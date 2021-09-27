@@ -1,0 +1,31 @@
+options:
+  platform:     psx
+  basename:     SCUS_941
+  base_path:    .
+  target_path:  SCUS_941/SCUS_941
+  asm_path:     asm/boot
+  asset_path:   assets/boot
+  src_path:     src/boot
+  # compiler
+  compiler: GCC
+  # disasm/linker
+  symbol_addrs_path:    symbol_addrs.SCUS_941.txt
+  undefined_syms_path:  undefined_syms.SCUS_941.txt
+  undefined_funcs_auto_path: undefined_funcs_auto.SCUS_941.txt
+  undefined_syms_auto_path: undefined_syms_auto.SCUS_941.txt
+  find_file_boundaries: yes
+  enable_ld_alignment_hack: yes
+segments:
+  - [0x0, header]    # data?
+  - [0x84, bin]      # zero padding
+  - name:  main
+    type:  code
+    start: 0x00000800
+    vram:  0x80010000    # per header
+    subalign: 4
+    subsegments:
+      - [0x800, data]     # data?
+      - [0x18B4, asm]     # first function
+      - [0x33190, bin]
+  - [0x53600, bin, trailer] # 0 to end
+  - [0x61000]

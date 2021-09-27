@@ -1,0 +1,7 @@
+PROGRAMMER_TOOLS_DTL-S2002_22_CD_10-16-98
+
+GNU C version 2.8.1 SN32 BUILD 4.0.0010 (PSX) compiled by CC.
+options passed:
+options enabled:  -fpeephole -ffunction-cse -fkeep-static-consts
+ -fpcc-struct-return -fcommon -fgnu-linker -msplit-addresses -mgas -mgpOPT
+ -mgpopt -msoft-float -mcpu=R3000

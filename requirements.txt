@@ -1,0 +1,14 @@
+ansiwrap
+attrs
+capstone
+colorama
+cxxfilt
+pycparser
+pylibyaml
+pynacl
+pypng
+python-Levenshtein
+python-ranges
+pyyaml
+toml
+watchdog

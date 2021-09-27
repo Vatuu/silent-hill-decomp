@@ -1,0 +1,8 @@
+Programmer Tools Runtime Library 4.1 DTL-S2002 CD Release 2.1 Dec1997
+
+
+GNU C version cygnus-2.7.2-970404 SN32.3.7.0004 (SonyPSX) compiled by CC.
+options passed:
+options enabled:  -fpeephole -ffunction-cse -fkeep-static-consts
+ -fpcc-struct-return -fcommon -fverbose-asm -fgnu-linker -mgas -msoft-float
+ -mcpu=3000
