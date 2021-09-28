@@ -25,7 +25,7 @@ segments:
     subalign: 4
     subsegments:
       - [0x800, data]     # data?
-      - [0x18B4, asm]     # first function
+      - [0x18B4, c]       # first function
       - [0x33190, bin]
   - [0x53600, bin, trailer] # 0 to end
   - [0x61000]

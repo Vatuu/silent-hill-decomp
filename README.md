@@ -45,5 +45,7 @@ Contributions are welcome. If you would like to reserve a function, open a PR wi
 
 ## Big TODOs
 Currently, capstone has no logic to disassemble GTE instructions (which are COP2 instructions,) and thus, these are interpreted as data. This means that any code that uses these are effectively not possible to decompile back into C (for now).
-Currently, you have to extract the code from the disk manually. It would be most reasonable to extract the assets and data from the disk, and recreate it during the build process.
+
+Furthermore, you have to extract the code from the disk manually. It would be most reasonable to extract the assets and data from the disk, and recreate it during the build process.
+
 

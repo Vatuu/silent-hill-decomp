@@ -58,6 +58,7 @@ CROSS			:= mips-elf-
 AS              := $(CROSS)as -EL
 LD              := $(CROSS)ld -EL
 OBJCOPY         := $(CROSS)objcopy
+#CC_PSYQ_36     := $(WINE) $(TOOLS_DIR)/psyq/3.6/CC1PSX.EXE # 16-bit
 CC_PSYQ_41      := $(WINE) $(TOOLS_DIR)/psyq/4.1/CC1PSX.EXE
 CC_PSYQ_43      := $(WINE) $(TOOLS_DIR)/psyq/4.3/CC1PSX.EXE
 CC_PSYQ_46      := $(WINE) $(TOOLS_DIR)/psyq/4.6/CC1PSX.EXE
@@ -101,9 +102,10 @@ setup: $(BOOT_BASENAME).yaml
 clean:
 	rm -rf $(BUILD_DIR)
 
-nuke: clean
+nuke:
 	rm -rf asm
 	rm -rf assets
+	rm -rf $(BUILD_DIR)
 	rm -rf *auto*.txt
 	rm -rf *.ld
 
@@ -126,6 +128,5 @@ $(BUILD_DIR)/%.c.o: %.c
 
 # keep .obj files
 .SECONDARY:
-
 .PHONY: all clean default
 SHELL = /bin/bash -e -o pipefail
