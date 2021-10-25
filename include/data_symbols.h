@@ -42,6 +42,10 @@ extern u8 D_8009D286;
 extern s8 D_8009D588;
 extern s32 D_8019D5E8;
 extern s32 D_8019DAA0;
+extern s64 D_80048D84[];
+extern s32 D_80071744;
+extern s32 D_80095DD8;
+extern s32 D_800722C8;
 
 #endif
 

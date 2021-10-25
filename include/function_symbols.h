@@ -29,6 +29,8 @@ extern void func_80013C9C();
 extern void func_8004433C(s32);
 extern s32 func_80033DAC(s32, s32);
 extern void func_800144F0(s32 arg0);
+extern void func_80014540(void);
+extern void func_80014510(s32 arg0);
 
 #endif
 

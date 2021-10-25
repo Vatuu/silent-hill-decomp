@@ -120,14 +120,25 @@ INCLUDE_ASM(s32, "18B4", func_800140F4);
 INCLUDE_ASM(s32, "18B4", func_800144D8);
 
 /* NONMATCHING
- * disassembly looks the same, but there's a different instruction?
+ * we are producing an addiu instead of addi
 void func_800144F0(s32 arg0) {
     func_80033DAC(arg0, 0);
 }*/
 INCLUDE_ASM(s32, "18B4", func_800144F0);
 
+
+/* NONMATCHING
+ * looks like it is generating safety code for the circumstance of arg0 < 0??
+void func_80014510(s32 arg0) {
+    func_800144F0(D_80048D84[arg0]);
+}*/
 INCLUDE_ASM(s32, "18B4", func_80014510);
 
+/* NONMATCHING
+ * regalloc and a really weird argument spilling (bug?)
+void func_80014540(void) {
+    func_80033E34(D_80071744, D_80095DD8, D_800722C8, 0);
+}*/
 INCLUDE_ASM(s32, "18B4", func_80014540);
 
 INCLUDE_ASM(s32, "18B4", func_80014578);
@@ -137,6 +148,15 @@ INCLUDE_ASM(s32, "18B4", func_800145BC);
 void func_80014608(void) {
 }
 
+/* NONMATCHING
+ * regalloc and a really weird argument spilling (bug?)
+void func_80014610(void) {
+    u32 sp10;
+
+    func_80033E34(0x266, 0x800, &sp10, 0);
+    func_800145BC(0);
+    func_80014A00(D_80048D84, &sp10, 0x50);
+}*/
 INCLUDE_ASM(s32, "18B4", func_80014610);
 
 INCLUDE_ASM(s32, "18B4", func_80014658);

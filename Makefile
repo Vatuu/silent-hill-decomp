@@ -8,7 +8,7 @@ TARGET_BOOT		:= $(BUILD_DIR)/$(BOOT_BASENAME)
 GAMEBIN_DIR		:= $(BOOT_BASENAME)
 
 # boot loader (identical on all disks, SCUS_941.63, SCUS_941.64, SCUS_941.65)
-ASM_BOOT_DIR	:= asm/boot
+ASM_BOOT_DIR	:= asm/boot asm/boot/data
 C_BOOT_DIR		:= src/boot
 ASSETS_BOOT_DIR	:= assets/boot
 
