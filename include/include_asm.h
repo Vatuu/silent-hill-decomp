@@ -1,33 +1,29 @@
-#ifndef INCLUDE_ASM_H
-#define INCLUDE_ASM_H
+#ifndef __INCLUDE_ASM_H__
+#define __INCLUDE_ASM_H__
 
 #define STRINGIFY_(x) #x
 #define STRINGIFY(x) STRINGIFY_(x)
 
-#ifndef PERMUTER
-
+#if !defined(SPLAT) && !defined(__CTX__) && !defined(PERMUTER)
 #ifndef INCLUDE_ASM
-
 #define INCLUDE_ASM(TYPE, FOLDER, NAME, ARGS...) \
-__asm__( \
-    ".section .text\n" \
-    "\t.align\t2\n" \
-    "\t.globl\t"#NAME"\n" \
-    "\t.ent\t"#NAME"\n" \
-    #NAME ":\n" \
-    ".include \"asm/"STRINGIFY(INCLUDE_ASM_TARGET)"/nonmatchings/"FOLDER"/"#NAME".s\"\n" \
-    "\t.set reorder\n" \
-    "\t.set at\n" \
-    "\t.end\t"#NAME \
-);
+   __asm__( \
+        ".section .text\n" \
+        "\t.align\t2\n" \
+        "\t.globl\t"#NAME"\n" \
+        "\t.ent\t"#NAME"\n" \
+        #NAME ":\n" \
+        "\t.include \"asm/"STRINGIFY(INCLUDE_ASM_TARGET)"/nonmatchings/"FOLDER"/"#NAME".s\"\n" \
+        "\t.set reorder\n" \
+        "\t.set at\n" \
+        "\t.end\t"#NAME \
+    );
 #endif
-
-// omit .global
-__asm__(".include \"include/include_asm.inc\"\n");
-
+__asm__(".include \"include/macro.inc\"\n");
 #else
 #define INCLUDE_ASM(TYPE, FOLDER, NAME, ARGS...)
 #endif
 
 
 #endif
+

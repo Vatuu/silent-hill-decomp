@@ -48,39 +48,28 @@ ALL_BIN_DIRS	:= $(BIN_BOOT_DIRS) $(BIN_$(COMMON_BASENAME)_DIRS)
 ALL_ASSETS_DIRS	:= $(ASSETS_BOOT_DIR) $(ASSETS_$(COMMON_BASENAME)_DIR)
 
 # TOOLS
-MAKE            := make
 PYTHON          := python3
 WINE            := wine
-SED             := sed
-UNIX2DOS        := unix2dos
-CPP             := cpp -P
-CROSS			:= mips-elf-
+CPP             := cpp
+CROSS			:= mips-linux-gnu-
 AS              := $(CROSS)as -EL
 LD              := $(CROSS)ld -EL
 OBJCOPY         := $(CROSS)objcopy
-#CC_PSYQ_36     := $(WINE) $(TOOLS_DIR)/psyq/3.6/CC1PSX.EXE # 16-bit
-CC_PSYQ_41      := $(WINE) $(TOOLS_DIR)/psyq/4.1/CC1PSX.EXE
-CC_PSYQ_43      := $(WINE) $(TOOLS_DIR)/psyq/4.3/CC1PSX.EXE
-CC_PSYQ_46      := $(WINE) $(TOOLS_DIR)/psyq/4.6/CC1PSX.EXE
-CC              := $(CC_PSYQ_41)
+CC_272			:= $(TOOLS_DIR)/psyq/272/cc1 # Native 2.7.2
+CC_PSYQ_36     	:= $(WINE) $(TOOLS_DIR)/psyq/3.6/CC1PSX.EXE # 2.7.2.SN.1
+CC_PSYQ_41      := $(WINE) $(TOOLS_DIR)/psyq/4.1/CC1PSX.EXE	# cygnus-2.7.2-970404
+CC_PSYQ_43      := $(WINE) $(TOOLS_DIR)/psyq/4.3/CC1PSX.EXE # 2.8.1 SN32
+CC_PSYQ_46      := $(WINE) $(TOOLS_DIR)/psyq/4.6/CC1PSX.EXE # 2.95
+CC              := $(CC_272)
 SPLAT           := $(PYTHON) $(TOOLS_DIR)/splat/split.py
 
-# FLAGS
-AS_INCLUDES     := -Iinclude
-AS_FLAGS        := -march=r3000 -mtune=r3000
-AS_FLAGS        += $(AS_INCLUDES)
-CPP_INCLUDES    := -Iinclude
-CPP_FLAGS       := -undef -Wall -lang-c
-CPP_FLAGS       += -Dmips -D__GNUC__=2 -D__OPTIMIZE__ -D__mips__ -D__mips -Dpsx -D__psx__ -D__psx -D_PSYQ -D__EXTENSIONS__ -D_MIPSEL -D__CHAR_UNSIGNED__ -D_LANGUAGE_C -DLANGUAGE_C
-CPP_FLAGS       += $(CPP_INCLUDES)
-
-ifdef PERMUTER
-CPP_FLAGS       += -DPERMUTER
-endif
-
-CC_FLAGS        := -quiet -G0 -Wall
+# Flags
 OPT_FLAGS       := -O2
-
+INCLUDE_CFLAGS	:= -Iinclude
+AS_FLAGS        := -march=r3000 -mtune=r3000 -Iinclude
+D_FLAGS       	:= -D_LANGUAGE_C
+CC_FLAGS        := -G 0 -mips1 -mcpu=3000 -mgas -msoft-float $(OPT_FLAGS) -fgnu-linker
+CPP_FLAGS       := -undef -Wall -lang-c $(DFLAGS) $(INCLUDE_CFLAGS) -nostdinc
 OBJCOPY_FLAGS   := -O binary
 
 # Rules
@@ -117,16 +106,22 @@ $(TARGET_BOOT).elf: $(O_BOOT_FILES)
 	$(LD) -Map $(BUILD_DIR)/$(BOOT_BASENAME).map -T $(BOOT_BASENAME).ld -T undefined_syms_auto.$(BOOT_BASENAME).txt -T undefined_funcs_auto.$(BOOT_BASENAME).txt -T undefined_syms.$(BOOT_BASENAME).txt --no-check-sections -o $@
 
 # generate objects
+$(BUILD_DIR)/%.i: %.c
+	$(CPP) -P -MMD -MP -MT $@ -MF $@.d $(CPP_FLAGS) -o $@ $<
+
+$(BUILD_DIR)/%.c.s: $(BUILD_DIR)/%.i
+	$(CC) $(CC_FLAGS) -o $@ $<
+
+$(BUILD_DIR)/%.c.o: $(BUILD_DIR)/%.c.s
+	$(AS) $(AS_FLAGS) -o $@ $<
+
 $(BUILD_DIR)/%.s.o: %.s
 	$(AS) $(AS_FLAGS) -o $@ $<
 
 $(BUILD_DIR)/%.bin.o: %.bin
 	$(LD) -r -b binary -o $@ $<
 
-$(BUILD_DIR)/%.c.o: %.c
-	$(CPP) $(CPP_FLAGS) $(CPP_TARGET) $< | $(UNIX2DOS) | $(CC) $(CC_FLAGS) $(OPT_FLAGS) | $(AS) $(AS_FLAGS) -o $@
-
-# keep .obj files
+### Settings
 .SECONDARY:
 .PHONY: all clean default
 SHELL = /bin/bash -e -o pipefail

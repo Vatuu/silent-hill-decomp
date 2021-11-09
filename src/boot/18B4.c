@@ -8,9 +8,6 @@ INCLUDE_ASM(s32, "18B4", func_800110C0);
 
 INCLUDE_ASM(s32, "18B4", func_800111E4);
 
-
-/* NONMATCHING
- * regalloc (usage of v0 over argument registers in loads)
 void func_80011274(void) {
     func_80033E34(D_80048D1C, D_80048D20, (u32*)0x800E0000, 0);
 
@@ -29,9 +26,7 @@ void func_80011274(void) {
     }
 
     func_80029818((u32*)0x800A0000, (u32*)0x800E0000);
-}*/
-
-INCLUDE_ASM(s32, "18B4", func_80011274);
+}
 
 INCLUDE_ASM(s32, "18B4", func_800112E8);
 
@@ -45,14 +40,10 @@ INCLUDE_ASM(s32, "18B4", func_80011784);
 
 INCLUDE_ASM(s32, "18B4", func_80011860);
 
-/* NONMATCHING
- * Currently, the compiler takes advantage of delay slots
- * However, using -g/-g3 should fix this; despite that, I get pseudo-op errors
 void func_80011920(void) {
     D_800965E8 = 0;
     D_80071A5C = 0;
-}*/
-INCLUDE_ASM(s32, "18B4", func_80011920);
+}
 
 INCLUDE_ASM(s32, "18B4", func_80011938);
 
@@ -60,20 +51,20 @@ INCLUDE_ASM(s32, "18B4", func_800119E4);
 
 INCLUDE_ASM(s32, "18B4", func_80011AEC);
 
-/* NONMATCHING
- * Another example of the compiler using -g/-g3
-void func_80011BB4(void) {
-    D_8009D588 = 1;
-    D_8009D274 = 0;
-    D_8009D278 = 1;
-    D_8009D27A = 0x74;
-    D_8009D27E = 0;
-    D_8009D280 = 0;
-    D_8009D282 = 0;
-    D_8009D284 = 0;
-    D_8009D285 = 0;
-    D_8009D286 = 0;
-}*/
+///* NONMATCHING
+// * something is out of order
+//void func_80011BB4(void) {
+//    D_8009D588 = 1;
+//    D_8009D274 = 0;
+//    D_8009D278 = 1;
+//    D_8009D27A = 0x74;
+//    D_8009D27E = 0;
+//    D_8009D280 = 0;
+//    D_8009D282 = 0;
+//    D_8009D284 = 0;
+//    D_8009D285 = 0;
+//    D_8009D286 = 0;
+//}*/
 INCLUDE_ASM(s32, "18B4", func_80011BB4);
 
 INCLUDE_ASM(s32, "18B4", func_80011C1C);
@@ -104,28 +95,21 @@ INCLUDE_ASM(s32, "18B4", func_800138EC);
 
 INCLUDE_ASM(s32, "18B4", func_80013C9C);
 
-/* NONMATCHING
- * Another example of the compiler using -g/-g3
 void func_800140A4(void) {
     D_8019DAA0++;
     if ((D_8019DAA0 & 1) == 0) {
         func_8004433C(D_8019D5E8);
         func_80013C9C();
     }
-}*/
-INCLUDE_ASM(s32, "18B4", func_800140A4);
+}
 
 INCLUDE_ASM(s32, "18B4", func_800140F4);
 
 INCLUDE_ASM(s32, "18B4", func_800144D8);
 
-/* NONMATCHING
- * we are producing an addiu instead of addi
 void func_800144F0(s32 arg0) {
     func_80033DAC(arg0, 0);
-}*/
-INCLUDE_ASM(s32, "18B4", func_800144F0);
-
+}
 
 /* NONMATCHING
  * looks like it is generating safety code for the circumstance of arg0 < 0??
@@ -134,12 +118,9 @@ void func_80014510(s32 arg0) {
 }*/
 INCLUDE_ASM(s32, "18B4", func_80014510);
 
-/* NONMATCHING
- * regalloc and a really weird argument spilling (bug?)
 void func_80014540(void) {
     func_80033E34(D_80071744, D_80095DD8, D_800722C8, 0);
-}*/
-INCLUDE_ASM(s32, "18B4", func_80014540);
+}
 
 INCLUDE_ASM(s32, "18B4", func_80014578);
 
@@ -148,16 +129,13 @@ INCLUDE_ASM(s32, "18B4", func_800145BC);
 void func_80014608(void) {
 }
 
-/* NONMATCHING
- * regalloc and a really weird argument spilling (bug?)
 void func_80014610(void) {
-    u32 sp10;
+    u8 sp10[0x800];
 
     func_80033E34(0x266, 0x800, &sp10, 0);
     func_800145BC(0);
     func_80014A00(D_80048D84, &sp10, 0x50);
-}*/
-INCLUDE_ASM(s32, "18B4", func_80014610);
+}
 
 INCLUDE_ASM(s32, "18B4", func_80014658);
 
