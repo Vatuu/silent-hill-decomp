@@ -6,7 +6,7 @@
 
 #if !defined(SPLAT) && !defined(__CTX__) && !defined(PERMUTER)
 #ifndef INCLUDE_ASM
-#define INCLUDE_ASM(TYPE, FOLDER, NAME, ARGS...) \
+#define INCLUDE_ASM(FOLDER, NAME, ...) \
    __asm__( \
         ".section .text\n" \
         "\t.align\t2\n" \
@@ -21,7 +21,7 @@
 #endif
 __asm__(".include \"include/macro.inc\"\n");
 #else
-#define INCLUDE_ASM(TYPE, FOLDER, NAME, ARGS...)
+#define INCLUDE_ASM(FOLDER, NAME, ...)
 #endif
 
 
