@@ -1,8 +1,6 @@
-# FFVII
-[![Match Status](https://img.shields.io/badge/matched-0.00-brightgreen.svg)]()
-[![Decomp Status](https://img.shields.io/badge/decompiled-0.00-yellow.svg)]()
+# Silent Hill Decompilation Project
 
-An in-progress decompilation of the original US release of Final Fantasy VII on the PSX.
+An in-progress decompilation of the 1.1 US release of Silent Hill on the Playstation 1.
 
 ## Building (Linux)
 
@@ -12,30 +10,32 @@ The build process has the following package requirements:
 - build-essential
 - binutils-mips-linux-gnu
 - python3
+- bchunk
+- 7z
 
 Under a Debian based distribution, you can install these with the following commands:
 ```
-sudo apt-get update
-sudo apt-get install git build-essential binutils-mips-linux-gnu python3
+sudo apt update
+sudo apt install git build-essential binutils-mips-linux-gnu python3 bchunk p7zip-full p7zip-rar
 ```
 
 ### Clone the repository
-Clone `https://github.com/Drahsid/ffvii.git` in whatever directory you wish. Make sure to initialize the submodules!
+Clone `https://github.com/Vatuu/silent-hill-decomp` in whatever directory you wish. Make sure to initialize the submodules!
 ```
-git clone https://github.com/Drahsid/ffvii.git --recursive
-cd ffvii
+git clone https://github.com/Vatuu/silent-hill-decomp.git --recursive
+cd silent-hill-decomp
 git submodule init
 ```
 
 ### Install Python3 requirements
 Run `pip3 install requirements.txt`
 
-### Extracting the contents of the disks
-Currently, you have to manually rip the relevant files, and place them into the SCUS_941 directory.
-
-To extract the required files to build, rip the bootloader from any of this disks (it is identical on all of them) and put it in the SCUS_941 directory with the name `SCUS_941`. On disk 1, this is `SCUS_941.63`; on disk 2, this is `SCUS_941.64`; on disk 3, this is `SCUS_941.65`
-
-Once you have done this, you can then run `make setup` to extract the data and disassembly from the code and overlays.
+### Placing the ROM
+Obviously, you will need to provide your own rom dump of the game. The required version is the NTSC-U 1.1 Version of Silent Hill.
+If done correctly, you will end up with a .BIN and .CUE file. Both of these need to be placed inside the `rom/image` folder, and renamed to SLUS-00707.BIN/.CUE respectively.
+SHA1 Hashes:
+    - .CUE `299D08DCB44E7516F394C3DD5BA40690AE33FD22` 84 Bytes
+    - .BIN `34278D31D9B9B12B3B5DB5E45BCBE548991ECBC7` 616,494,480 Bytes / 587 MiB
 
 ### Build the code
 Just run `make` to build. If the build succeeds, a folder will be produced with the name `build`, inside this, you will find the output.
@@ -45,7 +45,3 @@ Contributions are welcome. If you would like to reserve a function, open a PR wi
 
 ## Big TODOs
 Currently, capstone has no logic to disassemble GTE instructions (which are COP2 instructions,) and thus, these are interpreted as data. This means that any code that uses these are effectively not possible to decompile back into C (for now).
-
-Furthermore, you have to extract the code from the disk manually. It would be most reasonable to extract the assets and data from the disk, and recreate it during the build process.
-
-

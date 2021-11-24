@@ -5,12 +5,14 @@ options:
   # Paths
   base_path: .
   target_path: rom/SLUS_007.07
+  build_path: build
   asm_path: asm
   asset_path: assets
   src_path: src
   # compiler
   platform: psx
   compiler: GCC
+  ld_script_path: SLUS-00707.ld
   # disasm/linker
   symbol_addrs_path: symbol_addresses.txt
   undefined_syms_path: undefined_syms.txt
