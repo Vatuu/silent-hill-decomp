@@ -1,11 +1,10 @@
 asm
 assets
 build
-SCUS_941/*
-!SCUS_941/*.sha1
-SCUS_941/common/*
-!SCUS_941/common/*.sha1
 __pycache__
 .vscode
-*auto*.txt
+*auto.txt
 *.ld
+
+rom
+!rom/image/*.here"

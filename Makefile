@@ -1,4 +1,4 @@
-BOOT_BASENAME   := SCUS_941
+BOOT_BASENAME   := SLUS-00707
 COMMON_BASENAME	:= common
 
 BUILD_DIR       := build
@@ -62,6 +62,7 @@ CC_PSYQ_43      := $(WINE) $(TOOLS_DIR)/psyq/4.3/CC1PSX.EXE # 2.8.1 SN32
 CC_PSYQ_46      := $(WINE) $(TOOLS_DIR)/psyq/4.6/CC1PSX.EXE # 2.95
 CC              := $(CC_272)
 SPLAT           := $(PYTHON) $(TOOLS_DIR)/splat/split.py
+EXTRACT			:= tools/extractDisk.sh
 
 # Flags
 OPT_FLAGS       := -O2
@@ -86,6 +87,7 @@ dirs:
 	$(foreach dir,$(ALL_ASM_DIRS) $(ALL_C_DIRS) $(ALL_BIN_DIRS),$(shell mkdir -p $(BUILD_DIR)/$(dir)))
 
 setup: $(BOOT_BASENAME).yaml
+	$(EXTRACT) $(BOOT_BASENAME).yaml
 	$(SPLAT) $(BOOT_BASENAME).yaml
 
 clean:
@@ -103,7 +105,7 @@ $(TARGET_BOOT): $(TARGET_BOOT).elf
 	$(OBJCOPY) $(OBJCOPY_FLAGS) $< $@
 
 $(TARGET_BOOT).elf: $(O_BOOT_FILES)
-	$(LD) -Map $(BUILD_DIR)/$(BOOT_BASENAME).map -T $(BOOT_BASENAME).ld -T undefined_syms_auto.$(BOOT_BASENAME).txt -T undefined_funcs_auto.$(BOOT_BASENAME).txt -T undefined_syms.$(BOOT_BASENAME).txt --no-check-sections -o $@
+	$(LD) -Map $(BUILD_DIR)/$(BOOT_BASENAME).map -T $(BOOT_BASENAME).ld -T undefined_syms_auto.txt -T undefined_functions_auto.txt -T undefined_syms.txt --no-check-sections -o $@
 
 # generate objects
 $(BUILD_DIR)/%.i: %.c
