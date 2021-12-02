@@ -1,53 +1,36 @@
-BOOT_BASENAME   := SLUS-00707
-COMMON_BASENAME	:= common
+# Names and Paths
 
+GAME_NAME		:= SLUS-00707
+MAIN_NAME   	:= SLUS_007.07
+SEG_1_NAME		:= SILENT
+SEG_2_NAME		:= HILL
+
+ROM_DIR			:= rom
+IMAGE_DIR		:= $(ROM_DIR)/image
 BUILD_DIR       := build
 TOOLS_DIR       := tools
 
-TARGET_BOOT		:= $(BUILD_DIR)/$(BOOT_BASENAME)
-GAMEBIN_DIR		:= $(BOOT_BASENAME)
+TARGET_BOOT		:= $(BUILD_DIR)/$(MAIN_NAME)
 
-# boot loader (identical on all disks, SCUS_941.63, SCUS_941.64, SCUS_941.65)
-ASM_BOOT_DIR	:= asm/boot asm/boot/data
-C_BOOT_DIR		:= src/boot
-ASSETS_BOOT_DIR	:= assets/boot
+# Source Definitions
 
-ASM_BOOT_DIRS	:= $(ASM_BOOT_DIR) $(ASM_BOOT_DIR)/data
-C_BOOT_DIRS		:= $(C_BOOT_DIR)
-BIN_BOOT_DIRS	:= $(ASSETS_BOOT_DIR)
+ASM_DIR_BOOT	:= asm/main asm/main/data
+C_DIR_BOOT		:= src/main
+BIN_DIR_BOOT	:= assets/main
 
-S_BOOT_FILES	:= $(foreach dir,$(ASM_BOOT_DIRS),$(wildcard $(dir)/*.s))
-C_BOOT_FILES	:= $(foreach dir,$(C_BOOT_DIRS),$(wildcard $(dir)/*.c))
-BIN_BOOT_FILES	:= $(foreach dir,$(BIN_BOOT_DIRS),$(wildcard $(dir)/*.bin))
+S_FILES_BOOT	:= $(foreach dir,$(ASM_DIR_BOOT),$(wildcard $(dir)/*.s))
+C_FILES_BOOT	:= $(foreach dir,$(C_DIR_BOOT),$(wildcard $(dir)/*.c))
+BIN_FILES_BOOT	:= $(foreach dir,$(BIN_DIR_BOOT),$(wildcard $(dir)/*.bin))
 
-O_BOOT_FILES	:= $(foreach file,$(S_BOOT_FILES),$(BUILD_DIR)/$(file).o) \
-					$(foreach file,$(C_BOOT_FILES),$(BUILD_DIR)/$(file).o) \
-					$(foreach file,$(BIN_BOOT_FILES),$(BUILD_DIR)/$(file).o)
+O_FILES_BOOT	:= $(foreach file,$(S_FILES_BOOT),$(BUILD_DIR)/$(file).o) \
+					$(foreach file,$(C_FILES_BOOT),$(BUILD_DIR)/$(file).o) \
+					$(foreach file,$(BIN_FILES_BOOT),$(BUILD_DIR)/$(file).o)
 
-# common (here for example)
-ASM_$(COMMON_BASENAME)_DIR		:= asm/$(COMMON_BASENAME)
-C_$(COMMON_BASENAME)_DIR		:= src/$(COMMON_BASENAME)
-ASSETS_$(COMMON_BASENAME)_DIR	:= assets/$(COMMON_BASENAME)
+ASM_DIRS_ALL	:= $(ASM_DIR_BOOT)
+C_DIRS_ALL		:= $(C_DIR_BOOT)
+BIN_DIRS_ALL	:= $(BIN_DIR_BOOT)
 
-ASM_$(COMMON_BASENAME)_DIRS		:= $(ASM_$(COMMON_BASENAME)_DIR) $(ASM_$(COMMON_BASENAME)_DIR)/data
-C_$(COMMON_BASENAME)_DIRS		:= $(C_$(COMMON_BASENAME)_DIR)
-BIN_$(COMMON_BASENAME)_DIRS		:= $(ASSETS_$(COMMON_BASENAME)_DIR)
-
-S_$(COMMON_BASENAME)_FILES		:= $(foreach dir,$(ASM_$(COMMON_BASENAME)_DIRS),$(wildcard $(dir)/*.s))
-C_$(COMMON_BASENAME)_FILES		:= $(foreach dir,$(C_$(COMMON_BASENAME)_DIRS),$(wildcard $(dir)/*.c))
-BIN_$(COMMON_BASENAME)_FILES	:= $(foreach dir,$(BIN_$(COMMON_BASENAME)_DIRS),$(wildcard $(dir)/*.bin))
-
-O_$(COMMON_BASENAME)_FILES		:= $(foreach file,$(S_$(COMMON_BASENAME)_FILES),$(BUILD_DIR)/$(file).o) \
-									$(foreach file,$(C_$(COMMON_BASENAME)_FILES),$(BUILD_DIR)/$(file).o) \
-									$(foreach file,$(BIN_$(COMMON_BASENAME)_FILES),$(BUILD_DIR)/$(file).o)
-
-# batch
-ALL_ASM_DIRS	:= $(ASM_BOOT_DIRS) $(ASM_$(COMMON_BASENAME)_DIRS)
-ALL_C_DIRS		:= $(C_BOOT_DIRS) $(C_$(COMMON_BASENAME)_DIRS)
-ALL_BIN_DIRS	:= $(BIN_BOOT_DIRS) $(BIN_$(COMMON_BASENAME)_DIRS)
-ALL_ASSETS_DIRS	:= $(ASSETS_BOOT_DIR) $(ASSETS_$(COMMON_BASENAME)_DIR)
-
-# TOOLS
+# Tools
 PYTHON          := python3
 WINE            := wine
 CPP             := cpp
@@ -62,7 +45,7 @@ CC_PSYQ_43      := $(WINE) $(TOOLS_DIR)/psyq/4.3/CC1PSX.EXE # 2.8.1 SN32
 CC_PSYQ_46      := $(WINE) $(TOOLS_DIR)/psyq/4.6/CC1PSX.EXE # 2.95
 CC              := $(CC_272)
 SPLAT           := $(PYTHON) $(TOOLS_DIR)/splat/split.py
-EXTRACT			:= tools/extractDisk.sh
+EXTRACT			:= $(TOOLS_DIR)/extractDisk.sh
 
 # Flags
 OPT_FLAGS       := -O2
@@ -74,38 +57,45 @@ CPP_FLAGS       := -undef -Wall -lang-c $(DFLAGS) $(INCLUDE_CFLAGS) -nostdinc
 OBJCOPY_FLAGS   := -O binary
 
 # Rules
-
 default: all
 
 all: dirs $(TARGET_BOOT) check
 
 check: $(TARGET_BOOT)
-	@echo "$$(cat $(GAMEBIN_DIR)/$(BOOT_BASENAME).sha1) $<" | sha1sum --check
+	@echo "$$(cat $(ROM_DIR)/sha1/$(MAIN_NAME).sha1)" $< | sha1sum -c
 	@touch $@
 
-dirs:
-	$(foreach dir,$(ALL_ASM_DIRS) $(ALL_C_DIRS) $(ALL_BIN_DIRS),$(shell mkdir -p $(BUILD_DIR)/$(dir)))
+extract:
+	$(EXTRACT) $(GAME_NAME) $(IMAGE_DIR) $(ROM_DIR) 
 
-setup: $(BOOT_BASENAME).yaml
-	$(EXTRACT) $(BOOT_BASENAME).yaml
-	$(SPLAT) $(BOOT_BASENAME).yaml
+generate:
+	$(SPLAT) $(MAIN_NAME).yaml
+
+dirs:
+	$(foreach dir,$(ASM_DIRS_ALL) $(C_DIRS_ALL) $(BIN_DIRS_ALL),$(shell mkdir -p $(BUILD_DIR)/$(dir)))
 
 clean:
 	rm -rf $(BUILD_DIR)
 
-nuke:
+clean-rom:
+	find rom -maxdepth 1 -type f -delete
+
+reset:
 	rm -rf asm
 	rm -rf assets
-	rm -rf $(BUILD_DIR)
-	rm -rf *auto*.txt
-	rm -rf *.ld
+	rm -rf linker
+	rm -rf meta/*auto*.txt 
+
+setup: | clean reset clean-rom extract generate
+
+regenerate: | clean reset generate
 
 # bootloader
 $(TARGET_BOOT): $(TARGET_BOOT).elf
 	$(OBJCOPY) $(OBJCOPY_FLAGS) $< $@
 
-$(TARGET_BOOT).elf: $(O_BOOT_FILES)
-	$(LD) -Map $(BUILD_DIR)/$(BOOT_BASENAME).map -T $(BOOT_BASENAME).ld -T undefined_syms_auto.txt -T undefined_functions_auto.txt -T undefined_syms.txt --no-check-sections -o $@
+$(TARGET_BOOT).elf: $(O_FILES_BOOT)
+	$(LD) -Map $(TARGET_BOOT).map -T linker/$(MAIN_NAME).ld -T meta/undefined_symbols_auto.main.txt -T meta/undefined_functions_auto.main.txt -T meta/undefined_symbols.main.txt --no-check-sections -o $@
 
 # generate objects
 $(BUILD_DIR)/%.i: %.c

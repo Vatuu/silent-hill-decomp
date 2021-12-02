@@ -1,10 +1,11 @@
-asm
-assets
-build
+asm/
+assets/
+build/
+meta/*auto*.txt
+rom/
+linker/
+
 __pycache__
 .vscode
-*auto.txt
-*.ld
 
-rom
 !rom/image/*.here"

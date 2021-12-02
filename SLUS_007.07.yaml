@@ -1,25 +1,25 @@
 name: Silent Hill (North America)
-basename: SLUS-00707
+basename: SLUS_007.07
 sha1: f38344565fb731befc52fd968eb5a667be37acf3 #cAsE sEnSiTiVe
 options:
   # Paths
   base_path: .
   target_path: rom/SLUS_007.07
-  build_path: build
-  asm_path: asm
-  asset_path: assets
-  src_path: src
+  asm_path: asm/main
+  asset_path: assets/main
+  src_path: src/main
   # compiler
   platform: psx
   compiler: GCC
-  ld_script_path: SLUS-00707.ld
+  ld_script_path: linker/SLUS_007.07.ld
   # disasm/linker
-  symbol_addrs_path: symbol_addresses.txt
-  undefined_syms_path: undefined_syms.txt
-  undefined_funcs_auto_path: undefined_functions_auto.txt
-  undefined_syms_auto_path: undefined_syms_auto.txt
+  symbol_addrs_path: meta/symbol_addresses.main.txt
+  undefined_syms_path: meta/undefined_symbols.main.txt
+  undefined_funcs_auto_path: meta/undefined_functions_auto.main.txt
+  undefined_syms_auto_path: meta/undefined_symbols_auto.main.txt
   find_file_boundaries: true
   enable_ld_alignment_hack: true
+  use_legacy_include_asm: false
 rom:
   path: rom/image
   extraction_path: rom
@@ -33,5 +33,5 @@ segments:
     subalign: 4
     subsegments:
       - [0x800, c, boot]
-      - [0x3000, data]
+      - [0x3000, data, boot]
   - [0x13FFF]
