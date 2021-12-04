@@ -34,11 +34,11 @@ diff_count = args.count
 if args.make:
     check_call(["make", "-j4", "COMPARE=0"])
 
-baseimg = f"SCUS_941/SCUS_941"
+baseimg = f'rom/SLUS_007.07'
 basemap = f"expected/build/SCUS_941.map"
 
-myimg = f"build/SCUS_941"
-mymap = f"build/SCUS_941.map"
+myimg = f'build/SLUS_007.07'
+mymap = f'build/SLUS_007.07.map'
 
 if not os.path.isfile(baseimg):
     print(f"{baseimg} must exist.")

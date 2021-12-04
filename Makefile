@@ -62,7 +62,8 @@ default: all
 all: dirs $(TARGET_BOOT) check
 
 check: $(TARGET_BOOT)
-	@echo "$$(cat $(ROM_DIR)/sha1/$(MAIN_NAME).sha1)" $< | sha1sum -c
+	cat $(ROM_DIR)/sha1/$(MAIN_NAME).sha1
+	sha1sum $<
 	@touch $@
 
 extract:

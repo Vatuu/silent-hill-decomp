@@ -1,6 +1,6 @@
 name: Silent Hill (North America)
 basename: SLUS_007.07
-sha1: f38344565fb731befc52fd968eb5a667be37acf3 #cAsE sEnSiTiVe
+sha1: f38344565fb731befc52fd968eb5a667be37acf3
 options:
   # Paths
   base_path: .
@@ -29,9 +29,10 @@ segments:
   - name: main
     type: code
     start: 0x800
-    vram: 0x8001077C
+    vram: 0x80010000
     subalign: 4
     subsegments:
-      - [0x800, c, boot]
-      - [0x3000, data, boot]
+      - [0x800, data, stringsquestionmark]
+      - [0xF70, c, boot]
+      - [0x3780, data, boot]
   - [0x13FFF]
