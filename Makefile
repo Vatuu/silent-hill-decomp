@@ -9,6 +9,7 @@ ROM_DIR			:= rom
 IMAGE_DIR		:= $(ROM_DIR)/image
 BUILD_DIR       := build
 TOOLS_DIR       := tools
+ASSETS_DIR		:= assets
 
 TARGET_BOOT		:= $(BUILD_DIR)/$(MAIN_NAME)
 
@@ -34,16 +35,15 @@ BIN_DIRS_ALL	:= $(BIN_DIR_BOOT)
 PYTHON          := python3
 WINE            := wine
 CPP             := cpp
-CROSS			:= mips-linux-gnu-
-AS              := $(CROSS)as -EL
-LD              := $(CROSS)ld -EL
-OBJCOPY         := $(CROSS)objcopy
-CC_272			:= $(TOOLS_DIR)/psyq/272/cc1 # Native 2.7.2
-CC_PSYQ_36     	:= $(WINE) $(TOOLS_DIR)/psyq/3.6/CC1PSX.EXE # 2.7.2.SN.1
-CC_PSYQ_41      := $(WINE) $(TOOLS_DIR)/psyq/4.1/CC1PSX.EXE	# cygnus-2.7.2-970404
-CC_PSYQ_43      := $(WINE) $(TOOLS_DIR)/psyq/4.3/CC1PSX.EXE # 2.8.1 SN32
-CC_PSYQ_46      := $(WINE) $(TOOLS_DIR)/psyq/4.6/CC1PSX.EXE # 2.95
-CC              := $(CC_272)
+CROSS			:= mips-linux-gnu
+AS              := $(CROSS)-as -EL
+LD              := $(CROSS)-ld -EL
+OBJCOPY         := $(CROSS)-objcopy
+#CC_PSYQ_36     	:= $(WINE) $(TOOLS_DIR)/psyq/3.6/CC1PSX.EXE # 2.7.2.SN.1
+#CC_PSYQ_41      := $(WINE) $(TOOLS_DIR)/psyq/4.1/CC1PSX.EXE	# cygnus-2.7.2-970404
+#CC_PSYQ_43      := $(WINE) $(TOOLS_DIR)/psyq/4.3/CC1PSX.EXE # 2.8.1 SN32
+#CC_PSYQ_46      := $(WINE) $(TOOLS_DIR)/psyq/4.6/CC1PSX.EXE # 2.95
+CC              := $(TOOLS_DIR)/psyq/272/cc1 # Native 2.7.2
 SPLAT           := $(PYTHON) $(TOOLS_DIR)/splat/split.py
 EXTRACT			:= $(TOOLS_DIR)/extractDisk.sh
 
@@ -64,10 +64,9 @@ all: dirs $(TARGET_BOOT) check
 check: $(TARGET_BOOT)
 	cat $(ROM_DIR)/sha1/$(MAIN_NAME).sha1
 	sha1sum $<
-	@touch $@
 
 extract:
-	$(EXTRACT) $(GAME_NAME) $(IMAGE_DIR) $(ROM_DIR) 
+	$(EXTRACT) $(GAME_NAME) $(IMAGE_DIR) $(ROM_DIR) $(ASSETS_DIR)
 
 generate:
 	$(SPLAT) $(MAIN_NAME).yaml

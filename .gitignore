@@ -4,8 +4,9 @@ build/
 meta/*auto*.txt
 rom/
 linker/
+.vscode/
+.idea/
+__pycache__/
 
-__pycache__
-.vscode
-
+null.d
 !rom/image/*.here"

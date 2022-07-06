@@ -1,16 +1,12 @@
-#!/bin/sh
+#!/bin/bash
 
 basename=$1
 rom_dir=$2
 extract_dir=$3
+asset_dir=$4
 echo "Extracting ROM \"$basename\" to $extract_dir..."
 
-bchunk $rom_dir/$basename.bin $rom_dir/$basename.cue $extract_dir/$basename > /dev/null
-
-for i in $extract_dir/$basename*.iso; do
-    echo "\tExtracting Track $i..."
-    7z x -aoa -o$extract_dir $i > /dev/null
-    rm -f $i
-done
+(cd tools/psxiso;./dumpsxiso -x ../../$extract_dir -s ../../$extract_dir/layout.xml ../../$rom_dir/$basename.bin)
+(cd tools/silentassets;python3 extract.py -exe ../../$extract_dir/SLUS_007.07 -fs ../../$extract_dir/SILENT. -fh ../../$extract_dir/HILL. ../../$asset_dir)
 
 echo "Done!"
