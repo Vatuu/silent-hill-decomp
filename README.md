@@ -20,25 +20,25 @@ sudo apt install git build-essential binutils-mips-linux-gnu python3 bchunk p7zi
 ```
 
 ### Clone the repository
-Clone `https://github.com/Vatuu/silent-hill-decomp` in whatever directory you wish. Make sure to initialize the submodules!
+Clone `https://github.com/Vatuu/silent-hill-decomp` in whatever directory you wish. Make sure to clone recursively!
 ```
-git clone https://github.com/Vatuu/silent-hill-decomp.git --recursive
+git clone --recursive https://github.com/Vatuu/silent-hill-decomp.git
 cd silent-hill-decomp
-git submodule init
 ```
 
 ### Install Python3 requirements
-Run `pip3 install requirements.txt`
+Run `pip3 install -r requirements.txt`
 
 ### Placing the ROM
 Obviously, you will need to provide your own rom dump of the game. The required version is the NTSC-U 1.1 Version of Silent Hill.
-If done correctly, you will end up with a .BIN and .CUE file. Both of these need to be placed inside the `rom/image` folder, and renamed to SLUS-00707.BIN/.CUE respectively.
+If done correctly, you will end up with a .BIN and .CUE file. Both of these need to be placed inside the `rom/image` folder, and renamed to SLUS-00707.bin/.cue respectively.
 SHA1 Hashes:
-- .CUE: `299D08DCB44E7516F394C3DD5BA40690AE33FD22` 84 Bytes
-- .BIN: `34278D31D9B9B12B3B5DB5E45BCBE548991ECBC7` 616,494,480 Bytes / 587 MiB
+- .cue: `299D08DCB44E7516F394C3DD5BA40690AE33FD22` 84 Bytes
+- .bin: `34278D31D9B9B12B3B5DB5E45BCBE548991ECBC7` 616,494,480 Bytes / 587 MiB
 
 ### Build the code
-Just run `make` to build. If the build succeeds, a folder will be produced with the name `build`, inside this, you will find the output.
+Run `make setup` to extract needed assets/code from the bin, if that succeeds, run `make` to build it.
+Once build has finished a folder will be produced with the name `build`, inside this, you will find the output.
 
 ## Contributing
 Contributions are welcome. If you would like to reserve a function, open a PR with the function or file name(s).
