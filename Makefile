@@ -5,6 +5,8 @@ MAIN_NAME   	:= SLUS_007.07
 SEG_1_NAME		:= SILENT
 SEG_2_NAME		:= HILL
 
+OVERLAY_BODYPROG_NAME := BODYPROG.BIN
+
 ROM_DIR			:= rom
 IMAGE_DIR		:= $(ROM_DIR)/image
 BUILD_DIR       := build
@@ -12,6 +14,7 @@ TOOLS_DIR       := tools
 ASSETS_DIR		:= assets
 
 TARGET_BOOT		:= $(BUILD_DIR)/$(MAIN_NAME)
+TARGET_BODYPROG := $(BUILD_DIR)/$(OVERLAY_BODYPROG_NAME)
 
 # Source Definitions
 
@@ -27,9 +30,21 @@ O_FILES_BOOT	:= $(foreach file,$(S_FILES_BOOT),$(BUILD_DIR)/$(file).o) \
 					$(foreach file,$(C_FILES_BOOT),$(BUILD_DIR)/$(file).o) \
 					$(foreach file,$(BIN_FILES_BOOT),$(BUILD_DIR)/$(file).o)
 
-ASM_DIRS_ALL	:= $(ASM_DIR_BOOT)
-C_DIRS_ALL		:= $(C_DIR_BOOT)
-BIN_DIRS_ALL	:= $(BIN_DIR_BOOT)
+ASM_DIR_BODYPROG	:= asm/bodyprog asm/bodyprog/data
+C_DIR_BODYPROG		:= src/bodyprog
+BIN_DIR_BODYPROG	:= assets/bodyprog
+
+S_FILES_BODYPROG	:= $(foreach dir,$(ASM_DIR_BODYPROG),$(wildcard $(dir)/*.s))
+C_FILES_BODYPROG	:= $(foreach dir,$(C_DIR_BODYPROG),$(wildcard $(dir)/*.c))
+BIN_FILES_BODYPROG	:= $(foreach dir,$(BIN_DIR_BODYPROG),$(wildcard $(dir)/*.bin))
+
+O_FILES_BODYPROG	:= $(foreach file,$(S_FILES_BODYPROG),$(BUILD_DIR)/$(file).o) \
+					$(foreach file,$(C_FILES_BODYPROG),$(BUILD_DIR)/$(file).o) \
+					$(foreach file,$(BIN_FILES_BODYPROG),$(BUILD_DIR)/$(file).o)
+
+ASM_DIRS_ALL	:= $(ASM_DIR_BOOT) $(ASM_DIR_BODYPROG)
+C_DIRS_ALL		:= $(C_DIR_BOOT) $(C_DIR_BODYPROG)
+BIN_DIRS_ALL	:= $(BIN_DIR_BOOT) $(BIN_DIR_BODYPROG)
 
 # Tools
 PYTHON          := python3
@@ -59,7 +74,7 @@ OBJCOPY_FLAGS   := -O binary
 # Rules
 default: all
 
-all: dirs $(TARGET_BOOT) check
+all: dirs $(TARGET_BOOT) $(TARGET_BODYPROG) check
 
 check: $(TARGET_BOOT)
 	cat $(ROM_DIR)/sha1/$(MAIN_NAME).sha1
@@ -70,6 +85,7 @@ extract:
 
 generate:
 	$(SPLAT) $(MAIN_NAME).yaml
+	$(SPLAT) $(OVERLAY_BODYPROG_NAME).yaml
 
 dirs:
 	$(foreach dir,$(ASM_DIRS_ALL) $(C_DIRS_ALL) $(BIN_DIRS_ALL),$(shell mkdir -p $(BUILD_DIR)/$(dir)))
@@ -96,6 +112,13 @@ $(TARGET_BOOT): $(TARGET_BOOT).elf
 
 $(TARGET_BOOT).elf: $(O_FILES_BOOT)
 	$(LD) -Map $(TARGET_BOOT).map -T linker/$(MAIN_NAME).ld -T meta/undefined_symbols_auto.main.txt -T meta/undefined_functions_auto.main.txt -T meta/undefined_symbols.main.txt --no-check-sections -o $@
+
+# bodyprog / main overlay
+$(TARGET_BODYPROG): $(TARGET_BODYPROG).elf
+	$(OBJCOPY) $(OBJCOPY_FLAGS) $< $@
+
+$(TARGET_BODYPROG).elf: $(O_FILES_BODYPROG)
+	$(LD) -Map $(TARGET_BODYPROG).map -T linker/$(OVERLAY_BODYPROG_NAME).ld -T meta/undefined_symbols_auto.bodyprog.txt -T meta/undefined_functions_auto.bodyprog.txt -T meta/undefined_symbols.bodyprog.txt --no-check-sections -o $@
 
 # generate objects
 $(BUILD_DIR)/%.i: %.c
