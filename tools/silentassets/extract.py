@@ -30,7 +30,7 @@ class TableEntry:
 
 
 FILE_TYPES = [
-    EntryType("Texture Image", "TIM"), EntryType("Sound Bank", "VAB"), EntryType("Encrypted Overlay Data", "BIN"), EntryType("Animation Data?", "DMS"),
+    EntryType("Texture Image", "TIM"), EntryType("Sound Bank", "VAB"), EntryType("Overlay Data", "BIN"), EntryType("Animation Data?", "DMS"),
     EntryType("Animation Data", "ANM"), EntryType("PLM?", "PLM"), EntryType("Background Data?", "IPD"), EntryType("Character Data?", "ILM"),
     EntryType("Mesh Data", "TMD"), EntryType("Demo Data", "DAT"), EntryType("Audio Metadata?", "KDT"), EntryType("Compressed Data?", "CMP"),
     EntryType("Plaintext?", "TXT"), EntryType("Unused 1", "UU1"), EntryType("Unused 2", "UU2"), EntryType("XA Track Data", "")
@@ -82,6 +82,7 @@ def _parseEntry(entry):
         ( chr(32 + ((file2 >> shift) & 63)) for shift in range(0, 24, 6) )
     )).strip()
 
+    # size, lba, name, path, type
     return meta >> 19, meta & 0x7FFFF, name, DIRS[file1 & 15], FILE_TYPES[(file2 >> 24) & 15]
 
 def _decryptOverlay(data: bytes):
@@ -104,11 +105,11 @@ def _extract(entries:Iterable[TableEntry], output: Path, file: BinaryIO, sectorS
             outputPath.parent.mkdir(parents = True)
 
         ext = "XA" if i.type == FILE_TYPES[15] else i.type.extension
-        logging.info(f"Extracting {i.type.name}(.{ext}) to {outputPath}...")
+        logging.info(f"{index} Extracting {i.type.name}(.{ext}) to {outputPath}...")
 
         file.seek((i.offset - lbaOffset) * sectorSize)
         data = file.read((i.size if not i.size == 0 else entries[index + 1].offset - i.offset) * FILESIZE_STEP)
-        if(i.type == FILE_TYPES[2]):
+        if(i.type == FILE_TYPES[2] and i.path.startswith("1ST")):
             logging.info("\tDecrypting Overlay...")
             data = _decryptOverlay(data)
         with outputPath.open("wb") as _file:
