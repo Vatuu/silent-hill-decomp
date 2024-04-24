@@ -13,13 +13,14 @@ options:
   compiler: GCC
   ld_script_path: linker/SLUS_007.07.ld
   # disasm/linker
+  gp_value: 0x80022BB0
   symbol_addrs_path: meta/symbol_addresses.main.txt
-  undefined_syms_path: meta/undefined_symbols.main.txt
   undefined_funcs_auto_path: meta/undefined_functions_auto.main.txt
   undefined_syms_auto_path: meta/undefined_symbols_auto.main.txt
   find_file_boundaries: true
   enable_ld_alignment_hack: true
   use_legacy_include_asm: false
+  section_order: [".rodata", ".text", ".data", ".bss"]
 rom:
   path: rom/image
   extraction_path: rom
