@@ -54,18 +54,19 @@ CROSS			:= mips-linux-gnu
 AS              := $(CROSS)-as -EL
 LD              := $(CROSS)-ld -EL
 OBJCOPY         := $(CROSS)-objcopy
-#CC_PSYQ_36     	:= $(WINE) $(TOOLS_DIR)/psyq/3.6/CC1PSX.EXE # 2.7.2.SN.1
-#CC_PSYQ_41      := $(WINE) $(TOOLS_DIR)/psyq/4.1/CC1PSX.EXE	# cygnus-2.7.2-970404
-#CC_PSYQ_43      := $(WINE) $(TOOLS_DIR)/psyq/4.3/CC1PSX.EXE # 2.8.1 SN32
-#CC_PSYQ_46      := $(WINE) $(TOOLS_DIR)/psyq/4.6/CC1PSX.EXE # 2.95
-CC              := $(TOOLS_DIR)/psyq/272/cc1 # Native 2.7.2
+CC_PSYQ_36     	:= $(WINE) $(TOOLS_DIR)/psyq/3.6/CC1PSX.EXE # 2.7.2.SN.1
+CC_PSYQ_41      := $(WINE) $(TOOLS_DIR)/psyq/4.1/CC1PSX.EXE	# cygnus-2.7.2-970404
+CC_PSYQ_43      := $(WINE) $(TOOLS_DIR)/psyq/4.3/CC1PSX.EXE # 2.8.1 SN32
+CC_PSYQ_46      := $(WINE) $(TOOLS_DIR)/psyq/4.6/CC1PSX.EXE # 2.95
+#CC              := $(TOOLS_DIR)/psyq/272/cc1 # Native 2.7.2
+CC		:= $(CC_PSYQ_43)
 SPLAT           := $(PYTHON) $(TOOLS_DIR)/splat/split.py
 EXTRACT			:= $(TOOLS_DIR)/extractDisk.sh
 
 # Flags
 OPT_FLAGS       := -O2
 INCLUDE_CFLAGS	:= -Iinclude
-AS_FLAGS        := -march=r3000 -mtune=r3000 -Iinclude
+AS_FLAGS        := -G 0 -march=r3000 -mtune=r3000 -Iinclude --no-pad-sections
 D_FLAGS       	:= -D_LANGUAGE_C
 CC_FLAGS        := -G 0 -mips1 -mcpu=3000 -mgas -msoft-float $(OPT_FLAGS) -fgnu-linker
 CPP_FLAGS       := -undef -Wall -lang-c $(DFLAGS) $(INCLUDE_CFLAGS) -nostdinc
