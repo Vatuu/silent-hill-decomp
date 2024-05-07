@@ -1,38 +1,60 @@
-name: Silent Hill (North America)
-basename: SLUS_007.07
+name: SLUS_007.07
 sha1: f38344565fb731befc52fd968eb5a667be37acf3
 options:
-  # Paths
-  base_path: .
+  basename: SLUS_007.07
   target_path: rom/SLUS_007.07
-  asm_path: asm/main
-  asset_path: assets/main
-  src_path: src/main
-  # compiler
+  base_path: .
   platform: psx
   compiler: GCC
-  ld_script_path: linker/SLUS_007.07.ld
-  # disasm/linker
-  symbol_addrs_path: meta/symbol_addresses.main.txt
-  undefined_syms_path: meta/undefined_symbols.main.txt
-  undefined_funcs_auto_path: meta/undefined_functions_auto.main.txt
-  undefined_syms_auto_path: meta/undefined_symbols_auto.main.txt
-  find_file_boundaries: true
-  enable_ld_alignment_hack: true
-  use_legacy_include_asm: false
-rom:
-  path: rom/image
-  extraction_path: rom
+
+  asm_path: asm/executable
+  src_path: src/executable
+  build_path: build/executable
+  # create_asm_dependencies: True
+
+  ld_script_path: SLUS_007.07.ld
+
+  find_file_boundaries: False
+  gp_value: 0x80022BB0
+
+  o_as_suffix: True
+  use_legacy_include_asm: False
+
+  asm_function_macro: glabel
+  asm_jtbl_label_macro: jlabel
+  asm_data_macro: dlabel
+
+  section_order: [".rodata", ".text", ".data", ".bss"]
+  # auto_all_sections: [".data", ".rodata", ".bss"]
+
+  symbol_addrs_path:
+    - meta/executable/symbol_addrs.txt
+  reloc_addrs_path:
+    - meta/executable/reloc_addrs.txt
+
+  undefined_funcs_auto_path: meta/executable/undefined_funcs_auto.txt
+  undefined_syms_auto_path: meta/executable/undefined_syms_auto.txt
+
+  extensions_path: tools/splat_ext
+
+  subalign: 2
+
+  string_encoding: ASCII
+  data_string_encoding: ASCII
+  rodata_string_guesser_level: 2
+  data_string_guesser_level: 2
 segments:
-  - [0x0, header]
-  - [0x84, bin, zeroPadding]  # Zero Padding
-  - name: main
+  - name: header
+    type: header
+    start: 0x0
+
+  - name: executable
     type: code
     start: 0x800
     vram: 0x80010000
-    subalign: 4
+    # bss_size: Please fill out this value when you figure out the bss size
     subsegments:
-      - [0x800, data, stringsquestionmark]
-      - [0xF70, c, boot]
-      - [0x3780, data, boot]
-  - [0x13FFF]
+      - [0x800, rodata, 800]
+      - [0xF6C, c, bootloader] # estimated
+      - [0xB940, data, B940] # estimated
+  - [0x14000]

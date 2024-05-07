@@ -32,7 +32,7 @@ C_DIRS_ALL		:= $(C_DIR_BOOT)
 BIN_DIRS_ALL	:= $(BIN_DIR_BOOT)
 
 # Tools
-PYTHON          := python3
+PYTHON          := python3 -m
 WINE            := wine
 CPP             := cpp
 CROSS			:= mips-linux-gnu
@@ -44,7 +44,7 @@ OBJCOPY         := $(CROSS)-objcopy
 #CC_PSYQ_43      := $(WINE) $(TOOLS_DIR)/psyq/4.3/CC1PSX.EXE # 2.8.1 SN32
 #CC_PSYQ_46      := $(WINE) $(TOOLS_DIR)/psyq/4.6/CC1PSX.EXE # 2.95
 CC              := $(TOOLS_DIR)/psyq/272/cc1 # Native 2.7.2
-SPLAT           := $(PYTHON) $(TOOLS_DIR)/splat/split.py
+SPLAT           := $(PYTHON) splat
 EXTRACT			:= $(TOOLS_DIR)/extractDisk.sh
 
 # Flags
@@ -69,7 +69,7 @@ extract:
 	$(EXTRACT) $(GAME_NAME) $(IMAGE_DIR) $(ROM_DIR) $(ASSETS_DIR)
 
 generate:
-	$(SPLAT) $(MAIN_NAME).yaml
+	$(SPLAT) split $(MAIN_NAME).yaml
 
 dirs:
 	$(foreach dir,$(ASM_DIRS_ALL) $(C_DIRS_ALL) $(BIN_DIRS_ALL),$(shell mkdir -p $(BUILD_DIR)/$(dir)))

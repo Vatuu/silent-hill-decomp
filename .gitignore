@@ -1,7 +1,7 @@
 asm/
 assets/
 build/
-meta/*auto*.txt
+meta/**/*auto*.txt
 rom/
 linker/
 .vscode/
@@ -9,4 +9,4 @@ linker/
 __pycache__/
 
 null.d
-!rom/image/*.here"
+!*/place-the-bin-and-cue-here
