@@ -54,7 +54,7 @@ segments:
     vram: 0x80010000
     # bss_size: Please fill out this value when you figure out the bss size
     subsegments:
-      - [0x800, rodata, 800]
+      - [0x800, rodata, bootloader]
       - [0xF6C, c, bootloader] # estimated
       - [0xB940, data, B940] # estimated
   - [0x14000]

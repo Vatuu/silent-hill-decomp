@@ -23,8 +23,7 @@ SECTIONS
     {
         FILL(0x00000000);
         executable_RODATA_START = .;
-        build/executable/asm/executable/data/800.rodata.o(.rodata);
-        build/executable/src/executable/bootloader.o(.rodata);
+        build/executable/asm/executable/data/bootloader.rodata.o(.rodata);
         . = ALIGN(., 16);
         executable_RODATA_END = .;
         executable_RODATA_SIZE = ABSOLUTE(executable_RODATA_END - executable_RODATA_START);
@@ -34,8 +33,6 @@ SECTIONS
         executable_TEXT_END = .;
         executable_TEXT_SIZE = ABSOLUTE(executable_TEXT_END - executable_TEXT_START);
         executable_DATA_START = .;
-        _800_rodata = .;
-        build/executable/asm/executable/data/800.rodata.o(.data);
         bootloader = .;
         build/executable/src/executable/bootloader.o(.data);
         B940_data = .;
@@ -44,7 +41,6 @@ SECTIONS
         executable_DATA_END = .;
         executable_DATA_SIZE = ABSOLUTE(executable_DATA_END - executable_DATA_START);
         executable_BSS_START = .;
-        build/executable/asm/executable/data/800.rodata.o(.bss);
         build/executable/src/executable/bootloader.o(.bss);
         . = ALIGN(., 16);
         executable_BSS_END = .;
