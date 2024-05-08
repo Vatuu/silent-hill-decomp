@@ -6,12 +6,15 @@ SEG_1_NAME		:= SILENT
 SEG_2_NAME		:= HILL
 
 ROM_DIR			:= rom
+CONFIG_DIR		:= configs
 IMAGE_DIR		:= $(ROM_DIR)/image
 BUILD_DIR       := build
 TOOLS_DIR       := tools
 ASSETS_DIR		:= assets
 
 TARGET_BOOT		:= $(BUILD_DIR)/$(MAIN_NAME)
+
+CONFIG_FILES 	:= $(foreach dir,$(CONFIG_DIR),$(wildcard $(dir)/*.yaml))
 
 # Source Definitions
 
@@ -59,7 +62,7 @@ OBJCOPY_FLAGS   := -O binary
 # Rules
 default: all
 
-all: dirs $(TARGET_BOOT) check
+all: dirs check
 
 check: $(TARGET_BOOT)
 	cat $(ROM_DIR)/sha1/$(MAIN_NAME).sha1
@@ -69,7 +72,7 @@ extract:
 	$(EXTRACT) $(GAME_NAME) $(IMAGE_DIR) $(ROM_DIR) $(ASSETS_DIR)
 
 generate:
-	$(SPLAT) split $(MAIN_NAME).yaml
+	$(foreach config,$(CONFIG_FILES),$(shell $(SPLAT) split $(config)))
 
 dirs:
 	$(foreach dir,$(ASM_DIRS_ALL) $(C_DIRS_ALL) $(BIN_DIRS_ALL),$(shell mkdir -p $(BUILD_DIR)/$(dir)))
@@ -95,7 +98,7 @@ $(TARGET_BOOT): $(TARGET_BOOT).elf
 	$(OBJCOPY) $(OBJCOPY_FLAGS) $< $@
 
 $(TARGET_BOOT).elf: $(O_FILES_BOOT)
-	$(LD) -Map $(TARGET_BOOT).map -T linker/$(MAIN_NAME).ld -T meta/undefined_symbols_auto.main.txt -T meta/undefined_functions_auto.main.txt -T meta/undefined_symbols.main.txt --no-check-sections -o $@
+	$(LD) -Map $(TARGET_BOOT).map -T $(MAIN_NAME).ld --no-check-sections -o $@
 
 # generate objects
 $(BUILD_DIR)/%.i: %.c

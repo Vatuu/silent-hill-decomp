@@ -1,0 +1,56 @@
+name: Main Program (BODYPROG)
+sha1: eb118537b0c3c1e5cccfa2c5d283b3119c5ec7a3
+options:
+  basename: BODYPROG.BIN
+  target_path: assets/1ST/BODYPROG.BIN
+  base_path: ..
+  platform: psx
+  compiler: GCC
+
+  asm_path: asm/main/bodyprog
+  src_path: src/main
+  build_path: build/main
+  # create_asm_dependencies: True
+
+  ld_script_path: linkers/main/BODYPROG.BIN.ld
+
+  find_file_boundaries: False
+  gp_value: 0x80022BB0
+
+  o_as_suffix: True
+  use_legacy_include_asm: False
+
+  asm_function_macro: glabel
+  asm_jtbl_label_macro: jlabel
+  asm_data_macro: dlabel
+
+  section_order: [".rodata", ".text", ".data", ".bss"]
+  # auto_all_sections: [".data", ".rodata", ".bss"]
+
+  symbol_addrs_path:
+    - meta/main/bodyprog_symbol_addrs.txt
+  reloc_addrs_path:
+    - meta/main/bodyprog_reloc_addrs.txt
+
+  undefined_funcs_auto_path: meta/main/bodyprog_undefined_funcs_auto.txt
+  undefined_syms_auto_path: meta/main/bodyprog_undefined_syms_auto.txt
+
+  extensions_path: tools/splat_ext
+
+  subalign: 2
+
+  string_encoding: ASCII
+  data_string_encoding: ASCII
+  rodata_string_guesser_level: 2
+  data_string_guesser_level: 2
+segments:
+  - name: bodyprog
+    type: code
+    start: 0x0
+    vram: 0x80024B60
+    subalign: 8
+    subsegments:
+      - [0x0, rodata, bodyprog]
+      - [0x9AD0, c, bodyprog]
+      - [0x84238, data, bodyprog]
+  - [0xA4B00]
