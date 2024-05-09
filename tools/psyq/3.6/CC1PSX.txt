@@ -1,6 +1,0 @@
-# GNU C 2.7.2.SN.1 [AL 1.1, MM 40] Sony Playstation compiled by GNU C
-
-# Cc1 defaults:
-# -mgas -msoft-float
-
-# Cc1 arguments (-G value = 8, Cpu = 3000, ISA = 1)

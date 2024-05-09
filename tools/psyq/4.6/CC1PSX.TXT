@@ -1,5 +1,0 @@
-GNU C version 2.95.2 19991024 BUILD 4.0.0030 (PSX) compiled by CC.
-options passed:
-options enabled:  -fpeephole -ffunction-cse -fkeep-static-consts
- -fpcc-struct-return -fcommon -fgnu-linker -fargument-alias -fident
- -msplit-addresses -mgas -mgpOPT -mgpopt -msoft-float -mcpu=r3000
