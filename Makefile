@@ -11,20 +11,21 @@ IMAGE_DIR		:= $(ROM_DIR)/image
 BUILD_DIR       := build
 TOOLS_DIR       := tools
 ASSETS_DIR		:= assets
-
-TARGET_BOOT		:= $(BUILD_DIR)/$(MAIN_NAME)
+ASM_DIR			:= asm
+C_DIR_MAIN		:= src
 
 CONFIG_FILES 	:= $(foreach dir,$(CONFIG_DIR),$(wildcard $(dir)/*.yaml))
 
-# Source Definitions
+# Targets
 
-ASM_DIR_BOOT	:= asm/main asm/main/data
-C_DIR_BOOT		:= src/main
-BIN_DIR_BOOT	:= assets/main
+TARGET_MAIN 	:= executable
+TARGET_1ST 		:= bodyprog
+TARGET_BIN 		:=
+
+# Source Definitions
 
 S_FILES_BOOT	:= $(foreach dir,$(ASM_DIR_BOOT),$(wildcard $(dir)/*.s))
 C_FILES_BOOT	:= $(foreach dir,$(C_DIR_BOOT),$(wildcard $(dir)/*.c))
-BIN_FILES_BOOT	:= $(foreach dir,$(BIN_DIR_BOOT),$(wildcard $(dir)/*.bin))
 
 O_FILES_BOOT	:= $(foreach file,$(S_FILES_BOOT),$(BUILD_DIR)/$(file).o) \
 					$(foreach file,$(C_FILES_BOOT),$(BUILD_DIR)/$(file).o) \
@@ -36,17 +37,11 @@ BIN_DIRS_ALL	:= $(BIN_DIR_BOOT)
 
 # Tools
 PYTHON          := python3 -m
-WINE            := wine
-CPP             := cpp
 CROSS			:= mips-linux-gnu
 AS              := $(CROSS)-as -EL
 LD              := $(CROSS)-ld -EL
 OBJCOPY         := $(CROSS)-objcopy
-#CC_PSYQ_36     	:= $(WINE) $(TOOLS_DIR)/psyq/3.6/CC1PSX.EXE # 2.7.2.SN.1
-#CC_PSYQ_41      := $(WINE) $(TOOLS_DIR)/psyq/4.1/CC1PSX.EXE	# cygnus-2.7.2-970404
-#CC_PSYQ_43      := $(WINE) $(TOOLS_DIR)/psyq/4.3/CC1PSX.EXE # 2.8.1 SN32
-#CC_PSYQ_46      := $(WINE) $(TOOLS_DIR)/psyq/4.6/CC1PSX.EXE # 2.95
-CC              := $(TOOLS_DIR)/psyq/272/cc1 # Native 2.7.2
+CC              := $(TOOLS_DIR)/psyq/272/CC1PSX
 SPLAT           := $(PYTHON) splat
 EXTRACT			:= $(TOOLS_DIR)/extractDisk.sh
 
@@ -93,8 +88,8 @@ setup: | clean reset clean-rom extract generate
 
 regenerate: | clean reset generate
 
-# bootloader
-$(TARGET_BOOT): $(TARGET_BOOT).elf
+# executable
+$(TARGET_MAIN): | $(TARGET_MAIN).elf
 	$(OBJCOPY) $(OBJCOPY_FLAGS) $< $@
 
 $(TARGET_BOOT).elf: $(O_FILES_BOOT)

@@ -1,0 +1,60 @@
+name: Main Executable (SLUS_007.07)
+sha1: f38344565fb731befc52fd968eb5a667be37acf3
+options:
+  basename: SLUS_007.07
+  target_path: rom/SLUS_007.07
+  base_path: ..
+  platform: psx
+  compiler: GCC
+
+  asm_path: asm/main
+  src_path: src/
+  build_path: build/
+  # create_asm_dependencies: True
+
+  ld_script_path: linkers/main.ld
+
+  find_file_boundaries: False
+  gp_value: 0x80022BB0
+
+  o_as_suffix: True
+  use_legacy_include_asm: False
+
+  asm_function_macro: glabel
+  asm_jtbl_label_macro: jlabel
+  asm_data_macro: dlabel
+
+  section_order: [".rodata", ".text", ".data", ".bss"]
+  # auto_all_sections: [".data", ".rodata", ".bss"]
+
+  symbol_addrs_path:
+    - meta/main_symbol_addrs.txt
+  reloc_addrs_path:
+    - meta/main_reloc_addrs.txt
+
+  undefined_funcs_auto_path: meta/main_undefined_funcs_auto.txt
+  undefined_syms_auto_path: meta/main_undefined_syms_auto.txt
+
+  extensions_path: tools/splat_ext
+
+  subalign: 2
+
+  string_encoding: ASCII
+  data_string_encoding: ASCII
+  rodata_string_guesser_level: 2
+  data_string_guesser_level: 2
+segments:
+  - name: header
+    type: header
+    start: 0x0
+
+  - name: main
+    type: code
+    start: 0x800
+    vram: 0x80010000
+    # bss_size: Please fill out this value when you figure out the bss size
+    subsegments:
+      - [0x800, rodata, main]
+      - [0xF6C, c, main] # estimated
+      - [0xB940, data, main] # estimated
+  - [0x14000]
