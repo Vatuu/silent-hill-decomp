@@ -24,9 +24,7 @@ options:
   asm_jtbl_label_macro: jlabel
   asm_data_macro: dlabel
 
-  section_order: [".rodata", ".text", ".data", ".bss"]
-  # auto_all_sections: [".data", ".rodata", ".bss"]
-
+  section_order: [".rodata", ".text", ".data", ".sdata", ".sbss", ".bss"]
   symbol_addrs_path:
     - meta/main_symbol_addrs.txt
   reloc_addrs_path:
@@ -43,6 +41,8 @@ options:
   data_string_encoding: ASCII
   rodata_string_guesser_level: 2
   data_string_guesser_level: 2
+
+  ld_bss_is_noload: True
 segments:
   - name: header
     type: header
@@ -52,9 +52,17 @@ segments:
     type: code
     start: 0x800
     vram: 0x80010000
-    # bss_size: Please fill out this value when you figure out the bss size
+    bss_size: 0x1EC8
     subsegments:
       - [0x800, rodata, main]
-      - [0xF6C, c, main] # estimated
-      - [0xB940, data, main] # estimated
+      - [0x830, rodata, psyq]
+      - [0xF70, c, main]
+      - [0x29BC, textbin, psyq]
+      - [0xB91C, data, main]
+      - [0x11B4C, data, psyq]
+      - [0x133B0, sdata, main]
+      - [0x13490, sbss, main]
+      - [0x13494, sbss, psyq]
+      - { start: 0x13498, type: bss, vram: 0x80022c98, name: main }
+      - { start: 0x139B8, type: bss, vram: 0x800231a0, name: psyq }
   - [0x14000]
