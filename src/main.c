@@ -1,5 +1,7 @@
 #include "common.h"
 
+int D_80022C90;
+
 INCLUDE_ASM("asm/main/nonmatchings/main", func_80010770);
 
 INCLUDE_ASM("asm/main/nonmatchings/main", func_80010AD0);
@@ -94,7 +96,10 @@ INCLUDE_ASM("asm/main/nonmatchings/main", func_800120E4);
 
 INCLUDE_ASM("asm/main/nonmatchings/main", func_80012104);
 
-INCLUDE_ASM("asm/main/nonmatchings/main", func_80012110);
+void func_80012110(int arg0) 
+{
+    D_80022C90 = arg0;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/main", func_8001211C);
 
