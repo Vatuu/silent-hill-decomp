@@ -74,7 +74,9 @@ INCLUDE_ASM("asm/main/nonmatchings/main", func_80011C3C);
 
 INCLUDE_ASM("asm/main/nonmatchings/main", func_80011C70);
 
-void func_80011CFC(void) {
+void func_80011CFC() 
+{
+    
 }
 
 INCLUDE_ASM("asm/main/nonmatchings/main", func_80011D04);
@@ -87,7 +89,9 @@ INCLUDE_ASM("asm/main/nonmatchings/main", func_80011F48);
 
 INCLUDE_ASM("asm/main/nonmatchings/main", func_80011F78);
 
-void func_800120B0(void) {
+void func_800120B0() 
+{
+
 }
 
 INCLUDE_ASM("asm/main/nonmatchings/main", func_800120B8);
