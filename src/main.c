@@ -92,7 +92,10 @@ void func_800120B0(void) {
 
 INCLUDE_ASM("asm/main/nonmatchings/main", func_800120B8);
 
-INCLUDE_ASM("asm/main/nonmatchings/main", func_800120E4);
+unsigned int func_800120E4() 
+{
+    return func_800120B8() >> 17;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/main", func_80012104);
 
