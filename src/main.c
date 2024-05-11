@@ -101,6 +101,9 @@ void func_80012110(int arg0)
     D_80022C90 = arg0;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/main", func_8001211C);
+unsigned int func_8001211C()
+{
+    return func_800120B8() >> 20;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/main", func_8001213C);
