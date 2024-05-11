@@ -106,4 +106,38 @@ unsigned int func_8001211C()
     return func_800120B8() >> 20;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/main", func_8001213C);
+void func_8001213C(int *dst, int *src, int size)
+{
+    int *end;
+    int  data;
+    
+    if (dst == src)
+    {
+        return;
+    }
+        
+    size >>= 2;
+
+    if (dst < src)
+    {
+        end = src + size;
+
+        while (src < end)
+        {
+            data = *src++;
+            *dst++ = data;
+        }
+    }
+    else
+    {   
+        end = src;
+
+        dst += size;            
+        src += size;
+
+        while (src > end)
+        {
+            *(--dst) = *(--src);
+        }
+    }
+}
