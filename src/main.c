@@ -96,6 +96,9 @@ INCLUDE_ASM("asm/main/nonmatchings/main", func_80012104);
 
 INCLUDE_ASM("asm/main/nonmatchings/main", func_80012110);
 
-INCLUDE_ASM("asm/main/nonmatchings/main", func_8001211C);
+unsigned int func_8001211C()
+{
+    return func_800120B8() >> 20;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/main", func_8001213C);
