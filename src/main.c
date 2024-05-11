@@ -97,7 +97,10 @@ unsigned int func_800120E4()
     return func_800120B8() >> 17;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/main", func_80012104);
+int func_80012104() 
+{
+    return D_80022C90;
+}
 
 void func_80012110(int arg0) 
 {
