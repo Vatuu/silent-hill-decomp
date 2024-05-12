@@ -1,6 +1,19 @@
 #include "common.h"
 
+#define NULL 0
+
+typedef struct List
+{
+    int          unk0;
+    char         pad[4];
+    struct List *next;
+} List;
+
 int D_80022C90;
+
+List D_800230C8;
+
+int D_800230D4[];
 
 INCLUDE_ASM("asm/main/nonmatchings/main", func_80010770);
 
@@ -83,7 +96,24 @@ INCLUDE_ASM("asm/main/nonmatchings/main", func_80011D04);
 
 INCLUDE_ASM("asm/main/nonmatchings/main", func_80011E4C);
 
-INCLUDE_ASM("asm/main/nonmatchings/main", func_80011ED0);
+int func_80011ED0(int arg0)
+{
+    int   ret;
+    List *iter;
+
+    ret = 0;
+    for (iter = &D_800230C8; iter->next != NULL; iter = iter->next)
+    {
+        if (iter->next->unk0 == arg0)
+        {
+            FUN_80011f48(iter, D_800230D4, 0, 0);
+            ret = 1;
+            break;
+        }
+    }
+
+    return ret;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/main", func_80011F48);
 
