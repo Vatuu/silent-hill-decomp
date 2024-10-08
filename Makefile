@@ -47,6 +47,7 @@ OBJCOPY         	:= $(CROSS)-objcopy
 CPP              	:= cpp
 CC              	:= $(TOOLS_DIR)/gcc-2.8.1-psx/cc1
 SPLAT           	:= $(PYTHON) -m splat
+MASPSX				:= $(PYTHON) $(TOOLS_DIR)/maspsx/maspsx.py
 DUMPSXISO			:= $(TOOLS_DIR)/psxiso/dumpsxiso
 SILENT_ASSETS		:= $(PYTHON) $(TOOLS_DIR)/silentassets/extract.py
 
@@ -55,11 +56,12 @@ OPT_FLAGS       	:= -O2
 INCLUDE_CFLAGS		:= -Iinclude
 AS_FLAGS        	:= -march=r3000 -mtune=r3000 -Iinclude
 D_FLAGS       		:= -D_LANGUAGE_C
-CC_FLAGS        	:= -G 0 -mips1 -mcpu=3000 -mgas -msoft-float $(OPT_FLAGS) -fgnu-linker  -w -funsigned-char -fpeephole -ffunction-cse -fpcc-struct-return -fcommon -fverbose-asm -msoft-float -mgas -fgnu-linker -mips1 -mcpu=3000
+CC_FLAGS        	:= -G0 -mips1 -mcpu=3000 -mgas -msoft-float $(OPT_FLAGS) -fgnu-linker  -w -funsigned-char -fpeephole -ffunction-cse -fpcc-struct-return -fcommon -fverbose-asm -msoft-float -mgas -fgnu-linker -mips1 -mcpu=3000
 CPP_FLAGS       	:= -undef -Wall -lang-c $(DFLAGS) $(INCLUDE_CFLAGS) -nostdinc
 OBJCOPY_FLAGS   	:= -O binary
 DUMPSXISO_FLAGS		:= -x $(ROM_DIR) -s $(ROM_DIR)/layout.xml $(IMAGE_DIR)/$(GAME_NAME).bin
 SILENT_ASSETS_FLAGS := -exe $(ROM_DIR)/SLUS_007.07 -fs $(ROM_DIR)/SILENT. -fh $(ROM_DIR)/HILL. $(ASSETS_DIR)
+MASPSX_FLAGS		:= -G0 --aspsx-version=2.77
 
 # Rules
 default: all
@@ -112,7 +114,10 @@ $(BUILD_DIR)/%.i: %.c
 $(BUILD_DIR)/%.c.s: $(BUILD_DIR)/%.i
 	$(CC) $(CC_FLAGS) -o $@ $<
 
-$(BUILD_DIR)/%.c.o: $(BUILD_DIR)/%.c.s
+$(BUILD_DIR)/%.psx.s: $(BUILD_DIR)/%.c.s
+	$(MASPSX) $(MASPSX_FLAGS) $< > $@
+
+$(BUILD_DIR)/%.c.o: $(BUILD_DIR)/%.psx.s
 	$(AS) $(AS_FLAGS) -o $@ $<
 
 $(BUILD_DIR)/%.s.o: %.s
