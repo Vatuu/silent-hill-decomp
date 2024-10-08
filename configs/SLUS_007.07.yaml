@@ -59,7 +59,18 @@ segments:
       - [0x800, .rodata, main]
       - [0x808, .rodata, main_4]
       - [0x818, .rodata, main_3] # jtbl
-      - [0x830, rodata, psyq]
+
+      - [0x830, rodata, psyq/libspu/spu]
+      - [0x880, rodata, psyq/libetc/vsync]
+      - [0x890, rodata, psyq/libetc/intr]
+      - [0x900, rodata, psyq/libetc/intr_dma]
+      - [0x930, rodata, psyq/libcd/event]
+      - [0x950, rodata, psyq/libcd/sys]
+      - [0x960, rodata, psyq/libcd/cd_control_coms] # bss has table of pointers to this data
+      - [0xA9C, rodata, psyq/libcd/bios] # has jtbl, bss pointers
+      - [0xBC0, rodata, psyq/libcd/cdread]
+      - [0xC10, rodata, psyq/libgpu/tmd]
+      - [0xD50, rodata, psyq/libgpu/sys] 
 
       - [0xF70, c, main] # uses gp_rel
       - [0x12D0, c, main_2] # doesn't use gp_rel
@@ -69,7 +80,46 @@ segments:
       - [0x1E30, c, main_4] # doesn't use gp_rel
       - [0x28B8, c, main_5] # uses gp_rel
 
-      - [0x29BC, asm, psyq]
+      - [0x29BC, asm, psyq/libapi/a36] #EnterCriticalSection
+      - [0x29CC, asm, psyq/libapi/a37] #ExitCriticalSection
+      - [0x29DC, asm, psyq/libapi/a50] #open
+      - [0x29EC, asm, psyq/libapi/a52] #read
+      - [0x29FC, asm, psyq/libapi/a54] #close
+      - [0x2A0C, asm, psyq/libapi/a08] #OpenEvent
+      - [0x2A1C, asm, psyq/libapi/a12] #EnableEvent
+      - [0x2A2C, asm, psyq/libc/c21] #strcat
+      - [0x2A3C, asm, psyq/libc/c23] #strcmp
+      - [0x2A4C, asm, psyq/libc/c40] #bzero
+      - [0x2A5C, asm, psyq/libc/c43] #memset
+      - [0x2A6C, asm, psyq/libsnd/ut_roff]
+      - [0x2A8C, asm, psyq/libspu/s_ini]
+      - [0x2BEC, asm, psyq/libspu/spu] # has bss section: https://github.com/lab313ru/psx_psyq_signatures/blob/e9e46e7e133ef275a79bfce650924f98edb086bc/470/LIBSPU.LIB.json#L279
+      - [0x372C, asm, psyq/libapi/a07] #DeliverEvent
+      - [0x373C, asm, psyq/libc/c63] #printf
+      - [0x374C, asm, psyq/libspu/s_dcb]
+      - [0x377C, asm, psyq/libsn/snmain] #entry point
+      - [0x38FC, asm, psyq/libapi/c57] #InitHeap
+      - [0x390C, asm, psyq/libetc/vsync] #VSync
+      - [0x3B1C, asm, psyq/libapi/a91] #ChangeClearPAD
+      - [0x3B2C, asm, psyq/libapi/l10] #ChangeClearRCnt
+      - [0x3B3C, asm, psyq/libc/a63] # puts from psyq 4.4?
+      - [0x3B5C, asm, psyq/libetc/intr] # Callback functions
+      - [0x421C, asm, psyq/libapi/c114] # _96_remove
+      - [0x423C, asm, psyq/libapi/a23] # ReturnFromException
+      - [0x424C, asm, psyq/libapi/a24] # ResetEntryInt
+      - [0x425C, asm, psyq/libapi/a25] # HookEntryInt
+      - [0x426C, asm, psyq/libc/c19] # setjmp
+      - [0x427C, asm, psyq/libetc/intr_vb] # startIntrVSync
+      - [0x439C, asm, psyq/libetc/intr_dma] # startIntrDMA
+      - [0x463C, asm, psyq/libetc/vmode] # Set/GetVideoMode
+      - [0x466C, asm, psyq/libcd/event] # CdInit
+      - [0x47BC, asm, psyq/libcd/sys] # CD related functions
+      - [0x4F4C, asm, psyq/libcd/bios] # More CD functions, has bss StMode 
+      - [0x66AC, asm, psyq/libcd/cdread] # Still CD
+      - [0x707C, asm, psyq/libgpu/tmd]
+      - [0x88FC, asm, psyq/libgpu/sys] # from 4.2?, has bss
+      - [0xB90C, asm, psyq/libapi/c73] # GPU_cw
+
       - [0xB91C, data, main]
       - [0x11B4C, data, psyq]
       - [0x133B0, sdata, main]
