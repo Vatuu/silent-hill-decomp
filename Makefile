@@ -55,20 +55,32 @@ SILENT_ASSETS		:= $(PYTHON) $(TOOLS_DIR)/silentassets/extract.py
 
 # Flags
 OPT_FLAGS       	:= -O2
-DL_FLAGS			:= -G4
+
+DL_FLAGS_DEFAULT	:= -G0
+DL_FLAGS_OPTIMIZED	:= -G4
+
+# Used to force %gp_rel for some of the code
+# It seems that the rest doesn't use %gp_rel anywhere
+OPTIMIZED_FILES 	:= $(addprefix $(BUILD_DIR)/src/,main main_5)
+
 ENDIAN          	:= -EL
 INCLUDE_FLAGS		:= -Iinclude -I $(BUILD_DIR)
 DEFINE_FLAGS   		:= -D_LANGUAGE_C -DUSE_INCLUDE_ASM
-AS_FLAGS         	:= $(ENDIAN) $(INCLUDE_FLAGS) $(OPT_FLAGS) $(DL_FLAGS) -march=r3000 -mtune=r3000 -no-pad-sections
-CC_FLAGS        	:= $(OPT_FLAGS) $(DL_FLAGS) -mips1 -mcpu=3000 -w -funsigned-char -fpeephole -ffunction-cse -fpcc-struct-return -fcommon -fverbose-asm -msoft-float -mgas -fgnu-linker -quiet
+AS_FLAGS         	:= $(ENDIAN) $(INCLUDE_FLAGS) $(OPT_FLAGS) -march=r3000 -mtune=r3000 -no-pad-sections
+CC_FLAGS        	:= $(OPT_FLAGS) -mips1 -mcpu=3000 -w -funsigned-char -fpeephole -ffunction-cse -fpcc-struct-return -fcommon -fverbose-asm -msoft-float -mgas -fgnu-linker -quiet
 CPP_FLAGS			:= $(INCLUDE_FLAGS) $(DEFINE_FLAGS) -P -MMD -MP -undef -Wall -lang-c -nostdinc
 LD_FLAGS			:= $(ENDIAN) $(OPT_FLAGS) -nostdlib --no-check-sections
 OBJCOPY_FLAGS   	:= -O binary
 OBJDUMP_FLAGS 		:= --disassemble-all --reloc --disassemble-zeroes -Mreg-names=32
 SPLAT_FLAGS			:= --disassemble-all
-MASPSX_FLAGS		:= $(DL_FLAGS) --aspsx-version=2.77
+MASPSX_FLAGS		:= --aspsx-version=2.77
 DUMPSXISO_FLAGS		:= -x $(ROM_DIR) -s $(ROM_DIR)/layout.xml $(IMAGE_DIR)/$(GAME_NAME).bin
 SILENT_ASSETS_FLAGS := -exe $(ROM_DIR)/SLUS_007.07 -fs $(ROM_DIR)/SILENT. -fh $(ROM_DIR)/HILL. $(ASSETS_DIR)
+
+# Utilities
+
+# Function to return DLFLAGS depending on file
+get_dl_flags = $(if $(filter $1,$(OPTIMIZED_FILES)),$(DL_FLAGS_OPTIMIZED),$(DL_FLAGS_DEFAULT))
 
 # Rules
 default: all
@@ -107,7 +119,12 @@ $(BUILD_DIR)/$(TARGET_MAIN): $(BUILD_DIR)/$(TARGET_MAIN).elf
 	$(OBJCOPY) $(OBJCOPY_FLAGS) $< $@
 
 $(BUILD_DIR)/$(TARGET_MAIN).elf: $(O_FILES_BOOT)
-	$(LD) $(LD_FLAGS) -Map $(BUILD_DIR)/$(TARGET_MAIN).map -T $(LINKER_DIR)/$(MAIN_NAME).ld -T meta/$(MAIN_NAME).undefined_syms_auto.txt -T meta/$(MAIN_NAME).undefined_funcs_auto.txt -o $@
+	$(LD) $(LD_FLAGS) 												 \
+		-Map $(BUILD_DIR)/$(TARGET_MAIN).map 						 \
+		-T $(LINKER_DIR)/$(MAIN_NAME).ld 							 \
+		-T meta/$(MAIN_NAME).undefined_syms_auto.txt 				 \
+		-T meta/$(MAIN_NAME).undefined_funcs_auto.txt 				 \
+		-o $@
 
 # split yaml
 $(LINKER_DIR)/%.ld: $(CONFIG_DIR)/%.yaml
@@ -119,13 +136,13 @@ $(BUILD_DIR)/%.i: %.c
 	$(CPP) -P -MMD -MP -MT $@ -MF $@.d $(CPP_FLAGS) -o $@ $<
 
 $(BUILD_DIR)/%.c.s: $(BUILD_DIR)/%.i
-	$(CC) $(CC_FLAGS) -o $@ $<
+	$(CC) $(CC_FLAGS) $(call get_dl_flags, $(@:.c.s=)) -o $@ $<
 
 $(BUILD_DIR)/%.psx.s: $(BUILD_DIR)/%.c.s
-	$(MASPSX) $(MASPSX_FLAGS) $< > $@
+	$(MASPSX) $(MASPSX_FLAGS) $(call get_dl_flags, $(@:.psx.s=)) $< > $@
 
 $(BUILD_DIR)/%.c.o: $(BUILD_DIR)/%.psx.s
-	$(AS) $(AS_FLAGS) -o $@ $<
+	$(AS) $(AS_FLAGS) $(call get_dl_flags, $(@:.c.o=)) -o $@ $<
 	$(OBJDUMP) $(OBJDUMP_FLAGS) $@ > $(@:.o=.dump.s)
 
 $(BUILD_DIR)/%.s.o: %.s
