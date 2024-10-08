@@ -1,58 +1,61 @@
 # Names and Paths
 
-GAME_NAME		:= SLUS-00707
-MAIN_NAME   	:= SLUS_007.07
-SEG_1_NAME		:= SILENT
-SEG_2_NAME		:= HILL
+GAME_NAME				:= SLUS-00707
+MAIN_NAME   			:= SLUS_007.07
+SEG_1_NAME				:= SILENT
+SEG_2_NAME				:= HILL
 
-ROM_DIR			:= rom
-CONFIG_DIR		:= configs
-IMAGE_DIR		:= $(ROM_DIR)/image
-BUILD_DIR       := build
-TOOLS_DIR       := tools
-ASSETS_DIR		:= assets
-ASM_DIR			:= asm
-C_DIR_MAIN		:= src
+ROM_DIR					:= rom
+CONFIG_DIR				:= configs
+IMAGE_DIR				:= $(ROM_DIR)/image
+BUILD_DIR       		:= build
+TOOLS_DIR       		:= tools
+ASSETS_DIR				:= assets
+ASM_DIR					:= asm
+C_DIR_MAIN				:= src
 
-CONFIG_FILES 	:= $(foreach dir,$(CONFIG_DIR),$(wildcard $(dir)/*.yaml))
+CONFIG_FILES 			:= $(foreach dir,$(CONFIG_DIR),$(wildcard $(dir)/*.yaml))
 
 # Targets
 
-TARGET_MAIN 	:= executable
-TARGET_1ST 		:= bodyprog
-TARGET_BIN 		:=
+TARGET_MAIN 			:= executable
+TARGET_1ST 				:= bodyprog
+TARGET_BIN 				:=
 
 # Source Definitions
 
-S_FILES_BOOT	:= $(foreach dir,$(ASM_DIR_BOOT),$(wildcard $(dir)/*.s))
-C_FILES_BOOT	:= $(foreach dir,$(C_DIR_BOOT),$(wildcard $(dir)/*.c))
+S_FILES_BOOT			:= $(foreach dir,$(ASM_DIR_BOOT),$(wildcard $(dir)/*.s))
+C_FILES_BOOT			:= $(foreach dir,$(C_DIR_BOOT),$(wildcard $(dir)/*.c))
 
-O_FILES_BOOT	:= $(foreach file,$(S_FILES_BOOT),$(BUILD_DIR)/$(file).o) \
-					$(foreach file,$(C_FILES_BOOT),$(BUILD_DIR)/$(file).o) \
-					$(foreach file,$(BIN_FILES_BOOT),$(BUILD_DIR)/$(file).o)
+O_FILES_BOOT			:= $(foreach file,$(S_FILES_BOOT),$(BUILD_DIR)/$(file).o) \
+							$(foreach file,$(C_FILES_BOOT),$(BUILD_DIR)/$(file).o) \
+							$(foreach file,$(BIN_FILES_BOOT),$(BUILD_DIR)/$(file).o)
 
-ASM_DIRS_ALL	:= $(ASM_DIR_BOOT)
-C_DIRS_ALL		:= $(C_DIR_BOOT)
-BIN_DIRS_ALL	:= $(BIN_DIR_BOOT)
+ASM_DIRS_ALL			:= $(ASM_DIR_BOOT)
+C_DIRS_ALL				:= $(C_DIR_BOOT)
+BIN_DIRS_ALL			:= $(BIN_DIR_BOOT)
 
 # Tools
-PYTHON          := python3 -m
-CROSS			:= mips-linux-gnu
-AS              := $(CROSS)-as -EL
-LD              := $(CROSS)-ld -EL
-OBJCOPY         := $(CROSS)-objcopy
-CC              := $(TOOLS_DIR)/psyq/272/CC1PSX
-SPLAT           := $(PYTHON) splat
-EXTRACT			:= $(TOOLS_DIR)/extractDisk.sh
+PYTHON          		:= python3
+CROSS					:= mips-linux-gnu
+AS              		:= $(CROSS)-as -EL
+LD              		:= $(CROSS)-ld -EL
+OBJCOPY         		:= $(CROSS)-objcopy
+CC              		:= $(TOOLS_DIR)/psyq/272/CC1PSX
+SPLAT           		:= $(PYTHON) -m splat
+DUMPSXISO				:= $(TOOLS_DIR)/psxiso/dumpsxiso
+SILENT_ASSETS			:= $(PYTHON) $(TOOLS_DIR)/silentassets/extract.py
 
 # Flags
-OPT_FLAGS       := -O2
-INCLUDE_CFLAGS	:= -Iinclude
-AS_FLAGS        := -march=r3000 -mtune=r3000 -Iinclude
-D_FLAGS       	:= -D_LANGUAGE_C
-CC_FLAGS        := -G 0 -mips1 -mcpu=3000 -mgas -msoft-float $(OPT_FLAGS) -fgnu-linker
-CPP_FLAGS       := -undef -Wall -lang-c $(DFLAGS) $(INCLUDE_CFLAGS) -nostdinc
-OBJCOPY_FLAGS   := -O binary
+OPT_FLAGS       		:= -O2
+INCLUDE_CFLAGS			:= -Iinclude
+AS_FLAGS        		:= -march=r3000 -mtune=r3000 -Iinclude
+D_FLAGS       			:= -D_LANGUAGE_C
+CC_FLAGS        		:= -G 0 -mips1 -mcpu=3000 -mgas -msoft-float $(OPT_FLAGS) -fgnu-linker
+CPP_FLAGS       		:= -undef -Wall -lang-c $(DFLAGS) $(INCLUDE_CFLAGS) -nostdinc
+OBJCOPY_FLAGS   		:= -O binary
+DUMPSXISO_FLAGS			:= -x $(ROM_DIR) -s $(ROM_DIR)/layout.xml $(IMAGE_DIR)/$(GAME_NAME).bin
+SILENT_ASSETS_FLAGS 	:= -exe $(ROM_DIR)/SLUS_007.07 -fs $(ROM_DIR)/SILENT. -fh $(ROM_DIR)/HILL. $(ASSETS_DIR)
 
 # Rules
 default: all
@@ -64,7 +67,8 @@ check: $(TARGET_BOOT)
 	sha1sum $<
 
 extract:
-	$(EXTRACT) $(GAME_NAME) $(IMAGE_DIR) $(ROM_DIR) $(ASSETS_DIR)
+	$(DUMPSXISO) $(DUMPSXISO_FLAGS)
+	$(SILENT_ASSETS) $(SILENT_ASSETS_FLAGS)
 
 generate:
 	$(foreach config,$(CONFIG_FILES),$(shell $(SPLAT) split $(config)))
