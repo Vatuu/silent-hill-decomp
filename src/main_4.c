@@ -1,4 +1,4 @@
-#include "common.h"
+#include "main_4.h"
 
 INCLUDE_ASM("asm/main/nonmatchings/main_4", FUN_80011630);
 
@@ -30,7 +30,19 @@ INCLUDE_ASM("asm/main/nonmatchings/main_4", FUN_80011E4C);
 
 INCLUDE_ASM("asm/main/nonmatchings/main_4", func_80011ED0);
 
-INCLUDE_ASM("asm/main/nonmatchings/main_4", FUN_80011F48);
+void maybeMoveLastElement(MaybeLinkedList *from, MaybeLinkedList *to, s32 data0,
+                          s32 data1) {
+  MaybeLinkedList *tmp;
+
+  tmp        = from->next;
+  from->next = tmp->next;
+
+  tmp->next = to->next;
+  to->next  = tmp;
+
+  tmp->unk0 = data0;
+  tmp->unk4 = data1;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/main_4", FUN_80011F78);
 
