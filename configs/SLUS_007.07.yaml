@@ -35,14 +35,14 @@ options:
 
   extensions_path: tools/splat_ext
 
-  subalign: 2
+  subalign: 4
 
   string_encoding: ASCII
   data_string_encoding: ASCII
   rodata_string_guesser_level: 2
   data_string_guesser_level: 2
 
-  ld_bss_is_noload: True
+  ld_bss_is_noload: False
 segments:
   - name: header
     type: header
@@ -52,16 +52,20 @@ segments:
     type: code
     start: 0x800
     vram: 0x80010000
-    bss_size: 0x1EC8
+    align: 4
+    subalign: 4
+    # bss_size: 0x1EC8
     subsegments:
       - [0x800, .rodata, main]
       - [0x830, rodata, psyq]
       - [0xF70, c, main]
-      - [0x29BC, textbin, psyq]
+      - [0x29BC, asm, psyq]
       - [0xB91C, data, main]
       - [0x11B4C, data, psyq]
       - [0x133B0, sdata, main]
       - [0x13494, sbss, psyq]
-      - { start: 0x13498, type: bss, vram: 0x80022c98, name: main }
-      - { start: 0x139B8, type: bss, vram: 0x800231a0, name: psyq }
+      - [0x13498, bss]
+      # produces errors during build
+      # - { start: 0x13498, type: bss, vram: 0x80022c98, name: main }
+      # - { start: 0x139B8, type: bss, vram: 0x800231a0, name: psyq }
   - [0x14000]
