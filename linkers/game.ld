@@ -8,7 +8,7 @@ SECTIONS
     {
         FILL(0x00000000);
         game_RODATA_START = .;
-        build/game/asm/game/data/overlay.rodata.o(.rodata);
+        build/game/src/game/overlay.o(.rodata);
         . = ALIGN(., 16);
         game_RODATA_END = .;
         game_RODATA_SIZE = ABSOLUTE(game_RODATA_END - game_RODATA_START);

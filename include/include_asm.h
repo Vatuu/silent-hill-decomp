@@ -31,7 +31,13 @@
         ".section .text" \
     )
 #endif
-__asm__(".include \"include/labels.inc\"\n");
+
+__asm__( \
+    ".include \"macro.inc\"\n"  \
+    "\t.set\treorder\n"         \
+    "\t.set\tat\n"              \
+);
+
 #else
 #ifndef INCLUDE_ASM
 #define INCLUDE_ASM(FOLDER, NAME)

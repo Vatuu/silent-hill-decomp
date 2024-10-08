@@ -12,12 +12,12 @@ options:
   build_path: build/
   # create_asm_dependencies: True
 
-  ld_script_path: linkers/main.ld
+  ld_script_path: linkers/SLUS_007.07.ld
 
   find_file_boundaries: False
   gp_value: 0x80022BB0
 
-  o_as_suffix: True
+  o_as_suffix: False
   use_legacy_include_asm: False
 
   asm_function_macro: glabel
@@ -26,12 +26,12 @@ options:
 
   section_order: [".rodata", ".text", ".data", ".sdata", ".sbss", ".bss"]
   symbol_addrs_path:
-    - meta/main_symbol_addrs.txt
+    - meta/SLUS_007.07.symbol_addrs.txt
   reloc_addrs_path:
-    - meta/main_reloc_addrs.txt
+    - meta/SLUS_007.07.reloc_addrs.txt
 
-  undefined_funcs_auto_path: meta/main_undefined_funcs_auto.txt
-  undefined_syms_auto_path: meta/main_undefined_syms_auto.txt
+  undefined_funcs_auto_path: meta/SLUS_007.07.undefined_funcs_auto.txt
+  undefined_syms_auto_path: meta/SLUS_007.07.undefined_syms_auto.txt
 
   extensions_path: tools/splat_ext
 
@@ -54,14 +54,13 @@ segments:
     vram: 0x80010000
     bss_size: 0x1EC8
     subsegments:
-      - [0x800, rodata, main]
+      - [0x800, .rodata, main]
       - [0x830, rodata, psyq]
       - [0xF70, c, main]
       - [0x29BC, textbin, psyq]
       - [0xB91C, data, main]
       - [0x11B4C, data, psyq]
       - [0x133B0, sdata, main]
-      - [0x13490, sbss, main]
       - [0x13494, sbss, psyq]
       - { start: 0x13498, type: bss, vram: 0x80022c98, name: main }
       - { start: 0x139B8, type: bss, vram: 0x800231a0, name: psyq }
