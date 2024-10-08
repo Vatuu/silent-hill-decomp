@@ -232,6 +232,34 @@ INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_80024D50);
 
 INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_80024D54);
 
+INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_80024D5C);
+
+INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_80024D80);
+
+INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_80024DA4);
+
+INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_80024DCC);
+
+INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_80024E00);
+
+INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_80024E20);
+
+INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_80024E40);
+
+INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_80024E60);
+
+INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_80024E74);
+
+INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_80024ED0);
+
+INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_80024F2C);
+
+INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_80024F4C);
+
+INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_80024FBC);
+
+INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_80024FF8);
+
 INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_8002500C);
 
 INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_8002510C);
@@ -1133,6 +1161,20 @@ INCLUDE_ASM("asm/game/nonmatchings/overlay", func_8004E6D4);
 
 INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_800261E0);
 
+INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_800261E4);
+
+INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_800261EC);
+
+INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_800261F4);
+
+INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_800261FC);
+
+INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_80026204);
+
+INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_80026208);
+
+INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_8002620C);
+
 INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_80026214);
 
 INCLUDE_ASM("asm/game/nonmatchings/overlay", func_8004E864);
@@ -1163,6 +1205,22 @@ INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_800262FC);
 
 INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_80027DD8);
 
+INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_80027DF8);
+
+INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_80027E04);
+
+INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_80027E0C);
+
+INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_80027E14);
+
+INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_80027E18);
+
+INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_80027E20);
+
+INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_80027E28);
+
+INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_80027E2C);
+
 INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_80027E34);
 
 INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_80027E54);
@@ -1182,6 +1240,20 @@ INCLUDE_ASM("asm/game/nonmatchings/overlay", func_80052088);
 INCLUDE_ASM("asm/game/nonmatchings/overlay", func_800521A8);
 
 INCLUDE_ASM("asm/game/nonmatchings/overlay", func_8005227C);
+
+INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_80027F50);
+
+INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_80027F58);
+
+INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_80027F60);
+
+INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_80027F68);
+
+INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_80027F74);
+
+INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_80027F80);
+
+INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_80027F8C);
 
 INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_80027F94);
 
@@ -2071,6 +2143,10 @@ INCLUDE_ASM("asm/game/nonmatchings/overlay", func_80089644);
 
 INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_8002AC04);
 
+INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_8002AC54);
+
+INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_8002AC64);
+
 INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_8002AD64);
 
 INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_8002AD74);
@@ -2313,7 +2389,69 @@ INCLUDE_ASM("asm/game/nonmatchings/overlay", func_800904F4);
 
 INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_8002B33C);
 
-INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_8002B394);
+INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_8002B348);
+
+INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_8002B350);
+
+INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_8002B358);
+
+INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_8002B360);
+
+INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_8002B368);
+
+INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_8002B370);
+
+INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_8002B37C);
+
+INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_8002B388);
+
+INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_8002B38C);
+
+INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_8002B390);
+
+INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_8002B398);
+
+INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_8002B39C);
+
+INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_8002B3B0);
+
+INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_8002B3C4);
+
+INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_8002B3CC);
+
+INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_8002B3D0);
+
+INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_8002B3D4);
+
+INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_8002B3E0);
+
+INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_8002B3E8);
+
+INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_8002B3F0);
+
+INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_8002B3F8);
+
+INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_8002B400);
+
+INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_8002B404);
+
+INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_8002B408);
+
+INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_8002B418);
+
+INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_8002B41C);
+
+INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_8002B440);
+
+INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_8002B464);
+
+INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_8002B474);
+
+INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_8002B488);
+
+INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_8002B49C);
+
+INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_8002B4B0);
 
 INCLUDE_RODATA("asm/game/nonmatchings/overlay", D_8002B4C0);
 
