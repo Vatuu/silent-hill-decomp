@@ -1,7 +1,9 @@
-#include "common.h"
+#include "game.h"
+
+// Push into .rodata by wrapping both pointers in a struct
+const OverlayAddresses OVERLAY_POINTERS = {
+    .dynamic_overlay  = 0x800C9578,
+    .bodyprog_overlay = 0x80024B60,
+};
 
 INCLUDE_ASM("asm/main/nonmatchings/main", main);
-
-INCLUDE_RODATA("asm/main/nonmatchings/main", D_80010000);
-
-INCLUDE_RODATA("asm/main/nonmatchings/main", D_80010004);

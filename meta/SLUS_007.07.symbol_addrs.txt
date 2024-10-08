@@ -1,3 +1,4 @@
+OVERLAY_POINTERS = 0x80010000; // type:Overlays size:0x8
 switchdataD_80010310 = 0x80010310;
 S_INI_OBJ_30 = 0x800122bc;
 S_INI_OBJ_40 = 0x800122cc;

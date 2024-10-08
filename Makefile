@@ -55,12 +55,12 @@ SILENT_ASSETS		:= $(PYTHON) $(TOOLS_DIR)/silentassets/extract.py
 
 # Flags
 OPT_FLAGS       	:= -O2
-DL_FLAGS			:= -G0
+DL_FLAGS			:= -G4
 ENDIAN          	:= -EL
 INCLUDE_FLAGS		:= -Iinclude -I $(BUILD_DIR)
 DEFINE_FLAGS   		:= -D_LANGUAGE_C -DUSE_INCLUDE_ASM
-AS_FLAGS         	:= $(ENDIAN) $(INCLUDE_FLAGS) $(OPT_FLAGS) -march=r3000 -mtune=r3000 -no-pad-sections
-CC_FLAGS        	:= $(OPT_FLAGS) -mips1 -mcpu=3000 -w -funsigned-char -fpeephole -ffunction-cse -fpcc-struct-return -fcommon -fverbose-asm -msoft-float -mgas -fgnu-linker -quiet
+AS_FLAGS         	:= $(ENDIAN) $(INCLUDE_FLAGS) $(OPT_FLAGS) $(DL_FLAGS) -march=r3000 -mtune=r3000 -no-pad-sections
+CC_FLAGS        	:= $(OPT_FLAGS) $(DL_FLAGS) -mips1 -mcpu=3000 -w -funsigned-char -fpeephole -ffunction-cse -fpcc-struct-return -fcommon -fverbose-asm -msoft-float -mgas -fgnu-linker -quiet
 CPP_FLAGS			:= $(INCLUDE_FLAGS) $(DEFINE_FLAGS) -P -MMD -MP -undef -Wall -lang-c -nostdinc
 LD_FLAGS			:= $(ENDIAN) $(OPT_FLAGS) -nostdlib --no-check-sections
 OBJCOPY_FLAGS   	:= -O binary
