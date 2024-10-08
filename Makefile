@@ -39,29 +39,36 @@ C_DIRS_ALL			:= $(C_DIR_BOOT)
 BIN_DIRS_ALL		:= $(BIN_DIR_BOOT)
 
 # Tools
-PYTHON          	:= python3
 CROSS				:= mips-linux-gnu
-AS              	:= $(CROSS)-as -EL
-LD              	:= $(CROSS)-ld -EL
+AS              	:= $(CROSS)-as
+LD              	:= $(CROSS)-ld
 OBJCOPY         	:= $(CROSS)-objcopy
-CPP              	:= cpp
+OBJDUMP         	:= $(CROSS)-objdump
+CPP             	:= $(CROSS)-cpp
 CC              	:= $(TOOLS_DIR)/gcc-2.8.1-psx/cc1
-SPLAT           	:= $(PYTHON) -m splat
+
+PYTHON          	:= python3
+SPLAT           	:= $(PYTHON) -m splat split
 MASPSX				:= $(PYTHON) $(TOOLS_DIR)/maspsx/maspsx.py
 DUMPSXISO			:= $(TOOLS_DIR)/psxiso/dumpsxiso
 SILENT_ASSETS		:= $(PYTHON) $(TOOLS_DIR)/silentassets/extract.py
 
 # Flags
 OPT_FLAGS       	:= -O2
-INCLUDE_CFLAGS		:= -Iinclude
-AS_FLAGS        	:= -march=r3000 -mtune=r3000 -Iinclude
-D_FLAGS       		:= -D_LANGUAGE_C
-CC_FLAGS        	:= -G0 -mips1 -mcpu=3000 -mgas -msoft-float $(OPT_FLAGS) -fgnu-linker  -w -funsigned-char -fpeephole -ffunction-cse -fpcc-struct-return -fcommon -fverbose-asm -msoft-float -mgas -fgnu-linker -mips1 -mcpu=3000
-CPP_FLAGS       	:= -undef -Wall -lang-c $(DFLAGS) $(INCLUDE_CFLAGS) -nostdinc
+DL_FLAGS			:= -G0
+ENDIAN          	:= -EL
+INCLUDE_FLAGS		:= -Iinclude -I $(BUILD_DIR)
+DEFINE_FLAGS   		:= -D_LANGUAGE_C -DUSE_INCLUDE_ASM
+AS_FLAGS         	:= $(ENDIAN) $(INCLUDE_FLAGS) $(OPT_FLAGS) -march=r3000 -mtune=r3000 -no-pad-sections
+CC_FLAGS        	:= $(OPT_FLAGS) -mips1 -mcpu=3000 -w -funsigned-char -fpeephole -ffunction-cse -fpcc-struct-return -fcommon -fverbose-asm -msoft-float -mgas -fgnu-linker -quiet
+CPP_FLAGS			:= $(INCLUDE_FLAGS) $(DEFINE_FLAGS) -P -MMD -MP -undef -Wall -lang-c -nostdinc
+LD_FLAGS			:= $(ENDIAN) $(OPT_FLAGS) -nostdlib --no-check-sections
 OBJCOPY_FLAGS   	:= -O binary
+OBJDUMP_FLAGS 		:= --disassemble-all --reloc --disassemble-zeroes -Mreg-names=32
+SPLAT_FLAGS			:= --disassemble-all
+MASPSX_FLAGS		:= $(DL_FLAGS) --aspsx-version=2.77
 DUMPSXISO_FLAGS		:= -x $(ROM_DIR) -s $(ROM_DIR)/layout.xml $(IMAGE_DIR)/$(GAME_NAME).bin
 SILENT_ASSETS_FLAGS := -exe $(ROM_DIR)/SLUS_007.07 -fs $(ROM_DIR)/SILENT. -fh $(ROM_DIR)/HILL. $(ASSETS_DIR)
-MASPSX_FLAGS		:= -G0 --aspsx-version=2.77
 
 # Rules
 default: all
@@ -86,7 +93,7 @@ clean:
 clean-rom:
 	find rom -maxdepth 1 -type f -delete
 
-reset:
+reset: clean
 	rm -rf $(ASM_DIR)
 	rm -rf $(LINKER_DIR)
 	rm -rf meta/*auto*.txt 
@@ -100,12 +107,12 @@ $(BUILD_DIR)/$(TARGET_MAIN): $(BUILD_DIR)/$(TARGET_MAIN).elf
 	$(OBJCOPY) $(OBJCOPY_FLAGS) $< $@
 
 $(BUILD_DIR)/$(TARGET_MAIN).elf: $(O_FILES_BOOT)
-	$(LD) -Map $(BUILD_DIR)/$(TARGET_MAIN).map -T $(LINKER_DIR)/$(MAIN_NAME).ld -T meta/$(MAIN_NAME).undefined_syms_auto.txt -T meta/$(MAIN_NAME).undefined_funcs_auto.txt --no-check-sections -o $@
+	$(LD) $(LD_FLAGS) -Map $(BUILD_DIR)/$(TARGET_MAIN).map -T $(LINKER_DIR)/$(MAIN_NAME).ld -T meta/$(MAIN_NAME).undefined_syms_auto.txt -T meta/$(MAIN_NAME).undefined_funcs_auto.txt -o $@
 
 # split yaml
 $(LINKER_DIR)/%.ld: $(CONFIG_DIR)/%.yaml
 	@mkdir -p $(dir $@)
-	$(SPLAT) split $<
+	$(SPLAT) $(SPLAT_FLAGS) $<
 
 # generate objects
 $(BUILD_DIR)/%.i: %.c
@@ -119,6 +126,7 @@ $(BUILD_DIR)/%.psx.s: $(BUILD_DIR)/%.c.s
 
 $(BUILD_DIR)/%.c.o: $(BUILD_DIR)/%.psx.s
 	$(AS) $(AS_FLAGS) -o $@ $<
+	$(OBJDUMP) $(OBJDUMP_FLAGS) $@ > $(@:.o=.dump.s)
 
 $(BUILD_DIR)/%.s.o: %.s
 	$(AS) $(AS_FLAGS) -o $@ $<
