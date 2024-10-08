@@ -66,9 +66,8 @@ default: all
 
 all: dirs check
 
-check: $(TARGET_MAIN)
-	cat $(ROM_DIR)/sha1/$(MAIN_NAME).sha1
-	sha1sum $<
+check: $(BUILD_DIR)/$(TARGET_MAIN)
+	@sha256sum --ignore-missing --check checksum.sha
 
 extract:
 	$(DUMPSXISO) $(DUMPSXISO_FLAGS)
@@ -95,11 +94,11 @@ setup: | clean reset clean-rom extract generate
 regenerate: | clean reset generate
 
 # executable
-$(TARGET_MAIN): $(TARGET_MAIN).elf
+$(BUILD_DIR)/$(TARGET_MAIN): $(BUILD_DIR)/$(TARGET_MAIN).elf
 	$(OBJCOPY) $(OBJCOPY_FLAGS) $< $@
 
-$(TARGET_MAIN).elf: $(O_FILES_BOOT)
-	$(LD) -Map $(TARGET_MAIN).map -T $(LINKER_DIR)/$(MAIN_NAME).ld -T meta/$(MAIN_NAME).undefined_syms_auto.txt -T meta/$(MAIN_NAME).undefined_funcs_auto.txt --no-check-sections -o $@
+$(BUILD_DIR)/$(TARGET_MAIN).elf: $(O_FILES_BOOT)
+	$(LD) -Map $(BUILD_DIR)/$(TARGET_MAIN).map -T $(LINKER_DIR)/$(MAIN_NAME).ld -T meta/$(MAIN_NAME).undefined_syms_auto.txt -T meta/$(MAIN_NAME).undefined_funcs_auto.txt --no-check-sections -o $@
 
 # split yaml
 $(LINKER_DIR)/%.ld: $(CONFIG_DIR)/%.yaml
