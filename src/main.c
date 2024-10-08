@@ -1,6 +1,6 @@
 #include "common.h"
 
-int D_80022C90;
+extern int D_80022C90;
 
 INCLUDE_ASM("asm/main/nonmatchings/main", main);
 
