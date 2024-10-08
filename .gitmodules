@@ -7,3 +7,6 @@
 [submodule "tools/splat"]
 	path = tools/splat
 	url = https://github.com/ethteck/splat.git
+[submodule "tools/maspsx"]
+	path = tools/maspsx
+	url = https://github.com/mkst/maspsx.git
