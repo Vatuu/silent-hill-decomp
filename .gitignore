@@ -3,7 +3,7 @@ assets/
 build/
 meta/**/*auto*.txt
 rom/
-linker/
+linkers/
 .vscode/
 .idea/
 __pycache__/
