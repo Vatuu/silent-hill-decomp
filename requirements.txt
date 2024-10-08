@@ -13,3 +13,5 @@ pyyaml
 toml
 watchdog
 splat64[mips]
+clang-format
+clang-tidy
