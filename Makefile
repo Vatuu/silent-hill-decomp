@@ -61,7 +61,7 @@ DL_FLAGS_OPTIMIZED	:= -G4
 
 # Used to force %gp_rel for some of the code
 # It seems that the rest doesn't use %gp_rel anywhere
-OPTIMIZED_FILES 	:= $(addprefix $(BUILD_DIR)/src/,main main_5)
+OPTIMIZED_FILES 	:= $(addprefix $(BUILD_DIR)/src/, main rand)
 
 ENDIAN          	:= -EL
 INCLUDE_FLAGS		:= -Iinclude -I $(BUILD_DIR)
