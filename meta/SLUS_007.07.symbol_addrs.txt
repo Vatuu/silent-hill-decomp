@@ -1,8 +1,8 @@
 OVERLAY_POINTERS = 0x80010000; // type:Overlays size:0x8
 
-FILE_ENTRIES_TABLE = 0x8001B11C; 
-FOLDERS = 0x80021254; // type:u32 size:0x2C
-FILE_TYPES = 0x80021280; // type:u32 size:0x30
+g_fileEntries = 0x8001B11C; 
+g_folders = 0x80021254; // type:u32 size:0x2C
+g_fileTypes = 0x80021280; // type:u32 size:0x30
 
 FOLDER_XA = 0x80022bb0; // type:asciz
 FOLDER_VIN = 0x80022bb8; // type:asciz
@@ -15,6 +15,7 @@ FOLDER_CHARA = 0x80022be8; // type:asciz
 FOLDER_BG = 0x80022bf0; // type:asciz
 FOLDER_ANIM = 0x80022bf8; // type:asciz
 FOLDER_1ST = 0x80022c00; // type:asciz
+
 FILE_EXT_CMP = 0x80022c08; // type:asciz
 FILE_EXT_KDT = 0x80022c10; // type:asciz
 FILE_EXT_DAT = 0x80022c18; // type:asciz
@@ -483,12 +484,12 @@ SYS_OBJ_2FF0 = 0x8001b0ec;
 SYS_OBJ_3000 = 0x8001b0fc;
 main = 0x80010770;
 decryptOverlay = 0X80010AD0;
-getFileEntrySizeBytes = 0X80010B24;
-decodeFileEntryNameByOffset = 0x80010b54;
-decodeFileEntryName = 0x80010b88;
-encodeFileEntryName = 0x80010c60;
-getFileEntrySizeBytesAligned = 0x80010cd4;
-findFileEntryByFileTypeId = 0x80010d0c;
+getFileSize = 0X80010B24;
+decodeFileNameByOffset = 0x80010b54;
+decodeFileName = 0x80010b88;
+encodeFileNameParts = 0x80010c60;
+getFileSizeAligned = 0x80010cd4;
+findFileEntryByType = 0x80010d0c;
 findFileEntry = 0x80010d80;
 FUN_80010e58 = 0x80010e58;
 FUN_80010E68 = 0X80010E68;

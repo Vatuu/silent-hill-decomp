@@ -72,12 +72,13 @@ segments:
       - [0xC10, rodata, psyq/libgpu/tmd]
       - [0xD50, rodata, psyq/libgpu/sys] 
 
-      - [0xF70, c, main] # uses gp_rel
-      - [0x12D0, c, main_2] # doesn't use gp_rel
+      - [0xF70, c, main] # the main function
+      - [0x12D0, c, file_entries] # file entry functions
+      - [0x1658, c, main_2] # unclear
 
       - [0x1CC4, c, main_3] # split due to usage of jtbl in rodata
 
-      - [0x1E30, c, main_4] # doesn't use gp_rel
+      - [0x1E30, c, main_4] # unclear
       - [0x28B8, c, rand] # RNG functions
       - [0x293C, c, mem] # memmove
 
