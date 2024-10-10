@@ -12,4 +12,13 @@ typedef struct MaybeLinkedList {
 void maybeMoveLastElement(MaybeLinkedList *from, MaybeLinkedList *to, s32 data0,
                           s32 data1);
 
+typedef struct {
+  u32 maybeMin;
+  u32 maybeCount;
+} Unknown;
+
+extern Unknown D_800230C0;
+
+s32 FUN_80011E4C(s32 arg0, s32 arg1);
+
 #endif

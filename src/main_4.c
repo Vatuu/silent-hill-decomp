@@ -26,7 +26,36 @@ void FUN_80011cfc(void) {}
 
 INCLUDE_ASM("asm/main/nonmatchings/main_4", FUN_80011D04);
 
-INCLUDE_ASM("asm/main/nonmatchings/main_4", FUN_80011E4C);
+static inline u32 maybeClamp(s32 arg0) {
+  u32 min;
+  u32 max;
+
+  min = D_800230C0.maybeMin;
+  if (arg0 < min) {
+    return min;
+  }
+
+  max = min + D_800230C0.maybeCount;
+  if (arg0 > max) {
+    return max;
+  }
+
+  return arg0;
+}
+
+s32 FUN_80011E4C(s32 arg0, s32 arg1) {
+  u32 var_a0;
+  u32 var_a1;
+
+  var_a0 = maybeClamp(arg0);
+  var_a1 = maybeClamp(arg1);
+
+  if (var_a1 < var_a0) {
+    return 0;
+  }
+
+  return var_a1 - var_a0;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/main_4", FUN_80011ed0);
 
