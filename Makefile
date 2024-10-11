@@ -1,3 +1,7 @@
+# Configuration
+
+EXTRACT_OVERLAYS 		?= 0
+
 # Names and Paths
 
 GAME_NAME				:= SLUS-00707
@@ -19,6 +23,8 @@ TARGET_MAIN_NAME		:= main
 TARGET_MAIN_SRC			:= main
 TARGET_MAIN 			:= $(BUILD_DIR)/SLUS_007.07
 
+ifeq ($(EXTRACT_OVERLAYS), 1)
+
 TARGET_BODYPROG_NAME	:= bodyprog
 TARGET_BODYPROG_SRC		:= bodyprog
 TARGET_BODYPROG			:= $(BUILD_DIR)/1ST/BODYPROG.BIN
@@ -28,6 +34,7 @@ TARGET_B_KONAMI_SRC		:= b_konami
 TARGET_B_KONAMI			:= $(BUILD_DIR)/1ST/B_KONAMI.BIN
 
 TARGET_1ST				:= $(TARGET_BODYPROG) $(TARGET_B_KONAMI)
+TARGET_1ST_NAMES		:= $(TARGET_BODYPROG_NAME) $(TARGET_B_KONAMI_NAME)
 
 TARGET_STREAM_NAME		:= stream
 TARGET_STREAM_SRC		:= stream
@@ -48,12 +55,18 @@ TARGET_SAVELOAD			:= $(BUILD_DIR)/VIN/SAVELOAD.BIN
 TARGET_VIN				:= $(TARGET_STREAM) $(TARGET_CREDITS) \
 							$(TARGET_OPTIONS) $(TARGET_SAVELOAD)
 
+TARGET_VIN_NAMES		:= $(TARGET_STREAM_NAME) $(TARGET_CREDITS_NAME) \
+							$(TARGET_OPTIONS_NAME) $(TARGET_SAVELOAD_NAME)
+
+endif
+
+TARGET_NAMES			:= $(TARGET_MAIN_NAME) $(TARGET_1ST_NAMES) $(TARGET_VIN_NAMES)
 TARGET_ALL				:= $(TARGET_MAIN) $(TARGET_1ST) $(TARGET_VIN)
 
 # Source Definitions
 
-CONFIG_FILES 			:= $(foreach dir,$(CONFIG_DIR),$(wildcard $(dir)/*.yaml))
-LD_FILES	    		:= $(foreach f,$(CONFIG_FILES),$(patsubst %.yaml,%.ld,$(LINKER_DIR)/$(notdir $f)))
+CONFIG_FILES 			:= $(addsuffix .yaml,$(addprefix $(CONFIGS_DIR)/,$(TARGET_NAMES)))
+LD_FILES	    		:= $(addsuffix .ld,$(addprefix $(LINKER_DIR)/,$(TARGET_NAMES)))
 
 # Utils
 
