@@ -21,6 +21,11 @@ TARGET_MAIN 			:= $(BUILD_DIR)/SLUS_007.07
 TARGET_BODYPROG_NAME	:= bodyprog
 TARGET_BODYPROG			:= $(BUILD_DIR)/1ST/BODYPROG.BIN
 
+TARGET_STREAM_NAME		:= stream
+TARGET_STREAM			:= $(BUILD_DIR)/VIN/STREAM.BIN
+
+TARGET_ALL				:= $(TARGET_MAIN) $(TARGET_BODYPROG) $(TARGET_STREAM)
+
 # Source Definitions
 
 CONFIG_FILES 			:= $(foreach dir,$(CONFIG_DIR),$(wildcard $(dir)/*.yaml))
@@ -79,7 +84,7 @@ default: all
 
 all: check
 
-build: $(TARGET_MAIN) $(TARGET_BODYPROG)
+build: $(TARGET_ALL)
 
 check: build
 	@sha256sum --ignore-missing --check checksum.sha
@@ -134,6 +139,19 @@ $(TARGET_BODYPROG).elf: $(call gen_o_files, $(TARGET_BODYPROG_NAME))
 		-T $(LINKER_DIR)/$(TARGET_BODYPROG_NAME).ld 							\
 		-T $(LINKER_DIR)/undefined_syms_auto.$(TARGET_BODYPROG_NAME).txt 		\
 		-T $(LINKER_DIR)/undefined_funcs_auto.$(TARGET_BODYPROG_NAME).txt 		\
+		-o $@
+
+$(TARGET_STREAM): $(TARGET_STREAM).elf
+	@mkdir -p $(dir $@)
+	$(OBJCOPY) $(OBJCOPY_FLAGS) $< $@
+
+$(TARGET_STREAM).elf: $(call gen_o_files, $(TARGET_STREAM_NAME))
+	@mkdir -p $(dir $@)
+	$(LD) $(LD_FLAGS) 															\
+		-Map $(TARGET_STREAM).map 						 					\
+		-T $(LINKER_DIR)/$(TARGET_STREAM_NAME).ld 							\
+		-T $(LINKER_DIR)/undefined_syms_auto.$(TARGET_STREAM_NAME).txt 		\
+		-T $(LINKER_DIR)/undefined_funcs_auto.$(TARGET_STREAM_NAME).txt 		\
 		-o $@
 
 # generate objects
