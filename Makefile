@@ -37,7 +37,11 @@ TARGET_CREDITS_NAME		:= credits
 TARGET_CREDITS_SRC		:= screens/credits
 TARGET_CREDITS			:= $(BUILD_DIR)/VIN/STF_ROLL.BIN
 
-TARGET_VIN				:= $(TARGET_STREAM) $(TARGET_CREDITS)
+TARGET_OPTIONS_NAME		:= options
+TARGET_OPTIONS_SRC		:= screens/options
+TARGET_OPTIONS			:= $(BUILD_DIR)/VIN/OPTION.BIN
+
+TARGET_VIN				:= $(TARGET_STREAM) $(TARGET_CREDITS) $(TARGET_OPTIONS)
 
 TARGET_ALL				:= $(TARGET_MAIN) $(TARGET_1ST) $(TARGET_VIN)
 
@@ -193,6 +197,19 @@ $(TARGET_CREDITS).elf: $(call gen_o_files, $(TARGET_CREDITS_SRC))
 		-T $(LINKER_DIR)/$(TARGET_CREDITS_NAME).ld 							\
 		-T $(LINKER_DIR)/undefined_syms_auto.$(TARGET_CREDITS_NAME).txt 		\
 		-T $(LINKER_DIR)/undefined_funcs_auto.$(TARGET_CREDITS_NAME).txt 		\
+		-o $@
+
+$(TARGET_OPTIONS): $(TARGET_OPTIONS).elf
+	@mkdir -p $(dir $@)
+	$(OBJCOPY) $(OBJCOPY_FLAGS) $< $@
+
+$(TARGET_OPTIONS).elf: $(call gen_o_files, $(TARGET_OPTIONS_SRC))
+	@mkdir -p $(dir $@)
+	$(LD) $(LD_FLAGS) 															\
+		-Map $(TARGET_OPTIONS).map 						 					\
+		-T $(LINKER_DIR)/$(TARGET_OPTIONS_NAME).ld 							\
+		-T $(LINKER_DIR)/undefined_syms_auto.$(TARGET_OPTIONS_NAME).txt 		\
+		-T $(LINKER_DIR)/undefined_funcs_auto.$(TARGET_OPTIONS_NAME).txt 		\
 		-o $@
 
 # generate objects

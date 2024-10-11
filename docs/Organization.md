@@ -20,8 +20,10 @@ The actual decompiled source code is organized in the following way.
 ```
 src/
 ├── screens/
-│   └── credits/
-│       └── The credits overlay (STF_ROLL.BIN).
+│   ├── credits/
+│   │   └── The credits overlay (STF_ROLL.BIN).
+│   └── options/
+│       └── The options screen overlay (OPTION.BIN).
 ├── b_konami/
 │   └── The boot screen overlay (B_KONAMI.BIN).
 ├── bodyprog/
