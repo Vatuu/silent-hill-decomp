@@ -1,6 +1,6 @@
 # Configuration
 
-EXTRACT_OVERLAYS 		?= 0
+BUILD_OVERLAYS 		?= 1
 
 # Names and Paths
 
@@ -23,7 +23,7 @@ TARGET_MAIN_NAME		:= main
 TARGET_MAIN_SRC			:= main
 TARGET_MAIN 			:= $(BUILD_DIR)/SLUS_007.07
 
-ifeq ($(EXTRACT_OVERLAYS), 1)
+ifeq ($(BUILD_OVERLAYS), 1)
 
 TARGET_BODYPROG_NAME	:= bodyprog
 TARGET_BODYPROG_SRC		:= bodyprog
