@@ -22,8 +22,10 @@ src/
 ├── screens/
 │   ├── credits/
 │   │   └── The credits overlay (STF_ROLL.BIN).
-│   └── options/
-│       └── The options screen overlay (OPTION.BIN).
+│   ├── options/
+│   │   └── The options screen overlay (OPTION.BIN).
+│   └── saveload/
+│       └── The save/load screen overlay (SAVELOAD.BIN).
 ├── b_konami/
 │   └── The boot screen overlay (B_KONAMI.BIN).
 ├── bodyprog/
