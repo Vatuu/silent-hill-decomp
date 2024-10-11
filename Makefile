@@ -41,7 +41,12 @@ TARGET_OPTIONS_NAME		:= options
 TARGET_OPTIONS_SRC		:= screens/options
 TARGET_OPTIONS			:= $(BUILD_DIR)/VIN/OPTION.BIN
 
-TARGET_VIN				:= $(TARGET_STREAM) $(TARGET_CREDITS) $(TARGET_OPTIONS)
+TARGET_SAVELOAD_NAME	:= save_load
+TARGET_SAVELOAD_SRC		:= screens/save_load
+TARGET_SAVELOAD			:= $(BUILD_DIR)/VIN/SAVELOAD.BIN
+
+TARGET_VIN				:= $(TARGET_STREAM) $(TARGET_CREDITS) \
+							$(TARGET_OPTIONS) $(TARGET_SAVELOAD)
 
 TARGET_ALL				:= $(TARGET_MAIN) $(TARGET_1ST) $(TARGET_VIN)
 
@@ -210,6 +215,19 @@ $(TARGET_OPTIONS).elf: $(call gen_o_files, $(TARGET_OPTIONS_SRC))
 		-T $(LINKER_DIR)/$(TARGET_OPTIONS_NAME).ld 							\
 		-T $(LINKER_DIR)/undefined_syms_auto.$(TARGET_OPTIONS_NAME).txt 		\
 		-T $(LINKER_DIR)/undefined_funcs_auto.$(TARGET_OPTIONS_NAME).txt 		\
+		-o $@
+
+$(TARGET_SAVELOAD): $(TARGET_SAVELOAD).elf
+	@mkdir -p $(dir $@)
+	$(OBJCOPY) $(OBJCOPY_FLAGS) $< $@
+
+$(TARGET_SAVELOAD).elf: $(call gen_o_files, $(TARGET_SAVELOAD_SRC))
+	@mkdir -p $(dir $@)
+	$(LD) $(LD_FLAGS) 															\
+		-Map $(TARGET_SAVELOAD).map 						 					\
+		-T $(LINKER_DIR)/$(TARGET_SAVELOAD_NAME).ld 							\
+		-T $(LINKER_DIR)/undefined_syms_auto.$(TARGET_SAVELOAD_NAME).txt 		\
+		-T $(LINKER_DIR)/undefined_funcs_auto.$(TARGET_SAVELOAD_NAME).txt 		\
 		-o $@
 
 # generate objects
