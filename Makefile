@@ -1,9 +1,6 @@
 # Names and Paths
 
 GAME_NAME			:= SLUS-00707
-MAIN_NAME   		:= SLUS_007.07
-SEG_1_NAME			:= SILENT
-SEG_2_NAME			:= HILL
 
 ROM_DIR				:= rom
 CONFIG_DIR			:= configs
@@ -11,34 +8,36 @@ LINKER_DIR	       	:= linkers
 IMAGE_DIR			:= $(ROM_DIR)/image
 BUILD_DIR       	:= build
 TOOLS_DIR       	:= tools
+PERMUTER_DIR       	:= permuter
 ASSETS_DIR			:= assets
 ASM_DIR				:= asm
-C_DIR_MAIN			:= src
+C_DIR				:= src
+
+# Targets
+
+TARGET_MAIN_NAME	:= main
+TARGET_MAIN 		:= $(BUILD_DIR)/SLUS_007.07
+
+# Source Definitions
 
 CONFIG_FILES 		:= $(foreach dir,$(CONFIG_DIR),$(wildcard $(dir)/*.yaml))
 LD_FILES	    	:= $(foreach f,$(CONFIG_FILES),$(patsubst %.yaml,%.ld,$(LINKER_DIR)/$(notdir $f)))
 
-# Targets
+# Utils
 
-TARGET_MAIN 		:= executable
-TARGET_1ST 			:= bodyprog
-TARGET_BIN 			:=
+# Function to find matching .s files for a target name
+find_s_files 		= $(shell find $(ASM_DIR)/$(strip $1) -type f -path "*.s" -not -path "asm/*matchings*" 2> /dev/null)
 
-# Source Definitions
-ASM_DIRS_BOOT      	:= $(shell find asm/main -type d -not -path "asm/*matchings*" -not -path "asm/lib/*")
-C_DIR_BOOT			:= src
-S_FILES_BOOT		:= $(foreach dir,$(ASM_DIRS_BOOT),$(wildcard $(dir)/*.s))
-C_FILES_BOOT		:= $(foreach dir,$(C_DIR_BOOT),$(wildcard $(dir)/*.c))
+# Function to find matching .c files for a target name
+find_c_files 		= $(shell find $(C_DIR)/$(strip $1) -type f -path "*.c" 2> /dev/null)
 
-O_FILES_BOOT		:= $(foreach file,$(S_FILES_BOOT),$(BUILD_DIR)/$(file).o) \
-						$(foreach file,$(C_FILES_BOOT),$(BUILD_DIR)/$(file).o) \
-						$(foreach file,$(BIN_FILES_BOOT),$(BUILD_DIR)/$(file).o)
-
-ASM_DIRS_ALL		:= $(ASM_DIRS_BOOT)
-C_DIRS_ALL			:= $(C_DIR_BOOT)
-BIN_DIRS_ALL		:= $(BIN_DIR_BOOT)
+# Function to generate matching .o files for a target name in the build directory
+gen_o_files			= $(addprefix $(BUILD_DIR)/, \
+						$(patsubst %.s, %.s.o, $(call find_s_files, $1)) \
+						$(patsubst %.c, %.c.o, $(call find_c_files, $1)))
 
 # Tools
+
 CROSS				:= mips-linux-gnu
 AS              	:= $(CROSS)-as
 LD              	:= $(CROSS)-ld
@@ -47,13 +46,14 @@ OBJDUMP         	:= $(CROSS)-objdump
 CPP             	:= $(CROSS)-cpp
 CC              	:= $(TOOLS_DIR)/gcc-2.8.1-psx/cc1
 
-PYTHON          	:= python3
-SPLAT           	:= $(PYTHON) -m splat split
+PYTHON         		:= python3
+SPLAT          		:= $(PYTHON) -m splat split
 MASPSX				:= $(PYTHON) $(TOOLS_DIR)/maspsx/maspsx.py
 DUMPSXISO			:= $(TOOLS_DIR)/psxiso/dumpsxiso
 SILENT_ASSETS		:= $(PYTHON) $(TOOLS_DIR)/silentassets/extract.py
 
 # Flags
+
 OPT_FLAGS       	:= -O2
 DL_FLAGS			:= -G4
 ENDIAN          	:= -EL
@@ -71,11 +71,14 @@ DUMPSXISO_FLAGS		:= -x $(ROM_DIR) -s $(ROM_DIR)/layout.xml $(IMAGE_DIR)/$(GAME_N
 SILENT_ASSETS_FLAGS := -exe $(ROM_DIR)/SLUS_007.07 -fs $(ROM_DIR)/SILENT. -fh $(ROM_DIR)/HILL. $(ASSETS_DIR)
 
 # Rules
+
 default: all
 
-all: dirs check
+all: check
 
-check: $(BUILD_DIR)/$(TARGET_MAIN)
+build: $(TARGET_MAIN)
+
+check: build
 	@sha256sum --ignore-missing --check checksum.sha
 
 extract:
@@ -84,57 +87,65 @@ extract:
 
 generate: $(LD_FILES)
 
-dirs:
-	$(foreach dir,$(ASM_DIRS_ALL) $(C_DIRS_ALL) $(BIN_DIRS_ALL),$(shell mkdir -p $(BUILD_DIR)/$(dir)))
-
 clean:
 	rm -rf $(BUILD_DIR)
-
-clean-rom:
-	find rom -maxdepth 1 -type f -delete
+	rm -rf $(PERMUTER_DIR)
 
 reset: clean
 	rm -rf $(ASM_DIR)
 	rm -rf $(LINKER_DIR)
-	rm -rf meta/*auto*.txt 
 
-setup: | clean reset clean-rom extract generate
+clean-rom:
+	find rom -maxdepth 1 -type f -delete
 
-regenerate: | clean reset generate
+regenerate: reset
+	$(MAKE) generate
+
+# Recursive call to force order of operations
+setup: clean-rom
+	$(MAKE) extract
+	$(MAKE) regenerate
 
 # executable
-$(BUILD_DIR)/$(TARGET_MAIN): $(BUILD_DIR)/$(TARGET_MAIN).elf
+$(TARGET_MAIN): $(TARGET_MAIN).elf
+	@mkdir -p $(dir $@)
 	$(OBJCOPY) $(OBJCOPY_FLAGS) $< $@
 
-$(BUILD_DIR)/$(TARGET_MAIN).elf: $(O_FILES_BOOT)
-	$(LD) $(LD_FLAGS) 												 \
-		-Map $(BUILD_DIR)/$(TARGET_MAIN).map 						 \
-		-T $(LINKER_DIR)/$(MAIN_NAME).ld 							 \
-		-T meta/$(MAIN_NAME).undefined_syms_auto.txt 				 \
-		-T meta/$(MAIN_NAME).undefined_funcs_auto.txt 				 \
+$(TARGET_MAIN).elf: $(call gen_o_files, $(TARGET_MAIN_NAME))
+	@mkdir -p $(dir $@)
+	$(LD) $(LD_FLAGS) 														\
+		-Map $(TARGET_MAIN).map 						 					\
+		-T $(LINKER_DIR)/$(TARGET_MAIN_NAME).ld 							\
+		-T $(LINKER_DIR)/undefined_syms_auto.$(TARGET_MAIN_NAME).txt 		\
+		-T $(LINKER_DIR)/undefined_funcs_auto.$(TARGET_MAIN_NAME).txt 		\
 		-o $@
+
+# generate objects
+$(BUILD_DIR)/%.i: %.c
+	@mkdir -p $(dir $@)
+	$(CPP) -P -MMD -MP -MT $@ -MF $@.d $(CPP_FLAGS) -o $@ $<
+
+$(BUILD_DIR)/%.c.s: $(BUILD_DIR)/%.i
+	@mkdir -p $(dir $@)
+	$(CC) $(CC_FLAGS) -o $@ $<
+
+$(BUILD_DIR)/%.c.o: $(BUILD_DIR)/%.c.s
+	@mkdir -p $(dir $@)
+	$(MASPSX) $(MASPSX_FLAGS) -o $@ $<
+	$(OBJDUMP) $(OBJDUMP_FLAGS) $@ > $(@:.o=.dump.s)
+
+$(BUILD_DIR)/%.s.o: %.s
+	@mkdir -p $(dir $@)
+	$(AS) $(AS_FLAGS) -o $@ $<
+
+$(BUILD_DIR)/%.bin.o: %.bin
+	@mkdir -p $(dir $@)
+	$(LD) -r -b binary -o $@ $<
 
 # split yaml
 $(LINKER_DIR)/%.ld: $(CONFIG_DIR)/%.yaml
 	@mkdir -p $(dir $@)
 	$(SPLAT) $(SPLAT_FLAGS) $<
-
-# generate objects
-$(BUILD_DIR)/%.i: %.c
-	$(CPP) -P -MMD -MP -MT $@ -MF $@.d $(CPP_FLAGS) -o $@ $<
-
-$(BUILD_DIR)/%.c.s: $(BUILD_DIR)/%.i
-	$(CC) $(CC_FLAGS) -o $@ $<
-
-$(BUILD_DIR)/%.c.o: $(BUILD_DIR)/%.c.s
-	$(MASPSX) $(MASPSX_FLAGS) -o $@ $<
-	$(OBJDUMP) $(OBJDUMP_FLAGS) $@ > $(@:.o=.dump.s)
-
-$(BUILD_DIR)/%.s.o: %.s
-	$(AS) $(AS_FLAGS) -o $@ $<
-
-$(BUILD_DIR)/%.bin.o: %.bin
-	$(LD) -r -b binary -o $@ $<
 
 ### Settings
 .SECONDARY:

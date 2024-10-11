@@ -1,7 +1,6 @@
 asm/
 assets/
 build/
-meta/**/*auto*.txt
 rom/
 linkers/
 .vscode/

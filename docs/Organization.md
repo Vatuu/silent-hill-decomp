@@ -19,6 +19,6 @@ src/
 │   └── The boot overlay, known as B_KONAMI.BIN.
 ├── game/
 │   └── The main game logic overlay, known as BODYPROG.BIN.
-└── main.c
-    └── The game's main executable, known as SLUS_007.07.
+└── main/
+    └── The game's main executable logic, known as SLUS_007.07.
 ```

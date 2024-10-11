@@ -28,12 +28,12 @@ options:
   # auto_all_sections: [".data", ".rodata", ".bss"]
 
   symbol_addrs_path:
-    - meta/game_symbol_addrs.txt
+    - configs/symbol_addrs.game.txt
   reloc_addrs_path:
-    - meta/game_reloc_addrs.txt
+    - configs/reloc_addrs.game.txt
 
-  undefined_funcs_auto_path: meta/game_undefined_funcs_auto.txt
-  undefined_syms_auto_path: meta/game_undefined_syms_auto.txt
+  undefined_funcs_auto_path: linkers/undefined_funcs_auto.game.txt
+  undefined_syms_auto_path: linkers/undefined_syms_auto.game.txt
 
   extensions_path: tools/splat_ext
 
