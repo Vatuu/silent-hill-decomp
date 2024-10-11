@@ -13,8 +13,8 @@ void maybeMoveLastElement(MaybeLinkedList *from, MaybeLinkedList *to, s32 data0,
                           s32 data1);
 
 typedef struct {
-  u32 maybeMin;
-  u32 maybeCount;
+  u32 maybeStart;
+  u32 maybeLength;
 } Unknown;
 
 extern Unknown D_800230C0;

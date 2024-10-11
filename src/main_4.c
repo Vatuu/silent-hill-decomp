@@ -30,12 +30,12 @@ static inline u32 maybeClamp(s32 arg0) {
   u32 min;
   u32 max;
 
-  min = D_800230C0.maybeMin;
+  min = D_800230C0.maybeStart;
   if (arg0 < min) {
     return min;
   }
 
-  max = min + D_800230C0.maybeCount;
+  max = min + D_800230C0.maybeLength;
   if (arg0 > max) {
     return max;
   }
