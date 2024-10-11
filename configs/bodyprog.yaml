@@ -1,4 +1,4 @@
-name: Game Logic Overlay (BODYPROG)
+name: Main Game Logic Overlay (BODYPROG)
 sha1: eb118537b0c3c1e5cccfa2c5d283b3119c5ec7a3
 options:
   basename: BODYPROG.BIN
@@ -7,17 +7,17 @@ options:
   platform: psx
   compiler: GCC
 
-  asm_path: asm/game
-  src_path: src/game
-  build_path: build/game
+  asm_path: asm/bodyprog
+  src_path: src/bodyprog
+  build_path: build/
   # create_asm_dependencies: True
 
-  ld_script_path: linkers/game.ld
+  ld_script_path: linkers/bodyprog.ld
 
   find_file_boundaries: False
   gp_value: 0x80022BB0
 
-  o_as_suffix: True
+  o_as_suffix: False
   use_legacy_include_asm: False
 
   asm_function_macro: glabel
@@ -25,32 +25,33 @@ options:
   asm_data_macro: dlabel
 
   section_order: [".rodata", ".text", ".data", ".bss"]
-  # auto_all_sections: [".data", ".rodata", ".bss"]
 
   symbol_addrs_path:
-    - configs/symbol_addrs.game.txt
+    - configs/symbol_addrs.txt
+    - configs/symbol_addrs.bodyprog.txt
   reloc_addrs_path:
-    - configs/reloc_addrs.game.txt
+    - configs/reloc_addrs.bodyprog.txt
 
-  undefined_funcs_auto_path: linkers/undefined_funcs_auto.game.txt
-  undefined_syms_auto_path: linkers/undefined_syms_auto.game.txt
+  undefined_funcs_auto_path: linkers/undefined_funcs_auto.bodyprog.txt
+  undefined_syms_auto_path: linkers/undefined_syms_auto.bodyprog.txt
 
   extensions_path: tools/splat_ext
 
-  subalign: 2
+  subalign: 4
 
   string_encoding: ASCII
   data_string_encoding: ASCII
   rodata_string_guesser_level: 2
   data_string_guesser_level: 2
 segments:
-  - name: game
+  - name: bodyprog
     type: code
     start: 0x0
     vram: 0x80024B60
-    subalign: 8
+    align: 4
+    subalign: 4
     subsegments:
-      - [0x0, .rodata, overlay]
-      - [0x9AD0, c, overlay]
+      - [0x0, rodata, overlay]
+      - [0x9AD0, asm, overlay]
       - [0x84238, data, overlay]
   - [0xA4B00]
