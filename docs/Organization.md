@@ -19,14 +19,15 @@ A simple breakdown of how this repository is structured, as it can become confus
 The actual decompiled source code is organized in the following way.
 ```
 src/
-├── overlays/
-│   └── All overlays present in the game, sorted into dedicated folders.
+├── screens/
+│   └── credits/
+│       └── The credits overlay (STF_ROLL.BIN).
 ├── b_konami/
-│   └── The boot screen overlay, known as B_KONAMI.BIN.
+│   └── The boot screen overlay (B_KONAMI.BIN).
 ├── bodyprog/
-│   └── The main game logic overlay, known as BODYPROG.BIN.
+│   └── The main game logic overlay (BODYPROG.BIN).
 ├── stream/
-│   └── The stream overlay, known as STREAM.BIN.
+│   └── The video stream overlay (STREAM.BIN).
 └── main/
-    └── The game's main executable logic, known as SLUS_007.07.
+    └── The game's main executable logic (SLUS_007.07).
 ```

@@ -16,20 +16,30 @@ C_DIR					:= src
 # Targets
 
 TARGET_MAIN_NAME		:= main
+TARGET_MAIN_SRC			:= main
 TARGET_MAIN 			:= $(BUILD_DIR)/SLUS_007.07
 
 TARGET_BODYPROG_NAME	:= bodyprog
+TARGET_BODYPROG_SRC		:= bodyprog
 TARGET_BODYPROG			:= $(BUILD_DIR)/1ST/BODYPROG.BIN
 
 TARGET_B_KONAMI_NAME	:= b_konami
+TARGET_B_KONAMI_SRC		:= b_konami
 TARGET_B_KONAMI			:= $(BUILD_DIR)/1ST/B_KONAMI.BIN
 
 TARGET_1ST				:= $(TARGET_BODYPROG) $(TARGET_B_KONAMI)
 
 TARGET_STREAM_NAME		:= stream
+TARGET_STREAM_SRC		:= stream
 TARGET_STREAM			:= $(BUILD_DIR)/VIN/STREAM.BIN
 
-TARGET_ALL				:= $(TARGET_MAIN) $(TARGET_1ST) $(TARGET_STREAM)
+TARGET_CREDITS_NAME		:= credits
+TARGET_CREDITS_SRC		:= screens/credits
+TARGET_CREDITS			:= $(BUILD_DIR)/VIN/STF_ROLL.BIN
+
+TARGET_VIN				:= $(TARGET_STREAM) $(TARGET_CREDITS)
+
+TARGET_ALL				:= $(TARGET_MAIN) $(TARGET_1ST) $(TARGET_VIN)
 
 # Source Definitions
 
@@ -124,7 +134,7 @@ $(TARGET_MAIN): $(TARGET_MAIN).elf
 	@mkdir -p $(dir $@)
 	$(OBJCOPY) $(OBJCOPY_FLAGS) $< $@
 
-$(TARGET_MAIN).elf: $(call gen_o_files, $(TARGET_MAIN_NAME))
+$(TARGET_MAIN).elf: $(call gen_o_files, $(TARGET_MAIN_SRC))
 	@mkdir -p $(dir $@)
 	$(LD) $(LD_FLAGS) 														\
 		-Map $(TARGET_MAIN).map 						 					\
@@ -137,7 +147,7 @@ $(TARGET_BODYPROG): $(TARGET_BODYPROG).elf
 	@mkdir -p $(dir $@)
 	$(OBJCOPY) $(OBJCOPY_FLAGS) $< $@
 
-$(TARGET_BODYPROG).elf: $(call gen_o_files, $(TARGET_BODYPROG_NAME))
+$(TARGET_BODYPROG).elf: $(call gen_o_files, $(TARGET_BODYPROG_SRC))
 	@mkdir -p $(dir $@)
 	$(LD) $(LD_FLAGS) 															\
 		-Map $(TARGET_BODYPROG).map 						 					\
@@ -150,7 +160,7 @@ $(TARGET_B_KONAMI): $(TARGET_B_KONAMI).elf
 	@mkdir -p $(dir $@)
 	$(OBJCOPY) $(OBJCOPY_FLAGS) $< $@
 
-$(TARGET_B_KONAMI).elf: $(call gen_o_files, $(TARGET_B_KONAMI_NAME))
+$(TARGET_B_KONAMI).elf: $(call gen_o_files, $(TARGET_B_KONAMI_SRC))
 	@mkdir -p $(dir $@)
 	$(LD) $(LD_FLAGS) 															\
 		-Map $(TARGET_B_KONAMI).map 						 					\
@@ -163,13 +173,26 @@ $(TARGET_STREAM): $(TARGET_STREAM).elf
 	@mkdir -p $(dir $@)
 	$(OBJCOPY) $(OBJCOPY_FLAGS) $< $@
 
-$(TARGET_STREAM).elf: $(call gen_o_files, $(TARGET_STREAM_NAME))
+$(TARGET_STREAM).elf: $(call gen_o_files, $(TARGET_STREAM_SRC))
 	@mkdir -p $(dir $@)
 	$(LD) $(LD_FLAGS) 															\
 		-Map $(TARGET_STREAM).map 						 					\
 		-T $(LINKER_DIR)/$(TARGET_STREAM_NAME).ld 							\
 		-T $(LINKER_DIR)/undefined_syms_auto.$(TARGET_STREAM_NAME).txt 		\
 		-T $(LINKER_DIR)/undefined_funcs_auto.$(TARGET_STREAM_NAME).txt 		\
+		-o $@
+
+$(TARGET_CREDITS): $(TARGET_CREDITS).elf
+	@mkdir -p $(dir $@)
+	$(OBJCOPY) $(OBJCOPY_FLAGS) $< $@
+
+$(TARGET_CREDITS).elf: $(call gen_o_files, $(TARGET_CREDITS_SRC))
+	@mkdir -p $(dir $@)
+	$(LD) $(LD_FLAGS) 															\
+		-Map $(TARGET_CREDITS).map 						 					\
+		-T $(LINKER_DIR)/$(TARGET_CREDITS_NAME).ld 							\
+		-T $(LINKER_DIR)/undefined_syms_auto.$(TARGET_CREDITS_NAME).txt 		\
+		-T $(LINKER_DIR)/undefined_funcs_auto.$(TARGET_CREDITS_NAME).txt 		\
 		-o $@
 
 # generate objects
