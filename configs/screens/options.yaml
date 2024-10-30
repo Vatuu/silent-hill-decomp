@@ -1,17 +1,17 @@
-name: Save/Load screen overlay (SAVELOAD)
-sha1: af613b5c4b1ebb43a7ce6e5ecfd78262c5711e93
+name: Options screen overlay (OPTION)
+sha1: 229ffee4981d704b0afa87a2ea0298fd5038154f
 options:
-  basename: SAVELOAD.BIN
-  target_path: assets/VIN/SAVELOAD.BIN
-  base_path: ..
+  basename: OPTION.BIN
+  target_path: assets/VIN/OPTION.BIN
+  base_path: ../..
   platform: psx
   compiler: GCC
 
-  asm_path: asm/screens/saveload
-  src_path: src/screens/saveload
+  asm_path: asm/screens/options
+  src_path: src/screens/options
   build_path: build/
 
-  ld_script_path: linkers/saveload.ld
+  ld_script_path: linkers/screens/options.ld
 
   find_file_boundaries: False
   gp_value: 0x80022BB0
@@ -27,12 +27,12 @@ options:
 
   symbol_addrs_path:
     - configs/symbol_addrs.txt
-    - configs/symbol_addrs.saveload.txt
+    - configs/screens/symbol_addrs.options.txt
   reloc_addrs_path:
-    - configs/reloc_addrs.saveload.txt
+    - configs/screens/reloc_addrs.options.txt
 
-  undefined_funcs_auto_path: linkers/undefined_funcs_auto.saveload.txt
-  undefined_syms_auto_path: linkers/undefined_syms_auto.saveload.txt
+  undefined_funcs_auto_path: linkers/screens/undefined_funcs_auto.options.txt
+  undefined_syms_auto_path: linkers/screens/undefined_syms_auto.options.txt
 
   extensions_path: tools/splat_ext
 
@@ -43,7 +43,7 @@ options:
   rodata_string_guesser_level: 2
   data_string_guesser_level: 2
 segments:
-  - name: saveload
+  - name: options
     type: code
     start: 0
     vram: 0x801e2600
@@ -51,6 +51,6 @@ segments:
     subalign: 4
     subsegments:
       - [0x0, rodata]
-      - [0x78C, asm, saveload]
-      - [0x4EA8, data, saveload]
-  - [0x5100]
+      - [0x744, asm, options]
+      - [0x4CF4, data, options]
+  - [0x4E00]

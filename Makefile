@@ -42,15 +42,18 @@ TARGET_STREAM_SRC		:= stream
 TARGET_STREAM			:= $(BUILD_DIR)/VIN/STREAM.BIN
 
 TARGET_CREDITS_NAME		:= credits
-TARGET_CREDITS_SRC		:= screens/$(TARGET_CREDITS_NAME)
+TARGET_CREDITS_DIR		:= screens
+TARGET_CREDITS_SRC		:= $(TARGET_CREDITS_DIR)/$(TARGET_CREDITS_NAME)
 TARGET_CREDITS			:= $(BUILD_DIR)/VIN/STF_ROLL.BIN
 
 TARGET_OPTIONS_NAME		:= options
-TARGET_OPTIONS_SRC		:= screens/$(TARGET_OPTIONS_NAME)
+TARGET_OPTIONS_DIR		:= screens
+TARGET_OPTIONS_SRC		:= $(TARGET_OPTIONS_DIR)/$(TARGET_OPTIONS_NAME)
 TARGET_OPTIONS			:= $(BUILD_DIR)/VIN/OPTION.BIN
 
 TARGET_SAVELOAD_NAME	:= saveload
-TARGET_SAVELOAD_SRC		:= screens/$(TARGET_SAVELOAD_NAME)
+TARGET_SAVELOAD_DIR		:= screens
+TARGET_SAVELOAD_SRC		:= $(TARGET_SAVELOAD_DIR)/$(TARGET_SAVELOAD_NAME)
 TARGET_SAVELOAD			:= $(BUILD_DIR)/VIN/SAVELOAD.BIN
 
 ifeq ($(BUILD_MAPS), 1)
@@ -69,8 +72,8 @@ TARGET_VIN				:= $(TARGET_STREAM) $(TARGET_CREDITS) \
 							$(TARGET_OPTIONS) $(TARGET_SAVELOAD) \
 							$(TARGET_MAPS)
 
-TARGET_VIN_NAMES		:= $(TARGET_STREAM_NAME) $(TARGET_CREDITS_NAME) \
-							$(TARGET_OPTIONS_NAME) $(TARGET_SAVELOAD_NAME) \
+TARGET_VIN_NAMES		:= $(TARGET_STREAM_SRC) $(TARGET_CREDITS_SRC) \
+							$(TARGET_OPTIONS_SRC) $(TARGET_SAVELOAD_SRC) \
 							$(TARGET_MAPS_NAMES)
 
 endif
@@ -227,9 +230,9 @@ $(TARGET_CREDITS).elf: $(call gen_o_files, $(TARGET_CREDITS_SRC))
 	@mkdir -p $(dir $@)
 	$(LD) $(LD_FLAGS) 															\
 		-Map $(TARGET_CREDITS).map 						 					\
-		-T $(LINKER_DIR)/$(TARGET_CREDITS_NAME).ld 							\
-		-T $(LINKER_DIR)/undefined_syms_auto.$(TARGET_CREDITS_NAME).txt 		\
-		-T $(LINKER_DIR)/undefined_funcs_auto.$(TARGET_CREDITS_NAME).txt 		\
+		-T $(LINKER_DIR)/$(TARGET_CREDITS_DIR)/$(TARGET_CREDITS_NAME).ld 							\
+		-T $(LINKER_DIR)/$(TARGET_CREDITS_DIR)/undefined_syms_auto.$(TARGET_CREDITS_NAME).txt 		\
+		-T $(LINKER_DIR)/$(TARGET_CREDITS_DIR)/undefined_funcs_auto.$(TARGET_CREDITS_NAME).txt 		\
 		-o $@
 
 $(TARGET_OPTIONS): $(TARGET_OPTIONS).elf
@@ -240,9 +243,9 @@ $(TARGET_OPTIONS).elf: $(call gen_o_files, $(TARGET_OPTIONS_SRC))
 	@mkdir -p $(dir $@)
 	$(LD) $(LD_FLAGS) 															\
 		-Map $(TARGET_OPTIONS).map 						 					\
-		-T $(LINKER_DIR)/$(TARGET_OPTIONS_NAME).ld 							\
-		-T $(LINKER_DIR)/undefined_syms_auto.$(TARGET_OPTIONS_NAME).txt 		\
-		-T $(LINKER_DIR)/undefined_funcs_auto.$(TARGET_OPTIONS_NAME).txt 		\
+		-T $(LINKER_DIR)/$(TARGET_OPTIONS_DIR)/$(TARGET_OPTIONS_NAME).ld 							\
+		-T $(LINKER_DIR)/$(TARGET_OPTIONS_DIR)/undefined_syms_auto.$(TARGET_OPTIONS_NAME).txt 		\
+		-T $(LINKER_DIR)/$(TARGET_OPTIONS_DIR)/undefined_funcs_auto.$(TARGET_OPTIONS_NAME).txt 		\
 		-o $@
 
 $(TARGET_SAVELOAD): $(TARGET_SAVELOAD).elf
@@ -253,9 +256,9 @@ $(TARGET_SAVELOAD).elf: $(call gen_o_files, $(TARGET_SAVELOAD_SRC))
 	@mkdir -p $(dir $@)
 	$(LD) $(LD_FLAGS) 															\
 		-Map $(TARGET_SAVELOAD).map 						 					\
-		-T $(LINKER_DIR)/$(TARGET_SAVELOAD_NAME).ld 							\
-		-T $(LINKER_DIR)/undefined_syms_auto.$(TARGET_SAVELOAD_NAME).txt 		\
-		-T $(LINKER_DIR)/undefined_funcs_auto.$(TARGET_SAVELOAD_NAME).txt 		\
+		-T $(LINKER_DIR)/$(TARGET_SAVELOAD_SRC).ld 							\
+		-T $(LINKER_DIR)/$(TARGET_SAVELOAD_DIR)/undefined_syms_auto.$(TARGET_SAVELOAD_NAME).txt 		\
+		-T $(LINKER_DIR)/$(TARGET_SAVELOAD_DIR)/undefined_funcs_auto.$(TARGET_SAVELOAD_NAME).txt 		\
 		-o $@
 
 $(TARGET_MAP0_S00): $(TARGET_MAP0_S00).elf

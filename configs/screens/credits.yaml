@@ -3,7 +3,7 @@ sha1: 5a40c5ea20e9903804c5656c828869f8b858c2d1
 options:
   basename: STF_ROLL.BIN
   target_path: assets/VIN/STF_ROLL.BIN
-  base_path: ..
+  base_path: ../..
   platform: psx
   compiler: GCC
 
@@ -11,7 +11,7 @@ options:
   src_path: src/screens/credits
   build_path: build/
 
-  ld_script_path: linkers/credits.ld
+  ld_script_path: linkers/screens/credits.ld
 
   find_file_boundaries: False
   gp_value: 0x80022BB0
@@ -27,12 +27,12 @@ options:
 
   symbol_addrs_path:
     - configs/symbol_addrs.txt
-    - configs/symbol_addrs.credits.txt
+    - configs/screens/symbol_addrs.credits.txt
   reloc_addrs_path:
-    - configs/reloc_addrs.credits.txt
+    - configs/screens/reloc_addrs.credits.txt
 
-  undefined_funcs_auto_path: linkers/undefined_funcs_auto.credits.txt
-  undefined_syms_auto_path: linkers/undefined_syms_auto.credits.txt
+  undefined_funcs_auto_path: linkers/screens/undefined_funcs_auto.credits.txt
+  undefined_syms_auto_path: linkers/screens/undefined_syms_auto.credits.txt
 
   extensions_path: tools/splat_ext
 
