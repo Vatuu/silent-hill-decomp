@@ -19,102 +19,6 @@ ASSETS_DIR				:= assets
 ASM_DIR					:= asm
 C_DIR					:= src
 
-# Targets
-
-TARGET_SCREENS_SRC_DIR	:= screens
-TARGET_MAPS_SRC_DIR		:= maps
-
-TARGET_MAIN 			:= $(BUILD_DIR)/SLUS_007.07
-TARGET_MAIN_SRC			:= main
-
-ifeq ($(BUILD_OVERLAYS), 1)
-
-TARGET_BODYPROG			:= $(BUILD_DIR)/1ST/BODYPROG.BIN
-TARGET_BODYPROG_SRC		:= bodyprog
-
-TARGET_STREAM			:= $(BUILD_DIR)/VIN/STREAM.BIN
-TARGET_STREAM_SRC		:= stream
-
-ifeq ($(BUILD_SCREENS), 1)
-
-TARGET_B_KONAMI			:= $(BUILD_DIR)/1ST/B_KONAMI.BIN
-TARGET_B_KONAMI_SRC		:= $(TARGET_SCREENS_SRC_DIR)/b_konami
-
-TARGET_CREDITS			:= $(BUILD_DIR)/VIN/STF_ROLL.BIN
-TARGET_CREDITS_SRC		:= $(TARGET_SCREENS_SRC_DIR)/credits
-
-TARGET_OPTIONS			:= $(BUILD_DIR)/VIN/OPTION.BIN
-TARGET_OPTIONS_SRC		:= $(TARGET_SCREENS_SRC_DIR)/options
-
-TARGET_SAVELOAD			:= $(BUILD_DIR)/VIN/SAVELOAD.BIN
-TARGET_SAVELOAD_SRC		:= $(TARGET_SCREENS_SRC_DIR)/saveload
-
-TARGET_SCREENS			:= $(TARGET_B_KONAMI) $(TARGET_CREDITS) \
-							$(TARGET_OPTIONS) $(TARGET_SAVELOAD)
-
-TARGET_SCREENS_SRC		:= $(TARGET_B_KONAMI_SRC) $(TARGET_CREDITS_SRC) \
-							$(TARGET_OPTIONS_SRC) $(TARGET_SAVELOAD_SRC)
-
-endif
-
-ifeq ($(BUILD_MAPS), 1)
-
-TARGET_MAP0_S00			:= $(BUILD_DIR)/VIN/MAP0_S00.BIN
-TARGET_MAP0_S00_SRC		:= $(TARGET_MAPS_SRC_DIR)/map0_s00
-
-TARGET_MAPS				:= $(TARGET_MAP0_S00)
-TARGET_MAPS_SRC			:= $(TARGET_MAP0_S00_SRC)
-
-endif
-
-TARGET_OVERLAYS			:= $(TARGET_BODYPROG) $(TARGET_STREAM) \
-							$(TARGET_SCREENS) $(TARGET_MAPS)
-
-TARGET_OVERLAYS_SRC		:= $(TARGET_BODYPROG_SRC) $(TARGET_STREAM_SRC) \
-							$(TARGET_SCREENS_SRC) $(TARGET_MAPS_SRC)
-
-endif
-
-# depends on the same order and number of items for rule generation
-TARGET_ALL				:= $(TARGET_MAIN) $(TARGET_OVERLAYS)
-TARGET_SRC				:= $(TARGET_MAIN_SRC) $(TARGET_OVERLAYS_SRC)
-TARGET_COUNT			:= $(words $(TARGET_SRC))
-
-# Source Definitions
-
-CONFIG_FILES 			:= $(addsuffix .yaml,$(addprefix $(CONFIGS_DIR)/,$(TARGET_SRC)))
-LD_FILES	    		:= $(addsuffix .ld,$(addprefix $(LINKER_DIR)/,$(TARGET_SRC)))
-
-# Utils
-
-# Function to find matching .s files for a target name
-find_s_files 			= $(shell find $(ASM_DIR)/$(strip $1) -type f -path "*.s" -not -path "asm/*matchings*" 2> /dev/null)
-
-# Function to find matching .c files for a target name
-find_c_files 			= $(shell find $(C_DIR)/$(strip $1) -type f -path "*.c" 2> /dev/null)
-
-# Function to generate matching .o files for a target name in the build directory
-gen_o_files			 	= $(addprefix $(BUILD_DIR)/, \
-							$(patsubst %.s, %.s.o, $(call find_s_files, $1)) \
-							$(patsubst %.c, %.c.o, $(call find_c_files, $1)))
-
-# Template definition for elf target.
-# First parameter should be the source target with folder (e.g. screens/credits)
-# Second parameter should be the end target (e.g. build/VIN/STF_ROLL.BIN)
-define make_elf_target
-$2: $2.elf
-	$(OBJCOPY) $(OBJCOPY_FLAGS) $$< $$@
-
-$2.elf: $(call gen_o_files, $1)
-	@mkdir -p $(dir $2)
-	$(LD) $(LD_FLAGS) 																		\
-		-Map $2.map 						 												\
-		-T $(LINKER_DIR)/$1.ld				 												\
-		-T $(LINKER_DIR)/$(filter-out ./,$(dir $1))undefined_syms_auto.$(notdir $1).txt 	\
-		-T $(LINKER_DIR)/$(filter-out ./,$(dir $1))undefined_funcs_auto.$(notdir $1).txt 	\
-		-o $$@
-endef
-
 # Tools
 
 CROSS					:= mips-linux-gnu
@@ -130,6 +34,7 @@ SPLAT           		:= $(PYTHON) -m splat split
 MASPSX					:= $(PYTHON) $(TOOLS_DIR)/maspsx/maspsx.py
 DUMPSXISO				:= $(TOOLS_DIR)/psxiso/dumpsxiso
 SILENT_ASSETS			:= $(PYTHON) $(TOOLS_DIR)/silentassets/extract.py
+GET_YAML_TARGET			:= $(PYTHON) $(TOOLS_DIR)/get_yaml_target.py
 
 # Flags
 
@@ -149,13 +54,87 @@ MASPSX_FLAGS			:= --aspsx-version=2.77 --run-assembler $(AS_FLAGS)
 DUMPSXISO_FLAGS			:= -x $(ROM_DIR) -s $(ROM_DIR)/layout.xml $(IMAGE_DIR)/$(GAME_NAME).bin
 SILENT_ASSETS_FLAGS 	:= -exe $(ROM_DIR)/SLUS_007.07 -fs $(ROM_DIR)/SILENT. -fh $(ROM_DIR)/HILL. $(ASSETS_DIR)
 
+# Utils
+
+# Function to find matching .s files for a target name
+find_s_files 			= $(shell find $(ASM_DIR)/$(strip $1) -type f -path "*.s" -not -path "asm/*matchings*" 2> /dev/null)
+
+# Function to find matching .c files for a target name
+find_c_files 			= $(shell find $(C_DIR)/$(strip $1) -type f -path "*.c" 2> /dev/null)
+
+# Function to generate matching .o files for a target name in the build directory
+gen_o_files			 	= $(addprefix $(BUILD_DIR)/, \
+							$(patsubst %.s, %.s.o, $(call find_s_files, $1)) \
+							$(patsubst %.c, %.c.o, $(call find_c_files, $1)))
+
+# Function to get the path to yaml file for given target
+get_yaml_path			= $(addsuffix .yaml,$(addprefix $(CONFIG_DIR)/,$1))
+
+# Function to get the target output path for given target
+get_target_out			= $(addprefix $(BUILD_DIR)/,$(shell $(GET_YAML_TARGET) $(call get_yaml_path,$1)))
+
+# Template definition for elf target.
+# First parameter should be the source target with folder (e.g. screens/credits)
+# Second parameter should be the end target (e.g. build/VIN/STF_ROLL.BIN)
+define make_elf_target
+$2: $2.elf
+	$(OBJCOPY) $(OBJCOPY_FLAGS) $$< $$@
+
+$2.elf: $(call gen_o_files, $1)
+	@mkdir -p $(dir $2)
+	$(LD) $(LD_FLAGS) 																		\
+		-Map $2.map 						 												\
+		-T $(LINKER_DIR)/$1.ld				 												\
+		-T $(LINKER_DIR)/$(filter-out ./,$(dir $1))undefined_syms_auto.$(notdir $1).txt 	\
+		-T $(LINKER_DIR)/$(filter-out ./,$(dir $1))undefined_funcs_auto.$(notdir $1).txt 	\
+		-o $$@
+endef
+
+# Targets
+
+TARGET_SCREENS_SRC_DIR	:= screens
+TARGET_MAPS_SRC_DIR		:= maps
+
+TARGET_MAIN				:= main
+
+ifeq ($(BUILD_OVERLAYS), 1)
+
+TARGET_BODYPROG			:= bodyprog
+TARGET_STREAM			:= stream
+
+ifeq ($(BUILD_SCREENS), 1)
+
+TARGET_SCREENS			:= b_konami credits options saveload
+TARGET_SCREENS			:= $(addprefix $(TARGET_SCREENS_SRC_DIR)/,$(TARGET_SCREENS))
+
+endif
+
+ifeq ($(BUILD_MAPS), 1)
+
+TARGET_MAPS				:= map0_s00
+TARGET_MAPS				:= $(addprefix $(TARGET_MAPS_SRC_DIR)/,$(TARGET_MAPS))
+
+endif
+
+TARGET_OVERLAYS			:= $(TARGET_BODYPROG) $(TARGET_STREAM) $(TARGET_SCREENS) $(TARGET_MAPS)
+
+endif
+
+# Source Definitions
+
+TARGET_IN				:= $(TARGET_MAIN) $(TARGET_OVERLAYS)
+TARGET_OUT				:= $(foreach target,$(TARGET_IN),$(call get_target_out,$(target)))
+
+CONFIG_FILES 			:= $(foreach target,$(TARGET_IN),$(call get_yaml_path,$(target)))
+LD_FILES	    		:= $(addsuffix .ld,$(addprefix $(LINKER_DIR)/,$(TARGET_IN)))
+
 # Rules
 
 default: all
 
 all: check
 
-build: $(TARGET_ALL)
+build: $(TARGET_OUT)
 
 check: build
 	@sha256sum --ignore-missing --check checksum.sha
@@ -185,9 +164,11 @@ setup: clean-rom
 	$(MAKE) extract
 	$(MAKE) regenerate
 
+# Recipes
+
 # elf targets
-# for each target from TARGET_ALL generate an .elf target using TARGET_SRC with the same index
-$(foreach i,$(shell seq 1 $(TARGET_COUNT)),$(eval $(call make_elf_target,$(word $i,$(TARGET_SRC)),$(word $i,$(TARGET_ALL)))))
+# for each target from TARGET_IN generate an .elf target
+$(foreach target,$(TARGET_IN),$(eval $(call make_elf_target,$(target),$(call get_target_out,$(target)))))
 
 # generate objects
 $(BUILD_DIR)/%.i: %.c
