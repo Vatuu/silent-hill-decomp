@@ -19,6 +19,9 @@ A simple breakdown of how this repository is structured, as it can become confus
 The actual decompiled source code is organized in the following way.
 ```
 src/
+├── maps/
+│   └── map#_s##/
+│       └── The map (level) scripts overlay (MAP#_S##.BIN).
 ├── screens/
 │   ├── credits/
 │   │   └── The credits overlay (STF_ROLL.BIN).

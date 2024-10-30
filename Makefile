@@ -1,6 +1,7 @@
 # Configuration
 
 BUILD_OVERLAYS 		?= 1
+BUILD_MAPS			?= 0
 
 # Names and Paths
 
@@ -41,22 +42,36 @@ TARGET_STREAM_SRC		:= stream
 TARGET_STREAM			:= $(BUILD_DIR)/VIN/STREAM.BIN
 
 TARGET_CREDITS_NAME		:= credits
-TARGET_CREDITS_SRC		:= screens/credits
+TARGET_CREDITS_SRC		:= screens/$(TARGET_CREDITS_NAME)
 TARGET_CREDITS			:= $(BUILD_DIR)/VIN/STF_ROLL.BIN
 
 TARGET_OPTIONS_NAME		:= options
-TARGET_OPTIONS_SRC		:= screens/options
+TARGET_OPTIONS_SRC		:= screens/$(TARGET_OPTIONS_NAME)
 TARGET_OPTIONS			:= $(BUILD_DIR)/VIN/OPTION.BIN
 
 TARGET_SAVELOAD_NAME	:= saveload
-TARGET_SAVELOAD_SRC		:= screens/saveload
+TARGET_SAVELOAD_SRC		:= screens/$(TARGET_SAVELOAD_NAME)
 TARGET_SAVELOAD			:= $(BUILD_DIR)/VIN/SAVELOAD.BIN
 
+ifeq ($(BUILD_MAPS), 1)
+
+TARGET_MAP0_S00_BASE	:= map0_s00
+TARGET_MAP0_S00_NAME	:= maps/$(TARGET_MAP0_S00_BASE)
+TARGET_MAP0_S00_SRC		:= $(TARGET_MAP0_S00_NAME)
+TARGET_MAP0_S00			:= $(BUILD_DIR)/VIN/MAP0_S00.BIN
+
+TARGET_MAPS				:= $(TARGET_MAP0_S00)
+TARGET_MAPS_NAMES		:= $(TARGET_MAP0_S00_NAME)
+
+endif
+
 TARGET_VIN				:= $(TARGET_STREAM) $(TARGET_CREDITS) \
-							$(TARGET_OPTIONS) $(TARGET_SAVELOAD)
+							$(TARGET_OPTIONS) $(TARGET_SAVELOAD) \
+							$(TARGET_MAPS)
 
 TARGET_VIN_NAMES		:= $(TARGET_STREAM_NAME) $(TARGET_CREDITS_NAME) \
-							$(TARGET_OPTIONS_NAME) $(TARGET_SAVELOAD_NAME)
+							$(TARGET_OPTIONS_NAME) $(TARGET_SAVELOAD_NAME) \
+							$(TARGET_MAPS_NAMES)
 
 endif
 
@@ -241,6 +256,19 @@ $(TARGET_SAVELOAD).elf: $(call gen_o_files, $(TARGET_SAVELOAD_SRC))
 		-T $(LINKER_DIR)/$(TARGET_SAVELOAD_NAME).ld 							\
 		-T $(LINKER_DIR)/undefined_syms_auto.$(TARGET_SAVELOAD_NAME).txt 		\
 		-T $(LINKER_DIR)/undefined_funcs_auto.$(TARGET_SAVELOAD_NAME).txt 		\
+		-o $@
+
+$(TARGET_MAP0_S00): $(TARGET_MAP0_S00).elf
+	@mkdir -p $(dir $@)
+	$(OBJCOPY) $(OBJCOPY_FLAGS) $< $@
+
+$(TARGET_MAP0_S00).elf: $(call gen_o_files, $(TARGET_MAP0_S00_SRC))
+	@mkdir -p $(dir $@)
+	$(LD) $(LD_FLAGS) 															\
+		-Map $(TARGET_MAP0_S00).map 						 					\
+		-T $(LINKER_DIR)/$(TARGET_MAP0_S00_NAME).ld 							\
+		-T $(LINKER_DIR)/maps/undefined_syms_auto.$(TARGET_MAP0_S00_BASE).txt 		\
+		-T $(LINKER_DIR)/maps/undefined_funcs_auto.$(TARGET_MAP0_S00_BASE).txt 		\
 		-o $@
 
 # generate objects
