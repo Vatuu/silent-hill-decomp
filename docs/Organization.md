@@ -23,14 +23,14 @@ src/
 │   └── map#_s##/
 │       └── The map (level) scripts overlay (MAP#_S##.BIN).
 ├── screens/
+│   ├── b_konami/
+│   │   └── The boot screen overlay (B_KONAMI.BIN).
 │   ├── credits/
 │   │   └── The credits overlay (STF_ROLL.BIN).
 │   ├── options/
 │   │   └── The options screen overlay (OPTION.BIN).
 │   └── saveload/
 │       └── The save/load screen overlay (SAVELOAD.BIN).
-├── b_konami/
-│   └── The boot screen overlay (B_KONAMI.BIN).
 ├── bodyprog/
 │   └── The main game logic overlay (BODYPROG.BIN).
 ├── stream/
