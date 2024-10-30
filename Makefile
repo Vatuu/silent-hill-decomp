@@ -24,37 +24,30 @@ C_DIR					:= src
 TARGET_SCREENS_SRC_DIR	:= screens
 TARGET_MAPS_SRC_DIR		:= maps
 
-TARGET_MAIN_NAME		:= main
-TARGET_MAIN_SRC			:= $(TARGET_MAIN_NAME)
 TARGET_MAIN 			:= $(BUILD_DIR)/SLUS_007.07
+TARGET_MAIN_SRC			:= main
 
 ifeq ($(BUILD_OVERLAYS), 1)
 
-TARGET_BODYPROG_NAME	:= bodyprog
-TARGET_BODYPROG_SRC		:= $(TARGET_BODYPROG_NAME)
 TARGET_BODYPROG			:= $(BUILD_DIR)/1ST/BODYPROG.BIN
+TARGET_BODYPROG_SRC		:= bodyprog
 
-TARGET_STREAM_NAME		:= stream
-TARGET_STREAM_SRC		:= $(TARGET_STREAM_NAME)
 TARGET_STREAM			:= $(BUILD_DIR)/VIN/STREAM.BIN
+TARGET_STREAM_SRC		:= stream
 
 ifeq ($(BUILD_SCREENS), 1)
 
-TARGET_B_KONAMI_NAME	:= b_konami
-TARGET_B_KONAMI_SRC		:= $(TARGET_SCREENS_SRC_DIR)/$(TARGET_B_KONAMI_NAME)
 TARGET_B_KONAMI			:= $(BUILD_DIR)/1ST/B_KONAMI.BIN
+TARGET_B_KONAMI_SRC		:= $(TARGET_SCREENS_SRC_DIR)/b_konami
 
-TARGET_CREDITS_NAME		:= credits
-TARGET_CREDITS_SRC		:= $(TARGET_SCREENS_SRC_DIR)/$(TARGET_CREDITS_NAME)
 TARGET_CREDITS			:= $(BUILD_DIR)/VIN/STF_ROLL.BIN
+TARGET_CREDITS_SRC		:= $(TARGET_SCREENS_SRC_DIR)/credits
 
-TARGET_OPTIONS_NAME		:= options
-TARGET_OPTIONS_SRC		:= $(TARGET_SCREENS_SRC_DIR)/$(TARGET_OPTIONS_NAME)
 TARGET_OPTIONS			:= $(BUILD_DIR)/VIN/OPTION.BIN
+TARGET_OPTIONS_SRC		:= $(TARGET_SCREENS_SRC_DIR)/options
 
-TARGET_SAVELOAD_NAME	:= saveload
-TARGET_SAVELOAD_SRC		:= $(TARGET_SCREENS_SRC_DIR)/$(TARGET_SAVELOAD_NAME)
 TARGET_SAVELOAD			:= $(BUILD_DIR)/VIN/SAVELOAD.BIN
+TARGET_SAVELOAD_SRC		:= $(TARGET_SCREENS_SRC_DIR)/saveload
 
 TARGET_SCREENS			:= $(TARGET_B_KONAMI) $(TARGET_CREDITS) \
 							$(TARGET_OPTIONS) $(TARGET_SAVELOAD)
@@ -66,9 +59,8 @@ endif
 
 ifeq ($(BUILD_MAPS), 1)
 
-TARGET_MAP0_S00_NAME	:= map0_s00
-TARGET_MAP0_S00_SRC		:= $(TARGET_MAPS_SRC_DIR)/$(TARGET_MAP0_S00_NAME)
 TARGET_MAP0_S00			:= $(BUILD_DIR)/VIN/MAP0_S00.BIN
+TARGET_MAP0_S00_SRC		:= $(TARGET_MAPS_SRC_DIR)/map0_s00
 
 TARGET_MAPS				:= $(TARGET_MAP0_S00)
 TARGET_MAPS_SRC			:= $(TARGET_MAP0_S00_SRC)
@@ -83,8 +75,10 @@ TARGET_OVERLAYS_SRC		:= $(TARGET_BODYPROG_SRC) $(TARGET_STREAM_SRC) \
 
 endif
 
+# depends on the same order and number of items for rule generation
 TARGET_ALL				:= $(TARGET_MAIN) $(TARGET_OVERLAYS)
 TARGET_SRC				:= $(TARGET_MAIN_SRC) $(TARGET_OVERLAYS_SRC)
+TARGET_COUNT			:= $(words $(TARGET_SRC))
 
 # Source Definitions
 
@@ -103,6 +97,23 @@ find_c_files 			= $(shell find $(C_DIR)/$(strip $1) -type f -path "*.c" 2> /dev/
 gen_o_files			 	= $(addprefix $(BUILD_DIR)/, \
 							$(patsubst %.s, %.s.o, $(call find_s_files, $1)) \
 							$(patsubst %.c, %.c.o, $(call find_c_files, $1)))
+
+# Template definition for elf target.
+# First parameter should be the source target with folder (e.g. screens/credits)
+# Second parameter should be the end target (e.g. build/VIN/STF_ROLL.BIN)
+define make_elf_target
+$2: $2.elf
+	$(OBJCOPY) $(OBJCOPY_FLAGS) $$< $$@
+
+$2.elf: $(call gen_o_files, $1)
+	@mkdir -p $(dir $2)
+	$(LD) $(LD_FLAGS) 																		\
+		-Map $2.map 						 												\
+		-T $(LINKER_DIR)/$1.ld				 												\
+		-T $(LINKER_DIR)/$(filter-out ./,$(dir $1))undefined_syms_auto.$(notdir $1).txt 	\
+		-T $(LINKER_DIR)/$(filter-out ./,$(dir $1))undefined_funcs_auto.$(notdir $1).txt 	\
+		-o $$@
+endef
 
 # Tools
 
@@ -174,110 +185,9 @@ setup: clean-rom
 	$(MAKE) extract
 	$(MAKE) regenerate
 
-# executable
-$(TARGET_MAIN): $(TARGET_MAIN).elf
-	@mkdir -p $(dir $@)
-	$(OBJCOPY) $(OBJCOPY_FLAGS) $< $@
-
-$(TARGET_MAIN).elf: $(call gen_o_files, $(TARGET_MAIN_SRC))
-	@mkdir -p $(dir $@)
-	$(LD) $(LD_FLAGS) 														\
-		-Map $(TARGET_MAIN).map 						 					\
-		-T $(LINKER_DIR)/$(TARGET_MAIN_NAME).ld 							\
-		-T $(LINKER_DIR)/undefined_syms_auto.$(TARGET_MAIN_NAME).txt 		\
-		-T $(LINKER_DIR)/undefined_funcs_auto.$(TARGET_MAIN_NAME).txt 		\
-		-o $@
-
-$(TARGET_BODYPROG): $(TARGET_BODYPROG).elf
-	@mkdir -p $(dir $@)
-	$(OBJCOPY) $(OBJCOPY_FLAGS) $< $@
-
-$(TARGET_BODYPROG).elf: $(call gen_o_files, $(TARGET_BODYPROG_SRC))
-	@mkdir -p $(dir $@)
-	$(LD) $(LD_FLAGS) 															\
-		-Map $(TARGET_BODYPROG).map 						 					\
-		-T $(LINKER_DIR)/$(TARGET_BODYPROG_NAME).ld 							\
-		-T $(LINKER_DIR)/undefined_syms_auto.$(TARGET_BODYPROG_NAME).txt 		\
-		-T $(LINKER_DIR)/undefined_funcs_auto.$(TARGET_BODYPROG_NAME).txt 		\
-		-o $@
-
-$(TARGET_STREAM): $(TARGET_STREAM).elf
-	@mkdir -p $(dir $@)
-	$(OBJCOPY) $(OBJCOPY_FLAGS) $< $@
-
-$(TARGET_STREAM).elf: $(call gen_o_files, $(TARGET_STREAM_SRC))
-	@mkdir -p $(dir $@)
-	$(LD) $(LD_FLAGS) 															\
-		-Map $(TARGET_STREAM).map 						 					\
-		-T $(LINKER_DIR)/$(TARGET_STREAM_NAME).ld 							\
-		-T $(LINKER_DIR)/undefined_syms_auto.$(TARGET_STREAM_NAME).txt 		\
-		-T $(LINKER_DIR)/undefined_funcs_auto.$(TARGET_STREAM_NAME).txt 		\
-		-o $@
-
-$(TARGET_B_KONAMI): $(TARGET_B_KONAMI).elf
-	@mkdir -p $(dir $@)
-	$(OBJCOPY) $(OBJCOPY_FLAGS) $< $@
-
-$(TARGET_B_KONAMI).elf: $(call gen_o_files, $(TARGET_B_KONAMI_SRC))
-	@mkdir -p $(dir $@)
-	$(LD) $(LD_FLAGS) 															\
-		-Map $(TARGET_B_KONAMI).map 						 					\
-		-T $(LINKER_DIR)/$(TARGET_SCREENS_SRC_DIR)/$(TARGET_B_KONAMI_NAME).ld 		\
-		-T $(LINKER_DIR)/$(TARGET_SCREENS_SRC_DIR)/undefined_syms_auto.$(TARGET_B_KONAMI_NAME).txt 		\
-		-T $(LINKER_DIR)/$(TARGET_SCREENS_SRC_DIR)/undefined_funcs_auto.$(TARGET_B_KONAMI_NAME).txt 		\
-		-o $@
-
-$(TARGET_CREDITS): $(TARGET_CREDITS).elf
-	@mkdir -p $(dir $@)
-	$(OBJCOPY) $(OBJCOPY_FLAGS) $< $@
-
-$(TARGET_CREDITS).elf: $(call gen_o_files, $(TARGET_CREDITS_SRC))
-	@mkdir -p $(dir $@)
-	$(LD) $(LD_FLAGS) 															\
-		-Map $(TARGET_CREDITS).map 						 					\
-		-T $(LINKER_DIR)/$(TARGET_SCREENS_SRC_DIR)/$(TARGET_CREDITS_NAME).ld 							\
-		-T $(LINKER_DIR)/$(TARGET_SCREENS_SRC_DIR)/undefined_syms_auto.$(TARGET_CREDITS_NAME).txt 		\
-		-T $(LINKER_DIR)/$(TARGET_SCREENS_SRC_DIR)/undefined_funcs_auto.$(TARGET_CREDITS_NAME).txt 		\
-		-o $@
-
-$(TARGET_OPTIONS): $(TARGET_OPTIONS).elf
-	@mkdir -p $(dir $@)
-	$(OBJCOPY) $(OBJCOPY_FLAGS) $< $@
-
-$(TARGET_OPTIONS).elf: $(call gen_o_files, $(TARGET_OPTIONS_SRC))
-	@mkdir -p $(dir $@)
-	$(LD) $(LD_FLAGS) 															\
-		-Map $(TARGET_OPTIONS).map 						 					\
-		-T $(LINKER_DIR)/$(TARGET_SCREENS_SRC_DIR)/$(TARGET_OPTIONS_NAME).ld 							\
-		-T $(LINKER_DIR)/$(TARGET_SCREENS_SRC_DIR)/undefined_syms_auto.$(TARGET_OPTIONS_NAME).txt 		\
-		-T $(LINKER_DIR)/$(TARGET_SCREENS_SRC_DIR)/undefined_funcs_auto.$(TARGET_OPTIONS_NAME).txt 		\
-		-o $@
-
-$(TARGET_SAVELOAD): $(TARGET_SAVELOAD).elf
-	@mkdir -p $(dir $@)
-	$(OBJCOPY) $(OBJCOPY_FLAGS) $< $@
-
-$(TARGET_SAVELOAD).elf: $(call gen_o_files, $(TARGET_SAVELOAD_SRC))
-	@mkdir -p $(dir $@)
-	$(LD) $(LD_FLAGS) 															\
-		-Map $(TARGET_SAVELOAD).map 						 					\
-		-T $(LINKER_DIR)/$(TARGET_SCREENS_SRC_DIR)/$(TARGET_SAVELOAD_NAME).ld 							\
-		-T $(LINKER_DIR)/$(TARGET_SCREENS_SRC_DIR)/undefined_syms_auto.$(TARGET_SAVELOAD_NAME).txt 		\
-		-T $(LINKER_DIR)/$(TARGET_SCREENS_SRC_DIR)/undefined_funcs_auto.$(TARGET_SAVELOAD_NAME).txt 		\
-		-o $@
-
-$(TARGET_MAP0_S00): $(TARGET_MAP0_S00).elf
-	@mkdir -p $(dir $@)
-	$(OBJCOPY) $(OBJCOPY_FLAGS) $< $@
-
-$(TARGET_MAP0_S00).elf: $(call gen_o_files, $(TARGET_MAP0_S00_SRC))
-	@mkdir -p $(dir $@)
-	$(LD) $(LD_FLAGS) 															\
-		-Map $(TARGET_MAP0_S00).map 						 					\
-		-T $(LINKER_DIR)/$(TARGET_MAPS_SRC_DIR)/$(TARGET_MAP0_S00_NAME).ld 							\
-		-T $(LINKER_DIR)/$(TARGET_MAPS_SRC_DIR)/undefined_syms_auto.$(TARGET_MAP0_S00_NAME).txt 		\
-		-T $(LINKER_DIR)/$(TARGET_MAPS_SRC_DIR)/undefined_funcs_auto.$(TARGET_MAP0_S00_NAME).txt 		\
-		-o $@
+# elf targets
+# for each target from TARGET_ALL generate an .elf target using TARGET_SRC with the same index
+$(foreach i,$(shell seq 1 $(TARGET_COUNT)),$(eval $(call make_elf_target,$(word $i,$(TARGET_SRC)),$(word $i,$(TARGET_ALL)))))
 
 # generate objects
 $(BUILD_DIR)/%.i: %.c
