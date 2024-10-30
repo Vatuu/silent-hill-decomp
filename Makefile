@@ -21,76 +21,75 @@ C_DIR					:= src
 
 # Targets
 
+TARGET_SCREENS_SRC_DIR	:= screens
+TARGET_MAPS_SRC_DIR		:= maps
+
 TARGET_MAIN_NAME		:= main
-TARGET_MAIN_SRC			:= main
+TARGET_MAIN_SRC			:= $(TARGET_MAIN_NAME)
 TARGET_MAIN 			:= $(BUILD_DIR)/SLUS_007.07
 
 ifeq ($(BUILD_OVERLAYS), 1)
 
 TARGET_BODYPROG_NAME	:= bodyprog
-TARGET_BODYPROG_SRC		:= bodyprog
+TARGET_BODYPROG_SRC		:= $(TARGET_BODYPROG_NAME)
 TARGET_BODYPROG			:= $(BUILD_DIR)/1ST/BODYPROG.BIN
 
 TARGET_STREAM_NAME		:= stream
-TARGET_STREAM_SRC		:= stream
+TARGET_STREAM_SRC		:= $(TARGET_STREAM_NAME)
 TARGET_STREAM			:= $(BUILD_DIR)/VIN/STREAM.BIN
 
 ifeq ($(BUILD_SCREENS), 1)
 
 TARGET_B_KONAMI_NAME	:= b_konami
-TARGET_B_KONAMI_DIR		:= screens
-TARGET_B_KONAMI_SRC		:= $(TARGET_B_KONAMI_DIR)/$(TARGET_B_KONAMI_NAME)
+TARGET_B_KONAMI_SRC		:= $(TARGET_SCREENS_SRC_DIR)/$(TARGET_B_KONAMI_NAME)
 TARGET_B_KONAMI			:= $(BUILD_DIR)/1ST/B_KONAMI.BIN
 
 TARGET_CREDITS_NAME		:= credits
-TARGET_CREDITS_DIR		:= screens
-TARGET_CREDITS_SRC		:= $(TARGET_CREDITS_DIR)/$(TARGET_CREDITS_NAME)
+TARGET_CREDITS_SRC		:= $(TARGET_SCREENS_SRC_DIR)/$(TARGET_CREDITS_NAME)
 TARGET_CREDITS			:= $(BUILD_DIR)/VIN/STF_ROLL.BIN
 
 TARGET_OPTIONS_NAME		:= options
-TARGET_OPTIONS_DIR		:= screens
-TARGET_OPTIONS_SRC		:= $(TARGET_OPTIONS_DIR)/$(TARGET_OPTIONS_NAME)
+TARGET_OPTIONS_SRC		:= $(TARGET_SCREENS_SRC_DIR)/$(TARGET_OPTIONS_NAME)
 TARGET_OPTIONS			:= $(BUILD_DIR)/VIN/OPTION.BIN
 
 TARGET_SAVELOAD_NAME	:= saveload
-TARGET_SAVELOAD_DIR		:= screens
-TARGET_SAVELOAD_SRC		:= $(TARGET_SAVELOAD_DIR)/$(TARGET_SAVELOAD_NAME)
+TARGET_SAVELOAD_SRC		:= $(TARGET_SCREENS_SRC_DIR)/$(TARGET_SAVELOAD_NAME)
 TARGET_SAVELOAD			:= $(BUILD_DIR)/VIN/SAVELOAD.BIN
+
+TARGET_SCREENS			:= $(TARGET_B_KONAMI) $(TARGET_CREDITS) \
+							$(TARGET_OPTIONS) $(TARGET_SAVELOAD)
+
+TARGET_SCREENS_SRC		:= $(TARGET_B_KONAMI_SRC) $(TARGET_CREDITS_SRC) \
+							$(TARGET_OPTIONS_SRC) $(TARGET_SAVELOAD_SRC)
 
 endif
 
 ifeq ($(BUILD_MAPS), 1)
 
-TARGET_MAP0_S00_BASE	:= map0_s00
-TARGET_MAP0_S00_NAME	:= maps/$(TARGET_MAP0_S00_BASE)
-TARGET_MAP0_S00_SRC		:= $(TARGET_MAP0_S00_NAME)
+TARGET_MAP0_S00_NAME	:= map0_s00
+TARGET_MAP0_S00_SRC		:= $(TARGET_MAPS_SRC_DIR)/$(TARGET_MAP0_S00_NAME)
 TARGET_MAP0_S00			:= $(BUILD_DIR)/VIN/MAP0_S00.BIN
 
 TARGET_MAPS				:= $(TARGET_MAP0_S00)
-TARGET_MAPS_NAMES		:= $(TARGET_MAP0_S00_NAME)
+TARGET_MAPS_SRC			:= $(TARGET_MAP0_S00_SRC)
 
 endif
 
-TARGET_1ST				:= $(TARGET_BODYPROG) $(TARGET_B_KONAMI)
-TARGET_1ST_NAMES		:= $(TARGET_BODYPROG_NAME) $(TARGET_B_KONAMI_SRC)
+TARGET_OVERLAYS			:= $(TARGET_BODYPROG) $(TARGET_STREAM) \
+							$(TARGET_SCREENS) $(TARGET_MAPS)
 
-TARGET_VIN				:= $(TARGET_STREAM) $(TARGET_CREDITS) \
-							$(TARGET_OPTIONS) $(TARGET_SAVELOAD) \
-							$(TARGET_MAPS)
-
-TARGET_VIN_NAMES		:= $(TARGET_STREAM_SRC) $(TARGET_CREDITS_SRC) \
-							$(TARGET_OPTIONS_SRC) $(TARGET_SAVELOAD_SRC) \
-							$(TARGET_MAPS_NAMES)
+TARGET_OVERLAYS_SRC		:= $(TARGET_BODYPROG_SRC) $(TARGET_STREAM_SRC) \
+							$(TARGET_SCREENS_SRC) $(TARGET_MAPS_SRC)
 
 endif
 
-TARGET_NAMES			:= $(TARGET_MAIN_NAME) $(TARGET_1ST_NAMES) $(TARGET_VIN_NAMES)
-TARGET_ALL				:= $(TARGET_MAIN) $(TARGET_1ST) $(TARGET_VIN)
+TARGET_ALL				:= $(TARGET_MAIN) $(TARGET_OVERLAYS)
+TARGET_SRC				:= $(TARGET_MAIN_SRC) $(TARGET_OVERLAYS_SRC)
 
 # Source Definitions
 
-CONFIG_FILES 			:= $(addsuffix .yaml,$(addprefix $(CONFIGS_DIR)/,$(TARGET_NAMES)))
-LD_FILES	    		:= $(addsuffix .ld,$(addprefix $(LINKER_DIR)/,$(TARGET_NAMES)))
+CONFIG_FILES 			:= $(addsuffix .yaml,$(addprefix $(CONFIGS_DIR)/,$(TARGET_SRC)))
+LD_FILES	    		:= $(addsuffix .ld,$(addprefix $(LINKER_DIR)/,$(TARGET_SRC)))
 
 # Utils
 
@@ -202,19 +201,6 @@ $(TARGET_BODYPROG).elf: $(call gen_o_files, $(TARGET_BODYPROG_SRC))
 		-T $(LINKER_DIR)/undefined_funcs_auto.$(TARGET_BODYPROG_NAME).txt 		\
 		-o $@
 
-$(TARGET_B_KONAMI): $(TARGET_B_KONAMI).elf
-	@mkdir -p $(dir $@)
-	$(OBJCOPY) $(OBJCOPY_FLAGS) $< $@
-
-$(TARGET_B_KONAMI).elf: $(call gen_o_files, $(TARGET_B_KONAMI_SRC))
-	@mkdir -p $(dir $@)
-	$(LD) $(LD_FLAGS) 															\
-		-Map $(TARGET_B_KONAMI).map 						 					\
-		-T $(LINKER_DIR)/$(TARGET_B_KONAMI_DIR)/$(TARGET_B_KONAMI_NAME).ld 		\
-		-T $(LINKER_DIR)/$(TARGET_B_KONAMI_DIR)/undefined_syms_auto.$(TARGET_B_KONAMI_NAME).txt 		\
-		-T $(LINKER_DIR)/$(TARGET_B_KONAMI_DIR)/undefined_funcs_auto.$(TARGET_B_KONAMI_NAME).txt 		\
-		-o $@
-
 $(TARGET_STREAM): $(TARGET_STREAM).elf
 	@mkdir -p $(dir $@)
 	$(OBJCOPY) $(OBJCOPY_FLAGS) $< $@
@@ -228,6 +214,19 @@ $(TARGET_STREAM).elf: $(call gen_o_files, $(TARGET_STREAM_SRC))
 		-T $(LINKER_DIR)/undefined_funcs_auto.$(TARGET_STREAM_NAME).txt 		\
 		-o $@
 
+$(TARGET_B_KONAMI): $(TARGET_B_KONAMI).elf
+	@mkdir -p $(dir $@)
+	$(OBJCOPY) $(OBJCOPY_FLAGS) $< $@
+
+$(TARGET_B_KONAMI).elf: $(call gen_o_files, $(TARGET_B_KONAMI_SRC))
+	@mkdir -p $(dir $@)
+	$(LD) $(LD_FLAGS) 															\
+		-Map $(TARGET_B_KONAMI).map 						 					\
+		-T $(LINKER_DIR)/$(TARGET_SCREENS_SRC_DIR)/$(TARGET_B_KONAMI_NAME).ld 		\
+		-T $(LINKER_DIR)/$(TARGET_SCREENS_SRC_DIR)/undefined_syms_auto.$(TARGET_B_KONAMI_NAME).txt 		\
+		-T $(LINKER_DIR)/$(TARGET_SCREENS_SRC_DIR)/undefined_funcs_auto.$(TARGET_B_KONAMI_NAME).txt 		\
+		-o $@
+
 $(TARGET_CREDITS): $(TARGET_CREDITS).elf
 	@mkdir -p $(dir $@)
 	$(OBJCOPY) $(OBJCOPY_FLAGS) $< $@
@@ -236,9 +235,9 @@ $(TARGET_CREDITS).elf: $(call gen_o_files, $(TARGET_CREDITS_SRC))
 	@mkdir -p $(dir $@)
 	$(LD) $(LD_FLAGS) 															\
 		-Map $(TARGET_CREDITS).map 						 					\
-		-T $(LINKER_DIR)/$(TARGET_CREDITS_DIR)/$(TARGET_CREDITS_NAME).ld 							\
-		-T $(LINKER_DIR)/$(TARGET_CREDITS_DIR)/undefined_syms_auto.$(TARGET_CREDITS_NAME).txt 		\
-		-T $(LINKER_DIR)/$(TARGET_CREDITS_DIR)/undefined_funcs_auto.$(TARGET_CREDITS_NAME).txt 		\
+		-T $(LINKER_DIR)/$(TARGET_SCREENS_SRC_DIR)/$(TARGET_CREDITS_NAME).ld 							\
+		-T $(LINKER_DIR)/$(TARGET_SCREENS_SRC_DIR)/undefined_syms_auto.$(TARGET_CREDITS_NAME).txt 		\
+		-T $(LINKER_DIR)/$(TARGET_SCREENS_SRC_DIR)/undefined_funcs_auto.$(TARGET_CREDITS_NAME).txt 		\
 		-o $@
 
 $(TARGET_OPTIONS): $(TARGET_OPTIONS).elf
@@ -249,9 +248,9 @@ $(TARGET_OPTIONS).elf: $(call gen_o_files, $(TARGET_OPTIONS_SRC))
 	@mkdir -p $(dir $@)
 	$(LD) $(LD_FLAGS) 															\
 		-Map $(TARGET_OPTIONS).map 						 					\
-		-T $(LINKER_DIR)/$(TARGET_OPTIONS_DIR)/$(TARGET_OPTIONS_NAME).ld 							\
-		-T $(LINKER_DIR)/$(TARGET_OPTIONS_DIR)/undefined_syms_auto.$(TARGET_OPTIONS_NAME).txt 		\
-		-T $(LINKER_DIR)/$(TARGET_OPTIONS_DIR)/undefined_funcs_auto.$(TARGET_OPTIONS_NAME).txt 		\
+		-T $(LINKER_DIR)/$(TARGET_SCREENS_SRC_DIR)/$(TARGET_OPTIONS_NAME).ld 							\
+		-T $(LINKER_DIR)/$(TARGET_SCREENS_SRC_DIR)/undefined_syms_auto.$(TARGET_OPTIONS_NAME).txt 		\
+		-T $(LINKER_DIR)/$(TARGET_SCREENS_SRC_DIR)/undefined_funcs_auto.$(TARGET_OPTIONS_NAME).txt 		\
 		-o $@
 
 $(TARGET_SAVELOAD): $(TARGET_SAVELOAD).elf
@@ -262,9 +261,9 @@ $(TARGET_SAVELOAD).elf: $(call gen_o_files, $(TARGET_SAVELOAD_SRC))
 	@mkdir -p $(dir $@)
 	$(LD) $(LD_FLAGS) 															\
 		-Map $(TARGET_SAVELOAD).map 						 					\
-		-T $(LINKER_DIR)/$(TARGET_SAVELOAD_SRC).ld 							\
-		-T $(LINKER_DIR)/$(TARGET_SAVELOAD_DIR)/undefined_syms_auto.$(TARGET_SAVELOAD_NAME).txt 		\
-		-T $(LINKER_DIR)/$(TARGET_SAVELOAD_DIR)/undefined_funcs_auto.$(TARGET_SAVELOAD_NAME).txt 		\
+		-T $(LINKER_DIR)/$(TARGET_SCREENS_SRC_DIR)/$(TARGET_SAVELOAD_NAME).ld 							\
+		-T $(LINKER_DIR)/$(TARGET_SCREENS_SRC_DIR)/undefined_syms_auto.$(TARGET_SAVELOAD_NAME).txt 		\
+		-T $(LINKER_DIR)/$(TARGET_SCREENS_SRC_DIR)/undefined_funcs_auto.$(TARGET_SAVELOAD_NAME).txt 		\
 		-o $@
 
 $(TARGET_MAP0_S00): $(TARGET_MAP0_S00).elf
@@ -275,9 +274,9 @@ $(TARGET_MAP0_S00).elf: $(call gen_o_files, $(TARGET_MAP0_S00_SRC))
 	@mkdir -p $(dir $@)
 	$(LD) $(LD_FLAGS) 															\
 		-Map $(TARGET_MAP0_S00).map 						 					\
-		-T $(LINKER_DIR)/$(TARGET_MAP0_S00_NAME).ld 							\
-		-T $(LINKER_DIR)/maps/undefined_syms_auto.$(TARGET_MAP0_S00_BASE).txt 		\
-		-T $(LINKER_DIR)/maps/undefined_funcs_auto.$(TARGET_MAP0_S00_BASE).txt 		\
+		-T $(LINKER_DIR)/$(TARGET_MAPS_SRC_DIR)/$(TARGET_MAP0_S00_NAME).ld 							\
+		-T $(LINKER_DIR)/$(TARGET_MAPS_SRC_DIR)/undefined_syms_auto.$(TARGET_MAP0_S00_NAME).txt 		\
+		-T $(LINKER_DIR)/$(TARGET_MAPS_SRC_DIR)/undefined_funcs_auto.$(TARGET_MAP0_S00_NAME).txt 		\
 		-o $@
 
 # generate objects
