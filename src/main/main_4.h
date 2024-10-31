@@ -19,6 +19,6 @@ typedef struct {
 
 extern Unknown D_800230C0;
 
-s32 FUN_80011E4C(s32 arg0, s32 arg1);
+s32 func_80011E4C(s32 arg0, s32 arg1);
 
 #endif
