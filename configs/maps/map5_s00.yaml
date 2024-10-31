@@ -1,0 +1,56 @@
+name: The MAP5_S00 map overlay (MAP5_S00)
+sha1: 3aca876fb0a3e4a68e358bd0fd1d1445f39710a6
+options:
+  basename: MAP5_S00.BIN
+  target_path: assets/VIN/MAP5_S00.BIN
+  base_path: ../..
+  platform: psx
+  compiler: GCC
+
+  asm_path: asm/maps/map5_s00
+  src_path: src/maps/map5_s00
+  build_path: build
+
+  ld_script_path: linkers/maps/map5_s00.ld
+
+  find_file_boundaries: False
+  gp_value: 0x80022BB0
+
+  o_as_suffix: False
+  use_legacy_include_asm: False
+
+  asm_function_macro: glabel
+  asm_jtbl_label_macro: jlabel
+  asm_data_macro: dlabel
+
+  section_order: [".rodata", ".text", ".data", ".bss"]
+
+  symbol_addrs_path:
+    - configs/symbol_addrs.txt
+    - configs/maps/symbol_addrs.map5_s00.txt
+  reloc_addrs_path:
+    - configs/maps/reloc_addrs.map5_s00.txt
+
+  undefined_funcs_auto_path: linkers/maps/undefined_funcs_auto.map5_s00.txt
+  undefined_syms_auto_path: linkers/maps/undefined_syms_auto.map5_s00.txt
+
+  extensions_path: tools/splat_ext
+
+  subalign: 4
+
+  string_encoding: ASCII
+  data_string_encoding: ASCII
+  rodata_string_guesser_level: 2
+  data_string_guesser_level: 2
+segments:
+  - name: map5_s00
+    type: code
+    start: 0
+    vram: 0x800C9578
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x0, rodata]
+      - [0x1B60, asm, map5_s00]
+      - [0xF980, data, map5_s00]
+  - [0x14F00]

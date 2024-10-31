@@ -111,7 +111,14 @@ endif
 
 ifeq ($(BUILD_MAPS), 1)
 
-TARGET_MAPS				:= map0_s00
+TARGET_MAPS				:= map0_s00 map0_s01 map0_s02 \
+							map1_s00 map1_s01 map1_s02 map1_s03 map1_s04 map1_s05 map1_s06 \
+							map2_s00 map2_s01 map2_s02 map2_s03 map2_s04 \
+							map3_s00 map3_s01 map3_s02 map3_s03 map3_s04 map3_s05 map3_s06 \
+							map4_s00 map4_s01 map4_s02 map4_s03 map4_s04 map4_s05 map4_s06 \
+							map5_s00 map5_s01 map5_s02 map5_s03 \
+							map6_s00 map6_s01 map6_s02 map6_s03 map6_s04 map6_s05 \
+							map7_s00 map7_s01 map7_s02 map7_s03
 TARGET_MAPS				:= $(addprefix $(TARGET_MAPS_SRC_DIR)/,$(TARGET_MAPS))
 
 endif
