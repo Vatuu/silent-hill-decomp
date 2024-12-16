@@ -20,7 +20,7 @@ extern u32 g_RngSeed;
  *
  * @return A new pseudo-random 32-bit unsigned integer (u32).
  */
-u32 rngRand32();
+u32 rngRand32(void);
 
 /**
  * @brief Generates a new random positive 16-bit short integer.
@@ -31,7 +31,7 @@ u32 rngRand32();
  *
  * @return A random positive 16-bit short integer (0 to 0x7FFF).
  */
-s16 rngRand16();
+s16 rngRand16(void);
 
 /**
  * @brief Returns the current random seed value.
@@ -41,7 +41,7 @@ s16 rngRand16();
  *
  * @return The current random seed as a 32-bit unsigned integer (u32).
  */
-u32 rngGetSeed();
+u32 rngGetSeed(void);
 
 /**
  * @brief Sets the random seed to a specified value.
@@ -63,6 +63,6 @@ void rngSetSeed(u32 newseed);
  *
  * @return A random 12-bit short integer (0 to 0xFFF).
  */
-u16 rngRand12();
+u16 rngRand12(void);
 
 #endif
