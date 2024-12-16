@@ -7,6 +7,7 @@ linkers/
 .idea/
 __pycache__/
 permuter/
+expected/
 
 null.d
 !*/place-the-bin-and-cue-here
