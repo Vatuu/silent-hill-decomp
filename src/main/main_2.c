@@ -1,8 +1,12 @@
 #include "main_2.h"
 
-s32 func_80010e58(s32 arg0) { return arg0 < D_800230A8; }
+s32 func_80010e58(s32 arg0) {
+  return arg0 < D_800230A8;
+}
 
-s32 func_80010E68(void) { return D_80022C98[0x100] + 1 - D_80022C98[0x104]; }
+s32 func_80010E68(void) {
+  return D_80022C98[0x100] + 1 - D_80022C98[0x104];
+}
 
 s32 func_80010e84(void) {
   s32 result;
