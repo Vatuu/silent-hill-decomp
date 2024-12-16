@@ -3,104 +3,119 @@
 
 #include "common.h"
 
-#define FILE_ENTRY_BLOCK_SIZE 0x100
-#define FILE_ENTRY_ALIGNMENT_SIZE 0x800
+#define FS_BLOCK_SIZE 0x100  /** Units in which file size is measured in the file table */
+#define FS_SECTOR_SIZE 0x800 /** Size of a CD sector (2048 bytes) */
+#define FS_MAX_NAME 8        /** Maximum amount of characters in a file name (without extension or path) */
+#define FS_INVALID_TYPE 0x0f /** Unspecified file type (or empty extension) */
+#define FS_NUM_FILES 2074    /** Number of files in g_FileTable. Probably depends on version. */
 
 /**
- * @brief Array of folders.
- * 
- * This array, `g_FilePaths`, contains a list of (11) pointers to folder names.
- * The folder names are like "\XA\", "\VIN\", etc.
+ * @brief Entry in the file table.
+ *
+ * Contains the metadata of a single file in file table (`g_FileTable`):
+ * its name, size and location on the CD.
+ *
+ * The file name is stored as 8 6-bit characters represented as two 24-bit bitfields:
+ * `name0123` and `name4567`. The 6-bit character value maps to ASCII character range `0x20` ... `0x5f`.
+ * The name does not contain the path or extension.
+ *
+ * The path and extension are stored as 4-bit indices of the path string in `g_FilePaths` and of
+ * the extension string in `g_FileExts`, respectively. This limits the amount of paths and extensions
+ * to 16 each, with one representing an empty extension.
+ */
+typedef struct FileEntry {
+  u32 startsector : 19; /** Number of the CD sector where the file starts */
+  u32 numblocks : 12;   /** Size of file in 256-byte blocks */
+  u8  pathnum : 4;      /** Index of path to file in `g_FilePaths` */
+  u32 name0123 : 24;    /** First four 6-bit characters of the file name */
+  u32 name4567 : 24;    /** Second four 6-bit characters of the file name */
+  u8  type : 4;         /** File type (and index of extension in `g_FileExts`) */
+} FileEntry;
+
+/**
+ * @brief Array of file path strings.
+ *
+ * All possible path strings occuring in the data archives.
+ * This is referenced by index (`pathnum`) in each file table entry.
+ *
+ * In SLUS_007.07 there are 11 possible paths. They are all one subfolder deep
+ * and have starting and trailing path separators (backslashes).
  */
 extern char *const g_FilePaths[];
 
 /**
- * @brief Array of file types.
- * 
- * This array, `g_FileExts`, contains a list of (12) pointers to file types.
- * The file types are like ".CMP", ".DAT", etc.
+ * @brief Array of file extension strings.
+ *
+ * All possible file extensions occuring in the data archives.
+ * This is referenced by index (`type`) in each file table entry.
+ *
+ * In SLUS_007.07 there are 12 possible extensions. They all have a starting dot
+ * and are 3 characters long (`.XXX`).
  */
 extern char *const g_FileExts[];
 
 /**
- * @brief Represents an entry in the file entries table.
+ * @brief File information table.
  *
- * This struct contains encoded file names and locations of entries.
- * The file names are uppercase letters with a maximum length of 8.
- * They are encoded into 2 parts of 24-bit values. The encoding is done
- * by subtracting 0x20 from each character, which limits values to 6-bit
- * (as the maximum 6-bit value is 0x3F which is larger than 'Z' (0x5A) - 0x20),
- * and then OR'ing the results shifted left by 6.
- */
-typedef struct FileEntry {
-  u32 addr : 19;        // Address of the file entry
-  u32 blocks_num : 12;  // Size of the file in 256-byte block chunks
-  u8  dir_id : 4;       // Directory ID
-  u32 part1 : 24;       // Encoded file name, part 1
-  u32 part2 : 24;       // Encoded file name, part 2
-  u8  file_type_id : 4; // File type ID
-} FileEntry;
-
-/**
- * @brief Array of file entries.
- *
- * This array holds information about (assumingly) every file in .SILENT and
- * .HILL files.
+ * The file table is the index to the game's two data archives:
+ * the files `SILENT` and `HILL` on the CD. It contains metadata of every file
+ * in those archives, such as the name, size, file type and where the file is on the CD.
  */
 extern FileEntry g_FileTable[];
 
 /**
  * @brief Decrypts an encrypted overlay.
  *
- * This function takes an encrypted overlay and decrypts it, storing the result
- * in the provided result buffer. The decryption process is applied to the
- * specified number of bytes.
+ * The overlays in the `1ST` folder in the data archives are encrypted.
+ * Overlays in the `VIN` folder don't appear to be, though.
+ * This function decrypts data dword-by-dword, so `size` presumably must be
+ * divible by 4 for it to work properly.
  *
- * @param ovl_result Pointer to the buffer where the decrypted overlay will be
- * stored.
- * @param encrypted_ovl Pointer to the buffer containing the encrypted overlay
- * data.
+ * @param dst Destination buffer. Must be `size` long.
+ * @param src Encrypted overlay data.
  * @param size The number of bytes to decrypt.
  */
-void fsDecryptOverlay(s32 *ovl_result, const s32 *encrypted_ovl, s32 size);
+void fsDecryptOverlay(s32 *dst, const s32 *src, s32 size);
 
 /**
- * @brief Gets the size of a file entry in bytes.
+ * @brief Gets the size of a file in the file table.
  *
- * This function takes an index, looks up the corresponding file entry in
- * the global `g_FileTable` array, and returns the size of that file
- * entry in bytes.
+ * Takes a file table entry index (`filenum`) and returns the size of that file, obtained from
+ * its file table entry.
  *
- * @param entry_idx The index of the file entry to look up.
+ * @param filenum The index of the file entry to look up.
  * @return The size of the specified file entry in bytes.
  */
-s32 fsFileGetSize(s32 entry_idx);
+s32 fsFileGetSize(s32 filenum);
 
 /**
- * @brief Extracts the file name from a file entry at a given offset.
+ * @brief Gets the full name of a file in the file table.
  *
- * This function decodes the file name from the file entry located at the
- * specified offset in the global `g_FileTable` array. The decoded name is
- * stored in the provided output buffer.
+ * Takes a file table entry index (`filenum`) and returns the full name of that file
+ * (path + name + extension) into `outname`.
+ * The name is decoded from its file table representation into proper ASCII and is null terminated.
  *
- * @param[out] out_name Buffer where the decoded file name will be stored.
- * @param[in] offset The offset from the start of the `g_FileTable` array to
- * the target entry.
+ * @note `outname` must be at least 21 bytes long to fit the longest possible name that I know of
+ * plus a null terminator.
+ *
+ * @param[out] outname Buffer where the decoded file name will be stored.
+ * @param[in] filenum Index of the file in the file table.
  */
-void fsFileGetFullName(char *out_name, s32 offset);
+void fsFileGetFullName(char *outname, s32 filenum);
 
 /**
- * @brief Decodes the file name from a file entry.
+ * @brief Gets the full name from a file table entry.
  *
- * This function takes a pointer to a `FileEntry` and decodes the file name
- * from the `part1` and `part2` fields, storing the result in the provided
- * output buffer.
+ * Returns the full name in the file table entry `fentry`.
+ * The name is decoded from its file table representation into proper ASCII and is null terminated.
  *
- * @param[out] out_name Buffer where the decoded file name will be stored.
- * @param[in] file_entry Pointer to the file entry from which to decode the
- * name.
+ * @note `outname` must be at least 21 bytes long to fit the longest possible name that I know of
+ * plus a null terminator.
+ *
+ * @param[out] outname Buffer where the decoded file name will be stored.
+ * @param[in] fentry Pointer to the file table entry from which to decode the name.
  */
-void fsFileEntryGetFullName(char *out_name, const FileEntry *const file_entry);
+void fsFileEntryGetFullName(char *outname, const FileEntry *const fentry);
 
 /* Example of the file name encoding:
  *   For string like 'HERO':
@@ -115,63 +130,61 @@ void fsFileEntryGetFullName(char *out_name, const FileEntry *const file_entry);
  */
 
 /**
- * @brief Encodes a file name into FileEntry record parts.
+ * @brief Encodes a file name into 6-bit file table representation.
  *
- * This function takes a file name string and encodes it into two integers,
- * `part1` and `part2`, according to the encoding scheme described in the
- * `FileEntry` struct. The encoded values are stored in the provided output
- * parameters.
+ * Takes an ASCII file name and encodes it into the 6 bits per character format
+ * used by the file table.
+ * The name is stored in two 32-bit integers pointed to by `outname0123` and `outname4567`,
+ * corresponding to the `FileEntry` fields of the same name.
  *
- * @param[out] out_part1 Pointer to the integer where the first part of the
+ * @param[out] outname0123 Pointer to the integer where the first part of the
  * encoded name will be stored.
- * @param[out] out_part2 Pointer to the integer where the second part of the
+ * @param[out] outname4567 Pointer to the integer where the second part of the
  * encoded name will be stored.
- * @param[in] name The file name string to encode.
+ * @param[in] srcname The file name string to encode.
  */
-void fsEncodeFileName(s32 *out_part1, s32 *out_part2, const char *name);
+void fsEncodeFileName(s32 *outname0123, s32 *outname4567, const char *srcname);
 
 /**
- * @brief Calculates the size of a file entry aligned to 2MB blocks.
+ * @brief Gets the size of a file rounded up to CD sector size.
  *
- * This function takes an index, looks up the corresponding file entry in
- * the global `g_FileTable` array, and calculates the size of that file
- * entry, aligning the result to 0x800-byte (2MB) blocks.
+ * Takes an index in the file table and returns that file's size in bytes, rounded up to
+ * CD sector size (2048 bytes).
  *
- * @param entry_idx The index of the file entry to look up.
- * @return The size of the specified file entry aligned to 0x800-byte (2MB)
- * blocks.
+ * @param filenum The index of the file entry to look up.
+ * @return The size of the specified file entry in bytes rounded up to CD sector boundary.
  */
-s32 fsFileGetSizeInSectors(s32 entry_idx);
+s32 fsFileGetSizeInSectors(s32 filenum);
 
 /**
- * @brief Finds the offset to a first file entry with a matching file type ID.
+ * @brief Finds a file of the specified type in the file table.
  *
- * This function searches for the first file entry in the global `g_FileTable`
- * array that matches the specified `file_type_id`. The search starts from the
- * `start_offset` and proceeds either incrementally or decrementally based on
- * the `direction` parameter.
+ * Starts a linear search from the file table index `startnum`,
+ * going forwards if `direction` is positive, or backwards if it is negative.
+ * Returns the index of the first file it encounters whose `type` field is `ftype`,
+ * or -1 if it reaches the end of the table without finding anything.
  *
- * @param file_type_id The file type ID to search for.
- * @param start_offset The offset from which to start the search.
+ * @param ftype The file type to search for.
+ * @param startnum The table index from which to start the search.
  * @param direction The direction of the search: positive for incrementing,
  * negative for decrementing.
- * @return The offset of the first matching file entry, or -1 if not found.
+ * @return The index of the first matching file entry, or -1 if not found.
  */
-u32 fsFileFindNextOfType(s32 file_type_id, s32 start_offset, s32 direction);
+s32 fsFileFindNextOfType(s32 ftype, s32 startnum, s32 direction);
 
 /**
- * @brief Searches for a file entry by name and file type ID.
+ * @brief Finds a file with the specified name and type in the file table.
  *
- * This function searches for a file entry in the global `g_FileTable` array
- * that matches the specified file name and file type ID, starting from the
- * given offset. The search returns the index of the matching entry, or -1 if
- * not found.
+ * Starts a linear search from the file table index `startnum` going forwards.
+ * Returns the index of the first file it encounters whose `type` field is `ftype`
+ * and whose name is the same as `name`, or -1 if it reaches the end of the table
+ * without finding anything.
  *
  * @param name The file name to search for.
- * @param file_type_id The file type ID to match.
- * @param start_offset The offset from which to start the search.
+ * @param ftype The file type ID to match.
+ * @param startnum The offset from which to start the search.
  * @return The index of the matching file entry, or -1 if not found.
  */
-s32 fsFileFindNext(const char *name, s32 file_type_id, s32 start_offset);
+s32 fsFileFindNext(const char *name, s32 ftype, s32 startnum);
 
 #endif

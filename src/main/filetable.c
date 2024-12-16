@@ -1,172 +1,170 @@
 #include "filetable.h"
 
-#define MAX_NAME_LEN 8
-#define FILE_ENTRY_PART_SPLIT 4
-#define SHIFT_SIZE 6
-#define ENCODED_CHAR_SIZE 0x3F
-#define ENCODED_CHAR_OFFSET 0x20
-#define NO_FILE_TYPE_ID 0xF
+#define NAME_PART_CHARS 4
+#define NAME_CHAR_BITS 6
+#define NAME_CHAR_MASK 0x3F
+#define NAME_CHAR_OFFSET 0x20
 
-void fsDecryptOverlay(s32 *ovl_result, const s32 *encrypted_ovl, s32 size) {
+void fsDecryptOverlay(s32 *dst, const s32 *src, s32 size) {
   s32 i, seed = 0;
 
   i = 0;
   while (i < (size >> 2)) {
     seed = (seed + 0x01309125) * 0x03A452F7;
 
-    *ovl_result = *encrypted_ovl ^ seed;
+    *dst = *src ^ seed;
 
     i++;
-    encrypted_ovl++;
-    ovl_result++;
+    src++;
+    dst++;
   }
 }
 
-s32 fsFileGetSize(s32 entry_idx) {
-  return g_FileTable[entry_idx].blocks_num * FILE_ENTRY_BLOCK_SIZE;
+s32 fsFileGetSize(s32 filenum) {
+  return g_FileTable[filenum].numblocks * FS_BLOCK_SIZE;
 }
 
-void fsFileGetFullName(char *out_name, s32 offset) {
-  fsFileEntryGetFullName(out_name, &g_FileTable[offset]);
+void fsFileGetFullName(char *outname, s32 filenum) {
+  fsFileEntryGetFullName(outname, &g_FileTable[filenum]);
 }
 
-void fsFileEntryGetFullName(char *out_name, const FileEntry *const file_entry) {
+void fsFileEntryGetFullName(char *outname, const FileEntry *const fentry) {
   s32   i = 0;
-  char  decoded_char;
-  u32   name_part;
-  char  file_type_id;
-  char *file_type;
+  char  decoded;
+  u32   namepart;
+  char  ftype;
+  char *fext;
 
-  name_part = file_entry->part1;
+  namepart = fentry->name0123;
 
-  while (i < MAX_NAME_LEN) {
-    if (i == FILE_ENTRY_PART_SPLIT) {
-      name_part = file_entry->part2;
+  while (i < FS_MAX_NAME) {
+    if (i == NAME_PART_CHARS) {
+      namepart = fentry->name4567;
     }
 
-    decoded_char = name_part & ENCODED_CHAR_SIZE;
+    decoded = namepart & NAME_CHAR_MASK;
 
-    if (decoded_char == 0) {
+    if (decoded == 0) {
       break;
     }
 
-    out_name[i] = decoded_char + ENCODED_CHAR_OFFSET;
-    name_part >>= SHIFT_SIZE;
+    outname[i] = decoded + NAME_CHAR_OFFSET;
+    namepart >>= NAME_CHAR_BITS;
     i++;
   }
 
-  file_type_id = file_entry->file_type_id;
+  ftype = fentry->type;
 
-  if (file_type_id == NO_FILE_TYPE_ID) {
-    out_name[i] = NULL;
+  if (ftype == FS_INVALID_TYPE) {
+    outname[i] = '\0';
     return;
   }
 
-  file_type   = g_FileExts[file_type_id];
-  out_name[i] = *file_type;
+  fext = g_FileExts[ftype];
+  outname[i] = *fext;
 
-  while (*file_type) {
-    file_type++;
+  while (*fext) {
+    fext++;
     i++;
-    out_name[i] = *file_type;
+    outname[i] = *fext;
   }
 }
 
-void fsEncodeFileName(s32 *out_part1, s32 *out_part2, const char *name) {
+void fsEncodeFileName(s32 *outname0123, s32 *outname4567, const char *srcname) {
   s32 i;
-  s32 current_shift;
-  s32 item;
+  s32 curshift;
+  s32 srcchar;
 
-  s32 encoded_char;
-  s32 part1_counter;
-  s32 part2_counter;
+  s32 encoded;
+  s32 name0123;
+  s32 name4567;
 
-  part1_counter = 0;
-  part2_counter = 0;
-  current_shift = 0;
+  name0123 = 0;
+  name4567 = 0;
+  curshift = 0;
 
-  for (i = 0; i < MAX_NAME_LEN; i++) {
-    item = name[i];
+  for (i = 0; i < FS_MAX_NAME; i++) {
+    srcchar = srcname[i];
 
-    if (i == FILE_ENTRY_PART_SPLIT) {
-      current_shift = 0;
+    if (i == NAME_PART_CHARS) {
+      curshift = 0;
     }
 
-    if (item == NULL || item == '.') {
+    if (srcchar == '\0' || srcchar == '.') {
       break;
     }
 
-    encoded_char = (item - ENCODED_CHAR_OFFSET) << current_shift;
+    encoded = (srcchar - NAME_CHAR_OFFSET) << curshift;
 
     if (i < 4) {
-      part1_counter |= encoded_char;
+      name0123 |= encoded;
     } else {
-      part2_counter |= encoded_char;
+      name4567 |= encoded;
     }
 
-    current_shift += SHIFT_SIZE;
+    curshift += NAME_CHAR_BITS;
   }
 
-  *out_part1 = part1_counter;
-  *out_part2 = part2_counter;
+  *outname0123 = name0123;
+  *outname4567 = name4567;
 }
 
-s32 fsFileGetSizeInSectors(s32 entry_idx) {
-  return ((g_FileTable[entry_idx].blocks_num * FILE_ENTRY_BLOCK_SIZE) +
-          (FILE_ENTRY_ALIGNMENT_SIZE - 1)) &
-         ~(FILE_ENTRY_ALIGNMENT_SIZE - 1);
+s32 fsFileGetSizeInSectors(s32 filenum) {
+  return ((g_FileTable[filenum].numblocks * FS_BLOCK_SIZE) +
+          (FS_SECTOR_SIZE - 1)) &
+         ~(FS_SECTOR_SIZE - 1);
 }
 
-u32 fsFileFindNextOfType(s32 file_type_id, s32 start_offset, s32 direction) {
+s32 fsFileFindNextOfType(s32 ftype, s32 startnum, s32 direction) {
   s32 i;
-  u32 cur_offset;
+  u32 curnum;
   s32 increment;
 
   increment = direction < 0 ? -1 : 1;
 
-  i          = 0;
-  cur_offset = start_offset + increment;
+  i = 0;
+  curnum = startnum + increment;
 
-  while (i < 0x81A) {
-    if (cur_offset >= 0x81A) {
-      cur_offset = direction < 0 ? 0x819 : 0;
+  while (i < FS_NUM_FILES) {
+    if (curnum >= FS_NUM_FILES) {
+      curnum = direction < 0 ? FS_NUM_FILES - 1 : 0;
     }
 
-    if (g_FileTable[cur_offset].file_type_id == file_type_id) {
-      return cur_offset;
+    if (g_FileTable[curnum].type == ftype) {
+      return curnum;
     }
 
-    cur_offset += increment;
+    curnum += increment;
     i++;
   }
 
   return -1;
 }
 
-s32 fsFileFindNext(const char *name, s32 file_type_id, s32 start_offset) {
-  FileEntry *file_entry;
+s32 fsFileFindNext(const char *name, s32 ftype, s32 startnum) {
+  FileEntry *fentry;
 
-  s32 part1;
-  s32 part2;
+  s32 name0123;
+  s32 name4567;
 
-  s32 i = start_offset;
+  s32 i = startnum;
 
-  s32 entry_idx = -1;
+  s32 foundidx = -1;
 
-  fsEncodeFileName(&part1, &part2, name);
+  fsEncodeFileName(&name0123, &name4567, name);
 
-  file_entry = &g_FileTable[i];
+  fentry = &g_FileTable[i];
 
-  while (i < 0x81A) {
-    if (file_entry->part2 == part2 && file_entry->part1 == part1 &&
-        file_entry->file_type_id == file_type_id) {
-      entry_idx = i;
+  while (i < FS_NUM_FILES) {
+    if (fentry->name4567 == name4567 && fentry->name0123 == name0123 &&
+        fentry->type == ftype) {
+      foundidx = i;
       break;
     }
 
     i++;
-    file_entry++;
+    fentry++;
   }
 
-  return entry_idx;
+  return foundidx;
 }
