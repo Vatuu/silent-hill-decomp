@@ -146,6 +146,16 @@ build: $(TARGET_OUT)
 check: build
 	@sha256sum --ignore-missing --check checksum.sha
 
+expected: check
+	# Copying build results into "expected" folder
+	mkdir -p expected/build
+	cp -r build/src expected/build/src
+	cp -r build/asm expected/build/asm
+	# Future function changes can be diffed via:
+	#  python3 tools/asm-differ/diff.py -mwo --overlay bodyprog vcRetMaxTgtMvXzLen
+	# To try and decompile a function with M2C:
+	#  python3 tools/decompile.py vcRetMaxTgtMvXzLen
+
 extract:
 	$(DUMPSXISO) $(DUMPSXISO_FLAGS)
 	$(SILENT_ASSETS) $(SILENT_ASSETS_FLAGS)
