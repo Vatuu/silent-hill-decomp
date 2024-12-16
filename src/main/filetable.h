@@ -154,7 +154,7 @@ void fsEncodeFileName(s32 *outname0123, s32 *outname4567, const char *srcname);
  * @param filenum The index of the file entry to look up.
  * @return The size of the specified file entry in bytes rounded up to CD sector boundary.
  */
-s32 fsFileGetSizeInSectors(s32 filenum);
+s32 fsFileGetSectorAlignedSize(s32 filenum);
 
 /**
  * @brief Finds a file of the specified type in the file table.

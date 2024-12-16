@@ -109,7 +109,7 @@ void fsEncodeFileName(s32 *outname0123, s32 *outname4567, const char *srcname) {
   *outname4567 = name4567;
 }
 
-s32 fsFileGetSizeInSectors(s32 filenum) {
+s32 fsFileGetSectorAlignedSize(s32 filenum) {
   return ((g_FileTable[filenum].numblocks * FS_BLOCK_SIZE) +
           (FS_SECTOR_SIZE - 1)) &
          ~(FS_SECTOR_SIZE - 1);

@@ -1,17 +1,17 @@
-#ifndef RAND_H
-#define RAND_H
+#ifndef RNG_H
+#define RNG_H
 
 #include "common.h"
 
 /**
- * @brief Global variable storing the current random seed for the `ranqd1`
+ * @brief Global variable storing the current random seed for the `rngRand32`
  * function. The value is updated with each call to the RNG functions.
  */
-extern u32 g_RandSeed;
+extern u32 g_RngSeed;
 
 /**
  * @brief Generates a new random 32-bit unsigned integer and updates the
- * `g_RandSeed`.
+ * `g_RngSeed`.
  *
  * This function implements a Linear Congruential Generator (LCG) Random Number
  * Generator (RNG) algorithm, as outlined in "Numerical Recipes" (Second
@@ -20,49 +20,49 @@ extern u32 g_RandSeed;
  *
  * @return A new pseudo-random 32-bit unsigned integer (u32).
  */
-u32 ranqd1();
+u32 rngRand32();
 
 /**
  * @brief Generates a new random positive 16-bit short integer.
  * 
- * This function calls `ranqd1` to generate a random number, then
+ * This function calls `rngRand32` to generate a random number, then
  * shifts the result right to produce a value within the range
  * of 0 to 0x7FFF (16-bit - sign).
  *
  * @return A random positive 16-bit short integer (0 to 0x7FFF).
  */
-s16 getPositive16BitRandomNumber();
+s16 rngRand16();
 
 /**
  * @brief Returns the current random seed value.
  *
  * This function retrieves and returns the current value of the global variable
- * `g_RandSeed`.
+ * `g_RngSeed`.
  *
  * @return The current random seed as a 32-bit unsigned integer (u32).
  */
-u32 getRandomSeed();
+u32 rngGetSeed();
 
 /**
  * @brief Sets the random seed to a specified value.
  *
- * This function updates the global variable `g_RandSeed` with the given
+ * This function updates the global variable `g_RngSeed` with the given
  * seed value.
  *
- * @param next_seed The new seed value to be set, as a 32-bit unsigned integer
+ * @param newseed The new seed value to be set, as a 32-bit unsigned integer
  * (u32).
  */
-void setRandomSeed(u32 next_seed);
+void rngSetSeed(u32 newseed);
 
 /**
  * @brief Generates a new random 12-bit short integer.
  *
- * This function calls `ranqd1` to generate a random number, then
+ * This function calls `rngRand32` to generate a random number, then
  * shifts the result right to produce a value within the range
  * of 0 to 0xFFF (12-bit).
  *
  * @return A random 12-bit short integer (0 to 0xFFF).
  */
-u16 get12BitRandomNumber();
+u16 rngRand12();
 
 #endif
