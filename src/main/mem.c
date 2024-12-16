@@ -1,17 +1,17 @@
 #include "mem.h"
 
-void memmove(u32 *dest, u32 *src, s32 bytes_num) {
+void memmove32(u32 *dest, u32 *src, s32 numbytes) {
   u32 *end;
-  s32  words_num;
+  s32 numwords;
 
   if (dest == src) {
     return;
   }
 
-  words_num = bytes_num >> 2;
+  numwords = numbytes >> 2;
 
   if (dest < src) {
-    end = src + words_num;
+    end = src + numwords;
 
     while (src < end) {
       *dest++ = *src++;
@@ -19,8 +19,8 @@ void memmove(u32 *dest, u32 *src, s32 bytes_num) {
   } else {
     end = src;
 
-    dest += words_num;
-    src += words_num;
+    dest += numwords;
+    src += numwords;
 
     while (src > end) {
       *(--dest) = *(--src);
