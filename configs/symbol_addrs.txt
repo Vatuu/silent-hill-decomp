@@ -1,8 +1,8 @@
 OVERLAY_POINTERS = 0x80010000; // type:Overlays size:0x8
 
-g_fileEntries = 0x8001B11C; 
-g_folders = 0x80021254; // type:u32 size:0x2C
-g_fileTypes = 0x80021280; // type:u32 size:0x30
+g_FileTable = 0x8001B11C; 
+g_FilePaths = 0x80021254; // type:u32 size:0x2C
+g_FileExts = 0x80021280; // type:u32 size:0x30
 
 FOLDER_XA = 0x80022bb0; // type:asciz
 FOLDER_VIN = 0x80022bb8; // type:asciz
@@ -29,7 +29,7 @@ FILE_EXT_BIN = 0x80022c50; // type:asciz
 FILE_EXT_VAB = 0x80022c58; // type:asciz
 FILE_EXT_TIM = 0x80022c60; // type:asciz
 
-g_rand_seed = 0x80022c90; // type:u32
+g_RandSeed = 0x80022c90; // type:u32
 
 switchdataD_80010310 = 0x80010310;
 S_INI_OBJ_30 = 0x800122bc;
@@ -483,14 +483,14 @@ SYS_OBJ_2FAC = 0x8001b0a8;
 SYS_OBJ_2FF0 = 0x8001b0ec;
 SYS_OBJ_3000 = 0x8001b0fc;
 main = 0x80010770;
-decryptOverlay = 0X80010AD0;
-getFileSize = 0X80010B24;
-decodeFileNameByOffset = 0x80010b54;
-decodeFileName = 0x80010b88;
-encodeFileNameParts = 0x80010c60;
-getFileSizeAligned = 0x80010cd4;
-findFileEntryByType = 0x80010d0c;
-findFileEntry = 0x80010d80;
+fsDecryptOverlay = 0X80010AD0;
+fsFileGetSize = 0X80010B24;
+fsFileGetFullName = 0x80010b54;
+fsFileEntryGetFullName = 0x80010b88;
+fsEncodeFileName = 0x80010c60;
+fsFileGetSizeInSectors = 0x80010cd4;
+fsFileFindNextOfType = 0x80010d0c;
+fsFileFindNext = 0x80010d80;
 func_80010e58 = 0x80010e58;
 func_80010E68 = 0X80010E68;
 func_80010e84 = 0x80010e84;

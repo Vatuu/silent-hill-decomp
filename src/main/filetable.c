@@ -1,4 +1,4 @@
-#include "file_entries.h"
+#include "filetable.h"
 
 #define MAX_NAME_LEN 8
 #define FILE_ENTRY_PART_SPLIT 4
@@ -7,7 +7,7 @@
 #define ENCODED_CHAR_OFFSET 0x20
 #define NO_FILE_TYPE_ID 0xF
 
-void decryptOverlay(s32 *ovl_result, const s32 *encrypted_ovl, s32 size) {
+void fsDecryptOverlay(s32 *ovl_result, const s32 *encrypted_ovl, s32 size) {
   s32 i, seed = 0;
 
   i = 0;
@@ -22,15 +22,15 @@ void decryptOverlay(s32 *ovl_result, const s32 *encrypted_ovl, s32 size) {
   }
 }
 
-s32 getFileSize(s32 entry_idx) {
-  return g_fileEntries[entry_idx].blocks_num * FILE_ENTRY_BLOCK_SIZE;
+s32 fsFileGetSize(s32 entry_idx) {
+  return g_FileTable[entry_idx].blocks_num * FILE_ENTRY_BLOCK_SIZE;
 }
 
-void decodeFileNameByOffset(char *out_name, s32 offset) {
-  decodeFileName(out_name, &g_fileEntries[offset]);
+void fsFileGetFullName(char *out_name, s32 offset) {
+  fsFileEntryGetFullName(out_name, &g_FileTable[offset]);
 }
 
-void decodeFileName(char *out_name, const FileEntry *const file_entry) {
+void fsFileEntryGetFullName(char *out_name, const FileEntry *const file_entry) {
   s32   i = 0;
   char  decoded_char;
   u32   name_part;
@@ -62,7 +62,7 @@ void decodeFileName(char *out_name, const FileEntry *const file_entry) {
     return;
   }
 
-  file_type   = g_fileTypes[file_type_id];
+  file_type   = g_FileExts[file_type_id];
   out_name[i] = *file_type;
 
   while (*file_type) {
@@ -72,7 +72,7 @@ void decodeFileName(char *out_name, const FileEntry *const file_entry) {
   }
 }
 
-void encodeFileNameParts(s32 *out_part1, s32 *out_part2, const char *name) {
+void fsEncodeFileName(s32 *out_part1, s32 *out_part2, const char *name) {
   s32 i;
   s32 current_shift;
   s32 item;
@@ -111,13 +111,13 @@ void encodeFileNameParts(s32 *out_part1, s32 *out_part2, const char *name) {
   *out_part2 = part2_counter;
 }
 
-s32 getFileSizeAligned(s32 entry_idx) {
-  return ((g_fileEntries[entry_idx].blocks_num * FILE_ENTRY_BLOCK_SIZE) +
+s32 fsFileGetSizeInSectors(s32 entry_idx) {
+  return ((g_FileTable[entry_idx].blocks_num * FILE_ENTRY_BLOCK_SIZE) +
           (FILE_ENTRY_ALIGNMENT_SIZE - 1)) &
          ~(FILE_ENTRY_ALIGNMENT_SIZE - 1);
 }
 
-u32 findFileEntryByType(s32 file_type_id, s32 start_offset, s32 direction) {
+u32 fsFileFindNextOfType(s32 file_type_id, s32 start_offset, s32 direction) {
   s32 i;
   u32 cur_offset;
   s32 increment;
@@ -132,7 +132,7 @@ u32 findFileEntryByType(s32 file_type_id, s32 start_offset, s32 direction) {
       cur_offset = direction < 0 ? 0x819 : 0;
     }
 
-    if (g_fileEntries[cur_offset].file_type_id == file_type_id) {
+    if (g_FileTable[cur_offset].file_type_id == file_type_id) {
       return cur_offset;
     }
 
@@ -143,7 +143,7 @@ u32 findFileEntryByType(s32 file_type_id, s32 start_offset, s32 direction) {
   return -1;
 }
 
-s32 findFileEntry(const char *name, s32 file_type_id, s32 start_offset) {
+s32 fsFileFindNext(const char *name, s32 file_type_id, s32 start_offset) {
   FileEntry *file_entry;
 
   s32 part1;
@@ -153,9 +153,9 @@ s32 findFileEntry(const char *name, s32 file_type_id, s32 start_offset) {
 
   s32 entry_idx = -1;
 
-  encodeFileNameParts(&part1, &part2, name);
+  fsEncodeFileName(&part1, &part2, name);
 
-  file_entry = &g_fileEntries[i];
+  file_entry = &g_FileTable[i];
 
   while (i < 0x81A) {
     if (file_entry->part2 == part2 && file_entry->part1 == part1 &&

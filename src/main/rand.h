@@ -7,11 +7,11 @@
  * @brief Global variable storing the current random seed for the `ranqd1`
  * function. The value is updated with each call to the RNG functions.
  */
-extern u32 g_rand_seed;
+extern u32 g_RandSeed;
 
 /**
  * @brief Generates a new random 32-bit unsigned integer and updates the
- * `g_rand_seed`.
+ * `g_RandSeed`.
  *
  * This function implements a Linear Congruential Generator (LCG) Random Number
  * Generator (RNG) algorithm, as outlined in "Numerical Recipes" (Second
@@ -37,7 +37,7 @@ s16 getPositive16BitRandomNumber();
  * @brief Returns the current random seed value.
  *
  * This function retrieves and returns the current value of the global variable
- * `g_rand_seed`.
+ * `g_RandSeed`.
  *
  * @return The current random seed as a 32-bit unsigned integer (u32).
  */
@@ -46,7 +46,7 @@ u32 getRandomSeed();
 /**
  * @brief Sets the random seed to a specified value.
  *
- * This function updates the global variable `g_rand_seed` with the given
+ * This function updates the global variable `g_RandSeed` with the given
  * seed value.
  *
  * @param next_seed The new seed value to be set, as a 32-bit unsigned integer

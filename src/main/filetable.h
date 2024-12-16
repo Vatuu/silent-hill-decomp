@@ -9,18 +9,18 @@
 /**
  * @brief Array of folders.
  * 
- * This array, `g_folders`, contains a list of (11) pointers to folder names.
+ * This array, `g_FilePaths`, contains a list of (11) pointers to folder names.
  * The folder names are like "\XA\", "\VIN\", etc.
  */
-extern char *const g_folders[];
+extern char *const g_FilePaths[];
 
 /**
  * @brief Array of file types.
  * 
- * This array, `g_fileTypes`, contains a list of (12) pointers to file types.
+ * This array, `g_FileExts`, contains a list of (12) pointers to file types.
  * The file types are like ".CMP", ".DAT", etc.
  */
-extern char *const g_fileTypes[];
+extern char *const g_FileExts[];
 
 /**
  * @brief Represents an entry in the file entries table.
@@ -47,7 +47,7 @@ typedef struct FileEntry {
  * This array holds information about (assumingly) every file in .SILENT and
  * .HILL files.
  */
-extern FileEntry g_fileEntries[];
+extern FileEntry g_FileTable[];
 
 /**
  * @brief Decrypts an encrypted overlay.
@@ -62,32 +62,32 @@ extern FileEntry g_fileEntries[];
  * data.
  * @param size The number of bytes to decrypt.
  */
-void decryptOverlay(s32 *ovl_result, const s32 *encrypted_ovl, s32 size);
+void fsDecryptOverlay(s32 *ovl_result, const s32 *encrypted_ovl, s32 size);
 
 /**
  * @brief Gets the size of a file entry in bytes.
  *
  * This function takes an index, looks up the corresponding file entry in
- * the global `g_fileEntries` array, and returns the size of that file
+ * the global `g_FileTable` array, and returns the size of that file
  * entry in bytes.
  *
  * @param entry_idx The index of the file entry to look up.
  * @return The size of the specified file entry in bytes.
  */
-s32 getFileSize(s32 entry_idx);
+s32 fsFileGetSize(s32 entry_idx);
 
 /**
  * @brief Extracts the file name from a file entry at a given offset.
  *
  * This function decodes the file name from the file entry located at the
- * specified offset in the global `g_fileEntries` array. The decoded name is
+ * specified offset in the global `g_FileTable` array. The decoded name is
  * stored in the provided output buffer.
  *
  * @param[out] out_name Buffer where the decoded file name will be stored.
- * @param[in] offset The offset from the start of the `g_fileEntries` array to
+ * @param[in] offset The offset from the start of the `g_FileTable` array to
  * the target entry.
  */
-void decodeFileNameByOffset(char *out_name, s32 offset);
+void fsFileGetFullName(char *out_name, s32 offset);
 
 /**
  * @brief Decodes the file name from a file entry.
@@ -100,7 +100,7 @@ void decodeFileNameByOffset(char *out_name, s32 offset);
  * @param[in] file_entry Pointer to the file entry from which to decode the
  * name.
  */
-void decodeFileName(char *out_name, const FileEntry *const file_entry);
+void fsFileEntryGetFullName(char *out_name, const FileEntry *const file_entry);
 
 /* Example of the file name encoding:
  *   For string like 'HERO':
@@ -128,25 +128,25 @@ void decodeFileName(char *out_name, const FileEntry *const file_entry);
  * encoded name will be stored.
  * @param[in] name The file name string to encode.
  */
-void encodeFileNameParts(s32 *out_part1, s32 *out_part2, const char *name);
+void fsEncodeFileName(s32 *out_part1, s32 *out_part2, const char *name);
 
 /**
  * @brief Calculates the size of a file entry aligned to 2MB blocks.
  *
  * This function takes an index, looks up the corresponding file entry in
- * the global `g_fileEntries` array, and calculates the size of that file
+ * the global `g_FileTable` array, and calculates the size of that file
  * entry, aligning the result to 0x800-byte (2MB) blocks.
  *
  * @param entry_idx The index of the file entry to look up.
  * @return The size of the specified file entry aligned to 0x800-byte (2MB)
  * blocks.
  */
-s32 getFileSizeAligned(s32 entry_idx);
+s32 fsFileGetSizeInSectors(s32 entry_idx);
 
 /**
  * @brief Finds the offset to a first file entry with a matching file type ID.
  *
- * This function searches for the first file entry in the global `g_fileEntries`
+ * This function searches for the first file entry in the global `g_FileTable`
  * array that matches the specified `file_type_id`. The search starts from the
  * `start_offset` and proceeds either incrementally or decrementally based on
  * the `direction` parameter.
@@ -157,12 +157,12 @@ s32 getFileSizeAligned(s32 entry_idx);
  * negative for decrementing.
  * @return The offset of the first matching file entry, or -1 if not found.
  */
-u32 findFileEntryByType(s32 file_type_id, s32 start_offset, s32 direction);
+u32 fsFileFindNextOfType(s32 file_type_id, s32 start_offset, s32 direction);
 
 /**
  * @brief Searches for a file entry by name and file type ID.
  *
- * This function searches for a file entry in the global `g_fileEntries` array
+ * This function searches for a file entry in the global `g_FileTable` array
  * that matches the specified file name and file type ID, starting from the
  * given offset. The search returns the index of the matching entry, or -1 if
  * not found.
@@ -172,6 +172,6 @@ u32 findFileEntryByType(s32 file_type_id, s32 start_offset, s32 direction);
  * @param start_offset The offset from which to start the search.
  * @return The index of the matching file entry, or -1 if not found.
  */
-s32 findFileEntry(const char *name, s32 file_type_id, s32 start_offset);
+s32 fsFileFindNext(const char *name, s32 file_type_id, s32 start_offset);
 
 #endif

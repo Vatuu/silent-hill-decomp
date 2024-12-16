@@ -74,7 +74,7 @@ segments:
       - [0xD50, rodata, psyq/libgpu/sys] 
 
       - [0xF70, c, main] # the main function
-      - [0x12D0, c, file_entries] # file entry functions
+      - [0x12D0, c, filetable] # file entry functions
       - [0x1658, c, main_2] # unclear
 
       - [0x1CC4, c, main_3] # split due to usage of jtbl in rodata
