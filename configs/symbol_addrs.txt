@@ -1,9 +1,5 @@
 OVERLAY_POINTERS = 0x80010000; // type:Overlays size:0x8
 
-g_FileTable = 0x8001B11C; 
-g_FilePaths = 0x80021254; // type:u32 size:0x2C
-g_FileExts = 0x80021280; // type:u32 size:0x30
-
 FOLDER_XA = 0x80022bb0; // type:asciz
 FOLDER_VIN = 0x80022bb8; // type:asciz
 FOLDER_TIM = 0x80022bc0; // type:asciz
@@ -28,8 +24,6 @@ FILE_EXT_DMS = 0x80022c48; // type:asciz
 FILE_EXT_BIN = 0x80022c50; // type:asciz
 FILE_EXT_VAB = 0x80022c58; // type:asciz
 FILE_EXT_TIM = 0x80022c60; // type:asciz
-
-g_RngSeed = 0x80022c90; // type:u32
 
 switchdataD_80010310 = 0x80010310;
 S_INI_OBJ_30 = 0x800122bc;
@@ -482,53 +476,74 @@ SYS_OBJ_2F2C = 0x8001b028;
 SYS_OBJ_2FAC = 0x8001b0a8;
 SYS_OBJ_2FF0 = 0x8001b0ec;
 SYS_OBJ_3000 = 0x8001b0fc;
-main = 0x80010770;
-fsDecryptOverlay = 0X80010AD0;
-fsFileGetSize = 0X80010B24;
-fsFileGetFullName = 0x80010b54;
-fsFileEntryGetFullName = 0x80010b88;
-fsEncodeFileName = 0x80010c60;
-fsFileGetSectorAlignedSize = 0x80010cd4;
-fsFileFindNextOfType = 0x80010d0c;
-fsFileFindNext = 0x80010d80;
-func_80010e58 = 0x80010e58;
-func_80010E68 = 0X80010E68;
-func_80010e84 = 0x80010e84;
-func_80010ecc = 0x80010ecc;
-func_80010f34 = 0x80010f34;
-func_80010F68 = 0X80010F68;
-func_80010F9C = 0X80010F9C;
-func_80011018 = 0x80011018;
-func_80011074 = 0X80011074;
-func_80011170 = 0X80011170;
-func_800111dc = 0x800111dc;
-func_80011260 = 0X80011260;
-func_8001137C = 0X8001137C;
-func_800114C4 = 0X800114C4;
-func_80011630 = 0X80011630;
-func_800116BC = 0X800116BC;
-func_800117AC = 0X800117AC;
-func_800117E8 = 0X800117E8;
-func_8001182C = 0X8001182C;
-func_80011884 = 0X80011884;
-func_8001190c = 0x8001190c;
-func_80011A4C = 0X80011A4C;
-func_80011B24 = 0X80011B24;
-func_80011C3C = 0X80011C3C;
-func_80011C70 = 0X80011C70;
-func_80011cfc = 0x80011cfc;
-func_80011D04 = 0X80011D04;
-func_80011E4C = 0X80011E4C;
-func_80011ed0 = 0x80011ed0;
-maybeMoveLastElement = 0X80011F48;
-func_80011F78 = 0X80011F78;
-func_800120b0 = 0x800120b0;
-rngRand32 = 0x800120b8;
-rngRand16 = 0x800120e4;
-rngGetSeed = 0x80012104;
-rngSetSeed = 0x80012110;
-rngRand12 = 0x8001211c;
-memmove32 = 0x8001213c;
+
+// main
+main = 0x80010770; // type:func
+
+// filetable
+g_FileTable = 0x8001B11C; // type:u32 size:0x6138
+g_FilePaths = 0x80021254; // type:u32 size:0x2C
+g_FileExts = 0x80021280; // type:u32 size:0x30
+fsDecryptOverlay = 0X80010AD0; // type:func
+fsFileGetSize = 0X80010B24; // type:func
+fsFileGetFullName = 0x80010b54; // type:func
+fsFileEntryGetFullName = 0x80010b88; // type:func
+fsEncodeFileName = 0x80010c60; // type:func
+fsFileGetSectorAlignedSize = 0x80010cd4; // type:func
+fsFileFindNextOfType = 0x80010d0c; // type:func
+fsFileFindNext = 0x80010d80; // type:func
+
+// fsqueue
+g_FsQueue = 0x80022c98; // type:u32 size:0x428 // actually is a big struct, but this'll do for now
+fsQueueIsEntryLoaded = 0x80010e58; // type:func // unsure
+fsQueueGetLength = 0X80010E68; // type:func
+fsQueueDoThingWhenEmpty = 0x80010e84; // type:func // unsure, calls into bodyprog and touches the fsqueue
+fsQueueWaitForEmpty = 0x80010ecc; // type:func // spin wait for GetLength() < 1 with VSync/DrawSync and calls to bodyprog, loading screen?
+fsQueueStartSeek = 0x80010f34; // type:func
+fsQueueStartRead = 0X80010F68; // type:func
+fsQueueStartReadTim = 0X80010F9C; // type:func
+fsQueueStartReadGsThing = 0x80011018; // type:func // unsure, causes fsQueuePostLoadGsThing later
+fsQueueEnqueue = 0X80011074; // type:func
+fsQueueInit = 0X80011170; // type:func
+fsQueueReset = 0x800111dc; // type:func // unsure, resets a part of the queue
+fsQueueUpdate = 0X80011260; // type:func
+fsQueueUpdateSeek = 0X8001137C; // type:func
+fsQueueUpdateRead = 0X800114C4; // type:func
+fsQueueAllocEntryData = 0X80011630; // type:func
+fsQueueCanRead = 0X800116BC; // type:func
+fsQueueDoBuffersOverlap = 0X800117AC; // type:func
+fsQueueTickSetLoc = 0X800117E8; // type:func
+fsQueueTickRead = 0X8001182C; // type:func
+fsQueueTickReset = 0X80011884; // type:func
+fsFileReadPcDrv = 0x8001190c; // type:func // does not actually go into the queue
+fsQueueUpdatePostLoad = 0X80011A4C; // type:func
+fsQueuePostLoadTim = 0X80011B24; // type:func
+fsQueuePostLoadGsThing = 0X80011C3C; // type:func // unsure, calls into bodyprog, which then uses GsCOORDINATE2
+
+// fsmem
+// these might actually be from psyq heap or something, since they're in close proximity to memcpy
+g_FsMem = 0x800230c0; // type:u32 size:0xe0 // actually is a struct
+fsMemInit = 0X80011C70; // type:func
+nullsub_80011cfc = 0x80011cfc; // type:func
+fsMemAlloc = 0X80011D04; // type:func
+fsMemClampBlock = 0X80011E4C; // type:func
+fsMemFree = 0x80011ed0; // type:func
+fsMemRelinkBlock = 0X80011F48; // type:func
+memcpy = 0X80011F78; // type:func
+nullsub_800120b0 = 0x800120b0; // type:func
+
+// rng
+g_RngSeed = 0x80022c90; // type:u32
+rngRand32 = 0x800120b8; // type:func
+rngRand16 = 0x800120e4; // type:func
+rngGetSeed = 0x80012104; // type:func
+rngSetSeed = 0x80012110; // type:func
+rngRand12 = 0x8001211c; // type:func
+
+// memmove
+memmove32 = 0x8001213c; // type:func
+
+// psyq
 EnterCriticalSection = 0X800121BC;
 ExitCriticalSection = 0X800121CC;
 open = 0x800121dc;

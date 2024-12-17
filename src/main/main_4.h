@@ -3,22 +3,25 @@
 
 #include "common.h"
 
-typedef struct MaybeLinkedList {
-  /* 0x00 */ s32                     unk0;
-  /* 0x04 */ s32                     unk4;
-  /* 0x08 */ struct MaybeLinkedList *next;
-} MaybeLinkedList;
+#define FS_MEM_NUM_BLOCKS 16
 
-void maybeMoveLastElement(MaybeLinkedList *from, MaybeLinkedList *to, s32 data0,
-                          s32 data1);
+typedef struct FsMemBlock {
+  u8 *start;
+  u32 size;
+  struct FsMemBlock *next;
+} FsMemBlock;
 
 typedef struct {
-  u32 maybeStart;
-  u32 maybeLength;
-} Unknown;
+  u8 *start;
+  u32 size;
+  FsMemBlock alloc_list;
+  FsMemBlock free_list;
+  FsMemBlock blocks[FS_MEM_NUM_BLOCKS];
+} FsMemState;
 
-extern Unknown D_800230C0;
+extern FsMemState g_FsMem;
 
-s32 func_80011E4C(s32 arg0, s32 arg1);
+void fsMemRelinkBlock(FsMemBlock *from, FsMemBlock *to, u8 *start, u32 size);
+s32 fsMemClampBlock(u8 *start, u8 *end);
 
 #endif
