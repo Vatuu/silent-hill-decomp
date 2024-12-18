@@ -34,7 +34,7 @@ INCLUDE_ASM("asm/main/nonmatchings/fsqueue_3", fsQueueTickRead);
 
 INCLUDE_ASM("asm/main/nonmatchings/fsqueue_3", fsQueueTickReset);
 
-INCLUDE_ASM("asm/main/nonmatchings/fsqueue_3", fsFileReadPcDrv);
+INCLUDE_ASM("asm/main/nonmatchings/fsqueue_3", fsQueueReadPcDrv);
 
 INCLUDE_ASM("asm/main/nonmatchings/fsqueue_3", fsQueueUpdatePostLoad);
 
