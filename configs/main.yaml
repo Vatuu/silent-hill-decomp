@@ -58,8 +58,8 @@ segments:
     # bss_size: 0x1EC8
     subsegments:
       - [0x800, .rodata, main]
-      - [0x808, .rodata, main_4]
-      - [0x818, .rodata, main_3] # jtbl
+      - [0x808, .rodata, fsqueue_3]
+      - [0x818, .rodata, fsqueue_2] # jtbl
 
       - [0x830, rodata, psyq/libspu/spu]
       - [0x880, rodata, psyq/libetc/vsync]
@@ -75,11 +75,10 @@ segments:
 
       - [0xF70, c, main] # the main function
       - [0x12D0, c, filetable] # file entry functions
-      - [0x1658, c, main_2] # unclear
-
-      - [0x1CC4, c, main_3] # split due to usage of jtbl in rodata
-
-      - [0x1E30, c, main_4] # unclear
+      - [0x1658, c, fsqueue_1] # fs queue functions part 1
+      - [0x1CC4, c, fsqueue_2] # fs queue functions part 2, split due to usage of jtbl in rodata
+      - [0x1E30, c, fsqueue_3] # fs queue functions part 3
+      - [0x2470, c, fsmem] # fs heap allocator
       - [0x28B8, c, rng] # RNG functions
       - [0x293C, c, mem] # memmove32
 
