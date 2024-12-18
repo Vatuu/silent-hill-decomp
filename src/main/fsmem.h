@@ -21,6 +21,9 @@ typedef struct {
 
 extern FsMemState g_FsMem;
 
+void nullsub_80011cfc(void);
+void nullsub_800120b0(void);
+
 void fsMemInit(u8 *start, u32 size);
 void fsMemRelinkBlock(FsMemBlock *from, FsMemBlock *to, u8 *start, u32 size);
 s32 fsMemClampBlock(u8 *start, u8 *end);

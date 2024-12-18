@@ -1,5 +1,5 @@
-#ifndef FILE_ENTRIES_H
-#define FILE_ENTRIES_H
+#ifndef _FILETABLE_H
+#define _FILETABLE_H
 
 #include "common.h"
 
