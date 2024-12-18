@@ -41,7 +41,7 @@ GET_YAML_TARGET			:= $(PYTHON) $(TOOLS_DIR)/get_yaml_target.py
 OPT_FLAGS       		:= -O2
 DL_FLAGS				:= -G4
 ENDIAN          		:= -EL
-INCLUDE_FLAGS			:= -Iinclude -I $(BUILD_DIR)
+INCLUDE_FLAGS			:= -Iinclude -I $(BUILD_DIR) -Iinclude/psyq
 DEFINE_FLAGS   			:= -D_LANGUAGE_C -DUSE_INCLUDE_ASM
 AS_FLAGS         		:= $(ENDIAN) $(INCLUDE_FLAGS) $(OPT_FLAGS) $(DL_FLAGS) -march=r3000 -mtune=r3000 -no-pad-sections
 CC_FLAGS        		:= $(OPT_FLAGS) $(DL_FLAGS) -mips1 -mcpu=3000 -w -funsigned-char -fpeephole -ffunction-cse -fpcc-struct-return -fcommon -fverbose-asm -msoft-float -mgas -fgnu-linker -quiet

@@ -13,10 +13,9 @@ src_dir = root_dir + "src/"
 # Project-specific
 CPP_FLAGS = [
     "-Iinclude",
+    "-Iinclude/psyq",
     "-Isrc",
-    "-Iver/current/build/include",
     "-D_LANGUAGE_C",
-    "-DF3DEX_GBI_2",
     "-D_MIPS_SZLONG=32",
     "-DSCRIPT(...)={}",
     "-D__attribute__(...)=",
