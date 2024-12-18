@@ -1,5 +1,5 @@
-#ifndef MAIN_2_H
-#define MAIN_2_H
+#ifndef _FSQUEUE_H
+#define _FSQUEUE_H
 
 #include "common.h"
 #include "filetable.h"
@@ -54,10 +54,22 @@ extern FsQueue g_FsQueue;
 extern s32 D_800C489C;
 
 s32 func_8003c850();
+void fsQueueInit(void);
 s32 fsQueueIsEntryLoaded(s32 arg0);
 s32 fsQueueGetLength(void);
 s32 fsQueueDoThingWhenEmpty(void);
 s32 fsQueueAllocEntryData(FsQueueEntry *entry);
 s32 fsQueueReadPcDrv(FsQueueEntry *entry);
+s32 fsQueueCanRead(FsQueueEntry *entry);
+s32 fsQueueDoBuffersOverlap(u8 *data1, u32 size1, u8 *data2, u32 size2);
+void fsQueueTickSetLoc(FsQueueEntry *entry);
+void fsQueueTickRead(FsQueueEntry *entry);
+s32 fsQueueTickReset(FsQueueEntry *entry);
+void fsQueueUpdate(void);
+s32 fsQueueUpdateRead(FsQueueEntry *entry);
+s32 fsQueueUpdateSeek(FsQueueEntry *entry);
+void fsQueueUpdatePostLoad(FsQueueEntry *entry);
+void fsQueuePostLoadTim(FsQueueEntry *entry);
+void fsQueuePostLoadGsThing(FsQueueEntry *entry);
 
 #endif
