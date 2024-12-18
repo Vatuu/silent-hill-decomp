@@ -110,9 +110,7 @@ void fsEncodeFileName(s32 *outname0123, s32 *outname4567, const char *srcname) {
 }
 
 s32 fsFileGetSectorAlignedSize(s32 filenum) {
-  return ((g_FileTable[filenum].numblocks * FS_BLOCK_SIZE) +
-          (FS_SECTOR_SIZE - 1)) &
-         ~(FS_SECTOR_SIZE - 1);
+  return ALIGN(g_FileTable[filenum].numblocks * FS_BLOCK_SIZE, FS_SECTOR_SIZE);
 }
 
 s32 fsFileFindNextOfType(s32 ftype, s32 startnum, s32 direction) {
