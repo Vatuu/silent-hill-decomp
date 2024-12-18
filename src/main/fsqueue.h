@@ -57,5 +57,6 @@ s32 func_8003c850();
 s32 fsQueueIsEntryLoaded(s32 arg0);
 s32 fsQueueGetLength(void);
 s32 fsQueueDoThingWhenEmpty(void);
+s32 fsQueueAllocEntryData(FsQueueEntry *entry);
 
 #endif

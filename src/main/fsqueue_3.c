@@ -1,6 +1,21 @@
 #include "fsqueue.h"
+#include "fsmem.h"
 
-INCLUDE_ASM("asm/main/nonmatchings/fsqueue_3", fsQueueAllocEntryData);
+s32 fsQueueAllocEntryData(FsQueueEntry *entry) {
+  s32 result = 0;
+
+  if (entry->allocate) {
+    entry->data = fsMemAlloc(ALIGN(entry->info->numblocks * FS_BLOCK_SIZE, FS_SECTOR_SIZE));
+  } else {
+    entry->data = entry->external_data;
+  }
+
+  if (entry->data != 0) {
+    result = 1;
+  }
+
+  return result;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/fsqueue_3", fsQueueCanRead);
 
