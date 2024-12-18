@@ -39,7 +39,7 @@ INCLUDE_ASM("asm/main/nonmatchings/fsqueue_1", fsQueueEnqueue);
 void fsQueueInit(void) {
   bzero(&g_FsQueue, sizeof(g_FsQueue));
   g_FsQueue.last_idx = -1;
-  g_FsQueue.last_ptr = &g_FsQueue.entries[FS_QUEUE_MAX - 1];
+  g_FsQueue.last_ptr = &g_FsQueue.entries[FS_QUEUE_LEN - 1];
   g_FsQueue.read_idx = 0;
   g_FsQueue.read_ptr = g_FsQueue.entries;
   g_FsQueue.postload_idx = 0;
