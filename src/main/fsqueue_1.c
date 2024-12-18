@@ -48,7 +48,7 @@ void fsQueueInit(void) {
   g_FsQueue.postload_state = 0;
   g_FsQueue.reset_timer_0 = 0;
   g_FsQueue.reset_timer_1 = 0;
-  fsMemInit(0x1C0000, 0x20000);
+  fsMemInit(FS_MEM_BASE, FS_MEM_SIZE);
 }
 
 INCLUDE_ASM("asm/main/nonmatchings/fsqueue_1", fsQueueReset);
