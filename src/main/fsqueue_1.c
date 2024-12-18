@@ -1,4 +1,6 @@
 #include "fsqueue.h"
+#include "fsmem.h"
+#include "psyq/memory.h"
 
 s32 fsQueueIsEntryLoaded(s32 arg0) {
   return arg0 < g_FsQueue.postload_idx;
@@ -34,7 +36,20 @@ INCLUDE_ASM("asm/main/nonmatchings/fsqueue_1", fsQueueStartReadGsThing);
 
 INCLUDE_ASM("asm/main/nonmatchings/fsqueue_1", fsQueueEnqueue);
 
-INCLUDE_ASM("asm/main/nonmatchings/fsqueue_1", fsQueueInit);
+void fsQueueInit(void) {
+  bzero(&g_FsQueue, sizeof(g_FsQueue));
+  g_FsQueue.last_idx = -1;
+  g_FsQueue.last_ptr = &g_FsQueue.entries[FS_QUEUE_MAX - 1];
+  g_FsQueue.read_idx = 0;
+  g_FsQueue.read_ptr = g_FsQueue.entries;
+  g_FsQueue.postload_idx = 0;
+  g_FsQueue.postload_ptr = g_FsQueue.entries;
+  g_FsQueue.state = 0;
+  g_FsQueue.postload_state = 0;
+  g_FsQueue.reset_timer_0 = 0;
+  g_FsQueue.reset_timer_1 = 0;
+  fsMemInit(0x1C0000, 0x20000);
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/fsqueue_1", fsQueueReset);
 
