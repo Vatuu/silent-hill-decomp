@@ -1,6 +1,6 @@
 #include "fsqueue.h"
 #include "fsmem.h"
-#include "psyq/memory.h"
+#include <MEMORY.H>
 
 s32 fsQueueIsEntryLoaded(s32 arg0) {
   return arg0 < g_FsQueue.postload_idx;
