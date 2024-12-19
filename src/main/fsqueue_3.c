@@ -176,4 +176,10 @@ s32 fsQueuePostLoadTim(FsQueueEntry *entry) {
   return true;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/fsqueue_3", fsQueuePostLoadGsThing);
+/** bodyprog function */
+extern void func_80035560(s32, s32, void*, s32);
+
+s32 fsQueuePostLoadGsThing(FsQueueEntry* entry) {
+  func_80035560(entry->extra.gs_thing.field_00, entry->extra.gs_thing.field_04, entry->external_data, entry->extra.gs_thing.field_08);
+  return true;
+}

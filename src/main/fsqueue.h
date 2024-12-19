@@ -23,12 +23,9 @@ typedef struct {
  * See `FsQueueExtra`.
  */
 typedef struct {
-  u16 field_00;
-  u16 field_02;
-  u16 field_04;
-  u16 field_06;
-  u16 field_08;
-  u16 field_0a;
+  u32 field_00;
+  u32 field_04;
+  u32 field_08;
 } FsGsThingDesc;
 
 /**
