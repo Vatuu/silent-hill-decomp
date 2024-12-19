@@ -18,7 +18,36 @@ s32 fsQueueAllocEntryData(FsQueueEntry *entry) {
   return result;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/fsqueue_3", fsQueueCanRead);
+s32 fsQueueCanRead(FsQueueEntry *entry) {
+  FsQueueEntry *other;
+  s32 queue_len;
+  s32 overlap;
+  s32 i;
+
+  queue_len = g_FsQueue.read_idx - g_FsQueue.postload_idx;
+
+  if (queue_len > 0) {
+    i = 0;
+    do {
+      other = &g_FsQueue.entries[(g_FsQueue.postload_idx + i) & (FS_QUEUE_LEN - 1)];
+      overlap = false;
+      if (other->postload || other->allocate) {
+        overlap = fsQueueDoBuffersOverlap(
+          entry->data,
+          ALIGN(entry->info->numblocks * FS_BLOCK_SIZE, FS_SECTOR_SIZE),
+          other->data,
+          other->info->numblocks * FS_BLOCK_SIZE
+        );
+      }
+      if (overlap == true) {
+        return false;
+      }
+      i++;
+    } while (i < queue_len);
+  }
+
+  return true;
+}
 
 s32 fsQueueDoBuffersOverlap(u8 *data1, u32 size1, u8 *data2, u32 size2) {
   u32 data1_low = (u32)data1 & 0xFFFFFF;

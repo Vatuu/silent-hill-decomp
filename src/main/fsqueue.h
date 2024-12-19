@@ -318,8 +318,8 @@ s32 fsQueuePostLoadGsThing(FsQueueEntry *entry);
 
 /** @brief Check if specified read operation entry can be processed.
  *
- * Checks if loading `entry` will clobber any allocated memory used by any currently postloading operations.
- * Does not care about entries without allocated data.
+ * Checks if loading `entry` will clobber any memory that was allocated for pending entries in the queue,
+ * or memory that's used for postloading.
  *
  * @param entry Entry to check against.
  * @return 1 if the entry can be loaded without clobbering anything, 0 otherwise.
