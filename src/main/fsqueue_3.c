@@ -1,5 +1,6 @@
 #include "fsqueue.h"
 #include "fsmem.h"
+#include <LIBCD.H>
 
 s32 fsQueueAllocEntryData(FsQueueEntry *entry) {
   s32 result = 0;
@@ -32,7 +33,26 @@ INCLUDE_ASM("asm/main/nonmatchings/fsqueue_3", fsQueueTickSetLoc);
 
 INCLUDE_ASM("asm/main/nonmatchings/fsqueue_3", fsQueueTickRead);
 
-INCLUDE_ASM("asm/main/nonmatchings/fsqueue_3", fsQueueTickReset);
+s32 fsQueueTickReset(FsQueueEntry* entry) {
+  s32 result = false;
+
+  g_FsQueue.reset_timer_0++;
+
+  if (g_FsQueue.reset_timer_0 >= 8) {
+    result = true;
+    g_FsQueue.reset_timer_0 = 0;
+    g_FsQueue.reset_timer_1++;
+    if (g_FsQueue.reset_timer_1 >= 9) {
+      if (CdReset(0) == 1) {
+        g_FsQueue.reset_timer_1 = 0;
+      } else {
+        result = false;
+      }
+    }
+  }
+
+  return result;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/fsqueue_3", fsQueueTickReadPcDrv);
 
