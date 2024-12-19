@@ -115,6 +115,19 @@ enum FsQueueSeekState {
   FSQS_SEEK_RESET = 3   /** See `FSQS_READ_RESET`. When done, reset CD driver and goto `FSQS_SEEK_SETLOC`. */
 };
 
+/** @brief Postload state.
+ *
+ * When `fsQueueUpdate` is called it will perform an action on the current postload entry, if any,
+ * according to `g_FsQueue.postload_state`, which can have one of these values.
+ *
+ * See `FsQueue::postload_state`.
+ */
+enum FsQueuePostLoadState {
+  FSQS_POSTLOAD_INIT = 0, /** Check for allocated memory and proceed to `SKIP` or `EXEC`. */
+  FSQS_POSTLOAD_SKIP = 1, /** Skip postloading because this entry owns allocated memory. */
+  FSQS_POSTLOAD_EXEC = 2  /** Execute postload operation. */
+};
+
 /** @brief Postload types.
  *
  * What to do with a queue entry after its `operation` is done. Might be better described as "file format", but

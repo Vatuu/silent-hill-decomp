@@ -97,7 +97,50 @@ s32 fsQueueTickReset(FsQueueEntry *entry) {
 
 INCLUDE_ASM("asm/main/nonmatchings/fsqueue_3", fsQueueTickReadPcDrv);
 
-INCLUDE_ASM("asm/main/nonmatchings/fsqueue_3", fsQueueUpdatePostLoad);
+s32 fsQueueUpdatePostLoad(FsQueueEntry *entry) {
+  s32 result;
+  s32 state;
+  u8 postload;
+
+  result = 0;
+  state = g_FsQueue.postload_state;
+
+  switch (state) {
+    case FSQS_POSTLOAD_INIT:
+      if (entry->allocate) {
+        g_FsQueue.postload_state = FSQS_POSTLOAD_SKIP;
+      } else {
+        g_FsQueue.postload_state = FSQS_POSTLOAD_EXEC;
+      }
+      break;
+
+    case FSQS_POSTLOAD_SKIP:
+      /* do nothing */
+      break;
+
+    case FSQS_POSTLOAD_EXEC:
+      postload = entry->postload;
+      switch (postload) {
+        case FS_POSTLOAD_NONE:
+          result = 1;
+          break;
+        case FS_POSTLOAD_TIM:
+          result = fsQueuePostLoadTim(entry);
+          break;
+        case FS_POSTLOAD_GSTHING:
+          result = fsQueuePostLoadGsThing(entry);
+          break;
+        default:
+          break;
+      }
+      break;
+
+    default:
+      break;
+  }
+
+  return result;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/fsqueue_3", fsQueuePostLoadTim);
 
