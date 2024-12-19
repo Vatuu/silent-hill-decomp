@@ -174,6 +174,55 @@ s32 fsQueueDoThingWhenEmpty(void);
  */
 s32 fsQueueAllocEntryData(FsQueueEntry *entry);
 
+/** @brief Add new operation to the queue.
+ *
+ * If the queue is full, will spin while calling `fsQueueUpdate` and wait until space frees up.
+ * Called by all of the `fsQueueStart*` functions.
+ *
+ * @param fileno File table index of the file to load/seek.
+ * @param op Operation type (`FsQueueOperation`).
+ * @param postload Postload type (`FsQueuePostLoadType`).
+ * @param alloc Whether to allocate owned memory for this operation (`FsQueueEntry::allocate`).
+ * @param unused_1 Value for `FsQueueEntry::unused1`. Seems to be unused.
+ * @param extra Extra data for operation (`FsQueueEntry::extra`).
+ * @return Index of the new queue entry.
+ */
+s32 fsQueueEnqueue(s32 fileno, u8 op, u8 postload, u8 alloc, void *data, u32 unused_1, FsQueueExtra *extra);
+
+/** Add a new read operation to the queue.
+ * @param fileno File table index of the file to read.
+ * @param dst Destination buffer. Seems there are no size checks.
+ * @return Index of the new queue entry.
+ */
+s32 fsQueueStartRead(s32 fileno, void *dst);
+
+/** @brief Add a new TIM read operation to the queue.
+ * Adds a read operation with `postload = FS_POSTLOAD_TIM`.
+ * @param fileno File table index of the file to read.
+ * @param dst Destination buffer. Seems there are no size checks.
+ * @param image Where to upload the TIM in VRAM.
+ * @return Index of the new queue entry.
+ */
+s32 fsQueueStartReadTim(s32 fileno, void *dst, FsImageDesc *image);
+
+/** @brief Add a new libgs thing read operation to the queue.
+ * Adds a read operation with `postload = FS_POSTLOAD_GSTHING`.
+ * @note Does not actually take a file number, but instead takes one from an array of structs at 0x800a90fc in bodyprog,
+ * using `arg1` as an index. Does not seem to take a `FsGsThingDesc` pointer either. Maybe by value?
+ * @param arg0
+ * @param arg1 Index of something in an array in bodyprog.
+ * @param arg2 Destination buffer?
+ * @param arg3
+ * @return Index of the new queue entry.
+ */
+s32 fsQueueStartReadGsThing(s32 arg0, s32 arg1, void *arg2, s32 arg3);
+
+/** Add a new seek operation to the queue.
+ * @param fileno File table index of the file to seek to.
+ * @return Index of the new queue entry.
+ */
+s32 fsQueueStartSeek(s32 fileno);
+
 /** Process a read from PCDRV. Seems to be unused in release.
  * @param entry PCDRV read operation entry to process.
  * @return 1 if succeeded, 0 otherwise.
@@ -276,6 +325,14 @@ s32 fsQueuePostLoadGsThing(FsQueueEntry *entry);
  * @return 1 if the entry can be loaded without clobbering anything, 0 otherwise.
  */
 s32 fsQueueCanRead(FsQueueEntry *entry);
+
+/** Seems to clear the queue. */
+void fsQueueReset(void);
+
+/** Spin-waits for the queue to become empty while calling `fsQueueUpdate`.
+ * Calls some bodyprog functions before and after the wait, `VSync` in the wait and `DrawSync` after the wait.
+ */
+void fsQueueWaitForEmpty(void);
 
 /** @brief Check if two buffers overlap in memory.
  * Used by `fsQueueCanRead`.
