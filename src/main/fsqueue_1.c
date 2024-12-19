@@ -30,11 +30,25 @@ s32 fsQueueStartSeek(s32 fileno) {
   return fsQueueEnqueue(fileno, FS_OP_SEEK, FS_POSTLOAD_NONE, false, NULL, 0, NULL);
 }
 
-s32 fsQueueStartRead(s32 fileno, void* dst) {
+s32 fsQueueStartRead(s32 fileno, void *dst) {
   return fsQueueEnqueue(fileno, FS_OP_READ, FS_POSTLOAD_NONE, false, dst, 0, NULL);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/fsqueue_1", fsQueueStartReadTim);
+s32 fsQueueStartReadTim(s32 fileno, void *dst, FsImageDesc *image) {
+  FsQueueExtra extra;
+
+  if (image != NULL) {
+    extra.image = *image;
+  } else {
+    // u == 0xFF (-1) is a special case for "image descriptor not set"
+    extra.image.u = 0xFF;
+    extra.image.clut_x = -1;
+    extra.image.v = 0xFF;
+    extra.image.clut_y = -1;
+  }
+
+  return fsQueueEnqueue(fileno, FS_OP_READ, FS_POSTLOAD_TIM, false, dst, 0, &extra);
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/fsqueue_1", fsQueueStartReadGsThing);
 
