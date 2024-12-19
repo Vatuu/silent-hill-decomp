@@ -42,7 +42,7 @@ s32 fsQueueTickRead(FsQueueEntry* entry) {
   if (num_sectors < 0) {
     num_sectors += FS_SECTOR_SIZE - 1;
   }
-  return CdRead(num_sectors >> FS_SECTOR_SHIFT, (u_long *)entry->data, 0x80);
+  return CdRead(num_sectors >> FS_SECTOR_SHIFT, (u_long *)entry->data, CdlModeSpeed);
 }
 
 s32 fsQueueTickReset(FsQueueEntry *entry) {
