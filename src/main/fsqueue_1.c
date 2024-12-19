@@ -28,7 +28,9 @@ INCLUDE_ASM("asm/main/nonmatchings/fsqueue_1", fsQueueWaitForEmpty);
 
 INCLUDE_ASM("asm/main/nonmatchings/fsqueue_1", fsQueueStartSeek);
 
-INCLUDE_ASM("asm/main/nonmatchings/fsqueue_1", fsQueueStartRead);
+s32 fsQueueStartRead(s32 fileno, void* dst) {
+  return fsQueueEnqueue(fileno, FS_OP_READ, FS_POSTLOAD_NONE, false, dst, 0, NULL);
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/fsqueue_1", fsQueueStartReadTim);
 

@@ -134,8 +134,8 @@ enum FsQueuePostLoadType {
  */
 enum FsQueueOperation {
   FS_OP_NONE = 0, /** Uninitialized. */
-  FS_OP_READ = 1, /** Read from CD (`fsQueueUpdateRead`). */
-  FS_OP_SEEK = 2  /** Seek to file location on CD (`fsQueueUpdateSeek`). */
+  FS_OP_SEEK = 1, /** Seek to file location on CD (`fsQueueUpdateSeek`). */
+  FS_OP_READ = 2  /** Read from CD (`fsQueueUpdateRead`). */
 };
 
 /** The FS queue. See `FsQueue`. */
