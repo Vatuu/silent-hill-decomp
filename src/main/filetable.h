@@ -5,6 +5,7 @@
 
 #define FS_BLOCK_SIZE 0x100  /** Units in which file size is measured in the file table */
 #define FS_SECTOR_SIZE 0x800 /** Size of a CD sector (2048 bytes) */
+#define FS_SECTOR_SHIFT 11   /** For dividing by FS_SECTOR_SIZE */
 #define FS_MAX_NAME 8        /** Maximum amount of characters in a file name (without extension or path) */
 #define FS_INVALID_TYPE 0x0f /** Unspecified file type (or empty extension) */
 #define FS_NUM_FILES 2074    /** Number of files in g_FileTable. Probably depends on version. */

@@ -31,9 +31,17 @@ s32 fsQueueDoBuffersOverlap(u8 *data1, u32 size1, u8 *data2, u32 size2) {
 
 INCLUDE_ASM("asm/main/nonmatchings/fsqueue_3", fsQueueTickSetLoc);
 
-INCLUDE_ASM("asm/main/nonmatchings/fsqueue_3", fsQueueTickRead);
+s32 fsQueueTickRead(FsQueueEntry* entry) {
+  // round up to sector boundary; masking not needed because of the `>> 11` below
+  s32 num_sectors = (entry->info->numblocks * FS_BLOCK_SIZE) + FS_SECTOR_SIZE - 1;
+  // overflow check?
+  if (num_sectors < 0) {
+    num_sectors += FS_SECTOR_SIZE - 1;
+  }
+  return CdRead(num_sectors >> FS_SECTOR_SHIFT, (u_long *)entry->data, 0x80);
+}
 
-s32 fsQueueTickReset(FsQueueEntry* entry) {
+s32 fsQueueTickReset(FsQueueEntry *entry) {
   s32 result = false;
 
   g_FsQueue.reset_timer_0++;
