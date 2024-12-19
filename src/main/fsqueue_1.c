@@ -26,7 +26,9 @@ s32 fsQueueDoThingWhenEmpty(void) {
 
 INCLUDE_ASM("asm/main/nonmatchings/fsqueue_1", fsQueueWaitForEmpty);
 
-INCLUDE_ASM("asm/main/nonmatchings/fsqueue_1", fsQueueStartSeek);
+s32 fsQueueStartSeek(s32 fileno) {
+  return fsQueueEnqueue(fileno, FS_OP_SEEK, FS_POSTLOAD_NONE, false, NULL, 0, NULL);
+}
 
 s32 fsQueueStartRead(s32 fileno, void* dst) {
   return fsQueueEnqueue(fileno, FS_OP_READ, FS_POSTLOAD_NONE, false, dst, 0, NULL);
