@@ -55,7 +55,7 @@ segments:
     vram: 0x80010000
     align: 4
     subalign: 4
-    # bss_size: 0x1EC8
+    bss_size: 0x1EC8
     subsegments:
       - [0x800, .rodata, main]
       - [0x808, .rodata, fsqueue_3]
