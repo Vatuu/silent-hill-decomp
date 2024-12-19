@@ -1,6 +1,8 @@
 #include "fsqueue.h"
 #include "fsmem.h"
 #include <LIBCD.H>
+#include <LIBGTE.H>
+#include <LIBGPU.H>
 
 s32 fsQueueAllocEntryData(FsQueueEntry *entry) {
   s32 result = 0;
@@ -142,6 +144,36 @@ s32 fsQueueUpdatePostLoad(FsQueueEntry *entry) {
   return result;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/fsqueue_3", fsQueuePostLoadTim);
+s32 fsQueuePostLoadTim(FsQueueEntry *entry) {
+  TIM_IMAGE tim;
+  RECT tmprect;
+
+  OpenTIM((u_long *)entry->external_data);
+  ReadTIM(&tim);
+
+  tmprect = *tim.prect;
+  if (entry->extra.image.u != 0xFF) {
+    // this cursed contraption just extracts the XY from the tpage value
+    // for some reason specifically byte loads are used and this is the only way I can get it to match
+    // maybe tpage is actually stored as u8[2] for some reason
+    // same as tmprect.x = (entry->extra.image.tpage & 0x0F) * 64
+    tmprect.x = entry->extra.image.u + ((*(((u8*)&entry->extra.image.tpage) + 1) & 0xF) << 6);
+    // same as tmprect.y = (entry->extra.image.tpage & 0x10) * 16
+    tmprect.y = entry->extra.image.v + ((*(((u8*)&entry->extra.image.tpage) + 1) << 4) & 0x100);
+  }
+
+  LoadImage(&tmprect, tim.paddr);
+
+  if (tim.caddr != NULL) {
+    tmprect = *tim.crect;
+    if (entry->extra.image.clut_x != -1) {
+      tmprect.x = entry->extra.image.clut_x;
+      tmprect.y = entry->extra.image.clut_y;
+    }
+    LoadImage(&tmprect, tim.caddr);
+  }
+
+  return true;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/fsqueue_3", fsQueuePostLoadGsThing);
