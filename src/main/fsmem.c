@@ -26,17 +26,17 @@ static inline u8 *clampToHeapBounds(u8 *ptr) {
 }
 
 s32 fsMemClampBlock(u8 *start, u8 *end) {
-  u8 *prev;
-  u8 *var_a1;
+  u8 *clamped_start;
+  u8 *clamped_end;
 
-  prev = clampToHeapBounds(start);
-  var_a1 = clampToHeapBounds(end);
+  clamped_start = clampToHeapBounds(start);
+  clamped_end = clampToHeapBounds(end);
 
-  if (var_a1 < prev) {
+  if (clamped_end < clamped_start) {
     return 0;
   }
 
-  return var_a1 - prev;
+  return clamped_end - clamped_start;
 }
 
 s32 fsMemFree(u8 *ptr) {
