@@ -29,7 +29,11 @@ s32 fsQueueDoBuffersOverlap(u8 *data1, u32 size1, u8 *data2, u32 size2) {
   return 1;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/fsqueue_3", fsQueueTickSetLoc);
+s32 fsQueueTickSetLoc(FsQueueEntry* entry) {
+  CdlLOC cdloc;
+  CdIntToPos(entry->info->startsector, &cdloc);
+  return CdControl(CdlSetloc, (u_char *)&cdloc, NULL);
+}
 
 s32 fsQueueTickRead(FsQueueEntry* entry) {
   // round up to sector boundary; masking not needed because of the `>> 11` below
