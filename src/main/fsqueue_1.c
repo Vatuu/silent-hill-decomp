@@ -1,7 +1,6 @@
 #include "main/fsqueue.h"
 #include "main/fsmem.h"
 #include "bodyprog/bodyprog.h"
-#include "dynamic/dynamic.h"
 #include <MEMORY.H>
 #include <LIBETC.H>
 #include <LIBGTE.H>
