@@ -69,7 +69,15 @@ s32 fsQueueStartReadTim(s32 fileno, void *dst, FsImageDesc *image) {
   return fsQueueEnqueue(fileno, FS_OP_READ, FS_POSTLOAD_TIM, false, dst, 0, &extra);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/fsqueue_1", fsQueueStartReadAnm);
+s32 fsQueueStartReadAnm(s32 arg0, s32 arg1, void *arg2, s32 arg3) {
+  s32 fileno;
+  FsQueueExtra extra;
+  fileno = D_800A90FC[arg1].fileno;
+  extra.anm.field_04 = arg1;
+  extra.anm.field_00 = arg0;
+  extra.anm.field_08 = arg3;
+  return fsQueueEnqueue(fileno, FS_OP_READ, FS_POSTLOAD_ANM, false, arg2, 0, &extra);
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/fsqueue_1", fsQueueEnqueue);
 

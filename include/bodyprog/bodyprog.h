@@ -6,7 +6,8 @@
 /** Declarations for unknown symbols in bodyprog. */
 
 typedef struct {
-  s32 fileno;
+  s16 fileno;
+  s16 field_02;
   u32 field_04;
   u32 field_08;
   u32 field_0c;
