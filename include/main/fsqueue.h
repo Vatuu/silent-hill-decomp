@@ -61,6 +61,15 @@ typedef struct {
   void *data;            /** Output buffer. Either allocated or same as `external_data`. */
 } FsQueueEntry;
 
+/** Queue pointer.
+ * These had to be wrapped into a struct for some code to match.
+ * Used for the last added element, current read/seek op and current postprocess op.
+ */
+typedef struct {
+  s32 idx;           /** Index in `entries` that this is pointing to. */
+  FsQueueEntry *ptr; /** Entry in `entries` that this is pointing to. */
+} FsQueuePtr;
+
 /**
  * @brief FS queue.
  *
@@ -71,15 +80,14 @@ typedef struct {
  * For example, parsing a TIM file after reading it.
  *
  * New entries are added by `fsQueueEnqueue`. The queue is processed in `fsQueueUpdate`.
+ *
+ * @note Assuming this is a single struct because there's a `bzero` that zeroes out this entire block.
  */
 typedef struct {
   FsQueueEntry entries[FS_QUEUE_LEN]; /** Circular buffer for the queue itself. */
-  s32 last_idx;                       /** Index of the last added entry. */
-  FsQueueEntry *last_ptr;             /** Pointer to the last added entry. */
-  s32 read_idx;                       /** Index of the current operation entry to process. */
-  FsQueueEntry *read_ptr;             /** Pointer to the current operation entry to process. */
-  s32 postload_idx;                   /** Index of the current operation entry to postprocess. */
-  FsQueueEntry *postload_ptr;         /** Pointer to the current operation entry to postprocess.  */
+  FsQueuePtr last;                    /** Index and address of the last added entry. */
+  FsQueuePtr read;                    /** Index and address the current operation entry to process. */
+  FsQueuePtr postload;                /** Index and address of the current operation entry to postprocess. */
   u32 state;                          /** Current processing stage. `FsQueueReadState` for reads, `FsQueueSeekState` for seeks. */
   u32 postload_state;                 /** Current postprocessing stage. See `FsQueuePostLoadState`. */
   s32 reset_timer_0;                  /** Reset timer (lo). Incs up to 8, then incs `reset_timer_1`. See `fsQueueTickReset`. */
@@ -267,10 +275,10 @@ s32 fsQueueTickReset(FsQueueEntry *entry);
 /** @brief Ticks the FS queue once.
  *
  * Depending on current read entry's operation type, either ticks reading it (`fsQueueUpdateRead`) or seeking it (`fsQueueUpdateSeek`).
- * If they return 1, advances `g_FsQueue.read_idx` and `g_FsQueue.read_ptr`.
+ * If they return 1, advances `g_FsQueue.read.idx` and `g_FsQueue.read.ptr`.
  *
  * Regardless of the outcome of the above, also ticks postloading (`fsQueueUpdatePostLoad`) if there is an entry to postload.
- * If that reports that the current postload entry is done postloading, advances `g_FsQueue.postload_idx` and `g_FsQueue.postload_ptr`.
+ * If that reports that the current postload entry is done postloading, advances `g_FsQueue.postload.idx` and `g_FsQueue.postload_ptr`.
  */
 void fsQueueUpdate(void);
 

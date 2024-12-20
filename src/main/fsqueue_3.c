@@ -29,12 +29,12 @@ s32 fsQueueCanRead(FsQueueEntry *entry) {
   s32 overlap;
   s32 i;
 
-  queue_len = g_FsQueue.read_idx - g_FsQueue.postload_idx;
+  queue_len = g_FsQueue.read.idx - g_FsQueue.postload.idx;
 
   if (queue_len > 0) {
     i = 0;
     do {
-      other = &g_FsQueue.entries[(g_FsQueue.postload_idx + i) & (FS_QUEUE_LEN - 1)];
+      other = &g_FsQueue.entries[(g_FsQueue.postload.idx + i) & (FS_QUEUE_LEN - 1)];
       overlap = false;
       if (other->postload || other->allocate) {
         overlap = fsQueueDoBuffersOverlap(

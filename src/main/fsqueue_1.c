@@ -7,11 +7,11 @@
 #include <LIBGPU.H>
 
 s32 fsQueueIsEntryLoaded(s32 arg0) {
-  return arg0 < g_FsQueue.postload_idx;
+  return arg0 < g_FsQueue.postload.idx;
 }
 
 s32 fsQueueGetLength(void) {
-  return g_FsQueue.last_idx + 1 - g_FsQueue.postload_idx;
+  return g_FsQueue.last.idx + 1 - g_FsQueue.postload.idx;
 }
 
 s32 fsQueueDoThingWhenEmpty(void) {
@@ -79,16 +79,44 @@ s32 fsQueueStartReadAnm(s32 arg0, s32 arg1, void *arg2, s32 arg3) {
   return fsQueueEnqueue(fileno, FS_OP_READ, FS_POSTLOAD_ANM, false, arg2, 0, &extra);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/fsqueue_1", fsQueueEnqueue);
+s32 fsQueueEnqueue(s32 fileno, u8 op, u8 postload, u8 alloc, void *data, u32 unused_1, FsQueueExtra *extra) {
+  FsQueueEntry *new_entry;
+  FsQueuePtr *lastp;
+
+  // wait for space in queue
+  while (fsQueueGetLength() >= 0x20) {
+    fsQueueUpdate();
+  }
+
+  // this is the entire reason I wrapped these pointers and indices into structs
+  // if they're left as-is in the queue struct, this does not match unless you manually address them
+  lastp = &g_FsQueue.last;
+  lastp->idx++;
+  lastp->ptr = g_FsQueue.entries + (lastp->idx & 0x1f);
+
+  new_entry = g_FsQueue.last.ptr;
+  new_entry->info = &g_FileTable[fileno];
+  new_entry->operation = op;
+  new_entry->postload = postload;
+  new_entry->allocate = alloc;
+  new_entry->external_data = data;
+  new_entry->unused_1 = unused_1;
+
+  if (extra != NULL) {
+    new_entry->extra = *extra;
+  }
+
+  return g_FsQueue.last.idx;
+}
 
 void fsQueueInit(void) {
   bzero(&g_FsQueue, sizeof(g_FsQueue));
-  g_FsQueue.last_idx = -1;
-  g_FsQueue.last_ptr = &g_FsQueue.entries[FS_QUEUE_LEN - 1];
-  g_FsQueue.read_idx = 0;
-  g_FsQueue.read_ptr = g_FsQueue.entries;
-  g_FsQueue.postload_idx = 0;
-  g_FsQueue.postload_ptr = g_FsQueue.entries;
+  g_FsQueue.last.idx = -1;
+  g_FsQueue.last.ptr = &g_FsQueue.entries[FS_QUEUE_LEN - 1];
+  g_FsQueue.read.idx = 0;
+  g_FsQueue.read.ptr = g_FsQueue.entries;
+  g_FsQueue.postload.idx = 0;
+  g_FsQueue.postload.ptr = g_FsQueue.entries;
   g_FsQueue.state = 0;
   g_FsQueue.postload_state = 0;
   g_FsQueue.reset_timer_0 = 0;
