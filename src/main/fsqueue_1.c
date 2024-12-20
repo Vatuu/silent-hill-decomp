@@ -1,6 +1,14 @@
 #include "fsqueue.h"
 #include "fsmem.h"
 #include <MEMORY.H>
+#include <LIBETC.H>
+#include <LIBGTE.H>
+#include <LIBGPU.H>
+
+/** dynamic overlay function? */
+extern void func_80089128(void);
+/** dynamic overlay function? */
+extern void func_800892A4(s32);
 
 s32 fsQueueIsEntryLoaded(s32 arg0) {
   return arg0 < g_FsQueue.postload_idx;
@@ -24,7 +32,22 @@ s32 fsQueueDoThingWhenEmpty(void) {
   return result;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/fsqueue_1", fsQueueWaitForEmpty);
+void fsQueueWaitForEmpty(void) {
+  func_800892A4(0);
+  func_80089128();
+
+  while (true) {
+    VSync(0);
+    if (fsQueueGetLength() <= 0) {
+      break;
+    }
+    fsQueueUpdate();
+  }
+
+  func_800892A4(1);
+  DrawSync(0);
+  VSync(0);
+}
 
 s32 fsQueueStartSeek(s32 fileno) {
   return fsQueueEnqueue(fileno, FS_OP_SEEK, FS_POSTLOAD_NONE, false, NULL, 0, NULL);

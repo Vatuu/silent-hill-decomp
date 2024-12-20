@@ -4,6 +4,9 @@
 #include <LIBGTE.H>
 #include <LIBGPU.H>
 
+/** bodyprog function */
+extern void func_80035560(s32, s32, void*, s32);
+
 s32 fsQueueAllocEntryData(FsQueueEntry *entry) {
   s32 result = 0;
 
@@ -175,9 +178,6 @@ s32 fsQueuePostLoadTim(FsQueueEntry *entry) {
 
   return true;
 }
-
-/** bodyprog function */
-extern void func_80035560(s32, s32, void*, s32);
 
 s32 fsQueuePostLoadAnm(FsQueueEntry* entry) {
   func_80035560(entry->extra.anm.field_00, entry->extra.anm.field_04, entry->external_data, entry->extra.anm.field_08);
