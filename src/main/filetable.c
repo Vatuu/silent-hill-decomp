@@ -1,4 +1,4 @@
-#include "filetable.h"
+#include "main/filetable.h"
 
 #define NAME_PART_CHARS 4
 #define NAME_CHAR_BITS 6

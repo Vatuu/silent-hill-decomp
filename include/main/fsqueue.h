@@ -2,7 +2,7 @@
 #define _FSQUEUE_H
 
 #include "common.h"
-#include "filetable.h"
+#include "main/filetable.h"
 
 #define FS_QUEUE_LEN 32 /** FS queue size. */
 
@@ -153,12 +153,6 @@ enum FsQueueOperation {
 
 /** The FS queue. See `FsQueue`. */
 extern FsQueue g_FsQueue;
-
-/** Unknown. Set in `fsQueueDoThingWhenEmpty`. */
-extern s32 D_800C489C;
-
-/** Unknown. In BODYPROG. Called by `fsQueueDoThingWhenEmpty`. */
-s32 func_8003c850();
 
 /** @brief Initialize FS queue and FS memory.
  * Initializes `g_FsQueue` and calls `fsMemInit`.

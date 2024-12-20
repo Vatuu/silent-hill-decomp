@@ -1,5 +1,5 @@
-#include "fsqueue.h"
-#include "fsmem.h"
+#include "main/fsqueue.h"
+#include "main/fsmem.h"
 #include <LIBCD.H>
 #include <LIBGTE.H>
 #include <LIBGPU.H>

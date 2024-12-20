@@ -1,4 +1,4 @@
-#include "rng.h"
+#include "main/rng.h"
 
 u32 g_RngSeed = 0;
 

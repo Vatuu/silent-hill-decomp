@@ -1,14 +1,11 @@
-#include "fsqueue.h"
-#include "fsmem.h"
+#include "main/fsqueue.h"
+#include "main/fsmem.h"
+#include "bodyprog/bodyprog.h"
+#include "dynamic/dynamic.h"
 #include <MEMORY.H>
 #include <LIBETC.H>
 #include <LIBGTE.H>
 #include <LIBGPU.H>
-
-/** dynamic overlay function? */
-extern void func_80089128(void);
-/** dynamic overlay function? */
-extern void func_800892A4(s32);
 
 s32 fsQueueIsEntryLoaded(s32 arg0) {
   return arg0 < g_FsQueue.postload_idx;
