@@ -129,8 +129,8 @@ s32 fsQueueUpdatePostLoad(FsQueueEntry *entry) {
         case FS_POSTLOAD_TIM:
           result = fsQueuePostLoadTim(entry);
           break;
-        case FS_POSTLOAD_GSTHING:
-          result = fsQueuePostLoadGsThing(entry);
+        case FS_POSTLOAD_ANM:
+          result = fsQueuePostLoadAnm(entry);
           break;
         default:
           break;
@@ -179,7 +179,7 @@ s32 fsQueuePostLoadTim(FsQueueEntry *entry) {
 /** bodyprog function */
 extern void func_80035560(s32, s32, void*, s32);
 
-s32 fsQueuePostLoadGsThing(FsQueueEntry* entry) {
-  func_80035560(entry->extra.gs_thing.field_00, entry->extra.gs_thing.field_04, entry->external_data, entry->extra.gs_thing.field_08);
+s32 fsQueuePostLoadAnm(FsQueueEntry* entry) {
+  func_80035560(entry->extra.anm.field_00, entry->extra.anm.field_04, entry->external_data, entry->extra.anm.field_08);
   return true;
 }

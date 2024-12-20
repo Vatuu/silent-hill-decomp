@@ -19,25 +19,28 @@ typedef struct {
 } FsImageDesc;
 
 /**
- * @brief Extra queue entry data describing something libgs-related.
+ * @brief Extra queue entry data describing something related to loading some ANM files.
  * See `FsQueueExtra`.
  */
 typedef struct {
   u32 field_00;
   u32 field_04;
   u32 field_08;
-} FsGsThingDesc;
+} FsAnmDesc;
 
 /**
  * @brief Extra data passed with the queue entry.
  *
- * Seems to be either a TIM descriptor (`image`), or something libgs-related (`gs_thing`).
- * Not quite sure what `gs_thing` is, but it is processed in BODYPROG and the function that
- * does it uses a `GsCOORDINATE2`, so I'm assuming it's libgs-related.
+ * Seems to be either a TIM descriptor (`image`), or something for ANM files (`anm`).
+ *
+ * For `image` usage, see `fsQueuePostLoadTim`.
+ *
+ * Not quite sure what exactly `anm` is, but it is used with preprocess type 2, which is only used
+ * for some ANM files, but not others. See `fsQueuePostLoadAnm`.
  */
 typedef union {
-  FsImageDesc image;      /** Location in VRAM where to upload a TIM during postload. */
-  FsGsThingDesc gs_thing; /** Unknown, but libgs-related. */
+  FsImageDesc image; /** Location in VRAM where to upload a TIM during postload. */
+  FsAnmDesc anm;     /** Unknown. Used when loading some ANM files. */
 } FsQueueExtra;
 
 /**
@@ -133,9 +136,9 @@ enum FsQueuePostLoadState {
  * See `FsQueueEntry::postload`.
  */
 enum FsQueuePostLoadType {
-  FS_POSTLOAD_NONE = 0,   /** Do nothing. */
-  FS_POSTLOAD_TIM = 1,    /** Parse TIM file (`fsQueuePostLoadTim`). Can use `extra.image`. */
-  FS_POSTLOAD_GSTHING = 2 /** Parse some libgs-related file (`fsQueuePostLoadGsThing`). Uses `extra.gs_thing`. */
+  FS_POSTLOAD_NONE = 0, /** Do nothing. */
+  FS_POSTLOAD_TIM = 1,  /** Parse TIM file (`fsQueuePostLoadTim`). Can use `extra.image`. */
+  FS_POSTLOAD_ANM = 2   /** Parse ANM file maybe (`fsQueuePostLoadAnm`). Always uses `extra.anm`. */
 };
 
 /** @brief FS queue operation type.
@@ -215,17 +218,17 @@ s32 fsQueueStartRead(s32 fileno, void *dst);
  */
 s32 fsQueueStartReadTim(s32 fileno, void *dst, FsImageDesc *image);
 
-/** @brief Add a new libgs thing read operation to the queue.
- * Adds a read operation with `postload = FS_POSTLOAD_GSTHING`.
+/** @brief Add a new ANM read operation to the queue.
+ * Adds a read operation with `postload = FS_POSTLOAD_ANM`.
  * @note Does not actually take a file number, but instead takes one from an array of structs at 0x800a90fc in bodyprog,
- * using `arg1` as an index. Does not seem to take a `FsGsThingDesc` pointer either. Maybe by value?
+ * using `arg1` as an index. Does not seem to take a `FsAnmDesc` pointer either. Maybe by value?
  * @param arg0
  * @param arg1 Index of something in an array in bodyprog.
  * @param arg2 Destination buffer?
  * @param arg3
  * @return Index of the new queue entry.
  */
-s32 fsQueueStartReadGsThing(s32 arg0, s32 arg1, void *arg2, s32 arg3);
+s32 fsQueueStartReadAnm(s32 arg0, s32 arg1, void *arg2, s32 arg3);
 
 /** Add a new seek operation to the queue.
  * @param fileno File table index of the file to seek to.
@@ -315,16 +318,19 @@ s32 fsQueueUpdatePostLoad(FsQueueEntry *entry);
  */
 s32 fsQueuePostLoadTim(FsQueueEntry *entry);
 
-/** @brief Parse something libgs-related after loading it.
+/** @brief Parse an ANM file after loading it?
  *
- * Called during postloading for an unknown file type (`entry->postload = 2`).
+ * Called during postloading for some ANM files (when `entry->postload = 2`).
+ * For example, it is called for CLD2.ANM, SRL.ANM, SBL.ANM (maybe ones used for NPCs?), but not for others
+ * (e.g. HB_M0S01.ANM).
+ *
  * Calls into BODYPROG, where a function gets a `GsCOORDINATE2` from somewhere in the loaded data.
- * Always uses data from `entry->extra.gs_thing`.
+ * Always uses data from `entry->extra.anm`.
  *
  * @param entry Entry to parse.
  * @return Always 1.
  */
-s32 fsQueuePostLoadGsThing(FsQueueEntry *entry);
+s32 fsQueuePostLoadAnm(FsQueueEntry *entry);
 
 /** @brief Check if specified read operation entry can be processed.
  *

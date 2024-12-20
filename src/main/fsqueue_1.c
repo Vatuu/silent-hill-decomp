@@ -50,7 +50,7 @@ s32 fsQueueStartReadTim(s32 fileno, void *dst, FsImageDesc *image) {
   return fsQueueEnqueue(fileno, FS_OP_READ, FS_POSTLOAD_TIM, false, dst, 0, &extra);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/fsqueue_1", fsQueueStartReadGsThing);
+INCLUDE_ASM("asm/main/nonmatchings/fsqueue_1", fsQueueStartReadAnm);
 
 INCLUDE_ASM("asm/main/nonmatchings/fsqueue_1", fsQueueEnqueue);
 

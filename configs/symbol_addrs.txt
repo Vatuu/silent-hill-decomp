@@ -502,7 +502,7 @@ fsQueueWaitForEmpty = 0x80010ecc; // type:func // spin wait for GetLength() < 1 
 fsQueueStartSeek = 0x80010f34; // type:func
 fsQueueStartRead = 0X80010F68; // type:func
 fsQueueStartReadTim = 0X80010F9C; // type:func
-fsQueueStartReadGsThing = 0x80011018; // type:func // unsure, causes fsQueuePostLoadGsThing later
+fsQueueStartReadAnm = 0x80011018; // type:func // unsure, causes fsQueuePostLoadAnm later
 fsQueueEnqueue = 0X80011074; // type:func
 fsQueueInit = 0X80011170; // type:func
 fsQueueReset = 0x800111dc; // type:func // unsure, resets a part of the queue
@@ -518,7 +518,7 @@ fsQueueTickReset = 0X80011884; // type:func
 fsQueueTickReadPcDrv = 0x8001190c; // type:func // does not actually go into the queue
 fsQueueUpdatePostLoad = 0X80011A4C; // type:func
 fsQueuePostLoadTim = 0X80011B24; // type:func
-fsQueuePostLoadGsThing = 0X80011C3C; // type:func // unsure, calls into bodyprog, which then uses GsCOORDINATE2
+fsQueuePostLoadAnm = 0X80011C3C; // type:func // unsure, calls into bodyprog, which then uses GsCOORDINATE2
 
 // fsmem
 // these might actually be from psyq heap or something, since they're in close proximity to memcpy
