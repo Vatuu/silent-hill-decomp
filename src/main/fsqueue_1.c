@@ -84,7 +84,7 @@ s32 fsQueueEnqueue(s32 fileno, u8 op, u8 postload, u8 alloc, void *data, u32 unu
   FsQueuePtr *lastp;
 
   // wait for space in queue
-  while (fsQueueGetLength() >= 0x20) {
+  while (fsQueueGetLength() >= FS_QUEUE_LEN) {
     fsQueueUpdate();
   }
 
@@ -92,7 +92,7 @@ s32 fsQueueEnqueue(s32 fileno, u8 op, u8 postload, u8 alloc, void *data, u32 unu
   // if they're left as-is in the queue struct, this does not match unless you manually address them
   lastp = &g_FsQueue.last;
   lastp->idx++;
-  lastp->ptr = g_FsQueue.entries + (lastp->idx & 0x1f);
+  lastp->ptr = &g_FsQueue.entries[lastp->idx & (FS_QUEUE_LEN - 1)];
 
   new_entry = g_FsQueue.last.ptr;
   new_entry->info = &g_FileTable[fileno];
