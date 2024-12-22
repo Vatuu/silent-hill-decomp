@@ -4,9 +4,6 @@
 #include <LIBGTE.H>
 #include <LIBGPU.H>
 
-/** bodyprog function */
-extern void func_80035560(s32, s32, void*, s32);
-
 s32 fsQueueAllocEntryData(FsQueueEntry *entry) {
   s32 result = 0;
 
