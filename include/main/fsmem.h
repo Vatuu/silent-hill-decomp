@@ -62,7 +62,7 @@ s32 fsMemClampBlock(u8 *start, u8 *end);
  * @param size Number of bytes to allocate.
  * @return Allocated memory block.
  */
-void *fsMemAlloc(u32 size);
+void *fsMemAlloc(s32 size);
 
 /** @brief Free FS memory block.
  * @param ptr Address of memory block to free.

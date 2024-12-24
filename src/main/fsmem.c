@@ -36,7 +36,58 @@ void nullsub_80011cfc(void) {
 
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/fsmem", fsMemAlloc);
+void *fsMemAlloc(s32 size) {
+  FsMemBlock min_buffer; // seems to use this struct for some reason
+  FsMemBlock *min_block;
+  FsMemBlock *iter;
+  s32 clamped_size;
+  u8 *start;
+  u8 *end;
+
+  if (size == 0) {
+    return NULL;
+  }
+
+  // align to 4
+  size = (size + 3) & ~3;
+
+  if (g_FsMem.free_list.next == NULL) {
+    // no free blocks left
+    return NULL;
+  }
+
+  iter = &g_FsMem.alloc_list;
+  min_buffer.start = NULL;
+  min_buffer.size = 0x0FFFFFFF;
+  min_block = NULL;
+
+  for (; iter != NULL; iter = iter->next) {
+    if (iter->next == NULL) {
+      // last allocation; check if there is space left after it
+      start = iter->start + iter->size;
+      end = g_FsMem.start + g_FsMem.size;
+      clamped_size = fsMemClampBlock(start, end);
+    } else {
+      // check if there is space left in between this allocation and the next
+      end = iter->next->start;
+      start = iter->start + iter->size;
+      clamped_size = fsMemClampBlock(start, end);
+    }
+
+    if ((clamped_size >= size) && (clamped_size < (s32)min_buffer.size)) {
+      // track the smallest possible hole we can fit the new block into
+      min_block = iter;
+      min_buffer.size = clamped_size;
+      min_buffer.start = min_block->start + min_block->size;
+    }
+  }
+
+  if (min_buffer.start != NULL) {
+    fsMemRelinkBlock(&g_FsMem.free_list, min_block, min_buffer.start, size);
+  }
+
+  return min_buffer.start;
+}
 
 static inline u8 *clampToHeapBounds(u8 *ptr) {
   u8 *min;
