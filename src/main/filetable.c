@@ -24,11 +24,11 @@ s32 fsFileGetSize(s32 filenum) {
   return g_FileTable[filenum].numblocks * FS_BLOCK_SIZE;
 }
 
-void fsFileGetFullName(char *outname, s32 filenum) {
-  fsFileEntryGetFullName(outname, &g_FileTable[filenum]);
+void fsFileGetName(char *outname, s32 filenum) {
+  fsFileEntryGetName(outname, &g_FileTable[filenum]);
 }
 
-void fsFileEntryGetFullName(char *outname, const FileEntry *const fentry) {
+void fsFileEntryGetName(char *outname, const FileEntry *const fentry) {
   s32   i = 0;
   char  decoded;
   u32   namepart;

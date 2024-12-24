@@ -92,31 +92,31 @@ s32 fsFileGetSize(s32 filenum);
 /**
  * @brief Gets the full name of a file in the file table.
  *
- * Takes a file table entry index (`filenum`) and returns the full name of that file
- * (path + name + extension) into `outname`.
+ * Takes a file table entry index (`filenum`) and returns the name of that file (with extension)
+ * into `outname`.
  * The name is decoded from its file table representation into proper ASCII and is null terminated.
  *
- * @note `outname` must be at least 21 bytes long to fit the longest possible name that I know of
- * plus a null terminator.
+ * @note `outname` must be at least 13 bytes long to fit the longest possible name in 8.3 format.
+ * There are no size checks.
  *
  * @param[out] outname Buffer where the decoded file name will be stored.
  * @param[in] filenum Index of the file in the file table.
  */
-void fsFileGetFullName(char *outname, s32 filenum);
+void fsFileGetName(char *outname, s32 filenum);
 
 /**
- * @brief Gets the full name from a file table entry.
+ * @brief Gets the name from a file table entry.
  *
- * Returns the full name in the file table entry `fentry`.
+ * Returns the name (with extension) in the file table entry `fentry`.
  * The name is decoded from its file table representation into proper ASCII and is null terminated.
  *
- * @note `outname` must be at least 21 bytes long to fit the longest possible name that I know of
- * plus a null terminator.
+ * @note `outname` must be at least 13 bytes long to fit the longest possible name in 8.3 format.
+ * There are no size checks.
  *
  * @param[out] outname Buffer where the decoded file name will be stored.
  * @param[in] fentry Pointer to the file table entry from which to decode the name.
  */
-void fsFileEntryGetFullName(char *outname, const FileEntry *const fentry);
+void fsFileEntryGetName(char *outname, const FileEntry *const fentry);
 
 /* Example of the file name encoding:
  *   For string like 'HERO':
