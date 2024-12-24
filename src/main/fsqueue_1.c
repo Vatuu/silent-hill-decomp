@@ -125,7 +125,21 @@ void fsQueueInit(void) {
   fsMemInit(FS_MEM_BASE, FS_MEM_SIZE);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/fsqueue_1", fsQueueReset);
+void fsQueueReset(void) {
+  if (fsQueueGetLength() <= 0) {
+    return;
+  }
+
+  if (g_FsQueue.read.idx <= g_FsQueue.last.idx) {
+    g_FsQueue.read.idx = g_FsQueue.read.idx + FS_QUEUE_LEN;
+    g_FsQueue.read.ptr = g_FsQueue.entries + (g_FsQueue.read.idx & (FS_QUEUE_LEN - 1));
+    g_FsQueue.last = g_FsQueue.read;
+  }
+
+  g_FsQueue.postload = g_FsQueue.read;
+  g_FsQueue.postload_state = 0;
+  g_FsQueue.read.ptr->postload = 0;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/fsqueue_1", fsQueueUpdate);
 
