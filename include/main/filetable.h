@@ -27,10 +27,10 @@
 typedef struct FileEntry {
   u32 startsector : 19; /** Number of the CD sector where the file starts */
   u32 numblocks : 12;   /** Size of file in 256-byte blocks */
-  u8  pathnum : 4;      /** Index of path to file in `g_FilePaths` */
+  u32 pathnum : 4;      /** Index of path to file in `g_FilePaths` */
   u32 name0123 : 24;    /** First four 6-bit characters of the file name */
   u32 name4567 : 24;    /** Second four 6-bit characters of the file name */
-  u8  type : 4;         /** File type (and index of extension in `g_FileExts`) */
+  u32 type : 4;         /** File type (and index of extension in `g_FileExts`) */
 } FileEntry;
 
 /**
