@@ -13,7 +13,7 @@ def add_custom_arguments(parser):
 def apply_main(config, args):
     config['mapfile'] = f'build/SLUS_007.07.map'
     config['myimg'] = f'build/SLUS_007.07'
-    config['baseimg'] = f'rom/image/SLUS_007.07'
+    config['baseimg'] = f'rom/SLUS_007.07'
     config['source_directories'] = ['src/main', 'include', 'asm/main']
 
 def apply_overlay(binary_name, src_name, config, args):
