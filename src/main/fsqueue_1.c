@@ -5,6 +5,7 @@
 #include <LIBETC.H>
 #include <LIBGTE.H>
 #include <LIBGPU.H>
+#include <LIBCD.H>
 
 s32 fsQueueIsEntryLoaded(s32 arg0) {
   return arg0 < g_FsQueue.postload.idx;
@@ -128,4 +129,67 @@ INCLUDE_ASM("asm/main/nonmatchings/fsqueue_1", fsQueueReset);
 
 INCLUDE_ASM("asm/main/nonmatchings/fsqueue_1", fsQueueUpdate);
 
-INCLUDE_ASM("asm/main/nonmatchings/fsqueue_1", fsQueueUpdateSeek);
+s32 fsQueueUpdateSeek(FsQueueEntry* entry) {
+  s32 result = 0;
+  s32 state = g_FsQueue.state;
+
+  switch (state) {
+    case FSQS_SEEK_SETLOC:
+      switch (fsQueueTickSetLoc(entry)) {
+        case 0:
+          // CdlSetloc failed, reset and retry
+          g_FsQueue.state = FSQS_SEEK_RESET;
+          break;
+        case 1:
+          g_FsQueue.state = FSQS_SEEK_SEEKL;
+          break;
+      }
+      break;
+
+    case FSQS_SEEK_SEEKL:
+      switch (CdControl(CdlSeekL, NULL, NULL)) {
+        case 0:
+          // CdlSeekL failed, reset and retry
+          g_FsQueue.state = FSQS_SEEK_RESET;
+          break;
+        case 1:
+          g_FsQueue.state = FSQS_SEEK_SYNC;
+          break;
+      }
+      break;
+
+    case FSQS_SEEK_SYNC:
+      switch (CdSync(1, NULL)) {
+        case CdlNoIntr:
+          // wait some more, operation in progress
+          break;
+        case CdlComplete:
+          // we're done seeking
+          result = 1;
+          break;
+        case CdlDiskError:
+          // disk error, reset and try again
+          g_FsQueue.state = FSQS_SEEK_RESET;
+          break;
+        default:
+          // unknown error, reset and try again
+          g_FsQueue.state = FSQS_SEEK_RESET;
+          break;
+      }
+      break;
+
+    case FSQS_SEEK_RESET:
+      switch (fsQueueTickReset(entry)) {
+        case 0:
+          // still resetting
+          break;
+        case 1:
+          // reset done, try again from the beginning
+          g_FsQueue.state = FSQS_SEEK_SETLOC;
+          break;
+      }
+      break;
+  }
+
+  return result;
+}
