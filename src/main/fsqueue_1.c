@@ -141,7 +141,51 @@ void fsQueueReset(void) {
   g_FsQueue.read.ptr->postload = 0;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/fsqueue_1", fsQueueUpdate);
+void fsQueueUpdate(void) {
+  FsQueuePtr *read;
+  FsQueueEntry *tick;
+  s32 tmp = 0;
+
+  tick = g_FsQueue.read.ptr;
+  if (g_FsQueue.read.idx <= g_FsQueue.last.idx) {
+    // there are pending read/seek operations, tick them
+    switch (tick->operation) {
+      case FS_OP_SEEK:
+        tmp = fsQueueUpdateSeek(tick);
+        break;
+      case FS_OP_READ:
+        tmp = fsQueueUpdateRead(tick);
+        break;
+    }
+    if (tmp == 1) {
+      // seek or read done, proceed to the next one
+      // alias and tmp use seem to be required for a match for some reason, might be an inline?
+      read = &g_FsQueue.read;
+      g_FsQueue.state = 0; // FSQS_READ_ALLOCATE or FSQS_SEEK_SETLOC
+      g_FsQueue.reset_timer_0 = 0;
+      g_FsQueue.reset_timer_1 = 0;
+      tmp = ++read->idx;
+      read->ptr = g_FsQueue.entries + (tmp & (FS_QUEUE_LEN - 1));
+    }
+  } else {
+    // nothing to read
+    g_FsQueue.state = 0; // FSQS_READ_ALLOCATE or FSQS_SEEK_SETLOC
+  }
+
+  tick = g_FsQueue.postload.ptr;
+  if (g_FsQueue.postload.idx < g_FsQueue.read.idx) {
+    // there are operations to postload in the queue, tick them
+    tmp = fsQueueUpdatePostLoad(tick);
+    if (tmp == 1) {
+      g_FsQueue.postload_state = FSQS_POSTLOAD_INIT;
+      tmp = ++g_FsQueue.postload.idx;
+      g_FsQueue.postload.ptr = g_FsQueue.entries + (tmp & (FS_QUEUE_LEN - 1));
+    }
+  } else {
+    // nothing to postload
+    g_FsQueue.postload_state = FSQS_POSTLOAD_INIT;
+  }
+}
 
 s32 fsQueueUpdateSeek(FsQueueEntry* entry) {
   s32 result = 0;
