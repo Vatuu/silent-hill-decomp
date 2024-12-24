@@ -59,6 +59,7 @@ segments:
     subsegments:
       - [0x800, .rodata, main]
       - [0x808, .rodata, fsqueue_3]
+      - [0x814, pad, fsqueue_3] # extra padding for some reason
       - [0x818, .rodata, fsqueue_2] # jtbl
 
       - [0x830, rodata, psyq/libspu/spu]

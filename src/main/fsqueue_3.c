@@ -1,8 +1,10 @@
 #include "main/fsqueue.h"
 #include "main/fsmem.h"
+#include <LIBAPI.H>
 #include <LIBCD.H>
 #include <LIBGTE.H>
 #include <LIBGPU.H>
+#include <STRING.H>
 
 s32 fsQueueAllocEntryData(FsQueueEntry *entry) {
   s32 result = 0;
@@ -97,7 +99,42 @@ s32 fsQueueTickReset(FsQueueEntry *entry) {
   return result;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/fsqueue_3", fsQueueTickReadPcDrv);
+s32 fsQueueTickReadPcDrv(FsQueueEntry *entry) {
+  s32 handle;
+  s32 tmp;
+  s32 retry;
+  s32 result;
+  FileEntry *finfo = entry->info;
+  char pathbuf[64];
+  char namebuf[32];
+
+  result = 0;
+
+  strcpy(pathbuf, "sim:.\\DATA");
+  strcat(pathbuf, g_FilePaths[finfo->pathnum]);
+  fsFileEntryGetName(namebuf, finfo);
+  strcat(pathbuf, namebuf);
+
+  for (retry = 0; retry <= 2; retry++) {
+    handle = open(pathbuf, 0x4001);
+    if (handle == -1)
+      continue;
+
+    tmp = read(handle,entry->data, ALIGN(finfo->numblocks * FS_BLOCK_SIZE, FS_SECTOR_SIZE));
+    if (tmp == -1) {
+      continue;
+    }
+
+    do {
+      tmp = close(handle);
+    } while (tmp == -1);
+
+    result = 1;
+    break;
+  }
+
+  return result;
+}
 
 s32 fsQueueUpdatePostLoad(FsQueueEntry *entry) {
   s32 result;

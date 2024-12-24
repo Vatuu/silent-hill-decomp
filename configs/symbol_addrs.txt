@@ -1,5 +1,7 @@
 OVERLAY_POINTERS = 0x80010000; // type:Overlays size:0x8
 
+PCDRV_PATH = 0x80010008; // type:asciz
+
 FOLDER_XA = 0x80022bb0; // type:asciz
 FOLDER_VIN = 0x80022bb8; // type:asciz
 FOLDER_TIM = 0x80022bc0; // type:asciz
