@@ -191,11 +191,10 @@ s32 fsQueuePostLoadTim(FsQueueEntry *entry) {
   tmprect = *tim.prect;
   if (entry->extra.image.u != 0xFF) {
     // this cursed contraption just extracts the XY from the tpage value
-    // for some reason specifically byte loads are used and this is the only way I can get it to match
-    // maybe tpage is actually stored as u8[2] for some reason
-    // same as tmprect.x = (entry->extra.image.tpage & 0x0F) * 64
+    // for some reason it seems to be byte swapped, or maybe tpage is actually stored as u8[2]?
+    // same as tmprect.x = (entry->extra.image.tpage & 0x0F) * 64 for a normal tpage
     tmprect.x = entry->extra.image.u + ((*(((u8*)&entry->extra.image.tpage) + 1) & 0xF) << 6);
-    // same as tmprect.y = (entry->extra.image.tpage & 0x10) * 16
+    // same as tmprect.y = (entry->extra.image.tpage & 0x10) * 16 for a normal tpage
     tmprect.y = entry->extra.image.v + ((*(((u8*)&entry->extra.image.tpage) + 1) << 4) & 0x100);
   }
 

@@ -9,6 +9,7 @@
 /**
  * @brief Extra queue entry data describing where to upload a TIM after reading.
  * See `FsQueueExtra`.
+ * @note `tpage` seems to be byte swapped.
  */
 typedef struct {
   u16 tpage;
