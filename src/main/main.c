@@ -46,7 +46,6 @@ int main(void) {
   s32 i;
   s32 sprt_x;
   s32 fade;
-  DR_TPAGE *tpage;
   u8 *prim;
 
   ResetCallback();
@@ -84,7 +83,7 @@ int main(void) {
 
   // fade in 2ZANKO_E.TIM over 64 frames using a TILE with subtractive blending
   fade = 0xFF;
-  tpage = prim = PSX_SCRATCH;
+  prim = PSX_SCRATCH;
   while (true) {
     g_MainDispEnv.disp.y = 256 - (g_MainFbIdx * 224);
     PutDispEnv(&g_MainDispEnv);
