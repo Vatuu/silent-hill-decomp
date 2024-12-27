@@ -56,9 +56,9 @@ int main(void) {
 
   // clear framebuffer area of VRAM
   // @NOTE: this and some other GPU macros here are custom to ensure a match
-  setRECTFast(PSX_SCRATCH, 0, 0, 640, 512);
+  setRECTFast((RECT *)PSX_SCRATCH, 0, 0, 640, 512);
   VSync(0);
-  ClearImage2(PSX_SCRATCH, 0, 0, 0);
+  ClearImage2((RECT *)PSX_SCRATCH, 0, 0, 0);
   DrawSync(0);
 
   // display area = (0, 0, 320, 240)
