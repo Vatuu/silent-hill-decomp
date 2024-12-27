@@ -18,7 +18,7 @@ extern DRAWENV g_MainDrawEnv;
 
 // @HACK: explicit rodata here because these need to be referenced externally to end up in .rodata,
 // otherwise they'll go into .sdata because they're small; can't wrap them in a struct either because
-// main() accesses them individually and not with a single base
+// main() accesses them individually and not with a common base
 void * SECTION(".rodata") g_OvlDynamic = (void *)0x800C9578;
 void * SECTION(".rodata") g_OvlBodyprog = (void *)0x80024B60;
 
@@ -56,8 +56,8 @@ int main(void) {
   ResetGraph(3);
 
   // clear framebuffer area of VRAM
-  // @NOTE: this and other GPU macros here are custom to ensure a match
-  SET_RECT(PSX_SCRATCH, 0, 0, 640, 512);
+  // @NOTE: this and some other GPU macros here are custom to ensure a match
+  setRECTFast(PSX_SCRATCH, 0, 0, 640, 512);
   VSync(0);
   ClearImage2(PSX_SCRATCH, 0, 0, 0);
   DrawSync(0);
@@ -103,32 +103,27 @@ int main(void) {
 
     // draw the image as a series of 128x256 SPRTs
     for (i = 0, sprt_x = -64; i < 3; sprt_x += 128, i++) {
-      setlen(prim, 1);
-      ((DR_TPAGE *)prim)->code[0] = (((i + 13) & 0xF) | 0xE1000280);
-      DrawPrim(prim);
-      setlen(prim, 4);
-      *(u32*)(prim + 0x04) = 0x64808080;
-      *(s16*)(prim + 0x10) = 0x100;
-      *(s16*)(prim + 0x12) = 0x100;
-      *(u32*)(prim + 0x08) = ((sprt_x & 0xFFFF) + 0xFFF80000);
-      *(u32*)(prim + 0x0C) = (((g_MainImg0.clut_y << 6) | (((u16) g_MainImg0.clut_x >> 4) & 0x3F)) << 0x10);
-      DrawPrim(prim);
+      setDrawTPage((DR_TPAGE *)prim, 0, 1, getTPageN(1, 0, i + 13, 0));
+      DrawPrim((DR_TPAGE *)prim);
+      setlen((SPRT *)prim, 4);
+      setCodeWord((SPRT *)prim, PRIM_RECT | RECT_TEXTURE, 0x808080); // setSprt(); setRGB0();
+      setWH((SPRT *)prim, 256, 256);
+      setXY0Fast((SPRT *)prim, sprt_x, -8);
+      setUV0AndClut((SPRT *)prim, 0, 0, g_MainImg0.clut_x, g_MainImg0.clut_y);
+      DrawPrim((SPRT *)prim);
     }
 
     // subtractive blending
-    setlen(prim, 1);
-    ((DR_TPAGE *)prim)->code[0] = 0xE1000240;
-    DrawPrim(prim);
+    setDrawTPage((DR_TPAGE *)prim, 0, 1, getTPageN(0, 2, 0, 0));
+    DrawPrim((DR_TPAGE *)prim);
 
-    // draw fullscreen tile
-    setlen(prim, 3);
-    setcode(prim, 0x62);
-    *(u8* )(prim + 0x04) = fade;
-    *(u8* )(prim + 0x05) = fade;
-    *(u8* )(prim + 0x06) = fade;
-    *(u32*)(prim + 0x0C) = 0xF00280; // 320x240
-    *(u32*)(prim + 0x08) = 0;
-    DrawPrim(prim);
+    // draw blended fullscreen tile
+    setlen((TILE *)prim, 3);
+    setcode((TILE *)prim, PRIM_RECT | RECT_BLEND); // setSprt(); setSemiTrans();
+    setRGB0((TILE *)prim, fade, fade, fade);
+    setWHFast((TILE *)prim, 640, 240);
+    setXY0Fast((TILE *)prim, 0, 0);
+    DrawPrim((TILE *)prim);
 
     fade -= 4;
 
