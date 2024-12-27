@@ -2,6 +2,7 @@
 #define _BODYPROG_H
 
 #include "common.h"
+#include "main/fsqueue.h"
 
 /** Declarations for unknown symbols in bodyprog. */
 
@@ -19,6 +20,12 @@ extern struct_800A90FC D_800A90FC[];
 
 /** Unknown bodyprog var. Set in `fsQueueDoThingWhenEmpty`. */
 extern s32 D_800C489C;
+
+/** Bodyprog function that fades the screen out? Called by `main`. */
+void func_800314EC(FsImageDesc *arg0);
+
+/** Bodyprog entrypoint. Called by `main`. */
+void func_80032EE0(void);
 
 /** Unknown bodyprog function. Called by `fsQueuePostLoadAnm`. */
 void func_80035560(s32, s32, void*, s32);

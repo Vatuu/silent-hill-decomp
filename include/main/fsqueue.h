@@ -6,6 +6,9 @@
 
 #define FS_QUEUE_LEN 32 /** FS queue size. */
 
+#define FS_BUFFER0 ((void *)0x8010A600)
+#define FS_BUFFER1 ((void *)0x801E2600)
+
 /**
  * @brief Extra queue entry data describing where to upload a TIM after reading.
  * See `FsQueueExtra`.
