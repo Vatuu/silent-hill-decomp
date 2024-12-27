@@ -40,7 +40,7 @@ GET_YAML_TARGET := $(PYTHON) $(TOOLS_DIR)/get_yaml_target.py
 # Flags
 
 OPT_FLAGS           := -O2
-DL_FLAGS            := -G4
+DL_FLAGS            := -G8
 ENDIAN              := -EL
 INCLUDE_FLAGS       := -Iinclude -I $(BUILD_DIR) -Iinclude/psyq
 DEFINE_FLAGS        := -D_LANGUAGE_C -DUSE_INCLUDE_ASM
