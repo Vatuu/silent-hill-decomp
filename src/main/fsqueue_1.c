@@ -7,6 +7,8 @@
 #include <LIBGPU.H>
 #include <LIBCD.H>
 
+FsQueue g_FsQueue;
+
 s32 fsQueueIsEntryLoaded(s32 arg0) {
   return arg0 < g_FsQueue.postload.idx;
 }

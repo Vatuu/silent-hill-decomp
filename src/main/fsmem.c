@@ -1,5 +1,7 @@
 #include "main/fsmem.h"
 
+FsMemState g_FsMem;
+
 void fsMemInit(u8 *start, u32 size) {
   s32 i;
 

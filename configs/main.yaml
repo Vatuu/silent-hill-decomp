@@ -133,7 +133,9 @@ segments:
       - [0x13488, pad, main]
       - [0x13490, .sdata, rng]
       - [0x13494, sbss, psyq]
-      - [0x13498, bss]
+      - [0x13498, .bss, fsqueue_1]
+      - [0x138C0, .bss, fsmem]
+      - [0x139A0, bss, psyq]
       # produces errors during build
       # - { start: 0x13498, type: bss, vram: 0x80022c98, name: main }
       # - { start: 0x139B8, type: bss, vram: 0x800231a0, name: psyq }
