@@ -3,11 +3,7 @@
 
 #include "common.h"
 
-typedef struct {
-  /* 0x00 */ u32 *dynamic_overlay;
-  /* 0x04 */ u32 *bodyprog_overlay;
-} OverlayAddresses;
-
-extern const OverlayAddresses OVERLAY_POINTERS;
+extern void *const g_OvlDynamic;
+extern void *const g_OvlBodyprog;
 
 #endif

@@ -6,4 +6,6 @@
 
 #define ALIGN(x, a) (((u32)(x) + ((a)-1)) & ~((a)-1))
 
+#define SECTION(x) __attribute__((section(x)))
+
 #endif

@@ -1,32 +1,4 @@
-OVERLAY_POINTERS = 0x80010000; // type:Overlays size:0x8
-
-PCDRV_PATH = 0x80010008; // type:asciz
-
-FOLDER_XA = 0x80022bb0; // type:asciz
-FOLDER_VIN = 0x80022bb8; // type:asciz
-FOLDER_TIM = 0x80022bc0; // type:asciz
-FOLDER_TEST = 0x80022bc8; // type:asciz
-FOLDER_SND = 0x80022bd0; // type:asciz
-FOLDER_MISC = 0x80022bd8; // type:asciz
-FOLDER_ITEM = 0x80022be0; // type:asciz
-FOLDER_CHARA = 0x80022be8; // type:asciz
-FOLDER_BG = 0x80022bf0; // type:asciz
-FOLDER_ANIM = 0x80022bf8; // type:asciz
-FOLDER_1ST = 0x80022c00; // type:asciz
-
-FILE_EXT_CMP = 0x80022c08; // type:asciz
-FILE_EXT_KDT = 0x80022c10; // type:asciz
-FILE_EXT_DAT = 0x80022c18; // type:asciz
-FILE_EXT_TMD = 0x80022c20; // type:asciz
-FILE_EXT_ILM = 0x80022c28; // type:asciz
-FILE_EXT_IPD = 0x80022c30; // type:asciz
-FILE_EXT_PLM = 0x80022c38; // type:asciz
-FILE_EXT_ANM = 0x80022c40; // type:asciz
-FILE_EXT_DMS = 0x80022c48; // type:asciz
-FILE_EXT_BIN = 0x80022c50; // type:asciz
-FILE_EXT_VAB = 0x80022c58; // type:asciz
-FILE_EXT_TIM = 0x80022c60; // type:asciz
-
+// assorted psyq symbols
 switchdataD_80010310 = 0x80010310;
 S_INI_OBJ_30 = 0x800122bc;
 S_INI_OBJ_40 = 0x800122cc;
@@ -479,13 +451,20 @@ SYS_OBJ_2FAC = 0x8001b0a8;
 SYS_OBJ_2FF0 = 0x8001b0ec;
 SYS_OBJ_3000 = 0x8001b0fc;
 
-// main
+// main .rodata
+g_OvlDynamic = 0x80010000; // type:u32
+g_OvlBodyprog = 0x80010004; // type:u32
+// main .text
 main = 0x80010770; // type:func
+// main .data
+g_MainDispEnv = 0x800212dc; // type:DISPENV size:0x14
+g_MainDrawEnv = 0x800212f0; // type:DRAWENV size:0x5c
+// main .sdata
+g_MainImg0 = 0x80022c74; // type:FsImageDesc size:8
+g_MainImg1 = 0x80022c7c; // type:FsImageDesc size:8
+g_MainFbIdx = 0x80022c84; // type:u32
 
-// filetable
-g_FileTable = 0x8001B11C; // type:u32 size:0x6138
-g_FilePaths = 0x80021254; // type:u32 size:0x2C
-g_FileExts = 0x80021280; // type:u32 size:0x30
+// filetable .text
 fsDecryptOverlay = 0X80010AD0; // type:func
 fsFileGetSize = 0X80010B24; // type:func
 fsFileGetName = 0x80010b54; // type:func
@@ -494,9 +473,38 @@ fsEncodeFileName = 0x80010c60; // type:func
 fsFileGetSectorAlignedSize = 0x80010cd4; // type:func
 fsFileFindNextOfType = 0x80010d0c; // type:func
 fsFileFindNext = 0x80010d80; // type:func
+// filetable .data
+g_FileTable = 0x8001B11C; // type:FileEntry size:0x6138
+g_FilePaths = 0x80021254; // type:u32 size:0x2C
+g_FileExts = 0x80021280; // type:u32 size:0x30
+// filetable .sdata
+a_PathXA = 0x80022bb0; // type:asciz
+a_PathVIN = 0x80022bb8; // type:asciz
+a_PathTIM = 0x80022bc0; // type:asciz
+a_PathTEST = 0x80022bc8; // type:asciz
+a_PathSND = 0x80022bd0; // type:asciz
+a_PathMISC = 0x80022bd8; // type:asciz
+a_PathITEM = 0x80022be0; // type:asciz
+a_PathCHARA = 0x80022be8; // type:asciz
+a_PathBG = 0x80022bf0; // type:asciz
+a_PathANIM = 0x80022bf8; // type:asciz
+a_Path1ST = 0x80022c00; // type:asciz
+a_ExtCMP = 0x80022c08; // type:asciz
+a_ExtKDT = 0x80022c10; // type:asciz
+a_ExtDAT = 0x80022c18; // type:asciz
+a_ExtTMD = 0x80022c20; // type:asciz
+a_ExtILM = 0x80022c28; // type:asciz
+a_ExtIPD = 0x80022c30; // type:asciz
+a_ExtPLM = 0x80022c38; // type:asciz
+a_ExtANM = 0x80022c40; // type:asciz
+a_ExtDMS = 0x80022c48; // type:asciz
+a_ExtBIN = 0x80022c50; // type:asciz
+a_ExtVAB = 0x80022c58; // type:asciz
+a_ExtTIM = 0x80022c60; // type:asciz
 
-// fsqueue
-g_FsQueue = 0x80022c98; // type:u32 size:0x428 // actually is a big struct, but this'll do for now
+// fsqueue .rodata
+a_PcDrvPath = 0x80010008; // type:asciz
+// fsqueue .text
 fsQueueIsEntryLoaded = 0x80010e58; // type:func // unsure
 fsQueueGetLength = 0X80010E68; // type:func
 fsQueueDoThingWhenEmpty = 0x80010e84; // type:func // unsure, calls into bodyprog and touches the fsqueue
@@ -517,32 +525,37 @@ fsQueueDoBuffersOverlap = 0X800117AC; // type:func
 fsQueueTickSetLoc = 0X800117E8; // type:func
 fsQueueTickRead = 0X8001182C; // type:func
 fsQueueTickReset = 0X80011884; // type:func
-fsQueueTickReadPcDrv = 0x8001190c; // type:func // does not actually go into the queue
+fsQueueTickReadPcDrv = 0x8001190c; // type:func
 fsQueueUpdatePostLoad = 0X80011A4C; // type:func
 fsQueuePostLoadTim = 0X80011B24; // type:func
 fsQueuePostLoadAnm = 0X80011C3C; // type:func // unsure, calls into bodyprog, which then uses GsCOORDINATE2
+// fsqueue .bss
+g_FsQueue = 0x80022c98; // type:FsQueue size:0x428
 
-// fsmem
-// these might actually be from psyq heap or something, since they're in close proximity to memcpy
-g_FsMem = 0x800230c0; // type:u32 size:0xe0 // actually is a struct
+// fsmem .text
 fsMemInit = 0X80011C70; // type:func
 nullsub_80011cfc = 0x80011cfc; // type:func
 fsMemAlloc = 0X80011D04; // type:func
 fsMemClampBlock = 0X80011E4C; // type:func
 fsMemFree = 0x80011ed0; // type:func
 fsMemRelinkBlock = 0X80011F48; // type:func
+// fsmem .bss
+g_FsMem = 0x800230c0; // type:FsMemState size:0xe0
+
+// memcpy .text
 memcpy = 0X80011F78; // type:func
 nullsub_800120b0 = 0x800120b0; // type:func
 
-// rng
-g_RngSeed = 0x80022c90; // type:u32
+// rng .text
 rngRand32 = 0x800120b8; // type:func
 rngRand16 = 0x800120e4; // type:func
 rngGetSeed = 0x80012104; // type:func
 rngSetSeed = 0x80012110; // type:func
 rngRand12 = 0x8001211c; // type:func
+// rng .sdata
+g_RngSeed = 0x80022c90; // type:u32
 
-// memmove
+// memmove32 .text
 memmove32 = 0x8001213c; // type:func
 
 // psyq

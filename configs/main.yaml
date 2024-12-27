@@ -80,6 +80,7 @@ segments:
       - [0x1CC4, c, fsqueue_2] # fs queue functions part 2, split due to usage of jtbl in rodata
       - [0x1E30, c, fsqueue_3] # fs queue functions part 3
       - [0x2470, c, fsmem] # fs heap allocator
+      - [0x2778, c, memcpy] # custom memcpy implementation
       - [0x28B8, c, rng] # RNG functions
       - [0x293C, c, memmove32] # memmove32
 
@@ -123,9 +124,13 @@ segments:
       - [0x88FC, asm, psyq/libgpu/sys] # from 4.2?, has bss
       - [0xB90C, asm, psyq/libapi/c73] # GPU_cw
 
-      - [0xB91C, data, main]
+      - [0xB91C, data, filetable]
+      - [0x11AB0, data, main]
       - [0x11B4C, data, psyq]
-      - [0x133B0, sdata, main]
+      - [0x133B0, sdata, filetable]
+      - [0x1346C, sdata, start]
+      - [0x13474, .sdata, main]
+      - [0x13488, pad, main]
       - [0x13490, .sdata, rng]
       - [0x13494, sbss, psyq]
       - [0x13498, bss]
