@@ -153,9 +153,3 @@ void fsMemRelinkBlock(FsMemBlock *from, FsMemBlock *to, u8 *start, u32 size) {
   tmp->start = start;
   tmp->size = size;
 }
-
-INCLUDE_ASM("asm/main/nonmatchings/fsmem", memcpy);
-
-void nullsub_800120b0(void) {
-
-}
