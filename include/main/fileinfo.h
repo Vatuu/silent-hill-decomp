@@ -41,8 +41,11 @@ typedef struct FileInfo {
  *
  * In SLUS_007.07 there are 11 possible paths. They are all one subfolder deep
  * and have starting and trailing path separators (backslashes).
+ *
+ * @note Not `const char *` because it has to end up in .data/.sdata. Was also `char *` in the header
+ * found in one of the prototypes.
  */
-extern char *const g_FilePaths[];
+extern char *g_FilePaths[];
 
 /**
  * @brief Array of file extension strings.
@@ -52,8 +55,11 @@ extern char *const g_FilePaths[];
  *
  * In SLUS_007.07 there are 12 possible extensions. They all have a starting dot
  * and are 3 characters long (`.XXX`).
+ *
+ * @note Not `const char *` because it has to end up in .data/.sdata. Was also `char *` in the header
+ * found in one of the prototypes.
  */
-extern char *const g_FileExts[];
+extern char *g_FileExts[];
 
 /**
  * @brief File information table.
@@ -61,6 +67,9 @@ extern char *const g_FileExts[];
  * The file table is the index to the game's two data archives:
  * the files `SILENT` and `HILL` on the CD. It contains metadata of every file
  * in those archives, such as the name, size, file type and where the file is on the CD.
+ *
+ * @note Not `const` because it has to end up in .data. Was also like that in the header
+ * found in one of the prototypes.
  */
 extern FileInfo g_FileTable[];
 

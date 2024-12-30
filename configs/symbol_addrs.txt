@@ -478,29 +478,6 @@ g_FileTable = 0x8001B11C; // type:FileInfo size:0x6138
 g_FilePaths = 0x80021254; // type:u32 size:0x2C
 g_FileExts = 0x80021280; // type:u32 size:0x30
 // fileinfo .sdata
-a_PathXA = 0x80022bb0; // type:asciz
-a_PathVIN = 0x80022bb8; // type:asciz
-a_PathTIM = 0x80022bc0; // type:asciz
-a_PathTEST = 0x80022bc8; // type:asciz
-a_PathSND = 0x80022bd0; // type:asciz
-a_PathMISC = 0x80022bd8; // type:asciz
-a_PathITEM = 0x80022be0; // type:asciz
-a_PathCHARA = 0x80022be8; // type:asciz
-a_PathBG = 0x80022bf0; // type:asciz
-a_PathANIM = 0x80022bf8; // type:asciz
-a_Path1ST = 0x80022c00; // type:asciz
-a_ExtCMP = 0x80022c08; // type:asciz
-a_ExtKDT = 0x80022c10; // type:asciz
-a_ExtDAT = 0x80022c18; // type:asciz
-a_ExtTMD = 0x80022c20; // type:asciz
-a_ExtILM = 0x80022c28; // type:asciz
-a_ExtIPD = 0x80022c30; // type:asciz
-a_ExtPLM = 0x80022c38; // type:asciz
-a_ExtANM = 0x80022c40; // type:asciz
-a_ExtDMS = 0x80022c48; // type:asciz
-a_ExtBIN = 0x80022c50; // type:asciz
-a_ExtVAB = 0x80022c58; // type:asciz
-a_ExtTIM = 0x80022c60; // type:asciz
 
 // fsqueue .rodata
 a_PcDrvPath = 0x80010008; // type:asciz

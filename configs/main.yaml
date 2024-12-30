@@ -124,11 +124,12 @@ segments:
       - [0x88FC, asm, psyq/libgpu/sys] # from 4.2?, has bss
       - [0xB90C, asm, psyq/libapi/c73] # GPU_cw
 
-      - [0xB91C, data, fileinfo]
+      - [0xB91C, .data, fileinfo]
       - [0x11AB0, data, main]
       - [0x11B4C, data, psyq]
 
-      - [0x133B0, sdata, fileinfo]
+      - [0x133B0, .sdata, fileinfo]
+      - [0x13468, pad, fileinfo]
       - [0x1346C, sdata, start]
       - [0x13474, .sdata, main]
       - [0x13488, pad, main]
