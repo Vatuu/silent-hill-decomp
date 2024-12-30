@@ -24,14 +24,14 @@
  * the extension string in `g_FileExts`, respectively. This limits the amount of paths and extensions
  * to 16 each, with one representing an empty extension.
  */
-typedef struct FileEntry {
+typedef struct FileInfo {
   u32 startsector : 19; /** Number of the CD sector where the file starts */
   u32 numblocks : 12;   /** Size of file in 256-byte blocks */
   u32 pathnum : 4;      /** Index of path to file in `g_FilePaths` */
   u32 name0123 : 24;    /** First four 6-bit characters of the file name */
   u32 name4567 : 24;    /** Second four 6-bit characters of the file name */
   u32 type : 4;         /** File type (and index of extension in `g_FileExts`) */
-} FileEntry;
+} FileInfo;
 
 /**
  * @brief Array of file path strings.
@@ -62,7 +62,7 @@ extern char *const g_FileExts[];
  * the files `SILENT` and `HILL` on the CD. It contains metadata of every file
  * in those archives, such as the name, size, file type and where the file is on the CD.
  */
-extern FileEntry g_FileTable[];
+extern FileInfo g_FileTable[];
 
 /**
  * @brief Decrypts an encrypted overlay.
@@ -116,7 +116,7 @@ void fsFileGetName(char *outname, s32 filenum);
  * @param[out] outname Buffer where the decoded file name will be stored.
  * @param[in] fentry Pointer to the file table entry from which to decode the name.
  */
-void fsFileEntryGetName(char *outname, const FileEntry *const fentry);
+void fsFileInfoGetName(char *outname, const FileInfo *const fentry);
 
 /* Example of the file name encoding:
  *   For string like 'HERO':
@@ -136,7 +136,7 @@ void fsFileEntryGetName(char *outname, const FileEntry *const fentry);
  * Takes an ASCII file name and encodes it into the 6 bits per character format
  * used by the file table.
  * The name is stored in two 32-bit integers pointed to by `outname0123` and `outname4567`,
- * corresponding to the `FileEntry` fields of the same name.
+ * corresponding to the `FileInfo` fields of the same name.
  *
  * @param[out] outname0123 Pointer to the integer where the first part of the
  * encoded name will be stored.

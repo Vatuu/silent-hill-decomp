@@ -104,7 +104,7 @@ s32 fsQueueTickReadPcDrv(FsQueueEntry *entry) {
   s32 tmp;
   s32 retry;
   s32 result;
-  FileEntry *finfo = entry->info;
+  FileInfo *finfo = entry->info;
   char pathbuf[64];
   char namebuf[32];
 
@@ -112,7 +112,7 @@ s32 fsQueueTickReadPcDrv(FsQueueEntry *entry) {
 
   strcpy(pathbuf, "sim:.\\DATA");
   strcat(pathbuf, g_FilePaths[finfo->pathnum]);
-  fsFileEntryGetName(namebuf, finfo);
+  fsFileInfoGetName(namebuf, finfo);
   strcat(pathbuf, namebuf);
 
   for (retry = 0; retry <= 2; retry++) {

@@ -75,7 +75,7 @@ segments:
       - [0xD50, rodata, psyq/libgpu/sys] 
 
       - [0xF70, c, main] # the main function
-      - [0x12D0, c, filetable] # file entry functions
+      - [0x12D0, c, fileinfo] # file entry functions
       - [0x1658, c, fsqueue_1] # fs queue functions part 1
       - [0x1CC4, c, fsqueue_2] # fs queue functions part 2, split due to usage of jtbl in rodata
       - [0x1E30, c, fsqueue_3] # fs queue functions part 3
@@ -124,19 +124,19 @@ segments:
       - [0x88FC, asm, psyq/libgpu/sys] # from 4.2?, has bss
       - [0xB90C, asm, psyq/libapi/c73] # GPU_cw
 
-      - [0xB91C, data, filetable]
+      - [0xB91C, data, fileinfo]
       - [0x11AB0, data, main]
       - [0x11B4C, data, psyq]
-      - [0x133B0, sdata, filetable]
+
+      - [0x133B0, sdata, fileinfo]
       - [0x1346C, sdata, start]
       - [0x13474, .sdata, main]
       - [0x13488, pad, main]
       - [0x13490, .sdata, rng]
+
       - [0x13494, sbss, psyq]
+
       - [0x13498, .bss, fsqueue_1]
       - [0x138C0, .bss, fsmem]
       - [0x139A0, bss, psyq]
-      # produces errors during build
-      # - { start: 0x13498, type: bss, vram: 0x80022c98, name: main }
-      # - { start: 0x139B8, type: bss, vram: 0x800231a0, name: psyq }
   - [0x14000]

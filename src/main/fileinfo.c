@@ -1,4 +1,4 @@
-#include "main/filetable.h"
+#include "main/fileinfo.h"
 
 #define NAME_PART_CHARS 4
 #define NAME_CHAR_BITS 6
@@ -25,10 +25,10 @@ s32 fsFileGetSize(s32 filenum) {
 }
 
 void fsFileGetName(char *outname, s32 filenum) {
-  fsFileEntryGetName(outname, &g_FileTable[filenum]);
+  fsFileInfoGetName(outname, &g_FileTable[filenum]);
 }
 
-void fsFileEntryGetName(char *outname, const FileEntry *const fentry) {
+void fsFileInfoGetName(char *outname, const FileInfo *const fentry) {
   s32   i = 0;
   char  decoded;
   u32   namepart;
@@ -140,7 +140,7 @@ s32 fsFileFindNextOfType(s32 ftype, s32 startnum, s32 direction) {
 }
 
 s32 fsFileFindNext(const char *name, s32 ftype, s32 startnum) {
-  FileEntry *fentry;
+  FileInfo *fentry;
 
   s32 name0123;
   s32 name4567;

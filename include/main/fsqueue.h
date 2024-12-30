@@ -2,7 +2,7 @@
 #define _FSQUEUE_H
 
 #include "common.h"
-#include "main/filetable.h"
+#include "main/fileinfo.h"
 
 #define FS_QUEUE_LEN 32 /** FS queue size. */
 
@@ -51,10 +51,10 @@ typedef union {
  * @brief FS queue entry.
  *
  * Entry in the FS queue.
- * Holds the state of one read/seek operation and a pointer to the `FileEntry` of the file it's for.
+ * Holds the state of one read/seek operation and a pointer to the `FileInfo` of the file it's for.
  */
 typedef struct {
-  const FileEntry *info; /** Pointer to the file table entry of the file this entry is for. */
+  const FileInfo *info; /** Pointer to the file table entry of the file this entry is for. */
   u8 operation;          /** What to do. See `FsQueueOperation`. */
   u8 postload;           /** What to do after `operation` is done. See `FsQueuePostLoadType`. */
   u8 allocate;           /** If 1, allocate a buffer for `data` from `g_FsMem`, otherwise use `external_data` */
