@@ -13,9 +13,6 @@
 #define FILE_1ST_B_KONAMI_BIN 4 // "\\1ST\\B_KONAMI.BIN"
 #define FILE_1ST_FONT8NOC_TIM 7 // "\\1ST\\FONT8NOC.TIM"
 
-extern DISPENV g_MainDispEnv;
-extern DRAWENV g_MainDrawEnv;
-
 // @HACK: explicit rodata here because these need to be referenced externally to end up in .rodata,
 // otherwise they'll go into .sdata because they're small; can't wrap them in a struct either because
 // main() accesses them individually and not with a common base
@@ -39,6 +36,17 @@ FsImageDesc g_MainImg1 = {
 };
 
 s32 g_MainFbIdx = 0;
+
+DISPENV g_MainDispEnv = {
+  .disp = { 0, 0, 320, 240 },
+  .screen = { 0, 8, 256, 224 }
+};
+
+DRAWENV g_MainDrawEnv = {
+  .clip = { 0, 0, 320, 224 },
+  .dtd = 1,
+  .isbg = 1
+};
 
 int main(void) {
   s16 ofs_y;
@@ -118,7 +126,7 @@ int main(void) {
 
     // draw blended fullscreen tile
     setlen((TILE *)prim, 3);
-    setcode((TILE *)prim, PRIM_RECT | RECT_BLEND); // setSprt(); setSemiTrans();
+    setcode((TILE *)prim, PRIM_RECT | RECT_BLEND); // setTile(); setSemiTrans();
     setRGB0((TILE *)prim, fade, fade, fade);
     setWHFast((TILE *)prim, 640, 240);
     setXY0Fast((TILE *)prim, 0, 0);

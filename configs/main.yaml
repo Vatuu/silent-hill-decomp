@@ -125,7 +125,7 @@ segments:
       - [0xB90C, asm, psyq/libapi/c73] # GPU_cw
 
       - [0xB91C, .data, fileinfo]
-      - [0x11ADC, data, main]
+      - [0x11ADC, .data, main]
       - [0x11B4C, data, psyq]
 
       - [0x133B0, .sdata, fileinfo]
