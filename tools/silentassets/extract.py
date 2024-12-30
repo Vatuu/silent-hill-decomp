@@ -85,6 +85,11 @@ def _parseEntry(entry):
     # size, lba, name, path, type
     return meta >> 19, meta & 0x7FFFF, name, DIRS[file1 & 15], FILE_TYPES[(file2 >> 24) & 15]
 
+def _formatEntry(size, lba, name, path, type):
+    name = name.ljust(8)
+    namesep = ','.join(f"'{name[i]}'" for i in range(0, len(name)))
+    return f'{{ {lba:#07x}, {size:4d}, {DIRS.index(path):2d}, FN({namesep}), {FILE_TYPES.index(type):2d} }}'
+
 def _decryptOverlay(data: bytes):
     output   = bytearray(data)
     outArray = memoryview(output).cast("I") # uint32_t
@@ -129,14 +134,17 @@ def main():
         region = _detectRegion(checksum, executable.name)
         if(region == None):
             return
-    
+
+    headerText = ""
     entriesSilent = []
     entriesHill = []
     executable.seek(region.tocOffset)
     for i in range(region.fileCount):
         rawEntry = executable.read(ENTRY_STRUCT.size)
         size, lba, name, directory, type = _parseEntry(rawEntry)
-        entry = TableEntry(os.path.join(directory, f"{name}.{type.extension}" if not type == FILE_TYPES[15] else f"{name}"), type, size, lba)
+        fullpath = os.path.join(directory, f"{name}.{type.extension}" if not type == FILE_TYPES[15] else f"{name}")
+        headerText += f"/* {i:4d} */ {_formatEntry(size, lba, name, directory, type)}, // {fullpath}\n"
+        entry = TableEntry(fullpath, type, size, lba)
         if(lba < HILL_LBA):
             entriesSilent.append(entry)
         else:
@@ -144,6 +152,8 @@ def main():
     executable.close
     _extract(entriesSilent, args.outputFolder, args.silentFile, 2048, SILENT_LBA)
     _extract(entriesHill, args.outputFolder, args.hillFile, 2352, HILL_LBA)
+    with open(os.path.join(args.outputFolder, "filetable.c.inc"), "w") as f:
+        f.write(headerText)
     logging.info("All done!")
 
 
