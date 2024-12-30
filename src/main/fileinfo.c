@@ -44,6 +44,20 @@ char *g_FileExts[] = {
   ".CMP"
 };
 
+u32 g_FileXaLoc[] = {
+  0x00000,
+  0x099BF,
+  0x0A227,
+  0x0B377,
+  0x0D0BF,
+  0x0EA57,
+  0x0F997,
+  0x1096F,
+  0x16F07,
+  0x19797,
+  0x00000
+};
+
 void fsDecryptOverlay(s32 *dst, const s32 *src, s32 size) {
   s32 i, seed = 0;
 

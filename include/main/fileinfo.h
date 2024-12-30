@@ -74,6 +74,12 @@ extern char *g_FileExts[];
 extern FileInfo g_FileTable[];
 
 /**
+ * Array of starting sector numbers for the first 9 \XA\ files in the file table (2044 - 2052).
+ * These files seem to contain dialog and music. Array starts and ends with 0s.
+ */
+extern u32 g_FileXaLoc[];
+
+/**
  * @brief Decrypts an encrypted overlay.
  *
  * The overlays in the `1ST` folder in the data archives are encrypted.

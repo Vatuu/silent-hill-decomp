@@ -477,6 +477,7 @@ fsFileFindNext = 0x80010d80; // type:func
 g_FileTable = 0x8001B11C; // type:FileInfo size:0x6138
 g_FilePaths = 0x80021254; // type:u32 size:0x2C
 g_FileExts = 0x80021280; // type:u32 size:0x30
+g_FileXaLoc = 0x800212b0; // type:u32 size:44
 // fileinfo .sdata
 
 // fsqueue .rodata
