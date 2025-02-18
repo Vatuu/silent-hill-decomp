@@ -49,10 +49,10 @@ u32 rngGetSeed(void);
  * This function updates the global variable `g_RngSeed` with the given
  * seed value.
  *
- * @param newseed The new seed value to be set, as a 32-bit unsigned integer
+ * @param newSeed The new seed value to be set, as a 32-bit unsigned integer
  * (u32).
  */
-void rngSetSeed(u32 newseed);
+void rngSetSeed(u32 newSeed);
 
 /**
  * @brief Generates a new random 12-bit short integer.

@@ -1,8 +1,9 @@
+#include "bodyprog/bodyprog.h"
 #include "common.h"
 #include "game.h"
-#include "main/fsqueue.h"
-#include "bodyprog/bodyprog.h"
 #include "gpu.h"
+#include "main/fsqueue.h"
+
 #include <LIBAPI.H>
 #include <LIBETC.H>
 #include <LIBCD.H>
@@ -13,42 +14,47 @@
 #define FILE_1ST_B_KONAMI_BIN 4 // "\\1ST\\B_KONAMI.BIN"
 #define FILE_1ST_FONT8NOC_TIM 7 // "\\1ST\\FONT8NOC.TIM"
 
-// @HACK: explicit rodata here because these need to be referenced externally to end up in .rodata,
+// @HACK: Explicit rodata here because these need to be referenced externally to end up in .rodata,
 // otherwise they'll go into .sdata because they're small; can't wrap them in a struct either because
-// main() accesses them individually and not with a common base
-void * SECTION(".rodata") g_OvlDynamic = (void *)0x800C9578;
-void * SECTION(".rodata") g_OvlBodyprog = (void *)0x80024B60;
+// main() accesses them individually and not with a common base.
+void* SECTION(".rodata") g_OvlDynamic = (void *)0x800C9578;
+void* SECTION(".rodata") g_OvlBodyprog = (void *)0x80024B60;
 
-FsImageDesc g_MainImg0 = {
-  .tpage = 0x0d01,
-  .u = 32,
-  .v = 0,
-  .clut_x = 768,
-  .clut_y = 480
+FsImageDesc g_MainImg0 =
+{
+    .tPage = 0x0d01,
+    .u = 32,
+    .v = 0,
+    .clutX = 768,
+    .clutY = 480
 };
 
-FsImageDesc g_MainImg1 = {
-  .tpage = 0x1400,
-  .u = 0,
-  .v = 240,
-  .clut_x = 0,
-  .clut_y = 0
+FsImageDesc g_MainImg1 =
+{
+    .tPage = 0x1400,
+    .u = 0,
+    .v = 240,
+    .clutX = 0,
+    .clutY = 0
 };
 
 s32 g_MainFbIdx = 0;
 
-DISPENV g_MainDispEnv = {
-  .disp = { 0, 0, 320, 240 },
-  .screen = { 0, 8, 256, 224 }
+DISPENV g_MainDispEnv =
+{
+    .disp = { 0, 0, 320, 240 },
+    .screen = { 0, 8, 256, 224 }
 };
 
-DRAWENV g_MainDrawEnv = {
-  .clip = { 0, 0, 320, 224 },
-  .dtd = 1,
-  .isbg = 1
+DRAWENV g_MainDrawEnv =
+{
+    .clip = { 0, 0, 320, 224 },
+    .dtd = 1,
+    .isbg = 1
 };
 
-int main(void) {
+int main(void)
+{
   s16 ofs_y;
   s32 fb_next;
   s32 i;
@@ -116,7 +122,7 @@ int main(void) {
       setCodeWord((SPRT *)prim, PRIM_RECT | RECT_TEXTURE, 0x808080); // setSprt(); setRGB0();
       setWH((SPRT *)prim, 256, 256);
       setXY0Fast((SPRT *)prim, sprt_x, -8);
-      setUV0AndClut((SPRT *)prim, 0, 0, g_MainImg0.clut_x, g_MainImg0.clut_y);
+      setUV0AndClut((SPRT *)prim, 0, 0, g_MainImg0.clutX, g_MainImg0.clutY);
       DrawPrim((SPRT *)prim);
     }
 

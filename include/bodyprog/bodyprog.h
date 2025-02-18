@@ -7,12 +7,13 @@
 /** Declarations for unknown symbols in bodyprog. */
 
 /** Something related to ANM files. See `D_800A90FC`. */
-typedef struct {
-  s16 fileno;
-  s16 field_02;
-  u32 field_04;
-  u32 field_08;
-  u32 field_0c;
+typedef struct
+{
+    s16 fileno;
+    s16 field_02;
+    u32 field_04;
+    u32 field_08;
+    u32 field_0c;
 } struct_800A90FC;
 
 /** Unknown bodyprog var. Used in `fsQueueStartReadAnm`. */
