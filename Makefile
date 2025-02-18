@@ -214,6 +214,12 @@ $(BUILD_DIR)/%.bin.o: %.bin
 	@mkdir -p $(dir $@)
 	$(LD) -r -b binary -o $@ $<
 
+YAML_FILES := $(shell find $(CONFIG_DIR) -type f -name "*.yaml")
+LD_FILES := $(patsubst $(CONFIG_DIR)/%.yaml, $(LINKER_DIR)/%.ld, $(YAML_FILES))
+
+# Ensure all .ld files are built when "generate" is run.
+generate: $(LD_FILES)
+
 # Split yaml
 $(LINKER_DIR)/%.ld: $(CONFIG_DIR)/%.yaml
 	@mkdir -p $(dir $@)
