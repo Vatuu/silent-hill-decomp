@@ -52,5 +52,5 @@ segments:
     subsegments:
       - [0x0, rodata]
       - [0x34, c, b_konami]
-      - [0xF78, data, b_konami]
+      - [0xF78, data, b_konami] # Padding?
   - [0x1000]
