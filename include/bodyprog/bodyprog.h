@@ -23,7 +23,7 @@ extern struct_800A90FC D_800A90FC[];
 extern s32 D_800C489C;
 
 /** Bodyprog function that fades the screen out? Called by `main`. */
-void func_800314EC(FsImageDesc *arg0);
+void func_800314EC(FsImageDesc* arg0);
 
 /** Bodyprog entrypoint. Called by `main`. */
 void func_80032EE0(void);

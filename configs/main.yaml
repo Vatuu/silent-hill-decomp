@@ -59,7 +59,7 @@ segments:
     subsegments:
       - [0x800, .rodata, main]
       - [0x808, .rodata, fsqueue_3]
-      - [0x814, pad, fsqueue_3] # extra padding for some reason
+      - [0x814, pad, fsqueue_3] # Extra padding for some reason.
       - [0x818, .rodata, fsqueue_2] # jtbl
 
       - [0x830, rodata, psyq/libspu/spu]
@@ -68,20 +68,20 @@ segments:
       - [0x900, rodata, psyq/libetc/intr_dma]
       - [0x930, rodata, psyq/libcd/event]
       - [0x950, rodata, psyq/libcd/sys]
-      - [0x960, rodata, psyq/libcd/cd_control_coms] # bss has table of pointers to this data
-      - [0xA9C, rodata, psyq/libcd/bios] # has jtbl, bss pointers
+      - [0x960, rodata, psyq/libcd/cd_control_coms] # bss has table of pointers to this data.
+      - [0xA9C, rodata, psyq/libcd/bios] # Has jtbl, bss pointers.
       - [0xBC0, rodata, psyq/libcd/cdread]
       - [0xC10, rodata, psyq/libgpu/tmd]
       - [0xD50, rodata, psyq/libgpu/sys] 
 
-      - [0xF70, c, main] # the main function
-      - [0x12D0, c, fileinfo] # file entry functions
-      - [0x1658, c, fsqueue_1] # fs queue functions part 1
-      - [0x1CC4, c, fsqueue_2] # fs queue functions part 2, split due to usage of jtbl in rodata
-      - [0x1E30, c, fsqueue_3] # fs queue functions part 3
-      - [0x2470, c, fsmem] # fs heap allocator
-      - [0x2778, c, memcpy] # custom memcpy implementation
-      - [0x28B8, c, rng] # RNG functions
+      - [0xF70, c, main] # Main function.
+      - [0x12D0, c, fileinfo] # File entry functions.
+      - [0x1658, c, fsqueue_1] # fs queue functions part 1.
+      - [0x1CC4, c, fsqueue_2] # fs queue functions part 2, split due to usage of jtbl in rodata.
+      - [0x1E30, c, fsqueue_3] # fs queue functions part 3.
+      - [0x2470, c, fsmem] # fs heap allocator.
+      - [0x2778, c, memcpy] # Custom memcpy implementation.
+      - [0x28B8, c, rng] # RNG functions.
       - [0x293C, c, memmove32] # memmove32
 
       - [0x29BC, asm, psyq/libapi/a36] #EnterCriticalSection
@@ -97,7 +97,7 @@ segments:
       - [0x2A5C, asm, psyq/libc/c43] #memset
       - [0x2A6C, asm, psyq/libsnd/ut_roff]
       - [0x2A8C, asm, psyq/libspu/s_ini]
-      - [0x2BEC, asm, psyq/libspu/spu] # has bss section: https://github.com/lab313ru/psx_psyq_signatures/blob/e9e46e7e133ef275a79bfce650924f98edb086bc/470/LIBSPU.LIB.json#L279
+      - [0x2BEC, asm, psyq/libspu/spu] # Has bss section: https://github.com/lab313ru/psx_psyq_signatures/blob/e9e46e7e133ef275a79bfce650924f98edb086bc/470/LIBSPU.LIB.json#L279
       - [0x372C, asm, psyq/libapi/a07] #DeliverEvent
       - [0x373C, asm, psyq/libc/c63] #printf
       - [0x374C, asm, psyq/libspu/s_dcb]
@@ -117,11 +117,11 @@ segments:
       - [0x439C, asm, psyq/libetc/intr_dma] # startIntrDMA
       - [0x463C, asm, psyq/libetc/vmode] # Set/GetVideoMode
       - [0x466C, asm, psyq/libcd/event] # CdInit
-      - [0x47BC, asm, psyq/libcd/sys] # CD related functions
+      - [0x47BC, asm, psyq/libcd/sys] # CD related functions.
       - [0x4F4C, asm, psyq/libcd/bios] # More CD functions, has bss StMode 
-      - [0x66AC, asm, psyq/libcd/cdread] # Still CD
+      - [0x66AC, asm, psyq/libcd/cdread] # Still CD.
       - [0x707C, asm, psyq/libgpu/tmd]
-      - [0x88FC, asm, psyq/libgpu/sys] # from 4.2?, has bss
+      - [0x88FC, asm, psyq/libgpu/sys] # From 4.2?, has bss.
       - [0xB90C, asm, psyq/libapi/c73] # GPU_cw
 
       - [0xB91C, .data, fileinfo]
