@@ -64,7 +64,7 @@ int main(void)
 
     ResetCallback();
     CdInit();
-    fsQueueInit();
+    Fs_InitializeQueue_80011170();
     VSync(0);
     ResetGraph(3);
 
@@ -82,16 +82,16 @@ int main(void)
     SsUtReverbOff();
 
     // Load \1ST\2ZANKO_E.TIM ("There are violent and disturbing images...").
-    fsQueueStartReadTim(FILE_1ST_2ZANKO_E_TIM, FS_BUFFER0, &g_MainImg0);
-    while (fsQueueGetLength() > 0)
+    Fs_StartQueueReadTim_80010F9C(FILE_1ST_2ZANKO_E_TIM, FS_BUFFER0, &g_MainImg0);
+    while (Fs_GetQueueLength_80010E68() > 0)
     {
-        fsQueueUpdate();
+        Fs_UpdateQueue_80011260();
         VSync(0);
     }
 
     // Start loading \1ST\BODYPROG.BIN and \1ST\B_KONAMI.BIN.
-    fsQueueStartRead(FILE_1ST_BODYPROG_BIN, FS_BUFFER0);
-    fsQueueStartRead(FILE_1ST_B_KONAMI_BIN, FS_BUFFER1);
+    Fs_StartQueueRead_80010F68(FILE_1ST_BODYPROG_BIN, FS_BUFFER0);
+    Fs_StartQueueRead_80010F68(FILE_1ST_B_KONAMI_BIN, FS_BUFFER1);
 
     SetDispMask(1);
 
@@ -107,7 +107,7 @@ int main(void)
             break;
 
         // Swap buffers.
-        fbNext = g_MainFbIdx == 0;
+        fbNext = (g_MainFbIdx == 0);
         offsetY = 256 - (fbNext * 224);
         g_MainFbIdx = fbNext;
         g_MainDrawEnv.ofs[1] = offsetY; // Draw Y offset.
@@ -142,26 +142,26 @@ int main(void)
         fade -= 4;
 
         // Keep loading files in meantime.
-        fsQueueUpdate();
+        Fs_UpdateQueue_80011260();
         VSync(0);
     }
 
     // If files haven't loaded yet, wait until they do.
-    while (fsQueueGetLength() > 0)
+    while (Fs_GetQueueLength_80010E68() > 0)
     {
-        fsQueueUpdate();
+        Fs_UpdateQueue_80011260();
         VSync(0);
     }
 
     // Decrypt BODYPROG and B_KONAMI into place.
-    fsDecryptOverlay(g_OvlBodyprog, FS_BUFFER0, fsFileGetSize(FILE_1ST_BODYPROG_BIN));
-    fsDecryptOverlay(g_OvlDynamic, FS_BUFFER1, fsFileGetSize(FILE_1ST_B_KONAMI_BIN));
+    Fs_DecryptOverlay_80010AD0(g_OvlBodyprog, FS_BUFFER0, Fs_GetFileSize_80010B24(FILE_1ST_BODYPROG_BIN));
+    Fs_DecryptOverlay_80010AD0(g_OvlDynamic, FS_BUFFER1, Fs_GetFileSize_80010B24(FILE_1ST_B_KONAMI_BIN));
 
     // Load 1ST\FONT8NOC.TIM (8x8 font).
-    fsQueueStartReadTim(FILE_1ST_FONT8NOC_TIM, FS_BUFFER1, &g_MainImg1);
-    while (fsQueueGetLength() > 0)
+    Fs_StartQueueReadTim_80010F9C(FILE_1ST_FONT8NOC_TIM, FS_BUFFER1, &g_MainImg1);
+    while (Fs_GetQueueLength_80010E68() > 0)
     {
-        fsQueueUpdate();
+        Fs_UpdateQueue_80011260();
         VSync(0);
     }
 

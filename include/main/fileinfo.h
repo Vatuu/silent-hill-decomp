@@ -92,7 +92,7 @@ extern u32 g_FileXaLoc[];
  * @param src Encrypted overlay data.
  * @param size The number of bytes to decrypt.
  */
-void fsDecryptOverlay(s32* dest, const s32* src, s32 size);
+void Fs_DecryptOverlay_80010AD0(s32* dest, const s32* src, s32 size);
 
 /**
  * @brief Gets the size of a file in the file table.
@@ -103,7 +103,7 @@ void fsDecryptOverlay(s32* dest, const s32* src, s32 size);
  * @param fileIdx The index of the file entry to look up.
  * @return The size of the specified file entry in bytes.
  */
-s32 fsFileGetSize(s32 fileIdx);
+s32 Fs_GetFileSize_80010B24(s32 fileIdx);
 
 /**
  * @brief Gets the full name of a file in the file table.
@@ -118,7 +118,7 @@ s32 fsFileGetSize(s32 fileIdx);
  * @param[out] outName Buffer where the decoded file name will be stored.
  * @param[in] fileIdx Index of the file in the file table.
  */
-void fsFileGetName(char* outName, s32 fileIdx);
+void Fs_GetFileName_80010b54(char* outName, s32 fileIdx);
 
 /**
  * @brief Gets the name from a file table entry.
@@ -132,7 +132,7 @@ void fsFileGetName(char* outName, s32 fileIdx);
  * @param[out] outName Buffer where the decoded file name will be stored.
  * @param[in] fileEntry Pointer to the file table entry from which to decode the name.
  */
-void fsFileInfoGetName(char* outName, const FileInfo* const fileEntry);
+void Fs_GetFileInfoName_80010b88(char* outName, const FileInfo* const fileEntry);
 
 /* Example of the file name encoding:
  *   For string like 'HERO':
@@ -160,7 +160,7 @@ void fsFileInfoGetName(char* outName, const FileInfo* const fileEntry);
  * encoded name will be stored.
  * @param[in] srcName The file name string to encode.
  */
-void fsEncodeFileName(s32* outName0123, s32* outName4567, const char* srcName);
+void Fs_EncodeFileName_80010c60(s32* outName0123, s32* outName4567, const char* srcName);
 
 /**
  * @brief Gets the size of a file rounded up to CD sector size.
@@ -171,7 +171,7 @@ void fsEncodeFileName(s32* outName0123, s32* outName4567, const char* srcName);
  * @param fileIdx The index of the file entry to look up.
  * @return The size of the specified file entry in bytes rounded up to CD sector boundary.
  */
-s32 fsFileGetSectorAlignedSize(s32 fileIdx);
+s32 Fs_GetFileSectorAlignedSize_80010cd4(s32 fileIdx);
 
 /**
  * @brief Finds a file of the specified type in the file table.
@@ -187,7 +187,7 @@ s32 fsFileGetSectorAlignedSize(s32 fileIdx);
  * negative for decrementing.
  * @return The index of the first matching file entry, or -1 if not found.
  */
-s32 fsFileFindNextOfType(s32 fileType, s32 startIdx, s32 dir);
+s32 Fs_FindNextFileOfType_80010d0c(s32 fileType, s32 startIdx, s32 dir);
 
 /**
  * @brief Finds a file with the specified name and type in the file table.
@@ -202,6 +202,6 @@ s32 fsFileFindNextOfType(s32 fileType, s32 startIdx, s32 dir);
  * @param startIdx The offset from which to start the search.
  * @return The index of the matching file entry, or -1 if not found.
  */
-s32 fsFileFindNext(const char* name, s32 fileType, s32 startIdx);
+s32 Fs_FindNextFile_80010d80(const char* name, s32 fileType, s32 startIdx);
 
 #endif

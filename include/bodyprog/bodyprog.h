@@ -16,10 +16,10 @@ typedef struct
     u32 field_0c;
 } struct_800A90FC;
 
-/** Unknown bodyprog var. Used in `fsQueueStartReadAnm`. */
+/** Unknown bodyprog var. Used in `Fs_StartQueueReadAnm_80011018`. */
 extern struct_800A90FC D_800A90FC[];
 
-/** Unknown bodyprog var. Set in `fsQueueDoThingWhenEmpty`. */
+/** Unknown bodyprog var. Set in `Fs_DoQueueThingWhenEmpty_80010e84`. */
 extern s32 D_800C489C;
 
 /** Bodyprog function that fades the screen out? Called by `main`. */
@@ -28,16 +28,16 @@ void func_800314EC(FsImageDesc* arg0);
 /** Bodyprog entrypoint. Called by `main`. */
 void func_80032EE0(void);
 
-/** Unknown bodyprog function. Called by `fsQueuePostLoadAnm`. */
+/** Unknown bodyprog function. Called by `Fs_QueuePostLoadAnm_80011C3C`. */
 void func_80035560(s32, s32, void*, s32);
 
-/** Unknown bodyprog func. Called by `fsQueueDoThingWhenEmpty`. */
+/** Unknown bodyprog func. Called by `Fs_DoQueueThingWhenEmpty_80010e84`. */
 s32 func_8003c850(void);
 
-/** Unknown bodyprog func. Called by `fsQueueWaitForEmpty`. */
+/** Unknown bodyprog func. Called by `Fs_WaitForEmptyQueue_80010ecc`. */
 void func_80089128(void);
 
-/** Unknown bodyprog func. Called by `fsQueueWaitForEmpty` with `0` and then `1`. */
+/** Unknown bodyprog func. Called by `Fs_WaitForEmptyQueue_80010ecc` with `0` and then `1`. */
 void func_800892A4(s32);
 
 #endif

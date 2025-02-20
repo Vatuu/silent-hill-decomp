@@ -39,7 +39,7 @@ void nullsub_800120b0(void);
  * @param start Heap base.
  * @param size Total heap size in bytes.
  */
-void fsMemInit(u8* start, u32 size);
+void Fs_InitializeMem_80011C70(u8* start, u32 size);
 
 /** @brief Unlink an FS memblock from one list and link it to another.
  *
@@ -51,25 +51,25 @@ void fsMemInit(u8* start, u32 size);
  * @param start New block base.
  * @param size New block size.
  */
-void fsMemRelinkBlock(FsMemBlock* from, FsMemBlock* to, u8* start, u32 size);
+void Fs_RelinkMemBlock_80011F48(FsMemBlock* from, FsMemBlock* to, u8* start, u32 size);
 
 /** @brief Clamp memory buffer size to heap bounds.
  * @param start Buffer start.
  * @param size Buffer end.
  * @return New block size, or 0 if it does not fit or is invalid.
  */
-s32 fsMemClampBlock(u8* start, u8* end);
+s32 Fs_ClampMemBlock_80011E4C(u8* start, u8* end);
 
 /** @brief Allocate FS memory block.
  * @param size Number of bytes to allocate.
  * @return Allocated memory block.
  */
-void* fsMemAlloc(s32 size);
+void* Fs_AllocMem_80011D04(s32 size);
 
 /** @brief Free FS memory block.
  * @param ptr Address of memory block to free.
  * @return 1 if block was freed, 0 if it wasn't found.
  */
-s32 fsMemFree(u8* ptr);
+s32 Fs_FreeMem_80011ed0(u8* ptr);
 
 #endif

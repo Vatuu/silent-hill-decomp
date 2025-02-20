@@ -2,7 +2,7 @@
 
 FsMemState g_FsMemory;
 
-void fsMemInit(u8* start, u32 size)
+void Fs_InitializeMem_80011C70(u8* start, u32 size)
 {
     s32 i;
 
@@ -43,7 +43,7 @@ void nullsub_80011cfc(void)
 
 }
 
-void* fsMemAlloc(s32 size)
+void* Fs_AllocMem_80011D04(s32 size)
 {
     FsMemBlock bufferMin; // Seems to use this struct for some reason.
     FsMemBlock* blockMin;
@@ -74,14 +74,14 @@ void* fsMemAlloc(s32 size)
         {
             start = iter->start + iter->size;
             end = g_FsMemory.start + g_FsMemory.size;
-            clampedSize = fsMemClampBlock(start, end);
+            clampedSize = Fs_ClampMemBlock_80011E4C(start, end);
         }
         // Check if there's space left between current and nex allocation.
         else
         {
             end = iter->next->start;
             start = iter->start + iter->size;
-            clampedSize = fsMemClampBlock(start, end);
+            clampedSize = Fs_ClampMemBlock_80011E4C(start, end);
         }
 
         // Track smallest possible hole new block can fit into.
@@ -94,7 +94,7 @@ void* fsMemAlloc(s32 size)
     }
 
     if (bufferMin.start != NULL)
-        fsMemRelinkBlock(&g_FsMemory.freeList, blockMin, bufferMin.start, size);
+        Fs_RelinkMemBlock_80011F48(&g_FsMemory.freeList, blockMin, bufferMin.start, size);
 
     return bufferMin.start;
 }
@@ -115,7 +115,7 @@ static inline u8* clampToHeapBounds(u8* ptr)
     return ptr;
 }
 
-s32 fsMemClampBlock(u8* start, u8* end)
+s32 Fs_ClampMemBlock_80011E4C(u8* start, u8* end)
 {
     u8* clampedStart;
     u8* clampedEnd;
@@ -129,7 +129,7 @@ s32 fsMemClampBlock(u8* start, u8* end)
     return clampedEnd - clampedStart;
 }
 
-s32 fsMemFree(u8* ptr)
+s32 Fs_FreeMem_80011ed0(u8* ptr)
 {
     FsMemBlock* iter;
     FsMemBlock* prev = &g_FsMemory.allocList;
@@ -142,7 +142,7 @@ s32 fsMemFree(u8* ptr)
             iter = prev->next;
             if (iter->start == ptr)
             {
-                fsMemRelinkBlock(prev, &g_FsMemory.freeList, NULL, 0U);
+                Fs_RelinkMemBlock_80011F48(prev, &g_FsMemory.freeList, NULL, 0U);
                 result = true;
                 break;
             }
@@ -157,7 +157,7 @@ s32 fsMemFree(u8* ptr)
     return result;
 }
 
-void fsMemRelinkBlock(FsMemBlock* from, FsMemBlock* to, u8* start, u32 size)
+void Fs_RelinkMemBlock_80011F48(FsMemBlock* from, FsMemBlock* to, u8* start, u32 size)
 {
     FsMemBlock* tmp;
 

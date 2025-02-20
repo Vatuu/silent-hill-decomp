@@ -62,7 +62,7 @@ u32 g_FileXaLoc[] =
     0x00000
 };
 
-void fsDecryptOverlay(s32* dst, const s32* src, s32 size)
+void Fs_DecryptOverlay_80010AD0(s32* dst, const s32* src, s32 size)
 {
     s32 seed = 0;
     s32 i = 0;
@@ -80,17 +80,17 @@ void fsDecryptOverlay(s32* dst, const s32* src, s32 size)
     }
 }
 
-s32 fsFileGetSize(s32 fileIdx)
+s32 Fs_GetFileSize_80010B24(s32 fileIdx)
 {
     return g_FileTable[fileIdx].blockCount * FS_BLOCK_SIZE;
 }
 
-void fsFileGetName(char* outName, s32 fileIdx)
+void Fs_GetFileName_80010b54(char* outName, s32 fileIdx)
 {
-    fsFileInfoGetName(outName, &g_FileTable[fileIdx]);
+    Fs_GetFileInfoName_80010b88(outName, &g_FileTable[fileIdx]);
 }
 
-void fsFileInfoGetName(char* outName, const FileInfo* const fileEntry)
+void Fs_GetFileInfoName_80010b88(char* outName, const FileInfo* const fileEntry)
 {
     s32   i = 0;
     char  decoded;
@@ -134,7 +134,7 @@ void fsFileInfoGetName(char* outName, const FileInfo* const fileEntry)
     }
 }
 
-void fsEncodeFileName(s32* outName0123, s32* outName4567, const char* srcName)
+void Fs_EncodeFileName_80010c60(s32* outName0123, s32* outName4567, const char* srcName)
 {
     s32 i;
     s32 curShift;
@@ -174,12 +174,12 @@ void fsEncodeFileName(s32* outName0123, s32* outName4567, const char* srcName)
     *outName4567 = name4567;
 }
 
-s32 fsFileGetSectorAlignedSize(s32 fileIdx)
+s32 Fs_GetFileSectorAlignedSize_80010cd4(s32 fileIdx)
 {
   return ALIGN(g_FileTable[fileIdx].blockCount * FS_BLOCK_SIZE, FS_SECTOR_SIZE);
 }
 
-s32 fsFileFindNextOfType(s32 fileType, s32 startIndex, s32 dir)
+s32 Fs_FindNextFileOfType_80010d0c(s32 fileType, s32 startIndex, s32 dir)
 {
     s32 i;
     u32 curIdx;
@@ -205,7 +205,7 @@ s32 fsFileFindNextOfType(s32 fileType, s32 startIndex, s32 dir)
     return -1;
 }
 
-s32 fsFileFindNext(const char* name, s32 fileType, s32 startIdx)
+s32 Fs_FindNextFile_80010d80(const char* name, s32 fileType, s32 startIdx)
 {
     FileInfo* fileEntry;
 
@@ -215,7 +215,7 @@ s32 fsFileFindNext(const char* name, s32 fileType, s32 startIdx)
     s32 i = startIdx;
     s32 foundIdx = -1;
 
-    fsEncodeFileName(&name0123, &name4567, name);
+    Fs_EncodeFileName_80010c60(&name0123, &name4567, name);
 
     fileEntry = &g_FileTable[i];
     while (i < FS_FILE_COUNT)
