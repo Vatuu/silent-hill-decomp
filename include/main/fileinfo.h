@@ -41,6 +41,7 @@ extern FileInfo g_FileTable[];
 extern u32      g_FileXaLoc[];
 
 void Fs_DecryptOverlay_80010AD0(s32* dest, const s32* src, s32 size);
+
 s32  Fs_GetFileSize_80010B24(s32 fileIdx);
 void Fs_GetFileName_80010b54(char* outName, s32 fileIdx);
 void Fs_GetFileInfoName_80010b88(char* outName, const FileInfo* const fileEntry);

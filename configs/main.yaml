@@ -82,7 +82,7 @@ segments:
       - [0x2470, c, fsmem] # fs heap allocator.
       - [0x2778, c, memcpy] # Custom memcpy implementation.
       - [0x28B8, c, rng] # RNG functions.
-      - [0x293C, c, Mem_Move32_8001213c] # Mem_Move32_8001213c
+      - [0x293C, c, memmove32] # memmove32
 
       - [0x29BC, asm, psyq/libapi/a36] #EnterCriticalSection
       - [0x29CC, asm, psyq/libapi/a37] #ExitCriticalSection
