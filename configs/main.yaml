@@ -1,14 +1,14 @@
 name: Main Executable (SLUS_007.07)
 sha1: f38344565fb731befc52fd968eb5a667be37acf3
 options:
-  basename: SLUS_007.07
+  basename: main
   target_path: rom/SLUS_007.07
   base_path: ..
   platform: psx
   compiler: GCC
 
   asm_path: asm/main
-  src_path: src/
+  src_path: src/main
   build_path: build/
   # create_asm_dependencies: True
 
@@ -17,7 +17,7 @@ options:
   find_file_boundaries: False
   gp_value: 0x80022BB0
 
-  o_as_suffix: True
+  o_as_suffix: False
   use_legacy_include_asm: False
 
   asm_function_macro: glabel
@@ -26,23 +26,24 @@ options:
 
   section_order: [".rodata", ".text", ".data", ".sdata", ".sbss", ".bss"]
   symbol_addrs_path:
-    - meta/main_symbol_addrs.txt
+    - configs/symbol_addrs.txt
+    - configs/symbol_addrs.main.txt
   reloc_addrs_path:
-    - meta/main_reloc_addrs.txt
+    - configs/reloc_addrs.main.txt
 
-  undefined_funcs_auto_path: meta/main_undefined_funcs_auto.txt
-  undefined_syms_auto_path: meta/main_undefined_syms_auto.txt
+  undefined_funcs_auto_path: linkers/undefined_funcs_auto.main.txt
+  undefined_syms_auto_path: linkers/undefined_syms_auto.main.txt
 
   extensions_path: tools/splat_ext
 
-  subalign: 2
+  subalign: 4
 
   string_encoding: ASCII
   data_string_encoding: ASCII
   rodata_string_guesser_level: 2
   data_string_guesser_level: 2
 
-  ld_bss_is_noload: True
+  ld_bss_is_noload: False
 segments:
   - name: header
     type: header
@@ -52,17 +53,91 @@ segments:
     type: code
     start: 0x800
     vram: 0x80010000
+    align: 4
+    subalign: 4
     bss_size: 0x1EC8
     subsegments:
-      - [0x800, rodata, main]
-      - [0x830, rodata, psyq]
-      - [0xF70, c, main]
-      - [0x29BC, textbin, psyq]
-      - [0xB91C, data, main]
+      - [0x800, .rodata, main]
+      - [0x808, .rodata, fsqueue_3]
+      - [0x814, pad, fsqueue_3] # extra padding for some reason
+      - [0x818, .rodata, fsqueue_2] # jtbl
+
+      - [0x830, rodata, psyq/libspu/spu]
+      - [0x880, rodata, psyq/libetc/vsync]
+      - [0x890, rodata, psyq/libetc/intr]
+      - [0x900, rodata, psyq/libetc/intr_dma]
+      - [0x930, rodata, psyq/libcd/event]
+      - [0x950, rodata, psyq/libcd/sys]
+      - [0x960, rodata, psyq/libcd/cd_control_coms] # bss has table of pointers to this data
+      - [0xA9C, rodata, psyq/libcd/bios] # has jtbl, bss pointers
+      - [0xBC0, rodata, psyq/libcd/cdread]
+      - [0xC10, rodata, psyq/libgpu/tmd]
+      - [0xD50, rodata, psyq/libgpu/sys] 
+
+      - [0xF70, c, main] # the main function
+      - [0x12D0, c, fileinfo] # file entry functions
+      - [0x1658, c, fsqueue_1] # fs queue functions part 1
+      - [0x1CC4, c, fsqueue_2] # fs queue functions part 2, split due to usage of jtbl in rodata
+      - [0x1E30, c, fsqueue_3] # fs queue functions part 3
+      - [0x2470, c, fsmem] # fs heap allocator
+      - [0x2778, c, memcpy] # custom memcpy implementation
+      - [0x28B8, c, rng] # RNG functions
+      - [0x293C, c, memmove32] # memmove32
+
+      - [0x29BC, asm, psyq/libapi/a36] #EnterCriticalSection
+      - [0x29CC, asm, psyq/libapi/a37] #ExitCriticalSection
+      - [0x29DC, asm, psyq/libapi/a50] #open
+      - [0x29EC, asm, psyq/libapi/a52] #read
+      - [0x29FC, asm, psyq/libapi/a54] #close
+      - [0x2A0C, asm, psyq/libapi/a08] #OpenEvent
+      - [0x2A1C, asm, psyq/libapi/a12] #EnableEvent
+      - [0x2A2C, asm, psyq/libc/c21] #strcat
+      - [0x2A3C, asm, psyq/libc/c23] #strcmp
+      - [0x2A4C, asm, psyq/libc/c40] #bzero
+      - [0x2A5C, asm, psyq/libc/c43] #memset
+      - [0x2A6C, asm, psyq/libsnd/ut_roff]
+      - [0x2A8C, asm, psyq/libspu/s_ini]
+      - [0x2BEC, asm, psyq/libspu/spu] # has bss section: https://github.com/lab313ru/psx_psyq_signatures/blob/e9e46e7e133ef275a79bfce650924f98edb086bc/470/LIBSPU.LIB.json#L279
+      - [0x372C, asm, psyq/libapi/a07] #DeliverEvent
+      - [0x373C, asm, psyq/libc/c63] #printf
+      - [0x374C, asm, psyq/libspu/s_dcb]
+      - [0x377C, asm, psyq/libsn/snmain] #entry point
+      - [0x38FC, asm, psyq/libapi/c57] #InitHeap
+      - [0x390C, asm, psyq/libetc/vsync] #VSync
+      - [0x3B1C, asm, psyq/libapi/a91] #ChangeClearPAD
+      - [0x3B2C, asm, psyq/libapi/l10] #ChangeClearRCnt
+      - [0x3B3C, asm, psyq/libc/a63] # puts from psyq 4.4?
+      - [0x3B5C, asm, psyq/libetc/intr] # Callback functions
+      - [0x421C, asm, psyq/libapi/c114] # _96_remove
+      - [0x423C, asm, psyq/libapi/a23] # ReturnFromException
+      - [0x424C, asm, psyq/libapi/a24] # ResetEntryInt
+      - [0x425C, asm, psyq/libapi/a25] # HookEntryInt
+      - [0x426C, asm, psyq/libc/c19] # setjmp
+      - [0x427C, asm, psyq/libetc/intr_vb] # startIntrVSync
+      - [0x439C, asm, psyq/libetc/intr_dma] # startIntrDMA
+      - [0x463C, asm, psyq/libetc/vmode] # Set/GetVideoMode
+      - [0x466C, asm, psyq/libcd/event] # CdInit
+      - [0x47BC, asm, psyq/libcd/sys] # CD related functions
+      - [0x4F4C, asm, psyq/libcd/bios] # More CD functions, has bss StMode 
+      - [0x66AC, asm, psyq/libcd/cdread] # Still CD
+      - [0x707C, asm, psyq/libgpu/tmd]
+      - [0x88FC, asm, psyq/libgpu/sys] # from 4.2?, has bss
+      - [0xB90C, asm, psyq/libapi/c73] # GPU_cw
+
+      - [0xB91C, .data, fileinfo]
+      - [0x11ADC, .data, main]
       - [0x11B4C, data, psyq]
-      - [0x133B0, sdata, main]
-      - [0x13490, sbss, main]
+
+      - [0x133B0, .sdata, fileinfo]
+      - [0x13468, pad, fileinfo]
+      - [0x1346C, sdata, start]
+      - [0x13474, .sdata, main]
+      - [0x13488, pad, main]
+      - [0x13490, .sdata, rng]
+
       - [0x13494, sbss, psyq]
-      - { start: 0x13498, type: bss, vram: 0x80022c98, name: main }
-      - { start: 0x139B8, type: bss, vram: 0x800231a0, name: psyq }
+
+      - [0x13498, .bss, fsqueue_1]
+      - [0x138C0, .bss, fsmem]
+      - [0x139A0, bss, psyq]
   - [0x14000]

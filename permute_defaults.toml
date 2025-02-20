@@ -1,0 +1,38 @@
+compiler_type = "base"
+
+# uncomment lines below to customize randomization pass weights
+# see --help=randomization-passes for descriptions
+[weight_overrides]
+# perm_temp_for_expr = 100.0
+# perm_expand_expr = 20.0
+# perm_reorder_stmts = 10.0
+# perm_reorder_decls = 10.0
+# perm_add_mask = 15.0
+# perm_xor_zero = 10.0
+# perm_cast_simple = 10.0
+# perm_refer_to_var = 10.0
+# perm_float_literal = 3.0
+# perm_randomize_internal_type = 10.0
+# perm_randomize_external_type = 5.0
+# perm_randomize_function_type = 5.0
+# perm_split_assignment = 10.0
+# perm_sameline = 3.0
+# perm_ins_block = 10.0
+# perm_struct_ref = 10.0
+# perm_empty_stmt = 10.0
+# perm_condition = 10.0
+# perm_mult_zero = 5.0
+# perm_factor_mult = 5.0
+# perm_factor_shift = 5.0
+# perm_dummy_comma_expr = 5.0
+# perm_add_self_assignment = 5.0
+# perm_commutative = 5.0
+# perm_add_sub = 5.0
+# perm_inequalities = 5.0
+# perm_compound_assignment = 5.0
+# perm_remove_ast = 5.0
+# perm_duplicate_assignment = 5.0
+# perm_chain_assignment = 5.0
+# perm_long_chain_assignment = 3.0
+# perm_pad_var_decl = 1.0
+# perm_inline = 10.0
