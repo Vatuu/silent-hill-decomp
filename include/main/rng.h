@@ -5,10 +5,10 @@
 
 extern u32 g_RngSeed;
 
-u32  rngRand32(void);
-s16  rngRand16(void);
-u32  rngGetSeed(void);
-void rngSetSeed(u32 newSeed);
-u16  rngRand12(void);
+u32  Rng_Rand32_800120b8(void);
+s16  Rng_Rand32_800120e4(void);
+u32  Rng_GetSeed_80012104(void);
+void Rng_SetSeed_80012110(u32 newSeed);
+u16  Rng_Rand12_8001211c(void);
 
 #endif

@@ -525,11 +525,11 @@ memcpy = 0X80011F78; // type:func
 nullsub_800120b0 = 0x800120b0; // type:func
 
 // rng .text
-rngRand32 = 0x800120b8; // type:func
-rngRand16 = 0x800120e4; // type:func
-rngGetSeed = 0x80012104; // type:func
-rngSetSeed = 0x80012110; // type:func
-rngRand12 = 0x8001211c; // type:func
+Rng_Rand32_800120b8 = 0x800120b8; // type:func
+Rng_Rand32_800120e4 = 0x800120e4; // type:func
+Rng_GetSeed_80012104 = 0x80012104; // type:func
+Rng_SetSeed_80012110 = 0x80012110; // type:func
+Rng_Rand12_8001211c = 0x8001211c; // type:func
 // rng .sdata
 g_RngSeed = 0x80022c90; // type:u32
 
