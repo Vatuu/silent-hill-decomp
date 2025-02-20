@@ -4,7 +4,8 @@
 #include "common.h"
 #include "main/fileinfo.h"
 
-#define FS_QUEUE_LEN 32 /** FS queue size. */
+ /** FS queue size. */
+#define FS_QUEUE_LEN 32
 
 #define FS_BUFFER0 ((void*)0x8010A600)
 #define FS_BUFFER1 ((void*)0x801E2600)
@@ -46,7 +47,7 @@ typedef struct
  */
 typedef union
 {
-    FsImageDesc image; /** Location in VRAM where to upload a TIM during postload. */
+    FsImageDesc image; /** Location in VRAM where to upload a TIM during post-load. */
     FsAnmDesc   anm;   /** Unknown. Used when loading some ANM files. */
 } FsQueueExtra;
 
@@ -174,213 +175,39 @@ enum FsQueueOperation
     FS_OP_READ = 2  /** Read from CD (`Fs_UpdateQueueRead_800114C4`). */
 };
 
-/** The FS queue. See `FsQueue`. */
 extern FsQueue g_FsQueue;
 
-/** @brief Initialize FS queue and FS memory.
- * Initializes `g_FsQueue` and calls `Fs_InitializeMem_80011C70`.
- */
+// 1
+
+s32  Fs_IsQueueEntryLoaded_80010e58(s32 arg0);
+s32  Fs_GetQueueLength_80010E68(void);
+s32  Fs_DoQueueThingWhenEmpty_80010e84(void);
+void Fs_WaitForEmptyQueue_80010ecc(void);
+s32  Fs_StartQueueSeek_80010f34(s32 fileIdx);
+s32  Fs_StartQueueRead_80010F68(s32 fileIdx, void* dest);
+s32  Fs_StartQueueReadTim_80010F9C(s32 fileIdx, void* dest, FsImageDesc* image);
+s32  Fs_StartQueueReadAnm_80011018(s32 arg0, s32 arg1, void* arg2, s32 arg3);
+s32  Fs_QueueEnqueue_80011074(s32 fileIdx, u8 op, u8 postLoad, u8 alloc, void* data, u32 unused1, FsQueueExtra* extra);
 void Fs_InitializeQueue_80011170(void);
-
-/** Check if queue entry index `arg0` has been loaded and post loaded.
- * 
- * @param arg0 The index of the queue entry to check.
- * @return 1 if the entry has been fully processed, 0 otherwise.
- */
-s32 Fs_IsQueueEntryLoaded_80010e58(s32 arg0);
-
-/** Get number of operations currently in queue.
- * @return Number of operations in queue. Includes both pending reads and pending post loads.
- */
-s32 Fs_GetQueueLength_80010E68(void);
-
-/** Unknown. If queue is empty, call `func_8003c850`.
- * @return 1 when queue is empty and the call suceeds, 0 otherwise.
- */
-s32 Fs_DoQueueThingWhenEmpty_80010e84(void);
-
-/** If `entry->allocate` is set, allocate memory for `entry->data`, otherwise use `entry->external_data`.
- * 
- * @param entry Entry to allocate memory for.
- * @return 1 if allocation was successful or was not needed, 0 otherwise.
- */
-s32 Fs_AllocQueueEntryData_80011630(FsQueueEntry* entry);
-
-/** @brief Add new operation to the queue.
- *
- * If the queue is full, will spin while calling `Fs_UpdateQueue_80011260` and wait until space frees up.
- * Called by all of the `fsQueueStart*` functions.
- *
- * @param fileIdx File table index of the file to load/seek.
- * @param op Operation type (`FsQueueOperation`).
- * @param postLoad Postload type (`FsQueuePostLoadType`).
- * @param alloc Whether to allocate owned memory for this operation (`FsQueueEntry::allocate`).
- * @param unused1 Value for `FsQueueEntry::unused1`. Seems to be unused.
- * @param extra Extra data for operation (`FsQueueEntry::extra`).
- * @return Index of the new queue entry.
- */
-s32 Fs_QueueEnqueue_80011074(s32 fileIdx, u8 op, u8 postLoad, u8 alloc, void* data, u32 unused1, FsQueueExtra* extra);
-
-/** Add a new read operation to the queue.
- * 
- * @param fileIdx File table index of the file to read.
- * @param dest Destination buffer. Seems there are no size checks.
- * @return Index of the new queue entry.
- */
-s32 Fs_StartQueueRead_80010F68(s32 fileIdx, void* dest);
-
-/** @brief Add a new TIM read operation to the queue.
- * Adds a read operation with `postload = FS_POSTLOAD_TIM`.
- * 
- * @param fileIdx File table index of the file to read.
- * @param dest Destination buffer. Seems there are no size checks.
- * @param image Where to upload the TIM in VRAM.
- * @return Index of the new queue entry.
- */
-s32 Fs_StartQueueReadTim_80010F9C(s32 fileIdx, void* dest, FsImageDesc* image);
-
-/** @brief Add a new ANM read operation to the queue.
- * Adds a read operation with `postload = FS_POSTLOAD_ANM`.
- * 
- * @note Does not actually take a file number, but instead takes one from an array of structs at 0x800a90fc in bodyprog,
- * using `arg1` as an index. Does not seem to take a `FsAnmDesc` pointer either. Maybe by value?
- * 
- * @param arg0
- * @param arg1 Index of something in an array in bodyprog.
- * @param arg2 Destination buffer?
- * @param arg3
- * @return Index of the new queue entry.
- */
-s32 Fs_StartQueueReadAnm_80011018(s32 arg0, s32 arg1, void* arg2, s32 arg3);
-
-/** Add a new seek operation to the queue.
- * @param fileIdx File table index of the file to seek to.
- * @return Index of the new queue entry.
- */
-s32 Fs_StartQueueSeek_80010f34(s32 fileIdx);
-
-/** Process a read from PCDRV. Seems to be unused in release.
- * @param entry PCDRV read operation entry to process.
- * @return 1 if succeeded, 0 otherwise.
- */
-s32 Fs_TickQueueReadPcDvr_8001190c(FsQueueEntry* entry);
-
-/** @brief Process `FSQS_READ_SETLOC` or `FSQS_SEEK_SETLOC` state: set target sector.
- *
- * Calls `CdControl(CdlSetloc, ...)`.
- *
- * @param entry Entry to process.
- * @return 1 if succeded, 0 if `CdControl` failed.
- */
-s32 Fs_TickQueueSetLoc_800117E8(FsQueueEntry* entry);
-
-/** @brief Process `FSQS_READ_READ` state: read from CD.
- *
- * Calls `CdRead()`.
- *
- * @param entry Entry to process.
- * @return 1 if succeded, 0 if `CdControl` failed.
- */
-s32 Fs_TickQueueRead_8001182C(FsQueueEntry* entry);
-
-/** @brief Process `FSQS_READ_RESET` or `FSQS_SEEK_RESET` state: wait for a bit and reset CD driver.
- *
- * Increments `g_FsQueue.reset_timer_0` once. If it has reached 8, clears it and increments `g_FsQueue.reset_timer_1`.
- * If `g_FsQueue.reset_timer_1` has reached 9, clears it and calls `CdReset()`.
- *
- * @param entry Entry to process.
- * @return 1 if succeded, 0 if `CdControl` failed.
- */
-s32 Fs_ResetQueueTick_80011884(FsQueueEntry* entry);
-
-/** @brief Ticks the FS queue once.
- *
- * Depending on current read entry's operation type, either ticks reading it (`Fs_UpdateQueueRead_800114C4`) or seeking it (`Fs_UpdateQueueSeek_8001137C`).
- * If they return 1, advances `g_FsQueue.read.idx` and `g_FsQueue.read.ptr`.
- *
- * Regardless of the outcome of the above, also ticks postloading (`Fs_UpdateQueuePostLoad_80011A4C`) if there is an entry to postload.
- * If that reports that the current postload entry is done postloading, advances `g_FsQueue.postLoad.idx` and `g_FsQueue.postLoadLtr`.
- */
+void Fs_ResetQueue_800111dc(void);
 void Fs_UpdateQueue_80011260(void);
+s32  Fs_UpdateQueueSeek_8001137C(FsQueueEntry* entry);
 
-/** @brief Ticks a read operation once.
- *
- * Performs one step in the reading process according to `g_FsQueue.state`. When the whole process is done, returns 1.
- *
- * @param entry Entry to tick.
- * @return 1 when `entry` is done loading, 0 otherwise.
- */
+// 2
+
 s32 Fs_UpdateQueueRead_800114C4(FsQueueEntry* entry);
 
-/** @brief Ticks a seek operation once.
- *
- * Performs one step in the seeking process according to `g_FsQueue.state`. When the whole process is done, returns 1.
- *
- * @param entry Entry to tick.
- * @return 1 when `entry` is done seeking, 0 otherwise.
- */
-s32 Fs_UpdateQueueSeek_8001137C(FsQueueEntry* entry);
+// 3
 
-/** @brief Ticks postloading once.
- *
- * Performs one step in the postloading process according to `entry->postload_state`. When the whole process is done, returns 1.
- *
- * @param entry Entry to tick.
- * @return 1 when `entry` is done postloading, 0 otherwise.
- */
-s32 Fs_UpdateQueuePostLoad_80011A4C(FsQueueEntry* entry);
-
-/** @brief Parse a TIM file after loading it.
- *
- * Called during postloading for TIM files (`entry->postload = 1`).
- * Will use `OpenTIM`/`ReadTIM` to parse the loaded data and then upload it via `LoadImage`.
- * If `entry->extra.image.u` is not 0xFF, will override the XY components of the pixel and CLUT rects with values from `image`.
- *
- * @param entry Entry to parse.
- * @return Always 1.
- */
-s32 Fs_QueuePostLoadTim_80011B24(FsQueueEntry* entry);
-
-/** @brief Parse an ANM file after loading it?
- *
- * Called during postloading for some ANM files (when `entry->postload = 2`).
- * For example, it is called for CLD2.ANM, SRL.ANM, SBL.ANM (maybe ones used for NPCs?), but not for others
- * (e.g. HB_M0S01.ANM).
- *
- * Calls into BODYPROG, where a function gets a `GsCOORDINATE2` from somewhere in the loaded data.
- * Always uses data from `entry->extra.anm`.
- *
- * @param entry Entry to parse.
- * @return Always 1.
- */
-s32 Fs_QueuePostLoadAnm_80011C3C(FsQueueEntry* entry);
-
-/** @brief Check if specified read operation entry can be processed.
- *
- * Checks if loading `entry` will clobber any memory that was allocated for pending entries in the queue,
- * or memory that's used for postloading.
- *
- * @param entry Entry to check against.
- * @return 1 if the entry can be loaded without clobbering anything, 0 otherwise.
- */
+s32 Fs_AllocQueueEntryData_80011630(FsQueueEntry* entry);
 s32 Fs_CanQueueRead_800116BC(FsQueueEntry* entry);
-
-/** Seems to clear the queue. */
-void Fs_ResetQueue_800111dc(void);
-
-/** Spin-waits for the queue to become empty while calling `Fs_UpdateQueue_80011260`.
- * Calls some bodyprog functions before and after the wait, `VSync` in the wait and `DrawSync` after the wait.
- */
-void Fs_WaitForEmptyQueue_80010ecc(void);
-
-/** @brief Check if two buffers overlap in memory. Used by `Fs_CanQueueRead_800116BC`.
- * 
- * @param data0 Start of the first buffer.
- * @param size0 Size of the first buffer in bytes.
- * @param data1 Start of the second buffer.
- * @param size1 Size of the second buffer in bytes.
- * @return 1 if buffers overlap, 0 otherwise.
- */
 s32 Fs_DoQueueBuffersOverlap_800117AC(u8* data0, u32 size0, u8* data1, u32 size1);
+s32 Fs_TickQueueSetLoc_800117E8(FsQueueEntry* entry);
+s32 Fs_TickQueueRead_8001182C(FsQueueEntry* entry);
+s32 Fs_ResetQueueTick_80011884(FsQueueEntry* entry);
+s32 Fs_TickQueueReadPcDvr_8001190c(FsQueueEntry* entry);
+s32 Fs_UpdateQueuePostLoad_80011A4C(FsQueueEntry* entry);
+s32 Fs_QueuePostLoadTim_80011B24(FsQueueEntry* entry);
+s32 Fs_QueuePostLoadAnm_80011C3C(FsQueueEntry* entry);
 
 #endif

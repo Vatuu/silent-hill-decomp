@@ -8,18 +8,30 @@
 #include <LIBGPU.H>
 #include <LIBCD.H>
 
+/** The FS queue. See `FsQueue`. */
 FsQueue g_FsQueue;
 
+/** Check if queue entry index `arg0` has been loaded and post loaded.
+ * 
+ * @param arg0 The index of the queue entry to check.
+ * @return 1 if the entry has been fully processed, 0 otherwise.
+ */
 s32 Fs_IsQueueEntryLoaded_80010e58(s32 arg0)
 {
     return arg0 < g_FsQueue.postLoad.idx;
 }
 
+/** Get number of operations currently in queue.
+ * @return Number of operations in queue. Includes both pending reads and pending post loads.
+ */
 s32 Fs_GetQueueLength_80010E68(void)
 {
     return (g_FsQueue.last.idx + 1) - g_FsQueue.postLoad.idx;
 }
 
+/** Unknown. If queue is empty, call `func_8003c850`.
+ * @return 1 when queue is empty and the call suceeds, 0 otherwise.
+ */
 s32 Fs_DoQueueThingWhenEmpty_80010e84(void)
 {
     s32 result;
@@ -34,6 +46,9 @@ s32 Fs_DoQueueThingWhenEmpty_80010e84(void)
     return result;
 }
 
+/** Spin-waits for the queue to become empty while calling `Fs_UpdateQueue_80011260`.
+ * Calls some bodyprog functions before and after the wait, `VSync` in the wait and `DrawSync` after the wait.
+ */
 void Fs_WaitForEmptyQueue_80010ecc(void)
 {
     func_800892A4(0);
@@ -53,16 +68,34 @@ void Fs_WaitForEmptyQueue_80010ecc(void)
     VSync(0);
 }
 
+/** Add a new seek operation to the queue.
+ * @param fileIdx File table index of the file to seek to.
+ * @return Index of the new queue entry.
+ */
 s32 Fs_StartQueueSeek_80010f34(s32 fileIdx)
 {
     return Fs_QueueEnqueue_80011074(fileIdx, FS_OP_SEEK, FS_POST_LOAD_NONE, false, NULL, 0, NULL);
 }
 
+/** Add a new read operation to the queue.
+ * 
+ * @param fileIdx File table index of the file to read.
+ * @param dest Destination buffer. Seems there are no size checks.
+ * @return Index of the new queue entry.
+ */
 s32 Fs_StartQueueRead_80010F68(s32 fileIdx, void* dest)
 {
     return Fs_QueueEnqueue_80011074(fileIdx, FS_OP_READ, FS_POST_LOAD_NONE, false, dest, 0, NULL);
 }
 
+/** @brief Add a new TIM read operation to the queue.
+ * Adds a read operation with `postload = FS_POSTLOAD_TIM`.
+ * 
+ * @param fileIdx File table index of the file to read.
+ * @param dest Destination buffer. Seems there are no size checks.
+ * @param image Where to upload the TIM in VRAM.
+ * @return Index of the new queue entry.
+ */
 s32 Fs_StartQueueReadTim_80010F9C(s32 fileIdx, void* dest, FsImageDesc* image)
 {
     FsQueueExtra extra;
@@ -83,6 +116,18 @@ s32 Fs_StartQueueReadTim_80010F9C(s32 fileIdx, void* dest, FsImageDesc* image)
     return Fs_QueueEnqueue_80011074(fileIdx, FS_OP_READ, FS_POST_LOAD_TIM, false, dest, 0, &extra);
 }
 
+/** @brief Add a new ANM read operation to the queue.
+ * Adds a read operation with `postload = FS_POSTLOAD_ANM`.
+ * 
+ * @note Does not actually take a file number, but instead takes one from an array of structs at 0x800a90fc in bodyprog,
+ * using `arg1` as an index. Does not seem to take a `FsAnmDesc` pointer either. Maybe by value?
+ * 
+ * @param arg0
+ * @param arg1 Index of something in an array in bodyprog.
+ * @param arg2 Destination buffer?
+ * @param arg3
+ * @return Index of the new queue entry.
+ */
 s32 Fs_StartQueueReadAnm_80011018(s32 arg0, s32 arg1, void* arg2, s32 arg3)
 {
     s32          fileIdx;
@@ -95,6 +140,19 @@ s32 Fs_StartQueueReadAnm_80011018(s32 arg0, s32 arg1, void* arg2, s32 arg3)
     return Fs_QueueEnqueue_80011074(fileIdx, FS_OP_READ, FS_POST_LOAD_ANM, false, arg2, 0, &extra);
 }
 
+/** @brief Add new operation to the queue.
+ *
+ * If the queue is full, will spin while calling `Fs_UpdateQueue_80011260` and wait until space frees up.
+ * Called by all of the `fsQueueStart*` functions.
+ *
+ * @param fileIdx File table index of the file to load/seek.
+ * @param op Operation type (`FsQueueOperation`).
+ * @param postLoad Postload type (`FsQueuePostLoadType`).
+ * @param alloc Whether to allocate owned memory for this operation (`FsQueueEntry::allocate`).
+ * @param unused1 Value for `FsQueueEntry::unused1`. Seems to be unused.
+ * @param extra Extra data for operation (`FsQueueEntry::extra`).
+ * @return Index of the new queue entry.
+ */
 s32 Fs_QueueEnqueue_80011074(s32 fileIdx, u8 op, u8 postLoad, u8 alloc, void* data, u32 unused0, FsQueueExtra* extra)
     {
     FsQueueEntry* newEntry;
@@ -124,6 +182,9 @@ s32 Fs_QueueEnqueue_80011074(s32 fileIdx, u8 op, u8 postLoad, u8 alloc, void* da
     return g_FsQueue.last.idx;
 }
 
+/** @brief Initialize FS queue and FS memory.
+ * Initializes `g_FsQueue` and calls `Fs_InitializeMem_80011C70`.
+ */
 void Fs_InitializeQueue_80011170(void)
 {
     bzero(&g_FsQueue, sizeof(g_FsQueue));
@@ -140,6 +201,7 @@ void Fs_InitializeQueue_80011170(void)
     Fs_InitializeMem_80011C70(FS_MEM_BASE, FS_MEM_SIZE);
 }
 
+/** Seems to clear the queue. */
 void Fs_ResetQueue_800111dc(void)
 {
     if (Fs_GetQueueLength_80010E68() <= 0)
@@ -157,6 +219,14 @@ void Fs_ResetQueue_800111dc(void)
     g_FsQueue.read.ptr->postLoad = 0;
 }
 
+/** @brief Ticks the FS queue once.
+ *
+ * Depending on current read entry's operation type, either ticks reading it (`Fs_UpdateQueueRead_800114C4`) or seeking it (`Fs_UpdateQueueSeek_8001137C`).
+ * If they return 1, advances `g_FsQueue.read.idx` and `g_FsQueue.read.ptr`.
+ *
+ * Regardless of the outcome of the above, also ticks postloading (`Fs_UpdateQueuePostLoad_80011A4C`) if there is an entry to postload.
+ * If that reports that the current postload entry is done postloading, advances `g_FsQueue.postLoad.idx` and `g_FsQueue.postLoadLtr`.
+ */
 void Fs_UpdateQueue_80011260(void)
 {
     FsQueuePtr* read;
@@ -200,7 +270,7 @@ void Fs_UpdateQueue_80011260(void)
     tick = g_FsQueue.postLoad.ptr;
     if (g_FsQueue.postLoad.idx < g_FsQueue.read.idx)
     {
-        tmp = Fs_UpdateQueue_80011260postLoad(tick);
+        tmp = Fs_UpdateQueuePostLoad_80011A4C(tick);
         if (tmp == 1)
         {
             g_FsQueue.postLoadState = FSQS_POST_LOAD_INIT;
@@ -215,6 +285,13 @@ void Fs_UpdateQueue_80011260(void)
     }
 }
 
+/** @brief Ticks a seek operation once.
+ *
+ * Performs one step in the seeking process according to `g_FsQueue.state`. When the whole process is done, returns 1.
+ *
+ * @param entry Entry to tick.
+ * @return 1 when `entry` is done seeking, 0 otherwise.
+ */
 s32 Fs_UpdateQueueSeek_8001137C(FsQueueEntry* entry)
 {
     s32 result = false;

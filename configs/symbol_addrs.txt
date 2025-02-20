@@ -485,8 +485,8 @@ a_PcDrvPath = 0x80010008; // type:asciz
 // fsqueue .text
 Fs_IsQueueEntryLoaded_80010e58 = 0x80010e58; // type:func // Unsure.
 Fs_GetQueueLength_80010E68 = 0X80010E68; // type:func
-Fs_DoQueueThingWhenEmpty_80010e84 = 0x80010e84; // type:func // Unsure. Calls into bodyprog and touches fsqueue.
-Fs_WaitForEmptyQueue_80010ecc = 0x80010ecc; // type:func // Spin wait for GetLength() < 1 with VSync/DrawSync and calls to bodyprog. Loading screen?
+Fs_DoQueueThingWhenEmpty_80010e84 = 0x80010e84; // type:func // Unsure. Calls into BODYPROG and touches fsqueue.
+Fs_WaitForEmptyQueue_80010ecc = 0x80010ecc; // type:func // Spin wait for GetLength() < 1 with VSync/DrawSync and calls to BODYPROG. Loading screen?
 Fs_StartQueueSeek_80010f34 = 0x80010f34; // type:func
 Fs_StartQueueRead_80010F68 = 0X80010F68; // type:func
 Fs_StartQueueReadTim_80010F9C = 0X80010F9C; // type:func
@@ -506,7 +506,7 @@ Fs_ResetQueueTick_80011884 = 0X80011884; // type:func
 Fs_TickQueueReadPcDvr_8001190c = 0x8001190c; // type:func
 Fs_UpdateQueuePostLoad_80011A4C = 0X80011A4C; // type:func
 Fs_QueuePostLoadTim_80011B24 = 0X80011B24; // type:func
-Fs_QueuePostLoadAnm_80011C3C = 0X80011C3C; // type:func // Unsure. Calls into bodyprog, which then uses GsCOORDINATE2.
+Fs_QueuePostLoadAnm_80011C3C = 0X80011C3C; // type:func // Unsure. Calls into BODYPROG, which then uses GsCOORDINATE2.
 // fsqueue .bss
 g_FsQueue = 0x80022c98; // type:FsQueue size:0x428
 

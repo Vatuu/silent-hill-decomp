@@ -8,6 +8,11 @@
 #include <LIBGPU.H>
 #include <STRING.H>
 
+/** If `entry->allocate` is set, allocate memory for `entry->data`, otherwise use `entry->external_data`.
+ * 
+ * @param entry Entry to allocate memory for.
+ * @return 1 if allocation was successful or was not needed, 0 otherwise.
+ */
 s32 Fs_AllocQueueEntryData_80011630(FsQueueEntry* entry)
 {
     s32 result = 0;
@@ -27,6 +32,14 @@ s32 Fs_AllocQueueEntryData_80011630(FsQueueEntry* entry)
     return result;
 }
 
+/** @brief Check if specified read operation entry can be processed.
+ *
+ * Checks if loading `entry` will clobber any memory that was allocated for pending entries in the queue,
+ * or memory that's used for postloading.
+ *
+ * @param entry Entry to check against.
+ * @return 1 if the entry can be loaded without clobbering anything, 0 otherwise.
+ */
 s32 Fs_CanQueueRead_800116BC(FsQueueEntry* entry)
 {
     FsQueueEntry* other;
@@ -62,6 +75,14 @@ s32 Fs_CanQueueRead_800116BC(FsQueueEntry* entry)
     return true;
 }
 
+/** @brief Check if two buffers overlap in memory. Used by `Fs_CanQueueRead_800116BC`.
+ * 
+ * @param data0 Start of the first buffer.
+ * @param size0 Size of the first buffer in bytes.
+ * @param data1 Start of the second buffer.
+ * @param size1 Size of the second buffer in bytes.
+ * @return 1 if buffers overlap, 0 otherwise.
+ */
 s32 Fs_DoQueueBuffersOverlap_800117AC(u8* data0, u32 size0, u8* data1, u32 size1)
 {
     u32 data0Low = (u32)data0 & 0xFFFFFF;
@@ -72,6 +93,13 @@ s32 Fs_DoQueueBuffersOverlap_800117AC(u8* data0, u32 size0, u8* data1, u32 size1
     return 1;
 }
 
+/** @brief Process `FSQS_READ_SETLOC` or `FSQS_SEEK_SETLOC` state: set target sector.
+ *
+ * Calls `CdControl(CdlSetloc, ...)`.
+ *
+ * @param entry Entry to process.
+ * @return 1 if succeded, 0 if `CdControl` failed.
+ */
 s32 Fs_TickQueueSetLoc_800117E8(FsQueueEntry* entry)
 {
     CdlLOC cdloc;
@@ -79,6 +107,13 @@ s32 Fs_TickQueueSetLoc_800117E8(FsQueueEntry* entry)
     return CdControl(CdlSetloc, (u_char*)&cdloc, NULL);
 }
 
+/** @brief Process `FSQS_READ_READ` state: read from CD.
+ *
+ * Calls `CdRead()`.
+ *
+ * @param entry Entry to process.
+ * @return 1 if succeded, 0 if `CdControl` failed.
+ */
 s32 Fs_TickQueueRead_8001182C(FsQueueEntry* entry)
 {
     // Round up to sector boundary. Masking not needed because of `>> 11` below.
@@ -91,6 +126,14 @@ s32 Fs_TickQueueRead_8001182C(FsQueueEntry* entry)
     return CdRead(sectorCount >> FS_SECTOR_SHIFT, (u64*)entry->data, CdlModeSpeed);
 }
 
+/** @brief Process `FSQS_READ_RESET` or `FSQS_SEEK_RESET` state: wait for a bit and reset CD driver.
+ *
+ * Increments `g_FsQueue.reset_timer_0` once. If it has reached 8, clears it and increments `g_FsQueue.reset_timer_1`.
+ * If `g_FsQueue.reset_timer_1` has reached 9, clears it and calls `CdReset()`.
+ *
+ * @param entry Entry to process.
+ * @return 1 if succeded, 0 if `CdControl` failed.
+ */
 s32 Fs_ResetQueueTick_80011884(FsQueueEntry* entry)
 {
     s32 result = false;
@@ -119,6 +162,10 @@ s32 Fs_ResetQueueTick_80011884(FsQueueEntry* entry)
     return result;
 }
 
+/** Process a read from PCDRV. Seems to be unused in release.
+ * @param entry PCDRV read operation entry to process.
+ * @return 1 if succeeded, 0 otherwise.
+ */
 s32 Fs_TickQueueReadPcDvr_8001190c(FsQueueEntry* entry)
 {
     s32       handle;
@@ -159,7 +206,14 @@ s32 Fs_TickQueueReadPcDvr_8001190c(FsQueueEntry* entry)
     return result;
 }
 
-s32 Fs_UpdateQueue_80011260postLoad(FsQueueEntry* entry)
+/** @brief Ticks postloading once.
+ *
+ * Performs one step in the postloading process according to `entry->postload_state`. When the whole process is done, returns 1.
+ *
+ * @param entry Entry to tick.
+ * @return 1 when `entry` is done postloading, 0 otherwise.
+ */
+s32 Fs_UpdateQueuePostLoad_80011A4C(FsQueueEntry* entry)
 {
     s32 result;
     s32 state;
@@ -194,11 +248,11 @@ s32 Fs_UpdateQueue_80011260postLoad(FsQueueEntry* entry)
                 break;
 
             case FS_POST_LOAD_TIM:
-                result = fsQueuepostLoadTim(entry);
+                result = Fs_QueuePostLoadTim_80011B24(entry);
 
             break;
             case FS_POST_LOAD_ANM:
-                result = fsQueuepostLoadAnm(entry);
+                result = Fs_QueuePostLoadAnm_80011C3C(entry);
                 break;
 
             default:
@@ -214,7 +268,16 @@ s32 Fs_UpdateQueue_80011260postLoad(FsQueueEntry* entry)
     return result;
 }
 
-s32 fsQueuepostLoadTim(FsQueueEntry* entry)
+/** @brief Parse a TIM file after loading it.
+ *
+ * Called during postloading for TIM files (`entry->postload = 1`).
+ * Will use `OpenTIM`/`ReadTIM` to parse the loaded data and then upload it via `LoadImage`.
+ * If `entry->extra.image.u` is not 0xFF, will override the XY components of the pixel and CLUT rects with values from `image`.
+ *
+ * @param entry Entry to parse.
+ * @return Always 1.
+ */
+s32 Fs_QueuePostLoadTim_80011B24(FsQueueEntry* entry)
 {
     TIM_IMAGE tim;
     RECT tempRect;
@@ -251,7 +314,19 @@ s32 fsQueuepostLoadTim(FsQueueEntry* entry)
     return true;
 }
 
-s32 fsQueuepostLoadAnm(FsQueueEntry* entry)
+/** @brief Parse an ANM file after loading it?
+ *
+ * Called during postloading for some ANM files (when `entry->postload = 2`).
+ * For example, it is called for CLD2.ANM, SRL.ANM, SBL.ANM (maybe ones used for NPCs?), but not for others
+ * (e.g. HB_M0S01.ANM).
+ *
+ * Calls into BODYPROG, where a function gets a `GsCOORDINATE2` from somewhere in the loaded data.
+ * Always uses data from `entry->extra.anm`.
+ *
+ * @param entry Entry to parse.
+ * @return Always 1.
+ */
+s32 Fs_QueuePostLoadAnm_80011C3C(FsQueueEntry* entry)
 {
     func_80035560(entry->extra.anm.field00, entry->extra.anm.field04, entry->externalData, entry->extra.anm.field08);
     return true;
