@@ -70,8 +70,9 @@ typedef struct
     void*           data;         /** Output buffer. Either allocated or same as `externalData`. */
 } FsQueueEntry;
 
-/** Queue pointer.
- * These had to be wrapped into a struct for some code to match.
+/** @brief Queue pointer.
+ * 
+ * These must be wrapped into a struct for some code to match.
  * Used for last added element, current read/seek op and current post process op.
  */
 typedef struct
