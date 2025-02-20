@@ -1,6 +1,6 @@
 #include "main/mem.h"
 
-void memmove32(u32* dest, u32* src, s32 byteCount)
+void Mem_Move_8001213c(u32* dest, u32* src, s32 byteCount)
 {
         u32* end;
         s32 wordCount;
