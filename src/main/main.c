@@ -5,8 +5,8 @@
 #include "main/fsqueue.h"
 
 #include <LIBAPI.H>
-#include <LIBETC.H>
 #include <LIBCD.H>
+#include <LIBETC.H>
 #include <LIBSND.H>
 
 #define FILE_1ST_2ZANKO_E_TIM 1 // "\\1ST\\2ZANKO_E.TIM"
@@ -23,8 +23,8 @@ void* SECTION(".rodata") g_OvlBodyprog = (void*)0x80024B60;
 FsImageDesc g_MainImg0 =
 {
     .tPage = 0x0d01,
-    .u = 32,
-    .v = 0,
+    .u     = 32,
+    .v     = 0,
     .clutX = 768,
     .clutY = 480
 };
@@ -32,8 +32,8 @@ FsImageDesc g_MainImg0 =
 FsImageDesc g_MainImg1 =
 {
     .tPage = 0x1400,
-    .u = 0,
-    .v = 240,
+    .u     = 0,
+    .v     = 240,
     .clutX = 0,
     .clutY = 0
 };
@@ -42,14 +42,14 @@ s32 g_MainFbIdx = 0;
 
 DISPENV g_MainDispEnv =
 {
-    .disp = { 0, 0, 320, 240 },
+    .disp   = { 0, 0, 320, 240 },
     .screen = { 0, 8, 256, 224 }
 };
 
 DRAWENV g_MainDrawEnv =
 {
     .clip = { 0, 0, 320, 224 },
-    .dtd = 1,
+    .dtd  = 1,
     .isbg = 1
 };
 
