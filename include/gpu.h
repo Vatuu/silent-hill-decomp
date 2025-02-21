@@ -2,8 +2,8 @@
 #define _GPU_H
 
 #include "common.h"
-#include <LIBGTE.H>
-#include <LIBGPU.H>
+#include <libgte.h>
+#include <libgpu.h>
 
 /** Primitive types. */
 enum PrimType {

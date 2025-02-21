@@ -1,10 +1,10 @@
 #include "main/fsqueue.h"
 #include "main/fsmem.h"
-#include <LIBAPI.H>
-#include <LIBCD.H>
-#include <LIBGTE.H>
-#include <LIBGPU.H>
-#include <STRING.H>
+#include <libapi.h>
+#include <libcd.h>
+#include <libgte.h>
+#include <libgpu.h>
+#include <string.h>
 
 s32 fsQueueAllocEntryData(FsQueueEntry *entry) {
   s32 result = 0;

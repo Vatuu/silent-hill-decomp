@@ -26,10 +26,9 @@ options:
   section_order: [".rodata", ".text", ".data", ".bss"]
 
   symbol_addrs_path:
-    - configs/symbol_addrs.txt
-    - configs/symbol_addrs.stream.txt
+    - configs/sym.stream.txt
   reloc_addrs_path:
-    - configs/reloc_addrs.stream.txt
+    - configs/rel.stream.txt
 
   undefined_funcs_auto_path: linkers/undefined_funcs_auto.stream.txt
   undefined_syms_auto_path: linkers/undefined_syms_auto.stream.txt
