@@ -26,10 +26,9 @@ options:
   section_order: [".rodata", ".text", ".data", ".bss"]
 
   symbol_addrs_path:
-    - configs/symbol_addrs.txt
-    - configs/maps/symbol_addrs.map7_s02.txt
+    - configs/maps/sym.map7_s02.txt
   reloc_addrs_path:
-    - configs/maps/reloc_addrs.map7_s02.txt
+    - configs/maps/rel.map7_s02.txt
 
   undefined_funcs_auto_path: linkers/maps/undefined_funcs_auto.map7_s02.txt
   undefined_syms_auto_path: linkers/maps/undefined_syms_auto.map7_s02.txt

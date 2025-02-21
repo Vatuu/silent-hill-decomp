@@ -27,10 +27,9 @@ options:
   section_order: [".rodata", ".text", ".data", ".bss"]
 
   symbol_addrs_path:
-    - configs/symbol_addrs.txt
-    - configs/symbol_addrs.bodyprog.txt
+    - configs/sym.bodyprog.txt
   reloc_addrs_path:
-    - configs/reloc_addrs.bodyprog.txt
+    - configs/rel.bodyprog.txt
 
   undefined_funcs_auto_path: linkers/undefined_funcs_auto.bodyprog.txt
   undefined_syms_auto_path: linkers/undefined_syms_auto.bodyprog.txt

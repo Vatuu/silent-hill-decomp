@@ -1,6 +1,6 @@
 #include "main/fsqueue.h"
 
-#include <LIBCD.H>
+#include <libcd.h>
 
 /** @brief Ticks a read operation once.
  *

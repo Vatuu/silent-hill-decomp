@@ -3,11 +3,13 @@
 #include "game.h"
 #include "gpu.h"
 #include "main/fsqueue.h"
+#include "bodyprog/bodyprog.h"
+#include "gpu.h"
 
-#include <LIBAPI.H>
-#include <LIBCD.H>
-#include <LIBETC.H>
-#include <LIBSND.H>
+#include <libapi.h>
+#include <libetc.h>
+#include <libcd.h>
+#include <libsnd.h>
 
 #define FILE_1ST_2ZANKO_E_TIM 1 // "\\1ST\\2ZANKO_E.TIM"
 #define FILE_1ST_BODYPROG_BIN 3 // "\\1ST\\BODYPROG.BIN"

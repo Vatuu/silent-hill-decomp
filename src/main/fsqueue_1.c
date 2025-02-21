@@ -2,11 +2,11 @@
 #include "main/fsmem.h"
 #include "bodyprog/bodyprog.h"
 
-#include <MEMORY.H>
-#include <LIBETC.H>
-#include <LIBGTE.H>
-#include <LIBGPU.H>
-#include <LIBCD.H>
+#include <memory.h>
+#include <libetc.h>
+#include <libgte.h>
+#include <libgpu.h>
+#include <libcd.h>
 
 /** The FS queue. See `FsQueue`. */
 FsQueue g_FsQueue;

@@ -2,11 +2,11 @@
 #include "main/fsqueue.h"
 #include "main/fsmem.h"
 
-#include <LIBAPI.H>
-#include <LIBCD.H>
-#include <LIBGTE.H>
-#include <LIBGPU.H>
-#include <STRING.H>
+#include <libapi.h>
+#include <libcd.h>
+#include <libgte.h>
+#include <libgpu.h>
+#include <string.h>
 
 /** If `entry->allocate` is set, allocate memory for `entry->data`, otherwise use `entry->external_data`.
  * 

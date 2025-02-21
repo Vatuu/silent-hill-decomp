@@ -9,6 +9,7 @@ The build process has the following package requirements:
 - git
 - build-essential
 - binutils-mips-linux-gnu
+- cpp-mips-linux-gnu
 - python3
 - bchunk
 - 7z
@@ -16,14 +17,13 @@ The build process has the following package requirements:
 Under a Debian-based distribution, you can install these with the following commands:
 ```
 sudo apt update
-sudo apt install git build-essential binutils-mips-linux-gnu python3 bchunk p7zip-full p7zip-rar
+sudo apt install git build-essential binutils-mips-linux-gnu cpp-mips-linux-gnu python3 bchunk p7zip-full p7zip-rar
 ```
 
 ### Clone the repository
 Clone `https://github.com/Vatuu/silent-hill-decomp` in whatever directory you wish. Make sure to clone recursively!
 ```
-git clone --recursive https://github.com/Vatuu/silent-hill-decomp.git
-cd silent-hill-decomp
+git clone --recursive https://github.com/Vatuu/silent-hill-decomp.git && cd silent-hill-decomp
 ```
 
 ### Install Python3 requirements
@@ -40,6 +40,13 @@ SHA1 Hashes:
 Run `make setup` to extract needed assets/code from the bin.
 If setup was successful, run `make` to build.
 Once the build has finished, a folder will be produced with the name `build`. Inside this, you will find the output.
+
+Additional Make Commands:
+* `check`: builds the executable/overlays and makes a checksums comprobation comparing it with the original file
+* `build-c`: clears the configuration of the project without deleting files
+* `build-C`: clears the configuration of the project without deleting files and, after compilation, makes a checksums comprobation comparing it with the original file
+
+`build-c/build-C` are obligatory in case of modifing the configuration in the `Makefile` in case of wanting to work on screen overlays and the maps overlays
 
 ## Contributing
 Contributions are welcome. If you would like to reserve a function, open a PR with the function or file name(s).
