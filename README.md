@@ -20,9 +20,9 @@ sudo apt install git build-essential binutils-mips-linux-gnu python3 bchunk p7zi
 ```
 
 ### Clone the repository
-Clone `https://github.com/Sezzary/silent-hill-decomp` in whatever directory you wish. Make sure to clone recursively!
+Clone `https://github.com/Vatuu/silent-hill-decomp` in whatever directory you wish. Make sure to clone recursively!
 ```
-git clone --recursive https://github.com/Sezzary/silent-hill-decomp.git
+git clone --recursive https://github.com/Vatuu/silent-hill-decomp.git
 cd silent-hill-decomp
 ```
 
