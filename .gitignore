@@ -1,12 +1,13 @@
 asm/
 assets/
 build/
-meta/**/*auto*.txt
 rom/
-linker/
+linkers/
 .vscode/
 .idea/
 __pycache__/
+permuter/
+expected/
 
 null.d
 !*/place-the-bin-and-cue-here

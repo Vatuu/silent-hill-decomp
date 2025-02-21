@@ -3,4 +3,4 @@ A collection of all sorts of relevant information regarding the setup, dependenc
 
 ## SDK
 
-- Psy-Q Version: 4.3.0 (Needs to be verified)
+- Psy-Q Version: 4.3.0 - seems to be correct, based on https://github.com/lab313ru/psx_psyq_signatures
