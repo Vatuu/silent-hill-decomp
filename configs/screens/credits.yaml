@@ -26,10 +26,9 @@ options:
   section_order: [".rodata", ".text", ".data", ".bss"]
 
   symbol_addrs_path:
-    - configs/symbol_addrs.txt
-    - configs/screens/symbol_addrs.credits.txt
+    - configs/screens/sym.credits.txt
   reloc_addrs_path:
-    - configs/screens/reloc_addrs.credits.txt
+    - configs/screens/rel.credits.txt
 
   undefined_funcs_auto_path: linkers/screens/undefined_funcs_auto.credits.txt
   undefined_syms_auto_path: linkers/screens/undefined_syms_auto.credits.txt

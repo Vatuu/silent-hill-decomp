@@ -107,6 +107,8 @@ ifeq ($(BUILD_OVERLAYS), 1)
 TARGET_BODYPROG := bodyprog
 TARGET_STREAM   := stream
 
+endif
+
 ifeq ($(BUILD_SCREENS), 1)
 
 TARGET_SCREENS := b_konami credits options saveload
@@ -130,8 +132,6 @@ endif
 
 TARGET_OVERLAYS			:= $(TARGET_BODYPROG) $(TARGET_STREAM) $(TARGET_SCREENS) $(TARGET_MAPS)
 
-endif
-
 # Source Definitions
 
 TARGET_IN  := $(TARGET_MAIN) $(TARGET_OVERLAYS)
@@ -144,7 +144,7 @@ LD_FILES     := $(addsuffix .ld,$(addprefix $(LINKER_DIR)/,$(TARGET_IN)))
 
 default: all
 
-all: check
+all: build
 
 build: $(TARGET_OUT)
 
@@ -181,11 +181,15 @@ clean-rom:
 regenerate: reset
 	$(MAKE) generate
 
-# Recursive call to force order of operations
-setup: clean-rom
+setup: reset
 	$(MAKE) extract
-	$(MAKE) regenerate
+	$(MAKE) generate
 
+build-c: regenerate
+	$(MAKE) build
+
+build-C: regenerate
+	$(MAKE) check
 # Recipes
 
 # elf targets

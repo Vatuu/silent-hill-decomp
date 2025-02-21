@@ -1,5 +1,5 @@
 #include "main/fsqueue.h"
-#include <LIBCD.H>
+#include <libcd.h>
 
 s32 fsQueueUpdateRead(FsQueueEntry* entry) {
   s32 status;
