@@ -26,6 +26,7 @@ options:
   section_order: [".rodata", ".text", ".data", ".bss"]
 
   symbol_addrs_path:
+    - configs/sym.main.txt
     - configs/screens/sym.b_konami.txt
   reloc_addrs_path:
     - configs/screens/rel.b_konami.txt
