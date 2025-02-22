@@ -26,6 +26,7 @@ options:
   section_order: [".rodata", ".text", ".data", ".bss"]
 
   symbol_addrs_path:
+    - configs/sym.main.txt
     - configs/maps/sym.map1_s04.txt
   reloc_addrs_path:
     - configs/maps/rel.map1_s04.txt

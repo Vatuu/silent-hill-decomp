@@ -10,7 +10,6 @@ options:
   asm_path: asm/bodyprog
   src_path: src/bodyprog
   build_path: build/
-  # create_asm_dependencies: True
 
   ld_script_path: linkers/bodyprog.ld
 
@@ -27,6 +26,7 @@ options:
   section_order: [".rodata", ".text", ".data", ".bss"]
 
   symbol_addrs_path:
+    - configs/sym.main.txt
     - configs/sym.bodyprog.txt
   reloc_addrs_path:
     - configs/rel.bodyprog.txt
