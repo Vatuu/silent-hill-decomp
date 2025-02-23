@@ -72,10 +72,10 @@ gen_o_files = $(addprefix $(BUILD_DIR)/, \
 							$(patsubst %.s, %.s.o, $(call find_s_files, $1)) \
 							$(patsubst %.c, %.c.o, $(call find_c_files, $1)))
 
-# Function to get path to yaml file for given target.
+# Function to get path to .yaml file for given target.
 get_yaml_path = $(addsuffix .yaml,$(addprefix $(CONFIG_DIR)/,$1))
 
-# Function to get the target output path for given target
+# Function to get target output path for given target
 get_target_out = $(addprefix $(BUILD_DIR)/,$(shell $(GET_YAML_TARGET) $(call get_yaml_path,$1)))
 
 # Template definition for elf target.
@@ -193,38 +193,44 @@ build-C: regenerate
 # Recipes
 
 # elf targets
-# for each target from TARGET_IN generate an .elf target
+# Generate .elf target for each target from TARGET_IN.
 $(foreach target,$(TARGET_IN),$(eval $(call make_elf_target,$(target),$(call get_target_out,$(target)))))
 
-# Generate objects
+# NOTE: For some reason, main executable uses -G8 while all screens overlays use -G0.
+define DL_FlagsSwitch
+	$(if $(or $(filter SCREENS,$(patsubst build/src/screens/%,SCREENS,$(1))), $(filter SCREENS,$(patsubst build/asm/screens/%,SCREENS,$(1)))),$(eval DL_FLAGS = -G0), $(eval DL_FLAGS = -G8))
+	$(eval AS_FLAGS = $(ENDIAN) $(INCLUDE_FLAGS) $(OPT_FLAGS) $(DL_FLAGS) -march=r3000 -mtune=r3000 -no-pad-sections)
+	$(eval CC_FLAGS = $(OPT_FLAGS) $(DL_FLAGS) -mips1 -mcpu=3000 -w -funsigned-char -fpeephole -ffunction-cse -fpcc-struct-return -fcommon -fverbose-asm -msoft-float -mgas -fgnu-linker -quiet)
+	$(eval MASPSX_FLAGS = --aspsx-version=2.77 --run-assembler $(AS_FLAGS))
+endef
+
+# Generate objects.
 $(BUILD_DIR)/%.i: %.c
 	@mkdir -p $(dir $@)
+	$(call DL_FlagsSwitch, $@)
 	$(CPP) -P -MMD -MP -MT $@ -MF $@.d $(CPP_FLAGS) -o $@ $<
 
 $(BUILD_DIR)/%.c.s: $(BUILD_DIR)/%.i
 	@mkdir -p $(dir $@)
+	$(call DL_FlagsSwitch, $@)
 	$(CC) $(CC_FLAGS) -o $@ $<
 
 $(BUILD_DIR)/%.c.o: $(BUILD_DIR)/%.c.s
 	@mkdir -p $(dir $@)
+	$(call DL_FlagsSwitch, $@)
 	$(MASPSX) $(MASPSX_FLAGS) -o $@ $<
 	$(OBJDUMP) $(OBJDUMP_FLAGS) $@ > $(@:.o=.dump.s)
 
 $(BUILD_DIR)/%.s.o: %.s
 	@mkdir -p $(dir $@)
+	$(call DL_FlagsSwitch, $@)
 	$(AS) $(AS_FLAGS) -o $@ $<
 
 $(BUILD_DIR)/%.bin.o: %.bin
 	@mkdir -p $(dir $@)
 	$(LD) -r -b binary -o $@ $<
 
-YAML_FILES := $(shell find $(CONFIG_DIR) -type f -name "*.yaml")
-LD_FILES := $(patsubst $(CONFIG_DIR)/%.yaml, $(LINKER_DIR)/%.ld, $(YAML_FILES))
-
-# Ensure all .ld files are built when "generate" is run.
-generate: $(LD_FILES)
-
-# Split yaml
+# Split .yaml.
 $(LINKER_DIR)/%.ld: $(CONFIG_DIR)/%.yaml
 	@mkdir -p $(dir $@)
 	$(SPLAT) $(SPLAT_FLAGS) $<
