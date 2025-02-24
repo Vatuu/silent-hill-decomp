@@ -1,85 +1,105 @@
 #include "main/fsqueue.h"
+
 #include <libcd.h>
 
-s32 fsQueueUpdateRead(FsQueueEntry* entry) {
-  s32 status;
-  s32 result;
+s32 Fs_UpdateQueueRead(s_FsQueueEntry* entry)
+{
+    s32 status;
+    s32 result;
 
-  result = false;
+    result = false;
+    switch (g_FsQueue.state)
+    {
+        case FSQS_READ_ALLOCATE:
+            switch (Fs_AllocQueueEntryData(entry))
+            {
+                // Retry until memory is allocated?
+                case 0:
+                    break;
 
-  switch (g_FsQueue.state) {
-    case FSQS_READ_ALLOCATE:
-      switch (fsQueueAllocEntryData(entry)) {
-        case 0:
-          // I guess this will just retry until memory is allocated?
-          break;
-        case 1:
-          g_FsQueue.state = FSQS_READ_CHECK;
-          break;
-      }
-      break;
+                case 1:
+                    g_FsQueue.state = FSQS_READ_CHECK;
+                    break;
+            }
 
-    case FSQS_READ_CHECK:
-      switch (fsQueueCanRead(entry)) {
-        case 0:
-          // can't read yet, memory is in use by another operation, wait until next tick
-          break;
-        case 1:
-          g_FsQueue.state = FSQS_READ_SETLOC;
-          break;
-      }
-      break;
+            break;
 
-    case FSQS_READ_SETLOC:
-      switch (fsQueueTickSetLoc(entry)) {
-        case 0:
-          // CdlSetloc failed, reset CD
-          g_FsQueue.state = FSQS_READ_RESET;
-          break;
-        case 1:
-          g_FsQueue.state = FSQS_READ_READ;
-          break;
-      }
-      break;
+        case FSQS_READ_CHECK:
+            switch (Fs_CanReadQueue(entry))
+            {
+                // Can't read yet; memory in use by another operation. Wait until next tick.
+                case 0:
+                    break;
 
-    case FSQS_READ_READ:
-      switch (fsQueueTickRead(entry)) {
-        case 0:
-          // CdRead failed, reset CD and retry
-          g_FsQueue.state = FSQS_READ_RESET;
-          break;
-        case 1:
-          g_FsQueue.state = FSQS_READ_SYNC;
-          break;
-      }
-      break;
+                case 1:
+                    g_FsQueue.state = FSQS_READ_SETLOC;
+                    break;
+            }
 
-    case FSQS_READ_SYNC:
-      // check how the read is going
-      switch (CdReadSync(1, NULL)) {
-        case -1:
-          // CdReadSync failed, reset CD
-          g_FsQueue.state = FSQS_READ_RESET;
-          break;
-        case 0:
-          // done reading, no state transition, let caller know that we're done
-          result = 1;
-          break;
-      }
-      break;
+            break;
 
-    case FSQS_READ_RESET:
-      switch (fsQueueTickReset(entry)) {
-        case 0:
-          // still resetting
-          break;
-        case 1:
-          // reset done, try again from the setloc
-          g_FsQueue.state = FSQS_READ_SETLOC;
-          break;
-      }
-      break;
-  }
+        case FSQS_READ_SETLOC:
+            switch (Fs_TickQueueSetLoc(entry))
+            {
+                // CdlSetloc failed; reset CD.
+                case 0:
+                    g_FsQueue.state = FSQS_READ_RESET;
+                    break;
 
-  return result;
+                case 1:
+                    g_FsQueue.state = FSQS_READ_READ;
+                    break;
+            }
+
+            break;
+
+        case FSQS_READ_READ:
+            switch (Fs_TickQueueRead(entry))
+            {
+                // CdRead failed; reset CD and retry.
+                case 0:
+                    g_FsQueue.state = FSQS_READ_RESET;
+                    break;
+
+                case 1:
+                    g_FsQueue.state = FSQS_READ_SYNC;
+                    break;
+            }
+
+            break;
+
+        // Check how read is going.
+        case FSQS_READ_SYNC:
+            switch (CdReadSync(1, NULL))
+            {
+                // CdReadSync failed; reset CD.
+                case -1:
+                    g_FsQueue.state = FSQS_READ_RESET;
+                    break;
+
+                // Done reading; no state transition, let caller know that it's done.
+                case 0:
+                    result = true;
+                    break;
+            }
+
+            break;
+
+        case FSQS_READ_RESET:
+            switch (Fs_ResetQueueTick(entry))
+            {
+                // Still resetting.
+                case 0:
+                    break;
+
+                // Reset done; retry from setloc.
+                case 1:
+                    g_FsQueue.state = FSQS_READ_SETLOC;
+                    break;
+            }
+
+            break;
+    }
+
+    return result;
 }
