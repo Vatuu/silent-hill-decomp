@@ -227,7 +227,7 @@ $(BUILD_DIR)/%.bin.o: %.bin
 	@mkdir -p $(dir $@)
 	$(LD) -r -b binary -o $@ $<
 
-# split yaml
+# Split .yaml.
 $(LINKER_DIR)/%.ld: $(CONFIG_DIR)/%.yaml
 	@mkdir -p $(dir $@)
 	$(SPLAT) $(SPLAT_FLAGS) $<
