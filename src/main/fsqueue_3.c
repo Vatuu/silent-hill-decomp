@@ -1,270 +1,218 @@
-
 #include "main/fsqueue.h"
 #include "main/fsmem.h"
-
 #include <libapi.h>
 #include <libcd.h>
 #include <libgte.h>
 #include <libgpu.h>
 #include <string.h>
 
-s32 Fs_AllocQueueEntryData(s_FsQueueEntry* entry)
-{
-    s32 result = 0;
+s32 fsQueueAllocEntryData(FsQueueEntry *entry) {
+  s32 result = 0;
 
-    if (entry->allocate)
-    {
-        entry->data = Fs_AllocMem(ALIGN(entry->info->blockCount * FS_BLOCK_SIZE, FS_SECTOR_SIZE));
-    }
-    else
-    {
-        entry->data = entry->externalData;
-    }
+  if (entry->allocate) {
+    entry->data = fsMemAlloc(ALIGN(entry->info->numblocks * FS_BLOCK_SIZE, FS_SECTOR_SIZE));
+  } else {
+    entry->data = entry->external_data;
+  }
 
-    if (entry->data != 0)
-    {
-        result = 1;
-    }
+  if (entry->data != 0) {
+    result = 1;
+  }
 
-    return result;
+  return result;
 }
 
-s32 Fs_CanReadQueue(s_FsQueueEntry* entry)
-{
-    s_FsQueueEntry* other;
-    s32 queueLength;
-    s32 overlap;
-    s32 i;
+s32 fsQueueCanRead(FsQueueEntry *entry) {
+  FsQueueEntry *other;
+  s32 queue_len;
+  s32 overlap;
+  s32 i;
 
-    queueLength = g_FsQueue.read.idx - g_FsQueue.postLoad.idx;
+  queue_len = g_FsQueue.read.idx - g_FsQueue.postload.idx;
 
-    if (queueLength > 0)
-    {
-        i = 0;
-        do
-        {
-            other = &g_FsQueue.entries[(g_FsQueue.postLoad.idx + i) & (FS_QUEUE_LENGTH - 1)];
-            overlap = false;
-            if (other->postLoad || other->allocate)
-            {
-                overlap = Fs_DoQueueBuffersOverlap(entry->data,
-                                                  ALIGN(entry->info->blockCount * FS_BLOCK_SIZE, FS_SECTOR_SIZE),
-                                                  other->data,
-                                                  other->info->blockCount * FS_BLOCK_SIZE);
-            }
+  if (queue_len > 0) {
+    i = 0;
+    do {
+      other = &g_FsQueue.entries[(g_FsQueue.postload.idx + i) & (FS_QUEUE_LEN - 1)];
+      overlap = false;
+      if (other->postload || other->allocate) {
+        overlap = fsQueueDoBuffersOverlap(
+          entry->data,
+          ALIGN(entry->info->numblocks * FS_BLOCK_SIZE, FS_SECTOR_SIZE),
+          other->data,
+          other->info->numblocks * FS_BLOCK_SIZE
+        );
+      }
+      if (overlap == true) {
+        return false;
+      }
+      i++;
+    } while (i < queue_len);
+  }
 
-            if (overlap == true)
-            {
-                return false;
-            }
+  return true;
+}
 
-            i++;
-        }
-        while (i < queueLength);
+s32 fsQueueDoBuffersOverlap(u8 *data1, u32 size1, u8 *data2, u32 size2) {
+  u32 data1_low = (u32)data1 & 0xFFFFFF;
+  u32 data2_low = (u32)data2 & 0xFFFFFF;
+  if ((data2_low >= data1_low + size1) || (data1_low >= data2_low + size2)) {
+    return 0;
+  }
+  return 1;
+}
+
+s32 fsQueueTickSetLoc(FsQueueEntry* entry) {
+  CdlLOC cdloc;
+  CdIntToPos(entry->info->startsector, &cdloc);
+  return CdControl(CdlSetloc, (u_char *)&cdloc, NULL);
+}
+
+s32 fsQueueTickRead(FsQueueEntry* entry) {
+  // round up to sector boundary; masking not needed because of the `>> 11` below
+  s32 num_sectors = (entry->info->numblocks * FS_BLOCK_SIZE) + FS_SECTOR_SIZE - 1;
+  // overflow check?
+  if (num_sectors < 0) {
+    num_sectors += FS_SECTOR_SIZE - 1;
+  }
+  return CdRead(num_sectors >> FS_SECTOR_SHIFT, (u_long *)entry->data, CdlModeSpeed);
+}
+
+s32 fsQueueTickReset(FsQueueEntry *entry) {
+  s32 result = false;
+
+  g_FsQueue.reset_timer_0++;
+
+  if (g_FsQueue.reset_timer_0 >= 8) {
+    result = true;
+    g_FsQueue.reset_timer_0 = 0;
+    g_FsQueue.reset_timer_1++;
+    if (g_FsQueue.reset_timer_1 >= 9) {
+      if (CdReset(0) == 1) {
+        g_FsQueue.reset_timer_1 = 0;
+      } else {
+        result = false;
+      }
+    }
+  }
+
+  return result;
+}
+
+s32 fsQueueTickReadPcDrv(FsQueueEntry *entry) {
+  s32 handle;
+  s32 tmp;
+  s32 retry;
+  s32 result;
+  FileInfo *finfo = entry->info;
+  char pathbuf[64];
+  char namebuf[32];
+
+  result = 0;
+
+  strcpy(pathbuf, "sim:.\\DATA");
+  strcat(pathbuf, g_FilePaths[finfo->pathnum]);
+  fsFileInfoGetName(namebuf, finfo);
+  strcat(pathbuf, namebuf);
+
+  for (retry = 0; retry <= 2; retry++) {
+    handle = open(pathbuf, 0x4001);
+    if (handle == -1)
+      continue;
+
+    tmp = read(handle,entry->data, ALIGN(finfo->numblocks * FS_BLOCK_SIZE, FS_SECTOR_SIZE));
+    if (tmp == -1) {
+      continue;
     }
 
-    return true;
+    do {
+      tmp = close(handle);
+    } while (tmp == -1);
+
+    result = 1;
+    break;
+  }
+
+  return result;
 }
 
-s32 Fs_DoQueueBuffersOverlap(u8* data0, u32 size0, u8* data1, u32 size1)
-{
-    u32 data0Low = (u32)data0 & 0xFFFFFF;
-    u32 data1Low = (u32)data1 & 0xFFFFFF;
-    if ((data1Low >= data0Low + size0) || (data0Low >= data1Low + size1))
-    {
-        return 0;
-    }
+s32 fsQueueUpdatePostLoad(FsQueueEntry *entry) {
+  s32 result;
+  s32 state;
+  u8 postload;
 
-    return 1;
-}
+  result = 0;
+  state = g_FsQueue.postload_state;
 
-s32 Fs_TickQueueSetLoc(s_FsQueueEntry* entry)
-{
-    CdlLOC cdloc;
-    CdIntToPos(entry->info->startSector, &cdloc);
-    return CdControl(CdlSetloc, (u_char*)&cdloc, NULL);
-}
+  switch (state) {
+    case FSQS_POSTLOAD_INIT:
+      if (entry->allocate) {
+        g_FsQueue.postload_state = FSQS_POSTLOAD_SKIP;
+      } else {
+        g_FsQueue.postload_state = FSQS_POSTLOAD_EXEC;
+      }
+      break;
 
-s32 Fs_TickQueueRead(s_FsQueueEntry* entry)
-{
-    // Round up to sector boundary. Masking not needed because of `>> 11` below.
-    s32 sectorCount = ((entry->info->blockCount * FS_BLOCK_SIZE) + FS_SECTOR_SIZE) - 1;
-    
-    // Overflow check?
-    if (sectorCount < 0)
-    {
-        sectorCount += FS_SECTOR_SIZE - 1;
-    }
+    case FSQS_POSTLOAD_SKIP:
+      /* do nothing */
+      break;
 
-    return CdRead(sectorCount >> FS_SECTOR_SHIFT, (u64*)entry->data, CdlModeSpeed);
-}
-
-s32 Fs_ResetQueueTick(s_FsQueueEntry* entry)
-{
-    s32 result = false;
-
-    g_FsQueue.resetTimer0++;
-
-    if (g_FsQueue.resetTimer0 >= 8)
-    {
-        result = true;
-        g_FsQueue.resetTimer0 = 0;
-        g_FsQueue.resetTimer1++;
-        
-        if (g_FsQueue.resetTimer1 >= 9)
-        {
-            if (CdReset(0) == 1)
-            {
-                g_FsQueue.resetTimer1 = 0;
-            }
-            else
-            {
-                result = false;
-            }
-        }
-    }
-
-    return result;
-}
-
-s32 Fs_TickQueueReadPcDvr(s_FsQueueEntry* entry)
-{
-    s32 handle;
-    s32 temp;
-    s32 retry;
-    s32 result;
-    s_FileInfo* file = entry->info;
-    char pathBuffer[64];
-    char nameBuffer[32];
-
-    result = 0;
-
-    strcpy(pathBuffer, "sim:.\\DATA");
-    strcat(pathBuffer, g_FilePaths[file->pathIdx]);
-    Fs_GetFileInfoName(nameBuffer, file);
-    strcat(pathBuffer, nameBuffer);
-
-    for (retry = 0; retry <= 2; retry++)
-    {
-        handle = open(pathBuffer, 0x4001);
-        if (handle == -1)
-        {
-            continue;
-        }
-
-        temp = read(handle,entry->data, ALIGN(file->blockCount * FS_BLOCK_SIZE, FS_SECTOR_SIZE));
-        if (temp == -1)
-        {
-            continue;
-        }
-
-        do
-        {
-            temp = close(handle);
-        }
-        while (temp == -1);
-
-        result = 1;
-        break;
-    }
-
-    return result;
-}
-
-s32 Fs_UpdateQueuePostLoad(s_FsQueueEntry* entry)
-{
-    s32 result;
-    s32 state;
-    u8 postLoad;
-
-    result = 0;
-    state = g_FsQueue.postLoadState;
-
-    switch (state)
-    {
-        case FSQS_POST_LOAD_INIT:
-            if (entry->allocate)
-            {
-                g_FsQueue.postLoadState = FSQS_POST_LOAD_SKIP;
-            }
-            else
-            {
-                g_FsQueue.postLoadState = FSQS_POST_LOAD_EXEC;
-            }
-            break;
-
-        // Do nothing.
-        case FSQS_POST_LOAD_SKIP:
-            break;
-
-        case FSQS_POST_LOAD_EXEC:
-        postLoad = entry->postLoad;
-        switch (postLoad)
-        {
-            case FS_POST_LOAD_NONE:
-                result = 1;
-                break;
-
-            case FS_POST_LOAD_TIM:
-                result = Fs_QueuePostLoadTim(entry);
-
-            break;
-            case FS_POST_LOAD_ANM:
-                result = Fs_QueuePostLoadAnm(entry);
-                break;
-
-            default:
-                break;
-        }
-
-        break;
-
+    case FSQS_POSTLOAD_EXEC:
+      postload = entry->postload;
+      switch (postload) {
+        case FS_POSTLOAD_NONE:
+          result = 1;
+          break;
+        case FS_POSTLOAD_TIM:
+          result = fsQueuePostLoadTim(entry);
+          break;
+        case FS_POSTLOAD_ANM:
+          result = fsQueuePostLoadAnm(entry);
+          break;
         default:
-            break;
-    }
+          break;
+      }
+      break;
 
-    return result;
+    default:
+      break;
+  }
+
+  return result;
 }
 
-s32 Fs_QueuePostLoadTim(s_FsQueueEntry* entry)
-{
-    TIM_IMAGE tim;
-    RECT tempRect;
+s32 fsQueuePostLoadTim(FsQueueEntry *entry) {
+  TIM_IMAGE tim;
+  RECT tmprect;
 
-    OpenTIM((u64*)entry->externalData);
-    ReadTIM(&tim);
+  OpenTIM((u_long *)entry->external_data);
+  ReadTIM(&tim);
 
-    tempRect = *tim.prect;
-    if (entry->extra.image.u != 0xFF)
-    {
-        // This contraption simply extracts XY from tPage value.
-        // For some reason it seems to be byte swapped, or maybe tPage is stored as u8[2]?
-        // Same as tempRect.x = (entry->extra.image.tPage & 0x0F) * 64 for normal tPage.
-        tempRect.x = entry->extra.image.u + ((*(((u8*)&entry->extra.image.tPage) + 1) & 0xF) << 6);
+  tmprect = *tim.prect;
+  if (entry->extra.image.u != 0xFF) {
+    // this cursed contraption just extracts the XY from the tpage value
+    // for some reason it seems to be byte swapped, or maybe tpage is actually stored as u8[2]?
+    // same as tmprect.x = (entry->extra.image.tpage & 0x0F) * 64 for a normal tpage
+    tmprect.x = entry->extra.image.u + ((*(((u8*)&entry->extra.image.tpage) + 1) & 0xF) << 6);
+    // same as tmprect.y = (entry->extra.image.tpage & 0x10) * 16 for a normal tpage
+    tmprect.y = entry->extra.image.v + ((*(((u8*)&entry->extra.image.tpage) + 1) << 4) & 0x100);
+  }
 
-        // Same as rempRect.y = (entry->extra.image.tPage & 0x10) * 16 for normal tPage.
-        tempRect.y = entry->extra.image.v + ((*(((u8*)&entry->extra.image.tPage) + 1) << 4) & 0x100);
+  LoadImage(&tmprect, tim.paddr);
+
+  if (tim.caddr != NULL) {
+    tmprect = *tim.crect;
+    if (entry->extra.image.clut_x != -1) {
+      tmprect.x = entry->extra.image.clut_x;
+      tmprect.y = entry->extra.image.clut_y;
     }
+    LoadImage(&tmprect, tim.caddr);
+  }
 
-    LoadImage(&tempRect, tim.paddr);
-
-    if (tim.caddr != NULL)
-    {
-        tempRect = *tim.crect;
-        if (entry->extra.image.clutX != -1)
-        {
-            tempRect.x = entry->extra.image.clutX;
-            tempRect.y = entry->extra.image.clutY;
-        }
-
-        LoadImage(&tempRect, tim.caddr);
-    }
-
-    return true;
+  return true;
 }
 
-s32 Fs_QueuePostLoadAnm(s_FsQueueEntry* entry)
-{
-    func_80035560(entry->extra.anm.field_00, entry->extra.anm.field_04, entry->externalData, entry->extra.anm.field_08);
-    return true;
+s32 fsQueuePostLoadAnm(FsQueueEntry* entry) {
+  func_80035560(entry->extra.anm.field_00, entry->extra.anm.field_04, entry->external_data, entry->extra.anm.field_08);
+  return true;
 }
