@@ -2,6 +2,7 @@
 
 BUILD_OVERLAYS ?= 1
 BUILD_SCREENS  ?= 0
+BUILD_SCREENS  ?= 0
 BUILD_MAPS     ?= 0
 NON_MATCHING   ?= 0
 
@@ -67,26 +68,26 @@ endif
 
 # Utils
 
-# Function to find matching .s files for a target name.
+# Function to find matching .s files for a target name
 find_s_files = $(shell find $(ASM_DIR)/$(strip $1) -type f -path "*.s" -not -path "asm/*matchings*" 2> /dev/null)
 
-# Function to find matching .c files for a target name.
+# Function to find matching .c files for a target name
 find_c_files = $(shell find $(C_DIR)/$(strip $1) -type f -path "*.c" 2> /dev/null)
 
-# Function to generate matching .o files for target name in build directory.
+# Function to generate matching .o files for a target name in the build directory
 gen_o_files = $(addprefix $(BUILD_DIR)/, \
 							$(patsubst %.s, %.s.o, $(call find_s_files, $1)) \
 							$(patsubst %.c, %.c.o, $(call find_c_files, $1)))
 
-# Function to get path to .yaml file for given target.
+# Function to get the path to yaml file for given target
 get_yaml_path = $(addsuffix .yaml,$(addprefix $(CONFIG_DIR)/,$1))
 
 # Function to get target output path for given target.
 get_target_out = $(addprefix $(BUILD_DIR)/,$(shell $(GET_YAML_TARGET) $(call get_yaml_path,$1)))
 
 # Template definition for elf target.
-# First parameter should be source target with folder (e.g. screens/credits).
-# Second parameter should be end target (e.g. build/VIN/STF_ROLL.BIN).
+# First parameter should be the source target with folder (e.g. screens/credits)
+# Second parameter should be the end target (e.g. build/VIN/STF_ROLL.BIN)
 define make_elf_target
 $2: $2.elf
 	$(OBJCOPY) $(OBJCOPY_FLAGS) $$< $$@
@@ -205,12 +206,10 @@ $(foreach target,$(TARGET_IN),$(eval $(call make_elf_target,$(target),$(call get
 # Generate objects.
 $(BUILD_DIR)/%.i: %.c
 	@mkdir -p $(dir $@)
-	$(call DL_FlagsSwitch, $@)
 	$(CPP) -P -MMD -MP -MT $@ -MF $@.d $(CPP_FLAGS) -o $@ $<
 
 $(BUILD_DIR)/%.c.s: $(BUILD_DIR)/%.i
 	@mkdir -p $(dir $@)
-	$(call DL_FlagsSwitch, $@)
 	$(CC) $(CC_FLAGS) -o $@ $<
 
 $(BUILD_DIR)/%.c.o: $(BUILD_DIR)/%.c.s
@@ -220,7 +219,6 @@ $(BUILD_DIR)/%.c.o: $(BUILD_DIR)/%.c.s
 
 $(BUILD_DIR)/%.s.o: %.s
 	@mkdir -p $(dir $@)
-	$(call DL_FlagsSwitch, $@)
 	$(AS) $(AS_FLAGS) -o $@ $<
 
 $(BUILD_DIR)/%.bin.o: %.bin

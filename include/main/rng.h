@@ -4,7 +4,7 @@
 #include "common.h"
 
 /**
- * @brief Global variable storing the current random seed for the `Rng_Rand32`
+ * @brief Global variable storing the current random seed for the `rngRand32`
  * function. The value is updated with each call to the RNG functions.
  */
 extern u32 g_RngSeed;
@@ -20,18 +20,18 @@ extern u32 g_RngSeed;
  *
  * @return A new pseudo-random 32-bit unsigned integer (u32).
  */
-u32 Rng_Rand32(void);
+u32 rngRand32(void);
 
 /**
  * @brief Generates a new random positive 16-bit short integer.
  * 
- * This function calls `Rng_Rand32` to generate a random number, then
+ * This function calls `rngRand32` to generate a random number, then
  * shifts the result right to produce a value within the range
  * of 0 to 0x7FFF (16-bit - sign).
  *
  * @return A random positive 16-bit short integer (0 to 0x7FFF).
  */
-s16 Rng_Rand16(void);
+s16 rngRand16(void);
 
 /**
  * @brief Returns the current random seed value.
@@ -41,7 +41,7 @@ s16 Rng_Rand16(void);
  *
  * @return The current random seed as a 32-bit unsigned integer (u32).
  */
-u32 Rng_GetSeed(void);
+u32 rngGetSeed(void);
 
 /**
  * @brief Sets the random seed to a specified value.
@@ -49,20 +49,20 @@ u32 Rng_GetSeed(void);
  * This function updates the global variable `g_RngSeed` with the given
  * seed value.
  *
- * @param newSeed The new seed value to be set, as a 32-bit unsigned integer
+ * @param newseed The new seed value to be set, as a 32-bit unsigned integer
  * (u32).
  */
-void Rng_SetSeed(u32 newSeed);
+void rngSetSeed(u32 newseed);
 
 /**
  * @brief Generates a new random 12-bit short integer.
  *
- * This function calls `Rng_Rand32` to generate a random number, then
+ * This function calls `rngRand32` to generate a random number, then
  * shifts the result right to produce a value within the range
  * of 0 to 0xFFF (12-bit).
  *
  * @return A random 12-bit short integer (0 to 0xFFF).
  */
-u16 Rng_Rand12(void);
+u16 rngRand12(void);
 
 #endif
