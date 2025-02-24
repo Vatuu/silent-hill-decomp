@@ -10,10 +10,10 @@
  * memory location to the destination memory location.
  * Copies word-by-word instead of byte-by-byte. Beware of unaligned access?
  *
- * @param dest Destination pointer where the content is to be copied.
+ * @param dest Destination pointer to where the content is to be copied.
  * @param src Source pointer from where the content is to be copied.
- * @param numbytes Number of bytes (not words) to copy.
+ * @param byteCount Number of bytes (not words) to copy.
  */
-void memmove32(u32 *dest, u32 *src, s32 numbytes);
+void Mem_Move32(u32* dest, u32* src, s32 byteCount);
 
 #endif
