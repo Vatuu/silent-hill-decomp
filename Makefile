@@ -1,7 +1,7 @@
 # Configuration
 
 BUILD_OVERLAYS ?= 1
-BUILD_SCREENS  ?= 1
+BUILD_SCREENS  ?= 0
 BUILD_MAPS     ?= 0
 NON_MATCHING   ?= 0
 
@@ -40,20 +40,26 @@ GET_YAML_TARGET := $(PYTHON) $(TOOLS_DIR)/get_yaml_target.py
 # Flags
 
 OPT_FLAGS           := -O2
-DL_FLAGS            := -G8
 ENDIAN              := -EL
 INCLUDE_FLAGS       := -Iinclude -I $(BUILD_DIR) -Iinclude/psyq
 DEFINE_FLAGS        := -D_LANGUAGE_C -DUSE_INCLUDE_ASM
-AS_FLAGS            := $(ENDIAN) $(INCLUDE_FLAGS) $(OPT_FLAGS) $(DL_FLAGS) -march=r3000 -mtune=r3000 -no-pad-sections
-CC_FLAGS            := $(OPT_FLAGS) $(DL_FLAGS) -mips1 -mcpu=3000 -w -funsigned-char -fpeephole -ffunction-cse -fpcc-struct-return -fcommon -fverbose-asm -msoft-float -mgas -fgnu-linker -quiet
 CPP_FLAGS           := $(INCLUDE_FLAGS) $(DEFINE_FLAGS) -P -MMD -MP -undef -Wall -lang-c -nostdinc
 LD_FLAGS            := $(ENDIAN) $(OPT_FLAGS) -nostdlib --no-check-sections
 OBJCOPY_FLAGS       := -O binary
 OBJDUMP_FLAGS       := --disassemble-all --reloc --disassemble-zeroes -Mreg-names=32
 SPLAT_FLAGS         := --disassemble-all
-MASPSX_FLAGS        := --aspsx-version=2.77 --run-assembler $(AS_FLAGS)
 DUMPSXISO_FLAGS     := -x $(ROM_DIR) -s $(ROM_DIR)/layout.xml $(IMAGE_DIR)/$(GAME_NAME).bin
 SILENT_ASSETS_FLAGS := -exe $(ROM_DIR)/SLUS_007.07 -fs $(ROM_DIR)/SILENT. -fh $(ROM_DIR)/HILL. $(ASSETS_DIR)
+
+# For some reason, main executable uses -G8 while overlays uses -G0.
+# This function redefines required parameters for compilation checking depending on
+# whether a file's route is from main executable or an overlay.
+define DL_FlagsSwitch
+	$(if $(or $(filter MAIN,$(patsubst build/src/main/%,MAIN,$(1))), $(filter MAIN,$(patsubst build/asm/main/%,MAIN,$(1)))), $(eval DL_FLAGS = -G8), $(eval DL_FLAGS = -G0))
+	$(eval AS_FLAGS = $(ENDIAN) $(INCLUDE_FLAGS) $(OPT_FLAGS) $(DL_FLAGS) -march=r3000 -mtune=r3000 -no-pad-sections)
+	$(eval CC_FLAGS = $(OPT_FLAGS) $(DL_FLAGS) -mips1 -mcpu=3000 -w -funsigned-char -fpeephole -ffunction-cse -fpcc-struct-return -fcommon -fverbose-asm -msoft-float -mgas -fgnu-linker -quiet)
+	$(eval MASPSX_FLAGS = --aspsx-version=2.77 --run-assembler $(AS_FLAGS))
+endef
 
 ifeq ($(NON_MATCHING),1)
 	DEFINE_FLAGS := $(DEFINE_FLAGS) -DNON_MATCHING
@@ -75,7 +81,7 @@ gen_o_files = $(addprefix $(BUILD_DIR)/, \
 # Function to get path to .yaml file for given target.
 get_yaml_path = $(addsuffix .yaml,$(addprefix $(CONFIG_DIR)/,$1))
 
-# Function to get target output path for given target
+# Function to get target output path for given target.
 get_target_out = $(addprefix $(BUILD_DIR)/,$(shell $(GET_YAML_TARGET) $(call get_yaml_path,$1)))
 
 # Template definition for elf target.
@@ -192,17 +198,9 @@ build-C: regenerate
 	$(MAKE) check
 # Recipes
 
-# elf targets
+# .elf targets
 # Generate .elf target for each target from TARGET_IN.
 $(foreach target,$(TARGET_IN),$(eval $(call make_elf_target,$(target),$(call get_target_out,$(target)))))
-
-# NOTE: For some reason, main executable uses -G8 while all screens overlays use -G0.
-define DL_FlagsSwitch
-	$(if $(or $(filter SCREENS,$(patsubst build/src/screens/%,SCREENS,$(1))), $(filter SCREENS,$(patsubst build/asm/screens/%,SCREENS,$(1)))),$(eval DL_FLAGS = -G0), $(eval DL_FLAGS = -G8))
-	$(eval AS_FLAGS = $(ENDIAN) $(INCLUDE_FLAGS) $(OPT_FLAGS) $(DL_FLAGS) -march=r3000 -mtune=r3000 -no-pad-sections)
-	$(eval CC_FLAGS = $(OPT_FLAGS) $(DL_FLAGS) -mips1 -mcpu=3000 -w -funsigned-char -fpeephole -ffunction-cse -fpcc-struct-return -fcommon -fverbose-asm -msoft-float -mgas -fgnu-linker -quiet)
-	$(eval MASPSX_FLAGS = --aspsx-version=2.77 --run-assembler $(AS_FLAGS))
-endef
 
 # Generate objects.
 $(BUILD_DIR)/%.i: %.c
