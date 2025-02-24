@@ -2,13 +2,6 @@
 
 #include <libcd.h>
 
-/** @brief Ticks a read operation once.
- *
- * Performs one step in the reading process according to `g_FsQueue.state`. When the whole process is done, it returns 1.
- *
- * @param entry Entry to tick.
- * @return 1 when `entry` is done loading, 0 otherwise.
- */
 s32 Fs_UpdateQueueRead(s_FsQueueEntry* entry)
 {
     s32 status;

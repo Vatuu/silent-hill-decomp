@@ -1,12 +1,7 @@
 #include "main/fsmem.h"
 
-/** FS memory heap. */
 s_FsMemState g_FsMemory;
 
-/** @brief Initialize FS memory heap.
- * @param start Heap base.
- * @param size Total heap size in bytes.
- */
 void Fs_InitializeMem(u8* start, u32 size)
 {
     s32 i;
@@ -51,10 +46,6 @@ void nullsub_80011cfc(void)
 {
 }
 
-/** @brief Allocate FS memory block.
- * @param size Number of bytes to allocate.
- * @return Allocated memory block.
- */
 void* Fs_AllocMem(s32 size)
 {
     s_FsMemBlock  bufferMin; // Seems to use this struct for some reason.
@@ -117,7 +108,7 @@ void* Fs_AllocMem(s32 size)
     return bufferMin.start;
 }
 
-static inline u8* clampToHeapBounds(u8* ptr)
+static inline u8* Fs_ClampToHeapBounds(u8* ptr)
 {
     u8* min;
     u8* max;
@@ -137,18 +128,13 @@ static inline u8* clampToHeapBounds(u8* ptr)
     return ptr;
 }
 
-/** @brief Clamp memory buffer size to heap bounds.
- * @param start Buffer start.
- * @param size Buffer end.
- * @return New block size, or 0 if it does not fit or is invalid.
- */
 s32 Fs_ClampMemBlock(u8* start, u8* end)
 {
     u8* clampedStart;
     u8* clampedEnd;
 
-    clampedStart = clampToHeapBounds(start);
-    clampedEnd = clampToHeapBounds(end);
+    clampedStart = Fs_ClampToHeapBounds(start);
+    clampedEnd = Fs_ClampToHeapBounds(end);
 
     if (clampedEnd < clampedStart)
     {
@@ -158,10 +144,6 @@ s32 Fs_ClampMemBlock(u8* start, u8* end)
     return clampedEnd - clampedStart;
 }
 
-/** @brief Free FS memory block.
- * @param ptr Address of memory block to free.
- * @return 1 if block was freed, 0 if it wasn't found.
- */
 s32 Fs_FreeMem(u8* ptr)
 {
     s_FsMemBlock* iter;
@@ -190,16 +172,6 @@ s32 Fs_FreeMem(u8* ptr)
     return result;
 }
 
-/** @brief Unlink an FS memblock from one list and link it to another.
- *
- * Unlinks `from->next` and links it to `to` (`to->next` becomes `from->next`).
- * Used to both allocate (`from = &free_list`) and free (`from` is in `alloc_list`).
- *
- * @param from List node to unlink from.
- * @param to List node to link to.
- * @param start New block base.
- * @param size New block size.
- */
 void Fs_RelinkMemBlock(s_FsMemBlock* from, s_FsMemBlock* to, u8* start, u32 size)
 {
     s_FsMemBlock* temp;
