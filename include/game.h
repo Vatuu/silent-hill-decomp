@@ -3,7 +3,7 @@
 
 #include "common.h"
 
-extern void *g_OvlDynamic;
-extern void *g_OvlBodyprog;
+extern void* g_OvlDynamic;
+extern void* g_OvlBodyprog;
 
 #endif
