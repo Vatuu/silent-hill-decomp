@@ -465,14 +465,14 @@ g_MainImg1 = 0x80022c7c; // type:FsImageDesc size:8
 g_MainFbIdx = 0x80022c84; // type:u32
 
 // fileinfo .text
-Fs_DecryptOverlay_80010AD0 = 0X80010AD0; // type:func
-Fs_GetFileSize_80010B24 = 0X80010B24; // type:func
-Fs_GetFileName_80010b54 = 0x80010b54; // type:func
-Fs_GetFileInfoName_80010b88 = 0x80010b88; // type:func
-Fs_EncodeFileName_80010c60 = 0x80010c60; // type:func
-Fs_GetFileSectorAlignedSize_80010cd4 = 0x80010cd4; // type:func
-Fs_FindNextFileOfType_80010d0c = 0x80010d0c; // type:func
-Fs_FindNextFile_80010d80 = 0x80010d80; // type:func
+Fs_DecryptOverlay = 0X80010AD0; // type:func
+Fs_GetFileSize = 0X80010B24; // type:func
+Fs_GetFileName = 0x80010b54; // type:func
+Fs_GetFileInfoName = 0x80010b88; // type:func
+Fs_EncodeFileName = 0x80010c60; // type:func
+Fs_GetFileSectorAlignedSize = 0x80010cd4; // type:func
+Fs_FindNextFileOfType = 0x80010d0c; // type:func
+Fs_FindNextFile = 0x80010d80; // type:func
 // fileinfo .data
 g_FileTable = 0x8001B11C; // type:FileInfo size:0x6138
 g_FilePaths = 0x80021254; // type:u32 size:0x2C
@@ -483,40 +483,40 @@ g_FileXaLoc = 0x800212b0; // type:u32 size:44
 // fsqueue .rodata
 a_PcDrvPath = 0x80010008; // type:asciz
 // fsqueue .text
-Fs_IsQueueEntryLoaded_80010e58 = 0x80010e58; // type:func // Unsure.
-Fs_GetQueueLength_80010E68 = 0X80010E68; // type:func
-Fs_DoQueueThingWhenEmpty_80010e84 = 0x80010e84; // type:func // Unsure. Calls into BODYPROG and touches fsqueue.
-Fs_WaitForEmptyQueue_80010ecc = 0x80010ecc; // type:func // Spin wait for GetLength() < 1 with VSync/DrawSync and calls to BODYPROG. Loading screen?
-Fs_StartQueueSeek_80010f34 = 0x80010f34; // type:func
-Fs_StartQueueRead_80010F68 = 0X80010F68; // type:func
-Fs_StartQueueReadTim_80010F9C = 0X80010F9C; // type:func
-Fs_StartQueueReadAnm_80011018 = 0x80011018; // type:func // Unsure. Causes Fs_QueuePostLoadAnm_80011C3C later.
-Fs_QueueEnqueue_80011074 = 0X80011074; // type:func
-Fs_InitializeQueue_80011170 = 0X80011170; // type:func
-Fs_ResetQueue_800111dc = 0x800111dc; // type:func // Unsure. Resets part of queue.
-Fs_UpdateQueue_80011260 = 0X80011260; // type:func
-Fs_UpdateQueueSeek_8001137C = 0X8001137C; // type:func
-Fs_UpdateQueueRead_800114C4 = 0X800114C4; // type:func
-Fs_AllocQueueEntryData_80011630 = 0X80011630; // type:func
-Fs_CanQueueRead_800116BC = 0X800116BC; // type:func
-Fs_DoQueueBuffersOverlap_800117AC = 0X800117AC; // type:func
-Fs_TickQueueSetLoc_800117E8 = 0X800117E8; // type:func
-Fs_TickQueueRead_8001182C = 0X8001182C; // type:func
-Fs_ResetQueueTick_80011884 = 0X80011884; // type:func
-Fs_TickQueueReadPcDvr_8001190c = 0x8001190c; // type:func
-Fs_UpdateQueuePostLoad_80011A4C = 0X80011A4C; // type:func
-Fs_QueuePostLoadTim_80011B24 = 0X80011B24; // type:func
-Fs_QueuePostLoadAnm_80011C3C = 0X80011C3C; // type:func // Unsure. Calls into BODYPROG, which then uses GsCOORDINATE2.
+Fs_IsQueueEntryLoaded = 0x80010e58; // type:func // Unsure.
+Fs_GetQueueLength = 0X80010E68; // type:func
+Fs_DoQueueThingWhenEmpty = 0x80010e84; // type:func // Unsure. Calls into BODYPROG and touches fsqueue.
+Fs_WaitForEmptyQueue = 0x80010ecc; // type:func // Spin wait for GetLength() < 1 with VSync/DrawSync and calls to BODYPROG. Loading screen?
+Fs_StartQueueSeek = 0x80010f34; // type:func
+Fs_StartQueueRead = 0X80010F68; // type:func
+Fs_StartQueueReadTim = 0X80010F9C; // type:func
+Fs_StartQueueReadAnm = 0x80011018; // type:func // Unsure. Causes Fs_QueuePostLoadAnm later.
+Fs_QueueEnqueue = 0X80011074; // type:func
+Fs_InitializeQueue = 0X80011170; // type:func
+Fs_ResetQueue = 0x800111dc; // type:func // Unsure. Resets part of queue.
+Fs_UpdateQueue = 0X80011260; // type:func
+Fs_UpdateQueueSeek = 0X8001137C; // type:func
+Fs_UpdateQueueRead = 0X800114C4; // type:func
+Fs_AllocQueueEntryData = 0X80011630; // type:func
+Fs_CanQueueRead = 0X800116BC; // type:func
+Fs_DoQueueBuffersOverlap = 0X800117AC; // type:func
+Fs_TickQueueSetLoc = 0X800117E8; // type:func
+Fs_TickQueueRead = 0X8001182C; // type:func
+Fs_ResetQueueTick = 0X80011884; // type:func
+Fs_TickQueueReadPcDvr = 0x8001190c; // type:func
+Fs_UpdateQueuePostLoad = 0X80011A4C; // type:func
+Fs_QueuePostLoadTim = 0X80011B24; // type:func
+Fs_QueuePostLoadAnm = 0X80011C3C; // type:func // Unsure. Calls into BODYPROG, which then uses GsCOORDINATE2.
 // fsqueue .bss
 g_FsQueue = 0x80022c98; // type:FsQueue size:0x428
 
 // fsmem .text
-Fs_InitializeMem_80011C70 = 0X80011C70; // type:func
+Fs_InitializeMem = 0X80011C70; // type:func
 nullsub_80011cfc = 0x80011cfc; // type:func
-Fs_AllocMem_80011D04 = 0X80011D04; // type:func
-Fs_ClampMemBlock_80011E4C = 0X80011E4C; // type:func
-Fs_FreeMem_80011ed0 = 0x80011ed0; // type:func
-Fs_RelinkMemBlock_80011F48 = 0X80011F48; // type:func
+Fs_AllocMem = 0X80011D04; // type:func
+Fs_ClampMemBlock = 0X80011E4C; // type:func
+Fs_FreeMem = 0x80011ed0; // type:func
+Fs_RelinkMemBlock = 0X80011F48; // type:func
 // fsmem .bss
 g_FsMem = 0x800230c0; // type:FsMemState size:0xe0
 
@@ -525,16 +525,16 @@ memcpy = 0X80011F78; // type:func
 nullsub_800120b0 = 0x800120b0; // type:func
 
 // rng .text
-Rng_Rand32_800120b8 = 0x800120b8; // type:func
-Rng_Rand32_800120e4 = 0x800120e4; // type:func
-Rng_GetSeed_80012104 = 0x80012104; // type:func
-Rng_SetSeed_80012110 = 0x80012110; // type:func
-Rng_Rand12_8001211c = 0x8001211c; // type:func
+Rng_Rand32 = 0x800120b8; // type:func
+Rng_Rand16 = 0x800120e4; // type:func
+Rng_GetSeed = 0x80012104; // type:func
+Rng_SetSeed = 0x80012110; // type:func
+Rng_Rand12 = 0x8001211c; // type:func
 // rng .sdata
 g_RngSeed = 0x80022c90; // type:u32
 
 // memmove32 .text
-Mem_Move_8001213c = 0x8001213c; // type:func
+Mem_Move = 0x8001213c; // type:func
 
 // psyq
 EnterCriticalSection = 0X800121BC;

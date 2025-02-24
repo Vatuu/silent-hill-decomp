@@ -22,7 +22,7 @@
 void* SECTION(".rodata") g_OvlDynamic = (void*)0x800C9578;
 void* SECTION(".rodata") g_OvlBodyprog = (void*)0x80024B60;
 
-FsImageDesc g_MainImg0 =
+s_FsImageDesc g_MainImg0 =
 {
     .tPage = 0x0d01,
     .u     = 32,
@@ -31,7 +31,7 @@ FsImageDesc g_MainImg0 =
     .clutY = 480
 };
 
-FsImageDesc g_MainImg1 =
+s_FsImageDesc g_MainImg1 =
 {
     .tPage = 0x1400,
     .u     = 0,
@@ -66,7 +66,7 @@ int main(void)
 
     ResetCallback();
     CdInit();
-    Fs_InitializeQueue_80011170();
+    Fs_InitializeQueue();
     VSync(0);
     ResetGraph(3);
 
@@ -84,16 +84,16 @@ int main(void)
     SsUtReverbOff();
 
     // Load \1ST\2ZANKO_E.TIM ("There are violent and disturbing images...").
-    Fs_StartQueueReadTim_80010F9C(FILE_1ST_2ZANKO_E_TIM, FS_BUFFER0, &g_MainImg0);
-    while (Fs_GetQueueLength_80010E68() > 0)
+    Fs_StartQueueReadTim(FILE_1ST_2ZANKO_E_TIM, FS_BUFFER0, &g_MainImg0);
+    while (Fs_GetQueueLength() > 0)
     {
-        Fs_UpdateQueue_80011260();
+        Fs_UpdateQueue();
         VSync(0);
     }
 
     // Start loading \1ST\BODYPROG.BIN and \1ST\B_KONAMI.BIN.
-    Fs_StartQueueRead_80010F68(FILE_1ST_BODYPROG_BIN, FS_BUFFER0);
-    Fs_StartQueueRead_80010F68(FILE_1ST_B_KONAMI_BIN, FS_BUFFER1);
+    Fs_StartQueueRead(FILE_1ST_BODYPROG_BIN, FS_BUFFER0);
+    Fs_StartQueueRead(FILE_1ST_B_KONAMI_BIN, FS_BUFFER1);
 
     SetDispMask(1);
 
@@ -106,7 +106,9 @@ int main(void)
         PutDispEnv(&g_MainDispEnv);
 
         if (fade < 0)
+        {
             break;
+        }
 
         // Swap buffers.
         fbNext = (g_MainFbIdx == 0);
@@ -144,26 +146,26 @@ int main(void)
         fade -= 4;
 
         // Keep loading files in meantime.
-        Fs_UpdateQueue_80011260();
+        Fs_UpdateQueue();
         VSync(0);
     }
 
     // If files haven't loaded yet, wait until they do.
-    while (Fs_GetQueueLength_80010E68() > 0)
+    while (Fs_GetQueueLength() > 0)
     {
-        Fs_UpdateQueue_80011260();
+        Fs_UpdateQueue();
         VSync(0);
     }
 
     // Decrypt BODYPROG and B_KONAMI into place.
-    Fs_DecryptOverlay_80010AD0(g_OvlBodyprog, FS_BUFFER0, Fs_GetFileSize_80010B24(FILE_1ST_BODYPROG_BIN));
-    Fs_DecryptOverlay_80010AD0(g_OvlDynamic, FS_BUFFER1, Fs_GetFileSize_80010B24(FILE_1ST_B_KONAMI_BIN));
+    Fs_DecryptOverlay(g_OvlBodyprog, FS_BUFFER0, Fs_GetFileSize(FILE_1ST_BODYPROG_BIN));
+    Fs_DecryptOverlay(g_OvlDynamic, FS_BUFFER1, Fs_GetFileSize(FILE_1ST_B_KONAMI_BIN));
 
     // Load 1ST\FONT8NOC.TIM (8x8 font).
-    Fs_StartQueueReadTim_80010F9C(FILE_1ST_FONT8NOC_TIM, FS_BUFFER1, &g_MainImg1);
-    while (Fs_GetQueueLength_80010E68() > 0)
+    Fs_StartQueueReadTim(FILE_1ST_FONT8NOC_TIM, FS_BUFFER1, &g_MainImg1);
+    while (Fs_GetQueueLength() > 0)
     {
-        Fs_UpdateQueue_80011260();
+        Fs_UpdateQueue();
         VSync(0);
     }
 

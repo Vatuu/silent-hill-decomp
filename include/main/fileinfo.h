@@ -24,7 +24,7 @@
  * the extension string in `g_FileExts`, respectively. This limits the amount of paths and extensions
  * to 16 each, with one representing an empty extension.
  */
-typedef struct FileInfo
+typedef struct s_FileInfo
 {
     u32 startSector : 19; /** Index of CD sector where file starts. */
     u32 blockCount  : 12; /** Size of file in 256-byte blocks. */
@@ -32,22 +32,22 @@ typedef struct FileInfo
     u32 name0123    : 24; /** First four 6-bit characters of file name. */
     u32 name4567    : 24; /** Second four 6-bit characters of file name. */
     u32 type        : 4;  /** File type (and index of extension in `g_FileExts`). */
-} FileInfo;
+} s_FileInfo;
 
 extern char* g_FilePaths[];
 extern char* g_FileExts[];
 
-extern FileInfo g_FileTable[];
-extern u32      g_FileXaLoc[];
+extern s_FileInfo g_FileTable[];
+extern u32        g_FileXaLoc[];
 
-void Fs_DecryptOverlay_80010AD0(s32* dest, const s32* src, s32 size);
+void Fs_DecryptOverlay(s32* dest, const s32* src, s32 size);
 
-s32  Fs_GetFileSize_80010B24(s32 fileIdx);
-void Fs_GetFileName_80010b54(char* outName, s32 fileIdx);
-void Fs_GetFileInfoName_80010b88(char* outName, const FileInfo* const fileEntry);
-void Fs_EncodeFileName_80010c60(s32* outName0123, s32* outName4567, const char* srcName);
-s32  Fs_GetFileSectorAlignedSize_80010cd4(s32 fileIdx);
-s32  Fs_FindNextFileOfType_80010d0c(s32 fileType, s32 startIdx, s32 dir);
-s32  Fs_FindNextFile_80010d80(const char* name, s32 fileType, s32 startIdx);
+s32  Fs_GetFileSize(s32 fileIdx);
+void Fs_GetFileName(char* outName, s32 fileIdx);
+void Fs_GetFileInfoName(char* outName, const s_FileInfo* const fileEntry);
+void Fs_EncodeFileName(s32* outName0123, s32* outName4567, const char* srcName);
+s32  Fs_GetFileSectorAlignedSize(s32 fileIdx);
+s32  Fs_FindNextFileOfType(s32 fileType, s32 startIdx, s32 dir);
+s32  Fs_FindNextFile(const char* name, s32 fileType, s32 startIdx);
 
 #endif

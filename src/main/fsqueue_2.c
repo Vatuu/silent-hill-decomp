@@ -9,7 +9,7 @@
  * @param entry Entry to tick.
  * @return 1 when `entry` is done loading, 0 otherwise.
  */
-s32 Fs_UpdateQueueRead_800114C4(FsQueueEntry* entry)
+s32 Fs_UpdateQueueRead(s_FsQueueEntry* entry)
 {
     s32 status;
     s32 result;
@@ -18,7 +18,7 @@ s32 Fs_UpdateQueueRead_800114C4(FsQueueEntry* entry)
     switch (g_FsQueue.state)
     {
         case FSQS_READ_ALLOCATE:
-            switch (Fs_AllocQueueEntryData_80011630(entry))
+            switch (Fs_AllocQueueEntryData(entry))
             {
                 // Retry until memory is allocated?
                 case 0:
@@ -32,7 +32,7 @@ s32 Fs_UpdateQueueRead_800114C4(FsQueueEntry* entry)
             break;
 
         case FSQS_READ_CHECK:
-            switch (Fs_CanQueueRead_800116BC(entry))
+            switch (Fs_CanQueueRead(entry))
             {
                 // Can't read yet; memory in use by another operation. Wait until next tick.
                 case 0:
@@ -46,7 +46,7 @@ s32 Fs_UpdateQueueRead_800114C4(FsQueueEntry* entry)
             break;
 
         case FSQS_READ_SETLOC:
-            switch (Fs_TickQueueSetLoc_800117E8(entry))
+            switch (Fs_TickQueueSetLoc(entry))
             {
                 // CdlSetloc failed; reset CD.
                 case 0:
@@ -61,7 +61,7 @@ s32 Fs_UpdateQueueRead_800114C4(FsQueueEntry* entry)
             break;
 
         case FSQS_READ_READ:
-            switch (Fs_TickQueueRead_8001182C(entry))
+            switch (Fs_TickQueueRead(entry))
             {
                 // CdRead failed; reset CD and retry.
                 case 0:
@@ -93,7 +93,7 @@ s32 Fs_UpdateQueueRead_800114C4(FsQueueEntry* entry)
             break;
 
         case FSQS_READ_RESET:
-            switch (Fs_ResetQueueTick_80011884(entry))
+            switch (Fs_ResetQueueTick(entry))
             {
                 // Still resetting.
                 case 0:

@@ -13,13 +13,13 @@
  * @param entry Entry to allocate memory for.
  * @return 1 if allocation was successful or was not needed, 0 otherwise.
  */
-s32 Fs_AllocQueueEntryData_80011630(FsQueueEntry* entry)
+s32 Fs_AllocQueueEntryData(s_FsQueueEntry* entry)
 {
     s32 result = 0;
 
     if (entry->allocate)
     {
-        entry->data = Fs_AllocMem_80011D04(ALIGN(entry->info->blockCount * FS_BLOCK_SIZE, FS_SECTOR_SIZE));
+        entry->data = Fs_AllocMem(ALIGN(entry->info->blockCount * FS_BLOCK_SIZE, FS_SECTOR_SIZE));
     }
     else
     {
@@ -27,7 +27,9 @@ s32 Fs_AllocQueueEntryData_80011630(FsQueueEntry* entry)
     }
 
     if (entry->data != 0)
+    {
         result = 1;
+    }
 
     return result;
 }
@@ -35,17 +37,17 @@ s32 Fs_AllocQueueEntryData_80011630(FsQueueEntry* entry)
 /** @brief Check if specified read operation entry can be processed.
  *
  * Checks if loading `entry` will clobber any memory that was allocated for pending entries in the queue,
- * or memory that's used for postloading.
+ * or memory that's used for post-loading.
  *
  * @param entry Entry to check against.
  * @return 1 if the entry can be loaded without clobbering anything, 0 otherwise.
  */
-s32 Fs_CanQueueRead_800116BC(FsQueueEntry* entry)
+s32 Fs_CanQueueRead(s_FsQueueEntry* entry)
 {
-    FsQueueEntry* other;
-    s32           queueLength;
-    s32           overlap;
-    s32           i;
+    s_FsQueueEntry* other;
+    s32 queueLength;
+    s32 overlap;
+    s32 i;
 
     queueLength = g_FsQueue.read.idx - g_FsQueue.postLoad.idx;
 
@@ -54,18 +56,20 @@ s32 Fs_CanQueueRead_800116BC(FsQueueEntry* entry)
         i = 0;
         do
         {
-            other = &g_FsQueue.entries[(g_FsQueue.postLoad.idx + i) & (FS_QUEUE_LEN - 1)];
+            other = &g_FsQueue.entries[(g_FsQueue.postLoad.idx + i) & (FS_QUEUE_LENGTH - 1)];
             overlap = false;
             if (other->postLoad || other->allocate)
             {
-                overlap = Fs_DoQueueBuffersOverlap_800117AC(entry->data,
+                overlap = Fs_DoQueueBuffersOverlap(entry->data,
                                                   ALIGN(entry->info->blockCount * FS_BLOCK_SIZE, FS_SECTOR_SIZE),
                                                   other->data,
                                                   other->info->blockCount * FS_BLOCK_SIZE);
             }
 
             if (overlap == true)
+            {
                 return false;
+            }
 
             i++;
         }
@@ -75,7 +79,7 @@ s32 Fs_CanQueueRead_800116BC(FsQueueEntry* entry)
     return true;
 }
 
-/** @brief Check if two buffers overlap in memory. Used by `Fs_CanQueueRead_800116BC`.
+/** @brief Check if two buffers overlap in memory. Used by `Fs_CanQueueRead`.
  * 
  * @param data0 Start of the first buffer.
  * @param size0 Size of the first buffer in bytes.
@@ -83,12 +87,14 @@ s32 Fs_CanQueueRead_800116BC(FsQueueEntry* entry)
  * @param size1 Size of the second buffer in bytes.
  * @return 1 if buffers overlap, 0 otherwise.
  */
-s32 Fs_DoQueueBuffersOverlap_800117AC(u8* data0, u32 size0, u8* data1, u32 size1)
+s32 Fs_DoQueueBuffersOverlap(u8* data0, u32 size0, u8* data1, u32 size1)
 {
     u32 data0Low = (u32)data0 & 0xFFFFFF;
     u32 data1Low = (u32)data1 & 0xFFFFFF;
     if ((data1Low >= data0Low + size0) || (data0Low >= data1Low + size1))
+    {
         return 0;
+    }
 
     return 1;
 }
@@ -100,7 +106,7 @@ s32 Fs_DoQueueBuffersOverlap_800117AC(u8* data0, u32 size0, u8* data1, u32 size1
  * @param entry Entry to process.
  * @return 1 if succeded, 0 if `CdControl` failed.
  */
-s32 Fs_TickQueueSetLoc_800117E8(FsQueueEntry* entry)
+s32 Fs_TickQueueSetLoc(s_FsQueueEntry* entry)
 {
     CdlLOC cdloc;
     CdIntToPos(entry->info->startSector, &cdloc);
@@ -114,27 +120,29 @@ s32 Fs_TickQueueSetLoc_800117E8(FsQueueEntry* entry)
  * @param entry Entry to process.
  * @return 1 if succeded, 0 if `CdControl` failed.
  */
-s32 Fs_TickQueueRead_8001182C(FsQueueEntry* entry)
+s32 Fs_TickQueueRead(s_FsQueueEntry* entry)
 {
     // Round up to sector boundary. Masking not needed because of `>> 11` below.
     s32 sectorCount = ((entry->info->blockCount * FS_BLOCK_SIZE) + FS_SECTOR_SIZE) - 1;
     
     // Overflow check?
     if (sectorCount < 0)
+    {
         sectorCount += FS_SECTOR_SIZE - 1;
+    }
 
     return CdRead(sectorCount >> FS_SECTOR_SHIFT, (u64*)entry->data, CdlModeSpeed);
 }
 
 /** @brief Process `FSQS_READ_RESET` or `FSQS_SEEK_RESET` state: wait for a bit and reset CD driver.
  *
- * Increments `g_FsQueue.reset_timer_0` once. If it has reached 8, clears it and increments `g_FsQueue.reset_timer_1`.
- * If `g_FsQueue.reset_timer_1` has reached 9, clears it and calls `CdReset()`.
+ * Increments `g_FsQueue.resetTimer0` once. If it has reached 8, clears it and increments `g_FsQueue.resetTimer1`.
+ * If `g_FsQueue.resetTimer1` has reached 9, clears it and calls `CdReset()`.
  *
  * @param entry Entry to process.
  * @return 1 if succeded, 0 if `CdControl` failed.
  */
-s32 Fs_ResetQueueTick_80011884(FsQueueEntry* entry)
+s32 Fs_ResetQueueTick(s_FsQueueEntry* entry)
 {
     s32 result = false;
 
@@ -166,32 +174,36 @@ s32 Fs_ResetQueueTick_80011884(FsQueueEntry* entry)
  * @param entry PCDRV read operation entry to process.
  * @return 1 if succeeded, 0 otherwise.
  */
-s32 Fs_TickQueueReadPcDvr_8001190c(FsQueueEntry* entry)
+s32 Fs_TickQueueReadPcDvr(s_FsQueueEntry* entry)
 {
-    s32       handle;
-    s32       temp;
-    s32       retry;
-    s32       result;
-    FileInfo* file = entry->info;
-    char      pathBuffer[64];
-    char      nameBuffer[32];
+    s32 handle;
+    s32 temp;
+    s32 retry;
+    s32 result;
+    s_FileInfo* file = entry->info;
+    char pathBuffer[64];
+    char nameBuffer[32];
 
     result = 0;
 
     strcpy(pathBuffer, "sim:.\\DATA");
     strcat(pathBuffer, g_FilePaths[file->pathIdx]);
-    Fs_GetFileInfoName_80010b88(nameBuffer, file);
+    Fs_GetFileInfoName(nameBuffer, file);
     strcat(pathBuffer, nameBuffer);
 
     for (retry = 0; retry <= 2; retry++)
     {
         handle = open(pathBuffer, 0x4001);
         if (handle == -1)
+        {
             continue;
+        }
 
         temp = read(handle,entry->data, ALIGN(file->blockCount * FS_BLOCK_SIZE, FS_SECTOR_SIZE));
         if (temp == -1)
+        {
             continue;
+        }
 
         do
         {
@@ -208,16 +220,16 @@ s32 Fs_TickQueueReadPcDvr_8001190c(FsQueueEntry* entry)
 
 /** @brief Ticks postloading once.
  *
- * Performs one step in the postloading process according to `entry->postload_state`. When the whole process is done, returns 1.
+ * Performs one step in the post-loading process according to `entry->postLoadState`. When the whole process is done, returns 1.
  *
  * @param entry Entry to tick.
  * @return 1 when `entry` is done postloading, 0 otherwise.
  */
-s32 Fs_UpdateQueuePostLoad_80011A4C(FsQueueEntry* entry)
+s32 Fs_UpdateQueuePostLoad(s_FsQueueEntry* entry)
 {
     s32 result;
     s32 state;
-    u8  postLoad;
+    u8 postLoad;
 
     result = 0;
     state = g_FsQueue.postLoadState;
@@ -248,11 +260,11 @@ s32 Fs_UpdateQueuePostLoad_80011A4C(FsQueueEntry* entry)
                 break;
 
             case FS_POST_LOAD_TIM:
-                result = Fs_QueuePostLoadTim_80011B24(entry);
+                result = Fs_QueuePostLoadTim(entry);
 
             break;
             case FS_POST_LOAD_ANM:
-                result = Fs_QueuePostLoadAnm_80011C3C(entry);
+                result = Fs_QueuePostLoadAnm(entry);
                 break;
 
             default:
@@ -270,14 +282,14 @@ s32 Fs_UpdateQueuePostLoad_80011A4C(FsQueueEntry* entry)
 
 /** @brief Parse a TIM file after loading it.
  *
- * Called during postloading for TIM files (`entry->postload = 1`).
+ * Called during post-loading for TIM files (`entry->postLoad = 1`).
  * Will use `OpenTIM`/`ReadTIM` to parse the loaded data and then upload it via `LoadImage`.
  * If `entry->extra.image.u` is not 0xFF, will override the XY components of the pixel and CLUT rects with values from `image`.
  *
  * @param entry Entry to parse.
  * @return Always 1.
  */
-s32 Fs_QueuePostLoadTim_80011B24(FsQueueEntry* entry)
+s32 Fs_QueuePostLoadTim(s_FsQueueEntry* entry)
 {
     TIM_IMAGE tim;
     RECT tempRect;
@@ -316,7 +328,7 @@ s32 Fs_QueuePostLoadTim_80011B24(FsQueueEntry* entry)
 
 /** @brief Parse an ANM file after loading it?
  *
- * Called during postloading for some ANM files (when `entry->postload = 2`).
+ * Called during post-loading for some ANM files (when `entry->postLoad = 2`).
  * For example, it is called for CLD2.ANM, SRL.ANM, SBL.ANM (maybe ones used for NPCs?), but not for others
  * (e.g. HB_M0S01.ANM).
  *
@@ -326,7 +338,7 @@ s32 Fs_QueuePostLoadTim_80011B24(FsQueueEntry* entry)
  * @param entry Entry to parse.
  * @return Always 1.
  */
-s32 Fs_QueuePostLoadAnm_80011C3C(FsQueueEntry* entry)
+s32 Fs_QueuePostLoadAnm(s_FsQueueEntry* entry)
 {
     func_80035560(entry->extra.anm.field00, entry->extra.anm.field04, entry->externalData, entry->extra.anm.field08);
     return true;

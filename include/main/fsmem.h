@@ -10,34 +10,34 @@
 /** @brief FS memory block.
  * Describes one allocation in the FS heap.
  */
-typedef struct FsMemBlock
+typedef struct s_FsMemBlock
 {
-    u8*                start; /** Start address. */
-    u32                size;  /** Size in bytes. */
-    struct FsMemBlock* next;  /** Next block in list. */
-} FsMemBlock;
+    u8*                  start; /** Start address. */
+    u32                  size;  /** Size in bytes. */
+    struct s_FsMemBlock* next;  /** Next block in list. */
+} s_FsMemBlock;
 
 /** @brief State of the FS memory heap.
  * This heap seems to only be used by the FS code.
  */
 typedef struct
 {
-    u8*        start;                      /** Heap base. */
-    u32        size;                       /** Total heap size in bytes. */
-    FsMemBlock allocList;                  /** Head of list of allocated memory blocks. */
-    FsMemBlock freeList;                   /** Head of list of free memory blocks. */
-    FsMemBlock blocks[FS_MEM_BLOCK_COUNT]; /** Block pool. */
-} FsMemState;
+    u8*          start;                      /** Heap base. */
+    u32          size;                       /** Total heap size in bytes. */
+    s_FsMemBlock allocList;                  /** Head of list of allocated memory blocks. */
+    s_FsMemBlock freeList;                   /** Head of list of free memory blocks. */
+    s_FsMemBlock blocks[FS_MEM_BLOCK_COUNT]; /** Block pool. */
+} s_FsMemState;
 
-extern FsMemState g_FsMemory;
+extern s_FsMemState g_FsMemory;
 
 void nullsub_800120b0(void);
 void nullsub_80011cfc(void);
 
-void  Fs_InitializeMem_80011C70(u8* start, u32 size);
-void  Fs_RelinkMemBlock_80011F48(FsMemBlock* from, FsMemBlock* to, u8* start, u32 size);
-void* Fs_AllocMem_80011D04(s32 size);
-s32   Fs_ClampMemBlock_80011E4C(u8* start, u8* end);
-s32   Fs_FreeMem_80011ed0(u8* ptr);
+void  Fs_InitializeMem(u8* start, u32 size);
+void  Fs_RelinkMemBlock(s_FsMemBlock* from, s_FsMemBlock* to, u8* start, u32 size);
+void* Fs_AllocMem(s32 size);
+s32   Fs_ClampMemBlock(u8* start, u8* end);
+s32   Fs_FreeMem(u8* ptr);
 
 #endif

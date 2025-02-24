@@ -1,22 +1,26 @@
 #include "main/fsmem.h"
 
 /** FS memory heap. */
-FsMemState g_FsMemory;
+s_FsMemState g_FsMemory;
 
 /** @brief Initialize FS memory heap.
  * @param start Heap base.
  * @param size Total heap size in bytes.
  */
-void Fs_InitializeMem_80011C70(u8* start, u32 size)
+void Fs_InitializeMem(u8* start, u32 size)
 {
     s32 i;
 
     // This really wants the start and size to be aligned to 8,
     // but since they're already hardcoded elsewhere, it doesn't really matter.
     if ((u32)start & 3)
+    {
         size = 0;
+    }
     if (size & 3)
+    {
         size = 0;
+    }
 
     g_FsMemory.start = start;
     g_FsMemory.size = size;
@@ -45,31 +49,34 @@ void Fs_InitializeMem_80011C70(u8* start, u32 size)
 
 void nullsub_80011cfc(void)
 {
-
 }
 
 /** @brief Allocate FS memory block.
  * @param size Number of bytes to allocate.
  * @return Allocated memory block.
  */
-void* Fs_AllocMem_80011D04(s32 size)
+void* Fs_AllocMem(s32 size)
 {
-    FsMemBlock bufferMin; // Seems to use this struct for some reason.
-    FsMemBlock* blockMin;
-    FsMemBlock* iter;
+    s_FsMemBlock  bufferMin; // Seems to use this struct for some reason.
+    s_FsMemBlock* blockMin;
+    s_FsMemBlock* iter;
     s32 clampedSize;
     u8* start;
     u8* end;
 
     if (size == 0)
+    {
         return NULL;
+    }
 
     // Align to 4.
     size = (size + 3) & ~3;
 
     // No free blocks left.
     if (g_FsMemory.freeList.next == NULL)
+    {
         return NULL;
+    }
 
     iter = &g_FsMemory.allocList;
     bufferMin.start = NULL;
@@ -83,14 +90,14 @@ void* Fs_AllocMem_80011D04(s32 size)
         {
             start = iter->start + iter->size;
             end = g_FsMemory.start + g_FsMemory.size;
-            clampedSize = Fs_ClampMemBlock_80011E4C(start, end);
+            clampedSize = Fs_ClampMemBlock(start, end);
         }
         // Check if there's space left between current and nex allocation.
         else
         {
             end = iter->next->start;
             start = iter->start + iter->size;
-            clampedSize = Fs_ClampMemBlock_80011E4C(start, end);
+            clampedSize = Fs_ClampMemBlock(start, end);
         }
 
         // Track smallest possible hole new block can fit into.
@@ -103,7 +110,9 @@ void* Fs_AllocMem_80011D04(s32 size)
     }
 
     if (bufferMin.start != NULL)
-        Fs_RelinkMemBlock_80011F48(&g_FsMemory.freeList, blockMin, bufferMin.start, size);
+    {
+        Fs_RelinkMemBlock(&g_FsMemory.freeList, blockMin, bufferMin.start, size);
+    }
 
     return bufferMin.start;
 }
@@ -115,11 +124,15 @@ static inline u8* clampToHeapBounds(u8* ptr)
 
     min = g_FsMemory.start;
     if (ptr < min)
+    {
         return min;
+    }
 
     max = min + g_FsMemory.size;
     if (ptr > max)
+    {
         return max;
+    }
 
     return ptr;
 }
@@ -129,7 +142,7 @@ static inline u8* clampToHeapBounds(u8* ptr)
  * @param size Buffer end.
  * @return New block size, or 0 if it does not fit or is invalid.
  */
-s32 Fs_ClampMemBlock_80011E4C(u8* start, u8* end)
+s32 Fs_ClampMemBlock(u8* start, u8* end)
 {
     u8* clampedStart;
     u8* clampedEnd;
@@ -138,7 +151,9 @@ s32 Fs_ClampMemBlock_80011E4C(u8* start, u8* end)
     clampedEnd = clampToHeapBounds(end);
 
     if (clampedEnd < clampedStart)
+    {
         return 0;
+    }
 
     return clampedEnd - clampedStart;
 }
@@ -147,10 +162,10 @@ s32 Fs_ClampMemBlock_80011E4C(u8* start, u8* end)
  * @param ptr Address of memory block to free.
  * @return 1 if block was freed, 0 if it wasn't found.
  */
-s32 Fs_FreeMem_80011ed0(u8* ptr)
+s32 Fs_FreeMem(u8* ptr)
 {
-    FsMemBlock* iter;
-    FsMemBlock* prev = &g_FsMemory.allocList;
+    s_FsMemBlock* iter;
+    s_FsMemBlock* prev = &g_FsMemory.allocList;
     s32 result = false;
 
     if (prev->next != NULL)
@@ -160,7 +175,7 @@ s32 Fs_FreeMem_80011ed0(u8* ptr)
             iter = prev->next;
             if (iter->start == ptr)
             {
-                Fs_RelinkMemBlock_80011F48(prev, &g_FsMemory.freeList, NULL, 0U);
+                Fs_RelinkMemBlock(prev, &g_FsMemory.freeList, NULL, 0U);
                 result = true;
                 break;
             }
@@ -185,16 +200,16 @@ s32 Fs_FreeMem_80011ed0(u8* ptr)
  * @param start New block base.
  * @param size New block size.
  */
-void Fs_RelinkMemBlock_80011F48(FsMemBlock* from, FsMemBlock* to, u8* start, u32 size)
+void Fs_RelinkMemBlock(s_FsMemBlock* from, s_FsMemBlock* to, u8* start, u32 size)
 {
-    FsMemBlock* tmp;
+    s_FsMemBlock* temp;
 
-    tmp = from->next;
-    from->next = tmp->next;
+    temp = from->next;
+    from->next = temp->next;
 
-    tmp->next = to->next;
-    to->next = tmp;
+    temp->next = to->next;
+    to->next = temp;
 
-    tmp->start = start;
-    tmp->size = size;
+    temp->start = start;
+    temp->size = size;
 }

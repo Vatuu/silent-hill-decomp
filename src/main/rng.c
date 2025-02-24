@@ -1,7 +1,7 @@
 #include "main/rng.h"
 
 /**
- * @brief Global variable storing the current random seed for the `Rng_Rand32_800120b8`
+ * @brief Global variable storing the current random seed for the `Rng_Rand32`
  * function. The value is updated with each call to the RNG functions.
  */
 u32 g_RngSeed = 0;
@@ -17,7 +17,7 @@ u32 g_RngSeed = 0;
  *
  * @return A new pseudo-random 32-bit unsigned integer (u32).
  */
-u32 Rng_Rand32_800120b8(void)
+u32 Rng_Rand32(void)
 {
     u32 nextSeed = g_RngSeed;
 
@@ -30,15 +30,15 @@ u32 Rng_Rand32_800120b8(void)
 /**
  * @brief Generates a new random positive 16-bit short integer.
  * 
- * This function calls `Rng_Rand32_800120b8` to generate a random number, then
+ * This function calls `Rng_Rand32` to generate a random number, then
  * shifts the result right to produce a value within the range
  * of 0 to 0x7FFF (16-bit - sign).
  *
  * @return A random positive 16-bit short integer (0 to 0x7FFF).
  */
-s16 Rng_Rand32_800120e4(void)
+s16 Rng_Rand16(void)
 {
-    return Rng_Rand32_800120b8() >> 0x11;
+    return Rng_Rand32() >> 0x11;
 }
 
 /**
@@ -49,7 +49,7 @@ s16 Rng_Rand32_800120e4(void)
  *
  * @return The current random seed as a 32-bit unsigned integer (u32).
  */
-u32 Rng_GetSeed_80012104(void)
+u32 Rng_GetSeed(void)
 {
     return g_RngSeed;
 }
@@ -63,7 +63,7 @@ u32 Rng_GetSeed_80012104(void)
  * @param newSeed The new seed value to be set, as a 32-bit unsigned integer
  * (u32).
  */
-void Rng_SetSeed_80012110(u32 nextSeed)
+void Rng_SetSeed(u32 nextSeed)
 {
     g_RngSeed = nextSeed;
 }
@@ -71,13 +71,13 @@ void Rng_SetSeed_80012110(u32 nextSeed)
 /**
  * @brief Generates a new random 12-bit short integer.
  *
- * This function calls `Rng_Rand32_800120b8` to generate a random number, then
+ * This function calls `Rng_Rand32` to generate a random number, then
  * shifts the result right to produce a value within the range
  * of 0 to 0xFFF (12-bit).
  *
  * @return A random 12-bit short integer (0 to 0xFFF).
  */
-u16 Rng_Rand12_8001211c(void)
+u16 Rng_Rand12(void)
 {
-    return Rng_Rand32_800120b8() >> 0x14;
+    return Rng_Rand32() >> 0x14;
 }
