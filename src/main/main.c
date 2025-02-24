@@ -1,7 +1,5 @@
-#include "bodyprog/bodyprog.h"
 #include "common.h"
 #include "game.h"
-#include "gpu.h"
 #include "main/fsqueue.h"
 #include "bodyprog/bodyprog.h"
 #include "gpu.h"
