@@ -8,7 +8,7 @@
 #include <libgpu.h>
 #include <string.h>
 
-/** If `entry->allocate` is set, allocate memory for `entry->data`, otherwise use `entry->external_data`.
+/** If `entry->allocate` is set, allocate memory for `entry->data`, otherwise use `entry->externalData`.
  * 
  * @param entry Entry to allocate memory for.
  * @return 1 if allocation was successful or was not needed, 0 otherwise.
