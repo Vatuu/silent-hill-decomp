@@ -3,6 +3,6 @@
 
 #include "common.h"
 
-void Mem_Move(u32* dest, u32* src, s32 byteCount);
+void Mem_Move32(u32* dest, u32* src, s32 byteCount);
 
 #endif

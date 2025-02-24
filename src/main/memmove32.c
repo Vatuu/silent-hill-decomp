@@ -11,7 +11,7 @@
  * @param src Source pointer from where the content is to be copied.
  * @param byteCount Number of bytes (not words) to copy.
  */
-void Mem_Move(u32* dest, u32* src, s32 byteCount)
+void Mem_Move32(u32* dest, u32* src, s32 byteCount)
 {
         u32* end;
         s32 wordCount;

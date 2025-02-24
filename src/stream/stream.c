@@ -1,7 +1,7 @@
 #include "common.h"
 
-#include <LIBDS.H>
-#include <LIBPRESS.H>
+#include <libds.h>
+#include <libpress.h>
 
 INCLUDE_ASM("asm/stream/nonmatchings/stream", func_801E2654);
 

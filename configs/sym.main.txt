@@ -534,7 +534,7 @@ Rng_Rand12 = 0x8001211c; // type:func
 g_RngSeed = 0x80022c90; // type:u32
 
 // memmove32 .text
-Mem_Move = 0x8001213c; // type:func
+Mem_Move32 = 0x8001213c; // type:func
 
 // psyq
 EnterCriticalSection = 0X800121BC;
