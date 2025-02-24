@@ -32,7 +32,7 @@ s32 Fs_UpdateQueueRead(s_FsQueueEntry* entry)
             break;
 
         case FSQS_READ_CHECK:
-            switch (Fs_CanQueueRead(entry))
+            switch (Fs_CanReadQueue(entry))
             {
                 // Can't read yet; memory in use by another operation. Wait until next tick.
                 case 0:

@@ -34,7 +34,7 @@ s32 Fs_AllocQueueEntryData(s_FsQueueEntry* entry)
     return result;
 }
 
-/** @brief Check if specified read operation entry can be processed.
+/** @brief Check if the specified read operation entry can be processed.
  *
  * Checks if loading `entry` will clobber any memory that was allocated for pending entries in the queue,
  * or memory that's used for post-loading.
@@ -42,7 +42,7 @@ s32 Fs_AllocQueueEntryData(s_FsQueueEntry* entry)
  * @param entry Entry to check against.
  * @return 1 if the entry can be loaded without clobbering anything, 0 otherwise.
  */
-s32 Fs_CanQueueRead(s_FsQueueEntry* entry)
+s32 Fs_CanReadQueue(s_FsQueueEntry* entry)
 {
     s_FsQueueEntry* other;
     s32 queueLength;
@@ -79,7 +79,7 @@ s32 Fs_CanQueueRead(s_FsQueueEntry* entry)
     return true;
 }
 
-/** @brief Check if two buffers overlap in memory. Used by `Fs_CanQueueRead`.
+/** @brief Check if two buffers overlap in memory. Used by `Fs_CanReadQueue`.
  * 
  * @param data0 Start of the first buffer.
  * @param size0 Size of the first buffer in bytes.

@@ -21,7 +21,7 @@
 enum FsQueueReadState
 {
     FSQS_READ_ALLOCATE = 0, /** Allocate memory for the current read operation (`fsQueueAllocData`), if needed. */
-    FSQS_READ_CHECK    = 1, /** Check if the current read operation can proceed (`Fs_CanQueueRead`). Goto next state if it can. */
+    FSQS_READ_CHECK    = 1, /** Check if the current read operation can proceed (`Fs_CanReadQueue`). Goto next state if it can. */
     FSQS_READ_SETLOC   = 2, /** Set start sector from `info` (`Fs_TickQueueSetLoc`). If failure, goto `FSQS_READ_RESET`. */
     FSQS_READ_READ     = 3, /** Read from CD (`Fs_TickQueueRead`). If failure, goto `FSQS_READ_RESET`. */
     FSQS_READ_SYNC     = 4, /** Wait for read to complete. If failure, goto `FSQS_READ_RESET`. */
@@ -135,7 +135,7 @@ typedef struct
     u8                allocate;     /** If 1, allocate a buffer for `data` from `g_FsMemory`, otherwise use `externalData` */
     u8                unused0;      /** Unused or padding. */
     void*             externalData; /** Pointer to an external buffer. */
-    u32               unused1;      /** Unused but set by `Fs_QueueEnqueue`. */
+    u32               unused1;      /** Unused but set by `Fs_EnqueueQueue`. */
     s_FsQueueExtra    extra;        /** Extra data, used during post load. */
     void*             data;         /** Output buffer. Either allocated or same as `externalData`. */
 } s_FsQueueEntry;
@@ -159,7 +159,7 @@ typedef struct
  * Each operation can optionally include a post-process (post-load) step that happens after the main operation is complete.
  * For example, parsing a TIM file after reading it.
  *
- * New entries are added by `Fs_QueueEnqueue`. The queue is processed in `Fs_UpdateQueue`.
+ * New entries are added by `Fs_EnqueueQueue`. The queue is processed in `Fs_UpdateQueue`.
  *
  * @note Assuming this is a single struct because there's a `bzero` that zeroes out this entire block.
  */
@@ -187,7 +187,7 @@ s32  Fs_StartQueueSeek(s32 fileIdx);
 s32  Fs_StartQueueRead(s32 fileIdx, void* dest);
 s32  Fs_StartQueueReadTim(s32 fileIdx, void* dest, s_FsImageDesc* image);
 s32  Fs_StartQueueReadAnm(s32 arg0, s32 arg1, void* arg2, s32 arg3);
-s32  Fs_QueueEnqueue(s32 fileIdx, u8 op, u8 postLoad, u8 alloc, void* data, u32 unused1, s_FsQueueExtra* extra);
+s32  Fs_EnqueueQueue(s32 fileIdx, u8 op, u8 postLoad, u8 alloc, void* data, u32 unused0, s_FsQueueExtra* extra);
 void Fs_InitializeQueue(void);
 void Fs_ResetQueue(void);
 void Fs_UpdateQueue(void);
@@ -200,7 +200,7 @@ s32 Fs_UpdateQueueRead(s_FsQueueEntry* entry);
 // 3
 
 s32 Fs_AllocQueueEntryData(s_FsQueueEntry* entry);
-s32 Fs_CanQueueRead(s_FsQueueEntry* entry);
+s32 Fs_CanReadQueue(s_FsQueueEntry* entry);
 s32 Fs_DoQueueBuffersOverlap(u8* data0, u32 size0, u8* data1, u32 size1);
 s32 Fs_TickQueueSetLoc(s_FsQueueEntry* entry);
 s32 Fs_TickQueueRead(s_FsQueueEntry* entry);

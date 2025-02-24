@@ -78,7 +78,7 @@ void Fs_WaitForEmptyQueue(void)
  */
 s32 Fs_StartQueueSeek(s32 fileIdx)
 {
-    return Fs_QueueEnqueue(fileIdx, FS_OP_SEEK, FS_POST_LOAD_NONE, false, NULL, 0, NULL);
+    return Fs_EnqueueQueue(fileIdx, FS_OP_SEEK, FS_POST_LOAD_NONE, false, NULL, 0, NULL);
 }
 
 /** Add a new read operation to the queue.
@@ -89,7 +89,7 @@ s32 Fs_StartQueueSeek(s32 fileIdx)
  */
 s32 Fs_StartQueueRead(s32 fileIdx, void* dest)
 {
-    return Fs_QueueEnqueue(fileIdx, FS_OP_READ, FS_POST_LOAD_NONE, false, dest, 0, NULL);
+    return Fs_EnqueueQueue(fileIdx, FS_OP_READ, FS_POST_LOAD_NONE, false, dest, 0, NULL);
 }
 
 /** @brief Add a new TIM read operation to the queue.
@@ -117,7 +117,7 @@ s32 Fs_StartQueueReadTim(s32 fileIdx, void* dest, s_FsImageDesc* image)
         extra.image.clutY = -1;
     }
 
-    return Fs_QueueEnqueue(fileIdx, FS_OP_READ, FS_POST_LOAD_TIM, false, dest, 0, &extra);
+    return Fs_EnqueueQueue(fileIdx, FS_OP_READ, FS_POST_LOAD_TIM, false, dest, 0, &extra);
 }
 
 /** @brief Add a new ANM read operation to the queue.
@@ -141,7 +141,7 @@ s32 Fs_StartQueueReadAnm(s32 arg0, s32 arg1, void* arg2, s32 arg3)
     extra.anm.field04 = arg1;
     extra.anm.field00 = arg0;
     extra.anm.field08 = arg3;
-    return Fs_QueueEnqueue(fileIdx, FS_OP_READ, FS_POST_LOAD_ANM, false, arg2, 0, &extra);
+    return Fs_EnqueueQueue(fileIdx, FS_OP_READ, FS_POST_LOAD_ANM, false, arg2, 0, &extra);
 }
 
 /** @brief Add new operation to the queue.
@@ -157,7 +157,7 @@ s32 Fs_StartQueueReadAnm(s32 arg0, s32 arg1, void* arg2, s32 arg3)
  * @param extra Extra data for operation (`s_FsQueueEntry::extra`).
  * @return Index of the new queue entry.
  */
-s32 Fs_QueueEnqueue(s32 fileIdx, u8 op, u8 postLoad, u8 alloc, void* data, u32 unused0, s_FsQueueExtra* extra)
+s32 Fs_EnqueueQueue(s32 fileIdx, u8 op, u8 postLoad, u8 alloc, void* data, u32 unused0, s_FsQueueExtra* extra)
 {
     s_FsQueueEntry* newEntry;
     s_FsQueuePtr* lastPtr;
