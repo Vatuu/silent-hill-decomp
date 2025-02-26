@@ -1,12 +1,13 @@
 #include "common.h"
 #include "bodyprog/bodyprog.h"
+#include "screens/saveload/saveload.h"
 
 typedef struct
 {
     s32 unk_0;
     s32 unk_4;
     s32 field_8;
-} s_Unk0; // Size: >=12
+} s_UnkSaveLoad0; // Size: >=12
 
 extern s_FsImageDesc D_800A902C;
 
@@ -18,7 +19,7 @@ INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E2F90);
 
 INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E2FCC);
 
-s32 func_801E3078(s_Unk0* arg0)
+s32 func_801E3078(s_UnkSaveLoad0* arg0)
 {
     if (arg0 != NULL && (arg0->field_8 & 0x01000000))
     {

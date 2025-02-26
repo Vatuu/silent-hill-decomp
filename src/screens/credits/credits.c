@@ -15,14 +15,14 @@ typedef struct
     s16 field_14;
     s16 unk_16;
     s32 field_18;
-} s_Unk0; // Size: unknown
+} s_UnkCredits0; // Size: unknown
 
 // Used by func_801E2E28.
 typedef struct
 {
     s32 field_0;
     s16 field_4;
-} s_Unk1; // Size: 6
+} s_UnkCredits1; // Size: 6
 
 extern s8  D_800AFE0E;
 extern s32 D_800AFE10; // Packed RGB+command color?
@@ -30,7 +30,7 @@ extern s8  D_800AFE2A;
 extern s32 D_800AFE2C; // Packed RGB+command color?
 extern s32 D_801E600C;
 
-extern s_Unk0 D_800AFE08;
+extern s_UnkCredits0 D_800AFE08;
 
 INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E2E28);
 
