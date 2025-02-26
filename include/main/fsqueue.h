@@ -83,6 +83,7 @@ enum FsQueueOperation
 /**
  * @brief Extra queue entry data describing where to upload a TIM after reading.
  * See `FsQueueExtra`.
+ * 
  * @note `tPage` seems to be byte swapped.
  */
 typedef struct

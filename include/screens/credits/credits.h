@@ -12,7 +12,8 @@ s32 func_801E3DF8(s32 arg0);
  *
  * This function sets the packed RGB+command color for D_800AFE10 with
  * the fourth component hard set to 0x64, possibly a graphics command.
- * RGB order only assumed.
+ * 
+ * @note RGB order only assumed.
  *
  * @param r Red component.
  * @param g Green component.
@@ -27,7 +28,8 @@ void func_801E4340(s8 arg0);
  *
  * This function sets the packed RGB+command color for D_800AFE10 with
  * the fourth component hard set to 0x2C, possibly a graphics command.
- * RGB order only assumed.
+ * 
+ * @note RGB order only assumed.
  *
  * @param r Red component.
  * @param g Green component.

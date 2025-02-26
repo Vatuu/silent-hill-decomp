@@ -1,8 +1,8 @@
 #include "common.h"
 #include "screens/credits/credits.h"
 
-// Padding added for now, but other unknown fields might exist.
-typedef struct UnkStruct0
+// Used by func_801E434C
+typedef struct
 {
     s16 field_0;
     s16 field_2;
@@ -15,7 +15,14 @@ typedef struct UnkStruct0
     s16 field_14;
     s16 unk_16;
     s32 field_18;
-} UnkStruct0;
+} s_Unk0; // Size: unknown
+
+// Used by func_801E2E28.
+typedef struct
+{
+    s32 field_0;
+    s16 field_4;
+} s_Unk1; // Size: 6
 
 extern s8  D_800AFE0E;
 extern s32 D_800AFE10; // Packed RGB+command color?
@@ -23,7 +30,7 @@ extern s8  D_800AFE2A;
 extern s32 D_800AFE2C; // Packed RGB+command color?
 extern s32 D_801E600C;
 
-extern UnkStruct0 D_800AFE08;
+extern s_Unk0 D_800AFE08;
 
 INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E2E28);
 
@@ -92,6 +99,7 @@ void func_801E4BC8(s8 arg0)
     D_800AFE2A = arg0;
 }
 
+// Identical to func_801E434C except for the global variables it modifies.
 INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E4BD4);
 
 INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E4C1C);

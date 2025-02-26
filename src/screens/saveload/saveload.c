@@ -1,4 +1,14 @@
 #include "common.h"
+#include "bodyprog/bodyprog.h"
+
+typedef struct
+{
+    s32 unk_0;
+    s32 unk_4;
+    s32 field_8;
+} s_Unk0; // Size: >=12
+
+extern s_FsImageDesc D_800A902C;
 
 INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E2D8C);
 
@@ -8,7 +18,17 @@ INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E2F90);
 
 INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E2FCC);
 
-INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E3078);
+s32 func_801E3078(s_Unk0* arg0)
+{
+    if (arg0 != NULL && (arg0->field_8 & 0x01000000))
+    {
+        func_8004A8DC(0);
+        return 1;
+    }
+        
+    func_8004A8DC(7);
+    return 0;
+}
 
 INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E30C4);
 
@@ -52,13 +72,20 @@ INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E6DB0);
 
 INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E6F38);
 
-INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E709C);
+void func_801E709C(void)
+{
+    func_801E2EBC();
+    func_800314EC(&D_800A902C);
+}
 
 INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E70C8);
 
 INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E7244);
 
-INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E72DC);
+void func_801E72DC(void)
+{
+    func_801E3C44();
+}
 
 INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E72FC);
 
