@@ -12,9 +12,9 @@ u32 Rng_Rand32(void)
     return nextSeed;
 }
 
-s16 Rng_Rand16(void)
+u16 Rng_Rand16(void)
 {
-    return Rng_Rand32() >> 0x11;
+    return Rng_Rand32() >> 17;
 }
 
 u32 Rng_GetSeed(void)
@@ -29,5 +29,5 @@ void Rng_SetSeed(u32 nextSeed)
 
 u16 Rng_Rand12(void)
 {
-    return Rng_Rand32() >> 0x14;
+    return Rng_Rand32() >> 20;
 }
