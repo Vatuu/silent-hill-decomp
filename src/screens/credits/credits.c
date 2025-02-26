@@ -1,15 +1,20 @@
 #include "common.h"
 #include "screens/credits/credits.h"
 
+// Padding added for now, but other unknown fields might exist.
 typedef struct UnkStruct0
 {
     s16 field_0;
     s16 field_2;
     s16 field_4;
-    u8  field_7; // Used as bool.
-
-    // Contains more unknown fields.
-    
+    s8  unk_6;
+    s8  field_7; // bool
+    s32 unk_8;
+    s32 unk_C;
+    s32 unk_10;
+    s16 field_14;
+    s16 unk_16;
+    s32 field_18;
 } UnkStruct0;
 
 extern s8  D_800AFE0E;
