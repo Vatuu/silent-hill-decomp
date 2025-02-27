@@ -51,7 +51,7 @@ void func_801E2E28(s32 idx)
     
     func_8004729C(D_801E5558[idx].field_00);
     temp_v1 = (D_801E5558[idx].field_04 * 2) - 0x1F8;
-    temp_lo = temp_v1 / (s32)D_801E5C20;
+    temp_lo = temp_v1 / D_801E5C20;
     
     D_801E5E7C = temp_v1;
     D_801E5E88 = 1;
