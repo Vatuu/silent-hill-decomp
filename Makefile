@@ -1,7 +1,7 @@
 # Configuration
 
 BUILD_OVERLAYS ?= 1
-BUILD_SCREENS  ?= 0
+BUILD_SCREENS  ?= 1
 BUILD_MAPS     ?= 0
 NON_MATCHING   ?= 0
 

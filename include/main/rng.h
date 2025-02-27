@@ -10,7 +10,7 @@
 extern u32 g_RngSeed;
 
 /**
- * @brief Generates a new random 32-bit unsigned integer and updates the
+ * @brief Generates a new random 32-bit unsigned integer and updates
  * `g_RngSeed`.
  *
  * This function implements a Linear Congruential Generator (LCG) Random Number
@@ -23,15 +23,15 @@ extern u32 g_RngSeed;
 u32 Rng_Rand32(void);
 
 /**
- * @brief Generates a new random positive 16-bit short integer.
+ * @brief Generates a new random 16-bit unsigned integer.
  * 
  * This function calls `Rng_Rand32` to generate a random number, then
  * shifts the result right to produce a value within the range
- * of 0 to 0x7FFF (16-bit - sign).
+ * of [0, 0x7FFF].
  *
- * @return A random positive 16-bit short integer (0 to 0x7FFF).
+ * @return A random positive 16-bit unsigned integer (u32).
  */
-s16 Rng_Rand16(void);
+u32 Rng_Rand16(void);
 
 /**
  * @brief Returns the current random seed value.

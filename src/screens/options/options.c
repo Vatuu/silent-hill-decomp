@@ -1,14 +1,23 @@
 #include "common.h"
 
+extern u8 D_800BC747;
+extern u8 D_800BC748;
+
 INCLUDE_ASM("asm/screens/options/nonmatchings/options", func_801E2D44);
 
 INCLUDE_ASM("asm/screens/options/nonmatchings/options", func_801E318C);
 
 INCLUDE_ASM("asm/screens/options/nonmatchings/options", func_801E3770);
 
-INCLUDE_ASM("asm/screens/options/nonmatchings/options", func_801E3F68);
+void func_801E3F68(void)
+{
+    func_801E3FB8(0, D_800BC747);
+}
 
-INCLUDE_ASM("asm/screens/options/nonmatchings/options", func_801E3F90);
+void func_801E3F90(void)
+{
+    func_801E3FB8(1, D_800BC748);
+}
 
 INCLUDE_ASM("asm/screens/options/nonmatchings/options", func_801E3FB8);
 
