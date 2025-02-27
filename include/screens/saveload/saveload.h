@@ -3,7 +3,12 @@
 
 #include "common.h"
 
-struct s_UnkSaveload0;
+typedef struct
+{
+    s32 unk_00;
+    s32 unk_04;
+    s32 field_08;
+} s_UnkSaveload0; // Size: >=12
 
 void func_801E2F90(s32 idx);
 

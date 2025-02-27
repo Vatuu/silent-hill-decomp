@@ -2,13 +2,6 @@
 #include "bodyprog/bodyprog.h"
 #include "screens/saveload/saveload.h"
 
-typedef struct
-{
-    s32 unk_00;
-    s32 unk_04;
-    s32 field_08;
-} s_UnkSaveload0; // Size: >=12
-
 extern s_FsImageDesc D_800A902C;
 extern u8            D_800A97D4[];
 extern u32           D_800BCD34;

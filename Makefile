@@ -14,6 +14,7 @@ CONFIG_DIR   := configs
 LINKER_DIR   := linkers
 IMAGE_DIR    := $(ROM_DIR)/image
 BUILD_DIR    := build
+OUT_DIR		 := $(BUILD_DIR)/out
 TOOLS_DIR    := tools
 PERMUTER_DIR := permuter
 ASSETS_DIR   := assets
@@ -82,7 +83,7 @@ gen_o_files = $(addprefix $(BUILD_DIR)/, \
 get_yaml_path = $(addsuffix .yaml,$(addprefix $(CONFIG_DIR)/,$1))
 
 # Function to get target output path for given target.
-get_target_out = $(addprefix $(BUILD_DIR)/,$(shell $(GET_YAML_TARGET) $(call get_yaml_path,$1)))
+get_target_out = $(addprefix $(OUT_DIR)/,$(shell $(GET_YAML_TARGET) $(call get_yaml_path,$1)))
 
 # Template definition for elf target.
 # First parameter should be source target with folder (e.g. screens/credits).
@@ -216,8 +217,8 @@ $(BUILD_DIR)/%.c.s: $(BUILD_DIR)/%.i
 $(BUILD_DIR)/%.c.o: $(BUILD_DIR)/%.c.s
 	@mkdir -p $(dir $@)
 	$(call DL_FlagsSwitch, $@)
-	$(MASPSX) $(MASPSX_FLAGS) -o $@ $<
-	$(OBJDUMP) $(OBJDUMP_FLAGS) $@ > $(@:.o=.dump.s)
+	-$(MASPSX) $(MASPSX_FLAGS) -o $@ $<
+	-$(OBJDUMP) $(OBJDUMP_FLAGS) $@ > $(@:.o=.dump.s)
 
 $(BUILD_DIR)/%.s.o: %.s
 	@mkdir -p $(dir $@)
