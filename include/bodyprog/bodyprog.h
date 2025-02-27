@@ -13,7 +13,7 @@ typedef struct
     s16 field_02;
     u32 field_04;
     u32 field_08;
-    u32 field_0c;
+    u32 field_0C;
 } s_800A90FC;
 
 /** Unknown bodyprog var. Used in `Fs_StartQueueReadAnm`. */

@@ -12,7 +12,7 @@ u32 Rng_Rand32(void)
     return nextSeed;
 }
 
-u16 Rng_Rand16(void)
+u32 Rng_Rand16(void)
 {
     return Rng_Rand32() >> 17;
 }
