@@ -4,6 +4,7 @@
 #include "common.h"
 
 void func_801E2E28(s32 idx);
+s32 func_801E2ED8(void);
 
 void func_801E3DD0(void);
 
