@@ -10,4 +10,8 @@
 
 #define SECTION(x) __attribute__((section(x)))
 
+#define STATIC_ASSERT(COND, MSG) typedef char static_assertion_##MSG[(COND) ? 1 : -1]
+#define STATIC_ASSERT_SIZEOF(TYPE, SIZE) \
+    typedef char static_assertion_sizeof_##TYPE[(sizeof(TYPE) == (SIZE)) ? 1 : -1]
+
 #endif

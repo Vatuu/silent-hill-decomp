@@ -27,6 +27,7 @@ options:
 
   symbol_addrs_path:
     - configs/sym.main.txt
+    - configs/sym.bodyprog.txt
     - configs/sym.stream.txt
   reloc_addrs_path:
     - configs/rel.stream.txt
