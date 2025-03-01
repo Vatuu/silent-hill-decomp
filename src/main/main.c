@@ -1,8 +1,8 @@
 #include "common.h"
 #include "game.h"
-#include "main/fsqueue.h"
-#include "bodyprog/bodyprog.h"
 #include "gpu.h"
+#include "bodyprog/bodyprog.h"
+#include "main/fsqueue.h"
 
 #include <libapi.h>
 #include <libetc.h>

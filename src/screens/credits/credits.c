@@ -1,11 +1,7 @@
 #include "common.h"
+#include "gpu.h"
 #include "main/rng.h"
 #include "screens/credits/credits.h"
-
-// Temporary declarations
-void func_80045A7C(u16); // Return type assumed.
-u8   func_80045B28();
-void func_8004729C(u16);
 
 typedef struct
 {
@@ -30,6 +26,31 @@ typedef struct
     s16 field_04;
 } s_UnkCredits1; // Size: 6
 
+typedef struct
+{
+    u32 unk_00;
+    u32 unk_04;
+    u32 field_08;
+    u32 field_0C;
+    u32 field_10;
+    u32 field_14;
+    u32 unk_18;
+    u32 field_1C;
+    u32 field_20;
+    u32 field_24;
+    u32 field_28;
+    u32 field_2C;
+} s_UnkCredits2; // Size: >=48
+
+typedef struct
+{
+    u8  pad[1424];
+    u32 field_590;
+    u32 field_594;
+    u32 field_598;
+    u32 field_59C;
+    u32 field_5A0;
+} s_UnkCredits3; // Size: >=1460
 
 extern s_UnkCredits0 D_800AFE08;
 extern s8            D_800AFE0E;
@@ -37,8 +58,12 @@ extern s32           D_800AFE10; // Packed RGB+command color? Command is 0x64.
 extern s_UnkCredits0 D_800AFE24;
 extern s8            D_800AFE2A;
 extern s32           D_800AFE2C; // Packed RGB+command color? Command is 0x2C.
+extern s_UnkCredits2 D_800B9FC0;
+extern s_UnkCredits3 D_800BC728;
+extern s32           D_800BCD0C;
 extern s32           D_800C48F0;
 extern s_UnkCredits1 D_801E5558[];
+extern RECT          D_801E557C[];
 extern s32           D_801E5C20;
 extern s32           D_801E5E7C;
 extern s32           D_801E5E80;
@@ -46,6 +71,14 @@ extern s32           D_801E5E84;
 extern s32           D_801E5E88;
 extern s32           D_801E5E8C; // Index for some array used by most recent func_801E2E28 call. func_801E2ED8 accesses it.
 extern s32           D_801E600C;
+
+// =====Temporary function declarations=====
+
+void func_80045A7C(u16); // Return type assumed.
+u8   func_80045B28();
+void func_8004729C(u16);
+
+//==========================================
 
 void func_801E2E28(s32 idx)
 {
@@ -102,7 +135,57 @@ INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E3094);
 
 INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E3124);
 
-INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E3304);
+s32 func_801E3304(void)
+{
+    s32 temp;
+
+    if (D_800BC728.field_590 == 11)
+    {
+        if (D_800BC728.field_59C == 0)
+        {
+            func_80032428(0x140, 0);
+            D_800BCD0C = 0;
+            D_800BC728.field_59C++;
+        }
+        else if (D_800BC728.field_59C != 10)
+        {
+            D_800BC728.field_59C++;
+        }
+        else
+        {
+            func_80032358(0, 0x20, 0x140, 0x1C0, 0, 0, 0);
+            LoadImage(&D_801E557C[0], 0x801CFA00);
+            LoadImage(&D_801E557C[1], 0x801C8200);
+            DrawSync(0);
+            VSync(2);
+            
+            temp = D_800BC728.field_594;
+            
+            D_800B9FC0.field_1C = 0;
+            D_800B9FC0.field_20 = 0;
+            
+            D_800BC728.field_59C = 0;
+            D_800BC728.field_5A0 = 0;
+            
+            D_800B9FC0.field_08 = 0;
+            D_800B9FC0.field_24 = 0;
+            D_800B9FC0.field_0C = 0;
+            D_800B9FC0.field_28 = 0;
+            D_800B9FC0.field_10 = 0;
+            D_800B9FC0.field_2C = 0;
+            D_800B9FC0.field_14 = 0;
+            
+            D_800BC728.field_598 = temp;
+            D_800BC728.field_594 = (s32)D_800BC728.field_590;
+            D_800BC728.field_590 = temp;
+            D_800BC728.field_598 = 0;
+        }
+        
+        return 0;
+    }
+
+    return 0;
+}
 
 INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E342C);
 
