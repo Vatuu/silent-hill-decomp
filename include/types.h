@@ -21,4 +21,10 @@ typedef unsigned long long u64;
 typedef enum { false, true } bool;
 #endif
 
+// lightly modified VECTOR with padding int removed, seems used through a lot of SH code
+typedef struct {
+    long vx, vy;
+    long vz;
+} VECTOR3;
+
 #endif
