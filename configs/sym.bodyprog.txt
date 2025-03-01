@@ -15,7 +15,7 @@ g_CurDeltaTime = 0x800B5CC0; // type:s32 - Q20.12 fixed point, usually 0x44 (0.0
 vcInitCamera = 0x8004004c; // type:func
 vcSetCameraUseWarp = 0x800400d4; // type:func
 vcRetCamMvSmoothF = 0x80040190; // type:func
-vcSetEvCamRate_800401C0 = 0x800401c0; // type:func guessed name
+vcSetEvCamRate = 0x800401c0; // type:func guessed name
 vcMoveAndSetCamera = 0x800401ec; // type:func
 vcMakeHeroHeadPos = 0x8004047c; // type:func
 vcAddOfsToPos = 0x80040518; // type:func
@@ -23,7 +23,7 @@ vcSetRefPosAndSysRef2CamParam = 0x800405c4; // type:func
 vcSetRefPosAndCamPosAngByPad = 0x800406d4; // type:func
 
 vwInitViewInfo = 0x80048a38; // type:func
-vwGetViewCoord_80048A90 = 0x80048a90; // type:func guessed name
+vwGetViewCoord = 0x80048a90; // type:func guessed name
 vwGetViewPosition = 0x80048a9c; // type:func
 vwGetViewAngle = 0x80048ac4; // type:func
 vwSetCoordRefAndEntou = 0x80048be0; // type:func
@@ -105,7 +105,7 @@ vcCamMatNoise = 0x80085a7c; // type:func
 Math_VectorMagnitude = 0x80085b1c; // type:func guessed name, could be something like vcGetXZSumDist
 vcGetXZSumDistFromLimArea = 0x80085c80; // type:func
 
-// vw globals
+// vw globals from SH2
 vcNullRoadArray = 0x800A8F44; // _VC_ROAD_DATA[2]
 vcNullNearRoad = 0x800AFC94; // _VC_NEAR_ROAD_DATA
 deflt_watch_mv_prm = 0x800AFCB8; // _VC_WATCH_MV_PARAM
