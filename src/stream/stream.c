@@ -15,20 +15,20 @@ INCLUDE_ASM("asm/stream/nonmatchings/stream", func_801E2908);
 
 INCLUDE_ASM("asm/stream/nonmatchings/stream", func_801E2A24);
 
-INCLUDE_ASM("asm/stream/nonmatchings/stream", func_801E2AA4);
+INCLUDE_ASM("asm/stream/nonmatchings/stream", open_main);
 
-INCLUDE_ASM("asm/stream/nonmatchings/stream", func_801E2B9C);
+INCLUDE_ASM("asm/stream/nonmatchings/stream", movie_main);
 
-INCLUDE_ASM("asm/stream/nonmatchings/stream", func_801E2F8C);
+INCLUDE_ASM("asm/stream/nonmatchings/stream", strSetDefDecEnv);
 
-INCLUDE_ASM("asm/stream/nonmatchings/stream", func_801E300C);
+INCLUDE_ASM("asm/stream/nonmatchings/stream", strInit);
 
-INCLUDE_ASM("asm/stream/nonmatchings/stream", func_801E307C);
+INCLUDE_ASM("asm/stream/nonmatchings/stream", strCallback);
 
-INCLUDE_ASM("asm/stream/nonmatchings/stream", func_801E31CC);
+INCLUDE_ASM("asm/stream/nonmatchings/stream", strKickCD);
 
-INCLUDE_ASM("asm/stream/nonmatchings/stream", func_801E3298);
+INCLUDE_ASM("asm/stream/nonmatchings/stream", strNextVlc);
 
-INCLUDE_ASM("asm/stream/nonmatchings/stream", func_801E331C);
+INCLUDE_ASM("asm/stream/nonmatchings/stream", strNext);
 
-INCLUDE_ASM("asm/stream/nonmatchings/stream", func_801E3438);
+INCLUDE_ASM("asm/stream/nonmatchings/stream", strSync);
