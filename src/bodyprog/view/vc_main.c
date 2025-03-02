@@ -7,27 +7,23 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vc_main", vcInitVCSystem);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vc_main", vcStartCameraSystem);
 
-// 0x80080A04
-void vcEndCameraSystem(void)
+void vcEndCameraSystem(void) // 0x80080A04
 {
     vcWork.view_cam_active_f_0 = 0;
 }
 
-// 0x80080A10
-s32 func_80080A10(void)
+s32 func_80080A10(void) // 0x80080A10
 {
     // TODO: bitfield access?
     return (vcWork.cur_near_road_2B8.road_p_0->cam_mv_type_14 >> 8) & 0xF;
 }
 
-// 0x80080A30
-void func_80080A30(s32 arg0)
+void func_80080A30(s32 arg0) // 0x80080A30
 {
     vcWork.field_2E4 = arg0;
 }
 
-// 0x80080A3C
-s32 func_80080A3C(void)
+s32 func_80080A3C(void) // 0x80080A3C
 {
     return vcWork.field_2E4;
 }
@@ -36,14 +32,12 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vc_main", vcSetFirstCamWork);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vc_main", func_80080B58);
 
-// 0x80080BF8
-void vcWorkSetFlags(VC_FLAGS enable, VC_FLAGS disable)
+void vcWorkSetFlags(VC_FLAGS enable, VC_FLAGS disable) // 0x80080BF8
 {
     vcWork.flags_8 = (vcWork.flags_8 | enable) & ~disable;
 }
 
-// 0x80080C18
-s32 func_80080C18(s32 arg0)
+s32 func_80080C18(s32 arg0) // 0x80080C18
 {
     s32 prev_val = vcWork.watch_tgt_max_y_88;
     vcWork.watch_tgt_max_y_88 = arg0;
@@ -54,39 +48,39 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vc_main", vcUserWatchTarget);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vc_main", vcUserCamTarget);
 
-// 0x80080D5C
-void vcChangeProjectionValue(s16 scr_y)
+void vcChangeProjectionValue(s16 scr_y) // 0x80080D5C
 {
     vcWork.geom_screen_dist_30 = scr_y;
 }
 
-// 0x80080D68
-void func_80080D68(void)
+void func_80080D68(void) // 0x80080D68
 {
     vcWork.field_D8 = 1;
 }
 
-// 0x80080D78
-void vcGetNowWatchPos(VECTOR3* watch_pos)
+void vcGetNowWatchPos(VECTOR3 *watch_pos) // 0x80080D78
 {
-    s32 temp_s1;
-    s32 temp_s4;
-    s32 temp_s5;
-    s32 temp_s6;
-    s32 temp_v0;
+    s32 sin_y;
+    s32 cos_y;
+    s32 cos_x;
+    s32 sin_x;
+    s32 r;
 
-    temp_s5 = shRcos(vcWork.cam_mat_ang_8E.vx);
-    temp_s6 = shRsin(vcWork.cam_mat_ang_8E.vx);
-    temp_s4 = shRcos(vcWork.cam_mat_ang_8E.vy);
-    temp_s1 = shRsin(vcWork.cam_mat_ang_8E.vy);
-    temp_v0 = Math_VectorMagnitude(vcWork.cam_pos_50.vx - vcWork.watch_tgt_pos_7C.vx, vcWork.cam_pos_50.vy - vcWork.watch_tgt_pos_7C.vy, vcWork.cam_pos_50.vz - vcWork.watch_tgt_pos_7C.vz);
-    watch_pos->vx = Math_MulFixed(Math_MulFixed(temp_v0, temp_s1, 0xC), temp_s5, 0xC) + vcWork.cam_pos_50.vx;
-    watch_pos->vz = Math_MulFixed(Math_MulFixed(temp_v0, temp_s4, 0xC), temp_s5, 0xC) + vcWork.cam_pos_50.vz;
-    watch_pos->vy = vcWork.cam_pos_50.vy - Math_MulFixed(temp_v0, temp_s6, 0xC);
+    cos_x = shRcos(vcWork.cam_mat_ang_8E.vx);
+    sin_x = shRsin(vcWork.cam_mat_ang_8E.vx);
+    cos_y = shRcos(vcWork.cam_mat_ang_8E.vy);
+    sin_y = shRsin(vcWork.cam_mat_ang_8E.vy);
+    r = Math_VectorMagnitude(vcWork.cam_pos_50.vx - vcWork.watch_tgt_pos_7C.vx,
+                             vcWork.cam_pos_50.vy - vcWork.watch_tgt_pos_7C.vy,
+                             vcWork.cam_pos_50.vz - vcWork.watch_tgt_pos_7C.vz);
+    watch_pos->vx = Math_MulFixed(Math_MulFixed(r, sin_y, 0xC), cos_x, 0xC) +
+                    vcWork.cam_pos_50.vx;
+    watch_pos->vz = Math_MulFixed(Math_MulFixed(r, cos_y, 0xC), cos_x, 0xC) +
+                    vcWork.cam_pos_50.vz;
+    watch_pos->vy = vcWork.cam_pos_50.vy - Math_MulFixed(r, sin_x, 0xC);
 }
 
-// 0x80080EA8
-void vcGetNowCamPos(VECTOR3* cam_pos)
+void vcGetNowCamPos(VECTOR3 *cam_pos) // 0x80080EA8
 {
     *cam_pos = vcWork.cam_pos_50;
 }
@@ -121,8 +115,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vc_main", vcSetNearestEnemyDataInVC_
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vc_main", vcSetNearRoadAryByCharaPos);
 
-// 0x8008227C
-s32 vcRetRoadUsePriority(VC_ROAD_TYPE rd_type)
+s32 vcRetRoadUsePriority(VC_ROAD_TYPE rd_type) // 0x8008227C
 {
     switch (rd_type)
     {
@@ -155,8 +148,8 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vc_main", vcMakeFarWatchTgtPos);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vc_main", vcSetWatchTgtXzPos);
 
-// 0x800835C0
-void vcSetWatchTgtYParam(VECTOR3* watch_pos, VC_WORK* w_p, s32 cam_mv_type, s32 watch_y)
+void vcSetWatchTgtYParam(VECTOR3 *watch_pos, VC_WORK *w_p, s32 cam_mv_type,
+                         s32 watch_y) // 0x800835C0
 {
     if (cam_mv_type == VC_MV_SELF_VIEW)
     {
@@ -202,16 +195,16 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vc_main", vcMakeNewBaseCamAng);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vc_main", vcRenewalBaseCamAngAndAdjustOfsCamAng);
 
-// 0x800852C8
-void vcMakeOfsCamTgtAng(SVECTOR* ofs_tgt_ang, MATRIX* base_matT, VC_WORK* w_p)
+void vcMakeOfsCamTgtAng(SVECTOR *ofs_tgt_ang, MATRIX *base_matT,
+                        VC_WORK *w_p) // 0x800852C8
 {
-    SVECTOR sp10;
+    SVECTOR vec;
 
-    sp10.vx = (w_p->watch_tgt_pos_7C.vx - w_p->cam_pos_50.vx) >> 4;
-    sp10.vy = (w_p->watch_tgt_pos_7C.vy - w_p->cam_pos_50.vy) >> 4;
-    sp10.vz = (w_p->watch_tgt_pos_7C.vz - w_p->cam_pos_50.vz) >> 4;
-    ApplyMatrixSV(base_matT, &sp10, &sp10);
-    vwVectorToAngle(ofs_tgt_ang, &sp10);
+    vec.vx = (w_p->watch_tgt_pos_7C.vx - w_p->cam_pos_50.vx) >> 4;
+    vec.vy = (w_p->watch_tgt_pos_7C.vy - w_p->cam_pos_50.vy) >> 4;
+    vec.vz = (w_p->watch_tgt_pos_7C.vz - w_p->cam_pos_50.vz) >> 4;
+    ApplyMatrixSV(base_matT, &vec, &vec);
+    vwVectorToAngle(ofs_tgt_ang, &vec);
     ofs_tgt_ang->vz = w_p->watch_tgt_ang_z_8C;
 }
 
@@ -221,18 +214,21 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vc_main", vcAdjCamOfsAngByCharaInScr
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vc_main", vcAdjCamOfsAngByOfsAngSpd);
 
-// 0x800857EC
-void vcMakeCamMatAndCamAngByBaseAngAndOfsAng(SVECTOR* cam_mat_ang, MATRIX* cam_mat, SVECTOR* base_cam_ang, SVECTOR* ofs_cam_ang, VECTOR3* cam_pos)
+void vcMakeCamMatAndCamAngByBaseAngAndOfsAng(SVECTOR *cam_mat_ang,
+                                             MATRIX  *cam_mat,
+                                             SVECTOR *base_cam_ang,
+                                             SVECTOR *ofs_cam_ang,
+                                             VECTOR3 *cam_pos) // 0x800857EC
 {
-    MATRIX sp10;
-    MATRIX sp30;
+    MATRIX base_mat;
+    MATRIX ofs_mat;
 
     cam_mat->t[0] = cam_pos->vx >> 4;
     cam_mat->t[1] = cam_pos->vy >> 4;
     cam_mat->t[2] = cam_pos->vz >> 4;
-    func_80096C94(base_cam_ang, &sp10);
-    func_80096C94(ofs_cam_ang, &sp30);
-    MulMatrix0(&sp10, &sp30, cam_mat);
+    func_80096C94(base_cam_ang, &base_mat);
+    func_80096C94(ofs_cam_ang, &ofs_mat);
+    MulMatrix0(&base_mat, &ofs_mat, cam_mat);
     vwMatrixToAngleYXZ(cam_mat_ang, cam_mat);
 }
 

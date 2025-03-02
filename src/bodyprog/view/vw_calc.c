@@ -11,8 +11,9 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vw_calc", vwDecreaseSideOfVector);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vw_calc", vwRetNewVelocityToTargetVal);
 
-// 0x80049464
-s32 vwRetNewAngSpdToTargetAng(s32 now_ang_spd, s16 now_ang, s16 tgt_ang, s32 accel_spd, s32 total_max_ang_spd, s32 dec_val_lim_spd)
+s32 vwRetNewAngSpdToTargetAng(s32 now_ang_spd, s16 now_ang, s16 tgt_ang,
+                              s32 accel_spd, s32 total_max_ang_spd,
+                              s32 dec_val_lim_spd) // 0x80049464
 {
     return vwRetNewVelocityToTargetVal(now_ang_spd, 0, ((tgt_ang - now_ang) << 0x14) >> 0x14, accel_spd, total_max_ang_spd, dec_val_lim_spd);
 }
@@ -27,8 +28,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vw_calc", func_800496AC);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vw_calc", vbSetWorldScreenMatrix);
 
-// 0x800498D8
-void vbSetRefView(VbRVIEW* rview)
+void vbSetRefView(VbRVIEW *rview) // 0x800498D8
 {
     GsCOORDINATE2 sp10;
     SVECTOR sp60;
@@ -62,8 +62,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vw_calc", func_80049F38);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vw_calc", func_8004A54C);
 
-// 0x8004A66C
-void vwAngleToVector(SVECTOR* vec, SVECTOR* ang, s32 r)
+void vwAngleToVector(SVECTOR *vec, SVECTOR *ang, s32 r) // 0x8004A66C
 {
     s32 entou_r = (r * shRcos(ang->vx)) >> 12;
     vec->vy = (-r * shRsin(ang->vx)) >> 12;
@@ -71,22 +70,21 @@ void vwAngleToVector(SVECTOR* vec, SVECTOR* ang, s32 r)
     vec->vz = (entou_r * shRcos(ang->vy)) >> 12;
 }
 
-// 0x8004A714
-s32 vwVectorToAngle(SVECTOR* ang, SVECTOR* vec)
+s32 vwVectorToAngle(SVECTOR *ang, SVECTOR *vec) // 0x8004A714
 {
     VECTOR sp10;
-    s32 result;
+    s32    ret_r;
 
     sp10.vx = vec->vx;
     sp10.vy = vec->vy;
     sp10.vz = vec->vz;
     Square0(&sp10, &sp10);
-    result = SquareRoot0(sp10.vx + sp10.vy + sp10.vz);
-    
+    ret_r = SquareRoot0(sp10.vx + sp10.vy + sp10.vz);
+
     ang->vx = ratan2(-vec->vy, SquareRoot0(sp10.vx + sp10.vz));
     ang->vy = ratan2(vec->vx, vec->vz);
     ang->vz = 0;
-    return result;
+    return ret_r;
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vw_calc", vwOresenHokan);
