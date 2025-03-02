@@ -107,18 +107,18 @@ vcGetXZSumDistFromLimArea = 0x80085c80; // type:func
 
 // vw globals from SH2
 vcNullRoadArray = 0x800A8F44; // _VC_ROAD_DATA[2]
-vcNullNearRoad = 0x800AFC94; // _VC_NEAR_ROAD_DATA
-deflt_watch_mv_prm = 0x800AFCB8; // _VC_WATCH_MV_PARAM
-self_view_watch_mv_prm = 0x800AFCC4; // _VC_WATCH_MV_PARAM
-cam_mv_prm_user = 0x800AFCD0; // _VC_CAM_MV_PARAM
+vcNullNearRoad = 0x800AFC94; // type:VC_NEAR_ROAD_DATA size:0x24
+deflt_watch_mv_prm = 0x800AFCB8; // type:VC_WATCH_MV_PARAM size:0xC
+self_view_watch_mv_prm = 0x800AFCC4; // type:VC_WATCH_MV_PARAM size:0xC
+cam_mv_prm_user = 0x800AFCD0; // type:VC_CAM_MV_PARAM size:0x10
 excl_r_ary = 0x800AFCE0; // int[9]
-vcWork = 0x800B9CD0; // _VC_WORK
-vcRefPosSt = 0x800BCDF8; // VECTOR3
-vcCameraInternalInfo = 0x800BE9F4; // _VC_CAMERA_INTINFO
-vwViewPointInfo = 0x800C37E0; // _VW_VIEW_WORK
-VbWvsMatrix = 0x800C3888; // MATRIX
-vcWatchMvPrmSt = 0x800C4630; // _VC_WATCH_MV_PARAM
-vcSelfViewTimer = 0x800C463C; // int
+vcWork = 0x800B9CD0; // type:VC_WORK size:0x2E8
+vcRefPosSt = 0x800BCDF8; // type:VECTOR3 size:0xC
+vcCameraInternalInfo = 0x800BE9F4; // type:VC_CAMERA_INTINFO size:8
+vwViewPointInfo = 0x800C37E0; // type:VW_VIEW_WORK size:0x84
+VbWvsMatrix = 0x800C3888; // type:MATRIX size:0x20
+vcWatchMvPrmSt = 0x800C4630; // type:VC_WATCH_MV_PARAM size:0xC
+vcSelfViewTimer = 0x800C463C; // type:s32
 
 g_SD_VolumeSE = 0x800C1684;
 g_SD_VolumeBGM = 0x800C1685;
@@ -705,7 +705,7 @@ PSDOFSX = 0x800C6E08;
 PSDOFSY = 0x800C6E0C;
 HWD0 = 0x800C6F28;
 VWD0 = 0x800C6F2C;
-GsIDMATRIX2 = 0x800C6FE0;
+GsIDMATRIX2 = 0x800C6FE0; // type:MATRIX size:0x20
 GsLIGHTWSMATRIX = 0x800C6F40;
 PSDBASEX = 0x800C6E10;
 PSDBASEY = 0x800C6E14;
@@ -788,7 +788,7 @@ gte_init = 0x80095CBC; // type:func
 // gs_123.o
 Gssub_make_matrix = 0x80095d0c; // type:func
 // gs_123.o globals
-GsIDMATRIX = 0x800C6FA0;
+GsIDMATRIX = 0x800C6FA0; // type:MATRIX size:0x20
 // symbols say these should be there, but other vars are inside the same space of them?
 // GsWSMATRIX = 0x800C6FA0 + 0x20; // unused
 // GsWSMATRIX_ORG = 0x800C6FA0 + 0x40; // unused
