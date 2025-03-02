@@ -304,6 +304,7 @@ void vcWorkSetFlags(VC_FLAGS enable, VC_FLAGS disable);
 void vcUserWatchTarget(VECTOR3 *watch_tgt_pos, VC_WATCH_MV_PARAM *watch_prm_p, int warp_watch_f);
 void vcUserCamTarget(VECTOR3 *cam_tgt_pos, VC_CAM_MV_PARAM *cam_prm_p, int warp_cam_f);
 void vcChangeProjectionValue(short scr_y);
+void func_80080D68();
 void vcGetNowWatchPos(VECTOR3 *watch_pos);
 void vcGetNowCamPos(VECTOR3 *cam_pos);
 void vcReturnPreAutoCamWork(int warp_f);
