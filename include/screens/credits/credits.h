@@ -79,6 +79,7 @@ extern s32           D_801E5E8C; // Index for some array used by most recent fun
 extern s32           D_801E600C;
 
 void func_801E2E28(s32 idx);
+
 s32 func_801E2ED8(void);
 
 void func_801E3DD0(void);
@@ -104,6 +105,7 @@ void func_801E42F8(s16 arg0, s16 arg1);
 void func_801E4310(s32 r, s32 g, s32 b);
 
 void func_801E4340(s8 arg0);
+
 void func_801E434C(u32 arg0, u32 arg1);
 
 /**
