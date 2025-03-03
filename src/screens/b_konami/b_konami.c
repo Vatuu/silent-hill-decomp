@@ -1,8 +1,14 @@
 #include "common.h"
+#include "gpu.h"
 #include "screens/b_konami/b_konami.h"
 
 #include <libetc.h>
 
+extern s32 D_800A8FFC; // Type assumed.
+extern u32 D_800A9004; // Type assumed.
+extern s32 D_800B5C7C; // Type assumed.
+extern s32 D_800B9FB8;
+extern u8* D_800C7018;
 extern s32 D_800CA4F4;
 extern s32 D_800CA4FC;
 extern s32 D_800CA500;
@@ -10,6 +16,8 @@ extern s32 D_800CA504;
 extern s32 D_800CA508;
 extern s32 D_800CA50C;
 extern s32 D_800CA510;
+
+void func_800C9E6C(u32* arg0, s32 otz, s16 vramX, s16 vramY, s16 w, s16 h, s16 x, s16 y);
 
 INCLUDE_ASM("asm/screens/b_konami/nonmatchings/b_konami", func_800C95AC);
 
@@ -19,9 +27,49 @@ INCLUDE_ASM("asm/screens/b_konami/nonmatchings/b_konami", func_800C99A4);
 
 INCLUDE_ASM("asm/screens/b_konami/nonmatchings/b_konami", func_800C9E6C);
 
-INCLUDE_ASM("asm/screens/b_konami/nonmatchings/b_konami", func_800C9FB8);
+// TODO: Wait on fgsfd's investigations for cleaner match of graphics setup.
+void func_800C9FB8(void)
+{
+    s32* temp_a1;
 
-INCLUDE_ASM("asm/screens/b_konami/nonmatchings/b_konami", func_800CA120);
+    func_800C9E6C(&D_800A8FFC, 0xF, 0, 0, 256, 256, -192, -192);
+    func_800C9E6C(&D_800A8FFC, 0xF, 256, 0, 128, 256, 64, -192);
+    func_800C9E6C(&D_800A8FFC, 0xF, 0, 256, 256, 128, -192, 64);
+    func_800C9E6C(&D_800A8FFC, 0xF, 256, 256, 128, 128, 64, 64);
+
+    temp_a1 = (D_800B9FB8 << 4) + &D_800B5C7C;
+
+    // addPrim(temp_a1, D_800C7018);
+    ((TILE*)D_800C7018)->tag = (u32)((*temp_a1 & 0xFFFFFF) | 0x03000000);
+    setaddr(temp_a1, D_800C7018);
+    
+    setCodeWord((TILE*)D_800C7018, PRIM_RECT, 0xFFFFFF);
+    setXY0Fast((TILE*)D_800C7018, -320, -240);
+    setWH((TILE*)D_800C7018, 640, 480);
+
+    D_800C7018 += sizeof(TILE);
+}
+
+// TODO: Wait on fgsfd's investigations for cleaner match of graphics setup.
+void func_800CA120(void)
+{
+    u32* temp_a1;
+
+    func_800C9E6C(&D_800A9004, 0xF, 0, 0, 256, 160, -208, -80);
+    func_800C9E6C(&D_800A9004, 0xF, 256, 0, 160, 160, 48, -80);
+    
+    temp_a1 = (D_800B9FB8 << 4) + &D_800B5C7C;
+
+    // addPrim(temp_a1, D_800C7018);
+    ((TILE*)D_800C7018)->tag = (u32)((*temp_a1 & 0xFFFFFF) | 0x03000000);
+    setaddr(temp_a1, D_800C7018);
+    
+    setCodeWord((TILE*)D_800C7018, PRIM_RECT, 0xFFFFFF);
+    setXY0Fast((TILE*)D_800C7018, -320, -240);
+    setWH((TILE*)D_800C7018, 640, 480);
+
+    D_800C7018 += sizeof(TILE);
+}
 
 void func_800CA234(void)
 {
