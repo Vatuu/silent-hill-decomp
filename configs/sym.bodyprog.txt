@@ -1,0 +1,1284 @@
+g_MainLoop_NumFrames = 0x800B9CCC;
+g_CurOTNum = 0x800B9FB8;
+g_SysWork = 0x800B9FC0; // type:SYS_W size:0x2768 - SYS_W struct?
+g_GameWork = 0x800BC728; // type:SH_SYS size:0x5D8 - SH_SYS? SH2_SYS in sh2
+g_pGameWork = 0x80024D44; // type:u32 SH_SYS* ?
+
+g_JoyPadBuff_tmp_P1 = 0x800BCCDC;
+g_JoyPadBuff_tmp_P2 = 0x800BC78C;
+g_JoyPadBuff_P1 = 0x800BC760; // type:s64
+
+g_CurDeltaTime = 0x800B5CC0; // type:s32 - Q20.12 fixed point, usually 0x44 (0.0166..) or 0x88 (0.033..)
+
+// sh "view" / "vw" / "vc" / "vb" code
+// most names from SH2, functions seem to match pretty close between it and SH1, besides a few missing/added funcs
+vcInitCamera = 0x8004004c; // type:func
+vcSetCameraUseWarp = 0x800400d4; // type:func
+vcRetCamMvSmoothF = 0x80040190; // type:func
+vcSetEvCamRate = 0x800401c0; // type:func guessed name
+vcMoveAndSetCamera = 0x800401ec; // type:func
+vcMakeHeroHeadPos = 0x8004047c; // type:func
+vcAddOfsToPos = 0x80040518; // type:func
+vcSetRefPosAndSysRef2CamParam = 0x800405c4; // type:func
+vcSetRefPosAndCamPosAngByPad = 0x800406d4; // type:func
+
+vwInitViewInfo = 0x80048a38; // type:func
+vwGetViewCoord = 0x80048a90; // type:func guessed name
+vwGetViewPosition = 0x80048a9c; // type:func
+vwGetViewAngle = 0x80048ac4; // type:func
+vwSetCoordRefAndEntou = 0x80048be0; // type:func
+vwSetViewInfoDirectMatrix = 0x80048cf0; // type:func
+vwSetViewInfo = 0x80048d48; // type:func
+vwRenewalXZVelocityToTargetPos = 0x80048f28; // type:func
+vwLimitOverLimVector = 0x8004914c; // type:func
+vwDecreaseSideOfVector = 0x80049228; // type:func
+vwRetNewVelocityToTargetVal = 0x80049388; // type:func
+vwRetNewAngSpdToTargetAng = 0x80049464; // type:func
+vwMatrixToAngleYXZ = 0x800495d4; // type:func
+vbSetWorldScreenMatrix = 0x800497e4; // type:func
+vbSetRefView = 0x800498d8; // type:func
+vwAngleToVector = 0x8004A66C; // type:func
+vwVectorToAngle = 0x8004A714; // type:func
+vwOresenHokan = 0x8004A7C8; // type:func
+
+Math_MulFixed = 0x800808d4; // type:func guessed name
+
+vcInitVCSystem = 0x80080940; // type:func
+vcStartCameraSystem = 0x800809dc; // type:func
+vcEndCameraSystem = 0x80080a04; // type:func guessed name
+vcSetFirstCamWork = 0x80080a4c; // type:func
+vcWorkSetFlags = 0x80080bf8; // type:func guessed name
+vcUserWatchTarget = 0x80080c2c; // type:func
+vcUserCamTarget = 0x80080cbc; // type:func
+vcChangeProjectionValue = 0x80080d5c; // type:func guessed name (exists in SH2 but code is different)
+vcGetNowWatchPos = 0x80080d78; // type:func
+vcGetNowCamPos = 0x80080ea8; // type:func
+vcReturnPreAutoCamWork = 0x80080ed0; // type:func
+vcSetSubjChara = 0x80080f14; // type:func
+vcExecCamera = 0x80080fbc; // type:func
+vcSetAllNpcDeadTimer = 0x8008123c; // type:func
+vcRetSmoothCamMvF = 0x800812cc; // type:func
+vcRetCurCamMvType = 0x80081428; // type:func
+vcRetThroughDoorCamEndF = 0x800815f0; // type:func
+vcRetFarWatchRate = 0x800816b0; // type:func
+vcRetSelfViewEffectRate = 0x800818d4; // type:func
+vcSetFlagsByCamMvType = 0x80081a0c; // type:func
+vcPreSetDataInVC_WORK = 0x80081b6c; // type:func
+vcSetTHROUGH_DOOR_CAM_PARAM_in_VC_WORK = 0x80081cbc; // type:func
+vcSetNearestEnemyDataInVC_WORK = 0x80081d90; // type:func
+vcSetNearRoadAryByCharaPos = 0x80081fbc; // type:func
+vcRetRoadUsePriority = 0x8008227c; // type:func
+vcSetCurNearRoadInVC_WORK = 0x800822b8; // type:func
+vcGetBestNewCurNearRoad = 0x800826ac; // type:func
+vcGetNearestNEAR_ROAD_DATA = 0x80082908; // type:func
+vcAdvantageDistOfOldCurRoad = 0x80082ad0; // type:func
+vcAutoRenewalWatchTgtPosAndAngZ = 0x80082b10; // type:func
+vcMakeNormalWatchTgtPos = 0x80082c58; // type:func
+vcMixSelfViewEffectToWatchTgtPos = 0x80082df4; // type:func
+vcMakeFarWatchTgtPos = 0x800832b4; // type:func
+vcSetWatchTgtXzPos = 0x800834a8; // type:func
+vcSetWatchTgtYParam = 0x800835c0; // type:func
+vcAdjustWatchYLimitHighWhenFarView = 0x800835e0; // type:func
+vcAutoRenewalCamTgtPos = 0x800836e8; // type:func
+vcRetMaxTgtMvXzLen = 0x8008395c; // type:func
+vcMakeIdealCamPosByHeadPos = 0x800839cc; // type:func
+vcMakeIdealCamPosForFixAngCam = 0x80083ad8; // type:func
+vcMakeIdealCamPosForThroughDoorCam = 0x80083d28; // type:func
+vcMakeIdealCamPosUseVC_ROAD_DATA = 0x80083f30; // type:func
+vcAdjustXzInLimAreaUsingMIN_IN_ROAD_DIST = 0x80084210; // type:func
+vcMakeBasicCamTgtMvVec = 0x800842c0; // type:func
+vcAdjTgtMvVecYByCurNearRoad = 0x800843f4; // type:func
+vcCamTgtMvVecIsFlipedFromCharaFront = 0x800845d0; // type:func
+vcFlipFromCamExclusionArea = 0x800848ac; // type:func
+vcGetUseWatchAndCamMvParam = 0x80084a34; // type:func
+vcRenewalCamData = 0x80084bd8; // type:func
+vcRenewalCamMatAng = 0x80084d54; // type:func
+vcMakeNewBaseCamAng = 0x80084ed8; // type:func
+vcRenewalBaseCamAngAndAdjustOfsCamAng = 0x800851b0; // type:func
+vcMakeOfsCamTgtAng = 0x800852c8; // type:func
+vcMakeOfsCam2CharaBottomAndTopAngByBaseMatT = 0x80085358; // type:func
+vcAdjCamOfsAngByCharaInScreen = 0x80085460; // type:func
+vcAdjCamOfsAngByOfsAngSpd = 0x8008555c; // type:func
+vcMakeCamMatAndCamAngByBaseAngAndOfsAng = 0x800857ec; // type:func
+vcSetDataToVwSystem = 0x80085884; // type:func
+vcCamMatNoise = 0x80085a7c; // type:func
+Math_VectorMagnitude = 0x80085b1c; // type:func guessed name, could be something like vcGetXZSumDist
+vcGetXZSumDistFromLimArea = 0x80085c80; // type:func
+
+// vw globals from SH2
+vcNullRoadArray = 0x800A8F44; // _VC_ROAD_DATA[2]
+vcNullNearRoad = 0x800AFC94; // type:VC_NEAR_ROAD_DATA size:0x24
+deflt_watch_mv_prm = 0x800AFCB8; // type:VC_WATCH_MV_PARAM size:0xC
+self_view_watch_mv_prm = 0x800AFCC4; // type:VC_WATCH_MV_PARAM size:0xC
+cam_mv_prm_user = 0x800AFCD0; // type:VC_CAM_MV_PARAM size:0x10
+excl_r_ary = 0x800AFCE0; // int[9]
+vcWork = 0x800B9CD0; // type:VC_WORK size:0x2E8
+vcRefPosSt = 0x800BCDF8; // type:VECTOR3 size:0xC
+vcCameraInternalInfo = 0x800BE9F4; // type:VC_CAMERA_INTINFO size:8
+vwViewPointInfo = 0x800C37E0; // type:VW_VIEW_WORK size:0x84
+VbWvsMatrix = 0x800C3888; // type:MATRIX size:0x20
+vcWatchMvPrmSt = 0x800C4630; // type:VC_WATCH_MV_PARAM size:0xC
+vcSelfViewTimer = 0x800C463C; // type:s32
+
+g_SD_VolumeSE = 0x800C1684;
+g_SD_VolumeBGM = 0x800C1685;
+g_SD_VolumeXA = 0x800C1686;
+g_SD_ReverbDepth = 0x800C1687;
+g_Game_VSyncTimeSinceBoot = 0x800C1690;
+
+g_Demo_FileIndex = 0x800C4844;
+g_Demo_RandSeedPrevious = 0x800C4888;
+g_Demo_RandSeedBackup = 0x800C488C;
+g_Demo_CurControllerPacket = 0x800C4890;
+g_Demo_CurrDemoStep = 0x800C4894;
+g_Demo_VideoPresentInterval = 0x800C4898;
+
+GFX_Init = 0x80032428; // type:func
+Settings_ScreenXYSet = 0x800324f4; // type:func
+Settings_DispEnvXYSet = 0x80032524; // type:func
+GFX_VSyncCallback = 0x80032b80; // type:func
+GameFS_TitleGfxLoad = 0x80032bf0; // type:func
+GameFS_StreamBinLoad = 0x80032c40; // type:func
+GameFS_OptionBinLoad = 0x80032c68; // type:func
+GameFS_SaveLoadBinLoad = 0x80032ca8; // type:func
+MainLoop = 0x80032ee0; // type:func
+Settings_ScreenAndVolUpdate = 0x800333CC; // type:func
+Settings_RestoreDefaults = 0x8003342c; // type:func
+Settings_RestoreControlDefaults = 0x80033480; // type:func
+nullsub_800334C8 = 0x800334C8; // type:func
+SysWork_Clear = 0x800340E0; // type:func
+MainLoop_ShouldWarmReset = 0x80034108; // type:func
+Game_WarmBoot = 0x80034264; // type:func
+JOY_Init = 0x8003441c; // type:func
+JOY_Update = 0x8003446C; // type:func
+JOY_ReadP1 = 0x80034450; // type:func
+JOY_ControllerDataUpdate = 0x80034494; // type:func
+ControllerData_AnalogToDigital = 0x80034670; // type:func
+GameFS_MapLoad = 0x8003521c; // type:func
+Chara_PositionUpdateFromParams = 0x800371e8; // type:func
+AreaLoad_UpdatePlayerPosition = 0x80039f30; // type:func
+GameFS_BgEtcGfxLoad_8003BE6C = 0x8003be6c; // type:func
+GameFS_BgItemLoad_8003BE9C = 0x8003be9c; // type:func
+GameFS_FlameGfxLoad_8003E710 = 0x8003e710; // type:func
+
+SD_EngineCmd = 0x80045A7C; // type:func
+SD_DriverInit = 0x80045DD4; // type:func
+SD_SetVolume = 0x80047798; // type:func
+SD_SetVolBGM = 0x80047808; // type:func
+SD_SetVolXA = 0x80047860; // type:func
+SD_GetVolSE = 0x800478B8; // type:func
+SD_SetReverbDepth = 0x80047AD0; // type:func
+SD_SetReverbEnable = 0x80047AFC; // type:func
+SD_StopSEQ = 0x8004839C; // type:func
+
+GFX_StringDraw = 0x8004a8e8; // type:func
+GameFS_Tim00TIMLoad = 0x80053da0; // type:func
+
+Chara_Load = 0x80088C7C; // type:func
+Chara_Spawn = 0x80088D78; // type:func
+
+Demo_DataRead = 0x8008f07c; // type:func
+Demo_GameGlobalsUpdate = 0x8008f1a0; // type:func
+Demo_GameGlobalsRestore = 0x8008f2bc; // type:func
+Demo_GameRandSeedUpdate = 0x8008f33c; // type:func
+Demo_GameRandSeedRestore = 0x8008f370; // type:func
+Demo_Start = 0x8008f398; // type:func
+Demo_Stop = 0x8008f3f0; // type:func
+Demo_ExitDemo = 0x8008f4e4; // type:func
+Demo_DemoRandSeedBackup = 0x8008f528; // type:func
+Demo_DemoRandSeedRestore = 0x8008f560; // type:func
+Demo_DemoRandSeedAdvance = 0x8008f598; // type:func
+Demo_Update = 0x8008f5d8; // type:func
+Demo_JoyUpdate = 0x8008f7cc; // type:func
+Demo_PresentIntervalUpdate = 0x8008f87c; // type:func
+Demo_GameRandSeedSet = 0x8008f8a8; // type:func
+
+// custom konami rotmatrix library?
+// TODO: identify the other RotMatrix funcs here
+shRsin = 0x8009687C; // type:func
+shRcos = 0x8009689C; // type:func
+shRotMatrixZ = 0x800968BC; // type:func
+
+// konami libsd sound library (customised libsnd?)
+tone_adsr_mem = 0x8009eda4; // type:func
+tone_adsr_back = 0x8009ee30; // type:func
+sd_alloc_sort = 0x8009eebc; // type:func
+SdSpuMalloc = 0x8009efa0; // type:func
+SdSpuMallocWithStartAddr = 0x8009f120; // type:func
+SdSpuFree = 0x8009f364; // type:func
+SdWorkInit = 0x8009f400; // type:func
+SdInit = 0x8009f490; // type:func
+SdStart = 0x8009f4d0; // type:func
+SdStart2 = 0x8009f510; // type:func
+SdSetTickMode = 0x8009f530; // type:func
+SdSeqCalledTbyT = 0x8009f53c; // type:func
+SdSetStereo = 0x8009f568; // type:func
+SdSetMono = 0x8009f574; // type:func
+SdSetReservedVoice = 0x8009f584; // type:func
+SdSetTableSize = 0x8009f5b8; // type:func
+SdEnd = 0x8009f5c0; // type:func
+SdQuit = 0x8009f64c; // type:func
+SdSetSerialAttr = 0x8009f67c; // type:func
+SdSetSerialVol = 0x8009f700; // type:func
+SdSetMVol = 0x8009f75c; // type:func
+SdVabOpenHead = 0x8009f79c; // type:func
+SdVabOpenHeadSticky = 0x8009f91c; // type:func
+SdVabFakeHead = 0x8009fac0; // type:func
+SdVbOpenOne = 0x8009fba8; // type:func
+SdVabTransBody = 0x8009fd38; // type:func
+SdVabTransBodyPartly = 0x8009fddc; // type:func
+SdVabTransCompleted = 0x8009fec4; // type:func
+SdVabClose = 0x8009ff00; // type:func
+SdSetAutoKeyOffMode = 0x8009ff64; // type:func
+SdAutoKeyOffCheck = 0x8009ff70; // type:func
+SdSeqOpen = 0x800a00a4; // type:func
+SdSeqOpenWithAccNum = 0x800a0154; // type:func
+SdSeqPlay = 0x800a0210; // type:func
+SdSeqStop = 0x800a02d8; // type:func
+SdSeqClose = 0x800a037c; // type:func
+SdSeqPause = 0x800a0418; // type:func
+SdSeqReplay = 0x800a0534; // type:func
+SdSeqSetVol = 0x800a06f0; // type:func
+SdSeqGetVol = 0x800a074c; // type:func
+SdUtFlush = 0x800a0794; // type:func
+SdUtReverbOn = 0x800a07b4; // type:func
+SdUtReverbOff = 0x800a07dc; // type:func
+SdUtSetReverbType = 0x800a080c; // type:func
+SdUtSetReverbDepth = 0x800a085c; // type:func
+SdSetRVol = 0x800a089c; // type:func
+SdUtSEAllKeyOff = 0x800a08dc; // type:func
+SdUtAllKeyOff = 0x800a09e8; // type:func
+SdUtGetVabHdr = 0x800a0a40; // type:func
+SdVoKeyOn = 0x800a0aa0; // type:func
+SdVoKeyOff = 0x800a0cfc; // type:func
+SdVoKeyOffWithRROff = 0x800a0e40; // type:func
+SdUtKeyOnV = 0x800a0f80; // type:func
+SdUtKeyOn = 0x800a1534; // type:func
+SdVbKeyOn = 0x800a16c0; // type:func
+SdUtKeyOffV = 0x800a18f4; // type:func
+SdUtKeyOffVWithRROff = 0x800a1a18; // type:func
+SdGetSeqStatus = 0x800a1b14; // type:func
+SdUtSetDetVVol = 0x800a1bd0; // type:func
+SdUtSetVVol = 0x800a1c1c; // type:func
+SdUtGetDetVVol = 0x800a1c78; // type:func
+SdUtGetVVol = 0x800a1ce8; // type:func
+SdGetTempo = 0x800a1d68; // type:func
+SdSetTempo = 0x800a1da4; // type:func
+SdSetSeqWide = 0x800a1e18; // type:func
+SdGetMidiVol = 0x800a1e50; // type:func
+SdSetMidiVol = 0x800a1e90; // type:func
+SdSetMidiExpress = 0x800a1ec4; // type:func
+SdGetMidiExpress = 0x800a1ef8; // type:func
+SdGetMidiPan = 0x800a1f38; // type:func
+SdSetMidiPan = 0x800a1f78; // type:func
+SdGetMidiPitchBendFine = 0x800a1fac; // type:func
+SdSetMidiPitchBendFine = 0x800a1fec; // type:func
+SdGetTrackTranspause = 0x800a2030; // type:func
+SdSetTrackTranspause = 0x800a2038; // type:func
+SdGetTrackMute = 0x800a2040; // type:func
+SdSetTrackMute = 0x800a2090; // type:func
+SdGetSeqControlStatus = 0x800a20ec; // type:func
+SdGetSeqPlayStatus = 0x800a2134; // type:func
+SdGetSeqBeat = 0x800a21e0; // type:func
+SdGetSeqBeat2 = 0x800a224c; // type:func
+
+// custom konami versions of these libsnd funcs, just redirects to SD versions, maybe to aid with ports
+SsSetMVol = 0x800a2294; // type:func
+SsEnd = 0x800a22c0; // type:func
+SsSetSerialAttr = 0x800a22e0; // type:func
+SsSetSerialVol = 0x800a2308; // type:func
+SsUtAllKeyOff = 0x800a2338; // type:func
+
+Note2Pitch = 0x800a39d8; // type:func
+tre_calc = 0x800a3b20; // type:func
+vib_calc = 0x800a3d30; // type:func
+random_calc = 0x800a3e70; // type:func
+volume_calc = 0x800a3f14; // type:func
+smf_vol_set = 0x800a4150; // type:func
+master_vol_set = 0x800a4260; // type:func
+seq_master_vol_set = 0x800a4314; // type:func
+toremoro_set = 0x800a439c; // type:func
+pitch_bend_calc = 0x800a441c; // type:func
+pitch_calc = 0x800a4494; // type:func
+midi_mod = 0x800a4608; // type:func
+midi_porta = 0x800a46b8; // type:func
+replay_reverb_set = 0x800a4748; // type:func
+midi_vsync = 0x800a4838; // type:func
+sound_seq_off = 0x800a4a34; // type:func
+sound_off = 0x800a4d20; // type:func
+set_note_on_mb = 0x800a4e90; // type:func - uncertain, could be set_midi_info, both are nullsubs
+adsr_set = 0x800a4e98; // type:func
+rr_off = 0x800a4f08; // type:func
+voice_check = 0x800a4f64; // type:func
+key_on = 0x800a5158; // type:func
+key_off = 0x800a5c7c; // type:func
+key_press = 0x800a5dcc; // type:func
+get_vab_tone = 0x800a5dd4; // type:func
+smf_data_entry = 0x800a5e84; // type:func
+control_change = 0x800a6268; // type:func
+program_change = 0x800a6c2c; // type:func
+chan_press = 0x800a6c58; // type:func
+pitch_bend = 0x800a6c60; // type:func
+control_code_set = 0x800a6cb0; // type:func
+
+smf_timer = 0x800a6d18; // type:func
+smf_timer_set = 0x800a6dc0; // type:func
+smf_timer_end = 0x800a6e58; // type:func
+smf_timer_stop = 0x800a6ec8; // type:func
+smf_vsync = 0x800a6f14; // type:func
+MemCmp = 0x800a6fb8; // type:func
+readMThd = 0x800a6ffc; // type:func
+readMTrk = 0x800a70bc; // type:func
+readEOF = 0x800a717c; // type:func
+egetc = 0x800a723c; // type:func
+readvarinum = 0x800a72b4; // type:func
+to32bit = 0x800a733c; // type:func
+to16bit = 0x800a7368; // type:func
+read32bit = 0x800a737c; // type:func
+read16bit = 0x800a73e8; // type:func
+readheader = 0x800a7428; // type:func
+len_add = 0x800a7814; // type:func
+metaevent = 0x800a7828; // type:func
+sysex = 0x800a7aec; // type:func
+chanmessage = 0x800a7b54; // type:func
+readtrack = 0x800a80c4; // type:func
+readtrack2 = 0x800a81f4; // type:func
+track_head_read = 0x800a8448; // type:func
+delta_time_conv = 0x800a84b0; // type:func
+midi_file_out = 0x800a8674; // type:func
+midi_smf_main = 0x800a8950; // type:func
+midi_smf_stop = 0x800a8c74; // type:func
+midi_smf_stat = 0x800a8d00; // type:func
+
+// konami libsd globals
+sd_interrupt_start_flag = 0x800B143C;
+sd_keyoff_mode = 0x800B1440;
+sd_mono_st_flag = 0x800B1444;
+sd_reverb_mode = 0x800B1448;
+sd_reverb_area_size = 0x800B1450;
+PitchTbl = 0x800B1728;
+random_tbl = 0x800B2328;
+sd_reserved_voice = 0x800B2528;
+spu_reverb_sw = 0x800B252C;
+spu_ch_tbl = 0x800B2530;
+sd_int_flag = 0x800B2590;
+sd_int_flag2 = 0x800B2594;
+smf_start_flag = 0x800B2598;
+sd_timer_sync = 0x800B259C;
+timer_count = 0x800B25A0;
+time_flag = 0x800B25B8;
+smf_file_no = 0x800B25BC;
+print_start = 0x800B25C0;
+
+vab_h = 0x800C7418;
+sd_vb_malloc_rec = 0x800C75D8;
+sd_seq_loop_mode = 0x800C7660;
+sd_tick_mode = 0x800C7664;
+sd_spu_alloc = 0x800C7668;
+s_attr = 0x800C76F0;
+smf_midi = 0x800C7738;
+smf_port = 0x800C8318;
+sd_timer_event = 0x800C8AF8;
+smf_song = 0x800C8B00;
+
+// sdk library funcs
+
+// a09.o
+CloseEvent = 0x80091afc; // type:func
+// a11.o
+TestEvent = 0x80091b0c; // type:func
+// a39.o
+SetSp = 0x80091b1c; // type:func
+// a51.o
+lseek = 0x80091b2c; // type:func
+// a53.o
+write = 0x80091b3c; // type:func
+// a65.o
+format = 0x80091b4c; // type:func
+// a67.o
+nextfile = 0x80091b5c; // type:func
+// a68.o
+rename = 0x80091b6c; // type:func
+// a69.o
+erase = 0x80091b7c; // type:func
+// a81.o
+Krom2RawAdd = 0x80091b8c; // type:func
+
+// first.o
+firstfile = 0x80091B9C; // type:func
+_firstfile = 0x80091D38; // type:func
+// first.o globals
+sfunc = 0x800C48F8;
+dev = 0x800C4900;
+
+// a66.o
+firstfile2 = 0x80091e3c; // type:func
+// a56.o
+exit = 0x80091e4c; // type:func
+// c24.o
+strncmp = 0x80091e5c; // type:func
+// c25.o
+strcpy = 0x80091e6c; // type:func
+// c26.o
+strncpy = 0x80091e7c; // type:func
+// c27.o
+strlen = 0x80091e8c; // type:func
+// c37.o
+toupper = 0x80091e9c; // type:func
+// libc/memcmp.o
+memcmp = 0x80091eac; // type:func
+// c171.o
+_card_info = 0x80091efc; // type:func
+// c172.o
+_card_load = 0x80091f0c; // type:func
+// a78.o
+_card_write = 0x80091f1c; // type:func
+// a80.o
+_new_card = 0x80091f2c; // type:func
+// card.o
+_card_clear = 0x80091f3c; // type:func
+
+// libcard/init.o
+InitCARD = 0x80091f7c; // type:func
+StartCARD = 0x80091fe8; // type:func
+StopCARD = 0x80092020; // type:func
+// libcard/init.o globals
+__ps_libinfo__libcard__ = 0x800AFE7C;
+
+// pad.o
+SetInitPadFlag = 0x8009204C; // type:func
+ReadInitPadFlag = 0x80092058; // type:func
+PAD_init = 0x80092068; // type:func
+InitPAD = 0x800920F8; // type:func
+StartPAD = 0x80092188; // type:func
+StopPAD = 0x800921B8; // type:func
+SetPatchPad = 0x800921F0; // type:func
+RemovePatchPad = 0x80092268; // type:func
+_Pad1 = 0x800922A0; // type:func
+_IsVSync = 0x80092308; // type:func
+// pad.o globals
+init_pad_flag = 0x800AFE8C;
+sio = 0x800AFE90;
+intc = 0x800AFE94;
+patch0 = 0x800C4928;
+
+// a18.o
+InitPAD2 = 0x8009234C; // type:func
+// a19.o
+StartPAD2 = 0x8009235C; // type:func
+// a20.o
+StopPAD2 = 0x8009236C; // type:func
+// a21.o
+PAD_init2 = 0x8009237C; // type:func
+// l02.o
+SysEnqIntRP = 0x8009238C; // type:func
+// l03.o
+SysDeqIntRP = 0x8009239C; // type:func
+
+// patch.o
+EnablePAD = 0x800923AC; // type:func
+DisablePAD = 0x800923C0; // type:func
+_patch_pad = 0x800923D4; // type:func
+// patch.o globals
+store = 0x800C4938; // maybe should be ret_adr instead?
+ret_adr = 0x800C493C; // symbols point to this as "ret_adr", but store is used to hold the return addr?
+_start_pad = 0x800C4940;
+_stop_pad = 0x800C4944;
+
+// c68.o
+FlushCache = 0x8009244C; // type:func
+
+// chclrpad.o
+_remove_ChgclrPAD = 0x8009245C; // type:func
+// chclrpad.o globals
+store_0 = 0x800C4948;
+
+// a74.o
+InitCARD2 = 0x800924CC; // type:func
+// a75.o
+StartCARD2 = 0x800924DC; // type:func
+// a76.o
+StopCARD2 = 0x800924EC; // type:func
+
+// LIBCARD/patch.o
+_patch_wait_start = 0x800924FC; // type:func
+_check_dsr = 0x80092528; // type:func
+_dsr_start = 0x8009256C; // type:func // alt name is _check_dsr_end ?
+_dsr_end = 0x80092580; // type:func // alt name is _wait_start ?
+_patch_card = 0x80092594; // type:func
+_patch_card2 = 0x80092628; // type:func
+_copy_memcard_patch = 0x80092698; // type:func
+// LIBCARD/patch.o globals
+store_1 = 0x800C4958;
+
+// LIBCARD/end.o
+_ExitCard = 0x800926CC; // type:func
+_clr_vector = 0x8009273C; // type:func
+_c_vend = 0x80092748; // type:label
+// LIBCARD/end.o globals
+store_2 = 0x800C4968;
+
+// cdrom.o
+ // todo: check in other SDKs for the global this uses
+StSetRing = 0x8009274C; // type:func
+// cdrom.o globals
+HADR0 = 0x800AFE9C; // all unused?
+HADR1 = 0x800AFEA0;
+HADR2 = 0x800AFEA4;
+HADR3 = 0x800AFEA8;
+
+// iso9660.o
+CdSearchFile = 0x8009277C; // type:func
+_cmp = 0x80092A54; // type:func
+CD_newmedia = 0x80092A74; // type:func
+CD_searchdir = 0x80092D38; // type:func
+CD_cachefile = 0x80092DDC; // type:func
+cd_read = 0x80093078; // type:func
+// iso9660.o globals
+current = 0x800AFEAC;
+pre_nopen.2 = 0x800AFEB0;
+file = 0x800C49C0;
+dire = 0x800C4FC0;
+load_buf = 0x800C65C0;
+
+// cdread2.o
+CdRead2 = 0x800930EC; // type:func
+StCdInterrupt2 = 0x80093170; // type:func
+
+// c_002.o
+// todo: same as cdrom.o, need to check older SDKs
+StClearRing = 0x8009319C; // type:func
+// c_002.o globals
+HADR0_0 = 0x800AFEBC; // all unused?
+HADR1_0 = 0x800AFEC0;
+HADR2_0 = 0x800AFEC4;
+HADR3_0 = 0x800AFEC8;
+
+// c_003.o
+// todo: same as c_002, check older SDKs
+StUnSetRing = 0x800931FC; // type:func
+// c_003.o globals
+HADR0_1 = 0x800AFECC;
+HADR1_1 = 0x800AFED0;
+HADR2_1 = 0x800AFED4;
+HADR3_1 = 0x800AFED8;
+
+// c_004.o
+// todo: same as c_002, check older SDKs
+data_ready_callback = 0x8009327C; // type:func
+StGetBackloc = 0x80093308; // type:func
+// c_004.o globals
+previous_frame_location = 0x800C6DC0;
+next_frameid = 0x800C6DC4;
+HADR0_2 = 0x800AFEDC;
+HADR1_2 = 0x800AFEE0;
+HADR2_2 = 0x800AFEE4;
+HADR3_2 = 0x800AFEE8;
+
+// c_005.o
+// todo: same as c_002
+StSetStream = 0x8009336C; // type:func
+// c_005.o globals
+HADR0_3 = 0x800AFEEC;
+HADR1_3 = 0x800AFEF0;
+HADR2_3 = 0x800AFEF4;
+HADR3_3 = 0x800AFEF8;
+
+// c_007.o
+// todo: same as c_002
+StFreeRing = 0x800933FC; // type:func
+// c_007.o globals
+HADR0_4 = 0x800AFEFC;
+HADR1_4 = 0x800AFF00;
+HADR2_4 = 0x800AFF04;
+HADR3_4 = 0x800AFF08;
+
+// c_008.o
+// todo: same as c_002
+init_ring_status = 0x800934AC; // type:func
+// c_008.o globals
+HADR0_5 = 0x800AFE0C;
+HADR1_5 = 0x800AFF10;
+HADR2_5 = 0x800AFF14;
+HADR3_5 = 0x800AFF18;
+
+// c_009.o
+// todo: same as c_002
+StGetNext = 0x800934EC; // type:func
+// c_009.o globals
+HADR0_6 = 0x800AFE1C;
+HADR1_6 = 0x800AFF20;
+HADR2_6 = 0x800AFF24;
+HADR3_6 = 0x800AFF28;
+
+// c_010.o
+// todo: same as c_002
+StSetMask = 0x800935AC; // type:func
+// c_010.o globals
+HADR0_7 = 0x800AFE2C;
+HADR1_7 = 0x800AFF30;
+HADR2_7 = 0x800AFF34;
+HADR3_7 = 0x800AFF38;
+
+// c_011.o
+// todo: same as c_002
+StCdInterrupt = 0x800935CC; // type:func
+mem2mem = 0x80093EE8; // type:func
+dma_execute = 0x80093F14; // type:func
+// c_011.o globals
+HADR0_8 = 0x800AFF3C;
+HADR1_8 = 0x800AFF40;
+HADR2_8 = 0x800AFF44;
+HADR3_8 = 0x800AFF48;
+DEV5_DELAY = 0x800AFF4C;
+COMMON_DELAY = 0x800AFF50;
+Dma_PCR = 0x800AFF54;
+Dma_ICR = 0x800AFF58;
+Dma_CHCR1 = 0x800AFF5C;
+Dma_MADR1 = 0x800AFF60;
+Dma_CHCR2 = 0x800AFF64;
+Dma_MADR2 = 0x800AFF68;
+Dma_CHCR3 = 0x800AFF6C;
+Dma_MADR3 = 0x800AFF70;
+Dma_CHCR5 = 0x800AFF74;
+Dma_MADR5 = 0x800AFF78;
+i_reg_0 = 0x800AFF7C; // i_reg
+i_mask_0 = 0x800AFF80; // i_mask
+debug_cause = 0x800AFF84;
+count.3 = 0x800AFF88;
+HeaderArea.2 = 0x800C6DD8;
+StCdIntrFlag = 0x800C4984; // todo why wasn't this named before?
+
+// e00.o
+LoadTPage = 0x800940BC; // type:func
+// e01.o
+LoadClut = 0x800941A4; // type:func
+// e02.o
+LoadClut2 = 0x80094208; // type:func
+// e03.o
+SetDefDrawEnv = 0x8009426C; // type:func
+// e04.o
+SetDefDispEnv = 0x80094320; // type:func
+// p00.o
+GetTPage = 0x8009435C; // type:func
+// p01.o
+GetClut = 0x8009439C; // type:func
+// p06.o
+AddPrim = 0x800943BC; // type:func
+// p09.o
+TermPrim = 0x800943FC; // type:func
+// p14.o
+SetPolyG3 = 0x8009441C; // type:func
+// p16.o
+SetPolyF4 = 0x8009443C; // type:func
+// p17.o
+SetPolyFT4 = 0x8009445C; // type:func
+// p18.o
+SetPolyG4 = 0x8009447C; // type:func
+// p26.o
+SetTile = 0x8009449C; // type:func
+// p33.o
+SetDrawTPage = 0x800944BC; // type:func
+// p34.o
+SetDrawMove = 0x800944EC; // type:func
+
+// 2d_sp1.o
+GsSortFastSprite = 0x8009454C; // type:func
+// 2d_sp1.o globals todo: 
+// GsOUT_PACKET_P = 0x800C7018;
+// GsORGOFSX = 0x800C6E94;
+// GsORGOFSY = 0x800C6E96;
+
+// gs_001.o
+// todo: same as c_002
+GsInitGraph = 0x800946CC; // type:func
+gpu_init = 0x80094740; // type:func
+GsInitGraph2 = 0x8009485C; // type:func
+valiable_init = 0x800948C4; // type:func
+GsSortClear = 0x80094AE4; // type:func
+// gs_001.o globals
+__ps_libinfo__libgs__ = 0x800AFF8C;
+Clear = 0x800C6DE8;
+// unsure about these globals, some reason order in SH1 doesn't match SDK 4.3 or 4.4
+PSDIDX = 0x800C6EA4;
+PSDOFSX = 0x800C6E08;
+PSDOFSY = 0x800C6E0C;
+HWD0 = 0x800C6F28;
+VWD0 = 0x800C6F2C;
+GsIDMATRIX2 = 0x800C6FE0; // type:MATRIX size:0x20
+GsLIGHTWSMATRIX = 0x800C6F40;
+PSDBASEX = 0x800C6E10;
+PSDBASEY = 0x800C6E14;
+POSITION = 0x800C6E18;
+CLIP2 = 0x800C6E98;
+PSDCNT = 0x800C6EA0;
+GsDISPENV = 0x800C6E80;
+PSDGPU = 0x800C6EA6;
+GsDRAWENV = 0x800C6E20;
+
+// gs_002.o
+GsGetActiveBuff = 0x80094C1C; // type:func
+GsSetDrawBuffOffset = 0x80094C2C; // type:func
+
+// gs_003.o
+GsSetDrawBuffClip = 0x80094D3C; // type:func
+
+// gs_007.o
+GsInitVcount = 0x80094DBC; // type:func
+
+// counter.o
+SetRCnt = 0x80094DFC; // type:func
+GetRCnt = 0x80094E98; // type:func
+StartRCnt = 0x80094ED0; // type:func
+StopRCnt = 0x80094F00; // type:func
+ResetRCnt = 0x80094F34; // type:func
+// counter.o globals
+intc_0 = 0x800AFF9C; // intc
+timer = 0x800AFFA0;
+rcntmask = 0x800AFFA4;
+
+// gs_008.o
+GsGetVcount = 0x80094f6c; // type:func
+// gs_009.o
+GsClearVcount = 0x80094f9c; // type:func
+// gs_010.o
+GsSwapDispBuff = 0x80094fcc; // type:func
+
+// matrix.o
+GsInitCoordinate2 = 0x8009507c; // type:func
+GsInitCoord2param = 0x800950ec; // type:func
+GsSetLsMatrix = 0x80095118; // type:func
+GsSetLightMatrix = 0x80095144; // type:func
+GsSetLightMatrix2 = 0x800951d8; // type:func
+GsMulCoord0 = 0x80095208; // type:func
+GsMulCoord2 = 0x80095298; // type:func
+GsMulCoord3 = 0x80095318; // type:func
+print_matrix = 0x80095398; // type:func
+print_vector = 0x80095408; // type:func
+// matrix.o globals
+// todo: DSTACK?
+
+// gs_104.o
+GsInit3D = 0x8009543c; // type:func
+// gs_104.o externs
+GsCLIP3near = 0x800C6F38;
+GsCLIP3far = 0x800C6F30;
+
+// gs_105.o
+GsMapModelingData = 0x800954bc; // type:func
+// gs_106.o
+GsSetProjection = 0x8009552c; // type:func
+// gs_107.o
+GsSetFlatLight = 0x8009554c; // type:func
+gte_set_lc = 0x80095A04; // type:func
+gte_read_lc = 0x80095A68; // type:func
+// gs_108.o
+GsSetLightMode = 0x80095abc; // type:func
+// gs_110.o
+GsSetAmbient = 0x80095b3c; // type:func
+// gs_111.o
+GsDrawOt = 0x80095b6c; // type:func
+// gs_113.o
+GsClearOt = 0x80095b9c; // type:func
+// gs_114.o
+GsSortOt = 0x80095bfc; // type:func
+// gs_121.o
+gte_init = 0x80095CBC; // type:func
+
+// gs_123.o
+Gssub_make_matrix = 0x80095d0c; // type:func
+// gs_123.o globals
+GsIDMATRIX = 0x800C6FA0; // type:MATRIX size:0x20
+// symbols say these should be there, but other vars are inside the same space of them?
+// GsWSMATRIX = 0x800C6FA0 + 0x20; // unused
+// GsWSMATRIX_ORG = 0x800C6FA0 + 0x40; // unused
+// GsIDMATRIX2 = 0x800C6FA0 + 0x60; // unused
+
+// gs_127.o
+GsDefDispBuff2 = 0x80095ddc; // type:func
+
+// objt.o
+GsLinkObject4 = 0x80095e5c; // type:func
+
+// objt3.o
+GsSortObject4J = 0x80095fec; // type:func
+// objt3.o globals
+GsFCALL4 = 0x800C7030;
+GsMATE_C = 0x800C701C;
+GsLMODE = 0x800C7008;
+GsLIGNR = 0x800C700C;
+GsLIOFF = 0x800C7004;
+GsNDIV = 0x800C7028;
+GsTON = 0x800C7024;
+GsLIGHT_MODE = 0x800C6F34;
+
+// msc00.o
+__ps_libinfo__libgte__ = 0x80096EC8;
+InitGeom = 0x80096ED0; // type:func
+// msc00.o globals
+SAVERA = 0x800B014C;
+
+// msc01.o
+SquareRoot0 = 0x80096F58; // type:func
+Rshift = 0x80096FA0; // type:label
+CNTSQ = 0x80096FAC; // type:label
+RTNSQRT = 0x80096FD4; // type:label
+
+// msc02.o
+InvSquareRoot = 0x80096fe8; // type:func
+VectorNormalS = 0x80097074; // type:func
+VectorNormal = 0x80097088; // type:func
+VectorNormalSS = 0x800970b8; // type:func
+VectorNormalS_entry = 0x800970C4; // type:label
+VectorNormal_entry = 0x800970E8; // type:func
+RshiftI_VN = 0x80097148; // type:label
+CNTISQ_VN = 0x80097154; // type:label
+MatrixNormal = 0x800971a8; // type:func
+// msc02.o globals
+SAVERA_0 = 0x800B015C; // SAVERA
+SAVERA2 = 0x800B0160;
+SAVERA3 = 0x800B0164;
+FRAC = 0x800B0168;
+EXPO = 0x800B016C;
+ISQRT = 0x800B0170;
+
+// msc06.o
+LoadAverage12 = 0x80097298; // type:func
+LoadAverage0 = 0x800972e8; // type:func
+LoadAverageShort12 = 0x80097338; // type:func
+LoadAverageShort0 = 0x800973c0; // type:func
+LoadAverageByte = 0x80097448; // type:func
+LoadAverageCol = 0x800974a8; // type:func
+
+// msc09.o
+SquareRoot12 = 0x80097528; // type:func
+Rshift12 = 0x80097570; // type:label
+CNTSQ12 = 0x8009757C; // type:label
+Rshift13 = 0x800975A8; // type:label
+RTNSQRT12 = 0x800975B4; // type:label
+// msc09.o externs
+SQRT = 0x800AFFCC;
+
+// mtx_000.o
+MulMatrix0 = 0x800975c8; // type:func
+
+// mtx_001.o
+MulRotMatrix = 0x800976d8; // type:func
+
+// mtx_003.o
+CompMatrix = 0x800977c8; // type:func
+
+// mtx_004.o
+ApplyMatrixLV = 0x80097928; // type:func
+APPMTX_01__mtx_004_ = 0x8009797C; // type:label
+APPMTX_02__mtx_004_ = 0x80097984; // type:label
+APPMTX_03__mtx_004_ = 0x800979A4; // type:label
+APPMTX_04__mtx_004_ = 0x800979AC; // type:label
+APPMTX_05__mtx_004_ = 0x800979CC; // type:label
+APPMTX_06__mtx_004_ = 0x800979D4; // type:label
+APPMTX_13__mtx_004_ = 0x80097A20; // type:label
+APPMTX_14__mtx_004_ = 0x80097A24; // type:label
+APPMTX_15__mtx_004_ = 0x80097A3C; // type:label
+APPMTX_16__mtx_004_ = 0x80097A40; // type:label
+APPMTX_17__mtx_004_ = 0x80097A58; // type:label
+APPMTX_18__mtx_004_ = 0x80097A5C; // type:label
+
+// mtx_005.o
+ApplyRotMatrix = 0x80097a88; // type:func
+
+// mtx_006.o
+PushMatrix = 0x80097ab8; // type:func
+CONTpush = 0x80097AF8; // type:label
+PopMatrix = 0x80097b5c; // type:func
+CONTpop = 0x80097B98; // type:label
+// mtx_006.o globals (todo: check psx)
+SAVERA__mtx_006_ = 0x800B02FC;
+FRAC__mtx_006_ = 0x800B0300;
+EXPO__mtx_006_ = 0x800B0304;
+MSP = 0x800B0308;
+MSTACK = 0x800B030C;
+STACKFUL = 0x800B058C;
+STACKEMP = 0x800B05BD;
+NOTIMP = 0x800B05E6;
+
+// mtx_007.o
+ReadLightMatrix = 0x80097c08; // type:func
+// mtx_01.o
+ApplyRotMatrixLV = 0x80097c58; // type:func
+APPMTX_01 = 0x80097C84; // type:label
+APPMTX_02 = 0x80097C8C; // type:label
+APPMTX_03 = 0x80097CAC; // type:label
+APPMTX_04 = 0x80097CB4; // type:label
+APPMTX_05 = 0x80097CD4; // type:label
+APPMTX_06 = 0x80097CDC; // type:label
+APPMTX_13 = 0x80097D28; // type:label
+APPMTX_14 = 0x80097D2C; // type:label
+APPMTX_15 = 0x80097D44; // type:label
+APPMTX_16 = 0x80097D48; // type:label
+APPMTX_17 = 0x80097D60; // type:label
+APPMTX_18 = 0x80097D64; // type:label
+// mtx_02.o
+SetMulRotMatrix = 0x80097d98; // type:func
+// mtx_03.o
+MulMatrix = 0x80097e88; // type:func
+// mtx_04.o
+MulMatrix2 = 0x80097f98; // type:func
+// mtx_05.o
+ApplyMatrix = 0x800980a8; // type:func
+// mtx_06.o
+ApplyMatrixSV = 0x800980f8; // type:func
+// mtx_07.o
+TransMatrix = 0x80098158; // type:func
+// mtx_08.o
+ScaleMatrix = 0x80098188; // type:func
+// mtx_09.o
+SetRotMatrix = 0x800982c8; // type:func
+// mtx_10.o
+SetLightMatrix = 0x800982f8; // type:func
+// mtx_11.o
+SetColorMatrix = 0x80098328; // type:func
+// mtx_12.o
+SetTransMatrix = 0x80098358; // type:func
+// reg08.o
+ReadGeomOffset = 0x80098378; // type:func
+// reg09.o
+ReadGeomScreen = 0x80098398; // type:func
+// reg10.o
+SetBackColor = 0x800983a8; // type:func
+// reg11.o
+SetFarColor = 0x800983c8; // type:func
+// reg12.o
+SetGeomOffset = 0x800983e8; // type:func
+// reg13.o
+SetGeomScreen = 0x80098408; // type:func
+
+// smp.o
+LocalLight = 0x80098418; // type:func
+DpqColor = 0x8009843c; // type:func
+NormalColor = 0x80098458; // type:func
+NormalColor3 = 0x80098474; // type:func
+NormalColorDpq = 0x800984b0; // type:func
+NormalColorDpq3 = 0x800984d4; // type:func
+NormalColorCol = 0x8009851c; // type:func
+NormalColorCol3 = 0x8009853c; // type:func
+ColorDpq = 0x80098580; // type:func
+ColorCol = 0x800985a8; // type:func
+AverageSZ3 = 0x800985cc; // type:func
+AverageSZ4 = 0x800985dc; // type:func
+
+// smp_00.o
+LightColor = 0x800985f8; // type:func
+DpqColorLight = 0x80098620; // type:func
+DpqColor3 = 0x80098648; // type:func
+Intpl = 0x80098684; // type:func
+Square12 = 0x800986a8; // type:func
+SQREL12 = 0x800986B8; // type:label
+Square12_cont = 0x800986BC; // type:label
+Square0 = 0x800986d0; // type:func
+SQREL0 = 0x800986E0; // type:label
+Square0_cont = 0x800986E4; // type:label
+AverageZ3 = 0x800986f8; // type:func
+AverageZ4 = 0x80098718; // type:func
+OuterProduct12 = 0x8009873c; // type:func
+OuterProduct0 = 0x80098794; // type:func
+Lzc = 0x800987ec; // type:func
+
+// smp_02.o
+RotTransPers = 0x80098808; // type:func
+// smp_03.o
+RotTransPers3 = 0x80098838; // type:func
+// smp_04.o
+RotTrans = 0x80098898; // type:func
+// cmb_00.o
+RotTransPers4 = 0x800988c8; // type:func
+// fgo_00.o
+TransposeMatrix = 0x80098948; // type:func
+
+// g3.o
+GsTMDfastNG3 = 0x80098988; // type:func
+NG3_1 = 0x800989C4; // type:label
+NG3_2 = 0x80098AB8; // type:label
+NG3_3 = 0x80098AC4; // type:label
+GsTMDfastG3NL = 0x80098ad0; // type:func
+G3NL_1 = 0x80098B0C; // type:label
+G3NL_2 = 0x80098BF8; // type:label
+G3NL_3 = 0x80098C04; // type:label
+GsTMDfastG3L = 0x80098c10; // type:func
+G3L_1 = 0x80098C28; // type:label
+G3L_1L = 0x80098C34; // type:label
+G3L_2 = 0x80098D84; // type:label
+G3L_3 = 0x80098D94; // type:label
+GsTMDfastG3LFG = 0x80098da0; // type:func
+G3LFG_1 = 0x80098DB8; // type:label
+G3LFG_1L = 0x80098DC4; // type:label
+G3LFG_2 = 0x80098F14; // type:label
+G3LFG_3 = 0x80098F24; // type:label
+
+// g4.o
+GsTMDfastNG4 = 0x80098f38; // type:func
+NG4_1 = 0x80098F74; // type:label
+NG4_2 = 0x800990A0; // type:label
+NG4_3 = 0x800990AC; // type:label
+GsTMDfastG4NL = 0x800990b8; // type:func
+G4NL_1 = 0x800990F4; // type:label
+G4NL_2 = 0x80099214; // type:label
+G4NL_3 = 0x80099220; // type:label
+GsTMDfastG4L = 0x8009922c; // type:func
+G4L_1 = 0x80099244; // type:label
+G4L_1L = 0x80099250; // type:label
+G4L_2L = 0x800993DC; // type:label
+G4L_2 = 0x800993F0; // type:label
+G4L_3 = 0x80099400; // type:label
+GsTMDfastG4LFG = 0x8009940c; // type:func
+G4LFG_1 = 0x80099424; // type:label
+G4LFG_1L = 0x80099430; // type:label
+G4LFG_2 = 0x800995D0; // type:label
+G4LFG_3 = 0x800995E0; // type:label
+
+// gt3.o
+GsTMDfastTNG3 = 0x800995f8; // type:func
+TNG3_1 = 0x80099634; // type:label
+TNG3_2 = 0x80099758; // type:label
+TNG3_3 = 0x80099764; // type:label
+GsTMDfastTG3NL = 0x80099770; // type:func
+TG3NL_1 = 0x800997AC; // type:label
+TG3NL_2 = 0x800998B4; // type:label
+TG3NL_3 = 0x800998C0; // type:label
+GsTMDfastTG3L = 0x800998cc; // type:func
+TG3L_1 = 0x800998E4; // type:label
+TG3L_1L = 0x800998F0; // type:label
+TG3L_2 = 0x80099A64; // type:label
+TG3L_3 = 0x80099A74; // type:label
+GsTMDfastTG3LFG = 0x80099a80; // type:func
+TG3LFG_1 = 0x80099A98; // type:label
+TG3LFG_1L = 0x80099AA4; // type:label
+TG3LFG_2 = 0x80099C18; // type:label
+TG3LFG_3 = 0x80099C28; // type:label
+
+// gt4.o
+GsTMDfastTNG4 = 0x80099c38; // type:func
+TNG4_1 = 0x80099C74; // type:label
+TNG4_2 = 0x80099DDC; // type:label
+TNG4_3 = 0x80099DE8; // type:label
+GsTMDfastTG4NL = 0x80099df4; // type:func
+TG4NL_1 = 0x80099E30; // type:label
+TG4NL_2 = 0x80099F74; // type:label
+TG4NL_3 = 0x80099F80; // type:label
+GsTMDfastTG4L = 0x80099f8c; // type:func
+TG4L_1 = 0x80099FA4; // type:label
+TG4L_1L = 0x80099FB0; // type:label
+TG4L_2L = 0x8009A164; // type:label
+TG4L_2 = 0x8009A17C; // type:label
+TG4L_3 = 0x8009A18C; // type:label
+GsTMDfastTG4LFG = 0x8009a198; // type:func
+TG4LFG_1 = 0x8009A1B0; // type:label
+TG4LFG_1L = 0x8009A1BC; // type:label
+TG4LFG_2 = 0x8009A388; // type:label
+TG4LFG_3 = 0x8009A398; // type:label
+
+// ratan.o
+ratan2 = 0x8009a3a8; // type:func
+// ratan.o globals
+ratan_tbl = 0x800B060C;
+
+// patchgte.o
+_patch_gte = 0x8009A528; // type:func
+oldbug = 0x8009A5D4; // type:func
+newnonbug = 0x8009A5EC; // type:label
+newnonbug_end = 0x8009A604; // type:label
+// patchgte.o globals
+store__patchgte_o_ = 0x800C7160;
+
+// padentry.o
+PadChkVsync = 0x8009a608; // type:func
+PadStartCom = 0x8009a628; // type:func
+PadStopCom = 0x8009a648; // type:func
+PadChkMtap = 0x8009a668; // type:func
+PadGetState = 0x8009a6b4; // type:func
+PadInfoMode = 0x8009a774; // type:func
+PadInfoAct = 0x8009a86c; // type:func
+PadInfoComb = 0x8009a940; // type:func
+PadSetActAlign = 0x8009a9e8; // type:func
+PadSetMainMode = 0x8009aa20; // type:func
+PadSetAct = 0x8009aa68; // type:func
+
+// padmain.o
+PadEnableCom = 0x8009aab8; // type:func
+_padSetVsyncParam = 0x8009abd0; // type:func
+isVsync = 0x8009ABFC; // type:func
+intPad = 0x8009AC64; // type:func
+_padChkVsync = 0x8009add0; // type:func
+_padStartCom = 0x8009ade4; // type:func
+_padStopCom = 0x8009aeb0; // type:func
+_padInitSioMode = 0x8009aef4; // type:func
+execIntState = 0x8009B228; // type:func
+_padSioRW = 0x8009b2f0; // type:func
+_padSioRW2 = 0x8009b4c8; // type:func
+_padClrIntSio0 = 0x8009b700; // type:func
+_padWaitRXready = 0x8009b790; // type:func
+// padmain.o globals
+__ps_libinfo__libpad__ = 0x800B0E1C;
+_padFuncNextPort = 0x800b0e24;
+_padFuncClrInfo = 0x800b0e28;
+_padFuncGetTxd = 0x800b0e2c;
+_padFuncCurrLimit = 0x800b0e30;
+_padFuncPtr2Port = 0x800b0e34;
+_padFuncPort2Info = 0x800b0e38;
+_padFuncSendAuto = 0x800b0e3c;
+_padFuncChkEng = 0x800b0e40;
+_padFuncRecvAuto = 0x800b0e44;
+_padFuncClrCmdNo = 0x800b0e48;
+_padFuncIntGun = 0x800b0e4c;
+_padFuncSetGunPort = 0x800b0e50;
+_padFuncGetGunPos = 0x800b0e54;
+_padInfoDir = 0x800b0e58;
+_padIntExec = 0x800b0e5c;
+_padGunExec = 0x800b0e60;
+_padSioChan = 0x800b0e64;
+_padSioState = 0x800b0e68;
+_padTotalCurr = 0x800b0e6c;
+_padModeMtap = 0x800b0e70;
+_padChanStart = 0x800b0e74;
+_padChanStop = 0x800b0e78;
+_padFixResult = 0x800b0e7c;
+intc__padmain_o_ = 0x800b0e84; // intc
+sio__padmain_o_ = 0x800b0e88; // sio
+vsyncParam = 0x800C7170;
+padRestPeriod = 0x800C7180;
+
+// padcmd.o
+_padSetAct = 0x8009b7b8; // type:func
+_padSetCmd = 0x8009b7c4; // type:func
+_padSendAtLoadInfo = 0x8009b7d4; // type:func
+_padRecvAtLoadInfo = 0x8009b858; // type:func
+_padGetActSize = 0x8009b9a4; // type:func
+_padLoadActInfo = 0x8009b9dc; // type:func
+sendAtLoadAct = 0x8009bab0; // type:func
+recvAtLoadAct = 0x8009bb58; // type:func
+_padSetActAlign = 0x8009bdcc; // type:func
+sendAtActAlign = 0x8009be34; // type:func
+recvAtActAlign = 0x8009be50; // type:func
+_padSetMainMode = 0x8009bf18; // type:func
+sendAtMainMode = 0x8009bfb0; // type:func
+recvAtMainMode = 0x8009c004; // type:func
+_padCmdParaMode = 0x8009c064; // type:func
+cmdPadInfo = 0x8009c084; // type:func
+cmdGetType = 0x8009c098; // type:func
+cmdActInfo = 0x8009c0b8; // type:func
+cmdCombList = 0x8009c0d8; // type:func
+cmdNext = 0x8009C0F8; // type:func
+// padcmd.o globals
+dst.16 = 0x800C7190; // not totally sure
+
+// padif.o
+intFuncReqa = 0x8009C118; // type:func
+intFuncCmd = 0x8009C160; // type:func
+intFuncSize = 0x8009C238; // type:func
+intFuncAck = 0x8009C2F8; // type:func
+intFuncData = 0x8009C384; // type:func
+// padif.o globals
+sioReadSize = 0x800B0E9C;
+sio__padif_o_ = 0x800B0EA0;
+sendAuto = 0x800B0EA4;
+// mtapTime = missing, game isn't using 4.4 sdk?
+padIntFunc = 0x800B0EA8;
+
+// padportd.o
+PadInitDirect = 0x8009c708; // type:func
+clrInfo = 0x8009c868; // type:func
+nextPort = 0x8009c8d0; // type:func
+dirClrCmdNo = 0x8009c9c4; // type:func
+getTxByte = 0x8009c9d4; // type:func
+chkCurrLimit = 0x8009ca90; // type:func
+ptr2Port = 0x8009cd0c; // type:func
+port2PadInfo = 0x8009CD44; // type:func
+// padportd.o globals
+sio__padportd_o_ = 0x800B0EBC;
+rxrawdata.4 = 0x800C71A0;
+txrawdata.5 = 0x800C71E8;
+infoDir = 0x800C7230;
+
+// padseqd.o
+_padInitDirSeq = 0x8009CD68; // type:func
+dirSendAuto = 0x8009CD9C; // type:func
+dirRecvAuto = 0x8009CE9C; // type:func
+_dirFailAuto = 0x8009D0EC; // type:func
+dirChkEngCmd = 0x8009D1C8; // type:func
+
+// waitrc2.o
+setRC2wait = 0x8009D1F8; // type:func
+chkRC2wait = 0x8009D218; // type:func
+// waitrc2.o globals
+_startTime = 0x800C7410;
+_waitTime = 0x800C7414;
+
+// s_crwa.o
+SpuClearReverbWorkArea = 0x8009d2b8; // type:func
+// s_crwa.o externs
+_spu_zerobuf = 0x800B0ECC;
+
+// LIBAPI/a10.o
+WaitEvent = 0x8009d458; // type:func
+
+// s_m_util.o
+_SpuIsInAllocateArea = 0x8009d468; // type:func
+_SpuIsInAllocateArea_ = 0x8009d4e8; // type:func
+
+// s_stm.o
+SpuSetTransferMode = 0x8009d578; // type:func
+// s_sva.o
+SpuSetVoiceAttr = 0x8009d5a8; // type:func
+
+// s_n2p.o
+_spu_note2pitch = 0x8009dba8; // type:func
+_spu_pitch2note = 0x8009dc78; // type:func
+// s_n2p.o globals
+_spu_NTable = 0x800B12CC;
+_spu_FTable = 0x800B12E4;
+
+// s_gva.o
+SpuGetVoiceAttr = 0x8009dda8; // type:func
+// s_q.o
+SpuQuit = 0x800a235c; // type:func
+// LIBAPI/a13.o
+DisableEvent = 0x800a23dc; // type:func
+// s_m_init.o
+SpuInitMalloc = 0x800a23ec; // type:func
+// s_sr.o
+SpuSetReverb = 0x800a244c; // type:func
+
+// s_srmp.o
+SpuSetReverbModeParam = 0x800a251c; // type:func
+// s_srmp.o externs
+_spu_rev_param = 0x800B1478;
+
+// s_sra.o
+_spu_setReverbAttr = 0x800a29fc; // type:func
+// s_rrwa.o
+SpuReserveReverbWorkArea = 0x800a2ecc; // type:func
+// s_srv.o
+SpuSetReverbVoice = 0x800a2f1c; // type:func
+// s_sav.o
+_SpuSetAnyVoice = 0x800a2f4c; // type:func
+// s_sk.o
+SpuSetKey = 0x800a320c; // type:func
+// s_gks.o
+SpuGetKeyStatus = 0x800a33cc; // type:func
+// s_skowa.o
+SpuSetKeyOnWithAttr = 0x800a345c; // type:func
+// s_w.o
+SpuWrite = 0x800a348c; // type:func
+// s_stsa.o
+SpuSetTransferStartAddr = 0x800a34ec; // type:func
+// s_itc.o
+SpuIsTransferCompleted = 0x800a354c; // type:func
+
+// s_sca.o
+SpuSetCommonAttr = 0x800a35fc; // type:func
+// unknown: SpuCommonError
+
+// s_grv.o
+SpuGetReverbVoice = 0x800a6cb8; // type:func
+
+// s_gav.o
+_SpuGetAnyVoice = 0x800a6ce8; // type:func
