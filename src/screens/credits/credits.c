@@ -44,7 +44,11 @@ typedef struct
 
 typedef struct
 {
-    u8  pad[1424];
+    u8  pad[1420];
+    u8  field_58C;
+    u8  field_58D;
+    u8  field_58E;
+    u8  field_58F;
     u32 field_590;
     u32 field_594;
     u32 field_598;
@@ -52,6 +56,7 @@ typedef struct
     u32 field_5A0;
 } s_UnkCredits3; // Size: >=1460
 
+extern s32           D_800A8FF0;
 extern s_UnkCredits0 D_800AFE08;
 extern s8            D_800AFE0E;
 extern s32           D_800AFE10; // Packed RGB+command color? Command is 0x64.
@@ -65,6 +70,7 @@ extern s32           D_800C48F0;
 extern s_UnkCredits1 D_801E5558[];
 extern RECT          D_801E557C[];
 extern s32           D_801E5C20;
+extern s32           D_801E5E74;
 extern s32           D_801E5E7C;
 extern s32           D_801E5E80;
 extern s32           D_801E5E84;
@@ -74,7 +80,9 @@ extern s32           D_801E600C;
 
 // =====Temporary function declarations=====
 
-void func_80045A7C(u16); // Return type assumed.
+void func_80032358(s16 x, s16 y, s16 w, s16 h, u8 r, u8 g, u8 b); // Return and arg types assumed.
+void func_80032428(u32, u32);                                     // Return and arg types assumed.
+void func_80045A7C(u16);                                          // Return type assumed.
 u8   func_80045B28();
 void func_8004729C(u16);
 
@@ -134,6 +142,74 @@ INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E2FC0);
 INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E3094);
 
 INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E3124);
+/*s32 func_801E3124(void)
+{
+    switch (D_800BC728.field_59C)
+    {
+        case 0:
+            switch (D_800BCD0C)
+            {
+                case 13:
+                    D_800BC728.field_58C = 0xFF;
+                    D_800BC728.field_58D = 0xFF;
+                    D_800BC728.field_58E = 0xFF;
+                    break;
+
+                case 5:
+                    D_800BC728.field_58C = 0;
+                    D_800BC728.field_58D = 0;
+                    D_800BC728.field_58E = 0;
+                    break;
+            }
+
+            func_80045A7C(0x12);
+            func_80045A7C(0x10);
+            D_800BC728.field_59C = (s32)(D_800BC728.field_59C + 1);
+            break;
+
+        case 1:
+            StoreImage(&D_801E557C[0], (u_long*)0x801CFA00);
+            StoreImage(&D_801E557C[1], (u_long*)0x801C8200);
+            DrawSync(0);
+
+            // Maybe some enum entry check.
+            switch (D_800BCD0C)
+            {
+                case 13:
+                    func_80032358(0, 0x20, 0x200, 0x1C0, 0xFF, 0xFF, 0xFF);
+                    break;
+
+                case 5:
+                    func_80032358(0, 0x20, 0x200, 0x1C0, 0x00, 0x00, 0x00);
+                    break;
+            }
+
+            D_800BC728.field_59C++;
+            break;
+
+        case 2:
+            func_80032428(0x200, 1);
+            D_800A8FF0 = 1;
+            D_801E5E74 = 0x3C;
+            D_800BC728.field_59C++;
+            break;
+
+        case 3:
+            D_801E5E74--;
+            
+            if (D_801E5E74 <= 0 && func_80045B28() < 2)
+            {
+                D_800BC728.field_58C = 0;
+                D_800BC728.field_58D = 0;
+                D_800BC728.field_58E = 0;
+                return 1;
+            }
+
+            break;
+    }
+
+    return 0;
+}*/
 
 s32 func_801E3304(void)
 {
