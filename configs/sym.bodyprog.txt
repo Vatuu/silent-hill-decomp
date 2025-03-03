@@ -133,10 +133,13 @@ g_Demo_CurControllerPacket = 0x800C4890;
 g_Demo_CurrDemoStep = 0x800C4894;
 g_Demo_VideoPresentInterval = 0x800C4898;
 
+
+GFX_ClearRectInterlaced = 0x80032358; // type:func
 GFX_Init = 0x80032428; // type:func
 Settings_ScreenXYSet = 0x800324f4; // type:func
 Settings_DispEnvXYSet = 0x80032524; // type:func
 GFX_VSyncCallback = 0x80032b80; // type:func
+GameFS_TitleGfxSeek = 0x80032bd0; // type:func
 GameFS_TitleGfxLoad = 0x80032bf0; // type:func
 GameFS_StreamBinLoad = 0x80032c40; // type:func
 GameFS_OptionBinLoad = 0x80032c68; // type:func

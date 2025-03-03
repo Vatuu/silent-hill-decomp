@@ -1,7 +1,6 @@
 #ifndef _FSQUEUE_H
 #define _FSQUEUE_H
 
-#include "common.h"
 #include "main/fileinfo.h"
 
  /** FS queue size. */

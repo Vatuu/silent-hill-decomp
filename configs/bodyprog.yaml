@@ -151,7 +151,7 @@ segments:
       - [0x7127c, asm, psyq/libgs/gs_127]
       - [0x712fc, asm, psyq/libgs/objt]
       - [0x7148c, asm, psyq/libgs/objt3]
-      - [0x71d1c, c, lib_8009687C] # konami custom RotMatrix functions? fewer branches & different GTE insns compared to PSX SDK versions
+      - [0x71d1c, asm, lib_8009687C] # konami custom RotMatrix functions? fewer branches & different GTE insns compared to PSX SDK versions
       - [0x72368, asm, psyq/libgte/msc00]
       - [0x723f8, asm, psyq/libgte/msc01]
       - [0x72488, asm, psyq/libgte/msc02]
@@ -209,7 +209,7 @@ segments:
       - [0x78a48, asm, psyq/libspu/s_sva]
       - [0x79048, asm, psyq/libspu/s_n2p]
       - [0x79248, asm, psyq/libspu/s_gva]
-      - [0x79638, c, lib_8009E198]
+      - [0x79638, asm, lib_8009E198]
       # libsd filenames likely aren't accurate since konami rally symbols didn't include object names
       # (maybe libsd was built from source code for libsnd? maybe can take obj names from that)
       - [0x7a244, c, libsd/sdmain]
