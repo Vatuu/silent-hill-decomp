@@ -1,16 +1,14 @@
 #include "common.h"
+#include "gpu.h"
 #include "bodyprog/bodyprog.h"
+#include "screens/credits/credits.h"
 #include "screens/saveload/saveload.h"
 
-extern s_FsImageDesc D_800A902C;
-extern u8            D_800A97D4[];
-extern u32           D_800BCD34;
-extern s8            D_800BCD40;
-extern s32           D_801E751C;
-extern s32           D_801E7520;
-extern s16           D_801E7570[];
-extern s16           D_801E7578[];
-extern s8            D_801E76D0;
+// ===== Temporary declarations =====
+
+void func_801E2D8C();
+
+//===================================
 
 INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E2D8C);
 
@@ -65,7 +63,40 @@ INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E5E18);
 
 INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E6320);
 
-INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E63C0);
+void func_801E63C0(void)
+{
+    if (D_800BC728.field_590 == 7)
+    {
+        VSync(8);
+    }
+    
+    D_800A8FF0 = 1;
+    D_800BCD0C = 6;
+    
+    D_800BC728.field_58C = 0;
+    D_800BC728.field_58D = 0;
+    D_800BC728.field_58E = 0;
+    
+    D_800BCD39 = 0;
+    
+    if (D_800BC728.field_594 == 4 || D_800BC728.field_594 == 8)
+    {
+        if (D_800A97D8 != 0)
+        {
+            D_800BCD34 = 0;
+        }
+    }
+    
+    D_801E7520 = 0;
+    D_800A97D8 = (D_800BC728.field_594 == 16);
+    
+    func_801E2D8C();
+    
+    D_800B9FE0[0] = 0;
+    D_800BC728.field_598++;
+    D_800BC728.field_59C = 0;
+    D_800BC728.field_5A0 = 0;
+}
 
 INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E649C);
 

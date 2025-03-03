@@ -3,6 +3,81 @@
 
 #include "common.h"
 
+typedef struct
+{
+    s16 field_00;
+    s16 field_02;
+    s16 field_04;
+    s8  unk_06;
+    s8  field_07; // bool
+    s32 unk_08;
+    s32 unk_0C;
+    s32 unk_10;
+    u16 field_14;
+    s16 unk_16;
+    u32 field_18;
+} s_UnkCredits0; // Size: unknown
+
+// Used by func_801E2E28.
+typedef struct
+{
+    s16 field_00;
+    s16 field_02;
+    s16 field_04;
+} s_UnkCredits1; // Size: 6
+
+typedef struct
+{
+    u32 unk_00;
+    u32 unk_04;
+    u32 field_08;
+    u32 field_0C;
+    u32 field_10;
+    u32 field_14;
+    u32 unk_18;
+    u32 field_1C;
+    u32 field_20;
+    u32 field_24;
+    u32 field_28;
+    u32 field_2C;
+} s_UnkCredits2; // Size: >=48
+
+typedef struct
+{
+    u8  pad[1420];
+    u8  field_58C;
+    u8  field_58D;
+    u8  field_58E;
+    u8  field_58F;
+    u32 field_590;
+    u32 field_594;
+    u32 field_598;
+    u32 field_59C;
+    u32 field_5A0;
+} s_UnkCredits3; // Size: >=1460
+
+extern s32           D_800A8FF0;
+extern s_UnkCredits0 D_800AFE08;
+extern s8            D_800AFE0E;
+extern s32           D_800AFE10; // Packed RGB+command color? Command is 0x64.
+extern s_UnkCredits0 D_800AFE24;
+extern s8            D_800AFE2A;
+extern s32           D_800AFE2C; // Packed RGB+command color? Command is 0x2C.
+extern s_UnkCredits2 D_800B9FC0;
+extern s_UnkCredits3 D_800BC728;
+extern s32           D_800BCD0C;
+extern s32           D_800C48F0;
+extern s_UnkCredits1 D_801E5558[];
+extern RECT          D_801E557C[];
+extern s32           D_801E5C20;
+extern s32           D_801E5E74;
+extern s32           D_801E5E7C;
+extern s32           D_801E5E80;
+extern s32           D_801E5E84;
+extern s32           D_801E5E88;
+extern s32           D_801E5E8C; // Index for some array used by most recent func_801E2E28 call. func_801E2ED8 accesses it.
+extern s32           D_801E600C;
+
 void func_801E2E28(s32 idx);
 s32 func_801E2ED8(void);
 

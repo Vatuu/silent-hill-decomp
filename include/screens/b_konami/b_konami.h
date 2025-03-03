@@ -3,6 +3,19 @@
 
 #include "common.h"
 
+extern s32 D_800A8FFC; // Type assumed.
+extern u32 D_800A9004; // Type assumed.
+extern s32 D_800B5C7C; // Type assumed.
+extern s32 D_800B9FB8;
+extern u8* D_800C7018; // Pointer to graphics commands?
+extern s32 D_800CA4F4;
+extern s32 D_800CA4FC;
+extern s32 D_800CA500;
+extern s32 D_800CA504;
+extern s32 D_800CA508;
+extern s32 D_800CA50C;
+extern s32 D_800CA510;
+
 void func_800CA234(void);
 
 void func_800C9FB8(void);

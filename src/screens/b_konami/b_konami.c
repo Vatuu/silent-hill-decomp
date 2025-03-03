@@ -4,20 +4,11 @@
 
 #include <libetc.h>
 
-extern s32 D_800A8FFC; // Type assumed.
-extern u32 D_800A9004; // Type assumed.
-extern s32 D_800B5C7C; // Type assumed.
-extern s32 D_800B9FB8;
-extern u8* D_800C7018;
-extern s32 D_800CA4F4;
-extern s32 D_800CA4FC;
-extern s32 D_800CA500;
-extern s32 D_800CA504;
-extern s32 D_800CA508;
-extern s32 D_800CA50C;
-extern s32 D_800CA510;
+// ===== Temporary declarations =====
 
 void func_800C9E6C(u32* arg0, s32 otz, s16 vramX, s16 vramY, s16 w, s16 h, s16 x, s16 y);
+
+//===================================
 
 INCLUDE_ASM("asm/screens/b_konami/nonmatchings/b_konami", func_800C95AC);
 
@@ -84,7 +75,7 @@ s32 func_800CA240(s32* arg0)
 void func_800CA24C(s32 arg0, s32 arg1, s32 arg2)
 {
     s32 var_a3;
-    s32* temp_v0;
+    s32* somePtr;
 
     var_a3 = 0;
     D_800CA4FC = 1;
@@ -94,13 +85,13 @@ void func_800CA24C(s32 arg0, s32 arg1, s32 arg2)
     D_800CA500 = arg0 + 4;
     do
     {
-        temp_v0 = D_800CA4F4 + var_a3;
+        somePtr = D_800CA4F4 + var_a3;
         var_a3 += 4;
-        *temp_v0 = 0;
+        *somePtr = 0;
     }
-    while (var_a3 < 0x1000);
+    while (var_a3 < 4096);
     
-    D_800CA508 = 0xFEE;
+    D_800CA508 = 4078;
     D_800CA510 = 0;
 }
 
