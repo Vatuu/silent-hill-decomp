@@ -42,6 +42,7 @@ typedef struct
     u32 field_2C;
 } s_UnkCredits2; // Size: >=48
 
+// Type used by g_GameSystem (currently "GameSys"). Rename to something like s_GameSystemInfo?
 typedef struct
 {
     u8  pad[1420];
@@ -76,13 +77,15 @@ extern s32           D_801E5E80;
 extern s32           D_801E5E84;
 extern s32           D_801E5E88;
 extern s32           D_801E5E8C; // Index for some array used by most recent func_801E2E28 call. func_801E2ED8 accesses it.
-extern s32           D_801E600C;
+extern s32           D_801E600C; // Random 16-bit number.
 
 void func_801E2E28(s32 idx);
 
 s32 func_801E2ED8(void);
 
 void func_801E3DD0(void);
+
+s32 func_801E3124(void);
 
 s32 func_801E3304(void);
 

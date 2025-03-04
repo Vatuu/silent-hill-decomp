@@ -6,7 +6,7 @@
 
 // ===== Temporary declarations =====
 
-void func_801E2D8C();
+void func_801E2D8C(); // bodyprog
 
 //===================================
 

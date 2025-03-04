@@ -8,7 +8,7 @@
 void func_80032358(s16 x, s16 y, s16 w, s16 h, u8 r, u8 g, u8 b); // Return and arg types assumed.
 void func_80032428(u32, u32);                                     // Return and arg types assumed.
 void func_80045A7C(u16);                                          // Return type assumed.
-u8   func_80045B28();
+u8   func_80045B28();                                             // bodyprog
 void func_8004729C(u16);
 
 //===================================
@@ -66,6 +66,7 @@ INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E2FC0);
 
 INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E3094);
 
+// TODO: Matches, but checksum fails.
 INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E3124);
 /*s32 func_801E3124(void)
 {
@@ -97,7 +98,7 @@ INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E3124);
             StoreImage(&D_801E557C[1], (u_long*)0x801C8200);
             DrawSync(0);
 
-            // Maybe some enum entry check.
+            // Maybe an enum entry check.
             switch (D_800BCD0C)
             {
                 case 13:
@@ -196,6 +197,7 @@ INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E386C);
 
 INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E3970);
 
+// Credits_SetRandomThingValue
 void func_801E3DD0(void)
 {
     D_801E600C = Rng_Rand16();
