@@ -2,7 +2,7 @@
 
 #include <libcd.h>
 
-s32 Fs_UpdateQueueRead(s_FsQueueEntry* entry)
+s32 Fs_QueueUpdateRead(s_FsQueueEntry* entry)
 {
     s32 status;
     s32 result;
@@ -11,7 +11,7 @@ s32 Fs_UpdateQueueRead(s_FsQueueEntry* entry)
     switch (g_FsQueue.state)
     {
         case FSQS_READ_ALLOCATE:
-            switch (Fs_AllocQueueEntryData(entry))
+            switch (Fs_QueueAllocEntryData(entry))
             {
                 // Retry until memory is allocated?
                 case 0:
@@ -25,7 +25,7 @@ s32 Fs_UpdateQueueRead(s_FsQueueEntry* entry)
             break;
 
         case FSQS_READ_CHECK:
-            switch (Fs_CanReadQueue(entry))
+            switch (Fs_QueueCanRead(entry))
             {
                 // Can't read yet; memory in use by another operation. Wait until next tick.
                 case 0:
@@ -39,7 +39,7 @@ s32 Fs_UpdateQueueRead(s_FsQueueEntry* entry)
             break;
 
         case FSQS_READ_SETLOC:
-            switch (Fs_TickQueueSetLoc(entry))
+            switch (Fs_QueueTickSetLoc(entry))
             {
                 // CdlSetloc failed; reset CD.
                 case 0:
@@ -54,7 +54,7 @@ s32 Fs_UpdateQueueRead(s_FsQueueEntry* entry)
             break;
 
         case FSQS_READ_READ:
-            switch (Fs_TickQueueRead(entry))
+            switch (Fs_QueueTickRead(entry))
             {
                 // CdRead failed; reset CD and retry.
                 case 0:
@@ -86,7 +86,7 @@ s32 Fs_UpdateQueueRead(s_FsQueueEntry* entry)
             break;
 
         case FSQS_READ_RESET:
-            switch (Fs_ResetQueueTick(entry))
+            switch (Fs_QueueResetTick(entry))
             {
                 // Still resetting.
                 case 0:

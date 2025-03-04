@@ -8,7 +8,7 @@
 #include <libgpu.h>
 #include <string.h>
 
-s32 Fs_AllocQueueEntryData(s_FsQueueEntry* entry)
+s32 Fs_QueueAllocEntryData(s_FsQueueEntry* entry)
 {
     s32 result = 0;
 
@@ -29,7 +29,7 @@ s32 Fs_AllocQueueEntryData(s_FsQueueEntry* entry)
     return result;
 }
 
-s32 Fs_CanReadQueue(s_FsQueueEntry* entry)
+s32 Fs_QueueCanRead(s_FsQueueEntry* entry)
 {
     s_FsQueueEntry* other;
     s32 queueLength;
@@ -47,10 +47,10 @@ s32 Fs_CanReadQueue(s_FsQueueEntry* entry)
             overlap = false;
             if (other->postLoad || other->allocate)
             {
-                overlap = Fs_DoQueueBuffersOverlap(entry->data,
-                                                  ALIGN(entry->info->blockCount * FS_BLOCK_SIZE, FS_SECTOR_SIZE),
-                                                  other->data,
-                                                  other->info->blockCount * FS_BLOCK_SIZE);
+                overlap = Fs_QueueDoBuffersOverlap(entry->data,
+                                                   ALIGN(entry->info->blockCount * FS_BLOCK_SIZE, FS_SECTOR_SIZE),
+                                                   other->data,
+                                                   other->info->blockCount * FS_BLOCK_SIZE);
             }
 
             if (overlap == true)
@@ -66,7 +66,7 @@ s32 Fs_CanReadQueue(s_FsQueueEntry* entry)
     return true;
 }
 
-s32 Fs_DoQueueBuffersOverlap(u8* data0, u32 size0, u8* data1, u32 size1)
+s32 Fs_QueueDoBuffersOverlap(u8* data0, u32 size0, u8* data1, u32 size1)
 {
     u32 data0Low = (u32)data0 & 0xFFFFFF;
     u32 data1Low = (u32)data1 & 0xFFFFFF;
@@ -78,14 +78,14 @@ s32 Fs_DoQueueBuffersOverlap(u8* data0, u32 size0, u8* data1, u32 size1)
     return 1;
 }
 
-s32 Fs_TickQueueSetLoc(s_FsQueueEntry* entry)
+s32 Fs_QueueTickSetLoc(s_FsQueueEntry* entry)
 {
     CdlLOC cdloc;
     CdIntToPos(entry->info->startSector, &cdloc);
     return CdControl(CdlSetloc, (u_char*)&cdloc, NULL);
 }
 
-s32 Fs_TickQueueRead(s_FsQueueEntry* entry)
+s32 Fs_QueueTickRead(s_FsQueueEntry* entry)
 {
     // Round up to sector boundary. Masking not needed because of `>> 11` below.
     s32 sectorCount = ((entry->info->blockCount * FS_BLOCK_SIZE) + FS_SECTOR_SIZE) - 1;
@@ -99,7 +99,7 @@ s32 Fs_TickQueueRead(s_FsQueueEntry* entry)
     return CdRead(sectorCount >> FS_SECTOR_SHIFT, (u64*)entry->data, CdlModeSpeed);
 }
 
-s32 Fs_ResetQueueTick(s_FsQueueEntry* entry)
+s32 Fs_QueueResetTick(s_FsQueueEntry* entry)
 {
     s32 result = false;
 
@@ -127,7 +127,7 @@ s32 Fs_ResetQueueTick(s_FsQueueEntry* entry)
     return result;
 }
 
-s32 Fs_TickQueueReadPcDvr(s_FsQueueEntry* entry)
+s32 Fs_QueueTickReadPcDvr(s_FsQueueEntry* entry)
 {
     s32 handle;
     s32 temp;
@@ -171,7 +171,7 @@ s32 Fs_TickQueueReadPcDvr(s_FsQueueEntry* entry)
     return result;
 }
 
-s32 Fs_UpdateQueuePostLoad(s_FsQueueEntry* entry)
+s32 Fs_QueueUpdatePostLoad(s_FsQueueEntry* entry)
 {
     s32 result;
     s32 state;
