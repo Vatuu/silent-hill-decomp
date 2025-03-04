@@ -64,7 +64,7 @@ int main(void)
 
     ResetCallback();
     CdInit();
-    Fs_InitializeQueue();
+    Fs_QueueInitialize();
     VSync(0);
     ResetGraph(3);
 
@@ -82,16 +82,16 @@ int main(void)
     SsUtReverbOff();
 
     // Load \1ST\2ZANKO_E.TIM ("There are violent and disturbing images...").
-    Fs_StartQueueReadTim(FILE_1ST_2ZANKO_E_TIM, FS_BUFFER0, &g_MainImg0);
-    while (Fs_GetQueueLength() > 0)
+    Fs_QueueStartReadTim(FILE_1ST_2ZANKO_E_TIM, FS_BUFFER0, &g_MainImg0);
+    while (Fs_QueueGetLength() > 0)
     {
-        Fs_UpdateQueue();
+        Fs_QueueUpdate();
         VSync(0);
     }
 
     // Start loading \1ST\BODYPROG.BIN and \1ST\B_KONAMI.BIN.
-    Fs_StartQueueRead(FILE_1ST_BODYPROG_BIN, FS_BUFFER0);
-    Fs_StartQueueRead(FILE_1ST_B_KONAMI_BIN, FS_BUFFER1);
+    Fs_QueueStartRead(FILE_1ST_BODYPROG_BIN, FS_BUFFER0);
+    Fs_QueueStartRead(FILE_1ST_B_KONAMI_BIN, FS_BUFFER1);
 
     SetDispMask(1);
 
@@ -144,14 +144,14 @@ int main(void)
         fade -= 4;
 
         // Keep loading files in meantime.
-        Fs_UpdateQueue();
+        Fs_QueueUpdate();
         VSync(0);
     }
 
     // If files haven't loaded yet, wait until they do.
-    while (Fs_GetQueueLength() > 0)
+    while (Fs_QueueGetLength() > 0)
     {
-        Fs_UpdateQueue();
+        Fs_QueueUpdate();
         VSync(0);
     }
 
@@ -160,10 +160,10 @@ int main(void)
     Fs_DecryptOverlay(g_OvlDynamic, FS_BUFFER1, Fs_GetFileSize(FILE_1ST_B_KONAMI_BIN));
 
     // Load 1ST\FONT8NOC.TIM (8x8 font).
-    Fs_StartQueueReadTim(FILE_1ST_FONT8NOC_TIM, FS_BUFFER1, &g_MainImg1);
-    while (Fs_GetQueueLength() > 0)
+    Fs_QueueStartReadTim(FILE_1ST_FONT8NOC_TIM, FS_BUFFER1, &g_MainImg1);
+    while (Fs_QueueGetLength() > 0)
     {
-        Fs_UpdateQueue();
+        Fs_QueueUpdate();
         VSync(0);
     }
 

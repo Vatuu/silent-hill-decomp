@@ -10,17 +10,17 @@
 
 s_FsQueue g_FsQueue;
 
-s32 Fs_IsQueueEntryLoaded(s32 queueIdx)
+s32 Fs_QueueIsEntryLoaded(s32 queueIdx)
 {
     return queueIdx < g_FsQueue.postLoad.idx;
 }
 
-s32 Fs_GetQueueLength(void)
+s32 Fs_QueueGetLength(void)
 {
     return (g_FsQueue.last.idx + 1) - g_FsQueue.postLoad.idx;
 }
 
-s32 Fs_DoQueueThingWhenEmpty(void)
+s32 Fs_QueueDoThingWhenEmpty(void)
 {
     s32 result;
 
@@ -28,7 +28,7 @@ s32 Fs_DoQueueThingWhenEmpty(void)
 
     result = false;
 
-    if (Fs_GetQueueLength() == 0)
+    if (Fs_QueueGetLength() == 0)
     {
         result = func_8003c850() != 0;
     }
@@ -36,7 +36,7 @@ s32 Fs_DoQueueThingWhenEmpty(void)
     return result;
 }
 
-void Fs_WaitForEmptyQueue(void)
+void Fs_QueueWaitForEmpty(void)
 {
     func_800892A4(0);
     func_80089128();
@@ -44,12 +44,12 @@ void Fs_WaitForEmptyQueue(void)
     while (true)
     {
         VSync(0);
-        if (Fs_GetQueueLength() <= 0)
+        if (Fs_QueueGetLength() <= 0)
         {
             break;
         }
 
-        Fs_UpdateQueue();
+        Fs_QueueUpdate();
     }
 
     func_800892A4(1);
@@ -57,17 +57,17 @@ void Fs_WaitForEmptyQueue(void)
     VSync(0);
 }
 
-s32 Fs_StartQueueSeek(s32 fileIdx)
+s32 Fs_QueueStartSeek(s32 fileIdx)
 {
-    return Fs_EnqueueQueue(fileIdx, FS_OP_SEEK, FS_POST_LOAD_NONE, false, NULL, 0, NULL);
+    return Fs_QueueEnqueue(fileIdx, FS_OP_SEEK, FS_POST_LOAD_NONE, false, NULL, 0, NULL);
 }
 
-s32 Fs_StartQueueRead(s32 fileIdx, void* dest)
+s32 Fs_QueueStartRead(s32 fileIdx, void* dest)
 {
-    return Fs_EnqueueQueue(fileIdx, FS_OP_READ, FS_POST_LOAD_NONE, false, dest, 0, NULL);
+    return Fs_QueueEnqueue(fileIdx, FS_OP_READ, FS_POST_LOAD_NONE, false, dest, 0, NULL);
 }
 
-s32 Fs_StartQueueReadTim(s32 fileIdx, void* dest, s_FsImageDesc* image)
+s32 Fs_QueueStartReadTim(s32 fileIdx, void* dest, s_FsImageDesc* image)
 {
     s_FsQueueExtra extra;
 
@@ -84,10 +84,10 @@ s32 Fs_StartQueueReadTim(s32 fileIdx, void* dest, s_FsImageDesc* image)
         extra.image.clutY = -1;
     }
 
-    return Fs_EnqueueQueue(fileIdx, FS_OP_READ, FS_POST_LOAD_TIM, false, dest, 0, &extra);
+    return Fs_QueueEnqueue(fileIdx, FS_OP_READ, FS_POST_LOAD_TIM, false, dest, 0, &extra);
 }
 
-s32 Fs_StartQueueReadAnm(s32 arg0, s32 arg1, void* arg2, s32 arg3)
+s32 Fs_QueueStartReadAnm(s32 arg0, s32 arg1, void* arg2, s32 arg3)
 {
     s32 fileIdx;
     s_FsQueueExtra extra;
@@ -96,17 +96,17 @@ s32 Fs_StartQueueReadAnm(s32 arg0, s32 arg1, void* arg2, s32 arg3)
     extra.anm.field_04 = arg1;
     extra.anm.field_00 = arg0;
     extra.anm.field_08 = arg3;
-    return Fs_EnqueueQueue(fileIdx, FS_OP_READ, FS_POST_LOAD_ANM, false, arg2, 0, &extra);
+    return Fs_QueueEnqueue(fileIdx, FS_OP_READ, FS_POST_LOAD_ANM, false, arg2, 0, &extra);
 }
 
-s32 Fs_EnqueueQueue(s32 fileIdx, u8 op, u8 postLoad, u8 alloc, void* data, u32 unused0, s_FsQueueExtra* extra)
+s32 Fs_QueueEnqueue(s32 fileIdx, u8 op, u8 postLoad, u8 alloc, void* data, u32 unused0, s_FsQueueExtra* extra)
 {
     s_FsQueueEntry* newEntry;
     s_FsQueuePtr* lastPtr;
 
     // Wait for space in queue.
-    while (Fs_GetQueueLength() >= FS_QUEUE_LENGTH)
-        Fs_UpdateQueue();
+    while (Fs_QueueGetLength() >= FS_QUEUE_LENGTH)
+        Fs_QueueUpdate();
 
     // This is the reason these pointers and indices are wrapped into structs.
     // If left as they are in the queue struct, this doesn't match unless manually addressed.
@@ -130,7 +130,7 @@ s32 Fs_EnqueueQueue(s32 fileIdx, u8 op, u8 postLoad, u8 alloc, void* data, u32 u
     return g_FsQueue.last.idx;
 }
 
-void Fs_InitializeQueue(void)
+void Fs_QueueInitialize(void)
 {
     bzero(&g_FsQueue, sizeof(g_FsQueue));
     g_FsQueue.last.idx = -1;
@@ -146,9 +146,9 @@ void Fs_InitializeQueue(void)
     Fs_InitializeMem(FS_MEM_BASE, FS_MEM_SIZE);
 }
 
-void Fs_ResetQueue(void)
+void Fs_QueueReset(void)
 {
-    if (Fs_GetQueueLength() <= 0)
+    if (Fs_QueueGetLength() <= 0)
     {
         return;
     }
@@ -165,7 +165,7 @@ void Fs_ResetQueue(void)
     g_FsQueue.read.ptr->postLoad = 0;
 }
 
-void Fs_UpdateQueue(void)
+void Fs_QueueUpdate(void)
 {
     s_FsQueuePtr* read;
     s_FsQueueEntry* tick;
@@ -178,11 +178,11 @@ void Fs_UpdateQueue(void)
         switch (tick->operation)
         {
             case FS_OP_SEEK:
-                temp = Fs_UpdateQueueSeek(tick);
+                temp = Fs_QueueUpdateSeek(tick);
                 break;
 
             case FS_OP_READ:
-                temp = Fs_UpdateQueueRead(tick);
+                temp = Fs_QueueUpdateRead(tick);
                 break;
         }
 
@@ -208,7 +208,7 @@ void Fs_UpdateQueue(void)
     tick = g_FsQueue.postLoad.ptr;
     if (g_FsQueue.postLoad.idx < g_FsQueue.read.idx)
     {
-        temp = Fs_UpdateQueuePostLoad(tick);
+        temp = Fs_QueueUpdatePostLoad(tick);
         if (temp == 1)
         {
             g_FsQueue.postLoadState = FSQS_POST_LOAD_INIT;
@@ -223,7 +223,7 @@ void Fs_UpdateQueue(void)
     }
 }
 
-s32 Fs_UpdateQueueSeek(s_FsQueueEntry* entry)
+s32 Fs_QueueUpdateSeek(s_FsQueueEntry* entry)
 {
     s32 result = false;
     s32 state = g_FsQueue.state;
@@ -231,7 +231,7 @@ s32 Fs_UpdateQueueSeek(s_FsQueueEntry* entry)
     switch (state)
     {
         case FSQS_SEEK_SET_LOC:
-        switch (Fs_TickQueueSetLoc(entry))
+        switch (Fs_QueueTickSetLoc(entry))
         {
             // CdlSetloc failed; reset and retry.
             case 0:
@@ -283,7 +283,7 @@ s32 Fs_UpdateQueueSeek(s_FsQueueEntry* entry)
         break;
 
         case FSQS_SEEK_RESET:
-        switch (Fs_ResetQueueTick(entry))
+        switch (Fs_QueueResetTick(entry))
         {
             // Still resetting.
             case 0:
