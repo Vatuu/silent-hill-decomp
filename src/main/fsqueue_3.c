@@ -48,9 +48,9 @@ s32 Fs_QueueCanRead(s_FsQueueEntry* entry)
             if (other->postLoad || other->allocate)
             {
                 overlap = Fs_QueueDoBuffersOverlap(entry->data,
-                                                  ALIGN(entry->info->blockCount * FS_BLOCK_SIZE, FS_SECTOR_SIZE),
-                                                  other->data,
-                                                  other->info->blockCount * FS_BLOCK_SIZE);
+                                                   ALIGN(entry->info->blockCount * FS_BLOCK_SIZE, FS_SECTOR_SIZE),
+                                                   other->data,
+                                                   other->info->blockCount * FS_BLOCK_SIZE);
             }
 
             if (overlap == true)
