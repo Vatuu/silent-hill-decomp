@@ -16,7 +16,7 @@ typedef struct
     u32 field_598;
     u32 field_59C;
     u32 field_5A0;
-} s_GameSystem; // Size: >=1444
+} s_GameWork; // Size: >=1444
 
 typedef struct
 {
@@ -38,7 +38,7 @@ typedef struct
 } s_800A90FC;
 
 // GameSystem
-extern s_GameSystem D_800BC728;
+extern s_GameWork D_800BC728;
 
 /** Vars accessed by credits and saveload. */
 extern s32 D_800A8FF0;
