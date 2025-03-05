@@ -4,17 +4,45 @@
 #include "common.h"
 #include "main/fsqueue.h"
 
-/** Declarations for unknown symbols in bodyprog. */
+typedef struct
+{
+    u8  unk_0[1420];
+    u8  field_58C;
+    u8  field_58D;
+    u8  field_58E;
+    u8  field_58F;
+    u32 field_590;
+    u32 field_594; // Maybe some game state enum entry.
+    u32 field_598;
+    u32 field_59C;
+    u32 field_5A0;
+} s_GameSystem; // Size: >=1444
+
+typedef struct
+{
+    s32 unk_0[2];
+    s32 field_8;
+    s32 unk_C[2213];
+    s32 field_22A0;
+    s32 field_22A4;
+} s_SystemWork; // Size: >=8868
 
 /** Something related to ANM files. See `D_800A90FC`. */
 typedef struct
 {
     s16 fileIdx;
-    s16 field_02;
-    u32 field_04;
-    u32 field_08;
-    u32 field_0C;
+    s16 field_2;
+    u32 field_4;
+    u32 field_8;
+    u32 field_C;
 } s_800A90FC;
+
+// GameSystem
+extern s_GameSystem D_800BC728;
+
+/** Vars accessed by credits and saveload. */
+extern s32 D_800A8FF0;
+extern s32 D_800BCD0C;
 
 /** Unknown bodyprog var. Used in `Fs_QueueStartReadAnm`. */
 extern s_800A90FC D_800A90FC[];

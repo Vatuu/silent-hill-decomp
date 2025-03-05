@@ -1,6 +1,7 @@
 #include "common.h"
 #include "gpu.h"
 #include "main/rng.h"
+#include "bodyprog/bodyprog.h"
 #include "screens/credits/credits.h"
 
 // ===== Temporary declarations =====
@@ -20,8 +21,8 @@ void func_801E2E28(s32 idx)
 
     D_801E5E8C = idx;
     
-    func_8004729C(D_801E5558[idx].field_00);
-    temp_v1 = (D_801E5558[idx].field_04 * 2) - 0x1F8;
+    func_8004729C(D_801E5558[idx].field_0);
+    temp_v1 = (D_801E5558[idx].field_4 * 2) - 0x1F8;
     temp_lo = temp_v1 / D_801E5C20;
     
     D_801E5E7C = temp_v1;
@@ -39,7 +40,7 @@ s32 func_801E2ED8(void)
             break;
         
         case 1:
-            func_80045A7C(D_801E5558[D_801E5E8C].field_00);
+            func_80045A7C(D_801E5558[D_801E5E8C].field_0);
             D_801E5E88 += 1;
             break;
 
@@ -51,7 +52,7 @@ s32 func_801E2ED8(void)
                     return 0;
                 
                 case 1:
-                    D_800C48F0 = D_801E5558[D_801E5E8C].field_02;
+                    D_800C48F0 = D_801E5558[D_801E5E8C].field_2;
                     return 1;
             }
         
@@ -169,9 +170,9 @@ s32 func_801E3304(void)
             D_800BC728.field_59C = 0;
             D_800BC728.field_5A0 = 0;
             
-            D_800B9FC0.field_08 = 0;
+            D_800B9FC0.field_8 = 0;
             D_800B9FC0.field_24 = 0;
-            D_800B9FC0.field_0C = 0;
+            D_800B9FC0.field_C = 0;
             D_800B9FC0.field_28 = 0;
             D_800B9FC0.field_10 = 0;
             D_800B9FC0.field_2C = 0;
@@ -212,9 +213,9 @@ INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E3E18);
 
 void func_801E42F8(s16 arg0, s16 arg1)
 {
-    D_800AFE08.field_00 = arg0;
-    D_800AFE08.field_02 = arg1;
-    D_800AFE08.field_04 = arg0;
+    D_800AFE08.field_0 = arg0;
+    D_800AFE08.field_2 = arg1;
+    D_800AFE08.field_4 = arg0;
 }
 
 void func_801E4310(s32 r, s32 g, s32 b)
@@ -233,7 +234,7 @@ void func_801E434C(u32 arg0, u32 arg1)
     u32 shiftedField_18;
     u32 maskedField_18;
 
-    D_800AFE08.field_07 = (arg0 != 0);
+    D_800AFE08.field_7 = (arg0 != 0);
 
     if (arg1 < 4)
     {
@@ -272,7 +273,7 @@ void func_801E4BD4(u32 arg0, u32 arg1)
     u32 shiftedField_18;
     u32 maskedField_18;
 
-    D_800AFE24.field_07 = (arg0 != 0);
+    D_800AFE24.field_7 = (arg0 != 0);
 
     if (arg1 < 4)
     {

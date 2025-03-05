@@ -5,9 +5,9 @@
 
 typedef struct
 {
-    s32 unk_00;
-    s32 unk_04;
-    s32 field_08;
+    s32 unk_0;
+    s32 unk_4;
+    s32 field_8;
 } s_UnkSaveload0; // Size: >=12
 
 extern s_FsImageDesc D_800A902C;

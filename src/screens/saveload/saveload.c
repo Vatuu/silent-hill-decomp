@@ -1,7 +1,6 @@
 #include "common.h"
 #include "gpu.h"
 #include "bodyprog/bodyprog.h"
-#include "screens/credits/credits.h"
 #include "screens/saveload/saveload.h"
 
 // ===== Temporary declarations =====
@@ -23,7 +22,7 @@ INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E2FCC);
 
 s32 func_801E3078(s_UnkSaveload0* arg0)
 {
-    if (arg0 != NULL && (arg0->field_08 & 0x01000000))
+    if (arg0 != NULL && (arg0->field_8 & 0x01000000))
     {
         func_8004A8DC(0);
         return 1;
@@ -118,22 +117,22 @@ INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E70C8);
 
 void func_801E7244(void)
 {
-    if (D_801E7520 > 0)
+    if (D_801E7520 <= 0)
+        return;
+
+    D_801E76D0 = 0;
+    D_801E7520 -= 1;
+
+    switch (D_801E751C) 
     {
-        D_801E76D0 = 0;
-        D_801E7520 -= 1;
+        case 1:
+            func_801E3910(D_801E751C, (D_800BCD34 >> (D_800BCD40 * 3)) & 7);
+            break;
 
-        switch (D_801E751C) 
-        {
-            case 1:
-                func_801E3910(D_801E751C, (D_800BCD34 >> (D_800BCD40 * 3)) & 7);
-                break;
-
-            case 2:
-            case 3:
-                func_801E3910(D_801E751C, func_8002E990());
-                break;
-        }
+        case 2:
+        case 3:
+            func_801E3910(D_801E751C, func_8002E990());
+            break;
     }
 }
 

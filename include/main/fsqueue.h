@@ -101,9 +101,9 @@ typedef struct
  */
 typedef struct
 {
-    u32 field_00;
-    u32 field_04;
-    u32 field_08;
+    u32 field_0;
+    u32 field_4;
+    u32 field_8;
 } s_FsAnmDesc;
 
 /**

@@ -5,33 +5,33 @@
 
 typedef struct
 {
-    s16 field_00;
-    s16 field_02;
-    s16 field_04;
-    s8  unk_06;
-    s8  field_07; // bool
-    s32 unk_08;
-    s32 unk_0C;
+    s16 field_0;
+    s16 field_2;
+    s16 field_4;
+    s8  unk_6;
+    s8  field_7; // bool
+    s32 unk_8;
+    s32 unk_C;
     s32 unk_10;
     u16 field_14;
     s16 unk_16;
     u32 field_18;
-} s_UnkCredits0; // Size: unknown
+} s_UnkCredits0; // Size: >=2C
 
 // Used by func_801E2E28.
 typedef struct
 {
-    s16 field_00;
-    s16 field_02;
-    s16 field_04;
+    s16 field_0;
+    s16 field_2;
+    s16 field_4;
 } s_UnkCredits1; // Size: 6
 
 typedef struct
 {
-    u32 unk_00;
-    u32 unk_04;
-    u32 field_08;
-    u32 field_0C;
+    u32 unk_0;
+    u32 unk_4;
+    u32 field_8;
+    u32 field_C;
     u32 field_10;
     u32 field_14;
     u32 unk_18;
@@ -42,22 +42,6 @@ typedef struct
     u32 field_2C;
 } s_UnkCredits2; // Size: >=48
 
-// Type used by g_GameSystem (currently "GameSys"). Rename to something like s_GameSystemInfo?
-typedef struct
-{
-    u8  pad[1420];
-    u8  field_58C;
-    u8  field_58D;
-    u8  field_58E;
-    u8  field_58F;
-    u32 field_590;
-    u32 field_594;
-    u32 field_598;
-    u32 field_59C;
-    u32 field_5A0;
-} s_UnkCredits3; // Size: >=1460
-
-extern s32           D_800A8FF0;
 extern s_UnkCredits0 D_800AFE08;
 extern s8            D_800AFE0E;
 extern s32           D_800AFE10; // Packed RGB+command color? Command is 0x64.
@@ -65,8 +49,6 @@ extern s_UnkCredits0 D_800AFE24;
 extern s8            D_800AFE2A;
 extern s32           D_800AFE2C; // Packed RGB+command color? Command is 0x2C.
 extern s_UnkCredits2 D_800B9FC0;
-extern s_UnkCredits3 D_800BC728;
-extern s32           D_800BCD0C;
 extern s32           D_800C48F0;
 extern s_UnkCredits1 D_801E5558[];
 extern RECT          D_801E557C[];
