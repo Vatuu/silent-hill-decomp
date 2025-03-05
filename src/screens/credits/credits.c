@@ -69,6 +69,7 @@ INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E3094);
 
 // TODO: Matches, but checksum fails.
 INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E3124);
+// Draws some image on the screen.
 /*s32 func_801E3124(void)
 {
     switch (D_800BC728.field_59C)
@@ -91,7 +92,7 @@ INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E3124);
 
             func_80045A7C(0x12);
             func_80045A7C(0x10);
-            D_800BC728.field_59C = (s32)(D_800BC728.field_59C + 1);
+            D_800BC728.field_59C++;
             break;
 
         case 1:

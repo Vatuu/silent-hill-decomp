@@ -7,9 +7,9 @@
 typedef struct
 {
     u8  unk_0[1420];
-    u8  field_58C;
-    u8  field_58D;
-    u8  field_58E;
+    u8  field_58C; // R?
+    u8  field_58D; // G?
+    u8  field_58E; // B?
     u8  field_58F;
     u32 field_590;
     u32 field_594; // Maybe some game state enum entry.
