@@ -489,7 +489,43 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vc_main", vcMakeIdealCamPosForThroug
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vc_main", vcMakeIdealCamPosUseVC_ROAD_DATA);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vc_main", vcAdjustXzInLimAreaUsingMIN_IN_ROAD_DIST);
+// vcGetMinInRoadDist() in SH2, hardcoded 4096 in SH1
+#define MIN_IN_ROAD_DIST 4096
+
+void vcAdjustXzInLimAreaUsingMIN_IN_ROAD_DIST(
+    s32 *x_p, s32 *z_p,
+    VC_LIMIT_AREA *lim_p) // 0x80084210
+{
+    s32 min_z;
+    s32 min_x;
+    s32 max_z;
+    s32 max_x;
+
+    s32 x = *x_p;
+    s32 z = *z_p;
+
+    min_x = (lim_p->min_hx << 8) + MIN_IN_ROAD_DIST;
+    max_x = (lim_p->max_hx << 8) - MIN_IN_ROAD_DIST;
+    min_z = (lim_p->min_hz << 8) + MIN_IN_ROAD_DIST;
+    max_z = (lim_p->max_hz << 8) - MIN_IN_ROAD_DIST;
+
+    if (max_x < min_x)
+    {
+        min_x = (min_x + max_x) >> 1;
+        max_x = min_x;
+    }
+    if (max_z < min_z)
+    {
+        min_z = (min_z + max_z) >> 1;
+        max_z = min_z;
+    }
+
+    x = CLAMP(x, min_x, max_x);
+    z = CLAMP(z, min_z, max_z);
+
+    *x_p = x;
+    *z_p = z;
+}
 
 void vcMakeBasicCamTgtMvVec(VECTOR3 *tgt_mv_vec, VECTOR3 *ideal_pos,
                             VC_WORK *w_p, s32 max_tgt_mv_xz_len) // 0x800842C0
