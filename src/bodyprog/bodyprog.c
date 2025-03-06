@@ -27,17 +27,17 @@ void func_8002E630()
 
         switch (i) 
         {                          
-        case 0:
-            ptr = D_800B2780;
-            break;
+            case 0:
+                ptr = D_800B2780;
+                break;
 
-        case 4:
-            ptr = D_800B3680;
-            break;
+            case 4:
+                ptr = D_800B3680;
+                break;
 
-        default:
-            ptr = D_800B4580;
-            break;
+            default:
+                ptr = D_800B4580;
+                break;
         }
 
         D_800B5508[i].field_14 = ptr;
