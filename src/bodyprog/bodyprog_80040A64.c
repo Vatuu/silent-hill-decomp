@@ -1,4 +1,5 @@
 #include "common.h"
+#include "bodyprog/bodyprog.h"
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80040A64);
 

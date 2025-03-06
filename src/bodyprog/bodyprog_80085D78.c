@@ -1,4 +1,5 @@
 #include "common.h"
+#include "bodyprog/bodyprog.h"
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80085D78);
 
@@ -154,6 +155,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008A0E4);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008A270);
 
+// TODO: Has match on decomp.me, some issues getting it to build.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008A2E0);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008A35C);

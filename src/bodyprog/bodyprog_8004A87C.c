@@ -1,12 +1,39 @@
 #include "common.h"
+#include "gpu.h"
+#include "bodyprog/bodyprog.h"
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8004A87C);
+#include <libgs.h>
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8004A8C0);
+void func_8004A87C(s32 arg0, s32 arg1)
+{
+    if (arg0 != -1)
+	{
+        D_800C38A8 = arg0 - 0xA0;
+        D_800C38AC = (s16)(arg0 - 0xA0);
+    }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8004A8CC);
+    if (arg1 != -1)
+	{
+        D_800C38AA = arg1 - 0x70;
+    }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8004A8DC);
+    D_800AD49C = 6;
+}
+
+void func_8004A8C0(s32 arg0)
+{
+    D_800AD49C = arg0;
+}
+
+void func_8004A8CC(void)
+{
+    D_800AD49C = 6;
+}
+
+void func_8004A8DC(s16 arg0)
+{
+    D_800AD498 = arg0;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", GFX_StringDraw);
 
@@ -18,9 +45,30 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8004B658);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8004B684);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8004B6D4);
+void func_8004B6D4(s16 arg0, s16 arg1)
+{
+    if (arg0 != -1)
+    {
+        D_800C38FC = arg0 + (-D_800BCCB0 / 2);
+        D_800C391C = D_800C38FC;
+    }
+    
+    if (arg1 != -1)
+    {
+        D_800C38FE = arg1 + (-D_800BCCB2 / 2);
+    }
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8004B74C);
+void func_8004B74C(s16 arg0)
+{
+    if ((u32)arg0 >= 5)
+    {
+        D_800C391E = 0;
+        return;
+    }
+    
+    D_800C391E = arg0;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8004B76C);
 
@@ -32,7 +80,10 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8004BB4C);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8004BBF4);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8004BCBC);
+void func_8004BCBC(s32 arg0)
+{
+    GsMapModelingData(arg0 + 4);
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8004BCDC);
 

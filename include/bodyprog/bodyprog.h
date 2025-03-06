@@ -27,6 +27,10 @@ typedef struct
     s32 field_18; 
 } s_800B5508;
 
+extern s16 D_800AD498;
+
+extern s32 D_800AD49C;
+
 /** Unknown bodyprog var. Used in `Fs_StartQueueReadAnm`. */
 extern s_800A90FC D_800A90FC[];
 
@@ -36,15 +40,33 @@ extern s_800B5508 D_800B3680[];
 
 extern s_800B5508 D_800B4580[];
 
+extern s32 D_800B5480;
+
 extern s_800B5508 D_800B5508[];
 
 extern s_800B5508 D_800B55E8;
 
-extern s32 D_800B5480;
+extern s32 D_800B55FC;
 
 extern s32 D_800B5618;
 
-extern s32 D_800B55FC;
+extern u16 D_800BCCB0;
+
+extern u16 D_800BCCB2;
+
+extern s16 D_800C38A8;
+
+extern s16 D_800C38AA;
+
+extern s32 D_800C38AC;
+
+extern s16 D_800C38FC;
+
+extern s16 D_800C38FE;
+
+extern s16 D_800C391C;
+
+extern s16 D_800C391E;
 
 /** Unknown bodyprog var. Set in `Fs_DoQueueThingWhenEmpty`. */
 extern s32 D_800C489C;
