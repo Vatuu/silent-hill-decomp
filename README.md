@@ -49,4 +49,4 @@ Additional Make commands:
 NOTE: `build-c/build-C` are obligatory if the configuration in the `Makefile` has been modified when intending to work on different overlays.
 
 ## Contributing
-Contributions are welcome. Feel free to contribute via a pull request or issue and join us on the [PS1/PS2 Decompilation Discord server](https://discord.gg/VwCPdfbxgm) in the `#silent-hill` channel.
+Contributions are welcome. Following our [coding conventions](./docs/Coding Conventions.md), feel free to contribute via a pull request or issue and join us on the [PS1/PS2 Decompilation](https://discord.gg/VwCPdfbxgm) Discord server in the `#silent-hill` channel.

@@ -14,7 +14,7 @@ CONFIG_DIR   := configs
 LINKER_DIR   := linkers
 IMAGE_DIR    := $(ROM_DIR)/image
 BUILD_DIR    := build
-OUT_DIR		 := $(BUILD_DIR)/out
+OUT_DIR      := $(BUILD_DIR)/out
 TOOLS_DIR    := tools
 PERMUTER_DIR := permuter
 ASSETS_DIR   := assets
@@ -35,11 +35,12 @@ PYTHON          := python3
 SPLAT           := $(PYTHON) -m splat split
 MASPSX          := $(PYTHON) $(TOOLS_DIR)/maspsx/maspsx.py
 DUMPSXISO       := $(TOOLS_DIR)/psxiso/dumpsxiso
+MKPSXISO        := $(TOOLS_DIR)/psxiso/mkpsxiso
 SILENT_ASSETS   := $(PYTHON) $(TOOLS_DIR)/silentassets/extract.py
+INSERT_OVLS     := $(PYTHON) $(TOOLS_DIR)/silentassets/insertovl.py
 GET_YAML_TARGET := $(PYTHON) $(TOOLS_DIR)/get_yaml_target.py
 
 # Flags
-
 OPT_FLAGS           := -O2
 ENDIAN              := -EL
 INCLUDE_FLAGS       := -Iinclude -I $(BUILD_DIR) -Iinclude/psyq
@@ -50,11 +51,12 @@ OBJCOPY_FLAGS       := -O binary
 OBJDUMP_FLAGS       := --disassemble-all --reloc --disassemble-zeroes -Mreg-names=32
 SPLAT_FLAGS         := --disassemble-all
 DUMPSXISO_FLAGS     := -x $(ROM_DIR) -s $(ROM_DIR)/layout.xml $(IMAGE_DIR)/$(GAME_NAME).bin
+MKPSXISO_FLAGS      := -y -q -o $(BUILD_DIR) $(ROM_DIR)/layout.xml
 SILENT_ASSETS_FLAGS := -exe $(ROM_DIR)/SLUS_007.07 -fs $(ROM_DIR)/SILENT. -fh $(ROM_DIR)/HILL. $(ASSETS_DIR)
+INSERT_OVLS_FLAGS   := -exe $(ROM_DIR)/SLUS_007.07 -fs $(ROM_DIR)/SILENT. -ftb $(ASSETS_DIR)/filetable.c.inc -b $(OUT_DIR) -o $(ROM_DIR)
 
-# For some reason, main executable uses -G8 while overlays uses -G0.
-# This function redefines required parameters for compilation checking depending on
-# whether a file's route is from main executable or an overlay.
+# Main executable uses -G8 while overlays use -G0.
+# This function redefines required parameters for compilation checking depending on whether a file's route is from main executable or an overlay.
 define DL_FlagsSwitch
 	$(if $(or $(filter MAIN,$(patsubst build/src/main/%,MAIN,$(1))), $(filter MAIN,$(patsubst build/asm/main/%,MAIN,$(1)))), $(eval DL_FLAGS = -G8), $(eval DL_FLAGS = -G0))
 	$(eval AS_FLAGS = $(ENDIAN) $(INCLUDE_FLAGS) $(OPT_FLAGS) $(DL_FLAGS) -march=r3000 -mtune=r3000 -no-pad-sections)
@@ -167,6 +169,10 @@ expected: check
 	#  python3 tools/asm-differ/diff.py -mwo --overlay bodyprog vcRetMaxTgtMvXzLen
 	# To try and decompile a function with M2C:
 	#  python3 tools/decompile.py vcRetMaxTgtMvXzLen
+
+iso:
+	$(INSERT_OVLS) $(INSERT_OVLS_FLAGS)
+	$(MKPSXISO) $(MKPSXISO_FLAGS)
 
 extract:
 	$(DUMPSXISO) $(DUMPSXISO_FLAGS)
