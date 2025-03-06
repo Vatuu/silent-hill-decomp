@@ -6,7 +6,7 @@
 #include <libgs.h>
 
 // TODO:
-// - change "struct SYS_W" to "SYS_W" below once SYS_W struct is added
+// - update func prototypes to match 1:1 with C files (s32 instead of int, etc)
 // - flags below are from SH2, most seem to match with SH but might be some
 // differences
 // - code that accesses VC_ROAD_TYPE & VC_NEAR_ROAD_DATA is odd, might need
