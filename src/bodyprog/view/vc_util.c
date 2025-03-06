@@ -193,7 +193,9 @@ void vcSetRefPosAndCamPosAngByPad(VECTOR3   *ref_pos,
     sp38.t[2] = sp18.vz;
     vwSetViewInfoDirectMatrix(NULL, &sp38);
 
-    if (g_pController2->btns_held_C & 0x0F005000)
+    if (g_pController2->btns_held_C &
+        (Pad_LSUp | Pad_LSRight | Pad_LSDown | Pad_LSLeft | Pad_BtnCross |
+         Pad_BtnTriangle))
     {
         SVECTOR sp58;
         vwAngleToVector(&sp58, &cam_ang, 0x500);
