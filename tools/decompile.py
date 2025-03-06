@@ -128,8 +128,26 @@ class InjectRes(Enum):
 # check if the overlay can be compiled
 def check_injected_code(func) -> InjectRes:
     print(f"make {func.overlay_name}")
+    
+    make_str = ""
+    if func.overlay_name == "SLUS_007.07" or func.overlay_name == "main":
+        make_str = ""
+    else:
+        if func.overlay_name == "bodyprog":
+            make_str = "build/out/1ST/BODYPROG.BIN"
+        elif func.overlay_name == "b_konami":
+            make_str = "build/out/1ST/B_KONAMI.BIN"
+        elif func.overlay_name == "option" or func.overlay_name == "options":
+            make_str = "build/out/VIN/OPTION.BIN"
+        elif func.overlay_name == "saveload":
+            make_str = "build/out/VIN/SAVELOAD.BIN"
+        elif func.overlay_name == "stf_roll" or func.overlay_name == "credits":
+            make_str = "build/out/VIN/STF_ROLL.BIN"
+        elif func.overlay_name == "stream":
+            make_str = "build/out/VIN/STREAM.BIN"
+    
     compile_result = subprocess.run(
-        f"make {func.overlay_name}",
+        f"make {make_str}",
         cwd=root_dir,
         shell=True,
         check=False,

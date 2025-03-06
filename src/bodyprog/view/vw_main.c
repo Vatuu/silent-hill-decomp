@@ -1,4 +1,4 @@
-#include "common.h"
+#include "game.h"
 
 #include "bodyprog/vw_system.h"
 
@@ -33,7 +33,29 @@ void vwGetViewAngle(SVECTOR *ang) // 0x80048AC4
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vw_main", func_80048AF4);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vw_main", vwSetCoordRefAndEntou);
+void vwSetCoordRefAndEntou(GsCOORDINATE2 *parent_p, s32 ref_x, s32 ref_y,
+                           s32 ref_z, s16 cam_ang_y, s16 cam_ang_z, s32 cam_y,
+                           s32 cam_xz_r) // 0x80048BE0
+{
+    SVECTOR view_ang;
+    MATRIX *view_mtx = &vwViewPointInfo.vwcoord.coord;
+
+    vwViewPointInfo.vwcoord.flg   = 0;
+    vwViewPointInfo.vwcoord.super = parent_p;
+
+    view_ang.vy = cam_ang_y;
+    view_ang.vz = cam_ang_z;
+    view_ang.vx = -ratan2(-cam_y, cam_xz_r);
+    view_ang.vy = (view_ang.vy + 0x800) & 0xFFF;
+
+    func_80096E78(&view_ang, view_mtx);
+
+    view_mtx->t[0] =
+        (ref_x >> 4) + (((cam_xz_r >> 4) * shRsin(cam_ang_y)) >> 0xC);
+    view_mtx->t[1] = (ref_y >> 4) + (cam_y >> 4);
+    view_mtx->t[2] =
+        (ref_z >> 4) + (((cam_xz_r >> 4) * shRcos(cam_ang_y)) >> 0xC);
+}
 
 void vwSetViewInfoDirectMatrix(GsCOORDINATE2 *pcoord,
                                MATRIX        *cammat) // 0x80048CF0
@@ -43,7 +65,24 @@ void vwSetViewInfoDirectMatrix(GsCOORDINATE2 *pcoord,
     vwViewPointInfo.vwcoord.coord = *cammat;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vw_main", vwSetViewInfo);
+// inlined into vwSetViewInfo, maybe vwMatrixToPosition?
+static inline void Math_MatrixToPosition(VECTOR3 *pos, MATRIX *workm)
+{
+    pos->vx = workm->t[0] * 16;
+    pos->vy = workm->t[1] * 16;
+    pos->vz = workm->t[2] * 16;
+}
+
+void vwSetViewInfo() // 0x80048D48
+{
+    vbSetRefView(&vwViewPointInfo.rview);
+
+    Math_MatrixToPosition(&vwViewPointInfo.worldpos,
+                          &vwViewPointInfo.vwcoord.workm);
+
+    vwMatrixToAngleYXZ(&vwViewPointInfo.worldang,
+                       &vwViewPointInfo.vwcoord.workm);
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vw_main", func_80048DA8);
 

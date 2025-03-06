@@ -1,5 +1,4 @@
-#include "common.h"
-#include "gpu.h"
+#include "game.h"
 #include "bodyprog/bodyprog.h"
 
 #include <libgs.h>
@@ -49,13 +48,13 @@ void func_8004B6D4(s16 arg0, s16 arg1)
 {
     if (arg0 != -1)
     {
-        D_800C38FC = arg0 + (-D_800BCCB0 / 2);
+        D_800C38FC = arg0 + (-g_GameWork.gsScreenWidth_588 / 2);
         D_800C391C = D_800C38FC;
     }
     
     if (arg1 != -1)
     {
-        D_800C38FE = arg1 + (-D_800BCCB2 / 2);
+        D_800C38FE = arg1 + (-g_GameWork.gsScreenHeight_58A / 2);
     }
 }
 
