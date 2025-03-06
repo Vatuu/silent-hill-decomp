@@ -1,5 +1,6 @@
 #include "common.h"
 #include "bodyprog/bodyprog.h"
+#include "main/fsqueue.h"
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80040A64);
 
@@ -21,7 +22,16 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_8004137C);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800414E0);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80041ADC);
+s32 func_80041ADC(s32 queueIdx)
+{
+    if (queueIdx == -1)
+        return 0;
+    
+    if (Fs_QueueIsEntryLoaded(queueIdx) == 0)
+        return 1;
+    
+    return 2;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80041B1C);
 
@@ -29,11 +39,33 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80041BA0);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80041C24);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80041CB4);
+void func_80041CB4(s_80041CB4* arg0, s_80041CEC* arg1)
+{
+    arg0->field_0 = arg1;
+    func_80041CEC(arg1);
+    
+    arg0->field_8 = 0;
+    arg0->field_4 = -1;
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80041CEC);
+void func_80041CEC(s_80041CEC* arg0)
+{
+    arg0->field_0 = 48;
+    arg0->field_1 = 6;
+    arg0->field_2 = 1;
+    arg0->field_3 = 0;
+    arg0->field_8 = 0;
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80041D10);
+void func_80041D10(s_80041D10* array, s32 size)
+{
+    s_80041D10* end = array + size;
+    while (array < end)
+    {
+        array->field_4 = -1;
+        array = (s_80041D10*)((u8*)array + sizeof(s_80041D10)); 
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80041D48);
 

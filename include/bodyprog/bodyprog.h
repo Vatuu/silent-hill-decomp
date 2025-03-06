@@ -27,6 +27,30 @@ typedef struct
     s32 field_22A4;
 } s_SystemWork; // Size: >=8868
 
+typedef struct
+{
+    s32 field_0;
+    s32 field_4;
+    s32 field_8;
+} s_80041CB4;
+
+typedef struct
+{
+    s8  unk_0[4];
+    s32 field_4;
+    s8  unk_8[18];
+} s_80041D10; // Size: 28
+
+typedef struct
+{
+    s8 field_0;
+    s8 field_1;
+    s8 field_2;
+    s8 field_3;
+    s8 unk_4[4];
+    s8 field_8;
+} s_80041CEC;
+
 /** Something related to ANM files. See `D_800A90FC`. */
 typedef struct
 {
@@ -49,6 +73,9 @@ typedef struct
 } s_800B5508;
 
 extern s_GameWork D_800BC728;
+
+/** Clears some field in some struct. */
+void func_80041D10(s_80041D10* array, s32 size);
 
 /** Accessed by credits and saveload. */
 extern s32 D_800A8FF0;
@@ -126,6 +153,8 @@ void func_800303E4();
  * - 'func_801E709C' in saveload.c */
 void func_800314EC(s_FsImageDesc* arg0);
 
+s32 Chara_Load(s32 arg0, s8 arg1, s32 arg2, s8 arg3, s32 arg4, s32 arg5);
+
 void GFX_ClearRectInterlaced(s16 x, s16 y, s16 w, s16 h, u8 r, u8 g, u8 b);
 
 /** Bodyprog func that searches for English title screen background graphic. */
@@ -139,6 +168,13 @@ void func_80035560(s32 arg0, s32 arg1, void* arg2, s32 arg3);
 
 /** Unknown bodyprog func. Called by `Fs_QueueDoThingWhenEmpty`. */
 s32 func_8003c850(void);
+
+/** Some kind of queue entry load status getter. */
+s32 func_80041ADC(s32 queueIdx);
+
+void func_80041CB4(s_80041CB4* arg0, s_80041CEC* arg1);
+
+void func_80041CEC(s_80041CEC*);
 
 /** Unknown bodyprog func. Called by `Fs_QueueWaitForEmpty`. */
 void func_80089128(void);

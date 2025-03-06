@@ -1,6 +1,10 @@
 #include "common.h"
 #include "bodyprog/bodyprog.h"
 
+void func_80035338(s32 arg0, s8 arg1, u32 arg2, s32 arg3); // arg3 type assumed.
+void func_8003D5B4(s8 arg0);
+void func_8003D6E0(s32 arg0, s32 arg1, s32 arg2, void* arg3);
+
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80085D78);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80085DC0);
@@ -81,7 +85,14 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800881B8);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80088370);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", Chara_Load);
+// arg2 type assumed.
+s32 Chara_Load(s32 arg0, s8 arg1, s32 arg2, s8 arg3, s32 arg4, s32 arg5) // 0x80088C7C
+{
+    func_80035338(arg0 + 1, arg1, 0, arg2);
+    func_8003D5B4(arg3);
+    func_8003D6E0(arg1, arg0, arg4, arg5);
+    return 1;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80088D0C);
 
