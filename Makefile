@@ -55,9 +55,8 @@ MKPSXISO_FLAGS      := -y -q -o $(BUILD_DIR) $(ROM_DIR)/layout.xml
 SILENT_ASSETS_FLAGS := -exe $(ROM_DIR)/SLUS_007.07 -fs $(ROM_DIR)/SILENT. -fh $(ROM_DIR)/HILL. $(ASSETS_DIR)
 INSERT_OVLS_FLAGS   := -exe $(ROM_DIR)/SLUS_007.07 -fs $(ROM_DIR)/SILENT. -ftb $(ASSETS_DIR)/filetable.c.inc -b $(OUT_DIR) -o $(ROM_DIR)
 
-# Main executable uses -G8 while overlays uses -G0.
-# This function redefines required parameters for compilation checking depending on
-# whether a file's route is from main executable or an overlay.
+# Main executable uses -G8 while overlays use -G0.
+# This function redefines required parameters for compilation checking depending on whether a file's route is from main executable or an overlay.
 define DL_FlagsSwitch
 	$(if $(or $(filter MAIN,$(patsubst build/src/main/%,MAIN,$(1))), $(filter MAIN,$(patsubst build/asm/main/%,MAIN,$(1)))), $(eval DL_FLAGS = -G8), $(eval DL_FLAGS = -G0))
 	$(eval AS_FLAGS = $(ENDIAN) $(INCLUDE_FLAGS) $(OPT_FLAGS) $(DL_FLAGS) -march=r3000 -mtune=r3000 -no-pad-sections)

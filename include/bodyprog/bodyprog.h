@@ -16,14 +16,15 @@ typedef struct
     u32 field_0C;
 } s_800A90FC;
 
-typedef struct {
-    s32 unk_0;
-    s32 unk_4;
-    s32 unk_8;
-    s32 unk_C;
-    s32 unk_10;
-    s32 unk_14;
-    s32 unk_18; 
+typedef struct
+{
+    s32 field_0;
+    s32 field_4;
+    s32 field_8;
+    s32 field_C;
+    s32 field_10;
+    s32 field_14;
+    s32 field_18; 
 } s_800B5508;
 
 /** Unknown bodyprog var. Used in `Fs_StartQueueReadAnm`. */
@@ -50,7 +51,7 @@ extern s32 D_800C489C;
 
 void func_8002E630();
 
-void func_8002E6E4(s32 arg0);
+void func_8002E6E4(s32 idx);
 
 void func_8002E730(s32 arg0);
 
@@ -76,13 +77,13 @@ void func_800314EC(s_FsImageDesc* arg0);
 
 void GFX_ClearRectInterlaced(s16 x, s16 y, s16 w, s16 h, u8 r, u8 g, u8 b);
 
-/** Bodyprog function that search the english title screen background graphic */
+/** Bodyprog func that searches for English title screen background graphic. */
 void GameFS_TitleGfxSeek();
 
 /** Bodyprog entrypoint. Called by `main`. */
 void func_80032EE0(void);
 
-/** Unknown bodyprog function. Called by `Fs_QueuePostLoadAnm`. */
+/** Unknown bodyprog func. Called by `Fs_QueuePostLoadAnm`. */
 void func_80035560(s32 arg0, s32 arg1, void* arg2, s32 arg3);
 
 /** Unknown bodyprog func. Called by `Fs_DoQueueThingWhenEmpty`. */

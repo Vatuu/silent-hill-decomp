@@ -248,8 +248,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008E794);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008EA68);
 
-void func_8008EF18(void) {
-}
+void func_8008EF18(void) {}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008EF20);
 
@@ -279,8 +278,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008F470);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", Demo_ExitDemo);
 
-void func_8008F518(void) {
-}
+void func_8008F518(void) {}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008F520);
 
@@ -308,13 +306,11 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80090664);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8009134C);
 
-void func_80091380(void) {
-}
+void func_80091380(void) {}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80091388);
 
-void func_80091464(void) {
-}
+void func_80091464(void) {}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8009146C);
 

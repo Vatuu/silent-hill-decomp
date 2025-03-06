@@ -2,8 +2,7 @@
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80040A64);
 
-void func_80040B6C(void) {
-}
+void func_80040B6C(void) {}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80040B74);
 
@@ -283,11 +282,9 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80048424);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80048498);
 
-void func_800485B0(void) {
-}
+void func_800485B0(void) {}
 
-void func_800485B8(void) {
-}
+void func_800485B8(void) {}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800485C0);
 

@@ -1,3 +1,4 @@
+#include "common.h"
 #include "bodyprog/bodyprog.h"
 #include "main/fsqueue.h"
 
@@ -8,7 +9,7 @@
 
 void func_8002E630() 
 {
-    s_800B5508 *ptr;
+    s_800B5508* ptr;
     s32 i;
 
     func_800303E4();
@@ -20,7 +21,7 @@ void func_8002E630()
 
     for (i = 0; i < 8; i++) 
     {
-        D_800B5508[i].unk_0 = 0;
+        D_800B5508[i].field_0 = 0;
         
         func_8002E730(i);
 
@@ -39,30 +40,26 @@ void func_8002E630()
             break;
         }
 
-        D_800B5508[i].unk_14 = ptr;
+        D_800B5508[i].field_14 = ptr;
         
         func_8002E6E4(i);
     } 
 }
 
-void func_8002E6E4(s32 arg0)
+void func_8002E6E4(s32 idx)
 {
     s_800B5508* temp_v0;
     s_800B5508* temp_s0;
 
     temp_v0 = &D_800B5508;
-
-    temp_s0 = &temp_v0[arg0];
+    temp_s0 = &temp_v0[idx];
+    temp_s0->field_0 = 0;
     
-    temp_s0->unk_0 = 0;
+    func_8002E730(idx);
+    bzero(temp_s0->field_14, 3840);
     
-    func_8002E730(arg0);
-    
-    bzero(temp_s0->unk_14, 3840);
-    
-    temp_s0->unk_18 = 0;
+    temp_s0->field_18 = 0;
 }
-
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8002E730);
 
@@ -77,24 +74,23 @@ void func_8002E7BC()
         D_800B5480 = 1;
         
         func_8002E8E4();
-        
         func_80030414();
         
-        D_800B55E8.unk_0 = 0;
-        D_800B55E8.unk_4 = 0;
-        D_800B55E8.unk_8 = 0;
-        D_800B55E8.unk_C = 0;
-        D_800B55E8.unk_10 = 0;
-        D_800B55E8.unk_14 = 0;
-        D_800B55E8.unk_18 = 0;
+        D_800B55E8.field_0 = 0;
+        D_800B55E8.field_4 = 0;
+        D_800B55E8.field_8 = 0;
+        D_800B55E8.field_C = 0;
+        D_800B55E8.field_10 = 0;
+        D_800B55E8.field_14 = 0;
+        D_800B55E8.field_18 = 0;
         
-        temp_v0 = &((s_800B5508 *)(&D_800B55E8))->unk_18;
+        temp_v0 = &((s_800B5508*)(&D_800B55E8))->field_18;
         
-        temp_v0->unk_4 = 0;
-        temp_v0->unk_8 = 0;
-        temp_v0->unk_C = 0;
-        temp_v0->unk_10 = 0;
-        temp_v0->unk_14 = 0;
+        temp_v0->field_4 = 0;
+        temp_v0->field_8 = 0;
+        temp_v0->field_C = 0;
+        temp_v0->field_10 = 0;
+        temp_v0->field_14 = 0;
     }
 }
 
@@ -103,7 +99,6 @@ void func_8002E830()
     if (D_800B5480 != 0) 
     {
         D_800B5480 = 0;
-        
         func_80030640();
     }
 }
@@ -147,19 +142,18 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8002EB88);
 
 void func_8002ECE0(s_800B5508* arg0)
 {
-    if (func_8003030C(arg0->unk_4) != 0)
+    if (func_8003030C(arg0->field_4) != 0)
     {
-        arg0->unk_14 = 11;
+        arg0->field_14 = 11;
+        D_800B5508[arg0->field_4].field_0 = 3;
         
-        D_800B5508[arg0->unk_4].unk_0 = 3;
+        func_8002E730(arg0->field_4);
         
-        func_8002E730(arg0->unk_4);
-        
-        D_800B5508[arg0->unk_4].unk_18 = 15;
+        D_800B5508[arg0->field_4].field_18 = 15;
     }
     else  
     {
-        arg0->unk_14 = 10;
+        arg0->field_14 = 10;
     }
 }
 
@@ -307,7 +301,8 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", GFX_VSyncCallback);
 
 void GameFS_TitleGfxSeek() 
 {
-    Fs_StartQueueSeek(1980); // Looks for TIM\TITLE_E.TIM
+    // Looks for TIM\TITLE_E.TIM.
+    Fs_StartQueueSeek(1980);
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", GameFS_TitleGfxLoad);
@@ -332,11 +327,9 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", Settings_RestoreDefaults);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", Settings_RestoreControlDefaults);
 
-void nullsub_800334C8(void) {
-}
+void nullsub_800334C8(void) {}
 
-void func_800334D0(void) {
-}
+void func_800334D0(void) {}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_800334D8);
 
@@ -637,8 +630,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003D3BC);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003D444);
 
-void func_8003D460(void) {
-}
+void func_8003D460(void) {}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003D468);
 
