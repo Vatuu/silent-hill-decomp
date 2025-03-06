@@ -31,7 +31,7 @@ extern s16 D_800AD498;
 
 extern s32 D_800AD49C;
 
-/** Unknown bodyprog var. Used in `Fs_StartQueueReadAnm`. */
+/** Unknown bodyprog var. Used in `Fs_QueueStartReadAnm`. */
 extern s_800A90FC D_800A90FC[];
 
 extern s_800B5508 D_800B2780[];
@@ -68,7 +68,7 @@ extern s16 D_800C391C;
 
 extern s16 D_800C391E;
 
-/** Unknown bodyprog var. Set in `Fs_DoQueueThingWhenEmpty`. */
+/** Unknown bodyprog var. Set in `Fs_QueueDoThingWhenEmpty`. */
 extern s32 D_800C489C;
 
 void func_8002E630();
@@ -108,13 +108,13 @@ void func_80032EE0(void);
 /** Unknown bodyprog func. Called by `Fs_QueuePostLoadAnm`. */
 void func_80035560(s32 arg0, s32 arg1, void* arg2, s32 arg3);
 
-/** Unknown bodyprog func. Called by `Fs_DoQueueThingWhenEmpty`. */
+/** Unknown bodyprog func. Called by `Fs_QueueDoThingWhenEmpty`. */
 s32 func_8003c850(void);
 
-/** Unknown bodyprog func. Called by `Fs_WaitForEmptyQueue`. */
+/** Unknown bodyprog func. Called by `Fs_QueueWaitForEmpty`. */
 void func_80089128(void);
 
-/** Unknown bodyprog func. Called by `Fs_WaitForEmptyQueue` with `0` and then `1`. */
+/** Unknown bodyprog func. Called by `Fs_QueueWaitForEmpty` with `0` and then `1`. */
 void func_800892A4(s32);
 
 #endif
