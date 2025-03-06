@@ -204,6 +204,7 @@ void func_801E28B0(void)
 
 void func_801E2908(void)
 {
+    // old IDB name MainLoopState11_Movie_PlayEnding_801E2908
     s_GameWork       *gameWork   = g_pGameWork0;
     s_ControllerData *controller = g_pController1;
     s32               prev_594;
@@ -267,7 +268,7 @@ void func_801E2A24(void)
     D_800B5C30           = 0x1000;
 }
 
-void open_main(s32 file_idx, s16 num_frames)
+void open_main(s32 file_idx, s16 num_frames) // 0x801E2AA4
 {
     Fs_QueueWaitForEmpty();
     if (!num_frames)
@@ -283,7 +284,7 @@ void open_main(s32 file_idx, s16 num_frames)
 
 INCLUDE_ASM("asm/stream/nonmatchings/stream", movie_main);
 
-void strSetDefDecEnv(DECENV *dec, int x0, int y0, int x1, int y1)
+void strSetDefDecEnv(DECENV *dec, int x0, int y0, int x1, int y1) // 0x801E2F8C
 {
     dec->rect[0].w = 480;
     dec->rect[1].w = 480;
@@ -305,7 +306,7 @@ void strSetDefDecEnv(DECENV *dec, int x0, int y0, int x1, int y1)
     dec->rect[1].y = y1;
 }
 
-void strInit(CdlLOC *loc, void (*callback)())
+void strInit(CdlLOC *loc, void (*callback)()) // 0x801E300C
 {
     DecDCTReset(0);
     DecDCToutCallback(callback);
@@ -314,7 +315,7 @@ void strInit(CdlLOC *loc, void (*callback)())
     strKickCD(loc);
 }
 
-void strCallback()
+void strCallback() // 0x801E307C
 {
     RECT snap_rect;
     int  id;
@@ -357,7 +358,7 @@ void strCallback()
     }
 }
 
-void strKickCD(CdlLOC *loc)
+void strKickCD(CdlLOC *loc) // 0x801E31CC
 {
     char   v2[8];
     u_char param;
@@ -376,7 +377,7 @@ void strKickCD(CdlLOC *loc)
         VSync(0);
 }
 
-int strNextVlc(DECENV *dec)
+int strNextVlc(DECENV *dec) // 0x801E3298
 {
     u_long *next, *strNext();
 
@@ -395,7 +396,7 @@ int strNextVlc(DECENV *dec)
     return 0;
 }
 
-u_long *strNext(DECENV *dec)
+u_long *strNext(DECENV *dec) // 0x801E331C
 {
     u_long   *addr;
     CDSECTOR *sector;
@@ -427,7 +428,7 @@ u_long *strNext(DECENV *dec)
     return addr;
 }
 
-void strSync(DECENV *dec)
+void strSync(DECENV *dec) // 0x801E3438
 {
     volatile u_long cnt = WAIT_TIME;
 
