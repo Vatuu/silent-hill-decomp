@@ -5,6 +5,7 @@
 
 #include <libgte.h>
 #include <libgpu.h>
+#include <libgs.h>
 
 /** Primitive types. */
 enum PrimType

@@ -1,17 +1,19 @@
 g_MainLoop_NumFrames = 0x800B9CCC;
 g_CurOTNum = 0x800B9FB8;
-g_SysWork = 0x800B9FC0; // type:SYS_W size:0x2768 - SYS_W struct?
-g_GameWork = 0x800BC728; // type:SH_SYS size:0x5D8 - SH_SYS? SH2_SYS in sh2
-g_pGameWork = 0x80024D44; // type:u32 SH_SYS* ?
-
-g_JoyPadBuff_tmp_P1 = 0x800BCCDC;
-g_JoyPadBuff_tmp_P2 = 0x800BC78C;
-g_JoyPadBuff_P1 = 0x800BC760; // type:s64
+g_SysWork = 0x800B9FC0; // type:SysWork size:0x2768 - should use s_SysWork here, but splat only supports custom structs with capital letter at beginning
+g_GameWork = 0x800BC728; // type:GameWork size:0x5D8
+g_pGameWork = 0x80024D44; // type:u32
+g_pSaveGame = 0x80024D48; // type:u32
+g_pController1 = 0x80024D4C; // type:u32
+g_pController2 = 0x80024D50; // type:u32
+g_pGameWork0 = 0x80024D54; // type:u32 same as g_pGameWork ?
 
 g_CurDeltaTime = 0x800B5CC0; // type:s32 - Q20.12 fixed point, usually 0x44 (0.0166..) or 0x88 (0.033..)
 
 // sh "view" / "vw" / "vc" / "vb" code
 // most names from SH2, functions seem to match pretty close between it and SH1, besides a few missing/added funcs
+hack_vcSetWatchTgtXzPos_fix = 0x8002B2B4; // type:s32 - some 0x80083500 value which probably coincidentally points to code inside vcSetWatchTgtXzPos, probably unrelated flags or something - a jtbl is right before this which spimdisasm decides to make it part of, breaking vcSetWatchTgtXzPos build
+
 vcInitCamera = 0x8004004c; // type:func
 vcSetCameraUseWarp = 0x800400d4; // type:func
 vcRetCamMvSmoothF = 0x80040190; // type:func

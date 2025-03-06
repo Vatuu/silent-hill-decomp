@@ -177,8 +177,8 @@ typedef struct _VC_WORK
     u_char                    through_door_activate_init_f_C;
     u_char                    unk_D[3];
     VC_THROUGH_DOOR_CAM_PARAM through_door_10;
-    u_short                   scr_half_ang_wy_2C;
-    u_short                   scr_half_ang_wx_2E;
+    s16                       scr_half_ang_wy_2C;
+    s16                       scr_half_ang_wx_2E;
     short geom_screen_dist_30; // related to GsSetProjection /
                                // g_GameSys.gs_y_res_58A
     short                field_32;
@@ -275,10 +275,10 @@ void vcMoveAndSetCamera(int in_connect_f, int change_debug_mode, int for_f,
 void vcMakeHeroHeadPos(VECTOR3 *head_pos);
 void vcAddOfsToPos(VECTOR3 *out_pos, VECTOR3 *in_pos, short ofs_xz_r,
                    short ang_y, int ofs_y);
-void vcSetRefPosAndSysRef2CamParam(VECTOR3 *ref_pos, struct SYS_W *sys_p,
+void vcSetRefPosAndSysRef2CamParam(VECTOR3 *ref_pos, s_SysWork *sys_p,
                                    int for_f, int back_f, int right_f,
                                    int left_f, int up_f, int down_f);
-void vcSetRefPosAndCamPosAngByPad(VECTOR3 *ref_pos, struct SYS_W *sys_p);
+void vcSetRefPosAndCamPosAngByPad(VECTOR3 *ref_pos, s_SysWork *sys_p);
 
 // vw_main
 void           vwInitViewInfo();
@@ -319,7 +319,7 @@ void vcInitVCSystem(VC_ROAD_DATA *vc_road_ary_list);
 void vcStartCameraSystem();
 void vcEndCameraSystem();
 void vcSetFirstCamWork(VECTOR3 *cam_pos, short chara_eye_ang_y,
-                       u_char use_through_door_cam_f);
+                       int use_through_door_cam_f);
 void vcWorkSetFlags(VC_FLAGS enable, VC_FLAGS disable);
 void vcUserWatchTarget(VECTOR3 *watch_tgt_pos, VC_WATCH_MV_PARAM *watch_prm_p,
                        int warp_watch_f);
@@ -366,7 +366,7 @@ int  vcAdvantageDistOfOldCurRoad(VC_NEAR_ROAD_DATA *old_cur_p);
 void vcAutoRenewalWatchTgtPosAndAngZ(VC_WORK *w_p, VC_CAM_MV_TYPE cam_mv_type,
                                      VC_AREA_SIZE_TYPE cur_rd_area_size,
                                      int               far_watch_rate,
-                                     short             self_view_eff_rate);
+                                     int               self_view_eff_rate);
 void vcMakeNormalWatchTgtPos(VECTOR3 *watch_tgt_pos, short *watch_tgt_ang_z_p,
                              VC_WORK *w_p, VC_CAM_MV_TYPE cam_mv_type,
                              VC_AREA_SIZE_TYPE cur_rd_area_size);
@@ -381,14 +381,15 @@ void vcSetWatchTgtXzPos(VECTOR3 *watch_pos, VECTOR3 *center_pos,
                         int tgt_watch_cir_r, short watch_cir_ang_y);
 void vcSetWatchTgtYParam(VECTOR3 *watch_pos, VC_WORK *w_p, int cam_mv_type,
                          int watch_y);
-int  vcAdjustWatchYLimitHighWhenFarView(VECTOR3 *watch_pos, VECTOR3 *cam_pos,
+void vcAdjustWatchYLimitHighWhenFarView(VECTOR3 *watch_pos, VECTOR3 *cam_pos,
                                         short sy);
 void vcAutoRenewalCamTgtPos(VC_WORK *w_p, VC_CAM_MV_TYPE cam_mv_type,
                             VC_CAM_MV_PARAM  *cam_mv_prm_p,
                             VC_ROAD_FLAGS     cur_rd_flags,
                             VC_AREA_SIZE_TYPE cur_rd_area_size);
 int  vcRetMaxTgtMvXzLen(VC_WORK *w_p, VC_CAM_MV_PARAM *cam_mv_prm_p);
-void vcMakeIdealCamPosByHeadPos(VECTOR3 *ideal_pos, VC_WORK *w_p);
+void vcMakeIdealCamPosByHeadPos(VECTOR3 *ideal_pos, VC_WORK *w_p,
+                                VC_AREA_SIZE_TYPE cur_rd_area_size);
 void vcMakeIdealCamPosForFixAngCam(VECTOR3 *ideal_pos, VC_WORK *w_p);
 void vcMakeIdealCamPosForThroughDoorCam(VECTOR3 *ideal_pos, VC_WORK *w_p);
 void vcMakeIdealCamPosUseVC_ROAD_DATA(VECTOR3 *ideal_pos, VC_WORK *w_p,

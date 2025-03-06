@@ -14,4 +14,7 @@
 #define STATIC_ASSERT_SIZEOF(TYPE, SIZE) \
     typedef char static_assertion_sizeof_##TYPE[(sizeof(TYPE) == (SIZE)) ? 1 : -1]
 
+#define CLAMP(val, min, max)                                                   \
+    (((val) < (min)) ? (min) : ((val) > (max)) ? (max) : (val))
+
 #endif
