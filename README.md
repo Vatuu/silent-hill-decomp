@@ -30,7 +30,7 @@ git clone --recursive https://github.com/Vatuu/silent-hill-decomp.git && cd sile
 Run `pip3 install -r requirements.txt`
 
 ### Place the ROM
-Obviously, you will need to provide your own ROM dump of the game. The required version is Silent Hill NTSC-U 1.1.
+You will need to provide your own ROM dump of the game. The required version is Silent Hill NTSC-U 1.1.
 If done correctly, you will end up with a .BIN and a .CUE file. These must be placed in the `rom/image` folder and renamed to SLUS-00707.bin/.cue, respectively.
 SHA1 Hashes:
 - .cue: `299D08DCB44E7516F394C3DD5BA40690AE33FD22` 84 Bytes
@@ -38,8 +38,8 @@ SHA1 Hashes:
 
 ### Build the code
 Run `make setup` to extract needed assets and code from the binary.
-If setup was successful, run `make` to build.
-Once the build has finished, a folder will be produced with the name `build`. Inside this, you will find the output.
+If the setup was successful, run `make` to build.
+Once the build has finished, a folder named `build` will be produced. The output will be inside this.
 
 Additional Make commands:
 * `check`: Builds the executable and overlays. After compilation, it compares checksums with the original files.
@@ -49,5 +49,4 @@ Additional Make commands:
 NOTE: `build-c/build-C` are obligatory if the configuration in the `Makefile` has been modified when intending to work on different overlays.
 
 ## Contributing
-Contributions are welcome. Feel free to contribute via a pull request, an issue or join us on the PS1/PS2 Decompilation server in the `#silent-hill` channel:
-https://discord.gg/VwCPdfbxgm
+Contributions are welcome. Following our [coding conventions](./docs/Coding Conventions.md), feel free to contribute via a pull request or issue and join us on the [PS1/PS2 Decompilation](https://discord.gg/VwCPdfbxgm) Discord server in the `#silent-hill` channel.
