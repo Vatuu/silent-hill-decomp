@@ -6,8 +6,8 @@
 extern MATRIX D_800C3868;
 extern MATRIX D_800C6FC0; // Might be psyq GsWSMATRIX.
 
-void vwRenewalXZVelocityToTargetPos(s32* velo_x, s32* velo_z, VECTOR3* now_pos, VECTOR3* tgt_pos, s32 tgt_r, s32 accel,
-                                    s32 total_max_spd, s32 dec_forwd_lim_spd, s32 dec_accel_side) // 0x80048F28
+void vwRenewalXZVelocityToTargetPos(s32* velo_x, s32* velo_z, VECTOR3* now_pos, VECTOR3* tgt_pos, s32 tgt_r,
+                                    s32 accel, s32 total_max_spd, s32 dec_forwd_lim_spd, s32 dec_accel_side) // 0x80048F28
 {
 // SH2 locals
 #if 0
@@ -76,10 +76,7 @@ void vwLimitOverLimVector(s32* vec_x, s32* vec_z, s32 lim_vec_len, s16 lim_vec_a
     lim_spd_dir_x = shRsin(lim_vec_ang_y);
     lim_spd_dir_z = shRcos(lim_vec_ang_y);
 
-    over_spd = (Math_MulFixed(*vec_x, lim_spd_dir_x, FP_SIN_Q) +
-                Math_MulFixed(*vec_z, lim_spd_dir_z, FP_SIN_Q)) -
-               lim_vec_len;
-
+    over_spd = (Math_MulFixed(*vec_x, lim_spd_dir_x, FP_SIN_Q) + Math_MulFixed(*vec_z, lim_spd_dir_z, FP_SIN_Q)) - lim_vec_len;
     if (over_spd > 0)
     {
         *vec_x -= Math_MulFixed(over_spd, lim_spd_dir_x, FP_SIN_Q);

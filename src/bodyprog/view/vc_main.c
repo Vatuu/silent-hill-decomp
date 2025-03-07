@@ -150,11 +150,8 @@ void vcReturnPreAutoCamWork(int warp_f) // 0x80080ED0
     vcWork.geom_screen_dist_30 = g_GameWork.gsScreenHeight_58A;
 }
 
-void vcSetSubjChara(VECTOR3* chara_pos, s32 chara_bottom_y, s32 chara_top_y,
-                    s32 chara_grnd_y, VECTOR3* chara_head_pos, s16 chara_mv_spd,
-                    s32 chara_mv_ang_y, s16 chara_ang_spd_y,
-                    s16 chara_eye_ang_y, s16 chara_eye_ang_wy,
-                    s32 chara_watch_xz_r) // 0x80080F14
+void vcSetSubjChara(VECTOR3* chara_pos, s32 chara_bottom_y, s32 chara_top_y, s32 chara_grnd_y, VECTOR3* chara_head_pos,
+                    s16 chara_mv_spd, s32 chara_mv_ang_y, s16 chara_ang_spd_y, s16 chara_eye_ang_y, s16 chara_eye_ang_wy, s32 chara_watch_xz_r) // 0x80080F14
 {
     vcWork.chara_pos_114        = *chara_pos;
     vcWork.chara_bottom_y_120   = chara_bottom_y;
@@ -703,7 +700,8 @@ void vcMakeOfsCamTgtAng(SVECTOR* ofs_tgt_ang, MATRIX* base_matT, VC_WORK* w_p) /
 }
 
 void vcMakeOfsCam2CharaBottomAndTopAngByBaseMatT(SVECTOR* ofs_cam2chara_btm_ang, SVECTOR* ofs_cam2chara_top_ang,
-                                                 MATRIX* base_matT, VECTOR3* cam_pos, VECTOR3* chara_pos, s32 chara_bottom_y, s32 chara_top_y) // 0x80085358
+                                                 MATRIX* base_matT, VECTOR3* cam_pos, VECTOR3* chara_pos,
+                                                 s32 chara_bottom_y, s32 chara_top_y) // 0x80085358
 {
     SVECTOR vec;
 
