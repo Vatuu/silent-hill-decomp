@@ -11,14 +11,14 @@ def add_custom_arguments(parser):
     )
 
 def apply_main(config, args):
-    config['mapfile'] = f'build/SLUS_007.07.map'
-    config['myimg'] = f'build/SLUS_007.07'
+    config['mapfile'] = f'build/out/SLUS_007.07.map'
+    config['myimg'] = f'build/out/SLUS_007.07'
     config['baseimg'] = f'rom/SLUS_007.07'
     config['source_directories'] = ['src/main', 'include', 'asm/main']
 
 def apply_overlay(binary_name, src_name, config, args):
-    config['mapfile'] = f'build/{os.path.basename(binary_name)}.map'
-    config['myimg'] = f'build/{os.path.basename(binary_name)}'
+    config['mapfile'] = f'build/out/{binary_name}.map'
+    config['myimg'] = f'build/out/{binary_name}'
     config['baseimg'] = f'assets/{binary_name}'
     config['source_directories'] = [f'src/{src_name}', f'asm/{src_name}', 'include']
 
@@ -30,7 +30,13 @@ def apply(config, args):
         if overlay == "bodyprog":
             apply_overlay("1ST/BODYPROG.BIN", "bodyprog", config, args)
         elif overlay == "b_konami":
-            apply_overlay("1ST/B_KONAMI.BIN", "b_konami", config, args)
+            apply_overlay("1ST/B_KONAMI.BIN", "screens/b_konami", config, args)
+        elif overlay == "option" or overlay == "options":
+            apply_overlay("VIN/OPTION.BIN", "screens/options", config, args)
+        elif overlay == "saveload":
+            apply_overlay("VIN/SAVELOAD.BIN", "screens/saveload", config, args)
+        elif overlay == "stf_roll" or overlay == "credits":
+            apply_overlay("VIN/STF_ROLL.BIN", "screens/credits", config, args)
         elif overlay == "stream":
             apply_overlay("VIN/STREAM.BIN", "stream", config, args)
     config["arch"] = "mipsel"

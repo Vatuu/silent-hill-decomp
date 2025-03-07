@@ -23,7 +23,7 @@ void SdInit(void) // 0x8009F490
     SsUtReverbOff();
     sound_off();
     SdWorkInit();
-    SpuInitMalloc(0x10, &sd_vb_malloc_rec);
+    SpuInitMalloc(16, &sd_vb_malloc_rec);
 }
 
 void SdStart(void) // 0x8009F4D0
@@ -35,6 +35,7 @@ void SdStart(void) // 0x8009F4D0
             smf_timer_set();
         }
     }
+
     sd_interrupt_start_flag = 1;
 }
 
@@ -103,20 +104,20 @@ void SdSetSerialAttr(char s_num, char attr, char mode) // 0x8009F67C
             spu_attr.mask   = SPU_COMMON_CDMIX;
             spu_attr.cd.mix = mode;
         }
-        else /* SS_REV */
+        else // SS_REV
         {
             spu_attr.mask      = SPU_COMMON_CDREV;
             spu_attr.cd.reverb = mode;
         }
     }
-    else /* SS_SERIAL_B */
+    else // SS_SERIAL_B
     {
         if (attr == SS_MIX)
         {
             spu_attr.mask    = SPU_COMMON_EXTMIX;
             spu_attr.ext.mix = mode;
         }
-        else /* SS_REV */
+        else // SS_REV
         {
             spu_attr.mask       = SPU_COMMON_EXTREV;
             spu_attr.ext.reverb = mode;
@@ -137,13 +138,13 @@ void SdSetSerialVol(s16 s_num, s16 voll, s16 volr) // 0x8009F700
 
     if (s_num == SS_SERIAL_A)
     {
-        attr.mask            = (SPU_COMMON_CDVOLL | SPU_COMMON_CDVOLR);
+        attr.mask            = SPU_COMMON_CDVOLL | SPU_COMMON_CDVOLR;
         attr.cd.volume.left  = v_left;
         attr.cd.volume.right = v_right;
     }
-    else /* SS_SERIAL_B */
+    else // SS_SERIAL_B
     {
-        attr.mask             = (SPU_COMMON_EXTVOLL | SPU_COMMON_EXTVOLR);
+        attr.mask             = SPU_COMMON_EXTVOLL | SPU_COMMON_EXTVOLR;
         attr.ext.volume.left  = v_left;
         attr.ext.volume.right = v_right;
     }
@@ -155,8 +156,7 @@ void SdSetMVol(s16 left, s16 right) // 0x8009F75C
 {
     SpuCommonAttr attr;
 
-    attr.mask = (SPU_COMMON_MVOLL | SPU_COMMON_MVOLR | SPU_COMMON_MVOLMODEL |
-                 SPU_COMMON_MVOLMODER);
+    attr.mask = SPU_COMMON_MVOLL | SPU_COMMON_MVOLR | SPU_COMMON_MVOLMODEL | SPU_COMMON_MVOLMODER;
     attr.mvol.left      = left << 7;
     attr.mvol.right     = right << 7;
     attr.mvolmode.left  = 0;
@@ -244,7 +244,7 @@ void SdUtSetReverbDepth(s16 left, s16 right) // 0x800A085C
 {
     SpuReverbAttr attr;
 
-    attr.mask        = (SPU_REV_DEPTHL | SPU_REV_DEPTHR);
+    attr.mask        = SPU_REV_DEPTHL | SPU_REV_DEPTHR;
     attr.depth.left  = (left << 0x10) >> 8;
     attr.depth.right = (right << 0x10) >> 8;
 
@@ -255,7 +255,7 @@ void SdSetRVol(s16 left, s16 right) // 0x800A089C
 {
     SpuReverbAttr attr;
 
-    attr.mask        = (SPU_REV_DEPTHL | SPU_REV_DEPTHR);
+    attr.mask        = SPU_REV_DEPTHL | SPU_REV_DEPTHR;
     attr.depth.left  = (left << 0x10) >> 8;
     attr.depth.right = (right << 0x10) >> 8;
 

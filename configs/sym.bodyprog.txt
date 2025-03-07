@@ -1,17 +1,19 @@
 g_MainLoop_NumFrames = 0x800B9CCC;
 g_CurOTNum = 0x800B9FB8;
-g_SysWork = 0x800B9FC0; // type:SYS_W size:0x2768 - SYS_W struct?
-g_GameWork = 0x800BC728; // type:SH_SYS size:0x5D8 - SH_SYS? SH2_SYS in sh2
-g_pGameWork = 0x80024D44; // type:u32 SH_SYS* ?
+g_SysWork = 0x800B9FC0; // type:SysWork size:0x2768 - should use s_SysWork here, but splat only supports custom structs with capital letter at beginning.
+g_GameWork = 0x800BC728; // type:GameWork size:0x5D8
+g_pGameWork = 0x80024D44; // type:u32
+g_pSaveGame = 0x80024D48; // type:u32
+g_pController1 = 0x80024D4C; // type:u32
+g_pController2 = 0x80024D50; // type:u32
+g_pGameWork0 = 0x80024D54; // type:u32 same as g_pGameWork ?
 
-g_JoyPadBuff_tmp_P1 = 0x800BCCDC;
-g_JoyPadBuff_tmp_P2 = 0x800BC78C;
-g_JoyPadBuff_P1 = 0x800BC760; // type:s64
-
-g_CurDeltaTime = 0x800B5CC0; // type:s32 - Q20.12 fixed point, usually 0x44 (0.0166..) or 0x88 (0.033..)
+g_CurDeltaTime = 0x800B5CC0; // type:s32 - Q20.12 fixed point, usually 0x44 (0.0166..) or 0x88 (0.033..).
 
 // sh "view" / "vw" / "vc" / "vb" code
-// most names from SH2, functions seem to match pretty close between it and SH1, besides a few missing/added funcs
+// Most names from SH2, functions seem to match pretty close between it and SH1 besides a few missing/extra funcs.
+hack_vcSetWatchTgtXzPos_fix = 0x8002B2B4; // type:s32 - Some 0x80083500 value which coincidentally points to code inside vcSetWatchTgtXzPos, probably unrelated flags or something. A jtbl is right before this which spimdisasm tries to include, breaking vcSetWatchTgtXzPos build.
+
 vcInitCamera = 0x8004004c; // type:func
 vcSetCameraUseWarp = 0x800400d4; // type:func
 vcRetCamMvSmoothF = 0x80040190; // type:func
@@ -41,16 +43,16 @@ vwAngleToVector = 0x8004A66C; // type:func
 vwVectorToAngle = 0x8004A714; // type:func
 vwOresenHokan = 0x8004A7C8; // type:func
 
-Math_MulFixed = 0x800808d4; // type:func guessed name
+Math_MulFixed = 0x800808d4; // type:func Guessed name.
 
 vcInitVCSystem = 0x80080940; // type:func
 vcStartCameraSystem = 0x800809dc; // type:func
-vcEndCameraSystem = 0x80080a04; // type:func guessed name
+vcEndCameraSystem = 0x80080a04; // type:func Guessed name.
 vcSetFirstCamWork = 0x80080a4c; // type:func
-vcWorkSetFlags = 0x80080bf8; // type:func guessed name
+vcWorkSetFlags = 0x80080bf8; // type:func Guessed name.
 vcUserWatchTarget = 0x80080c2c; // type:func
 vcUserCamTarget = 0x80080cbc; // type:func
-vcChangeProjectionValue = 0x80080d5c; // type:func guessed name (exists in SH2 but code is different)
+vcChangeProjectionValue = 0x80080d5c; // type:func Guessed name (exists in SH2, but code is different).
 vcGetNowWatchPos = 0x80080d78; // type:func
 vcGetNowCamPos = 0x80080ea8; // type:func
 vcReturnPreAutoCamWork = 0x80080ed0; // type:func
@@ -102,7 +104,7 @@ vcAdjCamOfsAngByOfsAngSpd = 0x8008555c; // type:func
 vcMakeCamMatAndCamAngByBaseAngAndOfsAng = 0x800857ec; // type:func
 vcSetDataToVwSystem = 0x80085884; // type:func
 vcCamMatNoise = 0x80085a7c; // type:func
-Math_VectorMagnitude = 0x80085b1c; // type:func guessed name, could be something like vcGetXZSumDist
+Math_VectorMagnitude = 0x80085b1c; // type:func Guessed name, could be something like vcGetXZSumDist.
 vcGetXZSumDistFromLimArea = 0x80085c80; // type:func
 
 // vw globals from SH2
@@ -284,7 +286,7 @@ SdGetSeqPlayStatus = 0x800a2134; // type:func
 SdGetSeqBeat = 0x800a21e0; // type:func
 SdGetSeqBeat2 = 0x800a224c; // type:func
 
-// custom konami versions of these libsnd funcs, just redirects to SD versions, maybe to aid with ports
+// Custom Konami versions of these libsnd funcs. Just redirects to SD versions, maybe to aid with ports.
 SsSetMVol = 0x800a2294; // type:func
 SsEnd = 0x800a22c0; // type:func
 SsSetSerialAttr = 0x800a22e0; // type:func
@@ -308,7 +310,7 @@ replay_reverb_set = 0x800a4748; // type:func
 midi_vsync = 0x800a4838; // type:func
 sound_seq_off = 0x800a4a34; // type:func
 sound_off = 0x800a4d20; // type:func
-set_note_on_mb = 0x800a4e90; // type:func - uncertain, could be set_midi_info, both are nullsubs
+set_note_on_mb = 0x800a4e90; // type:func Uncertain, could be set_midi_info. Both are nullsubs.
 adsr_set = 0x800a4e98; // type:func
 rr_off = 0x800a4f08; // type:func
 voice_check = 0x800a4f64; // type:func
@@ -482,8 +484,8 @@ EnablePAD = 0x800923AC; // type:func
 DisablePAD = 0x800923C0; // type:func
 _patch_pad = 0x800923D4; // type:func
 // patch.o globals
-store = 0x800C4938; // maybe should be ret_adr instead?
-ret_adr = 0x800C493C; // symbols point to this as "ret_adr", but store is used to hold the return addr?
+store = 0x800C4938; // Maybe should be ret_adr instead?
+ret_adr = 0x800C493C; // Symbols point to this as "ret_adr", but store is used to hold return addr?
 _start_pad = 0x800C4940;
 _stop_pad = 0x800C4944;
 
@@ -505,8 +507,8 @@ StopCARD2 = 0x800924EC; // type:func
 // LIBCARD/patch.o
 _patch_wait_start = 0x800924FC; // type:func
 _check_dsr = 0x80092528; // type:func
-_dsr_start = 0x8009256C; // type:func // alt name is _check_dsr_end ?
-_dsr_end = 0x80092580; // type:func // alt name is _wait_start ?
+_dsr_start = 0x8009256C; // type:func // Alt name is _check_dsr_end?
+_dsr_end = 0x80092580; // type:func // Alt name is _wait_start?
 _patch_card = 0x80092594; // type:func
 _patch_card2 = 0x80092628; // type:func
 _copy_memcard_patch = 0x80092698; // type:func
@@ -521,10 +523,10 @@ _c_vend = 0x80092748; // type:label
 store_2 = 0x800C4968;
 
 // cdrom.o
- // todo: check in other SDKs for the global this uses
+ // TODO: Check in other SDKs for the global this uses.
 StSetRing = 0x8009274C; // type:func
 // cdrom.o globals
-HADR0 = 0x800AFE9C; // all unused?
+HADR0 = 0x800AFE9C; // All unused?
 HADR1 = 0x800AFEA0;
 HADR2 = 0x800AFEA4;
 HADR3 = 0x800AFEA8;
@@ -548,7 +550,7 @@ CdRead2 = 0x800930EC; // type:func
 StCdInterrupt2 = 0x80093170; // type:func
 
 // c_002.o
-// todo: same as cdrom.o, need to check older SDKs
+// TODO: Same as cdrom.o, need to check older SDKs.
 StClearRing = 0x8009319C; // type:func
 // c_002.o globals
 HADR0_0 = 0x800AFEBC; // all unused?
@@ -557,7 +559,7 @@ HADR2_0 = 0x800AFEC4;
 HADR3_0 = 0x800AFEC8;
 
 // c_003.o
-// todo: same as c_002, check older SDKs
+// TODO: Same as c_002, check older SDKs.
 StUnSetRing = 0x800931FC; // type:func
 // c_003.o globals
 HADR0_1 = 0x800AFECC;
@@ -566,7 +568,7 @@ HADR2_1 = 0x800AFED4;
 HADR3_1 = 0x800AFED8;
 
 // c_004.o
-// todo: same as c_002, check older SDKs
+// TODO: Same as c_002, check older SDKs.
 data_ready_callback = 0x8009327C; // type:func
 StGetBackloc = 0x80093308; // type:func
 // c_004.o globals
@@ -578,7 +580,7 @@ HADR2_2 = 0x800AFEE4;
 HADR3_2 = 0x800AFEE8;
 
 // c_005.o
-// todo: same as c_002
+// TODO: Same as c_002.
 StSetStream = 0x8009336C; // type:func
 // c_005.o globals
 HADR0_3 = 0x800AFEEC;
@@ -587,7 +589,7 @@ HADR2_3 = 0x800AFEF4;
 HADR3_3 = 0x800AFEF8;
 
 // c_007.o
-// todo: same as c_002
+// TODO: Same as c_002.
 StFreeRing = 0x800933FC; // type:func
 // c_007.o globals
 HADR0_4 = 0x800AFEFC;
@@ -596,7 +598,7 @@ HADR2_4 = 0x800AFF04;
 HADR3_4 = 0x800AFF08;
 
 // c_008.o
-// todo: same as c_002
+// TODO: Same as c_002.
 init_ring_status = 0x800934AC; // type:func
 // c_008.o globals
 HADR0_5 = 0x800AFE0C;
@@ -605,7 +607,7 @@ HADR2_5 = 0x800AFF14;
 HADR3_5 = 0x800AFF18;
 
 // c_009.o
-// todo: same as c_002
+// TODO: Same as c_002.
 StGetNext = 0x800934EC; // type:func
 // c_009.o globals
 HADR0_6 = 0x800AFE1C;
@@ -614,7 +616,7 @@ HADR2_6 = 0x800AFF24;
 HADR3_6 = 0x800AFF28;
 
 // c_010.o
-// todo: same as c_002
+// TODO: Same as c_002.
 StSetMask = 0x800935AC; // type:func
 // c_010.o globals
 HADR0_7 = 0x800AFE2C;
@@ -623,7 +625,7 @@ HADR2_7 = 0x800AFF34;
 HADR3_7 = 0x800AFF38;
 
 // c_011.o
-// todo: same as c_002
+// TODO: Same as c_002.
 StCdInterrupt = 0x800935CC; // type:func
 mem2mem = 0x80093EE8; // type:func
 dma_execute = 0x80093F14; // type:func
@@ -649,7 +651,7 @@ i_mask_0 = 0x800AFF80; // i_mask
 debug_cause = 0x800AFF84;
 count.3 = 0x800AFF88;
 HeaderArea.2 = 0x800C6DD8;
-StCdIntrFlag = 0x800C4984; // todo why wasn't this named before?
+StCdIntrFlag = 0x800C4984; // TODO Why wasn't this named before?
 
 // e00.o
 LoadTPage = 0x800940BC; // type:func
@@ -686,13 +688,13 @@ SetDrawMove = 0x800944EC; // type:func
 
 // 2d_sp1.o
 GsSortFastSprite = 0x8009454C; // type:func
-// 2d_sp1.o globals todo: 
+// 2d_sp1.o globals TODO: 
 // GsOUT_PACKET_P = 0x800C7018;
 // GsORGOFSX = 0x800C6E94;
 // GsORGOFSY = 0x800C6E96;
 
 // gs_001.o
-// todo: same as c_002
+// TODO: Same as c_002
 GsInitGraph = 0x800946CC; // type:func
 gpu_init = 0x80094740; // type:func
 GsInitGraph2 = 0x8009485C; // type:func
@@ -701,7 +703,7 @@ GsSortClear = 0x80094AE4; // type:func
 // gs_001.o globals
 __ps_libinfo__libgs__ = 0x800AFF8C;
 Clear = 0x800C6DE8;
-// unsure about these globals, some reason order in SH1 doesn't match SDK 4.3 or 4.4
+// Unsure about these globals, some reason order in SH1 doesn't match SDK 4.3 or 4.4.
 PSDIDX = 0x800C6EA4;
 PSDOFSX = 0x800C6E08;
 PSDOFSY = 0x800C6E0C;
@@ -758,7 +760,7 @@ GsMulCoord3 = 0x80095318; // type:func
 print_matrix = 0x80095398; // type:func
 print_vector = 0x80095408; // type:func
 // matrix.o globals
-// todo: DSTACK?
+// TODO: DSTACK?
 
 // gs_104.o
 GsInit3D = 0x8009543c; // type:func
@@ -791,7 +793,7 @@ gte_init = 0x80095CBC; // type:func
 Gssub_make_matrix = 0x80095d0c; // type:func
 // gs_123.o globals
 GsIDMATRIX = 0x800C6FA0; // type:MATRIX size:0x20
-// symbols say these should be there, but other vars are inside the same space of them?
+// Symbols say these should be there, but other vars are inside the same space of them?
 // GsWSMATRIX = 0x800C6FA0 + 0x20; // unused
 // GsWSMATRIX_ORG = 0x800C6FA0 + 0x40; // unused
 // GsIDMATRIX2 = 0x800C6FA0 + 0x60; // unused
@@ -893,7 +895,7 @@ PushMatrix = 0x80097ab8; // type:func
 CONTpush = 0x80097AF8; // type:label
 PopMatrix = 0x80097b5c; // type:func
 CONTpop = 0x80097B98; // type:label
-// mtx_006.o globals (todo: check psx)
+// mtx_006.o globals (TODO: Check psx.)
 SAVERA__mtx_006_ = 0x800B02FC;
 FRAC__mtx_006_ = 0x800B0300;
 EXPO__mtx_006_ = 0x800B0304;
@@ -1170,7 +1172,7 @@ cmdActInfo = 0x8009c0b8; // type:func
 cmdCombList = 0x8009c0d8; // type:func
 cmdNext = 0x8009C0F8; // type:func
 // padcmd.o globals
-dst.16 = 0x800C7190; // not totally sure
+dst.16 = 0x800C7190; // Not totally sure.
 
 // padif.o
 intFuncReqa = 0x8009C118; // type:func
