@@ -6,17 +6,6 @@
 extern void* g_OvlDynamic;
 extern void* g_OvlBodyprog;
 
-typedef struct _AnalogPadData
-{
-    u8  status;
-    u8  data_format;
-    u16 digitalButtons;
-    u8  right_x;
-    u8  right_y;
-    u8  left_x;
-    u8  left_y;
-} s_AnalogPadData;
-
 typedef enum _PadButton
 {
     Pad_BtnSelect    = 1 << 0,
@@ -48,6 +37,17 @@ typedef enum _PadButton
     Pad_LSDown       = 1 << 26,
     Pad_LSLeft       = 1 << 27
 } e_PadButton;
+
+typedef struct _AnalogPadData
+{
+    u8  status;
+    u8  data_format;
+    u16 digitalButtons;
+    u8  right_x;
+    u8  right_y;
+    u8  left_x;
+    u8  left_y;
+} s_AnalogPadData;
 
 typedef struct _ControllerData
 {
@@ -163,13 +163,13 @@ typedef struct _SysWork
     // more follows
 } s_SysWork;
 
-extern s_GameWork  g_GameWork;
 extern s_SysWork   g_SysWork;
+extern s_GameWork  g_GameWork;
 extern s_GameWork* g_pGameWork;
+extern s_GameWork* g_pGameWork0;
 
 extern s_ControllerData* g_pController1;
 extern s_ControllerData* g_pController2;
-extern s_GameWork*       g_pGameWork0;
 
 extern s32 g_CurDeltaTime;
 
