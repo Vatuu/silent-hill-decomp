@@ -15,4 +15,4 @@ void func_80096E78(SVECTOR* vec, MATRIX* mat); // Another custom vwRotMatrix...]
 s32 shRcos(s32);
 s32 shRsin(s32);
 
-#endif /* _BODYPROG_MATH_H */
+#endif

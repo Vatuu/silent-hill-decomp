@@ -185,8 +185,9 @@ void func_801E28B0(void)
 {
     s32 prev_594;
 
-    prev_594             = g_GameWork.field_594;
-    g_GameWork.field_594 = 0xB;
+    prev_594 = g_GameWork.field_594;
+
+    g_GameWork.field_594 = 11;
     g_SysWork.field_1C   = 0;
     g_SysWork.field_20   = 0;
     g_GameWork.field_59C = 0;
@@ -212,7 +213,8 @@ void func_801E2908(void)
 
     if (controller->btns_new_10 & gameWork->controllerBinds_0.cancel)
     {
-        prev_594             = g_GameWork.field_594;
+        prev_594 = g_GameWork.field_594;
+
         g_GameWork.field_594 = 0x16;
         g_SysWork.field_1C   = 0;
         g_SysWork.field_20   = 0;

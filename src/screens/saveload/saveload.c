@@ -3,12 +3,6 @@
 #include "bodyprog/bodyprog.h"
 #include "screens/saveload/saveload.h"
 
-// ===== Temporary declarations =====
-
-void func_801E2D8C(); // bodyprog
-
-//===================================
-
 INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E2D8C);
 
 INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E2EBC);

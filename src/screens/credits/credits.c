@@ -6,10 +6,7 @@
 
 // ===== Temporary declarations =====
 
-void func_80032358(s16 x, s16 y, s16 w, s16 h, u8 r, u8 g, u8 b); // Return and arg types assumed.
-void func_80032428(u32, u32);                                     // Return and arg types assumed.
-void func_80045A7C(u16);                                          // Return type assumed.
-u8   func_80045B28();                                             // bodyprog
+void func_80032428(u32, u32); // Return and arg types assumed.
 void func_8004729C(u16);
 
 //===================================

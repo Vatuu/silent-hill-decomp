@@ -1,14 +1,14 @@
 #ifndef SAVELOAD_H
 #define SAVELOAD_H
 
-#include "common.h"
-
 typedef struct
 {
     s32 unk_0;
     s32 unk_4;
     s32 field_8;
 } s_UnkSaveload0; // Size: >=12
+
+extern s_GameWork g_GameWork;
 
 extern s_FsImageDesc D_800A902C;
 extern u8            D_800A97D4[];
