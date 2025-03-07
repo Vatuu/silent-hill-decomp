@@ -101,7 +101,9 @@ void func_801E2654(void)
             if ((D_800BCD0C & 7) == 5)
             {
                 Fs_QueueWaitForEmpty();
-                prev_594             = g_GameWork.field_594;
+
+                prev_594 = g_GameWork.field_594;
+
                 g_GameWork.field_594 = 6;
                 g_SysWork.field_1C   = 0;
                 g_SysWork.field_20   = 0;
@@ -137,7 +139,8 @@ void func_801E279C(void)
 
     open_main(file_idx, 0);
 
-    prev_594             = g_GameWork.field_594;
+    prev_594 = g_GameWork.field_594;
+
     g_GameWork.field_594 = 7;
     g_SysWork.field_1C   = 0;
     g_SysWork.field_20   = 0;
@@ -162,7 +165,9 @@ void func_801E2838(void)
     s32 prev_594;
 
     open_main(2055, 0); // XA/M1_03500
-    prev_594             = g_GameWork.field_594;
+
+    prev_594 = g_GameWork.field_594;
+
     g_GameWork.field_594 = 0xA;
     g_SysWork.field_1C   = 0;
     g_SysWork.field_20   = 0;
@@ -234,12 +239,12 @@ void func_801E2908(void)
 
     if (controller->field_18 & 0x08000000)
     {
-        D_801E3F3C -= 1;
+        D_801E3F3C--;
     }
 
     if (controller->field_18 & 0x02000000)
     {
-        D_801E3F3C += 1;
+        D_801E3F3C++;
     }
 
     func_80031EFC(0x28, 0x28);
@@ -255,7 +260,9 @@ void func_801E2A24(void)
     s32 prev_594;
 
     open_main(2053, 2060); // XA/C1_20670
-    prev_594             = g_GameWork.field_594;
+
+    prev_594 = g_GameWork.field_594;
+
     g_GameWork.field_594 = 7;
     g_SysWork.field_1C   = 0;
     g_SysWork.field_20   = 0;
@@ -318,7 +325,7 @@ void strInit(CdlLOC* loc, void(*callback)()) // 0x801E300C
     DecDCTReset(0);
     DecDCToutCallback(callback);
     StSetRing(m->sect_buff, RING_SIZE);
-    StSetStream(1, 1, 0xffffffff, 0, 0);
+    StSetStream(1, 1, 0xFFFFFFFF, 0, 0);
     strKickCD(loc);
 }
 
@@ -377,13 +384,19 @@ void strKickCD(CdlLOC* loc) // 0x801E31CC
 
     param = 0x80;
     while (!CdControl(CdlSetmode, &param, 0))
+    {
         ;
+    }
 
     while (!CdControl(CdlSeekL, loc, 0))
+    {
         VSync(0);
+    }
 
     while (!CdRead2(CdlModeStream | CdlModeSpeed | CdlModeRT | CdlModeSize1))
+    {
         VSync(0);
+    }
 }
 
 int strNextVlc(DECENV* dec) // 0x801E3298
@@ -395,7 +408,9 @@ int strNextVlc(DECENV* dec) // 0x801E3298
     {
         cnt--;
         if (!cnt)
+        {
             return -1;
+        }
     }
 
     dec->vlcid = dec->vlcid ^ 1;
@@ -415,7 +430,7 @@ u_long* strNext(DECENV* dec) // 0x801E331C
     {
         if (--cnt == 0)
         {
-            return (0);
+            return 0;
         }
     }
 
