@@ -6,6 +6,38 @@
 extern void* g_OvlDynamic;
 extern void* g_OvlBodyprog;
 
+typedef enum _PadButton
+{
+    Pad_BtnSelect    = 1 << 0,
+    Pad_BtnL3        = 1 << 1,
+    Pad_BtnR3        = 1 << 2,
+    Pad_BtnStart     = 1 << 3,
+    Pad_BtnDpadUp    = 1 << 4,
+    Pad_BtnDpadRight = 1 << 5,
+    Pad_BtnDpadDown  = 1 << 6,
+    Pad_BtnDpadLeft  = 1 << 7,
+    Pad_BtnL2        = 1 << 8,
+    Pad_BtnR2        = 1 << 9,
+    Pad_BtnL1        = 1 << 10,
+    Pad_BtnR1        = 1 << 11,
+    Pad_BtnTriangle  = 1 << 12,
+    Pad_BtnCircle    = 1 << 13,
+    Pad_BtnCross     = 1 << 14,
+    Pad_BtnSquare    = 1 << 15,
+    Pad_LSUp2        = 1 << 16,
+    Pad_LSRight2     = 1 << 17,
+    Pad_LSDown2      = 1 << 18,
+    Pad_LSLeft2      = 1 << 19,
+    Pad_RSUp         = 1 << 20,
+    Pad_RSRight      = 1 << 21,
+    Pad_RSDown       = 1 << 22,
+    Pad_RSLeft       = 1 << 23,
+    Pad_LSUp         = 1 << 24,
+    Pad_LSRight      = 1 << 25,
+    Pad_LSDown       = 1 << 26,
+    Pad_LSLeft       = 1 << 27
+} e_PadButton;
+
 typedef struct _AnalogPadData
 {
     u8  status;
@@ -16,38 +48,6 @@ typedef struct _AnalogPadData
     u8  left_x;
     u8  left_y;
 } s_AnalogPadData;
-
-typedef enum _PadButton
-{
-    Pad_BtnSelect    = 0x1,
-    Pad_BtnL3        = 0x2,
-    Pad_BtnR3        = 0x4,
-    Pad_BtnStart     = 0x8,
-    Pad_BtnDpadUp    = 0x10,
-    Pad_BtnDpadRight = 0x20,
-    Pad_BtnDpadDown  = 0x40,
-    Pad_BtnDpadLeft  = 0x80,
-    Pad_BtnL2        = 0x100,
-    Pad_BtnR2        = 0x200,
-    Pad_BtnL1        = 0x400,
-    Pad_BtnR1        = 0x800,
-    Pad_BtnTriangle  = 0x1000,
-    Pad_BtnCircle    = 0x2000,
-    Pad_BtnCross     = 0x4000,
-    Pad_BtnSquare    = 0x8000,
-    Pad_LSUp2        = 0x10000,
-    Pad_LSRight2     = 0x20000,
-    Pad_LSDown2      = 0x40000,
-    Pad_LSLeft2      = 0x80000,
-    Pad_RSUp         = 0x100000,
-    Pad_RSRight      = 0x200000,
-    Pad_RSDown       = 0x400000,
-    Pad_RSLeft       = 0x800000,
-    Pad_LSUp         = 0x1000000,
-    Pad_LSRight      = 0x2000000,
-    Pad_LSDown       = 0x4000000,
-    Pad_LSLeft       = 0x8000000,
-} e_PadButton;
 
 typedef struct _ControllerData
 {
@@ -163,13 +163,13 @@ typedef struct _SysWork
     // more follows
 } s_SysWork;
 
-extern s_GameWork  g_GameWork;
 extern s_SysWork   g_SysWork;
-extern s_GameWork *g_pGameWork;
+extern s_GameWork  g_GameWork;
+extern s_GameWork* g_pGameWork;
+extern s_GameWork* g_pGameWork0;
 
-extern s_ControllerData *g_pController1;
-extern s_ControllerData *g_pController2;
-extern s_GameWork       *g_pGameWork0;
+extern s_ControllerData* g_pController1;
+extern s_ControllerData* g_pController2;
 
 extern s32 g_CurDeltaTime;
 

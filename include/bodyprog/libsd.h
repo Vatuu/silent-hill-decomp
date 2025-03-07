@@ -1,11 +1,11 @@
 #ifndef _LIBSD_H
 #define _LIBSD_H
 
-/*
-   libsd: konami-customized version of libsnd?
-   Majority of functions match up with the libsnd Ss versions
-   libref.pdf v4.4 may be useful, though was likely based on earlier SDK
-*/
+/**
+ * libsd: konami-customized version of libsnd?
+ * Majority of functions match up with libsnd Ss versions.
+ * libref.pdf v4.4 may be useful, though was likely based on earlier SDK.
+ */
 
 extern s32 sd_reverb_mode;
 extern s16 sd_keyoff_mode;
@@ -19,7 +19,8 @@ extern s32 sd_int_flag2;
 extern s32 sd_timer_sync;
 extern s32 smf_start_flag;
 
-/* sdmain.c */
+// sdmain.c
+
 void SdWorkInit();
 void SdInit(void);
 void SdStart(void);
@@ -49,7 +50,8 @@ void SdSetRVol(s16 left, s16 right);
 
 void SdUtAllKeyOff(s16 mode);
 
-/* sdmidi.c */
+// sdmidi.c
+
 void midi_vsync();
 
 void sound_off();
@@ -61,21 +63,21 @@ void chan_press(void);
 
 void control_code_set(void);
 
-/* sdmidi2.c */
+// sdmidi2.c
+
 s32  smf_timer(void);
 void smf_timer_set();
 
 void smf_vsync(void);
 
-// to32bit/to16bit/len_add only seem used inside sdmidi2.c, can probably be
-// removed from header
+// to32bit/to16bit/len_add only seem used inside sdmidi2.c, can probably be removed from header.
 s32  to32bit(char arg0, char arg1, char arg2, char arg3);
 s32  to16bit(char arg0, char arg1);
-void len_add(s32 *ptr, s32 val);
+void len_add(s32* ptr, s32 val);
 
 void midi_smf_main();
 
-/* ssmain.c */
+// ssmain.c
 void SsSetMVol(s16 left, s16 right);
 void SsEnd(void);
 void SsSetSerialAttr(char s_num, char attr, char mode);

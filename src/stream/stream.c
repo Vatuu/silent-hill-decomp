@@ -6,11 +6,10 @@
 #include <libgpu.h>
 #include <libpress.h>
 
-#include "main/fileinfo.h"
 #include "bodyprog/bodyprog.h"
+#include "main/fileinfo.h"
 
-extern int StCdIntrFlag; // not included in SDK docs/headers, but movie player
-                         // sample code (and moviesys) uses it?
+extern int StCdIntrFlag; // Not included in SDK docs/headers, but movie player sample code (and moviesys) uses it?
 
 extern s32 D_800B5C30;
 extern s32 D_801E3F3C;
@@ -20,9 +19,9 @@ extern u8  D_800A900C[];
 
 typedef struct
 {
-    /* 0x00 */ u_long  *vlcbuf[2];
+    /* 0x00 */ u_long*  vlcbuf[2];
     /* 0x08 */ int      vlcid;
-    /* 0x0C */ u_short *imgbuf;
+    /* 0x0C */ u_short* imgbuf;
     /* 0x10 */ RECT     rect[2];
     /* 0x20 */ int      rectid;
     /* 0x24 */ RECT     slice;
@@ -43,7 +42,7 @@ typedef struct
     /* 0x1F240 */ u_long  vlcbuf1[14336];
 } MOVIE_STR;
 
-// customised StHEADER ?
+// Customised StHEADER?
 typedef struct
 {
     u_short id;
@@ -63,68 +62,71 @@ typedef struct
 #define MOVIE_WAIT 2000
 #define PPW 3 / 2
 
-extern MOVIE_STR *m;
+extern MOVIE_STR* m;
 extern s32        frame_cnt;
 
 void    open_main(s32 file_idx, s16 num_frames);
-void    movie_main(char *file_name, int f_size, int sector);
-void    strSetDefDecEnv(DECENV *dec, int x0, int y0, int x1, int y1);
-void    strInit(CdlLOC *loc, void (*callback)());
+void    movie_main(char* file_name, int f_size, int sector);
+void    strSetDefDecEnv(DECENV* dec, int x0, int y0, int x1, int y1);
+void    strInit(CdlLOC* loc, void (*callback)());
 void    strCallback();
-void    strKickCD(CdlLOC *loc);
-int     strNextVlc(DECENV *dec);
-u_long *strNext(DECENV *dec);
-void    strSync(DECENV *dec);
+void    strKickCD(CdlLOC* loc);
+int     strNextVlc(DECENV* dec);
+u_long* strNext(DECENV* dec);
+void    strSync(DECENV* dec);
 
 void func_801E2654(void)
 {
-    // old IDB name MainLoopState3_StartMovieIntro_801E2654
+    // Old IDB name MainLoopState3_StartMovieIntro_801E2654
     s32 prev_594;
 
     switch (g_GameWork.field_598)
     {
-    case 0:
-        VSync(8);
-        D_800BCD0C = 6;
-        GameFS_TitleGfxLoad();
-        g_GameWork.field_598 += 1;
-        break;
-    case 1:
-        if ((g_pController1->btns_held_C != 0) || (g_SysWork.field_1C >= 301))
-        {
-            D_800BCD0C           = 3;
-            g_GameWork.field_598 = 2;
-        }
-        break;
-    case 2:
-        if ((D_800BCD0C & 7) == 5)
-        {
-            Fs_QueueWaitForEmpty();
-            prev_594             = g_GameWork.field_594;
-            g_GameWork.field_594 = 6;
-            g_SysWork.field_1C   = 0;
-            g_SysWork.field_20   = 0;
-            g_GameWork.field_59C = 0;
-            g_GameWork.field_5A0 = 0;
-            g_SysWork.field_8    = 0;
-            g_SysWork.field_24   = 0;
-            g_SysWork.field_C    = 0;
-            g_SysWork.field_28   = 0;
-            g_SysWork.field_10   = 0;
-            g_SysWork.field_2C   = 0;
-            g_SysWork.field_14   = 0;
-            g_GameWork.field_598 = prev_594;
-            g_GameWork.field_590 = prev_594;
-            g_GameWork.field_598 = 0;
-        }
-        break;
+        case 0:
+            VSync(8);
+            D_800BCD0C = 6;
+            GameFS_TitleGfxLoad();
+            g_GameWork.field_598++;
+            break;
+
+        case 1:
+            if (g_pController1->btns_held_C != 0 || g_SysWork.field_1C >= 301)
+            {
+                D_800BCD0C           = 3;
+                g_GameWork.field_598 = 2;
+            }
+            break;
+
+        case 2:
+            if ((D_800BCD0C & 7) == 5)
+            {
+                Fs_QueueWaitForEmpty();
+                prev_594             = g_GameWork.field_594;
+                g_GameWork.field_594 = 6;
+                g_SysWork.field_1C   = 0;
+                g_SysWork.field_20   = 0;
+                g_GameWork.field_59C = 0;
+                g_GameWork.field_5A0 = 0;
+                g_SysWork.field_8    = 0;
+                g_SysWork.field_24   = 0;
+                g_SysWork.field_C    = 0;
+                g_SysWork.field_28   = 0;
+                g_SysWork.field_10   = 0;
+                g_SysWork.field_2C   = 0;
+                g_SysWork.field_14   = 0;
+                g_GameWork.field_598 = prev_594;
+                g_GameWork.field_590 = prev_594;
+                g_GameWork.field_598 = 0;
+            }
+            break;
     }
+
     func_800314EC(D_800A900C);
 }
 
 void func_801E279C(void)
 {
-    // old IDB name MainLoopState6_Movie_PlayIntro_801E279C
+    // Old IDB name MainLoopState6_Movie_PlayIntro_801E279C
 
     s32 prev_594;
     s32 file_idx = 2053; // XA/C1_20670
@@ -157,7 +159,7 @@ void func_801E279C(void)
 
 void func_801E2838(void)
 {
-    // old IDB name MainLoopState9_Movie_PlayOpening_801E2838
+    // Old IDB name MainLoopState9_Movie_PlayOpening_801E2838
     s32 prev_594;
 
     open_main(2055, 0); // XA/M1_03500
@@ -204,9 +206,9 @@ void func_801E28B0(void)
 
 void func_801E2908(void)
 {
-    // old IDB name MainLoopState11_Movie_PlayEnding_801E2908
-    s_GameWork       *gameWork   = g_pGameWork0;
-    s_ControllerData *controller = g_pController1;
+    // Old IDB name MainLoopState11_Movie_PlayEnding_801E2908
+    s_GameWork*       gameWork   = g_pGameWork0;
+    s_ControllerData* controller = g_pController1;
     s32               prev_594;
 
     if (controller->btns_new_10 & gameWork->controllerBinds_0.cancel)
@@ -228,14 +230,17 @@ void func_801E2908(void)
         g_GameWork.field_590 = prev_594;
         g_GameWork.field_598 = 0;
     }
+
     if (controller->field_18 & 0x08000000)
     {
         D_801E3F3C -= 1;
     }
+
     if (controller->field_18 & 0x02000000)
     {
         D_801E3F3C += 1;
     }
+
     func_80031EFC(0x28, 0x28);
     if (controller->btns_new_10 & gameWork->controllerBinds_0.enter)
     {
@@ -245,7 +250,7 @@ void func_801E2908(void)
 
 void func_801E2A24(void)
 {
-    // old IDB name MainLoopState5_Movie_PlayIntroAlternate_801E2A24
+    // Old IDB name MainLoopState5_Movie_PlayIntroAlternate_801E2A24
     s32 prev_594;
 
     open_main(2053, 2060); // XA/C1_20670
@@ -275,6 +280,7 @@ void open_main(s32 file_idx, s16 num_frames) // 0x801E2AA4
     {
         num_frames = g_FileTable[file_idx].blockCount - 7;
     }
+
     GFX_ClearRectInterlaced(0, 16, 480, 480, 0, 0, 0);
     movie_main(NULL, num_frames, g_FileTable[file_idx].startSector);
     GFX_ClearRectInterlaced(0, 16, 480, 480, 0, 0, 0);
@@ -306,7 +312,7 @@ void strSetDefDecEnv(DECENV *dec, int x0, int y0, int x1, int y1) // 0x801E2F8C
     dec->rect[1].y = y1;
 }
 
-void strInit(CdlLOC *loc, void (*callback)()) // 0x801E300C
+void strInit(CdlLOC* loc, void(*callback)()) // 0x801E300C
 {
     DecDCTReset(0);
     DecDCToutCallback(callback);
@@ -319,7 +325,7 @@ void strCallback() // 0x801E307C
 {
     RECT snap_rect;
     int  id;
-    u16 *imgbuf;
+    u16* imgbuf;
 
     if (StCdIntrFlag)
     {
@@ -330,7 +336,7 @@ void strCallback() // 0x801E307C
     snap_rect = m->dec.slice;
 
     DrawSync(0);
-    LoadImage(&snap_rect, (u_long *)m->dec.imgbuf);
+    LoadImage(&snap_rect, (u_long*)m->dec.imgbuf);
 
     imgbuf = m->imgbuf0;
     m->dec.slice.x += m->dec.slice.w;
@@ -342,10 +348,9 @@ void strCallback() // 0x801E307C
 
     m->dec.imgbuf = imgbuf;
 
-    if (m->dec.slice.x <
-        m->dec.rect[m->dec.rectid].x + m->dec.rect[m->dec.rectid].w)
+    if (m->dec.slice.x < (m->dec.rect[m->dec.rectid].x + m->dec.rect[m->dec.rectid].w))
     {
-        DecDCTout((u_long *)m->dec.imgbuf, m->dec.slice.w * m->dec.slice.h / 2);
+        DecDCTout((u_long*)m->dec.imgbuf, m->dec.slice.w * m->dec.slice.h / 2);
     }
     else
     {
@@ -358,7 +363,7 @@ void strCallback() // 0x801E307C
     }
 }
 
-void strKickCD(CdlLOC *loc) // 0x801E31CC
+void strKickCD(CdlLOC* loc) // 0x801E31CC
 {
     char   v2[8];
     u_char param;
@@ -368,18 +373,21 @@ void strKickCD(CdlLOC *loc) // 0x801E31CC
         CdControlB(CdlStandby, 0, 0);
         VSync(0);
     }
+
     param = 0x80;
     while (!CdControl(CdlSetmode, &param, 0))
         ;
+
     while (!CdControl(CdlSeekL, loc, 0))
         VSync(0);
+
     while (!CdRead2(CdlModeStream | CdlModeSpeed | CdlModeRT | CdlModeSize1))
         VSync(0);
 }
 
-int strNextVlc(DECENV *dec) // 0x801E3298
+int strNextVlc(DECENV* dec) // 0x801E3298
 {
-    u_long *next, *strNext();
+    u_long* next, *strNext();
 
     u_long cnt = 2000;
     while ((next = strNext(dec)) == 0)
@@ -396,16 +404,18 @@ int strNextVlc(DECENV *dec) // 0x801E3298
     return 0;
 }
 
-u_long *strNext(DECENV *dec) // 0x801E331C
+u_long* strNext(DECENV* dec) // 0x801E331C
 {
-    u_long   *addr;
-    CDSECTOR *sector;
+    u_long*   addr;
+    CDSECTOR* sector;
     int       cnt = MOVIE_WAIT;
 
     while (StGetNext((u_long **)&addr, (u_long **)&sector))
     {
         if (--cnt == 0)
+        {
             return (0);
+        }
     }
 
     if (addr[0] != sector->headm || addr[1] != sector->headv)
@@ -428,7 +438,7 @@ u_long *strNext(DECENV *dec) // 0x801E331C
     return addr;
 }
 
-void strSync(DECENV *dec) // 0x801E3438
+void strSync(DECENV* dec) // 0x801E3438
 {
     volatile u_long cnt = WAIT_TIME;
 
@@ -442,5 +452,6 @@ void strSync(DECENV *dec) // 0x801E3438
             dec->slice.y = dec->rect[dec->rectid].y;
         }
     }
+
     dec->isdone = 0;
 }
