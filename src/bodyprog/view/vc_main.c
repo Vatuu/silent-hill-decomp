@@ -20,7 +20,7 @@ void vcEndCameraSystem() // 0x80080A04
 
 s32 func_80080A10() // 0x80080A10
 {
-    // TODO: bitfield access?
+    // TODO: Bitfield access?
     return (vcWork.cur_near_road_2B8.road_p_0->cam_mv_type_14 >> 8) & 0xF;
 }
 
@@ -36,7 +36,7 @@ s32 func_80080A3C() // 0x80080A3C
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vc_main", vcSetFirstCamWork);
 
-void func_80080B58(GsCOORDINATE2 *a1, SVECTOR *a2, VECTOR3 *a3) // 0x80080B58
+void func_80080B58(GsCOORDINATE2* a1, SVECTOR* a2, VECTOR3* a3) // 0x80080B58
 {
     MATRIX sp10;
 
@@ -44,9 +44,9 @@ void func_80080B58(GsCOORDINATE2 *a1, SVECTOR *a2, VECTOR3 *a3) // 0x80080B58
     func_80049984(a1, &vcWork.field_DC);
     func_80096C94(a2, &sp10);
     MulMatrix(&vcWork.field_DC, &sp10);
-    vcWork.field_DC.t[0] = a3->vx >> 4;
-    vcWork.field_DC.t[1] = a3->vy >> 4;
-    vcWork.field_DC.t[2] = a3->vz >> 4;
+    vcWork.field_DC.t[0] = a3->vx >> FP_POS_Q;
+    vcWork.field_DC.t[1] = a3->vy >> FP_POS_Q;
+    vcWork.field_DC.t[2] = a3->vz >> FP_POS_Q;
 }
 
 void vcWorkSetFlags(VC_FLAGS enable, VC_FLAGS disable) // 0x80080BF8
@@ -61,12 +61,9 @@ s32 func_80080C18(s32 arg0) // 0x80080C18
     return prev_val;
 }
 
-void vcUserWatchTarget(VECTOR3 *watch_tgt_pos, VC_WATCH_MV_PARAM *watch_prm_p,
-                       s32 warp_watch_f) // 0x80080C2C
+void vcUserWatchTarget(VECTOR3* watch_tgt_pos, VC_WATCH_MV_PARAM* watch_prm_p, s32 warp_watch_f) // 0x80080C2C
 {
-    vcWork.flags_8 =
-        (vcWork.flags_8 & ~(VC_USER_WATCH_F | VC_VISIBLE_CHARA_F)) |
-        VC_USER_WATCH_F;
+    vcWork.flags_8 = (vcWork.flags_8 & ~(VC_USER_WATCH_F | VC_VISIBLE_CHARA_F)) | VC_USER_WATCH_F;
 
     if (warp_watch_f != 0)
         vcWork.flags_8 |= VC_WARP_WATCH_F;
@@ -75,26 +72,34 @@ void vcUserWatchTarget(VECTOR3 *watch_tgt_pos, VC_WATCH_MV_PARAM *watch_prm_p,
     vcWork.watch_tgt_ang_z_8C = 0;
 
     if (watch_prm_p == NULL)
+    {
         vcWork.user_watch_mv_prm_70 = deflt_watch_mv_prm;
+    }
     else
+    {
         vcWork.user_watch_mv_prm_70 = *watch_prm_p;
+    }
 }
 
-void vcUserCamTarget(VECTOR3 *cam_tgt_pos, VC_CAM_MV_PARAM *cam_prm_p,
-                     s32 warp_cam_f) // 0x80080CBC
+void vcUserCamTarget(VECTOR3* cam_tgt_pos, VC_CAM_MV_PARAM* cam_prm_p, s32 warp_cam_f) // 0x80080CBC
 {
-    vcWork.flags_8 =
-        (vcWork.flags_8 & ~(VC_USER_CAM_F | VC_WARP_CAM_F)) | VC_USER_CAM_F;
+    vcWork.flags_8 = (vcWork.flags_8 & ~(VC_USER_CAM_F | VC_WARP_CAM_F)) | VC_USER_CAM_F;
 
     if (warp_cam_f != 0)
+    {
         vcWork.flags_8 |= VC_WARP_CAM_F;
+    }
 
     vcWork.cam_tgt_pos_44 = *cam_tgt_pos;
 
     if (cam_prm_p == NULL)
+    {
         vcWork.user_cam_mv_prm_34 = cam_mv_prm_user;
+    }
     else
+    {
         vcWork.user_cam_mv_prm_34 = *cam_prm_p;
+    }
 }
 
 void vcChangeProjectionValue(s16 scr_y) // 0x80080D5C
@@ -107,7 +112,7 @@ void func_80080D68() // 0x80080D68
     vcWork.field_D8 = 1;
 }
 
-void vcGetNowWatchPos(VECTOR3 *watch_pos) // 0x80080D78
+void vcGetNowWatchPos(VECTOR3* watch_pos) // 0x80080D78
 {
     s32 sin_y;
     s32 cos_y;
@@ -119,14 +124,14 @@ void vcGetNowWatchPos(VECTOR3 *watch_pos) // 0x80080D78
     sin_x = shRsin(vcWork.cam_mat_ang_8E.vx);
     cos_y = shRcos(vcWork.cam_mat_ang_8E.vy);
     sin_y = shRsin(vcWork.cam_mat_ang_8E.vy);
+
     r = Math_VectorMagnitude(vcWork.cam_pos_50.vx - vcWork.watch_tgt_pos_7C.vx,
                              vcWork.cam_pos_50.vy - vcWork.watch_tgt_pos_7C.vy,
                              vcWork.cam_pos_50.vz - vcWork.watch_tgt_pos_7C.vz);
-    watch_pos->vx = Math_MulFixed(Math_MulFixed(r, sin_y, 0xC), cos_x, 0xC) +
-                    vcWork.cam_pos_50.vx;
-    watch_pos->vz = Math_MulFixed(Math_MulFixed(r, cos_y, 0xC), cos_x, 0xC) +
-                    vcWork.cam_pos_50.vz;
-    watch_pos->vy = vcWork.cam_pos_50.vy - Math_MulFixed(r, sin_x, 0xC);
+
+    watch_pos->vx = Math_MulFixed(Math_MulFixed(r, sin_y, FP_SIN_Q), cos_x, FP_SIN_Q) + vcWork.cam_pos_50.vx;
+    watch_pos->vz = Math_MulFixed(Math_MulFixed(r, cos_y, FP_SIN_Q), cos_x, FP_SIN_Q) + vcWork.cam_pos_50.vz;
+    watch_pos->vy = vcWork.cam_pos_50.vy - Math_MulFixed(r, sin_x, FP_SIN_Q);
 }
 
 void vcGetNowCamPos(VECTOR3 *cam_pos) // 0x80080EA8
@@ -137,13 +142,16 @@ void vcGetNowCamPos(VECTOR3 *cam_pos) // 0x80080EA8
 void vcReturnPreAutoCamWork(int warp_f) // 0x80080ED0
 {
     if (warp_f)
+    {
         vcWork.flags_8 |= VC_WARP_CAM_F | VC_WARP_WATCH_F | VC_WARP_CAM_TGT_F;
+    }
+
     vcWork.flags_8 &= ~(VC_USER_CAM_F | VC_USER_WATCH_F);
     vcWork.geom_screen_dist_30 = g_GameWork.gsScreenHeight_58A;
 }
 
-void vcSetSubjChara(VECTOR3 *chara_pos, s32 chara_bottom_y, s32 chara_top_y,
-                    s32 chara_grnd_y, VECTOR3 *chara_head_pos, s16 chara_mv_spd,
+void vcSetSubjChara(VECTOR3* chara_pos, s32 chara_bottom_y, s32 chara_top_y,
+                    s32 chara_grnd_y, VECTOR3* chara_head_pos, s16 chara_mv_spd,
                     s32 chara_mv_ang_y, s16 chara_ang_spd_y,
                     s16 chara_eye_ang_y, s16 chara_eye_ang_wy,
                     s32 chara_watch_xz_r) // 0x80080F14
@@ -180,36 +188,40 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vc_main", vcRetSelfViewEffectRate);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vc_main", vcSetFlagsByCamMvType);
 
-void vcPreSetDataInVC_WORK(VC_WORK      *w_p,
-                           VC_ROAD_DATA *vc_road_ary_list) // 0x80081B6C
+void vcPreSetDataInVC_WORK(VC_WORK* w_p, VC_ROAD_DATA* vc_road_ary_list) // 0x80081B6C
 {
     if (g_CurDeltaTime != 0)
     {
         if (vcWork.flags_8 & VC_PRS_F_VIEW_F)
+        {
             vcWork.flags_8 |= VC_OLD_PRS_F_VIEW_F;
+        }
         else
+        {
             vcWork.flags_8 &= ~VC_OLD_PRS_F_VIEW_F;
+        }
 
         if (g_pController1->btns_held_C & g_pGameWork0->controllerBinds_0.view)
+        {
             vcWork.flags_8 |= VC_PRS_F_VIEW_F;
+        }
         else
+        {
             vcWork.flags_8 &= ~VC_PRS_F_VIEW_F;
+        }
     }
 
-    vcWork.scr_half_ang_wx_2E = (s16)(ratan2(g_GameWork.gsScreenWidth_588,
-                                             vcWork.geom_screen_dist_30) >>
-                                      1);
-    vcWork.scr_half_ang_wy_2C = (s16)(ratan2(g_GameWork.gsScreenHeight_58A,
-                                             vcWork.geom_screen_dist_30) >>
-                                      1);
+    vcWork.scr_half_ang_wx_2E = (s16)(ratan2(g_GameWork.gsScreenWidth_588, vcWork.geom_screen_dist_30) >> 1);
+    vcWork.scr_half_ang_wy_2C = (s16)(ratan2(g_GameWork.gsScreenHeight_58A, vcWork.geom_screen_dist_30) >> 1);
 
     if (vcWork.through_door_activate_init_f_C != 0)
+    {
         vcSetTHROUGH_DOOR_CAM_PARAM_in_VC_WORK(&vcWork, VC_TDSC_START);
+    }
 
     vcSetTHROUGH_DOOR_CAM_PARAM_in_VC_WORK(&vcWork, VC_TDSC_MAIN);
     vcSetNearestEnemyDataInVC_WORK(w_p);
-    vcSetNearRoadAryByCharaPos(w_p, vc_road_ary_list, 0x14000, 0,
-                               w_p->nearest_enemy_p_2DC != NULL);
+    vcSetNearRoadAryByCharaPos(w_p, vc_road_ary_list, 0x14000, 0, w_p->nearest_enemy_p_2DC != NULL);
 }
 
 void vcSetTHROUGH_DOOR_CAM_PARAM_in_VC_WORK(
@@ -219,28 +231,31 @@ void vcSetTHROUGH_DOOR_CAM_PARAM_in_VC_WORK(
 
     switch (set_cmd_type)
     {
-    case VC_TDSC_START:
-        w_p->through_door_10.active_f_0 = 1;
-        prm_p->timer_4                  = 0;
-        prm_p->rail_ang_y_8             = w_p->chara_eye_ang_y_144;
-        prm_p->rail_sta_pos_C.vx        = w_p->chara_pos_114.vx;
-        prm_p->rail_sta_pos_C.vy        = w_p->chara_grnd_y_12C - 7987;
-        prm_p->rail_sta_pos_C.vz        = w_p->chara_pos_114.vz;
-        break;
-    case VC_TDSC_END:
-        w_p->through_door_10.active_f_0 = 0;
-        prm_p->timer_4                  = 0;
-        break;
-    case VC_TDSC_MAIN:
-        if (w_p->through_door_10.active_f_0 != 0)
-        {
-            prm_p->rail_sta_to_chara_dist_18 = Math_VectorMagnitude(
-                w_p->chara_pos_114.vx - w_p->through_door_10.rail_sta_pos_C.vx,
-                0,
-                w_p->chara_pos_114.vz - w_p->through_door_10.rail_sta_pos_C.vz);
-            prm_p->timer_4 += g_CurDeltaTime;
-        }
-        break;
+        case VC_TDSC_START:
+            w_p->through_door_10.active_f_0 = 1;
+            prm_p->timer_4                  = 0;
+            prm_p->rail_ang_y_8             = w_p->chara_eye_ang_y_144;
+            prm_p->rail_sta_pos_C.vx        = w_p->chara_pos_114.vx;
+            prm_p->rail_sta_pos_C.vy        = w_p->chara_grnd_y_12C - 7987;
+            prm_p->rail_sta_pos_C.vz        = w_p->chara_pos_114.vz;
+            break;
+
+        case VC_TDSC_END:
+            w_p->through_door_10.active_f_0 = 0;
+            prm_p->timer_4                  = 0;
+            break;
+
+        case VC_TDSC_MAIN:
+            if (w_p->through_door_10.active_f_0 != 0)
+            {
+                prm_p->rail_sta_to_chara_dist_18 = Math_VectorMagnitude(
+                    w_p->chara_pos_114.vx - w_p->through_door_10.rail_sta_pos_C.vx,
+                    0,
+                    w_p->chara_pos_114.vz - w_p->through_door_10.rail_sta_pos_C.vz);
+
+                prm_p->timer_4 += g_CurDeltaTime;
+            }
+            break;
     }
 }
 
@@ -271,10 +286,9 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vc_main", vcGetNearestNEAR_ROAD_DATA
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vc_main", vcAdvantageDistOfOldCurRoad);
 
-void vcAutoRenewalWatchTgtPosAndAngZ(VC_WORK *w_p, VC_CAM_MV_TYPE cam_mv_type,
+void vcAutoRenewalWatchTgtPosAndAngZ(VC_WORK* w_p, VC_CAM_MV_TYPE cam_mv_type,
                                      VC_AREA_SIZE_TYPE cur_rd_area_size,
-                                     int               far_watch_rate,
-                                     int self_view_eff_rate) // 0x80082B10
+                                     int far_watch_rate, int self_view_eff_rate) // 0x80082B10
 {
     VECTOR3 far_watch_pos;
 
@@ -286,18 +300,9 @@ void vcAutoRenewalWatchTgtPosAndAngZ(VC_WORK *w_p, VC_CAM_MV_TYPE cam_mv_type,
                                 cur_rd_area_size);
         if (far_watch_rate != 0)
         {
-            w_p->watch_tgt_pos_7C.vx +=
-                (far_watch_rate *
-                 (far_watch_pos.vx - w_p->watch_tgt_pos_7C.vx)) >>
-                0xC;
-            w_p->watch_tgt_pos_7C.vy +=
-                (far_watch_rate *
-                 (far_watch_pos.vy - w_p->watch_tgt_pos_7C.vy)) >>
-                0xC;
-            w_p->watch_tgt_pos_7C.vz +=
-                (far_watch_rate *
-                 (far_watch_pos.vz - w_p->watch_tgt_pos_7C.vz)) >>
-                0xC;
+            w_p->watch_tgt_pos_7C.vx += (far_watch_rate * (far_watch_pos.vx - w_p->watch_tgt_pos_7C.vx)) >> FP_SIN_Q;
+            w_p->watch_tgt_pos_7C.vy += (far_watch_rate * (far_watch_pos.vy - w_p->watch_tgt_pos_7C.vy)) >> FP_SIN_Q;
+            w_p->watch_tgt_pos_7C.vz += (far_watch_rate * (far_watch_pos.vz - w_p->watch_tgt_pos_7C.vz)) >> FP_SIN_Q;
         }
     }
     else
@@ -310,7 +315,9 @@ void vcAutoRenewalWatchTgtPosAndAngZ(VC_WORK *w_p, VC_CAM_MV_TYPE cam_mv_type,
         w_p, &g_SysWork.hero_neck_930.workm, g_SysWork.player_4C.c.flags_4[0]);
 
     if (w_p->watch_tgt_pos_7C.vy > w_p->watch_tgt_max_y_88)
+    {
         w_p->watch_tgt_pos_7C.vy = w_p->watch_tgt_max_y_88;
+    }
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vc_main", vcMakeNormalWatchTgtPos);
@@ -319,35 +326,35 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vc_main", vcMixSelfViewEffectToWatch
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vc_main", vcMakeFarWatchTgtPos);
 
-void vcSetWatchTgtXzPos(VECTOR3 *watch_pos, VECTOR3 *center_pos,
-                        VECTOR3 *cam_pos, s32 tgt_chara2watch_cir_dist,
+void vcSetWatchTgtXzPos(VECTOR3* watch_pos, VECTOR3* center_pos,
+                        VECTOR3* cam_pos, s32 tgt_chara2watch_cir_dist,
                         s32 tgt_watch_cir_r, s16 watch_cir_ang_y) // 0x800834A8
 {
     s16 cam2chr_ang;
     s32 chr2watch_x;
     s32 chr2watch_z;
 
-    cam2chr_ang =
-        ratan2(center_pos->vx - cam_pos->vx, center_pos->vz - cam_pos->vz);
+    cam2chr_ang = ratan2(center_pos->vx - cam_pos->vx, center_pos->vz - cam_pos->vz);
 
-    chr2watch_x =
-        Math_MulFixed(tgt_chara2watch_cir_dist, shRsin(cam2chr_ang), 0xC) +
-        Math_MulFixed(tgt_watch_cir_r, shRsin(watch_cir_ang_y), 0xC);
-    chr2watch_z =
-        Math_MulFixed(tgt_chara2watch_cir_dist, shRcos(cam2chr_ang), 0xC) +
-        Math_MulFixed(tgt_watch_cir_r, shRcos(watch_cir_ang_y), 0xC);
+    chr2watch_x = Math_MulFixed(tgt_chara2watch_cir_dist, shRsin(cam2chr_ang), FP_SIN_Q) +
+                  Math_MulFixed(tgt_watch_cir_r, shRsin(watch_cir_ang_y), FP_SIN_Q);
+    chr2watch_z = Math_MulFixed(tgt_chara2watch_cir_dist, shRcos(cam2chr_ang), FP_SIN_Q) +
+                  Math_MulFixed(tgt_watch_cir_r, shRcos(watch_cir_ang_y), FP_SIN_Q);
 
     watch_pos->vx = center_pos->vx + chr2watch_x;
     watch_pos->vz = center_pos->vz + chr2watch_z;
 }
 
-void vcSetWatchTgtYParam(VECTOR3 *watch_pos, VC_WORK *w_p, s32 cam_mv_type,
-                         s32 watch_y) // 0x800835C0
+void vcSetWatchTgtYParam(VECTOR3* watch_pos, VC_WORK* w_p, s32 cam_mv_type, s32 watch_y) // 0x800835C0
 {
     if (cam_mv_type == VC_MV_SELF_VIEW)
+    {
         watch_pos->vy = w_p->chara_center_y_128;
+    }
     else
+    {
         watch_pos->vy = watch_y;
+    }
 }
 
 void vcAdjustWatchYLimitHighWhenFarView(VECTOR3 *watch_pos, VECTOR3 *cam_pos,
