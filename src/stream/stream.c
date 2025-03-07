@@ -6,8 +6,8 @@
 #include <libgpu.h>
 #include <libpress.h>
 
-#include "main/fileinfo.h"
 #include "bodyprog/bodyprog.h"
+#include "main/fileinfo.h"
 
 extern int StCdIntrFlag; // Not included in SDK docs/headers, but movie player sample code (and moviesys) uses it?
 
