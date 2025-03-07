@@ -354,13 +354,13 @@ void vcSetWatchTgtYParam(VECTOR3* watch_pos, VC_WORK* w_p, s32 cam_mv_type, s32 
     }
 }
 
-void vcAdjustWatchYLimitHighWhenFarView(VECTOR3* watch_pos, VECTOR3* cam_pos, short sy) // 0x800835E0
+void vcAdjustWatchYLimitHighWhenFarView(VECTOR3* watch_pos, VECTOR3* cam_pos, s16 sy) // 0x800835E0
 {
     s16 max_cam_ang_x = ratan2(cam_pos->vy + 0x5000, 0xD000) - ratan2(g_GameWork.gsScreenHeight_58A / 2, sy);
     s32 dist = Math_VectorMagnitude(watch_pos->vx - cam_pos->vx, 0, watch_pos->vz - cam_pos->vz);
-    s32 cam_ang_x = ratan2(-watch_pos->vy + cam_pos->vy, dist) * 65536;
+    s32 cam_ang_x = ratan2(-watch_pos->vy + cam_pos->vy, dist) * FP_ANGLE_COUNT;
 
-    if ((max_cam_ang_x * 65536) < cam_ang_x)
+    if ((max_cam_ang_x * FP_ANGLE_COUNT) < cam_ang_x)
     {
         s32 ofs_y = (((dist >> FP_POS_Q) * shRsin(max_cam_ang_x)) / shRcos(max_cam_ang_x)) * 16;
         watch_pos->vy = cam_pos->vy - ofs_y;
@@ -467,17 +467,17 @@ void vcMakeIdealCamPosByHeadPos(VECTOR3* ideal_pos, VC_WORK* w_p, VC_AREA_SIZE_T
 
     if (g_pGameWork->gameOptionsViewMode_29)
     {
-        chara2cam_ang_y = w_p->chara_eye_ang_y_144 + 0x638;
-        ideal_pos->vy   = w_p->chara_head_pos_130.vy + 0x11E;
+        chara2cam_ang_y = w_p->chara_eye_ang_y_144 + DEG_TO_FPA(8.75f);
+        ideal_pos->vy   = w_p->chara_head_pos_130.vy + 286;
     }
     else
     {
-        chara2cam_ang_y = w_p->chara_eye_ang_y_144 + 0x78E;
-        ideal_pos->vy   = w_p->chara_head_pos_130.vy + 0x199;
+        chara2cam_ang_y = w_p->chara_eye_ang_y_144 + DEG_TO_FPA(10.625f);
+        ideal_pos->vy   = w_p->chara_head_pos_130.vy + 409;
     }
 
-    ideal_pos->vx = w_p->chara_head_pos_130.vx + ((shRsin(chara2cam_ang_y) * 0x2E1) >> FP_SIN_Q);
-    ideal_pos->vz = w_p->chara_head_pos_130.vz + ((shRcos(chara2cam_ang_y) * 0x2E1) >> FP_SIN_Q);
+    ideal_pos->vx = w_p->chara_head_pos_130.vx + ((shRsin(chara2cam_ang_y) * DEG_TO_FPA(4.05f)) >> FP_SIN_Q);
+    ideal_pos->vz = w_p->chara_head_pos_130.vz + ((shRcos(chara2cam_ang_y) * DEG_TO_FPA(4.05f)) >> FP_SIN_Q);
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vc_main", vcMakeIdealCamPosForFixAngCam);
@@ -486,11 +486,10 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vc_main", vcMakeIdealCamPosForThroug
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vc_main", vcMakeIdealCamPosUseVC_ROAD_DATA);
 
-// vcGetMinInRoadDist() in SH2, hardcoded 4096 in SH1
-#define MIN_IN_ROAD_DIST 4096
-
 void vcAdjustXzInLimAreaUsingMIN_IN_ROAD_DIST(s32* x_p, s32* z_p, VC_LIMIT_AREA* lim_p) // 0x80084210
 {
+    #define MIN_IN_ROAD_DIST 4096 // vcGetMinInRoadDist() in SH2, hardcoded 4096 in SH1
+    
     s32 min_z;
     s32 min_x;
     s32 max_z;
@@ -587,8 +586,8 @@ void vcGetUseWatchAndCamMvParam(VC_WATCH_MV_PARAM** watch_mv_prm_pp, VC_CAM_MV_P
 
         *watch_mv_prm_pp = &vcWatchMvPrmSt;
 
-        add_ang_accel_y = ((s64)w_p->chara_mv_spd_13C * 0x1000) >> FP_SIN_Q;
-        add_ang_accel_y = CLAMP(add_ang_accel_y, 0, 0x2000);
+        add_ang_accel_y = ((s64)w_p->chara_mv_spd_13C * DEG_TO_FPA(22.5f)) >> FP_SIN_Q;
+        add_ang_accel_y = CLAMP(add_ang_accel_y, 0, DEG_TO_FPA(45.0f));
 
         vcWatchMvPrmSt.ang_accel_y += add_ang_accel_y;
     }
@@ -764,16 +763,16 @@ void vcAdjCamOfsAngByCharaInScreen(SVECTOR* cam_ang, SVECTOR* ofs_cam2chara_btm_
     }
 
     // SH2 uses similar checks with 0.52359879 / 30 degrees.
-    if (var_a1 < -341)
+    if (var_a1 < DEG_TO_FPA(-1.875f))
     {
-        adj_cam_ang_x = -341;
+        adj_cam_ang_x = DEG_TO_FPA(-1.875f);
     }
     else
     {
         adj_cam_ang_x = var_a1;
-        if (var_a1 > 341)
+        if (var_a1 > DEG_TO_FPA(1.875f))
         {
-            adj_cam_ang_x = 341;
+            adj_cam_ang_x = DEG_TO_FPA(1.875f);
         }
     }
 
@@ -807,7 +806,7 @@ void vcSetDataToVwSystem(VC_WORK* w_p, VC_CAM_MV_TYPE cam_mv_type) // 0x80085884
     if (w_p->field_D8 != 0)
     {
         w_p->field_D8 = 0;
-        vwSetCoordRefAndEntou(&g_SysWork.hero_neck_930, 0, -0xCC, 0x4CC, 0x800, 0, -0x333, 0x1000);
+        vwSetCoordRefAndEntou(&g_SysWork.hero_neck_930, 0, -204, 1228, DEG_TO_FPA(11.25f), DEG_TO_FPA(0.0f), -0x333, 0x1000);
     }
     else if (w_p->field_FC != 0)
     {
@@ -818,17 +817,17 @@ void vcSetDataToVwSystem(VC_WORK* w_p, VC_CAM_MV_TYPE cam_mv_type) // 0x80085884
     {
         vcSelfViewTimer += g_CurDeltaTime;
 
-        noise_ang.vx = vcCamMatNoise(4, 0x1638, 0x238E, vcSelfViewTimer);
-        noise_ang.vy = vcCamMatNoise(2, 0x11C7, 0x2C71, vcSelfViewTimer);
+        noise_ang.vx = vcCamMatNoise(4, DEG_TO_FPA(31.25f), DEG_TO_FPA(50.0f), vcSelfViewTimer);
+        noise_ang.vy = vcCamMatNoise(2, DEG_TO_FPA(25.0f), DEG_TO_FPA(62.5f), vcSelfViewTimer);
         noise_ang.vz = 0;
         func_80096C94(&noise_ang, &noise_mat);
 
-        noise_mat.m[0][0] += vcCamMatNoise(0xC, 0x1F1C, 0x2800, vcSelfViewTimer);
-        noise_mat.m[0][1] += vcCamMatNoise(0xC, 0x1AAA, 0x2C71, vcSelfViewTimer);
-        noise_mat.m[0][2] += vcCamMatNoise(0xC, 0x1AAA, 0x238E, vcSelfViewTimer);
-        noise_mat.m[1][0] += vcCamMatNoise(0xC, 0x1638, 0x1638, vcSelfViewTimer);
-        noise_mat.m[1][1] += vcCamMatNoise(0xC, 0x2800, 0x11C7, vcSelfViewTimer);
-        noise_mat.m[1][2] += vcCamMatNoise(0xC, 0x1CE3, 0x2A38, vcSelfViewTimer);
+        noise_mat.m[0][0] += vcCamMatNoise(12, DEG_TO_FPA(43.75f), DEG_TO_FPA(56.25f), vcSelfViewTimer);
+        noise_mat.m[0][1] += vcCamMatNoise(12, DEG_TO_FPA(37.5f), DEG_TO_FPA(62.5f), vcSelfViewTimer);
+        noise_mat.m[0][2] += vcCamMatNoise(12, DEG_TO_FPA(37.5f), DEG_TO_FPA(50.0f), vcSelfViewTimer);
+        noise_mat.m[1][0] += vcCamMatNoise(12, DEG_TO_FPA(31.25f), DEG_TO_FPA(31.25f), vcSelfViewTimer);
+        noise_mat.m[1][1] += vcCamMatNoise(12, DEG_TO_FPA(56.25f), DEG_TO_FPA(25.0f), vcSelfViewTimer);
+        noise_mat.m[1][2] += vcCamMatNoise(12, DEG_TO_FPA(40.625f), DEG_TO_FPA(59.375f), vcSelfViewTimer);
         MulMatrix0(&w_p->cam_mat_98, &noise_mat, &noise_cam_mat);
 
         noise_cam_mat.t[0] = w_p->cam_mat_98.t[0];

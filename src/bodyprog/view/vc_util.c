@@ -81,27 +81,41 @@ void vcAddOfsToPos(VECTOR3* out_pos, VECTOR3* in_pos, s16 ofs_xz_r, s16 ang_y, s
 void vcSetRefPosAndSysRef2CamParam(VECTOR3* ref_pos, s_SysWork* sys_p, s32 for_f, s32 back_f, s32 right_f, s32 left_f, s32 up_f, s32 down_f) // 0x800405C4
 {
     if (for_f != 0)
+    {
         sys_p->cam_r_xz_2380 -= 0x199;
+    }
 
     if (back_f != 0)
+    {
         sys_p->cam_r_xz_2380 += 0x199;
+    }
 
     if (right_f != 0)
-        sys_p->cam_ang_y_237A = sys_p->cam_ang_y_237A - (D_800B5C34 * 0xB);
+    {
+        sys_p->cam_ang_y_237A = sys_p->cam_ang_y_237A - (D_800B5C34 * 11);
+    }
 
     if (left_f != 0)
-        sys_p->cam_ang_y_237A = sys_p->cam_ang_y_237A + (D_800B5C34 * 0xB);
+    {
+        sys_p->cam_ang_y_237A = sys_p->cam_ang_y_237A + (D_800B5C34 * 11);
+    }
 
     if (up_f != 0)
+    {
         sys_p->cam_y_2384 -= 0x199;
+    }
 
     if (down_f != 0)
+    {
         sys_p->cam_y_2384 += 0x199;
+    }
 
     if (sys_p->cam_r_xz_2380 < 0x1000)
+    {
         sys_p->cam_r_xz_2380 = 0x1000;
+    }
 
-    vcAddOfsToPos(ref_pos, &g_SysWork.player_4C.c.position_18, 0x800, g_SysWork.player_4C.c.rotation_24.vy, -0x1000);
+    vcAddOfsToPos(ref_pos, &g_SysWork.player_4C.c.position_18, 2048, g_SysWork.player_4C.c.rotation_24.vy, -4096);
 }
 
 void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, s_SysWork* sys_p) // 0x800406D4
@@ -125,30 +139,49 @@ void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, s_SysWork* sys_p) // 0x80040
     if (!(g_pController2->btns_held_C & Pad_BtnCircle))
     {
         if (g_pController2->btns_held_C & Pad_LSDown)
-            cam_ang.vx = cam_ang.vx - (D_800B5C34 * 0xB);
+        {
+            cam_ang.vx = cam_ang.vx - (D_800B5C34 * 11);
+        }
+
         if (g_pController2->btns_held_C & Pad_LSUp)
-            cam_ang.vx = cam_ang.vx + (D_800B5C34 * 0xB);
+        {
+            cam_ang.vx = cam_ang.vx + (D_800B5C34 * 11);
+        }
+
         if (g_pController2->btns_held_C & Pad_LSRight)
-            cam_ang.vy = cam_ang.vy + (D_800B5C34 * 0xB);
+        {
+            cam_ang.vy = cam_ang.vy + (D_800B5C34 * 11);
+        }
+
         if (g_pController2->btns_held_C & Pad_LSLeft)
-            cam_ang.vy = cam_ang.vy - (D_800B5C34 * 0xB);
+        {
+            cam_ang.vy = cam_ang.vy - (D_800B5C34 * 11);
+        }
 
         if (g_pController2->btns_held_C & (Pad_BtnTriangle | Pad_BtnCross))
         {
             var_s0 = 0;
             if (g_pController2->btns_held_C & Pad_BtnTriangle)
+            {
                 var_s0 = 0x19;
+            }
             if (g_pController2->btns_held_C & Pad_BtnCross)
+            {
                 var_s0 = -0x1A;
+            }
 
             var_v1 = var_s0 * shRsin(cam_ang.vy);
             if (var_v1 < 0)
+            {
                 var_v1 += 0xFFF;
+            }
 
             sp18.vx += var_v1 >> FP_SIN_Q;
             var_v1_4 = var_s0 * shRcos(cam_ang.vy);
             if (var_v1_4 < 0)
+            {
                 var_v1_4 += 0xFFF;
+            }
 
             sp18.vz += var_v1_4 >> FP_SIN_Q;
         }
@@ -156,26 +189,35 @@ void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, s_SysWork* sys_p) // 0x80040
     else
     {
         if (g_pController2->btns_held_C & Pad_LSUp)
+        {
             sp18.vy -= 0x19;
+        }
         if (g_pController2->btns_held_C & Pad_LSDown)
+        {
             sp18.vy += 0x19;
+        }
 
         if (g_pController2->btns_held_C & (Pad_LSRight | Pad_LSLeft))
         {
             var_s0 = 0;
             if (g_pController2->btns_held_C & Pad_LSRight)
+            {
                 var_s0 = 0x19;
+            }
             if (g_pController2->btns_held_C & Pad_LSLeft)
+            {
                 var_s0 = -0x1A;
+            }
 
-            var_v1 = var_s0 * shRsin(cam_ang.vy + 1024);
+            var_v1 = var_s0 * shRsin(cam_ang.vy + DEG_TO_FPA(5.625f));
             if (var_v1 < 0)
             {
                 var_v1 += 0xFFF;
             }
 
             sp18.vx += var_v1 >> FP_SIN_Q;
-            var_v1_4 = var_s0 * shRcos(cam_ang.vy + 1024);
+
+            var_v1_4 = var_s0 * shRcos(cam_ang.vy + DEG_TO_FPA(5.625f));
             if (var_v1_4 < 0)
             {
                 var_v1_4 += 0xFFF;
@@ -199,7 +241,7 @@ void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, s_SysWork* sys_p) // 0x80040
         ref_pos->vx           = (sp18.vx + sp58.vx) * 16;
         ref_pos->vy           = (sp18.vy + sp58.vy) * 16;
         ref_pos->vz           = (sp18.vz + sp58.vz) * 16;
-        sys_p->cam_ang_y_237A = ((cam_ang.vy + 0x800) << 0x14) >> 0x14;
+        sys_p->cam_ang_y_237A = ((cam_ang.vy + DEG_TO_FPA(11.25f)) << 0x14) >> 0x14;
         sys_p->cam_y_2384     = -sp58.vy * 16;
         sys_p->cam_r_xz_2380 = SquareRoot0((sp58.vx * sp58.vx) + (sp58.vz * sp58.vz)) * 16;
     }
