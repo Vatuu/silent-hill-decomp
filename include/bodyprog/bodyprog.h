@@ -127,12 +127,14 @@ extern s16 D_800C391E;
 /** Unknown bodyprog var. Set in `Fs_QueueDoThingWhenEmpty`. */
 extern s32 D_800C489C;
 
+/** Initializer for something before the game loop. */
 void func_8002E630();
 
 void func_8002E6E4(s32 idx);
 
-void func_8002E730(s32 arg0);
+void func_8002E730(s32 idx);
 
+/** Initializer for something before the game loop. */
 void func_8002E7BC();
 
 void func_8002E830();
