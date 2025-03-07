@@ -1,11 +1,11 @@
 #ifndef _LIBSD_H
 #define _LIBSD_H
 
-/*
-   libsd: konami-customized version of libsnd?
-   Majority of functions match up with the libsnd Ss versions
-   libref.pdf v4.4 may be useful, though was likely based on earlier SDK
-*/
+/**
+ * libsd: konami-customized version of libsnd?
+ * Majority of functions match up with libsnd Ss versions.
+ * libref.pdf v4.4 may be useful, though was likely based on earlier SDK.
+ */
 
 extern s32 sd_reverb_mode;
 extern s16 sd_keyoff_mode;
@@ -71,7 +71,7 @@ void smf_vsync(void);
 // removed from header
 s32  to32bit(char arg0, char arg1, char arg2, char arg3);
 s32  to16bit(char arg0, char arg1);
-void len_add(s32 *ptr, s32 val);
+void len_add(s32* ptr, s32 val);
 
 void midi_smf_main();
 
