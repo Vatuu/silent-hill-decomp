@@ -6,88 +6,86 @@
 #include <libgs.h>
 
 // TODO:
-// - update func prototypes to match 1:1 with C files (s32 instead of int, etc)
-// - flags below are from SH2, most seem to match with SH but might be some
-// differences
-// - code that accesses VC_ROAD_TYPE & VC_NEAR_ROAD_DATA is odd, might need
-// extra work
+// - Update func prototypes to match 1:1 with C files (s32 instead of int, etc).
+// - Flags below are from SH2, most seem to match with SH but might be some differences.
+// - Code that accesses VC_ROAD_TYPE & VC_NEAR_ROAD_DATA is odd, might need extra work.
 
 typedef enum _VC_ROAD_FLAGS
 {
-    VC_RD_NOFLAG            = 0x0,
-    VC_RD_END_DATA_F        = 0x1,
-    VC_RD_WARP_IN_F         = 0x2,
-    VC_RD_WARP_OUT_F        = 0x4,
-    VC_RD_WARP_IN_OUT_FS    = 0x6,
-    VC_RD_NO_FRONT_FLIP_F   = 0x8,
-    VC_RD_LIM_UP_FAR_VIEW_F = 0x10,
-    VC_RD_USE_NO_ENEMY_F    = 0x20,
-    VC_RD_USE_NEAR_ENEMY_F  = 0x40,
-    VC_RD_MARGE_ROAD_F      = 0x80
+    VC_RD_NOFLAG            = 0,
+    VC_RD_END_DATA_F        = 1 << 0,
+    VC_RD_WARP_IN_F         = 1 << 1,
+    VC_RD_WARP_OUT_F        = 1 << 2,
+    VC_RD_WARP_IN_OUT_FS    = VC_RD_WARP_IN_F | VC_RD_WARP_OUT_F,
+    VC_RD_NO_FRONT_FLIP_F   = 1 << 3,
+    VC_RD_LIM_UP_FAR_VIEW_F = 1 << 4,
+    VC_RD_USE_NO_ENEMY_F    = 1 << 5,
+    VC_RD_USE_NEAR_ENEMY_F  = 1 << 6,
+    VC_RD_MARGE_ROAD_F      = 1 << 7
 } VC_ROAD_FLAGS;
 STATIC_ASSERT_SIZEOF(VC_ROAD_FLAGS, 4);
 
 typedef enum _VC_FLAGS
 {
-    VC_USER_CAM_F            = 0x1,
-    VC_USER_WATCH_F          = 0x2,
-    VC_WARP_CAM_F            = 0x4,
-    VC_WARP_WATCH_F          = 0x8,
-    VC_WARP_CAM_TGT_F        = 0x10,
-    VC_SWITCH_NEAR_RD_DATA_F = 0x20,
-    VC_PROJ_MOMENT_CHANGE_F  = 0x40,
-    VC_VISIBLE_CHARA_F       = 0x80,
-    VC_INHIBIT_FAR_WATCH_F   = 0x100,
-    VC_PRS_F_VIEW_F          = 0x200,
-    VC_OLD_PRS_F_VIEW_F      = 0x400
+    VC_USER_CAM_F            = 1 << 0,
+    VC_USER_WATCH_F          = 1 << 1,
+    VC_WARP_CAM_F            = 1 << 2,
+    VC_WARP_WATCH_F          = 1 << 3,
+    VC_WARP_CAM_TGT_F        = 1 << 4,
+    VC_SWITCH_NEAR_RD_DATA_F = 1 << 5,
+    VC_PROJ_MOMENT_CHANGE_F  = 1 << 6,
+    VC_VISIBLE_CHARA_F       = 1 << 7,
+    VC_INHIBIT_FAR_WATCH_F   = 1 << 8,
+    VC_PRS_F_VIEW_F          = 1 << 9,
+    VC_OLD_PRS_F_VIEW_F      = 1 << 10
 } VC_FLAGS;
 STATIC_ASSERT_SIZEOF(VC_FLAGS, 4);
 
 typedef enum _VC_CAM_MV_TYPE
 {
-    VC_MV_CHASE        = 0x0,
-    VC_MV_SETTLE       = 0x1,
-    VC_MV_FIX_ANG      = 0x2,
-    VC_MV_SELF_VIEW    = 0x3,
-    VC_MV_THROUGH_DOOR = 0x4,
-    VC_MV_SUU          = 0x5
+    VC_MV_CHASE        = 0,
+    VC_MV_SETTLE       = 1,
+    VC_MV_FIX_ANG      = 2,
+    VC_MV_SELF_VIEW    = 3,
+    VC_MV_THROUGH_DOOR = 4,
+    VC_MV_SUU          = 5
 } VC_CAM_MV_TYPE;
 STATIC_ASSERT_SIZEOF(VC_CAM_MV_TYPE, 4);
 
 typedef enum _VC_CAM_CHK_TYPE
 {
-    VC_CHK_NEAREST_ROAD_TYPE   = 0x0,
-    VC_CHK_NEAREST_SWITCH_TYPE = 0x1
+    VC_CHK_NEAREST_ROAD_TYPE   = 0,
+    VC_CHK_NEAREST_SWITCH_TYPE = 1
 } VC_CAM_CHK_TYPE;
 STATIC_ASSERT_SIZEOF(VC_CAM_CHK_TYPE, 4);
 
 typedef enum _VC_ROAD_TYPE
 {
-    VC_RD_TYPE_ROAD           = 0x0,
-    VC_RD_TYPE_EFFECT         = 0x1,
-    VC_RD_TYPE_EVENT          = 0x2,
-    VC_RD_TYPE_ROAD_PRIO_LOW  = 0x3,
-    VC_RD_TYPE_ROAD_PRIO_HIGH = 0x4,
-    VC_RD_TYPE_SV_ONLY        = 0x5,
-    VC_RD_TYPE_SUU            = 0x6
+    VC_RD_TYPE_ROAD           = 0,
+    VC_RD_TYPE_EFFECT         = 1,
+    VC_RD_TYPE_EVENT          = 2,
+    VC_RD_TYPE_ROAD_PRIO_LOW  = 3,
+    VC_RD_TYPE_ROAD_PRIO_HIGH = 4,
+    VC_RD_TYPE_SV_ONLY        = 5,
+    VC_RD_TYPE_SUU            = 6
 } VC_ROAD_TYPE;
 STATIC_ASSERT_SIZEOF(VC_ROAD_TYPE, 4);
 
 typedef enum _VC_AREA_SIZE_TYPE
 {
-    VC_AREA_TINY    = 0x0,
-    VC_AREA_SMALL   = 0x1,
-    VC_AREA_WIDE    = 0x2,
-    VC_AREA_OUTDOOR = 0x3,
-    VC_AREA_SUU     = 0x4
+    VC_AREA_TINY    = 0,
+    VC_AREA_SMALL   = 1,
+    VC_AREA_WIDE    = 2,
+    VC_AREA_OUTDOOR = 3,
+    VC_AREA_SUU     = 4
 } VC_AREA_SIZE_TYPE;
 STATIC_ASSERT_SIZEOF(VC_AREA_SIZE_TYPE, 4);
 
 typedef enum _THROUGH_DOOR_SET_CMD_TYPE
 {
-    VC_TDSC_START = 0x0,
-    VC_TDSC_END   = 0x1,
-    VC_TDSC_MAIN  = 0x2
+    VC_TDSC_START = 0,
+    VC_TDSC_END   = 1,
+    VC_TDSC_MAIN  = 2
 } THROUGH_DOOR_SET_CMD_TYPE;
 STATIC_ASSERT_SIZEOF(THROUGH_DOOR_SET_CMD_TYPE, 4);
 

@@ -558,7 +558,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vc_main", vcCamTgtMvVecIsFlipedFromC
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vc_main", vcFlipFromCamExclusionArea);
 
-void vcGetUseWatchAndCamMvParam(VC_WATCH_MV_PARAM** watch_mv_prm_pp, VC_CAM_MV_PARAM ** cam_mv_prm_pp, s32 self_view_eff_rate, VC_WORK* w_p) // 0x80084A34
+void vcGetUseWatchAndCamMvParam(VC_WATCH_MV_PARAM** watch_mv_prm_pp, VC_CAM_MV_PARAM** cam_mv_prm_pp, s32 self_view_eff_rate, VC_WORK* w_p) // 0x80084A34
 {
     VC_CAM_MV_PARAM* cam_mv_prm_stg_p;
     s32              add_ang_accel_y;
@@ -648,8 +648,7 @@ void vcRenewalCamMatAng(VC_WORK* w_p, VC_WATCH_MV_PARAM* watch_mv_prm_p, VC_CAM_
         vcMakeOfsCam2CharaBottomAndTopAngByBaseMatT(&ofs_cam2chara_btm_ang, &ofs_cam2chara_top_ang, &new_base_matT,
                                                     &w_p->cam_pos_50, &w_p->chara_pos_114, w_p->chara_bottom_y_120,
                                                     w_p->chara_top_y_124);
-        vcAdjCamOfsAngByCharaInScreen(&ofs_tgt_ang, &ofs_cam2chara_btm_ang,
-                                      &ofs_cam2chara_top_ang, w_p);
+        vcAdjCamOfsAngByCharaInScreen(&ofs_tgt_ang, &ofs_cam2chara_btm_ang, &ofs_cam2chara_top_ang, w_p);
     }
 
     if (w_p->flags_8 & VC_WARP_WATCH_F)
@@ -661,13 +660,10 @@ void vcRenewalCamMatAng(VC_WORK* w_p, VC_WATCH_MV_PARAM* watch_mv_prm_p, VC_CAM_
     }
     else
     {
-        vcAdjCamOfsAngByOfsAngSpd(&w_p->ofs_cam_ang_B8,
-                                  &w_p->ofs_cam_ang_spd_C0, &ofs_tgt_ang,
-                                  watch_mv_prm_p);
+        vcAdjCamOfsAngByOfsAngSpd(&w_p->ofs_cam_ang_B8, &w_p->ofs_cam_ang_spd_C0, &ofs_tgt_ang, watch_mv_prm_p);
     }
 
-    vcMakeCamMatAndCamAngByBaseAngAndOfsAng(&w_p->cam_mat_ang_8E, &w_p->cam_mat_98, &new_base_cam_ang,
-                                            &w_p->ofs_cam_ang_B8, &w_p->cam_pos_50);
+    vcMakeCamMatAndCamAngByBaseAngAndOfsAng(&w_p->cam_mat_ang_8E, &w_p->cam_mat_98, &new_base_cam_ang, &w_p->ofs_cam_ang_B8, &w_p->cam_pos_50);
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vc_main", vcMakeNewBaseCamAng);
@@ -711,15 +707,15 @@ void vcMakeOfsCam2CharaBottomAndTopAngByBaseMatT(SVECTOR* ofs_cam2chara_btm_ang,
 {
     SVECTOR vec;
 
-    vec.vx = ((chara_pos->vx - cam_pos->vx) >> FP_POS_Q);
-    vec.vy = ((chara_bottom_y - cam_pos->vy) >> FP_POS_Q);
-    vec.vz = ((chara_pos->vz - cam_pos->vz) >> FP_POS_Q);
+    vec.vx = (chara_pos->vx - cam_pos->vx) >> FP_POS_Q;
+    vec.vy = (chara_bottom_y - cam_pos->vy) >> FP_POS_Q;
+    vec.vz = (chara_pos->vz - cam_pos->vz) >> FP_POS_Q;
     ApplyMatrixSV(base_matT, &vec, &vec);
     vwVectorToAngle(ofs_cam2chara_btm_ang, &vec);
 
-    vec.vx = ((chara_pos->vx - cam_pos->vx) >> FP_POS_Q);
-    vec.vy = ((chara_top_y - cam_pos->vy) >> FP_POS_Q);
-    vec.vz = ((chara_pos->vz - cam_pos->vz) >> FP_POS_Q);
+    vec.vx = (chara_pos->vx - cam_pos->vx) >> FP_POS_Q;
+    vec.vy = (chara_top_y - cam_pos->vy) >> FP_POS_Q;
+    vec.vz = (chara_pos->vz - cam_pos->vz) >> FP_POS_Q;
     ApplyMatrixSV(base_matT, &vec, &vec);
     vwVectorToAngle(ofs_cam2chara_top_ang, &vec);
 }
