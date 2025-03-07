@@ -1,5 +1,5 @@
 #include "common.h"
-#include "gpu.h"
+#include "game.h"
 #include "main/rng.h"
 #include "bodyprog/bodyprog.h"
 #include "screens/credits/credits.h"
@@ -72,27 +72,27 @@ INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E3124);
 // Draws some image on the screen.
 /*s32 func_801E3124(void)
 {
-    switch (D_800BC728.field_59C)
+    switch (g_GameWork.field_59C)
     {
         case 0:
             switch (D_800BCD0C)
             {
                 case 13:
-                    D_800BC728.field_58C = 0xFF;
-                    D_800BC728.field_58D = 0xFF;
-                    D_800BC728.field_58E = 0xFF;
+                    g_GameWork.field_58C = 0xFF;
+                    g_GameWork.field_58D = 0xFF;
+                    g_GameWork.field_58E = 0xFF;
                     break;
 
                 case 5:
-                    D_800BC728.field_58C = 0;
-                    D_800BC728.field_58D = 0;
-                    D_800BC728.field_58E = 0;
+                    g_GameWork.field_58C = 0;
+                    g_GameWork.field_58D = 0;
+                    g_GameWork.field_58E = 0;
                     break;
             }
 
             func_80045A7C(0x12);
             func_80045A7C(0x10);
-            D_800BC728.field_59C++;
+            g_GameWork.field_59C++;
             break;
 
         case 1:
@@ -112,14 +112,14 @@ INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E3124);
                     break;
             }
 
-            D_800BC728.field_59C++;
+            g_GameWork.field_59C++;
             break;
 
         case 2:
             func_80032428(0x200, 1);
             D_800A8FF0 = 1;
             D_801E5E74 = 0x3C;
-            D_800BC728.field_59C++;
+            g_GameWork.field_59C++;
             break;
 
         case 3:
@@ -127,9 +127,9 @@ INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E3124);
             
             if (D_801E5E74 <= 0 && func_80045B28() < 2)
             {
-                D_800BC728.field_58C = 0;
-                D_800BC728.field_58D = 0;
-                D_800BC728.field_58E = 0;
+                g_GameWork.field_58C = 0;
+                g_GameWork.field_58D = 0;
+                g_GameWork.field_58E = 0;
                 return 1;
             }
 
@@ -139,21 +139,23 @@ INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E3124);
     return 0;
 }*/
 
-s32 func_801E3304(void)
+// TODO: g_GameWork undeclared?
+INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E3304);
+/*s32 func_801E3304(void)
 {
     s32 temp;
 
-    if (D_800BC728.field_590 == 11)
+    if (g_GameWork.field_590 == 11)
     {
-        if (D_800BC728.field_59C == 0)
+        if (g_GameWork.field_59C == 0)
         {
             func_80032428(0x140, 0);
             D_800BCD0C = 0;
-            D_800BC728.field_59C++;
+            g_GameWork.field_59C++;
         }
-        else if (D_800BC728.field_59C != 10)
+        else if (g_GameWork.field_59C != 10)
         {
-            D_800BC728.field_59C++;
+            g_GameWork.field_59C++;
         }
         else
         {
@@ -163,13 +165,13 @@ s32 func_801E3304(void)
             DrawSync(0);
             VSync(2);
             
-            temp = D_800BC728.field_594;
+            temp = g_GameWork.field_594;
             
             D_800B9FC0.field_1C = 0;
             D_800B9FC0.field_20 = 0;
             
-            D_800BC728.field_59C = 0;
-            D_800BC728.field_5A0 = 0;
+            g_GameWork.field_59C = 0;
+            g_GameWork.field_5A0 = 0;
             
             D_800B9FC0.field_8 = 0;
             D_800B9FC0.field_24 = 0;
@@ -179,17 +181,17 @@ s32 func_801E3304(void)
             D_800B9FC0.field_2C = 0;
             D_800B9FC0.field_14 = 0;
             
-            D_800BC728.field_598 = temp;
-            D_800BC728.field_594 = (s32)D_800BC728.field_590;
-            D_800BC728.field_590 = temp;
-            D_800BC728.field_598 = 0;
+            g_GameWork.field_598 = temp;
+            g_GameWork.field_594 = (s32)g_GameWork.field_590;
+            g_GameWork.field_590 = temp;
+            g_GameWork.field_598 = 0;
         }
         
         return 0;
     }
 
     return 0;
-}
+}*/
 
 INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E342C);
 

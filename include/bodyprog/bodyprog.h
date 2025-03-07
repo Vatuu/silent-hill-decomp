@@ -6,20 +6,6 @@
 
 typedef struct
 {
-    u8  unk_0[1420];
-    u8  field_58C; // R?
-    u8  field_58D; // G?
-    u8  field_58E; // B?
-    u8  field_58F;
-    u32 field_590;
-    u32 field_594; // Maybe some game state enum entry.
-    u32 field_598;
-    u32 field_59C;
-    u32 field_5A0;
-} s_GameWork; // Size: >=1444
-
-typedef struct
-{
     s32 unk_0[2];
     s32 field_8;
     s32 unk_C[2213];
@@ -71,8 +57,6 @@ typedef struct
     s32 field_14;
     s32 field_18; 
 } s_800B5508;
-
-extern s_GameWork D_800BC728;
 
 /** Clears some field in some struct. */
 void func_80041D10(s_80041D10* array, s32 size);

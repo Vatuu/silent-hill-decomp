@@ -75,9 +75,9 @@ int     strNextVlc(DECENV* dec);
 u_long* strNext(DECENV* dec);
 void    strSync(DECENV* dec);
 
+// Old IDB name: MainLoopState3_StartMovieIntro_801E2654
 void func_801E2654(void)
 {
-    // Old IDB name MainLoopState3_StartMovieIntro_801E2654
     s32 prev_594;
 
     switch (g_GameWork.field_598)
@@ -124,10 +124,9 @@ void func_801E2654(void)
     func_800314EC(D_800A900C);
 }
 
+// Old IDB name: MainLoopState6_Movie_PlayIntro_801E279C
 void func_801E279C(void)
 {
-    // Old IDB name MainLoopState6_Movie_PlayIntro_801E279C
-
     s32 prev_594;
     s32 file_idx = 2053; // XA/C1_20670
 
@@ -157,9 +156,9 @@ void func_801E279C(void)
     D_800B5C30           = 0x1000;
 }
 
+// Old IDB name: MainLoopState9_Movie_PlayOpening_801E2838
 void func_801E2838(void)
 {
-    // Old IDB name MainLoopState9_Movie_PlayOpening_801E2838
     s32 prev_594;
 
     open_main(2055, 0); // XA/M1_03500
@@ -181,9 +180,9 @@ void func_801E2838(void)
     g_GameWork.field_598 = 0;
 }
 
+// Old IDB name: MainLoopStateD_ReturnToGame_801E28B0
 void func_801E28B0(void)
 {
-    // old IDB name MainLoopStateD_ReturnToGame_801E28B0
     s32 prev_594;
 
     prev_594             = g_GameWork.field_594;
@@ -204,9 +203,9 @@ void func_801E28B0(void)
     g_GameWork.field_598 = 0;
 }
 
+// Old IDB name: MainLoopState11_Movie_PlayEnding_801E2908
 void func_801E2908(void)
 {
-    // Old IDB name MainLoopState11_Movie_PlayEnding_801E2908
     s_GameWork*       gameWork   = g_pGameWork0;
     s_ControllerData* controller = g_pController1;
     s32               prev_594;
@@ -248,9 +247,9 @@ void func_801E2908(void)
     }
 }
 
+// Old IDB name: MainLoopState5_Movie_PlayIntroAlternate_801E2A24
 void func_801E2A24(void)
 {
-    // Old IDB name MainLoopState5_Movie_PlayIntroAlternate_801E2A24
     s32 prev_594;
 
     open_main(2053, 2060); // XA/C1_20670
@@ -290,7 +289,7 @@ void open_main(s32 file_idx, s16 num_frames) // 0x801E2AA4
 
 INCLUDE_ASM("asm/stream/nonmatchings/stream", movie_main);
 
-void strSetDefDecEnv(DECENV *dec, int x0, int y0, int x1, int y1) // 0x801E2F8C
+void strSetDefDecEnv(DECENV* dec, int x0, int y0, int x1, int y1) // 0x801E2F8C
 {
     dec->rect[0].w = 480;
     dec->rect[1].w = 480;

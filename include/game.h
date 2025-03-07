@@ -79,8 +79,8 @@ typedef struct _ControllerBindings
     u16 light;
     u16 run;
     u16 view;
-    u16 step_l;
-    u16 step_r;
+    u16 stepLeft;
+    u16 stepRight;
     u16 pause;
     u16 item;
     u16 map;
@@ -101,9 +101,12 @@ typedef struct _GameWork
     char                 pad90[0x4F8];
     u16                  gsScreenWidth_588;
     u16                  gsScreenHeight_58A;
-    char                 unk_58C[4];
+    u8                   field_58C; // R?
+    u8                   field_58D; // G?
+    u8                   field_58E; // B?
+    u8                   field_58F; // A or graphics command code?
     s32                  field_590;
-    s32                  field_594;
+    s32                  field_594; // Maybe some game state enum entry.
     s32                  field_598;
     s32                  field_59C;
     s32                  field_5A0;

@@ -1,5 +1,5 @@
 #include "common.h"
-#include "gpu.h"
+#include "game.h"
 #include "bodyprog/bodyprog.h"
 #include "screens/saveload/saveload.h"
 
@@ -62,9 +62,11 @@ INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E5E18);
 
 INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E6320);
 
-void func_801E63C0(void)
+// TODO: g_GameWork undeclared?
+INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E63C0);
+/*void func_801E63C0(void)
 {
-    if (D_800BC728.field_590 == 7)
+    if (g_GameWork.field_590 == 7)
     {
         VSync(8);
     }
@@ -72,13 +74,13 @@ void func_801E63C0(void)
     D_800A8FF0 = 1;
     D_800BCD0C = 6;
     
-    D_800BC728.field_58C = 0;
-    D_800BC728.field_58D = 0;
-    D_800BC728.field_58E = 0;
+    g_GameWork.field_58C = 0;
+    g_GameWork.field_58D = 0;
+    g_GameWork.field_58E = 0;
     
     D_800BCD39 = 0;
     
-    if (D_800BC728.field_594 == 4 || D_800BC728.field_594 == 8)
+    if (g_GameWork.field_594 == 4 || g_GameWork.field_594 == 8)
     {
         if (D_800A97D8 != 0)
         {
@@ -87,15 +89,15 @@ void func_801E63C0(void)
     }
     
     D_801E7520 = 0;
-    D_800A97D8 = (D_800BC728.field_594 == 16);
+    D_800A97D8 = (g_GameWork.field_594 == 16);
     
     func_801E2D8C();
     
     D_800B9FE0[0] = 0;
-    D_800BC728.field_598++;
-    D_800BC728.field_59C = 0;
-    D_800BC728.field_5A0 = 0;
-}
+    g_GameWork.field_598++;
+    g_GameWork.field_59C = 0;
+    g_GameWork.field_5A0 = 0;
+}*/
 
 INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E649C);
 
@@ -121,7 +123,7 @@ void func_801E7244(void)
         return;
 
     D_801E76D0 = 0;
-    D_801E7520 -= 1;
+    D_801E7520--;
 
     switch (D_801E751C) 
     {
