@@ -56,7 +56,6 @@ INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E5E18);
 
 INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E6320);
 
-// TODO: g_GameWork undeclared?
 INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E63C0);
 /*void func_801E63C0(void)
 {

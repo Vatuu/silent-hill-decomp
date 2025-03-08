@@ -1,5 +1,5 @@
-#ifndef B_KONAMI_H
-#define B_KONAMI_H
+#ifndef _B_KONAMI_H
+#define _B_KONAMI_H
 
 #include "common.h"
 
