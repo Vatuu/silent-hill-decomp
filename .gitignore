@@ -9,5 +9,6 @@ __pycache__/
 permuter/
 expected/
 
+objdiff.json
 null.d
 !*/place-the-bin-and-cue-here
