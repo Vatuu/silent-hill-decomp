@@ -182,6 +182,7 @@ build: $(TARGET_OUT)
 progress: regenerate
 	@$(MAKE) NON_MATCHING=0 SKIP_ASM=0 expected
 	@$(MAKE) NON_MATCHING=1 SKIP_ASM=1 build
+	@$(PYTHON) $(TOOLS_DIR)/objdiff_generate.py expected/src .
 	@$(OBJDIFF) report generate > $(BUILD_DIR)/progress.json
 
 check: build
