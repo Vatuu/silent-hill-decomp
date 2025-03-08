@@ -4,6 +4,7 @@ BUILD_OVERLAYS ?= 1
 BUILD_SCREENS  ?= 1
 BUILD_MAPS     ?= 0
 NON_MATCHING   ?= 0
+SKIP_ASM	   ?= 0
 
 # Names and Paths
 
@@ -30,6 +31,7 @@ OBJCOPY := $(CROSS)-objcopy
 OBJDUMP := $(CROSS)-objdump
 CPP     := $(CROSS)-cpp
 CC      := $(TOOLS_DIR)/gcc-2.8.1-psx/cc1
+OBJDIFF := $(TOOLS_DIR)/objdiff
 
 PYTHON          := python3
 SPLAT           := $(PYTHON) -m splat split
@@ -57,6 +59,7 @@ INSERT_OVLS_FLAGS   := -exe $(ROM_DIR)/SLUS_007.07 -fs $(ROM_DIR)/SILENT. -ftb $
 
 # Main executable uses -G8 while overlays use -G0.
 # This function redefines required parameters for compilation checking depending on whether a file's route is from main executable or an overlay.
+
 define DL_FlagsSwitch
 	$(if $(or $(filter MAIN,$(patsubst build/src/main/%,MAIN,$(1))), $(filter MAIN,$(patsubst build/asm/main/%,MAIN,$(1)))), $(eval DL_FLAGS = -G8), $(eval DL_FLAGS = -G0))
 	$(eval AS_FLAGS = $(ENDIAN) $(INCLUDE_FLAGS) $(OPT_FLAGS) $(DL_FLAGS) -march=r3000 -mtune=r3000 -no-pad-sections)
@@ -65,7 +68,11 @@ define DL_FlagsSwitch
 endef
 
 ifeq ($(NON_MATCHING),1)
-	DEFINE_FLAGS := $(DEFINE_FLAGS) -DNON_MATCHING
+	CPP_FLAGS := $(CPP_FLAGS) -DNON_MATCHING
+endif
+
+ifeq ($(SKIP_ASM),1)
+	CPP_FLAGS := $(CPP_FLAGS) -DSKIP_ASM
 endif
 
 # Utils
@@ -90,6 +97,19 @@ get_target_out = $(addprefix $(OUT_DIR)/,$(shell $(GET_YAML_TARGET) $(call get_y
 # Template definition for elf target.
 # First parameter should be source target with folder (e.g. screens/credits).
 # Second parameter should be end target (e.g. build/VIN/STF_ROLL.BIN).
+# If we skip the ASM inclusion to determine progress, we will not be able to link. Skip linking, if so.
+
+ifeq ($(SKIP_ASM),1)
+
+define make_elf_target
+$2: $2.elf
+
+$2.elf: $(call gen_o_files, $1)
+	@mkdir -p $(dir $2)
+endef
+
+else
+
 define make_elf_target
 $2: $2.elf
 	$(OBJCOPY) $(OBJCOPY_FLAGS) $$< $$@
@@ -103,6 +123,8 @@ $2.elf: $(call gen_o_files, $1)
 		-T $(LINKER_DIR)/$(filter-out ./,$(dir $1))undefined_funcs_auto.$(notdir $1).txt \
 		-o $$@
 endef
+
+endif
 
 # Targets
 
@@ -157,18 +179,19 @@ all: build
 
 build: $(TARGET_OUT)
 
+progress: regenerate
+	@$(MAKE) NON_MATCHING=0 SKIP_ASM=0 expected
+	@$(MAKE) NON_MATCHING=1 SKIP_ASM=1 build
+	@$(OBJDIFF) report generate > $(BUILD_DIR)/progress.json
+
 check: build
 	@sha256sum --ignore-missing --check checksum.sha
 
 expected: check
-	# Copying build results into "expected" folder
-	mkdir -p expected/build
-	cp -r build/src expected/build/src
-	cp -r build/asm expected/build/asm
-	# Future function changes can be diffed via:
-	#  python3 tools/asm-differ/diff.py -mwo --overlay bodyprog vcRetMaxTgtMvXzLen
-	# To try and decompile a function with M2C:
-	#  python3 tools/decompile.py vcRetMaxTgtMvXzLen
+	mkdir -p expected
+	mv build/src expected/src
+	mv build/asm expected/asm
+	rm -rf build
 
 iso:
 	$(INSERT_OVLS) $(INSERT_OVLS_FLAGS)
@@ -187,6 +210,7 @@ clean:
 reset: clean
 	rm -rf $(ASM_DIR)
 	rm -rf $(LINKER_DIR)
+	rm -rf expected
 
 clean-rom:
 	find rom -maxdepth 1 -type f -delete
