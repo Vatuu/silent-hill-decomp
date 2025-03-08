@@ -16,7 +16,7 @@ INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E2FCC);
 
 s32 func_801E3078(s_UnkSaveload0* arg0)
 {
-    if (arg0 != NULL && (arg0->field_8 & 0x01000000))
+    if (arg0 != NULL && (arg0->field_8 & (1 << 24)))
     {
         func_8004A8DC(0);
         return 1;
