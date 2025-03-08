@@ -288,7 +288,7 @@ void open_main(s32 file_idx, s16 num_frames) // 0x801E2AA4
     GsSwapDispBuff();
 }
 
-INCLUDE_ASM("asm/stream/nonmatchings/stream", movie_main);
+INCLUDE_ASM("asm/screens/stream/nonmatchings/stream", movie_main);
 
 void strSetDefDecEnv(DECENV *dec, int x0, int y0, int x1, int y1) // 0x801E2F8C
 {
