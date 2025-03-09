@@ -8,9 +8,6 @@
 #include "screens/b_konami/b_konami.h"
 #include "screens/stream/stream.h"
 
-#define FILE_1ST_KONAMI2_TIM 9   // "\\1ST\\KONAMI2.TIM"
-#define FILE_ANIM_HB_BASE_TIM 58 // "\\ANIM\\HB_BASE.ANM"
-
 void func_800C95AC(void)
 {
     s32 tempField_594;
@@ -38,7 +35,7 @@ void func_800C95AC(void)
                     func_8005E0DC(-1);
 
                     // Start loading \ANIM\HB_BASE.ANM.
-                    Fs_QueueStartRead(FILE_ANIM_HB_BASE_TIM, FS_BUFFER_0);
+                    Fs_QueueStartRead(FILE_ANIM_HB_BASE_ANM, FS_BUFFER_0);
                     
                     g_GameWork.field_598++;
                     break;
