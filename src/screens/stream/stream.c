@@ -327,7 +327,7 @@ void strKickCD(CdlLOC* loc) // 0x801E31CC
 
 int strNextVlc(DECENV* dec) // 0x801E3298
 {
-    u_long *next, *strNext();
+    u_long* next, *strNext();
 
     u_long cnt = 2000;
     while ((next = strNext(dec)) == 0)
