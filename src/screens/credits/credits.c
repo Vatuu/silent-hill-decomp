@@ -154,6 +154,8 @@ s32 func_801E3304(void)
             DrawSync(0);
             VSync(2);
 
+            // TODO: this doesn't match inline Game_StateSetNext
+            // maybe a different Game_StateSetPrevious?
             prevState = g_GameWork.gameState_594;
 
             g_SysWork.field_1C = 0;

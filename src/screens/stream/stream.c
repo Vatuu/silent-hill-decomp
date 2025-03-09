@@ -10,29 +10,6 @@
 #include "main/fileinfo.h"
 #include "screens/stream/stream.h"
 
-// TODO: b_konami/credits uses similar state update code, maybe this should be in a header somewhere
-static inline Game_StateSetNext(e_GameState gameState)
-{
-    e_GameState prevState;
-    prevState = g_GameWork.gameState_594;
-
-    g_GameWork.gameState_594        = gameState;
-    g_SysWork.field_1C   = 0;
-    g_SysWork.field_20   = 0;
-    g_GameWork.gameStateStep_598[1] = 0;
-    g_GameWork.gameStateStep_598[2] = 0;
-    g_SysWork.sysState_8            = SysState_Gameplay;
-    g_SysWork.field_24   = 0;
-    g_SysWork.sysStateStep_C        = 0;
-    g_SysWork.field_28   = 0;
-    g_SysWork.field_10   = 0;
-    g_SysWork.field_2C   = 0;
-    g_SysWork.field_14   = 0;
-    g_GameWork.gameStateStep_598[0] = prevState;
-    g_GameWork.gameStatePrev_590    = prevState;
-    g_GameWork.gameStateStep_598[0] = 0;
-}
-
 // Old IDB name: MainLoopState3_StartMovieIntro_801E2654
 void func_801E2654(void)
 {

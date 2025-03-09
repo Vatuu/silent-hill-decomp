@@ -87,6 +87,7 @@ typedef struct _ControllerBindings
     u16 option;
 } s_ControllerBindings;
 
+/** State IDs used by main game loop, value used as index into 0x800A977C function array */
 typedef enum _GameState
 {
     GameState_Unk0                = 0x0,
@@ -178,6 +179,7 @@ typedef struct _MainCharacter
 } s_MainCharacter;
 STATIC_ASSERT_SIZEOF(s_MainCharacter, 0x154);
 
+/** State IDs used by GameState_InGame, value used as index into 0x800A9A2C function array */
 typedef enum _SysState
 {
     SysState_Gameplay    = 0x0,
@@ -245,5 +247,29 @@ extern s_ControllerData* g_pController2;
 
 extern s32 g_CurDeltaTime;
 extern s32 g_CurOTNum;
+
+/** Sets the GameState to use in the next game update.
+    Inlined into stream & b_konami.
+*/
+static inline Game_StateSetNext(e_GameState gameState)
+{
+    e_GameState prevState = g_GameWork.gameState_594;
+
+    g_GameWork.gameState_594        = gameState;
+    g_SysWork.field_1C              = 0;
+    g_SysWork.field_20              = 0;
+    g_GameWork.gameStateStep_598[1] = 0;
+    g_GameWork.gameStateStep_598[2] = 0;
+    g_SysWork.sysState_8            = SysState_Gameplay;
+    g_SysWork.field_24              = 0;
+    g_SysWork.sysStateStep_C        = 0;
+    g_SysWork.field_28              = 0;
+    g_SysWork.field_10              = 0;
+    g_SysWork.field_2C              = 0;
+    g_SysWork.field_14              = 0;
+    g_GameWork.gameStateStep_598[0] = prevState;
+    g_GameWork.gameStatePrev_590    = prevState;
+    g_GameWork.gameStateStep_598[0] = 0;
+}
 
 #endif

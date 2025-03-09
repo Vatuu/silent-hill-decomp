@@ -10,7 +10,6 @@
 
 void func_800C95AC(void)
 {
-    e_GameState prevState;
     s32 idx;
 
     if (g_GameWork.gameState_594 == GameState_KonamiLogo)
@@ -61,26 +60,7 @@ void func_800C95AC(void)
                     {
                         Fs_QueueWaitForEmpty();
 
-                        prevState                = g_GameWork.gameState_594;
-                        g_GameWork.gameState_594 = GameState_KCETLogo;
-
-                        g_SysWork.field_1C = 0;
-                        g_SysWork.field_20 = 0;
-
-                        g_GameWork.gameStateStep_598[1] = 0;
-                        g_GameWork.gameStateStep_598[2] = 0;
-
-                        g_SysWork.sysState_8     = SysState_Gameplay;
-                        g_SysWork.field_24 = 0;
-                        g_SysWork.sysStateStep_C = 0;
-                        g_SysWork.field_28 = 0;
-                        g_SysWork.field_10 = 0;
-                        g_SysWork.field_2C = 0;
-                        g_SysWork.field_14 = 0;
-
-                        g_GameWork.gameStateStep_598[0] = prevState;
-                        g_GameWork.gameStatePrev_590    = prevState;
-                        g_GameWork.gameStateStep_598[0] = 0;
+                        Game_StateSetNext(GameState_KCETLogo);
                     }
                     break;
             }
