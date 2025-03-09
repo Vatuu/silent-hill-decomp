@@ -165,7 +165,8 @@ def main():
         size, lba, name, directory, type = _parseEntry(rawEntry, isPal)
         fullpath = os.path.join(directory, f"{name}.{type.extension}" if not type == FILE_TYPES[15] else f"{name}")
         headerText += f"/* {i:4d} */ {_formatEntry(size, lba, name, directory, type, isPal)}, // {fullpath}\n"
-        enumText += f"    FILE_{fullpath.replace("/", "_").replace(".", "_")} = {i}, // {fullpath}\n"
+        enumName = fullpath.replace("/", "_").replace(".", "_")
+        enumText += f"    FILE_{enumName} = {i}, // {fullpath}\n"
         entry = TableEntry(fullpath, type, size, lba)
         
         match directory:
