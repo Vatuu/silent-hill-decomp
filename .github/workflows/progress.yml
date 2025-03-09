@@ -20,12 +20,13 @@ jobs:
           submodules: recursive
 
       - name: "Setup Python"
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.13'
-      - run: pip3 install -r requirements.txt --break-system-packages
+        run: pip3 install -r requirements.txt --break-system-packages
+
+      - name: "Copy ROM"
+        run: cp -p /rom ./image/rom
 
       - run: ls
+      - run: ls /rom
       - run: ls ./rom/image
 
       - name: Setup Environment
