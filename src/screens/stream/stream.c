@@ -13,22 +13,22 @@
 // Old IDB name: MainLoopState3_StartMovieIntro_801E2654
 void func_801E2654(void)
 {
-    s32 prev_594;
+    e_GameState prevState;
 
-    switch (g_GameWork.field_598)
+    switch (g_GameWork.gameStateStep_598[0])
     {
         case 0:
             VSync(8);
             D_800BCD0C = 6;
             GameFS_TitleGfxLoad();
-            g_GameWork.field_598++;
+            g_GameWork.gameStateStep_598[0]++;
             break;
 
         case 1:
             if (g_pController1->btns_held_C != 0 || g_SysWork.field_1C >= 301)
             {
                 D_800BCD0C           = 3;
-                g_GameWork.field_598 = 2;
+                g_GameWork.gameStateStep_598[0] = 2;
             }
             break;
 
@@ -37,23 +37,23 @@ void func_801E2654(void)
             {
                 Fs_QueueWaitForEmpty();
 
-                prev_594 = g_GameWork.field_594;
+                prevState = g_GameWork.gameState_594;
 
-                g_GameWork.field_594 = 6;
+                g_GameWork.gameState_594        = GameState_MovieIntro;
                 g_SysWork.field_1C   = 0;
                 g_SysWork.field_20   = 0;
-                g_GameWork.field_59C = 0;
-                g_GameWork.field_5A0 = 0;
-                g_SysWork.field_8    = 0;
+                g_GameWork.gameStateStep_598[1] = 0;
+                g_GameWork.gameStateStep_598[2] = 0;
+                g_SysWork.sysState_8            = SysState_Gameplay;
                 g_SysWork.field_24   = 0;
-                g_SysWork.field_C    = 0;
+                g_SysWork.sysStateStep_C        = 0;
                 g_SysWork.field_28   = 0;
                 g_SysWork.field_10   = 0;
                 g_SysWork.field_2C   = 0;
                 g_SysWork.field_14   = 0;
-                g_GameWork.field_598 = prev_594;
-                g_GameWork.field_590 = prev_594;
-                g_GameWork.field_598 = 0;
+                g_GameWork.gameStateStep_598[0] = prevState;
+                g_GameWork.gameStatePrev_590    = prevState;
+                g_GameWork.gameStateStep_598[0] = 0;
             }
             break;
     }
@@ -64,7 +64,7 @@ void func_801E2654(void)
 // Old IDB name: MainLoopState6_Movie_PlayIntro_801E279C
 void func_801E279C(void)
 {
-    s32 prev_594;
+    e_GameState prevState;
     s32 file_idx = FILE_XA_C1_20670;
 
     if (g_pGameWork->optExtraOptionsEnabled_27 & 1)
@@ -74,74 +74,74 @@ void func_801E279C(void)
 
     open_main(file_idx, 0);
 
-    prev_594 = g_GameWork.field_594;
+    prevState = g_GameWork.gameState_594;
 
-    g_GameWork.field_594 = 7;
+    g_GameWork.gameState_594        = GameState_MainMenu;
     g_SysWork.field_1C   = 0;
     g_SysWork.field_20   = 0;
-    g_GameWork.field_59C = 0;
-    g_GameWork.field_5A0 = 0;
-    g_SysWork.field_8    = 0;
+    g_GameWork.gameStateStep_598[1] = 0;
+    g_GameWork.gameStateStep_598[2] = 0;
+    g_SysWork.sysState_8            = SysState_Gameplay;
     g_SysWork.field_24   = 0;
-    g_SysWork.field_C    = 0;
+    g_SysWork.sysStateStep_C        = 0;
     g_SysWork.field_28   = 0;
     g_SysWork.field_10   = 0;
     g_SysWork.field_2C   = 0;
     g_SysWork.field_14   = 0;
-    g_GameWork.field_598 = prev_594;
-    g_GameWork.field_590 = prev_594;
-    g_GameWork.field_598 = 0;
+    g_GameWork.gameStateStep_598[0] = prevState;
+    g_GameWork.gameStatePrev_590    = prevState;
+    g_GameWork.gameStateStep_598[0] = 0;
     D_800B5C30           = 0x1000;
 }
 
 // Old IDB name: MainLoopState9_Movie_PlayOpening_801E2838
 void func_801E2838(void)
 {
-    s32 prev_594;
+    e_GameState prevState;
 
     open_main(FILE_XA_M1_03500, 0);
 
-    prev_594 = g_GameWork.field_594;
+    prevState = g_GameWork.gameState_594;
 
-    g_GameWork.field_594 = 0xA;
+    g_GameWork.gameState_594        = GameState_LoadScreen;
     g_SysWork.field_1C   = 0;
     g_SysWork.field_20   = 0;
-    g_GameWork.field_59C = 0;
-    g_GameWork.field_5A0 = 0;
-    g_SysWork.field_8    = 0;
+    g_GameWork.gameStateStep_598[1] = 0;
+    g_GameWork.gameStateStep_598[2] = 0;
+    g_SysWork.sysState_8            = SysState_Gameplay;
     g_SysWork.field_24   = 0;
-    g_SysWork.field_C    = 0;
+    g_SysWork.sysStateStep_C        = SysState_Gameplay;
     g_SysWork.field_28   = 0;
     g_SysWork.field_10   = 0;
     g_SysWork.field_2C   = 0;
     g_SysWork.field_14   = 0;
-    g_GameWork.field_598 = prev_594;
-    g_GameWork.field_590 = prev_594;
-    g_GameWork.field_598 = 0;
+    g_GameWork.gameStateStep_598[0] = prevState;
+    g_GameWork.gameStatePrev_590    = prevState;
+    g_GameWork.gameStateStep_598[0] = 0;
 }
 
 // Old IDB name: MainLoopStateD_ReturnToGame_801E28B0
 void func_801E28B0(void)
 {
-    s32 prev_594;
+    e_GameState prevState;
 
-    prev_594 = g_GameWork.field_594;
+    prevState = g_GameWork.gameState_594;
 
-    g_GameWork.field_594 = 11;
+    g_GameWork.gameState_594        = GameState_InGame;
     g_SysWork.field_1C   = 0;
     g_SysWork.field_20   = 0;
-    g_GameWork.field_59C = 0;
-    g_GameWork.field_5A0 = 0;
-    g_SysWork.field_8    = 0;
+    g_GameWork.gameStateStep_598[1] = 0;
+    g_GameWork.gameStateStep_598[2] = 0;
+    g_SysWork.sysState_8            = SysState_Gameplay;
     g_SysWork.field_24   = 0;
-    g_SysWork.field_C    = 0;
+    g_SysWork.sysStateStep_C        = 0;
     g_SysWork.field_28   = 0;
     g_SysWork.field_10   = 0;
     g_SysWork.field_2C   = 0;
     g_SysWork.field_14   = 0;
-    g_GameWork.field_598 = prev_594;
-    g_GameWork.field_590 = prev_594;
-    g_GameWork.field_598 = 0;
+    g_GameWork.gameStateStep_598[0] = prevState;
+    g_GameWork.gameStatePrev_590    = prevState;
+    g_GameWork.gameStateStep_598[0] = 0;
 }
 
 // Old IDB name: MainLoopState11_Movie_PlayEnding_801E2908
@@ -149,27 +149,27 @@ void func_801E2908(void)
 {
     s_GameWork*       gameWork   = g_pGameWork0;
     s_ControllerData* controller = g_pController1;
-    s32               prev_594;
+    e_GameState       prevState;
 
     if (controller->btns_new_10 & gameWork->controllerBinds_0.cancel)
     {
-        prev_594 = g_GameWork.field_594;
+        prevState = g_GameWork.gameState_594;
 
-        g_GameWork.field_594 = 0x16;
+        g_GameWork.gameState_594        = GameState_Unk16;
         g_SysWork.field_1C   = 0;
         g_SysWork.field_20   = 0;
-        g_GameWork.field_59C = 0;
-        g_GameWork.field_5A0 = 0;
-        g_SysWork.field_8    = 0;
+        g_GameWork.gameStateStep_598[1] = 0;
+        g_GameWork.gameStateStep_598[2] = 0;
+        g_SysWork.sysState_8            = SysState_Gameplay;
         g_SysWork.field_24   = 0;
-        g_SysWork.field_C    = 0;
+        g_SysWork.sysStateStep_C        = 0;
         g_SysWork.field_28   = 0;
         g_SysWork.field_10   = 0;
         g_SysWork.field_2C   = 0;
         g_SysWork.field_14   = 0;
-        g_GameWork.field_598 = prev_594;
-        g_GameWork.field_590 = prev_594;
-        g_GameWork.field_598 = 0;
+        g_GameWork.gameStateStep_598[0] = prevState;
+        g_GameWork.gameStatePrev_590    = prevState;
+        g_GameWork.gameStateStep_598[0] = 0;
     }
 
     if (controller->field_18 & 0x08000000)
@@ -192,27 +192,27 @@ void func_801E2908(void)
 // Old IDB name: MainLoopState5_Movie_PlayIntroAlternate_801E2A24
 void func_801E2A24(void)
 {
-    s32 prev_594;
+    e_GameState prevState;
 
     open_main(FILE_XA_C1_20670, 2060); // Second param looks like file ID for FILE_XA_M6_02112, but is actually frame count?
 
-    prev_594 = g_GameWork.field_594;
+    prevState = g_GameWork.gameState_594;
 
-    g_GameWork.field_594 = 7;
+    g_GameWork.gameState_594        = GameState_MainMenu;
     g_SysWork.field_1C   = 0;
     g_SysWork.field_20   = 0;
-    g_GameWork.field_59C = 0;
-    g_GameWork.field_5A0 = 0;
-    g_SysWork.field_8    = 0;
+    g_GameWork.gameStateStep_598[1] = 0;
+    g_GameWork.gameStateStep_598[2] = 0;
+    g_SysWork.sysState_8            = SysState_Gameplay;
     g_SysWork.field_24   = 0;
-    g_SysWork.field_C    = 0;
+    g_SysWork.sysStateStep_C        = 0;
     g_SysWork.field_28   = 0;
     g_SysWork.field_10   = 0;
     g_SysWork.field_2C   = 0;
     g_SysWork.field_14   = 0;
-    g_GameWork.field_598 = prev_594;
-    g_GameWork.field_590 = prev_594;
-    g_GameWork.field_598 = 0;
+    g_GameWork.gameStateStep_598[0] = prevState;
+    g_GameWork.gameStatePrev_590    = prevState;
+    g_GameWork.gameStateStep_598[0] = 0;
     D_800B5C30           = 0x1000;
 }
 

@@ -10,16 +10,16 @@
 
 void func_800C95AC(void)
 {
-    s32 tempField_594;
+    e_GameState prevState;
     s32 idx;
 
-    if (g_GameWork.field_594 == 1)
+    if (g_GameWork.gameState_594 == GameState_KonamiLogo)
     {
         do
         {
             JOY_Update();
 
-            switch (g_GameWork.field_598)
+            switch (g_GameWork.gameStateStep_598[0])
             {
                 case 0:
                     GFX_Init(0x280, 1);
@@ -36,14 +36,14 @@ void func_800C95AC(void)
 
                     // Start loading \ANIM\HB_BASE.ANM.
                     Fs_QueueStartRead(FILE_ANIM_HB_BASE_ANM, FS_BUFFER_0);
-                    
-                    g_GameWork.field_598++;
+
+                    g_GameWork.gameStateStep_598[0]++;
                     break;
                     
                 case 1:
-                    if (D_800BCD0C == g_GameWork.field_598)
+                    if (D_800BCD0C == g_GameWork.gameStateStep_598[0])
                     {
-                        g_GameWork.field_598 = 2;
+                        g_GameWork.gameStateStep_598[0] = 2;
                     }
                     break;
                     
@@ -52,7 +52,7 @@ void func_800C95AC(void)
                     {
                         D_800BCD0C = 3;
                         D_800B5C30 = 0x333;
-                        g_GameWork.field_598 = 3;
+                        g_GameWork.gameStateStep_598[0] = 3;
                     }
                     break;
                     
@@ -60,27 +60,27 @@ void func_800C95AC(void)
                     if ((D_800BCD0C & 7) == 5)
                     {
                         Fs_QueueWaitForEmpty();
-                        
-                        tempField_594 = g_GameWork.field_594;
-                        g_GameWork.field_594 = 2;
-    
+
+                        prevState                = g_GameWork.gameState_594;
+                        g_GameWork.gameState_594 = GameState_KCETLogo;
+
                         g_SysWork.field_1C = 0;
                         g_SysWork.field_20 = 0;
-    
-                        g_GameWork.field_59C = 0;
-                        g_GameWork.field_5A0 = 0;
-    
-                        g_SysWork.field_8 = 0;
+
+                        g_GameWork.gameStateStep_598[1] = 0;
+                        g_GameWork.gameStateStep_598[2] = 0;
+
+                        g_SysWork.sysState_8     = SysState_Gameplay;
                         g_SysWork.field_24 = 0;
-                        g_SysWork.field_C = 0;
+                        g_SysWork.sysStateStep_C = 0;
                         g_SysWork.field_28 = 0;
                         g_SysWork.field_10 = 0;
                         g_SysWork.field_2C = 0;
                         g_SysWork.field_14 = 0;
-    
-                        g_GameWork.field_598 = tempField_594;
-                        g_GameWork.field_590 = tempField_594;
-                        g_GameWork.field_598 = 0;
+
+                        g_GameWork.gameStateStep_598[0] = prevState;
+                        g_GameWork.gameStatePrev_590    = prevState;
+                        g_GameWork.gameStateStep_598[0] = 0;
                     }
                     break;
             }
@@ -102,8 +102,7 @@ void func_800C95AC(void)
             
             GsClearOt(0, 0, &D_800A8F74[idx]);
             GsClearOt(0, 0, &D_800A8FC4[g_CurOTNum]);
-        }
-        while (g_GameWork.field_594 == 1);
+        } while (g_GameWork.gameState_594 == GameState_KonamiLogo);
     }
 }
 
