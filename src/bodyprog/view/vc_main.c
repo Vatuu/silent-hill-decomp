@@ -3,6 +3,8 @@
 #include "bodyprog/vw_system.h"
 #include "bodyprog/math.h"
 
+#define MIN_IN_ROAD_DIST 4096 // vcGetMinInRoadDist() in SH2, hardcoded 4096 in SH1
+
 INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vc_main", vcInitVCSystem);
 
 void vcStartCameraSystem() // 0x800809DC
@@ -58,7 +60,7 @@ void vcWorkSetFlags(VC_FLAGS enable, VC_FLAGS disable) // 0x80080BF8
 
 s32 func_80080C18(s32 arg0) // 0x80080C18
 {
-    s32 prev_val = vcWork.watch_tgt_max_y_88;
+    s32 prev_val              = vcWork.watch_tgt_max_y_88;
     vcWork.watch_tgt_max_y_88 = arg0;
     return prev_val;
 }
@@ -357,12 +359,12 @@ void vcSetWatchTgtYParam(VECTOR3* watch_pos, VC_WORK* w_p, s32 cam_mv_type, s32 
 void vcAdjustWatchYLimitHighWhenFarView(VECTOR3* watch_pos, VECTOR3* cam_pos, s16 sy) // 0x800835E0
 {
     s16 max_cam_ang_x = ratan2(cam_pos->vy + 0x5000, 0xD000) - ratan2(g_GameWork.gsScreenHeight_58A / 2, sy);
-    s32 dist = Math_VectorMagnitude(watch_pos->vx - cam_pos->vx, 0, watch_pos->vz - cam_pos->vz);
-    s32 cam_ang_x = ratan2(-watch_pos->vy + cam_pos->vy, dist) * FP_ANGLE_COUNT;
+    s32 dist          = Math_VectorMagnitude(watch_pos->vx - cam_pos->vx, 0, watch_pos->vz - cam_pos->vz);
+    s32 cam_ang_x     = ratan2(-watch_pos->vy + cam_pos->vy, dist) * FP_ANGLE_COUNT;
 
     if ((max_cam_ang_x * FP_ANGLE_COUNT) < cam_ang_x)
     {
-        s32 ofs_y = (((dist >> FP_POS_Q) * shRsin(max_cam_ang_x)) / shRcos(max_cam_ang_x)) * 16;
+        s32 ofs_y     = (((dist >> FP_POS_Q) * shRsin(max_cam_ang_x)) / shRcos(max_cam_ang_x)) * 16;
         watch_pos->vy = cam_pos->vy - ofs_y;
     }
 }
@@ -465,7 +467,7 @@ void vcMakeIdealCamPosByHeadPos(VECTOR3* ideal_pos, VC_WORK* w_p, VC_AREA_SIZE_T
         return;
     }
 
-    if (g_pGameWork->gameOptionsViewMode_29)
+    if (g_pGameWork->optViewMode_29)
     {
         chara2cam_ang_y = w_p->chara_eye_ang_y_144 + DEG_TO_FPA(8.75f);
         ideal_pos->vy   = w_p->chara_head_pos_130.vy + 286;
@@ -488,8 +490,6 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vc_main", vcMakeIdealCamPosUseVC_ROA
 
 void vcAdjustXzInLimAreaUsingMIN_IN_ROAD_DIST(s32* x_p, s32* z_p, VC_LIMIT_AREA* lim_p) // 0x80084210
 {
-    #define MIN_IN_ROAD_DIST 4096 // vcGetMinInRoadDist() in SH2, hardcoded 4096 in SH1
-    
     s32 min_z;
     s32 min_x;
     s32 max_z;
@@ -557,7 +557,81 @@ void vcMakeBasicCamTgtMvVec(VECTOR3* tgt_mv_vec, VECTOR3* ideal_pos, VC_WORK* w_
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vc_main", vcAdjTgtMvVecYByCurNearRoad);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vc_main", vcCamTgtMvVecIsFlipedFromCharaFront);
+void vcCamTgtMvVecIsFlipedFromCharaFront(VECTOR3* tgt_mv_vec, VC_WORK* w_p, s32 max_tgt_mv_xz_len, VC_AREA_SIZE_TYPE cur_rd_area_size)
+{
+    VECTOR3            pre_tgt_pos;
+    VECTOR3            chk_pos;
+    VECTOR3            post_tgt_pos;
+    s16                flip_ang_y;
+    VC_NEAR_ROAD_DATA* use_nearest_p;
+    s16                ang_y;
+    s32                flip_dist; // todo: name maybe switched with mv_len
+    s32                chk_near_dist;
+    s32                mv_len;
+    s32                min_z;
+    s32                min_x;
+    s32                max_z;
+    s32                max_x;
+
+    pre_tgt_pos.vx = tgt_mv_vec->vx + w_p->cam_tgt_pos_44.vx;
+    pre_tgt_pos.vz = tgt_mv_vec->vz + w_p->cam_tgt_pos_44.vz;
+    flip_dist      = vcFlipFromCamExclusionArea(&flip_ang_y, &w_p->old_cam_excl_area_r_6C, &pre_tgt_pos, &w_p->chara_pos_114, w_p->chara_eye_ang_y_144, cur_rd_area_size);
+    if (flip_dist > 0)
+    {
+        mv_len = flip_dist;
+        if (flip_dist > 0x800)
+            mv_len = 0x800;
+
+        // chk_pos is unused?
+        chk_pos.vx = pre_tgt_pos.vx + Math_MulFixed(mv_len, shRsin(flip_ang_y), FP_SIN_Q);
+        chk_pos.vz = pre_tgt_pos.vz + Math_MulFixed(mv_len, shRcos(flip_ang_y), FP_SIN_Q);
+
+        if (w_p->cur_near_road_2B8.road_p_0->flags_10 & VC_RD_MARGE_ROAD_F)
+        {
+            chk_near_dist = vcGetNearestNEAR_ROAD_DATA(&use_nearest_p, VC_CHK_NEAREST_ROAD_TYPE, w_p->cur_near_road_2B8.road_p_0->rd_type_11, &pre_tgt_pos, w_p, 1);
+            if (use_nearest_p == NULL)
+                use_nearest_p = &vcNullNearRoad;
+            else if (chk_near_dist > 0)
+                use_nearest_p = &w_p->cur_near_road_2B8;
+        }
+        else
+        {
+            use_nearest_p = &w_p->cur_near_road_2B8;
+        }
+
+        post_tgt_pos.vx = pre_tgt_pos.vx + ((flip_dist * shRsin(flip_ang_y)) >> FP_SIN_Q);
+        post_tgt_pos.vz = pre_tgt_pos.vz + ((flip_dist * shRcos(flip_ang_y)) >> FP_SIN_Q);
+
+        min_x = (use_nearest_p->rd_14.min_hx << 8) + MIN_IN_ROAD_DIST;
+        max_x = (use_nearest_p->rd_14.max_hx << 8) - MIN_IN_ROAD_DIST;
+        min_z = (use_nearest_p->rd_14.min_hz << 8) + MIN_IN_ROAD_DIST;
+        max_z = (use_nearest_p->rd_14.max_hz << 8) - MIN_IN_ROAD_DIST;
+
+        if (max_x < min_x)
+        {
+            min_x = (min_x + max_x) >> 1;
+            max_x = min_x;
+        }
+        if (max_z < min_z)
+        {
+            min_z = (min_z + max_z) >> 1;
+            max_z = min_z;
+        }
+
+        post_tgt_pos.vx = CLAMP(post_tgt_pos.vx, min_x, max_x);
+        post_tgt_pos.vz = CLAMP(post_tgt_pos.vz, min_z, max_z);
+
+        tgt_mv_vec->vx = post_tgt_pos.vx - w_p->cam_tgt_pos_44.vx;
+        tgt_mv_vec->vz = post_tgt_pos.vz - w_p->cam_tgt_pos_44.vz;
+
+        if (max_tgt_mv_xz_len < Math_VectorMagnitude(tgt_mv_vec->vx, 0, tgt_mv_vec->vz))
+        {
+            ang_y          = ratan2(tgt_mv_vec->vx, tgt_mv_vec->vz);
+            tgt_mv_vec->vx = Math_MulFixed(max_tgt_mv_xz_len, shRsin(ang_y), FP_SIN_Q);
+            tgt_mv_vec->vz = Math_MulFixed(max_tgt_mv_xz_len, shRcos(ang_y), FP_SIN_Q);
+        }
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vc_main", vcFlipFromCamExclusionArea);
 
@@ -618,8 +692,8 @@ void vcRenewalCamData(VC_WORK* w_p, VC_CAM_MV_PARAM* cam_mv_prm_p) // 0x80084BD8
                                    &w_p->cam_tgt_pos_44, 0x199, cam_mv_prm_p->accel_xz,
                                    cam_mv_prm_p->max_spd_xz, dec_spd_per_dist_xz, 0xC000);
 
-    w_p->cam_velo_60.vy = vwRetNewVelocityToTargetVal(w_p->cam_velo_60.vy, w_p->cam_pos_50.vy, w_p->cam_tgt_pos_44.vy,
-                                                      cam_mv_prm_p->accel_y, cam_mv_prm_p->max_spd_y, dec_spd_per_dist_y);
+    w_p->cam_velo_60.vy  = vwRetNewVelocityToTargetVal(w_p->cam_velo_60.vy, w_p->cam_pos_50.vy, w_p->cam_tgt_pos_44.vy,
+                                                       cam_mv_prm_p->accel_y, cam_mv_prm_p->max_spd_y, dec_spd_per_dist_y);
     w_p->cam_mv_ang_y_5C = ratan2(w_p->cam_velo_60.vx, w_p->cam_velo_60.vz);
 
     w_p->cam_pos_50.vx += Math_MulFixed(w_p->cam_velo_60.vx, g_CurDeltaTime, FP_SIN_Q);
@@ -740,12 +814,10 @@ void vcAdjCamOfsAngByCharaInScreen(SVECTOR* cam_ang, SVECTOR* ofs_cam2chara_btm_
     s16 adj_cam_ang_y;
 
     watch2chr_bottom_ofs_ang_x = shAngleRegulate(ofs_cam2chara_btm_ang->vx - cam_ang->vx);
-    watch2chr_top_ofs_ang_x = shAngleRegulate(ofs_cam2chara_top_ang->vx - cam_ang->vx);
-    watch2chr_ofs_ang_y = shAngleRegulate(ofs_cam2chara_top_ang->vy - cam_ang->vy);
+    watch2chr_top_ofs_ang_x    = shAngleRegulate(ofs_cam2chara_top_ang->vx - cam_ang->vx);
+    watch2chr_ofs_ang_y        = shAngleRegulate(ofs_cam2chara_top_ang->vy - cam_ang->vy);
 
-    adj_cam_ang_y = (watch2chr_ofs_ang_y > w_p->scr_half_ang_wx_2E) ?
-                        (watch2chr_ofs_ang_y - w_p->scr_half_ang_wx_2E) :
-                        ((-w_p->scr_half_ang_wx_2E > watch2chr_ofs_ang_y) ? (w_p->scr_half_ang_wx_2E + watch2chr_ofs_ang_y) : 0);
+    adj_cam_ang_y = (watch2chr_ofs_ang_y > w_p->scr_half_ang_wx_2E) ? (watch2chr_ofs_ang_y - w_p->scr_half_ang_wx_2E) : ((-w_p->scr_half_ang_wx_2E > watch2chr_ofs_ang_y) ? (w_p->scr_half_ang_wx_2E + watch2chr_ofs_ang_y) : 0);
 
     /*
     var_a1 = watch2chr_bottom_ofs_ang_x + w_p->scr_half_ang_wy_2C;

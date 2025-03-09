@@ -131,7 +131,7 @@ void func_801E279C(void)
     s32 prev_594;
     s32 file_idx = 2053; // XA/C1_20670
 
-    if (g_pGameWork->extraOptionsEnabled_27 & 1)
+    if (g_pGameWork->optExtraOptionsEnabled_27 & 1)
     {
         file_idx = 2054; // XA/C2_20670
     }
@@ -290,7 +290,7 @@ void open_main(s32 file_idx, s16 num_frames) // 0x801E2AA4
 
 INCLUDE_ASM("asm/screens/stream/nonmatchings/stream", movie_main);
 
-void strSetDefDecEnv(DECENV *dec, int x0, int y0, int x1, int y1) // 0x801E2F8C
+void strSetDefDecEnv(DECENV* dec, int x0, int y0, int x1, int y1) // 0x801E2F8C
 {
     dec->rect[0].w = 480;
     dec->rect[1].w = 480;
@@ -312,7 +312,7 @@ void strSetDefDecEnv(DECENV *dec, int x0, int y0, int x1, int y1) // 0x801E2F8C
     dec->rect[1].y = y1;
 }
 
-void strInit(CdlLOC* loc, void(*callback)()) // 0x801E300C
+void strInit(CdlLOC* loc, void (*callback)()) // 0x801E300C
 {
     DecDCTReset(0);
     DecDCToutCallback(callback);
@@ -387,7 +387,7 @@ void strKickCD(CdlLOC* loc) // 0x801E31CC
 
 int strNextVlc(DECENV* dec) // 0x801E3298
 {
-    u_long* next, *strNext();
+    u_long *next, *strNext();
 
     u_long cnt = 2000;
     while ((next = strNext(dec)) == 0)
@@ -410,7 +410,7 @@ u_long* strNext(DECENV* dec) // 0x801E331C
     CDSECTOR* sector;
     int       cnt = MOVIE_WAIT;
 
-    while (StGetNext((u_long **)&addr, (u_long **)&sector))
+    while (StGetNext((u_long**)&addr, (u_long**)&sector))
     {
         if (--cnt == 0)
         {

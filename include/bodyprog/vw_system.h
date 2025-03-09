@@ -8,7 +8,7 @@
 // TODO:
 // - Add doc comments above func delcarations.
 // - Flags below are from SH2, most seem to match with SH but there might be some differences.
-// - Code that accesses VC_ROAD_TYPE & VC_NEAR_ROAD_DATA is odd, might need extra work.
+// - Code that accesses VC_ROAD_DATA & VC_NEAR_ROAD_DATA is odd, might need extra work.
 
 typedef enum _VC_ROAD_FLAGS
 {
@@ -131,11 +131,11 @@ typedef struct _VC_ROAD_DATA
 {
     VC_LIMIT_AREA lim_sw_0;
     VC_LIMIT_AREA lim_rd_8;
-    char          flags_10; // _VC_ROAD_FLAGS
-    char          area_size_type_11;
-    char          min_hy_12;
-    char          max_hy_13;
-    u_int         cam_mv_type_14;
+    VC_ROAD_FLAGS     flags_10 : 8;
+    VC_AREA_SIZE_TYPE area_size_type_11 : 2;
+    VC_ROAD_TYPE      rd_type_11 : 3;
+    u32               unk : 19; // May contain mv_y_type / rd_dir_type, maybe cam_mv_type below too
+    u_int             cam_mv_type_14;
 } VC_ROAD_DATA;
 STATIC_ASSERT_SIZEOF(VC_ROAD_DATA, 0x18);
 

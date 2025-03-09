@@ -1,7 +1,7 @@
 #ifndef _BODYPROG_H
 #define _BODYPROG_H
 
-#include "common.h"
+#include "game.h"
 #include "main/fsqueue.h"
 
 /** Declarations for unknown symbols in bodyprog. */
@@ -116,5 +116,15 @@ void func_80089128(void);
 
 /** Unknown bodyprog func. Called by `Fs_QueueWaitForEmpty` with `0` and then `1`. */
 void func_800892A4(s32);
+
+/** Updates the footer with the checksum of the given data */
+void SaveGame_ChecksumUpdate(s_ShSaveGameFooter* saveFooter, char* saveData, s32 saveDataLength);
+
+/** Generates checksum of the given saveData and compares against checksum value in the footer
+    Return 1 if checksum matches, otherwise 0 */
+s32 SaveGame_ChecksumValidate(s_ShSaveGameFooter* saveFooter, char* saveData, s32 saveDataLength);
+
+/** Generates an 8-bit XOR checksum over the given data, only appears used with s_ShSaveGame data */
+u8 SaveGame_ChecksumGenerate(char* saveData, s32 saveDataLength);
 
 #endif
