@@ -6,21 +6,20 @@
 extern MATRIX D_800C3868;
 extern MATRIX D_800C6FC0; // Might be psyq GsWSMATRIX.
 
-void vwRenewalXZVelocityToTargetPos(s32* velo_x, s32* velo_z, VECTOR3* now_pos, VECTOR3* tgt_pos, s32 tgt_r,
-                                    s32 accel, s32 total_max_spd, s32 dec_forwd_lim_spd, s32 dec_accel_side) // 0x80048F28
+void vwRenewalXZVelocityToTargetPos(s32* velo_x, s32* velo_z, VECTOR3* now_pos, VECTOR3* tgt_pos, s32 tgt_r, s32 accel, s32 total_max_spd, s32 dec_forwd_lim_spd, s32 dec_accel_side) // 0x80048F28
 {
 // SH2 locals
 #if 0
     /* 0x1d */ float vec_xz[4];
-	/* 0x1d */ float lim_spd;
-	/* 0x1d */ float to_tgt_dist;
-	/* 0x16 */ float to_tgt_ang_y;
-	/* 0x18 */ float ang_y;
-	/* 0x1d */ float spd;
-	/* 0x2 */ float add_spd;
-	/* 0x1d */ float cam2tgt_dir_vec[4];
-	/* 0x1d */ float cam_mv_ang_y;
-	/* 0x1d */ float cam2tgt_ang_y;
+    /* 0x1d */ float lim_spd;
+    /* 0x1d */ float to_tgt_dist;
+    /* 0x16 */ float to_tgt_ang_y;
+    /* 0x18 */ float ang_y;
+    /* 0x1d */ float spd;
+    /* 0x2 */ float add_spd;
+    /* 0x1d */ float cam2tgt_dir_vec[4];
+    /* 0x1d */ float cam_mv_ang_y;
+    /* 0x1d */ float cam2tgt_ang_y;
 #endif
 
     SVECTOR unused; // cam2tgt_dir_vec?
@@ -153,17 +152,17 @@ void vbSetWorldScreenMatrix(GsCOORDINATE2* coord) // 0x800497E4
 void vbSetRefView(VbRVIEW* rview) // 0x800498D8
 {
     GsCOORDINATE2 sp10;
-    SVECTOR sp60;
-    SVECTOR sp68;
+    SVECTOR       sp60;
+    SVECTOR       sp68;
 
-    sp10.flg = 0;
+    sp10.flg   = 0;
     sp10.super = rview->super;
-    sp68.vx = rview->vr.vx - rview->vp.vx;
-    sp68.vy = rview->vr.vy - rview->vp.vy;
-    sp68.vz = rview->vr.vz - rview->vp.vz;
+    sp68.vx    = rview->vr.vx - rview->vp.vx;
+    sp68.vy    = rview->vr.vy - rview->vp.vy;
+    sp68.vz    = rview->vr.vz - rview->vp.vz;
     vwVectorToAngle(&sp60, &sp68);
     func_80096E78(&sp60, &sp10.coord);
-    
+
     sp10.coord.t[0] = rview->vp.vx;
     sp10.coord.t[1] = rview->vp.vy;
     sp10.coord.t[2] = rview->vp.vz;
@@ -187,9 +186,9 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vw_calc", func_8004A54C);
 void vwAngleToVector(SVECTOR* vec, SVECTOR* ang, s32 r) // 0x8004A66C
 {
     s32 entou_r = (r * shRcos(ang->vx)) >> FP_SIN_Q;
-    vec->vy = (-r * shRsin(ang->vx)) >> FP_SIN_Q;
-    vec->vx = (entou_r * shRsin(ang->vy)) >> FP_SIN_Q;
-    vec->vz = (entou_r * shRcos(ang->vy)) >> FP_SIN_Q;
+    vec->vy     = (-r * shRsin(ang->vx)) >> FP_SIN_Q;
+    vec->vx     = (entou_r * shRsin(ang->vy)) >> FP_SIN_Q;
+    vec->vz     = (entou_r * shRcos(ang->vy)) >> FP_SIN_Q;
 }
 
 s32 vwVectorToAngle(SVECTOR* ang, SVECTOR* vec) // 0x8004A714

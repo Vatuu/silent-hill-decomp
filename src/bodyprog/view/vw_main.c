@@ -11,7 +11,7 @@ void vwInitViewInfo() // 0x80048A38
     vwViewPointInfo.rview.vr.vx = 0;
     vwViewPointInfo.rview.vr.vy = 0;
     vwViewPointInfo.rview.vr.vz = 4096;
-    vwViewPointInfo.rview.rz = 0;
+    vwViewPointInfo.rview.rz    = 0;
     vwViewPointInfo.rview.super = &vwViewPointInfo.vwcoord;
     GsInitCoordinate2(NULL, &vwViewPointInfo.vwcoord);
     vwSetViewInfo();
@@ -51,12 +51,12 @@ void vwSetCoordRefAndEntou(GsCOORDINATE2* parent_p, s32 ref_x, s32 ref_y, s32 re
 
     view_mtx->t[0] = (ref_x >> FP_POS_Q) + (((cam_xz_r >> FP_POS_Q) * shRsin(cam_ang_y)) >> FP_SIN_Q);
     view_mtx->t[1] = (ref_y >> FP_POS_Q) + (cam_y >> FP_POS_Q);
-    view_mtx->t[2] =  (ref_z >> FP_POS_Q) + (((cam_xz_r >> FP_POS_Q) * shRcos(cam_ang_y)) >> FP_SIN_Q);
+    view_mtx->t[2] = (ref_z >> FP_POS_Q) + (((cam_xz_r >> FP_POS_Q) * shRcos(cam_ang_y)) >> FP_SIN_Q);
 }
 
 void vwSetViewInfoDirectMatrix(GsCOORDINATE2* pcoord, MATRIX* cammat) // 0x80048CF0
 {
-    vwViewPointInfo.vwcoord.flg = 0;
+    vwViewPointInfo.vwcoord.flg   = 0;
     vwViewPointInfo.vwcoord.super = pcoord;
     vwViewPointInfo.vwcoord.coord = *cammat;
 }
