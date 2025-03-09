@@ -1,5 +1,5 @@
-#ifndef CREDITS_H
-#define CREDITS_H
+#ifndef _CREDITS_H
+#define _CREDITS_H
 
 #include "common.h"
 

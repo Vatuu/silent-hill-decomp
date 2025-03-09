@@ -16,8 +16,7 @@ INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800CF17C);
 
 INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800CF544);
 
-void func_800CF670(void) {
-}
+void func_800CF670(void) {}
 
 INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800CF678);
 
@@ -67,20 +66,15 @@ INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800D1770);
 
 INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800D1780);
 
-void func_800D178C(void) {
-}
+void func_800D178C(void) {}
 
-void func_800D1794(void) {
-}
+void func_800D1794(void) {}
 
-void func_800D179C(void) {
-}
+void func_800D179C(void) {}
 
-void func_800D17A4(void) {
-}
+void func_800D17A4(void) {}
 
-void func_800D17AC(void) {
-}
+void func_800D17AC(void) {}
 
 INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800D17B4);
 
@@ -234,23 +228,17 @@ INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800DB9B8);
 
 INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800DBDEC);
 
-void func_800DBEEC(void) {
-}
+void func_800DBEEC(void) {}
 
-void func_800DBEF4(void) {
-}
+void func_800DBEF4(void) {}
 
-void func_800DBEFC(void) {
-}
+void func_800DBEFC(void) {}
 
-void func_800DBF04(void) {
-}
+void func_800DBF04(void) {}
 
-void func_800DBF0C(void) {
-}
+void func_800DBF0C(void) {}
 
-void func_800DBF14(void) {
-}
+void func_800DBF14(void) {}
 
 INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800DBF1C);
 
@@ -428,8 +416,7 @@ INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800E2A1C);
 
 INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800E2E78);
 
-void func_800E2F60(void) {
-}
+void func_800E2F60(void) {}
 
 INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800E2F68);
 
@@ -469,8 +456,7 @@ INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800E76C8);
 
 INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800E7914);
 
-void func_800E7A1C(void) {
-}
+void func_800E7A1C(void) {}
 
 INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800E7A24);
 

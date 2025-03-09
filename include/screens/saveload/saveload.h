@@ -1,5 +1,5 @@
-#ifndef SAVELOAD_H
-#define SAVELOAD_H
+#ifndef _SAVELOAD_H
+#define _SAVELOAD_H
 
 #include "common.h"
 

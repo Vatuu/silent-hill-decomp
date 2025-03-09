@@ -1,5 +1,5 @@
-#ifndef OPTIONS_H
-#define OPTIONS_H
+#ifndef _OPTIONS_H
+#define _OPTIONS_H
 
 #include "common.h"
 
