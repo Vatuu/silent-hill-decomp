@@ -58,7 +58,7 @@ INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E6320);
 
 void func_801E63C0(void)
 {
-    if (g_GameWork.field_590 == 7)
+    if (g_GameWork.gameStatePrev_590 == GameState_MainMenu)
     {
         VSync(8);
     }
@@ -71,8 +71,8 @@ void func_801E63C0(void)
     g_GameWork.field_58E = 0;
     
     D_800BCD39 = 0;
-    
-    if (g_GameWork.field_594 == 4 || g_GameWork.field_594 == 8)
+
+    if (g_GameWork.gameState_594 == GameState_Unk4 || g_GameWork.gameState_594 == GameState_Unk8)
     {
         if (D_800A97D8 != 0)
         {
@@ -81,14 +81,14 @@ void func_801E63C0(void)
     }
     
     D_801E7520 = 0;
-    D_800A97D8 = (g_GameWork.field_594 == 16);
-    
+    D_800A97D8 = (g_GameWork.gameState_594 == GameState_Unk10);
+
     func_801E2D8C();
     
     D_800B9FE0[0] = 0;
-    g_GameWork.field_598++;
-    g_GameWork.field_59C = 0;
-    g_GameWork.field_5A0 = 0;
+    g_GameWork.gameStateStep_598[0]++;
+    g_GameWork.gameStateStep_598[1] = 0;
+    g_GameWork.gameStateStep_598[2] = 0;
 }
 
 INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E649C);

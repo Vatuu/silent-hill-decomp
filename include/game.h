@@ -87,6 +87,34 @@ typedef struct _ControllerBindings
     u16 option;
 } s_ControllerBindings;
 
+/** State IDs used by main game loop, value used as index into 0x800A977C function array */
+typedef enum _GameState
+{
+    GameState_Unk0                = 0x0,
+    GameState_KonamiLogo          = 0x1,
+    GameState_KCETLogo            = 0x2,
+    GameState_StartMovieIntro     = 0x3,
+    GameState_Unk4                = 0x4,
+    GameState_MovieIntroAlternate = 0x5,
+    GameState_MovieIntro          = 0x6,
+    GameState_MainMenu            = 0x7,
+    GameState_Unk8                = 0x8,
+    GameState_MovieOpening        = 0x9,
+    GameState_LoadScreen          = 0xA,
+    GameState_InGame              = 0xB,
+    GameState_MapEvent            = 0xC,
+    GameState_ReturnToGameplay    = 0xD,
+    GameState_StatusScreen        = 0xE,
+    GameState_MapScreen           = 0xF,
+    GameState_Unk10               = 0x10,
+    GameState_MovieEnding         = 0x11,
+    GameState_OptionScreen        = 0x12,
+    GameState_LoadStatusScreen    = 0x13,
+    GameState_LoadMapScreen       = 0x14,
+    GameState_Unk15               = 0x15,
+    GameState_Unk16               = 0x16,
+} e_GameState;
+
 typedef struct _GameWork
 {
     s_ControllerBindings controllerBinds_0;
@@ -119,11 +147,9 @@ typedef struct _GameWork
     u8                   field_58D; // G?
     u8                   field_58E; // B?
     u8                   field_58F; // A or graphics command code?
-    s32                  field_590; //                        }
-    s32                  field_594; // Counter or enum state? } // These three are related.
-    s32                  field_598; //                        }
-    s32                  field_59C;
-    s32                  field_5A0;
+    e_GameState          gameStatePrev_590;
+    e_GameState          gameState_594;
+    s32                  gameStateStep_598[3]; // Temp data used by current gameState, can be another state id or other data
     char                 unk_5A4[0x34];
 } s_GameWork;
 STATIC_ASSERT_SIZEOF(s_GameWork, 0x5D8);
@@ -153,11 +179,29 @@ typedef struct _MainCharacter
 } s_MainCharacter;
 STATIC_ASSERT_SIZEOF(s_MainCharacter, 0x154);
 
+/** State IDs used by GameState_InGame, value used as index into 0x800A9A2C function array */
+typedef enum _SysState
+{
+    SysState_Gameplay    = 0x0,
+    SysState_OptionsMenu = 0x1,
+    SysState_StatusMenu  = 0x2,
+    SysState_FMV         = 0x4,
+    SysState_LoadArea1   = 0x5,
+    SysState_LoadArea2   = 0x6,
+    SysState_ReadMessage = 0x7,
+    SysState_SaveMenu1   = 0x8,
+    SysState_SaveMenu2   = 0x9,
+    SysState_Unk11       = 0xB,
+    SysState_Unk12       = 0xC,
+    SysState_GameOver    = 0xD,
+    SysState_GamePaused  = 0xE,
+} e_SysState;
+
 typedef struct _SysWork
 {
     char            unk_0[8];
-    s32             field_8;
-    s32             field_C;
+    e_SysState      sysState_8;
+    s32             sysStateStep_C; // The current step/state of the sysState_8 we're in
     s32             field_10;
     s32             field_14;
     char            unk_18[4];
@@ -203,5 +247,29 @@ extern s_ControllerData* g_pController2;
 
 extern s32 g_CurDeltaTime;
 extern s32 g_CurOTNum;
+
+/** Sets the GameState to use in the next game update.
+    Inlined into stream & b_konami.
+*/
+static inline Game_StateSetNext(e_GameState gameState)
+{
+    e_GameState prevState = g_GameWork.gameState_594;
+
+    g_GameWork.gameState_594        = gameState;
+    g_SysWork.field_1C              = 0;
+    g_SysWork.field_20              = 0;
+    g_GameWork.gameStateStep_598[1] = 0;
+    g_GameWork.gameStateStep_598[2] = 0;
+    g_SysWork.sysState_8            = SysState_Gameplay;
+    g_SysWork.field_24              = 0;
+    g_SysWork.sysStateStep_C        = 0;
+    g_SysWork.field_28              = 0;
+    g_SysWork.field_10              = 0;
+    g_SysWork.field_2C              = 0;
+    g_SysWork.field_14              = 0;
+    g_GameWork.gameStateStep_598[0] = prevState;
+    g_GameWork.gameStatePrev_590    = prevState;
+    g_GameWork.gameStateStep_598[0] = 0;
+}
 
 #endif

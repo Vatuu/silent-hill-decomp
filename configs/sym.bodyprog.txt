@@ -181,6 +181,7 @@ SD_SetReverbDepth = 0x80047AD0; // type:func
 SD_SetReverbEnable = 0x80047AFC; // type:func
 SD_StopSEQ = 0x8004839C; // type:func
 
+GFX_StringPosition = 0x8004A87C; // type:func
 GFX_StringDraw = 0x8004a8e8; // type:func
 GameFS_Tim00TIMLoad = 0x80053da0; // type:func
 
