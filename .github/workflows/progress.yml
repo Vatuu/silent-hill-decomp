@@ -19,8 +19,11 @@ jobs:
         with:
           submodules: recursive
 
-      - name: "Install Python Requirements"
-        run: pip3 install -r requirements.txt
+      - name: "Setup Python"
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: pip3 install -r requirements.txt
 
       - name: Setup Environment
         run: make setup
