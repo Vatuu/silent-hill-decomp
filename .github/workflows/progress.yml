@@ -23,12 +23,13 @@ jobs:
         run: pip3 install -r requirements.txt --break-system-packages
 
       - name: "Copy ROM"
-        run: cp -r -p /rom ./image/rom
-
-      - run: ls
-      - run: ls /rom
-      - run: ls ./rom/image
-
+        run: |
+          mkdir -p ./image/rom
+          cp -r -p /rom ./image/rom
+          ls
+          ls /rom
+          ls ./rom/image
+          
       - name: Setup Environment
         run: make setup
 
