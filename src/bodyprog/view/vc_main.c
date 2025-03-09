@@ -467,7 +467,7 @@ void vcMakeIdealCamPosByHeadPos(VECTOR3* ideal_pos, VC_WORK* w_p, VC_AREA_SIZE_T
         return;
     }
 
-    if (g_pGameWork->gameOptionsViewMode_29)
+    if (g_pGameWork->optViewMode_29)
     {
         chara2cam_ang_y = w_p->chara_eye_ang_y_144 + DEG_TO_FPA(8.75f);
         ideal_pos->vy   = w_p->chara_head_pos_130.vy + 286;

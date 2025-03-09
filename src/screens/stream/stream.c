@@ -131,7 +131,7 @@ void func_801E279C(void)
     s32 prev_594;
     s32 file_idx = 2053; // XA/C1_20670
 
-    if (g_pGameWork->extraOptionsEnabled_27 & 1)
+    if (g_pGameWork->optExtraOptionsEnabled_27 & 1)
     {
         file_idx = 2054; // XA/C2_20670
     }

@@ -135,6 +135,12 @@ g_Demo_CurControllerPacket = 0x800C4890;
 g_Demo_CurrDemoStep = 0x800C4894;
 g_Demo_VideoPresentInterval = 0x800C4898;
 
+SaveGame_ChecksumUpdate = 0x8002FF30; // type:func
+SaveGame_ChecksumValidate = 0x8002FF74; // type:func
+SaveGame_ChecksumGenerate = 0x8002FFD0; // type:func
+SaveGame_InventoryCopy = 0x8002FCCC; // type:func
+Game_SaveGameClear = 0x800350BC; // type:func
+
 GFX_ClearRectInterlaced = 0x80032358; // type:func
 GFX_Init = 0x80032428; // type:func
 Settings_ScreenXYSet = 0x800324f4; // type:func
