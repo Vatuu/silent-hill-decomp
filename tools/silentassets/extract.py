@@ -176,9 +176,11 @@ def main():
                 entriesSilent.append(entry)
     executable.close
     
-    with open(os.path.join(args.outputFolder, "filetable.c.inc"), "w") as f:
+    with open(os.path.join(args.outputFolder, "filetable.c.inc"), "a+") as f:
+        f.truncate(0)
         f.write(headerText)
-    with open(os.path.join(args.outputFolder, "fileenum.h.inc"), "w") as f:
+    with open(os.path.join(args.outputFolder, "fileenum.h.inc"), "a+") as f:
+        f.truncate(0)
         f.write(enumText)
     
     _extract(entriesSilent, args.outputFolder, args.silentFile, 2048, region.id)

@@ -27,7 +27,6 @@ jobs:
         run: |
           mkdir -p ./rom/image
           cp -r -p /rom/* ./rom/image
-          stat ./rom/image/SLUS-00707.bin
 
       - name: Setup Environment
         run: make setup
