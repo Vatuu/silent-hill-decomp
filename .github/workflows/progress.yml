@@ -24,8 +24,8 @@ jobs:
 
       - name: "Copy ROM"
         run: |
-          mkdir -p ./image/rom
-          cp -r -p /rom ./image/rom
+          mkdir -p ./image
+          cp -r -p /rom ./image
           ls
           ls /rom
           ls ./image/rom
