@@ -176,17 +176,17 @@ def main():
                 entriesSilent.append(entry)
     executable.close
     
+    _extract(entriesSilent, args.outputFolder, args.silentFile, 2048, region.id)
+    
+    if region.id != "NTSC Nov 24, 1998":
+        _extract(entriesHill, args.outputFolder, args.hillFile, 2352, region.id)
+
     with open(os.path.join(args.outputFolder, "filetable.c.inc"), "a+") as f:
         f.truncate(0)
         f.write(headerText)
     with open(os.path.join(args.outputFolder, "fileenum.h.inc"), "a+") as f:
         f.truncate(0)
         f.write(enumText)
-    
-    _extract(entriesSilent, args.outputFolder, args.silentFile, 2048, region.id)
-    
-    if region.id != "NTSC Nov 24, 1998":
-        _extract(entriesHill, args.outputFolder, args.hillFile, 2352, region.id)
     
     logging.info("All done!")
 
