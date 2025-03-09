@@ -154,7 +154,9 @@ def main():
     isPal = False
     if region == REGIONS[1]:
         isPal = True
-    headerText = ""
+    originText = f"// Generated from {region.name} ({region.id})\n"
+    headerText = originText
+    enumText = f"    {originText}"
     entriesSilent = []
     entriesHill = []
     executable.seek(region.tocOffset)
@@ -163,6 +165,7 @@ def main():
         size, lba, name, directory, type = _parseEntry(rawEntry, isPal)
         fullpath = os.path.join(directory, f"{name}.{type.extension}" if not type == FILE_TYPES[15] else f"{name}")
         headerText += f"/* {i:4d} */ {_formatEntry(size, lba, name, directory, type, isPal)}, // {fullpath}\n"
+        enumText += f"    FILE_{fullpath.replace("/", "_").replace(".", "_")} = {i}, // {fullpath}\n"
         entry = TableEntry(fullpath, type, size, lba)
         
         match directory:
@@ -174,6 +177,8 @@ def main():
     
     with open(os.path.join(args.outputFolder, "filetable.c.inc"), "w") as f:
         f.write(headerText)
+    with open(os.path.join(args.outputFolder, "fileenum.h.inc"), "w") as f:
+        f.write(enumText)
     
     _extract(entriesSilent, args.outputFolder, args.silentFile, 2048, region.id)
     

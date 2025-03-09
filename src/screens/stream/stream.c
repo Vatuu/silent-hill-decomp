@@ -65,11 +65,11 @@ void func_801E2654(void)
 void func_801E279C(void)
 {
     s32 prev_594;
-    s32 file_idx = 2053; // XA/C1_20670
+    s32 file_idx = FILE_XA_C1_20670;
 
     if (g_pGameWork->optExtraOptionsEnabled_27 & 1)
     {
-        file_idx = 2054; // XA/C2_20670
+        file_idx = FILE_XA_C2_20670;
     }
 
     open_main(file_idx, 0);
@@ -99,7 +99,7 @@ void func_801E2838(void)
 {
     s32 prev_594;
 
-    open_main(2055, 0); // XA/M1_03500
+    open_main(FILE_XA_M1_03500, 0);
 
     prev_594 = g_GameWork.field_594;
 
@@ -185,7 +185,7 @@ void func_801E2908(void)
     func_80031EFC(0x28, 0x28);
     if (controller->btns_new_10 & gameWork->controllerBinds_0.enter)
     {
-        open_main(2072 - D_801E3F3C, 0);
+        open_main(FILE_XA_ZC_14392 - D_801E3F3C, 0);
     }
 }
 
@@ -194,7 +194,7 @@ void func_801E2A24(void)
 {
     s32 prev_594;
 
-    open_main(2053, 2060); // XA/C1_20670
+    open_main(FILE_XA_C1_20670, 2060); // Second param looks like file ID for FILE_XA_M6_02112, but is actually frame count?
 
     prev_594 = g_GameWork.field_594;
 

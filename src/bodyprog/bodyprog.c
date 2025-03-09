@@ -331,7 +331,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", GFX_VSyncCallback);
 void GameFS_TitleGfxSeek() 
 {
     // Looks for TIM\TITLE_E.TIM.
-    Fs_QueueStartSeek(1980);
+    Fs_QueueStartSeek(FILE_TIM_TITLE_E_TIM);
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", GameFS_TitleGfxLoad);

@@ -9,11 +9,6 @@
 #include <libcd.h>
 #include <libsnd.h>
 
-#define FILE_1ST_2ZANKO_E_TIM 1 // "\\1ST\\2ZANKO_E.TIM"
-#define FILE_1ST_BODYPROG_BIN 3 // "\\1ST\\BODYPROG.BIN"
-#define FILE_1ST_B_KONAMI_BIN 4 // "\\1ST\\B_KONAMI.BIN"
-#define FILE_1ST_FONT8NOC_TIM 7 // "\\1ST\\FONT8NOC.TIM"
-
 // @HACK: Explicit rodata here because these need to be referenced externally to end up in .rodata,
 // otherwise they'll go into .sdata because they're small; can't wrap them in a struct either because
 // main() accesses them individually and not with a common base.
