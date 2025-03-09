@@ -24,11 +24,11 @@ jobs:
 
       - name: "Copy ROM"
         run: |
-          mkdir -p ./image
-          cp -r -p /rom ./image
+          mkdir -p ./rom/image
+          cp -r -p /rom/* ./rom/image
           ls
           ls /rom
-          ls ./image/rom
+          ls ./rom/image
 
       - name: Setup Environment
         run: make setup
