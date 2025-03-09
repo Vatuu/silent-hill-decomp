@@ -1,4 +1,3 @@
-#include "common.h"
 #include "bodyprog/bodyprog.h"
 #include "main/fsqueue.h"
 
@@ -171,7 +170,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8002FBB4);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8002FC3C);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8002FCCC);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", SaveGame_InventoryCopy);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8002FD5C);
 
@@ -179,11 +178,41 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8002FDB0);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8002FE70);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8002FF30);
+void SaveGame_ChecksumUpdate(s_ShSaveGameFooter* saveFooter, s8* saveData, s32 saveDataLength) // 0x8002FF30
+{
+    u8 checksum;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8002FF74);
+    saveFooter->checksum_0[0] = saveFooter->checksum_0[1] = 0;
+    saveFooter->magic_2                                   = SAVEGAME_FOOTER_MAGIC;
+    checksum                                              = SaveGame_ChecksumGenerate(saveData, saveDataLength);
+    saveFooter->checksum_0[0] = saveFooter->checksum_0[1] = checksum;
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8002FFD0);
+s32 SaveGame_ChecksumValidate(s_ShSaveGameFooter* saveFooter, s8* saveData, s32 saveDataLength) // 0x8002FF74
+{
+    s32 is_valid = 0;
+
+    if (saveFooter->checksum_0[0] == SaveGame_ChecksumGenerate(saveData, saveDataLength))
+    {
+        is_valid = saveFooter->magic_2 == SAVEGAME_FOOTER_MAGIC;
+    }
+
+    return is_valid;
+}
+
+u8 SaveGame_ChecksumGenerate(s8* saveData, s32 saveDataLength) // 0x8002FFD0
+{
+    u8  checksum = 0;
+    int i        = 0;
+
+    for (i = 0; i < saveDataLength;)
+    {
+        i++;
+        checksum ^= *saveData++;
+    }
+
+    return checksum;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80030000);
 
@@ -302,7 +331,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", GFX_VSyncCallback);
 void GameFS_TitleGfxSeek() 
 {
     // Looks for TIM\TITLE_E.TIM.
-    Fs_QueueStartSeek(1980);
+    Fs_QueueStartSeek(FILE_TIM_TITLE_E_TIM);
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", GameFS_TitleGfxLoad);
@@ -367,7 +396,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80034F18);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80034FB8);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_800350BC);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", Game_SaveGameClear);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80035178);
 
@@ -531,8 +560,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003AB28);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003B550);
 
-void func_8003B560(void) {
-}
+void func_8003B560(void) {}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003B568);
 

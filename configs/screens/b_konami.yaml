@@ -1,4 +1,4 @@
-name: The boot screen overlay (B_KONAMI)
+name: Boot screen overlay (B_KONAMI)
 sha1: 14829c61f976b261e0b89ee9f967f1be70a54fc6
 options:
   basename: B_KONAMI.BIN
@@ -26,8 +26,10 @@ options:
   section_order: [".rodata", ".text", ".data", ".bss"]
 
   symbol_addrs_path:
-    - configs/sym.main.txt
     - configs/screens/sym.b_konami.txt
+    - configs/screens/sym.stream.txt
+    - configs/sym.bodyprog.txt
+    - configs/sym.main.txt
   reloc_addrs_path:
     - configs/screens/rel.b_konami.txt
 
@@ -51,6 +53,8 @@ segments:
     subalign: 4
     subsegments:
       - [0x0, rodata]
+
       - [0x34, c, b_konami]
+
       - [0xF78, data, b_konami]
   - [0x1000]

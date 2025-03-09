@@ -8,76 +8,11 @@
 
 #include "bodyprog/bodyprog.h"
 #include "main/fileinfo.h"
+#include "screens/stream/stream.h"
 
-extern int StCdIntrFlag; // Not included in SDK docs/headers, but movie player sample code (and moviesys) uses it?
-
-extern s32 D_800B5C30;
-extern s32 D_801E3F3C;
-
-extern s32 D_800BCD0C;
-extern u8  D_800A900C[];
-
-typedef struct
-{
-    /* 0x00 */ u_long*  vlcbuf[2];
-    /* 0x08 */ int      vlcid;
-    /* 0x0C */ u_short* imgbuf;
-    /* 0x10 */ RECT     rect[2];
-    /* 0x20 */ int      rectid;
-    /* 0x24 */ RECT     slice;
-    /* 0x2C */ int      isdone;
-} DECENV;
-
-typedef struct
-{
-    /* 0x00000 */ CdlLOC  loc;
-    /* 0x00004 */ DECENV  dec;
-    /* 0x00034 */ int     Rewind_Switch; // or Clear_Flag
-    /* 0x00038 */ int     width;
-    /* 0x0003C */ int     height;
-    /* 0x00040 */ u_short imgbuf0[5760];
-    /* 0x02D40 */ u_short imgbuf1[5760];
-    /* 0x05A40 */ u_long  sect_buff[11776];
-    /* 0x11240 */ u_long  vlcbuf0[14336];
-    /* 0x1F240 */ u_long  vlcbuf1[14336];
-} MOVIE_STR;
-
-// Customised StHEADER?
-typedef struct
-{
-    u_short id;
-    u_short type;
-    u_short secCount;
-    u_short nSectors;
-    u_long  frameCount;
-    u_long  frameSize;
-    u_short width;
-    u_short height;
-    u_long  headm;
-    u_long  headv;
-    u_long  user;
-} CDSECTOR;
-
-#define RING_SIZE 23
-#define MOVIE_WAIT 2000
-#define PPW 3 / 2
-
-extern MOVIE_STR* m;
-extern s32        frame_cnt;
-
-void    open_main(s32 file_idx, s16 num_frames);
-void    movie_main(char* file_name, int f_size, int sector);
-void    strSetDefDecEnv(DECENV* dec, int x0, int y0, int x1, int y1);
-void    strInit(CdlLOC* loc, void (*callback)());
-void    strCallback();
-void    strKickCD(CdlLOC* loc);
-int     strNextVlc(DECENV* dec);
-u_long* strNext(DECENV* dec);
-void    strSync(DECENV* dec);
-
+// Old IDB name: MainLoopState3_StartMovieIntro_801E2654
 void func_801E2654(void)
 {
-    // Old IDB name MainLoopState3_StartMovieIntro_801E2654
     s32 prev_594;
 
     switch (g_GameWork.field_598)
@@ -101,7 +36,9 @@ void func_801E2654(void)
             if ((D_800BCD0C & 7) == 5)
             {
                 Fs_QueueWaitForEmpty();
-                prev_594             = g_GameWork.field_594;
+
+                prev_594 = g_GameWork.field_594;
+
                 g_GameWork.field_594 = 6;
                 g_SysWork.field_1C   = 0;
                 g_SysWork.field_20   = 0;
@@ -124,21 +61,21 @@ void func_801E2654(void)
     func_800314EC(D_800A900C);
 }
 
+// Old IDB name: MainLoopState6_Movie_PlayIntro_801E279C
 void func_801E279C(void)
 {
-    // Old IDB name MainLoopState6_Movie_PlayIntro_801E279C
-
     s32 prev_594;
-    s32 file_idx = 2053; // XA/C1_20670
+    s32 file_idx = FILE_XA_C1_20670;
 
-    if (g_pGameWork->extraOptionsEnabled_27 & 1)
+    if (g_pGameWork->optExtraOptionsEnabled_27 & 1)
     {
-        file_idx = 2054; // XA/C2_20670
+        file_idx = FILE_XA_C2_20670;
     }
 
     open_main(file_idx, 0);
 
-    prev_594             = g_GameWork.field_594;
+    prev_594 = g_GameWork.field_594;
+
     g_GameWork.field_594 = 7;
     g_SysWork.field_1C   = 0;
     g_SysWork.field_20   = 0;
@@ -157,13 +94,15 @@ void func_801E279C(void)
     D_800B5C30           = 0x1000;
 }
 
+// Old IDB name: MainLoopState9_Movie_PlayOpening_801E2838
 void func_801E2838(void)
 {
-    // Old IDB name MainLoopState9_Movie_PlayOpening_801E2838
     s32 prev_594;
 
-    open_main(2055, 0); // XA/M1_03500
-    prev_594             = g_GameWork.field_594;
+    open_main(FILE_XA_M1_03500, 0);
+
+    prev_594 = g_GameWork.field_594;
+
     g_GameWork.field_594 = 0xA;
     g_SysWork.field_1C   = 0;
     g_SysWork.field_20   = 0;
@@ -181,13 +120,14 @@ void func_801E2838(void)
     g_GameWork.field_598 = 0;
 }
 
+// Old IDB name: MainLoopStateD_ReturnToGame_801E28B0
 void func_801E28B0(void)
 {
-    // old IDB name MainLoopStateD_ReturnToGame_801E28B0
     s32 prev_594;
 
-    prev_594             = g_GameWork.field_594;
-    g_GameWork.field_594 = 0xB;
+    prev_594 = g_GameWork.field_594;
+
+    g_GameWork.field_594 = 11;
     g_SysWork.field_1C   = 0;
     g_SysWork.field_20   = 0;
     g_GameWork.field_59C = 0;
@@ -204,16 +144,17 @@ void func_801E28B0(void)
     g_GameWork.field_598 = 0;
 }
 
+// Old IDB name: MainLoopState11_Movie_PlayEnding_801E2908
 void func_801E2908(void)
 {
-    // Old IDB name MainLoopState11_Movie_PlayEnding_801E2908
     s_GameWork*       gameWork   = g_pGameWork0;
     s_ControllerData* controller = g_pController1;
     s32               prev_594;
 
     if (controller->btns_new_10 & gameWork->controllerBinds_0.cancel)
     {
-        prev_594             = g_GameWork.field_594;
+        prev_594 = g_GameWork.field_594;
+
         g_GameWork.field_594 = 0x16;
         g_SysWork.field_1C   = 0;
         g_SysWork.field_20   = 0;
@@ -233,28 +174,30 @@ void func_801E2908(void)
 
     if (controller->field_18 & 0x08000000)
     {
-        D_801E3F3C -= 1;
+        D_801E3F3C--;
     }
 
     if (controller->field_18 & 0x02000000)
     {
-        D_801E3F3C += 1;
+        D_801E3F3C++;
     }
 
     func_80031EFC(0x28, 0x28);
     if (controller->btns_new_10 & gameWork->controllerBinds_0.enter)
     {
-        open_main(2072 - D_801E3F3C, 0);
+        open_main(FILE_XA_ZC_14392 - D_801E3F3C, 0);
     }
 }
 
+// Old IDB name: MainLoopState5_Movie_PlayIntroAlternate_801E2A24
 void func_801E2A24(void)
 {
-    // Old IDB name MainLoopState5_Movie_PlayIntroAlternate_801E2A24
     s32 prev_594;
 
-    open_main(2053, 2060); // XA/C1_20670
-    prev_594             = g_GameWork.field_594;
+    open_main(FILE_XA_C1_20670, 2060); // Second param looks like file ID for FILE_XA_M6_02112, but is actually frame count?
+
+    prev_594 = g_GameWork.field_594;
+
     g_GameWork.field_594 = 7;
     g_SysWork.field_1C   = 0;
     g_SysWork.field_20   = 0;
@@ -288,9 +231,9 @@ void open_main(s32 file_idx, s16 num_frames) // 0x801E2AA4
     GsSwapDispBuff();
 }
 
-INCLUDE_ASM("asm/stream/nonmatchings/stream", movie_main);
+INCLUDE_ASM("asm/screens/stream/nonmatchings/stream", movie_main);
 
-void strSetDefDecEnv(DECENV *dec, int x0, int y0, int x1, int y1) // 0x801E2F8C
+void strSetDefDecEnv(DECENV* dec, s32 x0, s32 y0, s32 x1, s32 y1) // 0x801E2F8C
 {
     dec->rect[0].w = 480;
     dec->rect[1].w = 480;
@@ -312,19 +255,19 @@ void strSetDefDecEnv(DECENV *dec, int x0, int y0, int x1, int y1) // 0x801E2F8C
     dec->rect[1].y = y1;
 }
 
-void strInit(CdlLOC* loc, void(*callback)()) // 0x801E300C
+void strInit(CdlLOC* loc, void (*callback)()) // 0x801E300C
 {
     DecDCTReset(0);
     DecDCToutCallback(callback);
     StSetRing(m->sect_buff, RING_SIZE);
-    StSetStream(1, 1, 0xffffffff, 0, 0);
+    StSetStream(1, 1, 0xFFFFFFFF, 0, 0);
     strKickCD(loc);
 }
 
 void strCallback() // 0x801E307C
 {
     RECT snap_rect;
-    int  id;
+    s32  id;
     u16* imgbuf;
 
     if (StCdIntrFlag)
@@ -365,8 +308,8 @@ void strCallback() // 0x801E307C
 
 void strKickCD(CdlLOC* loc) // 0x801E31CC
 {
-    char   v2[8];
-    u_char param;
+    s8 v2[8];
+    u8 param;
 
     while (!CdControlB(CdlNop, 0, v2) || (v2[0] & 2) == 0)
     {
@@ -376,13 +319,19 @@ void strKickCD(CdlLOC* loc) // 0x801E31CC
 
     param = 0x80;
     while (!CdControl(CdlSetmode, &param, 0))
+    {
         ;
+    }
 
     while (!CdControl(CdlSeekL, loc, 0))
+    {
         VSync(0);
+    }
 
     while (!CdRead2(CdlModeStream | CdlModeSpeed | CdlModeRT | CdlModeSize1))
+    {
         VSync(0);
+    }
 }
 
 int strNextVlc(DECENV* dec) // 0x801E3298
@@ -394,7 +343,9 @@ int strNextVlc(DECENV* dec) // 0x801E3298
     {
         cnt--;
         if (!cnt)
+        {
             return -1;
+        }
     }
 
     dec->vlcid = dec->vlcid ^ 1;
@@ -410,11 +361,11 @@ u_long* strNext(DECENV* dec) // 0x801E331C
     CDSECTOR* sector;
     int       cnt = MOVIE_WAIT;
 
-    while (StGetNext((u_long **)&addr, (u_long **)&sector))
+    while (StGetNext((u_long**)&addr, (u_long**)&sector))
     {
         if (--cnt == 0)
         {
-            return (0);
+            return 0;
         }
     }
 

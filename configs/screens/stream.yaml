@@ -1,17 +1,17 @@
-name: Video Stream Logic Overlay (STREAM.BIN)
+name: Video stream logic overlay (STREAM)
 sha1: 2a0ffcbbb4f28d3bb66f7f73f18c1d4502cb2fe6
 options:
   basename: STREAM.BIN
   target_path: assets/VIN/STREAM.BIN
-  base_path: ..
+  base_path: ../..
   platform: psx
   compiler: GCC
 
-  asm_path: asm/stream
-  src_path: src/stream
-  build_path: build
+  asm_path: asm/screens/stream
+  src_path: src/screens/stream
+  build_path: build/
 
-  ld_script_path: linkers/stream.ld
+  ld_script_path: linkers/screens/stream.ld
 
   find_file_boundaries: False
   gp_value: 0x80022BB0
@@ -26,14 +26,14 @@ options:
   section_order: [".rodata", ".text", ".data", ".bss"]
 
   symbol_addrs_path:
-    - configs/sym.main.txt
+    - configs/screens/sym.stream.txt
     - configs/sym.bodyprog.txt
-    - configs/sym.stream.txt
+    - configs/sym.main.txt
   reloc_addrs_path:
-    - configs/rel.stream.txt
+    - configs/screens/rel.stream.txt
 
-  undefined_funcs_auto_path: linkers/undefined_funcs_auto.stream.txt
-  undefined_syms_auto_path: linkers/undefined_syms_auto.stream.txt
+  undefined_funcs_auto_path: linkers/screens/undefined_funcs_auto.stream.txt
+  undefined_syms_auto_path: linkers/screens/undefined_syms_auto.stream.txt
 
   extensions_path: tools/splat_ext
 

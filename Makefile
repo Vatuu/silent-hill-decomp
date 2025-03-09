@@ -4,7 +4,7 @@ BUILD_OVERLAYS ?= 1
 BUILD_SCREENS  ?= 1
 BUILD_MAPS     ?= 1
 NON_MATCHING   ?= 0
-SKIP_ASM	   ?= 0
+SKIP_ASM       ?= 0
 
 # Names and Paths
 
@@ -21,6 +21,7 @@ PERMUTER_DIR := permuter
 ASSETS_DIR   := assets
 ASM_DIR      := asm
 C_DIR        := src
+EXPECTED_DIR := expected
 
 # Tools
 
@@ -53,9 +54,9 @@ OBJCOPY_FLAGS       := -O binary
 OBJDUMP_FLAGS       := --disassemble-all --reloc --disassemble-zeroes -Mreg-names=32
 SPLAT_FLAGS         := --disassemble-all
 DUMPSXISO_FLAGS     := -x $(ROM_DIR) -s $(ROM_DIR)/layout.xml $(IMAGE_DIR)/$(GAME_NAME).bin
-MKPSXISO_FLAGS      := -y -q -o $(BUILD_DIR) $(ROM_DIR)/layout.xml
+MKPSXISO_FLAGS      := -y -q -o $(BUILD_DIR) $(ROM_DIR)/shgame.xml
 SILENT_ASSETS_FLAGS := -exe $(ROM_DIR)/SLUS_007.07 -fs $(ROM_DIR)/SILENT. -fh $(ROM_DIR)/HILL. $(ASSETS_DIR)
-INSERT_OVLS_FLAGS   := -exe $(ROM_DIR)/SLUS_007.07 -fs $(ROM_DIR)/SILENT. -ftb $(ASSETS_DIR)/filetable.c.inc -b $(OUT_DIR) -o $(ROM_DIR)
+INSERT_OVLS_FLAGS   := -exe $(ROM_DIR)/SLUS_007.07 -fs $(ROM_DIR)/SILENT. -ftb $(ASSETS_DIR)/filetable.c.inc -b $(OUT_DIR) -xml $(ROM_DIR)/layout.xml -o $(ROM_DIR)
 
 # Main executable uses -G8 while overlays use -G0.
 # This function redefines required parameters for compilation checking depending on whether a file's route is from main executable or an overlay.
@@ -135,13 +136,12 @@ TARGET_MAIN := main
 ifeq ($(BUILD_OVERLAYS), 1)
 
 TARGET_BODYPROG := bodyprog
-TARGET_STREAM   := stream
 
 endif
 
 ifeq ($(BUILD_SCREENS), 1)
 
-TARGET_SCREENS := b_konami credits options saveload
+TARGET_SCREENS := b_konami credits options saveload stream
 TARGET_SCREENS := $(addprefix $(TARGET_SCREENS_SRC_DIR)/,$(TARGET_SCREENS))
 
 endif
@@ -181,16 +181,16 @@ build: $(TARGET_OUT)
 progress: regenerate
 	@$(MAKE) NON_MATCHING=0 SKIP_ASM=0 expected
 	@$(MAKE) NON_MATCHING=1 SKIP_ASM=1 build
-	@$(PYTHON) $(TOOLS_DIR)/objdiff_generate.py expected/src .
+	@$(PYTHON) $(TOOLS_DIR)/objdiff_generate.py $(EXPECTED_DIR)/src .
 	@$(OBJDIFF) report generate > $(BUILD_DIR)/progress.json
 
 check: build
 	@sha256sum --ignore-missing --check checksum.sha
 
 expected: check
-	mkdir -p expected
-	mv build/src expected/src
-	mv build/asm expected/asm
+	mkdir -p $(EXPECTED_DIR)
+	mv build/src $(EXPECTED_DIR)/src
+	mv build/asm $(EXPECTED_DIR)/asm
 	rm -rf build
 
 iso:
@@ -210,7 +210,7 @@ clean:
 reset: clean
 	rm -rf $(ASM_DIR)
 	rm -rf $(LINKER_DIR)
-	rm -rf expected
+	rm -rf $(EXPECTED_DIR)
 
 clean-rom:
 	find rom -maxdepth 1 -type f -delete

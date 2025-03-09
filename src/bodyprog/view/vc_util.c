@@ -243,6 +243,6 @@ void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, s_SysWork* sys_p) // 0x80040
         ref_pos->vz           = (sp18.vz + sp58.vz) * 16;
         sys_p->cam_ang_y_237A = ((cam_ang.vy + DEG_TO_FPA(11.25f)) << 0x14) >> 0x14;
         sys_p->cam_y_2384     = -sp58.vy * 16;
-        sys_p->cam_r_xz_2380 = SquareRoot0((sp58.vx * sp58.vx) + (sp58.vz * sp58.vz)) * 16;
+        sys_p->cam_r_xz_2380  = SquareRoot0((sp58.vx * sp58.vx) + (sp58.vz * sp58.vz)) * 16;
     }
 }

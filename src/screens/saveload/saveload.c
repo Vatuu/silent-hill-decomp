@@ -1,16 +1,7 @@
-#include "common.h"
+#include "game.h"
+
 #include "bodyprog/bodyprog.h"
 #include "screens/saveload/saveload.h"
-
-extern s_FsImageDesc D_800A902C;
-extern u8            D_800A97D4[];
-extern u32           D_800BCD34;
-extern s8            D_800BCD40;
-extern s32           D_801E751C;
-extern s32           D_801E7520;
-extern s16           D_801E7570[];
-extern s16           D_801E7578[];
-extern s8            D_801E76D0;
 
 INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E2D8C);
 
@@ -25,7 +16,7 @@ INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E2FCC);
 
 s32 func_801E3078(s_UnkSaveload0* arg0)
 {
-    if (arg0 != NULL && (arg0->field_08 & 0x01000000))
+    if (arg0 != NULL && (arg0->field_8 & (1 << 24)))
     {
         func_8004A8DC(0);
         return 1;
@@ -65,7 +56,40 @@ INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E5E18);
 
 INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E6320);
 
-INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E63C0);
+void func_801E63C0(void)
+{
+    if (g_GameWork.field_590 == 7)
+    {
+        VSync(8);
+    }
+    
+    D_800A8FF0 = 1;
+    D_800BCD0C = 6;
+    
+    g_GameWork.field_58C = 0;
+    g_GameWork.field_58D = 0;
+    g_GameWork.field_58E = 0;
+    
+    D_800BCD39 = 0;
+    
+    if (g_GameWork.field_594 == 4 || g_GameWork.field_594 == 8)
+    {
+        if (D_800A97D8 != 0)
+        {
+            D_800BCD34 = 0;
+        }
+    }
+    
+    D_801E7520 = 0;
+    D_800A97D8 = (g_GameWork.field_594 == 16);
+    
+    func_801E2D8C();
+    
+    D_800B9FE0[0] = 0;
+    g_GameWork.field_598++;
+    g_GameWork.field_59C = 0;
+    g_GameWork.field_5A0 = 0;
+}
 
 INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E649C);
 
@@ -87,22 +111,22 @@ INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E70C8);
 
 void func_801E7244(void)
 {
-    if (D_801E7520 > 0)
+    if (D_801E7520 <= 0)
+        return;
+
+    D_801E76D0 = 0;
+    D_801E7520--;
+
+    switch (D_801E751C) 
     {
-        D_801E76D0 = 0;
-        D_801E7520 -= 1;
+        case 1:
+            func_801E3910(D_801E751C, (D_800BCD34 >> (D_800BCD40 * 3)) & 7);
+            break;
 
-        switch (D_801E751C) 
-        {
-            case 1:
-                func_801E3910(D_801E751C, (D_800BCD34 >> (D_800BCD40 * 3)) & 7);
-                break;
-
-            case 2:
-            case 3:
-                func_801E3910(D_801E751C, func_8002E990());
-                break;
-        }
+        case 2:
+        case 3:
+            func_801E3910(D_801E751C, func_8002E990());
+            break;
     }
 }
 
