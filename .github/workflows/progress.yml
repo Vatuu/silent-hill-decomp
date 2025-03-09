@@ -25,6 +25,9 @@ jobs:
           python-version: '3.13'
       - run: pip3 install -r requirements.txt --break-system-packages
 
+      - run: ls
+      - run: ls ./rom/image
+
       - name: Setup Environment
         run: make setup
 
