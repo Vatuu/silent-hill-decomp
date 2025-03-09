@@ -1,5 +1,5 @@
-#include "common.h"
 #include "game.h"
+
 #include "bodyprog/bodyprog.h"
 #include "screens/saveload/saveload.h"
 
@@ -56,8 +56,7 @@ INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E5E18);
 
 INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E6320);
 
-INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E63C0);
-/*void func_801E63C0(void)
+void func_801E63C0(void)
 {
     if (g_GameWork.field_590 == 7)
     {
@@ -90,7 +89,7 @@ INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E63C0);
     g_GameWork.field_598++;
     g_GameWork.field_59C = 0;
     g_GameWork.field_5A0 = 0;
-}*/
+}
 
 INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E649C);
 

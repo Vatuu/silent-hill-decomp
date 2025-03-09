@@ -27,6 +27,7 @@ options:
 
   symbol_addrs_path:
     - configs/screens/sym.saveload.txt
+    - configs/sym.bodyprog.txt
     - configs/sym.main.txt
   reloc_addrs_path:
     - configs/screens/rel.saveload.txt
