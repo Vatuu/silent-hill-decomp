@@ -9,15 +9,6 @@
 
 typedef struct
 {
-    s32 unk_0[2];
-    s32 field_8;
-    s32 unk_C[2213];
-    s32 field_22A0;
-    s32 field_22A4;
-} s_SystemWork; // Size: >=8868
-
-typedef struct
-{
     s32 field_0;
     s32 field_4;
     s32 field_8;

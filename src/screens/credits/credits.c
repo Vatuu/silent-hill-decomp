@@ -22,7 +22,7 @@ void func_801E2E28(s32 idx)
     D_801E5E80 = 0x10000 / temp_lo;
 }
 
-// TODO: Matched, but checksum fails.
+// TODO: Matched, but checksum fails. --Sezz
 INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E2ED8);
 /*s32 func_801E2ED8(void)
 {
@@ -248,7 +248,7 @@ INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E4394);
 
 INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E47E0);
 
-// TODO: Matched, but D_800AFE2C is supposed to be HADR0_7 according to sym.bodyprog.txt?
+// TODO: Matched, but D_800AFE2C is supposed to be HADR0_7 according to sym.bodyprog.txt and I don't know what this is. --Sezz
 INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E4B98);
 /*void func_801E4B98(s32 r, s32 g, s32 b)
 {
