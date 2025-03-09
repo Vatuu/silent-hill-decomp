@@ -248,28 +248,58 @@ extern s_ControllerData* g_pController2;
 extern s32 g_CurDeltaTime;
 extern s32 g_CurOTNum;
 
+/** Sets the SysState to use in the next game update. */
+static inline void SysWork_StateSetNext(e_SysState sysState)
+{
+    g_SysWork.sysState_8     = sysState;
+    g_SysWork.field_24       = 0;
+    g_SysWork.sysStateStep_C = 0;
+    g_SysWork.field_28       = 0;
+    g_SysWork.field_10       = 0;
+    g_SysWork.field_2C       = 0;
+    g_SysWork.field_14       = 0;
+}
+
 /** Sets the GameState to use in the next game update.
     Inlined into stream & b_konami.
 */
-static inline Game_StateSetNext(e_GameState gameState)
+static inline void Game_StateSetNext(e_GameState gameState)
 {
     e_GameState prevState = g_GameWork.gameState_594;
 
     g_GameWork.gameState_594        = gameState;
+
     g_SysWork.field_1C              = 0;
     g_SysWork.field_20              = 0;
+
     g_GameWork.gameStateStep_598[1] = 0;
     g_GameWork.gameStateStep_598[2] = 0;
-    g_SysWork.sysState_8            = SysState_Gameplay;
-    g_SysWork.field_24              = 0;
-    g_SysWork.sysStateStep_C        = 0;
-    g_SysWork.field_28              = 0;
-    g_SysWork.field_10              = 0;
-    g_SysWork.field_2C              = 0;
-    g_SysWork.field_14              = 0;
+
+    SysWork_StateSetNext(SysState_Gameplay);
+
     g_GameWork.gameStateStep_598[0] = prevState;
     g_GameWork.gameStatePrev_590    = prevState;
     g_GameWork.gameStateStep_598[0] = 0;
 }
 
+/** Sets GameState to the previous state.
+    Inlined into credits.
+ */
+static inline void Game_StateSetPrevious()
+{
+    e_GameState prevState = g_GameWork.gameState_594;
+
+    g_SysWork.field_1C = 0;
+    g_SysWork.field_20 = 0;
+
+    g_GameWork.gameStateStep_598[1] = 0;
+    g_GameWork.gameStateStep_598[2] = 0;
+
+    SysWork_StateSetNext(SysState_Gameplay);
+
+    g_GameWork.gameStateStep_598[0] = prevState;
+    g_GameWork.gameState_594        = g_GameWork.gameStatePrev_590;
+    g_GameWork.gameStatePrev_590    = prevState;
+    g_GameWork.gameStateStep_598[0] = 0;
+}
 #endif

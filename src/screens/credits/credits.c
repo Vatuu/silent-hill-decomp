@@ -132,8 +132,6 @@ s32 func_801E3124(void)
 
 s32 func_801E3304(void)
 {
-    e_GameState prevState;
-
     if (g_GameWork.gameStatePrev_590 == GameState_InGame)
     {
         if (g_GameWork.gameStateStep_598[1] == 0)
@@ -154,28 +152,7 @@ s32 func_801E3304(void)
             DrawSync(0);
             VSync(2);
 
-            // TODO: this doesn't match inline Game_StateSetNext
-            // maybe a different Game_StateSetPrevious?
-            prevState = g_GameWork.gameState_594;
-
-            g_SysWork.field_1C = 0;
-            g_SysWork.field_20 = 0;
-
-            g_GameWork.gameStateStep_598[1] = 0;
-            g_GameWork.gameStateStep_598[2] = 0;
-
-            g_SysWork.sysState_8     = SysState_Gameplay;
-            g_SysWork.field_24 = 0;
-            g_SysWork.sysStateStep_C = 0;
-            g_SysWork.field_28 = 0;
-            g_SysWork.field_10 = 0;
-            g_SysWork.field_2C = 0;
-            g_SysWork.field_14 = 0;
-
-            g_GameWork.gameStateStep_598[0] = prevState;
-            g_GameWork.gameState_594        = g_GameWork.gameStatePrev_590;
-            g_GameWork.gameStatePrev_590    = prevState;
-            g_GameWork.gameStateStep_598[0] = 0;
+            Game_StateSetPrevious();
         }
         
         return 0;

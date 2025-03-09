@@ -102,6 +102,13 @@ extern s16 D_800C391E;
 /** Unknown bodyprog var. Set in `Fs_QueueDoThingWhenEmpty`. */
 extern s32 D_800C489C;
 
+extern s32 D_800A8FEC;
+extern s32 D_800A9A14;
+extern s32 D_800A9A68;
+
+/** "\x07PAUSED" string */
+extern char D_80025394[];
+
 /** Initializer for something before the game loop. */
 void func_8002E630();
 
@@ -177,6 +184,18 @@ void func_80089128(void);
 void func_800892A4(s32);
 
 void func_801E2D8C();
+
+/** Sets position of next string drawn by GFX_StringDraw */
+void GFX_StringPosition(s32 x, s32 y);
+
+/** Draws a string to screen */
+void GFX_StringDraw(char* str, s32 arg1);
+
+/** Passes a command to sound driver */
+void SD_EngineCmd(s32 cmd);
+
+void func_8004C8DC();
+void func_80091380();
 
 /** Updates the footer with the checksum of the given data */
 void SaveGame_ChecksumUpdate(s_ShSaveGameFooter* saveFooter, s8* saveData, s32 saveDataLength);

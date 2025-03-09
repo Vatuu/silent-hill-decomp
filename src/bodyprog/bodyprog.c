@@ -512,7 +512,44 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80038BD4);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80038F6C);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_800391E8);
+// SysState_GamePaused handler
+void func_800391E8()
+{
+    D_800A9A68 += D_800A8FEC;
+    if (((D_800A9A68 >> 0xB) & 1) == 0)
+    {
+        GFX_StringPosition(125, 104);
+        GFX_StringDraw(D_80025394, 99); // "\x07PAUSED"
+    }
+
+    func_80091380();
+    func_8004C8DC();
+
+    if (g_SysWork.sysStateStep_C == 0)
+    {
+        SD_EngineCmd(3);
+        g_SysWork.sysStateStep_C += 1;
+    }
+
+    // Debug button combo to bring up save screen from pause screen
+    // DPad-Left + L2 + L1 + LS-Left + RS-Left + L3
+    if ((g_pController1->btns_held_C == (Pad_BtnL3 | Pad_BtnDpadLeft | Pad_BtnL2 | Pad_BtnL1 | Pad_LSLeft2 | Pad_RSLeft | Pad_LSLeft)) &&
+        (g_pController1->btns_new_10 & Pad_BtnL3))
+    {
+        D_800A9A68 = 0;
+        SD_EngineCmd(4);
+        D_800A9A14 = 0;
+        SysWork_StateSetNext(SysState_SaveMenu2);
+        return;
+    }
+
+    if (g_pController1->btns_new_10 & g_pGameWork0->controllerBinds_0.pause)
+    {
+        D_800A9A68 = 0;
+        SD_EngineCmd(4);
+        SysWork_StateSetNext(SysState_Gameplay);
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80039344);
 
