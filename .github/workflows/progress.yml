@@ -1,0 +1,29 @@
+name: Determine and Push Progress
+
+on:
+  push:
+
+jobs:
+  build:
+    container: ghcr.io/vatuu/decomp-images-silent-hill:master
+
+    strategy:
+      fail-fast: true
+      matrix:
+        game_id: [ SLUS-00707 ]
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Environment
+        run: make setup
+
+      - name: Generate Progress
+        run: make progress
+
+      - name: Upload Progress Report
+        uses: actions/upload-artifact@v4
+        with:
+            name: ${{ matrix.game_id }}_report
+            path: ./build/progress.json
+      
+
