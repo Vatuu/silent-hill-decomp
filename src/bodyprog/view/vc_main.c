@@ -580,7 +580,9 @@ void vcCamTgtMvVecIsFlipedFromCharaFront(VECTOR3* tgt_mv_vec, VC_WORK* w_p, s32 
     {
         mv_len = flip_dist;
         if (flip_dist > 0x800)
+        {
             mv_len = 0x800;
+        }
 
         // chk_pos is unused?
         chk_pos.vx = pre_tgt_pos.vx + Math_MulFixed(mv_len, shRsin(flip_ang_y), FP_SIN_Q);
@@ -590,9 +592,13 @@ void vcCamTgtMvVecIsFlipedFromCharaFront(VECTOR3* tgt_mv_vec, VC_WORK* w_p, s32 
         {
             chk_near_dist = vcGetNearestNEAR_ROAD_DATA(&use_nearest_p, VC_CHK_NEAREST_ROAD_TYPE, w_p->cur_near_road_2B8.road_p_0->rd_type_11, &pre_tgt_pos, w_p, 1);
             if (use_nearest_p == NULL)
+            {
                 use_nearest_p = &vcNullNearRoad;
+            }
             else if (chk_near_dist > 0)
+            {
                 use_nearest_p = &w_p->cur_near_road_2B8;
+            }
         }
         else
         {

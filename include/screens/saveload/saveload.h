@@ -1,6 +1,8 @@
 #ifndef _SAVELOAD_H
 #define _SAVELOAD_H
 
+#include "common.h"
+
 typedef struct
 {
     s32 unk_0;

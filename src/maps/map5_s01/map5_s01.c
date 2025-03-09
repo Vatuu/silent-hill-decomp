@@ -36,8 +36,7 @@ INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800CF870);
 
 INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800CFC38);
 
-void func_800CFD64(void) {
-}
+void func_800CFD64(void) {}
 
 INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800CFD6C);
 
@@ -87,20 +86,15 @@ INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800D1D34);
 
 INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800D1D44);
 
-void func_800D1D50(void) {
-}
+void func_800D1D50(void) {}
 
-void func_800D1D58(void) {
-}
+void func_800D1D58(void) {}
 
-void func_800D1D60(void) {
-}
+void func_800D1D60(void) {}
 
-void func_800D1D68(void) {
-}
+void func_800D1D68(void) {}
 
-void func_800D1D70(void) {
-}
+void func_800D1D70(void) {}
 
 INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800D1D78);
 
@@ -254,23 +248,17 @@ INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800DBCD4);
 
 INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800DC108);
 
-void func_800DC208(void) {
-}
+void func_800DC208(void) {}
 
-void func_800DC210(void) {
-}
+void func_800DC210(void) {}
 
-void func_800DC218(void) {
-}
+void func_800DC218(void) {}
 
-void func_800DC220(void) {
-}
+void func_800DC220(void) {}
 
-void func_800DC228(void) {
-}
+void func_800DC228(void) {}
 
-void func_800DC230(void) {
-}
+void func_800DC230(void) {}
 
 INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800DC238);
 
@@ -448,8 +436,7 @@ INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800E2D38);
 
 INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800E3194);
 
-void func_800E327C(void) {
-}
+void func_800E327C(void) {}
 
 INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800E3284);
 
@@ -511,8 +498,7 @@ INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800E9C8C);
 
 INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800E9F08);
 
-void func_800E9FAC(void) {
-}
+void func_800E9FAC(void) {}
 
 INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800E9FB4);
 
@@ -536,8 +522,7 @@ INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800EB470);
 
 INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800EB6B0);
 
-void func_800EB874(void) {
-}
+void func_800EB874(void) {}
 
 INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800EB87C);
 

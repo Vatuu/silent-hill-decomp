@@ -8,6 +8,7 @@
 
 #include "bodyprog/bodyprog.h"
 #include "main/fileinfo.h"
+#include "screens/stream/stream.h"
 
 extern int StCdIntrFlag; // Not included in SDK docs/headers, but movie player sample code (and moviesys) uses it?
 
@@ -127,6 +128,7 @@ void func_801E2654(void)
 }
 
 // Old IDB name: MainLoopState6_Movie_PlayIntro_801E279C
+// Old IDB name: MainLoopState6_Movie_PlayIntro_801E279C
 void func_801E279C(void)
 {
     s32 prev_594;
@@ -160,6 +162,7 @@ void func_801E279C(void)
 }
 
 // Old IDB name: MainLoopState9_Movie_PlayOpening_801E2838
+// Old IDB name: MainLoopState9_Movie_PlayOpening_801E2838
 void func_801E2838(void)
 {
     s32 prev_594;
@@ -186,6 +189,7 @@ void func_801E2838(void)
 }
 
 // Old IDB name: MainLoopStateD_ReturnToGame_801E28B0
+// Old IDB name: MainLoopStateD_ReturnToGame_801E28B0
 void func_801E28B0(void)
 {
     s32 prev_594;
@@ -209,6 +213,7 @@ void func_801E28B0(void)
     g_GameWork.field_598 = 0;
 }
 
+// Old IDB name: MainLoopState11_Movie_PlayEnding_801E2908
 // Old IDB name: MainLoopState11_Movie_PlayEnding_801E2908
 void func_801E2908(void)
 {
@@ -255,6 +260,7 @@ void func_801E2908(void)
 }
 
 // Old IDB name: MainLoopState5_Movie_PlayIntroAlternate_801E2A24
+// Old IDB name: MainLoopState5_Movie_PlayIntroAlternate_801E2A24
 void func_801E2A24(void)
 {
     s32 prev_594;
@@ -298,7 +304,7 @@ void open_main(s32 file_idx, s16 num_frames) // 0x801E2AA4
 
 INCLUDE_ASM("asm/screens/stream/nonmatchings/stream", movie_main);
 
-void strSetDefDecEnv(DECENV* dec, int x0, int y0, int x1, int y1) // 0x801E2F8C
+void strSetDefDecEnv(DECENV* dec, s32 x0, s32 y0, s32 x1, s32 y1) // 0x801E2F8C
 {
     dec->rect[0].w = 480;
     dec->rect[1].w = 480;
@@ -332,7 +338,7 @@ void strInit(CdlLOC* loc, void (*callback)()) // 0x801E300C
 void strCallback() // 0x801E307C
 {
     RECT snap_rect;
-    int  id;
+    s32  id;
     u16* imgbuf;
 
     if (StCdIntrFlag)
@@ -373,8 +379,8 @@ void strCallback() // 0x801E307C
 
 void strKickCD(CdlLOC* loc) // 0x801E31CC
 {
-    char   v2[8];
-    u_char param;
+    s8 v2[8];
+    u8 param;
 
     while (!CdControlB(CdlNop, 0, v2) || (v2[0] & 2) == 0)
     {
@@ -385,23 +391,29 @@ void strKickCD(CdlLOC* loc) // 0x801E31CC
     param = 0x80;
     while (!CdControl(CdlSetmode, &param, 0))
     {
+    {
         ;
+    }
     }
 
     while (!CdControl(CdlSeekL, loc, 0))
     {
+    {
         VSync(0);
+    }
     }
 
     while (!CdRead2(CdlModeStream | CdlModeSpeed | CdlModeRT | CdlModeSize1))
     {
+    {
         VSync(0);
+    }
     }
 }
 
 int strNextVlc(DECENV* dec) // 0x801E3298
 {
-    u_long *next, *strNext();
+    u_long* next, *strNext();
 
     u_long cnt = 2000;
     while ((next = strNext(dec)) == 0)
@@ -409,7 +421,9 @@ int strNextVlc(DECENV* dec) // 0x801E3298
         cnt--;
         if (!cnt)
         {
+        {
             return -1;
+        }
         }
     }
 

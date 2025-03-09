@@ -177,13 +177,13 @@ void func_800892A4(s32);
 void func_801E2D8C();
 
 /** Updates the footer with the checksum of the given data */
-void SaveGame_ChecksumUpdate(s_ShSaveGameFooter* saveFooter, char* saveData, s32 saveDataLength);
+void SaveGame_ChecksumUpdate(s_ShSaveGameFooter* saveFooter, s8* saveData, s32 saveDataLength);
 
 /** Generates checksum of the given saveData and compares against checksum value in the footer
     Return 1 if checksum matches, otherwise 0 */
-s32 SaveGame_ChecksumValidate(s_ShSaveGameFooter* saveFooter, char* saveData, s32 saveDataLength);
+s32 SaveGame_ChecksumValidate(s_ShSaveGameFooter* saveFooter, s8* saveData, s32 saveDataLength);
 
 /** Generates an 8-bit XOR checksum over the given data, only appears used with s_ShSaveGame data */
-u8 SaveGame_ChecksumGenerate(char* saveData, s32 saveDataLength);
+u8 SaveGame_ChecksumGenerate(s8* saveData, s32 saveDataLength);
 
 #endif

@@ -42,9 +42,7 @@ void Fs_InitializeMem(u8* start, u32 size)
     }
 }
 
-void nullsub_80011cfc(void)
-{
-}
+void nullsub_80011cfc(void) {}
 
 void* Fs_AllocMem(s32 size)
 {
