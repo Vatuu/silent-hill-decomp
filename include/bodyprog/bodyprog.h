@@ -145,8 +145,6 @@ void GFX_ClearRectInterlaced(s16 x, s16 y, s16 w, s16 h, u8 r, u8 g, u8 b);
 /** Bodyprog func that searches for English title screen background graphic. */
 void GameFS_TitleGfxSeek();
 
-void func_80032358(s16 x, s16 y, s16 w, s16 h, u8 r, u8 g, u8 b);
-
 void func_8003260C(); // Return type assumed.
 
 /** Bodyprog entrypoint. Called by `main`. */
@@ -172,9 +170,9 @@ void func_80041CEC(s_80041CEC*);
 /** Clears some field in some struct. */
 void func_80041D10(s_80041D10* array, s32 size);
 
-void func_80045A7C(u16);
-
 u8 func_80045B28();
+
+void func_8004729C(u16);
 
 void func_8005E0DC(s32); // Types assumed.
 

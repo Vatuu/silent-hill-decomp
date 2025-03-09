@@ -116,7 +116,6 @@ INCLUDE_ASM("asm/screens/b_konami/nonmatchings/b_konami", func_800C99A4);
 
 INCLUDE_ASM("asm/screens/b_konami/nonmatchings/b_konami", func_800C9E6C);
 
-// TODO: Wait on fgsfd's investigations for cleaner match of graphics setup.
 void func_800C9FB8(void)
 {
     s32* temp_a1;
@@ -128,6 +127,7 @@ void func_800C9FB8(void)
 
     temp_a1 = (g_CurOTNum << 4) + &D_800B5C7C;
 
+    // TODO: Wait on fgsfds's investigations for cleaner match of graphics setup.
     // addPrim(temp_a1, D_800C7018);
     ((TILE*)D_800C7018)->tag = (u32)((*temp_a1 & 0xFFFFFF) | 0x03000000);
     setaddr(temp_a1, D_800C7018);
@@ -139,7 +139,6 @@ void func_800C9FB8(void)
     D_800C7018 += sizeof(TILE);
 }
 
-// TODO: Wait on fgsfd's investigations for cleaner match of graphics setup.
 void func_800CA120(void)
 {
     u32* temp_a1;
@@ -149,6 +148,7 @@ void func_800CA120(void)
     
     temp_a1 = (g_CurOTNum << 4) + &D_800B5C7C;
 
+    // TODO: Wait on fgsfds's investigations for cleaner match of graphics setup.
     // addPrim(temp_a1, D_800C7018);
     ((TILE*)D_800C7018)->tag = (u32)((*temp_a1 & 0xFFFFFF) | 0x03000000);
     setaddr(temp_a1, D_800C7018);

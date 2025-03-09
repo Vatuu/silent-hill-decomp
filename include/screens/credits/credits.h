@@ -26,29 +26,12 @@ typedef struct
     s16 field_4;
 } s_UnkCredits1; // Size: 6
 
-typedef struct
-{
-    u32 unk_0;
-    u32 unk_4;
-    u32 field_8;
-    u32 field_C;
-    u32 field_10;
-    u32 field_14;
-    u32 unk_18;
-    u32 field_1C;
-    u32 field_20;
-    u32 field_24;
-    u32 field_28;
-    u32 field_2C;
-} s_UnkCredits2; // Size: >=48
-
 extern s_UnkCredits0 D_800AFE08;
 extern s8            D_800AFE0E;
 extern s32           D_800AFE10; // Packed RGB+command color? Command is 0x64.
 extern s_UnkCredits0 D_800AFE24;
 extern s8            D_800AFE2A;
 extern s32           D_800AFE2C; // Packed RGB+command color? Command is 0x2C.
-extern s_UnkCredits2 g_Syswork;
 extern s32           D_800C48F0;
 extern s_UnkCredits1 D_801E5558[];
 extern RECT          D_801E557C[];

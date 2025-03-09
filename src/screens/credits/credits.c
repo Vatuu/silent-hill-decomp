@@ -6,12 +6,10 @@
 
 // ===== Temporary declarations =====
 
-void GFX_Init(u32, u32); // Return and arg types assumed.
-void func_8004729C(u16);
-
 //===================================
 
-void func_801E2E28(s32 idx)
+INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E2E28);
+/*void func_801E2E28(s32 idx)
 {
     s32 temp_lo;
     s32 temp_v1;
@@ -27,9 +25,10 @@ void func_801E2E28(s32 idx)
     D_801E5E7C = temp_lo;
     D_801E5E84 = (temp_lo * D_801E5C20) + 0x1E0;
     D_801E5E80 = 0x10000 / temp_lo;
-}
+}*/
 
-s32 func_801E2ED8(void)
+INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E2ED8);
+/*s32 func_801E2ED8(void)
 {
     switch (D_801E5E88)
     {
@@ -37,7 +36,7 @@ s32 func_801E2ED8(void)
             break;
         
         case 1:
-            func_80045A7C(D_801E5558[D_801E5E8C].field_0);
+            SD_EngineCmd(D_801E5558[D_801E5E8C].field_0);
             D_801E5E88 += 1;
             break;
 
@@ -58,7 +57,7 @@ s32 func_801E2ED8(void)
     }
 
     return 0;
-}
+}*/
 
 INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E2FC0);
 
@@ -87,8 +86,8 @@ INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E3124);
                     break;
             }
 
-            func_80045A7C(0x12);
-            func_80045A7C(0x10);
+            SD_EngineCmd(0x12);
+            SD_EngineCmd(0x10);
             g_GameWork.field_59C++;
             break;
 
@@ -101,11 +100,11 @@ INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E3124);
             switch (D_800BCD0C)
             {
                 case 13:
-                    func_80032358(0, 0x20, 0x200, 0x1C0, 0xFF, 0xFF, 0xFF);
+                    GFX_ClearRectInterlaced(0, 0x20, 0x200, 0x1C0, 0xFF, 0xFF, 0xFF);
                     break;
 
                 case 5:
-                    func_80032358(0, 0x20, 0x200, 0x1C0, 0x00, 0x00, 0x00);
+                    GFX_ClearRectInterlaced(0, 0x20, 0x200, 0x1C0, 0x00, 0x00, 0x00);
                     break;
             }
 
@@ -136,9 +135,7 @@ INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E3124);
     return 0;
 }*/
 
-// TODO: g_GameWork undeclared?
-INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E3304);
-/*s32 func_801E3304(void)
+s32 func_801E3304(void)
 {
     s32 temp;
 
@@ -156,7 +153,7 @@ INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E3304);
         }
         else
         {
-            func_80032358(0, 0x20, 0x140, 0x1C0, 0, 0, 0);
+            GFX_ClearRectInterlaced(0, 0x20, 0x140, 0x1C0, 0, 0, 0);
             LoadImage(&D_801E557C[0], 0x801CFA00);
             LoadImage(&D_801E557C[1], 0x801C8200);
             DrawSync(0);
@@ -164,19 +161,19 @@ INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E3304);
             
             temp = g_GameWork.field_594;
             
-            g_Syswork.field_1C = 0;
-            g_Syswork.field_20 = 0;
+            g_SysWork.field_1C = 0;
+            g_SysWork.field_20 = 0;
             
             g_GameWork.field_59C = 0;
             g_GameWork.field_5A0 = 0;
             
-            g_Syswork.field_8 = 0;
-            g_Syswork.field_24 = 0;
-            g_Syswork.field_C = 0;
-            g_Syswork.field_28 = 0;
-            g_Syswork.field_10 = 0;
-            g_Syswork.field_2C = 0;
-            g_Syswork.field_14 = 0;
+            g_SysWork.field_8 = 0;
+            g_SysWork.field_24 = 0;
+            g_SysWork.field_C = 0;
+            g_SysWork.field_28 = 0;
+            g_SysWork.field_10 = 0;
+            g_SysWork.field_2C = 0;
+            g_SysWork.field_14 = 0;
             
             g_GameWork.field_598 = temp;
             g_GameWork.field_594 = (s32)g_GameWork.field_590;
@@ -188,7 +185,7 @@ INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E3304);
     }
 
     return 0;
-}*/
+}
 
 INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E342C);
 
@@ -198,7 +195,6 @@ INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E386C);
 
 INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E3970);
 
-// Credits_SetRandomThingValue
 void func_801E3DD0(void)
 {
     D_801E600C = Rng_Rand16();
@@ -257,10 +253,11 @@ INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E4394);
 
 INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E47E0);
 
-void func_801E4B98(s32 r, s32 g, s32 b)
+INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E4B98);
+/*void func_801E4B98(s32 r, s32 g, s32 b)
 {
     D_800AFE2C = (r & 0xFF) | ((g & 0xFF) << 8) | ((b & 0xFF) << 16) | (0x2C << 24);
-}
+}*/
 
 void func_801E4BC8(s8 arg0)
 {
