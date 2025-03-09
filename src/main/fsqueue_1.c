@@ -93,9 +93,9 @@ s32 Fs_QueueStartReadAnm(s32 arg0, s32 arg1, void* arg2, s32 arg3)
     s_FsQueueExtra extra;
 
     fileIdx = D_800A90FC[arg1].fileIdx;
-    extra.anm.field_04 = arg1;
-    extra.anm.field_00 = arg0;
-    extra.anm.field_08 = arg3;
+    extra.anm.field_4 = arg1;
+    extra.anm.field_0 = arg0;
+    extra.anm.field_8 = arg3;
     return Fs_QueueEnqueue(fileIdx, FS_OP_READ, FS_POST_LOAD_ANM, false, arg2, 0, &extra);
 }
 

@@ -79,8 +79,8 @@ typedef struct _ControllerBindings
     u16 light;
     u16 run;
     u16 view;
-    u16 step_l;
-    u16 step_r;
+    u16 stepLeft;
+    u16 stepRight;
     u16 pause;
     u16 item;
     u16 map;
@@ -115,10 +115,13 @@ typedef struct _GameWork
     u8                   saveGame_30C[0x27C];
     u16                  gsScreenWidth_588;
     u16                  gsScreenHeight_58A;
-    char                 unk_58C[4];
-    s32                  field_590;
-    s32                  field_594;
-    s32                  field_598;
+    u8                   field_58C; // R?
+    u8                   field_58D; // G?
+    u8                   field_58E; // B?
+    u8                   field_58F; // A or graphics command code?
+    s32                  field_590; //                        }
+    s32                  field_594; // Counter or enum state? } // These three are related.
+    s32                  field_598; //                        }
     s32                  field_59C;
     s32                  field_5A0;
     char                 unk_5A4[0x34];
@@ -199,5 +202,6 @@ extern s_ControllerData* g_pController1;
 extern s_ControllerData* g_pController2;
 
 extern s32 g_CurDeltaTime;
+extern s32 g_CurOTNum;
 
 #endif

@@ -1,7 +1,6 @@
-#include "common.h"
+#include "game.h"
 
-extern u8 D_800BC747;
-extern u8 D_800BC748;
+#include "screens/options/options.h"
 
 INCLUDE_ASM("asm/screens/options/nonmatchings/options", func_801E2D44);
 

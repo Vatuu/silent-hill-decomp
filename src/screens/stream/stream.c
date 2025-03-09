@@ -36,7 +36,9 @@ void func_801E2654(void)
             if ((D_800BCD0C & 7) == 5)
             {
                 Fs_QueueWaitForEmpty();
-                prev_594             = g_GameWork.field_594;
+
+                prev_594 = g_GameWork.field_594;
+
                 g_GameWork.field_594 = 6;
                 g_SysWork.field_1C   = 0;
                 g_SysWork.field_20   = 0;
@@ -72,7 +74,8 @@ void func_801E279C(void)
 
     open_main(file_idx, 0);
 
-    prev_594             = g_GameWork.field_594;
+    prev_594 = g_GameWork.field_594;
+
     g_GameWork.field_594 = 7;
     g_SysWork.field_1C   = 0;
     g_SysWork.field_20   = 0;
@@ -97,7 +100,9 @@ void func_801E2838(void)
     s32 prev_594;
 
     open_main(FILE_XA_M1_03500, 0);
-    prev_594             = g_GameWork.field_594;
+
+    prev_594 = g_GameWork.field_594;
+
     g_GameWork.field_594 = 0xA;
     g_SysWork.field_1C   = 0;
     g_SysWork.field_20   = 0;
@@ -120,8 +125,9 @@ void func_801E28B0(void)
 {
     s32 prev_594;
 
-    prev_594             = g_GameWork.field_594;
-    g_GameWork.field_594 = 0xB;
+    prev_594 = g_GameWork.field_594;
+
+    g_GameWork.field_594 = 11;
     g_SysWork.field_1C   = 0;
     g_SysWork.field_20   = 0;
     g_GameWork.field_59C = 0;
@@ -147,7 +153,8 @@ void func_801E2908(void)
 
     if (controller->btns_new_10 & gameWork->controllerBinds_0.cancel)
     {
-        prev_594             = g_GameWork.field_594;
+        prev_594 = g_GameWork.field_594;
+
         g_GameWork.field_594 = 0x16;
         g_SysWork.field_1C   = 0;
         g_SysWork.field_20   = 0;
@@ -167,12 +174,12 @@ void func_801E2908(void)
 
     if (controller->field_18 & 0x08000000)
     {
-        D_801E3F3C -= 1;
+        D_801E3F3C--;
     }
 
     if (controller->field_18 & 0x02000000)
     {
-        D_801E3F3C += 1;
+        D_801E3F3C++;
     }
 
     func_80031EFC(0x28, 0x28);
@@ -188,7 +195,9 @@ void func_801E2A24(void)
     s32 prev_594;
 
     open_main(FILE_XA_C1_20670, 2060); // Second param looks like file ID for FILE_XA_M6_02112, but is actually frame count?
-    prev_594             = g_GameWork.field_594;
+
+    prev_594 = g_GameWork.field_594;
+
     g_GameWork.field_594 = 7;
     g_SysWork.field_1C   = 0;
     g_SysWork.field_20   = 0;
@@ -251,7 +260,7 @@ void strInit(CdlLOC* loc, void (*callback)()) // 0x801E300C
     DecDCTReset(0);
     DecDCToutCallback(callback);
     StSetRing(m->sect_buff, RING_SIZE);
-    StSetStream(1, 1, 0xffffffff, 0, 0);
+    StSetStream(1, 1, 0xFFFFFFFF, 0, 0);
     strKickCD(loc);
 }
 
@@ -356,7 +365,7 @@ u_long* strNext(DECENV* dec) // 0x801E331C
     {
         if (--cnt == 0)
         {
-            return (0);
+            return 0;
         }
     }
 

@@ -1,8 +1,8 @@
 #include "common.h"
 #include "game.h"
-#include "main/fsqueue.h"
-#include "bodyprog/bodyprog.h"
 #include "gpu.h"
+#include "bodyprog/bodyprog.h"
+#include "main/fsqueue.h"
 
 #include <libapi.h>
 #include <libetc.h>
@@ -77,7 +77,7 @@ int main(void)
     SsUtReverbOff();
 
     // Load \1ST\2ZANKO_E.TIM ("There are violent and disturbing images...").
-    Fs_QueueStartReadTim(FILE_1ST_2ZANKO_E_TIM, FS_BUFFER0, &g_MainImg0);
+    Fs_QueueStartReadTim(FILE_1ST_2ZANKO_E_TIM, FS_BUFFER_0, &g_MainImg0);
     while (Fs_QueueGetLength() > 0)
     {
         Fs_QueueUpdate();
@@ -85,8 +85,8 @@ int main(void)
     }
 
     // Start loading \1ST\BODYPROG.BIN and \1ST\B_KONAMI.BIN.
-    Fs_QueueStartRead(FILE_1ST_BODYPROG_BIN, FS_BUFFER0);
-    Fs_QueueStartRead(FILE_1ST_B_KONAMI_BIN, FS_BUFFER1);
+    Fs_QueueStartRead(FILE_1ST_BODYPROG_BIN, FS_BUFFER_0);
+    Fs_QueueStartRead(FILE_1ST_B_KONAMI_BIN, FS_BUFFER_1);
 
     SetDispMask(1);
 
@@ -151,11 +151,11 @@ int main(void)
     }
 
     // Decrypt BODYPROG and B_KONAMI into place.
-    Fs_DecryptOverlay(g_OvlBodyprog, FS_BUFFER0, Fs_GetFileSize(FILE_1ST_BODYPROG_BIN));
-    Fs_DecryptOverlay(g_OvlDynamic, FS_BUFFER1, Fs_GetFileSize(FILE_1ST_B_KONAMI_BIN));
+    Fs_DecryptOverlay(g_OvlBodyprog, FS_BUFFER_0, Fs_GetFileSize(FILE_1ST_BODYPROG_BIN));
+    Fs_DecryptOverlay(g_OvlDynamic, FS_BUFFER_1, Fs_GetFileSize(FILE_1ST_B_KONAMI_BIN));
 
     // Load 1ST\FONT8NOC.TIM (8x8 font).
-    Fs_QueueStartReadTim(FILE_1ST_FONT8NOC_TIM, FS_BUFFER1, &g_MainImg1);
+    Fs_QueueStartReadTim(FILE_1ST_FONT8NOC_TIM, FS_BUFFER_1, &g_MainImg1);
     while (Fs_QueueGetLength() > 0)
     {
         Fs_QueueUpdate();
