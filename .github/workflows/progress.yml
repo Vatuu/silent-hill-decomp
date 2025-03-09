@@ -29,7 +29,7 @@ jobs:
           cp -r -p /rom/* ./rom/image
 
       - name: Setup Environment
-        run: make setup
+        run: make extract
 
       - name: Generate Progress
         run: make progress
