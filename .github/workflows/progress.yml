@@ -26,10 +26,7 @@ jobs:
         run: |
           mkdir -p ./rom/image
           cp -r -p /rom/* ./rom/image
-          ls
-          ls /rom
-          ls ./rom/image
-
+          
       - name: Setup Environment
         run: make setup
 
