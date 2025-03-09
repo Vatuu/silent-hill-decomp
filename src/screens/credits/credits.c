@@ -1,15 +1,10 @@
-#include "common.h"
 #include "game.h"
-#include "main/rng.h"
+
 #include "bodyprog/bodyprog.h"
+#include "main/rng.h"
 #include "screens/credits/credits.h"
 
-// ===== Temporary declarations =====
-
-//===================================
-
-INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E2E28);
-/*void func_801E2E28(s32 idx)
+void func_801E2E28(s32 idx)
 {
     s32 temp_lo;
     s32 temp_v1;
@@ -25,8 +20,9 @@ INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E2E28);
     D_801E5E7C = temp_lo;
     D_801E5E84 = (temp_lo * D_801E5C20) + 0x1E0;
     D_801E5E80 = 0x10000 / temp_lo;
-}*/
+}
 
+// TODO: Matched, but checksum fails.
 INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E2ED8);
 /*s32 func_801E2ED8(void)
 {
@@ -63,10 +59,7 @@ INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E2FC0);
 
 INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E3094);
 
-// TODO: Matches, but checksum fails.
-INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E3124);
-// Draws some image on the screen.
-/*s32 func_801E3124(void)
+s32 func_801E3124(void)
 {
     switch (g_GameWork.field_59C)
     {
@@ -92,8 +85,8 @@ INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E3124);
             break;
 
         case 1:
-            StoreImage(&D_801E557C[0], (u_long*)0x801CFA00);
-            StoreImage(&D_801E557C[1], (u_long*)0x801C8200);
+            StoreImage(&D_801E557C[0], (u_long*)IMAGE_BUFFER_0);
+            StoreImage(&D_801E557C[1], (u_long*)IMAGE_BUFFER_1);
             DrawSync(0);
 
             // Maybe an enum entry check.
@@ -133,7 +126,7 @@ INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E3124);
     }
 
     return 0;
-}*/
+}
 
 s32 func_801E3304(void)
 {
@@ -154,8 +147,8 @@ s32 func_801E3304(void)
         else
         {
             GFX_ClearRectInterlaced(0, 0x20, 0x140, 0x1C0, 0, 0, 0);
-            LoadImage(&D_801E557C[0], 0x801CFA00);
-            LoadImage(&D_801E557C[1], 0x801C8200);
+            LoadImage(&D_801E557C[0], IMAGE_BUFFER_0);
+            LoadImage(&D_801E557C[1], IMAGE_BUFFER_1);
             DrawSync(0);
             VSync(2);
             
@@ -253,6 +246,7 @@ INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E4394);
 
 INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E47E0);
 
+// TODO: D_800AFE2C is supposed to be HADR0_7?
 INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E4B98);
 /*void func_801E4B98(s32 r, s32 g, s32 b)
 {

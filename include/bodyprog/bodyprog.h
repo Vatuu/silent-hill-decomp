@@ -4,6 +4,9 @@
 #include "game.h"
 #include "main/fsqueue.h"
 
+#define IMAGE_BUFFER_0 (u_long*)0x801CFA00
+#define IMAGE_BUFFER_1 (u_long*)0x801C8200
+
 typedef struct
 {
     s32 unk_0[2];

@@ -6,8 +6,8 @@
  /** FS queue size. */
 #define FS_QUEUE_LENGTH 32
 
-#define FS_BUFFER_0 ((void*)0x8010A600)
-#define FS_BUFFER_1 ((void*)0x801E2600)
+#define FS_BUFFER_0 (void*)0x8010A600
+#define FS_BUFFER_1 (void*)0x801E2600
 
 /** @brief `FsQueue::state` values when processing a read operation (`Fs_QueueUpdateRead`).
  *

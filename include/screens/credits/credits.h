@@ -50,6 +50,7 @@ s32 func_801E2ED8(void);
 
 void func_801E3DD0(void);
 
+/** Draw some image on the screen. */
 s32 func_801E3124(void);
 
 s32 func_801E3304(void);
