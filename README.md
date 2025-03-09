@@ -17,7 +17,7 @@ The build process has the following package requirements:
 Under a Debian-based distribution (or Windows with a Debian-based WSL2 setup), you can install these with the following commands:
 ```
 sudo apt update
-sudo apt install git build-essential binutils-mips-linux-gnu cpp-mips-linux-gnu python3 bchunk p7zip-full p7zip-rar
+sudo apt install git build-essential binutils-mips-linux-gnu cpp-mips-linux-gnu python3 bchunk p7zip-full
 ```
 
 ### Clone the repository
