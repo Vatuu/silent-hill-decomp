@@ -33,23 +33,25 @@ INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E2ED8);
         
         case 1:
             SD_EngineCmd(D_801E5558[D_801E5E8C].field_0);
-            D_801E5E88 += 1;
+            D_801E5E88++;
             break;
 
         case 2:
             switch (func_80045B28())
             {
-                default:
                 case 0:
                     return 0;
                 
                 case 1:
                     D_800C48F0 = D_801E5558[D_801E5E8C].field_2;
                     return 1;
+
+                default:
+                    break;
             }
         
         default:
-            return 0;
+            break;
     }
 
     return 0;
@@ -246,7 +248,7 @@ INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E4394);
 
 INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E47E0);
 
-// TODO: D_800AFE2C is supposed to be HADR0_7?
+// TODO: Matched, but D_800AFE2C is supposed to be HADR0_7 according to sym.bodyprog.txt?
 INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E4B98);
 /*void func_801E4B98(s32 r, s32 g, s32 b)
 {
