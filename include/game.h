@@ -92,13 +92,27 @@ typedef struct _GameWork
     s_ControllerBindings controllerBinds_0;
     s8                   field_1C;
     s8                   field_1D;
-    char                 unk_1E[9];
-    u8                   extraOptionsEnabled_27;
-    char                 unk_28[1];
-    s8                   gameOptionsViewMode_29;
-    char                 unk_2A[0xE];
+    u8                   optSoundType_1E;
+    u8                   optVolumeBGM_1F;
+    u8                   optVolumeSE_20;
+    u8                   optVibrationEnabled_21;
+    u8                   optBrightness_22;
+    u8                   optWeaponCtrl_23;
+    u8                   optBloodColor_24;
+    u8                   optAutoLoad_25;
+    u8                   unk_26;
+    u8                   optExtraOptionsEnabled_27;
+    u8                   optViewCtrl_28;
+    s8                   optViewMode_29;
+    u8                   optRetreatTurn_2A;
+    u8                   optWalkRunCtrl_2B;
+    u8                   optAutoAiming_2C;
+    u8                   optBulletAdjust_2D;
+    char                 unk_2E[0x2];
+    char                 unk_30[8];
     s_ControllerData     controllers_38[2];
-    char                 pad90[0x4F8];
+    char                 unk_90[0x27C];
+    u8                   saveGame_30C[0x27C];
     u16                  gsScreenWidth_588;
     u16                  gsScreenHeight_58A;
     u8                   field_58C; // R?
@@ -112,6 +126,7 @@ typedef struct _GameWork
     s32                  field_5A0;
     char                 unk_5A4[0x34];
 } s_GameWork;
+STATIC_ASSERT_SIZEOF(s_GameWork, 0x5D8);
 
 typedef struct _SubCharacter
 {
@@ -153,7 +168,8 @@ typedef struct _SysWork
     s32             field_2C;
     char            unk_30[0x1C];
     s_MainCharacter player_4C;
-    char            unk_1A0[0x930 - 0x1A0];
+    s_SubCharacter  characters_1A0[6];
+    GsCOORDINATE2   unk_coord_890[2];
     GsCOORDINATE2   hero_neck_930;
     char            unk_980[0x22A4 - 0x980];
     s32             field_22A4;
@@ -163,8 +179,19 @@ typedef struct _SysWork
     s16             field_237E;
     int             cam_r_xz_2380;
     int             cam_y_2384;
-    // more follows
+    u8              unk_2388[0x3E0];
 } s_SysWork;
+STATIC_ASSERT_SIZEOF(s_SysWork, 0x2768);
+
+/** s_ShSaveGameFooter: appended to ShSaveGame during game save, contains 8-bit XOR checksum + magic
+    Checksum generated via SaveGame_ChecksumGenerate function */
+#define SAVEGAME_FOOTER_MAGIC 0xDCDC
+typedef struct _ShSaveGameFooter
+{
+    u8  checksum_0[2];
+    u16 magic_2;
+} s_ShSaveGameFooter;
+STATIC_ASSERT_SIZEOF(s_ShSaveGameFooter, 4);
 
 extern s_SysWork   g_SysWork;
 extern s_GameWork  g_GameWork;

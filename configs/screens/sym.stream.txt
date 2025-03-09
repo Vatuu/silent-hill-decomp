@@ -1,0 +1,47 @@
+// beatmania MOVIESYS names, which seems based on PSX SDK sample code
+// (SH1 seems closer to MOVIESYS than the SDK code)
+open_main = 0x801e2aa4; // type:func
+movie_main = 0x801e2b9c; // type:func
+strSetDefDecEnv = 0x801e2f8c; // type:func
+strInit = 0x801e300c; // type:func
+strCallback = 0x801e307c; // type:func
+strKickCD = 0x801e31cc; // type:func
+strNextVlc = 0x801e3298; // type:func
+strNext = 0x801e331c; // type:func
+strSync = 0x801e3438; // type:func
+// MOVIESYS globals
+max_frame = 0x801E3F40;
+frame_cnt = 0x801E3F44;
+disp = 0x801E3F48;
+m = 0x801F50E0;
+
+// dscb.o
+DsSyncCallback = 0x801e34cc; // type:func
+DsReadyCallback = 0x801e34e0; // type:func
+DsStartCallback = 0x801e34f4; // type:func
+DsDataCallback = 0x801e3508; // type:func
+// dscb.o globals
+GlobalCallback = 0x801F50E8;
+
+// libpress.o
+DecDCTReset = 0x801e352c; // type:func
+DecDCTGetEnv = 0x801e3560; // type:func
+DecDCTPutEnv = 0x801e35ec; // type:func
+DecDCTBufSize = 0x801e3684; // type:func
+DecDCTin = 0x801e3690; // type:func
+DecDCTout = 0x801e370c; // type:func
+DecDCTinSync = 0x801e372c; // type:func
+DecDCToutSync = 0x801e3768; // type:func
+DecDCTinCallback = 0x801e37a4; // type:func
+DecDCToutCallback = 0x801e37c8; // type:func
+MDEC_reset = 0x801e37ec; // type:func
+MDEC_in = 0x801e38dc; // type:func
+MDEC_out = 0x801e396c; // type:func
+MDEC_in_sync = 0x801e39f8; // type:func
+MDEC_out_sync = 0x801e3a8c; // type:func
+MDEC_status = 0x801e3b20; // type:func
+timeout = 0x801e3b38; // type:func
+
+// vlc.o
+DecDCTvlcSize = 0x801e3bbc; // type:func
+DecDCTvlc = 0x801e3bec; // type:func

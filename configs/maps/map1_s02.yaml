@@ -51,6 +51,6 @@ segments:
     subalign: 4
     subsegments:
       - [0x0, rodata]
-      - [0x24D4, asm, map1_s02]
+      - [0x24D4, c, map1_s02]
       - [0x157E0, data, map1_s02]
   - [0x1C600]
