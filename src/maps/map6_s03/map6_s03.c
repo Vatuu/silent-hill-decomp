@@ -18,8 +18,7 @@ INCLUDE_ASM("asm/maps/map6_s03/nonmatchings/map6_s03", func_800CCB00);
 
 INCLUDE_ASM("asm/maps/map6_s03/nonmatchings/map6_s03", func_800CCBC0);
 
-void func_800CCD0C(void) {
-}
+void func_800CCD0C(void) {}
 
 INCLUDE_ASM("asm/maps/map6_s03/nonmatchings/map6_s03", func_800CCD14);
 
@@ -69,25 +68,19 @@ INCLUDE_ASM("asm/maps/map6_s03/nonmatchings/map6_s03", func_800CEF14);
 
 INCLUDE_ASM("asm/maps/map6_s03/nonmatchings/map6_s03", func_800CEF24);
 
-void func_800CEF30(void) {
-}
+void func_800CEF30(void) {}
 
-void func_800CEF38(void) {
-}
+void func_800CEF38(void) {}
 
-void func_800CEF40(void) {
-}
+void func_800CEF40(void) {}
 
-void func_800CEF48(void) {
-}
+void func_800CEF48(void) {}
 
-void func_800CEF50(void) {
-}
+void func_800CEF50(void) {}
 
 INCLUDE_ASM("asm/maps/map6_s03/nonmatchings/map6_s03", func_800CEF58);
 
-void func_800CEF60(void) {
-}
+void func_800CEF60(void) {}
 
 INCLUDE_ASM("asm/maps/map6_s03/nonmatchings/map6_s03", func_800CEF68);
 
@@ -103,8 +96,7 @@ INCLUDE_ASM("asm/maps/map6_s03/nonmatchings/map6_s03", func_800CF414);
 
 INCLUDE_ASM("asm/maps/map6_s03/nonmatchings/map6_s03", func_800CFC50);
 
-void func_800D0000(void) {
-}
+void func_800D0000(void) {}
 
 INCLUDE_ASM("asm/maps/map6_s03/nonmatchings/map6_s03", func_800D0008);
 
@@ -122,8 +114,7 @@ INCLUDE_ASM("asm/maps/map6_s03/nonmatchings/map6_s03", func_800D2278);
 
 INCLUDE_ASM("asm/maps/map6_s03/nonmatchings/map6_s03", func_800D267C);
 
-void func_800D27F8(void) {
-}
+void func_800D27F8(void) {}
 
 INCLUDE_ASM("asm/maps/map6_s03/nonmatchings/map6_s03", func_800D2800);
 
@@ -195,8 +186,7 @@ INCLUDE_ASM("asm/maps/map6_s03/nonmatchings/map6_s03", func_800D7F24);
 
 INCLUDE_ASM("asm/maps/map6_s03/nonmatchings/map6_s03", func_800D7F98);
 
-void func_800D81A4(void) {
-}
+void func_800D81A4(void) {}
 
 INCLUDE_ASM("asm/maps/map6_s03/nonmatchings/map6_s03", func_800D81AC);
 
@@ -210,5 +200,4 @@ INCLUDE_ASM("asm/maps/map6_s03/nonmatchings/map6_s03", func_800D8818);
 
 INCLUDE_ASM("asm/maps/map6_s03/nonmatchings/map6_s03", func_800D89A0);
 
-void func_800D936C(void) {
-}
+void func_800D936C(void) {}
