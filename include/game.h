@@ -105,9 +105,9 @@ typedef struct _GameWork
     u8                   field_58D; // G?
     u8                   field_58E; // B?
     u8                   field_58F; // A or graphics command code?
-    s32                  field_590;
-    s32                  field_594; // Maybe some game state enum entry.
-    s32                  field_598;
+    s32                  field_590; //                        }
+    s32                  field_594; // Counter or enum state? } // These three are related.
+    s32                  field_598; //                        }
     s32                  field_59C;
     s32                  field_5A0;
     char                 unk_5A4[0x34];
