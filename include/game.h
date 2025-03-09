@@ -202,5 +202,6 @@ extern s_ControllerData* g_pController1;
 extern s_ControllerData* g_pController2;
 
 extern s32 g_CurDeltaTime;
+extern s32 g_CurOTNum;
 
 #endif

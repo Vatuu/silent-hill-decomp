@@ -1,4 +1,4 @@
-name: Video Stream Logic Overlay (STREAM.BIN)
+name: Video stream logic overlay (STREAM.BIN)
 sha1: 2a0ffcbbb4f28d3bb66f7f73f18c1d4502cb2fe6
 options:
   basename: STREAM.BIN
@@ -26,9 +26,9 @@ options:
   section_order: [".rodata", ".text", ".data", ".bss"]
 
   symbol_addrs_path:
-    - configs/sym.main.txt
-    - configs/sym.bodyprog.txt
     - configs/screens/sym.stream.txt
+    - configs/sym.bodyprog.txt
+    - configs/sym.main.txt
   reloc_addrs_path:
     - configs/screens/rel.stream.txt
 

@@ -26,8 +26,8 @@ options:
   section_order: [".rodata", ".text", ".data", ".bss"]
 
   symbol_addrs_path:
-    - configs/sym.main.txt
     - configs/screens/sym.credits.txt
+    - configs/sym.main.txt
   reloc_addrs_path:
     - configs/screens/rel.credits.txt
 

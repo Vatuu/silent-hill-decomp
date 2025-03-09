@@ -58,9 +58,6 @@ typedef struct
     s32 field_18; 
 } s_800B5508;
 
-/** Clears some field in some struct. */
-void func_80041D10(s_80041D10* array, s32 size);
-
 /** Accessed by credits and saveload. */
 extern s32 D_800A8FF0;
 
@@ -129,6 +126,8 @@ void func_8002E8D4();
 
 s32 func_8002E990();
 
+void func_8002EB88(); // Return type assumed.
+
 void func_8002ECE0(s_800B5508* arg0);
 
 void func_800303E4();
@@ -137,7 +136,7 @@ void func_800303E4();
  * Called by:
  * - `main` in main.c
  * - 'func_801E709C' in saveload.c */
-void func_800314EC(s_FsImageDesc* arg0);
+void func_800314EC(s_FsImageDesc* image);
 
 s32 Chara_Load(s32 arg0, s8 arg1, s32 arg2, s8 arg3, s32 arg4, s32 arg5);
 
@@ -148,14 +147,20 @@ void GameFS_TitleGfxSeek();
 
 void func_80032358(s16 x, s16 y, s16 w, s16 h, u8 r, u8 g, u8 b);
 
+void func_8003260C(); // Return type assumed.
+
 /** Bodyprog entrypoint. Called by `main`. */
 void func_80032EE0(void);
+
+void func_80033548(); // Return type assumed.
 
 /** Unknown bodyprog func. Called by `Fs_QueuePostLoadAnm`. */
 void func_80035560(s32 arg0, s32 arg1, void* arg2, s32 arg3);
 
 /** Unknown bodyprog func. Called by `Fs_QueueDoThingWhenEmpty`. */
 s32 func_8003c850(void);
+
+void func_8003D160(); // Return type assumed.
 
 /** Some kind of queue entry load status getter. */
 s32 func_80041ADC(s32 queueIdx);
@@ -164,9 +169,14 @@ void func_80041CB4(s_80041CB4* arg0, s_80041CEC* arg1);
 
 void func_80041CEC(s_80041CEC*);
 
+/** Clears some field in some struct. */
+void func_80041D10(s_80041D10* array, s32 size);
+
 void func_80045A7C(u16);
 
 u8 func_80045B28();
+
+void func_8005E0DC(s32); // Types assumed.
 
 /** Unknown bodyprog func. Called by `Fs_QueueWaitForEmpty`. */
 void func_80089128(void);

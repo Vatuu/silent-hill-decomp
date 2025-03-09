@@ -62,7 +62,6 @@ void func_801E2654(void)
 }
 
 // Old IDB name: MainLoopState6_Movie_PlayIntro_801E279C
-// Old IDB name: MainLoopState6_Movie_PlayIntro_801E279C
 void func_801E279C(void)
 {
     s32 prev_594;
@@ -96,7 +95,6 @@ void func_801E279C(void)
 }
 
 // Old IDB name: MainLoopState9_Movie_PlayOpening_801E2838
-// Old IDB name: MainLoopState9_Movie_PlayOpening_801E2838
 void func_801E2838(void)
 {
     s32 prev_594;
@@ -123,7 +121,6 @@ void func_801E2838(void)
 }
 
 // Old IDB name: MainLoopStateD_ReturnToGame_801E28B0
-// Old IDB name: MainLoopStateD_ReturnToGame_801E28B0
 void func_801E28B0(void)
 {
     s32 prev_594;
@@ -147,7 +144,6 @@ void func_801E28B0(void)
     g_GameWork.field_598 = 0;
 }
 
-// Old IDB name: MainLoopState11_Movie_PlayEnding_801E2908
 // Old IDB name: MainLoopState11_Movie_PlayEnding_801E2908
 void func_801E2908(void)
 {
@@ -193,7 +189,6 @@ void func_801E2908(void)
     }
 }
 
-// Old IDB name: MainLoopState5_Movie_PlayIntroAlternate_801E2A24
 // Old IDB name: MainLoopState5_Movie_PlayIntroAlternate_801E2A24
 void func_801E2A24(void)
 {
@@ -325,23 +320,17 @@ void strKickCD(CdlLOC* loc) // 0x801E31CC
     param = 0x80;
     while (!CdControl(CdlSetmode, &param, 0))
     {
-    {
         ;
-    }
     }
 
     while (!CdControl(CdlSeekL, loc, 0))
     {
-    {
         VSync(0);
-    }
     }
 
     while (!CdRead2(CdlModeStream | CdlModeSpeed | CdlModeRT | CdlModeSize1))
     {
-    {
         VSync(0);
-    }
     }
 }
 
@@ -355,9 +344,7 @@ int strNextVlc(DECENV* dec) // 0x801E3298
         cnt--;
         if (!cnt)
         {
-        {
             return -1;
-        }
         }
     }
 

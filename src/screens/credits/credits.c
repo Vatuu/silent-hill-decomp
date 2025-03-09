@@ -6,7 +6,7 @@
 
 // ===== Temporary declarations =====
 
-void func_80032428(u32, u32); // Return and arg types assumed.
+void GFX_Init(u32, u32); // Return and arg types assumed.
 void func_8004729C(u16);
 
 //===================================
@@ -113,7 +113,7 @@ INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E3124);
             break;
 
         case 2:
-            func_80032428(0x200, 1);
+            GFX_Init(0x200, 1);
             D_800A8FF0 = 1;
             D_801E5E74 = 0x3C;
             g_GameWork.field_59C++;
@@ -146,7 +146,7 @@ INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E3304);
     {
         if (g_GameWork.field_59C == 0)
         {
-            func_80032428(0x140, 0);
+            GFX_Init(0x140, 0);
             D_800BCD0C = 0;
             g_GameWork.field_59C++;
         }
@@ -164,19 +164,19 @@ INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E3304);
             
             temp = g_GameWork.field_594;
             
-            D_800B9FC0.field_1C = 0;
-            D_800B9FC0.field_20 = 0;
+            g_Syswork.field_1C = 0;
+            g_Syswork.field_20 = 0;
             
             g_GameWork.field_59C = 0;
             g_GameWork.field_5A0 = 0;
             
-            D_800B9FC0.field_8 = 0;
-            D_800B9FC0.field_24 = 0;
-            D_800B9FC0.field_C = 0;
-            D_800B9FC0.field_28 = 0;
-            D_800B9FC0.field_10 = 0;
-            D_800B9FC0.field_2C = 0;
-            D_800B9FC0.field_14 = 0;
+            g_Syswork.field_8 = 0;
+            g_Syswork.field_24 = 0;
+            g_Syswork.field_C = 0;
+            g_Syswork.field_28 = 0;
+            g_Syswork.field_10 = 0;
+            g_Syswork.field_2C = 0;
+            g_Syswork.field_14 = 0;
             
             g_GameWork.field_598 = temp;
             g_GameWork.field_594 = (s32)g_GameWork.field_590;

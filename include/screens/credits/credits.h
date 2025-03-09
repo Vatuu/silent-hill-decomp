@@ -48,7 +48,7 @@ extern s32           D_800AFE10; // Packed RGB+command color? Command is 0x64.
 extern s_UnkCredits0 D_800AFE24;
 extern s8            D_800AFE2A;
 extern s32           D_800AFE2C; // Packed RGB+command color? Command is 0x2C.
-extern s_UnkCredits2 D_800B9FC0;
+extern s_UnkCredits2 g_Syswork;
 extern s32           D_800C48F0;
 extern s_UnkCredits1 D_801E5558[];
 extern RECT          D_801E557C[];
