@@ -38,6 +38,26 @@ typedef enum _PadButton
     Pad_LSLeft       = 1 << 27
 } e_PadButton;
 
+/** State IDs used by GameState_InGame, value used as index into 0x800A9A2C function array */
+typedef enum _SysState
+{
+    SysState_Gameplay    = 0,
+    SysState_OptionsMenu = 1,
+    SysState_StatusMenu  = 2,
+    SysState_Unk3        = 3,
+    SysState_FMV         = 4,
+    SysState_LoadArea1   = 5,
+    SysState_LoadArea2   = 6,
+    SysState_ReadMessage = 7,
+    SysState_SaveMenu1   = 8,
+    SysState_SaveMenu2   = 9,
+    SysState_Unk10       = 10,
+    SysState_Unk11       = 11,
+    SysState_Unk12       = 12,
+    SysState_GameOver    = 13,
+    SysState_GamePaused  = 14
+} e_SysState;
+
 typedef struct _AnalogPadData
 {
     u8  status;
@@ -120,21 +140,21 @@ typedef struct _GameWork
     s_ControllerBindings controllerBinds_0;
     s8                   field_1C;
     s8                   field_1D;
-    u8                   optSoundType_1E;
-    u8                   optVolumeBGM_1F;
-    u8                   optVolumeSE_20;
-    u8                   optVibrationEnabled_21;
-    u8                   optBrightness_22;
-    u8                   optWeaponCtrl_23;
-    u8                   optBloodColor_24;
-    u8                   optAutoLoad_25;
+    u8                   optSoundType_1E;           /** Stereo: 0, monaural: 1. */
+    u8                   optVolumeBgm_1F;           /** Range: [0, 128] with steps of 8. */
+    u8                   optVolumeSe_20;            /** Range: [0, 128] with steps of 8. */
+    u8                   optVibrationEnabled_21;    /** Off: 0, on: 0x80. */
+    u8                   optBrightness_22;          /** Range: [0, 7], default: 3. */
+    u8                   optWeaponCtrl_23;          /** Switch: 0, press: 1. */
+    u8                   optBloodColor_24;          /** Normal: 0, green: 2, violet: 5, black: 11. */
+    u8                   optAutoLoad_25;            /** Off: 0, on: 1. */
     u8                   unk_26;
     u8                   optExtraOptionsEnabled_27;
-    u8                   optViewCtrl_28;
+    u8                   optViewCtrl_28;            /** Normal: 0, reverse: 1. */
     s8                   optViewMode_29;
-    u8                   optRetreatTurn_2A;
-    u8                   optWalkRunCtrl_2B;
-    u8                   optAutoAiming_2C;
+    u8                   optRetreatTurn_2A;         /** Normal: 0, reverse: 1. */
+    u8                   optWalkRunCtrl_2B;         /** Normal: 0, reverse: 1. */
+    u8                   optAutoAiming_2C;          /** Off: 1, on: 0. */
     u8                   optBulletAdjust_2D;
     char                 unk_2E[0x2];
     char                 unk_30[8];
@@ -149,23 +169,26 @@ typedef struct _GameWork
     u8                   field_58F; // A or graphics command code?
     e_GameState          gameStatePrev_590;
     e_GameState          gameState_594;
-    s32                  gameStateStep_598[3]; // Temp data used by current gameState. Can be another state ID or other data.
+    s32                  gameStateStep_598[3]; /** Temp data used by current gameState. Can be another state ID or other data. */
     char                 unk_5A4[0x34];
 } s_GameWork;
 STATIC_ASSERT_SIZEOF(s_GameWork, 0x5D8);
 
 typedef struct _SubCharacter
 {
-    char    chara_type_0;
-    char    field_1;
-    char    field_2;
-    char    field_3;
-    char    flags_4[0x14];
+    s8     chara_type_0;
+    s8     field_1;
+    s8     field_2;
+    s8     field_3;
+    s8     animIdx_4; // For player, used for anim idx for lower body.
+    s8     unk_5[3]; // 2nd byte holds flags? Bit 1 = set visibility.
+    s32    animFrameIdx_8;
+    s8     flags_10[12];
     VECTOR3 position_18;
     SVECTOR rotation_24;
     SVECTOR rot_spd_2C;
-    int     field_34;
-    int     chara_mv_spd_38;
+    s32     field_34;
+    s32     chara_mv_spd_38;
     s16     chara_mv_ang_y_3C;
     u8      pad_3E[2];
     u8      unk_40[0x128 - 0x40];
@@ -178,26 +201,6 @@ typedef struct _MainCharacter
     u8             extra[0x2C];
 } s_MainCharacter;
 STATIC_ASSERT_SIZEOF(s_MainCharacter, 0x154);
-
-/** State IDs used by GameState_InGame, value used as index into 0x800A9A2C function array */
-typedef enum _SysState
-{
-    SysState_Gameplay    = 0,
-    SysState_OptionsMenu = 1,
-    SysState_StatusMenu  = 2,
-    SysState_Unk3        = 3,
-    SysState_FMV         = 4,
-    SysState_LoadArea1   = 5,
-    SysState_LoadArea2   = 6,
-    SysState_ReadMessage = 7,
-    SysState_SaveMenu1   = 8,
-    SysState_SaveMenu2   = 9,
-    SysState_Unk10       = 10,
-    SysState_Unk11       = 11,
-    SysState_Unk12       = 12,
-    SysState_GameOver    = 13,
-    SysState_GamePaused  = 14
-} e_SysState;
 
 typedef struct _SysWork
 {
@@ -253,7 +256,7 @@ extern s32 g_CurDeltaTime;
 extern s32 g_CurOTNum;
 
 /**
-  * Sets the e_GameState to use in the next game update.
+  * Sets the GameState to use in the next game update.
   * Inlined into stream and b_konami.
   */
 static inline Game_StateSetNext(e_GameState gameState)

@@ -17,7 +17,7 @@ void vcSetCameraUseWarp(VECTOR3* chr_pos, s16 chr_ang_y) // 0x800400D4
     cam_ang.vz = 0;
 
     cam_pos.vx = chr_pos->vx - ((shRsin(chr_ang_y) * 0x1800) >> FP_SIN_Q);
-    cam_pos.vy = chr_pos->vy - 0x1B33;
+    cam_pos.vy = chr_pos->vy - 6963;
     cam_pos.vz = chr_pos->vz - ((shRcos(chr_ang_y) * 0x1800) >> FP_SIN_Q);
 
     vcSetFirstCamWork(&cam_pos, chr_ang_y, g_SysWork.field_22A4 & 0x40);
@@ -33,7 +33,7 @@ void func_800401A0(s32 arg0) // 0x800401A0
 {
     if (arg0)
     {
-        vcCameraInternalInfo.ev_cam_rate = 4096;
+        vcCameraInternalInfo.ev_cam_rate = 4096; // Angle?
     }
     else
     {
@@ -67,7 +67,7 @@ void vcMakeHeroHeadPos(VECTOR3* head_pos) // 0x8004047C
     ApplyMatrix(&neck_lwm, &fpos, &sp38);
 
     head_pos->vx = (sp38.vx + neck_lwm.t[0]) * 16;
-    head_pos->vy = ((sp38.vy + neck_lwm.t[1]) * 16) - 0x4CC;
+    head_pos->vy = ((sp38.vy + neck_lwm.t[1]) * 16) - 1228;
     head_pos->vz = (sp38.vz + neck_lwm.t[2]) * 16;
 }
 
