@@ -8,6 +8,7 @@ categories:
     paths:
       - bodyprog/psyq
       - main/psyq
+      - screens/stream/psyq
   - id: map
     name: Map Overlays
     paths:
