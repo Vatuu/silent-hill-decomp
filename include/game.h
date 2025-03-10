@@ -38,6 +38,34 @@ typedef enum _PadButton
     Pad_LSLeft       = 1 << 27
 } e_PadButton;
 
+/** State IDs used by main game loop. The value used as an index into 0x800A977C function array. */
+typedef enum _GameState
+{
+    GameState_Unk0                = 0,
+    GameState_KonamiLogo          = 1,
+    GameState_KCETLogo            = 2,
+    GameState_StartMovieIntro     = 3,
+    GameState_Unk4                = 4,
+    GameState_MovieIntroAlternate = 5,
+    GameState_MovieIntro          = 6,
+    GameState_MainMenu            = 7,
+    GameState_Unk8                = 8,
+    GameState_MovieOpening        = 9,
+    GameState_LoadScreen          = 10,
+    GameState_InGame              = 11,
+    GameState_MapEvent            = 12,
+    GameState_ReturnToGameplay    = 13,
+    GameState_StatusScreen        = 14,
+    GameState_MapScreen           = 15,
+    GameState_Unk10               = 16,
+    GameState_MovieEnding         = 17,
+    GameState_OptionScreen        = 18,
+    GameState_LoadStatusScreen    = 19,
+    GameState_LoadMapScreen       = 20,
+    GameState_Unk15               = 21,
+    GameState_Unk16               = 22
+} e_GameState;
+
 /** State IDs used by GameState_InGame, value used as index into 0x800A9A2C function array */
 typedef enum _SysState
 {
@@ -72,21 +100,21 @@ typedef struct _AnalogPadData
 typedef struct _ControllerData
 {
     s_AnalogPadData AnalogPad;
-    int             field_8;
+    s32             field_8;
     e_PadButton     btns_held_C;
     e_PadButton     btns_new_10;
-    char            field_14[4];
+    s8              field_14[4];
     e_PadButton     field_18;
-    int             field_1C;
-    char            field_20;
-    char            field_21;
-    char            field_22;
-    char            field_23;
-    char            field_24;
-    char            field_25;
-    char            field_26;
-    char            field_27;
-    int             field_28;
+    s32             field_1C;
+    s8              field_20;
+    s8              field_21;
+    s8              field_22;
+    s8              field_23;
+    s8              field_24;
+    s8              field_25;
+    s8              field_26;
+    s8              field_27;
+    s32             field_28;
 } s_ControllerData;
 
 typedef struct _ControllerBindings
@@ -106,34 +134,6 @@ typedef struct _ControllerBindings
     u16 map;
     u16 option;
 } s_ControllerBindings;
-
-/** State IDs used by main game loop. The value used as an index into 0x800A977C function array. */
-typedef enum _GameState
-{
-    GameState_Unk0                = 0,
-    GameState_KonamiLogo          = 1,
-    GameState_KCETLogo            = 2,
-    GameState_StartMovieIntro     = 3,
-    GameState_Unk4                = 4,
-    GameState_MovieIntroAlternate = 5,
-    GameState_MovieIntro          = 6,
-    GameState_MainMenu            = 7,
-    GameState_Unk8                = 8,
-    GameState_MovieOpening        = 9,
-    GameState_LoadScreen          = 10,
-    GameState_InGame              = 11,
-    GameState_MapEvent            = 12,
-    GameState_ReturnToGameplay    = 13,
-    GameState_StatusScreen        = 14,
-    GameState_MapScreen           = 15,
-    GameState_Unk10               = 16,
-    GameState_MovieEnding         = 17,
-    GameState_OptionScreen        = 18,
-    GameState_LoadStatusScreen    = 19,
-    GameState_LoadMapScreen       = 20,
-    GameState_Unk15               = 21,
-    GameState_Unk16               = 22
-} e_GameState;
 
 typedef struct _GameWork
 {
@@ -156,10 +156,10 @@ typedef struct _GameWork
     u8                   optWalkRunCtrl_2B;         /** Normal: 0, reverse: 1. */
     u8                   optAutoAiming_2C;          /** Off: 1, on: 0. */
     u8                   optBulletAdjust_2D;
-    char                 unk_2E[0x2];
-    char                 unk_30[8];
+    s8                   unk_2E[2];
+    s8                   unk_30[8];
     s_ControllerData     controllers_38[2];
-    char                 unk_90[0x27C];
+    s8                   unk_90[0x27C];
     u8                   saveGame_30C[0x27C];
     u16                  gsScreenWidth_588;
     u16                  gsScreenHeight_58A;
@@ -170,20 +170,39 @@ typedef struct _GameWork
     e_GameState          gameStatePrev_590;
     e_GameState          gameState_594;
     s32                  gameStateStep_598[3]; /** Temp data used by current gameState. Can be another state ID or other data. */
-    char                 unk_5A4[0x34];
+    s8                   unk_5A4[52];
 } s_GameWork;
 STATIC_ASSERT_SIZEOF(s_GameWork, 0x5D8);
 
 typedef struct _SubCharacter
 {
-    s8     chara_type_0;
+    s8      chara_type_0;
+    s8      field_1;
+    s8      field_2;
+    s8      field_3;
+
+    //char    animIdx_4[20];
+
+    // Might be packed into an s32.
+   /* s8      animIdx_4; // Used for player lower body, and upper body is masked elsewhere. Passed as "animStatus" to vcMixSelfViewEffectToWatchTgtPos.
+    s8      unk_5; // Flags of some sort?
+    s16     flags_6; // Bit 1: player uncontrollable (but can turn), bit 2: visibility on.
+
+    s32     animFrameIdx_8;
+
+    s8      flags_10[12];*/
+
+    /*s8     chara_type_0;
     s8     field_1;
     s8     field_2;
     s8     field_3;
     s8     animIdx_4; // For player, used for anim idx for lower body.
     s8     unk_5[3]; // 2nd byte holds flags? Bit 1 = set visibility.
     s32    animFrameIdx_8;
-    s8     flags_10[12];
+    s8     flags_10[12];*/
+
+    s8    flags_4[20];
+
     VECTOR3 position_18;
     SVECTOR rotation_24;
     SVECTOR rot_spd_2C;
@@ -204,31 +223,31 @@ STATIC_ASSERT_SIZEOF(s_MainCharacter, 0x154);
 
 typedef struct _SysWork
 {
-    char            unk_0[8];
+    s8              unk_0[8];
     e_SysState      sysState_8;
     s32             sysStateStep_C; // Current step/state of sysState_8 game is in.
     s32             field_10;
     s32             field_14;
-    char            unk_18[4];
+    s8              unk_18[4];
     s32             field_1C;
     s32             field_20;
     s32             field_24;
     s32             field_28;
     s32             field_2C;
-    char            unk_30[0x1C];
+    s8              unk_30[28];
     s_MainCharacter player_4C;
     s_SubCharacter  characters_1A0[6];
     GsCOORDINATE2   unk_coord_890[2];
     GsCOORDINATE2   hero_neck_930;
-    char            unk_980[0x22A4 - 0x980];
+    s8              unk_980[0x22A4 - 0x980];
     s32             field_22A4;
-    char            unk_22A8[0xD2];
+    s8              unk_22A8[210];
     s16             cam_ang_y_237A;
     s16             cam_ang_z_237C;
     s16             field_237E;
-    int             cam_r_xz_2380;
-    int             cam_y_2384;
-    u8              unk_2388[0x3E0];
+    s32             cam_r_xz_2380;
+    s32             cam_y_2384;
+    u8              unk_2388[992];
 } s_SysWork;
 STATIC_ASSERT_SIZEOF(s_SysWork, 0x2768);
 
