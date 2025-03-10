@@ -3,6 +3,16 @@
 
 #include "gpu.h"
 
+/**
+ * The length of a tile in game units.
+ * Currently uncertain, but this is likely used as a reference unit of measurement.
+ */
+#define TILE_UNIT 256
+
+/** Convert tile units to world units. */
+#define TILE(value) \
+	(s32)(value * TILE_UNIT)
+
 extern void* g_OvlDynamic;
 extern void* g_OvlBodyprog;
 
@@ -176,16 +186,24 @@ STATIC_ASSERT_SIZEOF(s_GameWork, 0x5D8);
 
 typedef struct _SubCharacter
 {
-    char    chara_type_0;
-    char    field_1;
-    char    field_2;
-    char    field_3;
-    char    flags_4[20];
+    u8    chara_type_0;
+    u8    field_1;
+    u8    field_2;
+    u8    field_3;
+
+    // Following 4 bytes might be packed into an s32 called "animStatus" going by an original param name in vcMixSelfViewEffectToWatchTgtPos.
+    u8  animIdx_4;
+    u8  maybeSomeState_5;
+    s16 flags_6; // Bit 1: movement unlockled? Bit 2: visible.
+
+    s32 animFrameIdx_8;
+    u8  flags_12[12];
+
     VECTOR3 position_18;
     SVECTOR rotation_24;
     SVECTOR rot_spd_2C;
-    int     field_34;
-    int     chara_mv_spd_38;
+    s32     field_34;
+    s32     chara_mv_spd_38;
     s16     chara_mv_ang_y_3C;
     u8      pad_3E[2];
     u8      unk_40[0x128 - 0x40];
@@ -194,7 +212,7 @@ STATIC_ASSERT_SIZEOF(s_SubCharacter, 0x128);
 
 typedef struct _MainCharacter
 {
-    s_SubCharacter c;
+    s_SubCharacter character;
     u8             extra[44];
 } s_MainCharacter;
 STATIC_ASSERT_SIZEOF(s_MainCharacter, 0x154);
