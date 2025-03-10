@@ -3,17 +3,17 @@
 
 #include <libgs.h>
 
-void func_8004A87C(s32 arg0, s32 arg1)
+void GFX_StringPosition(s32 x, s32 y)
 {
-    if (arg0 != -1)
-	{
-        D_800C38A8 = arg0 - 0xA0;
-        D_800C38AC = (s16)(arg0 - 0xA0);
+    if (x != -1)
+    {
+        D_800C38A8 = x - 0xA0;
+        D_800C38AC = (s16)(x - 0xA0);
     }
 
-    if (arg1 != -1)
-	{
-        D_800C38AA = arg1 - 0x70;
+    if (y != -1)
+    {
+        D_800C38AA = y - 0x70;
     }
 
     D_800AD49C = 6;
@@ -668,7 +668,36 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8007D6F0);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8007D970);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8007E530);
+// TODO: Can this work without needing inlined func?
+static inline SaveGame_PlayerReset(s_ShSaveGame* save)
+{
+    save->playerHealth_240  = 0x64000; // (100 << 0xC)?
+    save->field_A0          = 0;
+    save->field_AA          = 0;
+    save->field_238         = 0;
+    save->gameplayTimer_250 = 0;
+    save->field_254         = 0;
+    save->field_258         = 0;
+    save->field_23C         = 0;
+    save->field_24A         = 0;
+    save->field_25C &= ~6;
+}
+
+void Game_SaveGameResetPlayer() // 0x8007E530
+{
+    s_ShSaveGame* save = g_pSaveGame;
+    s32           i;
+
+    g_pSaveGame->field_AB = 8;
+
+    for (i = 0; i < GAME_INVENTORY_SIZE; i++)
+    {
+        save->items_0[i].id    = 0xFF;
+        save->items_0[i].count = 0;
+    }
+
+    SaveGame_PlayerReset(g_pSaveGame);
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8007E5AC);
 

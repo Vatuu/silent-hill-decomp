@@ -63,7 +63,7 @@ INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E3094);
 
 s32 func_801E3124(void)
 {
-    switch (g_GameWork.field_59C)
+    switch (g_GameWork.gameStateStep_598[1])
     {
         case 0:
             switch (D_800BCD0C)
@@ -83,7 +83,7 @@ s32 func_801E3124(void)
 
             SD_EngineCmd(0x12);
             SD_EngineCmd(0x10);
-            g_GameWork.field_59C++;
+            g_GameWork.gameStateStep_598[1]++;
             break;
 
         case 1:
@@ -103,14 +103,14 @@ s32 func_801E3124(void)
                     break;
             }
 
-            g_GameWork.field_59C++;
+            g_GameWork.gameStateStep_598[1]++;
             break;
 
         case 2:
             GFX_Init(0x200, 1);
             D_800A8FF0 = 1;
             D_801E5E74 = 0x3C;
-            g_GameWork.field_59C++;
+            g_GameWork.gameStateStep_598[1]++;
             break;
 
         case 3:
@@ -132,19 +132,17 @@ s32 func_801E3124(void)
 
 s32 func_801E3304(void)
 {
-    s32 temp;
-
-    if (g_GameWork.field_590 == 11)
+    if (g_GameWork.gameStatePrev_590 == GameState_InGame)
     {
-        if (g_GameWork.field_59C == 0)
+        if (g_GameWork.gameStateStep_598[1] == 0)
         {
             GFX_Init(0x140, 0);
             D_800BCD0C = 0;
-            g_GameWork.field_59C++;
+            g_GameWork.gameStateStep_598[1]++;
         }
-        else if (g_GameWork.field_59C != 10)
+        else if (g_GameWork.gameStateStep_598[1] != 10)
         {
-            g_GameWork.field_59C++;
+            g_GameWork.gameStateStep_598[1]++;
         }
         else
         {
@@ -153,27 +151,8 @@ s32 func_801E3304(void)
             LoadImage(&D_801E557C[1], IMAGE_BUFFER_1);
             DrawSync(0);
             VSync(2);
-            
-            temp = g_GameWork.field_594;
-            
-            g_SysWork.field_1C = 0;
-            g_SysWork.field_20 = 0;
-            
-            g_GameWork.field_59C = 0;
-            g_GameWork.field_5A0 = 0;
-            
-            g_SysWork.field_8 = 0;
-            g_SysWork.field_24 = 0;
-            g_SysWork.field_C = 0;
-            g_SysWork.field_28 = 0;
-            g_SysWork.field_10 = 0;
-            g_SysWork.field_2C = 0;
-            g_SysWork.field_14 = 0;
-            
-            g_GameWork.field_598 = temp;
-            g_GameWork.field_594 = (s32)g_GameWork.field_590;
-            g_GameWork.field_590 = temp;
-            g_GameWork.field_598 = 0;
+
+            Game_StateSetPrevious();
         }
         
         return 0;
