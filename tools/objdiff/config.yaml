@@ -17,10 +17,22 @@ categories:
     name: Main Executable
     paths:
       - main
-  - id: screen
-    name: Screen Overlays
+  - id: screens
+    name: Konami Boot Screen
     paths:
-      - screens
+      - screens/b_konami
+    name: Credits Screen
+    paths:
+      - screens/credits
+    name: Options Screen
+    paths:
+      - screens/options
+    name: Save and Load Screen
+    paths:
+      - screens/saveload
+    name: FMVs Logic
+    paths:
+      - screens/stream
 
 expected_paths:
   asm: expected/asm
