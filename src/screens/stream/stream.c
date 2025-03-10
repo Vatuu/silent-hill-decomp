@@ -46,25 +46,23 @@ void func_801E2654(void)
 // Old IDB name: MainLoopState6_Movie_PlayIntro_801E279C
 void func_801E279C(void)
 {
-    s32 file_idx = FILE_XA_C1_20670;
+    s32 fileIdx = FILE_XA_C1_20670;
 
     if (g_pGameWork->optExtraOptionsEnabled_27 & 1)
     {
-        file_idx = FILE_XA_C2_20670;
+        fileIdx = FILE_XA_C2_20670;
     }
 
-    open_main(file_idx, 0);
-
+    open_main(fileIdx, 0);
     Game_StateSetNext(GameState_MainMenu);
 
-    D_800B5C30           = 0x1000;
+    D_800B5C30 = 0x1000;
 }
 
 // Old IDB name: MainLoopState9_Movie_PlayOpening_801E2838
 void func_801E2838(void)
 {
     open_main(FILE_XA_M1_03500, 0);
-
     Game_StateSetNext(GameState_LoadScreen);
 }
 
@@ -85,12 +83,12 @@ void func_801E2908(void)
         Game_StateSetNext(GameState_Unk16);
     }
 
-    if (controller->field_18 & 0x08000000)
+    if (controller->field_18 & (1 << 27))
     {
         D_801E3F3C--;
     }
 
-    if (controller->field_18 & 0x02000000)
+    if (controller->field_18 & (1 << 25))
     {
         D_801E3F3C++;
     }
@@ -106,9 +104,9 @@ void func_801E2908(void)
 void func_801E2A24(void)
 {
     open_main(FILE_XA_C1_20670, 2060); // Second param looks like file ID for FILE_XA_M6_02112, but is actually frame count?
-
     Game_StateSetNext(GameState_MainMenu);
-    D_800B5C30           = 0x1000;
+
+    D_800B5C30 = 0x1000;
 }
 
 void open_main(s32 file_idx, s16 num_frames) // 0x801E2AA4

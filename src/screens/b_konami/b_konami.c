@@ -59,7 +59,6 @@ void func_800C95AC(void)
                     if ((D_800BCD0C & 7) == 5)
                     {
                         Fs_QueueWaitForEmpty();
-
                         Game_StateSetNext(GameState_KCETLogo);
                     }
                     break;
@@ -82,7 +81,8 @@ void func_800C95AC(void)
             
             GsClearOt(0, 0, &D_800A8F74[idx]);
             GsClearOt(0, 0, &D_800A8FC4[g_CurOTNum]);
-        } while (g_GameWork.gameState_594 == GameState_KonamiLogo);
+        }
+        while (g_GameWork.gameState_594 == GameState_KonamiLogo);
     }
 }
 
