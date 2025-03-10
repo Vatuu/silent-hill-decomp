@@ -87,6 +87,90 @@ typedef struct _ControllerBindings
     u16 option;
 } s_ControllerBindings;
 
+typedef struct _ShInventoryItem
+{
+    u8 id;
+    u8 count;
+    u8 unk_2;
+    u8 unk_3;
+} s_ShInventoryItem;
+
+#define GAME_INVENTORY_SIZE 40
+
+typedef struct _ShSaveGame
+{
+    s_ShInventoryItem items_0[GAME_INVENTORY_SIZE];
+    s8                field_A0;
+    s8                field_A1[3];
+    s8                curMapOverlayIndex_A4;
+    s8                field_A5;
+    s16               saveGameCount_A6;
+    s8                curMapEventNum_A8;
+    u8                curMapIndex_A9;
+    s8                field_AA;
+    u8                field_AB;
+    u32               flags_AC;
+    s32               field_B0[45];
+    s32               field_164;
+    s32               eventFlags_168[6];
+    s32               field_180[2];
+    s32               field_188;
+    s32               field_18C;
+    s32               field_190[4];
+    s32               field_1A0;
+    s32               field_1A4[12];
+    s32               mapFlags_1D4[2];
+    s32               field_1DC;
+    s32               field_1E0[22];
+    s32               field_238;
+    s16               field_23C;
+    s8                field_23E;
+    s8                field_23F;
+    s32               playerHealth_240;
+    s32               playerPosX_244;
+    s16               playerRotationYaw_248;
+    s8                field_24A;
+    s8                field_24B;
+    s32               playerPosZ_24C;
+    s32               gameplayTimer_250;
+    s32               field_254;
+    s32               field_258;
+    s32               field_25C;
+    s32               field_260;
+    s16               field_264;
+    s16               field_266;
+    s16               field_268;
+    s16               field_26A;
+    s16               field_26C;
+    s16               field_26E;
+    s16               field_270;
+    s16               field_272;
+    s16               field_274;
+    s16               field_276;
+    s16               field_278;
+    s8                field_27A;
+    s8                field_27B;
+} s_ShSaveGame;
+STATIC_ASSERT_SIZEOF(s_ShSaveGame, 0x27C);
+
+/** s_ShSaveGameFooter: appended to ShSaveGame during game save, contains 8-bit XOR checksum + magic
+    Checksum generated via SaveGame_ChecksumGenerate function */
+#define SAVEGAME_FOOTER_MAGIC 0xDCDC
+typedef struct _ShSaveGameFooter
+{
+    u8  checksum_0[2];
+    u16 magic_2;
+} s_ShSaveGameFooter;
+STATIC_ASSERT_SIZEOF(s_ShSaveGameFooter, 4);
+
+/** s_ShSaveGameContainer: contains s_ShSaveGame data with footer appended to the end containing checksum + magic */
+typedef struct _ShSaveGameContainer
+{
+    s_ShSaveGame       saveGame_0;
+    s_ShSaveGameFooter footer_27C;
+} s_ShSaveGameContainer;
+STATIC_ASSERT_SIZEOF(s_ShSaveGameContainer, 0x280);
+
 /** State IDs used by main game loop, value used as index into 0x800A977C function array */
 typedef enum _GameState
 {
@@ -139,8 +223,8 @@ typedef struct _GameWork
     char                 unk_2E[0x2];
     char                 unk_30[8];
     s_ControllerData     controllers_38[2];
-    char                 unk_90[0x27C];
-    u8                   saveGame_30C[0x27C];
+    s_ShSaveGame         saveGame_90; // Backup savegame?
+    s_ShSaveGame         saveGame_30C;
     u16                  gsScreenWidth_588;
     u16                  gsScreenHeight_58A;
     u8                   field_58C; // R?
@@ -168,7 +252,9 @@ typedef struct _SubCharacter
     int     chara_mv_spd_38;
     s16     chara_mv_ang_y_3C;
     u8      pad_3E[2];
-    u8      unk_40[0x128 - 0x40];
+    u8      unk_40[0x70];
+    s32     health_B0;
+    char    unk_B4[0x128 - 0xB4];
 } s_SubCharacter;
 STATIC_ASSERT_SIZEOF(s_SubCharacter, 0x128);
 
@@ -216,7 +302,7 @@ typedef struct _SysWork
     GsCOORDINATE2   unk_coord_890[2];
     GsCOORDINATE2   hero_neck_930;
     char            unk_980[0x22A4 - 0x980];
-    s32             field_22A4;
+    s32             flags_22A4;
     char            unk_22A8[0xD2];
     s16             cam_ang_y_237A;
     s16             cam_ang_z_237C;
@@ -227,24 +313,16 @@ typedef struct _SysWork
 } s_SysWork;
 STATIC_ASSERT_SIZEOF(s_SysWork, 0x2768);
 
-/** s_ShSaveGameFooter: appended to ShSaveGame during game save, contains 8-bit XOR checksum + magic
-    Checksum generated via SaveGame_ChecksumGenerate function */
-#define SAVEGAME_FOOTER_MAGIC 0xDCDC
-typedef struct _ShSaveGameFooter
-{
-    u8  checksum_0[2];
-    u16 magic_2;
-} s_ShSaveGameFooter;
-STATIC_ASSERT_SIZEOF(s_ShSaveGameFooter, 4);
-
 extern s_SysWork   g_SysWork;
 extern s_GameWork  g_GameWork;
 extern s_GameWork* g_pGameWork;
 extern s_GameWork* g_pGameWork0;
+extern s_ShSaveGame* g_pSaveGame;
 
 extern s_ControllerData* g_pController1;
 extern s_ControllerData* g_pController2;
 
+extern u32 g_CurMapEventNum;
 extern s32 g_CurDeltaTime;
 extern s32 g_CurOTNum;
 
@@ -282,7 +360,7 @@ static inline void Game_StateSetNext(e_GameState gameState)
     g_GameWork.gameStateStep_598[0] = 0;
 }
 
-/** Sets GameState to the previous state.
+/** Returns GameState to the previously used state.
     Inlined into credits.
  */
 static inline void Game_StateSetPrevious()

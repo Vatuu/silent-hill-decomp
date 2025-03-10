@@ -103,7 +103,6 @@ extern s16 D_800C391E;
 extern s32 D_800C489C;
 
 extern s32 D_800A8FEC;
-extern s32 D_800A9A14;
 extern s32 D_800A9A68;
 
 /** "\x07PAUSED" string */
@@ -185,26 +184,38 @@ void func_800892A4(s32);
 
 void func_801E2D8C();
 
-/** Sets position of next string drawn by GFX_StringDraw */
+/** Sets position of next string drawn by GFX_StringDraw. */
 void GFX_StringPosition(s32 x, s32 y);
 
-/** Draws a string to screen */
+/** Draws a string to screen. */
 void GFX_StringDraw(char* str, s32 arg1);
 
-/** Passes a command to sound driver */
+/** Passes a command to sound driver. */
 void SD_EngineCmd(s32 cmd);
 
 void func_8004C8DC();
 void func_80091380();
 
-/** Updates the footer with the checksum of the given data */
+/** Updates savegame buffer with current player SysWork info (position/rotation/health/event num) */
+void SysWork_SaveGameUpdatePlayer();
+
+/** Updates SysWork with player info from savegame buffer (position/rotation/health) */
+void SysWork_SaveGameReadPlayer();
+
+/** Resets player info inside savegame buffer (health/game timer/inventory) */
+void Game_SaveGameResetPlayer();
+
+/** Copies savegame into an s_ShSaveGameContainer and calculates footer checksum. */
+void SaveGame_CopyWithChecksum(s_ShSaveGameContainer* dest, s_ShSaveGame* src);
+
+/** Updates the footer with the checksum of the given data. */
 void SaveGame_ChecksumUpdate(s_ShSaveGameFooter* saveFooter, s8* saveData, s32 saveDataLength);
 
-/** Generates checksum of the given saveData and compares against checksum value in the footer
-    Return 1 if checksum matches, otherwise 0 */
+/** Generates checksum of the given saveData and compares against checksum value in the footer.
+    Returns 1 if checksum matches, otherwise 0. */
 s32 SaveGame_ChecksumValidate(s_ShSaveGameFooter* saveFooter, s8* saveData, s32 saveDataLength);
 
-/** Generates an 8-bit XOR checksum over the given data, only appears used with s_ShSaveGame data */
+/** Generates an 8-bit XOR checksum over the given data, only appears used with s_ShSaveGame data. */
 u8 SaveGame_ChecksumGenerate(s8* saveData, s32 saveDataLength);
 
 #endif

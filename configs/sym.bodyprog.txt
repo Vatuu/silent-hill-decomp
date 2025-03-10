@@ -9,6 +9,7 @@ g_pController2 = 0x80024D50; // type:u32
 g_pGameWork0 = 0x80024D54; // type:u32 same as g_pGameWork ?
 
 g_CurDeltaTime = 0x800B5CC0; // type:s32 - Q20.12 fixed point, usually 0x44 (0.0166..) or 0x88 (0.033..).
+g_CurMapEventNum = 0x800A9A14; // type:u32
 
 // sh "view" / "vw" / "vc" / "vb" code
 // Most names from SH2, functions seem to match pretty close between it and SH1 besides a few missing/extra funcs.
@@ -135,11 +136,16 @@ g_Demo_CurControllerPacket = 0x800C4890;
 g_Demo_CurrDemoStep = 0x800C4894;
 g_Demo_VideoPresentInterval = 0x800C4898;
 
+SaveGame_CopyWithChecksum = 0x8002FCCC; // type:func
 SaveGame_ChecksumUpdate = 0x8002FF30; // type:func
 SaveGame_ChecksumValidate = 0x8002FF74; // type:func
 SaveGame_ChecksumGenerate = 0x8002FFD0; // type:func
-SaveGame_InventoryCopy = 0x8002FCCC; // type:func
 Game_SaveGameClear = 0x800350BC; // type:func
+
+SysWork_SaveGameUpdatePlayer = 0x8003A120; // type:func
+SysWork_SaveGameReadPlayer = 0x8003A1F4; // type:func
+
+Game_SaveGameResetPlayer = 0x8007E530; // type:func
 
 GFX_ClearRectInterlaced = 0x80032358; // type:func
 GFX_Init = 0x80032428; // type:func
