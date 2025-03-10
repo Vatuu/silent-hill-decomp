@@ -53,7 +53,7 @@ typedef enum _GameState
 {
     GameState_Unk0                = 0,
     GameState_KonamiLogo          = 1,
-    GameState_KCETLogo            = 2,
+    GameState_KcetLogo            = 2,
     GameState_StartMovieIntro     = 3,
     GameState_Unk4                = 4,
     GameState_MovieIntroAlternate = 5,
@@ -261,11 +261,11 @@ STATIC_ASSERT_SIZEOF(s_ShSaveGameFooter, 4);
 
 extern s_SysWork   g_SysWork;
 extern s_GameWork  g_GameWork;
-extern s_GameWork* g_pGameWork;
-extern s_GameWork* g_pGameWork0;
+extern s_GameWork* g_GameWorkPtr0;
+extern s_GameWork* g_GameWorkPtr1;
 
-extern s_ControllerData* g_pController1;
-extern s_ControllerData* g_pController2;
+extern s_ControllerData* g_ControllerPtr0;
+extern s_ControllerData* g_ControllerPtr1;
 
 extern s32 g_CurDeltaTime;
 extern s32 g_CurOTNum;

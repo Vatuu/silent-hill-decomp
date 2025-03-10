@@ -23,7 +23,7 @@ void func_801E2654(void)
             break;
 
         case 1:
-            if (g_pController1->btns_held_C != 0 || g_SysWork.field_1C >= 301)
+            if (g_ControllerPtr0->btns_held_C != 0 || g_SysWork.field_1C >= 301)
             {
                 D_800BCD0C           = 3;
                 g_GameWork.gameStateStep_598[0] = 2;
@@ -48,7 +48,7 @@ void func_801E279C(void)
 {
     s32 fileIdx = FILE_XA_C1_20670;
 
-    if (g_pGameWork->optExtraOptionsEnabled_27 & 1)
+    if (g_GameWorkPtr0->optExtraOptionsEnabled_27 & 1)
     {
         fileIdx = FILE_XA_C2_20670;
     }
@@ -75,8 +75,8 @@ void func_801E28B0(void)
 // Old IDB name: MainLoopState11_Movie_PlayEnding_801E2908
 void func_801E2908(void)
 {
-    s_GameWork*       gameWork   = g_pGameWork0;
-    s_ControllerData* controller = g_pController1;
+    s_GameWork*       gameWork   = g_GameWorkPtr1;
+    s_ControllerData* controller = g_ControllerPtr0;
 
     if (controller->btns_new_10 & gameWork->controllerBinds_0.cancel)
     {
