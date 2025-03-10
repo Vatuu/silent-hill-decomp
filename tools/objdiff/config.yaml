@@ -9,30 +9,18 @@ categories:
       - bodyprog/psyq
       - main/psyq
       - screens/stream/psyq
-  - id: map
-    name: Map Overlays
-    paths:
-      - maps
   - id: main
     name: Main Executable
     paths:
       - main
   - id: screens
-    name: Konami Boot Screen
+    name: Game Screens
     paths:
-      - screens/b_konami
-    name: Credits Screen
+      - screens
+  - id: maps
+    name: Map Overlays
     paths:
-      - screens/credits
-    name: Options Screen
-    paths:
-      - screens/options
-    name: Save and Load Screen
-    paths:
-      - screens/saveload
-    name: FMVs Logic
-    paths:
-      - screens/stream
+      - maps
 
 expected_paths:
   asm: expected/asm
