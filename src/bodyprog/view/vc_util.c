@@ -20,8 +20,8 @@ void vcSetCameraUseWarp(VECTOR3* chr_pos, s16 chr_ang_y) // 0x800400D4
     cam_pos.vy = chr_pos->vy - 0x1B33;
     cam_pos.vz = chr_pos->vz - ((shRcos(chr_ang_y) * 0x1800) >> FP_SIN_Q);
 
-    vcSetFirstCamWork(&cam_pos, chr_ang_y, g_SysWork.field_22A4 & 0x40);
-    g_SysWork.field_22A4 &= ~0x40;
+    vcSetFirstCamWork(&cam_pos, chr_ang_y, g_SysWork.flags_22A4 & 0x40);
+    g_SysWork.flags_22A4 &= ~0x40;
 }
 
 int vcRetCamMvSmoothF() // 0x80040190

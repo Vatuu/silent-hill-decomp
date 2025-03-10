@@ -170,7 +170,13 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8002FBB4);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8002FC3C);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", SaveGame_InventoryCopy);
+void SaveGame_CopyWithChecksum(s_ShSaveGameContainer* dest, s_ShSaveGame* src) // 0x8002FCCC
+{
+    bzero(dest, sizeof(s_ShSaveGameContainer));
+
+    memcpy(&dest->saveGame_0, src, sizeof(s_ShSaveGame));
+    SaveGame_ChecksumUpdate(&dest->footer_27C, &dest->saveGame_0, sizeof(s_ShSaveGameContainer));
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8002FD5C);
 
@@ -512,7 +518,44 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80038BD4);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80038F6C);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_800391E8);
+// SysState_GamePaused handler
+void func_800391E8()
+{
+    D_800A9A68 += D_800A8FEC;
+    if (((D_800A9A68 >> 0xB) & 1) == 0)
+    {
+        GFX_StringPosition(125, 104);
+        GFX_StringDraw(D_80025394, 99); // "\x07PAUSED"
+    }
+
+    func_80091380();
+    func_8004C8DC();
+
+    if (g_SysWork.sysStateStep_C == 0)
+    {
+        SD_EngineCmd(3);
+        g_SysWork.sysStateStep_C += 1;
+    }
+
+    // Debug button combo to bring up save screen from pause screen
+    // DPad-Left + L2 + L1 + LS-Left + RS-Left + L3
+    if ((g_pController1->btns_held_C == (Pad_BtnL3 | Pad_BtnDpadLeft | Pad_BtnL2 | Pad_BtnL1 | Pad_LSLeft2 | Pad_RSLeft | Pad_LSLeft)) &&
+        (g_pController1->btns_new_10 & Pad_BtnL3))
+    {
+        D_800A9A68 = 0;
+        SD_EngineCmd(4);
+        g_CurMapEventNum = 0;
+        SysWork_StateSetNext(SysState_SaveMenu2);
+        return;
+    }
+
+    if (g_pController1->btns_new_10 & g_pGameWork0->controllerBinds_0.pause)
+    {
+        D_800A9A68 = 0;
+        SD_EngineCmd(4);
+        SysWork_StateSetNext(SysState_Gameplay);
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80039344);
 
@@ -538,11 +581,35 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80039F90);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80039FB8);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003A120);
+void SysWork_SaveGameUpdatePlayer() // 0x8003A120
+{
+    s_ShSaveGame* save      = g_pSaveGame;
+    save->curMapEventNum_A8 = g_CurMapEventNum;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003A16C);
+    save->playerPosX_244        = g_SysWork.player_4C.c.position_18.vx;
+    save->playerPosZ_24C        = g_SysWork.player_4C.c.position_18.vz;
+    save->playerRotationYaw_248 = g_SysWork.player_4C.c.rotation_24.vy;
+    save->playerHealth_240      = g_SysWork.player_4C.c.health_B0;
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003A1F4);
+void func_8003A16C() // 0x8003A16C
+{
+    if (!(g_SysWork.flags_22A4 & 2))
+    {
+        // update saveGame_30C with player info
+        SysWork_SaveGameUpdatePlayer();
+        // TODO: what is saveGame_90 used for?
+        g_GameWork.saveGame_90 = g_GameWork.saveGame_30C;
+    }
+}
+
+void SysWork_SaveGameReadPlayer() // 0x8003A1F4
+{
+    g_SysWork.player_4C.c.position_18.vx = g_pSaveGame->playerPosX_244;
+    g_SysWork.player_4C.c.position_18.vz = g_pSaveGame->playerPosZ_24C;
+    g_SysWork.player_4C.c.rotation_24.vy = g_pSaveGame->playerRotationYaw_248;
+    g_SysWork.player_4C.c.health_B0      = g_pSaveGame->playerHealth_240;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003A230);
 
