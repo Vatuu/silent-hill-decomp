@@ -26,7 +26,7 @@ class Config:
     build_base: bool
     build_target: bool
     units: list[Unit]
-    progress_category: list[ProgressCategory]
+    progress_categories: list[ProgressCategory]
 
 
 def _create_config():
