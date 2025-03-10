@@ -223,10 +223,16 @@ setup: reset
 	$(MAKE) extract
 	$(MAKE) generate
 
-build-c: regenerate
+build-c: clean
+	$(MAKE) generate
 	$(MAKE) build
 
-build-C: regenerate
+build-cn: clean
+	$(MAKE) generate
+	$(MAKE) build NON_MATCHING=1 SKIP_ASM=1
+
+build-C: clean
+	$(MAKE) generate
 	$(MAKE) check
 # Recipes
 

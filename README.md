@@ -3,7 +3,7 @@
 An in-progress decompilation of the 1.1 US release of Silent Hill on the Playstation 1.
 
 ## Progress
-As commonly done on PlayStation 1 games, due limited memory of the platform, games' functionality was splitted among many `overlays`. Silent Hill is not the exception as it splits many of the specific screen related code part of the game and the most are level specific logic.
+PlayStation 1 games commonly distribute their logic and functionality among different `overlays` due to the limited memory of the platform. Silent Hill was not the exception, as it distributes many specific screen-related code among a few `overlays` and most of the maps events are distributed in one specific `overlay` per map. Additionally, the main executable (`SLUS_007.07` on 1.1 NTSC release) only works as a memory handler as almost the entirety of the game and engine code is inside one overlay named `BODYPROG.BIN`.
 
 Progress bars powered by [decomp.dev](https://decomp.dev).
 

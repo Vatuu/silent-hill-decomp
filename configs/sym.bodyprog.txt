@@ -154,6 +154,7 @@ Settings_DispEnvXYSet = 0x80032524; // type:func
 GFX_VSyncCallback = 0x80032b80; // type:func
 GameFS_TitleGfxSeek = 0x80032bd0; // type:func
 GameFS_TitleGfxLoad = 0x80032bf0; // type:func
+GameFS_StreamBinSeek = 0x80032C20; // type:func
 GameFS_StreamBinLoad = 0x80032c40; // type:func
 GameFS_OptionBinLoad = 0x80032c68; // type:func
 GameFS_SaveLoadBinLoad = 0x80032ca8; // type:func

@@ -2,6 +2,7 @@
 #define _STREAM_H
 
 #include "common.h"
+#include <libgpu.h>
 
 extern int StCdIntrFlag; // Not included in SDK docs/headers, but movie player sample code (and moviesys) uses it?
 
@@ -58,9 +59,13 @@ typedef struct
 
 extern MOVIE_STR* m;
 extern s32        frame_cnt;
+#ifdef NON_MATCHING
+extern DISPENV	  disp;
+extern s32 		  max_frame;
+#endif
 
 void    open_main(s32 file_idx, s16 num_frames);
-void    movie_main(s8* file_name, s32 f_size, s32 sector);
+void    movie_main(char* file_name, s32 f_size, s32 sector);
 void    strSetDefDecEnv(DECENV* dec, s32 x0, s32 y0, s32 x1, s32 y1);
 void    strInit(CdlLOC* loc, void (*callback)());
 void    strCallback();

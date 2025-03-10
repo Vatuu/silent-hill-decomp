@@ -145,6 +145,9 @@ void GFX_ClearRectInterlaced(s16 x, s16 y, s16 w, s16 h, u8 r, u8 g, u8 b);
 /** Bodyprog func that searches for English title screen background graphic. */
 void GameFS_TitleGfxSeek();
 
+/** Bodyprog func that searches the stream overlay. */
+void GameFS_StreamBinSeek();
+
 void func_8003260C(); // Return type assumed.
 
 /** Bodyprog entrypoint. Called by `main`. */
