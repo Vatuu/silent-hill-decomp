@@ -13,11 +13,11 @@ categories:
     name: Main Executable
     paths:
       - main
-  - id: screens
+  - id: screen
     name: Game Screens
     paths:
       - screens
-  - id: maps
+  - id: map
     name: Map Overlays
     paths:
       - maps
