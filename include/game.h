@@ -156,11 +156,11 @@ typedef struct _GameWork
     u8                   optWalkRunCtrl_2B;         /** Normal: 0, reverse: 1. */
     u8                   optAutoAiming_2C;          /** Off: 1, on: 0. */
     u8                   optBulletAdjust_2D;
-    char                 unk_2E[0x2];
+    char                 unk_2E[2];
     char                 unk_30[8];
     s_ControllerData     controllers_38[2];
-    char                 unk_90[0x27C];
-    u8                   saveGame_30C[0x27C];
+    char                 unk_90[636];
+    u8                   saveGame_30C[636];
     u16                  gsScreenWidth_588;
     u16                  gsScreenHeight_58A;
     u8                   field_58C; // R?
@@ -170,7 +170,7 @@ typedef struct _GameWork
     e_GameState          gameStatePrev_590;
     e_GameState          gameState_594;
     s32                  gameStateStep_598[3]; /** Temp data used by current gameState. Can be another state ID or other data. */
-    char                 unk_5A4[0x34];
+    char                 unk_5A4[52];
 } s_GameWork;
 STATIC_ASSERT_SIZEOF(s_GameWork, 0x5D8);
 
@@ -180,7 +180,7 @@ typedef struct _SubCharacter
     char    field_1;
     char    field_2;
     char    field_3;
-    char    flags_4[0x14];
+    char    flags_4[20];
     VECTOR3 position_18;
     SVECTOR rotation_24;
     SVECTOR rot_spd_2C;
@@ -195,7 +195,7 @@ STATIC_ASSERT_SIZEOF(s_SubCharacter, 0x128);
 typedef struct _MainCharacter
 {
     s_SubCharacter c;
-    u8             extra[0x2C];
+    u8             extra[44];
 } s_MainCharacter;
 STATIC_ASSERT_SIZEOF(s_MainCharacter, 0x154);
 
@@ -212,20 +212,20 @@ typedef struct _SysWork
     s32             field_24;
     s32             field_28;
     s32             field_2C;
-    char            unk_30[0x1C];
+    char            unk_30[28];
     s_MainCharacter player_4C;
     s_SubCharacter  characters_1A0[6];
     GsCOORDINATE2   unk_coord_890[2];
     GsCOORDINATE2   hero_neck_930;
     char            unk_980[0x22A4 - 0x980];
     s32             field_22A4;
-    char            unk_22A8[0xD2];
+    char            unk_22A8[210];
     s16             cam_ang_y_237A;
     s16             cam_ang_z_237C;
     s16             field_237E;
     int             cam_r_xz_2380;
     int             cam_y_2384;
-    u8              unk_2388[0x3E0];
+    u8              unk_2388[992];
 } s_SysWork;
 STATIC_ASSERT_SIZEOF(s_SysWork, 0x2768);
 
