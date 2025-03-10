@@ -14,8 +14,6 @@
 #define DEG_TO_FPA(deg) \
 	(s16)(deg * (FP_ANGLE_COUNT / 360.0f))
 
-// TODO: Define DEG_TO_FPA(deg) macro to easily convert from degrees to fixed point Q angles and reduce instances of magic hex values.
-
 void func_80096C94(SVECTOR* vec, MATRIX* mat); // Custom vwRotMatrix...?
 void func_80096E78(SVECTOR* vec, MATRIX* mat); // Another custom vwRotMatrix...]?
 
