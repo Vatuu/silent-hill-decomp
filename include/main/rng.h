@@ -29,7 +29,8 @@ u32 Rng_Rand32(void);
  * shifts the result right to produce a value within the range
  * of [0, 0x7FFF].
  *
- * @return A random positive 16-bit unsigned integer (u32).
+ * @return A random positive 16-bit unsigned integer as a 32-bit unsigned
+ * integer (u32).
  */
 u32 Rng_Rand16(void);
 

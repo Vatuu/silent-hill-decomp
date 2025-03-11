@@ -10,7 +10,7 @@
 typedef struct
 {
     s32 field_0;
-    s32 field_4;
+    s32 field_4; // Maybe index?
     s32 field_8;
 } s_80041CB4;
 

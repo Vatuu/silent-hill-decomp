@@ -188,7 +188,6 @@ s32 Fs_FindNextFileOfType(s32 fileType, s32 startIdx, s32 dir)
 
     i = 0;
     currentIdx = startIdx + inc;
-
     while (i < FS_FILE_COUNT)
     {
         if (currentIdx >= FS_FILE_COUNT)
@@ -201,7 +200,7 @@ s32 Fs_FindNextFileOfType(s32 fileType, s32 startIdx, s32 dir)
         i++;
     }
 
-    return -1;
+    return NO_VALUE;
 }
 
 s32 Fs_FindNextFile(const char* name, s32 fileType, s32 startIdx)
@@ -212,7 +211,7 @@ s32 Fs_FindNextFile(const char* name, s32 fileType, s32 startIdx)
     s32 name4567;
 
     s32 i = startIdx;
-    s32 foundIdx = -1;
+    s32 foundIdx = NO_VALUE;
 
     Fs_EncodeFileName(&name0123, &name4567, name);
 

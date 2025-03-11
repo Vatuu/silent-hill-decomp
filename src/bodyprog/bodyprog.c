@@ -537,7 +537,7 @@ void func_800391E8()
     if (g_SysWork.sysStateStep_C == 0)
     {
         SD_EngineCmd(3);
-        g_SysWork.sysStateStep_C += 1;
+        g_SysWork.sysStateStep_C++;
     }
 
     // Debug button combo to bring up save screen from pause screen.

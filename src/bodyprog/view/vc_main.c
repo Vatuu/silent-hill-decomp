@@ -238,7 +238,7 @@ void vcSetTHROUGH_DOOR_CAM_PARAM_in_VC_WORK(VC_WORK* w_p, enum _THROUGH_DOOR_SET
             prm_p->timer_4                  = 0;
             prm_p->rail_ang_y_8             = w_p->chara_eye_ang_y_144;
             prm_p->rail_sta_pos_C.vx        = w_p->chara_pos_114.vx;
-            prm_p->rail_sta_pos_C.vy        = w_p->chara_grnd_y_12C - 7987;
+            prm_p->rail_sta_pos_C.vy        = w_p->chara_grnd_y_12C - TILE_UNIT(31.2f);
             prm_p->rail_sta_pos_C.vz        = w_p->chara_pos_114.vz;
             break;
 
@@ -358,13 +358,13 @@ void vcSetWatchTgtYParam(VECTOR3* watch_pos, VC_WORK* w_p, s32 cam_mv_type, s32 
 
 void vcAdjustWatchYLimitHighWhenFarView(VECTOR3* watch_pos, VECTOR3* cam_pos, s16 sy) // 0x800835E0
 {
-    s16 max_cam_ang_x = ratan2(cam_pos->vy + 0x5000, 0xD000) - ratan2(g_GameWork.gsScreenHeight_58A / 2, sy);
+    s16 max_cam_ang_x = ratan2(cam_pos->vy + TILE_UNIT(80.0f), TILE_UNIT(208.0f)) - ratan2(g_GameWork.gsScreenHeight_58A / 2, sy);
     s32 dist          = Math_VectorMagnitude(watch_pos->vx - cam_pos->vx, 0, watch_pos->vz - cam_pos->vz);
     s32 cam_ang_x     = ratan2(-watch_pos->vy + cam_pos->vy, dist) * FP_ANGLE_COUNT;
 
     if ((max_cam_ang_x * FP_ANGLE_COUNT) < cam_ang_x)
     {
-        s32 ofs_y     = (((dist >> FP_POS_Q) * shRsin(max_cam_ang_x)) / shRcos(max_cam_ang_x)) * 16;
+        s32 ofs_y     = (((dist >> FP_POS_Q) * shRsin(max_cam_ang_x)) / shRcos(max_cam_ang_x)) << FP_POS_Q;
         watch_pos->vy = cam_pos->vy - ofs_y;
     }
 }
@@ -419,7 +419,7 @@ void vcAutoRenewalCamTgtPos(VC_WORK* w_p, VC_CAM_MV_TYPE cam_mv_type, VC_CAM_MV_
             break;
 
         case 1:
-            vcMakeBasicCamTgtMvVec(&tgt_vec, &ideal_pos, w_p, 0x1000);
+            vcMakeBasicCamTgtMvVec(&tgt_vec, &ideal_pos, w_p, TILE_UNIT(16.0f));
             break;
     }
 
@@ -448,8 +448,8 @@ s32 vcRetMaxTgtMvXzLen(VC_WORK* w_p, VC_CAM_MV_PARAM* cam_mv_prm_p) // 0x8008395
 {
     s32 max_spd_xz;
 
-    max_spd_xz = w_p->chara_mv_spd_13C + 0x1000 + abs(w_p->chara_ang_spd_y_142 * 8);
-    max_spd_xz = (max_spd_xz < 0x2333) ? 0x2333 : max_spd_xz;
+    max_spd_xz = w_p->chara_mv_spd_13C + TILE_UNIT(16.0f) + abs(w_p->chara_ang_spd_y_142 * 8);
+    max_spd_xz = (max_spd_xz < TILE_UNIT(35.2f)) ? TILE_UNIT(35.2f) : max_spd_xz;
     max_spd_xz = (cam_mv_prm_p->max_spd_xz > max_spd_xz) ? max_spd_xz : cam_mv_prm_p->max_spd_xz;
 
     return Math_MulFixed(max_spd_xz, g_CurDeltaTime, FP_SIN_Q);
@@ -470,12 +470,12 @@ void vcMakeIdealCamPosByHeadPos(VECTOR3* ideal_pos, VC_WORK* w_p, VC_AREA_SIZE_T
     if (g_GameWorkPtr0->optViewMode_29)
     {
         chara2cam_ang_y = w_p->chara_eye_ang_y_144 + DEG_TO_FPA(8.75f);
-        ideal_pos->vy   = w_p->chara_head_pos_130.vy + 286;
+        ideal_pos->vy   = w_p->chara_head_pos_130.vy + TILE_UNIT(1.1175f);
     }
     else
     {
         chara2cam_ang_y = w_p->chara_eye_ang_y_144 + DEG_TO_FPA(10.625f);
-        ideal_pos->vy   = w_p->chara_head_pos_130.vy + 409;
+        ideal_pos->vy   = w_p->chara_head_pos_130.vy + TILE_UNIT(1.6f);
     }
 
     ideal_pos->vx = w_p->chara_head_pos_130.vx + ((shRsin(chara2cam_ang_y) * DEG_TO_FPA(4.05f)) >> FP_SIN_Q);
@@ -565,7 +565,7 @@ void vcCamTgtMvVecIsFlipedFromCharaFront(VECTOR3* tgt_mv_vec, VC_WORK* w_p, s32 
     s16                flip_ang_y;
     VC_NEAR_ROAD_DATA* use_nearest_p;
     s16                ang_y;
-    s32                flip_dist; // todo: name maybe switched with mv_len
+    s32                flip_dist; // TODO: Name maybe switched with mv_len.
     s32                chk_near_dist;
     s32                mv_len;
     s32                min_z;
@@ -579,9 +579,9 @@ void vcCamTgtMvVecIsFlipedFromCharaFront(VECTOR3* tgt_mv_vec, VC_WORK* w_p, s32 
     if (flip_dist > 0)
     {
         mv_len = flip_dist;
-        if (flip_dist > 0x800)
+        if (flip_dist > TILE_UNIT(8.0f))
         {
-            mv_len = 0x800;
+            mv_len = TILE_UNIT(8.0f);
         }
 
         // chk_pos is unused?
@@ -884,7 +884,7 @@ void vcSetDataToVwSystem(VC_WORK* w_p, VC_CAM_MV_TYPE cam_mv_type) // 0x80085884
     if (w_p->field_D8 != 0)
     {
         w_p->field_D8 = 0;
-        vwSetCoordRefAndEntou(&g_SysWork.hero_neck_930, 0, -204, 1228, DEG_TO_FPA(11.25f), DEG_TO_FPA(0.0f), -0x333, 0x1000);
+        vwSetCoordRefAndEntou(&g_SysWork.hero_neck_930, 0, TILE_UNIT(-0.8f), TILE_UNIT(4.8f), DEG_TO_FPA(11.25f), DEG_TO_FPA(0.0f), TILE_UNIT(-3.2f), 0x1000);
     }
     else if (w_p->field_FC != 0)
     {

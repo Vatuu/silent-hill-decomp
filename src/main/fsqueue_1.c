@@ -77,11 +77,11 @@ s32 Fs_QueueStartReadTim(s32 fileIdx, void* dest, s_FsImageDesc* image)
     }
     else
     {
-        // u == 0xFF (-1) is a special case for "image descriptor not set".
+        // u == 0xFF (NO_VALUE) is a special case for "image descriptor not set".
         extra.image.u = 0xFF;
-        extra.image.clutX = -1;
+        extra.image.clutX = NO_VALUE;
         extra.image.v = 0xFF;
-        extra.image.clutY = -1;
+        extra.image.clutY = NO_VALUE;
     }
 
     return Fs_QueueEnqueue(fileIdx, FS_OP_READ, FS_POST_LOAD_TIM, false, dest, 0, &extra);
@@ -133,7 +133,7 @@ s32 Fs_QueueEnqueue(s32 fileIdx, u8 op, u8 postLoad, u8 alloc, void* data, u32 u
 void Fs_QueueInitialize(void)
 {
     bzero(&g_FsQueue, sizeof(g_FsQueue));
-    g_FsQueue.last.idx = -1;
+    g_FsQueue.last.idx = NO_VALUE;
     g_FsQueue.last.ptr = &g_FsQueue.entries[FS_QUEUE_LENGTH - 1];
     g_FsQueue.read.idx = 0;
     g_FsQueue.read.ptr = g_FsQueue.entries;

@@ -147,13 +147,13 @@ s32 Fs_QueueTickReadPcDvr(s_FsQueueEntry* entry)
     for (retry = 0; retry <= 2; retry++)
     {
         handle = open(pathBuffer, 0x4001);
-        if (handle == -1)
+        if (handle == NO_VALUE)
         {
             continue;
         }
 
         temp = read(handle,entry->data, ALIGN(file->blockCount * FS_BLOCK_SIZE, FS_SECTOR_SIZE));
-        if (temp == -1)
+        if (temp == NO_VALUE)
         {
             continue;
         }
@@ -162,7 +162,7 @@ s32 Fs_QueueTickReadPcDvr(s_FsQueueEntry* entry)
         {
             temp = close(handle);
         }
-        while (temp == -1);
+        while (temp == NO_VALUE);
 
         result = 1;
         break;
@@ -251,7 +251,7 @@ s32 Fs_QueuePostLoadTim(s_FsQueueEntry* entry)
     if (tim.caddr != NULL)
     {
         tempRect = *tim.crect;
-        if (entry->extra.image.clutX != -1)
+        if (entry->extra.image.clutX != NO_VALUE)
         {
             tempRect.x = entry->extra.image.clutX;
             tempRect.y = entry->extra.image.clutY;

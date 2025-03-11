@@ -3,11 +3,13 @@
 
 #include "gpu.h"
 
+#define TICKS_PER_SECOND      60
+#define SAVEGAME_FOOTER_MAGIC 0xDCDC
+#define GAME_INVENTORY_SIZE   40
+
 /** Convert tile units (the engine's reference measurement) to world units. */
 #define TILE_UNIT(value) \
-	(s32)(value * 256.0f)
-
-#define GAME_INVENTORY_SIZE 40
+    (s32)((value) * 256.0f)
 
 typedef enum _PadButton
 {
@@ -203,10 +205,9 @@ typedef struct _ShSaveGame
 STATIC_ASSERT_SIZEOF(s_ShSaveGame, 0x27C);
 
 /** 
- * s_ShSaveGameFooter: Appended to ShSaveGame during game save. Contains 8-bit XOR checksum + magic
+ * Appended to ShSaveGame during game save. Contains 8-bit XOR checksum + magic
  * checksum generated via the SaveGame_ChecksumGenerate function .
  */
-#define SAVEGAME_FOOTER_MAGIC 0xDCDC
 typedef struct _ShSaveGameFooter
 {
     u8  checksum_0[2];
@@ -214,7 +215,7 @@ typedef struct _ShSaveGameFooter
 } s_ShSaveGameFooter;
 STATIC_ASSERT_SIZEOF(s_ShSaveGameFooter, 4);
 
-/** s_ShSaveGameContainer: Contains s_ShSaveGame data with the footer appended to the end containing the checksum + magic. */
+/** Contains s_ShSaveGame data with the footer appended to the end containing the checksum + magic. */
 typedef struct _ShSaveGameContainer
 {
     s_ShSaveGame       saveGame_0;
@@ -266,16 +267,19 @@ typedef struct _SubCharacter
     u8    chara_type_0;
     u8    field_1;
     u8    field_2;
-    u8    field_3;
+    u8    field_3; // Clear: anim transitioning(?), bit 1: animated, bit2: turning.
 
-    // Following 4 bytes might be packed into an s32 called "animStatus"
+    // Following 4 bytes might be packed into an s32 called "animStatus",
     // going by an original param name in vcMixSelfViewEffectToWatchTgtPos.
+
     u8  animIdx_4;
     u8  maybeSomeState_5;
     s16 flags_6; // Bit 1: movement unlockled? Bit 2: visible.
 
-    s32 animFrameIdx_8;
-    u8  flags_12[12];
+    s32 animFrameIdx_8;       // Rapidly incrementing anim frame index. Maybe interpolated frame index?
+    s16 animFrameIdx_C;       // Slowly incrementing anim frame index. Maybe actual frame data index of frame to be interpolated?
+    s16 interpolationAlpha_E; // Something to do with linear anim interpolation. Maybe alpha value in Q format.
+    u8  flags_12[8];
 
     VECTOR3 position_18;
     SVECTOR rotation_24;
@@ -285,19 +289,37 @@ typedef struct _SubCharacter
     s16     chara_mv_ang_y_3C;
     u8      pad_3E[2];
     u8      unk_40[112];
-    s32     health_B0;
-    char    unk_B4[0x128 - 0xB4];
+    s32     health_B0; // Bits 3-4 contain s16 associated with player's rate of heavy breathing, always set to 6. Can't split into s16s? Maybe packed data.
+    s8      unk_B4[52];  
+
+    // These might be part of a multi-purpose array of s32 elements used for storing unique data for each character type.
+    // For player, mostly used for counters as far as I could see. --Sezz
+
+    s32 field_E8;  // Player AFK counter. Increments every tick(?) for 10 seconds before player starts AFK anim. Purpose for other characters unknown.
+    s32 field_EC;  // Copy of player Y position. Purpose for other characters unknown.
+    s8  unk_F0[8]; // 2 more s32 for custom data?
+    s32 field_F8;  // Player run counter. Increments more slowly than runCounter_108. Purpose for other characters unknown.
+    s32 field_FC;  // Player winded counter. Counts 20 seconds worth of ticks(?) and caps at 0x23000. Purpose for other characters unknown.
+    s8  unk_FC[8]; // 2 more s32 for custom data?
+    s32 field_108; // Player run counter. Increments every tick(?) indefinitely. Purpose for other characters unknown.
+
+    s8 unk_EC[28]; 
 } s_SubCharacter;
-STATIC_ASSERT_SIZEOF(s_SubCharacter, 0x128);
+STATIC_ASSERT_SIZEOF(s_SubCharacter, 296);
 
 typedef struct _MainCharacter
 {
-    /* 0x000 */ s_SubCharacter character;
-    /* 0x128 */ u8             field_128;
-    /* 0x129 */ u8             field_129;
-    /* 0x12A */ u8             field_12A;
-    /* 0x12B */ u8             field_12B;
-    /* 0x12C */ u8             extra[40];
+    s_SubCharacter character;
+    u8             field_128;
+    u8             field_129;
+    u8             field_12A;
+    u8             field_12B;    // isPrevAnimStateSame? Always 1, set to 0 for 1 tick when anim state changes.
+    s8             copy_12C[20]; // Duplicate data. Sequentially opies all fields from 0x4 to 0x18 of s_SubCharacter.
+    s8             field_140[4];
+    s8             field_144[4]; // s32? Some kind of anim state. Set to 2 when player is in AFK anim, 0 otherwise.
+    s8             field_148[4]; // s32? Some kind of anim state.
+    s8             field_14C[4]; // s32? Some kind of anim state.
+    s8             unk_150[4];
 } s_MainCharacter;
 STATIC_ASSERT_SIZEOF(s_MainCharacter, 0x154);
 
@@ -347,7 +369,7 @@ extern u32 g_CurMapEventNum;
 extern s32 g_CurDeltaTime;
 extern s32 g_CurOTNum;
 
-/** Sets the SysState to use in the next game update. */
+/** Sets the SysState to be used in the next game update. */
 static inline void SysWork_StateSetNext(e_SysState sysState)
 {
     g_SysWork.sysState_8     = sysState;

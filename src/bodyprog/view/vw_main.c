@@ -10,7 +10,7 @@ void vwInitViewInfo() // 0x80048A38
     vwViewPointInfo.rview.vp.vx = 0;
     vwViewPointInfo.rview.vr.vx = 0;
     vwViewPointInfo.rview.vr.vy = 0;
-    vwViewPointInfo.rview.vr.vz = 4096;
+    vwViewPointInfo.rview.vr.vz = TILE_UNIT(16.0f);
     vwViewPointInfo.rview.rz    = 0;
     vwViewPointInfo.rview.super = &vwViewPointInfo.vwcoord;
     GsInitCoordinate2(NULL, &vwViewPointInfo.vwcoord);
@@ -64,9 +64,9 @@ void vwSetViewInfoDirectMatrix(GsCOORDINATE2* pcoord, MATRIX* cammat) // 0x80048
 // Inlined into vwSetViewInfo, maybe vwMatrixToPosition?
 static inline void Math_MatrixToPosition(VECTOR3* pos, MATRIX* workm)
 {
-    pos->vx = workm->t[0] * 16;
-    pos->vy = workm->t[1] * 16;
-    pos->vz = workm->t[2] * 16;
+    pos->vx = workm->t[0] << FP_POS_Q;
+    pos->vy = workm->t[1] << FP_POS_Q;
+    pos->vz = workm->t[2] << FP_POS_Q;
 }
 
 void vwSetViewInfo() // 0x80048D48
