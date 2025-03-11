@@ -21,7 +21,7 @@ void func_801E2654(void)
             break;
 
         case 1:
-            if (g_pController1->btns_held_C != 0 || g_SysWork.field_1C >= 301)
+            if (g_ControllerPtr0->btns_held_C != 0 || g_SysWork.field_1C >= 301)
             {
                 D_800BCD0C           = 3;
                 g_GameWork.gameStateStep_598[0] = 2;
@@ -44,25 +44,23 @@ void func_801E2654(void)
 // Old IDB name: MainLoopState6_Movie_PlayIntro_801E279C
 void func_801E279C(void)
 {
-    s32 file_idx = FILE_XA_C1_20670;
+    s32 fileIdx = FILE_XA_C1_20670;
 
-    if (g_pGameWork->optExtraOptionsEnabled_27 & 1)
+    if (g_GameWorkPtr0->optExtraOptionsEnabled_27 & 1)
     {
-        file_idx = FILE_XA_C2_20670;
+        fileIdx = FILE_XA_C2_20670;
     }
 
-    open_main(file_idx, 0);
-
+    open_main(fileIdx, 0);
     Game_StateSetNext(GameState_MainMenu);
 
-    D_800B5C30           = 0x1000;
+    D_800B5C30 = 0x1000;
 }
 
 // Old IDB name: MainLoopState9_Movie_PlayOpening_801E2838
 void func_801E2838(void)
 {
     open_main(FILE_XA_M1_03500, 0);
-
     Game_StateSetNext(GameState_LoadScreen);
 }
 
@@ -75,20 +73,20 @@ void func_801E28B0(void)
 // Old IDB name: MainLoopState11_Movie_PlayEnding_801E2908
 void func_801E2908(void)
 {
-    s_GameWork*       gameWork   = g_pGameWork0;
-    s_ControllerData* controller = g_pController1;
+    s_GameWork*       gameWork   = g_GameWorkPtr1;
+    s_ControllerData* controller = g_ControllerPtr0;
 
     if (controller->btns_new_10 & gameWork->controllerBinds_0.cancel)
     {
         Game_StateSetNext(GameState_Unk16);
     }
 
-    if (controller->field_18 & 0x08000000)
+    if (controller->field_18 & (1 << 27))
     {
         D_801E3F3C--;
     }
 
-    if (controller->field_18 & 0x02000000)
+    if (controller->field_18 & (1 << 25))
     {
         D_801E3F3C++;
     }
@@ -104,9 +102,9 @@ void func_801E2908(void)
 void func_801E2A24(void)
 {
     open_main(FILE_XA_C1_20670, 2060); // Second param looks like file ID for FILE_XA_M6_02112, but is actually frame count?
-
     Game_StateSetNext(GameState_MainMenu);
-    D_800B5C30           = 0x1000;
+
+    D_800B5C30 = 0x1000;
 }
 
 void open_main(s32 file_idx, s16 num_frames) // 0x801E2AA4
@@ -219,7 +217,7 @@ void movie_main(char* file_name, s32 f_size, s32 sector)
         strSync(&m->dec);
         VSync(0);
         
-        if ((g_pController1->btns_new_10 & g_pGameWork0->controllerBinds_0.skip))
+        if ((g_ControllerPtr0->btns_new_10 & g_GameWorkPtr1->controllerBinds_0.skip))
             break;
         if (MainLoop_ShouldWarmReset() > 0)
             break;

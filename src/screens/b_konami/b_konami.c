@@ -47,7 +47,7 @@ void func_800C95AC(void)
                     break;
                     
                 case 2:
-                    if (g_pController1->btns_held_C != 0 || g_SysWork.field_1C >= 181)
+                    if (g_ControllerPtr0->btns_held_C != 0 || g_SysWork.field_1C >= 181)
                     {
                         D_800BCD0C = 3;
                         D_800B5C30 = 0x333;
@@ -59,8 +59,7 @@ void func_800C95AC(void)
                     if ((D_800BCD0C & 7) == 5)
                     {
                         Fs_QueueWaitForEmpty();
-
-                        Game_StateSetNext(GameState_KCETLogo);
+                        Game_StateSetNext(GameState_KcetLogo);
                     }
                     break;
             }
@@ -82,7 +81,8 @@ void func_800C95AC(void)
             
             GsClearOt(0, 0, &D_800A8F74[idx]);
             GsClearOt(0, 0, &D_800A8FC4[g_CurOTNum]);
-        } while (g_GameWork.gameState_594 == GameState_KonamiLogo);
+        }
+        while (g_GameWork.gameState_594 == GameState_KonamiLogo);
     }
 }
 

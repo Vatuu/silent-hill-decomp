@@ -173,7 +173,6 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8002FC3C);
 void SaveGame_CopyWithChecksum(s_ShSaveGameContainer* dest, s_ShSaveGame* src) // 0x8002FCCC
 {
     bzero(dest, sizeof(s_ShSaveGameContainer));
-
     memcpy(&dest->saveGame_0, src, sizeof(s_ShSaveGame));
     SaveGame_ChecksumUpdate(&dest->footer_27C, &dest->saveGame_0, sizeof(s_ShSaveGameContainer));
 }
@@ -336,7 +335,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", GFX_VSyncCallback);
 
 void GameFS_TitleGfxSeek() 
 {
-    // Looks for TIM\TITLE_E.TIM
+    // Looks for TIM\TITLE_E.TIM.
     Fs_QueueStartSeek(FILE_TIM_TITLE_E_TIM);
 }
 
@@ -344,7 +343,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", GameFS_TitleGfxLoad);
 
 void GameFS_StreamBinSeek() 
 {
-    // Looks for VIN\STREAM.BIN
+    // Looks for VIN\STREAM.BIN.
     Fs_QueueStartSeek(FILE_VIN_STREAM_BIN);
 }
 
@@ -541,10 +540,10 @@ void func_800391E8()
         g_SysWork.sysStateStep_C += 1;
     }
 
-    // Debug button combo to bring up save screen from pause screen
+    // Debug button combo to bring up save screen from pause screen.
     // DPad-Left + L2 + L1 + LS-Left + RS-Left + L3
-    if ((g_pController1->btns_held_C == (Pad_BtnL3 | Pad_BtnDpadLeft | Pad_BtnL2 | Pad_BtnL1 | Pad_LSLeft2 | Pad_RSLeft | Pad_LSLeft)) &&
-        (g_pController1->btns_new_10 & Pad_BtnL3))
+    if ((g_ControllerPtr0->btns_held_C == (Pad_BtnL3 | Pad_BtnDpadLeft | Pad_BtnL2 | Pad_BtnL1 | Pad_LSLeft2 | Pad_RSLeft | Pad_LSLeft)) &&
+        (g_ControllerPtr0->btns_new_10 & Pad_BtnL3))
     {
         D_800A9A68 = 0;
         SD_EngineCmd(4);
@@ -553,7 +552,7 @@ void func_800391E8()
         return;
     }
 
-    if (g_pController1->btns_new_10 & g_pGameWork0->controllerBinds_0.pause)
+    if (g_ControllerPtr0->btns_new_10 & g_GameWorkPtr1->controllerBinds_0.pause)
     {
         D_800A9A68 = 0;
         SD_EngineCmd(4);
@@ -587,32 +586,33 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80039FB8);
 
 void SysWork_SaveGameUpdatePlayer() // 0x8003A120
 {
-    s_ShSaveGame* save      = g_pSaveGame;
+    s_ShSaveGame* save      = g_SaveGamePtr;
     save->curMapEventNum_A8 = g_CurMapEventNum;
 
-    save->playerPosX_244        = g_SysWork.player_4C.c.position_18.vx;
-    save->playerPosZ_24C        = g_SysWork.player_4C.c.position_18.vz;
-    save->playerRotationYaw_248 = g_SysWork.player_4C.c.rotation_24.vy;
-    save->playerHealth_240      = g_SysWork.player_4C.c.health_B0;
+    save->playerPosX_244        = g_SysWork.player_4C.character.position_18.vx;
+    save->playerPosZ_24C        = g_SysWork.player_4C.character.position_18.vz;
+    save->playerRotationYaw_248 = g_SysWork.player_4C.character.rotation_24.vy;
+    save->playerHealth_240      = g_SysWork.player_4C.character.health_B0;
 }
 
 void func_8003A16C() // 0x8003A16C
 {
     if (!(g_SysWork.flags_22A4 & 2))
     {
-        // update saveGame_30C with player info
+        // Update saveGame_30C with player info.
         SysWork_SaveGameUpdatePlayer();
-        // TODO: what is saveGame_90 used for?
+
+        // TODO: What is saveGame_90 used for?
         g_GameWork.saveGame_90 = g_GameWork.saveGame_30C;
     }
 }
 
 void SysWork_SaveGameReadPlayer() // 0x8003A1F4
 {
-    g_SysWork.player_4C.c.position_18.vx = g_pSaveGame->playerPosX_244;
-    g_SysWork.player_4C.c.position_18.vz = g_pSaveGame->playerPosZ_24C;
-    g_SysWork.player_4C.c.rotation_24.vy = g_pSaveGame->playerRotationYaw_248;
-    g_SysWork.player_4C.c.health_B0      = g_pSaveGame->playerHealth_240;
+    g_SysWork.player_4C.character.position_18.vx = g_SaveGamePtr->playerPosX_244;
+    g_SysWork.player_4C.character.position_18.vz = g_SaveGamePtr->playerPosZ_24C;
+    g_SysWork.player_4C.character.rotation_24.vy = g_SaveGamePtr->playerRotationYaw_248;
+    g_SysWork.player_4C.character.health_B0      = g_SaveGamePtr->playerHealth_240;
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003A230);

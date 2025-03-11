@@ -204,7 +204,7 @@ void vcPreSetDataInVC_WORK(VC_WORK* w_p, VC_ROAD_DATA* vc_road_ary_list) // 0x80
             vcWork.flags_8 &= ~VC_OLD_PRS_F_VIEW_F;
         }
 
-        if (g_pController1->btns_held_C & g_pGameWork0->controllerBinds_0.view)
+        if (g_ControllerPtr0->btns_held_C & g_GameWorkPtr1->controllerBinds_0.view)
         {
             vcWork.flags_8 |= VC_PRS_F_VIEW_F;
         }
@@ -313,7 +313,7 @@ void vcAutoRenewalWatchTgtPosAndAngZ(VC_WORK* w_p, VC_CAM_MV_TYPE cam_mv_type, V
     }
 
     vcMixSelfViewEffectToWatchTgtPos(&w_p->watch_tgt_pos_7C, &w_p->watch_tgt_ang_z_8C, self_view_eff_rate,
-                                     w_p, &g_SysWork.hero_neck_930.workm, g_SysWork.player_4C.c.flags_4[0]);
+                                     w_p, &g_SysWork.hero_neck_930.workm, g_SysWork.player_4C.character.animIdx_4);
 
     if (w_p->watch_tgt_pos_7C.vy > w_p->watch_tgt_max_y_88)
     {
@@ -467,7 +467,7 @@ void vcMakeIdealCamPosByHeadPos(VECTOR3* ideal_pos, VC_WORK* w_p, VC_AREA_SIZE_T
         return;
     }
 
-    if (g_pGameWork->optViewMode_29)
+    if (g_GameWorkPtr0->optViewMode_29)
     {
         chara2cam_ang_y = w_p->chara_eye_ang_y_144 + DEG_TO_FPA(8.75f);
         ideal_pos->vy   = w_p->chara_head_pos_130.vy + 286;

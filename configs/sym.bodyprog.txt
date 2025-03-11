@@ -2,11 +2,11 @@ g_MainLoop_NumFrames = 0x800B9CCC;
 g_CurOTNum = 0x800B9FB8;
 g_SysWork = 0x800B9FC0; // type:SysWork size:0x2768 - should use s_SysWork here, but splat only supports custom structs with capital letter at beginning.
 g_GameWork = 0x800BC728; // type:GameWork size:0x5D8
-g_pGameWork = 0x80024D44; // type:u32
-g_pSaveGame = 0x80024D48; // type:u32
-g_pController1 = 0x80024D4C; // type:u32
-g_pController2 = 0x80024D50; // type:u32
-g_pGameWork0 = 0x80024D54; // type:u32 same as g_pGameWork ?
+g_GameWorkPtr0 = 0x80024D44; // type:u32
+g_SaveGamePtr = 0x80024D48; // type:u32
+g_ControllerPtr0 = 0x80024D4C; // type:u32
+g_ControllerPtr1 = 0x80024D50; // type:u32
+g_GameWorkPtr1 = 0x80024D54; // type:u32 same as g_GameWorkPtr0 ?
 
 g_CurDeltaTime = 0x800B5CC0; // type:s32 - Q20.12 fixed point, usually 0x44 (0.0166..) or 0x88 (0.033..).
 g_CurMapEventNum = 0x800A9A14; // type:u32

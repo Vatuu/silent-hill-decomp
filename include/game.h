@@ -3,8 +3,11 @@
 
 #include "gpu.h"
 
-extern void* g_OvlDynamic;
-extern void* g_OvlBodyprog;
+/** Convert tile units (the engine's reference measurement) to world units. */
+#define TILE_UNIT(value) \
+	(s32)(value * 256.0f)
+
+#define GAME_INVENTORY_SIZE 40
 
 typedef enum _PadButton
 {
@@ -37,6 +40,54 @@ typedef enum _PadButton
     Pad_LSDown       = 1 << 26,
     Pad_LSLeft       = 1 << 27
 } e_PadButton;
+
+/** State IDs used by the main game loop. The values are used as indices into the 0x800A977C function array. */
+typedef enum _GameState
+{
+    GameState_Unk0                = 0,
+    GameState_KonamiLogo          = 1,
+    GameState_KcetLogo            = 2,
+    GameState_StartMovieIntro     = 3,
+    GameState_Unk4                = 4,
+    GameState_MovieIntroAlternate = 5,
+    GameState_MovieIntro          = 6,
+    GameState_MainMenu            = 7,
+    GameState_Unk8                = 8,
+    GameState_MovieOpening        = 9,
+    GameState_LoadScreen          = 10,
+    GameState_InGame              = 11,
+    GameState_MapEvent            = 12,
+    GameState_ReturnToGameplay    = 13,
+    GameState_StatusScreen        = 14,
+    GameState_MapScreen           = 15,
+    GameState_Unk10               = 16,
+    GameState_MovieEnding         = 17,
+    GameState_OptionScreen        = 18,
+    GameState_LoadStatusScreen    = 19,
+    GameState_LoadMapScreen       = 20,
+    GameState_Unk15               = 21,
+    GameState_Unk16               = 22
+} e_GameState;
+
+/** State IDs used by GameState_InGame. The values are used as indices into the 0x800A9A2C function array. */
+typedef enum _SysState
+{
+    SysState_Gameplay    = 0,
+    SysState_OptionsMenu = 1,
+    SysState_StatusMenu  = 2,
+    SysState_Unk3        = 3,
+    SysState_FMV         = 4,
+    SysState_LoadArea1   = 5,
+    SysState_LoadArea2   = 6,
+    SysState_ReadMessage = 7,
+    SysState_SaveMenu1   = 8,
+    SysState_SaveMenu2   = 9,
+    SysState_Unk10       = 10,
+    SysState_Unk11       = 11,
+    SysState_Unk12       = 12,
+    SysState_GameOver    = 13,
+    SysState_GamePaused  = 14
+} e_SysState;
 
 typedef struct _AnalogPadData
 {
@@ -95,8 +146,6 @@ typedef struct _ShInventoryItem
     u8 unk_3;
 } s_ShInventoryItem;
 
-#define GAME_INVENTORY_SIZE 40
-
 typedef struct _ShSaveGame
 {
     s_ShInventoryItem items_0[GAME_INVENTORY_SIZE];
@@ -153,8 +202,10 @@ typedef struct _ShSaveGame
 } s_ShSaveGame;
 STATIC_ASSERT_SIZEOF(s_ShSaveGame, 0x27C);
 
-/** s_ShSaveGameFooter: appended to ShSaveGame during game save, contains 8-bit XOR checksum + magic
-    Checksum generated via SaveGame_ChecksumGenerate function */
+/** 
+ * s_ShSaveGameFooter: Appended to ShSaveGame during game save. Contains 8-bit XOR checksum + magic
+ * checksum generated via the SaveGame_ChecksumGenerate function .
+ */
 #define SAVEGAME_FOOTER_MAGIC 0xDCDC
 typedef struct _ShSaveGameFooter
 {
@@ -163,64 +214,36 @@ typedef struct _ShSaveGameFooter
 } s_ShSaveGameFooter;
 STATIC_ASSERT_SIZEOF(s_ShSaveGameFooter, 4);
 
-/** s_ShSaveGameContainer: contains s_ShSaveGame data with footer appended to the end containing checksum + magic */
+/** s_ShSaveGameContainer: Contains s_ShSaveGame data with the footer appended to the end containing the checksum + magic. */
 typedef struct _ShSaveGameContainer
 {
     s_ShSaveGame       saveGame_0;
     s_ShSaveGameFooter footer_27C;
 } s_ShSaveGameContainer;
 STATIC_ASSERT_SIZEOF(s_ShSaveGameContainer, 0x280);
-
-/** State IDs used by main game loop, value used as index into 0x800A977C function array */
-typedef enum _GameState
-{
-    GameState_Unk0                = 0x0,
-    GameState_KonamiLogo          = 0x1,
-    GameState_KCETLogo            = 0x2,
-    GameState_StartMovieIntro     = 0x3,
-    GameState_Unk4                = 0x4,
-    GameState_MovieIntroAlternate = 0x5,
-    GameState_MovieIntro          = 0x6,
-    GameState_MainMenu            = 0x7,
-    GameState_Unk8                = 0x8,
-    GameState_MovieOpening        = 0x9,
-    GameState_LoadScreen          = 0xA,
-    GameState_InGame              = 0xB,
-    GameState_MapEvent            = 0xC,
-    GameState_ReturnToGameplay    = 0xD,
-    GameState_StatusScreen        = 0xE,
-    GameState_MapScreen           = 0xF,
-    GameState_Unk10               = 0x10,
-    GameState_MovieEnding         = 0x11,
-    GameState_OptionScreen        = 0x12,
-    GameState_LoadStatusScreen    = 0x13,
-    GameState_LoadMapScreen       = 0x14,
-    GameState_Unk15               = 0x15,
-    GameState_Unk16               = 0x16,
-} e_GameState;
-
+    
 typedef struct _GameWork
 {
     s_ControllerBindings controllerBinds_0;
     s8                   field_1C;
     s8                   field_1D;
-    u8                   optSoundType_1E;
-    u8                   optVolumeBGM_1F;
-    u8                   optVolumeSE_20;
-    u8                   optVibrationEnabled_21;
-    u8                   optBrightness_22;
-    u8                   optWeaponCtrl_23;
-    u8                   optBloodColor_24;
-    u8                   optAutoLoad_25;
+    u8                   optSoundType_1E;           /** Stereo: 0, monaural: 1. */
+    u8                   optVolumeBgm_1F;           /** Range: [0, 128] with steps of 8. */
+    u8                   optVolumeSe_20;            /** Range: [0, 128] with steps of 8. */
+    u8                   optVibrationEnabled_21;    /** Off: 0, on: 0x80. */
+    u8                   optBrightness_22;          /** Range: [0, 7], default: 3. */
+    u8                   optWeaponCtrl_23;          /** Switch: 0, press: 1. */
+    u8                   optBloodColor_24;          /** Normal: 0, green: 2, violet: 5, black: 11. */
+    u8                   optAutoLoad_25;            /** Off: 0, on: 1. */
     u8                   unk_26;
     u8                   optExtraOptionsEnabled_27;
-    u8                   optViewCtrl_28;
+    u8                   optViewCtrl_28;            /** Normal: 0, reverse: 1. */
     s8                   optViewMode_29;
-    u8                   optRetreatTurn_2A;
-    u8                   optWalkRunCtrl_2B;
-    u8                   optAutoAiming_2C;
+    u8                   optRetreatTurn_2A;         /** Normal: 0, reverse: 1. */
+    u8                   optWalkRunCtrl_2B;         /** Normal: 0, reverse: 1. */
+    u8                   optAutoAiming_2C;          /** Off: 1, on: 0. */
     u8                   optBulletAdjust_2D;
-    char                 unk_2E[0x2];
+    char                 unk_2E[2];
     char                 unk_30[8];
     s_ControllerData     controllers_38[2];
     s_ShSaveGame         saveGame_90; // Backup savegame?
@@ -233,26 +256,35 @@ typedef struct _GameWork
     u8                   field_58F; // A or graphics command code?
     e_GameState          gameStatePrev_590;
     e_GameState          gameState_594;
-    s32                  gameStateStep_598[3]; // Temp data used by current gameState, can be another state id or other data
-    char                 unk_5A4[0x34];
+    s32                  gameStateStep_598[3]; /** Temp data used by current gameState. Can be another state ID or other data. */
+    char                 unk_5A4[52];
 } s_GameWork;
 STATIC_ASSERT_SIZEOF(s_GameWork, 0x5D8);
 
 typedef struct _SubCharacter
 {
-    char    chara_type_0;
-    char    field_1;
-    char    field_2;
-    char    field_3;
-    char    flags_4[0x14];
+    u8    chara_type_0;
+    u8    field_1;
+    u8    field_2;
+    u8    field_3;
+
+    // Following 4 bytes might be packed into an s32 called "animStatus"
+    // going by an original param name in vcMixSelfViewEffectToWatchTgtPos.
+    u8  animIdx_4;
+    u8  maybeSomeState_5;
+    s16 flags_6; // Bit 1: movement unlockled? Bit 2: visible.
+
+    s32 animFrameIdx_8;
+    u8  flags_12[12];
+
     VECTOR3 position_18;
     SVECTOR rotation_24;
     SVECTOR rot_spd_2C;
-    int     field_34;
-    int     chara_mv_spd_38;
+    s32     field_34;
+    s32     chara_mv_spd_38;
     s16     chara_mv_ang_y_3C;
     u8      pad_3E[2];
-    u8      unk_40[0x70];
+    u8      unk_40[112];
     s32     health_B0;
     char    unk_B4[0x128 - 0xB4];
 } s_SubCharacter;
@@ -260,34 +292,20 @@ STATIC_ASSERT_SIZEOF(s_SubCharacter, 0x128);
 
 typedef struct _MainCharacter
 {
-    s_SubCharacter c;
-    u8             extra[0x2C];
+    /* 0x000 */ s_SubCharacter character;
+    /* 0x128 */ u8             field_128;
+    /* 0x129 */ u8             field_129;
+    /* 0x12A */ u8             field_12A;
+    /* 0x12B */ u8             field_12B;
+    /* 0x12C */ u8             extra[40];
 } s_MainCharacter;
 STATIC_ASSERT_SIZEOF(s_MainCharacter, 0x154);
-
-/** State IDs used by GameState_InGame, value used as index into 0x800A9A2C function array */
-typedef enum _SysState
-{
-    SysState_Gameplay    = 0x0,
-    SysState_OptionsMenu = 0x1,
-    SysState_StatusMenu  = 0x2,
-    SysState_FMV         = 0x4,
-    SysState_LoadArea1   = 0x5,
-    SysState_LoadArea2   = 0x6,
-    SysState_ReadMessage = 0x7,
-    SysState_SaveMenu1   = 0x8,
-    SysState_SaveMenu2   = 0x9,
-    SysState_Unk11       = 0xB,
-    SysState_Unk12       = 0xC,
-    SysState_GameOver    = 0xD,
-    SysState_GamePaused  = 0xE,
-} e_SysState;
 
 typedef struct _SysWork
 {
     char            unk_0[8];
     e_SysState      sysState_8;
-    s32             sysStateStep_C; // The current step/state of the sysState_8 we're in
+    s32             sysStateStep_C; // Current step/state of sysState_8 game is in.
     s32             field_10;
     s32             field_14;
     char            unk_18[4];
@@ -296,31 +314,34 @@ typedef struct _SysWork
     s32             field_24;
     s32             field_28;
     s32             field_2C;
-    char            unk_30[0x1C];
+    char            unk_30[28];
     s_MainCharacter player_4C;
     s_SubCharacter  characters_1A0[6];
     GsCOORDINATE2   unk_coord_890[2];
     GsCOORDINATE2   hero_neck_930;
     char            unk_980[0x22A4 - 0x980];
     s32             flags_22A4;
-    char            unk_22A8[0xD2];
+    char            unk_22A8[210];
     s16             cam_ang_y_237A;
     s16             cam_ang_z_237C;
     s16             field_237E;
     int             cam_r_xz_2380;
     int             cam_y_2384;
-    u8              unk_2388[0x3E0];
+    u8              unk_2388[992];
 } s_SysWork;
 STATIC_ASSERT_SIZEOF(s_SysWork, 0x2768);
 
-extern s_SysWork   g_SysWork;
-extern s_GameWork  g_GameWork;
-extern s_GameWork* g_pGameWork;
-extern s_GameWork* g_pGameWork0;
-extern s_ShSaveGame* g_pSaveGame;
+extern void* g_OvlDynamic;
+extern void* g_OvlBodyprog;
 
-extern s_ControllerData* g_pController1;
-extern s_ControllerData* g_pController2;
+extern s_SysWork     g_SysWork;
+extern s_GameWork    g_GameWork;
+extern s_GameWork*   g_GameWorkPtr0;
+extern s_GameWork*   g_GameWorkPtr1;
+extern s_ShSaveGame* g_SaveGamePtr;
+
+extern s_ControllerData* g_ControllerPtr0;
+extern s_ControllerData* g_ControllerPtr1;
 
 extern u32 g_CurMapEventNum;
 extern s32 g_CurDeltaTime;
@@ -338,17 +359,18 @@ static inline void SysWork_StateSetNext(e_SysState sysState)
     g_SysWork.field_14       = 0;
 }
 
-/** Sets the GameState to use in the next game update.
-    Inlined into stream & b_konami.
-*/
+/**
+ * Sets the GameState to be used in the next game update.
+ * Inlined into stream and b_konami.
+ */
 static inline void Game_StateSetNext(e_GameState gameState)
 {
     e_GameState prevState = g_GameWork.gameState_594;
 
-    g_GameWork.gameState_594        = gameState;
+    g_GameWork.gameState_594 = gameState;
 
-    g_SysWork.field_1C              = 0;
-    g_SysWork.field_20              = 0;
+    g_SysWork.field_1C = 0;
+    g_SysWork.field_20 = 0;
 
     g_GameWork.gameStateStep_598[1] = 0;
     g_GameWork.gameStateStep_598[2] = 0;
@@ -360,8 +382,9 @@ static inline void Game_StateSetNext(e_GameState gameState)
     g_GameWork.gameStateStep_598[0] = 0;
 }
 
-/** Returns GameState to the previously used state.
-    Inlined into credits.
+/**
+ * Returns the GameState to the previously used state.
+ * Inlined into credits.
  */
 static inline void Game_StateSetPrevious()
 {
