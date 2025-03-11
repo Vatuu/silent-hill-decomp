@@ -7,8 +7,7 @@
 #define TILE_UNIT(value) \
 	(s32)(value * 256.0f)
 
-extern void* g_OvlDynamic;
-extern void* g_OvlBodyprog;
+#define GAME_INVENTORY_SIZE 40
 
 typedef enum _PadButton
 {
@@ -42,7 +41,7 @@ typedef enum _PadButton
     Pad_LSLeft       = 1 << 27
 } e_PadButton;
 
-/** State IDs used by main game loop. The values are used as indices into the 0x800A977C function array. */
+/** State IDs used by the main game loop. The values are used as indices into the 0x800A977C function array. */
 typedef enum _GameState
 {
     GameState_Unk0                = 0,
@@ -147,8 +146,6 @@ typedef struct _ShInventoryItem
     u8 unk_3;
 } s_ShInventoryItem;
 
-#define GAME_INVENTORY_SIZE 40
-
 typedef struct _ShSaveGame
 {
     s_ShInventoryItem items_0[GAME_INVENTORY_SIZE];
@@ -205,8 +202,10 @@ typedef struct _ShSaveGame
 } s_ShSaveGame;
 STATIC_ASSERT_SIZEOF(s_ShSaveGame, 0x27C);
 
-/** s_ShSaveGameFooter: appended to ShSaveGame during game save, contains 8-bit XOR checksum + magic
-    Checksum generated via SaveGame_ChecksumGenerate function */
+/** 
+ * s_ShSaveGameFooter: Appended to ShSaveGame during game save. Contains 8-bit XOR checksum + magic
+ * checksum generated via the SaveGame_ChecksumGenerate function .
+ */
 #define SAVEGAME_FOOTER_MAGIC 0xDCDC
 typedef struct _ShSaveGameFooter
 {
@@ -215,42 +214,14 @@ typedef struct _ShSaveGameFooter
 } s_ShSaveGameFooter;
 STATIC_ASSERT_SIZEOF(s_ShSaveGameFooter, 4);
 
-/** s_ShSaveGameContainer: contains s_ShSaveGame data with footer appended to the end containing checksum + magic */
+/** s_ShSaveGameContainer: Contains s_ShSaveGame data with the footer appended to the end containing the checksum + magic. */
 typedef struct _ShSaveGameContainer
 {
     s_ShSaveGame       saveGame_0;
     s_ShSaveGameFooter footer_27C;
 } s_ShSaveGameContainer;
 STATIC_ASSERT_SIZEOF(s_ShSaveGameContainer, 0x280);
-
-/** State IDs used by main game loop, value used as index into 0x800A977C function array */
-typedef enum _GameState
-{
-    GameState_Unk0                = 0x0,
-    GameState_KonamiLogo          = 0x1,
-    GameState_KCETLogo            = 0x2,
-    GameState_StartMovieIntro     = 0x3,
-    GameState_Unk4                = 0x4,
-    GameState_MovieIntroAlternate = 0x5,
-    GameState_MovieIntro          = 0x6,
-    GameState_MainMenu            = 0x7,
-    GameState_Unk8                = 0x8,
-    GameState_MovieOpening        = 0x9,
-    GameState_LoadScreen          = 0xA,
-    GameState_InGame              = 0xB,
-    GameState_MapEvent            = 0xC,
-    GameState_ReturnToGameplay    = 0xD,
-    GameState_StatusScreen        = 0xE,
-    GameState_MapScreen           = 0xF,
-    GameState_Unk10               = 0x10,
-    GameState_MovieEnding         = 0x11,
-    GameState_OptionScreen        = 0x12,
-    GameState_LoadStatusScreen    = 0x13,
-    GameState_LoadMapScreen       = 0x14,
-    GameState_Unk15               = 0x15,
-    GameState_Unk16               = 0x16,
-} e_GameState;
-
+    
 typedef struct _GameWork
 {
     s_ControllerBindings controllerBinds_0;
@@ -313,7 +284,7 @@ typedef struct _SubCharacter
     s32     chara_mv_spd_38;
     s16     chara_mv_ang_y_3C;
     u8      pad_3E[2];
-    u8      unk_40[0x70];
+    u8      unk_40[112];
     s32     health_B0;
     char    unk_B4[0x128 - 0xB4];
 } s_SubCharacter;
@@ -350,7 +321,7 @@ typedef struct _SysWork
     GsCOORDINATE2   hero_neck_930;
     char            unk_980[0x22A4 - 0x980];
     s32             flags_22A4;
-    char            unk_22A8[0xD2];
+    char            unk_22A8[210];
     s16             cam_ang_y_237A;
     s16             cam_ang_z_237C;
     s16             field_237E;
@@ -360,11 +331,14 @@ typedef struct _SysWork
 } s_SysWork;
 STATIC_ASSERT_SIZEOF(s_SysWork, 0x2768);
 
+extern void* g_OvlDynamic;
+extern void* g_OvlBodyprog;
+
 extern s_SysWork     g_SysWork;
 extern s_GameWork    g_GameWork;
 extern s_GameWork*   g_GameWorkPtr0;
 extern s_GameWork*   g_GameWorkPtr1;
-extern s_ShSaveGame* g_pSaveGame;
+extern s_ShSaveGame* g_SaveGamePtr;
 
 extern s_ControllerData* g_ControllerPtr0;
 extern s_ControllerData* g_ControllerPtr1;
@@ -385,17 +359,18 @@ static inline void SysWork_StateSetNext(e_SysState sysState)
     g_SysWork.field_14       = 0;
 }
 
-/** Sets the GameState to be used in the next game update.
-  * Inlined into stream and b_konami.
-  */
+/**
+ * Sets the GameState to be used in the next game update.
+ * Inlined into stream and b_konami.
+ */
 static inline void Game_StateSetNext(e_GameState gameState)
 {
     e_GameState prevState = g_GameWork.gameState_594;
 
-    g_GameWork.gameState_594        = gameState;
+    g_GameWork.gameState_594 = gameState;
 
-    g_SysWork.field_1C              = 0;
-    g_SysWork.field_20              = 0;
+    g_SysWork.field_1C = 0;
+    g_SysWork.field_20 = 0;
 
     g_GameWork.gameStateStep_598[1] = 0;
     g_GameWork.gameStateStep_598[2] = 0;
@@ -407,8 +382,9 @@ static inline void Game_StateSetNext(e_GameState gameState)
     g_GameWork.gameStateStep_598[0] = 0;
 }
 
-/** Returns GameState to the previously used state.
-    Inlined into credits.
+/**
+ * Returns the GameState to the previously used state.
+ * Inlined into credits.
  */
 static inline void Game_StateSetPrevious()
 {

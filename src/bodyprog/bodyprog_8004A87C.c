@@ -685,10 +685,10 @@ static inline SaveGame_PlayerReset(s_ShSaveGame* save)
 
 void Game_SaveGameResetPlayer() // 0x8007E530
 {
-    s_ShSaveGame* save = g_pSaveGame;
+    s_ShSaveGame* save = g_SaveGamePtr;
     s32           i;
 
-    g_pSaveGame->field_AB = 8;
+    g_SaveGamePtr->field_AB = 8;
 
     for (i = 0; i < GAME_INVENTORY_SIZE; i++)
     {
@@ -696,7 +696,7 @@ void Game_SaveGameResetPlayer() // 0x8007E530
         save->items_0[i].count = 0;
     }
 
-    SaveGame_PlayerReset(g_pSaveGame);
+    SaveGame_PlayerReset(g_SaveGamePtr);
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8007E5AC);

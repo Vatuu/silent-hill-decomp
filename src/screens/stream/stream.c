@@ -217,7 +217,7 @@ void movie_main(char* file_name, s32 f_size, s32 sector)
         strSync(&m->dec);
         VSync(0);
         
-        if ((g_pController1->btns_new_10 & g_pGameWork0->controllerBinds_0.skip))
+        if ((g_ControllerPtr0->btns_new_10 & g_GameWorkPtr1->controllerBinds_0.skip))
             break;
         if (MainLoop_ShouldWarmReset() > 0)
             break;
