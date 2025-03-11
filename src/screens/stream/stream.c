@@ -174,7 +174,7 @@ void movie_main(char* file_name, s32 f_size, s32 sector)
     VSync(0);
     
     prev_frame_no = 0;
-    temp_s2 = g_pGameWork;
+    temp_s2 = g_GameWorkPtr0;
 
     while (true)
     {
