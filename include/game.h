@@ -3,12 +3,13 @@
 
 #include "gpu.h"
 
-/** Convert tile units (the engine's reference measurement) to world units. */
-#define TILE_UNIT(value) \
-	(s32)(value * 256.0f)
-
+#define TICKS_PER_SECOND      60
 #define SAVEGAME_FOOTER_MAGIC 0xDCDC
 #define GAME_INVENTORY_SIZE   40
+
+/** Convert tile units (the engine's reference measurement) to world units. */
+#define TILE_UNIT(value) \
+    (s32)((value) * 256.0f)
 
 typedef enum _PadButton
 {
@@ -266,10 +267,11 @@ typedef struct _SubCharacter
     u8    chara_type_0;
     u8    field_1;
     u8    field_2;
-    u8    field_3;
+    u8    field_3; // Clear: anim transitioning(?), bit 1: animated, bit2: turning.
 
-    // Following 4 bytes might be packed into an s32 called "animStatus"
+    // Following 4 bytes might be packed into an s32 called "animStatus",
     // going by an original param name in vcMixSelfViewEffectToWatchTgtPos.
+
     u8  animIdx_4;
     u8  maybeSomeState_5;
     s16 flags_6; // Bit 1: movement unlockled? Bit 2: visible.
@@ -285,10 +287,23 @@ typedef struct _SubCharacter
     s16     chara_mv_ang_y_3C;
     u8      pad_3E[2];
     u8      unk_40[112];
-    s32     health_B0;
-    char    unk_B4[0x128 - 0xB4];
+    s32     health_B0; // Bits 3-4 contain s16 associated with player's rate of heavy breathing, always set to 6. Can't split into s16s? Maybe packed data.
+    s8      unk_B4[52];  
+
+    // These might be part of an array of multi-purpose s32 elements used for storing unique data per-character.
+    // For player, mostly used for counters as far as I could see. --Sezz
+
+    s32     afkCounter_E8;    // Player AFK counter. Increments every tick(?) for 10 seconds before player starts AFK anim. Purpose for other characters unknown.
+    s32     field_EC;         // Copy of player Y position. No discernible purpose. Purpose for other characters unknown.
+    s8      unk_F0[8];        // 2 more s32 for custom data?
+    s32     runCounter_F8;    // Player run counter. Increments more slowly than runCounter_108. Purpose for other characters unknown.
+    s32     windedCounter_FC; // Player winded counter. Counts 20 seconds worth of ticks(?) and caps at 0x23000. Purpose for other characters unknown.
+    s8      unk_FC[8];        // 2 more s32 for custom data?
+    s32     runCounter_108;   // Player run counter. Increments every tick(?) indefinitely. Purpose for other characters unknown.
+
+    s8      _unk_EC[28]; 
 } s_SubCharacter;
-STATIC_ASSERT_SIZEOF(s_SubCharacter, 0x128);
+STATIC_ASSERT_SIZEOF(s_SubCharacter, 296);
 
 typedef struct _MainCharacter
 {
@@ -296,7 +311,7 @@ typedef struct _MainCharacter
     /* 0x128 */ u8             field_128;
     /* 0x129 */ u8             field_129;
     /* 0x12A */ u8             field_12A;
-    /* 0x12B */ u8             field_12B;
+    /* 0x12B */ u8             field_12B; // Related to anim state.
     /* 0x12C */ u8             extra[40];
 } s_MainCharacter;
 STATIC_ASSERT_SIZEOF(s_MainCharacter, 0x154);
