@@ -191,7 +191,8 @@ typedef struct _SubCharacter
     u8    field_2;
     u8    field_3;
 
-    // Following 4 bytes might be packed into an s32 called "animStatus" going by an original param name in vcMixSelfViewEffectToWatchTgtPos.
+    // Following 4 bytes might be packed into an s32 called "animStatus"
+    // going by an original param name in vcMixSelfViewEffectToWatchTgtPos.
     u8  animIdx_4;
     u8  maybeSomeState_5;
     s16 flags_6; // Bit 1: movement unlockled? Bit 2: visible.
