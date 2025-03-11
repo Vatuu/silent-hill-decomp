@@ -3,15 +3,9 @@
 
 #include "gpu.h"
 
-/**
- * The length of a tile in game units.
- * Currently uncertain, but this is likely used as a reference unit of measurement.
- */
-#define TILE_UNIT 256
-
-/** Convert tile units to world units. */
-#define TILE(value) \
-	(s32)(value * TILE_UNIT)
+/** Convert tile units (the engine's reference measurement) to world units. */
+#define TILE_UNIT(value) \
+	(s32)(value * 256.0f)
 
 extern void* g_OvlDynamic;
 extern void* g_OvlBodyprog;
@@ -213,8 +207,12 @@ STATIC_ASSERT_SIZEOF(s_SubCharacter, 0x128);
 
 typedef struct _MainCharacter
 {
-    s_SubCharacter character;
-    u8             extra[44];
+    /* 0x000 */ s_SubCharacter character;
+    /* 0x128 */ u8             field_128;
+    /* 0x129 */ u8             field_129;
+    /* 0x12A */ u8             field_12A;
+    /* 0x12B */ u8             field_12B;
+    /* 0x12C */ u8             extra[40];
 } s_MainCharacter;
 STATIC_ASSERT_SIZEOF(s_MainCharacter, 0x154);
 
