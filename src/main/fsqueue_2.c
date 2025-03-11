@@ -73,7 +73,7 @@ s32 Fs_QueueUpdateRead(s_FsQueueEntry* entry)
             switch (CdReadSync(1, NULL))
             {
                 // CdReadSync failed; reset CD.
-                case -1:
+                case NO_VALUE:
                     g_FsQueue.state = FSQS_READ_RESET;
                     break;
 

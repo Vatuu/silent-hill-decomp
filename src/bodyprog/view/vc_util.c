@@ -17,7 +17,7 @@ void vcSetCameraUseWarp(VECTOR3* chr_pos, s16 chr_ang_y) // 0x800400D4
     cam_ang.vz = 0;
 
     cam_pos.vx = chr_pos->vx - ((shRsin(chr_ang_y) * 0x1800) >> FP_SIN_Q);
-    cam_pos.vy = chr_pos->vy - 0x1B33;
+    cam_pos.vy = chr_pos->vy - TILE_UNIT(27.2f);
     cam_pos.vz = chr_pos->vz - ((shRcos(chr_ang_y) * 0x1800) >> FP_SIN_Q);
 
     vcSetFirstCamWork(&cam_pos, chr_ang_y, g_SysWork.flags_22A4 & 0x40);
@@ -33,7 +33,7 @@ void func_800401A0(s32 arg0) // 0x800401A0
 {
     if (arg0)
     {
-        vcCameraInternalInfo.ev_cam_rate = 4096;
+        vcCameraInternalInfo.ev_cam_rate = 4096; // TODO: If angle, replace magic value with DEG_TO_FPA(22.5f).
     }
     else
     {
@@ -62,13 +62,13 @@ void vcMakeHeroHeadPos(VECTOR3* head_pos) // 0x8004047C
     func_80049984(&g_SysWork.hero_neck_930, &neck_lwm);
 
     fpos.vx = 0;
-    fpos.vy = -25;
+    fpos.vy = TILE_UNIT(-0.1f);
     fpos.vz = 0;
     ApplyMatrix(&neck_lwm, &fpos, &sp38);
 
-    head_pos->vx = (sp38.vx + neck_lwm.t[0]) * 16;
-    head_pos->vy = ((sp38.vy + neck_lwm.t[1]) * 16) - 0x4CC;
-    head_pos->vz = (sp38.vz + neck_lwm.t[2]) * 16;
+    head_pos->vx = (sp38.vx + neck_lwm.t[0]) << FP_POS_Q;
+    head_pos->vy = ((sp38.vy + neck_lwm.t[1]) << FP_POS_Q) - TILE_UNIT(4.8f);
+    head_pos->vz = (sp38.vz + neck_lwm.t[2]) << FP_POS_Q;
 }
 
 void vcAddOfsToPos(VECTOR3* out_pos, VECTOR3* in_pos, s16 ofs_xz_r, s16 ang_y, s32 ofs_y) // 0x80040518
@@ -82,12 +82,12 @@ void vcSetRefPosAndSysRef2CamParam(VECTOR3* ref_pos, s_SysWork* sys_p, s32 for_f
 {
     if (for_f != 0)
     {
-        sys_p->cam_r_xz_2380 -= 0x199;
+        sys_p->cam_r_xz_2380 -= TILE_UNIT(1.6f);
     }
 
     if (back_f != 0)
     {
-        sys_p->cam_r_xz_2380 += 0x199;
+        sys_p->cam_r_xz_2380 += TILE_UNIT(1.6f);
     }
 
     if (right_f != 0)
@@ -102,20 +102,20 @@ void vcSetRefPosAndSysRef2CamParam(VECTOR3* ref_pos, s_SysWork* sys_p, s32 for_f
 
     if (up_f != 0)
     {
-        sys_p->cam_y_2384 -= 0x199;
+        sys_p->cam_y_2384 -= TILE_UNIT(1.6f);
     }
 
     if (down_f != 0)
     {
-        sys_p->cam_y_2384 += 0x199;
+        sys_p->cam_y_2384 += TILE_UNIT(1.6f);
     }
 
-    if (sys_p->cam_r_xz_2380 < 0x1000)
+    if (sys_p->cam_r_xz_2380 < TILE_UNIT(16.0f))
     {
-        sys_p->cam_r_xz_2380 = 0x1000;
+        sys_p->cam_r_xz_2380 = TILE_UNIT(16.0f);
     }
 
-    vcAddOfsToPos(ref_pos, &g_SysWork.player_4C.character.position_18, 2048, g_SysWork.player_4C.character.rotation_24.vy, -4096);
+    vcAddOfsToPos(ref_pos, &g_SysWork.player_4C.character.position_18, TILE_UNIT(8.0f), g_SysWork.player_4C.character.rotation_24.vy, TILE_UNIT(-16.0f));
 }
 
 void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, s_SysWork* sys_p) // 0x800406D4
@@ -237,12 +237,14 @@ void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, s_SysWork* sys_p) // 0x80040
     {
         SVECTOR sp58;
 
-        vwAngleToVector(&sp58, &cam_ang, 0x500);
-        ref_pos->vx           = (sp18.vx + sp58.vx) * 16;
-        ref_pos->vy           = (sp18.vy + sp58.vy) * 16;
-        ref_pos->vz           = (sp18.vz + sp58.vz) * 16;
+        vwAngleToVector(&sp58, &cam_ang, TILE_UNIT(5.0f));
+
+        ref_pos->vx = (sp18.vx + sp58.vx) << FP_POS_Q;
+        ref_pos->vy = (sp18.vy + sp58.vy) << FP_POS_Q;
+        ref_pos->vz = (sp18.vz + sp58.vz) << FP_POS_Q;
+
         sys_p->cam_ang_y_237A = ((cam_ang.vy + DEG_TO_FPA(11.25f)) << 0x14) >> 0x14;
-        sys_p->cam_y_2384     = -sp58.vy * 16;
-        sys_p->cam_r_xz_2380  = SquareRoot0((sp58.vx * sp58.vx) + (sp58.vz * sp58.vz)) * 16;
+        sys_p->cam_y_2384     = -sp58.vy << FP_POS_Q;
+        sys_p->cam_r_xz_2380  = SquareRoot0((sp58.vx * sp58.vx) + (sp58.vz * sp58.vz)) << FP_POS_Q;
     }
 }

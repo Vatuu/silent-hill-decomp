@@ -163,7 +163,7 @@ void movie_main(char* file_name, s32 f_size, s32 sector)
     VSync(0);
     strInit(&m->loc, strCallback);
 
-    while (strNextVlc(&m->dec) == -1)
+    while (strNextVlc(&m->dec) == NO_VALUE)
     {
         loc = file.pos;
         strKickCD(&loc);
@@ -196,7 +196,7 @@ void movie_main(char* file_name, s32 f_size, s32 sector)
         DecDCTin(m->dec.vlcbuf[m->dec.vlcid], 3);
         DecDCTout((u_long* ) m->dec.imgbuf, m->dec.slice.w * m->dec.slice.h / 2);
 
-        while (strNextVlc(&m->dec) == -1)
+        while (strNextVlc(&m->dec) == NO_VALUE)
         {
             frame_no = StGetBackloc(&loc);
             if (max_frame < frame_no || frame_no <= 0)
@@ -338,13 +338,13 @@ int strNextVlc(DECENV* dec) // 0x801E3298
 {
     u_long* next, *strNext();
 
-    u_long cnt = 2000;
+    u_long count = 2000;
     while ((next = strNext(dec)) == 0)
     {
-        cnt--;
-        if (!cnt)
+        count--;
+        if (!count)
         {
-            return -1;
+            return NO_VALUE;
         }
     }
 
@@ -359,11 +359,11 @@ u_long* strNext(DECENV* dec) // 0x801E331C
 {
     u_long*   addr;
     CDSECTOR* sector;
-    int       cnt = MOVIE_WAIT;
+    int       count = MOVIE_WAIT;
 
     while (StGetNext((u_long**)&addr, (u_long**)&sector))
     {
-        if (--cnt == 0)
+        if (--count == 0)
         {
             return 0;
         }
@@ -391,11 +391,11 @@ u_long* strNext(DECENV* dec) // 0x801E331C
 
 void strSync(DECENV* dec) // 0x801E3438
 {
-    volatile u_long cnt = WAIT_TIME;
+    volatile u_long count = WAIT_TIME;
 
     while (dec->isdone == 0)
     {
-        if (--cnt == 0)
+        if (--count == 0)
         {
             dec->isdone  = 1;
             dec->rectid  = dec->rectid ^ 1;

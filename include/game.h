@@ -7,7 +7,8 @@
 #define TILE_UNIT(value) \
 	(s32)(value * 256.0f)
 
-#define GAME_INVENTORY_SIZE 40
+#define SAVEGAME_FOOTER_MAGIC 0xDCDC
+#define GAME_INVENTORY_SIZE   40
 
 typedef enum _PadButton
 {
@@ -203,10 +204,9 @@ typedef struct _ShSaveGame
 STATIC_ASSERT_SIZEOF(s_ShSaveGame, 0x27C);
 
 /** 
- * s_ShSaveGameFooter: Appended to ShSaveGame during game save. Contains 8-bit XOR checksum + magic
+ * Appended to ShSaveGame during game save. Contains 8-bit XOR checksum + magic
  * checksum generated via the SaveGame_ChecksumGenerate function .
  */
-#define SAVEGAME_FOOTER_MAGIC 0xDCDC
 typedef struct _ShSaveGameFooter
 {
     u8  checksum_0[2];
@@ -214,7 +214,7 @@ typedef struct _ShSaveGameFooter
 } s_ShSaveGameFooter;
 STATIC_ASSERT_SIZEOF(s_ShSaveGameFooter, 4);
 
-/** s_ShSaveGameContainer: Contains s_ShSaveGame data with the footer appended to the end containing the checksum + magic. */
+/** Contains s_ShSaveGame data with the footer appended to the end containing the checksum + magic. */
 typedef struct _ShSaveGameContainer
 {
     s_ShSaveGame       saveGame_0;
@@ -347,7 +347,7 @@ extern u32 g_CurMapEventNum;
 extern s32 g_CurDeltaTime;
 extern s32 g_CurOTNum;
 
-/** Sets the SysState to use in the next game update. */
+/** Sets the SysState to be used in the next game update. */
 static inline void SysWork_StateSetNext(e_SysState sysState)
 {
     g_SysWork.sysState_8     = sysState;

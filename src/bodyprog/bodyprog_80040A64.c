@@ -24,7 +24,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800414E0);
 
 s32 func_80041ADC(s32 queueIdx)
 {
-    if (queueIdx == -1)
+    if (queueIdx == NO_VALUE)
         return 0;
     
     if (Fs_QueueIsEntryLoaded(queueIdx) == 0)
@@ -45,7 +45,7 @@ void func_80041CB4(s_80041CB4* arg0, s_80041CEC* arg1)
     func_80041CEC(arg1);
     
     arg0->field_8 = 0;
-    arg0->field_4 = -1;
+    arg0->field_4 = NO_VALUE;
 }
 
 void func_80041CEC(s_80041CEC* arg0)
@@ -62,7 +62,7 @@ void func_80041D10(s_80041D10* array, s32 size)
     s_80041D10* end = array + size;
     while (array < end)
     {
-        array->field_4 = -1;
+        array->field_4 = NO_VALUE;
         array = (s_80041D10*)((u8*)array + sizeof(s_80041D10)); 
     }
 }
