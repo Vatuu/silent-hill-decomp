@@ -668,7 +668,36 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8007D6F0);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8007D970);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8007E530);
+// TODO: Can this work without needing inlined func?
+static inline SaveGame_PlayerReset(s_ShSaveGame* save)
+{
+    save->playerHealth_240  = 0x64000; // (100 << 0xC)?
+    save->field_A0          = 0;
+    save->field_AA          = 0;
+    save->field_238         = 0;
+    save->gameplayTimer_250 = 0;
+    save->field_254         = 0;
+    save->field_258         = 0;
+    save->field_23C         = 0;
+    save->field_24A         = 0;
+    save->field_25C &= ~6;
+}
+
+void Game_SaveGameResetPlayer() // 0x8007E530
+{
+    s_ShSaveGame* save = g_pSaveGame;
+    s32           i;
+
+    g_pSaveGame->field_AB = 8;
+
+    for (i = 0; i < GAME_INVENTORY_SIZE; i++)
+    {
+        save->items_0[i].id    = 0xFF;
+        save->items_0[i].count = 0;
+    }
+
+    SaveGame_PlayerReset(g_pSaveGame);
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8007E5AC);
 

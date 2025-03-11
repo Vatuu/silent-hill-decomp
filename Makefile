@@ -17,6 +17,7 @@ IMAGE_DIR    := $(ROM_DIR)/image
 BUILD_DIR    := build
 OUT_DIR      := $(BUILD_DIR)/out
 TOOLS_DIR    := tools
+OBJDIFF_DIR	 := $(TOOLS_DIR)/objdiff
 PERMUTER_DIR := permuter
 ASSETS_DIR   := assets
 ASM_DIR      := asm
@@ -32,7 +33,7 @@ OBJCOPY := $(CROSS)-objcopy
 OBJDUMP := $(CROSS)-objdump
 CPP     := $(CROSS)-cpp
 CC      := $(TOOLS_DIR)/gcc-2.8.1-psx/cc1
-OBJDIFF := $(TOOLS_DIR)/objdiff
+OBJDIFF := $(OBJDIFF_DIR)/objdiff
 
 PYTHON          := python3
 SPLAT           := $(PYTHON) -m splat split
@@ -181,7 +182,7 @@ build: $(TARGET_OUT)
 progress: regenerate
 	@$(MAKE) NON_MATCHING=0 SKIP_ASM=0 expected
 	@$(MAKE) NON_MATCHING=1 SKIP_ASM=1 build
-	@$(PYTHON) $(TOOLS_DIR)/objdiff_generate.py $(EXPECTED_DIR)/src .
+	@$(PYTHON) $(OBJDIFF_DIR)/objdiff_generate.py $(OBJDIFF_DIR)/config.yaml
 	@$(OBJDIFF) report generate > $(BUILD_DIR)/progress.json
 
 check: build
@@ -222,10 +223,16 @@ setup: reset
 	$(MAKE) extract
 	$(MAKE) generate
 
-build-c: regenerate
+build-c: clean
+	$(MAKE) generate
 	$(MAKE) build
 
-build-C: regenerate
+build-cn: clean
+	$(MAKE) generate
+	$(MAKE) build NON_MATCHING=1 SKIP_ASM=1
+
+build-C: clean
+	$(MAKE) generate
 	$(MAKE) check
 # Recipes
 
