@@ -276,8 +276,10 @@ typedef struct _SubCharacter
     u8  maybeSomeState_5;
     s16 flags_6; // Bit 1: movement unlockled? Bit 2: visible.
 
-    s32 animFrameIdx_8;
-    u8  flags_12[12];
+    s32 animFrameIdx_8;       // Rapidly incrementing anim frame index. Maybe interpolated frame index?
+    s16 animFrameIdx_C;       // Slowly incrementing anim frame index. Maybe actual frame data index of frame to be interpolated?
+    s16 interpolationAlpha_E; // Something to do with linear anim interpolation. Maybe alpha value in Q format.
+    u8  flags_12[8];
 
     VECTOR3 position_18;
     SVECTOR rotation_24;
@@ -290,29 +292,34 @@ typedef struct _SubCharacter
     s32     health_B0; // Bits 3-4 contain s16 associated with player's rate of heavy breathing, always set to 6. Can't split into s16s? Maybe packed data.
     s8      unk_B4[52];  
 
-    // These might be part of an array of multi-purpose s32 elements used for storing unique data per-character.
+    // These might be part of a multi-purpose array of s32 elements used for storing unique data for each character type.
     // For player, mostly used for counters as far as I could see. --Sezz
 
-    s32     afkCounter_E8;    // Player AFK counter. Increments every tick(?) for 10 seconds before player starts AFK anim. Purpose for other characters unknown.
-    s32     field_EC;         // Copy of player Y position. No discernible purpose. Purpose for other characters unknown.
-    s8      unk_F0[8];        // 2 more s32 for custom data?
-    s32     runCounter_F8;    // Player run counter. Increments more slowly than runCounter_108. Purpose for other characters unknown.
-    s32     windedCounter_FC; // Player winded counter. Counts 20 seconds worth of ticks(?) and caps at 0x23000. Purpose for other characters unknown.
-    s8      unk_FC[8];        // 2 more s32 for custom data?
-    s32     runCounter_108;   // Player run counter. Increments every tick(?) indefinitely. Purpose for other characters unknown.
+    s32 field_E8;  // Player AFK counter. Increments every tick(?) for 10 seconds before player starts AFK anim. Purpose for other characters unknown.
+    s32 field_EC;  // Copy of player Y position. Purpose for other characters unknown.
+    s8  unk_F0[8]; // 2 more s32 for custom data?
+    s32 field_F8;  // Player run counter. Increments more slowly than runCounter_108. Purpose for other characters unknown.
+    s32 field_FC;  // Player winded counter. Counts 20 seconds worth of ticks(?) and caps at 0x23000. Purpose for other characters unknown.
+    s8  unk_FC[8]; // 2 more s32 for custom data?
+    s32 field_108; // Player run counter. Increments every tick(?) indefinitely. Purpose for other characters unknown.
 
-    s8      _unk_EC[28]; 
+    s8 unk_EC[28]; 
 } s_SubCharacter;
 STATIC_ASSERT_SIZEOF(s_SubCharacter, 296);
 
 typedef struct _MainCharacter
 {
-    /* 0x000 */ s_SubCharacter character;
-    /* 0x128 */ u8             field_128;
-    /* 0x129 */ u8             field_129;
-    /* 0x12A */ u8             field_12A;
-    /* 0x12B */ u8             field_12B; // Related to anim state.
-    /* 0x12C */ u8             extra[40];
+    s_SubCharacter character;
+    u8             field_128;
+    u8             field_129;
+    u8             field_12A;
+    u8             field_12B;    // isPrevAnimStateSame? Always 1, set to 0 for 1 tick when anim state changes.
+    s8             copy_12C[20]; // Duplicate data. Sequentially opies all fields from 0x4 to 0x18 of s_SubCharacter.
+    s8             field_140[4];
+    s8             field_144[4]; // s32? Some kind of anim state. Set to 2 when player is in AFK anim, 0 otherwise.
+    s8             field_148[4]; // s32? Some kind of anim state.
+    s8             field_14C[4]; // s32? Some kind of anim state.
+    s8             unk_150[4];
 } s_MainCharacter;
 STATIC_ASSERT_SIZEOF(s_MainCharacter, 0x154);
 
