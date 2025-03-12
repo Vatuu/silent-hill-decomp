@@ -41,29 +41,29 @@ void vwRenewalXZVelocityToTargetPos(s32* velo_x, s32* velo_z, VECTOR3* now_pos, 
 
     ratan2(*velo_x, *velo_z);
 
-    add_spd = Math_MulFixed(accel, g_CurDeltaTime, FP_SIN_Q);
-    *velo_x += (add_spd * shRsin(temp_v0)) >> FP_SIN_Q;
-    *velo_z += (add_spd * shRcos(temp_v0)) >> FP_SIN_Q;
+    add_spd = Math_MulFixed(accel, g_CurDeltaTime, Q12_SHIFT);
+    *velo_x += MUL_FIXED(add_spd, shRsin(temp_v0), Q12_SHIFT);
+    *velo_z += MUL_FIXED(add_spd, shRcos(temp_v0), Q12_SHIFT);
 
     temp_v0_2 = Math_VectorMagnitude(*velo_x, 0, *velo_z);
     if (total_max_spd < temp_v0_2)
     {
         temp_s1_2 = temp_v0_2 - total_max_spd;
         ang_y     = ratan2(*velo_x, *velo_z);
-        *velo_x -= Math_MulFixed(temp_s1_2, shRsin(ang_y), FP_SIN_Q);
-        *velo_z -= Math_MulFixed(temp_s1_2, shRcos(ang_y), FP_SIN_Q);
+        *velo_x -= Math_MulFixed(temp_s1_2, shRsin(ang_y), Q12_SHIFT);
+        *velo_z -= Math_MulFixed(temp_s1_2, shRcos(ang_y), Q12_SHIFT);
     }
 
     temp_s1_3    = tgt_pos->vx - now_pos->vx;
     temp_s0      = tgt_pos->vz - now_pos->vz;
     to_tgt_ang_y = ratan2(temp_s1_3, temp_s0);
-    var_s1       = Math_MulFixed(dec_forwd_lim_spd, Math_VectorMagnitude(temp_s1_3, 0, temp_s0) - tgt_r, FP_SIN_Q);
+    var_s1       = Math_MulFixed(dec_forwd_lim_spd, Math_VectorMagnitude(temp_s1_3, 0, temp_s0) - tgt_r, Q12_SHIFT);
 
     if (var_s1 < 0)
         var_s1 = 0;
 
     vwLimitOverLimVector(velo_x, velo_z, var_s1, to_tgt_ang_y);
-    vwDecreaseSideOfVector(velo_x, velo_z, Math_MulFixed(dec_accel_side, g_CurDeltaTime, FP_SIN_Q), var_s1 >> 1, to_tgt_ang_y);
+    vwDecreaseSideOfVector(velo_x, velo_z, Math_MulFixed(dec_accel_side, g_CurDeltaTime, Q12_SHIFT), var_s1 >> 1, to_tgt_ang_y);
 }
 
 void vwLimitOverLimVector(s32* vec_x, s32* vec_z, s32 lim_vec_len, s16 lim_vec_ang_y) // 0x8004914C
@@ -75,11 +75,11 @@ void vwLimitOverLimVector(s32* vec_x, s32* vec_z, s32 lim_vec_len, s16 lim_vec_a
     lim_spd_dir_x = shRsin(lim_vec_ang_y);
     lim_spd_dir_z = shRcos(lim_vec_ang_y);
 
-    over_spd = (Math_MulFixed(*vec_x, lim_spd_dir_x, FP_SIN_Q) + Math_MulFixed(*vec_z, lim_spd_dir_z, FP_SIN_Q)) - lim_vec_len;
+    over_spd = (Math_MulFixed(*vec_x, lim_spd_dir_x, Q12_SHIFT) + Math_MulFixed(*vec_z, lim_spd_dir_z, Q12_SHIFT)) - lim_vec_len;
     if (over_spd > 0)
     {
-        *vec_x -= Math_MulFixed(over_spd, lim_spd_dir_x, FP_SIN_Q);
-        *vec_z -= Math_MulFixed(over_spd, lim_spd_dir_z, FP_SIN_Q);
+        *vec_x -= Math_MulFixed(over_spd, lim_spd_dir_x, Q12_SHIFT);
+        *vec_z -= Math_MulFixed(over_spd, lim_spd_dir_z, Q12_SHIFT);
     }
 }
 
@@ -185,10 +185,10 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vw_calc", func_8004A54C);
 
 void vwAngleToVector(SVECTOR* vec, SVECTOR* ang, s32 r) // 0x8004A66C
 {
-    s32 entou_r = (r * shRcos(ang->vx)) >> FP_SIN_Q;
-    vec->vy     = (-r * shRsin(ang->vx)) >> FP_SIN_Q;
-    vec->vx     = (entou_r * shRsin(ang->vy)) >> FP_SIN_Q;
-    vec->vz     = (entou_r * shRcos(ang->vy)) >> FP_SIN_Q;
+    s32 entou_r = MUL_FIXED(r, shRcos(ang->vx), Q12_SHIFT);
+    vec->vy = MUL_FIXED(-r, shRsin(ang->vx), Q12_SHIFT);
+    vec->vx = MUL_FIXED(entou_r, shRsin(ang->vy), Q12_SHIFT);
+    vec->vz = MUL_FIXED(entou_r, shRcos(ang->vy), Q12_SHIFT);
 }
 
 s32 vwVectorToAngle(SVECTOR* ang, SVECTOR* vec) // 0x8004A714

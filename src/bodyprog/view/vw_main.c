@@ -49,9 +49,9 @@ void vwSetCoordRefAndEntou(GsCOORDINATE2* parent_p, s32 ref_x, s32 ref_y, s32 re
 
     func_80096E78(&view_ang, view_mtx);
 
-    view_mtx->t[0] = (ref_x >> FP_POS_Q) + (((cam_xz_r >> FP_POS_Q) * shRsin(cam_ang_y)) >> FP_SIN_Q);
-    view_mtx->t[1] = (ref_y >> FP_POS_Q) + (cam_y >> FP_POS_Q);
-    view_mtx->t[2] = (ref_z >> FP_POS_Q) + (((cam_xz_r >> FP_POS_Q) * shRcos(cam_ang_y)) >> FP_SIN_Q);
+    view_mtx->t[0] = FROM_FIXED(ref_x, Q4_SHIFT) + FROM_FIXED(FROM_FIXED(cam_xz_r, Q4_SHIFT) * shRsin(cam_ang_y), Q12_SHIFT);
+    view_mtx->t[1] = FROM_FIXED(ref_y, Q4_SHIFT) + FROM_FIXED(cam_y, Q4_SHIFT);
+    view_mtx->t[2] = FROM_FIXED(ref_z, Q4_SHIFT) + FROM_FIXED(FROM_FIXED(cam_xz_r, Q4_SHIFT) * shRcos(cam_ang_y), Q12_SHIFT);
 }
 
 void vwSetViewInfoDirectMatrix(GsCOORDINATE2* pcoord, MATRIX* cammat) // 0x80048CF0
@@ -64,9 +64,9 @@ void vwSetViewInfoDirectMatrix(GsCOORDINATE2* pcoord, MATRIX* cammat) // 0x80048
 // Inlined into vwSetViewInfo, maybe vwMatrixToPosition?
 static inline void Math_MatrixToPosition(VECTOR3* pos, MATRIX* workm)
 {
-    pos->vx = workm->t[0] << FP_POS_Q;
-    pos->vy = workm->t[1] << FP_POS_Q;
-    pos->vz = workm->t[2] << FP_POS_Q;
+    pos->vx = TO_FIXED(workm->t[0], Q4_SHIFT);
+    pos->vy = TO_FIXED(workm->t[1], Q4_SHIFT);
+    pos->vz = TO_FIXED(workm->t[2], Q4_SHIFT);
 }
 
 void vwSetViewInfo() // 0x80048D48
