@@ -26,7 +26,8 @@ typedef enum { false, true } bool;
 // Slightly modified VECTOR with padding int removed. Seems to be used through much of SH code.
 typedef struct
 {
-    long vx, vy;
+    long vx;
+    long vy;
     long vz;
 } VECTOR3;
 

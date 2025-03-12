@@ -16,9 +16,9 @@ void vcSetCameraUseWarp(VECTOR3* chr_pos, s16 chr_ang_y) // 0x800400D4
     cam_ang.vy = chr_ang_y;
     cam_ang.vz = 0;
 
-    cam_pos.vx = chr_pos->vx - ((shRsin(chr_ang_y) * 0x1800) >> FP_SIN_Q);
+    cam_pos.vx = chr_pos->vx - FROM_FIXED(shRsin(chr_ang_y) * 0x1800, Q12_SHIFT);
     cam_pos.vy = chr_pos->vy - TILE_UNIT(27.2f);
-    cam_pos.vz = chr_pos->vz - ((shRcos(chr_ang_y) * 0x1800) >> FP_SIN_Q);
+    cam_pos.vz = chr_pos->vz - FROM_FIXED(shRcos(chr_ang_y) * 0x1800, Q12_SHIFT);
 
     vcSetFirstCamWork(&cam_pos, chr_ang_y, g_SysWork.flags_22A4 & 0x40);
     g_SysWork.flags_22A4 &= ~0x40;
@@ -61,20 +61,20 @@ void vcMakeHeroHeadPos(VECTOR3* head_pos) // 0x8004047C
 
     func_80049984(&g_SysWork.hero_neck_930, &neck_lwm);
 
-    fpos.vx = 0;
+    fpos.vx = TILE_UNIT(0.0f);
     fpos.vy = TILE_UNIT(-0.1f);
-    fpos.vz = 0;
+    fpos.vz = TILE_UNIT(0.0f);
     ApplyMatrix(&neck_lwm, &fpos, &sp38);
 
-    head_pos->vx = (sp38.vx + neck_lwm.t[0]) << FP_POS_Q;
-    head_pos->vy = ((sp38.vy + neck_lwm.t[1]) << FP_POS_Q) - TILE_UNIT(4.8f);
-    head_pos->vz = (sp38.vz + neck_lwm.t[2]) << FP_POS_Q;
+    head_pos->vx = TO_FIXED(sp38.vx + neck_lwm.t[0], Q4_SHIFT);
+    head_pos->vy = TO_FIXED(sp38.vy + neck_lwm.t[1], Q4_SHIFT) - TILE_UNIT(4.8f);
+    head_pos->vz = TO_FIXED(sp38.vz + neck_lwm.t[2], Q4_SHIFT);
 }
 
 void vcAddOfsToPos(VECTOR3* out_pos, VECTOR3* in_pos, s16 ofs_xz_r, s16 ang_y, s32 ofs_y) // 0x80040518
 {
-    out_pos->vx = in_pos->vx + ((ofs_xz_r * shRsin(ang_y)) >> FP_SIN_Q);
-    out_pos->vz = in_pos->vz + ((ofs_xz_r * shRcos(ang_y)) >> FP_SIN_Q);
+    out_pos->vx = in_pos->vx + FROM_FIXED(ofs_xz_r * shRsin(ang_y), Q12_SHIFT);
+    out_pos->vz = in_pos->vz + FROM_FIXED(ofs_xz_r * shRcos(ang_y), Q12_SHIFT);
     out_pos->vy = in_pos->vy + ofs_y;
 }
 
@@ -130,9 +130,9 @@ void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, s_SysWork* sys_p) // 0x80040
 
     vwGetViewPosition(&cam_pos);
 
-    sp18.vx = cam_pos.vx >> FP_POS_Q;
-    sp18.vy = cam_pos.vy >> FP_POS_Q;
-    sp18.vz = cam_pos.vz >> FP_POS_Q;
+    sp18.vx = FROM_FIXED(cam_pos.vx, Q4_SHIFT);
+    sp18.vy = FROM_FIXED(cam_pos.vy, Q4_SHIFT);
+    sp18.vz = FROM_FIXED(cam_pos.vz, Q4_SHIFT);
 
     vwGetViewAngle(&cam_ang);
 
@@ -176,14 +176,14 @@ void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, s_SysWork* sys_p) // 0x80040
                 var_v1 += 0xFFF;
             }
 
-            sp18.vx += var_v1 >> FP_SIN_Q;
+            sp18.vx += FROM_FIXED(var_v1, Q12_SHIFT);
             var_v1_4 = var_s0 * shRcos(cam_ang.vy);
             if (var_v1_4 < 0)
             {
                 var_v1_4 += 0xFFF;
             }
 
-            sp18.vz += var_v1_4 >> FP_SIN_Q;
+            sp18.vz += FROM_FIXED(var_v1_4, Q12_SHIFT);
         }
     }
     else
@@ -215,14 +215,14 @@ void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, s_SysWork* sys_p) // 0x80040
                 var_v1 += 0xFFF;
             }
 
-            sp18.vx += var_v1 >> FP_SIN_Q;
+            sp18.vx += FROM_FIXED(var_v1, Q12_SHIFT);
 
             var_v1_4 = var_s0 * shRcos(cam_ang.vy + DEG_TO_FPA(5.625f));
             if (var_v1_4 < 0)
             {
                 var_v1_4 += 0xFFF;
             }
-            sp18.vz += var_v1_4 >> FP_SIN_Q;
+            sp18.vz += FROM_FIXED(var_v1_4, Q12_SHIFT);
         }
     }
 
@@ -239,12 +239,12 @@ void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, s_SysWork* sys_p) // 0x80040
 
         vwAngleToVector(&sp58, &cam_ang, TILE_UNIT(5.0f));
 
-        ref_pos->vx = (sp18.vx + sp58.vx) << FP_POS_Q;
-        ref_pos->vy = (sp18.vy + sp58.vy) << FP_POS_Q;
-        ref_pos->vz = (sp18.vz + sp58.vz) << FP_POS_Q;
+        ref_pos->vx = TO_FIXED(sp18.vx + sp58.vx, Q4_SHIFT);
+        ref_pos->vy = TO_FIXED(sp18.vy + sp58.vy, Q4_SHIFT);
+        ref_pos->vz = TO_FIXED(sp18.vz + sp58.vz, Q4_SHIFT);
 
         sys_p->cam_ang_y_237A = ((cam_ang.vy + DEG_TO_FPA(11.25f)) << 0x14) >> 0x14;
-        sys_p->cam_y_2384     = -sp58.vy << FP_POS_Q;
-        sys_p->cam_r_xz_2380  = SquareRoot0((sp58.vx * sp58.vx) + (sp58.vz * sp58.vz)) << FP_POS_Q;
+        sys_p->cam_y_2384     = TO_FIXED(-sp58.vy, Q4_SHIFT);
+        sys_p->cam_r_xz_2380  = TO_FIXED(SquareRoot0((sp58.vx * sp58.vx) + (sp58.vz * sp58.vz)), Q4_SHIFT);
     }
 }
