@@ -16,9 +16,9 @@ void vcSetCameraUseWarp(VECTOR3* chr_pos, s16 chr_ang_y) // 0x800400D4
     cam_ang.vy = chr_ang_y;
     cam_ang.vz = 0;
 
-    cam_pos.vx = chr_pos->vx - FROM_FIXED(shRsin(chr_ang_y) * 0x1800, Q12_SHIFT);
+    cam_pos.vx = chr_pos->vx - MUL_FIXED(shRsin(chr_ang_y), 0x1800, Q12_SHIFT);
     cam_pos.vy = chr_pos->vy - TILE_UNIT(27.2f);
-    cam_pos.vz = chr_pos->vz - FROM_FIXED(shRcos(chr_ang_y) * 0x1800, Q12_SHIFT);
+    cam_pos.vz = chr_pos->vz - MUL_FIXED(shRcos(chr_ang_y), 0x1800, Q12_SHIFT);
 
     vcSetFirstCamWork(&cam_pos, chr_ang_y, g_SysWork.flags_22A4 & 0x40);
     g_SysWork.flags_22A4 &= ~0x40;
@@ -73,8 +73,8 @@ void vcMakeHeroHeadPos(VECTOR3* head_pos) // 0x8004047C
 
 void vcAddOfsToPos(VECTOR3* out_pos, VECTOR3* in_pos, s16 ofs_xz_r, s16 ang_y, s32 ofs_y) // 0x80040518
 {
-    out_pos->vx = in_pos->vx + FROM_FIXED(ofs_xz_r * shRsin(ang_y), Q12_SHIFT);
-    out_pos->vz = in_pos->vz + FROM_FIXED(ofs_xz_r * shRcos(ang_y), Q12_SHIFT);
+    out_pos->vx = in_pos->vx + MUL_FIXED(ofs_xz_r, shRsin(ang_y), Q12_SHIFT);
+    out_pos->vz = in_pos->vz + MUL_FIXED(ofs_xz_r, shRcos(ang_y), Q12_SHIFT);
     out_pos->vy = in_pos->vy + ofs_y;
 }
 

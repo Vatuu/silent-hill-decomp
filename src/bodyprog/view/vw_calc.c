@@ -42,8 +42,8 @@ void vwRenewalXZVelocityToTargetPos(s32* velo_x, s32* velo_z, VECTOR3* now_pos, 
     ratan2(*velo_x, *velo_z);
 
     add_spd = Math_MulFixed(accel, g_CurDeltaTime, Q12_SHIFT);
-    *velo_x += FROM_FIXED(add_spd * shRsin(temp_v0), Q12_SHIFT);
-    *velo_z += FROM_FIXED(add_spd * shRcos(temp_v0), Q12_SHIFT);
+    *velo_x += MUL_FIXED(add_spd, shRsin(temp_v0), Q12_SHIFT);
+    *velo_z += MUL_FIXED(add_spd, shRcos(temp_v0), Q12_SHIFT);
 
     temp_v0_2 = Math_VectorMagnitude(*velo_x, 0, *velo_z);
     if (total_max_spd < temp_v0_2)
@@ -185,10 +185,10 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vw_calc", func_8004A54C);
 
 void vwAngleToVector(SVECTOR* vec, SVECTOR* ang, s32 r) // 0x8004A66C
 {
-    s32 entou_r = FROM_FIXED(r * shRcos(ang->vx), Q12_SHIFT);
-    vec->vy     = FROM_FIXED(-r * shRsin(ang->vx), Q12_SHIFT);
-    vec->vx     = FROM_FIXED(entou_r * shRsin(ang->vy), Q12_SHIFT);
-    vec->vz     = FROM_FIXED(entou_r * shRcos(ang->vy), Q12_SHIFT);
+    s32 entou_r = MUL_FIXED(r, shRcos(ang->vx), Q12_SHIFT);
+    vec->vy = MUL_FIXED(-r, shRsin(ang->vx), Q12_SHIFT);
+    vec->vx = MUL_FIXED(entou_r, shRsin(ang->vy), Q12_SHIFT);
+    vec->vz = MUL_FIXED(entou_r, shRcos(ang->vy), Q12_SHIFT);
 }
 
 s32 vwVectorToAngle(SVECTOR* ang, SVECTOR* vec) // 0x8004A714

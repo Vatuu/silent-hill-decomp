@@ -300,9 +300,9 @@ void vcAutoRenewalWatchTgtPosAndAngZ(VC_WORK* w_p, VC_CAM_MV_TYPE cam_mv_type, V
         vcMakeNormalWatchTgtPos(&w_p->watch_tgt_pos_7C, &w_p->watch_tgt_ang_z_8C, w_p, cam_mv_type, cur_rd_area_size);
         if (far_watch_rate != 0)
         {
-            w_p->watch_tgt_pos_7C.vx += FROM_FIXED(far_watch_rate * (far_watch_pos.vx - w_p->watch_tgt_pos_7C.vx), Q12_SHIFT);
-            w_p->watch_tgt_pos_7C.vy += FROM_FIXED(far_watch_rate * (far_watch_pos.vy - w_p->watch_tgt_pos_7C.vy), Q12_SHIFT);
-            w_p->watch_tgt_pos_7C.vz += FROM_FIXED(far_watch_rate * (far_watch_pos.vz - w_p->watch_tgt_pos_7C.vz), Q12_SHIFT);
+            w_p->watch_tgt_pos_7C.vx += MUL_FIXED(far_watch_rate, far_watch_pos.vx - w_p->watch_tgt_pos_7C.vx, Q12_SHIFT);
+            w_p->watch_tgt_pos_7C.vy += MUL_FIXED(far_watch_rate, far_watch_pos.vy - w_p->watch_tgt_pos_7C.vy, Q12_SHIFT);
+            w_p->watch_tgt_pos_7C.vz += MUL_FIXED(far_watch_rate, far_watch_pos.vz - w_p->watch_tgt_pos_7C.vz, Q12_SHIFT);
         }
     }
     else
@@ -476,8 +476,8 @@ void vcMakeIdealCamPosByHeadPos(VECTOR3* ideal_pos, VC_WORK* w_p, VC_AREA_SIZE_T
         ideal_pos->vy   = w_p->chara_head_pos_130.vy + TILE_UNIT(1.6f);
     }
 
-    ideal_pos->vx = w_p->chara_head_pos_130.vx + FROM_FIXED(shRsin(chara2cam_ang_y) * DEG_TO_FPA(4.05f), Q12_SHIFT);
-    ideal_pos->vz = w_p->chara_head_pos_130.vz + FROM_FIXED(shRcos(chara2cam_ang_y) * DEG_TO_FPA(4.05f), Q12_SHIFT);
+    ideal_pos->vx = w_p->chara_head_pos_130.vx + MUL_FIXED(shRsin(chara2cam_ang_y), DEG_TO_FPA(4.05f), Q12_SHIFT);
+    ideal_pos->vz = w_p->chara_head_pos_130.vz + MUL_FIXED(shRcos(chara2cam_ang_y), DEG_TO_FPA(4.05f), Q12_SHIFT);
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vc_main", vcMakeIdealCamPosForFixAngCam);
@@ -539,8 +539,8 @@ void vcMakeBasicCamTgtMvVec(VECTOR3* tgt_mv_vec, VECTOR3* ideal_pos, VC_WORK* w_
     }
     else
     {
-        tgt_mv_vec->vx = FROM_FIXED(max_tgt_mv_xz_len * shRsin(now2ideal_tgt_ang_y), Q12_SHIFT);
-        tgt_mv_vec->vz = FROM_FIXED(max_tgt_mv_xz_len * shRcos(now2ideal_tgt_ang_y), Q12_SHIFT);
+        tgt_mv_vec->vx = MUL_FIXED(max_tgt_mv_xz_len, shRsin(now2ideal_tgt_ang_y), Q12_SHIFT);
+        tgt_mv_vec->vz = MUL_FIXED(max_tgt_mv_xz_len, shRcos(now2ideal_tgt_ang_y), Q12_SHIFT);
     }
 
     if (g_CurDeltaTime == 0 && !(vcWork.flags_8 & VC_WARP_CAM_TGT_F))
@@ -603,8 +603,8 @@ void vcCamTgtMvVecIsFlipedFromCharaFront(VECTOR3* tgt_mv_vec, VC_WORK* w_p, s32 
             use_nearest_p = &w_p->cur_near_road_2B8;
         }
 
-        post_tgt_pos.vx = pre_tgt_pos.vx + FROM_FIXED(flip_dist * shRsin(flip_ang_y), Q12_SHIFT);
-        post_tgt_pos.vz = pre_tgt_pos.vz + FROM_FIXED(flip_dist * shRcos(flip_ang_y), Q12_SHIFT);
+        post_tgt_pos.vx = pre_tgt_pos.vx + MUL_FIXED(flip_dist, shRsin(flip_ang_y), Q12_SHIFT);
+        post_tgt_pos.vz = pre_tgt_pos.vz + MUL_FIXED(flip_dist, shRcos(flip_ang_y), Q12_SHIFT);
 
         min_x = TO_FIXED(use_nearest_p->rd_14.min_hx, Q8_SHIFT) + MIN_IN_ROAD_DIST;
         max_x = TO_FIXED(use_nearest_p->rd_14.max_hx, Q8_SHIFT) - MIN_IN_ROAD_DIST;
@@ -921,10 +921,10 @@ s32 vcCamMatNoise(s32 noise_w, s32 ang_spd1, s32 ang_spd2, s32 vcSelfViewTimer) 
 {
     s32 noise;
 
-    noise = shRcos(FROM_FIXED(ang_spd1 * (s64)vcSelfViewTimer, Q12_SHIFT)) + shRcos(FROM_FIXED(ang_spd2 * (s64)vcSelfViewTimer, Q12_SHIFT));
+    noise = shRcos(MUL_FIXED(ang_spd1, (s64)vcSelfViewTimer, Q12_SHIFT)) + shRcos(MUL_FIXED(ang_spd2, (s64)vcSelfViewTimer, Q12_SHIFT));
     noise = noise >> 1;
 
-    return FROM_FIXED(noise_w * noise, Q12_SHIFT);
+    return MUL_FIXED(noise_w, noise, Q12_SHIFT);
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vc_main", Math_VectorMagnitude);
