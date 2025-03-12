@@ -1,5 +1,21 @@
 #include "common.h"
 
+typedef struct
+{
+    s8  unk_0[5];
+    u16 field_6;
+} s_800BA134;
+
+extern u8 D_800BA007;
+
+extern u16 D_800BA012;
+
+extern s_800BA134 D_800BA134[];
+
+extern u8 D_800C4606;
+
+extern u8 D_800DD59C;
+
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800CB6B0);
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800CBBBC);
@@ -76,13 +92,27 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D23EC);
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D2C7C);
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D2D2C);
+void func_800D2D2C(void)
+{
+    D_800C4606++;
+}
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D2D44);
+void func_800D2D44(void)
+{
+    D_800BA134[0].field_6 = D_800BA134[0].field_6 & 0xFFFE;
+    D_800BA134[-37].field_6 = D_800BA134[-37].field_6 & 0xFFFE; // -37?
+}
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D2D6C);
+s32 func_800D2D6C(void)
+{
+    return ~(D_800BA012 & 1);
+}
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D2D84);
+void func_800D2D84(void)
+{
+    D_800BA134[0].field_6 = D_800BA134[0].field_6 | 1;
+    D_800BA134[-37].field_6 = D_800BA134[-37].field_6 | 1; // -37?
+}
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D2DAC);
 
@@ -108,7 +138,10 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D2EA4);
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D2EB4);
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D2EF4);
+void func_800D2EF4(void)
+{
+    D_800BA007 = D_800DD59C;
+}
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D2F08);
 

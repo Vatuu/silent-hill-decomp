@@ -1,25 +1,218 @@
-#include "common.h"
+#include "game.h"
+
+#include <libcd.h>
+
 #include "bodyprog/bodyprog.h"
+#include "screens/stream/stream.h"
 
 void func_80035338(s32 arg0, s8 arg1, u32 arg2, s32 arg3); // arg3 type assumed.
 void func_8003D5B4(s8 arg0);
 void func_8003D6E0(s32 arg0, s32 arg1, s32 arg2, void* arg3);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80085D78);
+void func_80085D78(s32 arg0)
+{
+    if (arg0 != 0)
+    {
+        g_SysWork.field_2C = 0;
+        g_SysWork.field_14 = 0;
+        g_SysWork.field_10++;
+        return;
+    }
+    
+    g_SysWork.field_28 = 0;
+    g_SysWork.field_10 = 0;
+    g_SysWork.field_2C = 0;
+    g_SysWork.field_14 = 0;
+    g_SysWork.sysStateStep_C++;
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80085DC0);
+void func_80085DC0(s32 arg0, s32 sysStateStep)
+{
+    if (arg0 != 0)
+    {
+        g_SysWork.field_10 = sysStateStep;
+        g_SysWork.field_2C = 0;
+        g_SysWork.field_14 = 0;
+    }
+    else
+    {
+        g_SysWork.sysStateStep_C = sysStateStep;
+        g_SysWork.field_28 = 0;
+        g_SysWork.field_10 = 0;
+        g_SysWork.field_2C = 0;
+        g_SysWork.field_14 = 0;
+    }
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80085DF0);
+void func_80085DF0(void)
+{
+    g_SysWork.field_2C += D_800A8FEC;
+    
+    if (D_800C9668() != 0 || g_SysWork.field_2C > 4096)
+    {
+        g_SysWork.field_28 = 0;
+        g_SysWork.field_10 = 0;
+        g_SysWork.field_2C = 0;
+        g_SysWork.field_14 = 0;
+        g_SysWork.sysStateStep_C++;
+    }
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80085E6C);
+void func_80085E6C(s32 arg0, s32 arg1)
+{
+    s32 temp_v0;
+
+    temp_v0 = g_SysWork.field_2C + D_800A8FEC;
+    g_SysWork.field_2C = temp_v0;
+    
+    if (arg0 < temp_v0)
+    {
+        func_80085D78(arg1);
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80085EB8);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008605C);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800860B0);
+void func_800860B0(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 sysStateStep, s32 arg5)
+{
+    s32 temp_v0;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008616C);
+    temp_v0 = func_800365B8(arg1);
+    if (temp_v0 <= 0)
+    {
+        return;
+    }
+    
+    if (arg0 == 0)
+    {
+        func_80085D78(arg5);
+        return;
+    }
+
+    if (temp_v0 == 1)
+    {
+        func_80085DC0(arg5, arg2);
+    }
+    if (temp_v0 == 2)
+    {
+        func_80085DC0(arg5, arg3);
+    }
+    if (temp_v0 == 3)
+    {
+        func_80085DC0(arg5, sysStateStep);
+    }
+}
+
+// TODO: Get rid of gotos.
+void func_8008616C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4)
+{
+    s32 var_v0;
+    s32 var_v1;
+    s32 var_v1_2;
+
+    if (arg0 != 2)
+    {
+        var_v1 = arg0;
+    }
+    else
+    {
+        var_v1 = g_SysWork.field_14;
+    }
+
+    // Irregular
+    switch (var_v1)
+    {
+        case 0:
+            if (arg2 != 2)
+            {
+                D_800B5C30 = arg3;
+            }
+            
+            if (arg1 != 0)
+            {
+                if (arg2 == 0)
+                {
+                    D_800BCD0C = 3;
+                }
+                else if (arg2 == 1)
+                {
+                    D_800BCD0C = 11;
+                }
+                else
+                {
+                    g_SysWork.field_30 = 18;
+                    if (arg2 == 3)
+                    {
+                        g_SysWork.flags_22A4 |= 8;
+                    }
+                }
+            }
+            else if (arg2 == 0)
+            {
+                D_800BCD0C = 7;
+            }
+            else if (arg2 == 1)
+            {
+                D_800BCD0C = 15;
+            }
+            else
+            {
+                g_SysWork.field_30 = 22;
+            }
+            
+            if (arg0 != 0)
+            {
+                g_SysWork.field_14++;
+                break;
+            }
+            
+            break;
+        
+        case 1:
+            if (arg2 < 2)
+            {
+                if (arg1 != 0 || D_800BCD0C != var_v1)
+                {
+                    if (arg1 == var_v1)
+                    {
+                        var_v1_2 = 5;
+                        var_v0 = D_800BCD0C & 7;
+
+                        if (var_v1_2 == var_v0)
+                        {
+                            func_80085D78(arg4);
+                        }
+                    }
+                }
+                else
+                {
+                    goto block_32;
+                }
+            }
+            else if (arg1 != 0 || g_SysWork.field_30 != var_v1)
+            {
+                if (arg1 == var_v1)
+                {
+                    var_v1_2 = g_SysWork.field_30;
+                    var_v0 = 21;
+                    
+                    if (var_v1_2 == var_v0)
+                    {
+                        goto block_32;
+                    }
+                }
+            }
+            else
+            {
+    block_32:
+                func_80085D78(arg4);
+            }
+            
+            break;
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800862F8);
 

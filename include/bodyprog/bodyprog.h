@@ -43,13 +43,13 @@ typedef struct
 
 typedef struct
 {
-    s32 field_0;
-    s32 field_4;
-    s32 field_8;
-    s32 field_C;
-    s32 field_10;
-    s32 field_14;
-    s32 field_18; 
+    s32                field_0;
+    s32                field_4; // Index into some array.
+    s32                field_8;
+    s32                field_C;
+    s32                field_10;
+    struct s_800B5508* field_14;
+    s32                field_18; 
 } s_800B5508;
 
 /** Accessed by credits and saveload. */
@@ -70,6 +70,8 @@ extern s_800B5508 D_800B4580[];
 
 extern s32 D_800B5480;
 
+extern s32 D_800B5488; // Index or state?
+
 extern s_800B5508 D_800B5508[];
 
 extern s_800B5508 D_800B55E8;
@@ -77,6 +79,8 @@ extern s_800B5508 D_800B55E8;
 extern s32 D_800B55FC;
 
 extern s32 D_800B5618;
+
+extern s32 (*D_800C9668)();
 
 extern u16 D_800BCCB0;
 
@@ -103,6 +107,7 @@ extern s16 D_800C391E;
 extern s32 D_800C489C;
 
 extern s32 D_800A8FEC;
+
 extern s32 D_800A9A68;
 
 /** "\x07PAUSED" string */
@@ -130,6 +135,12 @@ void func_8002EB88(); // Return type assumed.
 
 void func_8002ECE0(s_800B5508* arg0);
 
+void func_80030444();
+
+void func_8003045C();
+
+void func_80030530();
+
 void func_800303E4();
 
 /** Bodyprog function that fades the screen out?
@@ -137,16 +148,6 @@ void func_800303E4();
  * - `main` in main.c
  * - 'func_801E709C' in saveload.c */
 void func_800314EC(s_FsImageDesc* image);
-
-s32 Chara_Load(s32 arg0, s8 arg1, s32 arg2, s8 arg3, s32 arg4, s32 arg5);
-
-void GFX_ClearRectInterlaced(s16 x, s16 y, s16 w, s16 h, u8 r, u8 g, u8 b);
-
-/** Bodyprog func that searches for English title screen background graphic. */
-void GameFS_TitleGfxSeek();
-
-/** Bodyprog func that searches the stream overlay. */
-void GameFS_StreamBinSeek();
 
 void func_8003260C(); // Return type assumed.
 
@@ -187,6 +188,22 @@ void func_800892A4(s32);
 
 void func_801E2D8C();
 
+void func_8004C8DC();
+
+void func_80085DC0(s32 arg0, s32 sysStateStep);
+
+void func_80091380();
+
+s32 Chara_Load(s32 arg0, s8 arg1, s32 arg2, s8 arg3, s32 arg4, s32 arg5);
+
+/** Bodyprog func that searches for English title screen background graphic. */
+void GameFS_TitleGfxSeek();
+
+/** Bodyprog func that searches the stream overlay. */
+void GameFS_StreamBinSeek();
+
+void GFX_ClearRectInterlaced(s16 x, s16 y, s16 w, s16 h, u8 r, u8 g, u8 b);
+
 /** Sets position of next string drawn by GFX_StringDraw. */
 void GFX_StringPosition(s32 x, s32 y);
 
@@ -196,16 +213,13 @@ void GFX_StringDraw(char* str, s32 arg1);
 /** Passes a command to sound driver. */
 void SD_EngineCmd(s32 cmd);
 
-void func_8004C8DC();
-void func_80091380();
-
-/** Updates savegame buffer with current player SysWork info (position/rotation/health/event num) */
+/** Updates th savegame buffer with the current player SysWork info (position/rotation/health/event index). */
 void SysWork_SaveGameUpdatePlayer();
 
-/** Updates SysWork with player info from savegame buffer (position/rotation/health) */
+/** Updates SysWork with player info from the savegame buffer (position/rotation/health). */
 void SysWork_SaveGameReadPlayer();
 
-/** Resets player info inside savegame buffer (health/game timer/inventory) */
+/** Resets player info inside savegame buffer (health/game timer/inventory). */
 void Game_SaveGameResetPlayer();
 
 /** Copies savegame into an s_ShSaveGameContainer and calculates footer checksum. */

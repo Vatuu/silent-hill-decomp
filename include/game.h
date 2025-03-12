@@ -1,5 +1,5 @@
-#ifndef GAME_H
-#define GAME_H
+#ifndef _GAME_H
+#define _GAME_H
 
 #include "gpu.h"
 
@@ -7,7 +7,7 @@
 #define SAVEGAME_FOOTER_MAGIC 0xDCDC
 #define GAME_INVENTORY_SIZE   40
 
-/** Convert tile units (the engine's reference measurement) to world units. */
+/** Convert tile units (the engine's measurement reference) to world units. */
 #define TILE_UNIT(value) \
     (s32)((value) * 256.0f)
 
@@ -328,15 +328,16 @@ typedef struct _SysWork
     char            unk_0[8];
     e_SysState      sysState_8;
     s32             sysStateStep_C; // Current step/state of sysState_8 game is in.
-    s32             field_10;
+    s32             field_10;       // Sometimes assigned to same thing as sysStateStep_C.
     s32             field_14;
     char            unk_18[4];
     s32             field_1C;
     s32             field_20;
     s32             field_24;
     s32             field_28;
-    s32             field_2C;
-    char            unk_30[28];
+    s32             field_2C; // Distance of some kind?
+    s32             field_30;
+    char            unk_34[24];
     s_MainCharacter player_4C;
     s_SubCharacter  characters_1A0[6];
     GsCOORDINATE2   unk_coord_890[2];

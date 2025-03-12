@@ -233,7 +233,12 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80030370);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_800303E4);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80030414);
+void func_80030414() 
+{
+    func_80030444();
+    func_8003045C();
+    func_80030530();
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80030444);
 
