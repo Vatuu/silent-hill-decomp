@@ -197,22 +197,23 @@ s32 vcRetThroughDoorCamEndF(VC_WORK* w_p) // 0x800815F0
     prm_p           = &w_p->through_door_10;
     rail2chara_dist = prm_p->rail_sta_to_chara_dist_18;
 
-    if (w_p->through_door_10.active_f_0 == 0)
+    if (!w_p->through_door_10.active_f_0)
     {
         return 1;
     }
 
-    if (prm_p->timer_4 >= 4916 && w_p->nearest_enemy_xz_dist_2E0 < 4915)
+    // TODO: timer field treated as a distance here? maybe misnamed, need to check usages in SH2 against SH
+    if (prm_p->timer_4 > TILE_UNIT(19.2f) && w_p->nearest_enemy_xz_dist_2E0 < TILE_UNIT(19.2f))
     {
         return 1;
     }
 
-    if (rail2chara_dist >= 9421)
+    if (rail2chara_dist > TILE_UNIT(36.8f))
     {
         return 1;
     }
 
-    if (rail2chara_dist >= 2049)
+    if (rail2chara_dist > TILE_UNIT(8.0f))
     {
         abs_ofs_ang_y = shAngleRegulate(w_p->chara_eye_ang_y_144 - ratan2(w_p->chara_pos_114.vx - w_p->through_door_10.rail_sta_pos_C.vx, w_p->chara_pos_114.vz - w_p->through_door_10.rail_sta_pos_C.vz));
 
@@ -221,7 +222,7 @@ s32 vcRetThroughDoorCamEndF(VC_WORK* w_p) // 0x800815F0
             abs_ofs_ang_y = -abs_ofs_ang_y;
         }
 
-        if (abs_ofs_ang_y >= 797)
+        if (abs_ofs_ang_y > DEG_TO_FPA(4.373f))
         {
             return 1;
         }
@@ -340,10 +341,10 @@ s32 vcAdvantageDistOfOldCurRoad(VC_NEAR_ROAD_DATA* old_cur_p) // 0x80082AD0
         case VC_RD_TYPE_ROAD:
         case VC_RD_TYPE_EFFECT:
         default:
-            return 1433;
+            return TILE_UNIT(5.6f);
 
         case VC_RD_TYPE_EVENT:
-            return 614;
+            return TILE_UNIT(2.4f);
     }
 }
 

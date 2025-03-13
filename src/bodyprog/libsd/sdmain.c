@@ -228,7 +228,7 @@ s16 SdVabTransBodyPartly(u8* addr, u32 bufsize, s16 vabid) // 0x8009FDDC
             return -2;
         }
 
-        return vab_h_id; // Maybe was meant to be return var_v0 but devs just returned vab_h_id
+        return vab_h_id; // Maybe was meant to be return retval but devs just returned vab_h_id?
     }
     return retval;
 }
@@ -316,13 +316,15 @@ void SdSeqPlay(s16 seq_access_num, u8 play_mode, s16 l_count) // 0x800A0210
     }
 
     sd_int_flag = 1;
+
     if (smf_song[seq_access_num].vab_id_508 == -1)
     {
         sd_int_flag = 0;
         return;
     }
 
-    sd_seq_loop_mode                      = l_count;
+    sd_seq_loop_mode = l_count;
+
     smf_song[seq_access_num].field_518    = 0x10000;
     smf_song[seq_access_num].play_ptr_504 = smf_song[seq_access_num].seq_data_ptr_514;
 
@@ -351,12 +353,14 @@ void SdSeqStop(s16 seq_access_num) // 0x800A02D8
     if (smf_song[seq_access_num].vab_id_508 != -1)
     {
         sd_int_flag = 1;
+
         midi_smf_stop(seq_access_num);
         sound_seq_off(seq_access_num);
         smf_song[seq_access_num].vol_right_50E   = 127;
         smf_song[seq_access_num].vol_left_50C    = 127;
         smf_song[seq_access_num].play_status_50A = 2;
-        sd_int_flag                              = 0;
+
+        sd_int_flag = 0;
     }
 }
 
