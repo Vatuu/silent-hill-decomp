@@ -7,7 +7,7 @@
  * libref.pdf v4.4 may be useful, though was likely based on earlier SDK.
  */
 
-// MIDI related header magic.
+// MIDI-related header magic.
 #define SD_MAGIC_SEQp 0x53455170
 #define SD_MAGIC_MThd 0x6468544D
 #define SD_MAGIC_KDT  0x2054444B
@@ -29,7 +29,7 @@ extern s16 sd_seq_loop_mode;
 
 extern s32 spu_ch_tbl[24];
 
-typedef struct _VAB_S // Pachinko Dream uses similar VAB_S struct
+typedef struct _VAB_S // Pachinko Dream uses similar VAB_S struct.
 {
     s16            vab_id_0;
     struct VabHdr* vab_header_4; // libsnd.h
@@ -68,7 +68,8 @@ typedef struct _SMF_TRACK_S
     u8  byte27;
 } s_SMF_TRACK_S;
 
-typedef struct _SMF_S // Standard MIDI File
+/** Standard MIDI File */
+typedef struct _SMF_S
 {
     s_SMF_TRACK_S tracks_0[32];
     s8            unk_500[4];

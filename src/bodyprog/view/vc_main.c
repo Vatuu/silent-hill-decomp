@@ -202,7 +202,7 @@ s32 vcRetThroughDoorCamEndF(VC_WORK* w_p) // 0x800815F0
         return 1;
     }
 
-    // TODO: timer field treated as a distance here? maybe misnamed, need to check usages in SH2 against SH
+    // TODO: Timer field treated as distance here? Maybe misnamed, need to check usages in SH2 against SH.
     if (prm_p->timer_4 > TILE_UNIT(19.2f) && w_p->nearest_enemy_xz_dist_2E0 < TILE_UNIT(19.2f))
     {
         return 1;
@@ -215,14 +215,15 @@ s32 vcRetThroughDoorCamEndF(VC_WORK* w_p) // 0x800815F0
 
     if (rail2chara_dist > TILE_UNIT(8.0f))
     {
-        abs_ofs_ang_y = shAngleRegulate(w_p->chara_eye_ang_y_144 - ratan2(w_p->chara_pos_114.vx - w_p->through_door_10.rail_sta_pos_C.vx, w_p->chara_pos_114.vz - w_p->through_door_10.rail_sta_pos_C.vz));
+        abs_ofs_ang_y = shAngleRegulate(w_p->chara_eye_ang_y_144 -
+                        ratan2(w_p->chara_pos_114.vx - w_p->through_door_10.rail_sta_pos_C.vx, w_p->chara_pos_114.vz - w_p->through_door_10.rail_sta_pos_C.vz));
 
         if (abs_ofs_ang_y < 0)
         {
             abs_ofs_ang_y = -abs_ofs_ang_y;
         }
 
-        if (abs_ofs_ang_y > DEG_TO_FPA(4.373f))
+        if (abs_ofs_ang_y > DEG_TO_FPA(4.375f))
         {
             return 1;
         }

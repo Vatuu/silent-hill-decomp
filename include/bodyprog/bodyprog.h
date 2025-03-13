@@ -180,9 +180,6 @@ void func_8004729C(u16);
 
 void func_8005E0DC(s32); // Types assumed.
 
-/** Resets inventory/health/playtime in savegame buffer. */
-void Game_SaveGameResetPlayer();
-
 /** Unknown bodyprog func. Called by `Fs_QueueWaitForEmpty`. */
 void func_80089128(void);
 
@@ -216,13 +213,15 @@ void GFX_StringDraw(char* str, s32 arg1);
 /** Passes a command to sound driver. */
 void SD_EngineCmd(s32 cmd);
 
-/** Updates th savegame buffer with the current player SysWork info (position/rotation/health/event index). */
+void Game_SaveGameInitialize(s8 overlayIdx, s32 difficulty);
+
+/** Updates th savegame buffer with the current player SysWork info (position, rotation, health, event index). */
 void SysWork_SaveGameUpdatePlayer();
 
-/** Updates SysWork with player info from the savegame buffer (position/rotation/health). */
+/** Updates SysWork with player info from the savegame buffer (position, rotation, health). */
 void SysWork_SaveGameReadPlayer();
 
-/** Resets player info inside savegame buffer (health/game timer/inventory). */
+/** Resets player info in the savegame buffer (inventory, health, playtime). */
 void Game_SaveGameResetPlayer();
 
 /** Copies savegame into an s_ShSaveGameContainer and calculates footer checksum. */
