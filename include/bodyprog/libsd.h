@@ -7,6 +7,12 @@
  * libref.pdf v4.4 may be useful, though was likely based on earlier SDK.
  */
 
+// MIDI related header magic.
+#define SD_MAGIC_SEQp 0x53455170
+#define SD_MAGIC_MThd 0x6468544D
+#define SD_MAGIC_KDT  0x2054444B
+#define SD_MAGIC_KDT1 0x3154444B
+
 extern s32 sd_reverb_mode;
 extern s16 sd_keyoff_mode;
 extern s32 sd_interrupt_start_flag;

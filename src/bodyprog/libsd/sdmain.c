@@ -266,7 +266,7 @@ s16 SdSeqOpen(s32* addr, s16 vab_id) // 0x800A00A4
     s32 i;
 
     sd_int_flag = 1;
-    if (*addr != 0x53455170 && *addr != 0x6468544D && *addr != 0x2054444B && *addr != 0x3154444B)
+    if (*addr != SD_MAGIC_SEQp && *addr != SD_MAGIC_MThd && *addr != SD_MAGIC_KDT && *addr != SD_MAGIC_KDT1)
     {
         return -1;
     }
@@ -290,7 +290,7 @@ s16 SdSeqOpen(s32* addr, s16 vab_id) // 0x800A00A4
 s16 SdSeqOpenWithAccNum(s32* addr, s16 vab_id, s16 seq_access_num) // 0x800A0154
 {
     sd_int_flag = 1;
-    if (*addr != 0x53455170 && *addr != 0x6468544D && *addr != 0x2054444B && *addr != 0x3154444B)
+    if (*addr != SD_MAGIC_SEQp && *addr != SD_MAGIC_MThd && *addr != SD_MAGIC_KDT && *addr != SD_MAGIC_KDT1)
     {
         return -1;
     }
