@@ -550,12 +550,12 @@ void func_80087EDC(s32 arg0)
             
             g_SysWork.field_2C = 0;
             g_SysWork.field_14 = 0;
-            g_SysWork.field_22A0 |= 0x80;
+            g_SysWork.field_22A0 |= 1 << 7;
             g_SysWork.field_10++;
             return;
         
         case 1:
-            g_SysWork.field_22A0 |= 0x80;
+            g_SysWork.field_22A0 |= 1 << 7;
             SD_EngineCmd(23);
             
             g_SysWork.field_2C = 0;
@@ -564,7 +564,7 @@ void func_80087EDC(s32 arg0)
             return;
         
         case 2:
-            g_SysWork.field_22A0 |= 0x80;
+            g_SysWork.field_22A0 |= 1 << 7;
             
             if (!(func_80045BC8() & 0xFFFF))
             {
@@ -589,9 +589,44 @@ void func_80087EDC(s32 arg0)
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80088028);
+void func_80088028(void)
+{
+    func_80087EDC(0);
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80088048);
+void func_80088048(void)
+{
+    if (func_80045B28() & 0xFF)
+    {
+        return;
+    }
+    
+    switch (g_SysWork.field_10)
+    {
+        case 0:
+            func_80035E1C();
+            SD_EngineCmd(18);
+            
+            g_SysWork.field_2C = 0;
+            g_SysWork.field_14 = 0;
+            g_SysWork.field_10++;
+            break;
+            
+        case 1:
+            if (!(func_80045BC8() & 0xFFFF))
+            {
+                g_SysWork.field_28 = 0;
+                g_SysWork.field_10 = 0;
+                g_SysWork.field_2C = 0;
+                g_SysWork.field_14 = 0;
+                g_SysWork.sysStateStep_C++;
+            }
+            break;
+
+        default:
+            break;
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800880F0);
 
