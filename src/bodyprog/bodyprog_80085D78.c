@@ -279,26 +279,27 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800869E4);
 // Start of camera funcs section?
 // ==============================
 
-void func_80086A94(VECTOR3* pos, s32 xOffset, s32 yOffset, s32 zOffset, s32 xzAccel, s32 yAccel, s32 xzSpeedMax, s32 ySpeedMax, s32 warpCamF)
+void func_80086A94(VECTOR3* pos, s32 xOffset, s32 yOffset, s32 zOffset,
+                   s32 xzAccel, s32 yAccel, s32 xzSpeedMax, s32 ySpeedMax, s32 warpCamFlag)
 {
-    VECTOR3 newPos;
+    VECTOR3         targetPos;
     VC_CAM_MV_PARAM camMoveParams;
 
     // Set position.
     if (pos != NULL)
     {
-        newPos.vx = pos->vx + xOffset;
-        newPos.vy = pos->vy + yOffset;
-        newPos.vz = pos->vz + zOffset;
+        targetPos.vx = pos->vx + xOffset;
+        targetPos.vy = pos->vy + yOffset;
+        targetPos.vz = pos->vz + zOffset;
     }
     else
     {
-        newPos.vx = xOffset;
-        newPos.vy = yOffset;
-        newPos.vz = zOffset;
+        targetPos.vx = xOffset;
+        targetPos.vy = yOffset;
+        targetPos.vz = zOffset;
     }
 
-    // Set XZ acceleration.
+    // Set acceleration on XZ plane.
     if (xzAccel == 0)
     {
         camMoveParams.accel_xz = cam_mv_prm_user.accel_xz;
@@ -308,7 +309,7 @@ void func_80086A94(VECTOR3* pos, s32 xOffset, s32 yOffset, s32 zOffset, s32 xzAc
         camMoveParams.accel_xz = xzAccel;
     }
 
-    // Set Y acceleration.
+    // Set acceleration on Y axis.
     if (yAccel == 0)
     {
         camMoveParams.accel_y = cam_mv_prm_user.accel_y;
@@ -318,7 +319,7 @@ void func_80086A94(VECTOR3* pos, s32 xOffset, s32 yOffset, s32 zOffset, s32 xzAc
         camMoveParams.accel_y = yAccel;
     }
 
-    // Set max XZ speed.
+    // Set max speed on XZ plane.
     if (xzSpeedMax == 0)
     {
         camMoveParams.max_spd_xz = cam_mv_prm_user.max_spd_xz;
@@ -328,7 +329,7 @@ void func_80086A94(VECTOR3* pos, s32 xOffset, s32 yOffset, s32 zOffset, s32 xzAc
         camMoveParams.max_spd_xz = xzSpeedMax;
     }
 
-    // Set max Y speed.
+    // Set max speed on Y axis.
     if (ySpeedMax == 0)
     {
         camMoveParams.max_spd_y = cam_mv_prm_user.max_spd_y;
@@ -338,39 +339,255 @@ void func_80086A94(VECTOR3* pos, s32 xOffset, s32 yOffset, s32 zOffset, s32 xzAc
         camMoveParams.max_spd_y = ySpeedMax;
     }
 
-    // Set camera target.
-    vcUserCamTarget(&newPos, &camMoveParams, warpCamF);
+    // Set camera position target.
+    vcUserCamTarget(&targetPos, &camMoveParams, warpCamFlag);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80086B70);
+void func_80086B70(VECTOR3* lookAtPos, s32 xOffset, s32 yOffset, s32 zOffset,
+                   s32 xAngularAccel, s32 yAngularAccel, s32 xAngularSpeedMax, s32 yAngularSpeedMax, s32 warpWatchFlag)
+{
+    VECTOR3           lookAtTargetPos;
+    VC_WATCH_MV_PARAM camRotParams;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80086C58);
+    // Set look-at position.
+    if (lookAtPos != NULL)
+    {
+        lookAtTargetPos.vx = lookAtPos->vx + xOffset;
+        lookAtTargetPos.vy = lookAtPos->vy + yOffset;
+        lookAtTargetPos.vz = lookAtPos->vz + zOffset;
+    }
+    else
+    {
+        lookAtTargetPos.vx = xOffset;
+        lookAtTargetPos.vy = yOffset;
+        lookAtTargetPos.vz = zOffset;
+    }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80086D04);
+    // Set angular acceleration on X axis.
+    if (xAngularAccel == 0)
+    {
+        camRotParams.ang_accel_x = deflt_watch_mv_prm.ang_accel_x;
+    }
+    else
+    {
+        camRotParams.ang_accel_x = xAngularAccel;
+    }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80086DA8);
+    // Set angular acceleration on Y axis.
+    if (yAngularAccel == 0)
+    {
+        camRotParams.ang_accel_y = deflt_watch_mv_prm.ang_accel_y;
+    }
+    else
+    {
+        camRotParams.ang_accel_y = yAngularAccel;
+    }
+
+    // Set max angular speed on X axis.
+    if (xAngularSpeedMax == 0)
+    {
+        camRotParams.max_ang_spd_x = deflt_watch_mv_prm.max_ang_spd_x;
+    }
+    else
+    {
+        camRotParams.max_ang_spd_x = xAngularSpeedMax;
+    }
+    
+    // Set max angular speed on Y axis.
+    if (yAngularSpeedMax == 0)
+    {
+        camRotParams.max_ang_spd_y = deflt_watch_mv_prm.max_ang_spd_y;
+    }
+    else
+    {
+        camRotParams.max_ang_spd_y = yAngularSpeedMax;
+    }
+
+    // Set camera flags and rotation target.
+    vcWorkSetFlags(0, VC_VISIBLE_CHARA_F);
+    vcUserWatchTarget(&lookAtTargetPos, &camRotParams, warpWatchFlag);
+}
+
+// ==============================
+
+void func_80086C58(s32 arg0, s32 arg1)
+{
+    switch (g_SysWork.field_10)
+    {
+        case 0:
+            func_80085EB8(0, arg0, arg1, 0);
+            
+            g_SysWork.field_2C = 0;
+            g_SysWork.field_14 = 0;
+            g_SysWork.field_10++;
+            break;
+        
+        case 1:
+            func_80085EB8(1, arg0, 0, 1);
+            break;
+        
+        default:
+            g_SysWork.field_28 = 0;
+            g_SysWork.field_10 = 0;
+            g_SysWork.field_2C = 0;
+            g_SysWork.field_14 = 0;
+            g_SysWork.sysStateStep_C++;
+            break;
+    }
+}
+
+void func_80086D04(s32 arg0)
+{
+    switch (g_SysWork.field_10)
+    {
+        case 0:
+            func_80085EB8(3, arg0, 0, 0);
+            
+            g_SysWork.field_2C = 0;
+            g_SysWork.field_14 = 0;
+            g_SysWork.field_10++;
+            break;
+        
+        case 1:
+            func_80085EB8(1, arg0, 0, 1);
+            break;
+        
+        default:
+            g_SysWork.field_28 = 0;
+            g_SysWork.field_10 = 0;
+            g_SysWork.field_2C = 0;
+            g_SysWork.field_14 = 0;
+            g_SysWork.sysStateStep_C++;
+            break;
+    }
+}
+
+void func_80086DA8(s32 arg0, s32 arg1)
+{
+    switch (g_SysWork.field_10)
+    {
+        case 0:
+            func_8008616C(0, 1, 0, arg1, 0);
+            g_SysWork.field_2C = 0;
+            g_SysWork.field_14 = 0;
+            g_SysWork.field_10++;
+        
+        case 1:
+            func_800862F8(7, arg0, 1);
+            break;
+        
+        default:
+            func_8008616C(1, 1, 0, 0, 0);
+            break;
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80086E50);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80086F44);
+void func_80086F44(s32 arg0, s32 arg1)
+{
+    if (g_SysWork.field_10 == 0)
+    {
+        func_800862F8(2, 0, 0, arg0);
+        func_8008616C(2, 1, 0, arg1, 1);
+        return;
+    }
+    
+    func_8008616C(0, 0, 0, arg0, 0);
+    g_SysWork.field_28 = 0;
+    g_SysWork.field_10 = 0;
+    g_SysWork.field_2C = 0;
+    g_SysWork.field_14 = 0;
+    g_SysWork.sysStateStep_C++;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80086FE8);
 
+// Requires jump table.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008716C);
 
+// Requires jump table.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80087360);
 
+// Requires jump table.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80087540);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800877B8);
 
+// Requires jump table.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800879FC);
 
+// Requires jump table.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80087AF4);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80087EA8);
+void func_80087EA8(s32 arg0)
+{
+    if (func_800358A8() == 0)
+    {
+        return;
+    }
+    
+    func_800358DC(arg0);
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80087EDC);
+void func_80087EDC(s32 arg0)
+{
+    if ((func_80045B28() & 0xFF) || Fs_QueueDoThingWhenEmpty() == 0)
+    {
+        return;
+    }
+    
+    switch (g_SysWork.field_10)
+    {
+        case 0:
+            if (func_800358A8(arg0) == 0)
+            {
+                g_SysWork.field_10 = 3;
+                g_SysWork.field_2C = 0;
+                g_SysWork.field_14 = 0;
+                return;
+            }
+            
+            g_SysWork.field_2C = 0;
+            g_SysWork.field_14 = 0;
+            g_SysWork.field_22A0 |= 0x80;
+            g_SysWork.field_10++;
+            return;
+        
+        case 1:
+            g_SysWork.field_22A0 |= 0x80;
+            SD_EngineCmd(23);
+            
+            g_SysWork.field_2C = 0;
+            g_SysWork.field_14 = 0;
+            g_SysWork.field_10++;
+            return;
+        
+        case 2:
+            g_SysWork.field_22A0 |= 0x80;
+            
+            if (!(func_80045BC8() & 0xFFFF))
+            {
+                func_800358DC(arg0);
+                
+                g_SysWork.field_2C = 0;
+                g_SysWork.field_14 = 0;
+                g_SysWork.field_10++;
+            }
+            break;
+        
+        case 3:
+            g_SysWork.field_28 = 0;
+            g_SysWork.field_10 = 0;
+            g_SysWork.field_2C = 0;
+            g_SysWork.field_14 = 0;
+            g_SysWork.sysStateStep_C++;
+            break;
+
+        default:
+            break;
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80088028);
 

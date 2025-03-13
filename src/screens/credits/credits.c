@@ -81,8 +81,8 @@ s32 func_801E3124(void)
                     break;
             }
 
-            SD_EngineCmd(0x12);
-            SD_EngineCmd(0x10);
+            SD_EngineCmd(18);
+            SD_EngineCmd(16);
             g_GameWork.gameStateStep_598[1]++;
             break;
 

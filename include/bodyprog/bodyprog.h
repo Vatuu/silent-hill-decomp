@@ -121,7 +121,7 @@ extern s16 D_800C391E;
 /** Unknown bodyprog var. Set in `Fs_QueueDoThingWhenEmpty`. */
 extern s32 D_800C489C;
 
-extern s32 D_800A8FEC;
+extern s32 D_800A8FEC; // Maybe a distance?
 
 extern s32 D_800A9A68;
 
@@ -221,8 +221,25 @@ void func_800867B4(s32 caseParam, s32 idx);
 
 void func_800868DC(s32 idx);
 
-/** Camera update function? */
-void func_80086A94(VECTOR3* pos, s32 xOffset, s32 yOffset, s32 zOffset, s32 xzAccel, s32 yAccel, s32 xzSpeedMax, s32 ySpeedMax, s32 warpCamF);
+/** Camera_UpdatePosition? */
+void func_80086A94(VECTOR3* pos, s32 xOffset, s32 yOffset, s32 zOffset,
+                   s32 xzAccel, s32 yAccel, s32 xzSpeedMax, s32 ySpeedMax, s32 warpCamFlag);
+
+/** Camera_UpdateRotation.? */
+void func_80086B70(VECTOR3* lookAtPos, s32 xOffset, s32 yOffset, s32 zOffset,
+                   s32 xAngularAccel, s32 yAngularAccel, s32 xAngularSpeedMax, s32 yAngularSpeedMax, s32 warpWatchFlag);
+
+void func_80086C58(s32 arg0, s32 arg1);
+
+void func_80086D04(s32 arg0);
+
+void func_80086DA8(s32 arg0, s32 arg1);
+
+void func_80086F44(s32 arg0, s32 arg1);
+
+void func_80087EA8(s32 arg0);
+
+void func_80087EDC(s32 arg0);
 
 void func_80091380();
 

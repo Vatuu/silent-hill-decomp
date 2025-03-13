@@ -4,8 +4,9 @@
 #include "gpu.h"
 
 #define TICKS_PER_SECOND      60
-#define SAVEGAME_FOOTER_MAGIC 0xDCDC
+#define NPC_COUNT_MAX         6
 #define GAME_INVENTORY_SIZE   40
+#define SAVEGAME_FOOTER_MAGIC 0xDCDC
 
 /** Convert tile units (the engine's measurement reference) to world units. */
 #define TILE_UNIT(value) \
@@ -339,7 +340,7 @@ typedef struct _SysWork
     s32             field_30;
     char            unk_34[24];
     s_MainCharacter player_4C;
-    s_SubCharacter  characters_1A0[6];
+    s_SubCharacter  characters_1A0[NPC_COUNT_MAX];
     GsCOORDINATE2   unk_coord_890[2];
     GsCOORDINATE2   hero_neck_930;
     s8              unk_980[6432];
