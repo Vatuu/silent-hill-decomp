@@ -3,11 +3,17 @@
 #include <libcd.h>
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/vw_system.h"
+#include "main/fsqueue.h"
 #include "screens/stream/stream.h"
 
 void func_80035338(s32 arg0, s8 arg1, u32 arg2, s32 arg3); // arg3 type assumed.
 void func_8003D5B4(s8 arg0);
 void func_8003D6E0(s32 arg0, s32 arg1, s32 arg2, void* arg3);
+
+// ===================================
+// Start of game system funcs section?
+// ===================================
 
 void func_80085D78(s32 arg0)
 {
@@ -121,7 +127,6 @@ void func_8008616C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4)
         var_v1 = g_SysWork.field_14;
     }
 
-    // Irregular
     switch (var_v1)
     {
         case 0:
@@ -206,7 +211,7 @@ void func_8008616C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4)
             }
             else
             {
-    block_32:
+block_32:
                 func_80085D78(arg4);
             }
             
@@ -226,9 +231,43 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80086728);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008677C);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800867B4);
+void func_800867B4(s32 caseParam, s32 idx)
+{
+    switch (caseParam)
+    {
+        case 0:
+            DrawSync(0);
+            StoreImage(&D_8002AB10, IMAGE_BUFFER_2);
+            DrawSync(0);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800868DC);
+            // TODO: What are these offsets?
+            Fs_QueueStartReadTim(D_800A99B4[idx] + 0x768, FS_BUFFER_2, &D_800A901C);
+            Fs_QueueStartReadTim(D_800A99CC[idx] + 0x776, FS_BUFFER_3, &D_800A9024);
+            
+            GFX_Init(0x140, 1);
+            GsSwapDispBuff();
+            Fs_QueueWaitForEmpty();
+            break;
+        
+        case 1:
+            func_800314EC(&D_800A901C);
+            break;
+        
+        case 2:
+            LoadImage(&D_8002AB10, IMAGE_BUFFER_2);
+            DrawSync(0);
+            GFX_Init(0x140, 0);
+            break;
+
+        default:
+            break;
+    }
+}
+
+void func_800868DC(s32 idx)
+{
+    D_800C4710[idx] = 0;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800868F4);
 
@@ -236,7 +275,72 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008694C);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800869E4);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80086A94);
+// ==============================
+// Start of camera funcs section?
+// ==============================
+
+void func_80086A94(VECTOR3* pos, s32 xOffset, s32 yOffset, s32 zOffset, s32 xzAccel, s32 yAccel, s32 xzSpeedMax, s32 ySpeedMax, s32 warpCamF)
+{
+    VECTOR3 newPos;
+    VC_CAM_MV_PARAM camMoveParams;
+
+    // Set position.
+    if (pos != NULL)
+    {
+        newPos.vx = pos->vx + xOffset;
+        newPos.vy = pos->vy + yOffset;
+        newPos.vz = pos->vz + zOffset;
+    }
+    else
+    {
+        newPos.vx = xOffset;
+        newPos.vy = yOffset;
+        newPos.vz = zOffset;
+    }
+
+    // Set XZ acceleration.
+    if (xzAccel == 0)
+    {
+        camMoveParams.accel_xz = cam_mv_prm_user.accel_xz;
+    }
+    else
+    {
+        camMoveParams.accel_xz = xzAccel;
+    }
+
+    // Set Y acceleration.
+    if (yAccel == 0)
+    {
+        camMoveParams.accel_y = cam_mv_prm_user.accel_y;
+    }
+    else
+    {
+        camMoveParams.accel_y = yAccel;
+    }
+
+    // Set max XZ speed.
+    if (xzSpeedMax == 0)
+    {
+        camMoveParams.max_spd_xz = cam_mv_prm_user.max_spd_xz;
+    }
+    else
+    {
+        camMoveParams.max_spd_xz = xzSpeedMax;
+    }
+
+    // Set max Y speed.
+    if (ySpeedMax == 0)
+    {
+        camMoveParams.max_spd_y = cam_mv_prm_user.max_spd_y;
+    }
+    else
+    {
+        camMoveParams.max_spd_y = ySpeedMax;
+    }
+
+    // Set camera target.
+    vcUserCamTarget(&newPos, &camMoveParams, warpCamF);
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80086B70);
 

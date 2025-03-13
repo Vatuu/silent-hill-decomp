@@ -342,7 +342,8 @@ typedef struct _SysWork
     s_SubCharacter  characters_1A0[6];
     GsCOORDINATE2   unk_coord_890[2];
     GsCOORDINATE2   hero_neck_930;
-    char            unk_980[0x22A4 - 0x980];
+    s8              unk_980[6432];
+    s32             field_22A0;
     s32             flags_22A4;
     char            unk_22A8[210];
     s16             cam_ang_y_237A;
