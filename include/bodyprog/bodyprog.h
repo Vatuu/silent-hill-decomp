@@ -221,13 +221,11 @@ void func_800867B4(s32 caseParam, s32 idx);
 
 void func_800868DC(s32 idx);
 
-/** Camera_UpdatePosition? */
-void func_80086A94(VECTOR3* pos, s32 xOffset, s32 yOffset, s32 zOffset,
-                   s32 xzAccel, s32 yAccel, s32 xzSpeedMax, s32 ySpeedMax, s32 warpCamFlag);
+void Camera_SetTranslation(VECTOR3* pos, s32 xPosOffset, s32 yPosOffset, s32 zPosOffset,
+                           s32 xzAccel, s32 yAccel, s32 xzSpeedMax, s32 ySpeedMax, s32 warpCamFlag);
 
-/** Camera_UpdateRotation.? */
-void func_80086B70(VECTOR3* lookAtPos, s32 xOffset, s32 yOffset, s32 zOffset,
-                   s32 xAngularAccel, s32 yAngularAccel, s32 xAngularSpeedMax, s32 yAngularSpeedMax, s32 warpWatchFlag);
+void Camera_SetRotation(VECTOR3* lookAt, s32 xLookAtOffset, s32 yLookAtOffset, s32 zLookAtOffset,
+                        s32 xAngularAccel, s32 yAngularAccel, s32 xAngularSpeedMax, s32 yAngularSpeedMax, s32 warpWatchFlag);
 
 void func_80086C58(s32 arg0, s32 arg1);
 

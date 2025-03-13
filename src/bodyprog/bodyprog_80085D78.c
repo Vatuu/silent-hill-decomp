@@ -11,10 +11,6 @@ void func_80035338(s32 arg0, s8 arg1, u32 arg2, s32 arg3); // arg3 type assumed.
 void func_8003D5B4(s8 arg0);
 void func_8003D6E0(s32 arg0, s32 arg1, s32 arg2, void* arg3);
 
-// ===================================
-// Start of game system funcs section?
-// ===================================
-
 void func_80085D78(s32 arg0)
 {
     if (arg0 != 0)
@@ -275,92 +271,88 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008694C);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800869E4);
 
-// ==============================
-// Start of camera funcs section?
-// ==============================
-
-void func_80086A94(VECTOR3* pos, s32 xOffset, s32 yOffset, s32 zOffset,
-                   s32 xzAccel, s32 yAccel, s32 xzSpeedMax, s32 ySpeedMax, s32 warpCamFlag)
+void Camera_SetTranslation(VECTOR3* pos, s32 xPosOffset, s32 yPosOffset, s32 zPosOffset,
+                           s32 xzAccel, s32 yAccel, s32 xzSpeedMax, s32 ySpeedMax, s32 warpCamFlag) // 0x80086A94
 {
-    VECTOR3         targetPos;
-    VC_CAM_MV_PARAM camMoveParams;
+    VECTOR3         posTarget;
+    VC_CAM_MV_PARAM camTranslationParams;
 
-    // Set position.
+    // Set target position.
     if (pos != NULL)
     {
-        targetPos.vx = pos->vx + xOffset;
-        targetPos.vy = pos->vy + yOffset;
-        targetPos.vz = pos->vz + zOffset;
+        posTarget.vx = pos->vx + xPosOffset;
+        posTarget.vy = pos->vy + yPosOffset;
+        posTarget.vz = pos->vz + zPosOffset;
     }
     else
     {
-        targetPos.vx = xOffset;
-        targetPos.vy = yOffset;
-        targetPos.vz = zOffset;
+        posTarget.vx = xPosOffset;
+        posTarget.vy = yPosOffset;
+        posTarget.vz = zPosOffset;
     }
 
     // Set acceleration on XZ plane.
     if (xzAccel == 0)
     {
-        camMoveParams.accel_xz = cam_mv_prm_user.accel_xz;
+        camTranslationParams.accel_xz = cam_mv_prm_user.accel_xz;
     }
     else
     {
-        camMoveParams.accel_xz = xzAccel;
+        camTranslationParams.accel_xz = xzAccel;
     }
 
     // Set acceleration on Y axis.
     if (yAccel == 0)
     {
-        camMoveParams.accel_y = cam_mv_prm_user.accel_y;
+        camTranslationParams.accel_y = cam_mv_prm_user.accel_y;
     }
     else
     {
-        camMoveParams.accel_y = yAccel;
+        camTranslationParams.accel_y = yAccel;
     }
 
     // Set max speed on XZ plane.
     if (xzSpeedMax == 0)
     {
-        camMoveParams.max_spd_xz = cam_mv_prm_user.max_spd_xz;
+        camTranslationParams.max_spd_xz = cam_mv_prm_user.max_spd_xz;
     }
     else
     {
-        camMoveParams.max_spd_xz = xzSpeedMax;
+        camTranslationParams.max_spd_xz = xzSpeedMax;
     }
 
     // Set max speed on Y axis.
     if (ySpeedMax == 0)
     {
-        camMoveParams.max_spd_y = cam_mv_prm_user.max_spd_y;
+        camTranslationParams.max_spd_y = cam_mv_prm_user.max_spd_y;
     }
     else
     {
-        camMoveParams.max_spd_y = ySpeedMax;
+        camTranslationParams.max_spd_y = ySpeedMax;
     }
 
     // Set camera position target.
-    vcUserCamTarget(&targetPos, &camMoveParams, warpCamFlag);
+    vcUserCamTarget(&posTarget, &camTranslationParams, warpCamFlag);
 }
 
-void func_80086B70(VECTOR3* lookAtPos, s32 xOffset, s32 yOffset, s32 zOffset,
-                   s32 xAngularAccel, s32 yAngularAccel, s32 xAngularSpeedMax, s32 yAngularSpeedMax, s32 warpWatchFlag)
+void Camera_SetRotation(VECTOR3* lookAt, s32 xLookAtOffset, s32 yLookAtOffset, s32 zLookAtOffset,
+                        s32 xAngularAccel, s32 yAngularAccel, s32 xAngularSpeedMax, s32 yAngularSpeedMax, s32 warpWatchFlag) // 0x80086B70
 {
-    VECTOR3           lookAtTargetPos;
+    VECTOR3           lookAtTarget;
     VC_WATCH_MV_PARAM camRotParams;
 
-    // Set look-at position.
-    if (lookAtPos != NULL)
+    // Set target look-at position.
+    if (lookAt != NULL)
     {
-        lookAtTargetPos.vx = lookAtPos->vx + xOffset;
-        lookAtTargetPos.vy = lookAtPos->vy + yOffset;
-        lookAtTargetPos.vz = lookAtPos->vz + zOffset;
+        lookAtTarget.vx = lookAt->vx + xLookAtOffset;
+        lookAtTarget.vy = lookAt->vy + yLookAtOffset;
+        lookAtTarget.vz = lookAt->vz + zLookAtOffset;
     }
     else
     {
-        lookAtTargetPos.vx = xOffset;
-        lookAtTargetPos.vy = yOffset;
-        lookAtTargetPos.vz = zOffset;
+        lookAtTarget.vx = xLookAtOffset;
+        lookAtTarget.vy = yLookAtOffset;
+        lookAtTarget.vz = zLookAtOffset;
     }
 
     // Set angular acceleration on X axis.
@@ -405,10 +397,8 @@ void func_80086B70(VECTOR3* lookAtPos, s32 xOffset, s32 yOffset, s32 zOffset,
 
     // Set camera flags and rotation target.
     vcWorkSetFlags(0, VC_VISIBLE_CHARA_F);
-    vcUserWatchTarget(&lookAtTargetPos, &camRotParams, warpWatchFlag);
+    vcUserWatchTarget(&lookAtTarget, &camRotParams, warpWatchFlag);
 }
-
-// ==============================
 
 void func_80086C58(s32 arg0, s32 arg1)
 {
@@ -482,7 +472,29 @@ void func_80086DA8(s32 arg0, s32 arg1)
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80086E50);
+void func_80086E50(s32 arg0, s32 arg1, s32 arg2)
+{
+    switch (g_SysWork.field_10)
+    {
+        case 0:
+            func_8008616C(0, 1, 0, arg1, 0);
+            g_SysWork.field_2C = 0;
+            g_SysWork.field_14 = 0;
+            g_SysWork.field_10++;
+
+        case 1:
+            func_800862F8(7, arg0, 1);
+            break;
+
+        case 2:
+            func_8008616C(1, 1, 0, 0, 1);
+            break;
+
+        default:
+            func_800862F8(2, 0, 0);
+            func_8008616C(2, 0, 0, arg2, 0);
+    }
+}
 
 void func_80086F44(s32 arg0, s32 arg1)
 {
