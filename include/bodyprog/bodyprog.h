@@ -44,6 +44,16 @@ typedef struct
 
 typedef struct
 {
+    s8  unk_0[8];
+    s32 field_8;
+    s8  unk_12[2];
+    s32 field_14;
+    s32 field_20;
+
+} s_800A992C;
+
+typedef struct
+{
     s32                field_0;
     s32                field_4; // Index into some array.
     s32                field_8;
@@ -75,6 +85,8 @@ extern s32 D_800AD49C;
 /** Unknown bodyprog var. Used in `Fs_QueueStartReadAnm`. */
 extern s_800A90FC D_800A90FC[];
 
+extern s_800A992C D_800A992C[];
+
 extern s_800B5508 D_800B2780[];
 
 extern s_800B5508 D_800B3680[];
@@ -94,6 +106,10 @@ extern s32 D_800B55FC;
 extern s32 D_800B5618;
 
 extern s32 D_800C4710[];
+
+extern void (*D_800C9644)();
+
+extern void (*D_800C9648)(s32);
 
 extern s32 (*D_800C9668)();
 
@@ -221,6 +237,8 @@ void func_800867B4(s32 caseParam, s32 idx);
 
 void func_800868DC(s32 idx);
 
+void func_800869E4(u8* arg1, u8* arg2, s16* arg3);
+
 void Camera_SetTranslation(VECTOR3* pos, s32 xPosOffset, s32 yPosOffset, s32 zPosOffset,
                            s32 xzAccel, s32 yAccel, s32 xzSpeedMax, s32 ySpeedMax, s32 warpCamFlag);
 
@@ -235,9 +253,15 @@ void func_80086DA8(s32 arg0, s32 arg1);
 
 void func_80086F44(s32 arg0, s32 arg1);
 
+void func_80086FE8(s32 arg0, s32 arg1, s32 arg2);
+
 void func_80087EA8(s32 arg0);
 
 void func_80087EDC(s32 arg0);
+
+s32 func_80088D0C();
+
+void func_80088D34(s32 idx);
 
 void func_80091380();
 

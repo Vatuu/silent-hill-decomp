@@ -265,7 +265,7 @@ STATIC_ASSERT_SIZEOF(s_GameWork, 0x5D8);
 
 typedef struct _SubCharacter
 {
-    u8    chara_type_0;
+    u8    chara_type_0; // NOTE: Character types <24 must be some distinct category.
     u8    field_1;
     u8    field_2;
     u8    field_3; // Clear: anim transitioning(?), bit 1: animated, bit2: turning.

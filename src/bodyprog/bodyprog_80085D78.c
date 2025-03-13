@@ -3,6 +3,7 @@
 #include <libcd.h>
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/math.h"
 #include "bodyprog/vw_system.h"
 #include "main/fsqueue.h"
 #include "screens/stream/stream.h"
@@ -265,11 +266,44 @@ void func_800868DC(s32 idx)
     D_800C4710[idx] = 0;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800868F4);
+s32 func_800868F4(s32 arg0, s32 arg1, s32 idx)
+{
+    D_800C4710[idx] += g_CurDeltaTime;
+    D_800C4710[idx] = (arg1 < D_800C4710[idx]) ? arg1 : D_800C4710[idx];
+    
+    return (arg0 * D_800C4710[idx]) / arg1;
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008694C);
+s32 func_8008694C(s32 arg0, s16 arg1, s16 arg2, s32 arg3, s32 idx)
+{
+    D_800C4710[idx] += g_CurDeltaTime;
+    D_800C4710[idx] = (arg3 < D_800C4710[idx]) ? arg3 : D_800C4710[idx];
+    return (arg0 * shRsin(arg1 + ((arg2 * D_800C4710[idx]) / arg3))) >> 12;
+}
 
+// TODO: Matched, but checksum fails.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800869E4);
+/*void func_800869E4(u8* arg1, u8* arg2, s16* arg3)
+{
+    s32 ret;
+
+    g_SysWork.field_22A0 |= 0x20;
+    
+    ret = func_800365B8();
+    if (ret == 1)
+    {
+            g_SysWork.field_28 = 0;
+            g_SysWork.field_10 = 0;
+            g_SysWork.field_2C = 0;
+            g_SysWork.field_14 = 0;
+            g_SysWork.sysStateStep_C++;
+    }
+    else if (ret == -1)
+    {
+        SD_EngineCmd(arg3[*arg2]);
+        *arg2 += 1;
+    }
+}*/
 
 void Camera_SetTranslation(VECTOR3* pos, s32 xPosOffset, s32 yPosOffset, s32 zPosOffset,
                            s32 xzAccel, s32 yAccel, s32 xzSpeedMax, s32 ySpeedMax, s32 warpCamFlag) // 0x80086A94
@@ -513,7 +547,62 @@ void func_80086F44(s32 arg0, s32 arg1)
     g_SysWork.sysStateStep_C++;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80086FE8);
+void func_80086FE8(s32 arg0, s32 arg1, s32 arg2)
+{
+    s32 i;
+    
+    if (!(g_SysWork.flags_22A4 & 0x20))
+    {
+        // Run through NPCs.
+        for (i = 0; i < NPC_COUNT_MAX; i++)
+        {
+            // NPC type is >=24 or health is 0.
+            if ((u32)((u8)g_SysWork.characters_1A0[i].chara_type_0 - 1) >= 24 ||
+                g_SysWork.characters_1A0[i].health_B0 <= 0)
+            {
+                continue;
+            }
+
+            break;
+        }
+        
+        if (i != NPC_COUNT_MAX)
+        {
+            g_CurDeltaTime = 0;
+        }
+    }
+    
+    switch (g_SysWork.field_10)
+    {
+        case 0:
+            D_800C9644();
+            func_8005DC1C(arg1, arg2, 0x80, 0);
+            
+            g_SysWork.field_2C = 0;
+            g_SysWork.field_14 = 0;
+            g_SysWork.field_10++;
+        
+        case 1:
+            func_80085E6C(0x333, 1);
+            break;
+        
+        case 2:
+            func_800860B0(0, arg0, 0, 0, 0, 1);
+            break;
+        
+        default:
+            D_800C9648(0);
+            
+            g_SysWork.sysState_8 = 0;
+            g_SysWork.field_24 = 0;
+            g_SysWork.sysStateStep_C = 0;
+            g_SysWork.field_28 = 0;
+            g_SysWork.field_10 = 0;
+            g_SysWork.field_2C = 0;
+            g_SysWork.field_14 = 0;
+            break;
+    }
+}
 
 // Requires jump table.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008716C);
@@ -655,9 +744,18 @@ s32 Chara_Load(s32 arg0, s8 arg1, s32 arg2, s8 arg3, s32 arg4, s32 arg5) // 0x80
     return 1;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80088D0C);
+s32 func_80088D0C()
+{
+    Fs_QueueWaitForEmpty();
+    func_8003D95C();
+    return 1;
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80088D34);
+void func_80088D34(s32 idx)
+{
+    idx++; 
+    func_800445A4(D_800A992C[idx].field_8, D_800A992C[idx].field_20);
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", Chara_Spawn);
 

@@ -1,7 +1,8 @@
 #include "game.h"
-#include "bodyprog/bodyprog.h"
 
 #include <libgs.h>
+
+#include "bodyprog/bodyprog.h"
 
 void GFX_StringPosition(s32 x, s32 y)
 {
@@ -46,13 +47,13 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8004B684);
 
 void func_8004B6D4(s16 arg0, s16 arg1)
 {
-    if (arg0 != -1)
+    if (arg0 != NO_VALUE)
     {
         D_800C38FC = arg0 + (-g_GameWork.gsScreenWidth_588 / 2);
         D_800C391C = D_800C38FC;
     }
     
-    if (arg1 != -1)
+    if (arg1 != NO_VALUE)
     {
         D_800C38FE = arg1 + (-g_GameWork.gsScreenHeight_58A / 2);
     }
