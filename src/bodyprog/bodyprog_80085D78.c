@@ -311,7 +311,7 @@ void Camera_SetTranslation(VECTOR3* pos, s32 xPosOffset, s32 yPosOffset, s32 zPo
     VECTOR3         posTarget;
     VC_CAM_MV_PARAM camTranslationParams;
 
-    // Set target position.
+    // Set position target.
     if (pos != NULL)
     {
         posTarget.vx = pos->vx + xPosOffset;
@@ -375,7 +375,7 @@ void Camera_SetRotation(VECTOR3* lookAt, s32 xLookAtOffset, s32 yLookAtOffset, s
     VECTOR3           lookAtTarget;
     VC_WATCH_MV_PARAM camRotParams;
 
-    // Set target look-at position.
+    // Set look-at target.
     if (lookAt != NULL)
     {
         lookAtTarget.vx = lookAt->vx + xLookAtOffset;
