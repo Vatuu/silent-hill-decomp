@@ -140,7 +140,7 @@ SaveGame_CopyWithChecksum = 0x8002FCCC; // type:func
 SaveGame_ChecksumUpdate = 0x8002FF30; // type:func
 SaveGame_ChecksumValidate = 0x8002FF74; // type:func
 SaveGame_ChecksumGenerate = 0x8002FFD0; // type:func
-Game_SaveGameClear = 0x800350BC; // type:func
+Game_SaveGameInitialize = 0x800350BC; // type:func
 
 SysWork_SaveGameUpdatePlayer = 0x8003A120; // type:func
 SysWork_SaveGameReadPlayer = 0x8003A1F4; // type:func

@@ -1,4 +1,5 @@
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/math.h"
 #include "main/fsqueue.h"
 
 #include <memory.h>
@@ -405,7 +406,31 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80034F18);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80034FB8);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", Game_SaveGameClear);
+void Game_SaveGameInitialize(s8 overlayIndex, s32 difficulty) // 0x800350BC
+{
+    s32  i;
+    s32* var_a2;
+
+    bzero(g_SaveGamePtr, sizeof(s_ShSaveGame));
+
+    g_SaveGamePtr->curMapOverlayIndex_A4 = overlayIndex;
+
+    // -1 = easy, 0 = normal, 1 = hard
+    difficulty = CLAMP(difficulty, -1, 1);
+
+    var_a2 = g_SaveGamePtr->field_B0;
+
+    g_SaveGamePtr->field_260      = (g_SaveGamePtr->field_260 & 0x0FFFFFFF) | (difficulty << 0x1C);
+    g_SaveGamePtr->curMapIndex_A9 = 1;
+
+    for (i = 0; i < 45; i++)
+    {
+        var_a2[44] = -1;
+        var_a2 -= 1;
+    }
+
+    Game_SaveGameResetPlayer();
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80035178);
 
