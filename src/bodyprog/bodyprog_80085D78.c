@@ -80,10 +80,10 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008605C);
 
 void func_800860B0(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 sysStateStep, s32 arg5)
 {
-    s32 temp_v0;
+    s32 ret;
 
-    temp_v0 = func_800365B8(arg1);
-    if (temp_v0 <= 0)
+    ret = func_800365B8(arg1);
+    if (ret <= 0)
     {
         return;
     }
@@ -94,15 +94,15 @@ void func_800860B0(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 sysStateStep, s32
         return;
     }
 
-    if (temp_v0 == 1)
+    if (ret == 1)
     {
         func_80085DC0(arg5, arg2);
     }
-    if (temp_v0 == 2)
+    if (ret == 2)
     {
         func_80085DC0(arg5, arg3);
     }
-    if (temp_v0 == 3)
+    if (ret == 3)
     {
         func_80085DC0(arg5, sysStateStep);
     }
