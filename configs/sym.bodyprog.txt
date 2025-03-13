@@ -373,6 +373,7 @@ sd_interrupt_start_flag = 0x800B143C;
 sd_keyoff_mode = 0x800B1440;
 sd_mono_st_flag = 0x800B1444;
 sd_reverb_mode = 0x800B1448;
+sd_vab_transfer_offset = 0x800B144C; // type:u32 guessed name
 sd_reverb_area_size = 0x800B1450;
 PitchTbl = 0x800B1728;
 random_tbl = 0x800B2328;
