@@ -180,6 +180,9 @@ void func_8004729C(u16);
 
 void func_8005E0DC(s32); // Types assumed.
 
+/** Resets inventory/health/playtime in savegame buffer. */
+void Game_SaveGameResetPlayer();
+
 /** Unknown bodyprog func. Called by `Fs_QueueWaitForEmpty`. */
 void func_80089128(void);
 

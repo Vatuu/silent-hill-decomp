@@ -5,6 +5,11 @@
 
 #define MIN_IN_ROAD_DIST TILE_UNIT(16.0f) // vcGetMinInRoadDist() in SH2, hardcoded to TILE_UNIT(16.0f) in SH1.
 
+static inline s16 shAngleRegulate(s32 a)
+{
+    return (a << 0x14) >> 0x14;
+}
+
 INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vc_main", vcInitVCSystem);
 
 void vcStartCameraSystem() // 0x800809DC
@@ -183,7 +188,48 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vc_main", vcRetCurCamMvType);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vc_main", func_8008150C);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vc_main", vcRetThroughDoorCamEndF);
+s32 vcRetThroughDoorCamEndF(VC_WORK* w_p) // 0x800815F0
+{
+    VC_THROUGH_DOOR_CAM_PARAM* prm_p;
+    s32                        rail2chara_dist;
+    s32                        abs_ofs_ang_y;
+
+    prm_p           = &w_p->through_door_10;
+    rail2chara_dist = prm_p->rail_sta_to_chara_dist_18;
+
+    if (!w_p->through_door_10.active_f_0)
+    {
+        return 1;
+    }
+
+    // TODO: timer field treated as a distance here? maybe misnamed, need to check usages in SH2 against SH
+    if (prm_p->timer_4 > TILE_UNIT(19.2f) && w_p->nearest_enemy_xz_dist_2E0 < TILE_UNIT(19.2f))
+    {
+        return 1;
+    }
+
+    if (rail2chara_dist > TILE_UNIT(36.8f))
+    {
+        return 1;
+    }
+
+    if (rail2chara_dist > TILE_UNIT(8.0f))
+    {
+        abs_ofs_ang_y = shAngleRegulate(w_p->chara_eye_ang_y_144 - ratan2(w_p->chara_pos_114.vx - w_p->through_door_10.rail_sta_pos_C.vx, w_p->chara_pos_114.vz - w_p->through_door_10.rail_sta_pos_C.vz));
+
+        if (abs_ofs_ang_y < 0)
+        {
+            abs_ofs_ang_y = -abs_ofs_ang_y;
+        }
+
+        if (abs_ofs_ang_y > DEG_TO_FPA(4.373f))
+        {
+            return 1;
+        }
+    }
+
+    return 0;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vc_main", vcRetFarWatchRate);
 
@@ -288,7 +334,19 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vc_main", vcGetBestNewCurNearRoad);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vc_main", vcGetNearestNEAR_ROAD_DATA);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vc_main", vcAdvantageDistOfOldCurRoad);
+s32 vcAdvantageDistOfOldCurRoad(VC_NEAR_ROAD_DATA* old_cur_p) // 0x80082AD0
+{
+    switch ((s32)old_cur_p->road_p_0->rd_type_11)
+    {
+        case VC_RD_TYPE_ROAD:
+        case VC_RD_TYPE_EFFECT:
+        default:
+            return TILE_UNIT(5.6f);
+
+        case VC_RD_TYPE_EVENT:
+            return TILE_UNIT(2.4f);
+    }
+}
 
 void vcAutoRenewalWatchTgtPosAndAngZ(VC_WORK* w_p, VC_CAM_MV_TYPE cam_mv_type, VC_AREA_SIZE_TYPE cur_rd_area_size, int far_watch_rate, int self_view_eff_rate) // 0x80082B10
 {
@@ -800,11 +858,6 @@ void vcMakeOfsCam2CharaBottomAndTopAngByBaseMatT(SVECTOR* ofs_cam2chara_btm_ang,
     vec.vz = FROM_FIXED(chara_pos->vz - cam_pos->vz, Q4_SHIFT);
     ApplyMatrixSV(base_matT, &vec, &vec);
     vwVectorToAngle(ofs_cam2chara_top_ang, &vec);
-}
-
-static inline s16 shAngleRegulate(s32 a)
-{
-    return (a << 0x14) >> 0x14;
 }
 
 void vcAdjCamOfsAngByCharaInScreen(SVECTOR* cam_ang, SVECTOR* ofs_cam2chara_btm_ang, SVECTOR* ofs_cam2chara_top_ang, VC_WORK* w_p) // 0x80085460
