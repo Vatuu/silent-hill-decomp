@@ -280,13 +280,13 @@ void GFX_ClearRectInterlaced(s16 x, s16 y, s16 w, s16 h, u8 r, u8 g, u8 b);
 
 void GFX_VSyncCallback(void);
 
-/** Sets position of next string drawn by GFX_StringDraw. */
+/** Sets the position of the next string to be drawn by GFX_StringDraw. */
 void GFX_StringPosition(s32 x, s32 y);
 
-/** Draws a string to screen. */
+/** Draws a string in display space. */
 void GFX_StringDraw(char* str, s32 arg1);
 
-/** Passes a command to sound driver. */
+/** Passes a command to the sound driver. */
 void SD_EngineCmd(s32 cmd);
 
 /** Updates the savegame buffer with the current player SysWork info (position, rotation, health, event index). */
@@ -306,8 +306,10 @@ void SaveGame_CopyWithChecksum(s_ShSaveGameContainer* dest, s_ShSaveGame* src);
 /** Updates the footer with the checksum of the given data. */
 void SaveGame_ChecksumUpdate(s_ShSaveGameFooter* saveFooter, s8* saveData, s32 saveDataLength);
 
-/** Generates checksum of the given saveData and compares against checksum value in the footer.
-    Returns 1 if checksum matches, otherwise 0. */
+/**
+ * Generates a checksum of the given saveData and compares it against the checksum value in the footer.
+ * Returns 1 if the checksums match, otherwise 0.
+ */
 s32 SaveGame_ChecksumValidate(s_ShSaveGameFooter* saveFooter, s8* saveData, s32 saveDataLength);
 
 /** Generates an 8-bit XOR checksum over the given data, only appears used with s_ShSaveGame data. */

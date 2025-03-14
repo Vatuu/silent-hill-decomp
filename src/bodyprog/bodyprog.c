@@ -384,10 +384,13 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80032D1C);
 
 void MainLoop(void)
 {
-    #define V_BLANKS_CAPPED_MAX 4
-    #define H_BLANKS_PER_SECOND 15780
-    #define H_BLANKS_PER_TICK (H_BLANKS_PER_SECOND / TICKS_PER_SECOND)
-
+    #define ONE_FIXED_SEC                     TO_FIXED(1, Q12_SHIFT)
+    #define H_BLANKS_PER_TICK                 263
+    #define H_BLANKS_PER_SECOND               (H_BLANKS_PER_TICK * TICKS_PER_SECOND)                          // 15780
+    #define H_BLANKS_TO_SEC_CONVERSION_FACTOR ((float)ONE_FIXED_SEC / (float)H_BLANKS_PER_SECOND)             // 0.25956907477f
+    #define H_BLANKS_TO_FIXED_SEC_SCALE       (s32)(H_BLANKS_TO_SEC_CONVERSION_FACTOR * (float)ONE_FIXED_SEC) // 1063
+    #define CAPPED_V_BLANKS_MAX               4
+    
     s32 temp_a0;
     s32 temp_v0_2;
     s32 vCountCopy;
@@ -492,8 +495,8 @@ void MainLoop(void)
             g_UncappedVBlanks = g_CappedVBlanks;
             g_CappedVBlanks = MIN(g_CappedVBlanks, 4);
             
-            vCount = g_Demo_VideoPresentInterval * 263;
-            vCountCopy = g_UncappedVBlanks * 263;
+            vCount = g_Demo_VideoPresentInterval * H_BLANKS_PER_TICK;
+            vCountCopy = g_UncappedVBlanks * H_BLANKS_PER_TICK;
             g_CappedVBlanks = g_Demo_VideoPresentInterval;
         }
         else
@@ -527,17 +530,19 @@ void MainLoop(void)
             }
             
             g_UncappedVBlanks = g_CappedVBlanks;
-            g_CappedVBlanks = MIN(g_CappedVBlanks, V_BLANKS_CAPPED_MAX);
+            g_CappedVBlanks = MIN(g_CappedVBlanks, CAPPED_V_BLANKS_MAX);
             
             vCount = MIN(GsGetVcount(), 1052); // Will call GsGetVcount() twice.
             vCountCopy = vCount;
         }
-        
-        g_DeltaTime = MUL_FIXED(vCount, 1063, Q12_SHIFT);
-        D_800A8FEC = MUL_FIXED(vCountCopy, 1063, Q12_SHIFT);
+
+        // Update timers.
+        g_DeltaTime = MUL_FIXED(vCount, H_BLANKS_TO_FIXED_SEC_SCALE, Q12_SHIFT);
+        D_800A8FEC = MUL_FIXED(vCountCopy, H_BLANKS_TO_FIXED_SEC_SCALE, Q12_SHIFT);
         D_800B9CC8 = MUL_FIXED(vCount, 10419, Q12_SHIFT);
         GsClearVcount();
         
+        // Draw objects?
         GsSwapDispBuff();
         GsSortClear(g_GameWork.field_58C, g_GameWork.field_58D, g_GameWork.field_58E, &g_ObjectTable0[g_ObjectTableIdx]);
         GsDrawOt(&g_ObjectTable0[g_ObjectTableIdx]);
@@ -735,7 +740,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80038F6C);
 void func_800391E8()
 {
     D_800A9A68 += D_800A8FEC;
-    if (((D_800A9A68 >> 0xB) & 1) == 0)
+    if (((D_800A9A68 >> 11) & 1) == 0)
     {
         GFX_StringPosition(125, 104);
         GFX_StringDraw(D_80025394, 99); // "\x07PAUSED"

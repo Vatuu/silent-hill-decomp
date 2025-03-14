@@ -3,7 +3,7 @@
 
 #define Q4_SHIFT       4     /** Used for Q27.4 positions. */
 #define Q8_SHIFT       8     /** Used for Q8.8 range limits. */
-#define Q12_SHIFT      12    /** Used for Q19.12 trigonometry. */
+#define Q12_SHIFT      12    /** Used for Q19.12 timers and trigonometry. */
 #define FP_ANGLE_COUNT 65536 /** Number of possible fixed-point angles in Q1.15 format. */
 
 /** Multiplies two integers and converts the result from a fixed-point Q format. */
