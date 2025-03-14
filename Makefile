@@ -184,14 +184,11 @@ objdiff-config: regenerate
 	@$(MAKE) NON_MATCHING=1 SKIP_ASM=1 build
 	@$(PYTHON) $(OBJDIFF_DIR)/objdiff_generate.py $(OBJDIFF_DIR)/config.yaml
 
-#report
-progress: objdiff-config
+report: objdiff-config
 	@$(OBJDIFF) report generate > $(BUILD_DIR)/progress.json
 
 check: build
 	@sha256sum --ignore-missing --check checksum.sha
-
-#progress: build NON_MATCHING=1 SKIP_ASM=1
 
 expected: check
 	mkdir -p $(EXPECTED_DIR)
