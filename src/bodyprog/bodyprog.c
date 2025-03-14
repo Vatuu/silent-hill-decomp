@@ -9,15 +9,6 @@
 #include "bodyprog/math.h"
 #include "main/fsqueue.h"
 
-extern s32 g_MainLoop_FrameCount;
-
-extern void (*D_800A977C[])(void); // Function pointer array, maybe state funcs of some kind.
-
-extern u8* D_800C7018;
-extern s32 D_800B9CC8;
-
-extern s32 g_Demo_VideoPresentInterval;
-
 void func_8002E630() 
 {
     s_800B5508* ptr;
@@ -334,13 +325,38 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_800323C8);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", GFX_Init);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", Settings_ScreenXYSet);
+void Settings_ScreenXYSet(s32 x, s32 y)
+{
+    Settings_DispEnvXYSet(&GsDISPENV, x, y);
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", Settings_DispEnvXYSet);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_800325A4);
+/*void func_800325A4(DR_MODE* arg0) 
+{
+    char* temp[2];
+    
+    if (D_800BCD0C & 8) 
+    {
+        temp[0] = 0; 
+        
+        SetDrawMode(arg0, 0, 1, 32, NULL);
+    }
+    else 
+    {
+        temp[0] = 0;
+        
+        SetDrawMode(arg0, 0, 1, 64, NULL);
+    }
+}*/
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_800325F8);
+extern s32 D_800B5C28;
+
+int func_800325F8() 
+{
+    return 4096 - D_800B5C28;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003260C);
 
@@ -360,29 +376,45 @@ void GFX_VSyncCallback(void)
 
 void GameFS_TitleGfxSeek() 
 {
-    // Looks for TIM\TITLE_E.TIM.
     Fs_QueueStartSeek(FILE_TIM_TITLE_E_TIM);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", GameFS_TitleGfxLoad);
+void GameFS_TitleGfxLoad()
+{
+    Fs_QueueStartReadTim(FILE_TIM_TITLE_E_TIM, FS_BUFFER_3, &D_800A9014);
+}
 
 void GameFS_StreamBinSeek() 
 {
-    // Looks for VIN\STREAM.BIN.
     Fs_QueueStartSeek(FILE_VIN_STREAM_BIN);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", GameFS_StreamBinLoad);
+void GameFS_StreamBinLoad()
+{
+    Fs_QueueStartRead(FILE_VIN_STREAM_BIN, FS_BUFFER_1);
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", GameFS_OptionBinLoad);
+void GameFS_OptionBinLoad()
+{
+    Fs_QueueStartReadTim(FILE_TIM_OPTION_TIM, FS_BUFFER_1, &D_800A902C);
+    Fs_QueueStartRead(FILE_VIN_OPTION_BIN, FS_BUFFER_1);
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", GameFS_SaveLoadBinLoad);
+void GameFS_SaveLoadBinLoad()
+{
+    Fs_QueueStartReadTim(FILE_TIM_SAVELOAD_TIM, FS_BUFFER_1, &D_800A902C);
+    Fs_QueueStartRead(FILE_VIN_SAVELOAD_BIN, FS_BUFFER_1);
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80032CE8);
+void func_80032CE8()
+{
+    GFX_StringPosition(108, 104);
+    GFX_StringDraw(&D_8002510C, 100);
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80032D1C);
 
-void MainLoop(void)
+void MainLoop()
 {
     #define TICKS_PER_SECOND_MIN (TICKS_PER_SECOND / 4)
     #define H_BLANKS_PER_TICK    263
@@ -393,7 +425,7 @@ void MainLoop(void)
 
     #define H_BLANKS_PER_FRAME_MIN      (H_BLANKS_PER_SECOND / TICKS_PER_SECOND_MIN)                    // 1052
     #define H_BLANKS_TO_FIXED_SEC_SCALE (s32)(H_BLANKS_TO_SEC_CONVERSION_FACTOR * (float)ONE_SEC_FIXED) // 1063
-    #define H_BLANKS_UNKNOWN            10419                                                           // TODO: Somehow derive this value.
+    #define H_BLANKS_UNKNOWN_SCALE      10419                                                           // TODO: Somehow derive this value.
     #define V_BLANKS_MAX                4
 
     s32 vBlanks;
@@ -537,6 +569,7 @@ void MainLoop(void)
             g_UncappedVBlanks = g_VBlanks;
             g_VBlanks = MIN(g_VBlanks, V_BLANKS_MAX);
             
+            // Update V count.
             vCount = MIN(GsGetVcount(), H_BLANKS_PER_FRAME_MIN); // Will call GsGetVcount() twice.
             vCountCopy = vCount;
         }
@@ -544,7 +577,7 @@ void MainLoop(void)
         // Update timers.
         g_DeltaTime = MUL_FIXED(vCount, H_BLANKS_TO_FIXED_SEC_SCALE, Q12_SHIFT);
         D_800A8FEC = MUL_FIXED(vCountCopy, H_BLANKS_TO_FIXED_SEC_SCALE, Q12_SHIFT);
-        D_800B9CC8 = MUL_FIXED(vCount, H_BLANKS_UNKNOWN, Q12_SHIFT);
+        D_800B9CC8 = MUL_FIXED(vCount, H_BLANKS_UNKNOWN_SCALE, Q12_SHIFT);
         GsClearVcount();
         
         // Draw objects?
@@ -555,15 +588,39 @@ void MainLoop(void)
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", Settings_ScreenAndVolUpdate);
+void Settings_ScreenAndVolUpdate()
+{
+    s32 soundCmd;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", Settings_RestoreDefaults);
+    Settings_ScreenXYSet(g_GameWork.field_1C, g_GameWork.field_1D);
+    
+    soundCmd = (g_GameWork.optSoundType_1E != 0) ? 1 : 2;
+    SD_EngineCmd(soundCmd);
+
+    SD_SetVolume(OPT_SOUND_VOLUME_MAX, g_GameWork.optVolumeBgm_1F, g_GameWork.optVolumeSe_20);
+}
+
+void Settings_RestoreDefaults()
+{
+    g_GameWork.optWeaponCtrl_23 = 1;
+    g_GameWork.optBrightness_22 = 3;
+        
+    Settings_RestoreControlDefaults(0);
+        
+    g_GameWork.optVibrationEnabled_21 = OPT_VIBRATION_ENABLED;
+    g_GameWork.optVolumeBgm_1F = OPT_SOUND_VOLUME_MAX;
+    g_GameWork.optVolumeSe_20 = OPT_SOUND_VOLUME_MAX;
+        
+    Settings_ScreenAndVolUpdate();
+        
+    g_GameWork.optBloodColor_24 = 0;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", Settings_RestoreControlDefaults);
 
-void nullsub_800334C8(void) {}
+void nullsub_800334C8() {}
 
-void func_800334D0(void) {}
+void func_800334D0() {}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_800334D8);
 

@@ -123,6 +123,7 @@ typedef struct _ControllerData
     int             field_28;
 } s_ControllerData;
 
+// Input action key bindings.
 typedef struct _ControllerBindings
 {
     u16 enter;

@@ -10,6 +10,9 @@
 #define IMAGE_BUFFER_1 (u_long*)0x801C8200
 #define IMAGE_BUFFER_2 (u_long*)0x801ABE00
 
+#define OPT_SOUND_VOLUME_MAX  128
+#define OPT_VIBRATION_ENABLED 128
+
 typedef struct
 {
     s32 field_0;
@@ -65,15 +68,30 @@ typedef struct
     s32                field_18; 
 } s_800B5508;
 
+extern s8* D_8002510C;
+
+/** "\x07PAUSED" string */
+extern char D_80025394[];
+
 extern RECT D_8002AB10;
+
+extern s32 D_800A8FEC; // Maybe a distance?
+
+extern s_FsImageDesc D_800A9014;
 
 extern s_FsImageDesc D_800A901C;
 
 extern s_FsImageDesc D_800A9024;
 
+extern s_FsImageDesc D_800A902C;
+
 extern s32 D_800A9768;
 
 extern s32 D_800A976C;
+
+extern void (*D_800A977C[])(void); // Function pointer array, maybe state funcs of some kind.
+
+extern s32 D_800A9A68;
 
 /** Array of indices? */
 extern s8 D_800A99B4[];
@@ -116,6 +134,8 @@ extern void (*D_800C9648)(s32);
 
 extern s32 (*D_800C9668)();
 
+extern s32 D_800B9CC8;
+
 extern u16 D_800BCCB0;
 
 extern u16 D_800BCCB2;
@@ -140,12 +160,11 @@ extern s16 D_800C391E;
 /** Unknown bodyprog var. Set in `Fs_QueueDoThingWhenEmpty`. */
 extern s32 D_800C489C;
 
-extern s32 D_800A8FEC; // Maybe a distance?
+extern u8* D_800C7018;
 
-extern s32 D_800A9A68;
+extern s32 g_MainLoop_FrameCount;
 
-/** "\x07PAUSED" string */
-extern char D_80025394[];
+extern s32 g_Demo_VideoPresentInterval;
 
 /** Initializer for something before the game loop. */
 void func_8002E630();
@@ -270,21 +289,42 @@ void func_80091380();
 
 s32 Chara_Load(s32 arg0, s8 arg1, s32 arg2, s8 arg3, s32 arg4, s32 arg5);
 
-/** Bodyprog func that searches for English title screen background graphic. */
+/** Seeks for the English title screen background graphic. */
 void GameFS_TitleGfxSeek();
 
-/** Bodyprog func that searches the stream overlay. */
+/** Loads the English title screen background graphic. */
+void GameFS_TitleGfxLoad();
+
+/** Seeks for the stream overlay. */
 void GameFS_StreamBinSeek();
+
+/** Loads the stream overlay. */
+void GameFS_StreamBinLoad();
+
+/** Loads the options background graphic and overlay. */
+void GameFS_OptionBinLoad();
+
+/** Loads the save/load background graphic and overlay. */
+void GameFS_SaveLoadBinLoad();
+
+/** Draws some string in display space. */
+void func_80032CE8();
 
 void GFX_ClearRectInterlaced(s16 x, s16 y, s16 w, s16 h, u8 r, u8 g, u8 b);
 
-void GFX_VSyncCallback(void);
+void GFX_VSyncCallback();
 
 /** Sets the position of the next string to be drawn by GFX_StringDraw. */
 void GFX_StringPosition(s32 x, s32 y);
 
 /** Draws a string in display space. */
 void GFX_StringDraw(char* str, s32 arg1);
+
+void Settings_ScreenXYSet(s32 x, s32 y);
+
+void Settings_ScreenAndVolUpdate();
+
+void Settings_RestoreDefaults();
 
 /** Passes a command to the sound driver. */
 void SD_EngineCmd(s32 cmd);
