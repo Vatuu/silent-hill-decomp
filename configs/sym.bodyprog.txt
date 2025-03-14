@@ -16,7 +16,7 @@ g_MapEventIdx = 0x800A9A14; // type:u32
 
 g_IntervalVBlanks = 0x800A8FF0; // type:s32
 g_PrevVBlanks = 0x800A9770; // type:s32
-g_CappedVBlanks = 0x800B5C34; // type:s32
+g_VBlanks = 0x800B5C34; // type:s32
 g_UncappedVBlanks = 0x800B5C38; // type:s32
 
 // sh "view" / "vw" / "vc" / "vb" code

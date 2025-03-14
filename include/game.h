@@ -376,7 +376,7 @@ extern u32 g_MapEventIdx;
 
 extern s32 g_IntervalVBlanks;
 extern s32 g_PrevVBlanks;
-extern s32 g_CappedVBlanks;
+extern s32 g_VBlanks;
 extern s32 g_UncappedVBlanks;
 
 /** Sets the SysState to be used in the next game update. */

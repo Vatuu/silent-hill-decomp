@@ -384,18 +384,22 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80032D1C);
 
 void MainLoop(void)
 {
-    #define ONE_FIXED_SEC                     TO_FIXED(1, Q12_SHIFT)
-    #define H_BLANKS_PER_TICK                 263
-    #define H_BLANKS_PER_SECOND               (H_BLANKS_PER_TICK * TICKS_PER_SECOND)                          // 15780
-    #define H_BLANKS_TO_SEC_CONVERSION_FACTOR ((float)ONE_FIXED_SEC / (float)H_BLANKS_PER_SECOND)             // 0.25956907477f
-    #define H_BLANKS_TO_FIXED_SEC_SCALE       (s32)(H_BLANKS_TO_SEC_CONVERSION_FACTOR * (float)ONE_FIXED_SEC) // 1063
-    #define CAPPED_V_BLANKS_MAX               4
-    
-    s32 temp_a0;
-    s32 temp_v0_2;
+    #define TICKS_PER_SECOND_MIN (TICKS_PER_SECOND / 4)
+    #define H_BLANKS_PER_TICK    263
+    #define ONE_SEC_FIXED        TO_FIXED(1, Q12_SHIFT)
+
+    #define H_BLANKS_PER_SECOND               (H_BLANKS_PER_TICK * TICKS_PER_SECOND)              // 15780
+    #define H_BLANKS_TO_SEC_CONVERSION_FACTOR ((float)ONE_SEC_FIXED / (float)H_BLANKS_PER_SECOND) // 0.25956907477f
+
+    #define H_BLANKS_PER_FRAME_MIN      (H_BLANKS_PER_SECOND / TICKS_PER_SECOND_MIN)                    // 1052
+    #define H_BLANKS_TO_FIXED_SEC_SCALE (s32)(H_BLANKS_TO_SEC_CONVERSION_FACTOR * (float)ONE_SEC_FIXED) // 1063
+    #define H_BLANKS_UNKNOWN            10419                                                           // TODO: Somehow derive this value.
+    #define V_BLANKS_MAX                4
+
+    s32 vBlanks;
     s32 vCountCopy;
     s32 vCount;
-    s32 var_s1;
+    s32 interval;
 
     // Initialize engine.
     GsInitVcount();
@@ -471,39 +475,39 @@ void MainLoop(void)
         
         if (g_SysWork.flags_22A4 & 2)
         {
-            temp_v0_2 = VSync(-1);
-            g_CappedVBlanks = temp_v0_2 - g_PrevVBlanks;
+            vBlanks = VSync(-1);
+            g_VBlanks = vBlanks - g_PrevVBlanks;
             
             Demo_PresentIntervalUpdate();
             
-            var_s1 = g_Demo_VideoPresentInterval;
-            g_PrevVBlanks = temp_v0_2;
+            interval = g_Demo_VideoPresentInterval;
+            g_PrevVBlanks = vBlanks;
             
-            if (var_s1 < g_IntervalVBlanks)
+            if (interval < g_IntervalVBlanks)
             {
-                var_s1 = g_IntervalVBlanks;
+                interval = g_IntervalVBlanks;
             }
             
             do
             {
                 VSync(0);
-                g_CappedVBlanks++;
+                g_VBlanks++;
                 g_PrevVBlanks++;
             }
-            while (g_CappedVBlanks < var_s1);
+            while (g_VBlanks < interval);
             
-            g_UncappedVBlanks = g_CappedVBlanks;
-            g_CappedVBlanks = MIN(g_CappedVBlanks, 4);
+            g_UncappedVBlanks = g_VBlanks;
+            g_VBlanks = MIN(g_VBlanks, 4);
             
             vCount = g_Demo_VideoPresentInterval * H_BLANKS_PER_TICK;
             vCountCopy = g_UncappedVBlanks * H_BLANKS_PER_TICK;
-            g_CappedVBlanks = g_Demo_VideoPresentInterval;
+            g_VBlanks = g_Demo_VideoPresentInterval;
         }
         else
         {
             if (g_SysWork.sysState_8 != 0)
             {
-                g_CappedVBlanks = VSync(-1) - g_PrevVBlanks;
+                g_VBlanks = VSync(-1) - g_PrevVBlanks;
                 g_PrevVBlanks = VSync(-1);
                 VSync(0);
             }
@@ -514,32 +518,33 @@ void MainLoop(void)
                     VSync(0);
                 }
                 
-                g_CappedVBlanks = VSync(-1) - g_PrevVBlanks;
+                g_VBlanks = VSync(-1) - g_PrevVBlanks;
                 g_PrevVBlanks = VSync(-1);
                 
-                if (g_CappedVBlanks < g_IntervalVBlanks)
+                if (g_VBlanks < g_IntervalVBlanks)
                 {
                     do
                     {
                         VSync(0);
-                        g_CappedVBlanks++;
+                        g_VBlanks++;
                         g_PrevVBlanks++;
                     }
-                    while (g_CappedVBlanks < g_IntervalVBlanks);
+                    while (g_VBlanks < g_IntervalVBlanks);
                 }
             }
             
-            g_UncappedVBlanks = g_CappedVBlanks;
-            g_CappedVBlanks = MIN(g_CappedVBlanks, CAPPED_V_BLANKS_MAX);
+            // Update VBlanks.
+            g_UncappedVBlanks = g_VBlanks;
+            g_VBlanks = MIN(g_VBlanks, V_BLANKS_MAX);
             
-            vCount = MIN(GsGetVcount(), 1052); // Will call GsGetVcount() twice.
+            vCount = MIN(GsGetVcount(), H_BLANKS_PER_FRAME_MIN); // Will call GsGetVcount() twice.
             vCountCopy = vCount;
         }
 
         // Update timers.
         g_DeltaTime = MUL_FIXED(vCount, H_BLANKS_TO_FIXED_SEC_SCALE, Q12_SHIFT);
         D_800A8FEC = MUL_FIXED(vCountCopy, H_BLANKS_TO_FIXED_SEC_SCALE, Q12_SHIFT);
-        D_800B9CC8 = MUL_FIXED(vCount, 10419, Q12_SHIFT);
+        D_800B9CC8 = MUL_FIXED(vCount, H_BLANKS_UNKNOWN, Q12_SHIFT);
         GsClearVcount();
         
         // Draw objects?
