@@ -7,6 +7,10 @@
  * libref.pdf v4.4 may be useful, though was likely based on earlier SDK.
  */
 
+/** SD_ALLOC_SLOTS must equal SD_VAB_SLOTS due to SdWorkInit loop, but they're mostly unrelated */
+#define SD_ALLOC_SLOTS 16
+#define SD_VAB_SLOTS 16
+
 // MIDI related header magic.
 #define SD_MAGIC_SEQp 0x53455170
 #define SD_MAGIC_MThd 0x6468544D
@@ -46,7 +50,7 @@ typedef struct _VAB_S // Pachinko Dream uses similar VAB_S struct
 } s_VAB_S;
 STATIC_ASSERT_SIZEOF(s_VAB_S, 0x1C);
 
-extern s_VAB_S vab_h[0x10];
+extern s_VAB_S vab_h[SD_VAB_SLOTS];
 
 typedef struct _SMF_TRACK_S
 {
@@ -239,28 +243,38 @@ typedef struct _SMF_PORT
 } s_SMF_PORT;
 STATIC_ASSERT_SIZEOF(s_SMF_PORT, 0x54);
 
-extern s_SMF_MIDI smf_midi[2 * 16]; // 2 devices with 16 channels each?
-extern s_SMF_MIDI D_800C82B8;       // smf_midi[32] ? used in sound_off
+typedef struct _SD_ALLOC
+{
+    u32 addr_0;
+    s32 size_4;
+} s_SD_ALLOC;
+
+extern s_SMF_MIDI smf_midi[2 * 16];   // 2 devices with 16 channels each?
+extern s_SMF_MIDI smf_midi_sound_off; // Set by sound_off(), could be smf_midi[32], but game doesn't use offsets for [32]?
 extern s_SMF_PORT smf_port[24];
 extern s_SMF_S smf_song[2];
+
+extern s_SD_ALLOC sd_spu_alloc[SD_ALLOC_SLOTS];
+extern s32        sd_reverb_area_size[10];
 
 // sdmain.c
 
 void tone_adsr_back(s16);
+void sd_alloc_sort();
 
+void SdSpuFree(u32 addr);
 void SdWorkInit();
-void SdInit(void);
-void SdStart(void);
-void SdStart2(void);
+void SdInit();
+void SdStart();
+void SdStart2();
 void SdSetTickMode(s32 tick_mode);
-void SdSeqCalledTbyT(void);
-void SdSetStereo(void);
-void SdSetMono(void);
+void SdSeqCalledTbyT();
+void SdSetStereo();
+void SdSetMono();
 char SdSetReservedVoice(char voices);
-void SdSetTableSize(void);
-
+void SdSetTableSize();
 void SdEnd();
-void SdQuit(void);
+void SdQuit();
 void SdSetSerialAttr(char s_num, char attr, char mode);
 void SdSetSerialVol(s16 s_num, s16 voll, s16 volr);
 void SdSetMVol(s16 left, s16 right);
@@ -280,9 +294,9 @@ void SdSeqPause(s16 seq_access_num);
 void SdSeqReplay(s16 seq_access_num);
 void SdSeqSetVol(s16 seq_access_num, s16 voll, s16 volr);
 void SdSeqGetVol(s16 seq_access_num, s16* voll, s16* volr);
-void SdUtFlush(void);
-void SdUtReverbOn(void);
-void SdUtReverbOff(void);
+void SdUtFlush();
+void SdUtReverbOn();
+void SdUtReverbOff();
 s16  SdUtSetReverbType(s16 type);
 void SdUtSetReverbDepth(s16 left, s16 right);
 void SdSetRVol(s16 left, s16 right);
@@ -293,7 +307,10 @@ void SdVoKeyOff(s32 vab_pro, s32 pitch);
 void SdVoKeyOffWithRROff(s32 vab_pro, s32 pitch);
 
 s16 SdGetSeqStatus(s16 seq_access_num);
-
+s32  SdUtSetDetVVol(s16 voice, s16 volLeft, s16 volRight);
+s32  SdUtSetVVol(s16 voice, s16 volLeft, s16 volRight);
+s32  SdUtGetDetVVol(s16 voice, u16* volLeft, u16* volRight);
+s32  SdUtGetVVol(s16 voice, u16* volLeft, u16* volRight);
 u16  SdGetTempo(s16 seq_access_num);
 void SdSetTempo(s16 seq_access_num, s16 tempo);
 void SdSetSeqWide(s16 seq_access_num, u16 seq_wide);
@@ -332,16 +349,16 @@ void replay_reverb_set(s16 seq_access_num);
 void midi_vsync();
 void sound_seq_off(s32);
 void sound_off();
-void set_note_on_mb(void);
+void set_note_on_mb();
 void adsr_set(s32 voice, s_SMF_PORT* midiPort);
 void rr_off(s32 voice);
 
 void key_off(u8 midiNum, u8 keyNum);
-void key_press(void);
+void key_press();
 
 void control_change(u8, s32, s32);
 void program_change(u8 midiChannel, u8 progNum);
-void chan_press(void);
+void chan_press();
 
 void control_code_set(s32 seq_access_num);
 
@@ -351,7 +368,7 @@ s32  smf_timer();
 void smf_timer_set();
 void smf_timer_end();
 void smf_timer_stop();
-void smf_vsync(void);
+void smf_vsync();
 s32  MemCmp(u8* str1, u8* str2, s32 count);
 s32  readMThd(u32 offset);
 s32  readMTrk(u32 offset);
@@ -369,7 +386,7 @@ s16 midi_smf_stat(s32);
 
 // ssmain.c
 void SsSetMVol(s16 left, s16 right);
-void SsEnd(void);
+void SsEnd();
 void SsSetSerialAttr(char s_num, char attr, char mode);
 void SsSetSerialVol(char s_num, s16 voll, s16 volr);
 void SsUtAllKeyOff(s16 mode);

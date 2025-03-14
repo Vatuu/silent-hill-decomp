@@ -1,24 +1,104 @@
 #include "common.h"
-#include "bodyprog/libsd.h"
 
 #include <libspu.h>
 #include <libsnd.h>
+
+#include "bodyprog/libsd.h"
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmain", tone_adsr_mem);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmain", tone_adsr_back);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmain", sd_alloc_sort);
+void sd_alloc_sort() // 0x8009EEBC
+{
+    s32 lastSlotIdx;
+    s32 frontIdx;
+    s32 backIdx;
+
+    for (lastSlotIdx = 0; lastSlotIdx < SD_ALLOC_SLOTS; lastSlotIdx++)
+    {
+        if (sd_spu_alloc[lastSlotIdx].addr_0 == 0)
+        {
+            break;
+        }
+    }
+
+    for (frontIdx = 0; frontIdx < lastSlotIdx; frontIdx++)
+    {
+        for (backIdx = lastSlotIdx - 1; frontIdx < backIdx; backIdx--)
+        {
+            if (sd_spu_alloc[frontIdx].addr_0 > sd_spu_alloc[backIdx].addr_0)
+            {
+                s_SD_ALLOC temp;
+                temp.size_4 = sd_spu_alloc[frontIdx].size_4;
+                temp.addr_0 = sd_spu_alloc[frontIdx].addr_0;
+
+                sd_spu_alloc[frontIdx].size_4 = sd_spu_alloc[backIdx].size_4;
+                sd_spu_alloc[frontIdx].addr_0 = sd_spu_alloc[backIdx].addr_0;
+
+                sd_spu_alloc[backIdx].size_4 = temp.size_4;
+                sd_spu_alloc[backIdx].addr_0 = temp.addr_0;
+            }
+        }
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmain", SdSpuMalloc);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmain", SdSpuMallocWithStartAddr);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmain", SdSpuFree);
+void SdSpuFree(u32 addr) // 0x8009F364
+{
+    s32 i;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmain", SdWorkInit);
+    for (i = 0; i < SD_ALLOC_SLOTS; i++)
+    {
+        if (sd_spu_alloc[i].addr_0 != addr)
+        {
+            continue;
+        }
 
-void SdInit(void) // 0x8009F490
+        // TODO: could this be moved out of the for loop above?
+        for (; i < SD_ALLOC_SLOTS; i++)
+        {
+            sd_spu_alloc[i].size_4 = sd_spu_alloc[i + 1].size_4;
+            sd_spu_alloc[i].addr_0 = sd_spu_alloc[i + 1].addr_0;
+            if (!sd_spu_alloc[i].addr_0)
+                break;
+        }
+        sd_alloc_sort();
+        return;
+    }
+}
+
+void SdWorkInit() // 0x8009F400
+{
+    s32 i;
+
+    STATIC_ASSERT(SD_VAB_SLOTS == SD_ALLOC_SLOTS, SD_VAB_SLOTS_must_equal_SD_ALLOC_SLOTS);
+
+    for (i = 0; i < SD_VAB_SLOTS; i++)
+    {
+        vab_h[i].vab_id_0      = -1;
+        vab_h[i].field_19      = 0x7F;
+        vab_h[i].field_1A      = 0x7F;
+        vab_h[i].master_pan_1B = 0x40;
+        sd_spu_alloc[i].size_4 = 0;
+        sd_spu_alloc[i].addr_0 = 0;
+    }
+
+    for (i = 0; i < 2; i++)
+    {
+        smf_song[i].vab_id_508      = -1;
+        smf_song[i].play_status_50A = 0;
+        smf_song[i].vol_right_50E   = 0x7F;
+        smf_song[i].vol_left_50C    = 0x7F;
+    }
+
+    sd_tick_mode = 4096;
+}
+
+void SdInit() // 0x8009F490
 {
     SsUtReverbOff();
     sound_off();
@@ -26,7 +106,7 @@ void SdInit(void) // 0x8009F490
     SpuInitMalloc(16, &sd_vb_malloc_rec);
 }
 
-void SdStart(void) // 0x8009F4D0
+void SdStart() // 0x8009F4D0
 {
     if (sd_tick_mode > 0)
     {
@@ -39,7 +119,7 @@ void SdStart(void) // 0x8009F4D0
     sd_interrupt_start_flag = 1;
 }
 
-void SdStart2(void) // 0x8009F510
+void SdStart2() // 0x8009F510
 {
     SdStart();
 }
@@ -49,7 +129,7 @@ void SdSetTickMode(s32 tick_mode) // 0x8009F530
     sd_tick_mode = tick_mode;
 }
 
-void SdSeqCalledTbyT(void) // 0x8009F53C
+void SdSeqCalledTbyT() // 0x8009F53C
 {
     if (sd_interrupt_start_flag != 0)
     {
@@ -57,12 +137,12 @@ void SdSeqCalledTbyT(void) // 0x8009F53C
     }
 }
 
-void SdSetStereo(void) // 0x8009F568
+void SdSetStereo() // 0x8009F568
 {
     sd_mono_st_flag = 0;
 }
 
-void SdSetMono(void) // 0x8009F574
+void SdSetMono() // 0x8009F574
 {
     sd_mono_st_flag = 1;
 }
@@ -82,11 +162,34 @@ char SdSetReservedVoice(char voices) // 0x8009F584
     return voices;
 }
 
-void SdSetTableSize(void) {} // 0x8009F5B8
+void SdSetTableSize() {} // 0x8009F5B8
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmain", SdEnd);
+void SdEnd() // 0x8009F5C0
+{
+    s32 i;
 
-void SdQuit(void) // 0x8009F64C
+    sound_off();
+
+    if (sd_tick_mode > 0)
+    {
+        if (sd_tick_mode < 4)
+        {
+            smf_timer_end();
+        }
+    }
+
+    for (i = 0; i < SD_VAB_SLOTS; i++)
+    {
+        if (vab_h[i].vab_id_0 >= 0)
+        {
+            SdSpuFree(vab_h[i].vab_start_10);
+        }
+    }
+
+    SdWorkInit();
+}
+
+void SdQuit() // 0x8009F64C
 {
     sound_off();
     SdWorkInit();
@@ -473,18 +576,18 @@ void SdSeqGetVol(s16 seq_access_num, s16* voll, s16* volr) // 0x800A074C
     *volr = smf_song[seq_access_num].vol_right_50E;
 }
 
-void SdUtFlush(void) // 0x800A0794
+void SdUtFlush() // 0x800A0794
 {
     SdAutoKeyOffCheck();
 }
 
-void SdUtReverbOn(void) // 0x800A07B4
+void SdUtReverbOn() // 0x800A07B4
 {
     SpuReserveReverbWorkArea(SPU_ON);
     SpuSetReverb(SPU_ON);
 }
 
-void SdUtReverbOff(void) // 0x800A07DC
+void SdUtReverbOff() // 0x800A07DC
 {
     sd_reverb_mode = 0;
     SpuSetReverb(SPU_OFF);
@@ -670,13 +773,55 @@ s16 SdGetSeqStatus(s16 seq_access_num) // 0x800A1B14
     return smf_song[seq_access_num].play_status_50A;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmain", SdUtSetDetVVol);
+s32 SdUtSetDetVVol(s16 voice, s16 volLeft, s16 volRight) // 0x800A1BD0
+{
+    SpuVoiceAttr voiceAttr;
+    voiceAttr.mask         = SPU_VOICE_VOLL | SPU_VOICE_VOLR;
+    voiceAttr.voice        = spu_ch_tbl[voice];
+    voiceAttr.volume.left  = volLeft;
+    voiceAttr.volume.right = volRight;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmain", SdUtSetVVol);
+    SpuSetVoiceAttr(&voiceAttr);
+    return 0;
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmain", SdUtGetDetVVol);
+s32 SdUtSetVVol(s16 voice, s16 volLeft, s16 volRight) // 0x800A1C1C
+{
+    SpuVoiceAttr voiceAttr;
+    voiceAttr.mask         = SPU_VOICE_VOLL | SPU_VOICE_VOLR;
+    voiceAttr.voice        = spu_ch_tbl[voice];
+    voiceAttr.volume.left  = (volLeft & 0x7F) << 7;
+    voiceAttr.volume.right = (volRight & 0x7F) << 7;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmain", SdUtGetVVol);
+    SpuSetVoiceAttr(&voiceAttr);
+    return 0;
+}
+
+s32 SdUtGetDetVVol(s16 voice, u16* volLeft, u16* volRight) // 0x800A1C78
+{
+    SpuVoiceAttr voiceAttr;
+    voiceAttr.mask  = 0;
+    voiceAttr.voice = spu_ch_tbl[voice];
+
+    SpuGetVoiceAttr(&voiceAttr);
+
+    *volLeft  = voiceAttr.volume.left;
+    *volRight = voiceAttr.volume.right;
+    return 0;
+}
+
+s32 SdUtGetVVol(s16 voice, u16* volLeft, u16* volRight) // 0x800A1CE8
+{
+    SpuVoiceAttr voiceAttr;
+    voiceAttr.mask  = 0;
+    voiceAttr.voice = spu_ch_tbl[voice];
+
+    SpuGetVoiceAttr(&voiceAttr);
+
+    *volLeft  = voiceAttr.volume.left >> 7;
+    *volRight = voiceAttr.volume.right >> 7;
+    return 0;
+}
 
 u16 SdGetTempo(s16 seq_access_num) // 0x800A1D68
 {

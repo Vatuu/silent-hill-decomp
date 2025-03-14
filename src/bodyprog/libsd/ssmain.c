@@ -6,7 +6,7 @@ void SsSetMVol(s16 left, s16 right) // 0x800A2294
     SdSetMVol(left, right);
 }
 
-void SsEnd(void) // 0x800A22C0
+void SsEnd() // 0x800A22C0
 {
     SdEnd();
 }

@@ -23,12 +23,16 @@ void random_calc(s_SMF_PORT* midiPort) // 0x800A3E70
     s8  randValue;
 
     if (!midiPort->field_43)
+    {
         return;
+    }
 
     midiPort->field_44 += midiPort->field_43;
 
     if (midiPort->field_44 < 0x7F && midiPort->field_43 != 127)
+    {
         return;
+    }
 
     midiPort->field_44 = midiPort->field_44 & 0x7F;
 
@@ -61,7 +65,7 @@ void smf_vol_set(s32 midiChannel, s32 voice, s32 volLeft, s32 volRight) // 0x800
     {
         s_attr.volume.left  = (volLeft * smf_song[midiChannel >> 4].vol_left_50C) >> 7;
         s_attr.volume.right = (volRight * smf_song[midiChannel >> 4].vol_right_50E) >> 7;
-        if (smf_midi[midiChannel].field_21 || smf_song[midiChannel >> 4].seq_wide_534) // seq_wide s16 -> u16
+        if (smf_midi[midiChannel].field_21 || smf_song[midiChannel >> 4].seq_wide_534)
         {
             s_attr.volume.right = -s_attr.volume.right;
         }
@@ -292,16 +296,16 @@ void sound_off() // 0x800A4D20
         } while (keyStatus != 2 && keyStatus != 0);
     }
 
-    D_800C82B8.vol_3                = 0x7F;
-    D_800C82B8.pan_1                = 0x40;
-    D_800C82B8.pitchBendFine_7      = 0x40;
-    D_800C82B8.damperPedalEnabled_6 = 0;
-    D_800C82B8.expression_5         = 0x7F;
-    D_800C82B8.field_8              = 0x7F;
-    D_800C82B8.field_C              = 0x7F;
-    D_800C82B8.field_2              = 0;
-    D_800C82B8.field_32             = 0;
-    D_800C82B8.portamentoTime_28    = 0;
+    smf_midi_sound_off.vol_3                = 0x7F;
+    smf_midi_sound_off.pan_1                = 0x40;
+    smf_midi_sound_off.pitchBendFine_7      = 0x40;
+    smf_midi_sound_off.damperPedalEnabled_6 = 0;
+    smf_midi_sound_off.expression_5         = 0x7F;
+    smf_midi_sound_off.field_8              = 0x7F;
+    smf_midi_sound_off.field_C              = 0x7F;
+    smf_midi_sound_off.field_2              = 0;
+    smf_midi_sound_off.field_32             = 0;
+    smf_midi_sound_off.portamentoTime_28    = 0;
 
     do
     {
@@ -310,7 +314,7 @@ void sound_off() // 0x800A4D20
     } while (keyStatus != 2 && keyStatus != 0);
 }
 
-void set_note_on_mb(void) {} // 0x800A4E90
+void set_note_on_mb() {} // 0x800A4E90
 
 void adsr_set(s32 voice, s_SMF_PORT* midiPort) // 0x800A4E98
 {
@@ -376,7 +380,7 @@ void key_off(u8 midiNum, u8 keyNum)
     }
 }
 
-void key_press(void) {} // 0x800A5DCC
+void key_press() {} // 0x800A5DCC
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmidi", get_vab_tone);
 
@@ -389,7 +393,7 @@ void program_change(u8 midiChannel, u8 progNum) // 0x800A6C2C
     smf_midi[midiChannel].vabProgNum_0 = progNum;
 }
 
-void chan_press(void) {} // 0x800A6C58
+void chan_press() {} // 0x800A6C58
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmidi", pitch_bend);
 
