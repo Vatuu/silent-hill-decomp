@@ -75,7 +75,7 @@ void smf_timer_stop() // 0x800A6EC8
     sd_int_flag   = 0;
 }
 
-void smf_vsync(void) // 0x800A6F14
+void smf_vsync() // 0x800A6F14
 {
     if (sd_int_flag2 != 0)
         return;
