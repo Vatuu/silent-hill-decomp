@@ -41,7 +41,7 @@ void vwRenewalXZVelocityToTargetPos(s32* velo_x, s32* velo_z, VECTOR3* now_pos, 
 
     ratan2(*velo_x, *velo_z);
 
-    add_spd = Math_MulFixed(accel, g_CurDeltaTime, Q12_SHIFT);
+    add_spd = Math_MulFixed(accel, g_DeltaTime, Q12_SHIFT);
     *velo_x += MUL_FIXED(add_spd, shRsin(temp_v0), Q12_SHIFT);
     *velo_z += MUL_FIXED(add_spd, shRcos(temp_v0), Q12_SHIFT);
 
@@ -63,7 +63,7 @@ void vwRenewalXZVelocityToTargetPos(s32* velo_x, s32* velo_z, VECTOR3* now_pos, 
         var_s1 = 0;
 
     vwLimitOverLimVector(velo_x, velo_z, var_s1, to_tgt_ang_y);
-    vwDecreaseSideOfVector(velo_x, velo_z, Math_MulFixed(dec_accel_side, g_CurDeltaTime, Q12_SHIFT), var_s1 >> 1, to_tgt_ang_y);
+    vwDecreaseSideOfVector(velo_x, velo_z, Math_MulFixed(dec_accel_side, g_DeltaTime, Q12_SHIFT), var_s1 >> 1, to_tgt_ang_y);
 }
 
 void vwLimitOverLimVector(s32* vec_x, s32* vec_z, s32 lim_vec_len, s16 lim_vec_ang_y) // 0x8004914C

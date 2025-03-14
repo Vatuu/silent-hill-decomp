@@ -356,21 +356,21 @@ typedef struct _SysWork
 } s_SysWork;
 STATIC_ASSERT_SIZEOF(s_SysWork, 0x2768);
 
-extern void* g_OvlDynamic;
 extern void* g_OvlBodyprog;
+extern void* g_OvlDynamic;
+
+extern s32 g_DeltaTime;
+extern u32 g_MapEventIdx;
+extern s32 g_ObjectTableIdx;
+
+extern s_ControllerData* g_ControllerPtr0;
+extern s_ControllerData* g_ControllerPtr1;
 
 extern s_SysWork     g_SysWork;
 extern s_GameWork    g_GameWork;
 extern s_GameWork*   g_GameWorkPtr0;
 extern s_GameWork*   g_GameWorkPtr1;
 extern s_ShSaveGame* g_SaveGamePtr;
-
-extern s_ControllerData* g_ControllerPtr0;
-extern s_ControllerData* g_ControllerPtr1;
-
-extern u32 g_CurMapEventNum;
-extern s32 g_CurDeltaTime;
-extern s32 g_CurOTNum;
 
 /** Sets the SysState to be used in the next game update. */
 static inline void SysWork_StateSetNext(e_SysState sysState)

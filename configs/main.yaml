@@ -26,6 +26,7 @@ options:
 
   section_order: [".rodata", ".text", ".data", ".sdata", ".sbss", ".bss"]
   symbol_addrs_path:
+    - configs/sym.bodyprog.txt
     - configs/sym.main.txt
   reloc_addrs_path:
     - configs/rel.main.txt

@@ -4,6 +4,8 @@
 #include "game.h"
 #include "main/fsqueue.h"
 
+#define TEMP_MEMORY_ADDR (s8*)0x801A2600
+
 #define IMAGE_BUFFER_0 (u_long*)0x801CFA00
 #define IMAGE_BUFFER_1 (u_long*)0x801C8200
 #define IMAGE_BUFFER_2 (u_long*)0x801ABE00
@@ -75,7 +77,7 @@ extern s8 D_800A99B4[];
 /** Array of indices? */
 extern s8 D_800A99CC[];
 
-/** Accessed by credits and saveload. */
+/** "Present interval" of V blanks. Accessed by credits and saveload. */
 extern s32 D_800A8FF0;
 
 extern s16 D_800AD498;
@@ -183,7 +185,7 @@ void func_800314EC(s_FsImageDesc* image);
 void func_8003260C(); // Return type assumed.
 
 /** Bodyprog entrypoint. Called by `main`. */
-void func_80032EE0();
+void MainLoop();
 
 void func_80033548(); // Return type assumed.
 
@@ -274,6 +276,8 @@ void GameFS_TitleGfxSeek();
 void GameFS_StreamBinSeek();
 
 void GFX_ClearRectInterlaced(s16 x, s16 y, s16 w, s16 h, u8 r, u8 g, u8 b);
+
+void GFX_VSyncCallback(void);
 
 /** Sets position of next string drawn by GFX_StringDraw. */
 void GFX_StringPosition(s32 x, s32 y);

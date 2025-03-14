@@ -268,7 +268,7 @@ void func_800868DC(s32 idx)
 
 s32 func_800868F4(s32 arg0, s32 arg1, s32 idx)
 {
-    D_800C4710[idx] += g_CurDeltaTime;
+    D_800C4710[idx] += g_DeltaTime;
     D_800C4710[idx] = (arg1 < D_800C4710[idx]) ? arg1 : D_800C4710[idx];
     
     return (arg0 * D_800C4710[idx]) / arg1;
@@ -276,7 +276,7 @@ s32 func_800868F4(s32 arg0, s32 arg1, s32 idx)
 
 s32 func_8008694C(s32 arg0, s16 arg1, s16 arg2, s32 arg3, s32 idx)
 {
-    D_800C4710[idx] += g_CurDeltaTime;
+    D_800C4710[idx] += g_DeltaTime;
     D_800C4710[idx] = (arg3 < D_800C4710[idx]) ? arg3 : D_800C4710[idx];
     return (arg0 * shRsin(arg1 + ((arg2 * D_800C4710[idx]) / arg3))) >> 12;
 }
@@ -568,7 +568,7 @@ void func_80086FE8(s32 arg0, s32 arg1, s32 arg2)
         
         if (i != NPC_COUNT_MAX)
         {
-            g_CurDeltaTime = 0;
+            g_DeltaTime = 0;
         }
     }
     
