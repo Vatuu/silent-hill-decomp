@@ -63,7 +63,7 @@ void func_801E63C0(void)
         VSync(8);
     }
     
-    D_800A8FF0 = 1;
+    g_IntervalVBlanks = 1;
     D_800BCD0C = 6;
     
     g_GameWork.field_58C = 0;

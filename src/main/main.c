@@ -165,7 +165,7 @@ int main(void)
     // Fade image back out?
     func_800314EC(&g_MainImg0);
 
-    // Run game loop.
+    // Run main loop.
     MainLoop();
 
     return 0;

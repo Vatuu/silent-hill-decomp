@@ -72,15 +72,15 @@ void func_800C95AC(void)
             nullsub_800334C8();
             VSync(0);
             GsSwapDispBuff();
-            GsDrawOt(&D_800A8FC4[g_ObjectTableIdx]);
+            GsDrawOt(&g_ObjectTable1[g_ObjectTableIdx]);
 
             // TODO: Deal with 0x801A2600.
             idx = GsGetActiveBuff();
             g_ObjectTableIdx = idx;
             D_800C7018 = (idx << 0xF) + 0x801A2600;
             
-            GsClearOt(0, 0, &D_800A8F74[idx]);
-            GsClearOt(0, 0, &D_800A8FC4[g_ObjectTableIdx]);
+            GsClearOt(0, 0, &g_ObjectTable0[idx]);
+            GsClearOt(0, 0, &g_ObjectTable1[g_ObjectTableIdx]);
         }
         while (g_GameWork.gameState_594 == GameState_KonamiLogo);
     }

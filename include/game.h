@@ -359,18 +359,25 @@ STATIC_ASSERT_SIZEOF(s_SysWork, 0x2768);
 extern void* g_OvlBodyprog;
 extern void* g_OvlDynamic;
 
-extern s32 g_DeltaTime;
-extern u32 g_MapEventIdx;
-extern s32 g_ObjectTableIdx;
-
+extern s_SysWork         g_SysWork;
+extern s_GameWork        g_GameWork;
+extern s_GameWork*       g_GameWorkPtr0;
+extern s_GameWork*       g_GameWorkPtr1;
+extern s_ShSaveGame*     g_SaveGamePtr;
 extern s_ControllerData* g_ControllerPtr0;
 extern s_ControllerData* g_ControllerPtr1;
 
-extern s_SysWork     g_SysWork;
-extern s_GameWork    g_GameWork;
-extern s_GameWork*   g_GameWorkPtr0;
-extern s_GameWork*   g_GameWorkPtr1;
-extern s_ShSaveGame* g_SaveGamePtr;
+extern s32  g_ObjectTableIdx;
+extern GsOT g_ObjectTable0[];
+extern GsOT g_ObjectTable1[];
+
+extern s32 g_DeltaTime;
+extern u32 g_MapEventIdx;
+
+extern s32 g_IntervalVBlanks;
+extern s32 g_PrevVBlanks;
+extern s32 g_CappedVBlanks;
+extern s32 g_UncappedVBlanks;
 
 /** Sets the SysState to be used in the next game update. */
 static inline void SysWork_StateSetNext(e_SysState sysState)

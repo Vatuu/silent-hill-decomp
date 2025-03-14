@@ -6,10 +6,18 @@ g_GameWorkPtr0 = 0x80024D44; // type:u32
 g_SaveGamePtr = 0x80024D48; // type:u32
 g_ControllerPtr0 = 0x80024D4C; // type:u32
 g_ControllerPtr1 = 0x80024D50; // type:u32
-g_GameWorkPtr1 = 0x80024D54; // type:u32 same as g_GameWorkPtr0 ?
+g_GameWorkPtr1 = 0x80024D54; // type:u32 same as g_GameWorkPtr0?
+
+g_ObjectTable0 = 0x800A8F74; // type:s8
+g_ObjectTable1 = 0x800A8FC4; // type:s8
 
 g_DeltaTime = 0x800B5CC0; // type:s32 - Q20.12 fixed point, usually 0x44 (0.0166..) or 0x88 (0.033..).
 g_MapEventIdx = 0x800A9A14; // type:u32
+
+g_IntervalVBlanks = 0x800A8FF0; // type:s32
+g_PrevVBlanks = 0x800A9770; // type:s32
+g_CappedVBlanks = 0x800B5C34; // type:s32
+g_UncappedVBlanks = 0x800B5C38; // type:s32
 
 // sh "view" / "vw" / "vc" / "vb" code
 // Most names from SH2, functions seem to match pretty close between it and SH1 besides a few missing/extra funcs.

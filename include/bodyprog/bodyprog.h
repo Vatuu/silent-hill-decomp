@@ -71,14 +71,15 @@ extern s_FsImageDesc D_800A901C;
 
 extern s_FsImageDesc D_800A9024;
 
+extern s32 D_800A9768;
+
+extern s32 D_800A976C;
+
 /** Array of indices? */
 extern s8 D_800A99B4[];
 
 /** Array of indices? */
 extern s8 D_800A99CC[];
-
-/** "Present interval" of V blanks. Accessed by credits and saveload. */
-extern s32 D_800A8FF0;
 
 extern s16 D_800AD498;
 
@@ -245,7 +246,7 @@ void Camera_SetTranslation(VECTOR3* pos, s32 xPosOffset, s32 yPosOffset, s32 zPo
                            s32 xzAccel, s32 yAccel, s32 xzSpeedMax, s32 ySpeedMax, s32 warpCamFlag);
 
 void Camera_SetRotation(VECTOR3* lookAt, s32 xLookAtOffset, s32 yLookAtOffset, s32 zLookAtOffset,
-                        s32 xAngularAccel, s32 yAngularAccel, s32 xAngularSpeedMax, s32 yAngularSpeedMax, s32 warpWatchFlag);
+                        s32 xAngularAccel, s32 yAngularAccel, s32 xAngularSpeedMax, s32 yAngularSpeedMax, s32 warpLookAtFlag);
 
 void func_80086C58(s32 arg0, s32 arg1);
 

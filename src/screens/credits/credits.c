@@ -108,7 +108,7 @@ s32 func_801E3124(void)
 
         case 2:
             GFX_Init(0x200, 1);
-            D_800A8FF0 = 1;
+            g_IntervalVBlanks = 1;
             D_801E5E74 = 0x3C;
             g_GameWork.gameStateStep_598[1]++;
             break;

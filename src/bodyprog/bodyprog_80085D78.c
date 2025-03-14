@@ -370,7 +370,7 @@ void Camera_SetTranslation(VECTOR3* pos, s32 xPosOffset, s32 yPosOffset, s32 zPo
 }
 
 void Camera_SetRotation(VECTOR3* lookAt, s32 xLookAtOffset, s32 yLookAtOffset, s32 zLookAtOffset,
-                        s32 xAngularAccel, s32 yAngularAccel, s32 xAngularSpeedMax, s32 yAngularSpeedMax, s32 warpWatchFlag) // 0x80086B70
+                        s32 xAngularAccel, s32 yAngularAccel, s32 xAngularSpeedMax, s32 yAngularSpeedMax, s32 warpLookAtFlag) // 0x80086B70
 {
     VECTOR3           lookAtTarget;
     VC_WATCH_MV_PARAM camRotParams;
@@ -431,7 +431,7 @@ void Camera_SetRotation(VECTOR3* lookAt, s32 xLookAtOffset, s32 yLookAtOffset, s
 
     // Set camera flags and rotation target.
     vcWorkSetFlags(0, VC_VISIBLE_CHARA_F);
-    vcUserWatchTarget(&lookAtTarget, &camRotParams, warpWatchFlag);
+    vcUserWatchTarget(&lookAtTarget, &camRotParams, warpLookAtFlag);
 }
 
 void func_80086C58(s32 arg0, s32 arg1)

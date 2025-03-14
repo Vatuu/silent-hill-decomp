@@ -9,25 +9,12 @@
 #include "bodyprog/math.h"
 #include "main/fsqueue.h"
 
-#define CAPPED_V_BLANK_COUNT_MAX 4
-
-//
-extern s32 D_800A9768;
-extern s32 D_800A976C;
-
-
-
 extern s32 g_MainLoop_FrameCount;
 
-extern void (*D_800A977C[])(void); // Function pointer array, maybe state funcs of some kind. Return and param types assumed.
+extern void (*D_800A977C[])(void); // Function pointer array, maybe state funcs of some kind.
 
-extern GsOT D_800A8F74[]; // g_ObjectTable0
-extern GsOT D_800A8FC4[]; // g_ObjectTable1
-extern s32  D_800A9770;   // g_PrevVBlankCount
-extern u8*  D_800C7018;
-extern s32  D_800B5C34;   // g_VBlankCountCapped capped at 4.
-extern s32  D_800B5C38;   // g_VBlankCountUncapped
-extern s32  D_800B9CC8;
+extern u8* D_800C7018;
+extern s32 D_800B9CC8;
 
 extern s32 g_Demo_VideoPresentInterval;
 
@@ -397,13 +384,17 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80032D1C);
 
 void MainLoop(void)
 {
+    #define V_BLANKS_CAPPED_MAX 4
+    #define H_BLANKS_PER_SECOND 15780
+    #define H_BLANKS_PER_TICK (H_BLANKS_PER_SECOND / TICKS_PER_SECOND)
+
     s32 temp_a0;
     s32 temp_v0_2;
     s32 vCountCopy;
     s32 vCount;
     s32 var_s1;
 
-    // Initialize.
+    // Initialize engine.
     GsInitVcount();
     func_8002E630();
     func_8002E7BC();
@@ -415,7 +406,7 @@ void MainLoop(void)
     func_800890B8();
     SD_DriverInit();
 
-    // Game loop.
+    // Run game.
     while (true)
     {
         g_MainLoop_FrameCount++;
@@ -432,7 +423,7 @@ void MainLoop(void)
         
         g_ObjectTableIdx = GsGetActiveBuff();
     
-        if ((u32)(g_GameWork.gameState_594 - 10) < 2)
+        if ((g_GameWork.gameState_594 - 10) < 2)
         {
             D_800C7018 = TEMP_MEMORY_ADDR + (g_ObjectTableIdx << 17);
         }
@@ -445,8 +436,8 @@ void MainLoop(void)
             D_800C7018 = TEMP_MEMORY_ADDR + (g_ObjectTableIdx << 15);
         }
     
-        GsClearOt(0, 0, &D_800A8F74[g_ObjectTableIdx]);
-        GsClearOt(0, 0, &D_800A8FC4[g_ObjectTableIdx]);
+        GsClearOt(0, 0, &g_ObjectTable0[g_ObjectTableIdx]);
+        GsClearOt(0, 0, &g_ObjectTable1[g_ObjectTableIdx]);
 
         g_SysWork.field_22A0 = 0;
         
@@ -478,39 +469,39 @@ void MainLoop(void)
         if (g_SysWork.flags_22A4 & 2)
         {
             temp_v0_2 = VSync(-1);
-            D_800B5C34 = temp_v0_2 - D_800A9770;
+            g_CappedVBlanks = temp_v0_2 - g_PrevVBlanks;
             
             Demo_PresentIntervalUpdate();
             
             var_s1 = g_Demo_VideoPresentInterval;
-            D_800A9770 = temp_v0_2;
+            g_PrevVBlanks = temp_v0_2;
             
-            if (var_s1 < D_800A8FF0)
+            if (var_s1 < g_IntervalVBlanks)
             {
-                var_s1 = D_800A8FF0;
+                var_s1 = g_IntervalVBlanks;
             }
             
             do
             {
                 VSync(0);
-                D_800B5C34++;
-                D_800A9770++;
+                g_CappedVBlanks++;
+                g_PrevVBlanks++;
             }
-            while (D_800B5C34 < var_s1);
+            while (g_CappedVBlanks < var_s1);
             
-            D_800B5C38 = D_800B5C34;
-            D_800B5C34 = MIN(D_800B5C34, 4);
+            g_UncappedVBlanks = g_CappedVBlanks;
+            g_CappedVBlanks = MIN(g_CappedVBlanks, 4);
             
             vCount = g_Demo_VideoPresentInterval * 263;
-            vCountCopy = D_800B5C38 * 263;
-            D_800B5C34 = g_Demo_VideoPresentInterval;
+            vCountCopy = g_UncappedVBlanks * 263;
+            g_CappedVBlanks = g_Demo_VideoPresentInterval;
         }
         else
         {
             if (g_SysWork.sysState_8 != 0)
             {
-                D_800B5C34 = VSync(-1) - D_800A9770;
-                D_800A9770 = VSync(-1);
+                g_CappedVBlanks = VSync(-1) - g_PrevVBlanks;
+                g_PrevVBlanks = VSync(-1);
                 VSync(0);
             }
             else
@@ -520,23 +511,23 @@ void MainLoop(void)
                     VSync(0);
                 }
                 
-                D_800B5C34 = VSync(-1) - D_800A9770;
-                D_800A9770 = VSync(-1);
+                g_CappedVBlanks = VSync(-1) - g_PrevVBlanks;
+                g_PrevVBlanks = VSync(-1);
                 
-                if (D_800B5C34 < D_800A8FF0)
+                if (g_CappedVBlanks < g_IntervalVBlanks)
                 {
                     do
                     {
                         VSync(0);
-                        D_800B5C34++;
-                        D_800A9770++;
+                        g_CappedVBlanks++;
+                        g_PrevVBlanks++;
                     }
-                    while (D_800B5C34 < D_800A8FF0);
+                    while (g_CappedVBlanks < g_IntervalVBlanks);
                 }
             }
             
-            D_800B5C38 = D_800B5C34;
-            D_800B5C34 = MIN(D_800B5C34, CAPPED_V_BLANK_COUNT_MAX);
+            g_UncappedVBlanks = g_CappedVBlanks;
+            g_CappedVBlanks = MIN(g_CappedVBlanks, V_BLANKS_CAPPED_MAX);
             
             vCount = MIN(GsGetVcount(), 1052); // Will call GsGetVcount() twice.
             vCountCopy = vCount;
@@ -548,9 +539,9 @@ void MainLoop(void)
         GsClearVcount();
         
         GsSwapDispBuff();
-        GsSortClear(g_GameWork.field_58C, g_GameWork.field_58D, g_GameWork.field_58E, &D_800A8F74[g_ObjectTableIdx]);
-        GsDrawOt(&D_800A8F74[g_ObjectTableIdx]);
-        GsDrawOt(&D_800A8FC4[g_ObjectTableIdx]);
+        GsSortClear(g_GameWork.field_58C, g_GameWork.field_58D, g_GameWork.field_58E, &g_ObjectTable0[g_ObjectTableIdx]);
+        GsDrawOt(&g_ObjectTable0[g_ObjectTableIdx]);
+        GsDrawOt(&g_ObjectTable1[g_ObjectTableIdx]);
     }
 }
 
