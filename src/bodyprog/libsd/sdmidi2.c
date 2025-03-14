@@ -1,7 +1,11 @@
 #include "common.h"
 #include "bodyprog/libsd.h"
 
-s32 smf_timer(void) // 0x800A6D18
+#include <libapi.h>
+
+extern s32 sd_timer_flag; // Only used in this file
+
+s32 smf_timer() // 0x800A6D18
 {
     if (sd_interrupt_start_flag == 0 || sd_int_flag != 0)
     {
@@ -27,11 +31,49 @@ s32 smf_timer(void) // 0x800A6D18
     return 0;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmidi2", smf_timer_set);
+void smf_timer_set() // 0x800A6DC0
+{
+    if (sd_timer_flag == 0)
+    {
+        sd_timer_flag = 1;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmidi2", smf_timer_end);
+        EnterCriticalSection();
+        sd_timer_event = OpenEvent(RCntCNT2, EvSpINT, EvMdINTR, smf_timer);
+        EnableEvent(sd_timer_event);
+        SetRCnt(RCntCNT2, 7328, RCntMdINTR); // ~30Hz?
+        StartRCnt(RCntCNT2);
+        ExitCriticalSection();
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmidi2", smf_timer_stop);
+        sd_int_flag   = 0;
+        sd_timer_flag = 0;
+    }
+}
+
+void smf_timer_end() // 0x800A6E58
+{
+    sd_timer_flag = 1;
+
+    EnterCriticalSection();
+    StopRCnt(RCntCNT2);
+    DisableEvent(sd_timer_event);
+    CloseEvent(sd_timer_event);
+    ExitCriticalSection();
+
+    sd_timer_flag = 0;
+    sd_int_flag   = 0;
+}
+
+void smf_timer_stop() // 0x800A6EC8
+{
+    sd_timer_flag = 1;
+
+    EnterCriticalSection();
+    StopRCnt(RCntCNT2);
+    ExitCriticalSection();
+
+    sd_timer_flag = 0;
+    sd_int_flag   = 0;
+}
 
 void smf_vsync(void) // 0x800A6F14
 {
@@ -59,13 +101,79 @@ void smf_vsync(void) // 0x800A6F14
     sd_int_flag2 = 0;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmidi2", MemCmp);
+s32 MemCmp(u8* str1, u8* str2, s32 count) // 0x800A6FB8
+{
+    if (!count)
+    {
+        return -1;
+    }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmidi2", readMThd);
+    while (--count)
+    {
+        if (*str1 != *str2)
+        {
+            break;
+        }
+        str1 += 1;
+        str2 += 1;
+    }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmidi2", readMTrk);
+    return *str1 - *str2;
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmidi2", readEOF);
+s32 readMThd(u32 offset) // 0x800A6FFC
+{
+    extern char D_8002E538[4]; // "MThd"
+    while (true)
+    {
+        if (!MemCmp(D_8002E538, smf_song[smf_file_no].play_ptr_504 + offset, 4))
+        {
+            return offset + 4;
+        }
+
+        if (smf_song[smf_file_no].field_518 < ++offset)
+        {
+            return -1;
+        }
+    }
+    return offset;
+}
+
+s32 readMTrk(u32 offset) // 0x800A70BC
+{
+    extern char D_8002E540[4]; // "MTrk"
+    while (true)
+    {
+        if (!MemCmp(D_8002E540, smf_song[smf_file_no].play_ptr_504 + offset, 4))
+        {
+            return offset + 4;
+        }
+
+        if (smf_song[smf_file_no].field_518 < ++offset)
+        {
+            return -1;
+        }
+    }
+    return offset;
+}
+
+s32 readEOF(u32 offset) // 0x800A717C
+{
+    extern char D_800B25C4[3]; // 0x00002FFF
+    while (true)
+    {
+        if (!MemCmp(&D_800B25C4, smf_song[smf_file_no].play_ptr_504 + offset, 3))
+        {
+            return offset + 3;
+        }
+
+        if (smf_song[smf_file_no].field_518 < ++offset)
+        {
+            return -1;
+        }
+    }
+    return offset;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmidi2", egetc);
 

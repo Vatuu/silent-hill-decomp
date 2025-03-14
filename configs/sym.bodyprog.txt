@@ -385,6 +385,7 @@ sd_int_flag2 = 0x800B2594;
 smf_start_flag = 0x800B2598;
 sd_timer_sync = 0x800B259C;
 timer_count = 0x800B25A0;
+sd_timer_flag = 0x800B25B4; // type:s32 guessed name
 time_flag = 0x800B25B8;
 smf_file_no = 0x800B25BC;
 print_start = 0x800B25C0;
