@@ -179,20 +179,25 @@ all: build
 
 build: $(TARGET_OUT)
 
-progress: regenerate
+objdiff-config: regenerate
 	@$(MAKE) NON_MATCHING=0 SKIP_ASM=0 expected
 	@$(MAKE) NON_MATCHING=1 SKIP_ASM=1 build
 	@$(PYTHON) $(OBJDIFF_DIR)/objdiff_generate.py $(OBJDIFF_DIR)/config.yaml
+
+#report
+progress: objdiff-config
 	@$(OBJDIFF) report generate > $(BUILD_DIR)/progress.json
 
 check: build
 	@sha256sum --ignore-missing --check checksum.sha
 
+#progress: build NON_MATCHING=1 SKIP_ASM=1
+
 expected: check
 	mkdir -p $(EXPECTED_DIR)
 	mv build/src $(EXPECTED_DIR)/src
 	mv build/asm $(EXPECTED_DIR)/asm
-	rm -rf build
+	rm -rf $(BUILD_DIR)
 
 iso:
 	$(INSERT_OVLS) $(INSERT_OVLS_FLAGS)
@@ -223,17 +228,21 @@ setup: reset
 	$(MAKE) extract
 	$(MAKE) generate
 
-build-c: clean
+clean-build: clean
+	rm -rf $(LINKER_DIR)
 	$(MAKE) generate
 	$(MAKE) build
 
-build-cn: clean
+clean-check: clean
+	rm -rf $(LINKER_DIR)
+	$(MAKE) generate
+	$(MAKE) check
+
+clean-progress: clean
+	rm -rf $(LINKER_DIR)
 	$(MAKE) generate
 	$(MAKE) build NON_MATCHING=1 SKIP_ASM=1
 
-build-C: clean
-	$(MAKE) generate
-	$(MAKE) check
 # Recipes
 
 # .elf targets
