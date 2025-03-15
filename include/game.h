@@ -302,26 +302,25 @@ typedef struct _SubCharacter
     s32 field_FC;  // Player winded counter. Counts 20 seconds worth of ticks(?) and caps at 0x23000. Purpose for other characters unknown.
     s8  unk_FC[8]; // 2 more s32 for custom data?
     s32 field_108; // Player run counter. Increments every tick(?) indefinitely. Purpose for other characters unknown.
-
-    s8 unk_EC[28]; 
+    s8 unk_10C[26];
+    s16 field_126;
 } s_SubCharacter;
 STATIC_ASSERT_SIZEOF(s_SubCharacter, 296);
 
 typedef struct _MainCharacter
 {
-    s_SubCharacter character;
     u8             field_128;
     u8             field_129;
     u8             field_12A;
     u8             field_12B;    // isPrevAnimStateSame? Always 1, set to 0 for 1 tick when anim state changes.
     s8             copy_12C[20]; // Duplicate data. Sequentially opies all fields from 0x4 to 0x18 of s_SubCharacter.
-    s8             field_140[4];
-    s8             field_144[4]; // s32? Some kind of anim state. Set to 2 when player is in AFK anim, 0 otherwise.
-    s8             field_148[4]; // s32? Some kind of anim state.
-    s8             field_14C[4]; // s32? Some kind of anim state.
+    s32            field_140;
+    s32            field_144; // s32? Some kind of anim state. Set to 2 when player is in AFK anim, 0 otherwise.
+    s32            field_148; // s32? Some kind of anim state.
+    s32            field_14C; // s32? Some kind of anim state.
     s8             unk_150[4];
 } s_MainCharacter;
-STATIC_ASSERT_SIZEOF(s_MainCharacter, 0x154);
+STATIC_ASSERT_SIZEOF(s_MainCharacter, 44);
 
 typedef struct _SysWork
 {
@@ -337,7 +336,8 @@ typedef struct _SysWork
     s32             field_28;
     s32             field_2C;
     char            unk_30[28];
-    s_MainCharacter player_4C;
+    s_SubCharacter  characters_4C;
+    s_MainCharacter player_174;
     s_SubCharacter  characters_1A0[6];
     GsCOORDINATE2   unk_coord_890[2];
     GsCOORDINATE2   hero_neck_930;

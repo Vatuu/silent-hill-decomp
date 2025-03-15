@@ -1,4 +1,9 @@
 #include "common.h"
+#include <game.h>
+
+extern s8 D_800C457C;
+extern s8 D_800C4606;
+
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800CB6B0);
 
@@ -74,7 +79,63 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D2244);
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D23EC);
 
+#ifdef NON_MATCHING
+void func_800D2C7C(s32 arg0) {
+    s_MainCharacter* extra = &g_SysWork.player_174;
+    s_SubCharacter* subchar = &g_SysWork.characters_4C; 
+    g_SysWork.characters_4C.field_126 = 0;
+    
+    D_800C4606 = 0;
+    
+    /*
+    D_800C457C is related to animations that play during cutscenes.
+
+
+    It's value changes during cutscenes when Harry does any of the next
+    three actions
+    
+    0 nothing
+    1 is when Harry is walking
+    3 is when Harry moves to the right?
+    4 is when Harry moves to the left
+
+    However a function related to it behaviour is broken or I
+    just don't understand how it works as I tested it and after
+    the first in-game dialogue of Harry the value is keept as 1
+    (even when he is not walking or even in a cutscene!) until the
+    next dialgue triggers (when Harry look sees Cheryl and the second
+    FMV plays), something similar happens on the next overlay as this
+    value is is keept as 1 during a point of the first cutscene and
+    it doesn't change until the player make any sort of interaction
+	
+    */
+    
+    switch (arg0) {
+    case 0x36:
+        D_800C457C = 0;
+        break;
+    case 0x35:
+        D_800C457C = 1;
+        break;
+    case 0x38:
+        D_800C457C = 3;
+        break;
+    case 0x39:
+        D_800C457C = 4;
+        break;
+    }
+    g_SysWork.player_174.field_144 = arg0;
+    
+    subchar->field_3 = 0;
+    subchar->field_2 = 0;
+    extra->field_12B = 0;
+    extra->field_12A = 0;
+    g_SysWork.player_174.field_148 = 0;
+    g_SysWork.player_174.field_14C = 0;
+}
+#else
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D2C7C);
+#endif
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D2D2C);
 
