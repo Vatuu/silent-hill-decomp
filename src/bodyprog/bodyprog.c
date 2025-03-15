@@ -441,7 +441,7 @@ void MainLoop() // 0x80032ee0
     JOY_Init();
     VSyncCallback(&GFX_VSyncCallback);
     InitGeom();
-    func_8004BB10();
+    func_8004BB10(); // Initializes something for graphics.
     func_800890B8();
     SD_DriverInit();
 
@@ -502,7 +502,7 @@ void MainLoop() // 0x80032ee0
         }
         
         func_80089128();
-        func_8008D78C();
+        func_8008D78C(); // Camera update?
         DrawSync(0);
         
         if (g_SysWork.flags_22A4 & 2)
@@ -574,10 +574,10 @@ void MainLoop() // 0x80032ee0
             vCountCopy = vCount;
         }
 
-        // Update timers.
-        g_DeltaTime = MUL_FIXED(vCount, H_BLANKS_TO_FIXED_SEC_SCALE, Q12_SHIFT);
-        D_800A8FEC = MUL_FIXED(vCountCopy, H_BLANKS_TO_FIXED_SEC_SCALE, Q12_SHIFT);
-        D_800B9CC8 = MUL_FIXED(vCount, H_BLANKS_UNKNOWN_SCALE, Q12_SHIFT);
+        // Update delta time.
+        g_DeltaTime0 = MUL_FIXED(vCount, H_BLANKS_TO_FIXED_SEC_SCALE, Q12_SHIFT);
+        g_DeltaTime1 = MUL_FIXED(vCountCopy, H_BLANKS_TO_FIXED_SEC_SCALE, Q12_SHIFT);
+        g_DeltaTime2 = MUL_FIXED(vCount, H_BLANKS_UNKNOWN_SCALE, Q12_SHIFT); // TODO: Unknown time scale.
         GsClearVcount();
         
         // Draw objects?
@@ -801,7 +801,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80038F6C);
 // SysState_GamePaused handler
 void func_800391E8()
 {
-    D_800A9A68 += D_800A8FEC;
+    D_800A9A68 += g_DeltaTime1;
     if (((D_800A9A68 >> 11) & 1) == 0)
     {
         GFX_StringPosition(125, 104);
@@ -1052,7 +1052,10 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003E544);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003E5E8);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", GameFS_FlameGfxLoad_8003E710);
+void GameFS_FlameGfxLoad() // 0x8003E710
+{
+    Fs_QueueStartReadTim(FILE_TIM_FLAME_TIM, FS_BUFFER_1, &D_800A9FA8);
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003E740);
 

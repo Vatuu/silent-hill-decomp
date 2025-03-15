@@ -50,7 +50,7 @@ void func_80085DC0(s32 arg0, s32 sysStateStep)
 
 void func_80085DF0(void)
 {
-    g_SysWork.field_2C += D_800A8FEC;
+    g_SysWork.field_2C += g_DeltaTime1;
     
     if (D_800C9668() != 0 || g_SysWork.field_2C > 4096)
     {
@@ -64,12 +64,12 @@ void func_80085DF0(void)
 
 void func_80085E6C(s32 arg0, s32 arg1)
 {
-    s32 temp_v0;
+    s32 someTime;
 
-    temp_v0 = g_SysWork.field_2C + D_800A8FEC;
-    g_SysWork.field_2C = temp_v0;
+    someTime = g_SysWork.field_2C + g_DeltaTime1;
+    g_SysWork.field_2C = someTime;
     
-    if (arg0 < temp_v0)
+    if (arg0 < someTime)
     {
         func_80085D78(arg1);
     }
@@ -269,7 +269,7 @@ void func_800868DC(s32 idx)
 
 s32 func_800868F4(s32 arg0, s32 arg1, s32 idx)
 {
-    D_800C4710[idx] += g_DeltaTime;
+    D_800C4710[idx] += g_DeltaTime0;
     D_800C4710[idx] = (arg1 < D_800C4710[idx]) ? arg1 : D_800C4710[idx];
     
     return (arg0 * D_800C4710[idx]) / arg1;
@@ -277,7 +277,7 @@ s32 func_800868F4(s32 arg0, s32 arg1, s32 idx)
 
 s32 func_8008694C(s32 arg0, s16 arg1, s16 arg2, s32 arg3, s32 idx)
 {
-    D_800C4710[idx] += g_DeltaTime;
+    D_800C4710[idx] += g_DeltaTime0;
     D_800C4710[idx] = (arg3 < D_800C4710[idx]) ? arg3 : D_800C4710[idx];
     return (arg0 * shRsin(arg1 + ((arg2 * D_800C4710[idx]) / arg3))) >> 12;
 }
@@ -569,7 +569,7 @@ void func_80086FE8(s32 arg0, s32 arg1, s32 arg2)
         
         if (i != NPC_COUNT_MAX)
         {
-            g_DeltaTime = 0;
+            g_DeltaTime0 = 0;
         }
     }
     

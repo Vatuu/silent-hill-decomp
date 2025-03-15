@@ -75,8 +75,6 @@ extern char D_80025394[];
 
 extern RECT D_8002AB10;
 
-extern s32 D_800A8FEC; // Maybe a distance?
-
 extern s_FsImageDesc D_800A9014;
 
 extern s_FsImageDesc D_800A901C;
@@ -84,6 +82,8 @@ extern s_FsImageDesc D_800A901C;
 extern s_FsImageDesc D_800A9024;
 
 extern s_FsImageDesc D_800A902C;
+
+extern s_FsImageDesc D_800A9FA8;
 
 extern s32 D_800A9768;
 
@@ -137,8 +137,6 @@ extern void (*D_800C9644)();
 extern void (*D_800C9648)(s32);
 
 extern s32 (*D_800C9668)();
-
-extern s32 D_800B9CC8;
 
 extern u16 D_800BCCB0;
 
@@ -265,6 +263,7 @@ void func_80085DC0(s32 arg0, s32 sysStateStep);
 
 void func_80085DF0();
 
+/**  */
 void func_80085E6C(s32 arg0, s32 arg1);
 
 void func_800860B0(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 sysStateStep, s32 arg5);
@@ -327,6 +326,9 @@ void GameFS_OptionBinLoad();
 
 /** Loads the save/load background graphic and overlay. */
 void GameFS_SaveLoadBinLoad();
+
+/** Loads a flame graphic. */
+void GameFS_FlameGfxLoad();
 
 /** Draws some string in display space. */
 void func_80032CE8();

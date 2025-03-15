@@ -11,7 +11,9 @@ g_GameWorkPtr1 = 0x80024D54; // type:u32 same as g_GameWorkPtr0?
 g_ObjectTable0 = 0x800A8F74; // type:s8
 g_ObjectTable1 = 0x800A8FC4; // type:s8
 
-g_DeltaTime = 0x800B5CC0; // type:s32 - Q20.12 fixed point, usually 0x44 (0.0166..) or 0x88 (0.033..).
+g_DeltaTime0 = 0x800B5CC0; // type:s32 - Q20.12 fixed point, usually 0x44 (0.0166..) or 0x88 (0.033..).
+g_DeltaTime1 = 0x800A8FEC; // type:s32
+g_DeltaTime2 = 0x800B9CC8; // type:s32
 g_MapEventIdx = 0x800A9A14; // type:u32
 
 g_IntervalVBlanks = 0x800A8FF0; // type:s32
@@ -187,7 +189,7 @@ Chara_PositionUpdateFromParams = 0x800371e8; // type:func
 AreaLoad_UpdatePlayerPosition = 0x80039f30; // type:func
 GameFS_BgEtcGfxLoad_8003BE6C = 0x8003be6c; // type:func
 GameFS_BgItemLoad_8003BE9C = 0x8003be9c; // type:func
-GameFS_FlameGfxLoad_8003E710 = 0x8003e710; // type:func
+GameFS_FlameGfxLoad = 0x8003E710; // type:func
 
 SD_EngineCmd = 0x80045A7C; // type:func
 SD_DriverInit = 0x80045DD4; // type:func

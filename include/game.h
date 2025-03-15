@@ -343,7 +343,7 @@ typedef struct _SysWork
     s32             field_20;
     s32             field_24;
     s32             field_28;
-    s32             field_2C; // Distance of some kind?
+    s32             field_2C; // Timer of some kind.
     s32             field_30;
     char            unk_34[16];
     s8              unk_44;
@@ -384,7 +384,9 @@ extern s32  g_ObjectTableIdx;
 extern GsOT g_ObjectTable0[];
 extern GsOT g_ObjectTable1[];
 
-extern s32 g_DeltaTime;
+extern s32 g_DeltaTime0;
+extern s32 g_DeltaTime1;
+extern s32 g_DeltaTime2;
 extern u32 g_MapEventIdx;
 
 extern s32 g_IntervalVBlanks;
@@ -448,4 +450,5 @@ static inline void Game_StateSetPrevious()
     g_GameWork.gameStatePrev_590    = prevState;
     g_GameWork.gameStateStep_598[0] = 0;
 }
+
 #endif
