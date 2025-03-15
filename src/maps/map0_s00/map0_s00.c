@@ -89,13 +89,12 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D2244);
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D23EC);
 
-#ifdef NON_MATCHING
 void func_800D2C7C(s32 arg0)
 {
-    s_MainCharacter* extra = &g_SysWork.player_174;
-    s_SubCharacter* subchar = &g_SysWork.character_4C; 
-    g_SysWork.character_4C.field_126 = 0;
-    
+    s_MainCharacterExtra* extra             = &g_SysWork.player_4C.extra_128;
+    s_SubCharacter*       character         = &g_SysWork.player_4C.character;
+    g_SysWork.player_4C.character.field_126 = 0;
+
     D_800C4606 = 0;
     
     switch (arg0)
@@ -117,18 +116,15 @@ void func_800D2C7C(s32 arg0)
         break;
     }
 
-    g_SysWork.player_174.field_1C = arg0;
-    
-    subchar->field_3 = 0;
-    subchar->field_2 = 0;
+    g_SysWork.player_4C.extra_128.field_1C = arg0;
+
+    character->field_3                     = 0;
+    character->field_2                     = 0;
     extra->field_3 = 0;
     extra->field_2 = 0;
-    g_SysWork.player_174.field_20 = 0;
-    g_SysWork.player_174.field_24 = 0;
+    g_SysWork.player_4C.extra_128.field_20 = 0;
+    g_SysWork.player_4C.extra_128.field_24 = 0;
 }
-#else
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D2C7C);
-#endif
 
 void func_800D2D2C(void)
 {
@@ -137,21 +133,21 @@ void func_800D2D2C(void)
 
 void func_800D2D44(void)
 {
-    s_MainCharacter* extra = &g_SysWork.player_174;
-    s_SubCharacter* character = &g_SysWork.character_4C; 
+    s_MainCharacterExtra* extra     = &g_SysWork.player_4C.extra_128;
+    s_SubCharacter*       character = &g_SysWork.player_4C.character;
     extra->flags_6 &= 0xFFFE;
     character->flags_6 &= 0xFFFE;
 }
 
 s32 func_800D2D6C(void)
 {
-    return ~(g_SysWork.character_4C.flags_6 & 1);
+    return ~(g_SysWork.player_4C.character.flags_6 & 1);
 }
 
 void func_800D2D84(void)
 {
-    s_MainCharacter* extra = &g_SysWork.player_174;
-    s_SubCharacter* character = &g_SysWork.character_4C; 
+    s_MainCharacterExtra* extra     = &g_SysWork.player_4C.extra_128;
+    s_SubCharacter*       character = &g_SysWork.player_4C.character;
     extra->flags_6 |= 1;
     character->flags_6 |= 1;
 }
@@ -159,11 +155,11 @@ void func_800D2D84(void)
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D2DAC);
 
 s32 func_800D2E50(void) {
-    return g_SysWork.character_4C.field_126 == 0;
+    return g_SysWork.player_4C.character.field_126 == 0;
 }
 
 void func_800D2E60(void) {
-    g_SysWork.character_4C.field_126 = 0;
+    g_SysWork.player_4C.character.field_126 = 0;
 }
 
 void func_800D2E6C() {}
@@ -184,7 +180,7 @@ s32 func_800D2E94()
 void func_800D2E9C() {}
 
 u8 func_800D2EA4(void) {
-    return g_SysWork.character_4C.unk_10D;
+    return g_SysWork.player_4C.character.unk_10D;
 }
 
 void func_800D2EB4(void) {
@@ -340,7 +336,7 @@ void func_800DBE00() {
     g_SysWork.field_10 = 0;
     g_SysWork.field_2C = 0;
     g_SysWork.field_14 = 0;
-    g_SysWork.character_4C.position_18.vy = 0;
+    g_SysWork.player_4C.character.position_18.vy = 0;
 }
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800DBE68);
