@@ -3,10 +3,6 @@
 
 #include "common.h"
 
-extern u8 D_800BC747;
-
-extern u8 D_800BC748;
-
 void func_801E3F68(void);
 
 void func_801E3F90(void);
