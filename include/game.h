@@ -311,19 +311,23 @@ STATIC_ASSERT_SIZEOF(s_SubCharacter, 296);
 
 typedef struct _MainCharacter
 {
-    s_SubCharacter character;
-    u8             field_128;
-    u8             field_129;
-    u8             field_12A;
-    u8             field_12B;    // isPrevAnimStateSame? Always 1, set to 0 for 1 tick when anim state changes.
-    s8             copy_12C[20]; // Duplicate data. Sequentially opies all fields from 0x4 to 0x18 of s_SubCharacter.
-    s32            field_140;
-    s32            field_144; // Some kind of anim state. Set to 2 when player is in AFK anim, 0 otherwise.
-    s32            field_148; // Some kind of anim state.
-    s32            field_14C; // Some kind of anim state.
-    s8             unk_150[4];
+    // SubCharacter has the same 0x2C starting bytes?
+    // Maybe some base model struct which SubCharacter extends, model for torch or something attached to player?
+    u8             field_0;
+    u8             field_1;
+    u8             field_2;
+    u8             field_3;    // isPrevAnimStateSame? Always 1, set to 0 for 1 tick when anim state changes.
+    u8             unk_4;
+    u8             unk_5;
+    u16            flags_6;
+    s8             copy_8[16]; // Duplicate data. Sequentially opies all fields from 0x4 to 0x18 of s_SubCharacter.
+    s32            field_18;
+    s32            field_1C; // Some kind of anim state. Set to 2 when player is in AFK anim, 0 otherwise.
+    s32            field_20; // Some kind of anim state.
+    s32            field_24; // Some kind of anim state.
+    s8             unk_28[4];
 } s_MainCharacter;
-STATIC_ASSERT_SIZEOF(s_MainCharacter, 340);
+STATIC_ASSERT_SIZEOF(s_MainCharacter, 44);
 
 typedef struct _SysWork
 {
@@ -339,8 +343,14 @@ typedef struct _SysWork
     s32             field_28;
     s32             field_2C; // Distance of some kind?
     s32             field_30;
-    char            unk_34[24];
-    s_MainCharacter player_4C;
+    char            unk_34[16];
+    s8              unk_44;
+    s8              unk_45;
+    s8              unk_46;
+    s8              unk_47;
+    char            unk_48[4];
+	s_SubCharacter  character_4C;
+    s_MainCharacter player_174;
     s_SubCharacter  characters_1A0[NPC_COUNT_MAX];
     GsCOORDINATE2   unk_coord_890[2];
     GsCOORDINATE2   hero_neck_930;

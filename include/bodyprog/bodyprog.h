@@ -157,6 +157,10 @@ extern s16 D_800C391C;
 
 extern s16 D_800C391E;
 
+extern s8 D_800C457C;
+
+extern u8 D_800C4606;
+
 /** Unknown bodyprog var. Set in `Fs_QueueDoThingWhenEmpty`. */
 extern s32 D_800C489C;
 

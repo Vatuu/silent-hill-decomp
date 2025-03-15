@@ -866,10 +866,10 @@ void SysWork_SaveGameUpdatePlayer() // 0x8003A120
     s_ShSaveGame* save      = g_SaveGamePtr;
     save->curMapEventNum_A8 = g_MapEventIdx;
 
-    save->playerPosX_244        = g_SysWork.player_4C.character.position_18.vx;
-    save->playerPosZ_24C        = g_SysWork.player_4C.character.position_18.vz;
-    save->playerRotationYaw_248 = g_SysWork.player_4C.character.rotation_24.vy;
-    save->playerHealth_240      = g_SysWork.player_4C.character.health_B0;
+    save->playerPosX_244        = g_SysWork.character_4C.position_18.vx;
+    save->playerPosZ_24C        = g_SysWork.character_4C.position_18.vz;
+    save->playerRotationYaw_248 = g_SysWork.character_4C.rotation_24.vy;
+    save->playerHealth_240      = g_SysWork.character_4C.health_B0;
 }
 
 void func_8003A16C() // 0x8003A16C
@@ -886,10 +886,10 @@ void func_8003A16C() // 0x8003A16C
 
 void SysWork_SaveGameReadPlayer() // 0x8003A1F4
 {
-    g_SysWork.player_4C.character.position_18.vx = g_SaveGamePtr->playerPosX_244;
-    g_SysWork.player_4C.character.position_18.vz = g_SaveGamePtr->playerPosZ_24C;
-    g_SysWork.player_4C.character.rotation_24.vy = g_SaveGamePtr->playerRotationYaw_248;
-    g_SysWork.player_4C.character.health_B0      = g_SaveGamePtr->playerHealth_240;
+    g_SysWork.character_4C.position_18.vx = g_SaveGamePtr->playerPosX_244;
+    g_SysWork.character_4C.position_18.vz = g_SaveGamePtr->playerPosZ_24C;
+    g_SysWork.character_4C.rotation_24.vy = g_SaveGamePtr->playerRotationYaw_248;
+    g_SysWork.character_4C.health_B0      = g_SaveGamePtr->playerHealth_240;
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003A230);

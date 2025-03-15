@@ -1,20 +1,4 @@
-#include "game.h"
-
-typedef struct
-{
-    s8  unk_0[5];
-    u16 field_6;
-} s_800BA134;
-
-extern u8 D_800BA007;
-
-extern u16 D_800BA012;
-
-extern s_800BA134 D_800BA134[];
-
-extern s8 D_800C457C;
-
-extern u8 D_800C4606;
+#include "bodyprog/bodyprog.h"
 
 extern u8 D_800DD59C;
 
@@ -96,8 +80,8 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D23EC);
 void func_800D2C7C(s32 arg0)
 {
     s_MainCharacter* extra = &g_SysWork.player_174;
-    s_SubCharacter* subchar = &g_SysWork.player_4C.character; 
-    g_SysWork.player_4C.character.field_126 = 0;
+    s_SubCharacter* subchar = &g_SysWork.character_4C; 
+    g_SysWork.character_4C.field_126 = 0;
     
     D_800C4606 = 0;
     
@@ -143,39 +127,38 @@ void func_800D2C7C(s32 arg0)
         break;
     }
 
-    g_SysWork.player_174.field_144 = arg0;
+    g_SysWork.player_174.field_1C = arg0;
     
     subchar->field_3 = 0;
     subchar->field_2 = 0;
-    extra->field_12B = 0;
-    extra->field_12A = 0;
-    g_SysWork.player_174.field_148 = 0;
-    g_SysWork.player_174.field_14C = 0;
+    extra->field_3 = 0;
+    extra->field_2 = 0;
+    g_SysWork.player_174.field_20 = 0;
+    g_SysWork.player_174.field_24 = 0;
 }
 #else
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D2C7C);
 #endif
 
-void func_800D2D2C(void)
-{
-    D_800C4606++;
-}
-
 void func_800D2D44(void)
 {
-    D_800BA134[0].field_6 = D_800BA134[0].field_6 & 0xFFFE;
-    D_800BA134[-37].field_6 = D_800BA134[-37].field_6 & 0xFFFE; // -37?
+    s_MainCharacter* extra = &g_SysWork.player_174;
+    s_SubCharacter* character = &g_SysWork.character_4C; 
+    extra->flags_6 &= 0xFFFE;
+    character->flags_6 &= 0xFFFE;
 }
 
 s32 func_800D2D6C(void)
 {
-    return ~(D_800BA012 & 1);
+    return ~(g_SysWork.character_4C.flags_6 & 1);
 }
 
 void func_800D2D84(void)
 {
-    D_800BA134[0].field_6 = D_800BA134[0].field_6 | 1;
-    D_800BA134[-37].field_6 = D_800BA134[-37].field_6 | 1; // -37?
+    s_MainCharacter* extra = &g_SysWork.player_174;
+    s_SubCharacter* character = &g_SysWork.character_4C; 
+    extra->flags_6 |= 1;
+    character->flags_6 |= 1;
 }
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D2DAC);
@@ -204,7 +187,7 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D2EB4);
 
 void func_800D2EF4(void)
 {
-    D_800BA007 = D_800DD59C;
+    g_SysWork.unk_47 = D_800DD59C;
 }
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D2F08);
