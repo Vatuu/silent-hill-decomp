@@ -140,6 +140,11 @@ void func_800D2C7C(s32 arg0)
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D2C7C);
 #endif
 
+void func_800D2D2C(void)
+{
+    D_800C4606++;
+}
+
 void func_800D2D44(void)
 {
     s_MainCharacter* extra = &g_SysWork.player_174;
