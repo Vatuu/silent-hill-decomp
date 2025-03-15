@@ -1,9 +1,4 @@
-#include "common.h"
-#include <game.h>
-
-extern s8 D_800C457C;
-extern s8 D_800C4606;
-
+#include "game.h"
 
 typedef struct
 {
@@ -16,6 +11,8 @@ extern u8 D_800BA007;
 extern u16 D_800BA012;
 
 extern s_800BA134 D_800BA134[];
+
+extern s8 D_800C457C;
 
 extern u8 D_800C4606;
 
@@ -96,10 +93,11 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D2244);
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D23EC);
 
 #ifdef NON_MATCHING
-void func_800D2C7C(s32 arg0) {
+void func_800D2C7C(s32 arg0)
+{
     s_MainCharacter* extra = &g_SysWork.player_174;
-    s_SubCharacter* subchar = &g_SysWork.characters_4C; 
-    g_SysWork.characters_4C.field_126 = 0;
+    s_SubCharacter* subchar = &g_SysWork.player_4C.character; 
+    g_SysWork.player_4C.character.field_126 = 0;
     
     D_800C4606 = 0;
     
@@ -126,20 +124,25 @@ void func_800D2C7C(s32 arg0) {
 	
     */
     
-    switch (arg0) {
+    switch (arg0)
+    {
     case 0x36:
         D_800C457C = 0;
         break;
+
     case 0x35:
         D_800C457C = 1;
         break;
+
     case 0x38:
         D_800C457C = 3;
         break;
+
     case 0x39:
         D_800C457C = 4;
         break;
     }
+
     g_SysWork.player_174.field_144 = arg0;
     
     subchar->field_3 = 0;

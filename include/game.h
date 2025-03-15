@@ -311,18 +311,19 @@ STATIC_ASSERT_SIZEOF(s_SubCharacter, 296);
 
 typedef struct _MainCharacter
 {
+    s_SubCharacter character;
     u8             field_128;
     u8             field_129;
     u8             field_12A;
     u8             field_12B;    // isPrevAnimStateSame? Always 1, set to 0 for 1 tick when anim state changes.
     s8             copy_12C[20]; // Duplicate data. Sequentially opies all fields from 0x4 to 0x18 of s_SubCharacter.
     s32            field_140;
-    s32            field_144; // s32? Some kind of anim state. Set to 2 when player is in AFK anim, 0 otherwise.
-    s32            field_148; // s32? Some kind of anim state.
-    s32            field_14C; // s32? Some kind of anim state.
+    s32            field_144; // Some kind of anim state. Set to 2 when player is in AFK anim, 0 otherwise.
+    s32            field_148; // Some kind of anim state.
+    s32            field_14C; // Some kind of anim state.
     s8             unk_150[4];
 } s_MainCharacter;
-STATIC_ASSERT_SIZEOF(s_MainCharacter, 44);
+STATIC_ASSERT_SIZEOF(s_MainCharacter, 340);
 
 typedef struct _SysWork
 {

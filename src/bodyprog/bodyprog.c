@@ -364,7 +364,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003289C);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80032904);
 
-void GFX_VSyncCallback(void)
+void GFX_VSyncCallback() // 0x80032b80
 {
     D_800A9768++;
     D_800A976C++;
@@ -374,33 +374,33 @@ void GFX_VSyncCallback(void)
     g_SysWork.field_24++;
 }
 
-void GameFS_TitleGfxSeek() 
+void GameFS_TitleGfxSeek() // 0x80032bd0
 {
     Fs_QueueStartSeek(FILE_TIM_TITLE_E_TIM);
 }
 
-void GameFS_TitleGfxLoad()
+void GameFS_TitleGfxLoad() // 0x80032bf0
 {
     Fs_QueueStartReadTim(FILE_TIM_TITLE_E_TIM, FS_BUFFER_3, &D_800A9014);
 }
 
-void GameFS_StreamBinSeek() 
+void GameFS_StreamBinSeek() // 0x80032C20
 {
     Fs_QueueStartSeek(FILE_VIN_STREAM_BIN);
 }
 
-void GameFS_StreamBinLoad()
+void GameFS_StreamBinLoad() // 0x80032c40
 {
     Fs_QueueStartRead(FILE_VIN_STREAM_BIN, FS_BUFFER_1);
 }
 
-void GameFS_OptionBinLoad()
+void GameFS_OptionBinLoad() // 0x80032c68
 {
     Fs_QueueStartReadTim(FILE_TIM_OPTION_TIM, FS_BUFFER_1, &D_800A902C);
     Fs_QueueStartRead(FILE_VIN_OPTION_BIN, FS_BUFFER_1);
 }
 
-void GameFS_SaveLoadBinLoad()
+void GameFS_SaveLoadBinLoad() // 0x80032ca8
 {
     Fs_QueueStartReadTim(FILE_TIM_SAVELOAD_TIM, FS_BUFFER_1, &D_800A902C);
     Fs_QueueStartRead(FILE_VIN_SAVELOAD_BIN, FS_BUFFER_1);
@@ -414,7 +414,7 @@ void func_80032CE8()
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80032D1C);
 
-void MainLoop()
+void MainLoop() // 0x80032ee0
 {
     #define TICKS_PER_SECOND_MIN (TICKS_PER_SECOND / 4)
     #define H_BLANKS_PER_TICK    263
@@ -600,7 +600,7 @@ void Settings_ScreenAndVolUpdate()
     SD_SetVolume(OPT_SOUND_VOLUME_MAX, g_GameWork.optVolumeBgm_1F, g_GameWork.optVolumeSe_20);
 }
 
-void Settings_RestoreDefaults()
+void Settings_RestoreDefaults() // 0x8003342c
 {
     g_GameWork.optWeaponCtrl_23 = 1;
     g_GameWork.optBrightness_22 = 3;
@@ -866,10 +866,10 @@ void SysWork_SaveGameUpdatePlayer() // 0x8003A120
     s_ShSaveGame* save      = g_SaveGamePtr;
     save->curMapEventNum_A8 = g_MapEventIdx;
 
-    save->playerPosX_244        = g_SysWork.characters_4C.position_18.vx;
-    save->playerPosZ_24C        = g_SysWork.characters_4C.position_18.vz;
-    save->playerRotationYaw_248 = g_SysWork.characters_4C.rotation_24.vy;
-    save->playerHealth_240      = g_SysWork.characters_4C.health_B0;
+    save->playerPosX_244        = g_SysWork.player_4C.character.position_18.vx;
+    save->playerPosZ_24C        = g_SysWork.player_4C.character.position_18.vz;
+    save->playerRotationYaw_248 = g_SysWork.player_4C.character.rotation_24.vy;
+    save->playerHealth_240      = g_SysWork.player_4C.character.health_B0;
 }
 
 void func_8003A16C() // 0x8003A16C
@@ -886,10 +886,10 @@ void func_8003A16C() // 0x8003A16C
 
 void SysWork_SaveGameReadPlayer() // 0x8003A1F4
 {
-    g_SysWork.characters_4C.position_18.vx = g_SaveGamePtr->playerPosX_244;
-    g_SysWork.characters_4C.position_18.vz = g_SaveGamePtr->playerPosZ_24C;
-    g_SysWork.characters_4C.rotation_24.vy = g_SaveGamePtr->playerRotationYaw_248;
-    g_SysWork.characters_4C.health_B0      = g_SaveGamePtr->playerHealth_240;
+    g_SysWork.player_4C.character.position_18.vx = g_SaveGamePtr->playerPosX_244;
+    g_SysWork.player_4C.character.position_18.vz = g_SaveGamePtr->playerPosZ_24C;
+    g_SysWork.player_4C.character.rotation_24.vy = g_SaveGamePtr->playerRotationYaw_248;
+    g_SysWork.player_4C.character.health_B0      = g_SaveGamePtr->playerHealth_240;
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003A230);

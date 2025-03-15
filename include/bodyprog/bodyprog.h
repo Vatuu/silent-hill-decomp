@@ -247,7 +247,7 @@ void func_80085D78(s32 arg0);
 
 void func_80085DC0(s32 arg0, s32 sysStateStep);
 
-void func_80085DF0(void);
+void func_80085DF0();
 
 void func_80085E6C(s32 arg0, s32 arg1);
 
