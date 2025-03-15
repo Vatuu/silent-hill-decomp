@@ -206,21 +206,21 @@ GameFS_Tim00TIMLoad = 0x80053da0; // type:func
 Chara_Load = 0x80088C7C; // type:func
 Chara_Spawn = 0x80088D78; // type:func
 
-Demo_DataRead = 0x8008f07c; // type:func
-Demo_GameGlobalsUpdate = 0x8008f1a0; // type:func
-Demo_GameGlobalsRestore = 0x8008f2bc; // type:func
-Demo_GameRandSeedUpdate = 0x8008f33c; // type:func
-Demo_GameRandSeedRestore = 0x8008f370; // type:func
-Demo_Start = 0x8008f398; // type:func
-Demo_Stop = 0x8008f3f0; // type:func
-Demo_ExitDemo = 0x8008f4e4; // type:func
-Demo_DemoRandSeedBackup = 0x8008f528; // type:func
-Demo_DemoRandSeedRestore = 0x8008f560; // type:func
-Demo_DemoRandSeedAdvance = 0x8008f598; // type:func
-Demo_Update = 0x8008f5d8; // type:func
-Demo_JoyUpdate = 0x8008f7cc; // type:func
-Demo_PresentIntervalUpdate = 0x8008f87c; // type:func
-Demo_GameRandSeedSet = 0x8008f8a8; // type:func
+Demo_DataRead = 0x8008F07C; // type:func
+Demo_GameGlobalsUpdate = 0x8008F1A0; // type:func
+Demo_GameGlobalsRestore = 0x8008F2BC; // type:func
+Demo_GameRandSeedUpdate = 0x8008F33C; // type:func
+Demo_GameRandSeedRestore = 0x8008F370; // type:func
+Demo_Start = 0x8008F398; // type:func
+Demo_Stop = 0x8008F3F0; // type:func
+Demo_ExitDemo = 0x8008F4E4; // type:func
+Demo_DemoRandSeedBackup = 0x8008F528; // type:func
+Demo_DemoRandSeedRestore = 0x8008F560; // type:func
+Demo_DemoRandSeedAdvance = 0x8008F598; // type:func
+Demo_Update = 0x8008F5D8; // type:func
+Demo_JoyUpdate = 0x8008F7CC; // type:func
+Demo_PresentIntervalUpdate = 0x8008F87C; // type:func
+Demo_GameRandSeedSet = 0x8008F8A8; // type:func
 
 // custom konami rotmatrix library?
 // TODO: identify the other RotMatrix funcs here

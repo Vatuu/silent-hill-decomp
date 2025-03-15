@@ -306,6 +306,8 @@ void func_80091380();
 /** Returns 0.  */
 s32 func_8008F520();
 
+s32 func_8008F914();
+
 s32 Chara_Load(s32 arg0, s8 arg1, s32 arg2, s8 arg3, s32 arg4, s32 arg5);
 
 /** Seeks for the English title screen background graphic. */

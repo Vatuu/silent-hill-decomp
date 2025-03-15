@@ -1023,7 +1023,15 @@ s32 Demo_PresentIntervalUpdate() // 0x8008F87C
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", Demo_GameRandSeedSet);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008F914);
+s32 func_8008F914()
+{
+    if (g_SysWork.flags_22A4 & (1 << 1))
+    {
+        return func_8004393C();
+    }
+    
+    return 1;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008F94C);
 
