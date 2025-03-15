@@ -85,7 +85,7 @@ void func_801E63C0(void)
 
     func_801E2D8C();
     
-    D_800B9FE0[0] = 0;
+    g_SysWork.field_20 = 0;
     g_GameWork.gameStateStep_598[0]++;
     g_GameWork.gameStateStep_598[1] = 0;
     g_GameWork.gameStateStep_598[2] = 0;
