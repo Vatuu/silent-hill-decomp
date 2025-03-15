@@ -310,25 +310,25 @@ s32 func_8008F914();
 s32 Chara_Load(s32 arg0, s8 arg1, s32 arg2, s8 arg3, s32 arg4, s32 arg5);
 
 /** Seeks for the English title screen background graphic. */
-void GameFS_TitleGfxSeek();
+void GameFs_TitleGfxSeek();
 
 /** Loads the English title screen background graphic. */
-void GameFS_TitleGfxLoad();
+void GameFs_TitleGfxLoad();
 
 /** Seeks for the stream overlay. */
-void GameFS_StreamBinSeek();
+void GameFs_StreamBinSeek();
 
 /** Loads the stream overlay. */
-void GameFS_StreamBinLoad();
+void GameFs_StreamBinLoad();
 
 /** Loads the options background graphic and overlay. */
-void GameFS_OptionBinLoad();
+void GameFs_OptionBinLoad();
 
 /** Loads the save/load background graphic and overlay. */
-void GameFS_SaveLoadBinLoad();
+void GameFs_SaveLoadBinLoad();
 
 /** Loads a flame graphic. */
-void GameFS_FlameGfxLoad();
+void GameFs_FlameGfxLoad();
 
 /** Draws some string in display space. */
 void func_80032CE8();

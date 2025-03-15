@@ -18,7 +18,7 @@
  typedef enum _FSFile
  {
  #include "fileenum.h.inc"
- } e_FSFile;
+ } e_FsFile;
  
 /**
  * @brief Entry in the file table.

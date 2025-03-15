@@ -153,7 +153,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_800539A4);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_80053B08);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", GameFS_Tim00TIMLoad);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", GameFs_Tim00TIMLoad);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_80053DFC);
 

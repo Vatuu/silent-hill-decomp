@@ -374,33 +374,33 @@ void GFX_VSyncCallback() // 0x80032b80
     g_SysWork.field_24++;
 }
 
-void GameFS_TitleGfxSeek() // 0x80032bd0
+void GameFs_TitleGfxSeek() // 0x80032bd0
 {
     Fs_QueueStartSeek(FILE_TIM_TITLE_E_TIM);
 }
 
-void GameFS_TitleGfxLoad() // 0x80032bf0
+void GameFs_TitleGfxLoad() // 0x80032bf0
 {
     Fs_QueueStartReadTim(FILE_TIM_TITLE_E_TIM, FS_BUFFER_3, &D_800A9014);
 }
 
-void GameFS_StreamBinSeek() // 0x80032C20
+void GameFs_StreamBinSeek() // 0x80032C20
 {
     Fs_QueueStartSeek(FILE_VIN_STREAM_BIN);
 }
 
-void GameFS_StreamBinLoad() // 0x80032c40
+void GameFs_StreamBinLoad() // 0x80032c40
 {
     Fs_QueueStartRead(FILE_VIN_STREAM_BIN, FS_BUFFER_1);
 }
 
-void GameFS_OptionBinLoad() // 0x80032c68
+void GameFs_OptionBinLoad() // 0x80032c68
 {
     Fs_QueueStartReadTim(FILE_TIM_OPTION_TIM, FS_BUFFER_1, &D_800A902C);
     Fs_QueueStartRead(FILE_VIN_OPTION_BIN, FS_BUFFER_1);
 }
 
-void GameFS_SaveLoadBinLoad() // 0x80032ca8
+void GameFs_SaveLoadBinLoad() // 0x80032ca8
 {
     Fs_QueueStartReadTim(FILE_TIM_SAVELOAD_TIM, FS_BUFFER_1, &D_800A902C);
     Fs_QueueStartRead(FILE_VIN_SAVELOAD_BIN, FS_BUFFER_1);
@@ -686,7 +686,7 @@ void Game_SaveGameInitialize(s8 overlayIdx, s32 difficulty) // 0x800350BC
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80035178);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", GameFS_MapLoad);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", GameFs_MapLoad);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003528C);
 
@@ -940,9 +940,9 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003BE28);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003BE50);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", GameFS_BgEtcGfxLoad_8003BE6C);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", GameFs_BgEtcGfxLoad_8003BE6C);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", GameFS_BgItemLoad_8003BE9C);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", GameFs_BgItemLoad_8003BE9C);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003BED0);
 
@@ -1052,7 +1052,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003E544);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003E5E8);
 
-void GameFS_FlameGfxLoad() // 0x8003E710
+void GameFs_FlameGfxLoad() // 0x8003E710
 {
     Fs_QueueStartReadTim(FILE_TIM_FLAME_TIM, FS_BUFFER_1, &D_800A9FA8);
 }
