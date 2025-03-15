@@ -7,9 +7,9 @@
  * libref.pdf v4.4 may be useful, though was likely based on earlier SDK.
  */
 
-/** SD_ALLOC_SLOTS must equal SD_VAB_SLOTS due to SdWorkInit loop, but they're mostly unrelated */
+/** SD_ALLOC_SLOTS must equal SD_VAB_SLOTS due to SdWorkInit loop, but they're mostly unrelated. */
 #define SD_ALLOC_SLOTS 16
-#define SD_VAB_SLOTS 16
+#define SD_VAB_SLOTS   16
 
 // MIDI related header magic.
 #define SD_MAGIC_SEQp 0x53455170
@@ -35,7 +35,7 @@ extern s32 smf_file_no;
 
 extern u32 spu_ch_tbl[24];
 
-typedef struct _VAB_S // Pachinko Dream uses similar VAB_S struct
+typedef struct _VAB_S // Pachinko Dream uses similar VAB_S struct.
 {
     s16            vab_id_0;
     struct VabHdr* vab_header_4; // libsnd.h
@@ -76,7 +76,8 @@ typedef struct _SMF_TRACK_S
 } s_SMF_TRACK_S;
 STATIC_ASSERT_SIZEOF(s_SMF_TRACK_S, 0x28);
 
-typedef struct _SMF_S // Standard MIDI File
+/** Standard MIDI File */
+typedef struct _SMF_S
 {
     s_SMF_TRACK_S tracks_0[32];
     s8            unk_500[4];

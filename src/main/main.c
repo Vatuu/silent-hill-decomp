@@ -165,8 +165,8 @@ int main(void)
     // Fade image back out?
     func_800314EC(&g_MainImg0);
 
-    // Enter BODYPROG.
-    func_80032EE0();
+    // Run main loop.
+    MainLoop();
 
     return 0;
 }

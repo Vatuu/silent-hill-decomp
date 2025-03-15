@@ -1,7 +1,8 @@
 #include "common.h"
-#include "bodyprog/libsd.h"
 
 #include <libspu.h>
+
+#include "bodyprog/libsd.h"
 
 extern SpuVoiceAttr s_attr;
 
@@ -46,6 +47,7 @@ void random_calc(s_SMF_PORT* midiPort) // 0x800A3E70
         {
             var_v0 += 3;
         }
+
         midiPort->field_40 = (var_v0 >> 2);
     }
     else
@@ -207,8 +209,9 @@ void replay_reverb_set(s16 seq_access_num) // 0x800A4748
             {
                 reverb.depth.left = reverb.depth.right = smf_song[seq_access_num].field_536;
                 smf_song[seq_access_num].field_532     = 0;
-                return; // BUG: returns before it sets field_536 as reverb?
+                return; // BUG: Returns before setting field_536 as reverb?
             }
+
             SpuSetReverbModeParam(&reverb);
             SpuSetReverb(1);
         }
@@ -242,6 +245,7 @@ void midi_vsync() // 0x800A4838
             tre_calc(&smf_port[channel]);
             random_calc(&smf_port[channel]);
             pitch_calc(&smf_port[channel], 0);
+
             if (smf_song[(u8)smf_port[channel].smf_midi_num_3 >> 4].field_530 != 0)
             {
                 smf_vol_set(smf_port[channel].smf_midi_num_3, channel, smf_port[channel].vol_left_C, smf_port[channel].vol_right_E);
@@ -289,11 +293,13 @@ void sound_off() // 0x800A4D20
         voice                = spu_ch_tbl[i];
         voices |= voice;
         rr_off(i);
+
         do
         {
             SpuSetKey(0, voice);
             keyStatus = SpuGetKeyStatus(voice);
-        } while (keyStatus != 2 && keyStatus != 0);
+        }
+        while (keyStatus != 2 && keyStatus != 0);
     }
 
     smf_midi_sound_off.vol_3                = 0x7F;
@@ -311,7 +317,8 @@ void sound_off() // 0x800A4D20
     {
         SpuSetKey(0, voices);
         keyStatus = SpuGetKeyStatus(voices);
-    } while (keyStatus != 2 && keyStatus != 0);
+    }
+    while (keyStatus != 2 && keyStatus != 0);
 }
 
 void set_note_on_mb() {} // 0x800A4E90
@@ -356,11 +363,14 @@ void key_off(u8 midiNum, u8 keyNum)
             {
                 adsr_set(i, &smf_port[i]);
                 voices |= spu_ch_tbl[i];
+
                 do
                 {
                     SpuSetKey(0, spu_ch_tbl[i]);
                     keyStatus = SpuGetKeyStatus(spu_ch_tbl[i]);
-                } while (keyStatus != 2 && keyStatus != 0);
+                }
+                while (keyStatus != 2 && keyStatus != 0);
+
                 smf_port[i].field_16 = 0;
             }
             else
@@ -376,7 +386,8 @@ void key_off(u8 midiNum, u8 keyNum)
         {
             SpuSetKey(0, voices);
             keyStatus = SpuGetKeyStatus(voices);
-        } while (keyStatus != 2 && keyStatus != 0);
+        }
+        while (keyStatus != 2 && keyStatus != 0);
     }
 }
 

@@ -1,7 +1,8 @@
 #include "common.h"
-#include "bodyprog/libsd.h"
 
 #include <libapi.h>
+
+#include "bodyprog/libsd.h"
 
 extern s32 sd_timer_flag; // Only used in this file
 
@@ -114,6 +115,7 @@ s32 MemCmp(u8* str1, u8* str2, s32 count) // 0x800A6FB8
         {
             break;
         }
+
         str1 += 1;
         str2 += 1;
     }
@@ -136,12 +138,14 @@ s32 readMThd(u32 offset) // 0x800A6FFC
             return -1;
         }
     }
+
     return offset;
 }
 
 s32 readMTrk(u32 offset) // 0x800A70BC
 {
     extern char D_8002E540[4]; // "MTrk"
+
     while (true)
     {
         if (!MemCmp(D_8002E540, smf_song[smf_file_no].play_ptr_504 + offset, 4))
@@ -154,12 +158,14 @@ s32 readMTrk(u32 offset) // 0x800A70BC
             return -1;
         }
     }
+
     return offset;
 }
 
 s32 readEOF(u32 offset) // 0x800A717C
 {
     extern char D_800B25C4[3]; // 0x00002FFF
+
     while (true)
     {
         if (!MemCmp(&D_800B25C4, smf_song[smf_file_no].play_ptr_504 + offset, 3))
@@ -172,6 +178,7 @@ s32 readEOF(u32 offset) // 0x800A717C
             return -1;
         }
     }
+
     return offset;
 }
 

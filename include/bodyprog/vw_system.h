@@ -107,6 +107,7 @@ typedef struct _VC_CAMERA_INTINFO
 } VC_CAMERA_INTINFO;
 STATIC_ASSERT_SIZEOF(VC_CAMERA_INTINFO, 8);
 
+// Camera rotation parameters.
 typedef struct _VC_WATCH_MV_PARAM
 {
     int   ang_accel_x;
@@ -114,7 +115,7 @@ typedef struct _VC_WATCH_MV_PARAM
     short max_ang_spd_x;
     short max_ang_spd_y;
 } VC_WATCH_MV_PARAM;
-STATIC_ASSERT_SIZEOF(VC_WATCH_MV_PARAM, 0xC);
+STATIC_ASSERT_SIZEOF(VC_WATCH_MV_PARAM, 12);
 
 typedef struct _VC_CAM_MV_PARAM
 {
@@ -123,7 +124,7 @@ typedef struct _VC_CAM_MV_PARAM
     int max_spd_xz;
     int max_spd_y;
 } VC_CAM_MV_PARAM;
-STATIC_ASSERT_SIZEOF(VC_CAM_MV_PARAM, 0x10);
+STATIC_ASSERT_SIZEOF(VC_CAM_MV_PARAM, 16);
 
 // TODO: SH shifts cam_mv_type_14 around to access other data inside.
 // Likely that mv_type is only a char and other fields are inside it too.
@@ -137,7 +138,7 @@ typedef struct _VC_ROAD_DATA
     u32               unk : 19; // May contain mv_y_type / rd_dir_type, maybe cam_mv_type below too
     u_int             cam_mv_type_14;
 } VC_ROAD_DATA;
-STATIC_ASSERT_SIZEOF(VC_ROAD_DATA, 0x18);
+STATIC_ASSERT_SIZEOF(VC_ROAD_DATA, 24);
 
 typedef struct _VC_THROUGH_DOOR_CAM_PARAM
 {
@@ -149,7 +150,7 @@ typedef struct _VC_THROUGH_DOOR_CAM_PARAM
     VECTOR3 rail_sta_pos_C;
     int     rail_sta_to_chara_dist_18;
 } VC_THROUGH_DOOR_CAM_PARAM;
-STATIC_ASSERT_SIZEOF(VC_THROUGH_DOOR_CAM_PARAM, 0x1C);
+STATIC_ASSERT_SIZEOF(VC_THROUGH_DOOR_CAM_PARAM, 28);
 
 // TODO: Check if this struct is correct, some SH code seems to act like struct
 // is only 0x10 bytes when iterating through it?
@@ -165,7 +166,7 @@ typedef struct _VC_NEAR_ROAD_DATA
     VC_LIMIT_AREA rd_14;
     VC_LIMIT_AREA sw_1C;
 } VC_NEAR_ROAD_DATA;
-STATIC_ASSERT_SIZEOF(VC_NEAR_ROAD_DATA, 0x24);
+STATIC_ASSERT_SIZEOF(VC_NEAR_ROAD_DATA, 36);
 
 typedef struct _VC_WORK
 {
@@ -226,7 +227,7 @@ typedef struct _VC_WORK
     int                  nearest_enemy_xz_dist_2E0;
     int                  field_2E4;
 } VC_WORK;
-STATIC_ASSERT_SIZEOF(VC_WORK, 0x2E8);
+STATIC_ASSERT_SIZEOF(VC_WORK, 744);
 
 typedef struct _VbRVIEW
 {
@@ -235,7 +236,7 @@ typedef struct _VbRVIEW
     int            rz;
     GsCOORDINATE2* super;
 } VbRVIEW;
-STATIC_ASSERT_SIZEOF(VbRVIEW, 0x20);
+STATIC_ASSERT_SIZEOF(VbRVIEW, 32);
 
 typedef struct _VW_VIEW_WORK
 {
@@ -244,7 +245,7 @@ typedef struct _VW_VIEW_WORK
     VECTOR3       worldpos;
     SVECTOR       worldang;
 } VW_VIEW_WORK;
-STATIC_ASSERT_SIZEOF(VW_VIEW_WORK, 0x84);
+STATIC_ASSERT_SIZEOF(VW_VIEW_WORK, 132);
 
 extern VC_ROAD_DATA      vcNullRoadArray[2];
 extern VC_NEAR_ROAD_DATA vcNullNearRoad;

@@ -56,14 +56,14 @@ INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E5E18);
 
 INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E6320);
 
-void func_801E63C0(void)
+void func_801E63C0()
 {
     if (g_GameWork.gameStatePrev_590 == GameState_MainMenu)
     {
         VSync(8);
     }
     
-    D_800A8FF0 = 1;
+    g_IntervalVBlanks = 1;
     D_800BCD0C = 6;
     
     g_GameWork.field_58C = 0;
@@ -101,7 +101,7 @@ INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E6DB0);
 
 INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E6F38);
 
-void func_801E709C(void)
+void func_801E709C()
 {
     func_801E2EBC();
     func_800314EC(&D_800A902C);
@@ -109,7 +109,7 @@ void func_801E709C(void)
 
 INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E70C8);
 
-void func_801E7244(void)
+void func_801E7244()
 {
     if (D_801E7520 <= 0)
         return;
@@ -130,7 +130,7 @@ void func_801E7244(void)
     }
 }
 
-void func_801E72DC(void)
+void func_801E72DC()
 {
     func_801E3C44();
 }

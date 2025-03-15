@@ -1,15 +1,23 @@
-g_MainLoop_NumFrames = 0x800B9CCC;
-g_CurOTNum = 0x800B9FB8;
+g_MainLoop_FrameCount = 0x800B9CCC;
+g_ObjectTableIdx = 0x800B9FB8;
 g_SysWork = 0x800B9FC0; // type:SysWork size:0x2768 - should use s_SysWork here, but splat only supports custom structs with capital letter at beginning.
 g_GameWork = 0x800BC728; // type:GameWork size:0x5D8
 g_GameWorkPtr0 = 0x80024D44; // type:u32
 g_SaveGamePtr = 0x80024D48; // type:u32
 g_ControllerPtr0 = 0x80024D4C; // type:u32
 g_ControllerPtr1 = 0x80024D50; // type:u32
-g_GameWorkPtr1 = 0x80024D54; // type:u32 same as g_GameWorkPtr0 ?
+g_GameWorkPtr1 = 0x80024D54; // type:u32 same as g_GameWorkPtr0?
 
-g_CurDeltaTime = 0x800B5CC0; // type:s32 - Q20.12 fixed point, usually 0x44 (0.0166..) or 0x88 (0.033..).
-g_CurMapEventNum = 0x800A9A14; // type:u32
+g_ObjectTable0 = 0x800A8F74; // type:s8
+g_ObjectTable1 = 0x800A8FC4; // type:s8
+
+g_DeltaTime = 0x800B5CC0; // type:s32 - Q20.12 fixed point, usually 0x44 (0.0166..) or 0x88 (0.033..).
+g_MapEventIdx = 0x800A9A14; // type:u32
+
+g_IntervalVBlanks = 0x800A8FF0; // type:s32
+g_PrevVBlanks = 0x800A9770; // type:s32
+g_VBlanks = 0x800B5C34; // type:s32
+g_UncappedVBlanks = 0x800B5C38; // type:s32
 
 // sh "view" / "vw" / "vc" / "vb" code
 // Most names from SH2, functions seem to match pretty close between it and SH1 besides a few missing/extra funcs.
@@ -146,6 +154,9 @@ SysWork_SaveGameUpdatePlayer = 0x8003A120; // type:func
 SysWork_SaveGameReadPlayer = 0x8003A1F4; // type:func
 
 Game_SaveGameResetPlayer = 0x8007E530; // type:func
+
+Camera_SetTranslation = 0x80086A94; // type:func
+Camera_SetRotation = 0x80086B70; // type:func
 
 GFX_ClearRectInterlaced = 0x80032358; // type:func
 GFX_Init = 0x80032428; // type:func

@@ -1,11 +1,13 @@
-#include "bodyprog/bodyprog.h"
-#include "bodyprog/math.h"
-#include "main/fsqueue.h"
+#include "game.h"
 
 #include <memory.h>
 #include <libgte.h>
 #include <libgpu.h>
 #include <libetc.h>
+
+#include "bodyprog/bodyprog.h"
+#include "bodyprog/math.h"
+#include "main/fsqueue.h"
 
 void func_8002E630() 
 {
@@ -234,7 +236,12 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80030370);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_800303E4);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80030414);
+void func_80030414() 
+{
+    func_80030444();
+    func_8003045C();
+    func_80030530();
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80030444);
 
@@ -318,13 +325,38 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_800323C8);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", GFX_Init);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", Settings_ScreenXYSet);
+void Settings_ScreenXYSet(s32 x, s32 y)
+{
+    Settings_DispEnvXYSet(&GsDISPENV, x, y);
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", Settings_DispEnvXYSet);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_800325A4);
+/*void func_800325A4(DR_MODE* arg0) 
+{
+    char* temp[2];
+    
+    if (D_800BCD0C & 8) 
+    {
+        temp[0] = 0; 
+        
+        SetDrawMode(arg0, 0, 1, 32, NULL);
+    }
+    else 
+    {
+        temp[0] = 0;
+        
+        SetDrawMode(arg0, 0, 1, 64, NULL);
+    }
+}*/
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_800325F8);
+extern s32 D_800B5C28;
+
+int func_800325F8() 
+{
+    return 4096 - D_800B5C28;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003260C);
 
@@ -332,43 +364,263 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003289C);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80032904);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", GFX_VSyncCallback);
-
-void GameFS_TitleGfxSeek() 
+void GFX_VSyncCallback() // 0x80032b80
 {
-    // Looks for TIM\TITLE_E.TIM.
+    D_800A9768++;
+    D_800A976C++;
+
+    g_SysWork.field_1C++;
+    g_SysWork.field_20++;
+    g_SysWork.field_24++;
+}
+
+void GameFS_TitleGfxSeek() // 0x80032bd0
+{
     Fs_QueueStartSeek(FILE_TIM_TITLE_E_TIM);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", GameFS_TitleGfxLoad);
-
-void GameFS_StreamBinSeek() 
+void GameFS_TitleGfxLoad() // 0x80032bf0
 {
-    // Looks for VIN\STREAM.BIN.
+    Fs_QueueStartReadTim(FILE_TIM_TITLE_E_TIM, FS_BUFFER_3, &D_800A9014);
+}
+
+void GameFS_StreamBinSeek() // 0x80032C20
+{
     Fs_QueueStartSeek(FILE_VIN_STREAM_BIN);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", GameFS_StreamBinLoad);
+void GameFS_StreamBinLoad() // 0x80032c40
+{
+    Fs_QueueStartRead(FILE_VIN_STREAM_BIN, FS_BUFFER_1);
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", GameFS_OptionBinLoad);
+void GameFS_OptionBinLoad() // 0x80032c68
+{
+    Fs_QueueStartReadTim(FILE_TIM_OPTION_TIM, FS_BUFFER_1, &D_800A902C);
+    Fs_QueueStartRead(FILE_VIN_OPTION_BIN, FS_BUFFER_1);
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", GameFS_SaveLoadBinLoad);
+void GameFS_SaveLoadBinLoad() // 0x80032ca8
+{
+    Fs_QueueStartReadTim(FILE_TIM_SAVELOAD_TIM, FS_BUFFER_1, &D_800A902C);
+    Fs_QueueStartRead(FILE_VIN_SAVELOAD_BIN, FS_BUFFER_1);
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80032CE8);
+void func_80032CE8()
+{
+    GFX_StringPosition(108, 104);
+    GFX_StringDraw(&D_8002510C, 100);
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80032D1C);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", MainLoop);
+void MainLoop() // 0x80032ee0
+{
+    #define TICKS_PER_SECOND_MIN (TICKS_PER_SECOND / 4)
+    #define H_BLANKS_PER_TICK    263
+    #define ONE_SEC_FIXED        TO_FIXED(1, Q12_SHIFT)
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", Settings_ScreenAndVolUpdate);
+    #define H_BLANKS_PER_SECOND               (H_BLANKS_PER_TICK * TICKS_PER_SECOND)              // 15780
+    #define H_BLANKS_TO_SEC_CONVERSION_FACTOR ((float)ONE_SEC_FIXED / (float)H_BLANKS_PER_SECOND) // 0.25956907477f
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", Settings_RestoreDefaults);
+    #define H_BLANKS_PER_FRAME_MIN      (H_BLANKS_PER_SECOND / TICKS_PER_SECOND_MIN)                    // 1052
+    #define H_BLANKS_TO_FIXED_SEC_SCALE (s32)(H_BLANKS_TO_SEC_CONVERSION_FACTOR * (float)ONE_SEC_FIXED) // 1063
+    #define H_BLANKS_UNKNOWN_SCALE      10419                                                           // TODO: Somehow derive this value.
+    #define V_BLANKS_MAX                4
+
+    s32 vBlanks;
+    s32 vCountCopy;
+    s32 vCount;
+    s32 interval;
+
+    // Initialize engine.
+    GsInitVcount();
+    func_8002E630();
+    func_8002E7BC();
+    func_8002E85C();
+    JOY_Init();
+    VSyncCallback(&GFX_VSyncCallback);
+    InitGeom();
+    func_8004BB10();
+    func_800890B8();
+    SD_DriverInit();
+
+    // Run game.
+    while (true)
+    {
+        g_MainLoop_FrameCount++;
+
+        JOY_ReadP1();
+        Demo_JoyUpdate();
+        JOY_ControllerDataUpdate();
+    
+        if (MainLoop_ShouldWarmReset() == 2)
+        {
+            Game_WarmBoot();
+            continue;
+        }
+        
+        g_ObjectTableIdx = GsGetActiveBuff();
+    
+        if ((g_GameWork.gameState_594 - 10) < 2)
+        {
+            D_800C7018 = TEMP_MEMORY_ADDR + (g_ObjectTableIdx << 17);
+        }
+        else if (g_GameWork.gameState_594 == 14)
+        {
+            D_800C7018 = TEMP_MEMORY_ADDR + (g_ObjectTableIdx * 40000);
+        }
+        else
+        {
+            D_800C7018 = TEMP_MEMORY_ADDR + (g_ObjectTableIdx << 15);
+        }
+    
+        GsClearOt(0, 0, &g_ObjectTable0[g_ObjectTableIdx]);
+        GsClearOt(0, 0, &g_ObjectTable1[g_ObjectTableIdx]);
+
+        g_SysWork.field_22A0 = 0;
+        
+        // State machine?
+        D_800A977C[g_GameWork.gameState_594]();
+    
+        Demo_Update();
+        Demo_GameRandSeedSet();
+    
+        if (MainLoop_ShouldWarmReset() == 2)
+        {
+            Game_WarmBoot();
+            continue;
+        }
+    
+        func_8003260C();
+        func_8002EB88();
+        func_800485D8();
+        
+        if (!(func_80045B28() & 0xFF))
+        {
+            Fs_QueueUpdate();
+        }
+        
+        func_80089128();
+        func_8008D78C();
+        DrawSync(0);
+        
+        if (g_SysWork.flags_22A4 & 2)
+        {
+            vBlanks = VSync(-1);
+            g_VBlanks = vBlanks - g_PrevVBlanks;
+            
+            Demo_PresentIntervalUpdate();
+            
+            interval = g_Demo_VideoPresentInterval;
+            g_PrevVBlanks = vBlanks;
+            
+            if (interval < g_IntervalVBlanks)
+            {
+                interval = g_IntervalVBlanks;
+            }
+            
+            do
+            {
+                VSync(0);
+                g_VBlanks++;
+                g_PrevVBlanks++;
+            }
+            while (g_VBlanks < interval);
+            
+            g_UncappedVBlanks = g_VBlanks;
+            g_VBlanks = MIN(g_VBlanks, 4);
+            
+            vCount = g_Demo_VideoPresentInterval * H_BLANKS_PER_TICK;
+            vCountCopy = g_UncappedVBlanks * H_BLANKS_PER_TICK;
+            g_VBlanks = g_Demo_VideoPresentInterval;
+        }
+        else
+        {
+            if (g_SysWork.sysState_8 != 0)
+            {
+                g_VBlanks = VSync(-1) - g_PrevVBlanks;
+                g_PrevVBlanks = VSync(-1);
+                VSync(0);
+            }
+            else
+            {
+                if (D_800BCD0C != 1)
+                {
+                    VSync(0);
+                }
+                
+                g_VBlanks = VSync(-1) - g_PrevVBlanks;
+                g_PrevVBlanks = VSync(-1);
+                
+                if (g_VBlanks < g_IntervalVBlanks)
+                {
+                    do
+                    {
+                        VSync(0);
+                        g_VBlanks++;
+                        g_PrevVBlanks++;
+                    }
+                    while (g_VBlanks < g_IntervalVBlanks);
+                }
+            }
+            
+            // Update VBlanks.
+            g_UncappedVBlanks = g_VBlanks;
+            g_VBlanks = MIN(g_VBlanks, V_BLANKS_MAX);
+            
+            // Update V count.
+            vCount = MIN(GsGetVcount(), H_BLANKS_PER_FRAME_MIN); // Will call GsGetVcount() twice.
+            vCountCopy = vCount;
+        }
+
+        // Update timers.
+        g_DeltaTime = MUL_FIXED(vCount, H_BLANKS_TO_FIXED_SEC_SCALE, Q12_SHIFT);
+        D_800A8FEC = MUL_FIXED(vCountCopy, H_BLANKS_TO_FIXED_SEC_SCALE, Q12_SHIFT);
+        D_800B9CC8 = MUL_FIXED(vCount, H_BLANKS_UNKNOWN_SCALE, Q12_SHIFT);
+        GsClearVcount();
+        
+        // Draw objects?
+        GsSwapDispBuff();
+        GsSortClear(g_GameWork.field_58C, g_GameWork.field_58D, g_GameWork.field_58E, &g_ObjectTable0[g_ObjectTableIdx]);
+        GsDrawOt(&g_ObjectTable0[g_ObjectTableIdx]);
+        GsDrawOt(&g_ObjectTable1[g_ObjectTableIdx]);
+    }
+}
+
+void Settings_ScreenAndVolUpdate()
+{
+    s32 soundCmd;
+
+    Settings_ScreenXYSet(g_GameWork.field_1C, g_GameWork.field_1D);
+    
+    soundCmd = (g_GameWork.optSoundType_1E != 0) ? 1 : 2;
+    SD_EngineCmd(soundCmd);
+
+    SD_SetVolume(OPT_SOUND_VOLUME_MAX, g_GameWork.optVolumeBgm_1F, g_GameWork.optVolumeSe_20);
+}
+
+void Settings_RestoreDefaults() // 0x8003342c
+{
+    g_GameWork.optWeaponCtrl_23 = 1;
+    g_GameWork.optBrightness_22 = 3;
+        
+    Settings_RestoreControlDefaults(0);
+        
+    g_GameWork.optVibrationEnabled_21 = OPT_VIBRATION_ENABLED;
+    g_GameWork.optVolumeBgm_1F = OPT_SOUND_VOLUME_MAX;
+    g_GameWork.optVolumeSe_20 = OPT_SOUND_VOLUME_MAX;
+        
+    Settings_ScreenAndVolUpdate();
+        
+    g_GameWork.optBloodColor_24 = 0;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", Settings_RestoreControlDefaults);
 
-void nullsub_800334C8(void) {}
+void nullsub_800334C8() {}
 
-void func_800334D0(void) {}
+void func_800334D0() {}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_800334D8);
 
@@ -406,27 +658,27 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80034F18);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80034FB8);
 
-void Game_SaveGameInitialize(s8 overlayIndex, s32 difficulty) // 0x800350BC
+void Game_SaveGameInitialize(s8 overlayIdx, s32 difficulty) // 0x800350BC
 {
     s32  i;
     s32* var_a2;
 
     bzero(g_SaveGamePtr, sizeof(s_ShSaveGame));
 
-    g_SaveGamePtr->curMapOverlayIndex_A4 = overlayIndex;
+    g_SaveGamePtr->curMapOverlayIndex_A4 = overlayIdx;
 
-    // -1 = easy, 0 = normal, 1 = hard
+    // -1 = easy, 0 = normal, 1 = hard.
     difficulty = CLAMP(difficulty, -1, 1);
 
     var_a2 = g_SaveGamePtr->field_B0;
 
-    g_SaveGamePtr->field_260      = (g_SaveGamePtr->field_260 & 0x0FFFFFFF) | (difficulty << 0x1C);
+    g_SaveGamePtr->field_260      = (g_SaveGamePtr->field_260 & 0x0FFFFFFF) | (difficulty << 28);
     g_SaveGamePtr->curMapIndex_A9 = 1;
 
     for (i = 0; i < 45; i++)
     {
-        var_a2[44] = -1;
-        var_a2 -= 1;
+        var_a2[44] = NO_VALUE;
+        var_a2--;
     }
 
     Game_SaveGameResetPlayer();
@@ -550,7 +802,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80038F6C);
 void func_800391E8()
 {
     D_800A9A68 += D_800A8FEC;
-    if (((D_800A9A68 >> 0xB) & 1) == 0)
+    if (((D_800A9A68 >> 11) & 1) == 0)
     {
         GFX_StringPosition(125, 104);
         GFX_StringDraw(D_80025394, 99); // "\x07PAUSED"
@@ -572,7 +824,7 @@ void func_800391E8()
     {
         D_800A9A68 = 0;
         SD_EngineCmd(4);
-        g_CurMapEventNum = 0;
+        g_MapEventIdx = 0;
         SysWork_StateSetNext(SysState_SaveMenu2);
         return;
     }
@@ -612,12 +864,12 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80039FB8);
 void SysWork_SaveGameUpdatePlayer() // 0x8003A120
 {
     s_ShSaveGame* save      = g_SaveGamePtr;
-    save->curMapEventNum_A8 = g_CurMapEventNum;
+    save->curMapEventNum_A8 = g_MapEventIdx;
 
-    save->playerPosX_244        = g_SysWork.characters_4C.position_18.vx;
-    save->playerPosZ_24C        = g_SysWork.characters_4C.position_18.vz;
-    save->playerRotationYaw_248 = g_SysWork.characters_4C.rotation_24.vy;
-    save->playerHealth_240      = g_SysWork.characters_4C.health_B0;
+    save->playerPosX_244        = g_SysWork.player_4C.character.position_18.vx;
+    save->playerPosZ_24C        = g_SysWork.player_4C.character.position_18.vz;
+    save->playerRotationYaw_248 = g_SysWork.player_4C.character.rotation_24.vy;
+    save->playerHealth_240      = g_SysWork.player_4C.character.health_B0;
 }
 
 void func_8003A16C() // 0x8003A16C
@@ -634,10 +886,10 @@ void func_8003A16C() // 0x8003A16C
 
 void SysWork_SaveGameReadPlayer() // 0x8003A1F4
 {
-    g_SysWork.characters_4C.position_18.vx = g_SaveGamePtr->playerPosX_244;
-    g_SysWork.characters_4C.position_18.vz = g_SaveGamePtr->playerPosZ_24C;
-    g_SysWork.characters_4C.rotation_24.vy = g_SaveGamePtr->playerRotationYaw_248;
-    g_SysWork.characters_4C.health_B0      = g_SaveGamePtr->playerHealth_240;
+    g_SysWork.player_4C.character.position_18.vx = g_SaveGamePtr->playerPosX_244;
+    g_SysWork.player_4C.character.position_18.vz = g_SaveGamePtr->playerPosZ_24C;
+    g_SysWork.player_4C.character.rotation_24.vy = g_SaveGamePtr->playerRotationYaw_248;
+    g_SysWork.player_4C.character.health_B0      = g_SaveGamePtr->playerHealth_240;
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003A230);

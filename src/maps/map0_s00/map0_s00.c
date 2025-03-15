@@ -1,9 +1,22 @@
-#include "common.h"
-#include <game.h>
+#include "game.h"
+
+typedef struct
+{
+    s8  unk_0[5];
+    u16 field_6;
+} s_800BA134;
+
+extern u8 D_800BA007;
+
+extern u16 D_800BA012;
+
+extern s_800BA134 D_800BA134[];
 
 extern s8 D_800C457C;
-extern s8 D_800C4606;
 
+extern u8 D_800C4606;
+
+extern u8 D_800DD59C;
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800CB6B0);
 
@@ -80,10 +93,11 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D2244);
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D23EC);
 
 #ifdef NON_MATCHING
-void func_800D2C7C(s32 arg0) {
+void func_800D2C7C(s32 arg0)
+{
     s_MainCharacter* extra = &g_SysWork.player_174;
-    s_SubCharacter* subchar = &g_SysWork.characters_4C; 
-    g_SysWork.characters_4C.field_126 = 0;
+    s_SubCharacter* subchar = &g_SysWork.player_4C.character; 
+    g_SysWork.player_4C.character.field_126 = 0;
     
     D_800C4606 = 0;
     
@@ -110,20 +124,25 @@ void func_800D2C7C(s32 arg0) {
 	
     */
     
-    switch (arg0) {
+    switch (arg0)
+    {
     case 0x36:
         D_800C457C = 0;
         break;
+
     case 0x35:
         D_800C457C = 1;
         break;
+
     case 0x38:
         D_800C457C = 3;
         break;
+
     case 0x39:
         D_800C457C = 4;
         break;
     }
+
     g_SysWork.player_174.field_144 = arg0;
     
     subchar->field_3 = 0;
@@ -137,13 +156,27 @@ void func_800D2C7C(s32 arg0) {
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D2C7C);
 #endif
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D2D2C);
+void func_800D2D2C(void)
+{
+    D_800C4606++;
+}
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D2D44);
+void func_800D2D44(void)
+{
+    D_800BA134[0].field_6 = D_800BA134[0].field_6 & 0xFFFE;
+    D_800BA134[-37].field_6 = D_800BA134[-37].field_6 & 0xFFFE; // -37?
+}
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D2D6C);
+s32 func_800D2D6C(void)
+{
+    return ~(D_800BA012 & 1);
+}
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D2D84);
+void func_800D2D84(void)
+{
+    D_800BA134[0].field_6 = D_800BA134[0].field_6 | 1;
+    D_800BA134[-37].field_6 = D_800BA134[-37].field_6 | 1; // -37?
+}
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D2DAC);
 
@@ -169,7 +202,10 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D2EA4);
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D2EB4);
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D2EF4);
+void func_800D2EF4(void)
+{
+    D_800BA007 = D_800DD59C;
+}
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D2F08);
 

@@ -1,5 +1,5 @@
-#ifndef INCLUDE_ASM_H
-#define INCLUDE_ASM_H
+#ifndef _INCLUDE_ASM_H
+#define _INCLUDE_ASM_H
 
 #if !defined(SPLAT) && !defined(M2CTX) && !defined(PERMUTER) && !defined(SKIP_ASM)
 

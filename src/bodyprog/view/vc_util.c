@@ -3,7 +3,7 @@
 #include "bodyprog/math.h"
 #include "bodyprog/vw_system.h"
 
-extern s32 D_800B5C34; // Sensitivity multiplier?
+extern s32 g_VBlanks;
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vc_util", vcInitCamera);
 
@@ -92,12 +92,12 @@ void vcSetRefPosAndSysRef2CamParam(VECTOR3* ref_pos, s_SysWork* sys_p, s32 for_f
 
     if (right_f != 0)
     {
-        sys_p->cam_ang_y_237A = sys_p->cam_ang_y_237A - (D_800B5C34 * 11);
+        sys_p->cam_ang_y_237A = sys_p->cam_ang_y_237A - (g_VBlanks * 11);
     }
 
     if (left_f != 0)
     {
-        sys_p->cam_ang_y_237A = sys_p->cam_ang_y_237A + (D_800B5C34 * 11);
+        sys_p->cam_ang_y_237A = sys_p->cam_ang_y_237A + (g_VBlanks * 11);
     }
 
     if (up_f != 0)
@@ -115,7 +115,7 @@ void vcSetRefPosAndSysRef2CamParam(VECTOR3* ref_pos, s_SysWork* sys_p, s32 for_f
         sys_p->cam_r_xz_2380 = TILE_UNIT(16.0f);
     }
 
-    vcAddOfsToPos(ref_pos, &g_SysWork.characters_4C.position_18, TILE_UNIT(8.0f), g_SysWork.characters_4C.rotation_24.vy, TILE_UNIT(-16.0f));
+    vcAddOfsToPos(ref_pos, &g_SysWork.player_4C.character.position_18, TILE_UNIT(8.0f), g_SysWork.player_4C.character.rotation_24.vy, TILE_UNIT(-16.0f));
 }
 
 void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, s_SysWork* sys_p) // 0x800406D4
@@ -140,22 +140,22 @@ void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, s_SysWork* sys_p) // 0x80040
     {
         if (g_ControllerPtr1->btns_held_C & Pad_LSDown)
         {
-            cam_ang.vx = cam_ang.vx - (D_800B5C34 * 11);
+            cam_ang.vx = cam_ang.vx - (g_VBlanks * 11);
         }
 
         if (g_ControllerPtr1->btns_held_C & Pad_LSUp)
         {
-            cam_ang.vx = cam_ang.vx + (D_800B5C34 * 11);
+            cam_ang.vx = cam_ang.vx + (g_VBlanks * 11);
         }
 
         if (g_ControllerPtr1->btns_held_C & Pad_LSRight)
         {
-            cam_ang.vy = cam_ang.vy + (D_800B5C34 * 11);
+            cam_ang.vy = cam_ang.vy + (g_VBlanks * 11);
         }
 
         if (g_ControllerPtr1->btns_held_C & Pad_LSLeft)
         {
-            cam_ang.vy = cam_ang.vy - (D_800B5C34 * 11);
+            cam_ang.vy = cam_ang.vy - (g_VBlanks * 11);
         }
 
         if (g_ControllerPtr1->btns_held_C & (Pad_BtnTriangle | Pad_BtnCross))

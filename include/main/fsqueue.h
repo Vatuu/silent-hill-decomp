@@ -8,6 +8,8 @@
 
 #define FS_BUFFER_0 (void*)0x8010A600
 #define FS_BUFFER_1 (void*)0x801E2600
+#define FS_BUFFER_2 (void*)0x801CF600
+#define FS_BUFFER_3 (void*)0x801B2600
 
 /** @brief `FsQueue::state` values when processing a read operation (`Fs_QueueUpdateRead`).
  *

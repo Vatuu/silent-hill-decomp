@@ -912,6 +912,7 @@ s32 SdGetSeqControlStatus(s16 seq_access_num) // 0x800A20EC
     {
         return smf_song[seq_access_num].control_status_52F;
     }
+
     return -1;
 }
 
@@ -933,8 +934,10 @@ u32 SdGetSeqBeat(s16 seq_access_num) // 0x800A21E0
         {
             return 0;
         }
+
         return smf_song[seq_access_num].beat_51C / 60;
     }
+
     return -1;
 }
 
@@ -944,5 +947,6 @@ s32 SdGetSeqBeat2(s16 seq_access_num) // 0x800A224C
     {
         return smf_song[seq_access_num].beat2_52E;
     }
+
     return -1;
 }

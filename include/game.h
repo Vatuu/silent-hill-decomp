@@ -1,13 +1,14 @@
-#ifndef GAME_H
-#define GAME_H
+#ifndef _GAME_H
+#define _GAME_H
 
 #include "gpu.h"
 
 #define TICKS_PER_SECOND      60
-#define SAVEGAME_FOOTER_MAGIC 0xDCDC
+#define NPC_COUNT_MAX         6
 #define GAME_INVENTORY_SIZE   40
+#define SAVEGAME_FOOTER_MAGIC 0xDCDC
 
-/** Convert tile units (the engine's reference measurement) to world units. */
+/** Convert tile units (the engine's measurement reference) to world units. */
 #define TILE_UNIT(value) \
     (s32)((value) * 256.0f)
 
@@ -122,6 +123,7 @@ typedef struct _ControllerData
     int             field_28;
 } s_ControllerData;
 
+// Input action key bindings.
 typedef struct _ControllerBindings
 {
     u16 enter;
@@ -264,7 +266,7 @@ STATIC_ASSERT_SIZEOF(s_GameWork, 0x5D8);
 
 typedef struct _SubCharacter
 {
-    u8    chara_type_0;
+    u8    chara_type_0; // NOTE: Character types <24 must be some distinct category.
     u8    field_1;
     u8    field_2;
     u8    field_3; // Clear: anim transitioning(?), bit 1: animated, bit2: turning.
@@ -309,39 +311,41 @@ STATIC_ASSERT_SIZEOF(s_SubCharacter, 296);
 
 typedef struct _MainCharacter
 {
+    s_SubCharacter character;
     u8             field_128;
     u8             field_129;
     u8             field_12A;
     u8             field_12B;    // isPrevAnimStateSame? Always 1, set to 0 for 1 tick when anim state changes.
     s8             copy_12C[20]; // Duplicate data. Sequentially opies all fields from 0x4 to 0x18 of s_SubCharacter.
     s32            field_140;
-    s32            field_144; // s32? Some kind of anim state. Set to 2 when player is in AFK anim, 0 otherwise.
-    s32            field_148; // s32? Some kind of anim state.
-    s32            field_14C; // s32? Some kind of anim state.
+    s32            field_144; // Some kind of anim state. Set to 2 when player is in AFK anim, 0 otherwise.
+    s32            field_148; // Some kind of anim state.
+    s32            field_14C; // Some kind of anim state.
     s8             unk_150[4];
 } s_MainCharacter;
-STATIC_ASSERT_SIZEOF(s_MainCharacter, 44);
+STATIC_ASSERT_SIZEOF(s_MainCharacter, 340);
 
 typedef struct _SysWork
 {
     char            unk_0[8];
     e_SysState      sysState_8;
     s32             sysStateStep_C; // Current step/state of sysState_8 game is in.
-    s32             field_10;
+    s32             field_10;       // Sometimes assigned to same thing as sysStateStep_C.
     s32             field_14;
     char            unk_18[4];
     s32             field_1C;
     s32             field_20;
     s32             field_24;
     s32             field_28;
-    s32             field_2C;
-    char            unk_30[28];
-    s_SubCharacter  characters_4C;
-    s_MainCharacter player_174;
-    s_SubCharacter  characters_1A0[6];
+    s32             field_2C; // Distance of some kind?
+    s32             field_30;
+    char            unk_34[24];
+    s_MainCharacter player_4C;
+    s_SubCharacter  characters_1A0[NPC_COUNT_MAX];
     GsCOORDINATE2   unk_coord_890[2];
     GsCOORDINATE2   hero_neck_930;
-    char            unk_980[0x22A4 - 0x980];
+    s8              unk_980[6432];
+    s32             field_22A0;
     s32             flags_22A4;
     char            unk_22A8[210];
     s16             cam_ang_y_237A;
@@ -353,21 +357,28 @@ typedef struct _SysWork
 } s_SysWork;
 STATIC_ASSERT_SIZEOF(s_SysWork, 0x2768);
 
-extern void* g_OvlDynamic;
 extern void* g_OvlBodyprog;
+extern void* g_OvlDynamic;
 
-extern s_SysWork     g_SysWork;
-extern s_GameWork    g_GameWork;
-extern s_GameWork*   g_GameWorkPtr0;
-extern s_GameWork*   g_GameWorkPtr1;
-extern s_ShSaveGame* g_SaveGamePtr;
-
+extern s_SysWork         g_SysWork;
+extern s_GameWork        g_GameWork;
+extern s_GameWork*       g_GameWorkPtr0;
+extern s_GameWork*       g_GameWorkPtr1;
+extern s_ShSaveGame*     g_SaveGamePtr;
 extern s_ControllerData* g_ControllerPtr0;
 extern s_ControllerData* g_ControllerPtr1;
 
-extern u32 g_CurMapEventNum;
-extern s32 g_CurDeltaTime;
-extern s32 g_CurOTNum;
+extern s32  g_ObjectTableIdx;
+extern GsOT g_ObjectTable0[];
+extern GsOT g_ObjectTable1[];
+
+extern s32 g_DeltaTime;
+extern u32 g_MapEventIdx;
+
+extern s32 g_IntervalVBlanks;
+extern s32 g_PrevVBlanks;
+extern s32 g_VBlanks;
+extern s32 g_UncappedVBlanks;
 
 /** Sets the SysState to be used in the next game update. */
 static inline void SysWork_StateSetNext(e_SysState sysState)

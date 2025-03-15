@@ -72,15 +72,15 @@ void func_800C95AC(void)
             nullsub_800334C8();
             VSync(0);
             GsSwapDispBuff();
-            GsDrawOt(&D_800A8FC4[g_CurOTNum]);
+            GsDrawOt(&g_ObjectTable1[g_ObjectTableIdx]);
 
             // TODO: Deal with 0x801A2600.
             idx = GsGetActiveBuff();
-            g_CurOTNum = idx;
+            g_ObjectTableIdx = idx;
             D_800C7018 = (idx << 0xF) + 0x801A2600;
             
-            GsClearOt(0, 0, &D_800A8F74[idx]);
-            GsClearOt(0, 0, &D_800A8FC4[g_CurOTNum]);
+            GsClearOt(0, 0, &g_ObjectTable0[idx]);
+            GsClearOt(0, 0, &g_ObjectTable1[g_ObjectTableIdx]);
         }
         while (g_GameWork.gameState_594 == GameState_KonamiLogo);
     }
@@ -101,7 +101,7 @@ void func_800C9FB8(void)
     func_800C9E6C(&D_800A8FFC, 0xF, 0, 256, 256, 128, -192, 64);
     func_800C9E6C(&D_800A8FFC, 0xF, 256, 256, 128, 128, 64, 64);
 
-    temp_a1 = (g_CurOTNum << 4) + &D_800B5C7C;
+    temp_a1 = (g_ObjectTableIdx << 4) + &D_800B5C7C;
 
     // TODO: Wait on fgsfds's investigations for cleaner match of graphics setup.
     // addPrim(temp_a1, D_800C7018);
@@ -122,7 +122,7 @@ void func_800CA120(void)
     func_800C9E6C(&D_800A9004, 0xF, 0, 0, 256, 160, -208, -80);
     func_800C9E6C(&D_800A9004, 0xF, 256, 0, 160, 160, 48, -80);
     
-    temp_a1 = (g_CurOTNum << 4) + &D_800B5C7C;
+    temp_a1 = (g_ObjectTableIdx << 4) + &D_800B5C7C;
 
     // TODO: Wait on fgsfds's investigations for cleaner match of graphics setup.
     // addPrim(temp_a1, D_800C7018);

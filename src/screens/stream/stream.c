@@ -136,7 +136,7 @@ void movie_main(char* file_name, s32 f_size, s32 sector)
     frame_cnt = 0;
     max_frame = f_size;
     
-    m = (MOVIE_STR* )0x801A2600; // probably some kind of TEMP_MEMORY_ADDR define
+    m = (MOVIE_STR*)0x801A2600; // probably some kind of TEMP_MEMORY_ADDR define. Also used by b_konami.
     m->width = 320;
     m->height = 240;
     

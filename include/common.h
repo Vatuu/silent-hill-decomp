@@ -1,5 +1,5 @@
-#ifndef COMMON_H
-#define COMMON_H
+#ifndef _COMMON_H
+#define _COMMON_H
 
 #include "include_asm.h"
 #include "types.h"
