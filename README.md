@@ -657,11 +657,13 @@ If the setup was successful, run `make` to build.
 Once the build has finished, a folder named `build` will be produced. The output will be inside this.
 
 Additional Make commands:
+* `build`: Builds the executable and overlays. After compilation, it compares checksums with the original files.
 * `check`: Builds the executable and overlays. After compilation, it compares checksums with the original files.
-* `build-c`: Clears the project configuration without deleting files.
-* `build-C`: Clears the project configuration without deleting files. After compilation, it compares checksums with the original files.
+* `clean-build`: Clears the project configuration without deleting files.
+* `clean-check`: Clears the project configuration without deleting files. After compilation, it compares checksums with the original files.
+* `objdiff-config`: Generates project configuration for [objdiff](https://github.com/encounter/objdiff).
 
-NOTE: `build-c/build-C` are obligatory if the configuration in the `Makefile` has been modified when intending to work on different overlays.
+NOTE: `clean-build/clean-check` are obligatory if the configuration in the `Makefile` has been modified when intending to work on different overlays.
 
 ## Contributing
 Contributions are welcome. Following our [code conventions](https://github.com/Vatuu/silent-hill-decomp/blob/master/docs/Coding%20Conventions.md), feel free to contribute via a pull request or issue and join us in the [PS1/PS2 Decompilation](https://discord.gg/VwCPdfbxgm) Discord server's `#silent-hill` channel.

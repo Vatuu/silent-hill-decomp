@@ -25,6 +25,8 @@ class ProgressCategory:
 class Config:
     build_base: bool
     build_target: bool
+    custom_make: str
+    custom_args: list[str]
     units: list[Unit]
     progress_categories: list[ProgressCategory]
 
@@ -88,7 +90,7 @@ def main():
         categories.append(ProgressCategory(category["id"], category["name"]))
     
     with (Path(config["output"])).open("w") as json_file:
-        json.dump(asdict(Config(False, False, units, categories)), json_file, indent=2)
+        json.dump(asdict(Config(True, False, "make", ["build", "NON_MATCHING=1", "SKIP_ASM=1"], units, categories)), json_file, indent=2)
 
 if __name__ == "__main__":
     main()

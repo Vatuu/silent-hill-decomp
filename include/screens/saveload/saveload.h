@@ -10,6 +10,8 @@ typedef struct
     s32 field_8; // Maybe bitfield.
 } s_UnkSaveload0; // Size: >=12
 
+extern s_FsImageDesc D_800A902C;
+
 extern u8 D_800A97D4[];
 
 extern s8 D_800A97D8;

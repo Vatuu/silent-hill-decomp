@@ -370,7 +370,7 @@ void vcAutoRenewalWatchTgtPosAndAngZ(VC_WORK* w_p, VC_CAM_MV_TYPE cam_mv_type, V
     }
 
     vcMixSelfViewEffectToWatchTgtPos(&w_p->watch_tgt_pos_7C, &w_p->watch_tgt_ang_z_8C, self_view_eff_rate,
-                                     w_p, &g_SysWork.hero_neck_930.workm, g_SysWork.player_4C.character.animIdx_4);
+                                     w_p, &g_SysWork.hero_neck_930.workm, g_SysWork.characters_4C.animIdx_4);
 
     if (w_p->watch_tgt_pos_7C.vy > w_p->watch_tgt_max_y_88)
     {

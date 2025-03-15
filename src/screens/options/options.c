@@ -10,12 +10,12 @@ INCLUDE_ASM("asm/screens/options/nonmatchings/options", func_801E3770);
 
 void func_801E3F68(void)
 {
-    func_801E3FB8(0, D_800BC747);
+    func_801E3FB8(0, g_GameWork.optVolumeBgm_1F);
 }
 
 void func_801E3F90(void)
 {
-    func_801E3FB8(1, D_800BC748);
+    func_801E3FB8(1, g_GameWork.optVolumeSe_20);
 }
 
 INCLUDE_ASM("asm/screens/options/nonmatchings/options", func_801E3FB8);

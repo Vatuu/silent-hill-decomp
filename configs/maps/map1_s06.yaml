@@ -15,6 +15,7 @@ options:
 
   find_file_boundaries: False
   gp_value: 0x80022BB0
+  global_vram_start: 0x80010000
 
   o_as_suffix: False
   use_legacy_include_asm: False
@@ -27,6 +28,7 @@ options:
 
   symbol_addrs_path:
     - configs/sym.main.txt
+    - configs/sym.bodyprog.txt
     - configs/maps/sym.map1_s06.txt
   reloc_addrs_path:
     - configs/maps/rel.map1_s06.txt

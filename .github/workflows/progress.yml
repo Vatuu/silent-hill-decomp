@@ -31,8 +31,8 @@ jobs:
       - name: Setup Environment
         run: make extract
 
-      - name: Generate Progress
-        run: make progress
+      - name: Generate Progress Report
+        run: make report
 
       - name: Upload Progress Report
         uses: actions/upload-artifact@v4

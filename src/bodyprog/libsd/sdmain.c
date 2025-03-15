@@ -1,24 +1,104 @@
 #include "common.h"
-#include "bodyprog/libsd.h"
 
 #include <libspu.h>
 #include <libsnd.h>
+
+#include "bodyprog/libsd.h"
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmain", tone_adsr_mem);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmain", tone_adsr_back);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmain", sd_alloc_sort);
+void sd_alloc_sort() // 0x8009EEBC
+{
+    s32 lastSlotIdx;
+    s32 frontIdx;
+    s32 backIdx;
+
+    for (lastSlotIdx = 0; lastSlotIdx < SD_ALLOC_SLOTS; lastSlotIdx++)
+    {
+        if (sd_spu_alloc[lastSlotIdx].addr_0 == 0)
+        {
+            break;
+        }
+    }
+
+    for (frontIdx = 0; frontIdx < lastSlotIdx; frontIdx++)
+    {
+        for (backIdx = lastSlotIdx - 1; frontIdx < backIdx; backIdx--)
+        {
+            if (sd_spu_alloc[frontIdx].addr_0 > sd_spu_alloc[backIdx].addr_0)
+            {
+                s_SD_ALLOC temp;
+                temp.size_4 = sd_spu_alloc[frontIdx].size_4;
+                temp.addr_0 = sd_spu_alloc[frontIdx].addr_0;
+
+                sd_spu_alloc[frontIdx].size_4 = sd_spu_alloc[backIdx].size_4;
+                sd_spu_alloc[frontIdx].addr_0 = sd_spu_alloc[backIdx].addr_0;
+
+                sd_spu_alloc[backIdx].size_4 = temp.size_4;
+                sd_spu_alloc[backIdx].addr_0 = temp.addr_0;
+            }
+        }
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmain", SdSpuMalloc);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmain", SdSpuMallocWithStartAddr);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmain", SdSpuFree);
+void SdSpuFree(u32 addr) // 0x8009F364
+{
+    s32 i;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmain", SdWorkInit);
+    for (i = 0; i < SD_ALLOC_SLOTS; i++)
+    {
+        if (sd_spu_alloc[i].addr_0 != addr)
+        {
+            continue;
+        }
 
-void SdInit(void) // 0x8009F490
+        // TODO: could this be moved out of the for loop above?
+        for (; i < SD_ALLOC_SLOTS; i++)
+        {
+            sd_spu_alloc[i].size_4 = sd_spu_alloc[i + 1].size_4;
+            sd_spu_alloc[i].addr_0 = sd_spu_alloc[i + 1].addr_0;
+            if (!sd_spu_alloc[i].addr_0)
+                break;
+        }
+        sd_alloc_sort();
+        return;
+    }
+}
+
+void SdWorkInit() // 0x8009F400
+{
+    s32 i;
+
+    STATIC_ASSERT(SD_VAB_SLOTS == SD_ALLOC_SLOTS, SD_VAB_SLOTS_must_equal_SD_ALLOC_SLOTS);
+
+    for (i = 0; i < SD_VAB_SLOTS; i++)
+    {
+        vab_h[i].vab_id_0      = -1;
+        vab_h[i].field_19      = 0x7F;
+        vab_h[i].field_1A      = 0x7F;
+        vab_h[i].master_pan_1B = 0x40;
+        sd_spu_alloc[i].size_4 = 0;
+        sd_spu_alloc[i].addr_0 = 0;
+    }
+
+    for (i = 0; i < 2; i++)
+    {
+        smf_song[i].vab_id_508      = -1;
+        smf_song[i].play_status_50A = 0;
+        smf_song[i].vol_right_50E   = 0x7F;
+        smf_song[i].vol_left_50C    = 0x7F;
+    }
+
+    sd_tick_mode = 4096;
+}
+
+void SdInit() // 0x8009F490
 {
     SsUtReverbOff();
     sound_off();
@@ -26,7 +106,7 @@ void SdInit(void) // 0x8009F490
     SpuInitMalloc(16, &sd_vb_malloc_rec);
 }
 
-void SdStart(void) // 0x8009F4D0
+void SdStart() // 0x8009F4D0
 {
     if (sd_tick_mode > 0)
     {
@@ -39,7 +119,7 @@ void SdStart(void) // 0x8009F4D0
     sd_interrupt_start_flag = 1;
 }
 
-void SdStart2(void) // 0x8009F510
+void SdStart2() // 0x8009F510
 {
     SdStart();
 }
@@ -49,7 +129,7 @@ void SdSetTickMode(s32 tick_mode) // 0x8009F530
     sd_tick_mode = tick_mode;
 }
 
-void SdSeqCalledTbyT(void) // 0x8009F53C
+void SdSeqCalledTbyT() // 0x8009F53C
 {
     if (sd_interrupt_start_flag != 0)
     {
@@ -57,12 +137,12 @@ void SdSeqCalledTbyT(void) // 0x8009F53C
     }
 }
 
-void SdSetStereo(void) // 0x8009F568
+void SdSetStereo() // 0x8009F568
 {
     sd_mono_st_flag = 0;
 }
 
-void SdSetMono(void) // 0x8009F574
+void SdSetMono() // 0x8009F574
 {
     sd_mono_st_flag = 1;
 }
@@ -82,11 +162,34 @@ char SdSetReservedVoice(char voices) // 0x8009F584
     return voices;
 }
 
-void SdSetTableSize(void) {} // 0x8009F5B8
+void SdSetTableSize() {} // 0x8009F5B8
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmain", SdEnd);
+void SdEnd() // 0x8009F5C0
+{
+    s32 i;
 
-void SdQuit(void) // 0x8009F64C
+    sound_off();
+
+    if (sd_tick_mode > 0)
+    {
+        if (sd_tick_mode < 4)
+        {
+            smf_timer_end();
+        }
+    }
+
+    for (i = 0; i < SD_VAB_SLOTS; i++)
+    {
+        if (vab_h[i].vab_id_0 >= 0)
+        {
+            SdSpuFree(vab_h[i].vab_start_10);
+        }
+    }
+
+    SdWorkInit();
+}
+
+void SdQuit() // 0x8009F64C
 {
     sound_off();
     SdWorkInit();
@@ -385,9 +488,77 @@ void SdSeqClose(s16 seq_access_num) // 0x800A037C
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmain", SdSeqPause);
+void SdSeqPause(s16 seq_access_num) // 0x800A0418
+{
+    SpuVoiceAttr voice;
+    s32          i;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmain", SdSeqReplay);
+    if (seq_access_num == -1)
+    {
+        return;
+    }
+
+    sd_int_flag = 1;
+
+    for (i = 0; i < sd_reserved_voice; i++)
+    {
+        if ((smf_port[i].smf_midi_num_3 >> 4) == seq_access_num && smf_port[i].field_16 != 0)
+        {
+            voice.mask         = (SPU_VOICE_VOLL | SPU_VOICE_VOLR);
+            voice.voice        = spu_ch_tbl[i];
+            voice.volume.left  = 0;
+            voice.volume.right = 0;
+            SpuSetVoiceAttr(&voice);
+        }
+    }
+
+    smf_song[seq_access_num].play_status_50A = 4;
+
+    sd_int_flag = 0;
+}
+
+void SdSeqReplay(s16 seq_access_num) // 0x800A0534
+{
+    SpuVoiceAttr  voice;
+    SpuReverbAttr reverb;
+    s32           i;
+    u32           temp_v1;
+
+    if (seq_access_num == -1)
+    {
+        return;
+    }
+
+    sd_int_flag = 1;
+
+    for (i = 0; i < sd_reserved_voice; i++)
+    {
+        temp_v1 = (smf_port[i].smf_midi_num_3 >> 4);
+        if (temp_v1 == seq_access_num && smf_port[i].field_16 != 0)
+        {
+            voice.mask         = (SPU_VOICE_VOLL | SPU_VOICE_VOLR);
+            voice.voice        = spu_ch_tbl[i];
+            voice.volume.left  = ((smf_port[i].vol_left_C * smf_song[temp_v1].vol_left_50C) >> 7);
+            voice.volume.right = ((smf_port[i].vol_right_E * smf_song[temp_v1].vol_right_50E) >> 7);
+            SpuSetVoiceAttr(&voice);
+        }
+    }
+
+    if (smf_song[seq_access_num].field_536 != 0)
+    {
+        reverb.mask        = (SPU_REV_DEPTHL | SPU_REV_DEPTHR);
+        reverb.depth.right = 0;
+        reverb.depth.left  = 0;
+        SpuSetReverbModeParam(&reverb);
+        SpuSetReverb(1);
+        smf_song[seq_access_num].field_532 = 1;
+    }
+
+    smf_song[seq_access_num].play_status_50A = 1;
+    control_code_set(seq_access_num);
+
+    sd_int_flag = 0;
+}
 
 void SdSeqSetVol(s16 seq_access_num, s16 voll, s16 volr) // 0x800A06F0
 {
@@ -405,18 +576,18 @@ void SdSeqGetVol(s16 seq_access_num, s16* voll, s16* volr) // 0x800A074C
     *volr = smf_song[seq_access_num].vol_right_50E;
 }
 
-void SdUtFlush(void) // 0x800A0794
+void SdUtFlush() // 0x800A0794
 {
     SdAutoKeyOffCheck();
 }
 
-void SdUtReverbOn(void) // 0x800A07B4
+void SdUtReverbOn() // 0x800A07B4
 {
     SpuReserveReverbWorkArea(SPU_ON);
     SpuSetReverb(SPU_ON);
 }
 
-void SdUtReverbOff(void) // 0x800A07DC
+void SdUtReverbOff() // 0x800A07DC
 {
     sd_reverb_mode = 0;
     SpuSetReverb(SPU_OFF);
@@ -461,17 +632,126 @@ void SdSetRVol(s16 left, s16 right) // 0x800A089C
     SpuSetReverbModeParam(&attr);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmain", SdUtSEAllKeyOff);
+void SdUtSEAllKeyOff() // 0x800A08DC
+{
+    s32 i;
+    s32 keyStatus = 0;
+    u32 voices    = 0;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmain", SdUtAllKeyOff);
+    for (i = 0; i < sd_reserved_voice; i++)
+    {
+        if (smf_port[i].smf_midi_num_3 == 0x20)
+        {
+            voices |= spu_ch_tbl[i];
+            smf_port[i].field_16     = 0;
+            smf_port[i].midiKeyNum_6 = 0;
+            SpuSetKey(0, spu_ch_tbl[i]);
+            adsr_set(i, &smf_port[i]);
+            rr_off(i);
+            do
+            {
+                SpuSetKey(0, spu_ch_tbl[i]);
+                keyStatus = SpuGetKeyStatus(spu_ch_tbl[i]);
+            } while (keyStatus != 2 && keyStatus != 0);
+        }
+    }
+
+    if (keyStatus != 0)
+    {
+        SpuSetKey(0, voices);
+    }
+}
+
+void SdUtAllKeyOff(s16 mode) // 0x800A09E8
+{
+    s32 i;
+    u32 voices = 0;
+
+    for (i = 0; i < sd_reserved_voice; i++)
+    {
+        voices |= spu_ch_tbl[i];
+    }
+
+    SpuSetKey(0, voices);
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmain", SdUtGetVabHdr);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmain", SdVoKeyOn);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmain", SdVoKeyOff);
+void SdVoKeyOff(s32 vab_pro, s32 pitch) // 0x800A0CFC
+{
+    s32 i;
+    u32 voices = 0;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmain", SdVoKeyOffWithRROff);
+    sd_int_flag = 1;
+
+    for (i = 0; i < sd_reserved_voice; i++)
+    {
+        // Of the lower 16 bits of vab_pro, the upper 8 bits are used for VAB id, and the lower 8 bits specify a program number
+        // Of the lower 16 bits of pitch, the upper 8 bits specify a key number in MIDI standard.
+        // To specify a finer pitch, specify a key number in the lower 8 bits of pitch in 1/128 semitones.
+        if (smf_port[i].field_16 != 0 &&
+            smf_port[i].smf_midi_num_3 == 0x20 &&
+            smf_port[i].midiKeyNum_6 == (pitch >> 8) &&
+            smf_port[i].vabId_52 == (vab_pro >> 8) &&
+            smf_port[i].midiProgramNum_2 == (vab_pro & 0x7F))
+        {
+            voices |= spu_ch_tbl[i];
+
+            smf_port[i].field_16     = 0;
+            smf_port[i].midiKeyNum_6 = 0;
+
+            adsr_set(i, &smf_port[i]);
+            SpuSetKey(0, spu_ch_tbl[i]);
+            adsr_set(i, &smf_port[i]);
+            SpuSetKey(0, spu_ch_tbl[i]);
+
+            voices |= spu_ch_tbl[i];
+        }
+    }
+
+    SpuSetKey(0, voices);
+
+    sd_int_flag = 0;
+}
+
+void SdVoKeyOffWithRROff(s32 vab_pro, s32 pitch) // 0x800A0E40
+{
+    s32 i;
+    u32 voices = 0;
+
+    sd_int_flag = 1;
+
+    for (i = 0; i < sd_reserved_voice; i++)
+    {
+        // Of the lower 16 bits of vab_pro, the upper 8 bits are used for VAB id, and the lower 8 bits specify a program number
+        // Of the lower 16 bits of pitch, the upper 8 bits specify a key number in MIDI standard.
+        // To specify a finer pitch, specify a key number in the lower 8 bits of pitch in 1/128 semitones.
+        if (smf_port[i].field_16 != 0 &&
+            smf_port[i].smf_midi_num_3 == 0x20 &&
+            smf_port[i].midiKeyNum_6 == (pitch >> 8) &&
+            smf_port[i].vabId_52 == (vab_pro >> 8) &&
+            smf_port[i].midiProgramNum_2 == (vab_pro & 0x7F))
+        {
+            voices |= spu_ch_tbl[i];
+
+            smf_port[i].field_16     = 0;
+            smf_port[i].midiKeyNum_6 = 0;
+
+            adsr_set(i, &smf_port[i]);
+            rr_off(i);
+            SpuSetKey(0, spu_ch_tbl[i]);
+            SpuSetKey(0, spu_ch_tbl[i]);
+
+            voices |= spu_ch_tbl[i];
+        }
+    }
+
+    SpuSetKey(0, voices);
+
+    sd_int_flag = 0;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmain", SdUtKeyOnV);
 
@@ -493,13 +773,55 @@ s16 SdGetSeqStatus(s16 seq_access_num) // 0x800A1B14
     return smf_song[seq_access_num].play_status_50A;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmain", SdUtSetDetVVol);
+s32 SdUtSetDetVVol(s16 voice, s16 volLeft, s16 volRight) // 0x800A1BD0
+{
+    SpuVoiceAttr voiceAttr;
+    voiceAttr.mask         = SPU_VOICE_VOLL | SPU_VOICE_VOLR;
+    voiceAttr.voice        = spu_ch_tbl[voice];
+    voiceAttr.volume.left  = volLeft;
+    voiceAttr.volume.right = volRight;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmain", SdUtSetVVol);
+    SpuSetVoiceAttr(&voiceAttr);
+    return 0;
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmain", SdUtGetDetVVol);
+s32 SdUtSetVVol(s16 voice, s16 volLeft, s16 volRight) // 0x800A1C1C
+{
+    SpuVoiceAttr voiceAttr;
+    voiceAttr.mask         = SPU_VOICE_VOLL | SPU_VOICE_VOLR;
+    voiceAttr.voice        = spu_ch_tbl[voice];
+    voiceAttr.volume.left  = (volLeft & 0x7F) << 7;
+    voiceAttr.volume.right = (volRight & 0x7F) << 7;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmain", SdUtGetVVol);
+    SpuSetVoiceAttr(&voiceAttr);
+    return 0;
+}
+
+s32 SdUtGetDetVVol(s16 voice, u16* volLeft, u16* volRight) // 0x800A1C78
+{
+    SpuVoiceAttr voiceAttr;
+    voiceAttr.mask  = 0;
+    voiceAttr.voice = spu_ch_tbl[voice];
+
+    SpuGetVoiceAttr(&voiceAttr);
+
+    *volLeft  = voiceAttr.volume.left;
+    *volRight = voiceAttr.volume.right;
+    return 0;
+}
+
+s32 SdUtGetVVol(s16 voice, u16* volLeft, u16* volRight) // 0x800A1CE8
+{
+    SpuVoiceAttr voiceAttr;
+    voiceAttr.mask  = 0;
+    voiceAttr.voice = spu_ch_tbl[voice];
+
+    SpuGetVoiceAttr(&voiceAttr);
+
+    *volLeft  = voiceAttr.volume.left >> 7;
+    *volRight = voiceAttr.volume.right >> 7;
+    return 0;
+}
 
 u16 SdGetTempo(s16 seq_access_num) // 0x800A1D68
 {
@@ -517,26 +839,51 @@ void SdSetTempo(s16 seq_access_num, s16 tempo) // 0x800A1DA4
     }
 }
 
-void SdSetSeqWide(s16 seq_access_num, s16 seq_wide) // 0x800A1E18
+void SdSetSeqWide(s16 seq_access_num, u16 seq_wide) // 0x800A1E18
 {
     smf_song[seq_access_num].seq_wide_534 = seq_wide;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmain", SdGetMidiVol);
+u8 SdGetMidiVol(s16 device, s16 channel) // 0x800A1E50
+{
+    return smf_midi[channel + (device * 0x10)].vol_3;
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmain", SdSetMidiVol);
+void SdSetMidiVol(s16 device, s16 channel, s32 vol) // 0x800A1E90
+{
+    control_change(channel + (device * 0x10), 7, vol & 0x7F);
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmain", SdSetMidiExpress);
+void SdSetMidiExpress(s16 device, s16 channel, s32 expression) // 0x800A1EC4
+{
+    control_change(channel + (device * 0x10), 11, expression & 0x7F);
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmain", SdGetMidiExpress);
+u8 SdGetMidiExpress(s16 device, s16 channel) // 0x800A1EF8
+{
+    return smf_midi[channel + (device * 0x10)].expression_5;
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmain", SdGetMidiPan);
+u8 SdGetMidiPan(s16 device, s16 channel) // 0x800A1F38
+{
+    return smf_midi[channel + (device * 0x10)].pan_1;
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmain", SdSetMidiPan);
+void SdSetMidiPan(s16 device, s16 channel, s32 pan) // 0x800A1F78
+{
+    control_change(channel + (device * 0x10), 10, pan & 0x7F);
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmain", SdGetMidiPitchBendFine);
+u8 SdGetMidiPitchBendFine(s16 device, s16 channel) // 0x800A1FAC
+{
+    return smf_midi[channel + (device * 0x10)].pitchBendFine_7;
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmain", SdSetMidiPitchBendFine);
+s32 SdSetMidiPitchBendFine(s16 device, s16 channel, u8 pitchBendFine) // 0x800A1FEC
+{
+    smf_midi[channel + (device * 0x10)].pitchBendFine_7 = pitchBendFine & 0x7F;
+    return 0;
+}
 
 s32 SdGetTrackTranspause() // 0x800A2030
 {
