@@ -6,6 +6,7 @@
 #include "bodyprog/math.h"
 #include "bodyprog/vw_system.h"
 #include "main/fsqueue.h"
+#include "main/rng.h"
 #include "screens/stream/stream.h"
 
 void func_80035338(s32 arg0, s8 arg1, u32 arg2, s32 arg3); // arg3 type assumed.
@@ -147,7 +148,7 @@ void func_8008616C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4)
                     g_SysWork.field_30 = 18;
                     if (arg2 == 3)
                     {
-                        g_SysWork.flags_22A4 |= 8;
+                        g_SysWork.flags_22A4 |= (1 << 3);
                     }
                 }
             }
@@ -551,7 +552,7 @@ void func_80086FE8(s32 arg0, s32 arg1, s32 arg2)
 {
     s32 i;
     
-    if (!(g_SysWork.flags_22A4 & 0x20))
+    if (!(g_SysWork.flags_22A4 & (1 << 5)))
     {
         // Run through NPCs.
         for (i = 0; i < NPC_COUNT_MAX; i++)
@@ -920,7 +921,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008E794);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008EA68);
 
-void func_8008EF18(void) {}
+void func_8008EF18() {}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008EF20);
 
@@ -936,35 +937,89 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", Demo_GameGlobalsUpdat
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", Demo_GameGlobalsRestore);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", Demo_GameRandSeedUpdate);
+void Demo_GameRandSeedUpdate() // 0x8008f33c
+{
+    g_Demo_PrevRandSeed = Rng_GetSeed();
+    Rng_SetSeed(D_800AFDBC);
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", Demo_GameRandSeedRestore);
+void Demo_GameRandSeedRestore() // 0x8008f370
+{
+    Rng_SetSeed(g_Demo_PrevRandSeed);
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", Demo_Start);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", Demo_Stop);
+void Demo_Stop() // 0x8008f3f0
+{
+    D_800AFDEC = 0;
+    g_SysWork.flags_22A4 &= ~(1 << 1);
+    
+    Demo_GameGlobalsRestore(-3);
+    Demo_GameRandSeedRestore();
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008F434);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008F470);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", Demo_ExitDemo);
+void Demo_ExitDemo() // 0x8008F4E4
+{
+    D_800A9768 = 0xEA24;
+    g_Demo_ControllerPacket = NULL;
+    g_Demo_DemoStep = 0;
+    g_SysWork.flags_22A4 |= 1 << 8;
+}
 
-void func_8008F518(void) {}
+void func_8008F518() {}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008F520);
+s32 func_8008F520()
+{
+    return 0;
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", Demo_DemoRandSeedBackup);
+void Demo_DemoRandSeedBackup() // 0x8008F528
+{
+    if (g_SysWork.flags_22A4 & (1 << 1))
+    {
+        g_Demo_RandSeedBackup = Rng_GetSeed();
+    }
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", Demo_DemoRandSeedRestore);
+void Demo_DemoRandSeedRestore() // 0x8008F560
+{
+    if (g_SysWork.flags_22A4 & (1 << 1))
+    {
+        Rng_SetSeed(g_Demo_RandSeedBackup);
+    }
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", Demo_DemoRandSeedAdvance);
+void Demo_DemoRandSeedAdvance() // 0x8008F598
+{
+    #define SEED_OFFSET 0x3C6EF35F
+
+    if (g_SysWork.flags_22A4 & (1 << 1))
+    {
+        Rng_SetSeed(g_Demo_RandSeedBackup + SEED_OFFSET);
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", Demo_Update);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", Demo_JoyUpdate);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", Demo_PresentIntervalUpdate);
+s32 Demo_PresentIntervalUpdate() // 0x8008F87C
+{
+    g_Demo_VideoPresentInterval = 1;
+    
+    if (g_Demo_ControllerPacket == NULL)
+    {
+        return 0;
+    }
+    
+    g_Demo_VideoPresentInterval = g_Demo_ControllerPacket->field_9;
+    return 1;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", Demo_GameRandSeedSet);
 

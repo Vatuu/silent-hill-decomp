@@ -108,6 +108,10 @@ extern s_800A90FC D_800A90FC[];
 
 extern s_800A992C D_800A992C[];
 
+extern u16 D_800AFDBC;
+
+extern s32 D_800AFDEC;
+
 extern s_800B5508 D_800B2780[];
 
 extern s_800B5508 D_800B3680[];
@@ -169,6 +173,14 @@ extern u8* D_800C7018;
 extern s32 g_MainLoop_FrameCount;
 
 extern s32 g_Demo_VideoPresentInterval;
+
+extern u32 g_Demo_PrevRandSeed;
+
+extern u32 g_Demo_RandSeedBackup;
+
+extern s_ControllerData* g_Demo_ControllerPacket;
+
+extern s32 g_Demo_DemoStep;
 
 /** Initializer for something before the game loop. */
 void func_8002E630();
@@ -291,6 +303,9 @@ void func_80088D34(s32 idx);
 
 void func_80091380();
 
+/** Returns 0.  */
+s32 func_8008F520();
+
 s32 Chara_Load(s32 arg0, s8 arg1, s32 arg2, s8 arg3, s32 arg4, s32 arg5);
 
 /** Seeks for the English title screen background graphic. */
@@ -358,5 +373,22 @@ s32 SaveGame_ChecksumValidate(s_ShSaveGameFooter* saveFooter, s8* saveData, s32 
 
 /** Generates an 8-bit XOR checksum over the given data, only appears used with s_ShSaveGame data. */
 u8 SaveGame_ChecksumGenerate(s8* saveData, s32 saveDataLength);
+
+void Demo_GameRandSeedUpdate();
+
+void Demo_GameRandSeedRestore();
+
+void Demo_Stop();
+
+void Demo_ExitDemo();
+
+/** Generates the backup random demo seed and stores it in Demo_RandSeedBackup. */
+void Demo_DemoRandSeedBackup();
+
+void Demo_DemoRandSeedRestore();
+
+void Demo_DemoRandSeedAdvance();
+
+s32 Demo_PresentIntervalUpdate();
 
 #endif

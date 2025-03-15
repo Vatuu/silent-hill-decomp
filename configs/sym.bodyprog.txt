@@ -138,10 +138,10 @@ g_SD_ReverbDepth = 0x800C1687;
 g_Game_VSyncTimeSinceBoot = 0x800C1690;
 
 g_Demo_FileIndex = 0x800C4844;
-g_Demo_RandSeedPrevious = 0x800C4888;
+g_Demo_PrevRandSeed = 0x800C4888;
 g_Demo_RandSeedBackup = 0x800C488C;
-g_Demo_CurControllerPacket = 0x800C4890;
-g_Demo_CurrDemoStep = 0x800C4894;
+g_Demo_ControllerPacket = 0x800C4890;
+g_Demo_DemoStep = 0x800C4894;
 g_Demo_VideoPresentInterval = 0x800C4898;
 
 SaveGame_CopyWithChecksum = 0x8002FCCC; // type:func

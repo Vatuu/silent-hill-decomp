@@ -106,7 +106,9 @@ typedef struct _AnalogPadData
 typedef struct _ControllerData
 {
     s_AnalogPadData AnalogPad;
-    int             field_8;
+    s8              unk_8[1];
+    u8              field_9;
+    s8              unk_A[2];
     e_PadButton     btns_held_C;
     e_PadButton     btns_new_10;
     char            field_14[4];
