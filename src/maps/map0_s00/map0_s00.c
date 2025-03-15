@@ -2,6 +2,8 @@
 
 extern u8 D_800DD59C;
 
+void func_800D20E4();
+
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800CB6B0);
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800CBBBC);
@@ -56,19 +58,30 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D0B18);
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D0CB8);
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D0E04);
+void func_800D0E04()
+{
+    func_8004690C(0x550);
+}
 
-void func_800D0E24(void) {}
+void func_800D0E24() {}
 
-void func_800D0E2C(void) {}
+void func_800D0E2C() {}
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D0E34);
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D1C38);
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D209C);
+void func_800D209C(void) {
+    g_SysWork.unk_47 = NO_VALUE;
+    g_SaveGamePtr->field_AA = 0;
+    func_800D20E4();
+    func_800D2C7C(0x54);
+}
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D20D8);
+void func_800D20D8()
+{
+    g_SysWork.unk_2358 = 0;
+}
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D20E4);
 
@@ -84,29 +97,6 @@ void func_800D2C7C(s32 arg0)
     g_SysWork.character_4C.field_126 = 0;
     
     D_800C4606 = 0;
-    
-    /*
-    D_800C457C is related to animations that play during cutscenes.
-
-
-    It's value changes during cutscenes when Harry does any of the next
-    three actions
-    
-    0 nothing
-    1 is when Harry is walking
-    3 is when Harry moves to the right?
-    4 is when Harry moves to the left
-
-    However a function related to it behaviour is broken or I
-    just don't understand how it works as I tested it and after
-    the first in-game dialogue of Harry the value is keept as 1
-    (even when he is not walking or even in a cutscene!) until the
-    next dialgue triggers (when Harry look sees Cheryl and the second
-    FMV plays), something similar happens on the next overlay as this
-    value is is keept as 1 during a point of the first cutscene and
-    it doesn't change until the player make any sort of interaction
-	
-    */
     
     switch (arg0)
     {
@@ -168,29 +158,45 @@ void func_800D2D84(void)
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D2DAC);
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D2E50);
+s32 func_800D2E50(void) {
+    return g_SysWork.character_4C.field_126 == 0;
+}
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D2E60);
+void func_800D2E60(void) {
+    g_SysWork.character_4C.field_126 = 0;
+}
 
-void func_800D2E6C(void) {}
+void func_800D2E6C() {}
 
-void func_800D2E74(void) {}
+void func_800D2E74() {}
 
-void func_800D2E7C(void) {}
+void func_800D2E7C() {}
 
-void func_800D2E84(void) {}
+void func_800D2E84() {}
 
-void func_800D2E8C(void) {}
+void func_800D2E8C() {}
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D2E94);
+s32 func_800D2E94()
+{
+	return 0;
+}
 
-void func_800D2E9C(void) {}
+void func_800D2E9C() {}
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D2EA4);
+u8 func_800D2EA4(void) {
+    return g_SysWork.character_4C.unk_10D;
+}
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D2EB4);
+void func_800D2EB4(void) {
+    u8 temp_a0;
 
-void func_800D2EF4(void)
+    temp_a0 = g_SysWork.unk_47;
+    g_SysWork.unk_47 = NO_VALUE;
+    D_800DD59C = temp_a0;
+    func_8003DD80(1, 0x11);
+}
+
+void func_800D2EF4()
 {
     g_SysWork.unk_47 = D_800DD59C;
 }
@@ -205,7 +211,7 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D3B44);
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D3EF4);
 
-void func_800D4924(void) {}
+void func_800D4924() {}
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D492C);
 
@@ -221,7 +227,7 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D5FCC);
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D63D0);
 
-void func_800D654C(void) {}
+void func_800D654C() {}
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D6554);
 
@@ -279,7 +285,9 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D921C);
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D923C);
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D929C);
+s32 func_800D929C(void) {
+    return D_800A999C;
+}
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D92AC);
 
@@ -319,7 +327,21 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800DB870);
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800DB94C);
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800DBE00);
+void func_800DBE00() {
+    func_8004690C(0x54F);
+    func_8004690C(0x551);
+    func_8004690C(0x550);
+    SD_EngineCmd(0x16);
+    func_800892A4(4);
+    g_SysWork.sysState_8 = 0;
+    g_SysWork.field_24 = 0;
+    g_SysWork.sysStateStep_C = 0;
+    g_SysWork.field_28 = 0;
+    g_SysWork.field_10 = 0;
+    g_SysWork.field_2C = 0;
+    g_SysWork.field_14 = 0;
+    g_SysWork.character_4C.position_18.vy = 0;
+}
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800DBE68);
 

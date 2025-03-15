@@ -304,7 +304,9 @@ typedef struct _SubCharacter
     s32 field_FC;  // Player winded counter. Counts 20 seconds worth of ticks(?) and caps at 0x23000. Purpose for other characters unknown.
     s8  unk_FC[8]; // 2 more s32 for custom data?
     s32 field_108; // Player run counter. Increments every tick(?) indefinitely. Purpose for other characters unknown.
-    s8 unk_10C[26];
+    s8 unk_10C;
+	s8 unk_10D;
+	s8 unk_10E[24];
     s16 field_126;
 } s_SubCharacter;
 STATIC_ASSERT_SIZEOF(s_SubCharacter, 296);
@@ -357,7 +359,9 @@ typedef struct _SysWork
     s8              unk_980[6432];
     s32             field_22A0;
     s32             flags_22A4;
-    char            unk_22A8[210];
+    char            unk_22A8[176];
+    u8              unk_2358;
+    char            unk_2359[33];
     s16             cam_ang_y_237A;
     s16             cam_ang_z_237C;
     s16             field_237E;
