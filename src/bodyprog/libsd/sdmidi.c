@@ -1,7 +1,8 @@
 #include "common.h"
-#include "bodyprog/libsd.h"
 
 #include <libspu.h>
+
+#include "bodyprog/libsd.h"
 
 extern SpuVoiceAttr s_attr;
 

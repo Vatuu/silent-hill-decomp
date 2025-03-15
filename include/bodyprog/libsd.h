@@ -7,9 +7,9 @@
  * libref.pdf v4.4 may be useful, though was likely based on earlier SDK.
  */
 
-/** SD_ALLOC_SLOTS must equal SD_VAB_SLOTS due to SdWorkInit loop, but they're mostly unrelated */
+/** SD_ALLOC_SLOTS must equal SD_VAB_SLOTS due to SdWorkInit loop, but they're mostly unrelated. */
 #define SD_ALLOC_SLOTS 16
-#define SD_VAB_SLOTS 16
+#define SD_VAB_SLOTS   16
 
 // MIDI related header magic.
 #define SD_MAGIC_SEQp 0x53455170

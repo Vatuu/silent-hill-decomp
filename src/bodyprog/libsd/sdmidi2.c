@@ -1,7 +1,8 @@
 #include "common.h"
-#include "bodyprog/libsd.h"
 
 #include <libapi.h>
+
+#include "bodyprog/libsd.h"
 
 extern s32 sd_timer_flag; // Only used in this file
 
