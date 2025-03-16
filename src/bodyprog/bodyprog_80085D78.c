@@ -769,6 +769,17 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80089034);
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80089090);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800890B8);
+/*void func_800890B8()
+{
+    func_8009E198(&g_SysWork.field_2514[0], 0);
+    func_8009E310(&g_SysWork.field_2514[0], &g_SysWork.field_2514[8] , 2);
+    func_8009EBB8(&g_SysWork.field_2514[0], &g_SysWork.field_2514[12], 16);
+    
+    g_SysWork.field_2510 = func_8009E4F8();
+    
+    func_8009E7D8(g_SysWork.field_2510);
+    func_8009E97C(g_SysWork.field_2510);
+}*/
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80089128);
 
@@ -903,9 +914,67 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008D470);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008D5A0);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008D78C);
+void func_8008D78C()
+{
+    s32 var_v1;
+    s32 var_s1;
+
+    if (D_800C4818.field_2 == 0)
+    {
+        return;
+    }
+    D_800C4818.field_2 = 0;
+    
+    if (D_800C4818.field_0 != 0)
+    {
+        return;
+    }
+    
+    var_s1 = func_8008D850();
+    if (var_s1 != 0)
+    {
+        var_v1 = D_800C4818.field_8 - D_800C4818.field_A;
+    }
+    else
+    {
+        var_v1 = -D_800C4818.field_A;
+    }
+    
+    D_800C4818.field_A += var_v1 >> 1;
+    
+    if (vcRetCamMvSmoothF() == 0)
+    {
+        D_800C4818.field_A = 0;
+        var_s1 = 0;
+    }
+    
+    func_8008D990(var_s1, D_800C4818.field_A, &D_800C4818.field_C, D_800C4818.field_1C, D_800C4818.field_20);
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008D850);
+/*s32 func_8008D850()
+{
+    s16 rectX;
+    RECT rect;
+    s_8008D850 unk; 
+
+    rectX = 784;
+    if (g_ObjectTableIdx == 0)
+    {
+        rectX = 792;
+    }
+
+    rect.y = 112;
+    rect.w = 2;
+    rect.x = rectX;
+    rect.h = 1;
+    
+    DrawSync(0);
+    StoreImage2(&rect, &unk.field_0);
+    DrawSync(0);
+
+    return (unk.field_0 & 0x7FFF) == 0x7FFF;
+}*/
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008D8C0);
 
@@ -949,6 +1018,17 @@ void Demo_GameRandSeedRestore() // 0x8008f370
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", Demo_Start);
+/*void Demo_Start() // 0x8008F398
+{
+    D_800AFDEC = 1;
+    g_SysWork.flags_22A4 |= 2;
+    
+    Demo_GameGlobalsUpdate();
+    Demo_GameRandSeedUpdate();
+    
+    g_GameWork.field_5A8 = 1;
+    g_GameWork.field_5AC = 1;
+}*/
 
 void Demo_Stop() // 0x8008f3f0
 {
@@ -959,9 +1039,59 @@ void Demo_Stop() // 0x8008f3f0
     Demo_GameRandSeedRestore();
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008F434);
+s32 func_8008F434(s32 arg0)
+{
+    s32 caseVar = arg0 & ~1;
+
+    switch (caseVar)
+    {
+        case 2:
+        case 3:
+        case 4:
+        case 5:
+        case 10:
+        case 11:
+        case 12:
+        case 13:
+            return 0;
+
+        default:
+            break;
+    }
+
+    return 1;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008F470);
+/*s32 func_8008F470(s32 caseArg)
+{
+    switch (caseArg)
+    {
+        case 11:
+            if (g_SysWork.sysState_8 == 13)
+            {
+                return -1;
+            }
+            else if (D_800BCCB8 == 16)
+            {
+                return -1;
+            }
+
+        case 12:
+        case 13:
+        case 14:
+        case 15:
+            return 1;
+    
+        case 18:
+            return 1;
+    
+        default:
+            break;
+    }
+
+    return 0;
+}*/
 
 void Demo_ExitDemo() // 0x8008F4E4
 {
@@ -1021,7 +1151,23 @@ s32 Demo_PresentIntervalUpdate() // 0x8008F87C
     return 1;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", Demo_GameRandSeedSet);
+s32 Demo_GameRandSeedSet() // 0x8008F8A8
+{
+    if (!(g_SysWork.flags_22A4 & (1 << 1)))
+    {
+        return 1;
+    }
+    else if (g_Demo_ControllerPacket == NULL)
+    {
+        Rng_SetSeed(D_800AFDBC);
+        return 0;
+    }
+    else
+    {
+        Rng_SetSeed(g_Demo_ControllerPacket->btns_held_C);
+        return 1;
+    }
+}
 
 s32 func_8008F914()
 {

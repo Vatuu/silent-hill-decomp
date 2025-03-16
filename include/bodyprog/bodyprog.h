@@ -15,6 +15,11 @@
 
 typedef struct
 {
+    s16 field_0; // Flags?
+} s_8008D850;
+
+typedef struct
+{
     s32 field_0;
     s32 field_4; // Maybe index?
     s32 field_8;
@@ -68,6 +73,21 @@ typedef struct
     s32                field_18; 
 } s_800B5508;
 
+typedef struct
+{
+    u8  field_0;
+    u8  field_1;
+    u8  field_2;
+    u8  field_3;
+    s8  unk_4[4];
+    s16 field_8;
+    s16 field_A;
+    s16 field_C;
+    s8  unk_E[12];
+    s32 field_1C;
+    s32 field_20;
+} s_800C4818;
+
 extern s8* D_8002510C;
 
 /** "\x07PAUSED" string */
@@ -82,6 +102,8 @@ extern s_FsImageDesc D_800A901C;
 extern s_FsImageDesc D_800A9024;
 
 extern s_FsImageDesc D_800A902C;
+
+extern s_FsImageDesc D_800A906C;
 
 extern s_FsImageDesc D_800A9FA8;
 
@@ -142,6 +164,8 @@ extern u16 D_800BCCB0;
 
 extern u16 D_800BCCB2;
 
+extern s32 D_800BCCB8;
+
 /** Accessed by credits and saveload. */
 extern s32 D_800BCD0C;
 
@@ -162,6 +186,8 @@ extern s16 D_800C391E;
 extern s8 D_800C457C;
 
 extern u8 D_800C4606;
+
+extern s_800C4818 D_800C4818;
 
 /** Unknown bodyprog var. Set in `Fs_QueueDoThingWhenEmpty`. */
 extern s32 D_800C489C;
@@ -300,12 +326,22 @@ s32 func_80088D0C();
 
 void func_80088D34(s32 idx);
 
-void func_80091380();
+s32 func_8008F434(s32 arg0);
 
-/** Returns 0.  */
+void func_800890B8();
+
+s32 func_8008D850();
+
+void func_8008D78C();
+
+s32 func_8008F470(s32 caseArg);
+
+/** Returns 0. */
 s32 func_8008F520();
 
 s32 func_8008F914();
+
+void func_80091380();
 
 s32 Chara_Load(s32 arg0, s8 arg1, s32 arg2, s8 arg3, s32 arg4, s32 arg5);
 
@@ -329,6 +365,9 @@ void GameFs_SaveLoadBinLoad();
 
 /** Loads a flame graphic. */
 void GameFs_FlameGfxLoad();
+
+/** Loads "Tim00" graphic. */
+void GameFs_Tim00TIMLoad();
 
 /** Draws some string in display space. */
 void func_80032CE8();
@@ -382,6 +421,8 @@ void Demo_GameRandSeedUpdate();
 
 void Demo_GameRandSeedRestore();
 
+void Demo_Start();
+
 void Demo_Stop();
 
 void Demo_ExitDemo();
@@ -394,5 +435,7 @@ void Demo_DemoRandSeedRestore();
 void Demo_DemoRandSeedAdvance();
 
 s32 Demo_PresentIntervalUpdate();
+
+s32 Demo_GameRandSeedSet();
 
 #endif
