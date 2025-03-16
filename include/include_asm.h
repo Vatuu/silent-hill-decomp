@@ -14,10 +14,7 @@
                                 "\t.ent\t" #NAME "\n" #NAME ":\n"                                    \
                                 "\t.include \"" FOLDER "/" #NAME ".s\"\n"                            \
                                 "\t.set reorder\n"                                                   \
-                                "\t.set at\n"                                                        \
-                                "\t.end\t" #NAME "\n"                                                \
-                                ".end" #NAME ":\n"                                                   \
-                                "\t.size\t" #NAME ",.end" #NAME "-" #NAME "\n")
+                                "\t.set at\n")
         #endif
 
         #ifndef INCLUDE_RODATA

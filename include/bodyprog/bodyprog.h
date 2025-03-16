@@ -119,6 +119,9 @@ extern s32 D_800A976C;
 
 extern void (*D_800A977C[])(void); // Function pointer array, maybe state funcs of some kind.
 
+/** Used in `func_800D929C` from map0_s00.c */
+extern s32 D_800A999C;
+
 extern s32 D_800A9A68;
 
 /** Array of indices? */
@@ -189,6 +192,29 @@ extern s16 D_800C391C;
 
 extern s16 D_800C391E;
 
+/** D_800C457C could be related to animations that play during cutscenes
+
+ * Called by:
+ * - 'func_800D2C7C' in map0_s00.c
+ * - 'func_800D2D2C' in map0_s00.c
+ 
+ It's value changes during cutscenes when Harry does any of the next
+ three actions
+ 
+ * 0 - Nothing
+ * 1 - Harry is walking
+ * 3 - Harry moves to the right?
+ * 4 - Harry moves to the left
+ 
+ 
+ However this behaviour is irregular. After the first in-game dialogue
+ of Harry the value is keept as 1 (even when he is not walking or in
+ a cutscene) until the next dialogue triggers (when Harry look sees
+ Cheryl and the second FMV plays), something similar happens on the
+ next overlay as it value is keept as 1 during a point of the first
+ cutscene and it doesn't change until the player make any sort of
+ interaction
+*/
 extern s8 D_800C457C;
 
 extern u8 D_800C4606;
@@ -267,6 +293,9 @@ s32 func_8003c850();
 
 void func_8003D160(); // Return type assumed.
 
+/** Unknown. This parameters are likely inacurrate*/
+void func_8003DD80(s32, s32);
+
 /** Some kind of queue entry load status getter. */
 s32 func_80041ADC(s32 queueIdx);
 
@@ -278,6 +307,8 @@ void func_80041CEC(s_80041CEC*);
 void func_80041D10(s_80041D10* array, s32 size);
 
 u8 func_80045B28();
+
+void func_8004690C(s32);
 
 void func_8004729C(u16);
 

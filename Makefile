@@ -190,6 +190,8 @@ report: objdiff-config
 check: build
 	@sha256sum --ignore-missing --check checksum.sha
 
+progress: NON_MATCHING=1 SKIP_ASM=1 build
+
 expected: check
 	mkdir -p $(EXPECTED_DIR)
 	mv build/src $(EXPECTED_DIR)/src
@@ -235,10 +237,8 @@ clean-check: clean
 	$(MAKE) generate
 	$(MAKE) check
 
-clean-progress: clean
-	rm -rf $(LINKER_DIR)
-	$(MAKE) generate
-	$(MAKE) build NON_MATCHING=1 SKIP_ASM=1
+clean-progress: regenerate
+	$(MAKE) NON_MATCHING=1 SKIP_ASM=1 build
 
 # Recipes
 

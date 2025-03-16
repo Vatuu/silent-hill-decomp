@@ -306,15 +306,17 @@ typedef struct _SubCharacter
     s32 field_FC;  // Player winded counter. Counts 20 seconds worth of ticks(?) and caps at 0x23000. Purpose for other characters unknown.
     s8  unk_FC[8]; // 2 more s32 for custom data?
     s32 field_108; // Player run counter. Increments every tick(?) indefinitely. Purpose for other characters unknown.
-    s8 unk_10C[26];
+    s8 unk_10C;
+	s8 unk_10D;
+	s8 unk_10E[24];
     s16 field_126;
 } s_SubCharacter;
 STATIC_ASSERT_SIZEOF(s_SubCharacter, 296);
 
-typedef struct _MainCharacter
+typedef struct _MainCharacterExtra
 {
     // SubCharacter has the same 0x2C starting bytes?
-    // Maybe some base model struct which SubCharacter extends, model for torch or something attached to player?
+    // Maybe this is actually just a base model struct, which SubCharacter extends, and the extra data in MainCharacter is some model attached to player?
     u8             field_0;
     u8             field_1;
     u8             field_2;
@@ -328,8 +330,15 @@ typedef struct _MainCharacter
     s32            field_20; // Some kind of anim state.
     s32            field_24; // Some kind of anim state.
     s8             unk_28[4];
+} s_MainCharacterExtra;
+STATIC_ASSERT_SIZEOF(s_MainCharacterExtra, 44);
+
+typedef struct _MainCharacter
+{
+    s_SubCharacter       character;
+    s_MainCharacterExtra extra_128;
 } s_MainCharacter;
-STATIC_ASSERT_SIZEOF(s_MainCharacter, 44);
+STATIC_ASSERT_SIZEOF(s_MainCharacter, 340);
 
 typedef struct _SysWork
 {
@@ -351,15 +360,16 @@ typedef struct _SysWork
     s8              unk_46;
     s8              unk_47;
     char            unk_48[4];
-	s_SubCharacter  character_4C;
-    s_MainCharacter player_174;
+    s_MainCharacter player_4C;
     s_SubCharacter  characters_1A0[NPC_COUNT_MAX];
     GsCOORDINATE2   unk_coord_890[2];
     GsCOORDINATE2   hero_neck_930;
     s8              unk_980[6432];
     s32             field_22A0;
     s32             flags_22A4;
-    char            unk_22A8[210];
+    char            unk_22A8[176];
+    u8              unk_2358;
+    char            unk_2359[33];
     s16             cam_ang_y_237A;
     s16             cam_ang_z_237C;
     s16             field_237E;
