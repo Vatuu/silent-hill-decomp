@@ -510,6 +510,7 @@ void func_80032D1C()
     func_80089090(1);
 }
 
+#ifdef NON_MATCHING
 void MainLoop() // 0x80032ee0
 {
     #define TICKS_PER_SECOND_MIN (TICKS_PER_SECOND / 4)
@@ -683,6 +684,9 @@ void MainLoop() // 0x80032ee0
         GsDrawOt(&g_ObjectTable1[g_ObjectTableIdx]);
     }
 }
+#else
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", MainLoop);
+#endif
 
 void Settings_ScreenAndVolUpdate()
 {
