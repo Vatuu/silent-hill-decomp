@@ -17,7 +17,7 @@ IMAGE_DIR    := $(ROM_DIR)/image
 BUILD_DIR    := build
 OUT_DIR      := $(BUILD_DIR)/out
 TOOLS_DIR    := tools
-OBJDIFF_DIR	 := $(TOOLS_DIR)/objdiff
+OBJDIFF_DIR  := $(TOOLS_DIR)/objdiff
 PERMUTER_DIR := permuter
 ASSETS_DIR   := assets
 ASM_DIR      := asm
@@ -241,7 +241,7 @@ clean-check: clean
 clean-progress: clean
 	rm -rf $(LINKER_DIR)
 	$(MAKE) generate
-	$(MAKE) NON_MATCHING=1 SKIP_ASM=1 build
+	$(MAKE) progress
 
 # Recipes
 
