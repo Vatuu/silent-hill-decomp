@@ -724,7 +724,6 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80033548);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", SysWork_Clear);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", MainLoop_ShouldWarmReset);
 s32 MainLoop_ShouldWarmReset() // 0x80034108
 {
     #define RESET_BTN_FLAGS (Pad_BtnSelect | Pad_BtnStart)
