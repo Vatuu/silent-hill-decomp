@@ -412,6 +412,8 @@ void SysWork_SaveGameUpdatePlayer();
 /** Updates SysWork with player info from the savegame buffer (position, rotation, health). */
 void SysWork_SaveGameReadPlayer();
 
+s32 MainLoop_ShouldWarmReset();
+
 void Game_SaveGameInitialize(s8 overlayIdx, s32 difficulty);
 
 /** Resets player info in the savegame buffer (inventory, health, playtime). */

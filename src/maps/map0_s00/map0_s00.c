@@ -58,15 +58,22 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D0CB8);
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D0E04);
 
-void func_800D0E24(void) {}
+void func_800D0E24() {}
 
-void func_800D0E2C(void) {}
+void func_800D0E2C() {}
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D0E34);
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D1C38);
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D209C);
+void func_800D209C()
+{
+    g_SysWork.unk_47 = NO_VALUE;
+    g_SaveGamePtr->field_AA = 0;
+
+    func_800D20E4();
+    func_800D2C7C(84);
+}
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D20D8);
 

@@ -259,8 +259,8 @@ typedef struct _GameWork
     u8                   field_58D; // G?
     u8                   field_58E; // B?
     u8                   field_58F; // A or graphics command code?
-    e_GameState          gameStatePrev_590;
-    e_GameState          gameState_594;
+    s32                  gameStatePrev_590;    /** e_GameState */
+    s32                  gameState_594;        /** e_GameState */
     s32                  gameStateStep_598[3]; /** Temp data used by current gameState. Can be another state ID or other data. */
     char                 unk_5A4[52];
 } s_GameWork;

@@ -725,6 +725,65 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80033548);
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", SysWork_Clear);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", MainLoop_ShouldWarmReset);
+/*s32 MainLoop_ShouldWarmReset() // 0x80034108
+{
+    #define RESET_BTN_FLAGS (Pad_BtnSelect | Pad_BtnStart)
+    #define UNK_BTN_FLAGS_0 (Pad_BtnSelect | Pad_BtnStart | Pad_BtnL2 | Pad_BtnR2 | Pad_BtnL1 | Pad_BtnR1)
+    #define UNK_BTN_FLAGS_1 (Pad_BtnStart | Pad_BtnTriangle | Pad_BtnSquare)
+    
+    if (g_GameWork.gameState_594 < GameState_MovieIntroAlternate)
+    {
+        return 0;
+    }
+    
+    if (g_GameWork.gameState_594 == GameState_Unk8 && g_GameWork.gameStateStep_598[0] == 4)
+    {
+        return 0;
+    }
+    
+    if (g_GameWork.gameState_594 == GameState_Unk10 && (g_GameWork.gameStateStep_598[0] - 2) < 2u)
+    {
+        return 0;
+    }
+
+    if (g_SysWork.flags_22A4 & (1 << 1))
+    {
+        if (D_800A9768 >= 1801)
+        {
+            return 2;
+        }
+    }
+    else
+    {
+        D_800A9768 = 0;
+    }
+    
+    if (g_GameWork.gameState_594 == GameState_MainMenu)
+    {
+        return 0;
+    }
+
+    // Reset something.
+    if ((g_ControllerPtr0->btns_held_C & RESET_BTN_FLAGS) != RESET_BTN_FLAGS)
+    {
+        D_800A976C = 0;
+    }
+
+    if (D_800A976C >= 121)
+    {
+        return 2; 
+    }
+    else if (g_ControllerPtr0->btns_held_C == UNK_BTN_FLAGS_0 && (g_ControllerPtr0->btns_new_10 & UNK_BTN_FLAGS_0))
+    {
+        return 2; 
+    }
+    else if (g_ControllerPtr0->btns_held_C == UNK_BTN_FLAGS_1 && (g_ControllerPtr0->btns_new_10 & Pad_BtnStart))
+    {
+        return 2; 
+    }
+    
+    return (g_SysWork.flags_22A4 & (1 << 8)) ? 2 : 0;
+}*/
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", Game_WarmBoot);
 
