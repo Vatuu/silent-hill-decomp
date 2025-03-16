@@ -157,11 +157,11 @@ typedef struct _ShSaveGame
     s_ShInventoryItem items_0[GAME_INVENTORY_SIZE];
     s8                field_A0;
     s8                field_A1[3];
-    s8                curMapOverlayIndex_A4;
+    s8                mapOverlayIdx_A4;
     s8                field_A5;
     s16               saveGameCount_A6;
-    s8                curMapEventNum_A8;
-    u8                curMapIndex_A9;
+    s8                mapEventIdx_A8;
+    u8                mapIdx_A9;
     s8                field_AA;
     u8                field_AB;
     u32               flags_AC;
@@ -182,11 +182,11 @@ typedef struct _ShSaveGame
     s8                field_23E;
     s8                field_23F;
     s32               playerHealth_240;
-    s32               playerPosX_244;
+    s32               playerPositionX_244;
     s16               playerRotationY_248;
     s8                field_24A;
     s8                field_24B;
-    s32               playerPosZ_24C;
+    s32               playerPositionZ_24C;
     s32               gameplayTimer_250;
     s32               field_254;
     s32               field_258;

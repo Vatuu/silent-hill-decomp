@@ -819,7 +819,7 @@ void Game_SaveGameInitialize(s8 overlayIdx, s32 difficulty) // 0x800350BC
 
     bzero(g_SaveGamePtr, sizeof(s_ShSaveGame));
 
-    g_SaveGamePtr->curMapOverlayIndex_A4 = overlayIdx;
+    g_SaveGamePtr->mapOverlayIdx_A4 = overlayIdx;
 
     // -1 = easy, 0 = normal, 1 = hard.
     difficulty = CLAMP(difficulty, -1, 1);
@@ -827,7 +827,7 @@ void Game_SaveGameInitialize(s8 overlayIdx, s32 difficulty) // 0x800350BC
     var_a2 = g_SaveGamePtr->field_B0;
 
     g_SaveGamePtr->field_260      = (g_SaveGamePtr->field_260 & 0x0FFFFFFF) | (difficulty << 28);
-    g_SaveGamePtr->curMapIndex_A9 = 1;
+    g_SaveGamePtr->mapIdx_A9 = 1;
 
     for (i = 0; i < 45; i++)
     {
@@ -1018,10 +1018,10 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80039FB8);
 void SysWork_SaveGameUpdatePlayer() // 0x8003A120
 {
     s_ShSaveGame* save      = g_SaveGamePtr;
-    save->curMapEventNum_A8 = g_MapEventIdx;
+    save->mapEventIdx_A8 = g_MapEventIdx;
 
-    save->playerPosX_244      = g_SysWork.player_4C.character.position_18.vx;
-    save->playerPosZ_24C      = g_SysWork.player_4C.character.position_18.vz;
+    save->playerPositionX_244      = g_SysWork.player_4C.character.position_18.vx;
+    save->playerPositionZ_24C      = g_SysWork.player_4C.character.position_18.vz;
     save->playerRotationY_248 = g_SysWork.player_4C.character.rotation_24.vy;
     save->playerHealth_240    = g_SysWork.player_4C.character.health_B0;
 }
@@ -1040,8 +1040,8 @@ void func_8003A16C() // 0x8003A16C
 
 void SysWork_SaveGameReadPlayer() // 0x8003A1F4
 {
-    g_SysWork.player_4C.character.position_18.vx = g_SaveGamePtr->playerPosX_244;
-    g_SysWork.player_4C.character.position_18.vz = g_SaveGamePtr->playerPosZ_24C;
+    g_SysWork.player_4C.character.position_18.vx = g_SaveGamePtr->playerPositionX_244;
+    g_SysWork.player_4C.character.position_18.vz = g_SaveGamePtr->playerPositionZ_24C;
     g_SysWork.player_4C.character.rotation_24.vy = g_SaveGamePtr->playerRotationY_248;
     g_SysWork.player_4C.character.health_B0      = g_SaveGamePtr->playerHealth_240;
 }

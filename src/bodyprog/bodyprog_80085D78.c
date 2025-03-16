@@ -48,7 +48,7 @@ void func_80085DC0(s32 arg0, s32 sysStateStep)
     }
 }
 
-void func_80085DF0(void)
+void func_80085DF0()
 {
     g_SysWork.field_2C += g_DeltaTime1;
     
