@@ -237,7 +237,9 @@ clean-check: clean
 	$(MAKE) generate
 	$(MAKE) check
 
-clean-progress: regenerate
+clean-progress: clean
+	rm -rf $(LINKER_DIR)
+	$(MAKE) generate
 	$(MAKE) NON_MATCHING=1 SKIP_ASM=1 build
 
 # Recipes
