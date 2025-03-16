@@ -786,7 +786,11 @@ s32 MainLoop_ShouldWarmReset() // 0x80034108
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", Game_WarmBoot);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", JOY_Init);
+void JOY_Init() // 0x8003441C
+{
+    PadInitDirect(&g_GameWork.field_5B4, g_ControllerPtr1);
+    PadStartCom();
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", JOY_ReadP1);
 

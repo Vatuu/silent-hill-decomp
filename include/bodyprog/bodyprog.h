@@ -444,6 +444,8 @@ void SysWork_SaveGameReadPlayer();
 
 s32 MainLoop_ShouldWarmReset();
 
+void JOY_Init();
+
 void Game_SaveGameInitialize(s8 overlayIdx, s32 difficulty);
 
 /** Resets player info in the savegame buffer (inventory, health, playtime). */

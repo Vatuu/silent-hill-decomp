@@ -265,7 +265,9 @@ typedef struct _GameWork
     s8                   unk_5A4[4];
     s32                  field_5A8;
     s32                  field_5AC;
-    s8                   unk_5B0[40];
+    s8                   unk_5B0[4];
+    s32                  field_5B4;
+    s8                   unk_5B8[32];
 } s_GameWork;
 STATIC_ASSERT_SIZEOF(s_GameWork, 0x5D8);
 
