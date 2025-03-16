@@ -667,7 +667,7 @@ Additional Make commands:
 * `check`: Builds the executable and overlays. After compilation, it compares checksums with the original files.
 * `clean-build`: Clears the project configuration without deleting files.
 * `clean-check`: Clears the project configuration without deleting files. After compilation, it compares checksums with the original files.
-* `objdiff-config`: Generates project configuration for [objdiff](https://github.com/encounter/objdiff.)
+* `objdiff-config`: Generates project configuration for [Objdiff.](https://github.com/encounter/objdiff)
 
 NOTE: `clean-build/clean-check` are obligatory if the configuration in the `Makefile` has been modified when intending to work on different overlays.
 
