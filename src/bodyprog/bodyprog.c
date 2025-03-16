@@ -794,7 +794,11 @@ void JOY_Init() // 0x8003441C
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", JOY_ReadP1);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", JOY_Update);
+void JOY_Update() // 0x8003446C
+{
+    JOY_ReadP1();
+    JOY_ControllerDataUpdate();
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", JOY_ControllerDataUpdate);
 
@@ -802,9 +806,32 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", ControllerData_AnalogToDigital
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003483C);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_800348C0);
+void func_800348C0()
+{
+    bzero(&D_800A9944, 0x48);
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_800348E8);
+void func_800348E8()
+{
+    u8 temp_v0;
+
+    func_80034E58();
+    func_80034964();
+    
+    if (g_SysWork.flags_22A4 & (1 << 10))
+    {
+        temp_v0 = D_800BCDD4 + 1;
+        D_800BCDD4 = temp_v0;
+        
+        if ((temp_v0 & 0xFF) >= 21)
+        {
+            g_SysWork.flags_22A4 &= ~(1 << 10);
+            
+            SD_EngineCmd(0x5DE);
+            SD_EngineCmd(0x5DD);
+        }
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80034964);
 

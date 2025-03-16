@@ -119,6 +119,8 @@ extern s32 D_800A976C;
 
 extern void (*D_800A977C[])(void); // Function pointer array, maybe state funcs of some kind.
 
+extern u8 D_800A9944;
+
 /** Used in func_800D929C from map0_s00.c. */
 extern s32 D_800A999C;
 
@@ -160,6 +162,8 @@ extern s_800B5508 D_800B55E8;
 extern s32 D_800B55FC;
 
 extern s32 D_800B5618;
+
+extern u8 D_800BCDD4;
 
 extern s32 D_800C4710[];
 
@@ -445,6 +449,12 @@ void SysWork_SaveGameReadPlayer();
 s32 MainLoop_ShouldWarmReset();
 
 void JOY_Init();
+
+void JOY_Update();
+
+void func_800348C0();
+
+void func_800348E8();
 
 void Game_SaveGameInitialize(s8 overlayIdx, s32 difficulty);
 
