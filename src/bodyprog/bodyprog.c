@@ -813,22 +813,22 @@ void func_800348C0()
 
 void func_800348E8()
 {
-    u8 temp_v0;
+    u8 temp;
 
     func_80034E58();
     func_80034964();
     
     if (g_SysWork.flags_22A4 & (1 << 10))
     {
-        temp_v0 = D_800BCDD4 + 1;
-        D_800BCDD4 = temp_v0;
+        temp = D_800BCDD4 + 1;
+        D_800BCDD4 = temp;
         
-        if ((temp_v0 & 0xFF) >= 21)
+        if ((temp & 0xFF) >= 21)
         {
             g_SysWork.flags_22A4 &= ~(1 << 10);
             
-            SD_EngineCmd(0x5DE);
-            SD_EngineCmd(0x5DD);
+            SD_EngineCmd(1502);
+            SD_EngineCmd(1501);
         }
     }
 }
