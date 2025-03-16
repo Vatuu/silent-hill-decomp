@@ -190,7 +190,8 @@ report: objdiff-config
 check: build
 	@sha256sum --ignore-missing --check checksum.sha
 
-progress: NON_MATCHING=1 SKIP_ASM=1 build
+progress:
+	$(MAKE) build NON_MATCHING=1 SKIP_ASM=1
 
 expected: check
 	mkdir -p $(EXPECTED_DIR)
