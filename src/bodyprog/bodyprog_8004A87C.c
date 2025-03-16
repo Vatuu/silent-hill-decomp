@@ -153,7 +153,18 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_800539A4);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_80053B08);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", GameFS_Tim00TIMLoad);
+// TODO: Insert field_2352 properly.
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", GameFs_Tim00TIMLoad);
+/*void GameFs_Tim00TIMLoad() // 0x80053dA0
+{
+    if (g_SysWork.flags_2352 & (1 << 0))
+    {
+        return;
+    }
+    
+    Fs_QueueStartReadTim(FILE_ITEM_TIM00_TIM, FS_BUFFER_1, &D_800A906C);
+    g_SysWork.flags_2352 |= 1 << 0;
+}*/
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_80053DFC);
 

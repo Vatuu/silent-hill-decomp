@@ -43,7 +43,7 @@ Function parameters should be written in `camelCase` without an offset suffix.
 Global variables should be prefixed with `g_` and follow a similar format to function names. Example:
 
 `g_SysWork`  
-`g_Demo_RandSeedPrevious`
+`g_Demo_PrevRandSeed`
 
 ### Structures
 Struct names should be prefixed with `s_` and named according to their purpose. If the usage is unknown, they can be named categorically according to the system they belong to: `s_CreditsStruct0`. If a struct is only held at a static address, `s_[HexAddress]` can be used.

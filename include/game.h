@@ -105,12 +105,14 @@ typedef struct _AnalogPadData
 
 typedef struct _ControllerData
 {
-    s_AnalogPadData AnalogPad;
-    int             field_8;
-    e_PadButton     btns_held_C;
-    e_PadButton     btns_new_10;
-    char            field_14[4];
-    e_PadButton     field_18;
+    s_AnalogPadData analogPad_0;
+    s8              unk_8[1];
+    u8              field_9;
+    s8              unk_A[2];
+    s32             btns_held_C; /** e_PadButton */
+    s32             btns_new_10; /** e_PadButton */
+    s8              field_14[4];
+    s32             field_18;    /** e_PadButton */
     int             field_1C;
     char            field_20;
     char            field_21;
@@ -155,11 +157,11 @@ typedef struct _ShSaveGame
     s_ShInventoryItem items_0[GAME_INVENTORY_SIZE];
     s8                field_A0;
     s8                field_A1[3];
-    s8                curMapOverlayIndex_A4;
+    s8                mapOverlayIdx_A4;
     s8                field_A5;
     s16               saveGameCount_A6;
-    s8                curMapEventNum_A8;
-    u8                curMapIndex_A9;
+    s8                mapEventIdx_A8;
+    u8                mapIdx_A9;
     s8                field_AA;
     u8                field_AB;
     u32               flags_AC;
@@ -180,11 +182,11 @@ typedef struct _ShSaveGame
     s8                field_23E;
     s8                field_23F;
     s32               playerHealth_240;
-    s32               playerPosX_244;
-    s16               playerRotationYaw_248;
+    s32               playerPositionX_244;
+    s16               playerRotationY_248;
     s8                field_24A;
     s8                field_24B;
-    s32               playerPosZ_24C;
+    s32               playerPositionZ_24C;
     s32               gameplayTimer_250;
     s32               field_254;
     s32               field_258;
@@ -246,8 +248,8 @@ typedef struct _GameWork
     u8                   optWalkRunCtrl_2B;         /** Normal: 0, reverse: 1. */
     u8                   optAutoAiming_2C;          /** Off: 1, on: 0. */
     u8                   optBulletAdjust_2D;
-    char                 unk_2E[2];
-    char                 unk_30[8];
+    s8                   unk_2E[2];
+    s8                   unk_30[8];
     s_ControllerData     controllers_38[2];
     s_ShSaveGame         saveGame_90; // Backup savegame?
     s_ShSaveGame         saveGame_30C;
@@ -257,10 +259,13 @@ typedef struct _GameWork
     u8                   field_58D; // G?
     u8                   field_58E; // B?
     u8                   field_58F; // A or graphics command code?
-    e_GameState          gameStatePrev_590;
-    e_GameState          gameState_594;
+    s32                  gameStatePrev_590;    /** e_GameState */
+    s32                  gameState_594;        /** e_GameState */
     s32                  gameStateStep_598[3]; /** Temp data used by current gameState. Can be another state ID or other data. */
-    char                 unk_5A4[52];
+    s8                   unk_5A4[4];
+    s32                  field_5A8;
+    s32                  field_5AC;
+    s8                   unk_5B0[40];
 } s_GameWork;
 STATIC_ASSERT_SIZEOF(s_GameWork, 0x5D8);
 
@@ -340,24 +345,24 @@ STATIC_ASSERT_SIZEOF(s_MainCharacter, 340);
 
 typedef struct _SysWork
 {
-    char            unk_0[8];
+    s8              unk_0[8];
     e_SysState      sysState_8;
     s32             sysStateStep_C; // Current step/state of sysState_8 game is in.
     s32             field_10;       // Sometimes assigned to same thing as sysStateStep_C.
     s32             field_14;
-    char            unk_18[4];
+    s8              unk_18[4];
     s32             field_1C;
     s32             field_20;
     s32             field_24;
     s32             field_28;
-    s32             field_2C; // Distance of some kind?
+    s32             field_2C; // Timer of some kind.
     s32             field_30;
-    char            unk_34[16];
+    s8              unk_34[16];
     s8              unk_44;
     s8              unk_45;
     s8              unk_46;
     s8              unk_47;
-    char            unk_48[4];
+    s8              unk_48[4];
     s_MainCharacter player_4C;
     s_SubCharacter  characters_1A0[NPC_COUNT_MAX];
     GsCOORDINATE2   unk_coord_890[2];
@@ -365,15 +370,18 @@ typedef struct _SysWork
     s8              unk_980[6432];
     s32             field_22A0;
     s32             flags_22A4;
-    char            unk_22A8[176];
+    s8              unk_22A8[176];
     u8              unk_2358;
-    char            unk_2359[33];
+    s8              unk_2359[33];
     s16             cam_ang_y_237A;
     s16             cam_ang_z_237C;
     s16             field_237E;
     int             cam_r_xz_2380;
     int             cam_y_2384;
-    u8              unk_2388[992];
+    u8              unk_2388[392];
+    s32             field_2510;
+    s32             field_2514[10];
+    u8              unk_253C[556];
 } s_SysWork;
 STATIC_ASSERT_SIZEOF(s_SysWork, 0x2768);
 
@@ -392,7 +400,9 @@ extern s32  g_ObjectTableIdx;
 extern GsOT g_ObjectTable0[];
 extern GsOT g_ObjectTable1[];
 
-extern s32 g_DeltaTime;
+extern s32 g_DeltaTime0;
+extern s32 g_DeltaTime1;
+extern s32 g_DeltaTime2;
 extern u32 g_MapEventIdx;
 
 extern s32 g_IntervalVBlanks;
@@ -456,4 +466,5 @@ static inline void Game_StateSetPrevious()
     g_GameWork.gameStatePrev_590    = prevState;
     g_GameWork.gameStateStep_598[0] = 0;
 }
+
 #endif

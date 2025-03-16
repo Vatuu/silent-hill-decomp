@@ -11,7 +11,9 @@ g_GameWorkPtr1 = 0x80024D54; // type:u32 same as g_GameWorkPtr0?
 g_ObjectTable0 = 0x800A8F74; // type:s8
 g_ObjectTable1 = 0x800A8FC4; // type:s8
 
-g_DeltaTime = 0x800B5CC0; // type:s32 - Q20.12 fixed point, usually 0x44 (0.0166..) or 0x88 (0.033..).
+g_DeltaTime0 = 0x800B5CC0; // type:s32 - Q20.12 fixed point, usually 0x44 (0.0166..) or 0x88 (0.033..).
+g_DeltaTime1 = 0x800A8FEC; // type:s32
+g_DeltaTime2 = 0x800B9CC8; // type:s32
 g_MapEventIdx = 0x800A9A14; // type:u32
 
 g_IntervalVBlanks = 0x800A8FF0; // type:s32
@@ -138,10 +140,10 @@ g_SD_ReverbDepth = 0x800C1687;
 g_Game_VSyncTimeSinceBoot = 0x800C1690;
 
 g_Demo_FileIndex = 0x800C4844;
-g_Demo_RandSeedPrevious = 0x800C4888;
+g_Demo_PrevRandSeed = 0x800C4888;
 g_Demo_RandSeedBackup = 0x800C488C;
-g_Demo_CurControllerPacket = 0x800C4890;
-g_Demo_CurrDemoStep = 0x800C4894;
+g_Demo_ControllerPacket = 0x800C4890;
+g_Demo_DemoStep = 0x800C4894;
 g_Demo_VideoPresentInterval = 0x800C4898;
 
 SaveGame_CopyWithChecksum = 0x8002FCCC; // type:func
@@ -160,15 +162,15 @@ Camera_SetRotation = 0x80086B70; // type:func
 
 GFX_ClearRectInterlaced = 0x80032358; // type:func
 GFX_Init = 0x80032428; // type:func
-Settings_ScreenXYSet = 0x800324f4; // type:func
+Settings_ScreenXYSet = 0x800324F4; // type:func
 Settings_DispEnvXYSet = 0x80032524; // type:func
 GFX_VSyncCallback = 0x80032b80; // type:func
-GameFS_TitleGfxSeek = 0x80032bd0; // type:func
-GameFS_TitleGfxLoad = 0x80032bf0; // type:func
-GameFS_StreamBinSeek = 0x80032C20; // type:func
-GameFS_StreamBinLoad = 0x80032c40; // type:func
-GameFS_OptionBinLoad = 0x80032c68; // type:func
-GameFS_SaveLoadBinLoad = 0x80032ca8; // type:func
+GameFs_TitleGfxSeek = 0x80032bd0; // type:func
+GameFs_TitleGfxLoad = 0x80032bf0; // type:func
+GameFs_StreamBinSeek = 0x80032C20; // type:func
+GameFs_StreamBinLoad = 0x80032c40; // type:func
+GameFs_OptionBinLoad = 0x80032c68; // type:func
+GameFs_SaveLoadBinLoad = 0x80032ca8; // type:func
 MainLoop = 0x80032ee0; // type:func
 Settings_ScreenAndVolUpdate = 0x800333CC; // type:func
 Settings_RestoreDefaults = 0x8003342c; // type:func
@@ -182,12 +184,12 @@ JOY_Update = 0x8003446C; // type:func
 JOY_ReadP1 = 0x80034450; // type:func
 JOY_ControllerDataUpdate = 0x80034494; // type:func
 ControllerData_AnalogToDigital = 0x80034670; // type:func
-GameFS_MapLoad = 0x8003521c; // type:func
+GameFs_MapLoad = 0x8003521c; // type:func
 Chara_PositionUpdateFromParams = 0x800371e8; // type:func
 AreaLoad_UpdatePlayerPosition = 0x80039f30; // type:func
-GameFS_BgEtcGfxLoad_8003BE6C = 0x8003be6c; // type:func
-GameFS_BgItemLoad_8003BE9C = 0x8003be9c; // type:func
-GameFS_FlameGfxLoad_8003E710 = 0x8003e710; // type:func
+GameFs_BgEtcGfxLoad_8003BE6C = 0x8003be6c; // type:func
+GameFs_BgItemLoad_8003BE9C = 0x8003be9c; // type:func
+GameFs_FlameGfxLoad = 0x8003E710; // type:func
 
 SD_EngineCmd = 0x80045A7C; // type:func
 SD_DriverInit = 0x80045DD4; // type:func
@@ -201,26 +203,26 @@ SD_StopSEQ = 0x8004839C; // type:func
 
 GFX_StringPosition = 0x8004A87C; // type:func
 GFX_StringDraw = 0x8004a8e8; // type:func
-GameFS_Tim00TIMLoad = 0x80053da0; // type:func
+GameFs_Tim00TIMLoad = 0x80053da0; // type:func
 
 Chara_Load = 0x80088C7C; // type:func
 Chara_Spawn = 0x80088D78; // type:func
 
-Demo_DataRead = 0x8008f07c; // type:func
-Demo_GameGlobalsUpdate = 0x8008f1a0; // type:func
-Demo_GameGlobalsRestore = 0x8008f2bc; // type:func
-Demo_GameRandSeedUpdate = 0x8008f33c; // type:func
-Demo_GameRandSeedRestore = 0x8008f370; // type:func
-Demo_Start = 0x8008f398; // type:func
-Demo_Stop = 0x8008f3f0; // type:func
-Demo_ExitDemo = 0x8008f4e4; // type:func
-Demo_DemoRandSeedBackup = 0x8008f528; // type:func
-Demo_DemoRandSeedRestore = 0x8008f560; // type:func
-Demo_DemoRandSeedAdvance = 0x8008f598; // type:func
-Demo_Update = 0x8008f5d8; // type:func
-Demo_JoyUpdate = 0x8008f7cc; // type:func
-Demo_PresentIntervalUpdate = 0x8008f87c; // type:func
-Demo_GameRandSeedSet = 0x8008f8a8; // type:func
+Demo_DataRead = 0x8008F07C; // type:func
+Demo_GameGlobalsUpdate = 0x8008F1A0; // type:func
+Demo_GameGlobalsRestore = 0x8008F2BC; // type:func
+Demo_GameRandSeedUpdate = 0x8008F33C; // type:func
+Demo_GameRandSeedRestore = 0x8008F370; // type:func
+Demo_Start = 0x8008F398; // type:func
+Demo_Stop = 0x8008F3F0; // type:func
+Demo_ExitDemo = 0x8008F4E4; // type:func
+Demo_DemoRandSeedBackup = 0x8008F528; // type:func
+Demo_DemoRandSeedRestore = 0x8008F560; // type:func
+Demo_DemoRandSeedAdvance = 0x8008F598; // type:func
+Demo_Update = 0x8008F5D8; // type:func
+Demo_JoyUpdate = 0x8008F7CC; // type:func
+Demo_PresentIntervalUpdate = 0x8008F87C; // type:func
+Demo_GameRandSeedSet = 0x8008F8A8; // type:func
 
 // custom konami rotmatrix library?
 // TODO: identify the other RotMatrix funcs here

@@ -15,6 +15,11 @@
 
 typedef struct
 {
+    s16 field_0; // Flags?
+} s_8008D850;
+
+typedef struct
+{
     s32 field_0;
     s32 field_4; // Maybe index?
     s32 field_8;
@@ -68,6 +73,21 @@ typedef struct
     s32                field_18; 
 } s_800B5508;
 
+typedef struct
+{
+    u8  field_0;
+    u8  field_1;
+    u8  field_2;
+    u8  field_3;
+    s8  unk_4[4];
+    s16 field_8;
+    s16 field_A;
+    s16 field_C;
+    s8  unk_E[12];
+    s32 field_1C;
+    s32 field_20;
+} s_800C4818;
+
 extern s8* D_8002510C;
 
 /** "\x07PAUSED" string */
@@ -75,7 +95,9 @@ extern char D_80025394[];
 
 extern RECT D_8002AB10;
 
-extern s32 D_800A8FEC; // Maybe a distance?
+extern s_FsImageDesc D_800A8FF4;
+
+extern s_FsImageDesc D_800A8FFC;
 
 extern s_FsImageDesc D_800A9014;
 
@@ -85,13 +107,19 @@ extern s_FsImageDesc D_800A9024;
 
 extern s_FsImageDesc D_800A902C;
 
+extern s_FsImageDesc D_800A906C;
+
+extern u16 D_800A9774[];
+
+extern s_FsImageDesc D_800A9FA8;
+
 extern s32 D_800A9768;
 
 extern s32 D_800A976C;
 
 extern void (*D_800A977C[])(void); // Function pointer array, maybe state funcs of some kind.
 
-/** Used in `func_800D929C` from map0_s00.c */
+/** Used in func_800D929C from map0_s00.c. */
 extern s32 D_800A999C;
 
 extern s32 D_800A9A68;
@@ -110,6 +138,10 @@ extern s32 D_800AD49C;
 extern s_800A90FC D_800A90FC[];
 
 extern s_800A992C D_800A992C[];
+
+extern u16 D_800AFDBC;
+
+extern s32 D_800AFDEC;
 
 extern s_800B5508 D_800B2780[];
 
@@ -137,11 +169,11 @@ extern void (*D_800C9648)(s32);
 
 extern s32 (*D_800C9668)();
 
-extern s32 D_800B9CC8;
-
 extern u16 D_800BCCB0;
 
 extern u16 D_800BCCB2;
+
+extern s32 D_800BCCB8;
 
 /** Accessed by credits and saveload. */
 extern s32 D_800BCD0C;
@@ -160,32 +192,32 @@ extern s16 D_800C391C;
 
 extern s16 D_800C391E;
 
-/** D_800C457C could be related to animations that play during cutscenes
+/** D_800C457C could be related to animations that play during cutscenes.
 
  * Called by:
  * - 'func_800D2C7C' in map0_s00.c
  * - 'func_800D2D2C' in map0_s00.c
  
- It's value changes during cutscenes when Harry does any of the next
- three actions
+ Its value changes during cutscenes when Harry does any of the following
+ actions:
  
  * 0 - Nothing
- * 1 - Harry is walking
- * 3 - Harry moves to the right?
- * 4 - Harry moves to the left
- 
+ * 1 - Walking
+ * 3 - Moves to the right?
+ * 4 - Moves to the left
  
  However this behaviour is irregular. After the first in-game dialogue
- of Harry the value is keept as 1 (even when he is not walking or in
+ with Harry, the value is kept as 1 (even when he is not walking or in
  a cutscene) until the next dialogue triggers (when Harry look sees
- Cheryl and the second FMV plays), something similar happens on the
- next overlay as it value is keept as 1 during a point of the first
- cutscene and it doesn't change until the player make any sort of
- interaction
+ Cheryl and the second FMV plays). Something similar happens on the
+ next overlay and its value is 1 during the first
+ cutscene and doesn't change until the player makes an input.
 */
 extern s8 D_800C457C;
 
 extern u8 D_800C4606;
+
+extern s_800C4818 D_800C4818;
 
 /** Unknown bodyprog var. Set in `Fs_QueueDoThingWhenEmpty`. */
 extern s32 D_800C489C;
@@ -195,6 +227,16 @@ extern u8* D_800C7018;
 extern s32 g_MainLoop_FrameCount;
 
 extern s32 g_Demo_VideoPresentInterval;
+
+extern u32 g_Demo_PrevRandSeed;
+
+extern u32 g_Demo_RandSeedBackup;
+
+extern s_ControllerData* g_Demo_ControllerPacket;
+
+extern s32 g_Demo_DemoStep;
+
+extern s_FsImageDesc g_MainImg0;
 
 /** Initializer for something before the game loop. */
 void func_8002E630();
@@ -234,6 +276,8 @@ void func_800314EC(s_FsImageDesc* image);
 
 void func_8003260C(); // Return type assumed.
 
+void func_80032D1C();
+
 /** Bodyprog entrypoint. Called by `main`. */
 void MainLoop();
 
@@ -245,9 +289,10 @@ void func_80035560(s32 arg0, s32 arg1, void* arg2, s32 arg3);
 /** Unknown bodyprog func. Called by `Fs_QueueDoThingWhenEmpty`. */
 s32 func_8003c850();
 
-void func_8003D160(); // Return type assumed.
+/** Return type assumed. */
+void func_8003D160();
 
-/** Unknown. This parameters are likely inacurrate*/
+/** Param types assumed. */
 void func_8003DD80(s32, s32);
 
 /** Some kind of queue entry load status getter. */
@@ -284,6 +329,7 @@ void func_80085DC0(s32 arg0, s32 sysStateStep);
 
 void func_80085DF0();
 
+/**  */
 void func_80085E6C(s32 arg0, s32 arg1);
 
 void func_800860B0(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 sysStateStep, s32 arg5);
@@ -320,27 +366,51 @@ s32 func_80088D0C();
 
 void func_80088D34(s32 idx);
 
+s32 func_8008F434(s32 arg0);
+
+void func_800890B8();
+
+s32 func_8008D850();
+
+void func_8008D78C();
+
+s32 func_8008F470(s32 caseArg);
+
+/** Returns 0. */
+s32 func_8008F520();
+
+s32 func_8008F914();
+
 void func_80091380();
+
+// TODO: Arrange these in address order for better insight into the original interface. -- Sezz
+// ------------------------------------------------------------------
 
 s32 Chara_Load(s32 arg0, s8 arg1, s32 arg2, s8 arg3, s32 arg4, s32 arg5);
 
 /** Seeks for the English title screen background graphic. */
-void GameFS_TitleGfxSeek();
+void GameFs_TitleGfxSeek();
 
 /** Loads the English title screen background graphic. */
-void GameFS_TitleGfxLoad();
+void GameFs_TitleGfxLoad();
 
 /** Seeks for the stream overlay. */
-void GameFS_StreamBinSeek();
+void GameFs_StreamBinSeek();
 
 /** Loads the stream overlay. */
-void GameFS_StreamBinLoad();
+void GameFs_StreamBinLoad();
 
 /** Loads the options background graphic and overlay. */
-void GameFS_OptionBinLoad();
+void GameFs_OptionBinLoad();
 
 /** Loads the save/load background graphic and overlay. */
-void GameFS_SaveLoadBinLoad();
+void GameFs_SaveLoadBinLoad();
+
+/** Loads a flame graphic. */
+void GameFs_FlameGfxLoad();
+
+/** Loads "Tim00" graphic. */
+void GameFs_Tim00TIMLoad();
 
 /** Draws some string in display space. */
 void func_80032CE8();
@@ -357,6 +427,8 @@ void GFX_StringDraw(char* str, s32 arg1);
 
 void Settings_ScreenXYSet(s32 x, s32 y);
 
+void Settings_DispEnvXYSet(DISPENV* display, s32 x, s32 y);
+
 void Settings_ScreenAndVolUpdate();
 
 void Settings_RestoreDefaults();
@@ -369,6 +441,8 @@ void SysWork_SaveGameUpdatePlayer();
 
 /** Updates SysWork with player info from the savegame buffer (position, rotation, health). */
 void SysWork_SaveGameReadPlayer();
+
+s32 MainLoop_ShouldWarmReset();
 
 void Game_SaveGameInitialize(s8 overlayIdx, s32 difficulty);
 
@@ -389,5 +463,26 @@ s32 SaveGame_ChecksumValidate(s_ShSaveGameFooter* saveFooter, s8* saveData, s32 
 
 /** Generates an 8-bit XOR checksum over the given data, only appears used with s_ShSaveGame data. */
 u8 SaveGame_ChecksumGenerate(s8* saveData, s32 saveDataLength);
+
+void Demo_GameRandSeedUpdate();
+
+void Demo_GameRandSeedRestore();
+
+void Demo_Start();
+
+void Demo_Stop();
+
+void Demo_ExitDemo();
+
+/** Generates the backup random demo seed and stores it in Demo_RandSeedBackup. */
+void Demo_DemoRandSeedBackup();
+
+void Demo_DemoRandSeedRestore();
+
+void Demo_DemoRandSeedAdvance();
+
+s32 Demo_PresentIntervalUpdate();
+
+s32 Demo_GameRandSeedSet();
 
 #endif

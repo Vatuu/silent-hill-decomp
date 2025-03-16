@@ -6,6 +6,7 @@
 #include "bodyprog/math.h"
 #include "bodyprog/vw_system.h"
 #include "main/fsqueue.h"
+#include "main/rng.h"
 #include "screens/stream/stream.h"
 
 void func_80035338(s32 arg0, s8 arg1, u32 arg2, s32 arg3); // arg3 type assumed.
@@ -47,9 +48,9 @@ void func_80085DC0(s32 arg0, s32 sysStateStep)
     }
 }
 
-void func_80085DF0(void)
+void func_80085DF0()
 {
-    g_SysWork.field_2C += D_800A8FEC;
+    g_SysWork.field_2C += g_DeltaTime1;
     
     if (D_800C9668() != 0 || g_SysWork.field_2C > 4096)
     {
@@ -63,12 +64,12 @@ void func_80085DF0(void)
 
 void func_80085E6C(s32 arg0, s32 arg1)
 {
-    s32 temp_v0;
+    s32 unkTime;
 
-    temp_v0 = g_SysWork.field_2C + D_800A8FEC;
-    g_SysWork.field_2C = temp_v0;
+    unkTime = g_SysWork.field_2C + g_DeltaTime1;
+    g_SysWork.field_2C = unkTime;
     
-    if (arg0 < temp_v0)
+    if (arg0 < unkTime)
     {
         func_80085D78(arg1);
     }
@@ -147,7 +148,7 @@ void func_8008616C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4)
                     g_SysWork.field_30 = 18;
                     if (arg2 == 3)
                     {
-                        g_SysWork.flags_22A4 |= 8;
+                        g_SysWork.flags_22A4 |= (1 << 3);
                     }
                 }
             }
@@ -268,7 +269,7 @@ void func_800868DC(s32 idx)
 
 s32 func_800868F4(s32 arg0, s32 arg1, s32 idx)
 {
-    D_800C4710[idx] += g_DeltaTime;
+    D_800C4710[idx] += g_DeltaTime0;
     D_800C4710[idx] = (arg1 < D_800C4710[idx]) ? arg1 : D_800C4710[idx];
     
     return (arg0 * D_800C4710[idx]) / arg1;
@@ -276,7 +277,7 @@ s32 func_800868F4(s32 arg0, s32 arg1, s32 idx)
 
 s32 func_8008694C(s32 arg0, s16 arg1, s16 arg2, s32 arg3, s32 idx)
 {
-    D_800C4710[idx] += g_DeltaTime;
+    D_800C4710[idx] += g_DeltaTime0;
     D_800C4710[idx] = (arg3 < D_800C4710[idx]) ? arg3 : D_800C4710[idx];
     return (arg0 * shRsin(arg1 + ((arg2 * D_800C4710[idx]) / arg3))) >> 12;
 }
@@ -551,7 +552,7 @@ void func_80086FE8(s32 arg0, s32 arg1, s32 arg2)
 {
     s32 i;
     
-    if (!(g_SysWork.flags_22A4 & 0x20))
+    if (!(g_SysWork.flags_22A4 & (1 << 5)))
     {
         // Run through NPCs.
         for (i = 0; i < NPC_COUNT_MAX; i++)
@@ -568,7 +569,7 @@ void func_80086FE8(s32 arg0, s32 arg1, s32 arg2)
         
         if (i != NPC_COUNT_MAX)
         {
-            g_DeltaTime = 0;
+            g_DeltaTime0 = 0;
         }
     }
     
@@ -767,7 +768,17 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80089034);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80089090);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800890B8);
+void func_800890B8()
+{
+    func_8009E198(&g_SysWork.field_2514[0], 0);
+    func_8009E310(&g_SysWork.field_2514[0], &g_SysWork.field_2514[8] , 2);
+    func_8009EBB8(&g_SysWork.field_2514[0], &g_SysWork.field_2514[12], 16);
+    
+    g_SysWork.field_2510 = func_8009E4F8();
+    
+    func_8009E7D8(g_SysWork.field_2510);
+    func_8009E97C(g_SysWork.field_2510);
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80089128);
 
@@ -902,9 +913,66 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008D470);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008D5A0);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008D78C);
+void func_8008D78C()
+{
+    s32 var_v1;
+    s32 var_s1;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008D850);
+    if (D_800C4818.field_2 == 0)
+    {
+        return;
+    }
+    D_800C4818.field_2 = 0;
+    
+    if (D_800C4818.field_0 != 0)
+    {
+        return;
+    }
+    
+    var_s1 = func_8008D850();
+    if (var_s1 != 0)
+    {
+        var_v1 = D_800C4818.field_8 - D_800C4818.field_A;
+    }
+    else
+    {
+        var_v1 = -D_800C4818.field_A;
+    }
+    
+    D_800C4818.field_A += var_v1 >> 1;
+    
+    if (vcRetCamMvSmoothF() == 0)
+    {
+        D_800C4818.field_A = 0;
+        var_s1 = 0;
+    }
+    
+    func_8008D990(var_s1, D_800C4818.field_A, &D_800C4818.field_C, D_800C4818.field_1C, D_800C4818.field_20);
+}
+
+s32 func_8008D850()
+{
+    s16 rectX;
+    RECT rect;
+    s_8008D850 unk; 
+
+    rectX = 784;
+    if (g_ObjectTableIdx == 0)
+    {
+        rectX = 792;
+    }
+
+    rect.y = 112;
+    rect.w = 2;
+    rect.x = rectX;
+    rect.h = 1;
+    
+    DrawSync(0);
+    StoreImage2(&rect, &unk.field_0);
+    DrawSync(0);
+
+    return (unk.field_0 & 0x7FFF) == 0x7FFF;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008D8C0);
 
@@ -920,7 +988,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008E794);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008EA68);
 
-void func_8008EF18(void) {}
+void func_8008EF18() {}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008EF20);
 
@@ -936,39 +1004,178 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", Demo_GameGlobalsUpdat
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", Demo_GameGlobalsRestore);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", Demo_GameRandSeedUpdate);
+void Demo_GameRandSeedUpdate() // 0x8008f33c
+{
+    g_Demo_PrevRandSeed = Rng_GetSeed();
+    Rng_SetSeed(D_800AFDBC);
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", Demo_GameRandSeedRestore);
+void Demo_GameRandSeedRestore() // 0x8008f370
+{
+    Rng_SetSeed(g_Demo_PrevRandSeed);
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", Demo_Start);
+void Demo_Start() // 0x8008F398
+{
+    D_800AFDEC = 1;
+    g_SysWork.flags_22A4 |= 2;
+    
+    Demo_GameGlobalsUpdate();
+    Demo_GameRandSeedUpdate();
+    
+    g_GameWork.field_5A8 = 1;
+    g_GameWork.field_5AC = 1;
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", Demo_Stop);
+void Demo_Stop() // 0x8008f3f0
+{
+    D_800AFDEC = 0;
+    g_SysWork.flags_22A4 &= ~(1 << 1);
+    
+    Demo_GameGlobalsRestore(-3);
+    Demo_GameRandSeedRestore();
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008F434);
+s32 func_8008F434(s32 arg0)
+{
+    s32 caseVar = arg0 & ~1;
 
+    switch (caseVar)
+    {
+        case 2:
+        case 3:
+        case 4:
+        case 5:
+        case 10:
+        case 11:
+        case 12:
+        case 13:
+            return 0;
+
+        default:
+            break;
+    }
+
+    return 1;
+}
+
+// TODO: Says D_800BCCB8 is an undefined reference.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008F470);
+/*s32 func_8008F470(s32 caseArg)
+{
+    switch (caseArg)
+    {
+        case 11:
+            if (g_SysWork.sysState_8 == 13)
+            {
+                return -1;
+            }
+            else if (D_800BCCB8 == 16)
+            {
+                return -1;
+            }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", Demo_ExitDemo);
+        case 12:
+        case 13:
+        case 14:
+        case 15:
+            return 1;
+    
+        case 18:
+            return 1;
+    
+        default:
+            break;
+    }
 
-void func_8008F518(void) {}
+    return 0;
+}*/
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008F520);
+void Demo_ExitDemo() // 0x8008F4E4
+{
+    D_800A9768 = 0xEA24;
+    g_Demo_ControllerPacket = NULL;
+    g_Demo_DemoStep = 0;
+    g_SysWork.flags_22A4 |= 1 << 8;
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", Demo_DemoRandSeedBackup);
+void func_8008F518() {}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", Demo_DemoRandSeedRestore);
+s32 func_8008F520()
+{
+    return 0;
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", Demo_DemoRandSeedAdvance);
+void Demo_DemoRandSeedBackup() // 0x8008F528
+{
+    if (g_SysWork.flags_22A4 & (1 << 1))
+    {
+        g_Demo_RandSeedBackup = Rng_GetSeed();
+    }
+}
+
+void Demo_DemoRandSeedRestore() // 0x8008F560
+{
+    if (g_SysWork.flags_22A4 & (1 << 1))
+    {
+        Rng_SetSeed(g_Demo_RandSeedBackup);
+    }
+}
+
+void Demo_DemoRandSeedAdvance() // 0x8008F598
+{
+    #define SEED_OFFSET 0x3C6EF35F
+
+    if (g_SysWork.flags_22A4 & (1 << 1))
+    {
+        Rng_SetSeed(g_Demo_RandSeedBackup + SEED_OFFSET);
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", Demo_Update);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", Demo_JoyUpdate);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", Demo_PresentIntervalUpdate);
+s32 Demo_PresentIntervalUpdate() // 0x8008F87C
+{
+    g_Demo_VideoPresentInterval = 1;
+    
+    if (g_Demo_ControllerPacket == NULL)
+    {
+        return 0;
+    }
+    
+    g_Demo_VideoPresentInterval = g_Demo_ControllerPacket->field_9;
+    return 1;
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", Demo_GameRandSeedSet);
+s32 Demo_GameRandSeedSet() // 0x8008F8A8
+{
+    if (!(g_SysWork.flags_22A4 & (1 << 1)))
+    {
+        return 1;
+    }
+    else if (g_Demo_ControllerPacket == NULL)
+    {
+        Rng_SetSeed(D_800AFDBC);
+        return 0;
+    }
+    else
+    {
+        Rng_SetSeed(g_Demo_ControllerPacket->btns_held_C);
+        return 1;
+    }
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008F914);
+s32 func_8008F914()
+{
+    if (g_SysWork.flags_22A4 & (1 << 1))
+    {
+        return func_8004393C();
+    }
+    
+    return 1;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008F94C);
 
@@ -978,11 +1185,11 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80090664);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8009134C);
 
-void func_80091380(void) {}
+void func_80091380() {}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80091388);
 
-void func_80091464(void) {}
+void func_80091464() {}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8009146C);
 

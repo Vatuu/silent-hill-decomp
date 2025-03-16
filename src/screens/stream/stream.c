@@ -16,7 +16,7 @@ void func_801E2654(void)
         case 0:
             VSync(8);
             D_800BCD0C = 6;
-            GameFS_TitleGfxLoad();
+            GameFs_TitleGfxLoad();
             g_GameWork.gameStateStep_598[0]++;
             break;
 
