@@ -1059,18 +1059,16 @@ s32 func_8008F434(s32 arg0)
     return 1;
 }
 
-// TODO: Says D_800BCCB8 is an undefined reference.
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008F470);
-/*s32 func_8008F470(s32 caseArg)
+s32 func_8008F470(s32 caseArg)
 {
     switch (caseArg)
     {
         case 11:
-            if (g_SysWork.sysState_8 == 13)
+            if (g_SysWork.sysState_8 == SysState_GameOver)
             {
                 return -1;
             }
-            else if (D_800BCCB8 == 16)
+            else if (g_GameWork.gameStatePrev_590 == GameState_Unk10)
             {
                 return -1;
             }
@@ -1089,7 +1087,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008F470);
     }
 
     return 0;
-}*/
+}
 
 void Demo_ExitDemo() // 0x8008F4E4
 {

@@ -90,7 +90,7 @@ def main():
         categories.append(ProgressCategory(category["id"], category["name"]))
     
     with (Path(config["output"])).open("w") as json_file:
-        json.dump(asdict(Config(True, False, "make", ["build", "NON_MATCHING=1", "SKIP_ASM=1"], units, categories)), json_file, indent=2)
+        json.dump(asdict(Config(True, False, "make", ["progress"], units, categories)), json_file, indent=2)
 
 if __name__ == "__main__":
     main()

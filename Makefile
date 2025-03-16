@@ -17,7 +17,7 @@ IMAGE_DIR    := $(ROM_DIR)/image
 BUILD_DIR    := build
 OUT_DIR      := $(BUILD_DIR)/out
 TOOLS_DIR    := tools
-OBJDIFF_DIR	 := $(TOOLS_DIR)/objdiff
+OBJDIFF_DIR  := $(TOOLS_DIR)/objdiff
 PERMUTER_DIR := permuter
 ASSETS_DIR   := assets
 ASM_DIR      := asm
@@ -190,7 +190,8 @@ report: objdiff-config
 check: build
 	@sha256sum --ignore-missing --check checksum.sha
 
-progress: NON_MATCHING=1 SKIP_ASM=1 build
+progress:
+	$(MAKE) build NON_MATCHING=1 SKIP_ASM=1
 
 expected: check
 	mkdir -p $(EXPECTED_DIR)
@@ -240,7 +241,7 @@ clean-check: clean
 clean-progress: clean
 	rm -rf $(LINKER_DIR)
 	$(MAKE) generate
-	$(MAKE) NON_MATCHING=1 SKIP_ASM=1 build
+	$(MAKE) progress
 
 # Recipes
 
