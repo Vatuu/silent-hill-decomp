@@ -262,7 +262,10 @@ typedef struct _GameWork
     s32                  gameStatePrev_590;    /** e_GameState */
     s32                  gameState_594;        /** e_GameState */
     s32                  gameStateStep_598[3]; /** Temp data used by current gameState. Can be another state ID or other data. */
-    char                 unk_5A4[52];
+    char                 unk_5A4[4];
+    s32                  field_5A8;
+    s32                  field_5AC;
+    char                 unk_5B0[40];
 } s_GameWork;
 STATIC_ASSERT_SIZEOF(s_GameWork, 0x5D8);
 
@@ -375,7 +378,10 @@ typedef struct _SysWork
     s16             field_237E;
     int             cam_r_xz_2380;
     int             cam_y_2384;
-    u8              unk_2388[992];
+    u8              unk_2388[392];
+    s32             field_2510;
+    s32             field_2514[10];
+    u8              unk_253C[556];
 } s_SysWork;
 STATIC_ASSERT_SIZEOF(s_SysWork, 0x2768);
 

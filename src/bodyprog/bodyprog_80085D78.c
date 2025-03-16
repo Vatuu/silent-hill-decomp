@@ -64,12 +64,12 @@ void func_80085DF0(void)
 
 void func_80085E6C(s32 arg0, s32 arg1)
 {
-    s32 someTime;
+    s32 unkTime;
 
-    someTime = g_SysWork.field_2C + g_DeltaTime1;
-    g_SysWork.field_2C = someTime;
+    unkTime = g_SysWork.field_2C + g_DeltaTime1;
+    g_SysWork.field_2C = unkTime;
     
-    if (arg0 < someTime)
+    if (arg0 < unkTime)
     {
         func_80085D78(arg1);
     }
@@ -768,8 +768,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80089034);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80089090);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800890B8);
-/*void func_800890B8()
+void func_800890B8()
 {
     func_8009E198(&g_SysWork.field_2514[0], 0);
     func_8009E310(&g_SysWork.field_2514[0], &g_SysWork.field_2514[8] , 2);
@@ -779,7 +778,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800890B8);
     
     func_8009E7D8(g_SysWork.field_2510);
     func_8009E97C(g_SysWork.field_2510);
-}*/
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80089128);
 
@@ -951,8 +950,7 @@ void func_8008D78C()
     func_8008D990(var_s1, D_800C4818.field_A, &D_800C4818.field_C, D_800C4818.field_1C, D_800C4818.field_20);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008D850);
-/*s32 func_8008D850()
+s32 func_8008D850()
 {
     s16 rectX;
     RECT rect;
@@ -974,7 +972,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008D850);
     DrawSync(0);
 
     return (unk.field_0 & 0x7FFF) == 0x7FFF;
-}*/
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008D8C0);
 
@@ -1017,8 +1015,7 @@ void Demo_GameRandSeedRestore() // 0x8008f370
     Rng_SetSeed(g_Demo_PrevRandSeed);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", Demo_Start);
-/*void Demo_Start() // 0x8008F398
+void Demo_Start() // 0x8008F398
 {
     D_800AFDEC = 1;
     g_SysWork.flags_22A4 |= 2;
@@ -1028,7 +1025,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", Demo_Start);
     
     g_GameWork.field_5A8 = 1;
     g_GameWork.field_5AC = 1;
-}*/
+}
 
 void Demo_Stop() // 0x8008f3f0
 {
@@ -1062,6 +1059,7 @@ s32 func_8008F434(s32 arg0)
     return 1;
 }
 
+// TODO: Says D_800BCCB8 is an undefined reference.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008F470);
 /*s32 func_8008F470(s32 caseArg)
 {
