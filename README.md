@@ -5,10 +5,16 @@ An in-progress decompilation of the 1.1 US release of *Silent Hill* on the Plays
 ## Progress
 Due to the limited memory on the PlayStation 1, games often distribute their logic and functionality across different binary overlays. *Silent Hill* follows this approach by separating core engine code, screen-related code, and map stage event code into many distinct binaries. The main executable (`SLUS_007.07` on the 1.1 NTSC release) serves primarily as a memory handler.
 
-Progress bars powered by [decomp.dev](https://decomp.dev).
+Progress bars powered by [decomp.dev](https://decomp.dev)
 
 <table align=center>
     <tbody>
+        <tr>
+            <th colspan=3>Total Progress</th>
+        </tr>
+        <tr>
+            <td colspan=3 align=center><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&measure=code&category=all"/></td>
+        </tr>
         <tr>
             <th colspan=3>⚙ SLUS-00707 ⚙</th>
         </tr>
@@ -29,7 +35,7 @@ Progress bars powered by [decomp.dev](https://decomp.dev).
             <td colspan=2>Psy-Q libraries.</td>
         </tr>
         <tr>
-            <th colspan=3>⚙ Game System Overlays ⚙</th>
+            <th colspan=3>🎮 Game System Overlays 🎮</th>
         </tr>
         <tr>
             <td colspan=3 align=center>
@@ -69,7 +75,7 @@ Progress bars powered by [decomp.dev](https://decomp.dev).
         </tr>
         <tr>
             <td align=center><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&measure=code&unit=screens/stream/stream&color=rgb(0,200,0)"/></td>
-            <td>Video stream logic.</td>
+            <td>Full motion videos stream logic.</td>
         </tr>
         <tr>
           <th colspan=3>💾 SAVELOAD.BIN 💾</th>
@@ -657,11 +663,11 @@ If the setup was successful, run `make` to build.
 Once the build has finished, a folder named `build` will be produced. The output will be inside this.
 
 Additional Make commands:
-* `build`: Builds the executable and overlays. After compilation, it compares checksums with the original files.
+* `build`: Builds the executable and overlays.
 * `check`: Builds the executable and overlays. After compilation, it compares checksums with the original files.
 * `clean-build`: Clears the project configuration without deleting files.
 * `clean-check`: Clears the project configuration without deleting files. After compilation, it compares checksums with the original files.
-* `objdiff-config`: Generates project configuration for [objdiff](https://github.com/encounter/objdiff).
+* `objdiff-config`: Generates project configuration for [objdiff](https://github.com/encounter/objdiff.)
 
 NOTE: `clean-build/clean-check` are obligatory if the configuration in the `Makefile` has been modified when intending to work on different overlays.
 
