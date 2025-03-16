@@ -311,10 +311,10 @@ typedef struct _SubCharacter
 } s_SubCharacter;
 STATIC_ASSERT_SIZEOF(s_SubCharacter, 296);
 
-typedef struct _MainCharacter
+typedef struct _MainCharacterExtra
 {
     // SubCharacter has the same 0x2C starting bytes?
-    // Maybe some base model struct which SubCharacter extends, model for torch or something attached to player?
+    // Maybe this is actually just a base model struct, which SubCharacter extends, and the extra data in MainCharacter is some model attached to player?
     u8             field_0;
     u8             field_1;
     u8             field_2;
@@ -328,8 +328,15 @@ typedef struct _MainCharacter
     s32            field_20; // Some kind of anim state.
     s32            field_24; // Some kind of anim state.
     s8             unk_28[4];
+} s_MainCharacterExtra;
+STATIC_ASSERT_SIZEOF(s_MainCharacterExtra, 44);
+
+typedef struct _MainCharacter
+{
+    s_SubCharacter       character;
+    s_MainCharacterExtra extra_128;
 } s_MainCharacter;
-STATIC_ASSERT_SIZEOF(s_MainCharacter, 44);
+STATIC_ASSERT_SIZEOF(s_MainCharacter, 340);
 
 typedef struct _SysWork
 {
@@ -351,8 +358,7 @@ typedef struct _SysWork
     s8              unk_46;
     s8              unk_47;
     char            unk_48[4];
-	s_SubCharacter  character_4C;
-    s_MainCharacter player_174;
+    s_MainCharacter player_4C;
     s_SubCharacter  characters_1A0[NPC_COUNT_MAX];
     GsCOORDINATE2   unk_coord_890[2];
     GsCOORDINATE2   hero_neck_930;
