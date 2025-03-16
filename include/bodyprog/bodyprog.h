@@ -119,7 +119,7 @@ extern s32 D_800A976C;
 
 extern void (*D_800A977C[])(void); // Function pointer array, maybe state funcs of some kind.
 
-/** Used in `func_800D929C` from map0_s00.c */
+/** Used in func_800D929C from map0_s00.c. */
 extern s32 D_800A999C;
 
 extern s32 D_800A9A68;
@@ -192,28 +192,26 @@ extern s16 D_800C391C;
 
 extern s16 D_800C391E;
 
-/** D_800C457C could be related to animations that play during cutscenes
+/** D_800C457C could be related to animations that play during cutscenes.
 
  * Called by:
  * - 'func_800D2C7C' in map0_s00.c
  * - 'func_800D2D2C' in map0_s00.c
  
- It's value changes during cutscenes when Harry does any of the next
- three actions
+ Its value changes during cutscenes when Harry does any of the following
+ actions:
  
  * 0 - Nothing
- * 1 - Harry is walking
- * 3 - Harry moves to the right?
- * 4 - Harry moves to the left
- 
+ * 1 - Walking
+ * 3 - Moves to the right?
+ * 4 - Moves to the left
  
  However this behaviour is irregular. After the first in-game dialogue
- of Harry the value is keept as 1 (even when he is not walking or in
+ with Harry, the value is kept as 1 (even when he is not walking or in
  a cutscene) until the next dialogue triggers (when Harry look sees
- Cheryl and the second FMV plays), something similar happens on the
- next overlay as it value is keept as 1 during a point of the first
- cutscene and it doesn't change until the player make any sort of
- interaction
+ Cheryl and the second FMV plays). Something similar happens on the
+ next overlay and its value is 1 during the first
+ cutscene and doesn't change until the player makes an input.
 */
 extern s8 D_800C457C;
 
@@ -291,9 +289,10 @@ void func_80035560(s32 arg0, s32 arg1, void* arg2, s32 arg3);
 /** Unknown bodyprog func. Called by `Fs_QueueDoThingWhenEmpty`. */
 s32 func_8003c850();
 
-void func_8003D160(); // Return type assumed.
+/** Return type assumed. */
+void func_8003D160();
 
-/** Unknown. This parameters are likely inacurrate*/
+/** Param types assumed. */
 void func_8003DD80(s32, s32);
 
 /** Some kind of queue entry load status getter. */
