@@ -95,6 +95,10 @@ extern char D_80025394[];
 
 extern RECT D_8002AB10;
 
+extern s_FsImageDesc D_800A8FF4;
+
+extern s_FsImageDesc D_800A8FFC;
+
 extern s_FsImageDesc D_800A9014;
 
 extern s_FsImageDesc D_800A901C;
@@ -104,6 +108,8 @@ extern s_FsImageDesc D_800A9024;
 extern s_FsImageDesc D_800A902C;
 
 extern s_FsImageDesc D_800A906C;
+
+extern u16 D_800A9774[];
 
 extern s_FsImageDesc D_800A9FA8;
 
@@ -206,6 +212,8 @@ extern s_ControllerData* g_Demo_ControllerPacket;
 
 extern s32 g_Demo_DemoStep;
 
+extern s_FsImageDesc g_MainImg0;
+
 /** Initializer for something before the game loop. */
 void func_8002E630();
 
@@ -243,6 +251,8 @@ void func_800303E4();
 void func_800314EC(s_FsImageDesc* image);
 
 void func_8003260C(); // Return type assumed.
+
+void func_80032D1C();
 
 /** Bodyprog entrypoint. Called by `main`. */
 void MainLoop();
@@ -342,6 +352,9 @@ s32 func_8008F520();
 s32 func_8008F914();
 
 void func_80091380();
+
+// TODO: Arrange these in address order for better insight into the original interface. -- Sezz
+// ------------------------------------------------------------------
 
 s32 Chara_Load(s32 arg0, s8 arg1, s32 arg2, s8 arg3, s32 arg4, s32 arg5);
 

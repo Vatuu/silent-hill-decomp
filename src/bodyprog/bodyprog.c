@@ -412,7 +412,90 @@ void func_80032CE8()
     GFX_StringDraw(&D_8002510C, 100);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80032D1C);
+void func_80032D1C()
+{
+    s32 gameStateStep0;
+    s32 gameState;
+    s32 unkGameStateVar;
+
+    gameStateStep0 = g_GameWork.gameStateStep_598[0];
+    switch (gameStateStep0)
+    {
+        case 0:
+            g_GameWork.field_58C = 0;
+            g_GameWork.field_58D = 0;
+            g_GameWork.field_58E = 0;
+            
+            GFX_Init(0x140, 0);
+            g_SysWork.field_20 = 0;
+            g_GameWork.gameStateStep_598[1] = 0;
+            g_GameWork.gameStateStep_598[2] = 0;
+            g_GameWork.gameStateStep_598[0]++;
+            break;
+
+        case 1:
+            if (!(func_80045B28() & 0xFF))
+            {
+                unkGameStateVar = D_800A9774[g_GameWork.gameStateStep_598[1]];
+                if (unkGameStateVar != 0)
+                {
+                    SD_EngineCmd(unkGameStateVar);
+                    g_GameWork.gameStateStep_598[1]++;
+                }
+                else
+                {
+                    g_SysWork.field_20 = 0;
+                    g_GameWork.gameStateStep_598[1] = 0;
+                    g_GameWork.gameStateStep_598[2] = 0;
+                    g_GameWork.gameStateStep_598[0]++;
+                }
+            }
+            break;
+            
+        case 2:
+            Fs_QueueStartReadTim(FILE_1ST_FONT16_TIM, FS_BUFFER_1, &D_800A8FF4);
+            Fs_QueueStartReadTim(FILE_1ST_KONAMI_TIM, FS_BUFFER_1, &D_800A8FFC);
+            
+            D_800BCD0C = gameStateStep0;
+            g_GameWork.gameStateStep_598[0]++;
+            break;
+            
+        case 3:
+            if ((D_800BCD0C & 7) == 5)
+            {
+                Fs_QueueWaitForEmpty();
+                
+                gameState = g_GameWork.gameState_594;
+                
+                g_SysWork.field_1C = 0;
+                g_SysWork.field_20 = 0;
+
+                g_GameWork.gameStateStep_598[1] = 0;
+                g_GameWork.gameStateStep_598[2] = 0;
+
+                g_SysWork.sysState_8 = 0;
+                g_SysWork.field_24 = 0;
+                g_SysWork.sysStateStep_C = 0;
+                g_SysWork.field_28 = 0;
+                g_SysWork.field_10 = 0;
+                g_SysWork.field_2C = 0;
+                g_SysWork.field_14 = 0;
+
+                g_GameWork.gameStateStep_598[0] = gameState;
+                g_GameWork.gameState_594 = gameState + 1;
+                g_GameWork.gameStatePrev_590 = gameState;
+                g_GameWork.gameStateStep_598[0] = 0;
+            }
+            break;
+
+        default:
+            break;
+    }
+    
+    func_80033548();
+    func_800314EC(&g_MainImg0);
+    func_80089090(1);
+}
 
 void MainLoop() // 0x80032ee0
 {
