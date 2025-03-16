@@ -64,9 +64,7 @@ void func_800D0E04()
 }
 
 void func_800D0E24() {}
-void func_800D0E24() {}
 
-void func_800D0E2C() {}
 void func_800D0E2C() {}
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D0E34);
@@ -79,7 +77,7 @@ void func_800D209C()
     g_SaveGamePtr->field_AA = 0;
 
     func_800D20E4();
-    func_800D2C7C(0x54);
+    func_800D2C7C(84);
 }
 
 void func_800D20D8()

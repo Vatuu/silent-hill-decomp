@@ -183,7 +183,7 @@ typedef struct _ShSaveGame
     s8                field_23F;
     s32               playerHealth_240;
     s32               playerPosX_244;
-    s16               playerRotationYaw_248;
+    s16               playerRotationY_248;
     s8                field_24A;
     s8                field_24B;
     s32               playerPosZ_24C;
