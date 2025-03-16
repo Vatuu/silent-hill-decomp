@@ -325,12 +325,25 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_800323C8);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", GFX_Init);
 
-void Settings_ScreenXYSet(s32 x, s32 y)
+void Settings_ScreenXYSet(s32 x, s32 y) // 0x800324F4
 {
     Settings_DispEnvXYSet(&GsDISPENV, x, y);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", Settings_DispEnvXYSet);
+void Settings_DispEnvXYSet(DISPENV* display, s32 x, s32 y) // 0x80032524
+{
+    s_GameWork* gameWorkPtr;
+
+    x = (x < -11) ? -11 : ((x > 11) ? 11 : x);
+    y = (y < -8) ? -8 : ((y > 8) ? 8 : y);
+
+    gameWorkPtr = g_GameWorkPtr0;
+    gameWorkPtr->field_1C = x;
+    gameWorkPtr->field_1D = y;
+
+    display->screen.x = gameWorkPtr->field_1C;
+    display->screen.y = gameWorkPtr->field_1D + 8;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_800325A4);
 /*void func_800325A4(DR_MODE* arg0) 

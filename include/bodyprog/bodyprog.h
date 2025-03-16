@@ -397,6 +397,8 @@ void GFX_StringDraw(char* str, s32 arg1);
 
 void Settings_ScreenXYSet(s32 x, s32 y);
 
+void Settings_DispEnvXYSet(DISPENV* display, s32 x, s32 y);
+
 void Settings_ScreenAndVolUpdate();
 
 void Settings_RestoreDefaults();

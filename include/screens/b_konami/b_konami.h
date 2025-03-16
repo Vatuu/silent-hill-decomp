@@ -3,8 +3,6 @@
 
 #include "common.h"
 
-extern s32 D_800A8FFC; // Type assumed.
-
 extern s_FsImageDesc D_800A9004;
 
 extern s32 D_800B5C7C; // Type assumed.
