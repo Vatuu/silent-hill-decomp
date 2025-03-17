@@ -736,9 +736,28 @@ void GameFs_PlayerMapAnimLoad(s32 mapIdx) // 0x8007EB64
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8007EBBC);
 
+// Requires jump table.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8007F14C);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8007F1CC);
+void func_8007F1CC()
+{
+    D_800C455C = 0;
+    D_800C4558 = 0;
+    D_800C45C0 = 0;
+    D_800C45BE = 0;
+    D_800C45BC = 0;
+    D_800C457E = 0;
+    D_800C4604 = 0;
+    D_800C45F0 = 0;
+    D_800C45E8 = 0;
+    D_800C4582 = 0;
+    D_800C45AE = 0;
+    D_800C4586 = 0;
+    D_800C4580 = 0;
+    D_800C45AC = 0;
+    D_800C4584 = 0;
+    D_800AF214 = 0;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8007F250);
 

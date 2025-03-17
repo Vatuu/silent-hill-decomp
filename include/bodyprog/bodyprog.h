@@ -141,6 +141,8 @@ extern s_800A90FC D_800A90FC[];
 
 extern s_800A992C D_800A992C[];
 
+extern s8 D_800AF214;
+
 extern u16 D_800AFDBC;
 
 extern s32 D_800AFDEC;
@@ -193,6 +195,36 @@ extern s16 D_800C38FE;
 extern s16 D_800C391C;
 
 extern s16 D_800C391E;
+
+extern s32 D_800C4558;
+
+extern s32 D_800C455C;
+
+extern s16 D_800C457E;
+
+extern s16 D_800C4580;
+
+extern s16 D_800C4582;
+
+extern s16 D_800C4584;
+
+extern s16 D_800C4586;
+
+extern s16 D_800C45AC;
+
+extern s16 D_800C45AE;
+
+extern s16 D_800C45BC;
+
+extern s16 D_800C45BE;
+
+extern s16 D_800C45C0;
+
+extern s16 D_800C45E8;
+
+extern s16 D_800C45F0;
+
+extern s16 D_800C4604;
 
 /** D_800C457C could be related to animations that play during cutscenes.
 
@@ -468,6 +500,9 @@ void Game_SaveGameResetPlayer();
 
 /** Loads player animations for a given map. Maybe for cutscenes? */
 void GameFs_PlayerMapAnimLoad(s32 mapIdx);
+
+/** Resets several global variables to 0. */
+void func_8007F1CC();
 
 /** Copies savegame into an s_ShSaveGameContainer and calculates footer checksum. */
 void SaveGame_CopyWithChecksum(s_ShSaveGameContainer* dest, s_ShSaveGame* src);
