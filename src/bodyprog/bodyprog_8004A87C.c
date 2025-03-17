@@ -777,7 +777,19 @@ s32 func_8007F26C() // 0x8007F26C
     return 0;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8007F2AC);
+s32 func_8007F2AC() // 0x8007F2AC
+{
+    if (g_SysWork.player_4C.character.health_B0 <= 0 ||
+        g_SysWork.field_4B != 0 ||
+        g_SysWork.player_4C.extra_128.field_1C == 5 ||
+        g_SysWork.player_4C.extra_128.field_1C == 6 ||
+        (g_SysWork.player_4C.extra_128.field_1C - 7) < 44u) // TODO: Probably not how OG condition was.
+    {
+        return 1;
+    }
+    
+    return 0;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8007F308);
 

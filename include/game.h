@@ -301,7 +301,7 @@ typedef struct _SubCharacter
     u8      pad_3E[2];
     u8      unk_40[112];
     s32     health_B0; // Bits 3-4 contain s16 associated with player's rate of heavy breathing, always set to 6. Can't split into s16s? Maybe packed data.
-    s8      unk_B4[52];  
+    s8      unk_B4[52];
 
     // These might be part of a multi-purpose array of s32 elements used for storing unique data for each character type.
     // For player, mostly used for counters as far as I could see. --Sezz
@@ -365,7 +365,8 @@ typedef struct _SysWork
     s32             field_38; // Something related to map loading.
     s8              unk_3C[11];
     u8              field_47; // Something related to map loading.
-    s8              unk_48[4]; // Something related to map loading.
+    s8              unk_48[3];
+    u8              field_4B; // Something used among player anim state checks.
     s_MainCharacter player_4C;
     s_SubCharacter  characters_1A0[NPC_COUNT_MAX];
     GsCOORDINATE2   unk_coord_890[2];

@@ -515,6 +515,9 @@ void func_8007F250(u8* ptr, s8 arg1);
 /** Some kind of player anim state check. */
 s32 func_8007F26C();
 
+/** Some kind of player anim state check. */
+s32 func_8007F2AC();
+
 /** Copies savegame into an s_ShSaveGameContainer and calculates footer checksum. */
 void SaveGame_CopyWithChecksum(s_ShSaveGameContainer* dest, s_ShSaveGame* src);
 
