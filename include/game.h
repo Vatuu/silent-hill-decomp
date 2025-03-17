@@ -333,7 +333,7 @@ typedef struct _MainCharacterExtra
     u8             field_0;
     u8             field_1;
     u8             field_2;
-    u8             field_3;    // isPrevAnimStateSame? Always 1, set to 0 for 1 tick when anim state changes.
+    u8             isAnimStateUnchanged_3; // Educated guess. Always 1, set to 0 for 1 tick when anim state appears to change.
     u8             unk_4;
     u8             unk_5;
     u16            flags_6;
