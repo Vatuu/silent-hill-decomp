@@ -886,7 +886,26 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80035178);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", GameFs_MapLoad);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003528C);
+s32 func_8003528C(s32 idx0, s32 idx1)
+{
+    s32 tempField_8;
+    u32 tempField_4;
+    s_800A992C* ptr0;
+    s_800A992C* ptr1;
+
+    ptr0 = &D_800A992C[idx0];
+    ptr1 = &D_800A992C[idx1];
+    tempField_4 = ptr0->field_4;
+    tempField_8 = ptr1->field_8;
+    
+    if (tempField_4 >= (tempField_8 + ptr1->field_10) ||
+        tempField_8 >= (tempField_4 + ptr0->field_C))
+    {
+        return 0;
+    }
+    
+    return 1;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_800352F8);
 

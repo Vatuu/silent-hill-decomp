@@ -191,7 +191,7 @@ typedef struct _ShSaveGame
     s32               field_254;
     s32               field_258;
     s32               field_25C;
-    s32               field_260;
+    s32               field_260; // Packed data. Stores game difficulty and something else.
     s16               field_264;
     s16               field_266;
     s16               field_268;

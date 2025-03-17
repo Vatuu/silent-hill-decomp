@@ -54,12 +54,12 @@ typedef struct
 
 typedef struct
 {
-    s8  unk_0[8];
-    s32 field_8;
-    s8  unk_12[2];
+    s8  unk_0[4];
+    u32 field_4; // Fields 4 and 8 are related.
+    u32 field_8;
+    s32 field_C;
+    s32 field_10;
     s32 field_14;
-    s32 field_20;
-
 } s_800A992C;
 
 typedef struct
@@ -457,6 +457,8 @@ void func_800348C0();
 void func_800348E8();
 
 void Game_SaveGameInitialize(s8 overlayIdx, s32 difficulty);
+
+s32 func_8003528C(s32 idx0, s32 idx1);
 
 /** Resets player info in the savegame buffer (inventory, health, playtime). */
 void Game_SaveGameResetPlayer();
