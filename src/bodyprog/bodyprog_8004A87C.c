@@ -345,9 +345,36 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8005B3BC);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8005B424);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8005B46C);
+void func_8005B46C(s32* arg0) // 0x8005B46C
+{
+    *arg0 = 0;
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8005B474);
+void func_8005B474(s32* arg0, u32 arg1, s32 idx) // 0x8005B474
+{
+    u32 temp_a2;
+    u32 var_a1;
+    u32* ptr;
+
+    var_a1 = arg1;
+    temp_a2 = var_a1 + (idx * 24);
+    ptr = arg0 + 1;
+    
+    if (var_a1 >= temp_a2)
+    {
+        return;
+    }
+    
+    do
+    {
+        *ptr = var_a1;
+        var_a1 += 24;
+        *arg0 += 1;
+        
+        ptr += 1;
+    }
+    while (var_a1 < temp_a2);
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8005B4BC);
 
@@ -355,9 +382,26 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8005B55C);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8005B62C);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8005BF0C);
+void func_8005BF0C(s16 arg0, s16 arg1, s16 arg2) // 0x8005BF0C
+{
+    func_80031EFC(arg1, arg2);
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8005BF38);
+s16 func_8005BF38(s32 arg0) // 0x8005BF38
+{
+    s16 temp;
+    s16 res;
+
+    temp = arg0 & 0xFFF;
+    res = temp;
+    
+    if (temp >= 0x801)
+    {
+        res = temp | 0xF000;
+    }
+    
+    return res;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8005BF58);
 

@@ -473,6 +473,14 @@ void GameFs_FlameGfxLoad();
 /** Loads "Tim00" graphic. */
 void GameFs_Tim00TIMLoad();
 
+void func_8005B46C(s32* arg0);
+
+void func_8005B474(s32* arg0, u32 arg1, s32 idx);
+
+void func_8005BF0C(s16 arg0, s16 arg1, s16 arg2);
+
+s16 func_8005BF38(s32 arg0);
+
 /** Draws some string in display space. */
 void func_80032CE8();
 
