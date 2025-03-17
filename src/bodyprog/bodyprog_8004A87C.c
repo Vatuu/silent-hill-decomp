@@ -791,7 +791,10 @@ s32 func_8007F2AC() // 0x8007F2AC
     return 0;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8007F308);
+s16 Player_AnimGetSomething() // 0x8007F308
+{
+    return g_MaybePlayerAnims[g_SysWork.player_4C.character.animIdx_4].field_C;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8007F32C);
 

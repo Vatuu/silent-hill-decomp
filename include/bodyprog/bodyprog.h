@@ -88,6 +88,15 @@ typedef struct
     s32 field_20;
 } s_800C4818;
 
+// Contains animation data? Size is rather small, so if it does, it would be indices to
+// larger arrays containing actual data.
+typedef struct
+{
+    s8  unk_0[12];
+    s16 field_C;
+    s8  unk_10[2];
+} s_MaybeCharacterAnim;
+
 extern s8* D_8002510C;
 
 /** "\x07PAUSED" string */
@@ -142,6 +151,8 @@ extern s_800A90FC D_800A90FC[];
 extern s_800A992C D_800A992C[];
 
 extern s8 D_800AF214;
+
+extern s_MaybeCharacterAnim g_MaybePlayerAnims[];
 
 extern u16 D_800AFDBC;
 
@@ -517,6 +528,9 @@ s32 func_8007F26C();
 
 /** Some kind of player anim state check. */
 s32 func_8007F2AC();
+
+/** Gets something from the player's current animation? */
+s16 Player_AnimGetSomething();
 
 /** Copies savegame into an s_ShSaveGameContainer and calculates footer checksum. */
 void SaveGame_CopyWithChecksum(s_ShSaveGameContainer* dest, s_ShSaveGame* src);
