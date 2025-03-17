@@ -177,8 +177,6 @@ extern u16 D_800BCCB0;
 
 extern u16 D_800BCCB2;
 
-extern s32 D_800BCCB8;
-
 /** Accessed by credits and saveload. */
 extern s32 D_800BCD0C;
 
