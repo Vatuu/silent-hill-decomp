@@ -458,6 +458,9 @@ void func_800348E8();
 
 void Game_SaveGameInitialize(s8 overlayIdx, s32 difficulty);
 
+/** Loads a map file into `g_OvlDynamic`. */
+void GameFs_MapLoad(s32 mapFileIdx);
+
 s32 func_8003528C(s32 idx0, s32 idx1);
 
 /** Resets player info in the savegame buffer (inventory, health, playtime). */

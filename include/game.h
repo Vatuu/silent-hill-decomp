@@ -359,17 +359,18 @@ typedef struct _SysWork
     s32             field_28;
     s32             field_2C; // Timer of some kind.
     s32             field_30;
-    s8              unk_34[16];
-    s8              unk_44;
-    s8              unk_45;
-    s8              unk_46;
-    s8              unk_47;
-    s8              unk_48[4];
+    s8              unk_34[4];
+    s32             field_38; // Something related to map loading.
+    s8              unk_3C[11];
+    u8              field_47; // Something related to map loading.
+    s8              unk_48[4]; // Something related to map loading.
     s_MainCharacter player_4C;
     s_SubCharacter  characters_1A0[NPC_COUNT_MAX];
     GsCOORDINATE2   unk_coord_890[2];
     GsCOORDINATE2   hero_neck_930;
-    s8              unk_980[6432];
+    s8              unk_980[6424];
+    s32             field_2298; // Something related to map loading.
+    s8              unk_229C[4];
     s32             field_22A0;
     s32             flags_22A4;
     s8              unk_22A8[176];

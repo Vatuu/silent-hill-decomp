@@ -884,7 +884,21 @@ void Game_SaveGameInitialize(s8 overlayIdx, s32 difficulty) // 0x800350BC
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80035178);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", GameFs_MapLoad);
+void GameFs_MapLoad(s32 mapFileIdx) // 0x8003521C
+{
+    #define BASE_MAP_FILE_IDX 1995
+    
+    Fs_QueueStartRead(mapFileIdx + BASE_MAP_FILE_IDX, g_OvlDynamic);
+    func_8005E0DC(mapFileIdx);
+    func_8007EB64(mapFileIdx);
+    
+    if (g_SysWork.field_2298 & ((1 << 2) | (1 << 3) | (1 << 4) | (1 << 5)))
+    {
+        func_8003CD6C(&g_SysWork.field_38);
+    }
+    
+    func_800546A8(g_SysWork.field_47);
+}
 
 s32 func_8003528C(s32 idx0, s32 idx1)
 {
