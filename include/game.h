@@ -317,9 +317,11 @@ typedef struct _SubCharacter
     s32 field_104;  // Used by player, returned by `func_8007FD2C`. Purpose unknown.
     s32 field_108; // Player run counter. Increments every tick(?) indefinitely. Purpose for other characters unknown.
 
-    s8 unk_10C;
-	u8 field_10D;
-	s8 unk_10E[24];
+    s8  unk_10C;
+	u8  field_10D;
+	s8  unk_10E[5];
+    s32 field_112;
+	s8  unk_116[14];
     s16 field_126;
 } s_SubCharacter;
 STATIC_ASSERT_SIZEOF(s_SubCharacter, 296);

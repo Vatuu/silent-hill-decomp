@@ -535,6 +535,9 @@ s16 Player_AnimGetSomething();
 /** Gets some property data from player. */
 s32 func_8007FD2C();
 
+/** Gets something from player. */
+s32 func_8007FD3C();
+
 /** Copies savegame into an s_ShSaveGameContainer and calculates footer checksum. */
 void SaveGame_CopyWithChecksum(s_ShSaveGameContainer* dest, s_ShSaveGame* src);
 
