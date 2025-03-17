@@ -541,6 +541,9 @@ s32 func_8007FD3C();
 /** Forces Pad_BtnSelect button press. */
 void func_80080458();
 
+/** Generates a random value of some kind. */
+s32 func_80080514();
+
 /** Copies savegame into an s_ShSaveGameContainer and calculates footer checksum. */
 void SaveGame_CopyWithChecksum(s_ShSaveGameContainer* dest, s_ShSaveGame* src);
 

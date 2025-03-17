@@ -837,7 +837,13 @@ void func_80080458() // 0x80080458
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_80080478);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_80080514);
+s32 func_80080514() // 0x80080514
+{
+    s32 rand16;
+
+    rand16 = Rng_Rand16();
+    return (((rand16 * 2) ^ rand16) >> 3) & 0xFFF;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_80080540);
 
