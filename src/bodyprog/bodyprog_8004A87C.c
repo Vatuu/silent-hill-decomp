@@ -796,17 +796,23 @@ s16 Player_AnimGetSomething() // 0x8007F308
     return g_MaybePlayerAnims[g_SysWork.player_4C.character.animIdx_4].field_C;
 }
 
+// Large function. Something to do with player control.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8007F32C);
 
+// Medium function. Player-related.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8007F95C);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8007FB34);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8007FB94);
 
+// Similar to above.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8007FC48);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8007FD2C);
+s32 func_8007FD2C() // 0x8007FD2C
+{
+    return g_SysWork.player_4C.character.field_104;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8007FD3C);
 

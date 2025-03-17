@@ -303,18 +303,22 @@ typedef struct _SubCharacter
     s32     health_B0; // Bits 3-4 contain s16 associated with player's rate of heavy breathing, always set to 6. Can't split into s16s? Maybe packed data.
     s8      unk_B4[52];
 
-    // These might be part of a multi-purpose array of s32 elements used for storing unique data for each character type.
-    // For player, mostly used for counters as far as I could see. --Sezz
+    // Fields in the following block may be part of a multi-purpose array of s32 elements used to store unique property data for each character type.
+    // Start of this section is unclear, bytes above may be part of it.
+    // For player, mostly used for counters as far as I could see. -- Sezz
 
     s32 field_E8;  // Player AFK counter. Increments every tick(?) for 10 seconds before player starts AFK anim. Purpose for other characters unknown.
     s32 field_EC;  // Copy of player Y position. Purpose for other characters unknown.
-    s8  unk_F0[8]; // 2 more s32 for custom data?
+    s32 unk_F0;
+    s32 unk_F4;
     s32 field_F8;  // Player run counter. Increments more slowly than runCounter_108. Purpose for other characters unknown.
     s32 field_FC;  // Player winded counter. Counts 20 seconds worth of ticks(?) and caps at 0x23000. Purpose for other characters unknown.
-    s8  unk_FC[8]; // 2 more s32 for custom data?
+    s32 unk_100;
+    s32 field_104;  // Used by player, returned by `func_8007FD2C`. Purpose unknown.
     s32 field_108; // Player run counter. Increments every tick(?) indefinitely. Purpose for other characters unknown.
+
     s8 unk_10C;
-	s8 unk_10D;
+	u8 field_10D;
 	s8 unk_10E[24];
     s16 field_126;
 } s_SubCharacter;
