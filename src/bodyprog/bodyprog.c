@@ -788,11 +788,24 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", Game_WarmBoot);
 
 void JOY_Init() // 0x8003441C
 {
-    PadInitDirect(&g_GameWork.field_5B4, g_ControllerPtr1);
+    PadInitDirect(&g_GameWork.rawPadData_5B4, g_ControllerPtr1);
     PadStartCom();
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", JOY_ReadP1);
+void JOY_ReadP1() // 0x80034450
+{
+    s_ControllerData* cont = &g_GameWork.controllers_38[0];
+
+    // NOTE: memcpy is close, reads rawPadData_5B4 as two s32s, but doesn't give match.
+    // memcpy(&cont->analogPad_0, &g_GameWork.rawPadData_5B4, sizeof(s_AnalogPadData));
+    
+    *(s32*)&cont->analogPad_0 = *(s32*)&g_GameWork.rawPadData_5B4;
+    *(s32*)&cont->analogPad_0.right_x = *(s32*)&g_GameWork.rawPadData_5B4.right_x;
+
+    // Alternate
+    // ((s32*)&cont->analogPad_0)[0] = ((s32*)&g_GameWork.rawPadData_5B4)[0];
+    // ((s32*)&cont->analogPad_0)[1] = ((s32*)&g_GameWork.rawPadData_5B4)[1];
+}
 
 void JOY_Update() // 0x8003446C
 {

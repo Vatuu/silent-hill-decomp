@@ -266,10 +266,10 @@ typedef struct _GameWork
     s32                  field_5A8;
     s32                  field_5AC;
     s8                   unk_5B0[4];
-    s32                  field_5B4;
-    s8                   unk_5B8[32];
+    s_AnalogPadData      rawPadData_5B4;
+    s8                   unk_5BC[28];
 } s_GameWork;
-STATIC_ASSERT_SIZEOF(s_GameWork, 0x5D8);
+STATIC_ASSERT_SIZEOF(s_GameWork, 1496);
 
 typedef struct _SubCharacter
 {

@@ -450,6 +450,8 @@ s32 MainLoop_ShouldWarmReset();
 
 void JOY_Init();
 
+void JOY_ReadP1();
+
 void JOY_Update();
 
 void func_800348C0();
