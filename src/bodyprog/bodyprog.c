@@ -888,11 +888,11 @@ void GameFs_MapLoad(s32 mapFileIdx) // 0x8003521C
 {
     #define BASE_MAP_FILE_IDX 1995
     
-    Fs_QueueStartRead(mapFileIdx + BASE_MAP_FILE_IDX, g_OvlDynamic);
+    Fs_QueueStartRead(BASE_MAP_FILE_IDX + mapFileIdx, g_OvlDynamic);
     func_8005E0DC(mapFileIdx);
     func_8007EB64(mapFileIdx);
     
-    if (g_SysWork.field_2298 & ((1 << 2) | (1 << 3) | (1 << 4) | (1 << 5)))
+    if (g_SysWork.flags_2298 & ((1 << 2) | (1 << 3) | (1 << 4) | (1 << 5)))
     {
         func_8003CD6C(&g_SysWork.field_38);
     }

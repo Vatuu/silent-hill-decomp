@@ -369,7 +369,7 @@ typedef struct _SysWork
     GsCOORDINATE2   unk_coord_890[2];
     GsCOORDINATE2   hero_neck_930;
     s8              unk_980[6424];
-    s32             field_2298; // Something related to map loading.
+    s32             flags_2298; // Something related to map loading.
     s8              unk_229C[4];
     s32             field_22A0;
     s32             flags_22A4;
