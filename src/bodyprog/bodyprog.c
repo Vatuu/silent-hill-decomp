@@ -888,7 +888,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", GameFs_MapLoad);
 
 s32 func_8003528C(s32 idx0, s32 idx1)
 {
-    s32 tempField_8;
+    u32 tempField_8;
     u32 tempField_4;
     s_800A992C* ptr0;
     s_800A992C* ptr1;

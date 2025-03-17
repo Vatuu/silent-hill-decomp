@@ -348,7 +348,7 @@ STATIC_ASSERT_SIZEOF(s_MainCharacter, 340);
 typedef struct _SysWork
 {
     s8              unk_0[8];
-    e_SysState      sysState_8;
+    s32             sysState_8;     /** e_SysState */
     s32             sysStateStep_C; // Current step/state of sysState_8 game is in.
     s32             field_10;       // Sometimes assigned to same thing as sysStateStep_C.
     s32             field_14;
