@@ -765,7 +765,17 @@ void func_8007F250(u8* ptr, s8 arg1) // 0x8007F250
     D_800C4562 = arg1;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8007F26C);
+s32 func_8007F26C() // 0x8007F26C
+{
+    if (g_SysWork.player_4C.extra_128.field_20 == 25 ||
+        g_SysWork.player_4C.extra_128.field_1C == 5 ||
+        g_SysWork.player_4C.extra_128.field_1C == 6)
+    {
+        return 1;
+    }
+    
+    return 0;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8007F2AC);
 
