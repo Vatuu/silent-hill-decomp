@@ -544,6 +544,9 @@ void func_80080458();
 /** Generates a random value of some kind. */
 s32 func_80080514();
 
+/** Computes (abs(value) - subtractor) * copysign(value). */
+s32 PreservedSignSubtract(s32 value, s32 subtractor);
+
 /** Copies savegame into an s_ShSaveGameContainer and calculates footer checksum. */
 void SaveGame_CopyWithChecksum(s_ShSaveGameContainer* dest, s_ShSaveGame* src);
 

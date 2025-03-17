@@ -160,6 +160,7 @@ SysWork_SaveGameReadPlayer = 0x8003A1F4; // type:func
 Game_SaveGameResetPlayer = 0x8007E530; // type:func
 
 Player_AnimGetSomething = 0x8007F308; // type:func
+PreservedSignSubtract = 0x80080594; //type:func
 
 Camera_SetTranslation = 0x80086A94; // type:func
 Camera_SetRotation = 0x80086B70; // type:func

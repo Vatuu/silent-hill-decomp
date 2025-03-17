@@ -845,9 +845,18 @@ s32 func_80080514() // 0x80080514
     return (((rand16 * 2) ^ rand16) >> 3) & 0xFFF;
 }
 
+// TODO: Try decomping by hand. -- Sezz
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_80080540);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_80080594);
+s32 PreservedSignSubtract(s32 value, s32 subtractor) // 0x80080594
+{
+    s32 signBit;
+    s32 absDiff;
+    
+    signBit = value >> 31;  
+    absDiff = ((value ^ signBit) - signBit) - subtractor;  
+    return ((absDiff & ~(absDiff >> 31)) ^ signBit) - signBit; 
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_800805BC);
 
