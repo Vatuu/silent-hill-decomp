@@ -178,6 +178,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_80054558);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_80054634);
 
+// Requires jump table.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_800546A8);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_80054720);
@@ -719,7 +720,19 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8007E8C0);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8007E9C4);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8007EB64);
+void GameFs_PlayerMapAnimLoad(s32 mapIdx) // 0x8007EB64
+{
+    #define BASE_FILE_IDX FILE_ANIM_HB_M0S00_ANM
+    
+    if (g_GameWork.mapAnimIdx_5B1 != mapIdx ||
+        mapIdx == (FILE_ANIM_HB_M6S04_ANM - BASE_FILE_IDX) ||
+        mapIdx == (FILE_ANIM_HB_M7S01_ANM - BASE_FILE_IDX) ||
+        mapIdx == (FILE_ANIM_HB_M7S02_ANM - BASE_FILE_IDX))
+    {
+        g_GameWork.mapAnimIdx_5B1 = mapIdx;
+        Fs_QueueStartRead(BASE_FILE_IDX + mapIdx, FS_BUFFER_4);
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8007EBBC);
 

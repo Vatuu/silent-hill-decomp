@@ -265,7 +265,9 @@ typedef struct _GameWork
     s8                   unk_5A4[4];
     s32                  field_5A8;
     s32                  field_5AC;
-    s8                   unk_5B0[4];
+    s8                   unk_5B0;
+    s8                   mapAnimIdx_5B1;
+    s8                   unk_5B2[2];
     s_AnalogPadData      rawPadData_5B4;
     s8                   unk_5BC[28];
 } s_GameWork;

@@ -459,12 +459,15 @@ void func_800348E8();
 void Game_SaveGameInitialize(s8 overlayIdx, s32 difficulty);
 
 /** Loads a map file into `g_OvlDynamic`. */
-void GameFs_MapLoad(s32 mapFileIdx);
+void GameFs_MapLoad(s32 mapIdx);
 
 s32 func_8003528C(s32 idx0, s32 idx1);
 
 /** Resets player info in the savegame buffer (inventory, health, playtime). */
 void Game_SaveGameResetPlayer();
+
+/** Loads player animations for a given map. Maybe for cutscenes? */
+void GameFs_PlayerMapAnimLoad(s32 mapIdx);
 
 /** Copies savegame into an s_ShSaveGameContainer and calculates footer checksum. */
 void SaveGame_CopyWithChecksum(s_ShSaveGameContainer* dest, s_ShSaveGame* src);

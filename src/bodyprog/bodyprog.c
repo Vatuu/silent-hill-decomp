@@ -884,15 +884,16 @@ void Game_SaveGameInitialize(s8 overlayIdx, s32 difficulty) // 0x800350BC
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80035178);
 
-void GameFs_MapLoad(s32 mapFileIdx) // 0x8003521C
+void GameFs_MapLoad(s32 mapIdx) // 0x8003521C
 {
-    #define BASE_MAP_FILE_IDX 1995
+    #define BASE_FILE_IDX FILE_VIN_MAP0_S00_BIN
+    #define UNK_FLAGS     ((1 << 2) | (1 << 3) | (1 << 4) | (1 << 5))
     
-    Fs_QueueStartRead(BASE_MAP_FILE_IDX + mapFileIdx, g_OvlDynamic);
-    func_8005E0DC(mapFileIdx);
-    func_8007EB64(mapFileIdx);
+    Fs_QueueStartRead(BASE_FILE_IDX + mapIdx, g_OvlDynamic);
+    func_8005E0DC(mapIdx);
+    GameFs_PlayerMapAnimLoad(mapIdx);
     
-    if (g_SysWork.flags_2298 & ((1 << 2) | (1 << 3) | (1 << 4) | (1 << 5)))
+    if (g_SysWork.flags_2298 & UNK_FLAGS)
     {
         func_8003CD6C(&g_SysWork.field_38);
     }
@@ -1094,11 +1095,11 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80039FB8);
 
 void SysWork_SaveGameUpdatePlayer() // 0x8003A120
 {
-    s_ShSaveGame* save      = g_SaveGamePtr;
-    save->mapEventIdx_A8 = g_MapEventIdx;
+    s_ShSaveGame* save = g_SaveGamePtr;
 
-    save->playerPositionX_244      = g_SysWork.player_4C.character.position_18.vx;
-    save->playerPositionZ_24C      = g_SysWork.player_4C.character.position_18.vz;
+    save->mapEventIdx_A8      = g_MapEventIdx;
+    save->playerPositionX_244 = g_SysWork.player_4C.character.position_18.vx;
+    save->playerPositionZ_24C = g_SysWork.player_4C.character.position_18.vz;
     save->playerRotationY_248 = g_SysWork.player_4C.character.rotation_24.vy;
     save->playerHealth_240    = g_SysWork.player_4C.character.health_B0;
 }
