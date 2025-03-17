@@ -226,6 +226,10 @@ extern s16 D_800C45F0;
 
 extern s16 D_800C4604;
 
+extern u8 D_800C4561;
+
+extern s8 D_800C4562;
+
 /** D_800C457C could be related to animations that play during cutscenes.
 
  * Called by:
@@ -257,6 +261,8 @@ extern s_800C4818 D_800C4818;
 extern s32 D_800C489C;
 
 extern u8* D_800C7018;
+
+// TODO: Order these by address and add address comments.
 
 extern s32 g_MainLoop_FrameCount;
 
@@ -503,6 +509,8 @@ void GameFs_PlayerMapAnimLoad(s32 mapIdx);
 
 /** Resets several global variables to 0. */
 void func_8007F1CC();
+
+void func_8007F250(u8* ptr, s8 arg1);
 
 /** Copies savegame into an s_ShSaveGameContainer and calculates footer checksum. */
 void SaveGame_CopyWithChecksum(s_ShSaveGameContainer* dest, s_ShSaveGame* src);

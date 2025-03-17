@@ -739,7 +739,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8007EBBC);
 // Requires jump table.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8007F14C);
 
-void func_8007F1CC()
+void func_8007F1CC() // 0x8007F1CC
 {
     D_800C455C = 0;
     D_800C4558 = 0;
@@ -759,7 +759,11 @@ void func_8007F1CC()
     D_800AF214 = 0;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8007F250);
+void func_8007F250(u8* ptr, s8 arg1) // 0x8007F250
+{
+    *ptr = D_800C4561;
+    D_800C4562 = arg1;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8007F26C);
 
