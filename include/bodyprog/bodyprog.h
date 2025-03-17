@@ -104,6 +104,11 @@ extern char D_80025394[];
 
 extern RECT D_8002AB10;
 
+extern s32 D_8002B2CC;
+
+/** Unknown bodyprog var. Used in `Fs_QueueStartReadAnm`. */
+extern s_800A90FC D_800A90FC[];
+
 extern s_FsImageDesc D_800A8FF4;
 
 extern s_FsImageDesc D_800A8FFC;
@@ -128,12 +133,12 @@ extern s32 D_800A976C;
 
 extern void (*D_800A977C[])(void); // Function pointer array, maybe state funcs of some kind.
 
+extern s_800A992C D_800A992C[];
+
 extern u8 D_800A9944;
 
 /** Used in func_800D929C from map0_s00.c. */
 extern s32 D_800A999C;
-
-extern s32 D_800A9A68;
 
 /** Array of indices? */
 extern s8 D_800A99B4[];
@@ -141,18 +146,21 @@ extern s8 D_800A99B4[];
 /** Array of indices? */
 extern s8 D_800A99CC[];
 
+extern s32 D_800A9A68;
+
 extern s16 D_800AD498;
 
 extern s32 D_800AD49C;
 
-/** Unknown bodyprog var. Used in `Fs_QueueStartReadAnm`. */
-extern s_800A90FC D_800A90FC[];
-
-extern s_800A992C D_800A992C[];
-
 extern s8 D_800AF214;
 
 extern s_MaybeCharacterAnim g_MaybePlayerAnims[];
+
+extern s32 D_800AFC7C;
+
+extern s32 D_800AFC90;
+
+extern s32 D_800AFD9C;
 
 extern u16 D_800AFDBC;
 
@@ -423,6 +431,8 @@ void func_800890B8();
 
 s32 func_8008D850();
 
+void func_8008E4EC();
+
 void func_8008D78C();
 
 s32 func_8008F470(s32 caseArg);
@@ -541,11 +551,19 @@ s32 func_8007FD3C();
 /** Forces Pad_BtnSelect button press. */
 void func_80080458();
 
+s32 func_80080478(VECTOR3* pos0, VECTOR3* pos1);
+
 /** Generates a random value of some kind. */
 s32 func_80080514();
 
 /** Computes (abs(value) - subtractor) * copysign(value). */
 s32 PreservedSignSubtract(s32 value, s32 subtractor);
+
+s32 func_80080884();
+
+s32 func_800808AC();
+
+s32 func_800808F8(s32 arg0);
 
 /** Copies savegame into an s_ShSaveGameContainer and calculates footer checksum. */
 void SaveGame_CopyWithChecksum(s_ShSaveGameContainer* dest, s_ShSaveGame* src);

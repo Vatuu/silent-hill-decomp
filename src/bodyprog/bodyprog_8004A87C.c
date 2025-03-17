@@ -835,7 +835,33 @@ void func_80080458() // 0x80080458
     g_ControllerPtr1->btns_new_10 |= Pad_BtnSelect;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_80080478);
+s32 func_80080478(VECTOR3* pos0, VECTOR3* pos1) // 0x80080478
+{
+    s32 x0;
+    s32 x1;
+    s32 y1;
+    s32 y0;
+    s32 z0;
+    s32 z1;
+    s32 xDelta;
+    s32 zDelta;
+    s32 atan2Delta;
+    s32 unk;
+
+    x0 = pos0->vx;
+    x1 = pos1->vx;
+    y0 = pos0->vy;
+    y1 = pos1->vy;
+    z0 = pos0->vz;
+    z1 = pos1->vz;
+
+    xDelta = x1 - x0;
+    zDelta = z1 - z0;
+    atan2Delta = ratan2(xDelta, zDelta);
+    
+    unk = func_8008A058(func_80080540(xDelta, 0, zDelta));
+    return (ratan2(unk, y1 - y0) << 0x10) | (atan2Delta & 0xFFFF);
+}
 
 s32 func_80080514() // 0x80080514
 {
@@ -858,6 +884,7 @@ s32 PreservedSignSubtract(s32 value, s32 subtractor) // 0x80080594
     return ((absDiff & ~(absDiff >> 31)) ^ signBit) - signBit; 
 }
 
+// Unknown instruction error?
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_800805BC);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_800806AC);
@@ -866,10 +893,42 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8008074C);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8008076C);
 
+// TODO: Matched, but some issue here.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_80080884);
+/*s32 func_80080884() // 0x80080884
+{
+    func_8008076C();
+    return D_800AFC7C;
+}*/
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_800808AC);
+s32 func_800808AC() // 0x800808AC
+{
+    func_8008076C();
+    return D_800AFC90;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", Math_MulFixed);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_800808F8);
+s32 func_800808F8(s32 arg0) // 0x800808F8
+{
+    s32 res;
+
+    if (arg0 < 0x4000)
+    {
+        return 0;
+    }
+    
+    if (arg0 > 0x3FFFF)
+    {
+        if (arg0 > 0x3FFFFF)
+        {
+            return 12;
+        }
+    
+        res = 8;
+        return res;
+    }
+    
+    res = 4;
+    return res;
+}
