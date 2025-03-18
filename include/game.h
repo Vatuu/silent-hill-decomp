@@ -370,7 +370,7 @@ typedef struct _SysWork
     s8              unk_34[4];
     s32             field_38; // Something related to map loading.
     s8              unk_3C[11];
-    u8              field_47; // Something related to map loading.
+    s8              field_47; // Something related to map loading.
     s8              unk_48[3];
     u8              field_4B; // Something used among player anim state checks.
     s_MainCharacter player_4C;
