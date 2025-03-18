@@ -77,6 +77,8 @@ typedef struct
 {
     s8  unk_0[27];
     s16 field_1C;
+    s32 unk_1E[78];
+    s32 field_158;
 } s_800C1020;
 
 typedef struct
@@ -373,6 +375,8 @@ void func_80041CEC(s_80041CEC*);
 void func_80041D10(s_80041D10* array, s32 size);
 
 void func_80041E98();
+
+void func_80041FF0();
 
 u8 func_80045B28();
 

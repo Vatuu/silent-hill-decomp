@@ -77,7 +77,10 @@ void func_80041E98() // 0x80041E98
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80041ED0);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80041FF0);
+void func_80041FF0() // 0x80041FF0
+{
+    func_80042300(&D_800C1020, D_800C1020.field_158);
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_8004201C);
 
