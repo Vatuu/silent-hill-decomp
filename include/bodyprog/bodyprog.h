@@ -54,12 +54,12 @@ typedef struct
 
 typedef struct
 {
-    s8  unk_0[8];
-    s32 field_8;
-    s8  unk_12[2];
+    s8  unk_0[4];
+    u32 field_4; // Fields 4 and 8 are related.
+    u32 field_8;
+    s32 field_C;
+    s32 field_10;
     s32 field_14;
-    s32 field_20;
-
 } s_800A992C;
 
 typedef struct
@@ -72,6 +72,20 @@ typedef struct
     struct s_800B5508* field_14;
     s32                field_18; 
 } s_800B5508;
+
+typedef struct
+{
+    s8  unk_0[27];
+    s16 field_1C;
+    s32 unk_1E[78];
+    s32 field_158;
+} s_800C1020;
+
+typedef struct
+{
+    s8 unk_0[28];
+} s_800C117C;
+STATIC_ASSERT_SIZEOF(s_800C117C, 28);
 
 typedef struct
 {
@@ -88,12 +102,26 @@ typedef struct
     s32 field_20;
 } s_800C4818;
 
+// Contains animation data? Size is rather small, so if it does, it would be indices to
+// larger arrays containing actual data.
+typedef struct
+{
+    s8  unk_0[12];
+    s16 field_C;
+    s8  unk_10[2];
+} s_MaybeCharacterAnim;
+
 extern s8* D_8002510C;
 
 /** "\x07PAUSED" string */
 extern char D_80025394[];
 
 extern RECT D_8002AB10;
+
+extern s32 D_8002B2CC;
+
+/** Unknown bodyprog var. Used in `Fs_QueueStartReadAnm`. */
+extern s_800A90FC D_800A90FC[];
 
 extern s_FsImageDesc D_800A8FF4;
 
@@ -119,10 +147,12 @@ extern s32 D_800A976C;
 
 extern void (*D_800A977C[])(void); // Function pointer array, maybe state funcs of some kind.
 
+extern s_800A992C D_800A992C[];
+
+extern u8 D_800A9944;
+
 /** Used in func_800D929C from map0_s00.c. */
 extern s32 D_800A999C;
-
-extern s32 D_800A9A68;
 
 /** Array of indices? */
 extern s8 D_800A99B4[];
@@ -130,14 +160,21 @@ extern s8 D_800A99B4[];
 /** Array of indices? */
 extern s8 D_800A99CC[];
 
+extern s32 D_800A9A68;
+
 extern s16 D_800AD498;
 
 extern s32 D_800AD49C;
 
-/** Unknown bodyprog var. Used in `Fs_QueueStartReadAnm`. */
-extern s_800A90FC D_800A90FC[];
+extern s8 D_800AF214;
 
-extern s_800A992C D_800A992C[];
+extern s_MaybeCharacterAnim g_MaybePlayerAnims[];
+
+extern s32 D_800AFC7C;
+
+extern s32 D_800AFC90;
+
+extern s32 D_800AFD9C;
 
 extern u16 D_800AFDBC;
 
@@ -161,6 +198,12 @@ extern s32 D_800B55FC;
 
 extern s32 D_800B5618;
 
+extern u8 D_800BCDD4;
+
+extern s_800C1020 D_800C1020;
+
+extern s_800C117C D_800C117C[];
+
 extern s32 D_800C4710[];
 
 extern void (*D_800C9644)();
@@ -172,8 +215,6 @@ extern s32 (*D_800C9668)();
 extern u16 D_800BCCB0;
 
 extern u16 D_800BCCB2;
-
-extern s32 D_800BCCB8;
 
 /** Accessed by credits and saveload. */
 extern s32 D_800BCD0C;
@@ -191,6 +232,40 @@ extern s16 D_800C38FE;
 extern s16 D_800C391C;
 
 extern s16 D_800C391E;
+
+extern s32 D_800C4558;
+
+extern s32 D_800C455C;
+
+extern s16 D_800C457E;
+
+extern s16 D_800C4580;
+
+extern s16 D_800C4582;
+
+extern s16 D_800C4584;
+
+extern s16 D_800C4586;
+
+extern s16 D_800C45AC;
+
+extern s16 D_800C45AE;
+
+extern s16 D_800C45BC;
+
+extern s16 D_800C45BE;
+
+extern s16 D_800C45C0;
+
+extern s16 D_800C45E8;
+
+extern s16 D_800C45F0;
+
+extern s16 D_800C4604;
+
+extern u8 D_800C4561;
+
+extern s8 D_800C4562;
 
 /** D_800C457C could be related to animations that play during cutscenes.
 
@@ -223,6 +298,8 @@ extern s_800C4818 D_800C4818;
 extern s32 D_800C489C;
 
 extern u8* D_800C7018;
+
+// TODO: Order these by address and add address comments.
 
 extern s32 g_MainLoop_FrameCount;
 
@@ -305,6 +382,14 @@ void func_80041CEC(s_80041CEC*);
 /** Clears some field in some struct. */
 void func_80041D10(s_80041D10* array, s32 size);
 
+void func_80041E98();
+
+void func_80041FF0();
+
+void func_800420C0();
+
+s32 func_80042C04(s32 idx);
+
 u8 func_80045B28();
 
 void func_8004690C(s32);
@@ -372,6 +457,8 @@ void func_800890B8();
 
 s32 func_8008D850();
 
+void func_8008E4EC();
+
 void func_8008D78C();
 
 s32 func_8008F470(s32 caseArg);
@@ -412,6 +499,14 @@ void GameFs_FlameGfxLoad();
 /** Loads "Tim00" graphic. */
 void GameFs_Tim00TIMLoad();
 
+void func_8005B46C(s32* arg0);
+
+void func_8005B474(s32* arg0, u32 arg1, s32 idx);
+
+void func_8005BF0C(s16 arg0, s16 arg1, s16 arg2);
+
+s16 func_8005BF38(s32 arg0);
+
 /** Draws some string in display space. */
 void func_80032CE8();
 
@@ -444,10 +539,67 @@ void SysWork_SaveGameReadPlayer();
 
 s32 MainLoop_ShouldWarmReset();
 
+void JOY_Init();
+
+void JOY_ReadP1();
+
+void JOY_Update();
+
+void func_800348C0();
+
+void func_800348E8();
+
 void Game_SaveGameInitialize(s8 overlayIdx, s32 difficulty);
+
+/** Loads a map file into `g_OvlDynamic`. */
+void GameFs_MapLoad(s32 mapIdx);
+
+s32 func_8003528C(s32 idx0, s32 idx1);
 
 /** Resets player info in the savegame buffer (inventory, health, playtime). */
 void Game_SaveGameResetPlayer();
+
+/** Loads player animations for a given map. Maybe for cutscenes? */
+void GameFs_PlayerMapAnimLoad(s32 mapIdx);
+
+/** Resets several global variables to 0. */
+void func_8007F1CC();
+
+void func_8007F250(u8* ptr, s8 arg1);
+
+/** Some kind of player anim state check. */
+s32 func_8007F26C();
+
+/** Some kind of player anim state check. */
+s32 func_8007F2AC();
+
+/** Gets something from the player's current animation? */
+s16 Player_AnimGetSomething();
+
+/** Gets some property data from player. */
+s32 func_8007FD2C();
+
+/** Gets something from player. */
+s32 func_8007FD3C();
+
+/** Forces Pad_BtnSelect button press. */
+void func_80080458();
+
+s32 func_80080478(VECTOR3* pos0, VECTOR3* pos1);
+
+/** Generates a random value of some kind. */
+s32 func_80080514();
+
+/** Computes (abs(value) - subtractor) * copysign(value). */
+s32 PreservedSignSubtract(s32 value, s32 subtractor);
+
+void func_8008074C(int arg0, int arg1);
+
+s32 func_80080884();
+
+s32 func_800808AC();
+
+s32 func_800808F8(s32 arg0);
 
 /** Copies savegame into an s_ShSaveGameContainer and calculates footer checksum. */
 void SaveGame_CopyWithChecksum(s_ShSaveGameContainer* dest, s_ShSaveGame* src);

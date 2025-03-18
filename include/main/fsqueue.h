@@ -10,6 +10,7 @@
 #define FS_BUFFER_1 (void*)0x801E2600
 #define FS_BUFFER_2 (void*)0x801CF600
 #define FS_BUFFER_3 (void*)0x801B2600
+#define FS_BUFFER_4 (void*)0x80124384 // Used for player map anim.
 
 /** @brief `FsQueue::state` values when processing a read operation (`Fs_QueueUpdateRead`).
  *

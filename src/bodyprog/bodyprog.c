@@ -786,11 +786,32 @@ s32 MainLoop_ShouldWarmReset() // 0x80034108
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", Game_WarmBoot);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", JOY_Init);
+void JOY_Init() // 0x8003441C
+{
+    PadInitDirect(&g_GameWork.rawPadData_5B4, g_ControllerPtr1);
+    PadStartCom();
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", JOY_ReadP1);
+void JOY_ReadP1() // 0x80034450
+{
+    s_ControllerData* cont = &g_GameWork.controllers_38[0];
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", JOY_Update);
+    // NOTE: memcpy is close, reads rawPadData_5B4 as two s32s, but doesn't give match.
+    // memcpy(&cont->analogPad_0, &g_GameWork.rawPadData_5B4, sizeof(s_AnalogPadData));
+    
+    *(s32*)&cont->analogPad_0 = *(s32*)&g_GameWork.rawPadData_5B4;
+    *(s32*)&cont->analogPad_0.right_x = *(s32*)&g_GameWork.rawPadData_5B4.right_x;
+
+    // Alternate
+    // ((s32*)&cont->analogPad_0)[0] = ((s32*)&g_GameWork.rawPadData_5B4)[0];
+    // ((s32*)&cont->analogPad_0)[1] = ((s32*)&g_GameWork.rawPadData_5B4)[1];
+}
+
+void JOY_Update() // 0x8003446C
+{
+    JOY_ReadP1();
+    JOY_ControllerDataUpdate();
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", JOY_ControllerDataUpdate);
 
@@ -798,9 +819,32 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", ControllerData_AnalogToDigital
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003483C);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_800348C0);
+void func_800348C0()
+{
+    bzero(&D_800A9944, 0x48);
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_800348E8);
+void func_800348E8()
+{
+    u8 temp;
+
+    func_80034E58();
+    func_80034964();
+    
+    if (g_SysWork.flags_22A4 & (1 << 10))
+    {
+        temp = D_800BCDD4 + 1;
+        D_800BCDD4 = temp;
+        
+        if ((temp & 0xFF) >= 21)
+        {
+            g_SysWork.flags_22A4 &= ~(1 << 10);
+            
+            SD_EngineCmd(1502);
+            SD_EngineCmd(1501);
+        }
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80034964);
 
@@ -840,9 +884,47 @@ void Game_SaveGameInitialize(s8 overlayIdx, s32 difficulty) // 0x800350BC
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80035178);
 
+#ifdef NON_MATCHING
+void GameFs_MapLoad(s32 mapIdx) // 0x8003521C
+{
+    #define BASE_FILE_IDX FILE_VIN_MAP0_S00_BIN
+    #define UNK_FLAGS     ((1 << 2) | (1 << 3) | (1 << 4) | (1 << 5))
+    
+    Fs_QueueStartRead(BASE_FILE_IDX + mapIdx, g_OvlDynamic);
+    func_8005E0DC(mapIdx);
+    GameFs_PlayerMapAnimLoad(mapIdx);
+    
+    if (g_SysWork.flags_2298 & UNK_FLAGS)
+    {
+        func_8003CD6C(&g_SysWork.field_38);
+    }
+    
+    func_800546A8(g_SysWork.field_47);
+}
+#else
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", GameFs_MapLoad);
+#endif
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003528C);
+s32 func_8003528C(s32 idx0, s32 idx1)
+{
+    u32 tempField_8;
+    u32 tempField_4;
+    s_800A992C* ptr0;
+    s_800A992C* ptr1;
+
+    ptr0 = &D_800A992C[idx0];
+    ptr1 = &D_800A992C[idx1];
+    tempField_4 = ptr0->field_4;
+    tempField_8 = ptr1->field_8;
+    
+    if (tempField_4 >= (tempField_8 + ptr1->field_10) ||
+        tempField_8 >= (tempField_4 + ptr0->field_C))
+    {
+        return 0;
+    }
+    
+    return 1;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_800352F8);
 
@@ -1017,11 +1099,11 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80039FB8);
 
 void SysWork_SaveGameUpdatePlayer() // 0x8003A120
 {
-    s_ShSaveGame* save      = g_SaveGamePtr;
-    save->mapEventIdx_A8 = g_MapEventIdx;
+    s_ShSaveGame* save = g_SaveGamePtr;
 
-    save->playerPositionX_244      = g_SysWork.player_4C.character.position_18.vx;
-    save->playerPositionZ_24C      = g_SysWork.player_4C.character.position_18.vz;
+    save->mapEventIdx_A8      = g_MapEventIdx;
+    save->playerPositionX_244 = g_SysWork.player_4C.character.position_18.vx;
+    save->playerPositionZ_24C = g_SysWork.player_4C.character.position_18.vz;
     save->playerRotationY_248 = g_SysWork.player_4C.character.rotation_24.vy;
     save->playerHealth_240    = g_SysWork.player_4C.character.health_B0;
 }

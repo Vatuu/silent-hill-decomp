@@ -191,7 +191,7 @@ typedef struct _ShSaveGame
     s32               field_254;
     s32               field_258;
     s32               field_25C;
-    s32               field_260;
+    s32               field_260; // Packed data. Stores game difficulty and something else.
     s16               field_264;
     s16               field_266;
     s16               field_268;
@@ -265,9 +265,13 @@ typedef struct _GameWork
     s8                   unk_5A4[4];
     s32                  field_5A8;
     s32                  field_5AC;
-    s8                   unk_5B0[40];
+    s8                   unk_5B0;
+    s8                   mapAnimIdx_5B1;
+    s8                   unk_5B2[2];
+    s_AnalogPadData      rawPadData_5B4;
+    s8                   unk_5BC[28];
 } s_GameWork;
-STATIC_ASSERT_SIZEOF(s_GameWork, 0x5D8);
+STATIC_ASSERT_SIZEOF(s_GameWork, 1496);
 
 typedef struct _SubCharacter
 {
@@ -297,21 +301,27 @@ typedef struct _SubCharacter
     u8      pad_3E[2];
     u8      unk_40[112];
     s32     health_B0; // Bits 3-4 contain s16 associated with player's rate of heavy breathing, always set to 6. Can't split into s16s? Maybe packed data.
-    s8      unk_B4[52];  
+    s8      unk_B4[52];
 
-    // These might be part of a multi-purpose array of s32 elements used for storing unique data for each character type.
-    // For player, mostly used for counters as far as I could see. --Sezz
+    // Fields in the following block may be part of a multi-purpose array of s32 elements used to store unique property data for each character type.
+    // Start of this section is unclear, bytes above may be part of it.
+    // For player, mostly used for counters as far as I could see. -- Sezz
 
     s32 field_E8;  // Player AFK counter. Increments every tick(?) for 10 seconds before player starts AFK anim. Purpose for other characters unknown.
     s32 field_EC;  // Copy of player Y position. Purpose for other characters unknown.
-    s8  unk_F0[8]; // 2 more s32 for custom data?
+    s32 unk_F0;
+    s32 unk_F4;
     s32 field_F8;  // Player run counter. Increments more slowly than runCounter_108. Purpose for other characters unknown.
     s32 field_FC;  // Player winded counter. Counts 20 seconds worth of ticks(?) and caps at 0x23000. Purpose for other characters unknown.
-    s8  unk_FC[8]; // 2 more s32 for custom data?
+    s32 unk_100;
+    s32 field_104;  // Used by player, returned by `func_8007FD2C`. Purpose unknown.
     s32 field_108; // Player run counter. Increments every tick(?) indefinitely. Purpose for other characters unknown.
-    s8 unk_10C;
-	s8 unk_10D;
-	s8 unk_10E[24];
+
+    s8  unk_10C;
+	u8  field_10D;
+	s8  unk_10E[5];
+    s32 field_112;
+	s8  unk_116[14];
     s16 field_126;
 } s_SubCharacter;
 STATIC_ASSERT_SIZEOF(s_SubCharacter, 296);
@@ -323,7 +333,7 @@ typedef struct _MainCharacterExtra
     u8             field_0;
     u8             field_1;
     u8             field_2;
-    u8             field_3;    // isPrevAnimStateSame? Always 1, set to 0 for 1 tick when anim state changes.
+    u8             isAnimStateUnchanged_3; // Educated guess. Always 1, set to 0 for 1 tick when anim state appears to change.
     u8             unk_4;
     u8             unk_5;
     u16            flags_6;
@@ -346,7 +356,7 @@ STATIC_ASSERT_SIZEOF(s_MainCharacter, 340);
 typedef struct _SysWork
 {
     s8              unk_0[8];
-    e_SysState      sysState_8;
+    s32             sysState_8;     /** e_SysState */
     s32             sysStateStep_C; // Current step/state of sysState_8 game is in.
     s32             field_10;       // Sometimes assigned to same thing as sysStateStep_C.
     s32             field_14;
@@ -357,17 +367,19 @@ typedef struct _SysWork
     s32             field_28;
     s32             field_2C; // Timer of some kind.
     s32             field_30;
-    s8              unk_34[16];
-    s8              unk_44;
-    s8              unk_45;
-    s8              unk_46;
-    s8              unk_47;
-    s8              unk_48[4];
+    s8              unk_34[4];
+    s32             field_38; // Something related to map loading.
+    s8              unk_3C[11];
+    s8              field_47; // Something related to map loading.
+    s8              unk_48[3];
+    u8              field_4B; // Something used among player anim state checks.
     s_MainCharacter player_4C;
     s_SubCharacter  characters_1A0[NPC_COUNT_MAX];
     GsCOORDINATE2   unk_coord_890[2];
     GsCOORDINATE2   hero_neck_930;
-    s8              unk_980[6432];
+    s8              unk_980[6424];
+    s32             flags_2298; // Something related to map loading.
+    s8              unk_229C[4];
     s32             field_22A0;
     s32             flags_22A4;
     s8              unk_22A8[176];

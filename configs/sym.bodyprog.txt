@@ -21,6 +21,8 @@ g_PrevVBlanks = 0x800A9770; // type:s32
 g_VBlanks = 0x800B5C34; // type:s32
 g_UncappedVBlanks = 0x800B5C38; // type:s32
 
+g_MaybePlayerAnims = 0x800AF228; // type:MaybeCharacterAnim
+
 // sh "view" / "vw" / "vc" / "vb" code
 // Most names from SH2, functions seem to match pretty close between it and SH1 besides a few missing/extra funcs.
 hack_vcSetWatchTgtXzPos_fix = 0x8002B2B4; // type:s32 - Some 0x80083500 value which coincidentally points to code inside vcSetWatchTgtXzPos, probably unrelated flags or something. A jtbl is right before this which spimdisasm tries to include, breaking vcSetWatchTgtXzPos build.
@@ -157,6 +159,9 @@ SysWork_SaveGameReadPlayer = 0x8003A1F4; // type:func
 
 Game_SaveGameResetPlayer = 0x8007E530; // type:func
 
+Player_AnimGetSomething = 0x8007F308; // type:func
+PreservedSignSubtract = 0x80080594; //type:func
+
 Camera_SetTranslation = 0x80086A94; // type:func
 Camera_SetRotation = 0x80086B70; // type:func
 
@@ -184,12 +189,13 @@ JOY_Update = 0x8003446C; // type:func
 JOY_ReadP1 = 0x80034450; // type:func
 JOY_ControllerDataUpdate = 0x80034494; // type:func
 ControllerData_AnalogToDigital = 0x80034670; // type:func
-GameFs_MapLoad = 0x8003521c; // type:func
+GameFs_MapLoad = 0x8003521C; // type:func
 Chara_PositionUpdateFromParams = 0x800371e8; // type:func
 AreaLoad_UpdatePlayerPosition = 0x80039f30; // type:func
 GameFs_BgEtcGfxLoad_8003BE6C = 0x8003be6c; // type:func
 GameFs_BgItemLoad_8003BE9C = 0x8003be9c; // type:func
 GameFs_FlameGfxLoad = 0x8003E710; // type:func
+GameFs_PlayerMapAnimLoad = 0x8007EB64; // type:func
 
 SD_EngineCmd = 0x80045A7C; // type:func
 SD_DriverInit = 0x80045DD4; // type:func

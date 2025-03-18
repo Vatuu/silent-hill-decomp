@@ -755,7 +755,7 @@ s32 func_80088D0C()
 void func_80088D34(s32 idx)
 {
     idx++; 
-    func_800445A4(D_800A992C[idx].field_8, D_800A992C[idx].field_20);
+    func_800445A4(D_800A992C[idx].field_8, D_800A992C[idx].field_14);
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", Chara_Spawn);
@@ -976,9 +976,15 @@ s32 func_8008D850()
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008D8C0);
 
+// Large function.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008D990);
 
+// TODO: Matches, but checksum is wrong.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008E4EC);
+/*void func_8008E4EC() // 0x8008E4EC
+{
+    func_80056504(&D_8002B2CC, &D_800AFD9C, 1);
+}*/
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008E51C);
 

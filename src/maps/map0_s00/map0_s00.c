@@ -73,7 +73,7 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D1C38);
 
 void func_800D209C()
 {
-    g_SysWork.unk_47 = NO_VALUE;
+    g_SysWork.field_47 = NO_VALUE;
     g_SaveGamePtr->field_AA = 0;
 
     func_800D20E4();
@@ -124,7 +124,7 @@ void func_800D2C7C(s32 arg0)
     character->field_3 = 0;
     character->field_2 = 0;
 
-    extra->field_3 = 0;
+    extra->isAnimStateUnchanged_3 = 0;
     extra->field_2 = 0;
 
     g_SysWork.player_4C.extra_128.field_20 = 0;
@@ -190,15 +190,15 @@ void func_800D2E9C() {}
 
 u8 func_800D2EA4()
 {
-    return g_SysWork.player_4C.character.unk_10D;
+    return g_SysWork.player_4C.character.field_10D;
 }
 
 void func_800D2EB4()
 {
     u8 temp_a0;
 
-    temp_a0 = g_SysWork.unk_47;
-    g_SysWork.unk_47 = NO_VALUE;
+    temp_a0 = g_SysWork.field_47;
+    g_SysWork.field_47 = NO_VALUE;
     D_800DD59C = temp_a0;
 
     func_8003DD80(1, 17);
@@ -206,7 +206,7 @@ void func_800D2EB4()
 
 void func_800D2EF4()
 {
-    g_SysWork.unk_47 = D_800DD59C;
+    g_SysWork.field_47 = D_800DD59C;
 }
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D2F08);
