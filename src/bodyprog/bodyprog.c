@@ -884,6 +884,7 @@ void Game_SaveGameInitialize(s8 overlayIdx, s32 difficulty) // 0x800350BC
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80035178);
 
+#ifdef NON_MATCHING
 void GameFs_MapLoad(s32 mapIdx) // 0x8003521C
 {
     #define BASE_FILE_IDX FILE_VIN_MAP0_S00_BIN
@@ -900,6 +901,9 @@ void GameFs_MapLoad(s32 mapIdx) // 0x8003521C
     
     func_800546A8(g_SysWork.field_47);
 }
+#else
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", GameFs_MapLoad);
+#endif
 
 s32 func_8003528C(s32 idx0, s32 idx1)
 {

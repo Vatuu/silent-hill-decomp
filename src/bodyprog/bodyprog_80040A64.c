@@ -109,6 +109,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800426E4);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_8004287C);
 
+// TODO: Matched, but checksum fails.
 #ifdef NON_MATCHING
 s32 func_80042C04(s32 idx) // 0x80042C04
 {
