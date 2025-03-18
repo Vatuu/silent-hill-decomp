@@ -940,13 +940,11 @@ void func_8008074C(int arg0, int arg1) // 0x8008074C
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8008076C);
 
-// TODO: Matched, but some issue here.
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_80080884);
-/*s32 func_80080884() // 0x80080884
+s32 func_80080884() // 0x80080884
 {
     func_8008076C();
     return D_800AFC7C;
-}*/
+}
 
 s32 func_800808AC() // 0x800808AC
 {
