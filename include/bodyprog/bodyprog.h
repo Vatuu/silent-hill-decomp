@@ -75,6 +75,12 @@ typedef struct
 
 typedef struct
 {
+    s8  unk_0[27];
+    s16 field_1C;
+} s_800C1020;
+
+typedef struct
+{
     u8  field_0;
     u8  field_1;
     u8  field_2;
@@ -185,6 +191,8 @@ extern s32 D_800B55FC;
 extern s32 D_800B5618;
 
 extern u8 D_800BCDD4;
+
+extern s_800C1020 D_800C1020;
 
 extern s32 D_800C4710[];
 
@@ -363,6 +371,8 @@ void func_80041CEC(s_80041CEC*);
 
 /** Clears some field in some struct. */
 void func_80041D10(s_80041D10* array, s32 size);
+
+void func_80041E98();
 
 u8 func_80045B28();
 

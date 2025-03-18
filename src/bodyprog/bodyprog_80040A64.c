@@ -69,7 +69,11 @@ void func_80041D10(s_80041D10* array, s32 size)
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80041D48);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80041E98);
+void func_80041E98() // 0x80041E98
+{
+    bzero(&D_800C1020, 308);
+    D_800C1020.field_1C = 512;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80041ED0);
 
