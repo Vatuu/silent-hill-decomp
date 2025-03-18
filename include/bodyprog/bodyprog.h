@@ -567,6 +567,8 @@ s32 func_80080514();
 /** Computes (abs(value) - subtractor) * copysign(value). */
 s32 PreservedSignSubtract(s32 value, s32 subtractor);
 
+void func_8008074C(int arg0, int arg1);
+
 s32 func_80080884();
 
 s32 func_800808AC();
