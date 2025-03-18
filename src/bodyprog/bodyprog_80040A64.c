@@ -84,7 +84,12 @@ void func_80041FF0() // 0x80041FF0
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_8004201C);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800420C0);
+void func_800420C0() // 0x800420C0
+{
+    func_800420FC();
+    func_80042300(&D_800C1020, D_800C1020.field_158);
+    func_80041D48();
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800420FC);
 
@@ -104,7 +109,14 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800426E4);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_8004287C);
 
+#ifdef NON_MATCHING
+s32 func_80042C04(s32 idx) // 0x80042C04
+{
+    return (func_80041B1C(&D_800C117C[idx]) < 3) ^ 1;
+}
+#else
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80042C04);
+#endif
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80042C3C);
 
