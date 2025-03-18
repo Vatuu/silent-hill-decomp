@@ -124,7 +124,7 @@ void func_800D2C7C(s32 arg0)
     character->field_3 = 0;
     character->field_2 = 0;
 
-    extra->field_3 = 0;
+    extra->isAnimStateUnchanged_3 = 0;
     extra->field_2 = 0;
 
     g_SysWork.player_4C.extra_128.field_20 = 0;
