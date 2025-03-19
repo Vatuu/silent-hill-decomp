@@ -5,11 +5,6 @@
 
 #define MIN_IN_ROAD_DIST TILE_UNIT(16.0f) // vcGetMinInRoadDist() in SH2, hardcoded to TILE_UNIT(16.0f) in SH1.
 
-static inline s16 shAngleRegulate(s32 a)
-{
-    return (a << 0x14) >> 0x14;
-}
-
 INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vc_main", vcInitVCSystem);
 
 void vcStartCameraSystem() // 0x800809DC
@@ -27,8 +22,7 @@ void vcEndCameraSystem() // 0x80080A04
 
 s32 func_80080A10() // 0x80080A10
 {
-    // TODO: Bitfield access?
-    return (vcWork.cur_near_road_2B8.road_p_0->cam_mv_type_14 >> 8) & 0xF;
+    return vcWork.cur_near_road_2B8.road_p_0->field_15;
 }
 
 void func_80080A30(s32 arg0) // 0x80080A30
@@ -41,7 +35,31 @@ s32 func_80080A3C() // 0x80080A3C
     return vcWork.field_2E4;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vc_main", vcSetFirstCamWork);
+void vcSetFirstCamWork(VECTOR3* cam_pos, s16 chara_eye_ang_y, s32 use_through_door_cam_f) // 0x80080A4C
+{
+    Math_SVectorZero(&vcWork.ofs_cam_ang_spd_C0);
+
+    vcWork.flags_8 = VC_WARP_CAM_F | VC_WARP_WATCH_F | VC_WARP_CAM_TGT_F;
+
+    vcWork.cam_pos_50      = *cam_pos;
+    vcWork.cam_mv_ang_y_5C = 0;
+
+    Math_Vector3Zero(&vcWork.cam_velo_60);
+
+    vcWork.cam_tgt_pos_44 = *cam_pos;
+
+    Math_Vector3Zero(&vcWork.cam_tgt_velo_100);
+
+    vcWork.cam_mv_ang_y_5C = 0;
+    vcWork.cam_tgt_spd_110 = 0;
+
+    vcWork.cam_chara2ideal_ang_y_FE = shAngleRegulate(chara_eye_ang_y + 2048);
+
+    memcpy(&vcWork.cur_near_road_2B8, &vcNullNearRoad, sizeof(VC_NEAR_ROAD_DATA));
+
+    vcWork.through_door_activate_init_f_C = use_through_door_cam_f;
+    vcSetTHROUGH_DOOR_CAM_PARAM_in_VC_WORK(&vcWork, VC_TDSC_END);
+}
 
 void func_80080B58(GsCOORDINATE2* a1, SVECTOR* a2, VECTOR3* a3) // 0x80080B58
 {
@@ -180,11 +198,80 @@ void vcSetSubjChara(VECTOR3* chara_pos, s32 chara_bottom_y, s32 chara_top_y, s32
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vc_main", vcExecCamera);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vc_main", vcSetAllNpcDeadTimer);
+void vcSetAllNpcDeadTimer() // 0x8008123C
+{
+#define DEAD_TIMER_MAX 10
+
+    s_SubCharacter* chara;
+
+    for (chara = &g_SysWork.characters_1A0[0];
+         chara < &g_SysWork.characters_1A0[NPC_COUNT_MAX];
+         chara++)
+    {
+        if (chara->chara_type_0 == 0)
+        {
+            continue;
+        }
+
+        if (chara->health_B0 <= 0)
+        {
+            chara->dead_timer_C4 += g_DeltaTime0;
+        }
+        else
+        {
+            chara->dead_timer_C4 = 0;
+        }
+
+        if (chara->dead_timer_C4 > TO_FIXED(DEAD_TIMER_MAX, Q12_SHIFT))
+        {
+            chara->dead_timer_C4 = TO_FIXED(DEAD_TIMER_MAX, Q12_SHIFT);
+        }
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vc_main", vcRetSmoothCamMvF);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vc_main", vcRetCurCamMvType);
+VC_CAM_MV_TYPE vcRetCurCamMvType(VC_WORK* w_p) // 0x80081428
+{
+    s32 hasViewFlag;
+
+    if (g_GameWorkPtr0->optViewMode_29 != 0)
+    {
+        // If g_GameWorkPtr0->optViewCtrl_28 == 1 then it flips check against VC_PRS_F_VIEW_F flag?
+        // Code below matches but duplicates the return VC_MV_SELF_VIEW code, and doesn't really seem like something written by a dev
+        hasViewFlag = (vcWork.flags_8 & VC_PRS_F_VIEW_F) == VC_PRS_F_VIEW_F;
+
+        if (g_GameWorkPtr0->optViewCtrl_28)
+        {
+            if ((hasViewFlag ^ 1) != 0)
+            {
+                // TODO: can this be merged with block below somehow?
+                if ((w_p->flags_8 & 0x103) == 0 && func_8008150C(w_p->chara_pos_114.vx, w_p->chara_pos_114.vz) == 0)
+                {
+                    return VC_MV_SELF_VIEW;
+                }
+            }
+        }
+        else if (hasViewFlag)
+        {
+            if ((w_p->flags_8 & 0x103) == 0 && func_8008150C(w_p->chara_pos_114.vx, w_p->chara_pos_114.vz) == 0)
+            {
+                return VC_MV_SELF_VIEW;
+            }
+        }
+    }
+
+    if (w_p->through_door_10.active_f_0 != 0)
+    {
+        if (!vcRetThroughDoorCamEndF(w_p))
+        {
+            return VC_MV_THROUGH_DOOR;
+        }
+        vcSetTHROUGH_DOOR_CAM_PARAM_in_VC_WORK(w_p, VC_TDSC_END);
+    }
+
+    return w_p->cur_near_road_2B8.road_p_0->cam_mv_type_14;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vc_main", func_8008150C);
 
@@ -234,7 +321,80 @@ s32 vcRetThroughDoorCamEndF(VC_WORK* w_p) // 0x800815F0
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vc_main", vcRetFarWatchRate);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vc_main", vcRetSelfViewEffectRate);
+s32 vcRetSelfViewEffectRate(VC_CAM_MV_TYPE cur_cam_mv_type, s32 far_watch_rate, VC_WORK* w_p) // 0x800818D4
+{
+    s32 xyz_dist;
+    s32 max_rate;
+    s32 cam_max_rate;
+    s32 mul_rate;
+    s32 ret_eff_rate;
+
+    if (cur_cam_mv_type > VC_MV_THROUGH_DOOR)
+    {
+        return 0;
+    }
+
+    if (cur_cam_mv_type < VC_MV_SELF_VIEW)
+    {
+        return 0;
+    }
+
+    cam_max_rate = cur_cam_mv_type == VC_MV_SELF_VIEW ? TILE_UNIT(16.0f) : TILE_UNIT(5.6f);
+
+    xyz_dist = Math_VectorMagnitude(
+        FROM_FIXED(w_p->cam_pos_50.vx - w_p->chara_head_pos_130.vx, Q4_SHIFT),
+        FROM_FIXED(w_p->cam_pos_50.vy - w_p->chara_head_pos_130.vy, Q4_SHIFT),
+        FROM_FIXED(w_p->cam_pos_50.vz - w_p->chara_head_pos_130.vz, Q4_SHIFT));
+
+    if (xyz_dist >= TILE_UNIT(0.5f))
+    {
+        if (xyz_dist > TILE_UNIT(1.2f))
+        {
+            max_rate = 0;
+        }
+        else
+        {
+            max_rate = (cam_max_rate * (TILE_UNIT(1.2f) - xyz_dist)) / TILE_UNIT(0.7f);
+        }
+    }
+    else
+    {
+        max_rate = cam_max_rate;
+    }
+
+    if (w_p->nearest_enemy_xz_dist_2E0 > TILE_UNIT(64.0f))
+    {
+        mul_rate = TILE_UNIT(16.0f);
+    }
+    else
+    {
+        if (w_p->nearest_enemy_xz_dist_2E0 < TILE_UNIT(32.0f))
+        {
+            mul_rate = 0;
+        }
+        else
+        {
+            mul_rate = (w_p->nearest_enemy_xz_dist_2E0 - TILE_UNIT(32.0f)) / 2;
+        }
+    }
+    max_rate = FROM_FIXED(max_rate * mul_rate, Q12_SHIFT);
+
+    ret_eff_rate = cam_max_rate;
+
+    if (max_rate >= 0)
+    {
+        if (max_rate <= ret_eff_rate)
+        {
+            ret_eff_rate = max_rate;
+        }
+    }
+    else
+    {
+        ret_eff_rate = 0;
+    }
+
+    return ret_eff_rate;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vc_main", vcSetFlagsByCamMvType);
 

@@ -242,7 +242,7 @@ typedef struct _GameWork
     u8                   optAutoLoad_25;            /** Off: 0, on: 1. */
     u8                   unk_26;
     u8                   optExtraOptionsEnabled_27;
-    u8                   optViewCtrl_28;            /** Normal: 0, reverse: 1. */
+    s8                   optViewCtrl_28;            /** Normal: 0, reverse: 1. */
     s8                   optViewMode_29;
     u8                   optRetreatTurn_2A;         /** Normal: 0, reverse: 1. */
     u8                   optWalkRunCtrl_2B;         /** Normal: 0, reverse: 1. */
@@ -275,7 +275,7 @@ STATIC_ASSERT_SIZEOF(s_GameWork, 1496);
 
 typedef struct _SubCharacter
 {
-    u8    chara_type_0; // NOTE: Character types <24 must be some distinct category.
+    s8    chara_type_0; // NOTE: Character types <24 must be some distinct category.
     u8    field_1;
     u8    field_2;
     u8    field_3; // Clear: anim transitioning(?), bit 1: animated, bit2: turning.
@@ -301,7 +301,10 @@ typedef struct _SubCharacter
     u8      pad_3E[2];
     u8      unk_40[112];
     s32     health_B0; // Bits 3-4 contain s16 associated with player's rate of heavy breathing, always set to 6. Can't split into s16s? Maybe packed data.
-    s8      unk_B4[52];
+    s8      unk_B4[16];
+    u16     dead_timer_C4; // Part of shBattleInfo struct in SH2, may use something similar here.
+    s8      unk_C6[2];
+    s8      unk_C8[32];
 
     // Fields in the following block may be part of a multi-purpose array of s32 elements used to store unique property data for each character type.
     // Start of this section is unclear, bytes above may be part of it.
