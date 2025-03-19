@@ -1,3 +1,6 @@
+#include "game.h"
+
+#include "bodyprog/bodyprog.h"
 #include "maps/map0/s00.h"
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800CB6B0);
@@ -143,7 +146,7 @@ void func_800D2D44()
 
 s32 func_800D2D6C()
 {
-    return ~(g_SysWork.player_4C.character.flags_6 & 1);
+    return ~(g_SysWork.player_4C.character.flags_6 & (1 << 0));
 }
 
 void func_800D2D84()

@@ -200,13 +200,11 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vc_main", vcExecCamera);
 
 void vcSetAllNpcDeadTimer() // 0x8008123C
 {
-#define DEAD_TIMER_MAX 10
+    #define DEAD_TIMER_MAX 10
 
     s_SubCharacter* chara;
 
-    for (chara = &g_SysWork.characters_1A0[0];
-         chara < &g_SysWork.characters_1A0[NPC_COUNT_MAX];
-         chara++)
+    for (chara = &g_SysWork.characters_1A0[0]; chara < &g_SysWork.characters_1A0[NPC_COUNT_MAX]; chara++)
     {
         if (chara->chara_type_0 == 0)
         {
@@ -238,14 +236,14 @@ VC_CAM_MV_TYPE vcRetCurCamMvType(VC_WORK* w_p) // 0x80081428
     if (g_GameWorkPtr0->optViewMode_29 != 0)
     {
         // If g_GameWorkPtr0->optViewCtrl_28 == 1 then it flips check against VC_PRS_F_VIEW_F flag?
-        // Code below matches but duplicates the return VC_MV_SELF_VIEW code, and doesn't really seem like something written by a dev
+        // Code below matches but duplicates the return VC_MV_SELF_VIEW code, and doesn't really seem like something written by a dev. -- emoose
         hasViewFlag = (vcWork.flags_8 & VC_PRS_F_VIEW_F) == VC_PRS_F_VIEW_F;
 
         if (g_GameWorkPtr0->optViewCtrl_28)
         {
             if ((hasViewFlag ^ 1) != 0)
             {
-                // TODO: can this be merged with block below somehow?
+                // TODO: Can this be merged with block below somehow?
                 if ((w_p->flags_8 & 0x103) == 0 && func_8008150C(w_p->chara_pos_114.vx, w_p->chara_pos_114.vz) == 0)
                 {
                     return VC_MV_SELF_VIEW;
@@ -267,6 +265,7 @@ VC_CAM_MV_TYPE vcRetCurCamMvType(VC_WORK* w_p) // 0x80081428
         {
             return VC_MV_THROUGH_DOOR;
         }
+
         vcSetTHROUGH_DOOR_CAM_PARAM_in_VC_WORK(w_p, VC_TDSC_END);
     }
 
@@ -339,12 +338,11 @@ s32 vcRetSelfViewEffectRate(VC_CAM_MV_TYPE cur_cam_mv_type, s32 far_watch_rate, 
         return 0;
     }
 
-    cam_max_rate = cur_cam_mv_type == VC_MV_SELF_VIEW ? TILE_UNIT(16.0f) : TILE_UNIT(5.6f);
+    cam_max_rate = (cur_cam_mv_type == VC_MV_SELF_VIEW) ? TILE_UNIT(16.0f) : TILE_UNIT(5.6f);
 
-    xyz_dist = Math_VectorMagnitude(
-        FROM_FIXED(w_p->cam_pos_50.vx - w_p->chara_head_pos_130.vx, Q4_SHIFT),
-        FROM_FIXED(w_p->cam_pos_50.vy - w_p->chara_head_pos_130.vy, Q4_SHIFT),
-        FROM_FIXED(w_p->cam_pos_50.vz - w_p->chara_head_pos_130.vz, Q4_SHIFT));
+    xyz_dist = Math_VectorMagnitude(FROM_FIXED(w_p->cam_pos_50.vx - w_p->chara_head_pos_130.vx, Q4_SHIFT),
+                                    FROM_FIXED(w_p->cam_pos_50.vy - w_p->chara_head_pos_130.vy, Q4_SHIFT),
+                                    FROM_FIXED(w_p->cam_pos_50.vz - w_p->chara_head_pos_130.vz, Q4_SHIFT));
 
     if (xyz_dist >= TILE_UNIT(0.5f))
     {
@@ -377,7 +375,7 @@ s32 vcRetSelfViewEffectRate(VC_CAM_MV_TYPE cur_cam_mv_type, s32 far_watch_rate, 
             mul_rate = (w_p->nearest_enemy_xz_dist_2E0 - TILE_UNIT(32.0f)) / 2;
         }
     }
-    max_rate = FROM_FIXED(max_rate * mul_rate, Q12_SHIFT);
+    max_rate = FP_MULTIPLY(max_rate, mul_rate, Q12_SHIFT);
 
     ret_eff_rate = cam_max_rate;
 

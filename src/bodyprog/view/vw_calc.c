@@ -208,13 +208,12 @@ s32 vwVectorToAngle(SVECTOR* ang, SVECTOR* vec) // 0x8004A714
     return ret_r;
 }
 
-// Performs linear interpolation between y values based on an input x within the given range.
 s32 vwOresenHokan(s32* y_ary, s32 y_suu, s32 input_x, s32 min_x, s32 max_x) // 0x8004A7C8
 {
-    s32 amari;    // Remainder when calculating position within interval
-    s32 kukan_w;  // Width of each interval between y-values
-    s32 kukan_no; // Index of the interval containing input_x
-    s32 output_y; // Interpolated output y-value
+    s32 amari;    // Remainder when calculating position within interval.
+    s32 kukan_w;  // Width of each interval between Y values.
+    s32 kukan_no; // Index of the interval containing input_x.
+    s32 output_y; // Interpolated output Y value.
 
     if (input_x >= max_x)
     {
