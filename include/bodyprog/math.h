@@ -40,4 +40,23 @@ void func_80096E78(SVECTOR* vec, MATRIX* mat); // Another custom vwRotMatrix...]
 s32 shRsin(s32);
 s32 shRcos(s32);
 
+static inline s16 shAngleRegulate(s32 a)
+{
+    return (a << 20) >> 20;
+}
+
+static inline void Math_SVectorZero(SVECTOR* v)
+{
+    v->vx = 0;
+    v->vy = 0;
+    v->vz = 0;
+}
+
+static inline void Math_Vector3Zero(VECTOR3* v)
+{
+    v->vx = 0;
+    v->vy = 0;
+    v->vz = 0;
+}
+
 #endif
