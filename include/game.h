@@ -383,7 +383,7 @@ typedef struct _SysWork
     s32             field_22A0;
     s32             flags_22A4;
     s8              unk_22A8[176];
-    u8              unk_2358;
+    u8              field_2358;
     s8              unk_2359[33];
     s16             cam_ang_y_237A;
     s16             cam_ang_z_237C;

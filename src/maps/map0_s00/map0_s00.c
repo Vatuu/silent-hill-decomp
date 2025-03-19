@@ -1,8 +1,4 @@
-#include "bodyprog/bodyprog.h"
-
-extern u8 D_800DD59C;
-
-void func_800D20E4();
+#include "maps/map0/s00.h"
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800CB6B0);
 
@@ -82,7 +78,7 @@ void func_800D209C()
 
 void func_800D20D8()
 {
-    g_SysWork.unk_2358 = 0;
+    g_SysWork.field_2358 = 0;
 }
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D20E4);
@@ -261,7 +257,11 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D8310);
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D8748);
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D8888);
+void func_800D8888(void)
+{
+    func_800D923C();
+    D_800E3A30 = 0;
+}
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D88AC);
 
