@@ -514,15 +514,15 @@ void MainLoop() // 0x80032ee0
 {
     #define TICKS_PER_SECOND_MIN (TICKS_PER_SECOND / 4)
     #define H_BLANKS_PER_TICK    263
-    #define ONE_SEC_FIXED        TO_FIXED(1, Q12_SHIFT)
+    #define ONE_SEC_FIXED        FP_TO(1, Q12_SHIFT)
 
     #define H_BLANKS_PER_SECOND               (H_BLANKS_PER_TICK * TICKS_PER_SECOND)              // 15780
     #define H_BLANKS_TO_SEC_CONVERSION_FACTOR ((float)ONE_SEC_FIXED / (float)H_BLANKS_PER_SECOND) // 0.25956907477f
 
-    #define H_BLANKS_PER_FRAME_MIN      (H_BLANKS_PER_SECOND / TICKS_PER_SECOND_MIN)                    // 1052
-    #define H_BLANKS_TO_FIXED_SEC_SCALE (s32)(H_BLANKS_TO_SEC_CONVERSION_FACTOR * (float)ONE_SEC_FIXED) // 1063
-    #define H_BLANKS_UNKNOWN_SCALE      10419                                                           // TODO: Somehow derive this value.
-    #define V_BLANKS_MAX                4
+    #define H_BLANKS_PER_FRAME_MIN   (H_BLANKS_PER_SECOND / TICKS_PER_SECOND_MIN)                    // 1052
+    #define H_BLANKS_FP_TO_SEC_SCALE (s32)(H_BLANKS_TO_SEC_CONVERSION_FACTOR * (float)ONE_SEC_FIXED) // 1063
+    #define H_BLANKS_UNKNOWN_SCALE   10419                                                           // TODO: Somehow derive this value.
+    #define V_BLANKS_MAX             4
 
     s32 vBlanks;
     s32 vCountCopy;
@@ -671,8 +671,8 @@ void MainLoop() // 0x80032ee0
         }
 
         // Update delta time.
-        g_DeltaTime0 = FP_MULTIPLY(vCount, H_BLANKS_TO_FIXED_SEC_SCALE, Q12_SHIFT);
-        g_DeltaTime1 = FP_MULTIPLY(vCountCopy, H_BLANKS_TO_FIXED_SEC_SCALE, Q12_SHIFT);
+        g_DeltaTime0 = FP_MULTIPLY(vCount, H_BLANKS_FP_TO_SEC_SCALE, Q12_SHIFT);
+        g_DeltaTime1 = FP_MULTIPLY(vCountCopy, H_BLANKS_FP_TO_SEC_SCALE, Q12_SHIFT);
         g_DeltaTime2 = FP_MULTIPLY(vCount, H_BLANKS_UNKNOWN_SCALE, Q12_SHIFT); // TODO: Unknown time scale.
         GsClearVcount();
         
