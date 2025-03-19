@@ -45,7 +45,7 @@ void vwSetCoordRefAndEntou(GsCOORDINATE2* parent_p, s32 ref_x, s32 ref_y, s32 re
     view_ang.vy = cam_ang_y;
     view_ang.vz = cam_ang_z;
     view_ang.vx = -ratan2(-cam_y, cam_xz_r);
-    view_ang.vy = (view_ang.vy + DEG_TO_FPA(11.25f)) & 0xFFF;
+    view_ang.vy = (view_ang.vy + FP_ANGLE(11.25f)) & 0xFFF;
 
     func_80096E78(&view_ang, view_mtx);
 

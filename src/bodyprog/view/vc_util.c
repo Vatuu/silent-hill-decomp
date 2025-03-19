@@ -16,9 +16,9 @@ void vcSetCameraUseWarp(VECTOR3* chr_pos, s16 chr_ang_y) // 0x800400D4
     cam_ang.vy = chr_ang_y;
     cam_ang.vz = 0;
 
-    cam_pos.vx = chr_pos->vx - MUL_FIXED(shRsin(chr_ang_y), 0x1800, Q12_SHIFT);
+    cam_pos.vx = chr_pos->vx - FP_MULTIPLY(shRsin(chr_ang_y), 0x1800, Q12_SHIFT);
     cam_pos.vy = chr_pos->vy - TILE_UNIT(27.2f);
-    cam_pos.vz = chr_pos->vz - MUL_FIXED(shRcos(chr_ang_y), 0x1800, Q12_SHIFT);
+    cam_pos.vz = chr_pos->vz - FP_MULTIPLY(shRcos(chr_ang_y), 0x1800, Q12_SHIFT);
 
     vcSetFirstCamWork(&cam_pos, chr_ang_y, g_SysWork.flags_22A4 & 0x40);
     g_SysWork.flags_22A4 &= ~0x40;
@@ -33,7 +33,7 @@ void func_800401A0(s32 arg0) // 0x800401A0
 {
     if (arg0)
     {
-        vcCameraInternalInfo.ev_cam_rate = 4096; // TODO: If angle, replace magic value with DEG_TO_FPA(22.5f).
+        vcCameraInternalInfo.ev_cam_rate = 4096; // TODO: If angle, replace magic value with FP_ANGLE(22.5f).
     }
     else
     {
@@ -73,8 +73,8 @@ void vcMakeHeroHeadPos(VECTOR3* head_pos) // 0x8004047C
 
 void vcAddOfsToPos(VECTOR3* out_pos, VECTOR3* in_pos, s16 ofs_xz_r, s16 ang_y, s32 ofs_y) // 0x80040518
 {
-    out_pos->vx = in_pos->vx + MUL_FIXED(ofs_xz_r, shRsin(ang_y), Q12_SHIFT);
-    out_pos->vz = in_pos->vz + MUL_FIXED(ofs_xz_r, shRcos(ang_y), Q12_SHIFT);
+    out_pos->vx = in_pos->vx + FP_MULTIPLY(ofs_xz_r, shRsin(ang_y), Q12_SHIFT);
+    out_pos->vz = in_pos->vz + FP_MULTIPLY(ofs_xz_r, shRcos(ang_y), Q12_SHIFT);
     out_pos->vy = in_pos->vy + ofs_y;
 }
 
@@ -209,7 +209,7 @@ void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, s_SysWork* sys_p) // 0x80040
                 var_s0 = -0x1A;
             }
 
-            var_v1 = var_s0 * shRsin(cam_ang.vy + DEG_TO_FPA(5.625f));
+            var_v1 = var_s0 * shRsin(cam_ang.vy + FP_ANGLE(5.625f));
             if (var_v1 < 0)
             {
                 var_v1 += 0xFFF;
@@ -217,7 +217,7 @@ void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, s_SysWork* sys_p) // 0x80040
 
             sp18.vx += FROM_FIXED(var_v1, Q12_SHIFT);
 
-            var_v1_4 = var_s0 * shRcos(cam_ang.vy + DEG_TO_FPA(5.625f));
+            var_v1_4 = var_s0 * shRcos(cam_ang.vy + FP_ANGLE(5.625f));
             if (var_v1_4 < 0)
             {
                 var_v1_4 += 0xFFF;
@@ -243,7 +243,7 @@ void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, s_SysWork* sys_p) // 0x80040
         ref_pos->vy = TO_FIXED(sp18.vy + sp58.vy, Q4_SHIFT);
         ref_pos->vz = TO_FIXED(sp18.vz + sp58.vz, Q4_SHIFT);
 
-        sys_p->cam_ang_y_237A = ((cam_ang.vy + DEG_TO_FPA(11.25f)) << 0x14) >> 0x14;
+        sys_p->cam_ang_y_237A = ((cam_ang.vy + FP_ANGLE(11.25f)) << 0x14) >> 0x14;
         sys_p->cam_y_2384     = TO_FIXED(-sp58.vy, Q4_SHIFT);
         sys_p->cam_r_xz_2380  = TO_FIXED(SquareRoot0((sp58.vx * sp58.vx) + (sp58.vz * sp58.vz)), Q4_SHIFT);
     }
