@@ -208,4 +208,46 @@ s32 vwVectorToAngle(SVECTOR* ang, SVECTOR* vec) // 0x8004A714
     return ret_r;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vw_calc", vwOresenHokan);
+// Performs polyline interpolation between y-values based on an input x within a given range.
+s32 vwOresenHokan(s32* y_ary, s32 y_suu, s32 input_x, s32 min_x, s32 max_x) // 0x8004A7C8
+{
+    s32 amari;    // Remainder when calculating position within interval
+    s32 kukan_w;  // Width of each interval between y-values
+    s32 kukan_no; // Index of the interval containing input_x
+    s32 output_y; // Interpolated output y-value
+
+    if (input_x >= max_x)
+    {
+        output_y = y_ary[y_suu - 1];
+    }
+    else
+    {
+        if (input_x < min_x)
+        {
+            output_y = y_ary[0];
+        }
+        else
+        {
+            kukan_w  = (max_x - min_x) / (y_suu - 1);
+            amari    = (input_x - min_x) % kukan_w;
+            kukan_no = (input_x - min_x) / kukan_w;
+            if (kukan_no >= (y_suu - 1))
+            {
+                output_y = y_ary[y_suu - 1];
+            }
+            else
+            {
+                if (kukan_no < 0)
+                {
+                    output_y = y_ary[0];
+                }
+                else
+                {
+                    output_y = ((y_ary[kukan_no] * (kukan_w - amari)) + (y_ary[kukan_no + 1] * amari)) / kukan_w;
+                }
+            }
+        }
+    }
+
+    return output_y;
+}
