@@ -30,7 +30,8 @@ s32 func_800D2D6C();
 void func_800D2D84();
 
 /**
-Specifically triggered at specific points after the start of cutscenes or dialogues
+Specifically triggers at specific points after the
+start of cutscenes or dialogue
 */
 s32 func_800D2E50();
 
