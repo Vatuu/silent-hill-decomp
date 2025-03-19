@@ -231,13 +231,13 @@ Demo_JoyUpdate = 0x8008F7CC; // type:func
 Demo_PresentIntervalUpdate = 0x8008F87C; // type:func
 Demo_GameRandSeedSet = 0x8008F8A8; // type:func
 
-// custom konami rotmatrix library?
+// Custom Konami rotation matrix library?
 // TODO: identify the other RotMatrix funcs here
 shRsin = 0x8009687C; // type:func
 shRcos = 0x8009689C; // type:func
 shRotMatrixZ = 0x800968BC; // type:func
 
-// konami libsd sound library (customised libsnd?)
+// Konami libsd sound library (customised libsnd?)
 tone_adsr_mem = 0x8009eda4; // type:func
 tone_adsr_back = 0x8009ee30; // type:func
 sd_alloc_sort = 0x8009eebc; // type:func

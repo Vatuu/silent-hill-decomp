@@ -280,7 +280,7 @@ typedef struct _SubCharacter
     u8    field_2;
     u8    field_3; // Clear: anim transitioning(?), bit 1: animated, bit2: turning.
 
-    // NOTE: Bytes 0x4 to 0x17 are copied sequentially into s_MainCharacterExtra. If you figure out more, please copy work there too.
+    // Probably struct.
     //==================
 
     // Following 4 bytes might be packed into an s32 called "animStatus",
@@ -299,12 +299,14 @@ typedef struct _SubCharacter
 
     VECTOR3 position_18;
     SVECTOR rotation_24;
-    SVECTOR rot_spd_2C;
+    SVECTOR rotationSpeed_2C;
     s32     field_34;
-    s32     chara_mv_spd_38;
-    s16     chara_mv_ang_y_3C;
-    u8      pad_3E[2];
-    u8      unk_40[112];
+    s32     moveSpeed_38;
+    s16     headingAngle_3C;
+    s8      pad_3E[2];
+    s8      unk_40[4];
+    s32     field_44;
+    s8      unk_45[104];
     s32     health_B0; // Bits 3-4 contain s16 associated with player's rate of heavy breathing, always set to 6. Can't split into s16s? Maybe packed data.
     s8      unk_B4[16];
     u16     dead_timer_C4; // Part of shBattleInfo struct in SH2, may use something similar here.
@@ -315,15 +317,15 @@ typedef struct _SubCharacter
     // Start of this section is unclear, bytes above may be part of it.
     // For player, mostly used for counters as far as I could see. -- Sezz
 
-    s32 field_E8;  // Player AFK counter. Increments every tick(?) for 10 seconds before player starts AFK anim. Purpose for other characters unknown.
+    s32 field_E8;  // Player AFK counter. Increments every tick for 10 seconds before player starts AFK anim. Purpose for other characters unknown.
     s32 field_EC;  // Copy of player Y position. Purpose for other characters unknown.
     s32 unk_F0;
     s32 unk_F4;
     s32 field_F8;  // Player run counter. Increments more slowly than runCounter_108. Purpose for other characters unknown.
-    s32 field_FC;  // Player winded counter. Counts 20 seconds worth of ticks(?) and caps at 0x23000. Purpose for other characters unknown.
+    s32 field_FC;  // Player winded counter. Counts 20 seconds worth of ticks and caps at 0x23000. Purpose for other characters unknown.
     s32 unk_100;
     s32 field_104;  // Used by player, returned by `func_8007FD2C`. Purpose unknown.
-    s32 field_108; // Player run counter. Increments every tick(?) indefinitely. Purpose for other characters unknown.
+    s32 field_108; // Player run counter. Increments every tick indefinitely. Purpose for other characters unknown.
 
     s8  unk_10C;
 	u8  field_10D;
@@ -342,8 +344,8 @@ typedef struct _MainCharacterExtra
     u8             field_1;
     u8             field_2;
     u8             isAnimStateUnchanged_3; // Educated guess. Always 1, set to 0 for 1 tick when anim state appears to change.
-
-    // NOTE: This is a sequential copy of fields 0x4 to 0x17 of s_SubCharacter. If you figure out more, please copy work there too.
+    
+    // Probably struct.
     //==================
 
     u8  animIdx_4;
