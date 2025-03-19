@@ -135,8 +135,10 @@ typedef struct _VC_ROAD_DATA
     VC_ROAD_FLAGS     flags_10 : 8;
     VC_AREA_SIZE_TYPE area_size_type_11 : 2;
     VC_ROAD_TYPE      rd_type_11 : 3;
-    u32               unk : 19; // May contain mv_y_type / rd_dir_type, maybe cam_mv_type below too
-    u_int             cam_mv_type_14;
+    int               unk_11 : 19; // Unnamed fields may contain mv_y_type / rd_dir_type
+    int               unk_14 : 8;
+    u32               field_15 : 4;
+    int               cam_mv_type_14 : 4; /** VC_CAM_MV_TYPE */
 } VC_ROAD_DATA;
 STATIC_ASSERT_SIZEOF(VC_ROAD_DATA, 24);
 
@@ -320,6 +322,7 @@ s32  vcExecCamera();
 void vcSetAllNpcDeadTimer();
 s32  vcRetSmoothCamMvF(VECTOR3* old_pos, VECTOR3* now_pos, SVECTOR* old_ang, SVECTOR* now_ang);
 VC_CAM_MV_TYPE vcRetCurCamMvType(VC_WORK* w_p);
+s32  func_8008150C(s32, s32);
 s32  vcRetThroughDoorCamEndF(VC_WORK* w_p);
 s32  vcRetFarWatchRate(s32 far_watch_button_prs_f, VC_CAM_MV_TYPE cur_cam_mv_type, VC_WORK* w_p);
 s32  vcRetSelfViewEffectRate(VC_CAM_MV_TYPE cur_cam_mv_type, s32 far_watch_rate, VC_WORK* w_p);
