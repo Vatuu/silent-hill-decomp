@@ -89,6 +89,13 @@ STATIC_ASSERT_SIZEOF(s_800C117C, 28);
 
 typedef struct
 {
+    s32 field_0;
+    s8  unk_4[4];
+    s8  field_8;
+} s_800C4620;
+
+typedef struct
+{
     u8  field_0;
     u8  field_1;
     u8  field_2;
@@ -291,6 +298,8 @@ extern s8 D_800C4562;
 extern s8 D_800C457C;
 
 extern u8 D_800C4606;
+
+extern s_800C4620 D_800C4620;
 
 extern s_800C4818 D_800C4818;
 
@@ -592,6 +601,8 @@ s32 func_80080514();
 
 /** Computes (abs(value) - subtractor) * copysign(value). */
 s32 PreservedSignSubtract(s32 value, s32 subtractor);
+
+s32 func_800806AC(s32 arg0, s32 arg1, s32 arg2, s32 arg3); // arg3 type assumed.
 
 void func_8008074C(int arg0, int arg1);
 

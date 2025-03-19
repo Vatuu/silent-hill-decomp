@@ -931,12 +931,44 @@ s32 PreservedSignSubtract(s32 value, s32 subtractor) // 0x80080594
 // Unknown instruction error?
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_800805BC);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_800806AC);
+s32 func_800806AC(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x800806AC
+{
+    s32 res;
 
-void func_8008074C(int arg0, int arg1) // 0x8008074C
+    res = arg0 != 0;
+    if (res == 0)
+    {
+        return res;
+    }
+    
+    res = ~arg0 == 0;
+    if (res != 0)
+    {
+        return res;
+    }
+    
+    func_800699F8(&D_800C4620, arg1, arg3);
+    
+    res = arg2 < D_800C4620.field_0;
+    if (res != 0)
+    {
+        res = ~D_800C4620.field_8 != 0;
+        if (res != 0)
+        {
+            res = (arg0 & (1 << D_800C4620.field_8));
+            return res > 0U; 
+        }
+    }
+    
+    return res;
+}
+
+// TODO: Matched, but args don't fit with real `func_800806AC` siganture.
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8008074C);
+/*void func_8008074C(int arg0, int arg1) // 0x8008074C
 {
     func_800806AC(arg0, arg1, 1 << 31);
-}
+}*/
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8008076C);
 
