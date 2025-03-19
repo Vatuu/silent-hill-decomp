@@ -280,17 +280,22 @@ typedef struct _SubCharacter
     u8    field_2;
     u8    field_3; // Clear: anim transitioning(?), bit 1: animated, bit2: turning.
 
+    // NOTE: Bytes 0x4 to 0x17 are copied sequentially into s_MainCharacterExtra. If you figure out more, please copy work there too.
+    //==================
+
     // Following 4 bytes might be packed into an s32 called "animStatus",
-    // going by an original param name in vcMixSelfViewEffectToWatchTgtPos.
+    // implied by an original param name in `vcMixSelfViewEffectToWatchTgtPos`.
 
     u8  animIdx_4;
     u8  maybeSomeState_5;
     s16 flags_6; // Bit 1: movement unlockled? Bit 2: visible.
 
-    s32 animFrameIdx_8;       // Rapidly incrementing anim frame index. Maybe interpolated frame index?
-    s16 animFrameIdx_C;       // Slowly incrementing anim frame index. Maybe actual frame data index of frame to be interpolated?
-    s16 interpolationAlpha_E; // Something to do with linear anim interpolation. Maybe alpha value in Q format.
-    u8  flags_12[8];
+    s32 fixedAnimFrameIdx_8;  // animFrameIdx_C << 12. Maybe used for interpolation?
+    s16 animFrameIdx_C;       // Frame index into large array containing all frames for all anims?
+    s16 interpolationAlpha_E; // Something to do with linear anim interpolation. Maybe fixed-point alpha value. Gets set to 1 << 12 (4096).
+    u8  unk_10[8];            // Maybe flag fields.
+
+    //==================
 
     VECTOR3 position_18;
     SVECTOR rotation_24;
@@ -337,10 +342,20 @@ typedef struct _MainCharacterExtra
     u8             field_1;
     u8             field_2;
     u8             isAnimStateUnchanged_3; // Educated guess. Always 1, set to 0 for 1 tick when anim state appears to change.
-    u8             unk_4;
-    u8             unk_5;
-    u16            flags_6;
-    s8             copy_8[16]; // Duplicate data. Sequentially opies all fields from 0x4 to 0x18 of s_SubCharacter.
+
+    // NOTE: This is a sequential copy of fields 0x4 to 0x17 of s_SubCharacter. If you figure out more, please copy work there too.
+    //==================
+
+    u8  animIdx_4;
+    u8  maybeSomeState_5;
+    s16 flags_6;
+    s32 fixedAnimFrameIdx_8;
+    s16 animFrameIdx_C;
+    s16 interpolationAlpha_E;
+    u8  unk_10[8];
+
+    //==================
+
     s32            field_18;
     s32            field_1C; // Some kind of anim state. Set to 2 when player is in AFK anim, 0 otherwise.
     s32            field_20; // Some kind of anim state.
@@ -403,7 +418,7 @@ STATIC_ASSERT_SIZEOF(s_SysWork, 0x2768);
 extern void* g_OvlBodyprog;
 extern void* g_OvlDynamic;
 
-extern s_SysWork         g_SysWork;
+extern s_SysWork         g_SysWork; // 0x800B9FC0
 extern s_GameWork        g_GameWork;
 extern s_GameWork*       g_GameWorkPtr0;
 extern s_GameWork*       g_GameWorkPtr1;
