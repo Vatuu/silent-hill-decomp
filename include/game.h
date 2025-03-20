@@ -286,7 +286,7 @@ typedef struct _ModelAnimData
     // implied by an original param name in `vcMixSelfViewEffectToWatchTgtPos`.
 
     u8  animIdx_0;
-    u8  maybeSomeState_1; // animTime_4 could be a union. State says if its anim time or a func ptr? -- emoose
+    u8  maybeSomeState_1; // State says if animTime_4 is anim time or a func ptr? That field could be a union.  -- emoose
     u16 flags_2;          // e_AnimFlags. Bit 1: movement unlockled(?), bit 2: visible.
 
     s32 animTime_4;           // animFrameIdx_8 << 12.
@@ -299,11 +299,11 @@ STATIC_ASSERT_SIZEOF(s_ModelAnim, 20);
 
 typedef struct _Model
 {
-    s8          chara_type_0;
-    u8          field_1;
-    u8          field_2;
-    u8          isAnimStateUnchanged_3; // Educated guess. Always 1, set to 0 for 1 tick when anim state appears to change.
-                                        // Used differently in player's s_SubCharacter struct. 0: anim transitioning(?), bit 1: animated, bit 2: turning.
+    s8 chara_type_0;
+    u8 field_1;
+    u8 field_2;
+    u8 isAnimStateUnchanged_3; // Educated guess. Always 1, set to 0 for 1 tick when anim state appears to change.
+                            // Used differently in player's s_SubCharacter struct. 0: anim transitioning(?), bit 1: animated, bit 2: turning.
     s_ModelAnim anim_4;
 } s_Model;
 STATIC_ASSERT_SIZEOF(s_Model, 24);
@@ -335,7 +335,7 @@ typedef struct _SubCharacter
     s32 field_EC;  // Copy of player Y position. Purpose for other characters unknown.
     s32 field_F0;
     s32 field_F4;
-    s32 field_F8;  // Player run counter. Increments more slowly than runCounter_108. Purpose for other characters unknown.
+    s32 field_F8;  // Player run counter. Increments more slowly than `field_108`. Purpose for other characters unknown.
     s32 field_FC;  // Player out of breath counter. Counts 20 seconds worth of ticks and caps at 0x23000. Purpose for other characters unknown.
     s32 unk_100;
     s32 field_104; // Used by player, returned by `func_8007FD2C`. Purpose unknown.
@@ -354,10 +354,10 @@ typedef struct _MainCharacterExtra
 {
     s_Model model_0; // For player, this is a copy of model_0 in its corresponding s_SubCharacter.
     s32     field_18;
-    s32     field_1C; // Some kind of anim state. Set to 2 when player is in AFK anim, 0 otherwise.
-    s32     field_20; // Some kind of anim state.
-    s32     field_24; // Some kind of anim state.
-    s8      unk_28[4];
+    s32     field_1C; // Some kind of state. 0: nothing, 1: unknown bent over pose, 2: AFK, 8: dying, 5: forcefully turned around.
+    s32     field_20; // Some kind of anim state related to current action (running, walking, sidestepping, etc.).
+    s32     field_24; // Some kind of anim state related to current action (running, walking, sidestepping, etc.). Sometimes same as above, but not always.
+    s8      field_28; // Forcefully setting to 1 opens options menu.
 } s_MainCharacterExtra;
 STATIC_ASSERT_SIZEOF(s_MainCharacterExtra, 44);
 

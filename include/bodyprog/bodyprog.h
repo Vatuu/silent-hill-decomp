@@ -400,7 +400,7 @@ void func_800420C0();
 s32 func_80042C04(s32 idx);
 
 /** Anim_Update? */
-void func_800449F0(s_Model* model, void* buffer, s32 arg2, s_Model* targetModel);
+void Anim_Update(s_Model* model, void* buffer, s32 arg2, s_Model* targetModel);
 
 u8 func_80045B28();
 

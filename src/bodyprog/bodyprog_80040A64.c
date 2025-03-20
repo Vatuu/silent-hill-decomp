@@ -192,7 +192,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80044950);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800449AC);
 
-void func_800449F0(s_Model* model, void* buffer, s32 arg2, s_Model* targetModel)
+void Anim_Update(s_Model* model, void* buffer, s32 arg2, s_Model* targetModel)
 {
     s32 setAnimIdx;
     s32 someFixedTimemaskedAnimTime;
