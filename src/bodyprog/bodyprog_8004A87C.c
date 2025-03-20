@@ -747,7 +747,7 @@ void Game_SaveGameResetPlayer() // 0x8007E530
 
     g_SaveGamePtr->field_AB = 8;
 
-    for (i = 0; i < GAME_INVENTORY_SIZE; i++)
+    for (i = 0; i < INVENTORY_ITEM_COUNT_MAX; i++)
     {
         save->items_0[i].id    = 0xFF;
         save->items_0[i].count = 0;
@@ -876,7 +876,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_800803FC);
 
 void func_80080458() // 0x80080458
 {
-    g_ControllerPtr1->btns_new_10 |= Pad_BtnSelect;
+    g_ControllerPtr1->btns_new_10 |= Pad_Select;
 }
 
 s32 func_80080478(VECTOR3* pos0, VECTOR3* pos1) // 0x80080478

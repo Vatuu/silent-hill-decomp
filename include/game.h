@@ -3,43 +3,49 @@
 
 #include "gpu.h"
 
-#define TICKS_PER_SECOND      60
-#define NPC_COUNT_MAX         6
-#define GAME_INVENTORY_SIZE   40
-#define SAVEGAME_FOOTER_MAGIC 0xDCDC
+#define TICKS_PER_SECOND         60 // Theorised. It's unclear if the game has a fixed timestep.
+#define NPC_COUNT_MAX            6
+#define INVENTORY_ITEM_COUNT_MAX 40
+#define SAVEGAME_FOOTER_MAGIC    0xDCDC
 
-// TODO: Make it s_PadButtonFlags. Better to name flag enums as plural.
-typedef enum _PadButton
+typedef enum _PadButtonFlags
 {
-    Pad_BtnSelect    = 1 << 0,
-    Pad_BtnL3        = 1 << 1,
-    Pad_BtnR3        = 1 << 2,
-    Pad_BtnStart     = 1 << 3,
-    Pad_BtnDpadUp    = 1 << 4,
-    Pad_BtnDpadRight = 1 << 5,
-    Pad_BtnDpadDown  = 1 << 6,
-    Pad_BtnDpadLeft  = 1 << 7,
-    Pad_BtnL2        = 1 << 8,
-    Pad_BtnR2        = 1 << 9,
-    Pad_BtnL1        = 1 << 10,
-    Pad_BtnR1        = 1 << 11,
-    Pad_BtnTriangle  = 1 << 12,
-    Pad_BtnCircle    = 1 << 13,
-    Pad_BtnCross     = 1 << 14,
-    Pad_BtnSquare    = 1 << 15,
-    Pad_LSUp2        = 1 << 16,
-    Pad_LSRight2     = 1 << 17,
-    Pad_LSDown2      = 1 << 18,
-    Pad_LSLeft2      = 1 << 19,
-    Pad_RSUp         = 1 << 20,
-    Pad_RSRight      = 1 << 21,
-    Pad_RSDown       = 1 << 22,
-    Pad_RSLeft       = 1 << 23,
-    Pad_LSUp         = 1 << 24,
-    Pad_LSRight      = 1 << 25,
-    Pad_LSDown       = 1 << 26,
-    Pad_LSLeft       = 1 << 27
-} e_PadButton;
+    Pad_Select       = 1 << 0,
+    Pad_L3           = 1 << 1,
+    Pad_R3           = 1 << 2,
+    Pad_Start        = 1 << 3,
+    Pad_DpadUp       = 1 << 4,
+    Pad_DpadRight    = 1 << 5,
+    Pad_DpadDown     = 1 << 6,
+    Pad_DpadLeft     = 1 << 7,
+    Pad_L2           = 1 << 8,
+    Pad_R2           = 1 << 9,
+    Pad_L1           = 1 << 10,
+    Pad_R1           = 1 << 11,
+    Pad_Triangle     = 1 << 12,
+    Pad_Circle       = 1 << 13,
+    Pad_Cross        = 1 << 14,
+    Pad_Square       = 1 << 15,
+    Pad_LStickUp2    = 1 << 16,
+    Pad_LStickRight2 = 1 << 17,
+    Pad_LStickDown2  = 1 << 18,
+    Pad_LStickLeft2  = 1 << 19,
+    Pad_RStickUp     = 1 << 20,
+    Pad_RStickRight  = 1 << 21,
+    Pad_RStickDown   = 1 << 22,
+    Pad_RStickLeft   = 1 << 23,
+    Pad_LStickUp     = 1 << 24,
+    Pad_LStickRight  = 1 << 25,
+    Pad_LStickDown   = 1 << 26,
+    Pad_LStickLeft   = 1 << 27
+} e_PadButtonFlags;
+
+typedef enum _AnimFlags
+{
+    AnimFlag_Unk0 = 0,
+    AnimFlag_Unk1 = 1 << 0,
+    AnimFlag_Unk2 = 1 << 1
+} e_AnimFlags;
 
 /** State IDs used by the main game loop. The values are used as indices into the 0x800A977C function array. */
 typedef enum _GameState
@@ -76,25 +82,18 @@ typedef enum _SysState
     SysState_OptionsMenu = 1,
     SysState_StatusMenu  = 2,
     SysState_Unk3        = 3,
-    SysState_FMV         = 4,
-    SysState_LoadArea1   = 5,
-    SysState_LoadArea2   = 6,
+    SysState_Fmv         = 4,
+    SysState_LoadArea0   = 5,
+    SysState_LoadArea1   = 6,
     SysState_ReadMessage = 7,
-    SysState_SaveMenu1   = 8,
-    SysState_SaveMenu2   = 9,
+    SysState_SaveMenu0   = 8,
+    SysState_SaveMenu1   = 9,
     SysState_Unk10       = 10,
     SysState_Unk11       = 11,
     SysState_Unk12       = 12,
     SysState_GameOver    = 13,
     SysState_GamePaused  = 14
 } e_SysState;
-
-typedef enum _AnimFlags
-{
-    AnimFlag_Unk0 = 0,
-    AnimFlag_Unk1 = 1 << 0,
-    AnimFlag_Unk2 = 1 << 1
-} e_AnimFlags;
 
 typedef struct _AnalogPadData
 {
@@ -106,6 +105,7 @@ typedef struct _AnalogPadData
     u8  left_x;
     u8  left_y;
 } s_AnalogPadData;
+STATIC_ASSERT_SIZEOF(s_AnalogPadData, 8);
 
 typedef struct _ControllerData
 {
@@ -128,8 +128,9 @@ typedef struct _ControllerData
     char            field_27;
     s32             field_28;
 } s_ControllerData;
+STATIC_ASSERT_SIZEOF(s_ControllerData, 36);
 
-// Input action key bindings.
+/** Key bindings for input actions. */
 typedef struct _ControllerBindings
 {
     u16 enter;
@@ -147,6 +148,7 @@ typedef struct _ControllerBindings
     u16 map;
     u16 option;
 } s_ControllerBindings;
+STATIC_ASSERT_SIZEOF(s_ControllerBindings, 28);
 
 typedef struct _ShInventoryItem
 {
@@ -155,10 +157,11 @@ typedef struct _ShInventoryItem
     u8 unk_2;
     u8 unk_3;
 } s_ShInventoryItem;
+STATIC_ASSERT_SIZEOF(s_ControllerBindings, 4);
 
 typedef struct _ShSaveGame
 {
-    s_ShInventoryItem items_0[GAME_INVENTORY_SIZE];
+    s_ShInventoryItem items_0[INVENTORY_ITEM_COUNT_MAX];
     s8                field_A0;
     s8                field_A1[3];
     s8                mapOverlayIdx_A4;
@@ -210,7 +213,7 @@ typedef struct _ShSaveGame
     s8                field_27A;
     s8                field_27B;
 } s_ShSaveGame;
-STATIC_ASSERT_SIZEOF(s_ShSaveGame, 0x27C);
+STATIC_ASSERT_SIZEOF(s_ShSaveGame, 636);
 
 /** 
  * Appended to ShSaveGame during game save. Contains 8-bit XOR checksum + magic

@@ -596,7 +596,7 @@ s32 func_8007FD2C();
 /** Gets something from player. */
 s32 func_8007FD3C();
 
-/** Forces Pad_BtnSelect button press. */
+/** Forces Pad_Select button press. */
 void func_80080458();
 
 s32 func_80080478(VECTOR3* pos0, VECTOR3* pos1);

@@ -726,9 +726,9 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", SysWork_Clear);
 
 s32 MainLoop_ShouldWarmReset() // 0x80034108
 {
-    #define RESET_BTN_FLAGS (Pad_BtnSelect | Pad_BtnStart)
-    #define UNK_BTN_FLAGS_0 (Pad_BtnSelect | Pad_BtnStart | Pad_BtnL2 | Pad_BtnR2 | Pad_BtnL1 | Pad_BtnR1)
-    #define UNK_BTN_FLAGS_1 (Pad_BtnStart | Pad_BtnTriangle | Pad_BtnSquare)
+    #define RESET_BTN_FLAGS (Pad_Select | Pad_Start)
+    #define UNK_BTN_FLAGS_0 (Pad_Select | Pad_Start | Pad_L2 | Pad_R2 | Pad_L1 | Pad_R1)
+    #define UNK_BTN_FLAGS_1 (Pad_Start | Pad_Triangle | Pad_Square)
     
     if (g_GameWork.gameState_594 < GameState_MovieIntroAlternate)
     {
@@ -776,7 +776,7 @@ s32 MainLoop_ShouldWarmReset() // 0x80034108
     {
         return 2; 
     }
-    else if (g_ControllerPtr0->btns_held_C == UNK_BTN_FLAGS_1 && (g_ControllerPtr0->btns_new_10 & Pad_BtnStart))
+    else if (g_ControllerPtr0->btns_held_C == UNK_BTN_FLAGS_1 && (g_ControllerPtr0->btns_new_10 & Pad_Start))
     {
         return 2; 
     }
@@ -1055,13 +1055,13 @@ void func_800391E8()
 
     // Debug button combo to bring up save screen from pause screen.
     // DPad-Left + L2 + L1 + LS-Left + RS-Left + L3
-    if ((g_ControllerPtr0->btns_held_C == (Pad_BtnL3 | Pad_BtnDpadLeft | Pad_BtnL2 | Pad_BtnL1 | Pad_LSLeft2 | Pad_RSLeft | Pad_LSLeft)) &&
-        (g_ControllerPtr0->btns_new_10 & Pad_BtnL3))
+    if ((g_ControllerPtr0->btns_held_C == (Pad_L3 | Pad_DpadLeft | Pad_L2 | Pad_L1 | Pad_LStickLeft2 | Pad_RStickLeft | Pad_LStickLeft)) &&
+        (g_ControllerPtr0->btns_new_10 & Pad_L3))
     {
         D_800A9A68 = 0;
         SD_EngineCmd(4);
         g_MapEventIdx = 0;
-        SysWork_StateSetNext(SysState_SaveMenu2);
+        SysWork_StateSetNext(SysState_SaveMenu1);
         return;
     }
 

@@ -136,36 +136,36 @@ void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, s_SysWork* sys_p) // 0x80040
 
     vwGetViewAngle(&cam_ang);
 
-    if (!(g_ControllerPtr1->btns_held_C & Pad_BtnCircle))
+    if (!(g_ControllerPtr1->btns_held_C & Pad_Circle))
     {
-        if (g_ControllerPtr1->btns_held_C & Pad_LSDown)
+        if (g_ControllerPtr1->btns_held_C & Pad_LStickDown)
         {
             cam_ang.vx = cam_ang.vx - (g_VBlanks * 11);
         }
 
-        if (g_ControllerPtr1->btns_held_C & Pad_LSUp)
+        if (g_ControllerPtr1->btns_held_C & Pad_LStickUp)
         {
             cam_ang.vx = cam_ang.vx + (g_VBlanks * 11);
         }
 
-        if (g_ControllerPtr1->btns_held_C & Pad_LSRight)
+        if (g_ControllerPtr1->btns_held_C & Pad_LStickRight)
         {
             cam_ang.vy = cam_ang.vy + (g_VBlanks * 11);
         }
 
-        if (g_ControllerPtr1->btns_held_C & Pad_LSLeft)
+        if (g_ControllerPtr1->btns_held_C & Pad_LStickLeft)
         {
             cam_ang.vy = cam_ang.vy - (g_VBlanks * 11);
         }
 
-        if (g_ControllerPtr1->btns_held_C & (Pad_BtnTriangle | Pad_BtnCross))
+        if (g_ControllerPtr1->btns_held_C & (Pad_Triangle | Pad_Cross))
         {
             var_s0 = 0;
-            if (g_ControllerPtr1->btns_held_C & Pad_BtnTriangle)
+            if (g_ControllerPtr1->btns_held_C & Pad_Triangle)
             {
                 var_s0 = 0x19;
             }
-            if (g_ControllerPtr1->btns_held_C & Pad_BtnCross)
+            if (g_ControllerPtr1->btns_held_C & Pad_Cross)
             {
                 var_s0 = -0x1A;
             }
@@ -188,23 +188,23 @@ void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, s_SysWork* sys_p) // 0x80040
     }
     else
     {
-        if (g_ControllerPtr1->btns_held_C & Pad_LSUp)
+        if (g_ControllerPtr1->btns_held_C & Pad_LStickUp)
         {
             sp18.vy -= 0x19;
         }
-        if (g_ControllerPtr1->btns_held_C & Pad_LSDown)
+        if (g_ControllerPtr1->btns_held_C & Pad_LStickDown)
         {
             sp18.vy += 0x19;
         }
 
-        if (g_ControllerPtr1->btns_held_C & (Pad_LSRight | Pad_LSLeft))
+        if (g_ControllerPtr1->btns_held_C & (Pad_LStickRight | Pad_LStickLeft))
         {
             var_s0 = 0;
-            if (g_ControllerPtr1->btns_held_C & Pad_LSRight)
+            if (g_ControllerPtr1->btns_held_C & Pad_LStickRight)
             {
                 var_s0 = 0x19;
             }
-            if (g_ControllerPtr1->btns_held_C & Pad_LSLeft)
+            if (g_ControllerPtr1->btns_held_C & Pad_LStickLeft)
             {
                 var_s0 = -0x1A;
             }
@@ -233,7 +233,7 @@ void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, s_SysWork* sys_p) // 0x80040
     sp38.t[2] = sp18.vz;
     vwSetViewInfoDirectMatrix(NULL, &sp38);
 
-    if (g_ControllerPtr1->btns_held_C & (Pad_LSUp | Pad_LSRight | Pad_LSDown | Pad_LSLeft | Pad_BtnCross | Pad_BtnTriangle))
+    if (g_ControllerPtr1->btns_held_C & (Pad_LStickUp | Pad_LStickRight | Pad_LStickDown | Pad_LStickLeft | Pad_Cross | Pad_Triangle))
     {
         SVECTOR sp58;
 
