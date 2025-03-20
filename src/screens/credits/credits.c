@@ -95,11 +95,11 @@ s32 func_801E3124(void)
             switch (D_800BCD0C)
             {
                 case 13:
-                    GFX_ClearRectInterlaced(0, 0x20, 0x200, 0x1C0, 0xFF, 0xFF, 0xFF);
+                    Gfx_ClearRectInterlaced(0, 0x20, 0x200, 0x1C0, 0xFF, 0xFF, 0xFF);
                     break;
 
                 case 5:
-                    GFX_ClearRectInterlaced(0, 0x20, 0x200, 0x1C0, 0x00, 0x00, 0x00);
+                    Gfx_ClearRectInterlaced(0, 0x20, 0x200, 0x1C0, 0x00, 0x00, 0x00);
                     break;
             }
 
@@ -107,7 +107,7 @@ s32 func_801E3124(void)
             break;
 
         case 2:
-            GFX_Init(0x200, 1);
+            Gfx_Init(0x200, 1);
             g_IntervalVBlanks = 1;
             D_801E5E74 = 0x3C;
             g_GameWork.gameStateStep_598[1]++;
@@ -136,7 +136,7 @@ s32 func_801E3304(void)
     {
         if (g_GameWork.gameStateStep_598[1] == 0)
         {
-            GFX_Init(0x140, 0);
+            Gfx_Init(0x140, 0);
             D_800BCD0C = 0;
             g_GameWork.gameStateStep_598[1]++;
         }
@@ -146,7 +146,7 @@ s32 func_801E3304(void)
         }
         else
         {
-            GFX_ClearRectInterlaced(0, 0x20, 0x140, 0x1C0, 0, 0, 0);
+            Gfx_ClearRectInterlaced(0, 0x20, 0x140, 0x1C0, 0, 0, 0);
             LoadImage(&D_801E557C[0], IMAGE_BUFFER_0);
             LoadImage(&D_801E557C[1], IMAGE_BUFFER_1);
             DrawSync(0);

@@ -313,7 +313,7 @@ typedef struct _SubCharacter
     s8      unk_C6[2];
     s8      unk_C8[32];
 
-    // Fields in the following block may be part of a multi-purpose array of s32 elements used to store unique property data for each character type.
+    // Fields in the following block may be part of a multi-purpose array of `s32` elements used to store unique property data for each character type.
     // Start of this section is unclear, bytes above may be part of it.
     // For player, mostly used for counters as far as I could see. -- Sezz
 

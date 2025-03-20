@@ -115,9 +115,9 @@ void open_main(s32 file_idx, s16 num_frames) // 0x801E2AA4
         num_frames = g_FileTable[file_idx].blockCount - 7;
     }
 
-    GFX_ClearRectInterlaced(0, 16, 480, 480, 0, 0, 0);
+    Gfx_ClearRectInterlaced(0, 16, 480, 480, 0, 0, 0);
     movie_main(NULL, num_frames, g_FileTable[file_idx].startSector);
-    GFX_ClearRectInterlaced(0, 16, 480, 480, 0, 0, 0);
+    Gfx_ClearRectInterlaced(0, 16, 480, 480, 0, 0, 0);
     VSync(0);
     GsSwapDispBuff();
 }

@@ -28,12 +28,11 @@
 
 /** Multiplies two integers in a fixed-point Q format and converts the result from a fixed-point Q format. */
 #define FP_MULTIPLY(val0, val1, shift) \
-    FP_FROM((val0) * (val1), (shift))
+    (((val0) * (val1)) >> (shift))
 
-// TODO: Inferred, but not used anywhere yet.
 /** Converts a floating-point alpha in the range [0.0f, 1.0f] to a fixed-point alpha in Q3.12 format. */
 #define FP_ALPHA(alpha) \
-    (s16)((alpha) * FP_TO(1, Q12_SHIFT))
+    (s16)((alpha) * (1 << Q12_SHIFT))
 
 /** Converts floating-point degrees to fixed-point angles in Q1.15 format (used at Q4.12 resolution). */
 #define FP_ANGLE(deg) \

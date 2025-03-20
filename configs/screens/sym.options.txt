@@ -1,2 +1,2 @@
 
-GFX_DrawBrightLevelText = 0x801E6238; // type:func
+Gfx_DrawBrightnessLevelText = 0x801E6238; // type:func

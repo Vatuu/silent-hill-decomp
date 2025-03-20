@@ -166,11 +166,11 @@ PreservedSignSubtract = 0x80080594; //type:func
 Camera_SetTranslation = 0x80086A94; // type:func
 Camera_SetRotation = 0x80086B70; // type:func
 
-GFX_ClearRectInterlaced = 0x80032358; // type:func
-GFX_Init = 0x80032428; // type:func
+Gfx_ClearRectInterlaced = 0x80032358; // type:func
+Gfx_Init = 0x80032428; // type:func
 Settings_ScreenXYSet = 0x800324F4; // type:func
 Settings_DispEnvXYSet = 0x80032524; // type:func
-GFX_VSyncCallback = 0x80032b80; // type:func
+Gfx_VSyncCallback = 0x80032b80; // type:func
 GameFs_TitleGfxSeek = 0x80032bd0; // type:func
 GameFs_TitleGfxLoad = 0x80032bf0; // type:func
 GameFs_StreamBinSeek = 0x80032C20; // type:func
@@ -208,8 +208,8 @@ SD_SetReverbDepth = 0x80047AD0; // type:func
 SD_SetReverbEnable = 0x80047AFC; // type:func
 SD_StopSEQ = 0x8004839C; // type:func
 
-GFX_StringPosition = 0x8004A87C; // type:func
-GFX_StringDraw = 0x8004a8e8; // type:func
+Gfx_StringPosition = 0x8004A87C; // type:func
+Gfx_StringDraw = 0x8004a8e8; // type:func
 GameFs_Tim00TIMLoad = 0x80053da0; // type:func
 
 Chara_Load = 0x80088C7C; // type:func

@@ -1,6 +1,7 @@
 #include "game.h"
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/math.h"
 #include "maps/map0/s00.h"
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800CB6B0);
@@ -274,19 +275,24 @@ void func_800D88AC(s_SubCharacter* arg0)
     arg0->field_126 = 0;
 }
 
-void func_800D88C0(s_SubCharacter* arg0, s32 arg1)
+void func_800D88C0(s_SubCharacter* chara, s32 arg1)
 {
-    arg0->field_F4 = 1;
-    if (arg1 != 0) {
-        arg0->animIdx_4 = 3;
-        arg0->animFrameIdx_C = 0;
-        arg0->animFrameIdx_8 = 0;
-        arg0->interpolationAlpha_E = 4096;
-    } else {
-        arg0->field_E8 = 0;
-        arg0->field_3 = 0;
+    chara->field_F4 = 1;
+
+    if (arg1 != 0)
+    {
+        chara->animIdx_4 = 3;
+        chara->animFrameIdx_C = 0;
+        chara->fixedAnimFrameIdx_8 = 0;
+        chara->interpolationAlpha_E = FP_ALPHA(1.0f);
     }
-    arg0->flags_6 |= 1;
+    else
+    {
+        chara->field_E8 = 0;
+        chara->field_3 = 0;
+    }
+
+    chara->flags_6 |= 1;
 }
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D8904);

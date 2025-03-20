@@ -21,7 +21,7 @@ void func_800C95AC(void)
             switch (g_GameWork.gameStateStep_598[0])
             {
                 case 0:
-                    GFX_Init(0x280, 1);
+                    Gfx_Init(0x280, 1);
                     
                     D_800BCD0C = 6;
                     D_800B5C30 = 0x333;

@@ -399,13 +399,13 @@ void func_800420C0();
 
 s32 func_80042C04(s32 idx);
 
-void func_8004B9F8(s32 arg0, u8 arg1);  // Types assumed.
-
 u8 func_80045B28();
 
 void func_8004690C(s32);
 
 void func_8004729C(u16);
+
+void func_8004B9F8(s32 arg0, u8 arg1); // Types assumed.
 
 void func_8005E0DC(s32); // Types assumed.
 
@@ -521,15 +521,15 @@ s16 func_8005BF38(s32 arg0);
 /** Draws some string in display space. */
 void func_80032CE8();
 
-void GFX_ClearRectInterlaced(s16 x, s16 y, s16 w, s16 h, u8 r, u8 g, u8 b);
+void Gfx_ClearRectInterlaced(s16 x, s16 y, s16 w, s16 h, u8 r, u8 g, u8 b);
 
-void GFX_VSyncCallback();
+void Gfx_VSyncCallback();
 
-/** Sets the position of the next string to be drawn by GFX_StringDraw. */
-void GFX_StringPosition(s32 x, s32 y);
+/** Sets the position of the next string to be drawn by Gfx_StringDraw. */
+void Gfx_StringPosition(s32 x, s32 y);
 
 /** Draws a string in display space. */
-void GFX_StringDraw(char* str, s32 arg1);
+void Gfx_StringDraw(char* str, s32 arg1);
 
 void Settings_ScreenXYSet(s32 x, s32 y);
 

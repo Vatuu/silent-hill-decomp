@@ -4,7 +4,7 @@
 
 #include "bodyprog/bodyprog.h"
 
-void GFX_StringPosition(s32 x, s32 y)
+void Gfx_StringPosition(s32 x, s32 y)
 {
     if (x != -1)
     {
@@ -35,7 +35,7 @@ void func_8004A8DC(s16 arg0)
     D_800AD498 = arg0;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", GFX_StringDraw);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", Gfx_StringDraw);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8004ACF4);
 

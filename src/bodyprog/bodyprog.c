@@ -313,7 +313,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80032154);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_800321EC);
 
-void GFX_ClearRectInterlaced(s16 x, s16 y, s16 w, s16 h, u8 r, u8 g, u8 b)
+void Gfx_ClearRectInterlaced(s16 x, s16 y, s16 w, s16 h, u8 r, u8 g, u8 b)
 {
     setRECT((RECT*)PSX_SCRATCH, x, y, w, h);
     VSync(0);
@@ -323,7 +323,7 @@ void GFX_ClearRectInterlaced(s16 x, s16 y, s16 w, s16 h, u8 r, u8 g, u8 b)
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_800323C8);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", GFX_Init);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", Gfx_Init);
 
 void Settings_ScreenXYSet(s32 x, s32 y) // 0x800324F4
 {
@@ -377,7 +377,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003289C);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80032904);
 
-void GFX_VSyncCallback() // 0x80032b80
+void Gfx_VSyncCallback() // 0x80032b80
 {
     D_800A9768++;
     D_800A976C++;
@@ -421,8 +421,8 @@ void GameFs_SaveLoadBinLoad() // 0x80032ca8
 
 void func_80032CE8()
 {
-    GFX_StringPosition(108, 104);
-    GFX_StringDraw(&D_8002510C, 100);
+    Gfx_StringPosition(108, 104);
+    Gfx_StringDraw(&D_8002510C, 100);
 }
 
 void func_80032D1C()
@@ -439,7 +439,7 @@ void func_80032D1C()
             g_GameWork.field_58D = 0;
             g_GameWork.field_58E = 0;
             
-            GFX_Init(0x140, 0);
+            Gfx_Init(0x140, 0);
             g_SysWork.field_20 = 0;
             g_GameWork.gameStateStep_598[1] = 0;
             g_GameWork.gameStateStep_598[2] = 0;
@@ -535,7 +535,7 @@ void MainLoop() // 0x80032ee0
     func_8002E7BC();
     func_8002E85C();
     JOY_Init();
-    VSyncCallback(&GFX_VSyncCallback);
+    VSyncCallback(&Gfx_VSyncCallback);
     InitGeom();
     func_8004BB10(); // Initializes something for graphics.
     func_800890B8();
@@ -1040,8 +1040,8 @@ void func_800391E8()
     D_800A9A68 += g_DeltaTime1;
     if (((D_800A9A68 >> 11) & 1) == 0)
     {
-        GFX_StringPosition(125, 104);
-        GFX_StringDraw(D_80025394, 99); // "\x07PAUSED"
+        Gfx_StringPosition(125, 104);
+        Gfx_StringDraw(D_80025394, 99); // "\x07PAUSED"
     }
 
     func_80091380();
