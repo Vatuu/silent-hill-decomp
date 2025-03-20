@@ -113,7 +113,7 @@ typedef struct _ControllerData
     s32             btns_new_10; /** e_PadButton */
     s8              field_14[4];
     s32             field_18;    /** e_PadButton */
-    int             field_1C;
+    s32             field_1C;
     char            field_20;
     char            field_21;
     char            field_22;
@@ -122,7 +122,7 @@ typedef struct _ControllerData
     char            field_25;
     char            field_26;
     char            field_27;
-    int             field_28;
+    s32             field_28;
 } s_ControllerData;
 
 // Input action key bindings.
@@ -319,8 +319,8 @@ typedef struct _SubCharacter
 
     s32 field_E8;  // Player AFK counter. Increments every tick for 10 seconds before player starts AFK anim. Purpose for other characters unknown.
     s32 field_EC;  // Copy of player Y position. Purpose for other characters unknown.
-    s32 unk_F0;
-    s32 unk_F4;
+    s32 field_F0;
+    s32 field_F4;
     s32 field_F8;  // Player run counter. Increments more slowly than runCounter_108. Purpose for other characters unknown.
     s32 field_FC;  // Player winded counter. Counts 20 seconds worth of ticks and caps at 0x23000. Purpose for other characters unknown.
     s32 unk_100;
@@ -408,8 +408,8 @@ typedef struct _SysWork
     s16             cam_ang_y_237A;
     s16             cam_ang_z_237C;
     s16             field_237E;
-    int             cam_r_xz_2380;
-    int             cam_y_2384;
+    s32             cam_r_xz_2380;
+    s32             cam_y_2384;
     u8              unk_2388[392];
     s32             field_2510;
     s32             field_2514[10];

@@ -62,6 +62,10 @@ void func_800D654C();
 
 void func_800D8888();
 
+void func_800D88AC(s_SubCharacter *arg0);
+
+void func_800D88C0(s_SubCharacter* arg0, s32 arg1);
+
 /**
  * Seems to call for a specific struct, however `func_800D8888` it indicates
  * that it doesn't have arguments

@@ -260,15 +260,34 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D8310);
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D8748);
 
-void func_800D8888(void)
+void func_800D8888()
 {
     func_800D923C();
     D_800E3A30 = 0;
 }
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D88AC);
+void func_800D88AC(s_SubCharacter* arg0)
+{
+    arg0->field_F4 = 0;
+    arg0->field_F0 = 0;
+    arg0->field_EC = 0;
+    arg0->field_126 = 0;
+}
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D88C0);
+void func_800D88C0(s_SubCharacter* arg0, s32 arg1)
+{
+    arg0->field_F4 = 1;
+    if (arg1 != 0) {
+        arg0->animIdx_4 = 3;
+        arg0->animFrameIdx_C = 0;
+        arg0->animFrameIdx_8 = 0;
+        arg0->interpolationAlpha_E = 4096;
+    } else {
+        arg0->field_E8 = 0;
+        arg0->field_3 = 0;
+    }
+    arg0->flags_6 |= 1;
+}
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D8904);
 
