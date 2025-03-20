@@ -8,6 +8,7 @@
 #define GAME_INVENTORY_SIZE   40
 #define SAVEGAME_FOOTER_MAGIC 0xDCDC
 
+// TODO: Make it s_PadButtonFlags. Better to name flag enums as plural.
 typedef enum _PadButton
 {
     Pad_BtnSelect    = 1 << 0,
@@ -87,6 +88,13 @@ typedef enum _SysState
     SysState_GameOver    = 13,
     SysState_GamePaused  = 14
 } e_SysState;
+
+typedef enum _AnimFlags
+{
+    AnimFlag_Unk0 = 0,
+    AnimFlag_Unk1 = 1 << 0,
+    AnimFlag_Unk2 = 1 << 1
+} e_AnimFlags;
 
 typedef struct _AnalogPadData
 {
@@ -269,30 +277,37 @@ typedef struct _GameWork
 } s_GameWork;
 STATIC_ASSERT_SIZEOF(s_GameWork, 1496);
 
-typedef struct _SubCharacter
+typedef struct _ModelAnimData
 {
-    s8    chara_type_0; // NOTE: Character types <24 must be some distinct category.
-    u8    field_1;
-    u8    field_2;
-    u8    field_3; // Clear: anim transitioning(?), bit 1: animated, bit2: turning.
-
-    // Probably struct.
-    //==================
-
     // Following 4 bytes might be packed into an s32 called "animStatus",
     // implied by an original param name in `vcMixSelfViewEffectToWatchTgtPos`.
 
-    u8  animIdx_4;
-    u8  maybeSomeState_5;
-    u16 flags_6; // Bit 1: movement unlockled? Bit 2: visible.
+    u8  animIdx_0;
+    u8  maybeSomeState_1; // animTime_4 could be a union. State says if its anim time or a func ptr? -- emoose
+    u16 flags_2;          // e_AnimFlags. Bit 1: movement unlockled(?), bit 2: visible.
 
-    s32 fixedAnimFrameIdx_8;  // animFrameIdx_C << 12. Maybe used for interpolation?
-    s16 animFrameIdx_C;       // Frame index into large array containing all frames for all anims?
-    s16 interpolationAlpha_E; // Something to do with linear anim interpolation. Maybe fixed-point alpha value. Gets set to 1 << 12 (4096).
-    u8  unk_10[8];            // Maybe flag fields.
+    s32 animTime_4;           // animFrameIdx_8 << 12.
+    s16 animFrameIdx_8;       // Frame index into large array containing all frames for all anims?
+    s16 interpolationAlpha_A; // Something to do with linear anim interpolation. Maybe fixed-point alpha value. Gets set to 1 << 12 (4096).
+    s32 field_C;
+    s32 field_10;
+} s_ModelAnim;
+STATIC_ASSERT_SIZEOF(s_ModelAnim, 20);
 
-    //==================
+typedef struct _Model
+{
+    s8          chara_type_0;
+    u8          field_1;
+    u8          field_2;
+    u8          isAnimStateUnchanged_3; // Educated guess. Always 1, set to 0 for 1 tick when anim state appears to change.
+                                        // Used differently in player's s_SubCharacter struct. 0: anim transitioning(?), bit 1: animated, bit 2: turning.
+    s_ModelAnim anim_4;
+} s_Model;
+STATIC_ASSERT_SIZEOF(s_Model, 24);
 
+typedef struct _SubCharacter
+{
+    s_Model model_0;
     VECTOR3 position_18;
     SVECTOR rotation_24;
     SVECTOR rotationSpeed_2C;
@@ -303,7 +318,7 @@ typedef struct _SubCharacter
     s8      unk_40[4];
     s32     field_44;
     s8      unk_45[104];
-    s32     health_B0; // Bits 3-4 contain s16 associated with player's rate of heavy breathing, always set to 6. Can't split into `s16`s? Maybe packed data.
+    s32     health_B0; // Bits 3-4 contain `s16` associated with player's rate of heavy breathing, always set to 6. Can't split into `s16`s? Maybe packed data.
     s8      unk_B4[16];
     u16     dead_timer_C4; // Part of shBattleInfo struct in SH2, may use something similar here.
     s8      unk_C6[2];
@@ -318,9 +333,9 @@ typedef struct _SubCharacter
     s32 field_F0;
     s32 field_F4;
     s32 field_F8;  // Player run counter. Increments more slowly than runCounter_108. Purpose for other characters unknown.
-    s32 field_FC;  // Player winded counter. Counts 20 seconds worth of ticks and caps at 0x23000. Purpose for other characters unknown.
+    s32 field_FC;  // Player out of breath counter. Counts 20 seconds worth of ticks and caps at 0x23000. Purpose for other characters unknown.
     s32 unk_100;
-    s32 field_104;  // Used by player, returned by `func_8007FD2C`. Purpose unknown.
+    s32 field_104; // Used by player, returned by `func_8007FD2C`. Purpose unknown.
     s32 field_108; // Player run counter. Increments every tick indefinitely. Purpose for other characters unknown.
 
     s8  unk_10C;
@@ -334,34 +349,16 @@ STATIC_ASSERT_SIZEOF(s_SubCharacter, 296);
 
 typedef struct _MainCharacterExtra
 {
-    // SubCharacter has the same 0x2C starting bytes?
-    // Maybe this is actually just a base model struct, which SubCharacter extends, and the extra data in MainCharacter is some model attached to player?
-    u8             field_0;
-    u8             field_1;
-    u8             field_2;
-    u8             isAnimStateUnchanged_3; // Educated guess. Always 1, set to 0 for 1 tick when anim state appears to change.
-
-    // Probably struct.
-    //==================
-
-    u8  animIdx_4;
-    u8  maybeSomeState_5;
-    s16 flags_6;
-    s32 fixedAnimFrameIdx_8;
-    s16 animFrameIdx_C;
-    s16 interpolationAlpha_E;
-    u8  unk_10[8];
-
-    //==================
-
-    s32            field_18;
-    s32            field_1C; // Some kind of anim state. Set to 2 when player is in AFK anim, 0 otherwise.
-    s32            field_20; // Some kind of anim state.
-    s32            field_24; // Some kind of anim state.
-    s8             unk_28[4];
+    s_Model model_0; // For player, this is a copy of model_0 in its corresponding s_SubCharacter.
+    s32     field_18;
+    s32     field_1C; // Some kind of anim state. Set to 2 when player is in AFK anim, 0 otherwise.
+    s32     field_20; // Some kind of anim state.
+    s32     field_24; // Some kind of anim state.
+    s8      unk_28[4];
 } s_MainCharacterExtra;
 STATIC_ASSERT_SIZEOF(s_MainCharacterExtra, 44);
 
+// TODO: Is this a struct of its own, or are its fields kept separately?
 typedef struct _MainCharacter
 {
     s_SubCharacter       character;
@@ -390,7 +387,7 @@ typedef struct _SysWork
     s8              unk_48[3];
     u8              field_4B; // Something used among player anim state checks.
     s_MainCharacter player_4C;
-    s_SubCharacter  characters_1A0[NPC_COUNT_MAX];
+    s_SubCharacter  characters_1A0[NPC_COUNT_MAX]; // More accurate name might be npcs_1A0.
     GsCOORDINATE2   unk_coord_890[2];
     GsCOORDINATE2   hero_neck_930;
     s8              unk_980[6424];

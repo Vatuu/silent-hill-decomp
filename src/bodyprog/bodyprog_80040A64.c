@@ -1,10 +1,12 @@
-#include "common.h"
+#include "game.h"
+
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/math.h"
 #include "main/fsqueue.h"
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80040A64);
 
-void func_80040B6C(void) {}
+void func_80040B6C() {}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80040B74);
 
@@ -190,7 +192,74 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80044950);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800449AC);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800449F0);
+void func_800449F0(s_Model* model, void* buffer, s32 arg2, s_Model* targetModel)
+{
+    s32 setAnimIdx;
+    s32 someFixedTimemaskedAnimTime;
+    s32 maybeInterpTime;
+    s32 animTimeDelta;
+    s32 animTime;
+    s32 animFrameIdx;
+    s32 interpTime;
+    s32 maskedAnimTime;
+
+    setAnimIdx = 0;
+
+    if (model->anim_4.flags_2 & AnimFlag_Unk1)
+    {
+        maybeInterpTime = func_800449AC(model, targetModel);
+        animTimeDelta = FP_FROM((s64)maybeInterpTime * (s64)g_DeltaTime0, Q12_SHIFT);
+    }
+    else
+    {
+        animTimeDelta = 0;
+    }
+
+    // TODO: FP conversion is very confusing here, need to figure out what the called functions do. -- Sezz
+
+    // Calculate anim frame interpolation.
+    animTime = model->anim_4.animTime_4;
+    animFrameIdx = FP_FROM(animTime, Q12_SHIFT);
+    if (animTimeDelta != 0)
+    {
+        animTime += animTimeDelta;
+        interpTime = FP_TO(targetModel->anim_4.interpolationAlpha_A, Q12_SHIFT); // Shift already shifter interp alpha again?
+        if (animTime < interpTime)
+        {
+            interpTime = FP_TO(targetModel->anim_4.animFrameIdx_8, Q12_SHIFT);
+            if (animTime <= interpTime)
+            {
+                animTime = interpTime;
+                setAnimIdx = 1;
+            }
+        }
+        else
+        {
+            animTime = interpTime;
+            setAnimIdx = 1;
+        }
+
+        animFrameIdx = FP_FROM(animTime, Q12_SHIFT);
+    }
+
+    // Do something if some flags are set.
+    maskedAnimTime = animTime & 0xFFF;
+    if ((model->anim_4.flags_2 & AnimFlag_Unk1) || (model->anim_4.flags_2 & AnimFlag_Unk2))
+    {
+        func_800446D8(buffer, arg2, animFrameIdx, animFrameIdx + 1, maskedAnimTime);
+    }
+
+    // Set anim frame data.
+    model->anim_4.animTime_4 = animTime;
+    model->anim_4.animFrameIdx_8 = animFrameIdx;
+    model->anim_4.interpolationAlpha_A = FP_ALPHA(0.0f);
+
+    // Set anim index.
+    if (setAnimIdx != 0)
+    {
+        model->anim_4.animIdx_0 = targetModel->anim_4.flags_2;
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80044B38);
 
@@ -339,9 +408,9 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80048424);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80048498);
 
-void func_800485B0(void) {}
+void func_800485B0() {}
 
-void func_800485B8(void) {}
+void func_800485B8() {}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800485C0);
 

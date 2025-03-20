@@ -837,7 +837,7 @@ s32 func_8007F2AC() // 0x8007F2AC
 
 s16 Player_AnimGetSomething() // 0x8007F308
 {
-    return g_MaybePlayerAnims[g_SysWork.player_4C.character.animIdx_4].field_C;
+    return g_MaybePlayerAnims[g_SysWork.player_4C.character.model_0.anim_4.animIdx_0].field_C;
 }
 
 // Large function. Something to do with player control.
