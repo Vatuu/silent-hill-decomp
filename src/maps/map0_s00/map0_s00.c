@@ -93,8 +93,8 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D23EC);
 
 void func_800D2C7C(s32 arg0)
 {
-    s_MainCharacterExtra* extra     = &g_SysWork.player_4C.extra_128;
-    s_SubCharacter*       character = &g_SysWork.player_4C.character;
+    s_MainCharacterExtra* playerExtra = &g_SysWork.player_4C.extra_128;
+    s_SubCharacter*       chara       = &g_SysWork.player_4C.character;
 
     g_SysWork.player_4C.character.field_126 = 0;
 
@@ -121,11 +121,11 @@ void func_800D2C7C(s32 arg0)
 
     g_SysWork.player_4C.extra_128.field_1C = arg0;
 
-    character->field_3 = 0;
-    character->field_2 = 0;
+    chara->field_3 = 0;
+    chara->field_2 = 0;
 
-    extra->isAnimStateUnchanged_3 = 0;
-    extra->field_2 = 0;
+    playerExtra->isAnimStateUnchanged_3 = 0;
+    playerExtra->field_2 = 0;
 
     g_SysWork.player_4C.extra_128.field_20 = 0;
     g_SysWork.player_4C.extra_128.field_24 = 0;
@@ -138,11 +138,11 @@ void func_800D2D2C()
 
 void func_800D2D44()
 {
-    s_MainCharacterExtra* extra     = &g_SysWork.player_4C.extra_128;
-    s_SubCharacter*       character = &g_SysWork.player_4C.character;
+    s_MainCharacterExtra* playerExtra = &g_SysWork.player_4C.extra_128;
+    s_SubCharacter*       chara       = &g_SysWork.player_4C.character;
 
-    extra->flags_6 &= 0xFFFE;
-    character->flags_6 &= 0xFFFE;
+    playerExtra->flags_6 &= ~(1 << 0);
+    chara->flags_6 &= ~(1 << 0);
 }
 
 s32 func_800D2D6C()
@@ -152,11 +152,11 @@ s32 func_800D2D6C()
 
 void func_800D2D84()
 {
-    s_MainCharacterExtra* extra     = &g_SysWork.player_4C.extra_128;
-    s_SubCharacter*       character = &g_SysWork.player_4C.character;
+    s_MainCharacterExtra* playerExtra = &g_SysWork.player_4C.extra_128;
+    s_SubCharacter*       chara       = &g_SysWork.player_4C.character;
 
-    extra->flags_6 |= 1 << 0;
-    character->flags_6 |= 1 << 0;
+    playerExtra->flags_6 |= 1 << 0;
+    chara->flags_6 |= 1 << 0;
 }
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D2DAC);
@@ -292,7 +292,7 @@ void func_800D88C0(s_SubCharacter* chara, s32 arg1)
         chara->field_3 = 0;
     }
 
-    chara->flags_6 |= 1;
+    chara->flags_6 |= (1 << 0);
 }
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D8904);

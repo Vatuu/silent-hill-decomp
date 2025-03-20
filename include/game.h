@@ -288,7 +288,7 @@ typedef struct _SubCharacter
 
     u8  animIdx_4;
     u8  maybeSomeState_5;
-    s16 flags_6; // Bit 1: movement unlockled? Bit 2: visible.
+    u16 flags_6; // Bit 1: movement unlockled? Bit 2: visible.
 
     s32 fixedAnimFrameIdx_8;  // animFrameIdx_C << 12. Maybe used for interpolation?
     s16 animFrameIdx_C;       // Frame index into large array containing all frames for all anims?
