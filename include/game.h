@@ -8,10 +8,6 @@
 #define GAME_INVENTORY_SIZE   40
 #define SAVEGAME_FOOTER_MAGIC 0xDCDC
 
-/** Convert tile units (the engine's measurement reference) to world units. */
-#define TILE_UNIT(value) \
-    (s32)((value) * 256.0f)
-
 typedef enum _PadButton
 {
     Pad_BtnSelect    = 1 << 0,
