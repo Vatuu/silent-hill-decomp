@@ -298,7 +298,9 @@ void vbSetWorldScreenMatrix(GsCOORDINATE2* coord);
 void vbSetRefView(VbRVIEW* rview);
 void vwAngleToVector(SVECTOR* vec, SVECTOR* ang, s32 r);
 s32  vwVectorToAngle(SVECTOR* ang, SVECTOR* vec);
-s32  vwOresenHokan(s32* y_ary, s32 y_suu, s32 input_x, s32 min_x, s32 max_x);
+
+/** Performs linear interpolation between Y values based on an input X within the given range. */
+s32 vwOresenHokan(s32* y_ary, s32 y_suu, s32 input_x, s32 min_x, s32 max_x);
 
 s32 Math_MulFixed(s32 x, s32 y, s8 fractionalBits);
 
@@ -322,7 +324,7 @@ s32  vcExecCamera();
 void vcSetAllNpcDeadTimer();
 s32  vcRetSmoothCamMvF(VECTOR3* old_pos, VECTOR3* now_pos, SVECTOR* old_ang, SVECTOR* now_ang);
 VC_CAM_MV_TYPE vcRetCurCamMvType(VC_WORK* w_p);
-s32  func_8008150C(s32, s32);
+s32  func_8008150C(s32 arg0, s32 arg1);
 s32  vcRetThroughDoorCamEndF(VC_WORK* w_p);
 s32  vcRetFarWatchRate(s32 far_watch_button_prs_f, VC_CAM_MV_TYPE cur_cam_mv_type, VC_WORK* w_p);
 s32  vcRetSelfViewEffectRate(VC_CAM_MV_TYPE cur_cam_mv_type, s32 far_watch_rate, VC_WORK* w_p);

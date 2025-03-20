@@ -242,7 +242,7 @@ void func_800867B4(s32 caseParam, s32 idx)
             Fs_QueueStartReadTim(D_800A99B4[idx] + 0x768, FS_BUFFER_2, &D_800A901C);
             Fs_QueueStartReadTim(D_800A99CC[idx] + 0x776, FS_BUFFER_1, &D_800A9024);
             
-            GFX_Init(0x140, 1);
+            Gfx_Init(0x140, 1);
             GsSwapDispBuff();
             Fs_QueueWaitForEmpty();
             break;
@@ -254,7 +254,7 @@ void func_800867B4(s32 caseParam, s32 idx)
         case 2:
             LoadImage(&D_8002AB10, IMAGE_BUFFER_2);
             DrawSync(0);
-            GFX_Init(0x140, 0);
+            Gfx_Init(0x140, 0);
             break;
 
         default:

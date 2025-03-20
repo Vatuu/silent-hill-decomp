@@ -280,45 +280,52 @@ typedef struct _SubCharacter
     u8    field_2;
     u8    field_3; // Clear: anim transitioning(?), bit 1: animated, bit2: turning.
 
+    // Probably struct.
+    //==================
+
     // Following 4 bytes might be packed into an s32 called "animStatus",
-    // going by an original param name in vcMixSelfViewEffectToWatchTgtPos.
+    // implied by an original param name in `vcMixSelfViewEffectToWatchTgtPos`.
 
     u8  animIdx_4;
     u8  maybeSomeState_5;
-    s16 flags_6; // Bit 1: movement unlockled? Bit 2: visible.
+    u16 flags_6; // Bit 1: movement unlockled? Bit 2: visible.
 
-    s32 animFrameIdx_8;       // Rapidly incrementing anim frame index. Maybe interpolated frame index?
-    s16 animFrameIdx_C;       // Slowly incrementing anim frame index. Maybe actual frame data index of frame to be interpolated?
-    s16 interpolationAlpha_E; // Something to do with linear anim interpolation. Maybe alpha value in Q format.
-    u8  flags_12[8];
+    s32 fixedAnimFrameIdx_8;  // animFrameIdx_C << 12. Maybe used for interpolation?
+    s16 animFrameIdx_C;       // Frame index into large array containing all frames for all anims?
+    s16 interpolationAlpha_E; // Something to do with linear anim interpolation. Maybe fixed-point alpha value. Gets set to 1 << 12 (4096).
+    u8  unk_10[8];            // Maybe flag fields.
+
+    //==================
 
     VECTOR3 position_18;
     SVECTOR rotation_24;
-    SVECTOR rot_spd_2C;
+    SVECTOR rotationSpeed_2C;
     s32     field_34;
-    s32     chara_mv_spd_38;
-    s16     chara_mv_ang_y_3C;
-    u8      pad_3E[2];
-    u8      unk_40[112];
-    s32     health_B0; // Bits 3-4 contain s16 associated with player's rate of heavy breathing, always set to 6. Can't split into s16s? Maybe packed data.
+    s32     moveSpeed_38;
+    s16     headingAngle_3C;
+    s8      pad_3E[2];
+    s8      unk_40[4];
+    s32     field_44;
+    s8      unk_45[104];
+    s32     health_B0; // Bits 3-4 contain s16 associated with player's rate of heavy breathing, always set to 6. Can't split into `s16`s? Maybe packed data.
     s8      unk_B4[16];
     u16     dead_timer_C4; // Part of shBattleInfo struct in SH2, may use something similar here.
     s8      unk_C6[2];
     s8      unk_C8[32];
 
-    // Fields in the following block may be part of a multi-purpose array of s32 elements used to store unique property data for each character type.
+    // Fields in the following block may be part of a multi-purpose array of `s32` elements used to store unique property data for each character type.
     // Start of this section is unclear, bytes above may be part of it.
     // For player, mostly used for counters as far as I could see. -- Sezz
 
-    s32 field_E8;  // Player AFK counter. Increments every tick(?) for 10 seconds before player starts AFK anim. Purpose for other characters unknown.
+    s32 field_E8;  // Player AFK counter. Increments every tick for 10 seconds before player starts AFK anim. Purpose for other characters unknown.
     s32 field_EC;  // Copy of player Y position. Purpose for other characters unknown.
     s32 field_F0;
     s32 field_F4;
     s32 field_F8;  // Player run counter. Increments more slowly than runCounter_108. Purpose for other characters unknown.
-    s32 field_FC;  // Player winded counter. Counts 20 seconds worth of ticks(?) and caps at 0x23000. Purpose for other characters unknown.
+    s32 field_FC;  // Player winded counter. Counts 20 seconds worth of ticks and caps at 0x23000. Purpose for other characters unknown.
     s32 unk_100;
     s32 field_104;  // Used by player, returned by `func_8007FD2C`. Purpose unknown.
-    s32 field_108; // Player run counter. Increments every tick(?) indefinitely. Purpose for other characters unknown.
+    s32 field_108; // Player run counter. Increments every tick indefinitely. Purpose for other characters unknown.
 
     s8  unk_10C;
 	u8  field_10D;
@@ -337,10 +344,20 @@ typedef struct _MainCharacterExtra
     u8             field_1;
     u8             field_2;
     u8             isAnimStateUnchanged_3; // Educated guess. Always 1, set to 0 for 1 tick when anim state appears to change.
-    u8             unk_4;
-    u8             unk_5;
-    u16            flags_6;
-    s8             copy_8[16]; // Duplicate data. Sequentially opies all fields from 0x4 to 0x18 of s_SubCharacter.
+
+    // Probably struct.
+    //==================
+
+    u8  animIdx_4;
+    u8  maybeSomeState_5;
+    s16 flags_6;
+    s32 fixedAnimFrameIdx_8;
+    s16 animFrameIdx_C;
+    s16 interpolationAlpha_E;
+    u8  unk_10[8];
+
+    //==================
+
     s32            field_18;
     s32            field_1C; // Some kind of anim state. Set to 2 when player is in AFK anim, 0 otherwise.
     s32            field_20; // Some kind of anim state.
@@ -403,7 +420,7 @@ STATIC_ASSERT_SIZEOF(s_SysWork, 0x2768);
 extern void* g_OvlBodyprog;
 extern void* g_OvlDynamic;
 
-extern s_SysWork         g_SysWork;
+extern s_SysWork         g_SysWork; // 0x800B9FC0
 extern s_GameWork        g_GameWork;
 extern s_GameWork*       g_GameWorkPtr0;
 extern s_GameWork*       g_GameWorkPtr1;

@@ -9,8 +9,8 @@ void func_801E3F90(void);
 
 void func_801E3FB8(s32 arg0, s32 arg1);
 
-void GFX_DrawBrightLevelText();
+void Gfx_DrawBrightnessLevelText();
 
-extern char* D_801E2C64[]; //String: "LEVEL_________"
+extern char* D_801E2C64[]; // String: "LEVEL_________"
 
 #endif

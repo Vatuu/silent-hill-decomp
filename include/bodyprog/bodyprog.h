@@ -89,6 +89,13 @@ STATIC_ASSERT_SIZEOF(s_800C117C, 28);
 
 typedef struct
 {
+    s32 field_0;
+    s8  unk_4[4];
+    s8  field_8;
+} s_800C4620;
+
+typedef struct
+{
     u8  field_0;
     u8  field_1;
     u8  field_2;
@@ -292,6 +299,8 @@ extern s8 D_800C457C;
 
 extern u8 D_800C4606;
 
+extern s_800C4620 D_800C4620;
+
 extern s_800C4818 D_800C4818;
 
 /** Unknown bodyprog var. Set in `Fs_QueueDoThingWhenEmpty`. */
@@ -390,13 +399,13 @@ void func_800420C0();
 
 s32 func_80042C04(s32 idx);
 
-void func_8004B9F8(s32 arg0, u8 arg1);  // Types assumed.
-
 u8 func_80045B28();
 
 void func_8004690C(s32);
 
 void func_8004729C(u16);
+
+void func_8004B9F8(s32 arg0, u8 arg1); // Types assumed.
 
 void func_8005E0DC(s32); // Types assumed.
 
@@ -512,15 +521,15 @@ s16 func_8005BF38(s32 arg0);
 /** Draws some string in display space. */
 void func_80032CE8();
 
-void GFX_ClearRectInterlaced(s16 x, s16 y, s16 w, s16 h, u8 r, u8 g, u8 b);
+void Gfx_ClearRectInterlaced(s16 x, s16 y, s16 w, s16 h, u8 r, u8 g, u8 b);
 
-void GFX_VSyncCallback();
+void Gfx_VSyncCallback();
 
-/** Sets the position of the next string to be drawn by GFX_StringDraw. */
-void GFX_StringPosition(s32 x, s32 y);
+/** Sets the position of the next string to be drawn by Gfx_StringDraw. */
+void Gfx_StringPosition(s32 x, s32 y);
 
 /** Draws a string in display space. */
-void GFX_StringDraw(char* str, s32 arg1);
+void Gfx_StringDraw(char* str, s32 arg1);
 
 void Settings_ScreenXYSet(s32 x, s32 y);
 
@@ -594,6 +603,8 @@ s32 func_80080514();
 
 /** Computes (abs(value) - subtractor) * copysign(value). */
 s32 PreservedSignSubtract(s32 value, s32 subtractor);
+
+s32 func_800806AC(s32 arg0, s32 arg1, s32 arg2, s32 arg3); // arg3 type assumed.
 
 void func_8008074C(int arg0, int arg1);
 

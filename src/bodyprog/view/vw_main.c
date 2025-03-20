@@ -45,13 +45,13 @@ void vwSetCoordRefAndEntou(GsCOORDINATE2* parent_p, s32 ref_x, s32 ref_y, s32 re
     view_ang.vy = cam_ang_y;
     view_ang.vz = cam_ang_z;
     view_ang.vx = -ratan2(-cam_y, cam_xz_r);
-    view_ang.vy = (view_ang.vy + DEG_TO_FPA(11.25f)) & 0xFFF;
+    view_ang.vy = (view_ang.vy + FP_ANGLE(11.25f)) & 0xFFF;
 
     func_80096E78(&view_ang, view_mtx);
 
-    view_mtx->t[0] = FROM_FIXED(ref_x, Q4_SHIFT) + FROM_FIXED(FROM_FIXED(cam_xz_r, Q4_SHIFT) * shRsin(cam_ang_y), Q12_SHIFT);
-    view_mtx->t[1] = FROM_FIXED(ref_y, Q4_SHIFT) + FROM_FIXED(cam_y, Q4_SHIFT);
-    view_mtx->t[2] = FROM_FIXED(ref_z, Q4_SHIFT) + FROM_FIXED(FROM_FIXED(cam_xz_r, Q4_SHIFT) * shRcos(cam_ang_y), Q12_SHIFT);
+    view_mtx->t[0] = FP_FROM(ref_x, Q4_SHIFT) + FP_FROM(FP_FROM(cam_xz_r, Q4_SHIFT) * shRsin(cam_ang_y), Q12_SHIFT);
+    view_mtx->t[1] = FP_FROM(ref_y, Q4_SHIFT) + FP_FROM(cam_y, Q4_SHIFT);
+    view_mtx->t[2] = FP_FROM(ref_z, Q4_SHIFT) + FP_FROM(FP_FROM(cam_xz_r, Q4_SHIFT) * shRcos(cam_ang_y), Q12_SHIFT);
 }
 
 void vwSetViewInfoDirectMatrix(GsCOORDINATE2* pcoord, MATRIX* cammat) // 0x80048CF0
@@ -64,9 +64,9 @@ void vwSetViewInfoDirectMatrix(GsCOORDINATE2* pcoord, MATRIX* cammat) // 0x80048
 // Inlined into vwSetViewInfo, maybe vwMatrixToPosition?
 static inline void Math_MatrixToPosition(VECTOR3* pos, MATRIX* workm)
 {
-    pos->vx = TO_FIXED(workm->t[0], Q4_SHIFT);
-    pos->vy = TO_FIXED(workm->t[1], Q4_SHIFT);
-    pos->vz = TO_FIXED(workm->t[2], Q4_SHIFT);
+    pos->vx = FP_TO(workm->t[0], Q4_SHIFT);
+    pos->vy = FP_TO(workm->t[1], Q4_SHIFT);
+    pos->vz = FP_TO(workm->t[2], Q4_SHIFT);
 }
 
 void vwSetViewInfo() // 0x80048D48

@@ -42,8 +42,8 @@ void vwRenewalXZVelocityToTargetPos(s32* velo_x, s32* velo_z, VECTOR3* now_pos, 
     ratan2(*velo_x, *velo_z);
 
     add_spd = Math_MulFixed(accel, g_DeltaTime0, Q12_SHIFT);
-    *velo_x += MUL_FIXED(add_spd, shRsin(temp_v0), Q12_SHIFT);
-    *velo_z += MUL_FIXED(add_spd, shRcos(temp_v0), Q12_SHIFT);
+    *velo_x += FP_MULTIPLY(add_spd, shRsin(temp_v0), Q12_SHIFT);
+    *velo_z += FP_MULTIPLY(add_spd, shRcos(temp_v0), Q12_SHIFT);
 
     temp_v0_2 = Math_VectorMagnitude(*velo_x, 0, *velo_z);
     if (total_max_spd < temp_v0_2)
@@ -101,12 +101,12 @@ void vwMatrixToAngleYXZ(SVECTOR* ang, MATRIX* mat) // 0x800495D4
     s32 r_xz = SquareRoot0((mat->m[0][2] * mat->m[0][2]) + (mat->m[2][2] * mat->m[2][2]));
     ang->vx  = ratan2(-mat->m[1][2], r_xz);
 
-    if (ang->vx == DEG_TO_FPA(5.625f))
+    if (ang->vx == FP_ANGLE(5.625f))
     {
         ang->vz = 0;
         ang->vy = ratan2(mat->m[0][1], mat->m[2][1]);
     }
-    else if (ang->vx == DEG_TO_FPA(-5.625f))
+    else if (ang->vx == FP_ANGLE(-5.625f))
     {
         ang->vz = 0;
         ang->vy = ratan2(-mat->m[0][1], -mat->m[2][1]);
@@ -185,10 +185,10 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vw_calc", func_8004A54C);
 
 void vwAngleToVector(SVECTOR* vec, SVECTOR* ang, s32 r) // 0x8004A66C
 {
-    s32 entou_r = MUL_FIXED(r, shRcos(ang->vx), Q12_SHIFT);
-    vec->vy = MUL_FIXED(-r, shRsin(ang->vx), Q12_SHIFT);
-    vec->vx = MUL_FIXED(entou_r, shRsin(ang->vy), Q12_SHIFT);
-    vec->vz = MUL_FIXED(entou_r, shRcos(ang->vy), Q12_SHIFT);
+    s32 entou_r = FP_MULTIPLY(r, shRcos(ang->vx), Q12_SHIFT);
+    vec->vy = FP_MULTIPLY(-r, shRsin(ang->vx), Q12_SHIFT);
+    vec->vx = FP_MULTIPLY(entou_r, shRsin(ang->vy), Q12_SHIFT);
+    vec->vz = FP_MULTIPLY(entou_r, shRcos(ang->vy), Q12_SHIFT);
 }
 
 s32 vwVectorToAngle(SVECTOR* ang, SVECTOR* vec) // 0x8004A714
@@ -208,13 +208,12 @@ s32 vwVectorToAngle(SVECTOR* ang, SVECTOR* vec) // 0x8004A714
     return ret_r;
 }
 
-// Performs linear interpolation between y values based on an input x within the given range.
 s32 vwOresenHokan(s32* y_ary, s32 y_suu, s32 input_x, s32 min_x, s32 max_x) // 0x8004A7C8
 {
-    s32 amari;    // Remainder when calculating position within interval
-    s32 kukan_w;  // Width of each interval between y-values
-    s32 kukan_no; // Index of the interval containing input_x
-    s32 output_y; // Interpolated output y-value
+    s32 amari;    // Remainder when calculating position within interval.
+    s32 kukan_w;  // Width of each interval between Y values.
+    s32 kukan_no; // Index of the interval containing input_x.
+    s32 output_y; // Interpolated output Y value.
 
     if (input_x >= max_x)
     {
