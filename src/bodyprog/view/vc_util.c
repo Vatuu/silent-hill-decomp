@@ -115,7 +115,7 @@ void vcSetRefPosAndSysRef2CamParam(VECTOR3* ref_pos, s_SysWork* sys_p, s32 for_f
         sys_p->cam_r_xz_2380 = FP_TILE(16.0f);
     }
 
-    vcAddOfsToPos(ref_pos, &g_SysWork.player_4C.character.position_18, FP_TILE(8.0f), g_SysWork.player_4C.character.rotation_24.vy, FP_TILE(-16.0f));
+    vcAddOfsToPos(ref_pos, &g_SysWork.player_4C.chara_0.position_18, FP_TILE(8.0f), g_SysWork.player_4C.chara_0.rotation_24.vy, FP_TILE(-16.0f));
 }
 
 void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, s_SysWork* sys_p) // 0x800406D4

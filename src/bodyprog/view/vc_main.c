@@ -204,7 +204,7 @@ void vcSetAllNpcDeadTimer() // 0x8008123C
 
     s_SubCharacter* chara;
 
-    for (chara = &g_SysWork.characters_1A0[0]; chara < &g_SysWork.characters_1A0[NPC_COUNT_MAX]; chara++)
+    for (chara = &g_SysWork.npcs_1A0[0]; chara < &g_SysWork.npcs_1A0[NPC_COUNT_MAX]; chara++)
     {
         if (chara->model_0.chara_type_0 == 0)
         {
@@ -529,7 +529,7 @@ void vcAutoRenewalWatchTgtPosAndAngZ(VC_WORK* w_p, VC_CAM_MV_TYPE cam_mv_type, V
     }
 
     vcMixSelfViewEffectToWatchTgtPos(&w_p->watch_tgt_pos_7C, &w_p->watch_tgt_ang_z_8C, self_view_eff_rate,
-                                     w_p, &g_SysWork.hero_neck_930.workm, g_SysWork.player_4C.character.model_0.anim_4.animIdx_0);
+                                     w_p, &g_SysWork.hero_neck_930.workm, g_SysWork.player_4C.chara_0.model_0.anim_4.animIdx_0);
 
     if (w_p->watch_tgt_pos_7C.vy > w_p->watch_tgt_max_y_88)
     {

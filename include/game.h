@@ -361,7 +361,7 @@ STATIC_ASSERT_SIZEOF(s_MainCharacterExtra, 44);
 // TODO: Is this a struct of its own, or are its fields kept separately?
 typedef struct _MainCharacter
 {
-    s_SubCharacter       character;
+    s_SubCharacter       chara_0;
     s_MainCharacterExtra extra_128;
 } s_MainCharacter;
 STATIC_ASSERT_SIZEOF(s_MainCharacter, 340);
@@ -387,7 +387,7 @@ typedef struct _SysWork
     s8              unk_48[3];
     u8              field_4B; // Something used among player anim state checks.
     s_MainCharacter player_4C;
-    s_SubCharacter  characters_1A0[NPC_COUNT_MAX]; // More accurate name might be npcs_1A0.
+    s_SubCharacter  npcs_1A0[NPC_COUNT_MAX];
     GsCOORDINATE2   unk_coord_890[2];
     GsCOORDINATE2   hero_neck_930;
     s8              unk_980[6424];
