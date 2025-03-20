@@ -186,7 +186,6 @@ objdiff-config: regenerate
 
 report: objdiff-config
 	@$(OBJDIFF) report generate > $(BUILD_DIR)/progress.json
-	@$(PYTHON) $(OBJDIFF_DIR)/report_tempfix.py
 
 check: build
 	@sha256sum --ignore-missing --check checksum.sha
