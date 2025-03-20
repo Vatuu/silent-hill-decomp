@@ -390,6 +390,8 @@ void func_800420C0();
 
 s32 func_80042C04(s32 idx);
 
+void func_8004B9F8(s32 arg0, u8 arg1);  // Types assumed.
+
 u8 func_80045B28();
 
 void func_8004690C(s32);
