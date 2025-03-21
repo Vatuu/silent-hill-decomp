@@ -64,6 +64,14 @@ typedef struct
 
 typedef struct
 {
+    s8  unk_0[2];
+    u8  field_2;
+    s8  unk_6[4090];
+    s32 queueIdx_1000;
+} s_800BE9FC;
+
+typedef struct
+{
     s32                field_0;
     s8                 field_4[16]; 
     struct s_800B5508* field_14;
@@ -93,6 +101,13 @@ typedef struct
     s8 unk_0[28];
 } s_800C117C;
 STATIC_ASSERT_SIZEOF(s_800C117C, 28);
+
+typedef struct
+{
+    s8  unk_0[4];
+    u32 field_4;
+    s32 field_8;
+} s_800C37D8;
 
 typedef struct
 {
@@ -130,9 +145,13 @@ extern s8* D_8002510C;
 /** "\x07PAUSED" string */
 extern char D_80025394[];
 
+extern s32 D_80025528; // Type assumed.
+
+extern s32 D_80025530; // Type assumed.
+
 extern RECT D_8002AB10;
 
-extern s32 D_8002B2CC;
+extern s_800BE9FC D_8002B2CC;
 
 /** Unknown bodyprog var. Used in `Fs_QueueStartReadAnm`. */
 extern s_800A90FC D_800A90FC[];
@@ -152,6 +171,12 @@ extern s_FsImageDesc D_800A902C;
 extern s_FsImageDesc D_800A906C;
 
 extern u16 D_800A9774[];
+
+extern s32 D_800A9EB0;
+
+extern s32 D_800A9EBC; // Type assumed.
+
+extern s32 D_800A9EC4; // Type assumed.
 
 extern s_FsImageDesc D_800A9FA8;
 
@@ -175,6 +200,8 @@ extern s8 D_800A99B4[];
 extern s8 D_800A99CC[];
 
 extern s32 D_800A9A68;
+
+extern s_FsImageDesc D_800A9EB4;
 
 extern s16 D_800AD498;
 
@@ -214,9 +241,13 @@ extern s32 D_800B5618;
 
 extern u8 D_800BCDD4;
 
+extern u16 D_800BCE14;
+
 extern s_800C1020 D_800C1020;
 
 extern s_800C117C D_800C117C[];
+
+extern s_800C37D8* D_800C37D8;
 
 extern s32 D_800C4710[];
 
@@ -232,6 +263,26 @@ extern u16 D_800BCCB2;
 
 /** Accessed by credits and saveload. */
 extern s32 D_800BCD0C;
+
+extern s32 D_800BCDB0; // Type assumed.
+
+extern s16 D_800C15F8[];
+
+extern u16 D_800C1658;
+
+extern s8 D_800C1670;
+
+extern u8 g_Sd_VolumeBgm; // 0x800C1685
+
+extern u8 g_Sd_VolumeXa; // 0x800C1686
+
+extern u8 g_Sd_VolumeSe; // 0x800C1684
+
+extern s8 g_Sd_ReverbDepth; // 0x800C1687;
+
+extern s_800BE9FC D_800BE9FC;
+
+extern u8 D_800C37C8;
 
 extern s16 D_800C38A8;
 
@@ -315,21 +366,21 @@ extern s32 D_800C489C;
 
 extern u8* D_800C7018;
 
-// TODO: Order these by address and add address comments.
+// TODO: Order these by address.
 
-extern s32 g_MainLoop_FrameCount;
+extern s32 g_MainLoop_FrameCount; // 0x800B9CCC
 
-extern s32 g_Demo_VideoPresentInterval;
+extern s32 g_Demo_VideoPresentInterval; // 0x800C4898
 
-extern u32 g_Demo_PrevRandSeed;
+extern u32 g_Demo_PrevRandSeed; // 0x800C4888
 
-extern u32 g_Demo_RandSeedBackup;
+extern u32 g_Demo_RandSeedBackup; // 0x800C488C
 
-extern s_ControllerData* g_Demo_ControllerPacket;
+extern s_ControllerData* g_Demo_ControllerPacket; // 0x800C4890
 
-extern s32 g_Demo_DemoStep;
+extern s32 g_Demo_DemoStep; // 0x800C4894
 
-extern s_FsImageDesc g_MainImg0;
+extern s_FsImageDesc g_MainImg0; // 0x80022C74
 
 /** Initializer for something before the game loop. */
 void func_8002E630();
@@ -406,9 +457,32 @@ void func_800420C0();
 
 s32 func_80042C04(s32 idx);
 
+/** Updates a model's animation */
+void Anim_Update(s_Model* model, void* buffer, s32 arg2, s_Model* targetModel);
+
 u8 func_80045B28();
 
 void func_8004690C(s32);
+
+void Sd_SetVolBgm(s16 arg0, s16 arg1);
+
+void Sd_SetVolXa(s16 arg0, s16 arg1);
+
+s32 Sd_GetVolSe(s16 arg0);
+
+void Sd_SetReverbDepth(s8 depth);
+
+void Sd_SetReverbEnable(s32 mode);
+
+void Sd_StopSeq();
+
+/** CD function. */
+void func_800483D4();
+
+/** CD function. */
+void func_80048424();
+
+void func_800485C0(s32 idx);
 
 void func_8004729C(u16);
 
@@ -511,9 +585,6 @@ void GameFs_OptionBinLoad();
 /** Loads the save/load background graphic and overlay. */
 void GameFs_SaveLoadBinLoad();
 
-/** Loads a flame graphic. */
-void GameFs_FlameGfxLoad();
-
 /** Loads "Tim00" graphic. */
 void GameFs_Tim00TIMLoad();
 
@@ -574,6 +645,32 @@ void GameFs_MapLoad(s32 mapIdx);
 
 s32 func_8003528C(s32 idx0, s32 idx1);
 
+void AreaLoad_UpdatePlayerPosition();
+
+/** SysState_GamePaused handler. */
+void func_800391E8();
+
+void SysWork_SaveGameUpdatePlayer();
+
+void func_8003A16C();
+
+void SysWork_SaveGameReadPlayer();
+
+void func_8003BC8C();
+
+void func_8003BCF4();
+
+void func_8003BE28();
+
+void GameFs_BgEtcGfxLoad();
+
+void GameFs_BgItemLoad();
+
+void func_8003BED0();
+
+/** Loads a flame graphic. */
+void GameFs_FlameGfxLoad();
+
 /** Resets player info in the savegame buffer (inventory, health, playtime). */
 void Game_SaveGameResetPlayer();
 
@@ -600,7 +697,7 @@ s32 func_8007FD2C();
 /** Gets something from player. */
 s32 func_8007FD3C();
 
-/** Forces Pad_BtnSelect button press. */
+/** Forces Pad_Select button press. */
 void func_80080458();
 
 s32 func_80080478(VECTOR3* pos0, VECTOR3* pos1);

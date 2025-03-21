@@ -3,7 +3,7 @@
 #include "bodyprog/vw_system.h"
 #include "bodyprog/math.h"
 
-#define MIN_IN_ROAD_DIST TILE_UNIT(16.0f) // vcGetMinInRoadDist() in SH2, hardcoded to TILE_UNIT(16.0f) in SH1.
+#define MIN_IN_ROAD_DIST FP_TILE(16.0f) // vcGetMinInRoadDist() in SH2, hardcoded to FP_TILE(16.0f) in SH1.
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vc_main", vcInitVCSystem);
 
@@ -204,9 +204,9 @@ void vcSetAllNpcDeadTimer() // 0x8008123C
 
     s_SubCharacter* chara;
 
-    for (chara = &g_SysWork.characters_1A0[0]; chara < &g_SysWork.characters_1A0[NPC_COUNT_MAX]; chara++)
+    for (chara = &g_SysWork.npcs_1A0[0]; chara < &g_SysWork.npcs_1A0[NPC_COUNT_MAX]; chara++)
     {
-        if (chara->chara_type_0 == 0)
+        if (chara->model_0.chara_type_0 == 0)
         {
             continue;
         }
@@ -289,17 +289,17 @@ s32 vcRetThroughDoorCamEndF(VC_WORK* w_p) // 0x800815F0
     }
 
     // TODO: Timer field treated as distance here? Maybe misnamed, need to check usages in SH2 against SH.
-    if (prm_p->timer_4 > TILE_UNIT(19.2f) && w_p->nearest_enemy_xz_dist_2E0 < TILE_UNIT(19.2f))
+    if (prm_p->timer_4 > FP_TILE(19.2f) && w_p->nearest_enemy_xz_dist_2E0 < FP_TILE(19.2f))
     {
         return 1;
     }
 
-    if (rail2chara_dist > TILE_UNIT(36.8f))
+    if (rail2chara_dist > FP_TILE(36.8f))
     {
         return 1;
     }
 
-    if (rail2chara_dist > TILE_UNIT(8.0f))
+    if (rail2chara_dist > FP_TILE(8.0f))
     {
         abs_ofs_ang_y = shAngleRegulate(w_p->chara_eye_ang_y_144 -
                         ratan2(w_p->chara_pos_114.vx - w_p->through_door_10.rail_sta_pos_C.vx, w_p->chara_pos_114.vz - w_p->through_door_10.rail_sta_pos_C.vz));
@@ -338,21 +338,21 @@ s32 vcRetSelfViewEffectRate(VC_CAM_MV_TYPE cur_cam_mv_type, s32 far_watch_rate, 
         return 0;
     }
 
-    cam_max_rate = (cur_cam_mv_type == VC_MV_SELF_VIEW) ? TILE_UNIT(16.0f) : TILE_UNIT(5.6f);
+    cam_max_rate = (cur_cam_mv_type == VC_MV_SELF_VIEW) ? FP_TILE(16.0f) : FP_TILE(5.6f);
 
     xyz_dist = Math_VectorMagnitude(FP_FROM(w_p->cam_pos_50.vx - w_p->chara_head_pos_130.vx, Q4_SHIFT),
                                     FP_FROM(w_p->cam_pos_50.vy - w_p->chara_head_pos_130.vy, Q4_SHIFT),
                                     FP_FROM(w_p->cam_pos_50.vz - w_p->chara_head_pos_130.vz, Q4_SHIFT));
 
-    if (xyz_dist >= TILE_UNIT(0.5f))
+    if (xyz_dist >= FP_TILE(0.5f))
     {
-        if (xyz_dist > TILE_UNIT(1.2f))
+        if (xyz_dist > FP_TILE(1.2f))
         {
             max_rate = 0;
         }
         else
         {
-            max_rate = (cam_max_rate * (TILE_UNIT(1.2f) - xyz_dist)) / TILE_UNIT(0.7f);
+            max_rate = (cam_max_rate * (FP_TILE(1.2f) - xyz_dist)) / FP_TILE(0.7f);
         }
     }
     else
@@ -360,19 +360,19 @@ s32 vcRetSelfViewEffectRate(VC_CAM_MV_TYPE cur_cam_mv_type, s32 far_watch_rate, 
         max_rate = cam_max_rate;
     }
 
-    if (w_p->nearest_enemy_xz_dist_2E0 > TILE_UNIT(64.0f))
+    if (w_p->nearest_enemy_xz_dist_2E0 > FP_TILE(64.0f))
     {
-        mul_rate = TILE_UNIT(16.0f);
+        mul_rate = FP_TILE(16.0f);
     }
     else
     {
-        if (w_p->nearest_enemy_xz_dist_2E0 < TILE_UNIT(32.0f))
+        if (w_p->nearest_enemy_xz_dist_2E0 < FP_TILE(32.0f))
         {
             mul_rate = 0;
         }
         else
         {
-            mul_rate = (w_p->nearest_enemy_xz_dist_2E0 - TILE_UNIT(32.0f)) / 2;
+            mul_rate = (w_p->nearest_enemy_xz_dist_2E0 - FP_TILE(32.0f)) / 2;
         }
     }
 
@@ -444,7 +444,7 @@ void vcSetTHROUGH_DOOR_CAM_PARAM_in_VC_WORK(VC_WORK* w_p, enum _THROUGH_DOOR_SET
             prm_p->timer_4                  = 0;
             prm_p->rail_ang_y_8             = w_p->chara_eye_ang_y_144;
             prm_p->rail_sta_pos_C.vx        = w_p->chara_pos_114.vx;
-            prm_p->rail_sta_pos_C.vy        = w_p->chara_grnd_y_12C - TILE_UNIT(31.2f);
+            prm_p->rail_sta_pos_C.vy        = w_p->chara_grnd_y_12C - FP_TILE(31.2f);
             prm_p->rail_sta_pos_C.vz        = w_p->chara_pos_114.vz;
             break;
 
@@ -501,10 +501,10 @@ s32 vcAdvantageDistOfOldCurRoad(VC_NEAR_ROAD_DATA* old_cur_p) // 0x80082AD0
         case VC_RD_TYPE_ROAD:
         case VC_RD_TYPE_EFFECT:
         default:
-            return TILE_UNIT(5.6f);
+            return FP_TILE(5.6f);
 
         case VC_RD_TYPE_EVENT:
-            return TILE_UNIT(2.4f);
+            return FP_TILE(2.4f);
     }
 }
 
@@ -529,7 +529,7 @@ void vcAutoRenewalWatchTgtPosAndAngZ(VC_WORK* w_p, VC_CAM_MV_TYPE cam_mv_type, V
     }
 
     vcMixSelfViewEffectToWatchTgtPos(&w_p->watch_tgt_pos_7C, &w_p->watch_tgt_ang_z_8C, self_view_eff_rate,
-                                     w_p, &g_SysWork.hero_neck_930.workm, g_SysWork.player_4C.character.animIdx_4);
+                                     w_p, &g_SysWork.hero_neck_930.workm, g_SysWork.player_4C.chara_0.model_0.anim_4.animIdx_0);
 
     if (w_p->watch_tgt_pos_7C.vy > w_p->watch_tgt_max_y_88)
     {
@@ -574,7 +574,7 @@ void vcSetWatchTgtYParam(VECTOR3* watch_pos, VC_WORK* w_p, s32 cam_mv_type, s32 
 
 void vcAdjustWatchYLimitHighWhenFarView(VECTOR3* watch_pos, VECTOR3* cam_pos, s16 sy) // 0x800835E0
 {
-    s16 max_cam_ang_x = ratan2(cam_pos->vy + TILE_UNIT(80.0f), TILE_UNIT(208.0f)) - ratan2(g_GameWork.gsScreenHeight_58A / 2, sy);
+    s16 max_cam_ang_x = ratan2(cam_pos->vy + FP_TILE(80.0f), FP_TILE(208.0f)) - ratan2(g_GameWork.gsScreenHeight_58A / 2, sy);
     s32 dist          = Math_VectorMagnitude(watch_pos->vx - cam_pos->vx, 0, watch_pos->vz - cam_pos->vz);
     s32 cam_ang_x     = ratan2(-watch_pos->vy + cam_pos->vy, dist) * FP_ANGLE_COUNT;
 
@@ -635,7 +635,7 @@ void vcAutoRenewalCamTgtPos(VC_WORK* w_p, VC_CAM_MV_TYPE cam_mv_type, VC_CAM_MV_
             break;
 
         case 1:
-            vcMakeBasicCamTgtMvVec(&tgt_vec, &ideal_pos, w_p, TILE_UNIT(16.0f));
+            vcMakeBasicCamTgtMvVec(&tgt_vec, &ideal_pos, w_p, FP_TILE(16.0f));
             break;
     }
 
@@ -664,8 +664,8 @@ s32 vcRetMaxTgtMvXzLen(VC_WORK* w_p, VC_CAM_MV_PARAM* cam_mv_prm_p) // 0x8008395
 {
     s32 max_spd_xz;
 
-    max_spd_xz = w_p->chara_mv_spd_13C + TILE_UNIT(16.0f) + abs(w_p->chara_ang_spd_y_142 * 8);
-    max_spd_xz = (max_spd_xz < TILE_UNIT(35.2f)) ? TILE_UNIT(35.2f) : max_spd_xz;
+    max_spd_xz = w_p->chara_mv_spd_13C + FP_TILE(16.0f) + abs(w_p->chara_ang_spd_y_142 * 8);
+    max_spd_xz = (max_spd_xz < FP_TILE(35.2f)) ? FP_TILE(35.2f) : max_spd_xz;
     max_spd_xz = (cam_mv_prm_p->max_spd_xz > max_spd_xz) ? max_spd_xz : cam_mv_prm_p->max_spd_xz;
 
     return Math_MulFixed(max_spd_xz, g_DeltaTime0, Q12_SHIFT);
@@ -686,12 +686,12 @@ void vcMakeIdealCamPosByHeadPos(VECTOR3* ideal_pos, VC_WORK* w_p, VC_AREA_SIZE_T
     if (g_GameWorkPtr0->optViewMode_29)
     {
         chara2cam_ang_y = w_p->chara_eye_ang_y_144 + FP_ANGLE(8.75f);
-        ideal_pos->vy   = w_p->chara_head_pos_130.vy + TILE_UNIT(1.12f);
+        ideal_pos->vy   = w_p->chara_head_pos_130.vy + FP_TILE(1.12f);
     }
     else
     {
         chara2cam_ang_y = w_p->chara_eye_ang_y_144 + FP_ANGLE(10.625f);
-        ideal_pos->vy   = w_p->chara_head_pos_130.vy + TILE_UNIT(1.6f);
+        ideal_pos->vy   = w_p->chara_head_pos_130.vy + FP_TILE(1.6f);
     }
 
     ideal_pos->vx = w_p->chara_head_pos_130.vx + FP_MULTIPLY(shRsin(chara2cam_ang_y), FP_ANGLE(4.05f), Q12_SHIFT);
@@ -795,9 +795,9 @@ void vcCamTgtMvVecIsFlipedFromCharaFront(VECTOR3* tgt_mv_vec, VC_WORK* w_p, s32 
     if (flip_dist > 0)
     {
         mv_len = flip_dist;
-        if (flip_dist > TILE_UNIT(8.0f))
+        if (flip_dist > FP_TILE(8.0f))
         {
-            mv_len = TILE_UNIT(8.0f);
+            mv_len = FP_TILE(8.0f);
         }
 
         // chk_pos is unused?
@@ -1095,7 +1095,7 @@ void vcSetDataToVwSystem(VC_WORK* w_p, VC_CAM_MV_TYPE cam_mv_type) // 0x80085884
     if (w_p->field_D8 != 0)
     {
         w_p->field_D8 = 0;
-        vwSetCoordRefAndEntou(&g_SysWork.hero_neck_930, 0, TILE_UNIT(-0.8f), TILE_UNIT(4.8f), FP_ANGLE(11.25f), FP_ANGLE(0.0f), TILE_UNIT(-3.2f), 0x1000);
+        vwSetCoordRefAndEntou(&g_SysWork.hero_neck_930, 0, FP_TILE(-0.8f), FP_TILE(4.8f), FP_ANGLE(11.25f), FP_ANGLE(0.0f), FP_TILE(-3.2f), 0x1000);
     }
     else if (w_p->field_FC != 0)
     {

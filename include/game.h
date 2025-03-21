@@ -3,46 +3,49 @@
 
 #include "gpu.h"
 
-#define TICKS_PER_SECOND      60
-#define NPC_COUNT_MAX         6
-#define GAME_INVENTORY_SIZE   40
-#define SAVEGAME_FOOTER_MAGIC 0xDCDC
+#define TICKS_PER_SECOND         60 // Theorised. It's unclear if the game has a fixed timestep.
+#define NPC_COUNT_MAX            6
+#define INVENTORY_ITEM_COUNT_MAX 40
+#define SAVEGAME_FOOTER_MAGIC    0xDCDC
 
-/** Convert tile units (the engine's measurement reference) to world units. */
-#define TILE_UNIT(value) \
-    (s32)((value) * 256.0f)
-
-typedef enum _PadButton
+typedef enum _PadButtonFlags
 {
-    Pad_BtnSelect    = 1 << 0,
-    Pad_BtnL3        = 1 << 1,
-    Pad_BtnR3        = 1 << 2,
-    Pad_BtnStart     = 1 << 3,
-    Pad_BtnDpadUp    = 1 << 4,
-    Pad_BtnDpadRight = 1 << 5,
-    Pad_BtnDpadDown  = 1 << 6,
-    Pad_BtnDpadLeft  = 1 << 7,
-    Pad_BtnL2        = 1 << 8,
-    Pad_BtnR2        = 1 << 9,
-    Pad_BtnL1        = 1 << 10,
-    Pad_BtnR1        = 1 << 11,
-    Pad_BtnTriangle  = 1 << 12,
-    Pad_BtnCircle    = 1 << 13,
-    Pad_BtnCross     = 1 << 14,
-    Pad_BtnSquare    = 1 << 15,
-    Pad_LSUp2        = 1 << 16,
-    Pad_LSRight2     = 1 << 17,
-    Pad_LSDown2      = 1 << 18,
-    Pad_LSLeft2      = 1 << 19,
-    Pad_RSUp         = 1 << 20,
-    Pad_RSRight      = 1 << 21,
-    Pad_RSDown       = 1 << 22,
-    Pad_RSLeft       = 1 << 23,
-    Pad_LSUp         = 1 << 24,
-    Pad_LSRight      = 1 << 25,
-    Pad_LSDown       = 1 << 26,
-    Pad_LSLeft       = 1 << 27
-} e_PadButton;
+    Pad_Select       = 1 << 0,
+    Pad_L3           = 1 << 1,
+    Pad_R3           = 1 << 2,
+    Pad_Start        = 1 << 3,
+    Pad_DpadUp       = 1 << 4,
+    Pad_DpadRight    = 1 << 5,
+    Pad_DpadDown     = 1 << 6,
+    Pad_DpadLeft     = 1 << 7,
+    Pad_L2           = 1 << 8,
+    Pad_R2           = 1 << 9,
+    Pad_L1           = 1 << 10,
+    Pad_R1           = 1 << 11,
+    Pad_Triangle     = 1 << 12,
+    Pad_Circle       = 1 << 13,
+    Pad_Cross        = 1 << 14,
+    Pad_Square       = 1 << 15,
+    Pad_LStickUp2    = 1 << 16,
+    Pad_LStickRight2 = 1 << 17,
+    Pad_LStickDown2  = 1 << 18,
+    Pad_LStickLeft2  = 1 << 19,
+    Pad_RStickUp     = 1 << 20,
+    Pad_RStickRight  = 1 << 21,
+    Pad_RStickDown   = 1 << 22,
+    Pad_RStickLeft   = 1 << 23,
+    Pad_LStickUp     = 1 << 24,
+    Pad_LStickRight  = 1 << 25,
+    Pad_LStickDown   = 1 << 26,
+    Pad_LStickLeft   = 1 << 27
+} e_PadButtonFlags;
+
+typedef enum _AnimFlags
+{
+    AnimFlag_Unk0 = 0,
+    AnimFlag_Unk1 = 1 << 0,
+    AnimFlag_Unk2 = 1 << 1
+} e_AnimFlags;
 
 /** State IDs used by the main game loop. The values are used as indices into the 0x800A977C function array. */
 typedef enum _GameState
@@ -79,12 +82,12 @@ typedef enum _SysState
     SysState_OptionsMenu = 1,
     SysState_StatusMenu  = 2,
     SysState_Unk3        = 3,
-    SysState_FMV         = 4,
-    SysState_LoadArea1   = 5,
-    SysState_LoadArea2   = 6,
+    SysState_Fmv         = 4,
+    SysState_LoadArea0   = 5,
+    SysState_LoadArea1   = 6,
     SysState_ReadMessage = 7,
-    SysState_SaveMenu1   = 8,
-    SysState_SaveMenu2   = 9,
+    SysState_SaveMenu0   = 8,
+    SysState_SaveMenu1   = 9,
     SysState_Unk10       = 10,
     SysState_Unk11       = 11,
     SysState_Unk12       = 12,
@@ -102,6 +105,7 @@ typedef struct _AnalogPadData
     u8  left_x;
     u8  left_y;
 } s_AnalogPadData;
+STATIC_ASSERT_SIZEOF(s_AnalogPadData, 8);
 
 typedef struct _ControllerData
 {
@@ -124,8 +128,9 @@ typedef struct _ControllerData
     char            field_27;
     s32             field_28;
 } s_ControllerData;
+STATIC_ASSERT_SIZEOF(s_ControllerData, 44);
 
-// Input action key bindings.
+/** Key bindings for input actions. */
 typedef struct _ControllerBindings
 {
     u16 enter;
@@ -143,6 +148,7 @@ typedef struct _ControllerBindings
     u16 map;
     u16 option;
 } s_ControllerBindings;
+STATIC_ASSERT_SIZEOF(s_ControllerBindings, 28);
 
 typedef struct _ShInventoryItem
 {
@@ -151,10 +157,11 @@ typedef struct _ShInventoryItem
     u8 unk_2;
     u8 unk_3;
 } s_ShInventoryItem;
+STATIC_ASSERT_SIZEOF(s_ShInventoryItem, 4);
 
 typedef struct _ShSaveGame
 {
-    s_ShInventoryItem items_0[GAME_INVENTORY_SIZE];
+    s_ShInventoryItem items_0[INVENTORY_ITEM_COUNT_MAX];
     s8                field_A0;
     s8                field_A1[3];
     s8                mapOverlayIdx_A4;
@@ -206,7 +213,7 @@ typedef struct _ShSaveGame
     s8                field_27A;
     s8                field_27B;
 } s_ShSaveGame;
-STATIC_ASSERT_SIZEOF(s_ShSaveGame, 0x27C);
+STATIC_ASSERT_SIZEOF(s_ShSaveGame, 636);
 
 /** 
  * Appended to ShSaveGame during game save. Contains 8-bit XOR checksum + magic
@@ -273,30 +280,37 @@ typedef struct _GameWork
 } s_GameWork;
 STATIC_ASSERT_SIZEOF(s_GameWork, 1496);
 
-typedef struct _SubCharacter
+typedef struct _ModelAnimData
 {
-    s8    chara_type_0; // NOTE: Character types <24 must be some distinct category.
-    u8    field_1;
-    u8    field_2;
-    u8    field_3; // Clear: anim transitioning(?), bit 1: animated, bit2: turning.
-
-    // Probably struct.
-    //==================
-
     // Following 4 bytes might be packed into an s32 called "animStatus",
     // implied by an original param name in `vcMixSelfViewEffectToWatchTgtPos`.
 
-    u8  animIdx_4;
-    u8  maybeSomeState_5;
-    u16 flags_6; // Bit 1: movement unlockled? Bit 2: visible.
+    u8  animIdx_0;
+    u8  maybeSomeState_1; // State says if animTime_4 is anim time or a func ptr? That field could be a union.  -- emoose
+    u16 flags_2;          // e_AnimFlags. Bit 1: movement unlockled(?), bit 2: visible.
 
-    s32 fixedAnimFrameIdx_8;  // animFrameIdx_C << 12. Maybe used for interpolation?
-    s16 animFrameIdx_C;       // Frame index into large array containing all frames for all anims?
-    s16 interpolationAlpha_E; // Something to do with linear anim interpolation. Maybe fixed-point alpha value. Gets set to 1 << 12 (4096).
-    u8  unk_10[8];            // Maybe flag fields.
+    s32 animTime_4;           // animFrameIdx_8 << 12.
+    s16 animFrameIdx_8;       // Frame index into large array containing all frames for all anims?
+    s16 interpolationAlpha_A; // Something to do with linear anim interpolation. Maybe fixed-point alpha value. Gets set to 1 << 12 (4096).
+    s32 field_C;
+    s32 field_10;
+} s_ModelAnim;
+STATIC_ASSERT_SIZEOF(s_ModelAnim, 20);
 
-    //==================
+typedef struct _Model
+{
+    s8 chara_type_0;
+    u8 field_1;
+    u8 field_2;
+    u8 isAnimStateUnchanged_3; // Educated guess. Always 1, set to 0 for 1 tick when anim state appears to change.
+                            // Used differently in player's s_SubCharacter struct. 0: anim transitioning(?), bit 1: animated, bit 2: turning.
+    s_ModelAnim anim_4;
+} s_Model;
+STATIC_ASSERT_SIZEOF(s_Model, 24);
 
+typedef struct _SubCharacter
+{
+    s_Model model_0;
     VECTOR3 position_18;
     SVECTOR rotation_24;
     SVECTOR rotationSpeed_2C;
@@ -307,7 +321,7 @@ typedef struct _SubCharacter
     s8      unk_40[4];
     s32     field_44;
     s8      unk_45[104];
-    s32     health_B0; // Bits 3-4 contain s16 associated with player's rate of heavy breathing, always set to 6. Can't split into `s16`s? Maybe packed data.
+    s32     health_B0; // Bits 3-4 contain `s16` associated with player's rate of heavy breathing, always set to 6. Can't split into `s16`s? Maybe packed data.
     s8      unk_B4[16];
     u16     dead_timer_C4; // Part of shBattleInfo struct in SH2, may use something similar here.
     s8      unk_C6[2];
@@ -321,10 +335,10 @@ typedef struct _SubCharacter
     s32 field_EC;  // Copy of player Y position. Purpose for other characters unknown.
     s32 field_F0;
     s32 field_F4;
-    s32 field_F8;  // Player run counter. Increments more slowly than runCounter_108. Purpose for other characters unknown.
-    s32 field_FC;  // Player winded counter. Counts 20 seconds worth of ticks and caps at 0x23000. Purpose for other characters unknown.
+    s32 field_F8;  // Player run counter. Increments more slowly than `field_108`. Purpose for other characters unknown.
+    s32 field_FC;  // Player out of breath counter. Counts 20 seconds worth of ticks and caps at 0x23000. Purpose for other characters unknown.
     s32 unk_100;
-    s32 field_104;  // Used by player, returned by `func_8007FD2C`. Purpose unknown.
+    s32 field_104; // Used by player, returned by `func_8007FD2C`. Purpose unknown.
     s32 field_108; // Player run counter. Increments every tick indefinitely. Purpose for other characters unknown.
 
     s8  unk_10C;
@@ -338,37 +352,19 @@ STATIC_ASSERT_SIZEOF(s_SubCharacter, 296);
 
 typedef struct _MainCharacterExtra
 {
-    // SubCharacter has the same 0x2C starting bytes?
-    // Maybe this is actually just a base model struct, which SubCharacter extends, and the extra data in MainCharacter is some model attached to player?
-    u8             field_0;
-    u8             field_1;
-    u8             field_2;
-    u8             isAnimStateUnchanged_3; // Educated guess. Always 1, set to 0 for 1 tick when anim state appears to change.
-
-    // Probably struct.
-    //==================
-
-    u8  animIdx_4;
-    u8  maybeSomeState_5;
-    s16 flags_6;
-    s32 fixedAnimFrameIdx_8;
-    s16 animFrameIdx_C;
-    s16 interpolationAlpha_E;
-    u8  unk_10[8];
-
-    //==================
-
-    s32            field_18;
-    s32            field_1C; // Some kind of anim state. Set to 2 when player is in AFK anim, 0 otherwise.
-    s32            field_20; // Some kind of anim state.
-    s32            field_24; // Some kind of anim state.
-    s8             unk_28[4];
+    s_Model model_0; // For player, this is a copy of model_0 in its corresponding s_SubCharacter.
+    s32     field_18;
+    s32     field_1C; // Some kind of state. 0: nothing, 1: unknown bent over pose, 2: AFK, 8: dying, 5: forcefully turned around.
+    s32     field_20; // Some kind of anim state related to current action (running, walking, sidestepping, etc.).
+    s32     field_24; // Some kind of anim state related to current action (running, walking, sidestepping, etc.). Sometimes same as above, but not always.
+    s8      field_28; // Forcefully setting to 1 opens options menu.
 } s_MainCharacterExtra;
 STATIC_ASSERT_SIZEOF(s_MainCharacterExtra, 44);
 
+// TODO: Is this a struct of its own, or are its fields kept separately?
 typedef struct _MainCharacter
 {
-    s_SubCharacter       character;
+    s_SubCharacter       chara_0;
     s_MainCharacterExtra extra_128;
 } s_MainCharacter;
 STATIC_ASSERT_SIZEOF(s_MainCharacter, 340);
@@ -394,7 +390,7 @@ typedef struct _SysWork
     s8              unk_48[3];
     u8              field_4B; // Something used among player anim state checks.
     s_MainCharacter player_4C;
-    s_SubCharacter  characters_1A0[NPC_COUNT_MAX];
+    s_SubCharacter  npcs_1A0[NPC_COUNT_MAX];
     GsCOORDINATE2   unk_coord_890[2];
     GsCOORDINATE2   hero_neck_930;
     s8              unk_980[6424];

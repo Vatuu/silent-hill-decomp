@@ -460,9 +460,9 @@ main = 0x80010770; // type:func
 g_MainDispEnv = 0x800212dc; // type:DISPENV size:0x14
 g_MainDrawEnv = 0x800212f0; // type:DRAWENV size:0x5c
 // main .sdata
-g_MainImg0 = 0x80022c74; // type:FsImageDesc size:8
-g_MainImg1 = 0x80022c7c; // type:FsImageDesc size:8
-g_MainFbIdx = 0x80022c84; // type:u32
+g_MainImg0 = 0x80022C74; // type:FsImageDesc size:8
+g_MainImg1 = 0x80022C7c; // type:FsImageDesc size:8
+g_MainFbIdx = 0x80022C84; // type:u32
 
 // fileinfo .text
 Fs_DecryptOverlay = 0X80010AD0; // type:func

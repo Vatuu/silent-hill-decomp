@@ -135,10 +135,10 @@ VbWvsMatrix = 0x800C3888; // type:MATRIX size:0x20
 vcWatchMvPrmSt = 0x800C4630; // type:VC_WATCH_MV_PARAM size:0xC
 vcSelfViewTimer = 0x800C463C; // type:s32
 
-g_SD_VolumeSE = 0x800C1684;
-g_SD_VolumeBGM = 0x800C1685;
-g_SD_VolumeXA = 0x800C1686;
-g_SD_ReverbDepth = 0x800C1687;
+g_Sd_VolumeSe = 0x800C1684;
+g_Sd_VolumeBgm = 0x800C1685;
+g_Sd_VolumeXa = 0x800C1686;
+g_Sd_ReverbDepth = 0x800C1687;
 g_Game_VSyncTimeSinceBoot = 0x800C1690;
 
 g_Demo_FileIndex = 0x800C4844;
@@ -166,6 +166,8 @@ PreservedSignSubtract = 0x80080594; //type:func
 Camera_SetTranslation = 0x80086A94; // type:func
 Camera_SetRotation = 0x80086B70; // type:func
 
+Anim_Update = 0x800449F0; // type:func
+
 Gfx_ClearRectInterlaced = 0x80032358; // type:func
 Gfx_Init = 0x80032428; // type:func
 Settings_ScreenXYSet = 0x800324F4; // type:func
@@ -192,21 +194,21 @@ JOY_ControllerDataUpdate = 0x80034494; // type:func
 ControllerData_AnalogToDigital = 0x80034670; // type:func
 GameFs_MapLoad = 0x8003521C; // type:func
 Chara_PositionUpdateFromParams = 0x800371e8; // type:func
-AreaLoad_UpdatePlayerPosition = 0x80039f30; // type:func
-GameFs_BgEtcGfxLoad_8003BE6C = 0x8003be6c; // type:func
-GameFs_BgItemLoad_8003BE9C = 0x8003be9c; // type:func
+AreaLoad_UpdatePlayerPosition = 0x80039F30; // type:func
+GameFs_BgEtcGfxLoad = 0x8003be6c; // type:func
+GameFs_BgItemLoad = 0x8003be9c; // type:func
 GameFs_FlameGfxLoad = 0x8003E710; // type:func
 GameFs_PlayerMapAnimLoad = 0x8007EB64; // type:func
 
 SD_EngineCmd = 0x80045A7C; // type:func
 SD_DriverInit = 0x80045DD4; // type:func
 SD_SetVolume = 0x80047798; // type:func
-SD_SetVolBGM = 0x80047808; // type:func
-SD_SetVolXA = 0x80047860; // type:func
-SD_GetVolSE = 0x800478B8; // type:func
-SD_SetReverbDepth = 0x80047AD0; // type:func
-SD_SetReverbEnable = 0x80047AFC; // type:func
-SD_StopSEQ = 0x8004839C; // type:func
+Sd_SetVolBgm = 0x80047808; // type:func
+Sd_SetVolXa = 0x80047860; // type:func
+Sd_GetVolSe = 0x800478B8; // type:func
+Sd_SetReverbDepth = 0x80047AD0; // type:func
+Sd_SetReverbEnable = 0x80047AFC; // type:func
+Sd_StopSeq = 0x8004839C; // type:func
 
 Gfx_StringPosition = 0x8004A87C; // type:func
 Gfx_StringDraw = 0x8004a8e8; // type:func

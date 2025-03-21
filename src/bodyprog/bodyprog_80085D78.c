@@ -558,8 +558,8 @@ void func_80086FE8(s32 arg0, s32 arg1, s32 arg2)
         for (i = 0; i < NPC_COUNT_MAX; i++)
         {
             // NPC type is >=24 or health is 0.
-            if ((u32)((u8)g_SysWork.characters_1A0[i].chara_type_0 - 1) >= 24 ||
-                g_SysWork.characters_1A0[i].health_B0 <= 0)
+            if ((u32)((u8)g_SysWork.npcs_1A0[i].model_0.chara_type_0 - 1) >= 24 ||
+                g_SysWork.npcs_1A0[i].health_B0 <= 0)
             {
                 continue;
             }

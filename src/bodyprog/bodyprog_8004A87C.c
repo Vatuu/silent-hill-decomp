@@ -747,7 +747,7 @@ void Game_SaveGameResetPlayer() // 0x8007E530
 
     g_SaveGamePtr->field_AB = 8;
 
-    for (i = 0; i < GAME_INVENTORY_SIZE; i++)
+    for (i = 0; i < INVENTORY_ITEM_COUNT_MAX; i++)
     {
         save->items_0[i].id    = 0xFF;
         save->items_0[i].count = 0;
@@ -823,7 +823,7 @@ s32 func_8007F26C() // 0x8007F26C
 
 s32 func_8007F2AC() // 0x8007F2AC
 {
-    if (g_SysWork.player_4C.character.health_B0 <= 0 ||
+    if (g_SysWork.player_4C.chara_0.health_B0 <= 0 ||
         g_SysWork.field_4B != 0 ||
         g_SysWork.player_4C.extra_128.field_1C == 5 ||
         g_SysWork.player_4C.extra_128.field_1C == 6 ||
@@ -837,7 +837,7 @@ s32 func_8007F2AC() // 0x8007F2AC
 
 s16 Player_AnimGetSomething() // 0x8007F308
 {
-    return g_MaybePlayerAnims[g_SysWork.player_4C.character.animIdx_4].field_C;
+    return g_MaybePlayerAnims[g_SysWork.player_4C.chara_0.model_0.anim_4.animIdx_0].field_C;
 }
 
 // Large function. Something to do with player control.
@@ -855,12 +855,12 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8007FC48);
 
 s32 func_8007FD2C() // 0x8007FD2C
 {
-    return g_SysWork.player_4C.character.field_104;
+    return g_SysWork.player_4C.chara_0.field_104;
 }
 
 s32 func_8007FD3C() // 0x8007FD3C
 {
-    return g_SysWork.player_4C.character.field_112;
+    return g_SysWork.player_4C.chara_0.field_112;
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8007FD4C);
@@ -876,7 +876,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_800803FC);
 
 void func_80080458() // 0x80080458
 {
-    g_ControllerPtr1->btns_new_10 |= Pad_BtnSelect;
+    g_ControllerPtr1->btns_new_10 |= Pad_Select;
 }
 
 s32 func_80080478(VECTOR3* pos0, VECTOR3* pos1) // 0x80080478

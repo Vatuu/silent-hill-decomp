@@ -92,9 +92,9 @@ s32 func_8002E76C(s32 idx)
     return ret;
 }
 
-void func_8002E7BC(void)
+void func_8002E7BC()
 {
-    s_800B55E8* temp_v0;
+    s_800B55E8* unk;
 
     if (D_800B5480 == 1)
         return;
@@ -111,12 +111,12 @@ void func_8002E7BC(void)
     D_800B55E8[0].field_14 = 0;
     D_800B55E8[1].field_0 = 0;
 
-    temp_v0 = &D_800B55E8[1];
-    temp_v0->field_4 = 0;
-    temp_v0->field_8 = 0;
-    temp_v0->field_C = 0;
-    temp_v0->field_10 = 0;
-    temp_v0->field_14 = 0;
+    unk = &D_800B55E8[1];
+    unk->field_4 = 0;
+    unk->field_8 = 0;
+    unk->field_C = 0;
+    unk->field_10 = 0;
+    unk->field_14 = 0;
 }
 
 void func_8002E830()
@@ -483,18 +483,18 @@ void GameFs_StreamBinSeek() // 0x80032C20
     Fs_QueueStartSeek(FILE_VIN_STREAM_BIN);
 }
 
-void GameFs_StreamBinLoad() // 0x80032c40
+void GameFs_StreamBinLoad() // 0x80032C40
 {
     Fs_QueueStartRead(FILE_VIN_STREAM_BIN, FS_BUFFER_1);
 }
 
-void GameFs_OptionBinLoad() // 0x80032c68
+void GameFs_OptionBinLoad() // 0x80032C68
 {
     Fs_QueueStartReadTim(FILE_TIM_OPTION_TIM, FS_BUFFER_1, &D_800A902C);
     Fs_QueueStartRead(FILE_VIN_OPTION_BIN, FS_BUFFER_1);
 }
 
-void GameFs_SaveLoadBinLoad() // 0x80032ca8
+void GameFs_SaveLoadBinLoad() // 0x80032CA8
 {
     Fs_QueueStartReadTim(FILE_TIM_SAVELOAD_TIM, FS_BUFFER_1, &D_800A902C);
     Fs_QueueStartRead(FILE_VIN_SAVELOAD_BIN, FS_BUFFER_1);
@@ -502,7 +502,10 @@ void GameFs_SaveLoadBinLoad() // 0x80032ca8
 
 void func_80032CE8()
 {
-    Gfx_StringPosition(108, 104);
+    #define POS_X 108
+    #define POS_Y 104
+
+    Gfx_StringPosition(POS_X, POS_Y);
     Gfx_StringDraw(&D_8002510C, 100);
 }
 
@@ -555,7 +558,7 @@ void func_80032D1C()
             break;
             
         case 3:
-            if ((D_800BCD0C & 7) == 5)
+            if ((D_800BCD0C & 7) == ((1 << 0) | (1 << 2)))
             {
                 Fs_QueueWaitForEmpty();
                 
@@ -807,9 +810,9 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", SysWork_Clear);
 
 s32 MainLoop_ShouldWarmReset() // 0x80034108
 {
-    #define RESET_BTN_FLAGS (Pad_BtnSelect | Pad_BtnStart)
-    #define UNK_BTN_FLAGS_0 (Pad_BtnSelect | Pad_BtnStart | Pad_BtnL2 | Pad_BtnR2 | Pad_BtnL1 | Pad_BtnR1)
-    #define UNK_BTN_FLAGS_1 (Pad_BtnStart | Pad_BtnTriangle | Pad_BtnSquare)
+    #define RESET_BTN_FLAGS (Pad_Select | Pad_Start)
+    #define UNK_BTN_FLAGS_0 (Pad_Select | Pad_Start | Pad_L2 | Pad_R2 | Pad_L1 | Pad_R1)
+    #define UNK_BTN_FLAGS_1 (Pad_Start | Pad_Triangle | Pad_Square)
     
     if (g_GameWork.gameState_594 < GameState_MovieIntroAlternate)
     {
@@ -857,7 +860,7 @@ s32 MainLoop_ShouldWarmReset() // 0x80034108
     {
         return 2; 
     }
-    else if (g_ControllerPtr0->btns_held_C == UNK_BTN_FLAGS_1 && (g_ControllerPtr0->btns_new_10 & Pad_BtnStart))
+    else if (g_ControllerPtr0->btns_held_C == UNK_BTN_FLAGS_1 && (g_ControllerPtr0->btns_new_10 & Pad_Start))
     {
         return 2; 
     }
@@ -1115,8 +1118,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80038BD4);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80038F6C);
 
-// SysState_GamePaused handler
-void func_800391E8()
+void func_800391E8() // 0x800391E8
 {
     D_800A9A68 += g_DeltaTime1;
     if (((D_800A9A68 >> 11) & 1) == 0)
@@ -1136,13 +1138,13 @@ void func_800391E8()
 
     // Debug button combo to bring up save screen from pause screen.
     // DPad-Left + L2 + L1 + LS-Left + RS-Left + L3
-    if ((g_ControllerPtr0->btns_held_C == (Pad_BtnL3 | Pad_BtnDpadLeft | Pad_BtnL2 | Pad_BtnL1 | Pad_LSLeft2 | Pad_RSLeft | Pad_LSLeft)) &&
-        (g_ControllerPtr0->btns_new_10 & Pad_BtnL3))
+    if ((g_ControllerPtr0->btns_held_C == (Pad_L3 | Pad_DpadLeft | Pad_L2 | Pad_L1 | Pad_LStickLeft2 | Pad_RStickLeft | Pad_LStickLeft)) &&
+        (g_ControllerPtr0->btns_new_10 & Pad_L3))
     {
         D_800A9A68 = 0;
         SD_EngineCmd(4);
         g_MapEventIdx = 0;
-        SysWork_StateSetNext(SysState_SaveMenu2);
+        SysWork_StateSetNext(SysState_SaveMenu1);
         return;
     }
 
@@ -1170,7 +1172,10 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80039A58);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80039C40);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", AreaLoad_UpdatePlayerPosition);
+void AreaLoad_UpdatePlayerPosition() // 0x80039F30
+{
+    Chara_PositionUpdateFromParams(&D_800BCDB0);
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80039F54);
 
@@ -1183,10 +1188,10 @@ void SysWork_SaveGameUpdatePlayer() // 0x8003A120
     s_ShSaveGame* save = g_SaveGamePtr;
 
     save->mapEventIdx_A8      = g_MapEventIdx;
-    save->playerPositionX_244 = g_SysWork.player_4C.character.position_18.vx;
-    save->playerPositionZ_24C = g_SysWork.player_4C.character.position_18.vz;
-    save->playerRotationY_248 = g_SysWork.player_4C.character.rotation_24.vy;
-    save->playerHealth_240    = g_SysWork.player_4C.character.health_B0;
+    save->playerPositionX_244 = g_SysWork.player_4C.chara_0.position_18.vx;
+    save->playerPositionZ_24C = g_SysWork.player_4C.chara_0.position_18.vz;
+    save->playerRotationY_248 = g_SysWork.player_4C.chara_0.rotation_24.vy;
+    save->playerHealth_240    = g_SysWork.player_4C.chara_0.health_B0;
 }
 
 void func_8003A16C() // 0x8003A16C
@@ -1203,10 +1208,10 @@ void func_8003A16C() // 0x8003A16C
 
 void SysWork_SaveGameReadPlayer() // 0x8003A1F4
 {
-    g_SysWork.player_4C.character.position_18.vx = g_SaveGamePtr->playerPositionX_244;
-    g_SysWork.player_4C.character.position_18.vz = g_SaveGamePtr->playerPositionZ_24C;
-    g_SysWork.player_4C.character.rotation_24.vy = g_SaveGamePtr->playerRotationY_248;
-    g_SysWork.player_4C.character.health_B0      = g_SaveGamePtr->playerHealth_240;
+    g_SysWork.player_4C.chara_0.position_18.vx = g_SaveGamePtr->playerPositionX_244;
+    g_SysWork.player_4C.chara_0.position_18.vz = g_SaveGamePtr->playerPositionZ_24C;
+    g_SysWork.player_4C.chara_0.rotation_24.vy = g_SaveGamePtr->playerRotationY_248;
+    g_SysWork.player_4C.chara_0.health_B0      = g_SaveGamePtr->playerHealth_240;
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003A230);
@@ -1225,7 +1230,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003AB28);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003B550);
 
-void func_8003B560(void) {}
+void func_8003B560() {}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003B568);
 
@@ -1245,23 +1250,62 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003BAC4);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003BBF4);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003BC8C);
+void func_8003BC8C() // 0x8003BC8C
+{
+    if (D_800A9EB0 == ((D_800A9EB0 / 5) * 5))
+    {
+        func_8003BBF4(D_800A9EB0);
+    }
+    
+    D_800A9EB0++;
+    func_8003BA08();
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003BCF4);
+void func_8003BCF4() // 0x8003BCF4
+{
+    s32 i;
+
+    func_8003B7BC();
+
+    for (i = 0; i < 30; i++)
+    {
+        func_8003BBF4();
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003BD2C);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003BD48);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003BE28);
+void func_8003BE28() // 0x8003BE28
+{
+    func_80069820(D_800BCE14);
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003BE50);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", GameFs_BgEtcGfxLoad_8003BE6C);
+void GameFs_BgEtcGfxLoad() // 0x8003BE6C
+{
+    Fs_QueueStartReadTim(FILE_TIM_BG_ETC_TIM, FS_BUFFER_1, &D_800A9EB4);
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", GameFs_BgItemLoad_8003BE9C);
+void GameFs_BgItemLoad() // 0x8003BE9C
+{
+    D_800BE9FC.queueIdx_1000 = Fs_QueueStartRead(FILE_BG_BG_ITEM_PLM, &D_800BE9FC);
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003BED0);
+void func_8003BED0() // 0x8003BED0
+{
+    if (Fs_QueueIsEntryLoaded(D_800BE9FC.queueIdx_1000) == 0 || D_800BE9FC.field_2 != 0)
+    {
+        return;
+    }
+    
+    func_800560FC(&D_800BE9FC);
+    func_80056504(&D_800BE9FC, &D_80025528, &D_800A9EBC, 1);
+    func_80056504(&D_800BE9FC, &D_80025530, &D_800A9EC4, 1);
+    func_80056954(&D_800BE9FC);
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003BF60);
 
@@ -1323,7 +1367,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003D3BC);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003D444);
 
-void func_8003D460(void) {}
+void func_8003D460() {}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003D468);
 

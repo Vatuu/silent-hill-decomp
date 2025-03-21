@@ -1,10 +1,12 @@
-#include "common.h"
+#include "game.h"
+
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/math.h"
 #include "main/fsqueue.h"
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80040A64);
 
-void func_80040B6C(void) {}
+void func_80040B6C() {}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80040B74);
 
@@ -190,7 +192,74 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80044950);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800449AC);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800449F0);
+void Anim_Update(s_Model* model, void* buffer, s32 arg2, s_Model* targetModel)
+{
+    s32 setAnimIdx;
+    s32 someFixedTimemaskedAnimTime;
+    s32 maybeInterpTime;
+    s32 animTimeDelta;
+    s32 animTime;
+    s32 animFrameIdx;
+    s32 interpTime;
+    s32 maskedAnimTime;
+
+    setAnimIdx = 0;
+
+    if (model->anim_4.flags_2 & AnimFlag_Unk1)
+    {
+        maybeInterpTime = func_800449AC(model, targetModel);
+        animTimeDelta = FP_FROM((s64)maybeInterpTime * (s64)g_DeltaTime0, Q12_SHIFT);
+    }
+    else
+    {
+        animTimeDelta = 0;
+    }
+
+    // TODO: FP conversion is very confusing here, need to figure out what the called functions do. -- Sezz
+
+    // Calculate anim frame interpolation.
+    animTime = model->anim_4.animTime_4;
+    animFrameIdx = FP_FROM(animTime, Q12_SHIFT);
+    if (animTimeDelta != 0)
+    {
+        animTime += animTimeDelta;
+        interpTime = FP_TO(targetModel->anim_4.interpolationAlpha_A, Q12_SHIFT); // Shift already shifter interp alpha again?
+        if (animTime < interpTime)
+        {
+            interpTime = FP_TO(targetModel->anim_4.animFrameIdx_8, Q12_SHIFT);
+            if (animTime <= interpTime)
+            {
+                animTime = interpTime;
+                setAnimIdx = 1;
+            }
+        }
+        else
+        {
+            animTime = interpTime;
+            setAnimIdx = 1;
+        }
+
+        animFrameIdx = FP_FROM(animTime, Q12_SHIFT);
+    }
+
+    // Do something if some flags are set.
+    maskedAnimTime = animTime & 0xFFF;
+    if ((model->anim_4.flags_2 & AnimFlag_Unk1) || (model->anim_4.flags_2 & AnimFlag_Unk2))
+    {
+        func_800446D8(buffer, arg2, animFrameIdx, animFrameIdx + 1, maskedAnimTime);
+    }
+
+    // Set anim frame data.
+    model->anim_4.animTime_4 = animTime;
+    model->anim_4.animFrameIdx_8 = animFrameIdx;
+    model->anim_4.interpolationAlpha_A = FP_ALPHA(0.0f);
+
+    // Set anim index.
+    if (setAnimIdx != 0)
+    {
+        model->anim_4.animIdx_0 = targetModel->anim_4.flags_2;
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80044B38);
 
@@ -291,19 +360,47 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80047634);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", SD_SetVolume);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", SD_SetVolBGM);
+#ifdef NON_MATCHING
+void Sd_SetVolBgm(s16 arg0, s16 arg1) // 0x80047808
+{
+    SdSeqSetVol(0, ((arg0 * g_Sd_VolumeBgm) << 9) >> 16, ((arg1 * g_Sd_VolumeBgm) << 9) >> 16);
+}
+#else
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", Sd_SetVolBgm);
+#endif
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", SD_SetVolXA);
+#ifdef NON_MATCHING
+void Sd_SetVolXa(s16 arg0, s16 arg1) // 0x80047860
+{
+    SdSetSerialVol(0, ((arg0 * g_Sd_VolumeXa) << 9) >> 16, ((arg1 * g_Sd_VolumeXa) << 9) >> 16);
+}
+#else
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", Sd_SetVolXa);
+#endif
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", SD_GetVolSE);
+s32 Sd_GetVolSe(s16 arg0) // 0x800478B8
+{
+    return ((arg0 * g_Sd_VolumeSe) << 9) >> 16;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800478DC);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80047A70);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", SD_SetReverbDepth);
+void Sd_SetReverbDepth(s8 depth)
+{
+    s32 left;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", SD_SetReverbEnable);
+    g_Sd_ReverbDepth = depth;
+    
+    left = depth & 0xFF;
+    SdUtSetReverbDepth(left, left);
+}
+
+void Sd_SetReverbEnable(s32 mode)
+{
+    SdSetSerialAttr(0, 1, mode & 0xFF);
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80047B24);
 
@@ -331,19 +428,47 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80048244);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800482D8);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", SD_StopSEQ);
+void Sd_StopSeq()
+{
+    func_80046B78();
+    SdSeqClose(D_800C37C8);
+    
+    D_800C1670 = 2;
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800483D4);
+void func_800483D4() // 0x800483D4
+{
+    s32 sp10;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80048424);
+    if (!(func_80048954(2, CdIntToPos(D_800C37D8->field_8, &sp10), 0) & 0xFF))
+    {
+        D_800C1670 = 3;
+    }
+}
+
+void func_80048424() // 0x80048424
+{
+    if (CdSync(1, 0) == 2)
+    {
+        CdRead((D_800C37D8->field_4 + 0x7FF) >> 11, FS_BUFFER_1, 0x80);
+        
+        D_800C1670 = 4;
+        D_800C1658 = 0;
+    }
+    
+    D_800C1658++;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80048498);
 
-void func_800485B0(void) {}
+void func_800485B0() {}
 
-void func_800485B8(void) {}
+void func_800485B8() {}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800485C0);
+void func_800485C0(s32 idx)
+{
+    D_800C15F8[idx] = 0;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800485D8);
 
