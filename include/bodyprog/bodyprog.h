@@ -225,6 +225,8 @@ extern s32 D_800B5618;
 
 extern u8 D_800BCDD4;
 
+extern u16 D_800BCE14;
+
 extern s_800C1020 D_800C1020;
 
 extern s_800C117C D_800C117C[];
@@ -595,6 +597,8 @@ void SysWork_SaveGameUpdatePlayer();
 void func_8003A16C();
 
 void SysWork_SaveGameReadPlayer();
+
+void func_8003BE28();
 
 void GameFs_BgEtcGfxLoad();
 
