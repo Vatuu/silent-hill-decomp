@@ -73,13 +73,20 @@ typedef struct
 typedef struct
 {
     s32                field_0;
-    s32                field_4; // Index into some array.
-    s32                field_8;
-    s32                field_C;
-    s32                field_10;
+    s8                 field_4[16]; 
     struct s_800B5508* field_14;
     s32                field_18; 
 } s_800B5508;
+
+typedef struct
+{
+    s32 field_0;
+    s32 field_4;
+    s32 field_8;
+    s32 field_C;
+    s32 field_10;
+    s32 field_14;
+} s_800B55E8;
 
 typedef struct
 {
@@ -214,11 +221,11 @@ extern u16 D_800AFDBC;
 
 extern s32 D_800AFDEC;
 
-extern s_800B5508 D_800B2780[];
+extern s_800B55E8 D_800B2780[];
 
-extern s_800B5508 D_800B3680[];
+extern s_800B55E8 D_800B3680[];
 
-extern s_800B5508 D_800B4580[];
+extern s_800B55E8 D_800B4580[];
 
 extern s32 D_800B5480;
 
@@ -226,7 +233,7 @@ extern s32 D_800B5488; // Index or state?
 
 extern s_800B5508 D_800B5508[];
 
-extern s_800B5508 D_800B55E8;
+extern s_800B55E8 D_800B55E8[2];
 
 extern s32 D_800B55FC;
 
@@ -395,7 +402,7 @@ s32 func_8002E990();
 
 void func_8002EB88(); // Return type assumed.
 
-void func_8002ECE0(s_800B5508* arg0);
+void func_8002ECE0(s_800B55E8* arg0);
 
 void func_80030444();
 
