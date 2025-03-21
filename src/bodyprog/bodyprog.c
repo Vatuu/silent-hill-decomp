@@ -1177,7 +1177,17 @@ void func_8003BC8C() // 0x8003BC8C
     func_8003BA08();
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003BCF4);
+void func_8003BCF4() // 0x8003BCF4
+{
+    s32 i;
+
+    func_8003B7BC();
+
+    for (i = 0; i < 30; i++)
+    {
+        func_8003BBF4();
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003BD2C);
 

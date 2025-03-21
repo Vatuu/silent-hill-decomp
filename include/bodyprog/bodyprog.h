@@ -602,6 +602,8 @@ void SysWork_SaveGameReadPlayer();
 
 void func_8003BC8C();
 
+void func_8003BCF4();
+
 void func_8003BE28();
 
 void GameFs_BgEtcGfxLoad();
