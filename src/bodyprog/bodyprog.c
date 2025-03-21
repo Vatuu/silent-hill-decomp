@@ -1091,7 +1091,10 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80039A58);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80039C40);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", AreaLoad_UpdatePlayerPosition);
+void AreaLoad_UpdatePlayerPosition() // 0x80039F30
+{
+    Chara_PositionUpdateFromParams(&D_800BCDB0);
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80039F54);
 

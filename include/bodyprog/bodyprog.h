@@ -257,6 +257,8 @@ extern u16 D_800BCCB2;
 /** Accessed by credits and saveload. */
 extern s32 D_800BCD0C;
 
+extern s32 D_800BCDB0; // Type assumed.
+
 extern s16 D_800C15F8[];
 
 extern u16 D_800C1658;
@@ -635,6 +637,8 @@ void Game_SaveGameInitialize(s8 overlayIdx, s32 difficulty);
 void GameFs_MapLoad(s32 mapIdx);
 
 s32 func_8003528C(s32 idx0, s32 idx1);
+
+void AreaLoad_UpdatePlayerPosition();
 
 /** SysState_GamePaused handler. */
 void func_800391E8();
