@@ -64,6 +64,14 @@ typedef struct
 
 typedef struct
 {
+    s8  unk_0[2];
+    u8  field_2;
+    s8  unk_6[4090];
+    s32 queueIdx_1000;
+} s_800BE9FC;
+
+typedef struct
+{
     s32                field_0;
     s32                field_4; // Index into some array.
     s32                field_8;
@@ -123,9 +131,13 @@ extern s8* D_8002510C;
 /** "\x07PAUSED" string */
 extern char D_80025394[];
 
+extern s32 D_80025528; // Type assumed.
+
+extern s32 D_80025530; // Type assumed.
+
 extern RECT D_8002AB10;
 
-extern s32 D_8002B2CC;
+extern s_800BE9FC D_8002B2CC;
 
 /** Unknown bodyprog var. Used in `Fs_QueueStartReadAnm`. */
 extern s_800A90FC D_800A90FC[];
@@ -145,6 +157,10 @@ extern s_FsImageDesc D_800A902C;
 extern s_FsImageDesc D_800A906C;
 
 extern u16 D_800A9774[];
+
+extern s32 D_800A9EBC; // Type assumed.
+
+extern s32 D_800A9EC4; // Type assumed.
 
 extern s_FsImageDesc D_800A9FA8;
 
@@ -168,6 +184,8 @@ extern s8 D_800A99B4[];
 extern s8 D_800A99CC[];
 
 extern s32 D_800A9A68;
+
+extern s_FsImageDesc D_800A9EB4;
 
 extern s16 D_800AD498;
 
@@ -225,6 +243,8 @@ extern u16 D_800BCCB2;
 
 /** Accessed by credits and saveload. */
 extern s32 D_800BCD0C;
+
+extern s_800BE9FC D_800BE9FC;
 
 extern s16 D_800C38A8;
 
@@ -507,9 +527,6 @@ void GameFs_OptionBinLoad();
 /** Loads the save/load background graphic and overlay. */
 void GameFs_SaveLoadBinLoad();
 
-/** Loads a flame graphic. */
-void GameFs_FlameGfxLoad();
-
 /** Loads "Tim00" graphic. */
 void GameFs_Tim00TIMLoad();
 
@@ -569,6 +586,24 @@ void Game_SaveGameInitialize(s8 overlayIdx, s32 difficulty);
 void GameFs_MapLoad(s32 mapIdx);
 
 s32 func_8003528C(s32 idx0, s32 idx1);
+
+/** SysState_GamePaused handler. */
+void func_800391E8();
+
+void SysWork_SaveGameUpdatePlayer();
+
+void func_8003A16C();
+
+void SysWork_SaveGameReadPlayer();
+
+void GameFs_BgEtcGfxLoad();
+
+void GameFs_BgItemLoad();
+
+void func_8003BED0();
+
+/** Loads a flame graphic. */
+void GameFs_FlameGfxLoad();
 
 /** Resets player info in the savegame buffer (inventory, health, playtime). */
 void Game_SaveGameResetPlayer();

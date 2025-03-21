@@ -402,18 +402,18 @@ void GameFs_StreamBinSeek() // 0x80032C20
     Fs_QueueStartSeek(FILE_VIN_STREAM_BIN);
 }
 
-void GameFs_StreamBinLoad() // 0x80032c40
+void GameFs_StreamBinLoad() // 0x80032C40
 {
     Fs_QueueStartRead(FILE_VIN_STREAM_BIN, FS_BUFFER_1);
 }
 
-void GameFs_OptionBinLoad() // 0x80032c68
+void GameFs_OptionBinLoad() // 0x80032C68
 {
     Fs_QueueStartReadTim(FILE_TIM_OPTION_TIM, FS_BUFFER_1, &D_800A902C);
     Fs_QueueStartRead(FILE_VIN_OPTION_BIN, FS_BUFFER_1);
 }
 
-void GameFs_SaveLoadBinLoad() // 0x80032ca8
+void GameFs_SaveLoadBinLoad() // 0x80032cA8
 {
     Fs_QueueStartReadTim(FILE_TIM_SAVELOAD_TIM, FS_BUFFER_1, &D_800A902C);
     Fs_QueueStartRead(FILE_VIN_SAVELOAD_BIN, FS_BUFFER_1);
@@ -421,7 +421,10 @@ void GameFs_SaveLoadBinLoad() // 0x80032ca8
 
 void func_80032CE8()
 {
-    Gfx_StringPosition(108, 104);
+    #define POS_X 108
+    #define POS_Y 104
+
+    Gfx_StringPosition(POS_X, POS_Y);
     Gfx_StringDraw(&D_8002510C, 100);
 }
 
@@ -474,7 +477,7 @@ void func_80032D1C()
             break;
             
         case 3:
-            if ((D_800BCD0C & 7) == 5)
+            if ((D_800BCD0C & 7) == ((1 << 0) | (1 << 2)))
             {
                 Fs_QueueWaitForEmpty();
                 
@@ -1034,8 +1037,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80038BD4);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80038F6C);
 
-// SysState_GamePaused handler
-void func_800391E8()
+void func_800391E8() // 0x800391E8
 {
     D_800A9A68 += g_DeltaTime1;
     if (((D_800A9A68 >> 11) & 1) == 0)
@@ -1144,7 +1146,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003AB28);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003B550);
 
-void func_8003B560(void) {}
+void func_8003B560() {}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003B568);
 
@@ -1176,11 +1178,28 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003BE28);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003BE50);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", GameFs_BgEtcGfxLoad);
+void GameFs_BgEtcGfxLoad() // 0x8003BE6C
+{
+    Fs_QueueStartReadTim(FILE_TIM_BG_ETC_TIM, FS_BUFFER_1, &D_800A9EB4);
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", GameFs_BgItemLoad);
+void GameFs_BgItemLoad() // 0x8003BE9C
+{
+    D_800BE9FC.queueIdx_1000 = Fs_QueueStartRead(FILE_BG_BG_ITEM_PLM, &D_800BE9FC);
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003BED0);
+void func_8003BED0() // 0x8003BED0
+{
+    if (Fs_QueueIsEntryLoaded(D_800BE9FC.queueIdx_1000) == 0 || D_800BE9FC.field_2 != 0)
+    {
+        return;
+    }
+    
+    func_800560FC(&D_800BE9FC);
+    func_80056504(&D_800BE9FC, &D_80025528, &D_800A9EBC, 1);
+    func_80056504(&D_800BE9FC, &D_80025530, &D_800A9EC4, 1);
+    func_80056954(&D_800BE9FC);
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003BF60);
 
