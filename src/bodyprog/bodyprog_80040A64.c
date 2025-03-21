@@ -430,9 +430,28 @@ void SD_StopSEQ()
     D_800C1670 = 2;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800483D4);
+void func_800483D4() // 0x800483D4
+{
+    s32 sp10;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80048424);
+    if (!(func_80048954(2, CdIntToPos(D_800C37D8->field_8, &sp10), 0) & 0xFF))
+    {
+        D_800C1670 = 3;
+    }
+}
+
+void func_80048424() // 0x80048424
+{
+    if (CdSync(1, 0) == 2)
+    {
+        CdRead((D_800C37D8->field_4 + 0x7FF) >> 11, FS_BUFFER_1, 0x80);
+        
+        D_800C1670 = 4;
+        D_800C1658 = 0;
+    }
+    
+    D_800C1658++;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80048498);
 
@@ -440,7 +459,10 @@ void func_800485B0() {}
 
 void func_800485B8() {}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800485C0);
+void func_800485C0(s32 idx)
+{
+    D_800C15F8[idx] = 0;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800485D8);
 

@@ -97,6 +97,13 @@ STATIC_ASSERT_SIZEOF(s_800C117C, 28);
 
 typedef struct
 {
+    s8  unk_0[4];
+    u32 field_4;
+    s32 field_8;
+} s_800C37D8;
+
+typedef struct
+{
     s32 field_0;
     s8  unk_4[4];
     s8  field_8;
@@ -233,6 +240,8 @@ extern s_800C1020 D_800C1020;
 
 extern s_800C117C D_800C117C[];
 
+extern s_800C37D8* D_800C37D8;
+
 extern s32 D_800C4710[];
 
 extern void (*D_800C9644)();
@@ -249,6 +258,8 @@ extern u16 D_800BCCB2;
 extern s32 D_800BCD0C;
 
 extern s16 D_800C15F8[];
+
+extern u16 D_800C1658;
 
 extern s8 D_800C1670;
 
