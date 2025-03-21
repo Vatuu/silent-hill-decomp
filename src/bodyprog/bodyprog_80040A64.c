@@ -360,17 +360,23 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80047634);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", SD_SetVolume);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", Sd_SetVolBgm);
-/*void Sd_SetVolBgm(s16 arg0, s16 arg1) // 0x80047808
+#ifdef NON_MATCHING
+void Sd_SetVolBgm(s16 arg0, s16 arg1) // 0x80047808
 {
     SdSeqSetVol(0, ((arg0 * g_Sd_VolumeBgm) << 9) >> 16, ((arg1 * g_Sd_VolumeBgm) << 9) >> 16);
-}*/
+}
+#else
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", Sd_SetVolBgm);
+#endif
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", Sd_SetVolXa);
-/*void Sd_SetVolXa(s16 arg0, s16 arg1) // 0x80047860
+#ifdef NON_MATCHING
+void Sd_SetVolXa(s16 arg0, s16 arg1) // 0x80047860
 {
     SdSetSerialVol(0, ((arg0 * g_Sd_VolumeXa) << 9) >> 16, ((arg1 * g_Sd_VolumeXa) << 9) >> 16);
-}*/
+}
+#else
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", Sd_SetVolXa);
+#endif
 
 s32 Sd_GetVolSe(s16 arg0) // 0x800478B8
 {

@@ -92,9 +92,9 @@ s32 func_8002E76C(s32 idx)
     return ret;
 }
 
-void func_8002E7BC(void)
+void func_8002E7BC()
 {
-    s_800B55E8* temp_v0;
+    s_800B55E8* unk;
 
     if (D_800B5480 == 1)
         return;
@@ -111,12 +111,12 @@ void func_8002E7BC(void)
     D_800B55E8[0].field_14 = 0;
     D_800B55E8[1].field_0 = 0;
 
-    temp_v0 = &D_800B55E8[1];
-    temp_v0->field_4 = 0;
-    temp_v0->field_8 = 0;
-    temp_v0->field_C = 0;
-    temp_v0->field_10 = 0;
-    temp_v0->field_14 = 0;
+    unk = &D_800B55E8[1];
+    unk->field_4 = 0;
+    unk->field_8 = 0;
+    unk->field_C = 0;
+    unk->field_10 = 0;
+    unk->field_14 = 0;
 }
 
 void func_8002E830()
@@ -494,7 +494,7 @@ void GameFs_OptionBinLoad() // 0x80032C68
     Fs_QueueStartRead(FILE_VIN_OPTION_BIN, FS_BUFFER_1);
 }
 
-void GameFs_SaveLoadBinLoad() // 0x80032cA8
+void GameFs_SaveLoadBinLoad() // 0x80032CA8
 {
     Fs_QueueStartReadTim(FILE_TIM_SAVELOAD_TIM, FS_BUFFER_1, &D_800A902C);
     Fs_QueueStartRead(FILE_VIN_SAVELOAD_BIN, FS_BUFFER_1);

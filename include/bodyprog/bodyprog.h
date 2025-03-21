@@ -366,21 +366,21 @@ extern s32 D_800C489C;
 
 extern u8* D_800C7018;
 
-// TODO: Order these by address and add address comments.
+// TODO: Order these by address.
 
-extern s32 g_MainLoop_FrameCount;
+extern s32 g_MainLoop_FrameCount; // 0x800B9CCC
 
-extern s32 g_Demo_VideoPresentInterval;
+extern s32 g_Demo_VideoPresentInterval; // 0x800C4898
 
-extern u32 g_Demo_PrevRandSeed;
+extern u32 g_Demo_PrevRandSeed; // 0x800C4888
 
-extern u32 g_Demo_RandSeedBackup;
+extern u32 g_Demo_RandSeedBackup; // 0x800C488C
 
-extern s_ControllerData* g_Demo_ControllerPacket;
+extern s_ControllerData* g_Demo_ControllerPacket; // 0x800C4890
 
-extern s32 g_Demo_DemoStep;
+extern s32 g_Demo_DemoStep; // 0x800C4894
 
-extern s_FsImageDesc g_MainImg0;
+extern s_FsImageDesc g_MainImg0; // 0x80022C74
 
 /** Initializer for something before the game loop. */
 void func_8002E630();
