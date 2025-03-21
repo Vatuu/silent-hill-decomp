@@ -135,7 +135,22 @@ void func_8002E85C()
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8002E86C);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8002E898);
+s32 func_8002E898() 
+{
+    s32 i;
+    s32 ret;
+
+    ret = 0;
+    
+    i = 0;
+    
+    for (i = 0; i < 8; i++)
+    {   
+        ret |= D_800B5508[i].field_0 << (i * 3);
+    }
+    
+    return ret;
+}
 
 void func_8002E8D4()
 {
