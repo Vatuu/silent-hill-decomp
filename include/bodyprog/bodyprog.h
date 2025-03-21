@@ -158,6 +158,8 @@ extern s_FsImageDesc D_800A906C;
 
 extern u16 D_800A9774[];
 
+extern s32 D_800A9EB0;
+
 extern s32 D_800A9EBC; // Type assumed.
 
 extern s32 D_800A9EC4; // Type assumed.
@@ -597,6 +599,8 @@ void SysWork_SaveGameUpdatePlayer();
 void func_8003A16C();
 
 void SysWork_SaveGameReadPlayer();
+
+void func_8003BC8C();
 
 void func_8003BE28();
 

@@ -1166,7 +1166,16 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003BAC4);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003BBF4);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003BC8C);
+void func_8003BC8C() // 0x8003BC8C
+{
+    if (D_800A9EB0 == ((D_800A9EB0 / 5) * 5))
+    {
+        func_8003BBF4(D_800A9EB0);
+    }
+    
+    D_800A9EB0++;
+    func_8003BA08();
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003BCF4);
 
