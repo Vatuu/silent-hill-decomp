@@ -30,7 +30,7 @@ void func_800C95AC(void)
                     Fs_QueueStartReadTim(FILE_1ST_KONAMI2_TIM, FS_BUFFER_1, &D_800A9004);
                     
                     func_8003D160();
-                    GameFs_BgItemLoad_8003BE9C();
+                    GameFs_BgItemLoad();
                     func_8005E0DC(-1);
 
                     // Start loading \ANIM\HB_BASE.ANM.

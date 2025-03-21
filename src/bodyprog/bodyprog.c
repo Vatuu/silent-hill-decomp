@@ -1176,9 +1176,9 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003BE28);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003BE50);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", GameFs_BgEtcGfxLoad_8003BE6C);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", GameFs_BgEtcGfxLoad);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", GameFs_BgItemLoad_8003BE9C);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", GameFs_BgItemLoad);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003BED0);
 

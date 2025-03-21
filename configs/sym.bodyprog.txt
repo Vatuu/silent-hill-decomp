@@ -195,8 +195,8 @@ ControllerData_AnalogToDigital = 0x80034670; // type:func
 GameFs_MapLoad = 0x8003521C; // type:func
 Chara_PositionUpdateFromParams = 0x800371e8; // type:func
 AreaLoad_UpdatePlayerPosition = 0x80039f30; // type:func
-GameFs_BgEtcGfxLoad_8003BE6C = 0x8003be6c; // type:func
-GameFs_BgItemLoad_8003BE9C = 0x8003be9c; // type:func
+GameFs_BgEtcGfxLoad = 0x8003be6c; // type:func
+GameFs_BgItemLoad = 0x8003be9c; // type:func
 GameFs_FlameGfxLoad = 0x8003E710; // type:func
 GameFs_PlayerMapAnimLoad = 0x8007EB64; // type:func
 

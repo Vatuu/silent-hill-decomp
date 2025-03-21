@@ -128,7 +128,7 @@ typedef struct _ControllerData
     char            field_27;
     s32             field_28;
 } s_ControllerData;
-STATIC_ASSERT_SIZEOF(s_ControllerData, 36);
+STATIC_ASSERT_SIZEOF(s_ControllerData, 44);
 
 /** Key bindings for input actions. */
 typedef struct _ControllerBindings
@@ -157,7 +157,7 @@ typedef struct _ShInventoryItem
     u8 unk_2;
     u8 unk_3;
 } s_ShInventoryItem;
-STATIC_ASSERT_SIZEOF(s_ControllerBindings, 4);
+STATIC_ASSERT_SIZEOF(s_ShInventoryItem, 4);
 
 typedef struct _ShSaveGame
 {
