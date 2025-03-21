@@ -265,13 +265,13 @@ extern u16 D_800C1658;
 
 extern s8 D_800C1670;
 
-extern u8 g_SD_VolumeBGM; // 0x800C1685
+extern u8 g_Sd_VolumeBgm; // 0x800C1685
 
-extern u8 g_SD_VolumeXA; // 0x800C1686
+extern u8 g_Sd_VolumeXa; // 0x800C1686
 
-extern u8 g_SD_VolumeSE; // 0x800C1684
+extern u8 g_Sd_VolumeSe; // 0x800C1684
 
-extern s8 g_SD_ReverbDepth; // 0x800C1687;
+extern s8 g_Sd_ReverbDepth; // 0x800C1687;
 
 extern s_800BE9FC D_800BE9FC;
 

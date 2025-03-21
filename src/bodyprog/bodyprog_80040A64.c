@@ -360,38 +360,38 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80047634);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", SD_SetVolume);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", SD_SetVolBGM);
-/*void SD_SetVolBGM(s16 arg0, s16 arg1) // 0x80047808
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", Sd_SetVolBgm);
+/*void Sd_SetVolBgm(s16 arg0, s16 arg1) // 0x80047808
 {
-    SdSeqSetVol(0, ((arg0 * g_SD_VolumeBGM) << 9) >> 16, ((arg1 * g_SD_VolumeBGM) << 9) >> 16);
+    SdSeqSetVol(0, ((arg0 * g_Sd_VolumeBgm) << 9) >> 16, ((arg1 * g_Sd_VolumeBgm) << 9) >> 16);
 }*/
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", SD_SetVolXA);
-/*void SD_SetVolXA(s16 arg0, s16 arg1) // 0x80047860
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", Sd_SetVolXa);
+/*void Sd_SetVolXa(s16 arg0, s16 arg1) // 0x80047860
 {
-    SdSetSerialVol(0, ((arg0 * g_SD_VolumeXA) << 9) >> 16, ((arg1 * g_SD_VolumeXA) << 9) >> 16);
+    SdSetSerialVol(0, ((arg0 * g_Sd_VolumeXa) << 9) >> 16, ((arg1 * g_Sd_VolumeXa) << 9) >> 16);
 }*/
 
-s32 SD_GetVolSE(s16 arg0) // 0x800478B8
+s32 Sd_GetVolSe(s16 arg0) // 0x800478B8
 {
-    return ((arg0 * g_SD_VolumeSE) << 9) >> 16;
+    return ((arg0 * g_Sd_VolumeSe) << 9) >> 16;
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800478DC);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80047A70);
 
-void SD_SetReverbDepth(s8 depth)
+void Sd_SetReverbDepth(s8 depth)
 {
     s32 left;
 
-    g_SD_ReverbDepth = depth;
+    g_Sd_ReverbDepth = depth;
     
     left = depth & 0xFF;
     SdUtSetReverbDepth(left, left);
 }
 
-void SD_SetReverbEnable(s32 mode)
+void Sd_SetReverbEnable(s32 mode)
 {
     SdSetSerialAttr(0, 1, mode & 0xFF);
 }
@@ -422,7 +422,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80048244);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800482D8);
 
-void SD_StopSEQ()
+void Sd_StopSeq()
 {
     func_80046B78();
     SdSeqClose(D_800C37C8);
