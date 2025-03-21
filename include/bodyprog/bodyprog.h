@@ -248,7 +248,21 @@ extern u16 D_800BCCB2;
 /** Accessed by credits and saveload. */
 extern s32 D_800BCD0C;
 
+extern s16 D_800C15F8[];
+
+extern s8 D_800C1670;
+
+extern u8 g_SD_VolumeBGM; // 0x800C1685
+
+extern u8 g_SD_VolumeXA; // 0x800C1686
+
+extern u8 g_SD_VolumeSE; // 0x800C1684
+
+extern s8 g_SD_ReverbDepth; // 0x800C1687;
+
 extern s_800BE9FC D_800BE9FC;
+
+extern u8 D_800C37C8;
 
 extern s16 D_800C38A8;
 
@@ -429,6 +443,26 @@ void Anim_Update(s_Model* model, void* buffer, s32 arg2, s_Model* targetModel);
 u8 func_80045B28();
 
 void func_8004690C(s32);
+
+void Sd_SetVolBgm(s16 arg0, s16 arg1);
+
+void Sd_SetVolXa(s16 arg0, s16 arg1);
+
+s32 Sd_GetVolSe(s16 arg0);
+
+void Sd_SetReverbDepth(s8 depth);
+
+void Sd_SetReverbEnable(s32 mode);
+
+void Sd_StopSeq();
+
+/** CD function. */
+void func_800483D4();
+
+/** CD function. */
+void func_80048424();
+
+void func_800485C0(s32 idx);
 
 void func_8004729C(u16);
 

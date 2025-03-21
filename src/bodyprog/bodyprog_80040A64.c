@@ -361,18 +361,40 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80047634);
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", SD_SetVolume);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", SD_SetVolBGM);
+/*void SD_SetVolBGM(s16 arg0, s16 arg1) // 0x80047808
+{
+    SdSeqSetVol(0, ((arg0 * g_SD_VolumeBGM) << 9) >> 16, ((arg1 * g_SD_VolumeBGM) << 9) >> 16);
+}*/
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", SD_SetVolXA);
+/*void SD_SetVolXA(s16 arg0, s16 arg1) // 0x80047860
+{
+    SdSetSerialVol(0, ((arg0 * g_SD_VolumeXA) << 9) >> 16, ((arg1 * g_SD_VolumeXA) << 9) >> 16);
+}*/
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", SD_GetVolSE);
+s32 SD_GetVolSE(s16 arg0) // 0x800478B8
+{
+    return ((arg0 * g_SD_VolumeSE) << 9) >> 16;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800478DC);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80047A70);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", SD_SetReverbDepth);
+void SD_SetReverbDepth(s8 depth)
+{
+    s32 left;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", SD_SetReverbEnable);
+    g_SD_ReverbDepth = depth;
+    
+    left = depth & 0xFF;
+    SdUtSetReverbDepth(left, left);
+}
+
+void SD_SetReverbEnable(s32 mode)
+{
+    SdSetSerialAttr(0, 1, mode & 0xFF);
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80047B24);
 
@@ -400,7 +422,13 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80048244);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800482D8);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", SD_StopSEQ);
+void SD_StopSEQ()
+{
+    func_80046B78();
+    SdSeqClose(D_800C37C8);
+    
+    D_800C1670 = 2;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800483D4);
 
