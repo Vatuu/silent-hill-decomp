@@ -179,7 +179,20 @@ s32 func_8002E990()
     return D_800B55FC;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8002E9A0);
+s32 func_8002E9A0(s32 idx) 
+{
+    s32 ret;
+    s32 i;
+
+    ret = 0;
+    
+    for (i = 0; i < 15; i++) 
+    {
+        ret |= D_800B5508[idx].field_4[i] << (i * 2);
+    } 
+    
+    return ret;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8002E9EC);
 
