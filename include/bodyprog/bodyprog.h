@@ -75,6 +75,16 @@ typedef struct
 
 typedef struct
 {
+    s32 field_0;
+    s32 field_4;
+    s32 field_8;
+    s32 field_C;
+    s32 field_10;
+    s32 field_14;
+} s_800B55E8;
+
+typedef struct
+{
     s8  unk_0[27];
     s16 field_1C;
     s32 unk_1E[78];
@@ -199,7 +209,7 @@ extern s32 D_800B5488; // Index or state?
 
 extern s_800B5508 D_800B5508[];
 
-extern s_800B5508 D_800B55E8;
+extern s_800B55E8 D_800B55E8[2];
 
 extern s32 D_800B55FC;
 

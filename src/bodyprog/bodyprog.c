@@ -67,33 +67,31 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8002E730);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8002E76C);
 
-void func_8002E7BC()
+void func_8002E7BC(void)
 {
-    s_800B5508* temp_v0;
+    s_800B55E8* temp_v0;
 
-    if (D_800B5480 != 1)
-    {
-        D_800B5480 = 1;
-        
-        func_8002E8E4();
-        func_80030414();
-        
-        D_800B55E8.field_0 = 0;
-        D_800B55E8.field_4 = 0;
-        D_800B55E8.field_8 = 0;
-        D_800B55E8.field_C = 0;
-        D_800B55E8.field_10 = 0;
-        D_800B55E8.field_14 = 0;
-        D_800B55E8.field_18 = 0;
-        
-        temp_v0 = &((s_800B5508*)(&D_800B55E8))->field_18;
-        
-        temp_v0->field_4 = 0;
-        temp_v0->field_8 = 0;
-        temp_v0->field_C = 0;
-        temp_v0->field_10 = 0;
-        temp_v0->field_14 = 0;
-    }
+    if (D_800B5480 == 1)
+        return;
+    
+    D_800B5480 = 1;
+    func_8002E8E4();
+    func_80030414();
+    
+    D_800B55E8[0].field_0 = 0;
+    D_800B55E8[0].field_4 = 0;
+    D_800B55E8[0].field_8 = 0;
+    D_800B55E8[0].field_C = 0;
+    D_800B55E8[0].field_10 = 0;
+    D_800B55E8[0].field_14 = 0;
+    D_800B55E8[1].field_0 = 0;
+
+    temp_v0 = &D_800B55E8[1];
+    temp_v0->field_4 = 0;
+    temp_v0->field_8 = 0;
+    temp_v0->field_C = 0;
+    temp_v0->field_10 = 0;
+    temp_v0->field_14 = 0;
 }
 
 void func_8002E830()
