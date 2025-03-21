@@ -63,7 +63,15 @@ void func_8002E6E4(s32 idx)
     temp_s0->field_18 = 0;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8002E730);
+void func_8002E730(s32 idx) 
+{
+    s32 i;
+
+    for (i = 0; i < 15; i++) 
+    {
+        D_800B5508[idx].field_4[i] = 0;
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8002E76C);
 
@@ -140,7 +148,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8002EABC);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8002EB88);
 
-void func_8002ECE0(s_800B5508* arg0)
+void func_8002ECE0(s_800B55E8* arg0)
 {
     if (func_8003030C(arg0->field_4) != 0)
     {
