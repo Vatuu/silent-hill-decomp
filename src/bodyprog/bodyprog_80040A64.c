@@ -215,7 +215,7 @@ void Anim_Update(s_Model* model, void* buffer, s32 arg2, s_Model* targetModel)
         animTimeDelta = 0;
     }
 
-    // TODO: FP conversion is very confusing here, need to figure out what the called functions do. -- Sezz
+    // TODO: FP conversion is very confusing here, need to figure out what the called functions do. -- Sezz 2025.03.22
 
     // Calculate anim frame interpolation.
     animTime = model->anim_4.animTime_4;
@@ -223,7 +223,7 @@ void Anim_Update(s_Model* model, void* buffer, s32 arg2, s_Model* targetModel)
     if (animTimeDelta != 0)
     {
         animTime += animTimeDelta;
-        interpTime = FP_TO(targetModel->anim_4.interpolationAlpha_A, Q12_SHIFT); // Shift already shifter interp alpha again?
+        interpTime = FP_TO(targetModel->anim_4.interpolationAlpha_A, Q12_SHIFT);
         if (animTime < interpTime)
         {
             interpTime = FP_TO(targetModel->anim_4.animFrameIdx_8, Q12_SHIFT);
