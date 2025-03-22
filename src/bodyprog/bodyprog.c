@@ -1054,7 +1054,12 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80035ED0);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80035F4C);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_800363D0);
+void func_800363D0() // 0x800363D0
+{
+    D_800A9A1C = 0;
+    g_SysWork.field_22A0 |= 1 << 3;
+    func_80035DB4(0);
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003640C);
 
@@ -1078,7 +1083,20 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003708C);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80037124);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80037154);
+void func_80037154() // 0x80037154
+{
+    s32 i;
+    s_800BCDA8* element;
+
+    for (i = 0; i < 2; i++)
+    {
+        element = &D_800BCDA8[i];
+        
+        D_800BCDA8[i].field_2 = NO_VALUE;
+        D_800BCDA8[i].field_1 = NO_VALUE;
+        D_800BCDA8[i].field_3 = 0;
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80037188);
 

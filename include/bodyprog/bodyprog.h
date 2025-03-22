@@ -90,6 +90,15 @@ typedef struct
 
 typedef struct
 {
+    s8 unk_0;
+    s8 field_1;
+    s8 field_2;
+    s8 field_3;
+} s_800BCDA8;
+STATIC_ASSERT_SIZEOF(s_800BCDA8, 4);
+
+typedef struct
+{
     s8  unk_0[27];
     s16 field_1C;
     s32 unk_1E[78];
@@ -199,6 +208,8 @@ extern s8 D_800A99B4[];
 /** Array of indices? */
 extern s8 D_800A99CC[];
 
+extern s32 D_800A9A1C;
+
 extern s32 D_800A9A68;
 
 extern s_FsImageDesc D_800A9EB4;
@@ -263,6 +274,8 @@ extern u16 D_800BCCB2;
 
 /** Accessed by credits and saveload. */
 extern s32 D_800BCD0C;
+
+extern s_800BCDA8 D_800BCDA8[];
 
 extern s32 D_800BCDB0; // Type assumed.
 
@@ -646,6 +659,10 @@ void GameFs_MapLoad(s32 mapIdx);
 s32 func_8003528C(s32 idx0, s32 idx1);
 
 void AreaLoad_UpdatePlayerPosition();
+
+void func_800363D0();
+
+void func_80037154();
 
 /** SysState_GamePaused handler. */
 void func_800391E8();
