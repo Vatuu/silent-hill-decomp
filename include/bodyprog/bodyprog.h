@@ -250,6 +250,8 @@ extern s32 D_800B55FC;
 
 extern s32 D_800B5618;
 
+extern s8 D_800BCD78;
+
 extern u8 D_800BCDD4;
 
 extern u16 D_800BCE14;
@@ -661,6 +663,8 @@ s32 func_8003528C(s32 idx0, s32 idx1);
 void AreaLoad_UpdatePlayerPosition();
 
 void func_800363D0();
+
+void func_80037124();
 
 void func_80037154();
 

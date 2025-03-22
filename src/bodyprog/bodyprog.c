@@ -1081,7 +1081,12 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80036E48);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003708C);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80037124);
+void func_80037124() // 0x80037124
+{
+    D_800BCD78 = NO_VALUE;
+    func_8003652C();
+    DrawSync(0);
+}
 
 void func_80037154() // 0x80037154
 {
