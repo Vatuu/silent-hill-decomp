@@ -3,7 +3,7 @@
 
 #define Q4_SHIFT       4     /** Used for: Q27.4 positions. */
 #define Q8_SHIFT       8     /** Used for: Q8.8 range limits. Q24.8 tile units. */
-#define Q12_SHIFT      12    /** Used for: Q3.12 alphas. Q19.12 timers, trigonometry. */
+#define Q12_SHIFT      12    /** Used for: Q19.12 timers, trigonometry. */
 #define FP_ANGLE_COUNT 65536 /** Number of possible fixed-point angles in Q1.15 format. */
 
 /** Returns the larger of two values. */
@@ -29,10 +29,6 @@
 /** Multiplies two integers in a fixed-point Q format and converts the result from a fixed-point Q format. */
 #define FP_MULTIPLY(val0, val1, shift) \
     (((val0) * (val1)) >> (shift))
-
-/** Converts a floating-point alpha in the range [0.0f, 1.0f] to a fixed-point alpha in Q3.12 format. */
-#define FP_ALPHA(alpha) \
-    (s16)((alpha) * (1 << (Q12_SHIFT)))
 
 /** Converts floating-point degrees to fixed-point angles in Q1.15 format (used at Q4.12 resolution). */
 #define FP_ANGLE(deg) \

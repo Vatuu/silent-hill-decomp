@@ -192,67 +192,66 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80044950);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800449AC);
 
-void Anim_Update(s_Model* model, void* buffer, s32 arg2, s_Model* targetModel)
+void Anim_Update(s_Model* model, void* buffer, s32 arg2, s_Model* targetModel) // 0x800449F0
 {
     s32 setAnimIdx;
-    s32 someFixedTimemaskedAnimTime;
-    s32 maybeInterpTime;
-    s32 animTimeDelta;
-    s32 animTime;
-    s32 animFrameIdx;
-    s32 interpTime;
-    s32 maskedAnimTime;
+    s32 frameTimeDelta;
+    s32 frameTimeStep;
+    s32 newFrameIdx;
+    s32 newFrameTime;
+    s32 targetFrameTime;
+    s32 wrappedTime;
 
     setAnimIdx = 0;
 
-    if (model->anim_4.flags_2 & AnimFlag_Unk1)
+    // Compute frame time step.
+    if (model->anim_4.flags_2 & AnimFlag_Interpolate)
     {
-        maybeInterpTime = func_800449AC(model, targetModel);
-        animTimeDelta = FP_FROM((s64)maybeInterpTime * (s64)g_DeltaTime0, Q12_SHIFT);
+        frameTimeDelta = func_800449AC(model, targetModel);
+        frameTimeStep = FP_MULTIPLY((s64)frameTimeDelta, (s64)g_DeltaTime0, Q12_SHIFT);
     }
     else
     {
-        animTimeDelta = 0;
+        frameTimeStep = 0;
     }
-
-    // TODO: FP conversion is very confusing here, need to figure out what the called functions do. -- Sezz 2025.03.22
-
-    // Calculate anim frame interpolation.
-    animTime = model->anim_4.animTime_4;
-    animFrameIdx = FP_FROM(animTime, Q12_SHIFT);
-    if (animTimeDelta != 0)
+    
+    // Compute new frame time.
+    newFrameTime = model->anim_4.frameTime_4;
+    newFrameIdx = FP_FROM(newFrameTime, Q12_SHIFT);
+    if (frameTimeStep != 0)
     {
-        animTime += animTimeDelta;
-        interpTime = FP_TO(targetModel->anim_4.interpolationAlpha_A, Q12_SHIFT);
-        if (animTime < interpTime)
+        // Clamp new frame time against target frame time.
+        newFrameTime += frameTimeStep;
+        targetFrameTime = FP_TO(targetModel->anim_4.frameTimeTarget_A, Q12_SHIFT);
+        if (newFrameTime < targetFrameTime)
         {
-            interpTime = FP_TO(targetModel->anim_4.animFrameIdx_8, Q12_SHIFT);
-            if (animTime <= interpTime)
+            targetFrameTime = FP_TO(targetModel->anim_4.frameIdx_8, Q12_SHIFT);
+            if (newFrameTime <= targetFrameTime)
             {
-                animTime = interpTime;
+                newFrameTime = targetFrameTime;
                 setAnimIdx = 1;
             }
         }
         else
         {
-            animTime = interpTime;
+            newFrameTime = targetFrameTime;
             setAnimIdx = 1;
         }
 
-        animFrameIdx = FP_FROM(animTime, Q12_SHIFT);
+        newFrameIdx = FP_FROM(newFrameTime, Q12_SHIFT);
     }
 
-    // Do something if some flags are set.
-    maskedAnimTime = animTime & 0xFFF;
-    if ((model->anim_4.flags_2 & AnimFlag_Unk1) || (model->anim_4.flags_2 & AnimFlag_Unk2))
+    // Handle interpolation between current and next frame if flags are set.
+    wrappedTime = newFrameTime & 0xFFF;
+    if ((model->anim_4.flags_2 & AnimFlag_Interpolate) || (model->anim_4.flags_2 & AnimFlag_Unk2))
     {
-        func_800446D8(buffer, arg2, animFrameIdx, animFrameIdx + 1, maskedAnimTime);
+        func_800446D8(buffer, arg2, newFrameIdx, newFrameIdx + 1, wrappedTime);
     }
 
     // Set anim frame data.
-    model->anim_4.animTime_4 = animTime;
-    model->anim_4.animFrameIdx_8 = animFrameIdx;
-    model->anim_4.interpolationAlpha_A = FP_ALPHA(0.0f);
+    model->anim_4.frameTime_4 = newFrameTime;
+    model->anim_4.frameIdx_8 = newFrameIdx;
+    model->anim_4.frameTimeTarget_A = 0;
 
     // Set anim index.
     if (setAnimIdx != 0)
@@ -261,6 +260,7 @@ void Anim_Update(s_Model* model, void* buffer, s32 arg2, s_Model* targetModel)
     }
 }
 
+// Anim func.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80044B38);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80044CA4);

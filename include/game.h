@@ -42,9 +42,9 @@ typedef enum _PadButtonFlags
 
 typedef enum _AnimFlags
 {
-    AnimFlag_Unk0 = 0,
-    AnimFlag_Unk1 = 1 << 0,
-    AnimFlag_Unk2 = 1 << 1
+    AnimFlag_None        = 0,
+    AnimFlag_Interpolate = 1 << 0,
+    AnimFlag_Unk2        = 1 << 1
 } e_AnimFlags;
 
 /** State IDs used by the main game loop. The values are used as indices into the 0x800A977C function array. */
@@ -289,9 +289,9 @@ typedef struct _ModelAnimData
     u8  maybeSomeState_1; // State says if animTime_4 is anim time or a func ptr? That field could be a union.  -- emoose
     u16 flags_2;          // e_AnimFlags. Bit 1: movement unlockled(?), bit 2: visible.
 
-    s32 animTime_4;           // animFrameIdx_8 << 12.
-    s16 animFrameIdx_8;       // Frame index into large array containing all frames for all anims?
-    s16 interpolationAlpha_A; // Something to do with linear anim interpolation. Maybe fixed-point alpha value. Gets set to 1 << 12 (4096).
+    s32 frameTime_4;       // Fixed-point frame time.
+    s16 frameIdx_8;        // Frame index into theorized large array containing all frames for all anims.
+    s16 frameTimeTarget_A; // Unclear. Something to do with frame time.
     s32 field_C;
     s32 field_10;
 } s_ModelAnim;
