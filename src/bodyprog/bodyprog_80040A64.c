@@ -183,7 +183,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80044420);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800445A4);
 
-// Animation-related.
+// Anim func.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800446D8);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80044918);
@@ -200,7 +200,7 @@ void Anim_Update(s_Model* model, void* buffer, s32 arg2, s_Model* targetModel) /
     s32 newFrameIdx;
     s32 newFrameTime;
     s32 targetFrameTime;
-    s32 wrappedTime;
+    s32 wrappedFrameTime;
 
     setAnimIdx = 0;
 
@@ -220,7 +220,7 @@ void Anim_Update(s_Model* model, void* buffer, s32 arg2, s_Model* targetModel) /
     newFrameIdx = FP_FROM(newFrameTime, Q12_SHIFT);
     if (frameTimeStep != 0)
     {
-        // Clamp new frame time against target frame time.
+        // Clamp new frame time against target frame time?
         newFrameTime += frameTimeStep;
         targetFrameTime = FP_TO(targetModel->anim_4.frameTimeTarget_A, Q12_SHIFT);
         if (newFrameTime < targetFrameTime)
@@ -242,18 +242,18 @@ void Anim_Update(s_Model* model, void* buffer, s32 arg2, s_Model* targetModel) /
     }
 
     // Handle interpolation between current and next frame if flags are set.
-    wrappedTime = newFrameTime & 0xFFF;
+    wrappedFrameTime = newFrameTime & 0xFFF;
     if ((model->anim_4.flags_2 & AnimFlag_Interpolate) || (model->anim_4.flags_2 & AnimFlag_Unk2))
     {
-        func_800446D8(buffer, arg2, newFrameIdx, newFrameIdx + 1, wrappedTime);
+        func_800446D8(buffer, arg2, newFrameIdx, newFrameIdx + 1, wrappedFrameTime);
     }
 
-    // Set anim frame data.
+    // Update frame data.
     model->anim_4.frameTime_4 = newFrameTime;
     model->anim_4.frameIdx_8 = newFrameIdx;
     model->anim_4.frameTimeTarget_A = 0;
 
-    // Set anim index.
+    // Update anim index.
     if (setAnimIdx != 0)
     {
         model->anim_4.animIdx_0 = targetModel->anim_4.flags_2;
@@ -263,11 +263,21 @@ void Anim_Update(s_Model* model, void* buffer, s32 arg2, s_Model* targetModel) /
 // Anim func.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80044B38);
 
+// Anim func.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80044CA4);
 
+// Anim func.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80044DF0);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80044F14);
+void func_80044F14(s32 mtx, s16 z, s16 x, s16 y) // 0x80044F14
+{
+    *(s16*)0x1F800004 = z;
+    *(s16*)0x1F800002 = y;
+    *(s16*)0x1F800000 = x;
+    
+    func_80096E78((SVECTOR*)0x1F800000, (MATRIX*)0x1F800008);
+    MulMatrix(mtx + 4, (MATRIX*)0x1F800008);
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80044F6C);
 

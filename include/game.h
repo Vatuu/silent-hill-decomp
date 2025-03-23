@@ -287,7 +287,7 @@ typedef struct _ModelAnimData
 
     u8  animIdx_0;
     u8  maybeSomeState_1; // State says if animTime_4 is anim time or a func ptr? That field could be a union.  -- emoose
-    u16 flags_2;          // e_AnimFlags. Bit 1: movement unlockled(?), bit 2: visible.
+    s16 flags_2;          // e_AnimFlags. Bit 1: movement unlockled(?), bit 2: visible.
 
     s32 frameTime_4;       // Fixed-point frame time.
     s16 frameIdx_8;        // Frame index into theorized large array containing all frames for all anims.
