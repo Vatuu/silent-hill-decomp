@@ -282,9 +282,9 @@ void func_800D88C0(s_SubCharacter* chara, s32 arg1)
     if (arg1 != 0)
     {
         chara->model_0.anim_4.animIdx_0 = 3;
-        chara->model_0.anim_4.frameIdx_8 = 0;
-        chara->model_0.anim_4.frameTime_4 = 0;
-        chara->model_0.anim_4.frameTimeTarget_A = FP_TO(1, Q12_SHIFT);
+        chara->model_0.anim_4.keyframeIdx_8 = 0;
+        chara->model_0.anim_4.time_4 = 0;
+        chara->model_0.anim_4.targetKeyframeIdx_A = FP_TO(1, Q12_SHIFT);
     }
     else
     {

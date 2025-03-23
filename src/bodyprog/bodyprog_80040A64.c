@@ -195,63 +195,63 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800449AC);
 void Anim_Update(s_Model* model, void* buffer, s32 arg2, s_Model* targetModel) // 0x800449F0
 {
     s32 setAnimIdx;
-    s32 frameTimeDelta;
-    s32 frameTimeStep;
-    s32 newFrameIdx;
-    s32 newFrameTime;
-    s32 targetFrameTime;
-    s32 wrappedFrameTime;
+    s32 timeDelta;
+    s32 timeStep;
+    s32 newKeyframeIdx;
+    s32 newTime;
+    s32 targetTime;
+    s32 wrappedTime;
 
     setAnimIdx = 0;
 
-    // Compute frame time step.
+    // Compute time step.
     if (model->anim_4.flags_2 & AnimFlag_Interpolate)
     {
-        frameTimeDelta = func_800449AC(model, targetModel);
-        frameTimeStep = FP_MULTIPLY((s64)frameTimeDelta, (s64)g_DeltaTime0, Q12_SHIFT);
+        timeDelta = func_800449AC(model, targetModel);
+        timeStep = FP_MULTIPLY((s64)timeDelta, (s64)g_DeltaTime0, Q12_SHIFT);
     }
     else
     {
-        frameTimeStep = 0;
+        timeStep = 0;
     }
     
-    // Compute new frame time.
-    newFrameTime = model->anim_4.frameTime_4;
-    newFrameIdx = FP_FROM(newFrameTime, Q12_SHIFT);
-    if (frameTimeStep != 0)
+    // Compute new time.
+    newTime = model->anim_4.time_4;
+    newKeyframeIdx = FP_FROM(newTime, Q12_SHIFT);
+    if (timeStep != 0)
     {
-        // Clamp new frame time against target frame time?
-        newFrameTime += frameTimeStep;
-        targetFrameTime = FP_TO(targetModel->anim_4.frameTimeTarget_A, Q12_SHIFT);
-        if (newFrameTime < targetFrameTime)
+        // Clamp new time against target time?
+        newTime += timeStep;
+        targetTime = FP_TO(targetModel->anim_4.targetKeyframeIdx_A, Q12_SHIFT);
+        if (newTime < targetTime)
         {
-            targetFrameTime = FP_TO(targetModel->anim_4.frameIdx_8, Q12_SHIFT);
-            if (newFrameTime <= targetFrameTime)
+            targetTime = FP_TO(targetModel->anim_4.keyframeIdx_8, Q12_SHIFT);
+            if (newTime <= targetTime)
             {
-                newFrameTime = targetFrameTime;
+                newTime = targetTime;
                 setAnimIdx = 1;
             }
         }
         else
         {
-            newFrameTime = targetFrameTime;
+            newTime = targetTime;
             setAnimIdx = 1;
         }
 
-        newFrameIdx = FP_FROM(newFrameTime, Q12_SHIFT);
+        newKeyframeIdx = FP_FROM(newTime, Q12_SHIFT);
     }
 
     // Handle something if flags are set.
-    wrappedFrameTime = newFrameTime & 0xFFF;
+    wrappedTime = newTime & 0xFFF;
     if ((model->anim_4.flags_2 & AnimFlag_Interpolate) || (model->anim_4.flags_2 & AnimFlag_Unk2))
     {
-        func_800446D8(buffer, arg2, newFrameIdx, newFrameIdx + 1, wrappedFrameTime);
+        func_800446D8(buffer, arg2, newKeyframeIdx, newKeyframeIdx + 1, wrappedTime);
     }
 
     // Update frame data.
-    model->anim_4.frameTime_4 = newFrameTime;
-    model->anim_4.frameIdx_8 = newFrameIdx;
-    model->anim_4.frameTimeTarget_A = 0;
+    model->anim_4.time_4 = newTime;
+    model->anim_4.keyframeIdx_8 = newKeyframeIdx;
+    model->anim_4.targetKeyframeIdx_A = 0;
 
     // Update anim index.
     if (setAnimIdx != 0)
@@ -262,70 +262,70 @@ void Anim_Update(s_Model* model, void* buffer, s32 arg2, s_Model* targetModel) /
 
 void func_80044B38(s_Model* model, void* buffer, s32 arg2, s_Model* targetModel) // 0x80044B38
 {
-    s32 frameTimeTarget;
-    s32 nextFrameTimeTarget;
-    s32 frameTimeTargetDelta;
-    s32 fpFrameTime;
-    s32 fpNextFrameTimeTarget;
-    s32 fpFrameTimeDelta;
+    s32 targetKeyframeIdx;
+    s32 nextKeyframe;
+    s32 keyframeDelta;
+    s32 fpTime;
+    s32 fpNexTime;
+    s32 fpTimeDelta;
     s32 frameIdx;
-    s32 newFrameIdx;
-    s32 nextFrameCompare;
-    s32 frameTimeDelta;
-    s32 frameTimeStep;
-    s32 newFrameTime;
+    s32 newKeyframeIdx;
+    s32 projectedKeyframeIdx;
+    s32 timeDelta;
+    s32 timeStep;
+    s32 newTime;
     s32 temp;
-    s32 wrappedFrameTime;
+    s32 wrappedTime;
     
-    frameIdx = targetModel->anim_4.frameIdx_8;
-    frameTimeTarget = targetModel->anim_4.frameTimeTarget_A;
-    nextFrameTimeTarget = frameTimeTarget + 1;
-    frameTimeTargetDelta = nextFrameTimeTarget - frameIdx;
+    frameIdx = targetModel->anim_4.keyframeIdx_8;
+    targetKeyframeIdx = targetModel->anim_4.targetKeyframeIdx_A;
+    nextKeyframe = targetKeyframeIdx + 1;
+    keyframeDelta = nextKeyframe - frameIdx;
 
-    fpFrameTime = FP_TO(frameIdx, Q12_SHIFT);
-    fpNextFrameTimeTarget = FP_TO(nextFrameTimeTarget, Q12_SHIFT);
-    fpFrameTimeDelta = FP_TO(frameTimeTargetDelta, Q12_SHIFT);
+    fpTime = FP_TO(frameIdx, Q12_SHIFT);
+    fpNexTime = FP_TO(nextKeyframe, Q12_SHIFT);
+    fpTimeDelta = FP_TO(keyframeDelta, Q12_SHIFT);
 
-    // Compute frame time step.
+    // Compute time step.
     if (model->anim_4.flags_2 & AnimFlag_Interpolate)
     {
-        frameTimeDelta = func_800449AC(model, targetModel);
-        frameTimeStep = ((s64)frameTimeDelta * (s64)g_DeltaTime0) >> Q12_SHIFT;
+        timeDelta = func_800449AC(model, targetModel);
+        timeStep = ((s64)timeDelta * (s64)g_DeltaTime0) >> Q12_SHIFT;
     }
     else
     {
-        frameTimeStep = 0;
+        timeStep = 0;
     }
     
-    newFrameTime = model->anim_4.frameTime_4 + frameTimeStep;
-    while (newFrameTime < fpFrameTime)
+    // Wrap to valid range?
+    newTime = model->anim_4.time_4 + timeStep;
+    while (newTime < fpTime)
     {
-        newFrameTime += fpFrameTimeDelta;
+        newTime += fpTimeDelta;
+    }
+    while (newTime >= fpNexTime)
+    {
+        newTime -= fpTimeDelta;
     }
 
-    while (newFrameTime >= fpNextFrameTimeTarget)
+    newKeyframeIdx = FP_FROM(newTime, Q12_SHIFT);
+    projectedKeyframeIdx = newKeyframeIdx + 1;
+    if (projectedKeyframeIdx == nextKeyframe)
     {
-        newFrameTime -= fpFrameTimeDelta;
-    }
-
-    newFrameIdx = FP_FROM(newFrameTime, Q12_SHIFT);
-    nextFrameCompare = newFrameIdx + 1;
-    if (nextFrameCompare == nextFrameTimeTarget)
-    {
-        nextFrameCompare = frameIdx;
+        projectedKeyframeIdx = frameIdx;
     }
 
     // Handle something if flags are set.
-    wrappedFrameTime = newFrameTime & 0xFFF;
+    wrappedTime = newTime & 0xFFF;
     if ((model->anim_4.flags_2 & AnimFlag_Interpolate) || (model->anim_4.flags_2 & AnimFlag_Unk2))
     {
-        func_800446D8(buffer, arg2, newFrameIdx, nextFrameCompare, wrappedFrameTime);
+        func_800446D8(buffer, arg2, newKeyframeIdx, projectedKeyframeIdx, wrappedTime);
     }
 
     // Update frame data.
-    model->anim_4.frameTime_4 = newFrameTime;
-    model->anim_4.frameIdx_8 = newFrameIdx;
-    model->anim_4.frameTimeTarget_A = 0;
+    model->anim_4.time_4 = newTime;
+    model->anim_4.keyframeIdx_8 = newKeyframeIdx;
+    model->anim_4.targetKeyframeIdx_A = 0;
 }
 
 // Anim func.
@@ -346,7 +346,16 @@ void func_80044F14(s32 mtx, s16 z, s16 x, s16 y) // 0x80044F14
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80044F6C);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80044FE0);
+void func_80044FE0(s_80044FE0* arg0, s32 arg1, s8 arg2) // 0x80044FE0
+{
+    arg0->field_8 = arg1;
+    arg0->field_0 = arg2;
+    arg0->field_1 = 0;
+    arg0->field_2 = 1;
+    arg0->field_4 = 0;
+    
+    func_80045014();
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80045014);
 

@@ -25,13 +25,13 @@ typedef struct
     s32 field_8;
 } s_80041CB4;
 
+// Maybe all the same struct.
 typedef struct
 {
     s8  unk_0[4];
     s32 field_4;
     s8  unk_8[18];
 } s_80041D10; // Size: 28
-
 typedef struct
 {
     s8 field_0;
@@ -41,6 +41,15 @@ typedef struct
     s8 unk_4[4];
     s8 field_8;
 } s_80041CEC;
+typedef struct
+{
+    s8  field_0;
+    s8  field_1;
+    s8  field_2;
+    s8  field_3;
+    s32 field_4;
+    s32 field_8;
+} s_80044FE0;
 
 /** Something related to ANM files. See `D_800A90FC`. */
 typedef struct
@@ -87,6 +96,12 @@ typedef struct
     s32 field_10;
     s32 field_14;
 } s_800B55E8;
+
+typedef struct
+{
+    s8 field_0;
+    s8 field_1;
+} s_800C15B0;
 
 typedef struct
 {
@@ -280,6 +295,10 @@ extern s32 D_800BCD0C;
 extern s_800BCDA8 D_800BCDA8[];
 
 extern s32 D_800BCDB0; // Type assumed.
+
+extern s_800C15B0* D_800C15B0;
+
+extern s8 D_800C15B4;
 
 extern s16 D_800C15F8[];
 
@@ -478,6 +497,8 @@ void Anim_Update(s_Model* model, void* buffer, s32 arg2, s_Model* targetModel);
 void func_80044B38(s_Model* model, void* buffer, s32 arg2, s_Model* targetModel);
 
 void func_80044F14(s32 mtx, s16 z, s16 x, s16 y);
+
+void func_80044FE0(s_80044FE0* arg0, s32 arg1, s8 arg2);
 
 u8 func_80045B28();
 
