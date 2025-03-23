@@ -475,6 +475,8 @@ s32 func_80042C04(s32 idx);
 /** Updates a model's animation. */
 void Anim_Update(s_Model* model, void* buffer, s32 arg2, s_Model* targetModel);
 
+void func_80044B38(s_Model* model, void* buffer, s32 arg2, s_Model* targetModel);
+
 void func_80044F14(s32 mtx, s16 z, s16 x, s16 y);
 
 u8 func_80045B28();
