@@ -45,13 +45,13 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80041BA0);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80041C24);
 
-void func_80041CB4(s_80041CB4* arg0, s_80041CEC* arg1) // 0x80041CB4
+void func_80041CB4(s_Skeleton* skel, s_80041CEC* arg1) // 0x80041CB4
 {
-    arg0->field_0 = arg1;
+    skel->field_0 = arg1;
     func_80041CEC(arg1);
     
-    arg0->field_8 = 0; // NULL if pointer.
-    arg0->field_4 = NO_VALUE;
+    skel->bones_8 = NULL;
+    skel->field_4 = NO_VALUE;
 }
 
 void func_80041CEC(s_80041CEC* arg0) // 0x80041CEC
@@ -60,12 +60,14 @@ void func_80041CEC(s_80041CEC* arg0) // 0x80041CEC
     arg0->field_1 = 6;
     arg0->field_2 = 1;
     arg0->field_3 = 0;
-    arg0->field_8 = 0; // NULL if pointer.
+    arg0->field_8 = 0;
 }
 
 void func_80041D10(s_Skeleton* skels, s32 size) // 0x80041D10
 {
-    s_Skeleton* end = skels + size;
+    s_Skeleton* end;
+
+    end = skels + size;
     while (skels < end)
     {
         skels->field_4 = NO_VALUE;

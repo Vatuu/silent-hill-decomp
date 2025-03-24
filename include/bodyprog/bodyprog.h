@@ -23,13 +23,6 @@ typedef struct
 
 typedef struct
 {
-    s32 field_0;
-    s32 field_4; // Maybe index?
-    s32 field_8;
-} s_80041CB4;
-
-typedef struct
-{
     s8 unk_0[16];
     s8 field_10;
     s8 unk_11[7];
@@ -44,14 +37,13 @@ typedef struct
     s_Bone* bones_8;
 
     // Maybe incorrect.
-    s32     field_8;
     s8      unk_C[3];
     u8      field_10;
     s8      unk_11;
     s8      field_12;
     s8      field_13;
     s8      field_14;
-    s8      unk_15[4];
+    s8      unk_15[8];
 } s_Skeleton;
 STATIC_ASSERT_SIZEOF(s_Skeleton, 28);
 
@@ -497,7 +489,7 @@ void func_8003DD80(s32, s32);
 s32 func_80041ADC(s32 queueIdx);
 
 /** arg0 might be s_Skeleton, arg1 might be s_Bone. */
-void func_80041CB4(s_80041CB4* arg0, s_80041CEC* arg1);
+void func_80041CB4(s_Skeleton* skel, s_80041CEC* arg1);
 
 void func_80041CEC(s_80041CEC*);
 
