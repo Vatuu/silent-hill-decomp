@@ -197,10 +197,10 @@ void Anim_Update(s_Model* model, void* buffer, s32 arg2, s_Model* targetModel) /
     s32 setAnimIdx;
     s32 timeDelta;
     s32 timeStep;
-    s32 newKeyframeIdx;
+    s32 keyframeIdx0;
     s32 newTime;
     s32 targetTime;
-    s32 wrappedTime;
+    s32 alpha;
 
     setAnimIdx = 0;
 
@@ -217,7 +217,7 @@ void Anim_Update(s_Model* model, void* buffer, s32 arg2, s_Model* targetModel) /
     
     // Compute new time.
     newTime = model->anim_4.time_4;
-    newKeyframeIdx = FP_FROM(newTime, Q12_SHIFT);
+    keyframeIdx0 = FP_FROM(newTime, Q12_SHIFT);
     if (timeStep != 0)
     {
         // Clamp new time against target time?
@@ -238,19 +238,19 @@ void Anim_Update(s_Model* model, void* buffer, s32 arg2, s_Model* targetModel) /
             setAnimIdx = 1;
         }
 
-        newKeyframeIdx = FP_FROM(newTime, Q12_SHIFT);
+        keyframeIdx0 = FP_FROM(newTime, Q12_SHIFT);
     }
 
-    // Handle something if flags are set.
-    wrappedTime = newTime & 0xFFF;
+    // Update skeleton?
+    alpha = newTime & 0xFFF;
     if ((model->anim_4.flags_2 & AnimFlag_Interpolate) || (model->anim_4.flags_2 & AnimFlag_Unk2))
     {
-        func_800446D8(buffer, arg2, newKeyframeIdx, newKeyframeIdx + 1, wrappedTime);
+        func_800446D8(buffer, arg2, keyframeIdx0, keyframeIdx0 + 1, alpha);
     }
 
     // Update frame data.
     model->anim_4.time_4 = newTime;
-    model->anim_4.keyframeIdx_8 = newKeyframeIdx;
+    model->anim_4.keyframeIdx_8 = keyframeIdx0;
     model->anim_4.targetKeyframeIdx_A = 0;
 
     // Update anim index.
@@ -266,24 +266,24 @@ void func_80044B38(s_Model* model, void* buffer, s32 arg2, s_Model* targetModel)
     s32 nextKeyframe;
     s32 keyframeDelta;
     s32 fpTime;
-    s32 fpNexTime;
+    s32 fpNextTime;
     s32 fpTimeDelta;
-    s32 frameIdx;
-    s32 newKeyframeIdx;
-    s32 projectedKeyframeIdx;
+    s32 keyframeIdx;
+    s32 keyframeIdx0;
+    s32 keyframeIdx1;
     s32 timeDelta;
     s32 timeStep;
     s32 newTime;
     s32 temp;
     s32 wrappedTime;
     
-    frameIdx = targetModel->anim_4.keyframeIdx_8;
+    keyframeIdx = targetModel->anim_4.keyframeIdx_8;
     targetKeyframeIdx = targetModel->anim_4.targetKeyframeIdx_A;
     nextKeyframe = targetKeyframeIdx + 1;
-    keyframeDelta = nextKeyframe - frameIdx;
+    keyframeDelta = nextKeyframe - keyframeIdx;
 
-    fpTime = FP_TO(frameIdx, Q12_SHIFT);
-    fpNexTime = FP_TO(nextKeyframe, Q12_SHIFT);
+    fpTime = FP_TO(keyframeIdx, Q12_SHIFT);
+    fpNextTime = FP_TO(nextKeyframe, Q12_SHIFT);
     fpTimeDelta = FP_TO(keyframeDelta, Q12_SHIFT);
 
     // Compute time step.
@@ -297,34 +297,34 @@ void func_80044B38(s_Model* model, void* buffer, s32 arg2, s_Model* targetModel)
         timeStep = 0;
     }
     
-    // Wrap to valid range?
+    // Wrap new time to valid range?
     newTime = model->anim_4.time_4 + timeStep;
     while (newTime < fpTime)
     {
         newTime += fpTimeDelta;
     }
-    while (newTime >= fpNexTime)
+    while (newTime >= fpNextTime)
     {
         newTime -= fpTimeDelta;
     }
 
-    newKeyframeIdx = FP_FROM(newTime, Q12_SHIFT);
-    projectedKeyframeIdx = newKeyframeIdx + 1;
-    if (projectedKeyframeIdx == nextKeyframe)
+    keyframeIdx0 = FP_FROM(newTime, Q12_SHIFT);
+    keyframeIdx1 = keyframeIdx0 + 1;
+    if (keyframeIdx1 == nextKeyframe)
     {
-        projectedKeyframeIdx = frameIdx;
+        keyframeIdx1 = keyframeIdx;
     }
 
-    // Handle something if flags are set.
+    // Update skeleton?
     wrappedTime = newTime & 0xFFF;
     if ((model->anim_4.flags_2 & AnimFlag_Interpolate) || (model->anim_4.flags_2 & AnimFlag_Unk2))
     {
-        func_800446D8(buffer, arg2, newKeyframeIdx, projectedKeyframeIdx, wrappedTime);
+        func_800446D8(buffer, arg2, keyframeIdx0, keyframeIdx1, wrappedTime);
     }
 
     // Update frame data.
     model->anim_4.time_4 = newTime;
-    model->anim_4.keyframeIdx_8 = newKeyframeIdx;
+    model->anim_4.keyframeIdx_8 = keyframeIdx0;
     model->anim_4.targetKeyframeIdx_A = 0;
 }
 
@@ -346,6 +346,7 @@ void func_80044F14(s32 mtx, s16 z, s16 x, s16 y) // 0x80044F14
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80044F6C);
 
+// arg0 is maybe skeleton or first bone in bones array.
 void func_80044FE0(s_80044FE0* arg0, s32 arg1, s8 arg2) // 0x80044FE0
 {
     arg0->field_8 = arg1;
@@ -354,7 +355,7 @@ void func_80044FE0(s_80044FE0* arg0, s32 arg1, s8 arg2) // 0x80044FE0
     arg0->field_2 = 1;
     arg0->field_4 = 0;
     
-    func_80045014();
+    func_80045014(arg0);
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80045014);
