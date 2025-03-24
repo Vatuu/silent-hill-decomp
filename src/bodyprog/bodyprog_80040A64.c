@@ -273,8 +273,8 @@ void func_80044B38(s_Model* model, s_Skeleton* skel, s32 arg2, s_Model* targetMo
     s32 targetKeyframeIdx;
     s32 nextKeyframe;
     s32 keyframeDelta;
-    s32 fpTime;
-    s32 fpNextTime;
+    s32 time;
+    s32 nextTime;
     s32 fpTimeDelta;
     s32 keyframeIdx;
     s32 keyframeIdx0;
@@ -290,8 +290,8 @@ void func_80044B38(s_Model* model, s_Skeleton* skel, s32 arg2, s_Model* targetMo
     nextKeyframe = targetKeyframeIdx + 1;
     keyframeDelta = nextKeyframe - keyframeIdx;
 
-    fpTime = FP_TO(keyframeIdx, Q12_SHIFT);
-    fpNextTime = FP_TO(nextKeyframe, Q12_SHIFT);
+    time = FP_TO(keyframeIdx, Q12_SHIFT);
+    nextTime = FP_TO(nextKeyframe, Q12_SHIFT);
     fpTimeDelta = FP_TO(keyframeDelta, Q12_SHIFT);
 
     // Compute time step.
@@ -307,11 +307,11 @@ void func_80044B38(s_Model* model, s_Skeleton* skel, s32 arg2, s_Model* targetMo
     
     // Wrap new time to valid range?
     newTime = model->anim_4.time_4 + timeStep;
-    while (newTime < fpTime)
+    while (newTime < time)
     {
         newTime += fpTimeDelta;
     }
-    while (newTime >= fpNextTime)
+    while (newTime >= nextTime)
     {
         newTime -= fpTimeDelta;
     }
@@ -352,10 +352,28 @@ void func_80044F14(s32 mtx, s16 z, s16 x, s16 y) // 0x80044F14
     MulMatrix(mtx + 4, (MATRIX*)0x1F800008);
 }
 
-// Anim func.
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80044F6C);
+s8 func_80044F6C(s8* ptr, s32 arg1) // 0x80044F6C
+{
+    s8 temp;
 
-// arg0 is maybe skeleton or first bone in bones array.
+    if (arg1 != 0)
+    {
+        D_800C15B0 = ptr;
+    }
+    
+    if (D_800C15B0[0] != -3)
+    {
+        D_800C15B4 = D_800C15B0[0];
+        D_800C15B0++;
+    }
+    else if (++D_800C15B4 >= (D_800C15B0[1] - 1))
+    {
+        D_800C15B0++;
+    }
+
+    return D_800C15B4;
+}
+
 void func_80044FE0(s_80044FE0* arg0, s32 arg1, s8 arg2) // 0x80044FE0
 {
     arg0->field_8 = arg1;
@@ -391,8 +409,42 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80045360);
 // Anim func. Traverses skeleton bones for something.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800453E8);
 
-// Anim func. Traverses skeleton bones for something.
+#ifdef NON_MATCHING
+void func_80045468(s_Skeleton* skel, s32* arg1, s32 cond) // 0x80045468
+{
+    s_Skeleton* bone;
+    s32 someBone;
+    s32* newBone;
+    s32 status;
+
+    bone = skel->bones_8;
+    
+    // Get skeleton status?
+    status = func_80044F6C(arg1, 1);
+    if (status == -2)
+    {
+        return;
+    }
+    
+    // Traverse bone hierarchy.
+    do
+    {
+        if (cond != 0)
+        {
+            bone[status * 2].field_0 &= ~(1 << 31);
+        }
+        else
+        {
+            bone[status * 2].field_0 |= 1 << 31;
+        }
+        
+        status = func_80044F6C(arg1, 0);
+    }
+    while (status != -2);
+}
+#else
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80045468);
+#endif
 
 // Maybe larger anim func.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80045534);
