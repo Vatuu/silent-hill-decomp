@@ -18,15 +18,15 @@ typedef struct
     s16 field_0; // Flags?
 } s_8008D850;
 
+// Following structs likely have something to do with skeletons and bones. Some may be duplicates.
+//==========================================================================
+
 typedef struct
 {
     s32 field_0;
     s32 field_4; // Maybe index?
     s32 field_8;
 } s_80041CB4;
-
-// Following structs have something to do with skeletons and bones. Some may be duplicates.
-//==========================================================================
 
 typedef struct
 {
@@ -39,8 +39,8 @@ STATIC_ASSERT_SIZEOF(s_Bone, 24);
 // MAYBE skeleton data.
 typedef struct
 {
-    s32     field_0;
-    s32     field_4;
+    s32     field_0; // Pointer to something?
+    s32     field_4; // Maybe index.
     s_Bone* bones_8;
 
     // Maybe incorrect.
@@ -53,14 +53,7 @@ typedef struct
     s8      field_14;
     s8      unk_15[4];
 } s_Skeleton;
-//STATIC_ASSERT_SIZEOF(s_Skeleton, 24 or 28);
-
-typedef struct
-{
-    s8  unk_0[4];
-    s32 field_4;
-    s8  unk_8[18];
-} s_80041D10; // Size: 28
+STATIC_ASSERT_SIZEOF(s_Skeleton, 28);
 
 typedef struct
 {
@@ -503,12 +496,13 @@ void func_8003DD80(s32, s32);
 /** Some kind of queue entry load status getter. */
 s32 func_80041ADC(s32 queueIdx);
 
+/** arg0 might be s_Skeleton, arg1 might be s_Bone. */
 void func_80041CB4(s_80041CB4* arg0, s_80041CEC* arg1);
 
 void func_80041CEC(s_80041CEC*);
 
-/** Clears some field in some struct. */
-void func_80041D10(s_80041D10* array, s32 size);
+/** Clears field_4 field in array of skeletons? Might not be skeletons, but the struct fits. */
+void func_80041D10(s_Skeleton* skels, s32 size);
 
 void func_80041E98();
 
