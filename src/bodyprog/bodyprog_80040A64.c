@@ -4,6 +4,10 @@
 #include "bodyprog/math.h"
 #include "main/fsqueue.h"
 
+// Known contents:
+// - Animation funcs
+// - SD sound lib
+
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80040A64);
 
 void func_80040B6C() {}
@@ -183,6 +187,10 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80044420);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800445A4);
 
+// ========================================
+// ANIMATION
+// ========================================
+
 // Anim func.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800446D8);
 
@@ -192,7 +200,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80044950);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800449AC);
 
-void Anim_Update(s_Model* model, void* buffer, s32 arg2, s_Model* targetModel) // 0x800449F0
+void Anim_Update(s_Model* model, s_Skeleton* skel, s32 arg2, s_Model* targetModel) // 0x800449F0
 {
     s32 setAnimIdx;
     s32 timeDelta;
@@ -245,7 +253,7 @@ void Anim_Update(s_Model* model, void* buffer, s32 arg2, s_Model* targetModel) /
     alpha = newTime & 0xFFF;
     if ((model->anim_4.flags_2 & AnimFlag_Interpolate) || (model->anim_4.flags_2 & AnimFlag_Unk2))
     {
-        func_800446D8(buffer, arg2, keyframeIdx0, keyframeIdx0 + 1, alpha);
+        func_800446D8(skel, arg2, keyframeIdx0, keyframeIdx0 + 1, alpha);
     }
 
     // Update frame data.
@@ -260,7 +268,7 @@ void Anim_Update(s_Model* model, void* buffer, s32 arg2, s_Model* targetModel) /
     }
 }
 
-void func_80044B38(s_Model* model, void* buffer, s32 arg2, s_Model* targetModel) // 0x80044B38
+void func_80044B38(s_Model* model, s_Skeleton* skel, s32 arg2, s_Model* targetModel) // 0x80044B38
 {
     s32 targetKeyframeIdx;
     s32 nextKeyframe;
@@ -275,7 +283,7 @@ void func_80044B38(s_Model* model, void* buffer, s32 arg2, s_Model* targetModel)
     s32 timeStep;
     s32 newTime;
     s32 temp;
-    s32 wrappedTime;
+    s32 alpha;
     
     keyframeIdx = targetModel->anim_4.keyframeIdx_8;
     targetKeyframeIdx = targetModel->anim_4.targetKeyframeIdx_A;
@@ -316,10 +324,10 @@ void func_80044B38(s_Model* model, void* buffer, s32 arg2, s_Model* targetModel)
     }
 
     // Update skeleton?
-    wrappedTime = newTime & 0xFFF;
+    alpha = newTime & 0xFFF;
     if ((model->anim_4.flags_2 & AnimFlag_Interpolate) || (model->anim_4.flags_2 & AnimFlag_Unk2))
     {
-        func_800446D8(buffer, arg2, keyframeIdx0, keyframeIdx1, wrappedTime);
+        func_800446D8(skel, arg2, keyframeIdx0, keyframeIdx1, alpha);
     }
 
     // Update frame data.
@@ -328,10 +336,10 @@ void func_80044B38(s_Model* model, void* buffer, s32 arg2, s_Model* targetModel)
     model->anim_4.targetKeyframeIdx_A = 0;
 }
 
-// Anim func.
+// Anim func, similar to above.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80044CA4);
 
-// Anim func.
+// Anim func, similar to above.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80044DF0);
 
 void func_80044F14(s32 mtx, s16 z, s16 x, s16 y) // 0x80044F14
@@ -344,6 +352,7 @@ void func_80044F14(s32 mtx, s16 z, s16 x, s16 y) // 0x80044F14
     MulMatrix(mtx + 4, (MATRIX*)0x1F800008);
 }
 
+// Anim func.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80044F6C);
 
 // arg0 is maybe skeleton or first bone in bones array.
@@ -358,25 +367,39 @@ void func_80044FE0(s_80044FE0* arg0, s32 arg1, s8 arg2) // 0x80044FE0
     func_80045014(arg0);
 }
 
+// Anim func.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80045014);
 
+// Anim func. Used in tandem with skeleton bone traversal.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_8004506C);
 
+// Anim func.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80045108);
 
+// Anim func.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800451B0);
 
+// Anim func.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80045258);
 
+// Anim func.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800452EC);
 
+// Anim func. Traverses skeleton bones for something.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80045360);
 
+// Anim func. Traverses skeleton bones for something.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800453E8);
 
+// Anim func. Traverses skeleton bones for something.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80045468);
 
+// Maybe larger anim func.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80045534);
+
+// ========================================
+// SOUND
+// ========================================
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", SD_EngineCmd);
 

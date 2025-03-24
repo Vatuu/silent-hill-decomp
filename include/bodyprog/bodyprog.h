@@ -25,22 +25,43 @@ typedef struct
     s32 field_8;
 } s_80041CB4;
 
-// Maybe all the same struct.
+// Following structs have something to do with skeletons and bones. Some may be duplicates.
+//==========================================================================
+
+typedef struct
+{
+    s8 unk_0[16];
+    s8 field_10;
+    s8 unk_11[7];
+} s_Bone;
+STATIC_ASSERT_SIZEOF(s_Bone, 24);
+
+// MAYBE skeleton data.
+typedef struct
+{
+    u8      field_0;
+    u8      field_1;
+    s8      field_2;
+    s8      field_3;
+    s_Bone* bones_4;
+    s32     field_8;
+    s8      unk_C[3];
+    u8      field_10;
+    s8      unk_11;
+    s8      field_12;
+    s8      field_13;
+    s8      field_14;
+    s8      unk_15[4];
+} s_Skeleton;
+//STATIC_ASSERT_SIZEOF(s_Skeleton, 24 or 28);
+
 typedef struct
 {
     s8  unk_0[4];
     s32 field_4;
     s8  unk_8[18];
 } s_80041D10; // Size: 28
-typedef struct
-{
-    s8 field_0;
-    s8 field_1;
-    s8 field_2;
-    s8 field_3;
-    s8 unk_4[4];
-    s8 field_8;
-} s_80041CEC;
+
 typedef struct
 {
     s8  field_0;
@@ -50,6 +71,18 @@ typedef struct
     s32 field_4;
     s32 field_8;
 } s_80044FE0;
+
+typedef struct
+{
+    s8 field_0;
+    s8 field_1;
+    s8 field_2;
+    s8 field_3;
+    s8 unk_4[4];
+    s8 field_8;
+} s_80041CEC;
+
+//==========================================================================
 
 /** Something related to ANM files. See `D_800A90FC`. */
 typedef struct
@@ -492,9 +525,10 @@ void func_800420C0();
 s32 func_80042C04(s32 idx);
 
 /** Updates a model's animation. */
-void Anim_Update(s_Model* model, void* buffer, s32 arg2, s_Model* targetModel);
+void Anim_Update(s_Model* model, s_Skeleton* skel, s32 arg2, s_Model* targetModel);
 
-void func_80044B38(s_Model* model, void* buffer, s32 arg2, s_Model* targetModel);
+/** Updates a model's animation. */
+void func_80044B38(s_Model* model, s_Skeleton* skel, s32 arg2, s_Model* targetModel);
 
 void func_80044F14(s32 mtx, s16 z, s16 x, s16 y);
 
