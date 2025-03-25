@@ -141,13 +141,13 @@ void func_800D2D44()
     s_MainCharacterExtra* playerExtra = &g_SysWork.player_4C.extra_128;
     s_SubCharacter*       chara       = &g_SysWork.player_4C.chara_0;
 
-    playerExtra->model_0.anim_4.flags_2 &= ~AnimFlag_Interpolate;
-    chara->model_0.anim_4.flags_2 &= ~AnimFlag_Interpolate;
+    playerExtra->model_0.anim_4.flags_2 &= ~AnimFlag_Unk1;
+    chara->model_0.anim_4.flags_2 &= ~AnimFlag_Unk1;
 }
 
 s32 func_800D2D6C()
 {
-    return ~(g_SysWork.player_4C.chara_0.model_0.anim_4.flags_2 & AnimFlag_Interpolate);
+    return ~(g_SysWork.player_4C.chara_0.model_0.anim_4.flags_2 & AnimFlag_Unk1);
 }
 
 void func_800D2D84()
@@ -155,8 +155,8 @@ void func_800D2D84()
     s_MainCharacterExtra* playerExtra = &g_SysWork.player_4C.extra_128;
     s_SubCharacter*       chara       = &g_SysWork.player_4C.chara_0;
 
-    playerExtra->model_0.anim_4.flags_2 |= AnimFlag_Interpolate;
-    chara->model_0.anim_4.flags_2 |= AnimFlag_Interpolate;
+    playerExtra->model_0.anim_4.flags_2 |= AnimFlag_Unk1;
+    chara->model_0.anim_4.flags_2 |= AnimFlag_Unk1;
 }
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D2DAC);
@@ -282,9 +282,9 @@ void func_800D88C0(s_SubCharacter* chara, s32 arg1)
     if (arg1 != 0)
     {
         chara->model_0.anim_4.animIdx_0 = 3;
-        chara->model_0.anim_4.keyframeIdx_8 = 0;
+        chara->model_0.anim_4.keyframeIdx0_8 = 0;
         chara->model_0.anim_4.time_4 = 0;
-        chara->model_0.anim_4.targetKeyframeIdx_A = FP_TO(1, Q12_SHIFT);
+        chara->model_0.anim_4.keyframeIdx1_A = FP_TO(1, Q12_SHIFT);
     }
     else
     {
@@ -292,7 +292,7 @@ void func_800D88C0(s_SubCharacter* chara, s32 arg1)
         chara->model_0.isAnimStateUnchanged_3 = 0;
     }
 
-    chara->model_0.anim_4.flags_2 |= AnimFlag_Interpolate;
+    chara->model_0.anim_4.flags_2 |= AnimFlag_Unk1;
 }
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D8904);
