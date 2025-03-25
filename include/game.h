@@ -287,7 +287,7 @@ typedef struct _ModelAnimData
 
     u8  animIdx_0;
     u8  maybeSomeState_1; // State says if animTime_4 is anim time or a func ptr? That field could be a union.  -- emoose
-    s16 flags_2;          /** e_AnimFlags */ // Bit 1: movement unlockled(?), bit 2: visible.
+    u16 flags_2;          /** e_AnimFlags */ // Bit 1: movement unlockled(?), bit 2: visible.
     s32 time_4;           /** Fixed-point time along keyframe timeline. */ 
     s16 keyframeIdx0_8;
     s16 keyframeIdx1_A;
@@ -324,7 +324,21 @@ typedef struct _SubCharacter
     s8      unk_B4[16];
     u16     dead_timer_C4; // Part of shBattleInfo struct in SH2, may use something similar here.
     s8      unk_C6[2];
-    s8      unk_C8[32];
+
+    // Fields seen used inside maps (eg. map0_s00 func_800D923C)
+    s16 field_C8;
+    s16 field_CA;
+    s8  unk_CC[2];
+    s16 field_CE;
+    s8  unk_D0[4];
+    s16 field_D4;
+    s16 field_D6;
+    s16 field_D8;
+    s16 field_DA;
+    s16 field_DC;
+    s16 field_DE;
+    s32 flags_E0;
+    s8  unk_E4[4];
 
     // Fields in the following block may be part of a multi-purpose array of `s32` elements used to store unique property data for each character type.
     // Start of this section is unclear, bytes above may be part of it.
@@ -341,10 +355,10 @@ typedef struct _SubCharacter
     s32 field_108; // Player run counter. Increments every tick indefinitely. Purpose for other characters unknown.
 
     s8  unk_10C;
-	u8  field_10D;
-	s8  unk_10E[5];
+    u8  field_10D;
+    s8  unk_10E[5];
     s32 field_112;
-	s8  unk_116[14];
+    s8  unk_116[14];
     s16 field_126;
 } s_SubCharacter;
 STATIC_ASSERT_SIZEOF(s_SubCharacter, 296);

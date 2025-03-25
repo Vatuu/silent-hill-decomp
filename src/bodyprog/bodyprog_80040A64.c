@@ -3,6 +3,7 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math.h"
 #include "main/fsqueue.h"
+#include "bodyprog/libsd.h"
 
 // Known contents:
 // - Animation funcs
@@ -117,15 +118,10 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800426E4);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_8004287C);
 
-// TODO: Matched, but checksum fails.
-#ifdef NON_MATCHING
 s32 func_80042C04(s32 idx) // 0x80042C04
 {
     return (func_80041B1C(&D_800C117C[idx]) < 3) ^ 1;
 }
-#else
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80042C04);
-#endif
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80042C3C);
 
@@ -613,27 +609,19 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80047634);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", SD_SetVolume);
 
-#ifdef NON_MATCHING
-void Sd_SetVolBgm(s16 arg0, s16 arg1) // 0x80047808
+void Sd_SetVolBgm(s16 volLeft, s16 volRight) // 0x80047808
 {
-    SdSeqSetVol(0, ((arg0 * g_Sd_VolumeBgm) << 9) >> 16, ((arg1 * g_Sd_VolumeBgm) << 9) >> 16);
+    SdSeqSetVol(0, (volLeft * g_Sd_VolumeBgm) >> 7, (volRight * g_Sd_VolumeBgm) >> 7);
 }
-#else
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", Sd_SetVolBgm);
-#endif
 
-#ifdef NON_MATCHING
-void Sd_SetVolXa(s16 arg0, s16 arg1) // 0x80047860
+void Sd_SetVolXa(s16 volLeft, s16 volRight) // 0x80047860
 {
-    SdSetSerialVol(0, ((arg0 * g_Sd_VolumeXa) << 9) >> 16, ((arg1 * g_Sd_VolumeXa) << 9) >> 16);
+    SdSetSerialVol(0, (volLeft * g_Sd_VolumeXa) >> 7, (volRight * g_Sd_VolumeXa) >> 7);
 }
-#else
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", Sd_SetVolXa);
-#endif
 
-s32 Sd_GetVolSe(s16 arg0) // 0x800478B8
+s16 Sd_GetVolSe(s16 arg0) // 0x800478B8
 {
-    return ((arg0 * g_Sd_VolumeSe) << 9) >> 16;
+    return (arg0 * g_Sd_VolumeSe) >> 7;
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800478DC);

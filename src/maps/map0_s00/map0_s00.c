@@ -136,8 +136,6 @@ void func_800D2D2C()
     D_800C4606++;
 }
 
-// TODO: Need to update pointers.
-#ifdef NON_MATCHING
 void func_800D2D44()
 {
     s_MainCharacterExtra* playerExtra = &g_SysWork.player_4C.extra_128;
@@ -146,9 +144,6 @@ void func_800D2D44()
     playerExtra->model_0.anim_4.flags_2 &= ~AnimFlag_Unk1;
     chara->model_0.anim_4.flags_2 &= ~AnimFlag_Unk1;
 }
-#else
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D2D44);
-#endif
 
 s32 func_800D2D6C()
 {
@@ -266,18 +261,21 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D8310);
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D8748);
 
-void func_800D8888()
+void func_800D8888(s_SubCharacter* chara)
 {
-    func_800D923C();
+    func_800D923C(chara);
     D_800E3A30 = 0;
 }
 
-void func_800D88AC(s_SubCharacter* arg0)
+// The following funcs that take s_SubCharacter* arg are shared with other maps too.
+// Possibly shared .c file or seperate SubCharacter library?
+
+void func_800D88AC(s_SubCharacter* chara)
 {
-    arg0->field_F4 = 0;
-    arg0->field_F0 = 0;
-    arg0->field_EC = 0;
-    arg0->field_126 = 0;
+    chara->field_F4  = 0;
+    chara->field_F0  = 0;
+    chara->field_EC  = 0;
+    chara->field_126 = 0;
 }
 
 void func_800D88C0(s_SubCharacter* chara, s32 arg1)
@@ -300,23 +298,48 @@ void func_800D88C0(s_SubCharacter* chara, s32 arg1)
     chara->model_0.anim_4.flags_2 |= AnimFlag_Unk1;
 }
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D8904);
+void func_800D8904(s_SubCharacter* chara, s32 arg1)
+{
+    chara->field_126                      = 0;
+    chara->field_F8                       = 0;
+    chara->field_F0                       = 0;
+    chara->field_E8                       = arg1;
+    chara->model_0.isAnimStateUnchanged_3 = 0;
+}
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D891C);
+void func_800D891C(s_SubCharacter* chara)
+{
+    chara->field_F8 = 1;
+}
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D8928);
+void func_800D8928(s_SubCharacter* chara)
+{
+    chara->model_0.anim_4.flags_2 &= ~AnimFlag_Unk1;
+}
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D893C);
+s32 func_800D893C(s_SubCharacter* chara)
+{
+    return ~(chara->model_0.anim_4.flags_2 & AnimFlag_Unk1);
+}
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D8950);
+void func_800D8950(s_SubCharacter* chara)
+{
+    chara->model_0.anim_4.flags_2 |= AnimFlag_Unk1;
+}
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D8964);
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D8A00);
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D9064);
+void func_800D9064(s_SubCharacter* chara)
+{
+    chara->model_0.anim_4.flags_2 |= AnimFlag_Unk2;
+}
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D9078);
+void func_800D9078(s_SubCharacter* chara)
+{
+    chara->model_0.anim_4.flags_2 &= ~AnimFlag_Unk2;
+}
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D908C);
 
@@ -324,7 +347,30 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D9188);
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D921C);
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D923C);
+void func_800D923C(s_SubCharacter* chara)
+{
+    s32 char_flagsE0 = chara->flags_E0;
+    char_flagsE0     = (char_flagsE0 & ~0xF00);
+
+    chara->model_0.isAnimStateUnchanged_3 = 0;
+
+    chara->field_C8 = 0;
+    chara->field_CA = 0;
+    chara->field_CE = 0;
+    chara->field_D4 = 0;
+    chara->field_D6 = 0;
+    chara->field_DE = 0;
+    chara->field_DC = 0;
+    chara->field_DA = 0;
+    chara->field_D8 = 0;
+    chara->field_EC = 0;
+    chara->field_E8 = 0;
+    chara->field_EC = 0;
+    chara->field_F0 = 0;
+    chara->field_F4 = 0;
+    chara->flags_E0 = (char_flagsE0 | 0x300);
+    chara->model_0.field_2 += 1;
+}
 
 s32 func_800D929C()
 {
