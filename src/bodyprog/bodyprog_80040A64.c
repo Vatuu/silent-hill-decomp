@@ -508,10 +508,9 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80045360);
 // Anim func. Traverses skeleton bones for something.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800453E8);
 
-#ifdef NON_MATCHING
 void func_80045468(s_Skeleton* skel, s32* arg1, s32 cond) // 0x80045468
 {
-    s_Skeleton* bone;
+    s_Bone* bone;
     s32 status;
 
     bone = skel->bones_8;
@@ -528,20 +527,17 @@ void func_80045468(s_Skeleton* skel, s32* arg1, s32 cond) // 0x80045468
     {
         if (cond != 0)
         {
-            bone[status * 2].field_0 &= ~(1 << 31);
+            bone[status].field_0 &= ~(1 << 31);
         }
         else
         {
-            bone[status * 2].field_0 |= 1 << 31;
+            bone[status].field_0 |= 1 << 31;
         }
         
         status = func_80044F6C(arg1, 0);
     }
     while (status != -2);
 }
-#else
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80045468);
-#endif
 
 // Maybe larger anim func.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80045534);

@@ -21,11 +21,13 @@ typedef struct
 // Following structs likely have something to do with skeletons and bones. Some may be duplicates.
 //==========================================================================
 
+// Maybe a collection of matrices.
 typedef struct
 {
-    s8 unk_0[16];
-    s8 field_10;
-    s8 unk_11[7];
+    s32 field_0; // Flags?
+    s8  unk_4[12];
+    s8  field_10;
+    s8  unk_11[7];
 } s_Bone;
 STATIC_ASSERT_SIZEOF(s_Bone, 24);
 
