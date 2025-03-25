@@ -60,18 +60,28 @@ void func_800D4924();
 
 void func_800D654C();
 
-void func_800D8888();
+void func_800D8888(s_SubCharacter* chara);
 
 void func_800D88AC(s_SubCharacter* chara);
 
 /** Among other things, sets the character's anim to anim 3. */
 void func_800D88C0(s_SubCharacter* chara, s32 arg1);
 
-/**
- * Seems to call for a specific struct, however `func_800D8888` it indicates
- * that it doesn't have arguments
- */
-void func_800D923C();
+void func_800D8904(s_SubCharacter* chara, s32 arg1);
+
+void func_800D891C(s_SubCharacter* chara);
+
+void func_800D8928(s_SubCharacter* chara);
+
+s32 func_800D893C(s_SubCharacter* chara);
+
+void func_800D8950(s_SubCharacter* chara);
+
+void func_800D9064(s_SubCharacter* chara);
+
+void func_800D9078(s_SubCharacter* chara);
+
+void func_800D923C(s_SubCharacter* chara);
 
 s32 func_800D929C();
 

@@ -32,7 +32,29 @@ void vwGetViewAngle(SVECTOR* ang) // 0x80048AC4
     *ang = vwViewPointInfo.worldang;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vw_main", func_80048AF4);
+void func_80048AF4(VECTOR3* arg0, VECTOR3* arg1)
+{
+    s32     temp_x;
+    s32     temp_y;
+    s32     temp_z;
+    MATRIX  mat;
+    SVECTOR vec;
+
+    temp_x = FP_FROM(arg1->vx - arg0->vx, Q4_SHIFT);
+    temp_y = FP_FROM(arg1->vy - arg0->vy, Q4_SHIFT);
+    temp_z = FP_FROM(arg1->vz - arg0->vz, Q4_SHIFT);
+
+    vec.vz = 0;
+    vec.vy = ratan2(temp_x, temp_z);
+    vec.vx = ratan2(-temp_y, SquareRoot0((temp_x * temp_x) + (temp_z * temp_z)));
+
+    func_80096C94(&vec, &mat);
+
+    mat.t[0] = FP_FROM(arg0->vx, Q4_SHIFT);
+    mat.t[1] = FP_FROM(arg0->vy, Q4_SHIFT);
+    mat.t[2] = FP_FROM(arg0->vz, Q4_SHIFT);
+    vwSetViewInfoDirectMatrix(NULL, &mat);
+}
 
 void vwSetCoordRefAndEntou(GsCOORDINATE2* parent_p, s32 ref_x, s32 ref_y, s32 ref_z, s16 cam_ang_y, s16 cam_ang_z, s32 cam_y, s32 cam_xz_r) // 0x80048BE0
 {
