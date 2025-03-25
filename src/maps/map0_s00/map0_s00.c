@@ -268,7 +268,7 @@ void func_800D8888(s_SubCharacter* chara)
 }
 
 // The following funcs that take s_SubCharacter* arg are shared with other maps too.
-// Possibly shared .c file or seperate SubCharacter library?
+// Possibly shared .c file or separate SubCharacter library?
 
 void func_800D88AC(s_SubCharacter* chara)
 {
@@ -300,10 +300,11 @@ void func_800D88C0(s_SubCharacter* chara, s32 arg1)
 
 void func_800D8904(s_SubCharacter* chara, s32 arg1)
 {
-    chara->field_126                      = 0;
-    chara->field_F8                       = 0;
-    chara->field_F0                       = 0;
-    chara->field_E8                       = arg1;
+    chara->field_126 = 0;
+    chara->field_F8  = 0;
+    chara->field_F0  = 0;
+    chara->field_E8  = arg1;
+
     chara->model_0.isAnimStateUnchanged_3 = 0;
 }
 
