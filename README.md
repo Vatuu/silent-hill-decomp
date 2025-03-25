@@ -209,7 +209,7 @@ Progress bars powered by [decomp.dev](https://decomp.dev)
             <td>Note</td>
         </tr>
         <tr>
-            <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?unit=maps/map1_s04/map1_s05"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&measure=code&unit=maps/map1_s04/map1_s05"/></a></td>
+            <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?unit=maps/map1_s04/map1_s04"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&measure=code&unit=maps/map1_s04/map1_s04"/></a></td>
             <td>Unknown</td>
             <td>School location, likely in Otherworld.</td>
         </tr>
