@@ -159,17 +159,63 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80043A24);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80043B34);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80043B70);
+s32 func_80043B70(s_Dummy* arg0) // 0x80043B70
+{
+    if (arg0->field_1 == 0)
+    {
+        return 0;
+    }
+    
+    return func_80056888(arg0->field_4);
+}
 
+// TODO: Not the right type?
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80043BA4);
+/*s_Dummy* func_80043BA4(s_Dummy* arg0) // 0x80043BA4
+{
+    if (arg0->field_1 != 0)
+    {
+        return arg0 + 42;
+    }
+    
+    return NULL;
+}*/
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80043BC4);
+void func_80043BC4(s_Dummy* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) // 0x80043BC4
+{
+    if (arg0->field_1 != 0)
+    {
+        return;
+    }
+    
+    arg0->field_1 = 1;
+    
+    func_80043DA4();
+    func_8006993C(arg0 + 3); // TODO: Pointer?
+    func_800560FC(arg0->field_4);
+    func_8008E4EC(arg0->field_4);
+    func_80043C7C(arg0, arg3, arg4, arg5);
+    func_80056954(arg0->field_4);
+    func_80043E50(arg0, arg1, arg2);
+    func_80043F88(arg0, arg0->field_14);
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80043C7C);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80043D00);
+s32 func_80043D00(s_Dummy* arg0) // 0x80043D00
+{
+    if (arg0->field_1 == 0)
+    {
+        return 0;
+    }
+    
+    return func_80056348(&func_80043D64, arg0->field_4);
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80043D44);
+s32 func_80043D44(s32 arg0) // 0x80043D44
+{
+    return func_80043D64(arg0) == 0;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80043D64);
 

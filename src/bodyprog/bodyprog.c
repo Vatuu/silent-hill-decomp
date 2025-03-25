@@ -18,6 +18,7 @@ void func_8002E630()
 
     D_800B5480 = 0; 
 
+    // Clear arrays.
     bzero(D_800B5508, 1816);
     bzero(D_800B2780, 768);
 
@@ -1061,13 +1062,25 @@ void func_800363D0() // 0x800363D0
     func_80035DB4(0);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003640C);
+void func_8003640C(s32 arg0) // 0x8003640C
+{
+    if (arg0 != 0)
+    {
+        D_800C9590 = arg0;
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80036420);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003647C);
+s32 func_8003647C() // 0x8003647C
+{
+    return g_SaveGamePtr->field_A5 > D_800C9584;
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80036498);
+s32 func_80036498() // 80036498
+{
+    return !(g_SaveGamePtr->field_A5 > D_800C9584);
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_800364BC);
 

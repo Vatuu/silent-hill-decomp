@@ -15,6 +15,17 @@
 
 typedef struct
 {
+    s8  unk_0;
+    u8  field_1;
+    s8  unk_2[2];
+    s32 field_4;
+    s8  unk_8[12];
+    s32 field_14;
+    s32 unk_18; 
+} s_Dummy;
+
+typedef struct
+{
     s16 field_0; // Flags?
 } s_8008D850;
 
@@ -45,7 +56,7 @@ typedef struct
     s8      field_14;
     s8      unk_15[8];
 } s_Skeleton;
-STATIC_ASSERT_SIZEOF(s_Skeleton, 28);
+STATIC_ASSERT_SIZEOF(s_Skeleton, 28); // Unsure, might be 24
 
 typedef struct
 {
@@ -130,7 +141,7 @@ typedef struct
     s16 field_1C;
     s32 unk_1E[78];
     s32 field_158;
-} s_800C1020;
+} s_800C1020; // Size: 308?
 
 typedef struct
 {
@@ -412,6 +423,10 @@ extern s32 D_800C489C;
 
 extern u8* D_800C7018;
 
+extern s8 D_800C9584;
+
+extern s8 D_800C9590;
+
 // TODO: Order these by address.
 
 extern s32 g_MainLoop_FrameCount; // 0x800B9CCC
@@ -503,6 +518,18 @@ void func_80041FF0();
 void func_800420C0();
 
 s32 func_80042C04(s32 idx);
+
+s32 func_80043B70(s_Dummy* arg0);
+
+s_Dummy* func_80043BA4(s_Dummy* arg0);
+
+void func_80043BC4(s_Dummy* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
+
+s32 func_80043D00(s_Dummy* arg0);
+
+s32 func_80043D44(s32 arg0);
+
+s32 func_80043D64(s32 arg0); // Types assumed.
 
 /** Updates a model's animation. */
 void Anim_Update(s_Model* model, s_Skeleton* skel, s32 arg2, s_Model* targetModel);
@@ -707,6 +734,12 @@ s32 func_8003528C(s32 idx0, s32 idx1);
 void AreaLoad_UpdatePlayerPosition();
 
 void func_800363D0();
+
+void func_8003640C(s32 arg0);
+
+s32 func_8003647C();
+
+s32 func_80036498();
 
 void func_80037124();
 
