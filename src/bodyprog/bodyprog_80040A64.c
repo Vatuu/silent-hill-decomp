@@ -489,8 +489,17 @@ void func_80044FE0(s_80044FE0* arg0, s32 arg1, s8 arg2) // 0x80044FE0
     func_80045014(arg0);
 }
 
-// Anim func.
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80045014);
+void func_80045014(s_Skeleton* skel) // 0x80045014
+{
+    s_Bone* bone = skel->bones_8;
+
+    // Traverse bone hierarchy and clear flags.
+    while (bone < &skel->bones_8[skel->boneCount_0])
+    {
+        bone->flags_0 = 0;
+        bone++;
+    }
+}
 
 // Anim func. Used in tandem with skeleton bone traversal.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_8004506C);
@@ -516,26 +525,25 @@ void func_800453E8(s_Skeleton* skel, s32 cond) // 0x800453E8
 
     // Check if skeleton has bones.
     bone = skel->bones_8;
-    if (bone >= (bone + skel->boneCount_0))
+    if (bone >= &skel->bones_8[skel->boneCount_0])
     {
         return;
     }
     
     // Traverse bone hierarchy and set flags according to cond.
-    do
+    while (bone < &skel->bones_8[skel->boneCount_0])
     {
         if (cond != 0)
         {
-            bone->field_0 &= ~(1 << 31);
+            bone->flags_0 &= ~(1 << 31);
         }
         else
         {
-            bone->field_0 |= 1 << 31;
+            bone->flags_0 |= 1 << 31;
         }
         
         bone++;
     }
-    while (bone < (skel->bones_8 + skel->boneCount_0));
 }
 
 void func_80045468(s_Skeleton* skel, s32* arg1, s32 cond) // 0x80045468
@@ -552,16 +560,16 @@ void func_80045468(s_Skeleton* skel, s32* arg1, s32 cond) // 0x80045468
         return;
     }
     
-    // Traverse bone hierarchy.
+    // Traverse bone hierarchy and set flags according to cond.
     do
     {
         if (cond != 0)
         {
-            bone[status].field_0 &= ~(1 << 31);
+            bone[status].flags_0 &= ~(1 << 31);
         }
         else
         {
-            bone[status].field_0 |= 1 << 31;
+            bone[status].flags_0 |= 1 << 31;
         }
         
         status = func_80044F6C(arg1, 0);

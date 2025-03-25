@@ -24,7 +24,7 @@ typedef struct
 // Maybe a collection of matrices.
 typedef struct
 {
-    s32 field_0; // Flags?
+    s32 flags_0;
     s8  unk_4[12];
     s8  field_10;
     s8  unk_11[7];
@@ -558,7 +558,10 @@ s8 func_80044F6C(s8* ptr, s32 arg1);
 
 void func_80044FE0(s_80044FE0* arg0, s32 arg1, s8 arg2);
 
-/** Anim func. Traverses skeleton bones to set flags or a mask. */
+/** Clears skeleton bone flags/mask. Called by `func_80044FE0`. */
+void func_80045014(s_Skeleton* skel);
+
+/** Anim func. Traverses skeleton bones to set flags/mask. */
 void func_800453E8(s_Skeleton* skel, s32 cond);
 
 /** Does something with skeleton bones. `arg0` is a struct pointer. */
