@@ -31,11 +31,13 @@ typedef struct
 } s_Bone;
 STATIC_ASSERT_SIZEOF(s_Bone, 24);
 
-// MAYBE skeleton data.
+// PROBABLY skeleton data.
 typedef struct
 {
     u8      boneCount_0;
-    s8      unk_1[3];
+    s8      field_1;
+    s8      field_2;
+    s8      field_3;
     s32     field_4;
     s_Bone* bones_8;
 
@@ -49,16 +51,6 @@ typedef struct
     s8      unk_15[8];
 } s_Skeleton;
 STATIC_ASSERT_SIZEOF(s_Skeleton, 28); // Unsure, might be 24
-
-typedef struct
-{
-    s8  field_0;
-    s8  field_1;
-    s8  field_2;
-    s8  field_3;
-    s32 field_4;
-    s32 field_8;
-} s_80044FE0;
 
 typedef struct
 {
@@ -556,7 +548,8 @@ void func_80044F14(s32 mtx, s16 z, s16 x, s16 y);
 
 s8 func_80044F6C(s8* ptr, s32 arg1);
 
-void func_80044FE0(s_80044FE0* arg0, s32 arg1, s8 arg2);
+/** Skeleton setup? Assigns bones pointer for the skeleton and resets fields. */
+void func_80044FE0(s_Skeleton* skel, s_Bone* bones, u8 boneCount);
 
 /** Clears skeleton bone flags/mask. Called by `func_80044FE0`. */
 void func_80045014(s_Skeleton* skel);

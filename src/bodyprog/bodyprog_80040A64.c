@@ -478,15 +478,15 @@ s8 func_80044F6C(s8* ptr, s32 arg1) // 0x80044F6C
     return D_800C15B4;
 }
 
-void func_80044FE0(s_80044FE0* arg0, s32 arg1, s8 arg2) // 0x80044FE0
+void func_80044FE0(s_Skeleton* skel, s_Bone* bones, u8 boneCount) // 0x80044FE0
 {
-    arg0->field_8 = arg1;
-    arg0->field_0 = arg2;
-    arg0->field_1 = 0;
-    arg0->field_2 = 1;
-    arg0->field_4 = 0;
+    skel->bones_8 = bones;
+    skel->boneCount_0 = boneCount;
+    skel->field_1 = 0;
+    skel->field_2 = 1;
+    skel->field_4 = 0;
     
-    func_80045014(arg0);
+    func_80045014(skel);
 }
 
 void func_80045014(s_Skeleton* skel) // 0x80045014
