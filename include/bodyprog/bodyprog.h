@@ -135,11 +135,16 @@ STATIC_ASSERT_SIZEOF(s_800BCDA8, 4);
 
 typedef struct
 {
-    s8  unk_0[27];
+    s8  unk_0[28];
     s16 field_1C;
-    s32 unk_1E[78];
+    s8  unk_1E[304];
+    s32 field_150;
+    s32 field_154;
     s32 field_158;
-} s_800C1020; // Size: 308?
+    s8  unk_15A[1068];
+    s32 field_588;
+    // More may follow.
+} s_800C1020;
 
 typedef struct
 {
@@ -500,6 +505,8 @@ void func_8003DD80(s32, s32);
 
 /** Some kind of queue entry load status getter. */
 s32 func_80041ADC(s32 queueIdx);
+
+void func_80041C24(s_80041CEC* arg0, s32 arg1, s32 arg2);
 
 /** arg0 might be s_Skeleton, arg1 might be s_Bone. */
 void func_80041CB4(s_Skeleton* skel, s_80041CEC* arg1);

@@ -43,7 +43,20 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80041B1C);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80041BA0);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80041C24);
+void func_80041C24(s_80041CEC* arg0, s32 arg1, s32 arg2) // 0x80041C24
+{
+    bzero(&D_800C1020, 1420);
+    func_80041CB4((void*)((char*)&D_800C1020 + 312), arg0);
+    
+    D_800C1020.field_150 = arg1;
+    D_800C1020.field_154 = arg2;
+    D_800C1020.field_158 = 0;
+    D_800C1020.field_588 = 1;
+    
+    func_80041D10((void*)((char*)&D_800C1020 + 348), 4);
+    func_80041D48();
+    func_80041E98();
+}
 
 // TODO: Likey not s_Skeleton after all. Expected struct fields don't match.
 #ifdef NON_MATCHING
