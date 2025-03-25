@@ -18,9 +18,6 @@ typedef struct
     s16 field_0; // Flags?
 } s_8008D850;
 
-// Following structs likely have something to do with skeletons and bones. Some may be duplicates.
-//==========================================================================
-
 // Maybe a collection of matrices.
 typedef struct
 {
@@ -50,8 +47,9 @@ typedef struct
     s8      field_14;
     s8      unk_15[8];
 } s_Skeleton;
-STATIC_ASSERT_SIZEOF(s_Skeleton, 28); // Unsure, might be 24
+STATIC_ASSERT_SIZEOF(s_Skeleton, 28);
 
+// Likely not skeleton since filed_8 must be `s8`.
 typedef struct
 {
     s8 field_0;
@@ -62,8 +60,7 @@ typedef struct
     s8 field_8;
 } s_80041CEC;
 
-//==========================================================================
-
+// Maybe s_Skeleton?
 typedef struct
 {
     s8  unk_0;
