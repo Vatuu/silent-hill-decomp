@@ -248,7 +248,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80044950);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800449AC);
 
-void Anim_Update(s_Model* model, s_Skeleton* skel, s32 arg2, s_Model* targetModel) // 0x800449F0
+void Anim_Update(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Model* targetModel) // 0x800449F0
 {
     s32 setAnimIdx;
     s32 timeDelta;
@@ -297,11 +297,11 @@ void Anim_Update(s_Model* model, s_Skeleton* skel, s32 arg2, s_Model* targetMode
         keyframeIdx0 = FP_FROM(newTime, Q12_SHIFT);
     }
 
-    // Update skeleton?
+    // Update skeleton.
     alpha = newTime & 0xFFF;
     if ((model->anim_4.flags_2 & AnimFlag_Interpolate) || (model->anim_4.flags_2 & AnimFlag_Unk2))
     {
-        func_800446D8(skel, arg2, keyframeIdx0, keyframeIdx0 + 1, alpha);
+        func_800446D8(skel, coord, keyframeIdx0, keyframeIdx0 + 1, alpha);
     }
 
     // Update frame data.
@@ -316,7 +316,7 @@ void Anim_Update(s_Model* model, s_Skeleton* skel, s32 arg2, s_Model* targetMode
     }
 }
 
-void func_80044B38(s_Model* model, s_Skeleton* skel, s32 arg2, s_Model* targetModel) // 0x80044B38
+void func_80044B38(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Model* targetModel) // 0x80044B38
 {
     s32 targetKeyframeIdx;
     s32 nextKeyframe;
@@ -371,11 +371,11 @@ void func_80044B38(s_Model* model, s_Skeleton* skel, s32 arg2, s_Model* targetMo
         keyframeIdx1 = keyframeIdx;
     }
 
-    // Update skeleton?
+    // Update skeleton.
     alpha = newTime & 0xFFF;
     if ((model->anim_4.flags_2 & AnimFlag_Interpolate) || (model->anim_4.flags_2 & AnimFlag_Unk2))
     {
-        func_800446D8(skel, arg2, keyframeIdx0, keyframeIdx1, alpha);
+        func_800446D8(skel, coord, keyframeIdx0, keyframeIdx1, alpha);
     }
 
     // Update frame data.
@@ -387,8 +387,60 @@ void func_80044B38(s_Model* model, s_Skeleton* skel, s32 arg2, s_Model* targetMo
 // Anim func, similar to above.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80044CA4);
 
-// Anim func, similar to above.
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80044DF0);
+void func_80044DF0(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Model* targetModel)
+{
+    s32 keyframeIdx;
+    s32 targetKeyframeIdx;
+    s32 timeDelta;
+    register s32 timeStep asm("v0");
+    s32 newTargetKeyframeIdx;
+    s32 sinValue;
+    s32 alpha;
+    s32 newTime;
+
+    keyframeIdx = targetModel->anim_4.keyframeIdx_8;
+    targetKeyframeIdx = targetModel->anim_4.targetKeyframeIdx_A;
+
+    // Compute frame time step.
+    if (model->anim_4.flags_2 & AnimFlag_Interpolate)
+    {
+        timeDelta = func_800449AC(model, targetModel);
+        timeStep = FP_MULTIPLY((s64)timeDelta, g_DeltaTime0, Q12_SHIFT);
+    }
+    else
+    {
+        timeStep = 0;
+    }
+
+    // Update time target.
+    newTargetKeyframeIdx = model->anim_4.targetKeyframeIdx_A + timeStep;
+    model->anim_4.targetKeyframeIdx_A = newTargetKeyframeIdx;
+
+    // Sine-based easing?
+    sinValue = shRsin((newTargetKeyframeIdx / 2) - (SIN_LUT_SIZE / 4));
+    alpha = (sinValue / 2) + (SIN_LUT_SIZE / 2);
+
+    if (alpha >= (SIN_LUT_SIZE / 2))
+    {
+        newTime = FP_TO(keyframeIdx, Q12_SHIFT);
+    }
+    else
+    {
+        newTime = FP_TO(targetKeyframeIdx, Q12_SHIFT);
+    }
+
+    // Update time.
+    model->anim_4.time_4 = newTime;
+
+    // Update skeleton.
+    if ((model->anim_4.flags_2 & AnimFlag_Interpolate) || (model->anim_4.flags_2 & 2))
+    {
+        func_800446D8(skel, coord, keyframeIdx, targetKeyframeIdx, alpha);
+    }
+
+    // Update frame index.
+    model->anim_4.keyframeIdx_8 = FP_FROM(newTime, Q12_SHIFT);
+}
 
 void func_80044F14(s32 mtx, s16 z, s16 x, s16 y) // 0x80044F14
 {

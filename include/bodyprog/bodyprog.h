@@ -531,11 +531,17 @@ s32 func_80043D44(s32 arg0);
 
 s32 func_80043D64(s32 arg0); // Types assumed.
 
-/** Updates a model's animation. */
-void Anim_Update(s_Model* model, s_Skeleton* skel, s32 arg2, s_Model* targetModel);
+/** Updates a model's animation, variant 1. */
+void Anim_Update(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Model* targetModel);
 
-/** Updates a model's animation. */
-void func_80044B38(s_Model* model, s_Skeleton* skel, s32 arg2, s_Model* targetModel);
+/** Updates a model's animation, variant 2. */
+void func_80044B38(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Model* targetModel);
+
+/** Updates a model's animation, variant 3. */
+void func_80044CA4(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Model* targetModel);
+
+/** Updates a model's animation, variant 4. */
+void func_80044DF0(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Model* targetModel);
 
 void func_80044F14(s32 mtx, s16 z, s16 x, s16 y);
 
