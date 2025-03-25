@@ -45,14 +45,19 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80041BA0);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80041C24);
 
+// TODO: Likey not s_Skeleton after all. Expected struct fields don't match.
+#ifdef NON_MATCHING
 void func_80041CB4(s_Skeleton* skel, s_80041CEC* arg1) // 0x80041CB4
 {
-    skel->field_0 = arg1;
+    skel->boneCount_0 = arg1;
     func_80041CEC(arg1);
     
     skel->bones_8 = NULL;
     skel->field_4 = NO_VALUE;
 }
+#else
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80041CB4);
+#endif
 
 void func_80041CEC(s_80041CEC* arg0) // 0x80041CEC
 {
@@ -505,8 +510,33 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800452EC);
 // Anim func. Traverses skeleton bones for something.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80045360);
 
-// Anim func. Traverses skeleton bones for something.
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800453E8);
+void func_800453E8(s_Skeleton* skel, s32 cond) // 0x800453E8
+{
+    s_Bone* bone;
+
+    // Check if skeleton has bones.
+    bone = skel->bones_8;
+    if (bone >= (bone + skel->boneCount_0))
+    {
+        return;
+    }
+    
+    // Traverse bone hierarchy and set flags according to cond.
+    do
+    {
+        if (cond != 0)
+        {
+            bone->field_0 &= ~(1 << 31);
+        }
+        else
+        {
+            bone->field_0 |= 1 << 31;
+        }
+        
+        bone++;
+    }
+    while (bone < (skel->bones_8 + skel->boneCount_0));
+}
 
 void func_80045468(s_Skeleton* skel, s32* arg1, s32 cond) // 0x80045468
 {

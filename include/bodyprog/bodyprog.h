@@ -34,8 +34,9 @@ STATIC_ASSERT_SIZEOF(s_Bone, 24);
 // MAYBE skeleton data.
 typedef struct
 {
-    s32     field_0; // Pointer to something?
-    s32     field_4; // Maybe index.
+    u8      boneCount_0;
+    s8      unk_1[3];
+    s32     field_4;
     s_Bone* bones_8;
 
     // Maybe incorrect.
@@ -556,6 +557,9 @@ void func_80044F14(s32 mtx, s16 z, s16 x, s16 y);
 s8 func_80044F6C(s8* ptr, s32 arg1);
 
 void func_80044FE0(s_80044FE0* arg0, s32 arg1, s8 arg2);
+
+/** Anim func. Traverses skeleton bones to set flags or a mask. */
+void func_800453E8(s_Skeleton* skel, s32 cond);
 
 /** Does something with skeleton bones. `arg0` is a struct pointer. */
 void func_80045468(s_Skeleton* skel, s32* arg1, s32 cond);
