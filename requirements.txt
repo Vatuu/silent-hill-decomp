@@ -12,6 +12,6 @@ python-ranges
 pyyaml
 toml
 watchdog
-splat64[mips]
+splat64[mips]>=0.33.2,<1.0.0
 clang-format
 clang-tidy
