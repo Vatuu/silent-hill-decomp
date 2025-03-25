@@ -199,8 +199,6 @@ void func_80049B6C(GsCOORDINATE2* coord, MATRIX* mat, SVECTOR* vec)
 
 void func_80049C2C(MATRIX* mat, s32 x, s32 y, s32 z)
 {
-    extern MATRIX D_800C6FC0;
-
     VECTOR input;
     VECTOR output;
 

@@ -370,7 +370,7 @@ void func_800D923C(s_SubCharacter* chara)
     chara->field_F0 = 0;
     chara->field_F4 = 0;
     chara->flags_E0 = (char_flagsE0 | 0x300);
-    chara->model_0.field_2 += 1;
+    chara->model_0.field_2++;
 }
 
 s32 func_800D929C()
