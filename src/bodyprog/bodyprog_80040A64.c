@@ -159,7 +159,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80043A24);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80043B34);
 
-s32 func_80043B70(s_Dummy* arg0) // 0x80043B70
+s32 func_80043B70(s_80043B70* arg0) // 0x80043B70
 {
     if (arg0->field_1 == 0)
     {
@@ -169,9 +169,7 @@ s32 func_80043B70(s_Dummy* arg0) // 0x80043B70
     return func_80056888(arg0->field_4);
 }
 
-// TODO: Not the right type?
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80043BA4);
-/*s_Dummy* func_80043BA4(s_Dummy* arg0) // 0x80043BA4
+s_80043BA4* func_80043BA4(s_80043BA4* arg0) // 0x80043BA4
 {
     if (arg0->field_1 != 0)
     {
@@ -179,9 +177,9 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80043BA4);
     }
     
     return NULL;
-}*/
+}
 
-void func_80043BC4(s_Dummy* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) // 0x80043BC4
+void func_80043BC4(s_80043B70* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) // 0x80043BC4
 {
     if (arg0->field_1 != 0)
     {
@@ -202,7 +200,7 @@ void func_80043BC4(s_Dummy* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 ar
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80043C7C);
 
-s32 func_80043D00(s_Dummy* arg0) // 0x80043D00
+s32 func_80043D00(s_80043B70* arg0) // 0x80043D00
 {
     if (arg0->field_1 == 0)
     {

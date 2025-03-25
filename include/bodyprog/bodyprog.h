@@ -15,17 +15,6 @@
 
 typedef struct
 {
-    s8  unk_0;
-    u8  field_1;
-    s8  unk_2[2];
-    s32 field_4;
-    s8  unk_8[12];
-    s32 field_14;
-    s32 unk_18; 
-} s_Dummy;
-
-typedef struct
-{
     s16 field_0; // Flags?
 } s_8008D850;
 
@@ -79,6 +68,23 @@ typedef struct
 } s_80041CEC;
 
 //==========================================================================
+
+typedef struct
+{
+    s8  unk_0;
+    u8  field_1;
+    s8  unk_2[2];
+    s32 field_4;
+    s8  unk_8[12];
+    s32 field_14;
+    s32 unk_18; 
+} s_80043B70;
+
+typedef struct
+{
+    s8 unk_0;
+    u8 field_1;
+} s_80043BA4;
 
 /** Something related to ANM files. See `D_800A90FC`. */
 typedef struct
@@ -519,13 +525,13 @@ void func_800420C0();
 
 s32 func_80042C04(s32 idx);
 
-s32 func_80043B70(s_Dummy* arg0);
+s32 func_80043B70(s_80043B70* arg0);
 
-s_Dummy* func_80043BA4(s_Dummy* arg0);
+s_80043BA4* func_80043BA4(s_80043BA4* arg0);
 
-void func_80043BC4(s_Dummy* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
+void func_80043BC4(s_80043B70* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
 
-s32 func_80043D00(s_Dummy* arg0);
+s32 func_80043D00(s_80043B70* arg0);
 
 s32 func_80043D44(s32 arg0);
 
