@@ -4,6 +4,10 @@
 #include "bodyprog/math.h"
 #include "main/fsqueue.h"
 
+// Known contents:
+// - Animation funcs
+// - SD sound lib
+
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80040A64);
 
 void func_80040B6C() {}
@@ -24,7 +28,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_8004137C);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800414E0);
 
-s32 func_80041ADC(s32 queueIdx)
+s32 func_80041ADC(s32 queueIdx) // 80041ADC
 {
     if (queueIdx == NO_VALUE)
         return 0;
@@ -41,16 +45,16 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80041BA0);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80041C24);
 
-void func_80041CB4(s_80041CB4* arg0, s_80041CEC* arg1)
+void func_80041CB4(s_Skeleton* skel, s_80041CEC* arg1) // 0x80041CB4
 {
-    arg0->field_0 = arg1;
+    skel->field_0 = arg1;
     func_80041CEC(arg1);
     
-    arg0->field_8 = 0;
-    arg0->field_4 = NO_VALUE;
+    skel->bones_8 = NULL;
+    skel->field_4 = NO_VALUE;
 }
 
-void func_80041CEC(s_80041CEC* arg0)
+void func_80041CEC(s_80041CEC* arg0) // 0x80041CEC
 {
     arg0->field_0 = 48;
     arg0->field_1 = 6;
@@ -59,13 +63,15 @@ void func_80041CEC(s_80041CEC* arg0)
     arg0->field_8 = 0;
 }
 
-void func_80041D10(s_80041D10* array, s32 size)
+void func_80041D10(s_Skeleton* skels, s32 size) // 0x80041D10
 {
-    s_80041D10* end = array + size;
-    while (array < end)
+    s_Skeleton* end;
+
+    end = skels + size;
+    while (skels < end)
     {
-        array->field_4 = NO_VALUE;
-        array = (s_80041D10*)((u8*)array + sizeof(s_80041D10)); 
+        skels->field_4 = NO_VALUE;
+        skels = (s_Skeleton*)((u8*)skels + sizeof(s_Skeleton)); 
     }
 }
 
@@ -153,17 +159,61 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80043A24);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80043B34);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80043B70);
+s32 func_80043B70(s_80043B70* arg0) // 0x80043B70
+{
+    if (arg0->field_1 == 0)
+    {
+        return 0;
+    }
+    
+    return func_80056888(arg0->field_4);
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80043BA4);
+s_80043BA4* func_80043BA4(s_80043BA4* arg0) // 0x80043BA4
+{
+    if (arg0->field_1 != 0)
+    {
+        return arg0 + 42;
+    }
+    
+    return NULL;
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80043BC4);
+void func_80043BC4(s_80043B70* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) // 0x80043BC4
+{
+    if (arg0->field_1 != 0)
+    {
+        return;
+    }
+    
+    arg0->field_1 = 1;
+    
+    func_80043DA4();
+    func_8006993C(arg0 + 3); // TODO: Pointer?
+    func_800560FC(arg0->field_4);
+    func_8008E4EC(arg0->field_4);
+    func_80043C7C(arg0, arg3, arg4, arg5);
+    func_80056954(arg0->field_4);
+    func_80043E50(arg0, arg1, arg2);
+    func_80043F88(arg0, arg0->field_14);
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80043C7C);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80043D00);
+s32 func_80043D00(s_80043B70* arg0) // 0x80043D00
+{
+    if (arg0->field_1 == 0)
+    {
+        return 0;
+    }
+    
+    return func_80056348(&func_80043D64, arg0->field_4);
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80043D44);
+s32 func_80043D44(s32 arg0) // 0x80043D44
+{
+    return func_80043D64(arg0) == 0;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80043D64);
 
@@ -183,7 +233,11 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80044420);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800445A4);
 
-// Animation-related.
+// ========================================
+// ANIMATION
+// ========================================
+
+// Anim func.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800446D8);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80044918);
@@ -192,106 +246,305 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80044950);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800449AC);
 
-void Anim_Update(s_Model* model, void* buffer, s32 arg2, s_Model* targetModel)
+void Anim_Update(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Model* targetModel) // 0x800449F0
 {
     s32 setAnimIdx;
-    s32 someFixedTimemaskedAnimTime;
-    s32 maybeInterpTime;
-    s32 animTimeDelta;
-    s32 animTime;
-    s32 animFrameIdx;
-    s32 interpTime;
-    s32 maskedAnimTime;
+    s32 timeDelta;
+    s32 timeStep;
+    s32 newTime;
+    s32 newKeyframeIdx0;
+    s32 targetTime;
+    s32 alpha;
 
     setAnimIdx = 0;
 
+    // Compute time step.
     if (model->anim_4.flags_2 & AnimFlag_Unk1)
     {
-        maybeInterpTime = func_800449AC(model, targetModel);
-        animTimeDelta = FP_FROM((s64)maybeInterpTime * (s64)g_DeltaTime0, Q12_SHIFT);
+        timeDelta = func_800449AC(model, targetModel);
+        timeStep = FP_MULTIPLY((s64)timeDelta, (s64)g_DeltaTime0, Q12_SHIFT);
     }
     else
     {
-        animTimeDelta = 0;
+        timeStep = 0;
     }
-
-    // TODO: FP conversion is very confusing here, need to figure out what the called functions do. -- Sezz
-
-    // Calculate anim frame interpolation.
-    animTime = model->anim_4.animTime_4;
-    animFrameIdx = FP_FROM(animTime, Q12_SHIFT);
-    if (animTimeDelta != 0)
+    
+    // Compute new time.
+    newTime = model->anim_4.time_4;
+    newKeyframeIdx0 = FP_FROM(newTime, Q12_SHIFT);
+    if (timeStep != 0)
     {
-        animTime += animTimeDelta;
-        interpTime = FP_TO(targetModel->anim_4.interpolationAlpha_A, Q12_SHIFT); // Shift already shifter interp alpha again?
-        if (animTime < interpTime)
+        // Clamp new time against target time?
+        newTime += timeStep;
+        targetTime = FP_TO(targetModel->anim_4.keyframeIdx1_A, Q12_SHIFT);
+        if (newTime < targetTime)
         {
-            interpTime = FP_TO(targetModel->anim_4.animFrameIdx_8, Q12_SHIFT);
-            if (animTime <= interpTime)
+            targetTime = FP_TO(targetModel->anim_4.keyframeIdx0_8, Q12_SHIFT);
+            if (newTime <= targetTime)
             {
-                animTime = interpTime;
+                newTime = targetTime;
                 setAnimIdx = 1;
             }
         }
         else
         {
-            animTime = interpTime;
+            newTime = targetTime;
             setAnimIdx = 1;
         }
 
-        animFrameIdx = FP_FROM(animTime, Q12_SHIFT);
+        newKeyframeIdx0 = FP_FROM(newTime, Q12_SHIFT);
     }
 
-    // Do something if some flags are set.
-    maskedAnimTime = animTime & 0xFFF;
+    // Update skeleton.
+    alpha = newTime & 0xFFF;
     if ((model->anim_4.flags_2 & AnimFlag_Unk1) || (model->anim_4.flags_2 & AnimFlag_Unk2))
     {
-        func_800446D8(buffer, arg2, animFrameIdx, animFrameIdx + 1, maskedAnimTime);
+        func_800446D8(skel, coord, newKeyframeIdx0, newKeyframeIdx0 + 1, alpha);
     }
 
-    // Set anim frame data.
-    model->anim_4.animTime_4 = animTime;
-    model->anim_4.animFrameIdx_8 = animFrameIdx;
-    model->anim_4.interpolationAlpha_A = FP_ALPHA(0.0f);
+    // Update frame data.
+    model->anim_4.time_4 = newTime;
+    model->anim_4.keyframeIdx0_8 = newKeyframeIdx0;
+    model->anim_4.keyframeIdx1_A = 0;
 
-    // Set anim index.
+    // Update anim.
     if (setAnimIdx != 0)
     {
         model->anim_4.animIdx_0 = targetModel->anim_4.flags_2;
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80044B38);
+void func_80044B38(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Model* targetModel) // 0x80044B38
+{
+    s32 keyframeIdx0;
+    s32 keyframeIdx1;
+    s32 nextKeyframeIdx;
+    s32 keyframeDelta;
+    s32 currentKeyframeTime;
+    s32 nextKeyframeTime;
+    s32 keyframeTimeDelta;
+    s32 timeDelta;
+    s32 timeStep;
+    s32 newTime;
+    s32 newKeyframeIdx0;
+    s32 newKeyframeIdx1;
+    s32 alpha;
+    
+    keyframeIdx0 = targetModel->anim_4.keyframeIdx0_8;
+    keyframeIdx1 = targetModel->anim_4.keyframeIdx1_A;
+    nextKeyframeIdx = keyframeIdx1 + 1;
+    keyframeDelta = nextKeyframeIdx - keyframeIdx0;
 
+    currentKeyframeTime = FP_TO(keyframeIdx0, Q12_SHIFT);
+    nextKeyframeTime = FP_TO(nextKeyframeIdx, Q12_SHIFT);
+    keyframeTimeDelta = FP_TO(keyframeDelta, Q12_SHIFT);
+
+    // Compute time step.
+    if (model->anim_4.flags_2 & AnimFlag_Unk1)
+    {
+        timeDelta = func_800449AC(model, targetModel);
+        timeStep = FP_MULTIPLY((s64)timeDelta, (s64)g_DeltaTime0, Q12_SHIFT);
+    }
+    else
+    {
+        timeStep = 0;
+    }
+    
+    // Wrap new time to valid range?
+    newTime = model->anim_4.time_4 + timeStep;
+    while (newTime < currentKeyframeTime)
+    {
+        newTime += keyframeTimeDelta;
+    }
+    while (newTime >= nextKeyframeTime)
+    {
+        newTime -= keyframeTimeDelta;
+    }
+
+    // Compute new keyframe 1.
+    newKeyframeIdx0 = FP_FROM(newTime, Q12_SHIFT);
+    newKeyframeIdx1 = newKeyframeIdx0 + 1;
+    if (newKeyframeIdx1 == nextKeyframeIdx)
+    {
+        newKeyframeIdx1 = keyframeIdx0;
+    }
+
+    // Update skeleton.
+    alpha = newTime & 0xFFF;
+    if ((model->anim_4.flags_2 & AnimFlag_Unk1) || (model->anim_4.flags_2 & AnimFlag_Unk2))
+    {
+        func_800446D8(skel, coord, newKeyframeIdx0, newKeyframeIdx1, alpha);
+    }
+
+    // Update frame data.
+    model->anim_4.time_4 = newTime;
+    model->anim_4.keyframeIdx0_8 = newKeyframeIdx0;
+    model->anim_4.keyframeIdx1_A = 0;
+}
+
+// Anim func, similar to above.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80044CA4);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80044DF0);
+void func_80044DF0(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Model* targetModel)
+{
+    s32 keyframeIdx0;
+    s32 keyframeIdx1;
+    s32 timeDelta;
+    register s32 keyframeStep asm("v0"); // HACK: Manually set register to match.
+    s32 newKeyframeIdx1;
+    s32 sinValue;
+    s32 newTime;
+    s32 alpha;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80044F14);
+    keyframeIdx0 = targetModel->anim_4.keyframeIdx0_8;
+    keyframeIdx1 = targetModel->anim_4.keyframeIdx1_A;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80044F6C);
+    // Compute time step.
+    if (model->anim_4.flags_2 & AnimFlag_Unk1)
+    {
+        timeDelta = func_800449AC(model, targetModel);
+        keyframeStep = FP_MULTIPLY((s64)timeDelta, (s64)g_DeltaTime0, Q12_SHIFT);
+    }
+    else
+    {
+        keyframeStep = 0;
+    }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80044FE0);
+    // Update keyframe index 1.
+    newKeyframeIdx1 = model->anim_4.keyframeIdx1_A + keyframeStep;
+    model->anim_4.keyframeIdx1_A = newKeyframeIdx1;
 
+    // Sine-based easing?
+    sinValue = shRsin((newKeyframeIdx1 / 2) - (SIN_LUT_SIZE / 4));
+    alpha = (sinValue / 2) + (SIN_LUT_SIZE / 2);
+
+    // Clamp new time to keyframe 0 or 1.
+    if (alpha >= (SIN_LUT_SIZE / 2))
+    {
+        newTime = FP_TO(keyframeIdx0, Q12_SHIFT);
+    }
+    else
+    {
+        newTime = FP_TO(keyframeIdx1, Q12_SHIFT);
+    }
+
+    // Update time.
+    model->anim_4.time_4 = newTime;
+
+    // Update skeleton.
+    if ((model->anim_4.flags_2 & AnimFlag_Unk1) || (model->anim_4.flags_2 & AnimFlag_Unk2))
+    {
+        func_800446D8(skel, coord, keyframeIdx0, keyframeIdx1, alpha);
+    }
+
+    // Update keyframe 0.
+    model->anim_4.keyframeIdx0_8 = FP_FROM(newTime, Q12_SHIFT);
+}
+
+void func_80044F14(s32 mtx, s16 z, s16 x, s16 y) // 0x80044F14
+{
+    *(s16*)0x1F800004 = z;
+    *(s16*)0x1F800002 = y;
+    *(s16*)0x1F800000 = x;
+    
+    func_80096E78((SVECTOR*)0x1F800000, (MATRIX*)0x1F800008);
+    MulMatrix(mtx + 4, (MATRIX*)0x1F800008);
+}
+
+s8 func_80044F6C(s8* ptr, s32 arg1) // 0x80044F6C
+{
+    s8 temp;
+
+    if (arg1 != 0)
+    {
+        D_800C15B0 = ptr;
+    }
+    
+    if (D_800C15B0[0] != -3)
+    {
+        D_800C15B4 = D_800C15B0[0];
+        D_800C15B0++;
+    }
+    else if (++D_800C15B4 >= (D_800C15B0[1] - 1))
+    {
+        D_800C15B0++;
+    }
+
+    return D_800C15B4;
+}
+
+void func_80044FE0(s_80044FE0* arg0, s32 arg1, s8 arg2) // 0x80044FE0
+{
+    arg0->field_8 = arg1;
+    arg0->field_0 = arg2;
+    arg0->field_1 = 0;
+    arg0->field_2 = 1;
+    arg0->field_4 = 0;
+    
+    func_80045014(arg0);
+}
+
+// Anim func.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80045014);
 
+// Anim func. Used in tandem with skeleton bone traversal.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_8004506C);
 
+// Anim func.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80045108);
 
+// Anim func.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800451B0);
 
+// Anim func.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80045258);
 
+// Anim func.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800452EC);
 
+// Anim func. Traverses skeleton bones for something.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80045360);
 
+// Anim func. Traverses skeleton bones for something.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800453E8);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80045468);
+void func_80045468(s_Skeleton* skel, s32* arg1, s32 cond) // 0x80045468
+{
+    s_Bone* bone;
+    s32 status;
 
+    bone = skel->bones_8;
+    
+    // Get skeleton status?
+    status = func_80044F6C(arg1, 1);
+    if (status == -2)
+    {
+        return;
+    }
+    
+    // Traverse bone hierarchy.
+    do
+    {
+        if (cond != 0)
+        {
+            bone[status].field_0 &= ~(1 << 31);
+        }
+        else
+        {
+            bone[status].field_0 |= 1 << 31;
+        }
+        
+        status = func_80044F6C(arg1, 0);
+    }
+    while (status != -2);
+}
+
+// Maybe larger anim func.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80045534);
+
+// ========================================
+// SOUND
+// ========================================
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", SD_EngineCmd);
 

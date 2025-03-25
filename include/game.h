@@ -42,7 +42,7 @@ typedef enum _PadButtonFlags
 
 typedef enum _AnimFlags
 {
-    AnimFlag_Unk0 = 0,
+    AnimFlag_None = 0,
     AnimFlag_Unk1 = 1 << 0,
     AnimFlag_Unk2 = 1 << 1
 } e_AnimFlags;
@@ -287,11 +287,10 @@ typedef struct _ModelAnimData
 
     u8  animIdx_0;
     u8  maybeSomeState_1; // State says if animTime_4 is anim time or a func ptr? That field could be a union.  -- emoose
-    u16 flags_2;          // e_AnimFlags. Bit 1: movement unlockled(?), bit 2: visible.
-
-    s32 animTime_4;           // animFrameIdx_8 << 12.
-    s16 animFrameIdx_8;       // Frame index into large array containing all frames for all anims?
-    s16 interpolationAlpha_A; // Something to do with linear anim interpolation. Maybe fixed-point alpha value. Gets set to 1 << 12 (4096).
+    s16 flags_2;          /** e_AnimFlags */ // Bit 1: movement unlockled(?), bit 2: visible.
+    s32 time_4;           /** Fixed-point time along keyframe timeline. */ 
+    s16 keyframeIdx0_8;
+    s16 keyframeIdx1_A;
     s32 field_C;
     s32 field_10;
 } s_ModelAnim;
@@ -303,7 +302,7 @@ typedef struct _Model
     u8 field_1;
     u8 field_2;
     u8 isAnimStateUnchanged_3; // Educated guess. Always 1, set to 0 for 1 tick when anim state appears to change.
-                            // Used differently in player's s_SubCharacter struct. 0: anim transitioning(?), bit 1: animated, bit 2: turning.
+                               // Used differently in player's s_SubCharacter struct. 0: anim transitioning(?), bit 1: animated, bit 2: turning.
     s_ModelAnim anim_4;
 } s_Model;
 STATIC_ASSERT_SIZEOF(s_Model, 24);

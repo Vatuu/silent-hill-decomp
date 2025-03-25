@@ -762,6 +762,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8007E860);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8007E8C0);
 
+// Player func.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8007E9C4);
 
 void GameFs_PlayerMapAnimLoad(s32 mapIdx) // 0x8007EB64

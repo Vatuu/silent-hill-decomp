@@ -136,6 +136,8 @@ void func_800D2D2C()
     D_800C4606++;
 }
 
+// TODO: Need to update pointers.
+#ifdef NON_MATCHING
 void func_800D2D44()
 {
     s_MainCharacterExtra* playerExtra = &g_SysWork.player_4C.extra_128;
@@ -144,6 +146,9 @@ void func_800D2D44()
     playerExtra->model_0.anim_4.flags_2 &= ~AnimFlag_Unk1;
     chara->model_0.anim_4.flags_2 &= ~AnimFlag_Unk1;
 }
+#else
+INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D2D44);
+#endif
 
 s32 func_800D2D6C()
 {
@@ -282,9 +287,9 @@ void func_800D88C0(s_SubCharacter* chara, s32 arg1)
     if (arg1 != 0)
     {
         chara->model_0.anim_4.animIdx_0 = 3;
-        chara->model_0.anim_4.animFrameIdx_8 = 0;
-        chara->model_0.anim_4.animTime_4 = 0;
-        chara->model_0.anim_4.interpolationAlpha_A = FP_ALPHA(1.0f);
+        chara->model_0.anim_4.keyframeIdx0_8 = 0;
+        chara->model_0.anim_4.time_4 = 0;
+        chara->model_0.anim_4.keyframeIdx1_A = FP_TO(1, Q12_SHIFT);
     }
     else
     {

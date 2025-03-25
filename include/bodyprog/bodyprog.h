@@ -18,19 +18,46 @@ typedef struct
     s16 field_0; // Flags?
 } s_8008D850;
 
+// Following structs likely have something to do with skeletons and bones. Some may be duplicates.
+//==========================================================================
+
+// Maybe a collection of matrices.
 typedef struct
 {
-    s32 field_0;
-    s32 field_4; // Maybe index?
-    s32 field_8;
-} s_80041CB4;
+    s32 field_0; // Flags?
+    s8  unk_4[12];
+    s8  field_10;
+    s8  unk_11[7];
+} s_Bone;
+STATIC_ASSERT_SIZEOF(s_Bone, 24);
+
+// MAYBE skeleton data.
+typedef struct
+{
+    s32     field_0; // Pointer to something?
+    s32     field_4; // Maybe index.
+    s_Bone* bones_8;
+
+    // Maybe incorrect.
+    s8      unk_C[3];
+    u8      field_10;
+    s8      unk_11;
+    s8      field_12;
+    s8      field_13;
+    s8      field_14;
+    s8      unk_15[8];
+} s_Skeleton;
+STATIC_ASSERT_SIZEOF(s_Skeleton, 28); // Unsure, might be 24
 
 typedef struct
 {
-    s8  unk_0[4];
+    s8  field_0;
+    s8  field_1;
+    s8  field_2;
+    s8  field_3;
     s32 field_4;
-    s8  unk_8[18];
-} s_80041D10; // Size: 28
+    s32 field_8;
+} s_80044FE0;
 
 typedef struct
 {
@@ -41,6 +68,25 @@ typedef struct
     s8 unk_4[4];
     s8 field_8;
 } s_80041CEC;
+
+//==========================================================================
+
+typedef struct
+{
+    s8  unk_0;
+    u8  field_1;
+    s8  unk_2[2];
+    s32 field_4;
+    s8  unk_8[12];
+    s32 field_14;
+    s32 unk_18; 
+} s_80043B70;
+
+typedef struct
+{
+    s8 unk_0;
+    u8 field_1;
+} s_80043BA4;
 
 /** Something related to ANM files. See `D_800A90FC`. */
 typedef struct
@@ -90,11 +136,20 @@ typedef struct
 
 typedef struct
 {
+    s8 unk_0;
+    s8 field_1;
+    s8 field_2;
+    s8 field_3;
+} s_800BCDA8;
+STATIC_ASSERT_SIZEOF(s_800BCDA8, 4);
+
+typedef struct
+{
     s8  unk_0[27];
     s16 field_1C;
     s32 unk_1E[78];
     s32 field_158;
-} s_800C1020;
+} s_800C1020; // Size: 308?
 
 typedef struct
 {
@@ -199,6 +254,8 @@ extern s8 D_800A99B4[];
 /** Array of indices? */
 extern s8 D_800A99CC[];
 
+extern s32 D_800A9A1C;
+
 extern s32 D_800A9A68;
 
 extern s_FsImageDesc D_800A9EB4;
@@ -239,6 +296,8 @@ extern s32 D_800B55FC;
 
 extern s32 D_800B5618;
 
+extern s8 D_800BCD78;
+
 extern u8 D_800BCDD4;
 
 extern u16 D_800BCE14;
@@ -264,7 +323,13 @@ extern u16 D_800BCCB2;
 /** Accessed by credits and saveload. */
 extern s32 D_800BCD0C;
 
+extern s_800BCDA8 D_800BCDA8[];
+
 extern s32 D_800BCDB0; // Type assumed.
+
+extern s8* D_800C15B0;
+
+extern s8 D_800C15B4;
 
 extern s16 D_800C15F8[];
 
@@ -366,6 +431,10 @@ extern s32 D_800C489C;
 
 extern u8* D_800C7018;
 
+extern s8 D_800C9584;
+
+extern s8 D_800C9590;
+
 // TODO: Order these by address.
 
 extern s32 g_MainLoop_FrameCount; // 0x800B9CCC
@@ -442,12 +511,13 @@ void func_8003DD80(s32, s32);
 /** Some kind of queue entry load status getter. */
 s32 func_80041ADC(s32 queueIdx);
 
-void func_80041CB4(s_80041CB4* arg0, s_80041CEC* arg1);
+/** arg0 might be s_Skeleton, arg1 might be s_Bone. */
+void func_80041CB4(s_Skeleton* skel, s_80041CEC* arg1);
 
 void func_80041CEC(s_80041CEC*);
 
-/** Clears some field in some struct. */
-void func_80041D10(s_80041D10* array, s32 size);
+/** Clears field_4 field in array of skeletons? Might not be skeletons, but the struct fits. */
+void func_80041D10(s_Skeleton* skels, s32 size);
 
 void func_80041E98();
 
@@ -457,8 +527,38 @@ void func_800420C0();
 
 s32 func_80042C04(s32 idx);
 
-/** Updates a model's animation */
-void Anim_Update(s_Model* model, void* buffer, s32 arg2, s_Model* targetModel);
+s32 func_80043B70(s_80043B70* arg0);
+
+s_80043BA4* func_80043BA4(s_80043BA4* arg0);
+
+void func_80043BC4(s_80043B70* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
+
+s32 func_80043D00(s_80043B70* arg0);
+
+s32 func_80043D44(s32 arg0);
+
+s32 func_80043D64(s32 arg0); // Types assumed.
+
+/** Updates a model's animation, variant 1. */
+void Anim_Update(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Model* targetModel);
+
+/** Updates a model's animation, variant 2. */
+void func_80044B38(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Model* targetModel);
+
+/** Updates a model's animation, variant 3. */
+void func_80044CA4(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Model* targetModel);
+
+/** Updates a model's animation, variant 4. */
+void func_80044DF0(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Model* targetModel);
+
+void func_80044F14(s32 mtx, s16 z, s16 x, s16 y);
+
+s8 func_80044F6C(s8* ptr, s32 arg1);
+
+void func_80044FE0(s_80044FE0* arg0, s32 arg1, s8 arg2);
+
+/** Does something with skeleton bones. `arg0` is a struct pointer. */
+void func_80045468(s_Skeleton* skel, s32* arg1, s32 cond);
 
 u8 func_80045B28();
 
@@ -646,6 +746,18 @@ void GameFs_MapLoad(s32 mapIdx);
 s32 func_8003528C(s32 idx0, s32 idx1);
 
 void AreaLoad_UpdatePlayerPosition();
+
+void func_800363D0();
+
+void func_8003640C(s32 arg0);
+
+s32 func_8003647C();
+
+s32 func_80036498();
+
+void func_80037124();
+
+void func_80037154();
 
 /** SysState_GamePaused handler. */
 void func_800391E8();
