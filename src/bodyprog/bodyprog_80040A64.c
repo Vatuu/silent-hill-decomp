@@ -1,9 +1,9 @@
 #include "game.h"
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/libsd.h"
 #include "bodyprog/math.h"
 #include "main/fsqueue.h"
-#include "bodyprog/libsd.h"
 
 // Known contents:
 // - Animation funcs
