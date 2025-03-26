@@ -577,6 +577,8 @@ u32 func_80041B1C(void* arg0);
 
 s32 func_80042C04(s32 idx);
 
+s32 func_80042DE8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
+
 s32 func_80043B70(s_80043B70* arg0);
 
 s_80043BA4* func_80043BA4(s_80043BA4* arg0);

@@ -144,7 +144,22 @@ s32 func_80042C04(s32 idx) // 0x80042C04
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80042C3C);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80042DE8);
+s32 func_80042DE8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x80042DE8
+{
+    s32 res;
+
+    res = func_80042E2C(arg0 >> 4, arg1 >> 4);
+    if (arg4 != 0)
+    {
+        res -= 4096;
+        if (res < 0)
+        {
+            res = 0;
+        }
+    }
+    
+    return res;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80042E2C);
 
