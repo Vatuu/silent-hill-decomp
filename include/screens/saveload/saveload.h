@@ -12,8 +12,6 @@ typedef struct
 
 extern s_FsImageDesc D_800A902C;
 
-extern u8 D_800A97D4[];
-
 extern s8 D_800A97D8;
 
 extern s32 D_800B9FE0[];
@@ -21,8 +19,6 @@ extern s32 D_800B9FE0[];
 extern u32 D_800BCD34;
 
 extern s8 D_800BCD39;
-
-extern s8 D_800BCD40;
 
 extern s32 D_801E751C;
 

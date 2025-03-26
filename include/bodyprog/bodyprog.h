@@ -272,6 +272,8 @@ extern s32 D_800A976C;
 
 extern void (*D_800A977C[])(void); // Function pointer array, maybe state funcs of some kind.
 
+extern u8 D_800A97D4[];
+
 extern s_800A992C D_800A992C[];
 
 extern u8 D_800A9944;
@@ -353,6 +355,8 @@ extern u16 D_800BCCB2;
 
 /** Accessed by credits and saveload. */
 extern s32 D_800BCD0C;
+
+extern s8 D_800BCD40;
 
 extern s_800BCDA8 D_800BCDA8[];
 
@@ -525,7 +529,7 @@ void func_80032D1C();
 /** Bodyprog entrypoint. Called by `main`. */
 void MainLoop();
 
-void func_80033548(); // Return type assumed.
+s32 func_80033548();
 
 /** Unknown bodyprog func. Called by `Fs_QueuePostLoadAnm`. */
 void func_80035560(s32 arg0, s32 arg1, void* arg2, s32 arg3);

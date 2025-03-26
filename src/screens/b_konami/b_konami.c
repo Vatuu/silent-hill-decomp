@@ -8,7 +8,7 @@
 #include "screens/b_konami/b_konami.h"
 #include "screens/stream/stream.h"
 
-void func_800C95AC(void)
+void func_800C95AC() // 0x800C95AC
 {
     s32 idx;
 
@@ -86,13 +86,50 @@ void func_800C95AC(void)
     }
 }
 
-INCLUDE_ASM("asm/screens/b_konami/nonmatchings/b_konami", func_800C9874);
+s32 func_800C9874() // 0x800C9874
+{
+    s32 temp_v0;
+    s32 temp_v1;
+
+    if (func_80033548() == 0)
+    {
+        return 1;
+    }
+    
+    D_800BCD2C = BOOT_ADDR_0;
+    temp_v1 = (s32)D_800BCD2C[4];
+
+    D_800BCD2C = BOOT_ADDR_1;
+    temp_v0 = (s32)D_800BCD2C[4];
+
+    if (temp_v1 == 0 && temp_v0 == 0)
+    {
+        return 2;
+    }
+
+    if ((temp_v1 == 4 && (temp_v0 == 4 || temp_v0 == 0)) || (temp_v1 == 0 && temp_v0 == 4)) 
+    {
+        return 3;
+    }
+    else if (temp_v1 == 8 || temp_v0 == 8)
+    {
+        D_800BCD2C = &BOOT_ADDR_0[D_800A97D6 * 0xA50];
+        D_800BCD2C = &D_800BCD2C[D_800A97D4[D_800A97D6] * 16];
+        
+        D_800BCD40 = D_800BCD2C[5];
+        D_800BCD3F = D_800BCD2C[6];
+        D_800BCD3E = D_800BCD2C[7];
+        return 5;
+    }
+    
+    return 4;
+}
 
 INCLUDE_ASM("asm/screens/b_konami/nonmatchings/b_konami", func_800C99A4);
 
 INCLUDE_ASM("asm/screens/b_konami/nonmatchings/b_konami", func_800C9E6C);
 
-void func_800C9FB8(void)
+void func_800C9FB8() // 0x800C9FB8
 {
     s32* temp_a1;
 
@@ -115,7 +152,7 @@ void func_800C9FB8(void)
     D_800C7018 += sizeof(TILE);
 }
 
-void func_800CA120(void)
+void func_800CA120() // 0x800CA120
 {
     u32* temp_a1;
 
@@ -136,17 +173,17 @@ void func_800CA120(void)
     D_800C7018 += sizeof(TILE);
 }
 
-void func_800CA234(void)
+void func_800CA234() // 0x800CA234
 {
     D_800CA4FC = 0;
 }
 
-s32 func_800CA240(s32* arg0)
+s32 func_800CA240(s32* arg0) // 0x800CA240
 {
     return *arg0;
 }
 
-void func_800CA24C(s32 arg0, s32 arg1, s32 arg2)
+void func_800CA24C(s32 arg0, s32 arg1, s32 arg2) // 0x800CA24C
 {
     s32 var_a3;
     s32* somePtr;
@@ -169,7 +206,7 @@ void func_800CA24C(s32 arg0, s32 arg1, s32 arg2)
     D_800CA510 = 0;
 }
 
-s32 func_800CA2B8(void)
+s32 func_800CA2B8() // 0x800CA2B8
 {
     return D_800CA4FC;
 }
