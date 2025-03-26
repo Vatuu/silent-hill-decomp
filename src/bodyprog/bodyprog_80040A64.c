@@ -293,7 +293,28 @@ void func_80043E50(s_80043E50* arg0, s32* arg1, s32 arg2) // 0x80043E50
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80043F2C);
+s_80043F2C* func_80043F2C(s_80043F2C* arg0, s_80043F2C* arg1) // 0x80043F2C
+{
+    u8 size;
+    s_80043F2C* var_a1;
+    s32 i;
+
+    size = arg1->field_8;
+    var_a1 = arg1->field_C;
+    
+    for (i = 0; i < size; i++)
+    {
+        if (arg0->field_0 == var_a1->field_0 &&
+            arg0->field_4 == var_a1->field_4)
+        {
+            return var_a1;
+        }
+        
+        var_a1++;
+    }
+    
+    return NULL;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80043F88);
 

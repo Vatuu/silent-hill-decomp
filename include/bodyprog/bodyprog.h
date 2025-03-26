@@ -15,12 +15,22 @@
 
 typedef struct
 {
+    s32 field_0;
+    s32 field_4;
+    s32 field_8;
+    struct s_80043F2C* field_C;
+} s_80043F2C;
+STATIC_ASSERT_SIZEOF(s_80043F2C, 16);
+
+typedef struct
+{
     u8  field_0;
     s8  unk_1[3];
     s32 field_4;
     s8  unk_2[3];
     s32 field_C;
-} s_80043E50Sub; // Size: 16
+} s_80043E50Sub;
+STATIC_ASSERT_SIZEOF(s_80043E50Sub, 16);
 
 typedef struct
 {
@@ -567,6 +577,9 @@ s32 func_80043D44(s32 arg0);
 s32 func_80043D64(s32 arg0); // Types assumed.
 
 void func_80043E50(s_80043E50* arg0, s32* arg1, s32 arg2);
+
+/** TODO: Maybe doesn't operate on a linked list. Need more context from other functions before committing to this. */
+s_80043F2C* func_80043F2C(s_80043F2C* arg0, s_80043F2C* arg1);
 
 /** Updates a model's animation, variant 1. */
 void Anim_Update(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Model* targetModel);
