@@ -600,6 +600,8 @@ void func_80048424();
 
 void func_800485C0(s32 idx);
 
+s32 func_80048954(s32 com, u8* param, u8* res);
+
 void func_8004729C(u16);
 
 void func_8004B9F8(s32 arg0, u8 arg1); // Types assumed.

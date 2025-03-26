@@ -852,4 +852,34 @@ void func_800485C0(s32 idx)
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800485D8);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80048954);
+s32 func_80048954(s32 com, u8* param, u8* res) // 0x80048954
+{
+    u8 syncRes;
+    u8 comCopy = com;
+
+    if (CdSync(1, &syncRes) == 2 && CdControl(comCopy, param, res) != 0)
+    {
+        D_800C1658 = 0;
+        return 0;
+    }
+    
+    D_800C1658++;
+    if ((D_800C1658 & ~(1 << 16)) >= 0x259)
+    {
+        CdReset(0);
+        CdControlB(1, 0, 0);
+        VSync(3);
+        
+        if (D_800C1670.field_0 != 0)
+        {
+            D_800C1670.field_0 = 1;
+        }
+        
+        D_800C1670.field_1 = 0;
+        D_800C1670.field_2 = 0;
+        D_800C1670.field_3 = 0;
+        D_800C1658 = 0;
+    }
+    
+    return 1;
+}
