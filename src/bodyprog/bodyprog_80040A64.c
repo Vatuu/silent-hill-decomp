@@ -247,12 +247,13 @@ s32 func_80043D44(s32 arg0) // 0x80043D44
 
 s32 func_80043D64(s32 arg0) // 0x80043D64
 {
-    u32 v1 = arg0 + 7;
+    u32 i;
     u8 v0;
 
-    for (v1 = (arg0 + 7); v1 >= arg0; v1--)
+    i = arg0 + 7;
+    for (i = (arg0 + 7); i >= arg0; i--)
     {
-        v0 = *(u8*)v1;
+        v0 = *(u8*)i;
         if (v0 != NULL)
         {
             return v0 == 0x48;
