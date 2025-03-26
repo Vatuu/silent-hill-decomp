@@ -70,7 +70,8 @@ typedef struct
 
 typedef struct
 {
-    s8  unk_0[8];
+    s32 field_0;
+    s32 field_4;
     s16 field_8;
     s16 field_A;
     s32 field_C;
@@ -589,6 +590,8 @@ s32 func_80042C04(s32 idx);
 s32 func_80042DE8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 
 void func_80043338(s_80043338* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
+
+s32 func_800436D8(s_80043338* arg0, s32 arg1, s16 arg2, s16 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8);
 
 s32 func_80043B70(s_80043B70* arg0);
 
