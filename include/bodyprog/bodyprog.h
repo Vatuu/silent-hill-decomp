@@ -806,6 +806,8 @@ s32 func_8003647C();
 
 s32 func_80036498();
 
+void func_8003708C(s16* ptr0, u16* ptr1);
+
 void func_80037124();
 
 void func_80037154();
