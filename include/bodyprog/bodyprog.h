@@ -522,6 +522,8 @@ void func_80041FF0();
 
 void func_800420C0();
 
+u32 func_80041B1C(void* arg0);
+
 s32 func_80042C04(s32 idx);
 
 s32 func_80043B70(s_80043B70* arg0);
@@ -568,11 +570,11 @@ u8 func_80045B28();
 
 void func_8004690C(s32);
 
-void Sd_SetVolBgm(s16 arg0, s16 arg1);
+void Sd_SetVolBgm(s16 volLeft, s16 volRight);
 
-void Sd_SetVolXa(s16 arg0, s16 arg1);
+void Sd_SetVolXa(s16 volLeft, s16 volRight);
 
-s32 Sd_GetVolSe(s16 arg0);
+s16 Sd_GetVolSe(s16 arg0);
 
 void Sd_SetReverbDepth(s8 depth);
 

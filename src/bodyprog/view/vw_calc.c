@@ -171,11 +171,53 @@ void vbSetRefView(VbRVIEW* rview) // 0x800498D8
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vw_calc", func_80049984);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vw_calc", func_80049AF8);
+void func_80049AF8(GsCOORDINATE2* coord, SVECTOR* vec)
+{
+    MATRIX mat;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vw_calc", func_80049B6C);
+    func_80049984(coord, &mat);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vw_calc", func_80049C2C);
+    mat.t[0] -= D_800C3868.t[0];
+    mat.t[1] -= D_800C3868.t[1];
+    mat.t[2] -= D_800C3868.t[2];
+
+    func_800496AC(&VbWvsMatrix, &mat, vec);
+}
+
+void func_80049B6C(GsCOORDINATE2* coord, MATRIX* mat, SVECTOR* vec)
+{
+    func_80049984(coord, mat);
+    mat->t[0] -= D_800C3868.t[0];
+    mat->t[1] -= D_800C3868.t[1];
+    mat->t[2] -= D_800C3868.t[2];
+
+    func_800496AC(&VbWvsMatrix, mat, vec);
+    mat->t[0] += D_800C3868.t[0];
+    mat->t[1] += D_800C3868.t[1];
+    mat->t[2] += D_800C3868.t[2];
+}
+
+void func_80049C2C(MATRIX* mat, s32 x, s32 y, s32 z)
+{
+    VECTOR input;
+    VECTOR output;
+
+    input.vx = FP_FROM(x, Q4_SHIFT);
+    input.vy = FP_FROM(y, Q4_SHIFT);
+    input.vz = FP_FROM(z, Q4_SHIFT);
+    ApplyMatrixLV(&D_800C6FC0, &input, &output);
+
+    // Copies matrix fields as 32-bit words, maybe an inlined CopyMatrix func?
+    *(u32*)&mat->m[0][0] = *(u32*)&D_800C6FC0.m[0][0];
+    *(u32*)&mat->m[0][2] = *(u32*)&D_800C6FC0.m[0][2];
+    *(u32*)&mat->m[1][1] = *(u32*)&D_800C6FC0.m[1][1];
+    *(u32*)&mat->m[2][0] = *(u32*)&D_800C6FC0.m[2][0];
+    mat->m[2][2]         = D_800C6FC0.m[2][2];
+
+    mat->t[0] = output.vx + D_800C6FC0.t[0];
+    mat->t[1] = output.vy + D_800C6FC0.t[1];
+    mat->t[2] = output.vz + D_800C6FC0.t[2];
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vw_calc", func_80049D04);
 
