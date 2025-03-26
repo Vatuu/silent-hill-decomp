@@ -27,7 +27,7 @@
 #define FP_FROM(val, shift) \
 	((val) >> (shift))
 
-/** Multiplies two integers in a fixed-point Q format and converts the result from a fixed-point Q format. */
+/** Multiplies two integers in a fixed-point Q format and converts the result from the fixed-point Q format. */
 #define FP_MULTIPLY(val0, val1, shift) \
     (((val0) * (val1)) >> (shift))
 
