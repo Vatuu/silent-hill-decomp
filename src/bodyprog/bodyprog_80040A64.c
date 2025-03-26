@@ -212,7 +212,23 @@ void func_80043BC4(s_80043B70* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32
     func_80043F88(arg0, arg0->field_14);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80043C7C);
+void func_80043C7C(s_80043B70* arg0, s32 arg1, s32* arg2, s32 arg3) // 0x80043C7C
+{
+    if (arg0->field_1 == 0)
+    {
+        return;
+    }
+    
+    if (arg1 != 0)
+    {
+        func_80056774(arg0->field_4, arg1, &func_80043D44, arg3, 1);
+    }
+    
+    if (arg2 != NULL)
+    {
+        func_80056774(arg0->field_4, arg2, &func_80043D64, arg3, 1);
+    }
+}
 
 s32 func_80043D00(s_80043B70* arg0) // 0x80043D00
 {
