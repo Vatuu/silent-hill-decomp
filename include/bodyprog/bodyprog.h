@@ -148,6 +148,14 @@ typedef struct
 
 typedef struct
 {
+    u8 field_0;
+    s8 field_1;
+    s8 field_2;
+    s8 field_3;
+} s_800C1670;
+
+typedef struct
+{
     s8 unk_0[28];
 } s_800C117C;
 STATIC_ASSERT_SIZEOF(s_800C117C, 28);
@@ -330,7 +338,7 @@ extern s16 D_800C15F8[];
 
 extern u16 D_800C1658;
 
-extern s8 D_800C1670;
+extern s_800C1670 D_800C1670;
 
 extern u8 g_Sd_VolumeBgm; // 0x800C1685
 
@@ -552,7 +560,7 @@ void func_80044CA4(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Mod
 /** Updates a model's animation, variant 4. */
 void func_80044DF0(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Model* targetModel);
 
-void func_80044F14(s32 mtx, s16 z, s16 x, s16 y);
+void func_80044F14(s32 mat, s16 z, s16 x, s16 y);
 
 s8 func_80044F6C(s8* ptr, s32 arg1);
 

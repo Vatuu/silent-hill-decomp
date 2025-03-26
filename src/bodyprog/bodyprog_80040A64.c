@@ -7,7 +7,8 @@
 
 // Known contents:
 // - Animation funcs
-// - SD sound lib
+// - SD sound lib fucs
+// - CD lib funcs
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80040A64);
 
@@ -292,10 +293,22 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80044950);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800449AC);
 
+static inline s32 Anim_GetTimeStep(s_Model* model, s_Model* targetModel)
+{
+    s32 timeDelta;
+    
+    if (model->anim_4.flags_2 & AnimFlag_Unk1)
+    {
+        timeDelta = func_800449AC(model, targetModel);
+        return FP_MULTIPLY((s64)timeDelta, (s64)g_DeltaTime0, Q12_SHIFT);
+    }
+    
+    return 0;
+}
+
 void Anim_Update(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Model* targetModel) // 0x800449F0
 {
     s32 setAnimIdx;
-    s32 timeDelta;
     s32 timeStep;
     s32 newTime;
     s32 newKeyframeIdx0;
@@ -304,16 +317,8 @@ void Anim_Update(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Model
 
     setAnimIdx = 0;
 
-    // Compute time step.
-    if (model->anim_4.flags_2 & AnimFlag_Unk1)
-    {
-        timeDelta = func_800449AC(model, targetModel);
-        timeStep = FP_MULTIPLY((s64)timeDelta, (s64)g_DeltaTime0, Q12_SHIFT);
-    }
-    else
-    {
-        timeStep = 0;
-    }
+    // Get time step.
+    timeStep = Anim_GetTimeStep(model, targetModel);
     
     // Compute new time.
     newTime = model->anim_4.time_4;
@@ -369,7 +374,6 @@ void func_80044B38(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Mod
     s32 currentKeyframeTime;
     s32 nextKeyframeTime;
     s32 keyframeTimeDelta;
-    s32 timeDelta;
     s32 timeStep;
     s32 newTime;
     s32 newKeyframeIdx0;
@@ -385,16 +389,8 @@ void func_80044B38(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Mod
     nextKeyframeTime = FP_TO(nextKeyframeIdx, Q12_SHIFT);
     keyframeTimeDelta = FP_TO(keyframeDelta, Q12_SHIFT);
 
-    // Compute time step.
-    if (model->anim_4.flags_2 & AnimFlag_Unk1)
-    {
-        timeDelta = func_800449AC(model, targetModel);
-        timeStep = FP_MULTIPLY((s64)timeDelta, (s64)g_DeltaTime0, Q12_SHIFT);
-    }
-    else
-    {
-        timeStep = 0;
-    }
+    // Get time step.
+    timeStep = Anim_GetTimeStep(model, targetModel);
     
     // Wrap new time to valid range?
     newTime = model->anim_4.time_4 + timeStep;
@@ -428,15 +424,71 @@ void func_80044B38(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Mod
     model->anim_4.keyframeIdx1_A = 0;
 }
 
-// Anim func, similar to above.
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80044CA4);
+void func_80044CA4(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Model* targetModel) // 0x80044CA4
+{
+    s32 setAnimIdx;
+    s32 newKeyframeIdx0;
+    s32 newKeyframeIdx1;
+    s32 timeStep;
+    s32 alpha;
+    
+    setAnimIdx = 0;
+    newKeyframeIdx0 = targetModel->anim_4.keyframeIdx0_8;
+    newKeyframeIdx1 = targetModel->anim_4.keyframeIdx1_A;
+
+    // If no target frame 0 set, default to current frame index 0.
+    if (newKeyframeIdx0 == NO_VALUE)
+    {
+        newKeyframeIdx0 = model->anim_4.keyframeIdx0_8;
+    }
+
+    // Get time step.
+    timeStep = Anim_GetTimeStep(model, targetModel);
+
+    // Set time.
+    alpha = model->anim_4.keyframeIdx1_A;
+    alpha += timeStep;
+    if (alpha >= FP_ALPHA(0.5f))
+    {
+        model->anim_4.time_4 = FP_TO(newKeyframeIdx1, 12);
+    }
+    else
+    {
+        model->anim_4.time_4 = FP_TO(newKeyframeIdx0, Q12_SHIFT);
+    }
+
+    // Progress keyframes.
+    if (alpha >= FP_ALPHA(1.0f))
+    {
+        newKeyframeIdx0 = newKeyframeIdx1;
+        model->anim_4.keyframeIdx0_8 = newKeyframeIdx1;
+        
+        alpha = 0;
+        setAnimIdx = 1;
+    }
+
+    // Update skeleton.
+    if ((model->anim_4.flags_2 & AnimFlag_Unk1) || (model->anim_4.flags_2 & AnimFlag_Unk2))
+    {
+        func_800446D8(skel, coord, newKeyframeIdx0, newKeyframeIdx1, alpha);
+    }
+
+    // Update frame 1.
+    model->anim_4.keyframeIdx1_A = alpha;
+
+    // Update anim.
+    if (setAnimIdx != 0)
+    {
+        model->anim_4.animIdx_0 = targetModel->anim_4.flags_2;
+    }
+}
 
 void func_80044DF0(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Model* targetModel)
 {
     s32 keyframeIdx0;
     s32 keyframeIdx1;
     s32 timeDelta;
-    register s32 keyframeStep asm("v0"); // HACK: Manually set register to match.
+    register s32 timeStep asm("v0"); // HACK: Manually set register to match.
     s32 newKeyframeIdx1;
     s32 sinValue;
     s32 newTime;
@@ -445,27 +497,27 @@ void func_80044DF0(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Mod
     keyframeIdx0 = targetModel->anim_4.keyframeIdx0_8;
     keyframeIdx1 = targetModel->anim_4.keyframeIdx1_A;
 
-    // Compute time step.
+    // Compute time step. NOTE: Can't call `Anim_GetTimeStep` due to register constraints.
     if (model->anim_4.flags_2 & AnimFlag_Unk1)
     {
         timeDelta = func_800449AC(model, targetModel);
-        keyframeStep = FP_MULTIPLY((s64)timeDelta, (s64)g_DeltaTime0, Q12_SHIFT);
+        timeStep = FP_MULTIPLY((s64)timeDelta, (s64)g_DeltaTime0, Q12_SHIFT);
     }
     else
     {
-        keyframeStep = 0;
+        timeStep = 0;
     }
 
     // Update keyframe index 1.
-    newKeyframeIdx1 = model->anim_4.keyframeIdx1_A + keyframeStep;
+    newKeyframeIdx1 = model->anim_4.keyframeIdx1_A + timeStep;
     model->anim_4.keyframeIdx1_A = newKeyframeIdx1;
 
     // Sine-based easing?
-    sinValue = shRsin((newKeyframeIdx1 / 2) - (SIN_LUT_SIZE / 4));
-    alpha = (sinValue / 2) + (SIN_LUT_SIZE / 2);
+    sinValue = shRsin((newKeyframeIdx1 / 2) - FP_ALPHA(0.25f));
+    alpha = (sinValue / 2) + FP_ALPHA(0.5f);
 
     // Clamp new time to keyframe 0 or 1.
-    if (alpha >= (SIN_LUT_SIZE / 2))
+    if (alpha >= FP_ALPHA(0.5f))
     {
         newTime = FP_TO(keyframeIdx0, Q12_SHIFT);
     }
@@ -487,14 +539,14 @@ void func_80044DF0(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Mod
     model->anim_4.keyframeIdx0_8 = FP_FROM(newTime, Q12_SHIFT);
 }
 
-void func_80044F14(s32 mtx, s16 z, s16 x, s16 y) // 0x80044F14
+void func_80044F14(s32 mat, s16 z, s16 x, s16 y) // 0x80044F14
 {
     *(s16*)0x1F800004 = z;
     *(s16*)0x1F800002 = y;
     *(s16*)0x1F800000 = x;
     
     func_80096E78((SVECTOR*)0x1F800000, (MATRIX*)0x1F800008);
-    MulMatrix(mtx + 4, (MATRIX*)0x1F800008);
+    MulMatrix(mat + 4, (MATRIX*)0x1F800008);
 }
 
 s8 func_80044F6C(s8* ptr, s32 arg1) // 0x80044F6C
@@ -757,8 +809,12 @@ void Sd_StopSeq()
     func_80046B78();
     SdSeqClose(D_800C37C8);
     
-    D_800C1670 = 2;
+    D_800C1670.field_0 = 2;
 }
+
+// ========================================
+// CD
+// ========================================
 
 void func_800483D4() // 0x800483D4
 {
@@ -766,7 +822,7 @@ void func_800483D4() // 0x800483D4
 
     if (!(func_80048954(2, CdIntToPos(D_800C37D8->field_8, &sp10), 0) & 0xFF))
     {
-        D_800C1670 = 3;
+        D_800C1670.field_0 = 3;
     }
 }
 
@@ -776,7 +832,7 @@ void func_80048424() // 0x80048424
     {
         CdRead((D_800C37D8->field_4 + 0x7FF) >> 11, FS_BUFFER_1, 0x80);
         
-        D_800C1670 = 4;
+        D_800C1670.field_0 = 4;
         D_800C1658 = 0;
     }
     
