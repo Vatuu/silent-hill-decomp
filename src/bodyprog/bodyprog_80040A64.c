@@ -266,7 +266,32 @@ s32 func_80043D64(s32 arg0) // 0x80043D64
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80043DA4);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80043E50);
+void func_80043E50(s_80043E50* arg0, s32* arg1, s32 arg2) // 0x80043E50
+{
+    s32 i;
+    s32 j;
+    s_80043E50Sub* element;
+
+    for (i = 0; i < arg0->elementCount_8; i++)
+    {
+        element = &arg0->elements_14[i];
+        if (element->field_0 == 0)
+        {
+            element->field_C = func_80043F2C(&element->field_4, arg0->field_4);
+        }
+        else
+        {
+            for (j = 0; j < arg2; j++)
+            {
+                element->field_C = func_80043F2C(&element->field_4, arg1[j]);
+                if (element->field_C != 0)
+                {
+                    break;
+                }
+            }
+        }
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80043F2C);
 
