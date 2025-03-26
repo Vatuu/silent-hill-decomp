@@ -318,7 +318,19 @@ s_80043F2C* func_80043F2C(s_80043F2C* arg0, s_80043F2C* arg1) // 0x80043F2C
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80043F88);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80044044);
+void func_80044044(s_80044044* arg0, s32 arg1, s32 arg2) // 0x80044044
+{
+    s32 temp_a3;
+    s32 temp_v0;
+
+    temp_v0 = arg0->field_2;
+    temp_a3 = arg0->field_3;
+    
+    arg0->field_2 = arg1;
+    arg0->field_3 = arg2;
+    arg0->field_54 = (arg0->field_54 + ((arg1 - temp_v0) * 0x2800));
+    arg0->field_58 = (arg0->field_58 + ((arg2 - temp_a3) * 0x2800));
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80044090);
 
@@ -543,7 +555,7 @@ void func_80044DF0(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Mod
     keyframeIdx0 = targetModel->anim_4.keyframeIdx0_8;
     keyframeIdx1 = targetModel->anim_4.keyframeIdx1_A;
 
-    // Compute time step. NOTE: Can't call `Anim_GetTimeStep` due to register constraints.
+    // Compute time step. NOTE: Can't call `Anim_GetTimeStep` inline due to register constraints.
     if (model->anim_4.flags_2 & AnimFlag_Unk1)
     {
         timeDelta = func_800449AC(model, targetModel);
@@ -554,7 +566,7 @@ void func_80044DF0(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Mod
         timeStep = 0;
     }
 
-    // Update keyframe index 1.
+    // Update keyframe 1.
     newKeyframeIdx1 = model->anim_4.keyframeIdx1_A + timeStep;
     model->anim_4.keyframeIdx1_A = newKeyframeIdx1;
 

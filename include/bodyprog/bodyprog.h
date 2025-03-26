@@ -43,39 +43,19 @@ typedef struct
 
 typedef struct
 {
+    s8  unk_0;
+    s8  field_1;
+    s8  field_2;
+    s8  field_3;
+    s8  unk_4[80];
+    s32 field_54;
+    s32 field_58;
+} s_80044044;
+
+typedef struct
+{
     s16 field_0; // Flags?
 } s_8008D850;
-
-// Maybe a collection of matrices.
-typedef struct
-{
-    s32 flags_0;
-    s8  unk_4[12];
-    s8  field_10;
-    s8  unk_11[7];
-} s_Bone;
-STATIC_ASSERT_SIZEOF(s_Bone, 24);
-
-// PROBABLY skeleton data.
-typedef struct
-{
-    u8      boneCount_0;
-    s8      field_1;
-    s8      field_2;
-    s8      field_3;
-    s32     field_4;
-    s_Bone* bones_8;
-
-    // Maybe incorrect.
-    s8      unk_C[3];
-    u8      field_10;
-    s8      unk_11;
-    s8      field_12;
-    s8      field_13;
-    s8      field_14;
-    s8      unk_15[8];
-} s_Skeleton;
-STATIC_ASSERT_SIZEOF(s_Skeleton, 28);
 
 // Likely not skeleton since filed_8 must be `s8`.
 typedef struct
@@ -225,6 +205,37 @@ typedef struct
     s16 field_C;
     s8  unk_10[2];
 } s_MaybeCharacterAnim;
+
+// Maybe a collection of matrices.
+typedef struct
+{
+    s32 flags_0;
+    s8  unk_4[12];
+    s8  field_10;
+    s8  unk_11[7];
+} s_Bone;
+STATIC_ASSERT_SIZEOF(s_Bone, 24);
+
+// PROBABLY skeleton data.
+typedef struct
+{
+    u8      boneCount_0;
+    s8      field_1;
+    s8      field_2;
+    s8      field_3;
+    s32     field_4;
+    s_Bone* bones_8;
+
+    // Maybe incorrect.
+    s8      unk_C[3];
+    u8      field_10;
+    s8      unk_11;
+    s8      field_12;
+    s8      field_13;
+    s8      field_14;
+    s8      unk_15[8];
+} s_Skeleton;
+STATIC_ASSERT_SIZEOF(s_Skeleton, 28);
 
 extern s8* D_8002510C;
 
@@ -584,6 +595,8 @@ void func_80043E50(s_80043E50* arg0, s32* arg1, s32 arg2);
 
 /** TODO: Maybe doesn't operate on a linked list. Need more context from other functions before committing to this. */
 s_80043F2C* func_80043F2C(s_80043F2C* arg0, s_80043F2C* arg1);
+
+void func_80044044(s_80044044* arg0, s32 arg1, s32 arg2);
 
 /** Updates a model's animation, variant 1. */
 void Anim_Update(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Model* targetModel);
