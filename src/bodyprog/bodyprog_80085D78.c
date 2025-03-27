@@ -217,7 +217,84 @@ block_32:
     }
 }
 
+// TODO: Something with a jump table, don't know how to get it working. -- Sezz 2025.03.28
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800862F8);
+/*void func_800862F8(s32 arg0, s32 arg1, s32 arg2) // 0x800862F8
+{
+    s32 switchVar;
+
+    if (arg0 == 7)
+    {
+        switchVar = g_SysWork.field_14;
+    }
+    else
+    {
+        switchVar = arg0;
+        if (switchVar == 8)
+        {
+            switchVar = 1;
+            if (g_SysWork.field_14 == 0)
+            {
+                switchVar = 4;
+            }
+        }
+    }
+    
+    switch (switchVar)
+    {
+        case 0:
+            Fs_QueueStartReadTim(arg1, FS_BUFFER_1, &D_800A902C);
+            
+            if (arg0 != 0)
+            {
+                g_SysWork.field_14++;
+                
+                if (Fs_QueueDoThingWhenEmpty() != 0)
+                {
+                    func_80085D78(arg2);
+                }
+            }
+            break;
+
+        case 1:
+            if (Fs_QueueDoThingWhenEmpty() != 0)
+            {
+                func_80085D78(arg2);
+            }
+            break;
+        
+        case 2:
+            func_80031AAC(&D_800A902C);
+            break;
+            
+        case 3:
+            DrawSync(0);
+            StoreImage(&D_8002AB10, IMAGE_BUFFER_2);
+            DrawSync(0);
+            break;
+            
+        case 4:
+            Fs_QueueStartReadTim(arg1, FS_BUFFER_1, &D_800A9A04);
+            
+            if (arg0 == 8)
+            {
+                g_SysWork.field_14 = 1;
+            }
+            break;
+            
+        case 5:
+            func_80031AAC(&D_800A9A04);
+            break;
+            
+        case 6:
+            LoadImage(&D_8002AB10, IMAGE_BUFFER_2);
+            DrawSync(0);
+            break;
+
+        default:
+            break;
+    }
+}*/
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80086470);
 
@@ -229,7 +306,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80086728);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008677C);
 
-void func_800867B4(s32 caseParam, s32 idx)
+void func_800867B4(s32 caseParam, s32 idx) // 0x800867B4
 {
     switch (caseParam)
     {
@@ -531,11 +608,11 @@ void func_80086E50(s32 arg0, s32 arg1, s32 arg2)
     }
 }
 
-void func_80086F44(s32 arg0, s32 arg1)
+void func_80086F44(s32 arg0, s32 arg1) // 0x80086F44
 {
     if (g_SysWork.field_10 == 0)
     {
-        func_800862F8(2, 0, 0, arg0);
+        func_800862F8(2, 0, 0);
         func_8008616C(2, 1, 0, arg1, 1);
         return;
     }
