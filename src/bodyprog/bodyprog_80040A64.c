@@ -885,7 +885,33 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80047DB0);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80047E3C);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80047F18);
+void func_80047F18() // 0x80047F18
+{
+    s32 var_a1;
+    u16 temp_a1;
+    s32* ptr;
+
+    if (D_800C37D4->field_4 <= 0xC7FFu)
+    {
+        var_a1 = SdVabTransBody(D_800C37D4->field_2 + CD_ADDR_0, D_800C37C8);
+        ptr = &D_800C37D4->field_4;
+
+        D_800C37CC = *ptr;
+        D_800C1670.field_0 = 9;
+    }
+    else
+    {
+        var_a1 = SdVabTransBodyPartly(D_800C37D4->field_2 + CD_ADDR_0, 0xC800 - D_800C37D4->field_2, D_800C37C8);
+        D_800C37CC = 0xC800;
+        D_800C1670.field_0 = 6;
+    }
+    
+    if (var_a1 == NO_VALUE && D_800C37D0 < 16)
+    {
+        D_800C37D0++;
+        D_800C1670.field_0 = 1;
+    }
+}
 
 void func_80048000() // 0x80048000
 {

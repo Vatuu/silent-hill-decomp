@@ -10,6 +10,8 @@
 #define IMAGE_BUFFER_1 (u_long*)0x801C8200
 #define IMAGE_BUFFER_2 (u_long*)0x801ABE00
 
+#define CD_ADDR_0 0x801E2600
+
 #define OPT_SOUND_VOLUME_MAX  128
 #define OPT_VIBRATION_ENABLED 128
 
@@ -368,6 +370,8 @@ extern s_800C1020 D_800C1020;
 
 extern s_800C117C D_800C117C[];
 
+extern u8 D_800C37D0;
+
 extern s_800C37D8* D_800C37D8;
 
 extern s32 D_800C4710[];
@@ -667,6 +671,8 @@ s16 Sd_GetVolSe(s16 arg0);
 void Sd_SetReverbDepth(s8 depth);
 
 void Sd_SetReverbEnable(s32 mode);
+
+void func_80047F18();
 
 void func_80048000();
 
