@@ -168,6 +168,13 @@ typedef struct
 
 typedef struct
 {
+    u16 field_0;
+    s8  unk_2[19];
+    s8  field_15;
+} s_800C1658;
+
+typedef struct
+{
     u8 field_0;
     s8 field_1;
     s8 field_2;
@@ -401,7 +408,7 @@ extern s8 D_800C15B4;
 
 extern s16 D_800C15F8[];
 
-extern u16 D_800C1658;
+extern s_800C1658 D_800C1658;
 
 extern s_800C1670 D_800C1670;
 
@@ -675,6 +682,8 @@ void Sd_SetReverbEnable(s32 mode);
 void func_80047F18();
 
 void func_80048000();
+
+void func_800481F8();
 
 void Sd_StopSeq();
 

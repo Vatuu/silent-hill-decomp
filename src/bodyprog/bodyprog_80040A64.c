@@ -885,6 +885,10 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80047DB0);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80047E3C);
 
+// ========================================
+// CD
+// ========================================
+
 void func_80047F18() // 0x80047F18
 {
     s32 var_a1;
@@ -935,7 +939,18 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_8004807C);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800480FC);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800481F8);
+void func_800481F8() // 0x800481F8
+{
+    if (SdVabTransCompleted(0) != 1)
+    {
+        return;
+    }
+
+    D_800C1670.field_0 = 0;
+    D_800C1658.field_0 = 0;
+    D_800C1658.field_15 = 0;
+    func_80047A70();
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80048244);
 
@@ -949,15 +964,11 @@ void Sd_StopSeq()
     D_800C1670.field_0 = 2;
 }
 
-// ========================================
-// CD
-// ========================================
-
 void func_800483D4() // 0x800483D4
 {
-    s32 sp10;
+    CdlLOC* cdLoc;
 
-    if (!(func_80048954(2, CdIntToPos(D_800C37D8->field_8, &sp10), 0) & 0xFF))
+    if (!(func_80048954(2, CdIntToPos(D_800C37D8->field_8, &cdLoc), 0) & 0xFF))
     {
         D_800C1670.field_0 = 3;
     }
@@ -970,10 +981,10 @@ void func_80048424() // 0x80048424
         CdRead((D_800C37D8->field_4 + 0x7FF) >> 11, FS_BUFFER_1, 0x80);
         
         D_800C1670.field_0 = 4;
-        D_800C1658 = 0;
+        D_800C1658.field_0  = 0;
     }
     
-    D_800C1658++;
+    D_800C1658.field_0 ++;
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80048498);
@@ -996,12 +1007,12 @@ s32 func_80048954(s32 com, u8* param, u8* res) // 0x80048954
 
     if (CdSync(1, &syncRes) == 2 && CdControl(comCopy, param, res) != 0)
     {
-        D_800C1658 = 0;
+        D_800C1658.field_0  = 0;
         return 0;
     }
     
-    D_800C1658++;
-    if ((D_800C1658 & ~(1 << 16)) >= 0x259)
+    D_800C1658.field_0 ++;
+    if ((D_800C1658.field_0  & ~(1 << 16)) >= 0x259)
     {
         CdReset(0);
         CdControlB(1, 0, 0);
@@ -1015,7 +1026,7 @@ s32 func_80048954(s32 com, u8* param, u8* res) // 0x80048954
         D_800C1670.field_1 = 0;
         D_800C1670.field_2 = 0;
         D_800C1670.field_3 = 0;
-        D_800C1658 = 0;
+        D_800C1658.field_0  = 0;
     }
     
     return 1;
