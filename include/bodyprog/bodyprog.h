@@ -180,6 +180,14 @@ STATIC_ASSERT_SIZEOF(s_800C117C, 28);
 
 typedef struct
 {
+    s8  unk_0[2];
+    u16 field_2;
+    s32 field_4;
+    s32 field_8;
+} s_800C37D4;
+// Maybe the same.
+typedef struct
+{
     s8  unk_0[4];
     u32 field_4;
     s32 field_8;
@@ -404,6 +412,10 @@ extern s8 g_Sd_ReverbDepth; // 0x800C1687;
 extern s_800BE9FC D_800BE9FC;
 
 extern u8 D_800C37C8;
+
+extern u32 D_800C37CC;
+
+extern s_800C37D4* D_800C37D4;
 
 extern s16 D_800C38A8;
 
@@ -655,6 +667,8 @@ s16 Sd_GetVolSe(s16 arg0);
 void Sd_SetReverbDepth(s8 depth);
 
 void Sd_SetReverbEnable(s32 mode);
+
+void func_80048000();
 
 void Sd_StopSeq();
 

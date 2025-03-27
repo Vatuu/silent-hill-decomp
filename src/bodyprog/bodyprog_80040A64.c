@@ -1,5 +1,7 @@
 #include "game.h"
 
+#include <libcd.h>
+
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/libsd.h"
 #include "bodyprog/math.h"
@@ -885,7 +887,23 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80047E3C);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80047F18);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80048000);
+void func_80048000() // 0x80048000
+{
+    s32 i;
+    CdlLOC* cdLocArg;
+    CdlLOC* cdLocRes;
+
+    if (SdVabTransCompleted(0) == 1)
+    {
+        i = D_800C37D4->field_8 + ((D_800C37CC + 0x7FF) >> 11);
+        cdLocRes = CdIntToPos(i, &cdLocArg);
+
+        if (!(func_80048954(2, cdLocRes, 0) & 0xFF))
+        {
+            D_800C1670.field_0 = 7;
+        }
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_8004807C);
 
