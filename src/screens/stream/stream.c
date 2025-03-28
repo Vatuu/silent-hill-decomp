@@ -9,7 +9,7 @@
 #include "screens/stream/stream.h"
 
 // Old IDB name: MainLoopState3_StartMovieIntro_801E2654
-void func_801E2654(void)
+void func_801E2654()
 {
     switch (g_GameWork.gameStateStep_598[0])
     {
@@ -42,7 +42,7 @@ void func_801E2654(void)
 }
 
 // Old IDB name: MainLoopState6_Movie_PlayIntro_801E279C
-void func_801E279C(void)
+void func_801E279C()
 {
     s32 fileIdx = FILE_XA_C1_20670;
 
@@ -58,23 +58,26 @@ void func_801E279C(void)
 }
 
 // Old IDB name: MainLoopState9_Movie_PlayOpening_801E2838
-void func_801E2838(void)
+void func_801E2838()
 {
     open_main(FILE_XA_M1_03500, 0);
     Game_StateSetNext(GameState_LoadScreen);
 }
 
 // Old IDB name: MainLoopStateD_ReturnToGame_801E28B0
-void func_801E28B0(void)
+void func_801E28B0()
 {
     Game_StateSetNext(GameState_InGame);
 }
 
 // Old IDB name: MainLoopState11_Movie_PlayEnding_801E2908
-void func_801E2908(void)
+void func_801E2908()
 {
-    s_GameWork*       gameWork   = g_GameWorkPtr1;
-    s_ControllerData* controller = g_ControllerPtr0;
+    s_GameWork*       gameWork;
+    s_ControllerData* controller;
+
+    gameWork   = g_GameWorkPtr1;
+    controller = g_ControllerPtr0;
 
     if (controller->btns_new_10 & gameWork->controllerBinds_0.cancel)
     {
@@ -158,7 +161,7 @@ void movie_main(char* file_name, s32 f_size, s32 sector)
     {
         CdIntToPos(sector, &m->loc);
 	}
-    
+
     strSetDefDecEnv(&m->dec, 0, 16, 0, 256);
     VSync(0);
     strInit(&m->loc, strCallback);
@@ -168,11 +171,11 @@ void movie_main(char* file_name, s32 f_size, s32 sector)
         loc = file.pos;
         strKickCD(&loc);
     }
-    
+
     SsSetSerialAttr(0, 0, 1);
     SsSetSerialVol(0, 80, 80);
     VSync(0);
-    
+
     prev_frame_no = 0;
     temp_s2 = g_GameWorkPtr0;
 
@@ -205,10 +208,10 @@ void movie_main(char* file_name, s32 f_size, s32 sector)
             }
             strKickCD(&loc);
         }
-        
+
         if (frame_cnt >= max_frame)
             break;
-        
+
         if (prev_frame_no > frame_cnt)
             break;
         
