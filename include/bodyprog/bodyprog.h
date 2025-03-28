@@ -787,6 +787,8 @@ void func_800892A4(s32 idx);
 
 void func_800892DC(s32 idx, s32 arg1);
 
+void func_8008944C();
+
 s32 func_8008D850();
 
 void func_8008E4EC();
