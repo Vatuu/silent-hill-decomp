@@ -19,7 +19,8 @@ typedef struct
 {
     s8 unk_0[16];
 } s_8002AC04;
-
+STATIC_ASSERT_SIZEOF(s_8002AC04, 16);
+// Maybe same.
 typedef struct
 {
     s32 field_0;
@@ -28,7 +29,7 @@ typedef struct
     struct s_80043F2C* field_C;
 } s_80043F2C;
 STATIC_ASSERT_SIZEOF(s_80043F2C, 16);
-
+// Maybe same.
 typedef struct
 {
     u8  field_0;
@@ -782,7 +783,9 @@ s32 func_8008F434(s32 arg0);
 
 void func_800890B8();
 
-void func_800892A4(s32 arg0);
+void func_800892A4(s32 idx);
+
+void func_800892DC(s32 idx, s32 arg1);
 
 s32 func_8008D850();
 

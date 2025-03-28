@@ -1104,7 +1104,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80089090);
 void func_800890B8() // 0x800890B8
 {
     func_8009E198(&g_SysWork.field_2514[0], 0);
-    func_8009E310(&g_SysWork.field_2514[0], &g_SysWork.field_2514[8] , 2);
+    func_8009E310(&g_SysWork.field_2514[0], &g_SysWork.field_2514[8], 2);
     func_8009EBB8(&g_SysWork.field_2514[0], &g_SysWork.field_2514[12], 16);
 
     g_SysWork.field_2510 = func_8009E4F8();
@@ -1115,12 +1115,15 @@ void func_800890B8() // 0x800890B8
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80089128);
 
-void func_800892A4(s32 arg0) // 0x800892A4
+void func_800892A4(s32 idx) // 0x800892A4
 {
-    func_800895E4(g_SysWork.field_2514, &D_8002AC04[arg0], 0x80);
+    func_800895E4(g_SysWork.field_2514, &D_8002AC04[idx], 0x80);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800892DC);
+void func_800892DC(s32 idx, s32 arg1) // 0x800892DC
+{
+    func_800895E4(g_SysWork.field_2514, &D_8002AC04[idx], arg1 & 0xFF, idx * sizeof(s_8002AC04));
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80089314);
 
