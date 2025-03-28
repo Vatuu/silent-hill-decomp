@@ -36,10 +36,10 @@ s32 func_80041ADC(s32 queueIdx) // 80041ADC
 {
     if (queueIdx == NO_VALUE)
         return 0;
-    
+
     if (Fs_QueueIsEntryLoaded(queueIdx) == 0)
         return 1;
-    
+
     return 2;
 }
 
@@ -51,12 +51,12 @@ void func_80041C24(s_80041CEC* arg0, s32 arg1, s32 arg2) // 0x80041C24
 {
     bzero(&D_800C1020, 1420);
     func_80041CB4((void*)((char*)&D_800C1020 + 312), arg0);
-    
+
     D_800C1020.field_150 = arg1;
     D_800C1020.field_154 = arg2;
     D_800C1020.field_158 = 0;
     D_800C1020.field_588 = 1;
-    
+
     func_80041D10((void*)((char*)&D_800C1020 + 348), 4);
     func_80041D48();
     func_80041E98();
@@ -68,7 +68,7 @@ void func_80041CB4(s_Skeleton* skel, s_80041CEC* arg1) // 0x80041CB4
 {
     skel->boneCount_0 = arg1;
     func_80041CEC(arg1);
-    
+
     skel->bones_8 = NULL;
     skel->field_4 = NO_VALUE;
 }
@@ -159,7 +159,7 @@ s32 func_80042DE8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x80042DE
             res = 0;
         }
     }
-    
+
     return res;
 }
 
@@ -191,11 +191,11 @@ s32 func_800436D8(s_80043338* arg0, s32 arg1, s16 arg2, s16 arg3, s32 arg4, s32 
     {
         return arg1;
     }
-    
+
     arg0->field_8 = arg2;
     arg0->field_A = arg3;
     arg0->field_4 = Fs_QueueStartRead(arg1, arg0->field_0);
-    
+
     func_80043338(arg0, arg4, arg5, arg6, arg7, arg8);
     var_v0 = arg0->field_4;
     return var_v0;
@@ -217,7 +217,7 @@ s32 func_80043B70(s_80043B70* arg0) // 0x80043B70
     {
         return 0;
     }
-    
+
     return func_80056888(arg0->field_4);
 }
 
@@ -227,7 +227,7 @@ s_80043BA4* func_80043BA4(s_80043BA4* arg0) // 0x80043BA4
     {
         return arg0 + 42;
     }
-    
+
     return NULL;
 }
 
@@ -237,9 +237,9 @@ void func_80043BC4(s_80043B70* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32
     {
         return;
     }
-    
+
     arg0->field_1 = 1;
-    
+
     func_80043DA4();
     func_8006993C(arg0 + 3); // TODO: Pointer?
     func_800560FC(arg0->field_4);
@@ -256,12 +256,12 @@ void func_80043C7C(s_80043B70* arg0, s32 arg1, s32* arg2, s32 arg3) // 0x80043C7
     {
         return;
     }
-    
+
     if (arg1 != 0)
     {
         func_80056774(arg0->field_4, arg1, &func_80043D44, arg3, 1);
     }
-    
+
     if (arg2 != NULL)
     {
         func_80056774(arg0->field_4, arg2, &func_80043D64, arg3, 1);
@@ -274,7 +274,7 @@ s32 func_80043D00(s_80043B70* arg0) // 0x80043D00
     {
         return 0;
     }
-    
+
     return func_80056348(&func_80043D64, arg0->field_4);
 }
 
@@ -338,7 +338,7 @@ s_80043F2C* func_80043F2C(s_80043F2C* arg0, s_80043F2C* arg1) // 0x80043F2C
 
     size = arg1->field_8;
     var_a1 = arg1->field_C;
-    
+
     for (i = 0; i < size; i++)
     {
         if (arg0->field_0 == var_a1->field_0 &&
@@ -346,10 +346,10 @@ s_80043F2C* func_80043F2C(s_80043F2C* arg0, s_80043F2C* arg1) // 0x80043F2C
         {
             return var_a1;
         }
-        
+
         var_a1++;
     }
-    
+
     return NULL;
 }
 
@@ -362,7 +362,7 @@ void func_80044044(s_80044044* arg0, s32 arg1, s32 arg2) // 0x80044044
 
     temp_v0 = arg0->field_2;
     temp_a3 = arg0->field_3;
-    
+
     arg0->field_2 = arg1;
     arg0->field_3 = arg2;
     arg0->field_54 = (arg0->field_54 + ((arg1 - temp_v0) * 0x2800));
@@ -391,13 +391,13 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800449AC);
 static inline s32 Anim_GetTimeStep(s_Model* model, s_Model* targetModel)
 {
     s32 timeDelta;
-    
+
     if (model->anim_4.flags_2 & AnimFlag_Unk1)
     {
         timeDelta = func_800449AC(model, targetModel);
         return FP_MULTIPLY((s64)timeDelta, (s64)g_DeltaTime0, Q12_SHIFT);
     }
-    
+
     return 0;
 }
 
@@ -414,7 +414,7 @@ void Anim_Update(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Model
 
     // Get time step.
     timeStep = Anim_GetTimeStep(model, targetModel);
-    
+
     // Compute new time.
     newTime = model->anim_4.time_4;
     newKeyframeIdx0 = FP_FROM(newTime, Q12_SHIFT);
@@ -474,7 +474,7 @@ void func_80044B38(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Mod
     s32 newKeyframeIdx0;
     s32 newKeyframeIdx1;
     s32 alpha;
-    
+
     keyframeIdx0 = targetModel->anim_4.keyframeIdx0_8;
     keyframeIdx1 = targetModel->anim_4.keyframeIdx1_A;
     nextKeyframeIdx = keyframeIdx1 + 1;
@@ -652,7 +652,7 @@ s8 func_80044F6C(s8* ptr, s32 arg1) // 0x80044F6C
     {
         D_800C15B0 = ptr;
     }
-    
+
     if (D_800C15B0[0] != -3)
     {
         D_800C15B4 = D_800C15B0[0];
@@ -673,7 +673,7 @@ void func_80044FE0(s_Skeleton* skel, s_Bone* bones, u8 boneCount) // 0x80044FE0
     skel->field_1 = 0;
     skel->field_2 = 1;
     skel->field_4 = 0;
-    
+
     func_80045014(skel);
 }
 
@@ -717,7 +717,7 @@ void func_800453E8(s_Skeleton* skel, s32 cond) // 0x800453E8
     {
         return;
     }
-    
+
     // Traverse bone hierarchy and set flags according to cond.
     while (bone < &skel->bones_8[skel->boneCount_0])
     {
@@ -740,14 +740,14 @@ void func_80045468(s_Skeleton* skel, s32* arg1, s32 cond) // 0x80045468
     s32 status;
 
     bone = skel->bones_8;
-    
+
     // Get skeleton status?
     status = func_80044F6C(arg1, 1);
     if (status == -2)
     {
         return;
     }
-    
+
     // Traverse bone hierarchy and set flags according to cond.
     do
     {
@@ -863,7 +863,7 @@ void Sd_SetReverbDepth(s8 depth)
     s32 left;
 
     g_Sd_ReverbDepth = depth;
-    
+
     left = depth & 0xFF;
     SdUtSetReverbDepth(left, left);
 }
@@ -960,7 +960,7 @@ void Sd_StopSeq()
 {
     func_80046B78();
     SdSeqClose(D_800C37C8);
-    
+
     D_800C1670.field_0 = 2;
 }
 
@@ -983,7 +983,7 @@ void func_80048424() // 0x80048424
         D_800C1670.field_0 = 4;
         D_800C1658.field_0  = 0;
     }
-    
+
     D_800C1658.field_0 ++;
 }
 
@@ -1010,7 +1010,7 @@ s32 func_80048954(s32 com, u8* param, u8* res) // 0x80048954
         D_800C1658.field_0  = 0;
         return 0;
     }
-    
+
     D_800C1658.field_0 ++;
     if ((D_800C1658.field_0  & ~(1 << 16)) >= 0x259)
     {
@@ -1028,6 +1028,6 @@ s32 func_80048954(s32 com, u8* param, u8* res) // 0x80048954
         D_800C1670.field_3 = 0;
         D_800C1658.field_0  = 0;
     }
-    
+
     return 1;
 }

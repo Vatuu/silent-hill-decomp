@@ -518,16 +518,16 @@ void func_80086C58(s32 arg0, s32 arg1)
     {
         case 0:
             func_80085EB8(0, arg0, arg1, 0);
-            
+
             g_SysWork.field_2C = 0;
             g_SysWork.field_14 = 0;
             g_SysWork.field_10++;
             break;
-        
+
         case 1:
             func_80085EB8(1, arg0, 0, 1);
             break;
-        
+
         default:
             g_SysWork.field_28 = 0;
             g_SysWork.field_10 = 0;
@@ -549,11 +549,11 @@ void func_80086D04(s32 arg0)
             g_SysWork.field_14 = 0;
             g_SysWork.field_10++;
             break;
-        
+
         case 1:
             func_80085EB8(1, arg0, 0, 1);
             break;
-        
+
         default:
             g_SysWork.field_28 = 0;
             g_SysWork.field_10 = 0;
@@ -573,11 +573,11 @@ void func_80086DA8(s32 arg0, s32 arg1)
             g_SysWork.field_2C = 0;
             g_SysWork.field_14 = 0;
             g_SysWork.field_10++;
-        
+
         case 1:
             func_800862F8(7, arg0, 1);
             break;
-        
+
         default:
             func_8008616C(1, 1, 0, 0, 0);
             break;
@@ -616,7 +616,7 @@ void func_80086F44(s32 arg0, s32 arg1) // 0x80086F44
         func_8008616C(2, 1, 0, arg1, 1);
         return;
     }
-    
+
     func_8008616C(0, 0, 0, arg0, 0);
     g_SysWork.field_28 = 0;
     g_SysWork.field_10 = 0;
@@ -643,13 +643,13 @@ void func_80086FE8(s32 arg0, s32 arg1, s32 arg2) // 0x80086FE8
 
             break;
         }
-        
+
         if (i != NPC_COUNT_MAX)
         {
             g_DeltaTime0 = 0;
         }
     }
-    
+
     switch (g_SysWork.field_10)
     {
         case 0:
@@ -659,7 +659,7 @@ void func_80086FE8(s32 arg0, s32 arg1, s32 arg2) // 0x80086FE8
             g_SysWork.field_2C = 0;
             g_SysWork.field_14 = 0;
             g_SysWork.field_10++;
-        
+
         case 1:
             func_80085E6C(0x333, 1);
             break;
@@ -667,10 +667,10 @@ void func_80086FE8(s32 arg0, s32 arg1, s32 arg2) // 0x80086FE8
         case 2:
             func_800860B0(0, arg0, 0, 0, 0, 1);
             break;
-        
+
         default:
             D_800C9648(0);
-            
+
             g_SysWork.sysState_8 = 0;
             g_SysWork.field_24 = 0;
             g_SysWork.sysStateStep_C = 0;
@@ -696,22 +696,22 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008716C);
             g_SysWork.field_2C = 0;
             g_SysWork.field_14 = 0;
             g_SysWork.field_10++;
-            
+
         case 1:
             func_800862F8(7, arg0, 1);
             break;
-            
+
         case 2:
             func_8008616C(1, 1, 0, 0, 1);
             break;
-            
+
         case 3:
             func_800862F8(2, 0, 0);
-            
+
             var = 0;
             func_8008616C(2, var, 0, arg2, 1);
             break;
-            
+
         case 4:
             func_800862F8(2, 0, 0);
             if (g_ControllerPtr0->btns_new_10 & (g_GameWorkPtr1->controllerBinds_0.enter | g_GameWorkPtr1->controllerBinds_0.cancel))
@@ -721,18 +721,18 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008716C);
                 g_SysWork.field_10++;
             }
             break;
-            
+
         case 5:
             func_800862F8(2, 0, 0);
-            
+
             var = 1;
             func_8008616C(2, var, 0, arg2, 1);
             break;
-            
+
         default:
             func_8008616C(0, 0, 0, arg1, 0);
             D_800C9648(0);
-            
+
             g_SysWork.sysState_8 = 0;
             g_SysWork.field_24 = 0;
             g_SysWork.sysStateStep_C = 0;
@@ -755,26 +755,26 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80087360);
         case 0:
             D_800C9644();
             func_8008616C(0, 1, 0, arg1, 0);
-            
+
             g_SysWork.field_2C = 0;
             g_SysWork.field_14 = 0;
             g_SysWork.field_10++;
-        
+
         case 1:
             func_800862F8(7, arg0, 1);
             break;
-        
+
         case 2:
             func_8008616C(1, 1, 0, 0, 1);
             break;
-        
+
         case 3:
             func_800862F8(2, 0, 0);
-            
+
             var = 0;
             func_8008616C(2, var, 0, arg2,1);
             break;
-        
+
         case 4:
             func_800862F8(2, 0, 0);
             func_800860B0(0, arg3, 0, 0, 0, 1);
@@ -782,15 +782,15 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80087360);
         
         case 5:
             func_800862F8(2, 0, 0);
-            
+
             var = 1;
             func_8008616C(2, var, 0, arg2, 1);
             break;
-        
+
         default:
             func_8008616C(0, 0, 0, arg1, 0);
             D_800C9648(0);
-            
+
             g_SysWork.sysState_8 = 0;
             g_SysWork.field_24 = 0;
             g_SysWork.sysStateStep_C = 0;
@@ -813,24 +813,24 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80087540);
         case 0:
             D_800C9644();
             func_8008616C(0, 1, 0, arg1, 0);
-            
+
             g_SysWork.field_2C = 0;
             g_SysWork.field_14 = 0;
             g_SysWork.field_10++;
-        
+
         case 1:
             func_800862F8(7, arg0, 1);
             break;
-        
+
         case 2:
             func_8008616C(1, 1, 0, 0, 1);
             break;
-        
+
         case 3:
             func_800862F8(2, 0, 0);
             func_8008616C(2, 0, 0, arg2, 1);
             break;
-        
+
         case 4:
             func_800862F8(2, 0, 0);
             
@@ -840,7 +840,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80087540);
                 func_800860B0(0, var, 0, 0, 0, 1);
                 break;
             }
-            
+
             if (g_ControllerPtr0->btns_new_10 & (g_GameWorkPtr1->controllerBinds_0.enter | g_GameWorkPtr1->controllerBinds_0.cancel))
             {
                 g_SysWork.field_2C = 0;
@@ -848,26 +848,26 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80087540);
                 g_SysWork.field_10++;
             }
             break;
-        
+
         case 5:
             D_800A8E58 = 0x30;
             func_800862F8(2, 0, 0);
-            
+
             var = arg4;
             func_800860B0(0, var, 0, 0, 0, 1);
             break;
-        
+
         case 6:
             D_800A8E58 = 0x30;
-            
+
             func_800862F8(2, 0, 0);
             func_8008616C(2, 1, 0, arg2, 1);
             break;
-        
+
         default:
             func_8008616C(0, 0, 0, arg1, 0);
             D_800C9648(0);
-            
+
             g_SysWork.sysState_8 = 0;
             g_SysWork.field_24 = 0;
             g_SysWork.sysStateStep_C = 0;
@@ -899,10 +899,10 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800879FC);
         {
             var4 = newBulletAdjust;
         }
-        
+
         newBulletAdjust = var4;
     }
-    
+
     switch (arg0)
     {
         case 0:
@@ -911,36 +911,36 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800879FC);
             var2 = 5;
             func_800877B8(var0, var1, arg1, var2);
             break;
-        
+
         case 1:
             var0 = 32;
             var1 = 1;
             var2 = 6;
             func_800877B8(var0, var1, arg1, var2);
             break;
-        
+
         case 2:
             var0 = 34;
             var1 = 1;
             var2 = 7;
-            
+
             func_800877B8(var0, var1, arg1, var2);
             break;
-        
+
         case 3:
             var0 = 192;
             var1 = newBulletAdjust * 15;
             var2 = 8;
             func_800877B8(var0, var1, arg1, var2);
             break;
-        
+
         case 5:
             var0 = 194;
             var1 = newBulletAdjust * 6;
             var2 = 10;
             func_800877B8(var0, var1, arg1, var2);
             break;
-        
+
         case 4:
             var0 = 193;
             var1 = newBulletAdjust * 6;
@@ -1036,7 +1036,7 @@ void func_80088048(void)
     {
         return;
     }
-    
+
     switch (g_SysWork.field_10)
     {
         case 0:
@@ -1047,7 +1047,7 @@ void func_80088048(void)
             g_SysWork.field_14 = 0;
             g_SysWork.field_10++;
             break;
-            
+
         case 1:
             if (!(func_80045BC8() & 0xFFFF))
             {
@@ -1107,9 +1107,9 @@ void func_800890B8()
     func_8009E198(&g_SysWork.field_2514[0], 0);
     func_8009E310(&g_SysWork.field_2514[0], &g_SysWork.field_2514[8] , 2);
     func_8009EBB8(&g_SysWork.field_2514[0], &g_SysWork.field_2514[12], 16);
-    
+
     g_SysWork.field_2510 = func_8009E4F8();
-    
+
     func_8009E7D8(g_SysWork.field_2510);
     func_8009E97C(g_SysWork.field_2510);
 }
@@ -1256,13 +1256,14 @@ void func_8008D78C()
     {
         return;
     }
+
     D_800C4818.field_2 = 0;
-    
+
     if (D_800C4818.field_0 != 0)
     {
         return;
     }
-    
+
     var_s1 = func_8008D850();
     if (var_s1 != 0)
     {
@@ -1272,15 +1273,15 @@ void func_8008D78C()
     {
         var_v1 = -D_800C4818.field_A;
     }
-    
+
     D_800C4818.field_A += var_v1 >> 1;
-    
+
     if (vcRetCamMvSmoothF() == 0)
     {
         D_800C4818.field_A = 0;
         var_s1 = 0;
     }
-    
+
     func_8008D990(var_s1, D_800C4818.field_A, &D_800C4818.field_C, D_800C4818.field_1C, D_800C4818.field_20);
 }
 
@@ -1359,10 +1360,10 @@ void Demo_Start() // 0x8008F398
 {
     D_800AFDEC = 1;
     g_SysWork.flags_22A4 |= 2;
-    
+
     Demo_GameGlobalsUpdate();
     Demo_GameRandSeedUpdate();
-    
+
     g_GameWork.field_5A8 = 1;
     g_GameWork.field_5AC = 1;
 }
@@ -1371,7 +1372,7 @@ void Demo_Stop() // 0x8008f3f0
 {
     D_800AFDEC = 0;
     g_SysWork.flags_22A4 &= ~(1 << 1);
-    
+
     Demo_GameGlobalsRestore(-3);
     Demo_GameRandSeedRestore();
 }
@@ -1418,10 +1419,10 @@ s32 func_8008F470(s32 caseArg)
         case 14:
         case 15:
             return 1;
-    
+
         case 18:
             return 1;
-    
+
         default:
             break;
     }
@@ -1477,12 +1478,12 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", Demo_JoyUpdate);
 s32 Demo_PresentIntervalUpdate() // 0x8008F87C
 {
     g_Demo_VideoPresentInterval = 1;
-    
+
     if (g_Demo_ControllerPacket == NULL)
     {
         return 0;
     }
-    
+
     g_Demo_VideoPresentInterval = g_Demo_ControllerPacket->field_9;
     return 1;
 }
@@ -1511,7 +1512,7 @@ s32 func_8008F914()
     {
         return func_8004393C();
     }
-    
+
     return 1;
 }
 
