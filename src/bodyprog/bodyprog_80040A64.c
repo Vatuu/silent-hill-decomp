@@ -185,7 +185,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800435E4);
 
 s32 func_800436D8(s_80043338* arg0, s32 arg1, s16 arg2, s16 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8) // 0x800436D8
 {
-    s32 var_v0;
+    s32 res;
 
     if (arg1 == NO_VALUE)
     {
@@ -197,8 +197,8 @@ s32 func_800436D8(s_80043338* arg0, s32 arg1, s16 arg2, s16 arg3, s32 arg4, s32 
     arg0->field_4 = Fs_QueueStartRead(arg1, arg0->field_0);
 
     func_80043338(arg0, arg4, arg5, arg6, arg7, arg8);
-    var_v0 = arg0->field_4;
-    return var_v0;
+    res = arg0->field_4;
+    return res;
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80043740);
@@ -286,15 +286,15 @@ s32 func_80043D44(s32 arg0) // 0x80043D44
 s32 func_80043D64(s32 arg0) // 0x80043D64
 {
     u32 i;
-    u8 v0;
+    u8 var;
 
     i = arg0 + 7;
     for (i = (arg0 + 7); i >= arg0; i--)
     {
-        v0 = *(u8*)i;
-        if (v0 != NULL)
+        var = *(u8*)i;
+        if (var != NULL)
         {
-            return v0 == 0x48;
+            return var == 0x48;
         }
     }
 
@@ -333,21 +333,21 @@ void func_80043E50(s_80043E50* arg0, s32* arg1, s32 arg2) // 0x80043E50
 s_80043F2C* func_80043F2C(s_80043F2C* arg0, s_80043F2C* arg1) // 0x80043F2C
 {
     u8 size;
-    s_80043F2C* var_a1;
+    s_80043F2C* var;
     s32 i;
 
     size = arg1->field_8;
-    var_a1 = arg1->field_C;
+    var = arg1->field_C;
 
     for (i = 0; i < size; i++)
     {
-        if (arg0->field_0 == var_a1->field_0 &&
-            arg0->field_4 == var_a1->field_4)
+        if (arg0->field_0 == var->field_0 &&
+            arg0->field_4 == var->field_4)
         {
-            return var_a1;
+            return var;
         }
 
-        var_a1++;
+        var++;
     }
 
     return NULL;
@@ -357,16 +357,16 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80043F88);
 
 void func_80044044(s_80044044* arg0, s32 arg1, s32 arg2) // 0x80044044
 {
-    s32 temp_a3;
-    s32 temp_v0;
+    s32 var0;
+    s32 var1;
 
-    temp_v0 = arg0->field_2;
-    temp_a3 = arg0->field_3;
+    var0 = arg0->field_2;
+    var1 = arg0->field_3;
 
     arg0->field_2 = arg1;
     arg0->field_3 = arg2;
-    arg0->field_54 = (arg0->field_54 + ((arg1 - temp_v0) * 0x2800));
-    arg0->field_58 = (arg0->field_58 + ((arg2 - temp_a3) * 0x2800));
+    arg0->field_54 = (arg0->field_54 + ((arg1 - var0) * 0x2800));
+    arg0->field_58 = (arg0->field_58 + ((arg2 - var1) * 0x2800));
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80044090);
@@ -891,13 +891,12 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80047E3C);
 
 void func_80047F18() // 0x80047F18
 {
-    s32 var_a1;
-    u16 temp_a1;
+    s32 var;
     s32* ptr;
 
     if (D_800C37D4->field_4 <= 0xC7FFu)
     {
-        var_a1 = SdVabTransBody(D_800C37D4->field_2 + CD_ADDR_0, D_800C37C8);
+        var = SdVabTransBody(D_800C37D4->field_2 + CD_ADDR_0, D_800C37C8);
         ptr = &D_800C37D4->field_4;
 
         D_800C37CC = *ptr;
@@ -905,12 +904,12 @@ void func_80047F18() // 0x80047F18
     }
     else
     {
-        var_a1 = SdVabTransBodyPartly(D_800C37D4->field_2 + CD_ADDR_0, 0xC800 - D_800C37D4->field_2, D_800C37C8);
+        var = SdVabTransBodyPartly(D_800C37D4->field_2 + CD_ADDR_0, 0xC800 - D_800C37D4->field_2, D_800C37C8);
         D_800C37CC = 0xC800;
         D_800C1670.field_0 = 6;
     }
     
-    if (var_a1 == NO_VALUE && D_800C37D0 < 16)
+    if (var == NO_VALUE && D_800C37D0 < 16)
     {
         D_800C37D0++;
         D_800C1670.field_0 = 1;
@@ -1003,7 +1002,9 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800485D8);
 s32 func_80048954(s32 com, u8* param, u8* res) // 0x80048954
 {
     u8 syncRes;
-    u8 comCopy = com;
+    u8 comCopy;
+    
+    comCopy = com;
 
     if (CdSync(1, &syncRes) == 2 && CdControl(comCopy, param, res) != 0)
     {

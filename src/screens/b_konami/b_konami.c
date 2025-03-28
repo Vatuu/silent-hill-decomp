@@ -88,8 +88,8 @@ void func_800C95AC() // 0x800C95AC
 
 s32 func_800C9874() // 0x800C9874
 {
-    s32 temp_v0;
-    s32 temp_v1;
+    s32 var0;
+    s32 var1;
 
     if (func_80033548() == 0)
     {
@@ -97,21 +97,21 @@ s32 func_800C9874() // 0x800C9874
     }
     
     D_800BCD2C = BOOT_ADDR_0;
-    temp_v1 = (s32)D_800BCD2C[4];
+    var0 = (s32)D_800BCD2C[4];
 
     D_800BCD2C = BOOT_ADDR_1;
-    temp_v0 = (s32)D_800BCD2C[4];
+    var1 = (s32)D_800BCD2C[4];
 
-    if (temp_v1 == 0 && temp_v0 == 0)
+    if (var0 == 0 && var1 == 0)
     {
         return 2;
     }
 
-    if ((temp_v1 == 4 && (temp_v0 == 4 || temp_v0 == 0)) || (temp_v1 == 0 && temp_v0 == 4)) 
+    if ((var0 == 4 && (var1 == 4 || var1 == 0)) || (var0 == 0 && var1 == 4)) 
     {
         return 3;
     }
-    else if (temp_v1 == 8 || temp_v0 == 8)
+    else if (var0 == 8 || var1 == 8)
     {
         D_800BCD2C = &BOOT_ADDR_0[D_800A97D6 * 0xA50];
         D_800BCD2C = &D_800BCD2C[D_800A97D4[D_800A97D6] * 16];

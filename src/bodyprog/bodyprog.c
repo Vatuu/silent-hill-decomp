@@ -1094,36 +1094,36 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80036E48);
 
 void func_8003708C(s16* ptr0, u16* ptr1) // 0x8003708C
 {
-    s16 var_t0;
-    s32 temp_a2;
+    s32 var0;
+    s16 var1;
+    s32 var3;
     s32 shift;
     s32 i;
-    s32 var_t1;
 
-    var_t1 = 0;
-    var_t0 = 0;
+    var0 = 0;
+    var1 = 0;
     
     for (i = 0; i < 12; i++)
     {
         shift = (i & 3) * 4;
-        temp_a2 = (*ptr1 >> shift) & 0xF;
-        if (i != 0 && temp_a2 == 11 && var_t1 != 0)
+        var3 = (*ptr1 >> shift) & 0xF;
+        if (i != 0 && var3 == 11 && var0 != 0)
         {
-            var_t0 |= 11 << shift;
+            var1 |= 11 << shift;
         }
         
-        var_t1 = 0;
-        if (temp_a2 != 0 && temp_a2 != 11)
+        var0 = 0;
+        if (var3 != 0 && var3 != 11)
         {
-            var_t0 |= 11 << shift;
-            var_t1 = 1;
+            var1 |= 11 << shift;
+            var0 = 1;
         }
         
         if ((i & 3) == 3 || i == 12)
         {
             ptr1++;
-            *ptr0++ = var_t0;
-            var_t0 = 0;
+            *ptr0++ = var1;
+            var1 = 0;
         }
     } 
 }
