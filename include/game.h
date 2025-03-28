@@ -254,7 +254,7 @@ typedef struct _GameWork
     u8                   optRetreatTurn_2A;         /** Normal: 0, reverse: 1. */
     u8                   optWalkRunCtrl_2B;         /** Normal: 0, reverse: 1. */
     u8                   optAutoAiming_2C;          /** Off: 1, on: 0. */
-    u8                   optBulletAdjust_2D;
+    s8                   optBulletAdjust_2D;
     s8                   unk_2E[2];
     s8                   unk_30[8];
     s_ControllerData     controllers_38[2];
@@ -301,8 +301,8 @@ typedef struct _Model
     s8 chara_type_0;
     u8 field_1;
     u8 field_2;
-    u8 isAnimStateUnchanged_3; // Educated guess. Always 1, set to 0 for 1 tick when anim state appears to change.
-                               // Used differently in player's s_SubCharacter struct. 0: anim transitioning(?), bit 1: animated, bit 2: turning.
+    u8 isAnimStateUnchanged_3; // Educated guess. In `s_MainCharacterExtra`, always 1, set to 0 for 1 tick when anim state appears to change.
+                               // Used differently in player's `s_SubCharacter`. 0: anim transitioning(?), bit 1: animated, bit 2: turning.
     s_ModelAnim anim_4;
 } s_Model;
 STATIC_ASSERT_SIZEOF(s_Model, 24);

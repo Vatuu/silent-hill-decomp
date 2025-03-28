@@ -227,7 +227,9 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vw_calc", func_8004A54C);
 
 void vwAngleToVector(SVECTOR* vec, SVECTOR* ang, s32 r) // 0x8004A66C
 {
-    s32 entou_r = FP_MULTIPLY(r, shRcos(ang->vx), Q12_SHIFT);
+    s32 entou_r;
+    
+    entou_r = FP_MULTIPLY(r, shRcos(ang->vx), Q12_SHIFT);
     vec->vy = FP_MULTIPLY(-r, shRsin(ang->vx), Q12_SHIFT);
     vec->vx = FP_MULTIPLY(entou_r, shRsin(ang->vy), Q12_SHIFT);
     vec->vz = FP_MULTIPLY(entou_r, shRcos(ang->vy), Q12_SHIFT);
@@ -235,16 +237,16 @@ void vwAngleToVector(SVECTOR* vec, SVECTOR* ang, s32 r) // 0x8004A66C
 
 s32 vwVectorToAngle(SVECTOR* ang, SVECTOR* vec) // 0x8004A714
 {
-    VECTOR sp10;
+    VECTOR localVec;
     s32    ret_r;
 
-    sp10.vx = vec->vx;
-    sp10.vy = vec->vy;
-    sp10.vz = vec->vz;
-    Square0(&sp10, &sp10);
-    ret_r = SquareRoot0(sp10.vx + sp10.vy + sp10.vz);
+    localVec.vx = vec->vx;
+    localVec.vy = vec->vy;
+    localVec.vz = vec->vz;
+    Square0(&localVec, &localVec);
+    ret_r = SquareRoot0(localVec.vx + localVec.vy + localVec.vz);
 
-    ang->vx = ratan2(-vec->vy, SquareRoot0(sp10.vx + sp10.vz));
+    ang->vx = ratan2(-vec->vy, SquareRoot0(localVec.vx + localVec.vz));
     ang->vy = ratan2(vec->vx, vec->vz);
     ang->vz = 0;
     return ret_r;

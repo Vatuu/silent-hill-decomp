@@ -93,8 +93,11 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D23EC);
 
 void func_800D2C7C(s32 arg0)
 {
-    s_MainCharacterExtra* playerExtra = &g_SysWork.player_4C.extra_128;
-    s_SubCharacter*       chara       = &g_SysWork.player_4C.chara_0;
+    s_MainCharacterExtra* extra = &g_SysWork.player_4C.extra_128;
+    s_SubCharacter*       chara = &g_SysWork.player_4C.chara_0;
+
+    extra = &g_SysWork.player_4C.extra_128;
+    chara = &g_SysWork.player_4C.chara_0;
 
     g_SysWork.player_4C.chara_0.field_126 = 0;
 
@@ -124,8 +127,8 @@ void func_800D2C7C(s32 arg0)
     chara->model_0.isAnimStateUnchanged_3 = 0;
     chara->model_0.field_2 = 0;
 
-    playerExtra->model_0.isAnimStateUnchanged_3 = 0;
-    playerExtra->model_0.field_2 = 0;
+    extra->model_0.isAnimStateUnchanged_3 = 0;
+    extra->model_0.field_2 = 0;
 
     g_SysWork.player_4C.extra_128.field_20 = 0;
     g_SysWork.player_4C.extra_128.field_24 = 0;
@@ -138,10 +141,13 @@ void func_800D2D2C()
 
 void func_800D2D44()
 {
-    s_MainCharacterExtra* playerExtra = &g_SysWork.player_4C.extra_128;
-    s_SubCharacter*       chara       = &g_SysWork.player_4C.chara_0;
+    s_MainCharacterExtra* extra = &g_SysWork.player_4C.extra_128;
+    s_SubCharacter*       chara = &g_SysWork.player_4C.chara_0;
 
-    playerExtra->model_0.anim_4.flags_2 &= ~AnimFlag_Unk1;
+    extra = &g_SysWork.player_4C.extra_128;
+    chara = &g_SysWork.player_4C.chara_0;
+
+    extra->model_0.anim_4.flags_2 &= ~AnimFlag_Unk1;
     chara->model_0.anim_4.flags_2 &= ~AnimFlag_Unk1;
 }
 
@@ -152,10 +158,13 @@ s32 func_800D2D6C()
 
 void func_800D2D84()
 {
-    s_MainCharacterExtra* playerExtra = &g_SysWork.player_4C.extra_128;
-    s_SubCharacter*       chara       = &g_SysWork.player_4C.chara_0;
+    s_MainCharacterExtra* extra = &g_SysWork.player_4C.extra_128;
+    s_SubCharacter*       chara = &g_SysWork.player_4C.chara_0;
 
-    playerExtra->model_0.anim_4.flags_2 |= AnimFlag_Unk1;
+    extra = &g_SysWork.player_4C.extra_128;
+    chara = &g_SysWork.player_4C.chara_0;
+
+    extra->model_0.anim_4.flags_2 |= AnimFlag_Unk1;
     chara->model_0.anim_4.flags_2 |= AnimFlag_Unk1;
 }
 
@@ -195,11 +204,11 @@ u8 func_800D2EA4()
 
 void func_800D2EB4()
 {
-    u8 temp_a0;
+    u8 var;
 
-    temp_a0 = g_SysWork.field_47;
+    var = g_SysWork.field_47;
     g_SysWork.field_47 = NO_VALUE;
-    D_800DD59C = temp_a0;
+    D_800DD59C = var;
 
     func_8003DD80(1, 17);
 }
@@ -267,7 +276,7 @@ void func_800D8888(s_SubCharacter* chara)
     D_800E3A30 = 0;
 }
 
-// The following funcs that take s_SubCharacter* arg are shared with other maps too.
+// Following funcs taking `s_SubCharacter*` arg are shared with other maps too.
 // Possibly shared .c file or separate SubCharacter library?
 
 void func_800D88AC(s_SubCharacter* chara)
@@ -350,11 +359,12 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D921C);
 
 void func_800D923C(s_SubCharacter* chara)
 {
-    s32 char_flagsE0 = chara->flags_E0;
-    char_flagsE0     = (char_flagsE0 & ~0xF00);
+    s32 flags;
+    
+    flags = chara->flags_E0;
+    flags = flags & ~0xF00;
 
     chara->model_0.isAnimStateUnchanged_3 = 0;
-
     chara->field_C8 = 0;
     chara->field_CA = 0;
     chara->field_CE = 0;
@@ -369,7 +379,7 @@ void func_800D923C(s_SubCharacter* chara)
     chara->field_EC = 0;
     chara->field_F0 = 0;
     chara->field_F4 = 0;
-    chara->flags_E0 = (char_flagsE0 | 0x300);
+    chara->flags_E0 = flags | 0x300;
     chara->model_0.field_2++;
 }
 

@@ -3,15 +3,17 @@
 
 /**
  * libsd: konami-customized version of libsnd?
- * Majority of functions match up with libsnd Ss versions.
- * libref.pdf v4.4 may be useful, though was likely based on earlier SDK.
+ * Majority of the functions match up with libsnd Ss versions.
+ * libref.pdf v4.4 may be useful, though was likely based on an earlier SDK.
  */
 
 /** SD_ALLOC_SLOTS must equal SD_VAB_SLOTS due to SdWorkInit loop, but they're mostly unrelated. */
+
 #define SD_ALLOC_SLOTS 16
 #define SD_VAB_SLOTS   16
 
-// MIDI related header magic.
+/** MIDI-related header magic. */
+
 #define SD_MAGIC_SEQp 0x53455170
 #define SD_MAGIC_MThd 0x6468544D
 #define SD_MAGIC_KDT  0x2054444B

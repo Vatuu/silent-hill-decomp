@@ -311,6 +311,7 @@ s16 SdVabTransBodyPartly(u8* addr, u32 bufsize, s16 vabid) // 0x8009FDDC
 
     vab_h_id = vab_h[vabid].vab_id_0;
     retval   = -1;
+
     if (vab_h_id >= 0 && vab_h_id == vabid)
     {
         SpuSetTransferStartAddr(vab_h[vabid].vab_start_10 + sd_vab_transfer_offset);
@@ -342,10 +343,8 @@ s16 SdVabTransCompleted(s16 immediateFlag) // 0x8009FEC4
     {
         return SpuIsTransferCompleted(0);
     }
-    else
-    {
-        return SpuIsTransferCompleted(1);
-    }
+
+    return SpuIsTransferCompleted(1);
 }
 
 void SdVabClose(s16 vab_id) // 0x8009FF00
@@ -369,6 +368,7 @@ s16 SdSeqOpen(s32* addr, s16 vab_id) // 0x800A00A4
     s32 i;
 
     sd_int_flag = 1;
+
     if (*addr != SD_MAGIC_SEQp && *addr != SD_MAGIC_MThd && *addr != SD_MAGIC_KDT && *addr != SD_MAGIC_KDT1)
     {
         return -1;
@@ -393,6 +393,7 @@ s16 SdSeqOpen(s32* addr, s16 vab_id) // 0x800A00A4
 s16 SdSeqOpenWithAccNum(s32* addr, s16 vab_id, s16 seq_access_num) // 0x800A0154
 {
     sd_int_flag = 1;
+
     if (*addr != SD_MAGIC_SEQp && *addr != SD_MAGIC_MThd && *addr != SD_MAGIC_KDT && *addr != SD_MAGIC_KDT1)
     {
         return -1;
@@ -788,6 +789,7 @@ s32 SdUtSetDetVVol(s16 voice, s16 volLeft, s16 volRight) // 0x800A1BD0
 s32 SdUtSetVVol(s16 voice, s16 volLeft, s16 volRight) // 0x800A1C1C
 {
     SpuVoiceAttr voiceAttr;
+
     voiceAttr.mask         = SPU_VOICE_VOLL | SPU_VOICE_VOLR;
     voiceAttr.voice        = spu_ch_tbl[voice];
     voiceAttr.volume.left  = (volLeft & 0x7F) << 7;

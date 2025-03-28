@@ -10,55 +10,62 @@
 #define IMAGE_BUFFER_1 (u_long*)0x801C8200
 #define IMAGE_BUFFER_2 (u_long*)0x801ABE00
 
+#define CD_ADDR_0 0x801E2600
+
 #define OPT_SOUND_VOLUME_MAX  128
 #define OPT_VIBRATION_ENABLED 128
+
+typedef struct
+{
+    s8 unk_0[16];
+} s_8002AC04;
+STATIC_ASSERT_SIZEOF(s_8002AC04, 16);
+// Maybe same.
+typedef struct
+{
+    s32 field_0;
+    s32 field_4;
+    s32 field_8;
+    struct s_80043F2C* field_C;
+} s_80043F2C;
+STATIC_ASSERT_SIZEOF(s_80043F2C, 16);
+// Maybe same.
+typedef struct
+{
+    u8  field_0;
+    s8  unk_1[3];
+    s32 field_4;
+    s8  unk_2[3];
+    s32 field_C;
+} s_80043E50Sub;
+STATIC_ASSERT_SIZEOF(s_80043E50Sub, 16);
+
+typedef struct
+{
+    s32            field_0;
+    s32            field_4;
+    u8             elementCount_8;
+    s8             unk_C[9];
+    s_80043E50Sub* elements_14;
+} s_80043E50;
+
+typedef struct
+{
+    s8  unk_0;
+    s8  field_1;
+    s8  field_2;
+    s8  field_3;
+    s8  unk_4[80];
+    s32 field_54;
+    s32 field_58;
+} s_80044044;
 
 typedef struct
 {
     s16 field_0; // Flags?
 } s_8008D850;
 
-// Following structs likely have something to do with skeletons and bones. Some may be duplicates.
-//==========================================================================
-
-// Maybe a collection of matrices.
-typedef struct
-{
-    s32 field_0; // Flags?
-    s8  unk_4[12];
-    s8  field_10;
-    s8  unk_11[7];
-} s_Bone;
-STATIC_ASSERT_SIZEOF(s_Bone, 24);
-
-// MAYBE skeleton data.
-typedef struct
-{
-    s32     field_0; // Pointer to something?
-    s32     field_4; // Maybe index.
-    s_Bone* bones_8;
-
-    // Maybe incorrect.
-    s8      unk_C[3];
-    u8      field_10;
-    s8      unk_11;
-    s8      field_12;
-    s8      field_13;
-    s8      field_14;
-    s8      unk_15[8];
-} s_Skeleton;
-STATIC_ASSERT_SIZEOF(s_Skeleton, 28); // Unsure, might be 24
-
-typedef struct
-{
-    s8  field_0;
-    s8  field_1;
-    s8  field_2;
-    s8  field_3;
-    s32 field_4;
-    s32 field_8;
-} s_80044FE0;
-
+// Likely not skeleton since filed_8 must be `s8`.
 typedef struct
 {
     s8 field_0;
@@ -69,8 +76,17 @@ typedef struct
     s8 field_8;
 } s_80041CEC;
 
-//==========================================================================
+typedef struct
+{
+    s32 field_0;
+    s32 field_4;
+    s16 field_8;
+    s16 field_A;
+    s32 field_C;
+    s32 field_10;
+} s_80043338;
 
+// Maybe s_Skeleton?
 typedef struct
 {
     s8  unk_0;
@@ -145,11 +161,31 @@ STATIC_ASSERT_SIZEOF(s_800BCDA8, 4);
 
 typedef struct
 {
-    s8  unk_0[27];
+    s8  unk_0[28];
     s16 field_1C;
-    s32 unk_1E[78];
+    s8  unk_1E[304];
+    s32 field_150;
+    s32 field_154;
     s32 field_158;
-} s_800C1020; // Size: 308?
+    s8  unk_15A[1068];
+    s32 field_588;
+    // More may follow.
+} s_800C1020;
+
+typedef struct
+{
+    u16 field_0;
+    s8  unk_2[19];
+    s8  field_15;
+} s_800C1658;
+
+typedef struct
+{
+    u8 field_0;
+    s8 field_1;
+    s8 field_2;
+    s8 field_3;
+} s_800C1670;
 
 typedef struct
 {
@@ -157,6 +193,14 @@ typedef struct
 } s_800C117C;
 STATIC_ASSERT_SIZEOF(s_800C117C, 28);
 
+typedef struct
+{
+    s8  unk_0[2];
+    u16 field_2;
+    s32 field_4;
+    s32 field_8;
+} s_800C37D4;
+// Maybe the same.
 typedef struct
 {
     s8  unk_0[4];
@@ -195,6 +239,37 @@ typedef struct
     s8  unk_10[2];
 } s_MaybeCharacterAnim;
 
+// Maybe a collection of matrices.
+typedef struct
+{
+    s32 flags_0;
+    s8  unk_4[12];
+    s8  field_10;
+    s8  unk_11[7];
+} s_Bone;
+STATIC_ASSERT_SIZEOF(s_Bone, 24);
+
+// PROBABLY skeleton data.
+typedef struct
+{
+    u8      boneCount_0;
+    s8      field_1;
+    s8      field_2;
+    s8      field_3;
+    s32     field_4;
+    s_Bone* bones_8;
+
+    // Maybe incorrect.
+    s8      unk_C[3];
+    u8      field_10;
+    s8      unk_11;
+    s8      field_12;
+    s8      field_13;
+    s8      field_14;
+    s8      unk_15[8];
+} s_Skeleton;
+STATIC_ASSERT_SIZEOF(s_Skeleton, 28);
+
 extern s8* D_8002510C;
 
 /** "\x07PAUSED" string */
@@ -206,10 +281,11 @@ extern s32 D_80025530; // Type assumed.
 
 extern RECT D_8002AB10;
 
+extern s_8002AC04 D_8002AC04[];
+
 extern s_800BE9FC D_8002B2CC;
 
-/** Unknown bodyprog var. Used in `Fs_QueueStartReadAnm`. */
-extern s_800A90FC D_800A90FC[];
+extern s8 D_800A8E58;
 
 extern s_FsImageDesc D_800A8FF4;
 
@@ -224,6 +300,9 @@ extern s_FsImageDesc D_800A9024;
 extern s_FsImageDesc D_800A902C;
 
 extern s_FsImageDesc D_800A906C;
+
+/** Unknown bodyprog var. Used in `Fs_QueueStartReadAnm`. */
+extern s_800A90FC D_800A90FC[];
 
 extern u16 D_800A9774[];
 
@@ -241,6 +320,8 @@ extern s32 D_800A976C;
 
 extern void (*D_800A977C[])(void); // Function pointer array, maybe state funcs of some kind.
 
+extern u8 D_800A97D4[];
+
 extern s_800A992C D_800A992C[];
 
 extern u8 D_800A9944;
@@ -253,6 +334,8 @@ extern s8 D_800A99B4[];
 
 /** Array of indices? */
 extern s8 D_800A99CC[];
+
+extern s_FsImageDesc D_800A9A04;
 
 extern s32 D_800A9A1C;
 
@@ -306,6 +389,8 @@ extern s_800C1020 D_800C1020;
 
 extern s_800C117C D_800C117C[];
 
+extern u8 D_800C37D0;
+
 extern s_800C37D8* D_800C37D8;
 
 extern s32 D_800C4710[];
@@ -323,6 +408,8 @@ extern u16 D_800BCCB2;
 /** Accessed by credits and saveload. */
 extern s32 D_800BCD0C;
 
+extern s8 D_800BCD40;
+
 extern s_800BCDA8 D_800BCDA8[];
 
 extern s32 D_800BCDB0; // Type assumed.
@@ -333,9 +420,9 @@ extern s8 D_800C15B4;
 
 extern s16 D_800C15F8[];
 
-extern u16 D_800C1658;
+extern s_800C1658 D_800C1658;
 
-extern s8 D_800C1670;
+extern s_800C1670 D_800C1670;
 
 extern u8 g_Sd_VolumeBgm; // 0x800C1685
 
@@ -348,6 +435,10 @@ extern s8 g_Sd_ReverbDepth; // 0x800C1687;
 extern s_800BE9FC D_800BE9FC;
 
 extern u8 D_800C37C8;
+
+extern u32 D_800C37CC;
+
+extern s_800C37D4* D_800C37D4;
 
 extern s16 D_800C38A8;
 
@@ -494,7 +585,7 @@ void func_80032D1C();
 /** Bodyprog entrypoint. Called by `main`. */
 void MainLoop();
 
-void func_80033548(); // Return type assumed.
+s32 func_80033548();
 
 /** Unknown bodyprog func. Called by `Fs_QueuePostLoadAnm`. */
 void func_80035560(s32 arg0, s32 arg1, void* arg2, s32 arg3);
@@ -510,6 +601,8 @@ void func_8003DD80(s32, s32);
 
 /** Some kind of queue entry load status getter. */
 s32 func_80041ADC(s32 queueIdx);
+
+void func_80041C24(s_80041CEC* arg0, s32 arg1, s32 arg2);
 
 /** arg0 might be s_Skeleton, arg1 might be s_Bone. */
 void func_80041CB4(s_Skeleton* skel, s_80041CEC* arg1);
@@ -529,17 +622,32 @@ u32 func_80041B1C(void* arg0);
 
 s32 func_80042C04(s32 idx);
 
+s32 func_80042DE8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
+
+void func_80043338(s_80043338* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
+
+s32 func_800436D8(s_80043338* arg0, s32 arg1, s16 arg2, s16 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8);
+
 s32 func_80043B70(s_80043B70* arg0);
 
 s_80043BA4* func_80043BA4(s_80043BA4* arg0);
 
 void func_80043BC4(s_80043B70* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
 
+void func_80043C7C(s_80043B70* arg0, s32 arg1, s32* arg2, s32 arg3);
+
 s32 func_80043D00(s_80043B70* arg0);
 
 s32 func_80043D44(s32 arg0);
 
 s32 func_80043D64(s32 arg0); // Types assumed.
+
+void func_80043E50(s_80043E50* arg0, s32* arg1, s32 arg2);
+
+/** TODO: Maybe doesn't operate on a linked list. Need more context from other functions before committing to this. */
+s_80043F2C* func_80043F2C(s_80043F2C* arg0, s_80043F2C* arg1);
+
+void func_80044044(s_80044044* arg0, s32 arg1, s32 arg2);
 
 /** Updates a model's animation, variant 1. */
 void Anim_Update(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Model* targetModel);
@@ -553,11 +661,18 @@ void func_80044CA4(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Mod
 /** Updates a model's animation, variant 4. */
 void func_80044DF0(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Model* targetModel);
 
-void func_80044F14(s32 mtx, s16 z, s16 x, s16 y);
+void func_80044F14(s32 mat, s16 z, s16 x, s16 y);
 
 s8 func_80044F6C(s8* ptr, s32 arg1);
 
-void func_80044FE0(s_80044FE0* arg0, s32 arg1, s8 arg2);
+/** Skeleton setup? Assigns bones pointer for the skeleton and resets fields. */
+void func_80044FE0(s_Skeleton* skel, s_Bone* bones, u8 boneCount);
+
+/** Clears skeleton bone flags/mask. Called by `func_80044FE0`. */
+void func_80045014(s_Skeleton* skel);
+
+/** Anim func. Traverses skeleton bones to set flags/mask. */
+void func_800453E8(s_Skeleton* skel, s32 cond);
 
 /** Does something with skeleton bones. `arg0` is a struct pointer. */
 void func_80045468(s_Skeleton* skel, s32* arg1, s32 cond);
@@ -576,6 +691,12 @@ void Sd_SetReverbDepth(s8 depth);
 
 void Sd_SetReverbEnable(s32 mode);
 
+void func_80047F18();
+
+void func_80048000();
+
+void func_800481F8();
+
 void Sd_StopSeq();
 
 /** CD function. */
@@ -585,6 +706,8 @@ void func_800483D4();
 void func_80048424();
 
 void func_800485C0(s32 idx);
+
+s32 func_80048954(s32 com, u8* param, u8* res);
 
 void func_8004729C(u16);
 
@@ -615,6 +738,8 @@ void func_800860B0(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 sysStateStep, s32
 
 void func_8008616C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 
+void func_800862F8(s32 arg0, s32 arg1, s32 arg2);
+
 void func_800867B4(s32 caseParam, s32 idx);
 
 void func_800868DC(s32 idx);
@@ -637,6 +762,15 @@ void func_80086F44(s32 arg0, s32 arg1);
 
 void func_80086FE8(s32 arg0, s32 arg1, s32 arg2);
 
+void func_8008716C(s32 arg0, s32 arg1, s32 arg2);
+
+void func_80087360(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
+
+void func_80087540(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
+
+/** Something to do with bullet adjust setting. */
+void func_800879FC(u32 arg0, s32 arg1);
+
 void func_80087EA8(s32 arg0);
 
 void func_80087EDC(s32 arg0);
@@ -648,6 +782,22 @@ void func_80088D34(s32 idx);
 s32 func_8008F434(s32 arg0);
 
 void func_800890B8();
+
+void func_800892A4(s32 idx);
+
+void func_800892DC(s32 idx, s32 arg1);
+
+void func_8008944C();
+
+void func_80089470();
+
+void func_80089494();
+
+void func_800894B8(s32 arg0);
+
+void func_800894DC();
+
+void func_80089500();
 
 s32 func_8008D850();
 
@@ -667,7 +817,7 @@ void func_80091380();
 // TODO: Arrange these in address order for better insight into the original interface. -- Sezz
 // ------------------------------------------------------------------
 
-s32 Chara_Load(s32 arg0, s8 arg1, s32 arg2, s8 arg3, s32 arg4, s32 arg5);
+s32 Chara_Load(s32 arg0, s8 arg1, s32 arg2, s8 arg3, s32 arg4, s32 arg5); // arg2 type assumed.
 
 /** Seeks for the English title screen background graphic. */
 void GameFs_TitleGfxSeek();
@@ -756,6 +906,8 @@ void func_8003640C(s32 arg0);
 s32 func_8003647C();
 
 s32 func_80036498();
+
+void func_8003708C(s16* ptr0, u16* ptr1);
 
 void func_80037124();
 

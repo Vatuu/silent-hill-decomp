@@ -234,13 +234,12 @@ s32 vcRetSmoothCamMvF(VECTOR3* old_pos, VECTOR3* now_pos, SVECTOR* old_ang, SVEC
     s32 rot_x;
     s32 rot_y;
 
-    intrpt = FP_TO(g_DeltaTime0, Q12_SHIFT) / 0x44; // divide by 0.0166?
-    intrpt = CLAMP(intrpt, 0x1000, 0x4000);         // clamp between 1.0 and 4.0
+    intrpt = FP_TO(g_DeltaTime0, Q12_SHIFT) / 0x44; // Divide by 0.0166?
+    intrpt = CLAMP(intrpt, 0x1000, 0x4000);         // Clamp between 1.0 and 4.0.
 
-    mv_vec = Math_VectorMagnitude(
-        FP_FROM(now_pos->vx - old_pos->vx, Q4_SHIFT),
-        FP_FROM(now_pos->vy - old_pos->vy, Q4_SHIFT),
-        FP_FROM(now_pos->vz - old_pos->vz, Q4_SHIFT));
+    mv_vec = Math_VectorMagnitude(FP_FROM(now_pos->vx - old_pos->vx, Q4_SHIFT),
+                                  FP_FROM(now_pos->vy - old_pos->vy, Q4_SHIFT),
+                                  FP_FROM(now_pos->vz - old_pos->vz, Q4_SHIFT));
 
     mv_vec = FP_TO(mv_vec, Q12_SHIFT) / intrpt;
     if (mv_vec > FP_TILE(0.2f))
@@ -248,7 +247,7 @@ s32 vcRetSmoothCamMvF(VECTOR3* old_pos, VECTOR3* now_pos, SVECTOR* old_ang, SVEC
         return 0;
     }
 
-    rot_x = FP_TO(now_ang->vx - old_ang->vx >= 0 ? now_ang->vx - old_ang->vx : old_ang->vx - now_ang->vx, Q12_SHIFT) / intrpt;
+    rot_x = FP_TO(((now_ang->vx - old_ang->vx) >= 0) ? (now_ang->vx - old_ang->vx) : (old_ang->vx - now_ang->vx), Q12_SHIFT) / intrpt;
     if (rot_x > FP_ANGLE(1.25f))
     {
         return 0;
@@ -258,10 +257,9 @@ s32 vcRetSmoothCamMvF(VECTOR3* old_pos, VECTOR3* now_pos, SVECTOR* old_ang, SVEC
 
     // This (guessed) line is needed for regalloc match, but compiler just optimizes out since rot_x isn't used afterward.
     // BUG: Maybe the shRcos call below was meant to use the result of this, but was somehow left using now_ang->vx?
-    rot_x = now_ang->vx - old_ang->vx >= 0 ? now_ang->vx : old_ang->vx;
+    rot_x = ((now_ang->vx - old_ang->vx) >= 0) ? now_ang->vx : old_ang->vx;
 
     rot_y = FP_MULTIPLY(rot_y, shRcos(now_ang->vx), Q12_SHIFT);
-
     return rot_y <= FP_ANGLE(1.875f);
 }
 

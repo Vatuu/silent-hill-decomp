@@ -27,7 +27,7 @@
 #define FP_FROM(val, shift) \
 	((val) >> (shift))
 
-/** Multiplies two integers in a fixed-point Q format and converts the result from a fixed-point Q format. */
+/** Multiplies two integers in a fixed-point Q format and converts the result from the fixed-point Q format. */
 #define FP_MULTIPLY(val0, val1, shift) \
     (((val0) * (val1)) >> (shift))
 
@@ -39,7 +39,7 @@
 #define FP_ANGLE(deg) \
 	(s16)((deg) * ((FP_ANGLE_COUNT) / 360.0f))
 
-/** Convert floating-point tile units to fixed-point world units. */
+/** Converts floating-point tile units to fixed-point world units in Q12.8 format. */
 #define FP_TILE(val) \
     (s32)((val) * (1 << (Q8_SHIFT)))
 
@@ -62,8 +62,8 @@ static inline void Math_Vector3Zero(VECTOR3* vec)
     vec->vz = 0;
 }
 
-void func_80096C94(SVECTOR* vec, MATRIX* mtx); // Custom vwRotMatrix...?
-void func_80096E78(SVECTOR* vec, MATRIX* mtx); // Another custom vwRotMatrix...]?
+void func_80096C94(SVECTOR* vec, MATRIX* mat); // Custom vwRotMatrix...?
+void func_80096E78(SVECTOR* vec, MATRIX* mat); // Another custom vwRotMatrix...]?
 
 s32 shRsin(s32 angle);
 s32 shRcos(s32 angle);
