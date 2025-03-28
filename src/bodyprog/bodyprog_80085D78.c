@@ -802,13 +802,156 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80087360);
     }
 }*/
 
-// Requires jump table.
+// TODO: Something with a jump table, don't know how to get it working. -- Sezz 2025.03.28
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80087540);
+/*void func_80087540(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4)
+{
+    s32 var;
+
+    switch (g_SysWork.field_10)
+    {
+        case 0:
+            D_800C9644();
+            func_8008616C(0, 1, 0, arg1, 0);
+            
+            g_SysWork.field_2C = 0;
+            g_SysWork.field_14 = 0;
+            g_SysWork.field_10++;
+        
+        case 1:
+            func_800862F8(7, arg0, 1);
+            break;
+        
+        case 2:
+            func_8008616C(1, 1, 0, 0, 1);
+            break;
+        
+        case 3:
+            func_800862F8(2, 0, 0);
+            func_8008616C(2, 0, 0, arg2, 1);
+            break;
+        
+        case 4:
+            func_800862F8(2, 0, 0);
+            
+            if (arg3 != 0)
+            {
+                var = arg3;
+                func_800860B0(0, var, 0, 0, 0, 1);
+                break;
+            }
+            
+            if (g_ControllerPtr0->btns_new_10 & (g_GameWorkPtr1->controllerBinds_0.enter | g_GameWorkPtr1->controllerBinds_0.cancel))
+            {
+                g_SysWork.field_2C = 0;
+                g_SysWork.field_14 = 0;
+                g_SysWork.field_10++;
+            }
+            break;
+        
+        case 5:
+            D_800A8E58 = 0x30;
+            func_800862F8(2, 0, 0);
+            
+            var = arg4;
+            func_800860B0(0, var, 0, 0, 0, 1);
+            break;
+        
+        case 6:
+            D_800A8E58 = 0x30;
+            
+            func_800862F8(2, 0, 0);
+            func_8008616C(2, 1, 0, arg2, 1);
+            break;
+        
+        default:
+            func_8008616C(0, 0, 0, arg1, 0);
+            D_800C9648(0);
+            
+            g_SysWork.sysState_8 = 0;
+            g_SysWork.field_24 = 0;
+            g_SysWork.sysStateStep_C = 0;
+            g_SysWork.field_28 = 0;
+            g_SysWork.field_10 = 0;
+            g_SysWork.field_2C = 0;
+            g_SysWork.field_14 = 0;
+            break;
+    }
+}*/
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800877B8);
 
-// Requires jump table.
+// TODO: Something with a jump table, don't know how to get it working. -- Sezz 2025.03.28
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800879FC);
+/*void func_800879FC(u32 arg0, s32 arg1)
+{
+    s32 var0;
+    s32 var1;
+    s32 var2;
+    s32 var3;
+    s32 var4;
+
+    var3 = g_GameWork.optBulletAdjust_2D + 1;
+    if ((g_SaveGamePtr->field_260 >> 28) == NO_VALUE)
+    {
+        var4 = 2;
+        if (var3 >= var4)
+        {
+            var4 = var3;
+        }
+        
+        var3 = var4;
+    }
+    
+    switch (arg0)
+    {
+        case 0:
+            var0 = 33;
+            var1 = 1;
+            var2 = 5;
+            func_800877B8(var0, var1, arg1, var2);
+            break;
+        
+        case 1:
+            var0 = 32;
+            var1 = 1;
+            var2 = 6;
+            func_800877B8(var0, var1, arg1, var2);
+            break;
+        
+        case 2:
+            var0 = 34;
+            var1 = 1;
+            var2 = 7;
+            
+            func_800877B8(var0, var1, arg1, var2);
+            break;
+        
+        case 3:
+            var0 = 192;
+            var1 = var3 * 15;
+            var2 = 8;
+            func_800877B8(var0, var1, arg1, var2);
+            break;
+        
+        case 5:
+            var0 = 194;
+            var1 = var3 * 6;
+            var2 = 10;
+            func_800877B8(var0, var1, arg1, var2);
+            break;
+        
+        case 4:
+            var0 = 193;
+            var1 = var3 * 6;
+            var2 = 9;
+            func_800877B8(var0, var1, arg1, var2);
+            break;
+
+        default:
+            break;
+    }
+}*/
 
 // Requires jump table.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80087AF4);

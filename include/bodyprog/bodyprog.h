@@ -277,8 +277,7 @@ extern RECT D_8002AB10;
 
 extern s_800BE9FC D_8002B2CC;
 
-/** Unknown bodyprog var. Used in `Fs_QueueStartReadAnm`. */
-extern s_800A90FC D_800A90FC[];
+extern s8 D_800A8E58;
 
 extern s_FsImageDesc D_800A8FF4;
 
@@ -293,6 +292,9 @@ extern s_FsImageDesc D_800A9024;
 extern s_FsImageDesc D_800A902C;
 
 extern s_FsImageDesc D_800A906C;
+
+/** Unknown bodyprog var. Used in `Fs_QueueStartReadAnm`. */
+extern s_800A90FC D_800A90FC[];
 
 extern u16 D_800A9774[];
 
