@@ -254,7 +254,7 @@ typedef struct _GameWork
     u8                   optRetreatTurn_2A;         /** Normal: 0, reverse: 1. */
     u8                   optWalkRunCtrl_2B;         /** Normal: 0, reverse: 1. */
     u8                   optAutoAiming_2C;          /** Off: 1, on: 0. */
-    u8                   optBulletAdjust_2D;
+    s8                   optBulletAdjust_2D;
     s8                   unk_2E[2];
     s8                   unk_30[8];
     s_ControllerData     controllers_38[2];

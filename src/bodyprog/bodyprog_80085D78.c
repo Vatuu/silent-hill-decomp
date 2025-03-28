@@ -804,7 +804,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80087360);
 
 // TODO: Something with a jump table, don't know how to get it working. -- Sezz 2025.03.28
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80087540);
-/*void func_80087540(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4)
+/*void func_80087540(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x80087540
 {
     s32 var;
 
@@ -883,24 +883,24 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800877B8);
 
 // TODO: Something with a jump table, don't know how to get it working. -- Sezz 2025.03.28
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800879FC);
-/*void func_800879FC(u32 arg0, s32 arg1)
+/*void func_800879FC(u32 arg0, s32 arg1) // 0x800879FC
 {
     s32 var0;
     s32 var1;
     s32 var2;
-    s32 var3;
+    s32 newBulletAdjust;
     s32 var4;
 
-    var3 = g_GameWork.optBulletAdjust_2D + 1;
+    newBulletAdjust = g_GameWork.optBulletAdjust_2D + 1;
     if ((g_SaveGamePtr->field_260 >> 28) == NO_VALUE)
     {
         var4 = 2;
-        if (var3 >= var4)
+        if (newBulletAdjust >= var4)
         {
-            var4 = var3;
+            var4 = newBulletAdjust;
         }
         
-        var3 = var4;
+        newBulletAdjust = var4;
     }
     
     switch (arg0)
@@ -929,21 +929,21 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800879FC);
         
         case 3:
             var0 = 192;
-            var1 = var3 * 15;
+            var1 = newBulletAdjust * 15;
             var2 = 8;
             func_800877B8(var0, var1, arg1, var2);
             break;
         
         case 5:
             var0 = 194;
-            var1 = var3 * 6;
+            var1 = newBulletAdjust * 6;
             var2 = 10;
             func_800877B8(var0, var1, arg1, var2);
             break;
         
         case 4:
             var0 = 193;
-            var1 = var3 * 6;
+            var1 = newBulletAdjust * 6;
             var2 = 9;
             func_800877B8(var0, var1, arg1, var2);
             break;
