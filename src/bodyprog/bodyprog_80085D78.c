@@ -744,8 +744,63 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008716C);
     }
 }*/
 
-// Requires jump table.
+// TODO: Something with a jump table, don't know how to get it working. -- Sezz 2025.03.28
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80087360);
+/*void func_80087360(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x80087360
+{
+    s32 var;
+
+    switch (g_SysWork.field_10)
+    {
+        case 0:
+            D_800C9644();
+            func_8008616C(0, 1, 0, arg1, 0);
+            
+            g_SysWork.field_2C = 0;
+            g_SysWork.field_14 = 0;
+            g_SysWork.field_10++;
+        
+        case 1:
+            func_800862F8(7, arg0, 1);
+            break;
+        
+        case 2:
+            func_8008616C(1, 1, 0, 0, 1);
+            break;
+        
+        case 3:
+            func_800862F8(2, 0, 0);
+            
+            var = 0;
+            func_8008616C(2, var, 0, arg2,1);
+            break;
+        
+        case 4:
+            func_800862F8(2, 0, 0);
+            func_800860B0(0, arg3, 0, 0, 0, 1);
+            break;
+        
+        case 5:
+            func_800862F8(2, 0, 0);
+            
+            var = 1;
+            func_8008616C(2, var, 0, arg2, 1);
+            break;
+        
+        default:
+            func_8008616C(0, 0, 0, arg1, 0);
+            D_800C9648(0);
+            
+            g_SysWork.sysState_8 = 0;
+            g_SysWork.field_24 = 0;
+            g_SysWork.sysStateStep_C = 0;
+            g_SysWork.field_28 = 0;
+            g_SysWork.field_10 = 0;
+            g_SysWork.field_2C = 0;
+            g_SysWork.field_14 = 0;
+            break;
+    }
+}*/
 
 // Requires jump table.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80087540);
