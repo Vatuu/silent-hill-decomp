@@ -1144,11 +1144,20 @@ void func_80089494() // 0x80089494
     func_800892DC(9, 0xA0);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800894B8);
+void func_800894B8(s32 arg0) // 0x800894B8
+{
+    func_800892DC(9, arg0 & 0xFF);
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800894DC);
+void func_800894DC() // 0x800894DC
+{
+    func_800892DC(9, 0xE0);
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80089500);
+void func_80089500() // 0x80089500
+{
+    func_800892DC(9, 0xA0);
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80089524);
 

@@ -793,6 +793,12 @@ void func_80089470();
 
 void func_80089494();
 
+void func_800894B8(s32 arg0);
+
+void func_800894DC();
+
+void func_80089500();
+
 s32 func_8008D850();
 
 void func_8008E4EC();
