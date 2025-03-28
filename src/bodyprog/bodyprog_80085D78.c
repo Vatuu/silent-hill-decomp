@@ -1070,7 +1070,6 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800881B8);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80088370);
 
-// arg2 type assumed.
 s32 Chara_Load(s32 arg0, s8 arg1, s32 arg2, s8 arg3, s32 arg4, s32 arg5) // 0x80088C7C
 {
     func_80035338(arg0 + 1, arg1, 0, arg2);
@@ -1102,7 +1101,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80089034);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80089090);
 
-void func_800890B8()
+void func_800890B8() // 0x800890B8
 {
     func_8009E198(&g_SysWork.field_2514[0], 0);
     func_8009E310(&g_SysWork.field_2514[0], &g_SysWork.field_2514[8] , 2);
@@ -1116,7 +1115,10 @@ void func_800890B8()
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80089128);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800892A4);
+void func_800892A4(s32 arg0) // 0x800892A4
+{
+    func_800895E4(g_SysWork.field_2514, &D_8002AC04[arg0], 0x80);
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800892DC);
 

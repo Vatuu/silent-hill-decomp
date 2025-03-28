@@ -17,6 +17,11 @@
 
 typedef struct
 {
+    s8 unk_0[16];
+} s_8002AC04;
+
+typedef struct
+{
     s32 field_0;
     s32 field_4;
     s32 field_8;
@@ -274,6 +279,8 @@ extern s32 D_80025528; // Type assumed.
 extern s32 D_80025530; // Type assumed.
 
 extern RECT D_8002AB10;
+
+extern s_8002AC04 D_8002AC04[];
 
 extern s_800BE9FC D_8002B2CC;
 
@@ -775,6 +782,8 @@ s32 func_8008F434(s32 arg0);
 
 void func_800890B8();
 
+void func_800892A4(s32 arg0);
+
 s32 func_8008D850();
 
 void func_8008E4EC();
@@ -793,7 +802,7 @@ void func_80091380();
 // TODO: Arrange these in address order for better insight into the original interface. -- Sezz
 // ------------------------------------------------------------------
 
-s32 Chara_Load(s32 arg0, s8 arg1, s32 arg2, s8 arg3, s32 arg4, s32 arg5);
+s32 Chara_Load(s32 arg0, s8 arg1, s32 arg2, s8 arg3, s32 arg4, s32 arg5); // arg2 type assumed.
 
 /** Seeks for the English title screen background graphic. */
 void GameFs_TitleGfxSeek();
