@@ -1131,10 +1131,13 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800893D0);
 
 void func_8008944C() // 0x8008944C
 {
-    func_800892DC(0x13, 0xA0);
+    func_800892DC(19, 0xA0);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80089470);
+void func_80089470() // 0x80089470
+{
+    func_800892DC(19, 0xA0);
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80089494);
 
