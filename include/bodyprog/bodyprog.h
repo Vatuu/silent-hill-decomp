@@ -104,6 +104,12 @@ typedef struct
     u8 field_1;
 } s_80043BA4;
 
+typedef struct
+{
+    s8  unk_8[0x3E];
+    u16 field_3E;
+} s_8008A384;
+
 /** Something related to ANM files. See `D_800A90FC`. */
 typedef struct
 {
@@ -798,6 +804,8 @@ void func_800894B8(s32 arg0);
 void func_800894DC();
 
 void func_80089500();
+
+void func_8008A384(s_8008A384* arg0);
 
 s32 func_8008D850();
 
