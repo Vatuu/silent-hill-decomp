@@ -1208,7 +1208,14 @@ void func_8008A398(s_8008A384* arg0) // 0x8008A398
     arg0->field_3E |= (1 << 7);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008A3AC);
+void func_8008A3AC(s_8008A384* arg0) // 0x8008A3AC
+{
+    if (!(arg0->field_3E & (1 << 7)))
+    {
+        arg0->field_44 = 0;
+        func_8008A3E0();
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008A3E0);
 
