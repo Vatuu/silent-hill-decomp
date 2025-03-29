@@ -123,11 +123,13 @@ def _extract(entries:Iterable[TableEntry], output: Path, file: BinaryIO, sectorS
         
         file.seek((i.offset - entries[0].offset) * sectorSize)
         size = 0
-        if not i.size == 0:
-            size = i.size
+        if not i.size == 0 and (i.type != FILE_TYPES[15]):
+            size = i.size * FILESIZE_STEP
         elif index+1 < len(entries):
-            size = entries[index + 1].offset - i.offset
-        data = file.read(size * FILESIZE_STEP)
+            size = (entries[index + 1].offset - i.offset) * sectorSize
+        else:
+            size = -1 # read until end of file
+        data = file.read(size)
         if(i.type == FILE_TYPES[2] and regionID != "NTSC Nov 24, 1998"):
             if i.path.startswith("1ST"):
                 logging.info("\tDecrypting Overlay...")
@@ -179,7 +181,7 @@ def main():
     _extract(entriesSilent, args.outputFolder, args.silentFile, 2048, region.id)
     
     if region.id != "NTSC Nov 24, 1998":
-        _extract(entriesHill, args.outputFolder, args.hillFile, 2352, region.id)
+        _extract(entriesHill, args.outputFolder, args.hillFile, 2336, region.id)
 
     with open(os.path.join(args.outputFolder, "filetable.c.inc"), "a+") as f:
         f.truncate(0)
