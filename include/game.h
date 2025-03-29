@@ -95,6 +95,27 @@ typedef enum _SysState
     SysState_GamePaused  = 14
 } e_SysState;
 
+typedef enum _PlayerBoneIdx
+{
+    PlayerBoneIdx_Pelvis        = 0,
+    PlayerBoneIdx_Torso         = 1,
+    PlayerBoneIdx_Head          = 2,
+    PlayerBoneIdx_LeftUpperArm  = 3,
+    PlayerBoneIdx_LeftForearm   = 4,
+    PlayerBoneIdx_LeftHand      = 5,
+    PlayerBoneIdx_RightUpperArm = 6,
+    PlayerBoneIdx_RightForearm  = 7,
+    PlayerBoneIdx_RightHand     = 8,
+    PlayerBoneIdx_LeftThigh     = 9,
+    PlayerBoneIdx_LeftShin      = 10,
+    PlayerBoneIdx_LeftFoot      = 11,
+    PlayerBoneIdx_RightThigh    = 12,
+    PlayerBoneIdx_RightShin     = 13,
+    PlayerBoneIdx_RightFoot     = 14,
+
+    PlayerBoneIdx_Count = 15
+} s_PlayerBoneIdx;
+
 typedef struct _AnalogPadData
 {
     u8  status;
@@ -389,10 +410,10 @@ typedef struct _SysWork
     s32             sysStateStep_C; // Current step/state of sysState_8 game is in.
     s32             field_10;       // Sometimes assigned to same thing as sysStateStep_C.
     s32             field_14;
-    s8              unk_18[4];
-    s32             field_1C;
-    s32             field_20;
-    s32             field_24;
+    s32             field_18;
+    s32             field_1C; // Timer.
+    s32             field_20; // Timer.
+    s32             field_24; // Timer.
     s32             field_28;
     s32             field_2C; // Timer of some kind.
     s32             field_30;
@@ -401,12 +422,11 @@ typedef struct _SysWork
     s8              unk_3C[11];
     s8              field_47; // Something related to map loading.
     s8              unk_48[3];
-    u8              field_4B; // Something used among player anim state checks.
+    u8              isPlayerInCombatMode_4B;
     s_MainCharacter player_4C;
     s_SubCharacter  npcs_1A0[NPC_COUNT_MAX];
-    GsCOORDINATE2   unk_coord_890[2];
-    GsCOORDINATE2   hero_neck_930;
-    s8              unk_980[6424];
+    GsCOORDINATE2   playerBoneCoords_890[PlayerBoneIdx_Count];
+    s8              unk_980[5464]; // Maybe NPC bone coords? Would have to be a buffer.
     s32             flags_2298; // Something related to map loading.
     s8              unk_229C[4];
     s32             field_22A0;
@@ -414,11 +434,11 @@ typedef struct _SysWork
     s8              unk_22A8[176];
     u8              field_2358;
     s8              unk_2359[33];
-    s16             cam_ang_y_237A;
-    s16             cam_ang_z_237C;
+    s16             cameraAngleY_237A;
+    s16             cameraAngleZ_237C;
     s16             field_237E;
-    s32             cam_r_xz_2380;
-    s32             cam_y_2384;
+    s32             cameraRadiusXz_2380;
+    s32             cameraY_2384;
     u8              unk_2388[392];
     s32             field_2510;
     s32             field_2514[10];

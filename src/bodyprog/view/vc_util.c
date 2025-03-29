@@ -59,7 +59,7 @@ void vcMakeHeroHeadPos(VECTOR3* head_pos) // 0x8004047C
     SVECTOR fpos;
     VECTOR  sp38;
 
-    func_80049984(&g_SysWork.hero_neck_930, &neck_lwm);
+    func_80049984(&g_SysWork.playerBoneCoords_890[PlayerBoneIdx_Head], &neck_lwm);
 
     fpos.vx = FP_TILE(0.0f);
     fpos.vy = FP_TILE(-0.1f);
@@ -82,37 +82,37 @@ void vcSetRefPosAndSysRef2CamParam(VECTOR3* ref_pos, s_SysWork* sys_p, s32 for_f
 {
     if (for_f != 0)
     {
-        sys_p->cam_r_xz_2380 -= FP_TILE(1.6f);
+        sys_p->cameraRadiusXz_2380 -= FP_TILE(1.6f);
     }
 
     if (back_f != 0)
     {
-        sys_p->cam_r_xz_2380 += FP_TILE(1.6f);
+        sys_p->cameraRadiusXz_2380 += FP_TILE(1.6f);
     }
 
     if (right_f != 0)
     {
-        sys_p->cam_ang_y_237A = sys_p->cam_ang_y_237A - (g_VBlanks * 11);
+        sys_p->cameraAngleY_237A = sys_p->cameraAngleY_237A - (g_VBlanks * 11);
     }
 
     if (left_f != 0)
     {
-        sys_p->cam_ang_y_237A = sys_p->cam_ang_y_237A + (g_VBlanks * 11);
+        sys_p->cameraAngleY_237A = sys_p->cameraAngleY_237A + (g_VBlanks * 11);
     }
 
     if (up_f != 0)
     {
-        sys_p->cam_y_2384 -= FP_TILE(1.6f);
+        sys_p->cameraY_2384 -= FP_TILE(1.6f);
     }
 
     if (down_f != 0)
     {
-        sys_p->cam_y_2384 += FP_TILE(1.6f);
+        sys_p->cameraY_2384 += FP_TILE(1.6f);
     }
 
-    if (sys_p->cam_r_xz_2380 < FP_TILE(16.0f))
+    if (sys_p->cameraRadiusXz_2380 < FP_TILE(16.0f))
     {
-        sys_p->cam_r_xz_2380 = FP_TILE(16.0f);
+        sys_p->cameraRadiusXz_2380 = FP_TILE(16.0f);
     }
 
     vcAddOfsToPos(ref_pos, &g_SysWork.player_4C.chara_0.position_18, FP_TILE(8.0f), g_SysWork.player_4C.chara_0.rotation_24.vy, FP_TILE(-16.0f));
@@ -243,8 +243,8 @@ void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, s_SysWork* sys_p) // 0x80040
         ref_pos->vy = FP_TO(sp18.vy + sp58.vy, Q4_SHIFT);
         ref_pos->vz = FP_TO(sp18.vz + sp58.vz, Q4_SHIFT);
 
-        sys_p->cam_ang_y_237A = ((cam_ang.vy + FP_ANGLE(11.25f)) << 0x14) >> 0x14;
-        sys_p->cam_y_2384     = FP_TO(-sp58.vy, Q4_SHIFT);
-        sys_p->cam_r_xz_2380  = FP_TO(SquareRoot0((sp58.vx * sp58.vx) + (sp58.vz * sp58.vz)), Q4_SHIFT);
+        sys_p->cameraAngleY_237A = ((cam_ang.vy + FP_ANGLE(11.25f)) << 0x14) >> 0x14;
+        sys_p->cameraY_2384     = FP_TO(-sp58.vy, Q4_SHIFT);
+        sys_p->cameraRadiusXz_2380  = FP_TO(SquareRoot0((sp58.vx * sp58.vx) + (sp58.vz * sp58.vz)), Q4_SHIFT);
     }
 }
