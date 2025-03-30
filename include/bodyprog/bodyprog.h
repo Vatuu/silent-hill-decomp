@@ -76,10 +76,11 @@ typedef struct
     s8 field_8;
 } s_80041CEC;
 
+// Maybe level stream data?
 typedef struct
 {
     s32 field_0;
-    s32 field_4;
+    s32 queueEntryIdx_4;
     s16 fileChunkCoordX_8;
     s16 fileChunkCoordZ_A;
     s32 field_C;           // Something to do with distance from file chunk edge.
@@ -637,7 +638,8 @@ s32 func_80042DE8(s32 posX, s32 posZ, s32 fileChunkCoordX, s32 fileChunkCoordZ, 
 
 void func_80043338(s_80043338* arg0, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1, s32 clip);
 
-s32 func_800436D8(s_80043338* arg0, s32 arg1, s16 fileChunkCoordX, s16 fileChunkCoordZ, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1, s32 clip);
+/** Maybe facilitates file chunk streaming as the player moves around the map. */
+s32 func_800436D8(s_80043338* arg0, s32 fileIdx, s16 fileChunkCoordX, s16 fileChunkCoordZ, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1, s32 clip);
 
 s32 func_80043B70(s_80043B70* arg0);
 
