@@ -169,10 +169,10 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80042EBC);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800431E4);
 
-void func_80043338(s_80043338* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) // 0x80043338
+void func_80043338(s_80043338* arg0, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1, s32 clip) // 0x80043338
 {
-    arg0->field_C = func_80042DE8(arg1, arg2, arg0->field_8, arg0->field_A, arg5);
-    arg0->field_10 = func_80042DE8(arg3, arg4, arg0->field_8, arg0->field_A, arg5);
+    arg0->field_C = func_80042DE8(posX0, posZ0, arg0->fileChunkCoordX_8, arg0->fileChunkCoordZ_A, clip);
+    arg0->field_10 = func_80042DE8(posX1, posZ1, arg0->fileChunkCoordX_8, arg0->fileChunkCoordZ_A, clip);
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800433B8);
@@ -183,7 +183,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80043578);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800435E4);
 
-s32 func_800436D8(s_80043338* arg0, s32 arg1, s16 arg2, s16 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8) // 0x800436D8
+s32 func_800436D8(s_80043338* arg0, s32 arg1, s16 fileChunkCoordX, s16 fileChunkCoordZ, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1, s32 clip) // 0x800436D8
 {
     s32 res;
 
@@ -192,11 +192,13 @@ s32 func_800436D8(s_80043338* arg0, s32 arg1, s16 arg2, s16 arg3, s32 arg4, s32 
         return arg1;
     }
 
-    arg0->field_8 = arg2;
-    arg0->field_A = arg3;
+    arg0->fileChunkCoordX_8 = fileChunkCoordX;
+    arg0->fileChunkCoordZ_A = fileChunkCoordZ;
     arg0->field_4 = Fs_QueueStartRead(arg1, arg0->field_0);
 
-    func_80043338(arg0, arg4, arg5, arg6, arg7, arg8);
+    // Compute and store distance to file chunk edge in arg0.
+    func_80043338(arg0, posX0, posZ0, posX1, posZ1, clip);
+
     res = arg0->field_4;
     return res;
 }
