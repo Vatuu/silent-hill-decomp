@@ -4,7 +4,7 @@
 
 #include "bodyprog/bodyprog.h"
 
-void Gfx_StringPosition(s32 x, s32 y)
+void Gfx_StringPosition(s32 x, s32 y) // 0x0x8004A87C
 {
     if (x != -1)
     {
@@ -20,17 +20,17 @@ void Gfx_StringPosition(s32 x, s32 y)
     D_800AD49C = 6;
 }
 
-void func_8004A8C0(s32 arg0)
+void func_8004A8C0(s32 arg0) // 0x8004A8C0
 {
     D_800AD49C = arg0;
 }
 
-void func_8004A8CC(void)
+void func_8004A8CC() // 0x8004A8CC
 {
     D_800AD49C = 6;
 }
 
-void func_8004A8DC(s16 arg0)
+void func_8004A8DC(s16 arg0) // 0x8004A8DC
 {
     D_800AD498 = arg0;
 }
@@ -43,9 +43,17 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8004AF18);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8004B658);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8004B684);
+void func_8004B684() // 0x8004B684
+{
+    D_800C38B4 = 1;
+    D_800C38B0.field_0 = 0;
+    D_800C38B0.field_1 = 1;
+    D_800C38AC = -120;
+    D_800AD498 = 7;
+    g_SysWork.field_2350 = g_SysWork.field_2350 & ~0xF;
+}
 
-void func_8004B6D4(s16 arg0, s16 arg1)
+void func_8004B6D4(s16 arg0, s16 arg1) // 0x8004B6D4
 {
     if (arg0 != NO_VALUE)
     {
@@ -59,7 +67,7 @@ void func_8004B6D4(s16 arg0, s16 arg1)
     }
 }
 
-void func_8004B74C(s16 arg0)
+void func_8004B74C(s16 arg0) // 0x8004B74C
 {
     if ((u32)arg0 >= 5)
     {
@@ -80,7 +88,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8004BB4C);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8004BBF4);
 
-void func_8004BCBC(s32 arg0)
+void func_8004BCBC(s32 arg0) // 0x8004BCBC
 {
     GsMapModelingData(arg0 + 4);
 }

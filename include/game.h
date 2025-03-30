@@ -437,7 +437,9 @@ typedef struct _SysWork
     s8              unk_229C[4];
     s32             field_22A0;
     s32             flags_22A4;
-    s8              unk_22A8[176];
+    s8              unk_22A8[165];
+    s32             field_2350;
+    s8              unk_2354[4];
     u8              field_2358;
     s8              unk_2359[33];
     s16             cameraAngleY_237A;

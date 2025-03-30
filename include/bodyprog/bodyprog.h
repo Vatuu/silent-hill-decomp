@@ -219,6 +219,12 @@ typedef struct
 
 typedef struct
 {
+    s8 field_0;
+    s8 field_1;
+} s_800C38B0;
+
+typedef struct
+{
     s32 field_0;
     s8  unk_4[4];
     s8  field_8;
@@ -403,6 +409,10 @@ extern s_800C117C D_800C117C[];
 extern u8 D_800C37D0;
 
 extern s_800C37D8* D_800C37D8;
+
+extern s_800C38B0 D_800C38B0;
+
+extern s32 D_800C38B4;
 
 extern s32 D_800C4710[];
 
@@ -724,7 +734,21 @@ s32 func_80048954(s32 com, u8* param, u8* res);
 
 void func_8004729C(u16);
 
+void func_8004A8C0(s32 arg0);
+
+void func_8004A8CC();
+
+void func_8004A8DC(s16 arg0);
+
+void func_8004B684();
+
+void func_8004B6D4(s16 arg0, s16 arg1);
+
+void func_8004B74C(s16 arg0);
+
 void func_8004B9F8(s32 arg0, u8 arg1); // Types assumed.
+
+void func_8004BCBC(s32 arg0);
 
 void func_8005E0DC(s32); // Types assumed.
 
