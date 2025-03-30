@@ -427,6 +427,12 @@ typedef struct _SysWork
     s_SubCharacter  npcs_1A0[NPC_COUNT_MAX];
     GsCOORDINATE2   playerBoneCoords_890[PlayerBoneIdx_Count];
     s8              unk_980[5464]; // Maybe NPC bone coords? Would have to be a buffer.
+
+    /*s8              unk_980[1760];
+    GsCOORDINATE2   npc0BoneCoords_FC0[18]; // Dynamic buffer? Size is 18 for flyer.
+    s8              unk_1010[4744]; // Some non-coord data appears before next NPC coord array, which is size 22 for dog.
+*/
+
     s32             flags_2298; // Something related to map loading.
     s8              unk_229C[4];
     s32             field_22A0;

@@ -401,7 +401,7 @@ static inline s32 Anim_GetTimeStep(s_Model* model, s_Model* targetModel)
     return 0;
 }
 
-void Anim_Update(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Model* targetModel) // 0x800449F0
+void Anim_Update0(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Model* targetModel) // 0x800449F0
 {
     s32 setAnimIdx;
     s32 timeStep;
@@ -460,7 +460,7 @@ void Anim_Update(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Model
     }
 }
 
-void func_80044B38(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Model* targetModel) // 0x80044B38
+void Anim_Update1(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Model* targetModel) // 0x80044B38
 {
     s32 keyframeIdx0;
     s32 keyframeIdx1;
@@ -519,7 +519,7 @@ void func_80044B38(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Mod
     model->anim_4.keyframeIdx1_A = 0;
 }
 
-void func_80044CA4(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Model* targetModel) // 0x80044CA4
+void Anim_Update2(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Model* targetModel) // 0x80044CA4
 {
     s32 setAnimIdx;
     s32 newKeyframeIdx0;
@@ -578,7 +578,7 @@ void func_80044CA4(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Mod
     }
 }
 
-void func_80044DF0(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Model* targetModel)
+void Anim_Update3(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Model* targetModel) // 0x80044DF0
 {
     s32 keyframeIdx0;
     s32 keyframeIdx1;

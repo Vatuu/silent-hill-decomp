@@ -657,17 +657,17 @@ s_80043F2C* func_80043F2C(s_80043F2C* arg0, s_80043F2C* arg1);
 
 void func_80044044(s_80044044* arg0, s32 arg1, s32 arg2);
 
-/** Updates a model's animation, variant 1. */
-void Anim_Update(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Model* targetModel);
+/** Updates a character's animation, variant 0. First param might be `s_SubCharacter` instead. */
+void Anim_Update0(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Model* targetModel);
 
-/** Updates a model's animation, variant 2. */
-void func_80044B38(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Model* targetModel);
+/** Updates a character's animation, variant 1. */
+void Anim_Update1(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Model* targetModel);
 
-/** Updates a model's animation, variant 3. */
-void func_80044CA4(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Model* targetModel);
+/** Updates a character's animation, variant 2. */
+void Anim_Update2(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Model* targetModel);
 
-/** Updates a model's animation, variant 4. */
-void func_80044DF0(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Model* targetModel);
+/** Updates a character's animation, variant 3. */
+void Anim_Update3(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Model* targetModel);
 
 void func_80044F14(s32 mat, s16 z, s16 x, s16 y);
 

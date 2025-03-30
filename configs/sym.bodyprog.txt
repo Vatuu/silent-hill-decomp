@@ -166,7 +166,10 @@ PreservedSignSubtract = 0x80080594; //type:func
 Camera_SetTranslation = 0x80086A94; // type:func
 Camera_SetRotation = 0x80086B70; // type:func
 
-Anim_Update = 0x800449F0; // type:func
+Anim_Update0 = 0x800449F0; // type:func
+Anim_Update1 = 0x80044B38; // type:func
+Anim_Update2 = 0x80044CA4; // type:func
+Anim_Update3 = 0x80044DF0; // type:func
 
 Gfx_ClearRectInterlaced = 0x80032358; // type:func
 Gfx_Init = 0x80032428; // type:func

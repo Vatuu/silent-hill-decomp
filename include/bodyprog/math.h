@@ -7,13 +7,13 @@
 #define SIN_LUT_SIZE   4096  /** Number of entries in the sine lookup table. */
 #define FP_ANGLE_COUNT 65536 /** Number of fixed-point angles in Q1.15 format. */
 
-/** Returns the larger of two values. */
-#define MAX(val0, val1) \
-    (((val0) > (val1)) ? (val0) : (val1))
-
 /** Returns the smaller of two values. */
 #define MIN(val0, val1) \
     (((val0) < (val1)) ? (val0) : (val1))
+
+/** Returns the larger of two values. */
+#define MAX(val0, val1) \
+    (((val0) > (val1)) ? (val0) : (val1))
 
 /** Clamps a value to the range [min, max]. */
 #define CLAMP(val, min, max) \

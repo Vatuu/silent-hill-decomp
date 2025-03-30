@@ -609,8 +609,8 @@ void MainLoop() // 0x80032ee0
     #define V_BLANKS_MAX             4
 
     s32 vBlanks;
-    s32 vCountCopy;
     s32 vCount;
+    s32 vCountCopy;
     s32 interval;
 
     // Initialize engine.
@@ -750,7 +750,7 @@ void MainLoop() // 0x80032ee0
             g_VBlanks = MIN(g_VBlanks, V_BLANKS_MAX);
             
             // Update V count.
-            vCount = MIN(GsGetVcount(), H_BLANKS_PER_FRAME_MIN); // Will call GsGetVcount() twice.
+            vCount = MIN(GsGetVcount(), H_BLANKS_PER_FRAME_MIN); // NOTE: Will call GsGetVcount() twice.
             vCountCopy = vCount;
         }
 
