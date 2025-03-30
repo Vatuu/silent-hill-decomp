@@ -670,7 +670,7 @@ void func_80044FE0(s_Skeleton* skel, s_Bone* bones, u8 boneCount) // 0x80044FE0
 {
     skel->bones_8 = bones;
     skel->boneCount_0 = boneCount;
-    skel->field_1 = 0;
+    skel->boneIdx_1 = 0;
     skel->field_2 = 1;
     skel->field_4 = 0;
 
@@ -707,6 +707,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800452EC);
 // Anim func. Traverses skeleton bones for something.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80045360);
 
+// `cond` may actually be another `s_Skeleton` pointer.
 void func_800453E8(s_Skeleton* skel, s32 cond) // 0x800453E8
 {
     s_Bone* bone;

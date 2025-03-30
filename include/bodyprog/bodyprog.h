@@ -261,7 +261,7 @@ STATIC_ASSERT_SIZEOF(s_Bone, 24);
 typedef struct
 {
     u8      boneCount_0;
-    s8      field_1;
+    u8      boneIdx_1; // Current bone index? Used in traversal.
     s8      field_2;
     s8      field_3;
     s32     field_4;
@@ -269,7 +269,7 @@ typedef struct
 
     // Maybe incorrect.
     s8      unk_C[3];
-    u8      field_10;
+    u8      field_10; // Some count related to bone hierarchy.
     s8      unk_11;
     s8      field_12;
     s8      field_13;
@@ -286,6 +286,8 @@ extern char D_80025394[];
 extern s32 D_80025528; // Type assumed.
 
 extern s32 D_80025530; // Type assumed.
+
+extern RECT D_80028A20;
 
 extern RECT D_8002AB10;
 
@@ -861,6 +863,8 @@ void func_8005B474(s32* arg0, u32 arg1, s32 idx);
 void func_8005BF0C(s16 arg0, s16 arg1, s16 arg2);
 
 s16 func_8005BF38(s32 arg0);
+
+void func_80066E40();
 
 /** Draws some string in display space. */
 void func_80032CE8();

@@ -275,6 +275,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_80056BF8);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_80056C80);
 
+// First arg is `s_Bone`.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_80056C8C);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_80056CB4);
@@ -483,7 +484,12 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_80066184);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_80066D90);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_80066E40);
+void func_80066E40() // 0x80066E40
+{
+    DrawSync(0);
+    StoreImage(&D_80028A20, FS_BUFFER_3);
+    DrawSync(0);
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_80066E7C);
 
