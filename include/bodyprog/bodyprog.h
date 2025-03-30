@@ -82,8 +82,8 @@ typedef struct
     s32 field_4;
     s16 field_8;
     s16 field_A;
-    s32 field_C;
-    s32 field_10;
+    s32 field_C;  // Something to do with distance from file chunk edge.
+    s32 field_10; // Something to do with distance from file chunk edge.
 } s_80043338;
 
 // Maybe s_Skeleton?
@@ -632,7 +632,8 @@ u32 func_80041B1C(void* arg0);
 
 s32 func_80042C04(s32 idx);
 
-s32 func_80042DE8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
+/** Gets distance to the edge of a file chunk? */
+s32 func_80042DE8(s32 posX, s32 posZ, s32 fileChunkCoordX, s32 fileChunkCoordZ, s32 clip);
 
 void func_80043338(s_80043338* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
 

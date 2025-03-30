@@ -146,21 +146,21 @@ s32 func_80042C04(s32 idx) // 0x80042C04
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80042C3C);
 
-s32 func_80042DE8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x80042DE8
+s32 func_80042DE8(s32 posX, s32 posZ, s32 fileChunkCoordX, s32 fileChunkCoordZ, s32 clip) // 0x80042DE8
 {
-    s32 res;
+    s32 dist;
 
-    res = func_80042E2C(arg0 >> 4, arg1 >> 4);
-    if (arg4 != 0)
+    dist = func_80042E2C(FP_FROM(posX, Q4_SHIFT), FP_FROM(posZ, Q4_SHIFT), fileChunkCoordX, fileChunkCoordZ);
+    if (clip != 0)
     {
-        res -= 4096;
-        if (res < 0)
+        dist -= FP_TILE(16.0f);
+        if (dist < 0)
         {
-            res = 0;
+            dist = 0;
         }
     }
 
-    return res;
+    return dist;
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80042E2C);
