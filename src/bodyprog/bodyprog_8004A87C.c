@@ -491,7 +491,11 @@ void func_80066E40() // 0x80066E40
     DrawSync(0);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_80066E7C);
+void func_80066E7C() // 0x80066E7C
+{
+    LoadImage(&D_80028A20, FS_BUFFER_3);
+    DrawSync(0);
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_80066EB0);
 

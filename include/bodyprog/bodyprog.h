@@ -866,6 +866,8 @@ s16 func_8005BF38(s32 arg0);
 
 void func_80066E40();
 
+void func_80066E7C();
+
 /** Draws some string in display space. */
 void func_80032CE8();
 
