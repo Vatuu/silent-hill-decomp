@@ -97,23 +97,26 @@ typedef enum _SysState
 
 typedef enum _PlayerBoneIdx
 {
-    PlayerBoneIdx_Pelvis        = 0,
+    PlayerBoneIdx_Root          = 0,
     PlayerBoneIdx_Torso         = 1,
     PlayerBoneIdx_Head          = 2,
-    PlayerBoneIdx_LeftUpperArm  = 3,
-    PlayerBoneIdx_LeftForearm   = 4,
-    PlayerBoneIdx_LeftHand      = 5,
-    PlayerBoneIdx_RightUpperArm = 6,
-    PlayerBoneIdx_RightForearm  = 7,
-    PlayerBoneIdx_RightHand     = 8,
-    PlayerBoneIdx_LeftThigh     = 9,
-    PlayerBoneIdx_LeftShin      = 10,
-    PlayerBoneIdx_LeftFoot      = 11,
-    PlayerBoneIdx_RightThigh    = 12,
-    PlayerBoneIdx_RightShin     = 13,
-    PlayerBoneIdx_RightFoot     = 14,
+    PlayerBoneIdx_LeftShoulder  = 3,
+    PlayerBoneIdx_LeftUpperArm  = 4,
+    PlayerBoneIdx_LeftForearm   = 5,
+    PlayerBoneIdx_LeftHand      = 6,
+    PlayerBoneIdx_RightShoulder = 7,
+    PlayerBoneIdx_RightUpperArm = 8,
+    PlayerBoneIdx_RightForearm  = 9,
+    PlayerBoneIdx_RightHand     = 10,
+    PlayerBoneIdx_Hips          = 11,
+    PlayerBoneIdx_LeftThigh     = 12,
+    PlayerBoneIdx_LeftShin      = 13,
+    PlayerBoneIdx_LeftFoot      = 14,
+    PlayerBoneIdx_RightThigh    = 15,
+    PlayerBoneIdx_RightShin     = 16,
+    PlayerBoneIdx_RightFoot     = 17,
 
-    PlayerBoneIdx_Count = 15
+    PlayerBoneIdx_Count = 18
 } s_PlayerBoneIdx;
 
 typedef struct _AnalogPadData
@@ -425,15 +428,10 @@ typedef struct _SysWork
     u8              isPlayerInCombatMode_4B;
     s_MainCharacter player_4C;
     s_SubCharacter  npcs_1A0[NPC_COUNT_MAX];
-    GsCOORDINATE2   playerBoneCoords_890[PlayerBoneIdx_Count];
-    s8              unk_980[5464]; // Maybe NPC bone coords? Would have to be a buffer.
-
-    /*s8              unk_980[1760];
-    GsCOORDINATE2   npc0BoneCoords_FC0[18]; // Dynamic buffer? Size is 18 for flyer.
-    s8              unk_1010[4744]; // Some non-coord data appears before next NPC coord array, which is size 22 for dog.
-*/
-
-    s32             flags_2298; // Something related to map loading.
+    GsCOORDINATE2   playerBoneCoords_890[PlayerBoneIdx_Count]; // Followed by 5 coords which appear to be unused.
+    s8              pad_E30[400];  // Might be part of the previous array for 5 exra coords which go unused.
+    s8              unk_980[4824]; // Start of this is a tightly-packed buffer for NPC bone coords. Size unclear, appears to be enough for 60.
+    s32             flags_2298;    // Something related to map loading.
     s8              unk_229C[4];
     s32             field_22A0;
     s32             flags_22A4;
