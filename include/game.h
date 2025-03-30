@@ -428,9 +428,9 @@ typedef struct _SysWork
     u8              isPlayerInCombatMode_4B;
     s_MainCharacter player_4C;
     s_SubCharacter  npcs_1A0[NPC_COUNT_MAX];
-    GsCOORDINATE2   playerBoneCoords_890[PlayerBoneIdx_Count]; // Followed by 5 coords which appear to be unused.
+    GsCOORDINATE2   playerBoneCoords_890[PlayerBoneIdx_Count];
     s8              pad_E30[400];  // Might be part of the previous array for 5 exra coords which go unused.
-    s8              unk_980[4824]; // Start of this is a tightly-packed buffer for NPC bone coords. Size unclear, appears to be enough for 60.
+    s8              unk_FC0[4824]; // Start of this is a tightly-packed buffer for NPC bone coords. Size unclear, appears to be enough for 60.
     s32             flags_2298;    // Something related to map loading.
     s8              unk_229C[4];
     s32             field_22A0;
