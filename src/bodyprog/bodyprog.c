@@ -387,11 +387,11 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80031AAC);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80031CCC);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80031EFC);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", Gfx_DebugStringPosition);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80031F40);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", Gfx_DebugStringDraw);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80032154);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", Math_IntegerToString);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_800321EC);
 

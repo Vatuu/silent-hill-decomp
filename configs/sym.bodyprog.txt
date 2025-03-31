@@ -168,6 +168,10 @@ Camera_SetRotation = 0x80086B70; // type:func
 
 Anim_Update = 0x800449F0; // type:func
 
+Gfx_DebugStringPosition = 0x80031EFC; // type:func
+Gfx_DebugStringDraw = 0x80031F40; // type:func
+Math_IntegerToString = 0x80032154; // type:func
+
 Gfx_ClearRectInterlaced = 0x80032358; // type:func
 Gfx_Init = 0x80032428; // type:func
 Settings_ScreenXYSet = 0x800324F4; // type:func

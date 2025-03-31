@@ -578,6 +578,12 @@ void func_800303E4();
  * - 'func_801E709C' in saveload.c */
 void func_800314EC(s_FsImageDesc* image);
 
+void Gfx_DebugStringPosition(s32 x, s32 y);
+
+void Gfx_DebugStringDraw(char* str);
+
+char* Math_IntegerToString(s32 numDigits, s32 value);
+
 void func_8003260C(); // Return type assumed.
 
 void func_80032D1C();
