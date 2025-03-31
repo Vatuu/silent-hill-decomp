@@ -987,11 +987,30 @@ void func_800481F8() // 0x800481F8
     func_80047A70();
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80048244);
+void func_80048244(s16 cmd) // 0x80048244
+{
+    if (D_800C1658.field_6 == (u16)cmd)
+    {
+        return;
+    }
+    
+    if (D_800C1658.field_4 != 0)
+    {
+        func_800478DC(2);
+    }
+    
+    func_80046AD8();
+    SD_EngineCmd((u16)(cmd + 0xAD));
+    func_800478DC((u8)cmd);
+    
+    D_800C37D0 = 0;
+    D_800C1658.field_6 = (u16)cmd;
+    D_800C1658.field_15 = 1;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800482D8);
 
-void Sd_StopSeq()
+void Sd_StopSeq() // 0x8004839C
 {
     func_80046B78();
     SdSeqClose(D_800C37C8);

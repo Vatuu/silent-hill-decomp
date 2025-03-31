@@ -191,7 +191,10 @@ typedef struct
 typedef struct
 {
     u16 field_0;
-    s8  unk_2[19];
+    s8  field_2[2];
+    u16 field_4;
+    u16 field_6;
+    s8  unk_8[13];
     s8  field_15;
 } s_800C1658;
 
@@ -728,6 +731,8 @@ void func_80048000();
 void func_800480FC();
 
 void func_800481F8();
+
+void func_80048244(s16 cmd);
 
 void Sd_StopSeq();
 
