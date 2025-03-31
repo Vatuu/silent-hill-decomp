@@ -436,11 +436,11 @@ void func_800DBE00()
     func_800892A4(4);
 
     g_SysWork.sysState_8 = 0;
-    g_SysWork.field_24 = 0;
+    g_SysWork.timer_24 = 0;
     g_SysWork.sysStateStep_C = 0;
     g_SysWork.field_28 = 0;
     g_SysWork.field_10 = 0;
-    g_SysWork.field_2C = 0;
+    g_SysWork.timer_2C = 0;
     g_SysWork.field_14 = 0;
     g_SysWork.player_4C.chara_0.position_18.vy = 0;
 }

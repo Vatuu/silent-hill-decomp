@@ -17,7 +17,7 @@ void func_80085D78(s32 arg0)
 {
     if (arg0 != 0)
     {
-        g_SysWork.field_2C = 0;
+        g_SysWork.timer_2C = 0;
         g_SysWork.field_14 = 0;
         g_SysWork.field_10++;
         return;
@@ -25,7 +25,7 @@ void func_80085D78(s32 arg0)
     
     g_SysWork.field_28 = 0;
     g_SysWork.field_10 = 0;
-    g_SysWork.field_2C = 0;
+    g_SysWork.timer_2C = 0;
     g_SysWork.field_14 = 0;
     g_SysWork.sysStateStep_C++;
 }
@@ -35,7 +35,7 @@ void func_80085DC0(s32 arg0, s32 sysStateStep)
     if (arg0 != 0)
     {
         g_SysWork.field_10 = sysStateStep;
-        g_SysWork.field_2C = 0;
+        g_SysWork.timer_2C = 0;
         g_SysWork.field_14 = 0;
     }
     else
@@ -43,20 +43,20 @@ void func_80085DC0(s32 arg0, s32 sysStateStep)
         g_SysWork.sysStateStep_C = sysStateStep;
         g_SysWork.field_28 = 0;
         g_SysWork.field_10 = 0;
-        g_SysWork.field_2C = 0;
+        g_SysWork.timer_2C = 0;
         g_SysWork.field_14 = 0;
     }
 }
 
 void func_80085DF0()
 {
-    g_SysWork.field_2C += g_DeltaTime1;
+    g_SysWork.timer_2C += g_DeltaTime1;
     
-    if (D_800C9668() != 0 || g_SysWork.field_2C > 4096)
+    if (D_800C9668() != 0 || g_SysWork.timer_2C > 4096)
     {
         g_SysWork.field_28 = 0;
         g_SysWork.field_10 = 0;
-        g_SysWork.field_2C = 0;
+        g_SysWork.timer_2C = 0;
         g_SysWork.field_14 = 0;
         g_SysWork.sysStateStep_C++;
     }
@@ -66,8 +66,8 @@ void func_80085E6C(s32 arg0, s32 arg1)
 {
     s32 unkTime;
 
-    unkTime = g_SysWork.field_2C + g_DeltaTime1;
-    g_SysWork.field_2C = unkTime;
+    unkTime = g_SysWork.timer_2C + g_DeltaTime1;
+    g_SysWork.timer_2C = unkTime;
     
     if (arg0 < unkTime)
     {
@@ -519,7 +519,7 @@ void func_80086C58(s32 arg0, s32 arg1)
         case 0:
             func_80085EB8(0, arg0, arg1, 0);
 
-            g_SysWork.field_2C = 0;
+            g_SysWork.timer_2C = 0;
             g_SysWork.field_14 = 0;
             g_SysWork.field_10++;
             break;
@@ -531,7 +531,7 @@ void func_80086C58(s32 arg0, s32 arg1)
         default:
             g_SysWork.field_28 = 0;
             g_SysWork.field_10 = 0;
-            g_SysWork.field_2C = 0;
+            g_SysWork.timer_2C = 0;
             g_SysWork.field_14 = 0;
             g_SysWork.sysStateStep_C++;
             break;
@@ -545,7 +545,7 @@ void func_80086D04(s32 arg0)
         case 0:
             func_80085EB8(3, arg0, 0, 0);
             
-            g_SysWork.field_2C = 0;
+            g_SysWork.timer_2C = 0;
             g_SysWork.field_14 = 0;
             g_SysWork.field_10++;
             break;
@@ -557,7 +557,7 @@ void func_80086D04(s32 arg0)
         default:
             g_SysWork.field_28 = 0;
             g_SysWork.field_10 = 0;
-            g_SysWork.field_2C = 0;
+            g_SysWork.timer_2C = 0;
             g_SysWork.field_14 = 0;
             g_SysWork.sysStateStep_C++;
             break;
@@ -570,7 +570,7 @@ void func_80086DA8(s32 arg0, s32 arg1)
     {
         case 0:
             func_8008616C(0, 1, 0, arg1, 0);
-            g_SysWork.field_2C = 0;
+            g_SysWork.timer_2C = 0;
             g_SysWork.field_14 = 0;
             g_SysWork.field_10++;
 
@@ -590,7 +590,7 @@ void func_80086E50(s32 arg0, s32 arg1, s32 arg2)
     {
         case 0:
             func_8008616C(0, 1, 0, arg1, 0);
-            g_SysWork.field_2C = 0;
+            g_SysWork.timer_2C = 0;
             g_SysWork.field_14 = 0;
             g_SysWork.field_10++;
 
@@ -620,7 +620,7 @@ void func_80086F44(s32 arg0, s32 arg1) // 0x80086F44
     func_8008616C(0, 0, 0, arg0, 0);
     g_SysWork.field_28 = 0;
     g_SysWork.field_10 = 0;
-    g_SysWork.field_2C = 0;
+    g_SysWork.timer_2C = 0;
     g_SysWork.field_14 = 0;
     g_SysWork.sysStateStep_C++;
 }
@@ -656,7 +656,7 @@ void func_80086FE8(s32 arg0, s32 arg1, s32 arg2) // 0x80086FE8
             D_800C9644();
             func_8005DC1C(arg1, arg2, 0x80, 0);
             
-            g_SysWork.field_2C = 0;
+            g_SysWork.timer_2C = 0;
             g_SysWork.field_14 = 0;
             g_SysWork.field_10++;
 
@@ -672,11 +672,11 @@ void func_80086FE8(s32 arg0, s32 arg1, s32 arg2) // 0x80086FE8
             D_800C9648(0);
 
             g_SysWork.sysState_8 = 0;
-            g_SysWork.field_24 = 0;
+            g_SysWork.timer_24 = 0;
             g_SysWork.sysStateStep_C = 0;
             g_SysWork.field_28 = 0;
             g_SysWork.field_10 = 0;
-            g_SysWork.field_2C = 0;
+            g_SysWork.timer_2C = 0;
             g_SysWork.field_14 = 0;
             break;
     }
@@ -979,12 +979,12 @@ void func_80087EDC(s32 arg0)
             if (func_800358A8(arg0) == 0)
             {
                 g_SysWork.field_10 = 3;
-                g_SysWork.field_2C = 0;
+                g_SysWork.timer_2C = 0;
                 g_SysWork.field_14 = 0;
                 return;
             }
             
-            g_SysWork.field_2C = 0;
+            g_SysWork.timer_2C = 0;
             g_SysWork.field_14 = 0;
             g_SysWork.field_22A0 |= 1 << 7;
             g_SysWork.field_10++;
@@ -994,7 +994,7 @@ void func_80087EDC(s32 arg0)
             g_SysWork.field_22A0 |= 1 << 7;
             SD_EngineCmd(23);
             
-            g_SysWork.field_2C = 0;
+            g_SysWork.timer_2C = 0;
             g_SysWork.field_14 = 0;
             g_SysWork.field_10++;
             return;
@@ -1006,7 +1006,7 @@ void func_80087EDC(s32 arg0)
             {
                 func_800358DC(arg0);
                 
-                g_SysWork.field_2C = 0;
+                g_SysWork.timer_2C = 0;
                 g_SysWork.field_14 = 0;
                 g_SysWork.field_10++;
             }
@@ -1015,7 +1015,7 @@ void func_80087EDC(s32 arg0)
         case 3:
             g_SysWork.field_28 = 0;
             g_SysWork.field_10 = 0;
-            g_SysWork.field_2C = 0;
+            g_SysWork.timer_2C = 0;
             g_SysWork.field_14 = 0;
             g_SysWork.sysStateStep_C++;
             break;
@@ -1043,7 +1043,7 @@ void func_80088048(void)
             func_80035E1C();
             SD_EngineCmd(18);
             
-            g_SysWork.field_2C = 0;
+            g_SysWork.timer_2C = 0;
             g_SysWork.field_14 = 0;
             g_SysWork.field_10++;
             break;
@@ -1053,7 +1053,7 @@ void func_80088048(void)
             {
                 g_SysWork.field_28 = 0;
                 g_SysWork.field_10 = 0;
-                g_SysWork.field_2C = 0;
+                g_SysWork.timer_2C = 0;
                 g_SysWork.field_14 = 0;
                 g_SysWork.sysStateStep_C++;
             }

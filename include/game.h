@@ -414,11 +414,11 @@ typedef struct _SysWork
     s32             field_10;       // Sometimes assigned to same thing as sysStateStep_C.
     s32             field_14;
     s32             field_18;
-    s32             field_1C; // Timer.
-    s32             field_20; // Timer.
-    s32             field_24; // Timer.
+    s32             timer_1C;
+    s32             timer_20;
+    s32             timer_24;
     s32             field_28;
-    s32             field_2C; // Timer of some kind.
+    s32             timer_2C;
     s32             field_30;
     s8              unk_34[4];
     s32             field_38; // Something related to map loading.
@@ -429,8 +429,8 @@ typedef struct _SysWork
     s_MainCharacter player_4C;
     s_SubCharacter  npcs_1A0[NPC_COUNT_MAX];
     GsCOORDINATE2   playerBoneCoords_890[PlayerBoneIdx_Count];
-    s8              pad_E30[400];  // Might be part of the previous array for 5 exra coords which go unused.
-    s8              unk_FC0[4824]; // Start of this is a tightly-packed buffer for NPC bone coords. Size unclear, appears to be enough for 60.
+    s8              pad_E30[400];  // Might be part of previous array for 5 exra coords which go unused.
+    s8              unk_FC0[4824]; // Start is tightly-packed buffer for NPC bone coords. Size unclear, appears to be enough for 60 before what might be AI data.
     s32             flags_2298;    // Something related to map loading.
     s8              unk_229C[4];
     s32             field_22A0;
@@ -481,11 +481,11 @@ extern s32 g_UncappedVBlanks;
 static inline void SysWork_StateSetNext(e_SysState sysState)
 {
     g_SysWork.sysState_8     = sysState;
-    g_SysWork.field_24       = 0;
+    g_SysWork.timer_24       = 0;
     g_SysWork.sysStateStep_C = 0;
     g_SysWork.field_28       = 0;
     g_SysWork.field_10       = 0;
-    g_SysWork.field_2C       = 0;
+    g_SysWork.timer_2C       = 0;
     g_SysWork.field_14       = 0;
 }
 
@@ -499,8 +499,8 @@ static inline void Game_StateSetNext(e_GameState gameState)
 
     g_GameWork.gameState_594 = gameState;
 
-    g_SysWork.field_1C = 0;
-    g_SysWork.field_20 = 0;
+    g_SysWork.timer_1C = 0;
+    g_SysWork.timer_20 = 0;
 
     g_GameWork.gameStateStep_598[1] = 0;
     g_GameWork.gameStateStep_598[2] = 0;
@@ -520,8 +520,8 @@ static inline void Game_StateSetPrevious()
 {
     e_GameState prevState = g_GameWork.gameState_594;
 
-    g_SysWork.field_1C = 0;
-    g_SysWork.field_20 = 0;
+    g_SysWork.timer_1C = 0;
+    g_SysWork.timer_20 = 0;
 
     g_GameWork.gameStateStep_598[1] = 0;
     g_GameWork.gameStateStep_598[2] = 0;

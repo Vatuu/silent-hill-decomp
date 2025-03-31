@@ -21,7 +21,7 @@ void func_801E2654()
             break;
 
         case 1:
-            if (g_ControllerPtr0->btns_held_C != 0 || g_SysWork.field_1C >= 301)
+            if (g_ControllerPtr0->btns_held_C != 0 || g_SysWork.timer_1C >= 301)
             {
                 D_800BCD0C           = 3;
                 g_GameWork.gameStateStep_598[0] = 2;

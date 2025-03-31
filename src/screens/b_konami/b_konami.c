@@ -50,7 +50,7 @@ void func_800C95AC() // 0x800C95AC
                 break;
 
             case 2:
-                if (g_ControllerPtr0->btns_held_C != 0 || g_SysWork.field_1C >= 181)
+                if (g_ControllerPtr0->btns_held_C != 0 || g_SysWork.timer_1C >= 181)
                 {
                     D_800BCD0C = 3;
                     D_800B5C30 = 0x333;

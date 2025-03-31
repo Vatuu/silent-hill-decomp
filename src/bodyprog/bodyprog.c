@@ -463,9 +463,9 @@ void Gfx_VSyncCallback() // 0x80032b80
     D_800A9768++;
     D_800A976C++;
 
-    g_SysWork.field_1C++;
-    g_SysWork.field_20++;
-    g_SysWork.field_24++;
+    g_SysWork.timer_1C++;
+    g_SysWork.timer_20++;
+    g_SysWork.timer_24++;
 }
 
 void GameFs_TitleGfxSeek() // 0x80032bd0
@@ -524,7 +524,7 @@ void func_80032D1C()
             g_GameWork.field_58E = 0;
             
             Gfx_Init(0x140, 0);
-            g_SysWork.field_20 = 0;
+            g_SysWork.timer_20 = 0;
             g_GameWork.gameStateStep_598[1] = 0;
             g_GameWork.gameStateStep_598[2] = 0;
             g_GameWork.gameStateStep_598[0]++;
@@ -541,7 +541,7 @@ void func_80032D1C()
                 }
                 else
                 {
-                    g_SysWork.field_20 = 0;
+                    g_SysWork.timer_20 = 0;
                     g_GameWork.gameStateStep_598[1] = 0;
                     g_GameWork.gameStateStep_598[2] = 0;
                     g_GameWork.gameStateStep_598[0]++;
@@ -564,18 +564,18 @@ void func_80032D1C()
                 
                 gameState = g_GameWork.gameState_594;
                 
-                g_SysWork.field_1C = 0;
-                g_SysWork.field_20 = 0;
+                g_SysWork.timer_1C = 0;
+                g_SysWork.timer_20 = 0;
 
                 g_GameWork.gameStateStep_598[1] = 0;
                 g_GameWork.gameStateStep_598[2] = 0;
 
                 g_SysWork.sysState_8 = 0;
-                g_SysWork.field_24 = 0;
+                g_SysWork.timer_24 = 0;
                 g_SysWork.sysStateStep_C = 0;
                 g_SysWork.field_28 = 0;
                 g_SysWork.field_10 = 0;
-                g_SysWork.field_2C = 0;
+                g_SysWork.timer_2C = 0;
                 g_SysWork.field_14 = 0;
 
                 g_GameWork.gameStateStep_598[0] = gameState;
