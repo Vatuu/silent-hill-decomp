@@ -1008,7 +1008,38 @@ void func_80048244(s16 cmd) // 0x80048244
     D_800C1658.field_15 = 1;
 }
 
+// TODO: Needs jump table.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800482D8);
+/*void func_800482D8() // 0x800482D8
+{
+    switch (D_800C1670.field_0)
+    {
+        case 0:
+            D_800C37D8 = &D_800AA274[D_800C16A8];
+            D_800C37C8 = D_800C37D8->field_0;
+            D_800C1670.field_0 = 1;
+            break;
+        
+        case 1:
+            Sd_StopSeq();
+            break;
+        
+        case 2:
+            func_800483D4();
+            break;
+        
+        case 3:
+            func_80048424();
+            break;
+        
+        case 4:
+            func_80048498();
+            break;
+        
+        default:
+            break;
+    }
+}*/
 
 void Sd_StopSeq() // 0x8004839C
 {

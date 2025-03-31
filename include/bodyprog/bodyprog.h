@@ -222,7 +222,8 @@ typedef struct
 // Maybe the same.
 typedef struct
 {
-    s8  unk_0[4];
+    u8  field_0;
+    s8  unk_1[3];
     u32 field_4;
     s32 field_8;
 } s_800C37D8;
@@ -370,6 +371,8 @@ extern s32 D_800A9A68;
 
 extern s_FsImageDesc D_800A9EB4;
 
+extern s_800C37D8 D_800AA274[];
+
 extern s16 D_800AD498;
 
 extern s32 D_800AD49C;
@@ -411,6 +414,8 @@ extern s8 D_800BCD78;
 extern u8 D_800BCDD4;
 
 extern u16 D_800BCE14;
+
+extern u8 D_800C16A8;
 
 extern u8 D_800C37D0;
 
@@ -733,6 +738,8 @@ void func_800480FC();
 void func_800481F8();
 
 void func_80048244(s16 cmd);
+
+void func_800482D8();
 
 void Sd_StopSeq();
 
