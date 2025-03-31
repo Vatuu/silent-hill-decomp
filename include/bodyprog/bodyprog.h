@@ -379,6 +379,10 @@ extern s32 D_800B55FC;
 
 extern s32 D_800B5618;
 
+extern DVECTOR g_Gfx_DebugStringPosition0;
+
+extern DVECTOR g_Gfx_DebugStringPosition1;
+
 extern s8 D_800BCD78;
 
 extern u8 D_800BCDD4;
@@ -578,7 +582,7 @@ void func_800303E4();
  * - 'func_801E709C' in saveload.c */
 void func_800314EC(s_FsImageDesc* image);
 
-void Gfx_DebugStringPosition(s32 x, s32 y);
+void Gfx_DebugStringPosition(s16 x, s16 y);
 
 void Gfx_DebugStringDraw(char* str);
 
