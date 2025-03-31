@@ -682,7 +682,7 @@ void func_80086FE8(s32 arg0, s32 arg1, s32 arg2) // 0x80086FE8
     }
 }
 
-// TODO: Something with a jump table, don't know how to get it working. -- Sezz 2025.03.28
+// TODO: Requires jump table.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008716C);
 /*void func_8008716C(s32 arg0, s32 arg1, s32 arg2) // 0x8008716C
 {
@@ -693,7 +693,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008716C);
         case 0:
             D_800C9644();
             func_8008616C(0, 1, 0, arg1, 0);
-            g_SysWork.field_2C = 0;
+            g_SysWork.timer_2C = 0;
             g_SysWork.field_14 = 0;
             g_SysWork.field_10++;
 
@@ -716,7 +716,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008716C);
             func_800862F8(2, 0, 0);
             if (g_ControllerPtr0->btns_new_10 & (g_GameWorkPtr1->controllerBinds_0.enter | g_GameWorkPtr1->controllerBinds_0.cancel))
             {
-                g_SysWork.field_2C = 0;
+                g_SysWork.timer_2C = 0;
                 g_SysWork.field_14 = 0;
                 g_SysWork.field_10++;
             }
@@ -734,17 +734,17 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008716C);
             D_800C9648(0);
 
             g_SysWork.sysState_8 = 0;
-            g_SysWork.field_24 = 0;
+            g_SysWork.timer_24 = 0;
             g_SysWork.sysStateStep_C = 0;
             g_SysWork.field_28 = 0;
             g_SysWork.field_10 = 0;
-            g_SysWork.field_2C = 0;
+            g_SysWork.timer_2C = 0;
             g_SysWork.field_14 = 0;
             break;
     }
 }*/
 
-// TODO: Something with a jump table, don't know how to get it working. -- Sezz 2025.03.28
+// TODO: Requires jump table.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80087360);
 /*void func_80087360(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x80087360
 {
@@ -802,7 +802,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80087360);
     }
 }*/
 
-// TODO: Something with a jump table, don't know how to get it working. -- Sezz 2025.03.28
+// TODO: Requires jump table.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80087540);
 /*void func_80087540(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x80087540
 {
@@ -881,7 +881,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80087540);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800877B8);
 
-// TODO: Something with a jump table, don't know how to get it working. -- Sezz 2025.03.28
+// TODO: Requires jump table.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800879FC);
 /*void func_800879FC(u32 arg0, s32 arg1) // 0x800879FC
 {
@@ -953,7 +953,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800879FC);
     }
 }*/
 
-// Requires jump table.
+// TODO: Requires jump table.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80087AF4);
 
 void func_80087EA8(s32 arg0)
