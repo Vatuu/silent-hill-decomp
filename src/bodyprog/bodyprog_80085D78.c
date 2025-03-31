@@ -1198,8 +1198,11 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008A2E0);
 
 s32 func_8008A35C(s_8008A35C* arg0, s32 arg1) // 0x8008A35C
 {
-    s32 var = arg0->field_E + arg0->field_F;
-    s32 res = 0;
+    s32 var;
+    s32 res;
+
+    var = arg0->field_E + arg0->field_F;
+    res = 0;
     if (arg1 >= arg0->field_E)
     {
         res = (arg1 < var);
