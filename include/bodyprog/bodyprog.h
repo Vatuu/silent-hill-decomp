@@ -409,10 +409,6 @@ extern u8 D_800BCDD4;
 
 extern u16 D_800BCE14;
 
-extern s_800C1020 D_800C1020;
-
-extern s_800C117C D_800C117C[];
-
 extern u8 D_800C37D0;
 
 extern s_800C37D8* D_800C37D8;
@@ -441,6 +437,10 @@ extern s8 D_800BCD40;
 extern s_800BCDA8 D_800BCDA8[];
 
 extern s32 D_800BCDB0; // Type assumed.
+
+extern s_800C1020 D_800C1020;
+
+extern s_800C117C D_800C117C[];
 
 extern s8* D_800C15B0;
 
@@ -724,6 +724,8 @@ void Sd_SetReverbEnable(s32 mode);
 void func_80047F18();
 
 void func_80048000();
+
+void func_800480FC();
 
 void func_800481F8();
 

@@ -1298,8 +1298,8 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008D5A0);
 
 void func_8008D78C()
 {
-    s32 var_v1;
-    s32 var_s1;
+    s32 var0;
+    s32 var1;
 
     if (D_800C4818.field_2 == 0)
     {
@@ -1313,25 +1313,25 @@ void func_8008D78C()
         return;
     }
 
-    var_s1 = func_8008D850();
-    if (var_s1 != 0)
+    var1 = func_8008D850();
+    if (var1 != 0)
     {
-        var_v1 = D_800C4818.field_8 - D_800C4818.field_A;
+        var0 = D_800C4818.field_8 - D_800C4818.field_A;
     }
     else
     {
-        var_v1 = -D_800C4818.field_A;
+        var0 = -D_800C4818.field_A;
     }
 
-    D_800C4818.field_A += var_v1 >> 1;
+    D_800C4818.field_A += var0 >> 1;
 
     if (vcRetCamMvSmoothF() == 0)
     {
         D_800C4818.field_A = 0;
-        var_s1 = 0;
+        var1 = 0;
     }
 
-    func_8008D990(var_s1, D_800C4818.field_A, &D_800C4818.field_C, D_800C4818.field_1C, D_800C4818.field_20);
+    func_8008D990(var1, D_800C4818.field_A, &D_800C4818.field_C, D_800C4818.field_1C, D_800C4818.field_20);
 }
 
 s32 func_8008D850()
