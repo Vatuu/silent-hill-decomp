@@ -445,7 +445,7 @@ typedef struct _SysWork
     s16             field_237E;
     s32             cameraRadiusXz_2380;
     s32             cameraY_2384;
-    u8              unk_2388[392];
+    s8              unk_2388[392];
     s32             field_2510;
     s32             field_2514[10];
     u8              unk_253C[556];

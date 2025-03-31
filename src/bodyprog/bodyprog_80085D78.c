@@ -1218,7 +1218,7 @@ void func_8008A384(s_8008A384* arg0) // 0x8008A384
 
 void func_8008A398(s_8008A384* arg0) // 0x8008A398
 {
-    arg0->field_3E |= (1 << 7);
+    arg0->field_3E |= 1 << 7;
 }
 
 void func_8008A3AC(s_8008A384* arg0) // 0x8008A3AC
