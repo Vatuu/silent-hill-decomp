@@ -1196,7 +1196,17 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008A270);
 // TODO: Has match on decomp.me, some issues getting it to build.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008A2E0);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008A35C);
+s32 func_8008A35C(s_8008A35C* arg0, s32 arg1) // 0x8008A35C
+{
+    s32 var = arg0->field_E + arg0->field_F;
+    s32 res = 0;
+    if (arg1 >= arg0->field_E)
+    {
+        res = (arg1 < var);
+    }
+
+    return res;
+}
 
 void func_8008A384(s_8008A384* arg0) // 0x8008A384
 {
