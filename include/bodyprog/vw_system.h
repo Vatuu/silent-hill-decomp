@@ -159,7 +159,7 @@ STATIC_ASSERT_SIZEOF(VC_THROUGH_DOOR_CAM_PARAM, 28);
 typedef struct _VC_NEAR_ROAD_DATA
 {
     VC_ROAD_DATA* road_p_0;
-    u_char        rd_dir_type_4_mb; // unsure
+    u_char        rd_dir_type_4_mb; // Unsure.
     u_char        use_priority_5;
     u_char        unk_6[2];
     int           chara2road_sum_dist_8;
