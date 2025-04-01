@@ -23,6 +23,10 @@
 #define FP_TO(val, shift) \
 	((val) << (shift))
 
+/** Converts a float to a fixed-point Q format. */
+#define FP_FLOAT_TO(val, shift) \
+    ((val) * FP_TO(1, (shift)))
+
 /** Converts an integer from a fixed-point Q format. */
 #define FP_FROM(val, shift) \
 	((val) >> (shift))
@@ -30,6 +34,10 @@
 /** Multiplies two integers in a fixed-point Q format and converts the result from the fixed-point Q format. */
 #define FP_MULTIPLY(val0, val1, shift) \
     (((val0) * (val1)) >> (shift))
+
+/** Multiplies an integer by a float converted to fixed-point Q format, using 64-bit intermediate via Math_MulFixed for higher precision. */
+#define FP_MULTIPLY_PRECISE(val0, val1, shift) \
+    (Math_MulFixed((val0), FP_FLOAT_TO((val1), (shift)), (shift)))
 
 /** Converts a floating-point alpha in the range [0.0f, 1.0f] to a fixed-point alpha in Q3.12 format. */
 #define FP_ALPHA(alpha) \

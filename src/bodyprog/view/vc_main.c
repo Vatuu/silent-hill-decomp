@@ -1030,8 +1030,8 @@ void vcRenewalCamData(VC_WORK* w_p, VC_CAM_MV_PARAM* cam_mv_prm_p) // 0x80084BD8
         return;
     }
 
-    dec_spd_per_dist_xz = Math_MulFixed(cam_mv_prm_p->accel_xz, 0x666, Q12_SHIFT);
-    dec_spd_per_dist_y  = Math_MulFixed(cam_mv_prm_p->accel_y, 0x1000, Q12_SHIFT);
+    dec_spd_per_dist_xz = FP_MULTIPLY_PRECISE(cam_mv_prm_p->accel_xz, 0.4f, Q12_SHIFT);
+    dec_spd_per_dist_y  = FP_MULTIPLY_PRECISE(cam_mv_prm_p->accel_y, 1.0f, Q12_SHIFT); // SH2 removed this multiply and used accel_y directly, maybe 0.4f/1.0f were tunable defines
 
     vwRenewalXZVelocityToTargetPos(&w_p->cam_velo_60.vx, &w_p->cam_velo_60.vz, &w_p->cam_pos_50,
                                    &w_p->cam_tgt_pos_44, 0x199, cam_mv_prm_p->accel_xz,
@@ -1192,7 +1192,27 @@ void vcAdjCamOfsAngByCharaInScreen(SVECTOR* cam_ang, SVECTOR* ofs_cam2chara_btm_
     cam_ang->vx = adj_cam_ang_x + cam_ang->vx;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vc_main", vcAdjCamOfsAngByOfsAngSpd);
+void vcAdjCamOfsAngByOfsAngSpd(SVECTOR* ofs_ang, SVECTOR* ofs_ang_spd, SVECTOR* ofs_tgt_ang, VC_WATCH_MV_PARAM* prm_p) // 0x8008555C
+{
+    SVECTOR unused;
+    VECTOR3 max_spd_dec_per_dist;
+
+    unused.vx = shAngleRegulate(ofs_tgt_ang->vx - ofs_ang->vx);
+    unused.vy = shAngleRegulate(ofs_tgt_ang->vy - ofs_ang->vy);
+    unused.vz = shAngleRegulate(ofs_tgt_ang->vz - ofs_ang->vz);
+
+    max_spd_dec_per_dist.vx = FP_MULTIPLY_PRECISE(prm_p->ang_accel_x, 8.0f, Q12_SHIFT);
+    max_spd_dec_per_dist.vy = FP_MULTIPLY_PRECISE(prm_p->ang_accel_y, 3.0f, Q12_SHIFT);
+    max_spd_dec_per_dist.vz = FP_MULTIPLY_PRECISE(prm_p->ang_accel_y, 3.3f, Q12_SHIFT);
+
+    ofs_ang_spd->vx = vwRetNewAngSpdToTargetAng(ofs_ang_spd->vx, ofs_ang->vx, ofs_tgt_ang->vx, prm_p->ang_accel_x, prm_p->max_ang_spd_x, max_spd_dec_per_dist.vx);
+    ofs_ang_spd->vy = vwRetNewAngSpdToTargetAng(ofs_ang_spd->vy, ofs_ang->vy, ofs_tgt_ang->vy, prm_p->ang_accel_y, prm_p->max_ang_spd_y, max_spd_dec_per_dist.vy);
+    ofs_ang_spd->vz = vwRetNewAngSpdToTargetAng(ofs_ang_spd->vz, ofs_ang->vz, ofs_tgt_ang->vz, FP_FLOAT_TO(0.4f, Q12_SHIFT), FP_FLOAT_TO(0.4f, Q12_SHIFT), FP_FLOAT_TO(3.0f, Q12_SHIFT));
+
+    ofs_ang->vx += FP_MULTIPLY(ofs_ang_spd->vx, (s64)g_DeltaTime0, Q12_SHIFT);
+    ofs_ang->vy += FP_MULTIPLY(ofs_ang_spd->vy, (s64)g_DeltaTime0, Q12_SHIFT);
+    ofs_ang->vz += FP_MULTIPLY(ofs_ang_spd->vz, (s64)g_DeltaTime0, Q12_SHIFT);
+}
 
 void vcMakeCamMatAndCamAngByBaseAngAndOfsAng(SVECTOR* cam_mat_ang, MATRIX* cam_mat, SVECTOR* base_cam_ang, SVECTOR* ofs_cam_ang, VECTOR3* cam_pos) // 0x800857EC
 {
