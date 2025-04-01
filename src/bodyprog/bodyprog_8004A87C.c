@@ -393,7 +393,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8005B62C);
 
 void func_8005BF0C(s16 arg0, s16 arg1, s16 arg2) // 0x8005BF0C
 {
-    func_80031EFC(arg1, arg2);
+    Gfx_DebugStringPosition(arg1, arg2);
 }
 
 s16 func_8005BF38(s32 arg0) // 0x8005BF38
