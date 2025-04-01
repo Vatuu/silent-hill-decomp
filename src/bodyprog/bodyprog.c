@@ -388,11 +388,13 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80031CCC);
 
 void Gfx_DebugStringPosition(s16 x, s16 y) // 0x80031EFC
 {
-    if (x != -1)
+    if (x != NO_VALUE)
     {
-        g_Gfx_DebugStringPosition0.vx = g_Gfx_DebugStringPosition1.vx = x - 160;
+        g_Gfx_DebugStringPosition0.vx =
+        g_Gfx_DebugStringPosition1.vx = x - 160;
     }
-    if (y != -1)
+
+    if (y != NO_VALUE)
     {
         g_Gfx_DebugStringPosition1.vy = y - 112;
     }

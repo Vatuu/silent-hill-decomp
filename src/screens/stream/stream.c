@@ -4,14 +4,13 @@
 #include <libds.h>
 #include <libpress.h>
 
-#include "bodyprog/libsd.h"
-
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/libsd.h"
 #include "main/fileinfo.h"
 #include "screens/stream/stream.h"
 
-#define SCRN_WIDTH 320
-#define SCRN_HEIGHT 240
+#define SCREEN_WIDTH  320
+#define SCREEN_HEIGHT 240
 
 // Old IDB name: MainLoopState3_StartMovieIntro_801E2654
 void func_801E2654()
@@ -28,7 +27,7 @@ void func_801E2654()
         case 1:
             if (g_ControllerPtr0->btns_held_C != 0 || g_SysWork.timer_1C >= 301)
             {
-                D_800BCD0C           = 3;
+                D_800BCD0C = 3;
                 g_GameWork.gameStateStep_598[0] = 2;
             }
             break;
@@ -37,7 +36,6 @@ void func_801E2654()
             if ((D_800BCD0C & 7) == 5)
             {
                 Fs_QueueWaitForEmpty();
-
                 Game_StateSetNext(GameState_MovieIntro);
             }
             break;
@@ -79,7 +77,7 @@ void func_801E28B0()
 // Movie to play seems decided by LStickLeft/LStickRight, possibly debug movie player?
 void func_801E2908()
 {
-    extern s32 g_Debug_MoviePlayerIndex; // Only used in this func, maybe a static.
+    extern s32 g_Debug_MoviePlayerIdx; // Only used in this func, maybe a static.
 
     s_GameWork*       gameWork;
     s_ControllerData* controller;
@@ -94,25 +92,25 @@ void func_801E2908()
 
     if (controller->field_18 & Pad_LStickLeft)
     {
-        g_Debug_MoviePlayerIndex--;
+        g_Debug_MoviePlayerIdx--;
     }
 
     if (controller->field_18 & Pad_LStickRight)
     {
-        g_Debug_MoviePlayerIndex++;
+        g_Debug_MoviePlayerIdx++;
     }
 
     Gfx_DebugStringPosition(40, 40);
 
 #ifdef DEBUG
-    // Recreated code from pre-Jan17 builds which include calls to display these (though DebugStringDraw was nullsub in those builds...)
+    // Recreated code from pre-Jan17 builds which include calls to display these (though DebugStringDraw was nullsub in those builds).
     Gfx_DebugStringDraw("MOVIE NO=");
-    Gfx_DebugStringDraw(Math_IntegerToString(2, g_Debug_MoviePlayerIndex));
+    Gfx_DebugStringDraw(Math_IntegerToString(2, g_Debug_MoviePlayerIdx));
 #endif
 
     if (controller->btns_new_10 & gameWork->controllerBinds_0.enter)
     {
-        open_main(FILE_XA_ZC_14392 - g_Debug_MoviePlayerIndex, 0);
+        open_main(FILE_XA_ZC_14392 - g_Debug_MoviePlayerIdx, 0);
     }
 }
 
@@ -154,9 +152,9 @@ void movie_main(char* file_name, s32 f_size, s32 sector)
     frame_cnt = 0;
     max_frame = f_size;
     
-    m = (MOVIE_STR*)0x801A2600; // probably some kind of TEMP_MEMORY_ADDR define. Also used by b_konami.
-    m->width  = SCRN_WIDTH;
-    m->height = SCRN_HEIGHT;
+    m = (MOVIE_STR*)TEMP_MEMORY_ADDR;
+    m->width  = SCREEN_WIDTH;
+    m->height = SCREEN_HEIGHT;
 
     if (sector == 0)
     {
@@ -201,7 +199,7 @@ void movie_main(char* file_name, s32 f_size, s32 sector)
         // making a static inline setupDispEnv(DISPENV*, MOVIE_STR*, s_GameWork**) func got it very close
         // but still had register differences
 
-        disp.disp.y   = 256 - (m->dec.rectid * SCRN_HEIGHT);
+        disp.disp.y   = 256 - (m->dec.rectid * SCREEN_HEIGHT);
         disp.screen.x = temp_s2->field_1C;
         disp.screen.y = 8 + ((224 - m->height) / 2) + (temp_s2->field_1D);
 
@@ -260,9 +258,9 @@ void strSetDefDecEnv(DECENV* dec, s32 x0, s32 y0, s32 x1, s32 y1) // 0x801E2F8C
     dec->rectid    = 0;
     dec->isdone    = 0;
 
-    setRECT(&dec->rect[0], x0, y0, SCRN_WIDTH * PPW, SCRN_HEIGHT);
-    setRECT(&dec->rect[1], x1, y1, SCRN_WIDTH * PPW, SCRN_HEIGHT);
-    setRECT(&dec->slice, x0, y0, 16 * PPW, SCRN_HEIGHT);
+    setRECT(&dec->rect[0], x0, y0, SCREEN_WIDTH * PPW, SCREEN_HEIGHT);
+    setRECT(&dec->rect[1], x1, y1, SCREEN_WIDTH * PPW, SCREEN_HEIGHT);
+    setRECT(&dec->slice, x0, y0, 16 * PPW, SCREEN_HEIGHT);
 }
 
 void strInit(CdlLOC* loc, void (*callback)()) // 0x801E300C

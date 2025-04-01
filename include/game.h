@@ -72,7 +72,7 @@ typedef enum _GameState
     GameState_LoadStatusScreen    = 19,
     GameState_LoadMapScreen       = 20,
     GameState_Unk15               = 21,
-    GameState_Unk16               = 22 /** Doesn't exist in function array, but DebugMoviePlayer state tries to switch to it, removed debug menu? */
+    GameState_Unk16               = 22 /** Removed debug menu? Doesn't exist in function array, but DebugMoviePlayer state tries to switch to it. */
 } e_GameState;
 
 /** State IDs used by GameState_InGame. The values are used as indices into the 0x800A9A2C function array. */
