@@ -1031,7 +1031,7 @@ void vcRenewalCamData(VC_WORK* w_p, VC_CAM_MV_PARAM* cam_mv_prm_p) // 0x80084BD8
     }
 
     dec_spd_per_dist_xz = FP_MULTIPLY_PRECISE(cam_mv_prm_p->accel_xz, 0.4f, Q12_SHIFT);
-    dec_spd_per_dist_y  = FP_MULTIPLY_PRECISE(cam_mv_prm_p->accel_y, 1.0f, Q12_SHIFT); // SH2 removed this multiply and used accel_y directly, maybe 0.4f/1.0f were tunable defines
+    dec_spd_per_dist_y  = FP_MULTIPLY_PRECISE(cam_mv_prm_p->accel_y, 1.0f, Q12_SHIFT); // SH2 removes this multiply and uses accel_y directly, maybe 0.4f/1.0f were tunable defines & compiler removed it.
 
     vwRenewalXZVelocityToTargetPos(&w_p->cam_velo_60.vx, &w_p->cam_velo_60.vz, &w_p->cam_pos_50,
                                    &w_p->cam_tgt_pos_44, 0x199, cam_mv_prm_p->accel_xz,
