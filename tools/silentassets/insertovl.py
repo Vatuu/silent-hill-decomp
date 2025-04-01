@@ -150,6 +150,8 @@ def main():
     index = 0
         
     for x in fileTable:
+        if x.strip().startswith("//"):  # Skip lines that start with "//"
+            continue
         tableLine = readTableLine(re.findall(r"\{.*?\}", x)[0])
         
         fileTableOrig.append(tableLine)
@@ -271,7 +273,9 @@ def main():
         with open(os.path.dirname(args.xmlFile)+"/shgame.xml", "a+") as newXML:
             newXML.truncate(0)
             for fileLine in XML:
-                if "source=\"SLUS_007.07\"" in fileLine:
+                if "image_name=\"mkpsxiso.bin\"" in fileLine:
+                    newXML.write(fileLine.replace("mkpsxiso", "build/SLUS_007.07"))
+                elif "source=\"SLUS_007.07\"" in fileLine:
                     newXML.write(fileLine.replace("source=\"SLUS_007.07\"", "source=\"new_SLUS_007.07\""))
                 elif "source=\"SILENT.\"" in fileLine:
                     newXML.write(fileLine.replace("source=\"SILENT.\"", "source=\"new_SILENT.\""))

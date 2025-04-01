@@ -55,7 +55,7 @@ OBJCOPY_FLAGS       := -O binary
 OBJDUMP_FLAGS       := --disassemble-all --reloc --disassemble-zeroes -Mreg-names=32
 SPLAT_FLAGS         := --disassemble-all
 DUMPSXISO_FLAGS     := -x $(ROM_DIR) -s $(ROM_DIR)/layout.xml $(IMAGE_DIR)/$(GAME_NAME).bin
-MKPSXISO_FLAGS      := -y -q -o $(BUILD_DIR) $(ROM_DIR)/shgame.xml
+MKPSXISO_FLAGS      := -y -q $(ROM_DIR)/shgame.xml
 SILENT_ASSETS_FLAGS := -exe $(ROM_DIR)/SLUS_007.07 -fs $(ROM_DIR)/SILENT. -fh $(ROM_DIR)/HILL. $(ASSETS_DIR)
 INSERT_OVLS_FLAGS   := -exe $(ROM_DIR)/SLUS_007.07 -fs $(ROM_DIR)/SILENT. -ftb $(ASSETS_DIR)/filetable.c.inc -b $(OUT_DIR) -xml $(ROM_DIR)/layout.xml -o $(ROM_DIR)
 

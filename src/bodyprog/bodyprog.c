@@ -387,11 +387,21 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80031AAC);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80031CCC);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80031EFC);
+void Gfx_DebugStringPosition(s16 x, s16 y) // 0x80031EFC
+{
+    if (x != -1)
+    {
+        g_Gfx_DebugStringPosition0.vx = g_Gfx_DebugStringPosition1.vx = x - 160;
+    }
+    if (y != -1)
+    {
+        g_Gfx_DebugStringPosition1.vy = y - 112;
+    }
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80031F40);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", Gfx_DebugStringDraw);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80032154);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", Math_IntegerToString);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_800321EC);
 
