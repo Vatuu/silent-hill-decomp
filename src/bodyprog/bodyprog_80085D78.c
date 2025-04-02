@@ -1140,7 +1140,36 @@ void func_800892DC(s32 idx, s32 arg1) // 0x800892DC
     func_800895E4(g_SysWork.field_2514, &D_8002AC04[idx], arg1 & 0xFF, idx * sizeof(s_8002AC04));
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80089314);
+void func_80089314(s32 arg0) // 0x80089314
+{
+    s32 var0;
+    s32 var1;
+
+    var0 = 24;
+    D_800AFD05 += g_VBlanks;
+    
+    if (arg0 != 0)
+    {
+        var0 = 6;
+    }
+    
+    if ((s32)D_800AFD05 >= var0)
+    {
+        var0 = func_80080514();
+        if (arg0 != 0)
+        {
+            var1 = ((var0 * 16) >> 12) + 20;
+        }
+        else
+        {
+            var1 = ((var0 * 20) >> 12) + 60;
+        }
+        
+        D_800AFD04 = (D_800AFD04 + var1) & 0x7F;
+    }
+    
+    func_800892DC(0x15, (D_800AFD04 + 32) & 0xFF);
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800893D0);
 

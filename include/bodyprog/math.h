@@ -47,7 +47,7 @@
 #define FP_ANGLE(deg) \
 	(s16)((deg) * ((FP_ANGLE_COUNT) / 360.0f))
 
-/** Converts floating-point tile units to fixed-point world units in Q12.8 format. */
+/** Converts floating-point tile units to fixed-point world units in Q24.8 format. */
 #define FP_TILE(val) \
     (s32)((val) * (1 << (Q8_SHIFT)))
 

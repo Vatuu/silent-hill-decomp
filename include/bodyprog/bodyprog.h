@@ -236,6 +236,44 @@ typedef struct
 
 typedef struct
 {
+    s8  unk_0[12];
+    s8  field_C;
+    s8  field_D;
+    s8  field_E;
+    s8  unk_F;
+    s32 field_10;
+    s32 field_14;
+    s32 field_18;
+    s8  field_1C;
+    s8  field_1D;
+    s8  field_1E;
+} s_800C39A8; // Size: 32
+
+typedef struct
+{
+    s32 unk_0[36];
+    s32 field_24;
+    s8  unk_2[212];
+    s32 field_168;
+    s32 field_16C;
+    s32 field_170;
+    s32 unk_174;
+    s16 field_178;
+    s16 field_17A;
+    s16 field_17C;
+    s32 field_180;
+    s32 field_184;
+    s32 field_188;
+} s_800C3BE8;
+
+typedef struct
+{
+    s8  unk_0[36];
+    s32 field_24;
+} s_800C3E18;
+
+typedef struct
+{
     s32 field_0;
     s8  unk_4[4];
     s8  field_8;
@@ -377,6 +415,14 @@ extern s16 D_800AD498;
 
 extern s32 D_800AD49C;
 
+extern s32 D_800AE180;
+
+extern s8 D_800AE187;
+
+extern s32 D_800AE1AC;
+
+extern s32 D_800AE1B0;
+
 extern s8 D_800AF214;
 
 extern s_MaybeCharacterAnim g_MaybePlayerAnims[];
@@ -384,6 +430,10 @@ extern s_MaybeCharacterAnim g_MaybePlayerAnims[];
 extern s32 D_800AFC7C;
 
 extern s32 D_800AFC90;
+
+extern u8 D_800AFD04;
+
+extern u8 D_800AFD05;
 
 extern s32 D_800AFD9C;
 
@@ -493,6 +543,18 @@ extern s16 D_800C38FE;
 extern s16 D_800C391C;
 
 extern s16 D_800C391E;
+
+extern s_800C39A8 D_800C39A8[];
+
+extern s32 D_800C3AE8; // Type assumed.
+
+extern s32 D_800C3B38; // Type assumed.
+
+extern s32 D_800C3B48; // Type assumed.
+
+extern s_800C3BE8 D_800C3BE8;
+
+extern s_800C3E18 D_800C3E18;
 
 extern s32 D_800C4558;
 
@@ -630,7 +692,7 @@ void Gfx_DebugStringPosition(s16 x, s16 y);
 
 void Gfx_DebugStringDraw(char* str);
 
-char* Math_IntegerToString(s32 numDigits, s32 value);
+char* Math_IntegerToString(s32 digitCount, s32 value);
 
 void func_8003260C(); // Return type assumed.
 
@@ -751,6 +813,8 @@ void func_80047F18();
 
 void func_80048000();
 
+void func_8004807C();
+
 void func_800480FC();
 
 void func_800481F8();
@@ -788,6 +852,12 @@ void func_8004B74C(s16 arg0);
 void func_8004B9F8(s32 arg0, u8 arg1); // Types assumed.
 
 void func_8004BCBC(s32 arg0);
+
+void func_800546A8(s32 arg0);
+
+void func_80054928();
+
+void func_80054A04(s8 arg0);
 
 void func_8005E0DC(s32); // Types assumed.
 
@@ -868,6 +938,8 @@ void func_800890B8();
 void func_800892A4(s32 idx);
 
 void func_800892DC(s32 idx, s32 arg1);
+
+void func_80089314(s32 arg0);
 
 void func_8008944C();
 

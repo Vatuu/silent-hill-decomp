@@ -937,7 +937,27 @@ void func_80048000() // 0x80048000
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_8004807C);
+void func_8004807C() // 0x8004807C
+{
+    u32 var;
+
+    if (CdSync(1, 0) != 2)
+    {
+        return;
+    }
+    
+    var = D_800C37D4->field_4 - D_800C37CC;
+    if (var <= 0xC7FFU)
+    {
+        CdRead(((var + 0x7FF) >> 11), CD_ADDR_0, 0x80);
+    }
+    else
+    {
+        CdRead(25, CD_ADDR_0, 0x80);
+    }
+    
+    D_800C1670 = 8;
+}
 
 #ifdef NON_MATCHING
 void func_800480FC() // 0x800480FC

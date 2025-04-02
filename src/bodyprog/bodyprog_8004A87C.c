@@ -186,8 +186,36 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_80054558);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_80054634);
 
-// Requires jump table.
+// TODO: Requires jump table.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_800546A8);
+/*void func_800546A8(s32 arg0) // 0x800546A8
+{
+    switch ((u8)arg0)
+    {
+        case 0:
+            func_8003DD80(1, 34);
+            break;
+
+        case 1:
+        case 2:
+        case 4:
+        case 5:
+        case 6:
+        case 7:
+            func_8003DD80(1, 34);
+            break;
+
+        case 32:
+        case 33:
+        case 34:
+            func_8003DD80(1, 19);
+            break;
+
+        default:
+            func_8003DD80(1, 1);
+            break;
+    }
+}*/
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_80054720);
 
@@ -195,11 +223,63 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8005487C);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_800548D8);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_80054928);
+void func_80054928() // 0x80054928
+{
+    s32 i;
+    s_800C39A8* ptr;
+    
+
+    for (i = 0; i < 10; i++)
+    {
+        u8 val = 0xFF;
+        ptr = &D_800C39A8[i];
+        ptr->field_C = val;
+        ptr->field_D = val;
+        ptr->field_E = val;
+        ptr->field_10 = 1 << 12;
+        ptr->field_14 = 0;
+        ptr->field_18 = 0;
+        ptr->field_1C = val;
+        ptr->field_1D = val;
+        ptr->field_1E = val;
+    }
+    
+    GsSetAmbient(1024, 1024, 1024);
+    GsSetLightMode(1);
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_800549A0);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_80054A04);
+void func_80054A04(s8 arg0) // 0x80054A04
+{
+    #define ADDR (void*)0x801E3600
+
+    D_800AE187 = arg0;
+    D_800AE180 = 0;
+    D_800AE1AC = 0;
+    D_800AE1B0 = 0;
+    D_800C3E18.field_24 = NO_VALUE;
+    D_800C3BE8.field_17C = 0;
+    D_800C3BE8.field_17A = 0;
+    D_800C3BE8.field_178 = 0;
+    D_800C3BE8.field_188 = 0;
+    D_800C3BE8.field_184 = 0;
+    D_800C3BE8.field_180 = 0;
+
+    func_8004BCBC(ADDR);
+
+    D_800C3E18.field_24 = 0;
+
+    func_80054720(ADDR, 9, 0);
+    func_8005487C(9);
+
+    D_800C3BE8.field_170 = 1 << 12;
+    D_800C3BE8.field_16C = 1 << 12;
+    D_800C3BE8.field_168 = 1 << 12;
+
+    func_800549A0();
+    func_8004BB4C(&D_800C3B48, &D_800C3AE8, &D_800C3B38, 0);
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_80054AD8);
 
