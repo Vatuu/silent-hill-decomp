@@ -1031,6 +1031,12 @@ void func_8003BED0();
 /** Loads a flame graphic. */
 void GameFs_FlameGfxLoad();
 
+void func_8003ECBC();
+
+void func_8003ECE4();
+
+void func_8003ED08();
+
 /** Resets player info in the savegame buffer (inventory, health, playtime). */
 void Game_SaveGameResetPlayer();
 
