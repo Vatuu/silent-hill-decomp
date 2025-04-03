@@ -182,9 +182,53 @@ s32 readEOF(u32 offset) // 0x800A717C
     return offset;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmidi2", egetc);
+s32 egetc(s_SMF_TRACK_S* track) // 0x800A723C
+{
+    u32 ret = smf_song[smf_file_no].play_ptr_504[track->dword0];
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmidi2", readvarinum);
+    track->dword0++;
+
+    if (smf_song[smf_file_no].field_518 < track->dword0)
+    {
+        track->byte20 = 1;
+        return -1;
+    }
+
+    return ret;
+}
+
+s32 readvarinum(s_SMF_TRACK_S* track) // 0x800A72B4
+{
+    s32 curByte;
+    s32 num;
+
+    curByte = egetc(track);
+
+    if (curByte == 0)
+    {
+        return 0;
+    }
+
+    if (curByte == -1)
+    {
+        track->byte20 = 1;
+        return 0;
+    }
+
+    num = curByte;
+
+    if (curByte & 0x80)
+    {
+        num = curByte & 0x7F;
+        do
+        {
+            curByte = egetc(track);
+            num     = (num << 7) + (curByte & 0x7F);
+        } while (curByte & 0x80);
+    }
+
+    return num;
+}
 
 s32 to32bit(char arg0, char arg1, char arg2, char arg3) // 0x800A733C
 {
@@ -198,7 +242,12 @@ s32 to16bit(char arg0, char arg1) // 0x800A7368
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmidi2", read32bit);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmidi2", read16bit);
+s32 read16bit(s_SMF_TRACK_S* arg0) // 0x800A73E8
+{
+    s8 b0 = egetc(arg0);
+    s8 b1 = egetc(arg0);
+    return to16bit(b0, b1) & 0xFFFF;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmidi2", readheader);
 
@@ -209,7 +258,20 @@ void len_add(s32* ptr, s32 val) // 0x800A7814
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmidi2", metaevent);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmidi2", sysex);
+void sysex(s_SMF_TRACK_S* track) // 0x800A7AEC
+{
+    u32 i     = 0;
+    u32 count = readvarinum(track);
+
+    do
+    {
+        i++;
+        if ((egetc(track) & 0xFF) == 0xF7)
+        {
+            break;
+        }
+    } while (i < count);
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmidi2", chanmessage);
 
@@ -219,12 +281,78 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmidi2", readtrack2);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmidi2", track_head_read);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmidi2", delta_time_conv);
+void delta_time_conv(s_SMF_TRACK_S* track) // 0x800A84B0
+{
+    switch (smf_song[smf_file_no].midi_ppqn_528) // midi PPQN value?
+    {
+        case 48:
+            track->deltaTimeTicks_1C *= 10;
+            track->deltaTimeTicks_1C += track->deltaTimeRemainder_18;
+
+            track->deltaTimeRemainder_18 = track->deltaTimeTicks_1C & 3;
+            track->deltaTimeTicks_1C >>= 2;
+            break;
+        case 96:
+            track->deltaTimeTicks_1C *= 5;
+            track->deltaTimeTicks_1C += track->deltaTimeRemainder_18;
+
+            track->deltaTimeRemainder_18 = track->deltaTimeTicks_1C & 3;
+            track->deltaTimeTicks_1C >>= 2;
+            break;
+        case 192:
+        case 240:
+            track->deltaTimeTicks_1C += track->deltaTimeRemainder_18;
+
+            track->deltaTimeRemainder_18 = track->deltaTimeTicks_1C & 1;
+            track->deltaTimeTicks_1C >>= 1;
+            break;
+        case 288:
+        case 360:
+            track->deltaTimeTicks_1C /= 3;
+            break;
+        case 480:
+        case 384:
+            track->deltaTimeTicks_1C += track->deltaTimeRemainder_18;
+
+            track->deltaTimeRemainder_18 = track->deltaTimeTicks_1C & 3;
+            track->deltaTimeTicks_1C >>= 2;
+            break;
+        case 768:
+        case 960:
+            track->deltaTimeTicks_1C += track->deltaTimeRemainder_18;
+
+            track->deltaTimeRemainder_18 = track->deltaTimeTicks_1C & 7;
+            track->deltaTimeTicks_1C >>= 3;
+            break;
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmidi2", midi_file_out);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmidi2", midi_smf_main);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmidi2", midi_smf_stop);
+void midi_smf_stop(s32 seq_access_num) // 0x800A8C74
+{
+    s32 i;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmidi2", midi_smf_stat);
+    for (i = 0; i < smf_song[seq_access_num].num_tracks_526; i++)
+    {
+        smf_song[seq_access_num].tracks_0[i].byte20 = 1;
+        smf_song[seq_access_num].tracks_0[i].dword0 = 0;
+    }
+}
+
+s16 midi_smf_stat(s32 seq_access_num) // 0x800A8D00
+{
+    s32 i;
+
+    for (i = 0; i < smf_song[seq_access_num].num_tracks_526; i++)
+    {
+        if (smf_song[seq_access_num].tracks_0[i].byte20 != 1)
+        {
+            return 1;
+        }
+    }
+
+    return 3;
+}

@@ -586,7 +586,7 @@ void Gfx_DebugStringPosition(s16 x, s16 y);
 
 void Gfx_DebugStringDraw(char* str);
 
-char* Math_IntegerToString(s32 numDigits, s32 value);
+char* Math_IntegerToString(s32 minWidth, s32 value);
 
 void func_8003260C(); // Return type assumed.
 

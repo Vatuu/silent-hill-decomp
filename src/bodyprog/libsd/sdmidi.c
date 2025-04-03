@@ -12,9 +12,198 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmidi", func_800A39B8);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmidi", Note2Pitch);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmidi", tre_calc);
+void tre_calc(s_SMF_PORT* midiPort) // 0x800A3B20
+{
+    s32 vol;
+    s32 var_v0;
+    s8  var_a0;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmidi", vib_calc);
+    if (midiPort->field_36 == 0)
+    {
+        return;
+    }
+
+    if (midiPort->field_32 != midiPort->field_39)
+    {
+        midiPort->field_32++;
+    }
+    else
+    {
+        if (midiPort->field_38 >= midiPort->field_3A)
+        {
+            midiPort->field_34 = midiPort->field_36;
+        }
+        else
+        {
+            if (midiPort->field_38 != 0)
+            {
+                midiPort->field_34 += midiPort->field_3C;
+            }
+            else
+            {
+                midiPort->field_34 = midiPort->field_3C;
+            }
+            midiPort->field_38++;
+        }
+
+        midiPort->field_33 += midiPort->field_3B;
+        midiPort->unk_31[0] = 0;
+        if (midiPort->field_33 < 0) // field_33 u8 to s8
+        {
+            var_a0 = -midiPort->field_33 * 2;
+            if (var_a0 < 0)
+            {
+                var_a0 = -var_a0;
+            }
+
+            var_v0 = midiPort->field_34 * var_a0;
+            if (var_v0 > 0)
+            {
+                var_v0 = -var_v0;
+            }
+        }
+        else
+        {
+            var_a0 = midiPort->field_33 * 2;
+            if (var_a0 < 0)
+            {
+                var_a0 = -var_a0;
+            }
+
+            var_v0 = midiPort->field_34 * var_a0;
+            if (var_v0 < 0)
+            {
+                var_v0 = -var_v0;
+            }
+        }
+
+        if (var_v0 != 0)
+        {
+            if (var_v0 < 0)
+            {
+                var_v0 += 0xFF;
+            }
+            midiPort->field_3E = var_v0 >> 8;
+        }
+        else
+        {
+            midiPort->field_3E = 0;
+        }
+    }
+
+    if (midiPort->field_4C == midiPort->field_3E)
+    {
+        return;
+    }
+
+    midiPort->field_4C = midiPort->field_3E;
+
+    s_attr.mask  = SPU_VOICE_VOLL | SPU_VOICE_VOLR | SPU_VOICE_VOLMODEL | SPU_VOICE_VOLMODER;
+    s_attr.voice = spu_ch_tbl[midiPort->field_0];
+
+    vol = midiPort->vol_left_C + midiPort->field_3E;
+    if (vol < 0)
+    {
+        vol = 0;
+    }
+    else if (vol > 0x3FFF)
+    {
+        vol = 0x3FFF;
+    }
+    s_attr.volume.left = vol;
+
+    vol = midiPort->vol_right_E + midiPort->field_3E;
+    if (vol < 0)
+    {
+        vol = 0;
+    }
+    else if (vol > 0x3FFF)
+    {
+        vol = 0x3FFF;
+    }
+    s_attr.volume.right = vol;
+
+    s_attr.volmode.left  = 0;
+    s_attr.volmode.right = 0;
+    SpuSetVoiceAttr(&s_attr);
+}
+
+void vib_calc(s_SMF_PORT* midiPort) // 0x800A3D30
+{
+    s32 var_v0;
+    s8  var_a1;
+
+    if (midiPort->field_26 != 0)
+    {
+        if (midiPort->field_22 != midiPort->field_29)
+        {
+            midiPort->field_22++;
+            return;
+        }
+
+        if (midiPort->field_28 >= midiPort->field_2A)
+        {
+            midiPort->field_24 = midiPort->field_26;
+        }
+        else
+        {
+            if (midiPort->field_28 != 0)
+            {
+                midiPort->field_24 += midiPort->field_2C;
+            }
+            else
+            {
+                midiPort->field_24 = midiPort->field_2C;
+            }
+            midiPort->field_28++;
+        }
+
+        midiPort->field_23 += midiPort->field_2B;
+        midiPort->field_21 = 0;
+
+        if (midiPort->field_23 < 0)
+        {
+            var_a1 = -midiPort->field_23 * 2;
+            if (var_a1 < 0)
+            {
+                var_a1 = -var_a1;
+            }
+
+            var_v0 = midiPort->field_24 * var_a1;
+            if (var_v0 > 0)
+            {
+                var_v0 = -var_v0;
+            }
+        }
+        else
+        {
+            var_a1 = midiPort->field_23 * 2;
+            if (var_a1 < 0)
+            {
+                var_a1 = -var_a1;
+            }
+
+            var_v0 = midiPort->field_24 * var_a1;
+            if (var_v0 < 0)
+            {
+                var_v0 = -var_v0;
+            }
+        }
+
+        if (var_v0 != 0)
+        {
+            if (var_v0 < 0)
+            {
+                var_v0 += 0x3FF;
+            }
+
+            midiPort->field_2E = var_v0 >> 0xA;
+            return;
+        }
+
+        midiPort->field_2E = 0;
+    }
+}
 
 void random_calc(s_SMF_PORT* midiPort) // 0x800A3E70
 {
@@ -129,7 +318,33 @@ void toremoro_set() // 0x800A439C
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmidi", pitch_bend_calc);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmidi", pitch_calc);
+void pitch_calc(s_SMF_PORT* midiPort, s32 arg1) // 0x800A4494
+{
+    s_SMF_MIDI* midi;
+    s32         temp_s0;
+    s32         temp_a0;
+
+    midi = &smf_midi[midiPort->smf_midi_num_3];
+    if (midiPort->field_26 != 0 || midi->field_2 != 0 || midi->portamentoTime_28 != 0 || midiPort->field_43 != 0 || midi->pitchBendFine_7 != midiPort->field_4E || arg1 != 0)
+    {
+        midiPort->field_4E = midi->pitchBendFine_7;
+
+        temp_s0 = midiPort->field_40 + (midiPort->field_2E + ((u16)midi->field_1C + (u16)midi->field_2A));
+        temp_s0 += (midiPort->field_8 << 7) + pitch_bend_calc(midiPort, midi->pitchBendFine_7, midi);
+        temp_a0 = temp_s0 << 0x10;
+
+        s_attr.mask  = SPU_VOICE_PITCH;
+        s_attr.voice = spu_ch_tbl[midiPort->field_0];
+        s_attr.pitch = Note2Pitch(temp_a0 >> 0x17, temp_s0 & 0x7F, midiPort->field_1E, midiPort->field_1F);
+        SpuSetVoiceAttr(&s_attr);
+    }
+
+    if (midiPort->field_26 != 0 && !SpuGetKeyStatus(spu_ch_tbl[midiPort->field_0]))
+    {
+        midiPort->field_26 = 0;
+        midiPort->field_2E = 0;
+    }
+}
 
 void midi_mod(s_SMF_MIDI* midiTrack) // 0x800A4608
 {
@@ -139,7 +354,7 @@ void midi_mod(s_SMF_MIDI* midiTrack) // 0x800A4608
         {
             if ((midiTrack->field_1C + midiTrack->field_1A) < midiTrack->field_1E)
             {
-                midiTrack->field_1C = midiTrack->field_1C + midiTrack->field_1A;
+                midiTrack->field_1C += midiTrack->field_1A;
             }
             else
             {
@@ -149,7 +364,7 @@ void midi_mod(s_SMF_MIDI* midiTrack) // 0x800A4608
         }
         else if ((midiTrack->field_1C - midiTrack->field_1A) > -midiTrack->field_1E)
         {
-            midiTrack->field_1C = midiTrack->field_1C - midiTrack->field_1A;
+            midiTrack->field_1C -= midiTrack->field_1A;
         }
         else
         {
@@ -171,7 +386,7 @@ void midi_porta(s_SMF_MIDI* midiTrack) // 0x800A46B8
         {
             if ((midiTrack->field_2A + midiTrack->field_2C) < midiTrack->field_2E)
             {
-                midiTrack->field_2A = midiTrack->field_2A + midiTrack->field_2C;
+                midiTrack->field_2A += midiTrack->field_2C;
             }
             else
             {
@@ -182,7 +397,7 @@ void midi_porta(s_SMF_MIDI* midiTrack) // 0x800A46B8
         {
             if ((midiTrack->field_2C - midiTrack->field_2A) < midiTrack->field_2E)
             {
-                midiTrack->field_2A = midiTrack->field_2A - midiTrack->field_2C;
+                midiTrack->field_2A -= midiTrack->field_2C;
             }
             else
             {
@@ -393,7 +608,21 @@ void key_off(u8 midiNum, u8 keyNum)
 
 void key_press() {} // 0x800A5DCC
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmidi", get_vab_tone);
+VagAtr* get_vab_tone(s_SMF_MIDI* midiTrack, u16 tone, u8 midiChannel) // 0x800A5DD4
+{
+    s_VabHeader* vab;
+
+    if (midiTrack->bank_idx_5A > 16)
+    {
+        vab = vab_h[smf_song[midiChannel >> 4].vab_id_508].vab_header_4;
+    }
+    else
+    {
+        vab = vab_h[midiTrack->bank_idx_5A].vab_header_4;
+    }
+
+    return &vab->vag[(midiTrack->vabProgNum_0 * 0x10) + tone];
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmidi", smf_data_entry);
 
@@ -406,6 +635,10 @@ void program_change(u8 midiChannel, u8 progNum) // 0x800A6C2C
 
 void chan_press() {} // 0x800A6C58
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmidi", pitch_bend);
+void pitch_bend(u8 midiChannel, s32 unused, u8 pitchBend)
+{
+    smf_midi[midiChannel].pitchBendFine_7 = pitchBend & 0x7F;
+    func_800A39B8(1, midiChannel, pitchBend);
+}
 
 void control_code_set(s32 seq_access_num) {} // 0x800A6CB0
