@@ -4,7 +4,7 @@
 
 #include "bodyprog/bodyprog.h"
 
-void Gfx_StringPosition(s32 x, s32 y)
+void Gfx_StringPosition(s32 x, s32 y) // 0x0x8004A87C
 {
     if (x != -1)
     {
@@ -20,17 +20,17 @@ void Gfx_StringPosition(s32 x, s32 y)
     D_800AD49C = 6;
 }
 
-void func_8004A8C0(s32 arg0)
+void func_8004A8C0(s32 arg0) // 0x8004A8C0
 {
     D_800AD49C = arg0;
 }
 
-void func_8004A8CC(void)
+void func_8004A8CC() // 0x8004A8CC
 {
     D_800AD49C = 6;
 }
 
-void func_8004A8DC(s16 arg0)
+void func_8004A8DC(s16 arg0) // 0x8004A8DC
 {
     D_800AD498 = arg0;
 }
@@ -43,9 +43,17 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8004AF18);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8004B658);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8004B684);
+void func_8004B684() // 0x8004B684
+{
+    D_800C38B4 = 1;
+    D_800C38B0.field_0 = 0;
+    D_800C38B0.field_1 = 1;
+    D_800C38AC = -120;
+    D_800AD498 = 7;
+    g_SysWork.field_2350 = g_SysWork.field_2350 & ~0xF;
+}
 
-void func_8004B6D4(s16 arg0, s16 arg1)
+void func_8004B6D4(s16 arg0, s16 arg1) // 0x8004B6D4
 {
     if (arg0 != NO_VALUE)
     {
@@ -59,7 +67,7 @@ void func_8004B6D4(s16 arg0, s16 arg1)
     }
 }
 
-void func_8004B74C(s16 arg0)
+void func_8004B74C(s16 arg0) // 0x8004B74C
 {
     if ((u32)arg0 >= 5)
     {
@@ -80,7 +88,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8004BB4C);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8004BBF4);
 
-void func_8004BCBC(s32 arg0)
+void func_8004BCBC(s32 arg0) // 0x8004BCBC
 {
     GsMapModelingData(arg0 + 4);
 }
@@ -178,8 +186,36 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_80054558);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_80054634);
 
-// Requires jump table.
+// TODO: Requires jump table.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_800546A8);
+/*void func_800546A8(s32 arg0) // 0x800546A8
+{
+    switch ((u8)arg0)
+    {
+        case 0:
+            func_8003DD80(1, 34);
+            break;
+
+        case 1:
+        case 2:
+        case 4:
+        case 5:
+        case 6:
+        case 7:
+            func_8003DD80(1, 34);
+            break;
+
+        case 32:
+        case 33:
+        case 34:
+            func_8003DD80(1, 19);
+            break;
+
+        default:
+            func_8003DD80(1, 1);
+            break;
+    }
+}*/
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_80054720);
 
@@ -187,11 +223,63 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8005487C);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_800548D8);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_80054928);
+void func_80054928() // 0x80054928
+{
+    s32 i;
+    s_800C39A8* ptr;
+    
+
+    for (i = 0; i < 10; i++)
+    {
+        u8 val = 0xFF;
+        ptr = &D_800C39A8[i];
+        ptr->field_C = val;
+        ptr->field_D = val;
+        ptr->field_E = val;
+        ptr->field_10 = 1 << 12;
+        ptr->field_14 = 0;
+        ptr->field_18 = 0;
+        ptr->field_1C = val;
+        ptr->field_1D = val;
+        ptr->field_1E = val;
+    }
+    
+    GsSetAmbient(1024, 1024, 1024);
+    GsSetLightMode(1);
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_800549A0);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_80054A04);
+void func_80054A04(s8 arg0) // 0x80054A04
+{
+    #define ADDR (void*)0x801E3600
+
+    D_800AE187 = arg0;
+    D_800AE180 = 0;
+    D_800AE1AC = 0;
+    D_800AE1B0 = 0;
+    D_800C3E18.field_24 = NO_VALUE;
+    D_800C3BE8.field_17C = 0;
+    D_800C3BE8.field_17A = 0;
+    D_800C3BE8.field_178 = 0;
+    D_800C3BE8.field_188 = 0;
+    D_800C3BE8.field_184 = 0;
+    D_800C3BE8.field_180 = 0;
+
+    func_8004BCBC(ADDR);
+
+    D_800C3E18.field_24 = 0;
+
+    func_80054720(ADDR, 9, 0);
+    func_8005487C(9);
+
+    D_800C3BE8.field_170 = 1 << 12;
+    D_800C3BE8.field_16C = 1 << 12;
+    D_800C3BE8.field_168 = 1 << 12;
+
+    func_800549A0();
+    func_8004BB4C(&D_800C3B48, &D_800C3AE8, &D_800C3B38, 0);
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_80054AD8);
 
@@ -275,6 +363,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_80056BF8);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_80056C80);
 
+// First arg is `s_Bone`.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_80056C8C);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_80056CB4);
@@ -483,9 +572,18 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_80066184);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_80066D90);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_80066E40);
+void func_80066E40() // 0x80066E40
+{
+    DrawSync(0);
+    StoreImage(&D_80028A20, FS_BUFFER_3);
+    DrawSync(0);
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_80066E7C);
+void func_80066E7C() // 0x80066E7C
+{
+    LoadImage(&D_80028A20, FS_BUFFER_3);
+    DrawSync(0);
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_80066EB0);
 
@@ -825,7 +923,7 @@ s32 func_8007F26C() // 0x8007F26C
 s32 func_8007F2AC() // 0x8007F2AC
 {
     if (g_SysWork.player_4C.chara_0.health_B0 <= 0 ||
-        g_SysWork.field_4B != 0 ||
+        g_SysWork.isPlayerInCombatMode_4B != 0 ||
         g_SysWork.player_4C.extra_128.field_1C == 5 ||
         g_SysWork.player_4C.extra_128.field_1C == 6 ||
         (g_SysWork.player_4C.extra_128.field_1C - 7) < 44u) // TODO: Probably not how OG condition was.

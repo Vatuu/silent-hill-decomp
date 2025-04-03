@@ -72,7 +72,7 @@ typedef enum _GameState
     GameState_LoadStatusScreen    = 19,
     GameState_LoadMapScreen       = 20,
     GameState_Unk15               = 21,
-    GameState_Unk16               = 22 /** Doesn't exist in function array, but DebugMoviePlayer state tries to switch to it, removed debug menu? */
+    GameState_Unk16               = 22 /** Removed debug menu? Doesn't exist in function array, but DebugMoviePlayer state tries to switch to it. */
 } e_GameState;
 
 /** State IDs used by GameState_InGame. The values are used as indices into the 0x800A9A2C function array. */
@@ -94,6 +94,30 @@ typedef enum _SysState
     SysState_GameOver    = 13,
     SysState_GamePaused  = 14
 } e_SysState;
+
+typedef enum _PlayerBoneIdx
+{
+    PlayerBoneIdx_Root          = 0,
+    PlayerBoneIdx_Torso         = 1,
+    PlayerBoneIdx_Head          = 2,
+    PlayerBoneIdx_LeftShoulder  = 3,
+    PlayerBoneIdx_LeftUpperArm  = 4,
+    PlayerBoneIdx_LeftForearm   = 5,
+    PlayerBoneIdx_LeftHand      = 6,
+    PlayerBoneIdx_RightShoulder = 7,
+    PlayerBoneIdx_RightUpperArm = 8,
+    PlayerBoneIdx_RightForearm  = 9,
+    PlayerBoneIdx_RightHand     = 10,
+    PlayerBoneIdx_Hips          = 11,
+    PlayerBoneIdx_LeftThigh     = 12,
+    PlayerBoneIdx_LeftShin      = 13,
+    PlayerBoneIdx_LeftFoot      = 14,
+    PlayerBoneIdx_RightThigh    = 15,
+    PlayerBoneIdx_RightShin     = 16,
+    PlayerBoneIdx_RightFoot     = 17,
+
+    PlayerBoneIdx_Count = 18
+} s_PlayerBoneIdx;
 
 typedef struct _AnalogPadData
 {
@@ -389,37 +413,39 @@ typedef struct _SysWork
     s32             sysStateStep_C; // Current step/state of sysState_8 game is in.
     s32             field_10;       // Sometimes assigned to same thing as sysStateStep_C.
     s32             field_14;
-    s8              unk_18[4];
-    s32             field_1C;
-    s32             field_20;
-    s32             field_24;
+    s32             field_18;
+    s32             timer_1C;
+    s32             timer_20;
+    s32             timer_24;
     s32             field_28;
-    s32             field_2C; // Timer of some kind.
+    s32             timer_2C;
     s32             field_30;
     s8              unk_34[4];
     s32             field_38; // Something related to map loading.
     s8              unk_3C[11];
     s8              field_47; // Something related to map loading.
     s8              unk_48[3];
-    u8              field_4B; // Something used among player anim state checks.
+    u8              isPlayerInCombatMode_4B;
     s_MainCharacter player_4C;
     s_SubCharacter  npcs_1A0[NPC_COUNT_MAX];
-    GsCOORDINATE2   unk_coord_890[2];
-    GsCOORDINATE2   hero_neck_930;
-    s8              unk_980[6424];
-    s32             flags_2298; // Something related to map loading.
+    GsCOORDINATE2   playerBoneCoords_890[PlayerBoneIdx_Count];
+    s8              pad_E30[400];  // Might be part of previous array for 5 exra coords which go unused.
+    s8              unk_FC0[4824]; // Start is tightly-packed buffer for NPC bone coords. Size unclear, appears to be enough for 60 before what might be AI data.
+    s32             flags_2298;    // Something related to map loading.
     s8              unk_229C[4];
     s32             field_22A0;
     s32             flags_22A4;
-    s8              unk_22A8[176];
+    s8              unk_22A8[165];
+    s32             field_2350;
+    s8              unk_2354[4];
     u8              field_2358;
     s8              unk_2359[33];
-    s16             cam_ang_y_237A;
-    s16             cam_ang_z_237C;
+    s16             cameraAngleY_237A;
+    s16             cameraAngleZ_237C;
     s16             field_237E;
-    s32             cam_r_xz_2380;
-    s32             cam_y_2384;
-    u8              unk_2388[392];
+    s32             cameraRadiusXz_2380;
+    s32             cameraY_2384;
+    s8              unk_2388[392];
     s32             field_2510;
     s32             field_2514[10];
     u8              unk_253C[556];
@@ -455,11 +481,11 @@ extern s32 g_UncappedVBlanks;
 static inline void SysWork_StateSetNext(e_SysState sysState)
 {
     g_SysWork.sysState_8     = sysState;
-    g_SysWork.field_24       = 0;
+    g_SysWork.timer_24       = 0;
     g_SysWork.sysStateStep_C = 0;
     g_SysWork.field_28       = 0;
     g_SysWork.field_10       = 0;
-    g_SysWork.field_2C       = 0;
+    g_SysWork.timer_2C       = 0;
     g_SysWork.field_14       = 0;
 }
 
@@ -473,8 +499,8 @@ static inline void Game_StateSetNext(e_GameState gameState)
 
     g_GameWork.gameState_594 = gameState;
 
-    g_SysWork.field_1C = 0;
-    g_SysWork.field_20 = 0;
+    g_SysWork.timer_1C = 0;
+    g_SysWork.timer_20 = 0;
 
     g_GameWork.gameStateStep_598[1] = 0;
     g_GameWork.gameStateStep_598[2] = 0;
@@ -494,8 +520,8 @@ static inline void Game_StateSetPrevious()
 {
     e_GameState prevState = g_GameWork.gameState_594;
 
-    g_SysWork.field_1C = 0;
-    g_SysWork.field_20 = 0;
+    g_SysWork.timer_1C = 0;
+    g_SysWork.timer_20 = 0;
 
     g_GameWork.gameStateStep_598[1] = 0;
     g_GameWork.gameStateStep_598[2] = 0;

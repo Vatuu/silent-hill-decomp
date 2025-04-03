@@ -17,7 +17,7 @@ void func_80085D78(s32 arg0)
 {
     if (arg0 != 0)
     {
-        g_SysWork.field_2C = 0;
+        g_SysWork.timer_2C = 0;
         g_SysWork.field_14 = 0;
         g_SysWork.field_10++;
         return;
@@ -25,7 +25,7 @@ void func_80085D78(s32 arg0)
     
     g_SysWork.field_28 = 0;
     g_SysWork.field_10 = 0;
-    g_SysWork.field_2C = 0;
+    g_SysWork.timer_2C = 0;
     g_SysWork.field_14 = 0;
     g_SysWork.sysStateStep_C++;
 }
@@ -35,7 +35,7 @@ void func_80085DC0(s32 arg0, s32 sysStateStep)
     if (arg0 != 0)
     {
         g_SysWork.field_10 = sysStateStep;
-        g_SysWork.field_2C = 0;
+        g_SysWork.timer_2C = 0;
         g_SysWork.field_14 = 0;
     }
     else
@@ -43,20 +43,20 @@ void func_80085DC0(s32 arg0, s32 sysStateStep)
         g_SysWork.sysStateStep_C = sysStateStep;
         g_SysWork.field_28 = 0;
         g_SysWork.field_10 = 0;
-        g_SysWork.field_2C = 0;
+        g_SysWork.timer_2C = 0;
         g_SysWork.field_14 = 0;
     }
 }
 
 void func_80085DF0()
 {
-    g_SysWork.field_2C += g_DeltaTime1;
+    g_SysWork.timer_2C += g_DeltaTime1;
     
-    if (D_800C9668() != 0 || g_SysWork.field_2C > 4096)
+    if (D_800C9668() != 0 || g_SysWork.timer_2C > 4096)
     {
         g_SysWork.field_28 = 0;
         g_SysWork.field_10 = 0;
-        g_SysWork.field_2C = 0;
+        g_SysWork.timer_2C = 0;
         g_SysWork.field_14 = 0;
         g_SysWork.sysStateStep_C++;
     }
@@ -66,8 +66,8 @@ void func_80085E6C(s32 arg0, s32 arg1)
 {
     s32 unkTime;
 
-    unkTime = g_SysWork.field_2C + g_DeltaTime1;
-    g_SysWork.field_2C = unkTime;
+    unkTime = g_SysWork.timer_2C + g_DeltaTime1;
+    g_SysWork.timer_2C = unkTime;
     
     if (arg0 < unkTime)
     {
@@ -300,11 +300,26 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80086470);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800865FC);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800866D4);
+void func_800866D4(s32 arg0, s32 arg1, s32 arg2) // 0x800866D4
+{
+    if (D_800C964C(arg0, &D_800C4640, D_800C4700, arg1) == 1)
+    {
+        func_80085D78(arg2);
+    }
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80086728);
+void func_80086728(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x80086728
+{
+    if (D_800C96B8(arg0, arg1, &D_800C46A0, D_800C4702, arg2) == 1)
+    {
+        func_80085D78(arg3);
+    }
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008677C);
+void func_8008677C(s32 arg0, s32 arg1, s32 arg2) // 0x8008677C
+{
+    D_800C96B8(arg0, arg1, &D_800C46A0, D_800C4702, arg2);
+}
 
 void func_800867B4(s32 caseParam, s32 idx) // 0x800867B4
 {
@@ -519,7 +534,7 @@ void func_80086C58(s32 arg0, s32 arg1)
         case 0:
             func_80085EB8(0, arg0, arg1, 0);
 
-            g_SysWork.field_2C = 0;
+            g_SysWork.timer_2C = 0;
             g_SysWork.field_14 = 0;
             g_SysWork.field_10++;
             break;
@@ -531,7 +546,7 @@ void func_80086C58(s32 arg0, s32 arg1)
         default:
             g_SysWork.field_28 = 0;
             g_SysWork.field_10 = 0;
-            g_SysWork.field_2C = 0;
+            g_SysWork.timer_2C = 0;
             g_SysWork.field_14 = 0;
             g_SysWork.sysStateStep_C++;
             break;
@@ -545,7 +560,7 @@ void func_80086D04(s32 arg0)
         case 0:
             func_80085EB8(3, arg0, 0, 0);
             
-            g_SysWork.field_2C = 0;
+            g_SysWork.timer_2C = 0;
             g_SysWork.field_14 = 0;
             g_SysWork.field_10++;
             break;
@@ -557,7 +572,7 @@ void func_80086D04(s32 arg0)
         default:
             g_SysWork.field_28 = 0;
             g_SysWork.field_10 = 0;
-            g_SysWork.field_2C = 0;
+            g_SysWork.timer_2C = 0;
             g_SysWork.field_14 = 0;
             g_SysWork.sysStateStep_C++;
             break;
@@ -570,7 +585,7 @@ void func_80086DA8(s32 arg0, s32 arg1)
     {
         case 0:
             func_8008616C(0, 1, 0, arg1, 0);
-            g_SysWork.field_2C = 0;
+            g_SysWork.timer_2C = 0;
             g_SysWork.field_14 = 0;
             g_SysWork.field_10++;
 
@@ -590,7 +605,7 @@ void func_80086E50(s32 arg0, s32 arg1, s32 arg2)
     {
         case 0:
             func_8008616C(0, 1, 0, arg1, 0);
-            g_SysWork.field_2C = 0;
+            g_SysWork.timer_2C = 0;
             g_SysWork.field_14 = 0;
             g_SysWork.field_10++;
 
@@ -620,7 +635,7 @@ void func_80086F44(s32 arg0, s32 arg1) // 0x80086F44
     func_8008616C(0, 0, 0, arg0, 0);
     g_SysWork.field_28 = 0;
     g_SysWork.field_10 = 0;
-    g_SysWork.field_2C = 0;
+    g_SysWork.timer_2C = 0;
     g_SysWork.field_14 = 0;
     g_SysWork.sysStateStep_C++;
 }
@@ -656,7 +671,7 @@ void func_80086FE8(s32 arg0, s32 arg1, s32 arg2) // 0x80086FE8
             D_800C9644();
             func_8005DC1C(arg1, arg2, 0x80, 0);
             
-            g_SysWork.field_2C = 0;
+            g_SysWork.timer_2C = 0;
             g_SysWork.field_14 = 0;
             g_SysWork.field_10++;
 
@@ -672,17 +687,17 @@ void func_80086FE8(s32 arg0, s32 arg1, s32 arg2) // 0x80086FE8
             D_800C9648(0);
 
             g_SysWork.sysState_8 = 0;
-            g_SysWork.field_24 = 0;
+            g_SysWork.timer_24 = 0;
             g_SysWork.sysStateStep_C = 0;
             g_SysWork.field_28 = 0;
             g_SysWork.field_10 = 0;
-            g_SysWork.field_2C = 0;
+            g_SysWork.timer_2C = 0;
             g_SysWork.field_14 = 0;
             break;
     }
 }
 
-// TODO: Something with a jump table, don't know how to get it working. -- Sezz 2025.03.28
+// TODO: Requires jump table.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008716C);
 /*void func_8008716C(s32 arg0, s32 arg1, s32 arg2) // 0x8008716C
 {
@@ -693,7 +708,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008716C);
         case 0:
             D_800C9644();
             func_8008616C(0, 1, 0, arg1, 0);
-            g_SysWork.field_2C = 0;
+            g_SysWork.timer_2C = 0;
             g_SysWork.field_14 = 0;
             g_SysWork.field_10++;
 
@@ -716,7 +731,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008716C);
             func_800862F8(2, 0, 0);
             if (g_ControllerPtr0->btns_new_10 & (g_GameWorkPtr1->controllerBinds_0.enter | g_GameWorkPtr1->controllerBinds_0.cancel))
             {
-                g_SysWork.field_2C = 0;
+                g_SysWork.timer_2C = 0;
                 g_SysWork.field_14 = 0;
                 g_SysWork.field_10++;
             }
@@ -734,17 +749,17 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008716C);
             D_800C9648(0);
 
             g_SysWork.sysState_8 = 0;
-            g_SysWork.field_24 = 0;
+            g_SysWork.timer_24 = 0;
             g_SysWork.sysStateStep_C = 0;
             g_SysWork.field_28 = 0;
             g_SysWork.field_10 = 0;
-            g_SysWork.field_2C = 0;
+            g_SysWork.timer_2C = 0;
             g_SysWork.field_14 = 0;
             break;
     }
 }*/
 
-// TODO: Something with a jump table, don't know how to get it working. -- Sezz 2025.03.28
+// TODO: Requires jump table.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80087360);
 /*void func_80087360(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x80087360
 {
@@ -802,7 +817,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80087360);
     }
 }*/
 
-// TODO: Something with a jump table, don't know how to get it working. -- Sezz 2025.03.28
+// TODO: Requires jump table.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80087540);
 /*void func_80087540(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x80087540
 {
@@ -881,7 +896,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80087540);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800877B8);
 
-// TODO: Something with a jump table, don't know how to get it working. -- Sezz 2025.03.28
+// TODO: Requires jump table.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800879FC);
 /*void func_800879FC(u32 arg0, s32 arg1) // 0x800879FC
 {
@@ -953,7 +968,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800879FC);
     }
 }*/
 
-// Requires jump table.
+// TODO: Requires jump table.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80087AF4);
 
 void func_80087EA8(s32 arg0)
@@ -979,12 +994,12 @@ void func_80087EDC(s32 arg0)
             if (func_800358A8(arg0) == 0)
             {
                 g_SysWork.field_10 = 3;
-                g_SysWork.field_2C = 0;
+                g_SysWork.timer_2C = 0;
                 g_SysWork.field_14 = 0;
                 return;
             }
             
-            g_SysWork.field_2C = 0;
+            g_SysWork.timer_2C = 0;
             g_SysWork.field_14 = 0;
             g_SysWork.field_22A0 |= 1 << 7;
             g_SysWork.field_10++;
@@ -994,7 +1009,7 @@ void func_80087EDC(s32 arg0)
             g_SysWork.field_22A0 |= 1 << 7;
             SD_EngineCmd(23);
             
-            g_SysWork.field_2C = 0;
+            g_SysWork.timer_2C = 0;
             g_SysWork.field_14 = 0;
             g_SysWork.field_10++;
             return;
@@ -1006,7 +1021,7 @@ void func_80087EDC(s32 arg0)
             {
                 func_800358DC(arg0);
                 
-                g_SysWork.field_2C = 0;
+                g_SysWork.timer_2C = 0;
                 g_SysWork.field_14 = 0;
                 g_SysWork.field_10++;
             }
@@ -1015,7 +1030,7 @@ void func_80087EDC(s32 arg0)
         case 3:
             g_SysWork.field_28 = 0;
             g_SysWork.field_10 = 0;
-            g_SysWork.field_2C = 0;
+            g_SysWork.timer_2C = 0;
             g_SysWork.field_14 = 0;
             g_SysWork.sysStateStep_C++;
             break;
@@ -1043,7 +1058,7 @@ void func_80088048(void)
             func_80035E1C();
             SD_EngineCmd(18);
             
-            g_SysWork.field_2C = 0;
+            g_SysWork.timer_2C = 0;
             g_SysWork.field_14 = 0;
             g_SysWork.field_10++;
             break;
@@ -1053,7 +1068,7 @@ void func_80088048(void)
             {
                 g_SysWork.field_28 = 0;
                 g_SysWork.field_10 = 0;
-                g_SysWork.field_2C = 0;
+                g_SysWork.timer_2C = 0;
                 g_SysWork.field_14 = 0;
                 g_SysWork.sysStateStep_C++;
             }
@@ -1125,7 +1140,36 @@ void func_800892DC(s32 idx, s32 arg1) // 0x800892DC
     func_800895E4(g_SysWork.field_2514, &D_8002AC04[idx], arg1 & 0xFF, idx * sizeof(s_8002AC04));
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80089314);
+void func_80089314(s32 arg0) // 0x80089314
+{
+    s32 var0;
+    s32 var1;
+
+    var0 = 24;
+    D_800AFD05 += g_VBlanks;
+    
+    if (arg0 != 0)
+    {
+        var0 = 6;
+    }
+    
+    if ((s32)D_800AFD05 >= var0)
+    {
+        var0 = func_80080514();
+        if (arg0 != 0)
+        {
+            var1 = ((var0 * 16) >> 12) + 20;
+        }
+        else
+        {
+            var1 = ((var0 * 20) >> 12) + 60;
+        }
+        
+        D_800AFD04 = (D_800AFD04 + var1) & 0x7F;
+    }
+    
+    func_800892DC(0x15, (D_800AFD04 + 32) & 0xFF);
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800893D0);
 
@@ -1196,13 +1240,39 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008A270);
 // TODO: Has match on decomp.me, some issues getting it to build.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008A2E0);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008A35C);
+s32 func_8008A35C(s_8008A35C* arg0, s32 arg1) // 0x8008A35C
+{
+    s32 var;
+    s32 res;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008A384);
+    var = arg0->field_E + arg0->field_F;
+    res = 0;
+    if (arg1 >= arg0->field_E)
+    {
+        res = (arg1 < var);
+    }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008A398);
+    return res;
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008A3AC);
+void func_8008A384(s_8008A384* arg0) // 0x8008A384
+{
+    arg0->field_3E &= ~(1 << 7);
+}
+
+void func_8008A398(s_8008A384* arg0) // 0x8008A398
+{
+    arg0->field_3E |= 1 << 7;
+}
+
+void func_8008A3AC(s_8008A384* arg0) // 0x8008A3AC
+{
+    if (!(arg0->field_3E & (1 << 7)))
+    {
+        arg0->field_44 = 0;
+        func_8008A3E0();
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008A3E0);
 
@@ -1272,8 +1342,8 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008D5A0);
 
 void func_8008D78C()
 {
-    s32 var_v1;
-    s32 var_s1;
+    s32 var0;
+    s32 var1;
 
     if (D_800C4818.field_2 == 0)
     {
@@ -1287,25 +1357,25 @@ void func_8008D78C()
         return;
     }
 
-    var_s1 = func_8008D850();
-    if (var_s1 != 0)
+    var1 = func_8008D850();
+    if (var1 != 0)
     {
-        var_v1 = D_800C4818.field_8 - D_800C4818.field_A;
+        var0 = D_800C4818.field_8 - D_800C4818.field_A;
     }
     else
     {
-        var_v1 = -D_800C4818.field_A;
+        var0 = -D_800C4818.field_A;
     }
 
-    D_800C4818.field_A += var_v1 >> 1;
+    D_800C4818.field_A += var0 >> 1;
 
     if (vcRetCamMvSmoothF() == 0)
     {
         D_800C4818.field_A = 0;
-        var_s1 = 0;
+        var1 = 0;
     }
 
-    func_8008D990(var_s1, D_800C4818.field_A, &D_800C4818.field_C, D_800C4818.field_1C, D_800C4818.field_20);
+    func_8008D990(var1, D_800C4818.field_A, &D_800C4818.field_C, D_800C4818.field_1C, D_800C4818.field_20);
 }
 
 s32 func_8008D850()

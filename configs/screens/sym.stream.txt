@@ -10,7 +10,7 @@ strNextVlc = 0x801e3298; // type:func
 strNext = 0x801e331c; // type:func
 strSync = 0x801e3438; // type:func
 
-g_Debug_MoviePlayerIndex = 0x801E3F3C; // type:s32
+g_Debug_MoviePlayerIdx = 0x801E3F3C; // type:s32
 
 // MOVIESYS globals
 max_frame = 0x801E3F40;
