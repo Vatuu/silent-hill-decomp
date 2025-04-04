@@ -759,7 +759,11 @@ void DMSHeader_FixOffsets(s_DMSHeader* header);
 
 void DMSEntry_FixOffsets(s_DMSEntry* entry, s_DMSHeader* header);
 
+void DMS_CharacterGetStartPosRot(VECTOR3* position, SVECTOR* rotation, char* charName, s32 arg3, s_DMSHeader* header);
+
 s32 DMS_CharacterFindIndexByName(char* name, s_DMSHeader* header);
+
+void func_8008CB90(VECTOR3*, SVECTOR3*, s32, s32, s_DMSHeader*);
 
 void func_801E2D8C();
 

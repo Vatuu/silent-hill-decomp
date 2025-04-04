@@ -1262,7 +1262,30 @@ void DMSEntry_FixOffsets(s_DMSEntry* entry, s_DMSHeader* header) // 0x8008CA44
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008CA60);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008CA74);
+void DMS_CharacterGetStartPosRot(VECTOR3* position, SVECTOR* rotation, char* charName, s32 arg3, s_DMSHeader* header) // 0x8008CA74
+{
+    s32 charIndex;
+
+    charIndex = DMS_CharacterFindIndexByName(charName, header);
+    if (charIndex == NO_VALUE)
+    {
+        // Character not found in DMS.
+        Math_Vector3Zero(position);
+        Math_SVectorZero(rotation);
+
+        Gfx_DebugStringPosition(50, 90);
+
+#ifdef DEBUG
+        // Only seen in prototypes
+        Gfx_DebugStringDraw(charName);
+        Gfx_DebugStringDraw(" doesn't exist in dms.");
+#endif
+    }
+    else
+    {
+        func_8008CB90(position, rotation, charIndex, arg3, header);
+    }
+}
 
 s32 DMS_CharacterFindIndexByName(char* name, s_DMSHeader* header) // 0x8008CB10
 {

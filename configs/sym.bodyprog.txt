@@ -226,6 +226,7 @@ Chara_Spawn = 0x80088D78; // type:func
 
 DMSHeader_FixOffsets = 0x8008C9A0; // type:func
 DMSEntry_FixOffsets = 0x8008CA44; // type:func
+DMS_CharacterGetStartPosRot = 0x8008CA74; // type:func
 DMS_CharacterFindIndexByName = 0x8008CB10; // type:func
 
 Demo_DataRead = 0x8008F07C; // type:func
