@@ -276,15 +276,15 @@ typedef struct
     u8       ptr_8_count_2;
     char     unk_3[1];
     char     name_4[4]; // First 4 chars of name, eg. game code checks for "DAHLIA" but in file it's "DAHL"
-    SVECTOR* ptr_8;     // This might be a shorter SVECTOR3 without pad
-    int*     ptr_C;
+    SVECTOR3* svectorPtr_8;   // Pointer to SVECTOR3s, unknown purpose.
+    int*      unkStructPtr_C; // Pointer to struct of u16s, possibly MATRIX?
 } s_DMSEntry;
 STATIC_ASSERT_SIZEOF(s_DMSEntry, 0x10);
 
 typedef struct
 {
     u8          isLoaded_0;
-    u8          numCharacters_1;
+    u8          characterCount_1;
     u8          length_2;
     s8          unk_3[5];
     s16*        field_8;
@@ -757,9 +757,9 @@ void func_800892A4(s32);
 
 void DMSHeader_FixOffsets(s_DMSHeader* header);
 
-void DMSEntry_FixOffsets(s_DMSEntry*, s_DMSHeader*);
+void DMSEntry_FixOffsets(s_DMSEntry* entry, s_DMSHeader* header);
 
-s32 DMS_CharacterSearch(char* name, s_DMSHeader* header);
+s32 DMS_CharacterFindIndexByName(char* name, s_DMSHeader* header);
 
 void func_801E2D8C();
 

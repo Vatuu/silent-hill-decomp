@@ -1247,7 +1247,7 @@ void DMSHeader_FixOffsets(s_DMSHeader* header) // 0x8008C9A0
     DMSEntry_FixOffsets(&header->camera_1C, header);
 
     for (chara = header->characters_18;
-         chara < &header->characters_18[header->numCharacters_1];
+         chara < &header->characters_18[header->characterCount_1];
          chara++)
     {
         DMSEntry_FixOffsets(chara, header);
@@ -1256,19 +1256,19 @@ void DMSHeader_FixOffsets(s_DMSHeader* header) // 0x8008C9A0
 
 void DMSEntry_FixOffsets(s_DMSEntry* entry, s_DMSHeader* header) // 0x8008CA44
 {
-    entry->ptr_C = (u32)entry->ptr_C + (u32)header;
-    entry->ptr_8 = (u32)entry->ptr_8 + (u32)header;
+    entry->unkStructPtr_C = (u32)entry->unkStructPtr_C + (u32)header;
+    entry->svectorPtr_8   = (u32)entry->svectorPtr_8 + (u32)header;
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008CA60);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008CA74);
 
-s32 DMS_CharacterSearch(char* name, s_DMSHeader* header) // 0x8008CB10
+s32 DMS_CharacterFindIndexByName(char* name, s_DMSHeader* header) // 0x8008CB10
 {
     s32 i;
 
-    for (i = 0; i < header->numCharacters_1; i++)
+    for (i = 0; i < header->characterCount_1; i++)
     {
         if (!strncmp(name, header->characters_18[i].name_4, 4))
         {
