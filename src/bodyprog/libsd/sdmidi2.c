@@ -240,7 +240,14 @@ s32 to16bit(char arg0, char arg1) // 0x800A7368
     return (arg0 << 8) | arg1;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmidi2", read32bit);
+s32 read32bit(s_SMF_TRACK_S* track) // 0x800A737C
+{
+    s8 b0 = egetc(track);
+    s8 b1 = egetc(track);
+    s8 b2 = egetc(track);
+    s8 b3 = egetc(track);
+    return to32bit(b0, b1, b2, b3);
+}
 
 s32 read16bit(s_SMF_TRACK_S* arg0) // 0x800A73E8
 {

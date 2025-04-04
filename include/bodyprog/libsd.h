@@ -396,6 +396,9 @@ s32  readvarinum(s_SMF_TRACK_S* track);
 // to32bit/to16bit/len_add only seem used inside sdmidi2.c, can probably be removed from header.
 s32  to32bit(char arg0, char arg1, char arg2, char arg3);
 s32  to16bit(char arg0, char arg1);
+s32  read32bit(s_SMF_TRACK_S* track);
+s32  read16bit(s_SMF_TRACK_S* track);
+
 void len_add(s32* ptr, s32 val);
 
 void sysex(s_SMF_TRACK_S* track);
