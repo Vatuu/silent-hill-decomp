@@ -1262,7 +1262,7 @@ void DMSEntry_FixOffsets(s_DMSEntry* entry, s_DMSHeader* header) // 0x8008CA44
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008CA60);
 
-void DMS_CharacterGetStartPosRot(VECTOR3* position, SVECTOR* rotation, char* charName, s32 arg3, s_DMSHeader* header) // 0x8008CA74
+void DMS_CharacterGetPosRot(VECTOR3* position, SVECTOR* rotation, char* charName, s32 time, s_DMSHeader* header) // 0x8008CA74
 {
     s32 charIndex;
 
@@ -1283,7 +1283,7 @@ void DMS_CharacterGetStartPosRot(VECTOR3* position, SVECTOR* rotation, char* cha
     }
     else
     {
-        func_8008CB90(position, rotation, charIndex, arg3, header);
+        func_8008CB90(position, rotation, charIndex, time, header);
     }
 }
 
@@ -1308,7 +1308,35 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008CC98);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008CDBC);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008CE1C);
+s32 DMS_CameraGetTargetPos(VECTOR3* cam_tgt_pos, VECTOR3* watch_tgt_pos, u16* arg2, s32 time, s_DMSHeader* header)
+{
+    s_DMSEntry* camera;
+    s16         sp18[8];
+    s32         sp28;
+    s32         sp2C;
+    s32         sp30;
+    s32         camProjValue;
+
+    camera = &header->camera_1C;
+
+    func_8008D1D0(&sp28, &sp2C, &sp30, time, camera, header);
+    camProjValue = func_8008CFEC(&sp18, &camera->unkStructPtr_C[sp28 * 8], &camera->unkStructPtr_C[sp2C * 8], sp30);
+
+    cam_tgt_pos->vx = FP_TO(sp18[0] + header->field_C.vx, Q4_SHIFT);
+    cam_tgt_pos->vy = FP_TO(sp18[1] + header->field_C.vy, Q4_SHIFT);
+    cam_tgt_pos->vz = FP_TO(sp18[2] + header->field_C.vz, Q4_SHIFT);
+
+    watch_tgt_pos->vx = FP_TO(sp18[3] + header->field_C.vx, Q4_SHIFT);
+    watch_tgt_pos->vy = FP_TO(sp18[4] + header->field_C.vy, Q4_SHIFT);
+    watch_tgt_pos->vz = FP_TO(sp18[5] + header->field_C.vz, Q4_SHIFT);
+
+    if (arg2 != NULL)
+    {
+        *arg2 = sp18[6];
+    }
+
+    return camProjValue;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008CF54);
 
@@ -1320,7 +1348,11 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008D2C4);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008D330);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008D3D4);
+s32 Math_LerpFixed12(s16 from, s16 to, s32 t) // 0x8008D3D4
+{
+    // TODO: shifts are similar to shAngleRegulate, but that doesn't seem to work here.
+    return (s32)(FP_MULTIPLY((to - from) << 20 >> 20, (s64)t, 12) + from) << 20 >> 20;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008D41C);
 

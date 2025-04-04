@@ -277,7 +277,7 @@ typedef struct
     char     unk_3[1];
     char     name_4[4]; // First 4 chars of name, eg. game code checks for "DAHLIA" but in file it's "DAHL"
     SVECTOR3* svectorPtr_8;   // Pointer to SVECTOR3s, unknown purpose.
-    int*      unkStructPtr_C; // Pointer to struct of u16s, possibly MATRIX?
+    u16*      unkStructPtr_C; // Pointer to struct of u16s, possibly MATRIX?
 } s_DMSEntry;
 STATIC_ASSERT_SIZEOF(s_DMSEntry, 0x10);
 
@@ -764,6 +764,12 @@ void DMS_CharacterGetStartPosRot(VECTOR3* position, SVECTOR* rotation, char* cha
 s32 DMS_CharacterFindIndexByName(char* name, s_DMSHeader* header);
 
 void func_8008CB90(VECTOR3*, SVECTOR3*, s32, s32, s_DMSHeader*);
+
+s32 DMS_CameraGetTargetPos(VECTOR3* cam_tgt_pos, VECTOR3* watch_tgt_pos, u16* arg2, s32 time, s_DMSHeader* header);
+
+s32 func_8008CFEC(s16*, s16*, s16*, s32);
+
+void func_8008D1D0(s32*, s32*, s32*, s32, s_DMSEntry*, s_DMSHeader*);
 
 void func_801E2D8C();
 
