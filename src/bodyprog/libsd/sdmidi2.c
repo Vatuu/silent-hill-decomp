@@ -301,28 +301,28 @@ s32 track_head_read(s_SMF_TRACK_S* track)
 
 void delta_time_conv(s_SMF_TRACK_S* track) // 0x800A84B0
 {
-    switch (smf_song[smf_file_no].midi_ppqn_528) // midi PPQN value?
+    switch (smf_song[smf_file_no].midi_ppqn_528)
     {
         case 48:
             track->deltaTimeTicks_1C *= 10;
             track->deltaTimeTicks_1C += track->deltaTimeRemainder_18;
 
             track->deltaTimeRemainder_18 = track->deltaTimeTicks_1C & 3;
-            track->deltaTimeTicks_1C >>= 2;
+            track->deltaTimeTicks_1C /= 4;
             break;
         case 96:
             track->deltaTimeTicks_1C *= 5;
             track->deltaTimeTicks_1C += track->deltaTimeRemainder_18;
 
             track->deltaTimeRemainder_18 = track->deltaTimeTicks_1C & 3;
-            track->deltaTimeTicks_1C >>= 2;
+            track->deltaTimeTicks_1C /= 4;
             break;
         case 192:
         case 240:
             track->deltaTimeTicks_1C += track->deltaTimeRemainder_18;
 
             track->deltaTimeRemainder_18 = track->deltaTimeTicks_1C & 1;
-            track->deltaTimeTicks_1C >>= 1;
+            track->deltaTimeTicks_1C /= 2;
             break;
         case 288:
         case 360:
@@ -333,14 +333,14 @@ void delta_time_conv(s_SMF_TRACK_S* track) // 0x800A84B0
             track->deltaTimeTicks_1C += track->deltaTimeRemainder_18;
 
             track->deltaTimeRemainder_18 = track->deltaTimeTicks_1C & 3;
-            track->deltaTimeTicks_1C >>= 2;
+            track->deltaTimeTicks_1C /= 4;
             break;
         case 768:
         case 960:
             track->deltaTimeTicks_1C += track->deltaTimeRemainder_18;
 
             track->deltaTimeRemainder_18 = track->deltaTimeTicks_1C & 7;
-            track->deltaTimeTicks_1C >>= 3;
+            track->deltaTimeTicks_1C /= 8;
             break;
     }
 }
