@@ -1264,7 +1264,20 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008CA60);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008CA74);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008CB10);
+s32 DMS_CharacterSearch(char* name, s_DMSHeader* header) // 0x8008CB10
+{
+    s32 i;
+
+    for (i = 0; i < header->numCharacters_1; i++)
+    {
+        if (!strncmp(name, header->characters_18[i].name_4, 4))
+        {
+            return i;
+        }
+    }
+
+    return NO_VALUE;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008CB90);
 

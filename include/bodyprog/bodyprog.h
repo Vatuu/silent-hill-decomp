@@ -759,6 +759,8 @@ void DMSHeader_FixOffsets(s_DMSHeader* header);
 
 void DMSEntry_FixOffsets(s_DMSEntry*, s_DMSHeader*);
 
+s32 DMS_CharacterSearch(char* name, s_DMSHeader* header);
+
 void func_801E2D8C();
 
 void func_8004C8DC();
