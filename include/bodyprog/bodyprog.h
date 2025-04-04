@@ -270,6 +270,30 @@ typedef struct
 } s_Skeleton;
 STATIC_ASSERT_SIZEOF(s_Skeleton, 28);
 
+typedef struct
+{
+    s16      count_0;
+    u8       ptr_8_count_2;
+    char     unk_3[1];
+    char     name_4[4]; // First 4 chars of name, eg. game code checks for "DAHLIA" but in file it's "DAHL"
+    SVECTOR* ptr_8;     // This might be a shorter SVECTOR3 without pad
+    int*     ptr_C;
+} s_DMSEntry;
+STATIC_ASSERT_SIZEOF(s_DMSEntry, 0x10);
+
+typedef struct
+{
+    u8          isLoaded_0;
+    u8          numCharacters_1;
+    u8          length_2;
+    s8          unk_3[5];
+    s16*        field_8;
+    VECTOR3     field_C;
+    s_DMSEntry* characters_18;
+    s_DMSEntry  camera_1C;
+} s_DMSHeader;
+STATIC_ASSERT_SIZEOF(s_DMSHeader, 0x2C);
+
 extern s8* D_8002510C;
 
 /** "\x07PAUSED" string */
@@ -730,6 +754,10 @@ void func_80089128();
 
 /** Unknown bodyprog func. Called by `Fs_QueueWaitForEmpty` with `0` and then `1`. */
 void func_800892A4(s32);
+
+void DMSHeader_FixOffsets(s_DMSHeader* header);
+
+void DMSEntry_FixOffsets(s_DMSEntry*, s_DMSHeader*);
 
 void func_801E2D8C();
 

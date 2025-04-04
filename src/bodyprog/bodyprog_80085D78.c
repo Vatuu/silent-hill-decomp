@@ -1229,9 +1229,36 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008B714);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008BF84);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008C9A0);
+void DMSHeader_FixOffsets(s_DMSHeader* header) // 0x8008C9A0
+{
+    s_DMSEntry* chara;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008CA44);
+    if (header->isLoaded_0)
+    {
+        return;
+    }
+
+    header->isLoaded_0 = 1;
+
+    // Add memory addr of DMS header to the offsets in header
+    header->field_8       = (u8*)header->field_8 + (u32)header;
+    header->characters_18 = (u8*)header->characters_18 + (u32)header;
+
+    DMSEntry_FixOffsets(&header->camera_1C, header);
+
+    for (chara = header->characters_18;
+         chara < &header->characters_18[header->numCharacters_1];
+         chara++)
+    {
+        DMSEntry_FixOffsets(chara, header);
+    }
+}
+
+void DMSEntry_FixOffsets(s_DMSEntry* entry, s_DMSHeader* header) // 0x8008CA44
+{
+    entry->ptr_C = (u32)entry->ptr_C + (u32)header;
+    entry->ptr_8 = (u32)entry->ptr_8 + (u32)header;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008CA60);
 

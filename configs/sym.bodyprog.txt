@@ -224,6 +224,9 @@ GameFs_Tim00TIMLoad = 0x80053da0; // type:func
 Chara_Load = 0x80088C7C; // type:func
 Chara_Spawn = 0x80088D78; // type:func
 
+DMSHeader_FixOffsets = 0x8008C9A0; // type:func
+DMSEntry_FixOffsets = 0x8008CA44; // type:func
+
 Demo_DataRead = 0x8008F07C; // type:func
 Demo_GameGlobalsUpdate = 0x8008F1A0; // type:func
 Demo_GameGlobalsRestore = 0x8008F2BC; // type:func
