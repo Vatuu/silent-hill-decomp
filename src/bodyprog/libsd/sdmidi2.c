@@ -249,10 +249,10 @@ s32 read32bit(s_SMF_TRACK_S* track) // 0x800A737C
     return to32bit(b0, b1, b2, b3);
 }
 
-s32 read16bit(s_SMF_TRACK_S* arg0) // 0x800A73E8
+s32 read16bit(s_SMF_TRACK_S* track) // 0x800A73E8
 {
-    s8 b0 = egetc(arg0);
-    s8 b1 = egetc(arg0);
+    s8 b0 = egetc(track);
+    s8 b1 = egetc(track);
     return to16bit(b0, b1) & 0xFFFF;
 }
 
@@ -286,7 +286,18 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmidi2", readtrack);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmidi2", readtrack2);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmidi2", track_head_read);
+s32 track_head_read(s_SMF_TRACK_S* track)
+{
+    track->dword0 = readMTrk(track->dword0);
+    if (track->dword0 == NO_VALUE)
+    {
+        return 1;
+    }
+    track->dword8  = read32bit(track);
+    track->dword10 = track->dword0;
+    track->dwordC  = track->dword0 + track->dword8;
+    return 0;
+}
 
 void delta_time_conv(s_SMF_TRACK_S* track) // 0x800A84B0
 {

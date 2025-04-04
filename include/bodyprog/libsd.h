@@ -403,6 +403,7 @@ void len_add(s32* ptr, s32 val);
 
 void sysex(s_SMF_TRACK_S* track);
 
+s32  track_head_read(s_SMF_TRACK_S* track);
 void delta_time_conv(s_SMF_TRACK_S* track);
 void midi_file_out(s16);
 void midi_smf_main();
