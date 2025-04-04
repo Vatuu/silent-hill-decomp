@@ -228,7 +228,7 @@ typedef struct _SMF_PORT
     u16 field_2C;
     u16 field_2E;
     u8  field_30;
-    u8  unk_31[1];
+    u8  field_31;
     u8  field_32;
     s8  field_33;
     u16 field_34;

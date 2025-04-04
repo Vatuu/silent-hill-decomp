@@ -47,7 +47,7 @@ void tre_calc(s_SMF_PORT* midiPort) // 0x800A3B20
         }
 
         midiPort->field_33 += midiPort->field_3B;
-        midiPort->unk_31[0] = 0;
+        midiPort->field_31 = 0;
         if (midiPort->field_33 < 0) // field_33 u8 to s8
         {
             var_a0 = -midiPort->field_33 * 2;
