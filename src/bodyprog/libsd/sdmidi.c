@@ -318,14 +318,14 @@ void toremoro_set() // 0x800A439C
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmidi", pitch_bend_calc);
 
-void pitch_calc(s_SMF_PORT* midiPort, s32 arg1) // 0x800A4494
+void pitch_calc(s_SMF_PORT* midiPort, s32 forceSpuUpdate) // 0x800A4494
 {
     s_SMF_MIDI* midi;
     s32         temp_s0;
     s32         temp_a0;
 
     midi = &smf_midi[midiPort->smf_midi_num_3];
-    if (midiPort->field_26 != 0 || midi->field_2 != 0 || midi->portamentoTime_28 != 0 || midiPort->field_43 != 0 || midi->pitchBendFine_7 != midiPort->field_4E || arg1 != 0)
+    if (midiPort->field_26 != 0 || midi->field_2 != 0 || midi->portamentoTime_28 != 0 || midiPort->field_43 != 0 || midi->pitchBendFine_7 != midiPort->field_4E || forceSpuUpdate)
     {
         midiPort->field_4E = midi->pitchBendFine_7;
 

@@ -357,7 +357,7 @@ void seq_master_vol_set(s32 seq_access_num);
 void toremoro_set();
 
 s32  pitch_bend_calc(s_SMF_PORT*, u8, s_SMF_MIDI*);
-void pitch_calc(s_SMF_PORT* midiPort, s32 arg1);
+void pitch_calc(s_SMF_PORT* midiPort, s32 forceSpuUpdate);
 void midi_mod(s_SMF_MIDI* midiTrack);
 void midi_porta(s_SMF_MIDI* midiTrack);
 void replay_reverb_set(s16 seq_access_num);
