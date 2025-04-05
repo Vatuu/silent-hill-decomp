@@ -272,12 +272,12 @@ STATIC_ASSERT_SIZEOF(s_Skeleton, 28);
 
 typedef struct
 {
-    s16      count_0;
-    u8       ptr_8_count_2;
-    char     unk_3[1];
+    s16       keyframeCount_0;
+    u8        svectorCount_2;
+    u8        field_3;   // Usually 0, but sometimes filled in, possibly junk data left in padding byte.
     char     name_4[4]; // First 4 chars of name, eg. game code checks for "DAHLIA" but in file it's "DAHL"
     SVECTOR3* svectorPtr_8;   // Pointer to SVECTOR3s, unknown purpose.
-    u16*      unkStructPtr_C; // Pointer to struct of u16s, possibly MATRIX?
+    u16*      keyframePtr_C;  // Points to 6x u16 for characters, or 8x u16 for camera
 } s_DMSEntry;
 STATIC_ASSERT_SIZEOF(s_DMSEntry, 0x10);
 
@@ -285,9 +285,10 @@ typedef struct
 {
     u8          isLoaded_0;
     u8          characterCount_1;
-    u8          length_2;
-    s8          unk_3[5];
-    s16*        field_8;
+    u8          dvectorCount_2;
+    u8          field_3; // Usually 0, but sometimes filled in.
+    u32         field_4; // Unknown, correlates with DMS file size.
+    DVECTOR*    dvectorPtr_8;
     VECTOR3     field_C;
     s_DMSEntry* characters_18;
     s_DMSEntry  camera_1C;

@@ -1,0 +1,88 @@
+//------------------------------------------------
+//--- 010 Editor v14.0.1 Binary Template
+//
+//      File: sh1_dms.bt
+//   Authors: emoose
+//   Version: 1.0
+//   Purpose: Parser for SH1 DMS cutscene files
+//------------------------------------------------
+
+DisplayFormatHex();
+
+struct VECTOR3
+{
+    int vx<format=decimal>;
+    int vy<format=decimal>;
+    int vz<format=decimal>;
+};
+
+struct SVECTOR3
+{
+    short vx<format=decimal>;
+    short vy<format=decimal>;
+    short vz<format=decimal>;
+};
+
+struct DVECTOR
+{
+    short vx<format=decimal>;
+    short vy<format=decimal>;
+};
+
+struct CameraFrame
+{
+    short field_0[8]; // Used to calculate cam_tgt_pos & watch_tgt_pos.
+};
+
+struct CharacterFrame
+{
+    SVECTOR3 position_0;
+    SVECTOR3 rotation_6;
+};
+
+struct DMSEntry(int isCharacter)
+{    
+    int16 keyframeCount_0; // TODO: Are these actually keyframes?
+    byte svectorCount_2;
+    byte field_3; // Usually 0, but sometimes filled in, possibly junk data left in padding byte.
+    char name[4];
+    int svectorOffset_8;
+    int keyframeOffset_C;
+    
+    local long end = FTell();
+    
+    FSeek(svectorOffset_8);
+    SVECTOR3 svector[svectorCount_2]<optimize=false>;
+    
+    FSeek(keyframeOffset_C);
+    
+    if (isCharacter == 1)
+        CharacterFrame keyframes[keyframeCount_0]<optimize=false>;
+    else
+        CameraFrame keyframes[keyframeCount_0]<optimize=false>;
+        
+    FSeek(end);
+};
+
+struct DMSHeader
+{
+    byte isLoaded_0;
+    byte characterCount_1;
+    byte dvectorCount_2;
+    byte field_3; // Usually 0, but sometimes filled in.
+    uint32 field_4; // Unknown, correlates to file size?
+    uint32 dvectorOffset_8;
+    VECTOR3 field_C;
+    uint32 charactersOffset;
+    DMSEntry camera(0);
+};
+
+DMSHeader header;
+
+// DVECTORs sometimes have contiguous values (0, 20), (20, 42), (42, 56)
+// but sometimes have gaps, or decreasing values like (176, 78)
+FSeek(header.dvectorOffset_8);
+DVECTOR dvectors[header.dvectorCount_2];
+    
+FSeek(header.charactersOffset);
+DMSEntry characters(1)[header.characterCount_1]<optimize=false>;
