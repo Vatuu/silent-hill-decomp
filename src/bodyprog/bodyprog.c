@@ -401,7 +401,47 @@ void Gfx_DebugStringPosition(s16 x, s16 y) // 0x80031EFC
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", Gfx_DebugStringDraw);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", Math_IntegerToString);
+char* Math_IntegerToString(s32 minWidth, s32 value) // 0x80032154
+{
+    s32   isNegative;
+    char* string = PSX_SCRATCH_ADDR(0x1E);
+
+    if (value < 0)
+    {
+        isNegative = 1;
+        value      = -value;
+    }
+    else
+    {
+        isNegative = 0;
+    }
+
+    *string = 0;
+
+    do
+    {
+        string--;
+        minWidth--;
+        *string = '0' + (value % 10);
+        value /= 10;
+    } while (value > 0);
+
+    if (isNegative)
+    {
+        string--;
+        *string = '-';
+        minWidth--;
+    }
+
+    while (minWidth > 0)
+    {
+        string--;
+        *string = '\v';
+        minWidth--;
+    }
+
+    return string;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_800321EC);
 
@@ -817,7 +857,10 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_800334D8);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80033548);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", SysWork_Clear);
+void SysWork_Clear() // 0x800340E0
+{
+    bzero(&g_SysWork, sizeof(s_SysWork));
+}
 
 s32 MainLoop_ShouldWarmReset() // 0x80034108
 {
@@ -1057,7 +1100,14 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80035BE0);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80035DB4);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80035E1C);
+void func_80035E1C()
+{
+    s32 i;
+    for (i = 0; i < 9; i++)
+    {
+        g_SysWork.field_2748[i] = 0;
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80035E44);
 

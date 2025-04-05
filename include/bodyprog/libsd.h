@@ -1,9 +1,11 @@
 #ifndef _LIBSD_H
 #define _LIBSD_H
 
+#include <libsnd.h>
+
 /**
  * libsd: konami-customized version of libsnd?
- * Majority of the functions match up with libsnd Ss versions.
+ * Majority of the functions work like the libsnd Ss versions.
  * libref.pdf v4.4 may be useful, though was likely based on an earlier SDK.
  */
 
@@ -37,10 +39,17 @@ extern s32 smf_file_no;
 
 extern u32 spu_ch_tbl[24];
 
+typedef struct
+{
+    VabHdr  header;
+    ProgAtr prog[0x80];
+    VagAtr  vag[0]; // 16 per program
+} s_VabHeader;
+
 typedef struct _VAB_S // Pachinko Dream uses similar VAB_S struct.
 {
     s16            vab_id_0;
-    struct VabHdr* vab_header_4; // libsnd.h
+    s_VabHeader*   vab_header_4; // libsnd.h
     s32            vab_prog_size_8;
     s32            vab_addr_C;
     s32            vab_start_10;
@@ -63,9 +72,9 @@ typedef struct _SMF_TRACK_S
     u32 dword10;
     u16 tempo_14;
     u16 tempo_16;
-    u16 word18;
+    u16 deltaTimeRemainder_18;
     u16 field_1A;
-    u16 word1C;
+    u16 deltaTimeTicks_1C;
     u16 field_1E;
     u8  byte20;
     u8  byte21;
@@ -83,7 +92,7 @@ typedef struct _SMF_S
 {
     s_SMF_TRACK_S tracks_0[32];
     s8            unk_500[4];
-    void*         play_ptr_504;
+    u8*           play_ptr_504;
     s16           vab_id_508;
     s16           play_status_50A;
     s16           vol_left_50C;
@@ -95,7 +104,7 @@ typedef struct _SMF_S
     s32           field_520;
     u16           field_524;
     u16           num_tracks_526;
-    u16           field_528;
+    u16           midi_ppqn_528;
     u16           field_52A;
     u8            field_52C;
     u8            field_52D;
@@ -207,9 +216,9 @@ typedef struct _SMF_PORT
     u8  field_1E;
     u8  field_1F;
     u8  field_20;
-    u8  field_21[1];
+    u8  field_21;
     u8  field_22;
-    u8  field_23;
+    s8  field_23;
     u16 field_24;
     u16 field_26;
     u8  field_28;
@@ -219,9 +228,9 @@ typedef struct _SMF_PORT
     u16 field_2C;
     u16 field_2E;
     u8  field_30;
-    u8  unk_31[1];
+    u8  field_31;
     u8  field_32;
-    u8  field_33;
+    s8  field_33;
     u16 field_34;
     u16 field_36;
     u8  field_38;
@@ -336,6 +345,8 @@ s32 SdGetSeqBeat2(s16 seq_access_num);
 
 // sdmidi.c
 
+void func_800A39B8(s32, u8, u8); /** nullsub, possibly set_midi_info */
+u16  Note2Pitch(s32, s32, u8, u8);
 void tre_calc(s_SMF_PORT*);
 void vib_calc(s_SMF_PORT*);
 void random_calc(s_SMF_PORT* midiPort);
@@ -345,7 +356,8 @@ void master_vol_set();
 void seq_master_vol_set(s32 seq_access_num);
 void toremoro_set();
 
-void pitch_calc(s_SMF_PORT*, s32);
+s32  pitch_bend_calc(s_SMF_PORT*, u8, s_SMF_MIDI*);
+void pitch_calc(s_SMF_PORT* midiPort, s32 forceSpuUpdate);
 void midi_mod(s_SMF_MIDI* midiTrack);
 void midi_porta(s_SMF_MIDI* midiTrack);
 void replay_reverb_set(s16 seq_access_num);
@@ -358,10 +370,12 @@ void rr_off(s32 voice);
 
 void key_off(u8 midiNum, u8 keyNum);
 void key_press();
+VagAtr* get_vab_tone(s_SMF_MIDI* midiTrack, u16 tone, u8 midiChannel);
 
 void control_change(u8, s32, s32);
 void program_change(u8 midiChannel, u8 progNum);
 void chan_press();
+void pitch_bend(u8 midiChannel, s32 unused, u8 pitchBend);
 
 void control_code_set(s32 seq_access_num);
 
@@ -376,16 +390,25 @@ s32  MemCmp(u8* str1, u8* str2, s32 count);
 s32  readMThd(u32 offset);
 s32  readMTrk(u32 offset);
 s32  readEOF(u32 offset);
+s32  egetc(s_SMF_TRACK_S* track);
+s32  readvarinum(s_SMF_TRACK_S* track);
 
 // to32bit/to16bit/len_add only seem used inside sdmidi2.c, can probably be removed from header.
 s32  to32bit(char arg0, char arg1, char arg2, char arg3);
 s32  to16bit(char arg0, char arg1);
+s32  read32bit(s_SMF_TRACK_S* track);
+s32  read16bit(s_SMF_TRACK_S* track);
+
 void len_add(s32* ptr, s32 val);
 
+void sysex(s_SMF_TRACK_S* track);
+
+s32  track_head_read(s_SMF_TRACK_S* track);
+void delta_time_conv(s_SMF_TRACK_S* track);
 void midi_file_out(s16);
 void midi_smf_main();
-
-s16 midi_smf_stat(s32);
+void midi_smf_stop(s32 seq_access_num);
+s16  midi_smf_stat(s32 seq_access_num);
 
 // ssmain.c
 void SsSetMVol(s16 left, s16 right);
