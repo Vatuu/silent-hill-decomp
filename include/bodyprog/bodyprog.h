@@ -272,12 +272,28 @@ STATIC_ASSERT_SIZEOF(s_Skeleton, 28);
 
 typedef struct
 {
-    s16      count_0;
-    u8       ptr_8_count_2;
-    char     unk_3[1];
+    u16 field_0[8]; // Used to calculate cam_tgt_pos & watch_tgt_pos.
+} s_DMSKeyframeCamera;
+
+typedef struct
+{
+    SVECTOR3 position_0;
+    SVECTOR3 rotation_6;
+} s_DMSKeyframeCharacter;
+
+typedef struct
+{
+    s16       keyframeCount_0;
+    u8        svectorCount_2;
+    u8        field_3;   // Usually 0, but sometimes filled in, possibly junk data left in padding byte.
     char     name_4[4]; // First 4 chars of name, eg. game code checks for "DAHLIA" but in file it's "DAHL"
     SVECTOR3* svectorPtr_8;   // Pointer to SVECTOR3s, unknown purpose.
-    u16*      unkStructPtr_C; // Pointer to struct of u16s, possibly MATRIX?
+
+    union
+    {
+        s_DMSKeyframeCharacter* character;
+        s_DMSKeyframeCamera*    camera;
+    } keyframes_C;
 } s_DMSEntry;
 STATIC_ASSERT_SIZEOF(s_DMSEntry, 0x10);
 
@@ -285,9 +301,10 @@ typedef struct
 {
     u8          isLoaded_0;
     u8          characterCount_1;
-    u8          length_2;
-    s8          unk_3[5];
-    s16*        field_8;
+    u8          dvectorCount_2;
+    u8          field_3; // Usually 0, but sometimes filled in.
+    u32         field_4; // Unknown, correlates with DMS file size.
+    DVECTOR*    dvectorPtr_8; // TODO: Change to a more meaningful struct once purpose of vx/vy is understood.
     VECTOR3     field_C;
     s_DMSEntry* characters_18;
     s_DMSEntry  camera_1C;
@@ -766,6 +783,10 @@ s32 DMS_CharacterFindIndexByName(char* name, s_DMSHeader* header);
 void func_8008CB90(VECTOR3*, SVECTOR3*, s32, s32, s_DMSHeader*);
 
 s32 DMS_CameraGetTargetPos(VECTOR3* cam_tgt_pos, VECTOR3* watch_tgt_pos, u16* arg2, s32 time, s_DMSHeader* header);
+
+s32 func_8008D2C4(s32 time, s_DMSHeader* header);
+
+s32 Math_LerpFixed12(s16 from, s16 to, s32 t);
 
 s32 func_8008CFEC(s16*, s16*, s16*, s32);
 
