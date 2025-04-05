@@ -277,7 +277,7 @@ typedef struct
     u8        field_3;   // Usually 0, but sometimes filled in, possibly junk data left in padding byte.
     char     name_4[4]; // First 4 chars of name, eg. game code checks for "DAHLIA" but in file it's "DAHL"
     SVECTOR3* svectorPtr_8;   // Pointer to SVECTOR3s, unknown purpose.
-    u16*      keyframePtr_C;  // Points to 6x u16 for characters, or 8x u16 for camera
+    u16*      keyframePtr_C;  // Points to array of structs containing u16[6] for characters, or u16[8] for camera
 } s_DMSEntry;
 STATIC_ASSERT_SIZEOF(s_DMSEntry, 0x10);
 
