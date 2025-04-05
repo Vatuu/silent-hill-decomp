@@ -1344,7 +1344,31 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008CFEC);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008D1D0);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008D2C4);
+s32 func_8008D2C4(s32 time, s_DMSHeader* header)
+{
+    DVECTOR* vec;
+
+    time = FP_FROM(time, Q12_SHIFT);
+
+    for (vec = header->dvectorPtr_8;
+         vec < &header->dvectorPtr_8[header->dvectorCount_2];
+         vec++)
+    {
+        if (time != (vec->vx + vec->vy) - 1)
+        {
+            continue;
+        }
+
+        if (vec->vy > 1)
+        {
+            return 2;
+        }
+
+        return 1;
+    }
+
+    return 0;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008D330);
 

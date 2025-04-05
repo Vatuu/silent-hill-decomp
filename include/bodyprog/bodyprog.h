@@ -304,7 +304,7 @@ typedef struct
     u8          dvectorCount_2;
     u8          field_3; // Usually 0, but sometimes filled in.
     u32         field_4; // Unknown, correlates with DMS file size.
-    DVECTOR*    dvectorPtr_8;
+    DVECTOR*    dvectorPtr_8; // TODO: Change to a more meaningful struct once purpose of vx/vy is understood.
     VECTOR3     field_C;
     s_DMSEntry* characters_18;
     s_DMSEntry  camera_1C;
@@ -783,6 +783,10 @@ s32 DMS_CharacterFindIndexByName(char* name, s_DMSHeader* header);
 void func_8008CB90(VECTOR3*, SVECTOR3*, s32, s32, s_DMSHeader*);
 
 s32 DMS_CameraGetTargetPos(VECTOR3* cam_tgt_pos, VECTOR3* watch_tgt_pos, u16* arg2, s32 time, s_DMSHeader* header);
+
+s32 func_8008D2C4(s32 time, s_DMSHeader* header);
+
+s32 Math_LerpFixed12(s16 from, s16 to, s32 t);
 
 s32 func_8008CFEC(s16*, s16*, s16*, s32);
 
