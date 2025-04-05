@@ -1256,7 +1256,7 @@ void DMSHeader_FixOffsets(s_DMSHeader* header) // 0x8008C9A0
 
 void DMSEntry_FixOffsets(s_DMSEntry* entry, s_DMSHeader* header) // 0x8008CA44
 {
-    entry->keyframePtr_C = (u32)entry->keyframePtr_C + (u32)header;
+    entry->keyframes_C.character = (u32)entry->keyframes_C.character + (u32)header;
     entry->svectorPtr_8  = (u32)entry->svectorPtr_8 + (u32)header;
 }
 
@@ -1320,7 +1320,7 @@ s32 DMS_CameraGetTargetPos(VECTOR3* cam_tgt_pos, VECTOR3* watch_tgt_pos, u16* ar
     camera = &header->camera_1C;
 
     func_8008D1D0(&sp28, &sp2C, &sp30, time, camera, header);
-    camProjValue = func_8008CFEC(&sp18, &camera->keyframePtr_C[sp28 * 8], &camera->keyframePtr_C[sp2C * 8], sp30);
+    camProjValue = func_8008CFEC(&sp18, &camera->keyframes_C.camera[sp28], &camera->keyframes_C.camera[sp2C], sp30);
 
     cam_tgt_pos->vx = FP_TO(sp18[0] + header->field_C.vx, Q4_SHIFT);
     cam_tgt_pos->vy = FP_TO(sp18[1] + header->field_C.vy, Q4_SHIFT);

@@ -272,12 +272,28 @@ STATIC_ASSERT_SIZEOF(s_Skeleton, 28);
 
 typedef struct
 {
+    u16 field_0[8]; // Used to calculate cam_tgt_pos & watch_tgt_pos.
+} s_DMSKeyframeCamera;
+
+typedef struct
+{
+    SVECTOR3 position_0;
+    SVECTOR3 rotation_6;
+} s_DMSKeyframeCharacter;
+
+typedef struct
+{
     s16       keyframeCount_0;
     u8        svectorCount_2;
     u8        field_3;   // Usually 0, but sometimes filled in, possibly junk data left in padding byte.
     char     name_4[4]; // First 4 chars of name, eg. game code checks for "DAHLIA" but in file it's "DAHL"
     SVECTOR3* svectorPtr_8;   // Pointer to SVECTOR3s, unknown purpose.
-    u16*      keyframePtr_C;  // Points to array of structs containing u16[6] for characters, or u16[8] for camera
+
+    union
+    {
+        s_DMSKeyframeCharacter* character;
+        s_DMSKeyframeCamera*    camera;
+    } keyframes_C;
 } s_DMSEntry;
 STATIC_ASSERT_SIZEOF(s_DMSEntry, 0x10);
 
