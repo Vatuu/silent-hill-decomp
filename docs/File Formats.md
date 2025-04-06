@@ -33,13 +33,13 @@ The game keeps all of its data merged together inside the `SILENT.` and `HILL.` 
 
 These containers have no header or file table inside it, instead the list of files is kept in the main executable, in a [slightly-transformed way](/src/main/filetable.c.inc).
 
-The game itself refers to each file by its index in the table, and uses the table to find which sector to seek to in order to read the file.
+The game itself usually refers to each file by its index in the table, and uses the table to find which sector to seek to in order to read the file.
 
 > [!NOTE]  
 > [silentassets.py](/tools/silentassets/extract.py) tool can handle parsing the file table from the retail executable and extracting from these containers.
 
 ### Folder Paths
-File & folder names were fortunately left included in the file table, even though game itself doesn't appear to make use of them:
+Folder names were fortunately left included in the file table, even though game itself doesn't appear to make use of them:
 
 | Folder Name | File Types | Purpose |
 |-|-|-|
