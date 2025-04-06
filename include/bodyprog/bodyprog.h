@@ -782,6 +782,8 @@ s32 DMS_CharacterFindIndexByName(char* name, s_DMSHeader* header);
 
 void func_8008CB90(VECTOR3*, SVECTOR3*, s32, s32, s_DMSHeader*);
 
+void func_8008CC98(s_DMSKeyframeCharacter* result, s_DMSKeyframeCharacter* frame0, s_DMSKeyframeCharacter* frame1, s32 time);
+
 s32 DMS_CameraGetTargetPos(VECTOR3* cam_tgt_pos, VECTOR3* watch_tgt_pos, u16* arg2, s32 time, s_DMSHeader* header);
 
 s32 func_8008D2C4(s32 time, s_DMSHeader* header);

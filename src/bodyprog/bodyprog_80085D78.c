@@ -1304,7 +1304,18 @@ s32 DMS_CharacterFindIndexByName(char* name, s_DMSHeader* header) // 0x8008CB10
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008CB90);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008CC98);
+void func_8008CC98(s_DMSKeyframeCharacter* result, s_DMSKeyframeCharacter* frame0, s_DMSKeyframeCharacter* frame1, s32 time)
+{
+    // Low-precision lerp between positions?
+    result->position_0.vx = frame0->position_0.vx + FP_MULTIPLY(frame1->position_0.vx - frame0->position_0.vx, (s64)time, Q12_SHIFT);
+    result->position_0.vy = frame0->position_0.vy + FP_MULTIPLY(frame1->position_0.vy - frame0->position_0.vy, (s64)time, Q12_SHIFT);
+    result->position_0.vz = frame0->position_0.vz + FP_MULTIPLY(frame1->position_0.vz - frame0->position_0.vz, (s64)time, Q12_SHIFT);
+
+    // Higher-precision lerp between rotations?
+    result->rotation_6.vx = Math_LerpFixed12(frame0->rotation_6.vx, frame1->rotation_6.vx, time);
+    result->rotation_6.vy = Math_LerpFixed12(frame0->rotation_6.vy, frame1->rotation_6.vy, time);
+    result->rotation_6.vz = Math_LerpFixed12(frame0->rotation_6.vz, frame1->rotation_6.vz, time);
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008CDBC);
 
