@@ -22,7 +22,7 @@ void Hero_SetFly(bool isFlying, int* yPos) // 0x81234567
 ```
 
 #### Clang-format
-Our repository includes a `clang-format` configuration to help ensure code consistency. Git also has support for automatically formatting modified files.
+Our repository includes a `clang-format` configuration to help ensure code consistency. Git also has a command to handle formatting any modified files.
 
 We’d appreciate it if you could follow these steps prior to committing:
 

@@ -3,7 +3,7 @@ The game uses a number of custom file formats to store data related to models, l
 
 Some of these formats have been documented over the years, but a few still remain undocumented (or were only ever documented on long-closed-down websites).
 
-Since the goal of this project is a matching decompilation, understanding these file formats is essential, and can also help shape the decompilation process.
+Since the goal of this project is a matching decompilation, understanding these file formats is essential, and may also help shape the decompilation process.
 
 ### Data Files
 The table below summarizes each file format encountered so far, their known or suspected purposes, and any available documentation or parsing tools.
