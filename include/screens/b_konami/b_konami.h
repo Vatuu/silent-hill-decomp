@@ -6,20 +6,6 @@
 #define BOOT_ADDR_0 ((u8*)0x801E09E0)
 #define BOOT_ADDR_1 ((u8*)0x801E1430)
 
-extern s_FsImageDesc D_800A9004;
-
-extern s8 D_800A97D6; // Index?
-
-extern s32 D_800B5C7C; // Type assumed.
-
-extern s8* D_800BCD2C;
-
-extern u8 D_800BCD3E;
-
-extern u8 D_800BCD3F;
-
-extern u8* D_800C7018; // Pointer to graphics commands?
-
 extern s32 D_800CA4F4;
 
 extern s32 D_800CA4FC;

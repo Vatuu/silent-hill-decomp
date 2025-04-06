@@ -1,2 +1,3 @@
-
+Settings_BrightnessScreen = 0x801E6018; // type:func
 Gfx_DrawBrightnessLevelText = 0x801E6238; // type:func
+Gfx_DrawBrightnessLevelArrows = 0x801E628C; // type:func

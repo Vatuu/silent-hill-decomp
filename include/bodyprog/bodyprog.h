@@ -315,6 +315,8 @@ extern s_FsImageDesc D_800A8FF4;
 
 extern s_FsImageDesc D_800A8FFC;
 
+extern s_FsImageDesc D_800A9004;
+
 extern s_FsImageDesc D_800A9014;
 
 extern s_FsImageDesc D_800A901C;
@@ -322,6 +324,10 @@ extern s_FsImageDesc D_800A901C;
 extern s_FsImageDesc D_800A9024;
 
 extern s_FsImageDesc D_800A902C;
+
+extern s_FsImageDesc D_800A9044;
+
+extern s_FsImageDesc D_800A904C;
 
 extern s_FsImageDesc D_800A906C;
 
@@ -345,6 +351,8 @@ extern s32 D_800A976C;
 extern void (*D_800A977C[])(void); // Function pointer array, maybe state funcs of some kind.
 
 extern u8 D_800A97D4[];
+
+extern s8 D_800A97D6; // Index?
 
 extern s_800A992C D_800A992C[];
 
@@ -407,6 +415,14 @@ extern DVECTOR g_Gfx_DebugStringPosition0;
 
 extern DVECTOR g_Gfx_DebugStringPosition1;
 
+extern s32 D_800B5C7C; // Type assumed.
+
+extern s8* D_800BCD2C;
+
+extern u8 D_800BCD3E;
+
+extern u8 D_800BCD3F;
+
 extern s8 D_800BCD78;
 
 extern u8 D_800BCDD4;
@@ -433,7 +449,7 @@ extern u16 D_800BCCB0;
 
 extern u16 D_800BCCB2;
 
-/** Accessed by credits and saveload. */
+/** Accessed by credits, options and saveload. */
 extern s32 D_800BCD0C;
 
 extern s8 D_800BCD40;
@@ -548,7 +564,7 @@ extern s_800C4818 D_800C4818;
 /** Unknown bodyprog var. Set in `Fs_QueueDoThingWhenEmpty`. */
 extern s32 D_800C489C;
 
-extern u8* D_800C7018;
+extern u8* D_800C7018; // Pointer to graphics commands?
 
 extern s8 D_800C9584;
 
