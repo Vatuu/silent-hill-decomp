@@ -1,3 +1,36 @@
+
+Settings_ExtraScreen = 0x801E318C; // type:func
+Settings_MainScreen = 0x801E3770; // type:func
+Gfx_BGMBarDraw = 0x801E3F68; // type:func
+Gfx_SFXBarDraw = 0x801E3F90; // type:func
+Gfx_BarDraw = 0x801E3FB8; // type:func
+Gfx_OptionsStringsExtraDraw = 0x801E416C; // type:func
+Gfx_OptionsStringsMainDraw = 0x801E42EC; // type:func
+Gfx_SelectedOptionExtra = 0x801E4450;  // type:func
+Gfx_SelectedOptionMain = 0x801E472C; // type:func
+Gfx_VignetteDraw = 0x801E49F0; // type:func
+Gfx_SettingsOptionsExtraDraw = 0x801E4B2C; // type:func
+Gfx_SettingsOptionsMainDraw = 0x801E4FFC; // type:func
+
+
+Settings_PositionScreen = 0x801E53A0; // type:func
+Gfx_PositionArrowsDraw = 0x801E5A08; // type:func
+Gfx_PositionIndicatorDraw = 0x801E5CBC; // type:func
+
+
 Settings_BrightnessScreen = 0x801E6018; // type:func
-Gfx_DrawBrightnessLevelText = 0x801E6238; // type:func
-Gfx_DrawBrightnessLevelArrows = 0x801E628C; // type:func
+Gfx_BrightnessLevelTextDraw = 0x801E6238; // type:func
+Gfx_BrightnessLevelArrowsDraw = 0x801E628C; // type:func
+
+
+Gfx_LineDraw = 0x801E641C; // type:func
+Gfx_ArrowDraw = 0x801E662C; // type:func
+Gfx_ButtonDraw = 0x801E67B0; // type:func
+
+
+Settings_ControllerScreen = 0x801E69BC; // type:func
+Settings_ButtonChange = 0x801E6CF4; // type:func
+Gfx_ControllerScreenDraw = 0x801E6F60; // type:func
+Gfx_ControllerButtonsDraw = 0x801E716C; // type:func
+
+OPTION_ = 0x801E2784; // type:asciz

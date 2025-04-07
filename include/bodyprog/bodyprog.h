@@ -731,6 +731,8 @@ u8 func_80045B28();
 
 void func_8004690C(s32);
 
+void func_8004729C(u16);
+
 void Sd_SetVolBgm(s16 volLeft, s16 volRight);
 
 void Sd_SetVolXa(s16 volLeft, s16 volRight);
@@ -759,7 +761,11 @@ void func_800485C0(s32 idx);
 
 s32 func_80048954(s32 com, u8* param, u8* res);
 
-void func_8004729C(u16);
+void func_8004A8C0(s32 arg0);
+
+void func_8004A8CC();
+
+void func_8004A8DC(s16 arg0);
 
 void func_8004B9F8(s32 arg0, u8 arg1); // Types assumed.
 

@@ -28,17 +28,17 @@ extern s_801E2C74 D_801E2C74;
 
 extern s_801E2C74 D_801E2C8C;
 
-/** BGM Volume bar related. */
-void func_801E3F68();
+void Gfx_BGMBarDraw();
 
-/** SFX Volume bar related. */
-void func_801E3F90();
+void Gfx_SFXBarDraw();
 
-void func_801E3FB8(s32 arg0, s32 arg1);
+void Gfx_BarDraw(s32 arg0, s32 arg1);
 
-void Gfx_DrawBrightnessLevelText();
+void Gfx_SettingsOptionsDraw();
 
-void Gfx_DrawBrightnessLevelArrows();
+void Gfx_BrightnessLevelTextDraw();
+
+void Gfx_BrightnessLevelArrowsDraw();
 
 extern char* D_801E2C64[]; // String: "LEVEL_________"
 
