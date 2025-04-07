@@ -23,10 +23,10 @@ struct SVECTOR3
     short vz<format=decimal>;
 };
 
-struct DVECTOR
+struct DMSInterval
 {
-    short vx<format=decimal>;
-    short vy<format=decimal>;
+    short start<format=decimal>;
+    short duration<format=decimal>;
 };
 
 struct CameraFrame
@@ -51,6 +51,9 @@ struct DMSEntry(int isCharacter)
     
     local long end = FTell();
     
+    // SVECTOR values look similar to DMSIntervals, but instead of a start+length it uses start+end values?
+    // Each value seems to follow the last, eg.
+    // (0, 4, xx) (5, 6, xx) (7, 10, xx) (11, 13, xx) - unsure what the xx value is for
     FSeek(svectorOffset_8);
     SVECTOR3 svector[svectorCount_2]<optimize=false>;
     
@@ -68,21 +71,23 @@ struct DMSHeader
 {
     byte isLoaded_0;
     byte characterCount_1;
-    byte dvectorCount_2;
+    byte intervalCount_2;
     byte field_3; // Usually 0, but sometimes filled in.
     uint32 field_4; // Unknown, correlates to file size?
-    uint32 dvectorOffset_8;
+    uint32 intervalOffset_8;
     VECTOR3 field_C;
-    uint32 charactersOffset;
-    DMSEntry camera(0);
+    uint32 charactersOffset_10;
 };
 
 DMSHeader header;
 
-// DVECTORs sometimes have contiguous values (0, 20), (20, 42), (42, 56)
-// but sometimes have gaps, or decreasing values like (176, 78)
-FSeek(header.dvectorOffset_8);
-DVECTOR dvectors[header.dvectorCount_2];
+DMSEntry camera(0);
+
+// DMSInterval holds a start number + a length/duration, each interval seems to follow each other
+// eg. (0, 20), (20, 10), (30, 5) (35, 40)
+// Seems these are related to cutscene timing somehow, but unsure what the purpose of them is yet
+FSeek(header.intervalOffset_8);
+DMSInterval intervals[header.intervalCount_2];
     
-FSeek(header.charactersOffset);
+FSeek(header.charactersOffset_10);
 DMSEntry characters(1)[header.characterCount_1]<optimize=false>;
