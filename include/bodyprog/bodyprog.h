@@ -286,7 +286,7 @@ typedef struct
     s16       keyframeCount_0;
     u8        svectorCount_2;
     u8        field_3;   // Usually 0, but sometimes filled in, possibly junk data left in padding byte.
-    char     name_4[4]; // First 4 chars of name, eg. game code checks for "DAHLIA" but in file it's "DAHL"
+    char      name_4[4]; // First 4 chars of name, eg. game code checks for "DAHLIA" but in file it's "DAHL"
     SVECTOR3* svectorPtr_8;   // Pointer to SVECTOR3s, unknown purpose.
 
     union
@@ -299,15 +299,22 @@ STATIC_ASSERT_SIZEOF(s_DMSEntry, 0x10);
 
 typedef struct
 {
-    u8          isLoaded_0;
-    u8          characterCount_1;
-    u8          dvectorCount_2;
-    u8          field_3; // Usually 0, but sometimes filled in.
-    u32         field_4; // Unknown, correlates with DMS file size.
-    DVECTOR*    dvectorPtr_8; // TODO: Change to a more meaningful struct once purpose of vx/vy is understood.
-    VECTOR3     field_C;
-    s_DMSEntry* characters_18;
-    s_DMSEntry  camera_1C;
+    s16 start;
+    s16 duration;
+} s_DMSInterval;
+STATIC_ASSERT_SIZEOF(s_DMSInterval, 4);
+
+typedef struct
+{
+    u8             isLoaded_0;
+    u8             characterCount_1;
+    u8             intervalCount_2;
+    u8             field_3; // Usually 0, but sometimes filled in.
+    u32            field_4; // Unknown, correlates with DMS file size.
+    s_DMSInterval* intervalPtr_8;
+    VECTOR3        field_C;
+    s_DMSEntry*    characters_18;
+    s_DMSEntry     camera_1C;
 } s_DMSHeader;
 STATIC_ASSERT_SIZEOF(s_DMSHeader, 0x2C);
 

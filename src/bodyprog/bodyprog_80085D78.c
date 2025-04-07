@@ -1241,7 +1241,7 @@ void DMSHeader_FixOffsets(s_DMSHeader* header) // 0x8008C9A0
     header->isLoaded_0 = 1;
 
     // Add memory addr of DMS header to the offsets in header
-    header->dvectorPtr_8  = (u8*)header->dvectorPtr_8 + (u32)header;
+    header->intervalPtr_8 = (u8*)header->intervalPtr_8 + (u32)header;
     header->characters_18 = (u8*)header->characters_18 + (u32)header;
 
     DMSEntry_FixOffsets(&header->camera_1C, header);
@@ -1357,20 +1357,20 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008D1D0);
 
 s32 func_8008D2C4(s32 time, s_DMSHeader* header)
 {
-    DVECTOR* vec;
+    s_DMSInterval* interval;
 
     time = FP_FROM(time, Q12_SHIFT);
 
-    for (vec = header->dvectorPtr_8;
-         vec < &header->dvectorPtr_8[header->dvectorCount_2];
-         vec++)
+    for (interval = header->intervalPtr_8;
+         interval < &header->intervalPtr_8[header->intervalCount_2];
+         interval++)
     {
-        if (time != (vec->vx + vec->vy) - 1)
+        if (time != (interval->start + interval->duration) - 1)
         {
             continue;
         }
 
-        if (vec->vy > 1)
+        if (interval->duration > 1)
         {
             return 2;
         }
