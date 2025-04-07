@@ -210,7 +210,7 @@ void Gfx_BrightnessLevelArrowsDraw() // 0x801E628C
 }
 
 // ========================================
-// GENERIC DRAW OPTION SCREEN
+// DRAW OPTIONS FEATURES SCREEN
 // ========================================
 
 /** Draw related
