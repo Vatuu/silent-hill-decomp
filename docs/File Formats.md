@@ -43,16 +43,16 @@ Folder names were fortunately left included in the file table, even though game 
 
 | Folder Name | File Types | Purpose |
 |-|-|-|
-| 1ST/ | .TIM, .BIN | Textures used during bootup & main BODYPROG.BIN engine overlay. |
+| 1ST/ | .TIM, .BIN | B_KONAMI.BIN boot logo overlay & main BODYPROG.BIN engine overlay, both encrypted with XOR key. |
 | ANIM/ | .ANM, .DMS | ANM files for each character model, and .DMS files for each cutscene location. |
 | BG/ | .TIM, .IPD, .BIN | Textures & models for level graphics, along with two unknown .BIN files. |
 | CHARA/ | .TIM, .ILM | Textures & skeletal models for each character. |
 | ITEM/ | .TIM, .TMD, .PLM | Textures & models for in-game items. |
 | MISC/ | .DAT | Data related to demo playback. |
 | SND/ | .KDT, .VAB | MIDI audio & audio samples. |
-| TEST/ | .CMP, .DMS, .ILM, .IPD, .TIM, .TMD | Mixture of different files, uncertain if any used by game. |
+| TEST/ | .CMP, .DMS, .ILM, .IPD, .TIM, .TMD | Mostly leftovers from ITF, uncertain if any are used by game. |
 | TIM/ | .TIM | Full-screen textures. |
-| VIN/ | .BIN | Overlay code, weakly encrypted with XOR key. |
+| VIN/ | .BIN | Overlay binaries for maps & screens. |
 | XA/ | - | XA audio banks & FMV videos. |
 
 ### Sources
