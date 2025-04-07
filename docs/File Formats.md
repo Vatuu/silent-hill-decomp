@@ -9,7 +9,7 @@ Since the goal of this project is a matching decompilation, understanding these 
 The table below summarizes each file format encountered so far, their known or suspected purposes, and any available documentation or parsing tools.
 
 > [!NOTE]  
-> Many formats are still undergoing reverse engineering, with their internal structures inferred during the decompilation process. Contributions of parsers, template definitions, or observations are welcome!
+> Many formats are still being reversed/inferred during the decompilation process. Contributions of parsers, template definitions, or observations are welcome!
 
 | File Type | Purpose | Parser/Documentation |
 |-|-|-|
