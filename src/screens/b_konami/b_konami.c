@@ -77,7 +77,6 @@ void func_800C95AC() // 0x800C95AC
         GsSwapDispBuff();
         GsDrawOt(&g_ObjectTable1[g_ObjectTableIdx]);
 
-        // TODO: Deal with 0x801A2600.
         idx = GsGetActiveBuff();
         g_ObjectTableIdx = idx;
         GsOUT_PACKET_P = (PACKET*)(TEMP_MEMORY_ADDR + (idx << 0xF));
