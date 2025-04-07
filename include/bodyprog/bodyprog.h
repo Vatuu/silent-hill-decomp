@@ -572,8 +572,6 @@ extern s_800C4818 D_800C4818;
 /** Unknown bodyprog var. Set in `Fs_QueueDoThingWhenEmpty`. */
 extern s32 D_800C489C;
 
-extern u8* D_800C7018;
-
 extern s8 D_800C9584;
 
 extern s8 D_800C9590;

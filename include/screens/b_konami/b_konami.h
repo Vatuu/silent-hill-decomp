@@ -18,8 +18,6 @@ extern u8 D_800BCD3E;
 
 extern u8 D_800BCD3F;
 
-extern u8* D_800C7018; // Pointer to graphics commands?
-
 extern s32 D_800CA4F4;
 
 extern s32 D_800CA4FC;
