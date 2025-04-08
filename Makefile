@@ -234,11 +234,13 @@ clean-build: clean
 	$(MAKE) build
 
 clean-check: clean
+	rm -rf $(ASM_DIR)
 	rm -rf $(LINKER_DIR)
 	$(MAKE) generate
 	$(MAKE) check
 
 clean-progress: clean
+	rm -rf $(ASM_DIR)
 	rm -rf $(LINKER_DIR)
 	$(MAKE) generate
 	$(MAKE) progress

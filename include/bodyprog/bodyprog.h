@@ -336,6 +336,30 @@ typedef struct
 } s_Skeleton;
 STATIC_ASSERT_SIZEOF(s_Skeleton, 28);
 
+typedef struct
+{
+    s16      count_0;
+    u8       ptr_8_count_2;
+    char     unk_3[1];
+    char     name_4[4]; // First 4 chars of name, eg. game code checks for "DAHLIA" but in file it's "DAHL"
+    SVECTOR3* svectorPtr_8;   // Pointer to SVECTOR3s, unknown purpose.
+    u16*      unkStructPtr_C; // Pointer to struct of u16s, possibly MATRIX?
+} s_DMSEntry;
+STATIC_ASSERT_SIZEOF(s_DMSEntry, 0x10);
+
+typedef struct
+{
+    u8          isLoaded_0;
+    u8          characterCount_1;
+    u8          length_2;
+    s8          unk_3[5];
+    s16*        field_8;
+    VECTOR3     field_C;
+    s_DMSEntry* characters_18;
+    s_DMSEntry  camera_1C;
+} s_DMSHeader;
+STATIC_ASSERT_SIZEOF(s_DMSHeader, 0x2C);
+
 extern s8* D_8002510C;
 
 /** "\x07PAUSED" string */
@@ -359,6 +383,8 @@ extern s_FsImageDesc D_800A8FF4;
 
 extern s_FsImageDesc D_800A8FFC;
 
+extern s_FsImageDesc D_800A9004;
+
 extern s_FsImageDesc D_800A9014;
 
 extern s_FsImageDesc D_800A901C;
@@ -366,6 +392,10 @@ extern s_FsImageDesc D_800A901C;
 extern s_FsImageDesc D_800A9024;
 
 extern s_FsImageDesc D_800A902C;
+
+extern s_FsImageDesc D_800A9044;
+
+extern s_FsImageDesc D_800A904C;
 
 extern s_FsImageDesc D_800A906C;
 
@@ -389,6 +419,8 @@ extern s32 D_800A976C;
 extern void (*D_800A977C[])(void); // Function pointer array, maybe state funcs of some kind.
 
 extern u8 D_800A97D4[];
+
+extern s8 D_800A97D6; // Index?
 
 extern s_800A992C D_800A992C[];
 
@@ -465,6 +497,14 @@ extern DVECTOR g_Gfx_DebugStringPosition0;
 
 extern DVECTOR g_Gfx_DebugStringPosition1;
 
+extern s32 D_800B5C7C; // Type assumed.
+
+extern s8* D_800BCD2C;
+
+extern u8 D_800BCD3E;
+
+extern u8 D_800BCD3F;
+
 extern s8 D_800BCD78;
 
 extern u8 D_800BCDD4;
@@ -493,7 +533,7 @@ extern u16 D_800BCCB0;
 
 extern u16 D_800BCCB2;
 
-/** Accessed by credits and saveload. */
+/** Accessed by credits, options and saveload. */
 extern s32 D_800BCD0C;
 
 extern s8 D_800BCD40;
@@ -632,7 +672,7 @@ extern s_800C4818 D_800C4818;
 /** Unknown bodyprog var. Set in `Fs_QueueDoThingWhenEmpty`. */
 extern s32 D_800C489C;
 
-extern u8* D_800C7018;
+extern u8* D_800C7018; // Pointer to graphics commands?
 
 extern s8 D_800C9584;
 
@@ -694,7 +734,7 @@ void Gfx_DebugStringPosition(s16 x, s16 y);
 
 void Gfx_DebugStringDraw(char* str);
 
-char* Math_IntegerToString(s32 digitCount, s32 value);
+char* Math_IntegerToString(s32 widthMin, s32 value);
 
 void func_8003260C(); // Return type assumed.
 
@@ -801,6 +841,8 @@ u8 func_80045B28();
 
 void func_8004690C(s32);
 
+void func_8004729C(u16);
+
 void Sd_SetVolBgm(s16 volLeft, s16 volRight);
 
 void Sd_SetVolXa(s16 volLeft, s16 volRight);
@@ -868,6 +910,22 @@ void func_80089128();
 
 /** Unknown bodyprog func. Called by `Fs_QueueWaitForEmpty` with `0` and then `1`. */
 void func_800892A4(s32);
+
+void DMSHeader_FixOffsets(s_DMSHeader* header);
+
+void DMSEntry_FixOffsets(s_DMSEntry* entry, s_DMSHeader* header);
+
+void DMS_CharacterGetStartPosRot(VECTOR3* position, SVECTOR* rotation, char* charName, s32 arg3, s_DMSHeader* header);
+
+s32 DMS_CharacterFindIndexByName(char* name, s_DMSHeader* header);
+
+void func_8008CB90(VECTOR3*, SVECTOR3*, s32, s32, s_DMSHeader*);
+
+s32 DMS_CameraGetTargetPos(VECTOR3* cam_tgt_pos, VECTOR3* watch_tgt_pos, u16* arg2, s32 time, s_DMSHeader* header);
+
+s32 func_8008CFEC(s16*, s16*, s16*, s32);
+
+void func_8008D1D0(s32*, s32*, s32*, s32, s_DMSEntry*, s_DMSHeader*);
 
 void func_801E2D8C();
 

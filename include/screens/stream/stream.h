@@ -2,13 +2,13 @@
 #define _STREAM_H
 
 #include "common.h"
+#include <libcd.h>
 #include <libgpu.h>
 
 extern int StCdIntrFlag; // Not included in SDK docs/headers, but movie player sample code (and moviesys) uses it?
 
 extern s32 D_800B5C30;
 
-extern s32 D_800BCD0C;
 extern u8  D_800A900C[];
 
 typedef struct

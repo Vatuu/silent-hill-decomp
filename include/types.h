@@ -23,12 +23,19 @@ typedef enum { false, true } bool;
 
 #define NO_VALUE -1
 
-// Slightly modified VECTOR with padding int removed. Seems to be used through much of SH code.
+// Smaller VECTOR/SVECTOR with padding removed. Seems to be used through much of SH code.
 typedef struct
 {
     long vx;
     long vy;
     long vz;
 } VECTOR3;
+
+typedef struct
+{
+    short vx;
+    short vy;
+    short vz;
+} SVECTOR3;
 
 #endif

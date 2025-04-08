@@ -448,7 +448,9 @@ typedef struct _SysWork
     s8              unk_2388[392];
     s32             field_2510;
     s32             field_2514[10];
-    u8              unk_253C[556];
+    u8              unk_253C[524];
+    s16             field_2748[9];
+    u8              unk_275A[14];
 } s_SysWork;
 STATIC_ASSERT_SIZEOF(s_SysWork, 0x2768);
 

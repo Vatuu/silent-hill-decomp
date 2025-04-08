@@ -1,7 +1,6 @@
 #include "common.h"
 
 #include <libspu.h>
-#include <libsnd.h>
 
 #include "bodyprog/libsd.h"
 
