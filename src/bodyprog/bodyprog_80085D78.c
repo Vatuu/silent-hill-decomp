@@ -300,6 +300,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80086470);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800865FC);
 
+#ifdef NON_MATCHING
 void func_800866D4(s32 arg0, s32 arg1, s32 arg2) // 0x800866D4
 {
     if (D_800C964C(arg0, &D_800C4640, D_800C4700, arg1) == 1)
@@ -307,7 +308,11 @@ void func_800866D4(s32 arg0, s32 arg1, s32 arg2) // 0x800866D4
         func_80085D78(arg2);
     }
 }
+#else
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800866D4);
+#endif
 
+#ifdef NON_MATCHING
 void func_80086728(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x80086728
 {
     if (D_800C96B8(arg0, arg1, &D_800C46A0, D_800C4702, arg2) == 1)
@@ -315,11 +320,18 @@ void func_80086728(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x80086728
         func_80085D78(arg3);
     }
 }
+#else
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80086728);
+#endif
 
+#ifdef NON_MATCHING
 void func_8008677C(s32 arg0, s32 arg1, s32 arg2) // 0x8008677C
 {
     D_800C96B8(arg0, arg1, &D_800C46A0, D_800C4702, arg2);
 }
+#else
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008677C);
+#endif
 
 void func_800867B4(s32 caseParam, s32 idx) // 0x800867B4
 {
