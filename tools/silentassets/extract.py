@@ -12,8 +12,8 @@ from enum import IntFlag
 class Flags(IntFlag):
     NONE = 0
     ENCRYPTED_1ST_FOLDER = 1
-    USES_XA_CONTAINER = 2
-    USES_ALT_FILE_STRUCT = 4
+    NO_XA_CONTAINER = 2
+    ALT_FILE_STRUCT = 4
 
 @dataclass
 class Region:
@@ -98,20 +98,23 @@ DIRS_OPM16 = [
 ]
 
 REGIONS = (
-    Region("NTSC OPM16 Demo 98-10-19", "SCUS-94278", 0x2534D4BE, 0xAA90, 886, DIRS_OPM16, FILE_TYPES_OPM16, Flags.USES_XA_CONTAINER | Flags.USES_ALT_FILE_STRUCT),
-    Region("NTSC-J Trial Version 98-11-06", "SLPM-80363", 0xBE8E95CF, 0xB780, 843, DIRS_DEMO, FILE_TYPES_DEMO, Flags.USES_XA_CONTAINER | Flags.USES_ALT_FILE_STRUCT),
-    Region("PAL Demo 98-12-16", "SLED-01735", 0x9AE067D4, 0xB648, 850, DIRS_DEMO, FILE_TYPES_DEMO, Flags.USES_XA_CONTAINER),
-    Region("NTSC Demo 99-01-16", "SLUS-90050", 0x55E85F78, 0xB648, 849, DIRS_DEMO, FILE_TYPES_DEMO, Flags.USES_XA_CONTAINER),
-    Region("PAL Demo 99-06-08", "SLED-02190", 0x08E0B752, 0xC8FC, 1015, DIRS_PAL, FILE_TYPES, Flags.USES_XA_CONTAINER | Flags.ENCRYPTED_1ST_FOLDER),
-    Region("PAL Demo 99-06-16", "SLED-02186", 0x1782AA0A, 0xB8FC, 1015, DIRS_PAL, FILE_TYPES, Flags.USES_XA_CONTAINER | Flags.ENCRYPTED_1ST_FOLDER),
-    Region("NTSC Preview 98-11-24", "SLUS-45678", 0x8B88326C, 0xB71C, 1926, DIRS_NTSC, FILE_TYPES, 0),
-    Region("NTSC Review 99-01-07", "SLUS-00707", 0xCC454534, 0xB7B8, 2076, DIRS_NTSC, FILE_TYPES, 0),
-    Region("NTSC Trade Demo 99-01-17", "SLUS-80707", 0xC9FFEF2A, 0xB850, 2040, DIRS_NTSC, FILE_TYPES, Flags.USES_XA_CONTAINER),
-    Region("NTSC Beta 99-01-22", "SLUS-00707", 0x84AB9750, 0xB850, 2072, DIRS_NTSC, FILE_TYPES, Flags.USES_XA_CONTAINER),
-    Region("NTSC-J Rev 0 99-01-26", "SLPM-86192", 0x1532C55C, 0xB91C, 2074, DIRS_NTSC, FILE_TYPES, Flags.USES_XA_CONTAINER | Flags.ENCRYPTED_1ST_FOLDER),
-    Region("NTSC 1.1 99-02-10", "SLUS-00707", 0xCF9CD8E5, 0xB91C, 2074, DIRS_NTSC, FILE_TYPES, Flags.USES_XA_CONTAINER | Flags.ENCRYPTED_1ST_FOLDER),
-    Region("NTSC-J Rev 1/Rev 2 99-06-02", "SLPM-86192", 0xEB733CAA, 0xB91C, 2074, DIRS_NTSC, FILE_TYPES, Flags.USES_XA_CONTAINER | Flags.ENCRYPTED_1ST_FOLDER),
-    Region("PAL 99-06-07", "SLES-01514", 0x337E4A60, 0xB8FC, 2310, DIRS_PAL, FILE_TYPES, Flags.USES_XA_CONTAINER | Flags.ENCRYPTED_1ST_FOLDER),
+# Partial demo releases
+    Region("NTSC OPM16 Demo 98-10-19", "SCUS-94278", 0x2534D4BE, 0xAA90, 886, DIRS_OPM16, FILE_TYPES_OPM16, Flags.ALT_FILE_STRUCT),
+    Region("NTSC-J Trial Version 98-11-06", "SLPM-80363", 0xBE8E95CF, 0xB780, 843, DIRS_DEMO, FILE_TYPES_DEMO, Flags.ALT_FILE_STRUCT),
+    Region("PAL Demo 98-12-16", "SLED-01735", 0x9AE067D4, 0xB648, 850, DIRS_DEMO, FILE_TYPES_DEMO, 0),
+    Region("NTSC Demo 99-01-16", "SLUS-90050", 0x55E85F78, 0xB648, 849, DIRS_DEMO, FILE_TYPES_DEMO, 0),
+    Region("PAL Demo 99-06-08", "SLED-02190", 0x08E0B752, 0xC8FC, 1015, DIRS_PAL, FILE_TYPES, Flags.ENCRYPTED_1ST_FOLDER),
+    Region("PAL Demo 99-06-16", "SLED-02186", 0x1782AA0A, 0xB8FC, 1015, DIRS_PAL, FILE_TYPES, Flags.ENCRYPTED_1ST_FOLDER),
+# Prototypes
+    Region("NTSC Preview 98-11-24", "SLUS-45678", 0x8B88326C, 0xB71C, 1926, DIRS_NTSC, FILE_TYPES, Flags.NO_XA_CONTAINER),
+    Region("NTSC Review 99-01-07", "SLUS-00707", 0xCC454534, 0xB7B8, 2076, DIRS_NTSC, FILE_TYPES, Flags.NO_XA_CONTAINER),
+    Region("NTSC Trade Demo 99-01-17", "SLUS-80707", 0xC9FFEF2A, 0xB850, 2040, DIRS_NTSC, FILE_TYPES, 0),
+    Region("NTSC Beta 99-01-22", "SLUS-00707", 0x84AB9750, 0xB850, 2072, DIRS_NTSC, FILE_TYPES, 0),
+# Final releases
+    Region("NTSC-J Rev 0 99-01-26", "SLPM-86192", 0x1532C55C, 0xB91C, 2074, DIRS_NTSC, FILE_TYPES, Flags.ENCRYPTED_1ST_FOLDER),
+    Region("NTSC 1.1 99-02-10", "SLUS-00707", 0xCF9CD8E5, 0xB91C, 2074, DIRS_NTSC, FILE_TYPES, Flags.ENCRYPTED_1ST_FOLDER),
+    Region("NTSC-J Rev 1/Rev 2 99-06-02", "SLPM-86192", 0xEB733CAA, 0xB91C, 2074, DIRS_NTSC, FILE_TYPES, Flags.ENCRYPTED_1ST_FOLDER),
+    Region("PAL 99-06-07", "SLES-01514", 0x337E4A60, 0xB8FC, 2310, DIRS_PAL, FILE_TYPES, Flags.ENCRYPTED_1ST_FOLDER),
 )
 
 FILESIZE_STEP = 256
@@ -143,7 +146,7 @@ def _detectRegion(checksum: int, name: str) -> Region:
 def _parseEntry(entry, region):
     meta, file1, file2 = ENTRY_STRUCT.unpack(entry)
     
-    if not region.flags & Flags.USES_ALT_FILE_STRUCT:
+    if not region.flags & Flags.ALT_FILE_STRUCT:
         name = "".join(chain(
             ( chr(32 + ((file1 >> shift) & 63)) for shift in range(4, 28, 6) ),
             ( chr(32 + ((file2 >> shift) & 63)) for shift in range(0, 24, 6) )
@@ -255,7 +258,7 @@ def main():
     
     _extract(entriesSilent, args.outputFolder, args.silentFile, 2048, region.flags)
     
-    if region.flags & Flags.USES_XA_CONTAINER and args.hillFile:
+    if not region.flags & Flags.NO_XA_CONTAINER and args.hillFile:
         _extract(entriesHill, args.outputFolder, args.hillFile, 2336, region.flags)
 
     with open(os.path.join(args.outputFolder, "filetable.c.inc"), "a+") as f:
