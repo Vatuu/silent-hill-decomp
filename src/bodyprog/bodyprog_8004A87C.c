@@ -25,7 +25,7 @@ void func_8004A8C0(s32 arg0)
     D_800AD49C = arg0;
 }
 
-void func_8004A8CC(void)
+void func_8004A8CC()
 {
     D_800AD49C = 6;
 }
