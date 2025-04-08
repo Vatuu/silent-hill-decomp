@@ -1311,9 +1311,9 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008B714);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008BF84);
 
-void DMSHeader_FixOffsets(s_DMSHeader* header) // 0x8008C9A0
+void DmsHeader_FixOffsets(s_DmsHeader* header) // 0x8008C9A0
 {
-    s_DMSEntry* chara;
+    s_DmsEntry* chara;
 
     if (header->isLoaded_0)
     {
@@ -1326,17 +1326,17 @@ void DMSHeader_FixOffsets(s_DMSHeader* header) // 0x8008C9A0
     header->field_8       = (u8*)header->field_8 + (u32)header;
     header->characters_18 = (u8*)header->characters_18 + (u32)header;
 
-    DMSEntry_FixOffsets(&header->camera_1C, header);
+    DmsEntry_FixOffsets(&header->camera_1C, header);
 
     for (chara = header->characters_18;
          chara < &header->characters_18[header->characterCount_1];
          chara++)
     {
-        DMSEntry_FixOffsets(chara, header);
+        DmsEntry_FixOffsets(chara, header);
     }
 }
 
-void DMSEntry_FixOffsets(s_DMSEntry* entry, s_DMSHeader* header) // 0x8008CA44
+void DmsEntry_FixOffsets(s_DmsEntry* entry, s_DmsHeader* header) // 0x8008CA44
 {
     entry->unkStructPtr_C = (u32)entry->unkStructPtr_C + (u32)header;
     entry->svectorPtr_8   = (u32)entry->svectorPtr_8 + (u32)header;
@@ -1344,11 +1344,11 @@ void DMSEntry_FixOffsets(s_DMSEntry* entry, s_DMSHeader* header) // 0x8008CA44
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008CA60);
 
-void DMS_CharacterGetPosRot(VECTOR3* pos, SVECTOR* rot, char* charName, s32 time, s_DMSHeader* header) // 0x8008CA74
+void Dms_CharacterGetPosRot(VECTOR3* pos, SVECTOR* rot, char* charName, s32 time, s_DmsHeader* header) // 0x8008CA74
 {
     s32 charIdx;
 
-    charIdx = DMS_CharacterFindIndexByName(charName, header);
+    charIdx = Dms_CharacterFindIndexByName(charName, header);
     if (charIdx == NO_VALUE)
     {
         // Character not found in DMS.
@@ -1369,7 +1369,7 @@ void DMS_CharacterGetPosRot(VECTOR3* pos, SVECTOR* rot, char* charName, s32 time
     }
 }
 
-s32 DMS_CharacterFindIndexByName(char* name, s_DMSHeader* header) // 0x8008CB10
+s32 Dms_CharacterFindIndexByName(char* name, s_DmsHeader* header) // 0x8008CB10
 {
     s32 i;
 
@@ -1390,9 +1390,9 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008CC98);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008CDBC);
 
-s32 DMS_CameraGetTargetPos(VECTOR3* posTarget, VECTOR3* lookAtTarget, u16* arg2, s32 time, s_DMSHeader* header)
+s32 Dms_CameraGetTargetPos(VECTOR3* posTarget, VECTOR3* lookAtTarget, u16* arg2, s32 time, s_DmsHeader* header)
 {
-    s_DMSEntry* camera;
+    s_DmsEntry* camera;
     s16         sp18[8];
     s32         sp28;
     s32         sp2C;
