@@ -44,7 +44,7 @@ void func_8002E630()
         }
 
         D_800B5508[i].field_14 = ptr;
-        
+
         func_8002E6E4(i);
     } 
 }
@@ -57,10 +57,10 @@ void func_8002E6E4(s32 idx)
     temp_v0 = &D_800B5508;
     temp_s0 = &temp_v0[idx];
     temp_s0->field_0 = 0;
-    
+
     func_8002E730(idx);
     bzero(temp_s0->field_14, 3840);
-    
+
     temp_s0->field_18 = 0;
 }
 
@@ -142,12 +142,12 @@ s32 func_8002E898()
     s32 i;
 
     ret = 0;
-    
+
     for (i = 0; i < 8; i++)
-    {   
+    {
         ret |= D_800B5508[i].field_0 << (i * 3);
     }
-    
+
     return ret;
 }
 
@@ -164,11 +164,11 @@ s32 func_8002E914()
     s32 i;
 
     ret = 0;
-    for (i = 0; i < 8; i++) 
+    for (i = 0; i < 8; i++)
     {
         ret |= D_800B5508[i].field_0 << (i * 2);
-    } 
-    
+    }
+
     return ret;
 }
 
@@ -185,12 +185,12 @@ s32 func_8002E9A0(s32 idx)
     s32 i;
 
     ret = 0;
-    
-    for (i = 0; i < 15; i++) 
+
+    for (i = 0; i < 15; i++)
     {
         ret |= D_800B5508[idx].field_4[i] << (i * 2);
-    } 
-    
+    }
+
     return ret;
 }
 
@@ -202,15 +202,15 @@ s32 func_8002EA28(s32 idx)
     s32 i;
 
     ret = 0;
-    
-    for (i = 0; i < 15; i++) 
+
+    for (i = 0; i < 15; i++)
     {
-        if (D_800B5508[idx].field_4[i] != 0) 
+        if (D_800B5508[idx].field_4[i] != 0)
         {
             ret++;
         }
-    } 
-    
+    }
+
     return ret;
 }
 
@@ -234,7 +234,7 @@ void func_8002ECE0(s_800B55E8* arg0)
         
         D_800B5508[arg0->field_4].field_18 = 15;
     }
-    else  
+    else
     {
         arg0->field_14 = 10;
     }
@@ -279,14 +279,14 @@ void SaveGame_ChecksumUpdate(s_ShSaveGameFooter* saveFooter, s8* saveData, s32 s
 
 s32 SaveGame_ChecksumValidate(s_ShSaveGameFooter* saveFooter, s8* saveData, s32 saveDataLength) // 0x8002FF74
 {
-    s32 is_valid = 0;
+    s32 isValid = 0;
 
     if (saveFooter->checksum_0[0] == SaveGame_ChecksumGenerate(saveData, saveDataLength))
     {
-        is_valid = saveFooter->magic_2 == SAVEGAME_FOOTER_MAGIC;
+        isValid = saveFooter->magic_2 == SAVEGAME_FOOTER_MAGIC;
     }
 
-    return is_valid;
+    return isValid;
 }
 
 u8 SaveGame_ChecksumGenerate(s8* saveData, s32 saveDataLength) // 0x8002FFD0
