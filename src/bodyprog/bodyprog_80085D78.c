@@ -1355,7 +1355,7 @@ void Dms_CharacterGetPosRot(VECTOR3* pos, SVECTOR* rot, char* charName, s32 time
         Math_Vector3Zero(pos);
         Math_SVectorZero(rot);
 
-        Gfx_DebugStringPosition(50, 90);
+        Gfx_DebugStringPosition(SCREEN_POSITION_X(15.75f), SCREEN_POSITION_Y(37.5f));
 
 #ifdef DEBUG
         // Only seen in prototypes.

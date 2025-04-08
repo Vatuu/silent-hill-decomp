@@ -96,7 +96,7 @@ void func_801E2908()
         g_Debug_MoviePlayerIdx++;
     }
 
-    Gfx_DebugStringPosition(40, 40);
+    Gfx_DebugStringPosition(SCREEN_POSITION_X(12.5f), SCREEN_POSITION_Y(16.75f));
 
 #ifdef DEBUG
     // Recreated code from pre-Jan17 builds which include calls to display these (though DebugStringDraw was nullsub in those builds).

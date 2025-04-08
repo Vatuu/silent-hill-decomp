@@ -277,6 +277,7 @@ void func_800D8888(s_SubCharacter* chara)
 }
 
 // Following funcs taking `s_SubCharacter*` arg are shared with other maps too.
+// Probably all player-specific.
 // Possibly shared .c file or separate SubCharacter library?
 
 void func_800D88AC(s_SubCharacter* playerChara)

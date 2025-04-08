@@ -1254,7 +1254,7 @@ void func_800391E8() // 0x800391E8
     D_800A9A68 += g_DeltaTime1;
     if (((D_800A9A68 >> 11) & 1) == 0)
     {
-        Gfx_StringPosition(125, 104);
+        Gfx_StringPosition(SCREEN_POSITION_X(39.25f), SCREEN_POSITION_Y(43.5f));
         Gfx_StringDraw(D_80025394, 99); // "\x07PAUSED"
     }
 
