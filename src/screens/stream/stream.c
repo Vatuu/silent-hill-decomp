@@ -147,7 +147,7 @@ void movie_main(char* file_name, s32 f_size, s32 sector)
 
     frame_cnt = 0;
     max_frame = f_size;
-    
+
     m = (MOVIE_STR*)TEMP_MEMORY_ADDR;
     m->width  = SCREEN_WIDTH;
     m->height = SCREEN_HEIGHT;
@@ -162,6 +162,7 @@ void movie_main(char* file_name, s32 f_size, s32 sector)
 				return;
 			}
 		}
+
 		m->loc.minute = file.pos.minute;
 		m->loc.second = file.pos.second;
 		m->loc.sector = file.pos.sector;
@@ -201,7 +202,7 @@ void movie_main(char* file_name, s32 f_size, s32 sector)
 
         disp.disp.y = (disp.disp.y < 16) ? 16 : (disp.disp.y > 256) ? 256 : disp.disp.y;
         disp.screen.h = (disp.screen.h <= 0) ? 1 : (disp.screen.h > 208) ? 208 : disp.screen.h;
-        
+
         PutDispEnv(&disp);
         nullsub_800334C8();
         JOY_Update();
@@ -223,17 +224,18 @@ void movie_main(char* file_name, s32 f_size, s32 sector)
 
         if (prev_frame_no > frame_cnt)
             break;
-        
+
         prev_frame_no = frame_cnt;
 
         strSync(&m->dec);
         VSync(0);
-        
+
         if ((g_ControllerPtr0->btns_new_10 & g_GameWorkPtr1->controllerBinds_0.skip))
             break;
         if (MainLoop_ShouldWarmReset() > 0)
             break;
     }
+
     SsSetSerialVol(0, 0, 0);
     param = 0x80;
     CdControlB(CdlSetmode, &param, NULL);

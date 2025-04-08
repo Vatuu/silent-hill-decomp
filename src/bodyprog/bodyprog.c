@@ -388,15 +388,18 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80031CCC);
 
 void Gfx_DebugStringPosition(s16 x, s16 y) // 0x80031EFC
 {
+    #define OFFSET_X SCREEN_POSITION_X(50.0f)
+    #define OFFSET_Y SCREEN_POSITION_Y(47.0f)
+
     if (x != NO_VALUE)
     {
         g_Gfx_DebugStringPosition0.vx =
-        g_Gfx_DebugStringPosition1.vx = x - 160;
+        g_Gfx_DebugStringPosition1.vx = x - OFFSET_X;
     }
 
     if (y != NO_VALUE)
     {
-        g_Gfx_DebugStringPosition1.vy = y - 112;
+        g_Gfx_DebugStringPosition1.vy = y - OFFSET_Y;
     }
 }
 
@@ -554,10 +557,7 @@ void GameFs_SaveLoadBinLoad() // 0x80032CA8
 
 void func_80032CE8()
 {
-    #define POS_X 108
-    #define POS_Y 104
-
-    Gfx_StringPosition(POS_X, POS_Y);
+    Gfx_StringPosition(SCREEN_POSITION_X(33.75f), SCREEN_POSITION_Y(43.5f));
     Gfx_StringDraw(&D_8002510C, 100);
 }
 
@@ -646,7 +646,7 @@ void func_80032D1C()
     func_80089090(1);
 }
 
-void MainLoop() // 0x80032ee0
+void MainLoop() // 0x80032EE0
 {
     #define TICKS_PER_SECOND_MIN (TICKS_PER_SECOND / 4)
     #define H_BLANKS_PER_TICK    263

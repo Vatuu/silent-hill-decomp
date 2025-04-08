@@ -6,15 +6,18 @@
 
 void Gfx_StringPosition(s32 x, s32 y) // 0x0x8004A87C
 {
-    if (x != -1)
+    #define OFFSET_X SCREEN_POSITION_X(50.0f)
+    #define OFFSET_Y SCREEN_POSITION_Y(47.0f)
+
+    if (x != NO_VALUE)
     {
-        D_800C38A8 = x - 160;
-        D_800C38AC = (s16)(x - 160);
+        D_800C38A8 = x - OFFSET_X;
+        D_800C38AC = (s16)(x - OFFSET_X);
     }
 
-    if (y != -1)
+    if (y != NO_VALUE)
     {
-        D_800C38AA = y - 112;
+        D_800C38AA = y - OFFSET_Y;
     }
 
     D_800AD49C = 6;

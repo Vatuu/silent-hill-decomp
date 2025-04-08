@@ -172,7 +172,7 @@ void Gfx_BrightnessLevelTextDraw() // 0x801E6238
     char* str = D_801E2C64;
 
     func_8004A8DC(7);
-    Gfx_StringPosition(SCREEN_POSITION_X(0.25f), SCREEN_POSITION_Y(0.795f));
+    Gfx_StringPosition(SCREEN_POSITION_X(25.0f), SCREEN_POSITION_Y(79.5f));
     Gfx_StringDraw(str, 20);
     func_8004B9F8(1, g_GameWork.optBrightness_22);
 }

@@ -91,7 +91,7 @@ STATIC_ASSERT_SIZEOF(THROUGH_DOOR_SET_CMD_TYPE, 4);
 
 /** @brief 2D camera-specific axis-aligned bounding box (AABB), with values in Q8.8 format.
  * 
- * Constrains the camera position to a linited area on the XZ plane.
+ * Constrains the camera position to a limited area on the XZ plane.
  */
 typedef struct _VC_LIMIT_AREA
 {

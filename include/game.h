@@ -7,15 +7,16 @@
 #define SCREEN_HEIGHT    240
 #define TICKS_PER_SECOND 60 // Theorised. It's unclear if the game has a fixed timestep.
 
+#define CHARA_PROPERTY_COUNT_MAX 10
 #define NPC_COUNT_MAX            6
 #define INVENTORY_ITEM_COUNT_MAX 40
 #define SAVEGAME_FOOTER_MAGIC    0xDCDC
 
 #define SCREEN_POSITION_X(percent) \
-    (s32)((SCREEN_WIDTH) * (percent))
+    (s32)((SCREEN_WIDTH) * ((percent) / 100.0f))
 
 #define SCREEN_POSITION_Y(percent) \
-    (s32)((SCREEN_HEIGHT) * (percent))
+    (s32)((SCREEN_HEIGHT) * ((percent) / 100.0f))
 
 typedef enum _PadButtonFlags
 {
@@ -127,6 +128,20 @@ typedef enum _PlayerBoneIdx
 
     PlayerBoneIdx_Count = 18
 } s_PlayerBoneIdx;
+
+typedef enum _PlayerProperty
+{
+    PlayerProperty_Unk0          = 0,
+    PlayerProperty_AfkTimer      = 1, // Increments every tick for 10 seconds before AFK anim starts.
+    PlayerProperty_PositionY     = 2,
+    PlayerProperty_Unk3          = 3,
+    PlayerProperty_Unk4          = 4,
+    PlayerProperty_RunTimer0     = 5, // Increments indefinitely, but more slowly than `PlayerProperty_RunCounter1`.
+    PlayerProperty_ExertionTimer = 6, // Counts ~20 seconds worth of ticks while running and caps at 0x23000.
+    PlayerProperty_Unk7          = 7,
+    PlayerProperty_Unk8          = 8, // Returned by `func_8007FD2C`.
+    PlayerProperty_RunTimer1     = 9  // Increments every tick indefinitely.
+} s_PlayerProperty;
 
 typedef struct _AnalogPadData
 {
@@ -371,12 +386,13 @@ typedef struct _SubCharacter
     s16 field_DC;
     s16 field_DE;
     s32 flags_E0;
-    s8  unk_E4[4];
+
+    //s32 properties_E4[CHARA_PROPERTY_COUNT_MAX];
 
     // Fields in the following block may be part of a multi-purpose array of `s32` elements used to store unique property data for each character type.
-    // Start of this section is unclear, bytes above may be part of it.
     // For player, mostly used for counters as far as I could see. -- Sezz
 
+    s8  unk_E4[4];
     s32 field_E8;  // Player AFK counter. Increments every tick for 10 seconds before player starts AFK anim. Purpose for other characters unknown.
     s32 field_EC;  // Copy of player Y position. Purpose for other characters unknown.
     s32 field_F0;
