@@ -133,7 +133,7 @@ def _createParser():
 def _getChecksum(exe: BinaryIO):
     exe.seek(0)
     return crc32(exe.read(4096))
-    
+
 def _detectRegion(checksum: int, name: str) -> Region:
     for region in REGIONS:
         if checksum == region.checksum:
