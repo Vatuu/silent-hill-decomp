@@ -7,6 +7,13 @@ from struct import Struct
 from typing import BinaryIO, Iterable
 from zlib import crc32
 import os
+from enum import IntFlag
+
+class Flags(IntFlag):
+    NONE = 0
+    ENCRYPTED_1ST_FOLDER = 1
+    USES_XA_CONTAINER = 2
+    USES_ALT_FILE_STRUCT = 4
 
 @dataclass
 class Region:
@@ -15,6 +22,9 @@ class Region:
     checksum: int
     tocOffset: int
     fileCount: int
+    dirs: list[str]
+    filetypes: list[str]
+    flags: Flags
 
 @dataclass
 class EntryType:
@@ -28,20 +38,81 @@ class TableEntry:
     size: int
     offset: int
 
+# Description of each file type extension
+FILE_TYPE_NAMES = {
+    "TIM": "Texture Image",
+    "VAB": "Sound Bank",
+    "BIN": "Overlay Data",
+    "DMS": "Cutscene Data",
+    "ANM": "Animation Data",
+    "PLM": "Map Geometry Data",
+    "IPD": "Map Data",
+    "ILM": "Character Data",
+    "TMD": "Mesh Data",
+    "DAT": "Demo Data",
+    "KDT": "Audio Metadata",
+    "CMP": "Compressed Data",
+    "TXT": "Dummy Plaintext",
+    "UU1": "Unused 1",
+    "UU2": "Unused 2",
+    "UU3": "Unused 3",
+    "UU4": "Unused 4",
+    "": "XA Track Data"
+}
 
+# Mapping of type index -> type string, mappings change in certain releases
 FILE_TYPES = [
-    EntryType("Texture Image", "TIM"), EntryType("Sound Bank", "VAB"), EntryType("Overlay Data", "BIN"), EntryType("DMS?", "DMS"), EntryType("Animation Data", "ANM"), EntryType("Map Geometry Data", "PLM"), EntryType("Map Data", "IPD"), EntryType("Character Data", "ILM"), EntryType("Mesh Data", "TMD"), EntryType("Demo Data", "DAT"), EntryType("Audio Metadata", "KDT"), EntryType("Compressed Data?", "CMP"), EntryType("Plaintext?", "TXT"), EntryType("Unused 1", "UU1"), EntryType("Unused 2", "UU2"), EntryType("XA Track Data", "")
+    "TIM", "VAB", "BIN", "DMS", "ANM", "PLM", "IPD", "ILM", 
+    "TMD", "DAT", "KDT", "CMP", "TXT", "UU1", "UU2", ""
 ]
 
-DIRS = [ "1ST", "ANIM", "BG", "CHARA", "ITEM", "MISC", "SND", "TEST", "TIM", "VIN", "XA"]
-DIRS_PAL = [ "1ST", "ANIM", "BG", "CHARA", "ITEM", "MISC", "SND", "TEST", "TIM", "VIN", "VIN2", "VIN3", "VIN4", "VIN5", "XA"]
+FILE_TYPES_DEMO = [
+    "TIM", "VAB", "BIN", "ANM", "DMS", "PLM", "IPD", "ILM", 
+    "TMD", "DAT", "KDT", "CMP", "TXT", "UU1", "UU2", ""
+]
+
+FILE_TYPES_OPM16 = [
+    "TIM", "VAB", "BIN", "ANM", "DMS", "PLM", "IPD", "ILM", 
+    "TMD", "KDT", "CMP", "UU1", "UU2", "UU3", "UU4", ""
+]
+
+# Mapping of directory index -> dir string, mappings change in certain releases
+DIRS_NTSC = [
+    "1ST", "ANIM", "BG", "CHARA", "ITEM", "MISC", "SND", "TEST", 
+    "TIM", "VIN", "XA"
+]
+
+DIRS_PAL = [
+    "1ST", "ANIM", "BG", "CHARA", "ITEM", "MISC", "SND", "TEST", 
+    "TIM", "VIN", "VIN2", "VIN3", "VIN4", "VIN5", "XA"
+]
+
+DIRS_DEMO = [
+    "1ST", "ANIM", "BG", "CHARA", "ITEM", "MISC", "SND", "TIM",
+    "VIN", "XA"
+]
+
+DIRS_OPM16 = [
+    "1ST", "ANIM", "BG", "CHARA", "ITEM", "SND", "TEST", "TIM", 
+    "VIN", "XA"
+]
 
 REGIONS = (
-    Region("NTSC 1.1", "SLUS-00707", 0xDA0BFDF1, 0xB91C, 2074),
-    Region("PAL", "SLES-01514", 0xCBFD1A13, 0xB8FC, 2310),
-    Region("NTSC-J Rev 2", "SLPM-86192", 0x7E03604D, 0xB91C, 2074),
-    Region("NTSC Nov 24, 1998", "SLUS-45678", 0xEAEB4DF8, 0xB71C, 1926)
-    )
+    Region("NTSC OPM16 Demo 98-10-19", "SCUS-94278", 0x2534D4BE, 0xAA90, 886, DIRS_OPM16, FILE_TYPES_OPM16, Flags.USES_XA_CONTAINER | Flags.USES_ALT_FILE_STRUCT),
+    Region("NTSC-J Trial Version 98-11-06", "SLPM-80363", 0xBE8E95CF, 0xB780, 843, DIRS_DEMO, FILE_TYPES_DEMO, Flags.USES_XA_CONTAINER | Flags.USES_ALT_FILE_STRUCT),
+    Region("PAL Demo 98-12-16", "SLED-01735", 0x9AE067D4, 0xB648, 850, DIRS_DEMO, FILE_TYPES_DEMO, Flags.USES_XA_CONTAINER),
+    Region("NTSC Demo 99-01-16", "SLUS-90050", 0x55E85F78, 0xB648, 849, DIRS_DEMO, FILE_TYPES_DEMO, Flags.USES_XA_CONTAINER),
+    Region("PAL Demo 99-06-08", "SLED-02190", 0x08E0B752, 0xC8FC, 1015, DIRS_PAL, FILE_TYPES, Flags.USES_XA_CONTAINER | Flags.ENCRYPTED_1ST_FOLDER),
+    Region("PAL Demo 99-06-16", "SLED-02186", 0x1782AA0A, 0xB8FC, 1015, DIRS_PAL, FILE_TYPES, Flags.USES_XA_CONTAINER | Flags.ENCRYPTED_1ST_FOLDER),
+    Region("NTSC Preview 98-11-24", "SLUS-45678", 0x8B88326C, 0xB71C, 1926, DIRS_NTSC, FILE_TYPES, 0),
+    Region("NTSC Review 99-01-07", "SLUS-00707", 0xCC454534, 0xB7B8, 2076, DIRS_NTSC, FILE_TYPES, 0),
+    Region("NTSC Trade Demo 99-01-17", "SLUS-80707", 0xC9FFEF2A, 0xB850, 2040, DIRS_NTSC, FILE_TYPES, Flags.USES_XA_CONTAINER),
+    Region("NTSC Beta 99-01-22", "SLUS-00707", 0x84AB9750, 0xB850, 2072, DIRS_NTSC, FILE_TYPES, Flags.USES_XA_CONTAINER),
+    Region("NTSC-J Rev 0 99-01-26", "SLPM-86192", 0x1532C55C, 0xB91C, 2074, DIRS_NTSC, FILE_TYPES, Flags.USES_XA_CONTAINER | Flags.ENCRYPTED_1ST_FOLDER),
+    Region("NTSC 1.1 99-02-10", "SLUS-00707", 0xCF9CD8E5, 0xB91C, 2074, DIRS_NTSC, FILE_TYPES, Flags.USES_XA_CONTAINER | Flags.ENCRYPTED_1ST_FOLDER),
+    Region("NTSC-J Rev 1/Rev 2 99-06-02", "SLPM-86192", 0xEB733CAA, 0xB91C, 2074, DIRS_NTSC, FILE_TYPES, Flags.USES_XA_CONTAINER | Flags.ENCRYPTED_1ST_FOLDER),
+    Region("PAL 99-06-07", "SLES-01514", 0x337E4A60, 0xB8FC, 2310, DIRS_PAL, FILE_TYPES, Flags.USES_XA_CONTAINER | Flags.ENCRYPTED_1ST_FOLDER),
+)
 
 FILESIZE_STEP = 256
 
@@ -58,45 +129,53 @@ def _createParser():
 
 def _getChecksum(exe: BinaryIO):
     exe.seek(0)
-    return crc32(exe.read(128))
-
+    return crc32(exe.read(4096))
+    
 def _detectRegion(checksum: int, name: str) -> Region:
-    if(checksum == REGIONS[0].checksum):
-        region = REGIONS[0]
-    elif(checksum == REGIONS[1].checksum):
-        region = REGIONS[1]
-    elif(checksum == REGIONS[2].checksum):
-        region = REGIONS[2]
-    elif(checksum == REGIONS[3].checksum):
-        region = REGIONS[3]
-    else:
-        logging.error(f"Executable {name} returned a unrecognized checksum! [{checksum:08X}]")
-        logging.error("\tIt is not a valid Silent Hill executable.")
-        return None
-    logging.info(f"Determined the region as {region.id} ({region.name})")
-    return region
+    for region in REGIONS:
+        if checksum == region.checksum:
+            logging.info(f"Determined the region as {region.id} ({region.name})")
+            return region
+    logging.error(f"Executable {name} returned an unrecognized checksum! [{checksum:08X}]")
+    logging.error("\tIt is not a valid Silent Hill executable.")
+    return None
 
-def _parseEntry(entry, isPal):
+def _parseEntry(entry, region):
     meta, file1, file2 = ENTRY_STRUCT.unpack(entry)
     
-    name = "".join(chain(
-        ( chr(32 + ((file1 >> shift) & 63)) for shift in range(4, 28, 6) ),
-        ( chr(32 + ((file2 >> shift) & 63)) for shift in range(0, 24, 6) )
-    )).strip()
+    if not region.flags & Flags.USES_ALT_FILE_STRUCT:
+        name = "".join(chain(
+            ( chr(32 + ((file1 >> shift) & 63)) for shift in range(4, 28, 6) ),
+            ( chr(32 + ((file2 >> shift) & 63)) for shift in range(0, 24, 6) )
+        )).strip()
 
-    if isPal == False:
-        return meta >> 19, meta & 0x7FFFF, name, DIRS[file1 & 15], FILE_TYPES[(file2 >> 24) & 15]
+        # size, lba, name, path, type
+        return meta >> 19, meta & 0x7FFFF, name, region.dirs[file1 & 15], region.filetypes[(file2 >> 24) & 15]
     else:
-        return meta >> 19, meta & 0x7FFFF, name, DIRS_PAL[file1 & 15], FILE_TYPES[(file2 >> 24) & 15]
-    # size, lba, name, path, type
+        directoryIndex0 = (meta >> 31) & 0x1
+        directoryIndex1 = file1 & 0x7
 
-def _formatEntry(size, lba, name, path, type, isPal):
+        name0 = (file1 >> 3) & 0x1FFFFFFF
+        name1 = file2 & 0x7FFFF
+
+        extensionIndex = (file2 >> 19) & 0xFF
+        directoryIndex = (directoryIndex1 << 1) | directoryIndex0
+
+        nameBits = (name1 << 29) | name0
+
+        name = "".join(
+            chr(32 + ((nameBits >> shift) & 0x3F))
+            for shift in range(0, 48, 6)
+        ).strip()
+
+        # size, lba, name, path, type
+        return (meta >> 19) & 0xFFF, meta & 0x7FFFF, name, region.dirs[directoryIndex], region.filetypes[extensionIndex]
+
+def _formatEntry(size, lba, name, path, type, region):
     name = name.ljust(8)
     namesep = ','.join(f"'{name[i]}'" for i in range(0, len(name)))
-    if isPal == False:
-        return f'{{ {lba:#07x}, {size:4d}, {DIRS.index(path):2d}, FN({namesep}), {FILE_TYPES.index(type):2d} }}'
-    else:
-        return f'{{ {lba:#07x}, {size:4d}, {DIRS_PAL.index(path):2d}, FN({namesep}), {FILE_TYPES.index(type):2d} }}'
+
+    return f'{{ {lba:#07x}, {size:4d}, {region.dirs.index(path):2d}, FN({namesep}), {region.filetypes.index(type):2d} }}'
         
 
 def _decryptOverlay(data: bytes):
@@ -111,26 +190,26 @@ def _decryptOverlay(data: bytes):
 
     return output
 
-def _extract(entries:Iterable[TableEntry], output: Path, file: BinaryIO, sectorSize: int, regionID):
+def _extract(entries:Iterable[TableEntry], output: Path, file: BinaryIO, sectorSize: int, regionFlags: int):
     index = 0
     for i in entries:
         outputPath = (output / i.path).absolute()
-        if(not outputPath.parent.exists()):
+        if not outputPath.parent.exists():
             outputPath.parent.mkdir(parents = True)
 
-        ext = "XA" if i.type == FILE_TYPES[15] else i.type.extension
-        logging.info(f"{index} Extracting {i.type.name}(.{ext}) to {outputPath}...")
+        ext = "XA" if i.type == "" else i.type
+        logging.info(f"{index} Extracting {FILE_TYPE_NAMES[i.type]}(.{ext}) to {outputPath}...")
         
         file.seek((i.offset - entries[0].offset) * sectorSize)
         size = 0
-        if not i.size == 0 and (i.type != FILE_TYPES[15]):
+        if not i.size == 0 and (i.type != ""):
             size = i.size * FILESIZE_STEP
         elif index+1 < len(entries):
             size = (entries[index + 1].offset - i.offset) * sectorSize
         else:
             size = -1 # read until end of file
         data = file.read(size)
-        if(i.type == FILE_TYPES[2] and regionID != "NTSC Nov 24, 1998"):
+        if i.type == "BIN" and (regionFlags & Flags.ENCRYPTED_1ST_FOLDER):
             if i.path.startswith("1ST"):
                 logging.info("\tDecrypting Overlay...")
                 data = _decryptOverlay(data)
@@ -144,18 +223,14 @@ def main():
     executable: BinaryIO = args.executable
     checksum = _getChecksum(executable)
     
-    if(args.exeChecksum):
+    if args.exeChecksum:
         logging.info(f"Checksum of {executable.name}: {checksum:08X}")
         return
     else:
         region = _detectRegion(checksum, executable.name)
-        if(region == None):
+        if region == None:
             return
 
-
-    isPal = False
-    if region == REGIONS[1]:
-        isPal = True
     originText = f"// Generated from {region.name} ({region.id})\n"
     headerText = originText
     enumText = f"    {originText}"
@@ -164,10 +239,10 @@ def main():
     executable.seek(region.tocOffset)
     for i in range(region.fileCount):
         rawEntry = executable.read(ENTRY_STRUCT.size)
-        size, lba, name, directory, type = _parseEntry(rawEntry, isPal)
-        fullpath = os.path.join(directory, f"{name}.{type.extension}" if not type == FILE_TYPES[15] else f"{name}")
-        headerText += f"/* {i:4d} */ {_formatEntry(size, lba, name, directory, type, isPal)}, // {fullpath}\n"
-        enumName = fullpath.replace("/", "_").replace(".", "_")
+        size, lba, name, directory, type = _parseEntry(rawEntry, region)
+        fullpath = os.path.join(directory, f"{name}.{type}" if not type == "" else f"{name}").replace("\\", "/")
+        headerText += f"/* {i:4d} */ {_formatEntry(size, lba, name, directory, type, region)}, // {fullpath}\n"
+        enumName = fullpath.replace("/", "_").replace("\\", "_").replace(".", "_")
         enumText += f"    FILE_{enumName} = {i}, // {fullpath}\n"
         entry = TableEntry(fullpath, type, size, lba)
         
@@ -178,10 +253,10 @@ def main():
                 entriesSilent.append(entry)
     executable.close
     
-    _extract(entriesSilent, args.outputFolder, args.silentFile, 2048, region.id)
+    _extract(entriesSilent, args.outputFolder, args.silentFile, 2048, region.flags)
     
-    if region.id != "NTSC Nov 24, 1998":
-        _extract(entriesHill, args.outputFolder, args.hillFile, 2336, region.id)
+    if region.flags & Flags.USES_XA_CONTAINER and args.hillFile:
+        _extract(entriesHill, args.outputFolder, args.hillFile, 2336, region.flags)
 
     with open(os.path.join(args.outputFolder, "filetable.c.inc"), "a+") as f:
         f.truncate(0)
