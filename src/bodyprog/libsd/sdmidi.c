@@ -331,11 +331,11 @@ void pitch_calc(s_SMF_PORT* midiPort, s32 forceSpuUpdate) // 0x800A4494
 
         temp_s0 = midiPort->field_40 + (midiPort->field_2E + ((u16)midi->field_1C + (u16)midi->field_2A));
         temp_s0 += (midiPort->field_8 << 7) + pitch_bend_calc(midiPort, midi->pitchBendFine_7, midi);
-        temp_a0 = temp_s0 << 0x10;
+        temp_a0 = temp_s0 << 16;
 
         s_attr.mask  = SPU_VOICE_PITCH;
         s_attr.voice = spu_ch_tbl[midiPort->field_0];
-        s_attr.pitch = Note2Pitch(temp_a0 >> 0x17, temp_s0 & 0x7F, midiPort->field_1E, midiPort->field_1F);
+        s_attr.pitch = Note2Pitch(temp_a0 >> 23, temp_s0 & 0x7F, midiPort->field_1E, midiPort->field_1F);
         SpuSetVoiceAttr(&s_attr);
     }
 
@@ -443,10 +443,10 @@ void midi_vsync() // 0x800A4838
     {
         if (smf_song[device].play_status_50A == 1)
         {
-            for (channel = 0; channel < 0x10; channel++)
+            for (channel = 0; channel < 16; channel++)
             {
-                midi_mod(&smf_midi[channel + (device * 0x10)]);
-                midi_porta(&smf_midi[channel + (device * 0x10)]);
+                midi_mod(&smf_midi[channel + (device * 16)]);
+                midi_porta(&smf_midi[channel + (device * 16)]);
             }
         }
     }
@@ -590,7 +590,7 @@ void key_off(u8 midiNum, u8 keyNum)
             }
             else
             {
-                smf_port[i].field_1A |= 0x80;
+                smf_port[i].field_1A |= 1 << 7;
             }
         }
     }
@@ -621,7 +621,7 @@ VagAtr* get_vab_tone(s_SMF_MIDI* midiTrack, u16 tone, u8 midiChannel) // 0x800A5
         vab = vab_h[midiTrack->bank_idx_5A].vab_header_4;
     }
 
-    return &vab->vag[(midiTrack->vabProgNum_0 * 0x10) + tone];
+    return &vab->vag[(midiTrack->vabProgNum_0 * 16) + tone];
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmidi", smf_data_entry);
