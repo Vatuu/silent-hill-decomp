@@ -59,7 +59,7 @@ void vcMakeHeroHeadPos(VECTOR3* head_pos) // 0x8004047C
     SVECTOR fpos;
     VECTOR  sp38;
 
-    func_80049984(&g_SysWork.playerBoneCoords_890[PlayerBoneIdx_Head], &neck_lwm);
+    func_80049984(&g_SysWork.playerBoneCoords_890[PlayerBone_Head], &neck_lwm);
 
     fpos.vx = FP_TILE(0.0f);
     fpos.vy = FP_TILE(-0.1f);

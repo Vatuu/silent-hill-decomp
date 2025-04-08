@@ -85,7 +85,10 @@ typedef enum _GameState
     GameState_Unk16               = 22 /** Removed debug menu? Doesn't exist in function array, but DebugMoviePlayer state tries to switch to it. */
 } e_GameState;
 
-/** State IDs used by GameState_InGame. The values are used as indices into the 0x800A9A2C function array. */
+/** @brief State IDs used by `GameState_InGame`.
+ * 
+ * The values are used as indices into the 0x800A9A2C function array.
+ * */
 typedef enum _SysState
 {
     SysState_Gameplay    = 0,
@@ -105,30 +108,32 @@ typedef enum _SysState
     SysState_GamePaused  = 14
 } e_SysState;
 
-typedef enum _PlayerBoneIdx
+/** @brief Player model bone indices. */
+typedef enum _PlayerBone
 {
-    PlayerBoneIdx_Root          = 0,
-    PlayerBoneIdx_Torso         = 1,
-    PlayerBoneIdx_Head          = 2,
-    PlayerBoneIdx_LeftShoulder  = 3,
-    PlayerBoneIdx_LeftUpperArm  = 4,
-    PlayerBoneIdx_LeftForearm   = 5,
-    PlayerBoneIdx_LeftHand      = 6,
-    PlayerBoneIdx_RightShoulder = 7,
-    PlayerBoneIdx_RightUpperArm = 8,
-    PlayerBoneIdx_RightForearm  = 9,
-    PlayerBoneIdx_RightHand     = 10,
-    PlayerBoneIdx_Hips          = 11,
-    PlayerBoneIdx_LeftThigh     = 12,
-    PlayerBoneIdx_LeftShin      = 13,
-    PlayerBoneIdx_LeftFoot      = 14,
-    PlayerBoneIdx_RightThigh    = 15,
-    PlayerBoneIdx_RightShin     = 16,
-    PlayerBoneIdx_RightFoot     = 17,
+    PlayerBone_Root          = 0,
+    PlayerBone_Torso         = 1,
+    PlayerBone_Head          = 2,
+    PlayerBone_LeftShoulder  = 3,
+    PlayerBone_LeftUpperArm  = 4,
+    PlayerBone_LeftForearm   = 5,
+    PlayerBone_LeftHand      = 6,
+    PlayerBone_RightShoulder = 7,
+    PlayerBone_RightUpperArm = 8,
+    PlayerBone_RightForearm  = 9,
+    PlayerBone_RightHand     = 10,
+    PlayerBone_Hips          = 11,
+    PlayerBone_LeftThigh     = 12,
+    PlayerBone_LeftShin      = 13,
+    PlayerBone_LeftFoot      = 14,
+    PlayerBone_RightThigh    = 15,
+    PlayerBone_RightShin     = 16,
+    PlayerBone_RightFoot     = 17,
 
-    PlayerBoneIdx_Count = 18
-} s_PlayerBoneIdx;
+    PlayerBone_Count = 18
+} s_PlayerBone;
 
+/** @brief Player property indices. */
 typedef enum _PlayerProperty
 {
     PlayerProperty_Unk0          = 0,
@@ -136,7 +141,7 @@ typedef enum _PlayerProperty
     PlayerProperty_PositionY     = 2,
     PlayerProperty_Unk3          = 3,
     PlayerProperty_Unk4          = 4,
-    PlayerProperty_RunTimer0     = 5, // Increments indefinitely, but more slowly than `PlayerProperty_RunCounter1`.
+    PlayerProperty_RunTimer0     = 5, // Increments indefinitely, but more slowly than `PlayerProperty_RunTimer1`.
     PlayerProperty_ExertionTimer = 6, // Counts ~20 seconds worth of ticks while running and caps at 0x23000.
     PlayerProperty_Unk7          = 7,
     PlayerProperty_Unk8          = 8, // Returned by `func_8007FD2C`.
@@ -370,10 +375,11 @@ typedef struct _SubCharacter
     s8      unk_45[104];
     s32     health_B0; // Bits 3-4 contain `s16` associated with player's rate of heavy breathing, always set to 6. Can't split into `s16`s? Maybe packed data.
     s8      unk_B4[16];
-    u16     dead_timer_C4; // Part of shBattleInfo struct in SH2, may use something similar here.
+    u16     dead_timer_C4; // Part of `shBattleInfo` struct in SH2, may use something similar here.
     s8      unk_C6[2];
 
-    // Fields seen used inside maps (eg. map0_s00 func_800D923C)
+    // Fields seen used inside maps (eg. `map0_s00` `func_800D923C`)
+
     s16 field_C8;
     s16 field_CA;
     s8  unk_CC[2];
@@ -386,23 +392,7 @@ typedef struct _SubCharacter
     s16 field_DC;
     s16 field_DE;
     s32 flags_E0;
-
-    //s32 properties_E4[CHARA_PROPERTY_COUNT_MAX];
-
-    // Fields in the following block may be part of a multi-purpose array of `s32` elements used to store unique property data for each character type.
-    // For player, mostly used for counters as far as I could see. -- Sezz
-
-    s8  unk_E4[4];
-    s32 field_E8;  // Player AFK counter. Increments every tick for 10 seconds before player starts AFK anim. Purpose for other characters unknown.
-    s32 field_EC;  // Copy of player Y position. Purpose for other characters unknown.
-    s32 field_F0;
-    s32 field_F4;
-    s32 field_F8;  // Player run counter. Increments more slowly than `field_108`. Purpose for other characters unknown.
-    s32 field_FC;  // Player out of breath counter. Counts 20 seconds worth of ticks and caps at 0x23000. Purpose for other characters unknown.
-    s32 unk_100;
-    s32 field_104; // Used by player, returned by `func_8007FD2C`. Purpose unknown.
-    s32 field_108; // Player run counter. Increments every tick indefinitely. Purpose for other characters unknown.
-
+    s32 properties_E4[CHARA_PROPERTY_COUNT_MAX];
     s8  unk_10C;
     u8  field_10D;
     s8  unk_10E[5];
@@ -453,7 +443,7 @@ typedef struct _SysWork
     u8              isPlayerInCombatMode_4B;
     s_MainCharacter player_4C;
     s_SubCharacter  npcs_1A0[NPC_COUNT_MAX];
-    GsCOORDINATE2   playerBoneCoords_890[PlayerBoneIdx_Count];
+    GsCOORDINATE2   playerBoneCoords_890[PlayerBone_Count];
     s8              pad_E30[400];  // Might be part of previous array for 5 exra coords which go unused.
     s8              unk_FC0[4824]; // Start is tightly-packed buffer for NPC bone coords. Size unclear, appears to be enough for 60 before what might be AI data.
     s32             flags_2298;    // Something related to map loading.

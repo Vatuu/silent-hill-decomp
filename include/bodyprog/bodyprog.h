@@ -1189,7 +1189,7 @@ s32 func_8007F2AC();
 /** Gets something from the player's current animation? */
 s16 Player_AnimGetSomething();
 
-/** Gets some property data from player. */
+/** Gets property 8 from player. */
 s32 func_8007FD2C();
 
 /** Gets something from player. */
