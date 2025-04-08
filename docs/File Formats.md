@@ -1,7 +1,7 @@
 ## File Formats
 The game uses a number of custom file formats to store data related to models, levels, cutscenes, and other game assets.
 
-Some of these formats have been documented over the years, but a few still remain undocumented (or were only ever documented on long-closed-down websites).
+Some of these formats have been documented over the years, but a few still remain mostly unknown (or were only ever documented on long-closed-down websites).
 
 Since the goal of this project is a matching decompilation, understanding these file formats is essential, and may also help shape the decompilation process.
 
@@ -36,7 +36,7 @@ These containers have no header or file table inside it, instead the list of fil
 The game itself usually refers to each file by its index in the table, and uses the table to find which sector to seek to in order to read the file.
 
 > [!NOTE]  
-> [silentassets.py](/tools/silentassets/extract.py) tool can handle parsing the file table from the retail executable and extracting from these containers.
+> [silentassets.py](/tools/silentassets/extract.py) tool can handle parsing the file table and extracting from these containers.
 
 ### Folder Paths
 Folder names were fortunately left included in the file table, even though game itself doesn't appear to make use of them:
