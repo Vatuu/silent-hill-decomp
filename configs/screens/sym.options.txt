@@ -1,8 +1,8 @@
 
 Settings_ExtraScreen = 0x801E318C; // type:func
 Settings_MainScreen = 0x801E3770; // type:func
-Gfx_BGMBarDraw = 0x801E3F68; // type:func
-Gfx_SFXBarDraw = 0x801E3F90; // type:func
+Gfx_BgmBarDraw = 0x801E3F68; // type:func
+Gfx_SfxBarDraw = 0x801E3F90; // type:func
 Gfx_BarDraw = 0x801E3FB8; // type:func
 Gfx_OptionsStringsExtraDraw = 0x801E416C; // type:func
 Gfx_OptionsStringsMainDraw = 0x801E42EC; // type:func

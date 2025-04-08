@@ -14,12 +14,12 @@ INCLUDE_ASM("asm/screens/options/nonmatchings/options", Settings_ExtraScreen); /
 
 INCLUDE_ASM("asm/screens/options/nonmatchings/options", Settings_MainScreen); // 0x801E3770
 
-void Gfx_BGMBarDraw() // 0x801E3F68
+void Gfx_BgmBarDraw() // 0x801E3F68
 {
     Gfx_BarDraw(0, g_GameWork.optVolumeBgm_1F);
 }
 
-void Gfx_SFXBarDraw() // 0x801E3F90
+void Gfx_SfxBarDraw() // 0x801E3F90
 {
     Gfx_BarDraw(1, g_GameWork.optVolumeSe_20);
 }
