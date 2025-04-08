@@ -247,7 +247,9 @@ typedef struct
     s8  field_1C;
     s8  field_1D;
     s8  field_1E;
-} s_800C39A8; // Size: 32
+    s8  unk_1F;
+} s_800C39A8;
+STATIC_ASSERT_SIZEOF(s_800C39A8, 32);
 
 typedef struct
 {
