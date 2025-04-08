@@ -4,9 +4,6 @@
 [submodule "tools/m2c"]
 	path = tools/m2c
 	url = https://github.com/matt-kempster/m2c.git
-[submodule "tools/splat"]
-	path = tools/splat
-	url = https://github.com/ethteck/splat.git
 [submodule "tools/maspsx"]
 	path = tools/maspsx
 	url = https://github.com/mkst/maspsx.git
