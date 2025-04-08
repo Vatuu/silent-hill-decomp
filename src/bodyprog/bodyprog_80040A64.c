@@ -956,7 +956,7 @@ void func_8004807C() // 0x8004807C
         CdRead(25, CD_ADDR_0, 0x80);
     }
     
-    D_800C1670 = 8;
+    D_800C1670.field_0 = 8;
 }
 
 #ifdef NON_MATCHING

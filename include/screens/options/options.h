@@ -3,7 +3,8 @@
 
 #include "common.h"
 
-typedef struct _sub_801E2C74 {
+typedef struct _sub_801E2C74
+ {
     s8 field_0;
     s8 field_1;
     s8 field_2;
@@ -22,7 +23,7 @@ typedef struct _801E2C74
 {
     s_sub_801E2C74 field_0[2];
 } s_801E2C74;
-STATIC_ASSERT_SIZEOF(s_801E2C74, 0x18);
+STATIC_ASSERT_SIZEOF(s_801E2C74, 24);
 
 extern s_801E2C74 D_801E2C74;
 

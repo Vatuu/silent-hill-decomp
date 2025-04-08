@@ -402,7 +402,7 @@ void Gfx_DebugStringPosition(s16 x, s16 y) // 0x80031EFC
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", Gfx_DebugStringDraw);
 
-char* Math_IntegerToString(s32 minWidth, s32 value) // 0x80032154
+char* Math_IntegerToString(s32 widthMin, s32 value) // 0x80032154
 {
     s32   isNegative;
     char* string = PSX_SCRATCH_ADDR(0x1E);
@@ -422,7 +422,7 @@ char* Math_IntegerToString(s32 minWidth, s32 value) // 0x80032154
     do
     {
         string--;
-        minWidth--;
+        widthMin--;
         *string = '0' + (value % 10);
         value /= 10;
     } while (value > 0);
@@ -431,14 +431,14 @@ char* Math_IntegerToString(s32 minWidth, s32 value) // 0x80032154
     {
         string--;
         *string = '-';
-        minWidth--;
+        widthMin--;
     }
 
-    while (minWidth > 0)
+    while (widthMin > 0)
     {
         string--;
         *string = '\v';
-        minWidth--;
+        widthMin--;
     }
 
     return string;

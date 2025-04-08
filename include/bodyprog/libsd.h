@@ -42,8 +42,8 @@ extern u32 spu_ch_tbl[24];
 typedef struct
 {
     VabHdr  header;
-    ProgAtr prog[0x80];
-    VagAtr  vag[0]; // 16 per program
+    ProgAtr prog[128];
+    VagAtr  vag[0]; // 16 per program/
 } s_VabHeader;
 
 typedef struct _VAB_S // Pachinko Dream uses similar VAB_S struct.
@@ -59,7 +59,7 @@ typedef struct _VAB_S // Pachinko Dream uses similar VAB_S struct.
     char           field_1A; // rvol? ^
     s8             master_pan_1B;
 } s_VAB_S;
-STATIC_ASSERT_SIZEOF(s_VAB_S, 0x1C);
+STATIC_ASSERT_SIZEOF(s_VAB_S, 28);
 
 extern s_VAB_S vab_h[SD_VAB_SLOTS];
 
@@ -85,7 +85,7 @@ typedef struct _SMF_TRACK_S
     u8  byte26;
     u8  byte27;
 } s_SMF_TRACK_S;
-STATIC_ASSERT_SIZEOF(s_SMF_TRACK_S, 0x28);
+STATIC_ASSERT_SIZEOF(s_SMF_TRACK_S, 40);
 
 /** Standard MIDI File */
 typedef struct _SMF_S
@@ -117,7 +117,7 @@ typedef struct _SMF_S
     u16           field_538;
     u8            unk_53A[2];
 } s_SMF_S;
-STATIC_ASSERT_SIZEOF(s_SMF_S, 0x53C);
+STATIC_ASSERT_SIZEOF(s_SMF_S, 1340);
 
 /** s_SMF_MIDI fields are mainly changed by control_change(), which takes in a MIDI control change ID and adjusts appropriate field
  * Seems that func accepts some change IDs that are undefined in MIDI specs though... */
@@ -188,7 +188,7 @@ typedef struct _SMF_MIDI
     u8  bank_idx_5A;
     u8  unk_5B[1];
 } s_SMF_MIDI;
-STATIC_ASSERT_SIZEOF(s_SMF_MIDI, 0x5C);
+STATIC_ASSERT_SIZEOF(s_SMF_MIDI, 92);
 
 typedef struct _SMF_PORT
 {
@@ -253,7 +253,7 @@ typedef struct _SMF_PORT
     u8  vabId_52;
     u8  unk_53[1];
 } s_SMF_PORT;
-STATIC_ASSERT_SIZEOF(s_SMF_PORT, 0x54);
+STATIC_ASSERT_SIZEOF(s_SMF_PORT, 84);
 
 typedef struct _SD_ALLOC
 {
@@ -345,18 +345,18 @@ s32 SdGetSeqBeat2(s16 seq_access_num);
 
 // sdmidi.c
 
-void func_800A39B8(s32, u8, u8); /** nullsub, possibly set_midi_info */
-u16  Note2Pitch(s32, s32, u8, u8);
-void tre_calc(s_SMF_PORT*);
-void vib_calc(s_SMF_PORT*);
+void func_800A39B8(s32 arg0, u8 arg1, u8 arg2); /** nullsub, possibly set_midi_info */
+u16  Note2Pitch(s32 arg0, s32 arg1, u8 arg2, u8 arg3);
+void tre_calc(s_SMF_PORT* midiPort);
+void vib_calc(s_SMF_PORT* midiPort);
 void random_calc(s_SMF_PORT* midiPort);
-void volume_calc(s_SMF_PORT*, s_SMF_MIDI*);
+void volume_calc(s_SMF_PORT* midiPort, s_SMF_MIDI* midiTrack);
 void smf_vol_set(s32 midiChannel, s32 voice, s32 volLeft, s32 volRight);
 void master_vol_set();
 void seq_master_vol_set(s32 seq_access_num);
 void toremoro_set();
 
-s32  pitch_bend_calc(s_SMF_PORT*, u8, s_SMF_MIDI*);
+s32  pitch_bend_calc(s_SMF_PORT* midiPort0, u8 arg2, s_SMF_MIDI* midiPort1);
 void pitch_calc(s_SMF_PORT* midiPort, s32 forceSpuUpdate);
 void midi_mod(s_SMF_MIDI* midiTrack);
 void midi_porta(s_SMF_MIDI* midiTrack);

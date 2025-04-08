@@ -338,14 +338,14 @@ STATIC_ASSERT_SIZEOF(s_Skeleton, 28);
 
 typedef struct
 {
-    s16      count_0;
-    u8       ptr_8_count_2;
-    char     unk_3[1];
-    char     name_4[4]; // First 4 chars of name, eg. game code checks for "DAHLIA" but in file it's "DAHL"
-    SVECTOR3* svectorPtr_8;   // Pointer to SVECTOR3s, unknown purpose.
-    u16*      unkStructPtr_C; // Pointer to struct of u16s, possibly MATRIX?
+    s16       count_0;
+    u8        ptr_8_count_2;
+    char      unk_3[1];
+    char      name_4[4];      // First 4 chars of name. E.g. Code checks for "DAHLIA", file is "DAHL".
+    SVECTOR3* svectorPtr_8;   // Pointer to `SVECTOR3`s. Unknown purpose.
+    u16*      unkStructPtr_C; // Pointer to struct of `u16`s, possibly `MATRIX`?
 } s_DMSEntry;
-STATIC_ASSERT_SIZEOF(s_DMSEntry, 0x10);
+STATIC_ASSERT_SIZEOF(s_DMSEntry, 16);
 
 typedef struct
 {
@@ -358,7 +358,7 @@ typedef struct
     s_DMSEntry* characters_18;
     s_DMSEntry  camera_1C;
 } s_DMSHeader;
-STATIC_ASSERT_SIZEOF(s_DMSHeader, 0x2C);
+STATIC_ASSERT_SIZEOF(s_DMSHeader, 44);
 
 extern s8* D_8002510C;
 
@@ -533,7 +533,7 @@ extern u16 D_800BCCB0;
 
 extern u16 D_800BCCB2;
 
-/** Accessed by credits, options and saveload. */
+/** Accessed by credits, options, and saveload. */
 extern s32 D_800BCD0C;
 
 extern s8 D_800BCD40;
@@ -909,23 +909,23 @@ void func_8005E0DC(s32); // Types assumed.
 void func_80089128();
 
 /** Unknown bodyprog func. Called by `Fs_QueueWaitForEmpty` with `0` and then `1`. */
-void func_800892A4(s32);
+void func_800892A4(s32 arg0);
 
 void DMSHeader_FixOffsets(s_DMSHeader* header);
 
 void DMSEntry_FixOffsets(s_DMSEntry* entry, s_DMSHeader* header);
 
-void DMS_CharacterGetStartPosRot(VECTOR3* position, SVECTOR* rotation, char* charName, s32 arg3, s_DMSHeader* header);
+void DMS_CharacterGetStartPosRot(VECTOR3* pos, SVECTOR* rot, char* charName, s32 arg3, s_DMSHeader* header);
 
 s32 DMS_CharacterFindIndexByName(char* name, s_DMSHeader* header);
 
-void func_8008CB90(VECTOR3*, SVECTOR3*, s32, s32, s_DMSHeader*);
+void func_8008CB90(VECTOR3* pos, SVECTOR3* rot, s32 arg2, s32 arg3, s_DMSHeader* header);
 
-s32 DMS_CameraGetTargetPos(VECTOR3* cam_tgt_pos, VECTOR3* watch_tgt_pos, u16* arg2, s32 time, s_DMSHeader* header);
+s32 DMS_CameraGetTargetPos(VECTOR3* posTarget, VECTOR3* lookAtTarget, u16* arg2, s32 time, s_DMSHeader* header);
 
-s32 func_8008CFEC(s16*, s16*, s16*, s32);
+s32 func_8008CFEC(s16* arg0, s16* arg1, s16* arg2, s32 arg3);
 
-void func_8008D1D0(s32*, s32*, s32*, s32, s_DMSEntry*, s_DMSHeader*);
+void func_8008D1D0(s32* arg0, s32* arg1, s32* arg2, s32, s_DMSEntry* entry, s_DMSHeader* header);
 
 void func_801E2D8C();
 

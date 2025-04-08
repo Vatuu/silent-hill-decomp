@@ -5,7 +5,7 @@
 #include "screens/stream/stream.h"
 
 // ========================================
-// GENERAL, MAIN AND EXTRA OPTION SCREENS
+// GENERAL, MAIN, AND EXTRA OPTION SCREENS
 // ========================================
 
 INCLUDE_ASM("asm/screens/options/nonmatchings/options", func_801E2D44);
@@ -24,126 +24,133 @@ void Gfx_SfxBarDraw() // 0x801E3F90
     Gfx_BarDraw(1, g_GameWork.optVolumeSe_20);
 }
 
-/** Draw strings related
-Function that generates and draw bars used for SFX and BGM audio options
+/** Related to drawing strings.
+Generates and draws the bars used for SFX and BGM audio options.
 */
 INCLUDE_ASM("asm/screens/options/nonmatchings/options", Gfx_BarDraw); // 0x801E3FB8
 
-/** Draw strings related
-Function that draws the strings of the options available on the extra options screen
+/** Related to drawing strings.
+Draws the option strings in the extra options screen.
 */
 INCLUDE_ASM("asm/screens/options/nonmatchings/options", Gfx_OptionsStringsExtraDraw); // 0x801E416C
 
-/** Draw strings related
-Function that draws the strings of the options available on the main options screen
+/** Related to drawing strings.
+Draws the option strings in the main options screen.
 */
 INCLUDE_ASM("asm/screens/options/nonmatchings/options", Gfx_OptionsStringsMainDraw); // 0x801E42EC
 
-/** Draw related
-Function that draws the buttons aside the options and the line that indicates the
-selected option from the extra options screen
+/** Related to drawing.
+Draws the buttons next to options and lines indicating the
+selected option in the extra options screen.
 */
 INCLUDE_ASM("asm/screens/options/nonmatchings/options", Gfx_SelectedOptionExtra); // 0x801E4450
 
-/** Draw related
-Function that draws the buttons aside the options and the line that indicates the
-selected option from the main options screen
+/** Related to drawing.
+Draws the buttons next to options and lines indicating the
+selected option in the main options screen.
 */
 INCLUDE_ASM("asm/screens/options/nonmatchings/options", Gfx_SelectedOptionMain); // 0x801E472C
 
-/** Draw related
-Function that draws the vignette for the main and extra options screens
+/** Related to drawing.
+Draws the vignette for the main and extra options screens.
 */
 INCLUDE_ASM("asm/screens/options/nonmatchings/options", Gfx_VignetteDraw); // 0x801E49F0
 
-/** Draw related
-Function that draws the options for each setting used on the extra options screen
+/** Related to drawing.
+Draws the options for each setting used in the extra options screen.
 */
 INCLUDE_ASM("asm/screens/options/nonmatchings/options", Gfx_SettingsOptionsExtraDraw); // 0x801E4B2C
 
-/** Draw related
-Function that draws the options for each setting used on the main options screen
+/** Related to drawing.
+Draws the options for each setting used in the main options screen.
 */
 INCLUDE_ASM("asm/screens/options/nonmatchings/options", Gfx_SettingsOptionsMainDraw); // 0x801E4FFC
 
-// ========================================
+// ==============================
 // SCREEN POSITION OPTION SCREEN
-// ========================================
+// ==============================
 
 INCLUDE_ASM("asm/screens/options/nonmatchings/options", Settings_PositionScreen); // 0x801E53A0 
 
 INCLUDE_ASM("asm/screens/options/nonmatchings/options", Gfx_PositionArrowsDraw); // 0x801E5A08
 
-/** Draw related
-Function that draws the box that indicate the coordinates of the position of the
-screen in the position screen configuration
+/** Related to drawing.
+Draws the box that indicates the screen position in the
+position screen configuration.
 */
 INCLUDE_ASM("asm/screens/options/nonmatchings/options", Gfx_PositionIndicatorDraw); // 0x801E5CBC
 
-// ========================================
+// ========================
 // BRIGHTNESS OPTION SCREEN
-// ========================================
+// ========================
 
 void Settings_BrightnessScreen() // 0x801E6018
 {
     switch (g_GameWork.gameStateStep_598[1])
     {
-    case 0:
-        g_GameWork.gameStateStep_598[1] = 1;
-        g_GameWork.gameStateStep_598[2] = 0;
-    break;
-    case 1:
-        D_800BCD0C = 6;
-        g_GameWork.gameStateStep_598[1] = 2;
-        g_GameWork.gameStateStep_598[2] = 0;
-    break;
-    case 2:
-        if (g_ControllerPtr0->field_18 & Pad_LStickLeft)
-		{
-            if (g_GameWork.optBrightness_22 != 0)
-			{
-                g_GameWork.optBrightness_22--;
-                func_80046048(0x519, 0, 0x40);
-            }
-        }
-
-        if (g_ControllerPtr0->field_18 & Pad_LStickRight)
-		{
-            if (g_GameWork.optBrightness_22 < 7)
-			{
-                g_GameWork.optBrightness_22++;
-                func_80046048(0x519, 0, 0x40);
-            }
-        }
-
-        if (g_ControllerPtr0->btns_new_10 & (g_GameWorkPtr1->controllerBinds_0.enter | g_GameWorkPtr1->controllerBinds_0.cancel))
-		{
-            if (g_ControllerPtr0->btns_new_10 & g_GameWorkPtr1->controllerBinds_0.enter)
-			{
-                func_80046048(0x51B, 0, 0x40);
-            }
-            else
-			{
-                func_80046048(0x51A, 0, 0x40);
-            }
-            D_800BCD0C = 2;
-            g_GameWork.gameStateStep_598[1]++;
+        case 0:
+            g_GameWork.gameStateStep_598[1] = 1;
             g_GameWork.gameStateStep_598[2] = 0;
-        }
-    break;
-    case 3:
-        if (D_800BCD0C & 0x4 && (D_800BCD0C & 0x2) == 0 && D_800BCD0C & 0x1)
-		{
-            D_800BCD0C = 0x4 | 0x2;
-            g_GameWork.gameStateStep_598[0] = 11;
-            g_SysWork.field_20 = 0;
-            g_GameWork.gameStateStep_598[1] = 0;
+            break;
+
+        case 1:
+            D_800BCD0C = 6;
+            g_GameWork.gameStateStep_598[1] = 2;
             g_GameWork.gameStateStep_598[2] = 0;
-            g_GameWork.field_58C = 0;
-            g_GameWork.field_58D = 0;
-            g_GameWork.field_58E = 0;
-        }
-    break;
+            break;
+
+        case 2:
+            if (g_ControllerPtr0->field_18 & Pad_LStickLeft)
+            {
+                if (g_GameWork.optBrightness_22 != 0)
+                {
+                    g_GameWork.optBrightness_22--;
+                    func_80046048(0x519, 0, 0x40);
+                }
+            }
+
+            if (g_ControllerPtr0->field_18 & Pad_LStickRight)
+            {
+                if (g_GameWork.optBrightness_22 < 7)
+                {
+                    g_GameWork.optBrightness_22++;
+                    func_80046048(0x519, 0, 0x40);
+                }
+            }
+
+            if (g_ControllerPtr0->btns_new_10 & (g_GameWorkPtr1->controllerBinds_0.enter | g_GameWorkPtr1->controllerBinds_0.cancel))
+            {
+                if (g_ControllerPtr0->btns_new_10 & g_GameWorkPtr1->controllerBinds_0.enter)
+                {
+                    func_80046048(0x51B, 0, 0x40);
+                }
+                else
+                {
+                    func_80046048(0x51A, 0, 0x40);
+                }
+
+                D_800BCD0C = 2;
+                g_GameWork.gameStateStep_598[1]++;
+                g_GameWork.gameStateStep_598[2] = 0;
+            }
+            break;
+
+        case 3:
+            if (D_800BCD0C & (1 << 2) && (D_800BCD0C & (1 << 1)) == 0 && D_800BCD0C & (1 << 0))
+            {
+                D_800BCD0C = (1 << 2) | (1 << 1);
+                g_GameWork.gameStateStep_598[0] = 11;
+                g_SysWork.timer_20 = 0;
+                g_GameWork.gameStateStep_598[1] = 0;
+                g_GameWork.gameStateStep_598[2] = 0;
+                g_GameWork.field_58C = 0;
+                g_GameWork.field_58D = 0;
+                g_GameWork.field_58E = 0;
+            }
+            break;
+
+        default:
+            break;
     }
 
     if (g_GameWork.gameStatePrev_590 == GameState_MainMenu)
@@ -154,6 +161,7 @@ void Settings_BrightnessScreen() // 0x801E6018
 	{
         func_800314EC(&D_800A904C);
     }
+
     func_8003E5E8(g_GameWork.optBrightness_22);
     Gfx_BrightnessLevelArrowsDraw();
     Gfx_BrightnessLevelTextDraw();
@@ -161,13 +169,10 @@ void Settings_BrightnessScreen() // 0x801E6018
 
 void Gfx_BrightnessLevelTextDraw() // 0x801E6238
 {
-    #define POS_X 80
-    #define POS_Y 190
-
     char* str = D_801E2C64;
 
     func_8004A8DC(7);
-    Gfx_StringPosition(POS_X, POS_Y);
+    Gfx_StringPosition(SCREEN_POSITION_X(0.25f), SCREEN_POSITION_Y(0.795f));
     Gfx_StringDraw(str, 20);
     func_8004B9F8(1, g_GameWork.optBrightness_22);
 }
@@ -176,20 +181,21 @@ void Gfx_BrightnessLevelArrowsDraw() // 0x801E628C
 {
     s_801E2C74 var0;
     s_801E2C74 var1;
-    s32 btn_input;
+    s32 btnInput;
     s32 i;
     s32 dir;
 
     var0 = D_801E2C74;
     var1 = D_801E2C8C;
 
-    btn_input = g_ControllerPtr0->btns_held_C;
-    
-    if (btn_input & Pad_LStickLeft)
+    btnInput = g_ControllerPtr0->btns_held_C;
+
+    // Determine direction.
+    if (btnInput & Pad_LStickLeft)
 	{
         dir = 1;
     }
-	else if (btn_input & Pad_LStickRight)
+	else if (btnInput & Pad_LStickRight)
 	{
         dir = 2;
     }
@@ -202,7 +208,7 @@ void Gfx_BrightnessLevelArrowsDraw() // 0x801E628C
     {
         Gfx_ArrowDraw(&var0.field_0[i], 1, 0);
     }
-    
+
     for (i = dir - 1; i < dir; i++)
     {
         Gfx_ArrowDraw(&var1.field_0[i], 0, 0);
@@ -213,18 +219,18 @@ void Gfx_BrightnessLevelArrowsDraw() // 0x801E628C
 // DRAW OPTIONS FEATURES SCREEN
 // ========================================
 
-/** Draw related
-Function that draws the line used on the selected option from options screens
+/** Related to drawing.
+Draws the line on the selected option in options screens.
 */
 INCLUDE_ASM("asm/screens/options/nonmatchings/options", Gfx_LineDraw); // 0x801E641C
 
-/** Draw related
-Function that draws the arrows used on the many options screens
+/** Related to drawing.
+Draws the arrows used in options screens.
 */
 INCLUDE_ASM("asm/screens/options/nonmatchings/options", Gfx_ArrowDraw); // 0x801E662C
 
-/** Draw related
-Function that draws the button aside of options from main and extra options screens
+/** Related to drawing.
+Draws the button next to options in the main and extra option screens.
 */
 INCLUDE_ASM("asm/screens/options/nonmatchings/options", Gfx_ButtonDraw); // 0x801E67B0
 
@@ -234,8 +240,8 @@ INCLUDE_ASM("asm/screens/options/nonmatchings/options", Gfx_ButtonDraw); // 0x80
 
 INCLUDE_ASM("asm/screens/options/nonmatchings/options", Settings_ControllerScreen); // 0x801E69BC
 
-/** Controller mapping related
-Function that changes the button mapping based on the input
+/** Related to controller mapping.
+Changes the button mapping based on the input.
 */
 INCLUDE_ASM("asm/screens/options/nonmatchings/options", Settings_ButtonChange); // 0x801E6CF4
 

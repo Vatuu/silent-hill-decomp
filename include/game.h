@@ -3,10 +3,19 @@
 
 #include "gpu.h"
 
-#define TICKS_PER_SECOND         60 // Theorised. It's unclear if the game has a fixed timestep.
+#define SCREEN_WIDTH     320
+#define SCREEN_HEIGHT    240
+#define TICKS_PER_SECOND 60 // Theorised. It's unclear if the game has a fixed timestep.
+
 #define NPC_COUNT_MAX            6
 #define INVENTORY_ITEM_COUNT_MAX 40
 #define SAVEGAME_FOOTER_MAGIC    0xDCDC
+
+#define SCREEN_POSITION_X(percent) \
+    (s32)((SCREEN_WIDTH) * (percent))
+
+#define SCREEN_POSITION_Y(percent) \
+    (s32)((SCREEN_HEIGHT) * (percent))
 
 typedef enum _PadButtonFlags
 {

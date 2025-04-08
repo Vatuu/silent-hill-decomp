@@ -8,9 +8,6 @@
 #include "main/fileinfo.h"
 #include "screens/stream/stream.h"
 
-#define SCREEN_WIDTH  320
-#define SCREEN_HEIGHT 240
-
 // Old IDB name: MainLoopState3_StartMovieIntro_801E2654
 void func_801E2654()
 {
