@@ -28,6 +28,11 @@ options:
   section_order: [".rodata", ".text", ".data", ".bss"]
 
   symbol_addrs_path:
+    - configs/screens/sym.b_konami.txt
+    - configs/screens/sym.stream.txt
+    - configs/screens/sym.saveload.txt
+    - configs/screens/sym.options.txt
+    - configs/screens/sym.credits.txt
     - configs/sym.bodyprog.txt
     - configs/sym.main.txt
   reloc_addrs_path:
