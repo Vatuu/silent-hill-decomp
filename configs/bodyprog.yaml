@@ -52,7 +52,11 @@ segments:
     subalign: 4
     subsegments:
       - [0x0, rodata]
-
+      #- [0x3938, .rodata, bodyprog_8004A87C]
+      #- [0x39C4, rodata]
+      - [0x5FBC, .rodata, bodyprog_80085D78]
+      - [0x6044, rodata]
+      
       - [0x9ad0, c, bodyprog]
       - [0x1b4ec, c, view/vc_util]
       - [0x1bf04, c, bodyprog_80040A64]

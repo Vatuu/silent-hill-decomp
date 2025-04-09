@@ -217,9 +217,7 @@ block_32:
     }
 }
 
-// TODO: Something with a jump table, don't know how to get it working. -- Sezz 2025.03.28
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800862F8);
-/*void func_800862F8(s32 arg0, s32 arg1, s32 arg2) // 0x800862F8
+void func_800862F8(s32 arg0, s32 arg1, s32 arg2) // 0x800862F8
 {
     s32 switchVar;
 
@@ -294,7 +292,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800862F8);
         default:
             break;
     }
-}*/
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80086470);
 
@@ -682,9 +680,7 @@ void func_80086FE8(s32 arg0, s32 arg1, s32 arg2) // 0x80086FE8
     }
 }
 
-// TODO: Something with a jump table, don't know how to get it working. -- Sezz 2025.03.28
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008716C);
-/*void func_8008716C(s32 arg0, s32 arg1, s32 arg2) // 0x8008716C
+void func_8008716C(s32 arg0, s32 arg1, s32 arg2) // 0x8008716C
 {
     s32 var;
 
@@ -742,11 +738,9 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008716C);
             g_SysWork.field_14 = 0;
             break;
     }
-}*/
+}
 
-// TODO: Something with a jump table, don't know how to get it working. -- Sezz 2025.03.28
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80087360);
-/*void func_80087360(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x80087360
+void func_80087360(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x80087360
 {
     s32 var;
 
@@ -800,11 +794,9 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80087360);
             g_SysWork.field_14 = 0;
             break;
     }
-}*/
+}
 
-// TODO: Something with a jump table, don't know how to get it working. -- Sezz 2025.03.28
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80087540);
-/*void func_80087540(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x80087540
+void func_80087540(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x80087540
 {
     s32 var;
 
@@ -877,13 +869,11 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80087540);
             g_SysWork.field_14 = 0;
             break;
     }
-}*/
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800877B8);
 
-// TODO: Something with a jump table, don't know how to get it working. -- Sezz 2025.03.28
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800879FC);
-/*void func_800879FC(u32 arg0, s32 arg1) // 0x800879FC
+void func_800879FC(u32 arg0, s32 arg1) // 0x800879FC
 {
     s32 var0;
     s32 var1;
@@ -951,7 +941,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800879FC);
         default:
             break;
     }
-}*/
+}
 
 // Requires jump table.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80087AF4);

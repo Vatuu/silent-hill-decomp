@@ -53,6 +53,12 @@ segments:
     subalign: 4
     subsegments:
       - [0x0, rodata]
+      - [0x664, .rodata, options]
+      - [0x6A4, rodata]
       - [0x744, c, options]
+      #- [0x2DA0, c, options_position]
+      #- [0x3A18, c, options_brightness]
+      #- [0x3E1C, c, options_draw]
+      #- [0x43BC, c, options_controller]
       - [0x4CF4, data, options]
   - [0x4E00]
