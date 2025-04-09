@@ -171,11 +171,53 @@ void vbSetRefView(VbRVIEW* rview) // 0x800498D8
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vw_calc", func_80049984);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vw_calc", func_80049AF8);
+void func_80049AF8(GsCOORDINATE2* coord, SVECTOR* vec)
+{
+    MATRIX mat;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vw_calc", func_80049B6C);
+    func_80049984(coord, &mat);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vw_calc", func_80049C2C);
+    mat.t[0] -= D_800C3868.t[0];
+    mat.t[1] -= D_800C3868.t[1];
+    mat.t[2] -= D_800C3868.t[2];
+
+    func_800496AC(&VbWvsMatrix, &mat, vec);
+}
+
+void func_80049B6C(GsCOORDINATE2* coord, MATRIX* mat, SVECTOR* vec)
+{
+    func_80049984(coord, mat);
+    mat->t[0] -= D_800C3868.t[0];
+    mat->t[1] -= D_800C3868.t[1];
+    mat->t[2] -= D_800C3868.t[2];
+
+    func_800496AC(&VbWvsMatrix, mat, vec);
+    mat->t[0] += D_800C3868.t[0];
+    mat->t[1] += D_800C3868.t[1];
+    mat->t[2] += D_800C3868.t[2];
+}
+
+void func_80049C2C(MATRIX* mat, s32 x, s32 y, s32 z)
+{
+    VECTOR input;
+    VECTOR output;
+
+    input.vx = FP_FROM(x, Q4_SHIFT);
+    input.vy = FP_FROM(y, Q4_SHIFT);
+    input.vz = FP_FROM(z, Q4_SHIFT);
+    ApplyMatrixLV(&D_800C6FC0, &input, &output);
+
+    // Copies matrix fields as 32-bit words, maybe an inlined CopyMatrix func?
+    *(u32*)&mat->m[0][0] = *(u32*)&D_800C6FC0.m[0][0];
+    *(u32*)&mat->m[0][2] = *(u32*)&D_800C6FC0.m[0][2];
+    *(u32*)&mat->m[1][1] = *(u32*)&D_800C6FC0.m[1][1];
+    *(u32*)&mat->m[2][0] = *(u32*)&D_800C6FC0.m[2][0];
+    mat->m[2][2]         = D_800C6FC0.m[2][2];
+
+    mat->t[0] = output.vx + D_800C6FC0.t[0];
+    mat->t[1] = output.vy + D_800C6FC0.t[1];
+    mat->t[2] = output.vz + D_800C6FC0.t[2];
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vw_calc", func_80049D04);
 
@@ -185,7 +227,9 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vw_calc", func_8004A54C);
 
 void vwAngleToVector(SVECTOR* vec, SVECTOR* ang, s32 r) // 0x8004A66C
 {
-    s32 entou_r = FP_MULTIPLY(r, shRcos(ang->vx), Q12_SHIFT);
+    s32 entou_r;
+    
+    entou_r = FP_MULTIPLY(r, shRcos(ang->vx), Q12_SHIFT);
     vec->vy = FP_MULTIPLY(-r, shRsin(ang->vx), Q12_SHIFT);
     vec->vx = FP_MULTIPLY(entou_r, shRsin(ang->vy), Q12_SHIFT);
     vec->vz = FP_MULTIPLY(entou_r, shRcos(ang->vy), Q12_SHIFT);
@@ -193,16 +237,16 @@ void vwAngleToVector(SVECTOR* vec, SVECTOR* ang, s32 r) // 0x8004A66C
 
 s32 vwVectorToAngle(SVECTOR* ang, SVECTOR* vec) // 0x8004A714
 {
-    VECTOR sp10;
+    VECTOR localVec;
     s32    ret_r;
 
-    sp10.vx = vec->vx;
-    sp10.vy = vec->vy;
-    sp10.vz = vec->vz;
-    Square0(&sp10, &sp10);
-    ret_r = SquareRoot0(sp10.vx + sp10.vy + sp10.vz);
+    localVec.vx = vec->vx;
+    localVec.vy = vec->vy;
+    localVec.vz = vec->vz;
+    Square0(&localVec, &localVec);
+    ret_r = SquareRoot0(localVec.vx + localVec.vy + localVec.vz);
 
-    ang->vx = ratan2(-vec->vy, SquareRoot0(sp10.vx + sp10.vz));
+    ang->vx = ratan2(-vec->vy, SquareRoot0(localVec.vx + localVec.vz));
     ang->vy = ratan2(vec->vx, vec->vz);
     ang->vz = 0;
     return ret_r;

@@ -10,11 +10,11 @@ void func_801E2E28(s32 idx)
     s32 temp_v1;
 
     D_801E5E8C = idx;
-    
+
     func_8004729C(D_801E5558[idx].field_0);
     temp_v1 = (D_801E5558[idx].field_4 * 2) - 0x1F8;
     temp_lo = temp_v1 / D_801E5C20;
-    
+
     D_801E5E7C = temp_v1;
     D_801E5E88 = 1;
     D_801E5E7C = temp_lo;
@@ -30,7 +30,7 @@ INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E2ED8);
     {
         case 0:
             break;
-        
+
         case 1:
             SD_EngineCmd(D_801E5558[D_801E5E8C].field_0);
             D_801E5E88++;
@@ -41,7 +41,7 @@ INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E2ED8);
             {
                 case 0:
                     return 0;
-                
+
                 case 1:
                     D_800C48F0 = D_801E5558[D_801E5E8C].field_2;
                     return 1;
@@ -49,7 +49,7 @@ INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E2ED8);
                 default:
                     break;
             }
-        
+
         default:
             break;
     }
@@ -154,7 +154,7 @@ s32 func_801E3304(void)
 
             Game_StateSetPrevious();
         }
-        
+
         return 0;
     }
 
@@ -213,12 +213,12 @@ void func_801E434C(u32 arg0, u32 arg1)
         
         maskedField_18 &= 0xF;
         shiftedField_18 >>= 4;
-        
+
         shiftedArg1 = arg1 & 3;
         shiftedArg1 <<= 5;
         shiftedArg1 |= shiftedField_18;
         shiftedArg1 |= (u8)maskedField_18;
-        
+
         D_800AFE08.field_14 = shiftedArg1;
     }
 }
@@ -251,15 +251,15 @@ void func_801E4BD4(u32 arg0, u32 arg1)
     {
         maskedField_18 = D_800AFE24.field_18;
         shiftedField_18 = (maskedField_18 << 4) & 0x100;
-        
+
         maskedField_18 &= 0xF;
         shiftedField_18 >>= 4;
-        
+
         shiftedArg1 = arg1 & 3;
         shiftedArg1 <<= 5;
         shiftedArg1 |= shiftedField_18;
         shiftedArg1 |= (u8)maskedField_18;
-        
+
         D_800AFE24.field_14 = shiftedArg1;
     }
 }

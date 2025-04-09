@@ -5,7 +5,26 @@
 
 #define MIN_IN_ROAD_DIST FP_TILE(16.0f) // vcGetMinInRoadDist() in SH2, hardcoded to FP_TILE(16.0f) in SH1.
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vc_main", vcInitVCSystem);
+void vcInitVCSystem(VC_ROAD_DATA* vc_road_ary_list) // 0x80080940
+{
+    vcWork.view_cam_active_f_0 = 0;
+
+    if (vc_road_ary_list == NULL)
+    {
+        vcWork.vc_road_ary_list_4 = vcNullRoadArray;
+    }
+    else
+    {
+        vcWork.vc_road_ary_list_4 = vc_road_ary_list;
+    }
+
+    vcWork_CurNearRoadSet(&vcWork, &vcNullNearRoad);
+
+    vcWork.old_cam_excl_area_r_6C = NO_VALUE;
+    vcWork.watch_tgt_max_y_88     = FP_TILE(480.0f);
+    vcWork.field_D8               = 0;
+    vcWork.field_FC               = 0;
+}
 
 void vcStartCameraSystem() // 0x800809DC
 {
@@ -55,7 +74,7 @@ void vcSetFirstCamWork(VECTOR3* cam_pos, s16 chara_eye_ang_y, s32 use_through_do
 
     vcWork.cam_chara2ideal_ang_y_FE = shAngleRegulate(chara_eye_ang_y + 2048);
 
-    memcpy(&vcWork.cur_near_road_2B8, &vcNullNearRoad, sizeof(VC_NEAR_ROAD_DATA));
+    vcWork_CurNearRoadSet(&vcWork, &vcNullNearRoad);
 
     vcWork.through_door_activate_init_f_C = use_through_door_cam_f;
     vcSetTHROUGH_DOOR_CAM_PARAM_in_VC_WORK(&vcWork, VC_TDSC_END);
@@ -196,7 +215,77 @@ void vcSetSubjChara(VECTOR3* chara_pos, s32 chara_bottom_y, s32 chara_top_y, s32
     vcWork.chara_watch_xz_r_148 = chara_watch_xz_r;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vc_main", vcExecCamera);
+s32 vcExecCamera() // 0x80080FBC
+{
+    VECTOR3            sv_old_cam_pos;
+    SVECTOR            sv_old_cam_mat_ang;
+    VC_WATCH_MV_PARAM* watch_mv_prm_p;
+    VC_CAM_MV_PARAM*   cam_mv_prm_p;
+    VC_AREA_SIZE_TYPE  cur_rd_area_size;
+    VC_CAM_MV_TYPE     cur_cam_mv_type;
+    s32                self_view_eff_rate;
+    s32                warp_f;
+    s32                far_watch_rate;
+    VC_ROAD_FLAGS      cur_rd_flags;
+
+    sv_old_cam_pos     = vcWork.cam_pos_50;
+    sv_old_cam_mat_ang = vcWork.cam_mat_ang_8E;
+
+    if (vcWork.view_cam_active_f_0 == 0)
+    {
+        return 0;
+    }
+
+    vcSetAllNpcDeadTimer();
+    SetGeomScreen(vcWork.geom_screen_dist_30);
+    vcPreSetDataInVC_WORK(&vcWork, vcWork.vc_road_ary_list_4);
+
+    warp_f           = vcSetCurNearRoadInVC_WORK(&vcWork);
+    cur_rd_flags     = vcWork.cur_near_road_2B8.road_p_0->flags_10;
+    cur_rd_area_size = vcWork.cur_near_road_2B8.road_p_0->area_size_type_11;
+    cur_cam_mv_type  = vcRetCurCamMvType(&vcWork);
+
+    // TODO: This checks for VC_PRS_F_VIEW_F flag in a weird way.
+    far_watch_rate     = vcRetFarWatchRate(((vcWork.flags_8 >> 9) & 1) ^ (g_GameWorkPtr0->optViewCtrl_28 != 0), cur_cam_mv_type, &vcWork);
+    self_view_eff_rate = vcRetSelfViewEffectRate(cur_cam_mv_type, far_watch_rate, &vcWork);
+
+    if (!(vcWork.flags_8 & (VC_USER_CAM_F | VC_USER_WATCH_F)))
+    {
+        vcSetFlagsByCamMvType(cur_cam_mv_type, far_watch_rate, warp_f);
+    }
+
+    if (vcWork.flags_8 & VC_WARP_CAM_TGT_F)
+    {
+        vcWork.old_cam_excl_area_r_6C = NO_VALUE;
+    }
+
+    vcGetUseWatchAndCamMvParam(&watch_mv_prm_p, &cam_mv_prm_p, self_view_eff_rate, &vcWork);
+
+    if (!(vcWork.flags_8 & VC_USER_CAM_F))
+    {
+        vcAutoRenewalCamTgtPos(&vcWork, cur_cam_mv_type, cam_mv_prm_p, (s32)cur_rd_flags, cur_rd_area_size, far_watch_rate);
+    }
+
+    vcRenewalCamData(&vcWork, cam_mv_prm_p);
+
+    if (!(vcWork.flags_8 & VC_USER_WATCH_F))
+    {
+        vcAutoRenewalWatchTgtPosAndAngZ(&vcWork, cur_cam_mv_type, cur_rd_area_size, far_watch_rate, self_view_eff_rate);
+        if ((vcWork.cur_near_road_2B8.road_p_0->flags_10 & VC_RD_LIM_UP_FAR_VIEW_F) &&
+            (vcWork.cur_near_road_2B8.road_p_0->cam_mv_type_14 == VC_MV_CHASE || cur_cam_mv_type == VC_MV_SELF_VIEW))
+        {
+            vcAdjustWatchYLimitHighWhenFarView(&vcWork.watch_tgt_pos_7C, &vcWork.cam_pos_50, vcWork.geom_screen_dist_30);
+        }
+    }
+
+    vcRenewalCamMatAng(&vcWork, watch_mv_prm_p, cur_cam_mv_type, vcWork.flags_8 & VC_VISIBLE_CHARA_F);
+    vcSetDataToVwSystem(&vcWork, cur_cam_mv_type);
+
+    vcWork.through_door_activate_init_f_C = 0;
+    vcWork.flags_8 &= ~(VC_WARP_CAM_F | VC_WARP_WATCH_F | VC_WARP_CAM_TGT_F);
+
+    return vcRetSmoothCamMvF(&sv_old_cam_pos, &vcWork.cam_pos_50, &sv_old_cam_mat_ang, &vcWork.cam_mat_ang_8E);
+}
 
 void vcSetAllNpcDeadTimer() // 0x8008123C
 {
@@ -227,7 +316,41 @@ void vcSetAllNpcDeadTimer() // 0x8008123C
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vc_main", vcRetSmoothCamMvF);
+s32 vcRetSmoothCamMvF(VECTOR3* old_pos, VECTOR3* now_pos, SVECTOR* old_ang, SVECTOR* now_ang) // 0x800812CC
+{
+    s32 intrpt; // interpolate time?
+    s32 mv_vec;
+    s32 rot_x;
+    s32 rot_y;
+
+    intrpt = FP_TO(g_DeltaTime0, Q12_SHIFT) / 0x44; // Divide by 0.0166?
+    intrpt = CLAMP(intrpt, 0x1000, 0x4000);         // Clamp between 1.0 and 4.0.
+
+    mv_vec = Math_VectorMagnitude(FP_FROM(now_pos->vx - old_pos->vx, Q4_SHIFT),
+                                  FP_FROM(now_pos->vy - old_pos->vy, Q4_SHIFT),
+                                  FP_FROM(now_pos->vz - old_pos->vz, Q4_SHIFT));
+
+    mv_vec = FP_TO(mv_vec, Q12_SHIFT) / intrpt;
+    if (mv_vec > FP_TILE(0.2f))
+    {
+        return 0;
+    }
+
+    rot_x = FP_TO(((now_ang->vx - old_ang->vx) >= 0) ? (now_ang->vx - old_ang->vx) : (old_ang->vx - now_ang->vx), Q12_SHIFT) / intrpt;
+    if (rot_x > FP_ANGLE(1.25f))
+    {
+        return 0;
+    }
+
+    rot_y = FP_TO(abs(shAngleRegulate(now_ang->vy - old_ang->vy)), Q12_SHIFT) / intrpt;
+
+    // This (guessed) line is needed for regalloc match, but compiler just optimizes out since rot_x isn't used afterward.
+    // BUG: Maybe the shRcos call below was meant to use the result of this, but was somehow left using now_ang->vx?
+    rot_x = ((now_ang->vx - old_ang->vx) >= 0) ? now_ang->vx : old_ang->vx;
+
+    rot_y = FP_MULTIPLY(rot_y, shRcos(now_ang->vx), Q12_SHIFT);
+    return rot_y <= FP_ANGLE(1.875f);
+}
 
 VC_CAM_MV_TYPE vcRetCurCamMvType(VC_WORK* w_p) // 0x80081428
 {
@@ -585,7 +708,7 @@ void vcAdjustWatchYLimitHighWhenFarView(VECTOR3* watch_pos, VECTOR3* cam_pos, s1
     }
 }
 
-void vcAutoRenewalCamTgtPos(VC_WORK* w_p, VC_CAM_MV_TYPE cam_mv_type, VC_CAM_MV_PARAM* cam_mv_prm_p, VC_ROAD_FLAGS cur_rd_flags, VC_AREA_SIZE_TYPE cur_rd_area_size) // 0x800836E8
+void vcAutoRenewalCamTgtPos(VC_WORK* w_p, VC_CAM_MV_TYPE cam_mv_type, VC_CAM_MV_PARAM* cam_mv_prm_p, VC_ROAD_FLAGS cur_rd_flags, VC_AREA_SIZE_TYPE cur_rd_area_size, s32 far_watch_rate) // 0x800836E8
 {
     VECTOR3 tgt_vec;
     VECTOR3 ideal_pos;
@@ -907,8 +1030,8 @@ void vcRenewalCamData(VC_WORK* w_p, VC_CAM_MV_PARAM* cam_mv_prm_p) // 0x80084BD8
         return;
     }
 
-    dec_spd_per_dist_xz = Math_MulFixed(cam_mv_prm_p->accel_xz, 0x666, Q12_SHIFT);
-    dec_spd_per_dist_y  = Math_MulFixed(cam_mv_prm_p->accel_y, 0x1000, Q12_SHIFT);
+    dec_spd_per_dist_xz = FP_MULTIPLY_PRECISE(cam_mv_prm_p->accel_xz, 0.4f, Q12_SHIFT);
+    dec_spd_per_dist_y  = FP_MULTIPLY_PRECISE(cam_mv_prm_p->accel_y, 1.0f, Q12_SHIFT); // SH2 removes this multiply and uses accel_y directly, maybe 0.4f/1.0f were tunable defines & compiler removed it.
 
     vwRenewalXZVelocityToTargetPos(&w_p->cam_velo_60.vx, &w_p->cam_velo_60.vz, &w_p->cam_pos_50,
                                    &w_p->cam_tgt_pos_44, 0x199, cam_mv_prm_p->accel_xz,
@@ -1069,7 +1192,27 @@ void vcAdjCamOfsAngByCharaInScreen(SVECTOR* cam_ang, SVECTOR* ofs_cam2chara_btm_
     cam_ang->vx = adj_cam_ang_x + cam_ang->vx;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vc_main", vcAdjCamOfsAngByOfsAngSpd);
+void vcAdjCamOfsAngByOfsAngSpd(SVECTOR* ofs_ang, SVECTOR* ofs_ang_spd, SVECTOR* ofs_tgt_ang, VC_WATCH_MV_PARAM* prm_p) // 0x8008555C
+{
+    SVECTOR unused;
+    VECTOR3 max_spd_dec_per_dist;
+
+    unused.vx = shAngleRegulate(ofs_tgt_ang->vx - ofs_ang->vx);
+    unused.vy = shAngleRegulate(ofs_tgt_ang->vy - ofs_ang->vy);
+    unused.vz = shAngleRegulate(ofs_tgt_ang->vz - ofs_ang->vz);
+
+    max_spd_dec_per_dist.vx = FP_MULTIPLY_PRECISE(prm_p->ang_accel_x, 8.0f, Q12_SHIFT);
+    max_spd_dec_per_dist.vy = FP_MULTIPLY_PRECISE(prm_p->ang_accel_y, 3.0f, Q12_SHIFT);
+    max_spd_dec_per_dist.vz = FP_MULTIPLY_PRECISE(prm_p->ang_accel_y, 3.3f, Q12_SHIFT);
+
+    ofs_ang_spd->vx = vwRetNewAngSpdToTargetAng(ofs_ang_spd->vx, ofs_ang->vx, ofs_tgt_ang->vx, prm_p->ang_accel_x, prm_p->max_ang_spd_x, max_spd_dec_per_dist.vx);
+    ofs_ang_spd->vy = vwRetNewAngSpdToTargetAng(ofs_ang_spd->vy, ofs_ang->vy, ofs_tgt_ang->vy, prm_p->ang_accel_y, prm_p->max_ang_spd_y, max_spd_dec_per_dist.vy);
+    ofs_ang_spd->vz = vwRetNewAngSpdToTargetAng(ofs_ang_spd->vz, ofs_ang->vz, ofs_tgt_ang->vz, FP_FLOAT_TO(0.4f, Q12_SHIFT), FP_FLOAT_TO(0.4f, Q12_SHIFT), FP_FLOAT_TO(3.0f, Q12_SHIFT));
+
+    ofs_ang->vx += FP_MULTIPLY(ofs_ang_spd->vx, (s64)g_DeltaTime0, Q12_SHIFT);
+    ofs_ang->vy += FP_MULTIPLY(ofs_ang_spd->vy, (s64)g_DeltaTime0, Q12_SHIFT);
+    ofs_ang->vz += FP_MULTIPLY(ofs_ang_spd->vz, (s64)g_DeltaTime0, Q12_SHIFT);
+}
 
 void vcMakeCamMatAndCamAngByBaseAngAndOfsAng(SVECTOR* cam_mat_ang, MATRIX* cam_mat, SVECTOR* base_cam_ang, SVECTOR* ofs_cam_ang, VECTOR3* cam_pos) // 0x800857EC
 {

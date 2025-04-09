@@ -42,7 +42,7 @@ typedef enum _PadButtonFlags
 
 typedef enum _AnimFlags
 {
-    AnimFlag_Unk0 = 0,
+    AnimFlag_None = 0,
     AnimFlag_Unk1 = 1 << 0,
     AnimFlag_Unk2 = 1 << 1
 } e_AnimFlags;
@@ -67,12 +67,12 @@ typedef enum _GameState
     GameState_StatusScreen        = 14,
     GameState_MapScreen           = 15,
     GameState_Unk10               = 16,
-    GameState_MovieEnding         = 17,
+    GameState_DebugMoviePlayer    = 17,
     GameState_OptionScreen        = 18,
     GameState_LoadStatusScreen    = 19,
     GameState_LoadMapScreen       = 20,
     GameState_Unk15               = 21,
-    GameState_Unk16               = 22
+    GameState_Unk16               = 22 /** Doesn't exist in function array, but DebugMoviePlayer state tries to switch to it, removed debug menu? */
 } e_GameState;
 
 /** State IDs used by GameState_InGame. The values are used as indices into the 0x800A9A2C function array. */
@@ -254,7 +254,7 @@ typedef struct _GameWork
     u8                   optRetreatTurn_2A;         /** Normal: 0, reverse: 1. */
     u8                   optWalkRunCtrl_2B;         /** Normal: 0, reverse: 1. */
     u8                   optAutoAiming_2C;          /** Off: 1, on: 0. */
-    u8                   optBulletAdjust_2D;
+    s8                   optBulletAdjust_2D;
     s8                   unk_2E[2];
     s8                   unk_30[8];
     s_ControllerData     controllers_38[2];
@@ -287,11 +287,10 @@ typedef struct _ModelAnimData
 
     u8  animIdx_0;
     u8  maybeSomeState_1; // State says if animTime_4 is anim time or a func ptr? That field could be a union.  -- emoose
-    u16 flags_2;          // e_AnimFlags. Bit 1: movement unlockled(?), bit 2: visible.
-
-    s32 animTime_4;           // animFrameIdx_8 << 12.
-    s16 animFrameIdx_8;       // Frame index into large array containing all frames for all anims?
-    s16 interpolationAlpha_A; // Something to do with linear anim interpolation. Maybe fixed-point alpha value. Gets set to 1 << 12 (4096).
+    u16 flags_2;          /** e_AnimFlags */ // Bit 1: movement unlockled(?), bit 2: visible.
+    s32 time_4;           /** Fixed-point time along keyframe timeline. */ 
+    s16 keyframeIdx0_8;
+    s16 keyframeIdx1_A;
     s32 field_C;
     s32 field_10;
 } s_ModelAnim;
@@ -302,8 +301,8 @@ typedef struct _Model
     s8 chara_type_0;
     u8 field_1;
     u8 field_2;
-    u8 isAnimStateUnchanged_3; // Educated guess. Always 1, set to 0 for 1 tick when anim state appears to change.
-                            // Used differently in player's s_SubCharacter struct. 0: anim transitioning(?), bit 1: animated, bit 2: turning.
+    u8 isAnimStateUnchanged_3; // Educated guess. In `s_MainCharacterExtra`, always 1, set to 0 for 1 tick when anim state appears to change.
+                               // Used differently in player's `s_SubCharacter`. 0: anim transitioning(?), bit 1: animated, bit 2: turning.
     s_ModelAnim anim_4;
 } s_Model;
 STATIC_ASSERT_SIZEOF(s_Model, 24);
@@ -325,7 +324,21 @@ typedef struct _SubCharacter
     s8      unk_B4[16];
     u16     dead_timer_C4; // Part of shBattleInfo struct in SH2, may use something similar here.
     s8      unk_C6[2];
-    s8      unk_C8[32];
+
+    // Fields seen used inside maps (eg. map0_s00 func_800D923C)
+    s16 field_C8;
+    s16 field_CA;
+    s8  unk_CC[2];
+    s16 field_CE;
+    s8  unk_D0[4];
+    s16 field_D4;
+    s16 field_D6;
+    s16 field_D8;
+    s16 field_DA;
+    s16 field_DC;
+    s16 field_DE;
+    s32 flags_E0;
+    s8  unk_E4[4];
 
     // Fields in the following block may be part of a multi-purpose array of `s32` elements used to store unique property data for each character type.
     // Start of this section is unclear, bytes above may be part of it.
@@ -342,10 +355,10 @@ typedef struct _SubCharacter
     s32 field_108; // Player run counter. Increments every tick indefinitely. Purpose for other characters unknown.
 
     s8  unk_10C;
-	u8  field_10D;
-	s8  unk_10E[5];
+    u8  field_10D;
+    s8  unk_10E[5];
     s32 field_112;
-	s8  unk_116[14];
+    s8  unk_116[14];
     s16 field_126;
 } s_SubCharacter;
 STATIC_ASSERT_SIZEOF(s_SubCharacter, 296);
@@ -409,7 +422,9 @@ typedef struct _SysWork
     u8              unk_2388[392];
     s32             field_2510;
     s32             field_2514[10];
-    u8              unk_253C[556];
+    u8              unk_253C[524];
+    s16             field_2748[9];
+    u8              unk_275A[14];
 } s_SysWork;
 STATIC_ASSERT_SIZEOF(s_SysWork, 0x2768);
 

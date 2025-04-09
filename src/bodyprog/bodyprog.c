@@ -18,6 +18,7 @@ void func_8002E630()
 
     D_800B5480 = 0; 
 
+    // Clear arrays.
     bzero(D_800B5508, 1816);
     bzero(D_800B2780, 768);
 
@@ -386,11 +387,61 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80031AAC);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80031CCC);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80031EFC);
+void Gfx_DebugStringPosition(s16 x, s16 y) // 0x80031EFC
+{
+    if (x != -1)
+    {
+        g_Gfx_DebugStringPosition0.vx = g_Gfx_DebugStringPosition1.vx = x - 160;
+    }
+    if (y != -1)
+    {
+        g_Gfx_DebugStringPosition1.vy = y - 112;
+    }
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80031F40);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", Gfx_DebugStringDraw);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80032154);
+char* Math_IntegerToString(s32 minWidth, s32 value) // 0x80032154
+{
+    s32   isNegative;
+    char* string = PSX_SCRATCH_ADDR(0x1E);
+
+    if (value < 0)
+    {
+        isNegative = 1;
+        value      = -value;
+    }
+    else
+    {
+        isNegative = 0;
+    }
+
+    *string = 0;
+
+    do
+    {
+        string--;
+        minWidth--;
+        *string = '0' + (value % 10);
+        value /= 10;
+    } while (value > 0);
+
+    if (isNegative)
+    {
+        string--;
+        *string = '-';
+        minWidth--;
+    }
+
+    while (minWidth > 0)
+    {
+        string--;
+        *string = '\v';
+        minWidth--;
+    }
+
+    return string;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_800321EC);
 
@@ -806,7 +857,10 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_800334D8);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80033548);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", SysWork_Clear);
+void SysWork_Clear() // 0x800340E0
+{
+    bzero(&g_SysWork, sizeof(s_SysWork));
+}
 
 s32 MainLoop_ShouldWarmReset() // 0x80034108
 {
@@ -1046,7 +1100,14 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80035BE0);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80035DB4);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80035E1C);
+void func_80035E1C()
+{
+    s32 i;
+    for (i = 0; i < 9; i++)
+    {
+        g_SysWork.field_2748[i] = 0;
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80035E44);
 
@@ -1054,15 +1115,32 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80035ED0);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80035F4C);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_800363D0);
+void func_800363D0() // 0x800363D0
+{
+    D_800A9A1C = 0;
+    g_SysWork.field_22A0 |= 1 << 3;
+    func_80035DB4(0);
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003640C);
+void func_8003640C(s32 arg0) // 0x8003640C
+{
+    if (arg0 != 0)
+    {
+        D_800C9590 = arg0;
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80036420);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003647C);
+s32 func_8003647C() // 0x8003647C
+{
+    return g_SaveGamePtr->field_A5 > D_800C9584;
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80036498);
+s32 func_80036498() // 80036498
+{
+    return !(g_SaveGamePtr->field_A5 > D_800C9584);
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_800364BC);
 
@@ -1074,11 +1152,63 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80036B5C);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80036E48);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003708C);
+void func_8003708C(s16* ptr0, u16* ptr1) // 0x8003708C
+{
+    s32 var0;
+    s16 var1;
+    s32 var3;
+    s32 shift;
+    s32 i;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80037124);
+    var0 = 0;
+    var1 = 0;
+    
+    for (i = 0; i < 12; i++)
+    {
+        shift = (i & 3) * 4;
+        var3 = (*ptr1 >> shift) & 0xF;
+        if (i != 0 && var3 == 11 && var0 != 0)
+        {
+            var1 |= 11 << shift;
+        }
+        
+        var0 = 0;
+        if (var3 != 0 && var3 != 11)
+        {
+            var1 |= 11 << shift;
+            var0 = 1;
+        }
+        
+        if ((i & 3) == 3 || i == 12)
+        {
+            ptr1++;
+            *ptr0++ = var1;
+            var1 = 0;
+        }
+    } 
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80037154);
+void func_80037124() // 0x80037124
+{
+    D_800BCD78 = NO_VALUE;
+    func_8003652C();
+    DrawSync(0);
+}
+
+void func_80037154() // 0x80037154
+{
+    s32 i;
+    s_800BCDA8* element;
+
+    for (i = 0; i < 2; i++)
+    {
+        element = &D_800BCDA8[i];
+        
+        D_800BCDA8[i].field_2 = NO_VALUE;
+        D_800BCDA8[i].field_1 = NO_VALUE;
+        D_800BCDA8[i].field_3 = 0;
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80037188);
 

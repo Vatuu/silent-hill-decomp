@@ -281,6 +281,7 @@ void           vwInitViewInfo();
 GsCOORDINATE2* vwGetViewCoord();
 void           vwGetViewPosition(VECTOR3* pos);
 void           vwGetViewAngle(SVECTOR* ang);
+void           func_80048AF4(VECTOR3* arg0, VECTOR3* arg1);
 void           vwSetCoordRefAndEntou(GsCOORDINATE2* parent_p, s32 ref_x, s32 ref_y, s32 ref_z, s16 cam_ang_y, s16 cam_ang_z, s32 cam_y, s32 cam_xz_r);
 void           vwSetViewInfoDirectMatrix(GsCOORDINATE2* pcoord, MATRIX* cammat);
 void           vwSetViewInfo();
@@ -294,8 +295,13 @@ void vwDecreaseSideOfVector(s32* vec_x, s32* vec_z, s32 dec_val, s32 max_side_ve
 s32  vwRetNewVelocityToTargetVal(s32 now_spd, s32 mv_pos, s32 tgt_pos, s32 accel, s32 total_max_spd, s32 dec_val_lim_spd);
 s32  vwRetNewAngSpdToTargetAng(s32 now_ang_spd, s16 now_ang, s16 tgt_ang, s32 accel_spd, s32 total_max_ang_spd, s32 dec_val_lim_spd);
 void vwMatrixToAngleYXZ(SVECTOR* ang, MATRIX* mat);
+void func_800496AC(MATRIX* mat0, MATRIX* mat1, SVECTOR* vec);
 void vbSetWorldScreenMatrix(GsCOORDINATE2* coord);
 void vbSetRefView(VbRVIEW* rview);
+void func_80049984(GsCOORDINATE2*, MATRIX*);
+void func_80049AF8(GsCOORDINATE2* coord, SVECTOR* vec);
+void func_80049B6C(GsCOORDINATE2* coord, MATRIX* mat, SVECTOR* vec);
+void func_80049C2C(MATRIX* mat, s32 x, s32 y, s32 z);
 void vwAngleToVector(SVECTOR* vec, SVECTOR* ang, s32 r);
 s32  vwVectorToAngle(SVECTOR* ang, SVECTOR* vec);
 
@@ -345,7 +351,7 @@ void vcMakeFarWatchTgtPos(VECTOR3* watch_tgt_pos, VC_WORK* w_p, VC_AREA_SIZE_TYP
 void vcSetWatchTgtXzPos(VECTOR3* watch_pos, VECTOR3* center_pos, VECTOR3* cam_pos, s32 tgt_chara2watch_cir_dist, s32 tgt_watch_cir_r, s16 watch_cir_ang_y);
 void vcSetWatchTgtYParam(VECTOR3* watch_pos, VC_WORK* w_p, s32 cam_mv_type, s32 watch_y);
 void vcAdjustWatchYLimitHighWhenFarView(VECTOR3* watch_pos, VECTOR3* cam_pos, s16 sy);
-void vcAutoRenewalCamTgtPos(VC_WORK* w_p, VC_CAM_MV_TYPE cam_mv_type, VC_CAM_MV_PARAM* cam_mv_prm_p, VC_ROAD_FLAGS cur_rd_flags, VC_AREA_SIZE_TYPE cur_rd_area_size);
+void vcAutoRenewalCamTgtPos(VC_WORK* w_p, VC_CAM_MV_TYPE cam_mv_type, VC_CAM_MV_PARAM* cam_mv_prm_p, VC_ROAD_FLAGS cur_rd_flags, VC_AREA_SIZE_TYPE cur_rd_area_size, s32 far_watch_rate);
 s32  vcRetMaxTgtMvXzLen(VC_WORK* w_p, VC_CAM_MV_PARAM* cam_mv_prm_p);
 void vcMakeIdealCamPosByHeadPos(VECTOR3* ideal_pos, VC_WORK* w_p, VC_AREA_SIZE_TYPE cur_rd_area_size);
 void vcMakeIdealCamPosForFixAngCam(VECTOR3* ideal_pos, VC_WORK* w_p);
@@ -375,5 +381,10 @@ s32 Math_VectorMagnitude(s32 x, s32 y, s32 z);
 
 s32 vcGetXZSumDistFromLimArea(s32* out_vec_x_p, s32* out_vec_z_p, s32 chk_wld_x, s32 chk_wld_z,
                               s32 lim_min_x, s32 lim_max_x, s32 lim_min_z, s32 lim_max_z, s32 can_ret_minus_dist_f);
+
+static inline void vcWork_CurNearRoadSet(VC_WORK* work, VC_NEAR_ROAD_DATA* road)
+{
+    memcpy(&work->cur_near_road_2B8, road, sizeof(VC_NEAR_ROAD_DATA));
+}
 
 #endif /* _VW_SYSTEM_H */

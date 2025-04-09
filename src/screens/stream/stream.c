@@ -1,15 +1,19 @@
 #include "game.h"
 
-#include <libcd.h>
 #include <libds.h>
 #include <libpress.h>
+
+#include "bodyprog/libsd.h"
 
 #include "bodyprog/bodyprog.h"
 #include "main/fileinfo.h"
 #include "screens/stream/stream.h"
 
+#define SCRN_WIDTH 320
+#define SCRN_HEIGHT 240
+
 // Old IDB name: MainLoopState3_StartMovieIntro_801E2654
-void func_801E2654(void)
+void func_801E2654()
 {
     switch (g_GameWork.gameStateStep_598[0])
     {
@@ -42,7 +46,7 @@ void func_801E2654(void)
 }
 
 // Old IDB name: MainLoopState6_Movie_PlayIntro_801E279C
-void func_801E279C(void)
+void func_801E279C()
 {
     s32 fileIdx = FILE_XA_C1_20670;
 
@@ -58,43 +62,56 @@ void func_801E279C(void)
 }
 
 // Old IDB name: MainLoopState9_Movie_PlayOpening_801E2838
-void func_801E2838(void)
+void func_801E2838()
 {
     open_main(FILE_XA_M1_03500, 0);
     Game_StateSetNext(GameState_LoadScreen);
 }
 
 // Old IDB name: MainLoopStateD_ReturnToGame_801E28B0
-void func_801E28B0(void)
+void func_801E28B0()
 {
     Game_StateSetNext(GameState_InGame);
 }
 
 // Old IDB name: MainLoopState11_Movie_PlayEnding_801E2908
-void func_801E2908(void)
+// Movie to play seems decided by LStickLeft/LStickRight, possibly debug movie player?
+void func_801E2908()
 {
-    s_GameWork*       gameWork   = g_GameWorkPtr1;
-    s_ControllerData* controller = g_ControllerPtr0;
+    extern s32 g_Debug_MoviePlayerIndex; // Only used in this func, maybe a static.
+
+    s_GameWork*       gameWork;
+    s_ControllerData* controller;
+
+    gameWork   = g_GameWorkPtr1;
+    controller = g_ControllerPtr0;
 
     if (controller->btns_new_10 & gameWork->controllerBinds_0.cancel)
     {
-        Game_StateSetNext(GameState_Unk16);
+        Game_StateSetNext(GameState_Unk16); // Changes to nonexistent state 0x16 (22) and crashes, maybe removed debug menu.
     }
 
-    if (controller->field_18 & (1 << 27))
+    if (controller->field_18 & Pad_LStickLeft)
     {
-        D_801E3F3C--;
+        g_Debug_MoviePlayerIndex--;
     }
 
-    if (controller->field_18 & (1 << 25))
+    if (controller->field_18 & Pad_LStickRight)
     {
-        D_801E3F3C++;
+        g_Debug_MoviePlayerIndex++;
     }
 
-    func_80031EFC(0x28, 0x28);
+    Gfx_DebugStringPosition(40, 40);
+
+#ifdef DEBUG
+    // Recreated code from pre-Jan17 builds which include calls to display these (though DebugStringDraw was nullsub in those builds...)
+    Gfx_DebugStringDraw("MOVIE NO=");
+    Gfx_DebugStringDraw(Math_IntegerToString(2, g_Debug_MoviePlayerIndex));
+#endif
+
     if (controller->btns_new_10 & gameWork->controllerBinds_0.enter)
     {
-        open_main(FILE_XA_ZC_14392 - D_801E3F3C, 0);
+        open_main(FILE_XA_ZC_14392 - g_Debug_MoviePlayerIndex, 0);
     }
 }
 
@@ -137,9 +154,9 @@ void movie_main(char* file_name, s32 f_size, s32 sector)
     max_frame = f_size;
     
     m = (MOVIE_STR*)0x801A2600; // probably some kind of TEMP_MEMORY_ADDR define. Also used by b_konami.
-    m->width = 320;
-    m->height = 240;
-    
+    m->width  = SCRN_WIDTH;
+    m->height = SCRN_HEIGHT;
+
     if (sector == 0)
     {
         search_times = 0;
@@ -158,7 +175,7 @@ void movie_main(char* file_name, s32 f_size, s32 sector)
     {
         CdIntToPos(sector, &m->loc);
 	}
-    
+
     strSetDefDecEnv(&m->dec, 0, 16, 0, 256);
     VSync(0);
     strInit(&m->loc, strCallback);
@@ -168,11 +185,11 @@ void movie_main(char* file_name, s32 f_size, s32 sector)
         loc = file.pos;
         strKickCD(&loc);
     }
-    
+
     SsSetSerialAttr(0, 0, 1);
     SsSetSerialVol(0, 80, 80);
     VSync(0);
-    
+
     prev_frame_no = 0;
     temp_s2 = g_GameWorkPtr0;
 
@@ -182,8 +199,8 @@ void movie_main(char* file_name, s32 f_size, s32 sector)
         // DISPENV *SetDefDispEnv(DISPENV *env, int x, int y, int w, int h);
         // making a static inline setupDispEnv(DISPENV*, MOVIE_STR*, s_GameWork**) func got it very close
         // but still had register differences
-        
-        disp.disp.y = 256 - (m->dec.rectid * 240);
+
+        disp.disp.y   = 256 - (m->dec.rectid * SCRN_HEIGHT);
         disp.screen.x = temp_s2->field_1C;
         disp.screen.y = 8 + ((224 - m->height) / 2) + (temp_s2->field_1D);
 
@@ -205,10 +222,10 @@ void movie_main(char* file_name, s32 f_size, s32 sector)
             }
             strKickCD(&loc);
         }
-        
+
         if (frame_cnt >= max_frame)
             break;
-        
+
         if (prev_frame_no > frame_cnt)
             break;
         
@@ -235,24 +252,16 @@ INCLUDE_ASM("asm/screens/stream/nonmatchings/stream", movie_main);
 
 void strSetDefDecEnv(DECENV* dec, s32 x0, s32 y0, s32 x1, s32 y1) // 0x801E2F8C
 {
-    dec->rect[0].w = 480;
-    dec->rect[1].w = 480;
-    dec->vlcid     = 0;
-    dec->rectid    = 0;
-    dec->isdone    = 0;
-    dec->rect[0].x = x0;
-    dec->rect[0].y = y0;
-    dec->rect[0].h = 240;
-    dec->rect[1].x = x1;
-    dec->rect[1].h = 240;
-    dec->slice.x   = x0;
-    dec->slice.y   = y0;
-    dec->slice.w   = 16 * PPW;
-    dec->slice.h   = 240;
     dec->vlcbuf[0] = m->vlcbuf0;
     dec->vlcbuf[1] = m->vlcbuf1;
+    dec->vlcid     = 0;
     dec->imgbuf    = m->imgbuf0;
-    dec->rect[1].y = y1;
+    dec->rectid    = 0;
+    dec->isdone    = 0;
+
+    setRECT(&dec->rect[0], x0, y0, SCRN_WIDTH * PPW, SCRN_HEIGHT);
+    setRECT(&dec->rect[1], x1, y1, SCRN_WIDTH * PPW, SCRN_HEIGHT);
+    setRECT(&dec->slice, x0, y0, 16 * PPW, SCRN_HEIGHT);
 }
 
 void strInit(CdlLOC* loc, void (*callback)()) // 0x801E300C

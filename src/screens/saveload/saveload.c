@@ -21,7 +21,7 @@ s32 func_801E3078(s_UnkSaveload0* arg0)
         func_8004A8DC(0);
         return 1;
     }
-        
+
     func_8004A8DC(7);
     return 0;
 }
@@ -62,16 +62,15 @@ void func_801E63C0()
     {
         VSync(8);
     }
-    
+
     g_IntervalVBlanks = 1;
     D_800BCD0C = 6;
-    
+
     g_GameWork.field_58C = 0;
     g_GameWork.field_58D = 0;
     g_GameWork.field_58E = 0;
-    
-    D_800BCD39 = 0;
 
+    D_800BCD39 = 0;
     if (g_GameWork.gameState_594 == GameState_Unk4 || g_GameWork.gameState_594 == GameState_Unk8)
     {
         if (D_800A97D8 != 0)
@@ -79,12 +78,12 @@ void func_801E63C0()
             D_800BCD34 = 0;
         }
     }
-    
+
     D_801E7520 = 0;
     D_800A97D8 = (g_GameWork.gameState_594 == GameState_Unk10);
 
     func_801E2D8C();
-    
+
     g_SysWork.field_20 = 0;
     g_GameWork.gameStateStep_598[0]++;
     g_GameWork.gameStateStep_598[1] = 0;
