@@ -75,7 +75,7 @@ struct DMSHeader
     byte field_3; // Usually 0, but sometimes filled in.
     uint32 field_4; // Unknown, correlates to file size?
     uint32 intervalOffset_8;
-    VECTOR3 field_C;
+    VECTOR3 origin_C; // Origin point, gets added to character positions.
     uint32 charactersOffset_10;
 };
 
