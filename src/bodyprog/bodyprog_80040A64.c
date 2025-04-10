@@ -959,10 +959,9 @@ void func_8004807C() // 0x8004807C
     D_800C1670.field_0 = 8;
 }
 
-#ifdef NON_MATCHING
 void func_800480FC() // 0x800480FC
 {
-    u32 var0;
+    s32 var0;
     u32 var1;
 
     if (CdReadSync(1, 0) != 0)
@@ -974,14 +973,14 @@ void func_800480FC() // 0x800480FC
     if (var1 <= 0xC7FFU)
     {
         var0 = SdVabTransBodyPartly((u8*)CD_ADDR_0, var1, D_800C37C8);
-        D_800C1670.field_0 = 9;
         D_800C37CC = D_800C37D4->field_4;
+        D_800C1670.field_0 = 9;
     }
     else
     {
         var0 = SdVabTransBodyPartly((u8*)CD_ADDR_0, 0xC800u, D_800C37C8);
-        D_800C1670.field_0 = 6;
         D_800C37CC += 0xC800;
+        D_800C1670.field_0 = 6;
     }
     
     if (var0 == NO_VALUE && (u8)D_800C37D0 < 16)
@@ -990,9 +989,6 @@ void func_800480FC() // 0x800480FC
         D_800C1670.field_0 = 1;
     }
 }
-#else
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800480FC);
-#endif
 
 void func_800481F8() // 0x800481F8
 {
