@@ -24,7 +24,7 @@ void func_801E2E28(s32 idx)
 
 // TODO: Matched, but checksum fails. --Sezz
 INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E2ED8);
-/*s32 func_801E2ED8(void)
+/*s32 func_801E2ED8()
 {
     switch (D_801E5E88)
     {
@@ -61,7 +61,7 @@ INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E2FC0);
 
 INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E3094);
 
-s32 func_801E3124(void)
+s32 func_801E3124()
 {
     switch (g_GameWork.gameStateStep_598[1])
     {
@@ -130,7 +130,7 @@ s32 func_801E3124(void)
     return 0;
 }
 
-s32 func_801E3304(void)
+s32 func_801E3304()
 {
     if (g_GameWork.gameStatePrev_590 == GameState_InGame)
     {
@@ -163,7 +163,100 @@ s32 func_801E3304(void)
 
 INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E342C);
 
+#ifdef NON_MATCHING
+bool func_801E3684() // 0x801E3684
+{
+    s32 sp10;
+    s32 sp14;
+    s32 sp18;
+    s8* temp_s0;
+    s32* var_s2;
+    s32 temp_fp;
+    s32 temp_v1;
+    s32 var_s0;
+    s32 var_s1;
+    s32 var_s3;
+    s32 var_s4;
+    s32 var_s5;
+    s32 var_s6;
+    s32 var_v1;
+    bool ret;
+
+    temp_v1 = D_800C48F0 * 2;
+    var_s0 = (s32)((temp_v1 - 0x1F8) * D_801E5E80);
+    var_s0 = var_s0 >> 16;
+    var_s6 = D_801E5E84;
+    sp10 = D_801E5E7C;
+    
+    if (var_s0 < 0)
+    {
+        var_s0 = 0;
+    }
+    
+    var_v1 = (s32)(temp_v1 * D_801E5E80);
+    var_v1 = var_v1 >> 16;
+    if (var_v1 >= D_801E5C20)
+    {
+        var_v1 = D_801E5C20 - 1;
+    }
+    
+    sp14 = ((var_s0 * sp10) - temp_v1) + SCREEN_HEIGHT;
+    sp18 = (var_v1 - var_s0) + 1;
+
+    var_s6 = (var_s6 - temp_v1);
+    var_s6 = var_s6 + SCREEN_HEIGHT;
+    temp_fp = var_s6 < SCREEN_HEIGHT;
+    
+    if (temp_fp != 0)
+    {
+        ret = var_s6 < -23;
+        var_s4 = -1;
+        
+        if (ret)
+        {
+            var_s6 = -24;
+        }
+    }
+    else
+    {
+        ret = false;
+        var_s4 = -1;
+    }
+    
+    func_801E434C(1, 1);
+    func_801E4310(48, 48, 48);
+    
+    for (var_s5 = 2; var_s5 >= 0; var_s5--, var_s4 += 2)
+    {
+        if (var_s5 == 0)
+        {
+            var_s4 = 0;
+            func_801E434C(0, 0);
+            func_801E4310(64, 64, 64);
+        }
+        
+        var_s3 = sp14 + var_s4;
+        var_s2 = &D_801E5590[var_s0];
+
+        for (var_s1 = sp18; var_s1 > 0; var_s1--, var_s2++, var_s3 += sp10)
+        {
+            temp_s0 = *var_s2;
+            func_801E42F8(0, var_s3);
+            func_801E4394(temp_s0);
+        }
+        
+        if (temp_fp != 0)
+        {
+            func_801E42F8(0, var_s6 + var_s4);
+            func_801E4394(&D_801E5BD0);
+        }
+    } 
+    
+    return ret;
+}
+#else
 INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E3684);
+#endif
 
 INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E386C);
 
