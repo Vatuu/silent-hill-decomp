@@ -177,37 +177,8 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_80054558);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_80054634);
 
-#ifdef NON_MATCHING
-void func_800546A8(s32 arg0)
-{
-    switch ((u8)arg0)
-    {
-        case 0:
-            func_8003DD80(1, 0x22);
-            break;
-        case 1:
-        case 2:
-        case 4:
-        case 5:
-        case 6:
-        case 7:
-            func_8003DD80(1, 0x22);
-            break;
-        
-        case 32:
-        case 33:
-        case 34:
-            func_8003DD80(1, 0x13);
-            break;
-        
-        default:
-            func_8003DD80(1, 0x01);
-            break;
-    }
-}
-#else
+// Requires jump table.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_800546A8);
-#endif
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_80054720);
 
