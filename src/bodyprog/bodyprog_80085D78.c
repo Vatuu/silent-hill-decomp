@@ -1328,7 +1328,7 @@ void DmsHeader_FixOffsets(s_DmsHeader* header) // 0x8008C9A0
     header->isLoaded_0 = 1;
 
     // Add memory addr of DMS header to offsets in header.
-    header->field_8       = (u8*)header->field_8 + (u32)header;
+    header->intervalPtr_8 = (u8*)header->intervalPtr_8 + (u32)header;
     header->characters_18 = (u8*)header->characters_18 + (u32)header;
 
     DmsEntry_FixOffsets(&header->camera_1C, header);
@@ -1343,7 +1343,7 @@ void DmsHeader_FixOffsets(s_DmsHeader* header) // 0x8008C9A0
 
 void DmsEntry_FixOffsets(s_DmsEntry* entry, s_DmsHeader* header) // 0x8008CA44
 {
-    entry->unkStructPtr_C = (u32)entry->unkStructPtr_C + (u32)header;
+    entry->keyframes_C.character = (u32)entry->keyframes_C.character + (u32)header;
     entry->svectorPtr_8   = (u32)entry->svectorPtr_8 + (u32)header;
 }
 
@@ -1391,7 +1391,18 @@ s32 Dms_CharacterFindIndexByName(char* name, s_DmsHeader* header) // 0x8008CB10
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008CB90);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008CC98);
+void func_8008CC98(s_DmsKeyframeCharacter* result, s_DmsKeyframeCharacter* frame0, s_DmsKeyframeCharacter* frame1, s32 time)
+{
+    // Low-precision lerp between positions?
+    result->position_0.vx = frame0->position_0.vx + FP_MULTIPLY(frame1->position_0.vx - frame0->position_0.vx, (s64)time, Q12_SHIFT);
+    result->position_0.vy = frame0->position_0.vy + FP_MULTIPLY(frame1->position_0.vy - frame0->position_0.vy, (s64)time, Q12_SHIFT);
+    result->position_0.vz = frame0->position_0.vz + FP_MULTIPLY(frame1->position_0.vz - frame0->position_0.vz, (s64)time, Q12_SHIFT);
+
+    // Higher-precision lerp between rotations?
+    result->rotation_6.vx = Math_LerpFixed12(frame0->rotation_6.vx, frame1->rotation_6.vx, time);
+    result->rotation_6.vy = Math_LerpFixed12(frame0->rotation_6.vy, frame1->rotation_6.vy, time);
+    result->rotation_6.vz = Math_LerpFixed12(frame0->rotation_6.vz, frame1->rotation_6.vz, time);
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008CDBC);
 
@@ -1407,7 +1418,7 @@ s32 Dms_CameraGetTargetPos(VECTOR3* posTarget, VECTOR3* lookAtTarget, u16* arg2,
     camera = &header->camera_1C;
 
     func_8008D1D0(&sp28, &sp2C, &sp30, time, camera, header);
-    camProjValue = func_8008CFEC(&sp18, &camera->unkStructPtr_C[sp28 * 8], &camera->unkStructPtr_C[sp2C * 8], sp30);
+    camProjValue = func_8008CFEC(&sp18, &camera->keyframes_C.camera[sp28], &camera->keyframes_C.camera[sp2C], sp30);
 
     posTarget->vx = FP_TO(sp18[0] + header->field_C.vx, Q4_SHIFT);
     posTarget->vy = FP_TO(sp18[1] + header->field_C.vy, Q4_SHIFT);
@@ -1431,7 +1442,31 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008CFEC);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008D1D0);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008D2C4);
+s32 func_8008D2C4(s32 time, s_DmsHeader* header)
+{
+    s_DmsInterval* interval;
+
+    time = FP_FROM(time, Q12_SHIFT);
+
+    for (interval = header->intervalPtr_8;
+         interval < &header->intervalPtr_8[header->intervalCount_2];
+         interval++)
+    {
+        if (time != (interval->start + interval->duration) - 1)
+        {
+            continue;
+        }
+
+        if (interval->duration > 1)
+        {
+            return 2;
+        }
+
+        return 1;
+    }
+
+    return 0;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008D330);
 

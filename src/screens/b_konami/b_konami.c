@@ -77,10 +77,9 @@ void func_800C95AC() // 0x800C95AC
         GsSwapDispBuff();
         GsDrawOt(&g_ObjectTable1[g_ObjectTableIdx]);
 
-        // TODO: Deal with 0x801A2600.
         idx = GsGetActiveBuff();
         g_ObjectTableIdx = idx;
-        D_800C7018 = (idx << 0xF) + 0x801A2600;
+        GsOUT_PACKET_P   = (PACKET*)(TEMP_MEMORY_ADDR + (idx << 0xF));
 
         GsClearOt(0, 0, &g_ObjectTable0[idx]);
         GsClearOt(0, 0, &g_ObjectTable1[g_ObjectTableIdx]);
@@ -143,15 +142,15 @@ void func_800C9FB8() // 0x800C9FB8
     ptr = (g_ObjectTableIdx << 4) + &D_800B5C7C;
 
     // TODO: Wait on fgsfds's investigations for cleaner match of graphics setup.
-    // addPrim(temp_a1, D_800C7018);
-    ((TILE*)D_800C7018)->tag = (u32)((*ptr & 0xFFFFFF) | 0x03000000);
-    setaddr(ptr, D_800C7018);
+    // addPrim(temp_a1, GsOUT_PACKET_P);
+    ((TILE*)GsOUT_PACKET_P)->tag = (u32)((*ptr & 0xFFFFFF) | 0x03000000);
+    setaddr(ptr, GsOUT_PACKET_P);
 
-    setCodeWord((TILE*)D_800C7018, PRIM_RECT, 0xFFFFFF);
-    setXY0Fast((TILE*)D_800C7018, -320, -240);
-    setWH((TILE*)D_800C7018, 640, 480);
+    setCodeWord((TILE*)GsOUT_PACKET_P, PRIM_RECT, 0xFFFFFF);
+    setXY0Fast((TILE*)GsOUT_PACKET_P, -320, -240);
+    setWH((TILE*)GsOUT_PACKET_P, 640, 480);
 
-    D_800C7018 += sizeof(TILE);
+    GsOUT_PACKET_P = (PACKET*)((u8*)GsOUT_PACKET_P + sizeof(TILE));
 }
 
 void func_800CA120() // 0x800CA120
@@ -164,15 +163,15 @@ void func_800CA120() // 0x800CA120
     ptr = (g_ObjectTableIdx << 4) + &D_800B5C7C;
 
     // TODO: Wait on fgsfds's investigations for cleaner match of graphics setup.
-    // addPrim(temp_a1, D_800C7018);
-    ((TILE*)D_800C7018)->tag = (u32)((*ptr & 0xFFFFFF) | 0x03000000);
-    setaddr(ptr, D_800C7018);
+    // addPrim(temp_a1, GsOUT_PACKET_P);
+    ((TILE*)GsOUT_PACKET_P)->tag = (u32)((*ptr & 0xFFFFFF) | 0x03000000);
+    setaddr(ptr, GsOUT_PACKET_P);
 
-    setCodeWord((TILE*)D_800C7018, PRIM_RECT, 0xFFFFFF);
-    setXY0Fast((TILE*)D_800C7018, -320, -240);
-    setWH((TILE*)D_800C7018, 640, 480);
+    setCodeWord((TILE*)GsOUT_PACKET_P, PRIM_RECT, 0xFFFFFF);
+    setXY0Fast((TILE*)GsOUT_PACKET_P, -320, -240);
+    setWH((TILE*)GsOUT_PACKET_P, 640, 480);
 
-    D_800C7018 += sizeof(TILE);
+    GsOUT_PACKET_P = (PACKET*)((u8*)GsOUT_PACKET_P + sizeof(TILE));
 }
 
 void func_800CA234() // 0x800CA234
