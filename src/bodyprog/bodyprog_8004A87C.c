@@ -54,7 +54,7 @@ void func_8004B684() // 0x8004B684
     D_800C38B0.field_1 = 1;
     D_800C38AC = -120;
     D_800AD498 = 7;
-    g_SysWork.field_2350 = g_SysWork.field_2350 & ~0xF;
+    g_SysWork.field_234D &= ~0xF;
 }
 
 void func_8004B6D4(s16 arg0, s16 arg1) // 0x8004B6D4
@@ -165,7 +165,9 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_800539A4);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_80053B08);
 
-void GameFs_Tim00TIMLoad() // 0x80053dA0
+// TODO: Fix `flags_2352`.
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", GameFs_Tim00TIMLoad);
+/*void GameFs_Tim00TIMLoad() // 0x80053dA0
 {
     if (g_SysWork.flags_2352 & (1 << 0))
     {
@@ -174,7 +176,7 @@ void GameFs_Tim00TIMLoad() // 0x80053dA0
     
     Fs_QueueStartReadTim(FILE_ITEM_TIM00_TIM, FS_BUFFER_1, &D_800A906C);
     g_SysWork.flags_2352 |= 1 << 0;
-}
+}*/
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_80053DFC);
 

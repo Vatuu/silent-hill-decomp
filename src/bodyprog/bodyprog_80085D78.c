@@ -388,14 +388,14 @@ void func_800869E4(u8* arg1, u8* arg2, u16* arg3) // 0x800869E4
 {
     s32 ret;
 
-    g_SysWork.field_22A0 |= 0x20;
+    g_SysWork.field_22A0 |= 1 << 5;
     
     ret = func_800365B8();
     if (ret == 1)
     {
         g_SysWork.field_28 = 0;
         g_SysWork.field_10 = 0;
-        g_SysWork.field_2C = 0;
+        g_SysWork.timer_2C = 0;
         g_SysWork.field_14 = 0;
         g_SysWork.sysStateStep_C++;
     }
@@ -775,7 +775,7 @@ void func_80087360(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x80087360
             D_800C9644();
             func_8008616C(0, 1, 0, arg1, 0);
 
-            g_SysWork.field_2C = 0;
+            g_SysWork.timer_2C = 0;
             g_SysWork.field_14 = 0;
             g_SysWork.field_10++;
 
@@ -811,11 +811,11 @@ void func_80087360(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x80087360
             D_800C9648(0);
 
             g_SysWork.sysState_8 = 0;
-            g_SysWork.field_24 = 0;
+            g_SysWork.timer_24 = 0;
             g_SysWork.sysStateStep_C = 0;
             g_SysWork.field_28 = 0;
             g_SysWork.field_10 = 0;
-            g_SysWork.field_2C = 0;
+            g_SysWork.timer_2C = 0;
             g_SysWork.field_14 = 0;
             break;
     }
@@ -831,7 +831,7 @@ void func_80087540(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x800875
             D_800C9644();
             func_8008616C(0, 1, 0, arg1, 0);
 
-            g_SysWork.field_2C = 0;
+            g_SysWork.timer_2C = 0;
             g_SysWork.field_14 = 0;
             g_SysWork.field_10++;
 
@@ -860,7 +860,7 @@ void func_80087540(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x800875
 
             if (g_ControllerPtr0->btns_new_10 & (g_GameWorkPtr1->controllerBinds_0.enter | g_GameWorkPtr1->controllerBinds_0.cancel))
             {
-                g_SysWork.field_2C = 0;
+                g_SysWork.timer_2C = 0;
                 g_SysWork.field_14 = 0;
                 g_SysWork.field_10++;
             }
@@ -886,11 +886,11 @@ void func_80087540(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x800875
             D_800C9648(0);
 
             g_SysWork.sysState_8 = 0;
-            g_SysWork.field_24 = 0;
+            g_SysWork.timer_24 = 0;
             g_SysWork.sysStateStep_C = 0;
             g_SysWork.field_28 = 0;
             g_SysWork.field_10 = 0;
-            g_SysWork.field_2C = 0;
+            g_SysWork.timer_2C = 0;
             g_SysWork.field_14 = 0;
             break;
     }

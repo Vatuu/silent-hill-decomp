@@ -319,8 +319,8 @@ typedef struct _GameWork
     u8                   field_58D; // G?
     u8                   field_58E; // B?
     u8                   field_58F; // A or graphics command code?
-    s32                  gameStatePrev_590;    /** e_GameState */
-    s32                  gameState_594;        /** e_GameState */
+    s32                  gameStatePrev_590;    /** `e_GameState` */
+    s32                  gameState_594;        /** `e_GameState` */
     s32                  gameStateStep_598[3]; /** Temp data used by current gameState. Can be another state ID or other data. */
     s8                   unk_5A4[4];
     s32                  field_5A8;
@@ -339,8 +339,8 @@ typedef struct _ModelAnimData
     // implied by an original param name in `vcMixSelfViewEffectToWatchTgtPos`.
 
     u8  animIdx_0;
-    u8  maybeSomeState_1; // State says if animTime_4 is anim time or a func ptr? That field could be a union.  -- emoose
-    u16 flags_2;          /** e_AnimFlags */ // Bit 1: movement unlockled(?), bit 2: visible.
+    u8  maybeSomeState_1; // State says if `animTime_4` is anim time or a func ptr? That field could be a union.  -- emoose
+    u16 flags_2;          /** `e_AnimFlags` */ // Bit 1: movement unlockled(?), bit 2: visible.
     s32 time_4;           /** Fixed-point time along keyframe timeline. */ 
     s16 keyframeIdx0_8;
     s16 keyframeIdx1_A;
@@ -454,7 +454,7 @@ typedef struct _SysWork
     s32             field_234D;
     s8              unk_2351;
     s8              flags_2352;
-    s8              unk_2353[5];
+    s8              unk_2353[2];
     u8              field_2358;
     s8              unk_2359[33];
     s16             cameraAngleY_237A;
@@ -471,7 +471,7 @@ typedef struct _SysWork
     s32             field_275C;
     u8              unk_2760[8];
 } s_SysWork;
-STATIC_ASSERT_SIZEOF(s_SysWork, 0x2768);
+STATIC_ASSERT_SIZEOF(s_SysWork, 10088);
 
 extern void* g_OvlBodyprog;
 extern void* g_OvlDynamic;
