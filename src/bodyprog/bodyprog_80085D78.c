@@ -1370,7 +1370,7 @@ void Dms_CharacterGetPosRot(VECTOR3* pos, SVECTOR* rot, char* charName, s32 time
     }
     else
     {
-        func_8008CB90(pos, rot, charIdx, time, header);
+        Dms_CharacterGetPosRotByIndex(pos, rot, charIdx, time, header);
     }
 }
 
@@ -1389,7 +1389,28 @@ s32 Dms_CharacterFindIndexByName(char* name, s_DmsHeader* header) // 0x8008CB10
     return NO_VALUE;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008CB90);
+void Dms_CharacterGetPosRotByIndex(VECTOR3* pos, SVECTOR3* rot, s32 charaIndex, s32 time, s_DmsHeader* header)
+{
+    s_DmsEntry*             charaEntry;
+    s32                     keyframeIdx0; // maybe keyframeStart?
+    s32                     keyframeIdx1; // maybe keyframeEnd?
+    s32                     sp30;         // ??
+    s_DmsKeyframeCharacter* keyframes;
+    s_DmsKeyframeCharacter  curFrame;
+
+    charaEntry = &header->characters_18[charaIndex];
+    func_8008D1D0(&keyframeIdx0, &keyframeIdx1, &sp30, time, charaEntry, header);
+
+    keyframes = charaEntry->keyframes_C.character;
+    func_8008CC98(&curFrame, &keyframes[keyframeIdx0], &keyframes[keyframeIdx1], sp30);
+
+    pos->vx = FP_TO(curFrame.position_0.vx + header->field_C.vx, Q4_SHIFT);
+    pos->vy = FP_TO(curFrame.position_0.vy + header->field_C.vy, Q4_SHIFT);
+    pos->vz = FP_TO(curFrame.position_0.vz + header->field_C.vz, Q4_SHIFT);
+    rot->vx = curFrame.rotation_6.vx;
+    rot->vy = curFrame.rotation_6.vy;
+    rot->vz = curFrame.rotation_6.vz;
+}
 
 void func_8008CC98(s_DmsKeyframeCharacter* result, s_DmsKeyframeCharacter* frame0, s_DmsKeyframeCharacter* frame1, s32 time)
 {
