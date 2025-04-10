@@ -217,9 +217,7 @@ block_32:
     }
 }
 
-// TODO: Something with a jump table, don't know how to get it working. -- Sezz 2025.03.28
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800862F8);
-/*void func_800862F8(s32 arg0, s32 arg1, s32 arg2) // 0x800862F8
+void func_800862F8(s32 arg0, s32 arg1, s32 arg2) // 0x800862F8
 {
     s32 switchVar;
 
@@ -294,7 +292,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800862F8);
         default:
             break;
     }
-}*/
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80086470);
 
@@ -359,9 +357,7 @@ s32 func_8008694C(s32 arg0, s16 arg1, s16 arg2, s32 arg3, s32 idx)
     return (arg0 * shRsin(arg1 + ((arg2 * D_800C4710[idx]) / arg3))) >> 12;
 }
 
-// TODO: Matched, but checksum fails.
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800869E4);
-/*void func_800869E4(u8* arg1, u8* arg2, s16* arg3)
+void func_800869E4(u8* arg1, u8* arg2, u16* arg3) // 0x800869E4
 {
     s32 ret;
 
@@ -370,18 +366,18 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800869E4);
     ret = func_800365B8();
     if (ret == 1)
     {
-            g_SysWork.field_28 = 0;
-            g_SysWork.field_10 = 0;
-            g_SysWork.field_2C = 0;
-            g_SysWork.field_14 = 0;
-            g_SysWork.sysStateStep_C++;
+        g_SysWork.field_28 = 0;
+        g_SysWork.field_10 = 0;
+        g_SysWork.field_2C = 0;
+        g_SysWork.field_14 = 0;
+        g_SysWork.sysStateStep_C++;
     }
-    else if (ret == -1)
+    else if (ret == NO_VALUE)
     {
         SD_EngineCmd(arg3[*arg2]);
         *arg2 += 1;
     }
-}*/
+}
 
 void Camera_SetTranslation(VECTOR3* pos, s32 xPosOffset, s32 yPosOffset, s32 zPosOffset,
                            s32 xzAccel, s32 yAccel, s32 xzSpeedMax, s32 ySpeedMax, s32 warpCamFlag) // 0x80086A94
@@ -682,9 +678,7 @@ void func_80086FE8(s32 arg0, s32 arg1, s32 arg2) // 0x80086FE8
     }
 }
 
-// TODO: Something with a jump table, don't know how to get it working. -- Sezz 2025.03.28
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008716C);
-/*void func_8008716C(s32 arg0, s32 arg1, s32 arg2) // 0x8008716C
+void func_8008716C(s32 arg0, s32 arg1, s32 arg2) // 0x8008716C
 {
     s32 var;
 
@@ -742,11 +736,9 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008716C);
             g_SysWork.field_14 = 0;
             break;
     }
-}*/
+}
 
-// TODO: Something with a jump table, don't know how to get it working. -- Sezz 2025.03.28
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80087360);
-/*void func_80087360(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x80087360
+void func_80087360(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x80087360
 {
     s32 var;
 
@@ -800,11 +792,9 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80087360);
             g_SysWork.field_14 = 0;
             break;
     }
-}*/
+}
 
-// TODO: Something with a jump table, don't know how to get it working. -- Sezz 2025.03.28
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80087540);
-/*void func_80087540(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x80087540
+void func_80087540(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x80087540
 {
     s32 var;
 
@@ -877,13 +867,11 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80087540);
             g_SysWork.field_14 = 0;
             break;
     }
-}*/
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800877B8);
 
-// TODO: Something with a jump table, don't know how to get it working. -- Sezz 2025.03.28
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800879FC);
-/*void func_800879FC(u32 arg0, s32 arg1) // 0x800879FC
+void func_800879FC(u32 arg0, s32 arg1) // 0x800879FC
 {
     s32 var0;
     s32 var1;
@@ -951,7 +939,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800879FC);
         default:
             break;
     }
-}*/
+}
 
 // Requires jump table.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80087AF4);
@@ -1197,7 +1185,37 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008A0E4);
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008A270);
 
 // TODO: Has match on decomp.me, some issues getting it to build.
+/** It uses jump table, even though it matches it applies weirdly. The
+address where the jump table is defined on the *.yaml file, but it
+is commented so uncomment it onces we figure out how to apply this one.
+*/
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008A2E0);
+/*u8 func_8008A2E0(s32 arg0)
+{
+    if (g_SysWork.field_275C > 0x100000)
+    {
+        switch (arg0)
+        {
+            case 5:
+            case 25:
+                return 0x12;
+                
+            case 15:
+                return 15;
+                
+            case 2:
+            case 12:
+            case 22:
+                return 13;
+
+            default:
+                break;
+        }
+    }
+    
+    return D_800AD4C8[arg0].field_F;
+}*/
+
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008A35C);
 
@@ -1435,12 +1453,10 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008D8C0);
 // Large function.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008D990);
 
-// TODO: Matches, but checksum is wrong.
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008E4EC);
-/*void func_8008E4EC() // 0x8008E4EC
+void func_8008E4EC(s32 arg) // 0x8008E4EC
 {
-    func_80056504(&D_8002B2CC, &D_800AFD9C, 1);
-}*/
+    func_80056504(arg, &D_8002B2CC, &D_800AFD9C, 1);
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008E51C);
 

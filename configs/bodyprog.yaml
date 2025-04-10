@@ -58,7 +58,10 @@ segments:
     subalign: 4
     subsegments:
       - [0x0, rodata]
-
+      - [0x5FBC, .rodata, bodyprog_80085D78]  # Jumptables
+      - [0x6044, rodata]
+      # - [0x64A4, .rodata, bodyprog_80085D78] # Jumptable: func_8008A2E0
+      # - [0x6504, rodata]
       - [0x9ad0, c, bodyprog]
       - [0x1b4ec, c, view/vc_util]
       - [0x1bf04, c, bodyprog_80040A64]
