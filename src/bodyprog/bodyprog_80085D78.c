@@ -1425,41 +1425,60 @@ void Dms_CharacterKeyframeInterpolate(s_DmsKeyframeCharacter* result, s_DmsKeyfr
     result->rotation_6.vz = Math_LerpFixed12(frame0->rotation_6.vz, frame1->rotation_6.vz, lerpFactor);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008CDBC);
-
-s32 Dms_CameraGetTargetPos(VECTOR3* posTarget, VECTOR3* lookAtTarget, u16* arg2, s32 time, s_DmsHeader* header)
+// Unused function? returns 96 * cotangent(angle / 2)
+// Possibly camera/FOV related.
+s16 func_8008CDBC(s16 angle)
 {
-    s_DmsEntry* camera;
-    s16         sp18[8];
-    s32         sp28;
-    s32         sp2C;
-    s32         sp30;
-    s32         camProjValue;
+    return (96 * shRcos(angle / 2)) / shRsin(angle / 2);
+}
 
-    camera = &header->camera_1C;
+s32 Dms_CameraGetTargetPos(VECTOR3* posTarget, VECTOR3* lookAtTarget, u16* arg2, s32 time, s_DmsHeader* header) // 0x8008CE1C
+{
+    s_DmsEntry*         cameraEntry;
+    s32                 keyframePrev;
+    s32                 keyframeNext;
+    s32                 lerpFactor;
+    s_DmsKeyframeCamera curFrame;
+    s32                 camProjValue;
 
-    func_8008D1D0(&sp28, &sp2C, &sp30, time, camera, header);
-    camProjValue = func_8008CFEC(&sp18, &camera->keyframes_C.camera[sp28], &camera->keyframes_C.camera[sp2C], sp30);
+    cameraEntry = &header->camera_1C;
 
-    posTarget->vx = FP_TO(sp18[0] + header->origin_C.vx, Q4_SHIFT);
-    posTarget->vy = FP_TO(sp18[1] + header->origin_C.vy, Q4_SHIFT);
-    posTarget->vz = FP_TO(sp18[2] + header->origin_C.vz, Q4_SHIFT);
+    func_8008D1D0(&keyframePrev, &keyframeNext, &lerpFactor, time, cameraEntry, header);
+    camProjValue = Dms_CameraKeyframeInterpolate(&curFrame, &cameraEntry->keyframes_C.camera[keyframePrev], &cameraEntry->keyframes_C.camera[keyframeNext], lerpFactor);
 
-    lookAtTarget->vx = FP_TO(sp18[3] + header->origin_C.vx, Q4_SHIFT);
-    lookAtTarget->vy = FP_TO(sp18[4] + header->origin_C.vy, Q4_SHIFT);
-    lookAtTarget->vz = FP_TO(sp18[5] + header->origin_C.vz, Q4_SHIFT);
+    posTarget->vx = FP_TO(curFrame.posTarget_0.vx + header->origin_C.vx, Q4_SHIFT);
+    posTarget->vy = FP_TO(curFrame.posTarget_0.vy + header->origin_C.vy, Q4_SHIFT);
+    posTarget->vz = FP_TO(curFrame.posTarget_0.vz + header->origin_C.vz, Q4_SHIFT);
+
+    lookAtTarget->vx = FP_TO(curFrame.lookAtTarget_6.vx + header->origin_C.vx, Q4_SHIFT);
+    lookAtTarget->vy = FP_TO(curFrame.lookAtTarget_6.vy + header->origin_C.vy, Q4_SHIFT);
+    lookAtTarget->vz = FP_TO(curFrame.lookAtTarget_6.vz + header->origin_C.vz, Q4_SHIFT);
 
     if (arg2 != NULL)
     {
-        *arg2 = sp18[6];
+        *arg2 = curFrame.field_C[0];
     }
 
-    return camProjValue;
+    return camProjValue; // camProjValue comes from curFrame.field_C[1], return value is passed to vcChangeProjectionValue
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008CF54);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008CFEC);
+s32 Dms_CameraKeyframeInterpolate(s_DmsKeyframeCamera* result, s_DmsKeyframeCamera* frame0, s_DmsKeyframeCamera* frame1, s32 lerpFactor) // 0x8008CFEC
+{
+    result->posTarget_0.vx = frame0->posTarget_0.vx + FP_MULTIPLY(frame1->posTarget_0.vx - frame0->posTarget_0.vx, (s64)lerpFactor, Q12_SHIFT);
+    result->posTarget_0.vy = frame0->posTarget_0.vy + FP_MULTIPLY(frame1->posTarget_0.vy - frame0->posTarget_0.vy, (s64)lerpFactor, Q12_SHIFT);
+    result->posTarget_0.vz = frame0->posTarget_0.vz + FP_MULTIPLY(frame1->posTarget_0.vz - frame0->posTarget_0.vz, (s64)lerpFactor, Q12_SHIFT);
+
+    result->lookAtTarget_6.vx = frame0->lookAtTarget_6.vx + FP_MULTIPLY(frame1->lookAtTarget_6.vx - frame0->lookAtTarget_6.vx, (s64)lerpFactor, Q12_SHIFT);
+    result->lookAtTarget_6.vy = frame0->lookAtTarget_6.vy + FP_MULTIPLY(frame1->lookAtTarget_6.vy - frame0->lookAtTarget_6.vy, (s64)lerpFactor, Q12_SHIFT);
+    result->lookAtTarget_6.vz = frame0->lookAtTarget_6.vz + FP_MULTIPLY(frame1->lookAtTarget_6.vz - frame0->lookAtTarget_6.vz, (s64)lerpFactor, Q12_SHIFT);
+
+    result->field_C[0] = Math_LerpFixed12(frame0->field_C[0], frame1->field_C[0], lerpFactor);
+    result->field_C[1] = frame0->field_C[1] + FP_MULTIPLY(frame1->field_C[1] - frame0->field_C[1], (s64)lerpFactor, Q12_SHIFT);
+
+    return result->field_C[1];
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008D1D0);
 
