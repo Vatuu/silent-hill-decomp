@@ -2,6 +2,7 @@
 
 #include <libgs.h>
 
+#include "bodyprog/math.h"
 #include "bodyprog/bodyprog.h"
 
 void Gfx_StringPosition(s32 x, s32 y)
@@ -153,9 +154,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_800539A4);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_80053B08);
 
-// TODO: Insert field_2352 properly.
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", GameFs_Tim00TIMLoad);
-/*void GameFs_Tim00TIMLoad() // 0x80053dA0
+void GameFs_Tim00TIMLoad() // 0x80053dA0
 {
     if (g_SysWork.flags_2352 & (1 << 0))
     {
@@ -164,7 +163,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", GameFs_Tim00TIMLoad);
     
     Fs_QueueStartReadTim(FILE_ITEM_TIM00_TIM, FS_BUFFER_1, &D_800A906C);
     g_SysWork.flags_2352 |= 1 << 0;
-}*/
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_80053DFC);
 
@@ -178,9 +177,8 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_80054558);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_80054634);
 
-// Need jump table
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_800546A8);
-/*void func_800546A8(s32 arg0)
+#ifdef NON_MATCHING
+void func_800546A8(s32 arg0)
 {
     switch ((u8)arg0)
     {
@@ -206,7 +204,10 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_800546A8);
             func_8003DD80(1, 0x01);
             break;
     }
-}*/
+}
+#else
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_800546A8);
+#endif
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_80054720);
 
@@ -755,16 +756,16 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8007D970);
 // TODO: Can this work without needing inlined func?
 static inline SaveGame_PlayerReset(s_ShSaveGame* save)
 {
-    save->playerHealth_240  = 0x64000; // (100 << 0xC)?
-    save->field_A0          = 0;
-    save->field_AA          = 0;
-    save->field_238         = 0;
-    save->gameplayTimer_250 = 0;
-    save->field_254         = 0;
-    save->field_258         = 0;
-    save->field_23C         = 0;
-    save->field_24A         = 0;
-    save->field_25C &= ~6;
+    save->playerHealth_240       = FP_TO(100, 12);
+    save->field_A0               = 0;
+    save->equipedWeapon_AA       = 0;
+    save->field_238              = 0;
+    save->gameplayTimer_250      = 0;
+    save->RunningDistance_254    = 0;
+    save->WalkingDistance_258    = 0;
+    save->pickedUpItemsCount_23C = 0;
+    save->field_24A              = 0;
+    save->field_25C             &= ~6;
 }
 
 void Game_SaveGameResetPlayer() // 0x8007E530

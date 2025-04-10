@@ -201,8 +201,8 @@ void movie_main(char* file_name, s32 f_size, s32 sector)
         // but still had register differences
 
         disp.disp.y   = 256 - (m->dec.rectid * SCRN_HEIGHT);
-        disp.screen.x = temp_s2->field_1C;
-        disp.screen.y = 8 + ((224 - m->height) / 2) + (temp_s2->field_1D);
+        disp.screen.x = temp_s2->screenPosX_1C;
+        disp.screen.y = 8 + ((224 - m->height) / 2) + (temp_s2->screenPosX_1C);
 
         disp.disp.y = (disp.disp.y < 16) ? 16 : (disp.disp.y > 256) ? 256 : disp.disp.y;
         disp.screen.h = (disp.screen.h <= 0) ? 1 : (disp.screen.h > 208) ? 208 : disp.screen.h;
