@@ -1389,40 +1389,40 @@ s32 Dms_CharacterFindIndexByName(char* name, s_DmsHeader* header) // 0x8008CB10
     return NO_VALUE;
 }
 
-void Dms_CharacterGetPosRotByIndex(VECTOR3* pos, SVECTOR3* rot, s32 charaIndex, s32 time, s_DmsHeader* header)
+void Dms_CharacterGetPosRotByIndex(VECTOR3* pos, SVECTOR3* rot, s32 charaIndex, s32 time, s_DmsHeader* header) // 0x8008CB90
 {
     s_DmsEntry*             charaEntry;
-    s32                     keyframeIdx0; // maybe keyframeStart?
-    s32                     keyframeIdx1; // maybe keyframeEnd?
-    s32                     sp30;         // ??
+    s32                     keyframePrev;
+    s32                     keyframeNext;
+    s32                     lerpFactor;
     s_DmsKeyframeCharacter* keyframes;
     s_DmsKeyframeCharacter  curFrame;
 
     charaEntry = &header->characters_18[charaIndex];
-    func_8008D1D0(&keyframeIdx0, &keyframeIdx1, &sp30, time, charaEntry, header);
+    func_8008D1D0(&keyframePrev, &keyframeNext, &lerpFactor, time, charaEntry, header);
 
     keyframes = charaEntry->keyframes_C.character;
-    func_8008CC98(&curFrame, &keyframes[keyframeIdx0], &keyframes[keyframeIdx1], sp30);
+    Dms_CharacterKeyframeInterpolate(&curFrame, &keyframes[keyframePrev], &keyframes[keyframeNext], lerpFactor);
 
-    pos->vx = FP_TO(curFrame.position_0.vx + header->field_C.vx, Q4_SHIFT);
-    pos->vy = FP_TO(curFrame.position_0.vy + header->field_C.vy, Q4_SHIFT);
-    pos->vz = FP_TO(curFrame.position_0.vz + header->field_C.vz, Q4_SHIFT);
+    pos->vx = FP_TO(curFrame.position_0.vx + header->origin_C.vx, Q4_SHIFT);
+    pos->vy = FP_TO(curFrame.position_0.vy + header->origin_C.vy, Q4_SHIFT);
+    pos->vz = FP_TO(curFrame.position_0.vz + header->origin_C.vz, Q4_SHIFT);
     rot->vx = curFrame.rotation_6.vx;
     rot->vy = curFrame.rotation_6.vy;
     rot->vz = curFrame.rotation_6.vz;
 }
 
-void func_8008CC98(s_DmsKeyframeCharacter* result, s_DmsKeyframeCharacter* frame0, s_DmsKeyframeCharacter* frame1, s32 time)
+void Dms_CharacterKeyframeInterpolate(s_DmsKeyframeCharacter* result, s_DmsKeyframeCharacter* frame0, s_DmsKeyframeCharacter* frame1, s32 lerpFactor) // 0x8008CC98
 {
     // Low-precision lerp between positions?
-    result->position_0.vx = frame0->position_0.vx + FP_MULTIPLY(frame1->position_0.vx - frame0->position_0.vx, (s64)time, Q12_SHIFT);
-    result->position_0.vy = frame0->position_0.vy + FP_MULTIPLY(frame1->position_0.vy - frame0->position_0.vy, (s64)time, Q12_SHIFT);
-    result->position_0.vz = frame0->position_0.vz + FP_MULTIPLY(frame1->position_0.vz - frame0->position_0.vz, (s64)time, Q12_SHIFT);
+    result->position_0.vx = frame0->position_0.vx + FP_MULTIPLY(frame1->position_0.vx - frame0->position_0.vx, (s64)lerpFactor, Q12_SHIFT);
+    result->position_0.vy = frame0->position_0.vy + FP_MULTIPLY(frame1->position_0.vy - frame0->position_0.vy, (s64)lerpFactor, Q12_SHIFT);
+    result->position_0.vz = frame0->position_0.vz + FP_MULTIPLY(frame1->position_0.vz - frame0->position_0.vz, (s64)lerpFactor, Q12_SHIFT);
 
     // Higher-precision lerp between rotations?
-    result->rotation_6.vx = Math_LerpFixed12(frame0->rotation_6.vx, frame1->rotation_6.vx, time);
-    result->rotation_6.vy = Math_LerpFixed12(frame0->rotation_6.vy, frame1->rotation_6.vy, time);
-    result->rotation_6.vz = Math_LerpFixed12(frame0->rotation_6.vz, frame1->rotation_6.vz, time);
+    result->rotation_6.vx = Math_LerpFixed12(frame0->rotation_6.vx, frame1->rotation_6.vx, lerpFactor);
+    result->rotation_6.vy = Math_LerpFixed12(frame0->rotation_6.vy, frame1->rotation_6.vy, lerpFactor);
+    result->rotation_6.vz = Math_LerpFixed12(frame0->rotation_6.vz, frame1->rotation_6.vz, lerpFactor);
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008CDBC);
@@ -1441,13 +1441,13 @@ s32 Dms_CameraGetTargetPos(VECTOR3* posTarget, VECTOR3* lookAtTarget, u16* arg2,
     func_8008D1D0(&sp28, &sp2C, &sp30, time, camera, header);
     camProjValue = func_8008CFEC(&sp18, &camera->keyframes_C.camera[sp28], &camera->keyframes_C.camera[sp2C], sp30);
 
-    posTarget->vx = FP_TO(sp18[0] + header->field_C.vx, Q4_SHIFT);
-    posTarget->vy = FP_TO(sp18[1] + header->field_C.vy, Q4_SHIFT);
-    posTarget->vz = FP_TO(sp18[2] + header->field_C.vz, Q4_SHIFT);
+    posTarget->vx = FP_TO(sp18[0] + header->origin_C.vx, Q4_SHIFT);
+    posTarget->vy = FP_TO(sp18[1] + header->origin_C.vy, Q4_SHIFT);
+    posTarget->vz = FP_TO(sp18[2] + header->origin_C.vz, Q4_SHIFT);
 
-    lookAtTarget->vx = FP_TO(sp18[3] + header->field_C.vx, Q4_SHIFT);
-    lookAtTarget->vy = FP_TO(sp18[4] + header->field_C.vy, Q4_SHIFT);
-    lookAtTarget->vz = FP_TO(sp18[5] + header->field_C.vz, Q4_SHIFT);
+    lookAtTarget->vx = FP_TO(sp18[3] + header->origin_C.vx, Q4_SHIFT);
+    lookAtTarget->vy = FP_TO(sp18[4] + header->origin_C.vy, Q4_SHIFT);
+    lookAtTarget->vz = FP_TO(sp18[5] + header->origin_C.vz, Q4_SHIFT);
 
     if (arg2 != NULL)
     {
