@@ -1084,6 +1084,8 @@ void func_80066E40();
 
 void func_80066E7C();
 
+s32 func_8006A3B4(s32 arg0, s32 arg1, s32 arg2);
+
 /** Draws some string in display space. */
 void func_80032CE8();
 
