@@ -366,11 +366,11 @@ void func_800869E4(u8* arg1, u8* arg2, u16* arg3) // 0x800869E4
     ret = func_800365B8();
     if (ret == 1)
     {
-		g_SysWork.field_28 = 0;
-		g_SysWork.field_10 = 0;
-		g_SysWork.field_2C = 0;
-		g_SysWork.field_14 = 0;
-		g_SysWork.sysStateStep_C++;
+        g_SysWork.field_28 = 0;
+        g_SysWork.field_10 = 0;
+        g_SysWork.field_2C = 0;
+        g_SysWork.field_14 = 0;
+        g_SysWork.sysStateStep_C++;
     }
     else if (ret == NO_VALUE)
     {
