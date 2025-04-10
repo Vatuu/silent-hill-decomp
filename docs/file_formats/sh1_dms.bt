@@ -1,0 +1,93 @@
+//------------------------------------------------
+//--- 010 Editor v14.0.1 Binary Template
+//
+//      File: sh1_dms.bt
+//   Authors: emoose
+//   Version: 1.0
+//   Purpose: Parser for SH1 DMS cutscene files
+//------------------------------------------------
+
+DisplayFormatHex();
+
+struct VECTOR3
+{
+    int vx<format=decimal>;
+    int vy<format=decimal>;
+    int vz<format=decimal>;
+};
+
+struct SVECTOR3
+{
+    short vx<format=decimal>;
+    short vy<format=decimal>;
+    short vz<format=decimal>;
+};
+
+struct DMSInterval
+{
+    short start<format=decimal>;
+    short duration<format=decimal>;
+};
+
+struct CameraFrame
+{
+    short field_0[8]; // Used to calculate cam_tgt_pos & watch_tgt_pos.
+};
+
+struct CharacterFrame
+{
+    SVECTOR3 position_0;
+    SVECTOR3 rotation_6;
+};
+
+struct DMSEntry(int isCharacter)
+{    
+    int16 keyframeCount_0; // TODO: Are these actually keyframes?
+    byte svectorCount_2;
+    byte field_3; // Usually 0, but sometimes filled in, possibly junk data left in padding byte.
+    char name[4];
+    int svectorOffset_8;
+    int keyframeOffset_C;
+    
+    local long end = FTell();
+    
+    // SVECTOR values look similar to DMSIntervals, but instead of a start+length it uses start+end values?
+    // Each value seems to follow the last, eg.
+    // (0, 4, xx) (5, 6, xx) (7, 10, xx) (11, 13, xx) - unsure what the xx value is for
+    FSeek(svectorOffset_8);
+    SVECTOR3 svector[svectorCount_2]<optimize=false>;
+    
+    FSeek(keyframeOffset_C);
+    
+    if (isCharacter == 1)
+        CharacterFrame keyframes[keyframeCount_0]<optimize=false>;
+    else
+        CameraFrame keyframes[keyframeCount_0]<optimize=false>;
+        
+    FSeek(end);
+};
+
+struct DMSHeader
+{
+    byte isLoaded_0;
+    byte characterCount_1;
+    byte intervalCount_2;
+    byte field_3; // Usually 0, but sometimes filled in.
+    uint32 field_4; // Unknown, correlates to file size?
+    uint32 intervalOffset_8;
+    VECTOR3 field_C;
+    uint32 charactersOffset_10;
+};
+
+DMSHeader header;
+
+DMSEntry camera(0);
+
+// DMSInterval holds a start number + a length/duration, each interval seems to follow each other
+// eg. (0, 20), (20, 10), (30, 5) (35, 40)
+// Seems these are related to cutscene timing somehow, but unsure what the purpose of them is yet
+FSeek(header.intervalOffset_8);
+DMSInterval intervals[header.intervalCount_2];
+    
+FSeek(header.charactersOffset_10);
+DMSEntry characters(1)[header.characterCount_1]<optimize=false>;

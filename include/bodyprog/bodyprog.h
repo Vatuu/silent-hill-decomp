@@ -142,6 +142,13 @@ typedef struct
 
 typedef struct
 {
+    s8 unk_0[15];
+    s8 field_F;
+    s8 unk_10[8];
+} s_800AD4C8; // Size: 24
+
+typedef struct
+{
     s8  unk_0[2];
     u8  field_2;
     s8  unk_6[4090];
@@ -694,6 +701,8 @@ extern s32 g_Demo_DemoStep; // 0x800C4894
 
 extern s_FsImageDesc g_MainImg0; // 0x80022C74
 
+extern s_800AD4C8 D_800AD4C8[];
+
 /** Initializer for something before the game loop. */
 void func_8002E630();
 
@@ -937,7 +946,6 @@ void func_80085DC0(s32 arg0, s32 sysStateStep);
 
 void func_80085DF0();
 
-/**  */
 void func_80085E6C(s32 arg0, s32 arg1);
 
 void func_800860B0(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 sysStateStep, s32 arg5);
@@ -956,7 +964,7 @@ void func_800867B4(s32 caseParam, s32 idx);
 
 void func_800868DC(s32 idx);
 
-void func_800869E4(u8* arg1, u8* arg2, s16* arg3);
+void func_800869E4(u8* arg1, u8* arg2, u16* arg3);
 
 void Camera_SetTranslation(VECTOR3* pos, s32 xPosOffset, s32 yPosOffset, s32 zPosOffset,
                            s32 xzAccel, s32 yAccel, s32 xzSpeedMax, s32 ySpeedMax, s32 warpCamFlag);
@@ -1252,5 +1260,7 @@ void Demo_DemoRandSeedAdvance();
 s32 Demo_PresentIntervalUpdate();
 
 s32 Demo_GameRandSeedSet();
+
+u8 func_8008A2E0(s32 arg0);
 
 #endif

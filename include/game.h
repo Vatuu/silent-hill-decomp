@@ -207,8 +207,8 @@ typedef struct _ShInventoryItem
 {
     u8 id;
     u8 count;
-    u8 unk_2;
-    u8 unk_3;
+    u8 commands;
+    u8 unk_3; // Some sort of index?
 } s_ShInventoryItem;
 STATIC_ASSERT_SIZEOF(s_ShInventoryItem, 4);
 
@@ -222,11 +222,11 @@ typedef struct _ShSaveGame
     s16               saveGameCount_A6;
     s8                mapEventIdx_A8;
     u8                mapIdx_A9;
-    s8                field_AA;
+    s8                equipedWeapon_AA;
     u8                field_AB;
     u32               flags_AC;
     s32               field_B0[45];
-    s32               field_164;
+    s32               hasMapsFlags_164;
     s32               eventFlags_168[6];
     s32               field_180[2];
     s32               field_188;
@@ -238,18 +238,18 @@ typedef struct _ShSaveGame
     s32               field_1DC;
     s32               field_1E0[22];
     s32               field_238;
-    s16               field_23C;
+    s16               pickedUpItemsCount_23C;
     s8                field_23E;
     s8                field_23F;
-    s32               playerHealth_240;
-    s32               playerPositionX_244;
-    s16               playerRotationY_248;
+    s32               playerHealth_240;     /** q20.12, default: 100.0 */
+    s32               playerPositionX_244;  /** q20.12 */
+    s16               playerRotationY_248;  /** q4.12 multiply by 180 to get degrees, default: North*/
     s8                field_24A;
     s8                field_24B;
-    s32               playerPositionZ_24C;
-    s32               gameplayTimer_250;
-    s32               field_254;
-    s32               field_258;
+    s32               playerPositionZ_24C;  /** q20.12 */
+    s32               gameplayTimer_250;    /** q20.12 */
+    s32               RunningDistance_254;  /** q20.12 */
+    s32               WalkingDistance_258;  /** q20.12 */
     s32               field_25C;
     s32               field_260; // Packed data. Stores game difficulty and something else.
     s16               field_264;
@@ -290,25 +290,25 @@ STATIC_ASSERT_SIZEOF(s_ShSaveGameContainer, 0x280);
 typedef struct _GameWork
 {
     s_ControllerBindings controllerBinds_0;
-    s8                   field_1C;
-    s8                   field_1D;
-    u8                   optSoundType_1E;           /** Stereo: 0, monaural: 1. */
-    u8                   optVolumeBgm_1F;           /** Range: [0, 128] with steps of 8. */
-    u8                   optVolumeSe_20;            /** Range: [0, 128] with steps of 8. */
-    u8                   optVibrationEnabled_21;    /** Off: 0, on: 0x80. */
+    s8                   screenPosX_1C;             /** Range: [-11, 11], default: 0. */
+    s8                   screenPosY_1D;             /** Range: [-8, 8], default: 0. */
+    u8                   optSoundType_1E;           /** Stereo: 0, Monaural: 1, default: Stereo. */
+    u8                   optVolumeBgm_1F;           /** Range: [0, 128] with steps of 8, default: 16. */
+    u8                   optVolumeSe_20;            /** Range: [0, 128] with steps of 8, default: 16. */
+    u8                   optVibrationEnabled_21;    /** Off: 0, On: 128, default: On. */
     u8                   optBrightness_22;          /** Range: [0, 7], default: 3. */
-    u8                   optWeaponCtrl_23;          /** Switch: 0, press: 1. */
-    u8                   optBloodColor_24;          /** Normal: 0, green: 2, violet: 5, black: 11. */
-    u8                   optAutoLoad_25;            /** Off: 0, on: 1. */
+    u8                   optWeaponCtrl_23;          /** Switch: 0, Press: 1, default: Press. */
+    u8                   optBloodColor_24;          /** Normal: 0, Green: 2, Violet: 5, Black: 13, default: Normal */
+    u8                   optAutoLoad_25;            /** Off: 0, On: 1, default: Off. */
     u8                   unk_26;
     u8                   optExtraOptionsEnabled_27;
-    s8                   optViewCtrl_28;            /** Normal: 0, reverse: 1. */
-    s8                   optViewMode_29;
-    u8                   optRetreatTurn_2A;         /** Normal: 0, reverse: 1. */
-    u8                   optWalkRunCtrl_2B;         /** Normal: 0, reverse: 1. */
-    u8                   optAutoAiming_2C;          /** Off: 1, on: 0. */
-    s8                   optBulletAdjust_2D;
-    s8                   unk_2E[2];
+    s8                   optViewCtrl_28;            /** Normal: 0, Reverse: 1, default: Normal. */
+    s8                   optViewMode_29;            /** Normal: 0, Self View: 1, default: Normal. */
+    u8                   optRetreatTurn_2A;         /** Normal: 0, Reverse: 1, default: Normal. */
+    u8                   optWalkRunCtrl_2B;         /** Normal: 0, Reverse: 1, default: Normal. */
+    u8                   optAutoAiming_2C;          /** On: 0, Off: 1, default: On. */
+    s8                   optBulletAdjust_2D;        /** x1-x6: Range [0, 5], default: x1. */
+    s8                   unk_2E[2];                 /** looks like none-zero values in the "Next Fear" mode */
     s8                   unk_30[8];
     s_ControllerData     controllers_38[2];
     s_ShSaveGame         saveGame_90; // Backup savegame?
@@ -451,8 +451,10 @@ typedef struct _SysWork
     s32             field_22A0;
     s32             flags_22A4;
     s8              unk_22A8[165];
-    s32             field_2350;
-    s8              unk_2354[4];
+    s32             field_234D;
+    s8              unk_2351;
+    s8              flags_2352;
+    s8              unk_2353[5];
     u8              field_2358;
     s8              unk_2359[33];
     s16             cameraAngleY_237A;
@@ -465,7 +467,9 @@ typedef struct _SysWork
     s32             field_2514[10];
     u8              unk_253C[524];
     s16             field_2748[9];
-    u8              unk_275A[14];
+    u8              unk_275A[2];
+    s32             field_275C;
+    u8              unk_2760[8];
 } s_SysWork;
 STATIC_ASSERT_SIZEOF(s_SysWork, 0x2768);
 
