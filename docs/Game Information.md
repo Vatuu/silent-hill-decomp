@@ -19,32 +19,32 @@ Game makes use of custom file formats for models/cutscenes/levels, more informat
 
 ## Known Releases
 
-Several pre-release demos and versions were released during development, a table of known versions is listed below, along with the tools that support each build.
+Several pre-release demos and versions were released during development, a table of known releases is listed below, the [silentassets](/tools/silentassets/extract.py) tool supports extracting from each version listed here.
 
 > [!NOTE]  
 > This repo only targets the **Silent Hill (U) v1.1** release, though other releases could give insights into parts of the code, or include code/data which may be useful for the decompilation.
 
-| Date (YY-MM-DD) | Title | Game/disc code | [silentassets](https://github.com/Vatuu/silent-hill-decomp/blob/master/tools/silentassets/extract.py) support | [SHExtract](https://github.com/mbystryantsev/consolgames-tools/tree/master/game-specific/Silent%20Hill/FilesExtractor) support | Notes |
-|-|-|-|-|-|-|
-|  | **Partial Demos** |  |  |  |  |
-| 98-10-19 | Official Playstation Magazine Demo 16 (U) | SCUS-94278 | :x: | :heavy_check_mark: | WKS.XE / XAS.XE containers. |
-| 98-11-06 | Silent Hill Trial Version (J) | SLPM-80363 | :x: | :heavy_check_mark: | AKA Silent Hill Taikenban. |
-| 98-12-09 | Silent Hill Demo (G) | SLED-01774 | - | - | Demo video, only `MOVIESYS`/`movie_main` code. |
-| 98-12-16 | Silent Hill Demo (E) | SLED-01735 | :x: | :heavy_check_mark: | - |
-| 99-01-16 | Silent Hill Demo CD (U) | SLUS-90050 | :x: | :heavy_check_mark: | - |
-| 99-06-08 | Playstation Zone CD Vol. 10 (G) | SLED-02190 | :x: | :heavy_check_mark: | WKS./XAS. containers, later reissued as `SCED-02420` & `SCED-04082` |
-| 99-06-16 | Silent Hill Demo (E) | SLED-02186 | :x: | :heavy_check_mark: | - |
-|  | **Prototypes** |  |  |  |  |
-| 98-11-24 | Silent Hill Preview (U) | SLUS-45678 | :heavy_check_mark: | :x: | WKS. container, includes `FILEINFO.H`, burn date 98-10-24? |
-| 99-01-07 | Silent Hill Review (U) | SLUS-00707 | :x: | :x: | WKS. container. |
-| 99-01-17 | Silent Hill Trade Demo (U) | SLUS-80707 | :x: | :x: | - |
-| 99-01-22 | Silent Hill Beta (U) | SLUS-00707 | :x: | :x: | "Russian Bootleg", possibly scene pre-release. |
-|  | **Final Versions** |  |  |  |  |
-| 99-01-26 | Silent Hill (J) | SLPM-86192 | :x: | :x: | Rev 0 |
-| 99-02-10 | Silent Hill (U) | SLUS-00707 | :heavy_check_mark: | :heavy_check_mark: | v1.1 |
-| 99-06-02 | Silent Hill (J) | SLPM-86192 | :x: | :x: | Rev 1, fixed Larval Stalker / Aglaophotis glitch. |
-| 99-06-07 | Silent Hill (E) | SLES-01514 | :heavy_check_mark: | :heavy_check_mark: | - |
-| 99-06-16 | Silent Hill (J) | SLPM-86192 | :heavy_check_mark: | :heavy_check_mark: | Rev 2, `Konami the Best` release. |
+| Date (YY-MM-DD) | Title | Game/disc code | Notes |
+|-|-|-|-|
+|  | **Partial Demos** |  |  |
+| 98-10-19 | Official Playstation Magazine Demo 16 (U) | SCUS-94278 | WKS.XE / XAS.XE containers. |
+| 98-11-06 | Silent Hill Trial Version (J) | SLPM-80363 | AKA Silent Hill Taikenban. |
+| 98-12-09 | Silent Hill Demo (G) | SLED-01774 | Demo video, only `MOVIESYS`/`movie_main` code. |
+| 98-12-16 | Silent Hill Demo (E) | SLED-01735 | - |
+| 99-01-16 | Silent Hill Demo CD (U) | SLUS-90050 | - |
+| 99-06-08 | Playstation Zone CD Vol. 10 (G) | SLED-02190 | WKS./XAS. containers, later reissued as `SCED-02420` & `SCED-04082` |
+| 99-06-16 | Silent Hill Demo (E) | SLED-02186 | - |
+|  | **Prototypes** |  |  |
+| 98-11-24 | Silent Hill Preview (U) | SLUS-45678 | WKS. container, includes `FILEINFO.H`, burn date 98-10-24? |
+| 99-01-07 | Silent Hill Review (U) | SLUS-00707 | WKS. container. |
+| 99-01-17 | Silent Hill Trade Demo (U) | SLUS-80707 | - |
+| 99-01-22 | Silent Hill Beta (U) | SLUS-00707 | "Russian Bootleg", possibly scene pre-release. |
+|  | **Final Versions** |  |  |
+| 99-01-26 | Silent Hill (J) | SLPM-86192 | Rev 0 |
+| 99-02-10 | Silent Hill (U) | SLUS-00707 | v1.1 |
+| 99-06-02 | Silent Hill (J) | SLPM-86192 | Rev 1, fixed Larval Stalker / Aglaophotis glitch. |
+| 99-06-07 | Silent Hill (E) | SLES-01514 | - |
+| 99-06-16 | Silent Hill (J) | SLPM-86192 | Rev 2, `Konami the Best` release. |
 
 ### Unknown Releases
 
