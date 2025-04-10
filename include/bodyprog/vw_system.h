@@ -104,18 +104,18 @@ STATIC_ASSERT_SIZEOF(VC_LIMIT_AREA, 8);
 
 typedef struct _VC_CAMERA_INTINFO
 {
-    int    mode;
-    u_char mv_smooth;
-    char   unk_5;
-    short  ev_cam_rate;
+    s32 mode;
+    u8  mv_smooth;
+    s8  unk_5;
+    s16 ev_cam_rate;
 } VC_CAMERA_INTINFO;
 STATIC_ASSERT_SIZEOF(VC_CAMERA_INTINFO, 8);
 
 /** @brief Camera look-at rotation parameters. */
 typedef struct _VC_WATCH_MV_PARAM
 {
-    int ang_accel_x;   /** Angular acceleration on the X axis. */
-    int ang_accel_y;   /** Angular acceleration on the Y axis. */
+    s32 ang_accel_x;   /** Angular acceleration on the X axis. */
+    s32 ang_accel_y;   /** Angular acceleration on the Y axis. */
     s16 max_ang_spd_x; /** Max angular speed on the X axis. */
     s16 max_ang_spd_y; /** Max angular speed on the Y axis. */
 } VC_WATCH_MV_PARAM;
@@ -124,10 +124,10 @@ STATIC_ASSERT_SIZEOF(VC_WATCH_MV_PARAM, 12);
 /** @brief Camera translation paremeters. */
 typedef struct _VC_CAM_MV_PARAM
 {
-    int accel_xz;   /** Speed acceleration on the XZ plane. */
-    int accel_y;    /** Speed acceleration on the Y axis. */
-    int max_spd_xz; /** Max speed on the XZ plane. */
-    int max_spd_y;  /** Max speed on the Y axis. */
+    s32 accel_xz;   /** Speed acceleration on the XZ plane. */
+    s32 accel_y;    /** Speed acceleration on the Y axis. */
+    s32 max_spd_xz; /** Max speed on the XZ plane. */
+    s32 max_spd_y;  /** Max speed on the Y axis. */
 } VC_CAM_MV_PARAM;
 STATIC_ASSERT_SIZEOF(VC_CAM_MV_PARAM, 16);
 
@@ -156,10 +156,9 @@ typedef struct _VC_THROUGH_DOOR_CAM_PARAM
     u16     rail_ang_y_8;              /** The rail's Y angle. */
     s8      unk_A[2];
     VECTOR3 rail_sta_pos_C;            /** The rail's start position. */
-    int     rail_sta_to_chara_dist_18; /** The distance between the rail's rail start position to a character position. */
+    int     rail_sta_to_chara_dist_18; /** The distance from the rail's start position to a locked-on character's position. */
 } VC_THROUGH_DOOR_CAM_PARAM;
 STATIC_ASSERT_SIZEOF(VC_THROUGH_DOOR_CAM_PARAM, 28);
-
 
 // TODO: Check if this struct is correct, some SH code seems to act like struct
 // is only 16 bytes when iterating through it?
