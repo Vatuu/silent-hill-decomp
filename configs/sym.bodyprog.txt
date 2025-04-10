@@ -232,6 +232,7 @@ DmsEntry_FixOffsets = 0x8008CA44; // type:func
 
 Dms_CharacterGetPosRot = 0x8008CA74; // type:func
 Dms_CharacterFindIndexByName = 0x8008CB10; // type:func
+Dms_CharacterGetPosRotByIndex = 0x8008CB90; // type:func
 
 Dms_CameraGetTargetPos = 0x8008CE1C; // type:func
 
