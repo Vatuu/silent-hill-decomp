@@ -1,10 +1,11 @@
 #include "game.h"
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/math.h"
 #include "main/rng.h"
 #include "screens/credits/credits.h"
 
-void func_801E2E28(s32 idx)
+void func_801E2E28(s32 idx) // 0x801E2E28
 {
     s32 temp_lo;
     s32 temp_v1;
@@ -24,7 +25,7 @@ void func_801E2E28(s32 idx)
 
 // TODO: Matched, but checksum fails. --Sezz
 INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E2ED8);
-/*s32 func_801E2ED8()
+/*s32 func_801E2ED8() // 0x801E2ED8
 {
     switch (D_801E5E88)
     {
@@ -61,7 +62,7 @@ INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E2FC0);
 
 INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E3094);
 
-s32 func_801E3124()
+s32 func_801E3124() // 0x801E3124
 {
     switch (g_GameWork.gameStateStep_598[1])
     {
@@ -130,7 +131,7 @@ s32 func_801E3124()
     return 0;
 }
 
-s32 func_801E3304()
+s32 func_801E3304() // 0x801E3304
 {
     if (g_GameWork.gameStatePrev_590 == GameState_InGame)
     {
@@ -258,16 +259,38 @@ bool func_801E3684() // 0x801E3684
 INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E3684);
 #endif
 
-INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E386C);
+void func_801E386C() // 0x801E386C
+{
+    s_UnkCredits1* ptr;
+    s32 var0;
+    s64 var1;
+    s32 var2 = 5;
+    
+    func_8009185C(0, 0, SCREEN_HEIGHT, 0x1000, 0, 0x22000, 0xF0000, 0xB33, 899, -0xF9C);
+    ptr = D_801E5558;
+    ptr = &ptr[5];
+    var0 = (u16)ptr->field_4;
+
+    var1 = (s16)var0;
+    var1 = FP_TO(var1, Q12_SHIFT);
+    var1 = FP_FROM(var1, Q12_SHIFT);
+
+    D_801E5E8C = var2;
+    D_801E5E7C = var1 - 264;
+    D_800C48F0 = (s32)ptr->field_2;
+    D_801E5E7C = D_801E5E7C / D_801E5C20;
+    D_801E5E84 = (D_801E5E7C * D_801E5C20) + SCREEN_HEIGHT;
+    D_801E5E80 = 0x10000 / D_801E5E7C;
+}
 
 INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E3970);
 
-void func_801E3DD0(void)
+void func_801E3DD0() // 0x801E3DD0 
 {
     D_801E600C = Rng_Rand16();
 }
 
-s32 func_801E3DF8(s32 arg0)
+s32 func_801E3DF8(s32 arg0) // 0x801E3DF8
 {
     return ((u32)((arg0 & 0xFF) * 0x31) >> 6) | 0x38;
 }
@@ -281,17 +304,17 @@ void func_801E42F8(s16 arg0, s16 arg1)
     D_800AFE08.field_4 = arg0;
 }
 
-void func_801E4310(s32 r, s32 g, s32 b)
+void func_801E4310(s32 r, s32 g, s32 b) // 0x801E4310
 {
     D_800AFE10 = (r & 0xFF) | ((g & 0xFF) << 8) | ((b & 0xFF) << 16) | (0x64 << 24);
 }
 
-void func_801E4340(s8 arg0)
+void func_801E4340(s8 arg0) // 0x801E4340
 {
     D_800AFE0E = arg0;
 }
 
-void func_801E434C(u32 arg0, u32 arg1)
+void func_801E434C(u32 arg0, u32 arg1) // 0x801E434C
 {
     u32 shiftedArg1;
     u32 shiftedField_18;
@@ -327,12 +350,12 @@ INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E4B98);
     D_800AFE2C = (r & 0xFF) | ((g & 0xFF) << 8) | ((b & 0xFF) << 16) | (0x2C << 24);
 }*/
 
-void func_801E4BC8(s8 arg0)
+void func_801E4BC8(s8 arg0) // 0x801E4BC8
 {
     D_800AFE2A = arg0;
 }
 
-void func_801E4BD4(u32 arg0, u32 arg1)
+void func_801E4BD4(u32 arg0, u32 arg1) // 0x801E4BD4
 {
     u32 shiftedArg1;
     u32 shiftedField_18;
