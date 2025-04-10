@@ -164,7 +164,7 @@ void Gfx_BrightnessLevelTextDraw() // 0x801E6238
     #define POS_X 80
     #define POS_Y 190
 
-	char* D_801E2C64 = "LEVEL_________";
+    char* D_801E2C64 = "LEVEL_________";
 
     func_8004A8DC(7);
     Gfx_StringPosition(POS_X, POS_Y);
