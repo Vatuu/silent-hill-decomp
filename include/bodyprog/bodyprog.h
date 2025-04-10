@@ -521,6 +521,8 @@ extern u16 D_800BCE14;
 
 extern s8 D_800BCE1C;
 
+extern s32 D_800BE464;
+
 extern u8 D_800C16A8;
 
 extern u8 D_800C37D0;
@@ -1175,6 +1177,8 @@ void GameFs_BgItemLoad();
 void func_8003BED0();
 
 void func_8003C3A0();
+
+void func_8003D938();
 
 /** Loads a flame graphic. */
 void GameFs_FlameGfxLoad();
