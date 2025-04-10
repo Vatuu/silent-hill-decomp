@@ -74,7 +74,7 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D1C38);
 void func_800D209C()
 {
     g_SysWork.field_47 = NO_VALUE;
-    g_SaveGamePtr->equipedWeapon_AA = 0;
+    g_SaveGamePtr->equippedWeapon_AA = 0;
 
     func_800D20E4();
     func_800D2C7C(84);

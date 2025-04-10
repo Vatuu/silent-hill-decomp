@@ -145,7 +145,8 @@ typedef struct
     s8 unk_0[15];
     s8 field_F;
     s8 unk_10[8];
-} s_800AD4C8; // Size: 24
+} s_800AD4C8;
+STATIC_ASSERT_SIZEOF(s_800AD4C8, 24);
 
 typedef struct
 {
@@ -964,7 +965,7 @@ void func_800867B4(s32 caseParam, s32 idx);
 
 void func_800868DC(s32 idx);
 
-void func_800869E4(u8* arg1, u8* arg2, u16* arg3);
+void func_800869E4(u8* arg0, u8* arg1, u16* arg2);
 
 void Camera_SetTranslation(VECTOR3* pos, s32 xPosOffset, s32 yPosOffset, s32 zPosOffset,
                            s32 xzAccel, s32 yAccel, s32 xzSpeedMax, s32 ySpeedMax, s32 warpCamFlag);

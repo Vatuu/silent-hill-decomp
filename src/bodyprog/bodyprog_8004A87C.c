@@ -2,8 +2,8 @@
 
 #include <libgs.h>
 
-#include "bodyprog/math.h"
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/math.h"
 
 void Gfx_StringPosition(s32 x, s32 y) // 0x0x8004A87C
 {
@@ -830,16 +830,16 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8007D970);
 // TODO: Can this work without needing inlined func?
 static inline SaveGame_PlayerReset(s_ShSaveGame* save)
 {
-    save->playerHealth_240       = FP_TO(100, 12);
-    save->field_A0               = 0;
-    save->equipedWeapon_AA       = 0;
-    save->field_238              = 0;
-    save->gameplayTimer_250      = 0;
-    save->RunningDistance_254    = 0;
-    save->WalkingDistance_258    = 0;
-    save->pickedUpItemsCount_23C = 0;
-    save->field_24A              = 0;
-    save->field_25C             &= ~6;
+    save->playerHealth_240 = FP_TO(100, 12);
+    save->field_A0 = 0;
+    save->equippedWeapon_AA = 0;
+    save->field_238 = 0;
+    save->gameplayTimer_250 = 0;
+    save->runDistance_254 = 0;
+    save->walkDistance_258 = 0;
+    save->pickedUpItemCount_23C = 0;
+    save->field_24A = 0;
+    save->field_25C &= ~6;
 }
 
 void Game_SaveGameResetPlayer() // 0x8007E530

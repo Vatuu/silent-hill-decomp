@@ -183,7 +183,7 @@ void Gfx_BrightnessLevelArrowsDraw() // 0x801E628C
     s_801E2C74 var0 =
     { 
         {
-            8, 84, 
+            8, 84,
             16, 76,
             16, 92,
 
@@ -192,15 +192,15 @@ void Gfx_BrightnessLevelArrowsDraw() // 0x801E628C
             56, 92,
         } 
     };
-    
+
     // D_801E2C8C
     s_801E2C74 var1 =
     { 
         {
-             7, 84,
+            7, 84,
             17, 74,
             17, 94,
-    
+
             65, 84,
             55, 74,
             55, 94,

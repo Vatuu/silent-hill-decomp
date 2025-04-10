@@ -384,7 +384,7 @@ s32 func_8008694C(s32 arg0, s16 arg1, s16 arg2, s32 arg3, s32 idx)
     return (arg0 * shRsin(arg1 + ((arg2 * D_800C4710[idx]) / arg3))) >> 12;
 }
 
-void func_800869E4(u8* arg1, u8* arg2, u16* arg3) // 0x800869E4
+void func_800869E4(u8* arg0, u8* arg1, u16* arg2) // 0x800869E4
 {
     s32 ret;
 
@@ -401,8 +401,8 @@ void func_800869E4(u8* arg1, u8* arg2, u16* arg3) // 0x800869E4
     }
     else if (ret == NO_VALUE)
     {
-        SD_EngineCmd(arg3[*arg2]);
-        *arg2 += 1;
+        SD_EngineCmd(arg2[*arg1]);
+        *arg1 += 1;
     }
 }
 
@@ -1255,10 +1255,10 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008A2E0);
             case 5:
             case 25:
                 return 0x12;
-                
+
             case 15:
                 return 15;
-                
+
             case 2:
             case 12:
             case 22:
@@ -1268,10 +1268,9 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008A2E0);
                 break;
         }
     }
-    
+
     return D_800AD4C8[arg0].field_F;
 }*/
-
 
 s32 func_8008A35C(s_8008A35C* arg0, s32 arg1) // 0x8008A35C
 {

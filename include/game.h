@@ -166,10 +166,10 @@ typedef struct _ControllerData
     s8              unk_8[1];
     u8              field_9;
     s8              unk_A[2];
-    s32             btns_held_C; /** e_PadButton */
-    s32             btns_new_10; /** e_PadButton */
+    s32             btns_held_C; /** `e_PadButton` */
+    s32             btns_new_10; /** `e_PadButton` */
     s8              field_14[4];
-    s32             field_18;    /** e_PadButton */
+    s32             field_18;    /** `e_PadButton` */
     s32             field_1C;
     char            field_20;
     char            field_21;
@@ -222,7 +222,7 @@ typedef struct _ShSaveGame
     s16               saveGameCount_A6;
     s8                mapEventIdx_A8;
     u8                mapIdx_A9;
-    s8                equipedWeapon_AA;
+    s8                equippedWeapon_AA;
     u8                field_AB;
     u32               flags_AC;
     s32               field_B0[45];
@@ -238,18 +238,18 @@ typedef struct _ShSaveGame
     s32               field_1DC;
     s32               field_1E0[22];
     s32               field_238;
-    s16               pickedUpItemsCount_23C;
+    s16               pickedUpItemCount_23C;
     s8                field_23E;
     s8                field_23F;
-    s32               playerHealth_240;     /** q20.12, default: 100.0 */
-    s32               playerPositionX_244;  /** q20.12 */
-    s16               playerRotationY_248;  /** q4.12 multiply by 180 to get degrees, default: North*/
-    s8                field_24A;
-    s8                field_24B;
-    s32               playerPositionZ_24C;  /** q20.12 */
-    s32               gameplayTimer_250;    /** q20.12 */
-    s32               RunningDistance_254;  /** q20.12 */
-    s32               WalkingDistance_258;  /** q20.12 */
+    s32               playerHealth_240;      /** Q20.12, default: 100 */
+    s32               playerPositionX_244;   /** Q20.12 */
+    s16               playerRotationY_248;   /** Q4.12, in format that can be multiplied by 180 to get degrees. Default: North */
+    s8                field_24A; 
+    s8                field_24B; 
+    s32               playerPositionZ_24C;   /** Q20.12 */
+    s32               gameplayTimer_250;     /** Q20.12 */
+    s32               runDistance_254;       /** Q20.12 */
+    s32               walkDistance_258;      /** Q20.12 */
     s32               field_25C;
     s32               field_260; // Packed data. Stores game difficulty and something else.
     s16               field_264;
