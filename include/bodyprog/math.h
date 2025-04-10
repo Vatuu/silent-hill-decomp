@@ -2,18 +2,18 @@
 #define _BODYPROG_MATH_H
 
 #define Q4_SHIFT       4     /** Used for: Q27.4 positions. */
-#define Q8_SHIFT       8     /** Used for: Q8.8 range limits. Q24.8 tile units. */
+#define Q8_SHIFT       8     /** Used for: Q8.8 camera AABBs. Q24.8 tile units. */
 #define Q12_SHIFT      12    /** Used for: Q3.12 alphas. Q19.12 timers, trigonometry. */
 #define SIN_LUT_SIZE   4096  /** Number of entries in the sine lookup table. */
 #define FP_ANGLE_COUNT 65536 /** Number of fixed-point angles in Q1.15 format. */
 
-/** Returns the larger of two values. */
-#define MAX(val0, val1) \
-    (((val0) > (val1)) ? (val0) : (val1))
-
 /** Returns the smaller of two values. */
 #define MIN(val0, val1) \
     (((val0) < (val1)) ? (val0) : (val1))
+
+/** Returns the larger of two values. */
+#define MAX(val0, val1) \
+    (((val0) > (val1)) ? (val0) : (val1))
 
 /** Clamps a value to the range [min, max]. */
 #define CLAMP(val, min, max) \
@@ -47,7 +47,7 @@
 #define FP_ANGLE(deg) \
 	(s16)((deg) * ((FP_ANGLE_COUNT) / 360.0f))
 
-/** Converts floating-point tile units to fixed-point world units in Q12.8 format. */
+/** Converts floating-point tile units to fixed-point world units in Q24.8 format. */
 #define FP_TILE(val) \
     (s32)((val) * (1 << (Q8_SHIFT)))
 

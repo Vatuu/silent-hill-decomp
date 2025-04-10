@@ -169,7 +169,10 @@ PreservedSignSubtract = 0x80080594; //type:func
 Camera_SetTranslation = 0x80086A94; // type:func
 Camera_SetRotation = 0x80086B70; // type:func
 
-Anim_Update = 0x800449F0; // type:func
+Anim_Update0 = 0x800449F0; // type:func
+Anim_Update1 = 0x80044B38; // type:func
+Anim_Update2 = 0x80044CA4; // type:func
+Anim_Update3 = 0x80044DF0; // type:func
 
 Gfx_DebugStringPosition = 0x80031EFC; // type:func
 Gfx_DebugStringDraw = 0x80031F40; // type:func
@@ -224,13 +227,13 @@ GameFs_Tim00TIMLoad = 0x80053da0; // type:func
 Chara_Load = 0x80088C7C; // type:func
 Chara_Spawn = 0x80088D78; // type:func
 
-DMSHeader_FixOffsets = 0x8008C9A0; // type:func
-DMSEntry_FixOffsets = 0x8008CA44; // type:func
+DmsHeader_FixOffsets = 0x8008C9A0; // type:func
+DmsEntry_FixOffsets = 0x8008CA44; // type:func
 
-DMS_CharacterGetPosRot = 0x8008CA74; // type:func
-DMS_CharacterFindIndexByName = 0x8008CB10; // type:func
+Dms_CharacterGetPosRot = 0x8008CA74; // type:func
+Dms_CharacterFindIndexByName = 0x8008CB10; // type:func
 
-DMS_CameraGetTargetPos = 0x8008CE1C; // type:func
+Dms_CameraGetTargetPos = 0x8008CE1C; // type:func
 
 Math_LerpFixed12 = 0x8008D3D4; // type:func
 

@@ -15,8 +15,8 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmidi", Note2Pitch);
 void tre_calc(s_SMF_PORT* midiPort) // 0x800A3B20
 {
     s32 vol;
-    s32 var_v0;
-    s8  var_a0;
+    s32 var0;
+    s8  var1;
 
     if (midiPort->field_36 == 0)
     {
@@ -48,42 +48,42 @@ void tre_calc(s_SMF_PORT* midiPort) // 0x800A3B20
 
         midiPort->field_33 += midiPort->field_3B;
         midiPort->field_31 = 0;
-        if (midiPort->field_33 < 0) // field_33 u8 to s8
+        if (midiPort->field_33 < 0) // `field_33`, `u8` to `s8`.
         {
-            var_a0 = -midiPort->field_33 * 2;
-            if (var_a0 < 0)
+            var1 = -midiPort->field_33 * 2;
+            if (var1 < 0)
             {
-                var_a0 = -var_a0;
+                var1 = -var1;
             }
 
-            var_v0 = midiPort->field_34 * var_a0;
-            if (var_v0 > 0)
+            var0 = midiPort->field_34 * var1;
+            if (var0 > 0)
             {
-                var_v0 = -var_v0;
+                var0 = -var0;
             }
         }
         else
         {
-            var_a0 = midiPort->field_33 * 2;
-            if (var_a0 < 0)
+            var1 = midiPort->field_33 * 2;
+            if (var1 < 0)
             {
-                var_a0 = -var_a0;
+                var1 = -var1;
             }
 
-            var_v0 = midiPort->field_34 * var_a0;
-            if (var_v0 < 0)
+            var0 = midiPort->field_34 * var1;
+            if (var0 < 0)
             {
-                var_v0 = -var_v0;
+                var0 = -var0;
             }
         }
 
-        if (var_v0 != 0)
+        if (var0 != 0)
         {
-            if (var_v0 < 0)
+            if (var0 < 0)
             {
-                var_v0 += 0xFF;
+                var0 += 0xFF;
             }
-            midiPort->field_3E = var_v0 >> 8;
+            midiPort->field_3E = var0 >> 8;
         }
         else
         {
@@ -130,8 +130,8 @@ void tre_calc(s_SMF_PORT* midiPort) // 0x800A3B20
 
 void vib_calc(s_SMF_PORT* midiPort) // 0x800A3D30
 {
-    s32 var_v0;
-    s8  var_a1;
+    s32 var0;
+    s8  var1;
 
     if (midiPort->field_26 != 0)
     {
@@ -163,41 +163,41 @@ void vib_calc(s_SMF_PORT* midiPort) // 0x800A3D30
 
         if (midiPort->field_23 < 0)
         {
-            var_a1 = -midiPort->field_23 * 2;
-            if (var_a1 < 0)
+            var1 = -midiPort->field_23 * 2;
+            if (var1 < 0)
             {
-                var_a1 = -var_a1;
+                var1 = -var1;
             }
 
-            var_v0 = midiPort->field_24 * var_a1;
-            if (var_v0 > 0)
+            var0 = midiPort->field_24 * var1;
+            if (var0 > 0)
             {
-                var_v0 = -var_v0;
+                var0 = -var0;
             }
         }
         else
         {
-            var_a1 = midiPort->field_23 * 2;
-            if (var_a1 < 0)
+            var1 = midiPort->field_23 * 2;
+            if (var1 < 0)
             {
-                var_a1 = -var_a1;
+                var1 = -var1;
             }
 
-            var_v0 = midiPort->field_24 * var_a1;
-            if (var_v0 < 0)
+            var0 = midiPort->field_24 * var1;
+            if (var0 < 0)
             {
-                var_v0 = -var_v0;
+                var0 = -var0;
             }
         }
 
-        if (var_v0 != 0)
+        if (var0 != 0)
         {
-            if (var_v0 < 0)
+            if (var0 < 0)
             {
-                var_v0 += 0x3FF;
+                var0 += 0x3FF;
             }
 
-            midiPort->field_2E = var_v0 >> 0xA;
+            midiPort->field_2E = var0 >> 10;
             return;
         }
 
@@ -209,7 +209,7 @@ void random_calc(s_SMF_PORT* midiPort) // 0x800A3E70
 {
     extern u8 random_tbl[];
 
-    s32 var_v0;
+    s32 var0;
     s8  randValue;
 
     if (!midiPort->field_43)
@@ -231,13 +231,13 @@ void random_calc(s_SMF_PORT* midiPort) // 0x800A3E70
 
     if (randValue)
     {
-        var_v0 = randValue * midiPort->field_45;
-        if (var_v0 < 0)
+        var0 = randValue * midiPort->field_45;
+        if (var0 < 0)
         {
-            var_v0 += 3;
+            var0 += 3;
         }
 
-        midiPort->field_40 = (var_v0 >> 2);
+        midiPort->field_40 = (var0 >> 2);
     }
     else
     {
@@ -331,11 +331,11 @@ void pitch_calc(s_SMF_PORT* midiPort, s32 forceSpuUpdate) // 0x800A4494
 
         temp_s0 = midiPort->field_40 + (midiPort->field_2E + ((u16)midi->field_1C + (u16)midi->field_2A));
         temp_s0 += (midiPort->field_8 << 7) + pitch_bend_calc(midiPort, midi->pitchBendFine_7, midi);
-        temp_a0 = temp_s0 << 0x10;
+        temp_a0 = temp_s0 << 16;
 
         s_attr.mask  = SPU_VOICE_PITCH;
         s_attr.voice = spu_ch_tbl[midiPort->field_0];
-        s_attr.pitch = Note2Pitch(temp_a0 >> 0x17, temp_s0 & 0x7F, midiPort->field_1E, midiPort->field_1F);
+        s_attr.pitch = Note2Pitch(temp_a0 >> 23, temp_s0 & 0x7F, midiPort->field_1E, midiPort->field_1F);
         SpuSetVoiceAttr(&s_attr);
     }
 
@@ -443,10 +443,10 @@ void midi_vsync() // 0x800A4838
     {
         if (smf_song[device].play_status_50A == 1)
         {
-            for (channel = 0; channel < 0x10; channel++)
+            for (channel = 0; channel < 16; channel++)
             {
-                midi_mod(&smf_midi[channel + (device * 0x10)]);
-                midi_porta(&smf_midi[channel + (device * 0x10)]);
+                midi_mod(&smf_midi[channel + (device * 16)]);
+                midi_porta(&smf_midi[channel + (device * 16)]);
             }
         }
     }
@@ -590,7 +590,7 @@ void key_off(u8 midiNum, u8 keyNum)
             }
             else
             {
-                smf_port[i].field_1A |= 0x80;
+                smf_port[i].field_1A |= 1 << 7;
             }
         }
     }
@@ -621,7 +621,7 @@ VagAtr* get_vab_tone(s_SMF_MIDI* midiTrack, u16 tone, u8 midiChannel) // 0x800A5
         vab = vab_h[midiTrack->bank_idx_5A].vab_header_4;
     }
 
-    return &vab->vag[(midiTrack->vabProgNum_0 * 0x10) + tone];
+    return &vab->vag[(midiTrack->vabProgNum_0 * 16) + tone];
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmidi", smf_data_entry);

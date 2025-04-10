@@ -146,21 +146,21 @@ s32 func_80042C04(s32 idx) // 0x80042C04
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80042C3C);
 
-s32 func_80042DE8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x80042DE8
+s32 func_80042DE8(s32 posX, s32 posZ, s32 fileChunkCoordX, s32 fileChunkCoordZ, s32 clip) // 0x80042DE8
 {
-    s32 res;
+    s32 dist;
 
-    res = func_80042E2C(arg0 >> 4, arg1 >> 4);
-    if (arg4 != 0)
+    dist = func_80042E2C(FP_FROM(posX, Q4_SHIFT), FP_FROM(posZ, Q4_SHIFT), fileChunkCoordX, fileChunkCoordZ);
+    if (clip != 0)
     {
-        res -= 4096;
-        if (res < 0)
+        dist -= FP_TILE(16.0f);
+        if (dist < 0)
         {
-            res = 0;
+            dist = 0;
         }
     }
 
-    return res;
+    return dist;
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80042E2C);
@@ -169,10 +169,10 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80042EBC);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800431E4);
 
-void func_80043338(s_80043338* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) // 0x80043338
+void func_80043338(s_80043338* arg0, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1, s32 clip) // 0x80043338
 {
-    arg0->field_C = func_80042DE8(arg1, arg2, arg0->field_8, arg0->field_A, arg5);
-    arg0->field_10 = func_80042DE8(arg3, arg4, arg0->field_8, arg0->field_A, arg5);
+    arg0->field_C = func_80042DE8(posX0, posZ0, arg0->fileChunkCoordX_8, arg0->fileChunkCoordZ_A, clip);
+    arg0->field_10 = func_80042DE8(posX1, posZ1, arg0->fileChunkCoordX_8, arg0->fileChunkCoordZ_A, clip);
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800433B8);
@@ -183,22 +183,24 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80043578);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800435E4);
 
-s32 func_800436D8(s_80043338* arg0, s32 arg1, s16 arg2, s16 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8) // 0x800436D8
+s32 func_800436D8(s_80043338* arg0, s32 fileIdx, s16 fileChunkCoordX, s16 fileChunkCoordZ, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1, s32 clip) // 0x800436D8
 {
-    s32 res;
-
-    if (arg1 == NO_VALUE)
+    // Return NO_VALUE if no file specified.
+    if (fileIdx == NO_VALUE)
     {
-        return arg1;
+        return fileIdx;
     }
 
-    arg0->field_8 = arg2;
-    arg0->field_A = arg3;
-    arg0->field_4 = Fs_QueueStartRead(arg1, arg0->field_0);
+    // Store file chunk coords and read file.
+    arg0->fileChunkCoordX_8 = fileChunkCoordX;
+    arg0->fileChunkCoordZ_A = fileChunkCoordZ;
+    arg0->queueEntryIdx_4 = Fs_QueueStartRead(fileIdx, arg0->field_0);
 
-    func_80043338(arg0, arg4, arg5, arg6, arg7, arg8);
-    res = arg0->field_4;
-    return res;
+    // Compute and store distance to file chunk edge in arg0.
+    func_80043338(arg0, posX0, posZ0, posX1, posZ1, clip);
+
+    // Return queue entry index.
+    return arg0->queueEntryIdx_4;
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80043740);
@@ -401,7 +403,7 @@ static inline s32 Anim_GetTimeStep(s_Model* model, s_Model* targetModel)
     return 0;
 }
 
-void Anim_Update(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Model* targetModel) // 0x800449F0
+void Anim_Update0(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Model* targetModel) // 0x800449F0
 {
     s32 setAnimIdx;
     s32 timeStep;
@@ -460,7 +462,7 @@ void Anim_Update(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Model
     }
 }
 
-void func_80044B38(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Model* targetModel) // 0x80044B38
+void Anim_Update1(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Model* targetModel) // 0x80044B38
 {
     s32 keyframeIdx0;
     s32 keyframeIdx1;
@@ -519,7 +521,7 @@ void func_80044B38(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Mod
     model->anim_4.keyframeIdx1_A = 0;
 }
 
-void func_80044CA4(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Model* targetModel) // 0x80044CA4
+void Anim_Update2(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Model* targetModel) // 0x80044CA4
 {
     s32 setAnimIdx;
     s32 newKeyframeIdx0;
@@ -578,7 +580,7 @@ void func_80044CA4(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Mod
     }
 }
 
-void func_80044DF0(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Model* targetModel)
+void Anim_Update3(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Model* targetModel) // 0x80044DF0
 {
     s32 keyframeIdx0;
     s32 keyframeIdx1;
@@ -670,7 +672,7 @@ void func_80044FE0(s_Skeleton* skel, s_Bone* bones, u8 boneCount) // 0x80044FE0
 {
     skel->bones_8 = bones;
     skel->boneCount_0 = boneCount;
-    skel->field_1 = 0;
+    skel->boneIdx_1 = 0;
     skel->field_2 = 1;
     skel->field_4 = 0;
 
@@ -707,6 +709,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800452EC);
 // Anim func. Traverses skeleton bones for something.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80045360);
 
+// `cond` may actually be another `s_Skeleton` pointer.
 void func_800453E8(s_Skeleton* skel, s32 cond) // 0x800453E8
 {
     s_Bone* bone;
@@ -934,9 +937,62 @@ void func_80048000() // 0x80048000
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_8004807C);
+void func_8004807C() // 0x8004807C
+{
+    u32 var;
 
+    if (CdSync(1, 0) != 2)
+    {
+        return;
+    }
+    
+    var = D_800C37D4->field_4 - D_800C37CC;
+    if (var <= 0xC7FFU)
+    {
+        CdRead(((var + 0x7FF) >> 11), CD_ADDR_0, 0x80);
+    }
+    else
+    {
+        CdRead(25, CD_ADDR_0, 0x80);
+    }
+    
+    D_800C1670.field_0 = 8;
+}
+
+#ifdef NON_MATCHING
+void func_800480FC() // 0x800480FC
+{
+    u32 var0;
+    u32 var1;
+
+    if (CdReadSync(1, 0) != 0)
+    {
+        return;
+    }
+    
+    var1 = D_800C37D4->field_4 - D_800C37CC;
+    if (var1 <= 0xC7FFU)
+    {
+        var0 = SdVabTransBodyPartly((u8*)CD_ADDR_0, var1, D_800C37C8);
+        D_800C1670.field_0 = 9;
+        D_800C37CC = D_800C37D4->field_4;
+    }
+    else
+    {
+        var0 = SdVabTransBodyPartly((u8*)CD_ADDR_0, 0xC800u, D_800C37C8);
+        D_800C1670.field_0 = 6;
+        D_800C37CC += 0xC800;
+    }
+    
+    if (var0 == NO_VALUE && (u8)D_800C37D0 < 16)
+    {
+        D_800C37D0++;
+        D_800C1670.field_0 = 1;
+    }
+}
+#else
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800480FC);
+#endif
 
 void func_800481F8() // 0x800481F8
 {
@@ -951,11 +1007,61 @@ void func_800481F8() // 0x800481F8
     func_80047A70();
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80048244);
+void func_80048244(s16 cmd) // 0x80048244
+{
+    if (D_800C1658.field_6 == (u16)cmd)
+    {
+        return;
+    }
+    
+    if (D_800C1658.field_4 != 0)
+    {
+        func_800478DC(2);
+    }
+    
+    func_80046AD8();
+    SD_EngineCmd((u16)(cmd + 0xAD));
+    func_800478DC((u8)cmd);
+    
+    D_800C37D0 = 0;
+    D_800C1658.field_6 = (u16)cmd;
+    D_800C1658.field_15 = 1;
+}
 
+// TODO: Needs jump table.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800482D8);
+/*void func_800482D8() // 0x800482D8
+{
+    switch (D_800C1670.field_0)
+    {
+        case 0:
+            D_800C37D8 = &D_800AA274[D_800C16A8];
+            D_800C37C8 = D_800C37D8->field_0;
+            D_800C1670.field_0 = 1;
+            break;
+        
+        case 1:
+            Sd_StopSeq();
+            break;
+        
+        case 2:
+            func_800483D4();
+            break;
+        
+        case 3:
+            func_80048424();
+            break;
+        
+        case 4:
+            func_80048498();
+            break;
+        
+        default:
+            break;
+    }
+}*/
 
-void Sd_StopSeq()
+void Sd_StopSeq() // 0x8004839C
 {
     func_80046B78();
     SdSeqClose(D_800C37C8);

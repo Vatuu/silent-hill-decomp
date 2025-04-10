@@ -3,10 +3,20 @@
 
 #include "gpu.h"
 
-#define TICKS_PER_SECOND         60 // Theorised. It's unclear if the game has a fixed timestep.
+#define SCREEN_WIDTH     320
+#define SCREEN_HEIGHT    240
+#define TICKS_PER_SECOND 60 // Theorised. It's unclear if the game has a fixed timestep.
+
+#define CHARA_PROPERTY_COUNT_MAX 10
 #define NPC_COUNT_MAX            6
 #define INVENTORY_ITEM_COUNT_MAX 40
 #define SAVEGAME_FOOTER_MAGIC    0xDCDC
+
+#define SCREEN_POSITION_X(percent) \
+    (s32)((SCREEN_WIDTH) * ((percent) / 100.0f))
+
+#define SCREEN_POSITION_Y(percent) \
+    (s32)((SCREEN_HEIGHT) * ((percent) / 100.0f))
 
 typedef enum _PadButtonFlags
 {
@@ -72,10 +82,13 @@ typedef enum _GameState
     GameState_LoadStatusScreen    = 19,
     GameState_LoadMapScreen       = 20,
     GameState_Unk15               = 21,
-    GameState_Unk16               = 22 /** Doesn't exist in function array, but DebugMoviePlayer state tries to switch to it, removed debug menu? */
+    GameState_Unk16               = 22 /** Removed debug menu? Doesn't exist in function array, but DebugMoviePlayer state tries to switch to it. */
 } e_GameState;
 
-/** State IDs used by GameState_InGame. The values are used as indices into the 0x800A9A2C function array. */
+/** @brief State IDs used by `GameState_InGame`.
+ * 
+ * The values are used as indices into the 0x800A9A2C function array.
+ * */
 typedef enum _SysState
 {
     SysState_Gameplay    = 0,
@@ -94,6 +107,46 @@ typedef enum _SysState
     SysState_GameOver    = 13,
     SysState_GamePaused  = 14
 } e_SysState;
+
+/** @brief Player model bone indices. */
+typedef enum _PlayerBone
+{
+    PlayerBone_Root          = 0,
+    PlayerBone_Torso         = 1,
+    PlayerBone_Head          = 2,
+    PlayerBone_LeftShoulder  = 3,
+    PlayerBone_LeftUpperArm  = 4,
+    PlayerBone_LeftForearm   = 5,
+    PlayerBone_LeftHand      = 6,
+    PlayerBone_RightShoulder = 7,
+    PlayerBone_RightUpperArm = 8,
+    PlayerBone_RightForearm  = 9,
+    PlayerBone_RightHand     = 10,
+    PlayerBone_Hips          = 11,
+    PlayerBone_LeftThigh     = 12,
+    PlayerBone_LeftShin      = 13,
+    PlayerBone_LeftFoot      = 14,
+    PlayerBone_RightThigh    = 15,
+    PlayerBone_RightShin     = 16,
+    PlayerBone_RightFoot     = 17,
+
+    PlayerBone_Count = 18
+} s_PlayerBone;
+
+/** @brief Player property indices. */
+typedef enum _PlayerProperty
+{
+    PlayerProperty_Unk0          = 0,
+    PlayerProperty_AfkTimer      = 1, // Increments every tick for 10 seconds before AFK anim starts.
+    PlayerProperty_PositionY     = 2,
+    PlayerProperty_Unk3          = 3,
+    PlayerProperty_Unk4          = 4,
+    PlayerProperty_RunTimer0     = 5, // Increments indefinitely, but more slowly than `PlayerProperty_RunTimer1`.
+    PlayerProperty_ExertionTimer = 6, // Counts ~20 seconds worth of ticks while running and caps at 0x23000.
+    PlayerProperty_Unk7          = 7,
+    PlayerProperty_Unk8          = 8, // Returned by `func_8007FD2C`.
+    PlayerProperty_RunTimer1     = 9  // Increments every tick indefinitely.
+} s_PlayerProperty;
 
 typedef struct _AnalogPadData
 {
@@ -266,8 +319,8 @@ typedef struct _GameWork
     u8                   field_58D; // G?
     u8                   field_58E; // B?
     u8                   field_58F; // A or graphics command code?
-    s32                  gameStatePrev_590;    /** e_GameState */
-    s32                  gameState_594;        /** e_GameState */
+    s32                  gameStatePrev_590;    /** `e_GameState` */
+    s32                  gameState_594;        /** `e_GameState` */
     s32                  gameStateStep_598[3]; /** Temp data used by current gameState. Can be another state ID or other data. */
     s8                   unk_5A4[4];
     s32                  field_5A8;
@@ -286,8 +339,8 @@ typedef struct _ModelAnimData
     // implied by an original param name in `vcMixSelfViewEffectToWatchTgtPos`.
 
     u8  animIdx_0;
-    u8  maybeSomeState_1; // State says if animTime_4 is anim time or a func ptr? That field could be a union.  -- emoose
-    u16 flags_2;          /** e_AnimFlags */ // Bit 1: movement unlockled(?), bit 2: visible.
+    u8  maybeSomeState_1; // State says if `animTime_4` is anim time or a func ptr? That field could be a union.  -- emoose
+    u16 flags_2;          /** `e_AnimFlags` */ // Bit 1: movement unlockled(?), bit 2: visible.
     s32 time_4;           /** Fixed-point time along keyframe timeline. */ 
     s16 keyframeIdx0_8;
     s16 keyframeIdx1_A;
@@ -322,10 +375,11 @@ typedef struct _SubCharacter
     s8      unk_45[104];
     s32     health_B0; // Bits 3-4 contain `s16` associated with player's rate of heavy breathing, always set to 6. Can't split into `s16`s? Maybe packed data.
     s8      unk_B4[16];
-    u16     dead_timer_C4; // Part of shBattleInfo struct in SH2, may use something similar here.
+    u16     dead_timer_C4; // Part of `shBattleInfo` struct in SH2, may use something similar here.
     s8      unk_C6[2];
 
-    // Fields seen used inside maps (eg. map0_s00 func_800D923C)
+    // Fields seen used inside maps (eg. `map0_s00` `func_800D923C`)
+
     s16 field_C8;
     s16 field_CA;
     s8  unk_CC[2];
@@ -338,22 +392,7 @@ typedef struct _SubCharacter
     s16 field_DC;
     s16 field_DE;
     s32 flags_E0;
-    s8  unk_E4[4];
-
-    // Fields in the following block may be part of a multi-purpose array of `s32` elements used to store unique property data for each character type.
-    // Start of this section is unclear, bytes above may be part of it.
-    // For player, mostly used for counters as far as I could see. -- Sezz
-
-    s32 field_E8;  // Player AFK counter. Increments every tick for 10 seconds before player starts AFK anim. Purpose for other characters unknown.
-    s32 field_EC;  // Copy of player Y position. Purpose for other characters unknown.
-    s32 field_F0;
-    s32 field_F4;
-    s32 field_F8;  // Player run counter. Increments more slowly than `field_108`. Purpose for other characters unknown.
-    s32 field_FC;  // Player out of breath counter. Counts 20 seconds worth of ticks and caps at 0x23000. Purpose for other characters unknown.
-    s32 unk_100;
-    s32 field_104; // Used by player, returned by `func_8007FD2C`. Purpose unknown.
-    s32 field_108; // Player run counter. Increments every tick indefinitely. Purpose for other characters unknown.
-
+    s32 properties_E4[CHARA_PROPERTY_COUNT_MAX];
     s8  unk_10C;
     u8  field_10D;
     s8  unk_10E[5];
@@ -389,39 +428,41 @@ typedef struct _SysWork
     s32             sysStateStep_C; // Current step/state of sysState_8 game is in.
     s32             field_10;       // Sometimes assigned to same thing as sysStateStep_C.
     s32             field_14;
-    s8              unk_18[4];
-    s32             field_1C;
-    s32             field_20;
-    s32             field_24;
+    s32             field_18;
+    s32             timer_1C;
+    s32             timer_20;
+    s32             timer_24;
     s32             field_28;
-    s32             field_2C; // Timer of some kind.
+    s32             timer_2C;
     s32             field_30;
     s8              unk_34[4];
     s32             field_38; // Something related to map loading.
     s8              unk_3C[11];
     s8              field_47; // Something related to map loading.
     s8              unk_48[3];
-    u8              field_4B; // Something used among player anim state checks.
+    u8              isPlayerInCombatMode_4B;
     s_MainCharacter player_4C;
     s_SubCharacter  npcs_1A0[NPC_COUNT_MAX];
-    GsCOORDINATE2   unk_coord_890[2];
-    GsCOORDINATE2   hero_neck_930;
-    s8              unk_980[6424];
-    s32             flags_2298; // Something related to map loading.
+    GsCOORDINATE2   playerBoneCoords_890[PlayerBone_Count];
+    s8              pad_E30[400];  // Might be part of previous array for 5 exra coords which go unused.
+    s8              unk_FC0[4824]; // Start is tightly-packed buffer for NPC bone coords. Size unclear, appears to be enough for 60 before what might be AI data.
+    s32             flags_2298;    // Something related to map loading.
     s8              unk_229C[4];
     s32             field_22A0;
     s32             flags_22A4;
-    s8              unk_22A8[170];
-	s8              flags_2352;
-    s8              unk_2353[5];
+    s8              unk_22A8[165];
+    s32             field_234D;
+    s8              unk_2351;
+    s8              flags_2352;
+    s8              unk_2353[2];
     u8              field_2358;
     s8              unk_2359[33];
-    s16             cam_ang_y_237A;
-    s16             cam_ang_z_237C;
+    s16             cameraAngleY_237A;
+    s16             cameraAngleZ_237C;
     s16             field_237E;
-    s32             cam_r_xz_2380;
-    s32             cam_y_2384;
-    u8              unk_2388[392];
+    s32             cameraRadiusXz_2380;
+    s32             cameraY_2384;
+    s8              unk_2388[392];
     s32             field_2510;
     s32             field_2514[10];
     u8              unk_253C[524];
@@ -430,7 +471,7 @@ typedef struct _SysWork
     s32             field_275C;
     u8              unk_2760[8];
 } s_SysWork;
-STATIC_ASSERT_SIZEOF(s_SysWork, 0x2768);
+STATIC_ASSERT_SIZEOF(s_SysWork, 10088);
 
 extern void* g_OvlBodyprog;
 extern void* g_OvlDynamic;
@@ -461,11 +502,11 @@ extern s32 g_UncappedVBlanks;
 static inline void SysWork_StateSetNext(e_SysState sysState)
 {
     g_SysWork.sysState_8     = sysState;
-    g_SysWork.field_24       = 0;
+    g_SysWork.timer_24       = 0;
     g_SysWork.sysStateStep_C = 0;
     g_SysWork.field_28       = 0;
     g_SysWork.field_10       = 0;
-    g_SysWork.field_2C       = 0;
+    g_SysWork.timer_2C       = 0;
     g_SysWork.field_14       = 0;
 }
 
@@ -479,8 +520,8 @@ static inline void Game_StateSetNext(e_GameState gameState)
 
     g_GameWork.gameState_594 = gameState;
 
-    g_SysWork.field_1C = 0;
-    g_SysWork.field_20 = 0;
+    g_SysWork.timer_1C = 0;
+    g_SysWork.timer_20 = 0;
 
     g_GameWork.gameStateStep_598[1] = 0;
     g_GameWork.gameStateStep_598[2] = 0;
@@ -500,8 +541,8 @@ static inline void Game_StateSetPrevious()
 {
     e_GameState prevState = g_GameWork.gameState_594;
 
-    g_SysWork.field_1C = 0;
-    g_SysWork.field_20 = 0;
+    g_SysWork.timer_1C = 0;
+    g_SysWork.timer_20 = 0;
 
     g_GameWork.gameStateStep_598[1] = 0;
     g_GameWork.gameStateStep_598[2] = 0;

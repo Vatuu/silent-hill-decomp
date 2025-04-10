@@ -277,49 +277,49 @@ void func_800D8888(s_SubCharacter* chara)
 }
 
 // Following funcs taking `s_SubCharacter*` arg are shared with other maps too.
+// Probably all player-specific.
 // Possibly shared .c file or separate SubCharacter library?
 
-void func_800D88AC(s_SubCharacter* chara)
+void func_800D88AC(s_SubCharacter* playerChara)
 {
-    chara->field_F4  = 0;
-    chara->field_F0  = 0;
-    chara->field_EC  = 0;
-    chara->field_126 = 0;
+    playerChara->properties_E4[PlayerProperty_Unk4] = 0;
+    playerChara->properties_E4[PlayerProperty_Unk3] = 0;
+    playerChara->properties_E4[PlayerProperty_PositionY] = 0;
+    playerChara->field_126 = 0;
 }
 
-void func_800D88C0(s_SubCharacter* chara, s32 arg1)
+void func_800D88C0(s_SubCharacter* playerChara, s32 arg1)
 {
-    chara->field_F4 = 1;
+    playerChara->properties_E4[PlayerProperty_Unk4] = 1;
 
     if (arg1 != 0)
     {
-        chara->model_0.anim_4.animIdx_0 = 3;
-        chara->model_0.anim_4.keyframeIdx0_8 = 0;
-        chara->model_0.anim_4.time_4 = 0;
-        chara->model_0.anim_4.keyframeIdx1_A = FP_TO(1, Q12_SHIFT);
+        playerChara->model_0.anim_4.animIdx_0 = 3;
+        playerChara->model_0.anim_4.keyframeIdx0_8 = 0;
+        playerChara->model_0.anim_4.time_4 = 0;
+        playerChara->model_0.anim_4.keyframeIdx1_A = FP_TO(1, Q12_SHIFT);
     }
     else
     {
-        chara->field_E8 = 0;
-        chara->model_0.isAnimStateUnchanged_3 = 0;
+        playerChara->properties_E4[PlayerProperty_AfkTimer] = 0;
+        playerChara->model_0.isAnimStateUnchanged_3 = 0;
     }
 
-    chara->model_0.anim_4.flags_2 |= AnimFlag_Unk1;
+    playerChara->model_0.anim_4.flags_2 |= AnimFlag_Unk1;
 }
 
-void func_800D8904(s_SubCharacter* chara, s32 arg1)
+void func_800D8904(s_SubCharacter* playerChara, s32 afkTime)
 {
-    chara->field_126 = 0;
-    chara->field_F8  = 0;
-    chara->field_F0  = 0;
-    chara->field_E8  = arg1;
-
-    chara->model_0.isAnimStateUnchanged_3 = 0;
+    playerChara->field_126 = 0;
+    playerChara->properties_E4[PlayerProperty_RunTimer0] = 0;
+    playerChara->properties_E4[PlayerProperty_Unk3] = 0;
+    playerChara->properties_E4[PlayerProperty_AfkTimer] = afkTime;
+    playerChara->model_0.isAnimStateUnchanged_3 = 0;
 }
 
-void func_800D891C(s_SubCharacter* chara)
+void func_800D891C(s_SubCharacter* playerChara)
 {
-    chara->field_F8 = 1;
+    playerChara->properties_E4[PlayerProperty_RunTimer0] = 1;
 }
 
 void func_800D8928(s_SubCharacter* chara)
@@ -357,30 +357,30 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D9188);
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D921C);
 
-void func_800D923C(s_SubCharacter* chara)
+void func_800D923C(s_SubCharacter* playerChara)
 {
     s32 flags;
     
-    flags = chara->flags_E0;
-    flags = flags & ~0xF00;
+    flags = playerChara->flags_E0;
+    flags = flags & ~((1 << 8) | (1 << 9) | (1 << 10) | (1 << 11));
 
-    chara->model_0.isAnimStateUnchanged_3 = 0;
-    chara->field_C8 = 0;
-    chara->field_CA = 0;
-    chara->field_CE = 0;
-    chara->field_D4 = 0;
-    chara->field_D6 = 0;
-    chara->field_DE = 0;
-    chara->field_DC = 0;
-    chara->field_DA = 0;
-    chara->field_D8 = 0;
-    chara->field_EC = 0;
-    chara->field_E8 = 0;
-    chara->field_EC = 0;
-    chara->field_F0 = 0;
-    chara->field_F4 = 0;
-    chara->flags_E0 = flags | 0x300;
-    chara->model_0.field_2++;
+    playerChara->model_0.isAnimStateUnchanged_3 = 0;
+    playerChara->field_C8 = 0;
+    playerChara->field_CA = 0;
+    playerChara->field_CE = 0;
+    playerChara->field_D4 = 0;
+    playerChara->field_D6 = 0;
+    playerChara->field_DE = 0;
+    playerChara->field_DC = 0;
+    playerChara->field_DA = 0;
+    playerChara->field_D8 = 0;
+    playerChara->properties_E4[PlayerProperty_PositionY] = 0;
+    playerChara->properties_E4[PlayerProperty_AfkTimer] = 0;
+    playerChara->properties_E4[PlayerProperty_PositionY] = 0;
+    playerChara->properties_E4[PlayerProperty_Unk3] = 0;
+    playerChara->properties_E4[PlayerProperty_Unk4] = 0;
+    playerChara->flags_E0 = flags | ((1 << 8) | (1 << 9));
+    playerChara->model_0.field_2++;
 }
 
 s32 func_800D929C()
@@ -436,11 +436,11 @@ void func_800DBE00()
     func_800892A4(4);
 
     g_SysWork.sysState_8 = 0;
-    g_SysWork.field_24 = 0;
+    g_SysWork.timer_24 = 0;
     g_SysWork.sysStateStep_C = 0;
     g_SysWork.field_28 = 0;
     g_SysWork.field_10 = 0;
-    g_SysWork.field_2C = 0;
+    g_SysWork.timer_2C = 0;
     g_SysWork.field_14 = 0;
     g_SysWork.player_4C.chara_0.position_18.vy = 0;
 }

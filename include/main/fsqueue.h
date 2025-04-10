@@ -72,6 +72,7 @@ enum FsQueuePostLoadType
 };
 
 /** @brief FS queue operation type.
+ * 
  * What to do for a queue entry.
  * See `s_FsQueueEntry::operation`.
  */
@@ -82,13 +83,12 @@ enum FsQueueOperation
     FS_OP_READ = 2  /** Read from CD (`Fs_QueueUpdateRead`). */
 };
 
-/**
- * @brief Extra queue entry data describing where to upload a TIM after reading.
+/** @brief Extra queue entry data describing where to upload a TIM after reading.
  * See `FsQueueExtra`.
  * 
  * @note `tPage` seems to be byte swapped.
  */
-typedef struct
+typedef struct _FsImageDesc
 {
     u16 tPage;
     u8  u;
@@ -96,20 +96,20 @@ typedef struct
     s16 clutX;
     s16 clutY;
 } s_FsImageDesc;
+STATIC_ASSERT_SIZEOF(s_FsImageDesc, 8);
 
-/**
- * @brief Extra queue entry data describing something related to loading some ANM files.
+/** @brief Extra queue entry data describing something related to loading some ANM files.
  * See `FsQueueExtra`.
  */
-typedef struct
+typedef struct _FsAnmDesc
 {
     u32 field_0;
     u32 field_4;
     u32 field_8;
 } s_FsAnmDesc;
+STATIC_ASSERT_SIZEOF(s_FsAnmDesc, 12);
 
-/**
- * @brief Extra data passed with the queue entry.
+/** @brief Extra data passed with the queue entry.
  *
  * Seems to be either a TIM descriptor (`image`), or something for ANM files (`anm`).
  *
@@ -118,14 +118,13 @@ typedef struct
  * Unknown what exactly `anm` is, but it is used with preprocess type 2, which is only used
  * for some ANM files, but not others. See `Fs_QueuePostLoadAnm`.
  */
-typedef union
+typedef union _FsQueueExtra
 {
     s_FsImageDesc image; /** Location in VRAM where to upload a TIM during post-load. */
     s_FsAnmDesc   anm;   /** Unknown. Used when loading some ANM files. */
 } s_FsQueueExtra;
 
-/**
- * @brief FS queue entry.
+/** @brief FS queue entry.
  *
  * Entry in the FS queue.
  * Holds the state of one read/seek operation and a pointer to the `FileInfo` of the file it's for.
@@ -143,7 +142,8 @@ typedef struct
     void*             data;         /** Output buffer. Either allocated or same as `externalData`. */
 } s_FsQueueEntry;
 
-/** Queue pointer.
+/** @brief Queue pointer.
+ * 
  * These had to be wrapped into a struct for some code to match.
  * Used for last added element, current read/seek op and current post process op.
  */
@@ -153,8 +153,7 @@ typedef struct
     s_FsQueueEntry* ptr; /** Entry in `entries` this is pointing to. */
 } s_FsQueuePtr;
 
-/**
- * @brief FS queue.
+/** @brief FS queue.
  *
  * State of the file system operations queue.
  *

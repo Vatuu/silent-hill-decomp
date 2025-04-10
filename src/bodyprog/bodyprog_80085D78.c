@@ -17,7 +17,7 @@ void func_80085D78(s32 arg0)
 {
     if (arg0 != 0)
     {
-        g_SysWork.field_2C = 0;
+        g_SysWork.timer_2C = 0;
         g_SysWork.field_14 = 0;
         g_SysWork.field_10++;
         return;
@@ -25,7 +25,7 @@ void func_80085D78(s32 arg0)
     
     g_SysWork.field_28 = 0;
     g_SysWork.field_10 = 0;
-    g_SysWork.field_2C = 0;
+    g_SysWork.timer_2C = 0;
     g_SysWork.field_14 = 0;
     g_SysWork.sysStateStep_C++;
 }
@@ -35,7 +35,7 @@ void func_80085DC0(s32 arg0, s32 sysStateStep)
     if (arg0 != 0)
     {
         g_SysWork.field_10 = sysStateStep;
-        g_SysWork.field_2C = 0;
+        g_SysWork.timer_2C = 0;
         g_SysWork.field_14 = 0;
     }
     else
@@ -43,20 +43,20 @@ void func_80085DC0(s32 arg0, s32 sysStateStep)
         g_SysWork.sysStateStep_C = sysStateStep;
         g_SysWork.field_28 = 0;
         g_SysWork.field_10 = 0;
-        g_SysWork.field_2C = 0;
+        g_SysWork.timer_2C = 0;
         g_SysWork.field_14 = 0;
     }
 }
 
 void func_80085DF0()
 {
-    g_SysWork.field_2C += g_DeltaTime1;
+    g_SysWork.timer_2C += g_DeltaTime1;
     
-    if (D_800C9668() != 0 || g_SysWork.field_2C > 4096)
+    if (D_800C9668() != 0 || g_SysWork.timer_2C > 4096)
     {
         g_SysWork.field_28 = 0;
         g_SysWork.field_10 = 0;
-        g_SysWork.field_2C = 0;
+        g_SysWork.timer_2C = 0;
         g_SysWork.field_14 = 0;
         g_SysWork.sysStateStep_C++;
     }
@@ -66,8 +66,8 @@ void func_80085E6C(s32 arg0, s32 arg1)
 {
     s32 unkTime;
 
-    unkTime = g_SysWork.field_2C + g_DeltaTime1;
-    g_SysWork.field_2C = unkTime;
+    unkTime = g_SysWork.timer_2C + g_DeltaTime1;
+    g_SysWork.timer_2C = unkTime;
     
     if (arg0 < unkTime)
     {
@@ -298,11 +298,38 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80086470);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800865FC);
 
+#ifdef NON_MATCHING
+void func_800866D4(s32 arg0, s32 arg1, s32 arg2) // 0x800866D4
+{
+    if (D_800C964C(arg0, &D_800C4640, D_800C4700, arg1) == 1)
+    {
+        func_80085D78(arg2);
+    }
+}
+#else
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800866D4);
+#endif
 
+#ifdef NON_MATCHING
+void func_80086728(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x80086728
+{
+    if (D_800C96B8(arg0, arg1, &D_800C46A0, D_800C4702, arg2) == 1)
+    {
+        func_80085D78(arg3);
+    }
+}
+#else
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80086728);
+#endif
 
+#ifdef NON_MATCHING
+void func_8008677C(s32 arg0, s32 arg1, s32 arg2) // 0x8008677C
+{
+    D_800C96B8(arg0, arg1, &D_800C46A0, D_800C4702, arg2);
+}
+#else
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008677C);
+#endif
 
 void func_800867B4(s32 caseParam, s32 idx) // 0x800867B4
 {
@@ -361,14 +388,14 @@ void func_800869E4(u8* arg1, u8* arg2, u16* arg3) // 0x800869E4
 {
     s32 ret;
 
-    g_SysWork.field_22A0 |= 0x20;
+    g_SysWork.field_22A0 |= 1 << 5;
     
     ret = func_800365B8();
     if (ret == 1)
     {
         g_SysWork.field_28 = 0;
         g_SysWork.field_10 = 0;
-        g_SysWork.field_2C = 0;
+        g_SysWork.timer_2C = 0;
         g_SysWork.field_14 = 0;
         g_SysWork.sysStateStep_C++;
     }
@@ -515,7 +542,7 @@ void func_80086C58(s32 arg0, s32 arg1)
         case 0:
             func_80085EB8(0, arg0, arg1, 0);
 
-            g_SysWork.field_2C = 0;
+            g_SysWork.timer_2C = 0;
             g_SysWork.field_14 = 0;
             g_SysWork.field_10++;
             break;
@@ -527,7 +554,7 @@ void func_80086C58(s32 arg0, s32 arg1)
         default:
             g_SysWork.field_28 = 0;
             g_SysWork.field_10 = 0;
-            g_SysWork.field_2C = 0;
+            g_SysWork.timer_2C = 0;
             g_SysWork.field_14 = 0;
             g_SysWork.sysStateStep_C++;
             break;
@@ -541,7 +568,7 @@ void func_80086D04(s32 arg0)
         case 0:
             func_80085EB8(3, arg0, 0, 0);
             
-            g_SysWork.field_2C = 0;
+            g_SysWork.timer_2C = 0;
             g_SysWork.field_14 = 0;
             g_SysWork.field_10++;
             break;
@@ -553,7 +580,7 @@ void func_80086D04(s32 arg0)
         default:
             g_SysWork.field_28 = 0;
             g_SysWork.field_10 = 0;
-            g_SysWork.field_2C = 0;
+            g_SysWork.timer_2C = 0;
             g_SysWork.field_14 = 0;
             g_SysWork.sysStateStep_C++;
             break;
@@ -566,7 +593,7 @@ void func_80086DA8(s32 arg0, s32 arg1)
     {
         case 0:
             func_8008616C(0, 1, 0, arg1, 0);
-            g_SysWork.field_2C = 0;
+            g_SysWork.timer_2C = 0;
             g_SysWork.field_14 = 0;
             g_SysWork.field_10++;
 
@@ -586,7 +613,7 @@ void func_80086E50(s32 arg0, s32 arg1, s32 arg2)
     {
         case 0:
             func_8008616C(0, 1, 0, arg1, 0);
-            g_SysWork.field_2C = 0;
+            g_SysWork.timer_2C = 0;
             g_SysWork.field_14 = 0;
             g_SysWork.field_10++;
 
@@ -616,7 +643,7 @@ void func_80086F44(s32 arg0, s32 arg1) // 0x80086F44
     func_8008616C(0, 0, 0, arg0, 0);
     g_SysWork.field_28 = 0;
     g_SysWork.field_10 = 0;
-    g_SysWork.field_2C = 0;
+    g_SysWork.timer_2C = 0;
     g_SysWork.field_14 = 0;
     g_SysWork.sysStateStep_C++;
 }
@@ -652,7 +679,7 @@ void func_80086FE8(s32 arg0, s32 arg1, s32 arg2) // 0x80086FE8
             D_800C9644();
             func_8005DC1C(arg1, arg2, 0x80, 0);
             
-            g_SysWork.field_2C = 0;
+            g_SysWork.timer_2C = 0;
             g_SysWork.field_14 = 0;
             g_SysWork.field_10++;
 
@@ -668,11 +695,11 @@ void func_80086FE8(s32 arg0, s32 arg1, s32 arg2) // 0x80086FE8
             D_800C9648(0);
 
             g_SysWork.sysState_8 = 0;
-            g_SysWork.field_24 = 0;
+            g_SysWork.timer_24 = 0;
             g_SysWork.sysStateStep_C = 0;
             g_SysWork.field_28 = 0;
             g_SysWork.field_10 = 0;
-            g_SysWork.field_2C = 0;
+            g_SysWork.timer_2C = 0;
             g_SysWork.field_14 = 0;
             break;
     }
@@ -687,7 +714,7 @@ void func_8008716C(s32 arg0, s32 arg1, s32 arg2) // 0x8008716C
         case 0:
             D_800C9644();
             func_8008616C(0, 1, 0, arg1, 0);
-            g_SysWork.field_2C = 0;
+            g_SysWork.timer_2C = 0;
             g_SysWork.field_14 = 0;
             g_SysWork.field_10++;
 
@@ -710,7 +737,7 @@ void func_8008716C(s32 arg0, s32 arg1, s32 arg2) // 0x8008716C
             func_800862F8(2, 0, 0);
             if (g_ControllerPtr0->btns_new_10 & (g_GameWorkPtr1->controllerBinds_0.enter | g_GameWorkPtr1->controllerBinds_0.cancel))
             {
-                g_SysWork.field_2C = 0;
+                g_SysWork.timer_2C = 0;
                 g_SysWork.field_14 = 0;
                 g_SysWork.field_10++;
             }
@@ -728,11 +755,11 @@ void func_8008716C(s32 arg0, s32 arg1, s32 arg2) // 0x8008716C
             D_800C9648(0);
 
             g_SysWork.sysState_8 = 0;
-            g_SysWork.field_24 = 0;
+            g_SysWork.timer_24 = 0;
             g_SysWork.sysStateStep_C = 0;
             g_SysWork.field_28 = 0;
             g_SysWork.field_10 = 0;
-            g_SysWork.field_2C = 0;
+            g_SysWork.timer_2C = 0;
             g_SysWork.field_14 = 0;
             break;
     }
@@ -748,7 +775,7 @@ void func_80087360(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x80087360
             D_800C9644();
             func_8008616C(0, 1, 0, arg1, 0);
 
-            g_SysWork.field_2C = 0;
+            g_SysWork.timer_2C = 0;
             g_SysWork.field_14 = 0;
             g_SysWork.field_10++;
 
@@ -784,11 +811,11 @@ void func_80087360(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x80087360
             D_800C9648(0);
 
             g_SysWork.sysState_8 = 0;
-            g_SysWork.field_24 = 0;
+            g_SysWork.timer_24 = 0;
             g_SysWork.sysStateStep_C = 0;
             g_SysWork.field_28 = 0;
             g_SysWork.field_10 = 0;
-            g_SysWork.field_2C = 0;
+            g_SysWork.timer_2C = 0;
             g_SysWork.field_14 = 0;
             break;
     }
@@ -804,7 +831,7 @@ void func_80087540(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x800875
             D_800C9644();
             func_8008616C(0, 1, 0, arg1, 0);
 
-            g_SysWork.field_2C = 0;
+            g_SysWork.timer_2C = 0;
             g_SysWork.field_14 = 0;
             g_SysWork.field_10++;
 
@@ -833,7 +860,7 @@ void func_80087540(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x800875
 
             if (g_ControllerPtr0->btns_new_10 & (g_GameWorkPtr1->controllerBinds_0.enter | g_GameWorkPtr1->controllerBinds_0.cancel))
             {
-                g_SysWork.field_2C = 0;
+                g_SysWork.timer_2C = 0;
                 g_SysWork.field_14 = 0;
                 g_SysWork.field_10++;
             }
@@ -859,11 +886,11 @@ void func_80087540(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x800875
             D_800C9648(0);
 
             g_SysWork.sysState_8 = 0;
-            g_SysWork.field_24 = 0;
+            g_SysWork.timer_24 = 0;
             g_SysWork.sysStateStep_C = 0;
             g_SysWork.field_28 = 0;
             g_SysWork.field_10 = 0;
-            g_SysWork.field_2C = 0;
+            g_SysWork.timer_2C = 0;
             g_SysWork.field_14 = 0;
             break;
     }
@@ -941,7 +968,7 @@ void func_800879FC(u32 arg0, s32 arg1) // 0x800879FC
     }
 }
 
-// Requires jump table.
+// TODO: Requires jump table.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80087AF4);
 
 void func_80087EA8(s32 arg0)
@@ -967,12 +994,12 @@ void func_80087EDC(s32 arg0)
             if (func_800358A8(arg0) == 0)
             {
                 g_SysWork.field_10 = 3;
-                g_SysWork.field_2C = 0;
+                g_SysWork.timer_2C = 0;
                 g_SysWork.field_14 = 0;
                 return;
             }
             
-            g_SysWork.field_2C = 0;
+            g_SysWork.timer_2C = 0;
             g_SysWork.field_14 = 0;
             g_SysWork.field_22A0 |= 1 << 7;
             g_SysWork.field_10++;
@@ -982,7 +1009,7 @@ void func_80087EDC(s32 arg0)
             g_SysWork.field_22A0 |= 1 << 7;
             SD_EngineCmd(23);
             
-            g_SysWork.field_2C = 0;
+            g_SysWork.timer_2C = 0;
             g_SysWork.field_14 = 0;
             g_SysWork.field_10++;
             return;
@@ -994,7 +1021,7 @@ void func_80087EDC(s32 arg0)
             {
                 func_800358DC(arg0);
                 
-                g_SysWork.field_2C = 0;
+                g_SysWork.timer_2C = 0;
                 g_SysWork.field_14 = 0;
                 g_SysWork.field_10++;
             }
@@ -1003,7 +1030,7 @@ void func_80087EDC(s32 arg0)
         case 3:
             g_SysWork.field_28 = 0;
             g_SysWork.field_10 = 0;
-            g_SysWork.field_2C = 0;
+            g_SysWork.timer_2C = 0;
             g_SysWork.field_14 = 0;
             g_SysWork.sysStateStep_C++;
             break;
@@ -1031,7 +1058,7 @@ void func_80088048(void)
             func_80035E1C();
             SD_EngineCmd(18);
             
-            g_SysWork.field_2C = 0;
+            g_SysWork.timer_2C = 0;
             g_SysWork.field_14 = 0;
             g_SysWork.field_10++;
             break;
@@ -1041,7 +1068,7 @@ void func_80088048(void)
             {
                 g_SysWork.field_28 = 0;
                 g_SysWork.field_10 = 0;
-                g_SysWork.field_2C = 0;
+                g_SysWork.timer_2C = 0;
                 g_SysWork.field_14 = 0;
                 g_SysWork.sysStateStep_C++;
             }
@@ -1113,7 +1140,36 @@ void func_800892DC(s32 idx, s32 arg1) // 0x800892DC
     func_800895E4(g_SysWork.field_2514, &D_8002AC04[idx], arg1 & 0xFF, idx * sizeof(s_8002AC04));
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80089314);
+void func_80089314(s32 arg0) // 0x80089314
+{
+    s32 var0;
+    s32 var1;
+
+    var0 = 24;
+    D_800AFD05 += g_VBlanks;
+    
+    if (arg0 != 0)
+    {
+        var0 = 6;
+    }
+    
+    if ((s32)D_800AFD05 >= var0)
+    {
+        var0 = func_80080514();
+        if (arg0 != 0)
+        {
+            var1 = ((var0 * 16) >> 12) + 20;
+        }
+        else
+        {
+            var1 = ((var0 * 20) >> 12) + 60;
+        }
+        
+        D_800AFD04 = (D_800AFD04 + var1) & 0x7F;
+    }
+    
+    func_800892DC(0x15, (D_800AFD04 + 32) & 0xFF);
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800893D0);
 
@@ -1217,13 +1273,39 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008A2E0);
 }*/
 
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008A35C);
+s32 func_8008A35C(s_8008A35C* arg0, s32 arg1) // 0x8008A35C
+{
+    s32 var;
+    s32 res;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008A384);
+    var = arg0->field_E + arg0->field_F;
+    res = 0;
+    if (arg1 >= arg0->field_E)
+    {
+        res = (arg1 < var);
+    }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008A398);
+    return res;
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008A3AC);
+void func_8008A384(s_8008A384* arg0) // 0x8008A384
+{
+    arg0->field_3E &= ~(1 << 7);
+}
+
+void func_8008A398(s_8008A384* arg0) // 0x8008A398
+{
+    arg0->field_3E |= 1 << 7;
+}
+
+void func_8008A3AC(s_8008A384* arg0) // 0x8008A3AC
+{
+    if (!(arg0->field_3E & (1 << 7)))
+    {
+        arg0->field_44 = 0;
+        func_8008A3E0();
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008A3E0);
 
@@ -1247,9 +1329,9 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008B714);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008BF84);
 
-void DMSHeader_FixOffsets(s_DMSHeader* header) // 0x8008C9A0
+void DmsHeader_FixOffsets(s_DmsHeader* header) // 0x8008C9A0
 {
-    s_DMSEntry* chara;
+    s_DmsEntry* chara;
 
     if (header->isLoaded_0)
     {
@@ -1258,21 +1340,21 @@ void DMSHeader_FixOffsets(s_DMSHeader* header) // 0x8008C9A0
 
     header->isLoaded_0 = 1;
 
-    // Add memory addr of DMS header to the offsets in header
+    // Add memory addr of DMS header to offsets in header.
     header->field_8       = (u8*)header->field_8 + (u32)header;
     header->characters_18 = (u8*)header->characters_18 + (u32)header;
 
-    DMSEntry_FixOffsets(&header->camera_1C, header);
+    DmsEntry_FixOffsets(&header->camera_1C, header);
 
     for (chara = header->characters_18;
          chara < &header->characters_18[header->characterCount_1];
          chara++)
     {
-        DMSEntry_FixOffsets(chara, header);
+        DmsEntry_FixOffsets(chara, header);
     }
 }
 
-void DMSEntry_FixOffsets(s_DMSEntry* entry, s_DMSHeader* header) // 0x8008CA44
+void DmsEntry_FixOffsets(s_DmsEntry* entry, s_DmsHeader* header) // 0x8008CA44
 {
     entry->unkStructPtr_C = (u32)entry->unkStructPtr_C + (u32)header;
     entry->svectorPtr_8   = (u32)entry->svectorPtr_8 + (u32)header;
@@ -1280,32 +1362,32 @@ void DMSEntry_FixOffsets(s_DMSEntry* entry, s_DMSHeader* header) // 0x8008CA44
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008CA60);
 
-void DMS_CharacterGetPosRot(VECTOR3* position, SVECTOR* rotation, char* charName, s32 time, s_DMSHeader* header) // 0x8008CA74
+void Dms_CharacterGetPosRot(VECTOR3* pos, SVECTOR* rot, char* charName, s32 time, s_DmsHeader* header) // 0x8008CA74
 {
-    s32 charIndex;
+    s32 charIdx;
 
-    charIndex = DMS_CharacterFindIndexByName(charName, header);
-    if (charIndex == NO_VALUE)
+    charIdx = Dms_CharacterFindIndexByName(charName, header);
+    if (charIdx == NO_VALUE)
     {
         // Character not found in DMS.
-        Math_Vector3Zero(position);
-        Math_SVectorZero(rotation);
+        Math_Vector3Zero(pos);
+        Math_SVectorZero(rot);
 
-        Gfx_DebugStringPosition(50, 90);
+        Gfx_DebugStringPosition(SCREEN_POSITION_X(15.75f), SCREEN_POSITION_Y(37.5f));
 
 #ifdef DEBUG
-        // Only seen in prototypes
+        // Only seen in prototypes.
         Gfx_DebugStringDraw(charName);
         Gfx_DebugStringDraw(" doesn't exist in dms.");
 #endif
     }
     else
     {
-        func_8008CB90(position, rotation, charIndex, time, header);
+        func_8008CB90(pos, rot, charIdx, time, header);
     }
 }
 
-s32 DMS_CharacterFindIndexByName(char* name, s_DMSHeader* header) // 0x8008CB10
+s32 Dms_CharacterFindIndexByName(char* name, s_DmsHeader* header) // 0x8008CB10
 {
     s32 i;
 
@@ -1326,9 +1408,9 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008CC98);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008CDBC);
 
-s32 DMS_CameraGetTargetPos(VECTOR3* cam_tgt_pos, VECTOR3* watch_tgt_pos, u16* arg2, s32 time, s_DMSHeader* header)
+s32 Dms_CameraGetTargetPos(VECTOR3* posTarget, VECTOR3* lookAtTarget, u16* arg2, s32 time, s_DmsHeader* header)
 {
-    s_DMSEntry* camera;
+    s_DmsEntry* camera;
     s16         sp18[8];
     s32         sp28;
     s32         sp2C;
@@ -1340,13 +1422,13 @@ s32 DMS_CameraGetTargetPos(VECTOR3* cam_tgt_pos, VECTOR3* watch_tgt_pos, u16* ar
     func_8008D1D0(&sp28, &sp2C, &sp30, time, camera, header);
     camProjValue = func_8008CFEC(&sp18, &camera->unkStructPtr_C[sp28 * 8], &camera->unkStructPtr_C[sp2C * 8], sp30);
 
-    cam_tgt_pos->vx = FP_TO(sp18[0] + header->field_C.vx, Q4_SHIFT);
-    cam_tgt_pos->vy = FP_TO(sp18[1] + header->field_C.vy, Q4_SHIFT);
-    cam_tgt_pos->vz = FP_TO(sp18[2] + header->field_C.vz, Q4_SHIFT);
+    posTarget->vx = FP_TO(sp18[0] + header->field_C.vx, Q4_SHIFT);
+    posTarget->vy = FP_TO(sp18[1] + header->field_C.vy, Q4_SHIFT);
+    posTarget->vz = FP_TO(sp18[2] + header->field_C.vz, Q4_SHIFT);
 
-    watch_tgt_pos->vx = FP_TO(sp18[3] + header->field_C.vx, Q4_SHIFT);
-    watch_tgt_pos->vy = FP_TO(sp18[4] + header->field_C.vy, Q4_SHIFT);
-    watch_tgt_pos->vz = FP_TO(sp18[5] + header->field_C.vz, Q4_SHIFT);
+    lookAtTarget->vx = FP_TO(sp18[3] + header->field_C.vx, Q4_SHIFT);
+    lookAtTarget->vy = FP_TO(sp18[4] + header->field_C.vy, Q4_SHIFT);
+    lookAtTarget->vz = FP_TO(sp18[5] + header->field_C.vz, Q4_SHIFT);
 
     if (arg2 != NULL)
     {
@@ -1368,8 +1450,8 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008D330);
 
 s32 Math_LerpFixed12(s16 from, s16 to, s32 t) // 0x8008D3D4
 {
-    // TODO: shifts are similar to shAngleRegulate, but that doesn't seem to work here.
-    return (s32)(FP_MULTIPLY((to - from) << 20 >> 20, (s64)t, 12) + from) << 20 >> 20;
+    // TODO: Shifts are similar to shAngleRegulate, but that doesn't seem to work here.
+    return ((s32)(FP_MULTIPLY((((to - from) << 20) >> 20), (s64)t, 12) + from) << 20) >> 20;
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008D41C);
@@ -1388,8 +1470,8 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008D5A0);
 
 void func_8008D78C()
 {
-    s32 var_v1;
-    s32 var_s1;
+    s32 var0;
+    s32 var1;
 
     if (D_800C4818.field_2 == 0)
     {
@@ -1403,25 +1485,25 @@ void func_8008D78C()
         return;
     }
 
-    var_s1 = func_8008D850();
-    if (var_s1 != 0)
+    var1 = func_8008D850();
+    if (var1 != 0)
     {
-        var_v1 = D_800C4818.field_8 - D_800C4818.field_A;
+        var0 = D_800C4818.field_8 - D_800C4818.field_A;
     }
     else
     {
-        var_v1 = -D_800C4818.field_A;
+        var0 = -D_800C4818.field_A;
     }
 
-    D_800C4818.field_A += var_v1 >> 1;
+    D_800C4818.field_A += var0 >> 1;
 
     if (vcRetCamMvSmoothF() == 0)
     {
         D_800C4818.field_A = 0;
-        var_s1 = 0;
+        var1 = 0;
     }
 
-    func_8008D990(var_s1, D_800C4818.field_A, &D_800C4818.field_C, D_800C4818.field_1C, D_800C4818.field_20);
+    func_8008D990(var1, D_800C4818.field_A, &D_800C4818.field_C, D_800C4818.field_1C, D_800C4818.field_20);
 }
 
 s32 func_8008D850()

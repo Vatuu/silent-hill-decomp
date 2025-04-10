@@ -224,7 +224,8 @@ s32 readvarinum(s_SMF_TRACK_S* track) // 0x800A72B4
         {
             curByte = egetc(track);
             num     = (num << 7) + (curByte & 0x7F);
-        } while (curByte & 0x80);
+        }
+        while (curByte & 0x80);
     }
 
     return num;
@@ -277,7 +278,8 @@ void sysex(s_SMF_TRACK_S* track) // 0x800A7AEC
         {
             break;
         }
-    } while (i < count);
+    }
+    while (i < count);
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmidi2", chanmessage);
@@ -293,6 +295,7 @@ s32 track_head_read(s_SMF_TRACK_S* track)
     {
         return 1;
     }
+
     track->dword8  = read32bit(track);
     track->dword10 = track->dword0;
     track->dwordC  = track->dword0 + track->dword8;
@@ -306,41 +309,44 @@ void delta_time_conv(s_SMF_TRACK_S* track) // 0x800A84B0
         case 48:
             track->deltaTimeTicks_1C *= 10;
             track->deltaTimeTicks_1C += track->deltaTimeRemainder_18;
-
             track->deltaTimeRemainder_18 = track->deltaTimeTicks_1C & 3;
             track->deltaTimeTicks_1C /= 4;
             break;
+
         case 96:
             track->deltaTimeTicks_1C *= 5;
             track->deltaTimeTicks_1C += track->deltaTimeRemainder_18;
-
             track->deltaTimeRemainder_18 = track->deltaTimeTicks_1C & 3;
             track->deltaTimeTicks_1C /= 4;
             break;
+
         case 192:
         case 240:
             track->deltaTimeTicks_1C += track->deltaTimeRemainder_18;
-
             track->deltaTimeRemainder_18 = track->deltaTimeTicks_1C & 1;
             track->deltaTimeTicks_1C /= 2;
             break;
+
         case 288:
         case 360:
             track->deltaTimeTicks_1C /= 3;
             break;
+
         case 480:
         case 384:
             track->deltaTimeTicks_1C += track->deltaTimeRemainder_18;
-
             track->deltaTimeRemainder_18 = track->deltaTimeTicks_1C & 3;
             track->deltaTimeTicks_1C /= 4;
             break;
+
         case 768:
         case 960:
             track->deltaTimeTicks_1C += track->deltaTimeRemainder_18;
-
             track->deltaTimeRemainder_18 = track->deltaTimeTicks_1C & 7;
             track->deltaTimeTicks_1C /= 8;
+            break;
+
+        default:
             break;
     }
 }

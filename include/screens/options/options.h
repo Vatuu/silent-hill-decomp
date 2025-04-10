@@ -17,7 +17,7 @@ typedef struct
 {
     s_sub_801E2C74 field_0[2];
 } s_801E2C74;
-STATIC_ASSERT_SIZEOF(s_801E2C74, 0x18);
+STATIC_ASSERT_SIZEOF(s_801E2C74, 24);
 
 extern s_801E2C74 D_801E2C74;
 
