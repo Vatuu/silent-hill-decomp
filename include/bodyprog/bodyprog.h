@@ -385,7 +385,7 @@ typedef struct
     u8             field_3; // Usually 0, but sometimes filled in.
     u32            field_4; // Unknown, correlates with DMS file size.
     s_DmsInterval* intervalPtr_8;
-    VECTOR3        field_C;
+    VECTOR3        origin_C; // Origin point, gets added to character positions.
     s_DmsEntry*    characters_18;
     s_DmsEntry     camera_1C;
 } s_DmsHeader;
@@ -955,9 +955,9 @@ void Dms_CharacterGetStartPosRot(VECTOR3* pos, SVECTOR* rot, char* charName, s32
 
 s32 Dms_CharacterFindIndexByName(char* name, s_DmsHeader* header);
 
-void func_8008CB90(VECTOR3* pos, SVECTOR3* rot, s32 arg2, s32 arg3, s_DmsHeader* header);
+void Dms_CharacterGetPosRotByIndex(VECTOR3* pos, SVECTOR3* rot, s32 charaIndex, s32 time, s_DmsHeader* header);
 
-void func_8008CC98(s_DmsKeyframeCharacter* result, s_DmsKeyframeCharacter* frame0, s_DmsKeyframeCharacter* frame1, s32 time);
+void Dms_CharacterKeyframeInterpolate(s_DmsKeyframeCharacter* result, s_DmsKeyframeCharacter* frame0, s_DmsKeyframeCharacter* frame1, s32 lerpFactor);
 
 s32 Dms_CameraGetTargetPos(VECTOR3* posTarget, VECTOR3* lookAtTarget, u16* arg2, s32 time, s_DmsHeader* header);
 
