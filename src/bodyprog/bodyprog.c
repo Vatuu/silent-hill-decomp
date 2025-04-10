@@ -474,11 +474,11 @@ void Settings_DispEnvXYSet(DISPENV* display, s32 x, s32 y) // 0x80032524
     y = (y < -8) ? -8 : ((y > 8) ? 8 : y);
 
     gameWorkPtr = g_GameWorkPtr0;
-    gameWorkPtr->field_1C = x;
-    gameWorkPtr->field_1D = y;
+    gameWorkPtr->screenPosX_1C = x;
+    gameWorkPtr->screenPosY_1D = y;
 
-    display->screen.x = gameWorkPtr->field_1C;
-    display->screen.y = gameWorkPtr->field_1D + 8;
+    display->screen.x = gameWorkPtr->screenPosX_1C;
+    display->screen.y = gameWorkPtr->screenPosY_1D + 8;
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_800325A4);
@@ -824,7 +824,7 @@ void Settings_ScreenAndVolUpdate()
 {
     s32 soundCmd;
 
-    Settings_ScreenXYSet(g_GameWork.field_1C, g_GameWork.field_1D);
+    Settings_ScreenXYSet(g_GameWork.screenPosX_1C, g_GameWork.screenPosY_1D);
     
     soundCmd = (g_GameWork.optSoundType_1E != 0) ? 1 : 2;
     SD_EngineCmd(soundCmd);
@@ -1023,7 +1023,6 @@ void Game_SaveGameInitialize(s8 overlayIdx, s32 difficulty) // 0x800350BC
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80035178);
 
-#ifdef NON_MATCHING
 void GameFs_MapLoad(s32 mapIdx) // 0x8003521C
 {
     #define BASE_FILE_IDX FILE_VIN_MAP0_S00_BIN
@@ -1037,13 +1036,9 @@ void GameFs_MapLoad(s32 mapIdx) // 0x8003521C
     {
         func_8003CD6C(&g_SysWork.field_38);
     }
-
-    func_800546A8(g_SysWork.field_47);
+    
+    func_800546A8((u8)g_SysWork.field_47);
 }
-#else
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", GameFs_MapLoad);
-#endif
-
 s32 func_8003528C(s32 idx0, s32 idx1)
 {
     u32 tempField_8;

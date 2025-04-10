@@ -53,7 +53,7 @@ CPP_FLAGS           := $(INCLUDE_FLAGS) $(DEFINE_FLAGS) -P -MMD -MP -undef -Wall
 LD_FLAGS            := $(ENDIAN) $(OPT_FLAGS) -nostdlib --no-check-sections
 OBJCOPY_FLAGS       := -O binary
 OBJDUMP_FLAGS       := --disassemble-all --reloc --disassemble-zeroes -Mreg-names=32
-SPLAT_FLAGS         := --disassemble-all
+SPLAT_FLAGS         := --disassemble-all --make-full-disasm-for-code
 DUMPSXISO_FLAGS     := -x $(ROM_DIR) -s $(ROM_DIR)/layout.xml $(IMAGE_DIR)/$(GAME_NAME).bin
 MKPSXISO_FLAGS      := -y -q $(ROM_DIR)/shgame.xml
 SILENT_ASSETS_FLAGS := -exe $(ROM_DIR)/SLUS_007.07 -fs $(ROM_DIR)/SILENT. -fh $(ROM_DIR)/HILL. $(ASSETS_DIR)
@@ -161,7 +161,7 @@ TARGET_MAPS				:= $(addprefix $(TARGET_MAPS_SRC_DIR)/,$(TARGET_MAPS))
 
 endif
 
-TARGET_OVERLAYS			:= $(TARGET_BODYPROG) $(TARGET_STREAM) $(TARGET_SCREENS) $(TARGET_MAPS)
+TARGET_OVERLAYS			:= $(TARGET_BODYPROG) $(TARGET_SCREENS) $(TARGET_MAPS)
 
 # Source Definitions
 
@@ -180,8 +180,7 @@ all: build
 build: $(TARGET_OUT)
 
 objdiff-config: regenerate
-	@$(MAKE) NON_MATCHING=0 SKIP_ASM=0 expected
-	@$(MAKE) NON_MATCHING=1 SKIP_ASM=1 build
+	@$(MAKE) NON_MATCHING=1 SKIP_ASM=1 expected
 	@$(PYTHON) $(OBJDIFF_DIR)/objdiff_generate.py $(OBJDIFF_DIR)/config.yaml
 
 report: objdiff-config
@@ -193,11 +192,9 @@ check: build
 progress:
 	$(MAKE) build NON_MATCHING=1 SKIP_ASM=1
 
-expected: check
+expected: build
 	mkdir -p $(EXPECTED_DIR)
-	mv build/src $(EXPECTED_DIR)/src
 	mv build/asm $(EXPECTED_DIR)/asm
-	rm -rf $(BUILD_DIR)
 
 iso:
 	$(INSERT_OVLS) $(INSERT_OVLS_FLAGS)

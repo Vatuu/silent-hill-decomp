@@ -169,38 +169,59 @@ void Settings_BrightnessScreen() // 0x801E6018
 
 void Gfx_BrightnessLevelTextDraw() // 0x801E6238
 {
-    char* str = D_801E2C64;
+
+    char* D_801E2C64 = "LEVEL_________";
 
     func_8004A8DC(7);
     Gfx_StringPosition(SCREEN_POSITION_X(25.0f), SCREEN_POSITION_Y(79.5f));
-    Gfx_StringDraw(str, 20);
+    Gfx_StringDraw(D_801E2C64, 20);
     func_8004B9F8(1, g_GameWork.optBrightness_22);
 }
 
 void Gfx_BrightnessLevelArrowsDraw() // 0x801E628C
 {
-    s_801E2C74 var0;
-    s_801E2C74 var1;
-    s32 btnInput;
+    // D_801E2C74
+    s_801E2C74 var0 = { 
+        {
+             8, 84, 
+            16, 76,
+            16, 92,
+
+            64, 84,
+            56, 76,
+            56, 92,
+        } 
+    };
+    
+    // D_801E2C8C
+    s_801E2C74 var1 = { 
+        {
+             7, 84,
+            17, 74,
+            17, 94,
+    
+            65, 84,
+            55, 74,
+            55, 94,
+        }
+    };
+	
+    s32 btn_input;
     s32 i;
     s32 dir;
 
-    var0 = D_801E2C74;
-    var1 = D_801E2C8C;
-
-    btnInput = g_ControllerPtr0->btns_held_C;
-
+    btn_input = g_ControllerPtr0->btns_held_C;
     // Determine direction.
-    if (btnInput & Pad_LStickLeft)
-	{
+    if (btn_input & Pad_LStickLeft)
+    {
         dir = 1;
     }
-	else if (btnInput & Pad_LStickRight)
-	{
+    else if (btnInput & Pad_LStickRight)
+    {
         dir = 2;
     }
-	else
-	{
+    else
+    {
         dir = 0;
     }
 

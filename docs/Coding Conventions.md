@@ -20,6 +20,19 @@ void Hero_SetFly(bool isFlying, int* yPos) // 0x80012345
 }
 ```
 
+#### Clang-format
+The repository includes a `clang-format` configuration to help ensure code consistency. Git also has a command to handle formatting any modified files.
+
+We'd appreciate it if you could follow these steps prior to committing:
+
+1. Stage modified files:  
+   `git add src/`  
+   `git add include/`
+2. Run clang-format through git:  
+   `git clang-format`
+3. Review the changes with `git diff`, then re-stage and commit them:  
+   `git add src/`
+
 ## Naming Conventions
 If a function, structure, or field's name is already known from an SDK library or from the symbols of another game, that name should be used.
 Otherwise, names can follow the formats below.
