@@ -153,7 +153,7 @@ s32 func_80042DE8(s32 posX, s32 posZ, s32 fileChunkCoordX, s32 fileChunkCoordZ, 
     dist = func_80042E2C(FP_FROM(posX, Q4_SHIFT), FP_FROM(posZ, Q4_SHIFT), fileChunkCoordX, fileChunkCoordZ);
     if (clip != 0)
     {
-        dist -= FP_TILE(16.0f);
+        dist -= FP_METER(16.0f);
         if (dist < 0)
         {
             dist = 0;

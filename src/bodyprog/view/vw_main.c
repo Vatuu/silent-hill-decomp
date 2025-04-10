@@ -10,7 +10,7 @@ void vwInitViewInfo() // 0x80048A38
     vwViewPointInfo.rview.vp.vx = 0;
     vwViewPointInfo.rview.vr.vx = 0;
     vwViewPointInfo.rview.vr.vy = 0;
-    vwViewPointInfo.rview.vr.vz = FP_TILE(16.0f);
+    vwViewPointInfo.rview.vr.vz = FP_METER(16.0f);
     vwViewPointInfo.rview.rz    = 0;
     vwViewPointInfo.rview.super = &vwViewPointInfo.vwcoord;
     GsInitCoordinate2(NULL, &vwViewPointInfo.vwcoord);

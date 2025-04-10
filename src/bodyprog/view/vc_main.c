@@ -3,7 +3,7 @@
 #include "bodyprog/vw_system.h"
 #include "bodyprog/math.h"
 
-#define MIN_IN_ROAD_DIST FP_TILE(16.0f) // vcGetMinInRoadDist() in SH2, hardcoded to FP_TILE(16.0f) in SH1.
+#define MIN_IN_ROAD_DIST FP_METER(16.0f) // vcGetMinInRoadDist() in SH2, hardcoded to FP_METER(16.0f) in SH1.
 
 void vcInitVCSystem(VC_ROAD_DATA* vc_road_ary_list) // 0x80080940
 {
@@ -21,7 +21,7 @@ void vcInitVCSystem(VC_ROAD_DATA* vc_road_ary_list) // 0x80080940
     vcWork_CurNearRoadSet(&vcWork, &vcNullNearRoad);
 
     vcWork.old_cam_excl_area_r_6C = NO_VALUE;
-    vcWork.watch_tgt_max_y_88     = FP_TILE(480.0f);
+    vcWork.watch_tgt_max_y_88     = FP_METER(480.0f);
     vcWork.field_D8               = 0;
     vcWork.field_FC               = 0;
 }
@@ -331,7 +331,7 @@ s32 vcRetSmoothCamMvF(VECTOR3* old_pos, VECTOR3* now_pos, SVECTOR* old_ang, SVEC
                                   FP_FROM(now_pos->vz - old_pos->vz, Q4_SHIFT));
 
     mv_vec = FP_TO(mv_vec, Q12_SHIFT) / intrpt;
-    if (mv_vec > FP_TILE(0.2f))
+    if (mv_vec > FP_METER(0.2f))
     {
         return 0;
     }
@@ -412,17 +412,17 @@ s32 vcRetThroughDoorCamEndF(VC_WORK* w_p) // 0x800815F0
     }
 
     // TODO: Timer field treated as distance here? Maybe misnamed, need to check usages in SH2 against SH.
-    if (prm_p->timer_4 > FP_TILE(19.2f) && w_p->nearest_enemy_xz_dist_2E0 < FP_TILE(19.2f))
+    if (prm_p->timer_4 > FP_METER(19.2f) && w_p->nearest_enemy_xz_dist_2E0 < FP_METER(19.2f))
     {
         return 1;
     }
 
-    if (rail2chara_dist > FP_TILE(36.8f))
+    if (rail2chara_dist > FP_METER(36.8f))
     {
         return 1;
     }
 
-    if (rail2chara_dist > FP_TILE(8.0f))
+    if (rail2chara_dist > FP_METER(8.0f))
     {
         abs_ofs_ang_y = shAngleRegulate(w_p->chara_eye_ang_y_144 -
                         ratan2(w_p->chara_pos_114.vx - w_p->through_door_10.rail_sta_pos_C.vx, w_p->chara_pos_114.vz - w_p->through_door_10.rail_sta_pos_C.vz));
@@ -461,21 +461,21 @@ s32 vcRetSelfViewEffectRate(VC_CAM_MV_TYPE cur_cam_mv_type, s32 far_watch_rate, 
         return 0;
     }
 
-    cam_max_rate = (cur_cam_mv_type == VC_MV_SELF_VIEW) ? FP_TILE(16.0f) : FP_TILE(5.6f);
+    cam_max_rate = (cur_cam_mv_type == VC_MV_SELF_VIEW) ? FP_METER(16.0f) : FP_METER(5.6f);
 
     xyz_dist = Math_VectorMagnitude(FP_FROM(w_p->cam_pos_50.vx - w_p->chara_head_pos_130.vx, Q4_SHIFT),
                                     FP_FROM(w_p->cam_pos_50.vy - w_p->chara_head_pos_130.vy, Q4_SHIFT),
                                     FP_FROM(w_p->cam_pos_50.vz - w_p->chara_head_pos_130.vz, Q4_SHIFT));
 
-    if (xyz_dist >= FP_TILE(0.5f))
+    if (xyz_dist >= FP_METER(0.5f))
     {
-        if (xyz_dist > FP_TILE(1.2f))
+        if (xyz_dist > FP_METER(1.2f))
         {
             max_rate = 0;
         }
         else
         {
-            max_rate = (cam_max_rate * (FP_TILE(1.2f) - xyz_dist)) / FP_TILE(0.7f);
+            max_rate = (cam_max_rate * (FP_METER(1.2f) - xyz_dist)) / FP_METER(0.7f);
         }
     }
     else
@@ -483,19 +483,19 @@ s32 vcRetSelfViewEffectRate(VC_CAM_MV_TYPE cur_cam_mv_type, s32 far_watch_rate, 
         max_rate = cam_max_rate;
     }
 
-    if (w_p->nearest_enemy_xz_dist_2E0 > FP_TILE(64.0f))
+    if (w_p->nearest_enemy_xz_dist_2E0 > FP_METER(64.0f))
     {
-        mul_rate = FP_TILE(16.0f);
+        mul_rate = FP_METER(16.0f);
     }
     else
     {
-        if (w_p->nearest_enemy_xz_dist_2E0 < FP_TILE(32.0f))
+        if (w_p->nearest_enemy_xz_dist_2E0 < FP_METER(32.0f))
         {
             mul_rate = 0;
         }
         else
         {
-            mul_rate = (w_p->nearest_enemy_xz_dist_2E0 - FP_TILE(32.0f)) / 2;
+            mul_rate = (w_p->nearest_enemy_xz_dist_2E0 - FP_METER(32.0f)) / 2;
         }
     }
 
@@ -567,7 +567,7 @@ void vcSetTHROUGH_DOOR_CAM_PARAM_in_VC_WORK(VC_WORK* w_p, enum _THROUGH_DOOR_SET
             prm_p->timer_4                  = 0;
             prm_p->rail_ang_y_8             = w_p->chara_eye_ang_y_144;
             prm_p->rail_sta_pos_C.vx        = w_p->chara_pos_114.vx;
-            prm_p->rail_sta_pos_C.vy        = w_p->chara_grnd_y_12C - FP_TILE(31.2f);
+            prm_p->rail_sta_pos_C.vy        = w_p->chara_grnd_y_12C - FP_METER(31.2f);
             prm_p->rail_sta_pos_C.vz        = w_p->chara_pos_114.vz;
             break;
 
@@ -624,10 +624,10 @@ s32 vcAdvantageDistOfOldCurRoad(VC_NEAR_ROAD_DATA* old_cur_p) // 0x80082AD0
         case VC_RD_TYPE_ROAD:
         case VC_RD_TYPE_EFFECT:
         default:
-            return FP_TILE(5.6f);
+            return FP_METER(5.6f);
 
         case VC_RD_TYPE_EVENT:
-            return FP_TILE(2.4f);
+            return FP_METER(2.4f);
     }
 }
 
@@ -697,7 +697,7 @@ void vcSetWatchTgtYParam(VECTOR3* watch_pos, VC_WORK* w_p, s32 cam_mv_type, s32 
 
 void vcAdjustWatchYLimitHighWhenFarView(VECTOR3* watch_pos, VECTOR3* cam_pos, s16 sy) // 0x800835E0
 {
-    s16 max_cam_ang_x = ratan2(cam_pos->vy + FP_TILE(80.0f), FP_TILE(208.0f)) - ratan2(g_GameWork.gsScreenHeight_58A / 2, sy);
+    s16 max_cam_ang_x = ratan2(cam_pos->vy + FP_METER(80.0f), FP_METER(208.0f)) - ratan2(g_GameWork.gsScreenHeight_58A / 2, sy);
     s32 dist          = Math_VectorMagnitude(watch_pos->vx - cam_pos->vx, 0, watch_pos->vz - cam_pos->vz);
     s32 cam_ang_x     = ratan2(-watch_pos->vy + cam_pos->vy, dist) * FP_ANGLE_COUNT;
 
@@ -758,7 +758,7 @@ void vcAutoRenewalCamTgtPos(VC_WORK* w_p, VC_CAM_MV_TYPE cam_mv_type, VC_CAM_MV_
             break;
 
         case 1:
-            vcMakeBasicCamTgtMvVec(&tgt_vec, &ideal_pos, w_p, FP_TILE(16.0f));
+            vcMakeBasicCamTgtMvVec(&tgt_vec, &ideal_pos, w_p, FP_METER(16.0f));
             break;
     }
 
@@ -787,8 +787,8 @@ s32 vcRetMaxTgtMvXzLen(VC_WORK* w_p, VC_CAM_MV_PARAM* cam_mv_prm_p) // 0x8008395
 {
     s32 max_spd_xz;
 
-    max_spd_xz = w_p->chara_mv_spd_13C + FP_TILE(16.0f) + abs(w_p->chara_ang_spd_y_142 * 8);
-    max_spd_xz = (max_spd_xz < FP_TILE(35.2f)) ? FP_TILE(35.2f) : max_spd_xz;
+    max_spd_xz = w_p->chara_mv_spd_13C + FP_METER(16.0f) + abs(w_p->chara_ang_spd_y_142 * 8);
+    max_spd_xz = (max_spd_xz < FP_METER(35.2f)) ? FP_METER(35.2f) : max_spd_xz;
     max_spd_xz = (cam_mv_prm_p->max_spd_xz > max_spd_xz) ? max_spd_xz : cam_mv_prm_p->max_spd_xz;
 
     return Math_MulFixed(max_spd_xz, g_DeltaTime0, Q12_SHIFT);
@@ -809,12 +809,12 @@ void vcMakeIdealCamPosByHeadPos(VECTOR3* ideal_pos, VC_WORK* w_p, VC_AREA_SIZE_T
     if (g_GameWorkPtr0->optViewMode_29)
     {
         chara2cam_ang_y = w_p->chara_eye_ang_y_144 + FP_ANGLE(8.75f);
-        ideal_pos->vy   = w_p->chara_head_pos_130.vy + FP_TILE(1.12f);
+        ideal_pos->vy   = w_p->chara_head_pos_130.vy + FP_METER(1.12f);
     }
     else
     {
         chara2cam_ang_y = w_p->chara_eye_ang_y_144 + FP_ANGLE(10.625f);
-        ideal_pos->vy   = w_p->chara_head_pos_130.vy + FP_TILE(1.6f);
+        ideal_pos->vy   = w_p->chara_head_pos_130.vy + FP_METER(1.6f);
     }
 
     ideal_pos->vx = w_p->chara_head_pos_130.vx + FP_MULTIPLY(shRsin(chara2cam_ang_y), FP_ANGLE(4.05f), Q12_SHIFT);
@@ -918,9 +918,9 @@ void vcCamTgtMvVecIsFlipedFromCharaFront(VECTOR3* tgt_mv_vec, VC_WORK* w_p, s32 
     if (flip_dist > 0)
     {
         mv_len = flip_dist;
-        if (flip_dist > FP_TILE(8.0f))
+        if (flip_dist > FP_METER(8.0f))
         {
-            mv_len = FP_TILE(8.0f);
+            mv_len = FP_METER(8.0f);
         }
 
         // chk_pos is unused?
@@ -1239,9 +1239,9 @@ void vcSetDataToVwSystem(VC_WORK* w_p, VC_CAM_MV_TYPE cam_mv_type) // 0x80085884
     {
         w_p->field_D8 = 0;
         vwSetCoordRefAndEntou(&g_SysWork.playerBoneCoords_890[PlayerBone_Head],
-                              0, FP_TILE(-0.8f), FP_TILE(4.8f),
-                              FP_ANGLE(11.25f), FP_ANGLE(0.0f), FP_TILE(-3.2f),
-                              FP_TILE(16.0f));
+                              0, FP_METER(-0.8f), FP_METER(4.8f),
+                              FP_ANGLE(11.25f), FP_ANGLE(0.0f), FP_METER(-3.2f),
+                              FP_METER(16.0f));
     }
     else if (w_p->field_FC != 0)
     {

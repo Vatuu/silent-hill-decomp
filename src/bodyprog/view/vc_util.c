@@ -17,7 +17,7 @@ void vcSetCameraUseWarp(VECTOR3* chr_pos, s16 chr_ang_y) // 0x800400D4
     cam_ang.vz = 0;
 
     cam_pos.vx = chr_pos->vx - FP_MULTIPLY(shRsin(chr_ang_y), 0x1800, Q12_SHIFT);
-    cam_pos.vy = chr_pos->vy - FP_TILE(27.2f);
+    cam_pos.vy = chr_pos->vy - FP_METER(27.2f);
     cam_pos.vz = chr_pos->vz - FP_MULTIPLY(shRcos(chr_ang_y), 0x1800, Q12_SHIFT);
 
     vcSetFirstCamWork(&cam_pos, chr_ang_y, g_SysWork.flags_22A4 & 0x40);
@@ -61,13 +61,13 @@ void vcMakeHeroHeadPos(VECTOR3* head_pos) // 0x8004047C
 
     func_80049984(&g_SysWork.playerBoneCoords_890[PlayerBone_Head], &neck_lwm);
 
-    fpos.vx = FP_TILE(0.0f);
-    fpos.vy = FP_TILE(-0.1f);
-    fpos.vz = FP_TILE(0.0f);
+    fpos.vx = FP_METER(0.0f);
+    fpos.vy = FP_METER(-0.1f);
+    fpos.vz = FP_METER(0.0f);
     ApplyMatrix(&neck_lwm, &fpos, &sp38);
 
     head_pos->vx = FP_TO(sp38.vx + neck_lwm.t[0], Q4_SHIFT);
-    head_pos->vy = FP_TO(sp38.vy + neck_lwm.t[1], Q4_SHIFT) - FP_TILE(4.8f);
+    head_pos->vy = FP_TO(sp38.vy + neck_lwm.t[1], Q4_SHIFT) - FP_METER(4.8f);
     head_pos->vz = FP_TO(sp38.vz + neck_lwm.t[2], Q4_SHIFT);
 }
 
@@ -82,12 +82,12 @@ void vcSetRefPosAndSysRef2CamParam(VECTOR3* ref_pos, s_SysWork* sys_p, s32 for_f
 {
     if (for_f != 0)
     {
-        sys_p->cameraRadiusXz_2380 -= FP_TILE(1.6f);
+        sys_p->cameraRadiusXz_2380 -= FP_METER(1.6f);
     }
 
     if (back_f != 0)
     {
-        sys_p->cameraRadiusXz_2380 += FP_TILE(1.6f);
+        sys_p->cameraRadiusXz_2380 += FP_METER(1.6f);
     }
 
     if (right_f != 0)
@@ -102,20 +102,20 @@ void vcSetRefPosAndSysRef2CamParam(VECTOR3* ref_pos, s_SysWork* sys_p, s32 for_f
 
     if (up_f != 0)
     {
-        sys_p->cameraY_2384 -= FP_TILE(1.6f);
+        sys_p->cameraY_2384 -= FP_METER(1.6f);
     }
 
     if (down_f != 0)
     {
-        sys_p->cameraY_2384 += FP_TILE(1.6f);
+        sys_p->cameraY_2384 += FP_METER(1.6f);
     }
 
-    if (sys_p->cameraRadiusXz_2380 < FP_TILE(16.0f))
+    if (sys_p->cameraRadiusXz_2380 < FP_METER(16.0f))
     {
-        sys_p->cameraRadiusXz_2380 = FP_TILE(16.0f);
+        sys_p->cameraRadiusXz_2380 = FP_METER(16.0f);
     }
 
-    vcAddOfsToPos(ref_pos, &g_SysWork.player_4C.chara_0.position_18, FP_TILE(8.0f), g_SysWork.player_4C.chara_0.rotation_24.vy, FP_TILE(-16.0f));
+    vcAddOfsToPos(ref_pos, &g_SysWork.player_4C.chara_0.position_18, FP_METER(8.0f), g_SysWork.player_4C.chara_0.rotation_24.vy, FP_METER(-16.0f));
 }
 
 void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, s_SysWork* sys_p) // 0x800406D4
@@ -237,7 +237,7 @@ void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, s_SysWork* sys_p) // 0x80040
     {
         SVECTOR sp58;
 
-        vwAngleToVector(&sp58, &cam_ang, FP_TILE(5.0f));
+        vwAngleToVector(&sp58, &cam_ang, FP_METER(5.0f));
 
         ref_pos->vx = FP_TO(sp18.vx + sp58.vx, Q4_SHIFT);
         ref_pos->vy = FP_TO(sp18.vy + sp58.vy, Q4_SHIFT);
