@@ -704,6 +704,11 @@ extern s_FsImageDesc g_MainImg0; // 0x80022C74
 
 extern s_800AD4C8 D_800AD4C8[];
 
+/** TODO: 800C964C and 800C96B8 are part of map overlay header? maybe should be moved to maps/s00.h or dynamic/dynamic.h */
+extern s32 (*D_800C964C)(s32, void*, s16, s32);
+
+extern s32 (*D_800C96B8)(s32, s32, void*, s16, s32);
+
 /** Initializer for something before the game loop. */
 void func_8002E630();
 
