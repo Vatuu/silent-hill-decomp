@@ -346,14 +346,18 @@ STATIC_ASSERT_SIZEOF(s_Skeleton, 28);
 
 typedef struct
 {
-    u16 field_0[8]; // Used to calculate cam_tgt_pos & watch_tgt_pos.
+    SVECTOR3 posTarget_0;
+    SVECTOR3 lookAtTarget_6;
+    s16      field_C[2]; // field_C[1] gets passed to vcChangeProjectionValue
 } s_DmsKeyframeCamera;
+STATIC_ASSERT_SIZEOF(s_DmsKeyframeCamera, 16);
 
 typedef struct
 {
     SVECTOR3 position_0;
     SVECTOR3 rotation_6;
 } s_DmsKeyframeCharacter;
+STATIC_ASSERT_SIZEOF(s_DmsKeyframeCharacter, 12);
 
 typedef struct
 {
@@ -961,11 +965,11 @@ void Dms_CharacterKeyframeInterpolate(s_DmsKeyframeCharacter* result, s_DmsKeyfr
 
 s32 Dms_CameraGetTargetPos(VECTOR3* posTarget, VECTOR3* lookAtTarget, u16* arg2, s32 time, s_DmsHeader* header);
 
+s32 Dms_CameraKeyframeInterpolate(s_DmsKeyframeCamera* result, s_DmsKeyframeCamera* frame0, s_DmsKeyframeCamera* frame1, s32 lerpFactor);
+
 s32 func_8008D2C4(s32 time, s_DmsHeader* header);
 
 s32 Math_LerpFixed12(s16 from, s16 to, s32 t);
-
-s32 func_8008CFEC(s16* arg0, s16* arg1, s16* arg2, s32 arg3);
 
 void func_8008D1D0(s32* arg0, s32* arg1, s32* arg2, s32, s_DmsEntry* entry, s_DmsHeader* header);
 

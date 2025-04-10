@@ -237,6 +237,8 @@ Dms_CharacterKeyframeInterpolate = 0x8008CC98; // type:func
 
 Dms_CameraGetTargetPos = 0x8008CE1C; // type:func
 
+Dms_CameraKeyframeInterpolate = 0x8008CFEC; // type:func
+
 Math_LerpFixed12 = 0x8008D3D4; // type:func
 
 Demo_DataRead = 0x8008F07C; // type:func

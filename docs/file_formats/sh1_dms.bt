@@ -31,7 +31,9 @@ struct DMSInterval
 
 struct CameraFrame
 {
-    short field_0[8]; // Used to calculate cam_tgt_pos & watch_tgt_pos.
+    SVECTOR3 posTarget_0;
+    SVECTOR3 lookAtTarget_6;
+    short    field_C[2]; // field_C[1] gets passed to vcChangeProjectionValue
 };
 
 struct CharacterFrame
