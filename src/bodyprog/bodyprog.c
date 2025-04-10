@@ -1452,7 +1452,10 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003C30C);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003C368);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003C3A0);
+void func_8003C3A0() // 0x8003C3A0
+{
+    D_800BCE1C = 0;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003C3AC);
 
