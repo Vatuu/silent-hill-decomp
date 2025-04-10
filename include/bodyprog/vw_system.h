@@ -95,39 +95,38 @@ STATIC_ASSERT_SIZEOF(THROUGH_DOOR_SET_CMD_TYPE, 4);
  */
 typedef struct _VC_LIMIT_AREA
 {
-    s16 min_hx;
-    s16 max_hx;
-    s16 min_hz;
-    s16 max_hz;
+    short min_hx;
+    short max_hx;
+    short min_hz;
+    short max_hz;
 } VC_LIMIT_AREA;
 STATIC_ASSERT_SIZEOF(VC_LIMIT_AREA, 8);
 
 typedef struct _VC_CAMERA_INTINFO
 {
-    s32 mode;
-    u8  mv_smooth;
-    s8  unk_5;
-    s16 ev_cam_rate;
+    int    mode;
+    u_char mv_smooth;
+    char   unk_5;
+    short  ev_cam_rate;
 } VC_CAMERA_INTINFO;
 STATIC_ASSERT_SIZEOF(VC_CAMERA_INTINFO, 8);
 
-/** @brief Camera look-at rotation parameters. */
+// Camera rotation parameters.
 typedef struct _VC_WATCH_MV_PARAM
 {
-    s32 ang_accel_x;   /** Angular acceleration on the X axis. */
-    s32 ang_accel_y;   /** Angular acceleration on the Y axis. */
-    s16 max_ang_spd_x; /** Max angular speed on the X axis. */
-    s16 max_ang_spd_y; /** Max angular speed on the Y axis. */
+    int   ang_accel_x;
+    int   ang_accel_y;
+    short max_ang_spd_x;
+    short max_ang_spd_y;
 } VC_WATCH_MV_PARAM;
 STATIC_ASSERT_SIZEOF(VC_WATCH_MV_PARAM, 12);
 
-/** @brief Camera translation paremeters. */
 typedef struct _VC_CAM_MV_PARAM
 {
-    s32 accel_xz;   /** Speed acceleration on the XZ plane. */
-    s32 accel_y;    /** Speed acceleration on the Y axis. */
-    s32 max_spd_xz; /** Max speed on the XZ plane. */
-    s32 max_spd_y;  /** Max speed on the Y axis. */
+    int accel_xz;
+    int accel_y;
+    int max_spd_xz;
+    int max_spd_y;
 } VC_CAM_MV_PARAM;
 STATIC_ASSERT_SIZEOF(VC_CAM_MV_PARAM, 16);
 
@@ -135,42 +134,41 @@ STATIC_ASSERT_SIZEOF(VC_CAM_MV_PARAM, 16);
 // Likely that mv_type is only a char and other fields are inside it too.
 typedef struct _VC_ROAD_DATA
 {
-    VC_LIMIT_AREA     lim_sw_0;
-    VC_LIMIT_AREA     lim_rd_8;
-    VC_ROAD_FLAGS     flags_10          : 8;
+    VC_LIMIT_AREA lim_sw_0;
+    VC_LIMIT_AREA lim_rd_8;
+    VC_ROAD_FLAGS     flags_10 : 8;
     VC_AREA_SIZE_TYPE area_size_type_11 : 2;
-    VC_ROAD_TYPE      rd_type_11        : 3;
-    s32               unk_11            : 19; // Unnamed fields may contain `mv_y_type`/`rd_dir_type`.
-    s32               unk_14            : 8;
-    u32               field_15          : 4;
-    s32               cam_mv_type_14    : 4; /** `VC_CAM_MV_TYPE` */
+    VC_ROAD_TYPE      rd_type_11 : 3;
+    int               unk_11 : 19; // Unnamed fields may contain mv_y_type / rd_dir_type
+    int               unk_14 : 8;
+    u32               field_15 : 4;
+    int               cam_mv_type_14 : 4; /** VC_CAM_MV_TYPE */
 } VC_ROAD_DATA;
 STATIC_ASSERT_SIZEOF(VC_ROAD_DATA, 24);
 
-/** @brief Rail camera parementers. */
 typedef struct _VC_THROUGH_DOOR_CAM_PARAM
 {
-    u8      active_f_0;
-    s8      unk_1[3];
-    s32     timer_4;
-    u16     rail_ang_y_8;              /** The rail's Y angle. */
-    s8      unk_A[2];
-    VECTOR3 rail_sta_pos_C;            /** The rail's start position. */
-    s32     rail_sta_to_chara_dist_18; /** The distance between the rail's rail start position to a character position. */
+    u_char  active_f_0;
+    char    unk_1[3];
+    int     timer_4;
+    u_short rail_ang_y_8;
+    char    unk_A[2];
+    VECTOR3 rail_sta_pos_C;
+    int     rail_sta_to_chara_dist_18;
 } VC_THROUGH_DOOR_CAM_PARAM;
 STATIC_ASSERT_SIZEOF(VC_THROUGH_DOOR_CAM_PARAM, 28);
 
 // TODO: Check if this struct is correct, some SH code seems to act like struct
-// is only 16 bytes when iterating through it?
+// is only 0x10 bytes when iterating through it?
 typedef struct _VC_NEAR_ROAD_DATA
 {
     VC_ROAD_DATA* road_p_0;
-    u8            rd_dir_type_4_mb; // Unsure.
-    u8            use_priority_5;
-    u8            unk_6[2];
-    s32           chara2road_sum_dist_8;
-    s32           chara2road_vec_x_C;
-    s32           chara2road_vec_z_10;
+    u_char        rd_dir_type_4_mb; // Unsure.
+    u_char        use_priority_5;
+    u_char        unk_6[2];
+    int           chara2road_sum_dist_8;
+    int           chara2road_vec_x_C;
+    int           chara2road_vec_z_10;
     VC_LIMIT_AREA rd_14;
     VC_LIMIT_AREA sw_1C;
 } VC_NEAR_ROAD_DATA;
@@ -178,62 +176,62 @@ STATIC_ASSERT_SIZEOF(VC_NEAR_ROAD_DATA, 36);
 
 typedef struct _VC_WORK
 {
-    u8                        view_cam_active_f_0;
+    u_char                    view_cam_active_f_0;
     VC_ROAD_DATA*             vc_road_ary_list_4;
     VC_FLAGS                  flags_8;
-    u8                        through_door_activate_init_f_C;
-    s8                        unk_D[3];
+    u_char                    through_door_activate_init_f_C;
+    u_char                    unk_D[3];
     VC_THROUGH_DOOR_CAM_PARAM through_door_10;
     s16                       scr_half_ang_wy_2C;
     s16                       scr_half_ang_wx_2E;
-    s16                       geom_screen_dist_30; // Related to `GsSetProjection`/`g_GameSys.gs_y_res_58A`.
-    s16                       field_32;
-    VC_CAM_MV_PARAM           user_cam_mv_prm_34;       /** Look parameters? */
-    VECTOR3                   cam_tgt_pos_44;           /** Target position. */
-    VECTOR3                   cam_pos_50;               /** Position. */
-    s16                       cam_mv_ang_y_5C;          /** Angular velocity on the Y axis. */
-    s8                        unk_5E[2];
-    VECTOR3                   cam_velo_60;              /** Velocity. */
-    s32                       old_cam_excl_area_r_6C;   /** Previous exclusion area radius. */
-    VC_WATCH_MV_PARAM         user_watch_mv_prm_70;
-    VECTOR3                   watch_tgt_pos_7C;         /** Target look-at position. */
-    s32                       watch_tgt_max_y_88;       /** Max look-at Y angle. */
-    s16                       watch_tgt_ang_z_8C;       /** Target look-at Z angle. */
-    SVECTOR                   cam_mat_ang_8E;
-    u8                        unk_96[2];
-    MATRIX                    cam_mat_98;               /** Matrix. */
-    SVECTOR                   ofs_cam_ang_B8;           /** Offset rotation. */
-    SVECTOR                   ofs_cam_ang_spd_C0;       /** Offset rotational speed. */
-    SVECTOR                   base_cam_ang_C8;          /** Base rotation. */
-    s8                        unk_D0[8];
-    u8                        field_D8;
-    s8                        unk_D9[3];
-    MATRIX                    field_DC;
-    u8                        field_FC;
-    u8                        field_FD;
-    s16                       cam_chara2ideal_ang_y_FE;  
-    VECTOR3                   cam_tgt_velo_100;          /** Target velocity. */
-    s16                       cam_tgt_mv_ang_y_10C;      /** Target Y angles. */
-    s8                        unk_10E[2];
-    s32                       cam_tgt_spd_110;           /** Target speed. */
-    VECTOR3                   chara_pos_114;             /** Locked-on character's position. */
-    s32                       chara_bottom_y_120;        /** Locked-on character's bottom height. */
-    s32                       chara_top_y_124;           /** Locked-on character's top height. */
-    s32                       chara_center_y_128;        /** Locked-on character's center height. */
-    s32                       chara_grnd_y_12C;          /** Locked-on character's height from the ground? */
-    VECTOR3                   chara_head_pos_130;        /** Locked-on character's head position. */
-    s32                       chara_mv_spd_13C;          /** Locked-on character's movement speed. */
-    s16                       chara_mv_ang_y_140;        /** Locked-on character's heading angle. */
-    s16                       chara_ang_spd_y_142;       /** Locked-on character's heading angle angular speed. */
-    s16                       chara_eye_ang_y_144;       /** Locked-on character's look heading angle? */
-    s16                       chara_eye_ang_wy_146;
-    s32                       chara_watch_xz_r_148;      /** Locked-on character's radius on the XZ plane. */
-    VC_NEAR_ROAD_DATA         near_road_ary_14C[10];
-    s32                       near_road_suu_2B4;
-    VC_NEAR_ROAD_DATA         cur_near_road_2B8;
-    struct SubCharacter*      nearest_enemy_p_2DC;       /** Closest enemy. */
-    s32                       nearest_enemy_xz_dist_2E0; /** Distance to the closest enemy on the XZ plane. */
-    s32                       field_2E4;
+    short                     geom_screen_dist_30; // Related to GsSetProjection / g_GameSys.gs_y_res_58A.
+    short                field_32;
+    VC_CAM_MV_PARAM      user_cam_mv_prm_34;
+    VECTOR3              cam_tgt_pos_44;
+    VECTOR3              cam_pos_50;
+    short                cam_mv_ang_y_5C;
+    u_char               unk_5E[2];
+    VECTOR3              cam_velo_60;
+    int                  old_cam_excl_area_r_6C;
+    VC_WATCH_MV_PARAM    user_watch_mv_prm_70;
+    VECTOR3              watch_tgt_pos_7C;
+    int                  watch_tgt_max_y_88;
+    short                watch_tgt_ang_z_8C;
+    SVECTOR              cam_mat_ang_8E;
+    u_char               unk_96[2];
+    MATRIX               cam_mat_98;
+    SVECTOR              ofs_cam_ang_B8;
+    SVECTOR              ofs_cam_ang_spd_C0;
+    SVECTOR              base_cam_ang_C8;
+    u_char               unk_D0[8];
+    u_char               field_D8;
+    u_char               unk_D9[3];
+    MATRIX               field_DC;
+    u_char               field_FC;
+    u_char               field_FD;
+    short                cam_chara2ideal_ang_y_FE;
+    VECTOR3              cam_tgt_velo_100;
+    short                cam_tgt_mv_ang_y_10C;
+    u_char               unk_10E[2];
+    int                  cam_tgt_spd_110;
+    VECTOR3              chara_pos_114;
+    int                  chara_bottom_y_120;
+    int                  chara_top_y_124;
+    int                  chara_center_y_128;
+    int                  chara_grnd_y_12C;
+    VECTOR3              chara_head_pos_130;
+    int                  chara_mv_spd_13C;
+    short                chara_mv_ang_y_140;
+    short                chara_ang_spd_y_142;
+    short                chara_eye_ang_y_144;
+    short                chara_eye_ang_wy_146;
+    int                  chara_watch_xz_r_148;
+    VC_NEAR_ROAD_DATA    near_road_ary_14C[10];
+    int                  near_road_suu_2B4;
+    VC_NEAR_ROAD_DATA    cur_near_road_2B8;
+    struct SubCharacter* nearest_enemy_p_2DC;
+    int                  nearest_enemy_xz_dist_2E0;
+    int                  field_2E4;
 } VC_WORK;
 STATIC_ASSERT_SIZEOF(VC_WORK, 744);
 
@@ -241,7 +239,7 @@ typedef struct _VbRVIEW
 {
     VECTOR3        vp;
     VECTOR3        vr;
-    s32            rz;
+    int            rz;
     GsCOORDINATE2* super;
 } VbRVIEW;
 STATIC_ASSERT_SIZEOF(VbRVIEW, 32);
