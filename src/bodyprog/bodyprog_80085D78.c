@@ -1544,7 +1544,49 @@ void func_8008D464() // 0x8008D464
     D_800C4818.field_1 = 0;
 }
 
+// TODO: Check what's wrong.
+#ifdef NON_MATCHING
+void func_8008D470(s16 arg0, s32 arg1, VECTOR3* pos, s32 arg3) // 0x8008D470
+{
+    s_8008E51C* ptr;
+    s32 var;
+
+    if (D_800C4818.field_0 == 0)
+    {
+        func_800410D8(&D_800C4818.field_C, &D_800C4818.field_1C, &D_800C4818.field_20, arg1, pos);
+        
+        if ((ReadGeomScreen() >> 1) < D_800C4818.field_14)
+        {
+            D_800C4818.field_2 = 1;
+            D_800C4818.field_8 = func_8008D8C0(arg0, D_800C4818.field_14, D_800C4818.field_20);
+            
+            func_8008D5A0(&D_800C4818.field_C, D_800C4818.field_20);
+        }
+        else
+        {
+            return;
+        }
+    }
+    
+    if (D_800C4818.field_1 == 0)
+    {
+        ptr = func_8008E51C(FP_FROM(pos->vx, Q8_SHIFT), FP_FROM(pos->vz, Q8_SHIFT), arg3);
+        if (ptr != NULL)
+        {
+            func_8008E5B4();
+            
+            if (ptr->field_0 == 1)
+            {
+                var = FP_TO(ptr->field_2, Q8_SHIFT);
+                func_8008E794(pos, D_800C4818.field_20, var);
+                func_8008EA68(arg1, pos, var);
+            }
+        }
+    }
+}
+#else
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008D470);
+#endif
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008D5A0);
 

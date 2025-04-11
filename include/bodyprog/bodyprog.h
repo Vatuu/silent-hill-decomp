@@ -120,6 +120,15 @@ typedef struct
     u16 field_44;
 } s_8008A384;
 
+typedef struct
+{
+    u8  field_0;
+    s8  unk_1;
+    s16 field_2;
+    s8  unk_4[4];
+    s32 field_8;
+} s_8008E51C;
+
 /** Something related to ANM files. See `D_800A90FC`. */
 typedef struct
 {
@@ -989,6 +998,8 @@ void func_8008D448();
 void func_8008D454();
 
 void func_8008D464();
+
+void func_8008D470(s16 arg0, s32 arg1, VECTOR3* pos, s32 arg3);
 
 void func_8008D1D0(s32* arg0, s32* arg1, s32* arg2, s32, s_DmsEntry* entry, s_DmsHeader* header);
 
