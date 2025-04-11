@@ -65,7 +65,7 @@ Progress bars powered by [decomp.dev](https://decomp.dev)
         </tr>
         <tr>
             <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?unit=screens/b_konami/b_konami"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&measure=code&unit=screens/b_konami/b_konami&color=rgb(255,215,0)"/></a></td>
-            <td colspan=2>Boot screen logic.</td>
+            <td>Boot screen logic.</td>
             <td>First fully decompiled and matching overlay!</td>
         </tr>
         <tr>
