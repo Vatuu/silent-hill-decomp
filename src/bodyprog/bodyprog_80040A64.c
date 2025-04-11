@@ -822,7 +822,43 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", SD_EngineCmd);
     }
 }*/
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80045B28);
+u8 func_80045B28() // 0x80045B28
+{
+    u8 var;
+
+    var = 1;
+    if (D_800C1658.field_4 != 0)
+    {
+        return var;
+    }
+
+    var = 2;
+    if (D_800C1658.field_15 == 0)
+    {
+        if (D_800C1673 != 0)
+        {
+            D_800C1688.field_8 = VSync(-1);
+            D_800C1688.field_4 = 0;
+            return 3;
+        }
+
+        if (D_800C37DC == 0)
+        {
+            if (D_800C37DD == 0)
+            {
+                return 0;
+            }
+
+            var = 5;
+            return var;
+        }
+
+        var = 4;
+        return var;
+    }
+
+    return var;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80045BC8);
 

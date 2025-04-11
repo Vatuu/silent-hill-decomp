@@ -207,12 +207,18 @@ typedef struct
 
 typedef struct
 {
+    s8 unk_0[28];
+} s_800C117C;
+STATIC_ASSERT_SIZEOF(s_800C117C, 28);
+
+typedef struct
+{
     u16 field_0;
     s8  field_2[2];
     u16 field_4;
     u16 field_6;
     s8  unk_8[13];
-    s8  field_15;
+    u8  field_15;
 } s_800C1658;
 
 typedef struct
@@ -233,9 +239,10 @@ typedef struct
 
 typedef struct
 {
-    s8 unk_0[28];
-} s_800C117C;
-STATIC_ASSERT_SIZEOF(s_800C117C, 28);
+    s8  unk_0[4];
+    s32 field_4;
+    s32 field_8;
+} s_800C1688;
 
 typedef struct
 {
@@ -608,6 +615,10 @@ extern u8 g_Sd_VolumeSe; // 0x800C1684
 
 extern s8 g_Sd_ReverbDepth; // 0x800C1687;
 
+extern u8 D_800C1673;
+
+extern s_800C1688 D_800C1688;
+
 extern u8 D_800C16A8;
 
 extern s32 D_800C16C8; // Type assumed.
@@ -633,6 +644,10 @@ extern u8 D_800C37C8;
 extern u32 D_800C37CC;
 
 extern s_800C37D4* D_800C37D4;
+
+extern u8 D_800C37DC;
+
+extern u8 D_800C37DD;
 
 extern s16 D_800C38A8;
 
@@ -906,6 +921,9 @@ void func_800453E8(s_Skeleton* skel, s32 cond);
 void func_80045468(s_Skeleton* skel, s32* arg1, s32 cond);
 
 void SD_EngineCmd(s32 cmd);
+
+/** Sound func? */
+u8 func_80045B28();
 
 void SD_DriverInit();
 
