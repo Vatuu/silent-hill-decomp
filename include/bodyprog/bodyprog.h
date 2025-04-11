@@ -348,7 +348,7 @@ typedef struct
 {
     SVECTOR3 posTarget_0;
     SVECTOR3 lookAtTarget_6;
-    s16      field_C[2]; // field_C[1] gets passed to vcChangeProjectionValue
+    s16      field_C[2]; // `field_C[1]` gets passed to `vcChangeProjectionValue`.
 } s_DmsKeyframeCamera;
 STATIC_ASSERT_SIZEOF(s_DmsKeyframeCamera, 16);
 
@@ -534,36 +534,6 @@ extern DVECTOR g_Gfx_DebugStringPosition1;
 
 extern s32 D_800B5C7C; // Type assumed.
 
-extern s8* D_800BCD2C;
-
-extern u8 D_800BCD3E;
-
-extern u8 D_800BCD3F;
-
-extern s8 D_800BCD78;
-
-extern u8 D_800BCDD4;
-
-extern u16 D_800BCE14;
-
-extern u8 D_800C16A8;
-
-extern u8 D_800C37D0;
-
-extern s_800C37D8* D_800C37D8;
-
-extern s_800C38B0 D_800C38B0;
-
-extern s32 D_800C38B4;
-
-extern s32 D_800C4710[];
-
-extern void (*D_800C9644)();
-
-extern void (*D_800C9648)(s32);
-
-extern s32 (*D_800C9668)();
-
 extern u16 D_800BCCB0;
 
 extern u16 D_800BCCB2;
@@ -571,11 +541,29 @@ extern u16 D_800BCCB2;
 /** Accessed by credits, options, and saveload. */
 extern s32 D_800BCD0C;
 
+extern s8* D_800BCD2C;
+
+extern u8 D_800BCD3E;
+
+extern u8 D_800BCD3F;
+
 extern s8 D_800BCD40;
+
+extern s8 D_800BCD78;
 
 extern s_800BCDA8 D_800BCDA8[];
 
 extern s32 D_800BCDB0; // Type assumed.
+
+extern u8 D_800BCDD4;
+
+extern u16 D_800BCE14;
+
+extern s8 D_800BCE1C;
+
+extern s32 D_800BE464;
+
+extern s_800BE9FC D_800BE9FC;
 
 extern s_800C1020 D_800C1020;
 
@@ -599,7 +587,23 @@ extern u8 g_Sd_VolumeSe; // 0x800C1684
 
 extern s8 g_Sd_ReverbDepth; // 0x800C1687;
 
-extern s_800BE9FC D_800BE9FC;
+extern u8 D_800C16A8;
+
+extern u8 D_800C37D0;
+
+extern s_800C37D8* D_800C37D8;
+
+extern s_800C38B0 D_800C38B0;
+
+extern s32 D_800C38B4;
+
+extern s32 D_800C4710[];
+
+extern void (*D_800C9644)();
+
+extern void (*D_800C9648)(s32);
+
+extern s32 (*D_800C9668)();
 
 extern u8 D_800C37C8;
 
@@ -959,13 +963,16 @@ void Dms_CharacterGetStartPosRot(VECTOR3* pos, SVECTOR* rot, char* charName, s32
 
 s32 Dms_CharacterFindIndexByName(char* name, s_DmsHeader* header);
 
-void Dms_CharacterGetPosRotByIndex(VECTOR3* pos, SVECTOR3* rot, s32 charaIndex, s32 time, s_DmsHeader* header);
+void Dms_CharacterGetPosRotByIndex(VECTOR3* pos, SVECTOR3* rot, s32 charaIdx, s32 time, s_DmsHeader* header);
 
-void Dms_CharacterKeyframeInterpolate(s_DmsKeyframeCharacter* result, s_DmsKeyframeCharacter* frame0, s_DmsKeyframeCharacter* frame1, s32 lerpFactor);
+void Dms_CharacterKeyframeInterpolate(s_DmsKeyframeCharacter* result, s_DmsKeyframeCharacter* frame0, s_DmsKeyframeCharacter* frame1, s32 alpha);
+
+/** Unused function? Returns 96 * cotangent(angle / 2). Possibly camera/FOV related. */
+s16 func_8008CDBC(s16 angle);
 
 s32 Dms_CameraGetTargetPos(VECTOR3* posTarget, VECTOR3* lookAtTarget, u16* arg2, s32 time, s_DmsHeader* header);
 
-s32 Dms_CameraKeyframeInterpolate(s_DmsKeyframeCamera* result, s_DmsKeyframeCamera* frame0, s_DmsKeyframeCamera* frame1, s32 lerpFactor);
+s32 Dms_CameraKeyframeInterpolate(s_DmsKeyframeCamera* result, s_DmsKeyframeCamera* frame0, s_DmsKeyframeCamera* frame1, s32 alpha);
 
 s32 func_8008D2C4(s32 time, s_DmsHeader* header);
 
@@ -1120,6 +1127,8 @@ void func_80066E40();
 
 void func_80066E7C();
 
+s32 func_8006A3B4(s32 arg0, s32 arg1, s32 arg2);
+
 /** Draws some string in display space. */
 void func_80032CE8();
 
@@ -1205,6 +1214,10 @@ void GameFs_BgEtcGfxLoad();
 void GameFs_BgItemLoad();
 
 void func_8003BED0();
+
+void func_8003C3A0();
+
+void func_8003D938();
 
 /** Loads a flame graphic. */
 void GameFs_FlameGfxLoad();
