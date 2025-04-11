@@ -176,6 +176,12 @@ typedef struct
 
 typedef struct
 {
+	s32 field_0;
+    s8  unk_4[12];
+} s_800B5C40;
+
+typedef struct
+{
     s8 unk_0;
     s8 field_1;
     s8 field_2;
@@ -531,6 +537,8 @@ extern s32 D_800B5618;
 extern DVECTOR g_Gfx_DebugStringPosition0;
 
 extern DVECTOR g_Gfx_DebugStringPosition1;
+
+extern s_800B5C40 D_800B5C40;
 
 extern s32 D_800B5C7C; // Type assumed.
 

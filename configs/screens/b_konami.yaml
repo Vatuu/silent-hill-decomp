@@ -54,9 +54,13 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0x0, rodata]
+      - [0x0, pad]
+      - [0x8, .rodata, b_konami] # Jumptable
+      - [0x28, pad]
+      - [0x2C, .rodata, b_konami]
 
       - [0x34, c, b_konami]
 
-      - [0xF78, data, b_konami]
+      - [0xF78, .data, b_konami]
+      - [0xF9C, data] # What is this?
   - [0x1000]

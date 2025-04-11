@@ -54,7 +54,7 @@ void func_8004B684() // 0x8004B684
     D_800C38B0.field_1 = 1;
     D_800C38AC = -120;
     D_800AD498 = 7;
-    g_SysWork.field_234D &= ~0xF;
+    g_SysWork.field_2350 &= ~0xF;
 }
 
 void func_8004B6D4(s16 arg0, s16 arg1) // 0x8004B6D4

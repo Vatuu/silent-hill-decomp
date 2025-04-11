@@ -28,7 +28,25 @@ s32 func_801E3078(s_UnkSaveload0* arg0)
 
 INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E30C4);
 
-INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E326C);
+void func_801E326C(s8 *arg0, s8 *arg1, s32 arg2, s32 arg3) // 0x801E326C
+{
+    if (arg2 == 0)
+    {
+        D_801E756C[arg3] = 0;
+    }
+    
+    if (arg2 < D_801E7570[arg3] || (D_801E7570[arg3] + 4) < arg2)
+    {
+        if (D_801E756C[arg3] != arg0[6])
+        {
+            D_801E756C[arg3] = arg0[6];
+        }
+    }
+    else
+    {
+        func_801E4D90(arg0, arg1, arg2, arg3);
+    }
+}
 
 INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E3304);
 

@@ -24,6 +24,8 @@ extern s32 D_801E751C;
 
 extern s32 D_801E7520;
 
+extern s16 D_801E756C[];
+
 extern s16 D_801E7570[];
 
 extern s16 D_801E7578[];
@@ -33,6 +35,8 @@ extern s8 D_801E76D0;
 void func_801E2F90(s32 idx);
 
 s32 func_801E3078(s_UnkSaveload0* arg0);
+
+void func_801E4D90(s8* arg0, s8 *arg1, s32 arg2, s32 arg3);
 
 void func_801E63C0();
 

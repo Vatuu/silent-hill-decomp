@@ -6,21 +6,33 @@
 #define BOOT_ADDR_0 ((u8*)0x801E09E0)
 #define BOOT_ADDR_1 ((u8*)0x801E1430)
 
-extern s32 D_800CA4F4;
+typedef struct
+{
+    u8 field_0;
+    u8 field_1;
+    u8 field_2;
+    u8 field_3;
+} s_800CA4F0;
 
-extern s32 D_800CA4FC;
+extern s_800CA4F0 D_800CA4F0;
 
-extern s32 D_800CA500;
+extern u8* D_800CA4F4;
 
-extern s32 D_800CA504;
+extern s32 D_800CA4F8;
+
+extern s32 D_800CA4FC; // Boolean value
+
+extern u8* D_800CA500;
+
+extern u8* D_800CA504;
 
 extern s32 D_800CA508;
 
-extern s32 D_800CA50C;
+extern u8* D_800CA50C;
 
 extern s32 D_800CA510;
 
-void func_800C9E6C(s_FsImageDesc* image, s32 otz, s16 vramX, s16 vramY, s16 w, s16 h, s16 x, s16 y);
+void func_800C9E6C(s_FsImageDesc* image, s32 otz, s32 vramX, s32 vramY, s32 w, s32 h, s32 x, s32 y);
 
 /** Display Konami logo and start loading base hero animations. */
 void func_800C95AC();
