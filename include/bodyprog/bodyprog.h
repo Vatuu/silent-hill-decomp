@@ -602,6 +602,7 @@ extern s8 D_800C15B4;
 extern s16 D_800C15F8[];
 
 extern s_800C1658 D_800C1658;
+extern u16 D_800C1666;
 
 extern s_800C1670 D_800C1670;
 
@@ -924,6 +925,8 @@ void SD_EngineCmd(s32 cmd);
 
 /** Sound func? */
 u8 func_80045B28();
+
+u16 func_80045BC8();
 
 void SD_DriverInit();
 

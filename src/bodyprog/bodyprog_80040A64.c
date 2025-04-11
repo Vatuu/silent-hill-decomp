@@ -860,7 +860,10 @@ u8 func_80045B28() // 0x80045B28
     return var;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80045BC8);
+u16 func_80045BC8() // 0x80045BC8
+{
+    return D_800C1666;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80045BD8);
 
