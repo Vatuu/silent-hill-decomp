@@ -1546,20 +1546,19 @@ void func_8008D464() // 0x8008D464
 
 // TODO: Check what's wrong.
 #ifdef NON_MATCHING
-void func_8008D470(s16 arg0, s32 arg1, VECTOR3* pos, s32 arg3) // 0x8008D470
+void func_8008D470(s16 arg0, SVECTOR* rot, VECTOR3* pos, s32 arg3) // 0x8008D470
 {
     s_8008E51C* ptr;
     s32 var;
 
     if (D_800C4818.field_0 == 0)
     {
-        func_800410D8(&D_800C4818.field_C, &D_800C4818.field_1C, &D_800C4818.field_20, arg1, pos);
-        
+        func_800410D8(&D_800C4818.field_C, &D_800C4818.field_1C, &D_800C4818.field_20, rot, pos);
+
         if ((ReadGeomScreen() >> 1) < D_800C4818.field_14)
         {
             D_800C4818.field_2 = 1;
             D_800C4818.field_8 = func_8008D8C0(arg0, D_800C4818.field_14, D_800C4818.field_20);
-            
             func_8008D5A0(&D_800C4818.field_C, D_800C4818.field_20);
         }
         else
@@ -1567,14 +1566,14 @@ void func_8008D470(s16 arg0, s32 arg1, VECTOR3* pos, s32 arg3) // 0x8008D470
             return;
         }
     }
-    
+
     if (D_800C4818.field_1 == 0)
     {
         ptr = func_8008E51C(FP_FROM(pos->vx, Q8_SHIFT), FP_FROM(pos->vz, Q8_SHIFT), arg3);
         if (ptr != NULL)
         {
             func_8008E5B4();
-            
+
             if (ptr->field_0 == 1)
             {
                 var = FP_TO(ptr->field_2, Q8_SHIFT);
@@ -1628,7 +1627,7 @@ void func_8008D78C()
     func_8008D990(var1, D_800C4818.field_A, &D_800C4818.field_C, D_800C4818.field_1C, D_800C4818.field_20);
 }
 
-s32 func_8008D850()
+s32 func_8008D850() // 0x8008D850
 {
     s16 rectX;
     RECT rect;

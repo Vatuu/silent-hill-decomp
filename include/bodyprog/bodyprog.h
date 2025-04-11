@@ -999,7 +999,7 @@ void func_8008D454();
 
 void func_8008D464();
 
-void func_8008D470(s16 arg0, s32 arg1, VECTOR3* pos, s32 arg3);
+void func_8008D470(s16 arg0, SVECTOR* rot, VECTOR3* pos, s32 arg3);
 
 void func_8008D1D0(s32* arg0, s32* arg1, s32* arg2, s32, s_DmsEntry* entry, s_DmsHeader* header);
 
