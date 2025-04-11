@@ -982,6 +982,10 @@ void func_8008D41C();
 
 void func_8008D438();
 
+void func_8008D448();
+
+void func_8008D454();
+
 void func_8008D1D0(s32* arg0, s32* arg1, s32* arg2, s32, s_DmsEntry* entry, s_DmsHeader* header);
 
 void func_801E2D8C();

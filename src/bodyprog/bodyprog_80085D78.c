@@ -1529,9 +1529,15 @@ void func_8008D438() // 0x8008D438
     D_800C4818.field_0 = 1;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008D448);
+void func_8008D448() // 0x8008D448
+{
+    D_800C4818.field_0 = 0;
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008D454);
+void func_8008D454() // 0x8008D454
+{
+    D_800C4818.field_1 = 1;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008D464);
 
