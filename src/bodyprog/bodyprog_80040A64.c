@@ -785,7 +785,21 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80045BD8);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80045D28);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", SD_DriverInit);
+void SD_DriverInit() // 0x80045DD4
+{
+    SdInit();
+    SdSetTickMode(1);
+    func_80045D28(1);
+    SdSetReservedVoice(24);
+    SdStart();
+    SdSetTableSize(&D_800C16C8, 16, 3);
+
+    D_800C1678.field_C = 127;
+    D_800C1678.field_D = 127;
+    D_800C1678.field_E = 127;
+
+    func_80045E44();
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80045E44);
 

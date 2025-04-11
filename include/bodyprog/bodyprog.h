@@ -225,6 +225,14 @@ typedef struct
 
 typedef struct
 {
+    s8 unk_0[12];
+    s8 field_C;
+    s8 field_D;
+    s8 field_E;
+} s_800C1678;
+
+typedef struct
+{
     s8 unk_0[28];
 } s_800C117C;
 STATIC_ASSERT_SIZEOF(s_800C117C, 28);
@@ -590,6 +598,8 @@ extern s_800C1658 D_800C1658;
 
 extern s_800C1670 D_800C1670;
 
+extern s_800C1678 D_800C1678;
+
 extern u8 g_Sd_VolumeBgm; // 0x800C1685
 
 extern u8 g_Sd_VolumeXa; // 0x800C1686
@@ -599,6 +609,8 @@ extern u8 g_Sd_VolumeSe; // 0x800C1684
 extern s8 g_Sd_ReverbDepth; // 0x800C1687;
 
 extern u8 D_800C16A8;
+
+extern s32 D_800C16C8; // Type assumed.
 
 extern u8 D_800C37D0;
 
@@ -889,8 +901,11 @@ void func_80045014(s_Skeleton* skel);
 /** Anim func. Traverses skeleton bones to set flags/mask. */
 void func_800453E8(s_Skeleton* skel, s32 cond);
 
+
 /** Does something with skeleton bones. `arg0` is a struct pointer. */
 void func_80045468(s_Skeleton* skel, s32* arg1, s32 cond);
+
+void SD_DriverInit();
 
 u8 func_80045B28();
 
