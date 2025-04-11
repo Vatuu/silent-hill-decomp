@@ -390,8 +390,8 @@ void func_800C9FB8() // 0x800C9FB8
     setaddr(ptr, GsOUT_PACKET_P);
 
     setCodeWord((TILE*)GsOUT_PACKET_P, PRIM_RECT, 0xFFFFFF);
-    setXY0Fast((TILE*)GsOUT_PACKET_P, -320, -240);
-    setWH((TILE*)GsOUT_PACKET_P, 640, 480);
+    setXY0Fast((TILE*)GsOUT_PACKET_P, -SCREEN_WIDTH, -SCREEN_HEIGHT);
+    setWH((TILE*)GsOUT_PACKET_P, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2);
 
     GsOUT_PACKET_P = (PACKET*)((u8*)GsOUT_PACKET_P + sizeof(TILE));
 }
@@ -411,8 +411,8 @@ void func_800CA120() // 0x800CA120
     setaddr(ptr, GsOUT_PACKET_P);
 
     setCodeWord((TILE*)GsOUT_PACKET_P, PRIM_RECT, 0xFFFFFF);
-    setXY0Fast((TILE*)GsOUT_PACKET_P, -320, -240);
-    setWH((TILE*)GsOUT_PACKET_P, 640, 480);
+    setXY0Fast((TILE*)GsOUT_PACKET_P, -SCREEN_WIDTH, -SCREEN_HEIGHT);
+    setWH((TILE*)GsOUT_PACKET_P, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2);
 
     GsOUT_PACKET_P = (PACKET*)((u8*)GsOUT_PACKET_P + sizeof(TILE));
 }
