@@ -976,7 +976,11 @@ s32 Dms_CameraKeyframeInterpolate(s_DmsKeyframeCamera* result, s_DmsKeyframeCame
 
 s32 func_8008D2C4(s32 time, s_DmsHeader* header);
 
-s32 Math_LerpFixed12(s16 from, s16 to, s32 t);
+s32 Math_LerpFixed12(s16 from, s16 to, s32 alpha);
+
+void func_8008D41C();
+
+void func_8008D438();
 
 void func_8008D1D0(s32* arg0, s32* arg1, s32* arg2, s32, s_DmsEntry* entry, s_DmsHeader* header);
 

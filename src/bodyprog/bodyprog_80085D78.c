@@ -1028,12 +1028,12 @@ void func_80087EDC(s32 arg0)
     }
 }
 
-void func_80088028(void)
+void func_80088028()
 {
     func_80087EDC(0);
 }
 
-void func_80088048(void)
+void func_80088048()
 {
     if (func_80045B28() & 0xFF)
     {
@@ -1344,7 +1344,7 @@ void DmsHeader_FixOffsets(s_DmsHeader* header) // 0x8008C9A0
 void DmsEntry_FixOffsets(s_DmsEntry* entry, s_DmsHeader* header) // 0x8008CA44
 {
     entry->keyframes_C.character = (u32)entry->keyframes_C.character + (u32)header;
-    entry->svectorPtr_8   = (u32)entry->svectorPtr_8 + (u32)header;
+    entry->svectorPtr_8 = (u32)entry->svectorPtr_8 + (u32)header;
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008CA60);
@@ -1510,15 +1510,24 @@ s32 func_8008D2C4(s32 time, s_DmsHeader* header)
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008D330);
 
-s32 Math_LerpFixed12(s16 from, s16 to, s32 t) // 0x8008D3D4
+s32 Math_LerpFixed12(s16 from, s16 to, s32 alpha) // 0x8008D3D4
 {
     // TODO: Shifts are similar to `shAngleRegulate`, but that doesn't seem to work here.
-    return ((s32)(FP_MULTIPLY((((to - from) << 20) >> 20), (s64)t, 12) + from) << 20) >> 20;
+    return ((s32)(FP_MULTIPLY((((to - from) << 20) >> 20), (s64)alpha, 12) + from) << 20) >> 20;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008D41C);
+void func_8008D41C() // 0x8008D41C
+{
+    D_800C4818.field_0 = 0;
+    D_800C4818.field_1 = 0;
+    D_800C4818.field_2 = 0;
+    D_800C4818.field_A = 0;
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008D438);
+void func_8008D438() // 0x8008D438
+{
+    D_800C4818.field_0 = 1;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008D448);
 
