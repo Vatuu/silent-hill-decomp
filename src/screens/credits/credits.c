@@ -164,7 +164,6 @@ s32 func_801E3304() // 0x801E3304
 
 INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E342C);
 
-#ifdef NON_MATCHING
 bool func_801E3684() // 0x801E3684
 {
     s32 sp10;
@@ -255,9 +254,6 @@ bool func_801E3684() // 0x801E3684
     
     return ret;
 }
-#else
-INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E3684);
-#endif
 
 void func_801E386C() // 0x801E386C
 {
@@ -297,7 +293,7 @@ s32 func_801E3DF8(s32 arg0) // 0x801E3DF8
 
 INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E3E18);
 
-void func_801E42F8(s16 arg0, s16 arg1)
+void func_801E42F8(s32 arg0, s32 arg1) // 0x801E42F8
 {
     D_800AFE08.field_0 = arg0;
     D_800AFE08.field_2 = arg1;

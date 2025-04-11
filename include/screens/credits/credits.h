@@ -82,7 +82,7 @@ bool func_801E3684();
 
 s32 func_801E3DF8(s32 arg0);
 
-void func_801E42F8(s16 arg0, s16 arg1);
+void func_801E42F8(s32 arg0, s32 arg1);
 
 /** @brief Sets the current RGB+command color for `D_800AFE10`.
  *
