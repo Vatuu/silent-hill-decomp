@@ -1481,6 +1481,7 @@ s32 Dms_CameraKeyframeInterpolate(s_DmsKeyframeCamera* result, s_DmsKeyframeCame
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008D1D0);
 
+// Dms_IntervalGetStatus?
 s32 func_8008D2C4(s32 time, s_DmsHeader* header)
 {
     s_DmsInterval* interval;
