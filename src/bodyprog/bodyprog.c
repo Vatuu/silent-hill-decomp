@@ -696,15 +696,15 @@ void MainLoop() // 0x80032EE0
 
         if ((u32)(g_GameWork.gameState_594 - 10) < 2)
         {
-            D_800C7018 = TEMP_MEMORY_ADDR + (g_ObjectTableIdx << 17);
+            GsOUT_PACKET_P = (PACKET*)(TEMP_MEMORY_ADDR + (g_ObjectTableIdx << 17));
         }
         else if (g_GameWork.gameState_594 == 14)
         {
-            D_800C7018 = TEMP_MEMORY_ADDR + (g_ObjectTableIdx * 40000);
+            GsOUT_PACKET_P = (PACKET*)(TEMP_MEMORY_ADDR + (g_ObjectTableIdx * 40000));
         }
         else
         {
-            D_800C7018 = TEMP_MEMORY_ADDR + (g_ObjectTableIdx << 15);
+            GsOUT_PACKET_P = (PACKET*)(TEMP_MEMORY_ADDR + (g_ObjectTableIdx << 15));
         }
 
         GsClearOt(0, 0, &g_ObjectTable0[g_ObjectTableIdx]);

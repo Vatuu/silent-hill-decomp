@@ -961,7 +961,7 @@ void func_8004807C() // 0x8004807C
 
 void func_800480FC() // 0x800480FC
 {
-    u32 var0;
+    s32 var0;
     u32 var1;
 
     if (CdReadSync(1, 0) != 0)

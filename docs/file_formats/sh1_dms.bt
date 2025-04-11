@@ -31,7 +31,9 @@ struct DMSInterval
 
 struct CameraFrame
 {
-    short field_0[8]; // Used to calculate cam_tgt_pos & watch_tgt_pos.
+    SVECTOR3 posTarget_0;
+    SVECTOR3 lookAtTarget_6;
+    short    field_C[2]; // field_C[1] gets passed to vcChangeProjectionValue
 };
 
 struct CharacterFrame
@@ -75,7 +77,7 @@ struct DMSHeader
     byte field_3; // Usually 0, but sometimes filled in.
     uint32 field_4; // Unknown, correlates to file size?
     uint32 intervalOffset_8;
-    VECTOR3 field_C;
+    VECTOR3 origin_C; // Origin point, gets added to character positions.
     uint32 charactersOffset_10;
 };
 

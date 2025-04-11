@@ -346,25 +346,52 @@ STATIC_ASSERT_SIZEOF(s_Skeleton, 28);
 
 typedef struct
 {
-    s16       count_0;
-    u8        ptr_8_count_2;
-    char      unk_3[1];
+    SVECTOR3 posTarget_0;
+    SVECTOR3 lookAtTarget_6;
+    s16      field_C[2]; // field_C[1] gets passed to vcChangeProjectionValue
+} s_DmsKeyframeCamera;
+STATIC_ASSERT_SIZEOF(s_DmsKeyframeCamera, 16);
+
+typedef struct
+{
+    SVECTOR3 position_0;
+    SVECTOR3 rotation_6;
+} s_DmsKeyframeCharacter;
+STATIC_ASSERT_SIZEOF(s_DmsKeyframeCharacter, 12);
+
+typedef struct
+{
+    s16       keyframeCount_0;
+    u8        svectorCount_2;
+    u8        field_3;        // Usually 0, but sometimes filled in, possibly junk data left in padding byte.
     char      name_4[4];      // First 4 chars of name. E.g. Code checks for "DAHLIA", file is "DAHL".
     SVECTOR3* svectorPtr_8;   // Pointer to `SVECTOR3`s. Unknown purpose.
-    u16*      unkStructPtr_C; // Pointer to struct of `u16`s, possibly `MATRIX`?
+    union
+    {
+        s_DmsKeyframeCharacter* character;
+        s_DmsKeyframeCamera*    camera;
+    } keyframes_C;
 } s_DmsEntry;
 STATIC_ASSERT_SIZEOF(s_DmsEntry, 16);
 
 typedef struct
 {
-    u8          isLoaded_0;
-    u8          characterCount_1;
-    u8          length_2;
-    s8          unk_3[5];
-    s16*        field_8;
-    VECTOR3     field_C;
-    s_DmsEntry* characters_18;
-    s_DmsEntry  camera_1C;
+    s16 start;
+    s16 duration;
+} s_DmsInterval;
+STATIC_ASSERT_SIZEOF(s_DmsInterval, 4);
+
+typedef struct
+{
+    u8             isLoaded_0;
+    u8             characterCount_1;
+    u8             intervalCount_2;
+    u8             field_3; // Usually 0, but sometimes filled in.
+    u32            field_4; // Unknown, correlates with DMS file size.
+    s_DmsInterval* intervalPtr_8;
+    VECTOR3        origin_C; // Origin point, gets added to character positions.
+    s_DmsEntry*    characters_18;
+    s_DmsEntry     camera_1C;
 } s_DmsHeader;
 STATIC_ASSERT_SIZEOF(s_DmsHeader, 44);
 
@@ -684,8 +711,6 @@ extern s_800C4818 D_800C4818;
 /** Unknown bodyprog var. Set in `Fs_QueueDoThingWhenEmpty`. */
 extern s32 D_800C489C;
 
-extern u8* D_800C7018; // Pointer to graphics commands?
-
 extern s8 D_800C9584;
 
 extern s8 D_800C9590;
@@ -707,6 +732,11 @@ extern s32 g_Demo_DemoStep; // 0x800C4894
 extern s_FsImageDesc g_MainImg0; // 0x80022C74
 
 extern s_800AD4C8 D_800AD4C8[];
+
+/** TODO: 800C964C and 800C96B8 are part of map overlay header? maybe should be moved to maps/s00.h or dynamic/dynamic.h */
+extern s32 (*D_800C964C)(s32, void*, s16, s32);
+
+extern s32 (*D_800C96B8)(s32, s32, void*, s16, s32);
 
 /** Initializer for something before the game loop. */
 void func_8002E630();
@@ -933,11 +963,17 @@ void Dms_CharacterGetStartPosRot(VECTOR3* pos, SVECTOR* rot, char* charName, s32
 
 s32 Dms_CharacterFindIndexByName(char* name, s_DmsHeader* header);
 
-void func_8008CB90(VECTOR3* pos, SVECTOR3* rot, s32 arg2, s32 arg3, s_DmsHeader* header);
+void Dms_CharacterGetPosRotByIndex(VECTOR3* pos, SVECTOR3* rot, s32 charaIndex, s32 time, s_DmsHeader* header);
+
+void Dms_CharacterKeyframeInterpolate(s_DmsKeyframeCharacter* result, s_DmsKeyframeCharacter* frame0, s_DmsKeyframeCharacter* frame1, s32 lerpFactor);
 
 s32 Dms_CameraGetTargetPos(VECTOR3* posTarget, VECTOR3* lookAtTarget, u16* arg2, s32 time, s_DmsHeader* header);
 
-s32 func_8008CFEC(s16* arg0, s16* arg1, s16* arg2, s32 arg3);
+s32 Dms_CameraKeyframeInterpolate(s_DmsKeyframeCamera* result, s_DmsKeyframeCamera* frame0, s_DmsKeyframeCamera* frame1, s32 lerpFactor);
+
+s32 func_8008D2C4(s32 time, s_DmsHeader* header);
+
+s32 Math_LerpFixed12(s16 from, s16 to, s32 t);
 
 void func_8008D1D0(s32* arg0, s32* arg1, s32* arg2, s32, s_DmsEntry* entry, s_DmsHeader* header);
 

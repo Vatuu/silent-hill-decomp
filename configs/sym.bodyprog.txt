@@ -232,8 +232,12 @@ DmsEntry_FixOffsets = 0x8008CA44; // type:func
 
 Dms_CharacterGetPosRot = 0x8008CA74; // type:func
 Dms_CharacterFindIndexByName = 0x8008CB10; // type:func
+Dms_CharacterGetPosRotByIndex = 0x8008CB90; // type:func
+Dms_CharacterKeyframeInterpolate = 0x8008CC98; // type:func
 
 Dms_CameraGetTargetPos = 0x8008CE1C; // type:func
+
+Dms_CameraKeyframeInterpolate = 0x8008CFEC; // type:func
 
 Math_LerpFixed12 = 0x8008D3D4; // type:func
 
@@ -747,10 +751,6 @@ SetDrawMove = 0x800944EC; // type:func
 
 // 2d_sp1.o
 GsSortFastSprite = 0x8009454C; // type:func
-// 2d_sp1.o globals TODO: 
-// GsOUT_PACKET_P = 0x800C7018;
-// GsORGOFSX = 0x800C6E94;
-// GsORGOFSY = 0x800C6E96;
 
 // gs_001.o
 // TODO: Same as c_002
@@ -778,6 +778,8 @@ PSDCNT = 0x800C6EA0;
 GsDISPENV = 0x800C6E80;
 PSDGPU = 0x800C6EA6;
 GsDRAWENV = 0x800C6E20;
+GsORGOFSX = 0x800C6E94;
+GsORGOFSY = 0x800C6E96;
 
 // gs_002.o
 GsGetActiveBuff = 0x80094C1C; // type:func
@@ -823,6 +825,8 @@ print_vector = 0x80095408; // type:func
 
 // gs_104.o
 GsInit3D = 0x8009543c; // type:func
+// gs_104.o globals
+GsLIGHT_MODE = 0x800C6F34;
 // gs_104.o externs
 GsCLIP3near = 0x800C6F38;
 GsCLIP3far = 0x800C6F30;
@@ -865,15 +869,16 @@ GsLinkObject4 = 0x80095e5c; // type:func
 
 // objt3.o
 GsSortObject4J = 0x80095fec; // type:func
-// objt3.o globals
-GsFCALL4 = 0x800C7030;
-GsMATE_C = 0x800C701C;
+
+// global.o globals
+GsLIOFF = 0x800C7004;
 GsLMODE = 0x800C7008;
 GsLIGNR = 0x800C700C;
-GsLIOFF = 0x800C7004;
-GsNDIV = 0x800C7028;
+GsOUT_PACKET_P = 0x800C7018;
+GsMATE_C = 0x800C701C;
 GsTON = 0x800C7024;
-GsLIGHT_MODE = 0x800C6F34;
+GsNDIV = 0x800C7028;
+GsFCALL4 = 0x800C7030;
 
 // msc00.o
 __ps_libinfo__libgte__ = 0x80096EC8;
