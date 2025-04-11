@@ -348,7 +348,7 @@ typedef struct
 {
     SVECTOR3 posTarget_0;
     SVECTOR3 lookAtTarget_6;
-    s16      field_C[2]; // field_C[1] gets passed to vcChangeProjectionValue
+    s16      field_C[2]; // `field_C[1]` gets passed to `vcChangeProjectionValue`.
 } s_DmsKeyframeCamera;
 STATIC_ASSERT_SIZEOF(s_DmsKeyframeCamera, 16);
 
@@ -963,13 +963,16 @@ void Dms_CharacterGetStartPosRot(VECTOR3* pos, SVECTOR* rot, char* charName, s32
 
 s32 Dms_CharacterFindIndexByName(char* name, s_DmsHeader* header);
 
-void Dms_CharacterGetPosRotByIndex(VECTOR3* pos, SVECTOR3* rot, s32 charaIndex, s32 time, s_DmsHeader* header);
+void Dms_CharacterGetPosRotByIndex(VECTOR3* pos, SVECTOR3* rot, s32 charaIdx, s32 time, s_DmsHeader* header);
 
-void Dms_CharacterKeyframeInterpolate(s_DmsKeyframeCharacter* result, s_DmsKeyframeCharacter* frame0, s_DmsKeyframeCharacter* frame1, s32 lerpFactor);
+void Dms_CharacterKeyframeInterpolate(s_DmsKeyframeCharacter* result, s_DmsKeyframeCharacter* frame0, s_DmsKeyframeCharacter* frame1, s32 alpha);
+
+/** Unused function? Returns 96 * cotangent(angle / 2). Possibly camera/FOV related. */
+s16 func_8008CDBC(s16 angle);
 
 s32 Dms_CameraGetTargetPos(VECTOR3* posTarget, VECTOR3* lookAtTarget, u16* arg2, s32 time, s_DmsHeader* header);
 
-s32 Dms_CameraKeyframeInterpolate(s_DmsKeyframeCamera* result, s_DmsKeyframeCamera* frame0, s_DmsKeyframeCamera* frame1, s32 lerpFactor);
+s32 Dms_CameraKeyframeInterpolate(s_DmsKeyframeCamera* result, s_DmsKeyframeCamera* frame0, s_DmsKeyframeCamera* frame1, s32 alpha);
 
 s32 func_8008D2C4(s32 time, s_DmsHeader* header);
 

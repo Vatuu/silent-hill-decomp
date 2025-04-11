@@ -1389,20 +1389,20 @@ s32 Dms_CharacterFindIndexByName(char* name, s_DmsHeader* header) // 0x8008CB10
     return NO_VALUE;
 }
 
-void Dms_CharacterGetPosRotByIndex(VECTOR3* pos, SVECTOR3* rot, s32 charaIndex, s32 time, s_DmsHeader* header) // 0x8008CB90
+void Dms_CharacterGetPosRotByIndex(VECTOR3* pos, SVECTOR3* rot, s32 charaIdx, s32 time, s_DmsHeader* header) // 0x8008CB90
 {
     s_DmsEntry*             charaEntry;
     s32                     keyframePrev;
     s32                     keyframeNext;
-    s32                     lerpFactor;
+    s32                     alpha;
     s_DmsKeyframeCharacter* keyframes;
     s_DmsKeyframeCharacter  curFrame;
 
-    charaEntry = &header->characters_18[charaIndex];
-    func_8008D1D0(&keyframePrev, &keyframeNext, &lerpFactor, time, charaEntry, header);
+    charaEntry = &header->characters_18[charaIdx];
+    func_8008D1D0(&keyframePrev, &keyframeNext, &alpha, time, charaEntry, header);
 
     keyframes = charaEntry->keyframes_C.character;
-    Dms_CharacterKeyframeInterpolate(&curFrame, &keyframes[keyframePrev], &keyframes[keyframeNext], lerpFactor);
+    Dms_CharacterKeyframeInterpolate(&curFrame, &keyframes[keyframePrev], &keyframes[keyframeNext], alpha);
 
     pos->vx = FP_TO(curFrame.position_0.vx + header->origin_C.vx, Q4_SHIFT);
     pos->vy = FP_TO(curFrame.position_0.vy + header->origin_C.vy, Q4_SHIFT);
@@ -1412,39 +1412,37 @@ void Dms_CharacterGetPosRotByIndex(VECTOR3* pos, SVECTOR3* rot, s32 charaIndex, 
     rot->vz = curFrame.rotation_6.vz;
 }
 
-void Dms_CharacterKeyframeInterpolate(s_DmsKeyframeCharacter* result, s_DmsKeyframeCharacter* frame0, s_DmsKeyframeCharacter* frame1, s32 lerpFactor) // 0x8008CC98
+void Dms_CharacterKeyframeInterpolate(s_DmsKeyframeCharacter* result, s_DmsKeyframeCharacter* frame0, s_DmsKeyframeCharacter* frame1, s32 alpha) // 0x8008CC98
 {
     // Low-precision lerp between positions?
-    result->position_0.vx = frame0->position_0.vx + FP_MULTIPLY(frame1->position_0.vx - frame0->position_0.vx, (s64)lerpFactor, Q12_SHIFT);
-    result->position_0.vy = frame0->position_0.vy + FP_MULTIPLY(frame1->position_0.vy - frame0->position_0.vy, (s64)lerpFactor, Q12_SHIFT);
-    result->position_0.vz = frame0->position_0.vz + FP_MULTIPLY(frame1->position_0.vz - frame0->position_0.vz, (s64)lerpFactor, Q12_SHIFT);
+    result->position_0.vx = frame0->position_0.vx + FP_MULTIPLY(frame1->position_0.vx - frame0->position_0.vx, (s64)alpha, Q12_SHIFT);
+    result->position_0.vy = frame0->position_0.vy + FP_MULTIPLY(frame1->position_0.vy - frame0->position_0.vy, (s64)alpha, Q12_SHIFT);
+    result->position_0.vz = frame0->position_0.vz + FP_MULTIPLY(frame1->position_0.vz - frame0->position_0.vz, (s64)alpha, Q12_SHIFT);
 
     // Higher-precision lerp between rotations?
-    result->rotation_6.vx = Math_LerpFixed12(frame0->rotation_6.vx, frame1->rotation_6.vx, lerpFactor);
-    result->rotation_6.vy = Math_LerpFixed12(frame0->rotation_6.vy, frame1->rotation_6.vy, lerpFactor);
-    result->rotation_6.vz = Math_LerpFixed12(frame0->rotation_6.vz, frame1->rotation_6.vz, lerpFactor);
+    result->rotation_6.vx = Math_LerpFixed12(frame0->rotation_6.vx, frame1->rotation_6.vx, alpha);
+    result->rotation_6.vy = Math_LerpFixed12(frame0->rotation_6.vy, frame1->rotation_6.vy, alpha);
+    result->rotation_6.vz = Math_LerpFixed12(frame0->rotation_6.vz, frame1->rotation_6.vz, alpha);
 }
 
-// Unused function? returns 96 * cotangent(angle / 2)
-// Possibly camera/FOV related.
-s16 func_8008CDBC(s16 angle)
+s16 func_8008CDBC(s16 angle) // 0x8008CDBC
 {
     return (96 * shRcos(angle / 2)) / shRsin(angle / 2);
 }
 
 s32 Dms_CameraGetTargetPos(VECTOR3* posTarget, VECTOR3* lookAtTarget, u16* arg2, s32 time, s_DmsHeader* header) // 0x8008CE1C
 {
-    s_DmsEntry*         cameraEntry;
+    s_DmsEntry*         camEntry;
     s32                 keyframePrev;
     s32                 keyframeNext;
-    s32                 lerpFactor;
+    s32                 alpha;
     s_DmsKeyframeCamera curFrame;
     s32                 camProjValue;
 
-    cameraEntry = &header->camera_1C;
+    camEntry = &header->camera_1C;
 
-    func_8008D1D0(&keyframePrev, &keyframeNext, &lerpFactor, time, cameraEntry, header);
-    camProjValue = Dms_CameraKeyframeInterpolate(&curFrame, &cameraEntry->keyframes_C.camera[keyframePrev], &cameraEntry->keyframes_C.camera[keyframeNext], lerpFactor);
+    func_8008D1D0(&keyframePrev, &keyframeNext, &alpha, time, camEntry, header);
+    camProjValue = Dms_CameraKeyframeInterpolate(&curFrame, &camEntry->keyframes_C.camera[keyframePrev], &camEntry->keyframes_C.camera[keyframeNext], alpha);
 
     posTarget->vx = FP_TO(curFrame.posTarget_0.vx + header->origin_C.vx, Q4_SHIFT);
     posTarget->vy = FP_TO(curFrame.posTarget_0.vy + header->origin_C.vy, Q4_SHIFT);
@@ -1459,23 +1457,24 @@ s32 Dms_CameraGetTargetPos(VECTOR3* posTarget, VECTOR3* lookAtTarget, u16* arg2,
         *arg2 = curFrame.field_C[0];
     }
 
-    return camProjValue; // camProjValue comes from curFrame.field_C[1], return value is passed to vcChangeProjectionValue
+    // `camProjValue` comes from `curFrame.field_C[1]`, return value is passed to `vcChangeProjectionValue`.
+    return camProjValue;
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008CF54);
 
-s32 Dms_CameraKeyframeInterpolate(s_DmsKeyframeCamera* result, s_DmsKeyframeCamera* frame0, s_DmsKeyframeCamera* frame1, s32 lerpFactor) // 0x8008CFEC
+s32 Dms_CameraKeyframeInterpolate(s_DmsKeyframeCamera* result, s_DmsKeyframeCamera* frame0, s_DmsKeyframeCamera* frame1, s32 alpha) // 0x8008CFEC
 {
-    result->posTarget_0.vx = frame0->posTarget_0.vx + FP_MULTIPLY(frame1->posTarget_0.vx - frame0->posTarget_0.vx, (s64)lerpFactor, Q12_SHIFT);
-    result->posTarget_0.vy = frame0->posTarget_0.vy + FP_MULTIPLY(frame1->posTarget_0.vy - frame0->posTarget_0.vy, (s64)lerpFactor, Q12_SHIFT);
-    result->posTarget_0.vz = frame0->posTarget_0.vz + FP_MULTIPLY(frame1->posTarget_0.vz - frame0->posTarget_0.vz, (s64)lerpFactor, Q12_SHIFT);
+    result->posTarget_0.vx = frame0->posTarget_0.vx + FP_MULTIPLY(frame1->posTarget_0.vx - frame0->posTarget_0.vx, (s64)alpha, Q12_SHIFT);
+    result->posTarget_0.vy = frame0->posTarget_0.vy + FP_MULTIPLY(frame1->posTarget_0.vy - frame0->posTarget_0.vy, (s64)alpha, Q12_SHIFT);
+    result->posTarget_0.vz = frame0->posTarget_0.vz + FP_MULTIPLY(frame1->posTarget_0.vz - frame0->posTarget_0.vz, (s64)alpha, Q12_SHIFT);
 
-    result->lookAtTarget_6.vx = frame0->lookAtTarget_6.vx + FP_MULTIPLY(frame1->lookAtTarget_6.vx - frame0->lookAtTarget_6.vx, (s64)lerpFactor, Q12_SHIFT);
-    result->lookAtTarget_6.vy = frame0->lookAtTarget_6.vy + FP_MULTIPLY(frame1->lookAtTarget_6.vy - frame0->lookAtTarget_6.vy, (s64)lerpFactor, Q12_SHIFT);
-    result->lookAtTarget_6.vz = frame0->lookAtTarget_6.vz + FP_MULTIPLY(frame1->lookAtTarget_6.vz - frame0->lookAtTarget_6.vz, (s64)lerpFactor, Q12_SHIFT);
+    result->lookAtTarget_6.vx = frame0->lookAtTarget_6.vx + FP_MULTIPLY(frame1->lookAtTarget_6.vx - frame0->lookAtTarget_6.vx, (s64)alpha, Q12_SHIFT);
+    result->lookAtTarget_6.vy = frame0->lookAtTarget_6.vy + FP_MULTIPLY(frame1->lookAtTarget_6.vy - frame0->lookAtTarget_6.vy, (s64)alpha, Q12_SHIFT);
+    result->lookAtTarget_6.vz = frame0->lookAtTarget_6.vz + FP_MULTIPLY(frame1->lookAtTarget_6.vz - frame0->lookAtTarget_6.vz, (s64)alpha, Q12_SHIFT);
 
-    result->field_C[0] = Math_LerpFixed12(frame0->field_C[0], frame1->field_C[0], lerpFactor);
-    result->field_C[1] = frame0->field_C[1] + FP_MULTIPLY(frame1->field_C[1] - frame0->field_C[1], (s64)lerpFactor, Q12_SHIFT);
+    result->field_C[0] = Math_LerpFixed12(frame0->field_C[0], frame1->field_C[0], alpha);
+    result->field_C[1] = frame0->field_C[1] + FP_MULTIPLY(frame1->field_C[1] - frame0->field_C[1], (s64)alpha, Q12_SHIFT);
 
     return result->field_C[1];
 }
@@ -1492,7 +1491,7 @@ s32 func_8008D2C4(s32 time, s_DmsHeader* header)
          interval < &header->intervalPtr_8[header->intervalCount_2];
          interval++)
     {
-        if (time != (interval->start + interval->duration) - 1)
+        if (time != ((interval->start + interval->duration) - 1))
         {
             continue;
         }
@@ -1512,7 +1511,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008D330);
 
 s32 Math_LerpFixed12(s16 from, s16 to, s32 t) // 0x8008D3D4
 {
-    // TODO: Shifts are similar to shAngleRegulate, but that doesn't seem to work here.
+    // TODO: Shifts are similar to `shAngleRegulate`, but that doesn't seem to work here.
     return ((s32)(FP_MULTIPLY((((to - from) << 20) >> 20), (s64)t, 12) + from) << 20) >> 20;
 }
 
