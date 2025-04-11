@@ -775,7 +775,52 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80045534);
 // SOUND
 // ========================================
 
+// TODO: Requires jump table.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", SD_EngineCmd);
+/*void SD_EngineCmd(s32 cmd) // 0x80045A7C
+{
+    u32 maskedCmd;
+
+    maskedCmd = ((u32)cmd >> 8) & 0xFF;
+    switch (maskedCmd)
+    {
+        case 0:
+            func_80045BD8(cmd & 0xFFFF);
+            return;
+
+        case 3:
+        case 4:
+            func_80046A24(cmd & 0xFFFF);
+            return;
+
+        case 5:
+        case 6:
+            func_80046048(cmd & 0xFFFF, 0, 0);
+            return;
+
+        case 7:
+        case 8:
+            func_8004692C((cmd - 0x200) & 0xFFFF);
+            return;
+
+        case 11:
+        case 12:
+            func_800468EC();
+            return;
+
+        case 16:
+        case 17:
+        case 18:
+        case 19:
+        case 20:
+        case 21:
+        case 22:
+            func_80046D3C(cmd & 0xFFFF);
+
+        default:
+            return;
+    }
+}*/
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80045B28);
 

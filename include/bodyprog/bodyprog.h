@@ -905,6 +905,8 @@ void func_800453E8(s_Skeleton* skel, s32 cond);
 /** Does something with skeleton bones. `arg0` is a struct pointer. */
 void func_80045468(s_Skeleton* skel, s32* arg1, s32 cond);
 
+void SD_EngineCmd(s32 cmd);
+
 void SD_DriverInit();
 
 u8 func_80045B28();
