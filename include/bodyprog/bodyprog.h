@@ -299,7 +299,9 @@ typedef struct
     s16 field_8;
     s16 field_A;
     s16 field_C;
-    s8  unk_E[12];
+    s8  unk_E[6];
+    s32 field_14;
+    s8  unk_18[4];
     s32 field_1C;
     s32 field_20;
 } s_800C4818;
@@ -985,6 +987,8 @@ void func_8008D438();
 void func_8008D448();
 
 void func_8008D454();
+
+void func_8008D464();
 
 void func_8008D1D0(s32* arg0, s32* arg1, s32* arg2, s32, s_DmsEntry* entry, s_DmsHeader* header);
 
