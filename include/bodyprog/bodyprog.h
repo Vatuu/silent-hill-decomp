@@ -534,13 +534,26 @@ extern DVECTOR g_Gfx_DebugStringPosition1;
 
 extern s32 D_800B5C7C; // Type assumed.
 
+extern u16 D_800BCCB0;
+
+extern u16 D_800BCCB2;
+
+/** Accessed by credits, options, and saveload. */
+extern s32 D_800BCD0C;
+
 extern s8* D_800BCD2C;
 
 extern u8 D_800BCD3E;
 
 extern u8 D_800BCD3F;
 
+extern s8 D_800BCD40;
+
 extern s8 D_800BCD78;
+
+extern s_800BCDA8 D_800BCDA8[];
+
+extern s32 D_800BCDB0; // Type assumed.
 
 extern u8 D_800BCDD4;
 
@@ -550,36 +563,7 @@ extern s8 D_800BCE1C;
 
 extern s32 D_800BE464;
 
-extern u8 D_800C16A8;
-
-extern u8 D_800C37D0;
-
-extern s_800C37D8* D_800C37D8;
-
-extern s_800C38B0 D_800C38B0;
-
-extern s32 D_800C38B4;
-
-extern s32 D_800C4710[];
-
-extern void (*D_800C9644)();
-
-extern void (*D_800C9648)(s32);
-
-extern s32 (*D_800C9668)();
-
-extern u16 D_800BCCB0;
-
-extern u16 D_800BCCB2;
-
-/** Accessed by credits, options, and saveload. */
-extern s32 D_800BCD0C;
-
-extern s8 D_800BCD40;
-
-extern s_800BCDA8 D_800BCDA8[];
-
-extern s32 D_800BCDB0; // Type assumed.
+extern s_800BE9FC D_800BE9FC;
 
 extern s_800C1020 D_800C1020;
 
@@ -603,7 +587,23 @@ extern u8 g_Sd_VolumeSe; // 0x800C1684
 
 extern s8 g_Sd_ReverbDepth; // 0x800C1687;
 
-extern s_800BE9FC D_800BE9FC;
+extern u8 D_800C16A8;
+
+extern u8 D_800C37D0;
+
+extern s_800C37D8* D_800C37D8;
+
+extern s_800C38B0 D_800C38B0;
+
+extern s32 D_800C38B4;
+
+extern s32 D_800C4710[];
+
+extern void (*D_800C9644)();
+
+extern void (*D_800C9648)(s32);
+
+extern s32 (*D_800C9668)();
 
 extern u8 D_800C37C8;
 

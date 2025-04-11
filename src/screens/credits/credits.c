@@ -7,20 +7,20 @@
 
 void func_801E2E28(s32 idx) // 0x801E2E28
 {
-    s32 temp_lo;
-    s32 temp_v1;
+    s32 var0;
+    s32 var1;
 
     D_801E5E8C = idx;
 
     func_8004729C(D_801E5558[idx].field_0);
-    temp_v1 = (D_801E5558[idx].field_4 * 2) - 0x1F8;
-    temp_lo = temp_v1 / D_801E5C20;
+    var1 = (D_801E5558[idx].field_4 * 2) - 0x1F8;
+    var0 = var1 / D_801E5C20;
 
-    D_801E5E7C = temp_v1;
+    D_801E5E7C = var1;
     D_801E5E88 = 1;
-    D_801E5E7C = temp_lo;
-    D_801E5E84 = (temp_lo * D_801E5C20) + 0x1E0;
-    D_801E5E80 = 0x10000 / temp_lo;
+    D_801E5E7C = var0;
+    D_801E5E84 = (var0 * D_801E5C20) + 0x1E0;
+    D_801E5E80 = 0x10000 / var0;
 }
 
 // TODO: Matched, but checksum fails. --Sezz
