@@ -109,41 +109,44 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", Player_AnimUpdate);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8004C328);
 
-s32 func_8004C45C()
+s32 func_8004C45C() // 0x8004C45C
 {
     s32 i;
 
-    for (i = 0; i < 40; i++)
+    for (i = 0; i < INVENTORY_ITEM_COUNT_MAX; i++)
     {
-        if (g_SaveGamePtr->items_0[i].id == 0xA3) // HYPER_BLASTER
+        // Already in inventory, can't add new one.
+        if (g_SaveGamePtr->items_0[i].id == InventoryItemId_HyperBlaster)
         {
-            return -1; // Already in inventory, can't add new one.
+            return -1;
         }
     }
 
     if (g_SaveGamePtr->mapOverlayIdx_A4 > 0)
     {
+        // Konami gun controller connected.
         if (g_GameWork.controllers_38[1].analogPad_0.status == 0 &&
             g_GameWork.controllers_38[1].analogPad_0.received_bytes == 1 &&
             g_GameWork.controllers_38[1].analogPad_0.terminal_type == PadTerminalType_GunControllerKonami)
         {
-            return 1; // Konami Gun Controller connected.
+            return 1;
         }
 
-        if (g_SaveGamePtr->field_24A != 0 && (g_SaveGamePtr->field_24B & 0x10) != 0)
+        // Game completed with some condition met?
+        if (g_SaveGamePtr->field_24A != 0 && (g_SaveGamePtr->field_24B & (1 << 4)) != 0)
         {
-            return 1; // Game completed with some condition met?
+            return 1;
         }
     }
 
     return 0;
 }
 
-s32 func_8004C4F8()
+s32 func_8004C4F8() // 0x8004C4F8
 {
     if (g_SaveGamePtr->mapOverlayIdx_A4 > 0)
     {
-        if ((g_SaveGamePtr->field_24B & 0x10) != 0)
+        if ((g_SaveGamePtr->field_24B & (1 << 4)) != 0)
         {
             return 2; // Game completed with some condition met?
         }

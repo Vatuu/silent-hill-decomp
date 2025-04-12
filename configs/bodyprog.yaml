@@ -66,7 +66,7 @@ segments:
       - [0x1b4ec, c, view/vc_util]
       - [0x1bf04, c, bodyprog_80040A64]
       - [0x23ed8, c, view/vw_main]
-      - [0x243c8, c, view/vw_calc] # Contains part of SH2's vb_main?
+      - [0x243c8, c, view/vw_calc] # Contains part of SH2's `vb_main`?
       - [0x25d1c, c, bodyprog_8004A87C]
       - [0x5bde0, c, view/vc_main]
       - [0x61218, c, bodyprog_80085D78]

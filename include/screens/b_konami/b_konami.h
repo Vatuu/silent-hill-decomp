@@ -32,12 +32,14 @@ extern u8* D_800CA50C;
 
 extern s32 D_800CA510;
 
-void func_800C9E6C(s_FsImageDesc* image, s32 otz, s32 vramX, s32 vramY, s32 w, s32 h, s32 x, s32 y);
-
 /** Display Konami logo and start loading base hero animations. */
 void func_800C95AC();
 
 s32 func_800C9874();
+
+void func_800C99A4();
+
+void func_800C9E6C(s_FsImageDesc* image, s32 otz, s32 vramX, s32 vramY, s32 w, s32 h, s32 x, s32 y);
 
 void func_800C9FB8();
 
@@ -45,10 +47,12 @@ void func_800CA120();
 
 void func_800CA234();
 
-s32  func_800CA240(s32* arg0);
+s32 func_800CA240(s32* arg0);
 
 void func_800CA24C(s32 arg0, s32 arg1, s32 arg2);
 
-s32  func_800CA2B8();
+s32 func_800CA2B8();
+
+void func_800CA2C8(s32 arg0);
 
 #endif

@@ -108,6 +108,12 @@ typedef enum _SysState
     SysState_GamePaused  = 14
 } e_SysState;
 
+/** @brief Inventory item IDs. */
+typedef enum _InventoryItemId
+{
+    InventoryItemId_HyperBlaster = 163
+} e_InventoryItemId;
+
 /** @brief Player model bone indices. */
 typedef enum _PlayerBone
 {
@@ -148,7 +154,7 @@ typedef enum _PlayerProperty
     PlayerProperty_RunTimer1     = 9  // Increments every tick indefinitely.
 } s_PlayerProperty;
 
-// Based on LIBOVR.PDF `Buffer Data Format` section.
+/** Based on LIBOVR.PDF `Buffer Data Format` section. */
 typedef enum _PadTerminalType
 {
     PadTerminalType_Mouse               = 1,
@@ -158,14 +164,14 @@ typedef enum _PadTerminalType
     PadTerminalType_AnalogJoystick      = 5,
     PadTerminalType_GunControllerNamco  = 6,
     PadTerminalType_AnalogController    = 7,
-    PadTerminalType_MultitapAdapter     = 8,
+    PadTerminalType_MultitapAdapter     = 8
 } e_PadTerminalType;
 
 typedef struct _AnalogPadData
 {
     u8  status;
     u8  received_bytes : 4; /** Number of bytes received / 2. */
-    u8  terminal_type : 4;  /** e_PadTerminalType */
+    u8  terminal_type  : 4; /** `e_PadTerminalType` */
     u16 digitalButtons;
     u8  right_x;
     u8  right_y;

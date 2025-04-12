@@ -948,22 +948,26 @@ void func_8004B9F8(s32 arg0, u8 arg1); // Types assumed.
 
 void func_8004BCBC(s32 arg0);
 
-/** Used to check if Hyper Blaster can be added to inventory.
-    Return values:
-        -1 if already exists in inventory.
-        1 if konami gun controller connected, or savegame flags set.
-        0 otherwise.
-    Maybe Inventory_HyperBlasterCanAdd is suitable (inventory funcs seem bunched at a different address though?)
-*/
+// TODO: Can probably create status enums for the below funcs' return values to avoid magic,
+// but other funcs using similar return patterns should be identified first if they exist.
+
+// TODO: The name `Inventory_HyperBlasterCanAdd` may be suitable, though inventory
+// funcs seem to be bunched at a different address.
+/** @brief Used to check if the Hyper Blaster can be added to the inventory.
+ *
+ * @return -1 if it already exists in the inventory,
+ *          1 if the Konami gun controller is connected or the savegame flag is set,
+ *          0 otherwise.
+ */
 s32 func_8004C45C();
 
-/** Called by status screen to check if Hyper Blaster can be used?
-    Return values:
-        2 if savegame flag is set.
-        1 if konami gun controller connected.
-        0 otherwise.
-    Maybe Inventory_HyperBlasterCanUse is suitable.
-*/
+// TODO: The name `Inventory_HyperBlasterCanUse` may be suitable.
+/** @brief Called by status screen to check if Hyper Blaster can be used?
+ *
+ * @return 2 if the savegame flag is set,
+ *         1 if the Konami gun controller is connected,
+ *         0 otherwise.
+ */
 s32 func_8004C4F8();
 
 void func_800546A8(s32 arg0);
