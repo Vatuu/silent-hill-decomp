@@ -1,3 +1,11 @@
+// Handlers for movie-related GameStates
+GameState_StartMovieIntro_Update = 0x801E2654; // type:func
+GameState_MovieIntro_Update = 0x801E279C; // type:func
+GameState_MovieOpening_Update = 0x801E2838; // type:func
+GameState_ExitMovie_Update = 0x801E28B0; // type:func
+GameState_DebugMoviePlayer_Update = 0x801E2908; // type:func
+GameState_MovieIntroAlternate_Update = 0x801E2A24; // type:func
+
 // beatmania MOVIESYS names, which seems based on PSX SDK sample code
 // (SH1 seems closer to MOVIESYS than the SDK code)
 open_main = 0x801e2aa4; // type:func

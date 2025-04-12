@@ -73,7 +73,7 @@ typedef enum _GameState
     GameState_LoadScreen          = 10,
     GameState_InGame              = 11,
     GameState_MapEvent            = 12,
-    GameState_ReturnToGameplay    = 13,
+    GameState_ExitMovie           = 13,
     GameState_StatusScreen        = 14,
     GameState_MapScreen           = 15,
     GameState_Unk10               = 16,

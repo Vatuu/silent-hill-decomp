@@ -561,7 +561,7 @@ void func_80032CE8()
     Gfx_StringDraw(&D_8002510C, 100);
 }
 
-void func_80032D1C()
+void GameState_Unk0_Update() // 0x80032D1C
 {
     s32 gameStateStep0;
     s32 gameState;
@@ -963,7 +963,7 @@ void func_800348C0()
     bzero(&D_800A9944, 0x48);
 }
 
-void func_800348E8()
+void GameState_LoadScreen_Update() // 0x800348E8
 {
     u8 temp;
 
@@ -1241,11 +1241,11 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80038A6C);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80038B44);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80038BD4);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", GameState_InGame_Update);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80038F6C);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", SysState_Gameplay_Update);
 
-void func_800391E8() // 0x800391E8
+void SysState_GamePaused_Update() // 0x800391E8
 {
     D_800A9A68 += g_DeltaTime1;
     if (((D_800A9A68 >> 11) & 1) == 0)
@@ -1283,21 +1283,21 @@ void func_800391E8() // 0x800391E8
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80039344);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", SysState_OptionsMenu_Update);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003943C);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80039568);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", SysState_StatusMenu_Update);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_800395C0);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", GameState_LoadStatusScreen_Update);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_800396D4);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", SysState_Unk3_Update);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003991C);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", GameState_LoadMapScreen_Update);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80039A58);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", SysState_Fmv_Update);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80039C40);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", SysState_LoadArea_Update);
 
 void AreaLoad_UpdatePlayerPosition() // 0x80039F30
 {
@@ -1308,7 +1308,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80039F54);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80039F90);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80039FB8);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", SysState_ReadMessage_Update);
 
 void SysWork_SaveGameUpdatePlayer() // 0x8003A120
 {
@@ -1341,19 +1341,19 @@ void SysWork_SaveGameReadPlayer() // 0x8003A1F4
     g_SysWork.player_4C.chara_0.health_B0      = g_SaveGamePtr->playerHealth_240;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003A230);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", SysState_SaveMenu_Update);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003A3C8);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", SysState_Unk10_Update);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003A460);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", SysState_Unk11_Update);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003A4B4);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", SysState_Unk12_Update);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003A52C);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", SysState_GameOver_Update);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003AA4C);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", GameState_MapEvent_Update);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003AB28);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", GameState_MainMenu_Update);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003B550);
 

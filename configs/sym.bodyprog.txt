@@ -151,6 +151,30 @@ g_Demo_ControllerPacket = 0x800C4890;
 g_Demo_DemoStep = 0x800C4894;
 g_Demo_VideoPresentInterval = 0x800C4898;
 
+GameState_Unk0_Update = 0x80032D1C; // type:func
+GameState_MainMenu_Update = 0x8003AB28; // type:func
+GameState_LoadScreen_Update = 0x800348E8; // type:func
+GameState_InGame_Update = 0x80038BD4; // type:func
+GameState_MapEvent_Update = 0x8003AA4C; // type:func
+GameState_StatusScreen_Update = 0x8004C9B0; // type:func
+GameState_MapScreen_Update = 0x80066EB0; // type:func
+GameState_LoadStatusScreen_Update = 0x800395C0; // type:func
+GameState_LoadMapScreen_Update = 0x8003991C; // type:func
+
+SysState_Gameplay_Update = 0x80038F6C; // type:func
+SysState_OptionsMenu_Update = 0x80039344; // type:func
+SysState_StatusMenu_Update = 0x80039568; // type:func
+SysState_Unk3_Update = 0x800396D4; // type:func
+SysState_Fmv_Update = 0x80039A58; // type:func
+SysState_LoadArea_Update = 0x80039C40; // type:func
+SysState_ReadMessage_Update = 0x80039FB8; // type:func
+SysState_SaveMenu_Update = 0x8003A230; // type:func
+SysState_Unk10_Update = 0x8003A3C8; // type:func
+SysState_Unk11_Update = 0x8003A460; // type:func
+SysState_Unk12_Update = 0x8003A4B4; // type:func
+SysState_GameOver_Update = 0x8003A52C; // type:func
+SysState_GamePaused_Update = 0x800391E8; // type:func
+
 SaveGame_CopyWithChecksum = 0x8002FCCC; // type:func
 SaveGame_ChecksumUpdate = 0x8002FF30; // type:func
 SaveGame_ChecksumValidate = 0x8002FF74; // type:func
