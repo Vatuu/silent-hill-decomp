@@ -72,7 +72,7 @@ INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E5898);
 
 INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E5E18);
 
-INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E6320);
+INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", GameState_Unk8_Update); // 0x801E6320
 
 void func_801E63C0() // 0x801E63C0
 {
@@ -152,6 +152,6 @@ void func_801E72DC() // 0x801E72DC
     func_801E3C44();
 }
 
-INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E72FC);
+INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", GameState_Unk4_Update); // 0x801E72FC
 
 INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E737C);
