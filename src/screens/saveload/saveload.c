@@ -7,14 +7,14 @@ INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E2D8C);
 
 INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E2EBC);
 
-void func_801E2F90(s32 idx)
+void func_801E2F90(s32 idx) // 0x801E2F90
 {
     D_801E7578[idx] = D_800A97D4[idx] - D_801E7570[idx];
 }
 
 INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E2FCC);
 
-s32 func_801E3078(s_UnkSaveload0* arg0)
+s32 func_801E3078(s_UnkSaveload0* arg0) // 0x801E3078
 {
     if (arg0 != NULL && (arg0->field_8 & (1 << 24)))
     {
@@ -28,7 +28,25 @@ s32 func_801E3078(s_UnkSaveload0* arg0)
 
 INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E30C4);
 
-INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E326C);
+void func_801E326C(s8* arg0, s8* arg1, s32 arg2, s32 arg3) // 0x801E326C
+{
+    if (arg2 == 0)
+    {
+        D_801E756C[arg3] = 0;
+    }
+
+    if (arg2 < D_801E7570[arg3] || (D_801E7570[arg3] + 4) < arg2)
+    {
+        if (D_801E756C[arg3] != arg0[6])
+        {
+            D_801E756C[arg3] = arg0[6];
+        }
+    }
+    else
+    {
+        func_801E4D90(arg0, arg1, arg2, arg3);
+    }
+}
 
 INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E3304);
 
@@ -56,7 +74,7 @@ INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E5E18);
 
 INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E6320);
 
-void func_801E63C0()
+void func_801E63C0() // 0x801E63C0
 {
     if (g_GameWork.gameStatePrev_590 == GameState_MainMenu)
     {
@@ -129,7 +147,7 @@ void func_801E7244()
     }
 }
 
-void func_801E72DC()
+void func_801E72DC() // 0x801E72DC
 {
     func_801E3C44();
 }

@@ -11,6 +11,9 @@
 #define FS_BUFFER_2 (void*)0x801CF600
 #define FS_BUFFER_3 (void*)0x801B2600
 #define FS_BUFFER_4 (void*)0x80124384 // Used for player map anim.
+#define FS_BUFFER_5 (void*)0x801E3600 // Used in b_konami.c.
+#define FS_BUFFER_6 (void*)0x801E4600 // Used in b_konami.c.
+#define FS_BUFFER_7 (void*)0x801C2600 // Used in b_konami.c.
 
 /** @brief `FsQueue::state` values when processing a read operation (`Fs_QueueUpdateRead`).
  *
@@ -292,7 +295,7 @@ s32 Fs_QueueUpdateSeek(s_FsQueueEntry* entry);
 s32 Fs_QueueUpdateRead(s_FsQueueEntry* entry);
 
 /** If `entry->allocate` is set, allocate memory for `entry->data`, otherwise use `entry->externalData`.
- * 
+ *
  * @param entry Entry to allocate memory for.
  * @return 1 if allocation was successful or was not needed, 0 otherwise.
  */
@@ -309,7 +312,7 @@ s32 Fs_QueueAllocEntryData(s_FsQueueEntry* entry);
 s32 Fs_QueueCanRead(s_FsQueueEntry* entry);
 
 /** @brief Check if two buffers overlap in memory. Used by `Fs_QueueCanRead`.
- * 
+ *
  * @param data0 Start of the first buffer.
  * @param size0 Size of the first buffer in bytes.
  * @param data1 Start of the second buffer.

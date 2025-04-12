@@ -108,6 +108,12 @@ typedef enum _SysState
     SysState_GamePaused  = 14
 } e_SysState;
 
+/** @brief Inventory item IDs. */
+typedef enum _InventoryItemId
+{
+    InventoryItemId_HyperBlaster = 163
+} e_InventoryItemId;
+
 /** @brief Player model bone indices. */
 typedef enum _PlayerBone
 {
@@ -148,10 +154,24 @@ typedef enum _PlayerProperty
     PlayerProperty_RunTimer1     = 9  // Increments every tick indefinitely.
 } s_PlayerProperty;
 
+/** Based on LIBOVR.PDF `Buffer Data Format` section. */
+typedef enum _PadTerminalType
+{
+    PadTerminalType_Mouse               = 1,
+    PadTerminalType_16ButtonAnalog      = 2,
+    PadTerminalType_GunControllerKonami = 3,
+    PadTerminalType_16Button            = 4,
+    PadTerminalType_AnalogJoystick      = 5,
+    PadTerminalType_GunControllerNamco  = 6,
+    PadTerminalType_AnalogController    = 7,
+    PadTerminalType_MultitapAdapter     = 8
+} e_PadTerminalType;
+
 typedef struct _AnalogPadData
 {
     u8  status;
-    u8  data_format;
+    u8  received_bytes : 4; /** Number of bytes received / 2. */
+    u8  terminal_type  : 4; /** `e_PadTerminalType` */
     u16 digitalButtons;
     u8  right_x;
     u8  right_y;
@@ -244,8 +264,8 @@ typedef struct _ShSaveGame
     s32               playerHealth_240;      /** Q20.12, default: 100 */
     s32               playerPositionX_244;   /** Q20.12 */
     s16               playerRotationY_248;   /** Q4.12, in format that can be multiplied by 180 to get degrees. Default: North */
-    s8                field_24A; 
-    s8                field_24B; 
+    u8                field_24A;
+    u8                field_24B;
     s32               playerPositionZ_24C;   /** Q20.12 */
     s32               gameplayTimer_250;     /** Q20.12 */
     s32               runDistance_254;       /** Q20.12 */
@@ -450,11 +470,9 @@ typedef struct _SysWork
     s8              unk_229C[4];
     s32             field_22A0;
     s32             flags_22A4;
-    s8              unk_22A8[165];
-    s32             field_234D;
-    s8              unk_2351;
-    s8              flags_2352;
-    s8              unk_2353[2];
+    s8              unk_22A8[168];
+    s32             field_2350;
+    s8              unk_2354[4];
     u8              field_2358;
     s8              unk_2359[33];
     s16             cameraAngleY_237A;

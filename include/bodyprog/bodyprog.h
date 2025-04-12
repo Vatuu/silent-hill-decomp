@@ -185,6 +185,11 @@ typedef struct
 
 typedef struct
 {
+    s32 field_0[16];
+} s_800B5C40;
+
+typedef struct
+{
     s8 unk_0;
     s8 field_1;
     s8 field_2;
@@ -557,6 +562,8 @@ extern s32 D_800B5618;
 extern DVECTOR g_Gfx_DebugStringPosition0;
 
 extern DVECTOR g_Gfx_DebugStringPosition1;
+
+extern s_800B5C40 D_800B5C40[];
 
 extern s32 D_800B5C7C; // Type assumed.
 
@@ -989,6 +996,28 @@ void func_8004B74C(s16 arg0);
 void func_8004B9F8(s32 arg0, u8 arg1); // Types assumed.
 
 void func_8004BCBC(s32 arg0);
+
+// TODO: Can probably create status enums for the below funcs' return values to avoid magic,
+// but other funcs using similar return patterns should be identified first if they exist.
+
+// TODO: The name `Inventory_HyperBlasterCanAdd` may be suitable, though inventory
+// funcs seem to be bunched at a different address.
+/** @brief Used to check if the Hyper Blaster can be added to the inventory.
+ *
+ * @return -1 if it already exists in the inventory,
+ *          1 if the Konami gun controller is connected or the savegame flag is set,
+ *          0 otherwise.
+ */
+s32 func_8004C45C();
+
+// TODO: The name `Inventory_HyperBlasterCanUse` may be suitable.
+/** @brief Called by status screen to check if Hyper Blaster can be used?
+ *
+ * @return 2 if the savegame flag is set,
+ *         1 if the Konami gun controller is connected,
+ *         0 otherwise.
+ */
+s32 func_8004C4F8();
 
 void func_800546A8(s32 arg0);
 
