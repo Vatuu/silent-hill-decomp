@@ -1612,7 +1612,7 @@ void func_8008D470(s16 arg0, SVECTOR* rot, VECTOR3* pos, s32 arg3) // 0x8008D470
             {
                 var = FP_TO(ptr->field_2, Q8_SHIFT);
                 func_8008E794(pos, D_800C4818.field_20, var);
-                func_8008EA68(arg1, pos, var);
+                func_8008EA68(rot, pos, var);
             }
         }
     }
