@@ -60,7 +60,7 @@ INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E2ED8);
 
 INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E2FC0);
 
-INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E3094);
+INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", GameState_Unk15_Update); // 0x801E3094
 
 s32 func_801E3124() // 0x801E3124
 {

@@ -166,7 +166,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8004C564);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8004C8DC);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8004C9B0);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", GameState_StatusScreen_Update);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8004D1A0);
 
@@ -636,7 +636,7 @@ void func_80066E7C() // 0x80066E7C
     DrawSync(0);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_80066EB0);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", GameState_MapScreen_Update);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_80067914);
 

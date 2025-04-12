@@ -1,4 +1,4 @@
-
+GameState_OptionScreen_Update = 0x801E2D44; // type:func
 Settings_ExtraScreen = 0x801E318C; // type:func
 Settings_MainScreen = 0x801E3770; // type:func
 Gfx_BgmBarDraw = 0x801E3F68; // type:func

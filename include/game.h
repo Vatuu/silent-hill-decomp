@@ -73,7 +73,7 @@ typedef enum _GameState
     GameState_LoadScreen          = 10,
     GameState_InGame              = 11,
     GameState_MapEvent            = 12,
-    GameState_ReturnToGameplay    = 13,
+    GameState_ExitMovie           = 13,
     GameState_StatusScreen        = 14,
     GameState_MapScreen           = 15,
     GameState_Unk10               = 16,
@@ -306,7 +306,18 @@ typedef struct _ShSaveGameContainer
     s_ShSaveGameFooter footer_27C;
 } s_ShSaveGameContainer;
 STATIC_ASSERT_SIZEOF(s_ShSaveGameContainer, 0x280);
-    
+
+typedef struct _ShEventParam
+{
+    u8  unk_0[2];
+    s16 eventFlagNum_2;
+    u8  unk_4[1];
+    u8  field_5;
+    u8  unk_6[2];
+    u32 flags_8;
+} s_ShEventParam;
+STATIC_ASSERT_SIZEOF(s_ShEventParam, 0xC);
+
 typedef struct _GameWork
 {
     s_ControllerBindings controllerBinds_0;
@@ -510,6 +521,7 @@ extern s32 g_DeltaTime0;
 extern s32 g_DeltaTime1;
 extern s32 g_DeltaTime2;
 extern u32 g_MapEventIdx;
+extern s_ShEventParam* g_MapEventParam;
 
 extern s32 g_IntervalVBlanks;
 extern s32 g_PrevVBlanks;
@@ -571,6 +583,15 @@ static inline void Game_StateSetPrevious()
     g_GameWork.gameState_594        = g_GameWork.gameStatePrev_590;
     g_GameWork.gameStatePrev_590    = prevState;
     g_GameWork.gameStateStep_598[0] = 0;
+}
+
+/** Sets the given flag ID inside the savegame event flags array. */
+static inline void SaveGame_EventFlagSet(u32 flagNum)
+{
+    s16 flagIdx = flagNum / 32;
+    s16 flagBit = flagNum % 32;
+
+    g_SaveGamePtr->eventFlags_168[flagIdx] |= (1 << flagBit);
 }
 
 #endif

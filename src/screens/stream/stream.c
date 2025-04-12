@@ -8,8 +8,7 @@
 #include "main/fileinfo.h"
 #include "screens/stream/stream.h"
 
-// Old IDB name: MainLoopState3_StartMovieIntro_801E2654
-void func_801E2654()
+void GameState_StartMovieIntro_Update() // 0x801E2654
 {
     switch (g_GameWork.gameStateStep_598[0])
     {
@@ -40,8 +39,7 @@ void func_801E2654()
     func_800314EC(D_800A900C);
 }
 
-// Old IDB name: MainLoopState6_Movie_PlayIntro_801E279C
-void func_801E279C()
+void GameState_MovieIntro_Update() // 0x801E279C
 {
     s32 fileIdx = FILE_XA_C1_20670;
 
@@ -56,22 +54,18 @@ void func_801E279C()
     D_800B5C30 = 0x1000;
 }
 
-// Old IDB name: MainLoopState9_Movie_PlayOpening_801E2838
-void func_801E2838()
+void GameState_MovieOpening_Update() // 0x801E2838
 {
     open_main(FILE_XA_M1_03500, 0);
     Game_StateSetNext(GameState_LoadScreen);
 }
 
-// Old IDB name: MainLoopStateD_ReturnToGame_801E28B0
-void func_801E28B0()
+void GameState_ExitMovie_Update() // 0x801E28B0
 {
     Game_StateSetNext(GameState_InGame);
 }
 
-// Old IDB name: MainLoopState11_Movie_PlayEnding_801E2908
-// Movie to play seems decided by LStickLeft/LStickRight, possibly debug movie player?
-void func_801E2908()
+void GameState_DebugMoviePlayer_Update() // 0x801E2908
 {
     extern s32 g_Debug_MoviePlayerIdx; // Only used in this func, maybe a static.
 
@@ -110,8 +104,7 @@ void func_801E2908()
     }
 }
 
-// Old IDB name: MainLoopState5_Movie_PlayIntroAlternate_801E2A24
-void func_801E2A24(void)
+void GameState_MovieIntroAlternate_Update() // 0x801E2A24
 {
     open_main(FILE_XA_C1_20670, 2060); // Second param looks like file ID for FILE_XA_M6_02112, but is actually frame count?
     Game_StateSetNext(GameState_MainMenu);

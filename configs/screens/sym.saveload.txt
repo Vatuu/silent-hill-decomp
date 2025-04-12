@@ -1,0 +1,2 @@
+GameState_Unk4_Update = 0x801E72FC; // type:func
+GameState_Unk8_Update = 0x801E6320; // type:func

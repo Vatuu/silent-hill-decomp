@@ -1,0 +1,2 @@
+GameState_KonamiLogo_Update = 0x800C95AC; // type:func
+GameState_KcetLogo_Update = 0x800C99A4; // type:func

@@ -503,9 +503,13 @@ extern s8 D_800A99CC[];
 
 extern s_FsImageDesc D_800A9A04;
 
+extern s32 D_800A9A0C; // old IDB name FS_AllFilesLoaded, though FS code doesn't set it
+
 extern s32 D_800A9A1C;
 
 extern s32 D_800A9A68;
+
+extern RECT D_800A9A6C; // RECT <320, 256, 160, 240>, only used in SysState_Fmv_Update?
 
 extern s_FsImageDesc D_800A9EB4;
 
@@ -841,6 +845,11 @@ s32 func_80033548();
 
 /** Unknown bodyprog func. Called by `Fs_QueuePostLoadAnm`. */
 void func_80035560(s32 arg0, s32 arg1, void* arg2, s32 arg3);
+
+/** SysState_Fmv update function.
+ * Movie to play is decided by `2072 - g_MapEventIdx`
+ * After playback, savegame gets `D_800BCDD8->eventFlagNum_2` event flag set. */
+void SysState_Fmv_Update();
 
 /** Unknown bodyprog func. Called by `Fs_QueueDoThingWhenEmpty`. */
 s32 func_8003c850();

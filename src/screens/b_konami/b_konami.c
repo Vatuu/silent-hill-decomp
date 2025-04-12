@@ -27,7 +27,7 @@ s32 D_800CA508 = 0;
 u8* D_800CA50C = 0;
 s32 D_800CA510 = 0;
 
-void func_800C95AC() // 0x800C95AC
+void GameState_KonamiLogo_Update() // 0x800C95AC
 {
     s32 idx;
 
@@ -144,7 +144,7 @@ s32 func_800C9874() // 0x800C9874
     return 4;
 }
 
-void func_800C99A4() // 0x800C99A4
+void GameState_KcetLogo_Update() // 0x800C99A4
 {
     s_GameWork* ptr;
 

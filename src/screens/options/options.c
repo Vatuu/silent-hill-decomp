@@ -8,7 +8,7 @@
 // GENERAL, MAIN, AND EXTRA OPTION SCREENS
 // ========================================
 
-INCLUDE_ASM("asm/screens/options/nonmatchings/options", func_801E2D44);
+INCLUDE_ASM("asm/screens/options/nonmatchings/options", GameState_OptionScreen_Update); // 0x801E2D44
 
 INCLUDE_ASM("asm/screens/options/nonmatchings/options", Settings_ExtraScreen); // 0x801E318C
 
