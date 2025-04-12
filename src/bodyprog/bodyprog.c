@@ -583,7 +583,7 @@ void GameState_Unk0_Update() // 0x80032D1C
             break;
 
         case 1:
-            if (!(func_80045B28() & 0xFF))
+            if (!func_80045B28())
             {
                 unkGameStateVar = D_800A9774[g_GameWork.gameStateStep_598[1]];
                 if (unkGameStateVar != 0)
@@ -698,7 +698,7 @@ void MainLoop() // 0x80032EE0
         {
             GsOUT_PACKET_P = (PACKET*)(TEMP_MEMORY_ADDR + (g_ObjectTableIdx << 17));
         }
-        else if (g_GameWork.gameState_594 == 14)
+        else if (g_GameWork.gameState_594 == GameState_StatusScreen)
         {
             GsOUT_PACKET_P = (PACKET*)(TEMP_MEMORY_ADDR + (g_ObjectTableIdx * 40000));
         }
@@ -712,7 +712,7 @@ void MainLoop() // 0x80032EE0
 
         g_SysWork.field_22A0 = 0;
 
-        // State machine?
+        // Call update function for the current GameState.
         D_800A977C[g_GameWork.gameState_594]();
 
         Demo_Update();
@@ -728,7 +728,7 @@ void MainLoop() // 0x80032EE0
         func_8002EB88();
         func_800485D8();
 
-        if (!(func_80045B28() & 0xFF))
+        if (!func_80045B28())
         {
             Fs_QueueUpdate();
         }
@@ -769,7 +769,7 @@ void MainLoop() // 0x80032EE0
         }
         else
         {
-            if (g_SysWork.sysState_8 != 0)
+            if (g_SysWork.sysState_8 != SysState_Gameplay)
             {
                 g_VBlanks = VSync(-1) - g_PrevVBlanks;
                 g_PrevVBlanks = VSync(-1);

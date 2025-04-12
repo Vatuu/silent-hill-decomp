@@ -971,7 +971,7 @@ void func_80087EA8(s32 arg0)
 
 void func_80087EDC(s32 arg0)
 {
-    if ((func_80045B28() & 0xFF) || Fs_QueueDoThingWhenEmpty() == 0)
+    if (func_80045B28() || Fs_QueueDoThingWhenEmpty() == 0)
     {
         return;
     }
@@ -1035,7 +1035,7 @@ void func_80088028()
 
 void func_80088048()
 {
-    if (func_80045B28() & 0xFF)
+    if (func_80045B28())
     {
         return;
     }
