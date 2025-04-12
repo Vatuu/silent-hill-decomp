@@ -328,7 +328,7 @@ typedef struct _GameWork
     u8                   optWalkRunCtrl_2B;         /** Normal: 0, Reverse: 1, default: Normal. */
     u8                   optAutoAiming_2C;          /** On: 0, Off: 1, default: On. */
     s8                   optBulletAdjust_2D;        /** x1-x6: Range [0, 5], default: x1. */
-    s8                   unk_2E[2];                 /** looks like none-zero values in the "Next Fear" mode */
+    s8                   unk_2E[2];                 /** Looks like non-zero values in "Next Fear" mode. */
     s8                   unk_30[8];
     s_ControllerData     controllers_38[2];
     s_ShSaveGame         saveGame_90; // Backup savegame?
@@ -359,7 +359,7 @@ typedef struct _ModelAnimData
     // implied by an original param name in `vcMixSelfViewEffectToWatchTgtPos`.
 
     u8  animIdx_0;
-    u8  maybeSomeState_1; // State says if `animTime_4` is anim time or a func ptr? That field could be a union.  -- emoose
+    u8  maybeSomeState_1; // State says if `animTime_4` is anim time or a func ptr? That field could be a union. -- emoose
     u16 flags_2;          /** `e_AnimFlags` */ // Bit 1: movement unlockled(?), bit 2: visible.
     s32 time_4;           /** Fixed-point time along keyframe timeline. */ 
     s16 keyframeIdx0_8;

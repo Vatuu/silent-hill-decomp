@@ -775,17 +775,146 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80045534);
 // SOUND
 // ========================================
 
+// TODO: Requires jump table.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", SD_EngineCmd);
+/*void SD_EngineCmd(s32 cmd) // 0x80045A7C
+{
+    u32 maskedCmd;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80045B28);
+    maskedCmd = ((u32)cmd >> 8) & 0xFF;
+    switch (maskedCmd)
+    {
+        case 0:
+            func_80045BD8(cmd & 0xFFFF);
+            return;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80045BC8);
+        case 3:
+        case 4:
+            func_80046A24(cmd & 0xFFFF);
+            return;
+
+        case 5:
+        case 6:
+            func_80046048(cmd & 0xFFFF, 0, 0);
+            return;
+
+        case 7:
+        case 8:
+            func_8004692C((cmd - 0x200) & 0xFFFF);
+            return;
+
+        case 11:
+        case 12:
+            func_800468EC();
+            return;
+
+        case 16:
+        case 17:
+        case 18:
+        case 19:
+        case 20:
+        case 21:
+        case 22:
+            func_80046D3C(cmd & 0xFFFF);
+
+        default:
+            return;
+    }
+}*/
+
+u8 func_80045B28() // 0x80045B28
+{
+    u8 var;
+
+    var = 1;
+    if (D_800C1658.field_4 != 0)
+    {
+        return var;
+    }
+
+    var = 2;
+    if (D_800C1658.field_15 == 0)
+    {
+        if (D_800C1673 != 0)
+        {
+            D_800C1688.field_8 = VSync(-1);
+            D_800C1688.field_4 = 0;
+            return 3;
+        }
+
+        if (D_800C37DC == 0)
+        {
+            if (D_800C37DD == 0)
+            {
+                return 0;
+            }
+
+            var = 5;
+            return var;
+        }
+
+        var = 4;
+        return var;
+    }
+
+    return var;
+}
+
+u16 func_80045BC8() // 0x80045BC8
+{
+    return D_800C1666;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80045BD8);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80045D28);
+void func_80045D28(s32 caseArg) // 0x80045D28
+{
+    CdlATV vol;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", SD_DriverInit);
+    switch (caseArg & 0xFF)
+    {
+        case 0:
+            SdSetMono();
+
+            vol.val0 = vol.val2 = 0x4F; // spu (L)
+            vol.val1 = vol.val3 = 0x4F; // spu (R)
+            CdMix(&vol);
+
+            D_800C167C = 0x7F;
+            D_800C166A = 0;
+            return;
+
+        case 1:
+            SdSetStereo();
+
+            vol.val0 = vol.val2 = 0x7F; // spu (L)
+            vol.val1 = vol.val3 = 0;    // spu (R)
+            CdMix(&vol);
+
+            D_800C167C = 0x7F;
+            D_800C166A = 1;
+            return;
+
+        default:
+            break;
+    }
+}
+
+void SD_DriverInit() // 0x80045DD4
+{
+    SdInit();
+    SdSetTickMode(1);
+    func_80045D28(1);
+    SdSetReservedVoice(24);
+    SdStart();
+    SdSetTableSize(&D_800C16C8, 16, 3);
+
+    D_800C1678.field_C = 127;
+    D_800C1678.field_D = 127;
+    D_800C1678.field_E = 127;
+
+    func_80045E44();
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80045E44);
 

@@ -120,6 +120,15 @@ typedef struct
     u16 field_44;
 } s_8008A384;
 
+typedef struct
+{
+    u8  field_0;
+    s8  unk_1;
+    s16 field_2;
+    s8  unk_4[4];
+    s32 field_8;
+} s_8008E51C;
+
 /** Something related to ANM files. See `D_800A90FC`. */
 typedef struct
 {
@@ -203,12 +212,18 @@ typedef struct
 
 typedef struct
 {
+    s8 unk_0[28];
+} s_800C117C;
+STATIC_ASSERT_SIZEOF(s_800C117C, 28);
+
+typedef struct
+{
     u16 field_0;
     s8  field_2[2];
     u16 field_4;
     u16 field_6;
     s8  unk_8[13];
-    s8  field_15;
+    u8  field_15;
 } s_800C1658;
 
 typedef struct
@@ -221,9 +236,18 @@ typedef struct
 
 typedef struct
 {
-    s8 unk_0[28];
-} s_800C117C;
-STATIC_ASSERT_SIZEOF(s_800C117C, 28);
+    s8 unk_0[12];
+    s8 field_C;
+    s8 field_D;
+    s8 field_E;
+} s_800C1678;
+
+typedef struct
+{
+    s8  unk_0[4];
+    s32 field_4;
+    s32 field_8;
+} s_800C1688;
 
 typedef struct
 {
@@ -304,7 +328,9 @@ typedef struct
     s16 field_8;
     s16 field_A;
     s16 field_C;
-    s8  unk_E[12];
+    s8  unk_E[6];
+    s32 field_14;
+    s8  unk_18[4];
     s32 field_1C;
     s32 field_20;
 } s_800C4818;
@@ -583,8 +609,15 @@ extern s8 D_800C15B4;
 extern s16 D_800C15F8[];
 
 extern s_800C1658 D_800C1658;
+extern u16 D_800C1666;
+
+extern s8 D_800C166A;
+
+extern s16 D_800C167C;
 
 extern s_800C1670 D_800C1670;
+
+extern s_800C1678 D_800C1678;
 
 extern u8 g_Sd_VolumeBgm; // 0x800C1685
 
@@ -594,7 +627,13 @@ extern u8 g_Sd_VolumeSe; // 0x800C1684
 
 extern s8 g_Sd_ReverbDepth; // 0x800C1687;
 
+extern u8 D_800C1673;
+
+extern s_800C1688 D_800C1688;
+
 extern u8 D_800C16A8;
+
+extern s32 D_800C16C8; // Type assumed.
 
 extern u8 D_800C37D0;
 
@@ -617,6 +656,10 @@ extern u8 D_800C37C8;
 extern u32 D_800C37CC;
 
 extern s_800C37D4* D_800C37D4;
+
+extern u8 D_800C37DC;
+
+extern u8 D_800C37DD;
 
 extern s16 D_800C38A8;
 
@@ -888,6 +931,17 @@ void func_800453E8(s_Skeleton* skel, s32 cond);
 /** Does something with skeleton bones. `arg0` is a struct pointer. */
 void func_80045468(s_Skeleton* skel, s32* arg1, s32 cond);
 
+void SD_EngineCmd(s32 cmd);
+
+/** Sound func? */
+u8 func_80045B28();
+
+u16 func_80045BC8();
+
+void func_80045D28(s32 caseArg);
+
+void SD_DriverInit();
+
 u8 func_80045B28();
 
 void func_8004690C(s32);
@@ -1003,9 +1057,24 @@ s32 Dms_CameraGetTargetPos(VECTOR3* posTarget, VECTOR3* lookAtTarget, u16* arg2,
 
 s32 Dms_CameraKeyframeInterpolate(s_DmsKeyframeCamera* result, s_DmsKeyframeCamera* frame0, s_DmsKeyframeCamera* frame1, s32 alpha);
 
-s32 func_8008D2C4(s32 time, s_DmsHeader* header);
+/** DMS func. */
+void func_8008D1D0(s32* keyframePrev, s32* keyframeNext, s32* alpha, s32 time, s_DmsEntry* camEntry, s_DmsHeader* header);
 
-s32 Math_LerpFixed12(s16 from, s16 to, s32 t);
+u32 func_8008D2C4(s32 time, s_DmsHeader* header);
+
+s32 Math_LerpFixed12(s16 from, s16 to, s32 alpha);
+
+void func_8008D41C();
+
+void func_8008D438();
+
+void func_8008D448();
+
+void func_8008D454();
+
+void func_8008D464();
+
+void func_8008D470(s16 arg0, SVECTOR* rot, VECTOR3* pos, s32 arg3);
 
 void func_8008D1D0(s32* arg0, s32* arg1, s32* arg2, s32, s_DmsEntry* entry, s_DmsHeader* header);
 

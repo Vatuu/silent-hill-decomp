@@ -1028,12 +1028,12 @@ void func_80087EDC(s32 arg0)
     }
 }
 
-void func_80088028(void)
+void func_80088028()
 {
     func_80087EDC(0);
 }
 
-void func_80088048(void)
+void func_80088048()
 {
     if (func_80045B28() & 0xFF)
     {
@@ -1344,7 +1344,7 @@ void DmsHeader_FixOffsets(s_DmsHeader* header) // 0x8008C9A0
 void DmsEntry_FixOffsets(s_DmsEntry* entry, s_DmsHeader* header) // 0x8008CA44
 {
     entry->keyframes_C.character = (u32)entry->keyframes_C.character + (u32)header;
-    entry->svectorPtr_8   = (u32)entry->svectorPtr_8 + (u32)header;
+    entry->svectorPtr_8 = (u32)entry->svectorPtr_8 + (u32)header;
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008CA60);
@@ -1479,10 +1479,44 @@ s32 Dms_CameraKeyframeInterpolate(s_DmsKeyframeCamera* result, s_DmsKeyframeCame
     return result->field_C[1];
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008D1D0);
+void func_8008D1D0(s32* keyframePrev, s32* keyframeNext, s32* alpha, s32 time, s_DmsEntry* camEntry, s_DmsHeader* header) // 0x8008D1D0
+{
+    s32 prevVal;
+    s32 nextVal;
+
+    prevVal = 0;
+    nextVal = 0;
+    
+    switch (func_8008D2C4(time, header))
+    {
+        case 0:
+            prevVal = FP_FROM(time, Q12_SHIFT);
+            nextVal = prevVal + 1;
+            *alpha = time & 0xFFF;
+            break;
+
+        case 1:
+            prevVal = FP_FROM(time, Q12_SHIFT);
+            nextVal = prevVal;
+            *alpha = 0;
+            break;
+
+        case 2:
+            prevVal = FP_FROM(time, Q12_SHIFT) - 1;
+            nextVal = prevVal + 1;
+            *alpha = (time & 0xFFF) + 0x1000;
+            break;
+
+        default:
+            break;
+    }
+
+    *keyframePrev = func_8008D330(prevVal, camEntry);
+    *keyframeNext = func_8008D330(nextVal, camEntry);
+}
 
 // Dms_IntervalGetStatus?
-s32 func_8008D2C4(s32 time, s_DmsHeader* header)
+u32 func_8008D2C4(s32 time, s_DmsHeader* header)
 {
     s_DmsInterval* interval;
 
@@ -1510,23 +1544,82 @@ s32 func_8008D2C4(s32 time, s_DmsHeader* header)
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008D330);
 
-s32 Math_LerpFixed12(s16 from, s16 to, s32 t) // 0x8008D3D4
+s32 Math_LerpFixed12(s16 from, s16 to, s32 alpha) // 0x8008D3D4
 {
     // TODO: Shifts are similar to `shAngleRegulate`, but that doesn't seem to work here.
-    return ((s32)(FP_MULTIPLY((((to - from) << 20) >> 20), (s64)t, 12) + from) << 20) >> 20;
+    return ((s32)(FP_MULTIPLY((((to - from) << 20) >> 20), (s64)alpha, 12) + from) << 20) >> 20;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008D41C);
+void func_8008D41C() // 0x8008D41C
+{
+    D_800C4818.field_0 = 0;
+    D_800C4818.field_1 = 0;
+    D_800C4818.field_2 = 0;
+    D_800C4818.field_A = 0;
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008D438);
+void func_8008D438() // 0x8008D438
+{
+    D_800C4818.field_0 = 1;
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008D448);
+void func_8008D448() // 0x8008D448
+{
+    D_800C4818.field_0 = 0;
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008D454);
+void func_8008D454() // 0x8008D454
+{
+    D_800C4818.field_1 = 1;
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008D464);
+void func_8008D464() // 0x8008D464
+{
+    D_800C4818.field_1 = 0;
+}
 
+// TODO: Check what's wrong.
+#ifdef NON_MATCHING
+void func_8008D470(s16 arg0, SVECTOR* rot, VECTOR3* pos, s32 arg3) // 0x8008D470
+{
+    s_8008E51C* ptr;
+    s32 var;
+
+    if (D_800C4818.field_0 == 0)
+    {
+        func_800410D8(&D_800C4818.field_C, &D_800C4818.field_1C, &D_800C4818.field_20, rot, pos);
+
+        if ((ReadGeomScreen() >> 1) < D_800C4818.field_14)
+        {
+            D_800C4818.field_2 = 1;
+            D_800C4818.field_8 = func_8008D8C0(arg0, D_800C4818.field_14, D_800C4818.field_20);
+            func_8008D5A0(&D_800C4818.field_C, D_800C4818.field_20);
+        }
+        else
+        {
+            return;
+        }
+    }
+
+    if (D_800C4818.field_1 == 0)
+    {
+        ptr = func_8008E51C(FP_FROM(pos->vx, Q8_SHIFT), FP_FROM(pos->vz, Q8_SHIFT), arg3);
+        if (ptr != NULL)
+        {
+            func_8008E5B4();
+
+            if (ptr->field_0 == 1)
+            {
+                var = FP_TO(ptr->field_2, Q8_SHIFT);
+                func_8008E794(pos, D_800C4818.field_20, var);
+                func_8008EA68(arg1, pos, var);
+            }
+        }
+    }
+}
+#else
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008D470);
+#endif
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008D5A0);
 
@@ -1568,7 +1661,7 @@ void func_8008D78C()
     func_8008D990(var1, D_800C4818.field_A, &D_800C4818.field_C, D_800C4818.field_1C, D_800C4818.field_20);
 }
 
-s32 func_8008D850()
+s32 func_8008D850() // 0x8008D850
 {
     s16 rectX;
     RECT rect;
