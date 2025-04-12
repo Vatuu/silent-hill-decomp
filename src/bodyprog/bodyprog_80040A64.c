@@ -867,7 +867,38 @@ u16 func_80045BC8() // 0x80045BC8
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80045BD8);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80045D28);
+void func_80045D28(s32 caseArg) // 0x80045D28
+{
+    CdlATV vol;
+
+    switch (caseArg & 0xFF)
+    {
+        case 0:
+            SdSetMono();
+
+            vol.val0 = vol.val2 = 0x4F; // spu (L)
+            vol.val1 = vol.val3 = 0x4F; // spu (R)
+            CdMix(&vol);
+
+            D_800C167C = 0x7F;
+            D_800C166A = 0;
+            return;
+
+        case 1:
+            SdSetStereo();
+
+            vol.val0 = vol.val2 = 0x7F; // spu (L)
+            vol.val1 = vol.val3 = 0;    // spu (R)
+            CdMix(&vol);
+
+            D_800C167C = 0x7F;
+            D_800C166A = 1;
+            return;
+
+        default:
+            break;
+    }
+}
 
 void SD_DriverInit() // 0x80045DD4
 {

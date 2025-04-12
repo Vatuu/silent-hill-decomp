@@ -611,6 +611,10 @@ extern s16 D_800C15F8[];
 extern s_800C1658 D_800C1658;
 extern u16 D_800C1666;
 
+extern s8 D_800C166A;
+
+extern s16 D_800C167C;
+
 extern s_800C1670 D_800C1670;
 
 extern s_800C1678 D_800C1678;
@@ -934,6 +938,8 @@ void SD_EngineCmd(s32 cmd);
 u8 func_80045B28();
 
 u16 func_80045BC8();
+
+void func_80045D28(s32 caseArg);
 
 void SD_DriverInit();
 
