@@ -7,6 +7,7 @@
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math.h"
+#include "bodyprog/vw_system.h"
 #include "main/fsqueue.h"
 
 void func_8002E630() 
@@ -1393,19 +1394,19 @@ void SysWork_SaveGameReadPlayer() // 0x8003A1F4
     g_SysWork.player_4C.chara_0.health_B0      = g_SaveGamePtr->playerHealth_240;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", SysState_SaveMenu_Update);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", SysState_SaveMenu_Update); // 0x8003A230
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", SysState_Unk10_Update);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", SysState_Unk10_Update); // 0x8003A3C8
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", SysState_Unk11_Update);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", SysState_Unk11_Update); // 0x8003A460
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", SysState_Unk12_Update);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", SysState_Unk12_Update); // 0x8003A4B4
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", SysState_GameOver_Update);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", SysState_GameOver_Update); // 0x8003A52C
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", GameState_MapEvent_Update);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", GameState_MapEvent_Update); // 0x8003AA4C
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", GameState_MainMenu_Update);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", GameState_MainMenu_Update); // 0x8003AB28
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003B550);
 

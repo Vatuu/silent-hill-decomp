@@ -114,14 +114,6 @@ typedef struct
 
 typedef struct
 {
-    s8  unk_8[62];
-    u16 field_3E;
-    s8  unk_40[4];
-    u16 field_44;
-} s_8008A384;
-
-typedef struct
-{
     u8  field_0;
     s8  unk_1;
     s16 field_2;
@@ -1174,11 +1166,11 @@ void func_80089500();
 
 s32 func_8008A35C(s_8008A35C* arg0, s32 arg1);
 
-void func_8008A384(s_8008A384* arg0);
+void func_8008A384(s_SubCharacter* chara);
 
-void func_8008A398(s_8008A384* arg0);
+void func_8008A398(s_SubCharacter* chara);
 
-void func_8008A3AC(s_8008A384* arg0);
+void func_8008A3AC(s_SubCharacter* chara);
 
 s32 func_8008D850();
 
