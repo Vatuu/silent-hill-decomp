@@ -1479,10 +1479,44 @@ s32 Dms_CameraKeyframeInterpolate(s_DmsKeyframeCamera* result, s_DmsKeyframeCame
     return result->field_C[1];
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008D1D0);
+void func_8008D1D0(s32* keyframePrev, s32* keyframeNext, s32* alpha, s32 time, s_DmsEntry* camEntry, s_DmsHeader* header) // 0x8008D1D0
+{
+    s32 prevVal;
+    s32 nextVal;
+
+    prevVal = 0;
+    nextVal = 0;
+    
+    switch (func_8008D2C4(time, header))
+    {
+        case 0:
+            prevVal = FP_FROM(time, Q12_SHIFT);
+            nextVal = prevVal + 1;
+            *alpha = time & 0xFFF;
+            break;
+
+        case 1:
+            prevVal = FP_FROM(time, Q12_SHIFT);
+            nextVal = prevVal;
+            *alpha = 0;
+            break;
+
+        case 2:
+            prevVal = FP_FROM(time, Q12_SHIFT) - 1;
+            nextVal = prevVal + 1;
+            *alpha = (time & 0xFFF) + 0x1000;
+            break;
+
+        default:
+            break;
+    }
+
+    *keyframePrev = func_8008D330(prevVal, camEntry);
+    *keyframeNext = func_8008D330(nextVal, camEntry);
+}
 
 // Dms_IntervalGetStatus?
-s32 func_8008D2C4(s32 time, s_DmsHeader* header)
+u32 func_8008D2C4(s32 time, s_DmsHeader* header)
 {
     s_DmsInterval* interval;
 

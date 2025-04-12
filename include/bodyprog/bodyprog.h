@@ -928,7 +928,6 @@ void func_80045014(s_Skeleton* skel);
 /** Anim func. Traverses skeleton bones to set flags/mask. */
 void func_800453E8(s_Skeleton* skel, s32 cond);
 
-
 /** Does something with skeleton bones. `arg0` is a struct pointer. */
 void func_80045468(s_Skeleton* skel, s32* arg1, s32 cond);
 
@@ -1058,7 +1057,10 @@ s32 Dms_CameraGetTargetPos(VECTOR3* posTarget, VECTOR3* lookAtTarget, u16* arg2,
 
 s32 Dms_CameraKeyframeInterpolate(s_DmsKeyframeCamera* result, s_DmsKeyframeCamera* frame0, s_DmsKeyframeCamera* frame1, s32 alpha);
 
-s32 func_8008D2C4(s32 time, s_DmsHeader* header);
+/** DMS func. */
+void func_8008D1D0(s32* keyframePrev, s32* keyframeNext, s32* alpha, s32 time, s_DmsEntry* camEntry, s_DmsHeader* header);
+
+u32 func_8008D2C4(s32 time, s_DmsHeader* header);
 
 s32 Math_LerpFixed12(s16 from, s16 to, s32 alpha);
 
