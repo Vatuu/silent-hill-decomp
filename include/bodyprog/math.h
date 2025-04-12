@@ -41,7 +41,7 @@
 
 /** Converts a floating-point alpha in the range [0.0f, 1.0f] to a fixed-point alpha in Q3.12 format. */
 #define FP_ALPHA(alpha) \
-    (s16)((alpha) * (1 << (Q12_SHIFT)))
+    (s16)FP_FLOAT_TO(alpha, Q12_SHIFT)
 
 /** Converts floating-point degrees to fixed-point angles in Q1.15 format. */
 #define FP_ANGLE(deg) \

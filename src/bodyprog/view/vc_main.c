@@ -1240,8 +1240,7 @@ void vcSetDataToVwSystem(VC_WORK* w_p, VC_CAM_MV_TYPE cam_mv_type) // 0x80085884
         w_p->field_D8 = 0;
         vwSetCoordRefAndEntou(&g_SysWork.playerBoneCoords_890[PlayerBone_Head],
                               0, FP_METER(-0.8f), FP_METER(4.8f),
-                              FP_ANGLE(11.25f), FP_ANGLE(0.0f), FP_METER(-3.2f),
-                              FP_METER(16.0f));
+                              FP_ANGLE(11.25f), FP_ANGLE(0.0f), FP_METER(-3.2f), FP_METER(16.0f));
     }
     else if (w_p->field_FC != 0)
     {
