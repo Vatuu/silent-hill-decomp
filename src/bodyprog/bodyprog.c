@@ -1295,7 +1295,59 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", SysState_Unk3_Update);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", GameState_LoadMapScreen_Update);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", SysState_Fmv_Update);
+void SysState_Fmv_Update() // 0x80039A58
+{
+    switch (g_SysWork.sysStateStep_C)
+    {
+        case 0:
+            D_800BCD0C               = 3;
+            D_800A9A0C               = 0;
+            g_SysWork.sysStateStep_C = 1;
+        case 1:
+            if (func_8003c850() != 0)
+            {
+                GameFs_StreamBinLoad();
+                g_SysWork.sysStateStep_C++;
+            }
+            break;
+    }
+
+    if (D_800A9A0C == 0)
+    {
+        return;
+    }
+
+    // Copy framebuffer into `IMAGE_BUFFER_0` before movie playback
+    DrawSync(0);
+    StoreImage(&D_800A9A6C, (u32*)IMAGE_BUFFER_0);
+    DrawSync(0);
+
+    func_800892A4(0);
+    func_80089128();
+
+    // Start playing movie, file to play is based on file ID `2072 - g_MapEventIdx`
+    // Blocks until movie has finished playback (or user has skipped it)
+    open_main(2072 - g_MapEventIdx, g_FileTable[2072 - g_MapEventIdx].blockCount);
+
+    func_800892A4(1);
+
+    // Restore copied framebuffer from `IMAGE_BUFFER_0`
+    GsSwapDispBuff();
+    LoadImage(&D_800A9A6C, (u32*)IMAGE_BUFFER_0);
+    DrawSync(0);
+
+    // Set savegame flag based on `D_800BCDD8->eventFlagNum_2` flag ID
+    SaveGame_EventFlagSet(g_MapEventParam->eventFlagNum_2);
+
+    // Return to game
+    Game_StateSetNext(GameState_InGame);
+
+    // If flag is set, returns us to GameState_InGame with gameStateStep[0] = 1
+    if ((g_MapEventParam->flags_8 >> 0xD) & 2) // flags_8 & 0x4000? does shift imply bitfield?
+    {
+        g_GameWork.gameStateStep_598[0] = 1;
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", SysState_LoadArea_Update);
 
