@@ -530,7 +530,7 @@ extern s32 g_PrevVBlanks;
 extern s32 g_VBlanks;
 extern s32 g_UncappedVBlanks;
 
-/** Sets the SysState to be used in the next game update. */
+/** @brief Sets the SysState to be used in the next game update. */
 static inline void SysWork_StateSetNext(e_SysState sysState)
 {
     g_SysWork.sysState_8     = sysState;
@@ -542,8 +542,7 @@ static inline void SysWork_StateSetNext(e_SysState sysState)
     g_SysWork.field_14       = 0;
 }
 
-/**
- * Sets the GameState to be used in the next game update.
+/** @brief Sets the GameState to be used in the next game update.
  * Inlined into stream and b_konami.
  */
 static inline void Game_StateSetNext(e_GameState gameState)
@@ -565,8 +564,7 @@ static inline void Game_StateSetNext(e_GameState gameState)
     g_GameWork.gameStateStep_598[0] = 0;
 }
 
-/**
- * Returns the GameState to the previously used state.
+/** @brief Returns the GameState to the previously used state.
  * Inlined into credits.
  */
 static inline void Game_StateSetPrevious()
@@ -587,13 +585,13 @@ static inline void Game_StateSetPrevious()
     g_GameWork.gameStateStep_598[0] = 0;
 }
 
-/** Sets the given flag ID inside the savegame event flags array. */
-static inline void SaveGame_EventFlagSet(u32 flagNum)
+/** @brief Sets the given flag ID inside the savegame event flags array. */
+static inline void SaveGame_EventFlagSet(u32 flagId)
 {
-    s16 flagIdx = flagNum / 32;
-    s16 flagBit = flagNum % 32;
+    s16 flagIdx = flagId / 32;
+    s16 flagBit = flagId % 32;
 
-    g_SaveGamePtr->eventFlags_168[flagIdx] |= (1 << flagBit);
+    g_SaveGamePtr->eventFlags_168[flagIdx] |= 1 << flagBit;
 }
 
 #endif
