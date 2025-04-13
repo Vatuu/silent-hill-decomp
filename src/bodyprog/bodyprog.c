@@ -1579,20 +1579,22 @@ void GameFs_BgEtcGfxLoad() // 0x8003BE6C
 
 void GameFs_BgItemLoad() // 0x8003BE9C
 {
-    D_800BE9FC.queueIdx_1000 = Fs_QueueStartRead(FILE_BG_BG_ITEM_PLM, &D_800BE9FC);
+    D_800BCE18.field_1BE4.queueIdx_1000 = Fs_QueueStartRead(FILE_BG_BG_ITEM_PLM, &D_800BCE18.field_1BE4);
 }
 
 void func_8003BED0() // 0x8003BED0
 {
-    if (Fs_QueueIsEntryLoaded(D_800BE9FC.queueIdx_1000) == 0 || D_800BE9FC.field_2 != 0)
+    s_800BE9FC* D_800BE9FC = &D_800BCE18.field_1BE4;
+
+    if (Fs_QueueIsEntryLoaded(D_800BE9FC->queueIdx_1000) == 0 || D_800BE9FC->field_2 != 0)
     {
         return;
     }
 
-    func_800560FC(&D_800BE9FC);
-    func_80056504(&D_800BE9FC, &D_80025528, &D_800A9EBC, 1);
-    func_80056504(&D_800BE9FC, &D_80025530, &D_800A9EC4, 1);
-    func_80056954(&D_800BE9FC);
+    func_800560FC(&D_800BCE18.field_1BE4);
+    func_80056504(&D_800BCE18.field_1BE4, &D_80025528, &D_800A9EBC, 1);
+    func_80056504(&D_800BCE18.field_1BE4, &D_80025530, &D_800A9EC4, 1);
+    func_80056954(&D_800BCE18.field_1BE4);
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003BF60);
@@ -1615,7 +1617,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003C368);
 
 void func_8003C3A0() // 0x8003C3A0
 {
-    D_800BCE1C = 0;
+    D_800BCE18.field_4 = 0;
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003C3AC);
@@ -1674,7 +1676,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003D7D4);
 
 void func_8003D938() // 0x8003D938
 {
-    func_8003D9C8(&D_800BE464);
+    func_8003D9C8(&D_800BCE18.field_164C);
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003D95C);

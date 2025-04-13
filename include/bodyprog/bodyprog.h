@@ -3,6 +3,7 @@
 
 #include "game.h"
 #include "main/fsqueue.h"
+#include "bodyprog/vw_system.h"
 
 #define TEMP_MEMORY_ADDR (s8*)0x801A2600
 
@@ -188,6 +189,20 @@ typedef struct
     s8 field_3;
 } s_800BCDA8;
 STATIC_ASSERT_SIZEOF(s_800BCDA8, 4);
+
+typedef struct _s_800BCE18
+{
+    s8                unk_0[4];
+    s8                field_4;
+    u8                unk_5[3];
+    u8                unk_8[0x1644];
+    s32               field_164C;
+    u8                unk_1650[0x58C];
+    VC_CAMERA_INTINFO vcCameraInternalInfo_1BDC; // Debug camera info.
+    s_800BE9FC        field_1BE4;
+    s32               field_2BE8;
+} s_800BCE18;
+STATIC_ASSERT_SIZEOF(s_800BCE18, 0x2BEC); // TODO: likely even larger, func_8003CB44 accesses some 16 byte fields at 0x2BEC.
 
 typedef struct
 {
@@ -596,11 +611,7 @@ extern u8 D_800BCDD4;
 
 extern u16 D_800BCE14;
 
-extern s8 D_800BCE1C;
-
-extern s32 D_800BE464;
-
-extern s_800BE9FC D_800BE9FC;
+extern s_800BCE18 D_800BCE18;
 
 extern s_800C1020 D_800C1020;
 
@@ -799,6 +810,9 @@ typedef struct _MapOverlayHeader
     s32 (*func_13C)(s32, s32, void*, s16, s32); // 0x800C96B8
     u8 unk_140[40];
     void (*func_168)(void*, void*, void*);
+    u8           unk_16C[4];
+    u8           unk_170[0x25C];
+    VC_ROAD_DATA roadDataList_3CC[48]; // Ends at 0x84C
     // TODO: a lot more in here.
 } s_MapOverlayHeader;
 
