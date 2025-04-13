@@ -433,50 +433,52 @@ typedef struct
 } s_DmsHeader;
 STATIC_ASSERT_SIZEOF(s_DmsHeader, 44);
 
+// Used for normal credits screen.
 typedef struct
 {
-    s16 field_0;     //prim vertex x
-    s16 field_2;     //prim vertex y
-    s16 field_4;     //width?
-    s8 field_6;      //height? 
-    s8 field_7;      //blend flag
-    s32 field_8;     //rgb24 color + code
-    s16* field_C;    //points to 0x801E5C24, data size 400
-    s32* field_10;   //points to 0x801E5E24, data size 28, rgb24 + code
-    u16 field_14;    //tpage for setDrawTPage, calculated from field_18 with func_801E434C
-    s16 field_16;    //clut xy
-    u32 field_18;    //texture uv
+    s16  field_0;     // Prim vertex x
+    s16  field_2;     // Prim vertex y
+    s16  field_4;     // Width?
+    s8   field_6;     // Height? 
+    s8   field_7;     // Blend flag
+    s32  field_8;     // Rgb24 color + code
+    s16* field_C;     // Points to 0x801E5C24, data size 400
+    s32* field_10;    // Points to 0x801E5E24, data size 28, rgb24 + code
+    u16  field_14;    // Tpage for setDrawTPage, calculated from field_18 with func_801E434C
+    s16  field_16;    // Clut xy
+    u32  field_18;    // Texture uv
 } s_800AFE08; // Size: 28
 
+// Used for UFO ending credits screen.
 typedef struct
 {
-    s16 field_0;     //prim vertex x
-    s16 field_2;     //prim vertex y
-    s16 field_4;     //width?
-    s8 field_6;      //height? 
-    s8 field_7;      //blend flag
-    s32 field_8;     //rgb24 color + code
-    s16* field_C;    //points to 0x801E5C24, data size 400
-    s32* field_10;   //points to 0x801E5E40, data size 28, rgb24 + code
-    u16 field_14;    //tpage for setDrawTPage, calculated from field_18 with func_801E4BD4
-    s16 field_16;    //clut xy
-    u32 field_18;    //texture uv
-    s32 field_1C;
-    s16 field_20;
-    s16 field_22;
-    s32 field_24;
-    s32 field_28;
-    s32 field_2C;
-    s32 field_30;
-    s32 field_34;
-    s32 field_38;
-    s32 field_3C;
-    s32 field_40;
-    s32 field_44;
-    s32 field_48;
-    s32 field_4C;
-    s32 field_50;
-    s32 field_54;
+    s16  field_0;     // Prim vertex x
+    s16  field_2;     // Prim vertex y
+    s16  field_4;     // Width?
+    s8   field_6;     // Height? 
+    s8   field_7;     // Blend flag
+    s32  field_8;     // Rgb24 color + code
+    s16* field_C;     // Points to 0x801E5C24, data size 400
+    s32* field_10;    // Points to 0x801E5E40, data size 28, rgb24 + code
+    u16  field_14;    // Tpage for setDrawTPage, calculated from field_18 with func_801E4BD4
+    s16  field_16;    // Clut xy
+    u32  field_18;    // Texture uv
+    s32  field_1C;
+    s16  field_20;
+    s16  field_22;
+    s32  field_24;
+    s32  field_28;
+    s32  field_2C;
+    s32  field_30;
+    s32  field_34;
+    s32  field_38;
+    s32  field_3C;
+    s32  field_40;
+    s32  field_44;
+    s32  field_48;
+    s32  field_4C;
+    s32  field_50;
+    s32  field_54;
 } s_800AFE24; // Size: 85
 
 extern s8* D_8002510C;
