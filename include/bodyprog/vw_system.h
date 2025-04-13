@@ -106,7 +106,7 @@ STATIC_ASSERT_SIZEOF(VC_LIMIT_AREA, 8);
 
 typedef struct _VC_CAMERA_INTINFO
 {
-    s32 mode;
+    u32 mode;
     u8  mv_smooth;
     s8  unk_5;
     s16 ev_cam_rate;
