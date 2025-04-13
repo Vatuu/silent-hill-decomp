@@ -1124,7 +1124,7 @@ void func_8003640C(s32 arg0) // 0x8003640C
 {
     if (arg0 != 0)
     {
-        D_800C9590 = arg0;
+        g_MapOverlayHeader.field_14 = arg0;
     }
 }
 
@@ -1132,12 +1132,12 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80036420);
 
 s32 func_8003647C() // 0x8003647C
 {
-    return g_SaveGamePtr->field_A5 > D_800C9584;
+    return g_SaveGamePtr->field_A5 > g_MapOverlayHeader.field_8;
 }
 
 s32 func_80036498() // 80036498
 {
-    return !(g_SaveGamePtr->field_A5 > D_800C9584);
+    return !(g_SaveGamePtr->field_A5 > g_MapOverlayHeader.field_8);
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_800364BC);
