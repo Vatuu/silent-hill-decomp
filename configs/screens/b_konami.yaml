@@ -9,6 +9,7 @@ options:
 
   asm_path: asm/screens/b_konami
   src_path: src/screens/b_konami
+  asset_path: asm/screens/b_konami
   build_path: build
 
   ld_script_path: linkers/screens/b_konami.ld
@@ -60,5 +61,8 @@ segments:
       - [0x34, c, b_konami]
 
       - [0xF78, .data, b_konami]
-      - [0xF9C, data] # Probably gibberish data.
+  # Random garbage data at end, define as bin file to make splat mostly ignore it.
+  - name: footer_data
+    type: bin
+    start: 0xF9C
   - [0x1000]

@@ -3,6 +3,7 @@
 
 #include "game.h"
 #include "main/fsqueue.h"
+#include "bodyprog/vw_system.h"
 
 #define TEMP_MEMORY_ADDR (s8*)0x801A2600
 
@@ -114,14 +115,6 @@ typedef struct
 
 typedef struct
 {
-    s8  unk_8[62];
-    u16 field_3E;
-    s8  unk_40[4];
-    u16 field_44;
-} s_8008A384;
-
-typedef struct
-{
     u8  field_0;
     s8  unk_1;
     s16 field_2;
@@ -196,6 +189,20 @@ typedef struct
     s8 field_3;
 } s_800BCDA8;
 STATIC_ASSERT_SIZEOF(s_800BCDA8, 4);
+
+typedef struct _s_800BCE18
+{
+    s8                unk_0[4];
+    s8                field_4;
+    u8                unk_5[3];
+    u8                unk_8[0x1644];
+    s32               field_164C;
+    u8                unk_1650[0x58C];
+    VC_CAMERA_INTINFO vcCameraInternalInfo_1BDC; // Debug camera info.
+    s_800BE9FC        field_1BE4;
+    s32               field_2BE8;
+} s_800BCE18;
+STATIC_ASSERT_SIZEOF(s_800BCE18, 0x2BEC); // TODO: likely even larger, func_8003CB44 accesses some 16 byte fields at 0x2BEC.
 
 typedef struct
 {
@@ -505,7 +512,11 @@ extern s_FsImageDesc D_800A9A04;
 
 extern s32 D_800A9A0C; // old IDB name FS_AllFilesLoaded, though FS code doesn't set it
 
+extern s32 D_800A9A10;
+
 extern s32 D_800A9A1C;
+
+extern void (*D_800A9A2C[])(); // SysState func table
 
 extern s32 D_800A9A68;
 
@@ -567,6 +578,8 @@ extern DVECTOR g_Gfx_DebugStringPosition0;
 
 extern DVECTOR g_Gfx_DebugStringPosition1;
 
+extern s32 D_800B5C30;
+
 extern s_800B5C40 D_800B5C40[];
 
 extern s32 D_800B5C7C; // Type assumed.
@@ -588,6 +601,8 @@ extern s8 D_800BCD40;
 
 extern s8 D_800BCD78;
 
+extern s32 D_800BCD84;
+
 extern s_800BCDA8 D_800BCDA8[];
 
 extern s32 D_800BCDB0; // Type assumed.
@@ -596,11 +611,7 @@ extern u8 D_800BCDD4;
 
 extern u16 D_800BCE14;
 
-extern s8 D_800BCE1C;
-
-extern s32 D_800BE464;
-
-extern s_800BE9FC D_800BE9FC;
+extern s_800BCE18 D_800BCE18;
 
 extern s_800C1020 D_800C1020;
 
@@ -648,12 +659,6 @@ extern s_800C38B0 D_800C38B0;
 extern s32 D_800C38B4;
 
 extern s32 D_800C4710[];
-
-extern void (*D_800C9644)();
-
-extern void (*D_800C9648)(s32);
-
-extern s32 (*D_800C9668)();
 
 extern u8 D_800C37C8;
 
@@ -765,10 +770,6 @@ extern s_800C4818 D_800C4818;
 /** Unknown bodyprog var. Set in `Fs_QueueDoThingWhenEmpty`. */
 extern s32 D_800C489C;
 
-extern s8 D_800C9584;
-
-extern s8 D_800C9590;
-
 // TODO: Order these by address.
 
 extern s32 g_MainLoop_FrameCount; // 0x800B9CCC
@@ -787,10 +788,37 @@ extern s_FsImageDesc g_MainImg0; // 0x80022C74
 
 extern s_800AD4C8 D_800AD4C8[];
 
-/** TODO: 800C964C and 800C96B8 are part of map overlay header? maybe should be moved to maps/s00.h or dynamic/dynamic.h */
-extern s32 (*D_800C964C)(s32, void*, s16, s32);
+/** TODO: `g_MapOverlayHeader` is part of the overlay bin files, maybe should be moved to `maps/s00.h` or `dynamic/dynamic.h`. */
+typedef struct _MapOverlayHeader
+{
+    u8 unk_0[8];
+    s8 field_8;
+    u8 unk_9[3];
+    u8 unk_C[8];
+    s8 field_14;
+    u8 unk_15[3];
+    u8 unk_18[8];
+    void (**mapEventFuncs_20)(); // Points to array of event functions.
+    u8 unk_24[0x1C];
+    void (*func_40)();
+    void (*func_44)();
+    u8 unk_48[128];
+    void (*func_C8)();
+    void (*func_CC)(s32);
+    s32 (*func_D0)(s32, void*, s16, s32); // 0x800C964C
+    u8 unk_D4[24];
+    s32 (*func_EC)();
+    u8 unk_F0[76];
+    s32 (*func_13C)(s32, s32, void*, s16, s32); // 0x800C96B8
+    u8 unk_140[40];
+    void (*func_168)(void*, void*, void*);
+    u8           unk_16C[4];
+    u8           unk_170[0x25C];
+    VC_ROAD_DATA roadDataList_3CC[48]; // Ends at 0x84C
+    // TODO: a lot more in here.
+} s_MapOverlayHeader;
 
-extern s32 (*D_800C96B8)(s32, s32, void*, s16, s32);
+extern s_MapOverlayHeader g_MapOverlayHeader; // 0x800C957C
 
 /** Initializer for something before the game loop. */
 void func_8002E630();
@@ -828,6 +856,8 @@ void func_800303E4();
  * - 'func_801E709C' in saveload.c */
 void func_800314EC(s_FsImageDesc* image);
 
+void func_80031CCC(s32);
+
 void Gfx_DebugStringPosition(s16 x, s16 y);
 
 void Gfx_DebugStringDraw(char* str);
@@ -835,6 +865,11 @@ void Gfx_DebugStringDraw(char* str);
 char* Math_IntegerToString(s32 widthMin, s32 value);
 
 void func_8003260C(); // Return type assumed.
+
+void func_80032904();
+
+/** Draws some string in display space. */
+void func_80032CE8();
 
 void func_80032D1C();
 
@@ -845,6 +880,8 @@ s32 func_80033548();
 
 /** Unknown bodyprog func. Called by `Fs_QueuePostLoadAnm`. */
 void func_80035560(s32 arg0, s32 arg1, void* arg2, s32 arg3);
+
+void func_8003943C();
 
 /** SysState_Fmv update function.
  * Movie to play is decided by `2072 - g_MapEventIdx`
@@ -859,6 +896,8 @@ void func_8003D160();
 
 /** Param types assumed. */
 void func_8003DD80(s32, s32);
+
+void func_80040014();
 
 /** Some kind of queue entry load status getter. */
 s32 func_80041ADC(s32 queueIdx);
@@ -1033,6 +1072,10 @@ s32 func_8004C45C();
  */
 s32 func_8004C4F8();
 
+void func_80054024(s8);
+
+void func_800540A4(s8);
+
 void func_800546A8(s32 arg0);
 
 void func_80054928();
@@ -1040,6 +1083,8 @@ void func_80054928();
 void func_80054A04(s8 arg0);
 
 void func_8005E0DC(s32 arg0); // Types assumed.
+
+void func_8005E89C();
 
 /** Unknown bodyprog func. Called by `Fs_QueueWaitForEmpty`. */
 void func_80089128();
@@ -1174,11 +1219,11 @@ void func_80089500();
 
 s32 func_8008A35C(s_8008A35C* arg0, s32 arg1);
 
-void func_8008A384(s_8008A384* arg0);
+void func_8008A384(s_SubCharacter* chara);
 
-void func_8008A398(s_8008A384* arg0);
+void func_8008A398(s_SubCharacter* chara);
 
-void func_8008A3AC(s_8008A384* arg0);
+void func_8008A3AC(s_SubCharacter* chara);
 
 s32 func_8008D850();
 
@@ -1236,9 +1281,6 @@ void func_80066E7C();
 
 s32 func_8006A3B4(s32 arg0, s32 arg1, s32 arg2);
 
-/** Draws some string in display space. */
-void func_80032CE8();
-
 void Gfx_ClearRectInterlaced(s16 x, s16 y, s16 w, s16 h, u8 r, u8 g, u8 b);
 
 void Gfx_VSyncCallback();
@@ -1285,11 +1327,15 @@ void GameFs_MapLoad(s32 mapIdx);
 
 s32 func_8003528C(s32 idx0, s32 idx1);
 
+void func_80035DB4(s32);
+
 void AreaLoad_UpdatePlayerPosition();
 
 void func_800363D0();
 
 void func_8003640C(s32 arg0);
+
+void func_80036420();
 
 s32 func_8003647C();
 
@@ -1301,8 +1347,11 @@ void func_80037124();
 
 void func_80037154();
 
-/** SysState_GamePaused handler. */
-void func_800391E8();
+void func_800373CC(s32);
+
+void func_80037F24(s32);
+
+void func_80038354();
 
 void SysWork_SaveGameUpdatePlayer();
 
@@ -1324,7 +1373,15 @@ void func_8003BED0();
 
 void func_8003C3A0();
 
+void func_8003C3AC();
+
+void func_8003C878(s32);
+
+void func_8003CB3C(s_800BCE18* arg0);
+
 void func_8003D938();
+
+void func_8003DA9C(s32, GsCOORDINATE2*, s32, s16, s32);
 
 /** Loads a flame graphic. */
 void GameFs_FlameGfxLoad();
@@ -1335,11 +1392,17 @@ void func_8003ECE4();
 
 void func_8003ED08();
 
+void func_8003F170();
+
 /** Resets player info in the savegame buffer (inventory, health, playtime). */
 void Game_SaveGameResetPlayer();
 
 /** Loads player animations for a given map. Maybe for cutscenes? */
 void GameFs_PlayerMapAnimLoad(s32 mapIdx);
+
+void func_800717D0(s_SubCharacter*, void*, GsCOORDINATE2*);
+
+void func_8007D970(s_SubCharacter*, GsCOORDINATE2*);
 
 /** Resets several global variables to 0. */
 void func_8007F1CC();
