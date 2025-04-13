@@ -31,10 +31,9 @@ void vcSetCameraUseWarp(VECTOR3* chr_pos, s16 chr_ang_y) // 0x800400D4
     cam_ang.vy = chr_ang_y;
     cam_ang.vz = 0;
 
-    // TODO: 0x1800 might be (s32)FP_FLOAT_TO(1.5f, Q12_SHIFT)?
-    cam_pos.vx = chr_pos->vx - FP_MULTIPLY(shRsin(chr_ang_y), 0x1800, Q12_SHIFT);
+    cam_pos.vx = chr_pos->vx - FP_MULTIPLY_FLOAT(shRsin(chr_ang_y), 1.5f, Q12_SHIFT);
     cam_pos.vy = chr_pos->vy - FP_METER(27.2f);
-    cam_pos.vz = chr_pos->vz - FP_MULTIPLY(shRcos(chr_ang_y), 0x1800, Q12_SHIFT);
+    cam_pos.vz = chr_pos->vz - FP_MULTIPLY_FLOAT(shRcos(chr_ang_y), 1.5f, Q12_SHIFT);
 
     vcSetFirstCamWork(&cam_pos, chr_ang_y, g_SysWork.flags_22A4 & 0x40);
     g_SysWork.flags_22A4 &= ~0x40;
