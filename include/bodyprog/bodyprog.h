@@ -2,8 +2,8 @@
 #define _BODYPROG_H
 
 #include "game.h"
-#include "main/fsqueue.h"
 #include "bodyprog/vw_system.h"
+#include "main/fsqueue.h"
 
 #define TEMP_MEMORY_ADDR (s8*)0x801A2600
 
@@ -202,7 +202,7 @@ typedef struct _s_800BCE18
     s_800BE9FC        field_1BE4;
     s32               field_2BE8;
 } s_800BCE18;
-STATIC_ASSERT_SIZEOF(s_800BCE18, 0x2BEC); // TODO: likely even larger, func_8003CB44 accesses some 16 byte fields at 0x2BEC.
+STATIC_ASSERT_SIZEOF(s_800BCE18, 0x2BEC); // TODO: likely even larger. `func_8003CB44` accesses some 16 byte fields at 0x2BEC.
 
 typedef struct
 {
@@ -510,13 +510,13 @@ extern s8 D_800A99CC[];
 
 extern s_FsImageDesc D_800A9A04;
 
-extern s32 D_800A9A0C; // old IDB name FS_AllFilesLoaded, though FS code doesn't set it
+extern s32 D_800A9A0C; // Old IDB name FS_AllFilesLoaded, though FS code doesn't set it.
 
 extern s32 D_800A9A10;
 
 extern s32 D_800A9A1C;
 
-extern void (*D_800A9A2C[])(); // SysState func table
+extern void (*D_800A9A2C[])(); // SysState func table.
 
 extern s32 D_800A9A68;
 
@@ -627,6 +627,10 @@ extern s_800C1658 D_800C1658;
 extern u16 D_800C1666;
 
 extern s8 D_800C166A;
+
+extern s8 D_800C166C;
+
+extern s8 D_800C166F;
 
 extern s16 D_800C167C;
 
@@ -788,34 +792,34 @@ extern s_FsImageDesc g_MainImg0; // 0x80022C74
 
 extern s_800AD4C8 D_800AD4C8[];
 
-/** TODO: `g_MapOverlayHeader` is part of the overlay bin files, maybe should be moved to `maps/s00.h` or `dynamic/dynamic.h`. */
+/** TODO: `g_MapOverlayHeader` is part of the overlay bin files. Maybe should be moved to `maps/s00.h` or `dynamic/dynamic.h`. */
 typedef struct _MapOverlayHeader
 {
-    u8 unk_0[8];
-    s8 field_8;
-    u8 unk_9[3];
-    u8 unk_C[8];
-    s8 field_14;
-    u8 unk_15[3];
-    u8 unk_18[8];
-    void (**mapEventFuncs_20)(); // Points to array of event functions.
-    u8 unk_24[0x1C];
-    void (*func_40)();
-    void (*func_44)();
-    u8 unk_48[128];
-    void (*func_C8)();
-    void (*func_CC)(s32);
-    s32 (*func_D0)(s32, void*, s16, s32); // 0x800C964C
-    u8 unk_D4[24];
-    s32 (*func_EC)();
-    u8 unk_F0[76];
-    s32 (*func_13C)(s32, s32, void*, s16, s32); // 0x800C96B8
-    u8 unk_140[40];
-    void (*func_168)(void*, void*, void*);
+    u8           unk_0[8];
+    s8           field_8;
+    u8           unk_9[3];
+    u8           unk_C[8];
+    s8           field_14;
+    u8           unk_15[3];
+    u8           unk_18[8];
+    void         (**mapEventFuncs_20)(); // Points to array of event functions.
+    u8           unk_24[0x1C];
+    void         (*func_40)();
+    void         (*func_44)();
+    u8           unk_48[128];
+    void         (*func_C8)();
+    void         (*func_CC)(s32);
+    s32          (*func_D0)(s32, void*, s16, s32); // 0x800C964C
+    u8           unk_D4[24];
+    s32          (*func_EC)();
+    u8           unk_F0[76];
+    s32          (*func_13C)(s32, s32, void*, s16, s32); // 0x800C96B8
+    u8           unk_140[40];
+    void         (*func_168)(void*, void*, void*);
     u8           unk_16C[4];
-    u8           unk_170[0x25C];
-    VC_ROAD_DATA roadDataList_3CC[48]; // Ends at 0x84C
-    // TODO: a lot more in here.
+    u8           unk_170[604];
+    VC_ROAD_DATA roadDataList_3CC[48]; // Ends at 0x84C.
+    // TODO: A lot more in here.
 } s_MapOverlayHeader;
 
 extern s_MapOverlayHeader g_MapOverlayHeader; // 0x800C957C
@@ -853,7 +857,8 @@ void func_800303E4();
 /** Bodyprog function that fades the screen out?
  * Called by:
  * - `main` in main.c
- * - 'func_801E709C' in saveload.c */
+ * - 'func_801E709C' in saveload.c
+ * */
 void func_800314EC(s_FsImageDesc* image);
 
 void func_80031CCC(s32);
@@ -985,6 +990,8 @@ void SD_EngineCmd(s32 cmd);
 u8 func_80045B28();
 
 u16 func_80045BC8();
+
+void func_80045BD8(u16 caseArg);
 
 void func_80045D28(s32 caseArg);
 
@@ -1381,7 +1388,7 @@ void func_8003CB3C(s_800BCE18* arg0);
 
 void func_8003D938();
 
-void func_8003DA9C(s32, GsCOORDINATE2*, s32, s16, s32);
+void func_8003DA9C(s32 arg0, GsCOORDINATE2* coord, s32 arg2, s16 arg3, s32 arg4);
 
 /** Loads a flame graphic. */
 void GameFs_FlameGfxLoad();
@@ -1392,6 +1399,10 @@ void func_8003ECE4();
 
 void func_8003ED08();
 
+u8 func_8003ED64();
+
+void func_8003EDA8();
+
 void func_8003F170();
 
 /** Resets player info in the savegame buffer (inventory, health, playtime). */
@@ -1400,9 +1411,9 @@ void Game_SaveGameResetPlayer();
 /** Loads player animations for a given map. Maybe for cutscenes? */
 void GameFs_PlayerMapAnimLoad(s32 mapIdx);
 
-void func_800717D0(s_SubCharacter*, void*, GsCOORDINATE2*);
+void func_800717D0(s_SubCharacter* chara, void* arg1, GsCOORDINATE2* coord);
 
-void func_8007D970(s_SubCharacter*, GsCOORDINATE2*);
+void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord);
 
 /** Resets several global variables to 0. */
 void func_8007F1CC();

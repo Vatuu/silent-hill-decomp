@@ -865,7 +865,77 @@ u16 func_80045BC8() // 0x80045BC8
     return D_800C1666;
 }
 
+// TODO: Requires jump table.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80045BD8);
+/*void func_80045BD8(u16 caseArg) // 0x80045BD8
+{
+    u16 var0;
+
+    switch (caseArg)
+    {
+        case 1:
+            func_80045D28(0);
+            break;
+
+        case 2:
+            func_80045D28(1);
+            break;
+
+        case 16:
+            func_800469AC();
+            func_800468EC();
+            break;
+
+        case 17:
+            func_800469E8();
+            func_800468EC();
+            break;
+
+        case 18:
+            func_80046AD8();
+            break;
+
+        case 21:
+            func_800469E8();
+
+        case 20:
+            func_800469AC();
+            func_800468EC();
+            func_80046AD8();
+
+        case 19:
+            func_8004760C();
+            break;
+
+        case 22:
+            D_800C166C = 1;
+
+        default:
+            break;
+
+        case 23:
+            D_800C166C = 2;
+            break;
+
+        case 3:
+            D_800C166F = 1;
+            break;
+
+        case 4:
+            D_800C166F = 0;
+            break;
+    }
+
+    if ((u16)(caseArg - 160) < 85)
+    {
+        func_80047B24(caseArg);
+    }
+
+    if ((u16)(caseArg - 32) < 40)
+    {
+        func_80048244(caseArg);
+    }
+}*/
 
 void func_80045D28(s32 caseArg) // 0x80045D28
 {

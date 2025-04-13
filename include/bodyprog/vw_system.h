@@ -10,6 +10,8 @@
 // - Flags below are from SH2, most seem to match with SH but there might be some differences.
 // - Code that accesses VC_ROAD_DATA & VC_NEAR_ROAD_DATA is odd, might need extra work.
 
+struct _MapOverlayHeader; // `bodyprog.h` forward declaration.
+
 typedef enum _VC_ROAD_FLAGS
 {
     VC_RD_NOFLAG            = 0,
@@ -255,8 +257,6 @@ typedef struct _VW_VIEW_WORK
 } VW_VIEW_WORK;
 STATIC_ASSERT_SIZEOF(VW_VIEW_WORK, 132);
 
-struct _MapOverlayHeader; // `bodyprog.h` forward declaration.
-
 extern VC_ROAD_DATA      vcNullRoadArray[2];
 extern VC_NEAR_ROAD_DATA vcNullNearRoad;
 extern VC_WATCH_MV_PARAM deflt_watch_mv_prm;
@@ -271,6 +271,7 @@ extern VC_WATCH_MV_PARAM vcWatchMvPrmSt;
 extern int               vcSelfViewTimer;
 
 // vc_util.c
+
 void vcInitCamera(struct _MapOverlayHeader* map_overlay_ptr, VECTOR3* chr_pos);
 void vcSetCameraUseWarp(VECTOR3* chr_pos, s16 chr_ang_y);
 int  vcRetCamMvSmoothF();

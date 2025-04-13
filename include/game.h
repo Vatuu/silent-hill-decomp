@@ -306,18 +306,18 @@ typedef struct _ShSaveGameContainer
     s_ShSaveGame       saveGame_0;
     s_ShSaveGameFooter footer_27C;
 } s_ShSaveGameContainer;
-STATIC_ASSERT_SIZEOF(s_ShSaveGameContainer, 0x280);
+STATIC_ASSERT_SIZEOF(s_ShSaveGameContainer, 640);
 
 typedef struct _ShEventParam
 {
     u8  unk_0[2];
-    s16 eventFlagNum_2;
+    s16 eventFlagId_2;
     u8  unk_4[1];
     u8  field_5;
     u8  unk_6[2];
     u32 flags_8;
 } s_ShEventParam;
-STATIC_ASSERT_SIZEOF(s_ShEventParam, 0xC);
+STATIC_ASSERT_SIZEOF(s_ShEventParam, 12);
 
 typedef struct _GameWork
 {
@@ -493,7 +493,10 @@ typedef struct _SysWork
     s16             field_237E;
     s32             cameraRadiusXz_2380;
     s32             cameraY_2384;
-    s8              unk_2388[392];
+    s8              unk_2388[20];
+    s8              field_239C;
+    u8              field_239D; // Index?
+    s8              unk_239E[370];
     s32             field_2510;
     s32             field_2514[10];
     u8              unk_253C[524];
@@ -530,7 +533,7 @@ extern s32 g_PrevVBlanks;
 extern s32 g_VBlanks;
 extern s32 g_UncappedVBlanks;
 
-/** Sets the SysState to be used in the next game update. */
+/** @brief Sets the SysState to be used in the next game update. */
 static inline void SysWork_StateSetNext(e_SysState sysState)
 {
     g_SysWork.sysState_8     = sysState;
@@ -542,8 +545,7 @@ static inline void SysWork_StateSetNext(e_SysState sysState)
     g_SysWork.field_14       = 0;
 }
 
-/**
- * Sets the GameState to be used in the next game update.
+/** @brief Sets the GameState to be used in the next game update.
  * Inlined into stream and b_konami.
  */
 static inline void Game_StateSetNext(e_GameState gameState)
@@ -565,8 +567,7 @@ static inline void Game_StateSetNext(e_GameState gameState)
     g_GameWork.gameStateStep_598[0] = 0;
 }
 
-/**
- * Returns the GameState to the previously used state.
+/** @brief Returns the GameState to the previously used state.
  * Inlined into credits.
  */
 static inline void Game_StateSetPrevious()
@@ -587,13 +588,13 @@ static inline void Game_StateSetPrevious()
     g_GameWork.gameStateStep_598[0] = 0;
 }
 
-/** Sets the given flag ID inside the savegame event flags array. */
-static inline void SaveGame_EventFlagSet(u32 flagNum)
+/** @brief Sets the given flag ID inside the savegame event flags array. */
+static inline void SaveGame_EventFlagSet(u32 flagId)
 {
-    s16 flagIdx = flagNum / 32;
-    s16 flagBit = flagNum % 32;
+    s16 flagIdx = flagId / 32;
+    s16 flagBit = flagId % 32;
 
-    g_SaveGamePtr->eventFlags_168[flagIdx] |= (1 << flagBit);
+    g_SaveGamePtr->eventFlags_168[flagIdx] |= 1 << flagBit;
 }
 
 #endif

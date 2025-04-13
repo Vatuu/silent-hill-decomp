@@ -1,7 +1,7 @@
 #include "game.h"
 
-#include "bodyprog/math.h"
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/math.h"
 
 extern s32 g_VBlanks;
 
@@ -10,11 +10,13 @@ void vcInitCamera(struct _MapOverlayHeader* map_overlay_ptr, VECTOR3* chr_pos)
     D_800BCE18.vcCameraInternalInfo_1BDC.mv_smooth   = 0;
     D_800BCE18.vcCameraInternalInfo_1BDC.ev_cam_rate = 0;
     D_800BCE18.vcCameraInternalInfo_1BDC.mode        = 0;
+
     vcSetCameraUseWarp(chr_pos, g_SysWork.cameraAngleY_237A);
     SetGeomScreen(g_GameWork.gsScreenHeight_58A);
     vwInitViewInfo();
     vcInitVCSystem(map_overlay_ptr->roadDataList_3CC);
     vcStartCameraSystem();
+
     g_SysWork.cameraAngleZ_237C   = 0;
     g_SysWork.cameraRadiusXz_2380 = 0x3000;
     g_SysWork.cameraY_2384        = 0;

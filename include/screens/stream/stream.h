@@ -2,6 +2,7 @@
 #define _STREAM_H
 
 #include "common.h"
+
 #include <libcd.h>
 #include <libgpu.h>
 
@@ -52,9 +53,9 @@ typedef struct
     u_long user;
 } CDSECTOR;
 
-#define RING_SIZE 23
+#define RING_SIZE  23
 #define MOVIE_WAIT 2000
-#define PPW 3 / 2
+#define PPW        3 / 2
 
 extern MOVIE_STR* m;
 extern s32        frame_cnt;
@@ -64,14 +65,16 @@ extern s32 		  max_frame;
 #endif
 
 // Handlers for movie-related GameStates
+
 void GameState_StartMovieIntro_Update();
 void GameState_MovieIntro_Update();
 void GameState_MovieOpening_Update();
 void GameState_ExitMovie_Update();
-void GameState_DebugMoviePlayer_Update(); /** Unused debug movie player, movie to play decided by LStickLeft/LStickRight */
+void GameState_DebugMoviePlayer_Update(); /** Unused debug movie player. Movie to play decided by `LStickLeft`/`LStickRight`. */
 void GameState_MovieIntroAlternate_Update();
 
 // MOVIESYS code
+
 void    open_main(s32 file_idx, s16 num_frames);
 void    movie_main(char* file_name, s32 f_size, s32 sector);
 void    strSetDefDecEnv(DECENV* dec, s32 x0, s32 y0, s32 x1, s32 y1);

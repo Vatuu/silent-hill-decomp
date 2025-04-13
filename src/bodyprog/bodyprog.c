@@ -713,7 +713,7 @@ void MainLoop() // 0x80032EE0
 
         g_SysWork.field_22A0 = 0;
 
-        // Call update function for the current GameState.
+        // Call update function for current GameState.
         D_800A977C[g_GameWork.gameState_594]();
 
         Demo_Update();
@@ -1253,8 +1253,8 @@ void GameState_InGame_Update() // 0x80038BD4
         case 0:
             D_800BCD0C = 6;
             D_800B5C30 = 0x3000;
-
             g_GameWork.gameStateStep_598[0] = 1;
+
         case 1:
             DrawSync(0);
             func_80037154();
@@ -1262,7 +1262,7 @@ void GameState_InGame_Update() // 0x80038BD4
             func_800892A4(1);
             g_IntervalVBlanks = 2;
             g_GameWork.gameStateStep_598[0]++;
-            g_SysWork.field_22A0 |= 0x40;
+            g_SysWork.field_22A0 |= 1 << 6;
             break;
     }
 
@@ -1289,6 +1289,7 @@ void GameState_InGame_Update() // 0x80038BD4
     {
         g_DeltaTime0 = 0;
         D_800A9A2C[g_SysWork.sysState_8]();
+
         if (g_SysWork.sysState_8 == 0)
         {
             func_800373CC(1);
@@ -1328,13 +1329,13 @@ void GameState_InGame_Update() // 0x80038BD4
         Demo_DemoRandSeedRestore();
         func_8003F170();
 
-        if (g_SaveGamePtr->mapOverlayIdx_A4 != 0x2A)
+        if (g_SaveGamePtr->mapOverlayIdx_A4 != 42)
         {
             g_MapOverlayHeader.func_168(0, g_SaveGamePtr->mapOverlayIdx_A4, 1);
         }
 
         Demo_DemoRandSeedRestore();
-        if (player->model_0.anim_4.flags_2 & 2)
+        if (player->model_0.anim_4.flags_2 & (1 << 1))
         {
             func_8003DA9C(1, g_SysWork.playerBoneCoords_890, 1, g_SysWork.player_4C.chara_0.field_C6, 0);
             func_8008A384(&g_SysWork.player_4C.chara_0);
@@ -1400,14 +1401,12 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", SysState_StatusMenu_Update); /
 
 void GameState_LoadStatusScreen_Update() // 0x800395C0
 {
-    s_ShSaveGame* saveGamePtr;
+    s_ShSaveGame* saveGame;
 
     if (g_GameWork.gameStateStep_598[0] == 0)
     {
         DrawSync(0);
-
         g_IntervalVBlanks = 1;
-
         D_800BCD0C = 0;
 
         func_8003943C();
@@ -1417,9 +1416,9 @@ void GameState_LoadStatusScreen_Update() // 0x800395C0
             SD_EngineCmd(0x13);
         }
 
-        saveGamePtr = g_SaveGamePtr;
-        func_800540A4(saveGamePtr->mapOverlayIdx_A4);
-        func_80054024(saveGamePtr->mapOverlayIdx_A4);
+        saveGame = g_SaveGamePtr;
+        func_800540A4(saveGame->mapOverlayIdx_A4);
+        func_80054024(saveGame->mapOverlayIdx_A4);
 
         g_GameWork.gameStateStep_598[0]++;
     }
@@ -1436,20 +1435,24 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", SysState_Unk3_Update); // 0x80
 
 void GameState_LoadMapScreen_Update() // 0x8003991C
 {
-    s_ShSaveGame* saveGamePtr;
+    s_ShSaveGame* saveGame;
 
     if (g_GameWork.gameStateStep_598[0] == 0)
     {
         DrawSync(0);
         g_IntervalVBlanks = 1;
+
         func_8003943C();
         func_80066E40();
-        saveGamePtr = g_SaveGamePtr;
-        if (D_800A99CC[saveGamePtr->mapIdx_A9] != NO_VALUE)
+
+        saveGame = g_SaveGamePtr;
+
+        if (D_800A99CC[saveGame->mapIdx_A9] != NO_VALUE)
         {
-            Fs_QueueStartReadTim(FILE_TIM_MR_0TOWN_TIM + D_800A99CC[saveGamePtr->mapIdx_A9], FS_BUFFER_1, &D_800A9024);
+            Fs_QueueStartReadTim(FILE_TIM_MR_0TOWN_TIM + D_800A99CC[saveGame->mapIdx_A9], FS_BUFFER_1, &D_800A9024);
         }
-        Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + D_800A99B4[saveGamePtr->mapIdx_A9], FS_BUFFER_2, &D_800A901C);
+
+        Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + D_800A99B4[saveGame->mapIdx_A9], FS_BUFFER_2, &D_800A901C);
         g_GameWork.gameStateStep_598[0]++;
     }
 
@@ -1463,18 +1466,24 @@ void GameState_LoadMapScreen_Update() // 0x8003991C
 
 void SysState_Fmv_Update() // 0x80039A58
 {
+    #define BASE_IDX 2072
+
     switch (g_SysWork.sysStateStep_C)
     {
         case 0:
             D_800BCD0C               = 3;
             D_800A9A0C               = 0;
             g_SysWork.sysStateStep_C = 1;
+
         case 1:
             if (func_8003c850() != 0)
             {
                 GameFs_StreamBinLoad();
                 g_SysWork.sysStateStep_C++;
             }
+            break;
+
+        default:
             break;
     }
 
@@ -1483,7 +1492,7 @@ void SysState_Fmv_Update() // 0x80039A58
         return;
     }
 
-    // Copy framebuffer into `IMAGE_BUFFER_0` before movie playback
+    // Copy framebuffer into `IMAGE_BUFFER_0` before movie playback.
     DrawSync(0);
     StoreImage(&D_800A9A6C, (u32*)IMAGE_BUFFER_0);
     DrawSync(0);
@@ -1491,25 +1500,25 @@ void SysState_Fmv_Update() // 0x80039A58
     func_800892A4(0);
     func_80089128();
 
-    // Start playing movie, file to play is based on file ID `2072 - g_MapEventIdx`
-    // Blocks until movie has finished playback (or user has skipped it)
-    open_main(2072 - g_MapEventIdx, g_FileTable[2072 - g_MapEventIdx].blockCount);
+    // Start playing movie. File to play is based on file ID `BASE_IDX - g_MapEventIdx`.
+    // Blocks until movie has finished playback or user has skipped it.
+    open_main(BASE_IDX - g_MapEventIdx, g_FileTable[BASE_IDX - g_MapEventIdx].blockCount);
 
     func_800892A4(1);
 
-    // Restore copied framebuffer from `IMAGE_BUFFER_0`
+    // Restore copied framebuffer from `IMAGE_BUFFER_0`.
     GsSwapDispBuff();
     LoadImage(&D_800A9A6C, (u32*)IMAGE_BUFFER_0);
     DrawSync(0);
 
-    // Set savegame flag based on `D_800BCDD8->eventFlagNum_2` flag ID
-    SaveGame_EventFlagSet(g_MapEventParam->eventFlagNum_2);
+    // Set savegame flag based on `D_800BCDD8->eventFlagNum_2` flag ID.
+    SaveGame_EventFlagSet(g_MapEventParam->eventFlagId_2);
 
-    // Return to game
+    // Return to game.
     Game_StateSetNext(GameState_InGame);
 
-    // If flag is set, returns us to GameState_InGame with gameStateStep[0] = 1
-    if ((g_MapEventParam->flags_8 >> 0xD) & 2) // flags_8 & 0x4000? does shift imply bitfield?
+    // If flag is set, returns to `GameState_InGame` with `gameStateStep[0]` = 1.
+    if ((g_MapEventParam->flags_8 >> 13) & (1 << 1)) // flags_8 & (1 << 14)? Does shift imply bitfield?
     {
         g_GameWork.gameStateStep_598[0] = 1;
     }
@@ -1574,15 +1583,13 @@ void GameState_MapEvent_Update() // 0x8003AA4C
     if (g_GameWork.gameStateStep_598[0] == 0)
     {
         g_IntervalVBlanks = 1;
-
         D_800BCD0C = 6;
-
         g_GameWork.gameStateStep_598[0] = 1;
     }
 
     D_800A9A0C = ((D_800BCD0C & 7) == 5) && Fs_QueueDoThingWhenEmpty() != 0;
 
-    SaveGame_EventFlagSet(g_MapEventParam->eventFlagNum_2);
+    SaveGame_EventFlagSet(g_MapEventParam->eventFlagId_2);
 
     g_MapOverlayHeader.mapEventFuncs_20[g_MapEventIdx]();
 
@@ -1809,7 +1816,7 @@ void func_8003ECBC() // 0x8003ECBC
 void func_8003ECE4() // 0x8003ECE4
 {
     g_SysWork.unk_2388[21] = 0;
-    g_SaveGamePtr->flags_AC |= 2;
+    g_SaveGamePtr->flags_AC |= 1 << 1;
 }
 
 void func_8003ED08() // 0x8003ED08
@@ -1821,18 +1828,24 @@ void func_8003ED08() // 0x8003ED08
 
     if (var == 1)
     {
-        g_SaveGamePtr->flags_AC &= ~2;
+        g_SaveGamePtr->flags_AC &= ~(1 << 1);
         return;
     }
 
-    g_SaveGamePtr->flags_AC |= 2;
+    g_SaveGamePtr->flags_AC |= 1 << 1;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003ED64);
+u8 func_8003ED64() // 0x8003ED64
+{
+    return g_SysWork.field_239D;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003ED74);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003EDA8);
+void func_8003EDA8() // 0x8003EDA8
+{
+    g_SysWork.field_239C = 1;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003EDB8);
 
