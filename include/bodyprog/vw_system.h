@@ -255,6 +255,8 @@ typedef struct _VW_VIEW_WORK
 } VW_VIEW_WORK;
 STATIC_ASSERT_SIZEOF(VW_VIEW_WORK, 132);
 
+struct _MapOverlayHeader; // `bodyprog.h` forward declaration.
+
 extern VC_ROAD_DATA      vcNullRoadArray[2];
 extern VC_NEAR_ROAD_DATA vcNullNearRoad;
 extern VC_WATCH_MV_PARAM deflt_watch_mv_prm;
@@ -263,15 +265,13 @@ extern VC_CAM_MV_PARAM   cam_mv_prm_user;
 extern int               excl_r_ary[9];
 extern VC_WORK           vcWork;
 extern VECTOR3           vcRefPosSt;
-extern VC_CAMERA_INTINFO vcCameraInternalInfo; // Debug camera info.
 extern VW_VIEW_WORK      vwViewPointInfo;
 extern MATRIX            VbWvsMatrix;
 extern VC_WATCH_MV_PARAM vcWatchMvPrmSt;
 extern int               vcSelfViewTimer;
 
 // vc_util.c
-
-void vcInitCamera(void* map_overlay_ptr, VECTOR3* chr_pos);
+void vcInitCamera(struct _MapOverlayHeader* map_overlay_ptr, VECTOR3* chr_pos);
 void vcSetCameraUseWarp(VECTOR3* chr_pos, s16 chr_ang_y);
 int  vcRetCamMvSmoothF();
 void vcSetEvCamRate(s16 ev_cam_rate);

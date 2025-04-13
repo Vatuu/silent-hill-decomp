@@ -7,6 +7,7 @@
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math.h"
+#include "bodyprog/vw_system.h"
 #include "main/fsqueue.h"
 
 void func_8002E630() 
@@ -1123,7 +1124,7 @@ void func_8003640C(s32 arg0) // 0x8003640C
 {
     if (arg0 != 0)
     {
-        D_800C9590 = arg0;
+        g_MapOverlayHeader.field_14 = arg0;
     }
 }
 
@@ -1131,12 +1132,12 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80036420);
 
 s32 func_8003647C() // 0x8003647C
 {
-    return g_SaveGamePtr->field_A5 > D_800C9584;
+    return g_SaveGamePtr->field_A5 > g_MapOverlayHeader.field_8;
 }
 
 s32 func_80036498() // 80036498
 {
-    return !(g_SaveGamePtr->field_A5 > D_800C9584);
+    return !(g_SaveGamePtr->field_A5 > g_MapOverlayHeader.field_8);
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_800364BC);
@@ -1241,7 +1242,115 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80038A6C);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80038B44);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", GameState_InGame_Update);
+void GameState_InGame_Update() // 0x80038BD4
+{
+    s_SubCharacter* player;
+
+    Demo_DemoRandSeedBackup();
+
+    switch (g_GameWork.gameStateStep_598[0])
+    {
+        case 0:
+            D_800BCD0C = 6;
+            D_800B5C30 = 0x3000;
+
+            g_GameWork.gameStateStep_598[0] = 1;
+        case 1:
+            DrawSync(0);
+            func_80037154();
+            func_80036420();
+            func_800892A4(1);
+            g_IntervalVBlanks = 2;
+            g_GameWork.gameStateStep_598[0]++;
+            g_SysWork.field_22A0 |= 0x40;
+            break;
+    }
+
+    if (g_SysWork.sysState_8 != 0 && g_SysWork.player_4C.chara_0.health_B0 <= 0)
+    {
+        SysWork_StateSetNext(SysState_Gameplay);
+    }
+
+    if (g_DeltaTime0 != 0)
+    {
+        D_800BCD84 = g_DeltaTime0;
+    }
+    else
+    {
+        D_800BCD84 = g_DeltaTime1;
+    }
+
+    if (g_SysWork.sysState_8 == SysState_Gameplay)
+    {
+        g_SysWork.field_18 = 0;
+        D_800A9A2C[SysState_Gameplay]();
+    }
+    else
+    {
+        g_DeltaTime0 = 0;
+        D_800A9A2C[g_SysWork.sysState_8]();
+        if (g_SysWork.sysState_8 == 0)
+        {
+            func_800373CC(1);
+            if (D_800A9A10 != 0xF)
+            {
+                SysWork_StateSetNext(D_800A9A10);
+            }
+        }
+    }
+    Demo_DemoRandSeedRestore();
+
+    D_800A9A0C = ((D_800BCD0C & 7) == 5) && Fs_QueueDoThingWhenEmpty() != 0;
+
+    if ((g_SysWork.field_22A0 & 1) == 0 && g_MapOverlayHeader.func_40 != NULL)
+    {
+        g_MapOverlayHeader.func_40();
+    }
+
+    func_80032904();
+    func_80035DB4(0);
+    Demo_DemoRandSeedRestore();
+    Demo_DemoRandSeedRestore();
+
+    if ((g_SysWork.field_22A0 & 1) == 0)
+    {
+        func_80040014();
+        vcMoveAndSetCamera(0, 0, 0, 0, 0, 0, 0, 0);
+        if (g_MapOverlayHeader.func_44 != NULL)
+        {
+            g_MapOverlayHeader.func_44();
+        }
+        Demo_DemoRandSeedRestore();
+
+        player = &g_SysWork.player_4C.chara_0;
+        func_800717D0(player, FS_BUFFER_0, g_SysWork.playerBoneCoords_890);
+
+        Demo_DemoRandSeedRestore();
+        func_8003F170();
+
+        if (g_SaveGamePtr->mapOverlayIdx_A4 != 0x2A)
+        {
+            g_MapOverlayHeader.func_168(0, g_SaveGamePtr->mapOverlayIdx_A4, 1);
+        }
+
+        Demo_DemoRandSeedRestore();
+        if (player->model_0.anim_4.flags_2 & 2)
+        {
+            func_8003DA9C(1, g_SysWork.playerBoneCoords_890, 1, g_SysWork.player_4C.chara_0.field_C6, 0);
+            func_8008A384(&g_SysWork.player_4C.chara_0);
+            func_8007D970(&g_SysWork.player_4C, g_SysWork.playerBoneCoords_890);
+            func_8008A3AC(&g_SysWork.player_4C.chara_0);
+        }
+
+        Demo_DemoRandSeedRestore();
+        func_80037F24(1);
+        func_80038354();
+        func_8005E89C();
+        func_8003C3AC();
+        func_8003C878(1);
+        Demo_DemoRandSeedAdvance();
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", SysState_Gameplay_Update);
 
@@ -1283,17 +1392,74 @@ void SysState_GamePaused_Update() // 0x800391E8
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", SysState_OptionsMenu_Update);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", SysState_OptionsMenu_Update); // 0x80039344
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003943C);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", SysState_StatusMenu_Update);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", SysState_StatusMenu_Update); // 0x80039568
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", GameState_LoadStatusScreen_Update);
+void GameState_LoadStatusScreen_Update() // 0x800395C0
+{
+    s_ShSaveGame* saveGamePtr;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", SysState_Unk3_Update);
+    if (g_GameWork.gameStateStep_598[0] == 0)
+    {
+        DrawSync(0);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", GameState_LoadMapScreen_Update);
+        g_IntervalVBlanks = 1;
+
+        D_800BCD0C = 0;
+
+        func_8003943C();
+
+        if (func_80045B28())
+        {
+            SD_EngineCmd(0x13);
+        }
+
+        saveGamePtr = g_SaveGamePtr;
+        func_800540A4(saveGamePtr->mapOverlayIdx_A4);
+        func_80054024(saveGamePtr->mapOverlayIdx_A4);
+
+        g_GameWork.gameStateStep_598[0]++;
+    }
+
+    func_80031CCC(2);
+
+    if (Fs_QueueDoThingWhenEmpty() != 0)
+    {
+        Game_StateSetNext(GameState_StatusScreen);
+    }
+}
+
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", SysState_Unk3_Update); // 0x800396D4
+
+void GameState_LoadMapScreen_Update() // 0x8003991C
+{
+    s_ShSaveGame* saveGamePtr;
+
+    if (g_GameWork.gameStateStep_598[0] == 0)
+    {
+        DrawSync(0);
+        g_IntervalVBlanks = 1;
+        func_8003943C();
+        func_80066E40();
+        saveGamePtr = g_SaveGamePtr;
+        if (D_800A99CC[saveGamePtr->mapIdx_A9] != NO_VALUE)
+        {
+            Fs_QueueStartReadTim(FILE_TIM_MR_0TOWN_TIM + D_800A99CC[saveGamePtr->mapIdx_A9], FS_BUFFER_1, &D_800A9024);
+        }
+        Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + D_800A99B4[saveGamePtr->mapIdx_A9], FS_BUFFER_2, &D_800A901C);
+        g_GameWork.gameStateStep_598[0]++;
+    }
+
+    func_80031CCC(2);
+
+    if (Fs_QueueDoThingWhenEmpty() != 0)
+    {
+        Game_StateSetNext(GameState_MapScreen);
+    }
+}
 
 void SysState_Fmv_Update() // 0x80039A58
 {
@@ -1399,19 +1565,37 @@ void SysWork_SaveGameReadPlayer() // 0x8003A1F4
     g_SysWork.player_4C.chara_0.health_B0      = g_SaveGamePtr->playerHealth_240;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", SysState_SaveMenu_Update);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", SysState_SaveMenu_Update); // 0x8003A230
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", SysState_Unk10_Update);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", SysState_Unk10_Update); // 0x8003A3C8
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", SysState_Unk11_Update);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", SysState_Unk11_Update); // 0x8003A460
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", SysState_Unk12_Update);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", SysState_Unk12_Update); // 0x8003A4B4
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", SysState_GameOver_Update);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", SysState_GameOver_Update); // 0x8003A52C
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", GameState_MapEvent_Update);
+void GameState_MapEvent_Update() // 0x8003AA4C
+{
+    if (g_GameWork.gameStateStep_598[0] == 0)
+    {
+        g_IntervalVBlanks = 1;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", GameState_MainMenu_Update);
+        D_800BCD0C = 6;
+
+        g_GameWork.gameStateStep_598[0] = 1;
+    }
+
+    D_800A9A0C = ((D_800BCD0C & 7) == 5) && Fs_QueueDoThingWhenEmpty() != 0;
+
+    SaveGame_EventFlagSet(g_MapEventParam->eventFlagNum_2);
+
+    g_MapOverlayHeader.mapEventFuncs_20[g_MapEventIdx]();
+
+    func_800314EC(&D_800A902C);
+}
+
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", GameState_MainMenu_Update); // 0x8003AB28
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003B550);
 
@@ -1476,20 +1660,22 @@ void GameFs_BgEtcGfxLoad() // 0x8003BE6C
 
 void GameFs_BgItemLoad() // 0x8003BE9C
 {
-    D_800BE9FC.queueIdx_1000 = Fs_QueueStartRead(FILE_BG_BG_ITEM_PLM, &D_800BE9FC);
+    D_800BCE18.field_1BE4.queueIdx_1000 = Fs_QueueStartRead(FILE_BG_BG_ITEM_PLM, &D_800BCE18.field_1BE4);
 }
 
 void func_8003BED0() // 0x8003BED0
 {
-    if (Fs_QueueIsEntryLoaded(D_800BE9FC.queueIdx_1000) == 0 || D_800BE9FC.field_2 != 0)
+    s_800BE9FC* D_800BE9FC = &D_800BCE18.field_1BE4;
+
+    if (Fs_QueueIsEntryLoaded(D_800BE9FC->queueIdx_1000) == 0 || D_800BE9FC->field_2 != 0)
     {
         return;
     }
 
-    func_800560FC(&D_800BE9FC);
-    func_80056504(&D_800BE9FC, &D_80025528, &D_800A9EBC, 1);
-    func_80056504(&D_800BE9FC, &D_80025530, &D_800A9EC4, 1);
-    func_80056954(&D_800BE9FC);
+    func_800560FC(&D_800BCE18.field_1BE4);
+    func_80056504(&D_800BCE18.field_1BE4, &D_80025528, &D_800A9EBC, 1);
+    func_80056504(&D_800BCE18.field_1BE4, &D_80025530, &D_800A9EC4, 1);
+    func_80056954(&D_800BCE18.field_1BE4);
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003BF60);
@@ -1512,7 +1698,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003C368);
 
 void func_8003C3A0() // 0x8003C3A0
 {
-    D_800BCE1C = 0;
+    D_800BCE18.field_4 = 0;
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003C3AC);
@@ -1525,7 +1711,10 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003C8F8);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003C92C);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003CB3C);
+void func_8003CB3C(s_800BCE18* arg0)
+{
+    arg0->field_2BE8 = 0;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003CB44);
 
@@ -1571,7 +1760,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003D7D4);
 
 void func_8003D938() // 0x8003D938
 {
-    func_8003D9C8(&D_800BE464);
+    func_8003D9C8(&D_800BCE18.field_164C);
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003D95C);

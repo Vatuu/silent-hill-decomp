@@ -27,6 +27,10 @@ g_MaybePlayerAnims = 0x800AF228; // type:MaybeCharacterAnim
 g_Gfx_DebugStringPosition0 = 0x800B5C20; // type:DVECTOR size:4
 g_Gfx_DebugStringPosition1 = 0x800B5C24; // type:DVECTOR size:4
 
+// TODO: g_MapOverlayHeader is part of the overlay bin file, maybe should be moved to sym.maps_shared.txt or similar.
+// Including here for now since all map configs include this sym file, and bodyprog also reads from this header.
+g_MapOverlayHeader = 0x800C957C; // type:MapOverlayHeader size:0x84C - size incomplete
+
 // sh "view" / "vw" / "vc" / "vb" code
 // Most names from SH2, functions seem to match pretty close between it and SH1 besides a few missing/extra funcs.
 hack_vcSetWatchTgtXzPos_fix = 0x8002B2B4; // type:s32 - Some 0x80083500 value which coincidentally points to code inside vcSetWatchTgtXzPos, probably unrelated flags or something. A jtbl is right before this which spimdisasm tries to include, breaking vcSetWatchTgtXzPos build.
@@ -133,11 +137,12 @@ cam_mv_prm_user = 0x800AFCD0; // type:VC_CAM_MV_PARAM size:0x10
 excl_r_ary = 0x800AFCE0; // int[9]
 vcWork = 0x800B9CD0; // type:VC_WORK size:0x2E8
 vcRefPosSt = 0x800BCDF8; // type:VECTOR3 size:0xC
-vcCameraInternalInfo = 0x800BE9F4; // type:VC_CAMERA_INTINFO size:8
 vwViewPointInfo = 0x800C37E0; // type:VW_VIEW_WORK size:0x84
 VbWvsMatrix = 0x800C3888; // type:MATRIX size:0x20
 vcWatchMvPrmSt = 0x800C4630; // type:VC_WATCH_MV_PARAM size:0xC
 vcSelfViewTimer = 0x800C463C; // type:s32
+
+D_800BCE18 = 0x800BCE18; // type:u8 size:0x2BEC - size incomplete, contains vcCameraInternalInfo and others
 
 g_Sd_VolumeSe = 0x800C1684;
 g_Sd_VolumeBgm = 0x800C1685;

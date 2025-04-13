@@ -79,6 +79,9 @@ endif
 
 # Utils
 
+# Function to find matching .bin files for a target name.
+find_bin_files = $(shell find $(ASM_DIR)/$(strip $1) -type f -path "*.bin" 2> /dev/null)
+
 # Function to find matching .s files for a target name.
 find_s_files = $(shell find $(ASM_DIR)/$(strip $1) -type f -path "*.s" -not -path "asm/*matchings*" 2> /dev/null)
 
@@ -88,7 +91,8 @@ find_c_files = $(shell find $(C_DIR)/$(strip $1) -type f -path "*.c" 2> /dev/nul
 # Function to generate matching .o files for target name in build directory.
 gen_o_files = $(addprefix $(BUILD_DIR)/, \
 							$(patsubst %.s, %.s.o, $(call find_s_files, $1)) \
-							$(patsubst %.c, %.c.o, $(call find_c_files, $1)))
+							$(patsubst %.c, %.c.o, $(call find_c_files, $1)) \
+							$(patsubst %.bin, %.bin.o, $(call find_bin_files, $1)))
 
 # Function to get path to .yaml file for given target.
 get_yaml_path = $(addsuffix .yaml,$(addprefix $(CONFIG_DIR)/,$1))
@@ -272,7 +276,7 @@ $(BUILD_DIR)/%.s.o: %.s
 
 $(BUILD_DIR)/%.bin.o: %.bin
 	@mkdir -p $(dir $@)
-	$(LD) -r -b binary -o $@ $<
+	$(LD) $(LD_FLAGS) -r -b binary -o $@ $<
 
 # Split .yaml.
 $(LINKER_DIR)/%.ld: $(CONFIG_DIR)/%.yaml

@@ -1,11 +1,24 @@
 #include "game.h"
 
 #include "bodyprog/math.h"
-#include "bodyprog/vw_system.h"
+#include "bodyprog/bodyprog.h"
 
 extern s32 g_VBlanks;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vc_util", vcInitCamera);
+void vcInitCamera(struct _MapOverlayHeader* map_overlay_ptr, VECTOR3* chr_pos)
+{
+    D_800BCE18.vcCameraInternalInfo_1BDC.mv_smooth   = 0;
+    D_800BCE18.vcCameraInternalInfo_1BDC.ev_cam_rate = 0;
+    D_800BCE18.vcCameraInternalInfo_1BDC.mode        = 0;
+    vcSetCameraUseWarp(chr_pos, g_SysWork.cameraAngleY_237A);
+    SetGeomScreen(g_GameWork.gsScreenHeight_58A);
+    vwInitViewInfo();
+    vcInitVCSystem(map_overlay_ptr->roadDataList_3CC);
+    vcStartCameraSystem();
+    g_SysWork.cameraAngleZ_237C   = 0;
+    g_SysWork.cameraRadiusXz_2380 = 0x3000;
+    g_SysWork.cameraY_2384        = 0;
+}
 
 void vcSetCameraUseWarp(VECTOR3* chr_pos, s16 chr_ang_y) // 0x800400D4
 {
@@ -26,24 +39,24 @@ void vcSetCameraUseWarp(VECTOR3* chr_pos, s16 chr_ang_y) // 0x800400D4
 
 int vcRetCamMvSmoothF() // 0x80040190
 {
-    return vcCameraInternalInfo.mv_smooth;
+    return D_800BCE18.vcCameraInternalInfo_1BDC.mv_smooth;
 }
 
 void func_800401A0(s32 arg0) // 0x800401A0
 {
     if (arg0)
     {
-        vcCameraInternalInfo.ev_cam_rate = 4096; // TODO: If angle, replace magic value with FP_ANGLE(22.5f).
+        D_800BCE18.vcCameraInternalInfo_1BDC.ev_cam_rate = 4096; // TODO: If angle, replace magic value with FP_ANGLE(22.5f).
     }
     else
     {
-        vcCameraInternalInfo.ev_cam_rate = 0;
+        D_800BCE18.vcCameraInternalInfo_1BDC.ev_cam_rate = 0;
     }
 }
 
 void vcSetEvCamRate(s16 ev_cam_rate) // 0x800401C0
 {
-    vcCameraInternalInfo.ev_cam_rate = ev_cam_rate;
+    D_800BCE18.vcCameraInternalInfo_1BDC.ev_cam_rate = ev_cam_rate;
 }
 
 void func_800401CC() // 0x800401CC

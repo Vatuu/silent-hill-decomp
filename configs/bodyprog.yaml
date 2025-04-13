@@ -9,6 +9,7 @@ options:
 
   asm_path: asm/bodyprog
   src_path: src/bodyprog
+  asset_path: asm/bodyprog
   build_path: build/
 
   ld_script_path: linkers/bodyprog.ld
@@ -28,7 +29,7 @@ options:
   section_order: [".rodata", ".text", ".data", ".bss"]
 
   symbol_addrs_path:
-    - configs/screens/sym.b_konami.txt
+   # - configs/screens/sym.b_konami.txt - Can't currently be included as function addrs overlap with map overlay data addrs
     - configs/screens/sym.stream.txt
     - configs/screens/sym.saveload.txt
     - configs/screens/sym.options.txt
@@ -253,4 +254,11 @@ segments:
       - [0x821b8, c, libsd/sdmidi2]
 
       - [0x84238, data, bodyprog]
+
+  # Random garbage data at end of bodyprog, overlaps into other overlays causing symbol size issues.
+  # Define as bin file to make splat mostly ignore it.
+  - name: footer_data
+    type: bin
+    start: 0xA4A18
+
   - [0xA4B00]

@@ -51,8 +51,8 @@ void func_80085DC0(s32 arg0, s32 sysStateStep)
 void func_80085DF0()
 {
     g_SysWork.timer_2C += g_DeltaTime1;
-    
-    if (D_800C9668() != 0 || g_SysWork.timer_2C > 4096)
+
+    if (g_MapOverlayHeader.func_EC() != 0 || g_SysWork.timer_2C > 4096)
     {
         g_SysWork.field_28 = 0;
         g_SysWork.field_10 = 0;
@@ -300,7 +300,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800865FC);
 
 void func_800866D4(s32 arg0, s32 arg1, s32 arg2) // 0x800866D4
 {
-    if (D_800C964C(arg0, &D_800C4640, D_800C4700, arg1) == 1)
+    if (g_MapOverlayHeader.func_D0(arg0, &D_800C4640, D_800C4700, arg1) == 1)
     {
         func_80085D78(arg2);
     }
@@ -308,7 +308,7 @@ void func_800866D4(s32 arg0, s32 arg1, s32 arg2) // 0x800866D4
 
 void func_80086728(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x80086728
 {
-    if (D_800C96B8(arg0, arg1, &D_800C46A0, D_800C4702, arg2) == 1)
+    if (g_MapOverlayHeader.func_13C(arg0, arg1, &D_800C46A0, D_800C4702, arg2) == 1)
     {
         func_80085D78(arg3);
     }
@@ -316,7 +316,7 @@ void func_80086728(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x80086728
 
 void func_8008677C(s32 arg0, s32 arg1, s32 arg2) // 0x8008677C
 {
-    D_800C96B8(arg0, arg1, &D_800C46A0, D_800C4702, arg2);
+    g_MapOverlayHeader.func_13C(arg0, arg1, &D_800C46A0, D_800C4702, arg2);
 }
 
 void func_800867B4(s32 caseParam, s32 idx) // 0x800867B4
@@ -664,7 +664,7 @@ void func_80086FE8(s32 arg0, s32 arg1, s32 arg2) // 0x80086FE8
     switch (g_SysWork.field_10)
     {
         case 0:
-            D_800C9644();
+            g_MapOverlayHeader.func_C8();
             func_8005DC1C(arg1, arg2, 0x80, 0);
             
             g_SysWork.timer_2C = 0;
@@ -680,7 +680,7 @@ void func_80086FE8(s32 arg0, s32 arg1, s32 arg2) // 0x80086FE8
             break;
 
         default:
-            D_800C9648(0);
+            g_MapOverlayHeader.func_CC(0);
 
             g_SysWork.sysState_8 = 0;
             g_SysWork.timer_24 = 0;
@@ -700,7 +700,7 @@ void func_8008716C(s32 arg0, s32 arg1, s32 arg2) // 0x8008716C
     switch (g_SysWork.field_10)
     {
         case 0:
-            D_800C9644();
+            g_MapOverlayHeader.func_C8();
             func_8008616C(0, 1, 0, arg1, 0);
             g_SysWork.timer_2C = 0;
             g_SysWork.field_14 = 0;
@@ -740,7 +740,7 @@ void func_8008716C(s32 arg0, s32 arg1, s32 arg2) // 0x8008716C
 
         default:
             func_8008616C(0, 0, 0, arg1, 0);
-            D_800C9648(0);
+            g_MapOverlayHeader.func_CC(0);
 
             g_SysWork.sysState_8 = 0;
             g_SysWork.timer_24 = 0;
@@ -760,7 +760,7 @@ void func_80087360(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x80087360
     switch (g_SysWork.field_10)
     {
         case 0:
-            D_800C9644();
+            g_MapOverlayHeader.func_C8();
             func_8008616C(0, 1, 0, arg1, 0);
 
             g_SysWork.timer_2C = 0;
@@ -796,7 +796,7 @@ void func_80087360(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x80087360
 
         default:
             func_8008616C(0, 0, 0, arg1, 0);
-            D_800C9648(0);
+            g_MapOverlayHeader.func_CC(0);
 
             g_SysWork.sysState_8 = 0;
             g_SysWork.timer_24 = 0;
@@ -816,7 +816,7 @@ void func_80087540(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x800875
     switch (g_SysWork.field_10)
     {
         case 0:
-            D_800C9644();
+            g_MapOverlayHeader.func_C8();
             func_8008616C(0, 1, 0, arg1, 0);
 
             g_SysWork.timer_2C = 0;
@@ -871,7 +871,7 @@ void func_80087540(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x800875
 
         default:
             func_8008616C(0, 0, 0, arg1, 0);
-            D_800C9648(0);
+            g_MapOverlayHeader.func_CC(0);
 
             g_SysWork.sysState_8 = 0;
             g_SysWork.timer_24 = 0;
@@ -1275,21 +1275,21 @@ s32 func_8008A35C(s_8008A35C* arg0, s32 arg1) // 0x8008A35C
     return res;
 }
 
-void func_8008A384(s_8008A384* arg0) // 0x8008A384
+void func_8008A384(s_SubCharacter* chara) // 0x8008A384
 {
-    arg0->field_3E &= ~(1 << 7);
+    chara->field_3E &= ~(1 << 7);
 }
 
-void func_8008A398(s_8008A384* arg0) // 0x8008A398
+void func_8008A398(s_SubCharacter* chara) // 0x8008A398
 {
-    arg0->field_3E |= 1 << 7;
+    chara->field_3E |= 1 << 7;
 }
 
-void func_8008A3AC(s_8008A384* arg0) // 0x8008A3AC
+void func_8008A3AC(s_SubCharacter* chara) // 0x8008A3AC
 {
-    if (!(arg0->field_3E & (1 << 7)))
+    if (!(chara->field_3E & (1 << 7)))
     {
-        arg0->field_44 = 0;
+        chara->field_44 = 0;
         func_8008A3E0();
     }
 }

@@ -2,6 +2,7 @@
 #define _GAME_H
 
 #include "gpu.h"
+#include "types.h"
 
 #define SCREEN_WIDTH     320
 #define SCREEN_HEIGHT    240
@@ -400,14 +401,15 @@ typedef struct _SubCharacter
     s32     field_34;
     s32     moveSpeed_38;
     s16     headingAngle_3C;
-    s8      pad_3E[2];
+    s16     field_3E;
     s8      unk_40[4];
-    s32     field_44;
-    s8      unk_45[104];
+    s16     field_44;
+    s8      unk_46[2];
+    s8      unk_48[104];
     s32     health_B0; // Bits 3-4 contain `s16` associated with player's rate of heavy breathing, always set to 6. Can't split into `s16`s? Maybe packed data.
     s8      unk_B4[16];
     u16     dead_timer_C4; // Part of `shBattleInfo` struct in SH2, may use something similar here.
-    s8      unk_C6[2];
+    u16     field_C6;
 
     // Fields seen used inside maps (eg. `map0_s00` `func_800D923C`)
 
