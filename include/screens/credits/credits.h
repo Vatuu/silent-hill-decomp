@@ -3,21 +3,6 @@
 
 #include "common.h"
 
-typedef struct
-{
-    s16 field_0;
-    s16 field_2;
-    s16 field_4;
-    s8  unk_6;
-    s8  field_7; // bool
-    s32 unk_8;
-    s32 unk_C;
-    s32 unk_10;
-    u16 field_14;
-    s16 unk_16;
-    u32 field_18;
-} s_UnkCredits0;
-
 // Used by `func_801E2E28`.
 typedef struct
 {
@@ -26,20 +11,6 @@ typedef struct
     s16 field_4;
 } s_UnkCredits1;
 STATIC_ASSERT_SIZEOF(s_UnkCredits1, 6);
-
-extern s_UnkCredits0 D_800AFE08;
-
-extern s8 D_800AFE0E;
-
-extern s32 D_800AFE10; // Packed RGB+command color? Command is 0x64.
-
-extern s_UnkCredits0 D_800AFE24;
-
-extern s8 D_800AFE2A;
-
-extern s32 D_800AFE2C; // Packed RGB+command color? Command is 0x2C.
-
-extern s32 D_800C48F0;
 
 extern s_UnkCredits1 D_801E5558[];
 
@@ -52,6 +23,8 @@ extern s32 D_801E5BD0;
 extern s32 D_801E5C20;
 
 extern s32 D_801E5E74;
+
+extern s32 D_801E5E78;
 
 extern s32 D_801E5E7C;
 
@@ -76,6 +49,8 @@ void func_801E3DD0();
 /** Draw some image on the screen. */
 s32 func_801E3124();
 
+s32 func_801E342C();
+
 s32 func_801E3304();
 
 bool func_801E3684();
@@ -84,9 +59,9 @@ s32 func_801E3DF8(s32 arg0);
 
 void func_801E42F8(s32 arg0, s32 arg1);
 
-/** @brief Sets the current RGB+command color for `D_800AFE10`.
+/** @brief Sets the current RGB+command color for `D_800AFE08` struct.
  *
- * This function sets the packed RGB+command color for `D_800AFE10` with
+ * This function sets the packed RGB+command color for `D_800AFE08` with
  * the fourth component hard set to 0x64, possibly a graphics command.
  * 
  * @note RGB order only assumed.

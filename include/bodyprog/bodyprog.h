@@ -444,6 +444,54 @@ typedef struct _s_func_800699F8
 } s_func_800699F8;
 STATIC_ASSERT_SIZEOF(s_func_800699F8, 12);
 
+// Used for normal credits screen.
+typedef struct
+{
+    s16  field_0;     // Prim vertex x
+    s16  field_2;     // Prim vertex y
+    s16  field_4;     // Width?
+    s8   field_6;     // Height? 
+    s8   field_7;     // Blend flag
+    s32  field_8;     // Rgb24 color + code
+    s16* field_C;     // Points to 0x801E5C24, data size 400
+    s32* field_10;    // Points to 0x801E5E24, data size 28, rgb24 + code
+    u16  field_14;    // Tpage for setDrawTPage, calculated from field_18 with func_801E434C
+    s16  field_16;    // Clut xy
+    u32  field_18;    // Texture uv
+} s_800AFE08; // Size: 28
+
+// Used for UFO ending credits screen.
+typedef struct
+{
+    s16  field_0;     // Prim vertex x
+    s16  field_2;     // Prim vertex y
+    s16  field_4;     // Width?
+    s8   field_6;     // Height? 
+    s8   field_7;     // Blend flag
+    s32  field_8;     // Rgb24 color + code
+    s16* field_C;     // Points to 0x801E5C24, data size 400
+    s32* field_10;    // Points to 0x801E5E40, data size 28, rgb24 + code
+    u16  field_14;    // Tpage for setDrawTPage, calculated from field_18 with func_801E4BD4
+    s16  field_16;    // Clut xy
+    u32  field_18;    // Texture uv
+    s32  field_1C;
+    s16  field_20;
+    s16  field_22;
+    s32  field_24;
+    s32  field_28;
+    s32  field_2C;
+    s32  field_30;
+    s32  field_34;
+    s32  field_38;
+    s32  field_3C;
+    s32  field_40;
+    s32  field_44;
+    s32  field_48;
+    s32  field_4C;
+    s32  field_50;
+    s32  field_54;
+} s_800AFE24; // Size: 85
+
 extern s8* D_8002510C;
 
 /** "\x07PAUSED" string */
@@ -567,6 +615,10 @@ extern u16 D_800AFDBC;
 
 extern s32 D_800AFDEC;
 
+extern s_800AFE08 D_800AFE08;
+
+extern s_800AFE24 D_800AFE24;
+
 extern s_800B55E8 D_800B2780[];
 
 extern s_800B55E8 D_800B3680[];
@@ -593,11 +645,15 @@ extern s32 D_800B5C30;
 
 extern s_800B5C40 D_800B5C40[];
 
-extern s32 D_800B5C7C; // Type assumed.
+extern s32 D_800B5C7C;
+
+extern u8 D_800BC74F;
 
 extern u16 D_800BCCB0;
 
 extern u16 D_800BCCB2;
+
+extern s32 D_800B7CC4;
 
 /** Accessed by credits, options, and saveload. */
 extern s32 D_800BCD0C;
@@ -784,6 +840,8 @@ extern s_800C4818 D_800C4818;
 
 /** Unknown bodyprog var. Set in `Fs_QueueDoThingWhenEmpty`. */
 extern s32 D_800C489C;
+
+extern s32 D_800C48F0;
 
 // TODO: Order these by address.
 

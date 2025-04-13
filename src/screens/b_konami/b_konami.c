@@ -346,8 +346,7 @@ void func_800C9E6C(s_FsImageDesc* image, s32 otz, s32 vramX, s32 vramY, s32 w, s
     u32       vramBase = *((u8*)&image->tPage + 1) + (u32)(vramX >> 8) + (((u32)(vramY >> 8)) << 4);
     u32*      addr     = &D_800B5C40[g_ObjectTableIdx].field_0[otz];
 
-    prim->tag = getaddr(addr) | 0x04000000u;
-    setaddr(addr, prim);
+    addPrimFast(addr, prim, 4);
     setCodeWord(prim, PRIM_RECT | RECT_TEXTURE, 0x808080);
     setWH(prim, w, h);
 
@@ -378,11 +377,7 @@ void func_800C9FB8() // 0x800C9FB8
 
     ptr = (g_ObjectTableIdx << 4) + &D_800B5C7C;
 
-    // TODO: Wait on fgsfds's investigations for cleaner match of graphics setup.
-    // addPrim(temp_a1, GsOUT_PACKET_P);
-    ((TILE*)GsOUT_PACKET_P)->tag = (u32)((*ptr & 0xFFFFFF) | 0x03000000);
-    setaddr(ptr, GsOUT_PACKET_P);
-
+    addPrimFast(ptr, (TILE*)GsOUT_PACKET_P, 3);
     setCodeWord((TILE*)GsOUT_PACKET_P, PRIM_RECT, 0xFFFFFF);
     setXY0Fast((TILE*)GsOUT_PACKET_P, -SCREEN_WIDTH, -SCREEN_HEIGHT);
     setWH((TILE*)GsOUT_PACKET_P, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2);
@@ -399,11 +394,7 @@ void func_800CA120() // 0x800CA120
 
     ptr = (g_ObjectTableIdx << 4) + &D_800B5C7C;
 
-    // TODO: Wait on fgsfds's investigations for cleaner match of graphics setup.
-    // addPrim(temp_a1, GsOUT_PACKET_P);
-    ((TILE*)GsOUT_PACKET_P)->tag = (u32)((*ptr & 0xFFFFFF) | 0x03000000);
-    setaddr(ptr, GsOUT_PACKET_P);
-
+    addPrimFast(ptr, (TILE*)GsOUT_PACKET_P, 3);
     setCodeWord((TILE*)GsOUT_PACKET_P, PRIM_RECT, 0xFFFFFF);
     setXY0Fast((TILE*)GsOUT_PACKET_P, -SCREEN_WIDTH, -SCREEN_HEIGHT);
     setWH((TILE*)GsOUT_PACKET_P, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2);
