@@ -1835,7 +1835,10 @@ void func_8003ED08() // 0x8003ED08
     g_SaveGamePtr->flags_AC |= 2;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003ED64);
+u8 func_8003ED64() // 0x8003ED64
+{
+    return g_SysWork.field_239D;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003ED74);
 
