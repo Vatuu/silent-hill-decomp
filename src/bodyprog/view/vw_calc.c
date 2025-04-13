@@ -4,7 +4,6 @@
 #include "bodyprog/math.h"
 
 extern MATRIX D_800C3868;
-extern MATRIX D_800C6FC0; // Might be psyq GsWSMATRIX.
 
 void vwRenewalXZVelocityToTargetPos(s32* velo_x, s32* velo_z, VECTOR3* now_pos, VECTOR3* tgt_pos, s32 tgt_r, s32 accel, s32 total_max_spd, s32 dec_forwd_lim_spd, s32 dec_accel_side) // 0x80048F28
 {
@@ -133,20 +132,20 @@ void vbSetWorldScreenMatrix(GsCOORDINATE2* coord) // 0x800497E4
     VbWvsMatrix.t[1] = 0;
     VbWvsMatrix.t[0] = 0;
 
-    D_800C6FC0.m[0][0] = VbWvsMatrix.m[0][0];
-    D_800C6FC0.m[0][1] = VbWvsMatrix.m[0][1];
-    D_800C6FC0.m[0][2] = VbWvsMatrix.m[0][2];
-    D_800C6FC0.m[1][0] = VbWvsMatrix.m[1][0];
-    D_800C6FC0.m[1][1] = VbWvsMatrix.m[1][1];
-    D_800C6FC0.m[1][2] = VbWvsMatrix.m[1][2];
-    D_800C6FC0.m[2][0] = VbWvsMatrix.m[2][0];
-    D_800C6FC0.m[2][1] = VbWvsMatrix.m[2][1];
-    D_800C6FC0.m[2][2] = VbWvsMatrix.m[2][2];
+    GsWSMATRIX.m[0][0] = VbWvsMatrix.m[0][0];
+    GsWSMATRIX.m[0][1] = VbWvsMatrix.m[0][1];
+    GsWSMATRIX.m[0][2] = VbWvsMatrix.m[0][2];
+    GsWSMATRIX.m[1][0] = VbWvsMatrix.m[1][0];
+    GsWSMATRIX.m[1][1] = VbWvsMatrix.m[1][1];
+    GsWSMATRIX.m[1][2] = VbWvsMatrix.m[1][2];
+    GsWSMATRIX.m[2][0] = VbWvsMatrix.m[2][0];
+    GsWSMATRIX.m[2][1] = VbWvsMatrix.m[2][1];
+    GsWSMATRIX.m[2][2] = VbWvsMatrix.m[2][2];
 
     sp30.vx = -D_800C3868.t[0];
     sp30.vy = -D_800C3868.t[1];
     sp30.vz = -D_800C3868.t[2];
-    ApplyMatrixLV(&VbWvsMatrix, &sp30, (VECTOR*)&D_800C6FC0.t);
+    ApplyMatrixLV(&VbWvsMatrix, &sp30, (VECTOR*)&GsWSMATRIX.t);
 }
 
 void vbSetRefView(VbRVIEW* rview) // 0x800498D8
@@ -205,18 +204,18 @@ void func_80049C2C(MATRIX* mat, s32 x, s32 y, s32 z)
     input.vx = FP_FROM(x, Q4_SHIFT);
     input.vy = FP_FROM(y, Q4_SHIFT);
     input.vz = FP_FROM(z, Q4_SHIFT);
-    ApplyMatrixLV(&D_800C6FC0, &input, &output);
+    ApplyMatrixLV(&GsWSMATRIX, &input, &output);
 
     // Copies matrix fields as 32-bit words, maybe an inlined CopyMatrix func?
-    *(u32*)&mat->m[0][0] = *(u32*)&D_800C6FC0.m[0][0];
-    *(u32*)&mat->m[0][2] = *(u32*)&D_800C6FC0.m[0][2];
-    *(u32*)&mat->m[1][1] = *(u32*)&D_800C6FC0.m[1][1];
-    *(u32*)&mat->m[2][0] = *(u32*)&D_800C6FC0.m[2][0];
-    mat->m[2][2]         = D_800C6FC0.m[2][2];
+    *(u32*)&mat->m[0][0] = *(u32*)&GsWSMATRIX.m[0][0];
+    *(u32*)&mat->m[0][2] = *(u32*)&GsWSMATRIX.m[0][2];
+    *(u32*)&mat->m[1][1] = *(u32*)&GsWSMATRIX.m[1][1];
+    *(u32*)&mat->m[2][0] = *(u32*)&GsWSMATRIX.m[2][0];
+    mat->m[2][2]         = GsWSMATRIX.m[2][2];
 
-    mat->t[0] = output.vx + D_800C6FC0.t[0];
-    mat->t[1] = output.vy + D_800C6FC0.t[1];
-    mat->t[2] = output.vz + D_800C6FC0.t[2];
+    mat->t[0] = output.vx + GsWSMATRIX.t[0];
+    mat->t[1] = output.vy + GsWSMATRIX.t[1];
+    mat->t[2] = output.vz + GsWSMATRIX.t[2];
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vw_calc", func_80049D04);
