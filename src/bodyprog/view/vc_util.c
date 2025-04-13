@@ -18,7 +18,7 @@ void vcInitCamera(struct _MapOverlayHeader* map_overlay_ptr, VECTOR3* chr_pos)
     vcStartCameraSystem();
 
     g_SysWork.cameraAngleZ_237C   = 0;
-    g_SysWork.cameraRadiusXz_2380 = 0x3000;
+    g_SysWork.cameraRadiusXz_2380 = FP_METER(48.f);
     g_SysWork.cameraY_2384        = 0;
 }
 
@@ -31,9 +31,9 @@ void vcSetCameraUseWarp(VECTOR3* chr_pos, s16 chr_ang_y) // 0x800400D4
     cam_ang.vy = chr_ang_y;
     cam_ang.vz = 0;
 
-    cam_pos.vx = chr_pos->vx - FP_MULTIPLY(shRsin(chr_ang_y), 0x1800, Q12_SHIFT);
+    cam_pos.vx = chr_pos->vx - FP_MULTIPLY_FLOAT(shRsin(chr_ang_y), 1.5f, Q12_SHIFT);
     cam_pos.vy = chr_pos->vy - FP_METER(27.2f);
-    cam_pos.vz = chr_pos->vz - FP_MULTIPLY(shRcos(chr_ang_y), 0x1800, Q12_SHIFT);
+    cam_pos.vz = chr_pos->vz - FP_MULTIPLY_FLOAT(shRcos(chr_ang_y), 1.5f, Q12_SHIFT);
 
     vcSetFirstCamWork(&cam_pos, chr_ang_y, g_SysWork.flags_22A4 & 0x40);
     g_SysWork.flags_22A4 &= ~0x40;
@@ -66,7 +66,90 @@ void func_800401CC() // 0x800401CC
     func_80080D68();
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vc_util", vcMoveAndSetCamera);
+void vcMoveAndSetCamera(s32 in_connect_f, s32 change_debug_mode, s32 for_f, s32 back_f, s32 right_f, s32 left_f, s32 up_f, s32 down_f) // 0x800401EC
+{
+    VECTOR3         first_cam_pos;
+    VECTOR3         hr_head_pos;
+    s32             hero_bottom_y;
+    s32             hero_top_y;
+    s32             grnd_y;
+    s_SubCharacter* hr_p;
+    s_func_800699F8 sp50; // collision related?
+
+    if (change_debug_mode != 0)
+    {
+        D_800BCE18.vcCameraInternalInfo_1BDC.mode++;
+    }
+
+    switch (D_800BCE18.vcCameraInternalInfo_1BDC.mode)
+    {
+        default:
+            D_800BCE18.vcCameraInternalInfo_1BDC.mode = 0;
+
+            first_cam_pos.vy = FP_METER(-35.2f);
+            first_cam_pos.vx = g_SysWork.player_4C.chara_0.position_18.vx + FP_METER(112.f);
+            first_cam_pos.vz = g_SysWork.player_4C.chara_0.position_18.vz;
+
+            vcSetFirstCamWork(&first_cam_pos, g_SysWork.player_4C.chara_0.rotation_24.vy, 0U);
+        case 0:
+            hr_p = &g_SysWork.player_4C.chara_0;
+
+            if (in_connect_f != 0)
+            {
+                grnd_y = FP_METER(-32.f);
+
+                hr_head_pos.vx = hr_p->position_18.vx;
+                hr_head_pos.vy = hr_p->position_18.vy - FP_METER(30.4f);
+                hr_head_pos.vz = hr_p->position_18.vz;
+            }
+            else
+            {
+                func_800699F8(&sp50, hr_p->position_18.vx, hr_p->position_18.vz);
+                grnd_y = sp50.chara_grnd_0;
+
+                vcMakeHeroHeadPos(&hr_head_pos);
+            }
+
+            hero_top_y = hr_p->position_18.vy - FP_METER(27.2f);
+            // TODO: Not sure what this is doing, maybe some kind of FP_MULTIPLY.
+            hero_bottom_y = hr_p->position_18.vy + ((s32) - (D_800BCE18.vcCameraInternalInfo_1BDC.ev_cam_rate * 0x800) >> 0xC);
+
+            if (D_800BCE18.vcCameraInternalInfo_1BDC.ev_cam_rate > 0)
+            {
+                vcWorkSetFlags(VC_INHIBIT_FAR_WATCH_F, 0);
+            }
+            else
+            {
+                vcWorkSetFlags(0, VC_INHIBIT_FAR_WATCH_F);
+            }
+
+            vcSetSubjChara(&hr_p->position_18, hero_bottom_y, hero_top_y, grnd_y,
+                           &hr_head_pos, hr_p->moveSpeed_38, hr_p->headingAngle_3C, hr_p->rotationSpeed_2C.vy, hr_p->rotation_24.vy,
+                           FP_ANGLE(7.5f), FP_METER(176.f));
+
+            D_800BCE18.vcCameraInternalInfo_1BDC.mv_smooth = vcExecCamera();
+            break;
+
+        case 1:
+            vcSetRefPosAndSysRef2CamParam(&vcRefPosSt, &g_SysWork, for_f, back_f, right_f, left_f, up_f, down_f);
+            vwSetCoordRefAndEntou(NULL,
+                                  vcRefPosSt.vx, vcRefPosSt.vy, vcRefPosSt.vz,
+                                  g_SysWork.cameraAngleY_237A, g_SysWork.cameraAngleZ_237C, g_SysWork.cameraY_2384, g_SysWork.cameraRadiusXz_2380);
+            break;
+
+        case 2:
+            vcSetRefPosAndCamPosAngByPad(&vcRefPosSt, &g_SysWork);
+            break;
+
+        case 3:
+            vcSetRefPosAndSysRef2CamParam(&vcRefPosSt, &g_SysWork, for_f, back_f, right_f, left_f, up_f, down_f);
+            vwSetCoordRefAndEntou(&g_SysWork.playerBoneCoords_890[PlayerBone_Head],
+                                  FP_METER(0.f), FP_METER(-2.4f), FP_METER(16.f),
+                                  FP_ANGLE(10.315f), FP_ANGLE(0.f), FP_METER(-3.2f), FP_METER(16.f));
+            break;
+    }
+    vwSetViewInfo();
+}
 
 void vcMakeHeroHeadPos(VECTOR3* head_pos) // 0x8004047C
 {
@@ -258,8 +341,8 @@ void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, s_SysWork* sys_p) // 0x80040
         ref_pos->vy = FP_TO(sp18.vy + sp58.vy, Q4_SHIFT);
         ref_pos->vz = FP_TO(sp18.vz + sp58.vz, Q4_SHIFT);
 
-        sys_p->cameraAngleY_237A = ((cam_ang.vy + FP_ANGLE(11.25f)) << 0x14) >> 0x14;
-        sys_p->cameraY_2384     = FP_TO(-sp58.vy, Q4_SHIFT);
-        sys_p->cameraRadiusXz_2380  = FP_TO(SquareRoot0((sp58.vx * sp58.vx) + (sp58.vz * sp58.vz)), Q4_SHIFT);
+        sys_p->cameraAngleY_237A   = shAngleRegulate(cam_ang.vy + FP_ANGLE(11.25f));
+        sys_p->cameraY_2384        = FP_TO(-sp58.vy, Q4_SHIFT);
+        sys_p->cameraRadiusXz_2380 = FP_TO(SquareRoot0((sp58.vx * sp58.vx) + (sp58.vz * sp58.vz)), Q4_SHIFT);
     }
 }
