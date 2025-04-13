@@ -797,7 +797,9 @@ typedef struct _MapOverlayHeader
     u8 unk_C[8];
     s8 field_14;
     u8 unk_15[3];
-    u8 unk_18[40];
+    u8 unk_18[8];
+    void (**mapEventFuncs_20)(); // Points to array of event functions.
+    u8 unk_24[0x1C];
     void (*func_40)();
     void (*func_44)();
     u8 unk_48[128];
@@ -854,6 +856,8 @@ void func_800303E4();
  * - 'func_801E709C' in saveload.c */
 void func_800314EC(s_FsImageDesc* image);
 
+void func_80031CCC(s32);
+
 void Gfx_DebugStringPosition(s16 x, s16 y);
 
 void Gfx_DebugStringDraw(char* str);
@@ -876,6 +880,8 @@ s32 func_80033548();
 
 /** Unknown bodyprog func. Called by `Fs_QueuePostLoadAnm`. */
 void func_80035560(s32 arg0, s32 arg1, void* arg2, s32 arg3);
+
+void func_8003943C();
 
 /** SysState_Fmv update function.
  * Movie to play is decided by `2072 - g_MapEventIdx`
@@ -1065,6 +1071,10 @@ s32 func_8004C45C();
  *         0 otherwise.
  */
 s32 func_8004C4F8();
+
+void func_80054024(s8);
+
+void func_800540A4(s8);
 
 void func_800546A8(s32 arg0);
 
