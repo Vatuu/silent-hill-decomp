@@ -1816,7 +1816,7 @@ void func_8003ECBC() // 0x8003ECBC
 void func_8003ECE4() // 0x8003ECE4
 {
     g_SysWork.unk_2388[21] = 0;
-    g_SaveGamePtr->flags_AC |= 2;
+    g_SaveGamePtr->flags_AC |= 1 << 1;
 }
 
 void func_8003ED08() // 0x8003ED08
@@ -1828,11 +1828,11 @@ void func_8003ED08() // 0x8003ED08
 
     if (var == 1)
     {
-        g_SaveGamePtr->flags_AC &= ~2;
+        g_SaveGamePtr->flags_AC &= ~(1 << 1);
         return;
     }
 
-    g_SaveGamePtr->flags_AC |= 2;
+    g_SaveGamePtr->flags_AC |= 1 << 1;
 }
 
 u8 func_8003ED64() // 0x8003ED64
@@ -1842,7 +1842,10 @@ u8 func_8003ED64() // 0x8003ED64
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003ED74);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003EDA8);
+void func_8003EDA8() // 0x8003EDA8
+{
+    g_SysWork.field_239C = 1;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003EDB8);
 

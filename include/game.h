@@ -493,8 +493,9 @@ typedef struct _SysWork
     s16             field_237E;
     s32             cameraRadiusXz_2380;
     s32             cameraY_2384;
-    s8              unk_2388[21];
-    u8              field_239D;
+    s8              unk_2388[20];
+    s8              field_239C;
+    u8              field_239D; // Index?
     s8              unk_239E[370];
     s32             field_2510;
     s32             field_2514[10];

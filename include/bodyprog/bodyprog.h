@@ -1401,6 +1401,8 @@ void func_8003ED08();
 
 u8 func_8003ED64();
 
+void func_8003EDA8();
+
 void func_8003F170();
 
 /** Resets player info in the savegame buffer (inventory, health, playtime). */
