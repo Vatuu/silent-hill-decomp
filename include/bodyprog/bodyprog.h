@@ -433,6 +433,17 @@ typedef struct
 } s_DmsHeader;
 STATIC_ASSERT_SIZEOF(s_DmsHeader, 44);
 
+/** Returned by `func_800699F8`, collision related? */
+typedef struct _s_func_800699F8
+{
+    s32 chara_grnd_0;
+    s16 word4;
+    s16 word6;
+    s8  byte8;
+    u8  unk_9[3];
+} s_func_800699F8;
+STATIC_ASSERT_SIZEOF(s_func_800699F8, 12);
+
 extern s8* D_8002510C;
 
 /** "\x07PAUSED" string */
@@ -1285,6 +1296,8 @@ s16 func_8005BF38(s32 arg0);
 void func_80066E40();
 
 void func_80066E7C();
+
+void func_800699F8(s_func_800699F8* arg0, s32 arg1, s32 arg2);
 
 s32 func_8006A3B4(s32 arg0, s32 arg1, s32 arg2);
 
