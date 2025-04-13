@@ -1367,6 +1367,8 @@ void func_8003C3AC();
 
 void func_8003C878(s32);
 
+void func_8003CB3C(s_800BCE18* arg0);
+
 void func_8003D938();
 
 void func_8003DA9C(s32, GsCOORDINATE2*, s32, s16, s32);
