@@ -305,18 +305,18 @@ typedef struct _ShSaveGameContainer
     s_ShSaveGame       saveGame_0;
     s_ShSaveGameFooter footer_27C;
 } s_ShSaveGameContainer;
-STATIC_ASSERT_SIZEOF(s_ShSaveGameContainer, 0x280);
+STATIC_ASSERT_SIZEOF(s_ShSaveGameContainer, 640);
 
 typedef struct _ShEventParam
 {
     u8  unk_0[2];
-    s16 eventFlagNum_2;
+    s16 eventFlagId_2;
     u8  unk_4[1];
     u8  field_5;
     u8  unk_6[2];
     u32 flags_8;
 } s_ShEventParam;
-STATIC_ASSERT_SIZEOF(s_ShEventParam, 0xC);
+STATIC_ASSERT_SIZEOF(s_ShEventParam, 12);
 
 typedef struct _GameWork
 {
