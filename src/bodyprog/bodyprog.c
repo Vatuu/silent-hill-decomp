@@ -1297,6 +1297,8 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", GameState_LoadMapScreen_Update
 
 void SysState_Fmv_Update() // 0x80039A58
 {
+    #define BASE_IDX 2072
+
     switch (g_SysWork.sysStateStep_C)
     {
         case 0:
@@ -1329,9 +1331,9 @@ void SysState_Fmv_Update() // 0x80039A58
     func_800892A4(0);
     func_80089128();
 
-    // Start playing movie. File to play is based on file ID `2072 - g_MapEventIdx`.
+    // Start playing movie. File to play is based on file ID `BASE_IDX - g_MapEventIdx`.
     // Blocks until movie has finished playback or user has skipped it.
-    open_main(2072 - g_MapEventIdx, g_FileTable[2072 - g_MapEventIdx].blockCount);
+    open_main(BASE_IDX - g_MapEventIdx, g_FileTable[BASE_IDX - g_MapEventIdx].blockCount);
 
     func_800892A4(1);
 
@@ -1347,7 +1349,7 @@ void SysState_Fmv_Update() // 0x80039A58
     Game_StateSetNext(GameState_InGame);
 
     // If flag is set, returns to `GameState_InGame` with `gameStateStep[0]` = 1.
-    if ((g_MapEventParam->flags_8 >> 13) & (1 << 1)) // flags_8 & 0x4000? Does shift imply bitfield?
+    if ((g_MapEventParam->flags_8 >> 13) & (1 << 1)) // flags_8 & (1 << 14)? Does shift imply bitfield?
     {
         g_GameWork.gameStateStep_598[0] = 1;
     }
