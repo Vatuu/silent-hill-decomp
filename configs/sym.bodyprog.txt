@@ -798,7 +798,6 @@ PSDOFSX = 0x800C6E08;
 PSDOFSY = 0x800C6E0C;
 HWD0 = 0x800C6F28;
 VWD0 = 0x800C6F2C;
-GsIDMATRIX2 = 0x800C6FE0; // type:MATRIX size:0x20
 GsLIGHTWSMATRIX = 0x800C6F40;
 PSDBASEX = 0x800C6E10;
 PSDBASEY = 0x800C6E14;
@@ -886,10 +885,9 @@ gte_init = 0x80095CBC; // type:func
 Gssub_make_matrix = 0x80095d0c; // type:func
 // gs_123.o globals
 GsIDMATRIX = 0x800C6FA0; // type:MATRIX size:0x20
-// Symbols say these should be there, but other vars are inside the same space of them?
-// GsWSMATRIX = 0x800C6FA0 + 0x20; // unused
-// GsWSMATRIX_ORG = 0x800C6FA0 + 0x40; // unused
-// GsIDMATRIX2 = 0x800C6FA0 + 0x60; // unused
+GsWSMATRIX = 0x800C6FC0; // type:MATRIX size:0x20
+// GsWSMATRIX_ORG missing?
+GsIDMATRIX2 = 0x800C6FE0; // type:MATRIX size:0x20
 
 // gs_127.o
 GsDefDispBuff2 = 0x80095ddc; // type:func
