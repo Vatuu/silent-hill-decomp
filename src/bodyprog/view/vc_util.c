@@ -97,7 +97,8 @@ void vcMoveAndSetCamera(s32 in_connect_f, s32 change_debug_mode, s32 for_f, s32 
 
             if (in_connect_f != 0)
             {
-                grnd_y         = FP_METER(-32.f);
+                grnd_y = FP_METER(-32.f);
+
                 hr_head_pos.vx = hr_p->position_18.vx;
                 hr_head_pos.vy = hr_p->position_18.vy - FP_METER(30.4f);
                 hr_head_pos.vz = hr_p->position_18.vz;
@@ -132,15 +133,9 @@ void vcMoveAndSetCamera(s32 in_connect_f, s32 change_debug_mode, s32 for_f, s32 
 
         case 1:
             vcSetRefPosAndSysRef2CamParam(&vcRefPosSt, &g_SysWork, for_f, back_f, right_f, left_f, up_f, down_f);
-            vwSetCoordRefAndEntou(
-                0,
-                vcRefPosSt.vx,
-                vcRefPosSt.vy,
-                vcRefPosSt.vz,
-                g_SysWork.cameraAngleY_237A,
-                g_SysWork.cameraAngleZ_237C,
-                g_SysWork.cameraY_2384,
-                g_SysWork.cameraRadiusXz_2380);
+            vwSetCoordRefAndEntou(NULL,
+                                  vcRefPosSt.vx, vcRefPosSt.vy, vcRefPosSt.vz,
+                                  g_SysWork.cameraAngleY_237A, g_SysWork.cameraAngleZ_237C, g_SysWork.cameraY_2384, g_SysWork.cameraRadiusXz_2380);
             break;
 
         case 2:
@@ -149,8 +144,9 @@ void vcMoveAndSetCamera(s32 in_connect_f, s32 change_debug_mode, s32 for_f, s32 
 
         case 3:
             vcSetRefPosAndSysRef2CamParam(&vcRefPosSt, &g_SysWork, for_f, back_f, right_f, left_f, up_f, down_f);
-            vwSetCoordRefAndEntou(&g_SysWork.playerBoneCoords_890[PlayerBone_Head], 0,
-                                  FP_METER(-2.4f), FP_METER(16.f), FP_ANGLE(10.315f), 0, FP_METER(-3.2f), FP_METER(16.f));
+            vwSetCoordRefAndEntou(&g_SysWork.playerBoneCoords_890[PlayerBone_Head],
+                                  FP_METER(0.f), FP_METER(-2.4f), FP_METER(16.f),
+                                  FP_ANGLE(10.315f), FP_ANGLE(0.f), FP_METER(-3.2f), FP_METER(16.f));
             break;
     }
     vwSetViewInfo();

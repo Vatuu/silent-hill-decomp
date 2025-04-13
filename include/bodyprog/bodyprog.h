@@ -433,12 +433,14 @@ typedef struct
 } s_DmsHeader;
 STATIC_ASSERT_SIZEOF(s_DmsHeader, 44);
 
+/** Returned by `func_800699F8`, collision related? */
 typedef struct _s_func_800699F8
 {
     s32 chara_grnd_0;
     s16 word4;
     s16 word6;
     s8  byte8;
+    u8  unk_9[3];
 } s_func_800699F8;
 STATIC_ASSERT_SIZEOF(s_func_800699F8, 12);
 
