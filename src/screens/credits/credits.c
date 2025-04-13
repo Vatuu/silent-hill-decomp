@@ -60,34 +60,15 @@ s32 func_801E2ED8() // 0x801E2ED8
 INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E2FC0);
 /*s32 func_801E2FC0(void) // 0x801E2FC0
 {
-    s32 state;
-  
-    switch (D_800BCD0C) 
-    {
+    switch (D_800BCD0C) {
         case 4:
         case 5:
         case 12:
         case 13:
-            if (Fs_QueueGetLength() != 0) 
-            {
+            if (Fs_QueueGetLength() != 0) {
                 break;
             }
-            state = g_GameWork.gameState_594;
-            g_GameWork.gameState_594 = 0x15;
-            g_SysWork.timer_1C = 0;
-            g_SysWork.timer_20 = 0;
-            g_GameWork.gameStateStep_598[1] = 0;
-            g_GameWork.gameStateStep_598[2] = 0;
-            g_SysWork.sysState_8 = 0;
-            g_SysWork.timer_24 = 0;
-            g_SysWork.sysStateStep_C = 0;
-            g_SysWork.field_28 = 0;
-            g_SysWork.field_10 = 0;
-            g_SysWork.timer_2C = 0;
-            g_SysWork.field_14 = 0;
-            g_GameWork.gameStateStep_598[0] = state;
-            g_GameWork.gameStatePrev_590 = state;
-            g_GameWork.gameStateStep_598[0] = 0;
+            Game_StateSetNext(GameState_Unk15);
             return 1;
         case 2:
         case 3:
