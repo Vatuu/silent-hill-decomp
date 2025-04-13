@@ -27,8 +27,8 @@ Several pre-release demos and versions were released during development, a table
 | Date (YY-MM-DD) | Title | Game/disc code | Notes |
 |-|-|-|-|
 |  | **Partial Demos** |  |  |
-| 98-10-19 | Official Playstation Magazine Demo 16 (U) | SCUS-94278 | WKS.XE / XAS.XE containers. |
-| 98-11-06 | Famitsuu Wave 2gatsu-gou Vol. 7 (J) | SLPM-80366 | - |
+| 98-10-19 | Official Playstation Magazine Demo 16 (U) | SCUS-94278 | WKS.XE/XAS.XE containers. |
+| 98-11-06 | Famitsuu Wave 2gatsu-gou Vol. 7 (J) | SLPM-80366 | WKS./XAS. containers. |
 | 98-11-06 | Silent Hill Trial Version (J) | SLPM-80363 | AKA Silent Hill Taikenban. |
 | 98-12-09 | Silent Hill Demo (G) | SLED-01774 | Demo video, only `MOVIESYS`/`movie_main` code. |
 | 98-12-16 | Silent Hill Demo (E) | SLED-01735 | - |
@@ -36,7 +36,7 @@ Several pre-release demos and versions were released during development, a table
 | 99-06-08 | Playstation Zone CD Vol. 10 (G) | SLED-02190 | WKS./XAS. containers, later reissued as `SCED-02420` & `SCED-04082` |
 | 99-06-16 | Silent Hill Demo (E) | SLED-02186 | - |
 |  | **Prototypes** |  |  |
-| 98-11-24 | Silent Hill Preview (U) | SLUS-45678 | WKS. container, includes `FILEINFO.H`, burn date 98-10-24? |
+| 98-11-24 | Silent Hill Preview (U) | SLUS-45678 | WKS. container, includes `FILEINFO.H`, volume dated 98-10-24? |
 | 99-01-07 | Silent Hill Review (U) | SLUS-00707 | WKS. container. |
 | 99-01-17 | Silent Hill Trade Demo (U) | SLUS-80707 | - |
 | 99-01-22 | Silent Hill Beta (U) | SLUS-00707 | "Russian Bootleg", possibly scene pre-release. |
@@ -50,6 +50,6 @@ Several pre-release demos and versions were released during development, a table
 ### Unknown Releases
 
 - A `SCPS-45380` release for Hong Kong/Asia was also produced, but has only been pictured inside sealed packaging, did this include a normal JP disc inside it, or was it a special release? (release date was apparently around 1999-04)
-- Earliest known scene release is `Silent_Hill_USA_PAL_NTSC_Patch-PARADOX` from 1999-02-05, dated ~2 weeks after "Silent Hill Beta (U)", but 6 days prior to US v1.1 creation date - could they release a patch for a game only 2 weeks after it was produced? or was this for even earlier release?
-- Earliest JP scene release is `Silent_Hill_JAP_Final-DVNpSX` from 1999-05-01, 1 month prior to JP Rev. 1. `Final` implies this was meant to replace an earlier non-final release (the group never used `Final` in other releases), but at this point JP Rev. 0 was the only known release, was there an earlier release this was meant to replace?
+- Earliest known scene release is `Silent_Hill_USA_PAL_NTSC_Patch-PARADOX` from 1999-02-05, dated ~2 weeks after "Silent Hill Beta (U)", but 6 days prior to US v1.1 creation date - could they release a patch for a game only 2 weeks after it was produced, or was this for an even earlier release?
+- Earliest JP scene release is `Silent_Hill_JAP_Final-DVNpSX` from 1999-05-01, one month prior to JP Rev. 1 creation date. The group never used `Final` in any other releases, implying this was meant to replace an earlier non-final scene release, but at this point JP Rev. 0 was the only known JP release available - was there an earlier release this was meant to replace?
 - Scene history for 1998 is very incomplete (dat listing sites only show 8 releases for the whole year), could be other releases that we're missing information about.
