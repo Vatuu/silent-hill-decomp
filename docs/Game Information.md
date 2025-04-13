@@ -28,6 +28,7 @@ Several pre-release demos and versions were released during development, a table
 |-|-|-|-|
 |  | **Partial Demos** |  |  |
 | 98-10-19 | Official Playstation Magazine Demo 16 (U) | SCUS-94278 | WKS.XE / XAS.XE containers. |
+| 98-11-06 | Famitsuu Wave 2gatsu-gou Vol. 7 (J) | SLPM-80366 | - |
 | 98-11-06 | Silent Hill Trial Version (J) | SLPM-80363 | AKA Silent Hill Taikenban. |
 | 98-12-09 | Silent Hill Demo (G) | SLED-01774 | Demo video, only `MOVIESYS`/`movie_main` code. |
 | 98-12-16 | Silent Hill Demo (E) | SLED-01735 | - |
