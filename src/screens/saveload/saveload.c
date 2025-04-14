@@ -12,17 +12,30 @@ void func_801E2F90(s32 idx) // 0x801E2F90
     D_801E7578[idx] = D_800A97D4[idx] - D_801E7570[idx];
 }
 
-INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E2FCC);
+void func_801E2FCC(s32 arg0, s32 arg1, s32 arg2, s32 arg3)
+{
+    extern char D_801E2720[]; // "FILE" - needs rodata migration
+    char*       str = D_801E2720;
+
+    if (arg0 == D_800A97D4[arg1] && arg3 >= 4)
+    {
+        Gfx_StringColor(7);
+        Gfx_StringPosition((arg1 * 150) + 32, 35);
+        Gfx_StringDraw(str, 50);
+        Gfx_StringPosition((arg1 * 150) + 82, 35);
+        Gfx_StringDrawInt(1, arg2);
+    }
+}
 
 s32 func_801E3078(s_UnkSaveload0* arg0) // 0x801E3078
 {
     if (arg0 != NULL && (arg0->field_8 & (1 << 24)))
     {
-        func_8004A8DC(0);
+        Gfx_StringColor(0);
         return 1;
     }
 
-    func_8004A8DC(7);
+    Gfx_StringColor(7);
     return 0;
 }
 
@@ -72,7 +85,26 @@ INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E5898);
 
 INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E5E18);
 
-INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", GameState_Unk8_Update); // 0x801E6320
+void GameState_Unk8_Update() // 0x801E6320
+{
+    D_801E76D0 = 1;
+
+    if (g_GameWork.gameStateStep_598[0] == 0)
+    {
+        D_801E7524[0]();
+    }
+
+    D_801E7524[g_GameWork.gameStateStep_598[0]]();
+
+    func_801E709C();
+    func_801E7244();
+    func_801E70C8();
+
+    if (g_GameWork.gameState_594 == GameState_Unk10)
+    {
+        func_800363D0();
+    }
+}
 
 void func_801E63C0() // 0x801E63C0
 {
@@ -152,6 +184,18 @@ void func_801E72DC() // 0x801E72DC
     func_801E3C44();
 }
 
-INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", GameState_Unk4_Update); // 0x801E72FC
+void GameState_Unk4_Update() // 0x801E72FC
+{
+    if (g_GameWork.gameStateStep_598[0] == 0)
+    {
+        D_801E7544[0]();
+    }
+
+    D_801E7544[g_GameWork.gameStateStep_598[0]]();
+
+    func_801E709C();
+    func_801E7244();
+    func_801E70C8();
+}
 
 INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E737C);
