@@ -658,6 +658,8 @@ extern s32 D_800B7CC4;
 /** Accessed by credits, options, and saveload. */
 extern s32 D_800BCD0C;
 
+extern s16 D_800BCD28;
+
 extern s8* D_800BCD2C;
 
 extern u8 D_800BCD3E;

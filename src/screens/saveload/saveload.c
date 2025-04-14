@@ -198,4 +198,38 @@ void GameState_Unk4_Update() // 0x801E72FC
     func_801E70C8();
 }
 
-INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E737C);
+void func_801E737C()
+{
+    if (!func_80033548())
+    {
+        return;
+    }
+
+    if (D_800BCD28 == 0 || D_800BCD39 != 0 || !func_80033548())
+    {
+        g_GameWork.gameState_594 = GameState_Unk8;
+
+        if (g_GameWork.gameStatePrev_590 == GameState_KcetLogo)
+        {
+            g_GameWork.gameStateStep_598[0] = 1;
+            g_GameWork.gameStateStep_598[1] = g_GameWork.gameStatePrev_590;
+
+            D_800BCD0C = 3;
+
+            GameFs_TitleGfxLoad();
+        }
+
+        return;
+    }
+
+    D_800BCD2C = (s8*)0x801E09E0 + (D_800A97D6 * 0xA50);
+    D_800BCD2C = D_800BCD2C + (D_800A97D4[D_800A97D6] * 0x10);
+    D_800BCD40 = D_800BCD2C[5];
+    D_800BCD3F = D_800BCD2C[6];
+    D_800BCD3E = D_800BCD2C[7];
+
+    g_GameWork.gameStateStep_598[0]++;
+    g_SysWork.timer_20              = 0;
+    g_GameWork.gameStateStep_598[1] = 0;
+    g_GameWork.gameStateStep_598[2] = 0;
+}

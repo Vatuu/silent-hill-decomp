@@ -44,6 +44,8 @@ void func_801E326C(s8* arg0, s8* arg1, s32 arg2, s32 arg3);
 
 void func_801E4D90(s8* arg0, s8* arg1, s32 arg2, s32 arg3);
 
+void GameState_Unk8_Update();
+
 void func_801E63C0();
 
 void func_801E709C();
@@ -53,5 +55,9 @@ void func_801E70C8();
 void func_801E7244();
 
 void func_801E72DC();
+
+void GameState_Unk4_Update();
+
+void func_801E737C();
 
 #endif
