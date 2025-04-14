@@ -34,9 +34,9 @@ void func_8004A8CC() // 0x8004A8CC
     D_800AD49C = 6;
 }
 
-void Gfx_StringColor(s16 arg0) // 0x8004A8DC
+void Gfx_StringColor(s16 colorId) // 0x8004A8DC
 {
-    D_800AD498 = arg0;
+    D_800AD498 = colorId;
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", Gfx_StringDraw);
@@ -52,8 +52,8 @@ void func_8004B684() // 0x8004B684
     D_800C38B4 = 1;
     D_800C38B0.field_0 = 0;
     D_800C38B0.field_1 = 1;
-    D_800C38AC = -120;
-    D_800AD498 = 7;
+    D_800C38AC = SCREEN_POSITION_X(-37.5f);
+    D_800AD498 = ColorId_White;
     g_SysWork.field_2350 &= ~0xF;
 }
 

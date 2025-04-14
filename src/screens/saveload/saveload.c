@@ -12,17 +12,20 @@ void func_801E2F90(s32 idx) // 0x801E2F90
     D_801E7578[idx] = D_800A97D4[idx] - D_801E7570[idx];
 }
 
-void func_801E2FCC(s32 arg0, s32 arg1, s32 arg2, s32 arg3)
+void func_801E2FCC(s32 arg0, s32 posStepsX, s32 arg2, s32 arg3) // 0x801E2FCC
 {
-    extern char D_801E2720[]; // "FILE" - needs rodata migration
+    #define POS_STEP_X SCREEN_POSITION_X(47.0f)
+
+    extern char D_801E2720[]; // "FILE" - needs rodata migration.
     char*       str = D_801E2720;
 
-    if (arg0 == D_800A97D4[arg1] && arg3 >= 4)
+    if (arg0 == D_800A97D4[posStepsX] && arg3 >= 4)
     {
-        Gfx_StringColor(7);
-        Gfx_StringPosition((arg1 * 150) + 32, 35);
+        Gfx_StringColor(ColorId_White);
+        Gfx_StringPosition((posStepsX * POS_STEP_X) + SCREEN_POSITION_X(10.0f), SCREEN_POSITION_Y(14.75f));
         Gfx_StringDraw(str, 50);
-        Gfx_StringPosition((arg1 * 150) + 82, 35);
+
+        Gfx_StringPosition((posStepsX * POS_STEP_X) + SCREEN_POSITION_X(25.75f), SCREEN_POSITION_Y(14.75f));
         Gfx_StringDrawInt(1, arg2);
     }
 }
@@ -31,11 +34,11 @@ s32 func_801E3078(s_UnkSaveload0* arg0) // 0x801E3078
 {
     if (arg0 != NULL && (arg0->field_8 & (1 << 24)))
     {
-        Gfx_StringColor(0);
+        Gfx_StringColor(ColorId_Gold);
         return 1;
     }
 
-    Gfx_StringColor(7);
+    Gfx_StringColor(ColorId_White);
     return 0;
 }
 
@@ -161,7 +164,9 @@ INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E70C8);
 void func_801E7244()
 {
     if (D_801E7520 <= 0)
+    {
         return;
+    }
 
     D_801E76D0 = 0;
     D_801E7520--;
@@ -223,7 +228,7 @@ void func_801E737C()
     }
 
     D_800BCD2C = (s8*)0x801E09E0 + (D_800A97D6 * 0xA50);
-    D_800BCD2C = D_800BCD2C + (D_800A97D4[D_800A97D6] * 0x10);
+    D_800BCD2C = D_800BCD2C + (D_800A97D4[D_800A97D6] * 16);
     D_800BCD40 = D_800BCD2C[5];
     D_800BCD3F = D_800BCD2C[6];
     D_800BCD3E = D_800BCD2C[7];

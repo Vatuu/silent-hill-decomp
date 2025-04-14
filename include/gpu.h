@@ -28,7 +28,7 @@ enum PrimRectFlags
 
 /** Same as `getTPage()`, but `xn` and `yn` are indices instead of VRAM coordinates. */
 #define getTPageN(tp, abr, xn, yn) \
-    ((((tp) & 0x3) << 7)|(((abr) & 0x3) << 5)|((xn) & 0xf)|(((yn) & 1) << 4))
+    ((((tp) & 0x3) << 7)|(((abr) & 0x3) << 5)|((xn) & 0xF)|(((yn) & 1) << 4))
 
 /** Same as `setRECT()`, but uses 2x 32-bit stores instead of 4x 16-bit stores. */
 #define setRECTFast(r, x, y, w, h) \
@@ -45,13 +45,14 @@ enum PrimRectFlags
 
 /** Combines `setUV0()` and `setClut()` into a single 32-bit stores; also does not call `GetClut()`. */
 #define setUV0AndClut(p, u, v, cx, cy) \
-    *(u32*)(&(p)->u0) = (((((cy) << 6) | (((cx) >> 4) & 0x3F)) << 0x10) | ((v) << 8) | (u))
+    *(u32*)(&(p)->u0) = (((((cy) << 6) | (((cx) >> 4) & 0x3F)) << 16) | ((v) << 8) | (u))
 
 /** Combines `setcode()` and `setRGB0()`. */
 #define setCodeWord(p, c, rgb24) \
     *(u32*)(((u8*)(p)) + 4) = (((c) << 24) | ((rgb24) & 0xFFFFFF))
 
-/** Combines `addPrim` and `setlen()`. */
-#define addPrimFast(ot,p,_len) (((p)->tag = getaddr(ot) | (_len << 24)), setaddr(ot, p))
+/** Combines `addPrim()` and `setlen()`. */
+#define addPrimFast(ot, p ,_len) \
+    (((p)->tag = getaddr(ot) | (_len << 24)), setaddr(ot, p))
 
 #endif

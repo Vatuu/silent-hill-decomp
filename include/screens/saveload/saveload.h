@@ -38,6 +38,8 @@ extern s8 D_801E76D0;
 
 void func_801E2F90(s32 idx);
 
+void func_801E2FCC(s32 arg0, s32 posStepsX, s32 arg2, s32 arg3);
+
 s32 func_801E3078(s_UnkSaveload0* arg0);
 
 void func_801E326C(s8* arg0, s8* arg1, s32 arg2, s32 arg3);

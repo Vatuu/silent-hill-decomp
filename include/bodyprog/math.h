@@ -37,7 +37,7 @@
 
 /** Multiplies an integer by a float converted to fixed-point Q format and converts the result from the fixed-point Q format. */
 #define FP_MULTIPLY_FLOAT(val0, val1, shift) \
-    (FP_MULTIPLY((val0), ((s32)FP_FLOAT_TO((val1), (shift))), (shift)))
+    (FP_MULTIPLY((val0), (s32)FP_FLOAT_TO((val1), (shift)), (shift)))
 
 /** Multiplies an integer by a float converted to fixed-point Q format, using 64-bit intermediate via Math_MulFixed for higher precision. */
 #define FP_MULTIPLY_PRECISE(val0, val1, shift) \

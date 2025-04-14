@@ -1733,7 +1733,7 @@ void Demo_GameRandSeedRestore() // 0x8008f370
 void Demo_Start() // 0x8008F398
 {
     D_800AFDEC = 1;
-    g_SysWork.flags_22A4 |= 2;
+    g_SysWork.flags_22A4 |= 1 << 1;
 
     Demo_GameGlobalsUpdate();
     Demo_GameRandSeedUpdate();

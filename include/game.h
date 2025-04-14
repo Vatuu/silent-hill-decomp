@@ -19,6 +19,19 @@
 #define SCREEN_POSITION_Y(percent) \
     (s32)((SCREEN_HEIGHT) * ((percent) / 100.0f))
 
+/** @brief Color IDs used used by strings displayed on the screen. */
+typedef enum _ColorId
+{
+    ColorId_Gold      = 0,
+    ColorId_DarkGrey  = 1,
+    ColorId_Green0    = 2,
+    ColorId_Nuclear   = 3,
+    ColorId_Red       = 4,
+    ColorId_Green1    = 5,
+    ColorId_LightGrey = 6,
+    ColorId_White     = 7
+} e_ColorId;
+    
 typedef enum _PadButtonFlags
 {
     Pad_Select       = 1 << 0,
@@ -58,7 +71,7 @@ typedef enum _AnimFlags
     AnimFlag_Unk2 = 1 << 1
 } e_AnimFlags;
 
-/** State IDs used by the main game loop. The values are used as indices into the 0x800A977C function array. */
+/** @brief State IDs used by the main game loop. The values are used as indices into the 0x800A977C function array. */
 typedef enum _GameState
 {
     GameState_Unk0                = 0,

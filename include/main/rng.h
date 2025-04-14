@@ -3,14 +3,12 @@
 
 #include "common.h"
 
-/**
- * @brief Global variable storing the current random seed for the `Rng_Rand32`
+/** @brief Global variable storing the current random seed for the `Rng_Rand32`
  * function. The value is updated with each call to the RNG functions.
  */
 extern u32 g_RngSeed;
 
-/**
- * @brief Generates a new random 32-bit unsigned integer and updates
+/** @brief Generates a new random 32-bit unsigned integer and updates
  * `g_RngSeed`.
  *
  * This function implements a Linear Congruential Generator (LCG) Random Number
@@ -20,10 +18,9 @@ extern u32 g_RngSeed;
  *
  * @return A new pseudo-random 32-bit unsigned integer (u32).
  */
-u32 Rng_Rand32(void);
+u32 Rng_Rand32();
 
-/**
- * @brief Generates a new random 16-bit unsigned integer.
+/** @brief Generates a new random 16-bit unsigned integer.
  * 
  * This function calls `Rng_Rand32` to generate a random number, then
  * shifts the result right to produce a value within the range
@@ -32,20 +29,18 @@ u32 Rng_Rand32(void);
  * @return A random positive 16-bit unsigned integer as a 32-bit unsigned
  * integer (u32).
  */
-u32 Rng_Rand16(void);
+u32 Rng_Rand16();
 
-/**
- * @brief Returns the current random seed value.
+/** @brief Returns the current random seed value.
  *
  * This function retrieves and returns the current value of the global variable
  * `g_RngSeed`.
  *
  * @return The current random seed as a 32-bit unsigned integer (u32).
  */
-u32 Rng_GetSeed(void);
+u32 Rng_GetSeed();
 
-/**
- * @brief Sets the random seed to a specified value.
+/** @brief Sets the random seed to a specified value.
  *
  * This function updates the global variable `g_RngSeed` with the given
  * seed value.
@@ -55,8 +50,7 @@ u32 Rng_GetSeed(void);
  */
 void Rng_SetSeed(u32 newSeed);
 
-/**
- * @brief Generates a new random 12-bit short integer.
+/** @brief Generates a new random 12-bit short integer.
  *
  * This function calls `Rng_Rand32` to generate a random number, then
  * shifts the result right to produce a value within the range
@@ -64,6 +58,6 @@ void Rng_SetSeed(u32 newSeed);
  *
  * @return A random 12-bit short integer (0 to 0xFFF).
  */
-u16 Rng_Rand12(void);
+u16 Rng_Rand12();
 
 #endif

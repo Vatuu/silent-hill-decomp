@@ -738,7 +738,7 @@ void MainLoop() // 0x80032EE0
         func_8008D78C(); // Camera update?
         DrawSync(0);
 
-        if (g_SysWork.flags_22A4 & 2)
+        if (g_SysWork.flags_22A4 & (1 << 1))
         {
             vBlanks = VSync(-1);
             g_VBlanks = vBlanks - g_PrevVBlanks;

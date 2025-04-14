@@ -58,34 +58,40 @@ s32 func_801E2ED8() // 0x801E2ED8
 
 // TODO: Needs jmptable
 INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E2FC0);
-/*s32 func_801E2FC0(void) // 0x801E2FC0
+/*s32 func_801E2FC0() // 0x801E2FC0
 {
-    switch (D_800BCD0C) {
+    switch (D_800BCD0C)
+    {
         case 4:
         case 5:
         case 12:
         case 13:
-            if (Fs_QueueGetLength() != 0) {
+            if (Fs_QueueGetLength() != 0)
+            {
                 break;
             }
+
             Game_StateSetNext(GameState_Unk15);
             return 1;
+
         case 2:
         case 3:
         case 10:
         case 11:
             break;
+
         default:
             D_800BCD0C = 10;
-            D_800B5C30 = 0x1000;
+            D_800B5C30 = 1 << 12;
             break;
     }
+
     return 0;
 }*/
 
 // TODO: Needs rodata
 INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", GameState_Unk15_Update); // 0x801E3094
-/*void GameState_Unk15_Update(void) // 0x801E3094
+/*void GameState_Unk15_Update() // 0x801E3094
 {
     const s32* (*routines[3])() = { func_801E3124, func_801E342C, func_801E3304 };
     
@@ -199,16 +205,17 @@ s32 func_801E3304() // 0x801E3304
     return 0;
 }
 
-s32 func_801E342C(void) // 0x801E342C
+s32 func_801E342C() // 0x801E342C
 {
-    s32 temp_v1;
+    s32 temp;
     u32* addr;
     TILE* tile;
 
-    if (((g_GameWork.optExtraOptionsEnabled_27 >> (D_801E5E8C - 1)) & 1) && (g_ControllerPtr0->btns_new_10 & g_GameWorkPtr1->controllerBinds_0.skip))
+    if (((g_GameWork.optExtraOptionsEnabled_27 >> (D_801E5E8C - 1)) & (1 << 0)) &&
+        (g_ControllerPtr0->btns_new_10 & g_GameWorkPtr1->controllerBinds_0.skip))
     {
         D_800C48F0 = D_801E5558[D_801E5E8C].field_4 + (D_801E5E84 / 2);
-        SD_EngineCmd(0x13);
+        SD_EngineCmd(19);
     }
 
     addr = (g_ObjectTableIdx << 11) + &D_800B7CC4;
@@ -220,7 +227,7 @@ s32 func_801E342C(void) // 0x801E342C
     setWHFast(tile, 512, 2);
 
     GsOUT_PACKET_P += sizeof(TILE);
-    temp_v1 = func_801E3684();
+    temp = func_801E3684();
 
     switch(g_GameWork.gameStateStep_598[1])
     {
@@ -235,18 +242,18 @@ s32 func_801E342C(void) // 0x801E342C
                     D_800BCD0C = 6;
                     break;
             }
-            
-            D_800B5C30 = 0x1000;
+
+            D_800B5C30 = 1 << 12;
             g_GameWork.gameStateStep_598[1]++;
-            D_801E5E78 = 0xB4;
+            D_801E5E78 = 180;
             break;
 
         case 1:
-            if (temp_v1 == 0)
+            if (temp == 0)
             {
                 break;
             }
-            
+
             D_801E5E78--;
             if (!(func_80045B28() & 0xFF))
             {
@@ -262,7 +269,7 @@ s32 func_801E342C(void) // 0x801E342C
                 g_GameWork.gameStateStep_598[1] = 3;
             }
             break;
-                
+
         case 3:
             if (D_800BCD0C == 5)
             {
@@ -271,7 +278,7 @@ s32 func_801E342C(void) // 0x801E342C
             }
             break;
     }
-    
+
     return 0;
 }
 

@@ -433,7 +433,7 @@ typedef struct
 } s_DmsHeader;
 STATIC_ASSERT_SIZEOF(s_DmsHeader, 44);
 
-/** Returned by `func_800699F8`, collision related? */
+/** @brief Returned by `func_800699F8`, collision related? */
 typedef struct _s_func_800699F8
 {
     s32 chara_grnd_0;
@@ -444,36 +444,37 @@ typedef struct _s_func_800699F8
 } s_func_800699F8;
 STATIC_ASSERT_SIZEOF(s_func_800699F8, 12);
 
-// Used for normal credits screen.
+/** @brief Used for normal credits screen. */
 typedef struct
 {
-    s16  field_0;     // Prim vertex x
-    s16  field_2;     // Prim vertex y
-    s16  field_4;     // Width?
-    s8   field_6;     // Height? 
-    s8   field_7;     // Blend flag
-    s32  field_8;     // Rgb24 color + code
-    s16* field_C;     // Points to 0x801E5C24, data size 400
-    s32* field_10;    // Points to 0x801E5E24, data size 28, rgb24 + code
-    u16  field_14;    // Tpage for setDrawTPage, calculated from field_18 with func_801E434C
-    s16  field_16;    // Clut xy
-    u32  field_18;    // Texture uv
-} s_800AFE08; // Size: 28
+    s16  field_0;  /** Prim vertex X. */
+    s16  field_2;  /** Prim vertex Y. */
+    s16  field_4;  /** Width? */
+    s8   field_6;  /** Height?  */
+    s8   field_7;  /** Blend flag. */
+    s32  field_8;  /** Rgb24 color + code. */
+    s16* field_C;  /** Points to 0x801E5C24, data size 400. */
+    s32* field_10; /** Points to 0x801E5E24, data size 28, rgb24 + code. */
+    u16  field_14; /** Tpage for `setDrawTPage`, calculated from `field_18` with `func_801E434C`. */
+    s16  field_16; /** Clut XY. */
+    u32  field_18; /** Texture UV. */
+} s_800AFE08;
+STATIC_ASSERT_SIZEOF(s_800AFE08, 28);
 
-// Used for UFO ending credits screen.
+/** @brief Used for UFO ending credits screen. */
 typedef struct
 {
-    s16  field_0;     // Prim vertex x
-    s16  field_2;     // Prim vertex y
-    s16  field_4;     // Width?
-    s8   field_6;     // Height? 
-    s8   field_7;     // Blend flag
-    s32  field_8;     // Rgb24 color + code
-    s16* field_C;     // Points to 0x801E5C24, data size 400
-    s32* field_10;    // Points to 0x801E5E40, data size 28, rgb24 + code
-    u16  field_14;    // Tpage for setDrawTPage, calculated from field_18 with func_801E4BD4
-    s16  field_16;    // Clut xy
-    u32  field_18;    // Texture uv
+    s16  field_0;  /** Prim vertex X. */
+    s16  field_2;  /** Prim vertex Y. */
+    s16  field_4;  /** Width? */
+    s8   field_6;  /** Height?  */
+    s8   field_7;  /** Blend flag. */
+    s32  field_8;  /** Rgb24 color + code. */
+    s16* field_C;  /** Points to 0x801E5C24, data size 400. */
+    s32* field_10; /** Points to 0x801E5E40, data size 28, rgb24 + code. */
+    u16  field_14; /** Tpage for `setDrawTPage`, calculated from `field_18` with `func_801E4BD4`. */
+    s16  field_16; /** Clut XY. */
+    u32  field_18; /** Texture UV. */
     s32  field_1C;
     s16  field_20;
     s16  field_22;
@@ -585,6 +586,7 @@ extern s_FsImageDesc D_800A9EB4;
 
 extern s_800C37D8 D_800AA274[];
 
+/** String color. */
 extern s16 D_800AD498;
 
 extern s32 D_800AD49C;
@@ -1370,8 +1372,8 @@ void Gfx_StringColor(s16 colorId);
 /** Draws a string in display space. */
 void Gfx_StringDraw(char* str, s32 arg1);
 
-/** Draws an int number to display */
-void Gfx_StringDrawInt(s32 widthMin, s32 value);
+/** Draws an int number to display. */
+void Gfx_StringDrawInt(s32 widthMin, s32 val);
 
 void Settings_ScreenXYSet(s32 x, s32 y);
 
