@@ -171,10 +171,10 @@ void Gfx_BrightnessLevelTextDraw() // 0x801E6238
 {
     char* D_801E2C64 = "LEVEL_________";
 
-    func_8004A8DC(7);
+    Gfx_StringColor(7);
     Gfx_StringPosition(SCREEN_POSITION_X(25.0f), SCREEN_POSITION_Y(79.5f));
     Gfx_StringDraw(D_801E2C64, 20);
-    func_8004B9F8(1, g_GameWork.optBrightness_22);
+    Gfx_StringDrawInt(1, g_GameWork.optBrightness_22);
 }
 
 void Gfx_BrightnessLevelArrowsDraw() // 0x801E628C

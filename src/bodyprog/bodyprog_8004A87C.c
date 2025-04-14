@@ -34,7 +34,7 @@ void func_8004A8CC() // 0x8004A8CC
     D_800AD49C = 6;
 }
 
-void func_8004A8DC(s16 arg0) // 0x8004A8DC
+void Gfx_StringColor(s16 arg0) // 0x8004A8DC
 {
     D_800AD498 = arg0;
 }
@@ -84,7 +84,7 @@ void func_8004B74C(s16 arg0) // 0x8004B74C
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8004B76C);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8004B9F8);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", Gfx_StringDrawInt);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8004BB10);
 

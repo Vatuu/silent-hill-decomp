@@ -658,6 +658,8 @@ extern s32 D_800B7CC4;
 /** Accessed by credits, options, and saveload. */
 extern s32 D_800BCD0C;
 
+extern s16 D_800BCD28;
+
 extern s8* D_800BCD2C;
 
 extern u8 D_800BCD3E;
@@ -1114,15 +1116,11 @@ void func_8004A8C0(s32 arg0);
 
 void func_8004A8CC();
 
-void func_8004A8DC(s16 arg0);
-
 void func_8004B684();
 
 void func_8004B6D4(s16 arg0, s16 arg1);
 
 void func_8004B74C(s16 arg0);
-
-void func_8004B9F8(s32 arg0, u8 arg1); // Types assumed.
 
 void func_8004BCBC(s32 arg0);
 
@@ -1366,8 +1364,14 @@ void Gfx_VSyncCallback();
 /** Sets the position of the next string to be drawn by Gfx_StringDraw. */
 void Gfx_StringPosition(s32 x, s32 y);
 
+/** Sets the color of the next string drawn by Gfx_StringDraw. (TODO: add color list) */
+void Gfx_StringColor(s16 colorId);
+
 /** Draws a string in display space. */
 void Gfx_StringDraw(char* str, s32 arg1);
+
+/** Draws an int number to display */
+void Gfx_StringDrawInt(s32 widthMin, s32 value);
 
 void Settings_ScreenXYSet(s32 x, s32 y);
 
