@@ -327,19 +327,17 @@ typedef struct
 
 typedef struct
 {
-    u8  field_0;
-    u8  field_1;
-    u8  field_2;
-    u8  field_3;
-    s8  unk_4[4];
-    s16 field_8;
-    s16 field_A;
-    s16 field_C;
-    s8  unk_E[6];
-    s32 field_14;
-    s8  unk_18[4];
-    s32 field_1C;
-    s32 field_20;
+    u8      field_0;
+    u8      field_1;
+    u8      field_2;
+    u8      field_3;
+    s8      unk_4[4];
+    s16     field_8;
+    s16     field_A;
+    VECTOR3 field_C;
+    s8      unk_18[4];
+    s32     field_1C;
+    s32     field_20;
 } s_800C4818;
 
 // Contains animation data? Size is rather small, so if it does, it would be indices to
@@ -980,6 +978,8 @@ void func_8003DD80(s32, s32);
 
 void func_80040014();
 
+void func_800410D8(VECTOR3*, s32*, s32*, SVECTOR*, VECTOR3*);
+
 /** Some kind of queue entry load status getter. */
 s32 func_80041ADC(s32 queueIdx);
 
@@ -1151,6 +1151,8 @@ s32 func_8004C45C();
  */
 s32 func_8004C4F8();
 
+void func_8004C8DC();
+
 void func_80054024(s8);
 
 void func_800540A4(s8);
@@ -1209,11 +1211,15 @@ void func_8008D464();
 
 void func_8008D470(s16 arg0, SVECTOR* rot, VECTOR3* pos, s32 arg3);
 
-void func_8008D1D0(s32* arg0, s32* arg1, s32* arg2, s32, s_DmsEntry* entry, s_DmsHeader* header);
+void func_8008D5A0(VECTOR3*, s16);
 
-void func_801E2D8C();
+s32 func_8008D8C0(s16, s32, s32);
 
-void func_8004C8DC();
+void func_8008D990(s32, s32, VECTOR3*, s32, s32);
+
+void func_8008E794(VECTOR3*, s16, s32);
+
+void func_8008EA68(SVECTOR*, VECTOR3*, s32);
 
 void func_80085D78(s32 arg0);
 

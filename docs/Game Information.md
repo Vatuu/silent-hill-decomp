@@ -38,14 +38,14 @@ Several pre-release demos and versions were released during development, a table
 |  | **Prototypes** |  |  |
 | 98-11-24 | Silent Hill Preview (U) | SLUS-45678 | WKS. container, includes `FILEINFO.H`, volume dated 98-10-24? |
 | 99-01-07 | Silent Hill Review (U) | SLUS-00707 | WKS. container. |
-| 99-01-17 | Silent Hill Trade Demo (U) | SLUS-80707 | - |
+| 99-01-17 | Silent Hill Trade Demo (U) | SLUS-80707 | Redump mentions "anti-modchip"? |
 | 99-01-22 | Silent Hill Beta (U) | SLUS-00707 | "Russian Bootleg", possibly scene pre-release. |
 |  | **Final Versions** |  |  |
 | 99-01-26 | Silent Hill (J) | SLPM-86192 | Rev 0 |
 | 99-02-10 | Silent Hill (U) | SLUS-00707 | v1.1 |
 | 99-06-02 | Silent Hill (J) | SLPM-86192 | Rev 1, fixed Larval Stalker / Aglaophotis glitch. |
 | 99-06-07 | Silent Hill (E) | SLES-01514 | - |
-| 99-06-16 | Silent Hill (J) | SLPM-86192 | Rev 2, `Konami the Best` release. |
+| 99-06-16 | Silent Hill (J) | SLPM-86192 | Rev 2 `Konami the Best` release, EXE matches Rev 1 but SILENT contents differ, Redump mentions "anti-modchip"? |
 
 ### Unknown Releases
 
