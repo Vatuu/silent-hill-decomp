@@ -171,8 +171,8 @@ void Gfx_BrightnessLevelTextDraw() // 0x801E6238
 {
     char* D_801E2C64 = "LEVEL_________";
 
-    Gfx_StringColor(ColorId_White);
-    Gfx_StringPosition(SCREEN_POSITION_X(25.0f), SCREEN_POSITION_Y(79.5f));
+    Gfx_StringSetColor(ColorId_White);
+    Gfx_StringSetPosition(SCREEN_POSITION_X(25.0f), SCREEN_POSITION_Y(79.5f));
     Gfx_StringDraw(D_801E2C64, 20);
     Gfx_StringDrawInt(1, g_GameWork.optBrightness_22);
 }

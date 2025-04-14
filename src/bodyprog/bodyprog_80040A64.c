@@ -776,8 +776,8 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80045534);
 // ========================================
 
 // TODO: Requires jump table.
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", SD_EngineCmd);
-/*void SD_EngineCmd(s32 cmd) // 0x80045A7C
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", Sd_EngineCmd);
+/*void Sd_EngineCmd(s32 cmd) // 0x80045A7C
 {
     u32 maskedCmd;
 
@@ -970,7 +970,7 @@ void func_80045D28(s32 caseArg) // 0x80045D28
     }
 }
 
-void SD_DriverInit() // 0x80045DD4
+void Sd_DriverInit() // 0x80045DD4
 {
     SdInit();
     SdSetTickMode(1);
@@ -1039,7 +1039,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_8004760C);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80047634);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", SD_SetVolume);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", Sd_SetVolume);
 
 void Sd_SetVolBgm(s16 volLeft, s16 volRight) // 0x80047808
 {
@@ -1215,7 +1215,7 @@ void func_80048244(s16 cmd) // 0x80048244
     }
     
     func_80046AD8();
-    SD_EngineCmd((u16)(cmd + 0xAD));
+    Sd_EngineCmd((u16)(cmd + 0xAD));
     func_800478DC((u8)cmd);
     
     D_800C37D0 = 0;

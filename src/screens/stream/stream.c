@@ -198,7 +198,7 @@ void movie_main(char* file_name, s32 f_size, s32 sector)
 
         PutDispEnv(&disp);
         nullsub_800334C8();
-        JOY_Update();
+        Joy_Update();
         DecDCTin(m->dec.vlcbuf[m->dec.vlcid], 3);
         DecDCTout((u_long* ) m->dec.imgbuf, m->dec.slice.w * m->dec.slice.h / 2);
 

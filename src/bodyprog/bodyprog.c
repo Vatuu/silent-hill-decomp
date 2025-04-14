@@ -558,7 +558,7 @@ void GameFs_SaveLoadBinLoad() // 0x80032CA8
 
 void func_80032CE8()
 {
-    Gfx_StringPosition(SCREEN_POSITION_X(33.75f), SCREEN_POSITION_Y(43.5f));
+    Gfx_StringSetPosition(SCREEN_POSITION_X(33.75f), SCREEN_POSITION_Y(43.5f));
     Gfx_StringDraw(&D_8002510C, 100);
 }
 
@@ -589,7 +589,7 @@ void GameState_Unk0_Update() // 0x80032D1C
                 unkGameStateVar = D_800A9774[g_GameWork.gameStateStep_598[1]];
                 if (unkGameStateVar != 0)
                 {
-                    SD_EngineCmd(unkGameStateVar);
+                    Sd_EngineCmd(unkGameStateVar);
                     g_GameWork.gameStateStep_598[1]++;
                 }
                 else
@@ -671,21 +671,21 @@ void MainLoop() // 0x80032EE0
     func_8002E630();
     func_8002E7BC();
     func_8002E85C();
-    JOY_Init();
+    Joy_Init();
     VSyncCallback(&Gfx_VSyncCallback);
     InitGeom();
     func_8004BB10(); // Initializes something for graphics.
     func_800890B8();
-    SD_DriverInit();
+    Sd_DriverInit();
 
     // Run game.
     while (true)
     {
         g_MainLoop_FrameCount++;
 
-        JOY_ReadP1();
+        Joy_ReadP1();
         Demo_JoyUpdate();
-        JOY_ControllerDataUpdate();
+        Joy_ControllerDataUpdate();
 
         if (MainLoop_ShouldWarmReset() == 2)
         {
@@ -828,9 +828,9 @@ void Settings_ScreenAndVolUpdate()
     Settings_ScreenXYSet(g_GameWork.screenPosX_1C, g_GameWork.screenPosY_1D);
     
     soundCmd = (g_GameWork.optSoundType_1E != 0) ? 1 : 2;
-    SD_EngineCmd(soundCmd);
+    Sd_EngineCmd(soundCmd);
 
-    SD_SetVolume(OPT_SOUND_VOLUME_MAX, g_GameWork.optVolumeBgm_1F, g_GameWork.optVolumeSe_20);
+    Sd_SetVolume(OPT_SOUND_VOLUME_MAX, g_GameWork.optVolumeBgm_1F, g_GameWork.optVolumeSe_20);
 }
 
 void Settings_RestoreDefaults() // 0x8003342c
@@ -926,13 +926,13 @@ s32 MainLoop_ShouldWarmReset() // 0x80034108
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", Game_WarmBoot);
 
-void JOY_Init() // 0x8003441C
+void Joy_Init() // 0x8003441C
 {
     PadInitDirect(&g_GameWork.rawPadData_5B4, g_ControllerPtr1);
     PadStartCom();
 }
 
-void JOY_ReadP1() // 0x80034450
+void Joy_ReadP1() // 0x80034450
 {
     s_ControllerData* cont = &g_GameWork.controllers_38[0];
 
@@ -947,13 +947,13 @@ void JOY_ReadP1() // 0x80034450
     // ((s32*)&cont->analogPad_0)[1] = ((s32*)&g_GameWork.rawPadData_5B4)[1];
 }
 
-void JOY_Update() // 0x8003446C
+void Joy_Update() // 0x8003446C
 {
-    JOY_ReadP1();
-    JOY_ControllerDataUpdate();
+    Joy_ReadP1();
+    Joy_ControllerDataUpdate();
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", JOY_ControllerDataUpdate);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", Joy_ControllerDataUpdate);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", ControllerData_AnalogToDigital);
 
@@ -980,8 +980,8 @@ void GameState_LoadScreen_Update() // 0x800348E8
         {
             g_SysWork.flags_22A4 &= ~(1 << 10);
 
-            SD_EngineCmd(1502);
-            SD_EngineCmd(1501);
+            Sd_EngineCmd(1502);
+            Sd_EngineCmd(1501);
         }
     }
 }
@@ -1360,7 +1360,7 @@ void SysState_GamePaused_Update() // 0x800391E8
     D_800A9A68 += g_DeltaTime1;
     if (((D_800A9A68 >> 11) & 1) == 0)
     {
-        Gfx_StringPosition(SCREEN_POSITION_X(39.25f), SCREEN_POSITION_Y(43.5f));
+        Gfx_StringSetPosition(SCREEN_POSITION_X(39.25f), SCREEN_POSITION_Y(43.5f));
         Gfx_StringDraw(D_80025394, 99); // "\x07PAUSED"
     }
 
@@ -1369,7 +1369,7 @@ void SysState_GamePaused_Update() // 0x800391E8
 
     if (g_SysWork.sysStateStep_C == 0)
     {
-        SD_EngineCmd(3);
+        Sd_EngineCmd(3);
         g_SysWork.sysStateStep_C++;
     }
 
@@ -1379,7 +1379,7 @@ void SysState_GamePaused_Update() // 0x800391E8
         (g_ControllerPtr0->btns_new_10 & Pad_L3))
     {
         D_800A9A68 = 0;
-        SD_EngineCmd(4);
+        Sd_EngineCmd(4);
         g_MapEventIdx = 0;
         SysWork_StateSetNext(SysState_SaveMenu1);
         return;
@@ -1388,7 +1388,7 @@ void SysState_GamePaused_Update() // 0x800391E8
     if (g_ControllerPtr0->btns_new_10 & g_GameWorkPtr1->controllerBinds_0.pause)
     {
         D_800A9A68 = 0;
-        SD_EngineCmd(4);
+        Sd_EngineCmd(4);
         SysWork_StateSetNext(SysState_Gameplay);
     }
 }
@@ -1413,7 +1413,7 @@ void GameState_LoadStatusScreen_Update() // 0x800395C0
 
         if (func_80045B28())
         {
-            SD_EngineCmd(0x13);
+            Sd_EngineCmd(0x13);
         }
 
         saveGame = g_SaveGamePtr;

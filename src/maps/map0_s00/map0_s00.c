@@ -432,7 +432,7 @@ void func_800DBE00()
     func_8004690C(0x551);
     func_8004690C(0x550);
 
-    SD_EngineCmd(22);
+    Sd_EngineCmd(22);
     func_800892A4(4);
 
     g_SysWork.sysState_8 = 0;

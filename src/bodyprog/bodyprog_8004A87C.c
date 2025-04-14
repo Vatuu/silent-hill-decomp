@@ -5,20 +5,20 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math.h"
 
-void Gfx_StringPosition(s32 x, s32 y) // 0x0x8004A87C
+void Gfx_StringSetPosition(s32 x, s32 y) // 0x8004A87C
 {
     #define OFFSET_X SCREEN_POSITION_X(50.0f)
     #define OFFSET_Y SCREEN_POSITION_Y(47.0f)
 
     if (x != NO_VALUE)
     {
-        D_800C38A8 = x - OFFSET_X;
-        D_800C38AC = (s16)(x - OFFSET_X);
+        g_StringPositionX0 = x - OFFSET_X;
+        g_StringPositionX1 = (s16)(x - OFFSET_X);
     }
 
     if (y != NO_VALUE)
     {
-        D_800C38AA = y - OFFSET_Y;
+        g_StringPositionY = y - OFFSET_Y;
     }
 
     D_800AD49C = 6;
@@ -34,9 +34,9 @@ void func_8004A8CC() // 0x8004A8CC
     D_800AD49C = 6;
 }
 
-void Gfx_StringColor(s16 colorId) // 0x8004A8DC
+void Gfx_StringSetColor(s16 colorId) // 0x8004A8DC
 {
-    D_800AD498 = colorId;
+    g_StringColorId = colorId;
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", Gfx_StringDraw);
@@ -52,8 +52,8 @@ void func_8004B684() // 0x8004B684
     D_800C38B4 = 1;
     D_800C38B0.field_0 = 0;
     D_800C38B0.field_1 = 1;
-    D_800C38AC = SCREEN_POSITION_X(-37.5f);
-    D_800AD498 = ColorId_White;
+    g_StringPositionX1 = SCREEN_POSITION_X(-37.5f);
+    g_StringColorId = ColorId_White;
     g_SysWork.field_2350 &= ~0xF;
 }
 

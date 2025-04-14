@@ -389,7 +389,7 @@ void func_800869E4(u8* arg0, u8* arg1, u16* arg2) // 0x800869E4
     }
     else if (ret == NO_VALUE)
     {
-        SD_EngineCmd(arg2[*arg1]);
+        Sd_EngineCmd(arg2[*arg1]);
         *arg1 += 1;
     }
 }
@@ -995,7 +995,7 @@ void func_80087EDC(s32 arg0)
         
         case 1:
             g_SysWork.field_22A0 |= 1 << 7;
-            SD_EngineCmd(23);
+            Sd_EngineCmd(23);
             
             g_SysWork.timer_2C = 0;
             g_SysWork.field_14 = 0;
@@ -1044,7 +1044,7 @@ void func_80088048()
     {
         case 0:
             func_80035E1C();
-            SD_EngineCmd(18);
+            Sd_EngineCmd(18);
             
             g_SysWork.timer_2C = 0;
             g_SysWork.field_14 = 0;

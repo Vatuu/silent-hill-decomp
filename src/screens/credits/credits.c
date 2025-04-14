@@ -31,7 +31,7 @@ s32 func_801E2ED8() // 0x801E2ED8
             break;
 
         case 1:
-            SD_EngineCmd((u16)D_801E5558[D_801E5E8C].field_0);
+            Sd_EngineCmd((u16)D_801E5558[D_801E5E8C].field_0);
             D_801E5E88++;
             break;
 
@@ -125,8 +125,8 @@ s32 func_801E3124() // 0x801E3124
                     break;
             }
 
-            SD_EngineCmd(18);
-            SD_EngineCmd(16);
+            Sd_EngineCmd(18);
+            Sd_EngineCmd(16);
             g_GameWork.gameStateStep_598[1]++;
             break;
 
@@ -215,7 +215,7 @@ s32 func_801E342C() // 0x801E342C
         (g_ControllerPtr0->btns_new_10 & g_GameWorkPtr1->controllerBinds_0.skip))
     {
         D_800C48F0 = D_801E5558[D_801E5E8C].field_4 + (D_801E5E84 / 2);
-        SD_EngineCmd(19);
+        Sd_EngineCmd(19);
     }
 
     addr = (g_ObjectTableIdx << 11) + &D_800B7CC4;

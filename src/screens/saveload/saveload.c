@@ -12,20 +12,20 @@ void func_801E2F90(s32 idx) // 0x801E2F90
     D_801E7578[idx] = D_800A97D4[idx] - D_801E7570[idx];
 }
 
-void func_801E2FCC(s32 arg0, s32 posStepsX, s32 arg2, s32 arg3) // 0x801E2FCC
+void func_801E2FCC(s32 arg0, s32 columnId, s32 arg2, s32 arg3) // 0x801E2FCC
 {
-    #define POS_STEP_X SCREEN_POSITION_X(47.0f)
+    #define COLUMN_OFFSET SCREEN_POSITION_X(47.0f)
 
     extern char D_801E2720[]; // "FILE" - needs rodata migration.
     char*       str = D_801E2720;
 
-    if (arg0 == D_800A97D4[posStepsX] && arg3 >= 4)
+    if (arg0 == D_800A97D4[columnId] && arg3 >= 4)
     {
-        Gfx_StringColor(ColorId_White);
-        Gfx_StringPosition((posStepsX * POS_STEP_X) + SCREEN_POSITION_X(10.0f), SCREEN_POSITION_Y(14.75f));
+        Gfx_StringSetColor(ColorId_White);
+        Gfx_StringSetPosition((columnId * COLUMN_OFFSET) + SCREEN_POSITION_X(10.0f), SCREEN_POSITION_Y(14.75f));
         Gfx_StringDraw(str, 50);
 
-        Gfx_StringPosition((posStepsX * POS_STEP_X) + SCREEN_POSITION_X(25.75f), SCREEN_POSITION_Y(14.75f));
+        Gfx_StringSetPosition((columnId * COLUMN_OFFSET) + SCREEN_POSITION_X(25.75f), SCREEN_POSITION_Y(14.75f));
         Gfx_StringDrawInt(1, arg2);
     }
 }
@@ -34,11 +34,11 @@ s32 func_801E3078(s_UnkSaveload0* arg0) // 0x801E3078
 {
     if (arg0 != NULL && (arg0->field_8 & (1 << 24)))
     {
-        Gfx_StringColor(ColorId_Gold);
+        Gfx_StringSetColor(ColorId_Gold);
         return 1;
     }
 
-    Gfx_StringColor(ColorId_White);
+    Gfx_StringSetColor(ColorId_White);
     return 0;
 }
 

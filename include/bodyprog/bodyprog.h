@@ -587,7 +587,7 @@ extern s_FsImageDesc D_800A9EB4;
 extern s_800C37D8 D_800AA274[];
 
 /** String color. */
-extern s16 D_800AD498;
+extern s16 g_StringColorId; // 0x800AD498
 
 extern s32 D_800AD49C;
 
@@ -745,11 +745,14 @@ extern u8 D_800C37DC;
 
 extern u8 D_800C37DD;
 
-extern s16 D_800C38A8;
+/** String X position. */
+extern s16 g_StringPositionX0; // 0x800C38A8
 
-extern s16 D_800C38AA;
+/** String Y position. */
+extern s16 g_StringPositionY; // 0x800C38AA
 
-extern s32 D_800C38AC;
+/** String X position as `s32`. It's unclear why there are two. */
+extern s32 g_StringPositionX1; // 0x800C38AC
 
 extern s16 D_800C38FC;
 
@@ -1057,7 +1060,7 @@ void func_800453E8(s_Skeleton* skel, s32 cond);
 /** Does something with skeleton bones. `arg0` is a struct pointer. */
 void func_80045468(s_Skeleton* skel, s32* arg1, s32 cond);
 
-void SD_EngineCmd(s32 cmd);
+void Sd_EngineCmd(s32 cmd);
 
 /** Sound func? */
 u8 func_80045B28();
@@ -1068,7 +1071,7 @@ void func_80045BD8(u16 caseArg);
 
 void func_80045D28(s32 caseArg);
 
-void SD_DriverInit();
+void Sd_DriverInit();
 
 u8 func_80045B28();
 
@@ -1364,10 +1367,10 @@ void Gfx_ClearRectInterlaced(s16 x, s16 y, s16 w, s16 h, u8 r, u8 g, u8 b);
 void Gfx_VSyncCallback();
 
 /** Sets the position of the next string to be drawn by Gfx_StringDraw. */
-void Gfx_StringPosition(s32 x, s32 y);
+void Gfx_StringSetPosition(s32 x, s32 y);
 
 /** Sets the color of the next string drawn by Gfx_StringDraw. (TODO: add color list) */
-void Gfx_StringColor(s16 colorId);
+void Gfx_StringSetColor(s16 colorId);
 
 /** Draws a string in display space. */
 void Gfx_StringDraw(char* str, s32 arg1);
@@ -1384,7 +1387,7 @@ void Settings_ScreenAndVolUpdate();
 void Settings_RestoreDefaults();
 
 /** Passes a command to the sound driver. */
-void SD_EngineCmd(s32 cmd);
+void Sd_EngineCmd(s32 cmd);
 
 /** Updates the savegame buffer with the current player SysWork info (position, rotation, health, event index). */
 void SysWork_SaveGameUpdatePlayer();
@@ -1394,11 +1397,11 @@ void SysWork_SaveGameReadPlayer();
 
 s32 MainLoop_ShouldWarmReset();
 
-void JOY_Init();
+void Joy_Init();
 
-void JOY_ReadP1();
+void Joy_ReadP1();
 
-void JOY_Update();
+void Joy_Update();
 
 void func_800348C0();
 

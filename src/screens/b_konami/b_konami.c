@@ -38,7 +38,7 @@ void GameState_KonamiLogo_Update() // 0x800C95AC
 
     while (g_GameWork.gameState_594 == GameState_KonamiLogo)
     {
-        JOY_Update();
+        Joy_Update();
 
         switch (g_GameWork.gameStateStep_598[0])
         {
@@ -150,7 +150,7 @@ void GameState_KcetLogo_Update() // 0x800C99A4
 
     while (g_GameWork.gameState_594 == GameState_KcetLogo)
     {
-        JOY_Update();
+        Joy_Update();
 
         switch (g_GameWork.gameStateStep_598[0])
         {
