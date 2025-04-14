@@ -36,6 +36,8 @@ extern s16 D_801E7578[];
 
 extern s8 D_801E76D0;
 
+void func_801E2D8C();
+
 void func_801E2F90(s32 idx);
 
 void func_801E2FCC(s32 arg0, s32 columnId, s32 arg2, s32 arg3);
