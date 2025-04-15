@@ -1151,26 +1151,30 @@ s32 func_800808AC() // 0x800808AC
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", Math_MulFixed);
 
-s32 func_800808F8(s32 arg0) // 0x800808F8
+s32 Math_GetMagnitudeShift(s32 mag) // 0x800808F8
 {
-    s32 res;
+    #define THRESHOLD_0 (1 << 14)
+    #define THRESHOLD_1 ((1 << 18) - 1)
+    #define THRESHOLD_2 ((1 << 22) - 1)
 
-    if (arg0 < 0x4000)
+    s32 qShift;
+
+    if (mag < THRESHOLD_0)
     {
         return 0;
     }
-    
-    if (arg0 > 0x3FFFF)
+
+    if (mag > THRESHOLD_1)
     {
-        if (arg0 > 0x3FFFFF)
+        if (mag > THRESHOLD_2)
         {
-            return 12;
+            return Q12_SHIFT;
         }
-    
-        res = 8;
-        return res;
+
+        qShift = Q8_SHIFT;
+        return qShift;
     }
-    
-    res = 4;
-    return res;
+
+    qShift = Q4_SHIFT;
+    return qShift;
 }

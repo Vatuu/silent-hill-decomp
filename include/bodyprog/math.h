@@ -7,6 +7,14 @@
 #define SIN_LUT_SIZE   4096  /** Number of entries in the sine lookup table. */
 #define FP_ANGLE_COUNT 65536 /** Number of fixed-point angles in Q1.15 format. */
 
+/** Returns the square of a value. */
+#define SQUARE(val) \
+    ((val) * (val))
+
+/** Returns the cube of a value. */
+#define CUBE(val) \
+    ((val) * (val) * (val))
+
 /** Returns the smaller of two values. */
 #define MIN(val0, val1) \
     (((val0) < (val1)) ? (val0) : (val1))

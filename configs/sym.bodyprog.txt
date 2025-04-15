@@ -192,6 +192,9 @@ SaveGame_ChecksumValidate = 0x8002FF74; // type:func
 SaveGame_ChecksumGenerate = 0x8002FFD0; // type:func
 Game_SaveGameInitialize = 0x800350BC; // type:func
 
+// TODO: Naming this function results in an undefined reference.
+//SaveLoad_FileStringDraw = 0x801E2FCC; // type:func
+
 SysWork_SaveGameUpdatePlayer = 0x8003A120; // type:func
 SysWork_SaveGameReadPlayer = 0x8003A1F4; // type:func
 
@@ -278,6 +281,7 @@ Dms_CameraGetTargetPos = 0x8008CE1C; // type:func
 Dms_CameraKeyframeInterpolate = 0x8008CFEC; // type:func
 
 Math_LerpFixed12 = 0x8008D3D4; // type:func
+Math_GetMagnitudeShift = 0x800808F8; // type:func
 
 Demo_DataRead = 0x8008F07C; // type:func
 Demo_GameGlobalsUpdate = 0x8008F1A0; // type:func

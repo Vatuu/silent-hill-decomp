@@ -7,26 +7,32 @@ INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E2D8C);
 
 INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E2EBC);
 
-void func_801E2F90(s32 idx) // 0x801E2F90
+void func_801E2F90(s32 saveSlotIdx) // 0x801E2F90
 {
-    D_801E7578[idx] = D_800A97D4[idx] - D_801E7570[idx];
+    D_801E7578[saveSlotIdx] = D_800A97D4[saveSlotIdx] - D_801E7570[saveSlotIdx];
 }
 
-void func_801E2FCC(s32 arg0, s32 columnId, s32 arg2, s32 arg3) // 0x801E2FCC
+void func_801E2FCC(s32 arg0, s32 saveSlotIdx, s32 fileId, s32 arg3) // 0x801E2FCC
 {
-    #define COLUMN_OFFSET SCREEN_POSITION_X(47.0f)
+    #define COLUMN_OFFSET_X      SCREEN_POSITION_X(47.0f)
+    #define FILE_STR_MARGIN_X    SCREEN_POSITION_X(10.0f)
+    #define FILE_ID_STR_MARGIN_X FILE_STR_MARGIN_X + SCREEN_POSITION_X(15.75f)
+    #define POS_Y                SCREEN_POSITION_Y(14.75f)
 
     extern char D_801E2720[]; // "FILE" - needs rodata migration.
     char*       str = D_801E2720;
 
-    if (arg0 == D_800A97D4[columnId] && arg3 >= 4)
+    if (arg0 == D_800A97D4[saveSlotIdx] && arg3 >= 4)
     {
         Gfx_StringSetColor(ColorId_White);
-        Gfx_StringSetPosition((columnId * COLUMN_OFFSET) + SCREEN_POSITION_X(10.0f), SCREEN_POSITION_Y(14.75f));
+
+        // Draw "FILE" string.
+        Gfx_StringSetPosition((saveSlotIdx * COLUMN_OFFSET_X) + FILE_STR_MARGIN_X, POS_Y);
         Gfx_StringDraw(str, 50);
 
-        Gfx_StringSetPosition((columnId * COLUMN_OFFSET) + SCREEN_POSITION_X(25.75f), SCREEN_POSITION_Y(14.75f));
-        Gfx_StringDrawInt(1, arg2);
+        // Draw file ID string.
+        Gfx_StringSetPosition((saveSlotIdx * COLUMN_OFFSET_X) + FILE_ID_STR_MARGIN_X, POS_Y);
+        Gfx_StringDrawInt(1, fileId);
     }
 }
 

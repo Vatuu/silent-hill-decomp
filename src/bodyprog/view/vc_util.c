@@ -158,18 +158,18 @@ void vcMakeHeroHeadPos(VECTOR3* head_pos) // 0x8004047C
 {
     MATRIX  neck_lwm;
     SVECTOR fpos;
-    VECTOR  sp38;
+    VECTOR  vec;
 
     func_80049984(&g_SysWork.playerBoneCoords_890[PlayerBone_Head], &neck_lwm);
 
     fpos.vx = FP_METER(0.0f);
     fpos.vy = FP_METER(-0.1f);
     fpos.vz = FP_METER(0.0f);
-    ApplyMatrix(&neck_lwm, &fpos, &sp38);
+    ApplyMatrix(&neck_lwm, &fpos, &vec);
 
-    head_pos->vx = FP_TO(sp38.vx + neck_lwm.t[0], Q4_SHIFT);
-    head_pos->vy = FP_TO(sp38.vy + neck_lwm.t[1], Q4_SHIFT) - FP_METER(4.8f);
-    head_pos->vz = FP_TO(sp38.vz + neck_lwm.t[2], Q4_SHIFT);
+    head_pos->vx = FP_TO(vec.vx + neck_lwm.t[0], Q4_SHIFT);
+    head_pos->vy = FP_TO(vec.vy + neck_lwm.t[1], Q4_SHIFT) - FP_METER(4.8f);
+    head_pos->vz = FP_TO(vec.vz + neck_lwm.t[2], Q4_SHIFT);
 }
 
 void vcAddOfsToPos(VECTOR3* out_pos, VECTOR3* in_pos, s16 ofs_xz_r, s16 ang_y, s32 ofs_y) // 0x80040518
@@ -222,18 +222,18 @@ void vcSetRefPosAndSysRef2CamParam(VECTOR3* ref_pos, s_SysWork* sys_p, s32 for_f
 void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, s_SysWork* sys_p) // 0x800406D4
 {
     SVECTOR cam_ang;
-    VECTOR3 sp18;
+    VECTOR3 vec0;
     VECTOR3 cam_pos;
-    MATRIX  sp38;
-    s32     var_s0;
-    s32     var_v1;
-    s32     var_v1_4;
+    MATRIX  mat;
+    s32     var0;
+    s32     var1;
+    s32     var2;
 
     vwGetViewPosition(&cam_pos);
 
-    sp18.vx = FP_FROM(cam_pos.vx, Q4_SHIFT);
-    sp18.vy = FP_FROM(cam_pos.vy, Q4_SHIFT);
-    sp18.vz = FP_FROM(cam_pos.vz, Q4_SHIFT);
+    vec0.vx = FP_FROM(cam_pos.vx, Q4_SHIFT);
+    vec0.vy = FP_FROM(cam_pos.vy, Q4_SHIFT);
+    vec0.vz = FP_FROM(cam_pos.vz, Q4_SHIFT);
 
     vwGetViewAngle(&cam_ang);
 
@@ -261,91 +261,91 @@ void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, s_SysWork* sys_p) // 0x80040
 
         if (g_ControllerPtr1->btns_held_C & (Pad_Triangle | Pad_Cross))
         {
-            var_s0 = 0;
+            var0 = 0;
             if (g_ControllerPtr1->btns_held_C & Pad_Triangle)
             {
-                var_s0 = 0x19;
+                var0 = 0x19;
             }
             if (g_ControllerPtr1->btns_held_C & Pad_Cross)
             {
-                var_s0 = -0x1A;
+                var0 = -0x1A;
             }
 
-            var_v1 = var_s0 * shRsin(cam_ang.vy);
-            if (var_v1 < 0)
+            var1 = var0 * shRsin(cam_ang.vy);
+            if (var1 < 0)
             {
-                var_v1 += 0xFFF;
+                var1 += 0xFFF;
             }
 
-            sp18.vx += FP_FROM(var_v1, Q12_SHIFT);
-            var_v1_4 = var_s0 * shRcos(cam_ang.vy);
-            if (var_v1_4 < 0)
+            vec0.vx += FP_FROM(var1, Q12_SHIFT);
+            var2 = var0 * shRcos(cam_ang.vy);
+            if (var2 < 0)
             {
-                var_v1_4 += 0xFFF;
+                var2 += 0xFFF;
             }
 
-            sp18.vz += FP_FROM(var_v1_4, Q12_SHIFT);
+            vec0.vz += FP_FROM(var2, Q12_SHIFT);
         }
     }
     else
     {
         if (g_ControllerPtr1->btns_held_C & Pad_LStickUp)
         {
-            sp18.vy -= 0x19;
+            vec0.vy -= 0x19;
         }
         if (g_ControllerPtr1->btns_held_C & Pad_LStickDown)
         {
-            sp18.vy += 0x19;
+            vec0.vy += 0x19;
         }
 
         if (g_ControllerPtr1->btns_held_C & (Pad_LStickRight | Pad_LStickLeft))
         {
-            var_s0 = 0;
+            var0 = 0;
             if (g_ControllerPtr1->btns_held_C & Pad_LStickRight)
             {
-                var_s0 = 0x19;
+                var0 = 0x19;
             }
             if (g_ControllerPtr1->btns_held_C & Pad_LStickLeft)
             {
-                var_s0 = -0x1A;
+                var0 = -0x1A;
             }
 
-            var_v1 = var_s0 * shRsin(cam_ang.vy + FP_ANGLE(5.625f));
-            if (var_v1 < 0)
+            var1 = var0 * shRsin(cam_ang.vy + FP_ANGLE(5.625f));
+            if (var1 < 0)
             {
-                var_v1 += 0xFFF;
+                var1 += 0xFFF;
             }
 
-            sp18.vx += FP_FROM(var_v1, Q12_SHIFT);
+            vec0.vx += FP_FROM(var1, Q12_SHIFT);
 
-            var_v1_4 = var_s0 * shRcos(cam_ang.vy + FP_ANGLE(5.625f));
-            if (var_v1_4 < 0)
+            var2 = var0 * shRcos(cam_ang.vy + FP_ANGLE(5.625f));
+            if (var2 < 0)
             {
-                var_v1_4 += 0xFFF;
+                var2 += 0xFFF;
             }
-            sp18.vz += FP_FROM(var_v1_4, Q12_SHIFT);
+            vec0.vz += FP_FROM(var2, Q12_SHIFT);
         }
     }
 
-    func_80096E78(&cam_ang, &sp38);
+    func_80096E78(&cam_ang, &mat);
 
-    sp38.t[0] = sp18.vx;
-    sp38.t[1] = sp18.vy;
-    sp38.t[2] = sp18.vz;
-    vwSetViewInfoDirectMatrix(NULL, &sp38);
+    mat.t[0] = vec0.vx;
+    mat.t[1] = vec0.vy;
+    mat.t[2] = vec0.vz;
+    vwSetViewInfoDirectMatrix(NULL, &mat);
 
     if (g_ControllerPtr1->btns_held_C & (Pad_LStickUp | Pad_LStickRight | Pad_LStickDown | Pad_LStickLeft | Pad_Cross | Pad_Triangle))
     {
-        SVECTOR sp58;
+        SVECTOR vec1;
 
-        vwAngleToVector(&sp58, &cam_ang, FP_METER(5.0f));
+        vwAngleToVector(&vec1, &cam_ang, FP_METER(5.0f));
 
-        ref_pos->vx = FP_TO(sp18.vx + sp58.vx, Q4_SHIFT);
-        ref_pos->vy = FP_TO(sp18.vy + sp58.vy, Q4_SHIFT);
-        ref_pos->vz = FP_TO(sp18.vz + sp58.vz, Q4_SHIFT);
+        ref_pos->vx = FP_TO(vec0.vx + vec1.vx, Q4_SHIFT);
+        ref_pos->vy = FP_TO(vec0.vy + vec1.vy, Q4_SHIFT);
+        ref_pos->vz = FP_TO(vec0.vz + vec1.vz, Q4_SHIFT);
 
         sys_p->cameraAngleY_237A   = shAngleRegulate(cam_ang.vy + FP_ANGLE(11.25f));
-        sys_p->cameraY_2384        = FP_TO(-sp58.vy, Q4_SHIFT);
-        sys_p->cameraRadiusXz_2380 = FP_TO(SquareRoot0((sp58.vx * sp58.vx) + (sp58.vz * sp58.vz)), Q4_SHIFT);
+        sys_p->cameraY_2384        = FP_TO(-vec1.vy, Q4_SHIFT);
+        sys_p->cameraRadiusXz_2380 = FP_TO(SquareRoot0((vec1.vx * vec1.vx) + (vec1.vz * vec1.vz)), Q4_SHIFT);
     }
 }

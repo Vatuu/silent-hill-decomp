@@ -435,9 +435,9 @@ STATIC_ASSERT_SIZEOF(s_DmsHeader, 44);
 typedef struct _s_func_800699F8
 {
     s32 chara_grnd_0;
-    s16 word4;
-    s16 word6;
-    s8  byte8;
+    s16 field_4;
+    s16 field_6;
+    s8  field_8;
     u8  unk_9[3];
 } s_func_800699F8;
 STATIC_ASSERT_SIZEOF(s_func_800699F8, 12);
@@ -549,9 +549,9 @@ extern s32 D_800A976C;
 
 extern void (*D_800A977C[])(void); // Function pointer array, maybe state funcs of some kind.
 
-extern u8 D_800A97D4[];
+extern u8 D_800A97D4[]; // Something related to save slots.
 
-extern s8 D_800A97D6; // Index?
+extern s8 D_800A97D6; // Save slot index?
 
 extern s_800A992C D_800A992C[];
 
@@ -1381,7 +1381,7 @@ void Gfx_StringSetColor(s16 colorId);
 /** Draws a string in display space. */
 void Gfx_StringDraw(char* str, s32 arg1);
 
-/** Draws an int number to display. */
+/** Draws an integer string in display space. */
 void Gfx_StringDrawInt(s32 widthMin, s32 val);
 
 void Settings_ScreenXYSet(s32 x, s32 y);
@@ -1540,7 +1540,8 @@ s32 func_80080884();
 
 s32 func_800808AC();
 
-s32 func_800808F8(s32 arg0);
+/** Returns a Q shift based on a magnitude. */
+s32 Math_GetMagnitudeShift(s32 mag);
 
 /** Copies savegame into an s_ShSaveGameContainer and calculates footer checksum. */
 void SaveGame_CopyWithChecksum(s_ShSaveGameContainer* dest, s_ShSaveGame* src);
@@ -1548,8 +1549,7 @@ void SaveGame_CopyWithChecksum(s_ShSaveGameContainer* dest, s_ShSaveGame* src);
 /** Updates the footer with the checksum of the given data. */
 void SaveGame_ChecksumUpdate(s_ShSaveGameFooter* saveFooter, s8* saveData, s32 saveDataLength);
 
-/**
- * Generates a checksum of the given saveData and compares it against the checksum value in the footer.
+/** Generates a checksum of the given saveData and compares it against the checksum value in the footer.
  * Returns 1 if the checksums match, otherwise 0.
  */
 s32 SaveGame_ChecksumValidate(s_ShSaveGameFooter* saveFooter, s8* saveData, s32 saveDataLength);
