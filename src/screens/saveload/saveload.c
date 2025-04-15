@@ -3,7 +3,38 @@
 #include "bodyprog/bodyprog.h"
 #include "screens/saveload/saveload.h"
 
-INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E2D8C);
+void func_801E2D8C() // 0x801E2D8C
+{
+    s32 i;
+    s32 j;
+
+    func_80037124();
+
+    D_801E750C = 0;
+    D_801E7510 = 0;
+    D_801E76D4 = 40;
+    D_801E76D6 = 0;
+    
+    for (i = 0; i < MEMORY_CARD_SLOT_COUNT; i++)
+    {
+        D_801E76D2[i] = 1;
+        D_801E76CE[i] = NO_VALUE;
+        D_801E7564[i] = 0;
+        D_801E756C[i] = 0;
+        D_801E7570[i] = NO_VALUE;
+        D_801E7574[i] = NO_VALUE;
+        D_801E7578[i] = 0;
+        D_801E7514[i] = 1;
+        D_801E7518[i] = 0;
+         
+        for (j = 0; j < SAVE_COUNT_MAX; j++)
+        {
+            D_801E7584[j + (SAVE_COUNT_MAX * i)] = 0;
+        }
+         
+        D_801E76D0 = 1;
+    }
+}
 
 INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E2EBC);
 
