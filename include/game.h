@@ -21,7 +21,7 @@
 #define SCREEN_POSITION_Y(percent) \
     (s32)((SCREEN_HEIGHT) * ((percent) / 100.0f))
 
-/** @brief Color IDs used used by strings displayed on the screen. */
+/** @brief Color IDs used by strings displayed on the screen. */
 typedef enum _ColorId
 {
     ColorId_Gold      = 0,
@@ -104,7 +104,7 @@ typedef enum _GameState
 /** @brief State IDs used by `GameState_InGame`.
  * 
  * The values are used as indices into the 0x800A9A2C function array.
- * */
+ */
 typedef enum _SysState
 {
     SysState_Gameplay    = 0,
@@ -124,10 +124,105 @@ typedef enum _SysState
     SysState_GamePaused  = 14
 } e_SysState;
 
+/** @brief Inventory command IDs. */
+typedef enum _InventoryCommandId
+{
+    InventoryCommandId_UseHealth     = 0,
+    InventoryCommandId_Use           = 1,
+    InventoryCommandId_Equip         = 2,
+    InventoryCommandId_Unequip       = 3,
+    InventoryCommandId_EquipReload   = 4,
+    InventoryCommandId_UnequipReload = 5,
+    InventoryCommandId_OnOff         = 6,
+    InventoryCommandId_Reload        = 7,
+    InventoryCommandId_Look          = 8,
+    InventoryCommandId_UseLook       = 9
+    // Flashlight 11 in daytime?
+} s_InventoryCommandId;
+
 /** @brief Inventory item IDs. */
 typedef enum _InventoryItemId
 {
-    InventoryItemId_HyperBlaster = 163
+    InventoryItemId_Empty                = NO_VALUE,
+    InventoryItemId_Unequipped           = 0,
+
+    InventoryItemId_HealthDrink          = 32,
+    InventoryItemId_FirstAidKit          = 33,
+    InventoryItemId_Ampoule              = 34,
+
+    InventoryItemId_LobbyKey             = 64,
+    InventoryItemId_HouseKey             = 65,
+    InventoryItemId_KeyOfLion            = 66,
+    InventoryItemId_KeyOfWoodman         = 67,
+    InventoryItemId_KeyOfScarecrow       = 68,
+    InventoryItemId_LibraryReserveKey    = 69,
+    InventoryItemId_ClassroomKey         = 70,
+    InventoryItemId_KGordonKey           = 71,
+    InventoryItemId_DrawbridgeKey        = 72,
+    InventoryItemId_BasementKey          = 73,
+    InventoryItemId_BasementStoreroomKey = 74,
+    InventoryItemId_ExaminationRoomKey   = 75,
+    InventoryItemId_AntiqueShopKey       = 76,
+    InventoryItemId_SewerKey             = 77,
+    InventoryItemId_KeyOfOphiel          = 78,
+    InventoryItemId_KeyOfHagith          = 79,
+    InventoryItemId_KeyOfPhaleg          = 80,
+    InventoryItemId_KeyOfBethor          = 81,
+    InventoryItemId_KeyOfAratron         = 82,
+    InventoryItemId_NoteToSchool         = 83,
+    InventoryItemId_NoteDoghouse         = 84,
+    InventoryItemId_PictureCard          = 85,
+
+    InventoryItemId_SewerExitKey         = 87,
+    InventoryItemId_ChannelingStone      = 88,
+
+    InventoryItemId_Chemical             = 96,
+    InventoryItemId_GoldMedallion        = 97,
+    InventoryItemId_SilverMedallion      = 98,
+    InventoryItemId_RubberBall           = 99,
+    InventoryItemId_Flauros              = 100,
+    InventoryItemId_PlasticBottle        = 101,
+    InventoryItemId_UnknownLiquid        = 102,
+    InventoryItemId_PlateOfTurtle        = 103,
+    InventoryItemId_PlateOfHatter        = 104,
+    InventoryItemId_PlateOfCat           = 105,
+    InventoryItemId_PlateOfQueen         = 106,
+    InventoryItemId_BloodPack            = 107,
+    InventoryItemId_DisinfectingAlcohol  = 108,
+    InventoryItemId_Lighter              = 109,
+    InventoryItemId_VideoTape            = 110,
+
+    InventoryItemId_KaufmannKey          = 112,
+    InventoryItemId_Receipt              = 113,
+    InventoryItemId_SafeKey              = 114,
+    InventoryItemId_Magnet               = 115,
+    InventoryItemId_MotorcycleKey        = 116,
+    InventoryItemId_BirdCageKey          = 117,
+    InventoryItemId_Pliers               = 118,
+    InventoryItemId_Screwdriver          = 119,
+    InventoryItemId_Camera               = 120,
+    InventoryItemId_RingOfContract       = 121,
+    InventoryItemId_KitchenKnife         = 128,
+    InventoryItemId_SteelPipe            = 129,
+    InventoryItemId_RockDrill            = 130,
+
+    InventoryItemId_Hammer               = 132,
+    InventoryItemId_Chainsaw             = 133,
+    InventoryItemId_Katana               = 134,
+    InventoryItemId_Axe                  = 135,
+
+    InventoryItemId_Handgun              = 160,
+    InventoryItemId_HuntingRifle         = 161,
+    InventoryItemId_Shotgun              = 162,
+    InventoryItemId_HyperBlaster         = 163,
+
+    InventoryItemId_HandgunBullets       = 192,
+    InventoryItemId_RifleShells          = 193,
+    InventoryItemId_ShotgunShells        = 194,
+
+    InventoryItemId_Flashlight           = 224,
+    InventoryItemId_PocketRadio          = 225,
+    InventoryItemId_GasolineTank         = 226
 } e_InventoryItemId;
 
 /** @brief Player model bone indices. */
@@ -152,7 +247,7 @@ typedef enum _PlayerBone
     PlayerBone_RightShin     = 16,
     PlayerBone_RightFoot     = 17,
 
-    PlayerBone_Count = 18
+    PlayerBone_Count         = 18
 } s_PlayerBone;
 
 /** @brief Player property indices. */
@@ -220,6 +315,8 @@ typedef struct _ControllerData
 STATIC_ASSERT_SIZEOF(s_ControllerData, 44);
 
 /** Key bindings for input actions. */
+// TODO: Instead of `u16`s, it should use 1-bit packed 16-bit `u32`, similar to `PadButtonFlags` but not an enum because it can have multiple values.
+// Only the first 16 values are counted (analog directions are not included). Also, D-Pad is not registered.
 typedef struct _ControllerBindings
 {
     u16 enter;
@@ -241,10 +338,10 @@ STATIC_ASSERT_SIZEOF(s_ControllerBindings, 28);
 
 typedef struct _ShInventoryItem
 {
-    u8 id;
+    u8 id;      /** `InventoryItemId` */
     u8 count;
-    u8 commands;
-    u8 unk_3; // Some sort of index?
+    u8 command; /** `InventoryCommandId` */
+    u8 unk_3;   // Some sort of index?
 } s_ShInventoryItem;
 STATIC_ASSERT_SIZEOF(s_ShInventoryItem, 4);
 
@@ -256,57 +353,56 @@ typedef struct _ShSaveGame
     s8                mapOverlayIdx_A4;
     s8                field_A5;
     s16               saveGameCount_A6;
-    s8                mapEventIdx_A8;
-    u8                mapIdx_A9;
-    s8                equippedWeapon_AA;
+    s8                mapEventIdx_A8;          // See Sparagas' `SaveTitle` enum for details of every value.
+    u8                mapIdx_A9; 
+    s8                equippedWeapon_AA;       /** `InventoryItemId` */
     u8                field_AB;
     u32               flags_AC;
     s32               field_B0[45];
-    s32               hasMapsFlags_164;
-    s32               eventFlags_168[6];
-    s32               field_180[2];
-    s32               field_188;
-    s32               field_18C;
-    s32               field_190[4];
-    s32               field_1A0;
-    s32               field_1A4[12];
-    s32               mapFlags_1D4[2];
-    s32               field_1DC;
-    s32               field_1E0[22];
+    s32               hasMapsFlags_164;        // See Sparagas' `HasMapsFlags` struct for details of every bit.
+    s32               eventFlags_168[6];       //----------------------------------------
+    s32               field_180[2];            //
+    s32               field_188;               //
+    s32               field_18C;               // Only tested a few, but it seems all are related to events and pick-up flags, grouped by location and not item types.
+    s32               field_190[4];            //
+    s32               field_1A0;               //
+    s32               field_1A4[12];           //----------------------------------------
+    s32               mapFlags_1D4[2];         //----------------------------------------
+    s32               field_1DC;               // These 3 are one `u32 mapMarkingsFlags[25];` (or maybe `u8 mapMarkingsFlags[100];`?) See Sparagas' `MapMarkingsFlags` struct for details of every bit.
+    s32               field_1E0[22];           //----------------------------------------
     s32               field_238;
     s16               pickedUpItemCount_23C;
     s8                field_23E;
     s8                field_23F;
-    s32               playerHealth_240;      /** Q20.12, default: 100 */
-    s32               playerPositionX_244;   /** Q20.12 */
-    s16               playerRotationY_248;   /** Q4.12, in format that can be multiplied by 180 to get degrees. Default: North */
+    s32               playerHealth_240;        /** Q20.12, default: 100 */
+    s32               playerPositionX_244;     /** Q20.12 */
+    s16               playerRotationY_248;     /** Q4.12, Range [0, 0.999755859375], Positive Z: 0, clockwise rotation. It can be multiplied by 360 to get degrees. */
     u8                field_24A;
     u8                field_24B;
-    s32               playerPositionZ_24C;   /** Q20.12 */
-    s32               gameplayTimer_250;     /** Q20.12 */
-    s32               runDistance_254;       /** Q20.12 */
-    s32               walkDistance_258;      /** Q20.12 */
+    s32               playerPositionZ_24C;     /** Q20.12 */
+    s32               gameplayTimer_250;       /** Q20.12 */
+    s32               runDistance_254;         /** Q20.12 */
+    s32               walkDistance_258;        /** Q20.12 */
     s32               field_25C;
-    s32               field_260; // Packed data. Stores game difficulty and something else.
-    s16               field_264;
-    s16               field_266;
-    s16               field_268;
-    s16               field_26A;
+    s32               field_260;               /** Packed data. Stores game difficulty and something else. Last byte is -16 on easy, 0 on normal, and 16 on hard. */
+    s16               firedShotCount_264;      /** Missed shot count = firedShotCount - (closeRangeShotCount + midRangeShotCount + longRangeShotCount). */
+    s16               closeRangeShotCount_266; /** Only hits counted. */
+    s16               midRangeShotCount_268;   /** Only hits counted. */
+    s16               longRangeShotCount_26A;  /** Only hits counted. */
     s16               field_26C;
-    s16               field_26E;
+    s16               field_26E; // Related to enemy kills.
     s16               field_270;
     s16               field_272;
     s16               field_274;
     s16               field_276;
     s16               field_278;
     s8                field_27A;
-    s8                field_27B;
+    s8                continueCount_27B;
 } s_ShSaveGame;
 STATIC_ASSERT_SIZEOF(s_ShSaveGame, 636);
 
-/** 
- * Appended to ShSaveGame during game save. Contains 8-bit XOR checksum + magic
- * checksum generated via the SaveGame_ChecksumGenerate function .
+/** @brief Appended to ShSaveGame during game save. Contains 8-bit XOR checksum + magic
+ * checksum generated via the SaveGame_ChecksumGenerate function.
  */
 typedef struct _ShSaveGameFooter
 {
