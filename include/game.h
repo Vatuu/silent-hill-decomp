@@ -21,7 +21,7 @@
 #define SCREEN_POSITION_Y(percent) \
     (s32)((SCREEN_HEIGHT) * ((percent) / 100.0f))
 
-/** @brief Color IDs used used by strings displayed on the screen. */
+/** @brief Color IDs used by strings displayed on the screen. */
 typedef enum _ColorId
 {
     ColorId_Gold      = 0,
@@ -125,6 +125,7 @@ typedef enum _SysState
 } e_SysState;
 
 /** @brief Inventory item IDs. */
+/** See Sparagas ItemID enum for details of every value. */
 typedef enum _InventoryItemId
 {
     InventoryItemId_HyperBlaster = 163
@@ -220,6 +221,8 @@ typedef struct _ControllerData
 STATIC_ASSERT_SIZEOF(s_ControllerData, 44);
 
 /** Key bindings for input actions. */
+/** Instead of u16, it should use 1-bit packed 16bit uint, similar to PadButtonFlags but it is not enum, because it can have multiple values.
+Only the first 16 values are counted (Analog directions are not included). Also, D-Pad are not registered.*/
 typedef struct _ControllerBindings
 {
     u16 enter;
@@ -241,9 +244,9 @@ STATIC_ASSERT_SIZEOF(s_ControllerBindings, 28);
 
 typedef struct _ShInventoryItem
 {
-    u8 id;
+    u8 id;        /** see Sparagas ItemID enum for details of every value. */
     u8 count;
-    u8 commands;
+    u8 commands;  /** see Sparagas Commands enum for details of every value. */
     u8 unk_3; // Some sort of index?
 } s_ShInventoryItem;
 STATIC_ASSERT_SIZEOF(s_ShInventoryItem, 4);
@@ -256,30 +259,30 @@ typedef struct _ShSaveGame
     s8                mapOverlayIdx_A4;
     s8                field_A5;
     s16               saveGameCount_A6;
-    s8                mapEventIdx_A8;
-    u8                mapIdx_A9;
-    s8                equippedWeapon_AA;
+    s8                mapEventIdx_A8;      /** see Sparagas SaveTitle enum for details of every value. */
+    u8                mapIdx_A9; 
+    s8                equippedWeapon_AA;   /** see Sparagas ItemID enum for details of every value. */
     u8                field_AB;
     u32               flags_AC;
     s32               field_B0[45];
-    s32               hasMapsFlags_164;
-    s32               eventFlags_168[6];
-    s32               field_180[2];
-    s32               field_188;
-    s32               field_18C;
-    s32               field_190[4];
-    s32               field_1A0;
-    s32               field_1A4[12];
-    s32               mapFlags_1D4[2];
-    s32               field_1DC;
-    s32               field_1E0[22];
+    s32               hasMapsFlags_164;    /** see Sparagas HasMapsFlags struct for details of every bit. */
+    s32               eventFlags_168[6];   //----------------------------------------
+    s32               field_180[2];        //
+    s32               field_188;           //
+    s32               field_18C;           // Only tested a few, but it seems all are related to events and pick-up flags, grouped by location and not item types.
+    s32               field_190[4];        //
+    s32               field_1A0;           //
+    s32               field_1A4[12];       //----------------------------------------
+    s32               mapFlags_1D4[2];     //----------------------------------------
+    s32               field_1DC;           // These 3 are one `u32 mapMarkingsFlags[25];` (or maybe `u8 mapMarkingsFlags[100];`?) see Sparagas MapMarkingsFlags struct for details of every bit.
+    s32               field_1E0[22];       //----------------------------------------
     s32               field_238;
     s16               pickedUpItemCount_23C;
     s8                field_23E;
     s8                field_23F;
     s32               playerHealth_240;      /** Q20.12, default: 100 */
     s32               playerPositionX_244;   /** Q20.12 */
-    s16               playerRotationY_248;   /** Q4.12, in format that can be multiplied by 180 to get degrees. Default: North */
+    s16               playerRotationY_248;   /** Q4.12, Range [0, 0.999755859375], Positive Z: 0, clockwise rotation. It can be multiplied by 360 to get degrees */
     u8                field_24A;
     u8                field_24B;
     s32               playerPositionZ_24C;   /** Q20.12 */
@@ -287,26 +290,26 @@ typedef struct _ShSaveGame
     s32               runDistance_254;       /** Q20.12 */
     s32               walkDistance_258;      /** Q20.12 */
     s32               field_25C;
-    s32               field_260; // Packed data. Stores game difficulty and something else.
-    s16               field_264;
-    s16               field_266;
-    s16               field_268;
-    s16               field_26A;
+    s32               field_260;  // Packed data. Stores game difficulty and something else. The last byte is -16 on easy, 0 on normal, and 16 on hard.
+    s16               field_264;  // shotsFired - total shots fired (misses are calculated missedShots = shotsFired - shortRangeShots - middleRangeShots - longRangeShots)
+    s16               field_266;  // shortRangeShots - only counts hit shots
+    s16               field_268;  // middleRangeShots - only counts hit shots
+    s16               field_26A;  // longRangeShots - only counts hit shots
     s16               field_26C;
-    s16               field_26E;
+    s16               field_26E;  // related to enemy kills.
     s16               field_270;
     s16               field_272;
     s16               field_274;
     s16               field_276;
     s16               field_278;
     s8                field_27A;
-    s8                field_27B;
+    s8                field_27B;  // continuesCount;
 } s_ShSaveGame;
 STATIC_ASSERT_SIZEOF(s_ShSaveGame, 636);
 
 /** 
  * Appended to ShSaveGame during game save. Contains 8-bit XOR checksum + magic
- * checksum generated via the SaveGame_ChecksumGenerate function .
+ * checksum generated via the SaveGame_ChecksumGenerate function.
  */
 typedef struct _ShSaveGameFooter
 {
