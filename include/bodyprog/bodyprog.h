@@ -664,7 +664,7 @@ extern s8* D_800BCD2C;
 
 extern u8 D_800BCD3E;
 
-extern u8 D_800BCD3F;
+extern s8 D_800BCD3F;
 
 extern s8 D_800BCD40;
 
