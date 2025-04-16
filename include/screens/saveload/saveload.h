@@ -10,8 +10,8 @@ typedef struct
 {
     s32                    unk_0;
     s32                    unk_4;
-    s32                     field_8; // Maybe bitfield.
-    //struct s_UnkSaveload0* field_9;
+    s32                    field_8; // Maybe bitfield.
+    struct s_UnkSaveload0* field_9;
 } s_UnkSaveload0; // Size: >=12
 
 typedef struct
