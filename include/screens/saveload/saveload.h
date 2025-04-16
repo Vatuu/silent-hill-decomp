@@ -10,8 +10,8 @@ typedef struct
 {
     s32                    unk_0;
     s32                    unk_4;
-    s8                     field_8; // Maybe bitfield.
-    struct s_UnkSaveload0* field_9;
+    s32                     field_8; // Maybe bitfield.
+    //struct s_UnkSaveload0* field_9;
 } s_UnkSaveload0; // Size: >=12
 
 typedef struct
@@ -69,7 +69,7 @@ extern s8 D_801E76D4;
 
 extern u8 D_801E76D5;
 
-extern u8 D_801E76D6;
+extern s8 D_801E76D6;
 
 extern s8 D_801E76CE[MEMORY_CARD_SLOT_COUNT];
 
