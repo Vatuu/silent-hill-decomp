@@ -98,6 +98,8 @@ void GameState_Unk8_Update();
 
 void func_801E63C0();
 
+void func_801E69E8();
+
 void func_801E709C();
 
 void func_801E70C8();

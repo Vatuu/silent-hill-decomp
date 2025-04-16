@@ -277,7 +277,54 @@ void func_801E63C0() // 0x801E63C0
 
 INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E649C);
 
-INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E69E8);
+void func_801E69E8() // 0x801E69E8
+{
+    switch (g_GameWork.gameStateStep_598[1])
+    {
+        case 0:
+            D_801E751C = 1;
+            D_801E7520 = 30;
+            g_GameWork.gameStateStep_598[1] = 1;
+            g_GameWork.gameStateStep_598[2] = 0;
+
+        case 1:
+            g_GameWork.gameStateStep_598[1]++;
+            g_GameWork.gameStateStep_598[2] = 0;
+            break;
+
+        case 2:
+            func_8002E94C(6, D_800BCD40, 0, 0);
+            g_GameWork.gameStateStep_598[1]++;
+            g_GameWork.gameStateStep_598[2] = 0;
+            break;
+
+        case 3:
+            switch (func_8002E990())
+            {
+                case 10:
+                    D_801E7520 = 30;
+                    g_GameWork.gameStateStep_598[0] = 1;
+                    g_SysWork.timer_20 = 0;
+                    g_GameWork.gameStateStep_598[1] = 0;
+                    g_GameWork.gameStateStep_598[2] = 0;
+                    break;
+
+                case 11:
+                    g_SysWork.timer_20 = 0;
+                    g_GameWork.gameStateStep_598[0]++;
+                    g_GameWork.gameStateStep_598[1] = 0;
+                    g_GameWork.gameStateStep_598[2] = 0;
+                    break;
+
+                default:
+                    break;
+            }
+            break;
+
+        default:
+            break;
+    }
+}
 
 INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E6B18);
 
