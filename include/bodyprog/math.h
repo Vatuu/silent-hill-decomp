@@ -55,6 +55,10 @@
 #define FP_ALPHA(alpha) \
     (s16)FP_FLOAT_TO(alpha, Q12_SHIFT)
 
+/** Converts a normalized color value in the range [0.0f, 1.0f] to a byte color format in the range [0, 255]. */
+#define FP_COLOR(val) \
+    (u8)((val) * 255)
+
 /** Converts floating-point degrees to fixed-point angles in Q1.15 format. */
 #define FP_ANGLE(deg) \
 	(s16)((deg) * ((FP_ANGLE_COUNT) / 360.0f))

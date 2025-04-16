@@ -848,6 +848,8 @@ extern s32 D_800C489C;
 
 extern s32 D_800C48F0;
 
+extern RECT D_801E557C[];
+
 // TODO: Order these by address.
 
 extern s32 g_MainLoop_FrameCount; // 0x800B9CCC

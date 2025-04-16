@@ -14,8 +14,6 @@ STATIC_ASSERT_SIZEOF(s_UnkCredits1, 6);
 
 extern s_UnkCredits1 D_801E5558[];
 
-extern RECT D_801E557C[];
-
 extern s32 D_801E5590[];
 
 extern s32 D_801E5BD0;
