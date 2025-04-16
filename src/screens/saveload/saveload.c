@@ -80,9 +80,11 @@ s32 func_801E3078(s_UnkSaveload0* arg0) // 0x801E3078
     return 0;
 }
 
-// TODO: Check objdiff.
-INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E30C4);
-/*void func_801E30C4(s_UnkSaveload0* ptr, s32 arg1, s32 idx) // 0x801E30C4
+/** TODO: Check objdiff.
+The struct is causing missmatch.
+*/
+#ifdef NON_MATCHING
+void func_801E30C4(s_UnkSaveload0* ptr, s32 arg1, s32 idx) // 0x801E30C4
 {
     #define OFFSET_X SCREEN_POSITION_X(47.0f)
     #define MARGIN_X SCREEN_POSITION_X(28.25f)
@@ -122,7 +124,10 @@ INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E30C4);
                               (var0 * OFFSET_Y) + MARGIN_Y);
         Gfx_StringDraw(D_801E74A8[idxVar], 50);
     }
-}*/
+}
+#else
+INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E30C4);
+#endif
 
 void func_801E326C(s8* arg0, s8* arg1, s32 arg2, s32 arg3) // 0x801E326C
 {
@@ -329,8 +334,6 @@ void func_801E69E8() // 0x801E69E8
 
 INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E6B18);
 
-// TODO: Check objdiff.
-#ifdef NON_MATCHING
 void func_801E6DB0() // 0x801E6DB0
 {
     s32 var0;
@@ -399,9 +402,6 @@ void func_801E6DB0() // 0x801E6DB0
             break;
     }
 }
-#else
-INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E6DB0);
-#endif
 
 INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E6F38);
 
