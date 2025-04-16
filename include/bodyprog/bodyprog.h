@@ -1089,6 +1089,8 @@ void Sd_SetReverbDepth(s8 depth);
 
 void Sd_SetReverbEnable(s32 mode);
 
+void func_80047B24(u16);
+
 void func_80047F18();
 
 void func_80048000();

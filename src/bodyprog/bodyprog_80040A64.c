@@ -775,9 +775,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80045534);
 // SOUND
 // ========================================
 
-// TODO: Requires jump table.
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", Sd_EngineCmd);
-/*void Sd_EngineCmd(s32 cmd) // 0x80045A7C
+void Sd_EngineCmd(s32 cmd) // 0x80045A7C
 {
     u32 maskedCmd;
 
@@ -820,7 +818,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", Sd_EngineCmd);
         default:
             return;
     }
-}*/
+}
 
 u8 func_80045B28() // 0x80045B28
 {
@@ -865,9 +863,18 @@ u16 func_80045BC8() // 0x80045BC8
     return D_800C1666;
 }
 
-// TODO: Requires jump table.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80045BD8);
-/*void func_80045BD8(u16 caseArg) // 0x80045BD8
+/** TODO: Needs jump table.
+Inserting it causes missalignment as for some reason it add
+4 bytes to each value of the jumptable. It seems to be
+an issue of the function not matching itself rather than a
+quirk of the compiler or the insertion as looking at it on
+Objdiff shows a minor difference at the end of the assembly
+which doesn't appear on Decomp.me. In case of trying to
+fix it just uncomment the segment split on the `bodyprog.yaml`
+that has a comment that says `# Jumptable: func_80045BD8`
+
+void func_80045BD8(u16 caseArg) // 0x80045BD8
 {
     u16 var0;
 
@@ -935,7 +942,8 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80045BD8);
     {
         func_80048244(caseArg);
     }
-}*/
+}
+*/
 
 void func_80045D28(s32 caseArg) // 0x80045D28
 {
@@ -1223,7 +1231,12 @@ void func_80048244(s16 cmd) // 0x80048244
     D_800C1658.field_15 = 1;
 }
 
-// TODO: Needs jump table.
+/** TODO: Needs jump table.
+Inserting it generates a weird behaviour on the jump
+table of func_80045BD8 so whenever that get fixed try
+to insert this by uncommenting the segment on the yaml
+file.
+*/
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800482D8);
 /*void func_800482D8() // 0x800482D8
 {
