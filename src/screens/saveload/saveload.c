@@ -80,7 +80,7 @@ s32 func_801E3078(s_UnkSaveload0* arg0) // 0x801E3078
     return 0;
 }
 
-// Impossible to fix match without working objdiff. -- Sezz
+// TODO: Check objdiff.
 INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E30C4);
 /*void func_801E30C4(s_UnkSaveload0* ptr, s32 arg1, s32 idx) // 0x801E30C4
 {
@@ -294,6 +294,7 @@ void func_801E69E8() // 0x801E69E8
 
         case 2:
             func_8002E94C(6, D_800BCD40, 0, 0);
+
             g_GameWork.gameStateStep_598[1]++;
             g_GameWork.gameStateStep_598[2] = 0;
             break;
@@ -328,7 +329,79 @@ void func_801E69E8() // 0x801E69E8
 
 INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E6B18);
 
+// TODO: Check objdiff.
+#ifdef NON_MATCHING
+void func_801E6DB0() // 0x801E6DB0
+{
+    s32 var0;
+    s32 var1;
+
+    switch (g_GameWork.gameStateStep_598[1])
+    {
+        case 0:
+            D_801E751C = 3;
+
+            func_8002E94C(4, D_800BCD40, D_800BCD3F, D_800BCD3E);
+
+            g_GameWork.gameStateStep_598[1]++;
+            g_GameWork.gameStateStep_598[2] = 0;
+
+        case 1:
+            var0 = func_8002E990();
+            if (var0 != 1)
+            {
+                if (var0 != 11)
+                {
+                    D_800BCD39 = 1;
+                    g_GameWork.gameStateStep_598[0] = 1;
+                    g_SysWork.timer_20 = 0;
+                    g_GameWork.gameStateStep_598[1] = 0;
+                    g_GameWork.gameStateStep_598[2] = 0;
+                    break;
+                }
+
+                func_8002E94C(2, D_800BCD40, 0, 0);
+
+                g_GameWork.gameStateStep_598[1]++;
+                g_GameWork.gameStateStep_598[2] = 0;
+                break;
+            }
+
+            D_801E7520 = 30;
+            break;
+
+        case 2:
+            var1 = func_8002E990();
+            if (var1 == 1)
+            {
+                D_801E7520 = 30;
+                break;
+            }
+
+            if (var1 != 11)
+            {
+                D_800BCD39 = 1;
+                g_GameWork.gameStateStep_598[0] = 1;
+                g_SysWork.timer_20 = 0;
+                g_GameWork.gameStateStep_598[1] = 0;
+                g_GameWork.gameStateStep_598[2] = 0;
+                break;
+            }
+
+            D_801E7520 = 300;
+            g_SysWork.timer_20 = 0;
+            g_GameWork.gameStateStep_598[0]++;
+            g_GameWork.gameStateStep_598[1] = 0;
+            g_GameWork.gameStateStep_598[2] = 0;
+            break;
+
+        default:
+            break;
+    }
+}
+#else
 INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E6DB0);
+#endif
 
 INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E6F38);
 

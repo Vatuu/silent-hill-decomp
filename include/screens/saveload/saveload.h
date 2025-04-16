@@ -100,6 +100,8 @@ void func_801E63C0();
 
 void func_801E69E8();
 
+void func_801E6DB0();
+
 void func_801E709C();
 
 void func_801E70C8();
