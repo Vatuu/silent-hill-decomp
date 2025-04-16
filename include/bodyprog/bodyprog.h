@@ -547,7 +547,7 @@ extern s32 D_800A9768;
 
 extern s32 D_800A976C;
 
-extern void (*D_800A977C[])(void); // Function pointer array, maybe state funcs of some kind.
+extern void (*D_800A977C[])(); // Function pointer array, maybe state funcs of some kind.
 
 extern u8 D_800A97D4[]; // Something related to save slots.
 

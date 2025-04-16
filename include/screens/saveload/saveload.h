@@ -10,9 +10,14 @@ typedef struct
 {
     s32                    unk_0;
     s32                    unk_4;
-    s32                    field_8; // Maybe bitfield.
-    struct s_UnkSaveload0* field_C;
+    s8                     field_8; // Maybe bitfield.
+    struct s_UnkSaveload0* field_9;
 } s_UnkSaveload0; // Size: >=12
+
+typedef struct
+{
+    u8 field_0[25];
+} s_801E2728;
 
 extern s_FsImageDesc D_800A902C;
 
@@ -23,6 +28,10 @@ extern s32 D_800B9FE0[];
 extern u32 D_800BCD34;
 
 extern s8 D_800BCD39;
+
+extern s_801E2728 D_801E2728; // Probably an array instead.
+
+extern char* D_801E74A8[];
 
 extern s32 D_801E750C;
 
@@ -58,7 +67,9 @@ extern s8 D_801E76D2[MEMORY_CARD_SLOT_COUNT];
 
 extern s8 D_801E76D4;
 
-extern s8 D_801E76D6;
+extern u8 D_801E76D5;
+
+extern u8 D_801E76D6;
 
 extern s8 D_801E76CE[MEMORY_CARD_SLOT_COUNT];
 
@@ -70,6 +81,9 @@ void func_801E2F90(s32 saveSlotIdx);
 // TODO: Rename to `SaveLoad_FileStringDraw`.
 /** Draws the "FILE X" string in the save/load screen. */
 void func_801E2FCC(s32 arg0, s32 saveSlotIdx, s32 fileId, s32 arg3);
+
+/** Draws some string. */
+void func_801E30C4(s_UnkSaveload0* ptr, s32 arg1, s32 idx);
 
 /** Sets the color of the string to be drawn based on some flag. */
 s32 func_801E3078(s_UnkSaveload0* arg0);

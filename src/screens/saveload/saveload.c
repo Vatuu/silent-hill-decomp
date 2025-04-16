@@ -12,9 +12,9 @@ void func_801E2D8C() // 0x801E2D8C
 
     D_801E750C = 0;
     D_801E7510 = 0;
-    D_801E76D4 = 40;
+    D_801E76D4 = INVENTORY_ITEM_COUNT_MAX;
     D_801E76D6 = 0;
-    
+
     for (i = 0; i < MEMORY_CARD_SLOT_COUNT; i++)
     {
         D_801E76D2[i] = 1;
@@ -26,12 +26,12 @@ void func_801E2D8C() // 0x801E2D8C
         D_801E7578[i] = 0;
         D_801E7514[i] = 1;
         D_801E7518[i] = 0;
-         
+
         for (j = 0; j < SAVE_COUNT_MAX; j++)
         {
             D_801E7584[j + (SAVE_COUNT_MAX * i)] = 0;
         }
-         
+
         D_801E76D0 = 1;
     }
 }
@@ -45,7 +45,7 @@ void func_801E2F90(s32 saveSlotIdx) // 0x801E2F90
 
 void func_801E2FCC(s32 arg0, s32 saveSlotIdx, s32 fileId, s32 arg3) // 0x801E2FCC
 {
-    #define COLUMN_OFFSET_X      SCREEN_POSITION_X(47.0f)
+    #define OFFSET_X             SCREEN_POSITION_X(47.0f)
     #define FILE_STR_MARGIN_X    SCREEN_POSITION_X(10.0f)
     #define FILE_ID_STR_MARGIN_X FILE_STR_MARGIN_X + SCREEN_POSITION_X(15.75f)
     #define POS_Y                SCREEN_POSITION_Y(14.75f)
@@ -58,11 +58,11 @@ void func_801E2FCC(s32 arg0, s32 saveSlotIdx, s32 fileId, s32 arg3) // 0x801E2FC
         Gfx_StringSetColor(ColorId_White);
 
         // Draw "FILE" string.
-        Gfx_StringSetPosition((saveSlotIdx * COLUMN_OFFSET_X) + FILE_STR_MARGIN_X, POS_Y);
+        Gfx_StringSetPosition((saveSlotIdx * OFFSET_X) + FILE_STR_MARGIN_X, POS_Y);
         Gfx_StringDraw(str, 50);
 
         // Draw file ID string.
-        Gfx_StringSetPosition((saveSlotIdx * COLUMN_OFFSET_X) + FILE_ID_STR_MARGIN_X, POS_Y);
+        Gfx_StringSetPosition((saveSlotIdx * OFFSET_X) + FILE_ID_STR_MARGIN_X, POS_Y);
         Gfx_StringDrawInt(1, fileId);
     }
 }
@@ -79,7 +79,51 @@ s32 func_801E3078(s_UnkSaveload0* arg0) // 0x801E3078
     return 0;
 }
 
+#ifdef NON_MATCHING
+void func_801E30C4(s_UnkSaveload0* ptr, s32 arg1, s32 idx) // 0x801E30C4
+{
+    #define OFFSET_X SCREEN_POSITION_X(47.0f)
+    #define MARGIN_X SCREEN_POSITION_X(28.25f)
+    #define OFFSET_Y SCREEN_POSITION_Y(8.5f)
+    #define MARGIN_Y SCREEN_POSITION_Y(22.25f)
+
+    s32        var0;
+    s32        var1;
+    s_801E2728 var2;
+    s32        idxVar;
+    s32        colorId;
+
+    idxVar = ptr->field_8;
+    var2 = D_801E2728;
+
+    var1 = D_801E7570[idx];
+    if (arg1 >= var1 && (var1 + 4) >= arg1)
+    {
+        var0 = arg1 - var1;
+
+        func_801E3078(ptr->field_9);
+
+        if (D_801E76D6 != 0 && D_800A97D6 == idx && D_800A97D4[idx] == arg1)
+        {
+            if (D_801E76D5 != 0)
+            {
+                colorId = ColorId_Gold;
+            }
+            else
+            {
+                colorId = ColorId_White;
+            }
+            Gfx_StringSetColor(colorId);
+        }
+
+        Gfx_StringSetPosition(((idx * OFFSET_X) + MARGIN_X) - (var2.field_0[idxVar] / 2),
+                              (var0 * OFFSET_Y) + MARGIN_Y);
+        Gfx_StringDraw(D_801E74A8[idxVar], 50);
+    }
+}
+#else
 INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E30C4);
+#endif
 
 void func_801E326C(s8* arg0, s8* arg1, s32 arg2, s32 arg3) // 0x801E326C
 {
