@@ -80,9 +80,8 @@ s32 func_801E3078(s_UnkSaveload0* arg0) // 0x801E3078
     return 0;
 }
 
-/** TODO: Check objdiff.
-The struct is causing missmatch.
-*/
+// TODO: Check objdiff.
+// The struct is causing missmatch.
 #ifdef NON_MATCHING
 void func_801E30C4(s_UnkSaveload0* ptr, s32 arg1, s32 idx) // 0x801E30C4
 {
@@ -149,59 +148,7 @@ void func_801E326C(s8* arg0, s8* arg1, s32 arg2, s32 arg3) // 0x801E326C
     }
 }
 
-// TODO: Wrong includes??
 INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E3304);
-/*s32 func_801E3304() // 0x801E3304
-{
-    s32 var;
-
-    if (g_GameWork.gameStatePrev_590 != 11)
-    {
-        return 0;
-    }
-
-    if (g_GameWork.gameStateStep_598[2] == 0)
-    {
-        Gfx_Init(320, 0);
-        D_800BCD0C = 0;
-        g_GameWork.gameStateStep_598[2]++;
-    }
-    else if (g_GameWork.gameStateStep_598[2] != 10)
-    {
-        g_GameWork.gameStateStep_598[2]++;
-    }
-    else
-    {
-        Gfx_ClearRectInterlaced(0, 32, 320, 448, FP_COLOR(0.0f), FP_COLOR(0.0f), FP_COLOR(0.0f));
-        LoadImage(&D_801E557C[0], IMAGE_BUFFER_0);
-        LoadImage(&D_801E557C[1], IMAGE_BUFFER_1);
-        DrawSync(0);
-        VSync(2);
-
-        var = g_GameWork.gameState_594;
-
-        g_SysWork.timer_1C = 0;
-        g_SysWork.timer_20 = 0;
-
-        g_GameWork.gameStateStep_598[2] = 0;
-        g_GameWork.gameStateStep_598[3] = 0;
-
-        g_SysWork.sysState_8 = 0;
-        g_SysWork.timer_24 = 0;
-        g_SysWork.sysStateStep_C = 0;
-        g_SysWork.field_28 = 0;
-        g_SysWork.field_10 = 0;
-        g_SysWork.timer_2C = 0;
-        g_SysWork.field_14 = 0;
-
-        g_GameWork.gameStateStep_598[0] = var;
-        g_GameWork.gameState_594 = g_GameWork.gameStatePrev_590;
-        g_GameWork.gameStatePrev_590 = var;
-        g_GameWork.gameStateStep_598[0] = 0;
-    }
-
-    return 0;
-}*/
 
 INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E3910);
 

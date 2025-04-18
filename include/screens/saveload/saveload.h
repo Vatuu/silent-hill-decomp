@@ -90,8 +90,6 @@ s32 func_801E3078(s_UnkSaveload0* arg0);
 
 void func_801E326C(s8* arg0, s8* arg1, s32 arg2, s32 arg3);
 
-s32 func_801E3304();
-
 void func_801E4D90(s8* arg0, s8* arg1, s32 arg2, s32 arg3);
 
 void GameState_Unk8_Update();
