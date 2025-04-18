@@ -1,0 +1,9 @@
+sharedFunc_800D88AC = 0x800D88AC; // type:func
+sharedFunc_800D8904 = 0x800D8904; // type:func
+sharedFunc_800D891C = 0x800D891C; // type:func
+sharedFunc_800D8928 = 0x800D8928; // type:func
+sharedFunc_800D893C = 0x800D893C; // type:func
+sharedFunc_800D8950 = 0x800D8950; // type:func
+sharedFunc_800D9064 = 0x800D9064; // type:func
+sharedFunc_800D9078 = 0x800D9078; // type:func
+sharedFunc_800D923C = 0x800D923C; // type:func

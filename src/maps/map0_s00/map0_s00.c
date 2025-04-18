@@ -272,7 +272,7 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D8748);
 
 void func_800D8888(s_SubCharacter* chara)
 {
-    func_800D923C(chara);
+    sharedFunc_800D923C(chara);
     D_800E3A30 = 0;
 }
 
@@ -280,15 +280,9 @@ void func_800D8888(s_SubCharacter* chara)
 // Probably all player-specific.
 // Possibly shared .c file or separate SubCharacter library?
 
-void func_800D88AC(s_SubCharacter* playerChara)
-{
-    playerChara->properties_E4[PlayerProperty_Unk4] = 0;
-    playerChara->properties_E4[PlayerProperty_Unk3] = 0;
-    playerChara->properties_E4[PlayerProperty_PositionY] = 0;
-    playerChara->field_126 = 0;
-}
-// Shared functions end.
+#include "maps/shared/sharedFunc_800D88AC.h" // 0x800D88AC
 
+// func_800D88C0 not shared? 
 void func_800D88C0(s_SubCharacter* playerChara, s32 arg1)
 {
     playerChara->properties_E4[PlayerProperty_Unk4] = 1;
@@ -309,48 +303,23 @@ void func_800D88C0(s_SubCharacter* playerChara, s32 arg1)
     playerChara->model_0.anim_4.flags_2 |= AnimFlag_Unk1;
 }
 
-void func_800D8904(s_SubCharacter* playerChara, s32 afkTime)
-{
-    playerChara->field_126 = 0;
-    playerChara->properties_E4[PlayerProperty_RunTimer0] = 0;
-    playerChara->properties_E4[PlayerProperty_Unk3] = 0;
-    playerChara->properties_E4[PlayerProperty_AfkTimer] = afkTime;
-    playerChara->model_0.isAnimStateUnchanged_3 = 0;
-}
+#include "maps/shared/sharedFunc_800D8904.h" // 0x800D8904
 
-void func_800D891C(s_SubCharacter* playerChara)
-{
-    playerChara->properties_E4[PlayerProperty_RunTimer0] = 1;
-}
+#include "maps/shared/sharedFunc_800D891C.h" // 0x800D891C
 
-void func_800D8928(s_SubCharacter* chara)
-{
-    chara->model_0.anim_4.flags_2 &= ~AnimFlag_Unk1;
-}
+#include "maps/shared/sharedFunc_800D8928.h" // 0x800D8928
 
-s32 func_800D893C(s_SubCharacter* chara)
-{
-    return ~(chara->model_0.anim_4.flags_2 & AnimFlag_Unk1);
-}
+#include "maps/shared/sharedFunc_800D893C.h" // 0x800D893C
 
-void func_800D8950(s_SubCharacter* chara)
-{
-    chara->model_0.anim_4.flags_2 |= AnimFlag_Unk1;
-}
+#include "maps/shared/sharedFunc_800D8950.h" // 0x800D8950
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D8964);
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D8A00);
 
-void func_800D9064(s_SubCharacter* chara)
-{
-    chara->model_0.anim_4.flags_2 |= AnimFlag_Unk2;
-}
+#include "maps/shared/sharedFunc_800D9064.h" // 0x800D9064
 
-void func_800D9078(s_SubCharacter* chara)
-{
-    chara->model_0.anim_4.flags_2 &= ~AnimFlag_Unk2;
-}
+#include "maps/shared/sharedFunc_800D9078.h" // 0x800D9078
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D908C);
 
@@ -358,31 +327,7 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D9188);
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D921C);
 
-void func_800D923C(s_SubCharacter* playerChara)
-{
-    s32 flags;
-    
-    flags = playerChara->flags_E0;
-    flags = flags & ~((1 << 8) | (1 << 9) | (1 << 10) | (1 << 11));
-
-    playerChara->model_0.isAnimStateUnchanged_3 = 0;
-    playerChara->field_C8 = 0;
-    playerChara->field_CA = 0;
-    playerChara->field_CE = 0;
-    playerChara->field_D4 = 0;
-    playerChara->field_D6 = 0;
-    playerChara->field_DE = 0;
-    playerChara->field_DC = 0;
-    playerChara->field_DA = 0;
-    playerChara->field_D8 = 0;
-    playerChara->properties_E4[PlayerProperty_PositionY] = 0;
-    playerChara->properties_E4[PlayerProperty_AfkTimer] = 0;
-    playerChara->properties_E4[PlayerProperty_PositionY] = 0;
-    playerChara->properties_E4[PlayerProperty_Unk3] = 0;
-    playerChara->properties_E4[PlayerProperty_Unk4] = 0;
-    playerChara->flags_E0 = flags | ((1 << 8) | (1 << 9));
-    playerChara->model_0.field_2++;
-}
+#include "maps/shared/sharedFunc_800D923C.h" // 0x800D923C
 
 s32 func_800D929C()
 {
