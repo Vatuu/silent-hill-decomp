@@ -724,7 +724,19 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8006BC34);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8006BCC4);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8006BDDC);
+void func_8006BDDC(a_func_8006BDDC* arg0, s16 arg1, s16 arg2) // 0x8006BDDC
+{
+    if (arg0->field_0 == 0)
+    {
+        arg0->field_0 = 1;
+        arg0->field_2 = arg1;
+        arg0->field_4 = arg2;
+        return;
+    }
+
+    arg0->field_0++;
+    func_80048DA8(&arg0->field_2, &arg0->field_4, arg1, arg2);
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8006BE40);
 

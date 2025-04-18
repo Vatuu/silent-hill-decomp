@@ -9,7 +9,6 @@
 #define BOOT_ADDR_0      ((u8*)0x801E09E0)
 #define BOOT_ADDR_1      ((u8*)0x801E1430)
 
-
 #define IMAGE_BUFFER_0 ((u_long*)0x801CFA00)
 #define IMAGE_BUFFER_1 ((u_long*)0x801C8200)
 #define IMAGE_BUFFER_2 ((u_long*)0x801ABE00)
@@ -18,6 +17,14 @@
 
 #define OPT_SOUND_VOLUME_MAX  128
 #define OPT_VIBRATION_ENABLED 128
+
+typedef struct
+{
+    s8  field_0;
+    s8  unk_1;
+    s16 field_2;
+    s16 field_4;
+} a_func_8006BDDC;
 
 typedef struct
 {
@@ -1409,6 +1416,8 @@ void func_80066E7C();
 void func_800699F8(s_func_800699F8* arg0, s32 arg1, s32 arg2);
 
 s32 func_8006A3B4(s32 arg0, s32 arg1, s32 arg2);
+
+void func_8006BDDC(a_func_8006BDDC* arg0, s16 arg1, s16 arg2);
 
 void Gfx_ClearRectInterlaced(s16 x, s16 y, s16 w, s16 h, u8 r, u8 g, u8 b);
 
