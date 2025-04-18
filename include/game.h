@@ -720,9 +720,11 @@ static inline void SaveGame_EventFlagSet(u32 flagId)
     g_SaveGamePtr->eventFlags_168[flagIdx] |= 1 << flagBit;
 }
 
-/** @brief Sets the given flag ID inside an array of 16-bit flag values. */
+/** @brief Checks if the given flag ID is set inside array of 16-bit flag values. */
 static inline int Flags16b_IsSet(u16* array, s32 flagId)
 {
+    // BUG: `>> 5` divides flagId by 32 to get the index into array, but array is of 16-bit values.
+    // Maybe copy paste from a u32 version of the func.
     return (array[flagId >> 5] >> (flagId & 0x1F)) & 1;
 }
 
