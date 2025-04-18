@@ -59,6 +59,8 @@ segments:
     subalign: 4
     subsegments:
       - [0x0, rodata]
+      - [0x8F8, .rodata, bodyprog]  # Jumptable: `SysState_GameOver_Update`
+      - [0x91C, rodata]
       - [0x109C, .rodata, bodyprog_80040A64]  # Jumptable: Sd_EngineCmd
       - [0x10F8, rodata]
       #- [0x10FC, .rodata, bodyprog_80040A64]  # Jumptable: func_80045BD8

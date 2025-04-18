@@ -1596,8 +1596,6 @@ void SysState_EventPlaySound_Update() // 0x8003A4B4
     g_SysWork.sysState_8 = 0;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", SysState_GameOver_Update); // 0x8003A52C
-/** TODO: Needs jump table.
 void SysState_GameOver_Update() // 0x8003A52C
 {
     extern u8   g_SysState_GameOver_CurTipIndex; // Only used in this func, maybe static.
@@ -1646,7 +1644,7 @@ void SysState_GameOver_Update() // 0x8003A52C
                 }
             }
 
-            var_s0 = Rng_Rand16() % var_s0;
+            var_s0 = (s32)Rng_Rand16() % var_s0;
 
             // var_s0 seems to go unused after this loop
             // but it does get checked during the loop and can cause loop to exit early, affecting what tipIndex will contain
@@ -1757,7 +1755,7 @@ void SysState_GameOver_Update() // 0x8003A52C
         g_SysWork.field_22A0 |= 1;
     }
 }
-*/
+//*/
 
 void GameState_MapEvent_Update() // 0x8003AA4C
 {
