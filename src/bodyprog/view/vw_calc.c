@@ -59,7 +59,9 @@ void vwRenewalXZVelocityToTargetPos(s32* velo_x, s32* velo_z, VECTOR3* now_pos, 
     var_s1       = Math_MulFixed(dec_forwd_lim_spd, Math_VectorMagnitude(temp_s1_3, 0, temp_s0) - tgt_r, Q12_SHIFT);
 
     if (var_s1 < 0)
+    {
         var_s1 = 0;
+    }
 
     vwLimitOverLimVector(velo_x, velo_z, var_s1, to_tgt_ang_y);
     vwDecreaseSideOfVector(velo_x, velo_z, Math_MulFixed(dec_accel_side, g_DeltaTime0, Q12_SHIFT), var_s1 >> 1, to_tgt_ang_y);
@@ -88,7 +90,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vw_calc", vwRetNewVelocityToTargetVa
 
 s32 vwRetNewAngSpdToTargetAng(s32 now_ang_spd, s16 now_ang, s16 tgt_ang, s32 accel_spd, s32 total_max_ang_spd, s32 dec_val_lim_spd) // 0x80049464
 {
-    return vwRetNewVelocityToTargetVal(now_ang_spd, 0, ((tgt_ang - now_ang) << 0x14) >> 0x14, accel_spd, total_max_ang_spd, dec_val_lim_spd);
+    return vwRetNewVelocityToTargetVal(now_ang_spd, 0, ((tgt_ang - now_ang) << 20) >> 20, accel_spd, total_max_ang_spd, dec_val_lim_spd);
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vw_calc", func_800494B0);

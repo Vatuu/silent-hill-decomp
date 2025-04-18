@@ -352,7 +352,7 @@ void func_801E6DB0() // 0x801E6DB0
 
 INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E6F38);
 
-void func_801E709C()
+void func_801E709C() // 0x801E709C
 {
     func_801E2EBC();
     func_800314EC(&D_800A902C);
@@ -360,7 +360,7 @@ void func_801E709C()
 
 INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E70C8);
 
-void func_801E7244()
+void func_801E7244() // 0x801E7244
 {
     if (D_801E7520 <= 0)
     {
@@ -402,7 +402,7 @@ void GameState_Unk4_Update() // 0x801E72FC
     func_801E70C8();
 }
 
-void func_801E737C()
+void func_801E737C() // 0x801E737C
 {
     if (!func_80033548())
     {
@@ -426,14 +426,14 @@ void func_801E737C()
         return;
     }
 
-    D_800BCD2C = (s8*)0x801E09E0 + (D_800A97D6 * 0xA50);
+    D_800BCD2C = BOOT_ADDR_0 + (D_800A97D6 * 2640);
     D_800BCD2C = D_800BCD2C + (D_800A97D4[D_800A97D6] * 16);
     D_800BCD40 = D_800BCD2C[5];
     D_800BCD3F = D_800BCD2C[6];
     D_800BCD3E = D_800BCD2C[7];
 
     g_GameWork.gameStateStep_598[0]++;
-    g_SysWork.timer_20              = 0;
+    g_SysWork.timer_20 = 0;
     g_GameWork.gameStateStep_598[1] = 0;
     g_GameWork.gameStateStep_598[2] = 0;
 }

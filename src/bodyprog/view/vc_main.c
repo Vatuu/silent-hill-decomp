@@ -72,7 +72,7 @@ void vcSetFirstCamWork(VECTOR3* cam_pos, s16 chara_eye_ang_y, s32 use_through_do
     vcWork.cam_mv_ang_y_5C = 0;
     vcWork.cam_tgt_spd_110 = 0;
 
-    vcWork.cam_chara2ideal_ang_y_FE = shAngleRegulate(chara_eye_ang_y + 2048);
+    vcWork.cam_chara2ideal_ang_y_FE = shAngleRegulate(chara_eye_ang_y + FP_ANGLE(11.25f));
 
     vcWork_CurNearRoadSet(&vcWork, &vcNullNearRoad);
 
@@ -100,10 +100,10 @@ void vcWorkSetFlags(VC_FLAGS enable, VC_FLAGS disable) // 0x80080BF8
     vcWork.flags_8 = (vcWork.flags_8 | enable) & ~disable;
 }
 
-s32 func_80080C18(s32 arg0) // 0x80080C18
+s32 func_80080C18(s32 lookAtAngleYMax) // 0x80080C18
 {
     s32 prev_val              = vcWork.watch_tgt_max_y_88;
-    vcWork.watch_tgt_max_y_88 = arg0;
+    vcWork.watch_tgt_max_y_88 = lookAtAngleYMax;
     return prev_val;
 }
 
@@ -318,13 +318,13 @@ void vcSetAllNpcDeadTimer() // 0x8008123C
 
 s32 vcRetSmoothCamMvF(VECTOR3* old_pos, VECTOR3* now_pos, SVECTOR* old_ang, SVECTOR* now_ang) // 0x800812CC
 {
-    s32 intrpt; // interpolate time?
+    s32 intrpt; // Interpolation time (i.e. alpha)?
     s32 mv_vec;
     s32 rot_x;
     s32 rot_y;
 
     intrpt = FP_TO(g_DeltaTime0, Q12_SHIFT) / 0x44; // Divide by 0.0166?
-    intrpt = CLAMP(intrpt, 0x1000, 0x4000);         // Clamp between 1.0 and 4.0.
+    intrpt = CLAMP(intrpt, FP_TO(1, Q12_SHIFT), FP_TO(4, Q12_SHIFT));
 
     mv_vec = Math_VectorMagnitude(FP_FROM(now_pos->vx - old_pos->vx, Q4_SHIFT),
                                   FP_FROM(now_pos->vy - old_pos->vy, Q4_SHIFT),
@@ -367,7 +367,7 @@ VC_CAM_MV_TYPE vcRetCurCamMvType(VC_WORK* w_p) // 0x80081428
             if ((hasViewFlag ^ 1) != 0)
             {
                 // TODO: Can this be merged with block below somehow?
-                if ((w_p->flags_8 & 0x103) == 0 && func_8008150C(w_p->chara_pos_114.vx, w_p->chara_pos_114.vz) == 0)
+                if ((w_p->flags_8 & ((1 << 0) | (1 << 1) | (1 << 8))) == 0 && func_8008150C(w_p->chara_pos_114.vx, w_p->chara_pos_114.vz) == 0)
                 {
                     return VC_MV_SELF_VIEW;
                 }
@@ -375,7 +375,7 @@ VC_CAM_MV_TYPE vcRetCurCamMvType(VC_WORK* w_p) // 0x80081428
         }
         else if (hasViewFlag)
         {
-            if ((w_p->flags_8 & 0x103) == 0 && func_8008150C(w_p->chara_pos_114.vx, w_p->chara_pos_114.vz) == 0)
+            if ((w_p->flags_8 & ((1 << 0) | (1 << 1) | (1 << 8))) == 0 && func_8008150C(w_p->chara_pos_114.vx, w_p->chara_pos_114.vz) == 0)
             {
                 return VC_MV_SELF_VIEW;
             }
@@ -1020,7 +1020,7 @@ void vcRenewalCamData(VC_WORK* w_p, VC_CAM_MV_PARAM* cam_mv_prm_p) // 0x80084BD8
     s32 dec_spd_per_dist_xz;
     s32 dec_spd_per_dist_y;
 
-    if (w_p->flags_8 & VC_WARP_CAM_F) // & 4
+    if (w_p->flags_8 & VC_WARP_CAM_F)
     {
         w_p->cam_mv_ang_y_5C = ratan2(w_p->cam_tgt_pos_44.vx - w_p->cam_pos_50.vx, w_p->cam_tgt_pos_44.vz - w_p->cam_pos_50.vz);
         w_p->cam_pos_50      = w_p->cam_tgt_pos_44;
@@ -1034,8 +1034,8 @@ void vcRenewalCamData(VC_WORK* w_p, VC_CAM_MV_PARAM* cam_mv_prm_p) // 0x80084BD8
     dec_spd_per_dist_y  = FP_MULTIPLY_PRECISE(cam_mv_prm_p->accel_y, 1.0f, Q12_SHIFT); // SH2 removes this multiply and uses accel_y directly, maybe 0.4f/1.0f were tunable defines & compiler removed it.
 
     vwRenewalXZVelocityToTargetPos(&w_p->cam_velo_60.vx, &w_p->cam_velo_60.vz, &w_p->cam_pos_50,
-                                   &w_p->cam_tgt_pos_44, 0x199, cam_mv_prm_p->accel_xz,
-                                   cam_mv_prm_p->max_spd_xz, dec_spd_per_dist_xz, 0xC000);
+                                   &w_p->cam_tgt_pos_44, FP_METER(1.6f), cam_mv_prm_p->accel_xz,
+                                   cam_mv_prm_p->max_spd_xz, dec_spd_per_dist_xz, FP_TO(12, Q12_SHIFT));
 
     w_p->cam_velo_60.vy  = vwRetNewVelocityToTargetVal(w_p->cam_velo_60.vy, w_p->cam_pos_50.vy, w_p->cam_tgt_pos_44.vy,
                                                        cam_mv_prm_p->accel_y, cam_mv_prm_p->max_spd_y, dec_spd_per_dist_y);

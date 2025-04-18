@@ -3,9 +3,6 @@
 
 #include "common.h"
 
-#define BOOT_ADDR_0 ((u8*)0x801E09E0)
-#define BOOT_ADDR_1 ((u8*)0x801E1430)
-
 typedef struct
 {
     u8 field_0;

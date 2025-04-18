@@ -105,7 +105,9 @@ void GameState_KonamiLogo_Update() // 0x800C95AC
     }
 }
 
-s32 func_800C9874() // 0x800C9874
+// TODO: Line `D_800BCD2C = &BOOT_ADDR_0[D_800A97D6 * 2640];` won't compile anymore.
+INCLUDE_ASM("asm/screens/b_konami/nonmatchings/b_konami", func_800C9874);
+/*s32 func_800C9874() // 0x800C9874
 {
     s32 var0;
     s32 var1;
@@ -132,7 +134,7 @@ s32 func_800C9874() // 0x800C9874
     }
     else if (var0 == 8 || var1 == 8)
     {
-        D_800BCD2C = &BOOT_ADDR_0[D_800A97D6 * 0xA50];
+        D_800BCD2C = &BOOT_ADDR_0[D_800A97D6 * 2640];
         D_800BCD2C = &D_800BCD2C[D_800A97D4[D_800A97D6] * 16];
         
         D_800BCD40 = D_800BCD2C[5];
@@ -142,7 +144,7 @@ s32 func_800C9874() // 0x800C9874
     }
     
     return 4;
-}
+}*/
 
 void GameState_KcetLogo_Update() // 0x800C99A4
 {
