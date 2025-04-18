@@ -1091,9 +1091,9 @@ s32 PreservedSignSubtract(s32 value, s32 subtractor) // 0x80080594
 // Unknown instruction error?
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_800805BC);
 
-s32 func_800806AC(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x800806AC
+u32 func_800806AC(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x800806AC
 {
-    s32 res;
+    u32 res;
 
     res = arg0 != 0;
     if (res == 0)
