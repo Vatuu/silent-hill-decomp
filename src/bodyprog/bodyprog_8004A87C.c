@@ -724,7 +724,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8006BC34);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8006BCC4);
 
-void func_8006BDDC(a_func_8006BDDC* arg0, s16 arg1, s16 arg2) // 0x8006BDDC
+void func_8006BDDC(s_func_8006BDDC* arg0, s16 arg1, s16 arg2) // 0x8006BDDC
 {
     if (arg0->field_0 == 0)
     {
@@ -870,7 +870,50 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_80071CE8);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_80073FC0);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_80074254);
+void func_80074254(s32 arg0, s32 arg1) // 0x0074254
+{
+    s32 var0;
+
+    if (func_80075504() != 0)
+    {
+        return;
+    }
+
+    var0 = (D_800C45C9 == 10) ? 1333 : 1314;
+
+    switch (g_SysWork.player_4C.extra_128.field_20)
+    {
+        case 0:
+            func_80071620(55, arg0, 551, 1320);
+            break;
+
+        case 14:
+            if (func_80071620(23, arg0, 173, var0) != 0)
+            {
+                func_8008944C();
+            }
+            break;
+
+        case 17:
+            if (func_80071620(39, arg0, 340, var0) != 0)
+            {
+                func_8008944C();
+            }
+            break;
+
+        case 18:
+            if (func_80071620(43, arg0, 369, var0) != 0)
+            {
+                func_8008944C();
+            }
+            break;
+
+        default:
+            break;
+    }
+
+    func_800771BC(arg0, arg1);
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_80074350);
 
@@ -899,7 +942,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8007D970);
 // TODO: Can this work without needing inlined func?
 static inline SaveGame_PlayerReset(s_ShSaveGame* save)
 {
-    save->playerHealth_240 = FP_TO(100, 12);
+    save->playerHealth_240 = FP_TO(100, Q12_SHIFT);
     save->field_A0 = 0;
     save->equippedWeapon_AA = 0;
     save->field_238 = 0;

@@ -24,7 +24,7 @@ typedef struct
     s8  unk_1;
     s16 field_2;
     s16 field_4;
-} a_func_8006BDDC;
+} s_func_8006BDDC;
 
 typedef struct
 {
@@ -822,6 +822,8 @@ extern s16 D_800C45BE;
 
 extern s16 D_800C45C0;
 
+extern u8 D_800C45C9;
+
 extern s16 D_800C45E8;
 
 extern s16 D_800C45F0;
@@ -1417,16 +1419,18 @@ void func_800699F8(s_func_800699F8* arg0, s32 arg1, s32 arg2);
 
 s32 func_8006A3B4(s32 arg0, s32 arg1, s32 arg2);
 
-void func_8006BDDC(a_func_8006BDDC* arg0, s16 arg1, s16 arg2);
+void func_8006BDDC(s_func_8006BDDC* arg0, s16 arg1, s16 arg2);
+
+void func_80074254(s32 arg0, s32 arg1); // `arg1` is pointer?
 
 void Gfx_ClearRectInterlaced(s16 x, s16 y, s16 w, s16 h, u8 r, u8 g, u8 b);
 
 void Gfx_VSyncCallback();
 
-/** Sets the position of the next string to be drawn by Gfx_StringDraw. */
+/** Sets the position of the next string to be drawn by `Gfx_StringDraw`. */
 void Gfx_StringSetPosition(s32 x, s32 y);
 
-/** Sets the color of the next string drawn by Gfx_StringDraw. (TODO: add color list) */
+/** Sets the color of the next string drawn by `Gfx_StringDraw`. (TODO: add color list) */
 void Gfx_StringSetColor(s16 colorId);
 
 /** Draws a string in display space. */
