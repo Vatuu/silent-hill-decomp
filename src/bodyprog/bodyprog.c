@@ -7,6 +7,7 @@
 #include "bodyprog/math.h"
 #include "bodyprog/vw_system.h"
 #include "main/fsqueue.h"
+#include "main/rng.h"
 
 void func_8002E630() 
 {
@@ -1596,6 +1597,167 @@ void SysState_EventPlaySound_Update() // 0x8003A4B4
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", SysState_GameOver_Update); // 0x8003A52C
+/** TODO: Needs jump table.
+void SysState_GameOver_Update() // 0x8003A52C
+{
+    extern u8   g_SysState_GameOver_CurTipIndex; // only used in this func, maybe g_SysState_GameOver_CurTipIndex?
+    extern char D_80025448[];                    // "\aGAME_OVER" - needs rodata migration
+
+    u16  seenTipIndexes[1];
+    s32  tipIndex;
+    s32  var_s0; // tipRandCondition? not sure what good name is
+    u16* temp_a0;
+
+    switch (g_SysWork.sysStateStep_C)
+    {
+        case 0:
+            g_MapOverlayHeader.func_C8();
+            g_SysWork.field_28 = 0;
+
+            if (g_GameWork.saveGame_90.continueCount_27B < 99)
+            {
+                g_GameWork.saveGame_90.continueCount_27B++;
+            }
+
+            func_8003B550();
+
+            // If we've seen every game over tip, reset the flag bits
+            if (g_GameWork.seenGameOverTips_2E[0] == 0x7FFF)
+            {
+                g_GameWork.seenGameOverTips_2E[0] = 0U;
+            }
+
+            var_s0 = 0;
+
+            seenTipIndexes[0] = g_GameWork.seenGameOverTips_2E[0];
+            for (tipIndex = 0; tipIndex < 15; tipIndex++)
+            {
+                if (!Flags16b_IsSet(seenTipIndexes, tipIndex))
+                {
+                    if ((!(g_SysWork.field_24DC & 3) && tipIndex - 0xD >= 2U) ||
+                        ((g_SysWork.field_24DC & 3) && tipIndex - 0xD < 2U))
+                    {
+                        var_s0 += 3;
+                    }
+                    else
+                    {
+                        var_s0 += 1;
+                    }
+                }
+            }
+
+            var_s0 = Rng_Rand16() % var_s0;
+
+            // var_s0 seems to go unused after this loop
+            // but it does get checked during the loop and can cause loop to exit early, affecting what tipIndex will contain
+            for (tipIndex = 0; tipIndex < 15; tipIndex++)
+            {
+                if (!Flags16b_IsSet(seenTipIndexes, tipIndex))
+                {
+                    if ((!(g_SysWork.field_24DC & 3) && tipIndex - 0xD >= 2U) ||
+                        ((g_SysWork.field_24DC & 3) && tipIndex - 0xD < 2U))
+                    {
+                        if (var_s0 < 3)
+                        {
+                            break;
+                        }
+                        var_s0 -= 3;
+                    }
+                    else
+                    {
+                        if (var_s0 <= 0)
+                        {
+                            break;
+                        }
+                        var_s0 -= 1;
+                    }
+                }
+            }
+
+            // Store current shown tipIndex, later sysStateStep_C == 7 will set it inside seenGameOverTips_2E.
+            g_SysState_GameOver_CurTipIndex = tipIndex;
+
+            Fs_QueueStartReadTim(FILE_TIM_TIPS_E01_TIM + tipIndex, FS_BUFFER_1, &D_800A9054);
+
+            SysWork_StateStepIncrement();
+        case 1:
+            func_8008616C(2, 1, 0, 0x800, 0);
+            break;
+        case 2:
+            func_8008616C(0, 0, 0, 0x800, 0);
+
+            SysWork_StateStepIncrement();
+        case 3:
+            Gfx_StringSetPosition(104, 104);
+            Gfx_StringDraw(D_80025448, 0x63); // "\aGAME_OVER" - needs rodata migration
+            g_SysWork.field_28++;
+            if ((g_ControllerPtr0->btns_new_10 & (g_GameWorkPtr1->controllerBinds_0.enter | g_GameWorkPtr1->controllerBinds_0.cancel)) ||
+                (g_SysWork.field_28 > 0xF0))
+            {
+                SysWork_StateStepIncrement();
+            }
+            break;
+        case 4:
+            Gfx_StringSetPosition(104, 104);
+            Gfx_StringDraw(D_80025448, 0x63); // "\aGAME_OVER" - needs rodata migration
+            func_8008616C(2, 1, 0, 0x2000, 0);
+            break;
+        case 5:
+            if ((g_SaveGamePtr->field_260 >> 0x1C) == 1)
+            {
+                // TODO: inline SysWork_StateStepReset? if we find other code matching this
+                g_SysWork.sysStateStep_C = -1;
+                g_SysWork.field_28       = 0;
+                g_SysWork.field_10       = 0;
+                g_SysWork.timer_2C       = 0;
+                g_SysWork.field_14       = 0;
+                break;
+            }
+            else
+            {
+                Fs_QueueWaitForEmpty();
+                func_80037188();
+                SysWork_StateStepIncrement();
+            }
+        case 6:
+            func_8008616C(2, 0, 0, 0x2000, 0);
+            g_SysWork.field_28 = 0;
+            func_800314EC(&D_800A9054);
+            break;
+        case 7:
+            g_SysWork.field_28++;
+            func_800314EC(&D_800A9054);
+            if (!(g_ControllerPtr0->btns_new_10 & (g_GameWorkPtr1->controllerBinds_0.enter | g_GameWorkPtr1->controllerBinds_0.cancel)))
+            {
+                if (g_SysWork.field_28 <= 0x1E0)
+                {
+                    break;
+                }
+            }
+
+            // TODO: some inline FlagSet func? couldn't get matching ver, but pretty sure temp_a0 can be removed somehow
+            temp_a0 = &g_GameWork.seenGameOverTips_2E[(g_SysState_GameOver_CurTipIndex >> 5)];
+            *temp_a0 |= 1 << (g_SysState_GameOver_CurTipIndex & 0x1F);
+
+            SysWork_StateStepIncrement();
+            break;
+        case 8:
+            func_800314EC(&D_800A9054);
+            func_8008616C(2, 1, 0, 0x2000, 0);
+            break;
+        default:
+            g_MapOverlayHeader.func_CC(0);
+            SysWork_StateSetNext(0);
+            Game_WarmBoot();
+            break;
+    }
+
+    if (g_SysWork.sysStateStep_C >= 2 || g_GameWork.gameState_594 != GameState_InGame)
+    {
+        g_SysWork.field_22A0 |= 1;
+    }
+}
+*/
 
 void GameState_MapEvent_Update() // 0x8003AA4C
 {

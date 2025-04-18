@@ -538,6 +538,8 @@ extern s_FsImageDesc D_800A9044;
 
 extern s_FsImageDesc D_800A904C;
 
+extern s_FsImageDesc D_800A9054;
+
 extern s_FsImageDesc D_800A906C;
 
 /** Unknown bodyprog var. Used in `Fs_QueueStartReadAnm`. */
@@ -981,12 +983,16 @@ s32 func_80033548();
 /** Unknown bodyprog func. Called by `Fs_QueuePostLoadAnm`. */
 void func_80035560(s32 arg0, s32 arg1, void* arg2, s32 arg3);
 
+void func_80037188();
+
 void func_8003943C();
 
 /** SysState_Fmv update function.
  * Movie to play is decided by `2072 - g_MapEventIdx`
  * After playback, savegame gets `D_800BCDD8->eventFlagNum_2` event flag set. */
 void SysState_Fmv_Update();
+
+void func_8003B550();
 
 /** Unknown bodyprog func. Called by `Fs_QueueDoThingWhenEmpty`. */
 s32 func_8003c850();
