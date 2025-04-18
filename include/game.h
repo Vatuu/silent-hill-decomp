@@ -107,21 +107,21 @@ typedef enum _GameState
  */
 typedef enum _SysState
 {
-    SysState_Gameplay    = 0,
-    SysState_OptionsMenu = 1,
-    SysState_StatusMenu  = 2,
-    SysState_Unk3        = 3,
-    SysState_Fmv         = 4,
-    SysState_LoadArea0   = 5,
-    SysState_LoadArea1   = 6,
-    SysState_ReadMessage = 7,
-    SysState_SaveMenu0   = 8,
-    SysState_SaveMenu1   = 9,
-    SysState_Unk10       = 10,
-    SysState_Unk11       = 11,
-    SysState_Unk12       = 12,
-    SysState_GameOver    = 13,
-    SysState_GamePaused  = 14
+    SysState_Gameplay       = 0,
+    SysState_OptionsMenu    = 1,
+    SysState_StatusMenu     = 2,
+    SysState_Unk3           = 3,
+    SysState_Fmv            = 4,
+    SysState_LoadArea0      = 5,
+    SysState_LoadArea1      = 6,
+    SysState_ReadMessage    = 7,
+    SysState_SaveMenu0      = 8,
+    SysState_SaveMenu1      = 9,
+    SysState_EventCallFunc  = 10,
+    SysState_EventSetFlag   = 11,
+    SysState_EventPlaySound = 12,
+    SysState_GameOver       = 13,
+    SysState_GamePaused     = 14
 } e_SysState;
 
 /** @brief Inventory command IDs. */
@@ -397,7 +397,7 @@ typedef struct _ShSaveGame
     s16               field_276;
     s16               field_278;
     s8                field_27A;
-    s8                continueCount_27B;
+    u8                continueCount_27B;
 } s_ShSaveGame;
 STATIC_ASSERT_SIZEOF(s_ShSaveGame, 636);
 
@@ -451,7 +451,7 @@ typedef struct _GameWork
     u8                   optWalkRunCtrl_2B;         /** Normal: 0, Reverse: 1, default: Normal. */
     u8                   optAutoAiming_2C;          /** On: 0, Off: 1, default: On. */
     s8                   optBulletAdjust_2D;        /** x1-x6: Range [0, 5], default: x1. */
-    s8                   unk_2E[2];                 /** Looks like non-zero values in "Next Fear" mode. */
+    u16                  seenGameOverTips_2E[1];    /** Bitfield tracking seen game-over tips. Each bit corresponds to a tip index (0–15); set bits indicate seen tips. */
     s8                   unk_30[8];
     s_ControllerData     controllers_38[2];
     s_ShSaveGame         saveGame_90; // Backup savegame?
@@ -607,7 +607,9 @@ typedef struct _SysWork
     s8              unk_2388[20];
     s8              field_239C;
     u8              field_239D; // Index?
-    s8              unk_239E[370];
+    s8              unk_239E[318];
+    s32             field_24DC;
+    s8              unk_24E0[48];
     s32             field_2510;
     s32             field_2514[10];
     u8              unk_253C[524];
@@ -654,6 +656,16 @@ static inline void SysWork_StateSetNext(e_SysState sysState)
     g_SysWork.field_10       = 0;
     g_SysWork.timer_2C       = 0;
     g_SysWork.field_14       = 0;
+}
+
+/** @brief Increments the sysStateStep index inside SysWork. */
+static inline void SysWork_StateStepIncrement()
+{
+    g_SysWork.field_28 = 0;
+    g_SysWork.field_10 = 0;
+    g_SysWork.timer_2C = 0;
+    g_SysWork.field_14 = 0;
+    g_SysWork.sysStateStep_C++;
 }
 
 /** @brief Sets the GameState to be used in the next game update.
@@ -706,6 +718,14 @@ static inline void SaveGame_EventFlagSet(u32 flagId)
     s16 flagBit = flagId % 32;
 
     g_SaveGamePtr->eventFlags_168[flagIdx] |= 1 << flagBit;
+}
+
+/** @brief Checks if the given flag ID is set inside array of 16-bit flag values. */
+static inline int Flags16b_IsSet(u16* array, s32 flagId)
+{
+    // BUG: `>> 5` divides flagId by 32 to get the index into array, but array is of 16-bit values.
+    // Maybe copy paste from a u32 version of the func.
+    return (array[flagId >> 5] >> (flagId & 0x1F)) & 1;
 }
 
 #endif

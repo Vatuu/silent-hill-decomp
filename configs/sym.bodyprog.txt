@@ -15,6 +15,7 @@ g_DeltaTime0 = 0x800B5CC0; // type:s32 - Q20.12 fixed point, usually 0x44 (0.016
 g_DeltaTime1 = 0x800A8FEC; // type:s32
 g_DeltaTime2 = 0x800B9CC8; // type:s32
 g_MapEventIdx = 0x800A9A14; // type:u32
+g_SysState_GameOver_CurTipIndex = 0x800BCD80; // type:u8
 g_MapEventParam = 0x800BCDD8; // type:u32 - pointer to s_ShEventParam
 
 g_IntervalVBlanks = 0x800A8FF0; // type:s32
@@ -180,9 +181,9 @@ SysState_Fmv_Update = 0x80039A58; // type:func
 SysState_LoadArea_Update = 0x80039C40; // type:func
 SysState_ReadMessage_Update = 0x80039FB8; // type:func
 SysState_SaveMenu_Update = 0x8003A230; // type:func
-SysState_Unk10_Update = 0x8003A3C8; // type:func
-SysState_Unk11_Update = 0x8003A460; // type:func
-SysState_Unk12_Update = 0x8003A4B4; // type:func
+SysState_EventCallFunc_Update = 0x8003A3C8; // type:func
+SysState_EventSetFlag_Update = 0x8003A460; // type:func
+SysState_EventPlaySound_Update = 0x8003A4B4; // type:func
 SysState_GameOver_Update = 0x8003A52C; // type:func
 SysState_GamePaused_Update = 0x800391E8; // type:func
 
