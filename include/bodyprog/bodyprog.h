@@ -520,6 +520,8 @@ typedef struct
     s32  field_54;
 } s_800AFE24; // Size: 85
 
+extern s_FsImageDesc g_MainImg0; // 0x80022C74 - TODO: part of main exe, move to main/ headers?
+
 extern s8* D_8002510C;
 
 /** "\x07PAUSED" string */
@@ -904,7 +906,9 @@ extern s_ControllerData* g_Demo_ControllerPacket; // 0x800C4890
 
 extern s32 g_Demo_DemoStep; // 0x800C4894
 
-extern s_FsImageDesc g_MainImg0; // 0x80022C74
+extern s16 D_800C6E26;
+
+extern s16 D_800C6E8E;
 
 extern s_800ACAA8 D_800ACAA8[];
 
@@ -986,6 +990,8 @@ void Gfx_DebugStringPosition(s16 x, s16 y);
 void Gfx_DebugStringDraw(char* str);
 
 char* Math_IntegerToString(s32 widthMin, s32 value);
+
+void Gfx_Init(u16 screenWidth, s32 isInterlaced);
 
 void func_8003260C(); // Return type assumed.
 

@@ -326,11 +326,10 @@ void func_800867B4(s32 caseParam, s32 idx) // 0x800867B4
             StoreImage(&D_8002AB10, IMAGE_BUFFER_2);
             DrawSync(0);
 
-            // TODO: What are these offsets?
-            Fs_QueueStartReadTim(D_800A99B4[idx] + 1896, FS_BUFFER_2, &D_800A901C);
-            Fs_QueueStartReadTim(D_800A99CC[idx] + 1910, FS_BUFFER_1, &D_800A9024);
+            Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + D_800A99B4[idx], FS_BUFFER_2, &D_800A901C);
+            Fs_QueueStartReadTim(FILE_TIM_MR_0TOWN_TIM + D_800A99CC[idx], FS_BUFFER_1, &D_800A9024);
 
-            Gfx_Init(0x140, 1);
+            Gfx_Init(SCREEN_WIDTH, 1);
             GsSwapDispBuff();
             Fs_QueueWaitForEmpty();
             break;
@@ -342,7 +341,7 @@ void func_800867B4(s32 caseParam, s32 idx) // 0x800867B4
         case 2:
             LoadImage(&D_8002AB10, IMAGE_BUFFER_2);
             DrawSync(0);
-            Gfx_Init(0x140, 0);
+            Gfx_Init(SCREEN_WIDTH, 0);
             break;
 
         default:
