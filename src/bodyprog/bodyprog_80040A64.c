@@ -775,30 +775,27 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80045534);
 // SOUND
 // ========================================
 
-void Sd_EngineCmd(s32 cmd) // 0x80045A7C
+void Sd_EngineCmd(u32 cmd) // 0x80045A7C
 {
-    u32 maskedCmd;
-
-    maskedCmd = ((u32)cmd >> 8) & 0xFF;
-    switch (maskedCmd)
+    switch ((cmd >> 8) & 0xFF)
     {
         case 0:
-            func_80045BD8(cmd & 0xFFFF);
+            func_80045BD8(cmd);
             return;
 
         case 3:
         case 4:
-            func_80046A24(cmd & 0xFFFF);
+            func_80046A24(cmd);
             return;
 
         case 5:
         case 6:
-            func_80046048(cmd & 0xFFFF, 0, 0);
+            func_80046048(cmd, 0, 0);
             return;
 
         case 7:
         case 8:
-            func_8004692C((cmd - 0x200) & 0xFFFF);
+            func_8004692C((cmd - 0x200));
             return;
 
         case 11:
@@ -813,7 +810,7 @@ void Sd_EngineCmd(s32 cmd) // 0x80045A7C
         case 20:
         case 21:
         case 22:
-            func_80046D3C(cmd & 0xFFFF);
+            func_80046D3C(cmd);
 
         default:
             return;
@@ -1008,12 +1005,12 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800468EC);
 
 void func_8004690C(s32 arg0) // 0x8004690C
 {
-    func_8004692C(arg0 & 0xFFFF);
+    func_8004692C(arg0);
 }
 
-void func_8004692C(s32 arg0) // 0x8004692C
+void func_8004692C(u16 arg0) // 0x8004692C
 {
-    if ((arg0 & 0xFFFF) == 0x500)
+    if (arg0 == 0x500)
     {
         return;
     }

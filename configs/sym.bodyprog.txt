@@ -180,9 +180,9 @@ SysState_Fmv_Update = 0x80039A58; // type:func
 SysState_LoadArea_Update = 0x80039C40; // type:func
 SysState_ReadMessage_Update = 0x80039FB8; // type:func
 SysState_SaveMenu_Update = 0x8003A230; // type:func
-SysState_Unk10_Update = 0x8003A3C8; // type:func
-SysState_Unk11_Update = 0x8003A460; // type:func
-SysState_Unk12_Update = 0x8003A4B4; // type:func
+SysState_EventCallFunc_Update = 0x8003A3C8; // type:func
+SysState_EventSetFlag_Update = 0x8003A460; // type:func
+SysState_EventPlaySound_Update = 0x8003A4B4; // type:func
 SysState_GameOver_Update = 0x8003A52C; // type:func
 SysState_GamePaused_Update = 0x800391E8; // type:func
 

@@ -1081,7 +1081,8 @@ void func_800453E8(s_Skeleton* skel, s32 cond);
 /** Does something with skeleton bones. `arg0` is a struct pointer. */
 void func_80045468(s_Skeleton* skel, s32* arg1, s32 cond);
 
-void Sd_EngineCmd(s32 cmd);
+/** Passes a command to the sound driver. */
+void Sd_EngineCmd(u32 cmd);
 
 /** Sound func? */
 u8 func_80045B28();
@@ -1096,7 +1097,15 @@ void Sd_DriverInit();
 
 u8 func_80045B28();
 
+void func_80046048(u16, s32, s32);
+
 void func_8004690C(s32);
+
+void func_8004692C(u16);
+
+void func_80046A24(u16);
+
+void func_80046D3C(u16);
 
 void func_8004729C(u16);
 
@@ -1419,9 +1428,6 @@ void Settings_ScreenAndVolUpdate();
 
 void Settings_RestoreDefaults();
 
-/** Passes a command to the sound driver. */
-void Sd_EngineCmd(s32 cmd);
-
 /** Updates the savegame buffer with the current player SysWork info (position, rotation, health, event index). */
 void SysWork_SaveGameUpdatePlayer();
 
@@ -1429,6 +1435,8 @@ void SysWork_SaveGameUpdatePlayer();
 void SysWork_SaveGameReadPlayer();
 
 s32 MainLoop_ShouldWarmReset();
+
+void Game_WarmBoot();
 
 void Joy_Init();
 

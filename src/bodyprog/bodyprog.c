@@ -1568,11 +1568,32 @@ void SysWork_SaveGameReadPlayer() // 0x8003A1F4
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", SysState_SaveMenu_Update); // 0x8003A230
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", SysState_Unk10_Update); // 0x8003A3C8
+void SysState_EventCallFunc_Update() // 0x8003A3C8
+{
+    if ((g_MapEventParam->flags_8 >> 0xD) & 0x3F)
+    {
+        SaveGame_EventFlagSet(g_MapEventParam->eventFlagId_2);
+    }
+    g_DeltaTime0 = D_800BCD84;
+    g_MapOverlayHeader.mapEventFuncs_20[g_MapEventIdx]();
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", SysState_Unk11_Update); // 0x8003A460
+void SysState_EventSetFlag_Update() // 0x8003A460
+{
+    g_DeltaTime0 = D_800BCD84;
+    SaveGame_EventFlagSet(g_MapEventParam->eventFlagId_2);
+    g_SysWork.sysState_8 = 0;
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", SysState_Unk12_Update); // 0x8003A4B4
+void SysState_EventPlaySound_Update() // 0x8003A4B4
+{
+    g_DeltaTime0 = D_800BCD84;
+
+    Sd_EngineCmd(((u16)g_MapEventIdx + 0x500) & 0xFFFF);
+
+    SaveGame_EventFlagSet(g_MapEventParam->eventFlagId_2);
+    g_SysWork.sysState_8 = 0;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", SysState_GameOver_Update); // 0x8003A52C
 

@@ -107,21 +107,21 @@ typedef enum _GameState
  */
 typedef enum _SysState
 {
-    SysState_Gameplay    = 0,
-    SysState_OptionsMenu = 1,
-    SysState_StatusMenu  = 2,
-    SysState_Unk3        = 3,
-    SysState_Fmv         = 4,
-    SysState_LoadArea0   = 5,
-    SysState_LoadArea1   = 6,
-    SysState_ReadMessage = 7,
-    SysState_SaveMenu0   = 8,
-    SysState_SaveMenu1   = 9,
-    SysState_Unk10       = 10,
-    SysState_Unk11       = 11,
-    SysState_Unk12       = 12,
-    SysState_GameOver    = 13,
-    SysState_GamePaused  = 14
+    SysState_Gameplay       = 0,
+    SysState_OptionsMenu    = 1,
+    SysState_StatusMenu     = 2,
+    SysState_Unk3           = 3,
+    SysState_Fmv            = 4,
+    SysState_LoadArea0      = 5,
+    SysState_LoadArea1      = 6,
+    SysState_ReadMessage    = 7,
+    SysState_SaveMenu0      = 8,
+    SysState_SaveMenu1      = 9,
+    SysState_EventCallFunc  = 10,
+    SysState_EventSetFlag   = 11,
+    SysState_EventPlaySound = 12,
+    SysState_GameOver       = 13,
+    SysState_GamePaused     = 14
 } e_SysState;
 
 /** @brief Inventory command IDs. */
