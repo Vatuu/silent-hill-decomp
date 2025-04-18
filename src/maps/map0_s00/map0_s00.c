@@ -272,7 +272,7 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D8748);
 
 void func_800D8888(s_SubCharacter* chara)
 {
-    sharedFunc_800D923C(chara);
+    sharedFunc_800D923C_0_s00(chara);
     D_800E3A30 = 0;
 }
 
@@ -280,7 +280,7 @@ void func_800D8888(s_SubCharacter* chara)
 // Probably all player-specific.
 // Possibly shared .c file or separate SubCharacter library?
 
-#include "maps/shared/sharedFunc_800D88AC.h" // 0x800D88AC
+#include "maps/shared/sharedFunc_800D88AC_0_s00.h" // 0x800D88AC
 
 // func_800D88C0 not shared? 
 void func_800D88C0(s_SubCharacter* playerChara, s32 arg1)
@@ -303,23 +303,23 @@ void func_800D88C0(s_SubCharacter* playerChara, s32 arg1)
     playerChara->model_0.anim_4.flags_2 |= AnimFlag_Unk1;
 }
 
-#include "maps/shared/sharedFunc_800D8904.h" // 0x800D8904
+#include "maps/shared/sharedFunc_800D8904_0_s00.h" // 0x800D8904
 
-#include "maps/shared/sharedFunc_800D891C.h" // 0x800D891C
+#include "maps/shared/sharedFunc_800D891C_0_s00.h" // 0x800D891C
 
-#include "maps/shared/sharedFunc_800D8928.h" // 0x800D8928
+#include "maps/shared/sharedFunc_800D8928_0_s00.h" // 0x800D8928
 
-#include "maps/shared/sharedFunc_800D893C.h" // 0x800D893C
+#include "maps/shared/sharedFunc_800D893C_0_s00.h" // 0x800D893C
 
-#include "maps/shared/sharedFunc_800D8950.h" // 0x800D8950
+#include "maps/shared/sharedFunc_800D8950_0_s00.h" // 0x800D8950
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D8964);
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D8A00);
 
-#include "maps/shared/sharedFunc_800D9064.h" // 0x800D9064
+#include "maps/shared/sharedFunc_800D9064_0_s00.h" // 0x800D9064
 
-#include "maps/shared/sharedFunc_800D9078.h" // 0x800D9078
+#include "maps/shared/sharedFunc_800D9078_0_s00.h" // 0x800D9078
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D908C);
 
@@ -327,7 +327,7 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D9188);
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D921C);
 
-#include "maps/shared/sharedFunc_800D923C.h" // 0x800D923C
+#include "maps/shared/sharedFunc_800D923C_0_s00.h" // 0x800D923C
 
 s32 func_800D929C()
 {

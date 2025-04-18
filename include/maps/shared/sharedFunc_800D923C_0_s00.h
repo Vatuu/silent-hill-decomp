@@ -1,4 +1,4 @@
-void sharedFunc_800D923C(s_SubCharacter* playerChara)
+void sharedFunc_800D923C_0_s00(s_SubCharacter* playerChara)
 {
     s32 flags;
     

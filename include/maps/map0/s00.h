@@ -62,28 +62,28 @@ void func_800D654C();
 
 void func_800D8888(s_SubCharacter* chara);
 
-void sharedFunc_800D88AC(s_SubCharacter* playerChara);
+// TODO: sharedFuncs could go in their own header.
+
+void sharedFunc_800D88AC_0_s00(s_SubCharacter* playerChara);
 
 /** Among other things, sets the players's anim to anim 3 (which might actually be flags if the field packs more data). */
 void func_800D88C0(s_SubCharacter* playerChara, s32 arg1);
 
-// TODO: sharedFuncs could go in their own header.
+void sharedFunc_800D8904_0_s00(s_SubCharacter* playerChara, s32 afkTime);
 
-void sharedFunc_800D8904(s_SubCharacter* playerChara, s32 afkTime);
+void sharedFunc_800D891C_0_s00(s_SubCharacter* playerChara);
 
-void sharedFunc_800D891C(s_SubCharacter* playerChara);
+void sharedFunc_800D8928_0_s00(s_SubCharacter* chara);
 
-void sharedFunc_800D8928(s_SubCharacter* chara);
+s32 sharedFunc_800D893C_0_s00(s_SubCharacter* chara);
 
-s32 sharedFunc_800D893C(s_SubCharacter* chara);
+void sharedFunc_800D8950_0_s00(s_SubCharacter* chara);
 
-void sharedFunc_800D8950(s_SubCharacter* chara);
+void sharedFunc_800D9064_0_s00(s_SubCharacter* chara);
 
-void sharedFunc_800D9064(s_SubCharacter* chara);
+void sharedFunc_800D9078_0_s00(s_SubCharacter* chara);
 
-void sharedFunc_800D9078(s_SubCharacter* chara);
-
-void sharedFunc_800D923C(s_SubCharacter* playerChara);
+void sharedFunc_800D923C_0_s00(s_SubCharacter* playerChara);
 
 s32 func_800D929C();
 

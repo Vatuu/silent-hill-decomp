@@ -1,4 +1,4 @@
-#include "common.h"
+#include "game.h"
 
 INCLUDE_ASM("asm/maps/map3_s00/nonmatchings/map3_s00", func_800CB408);
 
@@ -96,27 +96,27 @@ INCLUDE_ASM("asm/maps/map3_s00/nonmatchings/map3_s00", func_800CF470);
 
 INCLUDE_ASM("asm/maps/map3_s00/nonmatchings/map3_s00", func_800CFE48);
 
-INCLUDE_ASM("asm/maps/map3_s00/nonmatchings/map3_s00", func_800CFE84);
+#include "maps/shared/sharedFunc_800D88AC_0_s00.h" // 0x800CFE84
 
 INCLUDE_ASM("asm/maps/map3_s00/nonmatchings/map3_s00", func_800CFE98);
 
-INCLUDE_ASM("asm/maps/map3_s00/nonmatchings/map3_s00", func_800CFEDC);
+#include "maps/shared/sharedFunc_800D8904_0_s00.h" // 0x800CFEDC
 
-INCLUDE_ASM("asm/maps/map3_s00/nonmatchings/map3_s00", func_800CFEF4);
+#include "maps/shared/sharedFunc_800D891C_0_s00.h" // 0x800CFEF4
 
-INCLUDE_ASM("asm/maps/map3_s00/nonmatchings/map3_s00", func_800CFF00);
+#include "maps/shared/sharedFunc_800D8928_0_s00.h" // 0x800CFF00
 
-INCLUDE_ASM("asm/maps/map3_s00/nonmatchings/map3_s00", func_800CFF14);
+#include "maps/shared/sharedFunc_800D893C_0_s00.h" // 0x800CFF14
 
-INCLUDE_ASM("asm/maps/map3_s00/nonmatchings/map3_s00", func_800CFF28);
+#include "maps/shared/sharedFunc_800D8950_0_s00.h" // 0x800CFF28
 
 INCLUDE_ASM("asm/maps/map3_s00/nonmatchings/map3_s00", func_800CFF3C);
 
 INCLUDE_ASM("asm/maps/map3_s00/nonmatchings/map3_s00", func_800CFFD8);
 
-INCLUDE_ASM("asm/maps/map3_s00/nonmatchings/map3_s00", func_800D063C);
+#include "maps/shared/sharedFunc_800D9064_0_s00.h" // 0x800D063C
 
-INCLUDE_ASM("asm/maps/map3_s00/nonmatchings/map3_s00", func_800D0650);
+#include "maps/shared/sharedFunc_800D9078_0_s00.h" // 0x800D0650
 
 INCLUDE_ASM("asm/maps/map3_s00/nonmatchings/map3_s00", func_800D0664);
 
@@ -124,7 +124,7 @@ INCLUDE_ASM("asm/maps/map3_s00/nonmatchings/map3_s00", func_800D0760);
 
 INCLUDE_ASM("asm/maps/map3_s00/nonmatchings/map3_s00", func_800D0828);
 
-INCLUDE_ASM("asm/maps/map3_s00/nonmatchings/map3_s00", func_800D0848);
+#include "maps/shared/sharedFunc_800D923C_0_s00.h" // 0x800D0848
 
 INCLUDE_ASM("asm/maps/map3_s00/nonmatchings/map3_s00", func_800D08A8);
 

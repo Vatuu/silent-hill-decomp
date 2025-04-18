@@ -1,4 +1,4 @@
-void sharedFunc_800D88AC(s_SubCharacter* playerChara)
+void sharedFunc_800D88AC_0_s00(s_SubCharacter* playerChara)
 {
     playerChara->properties_E4[PlayerProperty_Unk4] = 0;
     playerChara->properties_E4[PlayerProperty_Unk3] = 0;
