@@ -62,7 +62,7 @@ void func_8004B6D4(s16 arg0, s16 arg1) // 0x8004B6D4
         D_800C38FC = arg0 + (-g_GameWork.gsScreenWidth_588 / 2);
         D_800C391C = D_800C38FC;
     }
-    
+
     if (arg1 != NO_VALUE)
     {
         D_800C38FE = arg1 + (-g_GameWork.gsScreenHeight_58A / 2);
@@ -76,7 +76,7 @@ void func_8004B74C(s16 arg0) // 0x8004B74C
         D_800C391E = 0;
         return;
     }
-    
+
     D_800C391E = arg0;
 }
 
@@ -116,7 +116,7 @@ s32 func_8004C45C() // 0x8004C45C
         // Already in inventory, can't add new one.
         if (g_SaveGamePtr->items_0[i].id == InventoryItemId_HyperBlaster)
         {
-            return -1;
+            return NO_VALUE;
         }
     }
 
@@ -218,7 +218,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", GameFs_Tim00TIMLoad);
     {
         return;
     }
-    
+
     Fs_QueueStartReadTim(FILE_ITEM_TIM00_TIM, FS_BUFFER_1, &D_800A906C);
     g_SysWork.flags_2352 |= 1 << 0;
 }*/
@@ -274,7 +274,6 @@ void func_80054928() // 0x80054928
 {
     s32 i;
     s_800C39A8* ptr;
-    
 
     for (i = 0; i < 10; i++)
     {
@@ -290,7 +289,7 @@ void func_80054928() // 0x80054928
         ptr->field_1D = val;
         ptr->field_1E = val;
     }
-    
+
     GsSetAmbient(1024, 1024, 1024);
     GsSetLightMode(1);
 }
@@ -495,12 +494,12 @@ void func_8005B474(s32* arg0, u32 arg1, s32 idx) // 0x8005B474
     var_a1 = arg1;
     temp_a2 = var_a1 + (idx * 24);
     ptr = arg0 + 1;
-    
+
     if (var_a1 >= temp_a2)
     {
         return;
     }
-    
+
     do
     {
         *ptr = var_a1;
@@ -530,12 +529,12 @@ s16 func_8005BF38(s32 arg0) // 0x8005BF38
 
     temp = arg0 & 0xFFF;
     res = temp;
-    
+
     if (temp >= 0x801)
     {
         res = temp | 0xF000;
     }
-    
+
     return res;
 }
 
@@ -682,12 +681,12 @@ s32 func_8006A3B4(s32 arg0, s32 arg1, s32 arg2) // 0x8006A3B4
     var0 = SetSp(0x1F8003D8);
     var1 = func_8006A42C(arg0, arg1, arg2);
     SetSp(var0);
-    
+
     if (var1 == NO_VALUE)
     {
         var1 = 1;
     }
-    
+
     return var1;
 }
 
@@ -978,7 +977,7 @@ s32 func_8007F26C() // 0x8007F26C
     {
         return 1;
     }
-    
+
     return 0;
 }
 
@@ -992,7 +991,7 @@ s32 func_8007F2AC() // 0x8007F2AC
     {
         return 1;
     }
-    
+
     return 0;
 }
 
@@ -1063,7 +1062,7 @@ s32 func_80080478(VECTOR3* pos0, VECTOR3* pos1) // 0x80080478
     xDelta = x1 - x0;
     zDelta = z1 - z0;
     atan2Delta = ratan2(xDelta, zDelta);
-    
+
     unk = func_8008A058(func_80080540(xDelta, 0, zDelta));
     return (ratan2(unk, y1 - y0) << 0x10) | (atan2Delta & 0xFFFF);
 }
@@ -1083,7 +1082,7 @@ s32 PreservedSignSubtract(s32 value, s32 subtractor) // 0x80080594
 {
     s32 signBit;
     s32 absDiff;
-    
+
     signBit = value >> 31;  
     absDiff = ((value ^ signBit) - signBit) - subtractor;  
     return ((absDiff & ~(absDiff >> 31)) ^ signBit) - signBit; 
@@ -1101,15 +1100,15 @@ s32 func_800806AC(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x800806AC
     {
         return res;
     }
-    
+
     res = ~arg0 == 0;
     if (res != 0)
     {
         return res;
     }
-    
+
     func_800699F8(&D_800C4620, arg1, arg3);
-    
+
     res = arg2 < D_800C4620.field_0;
     if (res != 0)
     {
@@ -1117,10 +1116,10 @@ s32 func_800806AC(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x800806AC
         if (res != 0)
         {
             res = (arg0 & (1 << D_800C4620.field_8));
-            return res > 0U; 
+            return res > 0; 
         }
     }
-    
+
     return res;
 }
 

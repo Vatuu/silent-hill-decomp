@@ -97,3 +97,33 @@ Acronyms and abbreviations should be treated as words. Example:
 `GfxFunc` instead of `GFXFunc`, `myId` instead of `myID`.
 
 Custom primitive type aliases should be used (`s32`, `u32`, `s16`, etc.) instead of the defaults of the language to ensure type sizes are always clear.
+
+Use `/** */`-style comments for formal documentaion and `//`-style comments for casual development notes. Examples:
+
+```C
+/** @brief Stores my data. */
+typedef struct _MyStruct
+{
+    VECTOR3 pos_0;   /** Q27.4 */
+    s32     field_C; // Maybe index?
+} s_MyStruct;
+
+/** @brief Do something.
+ *
+ * This function does something.
+ *
+ * @param dist My distance.
+ * @return 0 if `dist` is greater than or equal to 0,
+ *         0x10 otherwise.
+ */
+static inline s32 Math_MyFunc(s32 dist)
+{
+    if (dist >= 0)
+    {
+        return 0;
+    }
+
+    // Value might be enum entry from `e_MyEnum`, but it's unclear right now.
+    return 0x10;
+}
+```
