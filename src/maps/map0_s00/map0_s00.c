@@ -58,12 +58,10 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D0B18);
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D0CB8);
 
-/* Shared Functions MAP0_S01 */
 void func_800D0E04()
 {
     func_8004690C(0x550);
 }
-/* Shared Functions End */
 
 void func_800D0E24() {}
 
@@ -73,7 +71,6 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D0E34);
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D1C38);
 
-/* Shared Functions MAP0_S01 */
 void func_800D209C()
 {
     g_SysWork.field_47 = NO_VALUE;
@@ -87,7 +84,6 @@ void func_800D20D8()
 {
     g_SysWork.field_2358 = 0;
 }
-/* Shared Functions End */
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D20E4);
 
@@ -138,7 +134,6 @@ void func_800D2C7C(s32 arg0)
     g_SysWork.player_4C.extra_128.field_24 = 0;
 }
 
-/* Shared Functions MAP0_S01 */
 void func_800D2D2C()
 {
     D_800C4606++;
@@ -172,11 +167,9 @@ void func_800D2D84()
     extra->model_0.anim_4.flags_2 |= AnimFlag_Unk1;
     chara->model_0.anim_4.flags_2 |= AnimFlag_Unk1;
 }
-/* Shared Functions End */
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D2DAC);
 
-/* Shared Functions MAP0_S01 */
 s32 func_800D2E50()
 {
     return g_SysWork.player_4C.chara_0.field_126 == 0;
@@ -224,7 +217,6 @@ void func_800D2EF4()
 {
     g_SysWork.field_47 = D_800DD59C;
 }
-/* Shared Functions End */
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D2F08);
 
@@ -278,7 +270,6 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D8310);
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D8748);
 
-/* Shared Functions MAP0_S01 */
 void func_800D8888(s_SubCharacter* chara)
 {
     func_800D923C(chara);
@@ -318,7 +309,6 @@ void func_800D88C0(s_SubCharacter* playerChara, s32 arg1)
     playerChara->model_0.anim_4.flags_2 |= AnimFlag_Unk1;
 }
 
-/* Shared Functions MAP0_S01 */
 void func_800D8904(s_SubCharacter* playerChara, s32 afkTime)
 {
     playerChara->field_126 = 0;
@@ -347,13 +337,11 @@ void func_800D8950(s_SubCharacter* chara)
 {
     chara->model_0.anim_4.flags_2 |= AnimFlag_Unk1;
 }
-/* Shared Functions End */
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D8964);
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D8A00);
 
-/* Shared Functions MAP0_S01 */
 void func_800D9064(s_SubCharacter* chara)
 {
     chara->model_0.anim_4.flags_2 |= AnimFlag_Unk2;
@@ -363,13 +351,11 @@ void func_800D9078(s_SubCharacter* chara)
 {
     chara->model_0.anim_4.flags_2 &= ~AnimFlag_Unk2;
 }
-/* Shared Functions End */
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D908C);
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D9188);
 
-/* Shared Functions MAP0_S01 */
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D921C);
 
 void func_800D923C(s_SubCharacter* playerChara)
@@ -402,7 +388,6 @@ s32 func_800D929C()
 {
     return D_800A999C;
 }
-/* Shared Functions End */
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D92AC);
 

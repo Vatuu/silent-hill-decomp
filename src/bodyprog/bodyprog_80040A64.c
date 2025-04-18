@@ -1011,7 +1011,16 @@ void func_8004690C(s32 arg0) // 0x8004690C
     func_8004692C(arg0 & 0xFFFF);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_8004692C);
+void func_8004692C(s32 arg0) // 0x8004692C
+{
+    if ((arg0 & 0xFFFF) != 0x500)
+	{
+        D_800C15C4 = arg0 - 0x500;
+        D_800C15C6 = D_800ACAA8[D_800C15C4].field_2;
+        D_800C15C8 = (D_800ACAA8[D_800C15C4].field_4 & 0xFF) << 8;
+        SdVoKeyOff(D_800C15C6, D_800C15C8);
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800469AC);
 
@@ -1083,28 +1092,70 @@ void Sd_SetReverbEnable(s32 mode)
     SdSetSerialAttr(0, 1, mode & 0xFF);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80047B24);
+void func_80047B24(s32 arg0) // 0x80047B24
+{
+    if (D_800C1658.field_4 != 0)
+	{
+        func_800478DC(2);
+    }
+    D_800C37D0 = 0;
+    func_800478DC(arg0 & 0xFF);
+    D_800C1658.field_15 = 1;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80047B80);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80047D1C);
-
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80047D50);
-
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80047DB0);
-
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80047E3C);
+void func_80047D1C(void) // 0x80047D1C
+{
+    D_800C37CC = 0;
+    SdVabClose(D_800C37C8);
+    D_800C1670.field_0 = 2;
+}
 
 // ========================================
 // CD
 // ========================================
+
+void func_80047D50(void) // 0x80047D50
+{
+    CdlLOC* sp10;
+
+    if (!(func_80048954(2, CdIntToPos(D_800C37D4->field_8 + ((u32) D_800C37CC >> 0xB), &sp10), 0) & 0xFF))
+	{
+        D_800C1670.field_0 = 3;
+	}
+}
+
+void func_80047DB0() // 0x80047DB0
+{
+    if (CdSync(1, 0) == 2)
+	{
+        if (D_800C37D4->field_4 < 51200)
+		{
+            CdRead((D_800C37D4->field_4 + 2047) / 2048, CD_ADDR_0, 128);
+        }
+		else
+		{
+            CdRead(25, CD_ADDR_0, 128);
+        }
+        if (D_800C1670.field_0)
+        {
+            char unk = -unk;
+        }
+        D_800C1670.field_0 = 4;
+        D_800C1658.field_0 = 0;
+    }
+    D_800C1658.field_0++;
+}
+
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80047E3C);
 
 void func_80047F18() // 0x80047F18
 {
     s32 var;
     s32* ptr;
 
-    if (D_800C37D4->field_4 <= 0xC7FFu)
+    if (D_800C37D4->field_4 < 51200)
     {
         var = SdVabTransBody(D_800C37D4->field_2 + CD_ADDR_0, D_800C37C8);
         ptr = &D_800C37D4->field_4;
@@ -1154,13 +1205,13 @@ void func_8004807C() // 0x8004807C
     }
     
     var = D_800C37D4->field_4 - D_800C37CC;
-    if (var <= 0xC7FFU)
+    if (var < 51200)
     {
-        CdRead(((var + 0x7FF) >> 11), CD_ADDR_0, 0x80);
+        CdRead(((var + 2047) / 2048), CD_ADDR_0, 128);
     }
     else
     {
-        CdRead(25, CD_ADDR_0, 0x80);
+        CdRead(25, CD_ADDR_0, 128);
     }
     
     D_800C1670.field_0 = 8;
@@ -1177,7 +1228,7 @@ void func_800480FC() // 0x800480FC
     }
     
     var1 = D_800C37D4->field_4 - D_800C37CC;
-    if (var1 <= 0xC7FFU)
+    if (var1 < 51200)
     {
         var0 = SdVabTransBodyPartly((u8*)CD_ADDR_0, var1, D_800C37C8);
         D_800C37CC = D_800C37D4->field_4;
@@ -1291,7 +1342,7 @@ void func_80048424() // 0x80048424
 {
     if (CdSync(1, 0) == 2)
     {
-        CdRead((D_800C37D8->field_4 + 0x7FF) >> 11, FS_BUFFER_1, 0x80);
+        CdRead((D_800C37D8->field_4 + 2047) / 2048, FS_BUFFER_1, 128);
         
         D_800C1670.field_0 = 4;
         D_800C1658.field_0  = 0;
@@ -1341,7 +1392,7 @@ s32 func_80048954(s32 com, u8* param, u8* res) // 0x80048954
         D_800C1670.field_1 = 0;
         D_800C1670.field_2 = 0;
         D_800C1670.field_3 = 0;
-        D_800C1658.field_0  = 0;
+        D_800C1658.field_0 = 0;
     }
 
     return 1;
