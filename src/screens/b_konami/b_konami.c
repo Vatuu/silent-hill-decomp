@@ -86,7 +86,7 @@ void GameState_KonamiLogo_Update() // 0x800C95AC
                 break;
         }
 
-        func_800C9FB8();
+        Gfx_KonamiScreenDraw();
         func_8003260C();
         Fs_QueueUpdate();
         func_8002EB88();
@@ -321,7 +321,7 @@ void GameState_KcetLogo_Update() // 0x800C99A4
                 break;
         }
         
-        func_800CA120();
+        Gfx_KcetScreenDraw();
         func_8003260C();
         Fs_QueueUpdate();
         func_8002EB88();
@@ -366,7 +366,7 @@ void func_800C9E6C(s_FsImageDesc* image, s32 otz, s32 vramX, s32 vramY, s32 w, s
     GsOUT_PACKET_P = (u8*)prim + 28;
 }
 
-void func_800C9FB8() // 0x800C9FB8
+void Gfx_KonamiScreenDraw() // 0x800C9FB8
 {
     s32* ptr;
 
@@ -385,7 +385,7 @@ void func_800C9FB8() // 0x800C9FB8
     GsOUT_PACKET_P = (PACKET*)((u8*)GsOUT_PACKET_P + sizeof(TILE));
 }
 
-void func_800CA120() // 0x800CA120
+void Gfx_KcetScreenDraw() // 0x800CA120
 {
     u32* ptr;
 

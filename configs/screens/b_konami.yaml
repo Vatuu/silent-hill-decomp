@@ -56,12 +56,12 @@ segments:
     subalign: 4
     subsegments:
       - [0x0, pad]
-      - [0x8, .rodata, b_konami] # Jump table.
+      - [0x8, .rodata, b_konami]
 
       - [0x34, c, b_konami]
 
       - [0xF78, .data, b_konami]
-  # Random garbage data at end, define as bin file to make splat mostly ignore it.
+  # Random garbage data at end, define as bin file to make Splat ignore it.
   - name: footer_data
     type: bin
     start: 0xF9C

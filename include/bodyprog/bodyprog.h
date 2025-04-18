@@ -142,6 +142,12 @@ typedef struct
     s32 field_14;
 } s_800A992C;
 
+typedef struct {
+    s16 unk_0;
+    s16 field_2;
+    s8 field_4;
+} s_800ACAA8;
+
 typedef struct
 {
     s8 unk_0[15];
@@ -260,7 +266,7 @@ typedef struct
 {
     s8  unk_0[2];
     u16 field_2;
-    s32 field_4;
+    u32 field_4;
     s32 field_8;
 } s_800C37D4;
 // Maybe the same.
@@ -690,9 +696,16 @@ extern s8* D_800C15B0;
 
 extern s8 D_800C15B4;
 
+extern s16 D_800C15C4;
+
+extern s16 D_800C15C6;
+
+extern s16 D_800C15C8;
+
 extern s16 D_800C15F8[];
 
 extern s_800C1658 D_800C1658;
+
 extern u16 D_800C1666;
 
 extern s8 D_800C166A;
@@ -865,6 +878,8 @@ extern s_ControllerData* g_Demo_ControllerPacket; // 0x800C4890
 extern s32 g_Demo_DemoStep; // 0x800C4894
 
 extern s_FsImageDesc g_MainImg0; // 0x80022C74
+
+extern s_800ACAA8 D_800ACAA8[];
 
 extern s_800AD4C8 D_800AD4C8[];
 
@@ -1090,6 +1105,8 @@ s16 Sd_GetVolSe(s16 arg0);
 void Sd_SetReverbDepth(s8 depth);
 
 void Sd_SetReverbEnable(s32 mode);
+
+void func_80047B24(s32 arg0);
 
 void func_80047F18();
 

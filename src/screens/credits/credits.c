@@ -56,9 +56,7 @@ s32 func_801E2ED8() // 0x801E2ED8
     return 0;
 }
 
-// TODO: Needs jmptable
-INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E2FC0);
-/*s32 func_801E2FC0() // 0x801E2FC0
+s32 func_801E2FC0() // 0x801E2FC0
 {
     switch (D_800BCD0C)
     {
@@ -87,11 +85,9 @@ INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E2FC0);
     }
 
     return 0;
-}*/
+}
 
-// TODO: Needs rodata
-INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", GameState_Unk15_Update); // 0x801E3094
-/*void GameState_Unk15_Update() // 0x801E3094
+void GameState_Unk15_Update() // 0x801E3094
 {
     const s32* (*routines[3])() = { func_801E3124, func_801E342C, func_801E3304 };
     
@@ -103,7 +99,7 @@ INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", GameState_Unk15_Update);
         g_GameWork.gameStateStep_598[2] = 0;
         g_GameWork.gameStateStep_598[0]++;
     }
-}*/
+}
 
 s32 func_801E3124() // 0x801E3124
 {

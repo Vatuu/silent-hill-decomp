@@ -235,9 +235,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_80054558);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_80054634);
 
-// TODO: Requires jump table.
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_800546A8);
-/*void func_800546A8(s32 arg0) // 0x800546A8
+void func_800546A8(s32 arg0) // 0x800546A8
 {
     switch ((u8)arg0)
     {
@@ -264,7 +262,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_800546A8);
             func_8003DD80(1, 1);
             break;
     }
-}*/
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_80054720);
 

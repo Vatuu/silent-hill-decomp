@@ -77,7 +77,7 @@ Progress bars powered by [decomp.dev](https://decomp.dev)
         </tr>
         <tr>
             <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?unit=screens/stream/stream"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&measure=code&unit=screens/stream/stream&color=rgb(0,200,0)"/></a></td>
-            <td>Full motion videos stream logic.</td>
+            <td colspan=2>Full motion videos stream logic.</td>
         </tr>
         <tr>
           <th colspan=3>💾 SAVELOAD.BIN 💾</th>
