@@ -1,4 +1,4 @@
-#include "common.h"
+#include "game.h"
 
 INCLUDE_ASM("asm/maps/map6_s02/nonmatchings/map6_s02", func_800CABA0);
 
@@ -78,27 +78,27 @@ INCLUDE_ASM("asm/maps/map6_s02/nonmatchings/map6_s02", func_800CD988);
 
 INCLUDE_ASM("asm/maps/map6_s02/nonmatchings/map6_s02", func_800CDE8C);
 
-INCLUDE_ASM("asm/maps/map6_s02/nonmatchings/map6_s02", func_800CDEB0);
+#include "maps/shared/sharedFunc_800D88AC_0_s00.h" // 0x800CDEB0
 
 INCLUDE_ASM("asm/maps/map6_s02/nonmatchings/map6_s02", func_800CDEC4);
 
-INCLUDE_ASM("asm/maps/map6_s02/nonmatchings/map6_s02", func_800CDF08);
+#include "maps/shared/sharedFunc_800D8904_0_s00.h" // 0x800CDF08
 
-INCLUDE_ASM("asm/maps/map6_s02/nonmatchings/map6_s02", func_800CDF20);
+#include "maps/shared/sharedFunc_800D891C_0_s00.h" // 0x800CDF20
 
-INCLUDE_ASM("asm/maps/map6_s02/nonmatchings/map6_s02", func_800CDF2C);
+#include "maps/shared/sharedFunc_800D8928_0_s00.h" // 0x800CDF2C
 
-INCLUDE_ASM("asm/maps/map6_s02/nonmatchings/map6_s02", func_800CDF40);
+#include "maps/shared/sharedFunc_800D893C_0_s00.h" // 0x800CDF40
 
-INCLUDE_ASM("asm/maps/map6_s02/nonmatchings/map6_s02", func_800CDF54);
+#include "maps/shared/sharedFunc_800D8950_0_s00.h" // 0x800CDF54
 
 INCLUDE_ASM("asm/maps/map6_s02/nonmatchings/map6_s02", func_800CDF68);
 
 INCLUDE_ASM("asm/maps/map6_s02/nonmatchings/map6_s02", func_800CDFF4);
 
-INCLUDE_ASM("asm/maps/map6_s02/nonmatchings/map6_s02", func_800CE658);
+#include "maps/shared/sharedFunc_800D9064_0_s00.h" // 0x800CE658
 
-INCLUDE_ASM("asm/maps/map6_s02/nonmatchings/map6_s02", func_800CE66C);
+#include "maps/shared/sharedFunc_800D9078_0_s00.h" // 0x800CE66C
 
 INCLUDE_ASM("asm/maps/map6_s02/nonmatchings/map6_s02", func_800CE680);
 
@@ -106,7 +106,7 @@ INCLUDE_ASM("asm/maps/map6_s02/nonmatchings/map6_s02", func_800CE77C);
 
 INCLUDE_ASM("asm/maps/map6_s02/nonmatchings/map6_s02", func_800CE810);
 
-INCLUDE_ASM("asm/maps/map6_s02/nonmatchings/map6_s02", func_800CE81C);
+#include "maps/shared/sharedFunc_800D923C_0_s00.h" // 0x800CE81C
 
 INCLUDE_ASM("asm/maps/map6_s02/nonmatchings/map6_s02", func_800CE87C);
 

@@ -1,4 +1,4 @@
-#include "common.h"
+#include "game.h"
 
 INCLUDE_ASM("asm/maps/map5_s02/nonmatchings/map5_s02", func_800CB6CC);
 
@@ -116,27 +116,27 @@ INCLUDE_ASM("asm/maps/map5_s02/nonmatchings/map5_s02", func_800D30FC);
 
 INCLUDE_ASM("asm/maps/map5_s02/nonmatchings/map5_s02", func_800D3AC0);
 
-INCLUDE_ASM("asm/maps/map5_s02/nonmatchings/map5_s02", func_800D3AFC);
+#include "maps/shared/sharedFunc_800D88AC_0_s00.h" // 0x800D3AFC
 
 INCLUDE_ASM("asm/maps/map5_s02/nonmatchings/map5_s02", func_800D3B10);
 
-INCLUDE_ASM("asm/maps/map5_s02/nonmatchings/map5_s02", func_800D3B54);
+#include "maps/shared/sharedFunc_800D8904_0_s00.h" // 0x800D3B54
 
-INCLUDE_ASM("asm/maps/map5_s02/nonmatchings/map5_s02", func_800D3B6C);
+#include "maps/shared/sharedFunc_800D891C_0_s00.h" // 0x800D3B6C
 
-INCLUDE_ASM("asm/maps/map5_s02/nonmatchings/map5_s02", func_800D3B78);
+#include "maps/shared/sharedFunc_800D8928_0_s00.h" // 0x800D3B78
 
-INCLUDE_ASM("asm/maps/map5_s02/nonmatchings/map5_s02", func_800D3B8C);
+#include "maps/shared/sharedFunc_800D893C_0_s00.h" // 0x800D3B8C
 
-INCLUDE_ASM("asm/maps/map5_s02/nonmatchings/map5_s02", func_800D3BA0);
+#include "maps/shared/sharedFunc_800D8950_0_s00.h" // 0x800D3BA0
 
 INCLUDE_ASM("asm/maps/map5_s02/nonmatchings/map5_s02", func_800D3BB4);
 
 INCLUDE_ASM("asm/maps/map5_s02/nonmatchings/map5_s02", func_800D3C50);
 
-INCLUDE_ASM("asm/maps/map5_s02/nonmatchings/map5_s02", func_800D42B4);
+#include "maps/shared/sharedFunc_800D9064_0_s00.h" // 0x800D42B4
 
-INCLUDE_ASM("asm/maps/map5_s02/nonmatchings/map5_s02", func_800D42C8);
+#include "maps/shared/sharedFunc_800D9078_0_s00.h" // 0x800D42C8
 
 INCLUDE_ASM("asm/maps/map5_s02/nonmatchings/map5_s02", func_800D42DC);
 
@@ -144,7 +144,7 @@ INCLUDE_ASM("asm/maps/map5_s02/nonmatchings/map5_s02", func_800D43D8);
 
 INCLUDE_ASM("asm/maps/map5_s02/nonmatchings/map5_s02", func_800D44A0);
 
-INCLUDE_ASM("asm/maps/map5_s02/nonmatchings/map5_s02", func_800D44AC);
+#include "maps/shared/sharedFunc_800D923C_0_s00.h" // 0x800D44AC
 
 INCLUDE_ASM("asm/maps/map5_s02/nonmatchings/map5_s02", func_800D450C);
 

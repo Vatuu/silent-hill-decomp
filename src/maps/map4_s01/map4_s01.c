@@ -1,4 +1,4 @@
-#include "common.h"
+#include "game.h"
 
 INCLUDE_ASM("asm/maps/map4_s01/nonmatchings/map4_s01", func_800CC19C);
 
@@ -82,27 +82,27 @@ INCLUDE_ASM("asm/maps/map4_s01/nonmatchings/map4_s01", func_800D0044);
 
 INCLUDE_ASM("asm/maps/map4_s01/nonmatchings/map4_s01", func_800D1084);
 
-INCLUDE_ASM("asm/maps/map4_s01/nonmatchings/map4_s01", func_800D10C0);
+#include "maps/shared/sharedFunc_800D88AC_0_s00.h" // 0x800D10C0
 
 INCLUDE_ASM("asm/maps/map4_s01/nonmatchings/map4_s01", func_800D10D4);
 
-INCLUDE_ASM("asm/maps/map4_s01/nonmatchings/map4_s01", func_800D1118);
+#include "maps/shared/sharedFunc_800D8904_0_s00.h" // 0x800D1118
 
-INCLUDE_ASM("asm/maps/map4_s01/nonmatchings/map4_s01", func_800D1130);
+#include "maps/shared/sharedFunc_800D891C_0_s00.h" // 0x800D1130
 
-INCLUDE_ASM("asm/maps/map4_s01/nonmatchings/map4_s01", func_800D113C);
+#include "maps/shared/sharedFunc_800D8928_0_s00.h" // 0x800D113C
 
-INCLUDE_ASM("asm/maps/map4_s01/nonmatchings/map4_s01", func_800D1150);
+#include "maps/shared/sharedFunc_800D893C_0_s00.h" // 0x800D1150
 
-INCLUDE_ASM("asm/maps/map4_s01/nonmatchings/map4_s01", func_800D1164);
+#include "maps/shared/sharedFunc_800D8950_0_s00.h" // 0x800D1164
 
 INCLUDE_ASM("asm/maps/map4_s01/nonmatchings/map4_s01", func_800D1178);
 
 INCLUDE_ASM("asm/maps/map4_s01/nonmatchings/map4_s01", func_800D1214);
 
-INCLUDE_ASM("asm/maps/map4_s01/nonmatchings/map4_s01", func_800D1878);
+#include "maps/shared/sharedFunc_800D9064_0_s00.h" // 0x800D1878
 
-INCLUDE_ASM("asm/maps/map4_s01/nonmatchings/map4_s01", func_800D188C);
+#include "maps/shared/sharedFunc_800D9078_0_s00.h" // 0x800D188C
 
 INCLUDE_ASM("asm/maps/map4_s01/nonmatchings/map4_s01", func_800D18A0);
 
@@ -110,7 +110,7 @@ INCLUDE_ASM("asm/maps/map4_s01/nonmatchings/map4_s01", func_800D199C);
 
 INCLUDE_ASM("asm/maps/map4_s01/nonmatchings/map4_s01", func_800D1A50);
 
-INCLUDE_ASM("asm/maps/map4_s01/nonmatchings/map4_s01", func_800D1A70);
+#include "maps/shared/sharedFunc_800D923C_0_s00.h" // 0x800D1A70
 
 INCLUDE_ASM("asm/maps/map4_s01/nonmatchings/map4_s01", func_800D1AD0);
 
