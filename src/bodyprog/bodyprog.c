@@ -1600,7 +1600,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", SysState_GameOver_Update); // 
 /** TODO: Needs jump table.
 void SysState_GameOver_Update() // 0x8003A52C
 {
-    extern u8   g_SysState_GameOver_CurTipIndex; // only used in this func, maybe g_SysState_GameOver_CurTipIndex?
+    extern u8   g_SysState_GameOver_CurTipIndex; // Only used in this func, maybe static.
     extern char D_80025448[];                    // "\aGAME_OVER" - needs rodata migration
 
     u16  seenTipIndexes[1];
