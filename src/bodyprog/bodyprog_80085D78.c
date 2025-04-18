@@ -22,7 +22,7 @@ void func_80085D78(s32 arg0)
         g_SysWork.field_10++;
         return;
     }
-    
+
     g_SysWork.field_28 = 0;
     g_SysWork.field_10 = 0;
     g_SysWork.timer_2C = 0;
@@ -68,7 +68,7 @@ void func_80085E6C(s32 arg0, s32 arg1)
 
     unkTime = g_SysWork.timer_2C + g_DeltaTime1;
     g_SysWork.timer_2C = unkTime;
-    
+
     if (arg0 < unkTime)
     {
         func_80085D78(arg1);
@@ -132,7 +132,7 @@ void func_8008616C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4)
             {
                 D_800B5C30 = arg3;
             }
-            
+
             if (arg1 != 0)
             {
                 if (arg2 == 0)
@@ -164,15 +164,14 @@ void func_8008616C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4)
             {
                 g_SysWork.field_30 = 22;
             }
-            
+
             if (arg0 != 0)
             {
                 g_SysWork.field_14++;
                 break;
             }
-            
             break;
-        
+
         case 1:
             if (arg2 < 2)
             {
@@ -212,7 +211,6 @@ void func_8008616C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4)
 block_32:
                 func_80085D78(arg4);
             }
-            
             break;
     }
 }
@@ -237,12 +235,12 @@ void func_800862F8(s32 arg0, s32 arg1, s32 arg2) // 0x800862F8
             }
         }
     }
-    
+
     switch (switchVar)
     {
         case 0:
             Fs_QueueStartReadTim(arg1, FS_BUFFER_1, &D_800A902C);
-            
+
             if (arg0 != 0)
             {
                 g_SysWork.field_14++;
@@ -260,30 +258,30 @@ void func_800862F8(s32 arg0, s32 arg1, s32 arg2) // 0x800862F8
                 func_80085D78(arg2);
             }
             break;
-        
+
         case 2:
             func_80031AAC(&D_800A902C);
             break;
-            
+
         case 3:
             DrawSync(0);
             StoreImage(&D_8002AB10, IMAGE_BUFFER_2);
             DrawSync(0);
             break;
-            
+
         case 4:
             Fs_QueueStartReadTim(arg1, FS_BUFFER_1, &D_800A9A04);
-            
+
             if (arg0 == 8)
             {
                 g_SysWork.field_14 = 1;
             }
             break;
-            
+
         case 5:
             func_80031AAC(&D_800A9A04);
             break;
-            
+
         case 6:
             LoadImage(&D_8002AB10, IMAGE_BUFFER_2);
             DrawSync(0);
@@ -329,18 +327,18 @@ void func_800867B4(s32 caseParam, s32 idx) // 0x800867B4
             DrawSync(0);
 
             // TODO: What are these offsets?
-            Fs_QueueStartReadTim(D_800A99B4[idx] + 0x768, FS_BUFFER_2, &D_800A901C);
-            Fs_QueueStartReadTim(D_800A99CC[idx] + 0x776, FS_BUFFER_1, &D_800A9024);
-            
+            Fs_QueueStartReadTim(D_800A99B4[idx] + 1896, FS_BUFFER_2, &D_800A901C);
+            Fs_QueueStartReadTim(D_800A99CC[idx] + 1910, FS_BUFFER_1, &D_800A9024);
+
             Gfx_Init(0x140, 1);
             GsSwapDispBuff();
             Fs_QueueWaitForEmpty();
             break;
-        
+
         case 1:
             func_800314EC(&D_800A901C);
             break;
-        
+
         case 2:
             LoadImage(&D_8002AB10, IMAGE_BUFFER_2);
             DrawSync(0);
@@ -361,7 +359,7 @@ s32 func_800868F4(s32 arg0, s32 arg1, s32 idx)
 {
     D_800C4710[idx] += g_DeltaTime0;
     D_800C4710[idx] = (arg1 < D_800C4710[idx]) ? arg1 : D_800C4710[idx];
-    
+
     return (arg0 * D_800C4710[idx]) / arg1;
 }
 
@@ -377,7 +375,7 @@ void func_800869E4(u8* arg0, u8* arg1, u16* arg2) // 0x800869E4
     s32 ret;
 
     g_SysWork.field_22A0 |= 1 << 5;
-    
+
     ret = func_800365B8();
     if (ret == 1)
     {

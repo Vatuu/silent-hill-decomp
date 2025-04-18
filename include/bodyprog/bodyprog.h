@@ -1493,6 +1493,16 @@ void func_8003A16C();
 
 void SysWork_SaveGameReadPlayer();
 
+void SysState_EventCallFunc_Update();
+
+void SysState_EventSetFlag_Update();
+
+void SysState_EventPlaySound_Update();
+
+void SysState_GameOver_Update();
+
+void GameState_MapEvent_Update();
+
 void func_8003BC8C();
 
 void func_8003BCF4();

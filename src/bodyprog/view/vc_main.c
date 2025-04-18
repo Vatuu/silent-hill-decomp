@@ -553,7 +553,7 @@ void vcPreSetDataInVC_WORK(VC_WORK* w_p, VC_ROAD_DATA* vc_road_ary_list) // 0x80
 
     vcSetTHROUGH_DOOR_CAM_PARAM_in_VC_WORK(&vcWork, VC_TDSC_MAIN);
     vcSetNearestEnemyDataInVC_WORK(w_p);
-    vcSetNearRoadAryByCharaPos(w_p, vc_road_ary_list, 0x14000, 0, w_p->nearest_enemy_p_2DC != NULL);
+    vcSetNearRoadAryByCharaPos(w_p, vc_road_ary_list, FP_METER(320.0f), 0, w_p->nearest_enemy_p_2DC != NULL);
 }
 
 void vcSetTHROUGH_DOOR_CAM_PARAM_in_VC_WORK(VC_WORK* w_p, enum _THROUGH_DOOR_SET_CMD_TYPE set_cmd_type) // 0x80081CBC

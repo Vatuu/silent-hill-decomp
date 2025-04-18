@@ -47,7 +47,7 @@
 #define FP_MULTIPLY_FLOAT(val0, val1, shift) \
     (FP_MULTIPLY((val0), (s32)FP_FLOAT_TO((val1), (shift)), (shift)))
 
-/** Multiplies an integer by a float converted to fixed-point Q format, using 64-bit intermediate via Math_MulFixed for higher precision. */
+/** Multiplies an integer by a float converted to fixed-point Q format, using 64-bit intermediate via `Math_MulFixed` for higher precision. */
 #define FP_MULTIPLY_PRECISE(val0, val1, shift) \
     (Math_MulFixed((val0), FP_FLOAT_TO((val1), (shift)), (shift)))
 
@@ -55,7 +55,7 @@
 #define FP_ALPHA(alpha) \
     (s16)FP_FLOAT_TO(alpha, (Q12_SHIFT))
 
-/** Converts a normalized color value in the range [0.0f, 1.0f] to an 8-bit color format in the range [0, 255]. */
+/** Converts a normalized color value in the range [0.0f, 1.0f] to an 8-bit color value in the range [0, 255]. */
 #define FP_COLOR(val) \
     (u8)((val) * 255)
 

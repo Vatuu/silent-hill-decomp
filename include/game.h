@@ -451,7 +451,7 @@ typedef struct _GameWork
     u8                   optWalkRunCtrl_2B;         /** Normal: 0, Reverse: 1, default: Normal. */
     u8                   optAutoAiming_2C;          /** On: 0, Off: 1, default: On. */
     s8                   optBulletAdjust_2D;        /** x1-x6: Range [0, 5], default: x1. */
-    u16                  seenGameOverTips_2E[1];    /** Bitfield tracking seen game-over tips. Each bit corresponds to a tip index (0–15); set bits indicate seen tips. */
+    u16                  seenGameOverTips_2E[1];    /** Bitfield tracking seen game-over tips. Each bit corresponds to a tip index (0–15), set bits indicate seen tips. */
     s8                   unk_30[8];
     s_ControllerData     controllers_38[2];
     s_ShSaveGame         saveGame_90; // Backup savegame?
@@ -658,7 +658,7 @@ static inline void SysWork_StateSetNext(e_SysState sysState)
     g_SysWork.field_14       = 0;
 }
 
-/** @brief Increments the sysStateStep index inside SysWork. */
+/** @brief Increments the `sysStateStep` index in `g_SysWork`. */
 static inline void SysWork_StateStepIncrement()
 {
     g_SysWork.field_28 = 0;
@@ -720,12 +720,12 @@ static inline void SaveGame_EventFlagSet(u32 flagId)
     g_SaveGamePtr->eventFlags_168[flagIdx] |= 1 << flagBit;
 }
 
-/** @brief Checks if the given flag ID is set inside array of 16-bit flag values. */
-static inline int Flags16b_IsSet(u16* array, s32 flagId)
+/** @brief Checks if the given flag ID is set inside the array of 16-bit flag values. */
+static inline s32 Flags16b_IsSet(u16* array, s32 flagId)
 {
-    // BUG: `>> 5` divides flagId by 32 to get the index into array, but array is of 16-bit values.
-    // Maybe copy paste from a u32 version of the func.
-    return (array[flagId >> 5] >> (flagId & 0x1F)) & 1;
+    // BUG: `>> 5` divides flagId by 32 to get array index, but array is of 16-bit values.
+    // Maybe copy paste from `u32` version of func.
+    return (array[flagId >> 5] >> (flagId & 0x1F)) & (1 << 0);
 }
 
 #endif

@@ -1259,6 +1259,7 @@ void GameState_InGame_Update() // 0x80038BD4
             func_80037154();
             func_80036420();
             func_800892A4(1);
+
             g_IntervalVBlanks = 2;
             g_GameWork.gameStateStep_598[0]++;
             g_SysWork.field_22A0 |= 1 << 6;
@@ -1571,10 +1572,11 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", SysState_SaveMenu_Update); // 
 
 void SysState_EventCallFunc_Update() // 0x8003A3C8
 {
-    if ((g_MapEventParam->flags_8 >> 0xD) & 0x3F)
+    if ((g_MapEventParam->flags_8 >> 13) & 0x3F)
     {
         SaveGame_EventFlagSet(g_MapEventParam->eventFlagId_2);
     }
+
     g_DeltaTime0 = D_800BCD84;
     g_MapOverlayHeader.mapEventFuncs_20[g_MapEventIdx]();
 }
@@ -1598,12 +1600,14 @@ void SysState_EventPlaySound_Update() // 0x8003A4B4
 
 void SysState_GameOver_Update() // 0x8003A52C
 {
-    extern u8   g_SysState_GameOver_CurTipIndex; // Only used in this func, maybe static.
+    #define TIP_COUNT 15
+
+    extern u8   g_SysState_GameOver_TipIdx; // Only used in this func, maybe static.
     extern char D_80025448[];                    // "\aGAME_OVER" - needs rodata migration
 
-    u16  seenTipIndexes[1];
-    s32  tipIndex;
-    s32  var_s0; // tipRandCondition? not sure what good name is
+    u16  seenTipIdxs[1];
+    s32  tipIdx;
+    s32  randTipVal;
     u16* temp_a0;
 
     switch (g_SysWork.sysStateStep_C)
@@ -1622,89 +1626,95 @@ void SysState_GameOver_Update() // 0x8003A52C
             // If we've seen every game over tip, reset the flag bits
             if (g_GameWork.seenGameOverTips_2E[0] == 0x7FFF)
             {
-                g_GameWork.seenGameOverTips_2E[0] = 0U;
+                g_GameWork.seenGameOverTips_2E[0] = 0;
             }
 
-            var_s0 = 0;
+            randTipVal = 0;
 
-            seenTipIndexes[0] = g_GameWork.seenGameOverTips_2E[0];
-            for (tipIndex = 0; tipIndex < 15; tipIndex++)
+            seenTipIdxs[0] = g_GameWork.seenGameOverTips_2E[0];
+            for (tipIdx = 0; tipIdx < TIP_COUNT; tipIdx++)
             {
-                if (!Flags16b_IsSet(seenTipIndexes, tipIndex))
+                if (!Flags16b_IsSet(seenTipIdxs, tipIdx))
                 {
-                    if ((!(g_SysWork.field_24DC & 3) && tipIndex - 0xD >= 2U) ||
-                        ((g_SysWork.field_24DC & 3) && tipIndex - 0xD < 2U))
+                    if ((!(g_SysWork.field_24DC & 0x3) && (tipIdx - 13) >= 2u) ||
+                        ((g_SysWork.field_24DC & 0x3) && (tipIdx - 13) < 2u))
                     {
-                        var_s0 += 3;
+                        randTipVal += 3;
                     }
                     else
                     {
-                        var_s0 += 1;
+                        randTipVal++;
                     }
                 }
             }
 
-            var_s0 = (s32)Rng_Rand16() % var_s0;
+            randTipVal = (s32)Rng_Rand16() % randTipVal;
 
-            // var_s0 seems to go unused after this loop
-            // but it does get checked during the loop and can cause loop to exit early, affecting what tipIndex will contain
-            for (tipIndex = 0; tipIndex < 15; tipIndex++)
+            // `randTipVal` seems to go unused after loop, gets checked during loop and can cause early exit,
+            // thereby affecting what `tipIdx` will contain.
+            for (tipIdx = 0; tipIdx < TIP_COUNT; tipIdx++)
             {
-                if (!Flags16b_IsSet(seenTipIndexes, tipIndex))
+                if (!Flags16b_IsSet(seenTipIdxs, tipIdx))
                 {
-                    if ((!(g_SysWork.field_24DC & 3) && tipIndex - 0xD >= 2U) ||
-                        ((g_SysWork.field_24DC & 3) && tipIndex - 0xD < 2U))
+                    if ((!(g_SysWork.field_24DC & 0x3) && (tipIdx - 13) >= 2u) ||
+                        ((g_SysWork.field_24DC & 0x3) && (tipIdx - 13) < 2u))
                     {
-                        if (var_s0 < 3)
+                        if (randTipVal < 3)
                         {
                             break;
                         }
-                        var_s0 -= 3;
+
+                        randTipVal -= 3;
                     }
                     else
                     {
-                        if (var_s0 <= 0)
+                        if (randTipVal <= 0)
                         {
                             break;
                         }
-                        var_s0 -= 1;
+
+                        randTipVal--;
                     }
                 }
             }
 
-            // Store current shown tipIndex, later sysStateStep_C == 7 will set it inside seenGameOverTips_2E.
-            g_SysState_GameOver_CurTipIndex = tipIndex;
+            // Store current shown `tipIdx`, later `sysStateStep_C == 7` will set it inside `seenGameOverTips_2E`.
+            g_SysState_GameOver_TipIdx = tipIdx;
 
-            Fs_QueueStartReadTim(FILE_TIM_TIPS_E01_TIM + tipIndex, FS_BUFFER_1, &D_800A9054);
-
+            Fs_QueueStartReadTim(FILE_TIM_TIPS_E01_TIM + tipIdx, FS_BUFFER_1, &D_800A9054);
             SysWork_StateStepIncrement();
+
         case 1:
             func_8008616C(2, 1, 0, 0x800, 0);
             break;
+
         case 2:
             func_8008616C(0, 0, 0, 0x800, 0);
-
             SysWork_StateStepIncrement();
+
         case 3:
-            Gfx_StringSetPosition(104, 104);
-            Gfx_StringDraw(D_80025448, 0x63); // "\aGAME_OVER" - needs rodata migration
+            Gfx_StringSetPosition(SCREEN_POSITION_X(32.5f), SCREEN_POSITION_Y(43.5f));
+            Gfx_StringDraw(D_80025448, 0x63); // "\aGAME_OVER" - needs rodata migration.
             g_SysWork.field_28++;
+
             if ((g_ControllerPtr0->btns_new_10 & (g_GameWorkPtr1->controllerBinds_0.enter | g_GameWorkPtr1->controllerBinds_0.cancel)) ||
-                (g_SysWork.field_28 > 0xF0))
+                g_SysWork.field_28 > 240)
             {
                 SysWork_StateStepIncrement();
             }
             break;
+
         case 4:
-            Gfx_StringSetPosition(104, 104);
-            Gfx_StringDraw(D_80025448, 0x63); // "\aGAME_OVER" - needs rodata migration
+            Gfx_StringSetPosition(SCREEN_POSITION_X(32.5f), SCREEN_POSITION_Y(43.5f));
+            Gfx_StringDraw(D_80025448, 0x63); // "\aGAME_OVER" - needs rodata migration.
             func_8008616C(2, 1, 0, 0x2000, 0);
             break;
+
         case 5:
-            if ((g_SaveGamePtr->field_260 >> 0x1C) == 1)
+            if ((g_SaveGamePtr->field_260 >> 28) == 1)
             {
-                // TODO: inline SysWork_StateStepReset? if we find other code matching this
-                g_SysWork.sysStateStep_C = -1;
+                // TODO: Create `inline SysWork_StateStepReset` if other code matching is needed.
+                g_SysWork.sysStateStep_C = NO_VALUE;
                 g_SysWork.field_28       = 0;
                 g_SysWork.field_10       = 0;
                 g_SysWork.timer_2C       = 0;
@@ -1717,32 +1727,37 @@ void SysState_GameOver_Update() // 0x8003A52C
                 func_80037188();
                 SysWork_StateStepIncrement();
             }
+
         case 6:
             func_8008616C(2, 0, 0, 0x2000, 0);
             g_SysWork.field_28 = 0;
             func_800314EC(&D_800A9054);
             break;
+
         case 7:
             g_SysWork.field_28++;
             func_800314EC(&D_800A9054);
+
             if (!(g_ControllerPtr0->btns_new_10 & (g_GameWorkPtr1->controllerBinds_0.enter | g_GameWorkPtr1->controllerBinds_0.cancel)))
             {
-                if (g_SysWork.field_28 <= 0x1E0)
+                if (g_SysWork.field_28 <= 480)
                 {
                     break;
                 }
             }
 
             // TODO: some inline FlagSet func? couldn't get matching ver, but pretty sure temp_a0 can be removed somehow
-            temp_a0 = &g_GameWork.seenGameOverTips_2E[(g_SysState_GameOver_CurTipIndex >> 5)];
-            *temp_a0 |= 1 << (g_SysState_GameOver_CurTipIndex & 0x1F);
+            temp_a0 = &g_GameWork.seenGameOverTips_2E[(g_SysState_GameOver_TipIdx >> 5)];
+            *temp_a0 |= (1 << 0) << (g_SysState_GameOver_TipIdx & 0x1F);
 
             SysWork_StateStepIncrement();
             break;
+
         case 8:
             func_800314EC(&D_800A9054);
             func_8008616C(2, 1, 0, 0x2000, 0);
             break;
+
         default:
             g_MapOverlayHeader.func_CC(0);
             SysWork_StateSetNext(0);
@@ -1752,7 +1767,7 @@ void SysState_GameOver_Update() // 0x8003A52C
 
     if (g_SysWork.sysStateStep_C >= 2 || g_GameWork.gameState_594 != GameState_InGame)
     {
-        g_SysWork.field_22A0 |= 1;
+        g_SysWork.field_22A0 |= 1 << 0;
     }
 }
 
@@ -1765,7 +1780,7 @@ void GameState_MapEvent_Update() // 0x8003AA4C
         g_GameWork.gameStateStep_598[0] = 1;
     }
 
-    D_800A9A0C = ((D_800BCD0C & 7) == 5) && Fs_QueueDoThingWhenEmpty() != 0;
+    D_800A9A0C = (D_800BCD0C & 7) == 5 && Fs_QueueDoThingWhenEmpty() != 0;
 
     SaveGame_EventFlagSet(g_MapEventParam->eventFlagId_2);
 

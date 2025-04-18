@@ -59,19 +59,19 @@ segments:
     subalign: 4
     subsegments:
       - [0x0, rodata]
-      - [0x8F8, .rodata, bodyprog]  # Jumptable: `SysState_GameOver_Update`
+      - [0x8F8, .rodata, bodyprog] # Jumptable: `SysState_GameOver_Update`
       - [0x91C, rodata]
-      - [0x109C, .rodata, bodyprog_80040A64]  # Jumptable: Sd_EngineCmd
+      - [0x109C, .rodata, bodyprog_80040A64] # Jumptable: `Sd_EngineCmd`
       - [0x10F8, rodata]
-      #- [0x10FC, .rodata, bodyprog_80040A64]  # Jumptable: func_80045BD8
+      #- [0x10FC, .rodata, bodyprog_80040A64] # Jumptable: `func_80045BD8`
       #- [0x1158, rodata]
-      #- [0x11C4, .rodata, bodyprog_80040A64]  # Jumptable: func_800482D8
+      #- [0x11C4, .rodata, bodyprog_80040A64] # Jumptable: `func_800482D8`
       #- [0x11D8, rodata]
-      - [0x3938, .rodata, bodyprog_8004A87C]  # Jumptable
+      - [0x3938, .rodata, bodyprog_8004A87C] # Jumptable
       - [0x39C4, rodata]
-      - [0x5FBC, .rodata, bodyprog_80085D78]  # Jumptables
+      - [0x5FBC, .rodata, bodyprog_80085D78] # Jumptables
       - [0x6044, rodata]
-      # - [0x64A4, .rodata, bodyprog_80085D78] # Jumptable: func_8008A2E0
+      # - [0x64A4, .rodata, bodyprog_80085D78] # Jumptable: `func_8008A2E0`
       # - [0x6504, rodata]
       - [0x9ad0, c, bodyprog]
       - [0x1b4ec, c, view/vc_util]
