@@ -21,6 +21,8 @@ typedef struct
 
 extern s_FsImageDesc D_800A902C;
 
+extern s8 D_800A97D7;
+
 extern s8 D_800A97D8;
 
 extern s32 D_800B9FE0[];
@@ -99,6 +101,8 @@ void func_801E63C0();
 void func_801E69E8();
 
 void func_801E6DB0();
+
+void func_801E6F38();
 
 void func_801E709C();
 

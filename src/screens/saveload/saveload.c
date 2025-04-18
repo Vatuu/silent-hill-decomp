@@ -350,7 +350,47 @@ void func_801E6DB0() // 0x801E6DB0
     }
 }
 
-INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E6F38);
+void func_801E6F38() // 0x801E6F38
+{
+    switch (g_GameWork.gameStateStep_598[1])
+    {
+        // TODO: Are these meant to use GameState? `gameStateStep` is normally something different?
+        // First case here increments it too.
+        case GameState_Unk0:
+            func_8002E830();
+
+            D_800A97D7 = 1;
+
+            // Backup current savegame? Does anything ever restore from this?
+            g_GameWork.saveGame_90 = g_GameWork.saveGame_30C;
+
+            func_80035178();
+            
+            g_SysWork.flags_2298 = 8;
+
+            GameFs_MapLoad(g_SaveGamePtr->mapOverlayIdx_A4);
+
+            D_800BCD0C = 2;
+            g_GameWork.gameStateStep_598[1]++;
+            g_GameWork.gameStateStep_598[2] = 0;
+            break;
+
+        case GameState_KonamiLogo:
+        {
+            if ((D_800BCD0C & 7) == 5)
+            {
+                Fs_QueueWaitForEmpty();
+                Settings_ScreenAndVolUpdate();
+
+                Game_StateSetNext(GameState_LoadScreen);
+            }
+            break;
+        }
+
+        default:
+            break;
+    }
+}
 
 void func_801E709C() // 0x801E709C
 {
