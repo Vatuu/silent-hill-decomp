@@ -5,14 +5,14 @@
 #include "bodyprog/vw_system.h"
 #include "main/fsqueue.h"
 
-#define TEMP_MEMORY_ADDR (s8*)0x801A2600
-#define BOOT_ADDR_0      (u8*)0x801E09E0
-#define BOOT_ADDR_1      (u8*)0x801E1430
+#define TEMP_MEMORY_ADDR ((s8*)0x801A2600)
+#define BOOT_ADDR_0      ((u8*)0x801E09E0)
+#define BOOT_ADDR_1      ((u8*)0x801E1430)
 
 
-#define IMAGE_BUFFER_0 (u_long*)0x801CFA00
-#define IMAGE_BUFFER_1 (u_long*)0x801C8200
-#define IMAGE_BUFFER_2 (u_long*)0x801ABE00
+#define IMAGE_BUFFER_0 ((u_long*)0x801CFA00)
+#define IMAGE_BUFFER_1 ((u_long*)0x801C8200)
+#define IMAGE_BUFFER_2 ((u_long*)0x801ABE00)
 
 #define CD_ADDR_0 0x801E2600
 

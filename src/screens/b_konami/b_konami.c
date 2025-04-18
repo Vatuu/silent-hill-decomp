@@ -98,16 +98,14 @@ void GameState_KonamiLogo_Update() // 0x800C95AC
 
         idx = GsGetActiveBuff();
         g_ObjectTableIdx = idx;
-        GsOUT_PACKET_P   = (PACKET*)(TEMP_MEMORY_ADDR + (idx << 0xF));
+        GsOUT_PACKET_P   = (PACKET*)(TEMP_MEMORY_ADDR + (idx << 15));
 
         GsClearOt(0, 0, &g_ObjectTable0[idx]);
         GsClearOt(0, 0, &g_ObjectTable1[g_ObjectTableIdx]);
     }
 }
 
-// TODO: Line `D_800BCD2C = &BOOT_ADDR_0[D_800A97D6 * 2640];` won't compile anymore.
-INCLUDE_ASM("asm/screens/b_konami/nonmatchings/b_konami", func_800C9874);
-/*s32 func_800C9874() // 0x800C9874
+s32 func_800C9874() // 0x800C9874
 {
     s32 var0;
     s32 var1;
@@ -144,7 +142,7 @@ INCLUDE_ASM("asm/screens/b_konami/nonmatchings/b_konami", func_800C9874);
     }
     
     return 4;
-}*/
+}
 
 void GameState_KcetLogo_Update() // 0x800C99A4
 {
