@@ -1755,7 +1755,6 @@ void SysState_GameOver_Update() // 0x8003A52C
         g_SysWork.field_22A0 |= 1;
     }
 }
-//*/
 
 void GameState_MapEvent_Update() // 0x8003AA4C
 {
