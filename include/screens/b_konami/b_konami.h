@@ -39,7 +39,7 @@ s32 func_800C9874();
 
 void GameState_KcetLogo_Update();
 
-/** Draws individual parts of Konami and Kcet logos */
+/** Draws individual parts of Konami and KCET logos. */
 void func_800C9E6C(s_FsImageDesc* image, s32 otz, s32 vramX, s32 vramY, s32 w, s32 h, s32 x, s32 y);
 
 void Gfx_KonamiScreenDraw();

@@ -142,10 +142,11 @@ typedef struct
     s32 field_14;
 } s_800A992C;
 
-typedef struct {
+typedef struct
+{
     s16 unk_0;
     s16 field_2;
-    s8 field_4;
+    s8  field_4;
 } s_800ACAA8;
 
 typedef struct
@@ -1107,6 +1108,10 @@ void Sd_SetReverbDepth(s8 depth);
 void Sd_SetReverbEnable(s32 mode);
 
 void func_80047B24(s32 arg0);
+
+void func_80047D1C();
+
+void func_80047D50();
 
 void func_80047F18();
 

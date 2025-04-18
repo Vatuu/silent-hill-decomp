@@ -359,10 +359,9 @@ void func_800C9E6C(s_FsImageDesc* image, s32 otz, s32 vramX, s32 vramY, s32 w, s
     setXY0Fast(prim, (u16)x, y);
 
     tPage = (DR_TPAGE*)((u8*)prim + sizeof(SPRT));
-
     setDrawTPage(tPage, 0, 1, getTPage(*((u8*)&image->tPage), 0, (vramBase << 6), (((vramBase >> 4) & (1 << 0)) << 8)));
-
     AddPrim(addr, tPage);
+
     GsOUT_PACKET_P = (u8*)prim + 28;
 }
 

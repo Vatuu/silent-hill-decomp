@@ -287,7 +287,7 @@ void func_800D88AC(s_SubCharacter* playerChara)
     playerChara->properties_E4[PlayerProperty_PositionY] = 0;
     playerChara->field_126 = 0;
 }
-/* Shared Functions End */
+// Shared functions end.
 
 void func_800D88C0(s_SubCharacter* playerChara, s32 arg1)
 {

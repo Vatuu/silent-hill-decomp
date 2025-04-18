@@ -40,6 +40,8 @@ void func_801E2E28(s32 idx);
 
 s32 func_801E2ED8();
 
+s32 func_801E2FC0();
+
 void func_801E386C();
 
 void func_801E3DD0();
