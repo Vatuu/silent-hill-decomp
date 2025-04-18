@@ -98,7 +98,7 @@ void GameState_KonamiLogo_Update() // 0x800C95AC
 
         idx = GsGetActiveBuff();
         g_ObjectTableIdx = idx;
-        GsOUT_PACKET_P   = (PACKET*)(TEMP_MEMORY_ADDR + (idx << 0xF));
+        GsOUT_PACKET_P   = (PACKET*)(TEMP_MEMORY_ADDR + (idx << 15));
 
         GsClearOt(0, 0, &g_ObjectTable0[idx]);
         GsClearOt(0, 0, &g_ObjectTable1[g_ObjectTableIdx]);
@@ -132,7 +132,7 @@ s32 func_800C9874() // 0x800C9874
     }
     else if (var0 == 8 || var1 == 8)
     {
-        D_800BCD2C = &BOOT_ADDR_0[D_800A97D6 * 0xA50];
+        D_800BCD2C = &BOOT_ADDR_0[D_800A97D6 * 2640];
         D_800BCD2C = &D_800BCD2C[D_800A97D4[D_800A97D6] * 16];
         
         D_800BCD40 = D_800BCD2C[5];
@@ -359,10 +359,9 @@ void func_800C9E6C(s_FsImageDesc* image, s32 otz, s32 vramX, s32 vramY, s32 w, s
     setXY0Fast(prim, (u16)x, y);
 
     tPage = (DR_TPAGE*)((u8*)prim + sizeof(SPRT));
-
     setDrawTPage(tPage, 0, 1, getTPage(*((u8*)&image->tPage), 0, (vramBase << 6), (((vramBase >> 4) & (1 << 0)) << 8)));
-
     AddPrim(addr, tPage);
+
     GsOUT_PACKET_P = (u8*)prim + 28;
 }
 

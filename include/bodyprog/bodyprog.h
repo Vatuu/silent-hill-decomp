@@ -5,11 +5,14 @@
 #include "bodyprog/vw_system.h"
 #include "main/fsqueue.h"
 
-#define TEMP_MEMORY_ADDR (s8*)0x801A2600
+#define TEMP_MEMORY_ADDR ((s8*)0x801A2600)
+#define BOOT_ADDR_0      ((u8*)0x801E09E0)
+#define BOOT_ADDR_1      ((u8*)0x801E1430)
 
-#define IMAGE_BUFFER_0 (u_long*)0x801CFA00
-#define IMAGE_BUFFER_1 (u_long*)0x801C8200
-#define IMAGE_BUFFER_2 (u_long*)0x801ABE00
+
+#define IMAGE_BUFFER_0 ((u_long*)0x801CFA00)
+#define IMAGE_BUFFER_1 ((u_long*)0x801C8200)
+#define IMAGE_BUFFER_2 ((u_long*)0x801ABE00)
 
 #define CD_ADDR_0 0x801E2600
 
@@ -142,10 +145,11 @@ typedef struct
     s32 field_14;
 } s_800A992C;
 
-typedef struct {
+typedef struct
+{
     s16 unk_0;
     s16 field_2;
-    s8 field_4;
+    s8  field_4;
 } s_800ACAA8;
 
 typedef struct
@@ -553,7 +557,7 @@ extern s32 D_800A9768;
 
 extern s32 D_800A976C;
 
-extern void (*D_800A977C[])(void); // Function pointer array, maybe state funcs of some kind.
+extern void (*D_800A977C[])(); // Function pointer array, maybe state funcs of some kind.
 
 extern u8 D_800A97D4[]; // Something related to save slots.
 
@@ -670,7 +674,7 @@ extern s8* D_800BCD2C;
 
 extern u8 D_800BCD3E;
 
-extern u8 D_800BCD3F;
+extern s8 D_800BCD3F;
 
 extern s8 D_800BCD40;
 
@@ -860,6 +864,8 @@ extern s_800C4818 D_800C4818;
 extern s32 D_800C489C;
 
 extern s32 D_800C48F0;
+
+extern RECT D_801E557C[];
 
 // TODO: Order these by address.
 
@@ -1105,6 +1111,10 @@ void Sd_SetReverbDepth(s8 depth);
 void Sd_SetReverbEnable(s32 mode);
 
 void func_80047B24(s32 arg0);
+
+void func_80047D1C();
+
+void func_80047D50();
 
 void func_80047F18();
 

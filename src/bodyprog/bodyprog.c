@@ -1,8 +1,6 @@
 #include "game.h"
 
 #include <memory.h>
-#include <libgte.h>
-#include <libgpu.h>
 #include <libetc.h>
 
 #include "bodyprog/bodyprog.h"

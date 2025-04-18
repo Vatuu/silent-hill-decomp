@@ -1,13 +1,13 @@
 #include "common.h"
 #include "game.h"
-#include "gpu.h"
-#include "bodyprog/bodyprog.h"
-#include "main/fsqueue.h"
 
 #include <libapi.h>
 #include <libetc.h>
 #include <libcd.h>
 #include <libsnd.h>
+
+#include "bodyprog/bodyprog.h"
+#include "main/fsqueue.h"
 
 // @HACK: Explicit rodata here because these need to be referenced externally to end up in .rodata,
 // otherwise they'll go into .sdata because they're small; can't wrap them in a struct either because
@@ -64,7 +64,7 @@ int main(void)
     ResetGraph(3);
 
     // Clear framebuffer area of VRAM.
-    // @NOTE: This and some other GPU macros here are custom to ensure a match.
+    // NOTE: This and some other GPU macros here are custom to ensure a match.
     setRECTFast((RECT*)PSX_SCRATCH, 0, 0, 640, 512);
     VSync(0);
     ClearImage2((RECT*)PSX_SCRATCH, 0, 0, 0);

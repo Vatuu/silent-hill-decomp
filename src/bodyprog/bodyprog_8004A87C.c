@@ -1,7 +1,5 @@
 #include "game.h"
 
-#include <libgs.h>
-
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math.h"
 

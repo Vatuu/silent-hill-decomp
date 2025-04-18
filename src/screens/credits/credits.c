@@ -135,11 +135,11 @@ s32 func_801E3124() // 0x801E3124
             switch (D_800BCD0C)
             {
                 case 13:
-                    Gfx_ClearRectInterlaced(0, 0x20, 0x200, 0x1C0, 0xFF, 0xFF, 0xFF);
+                    Gfx_ClearRectInterlaced(0, 32, 512, 448, FP_COLOR(1.0f), FP_COLOR(1.0f), FP_COLOR(1.0f));
                     break;
 
                 case 5:
-                    Gfx_ClearRectInterlaced(0, 0x20, 0x200, 0x1C0, 0x00, 0x00, 0x00);
+                    Gfx_ClearRectInterlaced(0, 32, 512, 448, FP_COLOR(0.0f), FP_COLOR(0.0f), FP_COLOR(0.0f));
                     break;
             }
 
@@ -186,7 +186,7 @@ s32 func_801E3304() // 0x801E3304
         }
         else
         {
-            Gfx_ClearRectInterlaced(0, 0x20, 0x140, 0x1C0, 0, 0, 0);
+            Gfx_ClearRectInterlaced(0, 32, 320, 448, FP_COLOR(0.0f), FP_COLOR(0.0f), FP_COLOR(0.0f));
             LoadImage(&D_801E557C[0], IMAGE_BUFFER_0);
             LoadImage(&D_801E557C[1], IMAGE_BUFFER_1);
             DrawSync(0);

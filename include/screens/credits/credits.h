@@ -14,8 +14,6 @@ STATIC_ASSERT_SIZEOF(s_UnkCredits1, 6);
 
 extern s_UnkCredits1 D_801E5558[];
 
-extern RECT D_801E557C[];
-
 extern s32 D_801E5590[];
 
 extern s32 D_801E5BD0;
@@ -41,6 +39,8 @@ extern s32 D_801E600C; // Random 16-bit number.
 void func_801E2E28(s32 idx);
 
 s32 func_801E2ED8();
+
+s32 func_801E2FC0();
 
 void func_801E386C();
 
