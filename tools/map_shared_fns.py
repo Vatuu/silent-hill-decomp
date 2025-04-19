@@ -1,16 +1,17 @@
+# Compares ASM of funcs in first map folder against funcs in second map, and prints matching filenames.
+# Funcs are compared by removing any block-comments and data/func refs, and then checking Levenshtein distance.
+# Any with distance = 0 will then be printed.
+#
 # Usage:
 #   python tools/map_shared_fns.py [--matchings] [--nonmatchings] [--replace] first_map_name second_map_name
 #     --matchings: only compare first map `matchings` against second map nonmatchings
 #     --nonmatchings: only compare first map `nonmatchings` against second map nonmatchings
 #     --replace: replaces INCLUDE_ASM lines inside second map .c with #include, when sharedFuncs are found
 #
-# Compares funcs in first map folder against funcs in second map.
-# Funcs are compared by removing any block-comments and data/func refs, and then checking Levenshtein distance
-# Any with distance = 0 will then be printed
-#
-# If func in first-map folder is named as sharedFunc_XXXXXXXX_0_s00 (where 0_s00 is map number, eg. map0_s00)
-# It will also print out lines to add to sym.txt file and #includes to add in .c file.
+# If a matching func is found which is named as sharedFunc_XXXXXXXX_0_s00 in first-map folder (where 0_s00 is map number, eg. map0_s00)
+# It'll also print out lines to add in sym.txt file and #includes to add in .c file
 # If --replace flag is provided it'll try replacing the INCLUDE_ASM line in second maps .c with #include lines.
+# (more info at https://github.com/Vatuu/silent-hill-decomp/issues/74#issuecomment-2816256817)
 
 import os
 import re
