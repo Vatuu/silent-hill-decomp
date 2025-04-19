@@ -30,12 +30,13 @@ def read_and_clean_file(file_path):
             content = file.read()
             # Remove /* blockquote comments */
             content = re.sub(r'/\*.*?\*/', '', content, flags=re.DOTALL)
-            # Remove func_[8 characters] and D_[8 characters] and L[8 characters]
-            content = re.sub(r'func_[a-fA-F0-9]{8}', '', content)
-            content = re.sub(r'D_[a-fA-F0-9]{8}', '', content)
-            content = re.sub(r'L[a-fA-F0-9]{8}', '', content)
+            # Remove func_[8 chars], D_[8 chars], L[8 chars], jtbl_[8 chars]
+            content = re.sub(r'func_[a-fA-F0-9]{8}', 'func', content)
+            content = re.sub(r'D_[a-fA-F0-9]{8}', 'D', content)
+            content = re.sub(r'L[a-fA-F0-9]{8}', 'L', content)
+            content = re.sub(r'jtbl_[a-fA-F0-9]{8}', 'jtbl', content)
             # Remove sharedFunc_[8 chars]_[digit]_[3 chars]
-            content = re.sub(r'sharedFunc_[a-fA-F0-9]{8}_[0-9]{1}_[a-zA-Z0-9]{3}', '', content)
+            content = re.sub(r'sharedFunc_[a-fA-F0-9]{8}_[0-9]{1}_[a-zA-Z0-9]{3}', 'func', content)
             return content
     except Exception as e:
         print(f"Error reading {file_path}: {e}")
@@ -96,7 +97,10 @@ def find_equal_asm_files(searchType, map1, map2, maxdistance, replaceIncludeAsm)
     sharedFuncSymbols = ""
 
     # include lines to add to .c file
-    includeLines = {}
+    includeLines = ""
+
+    # search-replace changes to make inside .c file, if --replace is specified
+    replacements = {}
     
     if matched_files:
         print(f"Matches for distance <= {maxdistance}:")
@@ -126,43 +130,43 @@ def find_equal_asm_files(searchType, map1, map2, maxdistance, replaceIncludeAsm)
 
                         include_key = f'INCLUDE_ASM("asm/maps/{map2}/nonmatchings/{map2}", func_{addr});'
                         include_value = f'#include "maps/shared/{funcName}.h" // 0x{addr}'
-                        includeLines[include_key] = include_value
-                        
+                        includeLines += "\n" + include_value
+                        replacements[include_key] = include_value
+
         if sharedFuncSymbols:
             print(f"\nsym.{map2}.txt adds:")
             print(sharedFuncSymbols)
 
         if includeLines:
-            print("\n.c includes:\n")
-            for k, v in includeLines.items():
-                print(f"{v}")
+            print("\n.c includes:")
+            print(includeLines)
 
-            # Optional replacement in .c file
-            if replaceIncludeAsm:
-                c_path = f"src/maps/{map2}/{map2}.c"
-                print(f"\nReplacing INCLUDE_ASM lines inside {c_path}...\n")
-                try:
-                    with open(c_path, "r", encoding="utf-8") as f:
-                        c_code = f.read()
+        # Optional replacement in .c file
+        if replacements and replaceIncludeAsm:
+            c_path = f"src/maps/{map2}/{map2}.c"
+            print(f"\nReplacing INCLUDE_ASM lines inside {c_path}...\n")
+            try:
+                with open(c_path, "r", encoding="utf-8") as f:
+                    c_code = f.read()
 
-                    replaced = False
-                    for key, value in includeLines.items():
-                        if key in c_code:
-                            c_code = c_code.replace(key, value)
-                            print(f"Old: {key}\nNew: {value}\n")
-                            replaced = True
-                        else:
-                            print(f"Could not find line to replace: {key}")
-
-                    if replaced:
-                        with open(c_path, "w", encoding="utf-8") as f:
-                            f.write(c_code)
-                        print(f"Updated {c_path} with new includes.")
+                replaced = False
+                for key, value in replacements.items():
+                    if key in c_code:
+                        c_code = c_code.replace(key, value)
+                        print(f"Old: {key}\nNew: {value}\n")
+                        replaced = True
                     else:
-                        print(f"\nNo matching INCLUDE_ASM lines found in {c_path}. Nothing replaced.")
+                        print(f"Could not find line to replace: {key}")
 
-                except FileNotFoundError:
-                    print(f"\nError: File {c_path} not found.")
+                if replaced:
+                    with open(c_path, "w", encoding="utf-8") as f:
+                        f.write(c_code)
+                    print(f"Updated {c_path} with new includes.")
+                else:
+                    print(f"\nNo matching INCLUDE_ASM lines found in {c_path}. Nothing replaced.")
+
+            except FileNotFoundError:
+                print(f"\nError: File {c_path} not found.")
     else:
         print("\nNo matching files found.")
 
