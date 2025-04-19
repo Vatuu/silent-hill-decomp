@@ -1075,7 +1075,11 @@ void func_800472BC(s32 arg0) // 0x800472BC
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80047308);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_8004760C);
+void func_8004760C() // 0x8004760C
+{
+    func_800478DC(2);
+    D_800C166E = 1;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80047634);
 

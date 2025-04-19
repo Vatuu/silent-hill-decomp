@@ -751,6 +751,8 @@ extern s8 D_800C166A;
 
 extern s8 D_800C166C;
 
+extern s8 D_800C166E;
+
 extern s8 D_800C166F;
 
 extern s16 D_800C167C;
@@ -1154,6 +1156,8 @@ s32 func_80046DCC(s32 idx);
 void func_8004729C(u16 arg0);
 
 void func_800472BC(s32 arg0);
+
+void func_8004760C();
 
 void func_8004692C(u16);
 
