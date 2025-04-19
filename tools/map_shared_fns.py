@@ -7,10 +7,12 @@
 #     --matchings: only compare first map `matchings` against second map nonmatchings
 #     --nonmatchings: only compare first map `nonmatchings` against second map nonmatchings
 #     --replace: replaces INCLUDE_ASM lines inside second map .c with #include, when sharedFuncs are found
+#     --updsyms: updates sym.[map2].txt file with needed symbols (will need to be reordered manually)
 #
 # If a matching func is found which is named as sharedFunc_XXXXXXXX_0_s00 in first-map folder (where 0_s00 is map number, eg. map0_s00)
 # It'll also print out lines to add in sym.txt file and #includes to add in .c file
 # If --replace flag is provided it'll try replacing the INCLUDE_ASM line in second maps .c with #include lines.
+# Similarly --updsyms will update second maps sym.txt file with the extra symbols.
 # (more info at https://github.com/Vatuu/silent-hill-decomp/issues/74#issuecomment-2816256817)
 
 import os
@@ -25,25 +27,80 @@ def count_lines_in_file(file_path):
         print(f"Error reading {file_path}: {e}")
         return -1
 
-def read_and_clean_file(file_path):
+def find_shared_data_lines(text):
+    """
+    Checks each line in `text` for sharedData_, returning each line number and sharedData var name
+
+    Args:
+        text (str): The input multiline string.
+
+    Returns:
+        dict[int, str]: Dictionary with line numbers as keys and the first matched string as value.
+    """
+    pattern = r'sharedData_[a-fA-F0-9]{8}_[0-9]{1}_[a-zA-Z0-9]{3}'
+    result = {}
+
+    lines = text.splitlines()
+    for i, line in enumerate(lines):
+        #print(line)
+        match = re.search(pattern, line)
+        if match:
+            #print("match")
+            result[i + 1] = match.group(0)
+
+    return result
+
+def match_shared_data_vars(text, shared_data_map):
+    """
+    For each line number in shared_data_map, searches the corresponding line in text
+    for the pattern D_[8 chars] and associates it with the sharedData_ value.
+
+    Args:
+        new_text (str): A multiline string to scan for D_ patterns.
+        shared_data_map (dict[int, str]): Output from find_first_shared_data().
+
+    Returns:
+        list[tuple[str, str]]: List of unique (D_ pattern, sharedData_ value) tuples.
+    """
+    d_pattern = r'D_[a-zA-Z0-9]{8}'
+    result_dict = {}
+
+    lines = text.splitlines()
+    for line_num, shared_data_val in shared_data_map.items():
+        if 1 <= line_num <= len(lines):
+            line = lines[line_num - 1]
+            matches = re.findall(d_pattern, line)
+            for match in matches:
+                if match not in result_dict:
+                    result_dict[match] = shared_data_val
+
+    return list(result_dict.items())
+
+def read_file(path):
     try:
-        with open(file_path, 'r') as file:
-            content = file.read()
-            # Remove /* blockquote comments */
-            content = re.sub(r'/\*.*?\*/', '', content, flags=re.DOTALL)
-            # Remove func_[8 chars], D_[8 chars], L[8 chars], jtbl_[8 chars]
-            content = re.sub(r'func_[a-fA-F0-9]{8}', 'func', content)
-            content = re.sub(r'D_[a-fA-F0-9]{8}', 'D', content)
-            content = re.sub(r'L[a-fA-F0-9]{8}', 'L', content)
-            content = re.sub(r'jtbl_[a-fA-F0-9]{8}', 'jtbl', content)
-            # Remove sharedFunc_[8 chars]_[digit]_[3 chars]
-            content = re.sub(r'sharedFunc_[a-fA-F0-9]{8}_[0-9]{1}_[a-zA-Z0-9]{3}', 'func', content)
-            return content
+        with open(path, 'r') as file:
+            text = file.read()
+            return text
     except Exception as e:
-        print(f"Error reading {file_path}: {e}")
+        print(f"Error reading {path}: {e}")
         return None
 
-def find_equal_asm_files(searchType, map1, map2, maxdistance, replaceIncludeAsm):
+def clean_file(content):
+    if content is None:
+        return None
+    # Remove /* blockquote comments */
+    content = re.sub(r'/\*.*?\*/', '', content, flags=re.DOTALL)
+    # Remove func_[8 chars], D_[8 chars], L[8 chars], jtbl_[8 chars]
+    content = re.sub(r'func_[a-fA-F0-9]{8}', 'func', content)
+    content = re.sub(r'D_[a-fA-F0-9]{8}', 'D', content)
+    content = re.sub(r'L[a-fA-F0-9]{8}', 'L', content)
+    content = re.sub(r'jtbl_[a-fA-F0-9]{8}', 'jtbl', content)
+    # Remove sharedFunc_[8 chars]_[digit]_[3 chars]
+    content = re.sub(r'sharedFunc_[a-fA-F0-9]{8}_[0-9]{1}_[a-zA-Z0-9]{3}', 'func', content)
+    content = re.sub(r'sharedData_[a-fA-F0-9]{8}_[0-9]{1}_[a-zA-Z0-9]{3}', 'D', content)
+    return content
+
+def find_equal_asm_files(searchType, map1, map2, maxdistance, replaceIncludeAsm, updateSymTxtFile):
     map1_asm_path = os.path.join("asm", "maps", map1)
     map2_asm_path = os.path.join("asm", "maps", map2)
 
@@ -95,7 +152,7 @@ def find_equal_asm_files(searchType, map1, map2, maxdistance, replaceIncludeAsm)
                 matched_files.append((file1, file2, count1))
                 
     # symbols to add to sym.xxx.txt
-    sharedFuncSymbols = ""
+    sharedFuncSymbols = {}
 
     # include lines to add to .c file
     includeLines = ""
@@ -108,26 +165,42 @@ def find_equal_asm_files(searchType, map1, map2, maxdistance, replaceIncludeAsm)
         for file1, file2, count in matched_files:
             
             # Read and clean the contents
-            content1 = read_and_clean_file(file1)
-            content2 = read_and_clean_file(file2)
+            file1_text = read_file(file1)
+            file2_text = read_file(file2)
+            content1 = clean_file(file1_text)
+            content2 = clean_file(file2_text)
             
             if content1 is not None and content2 is not None:
                 # Compute Levenshtein distance
                 distance = Levenshtein.distance(content1, content2)
                 if distance <= maxdistance:
+
                     relative_file1 = os.path.relpath(file1, map1_asm_path)
                     relative_file2 = os.path.relpath(file2, map2_asm_path)
                     name_file1 = os.path.basename(file1)
                     name_file2 = os.path.basename(file2)
 
                     print(f"  {relative_file1} and {relative_file2}: {distance}")
-                    
+
+                    # If first map file contains sharedData_ lines, try to find the D_ reference on the same line # inside second map, and build up symbol list
+                    shared_data_refs = find_shared_data_lines(file1_text)
+                    if len(shared_data_refs):
+                        matched_data = match_shared_data_vars(file2_text, shared_data_refs)
+                        for key, value in matched_data:
+                            addr = key.split("_")[1]
+                            addr_int = int(addr, 16)
+                            if addr_int not in sharedFuncSymbols:
+                                sharedFuncSymbols[addr_int] = f"{value} = 0x{addr}; // type:" # todo: grab type from inside map1 sym file?
+
                     # If first dir func is named sharedFunc, print symbol names/includes for user to add to second map
                     if "sharedFunc" in name_file1:
                         funcName = name_file1.split(".")[0]
                         addr = name_file2.split("_")[1]
                         addr = addr.split(".")[0]
-                        sharedFuncSymbols += f"\n{funcName} = 0x{addr}; // type:func"
+                        addr_int = int(addr, 16)
+                        
+                        if addr_int not in sharedFuncSymbols:
+                            sharedFuncSymbols[addr_int] = f"{funcName} = 0x{addr}; // type:func"
 
                         include_key = f'INCLUDE_ASM("asm/maps/{map2}/nonmatchings/{map2}", func_{addr});'
                         include_value = f'#include "maps/shared/{funcName}.h" // 0x{addr}'
@@ -136,7 +209,8 @@ def find_equal_asm_files(searchType, map1, map2, maxdistance, replaceIncludeAsm)
 
         if sharedFuncSymbols:
             print(f"\nsym.{map2}.txt adds:")
-            print(sharedFuncSymbols)
+            for addr_int in sorted(sharedFuncSymbols.keys()):
+                print(sharedFuncSymbols[addr_int])
 
         if includeLines:
             print("\n.c includes:")
@@ -168,6 +242,36 @@ def find_equal_asm_files(searchType, map1, map2, maxdistance, replaceIncludeAsm)
 
             except FileNotFoundError:
                 print(f"\nError: File {c_path} not found.")
+
+        # Optional sym.[map2].txt update
+        if updateSymTxtFile and sharedFuncSymbols:
+            sym_path = f"configs/maps/sym.{map2}.txt"
+            print(f"\nAdding symbol lines to {sym_path}...\n")
+            try:
+                with open(sym_path, "r", encoding="utf-8") as f:
+                    sym_code = f.read()
+
+                updated = False
+                for addr_int in sorted(sharedFuncSymbols.keys()):
+                    addr_text = f"0x{addr_int:08X}"
+                    addr_val = sharedFuncSymbols[addr_int]
+                    if addr_text not in sym_code:
+                        sym_code = sym_code + "\n" + addr_val
+                        print(f"Added line: {addr_val}")
+                        updated = True
+                    else:
+                        print(f"Address 0x{addr_text} already has symbol defined")
+
+                if updated:
+                    sym_code += "\n" # end file with newline
+                    with open(sym_path, "w", encoding="utf-8") as f:
+                        f.write(sym_code)
+                    print(f"\nUpdated {sym_path}.")
+                else:
+                    print(f"\nNothing added to {sym_path}.")
+
+            except FileNotFoundError:
+                print(f"\nError: File {sym_path} not found.")
     else:
         print("\nNo matching files found.")
 
@@ -184,6 +288,7 @@ if __name__ == "__main__":
     parser.add_argument("--nonmatchings", action="store_true", help="Check nonmatchings in first folder against nonmatchings in second")
     parser.add_argument("--matchings", action="store_true", help="Check matchings in first folder against nonmatchings in second")
     parser.add_argument("--replace", action="store_true", help="Replaces INCLUDE_ASM lines inside second map .c with #include, when sharedFuncs are found")
+    parser.add_argument("--updsyms", action="store_true", help="Updates sym.[map2].txt file with needed symbols (will need to be reordered manually)")
     args = parser.parse_args()
 
     searchType = "all"
@@ -192,4 +297,4 @@ if __name__ == "__main__":
     if args.nonmatchings:
         searchType = "nonmatchings"
 
-    find_equal_asm_files(searchType, args.map1, args.map2, 0, args.replace)
+    find_equal_asm_files(searchType, args.map1, args.map2, 0, args.replace, args.updsyms)
