@@ -1151,6 +1151,8 @@ void func_80046B78();
 
 s32 func_80046DCC(s32 idx);
 
+void func_8004729C(u16 arg0);
+
 void func_8004692C(u16);
 
 void func_80046A24(u16);

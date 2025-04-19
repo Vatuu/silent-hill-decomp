@@ -1055,7 +1055,10 @@ s32 func_80046DCC(s32 idx) // 0x80046DCC
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80046E00);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_8004729C);
+void func_8004729C(u16 arg0) // 0x8004729C
+{
+    func_800472BC(arg0 & 0xFFFF);
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800472BC);
 
