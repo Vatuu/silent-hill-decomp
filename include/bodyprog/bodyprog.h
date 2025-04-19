@@ -258,7 +258,10 @@ typedef struct
     s8  field_2[2];
     u16 field_4;
     u16 field_6;
-    s8  unk_8[13];
+    s8  unk_8[6];
+    s16 field_E;
+    s8  unk_F[4];
+    s8  field_14;
     u8  field_15;
 } s_800C1658;
 
@@ -1133,6 +1136,9 @@ u8 func_80045B28();
 void func_80046048(u16, s32, s32);
 
 void func_8004690C(s32);
+
+/** Sound func. */
+void func_80046B78();
 
 void func_8004692C(u16);
 

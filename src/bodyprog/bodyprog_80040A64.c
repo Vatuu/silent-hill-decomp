@@ -1033,7 +1033,14 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80046AD8);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80046B04);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80046B78);
+void func_80046B78() // 0x80046B78
+{
+    Sd_SetVolBgm(0, 0);
+    SdSeqStop(0);
+
+    D_800C1658.field_14 = 0;
+    D_800C1658.field_E = 0;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80046BB4);
 
