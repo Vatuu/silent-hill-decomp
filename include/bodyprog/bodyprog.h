@@ -280,12 +280,18 @@ typedef struct
     s8 field_3;
 } s_800C1670;
 
+// Sound data struct?
 typedef struct
 {
-    s8 unk_0[12];
-    s8 field_C;
-    s8 field_D;
-    s8 field_E;
+    s16 volumeXa_0; // Might be wrong, but it's used in a `Sd_SetVolBXa` call.
+    s8  unk_2[2];
+    u16 field_4;
+    s8  unk_6[2];
+    s16 volumeBgm_8; // Might be wrong, but it's used in a `Sd_SetVolBgm` call.
+    s8  field_10[2];
+    s8  field_C;     // (?) volume?
+    s8  field_D;     // BGM volume?
+    s8  field_E;     // SE volume?
 } s_800C1678;
 
 typedef struct
@@ -1158,6 +1164,9 @@ void func_8004729C(u16 arg0);
 void func_800472BC(s32 arg0);
 
 void func_8004760C();
+
+/** Args are volume levels. */
+void Sd_SetVolume(u8 arg0, u8 arg1, u8 arg2);
 
 void func_8004692C(u16);
 

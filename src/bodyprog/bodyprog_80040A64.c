@@ -984,9 +984,9 @@ void Sd_DriverInit() // 0x80045DD4
     SdStart();
     SdSetTableSize(&D_800C16C8, 16, 3);
 
-    D_800C1678.field_C = 127;
-    D_800C1678.field_D = 127;
-    D_800C1678.field_E = 127;
+    D_800C1678.field_C = OPT_SOUND_VOLUME_MAX - 1;
+    D_800C1678.field_D = OPT_SOUND_VOLUME_MAX - 1;
+    D_800C1678.field_E = OPT_SOUND_VOLUME_MAX - 1;
 
     func_80045E44();
 }
@@ -1083,7 +1083,22 @@ void func_8004760C() // 0x8004760C
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80047634);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", Sd_SetVolume);
+void Sd_SetVolume(u8 arg0, u8 arg1, u8 arg2) // 0x80047798
+{
+    D_800C1678.field_E = arg0;
+    D_800C1678.field_D = arg1;
+    D_800C1678.field_C = arg2;
+    
+    if (D_800C1658.field_E != 0)
+    {
+        Sd_SetVolBgm(D_800C1678.volumeBgm_8, D_800C1678.volumeBgm_8);
+    }
+    
+    if (D_800C1658.field_4 != 0)
+    {
+        Sd_SetVolXa(D_800C1678.volumeXa_0, D_800C1678.volumeXa_0);
+    }
+}
 
 void Sd_SetVolBgm(s16 volLeft, s16 volRight) // 0x80047808
 {
