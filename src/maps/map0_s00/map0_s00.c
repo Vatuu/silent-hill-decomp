@@ -1,5 +1,6 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math.h"
+#include "maps/shared.h"
 #include "maps/map0/s00.h"
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800CB6B0);
@@ -118,21 +119,9 @@ void func_800D2E9C() {}
 
 #include "maps/shared/sharedFunc_800D2EA4_0_s00.h" // 0x800D2EA4
 
-void func_800D2EB4()
-{
-    u8 var;
+#include "maps/shared/sharedFunc_800D2EB4_0_s00.h" // 0x800D2EB4
 
-    var = g_SysWork.field_47;
-    g_SysWork.field_47 = NO_VALUE;
-    D_800DD59C = var;
-
-    func_8003DD80(1, 17);
-}
-
-void func_800D2EF4()
-{
-    g_SysWork.field_47 = D_800DD59C;
-}
+#include "maps/shared/sharedFunc_800D2EF4_0_s00.h" // 0x800D2EF4
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D2F08);
 

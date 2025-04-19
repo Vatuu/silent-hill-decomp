@@ -1,5 +1,6 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math.h"
+#include "maps/shared.h"
 
 INCLUDE_ASM("asm/maps/map3_s01/nonmatchings/map3_s01", func_800CB214);
 
@@ -89,9 +90,9 @@ void func_800CEDE0(void) {}
 
 #include "maps/shared/sharedFunc_800D2EA4_0_s00.h" // 0x800CEDE8
 
-INCLUDE_ASM("asm/maps/map3_s01/nonmatchings/map3_s01", func_800CEDF8);
+#include "maps/shared/sharedFunc_800D2EB4_0_s00.h" // 0x800CEDF8
 
-INCLUDE_ASM("asm/maps/map3_s01/nonmatchings/map3_s01", func_800CEE38);
+#include "maps/shared/sharedFunc_800D2EF4_0_s00.h" // 0x800CEE38
 
 INCLUDE_ASM("asm/maps/map3_s01/nonmatchings/map3_s01", func_800CEE4C);
 
