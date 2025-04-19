@@ -1060,7 +1060,18 @@ void func_8004729C(u16 arg0) // 0x8004729C
     func_800472BC(arg0 & 0xFFFF);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800472BC);
+void func_800472BC(s32 arg0) // 0x800472BC
+{
+    D_800C1658.field_2 = arg0 & 0xFFF;
+    D_800C37DC = 1;
+
+    if (D_800C1658.field_4 != 0)
+    {
+        func_800478DC(2);
+    }
+
+    func_800478DC(6);
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80047308);
 

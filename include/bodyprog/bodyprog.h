@@ -262,11 +262,11 @@ STATIC_ASSERT_SIZEOF(s_800C117C, 28);
 typedef struct
 {
     u16 field_0;
-    s8  field_2[2];
+    u16 field_2;
     u16 field_4;
     u16 field_6;
     s8  unk_8[6];
-    s16 field_E;
+    u16 field_E;
     s8  unk_F[4];
     s8  field_14;
     u8  field_15;
@@ -1152,6 +1152,8 @@ void func_80046B78();
 s32 func_80046DCC(s32 idx);
 
 void func_8004729C(u16 arg0);
+
+void func_800472BC(s32 arg0);
 
 void func_8004692C(u16);
 
