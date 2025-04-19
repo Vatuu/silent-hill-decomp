@@ -1,0 +1,11 @@
+sharedFunc_800D0E04_0_s00 = 0x800CDE94; // type:func
+sharedFunc_800D20D8_0_s00 = 0x800CF64C; // type:func
+sharedFunc_800D2D2C_0_s00 = 0x800CFA48; // type:func
+sharedFunc_800D2D44_0_s00 = 0x800CFA60; // type:func
+sharedFunc_800D2D6C_0_s00 = 0x800CFA88; // type:func
+sharedFunc_800D2D84_0_s00 = 0x800CFAA0; // type:func
+sharedFunc_800D2E50_0_s00 = 0x800CFB6C; // type:func
+sharedFunc_800D2E60_0_s00 = 0x800CFB7C; // type:func
+sharedFunc_800D2EA4_0_s00 = 0x800CFBC0; // type:func
+
+sharedFunc_800D929C_0_s00 = 0x800D64F8; // type:func

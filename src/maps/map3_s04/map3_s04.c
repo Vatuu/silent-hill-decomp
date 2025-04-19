@@ -1,4 +1,4 @@
-#include "game.h"
+#include "bodyprog/bodyprog.h"
 
 INCLUDE_ASM("asm/maps/map3_s04/nonmatchings/map3_s04", func_800CB37C);
 
@@ -8,7 +8,7 @@ INCLUDE_ASM("asm/maps/map3_s04/nonmatchings/map3_s04", func_800CB664);
 
 INCLUDE_ASM("asm/maps/map3_s04/nonmatchings/map3_s04", func_800CB71C);
 
-INCLUDE_ASM("asm/maps/map3_s04/nonmatchings/map3_s04", func_800CB880);
+#include "maps/shared/sharedFunc_800D0E04_0_s00.h" // 0x800CB880
 
 INCLUDE_ASM("asm/maps/map3_s04/nonmatchings/map3_s04", func_800CB8A0);
 
@@ -20,7 +20,7 @@ INCLUDE_ASM("asm/maps/map3_s04/nonmatchings/map3_s04", func_800CCB10);
 
 INCLUDE_ASM("asm/maps/map3_s04/nonmatchings/map3_s04", func_800CCF60);
 
-INCLUDE_ASM("asm/maps/map3_s04/nonmatchings/map3_s04", func_800CCF9C);
+#include "maps/shared/sharedFunc_800D20D8_0_s00.h" // 0x800CCF9C
 
 INCLUDE_ASM("asm/maps/map3_s04/nonmatchings/map3_s04", func_800CCFA8);
 
@@ -30,19 +30,19 @@ INCLUDE_ASM("asm/maps/map3_s04/nonmatchings/map3_s04", func_800CD2E0);
 
 INCLUDE_ASM("asm/maps/map3_s04/nonmatchings/map3_s04", func_800CD2E8);
 
-INCLUDE_ASM("asm/maps/map3_s04/nonmatchings/map3_s04", func_800CD398);
+#include "maps/shared/sharedFunc_800D2D2C_0_s00.h" // 0x800CD398
 
-INCLUDE_ASM("asm/maps/map3_s04/nonmatchings/map3_s04", func_800CD3B0);
+#include "maps/shared/sharedFunc_800D2D44_0_s00.h" // 0x800CD3B0
 
-INCLUDE_ASM("asm/maps/map3_s04/nonmatchings/map3_s04", func_800CD3D8);
+#include "maps/shared/sharedFunc_800D2D6C_0_s00.h" // 0x800CD3D8
 
-INCLUDE_ASM("asm/maps/map3_s04/nonmatchings/map3_s04", func_800CD3F0);
+#include "maps/shared/sharedFunc_800D2D84_0_s00.h" // 0x800CD3F0
 
 INCLUDE_ASM("asm/maps/map3_s04/nonmatchings/map3_s04", func_800CD418);
 
-INCLUDE_ASM("asm/maps/map3_s04/nonmatchings/map3_s04", func_800CD4BC);
+#include "maps/shared/sharedFunc_800D2E50_0_s00.h" // 0x800CD4BC
 
-INCLUDE_ASM("asm/maps/map3_s04/nonmatchings/map3_s04", func_800CD4CC);
+#include "maps/shared/sharedFunc_800D2E60_0_s00.h" // 0x800CD4CC
 
 void func_800CD4D8(void) {}
 
@@ -58,7 +58,7 @@ INCLUDE_ASM("asm/maps/map3_s04/nonmatchings/map3_s04", func_800CD500);
 
 void func_800CD508(void) {}
 
-INCLUDE_ASM("asm/maps/map3_s04/nonmatchings/map3_s04", func_800CD510);
+#include "maps/shared/sharedFunc_800D2EA4_0_s00.h" // 0x800CD510
 
 INCLUDE_ASM("asm/maps/map3_s04/nonmatchings/map3_s04", func_800CD520);
 
@@ -186,7 +186,7 @@ INCLUDE_ASM("asm/maps/map3_s04/nonmatchings/map3_s04", func_800D1CFC);
 
 #include "maps/shared/sharedFunc_800D923C_0_s00.h" // 0x800D1D1C
 
-INCLUDE_ASM("asm/maps/map3_s04/nonmatchings/map3_s04", func_800D1D7C);
+#include "maps/shared/sharedFunc_800D929C_0_s00.h" // 0x800D1D7C
 
 INCLUDE_ASM("asm/maps/map3_s04/nonmatchings/map3_s04", func_800D1D8C);
 

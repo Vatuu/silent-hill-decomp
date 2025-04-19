@@ -1,5 +1,3 @@
-#include "game.h"
-
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math.h"
 #include "maps/map0/s00.h"
@@ -58,10 +56,7 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D0B18);
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D0CB8);
 
-void func_800D0E04()
-{
-    func_8004690C(0x550);
-}
+#include "maps/shared/sharedFunc_800D0E04_0_s00.h" // 0x800D0E04
 
 void func_800D0E24() {}
 
@@ -80,10 +75,7 @@ void func_800D209C()
     func_800D2C7C(84);
 }
 
-void func_800D20D8()
-{
-    g_SysWork.field_2358 = 0;
-}
+#include "maps/shared/sharedFunc_800D20D8_0_s00.h" // 0x800D20D8
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D20E4);
 
@@ -134,51 +126,19 @@ void func_800D2C7C(s32 arg0)
     g_SysWork.player_4C.extra_128.field_24 = 0;
 }
 
-void func_800D2D2C()
-{
-    D_800C4606++;
-}
+#include "maps/shared/sharedFunc_800D2D2C_0_s00.h" // 0x800D2D2C
 
-void func_800D2D44()
-{
-    s_MainCharacterExtra* extra = &g_SysWork.player_4C.extra_128;
-    s_SubCharacter*       chara = &g_SysWork.player_4C.chara_0;
+#include "maps/shared/sharedFunc_800D2D44_0_s00.h" // 0x800D2D44
 
-    extra = &g_SysWork.player_4C.extra_128;
-    chara = &g_SysWork.player_4C.chara_0;
+#include "maps/shared/sharedFunc_800D2D6C_0_s00.h" // 0x800D2D6C
 
-    extra->model_0.anim_4.flags_2 &= ~AnimFlag_Unk1;
-    chara->model_0.anim_4.flags_2 &= ~AnimFlag_Unk1;
-}
-
-s32 func_800D2D6C()
-{
-    return ~(g_SysWork.player_4C.chara_0.model_0.anim_4.flags_2 & AnimFlag_Unk1);
-}
-
-void func_800D2D84()
-{
-    s_MainCharacterExtra* extra = &g_SysWork.player_4C.extra_128;
-    s_SubCharacter*       chara = &g_SysWork.player_4C.chara_0;
-
-    extra = &g_SysWork.player_4C.extra_128;
-    chara = &g_SysWork.player_4C.chara_0;
-
-    extra->model_0.anim_4.flags_2 |= AnimFlag_Unk1;
-    chara->model_0.anim_4.flags_2 |= AnimFlag_Unk1;
-}
+#include "maps/shared/sharedFunc_800D2D84_0_s00.h" // 0x800D2D84
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D2DAC);
 
-s32 func_800D2E50()
-{
-    return g_SysWork.player_4C.chara_0.field_126 == 0;
-}
+#include "maps/shared/sharedFunc_800D2E50_0_s00.h" // 0x800D2E50
 
-void func_800D2E60()
-{
-    g_SysWork.player_4C.chara_0.field_126 = 0;
-}
+#include "maps/shared/sharedFunc_800D2E60_0_s00.h" // 0x800D2E60
 
 void func_800D2E6C() {}
 
@@ -197,10 +157,7 @@ s32 func_800D2E94()
 
 void func_800D2E9C() {}
 
-u8 func_800D2EA4()
-{
-    return g_SysWork.player_4C.chara_0.field_10D;
-}
+#include "maps/shared/sharedFunc_800D2EA4_0_s00.h" // 0x800D2EA4
 
 void func_800D2EB4()
 {
@@ -329,10 +286,7 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D921C);
 
 #include "maps/shared/sharedFunc_800D923C_0_s00.h" // 0x800D923C
 
-s32 func_800D929C()
-{
-    return D_800A999C;
-}
+#include "maps/shared/sharedFunc_800D929C_0_s00.h" // 0x800D929C
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D92AC);
 

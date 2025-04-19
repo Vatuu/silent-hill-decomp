@@ -9,7 +9,7 @@ extern s32 D_800E3A30;
 
 void func_800D0124();
 
-void func_800D0E04();
+void sharedFunc_800D0E04_0_s00();
 
 void func_800D0E24();
 
@@ -19,22 +19,22 @@ void func_800D209C();
 
 void func_800D20E4();
 
-void func_800D20D8();
+void sharedFunc_800D20D8_0_s00();
 
 void func_800D2C7C(s32 arg0);
 
-void func_800D2D2C();
+void sharedFunc_800D2D2C_0_s00();
 
-void func_800D2D44();
+void sharedFunc_800D2D44_0_s00();
 
-s32 func_800D2D6C();
+s32 sharedFunc_800D2D6C_0_s00();
 
-void func_800D2D84();
+void sharedFunc_800D2D84_0_s00();
 
 /** Triggers at specific points after the start of a cutscene or dialogue. */
-s32 func_800D2E50();
+s32 sharedFunc_800D2E50_0_s00();
 
-void func_800D2E60();
+void sharedFunc_800D2E60_0_s00();
 
 void func_800D2E6C();
 
@@ -50,7 +50,7 @@ s32 func_800D2E94();
 
 void func_800D2E9C();
 
-u8 func_800D2EA4();
+u8 sharedFunc_800D2EA4_0_s00();
 
 void func_800D2EB4();
 
