@@ -166,6 +166,13 @@ typedef struct
 
 typedef struct
 {
+    s8  unk_0[8];
+    s32 field_8;
+} s_800AA894;
+STATIC_ASSERT_SIZEOF(s_800AA894, 12);
+
+typedef struct
+{
     s16 unk_0;
     s16 field_2;
     s8  field_4;
@@ -224,14 +231,14 @@ typedef struct _s_800BCE18
     s8                unk_0[4];
     s8                field_4;
     u8                unk_5[3];
-    u8                unk_8[0x1644];
+    u8                unk_8[5700];
     s32               field_164C;
-    u8                unk_1650[0x58C];
+    u8                unk_1650[1420];
     VC_CAMERA_INTINFO vcCameraInternalInfo_1BDC; // Debug camera info.
     s_800BE9FC        field_1BE4;
     s32               field_2BE8;
 } s_800BCE18;
-STATIC_ASSERT_SIZEOF(s_800BCE18, 0x2BEC); // TODO: likely even larger. `func_8003CB44` accesses some 16 byte fields at 0x2BEC.
+STATIC_ASSERT_SIZEOF(s_800BCE18, 0x2BEC); // TODO: Likely even larger. `func_8003CB44` accesses some 16 byte fields at 0x2BEC.
 
 typedef struct
 {
@@ -255,10 +262,13 @@ STATIC_ASSERT_SIZEOF(s_800C117C, 28);
 typedef struct
 {
     u16 field_0;
-    s8  field_2[2];
+    u16 field_2;
     u16 field_4;
     u16 field_6;
-    s8  unk_8[13];
+    s8  unk_8[6];
+    u16 field_E;
+    s8  unk_F[4];
+    s8  field_14;
     u8  field_15;
 } s_800C1658;
 
@@ -270,12 +280,18 @@ typedef struct
     s8 field_3;
 } s_800C1670;
 
+// Sound data struct?
 typedef struct
 {
-    s8 unk_0[12];
-    s8 field_C;
-    s8 field_D;
-    s8 field_E;
+    s16 volumeXa_0; // Might be wrong, but it's used in a `Sd_SetVolBXa` call.
+    s8  unk_2[2];
+    u16 field_4;
+    s8  unk_6[2];
+    s16 volumeBgm_8; // Might be wrong, but it's used in a `Sd_SetVolBgm` call.
+    s8  field_10[2];
+    s8  field_C;     // (?) volume?
+    s8  field_D;     // BGM volume?
+    s8  field_E;     // SE volume?
 } s_800C1678;
 
 typedef struct
@@ -617,6 +633,8 @@ extern s_FsImageDesc D_800A9EB4;
 
 extern s_800C37D8 D_800AA274[];
 
+extern s_800AA894 D_800AA894[];
+
 /** String color. */
 extern s16 g_StringColorId; // 0x800AD498
 
@@ -738,6 +756,8 @@ extern u16 D_800C1666;
 extern s8 D_800C166A;
 
 extern s8 D_800C166C;
+
+extern s8 D_800C166E;
 
 extern s8 D_800C166F;
 
@@ -1133,6 +1153,20 @@ u8 func_80045B28();
 void func_80046048(u16, s32, s32);
 
 void func_8004690C(s32);
+
+/** Sound func. */
+void func_80046B78();
+
+s32 func_80046DCC(s32 idx);
+
+void func_8004729C(u16 arg0);
+
+void func_800472BC(s32 arg0);
+
+void func_8004760C();
+
+/** Args are volume levels. */
+void Sd_SetVolume(u8 arg0, u8 arg1, u8 arg2);
 
 void func_8004692C(u16);
 
