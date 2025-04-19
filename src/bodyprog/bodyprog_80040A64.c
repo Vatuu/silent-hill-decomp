@@ -1048,7 +1048,10 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80046C54);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80046D3C);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80046DCC);
+s32 func_80046DCC(s32 idx) // 0x80046DCC
+{
+    return (D_800AA894[idx & 0xFFF].field_8 & 0xFFFFFF) + 32;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80046E00);
 

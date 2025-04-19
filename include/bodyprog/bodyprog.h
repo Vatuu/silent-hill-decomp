@@ -166,6 +166,13 @@ typedef struct
 
 typedef struct
 {
+    s8  unk_0[8];
+    s32 field_8;
+} s_800AA894;
+STATIC_ASSERT_SIZEOF(s_800AA894, 12);
+
+typedef struct
+{
     s16 unk_0;
     s16 field_2;
     s8  field_4;
@@ -224,14 +231,14 @@ typedef struct _s_800BCE18
     s8                unk_0[4];
     s8                field_4;
     u8                unk_5[3];
-    u8                unk_8[0x1644];
+    u8                unk_8[5700];
     s32               field_164C;
-    u8                unk_1650[0x58C];
+    u8                unk_1650[1420];
     VC_CAMERA_INTINFO vcCameraInternalInfo_1BDC; // Debug camera info.
     s_800BE9FC        field_1BE4;
     s32               field_2BE8;
 } s_800BCE18;
-STATIC_ASSERT_SIZEOF(s_800BCE18, 0x2BEC); // TODO: likely even larger. `func_8003CB44` accesses some 16 byte fields at 0x2BEC.
+STATIC_ASSERT_SIZEOF(s_800BCE18, 0x2BEC); // TODO: Likely even larger. `func_8003CB44` accesses some 16 byte fields at 0x2BEC.
 
 typedef struct
 {
@@ -619,6 +626,8 @@ extern RECT D_800A9A6C; // RECT <320, 256, 160, 240>, only used in SysState_Fmv_
 extern s_FsImageDesc D_800A9EB4;
 
 extern s_800C37D8 D_800AA274[];
+
+extern s_800AA894 D_800AA894[];
 
 /** String color. */
 extern s16 g_StringColorId; // 0x800AD498
@@ -1139,6 +1148,8 @@ void func_8004690C(s32);
 
 /** Sound func. */
 void func_80046B78();
+
+s32 func_80046DCC(s32 idx);
 
 void func_8004692C(u16);
 
