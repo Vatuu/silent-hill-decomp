@@ -59,7 +59,10 @@ void func_800D1620(void) {}
 
 void func_800D1628(void) {}
 
-INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D1630);
+s32 func_800D1630()
+{
+    return 0;
+}
 
 void func_800D1638(void) {}
 

@@ -55,7 +55,10 @@ void func_800CE9B4(void) {}
 
 void func_800CE9BC(void) {}
 
-INCLUDE_ASM("asm/maps/map7_s00/nonmatchings/map7_s00", func_800CE9C4);
+s32 func_800CE9C4()
+{
+    return 0;
+}
 
 void func_800CE9CC(void) {}
 

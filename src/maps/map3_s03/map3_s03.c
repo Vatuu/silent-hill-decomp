@@ -27,7 +27,10 @@ INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800CD0E4);
 
 INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800CD244);
 
-INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800CD41C);
+s32 func_800CD41C()
+{
+    return 0;
+}
 
 #include "maps/shared/sharedFunc_800D2C7C_0_s00.h" // 0x800CD424
 
@@ -55,7 +58,10 @@ void func_800CD62C(void) {}
 
 void func_800CD634(void) {}
 
-INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800CD63C);
+s32 func_800CD63C()
+{
+    return 0;
+}
 
 void func_800CD644(void) {}
 

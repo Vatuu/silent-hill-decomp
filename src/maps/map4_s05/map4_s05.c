@@ -91,7 +91,10 @@ void func_800D1678(void) {}
 
 void func_800D1680(void) {}
 
-INCLUDE_ASM("asm/maps/map4_s05/nonmatchings/map4_s05", func_800D1688);
+s32 func_800D1688()
+{
+    return 0;
+}
 
 void func_800D1690(void) {}
 

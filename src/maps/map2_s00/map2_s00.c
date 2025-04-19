@@ -49,7 +49,10 @@ INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800D125C);
 
 INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800D13BC);
 
-INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800D1594);
+s32 func_800D1594()
+{
+    return 0;
+}
 
 #include "maps/shared/sharedFunc_800D2C7C_0_s00.h" // 0x800D159C
 

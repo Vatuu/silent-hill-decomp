@@ -63,7 +63,10 @@ void func_800CFE28(void) {}
 
 void func_800CFE30(void) {}
 
-INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", func_800CFE38);
+s32 func_800CFE38()
+{
+    return 0;
+}
 
 void func_800CFE40(void) {}
 
