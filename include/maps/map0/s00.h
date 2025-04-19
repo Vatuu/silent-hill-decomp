@@ -21,7 +21,7 @@ void func_800D20E4();
 
 void sharedFunc_800D20D8_0_s00();
 
-void func_800D2C7C(s32 arg0);
+void sharedFunc_800D2C7C_0_s00(s32 arg0);
 
 void sharedFunc_800D2D2C_0_s00();
 
@@ -67,7 +67,7 @@ void func_800D8888(s_SubCharacter* chara);
 void sharedFunc_800D88AC_0_s00(s_SubCharacter* playerChara);
 
 /** Among other things, sets the players's anim to anim 3 (which might actually be flags if the field packs more data). */
-void func_800D88C0(s_SubCharacter* playerChara, s32 arg1);
+void sharedFunc_800D88C0_0_s00(s_SubCharacter* playerChara, s32 arg1);
 
 void sharedFunc_800D8904_0_s00(s_SubCharacter* playerChara, s32 afkTime);
 

@@ -72,7 +72,7 @@ void func_800D209C()
     g_SaveGamePtr->equippedWeapon_AA = 0;
 
     func_800D20E4();
-    func_800D2C7C(84);
+    sharedFunc_800D2C7C_0_s00(84);
 }
 
 #include "maps/shared/sharedFunc_800D20D8_0_s00.h" // 0x800D20D8
@@ -83,48 +83,7 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D2244);
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D23EC);
 
-void func_800D2C7C(s32 arg0)
-{
-    s_MainCharacterExtra* extra = &g_SysWork.player_4C.extra_128;
-    s_SubCharacter*       chara = &g_SysWork.player_4C.chara_0;
-
-    extra = &g_SysWork.player_4C.extra_128;
-    chara = &g_SysWork.player_4C.chara_0;
-
-    g_SysWork.player_4C.chara_0.field_126 = 0;
-
-    D_800C4606 = 0;
-    
-    switch (arg0)
-    {
-        case 0x36:
-            D_800C457C = 0;
-            break;
-
-        case 0x35:
-            D_800C457C = 1;
-            break;
-
-        case 0x38:
-            D_800C457C = 3;
-            break;
-
-        case 0x39:
-            D_800C457C = 4;
-            break;
-    }
-
-    g_SysWork.player_4C.extra_128.field_1C = arg0;
-
-    chara->model_0.isAnimStateUnchanged_3 = 0;
-    chara->model_0.field_2 = 0;
-
-    extra->model_0.isAnimStateUnchanged_3 = 0;
-    extra->model_0.field_2 = 0;
-
-    g_SysWork.player_4C.extra_128.field_20 = 0;
-    g_SysWork.player_4C.extra_128.field_24 = 0;
-}
+#include "maps/shared/sharedFunc_800D2C7C_0_s00.h" // 0x800D2C7C
 
 #include "maps/shared/sharedFunc_800D2D2C_0_s00.h" // 0x800D2D2C
 
@@ -239,26 +198,7 @@ void func_800D8888(s_SubCharacter* chara)
 
 #include "maps/shared/sharedFunc_800D88AC_0_s00.h" // 0x800D88AC
 
-// func_800D88C0 not shared? 
-void func_800D88C0(s_SubCharacter* playerChara, s32 arg1)
-{
-    playerChara->properties_E4[PlayerProperty_Unk4] = 1;
-
-    if (arg1 != 0)
-    {
-        playerChara->model_0.anim_4.animIdx_0 = 3;
-        playerChara->model_0.anim_4.keyframeIdx0_8 = 0;
-        playerChara->model_0.anim_4.time_4 = 0;
-        playerChara->model_0.anim_4.keyframeIdx1_A = FP_TO(1, Q12_SHIFT);
-    }
-    else
-    {
-        playerChara->properties_E4[PlayerProperty_AfkTimer] = 0;
-        playerChara->model_0.isAnimStateUnchanged_3 = 0;
-    }
-
-    playerChara->model_0.anim_4.flags_2 |= AnimFlag_Unk1;
-}
+#include "maps/shared/sharedFunc_800D88C0_0_s00.h" // 0x800D88C0
 
 #include "maps/shared/sharedFunc_800D8904_0_s00.h" // 0x800D8904
 
