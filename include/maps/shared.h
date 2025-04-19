@@ -1,11 +1,17 @@
 #ifndef _MAPS_SHARED_H
 #define _MAPS_SHARED_H
 
-extern u8 sharedData_800DD59C_0_s00;
+extern s8 sharedData_800DD59C_0_s00;
+
+extern s32 sharedData_800E39D8_0_s00;
 
 void sharedFunc_800D0E04_0_s00();
 
+void sharedFunc_800D209C_0_s00();
+
 void sharedFunc_800D20D8_0_s00();
+
+void sharedFunc_800D20E4_0_s00();
 
 void sharedFunc_800D2C7C_0_s00(s32 arg0);
 

@@ -42,11 +42,11 @@ INCLUDE_ASM("asm/maps/map0_s02/nonmatchings/map0_s02", func_800CDAA8);
 
 INCLUDE_ASM("asm/maps/map0_s02/nonmatchings/map0_s02", func_800CDD9C);
 
-INCLUDE_ASM("asm/maps/map0_s02/nonmatchings/map0_s02", func_800CE1C8);
+#include "maps/shared/sharedFunc_800D209C_0_s00.h" // 0x800CE1C8
 
 #include "maps/shared/sharedFunc_800D20D8_0_s00.h" // 0x800CE204
 
-INCLUDE_ASM("asm/maps/map0_s02/nonmatchings/map0_s02", func_800CE210);
+#include "maps/shared/sharedFunc_800D20E4_0_s00.h" // 0x800CE210
 
 INCLUDE_ASM("asm/maps/map0_s02/nonmatchings/map0_s02", func_800CE370);
 

@@ -67,18 +67,11 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D0E34);
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D1C38);
 
-void func_800D209C()
-{
-    g_SysWork.field_47 = NO_VALUE;
-    g_SaveGamePtr->equippedWeapon_AA = 0;
-
-    func_800D20E4();
-    sharedFunc_800D2C7C_0_s00(84);
-}
+#include "maps/shared/sharedFunc_800D209C_0_s00.h" // 0x800D209C
 
 #include "maps/shared/sharedFunc_800D20D8_0_s00.h" // 0x800D20D8
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D20E4);
+#include "maps/shared/sharedFunc_800D20E4_0_s00.h" // 0x800D20E4
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D2244);
 

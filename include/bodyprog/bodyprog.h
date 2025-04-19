@@ -630,6 +630,10 @@ extern s32 D_800AE1B0;
 
 extern s8 D_800AF214;
 
+extern s8 D_800AF215;
+
+extern s8 D_800AF216;
+
 extern s_MaybeCharacterAnim g_MaybePlayerAnims[];
 
 extern s32 D_800AFC7C;
@@ -823,6 +827,8 @@ extern s16 D_800C4582;
 extern s16 D_800C4584;
 
 extern s16 D_800C4586;
+
+extern s8 D_800C4588;
 
 extern s16 D_800C45AC;
 

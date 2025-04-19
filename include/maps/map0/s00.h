@@ -11,10 +11,6 @@ void func_800D0E24();
 
 void func_800D0E2C();
 
-void func_800D209C();
-
-void func_800D20E4();
-
 void func_800D2E6C();
 
 void func_800D2E74();
