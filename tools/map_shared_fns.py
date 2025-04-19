@@ -30,9 +30,10 @@ def read_and_clean_file(file_path):
             content = file.read()
             # Remove /* blockquote comments */
             content = re.sub(r'/\*.*?\*/', '', content, flags=re.DOTALL)
-            # Remove func_[8 characters] and D_[8 characters]
+            # Remove func_[8 characters] and D_[8 characters] and L[8 characters]
             content = re.sub(r'func_[a-fA-F0-9]{8}', '', content)
             content = re.sub(r'D_[a-fA-F0-9]{8}', '', content)
+            content = re.sub(r'L[a-fA-F0-9]{8}', '', content)
             # Remove sharedFunc_[8 chars]_[digit]_[3 chars]
             content = re.sub(r'sharedFunc_[a-fA-F0-9]{8}_[0-9]{1}_[a-zA-Z0-9]{3}', '', content)
             return content
@@ -185,5 +186,5 @@ if __name__ == "__main__":
         searchType = "matchings"
     if args.nonmatchings:
         searchType = "nonmatchings"
-    
+
     find_equal_asm_files(searchType, args.map1, args.map2, 0, args.replace)
