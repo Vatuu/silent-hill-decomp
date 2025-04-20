@@ -18,3 +18,9 @@ sharedFunc_800D929C_0_s00 = 0x800D606C; // type:func
 sharedData_800DD59C_0_s00 = 0x800DAA40; // type:u8
 
 sharedData_800E39D8_0_s00 = 0x800DF54C; // type:s32
+
+sharedFunc_800CBBBC_0_s00 = 0x800CCB4C; // type:func
+sharedData_800E0C6E_0_s00 = 0x800DCEE2; // type:s16
+sharedData_800E323C_0_s00 = 0x800DF4B0; // type:VECTOR3 size:0xC
+sharedData_800E324C_0_s00 = 0x800DF4C0; // type:VECTOR3 size:0xC
+sharedData_800E3260_0_s00 = 0x800DF4D4; // type:s16

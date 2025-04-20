@@ -27,6 +27,10 @@
 #define CLAMP(val, min, max) \
     (((val) < (min)) ? (min) : (((val) > (max)) ? (max) : (val)))
 
+/** Computes the absolute difference between two values. */
+#define ABS_DIFF(a, b) \
+    (((a) - (b)) < 0 ? (b) - (a) : (a) - (b))
+
 /** Converts an integer to a fixed-point Q format. */
 #define FP_TO(val, shift) \
 	((val) << (shift))

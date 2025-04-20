@@ -3,7 +3,17 @@
 
 extern s8 sharedData_800DD59C_0_s00;
 
+extern s16 sharedData_800E0C6E_0_s00;
+
+extern VECTOR3 sharedData_800E323C_0_s00;
+
+extern VECTOR3 sharedData_800E324C_0_s00;
+
+extern s16 sharedData_800E3260_0_s00;
+
 extern s32 sharedData_800E39D8_0_s00;
+
+s32 sharedFunc_800CBBBC_0_s00();
 
 void sharedFunc_800D0E04_0_s00();
 

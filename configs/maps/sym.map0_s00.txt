@@ -1,3 +1,4 @@
+sharedFunc_800CBBBC_0_s00 = 0x800CBBBC; // type:func
 sharedFunc_800D0E04_0_s00 = 0x800D0E04; // type:func
 sharedFunc_800D209C_0_s00 = 0x800D209C; // type:func
 sharedFunc_800D20D8_0_s00 = 0x800D20D8; // type:func
@@ -27,5 +28,12 @@ sharedFunc_800D923C_0_s00 = 0x800D923C; // type:func
 sharedFunc_800D929C_0_s00 = 0x800D929C; // type:func
 
 sharedData_800DD59C_0_s00 = 0x800DD59C; // type:u8
+
+sharedData_800E0C6E_0_s00 = 0x800E0C6E; // type:s16
+
+sharedData_800E323C_0_s00 = 0x800E323C; // type:VECTOR3 size:0xC
+sharedData_800E324C_0_s00 = 0x800E324C; // type:VECTOR3 size:0xC
+
+sharedData_800E3260_0_s00 = 0x800E3260; // type:s16
 
 sharedData_800E39D8_0_s00 = 0x800E39D8; // type:s32
