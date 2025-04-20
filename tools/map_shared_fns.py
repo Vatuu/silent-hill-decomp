@@ -91,6 +91,22 @@ def parse_sym_comments(content):
 
     return comment_map
 
+def sort_sym_by_address(input_text):
+    lines = input_text.strip().splitlines()
+    addr_dict = {}
+
+    for line in lines:
+        if "0x" in line:
+            try:
+                addr_str = line.split("0x")[1].split(";")[0]
+                addr = int(addr_str, 16)
+                addr_dict[addr] = line
+            except (IndexError, ValueError):
+                continue  # skip lines that don't match the pattern
+
+    sorted_lines = [addr_dict[addr] for addr in sorted(addr_dict.keys())]
+    return "\n".join(sorted_lines)
+
 def read_file(path):
     try:
         with open(path, 'r') as file:
@@ -296,6 +312,7 @@ def find_equal_asm_files(searchType, map1, map2, maxdistance, replaceIncludeAsm,
                         print(f"Address 0x{addr_text} already has symbol defined")
 
                 if updated:
+                    sym_code = sort_sym_by_address(sym_code)
                     sym_code += "\n" # end file with newline
                     with open(sym_path, "w", encoding="utf-8") as f:
                         f.write(sym_code)
@@ -330,4 +347,19 @@ if __name__ == "__main__":
     if args.nonmatchings:
         searchType = "nonmatchings"
 
-    find_equal_asm_files(searchType, args.map1, args.map2, 0, args.replace, args.updsyms)
+    if args.map2 == "all":
+        TARGET_MAPS = [
+            "map0_s00", "map0_s01", "map0_s02",
+            "map1_s00", "map1_s01", "map1_s02", "map1_s03", "map1_s04", "map1_s05", "map1_s06",
+            "map2_s00", "map2_s01", "map2_s02", "map2_s03", "map2_s04",
+            "map3_s00", "map3_s01", "map3_s02", "map3_s03", "map3_s04", "map3_s05", "map3_s06",
+            "map4_s00", "map4_s01", "map4_s02", "map4_s03", "map4_s04", "map4_s05", "map4_s06",
+            "map5_s00", "map5_s01", "map5_s02", "map5_s03",
+            "map6_s00", "map6_s01", "map6_s02", "map6_s03", "map6_s04", "map6_s05",
+            "map7_s00", "map7_s01", "map7_s02", "map7_s03",
+        ]
+        for map_name in TARGET_MAPS:
+            if map_name != args.map1:
+                find_equal_asm_files(searchType, args.map1, map_name, 0, args.replace, args.updsyms)
+    else:
+        find_equal_asm_files(searchType, args.map1, args.map2, 0, args.replace, args.updsyms)
