@@ -15,6 +15,8 @@ extern s32 sharedData_800E39D8_0_s00;
 
 s32 sharedFunc_800CBBBC_0_s00();
 
+void sharedFunc_800D01BC_0_s00(u16* arg0, VECTOR3* arg1, s32 arg2);
+
 void sharedFunc_800D0E04_0_s00();
 
 void sharedFunc_800D209C_0_s00();
