@@ -462,18 +462,17 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_800323C8);
 void Gfx_Init(u16 screenWidth, s32 isInterlaced) // 0x80032428
 {
     g_GameWork.gsScreenWidth_588  = screenWidth;
-    g_GameWork.gsScreenHeight_58A = !isInterlaced ? 224 : 448;
+    g_GameWork.gsScreenHeight_58A = !isInterlaced ? FRAMEBUFFER_HEIGHT_PROGRESSIVE : FRAMEBUFFER_HEIGHT_INTERLACED;
 
     DrawSync(0);
-    GsInitGraph2(g_GameWork.gsScreenWidth_588, g_GameWork.gsScreenHeight_58A, (isInterlaced | 4), 1, 0);
+    GsInitGraph2(g_GameWork.gsScreenWidth_588, g_GameWork.gsScreenHeight_58A, (isInterlaced | 0x4), 1, 0);
     GsDefDispBuff2(0, 32, 0, isInterlaced ? 32 : 256);
 
-    D_800C6E8E = D_800C6E26 = 224;
+    D_800C6E8E =
+    D_800C6E26 = FRAMEBUFFER_HEIGHT_PROGRESSIVE;
 
     GsInit3D();
-
     Settings_ScreenXYSet(g_GameWorkPtr0->screenPosX_1C, g_GameWorkPtr0->screenPosY_1D);
-
     GsSwapDispBuff();
     GsSwapDispBuff();
 }

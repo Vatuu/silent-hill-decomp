@@ -4,9 +4,12 @@
 #include "gpu.h"
 #include "types.h"
 
-#define SCREEN_WIDTH     320
-#define SCREEN_HEIGHT    240
 #define TICKS_PER_SECOND 60 // Theorised. It's unclear if the game has a fixed timestep.
+
+#define SCREEN_WIDTH                   320
+#define SCREEN_HEIGHT                  240
+#define FRAMEBUFFER_HEIGHT_PROGRESSIVE 224
+#define FRAMEBUFFER_HEIGHT_INTERLACED  (FRAMEBUFFER_HEIGHT_PROGRESSIVE * 2)
 
 #define CHARA_PROPERTY_COUNT_MAX 10
 #define NPC_COUNT_MAX            6

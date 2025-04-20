@@ -62,11 +62,11 @@ void func_80041C24(s_80041CEC* arg0, s32 arg1, s32 arg2) // 0x80041C24
     func_80041E98();
 }
 
-// TODO: Likey not s_Skeleton after all. Expected struct fields don't match.
+// TODO: Likey not `s_Skeleton` after all. Expected struct fields don't match.
 #ifdef NON_MATCHING
 void func_80041CB4(s_Skeleton* skel, s_80041CEC* arg1) // 0x80041CB4
 {
-    skel->boneCount_0 = arg1;
+    skel->boneCount_0 = arg1; // TODO: `boneCount` isn't a ptr.
     func_80041CEC(arg1);
 
     skel->bones_8 = NULL;

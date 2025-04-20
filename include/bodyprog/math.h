@@ -33,7 +33,7 @@
 
 /** Converts a float to a fixed-point Q format. */
 #define FP_FLOAT_TO(val, shift) \
-    ((val) * FP_TO(1, (shift)))
+    (s32)((val) * FP_TO(1, (shift)))
 
 /** Converts an integer from a fixed-point Q format. */
 #define FP_FROM(val, shift) \
@@ -45,7 +45,7 @@
 
 /** Multiplies an integer by a float converted to fixed-point Q format and converts the result from the fixed-point Q format. */
 #define FP_MULTIPLY_FLOAT(val0, val1, shift) \
-    (FP_MULTIPLY((val0), (s32)FP_FLOAT_TO((val1), (shift)), (shift)))
+    (FP_MULTIPLY((val0), FP_FLOAT_TO((val1), (shift)), (shift)))
 
 /** Multiplies an integer by a float converted to fixed-point Q format, using 64-bit intermediate via `Math_MulFixed` for higher precision. */
 #define FP_MULTIPLY_PRECISE(val0, val1, shift) \
@@ -65,7 +65,7 @@
 
 /** Converts floating-point meters to fixed-point meters in Q24.8 format. */
 #define FP_METER(met) \
-    (s32)((met) * (1 << (Q8_SHIFT)))
+    FP_FLOAT_TO(met, Q8_SHIFT)
 
 static inline s16 shAngleRegulate(s32 angle)
 {

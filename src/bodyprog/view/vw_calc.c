@@ -5,7 +5,8 @@
 
 extern MATRIX D_800C3868;
 
-void vwRenewalXZVelocityToTargetPos(s32* velo_x, s32* velo_z, VECTOR3* now_pos, VECTOR3* tgt_pos, s32 tgt_r, s32 accel, s32 total_max_spd, s32 dec_forwd_lim_spd, s32 dec_accel_side) // 0x80048F28
+void vwRenewalXZVelocityToTargetPos(s32* velo_x, s32* velo_z, VECTOR3* now_pos, VECTOR3* tgt_pos, s32 tgt_r,
+                                    s32 accel, s32 total_max_spd, s32 dec_forwd_lim_spd, s32 dec_accel_side) // 0x80048F28
 {
 // SH2 locals
 #if 0
@@ -21,7 +22,7 @@ void vwRenewalXZVelocityToTargetPos(s32* velo_x, s32* velo_z, VECTOR3* now_pos, 
     /* 0x1d */ float cam2tgt_ang_y;
 #endif
 
-    SVECTOR unused; // cam2tgt_dir_vec?
+    SVECTOR unused; // `cam2tgt_dir_vec`?
     s16     temp_v0;
     s32     ang_y;
     s32     temp_s0;
@@ -34,7 +35,7 @@ void vwRenewalXZVelocityToTargetPos(s32* velo_x, s32* velo_z, VECTOR3* now_pos, 
 
     temp_v0 = ratan2(tgt_pos->vx - now_pos->vx, tgt_pos->vz - now_pos->vz);
 
-    // shSinCosV is called in SH2 while SH just calls shRsin/shRcos and does nothing with result.
+    // `shSinCosV` is called in SH2 while SH just calls `shRsin`/`shRcos` and does nothing with result.
     unused.vx = shRsin(temp_v0);
     unused.vy = shRcos(temp_v0);
 
@@ -48,7 +49,7 @@ void vwRenewalXZVelocityToTargetPos(s32* velo_x, s32* velo_z, VECTOR3* now_pos, 
     if (total_max_spd < temp_v0_2)
     {
         temp_s1_2 = temp_v0_2 - total_max_spd;
-        ang_y     = ratan2(*velo_x, *velo_z);
+        ang_y = ratan2(*velo_x, *velo_z);
         *velo_x -= Math_MulFixed(temp_s1_2, shRsin(ang_y), Q12_SHIFT);
         *velo_z -= Math_MulFixed(temp_s1_2, shRcos(ang_y), Q12_SHIFT);
     }

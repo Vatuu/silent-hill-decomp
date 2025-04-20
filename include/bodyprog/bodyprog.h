@@ -945,7 +945,7 @@ typedef struct _MapOverlayHeader
     u8           unk_15[3];
     u8           unk_18[8];
     void         (**mapEventFuncs_20)(); // Points to array of event functions.
-    u8           unk_24[0x1C];
+    u8           unk_24[28];
     void         (*func_40)();
     void         (*func_44)();
     u8           unk_48[128];

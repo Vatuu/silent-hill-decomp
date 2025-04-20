@@ -48,7 +48,7 @@ void func_800401A0(s32 arg0) // 0x800401A0
 {
     if (arg0)
     {
-        D_800BCE18.vcCameraInternalInfo_1BDC.ev_cam_rate = 4096; // TODO: If angle, replace magic value with FP_ANGLE(22.5f).
+        D_800BCE18.vcCameraInternalInfo_1BDC.ev_cam_rate = FP_METER(16.0f);
     }
     else
     {
@@ -114,7 +114,7 @@ void vcMoveAndSetCamera(s32 in_connect_f, s32 change_debug_mode, s32 for_f, s32 
             hero_top_y = hr_p->position_18.vy - FP_METER(27.2f);
 
             // TODO: Not sure what this is doing, maybe some kind of `FP_MULTIPLY`.
-            hero_bottom_y = hr_p->position_18.vy + ((s32)-(D_800BCE18.vcCameraInternalInfo_1BDC.ev_cam_rate * 0x800) >> Q12_SHIFT);
+            hero_bottom_y = hr_p->position_18.vy + ((s32)-(D_800BCE18.vcCameraInternalInfo_1BDC.ev_cam_rate * FP_METER(8)) >> Q12_SHIFT);
 
             if (D_800BCE18.vcCameraInternalInfo_1BDC.ev_cam_rate > 0)
             {
@@ -289,6 +289,8 @@ void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, s_SysWork* sys_p) // 0x80040
     }
     else
     {
+        // TODO: Demagic hex values.
+
         if (g_ControllerPtr1->btns_held_C & Pad_LStickUp)
         {
             vec0.vy -= 0x19;
@@ -346,6 +348,6 @@ void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, s_SysWork* sys_p) // 0x80040
 
         sys_p->cameraAngleY_237A   = shAngleRegulate(cam_ang.vy + FP_ANGLE(11.25f));
         sys_p->cameraY_2384        = FP_TO(-vec1.vy, Q4_SHIFT);
-        sys_p->cameraRadiusXz_2380 = FP_TO(SquareRoot0((vec1.vx * vec1.vx) + (vec1.vz * vec1.vz)), Q4_SHIFT);
+        sys_p->cameraRadiusXz_2380 = FP_TO(SquareRoot0(SQUARE(vec1.vx) + SQUARE(vec1.vz)), Q4_SHIFT);
     }
 }

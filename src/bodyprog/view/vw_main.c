@@ -83,7 +83,7 @@ void vwSetViewInfoDirectMatrix(GsCOORDINATE2* pcoord, MATRIX* cammat) // 0x80048
     vwViewPointInfo.vwcoord.coord = *cammat;
 }
 
-// Inlined into vwSetViewInfo, maybe vwMatrixToPosition?
+// Inlined into `vwSetViewInfo`, maybe `vwMatrixToPosition`?
 static inline void Math_MatrixToPosition(VECTOR3* pos, MATRIX* workm)
 {
     pos->vx = FP_TO(workm->t[0], Q4_SHIFT);
