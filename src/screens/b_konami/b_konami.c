@@ -278,7 +278,7 @@ void GameState_KcetLogo_Update() // 0x800C99A4
                 if ((D_800BCD0C & 7) == 5)
                 {
                     Settings_ScreenAndVolUpdate();
-                    Gfx_Init(0x140, 0);
+                    Gfx_Init(SCREEN_WIDTH, 0);
 
                     switch (D_800CA4F0.field_0)
                     {

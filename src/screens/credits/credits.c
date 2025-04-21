@@ -176,7 +176,7 @@ s32 func_801E3304() // 0x801E3304
     {
         if (g_GameWork.gameStateStep_598[1] == 0)
         {
-            Gfx_Init(0x140, 0);
+            Gfx_Init(SCREEN_WIDTH, 0);
             D_800BCD0C = 0;
             g_GameWork.gameStateStep_598[1]++;
         }

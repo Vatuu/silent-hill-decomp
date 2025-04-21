@@ -1181,7 +1181,7 @@ u32 func_800806AC(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x800806AC
         if (res != 0)
         {
             res = (arg0 & (1 << D_800C4620.field_8));
-            return res > 0; 
+            return res > 0u; 
         }
     }
 

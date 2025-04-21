@@ -459,7 +459,23 @@ void Gfx_ClearRectInterlaced(s16 x, s16 y, s16 w, s16 h, u8 r, u8 g, u8 b)
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_800323C8);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", Gfx_Init);
+void Gfx_Init(u16 screenWidth, s32 isInterlaced) // 0x80032428
+{
+    g_GameWork.gsScreenWidth_588  = screenWidth;
+    g_GameWork.gsScreenHeight_58A = !isInterlaced ? FRAMEBUFFER_HEIGHT_PROGRESSIVE : FRAMEBUFFER_HEIGHT_INTERLACED;
+
+    DrawSync(0);
+    GsInitGraph2(g_GameWork.gsScreenWidth_588, g_GameWork.gsScreenHeight_58A, (isInterlaced | 0x4), 1, 0);
+    GsDefDispBuff2(0, 32, 0, isInterlaced ? 32 : 256);
+
+    D_800C6E8E =
+    D_800C6E26 = FRAMEBUFFER_HEIGHT_PROGRESSIVE;
+
+    GsInit3D();
+    Settings_ScreenXYSet(g_GameWorkPtr0->screenPosX_1C, g_GameWorkPtr0->screenPosY_1D);
+    GsSwapDispBuff();
+    GsSwapDispBuff();
+}
 
 void Settings_ScreenXYSet(s32 x, s32 y) // 0x800324F4
 {
@@ -575,7 +591,7 @@ void GameState_Unk0_Update() // 0x80032D1C
             g_GameWork.field_58D = 0;
             g_GameWork.field_58E = 0;
 
-            Gfx_Init(0x140, 0);
+            Gfx_Init(SCREEN_WIDTH, 0);
             g_SysWork.timer_20 = 0;
             g_GameWork.gameStateStep_598[1] = 0;
             g_GameWork.gameStateStep_598[2] = 0;

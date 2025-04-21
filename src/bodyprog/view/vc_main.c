@@ -245,8 +245,8 @@ s32 vcExecCamera() // 0x80080FBC
     cur_rd_area_size = vcWork.cur_near_road_2B8.road_p_0->area_size_type_11;
     cur_cam_mv_type  = vcRetCurCamMvType(&vcWork);
 
-    // TODO: This checks for VC_PRS_F_VIEW_F flag in a weird way.
-    far_watch_rate     = vcRetFarWatchRate(((vcWork.flags_8 >> 9) & 1) ^ (g_GameWorkPtr0->optViewCtrl_28 != 0), cur_cam_mv_type, &vcWork);
+    // TODO: This checks for `VC_PRS_F_VIEW_F` flag in a weird way.
+    far_watch_rate     = vcRetFarWatchRate(((vcWork.flags_8 >> 9) & (1 << 0)) ^ (g_GameWorkPtr0->optViewCtrl_28 != 0), cur_cam_mv_type, &vcWork);
     self_view_eff_rate = vcRetSelfViewEffectRate(cur_cam_mv_type, far_watch_rate, &vcWork);
 
     if (!(vcWork.flags_8 & (VC_USER_CAM_F | VC_USER_WATCH_F)))
@@ -323,7 +323,7 @@ s32 vcRetSmoothCamMvF(VECTOR3* old_pos, VECTOR3* now_pos, SVECTOR* old_ang, SVEC
     s32 rot_x;
     s32 rot_y;
 
-    intrpt = FP_TO(g_DeltaTime0, Q12_SHIFT) / 0x44; // Divide by 0.0166?
+    intrpt = FP_TO(g_DeltaTime0, Q12_SHIFT) / FP_FLOAT_TO(0.01675f, Q12_SHIFT);
     intrpt = CLAMP(intrpt, FP_TO(1, Q12_SHIFT), FP_TO(4, Q12_SHIFT));
 
     mv_vec = Math_VectorMagnitude(FP_FROM(now_pos->vx - old_pos->vx, Q4_SHIFT),
@@ -358,16 +358,17 @@ VC_CAM_MV_TYPE vcRetCurCamMvType(VC_WORK* w_p) // 0x80081428
 
     if (g_GameWorkPtr0->optViewMode_29 != 0)
     {
-        // If g_GameWorkPtr0->optViewCtrl_28 == 1 then it flips check against VC_PRS_F_VIEW_F flag?
-        // Code below matches but duplicates the return VC_MV_SELF_VIEW code, and doesn't really seem like something written by a dev. -- emoose
+        // If `g_GameWorkPtr0->optViewCtrl_28 == 1` then it flips check against `VC_PRS_F_VIEW_F` flag?
+        // Code below matches but duplicates the return `VC_MV_SELF_VIEW` code, and doesn't really seem like something written by a dev. -- emoose
         hasViewFlag = (vcWork.flags_8 & VC_PRS_F_VIEW_F) == VC_PRS_F_VIEW_F;
 
         if (g_GameWorkPtr0->optViewCtrl_28)
         {
-            if ((hasViewFlag ^ 1) != 0)
+            if ((hasViewFlag ^ (1 << 0)) != 0)
             {
                 // TODO: Can this be merged with block below somehow?
-                if ((w_p->flags_8 & ((1 << 0) | (1 << 1) | (1 << 8))) == 0 && func_8008150C(w_p->chara_pos_114.vx, w_p->chara_pos_114.vz) == 0)
+                if ((w_p->flags_8 & (VC_USER_CAM_F | VC_USER_WATCH_F | VC_INHIBIT_FAR_WATCH_F)) == 0 &&
+                    func_8008150C(w_p->chara_pos_114.vx, w_p->chara_pos_114.vz) == 0)
                 {
                     return VC_MV_SELF_VIEW;
                 }
@@ -375,7 +376,8 @@ VC_CAM_MV_TYPE vcRetCurCamMvType(VC_WORK* w_p) // 0x80081428
         }
         else if (hasViewFlag)
         {
-            if ((w_p->flags_8 & ((1 << 0) | (1 << 1) | (1 << 8))) == 0 && func_8008150C(w_p->chara_pos_114.vx, w_p->chara_pos_114.vz) == 0)
+            if ((w_p->flags_8 & (VC_USER_CAM_F | VC_USER_WATCH_F | VC_INHIBIT_FAR_WATCH_F)) == 0 &&
+                func_8008150C(w_p->chara_pos_114.vx, w_p->chara_pos_114.vz) == 0)
             {
                 return VC_MV_SELF_VIEW;
             }
@@ -747,8 +749,7 @@ void vcAutoRenewalCamTgtPos(VC_WORK* w_p, VC_CAM_MV_TYPE cam_mv_type, VC_CAM_MV_
 
             if (cam_mv_type == VC_MV_CHASE && !(cur_rd_flags & VC_RD_NO_FRONT_FLIP_F))
             {
-                vcCamTgtMvVecIsFlipedFromCharaFront(
-                    &tgt_vec, w_p, max_tgt_mv_xz_len, cur_rd_area_size);
+                vcCamTgtMvVecIsFlipedFromCharaFront(&tgt_vec, w_p, max_tgt_mv_xz_len, cur_rd_area_size);
             }
 
             if (cam_mv_type != VC_MV_THROUGH_DOOR)
@@ -1030,8 +1031,9 @@ void vcRenewalCamData(VC_WORK* w_p, VC_CAM_MV_PARAM* cam_mv_prm_p) // 0x80084BD8
         return;
     }
 
+    // SH2 removes this multiply and uses `accel_y` directly. Maybe 0.4f/1.0f were tunable defines and compiler removed it.
     dec_spd_per_dist_xz = FP_MULTIPLY_PRECISE(cam_mv_prm_p->accel_xz, 0.4f, Q12_SHIFT);
-    dec_spd_per_dist_y  = FP_MULTIPLY_PRECISE(cam_mv_prm_p->accel_y, 1.0f, Q12_SHIFT); // SH2 removes this multiply and uses accel_y directly, maybe 0.4f/1.0f were tunable defines & compiler removed it.
+    dec_spd_per_dist_y  = FP_MULTIPLY_PRECISE(cam_mv_prm_p->accel_y, 1.0f, Q12_SHIFT);
 
     vwRenewalXZVelocityToTargetPos(&w_p->cam_velo_60.vx, &w_p->cam_velo_60.vz, &w_p->cam_pos_50,
                                    &w_p->cam_tgt_pos_44, FP_METER(1.6f), cam_mv_prm_p->accel_xz,
@@ -1157,7 +1159,9 @@ void vcAdjCamOfsAngByCharaInScreen(SVECTOR* cam_ang, SVECTOR* ofs_cam2chara_btm_
     watch2chr_top_ofs_ang_x    = shAngleRegulate(ofs_cam2chara_top_ang->vx - cam_ang->vx);
     watch2chr_ofs_ang_y        = shAngleRegulate(ofs_cam2chara_top_ang->vy - cam_ang->vy);
 
-    adj_cam_ang_y = (watch2chr_ofs_ang_y > w_p->scr_half_ang_wx_2E) ? (watch2chr_ofs_ang_y - w_p->scr_half_ang_wx_2E) : ((-w_p->scr_half_ang_wx_2E > watch2chr_ofs_ang_y) ? (w_p->scr_half_ang_wx_2E + watch2chr_ofs_ang_y) : 0);
+    adj_cam_ang_y = (watch2chr_ofs_ang_y > w_p->scr_half_ang_wx_2E) ?
+                    (watch2chr_ofs_ang_y - w_p->scr_half_ang_wx_2E) :
+                    ((-w_p->scr_half_ang_wx_2E > watch2chr_ofs_ang_y) ? (w_p->scr_half_ang_wx_2E + watch2chr_ofs_ang_y) : 0);
 
     /*
     var_a1 = watch2chr_bottom_ofs_ang_x + w_p->scr_half_ang_wy_2C;

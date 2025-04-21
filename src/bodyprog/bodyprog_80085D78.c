@@ -112,20 +112,20 @@ void func_800860B0(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 sysStateStep, s32
 // TODO: Get rid of gotos.
 void func_8008616C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4)
 {
-    s32 var_v0;
-    s32 var_v1;
-    s32 var_v1_2;
+    s32 caseVar;
+    s32 var0;
+    s32 var1;
 
     if (arg0 != 2)
     {
-        var_v1 = arg0;
+        caseVar = arg0;
     }
     else
     {
-        var_v1 = g_SysWork.field_14;
+        caseVar = g_SysWork.field_14;
     }
 
-    switch (var_v1)
+    switch (caseVar)
     {
         case 0:
             if (arg2 != 2)
@@ -146,9 +146,10 @@ void func_8008616C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4)
                 else
                 {
                     g_SysWork.field_30 = 18;
+
                     if (arg2 == 3)
                     {
-                        g_SysWork.flags_22A4 |= (1 << 3);
+                        g_SysWork.flags_22A4 |= 1 << 3;
                     }
                 }
             }
@@ -175,14 +176,14 @@ void func_8008616C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4)
         case 1:
             if (arg2 < 2)
             {
-                if (arg1 != 0 || D_800BCD0C != var_v1)
+                if (arg1 != 0 || D_800BCD0C != caseVar)
                 {
-                    if (arg1 == var_v1)
+                    if (arg1 == caseVar)
                     {
-                        var_v1_2 = 5;
-                        var_v0 = D_800BCD0C & 7;
+                        var1 = 5;
+                        var0 = D_800BCD0C & 0x7;
 
-                        if (var_v1_2 == var_v0)
+                        if (var1 == var0)
                         {
                             func_80085D78(arg4);
                         }
@@ -193,14 +194,14 @@ void func_8008616C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4)
                     goto block_32;
                 }
             }
-            else if (arg1 != 0 || g_SysWork.field_30 != var_v1)
+            else if (arg1 != 0 || g_SysWork.field_30 != caseVar)
             {
-                if (arg1 == var_v1)
+                if (arg1 == caseVar)
                 {
-                    var_v1_2 = g_SysWork.field_30;
-                    var_v0 = 21;
+                    var1 = g_SysWork.field_30;
+                    var0 = 21;
                     
-                    if (var_v1_2 == var_v0)
+                    if (var1 == var0)
                     {
                         goto block_32;
                     }
@@ -326,11 +327,10 @@ void func_800867B4(s32 caseParam, s32 idx) // 0x800867B4
             StoreImage(&D_8002AB10, IMAGE_BUFFER_2);
             DrawSync(0);
 
-            // TODO: What are these offsets?
-            Fs_QueueStartReadTim(D_800A99B4[idx] + 1896, FS_BUFFER_2, &D_800A901C);
-            Fs_QueueStartReadTim(D_800A99CC[idx] + 1910, FS_BUFFER_1, &D_800A9024);
+            Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + D_800A99B4[idx], FS_BUFFER_2, &D_800A901C);
+            Fs_QueueStartReadTim(FILE_TIM_MR_0TOWN_TIM + D_800A99CC[idx], FS_BUFFER_1, &D_800A9024);
 
-            Gfx_Init(0x140, 1);
+            Gfx_Init(SCREEN_WIDTH, 1);
             GsSwapDispBuff();
             Fs_QueueWaitForEmpty();
             break;
@@ -342,7 +342,7 @@ void func_800867B4(s32 caseParam, s32 idx) // 0x800867B4
         case 2:
             LoadImage(&D_8002AB10, IMAGE_BUFFER_2);
             DrawSync(0);
-            Gfx_Init(0x140, 0);
+            Gfx_Init(SCREEN_WIDTH, 0);
             break;
 
         default:
