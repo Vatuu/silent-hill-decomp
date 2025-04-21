@@ -114,7 +114,7 @@ void vcMoveAndSetCamera(s32 in_connect_f, s32 change_debug_mode, s32 for_f, s32 
             hero_top_y = hr_p->position_18.vy - FP_METER(27.2f);
 
             // TODO: Not sure what this is doing, maybe some kind of `FP_MULTIPLY`.
-            hero_bottom_y = hr_p->position_18.vy + ((s32)-(D_800BCE18.vcCameraInternalInfo_1BDC.ev_cam_rate * FP_METER(8)) >> Q12_SHIFT);
+            hero_bottom_y = hr_p->position_18.vy + ((s32)-(D_800BCE18.vcCameraInternalInfo_1BDC.ev_cam_rate * FP_METER(8.0f)) >> Q12_SHIFT);
 
             if (D_800BCE18.vcCameraInternalInfo_1BDC.ev_cam_rate > 0)
             {
