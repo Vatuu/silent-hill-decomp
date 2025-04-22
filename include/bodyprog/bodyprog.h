@@ -973,6 +973,8 @@ void func_8002E6E4(s32 idx);
 
 void func_8002E730(s32 idx);
 
+s32 func_8002E76C(s32 idx);
+
 /** Initializer for something before the game loop. */
 void func_8002E7BC();
 
@@ -980,15 +982,41 @@ void func_8002E830();
 
 void func_8002E85C();
 
+s32 func_8002E898();
+
 void func_8002E8D4();
 
 void func_8002E8E4();
 
+s32 func_8002E914();
+
 s32 func_8002E990();
+
+s32 func_8002E9A0(s32 idx);
+
+s32 func_8002E9EC(s32 arg0, s32 arg1, s32 arg2);
+
+s32 func_8002EA28(s32 idx);
+
+s32 func_8002EA78(s32 idx);
 
 void func_8002EB88(); // Return type assumed.
 
 void func_8002ECE0(s_800B55E8* arg0);
+
+/** Copies savegame into an s_ShSaveGameContainer and calculates footer checksum. */
+void SaveGame_CopyWithChecksum(s_ShSaveGameContainer* dest, s_ShSaveGame* src);
+
+/** Updates the footer with the checksum of the given data. */
+void SaveGame_ChecksumUpdate(s_ShSaveGameFooter* saveFooter, s8* saveData, s32 saveDataLength);
+
+/** Generates a checksum of the given saveData and compares it against the checksum value in the footer.
+ * Returns 1 if the checksums match, otherwise 0.
+ */
+s32 SaveGame_ChecksumValidate(s_ShSaveGameFooter* saveFooter, s8* saveData, s32 saveDataLength);
+
+/** Generates an 8-bit XOR checksum over the given data, only appears used with s_ShSaveGame data. */
+u8 SaveGame_ChecksumGenerate(s8* saveData, s32 saveDataLength);
 
 void func_80030444();
 
@@ -1036,7 +1064,7 @@ void func_80037188();
 
 void func_8003943C();
 
-/** SysState_Fmv update function.
+/** `SysState_Fmv` update function.
  * Movie to play is decided by `2072 - g_MapEventIdx`
  * After playback, savegame gets `D_800BCDD8->eventFlagNum_2` event flag set. */
 void SysState_Fmv_Update();
@@ -1662,20 +1690,6 @@ s32 func_800808AC();
 
 /** Returns a Q shift based on a magnitude. */
 s32 Math_GetMagnitudeShift(s32 mag);
-
-/** Copies savegame into an s_ShSaveGameContainer and calculates footer checksum. */
-void SaveGame_CopyWithChecksum(s_ShSaveGameContainer* dest, s_ShSaveGame* src);
-
-/** Updates the footer with the checksum of the given data. */
-void SaveGame_ChecksumUpdate(s_ShSaveGameFooter* saveFooter, s8* saveData, s32 saveDataLength);
-
-/** Generates a checksum of the given saveData and compares it against the checksum value in the footer.
- * Returns 1 if the checksums match, otherwise 0.
- */
-s32 SaveGame_ChecksumValidate(s_ShSaveGameFooter* saveFooter, s8* saveData, s32 saveDataLength);
-
-/** Generates an 8-bit XOR checksum over the given data, only appears used with s_ShSaveGame data. */
-u8 SaveGame_ChecksumGenerate(s8* saveData, s32 saveDataLength);
 
 void Demo_GameRandSeedUpdate();
 

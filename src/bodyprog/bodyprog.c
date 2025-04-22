@@ -64,7 +64,7 @@ void func_8002E6E4(s32 idx) // 0x8002E6E4
     temp_s0->field_18 = 0;
 }
 
-void func_8002E730(s32 idx) 
+void func_8002E730(s32 idx) // 0x8002E730
 {
     s32 i;
 
@@ -95,15 +95,17 @@ s32 func_8002E76C(s32 idx) // 0x8002E76C
 
 void func_8002E7BC() // 0x8002E7BC
 {
-    s_800B55E8* unk;
+    s_800B55E8* ptr;
 
     if (D_800B5480 == 1)
+    {
         return;
-    
+    }
+
     D_800B5480 = 1;
     func_8002E8E4();
     func_80030414();
-    
+
     D_800B55E8[0].field_0 = 0;
     D_800B55E8[0].field_4 = 0;
     D_800B55E8[0].field_8 = 0;
@@ -112,12 +114,12 @@ void func_8002E7BC() // 0x8002E7BC
     D_800B55E8[0].field_14 = 0;
     D_800B55E8[1].field_0 = 0;
 
-    unk = &D_800B55E8[1];
-    unk->field_4 = 0;
-    unk->field_8 = 0;
-    unk->field_C = 0;
-    unk->field_10 = 0;
-    unk->field_14 = 0;
+    ptr = &D_800B55E8[1];
+    ptr->field_4 = 0;
+    ptr->field_8 = 0;
+    ptr->field_C = 0;
+    ptr->field_10 = 0;
+    ptr->field_14 = 0;
 }
 
 void func_8002E830() // 0x8002E830
@@ -208,7 +210,17 @@ s32 func_8002E9A0(s32 idx) // 0x8002E9A0
     return ret;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8002E9EC);
+s32 func_8002E9EC(s32 arg0, s32 arg1, s32 arg2) // 0x8002E9EC
+{
+    s32 var0;
+    s32 var1;
+    s32 var2;
+
+    var0 = D_800B5508[arg0].field_14;
+    var1 = arg1 << 8; 
+    var2 = (arg2 * 12) + 4; 
+    return var0 + var1 + var2;
+}
 
 s32 func_8002EA28(s32 idx) // 0x8002EA28
 {
