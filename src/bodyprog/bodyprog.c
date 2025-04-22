@@ -9,7 +9,7 @@
 #include "main/fsqueue.h"
 #include "main/rng.h"
 
-void func_8002E630() 
+void func_8002E630() // 0x8002E630
 {
     s_800B5508* ptr;
     s32 i;
@@ -49,7 +49,7 @@ void func_8002E630()
     } 
 }
 
-void func_8002E6E4(s32 idx)
+void func_8002E6E4(s32 idx) // 0x8002E6E4
 {
     s_800B5508* temp_v0;
     s_800B5508* temp_s0;
@@ -74,7 +74,7 @@ void func_8002E730(s32 idx)
     }
 }
 
-s32 func_8002E76C(s32 idx) 
+s32 func_8002E76C(s32 idx) // 0x8002E76C
 {
     s32 ret;
     s32 i;
@@ -93,7 +93,7 @@ s32 func_8002E76C(s32 idx)
     return ret;
 }
 
-void func_8002E7BC()
+void func_8002E7BC() // 0x8002E7BC
 {
     s_800B55E8* unk;
 
@@ -120,7 +120,7 @@ void func_8002E7BC()
     unk->field_14 = 0;
 }
 
-void func_8002E830()
+void func_8002E830() // 0x8002E830
 {
     if (D_800B5480 != 0) 
     {
@@ -129,14 +129,14 @@ void func_8002E830()
     }
 }
 
-void func_8002E85C()
+void func_8002E85C() // 0x8002E85C
 {
     D_800B5618 = 1;
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8002E86C);
 
-s32 func_8002E898() 
+s32 func_8002E898() // 0x8002E898
 {
     s32 ret;
     s32 i;
@@ -151,14 +151,28 @@ s32 func_8002E898()
     return ret;
 }
 
-void func_8002E8D4()
+void func_8002E8D4() // 0x8002E8D4
 {
     D_800B5618 = 1;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8002E8E4);
+void func_8002E8E4() // 0x8002E8E4
+{
+    s_800B55E8* ptr;
 
-s32 func_8002E914() 
+    D_800B5508[9].field_14 = NULL;
+    D_800B5508[8].field_18 = 0;
+    
+    ptr = &D_800B5508[8].field_18;
+    
+    ptr->field_4 = 0;
+    ptr->field_8 = 0;
+    ptr->field_C = 0;
+    ptr->field_10 = 0;
+    ptr->field_14 = 1;
+}
+
+s32 func_8002E914() // 0x8002E914
 {
     s32 ret;
     s32 i;
@@ -174,12 +188,12 @@ s32 func_8002E914()
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8002E94C);
 
-s32 func_8002E990()
+s32 func_8002E990() // 0x8002E990
 {
     return D_800B55FC;
 }
 
-s32 func_8002E9A0(s32 idx) 
+s32 func_8002E9A0(s32 idx) // 0x8002E9A0
 {
     s32 ret;
     s32 i;
@@ -196,7 +210,7 @@ s32 func_8002E9A0(s32 idx)
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8002E9EC);
 
-s32 func_8002EA28(s32 idx) 
+s32 func_8002EA28(s32 idx) // 0x8002EA28
 {
     s32 ret;
     s32 i;
@@ -214,7 +228,7 @@ s32 func_8002EA28(s32 idx)
     return ret;
 }
 
-s32 func_8002EA78(s32 idx) 
+s32 func_8002EA78(s32 idx) // 0x8002EA78
 {
     return D_800B5508[idx].field_18 - func_8002EA28(idx);
 }
@@ -223,7 +237,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8002EABC);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8002EB88);
 
-void func_8002ECE0(s_800B55E8* arg0)
+void func_8002ECE0(s_800B55E8* arg0) // 0x8002ECE0
 {
     if (func_8003030C(arg0->field_4) != 0)
     {
@@ -317,7 +331,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80030370);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_800303E4);
 
-void func_80030414() 
+void func_80030414() // 0x80030414
 {
     func_80030444();
     func_8003045C();
@@ -498,7 +512,7 @@ void Settings_DispEnvXYSet(DISPENV* display, s32 x, s32 y) // 0x80032524
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_800325A4);
-/*void func_800325A4(DR_MODE* arg0) 
+/*void func_800325A4(DR_MODE* arg0) // 0x800325A4
 {
     char* temp[2];
 
@@ -518,7 +532,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_800325A4);
 
 extern s32 D_800B5C28;
 
-int func_800325F8() 
+int func_800325F8() // 0x800325F8
 {
     return 4096 - D_800B5C28;
 }
@@ -836,7 +850,7 @@ void MainLoop() // 0x80032EE0
     }
 }
 
-void Settings_ScreenAndVolUpdate()
+void Settings_ScreenAndVolUpdate() // 0x0x800333CC
 {
     s32 soundCmd;
 
@@ -1113,7 +1127,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80035BE0);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80035DB4);
 
-void func_80035E1C()
+void func_80035E1C() // 0x80035E1C
 {
     s32 i;
     for (i = 0; i < 9; i++)

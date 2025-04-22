@@ -982,6 +982,8 @@ void func_8002E85C();
 
 void func_8002E8D4();
 
+void func_8002E8E4();
+
 s32 func_8002E990();
 
 void func_8002EB88(); // Return type assumed.
