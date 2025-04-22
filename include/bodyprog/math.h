@@ -89,7 +89,7 @@
  * 16   | 0.002%  | 0xFFFF
  */
 #define TEST_RNG(bits) \
-    (Rng_Rand16() & ((bits) | ((bits) - 1)))
+    (Rng_Rand16() & ((1 << (bits)) - 1))
 
 static inline s16 shAngleRegulate(s32 angle)
 {
