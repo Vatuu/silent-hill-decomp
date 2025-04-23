@@ -89,8 +89,8 @@ s32 func_801E2FC0() // 0x801E2FC0
 
 void GameState_Unk15_Update() // 0x801E3094
 {
-    const s32* (*routines[3])() = { func_801E3124, func_801E342C, func_801E3304 };
-    
+    s32* (*routines[3])() = {func_801E3124, func_801E342C, func_801E3304};
+
     D_800C48F0 += g_VBlanks;
     if (routines[g_GameWork.gameStateStep_598[0]]() != 0) 
     {
@@ -362,7 +362,7 @@ bool func_801E3684() // 0x801E3684
         if (temp_fp != 0)
         {
             func_801E42F8(0, var_s6 + var_s4);
-            func_801E4394(&D_801E5BD0);
+            func_801E4394(D_801E5BD0);
         }
     } 
     
@@ -393,7 +393,148 @@ void func_801E386C() // 0x801E386C
     D_801E5E80 = 0x10000 / D_801E5E7C;
 }
 
-INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E3970);
+bool func_801E3970(void) // 0x801E3970
+{
+    bool   showKCET    = false;
+    bool   animateKCET = false;
+    bool   finished    = false;
+    char*  lineStrPtr;
+    char** currentLinePtr;
+    s32    temp_a1;
+    s32    temp_a2;
+    s32    currentLineYPos;
+    s32    lineHeight;
+    s32    temp_v0;
+    s32    temp_v0_4;
+    s32    vblank;
+    s32    var_a0;
+    s32    var_fp;
+    s32    lineIndex;
+    s32    i;
+    s32    lineY;
+    s32    var_s5;
+    s32    sin;
+    s32    cos;
+    s32    linesToDraw;
+    s32    var_t3;
+
+    vblank = FP_MULTIPLY((s64)D_800C48F0, 0x1000, Q12_SHIFT);
+
+    temp_a2    = D_801E5E84;
+    lineHeight = D_801E5E7C;
+
+    lineIndex = (vblank - 0x198) * D_801E5E80;
+    lineIndex = lineIndex >> 16;
+    if (lineIndex < 0)
+    {
+        lineIndex = 0;
+    }
+
+    var_a0 = vblank * D_801E5E80;
+    var_a0 = var_a0 >> 16;
+    if (var_a0 >= D_801E5C20)
+    {
+        var_a0 = D_801E5C20 - 1;
+    }
+
+    temp_a2 = (temp_a2 - vblank);
+    var_fp  = temp_a2 + 0x78;
+
+    temp_a2 = var_fp;
+    var_s5  = 0;
+
+    showKCET = var_fp < 0x78;
+
+    var_t3          = lineIndex * lineHeight;
+    temp_v0         = var_t3 - vblank;
+    currentLineYPos = temp_v0 + 0x78;
+
+    temp_v0     = (var_a0 - lineIndex);
+    linesToDraw = temp_v0 + 1;
+
+    if (showKCET)
+    {
+        animateKCET = var_fp < -0x2F;
+        if (animateKCET)
+        {
+            var_fp = -0x30;
+            var_s5 = -0x30 - temp_a2;
+        }
+    }
+    else
+    {
+        animateKCET = false;
+    }
+
+    func_801E4310(160, 160, 160);
+    func_801E434C(0, 0);
+
+    lineY          = currentLineYPos;
+    currentLinePtr = &D_801E5590[lineIndex];
+
+    for (i = linesToDraw; i > 0; i--, lineY += lineHeight, currentLinePtr++)
+    {
+        lineStrPtr = *currentLinePtr;
+        func_801E47E0(0, lineY);
+        func_801E4C1C(lineStrPtr);
+    }
+
+    if (animateKCET)
+    {
+        temp_a1 = var_s5;
+        if (var_s5 < 0x78) // rotate
+        {
+            temp_a1 = (var_s5 * 0x1000) / 0x78;
+            temp_a1 = FP_MULTIPLY((s64)(0x1000 - temp_a1), 0x36F, Q12_SHIFT);
+            sin     = -shRsin(temp_a1);
+            cos     = shRcos(temp_a1);
+            func_8009185C(0, 0, 0xF0, 0x1000, 0, 0x22000, 0xF0000, 0xB33, cos, sin);
+        }
+        else if (var_s5 < 0xB4) // zoom in
+        {
+            temp_a1   = var_s5 - 0x78;
+            temp_a1   = (temp_a1 * 0x1000) / 0x3C;
+            temp_v0_4 = FP_MULTIPLY((s64)(0x1000 - temp_a1), 0x1E000, Q12_SHIFT) + 0xD2000;
+            func_8009185C(0, 0, 0xF0, 0x1000, 0, 0x22000, temp_v0_4, 0xB33, 0x1000, 0);
+        }
+        else if (var_s5 >= 0x168)
+        {
+            if (var_s5 < 0x1E0) // zoom out
+            {
+                temp_a1   = var_s5 - 0x168;
+                temp_a1   = (temp_a1 * 0x1000) / 0x78;
+                temp_v0_4 = FP_MULTIPLY((s64)(0x1000 - temp_a1), -0xE2E000, Q12_SHIFT) + 0xF00000;
+                func_8009185C(0, 0, 0xF0, 0x1000, 0, 0x22000, temp_v0_4, 0xB33, 0x1000, 0);
+            }
+            else // hide and finish
+            {
+                finished = true;
+                showKCET = false;
+            }
+        }
+    }
+    else if (((g_GameWork.optExtraOptionsEnabled_27 >> (D_801E5E8C - 1)) & 1) && (g_ControllerPtr0->btns_new_10 & g_GameWorkPtr1->controllerBinds_0.skip))
+    {
+        s32 skipTo    = D_801E5E84 + 0xA8;
+        s32 skipToInt = FP_TO(skipTo, Q12_SHIFT);
+
+        if (skipToInt < 0)
+        {
+            skipToInt += 0xFFF;
+        }
+        skipTo     = FP_FROM(skipToInt, Q12_SHIFT);
+        D_800C48F0 = skipTo;
+        Sd_EngineCmd(19);
+    }
+
+    if (showKCET)
+    {
+        func_801E47E0(0, var_fp);
+        func_801E4C1C(D_801E5BD0);
+    }
+
+    return finished;
+}
 
 void func_801E3DD0() // 0x801E3DD0 
 {
@@ -449,9 +590,199 @@ void func_801E434C(u32 arg0, u32 arg1) // 0x801E434C
     }
 }
 
-INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E4394);
+void func_801E4394(u8* string) // 0x801E4394
+{
+    u8*     strPtr     = string;
+    s32     textX      = D_800AFE08.field_0;
+    s32     textY      = D_800AFE08.field_2;
+    s32     marginX    = D_800AFE08.field_4;
+    s32     fontH      = D_800AFE08.field_6;
+    s16*    widthTable = D_800AFE08.field_C;
+    s32*    colorTable = D_800AFE08.field_10;
+    PACKET* packet     = GsOUT_PACKET_P;
+    u32     blendFlag  = (u8)D_800AFE08.field_7;
+    u32     charCode   = *strPtr;
+    u32     colorCode  = D_800AFE08.field_8 | (blendFlag << 25); // rgb + code + semi-transp flag
+    u32     clut       = (u16)D_800AFE08.field_16;               // clut x, clut y
+    s32*    addr       = (s32*)((g_ObjectTableIdx << 4) + &D_800B5C58);
 
-INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E47E0);
+    s32       charWidth;
+    s32       widthSum;
+    s32       idx;
+    u32       temp;
+    u32       nextChar;
+    u8*       scanPtr;
+    SPRT*     sprite;
+    SPRT_16*  sprite16;
+    DR_TPAGE* tpage;
+
+    while (charCode != 0)
+    {
+        charWidth = widthTable[charCode];
+        if ((charCode - 0x21) < 0x64) // normal font
+        {
+            sprite = (SPRT*)packet;
+            addPrimFast(addr, sprite, 4);
+            *(u32*)(&sprite->r0) = colorCode;
+            setXY0Fast(sprite, textX, textY);
+            idx                  = charCode - 0x21;
+            temp                 = idx / 10;
+            idx                  = idx % 10;
+            idx                  = idx * 24;
+            *(u32*)(&sprite->u0) = idx + (temp * 24 * 256);
+            *(u32*)(&sprite->u0) += clut << 16;
+            setWHFast(sprite, 24, 24);
+            packet += sizeof(SPRT);
+        }
+        else
+        {
+            sprite16 = (SPRT_16*)packet;
+            if ((charCode - 0xA0) < 0x10) // kcet font
+            {
+                addPrimFast(addr, sprite16, 3);
+                *(u32*)(&sprite16->r0) = colorCode ^ (0x18 << 24); // GP0(7Ch) - Textured Rectangle, 16x16, opaque, texture-blending
+                setXY0Fast(sprite16, textX, textY + 4);
+                idx                    = charCode - 0xA0;
+                *(u32*)(&sprite16->u0) = (idx * 256 * 16) + 16 * (16 - 1);
+                *(u32*)(&sprite16->u0) += clut << 16;
+                packet += sizeof(SPRT_16);
+            }
+            else if ((charCode - 0xB8) < 7) // kcet font, .YVUTSR
+            {
+                addPrimFast(addr, sprite16, 3);
+                *(u32*)(&sprite16->r0) = colorCode ^ (0x18 << 24); // GP0(7Ch) - Textured Rectangle, 16x16, opaque, texture-blending
+                setXY0Fast(sprite16, textX, textY + 4);
+                idx                    = charCode - 0xB8;
+                *(u32*)(&sprite16->u0) = (idx * 16) + (256 * 16 * (16 - 1) + 16 * 8);
+                *(u32*)(&sprite16->u0) += clut << 16;
+                packet += sizeof(SPRT_16);
+            }
+            else if ((charCode - 1) < 7) // changes font color
+            {
+                colorCode = colorTable[charCode - 1] | ((u8)D_800AFE08.field_7 << 25);
+            }
+            else if ((charCode - 0xD0) < 8) // changes font width table?
+            {
+                scanPtr  = strPtr + 1;
+                widthSum = 0;
+                while (1)
+                {
+                    s32 var  = 8;
+                    nextChar = *scanPtr++;
+                    if (nextChar == (charCode + 8) || ((nextChar == charCode) || (nextChar == 10)) || (nextChar == 0xd) || (nextChar == 0xc))
+                    {
+                        break;
+                    }
+                    if (((nextChar - 0xF0) >= var) && ((nextChar - 0xF8) > 7) && ((nextChar - 0xE0) > 7) && ((nextChar - 0xE8) > 7))
+                    {
+                        widthSum += widthTable[nextChar];
+                    }
+                }
+                (&widthTable[charCode])[16] = widthSum / 2;
+                (&widthTable[charCode])[32] = -(&widthTable[charCode])[16];
+                (&widthTable[charCode])[24] = widthSum;
+                (&widthTable[charCode])[40] = -(&widthTable[charCode])[24];
+            }
+        }
+        switch ((s32)charCode) // offsets
+        {
+            case 10: // new line
+                textX = marginX;
+                textY += fontH;
+                break;
+
+            case 13: // carriage return
+                textX = marginX;
+                break;
+
+            case 11: // vertical tab
+                textY += fontH;
+                break;
+
+            case 12: // form feed
+                textX = D_800AFE08.field_0;
+                textY = D_800AFE08.field_2;
+                break;
+
+            default:
+                textX += charWidth;
+                break;
+        }
+
+        strPtr++;
+        charCode = *strPtr;
+    }
+
+    tpage = (DR_TPAGE*)packet;
+    setDrawTPage(tpage, 0, 1, D_800AFE08.field_14);
+    addPrim(addr, tpage);
+    D_800AFE08.field_0 = textX;
+    D_800AFE08.field_2 = textY;
+    GsOUT_PACKET_P     = packet + sizeof(DR_TPAGE);
+}
+
+void func_801E47E0(s32 arg0, s32 arg1) // 0x801E47E0
+{
+    s32  temp_a2;
+    s32  temp_lo;
+    s32  temp_lo_11;
+    s32  temp_lo_12;
+    s32  temp_lo_15;
+    s32  temp_lo_3;
+    s32  temp_lo_4;
+    s32  temp_lo_6;
+    s32  temp_lo_7;
+    s32  temp_t0;
+    s32  temp_t1;
+    s32  temp_t2;
+    s32  temp_v0;
+    s32  temp_v0_2;
+    s32  temp_v0_3;
+    s32  temp_v0_4;
+    bool check = D_800AFE24.field_0 != arg0;
+
+    if (D_800AFE24.field_2 != arg1)
+    {
+        temp_lo   = arg1 * D_800AFE24.field_3C;
+        temp_t1   = D_800AFE24.field_24 << 0x16;
+        temp_lo_3 = (D_800AFE24.field_30 + (s32)FP_MULTIPLY((s64)D_800AFE24.field_1C, temp_lo, Q12_SHIFT)) >> 2;
+        temp_lo_3 = temp_t1 / temp_lo_3;
+
+        temp_t2   = arg1 + 0x18;
+        temp_lo_4 = temp_t2 * D_800AFE24.field_3C;
+        temp_lo_6 = (D_800AFE24.field_30 + (s32)FP_MULTIPLY((s64)D_800AFE24.field_1C, temp_lo_4, Q12_SHIFT)) >> 2;
+        temp_lo_6 = temp_t1 / temp_lo_6;
+
+        temp_lo_7 = arg0 * D_800AFE24.field_34;
+        temp_v0   = D_800AFE24.field_28 + FP_MULTIPLY((s64)D_800AFE24.field_1C, temp_lo_7, Q12_SHIFT);
+        temp_t0   = FP_MULTIPLY((s64)temp_lo_3, temp_v0, Q12_SHIFT);
+        temp_v0_2 = D_800AFE24.field_28 + FP_MULTIPLY((s64)D_800AFE24.field_1C, D_800AFE24.field_34, Q12_SHIFT);
+
+        D_800AFE24.field_0  = arg0;
+        D_800AFE24.field_2  = arg1;
+        D_800AFE24.field_4  = arg0;
+        D_800AFE24.field_40 = temp_t0;
+        D_800AFE24.field_44 = FP_MULTIPLY((s64)temp_lo_6, temp_v0, Q12_SHIFT);
+        D_800AFE24.field_48 = FP_MULTIPLY((s64)temp_lo_3, temp_v0_2, Q12_SHIFT) - FP_MULTIPLY((s64)temp_lo_3, D_800AFE24.field_28, Q12_SHIFT);
+        D_800AFE24.field_4C = FP_MULTIPLY((s64)temp_lo_6, temp_v0_2, Q12_SHIFT) - FP_MULTIPLY((s64)temp_lo_6, D_800AFE24.field_28, Q12_SHIFT);
+        temp_lo_11          = arg1 * D_800AFE24.field_38;
+        temp_v0_3           = D_800AFE24.field_2C + FP_MULTIPLY((s64)D_800AFE24.field_1C, temp_lo_11, Q12_SHIFT);
+        D_800AFE24.field_50 = FP_MULTIPLY((s64)temp_lo_3, temp_v0_3, Q12_SHIFT);
+
+        temp_lo_12          = temp_t2 * D_800AFE24.field_38;
+        temp_t0             = D_800AFE24.field_2C + FP_MULTIPLY((s64)D_800AFE24.field_1C, temp_lo_12, Q12_SHIFT);
+        D_800AFE24.field_54 = FP_MULTIPLY((s64)temp_lo_6, temp_t0, Q12_SHIFT);
+    }
+    else if (check)
+    {
+        temp_v0_4          = arg0 - D_800AFE24.field_0;
+        temp_a2            = temp_v0_4 * D_800AFE24.field_48;
+        temp_lo_15         = temp_v0_4 * D_800AFE24.field_4C;
+        D_800AFE24.field_0 = arg0;
+        D_800AFE24.field_40 += temp_a2;
+        D_800AFE24.field_44 += temp_lo_15;
+    }
+}
 
 void func_801E4B98(s32 r, s32 g, s32 b)
 {
@@ -488,4 +819,235 @@ void func_801E4BD4(u32 arg0, u32 arg1) // 0x801E4BD4
     }
 }
 
-INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E4C1C);
+void func_801E4C1C(u8* strPtr) // 0x801E4C1C
+{
+    PACKET* packet;
+    s32*    addr;
+
+    s32 textX   = D_800AFE24.field_0;
+    s32 textY   = D_800AFE24.field_2;
+    s32 marginX = D_800AFE24.field_4;
+    s32 fontH   = D_800AFE24.field_6;
+    u32 colorCode;
+
+    s32 var_a3 = D_800AFE24.field_40;
+    s32 var_t3 = D_800AFE24.field_44;
+    s32 var_t7 = D_800AFE24.field_48;
+    s32 var_t6 = D_800AFE24.field_4C;
+    s32 var_t4 = D_800AFE24.field_50;
+    s32 var_t5 = D_800AFE24.field_54;
+
+    u32       clut       = (u16)D_800AFE24.field_16;
+    u32       tPage      = D_800AFE24.field_14;
+    s16*      widthTable = D_800AFE24.field_C;
+    s32*      colorTable = D_800AFE24.field_10;
+    u32       blendFlag  = (u8)D_800AFE24.field_7 << 25;
+    s32       charWidth;
+    bool      textXChanged;
+    bool      textYChanged;
+    u32       nextChar;
+    u8*       scanPtr;
+    POLY_FT4* poly;
+    s32       widthSum;
+    u32       charCode;
+
+    s32 temp_a0_4;
+    s32 temp_a1_2;
+    s32 temp_lo_3;
+    s32 temp_lo_6;
+    s32 temp_v0_5;
+    s32 temp_v0_7;
+
+    s32 var_a1;
+    s32 var_a2;
+    s32 var_t0;
+    s32 var_t0_2;
+
+    u32 temp_v1;
+    u32 temp;
+    s32 idx;
+
+    packet = GsOUT_PACKET_P;
+    addr   = (s32*)((g_ObjectTableIdx << 4) + &D_800B5C58);
+
+    charCode  = *strPtr;
+    colorCode = D_800AFE24.field_8 | blendFlag; // rgb + code + semi-transp flag
+
+    while (charCode != 0)
+    {
+        poly = (POLY_FT4*)packet;
+
+        var_t0 = (charCode - 0xA0) < 0x10U | (charCode - 0xB8 < 7U) << 1;
+        if (var_t0 != 0) // map kcet font to normal
+        {
+            if (var_t0 == 1)
+            {
+                charCode = D_801E5E5C[charCode - 0xA0];
+            }
+            else
+            {
+                charCode = D_801E5E6C[charCode - 0xB8];
+            }
+        }
+
+        charWidth = widthTable[charCode];
+        if (charCode - 0x21 < 0x64U) // normal font
+        {
+            s32 offset         = 24 * 256;
+            idx                = charCode - 0x21;
+            temp               = idx / 10;
+            idx                = idx % 10;
+            idx                = idx * 24;
+            temp               = temp * 24;
+            *(u32*)(&poly->u0) = idx + (temp * 256);
+            *(u32*)(&poly->u0) += clut << 16;
+            *(u32*)(&poly->u1) = (idx + charWidth) + (temp * 256);
+            *(u32*)(&poly->u1) += tPage << 16;
+            temp_v1            = temp * (u64)256; // from permuter, not sure why this works
+            *(u32*)(&poly->u2) = idx + (temp_v1 + offset);
+            *(u32*)(&poly->u3) = (idx + charWidth) + (temp_v1 + offset);
+
+            if (var_t0 != 0)
+            {
+                charWidth = (charWidth * 2) / 3;
+                var_a1    = var_t7 * charWidth;
+                var_a2    = var_t6 * charWidth;
+                var_a2    = ((var_a2 - var_a1) * 2) / 3 + var_a1;
+                var_t0_2  = ((var_t5 - var_t4) * 2) / 3 + var_t4;
+            }
+            else
+            {
+                var_a1   = var_t7 * charWidth;
+                var_t0_2 = var_t5;
+                var_a2   = var_t6 * charWidth;
+            }
+            addPrimFast(addr, (POLY_FT4*)packet, 9);
+            *(u32*)(&poly->r0) = colorCode; // GP0(2Ch) - Textured four-point polygon, opaque, texture-blending
+            setXY0Fast(poly, FP_FROM(var_a3, Q12_SHIFT), FP_FROM(var_t4, Q12_SHIFT));
+            setXY1Fast(poly, FP_FROM(var_a3 + var_a1, Q12_SHIFT), FP_FROM(var_t4, Q12_SHIFT));
+            setXY2Fast(poly, FP_FROM(var_t3, Q12_SHIFT), FP_FROM(var_t0_2, Q12_SHIFT));
+            setXY3Fast(poly, FP_FROM(var_t3 + var_a2, Q12_SHIFT), FP_FROM(var_t0_2, Q12_SHIFT));
+            packet += sizeof(POLY_FT4);
+        }
+        else if ((charCode - 1) < 7U) // changes font color
+        {
+            colorCode = colorTable[charCode - 1] | ((u8)D_800AFE24.field_7 << 25);
+        }
+        else if ((charCode - 0xD0) < 8U) // changes font width table?
+        {
+            widthSum = 0;
+            scanPtr  = strPtr + 1;
+            while (1)
+            {
+                s32 var  = 8;
+                nextChar = *scanPtr++;
+                if ((nextChar == (charCode + 8)) || (nextChar == charCode) || (nextChar == 0xA) || (nextChar == 0xD) || (nextChar == 0xC))
+                {
+                    break;
+                }
+                if ((nextChar - 0xF0) >= var && (nextChar - 0xF8) >= 8U && (nextChar - 0xE0) >= 8U && (nextChar - 0xE8) >= 8U)
+                {
+                    var_t0 = (nextChar - 0xA0) < 0x10U | (nextChar - 0xB8 < 7U) << 1;
+                    if (var_t0 != 0) // map kcet font to normal
+                    {
+                        if (var_t0 == 1)
+                        {
+                            nextChar = D_801E5E5C[nextChar - 0xA0];
+                        }
+                        else
+                        {
+                            nextChar = D_801E5E6C[nextChar - 0xB8];
+                        }
+                        widthSum += (widthTable[nextChar] * 2) / 3;
+                    }
+                    else
+                    {
+                        widthSum += widthTable[nextChar];
+                    }
+                }
+            }
+            (&widthTable[charCode])[16] = widthSum / 2;
+            (&widthTable[charCode])[32] = -(&widthTable[charCode])[16];
+            (&widthTable[charCode])[24] = widthSum;
+            (&widthTable[charCode])[40] = -(&widthTable[charCode])[24];
+        }
+
+        textXChanged = false;
+        textYChanged = false;
+        switch ((s32)charCode) // offsets
+        {
+            case 10: // new line
+                textX = marginX;
+                textY += fontH;
+                textYChanged = true;
+                break;
+
+            case 11: // vertical tab
+                textY += fontH;
+                textYChanged = true;
+                break;
+
+            case 13: // carriage return
+                charWidth    = textX - marginX;
+                textX        = marginX;
+                textXChanged = true;
+                break;
+
+            case 12: // form feed
+                textX        = D_800AFE24.field_0;
+                textY        = D_800AFE24.field_2;
+                textYChanged = true;
+                break;
+
+            default:
+                textX += charWidth;
+                textXChanged = true;
+                break;
+        }
+
+        if (textYChanged)
+        {
+            temp_a1_2 = D_800AFE24.field_24 << 0x16;
+
+            temp_lo_3 = (D_800AFE24.field_30 + (s32)FP_MULTIPLY((s64)D_800AFE24.field_1C, textY * D_800AFE24.field_3C, Q12_SHIFT)) >> 2;
+            temp_lo_3 = temp_a1_2 / temp_lo_3;
+
+            temp_lo_6 = (D_800AFE24.field_30 + (s32)FP_MULTIPLY((s64)D_800AFE24.field_1C, (textY + 0x18) * D_800AFE24.field_3C, Q12_SHIFT)) >> 2;
+            temp_lo_6 = temp_a1_2 / temp_lo_6;
+
+            temp_v0_5 = D_800AFE24.field_28 + FP_MULTIPLY((s64)D_800AFE24.field_1C, textX * D_800AFE24.field_34, Q12_SHIFT);
+
+            var_a3 = FP_MULTIPLY((s64)temp_lo_3, temp_v0_5, Q12_SHIFT);
+            var_t3 = FP_MULTIPLY((s64)temp_lo_6, temp_v0_5, Q12_SHIFT);
+
+            temp_v0_5 = D_800AFE24.field_28 + FP_MULTIPLY((s64)D_800AFE24.field_1C, D_800AFE24.field_34, Q12_SHIFT);
+
+            var_t7 = FP_MULTIPLY((s64)temp_lo_3, temp_v0_5, Q12_SHIFT) - FP_MULTIPLY((s64)temp_lo_3, D_800AFE24.field_28, Q12_SHIFT);
+            var_t6 = FP_MULTIPLY((s64)temp_lo_6, temp_v0_5, Q12_SHIFT) - FP_MULTIPLY((s64)temp_lo_6, D_800AFE24.field_28, Q12_SHIFT);
+
+            temp_v0_7 = D_800AFE24.field_2C + FP_MULTIPLY((s64)D_800AFE24.field_1C, textY * D_800AFE24.field_38, Q12_SHIFT);
+            var_t4    = FP_MULTIPLY((s64)temp_lo_3, temp_v0_7, Q12_SHIFT);
+
+            temp_a0_4 = D_800AFE24.field_2C + FP_MULTIPLY((s64)D_800AFE24.field_1C, (textY + 0x18) * D_800AFE24.field_38, Q12_SHIFT);
+            var_t5    = FP_MULTIPLY((s64)temp_lo_6, temp_a0_4, Q12_SHIFT);
+        }
+        else if (textXChanged)
+        {
+            var_a3 += charWidth * var_t7;
+            var_t3 += charWidth * var_t6;
+        }
+
+        strPtr++;
+        charCode = *strPtr;
+    }
+
+    GsOUT_PACKET_P      = packet;
+    D_800AFE24.field_0  = textX;
+    D_800AFE24.field_2  = textY;
+    D_800AFE24.field_40 = var_a3;
+    D_800AFE24.field_44 = var_t3;
+    D_800AFE24.field_48 = var_t7;
+    D_800AFE24.field_4C = var_t6;
+    D_800AFE24.field_50 = var_t4;
+    D_800AFE24.field_54 = var_t5;
+}
