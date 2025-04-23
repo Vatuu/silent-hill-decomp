@@ -3,16 +3,18 @@
 # Any with distance = 0 will then be printed.
 #
 # Usage:
-#   python tools/map_shared_fns.py [--matchings] [--nonmatchings] [--replace] first_map_name second_map_name
-#     --matchings: only compare first map `matchings` against second map nonmatchings
-#     --nonmatchings: only compare first map `nonmatchings` against second map nonmatchings
-#     --replace: replaces INCLUDE_ASM lines inside second map .c with #include, when sharedFuncs are found
-#     --updsyms: updates sym.[map2].txt file with needed symbols (will need to be reordered manually)
+#   python tools/map_shared_fns.py [-h] [--matchings] [--nonmatchings] [--replace] [--updsyms] map1 map2
+#     --matchings: Only compare map1 `matchings` against map2 `nonmatchings`
+#     --nonmatchings: Only compare map1 `nonmatchings` against map2 `nonmatchings`
+#     --replace: When sharedFuncs are found in map2, replaces .c INCLUDE_ASM for them with #include
+#     --updsyms: When sharedFuncs are found in map2, updates map2 sym.txt file with symbols for them and re-orders file by symbol address
 #
-# If a matching func is found which is named as sharedFunc_XXXXXXXX_0_s00 in first-map folder (where 0_s00 is map number, eg. map0_s00)
-# It'll also print out lines to add in sym.txt file and #includes to add in .c file
-# If --replace flag is provided it'll try replacing the INCLUDE_ASM line in second maps .c with #include lines.
-# Similarly --updsyms will update second maps sym.txt file with the extra symbols.
+# If a matching func is found which is named as sharedFunc_XXXXXXXX_0_s00 in map1 folder (where 0_s00 is map number, eg. map0_s00)
+# It'll also print out lines to add in map2 sym.txt file and #includes to add in .c file
+#
+# If --replace flag is provided it'll try replacing the INCLUDE_ASM line in map2 .c with #include lines.
+# Similarly --updsyms will update map2 sym.txt file with the extra symbols needed for it to share function names.
+#
 # (more info at https://github.com/Vatuu/silent-hill-decomp/issues/74#issuecomment-2816256817)
 
 import os
@@ -335,10 +337,10 @@ if __name__ == "__main__":
     parser.add_argument("map1", type=str, help="First map folder")
     parser.add_argument("map2", type=str, help="Second map folder")
 
-    parser.add_argument("--nonmatchings", action="store_true", help="Check nonmatchings in first folder against nonmatchings in second")
-    parser.add_argument("--matchings", action="store_true", help="Check matchings in first folder against nonmatchings in second")
-    parser.add_argument("--replace", action="store_true", help="Replaces INCLUDE_ASM lines inside second map .c with #include, when sharedFuncs are found")
-    parser.add_argument("--updsyms", action="store_true", help="Updates sym.[map2].txt file with needed symbols (will need to be reordered manually)")
+    parser.add_argument("--matchings", action="store_true", help="Only compare first map `matchings` against second map `nonmatchings`")
+    parser.add_argument("--nonmatchings", action="store_true", help="Only compare first map `nonmatchings` against second map `nonmatchings`")
+    parser.add_argument("--replace", action="store_true", help="When sharedFuncs are found in map2, replaces .c INCLUDE_ASM for them with #include")
+    parser.add_argument("--updsyms", action="store_true", help="When sharedFuncs are found in map2, updates map2 sym.txt file with symbols for them and re-orders file by symbol address")
     args = parser.parse_args()
 
     searchType = "all"
