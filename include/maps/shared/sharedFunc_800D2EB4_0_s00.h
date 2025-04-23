@@ -2,8 +2,8 @@ void sharedFunc_800D2EB4_0_s00()
 {
     u8 var;
 
-    var = g_SysWork.field_47;
-    g_SysWork.field_47 = NO_VALUE;
+    var                       = g_SysWork.field_47;
+    g_SysWork.field_47        = NO_VALUE;
     sharedData_800DD59C_0_s00 = var;
 
     func_8003DD80(1, 17);
