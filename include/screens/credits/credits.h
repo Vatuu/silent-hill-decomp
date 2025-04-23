@@ -14,11 +14,15 @@ STATIC_ASSERT_SIZEOF(s_UnkCredits1, 6);
 
 extern s_UnkCredits1 D_801E5558[];
 
-extern s32 D_801E5590[];
+extern char* D_801E5590[]; // credits string table
 
-extern s32 D_801E5BD0;
+extern char D_801E5BD0[]; // kcet string
 
 extern s32 D_801E5C20;
+
+extern u8 D_801E5E5C[];
+
+extern u8 D_801E5E6C[];
 
 extern s32 D_801E5E74;
 

@@ -696,6 +696,8 @@ extern s32 D_800B5C30;
 
 extern s_800B5C40 D_800B5C40[];
 
+extern s32 D_800B5C58;
+
 extern s32 D_800B5C7C;
 
 extern u8 D_800BC74F;
