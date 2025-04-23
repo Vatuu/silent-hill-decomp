@@ -1,8 +1,11 @@
-#include "common.h"
+#include "bodyprog/bodyprog.h"
+#include "bodyprog/math.h"
+#include "main/rng.h"
+#include "maps/shared.h"
 
 INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", func_800CB7A8);
 
-INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", func_800CBC34);
+#include "maps/shared/sharedFunc_800CBBBC_0_s00.h" // 0x800CBC34
 
 INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", func_800CBD0C);
 
@@ -18,7 +21,7 @@ INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", func_800CCE2C);
 
 void func_800CCF40(void) {}
 
-INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", func_800CCF48);
+#include "maps/shared/sharedFunc_800D01BC_0_s00.h" // 0x800CCF48
 
 INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", func_800CD000);
 
@@ -28,7 +31,7 @@ INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", func_800CD208);
 
 INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", func_800CD2C0);
 
-INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", func_800CD458);
+#include "maps/shared/sharedFunc_800D0E04_0_s00.h" // 0x800CD458
 
 INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", func_800CD478);
 
@@ -38,31 +41,34 @@ INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", func_800CE0DC);
 
 INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", func_800CE610);
 
-INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", func_800CEA3C);
+#include "maps/shared/sharedFunc_800D209C_0_s00.h" // 0x800CEA3C
 
-INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", func_800CEA78);
+#include "maps/shared/sharedFunc_800D20D8_0_s00.h" // 0x800CEA78
 
-INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", func_800CEA84);
+#include "maps/shared/sharedFunc_800D20E4_0_s00.h" // 0x800CEA84
 
 INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", func_800CEBE4);
 
-INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", func_800CEDBC);
+s32 func_800CEDBC()
+{
+    return 0;
+}
 
-INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", func_800CEDC4);
+#include "maps/shared/sharedFunc_800D2C7C_0_s00.h" // 0x800CEDC4
 
-INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", func_800CEE74);
+#include "maps/shared/sharedFunc_800D2D2C_0_s00.h" // 0x800CEE74
 
-INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", func_800CEE8C);
+#include "maps/shared/sharedFunc_800D2D44_0_s00.h" // 0x800CEE8C
 
-INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", func_800CEEB4);
+#include "maps/shared/sharedFunc_800D2D6C_0_s00.h" // 0x800CEEB4
 
-INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", func_800CEECC);
+#include "maps/shared/sharedFunc_800D2D84_0_s00.h" // 0x800CEECC
 
 INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", func_800CEEF4);
 
-INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", func_800CEF98);
+#include "maps/shared/sharedFunc_800D2E50_0_s00.h" // 0x800CEF98
 
-INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", func_800CEFA8);
+#include "maps/shared/sharedFunc_800D2E60_0_s00.h" // 0x800CEFA8
 
 void func_800CEFB4(void) {}
 
@@ -74,15 +80,18 @@ void func_800CEFCC(void) {}
 
 void func_800CEFD4(void) {}
 
-INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", func_800CEFDC);
+s32 func_800CEFDC()
+{
+    return 0;
+}
 
 void func_800CEFE4(void) {}
 
-INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", func_800CEFEC);
+#include "maps/shared/sharedFunc_800D2EA4_0_s00.h" // 0x800CEFEC
 
-INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", func_800CEFFC);
+#include "maps/shared/sharedFunc_800D2EB4_0_s00.h" // 0x800CEFFC
 
-INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", func_800CF03C);
+#include "maps/shared/sharedFunc_800D2EF4_0_s00.h" // 0x800CF03C
 
 INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", func_800CF050);
 
@@ -140,7 +149,7 @@ INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", func_800D7378);
 
 INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", func_800D7594);
 
-INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", func_800D7748);
+#include "maps/shared/sharedFunc_800D929C_0_s00.h" // 0x800D7748
 
 INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", func_800D7758);
 

@@ -542,9 +542,11 @@ typedef struct _SubCharacter
     s32 properties_E4[CHARA_PROPERTY_COUNT_MAX];
     s8  unk_10C;
     u8  field_10D;
-    s8  unk_10E[5];
-    s32 field_112;
-    s8  unk_116[14];
+    s8  unk_10E[6];
+    s32 field_114;
+    s8  unk_118[4];
+    s32 field_11C;
+    s8  unk_120[6];
     s16 field_126;
 } s_SubCharacter;
 STATIC_ASSERT_SIZEOF(s_SubCharacter, 296);
