@@ -1907,7 +1907,6 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80091778);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800917C0);
 
-// INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8009185C);
 void func_8009185C(s16 arg0, s16 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8, s32 arg9) // 0x8009185C
 {
     s32 temp_lo;
