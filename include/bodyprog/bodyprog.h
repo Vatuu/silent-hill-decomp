@@ -680,6 +680,8 @@ extern s32 D_800B5480;
 
 extern s32 D_800B5488; // Index or state?
 
+extern s32 D_800B54BC;
+
 extern s_800B5508 D_800B5508[];
 
 extern s_800B55E8 D_800B55E8[2];
@@ -1034,6 +1036,10 @@ void func_800303E4();
 void func_800314EC(s_FsImageDesc* image);
 
 void func_80031CCC(s32);
+
+void func_80030414();
+
+void func_80030884();
 
 void Gfx_DebugStringPosition(s16 x, s16 y);
 

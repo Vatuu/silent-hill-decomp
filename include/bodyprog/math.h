@@ -67,30 +67,6 @@
 #define FP_METER(met) \
     FP_FLOAT_TO(met, Q8_SHIFT)
 
-/** @brief Tests if a probability, determined by the number of set bits in a mask, is met.
- *
- * Bits | Percent | Mask
- * -----|---------|------
- * 1    | 50%     | 0x1
- * 2    | 25%     | 0x3
- * 3    | 12.5%   | 0x7
- * 4    | 6.25%   | 0xF
- * 5    | 3.125%  | 0x1F
- * 6    | 1.563%  | 0x3F
- * 7    | 0.781%  | 0x7F
- * 8    | 0.391%  | 0xFF
- * 9    | 0.195%  | 0x1FF
- * 10   | 0.098%  | 0x3FF
- * 11   | 0.049%  | 0x7FF
- * 12   | 0.024%  | 0xFFF
- * 13   | 0.012%  | 0x1FFF
- * 14   | 0.006%  | 0x3FFF
- * 15   | 0.003%  | 0x7FFF
- * 16   | 0.002%  | 0xFFFF
- */
-#define TEST_RNG(bits) \
-    (Rng_Rand16() & ((1 << (bits)) - 1))
-
 static inline s16 shAngleRegulate(s32 angle)
 {
     return (angle << 20) >> 20;
