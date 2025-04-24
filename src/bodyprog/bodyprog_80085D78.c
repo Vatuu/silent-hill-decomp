@@ -1916,9 +1916,9 @@ void func_8009185C(s16 arg0, s16 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s
     s32 temp_t1;
     s32 temp_t2;
     s32 temp_v0;
-    u16 temp_t0 = 0x18;
+    u16 temp_t0 = 24;
 
-    temp_t1   = arg2 << 0x16;
+    temp_t1   = arg2 << 22;
     temp_lo   = temp_t1 / (arg6 >> 2);
     temp_lo_2 = arg9 * temp_t0;
     temp_lo_4 = (arg6 + (s32)FP_MULTIPLY((s64)arg3, temp_lo_2, Q12_SHIFT)) >> 2;
@@ -1927,7 +1927,7 @@ void func_8009185C(s16 arg0, s16 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s
     D_800AFE24.field_0  = 0;
     D_800AFE24.field_2  = 0;
     D_800AFE24.field_4  = 0;
-    D_800AFE24.field_6  = 0x18;
+    D_800AFE24.field_6  = 24;
     D_800AFE24.field_7  = 0;
     D_800AFE24.field_8  = 0x2CFFFFFF;
     D_800AFE24.field_18 = D_800AFE08.field_18;
@@ -1945,10 +1945,12 @@ void func_8009185C(s16 arg0, s16 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s
     D_800AFE24.field_3C = arg9;
     D_800AFE24.field_40 = FP_MULTIPLY((s64)temp_lo, arg4, Q12_SHIFT);
     D_800AFE24.field_44 = FP_MULTIPLY((s64)temp_lo_4, arg4, Q12_SHIFT);
+
     temp_v0             = arg4 + FP_MULTIPLY((s64)arg3, arg7, Q12_SHIFT);
     D_800AFE24.field_48 = FP_MULTIPLY((s64)temp_lo, temp_v0, Q12_SHIFT) - D_800AFE24.field_40;
     D_800AFE24.field_4C = FP_MULTIPLY((s64)temp_lo_4, temp_v0, Q12_SHIFT) - D_800AFE24.field_44;
     D_800AFE24.field_50 = FP_MULTIPLY((s64)temp_lo, arg5, Q12_SHIFT);
+
     temp_lo_7           = arg8 * temp_t0;
     temp_t2             = arg5 + FP_MULTIPLY((s64)arg3, temp_lo_7, Q12_SHIFT);
     D_800AFE24.field_54 = FP_MULTIPLY((s64)temp_lo_4, temp_t2, Q12_SHIFT);

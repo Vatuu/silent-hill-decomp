@@ -1434,6 +1434,8 @@ s32 func_8008F520();
 
 s32 func_8008F914();
 
+void func_8009185C(s16 arg0, s16 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8, s32 arg9);
+
 void func_80091380();
 
 // TODO: Arrange these in address order for better insight into the original interface. -- Sezz

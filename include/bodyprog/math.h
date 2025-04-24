@@ -1,11 +1,11 @@
 #ifndef _BODYPROG_MATH_H
 #define _BODYPROG_MATH_H
 
-#define Q4_SHIFT       4     /** Used for: Q27.4 positions. */
-#define Q8_SHIFT       8     /** Used for: Q8.8 camera AABBs. Q24.8 meters. */
-#define Q12_SHIFT      12    /** Used for: Q3.12 alphas. Q19.12 timers, trigonometry. */
-#define SIN_LUT_SIZE   4096  /** Number of entries in the sine lookup table. */
-#define FP_ANGLE_COUNT 65536 /** Number of fixed-point angles in Q1.15 format. */
+#define Q4_SHIFT       4         /** Used for: Q27.4 positions. */
+#define Q8_SHIFT       8         /** Used for: Q8.8 camera AABBs. Q24.8 meters. */
+#define Q12_SHIFT      12        /** Used for: Q3.12 alphas. Q19.12 timers, trigonometry. */
+#define SIN_LUT_SIZE   4096      /** Number of entries in the sine lookup table. */
+#define FP_ANGLE_COUNT (1 << 16) /** Number of fixed-point angles in Q1.15 format. */
 
 /** @brief Squares a value. */
 #define SQUARE(x) \
@@ -29,7 +29,7 @@
 
 /** @brief Computes the absolute difference between two values. */
 #define ABS_DIFF(a, b) \
-    (((a) - (b)) < 0 ? (b) - (a) : (a) - (b))
+    ((((a) - (b)) < 0) ? ((b) - (a)) : ((a) - (b)))
 
 /** @brief Converts an integer to a fixed-point Q format. */
 #define FP_TO(x, shift) \
@@ -61,7 +61,7 @@
 
 /** @brief Converts a normalized color value in the range [0.0f, 1.0f] to an 8-bit color value in the range [0, 255]. */
 #define FP_COLOR(val) \
-    (u8)((val) * 255)
+    (u8)((val) * (FP_FLOAT_TO(1.0f, Q8_SHIFT) - 1))
 
 /** @brief Converts floating-point degrees to fixed-point angles in Q1.15 format. */
 #define FP_ANGLE(deg) \
@@ -70,30 +70,6 @@
 /** @brief Converts floating-point meters to fixed-point meters in Q24.8 format. */
 #define FP_METER(met) \
     FP_FLOAT_TO(met, Q8_SHIFT)
-
-/** @brief Tests if a probability, determined by the number of set bits in a mask, is met.
- *
- * Bits | Percent | Mask
- * -----|---------|------
- * 1    | 50%     | 0x1
- * 2    | 25%     | 0x3
- * 3    | 12.5%   | 0x7
- * 4    | 6.25%   | 0xF
- * 5    | 3.125%  | 0x1F
- * 6    | 1.563%  | 0x3F
- * 7    | 0.781%  | 0x7F
- * 8    | 0.391%  | 0xFF
- * 9    | 0.195%  | 0x1FF
- * 10   | 0.098%  | 0x3FF
- * 11   | 0.049%  | 0x7FF
- * 12   | 0.024%  | 0xFFF
- * 13   | 0.012%  | 0x1FFF
- * 14   | 0.006%  | 0x3FFF
- * 15   | 0.003%  | 0x7FFF
- * 16   | 0.002%  | 0xFFFF
- */
-#define TEST_RNG(bits) \
-    (Rng_Rand16() & ((1 << (bits)) - 1))
 
 static inline s16 shAngleRegulate(s32 angle)
 {

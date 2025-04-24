@@ -1,12 +1,12 @@
 void sharedFunc_800D20E4_0_s00()
 {
-    // TODO: the pointers here are odd, might be full of inlines.
+    // TODO: Pointers here are odd, might be full of inlines.
 
     s_MainCharacterExtra* extra;
     s_SubCharacter*       chara;
     s_SysWork*            sysWork;
 
-    sharedData_800DD59C_0_s00 = -1;
+    sharedData_800DD59C_0_s00 = NO_VALUE;
 
     D_800C457C = 0;
     D_800C4588 = 0;
@@ -50,9 +50,9 @@ void sharedFunc_800D20E4_0_s00()
     chara->field_D6 = 0;
     sysWork->player_4C.chara_0.field_11C |= 0x30;
     chara->field_3E |= 8;
-    chara->flags_E0 = ((chara->flags_E0 & ~0xF00) | 0x400);
+    chara->flags_E0 = ((chara->flags_E0 & ~0xF00) | (1 << 10));
 
-    if (sysWork->field_47 < 0x20)
+    if (sysWork->field_47 < 32)
     {
         sysWork->field_47 = (sysWork->field_47 % 10);
     }
