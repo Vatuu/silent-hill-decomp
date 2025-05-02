@@ -395,4 +395,14 @@ static inline void vcWork_CurNearRoadSet(VC_WORK* work, VC_NEAR_ROAD_DATA* road)
     memcpy(&work->cur_near_road_2B8, road, sizeof(VC_NEAR_ROAD_DATA));
 }
 
+static inline void vcWork_FlagClear(s32 flag)
+{
+    vcWork.flags_8 &= ~flag;
+}
+
+static inline void vcWork_FlagSet(s32 flag)
+{
+    vcWork.flags_8 |= flag;
+}
+
 #endif /* _VW_SYSTEM_H */
