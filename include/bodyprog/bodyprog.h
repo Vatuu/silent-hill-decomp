@@ -668,6 +668,8 @@ extern s32 D_800AFD9C;
 
 extern u16 D_800AFDBC;
 
+extern void* D_800AFDC0;
+
 extern s32 D_800AFDEC;
 
 extern s_800AFE08 D_800AFE08;
@@ -912,6 +914,8 @@ extern s16 D_800C4700;
 extern s16 D_800C4702;
 
 extern s_800C4818 D_800C4818;
+
+extern s32 g_Demo_FileIndex; // 0x800C4844
 
 /** Unknown bodyprog var. Set in `Fs_QueueDoThingWhenEmpty`. */
 extern s32 D_800C489C;
@@ -1331,6 +1335,8 @@ void func_8008D990(s32, s32, VECTOR3*, s32, s32);
 void func_8008E794(VECTOR3*, s16, s32);
 
 void func_8008EA68(SVECTOR*, VECTOR3*, s32);
+
+void func_8008EF20(s32);
 
 void func_80085D78(s32 arg0);
 

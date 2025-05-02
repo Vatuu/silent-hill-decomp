@@ -1702,7 +1702,15 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008EF20);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008F048);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", Demo_DataRead);
+void Demo_DataRead() // 0x8008F07C
+{
+    func_8008EF20(0);
+
+    if (g_Demo_FileIndex != NO_VALUE)
+    {
+        Fs_QueueStartRead(g_Demo_FileIndex, D_800AFDC0);
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008F0BC);
 
@@ -1840,7 +1848,43 @@ void Demo_DemoRandSeedAdvance() // 0x8008F598
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", Demo_Update);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", Demo_JoyUpdate);
+// TODO: Move this to header if any other funcs have same code.
+static inline void ControllerData_Reset(s_ControllerData* controller, u16 buttons)
+{
+    *(u16*)&controller->analogPad_0.status  = 0x7300;
+    controller->analogPad_0.digitalButtons  = buttons;
+    *(u32*)&controller->analogPad_0.right_x = 0x80808080;
+}
+
+s32 Demo_JoyUpdate() // 0x8008F7CC
+{
+    u32 curButtons;
+
+    if (!(g_SysWork.flags_22A4 & (1 << 1)))
+    {
+        return 0;
+    }
+
+    curButtons = g_ControllerPtr0->analogPad_0.digitalButtons;
+
+    if (curButtons != 0xFFFF)
+    {
+        Demo_ExitDemo();
+        return 1;
+    }
+
+    D_800A9768 = 0; // Demo_FrameCnt
+
+    if (g_Demo_ControllerPacket != NULL)
+    {
+        g_ControllerPtr0->analogPad_0 = g_Demo_ControllerPacket->analogPad_0;
+        return 1;
+    }
+
+    ControllerData_Reset(g_ControllerPtr0, curButtons);
+
+    return 1;
+}
 
 s32 Demo_PresentIntervalUpdate() // 0x8008F87C
 {
