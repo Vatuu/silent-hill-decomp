@@ -1698,17 +1698,64 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008EA68);
 
 void func_8008EF18() {}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008EF20);
-
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008F048);
-
-void Demo_DataRead() // 0x8008F07C
+s32 Demo_SequenceAdvance(s32 incrementAmt)
 {
-    func_8008EF20(0);
+    g_Demo_DemoNum += incrementAmt;
 
-    if (g_Demo_FileIndex != NO_VALUE)
+    while (true)
     {
-        Fs_QueueStartRead(g_Demo_FileIndex, D_800AFDC0);
+        // Cycle demo ID between 0 - 5
+        while (g_Demo_DemoNum < 0)
+        {
+            g_Demo_DemoNum += 5;
+        }
+
+        while ((u32)g_Demo_DemoNum >= 5)
+        {
+            g_Demo_DemoNum -= 5;
+        }
+
+        // Call optional funcptr associated with this demo.
+        // If funcptr is set, it returns whether the demo is eligible to play (possibly based on game progress or other conditions)
+        // In retail demos this pointer is always NULL.
+        if (g_Demo_FileIds[g_Demo_DemoNum].funcPtr_4 == NULL || g_Demo_FileIds[g_Demo_DemoNum].funcPtr_4() == 1)
+        {
+            break;
+        }
+
+        // If funcptr is set and returned false, skip to the next demo.
+        // Direction to skip depends on sign of demoIncrement (forward or backward)
+        if (incrementAmt >= 0)
+        {
+            g_Demo_DemoNum++;
+        }
+        else
+        {
+            g_Demo_DemoNum--;
+        }
+    }
+
+    g_Demo_DemoFileIndex = g_Demo_FileIds[g_Demo_DemoNum].demoFileId_0;
+    g_Demo_PlayFileIndex = g_Demo_FileIds[g_Demo_DemoNum].playFileId_2;
+
+    return 1;
+}
+
+void Demo_DemoDataRead() // 0x8008F048
+{
+    if (g_Demo_DemoFileIndex != NO_VALUE)
+    {
+        Fs_QueueStartRead(g_Demo_DemoFileIndex, DEMO_WORK());
+    }
+}
+
+void Demo_PlayDataRead() // 0x8008F07C
+{
+    Demo_SequenceAdvance(0);
+
+    if (g_Demo_PlayFileIndex != NO_VALUE)
+    {
+        Fs_QueueStartRead(g_Demo_PlayFileIndex, D_800AFDC0);
     }
 }
 

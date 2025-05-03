@@ -295,8 +295,8 @@ void GameState_KcetLogo_Update() // 0x800C99A4
                             break;
                     }
 
-                    func_8008EF20(0);
-                    func_8008F048();
+                    Demo_SequenceAdvance(0);
+                    Demo_DemoDataRead();
                     Fs_QueueWaitForEmpty();
 
                     g_SysWork.timer_1C = 0;

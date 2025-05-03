@@ -669,6 +669,8 @@ extern u8 D_800AFD05;
 
 extern s32 D_800AFD9C;
 
+extern s32 g_Demo_DemoNum; // 0x800AFDB8
+
 extern u16 g_Demo_RandSeed; // 0x800AFDBC
 
 extern void* D_800AFDC0;
@@ -949,7 +951,18 @@ typedef struct _DemoFrameData
 } s_DemoFrameData;
 STATIC_ASSERT_SIZEOF(s_DemoFrameData, 16);
 
-extern s32 g_Demo_FileIndex; // 0x800C4844
+/** Associates a demo number/ID with PLAYXXXX.DAT/DEMOXXXX.DAT file IDs. */
+typedef struct _DemoFileInfo
+{
+    s16 demoFileId_0;   /** MISC/DEMOXXXX.DAT, initial gamestate for the demo & user config override. */
+    s16 playFileId_2;   /** MISC/PLAYXXXX.DAT, data of button presses/randseed for each frame. */
+    s32 (*funcPtr_4)(); /** Optional funcptr, returns whether this demo is eligible to be played (unused in retail demos). */
+} s_DemoFileInfo;
+STATIC_ASSERT_SIZEOF(s_DemoFileInfo, 8);
+
+extern s32 g_Demo_DemoFileIndex; // 0x800C4840
+
+extern s32 g_Demo_PlayFileIndex; // 0x800C4844
 
 extern s_ShSaveUserConfig g_Demo_UserConfigBackup; // 0x800C4850
 
@@ -962,6 +975,17 @@ extern s_DemoFrameData* g_Demo_CurFrameData; // 0x800C4890
 extern s32 g_Demo_DemoStep; // 0x800C4894
 
 extern s32 g_Demo_VideoPresentInterval; // 0x800C4898
+
+extern s_DemoFileInfo g_Demo_FileIds[]; // 0x800AFDC4
+/* TODO: data migration
+s_DemoFileInfo g_Demo_FileIds[5] = {
+    { FILE_MISC_DEMO0009_DAT, FILE_MISC_PLAY0009_DAT, NULL },
+    { FILE_MISC_DEMO000A_DAT, FILE_MISC_PLAY000A_DAT, NULL },
+    { FILE_MISC_DEMO0003_DAT, FILE_MISC_PLAY0003_DAT, NULL },
+    { FILE_MISC_DEMO000B_DAT, FILE_MISC_PLAY000B_DAT, NULL },
+    { FILE_MISC_DEMO0005_DAT, FILE_MISC_PLAY0005_DAT, NULL },
+};
+*/
 
 extern s16 D_800C6E26;
 
@@ -1361,8 +1385,6 @@ void func_8008E794(VECTOR3*, s16, s32);
 
 void func_8008EA68(SVECTOR*, VECTOR3*, s32);
 
-void func_8008EF20(s32);
-
 void func_80085D78(s32 arg0);
 
 void func_80085DC0(s32 arg0, s32 sysStateStep);
@@ -1715,6 +1737,12 @@ s32 SaveGame_ChecksumValidate(s_ShSaveGameFooter* saveFooter, s8* saveData, s32 
 
 /** Generates an 8-bit XOR checksum over the given data, only appears used with s_ShSaveGame data. */
 u8 SaveGame_ChecksumGenerate(s8* saveData, s32 saveDataLength);
+
+s32 Demo_SequenceAdvance(s32 incrementAmt);
+
+void Demo_DemoDataRead();
+
+void Demo_PlayDataRead();
 
 void Demo_GameRandSeedUpdate();
 
