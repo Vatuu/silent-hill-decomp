@@ -410,6 +410,8 @@ SsSetSerialAttr = 0x800a22e0; // type:func
 SsSetSerialVol = 0x800a2308; // type:func
 SsUtAllKeyOff = 0x800a2338; // type:func
 
+set_note_on = 0x800a397c; // type:func - Might be switched with set_midi_info, both call into nullsubs.
+set_midi_info = 0x800a39b8; // type:func - Might be switched with set_note_on, both call into nullsubs.
 Note2Pitch = 0x800a39d8; // type:func
 tre_calc = 0x800a3b20; // type:func
 vib_calc = 0x800a3d30; // type:func
@@ -427,7 +429,7 @@ replay_reverb_set = 0x800a4748; // type:func
 midi_vsync = 0x800a4838; // type:func
 sound_seq_off = 0x800a4a34; // type:func
 sound_off = 0x800a4d20; // type:func
-set_note_on_mb = 0x800a4e90; // type:func Uncertain, could be set_midi_info. Both are nullsubs.
+
 adsr_set = 0x800a4e98; // type:func
 rr_off = 0x800a4f08; // type:func
 voice_check = 0x800a4f64; // type:func

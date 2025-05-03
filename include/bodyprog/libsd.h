@@ -348,7 +348,8 @@ s32 SdGetSeqBeat2(s16 seq_access_num);
 
 // sdmidi.c
 
-void func_800A39B8(s32 arg0, u8 arg1, u8 arg2); /** nullsub, possibly set_midi_info */
+void set_note_on(s16 arg0, u8 arg1, u8 arg2, s16 arg3, s16 arg4);
+void set_midi_info(s32 type, u8 midiChannel, u32 value);
 u16  Note2Pitch(s32 arg0, s32 arg1, u8 arg2, u8 arg3);
 void tre_calc(s_SMF_PORT* midiPort);
 void vib_calc(s_SMF_PORT* midiPort);
@@ -367,7 +368,7 @@ void replay_reverb_set(s16 seq_access_num);
 void midi_vsync();
 void sound_seq_off(s32);
 void sound_off();
-void set_note_on_mb();
+
 void adsr_set(s32 voice, s_SMF_PORT* midiPort);
 void rr_off(s32 voice);
 
