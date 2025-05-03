@@ -260,6 +260,7 @@ typedef struct _SD_ALLOC
     u32 addr_0;
     s32 size_4;
 } s_SD_ALLOC;
+STATIC_ASSERT_SIZEOF(s_SD_ALLOC, 8);
 
 extern s_SMF_MIDI smf_midi[2 * 16];   // 2 devices with 16 channels each?
 extern s_SMF_MIDI smf_midi_sound_off; // Set by sound_off(), could be smf_midi[32], but game doesn't use offsets for [32]?
@@ -271,7 +272,8 @@ extern s32        sd_reverb_area_size[10];
 
 // sdmain.c
 
-void tone_adsr_back(s16);
+void tone_adsr_mem(s16 vabid);
+void tone_adsr_back(s16 vabid);
 void sd_alloc_sort();
 
 void SdSpuFree(u32 addr);
@@ -314,6 +316,7 @@ void SdUtSetReverbDepth(s16 left, s16 right);
 void SdSetRVol(s16 left, s16 right);
 void SdUtSEAllKeyOff();
 void SdUtAllKeyOff(s16 mode);
+s32  SdUtGetVabHdr(s16 vabId, VabHdr* vabhdrptr);
 
 void SdVoKeyOff(s32 vab_pro, s32 pitch);
 void SdVoKeyOffWithRROff(s32 vab_pro, s32 pitch);

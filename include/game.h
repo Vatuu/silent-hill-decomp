@@ -404,24 +404,6 @@ typedef struct _ShSaveGame
 } s_ShSaveGame;
 STATIC_ASSERT_SIZEOF(s_ShSaveGame, 636);
 
-/** @brief Appended to ShSaveGame during game save. Contains 8-bit XOR checksum + magic
- * checksum generated via the SaveGame_ChecksumGenerate function.
- */
-typedef struct _ShSaveGameFooter
-{
-    u8  checksum_0[2];
-    u16 magic_2;
-} s_ShSaveGameFooter;
-STATIC_ASSERT_SIZEOF(s_ShSaveGameFooter, 4);
-
-/** Contains s_ShSaveGame data with the footer appended to the end containing the checksum + magic. */
-typedef struct _ShSaveGameContainer
-{
-    s_ShSaveGame       saveGame_0;
-    s_ShSaveGameFooter footer_27C;
-} s_ShSaveGameContainer;
-STATIC_ASSERT_SIZEOF(s_ShSaveGameContainer, 640);
-
 typedef struct _ShEventParam
 {
     u8  unk_0[2];
@@ -459,6 +441,32 @@ typedef struct _ShSaveUserConfig
     u32                  unk_34[1];
 } s_ShSaveUserConfig;
 STATIC_ASSERT_SIZEOF(s_ShSaveUserConfig, 56);
+
+/** @brief Appended to ShSaveGame & ShSaveUserConfig during game save. Contains 8-bit XOR checksum + magic.
+ * Checksum generated via the SaveGame_ChecksumGenerate function.
+ */
+typedef struct _ShSaveGameFooter
+{
+    u8  checksum_0[2];
+    u16 magic_2;
+} s_ShSaveGameFooter;
+STATIC_ASSERT_SIZEOF(s_ShSaveGameFooter, 4);
+
+/** Contains s_ShSaveGame data with the footer appended to the end containing the checksum + magic. */
+typedef struct _ShSaveGameContainer
+{
+    s_ShSaveGame       saveGame_0;
+    s_ShSaveGameFooter footer_27C;
+} s_ShSaveGameContainer;
+STATIC_ASSERT_SIZEOF(s_ShSaveGameContainer, 640);
+
+/** Contains s_ShSaveUserConfig data padded to 128 bytes, with footer at the end containing checksum + magic. */
+typedef struct _ShSaveUserConfigContainer
+{
+    s_ShSaveUserConfig config_0;
+    u8                 pad_38[68];
+    s_ShSaveGameFooter footer_7C;
+} s_ShSaveUserConfigContainer;
 
 typedef struct _GameWork
 {

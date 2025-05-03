@@ -250,7 +250,12 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8002F61C);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8002FB64);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8002FBB4);
+void SaveGame_UserConfigCopyWithChecksum(s_ShSaveUserConfigContainer* dest, s_ShSaveUserConfig* src) // 0x8002FBB4
+{
+    bzero(dest, sizeof(s_ShSaveUserConfigContainer));
+    dest->config_0 = *src;
+    SaveGame_ChecksumUpdate(&dest->footer_7C, &dest->config_0, sizeof(s_ShSaveUserConfigContainer));
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8002FC3C);
 

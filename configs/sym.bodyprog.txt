@@ -196,6 +196,7 @@ SysState_EventPlaySound_Update = 0x8003A4B4; // type:func
 SysState_GameOver_Update = 0x8003A52C; // type:func
 SysState_GamePaused_Update = 0x800391E8; // type:func
 
+SaveGame_UserConfigCopyWithChecksum = 0x8002FBB4; // type:func
 SaveGame_CopyWithChecksum = 0x8002FCCC; // type:func
 SaveGame_ChecksumUpdate = 0x8002FF30; // type:func
 SaveGame_ChecksumValidate = 0x8002FF74; // type:func
