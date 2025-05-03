@@ -321,7 +321,9 @@ s32  SdUtGetVabHdr(s16 vabId, VabHdr* vabhdrptr);
 void SdVoKeyOff(s32 vab_pro, s32 pitch);
 void SdVoKeyOffWithRROff(s32 vab_pro, s32 pitch);
 
-s16 SdGetSeqStatus(s16 seq_access_num);
+s32  SdUtKeyOffV(s16 voice);
+s32  SdUtKeyOffVWithRROff(s16 voice);
+s16  SdGetSeqStatus(s16 seq_access_num);
 s32  SdUtSetDetVVol(s16 voice, s16 volLeft, s16 volRight);
 s32  SdUtSetVVol(s16 voice, s16 volLeft, s16 volRight);
 s32  SdUtGetDetVVol(s16 voice, u16* volLeft, u16* volRight);
