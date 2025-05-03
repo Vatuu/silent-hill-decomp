@@ -169,6 +169,7 @@ g_Demo_VideoPresentInterval = 0x800C4898;
 
 g_Demo_DemoNum = 0x800AFDB8; // type:s32
 g_Demo_RandSeed = 0x800AFDBC; // type:u16
+g_Demo_PlayFileBufferPtr = 0x800AFDC0; // type:s32
 g_Demo_FileIds = 0x800AFDC4; // type:DemoFileInfo size:0x28
 
 GameState_Unk0_Update = 0x80032D1C; // type:func

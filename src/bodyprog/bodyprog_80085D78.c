@@ -1755,7 +1755,7 @@ void Demo_PlayDataRead() // 0x8008F07C
 
     if (g_Demo_PlayFileIndex != NO_VALUE)
     {
-        Fs_QueueStartRead(g_Demo_PlayFileIndex, D_800AFDC0);
+        Fs_QueueStartRead(g_Demo_PlayFileIndex, g_Demo_PlayFileBufferPtr);
     }
 }
 

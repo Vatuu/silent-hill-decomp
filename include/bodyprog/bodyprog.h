@@ -669,12 +669,6 @@ extern u8 D_800AFD05;
 
 extern s32 D_800AFD9C;
 
-extern s32 g_Demo_DemoNum; // 0x800AFDB8
-
-extern u16 g_Demo_RandSeed; // 0x800AFDBC
-
-extern void* D_800AFDC0;
-
 extern s32 D_800AFDEC;
 
 extern s_800AFE08 D_800AFE08;
@@ -975,6 +969,12 @@ extern s_DemoFrameData* g_Demo_CurFrameData; // 0x800C4890
 extern s32 g_Demo_DemoStep; // 0x800C4894
 
 extern s32 g_Demo_VideoPresentInterval; // 0x800C4898
+
+extern s32 g_Demo_DemoNum; // 0x800AFDB8
+
+extern u16 g_Demo_RandSeed; // 0x800AFDBC
+
+extern void* g_Demo_PlayFileBufferPtr; // 0x800AFDC0
 
 extern s_DemoFileInfo g_Demo_FileIds[]; // 0x800AFDC4
 /* TODO: data migration
