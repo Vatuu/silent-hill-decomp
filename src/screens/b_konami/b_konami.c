@@ -234,7 +234,7 @@ void GameState_KcetLogo_Update() // 0x800C99A4
                                 break;
 
                             case 2:
-                                if ((s8)ptr->optAutoLoad_25 != 0)
+                                if ((s8)ptr->config_0.optAutoLoad_25 != 0)
                                 {
                                     Fs_QueueStartRead(FILE_VIN_SAVELOAD_BIN, FS_BUFFER_1);
                                     Fs_QueueStartSeek(FILE_TIM_SAVELOAD_TIM);
@@ -295,8 +295,8 @@ void GameState_KcetLogo_Update() // 0x800C99A4
                             break;
                     }
 
-                    func_8008EF20(0);
-                    func_8008F048();
+                    Demo_SequenceAdvance(0);
+                    Demo_DemoDataRead();
                     Fs_QueueWaitForEmpty();
 
                     g_SysWork.timer_1C = 0;

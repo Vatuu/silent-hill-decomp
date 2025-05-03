@@ -721,7 +721,7 @@ void func_8008716C(s32 arg0, s32 arg1, s32 arg2) // 0x8008716C
 
         case 4:
             func_800862F8(2, 0, 0);
-            if (g_ControllerPtr0->btns_new_10 & (g_GameWorkPtr1->controllerBinds_0.enter | g_GameWorkPtr1->controllerBinds_0.cancel))
+            if (g_ControllerPtr0->btns_new_10 & (g_GameWorkPtr1->config_0.controllerBinds_0.enter | g_GameWorkPtr1->config_0.controllerBinds_0.cancel))
             {
                 g_SysWork.timer_2C = 0;
                 g_SysWork.field_14 = 0;
@@ -844,7 +844,7 @@ void func_80087540(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x800875
                 break;
             }
 
-            if (g_ControllerPtr0->btns_new_10 & (g_GameWorkPtr1->controllerBinds_0.enter | g_GameWorkPtr1->controllerBinds_0.cancel))
+            if (g_ControllerPtr0->btns_new_10 & (g_GameWorkPtr1->config_0.controllerBinds_0.enter | g_GameWorkPtr1->config_0.controllerBinds_0.cancel))
             {
                 g_SysWork.timer_2C = 0;
                 g_SysWork.field_14 = 0;
@@ -892,7 +892,7 @@ void func_800879FC(u32 arg0, s32 arg1) // 0x800879FC
     s32 newBulletAdjust;
     s32 var4;
 
-    newBulletAdjust = g_GameWork.optBulletAdjust_2D + 1;
+    newBulletAdjust = g_GameWork.config_0.optBulletAdjust_2D + 1;
     if ((g_SaveGamePtr->field_260 >> 28) == NO_VALUE)
     {
         var4 = 2;
@@ -1698,35 +1698,128 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008EA68);
 
 void func_8008EF18() {}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008EF20);
-
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008F048);
-
-void Demo_DataRead() // 0x8008F07C
+s32 Demo_SequenceAdvance(s32 incrementAmt)
 {
-    func_8008EF20(0);
+    g_Demo_DemoNum += incrementAmt;
 
-    if (g_Demo_FileIndex != NO_VALUE)
+    while (true)
     {
-        Fs_QueueStartRead(g_Demo_FileIndex, D_800AFDC0);
+        // Cycle demo ID between 0 - DEMO_FILE_COUNT_MAX (5)
+        while (g_Demo_DemoNum < 0)
+        {
+            g_Demo_DemoNum += DEMO_FILE_COUNT_MAX;
+        }
+
+        while ((u32)g_Demo_DemoNum >= DEMO_FILE_COUNT_MAX)
+        {
+            g_Demo_DemoNum -= DEMO_FILE_COUNT_MAX;
+        }
+
+        // Call optional funcptr associated with this demo.
+        // If funcptr is set, it returns whether the demo is eligible to play (possibly based on game progress or other conditions)
+        // In retail demos this pointer is always NULL.
+        if (g_Demo_FileIds[g_Demo_DemoNum].canPlayDemo_4 == NULL || g_Demo_FileIds[g_Demo_DemoNum].canPlayDemo_4() == 1)
+        {
+            break;
+        }
+
+        // If funcptr is set and returned false, skip to the next demo.
+        // Direction to skip depends on sign of incrementAmt (forward or backward)
+        if (incrementAmt >= 0)
+        {
+            g_Demo_DemoNum++;
+        }
+        else
+        {
+            g_Demo_DemoNum--;
+        }
+    }
+
+    g_Demo_DemoFileIndex = g_Demo_FileIds[g_Demo_DemoNum].demoFileId_0;
+    g_Demo_PlayFileIndex = g_Demo_FileIds[g_Demo_DemoNum].playFileId_2;
+
+    return 1;
+}
+
+void Demo_DemoDataRead() // 0x8008F048
+{
+    if (g_Demo_DemoFileIndex != NO_VALUE)
+    {
+        Fs_QueueStartRead(g_Demo_DemoFileIndex, DEMO_WORK());
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008F0BC);
-
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008F13C);
-
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", Demo_GameGlobalsUpdate);
-
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", Demo_GameGlobalsRestore);
-
-void Demo_GameRandSeedUpdate() // 0x8008f33c
+void Demo_PlayDataRead() // 0x8008F07C
 {
-    g_Demo_PrevRandSeed = Rng_GetSeed();
-    Rng_SetSeed(D_800AFDBC);
+    Demo_SequenceAdvance(0);
+
+    if (g_Demo_PlayFileIndex != NO_VALUE)
+    {
+        Fs_QueueStartRead(g_Demo_PlayFileIndex, g_Demo_PlayFileBufferPtr);
+    }
 }
 
-void Demo_GameRandSeedRestore() // 0x8008f370
+s32 Demo_PlayFileBufferSetup() // 0x8008F0BC
+{
+    s32 mapOverlaySize;
+    s32 playFileSize;
+
+    // Get size of map overlay used in the demo.
+    mapOverlaySize = Fs_GetFileSize(FILE_VIN_MAP0_S00_BIN + DEMO_WORK()->saveGame_100.mapOverlayIdx_A4);
+
+    // Get size of the play file, rounded up to the next 0x800-byte boundary.
+    playFileSize = (Fs_GetFileSize(g_Demo_PlayFileIndex) + 0x7FF) & ~0x7FF;
+
+    // Try placing the play file buffer just before DEMO_WORK in memory.
+    g_Demo_PlayFileBufferPtr = (void*)((s32)DEMO_WORK() - playFileSize);
+
+    // If play file or map overlay is too large, the buffer ptr may overlap with the map.
+    // Return 1 if the buffer fits (no overlap with the map overlay); otherwise, return 0.
+    return ((u32)g_Demo_PlayFileBufferPtr >= (u32)(g_OvlDynamic + mapOverlaySize));
+}
+
+void Demo_DemoFileSaveGameUpdate() // 0x8008F13C
+{
+    g_GameWork.saveGame_30C = DEMO_WORK()->saveGame_100;
+}
+
+void Demo_GameGlobalsUpdate() // 0x8008F1A0
+{
+    // Backup current user config
+    g_Demo_UserConfigBackup = g_GameWork.config_0;
+
+    // Update Demo_RandSeed
+    g_Demo_RandSeed = DEMO_WORK()->randSeed_7FC;
+
+    // Replace user config with config from demo file
+    g_GameWork.config_0 = DEMO_WORK()->config_0;
+
+    // Restore users system settings over the demo values
+    g_GameWork.config_0.screenPosX_1C          = g_Demo_UserConfigBackup.screenPosX_1C;
+    g_GameWork.config_0.screenPosY_1D          = g_Demo_UserConfigBackup.screenPosY_1D;
+    g_GameWork.config_0.optSoundType_1E        = g_Demo_UserConfigBackup.optSoundType_1E;
+    g_GameWork.config_0.optVolumeBgm_1F        = OPT_SOUND_VOLUME_MIN;   // Disable BGM during demo.
+    g_GameWork.config_0.optVolumeSe_20         = g_Demo_UserConfigBackup.optVolumeSe_20;
+    g_GameWork.config_0.optVibrationEnabled_21 = OPT_VIBRATION_DISABLED; // Disable vibration during demo.
+    g_GameWork.config_0.optBrightness_22       = g_Demo_UserConfigBackup.optBrightness_22;
+
+    Sd_SetVolume(OPT_SOUND_VOLUME_MIN, OPT_SOUND_VOLUME_MIN, g_GameWork.config_0.optVolumeSe_20);
+}
+
+void Demo_GameGlobalsRestore() // 0x8008F2BC
+{
+    g_GameWork.config_0 = g_Demo_UserConfigBackup;
+
+    Sd_SetVolume(OPT_SOUND_VOLUME_MAX, g_GameWork.config_0.optVolumeBgm_1F, g_GameWork.config_0.optVolumeSe_20);
+}
+
+void Demo_GameRandSeedUpdate() // 0x8008F33C
+{
+    g_Demo_PrevRandSeed = Rng_GetSeed();
+    Rng_SetSeed(g_Demo_RandSeed);
+}
+
+void Demo_GameRandSeedRestore() // 0x8008F370
 {
     Rng_SetSeed(g_Demo_PrevRandSeed);
 }
@@ -1808,7 +1901,7 @@ s32 func_8008F470(s32 caseArg)
 void Demo_ExitDemo() // 0x8008F4E4
 {
     D_800A9768 = 0xEA24;
-    g_Demo_ControllerPacket = NULL;
+    g_Demo_CurFrameData = NULL;
     g_Demo_DemoStep = 0;
     g_SysWork.flags_22A4 |= 1 << 8;
 }
@@ -1856,7 +1949,7 @@ static inline void ControllerData_Reset(s_ControllerData* controller, u16 button
     *(u32*)&controller->analogPad_0.right_x = 0x80808080;
 }
 
-s32 Demo_JoyUpdate() // 0x8008F7CC
+s32 Demo_ControllerDataUpdate() // 0x8008F7CC
 {
     u32 curButtons;
 
@@ -1875,9 +1968,9 @@ s32 Demo_JoyUpdate() // 0x8008F7CC
 
     D_800A9768 = 0; // Demo_FrameCnt
 
-    if (g_Demo_ControllerPacket != NULL)
+    if (g_Demo_CurFrameData != NULL)
     {
-        g_ControllerPtr0->analogPad_0 = g_Demo_ControllerPacket->analogPad_0;
+        g_ControllerPtr0->analogPad_0 = g_Demo_CurFrameData->analogPad_0;
         return 1;
     }
 
@@ -1890,12 +1983,12 @@ s32 Demo_PresentIntervalUpdate() // 0x8008F87C
 {
     g_Demo_VideoPresentInterval = 1;
 
-    if (g_Demo_ControllerPacket == NULL)
+    if (g_Demo_CurFrameData == NULL)
     {
         return 0;
     }
 
-    g_Demo_VideoPresentInterval = g_Demo_ControllerPacket->field_9;
+    g_Demo_VideoPresentInterval = g_Demo_CurFrameData->videoPresentInterval_9;
     return 1;
 }
 
@@ -1905,14 +1998,14 @@ s32 Demo_GameRandSeedSet() // 0x8008F8A8
     {
         return 1;
     }
-    else if (g_Demo_ControllerPacket == NULL)
+    else if (g_Demo_CurFrameData == NULL)
     {
-        Rng_SetSeed(D_800AFDBC);
+        Rng_SetSeed(g_Demo_RandSeed);
         return 0;
     }
     else
     {
-        Rng_SetSeed(g_Demo_ControllerPacket->btns_held_C);
+        Rng_SetSeed(g_Demo_CurFrameData->randSeed_C);
         return 1;
     }
 }

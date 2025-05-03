@@ -8,6 +8,7 @@
 #define TEMP_MEMORY_ADDR ((s8*)0x801A2600)
 #define BOOT_ADDR_0      ((u8*)0x801E09E0)
 #define BOOT_ADDR_1      ((u8*)0x801E1430)
+#define DEMO_WORK()      ((s_DemoWork*)0x800FDE00) // TODO: Move closer to demo structs (or to separate header?)
 
 #define IMAGE_BUFFER_0 ((u_long*)0x801CFA00)
 #define IMAGE_BUFFER_1 ((u_long*)0x801C8200)
@@ -15,8 +16,10 @@
 
 #define CD_ADDR_0 0x801E2600
 
-#define OPT_SOUND_VOLUME_MAX  128
-#define OPT_VIBRATION_ENABLED 128
+#define OPT_SOUND_VOLUME_MIN   0
+#define OPT_SOUND_VOLUME_MAX   128
+#define OPT_VIBRATION_DISABLED 0
+#define OPT_VIBRATION_ENABLED  128
 
 typedef struct
 {
@@ -666,10 +669,6 @@ extern u8 D_800AFD05;
 
 extern s32 D_800AFD9C;
 
-extern u16 D_800AFDBC;
-
-extern void* D_800AFDC0;
-
 extern s32 D_800AFDEC;
 
 extern s_800AFE08 D_800AFE08;
@@ -915,8 +914,6 @@ extern s16 D_800C4702;
 
 extern s_800C4818 D_800C4818;
 
-extern s32 g_Demo_FileIndex; // 0x800C4844
-
 /** Unknown bodyprog var. Set in `Fs_QueueDoThingWhenEmpty`. */
 extern s32 D_800C489C;
 
@@ -928,15 +925,70 @@ extern RECT D_801E557C[];
 
 extern s32 g_MainLoop_FrameCount; // 0x800B9CCC
 
-extern s32 g_Demo_VideoPresentInterval; // 0x800C4898
+/** Initial demo game state data, stored inside MISC/DEMOXXXX.DAT files. */
+typedef struct _DemoWork
+{
+    s_ShSaveUserConfig config_0;
+    u8                 unk_38[0xC8];
+    s_ShSaveGame       saveGame_100;
+    u8                 unk_37C[0x480];
+    u16                randSeed_7FC;
+} s_DemoWork;
+STATIC_ASSERT_SIZEOF(s_DemoWork, 2048);
+
+/** Per-frame demo data, stored inside MISC/PLAYXXXX.DAT files. */
+typedef struct _DemoFrameData
+{
+    s_AnalogPadData analogPad_0;
+    u8              unk_8;
+    u8              videoPresentInterval_9;
+    u8              unk_A[2];
+    u32             randSeed_C;
+} s_DemoFrameData;
+STATIC_ASSERT_SIZEOF(s_DemoFrameData, 16);
+
+/** Associates a demo number/ID with PLAYXXXX.DAT/DEMOXXXX.DAT file IDs. */
+typedef struct _DemoFileInfo
+{
+    s16 demoFileId_0;       /** MISC/DEMOXXXX.DAT, initial gamestate for the demo & user config override. */
+    s16 playFileId_2;       /** MISC/PLAYXXXX.DAT, data of button presses/randseed for each frame. */
+    s32 (*canPlayDemo_4)(); /** Optional funcptr, returns whether this demo is eligible to be played (unused in retail demos). */
+} s_DemoFileInfo;
+STATIC_ASSERT_SIZEOF(s_DemoFileInfo, 8);
+
+extern s32 g_Demo_DemoFileIndex; // 0x800C4840
+
+extern s32 g_Demo_PlayFileIndex; // 0x800C4844
+
+extern s_ShSaveUserConfig g_Demo_UserConfigBackup; // 0x800C4850
 
 extern u32 g_Demo_PrevRandSeed; // 0x800C4888
 
 extern u32 g_Demo_RandSeedBackup; // 0x800C488C
 
-extern s_ControllerData* g_Demo_ControllerPacket; // 0x800C4890
+extern s_DemoFrameData* g_Demo_CurFrameData; // 0x800C4890
 
 extern s32 g_Demo_DemoStep; // 0x800C4894
+
+extern s32 g_Demo_VideoPresentInterval; // 0x800C4898
+
+extern s32 g_Demo_DemoNum; // 0x800AFDB8
+
+extern u16 g_Demo_RandSeed; // 0x800AFDBC
+
+extern void* g_Demo_PlayFileBufferPtr; // 0x800AFDC0
+
+#define DEMO_FILE_COUNT_MAX 5
+extern s_DemoFileInfo g_Demo_FileIds[DEMO_FILE_COUNT_MAX]; // 0x800AFDC4
+/* TODO: data migration
+s_DemoFileInfo g_Demo_FileIds[DEMO_FILE_COUNT_MAX] = {
+    { FILE_MISC_DEMO0009_DAT, FILE_MISC_PLAY0009_DAT, NULL },
+    { FILE_MISC_DEMO000A_DAT, FILE_MISC_PLAY000A_DAT, NULL },
+    { FILE_MISC_DEMO0003_DAT, FILE_MISC_PLAY0003_DAT, NULL },
+    { FILE_MISC_DEMO000B_DAT, FILE_MISC_PLAY000B_DAT, NULL },
+    { FILE_MISC_DEMO0005_DAT, FILE_MISC_PLAY0005_DAT, NULL },
+};
+*/
 
 extern s16 D_800C6E26;
 
@@ -1336,8 +1388,6 @@ void func_8008E794(VECTOR3*, s16, s32);
 
 void func_8008EA68(SVECTOR*, VECTOR3*, s32);
 
-void func_8008EF20(s32);
-
 void func_80085D78(s32 arg0);
 
 void func_80085DC0(s32 arg0, s32 sysStateStep);
@@ -1691,6 +1741,20 @@ s32 SaveGame_ChecksumValidate(s_ShSaveGameFooter* saveFooter, s8* saveData, s32 
 /** Generates an 8-bit XOR checksum over the given data, only appears used with s_ShSaveGame data. */
 u8 SaveGame_ChecksumGenerate(s8* saveData, s32 saveDataLength);
 
+s32 Demo_SequenceAdvance(s32 incrementAmt);
+
+void Demo_DemoDataRead();
+
+void Demo_PlayDataRead();
+
+s32 Demo_PlayFileBufferSetup();
+
+void Demo_DemoFileSaveGameUpdate();
+
+void Demo_GameGlobalsUpdate();
+
+void Demo_GameGlobalsRestore();
+
 void Demo_GameRandSeedUpdate();
 
 void Demo_GameRandSeedRestore();
@@ -1707,6 +1771,8 @@ void Demo_DemoRandSeedBackup();
 void Demo_DemoRandSeedRestore();
 
 void Demo_DemoRandSeedAdvance();
+
+s32 Demo_ControllerDataUpdate();
 
 s32 Demo_PresentIntervalUpdate();
 

@@ -37,6 +37,8 @@ g_StringPositionX0 = 0x800C38A8; // type:s16
 g_StringPositionX1 = 0x800C38AC; // type:s32
 g_StringPositionY = 0x800C38AA; // type:s16
 
+hack_D_800FE5FC_fix = 0x800FE5FC; // ignore:true - Part of temp memory block at 800FDE00, has to be unsymbolized for C to match.
+
 // sh "view" / "vw" / "vc" / "vb" code
 // Most names from SH2, functions seem to match pretty close between it and SH1 besides a few missing/extra funcs.
 hack_vcSetWatchTgtXzPos_fix = 0x8002B2B4; // type:s32 - Some 0x80083500 value which coincidentally points to code inside vcSetWatchTgtXzPos, probably unrelated flags or something. A jtbl is right before this which spimdisasm tries to include, breaking vcSetWatchTgtXzPos build.
@@ -156,12 +158,19 @@ g_Sd_VolumeXa = 0x800C1686;
 g_Sd_ReverbDepth = 0x800C1687;
 g_Game_VSyncTimeSinceBoot = 0x800C1690;
 
-g_Demo_FileIndex = 0x800C4844;
+g_Demo_DemoFileIndex = 0x800C4840; // type:s32
+g_Demo_PlayFileIndex = 0x800C4844; // type:s32
+g_Demo_UserConfigBackup = 0x800C4850; // type:ShSaveUserConfig size:0x38
 g_Demo_PrevRandSeed = 0x800C4888;
 g_Demo_RandSeedBackup = 0x800C488C;
-g_Demo_ControllerPacket = 0x800C4890;
+g_Demo_CurFrameData = 0x800C4890;
 g_Demo_DemoStep = 0x800C4894;
 g_Demo_VideoPresentInterval = 0x800C4898;
+
+g_Demo_DemoNum = 0x800AFDB8; // type:s32
+g_Demo_RandSeed = 0x800AFDBC; // type:u16
+g_Demo_PlayFileBufferPtr = 0x800AFDC0; // type:s32
+g_Demo_FileIds = 0x800AFDC4; // type:DemoFileInfo size:0x28
 
 GameState_Unk0_Update = 0x80032D1C; // type:func
 GameState_MainMenu_Update = 0x8003AB28; // type:func
@@ -284,7 +293,11 @@ Dms_CameraKeyframeInterpolate = 0x8008CFEC; // type:func
 Math_LerpFixed12 = 0x8008D3D4; // type:func
 Math_GetMagnitudeShift = 0x800808F8; // type:func
 
-Demo_DataRead = 0x8008F07C; // type:func
+Demo_SequenceAdvance = 0x8008EF20; // type:func
+Demo_DemoDataRead = 0x8008F048; // type:func
+Demo_PlayDataRead = 0x8008F07C; // type:func
+Demo_PlayFileBufferSetup = 0x8008F0BC; // type:func
+Demo_DemoFileSaveGameUpdate = 0x8008F13C; // type:func
 Demo_GameGlobalsUpdate = 0x8008F1A0; // type:func
 Demo_GameGlobalsRestore = 0x8008F2BC; // type:func
 Demo_GameRandSeedUpdate = 0x8008F33C; // type:func
@@ -296,7 +309,7 @@ Demo_DemoRandSeedBackup = 0x8008F528; // type:func
 Demo_DemoRandSeedRestore = 0x8008F560; // type:func
 Demo_DemoRandSeedAdvance = 0x8008F598; // type:func
 Demo_Update = 0x8008F5D8; // type:func
-Demo_JoyUpdate = 0x8008F7CC; // type:func
+Demo_ControllerDataUpdate = 0x8008F7CC; // type:func
 Demo_PresentIntervalUpdate = 0x8008F87C; // type:func
 Demo_GameRandSeedSet = 0x8008F8A8; // type:func
 

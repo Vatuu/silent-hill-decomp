@@ -433,7 +433,7 @@ typedef struct _ShEventParam
 } s_ShEventParam;
 STATIC_ASSERT_SIZEOF(s_ShEventParam, 12);
 
-typedef struct _GameWork
+typedef struct _ShSaveUserConfig
 {
     s_ControllerBindings controllerBinds_0;
     s8                   screenPosX_1C;             /** Range: [-11, 11], default: 0. */
@@ -455,7 +455,14 @@ typedef struct _GameWork
     u8                   optAutoAiming_2C;          /** On: 0, Off: 1, default: On. */
     s8                   optBulletAdjust_2D;        /** x1-x6: Range [0, 5], default: x1. */
     u16                  seenGameOverTips_2E[1];    /** Bitfield tracking seen game-over tips. Each bit corresponds to a tip index (0–15), set bits indicate seen tips. */
-    s8                   unk_30[8];
+    s8                   unk_30[4];
+    u32                  unk_34[1];
+} s_ShSaveUserConfig;
+STATIC_ASSERT_SIZEOF(s_ShSaveUserConfig, 56);
+
+typedef struct _GameWork
+{
+    s_ShSaveUserConfig   config_0;
     s_ControllerData     controllers_38[2];
     s_ShSaveGame         saveGame_90; // Backup savegame?
     s_ShSaveGame         saveGame_30C;
