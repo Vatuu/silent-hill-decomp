@@ -929,7 +929,7 @@ extern RECT D_801E557C[];
 
 extern s32 g_MainLoop_FrameCount; // 0x800B9CCC
 
-/** Initial game state data, stored inside MISC/DEMOXXXX.DAT files. */
+/** Initial demo game state data, stored inside MISC/DEMOXXXX.DAT files. */
 typedef struct _DemoWork
 {
     s_ShSaveUserConfig config_0;
@@ -938,7 +938,7 @@ typedef struct _DemoWork
 } s_DemoWork;
 STATIC_ASSERT_SIZEOF(s_DemoWork, 2048);
 
-/** Per-frame game state data, stored inside MISC/PLAYXXXX.DAT files. */
+/** Per-frame demo data, stored inside MISC/PLAYXXXX.DAT files. */
 typedef struct _DemoFrameData
 {
     s_AnalogPadData analogPad_0;
