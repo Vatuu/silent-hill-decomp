@@ -699,7 +699,7 @@ void MainLoop() // 0x80032EE0
         g_MainLoop_FrameCount++;
 
         Joy_ReadP1();
-        Demo_JoyUpdate();
+        Demo_ControllerDataUpdate();
         Joy_ControllerDataUpdate();
 
         if (MainLoop_ShouldWarmReset() == 2)

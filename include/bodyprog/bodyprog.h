@@ -929,7 +929,9 @@ extern s32 g_MainLoop_FrameCount; // 0x800B9CCC
 typedef struct _DemoWork
 {
     s_ShSaveUserConfig config_0;
-    u8                 unk_38[0x7C4];
+    u8                 unk_38[0xC8];
+    s_ShSaveGame       saveGame_100;
+    u8                 unk_37C[0x480];
     u16                randSeed_7FC;
 } s_DemoWork;
 STATIC_ASSERT_SIZEOF(s_DemoWork, 2048);
@@ -1744,6 +1746,14 @@ void Demo_DemoDataRead();
 
 void Demo_PlayDataRead();
 
+s32 Demo_PlayFileBufferSetup();
+
+void Demo_DemoFileSaveGameUpdate();
+
+void Demo_GameGlobalsUpdate();
+
+void Demo_GameGlobalsRestore();
+
 void Demo_GameRandSeedUpdate();
 
 void Demo_GameRandSeedRestore();
@@ -1760,6 +1770,8 @@ void Demo_DemoRandSeedBackup();
 void Demo_DemoRandSeedRestore();
 
 void Demo_DemoRandSeedAdvance();
+
+s32 Demo_ControllerDataUpdate();
 
 s32 Demo_PresentIntervalUpdate();
 

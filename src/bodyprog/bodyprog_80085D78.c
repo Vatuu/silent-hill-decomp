@@ -1759,11 +1759,31 @@ void Demo_PlayDataRead() // 0x8008F07C
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008F0BC);
+s32 Demo_PlayFileBufferSetup() // 0x8008F0BC
+{
+    s32 mapOverlaySize;
+    s32 playFileSize;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008F13C);
+    // Get size of map overlay used in the demo.
+    mapOverlaySize = Fs_GetFileSize(FILE_VIN_MAP0_S00_BIN + DEMO_WORK()->saveGame_100.mapOverlayIdx_A4);
 
-void Demo_GameGlobalsUpdate()
+    // Get size of the play file, rounded up to the next 0x800-byte boundary.
+    playFileSize = (Fs_GetFileSize(g_Demo_PlayFileIndex) + 0x7FF) & ~0x7FF;
+
+    // Try placing the play file buffer just before DEMO_WORK in memory.
+    g_Demo_PlayFileBufferPtr = (void*)((s32)DEMO_WORK() - playFileSize);
+
+    // If play file or map overlay is too large, the buffer ptr may overlap with the map.
+    // Return 1 if the buffer fits (no overlap with the map overlay); otherwise, return 0.
+    return ((u32)g_Demo_PlayFileBufferPtr >= (u32)(g_OvlDynamic + mapOverlaySize));
+}
+
+void Demo_DemoFileSaveGameUpdate() // 0x8008F13C
+{
+    g_GameWork.saveGame_30C = DEMO_WORK()->saveGame_100;
+}
+
+void Demo_GameGlobalsUpdate() // 0x8008F1A0
 {
     // Backup current user config
     g_Demo_UserConfigBackup = g_GameWork.config_0;
@@ -1783,23 +1803,23 @@ void Demo_GameGlobalsUpdate()
     g_GameWork.config_0.optVibrationEnabled_21 = OPT_VIBRATION_DISABLED; // Disable vibration during demo.
     g_GameWork.config_0.optBrightness_22       = g_Demo_UserConfigBackup.optBrightness_22;
 
-    Sd_SetVolume(0, 0, g_GameWork.config_0.optVolumeSe_20);
+    Sd_SetVolume(OPT_SOUND_VOLUME_MIN, OPT_SOUND_VOLUME_MIN, g_GameWork.config_0.optVolumeSe_20);
 }
 
-void Demo_GameGlobalsRestore()
+void Demo_GameGlobalsRestore() // 0x8008F2BC
 {
     g_GameWork.config_0 = g_Demo_UserConfigBackup;
 
-    Sd_SetVolume(0x80U, g_GameWork.config_0.optVolumeBgm_1F, g_GameWork.config_0.optVolumeSe_20);
+    Sd_SetVolume(OPT_SOUND_VOLUME_MAX, g_GameWork.config_0.optVolumeBgm_1F, g_GameWork.config_0.optVolumeSe_20);
 }
 
-void Demo_GameRandSeedUpdate() // 0x8008f33c
+void Demo_GameRandSeedUpdate() // 0x8008F33C
 {
     g_Demo_PrevRandSeed = Rng_GetSeed();
     Rng_SetSeed(g_Demo_RandSeed);
 }
 
-void Demo_GameRandSeedRestore() // 0x8008f370
+void Demo_GameRandSeedRestore() // 0x8008F370
 {
     Rng_SetSeed(g_Demo_PrevRandSeed);
 }
@@ -1929,7 +1949,7 @@ static inline void ControllerData_Reset(s_ControllerData* controller, u16 button
     *(u32*)&controller->analogPad_0.right_x = 0x80808080;
 }
 
-s32 Demo_JoyUpdate() // 0x8008F7CC
+s32 Demo_ControllerDataUpdate() // 0x8008F7CC
 {
     u32 curButtons;
 
