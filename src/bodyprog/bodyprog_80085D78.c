@@ -1704,27 +1704,27 @@ s32 Demo_SequenceAdvance(s32 incrementAmt)
 
     while (true)
     {
-        // Cycle demo ID between 0 - 5
+        // Cycle demo ID between 0 - DEMO_FILE_COUNT_MAX (5)
         while (g_Demo_DemoNum < 0)
         {
-            g_Demo_DemoNum += 5;
+            g_Demo_DemoNum += DEMO_FILE_COUNT_MAX;
         }
 
-        while ((u32)g_Demo_DemoNum >= 5)
+        while ((u32)g_Demo_DemoNum >= DEMO_FILE_COUNT_MAX)
         {
-            g_Demo_DemoNum -= 5;
+            g_Demo_DemoNum -= DEMO_FILE_COUNT_MAX;
         }
 
         // Call optional funcptr associated with this demo.
         // If funcptr is set, it returns whether the demo is eligible to play (possibly based on game progress or other conditions)
         // In retail demos this pointer is always NULL.
-        if (g_Demo_FileIds[g_Demo_DemoNum].funcPtr_4 == NULL || g_Demo_FileIds[g_Demo_DemoNum].funcPtr_4() == 1)
+        if (g_Demo_FileIds[g_Demo_DemoNum].canPlayDemo_4 == NULL || g_Demo_FileIds[g_Demo_DemoNum].canPlayDemo_4() == 1)
         {
             break;
         }
 
         // If funcptr is set and returned false, skip to the next demo.
-        // Direction to skip depends on sign of demoIncrement (forward or backward)
+        // Direction to skip depends on sign of incrementAmt (forward or backward)
         if (incrementAmt >= 0)
         {
             g_Demo_DemoNum++;
