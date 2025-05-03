@@ -1278,6 +1278,12 @@ void func_800483D4();
 /** CD function. */
 void func_80048424();
 
+/** Nullsub */
+void func_800485B0(s16 arg0, u8 arg1, u8 arg2, s16 arg3, s16 arg4);
+
+/** Nullsub */
+void func_800485B8(s32 arg0, u8 arg1, u32 arg2);
+
 void func_800485C0(s32 idx);
 
 s32 func_80048954(s32 com, u8* param, u8* res);

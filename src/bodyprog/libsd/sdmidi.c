@@ -1,4 +1,4 @@
-#include "common.h"
+#include "game.h"
 
 #include <libspu.h>
 
@@ -8,13 +8,11 @@ extern SpuVoiceAttr s_attr;
 
 void set_note_on(s16 arg0, u8 arg1, u8 arg2, s16 arg3, s16 arg4) // 0x800A397C
 {
-    void func_800485B0(s16, u8, u8, s16, s16);
     func_800485B0(arg0, arg1, arg2, arg3, arg4); // Nullsub
 }
 
 void set_midi_info(s32 type, u8 midiChannel, u32 value) // 0x800A39B8
 {
-    void func_800485B8(s32, u8, u32);
     func_800485B8(type, midiChannel, value); // Nullsub
 }
 
