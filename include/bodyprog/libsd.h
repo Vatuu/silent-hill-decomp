@@ -260,6 +260,7 @@ typedef struct _SD_ALLOC
     u32 addr_0;
     s32 size_4;
 } s_SD_ALLOC;
+STATIC_ASSERT_SIZEOF(s_SD_ALLOC, 8);
 
 extern s_SMF_MIDI smf_midi[2 * 16];   // 2 devices with 16 channels each?
 extern s_SMF_MIDI smf_midi_sound_off; // Set by sound_off(), could be smf_midi[32], but game doesn't use offsets for [32]?
@@ -271,7 +272,8 @@ extern s32        sd_reverb_area_size[10];
 
 // sdmain.c
 
-void tone_adsr_back(s16);
+void tone_adsr_mem(s16 vabid);
+void tone_adsr_back(s16 vabid);
 void sd_alloc_sort();
 
 void SdSpuFree(u32 addr);
@@ -314,11 +316,14 @@ void SdUtSetReverbDepth(s16 left, s16 right);
 void SdSetRVol(s16 left, s16 right);
 void SdUtSEAllKeyOff();
 void SdUtAllKeyOff(s16 mode);
+s32  SdUtGetVabHdr(s16 vabId, VabHdr* vabhdrptr);
 
 void SdVoKeyOff(s32 vab_pro, s32 pitch);
 void SdVoKeyOffWithRROff(s32 vab_pro, s32 pitch);
 
-s16 SdGetSeqStatus(s16 seq_access_num);
+s32  SdUtKeyOffV(s16 voice);
+s32  SdUtKeyOffVWithRROff(s16 voice);
+s16  SdGetSeqStatus(s16 seq_access_num);
 s32  SdUtSetDetVVol(s16 voice, s16 volLeft, s16 volRight);
 s32  SdUtSetVVol(s16 voice, s16 volLeft, s16 volRight);
 s32  SdUtGetDetVVol(s16 voice, u16* volLeft, u16* volRight);
@@ -345,7 +350,8 @@ s32 SdGetSeqBeat2(s16 seq_access_num);
 
 // sdmidi.c
 
-void func_800A39B8(s32 arg0, u8 arg1, u8 arg2); /** nullsub, possibly set_midi_info */
+void set_note_on(s16 arg0, u8 arg1, u8 arg2, s16 arg3, s16 arg4);
+void set_midi_info(s32 type, u8 midiChannel, u32 value);
 u16  Note2Pitch(s32 arg0, s32 arg1, u8 arg2, u8 arg3);
 void tre_calc(s_SMF_PORT* midiPort);
 void vib_calc(s_SMF_PORT* midiPort);
@@ -364,7 +370,7 @@ void replay_reverb_set(s16 seq_access_num);
 void midi_vsync();
 void sound_seq_off(s32);
 void sound_off();
-void set_note_on_mb();
+
 void adsr_set(s32 voice, s_SMF_PORT* midiPort);
 void rr_off(s32 voice);
 

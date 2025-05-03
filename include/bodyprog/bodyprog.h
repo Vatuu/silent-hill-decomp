@@ -1278,6 +1278,12 @@ void func_800483D4();
 /** CD function. */
 void func_80048424();
 
+/** Nullsub */
+void func_800485B0(s16 arg0, u8 arg1, u8 arg2, s16 arg3, s16 arg4);
+
+/** Nullsub */
+void func_800485B8(s32 arg0, u8 arg1, u32 arg2);
+
 void func_800485C0(s32 idx);
 
 s32 func_80048954(s32 com, u8* param, u8* res);
@@ -1726,6 +1732,9 @@ s32 func_800808AC();
 
 /** Returns a Q shift based on a magnitude. */
 s32 Math_GetMagnitudeShift(s32 mag);
+
+/** Copies user config into an s_ShSaveUserConfigContainer and calculates footer checksum. */
+void SaveGame_UserConfigCopyWithChecksum(s_ShSaveUserConfigContainer* dest, s_ShSaveUserConfig* src);
 
 /** Copies savegame into an s_ShSaveGameContainer and calculates footer checksum. */
 void SaveGame_CopyWithChecksum(s_ShSaveGameContainer* dest, s_ShSaveGame* src);

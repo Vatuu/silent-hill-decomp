@@ -1,4 +1,4 @@
-#include "common.h"
+#include "game.h"
 
 #include <libspu.h>
 
@@ -6,9 +6,15 @@
 
 extern SpuVoiceAttr s_attr;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmidi", func_800A397C);
+void set_note_on(s16 arg0, u8 arg1, u8 arg2, s16 arg3, s16 arg4) // 0x800A397C
+{
+    func_800485B0(arg0, arg1, arg2, arg3, arg4); // Nullsub
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmidi", func_800A39B8);
+void set_midi_info(s32 type, u8 midiChannel, u32 value) // 0x800A39B8
+{
+    func_800485B8(type, midiChannel, value); // Nullsub
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmidi", Note2Pitch);
 
@@ -536,7 +542,7 @@ void sound_off() // 0x800A4D20
     while (keyStatus != 2 && keyStatus != 0);
 }
 
-void set_note_on_mb() {} // 0x800A4E90
+void func_800A4E90() {} // 0x800A4E90
 
 void adsr_set(s32 voice, s_SMF_PORT* midiPort) // 0x800A4E98
 {
@@ -638,7 +644,7 @@ void chan_press() {} // 0x800A6C58
 void pitch_bend(u8 midiChannel, s32 unused, u8 pitchBend)
 {
     smf_midi[midiChannel].pitchBendFine_7 = pitchBend & 0x7F;
-    func_800A39B8(1, midiChannel, pitchBend);
+    set_midi_info(1, midiChannel, pitchBend);
 }
 
 void control_code_set(s32 seq_access_num) {} // 0x800A6CB0

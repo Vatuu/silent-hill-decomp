@@ -4,9 +4,51 @@
 
 #include "bodyprog/libsd.h"
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmain", tone_adsr_mem);
+void tone_adsr_mem(s16 vabid) // 0x8009EDA4
+{
+    s_VabHeader* vabData;
+    VagAtr*      vagAtr;
+    VabHdr*      vabHdr;
+    s32          vagNum;
+    s32          progNum;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmain", tone_adsr_back);
+    vabData = vab_h[vabid].vab_header_4;
+    vabHdr  = &vabData->header;
+
+    for (progNum = 0; progNum < vabHdr->ps; progNum++)
+    {
+        for (vagNum = 0; vagNum < 0x10; vagNum++)
+        {
+            vagAtr = &vabData->vag[(progNum * 0x10) + vagNum];
+
+            vagAtr->reserved[0] = vagAtr->adsr1;
+            vagAtr->reserved[1] = vagAtr->adsr2;
+        }
+    }
+}
+
+void tone_adsr_back(s16 vabid) // 0x8009EE30
+{
+    s_VabHeader* vabData;
+    VagAtr*      vagAtr;
+    VabHdr*      vabHdr;
+    s32          vagNum;
+    s32          progNum;
+
+    vabData = vab_h[vabid].vab_header_4;
+    vabHdr  = &vabData->header;
+
+    for (progNum = 0; progNum < vabHdr->ps; progNum++)
+    {
+        for (vagNum = 0; vagNum < 0x10; vagNum++)
+        {
+            vagAtr = &vabData->vag[(progNum * 0x10) + vagNum];
+
+            vagAtr->adsr1 = vagAtr->reserved[0];
+            vagAtr->adsr2 = vagAtr->reserved[1];
+        }
+    }
+}
 
 void sd_alloc_sort() // 0x8009EEBC
 {
@@ -360,7 +402,47 @@ void SdSetAutoKeyOffMode(s16 mode) // 0x8009FF64
     sd_keyoff_mode = mode;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmain", SdAutoKeyOffCheck);
+void SdAutoKeyOffCheck() // 0x8009FF70
+{
+    s32 keyStatus;
+    s32 voiceIdx;
+    u32 voices;
+
+    voices = 0;
+
+    if (sd_keyoff_mode == 0)
+    {
+        for (voiceIdx = 0; voiceIdx < sd_reserved_voice; voiceIdx++)
+        {
+            if (smf_port[voiceIdx].field_16 != 0 && SpuGetKeyStatus(spu_ch_tbl[voiceIdx]) == 3)
+            {
+                if (smf_port[voiceIdx].field_16 >= 2U)
+                {
+                    voices |= spu_ch_tbl[voiceIdx];
+
+                    do
+                    {
+                        SpuSetKey(0, spu_ch_tbl[voiceIdx]);
+                        keyStatus = SpuGetKeyStatus(spu_ch_tbl[voiceIdx]);
+                    } while (keyStatus != 2 && keyStatus != 0);
+
+                    smf_port[voiceIdx].field_16 = 0;
+
+                    func_800485C0(voiceIdx);
+                }
+                else
+                {
+                    smf_port[voiceIdx].field_16++;
+                }
+            }
+        }
+    }
+
+    if (voices != 0)
+    {
+        SpuSetKey(0, voices);
+    }
+}
 
 s16 SdSeqOpen(s32* addr, s16 vab_id) // 0x800A00A4
 {
@@ -675,7 +757,27 @@ void SdUtAllKeyOff(s16 mode) // 0x800A09E8
     SpuSetKey(0, voices);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmain", SdUtGetVabHdr);
+s32 SdUtGetVabHdr(s16 vabId, VabHdr* vabhdrptr) // 0x800A0A40
+{
+    u8* dest;
+    u8* src;
+    u32 i;
+
+    if (vab_h[vabId].vab_id_0 == -1)
+    {
+        return -1;
+    }
+
+    dest = (u8*)vabhdrptr;
+    src  = (u8*)vab_h[vabId].vab_header_4;
+
+    for (i = 0; i < sizeof(VabHdr); i++)
+    {
+        *dest++ = *src++;
+    }
+
+    return 0;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmain", SdVoKeyOn);
 
@@ -759,9 +861,67 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmain", SdUtKeyOn);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmain", SdVbKeyOn);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmain", SdUtKeyOffV);
+s32 SdUtKeyOffV(s16 voice) // 0x800A18F4
+{
+    s32 keyStatus;
+    u32 voiceChannel;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmain", SdUtKeyOffVWithRROff);
+    sd_int_flag = 1;
+    if (smf_port[voice].field_16 != 0 && smf_port[voice].smf_midi_num_3 == 0x20)
+    {
+        voiceChannel = spu_ch_tbl[voice];
+
+        smf_port[voice].field_16     = 0;
+        smf_port[voice].midiKeyNum_6 = 0;
+
+        adsr_set(voice, &smf_port[voice]);
+        SpuSetKey(0, spu_ch_tbl[voice]);
+        do
+        {
+            adsr_set(voice, &smf_port[voice]);
+            SpuSetKey(0, voiceChannel);
+            keyStatus = SpuGetKeyStatus(voiceChannel);
+        } while (keyStatus != 2 && keyStatus != 0);
+    }
+    else
+    {
+        sd_int_flag = 0;
+        return -1;
+    }
+    sd_int_flag = 0;
+    return 0;
+}
+
+s32 SdUtKeyOffVWithRROff(s16 voice) // 0x800A1A18
+{
+    s32 keyStatus;
+    u32 voiceChannel;
+
+    sd_int_flag = 1;
+    if (smf_port[voice].field_16 != 0 && smf_port[voice].smf_midi_num_3 == 0x20)
+    {
+        voiceChannel = spu_ch_tbl[voice];
+
+        smf_port[voice].field_16     = 0;
+        smf_port[voice].midiKeyNum_6 = 0;
+
+        adsr_set(voice, &smf_port[voice]);
+        rr_off(voice);
+        SpuSetKey(0, spu_ch_tbl[voice]);
+        do
+        {
+            SpuSetKey(0, voiceChannel);
+            keyStatus = SpuGetKeyStatus(voiceChannel);
+        } while (keyStatus != 2 && keyStatus != 0);
+    }
+    else
+    {
+        sd_int_flag = 0;
+        return -1;
+    }
+    sd_int_flag = 0;
+    return 0;
+}
 
 s16 SdGetSeqStatus(s16 seq_access_num) // 0x800A1B14
 {
