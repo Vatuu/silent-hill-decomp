@@ -771,7 +771,7 @@ s32 SdUtGetVabHdr(s16 vabId, VabHdr* vabhdrptr) // 0x800A0A40
     dest = (u8*)vabhdrptr;
     src  = (u8*)vab_h[vabId].vab_header_4;
 
-    for (i = 0; i < 0x20; i++)
+    for (i = 0; i < sizeof(VabHdr); i++)
     {
         *dest++ = *src++;
     }
