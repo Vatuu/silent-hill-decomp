@@ -1731,9 +1731,9 @@ void Demo_GameGlobalsUpdate()
     g_GameWork.config_0.screenPosX_1C          = g_Demo_UserConfigBackup.screenPosX_1C;
     g_GameWork.config_0.screenPosY_1D          = g_Demo_UserConfigBackup.screenPosY_1D;
     g_GameWork.config_0.optSoundType_1E        = g_Demo_UserConfigBackup.optSoundType_1E;
-    g_GameWork.config_0.optVolumeBgm_1F        = 0; // Disable BGM during demo.
+    g_GameWork.config_0.optVolumeBgm_1F        = OPT_SOUND_VOLUME_MIN;   // Disable BGM during demo.
     g_GameWork.config_0.optVolumeSe_20         = g_Demo_UserConfigBackup.optVolumeSe_20;
-    g_GameWork.config_0.optVibrationEnabled_21 = 0; // Disable vibration during demo.
+    g_GameWork.config_0.optVibrationEnabled_21 = OPT_VIBRATION_DISABLED; // Disable vibration during demo.
     g_GameWork.config_0.optBrightness_22       = g_Demo_UserConfigBackup.optBrightness_22;
 
     Sd_SetVolume(0, 0, g_GameWork.config_0.optVolumeSe_20);
