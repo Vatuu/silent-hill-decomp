@@ -44,7 +44,7 @@ void GameState_MovieIntro_Update() // 0x801E279C
 {
     s32 fileIdx = FILE_XA_C1_20670;
 
-    if (g_GameWorkPtr0->optExtraOptionsEnabled_27 & 1)
+    if (g_GameWorkPtr0->config_0.optExtraOptionsEnabled_27 & 1)
     {
         fileIdx = FILE_XA_C2_20670;
     }
@@ -76,7 +76,7 @@ void GameState_DebugMoviePlayer_Update() // 0x801E2908
     gameWork   = g_GameWorkPtr1;
     controller = g_ControllerPtr0;
 
-    if (controller->btns_new_10 & gameWork->controllerBinds_0.cancel)
+    if (controller->btns_new_10 & gameWork->config_0.controllerBinds_0.cancel)
     {
         Game_StateSetNext(GameState_Unk16); // Changes to nonexistent state 0x16 (22) and crashes, maybe removed debug menu.
     }
@@ -99,7 +99,7 @@ void GameState_DebugMoviePlayer_Update() // 0x801E2908
     Gfx_DebugStringDraw(Math_IntegerToString(2, g_Debug_MoviePlayerIdx));
 #endif
 
-    if (controller->btns_new_10 & gameWork->controllerBinds_0.enter)
+    if (controller->btns_new_10 & gameWork->config_0.controllerBinds_0.enter)
     {
         open_main(FILE_XA_ZC_14392 - g_Debug_MoviePlayerIdx, 0);
     }
@@ -191,8 +191,8 @@ void movie_main(char* file_name, s32 f_size, s32 sector)
         // but still had register differences
 
         disp.disp.y   = 256 - (m->dec.rectid * SCREEN_HEIGHT);
-        disp.screen.x = temp_s2->screenPosX_1C;
-        disp.screen.y = 8 + ((224 - m->height) / 2) + (temp_s2->screenPosY_1D);
+        disp.screen.x = temp_s2->config_0.screenPosX_1C;
+        disp.screen.y = 8 + ((224 - m->height) / 2) + (temp_s2->config_0.screenPosY_1D);
 
         disp.disp.y = (disp.disp.y < 16) ? 16 : (disp.disp.y > 256) ? 256 : disp.disp.y;
         disp.screen.h = (disp.screen.h <= 0) ? 1 : (disp.screen.h > 208) ? 208 : disp.screen.h;
@@ -224,7 +224,7 @@ void movie_main(char* file_name, s32 f_size, s32 sector)
         strSync(&m->dec);
         VSync(0);
 
-        if ((g_ControllerPtr0->btns_new_10 & g_GameWorkPtr1->controllerBinds_0.skip))
+        if ((g_ControllerPtr0->btns_new_10 & g_GameWorkPtr1->config_0.controllerBinds_0.skip))
             break;
         if (MainLoop_ShouldWarmReset() > 0)
             break;

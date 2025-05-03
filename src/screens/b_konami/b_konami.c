@@ -234,7 +234,7 @@ void GameState_KcetLogo_Update() // 0x800C99A4
                                 break;
 
                             case 2:
-                                if ((s8)ptr->optAutoLoad_25 != 0)
+                                if ((s8)ptr->config_0.optAutoLoad_25 != 0)
                                 {
                                     Fs_QueueStartRead(FILE_VIN_SAVELOAD_BIN, FS_BUFFER_1);
                                     Fs_QueueStartSeek(FILE_TIM_SAVELOAD_TIM);

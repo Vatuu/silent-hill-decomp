@@ -472,7 +472,7 @@ void Gfx_Init(u16 screenWidth, s32 isInterlaced) // 0x80032428
     D_800C6E26 = FRAMEBUFFER_HEIGHT_PROGRESSIVE;
 
     GsInit3D();
-    Settings_ScreenXYSet(g_GameWorkPtr0->screenPosX_1C, g_GameWorkPtr0->screenPosY_1D);
+    Settings_ScreenXYSet(g_GameWorkPtr0->config_0.screenPosX_1C, g_GameWorkPtr0->config_0.screenPosY_1D);
     GsSwapDispBuff();
     GsSwapDispBuff();
 }
@@ -490,11 +490,11 @@ void Settings_DispEnvXYSet(DISPENV* display, s32 x, s32 y) // 0x80032524
     y = (y < -8) ? -8 : ((y > 8) ? 8 : y);
 
     gameWorkPtr = g_GameWorkPtr0;
-    gameWorkPtr->screenPosX_1C = x;
-    gameWorkPtr->screenPosY_1D = y;
+    gameWorkPtr->config_0.screenPosX_1C = x;
+    gameWorkPtr->config_0.screenPosY_1D = y;
 
-    display->screen.x = gameWorkPtr->screenPosX_1C;
-    display->screen.y = gameWorkPtr->screenPosY_1D + 8;
+    display->screen.x = gameWorkPtr->config_0.screenPosX_1C;
+    display->screen.y = gameWorkPtr->config_0.screenPosY_1D + 8;
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_800325A4);
@@ -840,28 +840,28 @@ void Settings_ScreenAndVolUpdate()
 {
     s32 soundCmd;
 
-    Settings_ScreenXYSet(g_GameWork.screenPosX_1C, g_GameWork.screenPosY_1D);
-    
-    soundCmd = (g_GameWork.optSoundType_1E != 0) ? 1 : 2;
+    Settings_ScreenXYSet(g_GameWork.config_0.screenPosX_1C, g_GameWork.config_0.screenPosY_1D);
+
+    soundCmd = (g_GameWork.config_0.optSoundType_1E != 0) ? 1 : 2;
     Sd_EngineCmd(soundCmd);
 
-    Sd_SetVolume(OPT_SOUND_VOLUME_MAX, g_GameWork.optVolumeBgm_1F, g_GameWork.optVolumeSe_20);
+    Sd_SetVolume(OPT_SOUND_VOLUME_MAX, g_GameWork.config_0.optVolumeBgm_1F, g_GameWork.config_0.optVolumeSe_20);
 }
 
 void Settings_RestoreDefaults() // 0x8003342c
 {
-    g_GameWork.optWeaponCtrl_23 = 1;
-    g_GameWork.optBrightness_22 = 3;
+    g_GameWork.config_0.optWeaponCtrl_23 = 1;
+    g_GameWork.config_0.optBrightness_22 = 3;
 
     Settings_RestoreControlDefaults(0);
 
-    g_GameWork.optVibrationEnabled_21 = OPT_VIBRATION_ENABLED;
-    g_GameWork.optVolumeBgm_1F = OPT_SOUND_VOLUME_MAX;
-    g_GameWork.optVolumeSe_20 = OPT_SOUND_VOLUME_MAX;
+    g_GameWork.config_0.optVibrationEnabled_21 = OPT_VIBRATION_ENABLED;
+    g_GameWork.config_0.optVolumeBgm_1F        = OPT_SOUND_VOLUME_MAX;
+    g_GameWork.config_0.optVolumeSe_20         = OPT_SOUND_VOLUME_MAX;
 
     Settings_ScreenAndVolUpdate();
 
-    g_GameWork.optBloodColor_24 = 0;
+    g_GameWork.config_0.optBloodColor_24 = 0;
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", Settings_RestoreControlDefaults);
@@ -1401,7 +1401,7 @@ void SysState_GamePaused_Update() // 0x800391E8
         return;
     }
 
-    if (g_ControllerPtr0->btns_new_10 & g_GameWorkPtr1->controllerBinds_0.pause)
+    if (g_ControllerPtr0->btns_new_10 & g_GameWorkPtr1->config_0.controllerBinds_0.pause)
     {
         D_800A9A68 = 0;
         Sd_EngineCmd(4);
@@ -1640,14 +1640,14 @@ void SysState_GameOver_Update() // 0x8003A52C
             func_8003B550();
 
             // If we've seen every game over tip, reset the flag bits
-            if (g_GameWork.seenGameOverTips_2E[0] == 0x7FFF)
+            if (g_GameWork.config_0.seenGameOverTips_2E[0] == 0x7FFF)
             {
-                g_GameWork.seenGameOverTips_2E[0] = 0;
+                g_GameWork.config_0.seenGameOverTips_2E[0] = 0;
             }
 
             randTipVal = 0;
 
-            seenTipIdxs[0] = g_GameWork.seenGameOverTips_2E[0];
+            seenTipIdxs[0] = g_GameWork.config_0.seenGameOverTips_2E[0];
             for (tipIdx = 0; tipIdx < TIP_COUNT; tipIdx++)
             {
                 if (!Flags16b_IsSet(seenTipIdxs, tipIdx))
@@ -1713,7 +1713,7 @@ void SysState_GameOver_Update() // 0x8003A52C
             Gfx_StringDraw(D_80025448, 0x63); // "\aGAME_OVER" - needs rodata migration.
             g_SysWork.field_28++;
 
-            if ((g_ControllerPtr0->btns_new_10 & (g_GameWorkPtr1->controllerBinds_0.enter | g_GameWorkPtr1->controllerBinds_0.cancel)) ||
+            if ((g_ControllerPtr0->btns_new_10 & (g_GameWorkPtr1->config_0.controllerBinds_0.enter | g_GameWorkPtr1->config_0.controllerBinds_0.cancel)) ||
                 g_SysWork.field_28 > 240)
             {
                 SysWork_StateStepIncrement();
@@ -1754,7 +1754,7 @@ void SysState_GameOver_Update() // 0x8003A52C
             g_SysWork.field_28++;
             func_800314EC(&D_800A9054);
 
-            if (!(g_ControllerPtr0->btns_new_10 & (g_GameWorkPtr1->controllerBinds_0.enter | g_GameWorkPtr1->controllerBinds_0.cancel)))
+            if (!(g_ControllerPtr0->btns_new_10 & (g_GameWorkPtr1->config_0.controllerBinds_0.enter | g_GameWorkPtr1->config_0.controllerBinds_0.cancel)))
             {
                 if (g_SysWork.field_28 <= 480)
                 {
@@ -1763,7 +1763,7 @@ void SysState_GameOver_Update() // 0x8003A52C
             }
 
             // TODO: some inline FlagSet func? couldn't get matching ver, but pretty sure temp_a0 can be removed somehow
-            temp_a0 = &g_GameWork.seenGameOverTips_2E[(g_SysState_GameOver_TipIdx >> 5)];
+            temp_a0 = &g_GameWork.config_0.seenGameOverTips_2E[(g_SysState_GameOver_TipIdx >> 5)];
             *temp_a0 |= (1 << 0) << (g_SysState_GameOver_TipIdx & 0x1F);
 
             SysWork_StateStepIncrement();
