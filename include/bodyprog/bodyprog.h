@@ -8,6 +8,7 @@
 #define TEMP_MEMORY_ADDR ((s8*)0x801A2600)
 #define BOOT_ADDR_0      ((u8*)0x801E09E0)
 #define BOOT_ADDR_1      ((u8*)0x801E1430)
+#define DEMO_WORK()      ((s_DemoWork*)0x800FDE00) // TODO: Move closer to demo structs (or to separate header?)
 
 #define IMAGE_BUFFER_0 ((u_long*)0x801CFA00)
 #define IMAGE_BUFFER_1 ((u_long*)0x801C8200)
@@ -666,7 +667,7 @@ extern u8 D_800AFD05;
 
 extern s32 D_800AFD9C;
 
-extern u16 D_800AFDBC;
+extern u16 g_Demo_RandSeed; // 0x800AFDBC
 
 extern void* D_800AFDC0;
 
@@ -915,8 +916,6 @@ extern s16 D_800C4702;
 
 extern s_800C4818 D_800C4818;
 
-extern s32 g_Demo_FileIndex; // 0x800C4844
-
 /** Unknown bodyprog var. Set in `Fs_QueueDoThingWhenEmpty`. */
 extern s32 D_800C489C;
 
@@ -928,15 +927,39 @@ extern RECT D_801E557C[];
 
 extern s32 g_MainLoop_FrameCount; // 0x800B9CCC
 
-extern s32 g_Demo_VideoPresentInterval; // 0x800C4898
+/** Initial game state data, stored inside MISC/DEMOXXXX.DAT files. */
+typedef struct _DemoWork
+{
+    s_ShSaveUserConfig config_0;
+    u8                 unk_38[0x7C4];
+    u16                randSeed_7FC;
+} s_DemoWork;
+STATIC_ASSERT_SIZEOF(s_DemoWork, 2048);
+
+/** Per-frame game state data, stored inside MISC/PLAYXXXX.DAT files. */
+typedef struct _DemoFrameData
+{
+    s_AnalogPadData analogPad_0;
+    u8              unk_8;
+    u8              videoPresentInterval_9;
+    u8              unk_A[2];
+    u32             randSeed_C;
+} s_DemoFrameData;
+STATIC_ASSERT_SIZEOF(s_DemoFrameData, 16);
+
+extern s32 g_Demo_FileIndex; // 0x800C4844
+
+extern s_ShSaveUserConfig g_Demo_UserConfigBackup; // 0x800C4850
 
 extern u32 g_Demo_PrevRandSeed; // 0x800C4888
 
 extern u32 g_Demo_RandSeedBackup; // 0x800C488C
 
-extern s_ControllerData* g_Demo_ControllerPacket; // 0x800C4890
+extern s_DemoFrameData* g_Demo_CurFrameData; // 0x800C4890
 
 extern s32 g_Demo_DemoStep; // 0x800C4894
+
+extern s32 g_Demo_VideoPresentInterval; // 0x800C4898
 
 extern s16 D_800C6E26;
 

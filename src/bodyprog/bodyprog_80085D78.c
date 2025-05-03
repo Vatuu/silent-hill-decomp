@@ -1716,14 +1716,40 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008F0BC);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008F13C);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", Demo_GameGlobalsUpdate);
+void Demo_GameGlobalsUpdate()
+{
+    // Backup current user config
+    g_Demo_UserConfigBackup = g_GameWork.config_0;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", Demo_GameGlobalsRestore);
+    // Update Demo_RandSeed
+    g_Demo_RandSeed = DEMO_WORK()->randSeed_7FC;
+
+    // Replace user config with config from demo file
+    g_GameWork.config_0 = DEMO_WORK()->config_0;
+
+    // Restore users system settings over the demo values
+    g_GameWork.config_0.screenPosX_1C          = g_Demo_UserConfigBackup.screenPosX_1C;
+    g_GameWork.config_0.screenPosY_1D          = g_Demo_UserConfigBackup.screenPosY_1D;
+    g_GameWork.config_0.optSoundType_1E        = g_Demo_UserConfigBackup.optSoundType_1E;
+    g_GameWork.config_0.optVolumeBgm_1F        = 0; // Disable BGM during demo.
+    g_GameWork.config_0.optVolumeSe_20         = g_Demo_UserConfigBackup.optVolumeSe_20;
+    g_GameWork.config_0.optVibrationEnabled_21 = 0; // Disable vibration during demo.
+    g_GameWork.config_0.optBrightness_22       = g_Demo_UserConfigBackup.optBrightness_22;
+
+    Sd_SetVolume(0, 0, g_GameWork.config_0.optVolumeSe_20);
+}
+
+void Demo_GameGlobalsRestore()
+{
+    g_GameWork.config_0 = g_Demo_UserConfigBackup;
+
+    Sd_SetVolume(0x80U, g_GameWork.config_0.optVolumeBgm_1F, g_GameWork.config_0.optVolumeSe_20);
+}
 
 void Demo_GameRandSeedUpdate() // 0x8008f33c
 {
     g_Demo_PrevRandSeed = Rng_GetSeed();
-    Rng_SetSeed(D_800AFDBC);
+    Rng_SetSeed(g_Demo_RandSeed);
 }
 
 void Demo_GameRandSeedRestore() // 0x8008f370
@@ -1808,7 +1834,7 @@ s32 func_8008F470(s32 caseArg)
 void Demo_ExitDemo() // 0x8008F4E4
 {
     D_800A9768 = 0xEA24;
-    g_Demo_ControllerPacket = NULL;
+    g_Demo_CurFrameData = NULL;
     g_Demo_DemoStep = 0;
     g_SysWork.flags_22A4 |= 1 << 8;
 }
@@ -1875,9 +1901,9 @@ s32 Demo_JoyUpdate() // 0x8008F7CC
 
     D_800A9768 = 0; // Demo_FrameCnt
 
-    if (g_Demo_ControllerPacket != NULL)
+    if (g_Demo_CurFrameData != NULL)
     {
-        g_ControllerPtr0->analogPad_0 = g_Demo_ControllerPacket->analogPad_0;
+        g_ControllerPtr0->analogPad_0 = g_Demo_CurFrameData->analogPad_0;
         return 1;
     }
 
@@ -1890,12 +1916,12 @@ s32 Demo_PresentIntervalUpdate() // 0x8008F87C
 {
     g_Demo_VideoPresentInterval = 1;
 
-    if (g_Demo_ControllerPacket == NULL)
+    if (g_Demo_CurFrameData == NULL)
     {
         return 0;
     }
 
-    g_Demo_VideoPresentInterval = g_Demo_ControllerPacket->field_9;
+    g_Demo_VideoPresentInterval = g_Demo_CurFrameData->videoPresentInterval_9;
     return 1;
 }
 
@@ -1905,14 +1931,14 @@ s32 Demo_GameRandSeedSet() // 0x8008F8A8
     {
         return 1;
     }
-    else if (g_Demo_ControllerPacket == NULL)
+    else if (g_Demo_CurFrameData == NULL)
     {
-        Rng_SetSeed(D_800AFDBC);
+        Rng_SetSeed(g_Demo_RandSeed);
         return 0;
     }
     else
     {
-        Rng_SetSeed(g_Demo_ControllerPacket->btns_held_C);
+        Rng_SetSeed(g_Demo_CurFrameData->randSeed_C);
         return 1;
     }
 }
