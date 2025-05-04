@@ -374,9 +374,9 @@ s16 midi_smf_stat(s32 seq_access_num) // 0x800A8D00
     {
         if (smf_song[seq_access_num].tracks_0[i].mf_eof_flag_20 != 1)
         {
-            return 1;
+            return SEQ_PLAY;
         }
     }
 
-    return 3;
+    return SEQ_END;
 }

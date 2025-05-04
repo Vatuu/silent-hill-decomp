@@ -447,7 +447,7 @@ void midi_vsync() // 0x800A4838
 
     for (device = 0; device < 2; device++)
     {
-        if (smf_song[device].sd_seq_stat_50A == 1)
+        if (smf_song[device].sd_seq_stat_50A == SEQ_PLAY)
         {
             for (channel = 0; channel < 16; channel++)
             {
@@ -460,7 +460,7 @@ void midi_vsync() // 0x800A4838
     for (channel = 0; channel < sd_reserved_voice; channel++)
     {
         u8 midi_num = smf_port[channel].midi_ch_3;
-        if (midi_num < 32 && smf_song[midi_num >> 4].sd_seq_stat_50A == 1)
+        if (midi_num < 32 && smf_song[midi_num >> 4].sd_seq_stat_50A == SEQ_PLAY)
         {
             vib_calc(&smf_port[channel]);
             tre_calc(&smf_port[channel]);
@@ -476,7 +476,7 @@ void midi_vsync() // 0x800A4838
 
     for (device = 0; device < 2; device++)
     {
-        if (smf_song[device].sd_seq_stat_50A == 1)
+        if (smf_song[device].sd_seq_stat_50A == SEQ_PLAY)
         {
             replay_reverb_set(device);
             if (smf_song[device].seq_vol_set_flag_530 != 0)

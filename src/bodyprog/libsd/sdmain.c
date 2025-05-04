@@ -131,7 +131,7 @@ void SdWorkInit() // 0x8009F400
     for (i = 0; i < 2; i++)
     {
         smf_song[i].sd_seq_vab_id_508 = -1;
-        smf_song[i].sd_seq_stat_50A   = 0;
+        smf_song[i].sd_seq_stat_50A   = SEQ_NON;
         smf_song[i].sd_seq_mvolr_50E  = 0x7F;
         smf_song[i].sd_seq_mvoll_50C  = 0x7F;
     }
@@ -459,10 +459,11 @@ s16 SdSeqOpen(s32* addr, s16 vab_id) // 0x800A00A4
     {
         if (smf_song[i].sd_seq_vab_id_508 == -1)
         {
-            smf_song[i].sd_seq_stat_50A       = 2;
+            smf_song[i].sd_seq_stat_50A       = SEQ_STOP;
             smf_song[i].sd_seq_start_addr_514 = addr;
             smf_song[i].sd_seq_vab_id_508     = vab_id;
-            sd_int_flag                  = 0;
+
+            sd_int_flag = 0;
             return i;
         }
     }
@@ -482,10 +483,11 @@ s16 SdSeqOpenWithAccNum(s32* addr, s16 vab_id, s16 seq_access_num) // 0x800A0154
 
     if (smf_song[seq_access_num].sd_seq_vab_id_508 == -1)
     {
-        smf_song[seq_access_num].sd_seq_stat_50A       = 2;
+        smf_song[seq_access_num].sd_seq_stat_50A       = SEQ_STOP;
         smf_song[seq_access_num].sd_seq_start_addr_514 = addr;
         smf_song[seq_access_num].sd_seq_vab_id_508     = vab_id;
-        sd_int_flag                               = 0;
+
+        sd_int_flag = 0;
         return seq_access_num;
     }
 
@@ -517,12 +519,13 @@ void SdSeqPlay(s16 seq_access_num, u8 play_mode, s16 l_count) // 0x800A0210
 
     if (!play_mode)
     {
-        smf_song[seq_access_num].sd_seq_stat_50A = 4;
+        smf_song[seq_access_num].sd_seq_stat_50A = SEQ_PAUSE;
     }
     else
     {
-        smf_start_flag                           = 1;
-        smf_song[seq_access_num].sd_seq_stat_50A = 1;
+        smf_start_flag = 1;
+
+        smf_song[seq_access_num].sd_seq_stat_50A = SEQ_PLAY;
     }
 
     sd_int_flag = 0;
@@ -543,7 +546,7 @@ void SdSeqStop(s16 seq_access_num) // 0x800A02D8
         sound_seq_off(seq_access_num);
         smf_song[seq_access_num].sd_seq_mvolr_50E = 127;
         smf_song[seq_access_num].sd_seq_mvoll_50C = 127;
-        smf_song[seq_access_num].sd_seq_stat_50A  = 2;
+        smf_song[seq_access_num].sd_seq_stat_50A  = SEQ_STOP;
 
         sd_int_flag = 0;
     }
@@ -562,7 +565,7 @@ void SdSeqClose(s16 seq_access_num) // 0x800A037C
 
         tone_adsr_back(smf_song[seq_access_num].sd_seq_vab_id_508);
         smf_song[seq_access_num].sd_seq_vab_id_508 = -1;
-        smf_song[seq_access_num].sd_seq_stat_50A   = 0;
+        smf_song[seq_access_num].sd_seq_stat_50A   = SEQ_NON;
         smf_song[seq_access_num].sd_seq_mvolr_50E  = 127;
         smf_song[seq_access_num].sd_seq_mvoll_50C  = 127;
 
@@ -594,7 +597,7 @@ void SdSeqPause(s16 seq_access_num) // 0x800A0418
         }
     }
 
-    smf_song[seq_access_num].sd_seq_stat_50A = 4;
+    smf_song[seq_access_num].sd_seq_stat_50A = SEQ_PAUSE;
 
     sd_int_flag = 0;
 }
@@ -636,7 +639,7 @@ void SdSeqReplay(s16 seq_access_num) // 0x800A0534
         smf_song[seq_access_num].seq_rev_set_flag_532 = 1;
     }
 
-    smf_song[seq_access_num].sd_seq_stat_50A = 1;
+    smf_song[seq_access_num].sd_seq_stat_50A = SEQ_PLAY;
     control_code_set(seq_access_num);
 
     sd_int_flag = 0;
@@ -646,7 +649,7 @@ void SdSeqSetVol(s16 seq_access_num, s16 voll, s16 volr) // 0x800A06F0
 {
     smf_song[seq_access_num].sd_seq_mvoll_50C = voll & 0x7F;
     smf_song[seq_access_num].sd_seq_mvolr_50E = volr & 0x7F;
-    if (smf_song[seq_access_num].sd_seq_stat_50A != 2)
+    if (smf_song[seq_access_num].sd_seq_stat_50A != SEQ_STOP)
     {
         smf_song[seq_access_num].seq_vol_set_flag_530 = 1;
     }
@@ -925,9 +928,9 @@ s32 SdUtKeyOffVWithRROff(s16 voice) // 0x800A1A18
 
 s16 SdGetSeqStatus(s16 seq_access_num) // 0x800A1B14
 {
-    if (smf_song[seq_access_num].sd_seq_stat_50A == 1 && midi_smf_stat(seq_access_num) == 3)
+    if (smf_song[seq_access_num].sd_seq_stat_50A == SEQ_PLAY && midi_smf_stat(seq_access_num) == SEQ_END)
     {
-        smf_song[seq_access_num].sd_seq_stat_50A = 3;
+        smf_song[seq_access_num].sd_seq_stat_50A = SEQ_END;
     }
 
     return smf_song[seq_access_num].sd_seq_stat_50A;
@@ -1079,9 +1082,9 @@ s32 SdGetSeqControlStatus(s16 seq_access_num) // 0x800A20EC
 
 s16 SdGetSeqPlayStatus(s32 seq_access_num) // 0x800A2134
 {
-    if (smf_song[seq_access_num].sd_seq_stat_50A == 1 && midi_smf_stat(seq_access_num) == 3)
+    if (smf_song[seq_access_num].sd_seq_stat_50A == SEQ_PLAY && midi_smf_stat(seq_access_num) == SEQ_END)
     {
-        smf_song[seq_access_num].sd_seq_stat_50A = 3;
+        smf_song[seq_access_num].sd_seq_stat_50A = SEQ_END;
     }
 
     return smf_song[seq_access_num].sd_seq_stat_50A;

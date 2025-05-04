@@ -21,6 +21,15 @@
 #define SD_MAGIC_KDT  0x2054444B
 #define SD_MAGIC_KDT1 0x3154444B
 
+enum SMF_STAT
+{
+    SEQ_NON   = 0,
+    SEQ_PLAY  = 1,
+    SEQ_STOP  = 2,
+    SEQ_END   = 3,
+    SEQ_PAUSE = 4
+};
+
 extern s32 sd_reverb_mode;
 extern s16 sd_keyoff_mode;
 extern s32 sd_interrupt_start_flag;
@@ -90,32 +99,32 @@ STATIC_ASSERT_SIZEOF(SMF, 40);
 /** Standard MIDI File */
 typedef struct Smf_Song
 {
-    SMF           tracks_0[32];
-    u8*           mf_data_ptr2_500;
-    u8*           mf_data_ptr_504;
-    s16           sd_seq_vab_id_508;
-    s16           sd_seq_stat_50A;
-    s16           sd_seq_mvoll_50C;
-    s16           sd_seq_mvolr_50E;
-    u32           sd_seq_track_mute_510;
-    void*         sd_seq_start_addr_514;
-    s32           mf_data_size_518;
-    u32           mf_seq_beat_51C;
-    s32           mf_seq_beat_wk_520;
-    u16           mf_format_524;
-    u16           mf_tracks_526;
-    u16           mf_division_528;
-    u16           mf_head_len_52A;
-    u8            smf_seq_flag_52C;
-    u8            loop_start_flag_52D;
-    u8            smf_beat_stat_52E;
-    u8            smf_control_stat_52F;
-    u16           seq_vol_set_flag_530;
-    u16           seq_rev_set_flag_532;
-    u16           seq_wide_flag_534;
-    u16           seq_reverb_depth_536;
-    u16           midi_master_vol_538;
-    u8            unk_53A[2];
+    SMF   tracks_0[32];
+    u8*   mf_data_ptr2_500;
+    u8*   mf_data_ptr_504;
+    s16   sd_seq_vab_id_508;
+    s16   sd_seq_stat_50A; /** SMF_STAT enum */
+    s16   sd_seq_mvoll_50C;
+    s16   sd_seq_mvolr_50E;
+    u32   sd_seq_track_mute_510;
+    void* sd_seq_start_addr_514;
+    s32   mf_data_size_518;
+    u32   mf_seq_beat_51C;
+    s32   mf_seq_beat_wk_520;
+    u16   mf_format_524;
+    u16   mf_tracks_526;
+    u16   mf_division_528;
+    u16   mf_head_len_52A;
+    u8    smf_seq_flag_52C;
+    u8    loop_start_flag_52D;
+    u8    smf_beat_stat_52E;
+    u8    smf_control_stat_52F;
+    u16   seq_vol_set_flag_530;
+    u16   seq_rev_set_flag_532;
+    u16   seq_wide_flag_534;
+    u16   seq_reverb_depth_536;
+    u16   midi_master_vol_538;
+    u8    unk_53A[2];
 } SMF_SONG;
 STATIC_ASSERT_SIZEOF(SMF_SONG, 1340);
 
@@ -339,14 +348,14 @@ u8   SdGetMidiPan(s16 device, s16 channel);
 void SdSetMidiPan(s16 device, s16 channel, s32 pan);
 u8   SdGetMidiPitchBendFine(s16 device, s16 channel);
 s32  SdSetMidiPitchBendFine(s16 device, s16 channel, u8 pitchBendFine);
-s32 SdGetTrackTranspause();
-s32 SdSetTrackTranspause();
-s32 SdGetTrackMute(s16 seq_access_num, s32 channel);
-s32 SdSetTrackMute(s16 seq_access_num, s32 channel);
-s32 SdGetSeqControlStatus(s16 seq_access_num);
-s16 SdGetSeqPlayStatus(s32 seq_access_num);
-u32 SdGetSeqBeat(s16 seq_access_num);
-s32 SdGetSeqBeat2(s16 seq_access_num);
+s32  SdGetTrackTranspause();
+s32  SdSetTrackTranspause();
+s32  SdGetTrackMute(s16 seq_access_num, s32 channel);
+s32  SdSetTrackMute(s16 seq_access_num, s32 channel);
+s32  SdGetSeqControlStatus(s16 seq_access_num);
+s16  SdGetSeqPlayStatus(s32 seq_access_num); /** Returns SMF_STAT. */
+u32  SdGetSeqBeat(s16 seq_access_num);
+s32  SdGetSeqBeat2(s16 seq_access_num);
 
 // sdmidi.c
 
@@ -414,7 +423,7 @@ void delta_time_conv(SMF* track);
 void midi_file_out(s16);
 void midi_smf_main();
 void midi_smf_stop(s32 seq_access_num);
-s16  midi_smf_stat(s32 seq_access_num);
+s16  midi_smf_stat(s32 seq_access_num); /** Returns SMF_STAT. */
 
 // ssmain.c
 void SsSetMVol(s16 left, s16 right);
