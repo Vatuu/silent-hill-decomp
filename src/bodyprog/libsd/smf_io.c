@@ -628,7 +628,132 @@ VagAtr* get_vab_tone(MIDI* p, u16 tone, u8 chan) // 0x800A5DD4
     return &vab->vag_atr[(p->prog_no_0 * 16) + tone];
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_io", smf_data_entry);
+void smf_data_entry(MIDI* p, u8 chan)
+{
+    SpuReverbAttr rev_attr; // used in AUDIO.IRX but unused here
+    VagAtr*       vp;
+    s32           i;
+
+    if (p->nrpn_msb_26 == 0x10 && p->nrpn_lsb_25 < 0xE)
+    {
+        for (i = 0; i < 16; i++)
+        {
+            vp = get_vab_tone(p, i, chan);
+            switch (p->nrpn_lsb_25)
+            {
+                case 0:
+                    break;
+                case 1:
+                    vp->mode = p->data_entry_27;
+                    break;
+                case 2:
+                    vp->min = p->data_entry_27;
+                    break;
+                case 3:
+                    vp->max = p->data_entry_27;
+                    break;
+                case 4:
+                    vp->adsr1 = (vp->adsr1 & 0xFF) | ((0x7F - p->data_entry_27) << 8);
+                    break;
+                case 5:
+                    vp->adsr1 = (vp->adsr1 & 0xFF) | ((0x7F - p->data_entry_27) << 8) | 0x8000;
+                    break;
+                case 6:
+                    vp->adsr1 = (vp->adsr1 & 0xFF0F) | ((p->data_entry_27 * 2) & 0xF0);
+                    break;
+                case 7:
+                    vp->adsr1 = (vp->adsr1 & 0xFFF0) | ((p->data_entry_27 >> 3));
+                    break;
+                case 8:
+                    vp->adsr2 = (vp->adsr2 & 0x603F) | ((0x7F - p->data_entry_27) << 6);
+                    break;
+                case 9:
+                    vp->adsr2 = (vp->adsr2 & 0x603F) | ((0x7F - p->data_entry_27) << 6) | 0x8000;
+                    break;
+                case 10:
+                    vp->adsr2 = (vp->adsr2 & 0xFFC0) | ((0x7F - p->data_entry_27) >> 3);
+                    break;
+                case 11:
+                    vp->adsr2 = (vp->adsr2 & 0xFFC0) | ((0x7F - p->data_entry_27) >> 3) | 0x20;
+                    break;
+                case 12:
+                    if (p->data_entry_27 <= 0x40)
+                    {
+                        vp->adsr2 |= 0x4000;
+                    }
+                    else
+                    {
+                        vp->adsr2 &= 0xBFFF;
+                    }
+                    break;
+                case 13:
+                    vp->adsr1 = vp->reserved[0];
+                    vp->adsr2 = vp->reserved[1];
+                    break;
+            }
+        }
+    }
+    else
+    {
+        vp = get_vab_tone(p, p->nrpn_msb_26 & 0xF, chan);
+
+        switch (p->nrpn_lsb_25)
+        {
+            case 0:
+                break;
+            case 1:
+                vp->mode = p->data_entry_27;
+                break;
+            case 2:
+                vp->min = p->data_entry_27;
+                break;
+            case 3:
+                vp->max = p->data_entry_27;
+                break;
+            case 4:
+                vp->adsr1 = (vp->adsr1 & 0xFF) | ((0x7F - p->data_entry_27) << 8);
+                break;
+            case 5:
+                vp->adsr1 = (vp->adsr1 & 0xFF) | ((0x7F - p->data_entry_27) << 8) | 0x8000;
+                break;
+            case 6:
+                vp->adsr1 = (vp->adsr1 & 0xFF0F) | ((p->data_entry_27 * 2) & 0xF0);
+                break;
+            case 7:
+                vp->adsr1 = (vp->adsr1 & 0xFFF0) | (p->data_entry_27 >> 3);
+                break;
+            case 8:
+                vp->adsr2 = (vp->adsr2 & 0x603F) | ((0x7F - p->data_entry_27) << 6);
+                break;
+            case 9:
+                vp->adsr2 = (vp->adsr2 & 0x603F) | ((0x7F - p->data_entry_27) << 6) | 0x8000;
+                break;
+            case 10:
+                vp->adsr2 = (vp->adsr2 & 0xFFC0) | ((0x7F - p->data_entry_27) >> 3);
+                break;
+            case 11:
+                vp->adsr2 = (vp->adsr2 & 0xFFC0) | ((0x7F - p->data_entry_27) >> 3) | 0x20;
+                break;
+            case 12:
+                if (p->data_entry_27 <= 0x40)
+                {
+                    vp->adsr2 |= 0x4000;
+                }
+                else
+                {
+                    vp->adsr2 &= 0xBFFF;
+                }
+                break;
+            case 13:
+                vp->adsr1 = vp->reserved[0];
+                vp->adsr2 = vp->reserved[1];
+                return;
+            case 23:
+                p->before_note_13 = p->data_entry_27;
+                break;
+        }
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_io", control_change);
 
