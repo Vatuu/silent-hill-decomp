@@ -4,182 +4,184 @@
 
 #include "bodyprog/libsd.h"
 
-s32 MemCmp(u8* str1, u8* str2, s32 count) // 0x800A6FB8
+s32 MemCmp(u8* src, u8* des, s32 num) // 0x800A6FB8
 {
-    if (!count)
+    if (!num)
     {
         return -1;
     }
 
-    while (--count)
+    while (--num)
     {
-        if (*str1 != *str2)
+        if (*src != *des)
         {
             break;
         }
 
-        str1 += 1;
-        str2 += 1;
+        src += 1;
+        des += 1;
     }
 
-    return *str1 - *str2;
+    return *src - *des;
 }
 
-s32 readMThd(u32 offset) // 0x800A6FFC
+s32 readMThd(u32 loc) // 0x800A6FFC
 {
     extern char D_8002E538[4]; // "MThd"
     while (true)
     {
-        if (!MemCmp(D_8002E538, smf_song[smf_file_no].mf_data_ptr_504 + offset, 4))
+        if (!MemCmp(D_8002E538, smf_song[smf_file_no].mf_data_ptr_504 + loc, 4))
         {
-            return offset + 4;
+            return loc + 4;
         }
 
-        if (smf_song[smf_file_no].mf_data_size_518 < ++offset)
+        if (smf_song[smf_file_no].mf_data_size_518 < ++loc)
         {
             return -1;
         }
     }
 
-    return offset;
+    return loc;
 }
 
-s32 readMTrk(u32 offset) // 0x800A70BC
+s32 readMTrk(u32 loc) // 0x800A70BC
 {
     extern char D_8002E540[4]; // "MTrk"
 
     while (true)
     {
-        if (!MemCmp(D_8002E540, smf_song[smf_file_no].mf_data_ptr_504 + offset, 4))
+        if (!MemCmp(D_8002E540, smf_song[smf_file_no].mf_data_ptr_504 + loc, 4))
         {
-            return offset + 4;
+            return loc + 4;
         }
 
-        if (smf_song[smf_file_no].mf_data_size_518 < ++offset)
+        if (smf_song[smf_file_no].mf_data_size_518 < ++loc)
         {
             return -1;
         }
     }
 
-    return offset;
+    return loc;
 }
 
-s32 readEOF(u32 offset) // 0x800A717C
+s32 readEOF(u32 loc) // 0x800A717C
 {
-    extern char D_800B25C4[3]; // 0x00002FFF
+    extern char eof_char[3]; // 0x00002FFF
 
     while (true)
     {
-        if (!MemCmp(&D_800B25C4, smf_song[smf_file_no].mf_data_ptr_504 + offset, 3))
+        if (!MemCmp(&eof_char, smf_song[smf_file_no].mf_data_ptr_504 + loc, 3))
         {
-            return offset + 3;
+            return loc + 3;
         }
 
-        if (smf_song[smf_file_no].mf_data_size_518 < ++offset)
+        if (smf_song[smf_file_no].mf_data_size_518 < ++loc)
         {
             return -1;
         }
     }
 
-    return offset;
+    return loc;
 }
 
-s32 egetc(SMF* track) // 0x800A723C
+s32 egetc(SMF* p) // 0x800A723C
 {
-    u32 ret = smf_song[smf_file_no].mf_data_ptr_504[track->mf_data_loc_0];
+    u32 data;
 
-    track->mf_data_loc_0++;
+    data = smf_song[smf_file_no].mf_data_ptr_504[p->mf_data_loc_0];
 
-    if (smf_song[smf_file_no].mf_data_size_518 < track->mf_data_loc_0)
+    p->mf_data_loc_0++;
+
+    if (smf_song[smf_file_no].mf_data_size_518 < p->mf_data_loc_0)
     {
-        track->mf_eof_flag_20 = 1;
+        p->mf_eof_flag_20 = 1;
         return -1;
     }
 
-    return ret;
+    return data;
 }
 
-s32 readvarinum(SMF* track) // 0x800A72B4
+s32 readvarinum(SMF* p) // 0x800A72B4
 {
-    s32 curByte;
-    s32 num;
+    s32 c;
+    s32 value;
 
-    curByte = egetc(track);
+    c = egetc(p);
 
-    if (curByte == 0)
+    if (c == 0)
     {
         return 0;
     }
 
-    if (curByte == -1)
+    if (c == -1)
     {
-        track->mf_eof_flag_20 = 1;
+        p->mf_eof_flag_20 = 1;
         return 0;
     }
 
-    num = curByte;
+    value = c;
 
-    if (curByte & 0x80)
+    if (c & 0x80)
     {
-        num = curByte & 0x7F;
+        value = c & 0x7F;
         do
         {
-            curByte = egetc(track);
-            num     = (num << 7) + (curByte & 0x7F);
-        } while (curByte & 0x80);
+            c     = egetc(p);
+            value = (value << 7) + (c & 0x7F);
+        } while (c & 0x80);
     }
 
-    return num;
+    return value;
 }
 
-s32 to32bit(char arg0, char arg1, char arg2, char arg3) // 0x800A733C
+s32 to32bit(char c1, char c2, char c3, char c4) // 0x800A733C
 {
-    return (((((arg0 << 8) + arg1) << 8) + arg2) << 8) | arg3;
+    return (((((c1 << 8) + c2) << 8) + c3) << 8) | c4;
 }
 
-s32 to16bit(char arg0, char arg1) // 0x800A7368
+s32 to16bit(char c1, char c2) // 0x800A7368
 {
-    return (arg0 << 8) | arg1;
+    return (c1 << 8) | c2;
 }
 
-s32 read32bit(SMF* track) // 0x800A737C
+s32 read32bit(SMF* p) // 0x800A737C
 {
-    s8 b0 = egetc(track);
-    s8 b1 = egetc(track);
-    s8 b2 = egetc(track);
-    s8 b3 = egetc(track);
-    return to32bit(b0, b1, b2, b3);
+    s8 c1 = egetc(p);
+    s8 c2 = egetc(p);
+    s8 c3 = egetc(p);
+    s8 c4 = egetc(p);
+    return to32bit(c1, c2, c3, c4);
 }
 
-s32 read16bit(SMF* track) // 0x800A73E8
+s32 read16bit(SMF* p) // 0x800A73E8
 {
-    s8 b0 = egetc(track);
-    s8 b1 = egetc(track);
-    return to16bit(b0, b1) & 0xFFFF;
+    s8 c1 = egetc(p);
+    s8 c2 = egetc(p);
+    return to16bit(c1, c2) & 0xFFFF;
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_mid", readheader);
 
-void len_add(s32* ptr, s32 val) // 0x800A7814
+void len_add(SMF* p, s32 len) // 0x800A7814
 {
-    *ptr += val;
+    p->mf_data_loc_0 += len;
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_mid", metaevent);
 
-void sysex(SMF* track) // 0x800A7AEC
+void sysex(SMF* p) // 0x800A7AEC
 {
-    u32 i     = 0;
-    u32 count = readvarinum(track);
+    u32 cou = 0;
+    u32 len = readvarinum(p);
 
     do
     {
-        i++;
-        if ((egetc(track) & 0xFF) == 0xF7)
+        cou++;
+        if ((egetc(p) & 0xFF) == 0xF7)
         {
             break;
         }
-    } while (i < count);
+    } while (cou < len);
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_mid", chanmessage);
@@ -188,62 +190,62 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_mid", readtrack);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_mid", readtrack2);
 
-s32 track_head_read(SMF* track)
+s32 track_head_read(SMF* p)
 {
-    track->mf_data_loc_0 = readMTrk(track->mf_data_loc_0);
-    if (track->mf_data_loc_0 == NO_VALUE)
+    p->mf_data_loc_0 = readMTrk(p->mf_data_loc_0);
+    if (p->mf_data_loc_0 == NO_VALUE)
     {
         return 1;
     }
 
-    track->mf_track_length_8 = read32bit(track);
-    track->mf_repeat_ptr_10  = track->mf_data_loc_0;
-    track->mf_track_size_C   = track->mf_data_loc_0 + track->mf_track_length_8;
+    p->mf_track_length_8 = read32bit(p);
+    p->mf_repeat_ptr_10  = p->mf_data_loc_0;
+    p->mf_track_size_C   = p->mf_data_loc_0 + p->mf_track_length_8;
     return 0;
 }
 
-void delta_time_conv(SMF* track) // 0x800A84B0
+void delta_time_conv(SMF* p) // 0x800A84B0
 {
     switch (smf_song[smf_file_no].mf_division_528)
     {
         case 48:
-            track->mf_delta_time_1C *= 10;
-            track->mf_delta_time_1C += track->time_hosei_18;
-            track->time_hosei_18 = track->mf_delta_time_1C & 3;
-            track->mf_delta_time_1C /= 4;
+            p->mf_delta_time_1C *= 10;
+            p->mf_delta_time_1C += p->time_hosei_18;
+            p->time_hosei_18 = p->mf_delta_time_1C & 3;
+            p->mf_delta_time_1C /= 4;
             break;
 
         case 96:
-            track->mf_delta_time_1C *= 5;
-            track->mf_delta_time_1C += track->time_hosei_18;
-            track->time_hosei_18 = track->mf_delta_time_1C & 3;
-            track->mf_delta_time_1C /= 4;
+            p->mf_delta_time_1C *= 5;
+            p->mf_delta_time_1C += p->time_hosei_18;
+            p->time_hosei_18 = p->mf_delta_time_1C & 3;
+            p->mf_delta_time_1C /= 4;
             break;
 
         case 192:
         case 240:
-            track->mf_delta_time_1C += track->time_hosei_18;
-            track->time_hosei_18 = track->mf_delta_time_1C & 1;
-            track->mf_delta_time_1C /= 2;
+            p->mf_delta_time_1C += p->time_hosei_18;
+            p->time_hosei_18 = p->mf_delta_time_1C & 1;
+            p->mf_delta_time_1C /= 2;
             break;
 
         case 288:
         case 360:
-            track->mf_delta_time_1C /= 3;
+            p->mf_delta_time_1C /= 3;
             break;
 
         case 480:
         case 384:
-            track->mf_delta_time_1C += track->time_hosei_18;
-            track->time_hosei_18 = track->mf_delta_time_1C & 3;
-            track->mf_delta_time_1C /= 4;
+            p->mf_delta_time_1C += p->time_hosei_18;
+            p->time_hosei_18 = p->mf_delta_time_1C & 3;
+            p->mf_delta_time_1C /= 4;
             break;
 
         case 768:
         case 960:
-            track->mf_delta_time_1C += track->time_hosei_18;
-            track->time_hosei_18 = track->mf_delta_time_1C & 7;
-            track->mf_delta_time_1C /= 8;
+            p->mf_delta_time_1C += p->time_hosei_18;
+            p->time_hosei_18 = p->mf_delta_time_1C & 7;
+            p->mf_delta_time_1C /= 8;
             break;
 
         default:
@@ -255,24 +257,24 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_mid", midi_file_out);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_mid", midi_smf_main);
 
-void midi_smf_stop(s32 seq_access_num) // 0x800A8C74
+void midi_smf_stop(s32 access_value) // 0x800A8C74
 {
-    s32 i;
+    s32 tr;
 
-    for (i = 0; i < smf_song[seq_access_num].mf_tracks_526; i++)
+    for (tr = 0; tr < smf_song[access_value].mf_tracks_526; tr++)
     {
-        smf_song[seq_access_num].tracks_0[i].mf_eof_flag_20 = 1;
-        smf_song[seq_access_num].tracks_0[i].mf_data_loc_0  = 0;
+        smf_song[access_value].tracks_0[tr].mf_eof_flag_20 = 1;
+        smf_song[access_value].tracks_0[tr].mf_data_loc_0  = 0;
     }
 }
 
-s16 midi_smf_stat(s32 seq_access_num) // 0x800A8D00
+s16 midi_smf_stat(s32 access_no) // 0x800A8D00
 {
-    s32 i;
+    s32 tr;
 
-    for (i = 0; i < smf_song[seq_access_num].mf_tracks_526; i++)
+    for (tr = 0; tr < smf_song[access_no].mf_tracks_526; tr++)
     {
-        if (smf_song[seq_access_num].tracks_0[i].mf_eof_flag_20 != 1)
+        if (smf_song[access_no].tracks_0[tr].mf_eof_flag_20 != 1)
         {
             return SEQ_PLAY;
         }

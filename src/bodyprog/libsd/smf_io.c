@@ -18,96 +18,97 @@ void set_midi_info(s32 type, u8 midiChannel, u32 value) // 0x800A39B8
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_io", Note2Pitch);
 
-void tre_calc(PORT* midiPort) // 0x800A3B20
+void tre_calc(PORT* p) // 0x800A3B20
 {
     s32 vol;
-    s32 var0;
-    s8  var1;
+    s32 tre_data;
+    s8  tre_char;
 
-    if (midiPort->tredm_36 == 0)
+    if (p->tredm_36 == 0)
     {
         return;
     }
 
-    if (midiPort->trehc_32 != midiPort->trehs_39)
+    if (p->trehc_32 != p->trehs_39)
     {
-        midiPort->trehc_32++;
+        p->trehc_32++;
     }
     else
     {
-        if (midiPort->trecc_38 >= midiPort->trecs_3A)
+        if (p->trecc_38 >= p->trecs_3A)
         {
-            midiPort->tred_34 = midiPort->tredm_36;
+            p->tred_34 = p->tredm_36;
         }
         else
         {
-            if (midiPort->trecc_38 != 0)
+            if (p->trecc_38 != 0)
             {
-                midiPort->tred_34 += midiPort->tread_3C;
+                p->tred_34 += p->tread_3C;
             }
             else
             {
-                midiPort->tred_34 = midiPort->tread_3C;
+                p->tred_34 = p->tread_3C;
             }
-            midiPort->trecc_38++;
+            p->trecc_38++;
         }
 
-        midiPort->trec_33 += midiPort->trecad_3B;
-        midiPort->trecadw2_31 = 0;
-        if (midiPort->trec_33 < 0)
+        p->trec_33 += p->trecad_3B;
+        p->trecadw2_31 = 0;
+
+        if (p->trec_33 < 0)
         {
-            var1 = -midiPort->trec_33 * 2;
-            if (var1 < 0)
+            tre_char = -p->trec_33 * 2;
+            if (tre_char < 0)
             {
-                var1 = -var1;
+                tre_char = -tre_char;
             }
 
-            var0 = midiPort->tred_34 * var1;
-            if (var0 > 0)
+            tre_data = p->tred_34 * tre_char;
+            if (tre_data > 0)
             {
-                var0 = -var0;
+                tre_data = -tre_data;
             }
-        }
-        else
-        {
-            var1 = midiPort->trec_33 * 2;
-            if (var1 < 0)
-            {
-                var1 = -var1;
-            }
-
-            var0 = midiPort->tred_34 * var1;
-            if (var0 < 0)
-            {
-                var0 = -var0;
-            }
-        }
-
-        if (var0 != 0)
-        {
-            if (var0 < 0)
-            {
-                var0 += 0xFF;
-            }
-            midiPort->tre_data_3E = var0 >> 8;
         }
         else
         {
-            midiPort->tre_data_3E = 0;
+            tre_char = p->trec_33 * 2;
+            if (tre_char < 0)
+            {
+                tre_char = -tre_char;
+            }
+
+            tre_data = p->tred_34 * tre_char;
+            if (tre_data < 0)
+            {
+                tre_data = -tre_data;
+            }
+        }
+
+        if (tre_data != 0)
+        {
+            if (tre_data < 0)
+            {
+                tre_data += 0xFF;
+            }
+            p->tre_data_3E = tre_data >> 8;
+        }
+        else
+        {
+            p->tre_data_3E = 0;
         }
     }
 
-    if (midiPort->tremoro_wk_4C == midiPort->tre_data_3E)
+    if (p->tremoro_wk_4C == p->tre_data_3E)
     {
         return;
     }
 
-    midiPort->tremoro_wk_4C = midiPort->tre_data_3E;
+    p->tremoro_wk_4C = p->tre_data_3E;
 
     s_attr.mask  = SPU_VOICE_VOLL | SPU_VOICE_VOLR | SPU_VOICE_VOLMODEL | SPU_VOICE_VOLMODER;
-    s_attr.voice = spu_ch_tbl[midiPort->vc_0];
+    s_attr.voice = spu_ch_tbl[p->vc_0];
 
-    vol = midiPort->l_vol_C + midiPort->tre_data_3E;
+    vol = p->l_vol_C + p->tre_data_3E;
     if (vol < 0)
     {
         vol = 0;
@@ -118,7 +119,7 @@ void tre_calc(PORT* midiPort) // 0x800A3B20
     }
     s_attr.volume.left = vol;
 
-    vol = midiPort->r_vol_E + midiPort->tre_data_3E;
+    vol = p->r_vol_E + p->tre_data_3E;
     if (vol < 0)
     {
         vol = 0;
@@ -134,135 +135,135 @@ void tre_calc(PORT* midiPort) // 0x800A3B20
     SpuSetVoiceAttr(&s_attr);
 }
 
-void vib_calc(PORT* midiPort) // 0x800A3D30
+void vib_calc(PORT* p) // 0x800A3D30
 {
-    s32 var0;
-    s8  var1;
+    s32 vib_data;
+    s8  vib_char;
 
-    if (midiPort->vibdm_26 != 0)
+    if (p->vibdm_26 != 0)
     {
-        if (midiPort->vibhc_22 != midiPort->vibhs_29)
+        if (p->vibhc_22 != p->vibhs_29)
         {
-            midiPort->vibhc_22++;
+            p->vibhc_22++;
             return;
         }
 
-        if (midiPort->vibcc_28 >= midiPort->vibcs_2A)
+        if (p->vibcc_28 >= p->vibcs_2A)
         {
-            midiPort->vibd_24 = midiPort->vibdm_26;
+            p->vibd_24 = p->vibdm_26;
         }
         else
         {
-            if (midiPort->vibcc_28 != 0)
+            if (p->vibcc_28 != 0)
             {
-                midiPort->vibd_24 += midiPort->vibad_2C;
+                p->vibd_24 += p->vibad_2C;
             }
             else
             {
-                midiPort->vibd_24 = midiPort->vibad_2C;
+                p->vibd_24 = p->vibad_2C;
             }
-            midiPort->vibcc_28++;
+            p->vibcc_28++;
         }
 
-        midiPort->vibc_23 += midiPort->vibcad_2B;
-        midiPort->vibcadw2_21 = 0;
+        p->vibc_23 += p->vibcad_2B;
+        p->vibcadw2_21 = 0;
 
-        if (midiPort->vibc_23 < 0)
+        if (p->vibc_23 < 0)
         {
-            var1 = -midiPort->vibc_23 * 2;
-            if (var1 < 0)
+            vib_char = -p->vibc_23 * 2;
+            if (vib_char < 0)
             {
-                var1 = -var1;
+                vib_char = -vib_char;
             }
 
-            var0 = midiPort->vibd_24 * var1;
-            if (var0 > 0)
+            vib_data = p->vibd_24 * vib_char;
+            if (vib_data > 0)
             {
-                var0 = -var0;
+                vib_data = -vib_data;
             }
         }
         else
         {
-            var1 = midiPort->vibc_23 * 2;
-            if (var1 < 0)
+            vib_char = p->vibc_23 * 2;
+            if (vib_char < 0)
             {
-                var1 = -var1;
+                vib_char = -vib_char;
             }
 
-            var0 = midiPort->vibd_24 * var1;
-            if (var0 < 0)
+            vib_data = p->vibd_24 * vib_char;
+            if (vib_data < 0)
             {
-                var0 = -var0;
+                vib_data = -vib_data;
             }
         }
 
-        if (var0 != 0)
+        if (vib_data != 0)
         {
-            if (var0 < 0)
+            if (vib_data < 0)
             {
-                var0 += 0x3FF;
+                vib_data += 0x3FF;
             }
 
-            midiPort->vib_data_2E = var0 >> 10;
+            p->vib_data_2E = vib_data >> 10;
             return;
         }
 
-        midiPort->vib_data_2E = 0;
+        p->vib_data_2E = 0;
     }
 }
 
-void random_calc(PORT* midiPort) // 0x800A3E70
+void random_calc(PORT* p) // 0x800A3E70
 {
     extern u8 random_tbl[];
 
-    s32 var0;
-    s8  randValue;
+    s32 rd_data;
+    s8  c_data;
 
-    if (!midiPort->rdms_43)
+    if (!p->rdms_43)
     {
         return;
     }
 
-    midiPort->rdmc_44 += midiPort->rdms_43;
+    p->rdmc_44 += p->rdms_43;
 
-    if (midiPort->rdmc_44 < 0x7F && midiPort->rdms_43 != 127)
+    if (p->rdmc_44 < 0x7F && p->rdms_43 != 127)
     {
         return;
     }
 
-    midiPort->rdmc_44 = midiPort->rdmc_44 & 0x7F;
+    p->rdmc_44 = p->rdmc_44 & 0x7F;
 
-    randValue = random_tbl[midiPort->rdmo_42];
-    midiPort->rdmo_42++;
+    c_data = random_tbl[p->rdmo_42];
+    p->rdmo_42++;
 
-    if (randValue)
+    if (c_data)
     {
-        var0 = randValue * midiPort->rdmdm_45;
-        if (var0 < 0)
+        rd_data = c_data * p->rdmdm_45;
+        if (rd_data < 0)
         {
-            var0 += 3;
+            rd_data += 3;
         }
 
-        midiPort->rdmd_40 = (var0 >> 2);
+        p->rdmd_40 = (rd_data >> 2);
     }
     else
     {
-        midiPort->rdmd_40 = 0;
+        p->rdmd_40 = 0;
     }
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_io", volume_calc);
 
-void smf_vol_set(s32 midiChannel, s32 voice, s32 volLeft, s32 volRight) // 0x800A4150
+void smf_vol_set(s32 ch, s32 vc, s32 l_vol, s32 r_vol) // 0x800A4150
 {
     s_attr.mask  = (SPU_VOICE_VOLL | SPU_VOICE_VOLR | SPU_VOICE_VOLMODEL | SPU_VOICE_VOLMODER);
-    s_attr.voice = spu_ch_tbl[voice];
+    s_attr.voice = spu_ch_tbl[vc];
 
-    if (volLeft | volRight)
+    if (l_vol | r_vol)
     {
-        s_attr.volume.left  = (volLeft * smf_song[midiChannel >> 4].sd_seq_mvoll_50C) >> 7;
-        s_attr.volume.right = (volRight * smf_song[midiChannel >> 4].sd_seq_mvolr_50E) >> 7;
-        if (smf_midi[midiChannel].wide_flag_21 || smf_song[midiChannel >> 4].seq_wide_flag_534)
+        s_attr.volume.left  = (l_vol * smf_song[ch >> 4].sd_seq_mvoll_50C) >> 7;
+        s_attr.volume.right = (r_vol * smf_song[ch >> 4].sd_seq_mvolr_50E) >> 7;
+        if (smf_midi[ch].wide_flag_21 || smf_song[ch >> 4].seq_wide_flag_534)
         {
             s_attr.volume.right = -s_attr.volume.right;
         }
@@ -294,194 +295,194 @@ void master_vol_set() // 0x800A4260
     sd_int_flag = 0;
 }
 
-void seq_master_vol_set(s32 seq_access_num) // 0x800A4314
+void seq_master_vol_set(s32 access_num) // 0x800A4314
 {
-    s32 i;
+    s32 vc;
 
-    for (i = 0; i < sd_reserved_voice; i++)
+    for (vc = 0; vc < sd_reserved_voice; vc++)
     {
-        if ((smf_port[i].midi_ch_3 >> 4) == seq_access_num)
+        if ((smf_port[vc].midi_ch_3 >> 4) == access_num)
         {
-            smf_vol_set(smf_port[i].midi_ch_3, i, smf_port[i].l_vol_C, smf_port[i].r_vol_E);
+            smf_vol_set(smf_port[vc].midi_ch_3, vc, smf_port[vc].l_vol_C, smf_port[vc].r_vol_E);
         }
     }
 }
 
 void toremoro_set() // 0x800A439C
 {
-    s16 temp_v1;
-    s32 i;
+    s16 tre_data;
+    s32 vc;
 
-    for (i = 0; i < sd_reserved_voice; i++)
+    for (vc = 0; vc < sd_reserved_voice; vc++)
     {
-        temp_v1 = smf_port[i].tre_data_3E;
-        if (smf_port[i].tremoro_wk_4C != temp_v1)
+        tre_data = smf_port[vc].tre_data_3E;
+        if (smf_port[vc].tremoro_wk_4C != tre_data)
         {
-            smf_vol_set(smf_port[i].midi_ch_3, i, smf_port[i].l_vol_C + temp_v1, smf_port[i].r_vol_E + temp_v1);
+            smf_vol_set(smf_port[vc].midi_ch_3, vc, smf_port[vc].l_vol_C + tre_data, smf_port[vc].r_vol_E + tre_data);
         }
     }
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_io", pitch_bend_calc);
 
-void pitch_calc(PORT* midiPort, s32 forceSpuUpdate) // 0x800A4494
+void pitch_calc(PORT* p, s32 forceSpuUpdate) // 0x800A4494
 {
-    MIDI* midi;
-    s32   temp_s0;
-    s32   temp_a0;
+    MIDI* m;
+    s32   pitch;
+    s32   note;
 
-    midi = &smf_midi[midiPort->midi_ch_3];
-    if (midiPort->vibdm_26 != 0 || midi->mod_2 != 0 || midi->porta_28 != 0 || midiPort->rdms_43 != 0 || midi->pbend_7 != midiPort->pbend_wk_4E || forceSpuUpdate)
+    m = &smf_midi[p->midi_ch_3];
+    if (p->vibdm_26 != 0 || m->mod_2 != 0 || m->porta_28 != 0 || p->rdms_43 != 0 || m->pbend_7 != p->pbend_wk_4E || forceSpuUpdate)
     {
-        midiPort->pbend_wk_4E = midi->pbend_7;
+        p->pbend_wk_4E = m->pbend_7;
 
-        temp_s0 = midiPort->rdmd_40 + (midiPort->vib_data_2E + ((u16)midi->mod_depth_1C + (u16)midi->porta_depth_2A));
-        temp_s0 += (midiPort->note_wk_8 << 7) + pitch_bend_calc(midiPort, midi->pbend_7, midi);
-        temp_a0 = temp_s0 << 16;
+        pitch = p->rdmd_40 + (p->vib_data_2E + ((u16)m->mod_depth_1C + (u16)m->porta_depth_2A));
+        pitch += (p->note_wk_8 << 7) + pitch_bend_calc(p, m->pbend_7, m);
+        note = pitch << 16;
 
         s_attr.mask  = SPU_VOICE_PITCH;
-        s_attr.voice = spu_ch_tbl[midiPort->vc_0];
-        s_attr.pitch = Note2Pitch(temp_a0 >> 23, temp_s0 & 0x7F, midiPort->center_1E, midiPort->shift_1F);
+        s_attr.voice = spu_ch_tbl[p->vc_0];
+        s_attr.pitch = Note2Pitch(note >> 23, pitch & 0x7F, p->center_1E, p->shift_1F);
         SpuSetVoiceAttr(&s_attr);
     }
 
-    if (midiPort->vibdm_26 != 0 && !SpuGetKeyStatus(spu_ch_tbl[midiPort->vc_0]))
+    if (p->vibdm_26 != 0 && !SpuGetKeyStatus(spu_ch_tbl[p->vc_0]))
     {
-        midiPort->vibdm_26    = 0;
-        midiPort->vib_data_2E = 0;
+        p->vibdm_26    = 0;
+        p->vib_data_2E = 0;
     }
 }
 
-void midi_mod(MIDI* midiTrack) // 0x800A4608
+void midi_mod(MIDI* p) // 0x800A4608
 {
-    if (midiTrack->mod_2 != 0)
+    if (p->mod_2 != 0)
     {
-        if (midiTrack->mod_w_14 != 0)
+        if (p->mod_w_14 != 0)
         {
-            if ((midiTrack->mod_depth_1C + midiTrack->mod_add_1A) < midiTrack->mod_limit_1E)
+            if ((p->mod_depth_1C + p->mod_add_1A) < p->mod_limit_1E)
             {
-                midiTrack->mod_depth_1C += midiTrack->mod_add_1A;
+                p->mod_depth_1C += p->mod_add_1A;
             }
             else
             {
-                midiTrack->mod_w_14     = 0;
-                midiTrack->mod_depth_1C = midiTrack->mod_limit_1E;
+                p->mod_w_14     = 0;
+                p->mod_depth_1C = p->mod_limit_1E;
             }
         }
-        else if ((midiTrack->mod_depth_1C - midiTrack->mod_add_1A) > -midiTrack->mod_limit_1E)
+        else if ((p->mod_depth_1C - p->mod_add_1A) > -p->mod_limit_1E)
         {
-            midiTrack->mod_depth_1C -= midiTrack->mod_add_1A;
+            p->mod_depth_1C -= p->mod_add_1A;
         }
         else
         {
-            midiTrack->mod_w_14     = 1;
-            midiTrack->mod_depth_1C = -midiTrack->mod_limit_1E;
+            p->mod_w_14     = 1;
+            p->mod_depth_1C = -p->mod_limit_1E;
         }
     }
     else
     {
-        midiTrack->mod_depth_1C = 0;
+        p->mod_depth_1C = 0;
     }
 }
 
-void midi_porta(MIDI* midiTrack) // 0x800A46B8
+void midi_porta(MIDI* p) // 0x800A46B8
 {
-    if (midiTrack->porta_28 != 0)
+    if (p->porta_28 != 0)
     {
-        if (midiTrack->porta_wk_30 != 0)
+        if (p->porta_wk_30 != 0)
         {
-            if ((midiTrack->porta_depth_2A + midiTrack->porta_add_2C) < midiTrack->porta_limit_2E)
+            if ((p->porta_depth_2A + p->porta_add_2C) < p->porta_limit_2E)
             {
-                midiTrack->porta_depth_2A += midiTrack->porta_add_2C;
+                p->porta_depth_2A += p->porta_add_2C;
             }
             else
             {
-                midiTrack->porta_depth_2A = midiTrack->porta_limit_2E;
+                p->porta_depth_2A = p->porta_limit_2E;
             }
         }
         else
         {
-            if ((midiTrack->porta_add_2C - midiTrack->porta_depth_2A) < midiTrack->porta_limit_2E)
+            if ((p->porta_add_2C - p->porta_depth_2A) < p->porta_limit_2E)
             {
-                midiTrack->porta_depth_2A -= midiTrack->porta_add_2C;
+                p->porta_depth_2A -= p->porta_add_2C;
             }
             else
             {
-                midiTrack->porta_depth_2A = -midiTrack->porta_limit_2E;
+                p->porta_depth_2A = -p->porta_limit_2E;
             }
         }
     }
 }
 
-void replay_reverb_set(s16 seq_access_num) // 0x800A4748
+void replay_reverb_set(s16 acc) // 0x800A4748
 {
     SpuReverbAttr reverb;
 
-    if (smf_song[seq_access_num].seq_rev_set_flag_532 != 0)
+    if (smf_song[acc].seq_rev_set_flag_532 != 0)
     {
-        if (smf_song[seq_access_num].seq_rev_set_flag_532 & 1)
+        if (smf_song[acc].seq_rev_set_flag_532 & 1)
         {
             reverb.mask = SPU_REV_DEPTHL | SPU_REV_DEPTHR;
-            if (smf_song[seq_access_num].seq_rev_set_flag_532 << 8 < smf_song[seq_access_num].seq_reverb_depth_536)
+            if (smf_song[acc].seq_rev_set_flag_532 << 8 < smf_song[acc].seq_reverb_depth_536)
             {
-                reverb.depth.left = reverb.depth.right = smf_song[seq_access_num].seq_rev_set_flag_532 << 8;
+                reverb.depth.left = reverb.depth.right = smf_song[acc].seq_rev_set_flag_532 << 8;
             }
             else
             {
-                reverb.depth.left = reverb.depth.right        = smf_song[seq_access_num].seq_reverb_depth_536;
-                smf_song[seq_access_num].seq_rev_set_flag_532 = 0;
+                reverb.depth.left = reverb.depth.right = smf_song[acc].seq_reverb_depth_536;
+                smf_song[acc].seq_rev_set_flag_532     = 0;
                 return; // BUG: Returns before setting seq_reverb_depth_536 as reverb? (fixed in soundcd.irx)
             }
 
             SpuSetReverbModeParam(&reverb);
             SpuSetReverb(1);
         }
-        smf_song[seq_access_num].seq_rev_set_flag_532 += 2;
+        smf_song[acc].seq_rev_set_flag_532 += 2;
     }
 }
 
 void midi_vsync() // 0x800A4838
 {
-    s32 device;
-    s32 channel;
+    s32 i;
+    s32 ch;
 
-    for (device = 0; device < 2; device++)
+    for (i = 0; i < 2; i++)
     {
-        if (smf_song[device].sd_seq_stat_50A == SEQ_PLAY)
+        if (smf_song[i].sd_seq_stat_50A == SEQ_PLAY)
         {
-            for (channel = 0; channel < 16; channel++)
+            for (ch = 0; ch < 16; ch++)
             {
-                midi_mod(&smf_midi[channel + (device * 16)]);
-                midi_porta(&smf_midi[channel + (device * 16)]);
+                midi_mod(&smf_midi[ch + (i * 16)]);
+                midi_porta(&smf_midi[ch + (i * 16)]);
             }
         }
     }
 
-    for (channel = 0; channel < sd_reserved_voice; channel++)
+    for (ch = 0; ch < sd_reserved_voice; ch++)
     {
-        u8 midi_num = smf_port[channel].midi_ch_3;
+        u8 midi_num = smf_port[ch].midi_ch_3;
         if (midi_num < 32 && smf_song[midi_num >> 4].sd_seq_stat_50A == SEQ_PLAY)
         {
-            vib_calc(&smf_port[channel]);
-            tre_calc(&smf_port[channel]);
-            random_calc(&smf_port[channel]);
-            pitch_calc(&smf_port[channel], 0);
+            vib_calc(&smf_port[ch]);
+            tre_calc(&smf_port[ch]);
+            random_calc(&smf_port[ch]);
+            pitch_calc(&smf_port[ch], 0);
 
-            if (smf_song[(u8)smf_port[channel].midi_ch_3 >> 4].seq_vol_set_flag_530 != 0)
+            if (smf_song[(u8)smf_port[ch].midi_ch_3 >> 4].seq_vol_set_flag_530 != 0)
             {
-                smf_vol_set(smf_port[channel].midi_ch_3, channel, smf_port[channel].l_vol_C, smf_port[channel].r_vol_E);
+                smf_vol_set(smf_port[ch].midi_ch_3, ch, smf_port[ch].l_vol_C, smf_port[ch].r_vol_E);
             }
         }
     }
 
-    for (device = 0; device < 2; device++)
+    for (i = 0; i < 2; i++)
     {
-        if (smf_song[device].sd_seq_stat_50A == SEQ_PLAY)
+        if (smf_song[i].sd_seq_stat_50A == SEQ_PLAY)
         {
-            replay_reverb_set(device);
-            if (smf_song[device].seq_vol_set_flag_530 != 0)
+            replay_reverb_set(i);
+            if (smf_song[i].seq_vol_set_flag_530 != 0)
             {
-                smf_song[device].seq_vol_set_flag_530 = 0;
+                smf_song[i].seq_vol_set_flag_530 = 0;
             }
         }
     }
@@ -493,28 +494,28 @@ void sound_off() // 0x800A4D20
 {
     u32 voice;
     s32 keyStatus;
-    s32 i;
+    s32 vo;
     u32 voices;
 
     voices = 0;
 
-    for (i = 0; i < 2; i++)
+    for (vo = 0; vo < 2; vo++)
     {
-        sound_seq_off(i);
+        sound_seq_off(vo);
     }
 
-    for (i = 0; i < sd_reserved_voice; i++)
+    for (vo = 0; vo < sd_reserved_voice; vo++)
     {
-        smf_vol_set(0, i, 0, 0);
-        smf_port[i].vc_0        = i;
-        smf_port[i].stat_16     = 0;
-        smf_port[i].pan_14      = 0x40;
-        smf_port[i].pbend_wk_4E = 0x40;
-        smf_port[i].pbend_50    = 0x40;
+        smf_vol_set(0, vo, 0, 0);
+        smf_port[vo].vc_0        = vo;
+        smf_port[vo].stat_16     = 0;
+        smf_port[vo].pan_14      = 0x40;
+        smf_port[vo].pbend_wk_4E = 0x40;
+        smf_port[vo].pbend_50    = 0x40;
 
-        voice = spu_ch_tbl[i];
+        voice = spu_ch_tbl[vo];
         voices |= voice;
-        rr_off(i);
+        rr_off(vo);
 
         do
         {
@@ -543,20 +544,20 @@ void sound_off() // 0x800A4D20
 
 void vol_calc() {} // 0x800A4E90
 
-void adsr_set(s32 voice, PORT* midiPort) // 0x800A4E98
+void adsr_set(s32 vo, PORT* p) // 0x800A4E98
 {
     s_attr.mask   = SPU_VOICE_ADSR_AMODE | SPU_VOICE_ADSR_ADSR1 | SPU_VOICE_ADSR_ADSR2;
-    s_attr.voice  = spu_ch_tbl[voice];
-    s_attr.adsr1  = midiPort->adsr1_46;
-    s_attr.adsr2  = midiPort->adsr2_48;
-    s_attr.a_mode = midiPort->a_mode_4A;
+    s_attr.voice  = spu_ch_tbl[vo];
+    s_attr.adsr1  = p->adsr1_46;
+    s_attr.adsr2  = p->adsr2_48;
+    s_attr.a_mode = p->a_mode_4A;
     SpuSetVoiceAttr(&s_attr);
 }
 
-void rr_off(s32 voice) // 0x800A4F08
+void rr_off(s32 vo) // 0x800A4F08
 {
     s_attr.mask   = SPU_VOICE_ADSR_AMODE | SPU_VOICE_ADSR_ADSR1 | SPU_VOICE_ADSR_ADSR2;
-    s_attr.voice  = spu_ch_tbl[voice];
+    s_attr.voice  = spu_ch_tbl[vo];
     s_attr.adsr1  = 0;
     s_attr.adsr2  = 0;
     s_attr.a_mode = 5;
@@ -567,34 +568,34 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_io", voice_check);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_io", key_on);
 
-void key_off(u8 midiNum, u8 keyNum)
+void key_off(u8 chan, u8 c1)
 {
     s32 keyStatus;
-    s32 i;
+    s32 vo;
     u32 voices;
 
     voices = 0;
 
-    for (i = 0; i < sd_reserved_voice; i++)
+    for (vo = 0; vo < sd_reserved_voice; vo++)
     {
-        if (midiNum == smf_port[i].midi_ch_3 && keyNum == smf_port[i].note_6)
+        if (chan == smf_port[vo].midi_ch_3 && c1 == smf_port[vo].note_6)
         {
-            if (smf_port[i].pedal_1B == 0)
+            if (smf_port[vo].pedal_1B == 0)
             {
-                adsr_set(i, &smf_port[i]);
-                voices |= spu_ch_tbl[i];
+                adsr_set(vo, &smf_port[vo]);
+                voices |= spu_ch_tbl[vo];
 
                 do
                 {
-                    SpuSetKey(0, spu_ch_tbl[i]);
-                    keyStatus = SpuGetKeyStatus(spu_ch_tbl[i]);
+                    SpuSetKey(0, spu_ch_tbl[vo]);
+                    keyStatus = SpuGetKeyStatus(spu_ch_tbl[vo]);
                 } while (keyStatus != 2 && keyStatus != 0);
 
-                smf_port[i].stat_16 = 0;
+                smf_port[vo].stat_16 = 0;
             }
             else
             {
-                smf_port[i].velo_1A |= 1 << 7;
+                smf_port[vo].velo_1A |= 1 << 7;
             }
         }
     }
@@ -611,37 +612,37 @@ void key_off(u8 midiNum, u8 keyNum)
 
 void key_press() {} // 0x800A5DCC
 
-VagAtr* get_vab_tone(MIDI* midiTrack, u16 tone, u8 midiChannel) // 0x800A5DD4
+VagAtr* get_vab_tone(MIDI* p, u16 tone, u8 chan) // 0x800A5DD4
 {
     SD_VAB_H* vab;
 
-    if (midiTrack->bank_change_5A > 16)
+    if (p->bank_change_5A > 16)
     {
-        vab = vab_h[smf_song[midiChannel >> 4].sd_seq_vab_id_508].vh_addr_4;
+        vab = vab_h[smf_song[chan >> 4].sd_seq_vab_id_508].vh_addr_4;
     }
     else
     {
-        vab = vab_h[midiTrack->bank_change_5A].vh_addr_4;
+        vab = vab_h[p->bank_change_5A].vh_addr_4;
     }
 
-    return &vab->vag_atr[(midiTrack->prog_no_0 * 16) + tone];
+    return &vab->vag_atr[(p->prog_no_0 * 16) + tone];
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_io", smf_data_entry);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_io", control_change);
 
-void program_change(u8 midiChannel, u8 progNum) // 0x800A6C2C
+void program_change(u8 chan, u8 c1) // 0x800A6C2C
 {
-    smf_midi[midiChannel].prog_no_0 = progNum;
+    smf_midi[chan].prog_no_0 = c1;
 }
 
 void chan_press() {} // 0x800A6C58
 
-void pitch_bend(u8 midiChannel, s32 unused, u8 pitchBend)
+void pitch_bend(u8 chan, s32 c1, u8 c2)
 {
-    smf_midi[midiChannel].pbend_7 = pitchBend & 0x7F;
-    set_midi_info(1, midiChannel, pitchBend);
+    smf_midi[chan].pbend_7 = c2 & 0x7F;
+    set_midi_info(1, chan, c2);
 }
 
 void control_code_set(s32 seq_access_num) {} // 0x800A6CB0
