@@ -355,20 +355,20 @@ s16 SdVabTransBodyPartly(u8* addr, u32 bufsize, s16 vabid) // 0x8009FDDC
 
     if (vab_h_id >= 0 && vab_h_id == vabid)
     {
-        SpuSetTransferStartAddr(vab_h[vabid].vb_start_addr_10 + sd_vab_transfer_offset);
-        if (vab_h[vabid].vb_size_14 - sd_vab_transfer_offset < bufsize)
+        SpuSetTransferStartAddr(vab_h[vabid].vb_start_addr_10 + body_partly_size);
+        if (vab_h[vabid].vb_size_14 - body_partly_size < bufsize)
         {
-            bufsize = vab_h[vabid].vb_size_14 - sd_vab_transfer_offset;
+            bufsize = vab_h[vabid].vb_size_14 - body_partly_size;
         }
         if (SpuWrite(addr, bufsize) != bufsize)
         {
             return -1;
         }
 
-        sd_vab_transfer_offset += bufsize;
+        body_partly_size += bufsize;
         retval = vab_h_id;
 
-        if (sd_vab_transfer_offset < vab_h[vabid].vb_size_14)
+        if (body_partly_size < vab_h[vabid].vb_size_14)
         {
             return -2;
         }

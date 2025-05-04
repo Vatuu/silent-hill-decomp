@@ -541,7 +541,7 @@ void sound_off() // 0x800A4D20
     } while (keyStatus != 2 && keyStatus != 0);
 }
 
-void func_800A4E90() {} // 0x800A4E90
+void vol_calc() {} // 0x800A4E90
 
 void adsr_set(s32 voice, PORT* midiPort) // 0x800A4E98
 {

@@ -41,11 +41,10 @@ extern s32 sd_int_flag;
 extern s32 sd_int_flag2;
 extern s32 sd_timer_sync;
 extern s32 smf_start_flag;
-extern u32 sd_vab_transfer_offset;
+extern u32 body_partly_size;
 extern s16 sd_seq_loop_mode;
 extern s32 sd_timer_event;
 extern s32 smf_file_no;
-
 extern u32 spu_ch_tbl[24];
 
 typedef struct SD_Vab_H
@@ -69,8 +68,6 @@ typedef struct Vab_h
     s8        mpan_1B;
 } VAB_H;
 STATIC_ASSERT_SIZEOF(VAB_H, 28);
-
-extern VAB_H vab_h[SD_VAB_SLOTS];
 
 typedef struct SMF_data
 {
@@ -271,6 +268,7 @@ typedef struct SD_Spu_Alloc
 } SD_SPU_ALLOC;
 STATIC_ASSERT_SIZEOF(SD_SPU_ALLOC, 8);
 
+extern VAB_H    vab_h[SD_VAB_SLOTS];
 extern MIDI     smf_midi[2 * 16];   // 2 devices with 16 channels each?
 extern MIDI     smf_midi_sound_off; // Set by sound_off(), could be smf_midi[32], but game doesn't use offsets for [32]?
 extern PORT     smf_port[24];

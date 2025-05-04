@@ -321,6 +321,7 @@ shRcos = 0x8009689C; // type:func
 shRotMatrixZ = 0x800968BC; // type:func
 
 // Konami libsd sound library (customised libsnd?)
+// smf_snd.c
 tone_adsr_mem = 0x8009eda4; // type:func
 tone_adsr_back = 0x8009ee30; // type:func
 sd_alloc_sort = 0x8009eebc; // type:func
@@ -410,8 +411,9 @@ SsSetSerialAttr = 0x800a22e0; // type:func
 SsSetSerialVol = 0x800a2308; // type:func
 SsUtAllKeyOff = 0x800a2338; // type:func
 
-set_note_on = 0x800a397c; // type:func - Might be switched with set_midi_info, both call into nullsubs.
-set_midi_info = 0x800a39b8; // type:func - Might be switched with set_note_on, both call into nullsubs.
+// smf_io.c
+set_note_on = 0x800a397c; // type:func
+set_midi_info = 0x800a39b8; // type:func
 Note2Pitch = 0x800a39d8; // type:func
 tre_calc = 0x800a3b20; // type:func
 vib_calc = 0x800a3d30; // type:func
@@ -429,7 +431,7 @@ replay_reverb_set = 0x800a4748; // type:func
 midi_vsync = 0x800a4838; // type:func
 sound_seq_off = 0x800a4a34; // type:func
 sound_off = 0x800a4d20; // type:func
-
+vol_calc = 0x800a4e90; // type:func
 adsr_set = 0x800a4e98; // type:func
 rr_off = 0x800a4f08; // type:func
 voice_check = 0x800a4f64; // type:func
@@ -444,11 +446,14 @@ chan_press = 0x800a6c58; // type:func
 pitch_bend = 0x800a6c60; // type:func
 control_code_set = 0x800a6cb0; // type:func
 
+// smf_main.c
 smf_timer = 0x800a6d18; // type:func
 smf_timer_set = 0x800a6dc0; // type:func
 smf_timer_end = 0x800a6e58; // type:func
 smf_timer_stop = 0x800a6ec8; // type:func
 smf_vsync = 0x800a6f14; // type:func
+
+// smf_mid.c
 MemCmp = 0x800a6fb8; // type:func
 readMThd = 0x800a6ffc; // type:func
 readMTrk = 0x800a70bc; // type:func
@@ -473,12 +478,12 @@ midi_smf_main = 0x800a8950; // type:func
 midi_smf_stop = 0x800a8c74; // type:func
 midi_smf_stat = 0x800a8d00; // type:func
 
-// konami libsd globals
+// konami libsd globals (smf_def.c?)
 sd_interrupt_start_flag = 0x800B143C;
 sd_keyoff_mode = 0x800B1440;
 sd_mono_st_flag = 0x800B1444;
 sd_reverb_mode = 0x800B1448;
-sd_vab_transfer_offset = 0x800B144C; // type:u32 guessed name
+body_partly_size = 0x800B144C; // type:u32
 sd_reverb_area_size = 0x800B1450;
 PitchTbl = 0x800B1728;
 random_tbl = 0x800B2328;
