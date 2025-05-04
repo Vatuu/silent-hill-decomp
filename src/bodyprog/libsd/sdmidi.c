@@ -617,7 +617,7 @@ void key_press() {} // 0x800A5DCC
 
 VagAtr* get_vab_tone(MIDI* midiTrack, u16 tone, u8 midiChannel) // 0x800A5DD4
 {
-    s_VabHeader* vab;
+    SD_VAB_H* vab;
 
     if (midiTrack->bank_change_5A > 16)
     {
@@ -628,7 +628,7 @@ VagAtr* get_vab_tone(MIDI* midiTrack, u16 tone, u8 midiChannel) // 0x800A5DD4
         vab = vab_h[midiTrack->bank_change_5A].vh_addr_4;
     }
 
-    return &vab->vag[(midiTrack->prog_no_0 * 16) + tone];
+    return &vab->vag_atr[(midiTrack->prog_no_0 * 16) + tone];
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmidi", smf_data_entry);

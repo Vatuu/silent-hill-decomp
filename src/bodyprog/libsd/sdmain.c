@@ -6,20 +6,20 @@
 
 void tone_adsr_mem(s16 vabid) // 0x8009EDA4
 {
-    s_VabHeader* vabData;
-    VagAtr*      vagAtr;
-    VabHdr*      vabHdr;
-    s32          vagNum;
-    s32          progNum;
+    SD_VAB_H* vabData;
+    VagAtr*   vagAtr;
+    VabHdr*   vabHdr;
+    s32       vagNum;
+    s32       progNum;
 
     vabData = vab_h[vabid].vh_addr_4;
-    vabHdr  = &vabData->header;
+    vabHdr  = &vabData->vab_h;
 
     for (progNum = 0; progNum < vabHdr->ps; progNum++)
     {
         for (vagNum = 0; vagNum < 0x10; vagNum++)
         {
-            vagAtr = &vabData->vag[(progNum * 0x10) + vagNum];
+            vagAtr = &vabData->vag_atr[(progNum * 0x10) + vagNum];
 
             vagAtr->reserved[0] = vagAtr->adsr1;
             vagAtr->reserved[1] = vagAtr->adsr2;
@@ -29,20 +29,20 @@ void tone_adsr_mem(s16 vabid) // 0x8009EDA4
 
 void tone_adsr_back(s16 vabid) // 0x8009EE30
 {
-    s_VabHeader* vabData;
-    VagAtr*      vagAtr;
-    VabHdr*      vabHdr;
-    s32          vagNum;
-    s32          progNum;
+    SD_VAB_H* vabData;
+    VagAtr*   vagAtr;
+    VabHdr*   vabHdr;
+    s32       vagNum;
+    s32       progNum;
 
     vabData = vab_h[vabid].vh_addr_4;
-    vabHdr  = &vabData->header;
+    vabHdr  = &vabData->vab_h;
 
     for (progNum = 0; progNum < vabHdr->ps; progNum++)
     {
         for (vagNum = 0; vagNum < 0x10; vagNum++)
         {
-            vagAtr = &vabData->vag[(progNum * 0x10) + vagNum];
+            vagAtr = &vabData->vag_atr[(progNum * 0x10) + vagNum];
 
             vagAtr->adsr1 = vagAtr->reserved[0];
             vagAtr->adsr2 = vagAtr->reserved[1];

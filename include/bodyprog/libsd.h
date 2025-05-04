@@ -48,25 +48,25 @@ extern s32 smf_file_no;
 
 extern u32 spu_ch_tbl[24];
 
-typedef struct
+typedef struct SD_Vab_H
 {
-    VabHdr  header;
-    ProgAtr prog[128];
-    VagAtr  vag[0]; // 16 per program/
-} s_VabHeader;
+    VabHdr  vab_h;
+    ProgAtr vab_prog[128];
+    VagAtr  vag_atr[256]; // 16 per program.
+} SD_VAB_H;
 
 typedef struct Vab_h
 {
-    s16            vab_id_0;
-    s_VabHeader*   vh_addr_4;
-    s32            vh_size_8;
-    s32            vb_addr_C;
-    s32            vb_start_addr_10;
-    s32            vb_size_14;
-    s8             mvol_18; // these s8s are u8 in soundcd.irx
-    s8             mvoll_19;
-    s8             mvolr_1A;
-    s8             mpan_1B;
+    s16       vab_id_0;
+    SD_VAB_H* vh_addr_4;
+    s32       vh_size_8;
+    s32       vb_addr_C;
+    s32       vb_start_addr_10;
+    s32       vb_size_14;
+    s8        mvol_18; // these s8s are u8 in soundcd.irx
+    s8        mvoll_19;
+    s8        mvolr_1A;
+    s8        mpan_1B;
 } VAB_H;
 STATIC_ASSERT_SIZEOF(VAB_H, 28);
 
