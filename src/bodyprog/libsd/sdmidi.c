@@ -54,7 +54,7 @@ void tre_calc(s_SMF_PORT* midiPort) // 0x800A3B20
 
         midiPort->trec_33 += midiPort->trecad_3B;
         midiPort->trecadw2_31 = 0;
-        if (midiPort->trec_33 < 0) // `field_33`, `u8` to `s8`.
+        if (midiPort->trec_33 < 0)
         {
             var1 = -midiPort->trec_33 * 2;
             if (var1 < 0)
@@ -260,9 +260,9 @@ void smf_vol_set(s32 midiChannel, s32 voice, s32 volLeft, s32 volRight) // 0x800
 
     if (volLeft | volRight)
     {
-        s_attr.volume.left  = (volLeft * smf_song[midiChannel >> 4].vol_left_50C) >> 7;
-        s_attr.volume.right = (volRight * smf_song[midiChannel >> 4].vol_right_50E) >> 7;
-        if (smf_midi[midiChannel].field_21 || smf_song[midiChannel >> 4].seq_wide_534)
+        s_attr.volume.left  = (volLeft * smf_song[midiChannel >> 4].sd_seq_mvoll_50C) >> 7;
+        s_attr.volume.right = (volRight * smf_song[midiChannel >> 4].sd_seq_mvolr_50E) >> 7;
+        if (smf_midi[midiChannel].wide_flag_21 || smf_song[midiChannel >> 4].seq_wide_flag_534)
         {
             s_attr.volume.right = -s_attr.volume.right;
         }
@@ -331,12 +331,12 @@ void pitch_calc(s_SMF_PORT* midiPort, s32 forceSpuUpdate) // 0x800A4494
     s32         temp_a0;
 
     midi = &smf_midi[midiPort->midi_ch_3];
-    if (midiPort->vibdm_26 != 0 || midi->field_2 != 0 || midi->portamentoTime_28 != 0 || midiPort->rdms_43 != 0 || midi->pitchBendFine_7 != midiPort->pbend_wk_4E || forceSpuUpdate)
+    if (midiPort->vibdm_26 != 0 || midi->mod_2 != 0 || midi->porta_28 != 0 || midiPort->rdms_43 != 0 || midi->pbend_7 != midiPort->pbend_wk_4E || forceSpuUpdate)
     {
-        midiPort->pbend_wk_4E = midi->pitchBendFine_7;
+        midiPort->pbend_wk_4E = midi->pbend_7;
 
-        temp_s0 = midiPort->rdmd_40 + (midiPort->vib_data_2E + ((u16)midi->field_1C + (u16)midi->field_2A));
-        temp_s0 += (midiPort->note_wk_8 << 7) + pitch_bend_calc(midiPort, midi->pitchBendFine_7, midi);
+        temp_s0 = midiPort->rdmd_40 + (midiPort->vib_data_2E + ((u16)midi->mod_depth_1C + (u16)midi->porta_depth_2A));
+        temp_s0 += (midiPort->note_wk_8 << 7) + pitch_bend_calc(midiPort, midi->pbend_7, midi);
         temp_a0 = temp_s0 << 16;
 
         s_attr.mask  = SPU_VOICE_PITCH;
@@ -354,60 +354,60 @@ void pitch_calc(s_SMF_PORT* midiPort, s32 forceSpuUpdate) // 0x800A4494
 
 void midi_mod(s_SMF_MIDI* midiTrack) // 0x800A4608
 {
-    if (midiTrack->field_2 != 0)
+    if (midiTrack->mod_2 != 0)
     {
-        if (midiTrack->field_14 != 0)
+        if (midiTrack->mod_w_14 != 0)
         {
-            if ((midiTrack->field_1C + midiTrack->field_1A) < midiTrack->field_1E)
+            if ((midiTrack->mod_depth_1C + midiTrack->mod_add_1A) < midiTrack->mod_limit_1E)
             {
-                midiTrack->field_1C += midiTrack->field_1A;
+                midiTrack->mod_depth_1C += midiTrack->mod_add_1A;
             }
             else
             {
-                midiTrack->field_14 = 0;
-                midiTrack->field_1C = midiTrack->field_1E;
+                midiTrack->mod_w_14     = 0;
+                midiTrack->mod_depth_1C = midiTrack->mod_limit_1E;
             }
         }
-        else if ((midiTrack->field_1C - midiTrack->field_1A) > -midiTrack->field_1E)
+        else if ((midiTrack->mod_depth_1C - midiTrack->mod_add_1A) > -midiTrack->mod_limit_1E)
         {
-            midiTrack->field_1C -= midiTrack->field_1A;
+            midiTrack->mod_depth_1C -= midiTrack->mod_add_1A;
         }
         else
         {
-            midiTrack->field_14 = 1;
-            midiTrack->field_1C = -midiTrack->field_1E;
+            midiTrack->mod_w_14     = 1;
+            midiTrack->mod_depth_1C = -midiTrack->mod_limit_1E;
         }
     }
     else
     {
-        midiTrack->field_1C = 0;
+        midiTrack->mod_depth_1C = 0;
     }
 }
 
 void midi_porta(s_SMF_MIDI* midiTrack) // 0x800A46B8
 {
-    if (midiTrack->portamentoTime_28 != 0)
+    if (midiTrack->porta_28 != 0)
     {
-        if (midiTrack->field_30 != 0)
+        if (midiTrack->porta_wk_30 != 0)
         {
-            if ((midiTrack->field_2A + midiTrack->field_2C) < midiTrack->field_2E)
+            if ((midiTrack->porta_depth_2A + midiTrack->porta_add_2C) < midiTrack->porta_limit_2E)
             {
-                midiTrack->field_2A += midiTrack->field_2C;
+                midiTrack->porta_depth_2A += midiTrack->porta_add_2C;
             }
             else
             {
-                midiTrack->field_2A = midiTrack->field_2E;
+                midiTrack->porta_depth_2A = midiTrack->porta_limit_2E;
             }
         }
         else
         {
-            if ((midiTrack->field_2C - midiTrack->field_2A) < midiTrack->field_2E)
+            if ((midiTrack->porta_add_2C - midiTrack->porta_depth_2A) < midiTrack->porta_limit_2E)
             {
-                midiTrack->field_2A -= midiTrack->field_2C;
+                midiTrack->porta_depth_2A -= midiTrack->porta_add_2C;
             }
             else
             {
-                midiTrack->field_2A = -midiTrack->field_2E;
+                midiTrack->porta_depth_2A = -midiTrack->porta_limit_2E;
             }
         }
     }
@@ -417,26 +417,26 @@ void replay_reverb_set(s16 seq_access_num) // 0x800A4748
 {
     SpuReverbAttr reverb;
 
-    if (smf_song[seq_access_num].field_532 != 0)
+    if (smf_song[seq_access_num].seq_rev_set_flag_532 != 0)
     {
-        if (smf_song[seq_access_num].field_532 & 1)
+        if (smf_song[seq_access_num].seq_rev_set_flag_532 & 1)
         {
             reverb.mask = SPU_REV_DEPTHL | SPU_REV_DEPTHR;
-            if (smf_song[seq_access_num].field_532 << 8 < smf_song[seq_access_num].field_536)
+            if (smf_song[seq_access_num].seq_rev_set_flag_532 << 8 < smf_song[seq_access_num].seq_reverb_depth_536)
             {
-                reverb.depth.left = reverb.depth.right = smf_song[seq_access_num].field_532 << 8;
+                reverb.depth.left = reverb.depth.right = smf_song[seq_access_num].seq_rev_set_flag_532 << 8;
             }
             else
             {
-                reverb.depth.left = reverb.depth.right = smf_song[seq_access_num].field_536;
-                smf_song[seq_access_num].field_532     = 0;
-                return; // BUG: Returns before setting field_536 as reverb?
+                reverb.depth.left = reverb.depth.right        = smf_song[seq_access_num].seq_reverb_depth_536;
+                smf_song[seq_access_num].seq_rev_set_flag_532 = 0;
+                return; // BUG: Returns before setting seq_reverb_depth_536 as reverb? (fixed in soundcd.irx)
             }
 
             SpuSetReverbModeParam(&reverb);
             SpuSetReverb(1);
         }
-        smf_song[seq_access_num].field_532 += 2;
+        smf_song[seq_access_num].seq_rev_set_flag_532 += 2;
     }
 }
 
@@ -447,7 +447,7 @@ void midi_vsync() // 0x800A4838
 
     for (device = 0; device < 2; device++)
     {
-        if (smf_song[device].play_status_50A == 1)
+        if (smf_song[device].sd_seq_stat_50A == 1)
         {
             for (channel = 0; channel < 16; channel++)
             {
@@ -460,14 +460,14 @@ void midi_vsync() // 0x800A4838
     for (channel = 0; channel < sd_reserved_voice; channel++)
     {
         u8 midi_num = smf_port[channel].midi_ch_3;
-        if (midi_num < 32 && smf_song[midi_num >> 4].play_status_50A == 1)
+        if (midi_num < 32 && smf_song[midi_num >> 4].sd_seq_stat_50A == 1)
         {
             vib_calc(&smf_port[channel]);
             tre_calc(&smf_port[channel]);
             random_calc(&smf_port[channel]);
             pitch_calc(&smf_port[channel], 0);
 
-            if (smf_song[(u8)smf_port[channel].midi_ch_3 >> 4].field_530 != 0)
+            if (smf_song[(u8)smf_port[channel].midi_ch_3 >> 4].seq_vol_set_flag_530 != 0)
             {
                 smf_vol_set(smf_port[channel].midi_ch_3, channel, smf_port[channel].l_vol_C, smf_port[channel].r_vol_E);
             }
@@ -476,12 +476,12 @@ void midi_vsync() // 0x800A4838
 
     for (device = 0; device < 2; device++)
     {
-        if (smf_song[device].play_status_50A == 1)
+        if (smf_song[device].sd_seq_stat_50A == 1)
         {
             replay_reverb_set(device);
-            if (smf_song[device].field_530 != 0)
+            if (smf_song[device].seq_vol_set_flag_530 != 0)
             {
-                smf_song[device].field_530 = 0;
+                smf_song[device].seq_vol_set_flag_530 = 0;
             }
         }
     }
@@ -524,16 +524,16 @@ void sound_off() // 0x800A4D20
         while (keyStatus != 2 && keyStatus != 0);
     }
 
-    smf_midi_sound_off.vol_3                = 0x7F;
+    smf_midi_sound_off.mvol_3               = 0x7F;
     smf_midi_sound_off.pan_1                = 0x40;
-    smf_midi_sound_off.pitchBendFine_7      = 0x40;
-    smf_midi_sound_off.damperPedalEnabled_6 = 0;
-    smf_midi_sound_off.expression_5         = 0x7F;
-    smf_midi_sound_off.field_8              = 0x7F;
-    smf_midi_sound_off.field_C              = 0x7F;
-    smf_midi_sound_off.field_2              = 0;
-    smf_midi_sound_off.field_32             = 0;
-    smf_midi_sound_off.portamentoTime_28    = 0;
+    smf_midi_sound_off.pbend_7              = 0x40;
+    smf_midi_sound_off.pedal_6              = 0;
+    smf_midi_sound_off.express_5            = 0x7F;
+    smf_midi_sound_off.l_vol_8              = 0x7F;
+    smf_midi_sound_off.r_vol_C              = 0x7F;
+    smf_midi_sound_off.mod_2                = 0;
+    smf_midi_sound_off.pitch_32             = 0;
+    smf_midi_sound_off.porta_28             = 0;
 
     do
     {
@@ -619,16 +619,16 @@ VagAtr* get_vab_tone(s_SMF_MIDI* midiTrack, u16 tone, u8 midiChannel) // 0x800A5
 {
     s_VabHeader* vab;
 
-    if (midiTrack->bank_idx_5A > 16)
+    if (midiTrack->bank_change_5A > 16)
     {
-        vab = vab_h[smf_song[midiChannel >> 4].vab_id_508].vab_header_4;
+        vab = vab_h[smf_song[midiChannel >> 4].sd_seq_vab_id_508].vh_addr_4;
     }
     else
     {
-        vab = vab_h[midiTrack->bank_idx_5A].vab_header_4;
+        vab = vab_h[midiTrack->bank_change_5A].vh_addr_4;
     }
 
-    return &vab->vag[(midiTrack->vabProgNum_0 * 16) + tone];
+    return &vab->vag[(midiTrack->prog_no_0 * 16) + tone];
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmidi", smf_data_entry);
@@ -637,14 +637,14 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmidi", control_change);
 
 void program_change(u8 midiChannel, u8 progNum) // 0x800A6C2C
 {
-    smf_midi[midiChannel].vabProgNum_0 = progNum;
+    smf_midi[midiChannel].prog_no_0 = progNum;
 }
 
 void chan_press() {} // 0x800A6C58
 
 void pitch_bend(u8 midiChannel, s32 unused, u8 pitchBend)
 {
-    smf_midi[midiChannel].pitchBendFine_7 = pitchBend & 0x7F;
+    smf_midi[midiChannel].pbend_7 = pitchBend & 0x7F;
     set_midi_info(1, midiChannel, pitchBend);
 }
 

@@ -128,12 +128,12 @@ s32 readMThd(u32 offset) // 0x800A6FFC
     extern char D_8002E538[4]; // "MThd"
     while (true)
     {
-        if (!MemCmp(D_8002E538, smf_song[smf_file_no].play_ptr_504 + offset, 4))
+        if (!MemCmp(D_8002E538, smf_song[smf_file_no].mf_data_ptr_504 + offset, 4))
         {
             return offset + 4;
         }
 
-        if (smf_song[smf_file_no].field_518 < ++offset)
+        if (smf_song[smf_file_no].mf_data_size_518 < ++offset)
         {
             return -1;
         }
@@ -148,12 +148,12 @@ s32 readMTrk(u32 offset) // 0x800A70BC
 
     while (true)
     {
-        if (!MemCmp(D_8002E540, smf_song[smf_file_no].play_ptr_504 + offset, 4))
+        if (!MemCmp(D_8002E540, smf_song[smf_file_no].mf_data_ptr_504 + offset, 4))
         {
             return offset + 4;
         }
 
-        if (smf_song[smf_file_no].field_518 < ++offset)
+        if (smf_song[smf_file_no].mf_data_size_518 < ++offset)
         {
             return -1;
         }
@@ -168,12 +168,12 @@ s32 readEOF(u32 offset) // 0x800A717C
 
     while (true)
     {
-        if (!MemCmp(&D_800B25C4, smf_song[smf_file_no].play_ptr_504 + offset, 3))
+        if (!MemCmp(&D_800B25C4, smf_song[smf_file_no].mf_data_ptr_504 + offset, 3))
         {
             return offset + 3;
         }
 
-        if (smf_song[smf_file_no].field_518 < ++offset)
+        if (smf_song[smf_file_no].mf_data_size_518 < ++offset)
         {
             return -1;
         }
@@ -184,13 +184,13 @@ s32 readEOF(u32 offset) // 0x800A717C
 
 s32 egetc(s_SMF_TRACK_S* track) // 0x800A723C
 {
-    u32 ret = smf_song[smf_file_no].play_ptr_504[track->dword0];
+    u32 ret = smf_song[smf_file_no].mf_data_ptr_504[track->mf_data_loc_0];
 
-    track->dword0++;
+    track->mf_data_loc_0++;
 
-    if (smf_song[smf_file_no].field_518 < track->dword0)
+    if (smf_song[smf_file_no].mf_data_size_518 < track->mf_data_loc_0)
     {
-        track->byte20 = 1;
+        track->mf_eof_flag_20 = 1;
         return -1;
     }
 
@@ -211,7 +211,7 @@ s32 readvarinum(s_SMF_TRACK_S* track) // 0x800A72B4
 
     if (curByte == -1)
     {
-        track->byte20 = 1;
+        track->mf_eof_flag_20 = 1;
         return 0;
     }
 
@@ -290,60 +290,60 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmidi2", readtrack2);
 
 s32 track_head_read(s_SMF_TRACK_S* track)
 {
-    track->dword0 = readMTrk(track->dword0);
-    if (track->dword0 == NO_VALUE)
+    track->mf_data_loc_0 = readMTrk(track->mf_data_loc_0);
+    if (track->mf_data_loc_0 == NO_VALUE)
     {
         return 1;
     }
 
-    track->dword8  = read32bit(track);
-    track->dword10 = track->dword0;
-    track->dwordC  = track->dword0 + track->dword8;
+    track->mf_track_length_8 = read32bit(track);
+    track->mf_repeat_ptr_10  = track->mf_data_loc_0;
+    track->mf_track_size_C   = track->mf_data_loc_0 + track->mf_track_length_8;
     return 0;
 }
 
 void delta_time_conv(s_SMF_TRACK_S* track) // 0x800A84B0
 {
-    switch (smf_song[smf_file_no].midi_ppqn_528)
+    switch (smf_song[smf_file_no].mf_division_528)
     {
         case 48:
-            track->deltaTimeTicks_1C *= 10;
-            track->deltaTimeTicks_1C += track->deltaTimeRemainder_18;
-            track->deltaTimeRemainder_18 = track->deltaTimeTicks_1C & 3;
-            track->deltaTimeTicks_1C /= 4;
+            track->mf_delta_time_1C *= 10;
+            track->mf_delta_time_1C += track->time_hosei_18;
+            track->time_hosei_18 = track->mf_delta_time_1C & 3;
+            track->mf_delta_time_1C /= 4;
             break;
 
         case 96:
-            track->deltaTimeTicks_1C *= 5;
-            track->deltaTimeTicks_1C += track->deltaTimeRemainder_18;
-            track->deltaTimeRemainder_18 = track->deltaTimeTicks_1C & 3;
-            track->deltaTimeTicks_1C /= 4;
+            track->mf_delta_time_1C *= 5;
+            track->mf_delta_time_1C += track->time_hosei_18;
+            track->time_hosei_18 = track->mf_delta_time_1C & 3;
+            track->mf_delta_time_1C /= 4;
             break;
 
         case 192:
         case 240:
-            track->deltaTimeTicks_1C += track->deltaTimeRemainder_18;
-            track->deltaTimeRemainder_18 = track->deltaTimeTicks_1C & 1;
-            track->deltaTimeTicks_1C /= 2;
+            track->mf_delta_time_1C += track->time_hosei_18;
+            track->time_hosei_18 = track->mf_delta_time_1C & 1;
+            track->mf_delta_time_1C /= 2;
             break;
 
         case 288:
         case 360:
-            track->deltaTimeTicks_1C /= 3;
+            track->mf_delta_time_1C /= 3;
             break;
 
         case 480:
         case 384:
-            track->deltaTimeTicks_1C += track->deltaTimeRemainder_18;
-            track->deltaTimeRemainder_18 = track->deltaTimeTicks_1C & 3;
-            track->deltaTimeTicks_1C /= 4;
+            track->mf_delta_time_1C += track->time_hosei_18;
+            track->time_hosei_18 = track->mf_delta_time_1C & 3;
+            track->mf_delta_time_1C /= 4;
             break;
 
         case 768:
         case 960:
-            track->deltaTimeTicks_1C += track->deltaTimeRemainder_18;
-            track->deltaTimeRemainder_18 = track->deltaTimeTicks_1C & 7;
-            track->deltaTimeTicks_1C /= 8;
+            track->mf_delta_time_1C += track->time_hosei_18;
+            track->time_hosei_18 = track->mf_delta_time_1C & 7;
+            track->mf_delta_time_1C /= 8;
             break;
 
         default:
@@ -361,8 +361,8 @@ void midi_smf_stop(s32 seq_access_num) // 0x800A8C74
 
     for (i = 0; i < smf_song[seq_access_num].num_tracks_526; i++)
     {
-        smf_song[seq_access_num].tracks_0[i].byte20 = 1;
-        smf_song[seq_access_num].tracks_0[i].dword0 = 0;
+        smf_song[seq_access_num].tracks_0[i].mf_eof_flag_20 = 1;
+        smf_song[seq_access_num].tracks_0[i].mf_data_loc_0  = 0;
     }
 }
 
@@ -372,7 +372,7 @@ s16 midi_smf_stat(s32 seq_access_num) // 0x800A8D00
 
     for (i = 0; i < smf_song[seq_access_num].num_tracks_526; i++)
     {
-        if (smf_song[seq_access_num].tracks_0[i].byte20 != 1)
+        if (smf_song[seq_access_num].tracks_0[i].mf_eof_flag_20 != 1)
         {
             return 1;
         }

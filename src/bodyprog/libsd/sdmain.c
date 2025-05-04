@@ -12,7 +12,7 @@ void tone_adsr_mem(s16 vabid) // 0x8009EDA4
     s32          vagNum;
     s32          progNum;
 
-    vabData = vab_h[vabid].vab_header_4;
+    vabData = vab_h[vabid].vh_addr_4;
     vabHdr  = &vabData->header;
 
     for (progNum = 0; progNum < vabHdr->ps; progNum++)
@@ -35,7 +35,7 @@ void tone_adsr_back(s16 vabid) // 0x8009EE30
     s32          vagNum;
     s32          progNum;
 
-    vabData = vab_h[vabid].vab_header_4;
+    vabData = vab_h[vabid].vh_addr_4;
     vabHdr  = &vabData->header;
 
     for (progNum = 0; progNum < vabHdr->ps; progNum++)
@@ -121,19 +121,19 @@ void SdWorkInit() // 0x8009F400
     for (i = 0; i < SD_VAB_SLOTS; i++)
     {
         vab_h[i].vab_id_0      = -1;
-        vab_h[i].field_19      = 0x7F;
-        vab_h[i].field_1A      = 0x7F;
-        vab_h[i].master_pan_1B = 0x40;
+        vab_h[i].mvoll_19      = 0x7F;
+        vab_h[i].mvolr_1A      = 0x7F;
+        vab_h[i].mpan_1B       = 0x40;
         sd_spu_alloc[i].size_4 = 0;
         sd_spu_alloc[i].addr_0 = 0;
     }
 
     for (i = 0; i < 2; i++)
     {
-        smf_song[i].vab_id_508      = -1;
-        smf_song[i].play_status_50A = 0;
-        smf_song[i].vol_right_50E   = 0x7F;
-        smf_song[i].vol_left_50C    = 0x7F;
+        smf_song[i].sd_seq_vab_id_508 = -1;
+        smf_song[i].sd_seq_stat_50A   = 0;
+        smf_song[i].sd_seq_mvolr_50E  = 0x7F;
+        smf_song[i].sd_seq_mvoll_50C  = 0x7F;
     }
 
     sd_tick_mode = 4096;
@@ -223,7 +223,7 @@ void SdEnd() // 0x8009F5C0
     {
         if (vab_h[i].vab_id_0 >= 0)
         {
-            SdSpuFree(vab_h[i].vab_start_10);
+            SdSpuFree(vab_h[i].vb_start_addr_10);
         }
     }
 
@@ -329,10 +329,10 @@ s16 SdVabTransBody(u8* addr, s16 vabid) // 0x8009FD38
     vab_h_id = vab_h[vabid].vab_id_0;
     if (vab_h_id >= 0 && vab_h_id == vabid)
     {
-        SpuSetTransferStartAddr(vab_h[vabid].vab_start_10);
-        if (SpuWrite(addr, vab_h[vabid].vab_total_14) == vab_h[vabid].vab_total_14)
+        SpuSetTransferStartAddr(vab_h[vabid].vb_start_addr_10);
+        if (SpuWrite(addr, vab_h[vabid].vb_size_14) == vab_h[vabid].vb_size_14)
         {
-            vab_h[vabid].vab_addr_C = addr;
+            vab_h[vabid].vb_addr_C = addr;
             return vab_h_id;
         }
     }
@@ -355,10 +355,10 @@ s16 SdVabTransBodyPartly(u8* addr, u32 bufsize, s16 vabid) // 0x8009FDDC
 
     if (vab_h_id >= 0 && vab_h_id == vabid)
     {
-        SpuSetTransferStartAddr(vab_h[vabid].vab_start_10 + sd_vab_transfer_offset);
-        if (vab_h[vabid].vab_total_14 - sd_vab_transfer_offset < bufsize)
+        SpuSetTransferStartAddr(vab_h[vabid].vb_start_addr_10 + sd_vab_transfer_offset);
+        if (vab_h[vabid].vb_size_14 - sd_vab_transfer_offset < bufsize)
         {
-            bufsize = vab_h[vabid].vab_total_14 - sd_vab_transfer_offset;
+            bufsize = vab_h[vabid].vb_size_14 - sd_vab_transfer_offset;
         }
         if (SpuWrite(addr, bufsize) != bufsize)
         {
@@ -368,7 +368,7 @@ s16 SdVabTransBodyPartly(u8* addr, u32 bufsize, s16 vabid) // 0x8009FDDC
         sd_vab_transfer_offset += bufsize;
         retval = vab_h_id;
 
-        if (sd_vab_transfer_offset < vab_h[vabid].vab_total_14)
+        if (sd_vab_transfer_offset < vab_h[vabid].vb_size_14)
         {
             return -2;
         }
@@ -392,7 +392,7 @@ void SdVabClose(s16 vab_id) // 0x8009FF00
 {
     if (vab_h[vab_id].vab_id_0 != -1)
     {
-        SdSpuFree(vab_h[vab_id].vab_start_10);
+        SdSpuFree(vab_h[vab_id].vb_start_addr_10);
         vab_h[vab_id].vab_id_0 = -1;
     }
 }
@@ -457,11 +457,11 @@ s16 SdSeqOpen(s32* addr, s16 vab_id) // 0x800A00A4
 
     for (i = 0; i < 2; i++)
     {
-        if (smf_song[i].vab_id_508 == -1)
+        if (smf_song[i].sd_seq_vab_id_508 == -1)
         {
-            smf_song[i].play_status_50A  = 2;
-            smf_song[i].seq_data_ptr_514 = addr;
-            smf_song[i].vab_id_508       = vab_id;
+            smf_song[i].sd_seq_stat_50A       = 2;
+            smf_song[i].sd_seq_start_addr_514 = addr;
+            smf_song[i].sd_seq_vab_id_508     = vab_id;
             sd_int_flag                  = 0;
             return i;
         }
@@ -480,11 +480,11 @@ s16 SdSeqOpenWithAccNum(s32* addr, s16 vab_id, s16 seq_access_num) // 0x800A0154
         return -1;
     }
 
-    if (smf_song[seq_access_num].vab_id_508 == -1)
+    if (smf_song[seq_access_num].sd_seq_vab_id_508 == -1)
     {
-        smf_song[seq_access_num].play_status_50A  = 2;
-        smf_song[seq_access_num].seq_data_ptr_514 = addr;
-        smf_song[seq_access_num].vab_id_508       = vab_id;
+        smf_song[seq_access_num].sd_seq_stat_50A       = 2;
+        smf_song[seq_access_num].sd_seq_start_addr_514 = addr;
+        smf_song[seq_access_num].sd_seq_vab_id_508     = vab_id;
         sd_int_flag                               = 0;
         return seq_access_num;
     }
@@ -502,7 +502,7 @@ void SdSeqPlay(s16 seq_access_num, u8 play_mode, s16 l_count) // 0x800A0210
 
     sd_int_flag = 1;
 
-    if (smf_song[seq_access_num].vab_id_508 == -1)
+    if (smf_song[seq_access_num].sd_seq_vab_id_508 == -1)
     {
         sd_int_flag = 0;
         return;
@@ -510,19 +510,19 @@ void SdSeqPlay(s16 seq_access_num, u8 play_mode, s16 l_count) // 0x800A0210
 
     sd_seq_loop_mode = l_count;
 
-    smf_song[seq_access_num].field_518    = 0x10000;
-    smf_song[seq_access_num].play_ptr_504 = smf_song[seq_access_num].seq_data_ptr_514;
+    smf_song[seq_access_num].mf_data_size_518 = 0x10000;
+    smf_song[seq_access_num].mf_data_ptr_504  = smf_song[seq_access_num].sd_seq_start_addr_514;
 
     midi_file_out(seq_access_num);
 
     if (!play_mode)
     {
-        smf_song[seq_access_num].play_status_50A = 4;
+        smf_song[seq_access_num].sd_seq_stat_50A = 4;
     }
     else
     {
         smf_start_flag                           = 1;
-        smf_song[seq_access_num].play_status_50A = 1;
+        smf_song[seq_access_num].sd_seq_stat_50A = 1;
     }
 
     sd_int_flag = 0;
@@ -535,15 +535,15 @@ void SdSeqStop(s16 seq_access_num) // 0x800A02D8
         return;
     }
 
-    if (smf_song[seq_access_num].vab_id_508 != -1)
+    if (smf_song[seq_access_num].sd_seq_vab_id_508 != -1)
     {
         sd_int_flag = 1;
 
         midi_smf_stop(seq_access_num);
         sound_seq_off(seq_access_num);
-        smf_song[seq_access_num].vol_right_50E   = 127;
-        smf_song[seq_access_num].vol_left_50C    = 127;
-        smf_song[seq_access_num].play_status_50A = 2;
+        smf_song[seq_access_num].sd_seq_mvolr_50E = 127;
+        smf_song[seq_access_num].sd_seq_mvoll_50C = 127;
+        smf_song[seq_access_num].sd_seq_stat_50A  = 2;
 
         sd_int_flag = 0;
     }
@@ -556,15 +556,15 @@ void SdSeqClose(s16 seq_access_num) // 0x800A037C
         return;
     }
 
-    if (smf_song[seq_access_num].vab_id_508 != -1)
+    if (smf_song[seq_access_num].sd_seq_vab_id_508 != -1)
     {
         sd_int_flag = 1;
 
-        tone_adsr_back(smf_song[seq_access_num].vab_id_508);
-        smf_song[seq_access_num].vab_id_508      = -1;
-        smf_song[seq_access_num].play_status_50A = 0;
-        smf_song[seq_access_num].vol_right_50E   = 127;
-        smf_song[seq_access_num].vol_left_50C    = 127;
+        tone_adsr_back(smf_song[seq_access_num].sd_seq_vab_id_508);
+        smf_song[seq_access_num].sd_seq_vab_id_508 = -1;
+        smf_song[seq_access_num].sd_seq_stat_50A   = 0;
+        smf_song[seq_access_num].sd_seq_mvolr_50E  = 127;
+        smf_song[seq_access_num].sd_seq_mvoll_50C  = 127;
 
         sd_int_flag = 0;
     }
@@ -594,7 +594,7 @@ void SdSeqPause(s16 seq_access_num) // 0x800A0418
         }
     }
 
-    smf_song[seq_access_num].play_status_50A = 4;
+    smf_song[seq_access_num].sd_seq_stat_50A = 4;
 
     sd_int_flag = 0;
 }
@@ -620,23 +620,23 @@ void SdSeqReplay(s16 seq_access_num) // 0x800A0534
         {
             voice.mask         = (SPU_VOICE_VOLL | SPU_VOICE_VOLR);
             voice.voice        = spu_ch_tbl[i];
-            voice.volume.left  = ((smf_port[i].l_vol_C * smf_song[temp_v1].vol_left_50C) >> 7);
-            voice.volume.right = ((smf_port[i].r_vol_E * smf_song[temp_v1].vol_right_50E) >> 7);
+            voice.volume.left  = ((smf_port[i].l_vol_C * smf_song[temp_v1].sd_seq_mvoll_50C) >> 7);
+            voice.volume.right = ((smf_port[i].r_vol_E * smf_song[temp_v1].sd_seq_mvolr_50E) >> 7);
             SpuSetVoiceAttr(&voice);
         }
     }
 
-    if (smf_song[seq_access_num].field_536 != 0)
+    if (smf_song[seq_access_num].seq_reverb_depth_536 != 0)
     {
         reverb.mask        = (SPU_REV_DEPTHL | SPU_REV_DEPTHR);
         reverb.depth.right = 0;
         reverb.depth.left  = 0;
         SpuSetReverbModeParam(&reverb);
         SpuSetReverb(1);
-        smf_song[seq_access_num].field_532 = 1;
+        smf_song[seq_access_num].seq_rev_set_flag_532 = 1;
     }
 
-    smf_song[seq_access_num].play_status_50A = 1;
+    smf_song[seq_access_num].sd_seq_stat_50A = 1;
     control_code_set(seq_access_num);
 
     sd_int_flag = 0;
@@ -644,18 +644,18 @@ void SdSeqReplay(s16 seq_access_num) // 0x800A0534
 
 void SdSeqSetVol(s16 seq_access_num, s16 voll, s16 volr) // 0x800A06F0
 {
-    smf_song[seq_access_num].vol_left_50C  = voll & 0x7F;
-    smf_song[seq_access_num].vol_right_50E = volr & 0x7F;
-    if (smf_song[seq_access_num].play_status_50A != 2)
+    smf_song[seq_access_num].sd_seq_mvoll_50C = voll & 0x7F;
+    smf_song[seq_access_num].sd_seq_mvolr_50E = volr & 0x7F;
+    if (smf_song[seq_access_num].sd_seq_stat_50A != 2)
     {
-        smf_song[seq_access_num].field_530 = 1;
+        smf_song[seq_access_num].seq_vol_set_flag_530 = 1;
     }
 }
 
 void SdSeqGetVol(s16 seq_access_num, s16* voll, s16* volr) // 0x800A074C
 {
-    *voll = smf_song[seq_access_num].vol_left_50C;
-    *volr = smf_song[seq_access_num].vol_right_50E;
+    *voll = smf_song[seq_access_num].sd_seq_mvoll_50C;
+    *volr = smf_song[seq_access_num].sd_seq_mvolr_50E;
 }
 
 void SdUtFlush() // 0x800A0794
@@ -769,7 +769,7 @@ s32 SdUtGetVabHdr(s16 vabId, VabHdr* vabhdrptr) // 0x800A0A40
     }
 
     dest = (u8*)vabhdrptr;
-    src  = (u8*)vab_h[vabId].vab_header_4;
+    src  = (u8*)vab_h[vabId].vh_addr_4;
 
     for (i = 0; i < sizeof(VabHdr); i++)
     {
@@ -925,12 +925,12 @@ s32 SdUtKeyOffVWithRROff(s16 voice) // 0x800A1A18
 
 s16 SdGetSeqStatus(s16 seq_access_num) // 0x800A1B14
 {
-    if (smf_song[seq_access_num].play_status_50A == 1 && midi_smf_stat(seq_access_num) == 3)
+    if (smf_song[seq_access_num].sd_seq_stat_50A == 1 && midi_smf_stat(seq_access_num) == 3)
     {
-        smf_song[seq_access_num].play_status_50A = 3;
+        smf_song[seq_access_num].sd_seq_stat_50A = 3;
     }
 
-    return smf_song[seq_access_num].play_status_50A;
+    return smf_song[seq_access_num].sd_seq_stat_50A;
 }
 
 s32 SdUtSetDetVVol(s16 voice, s16 volLeft, s16 volRight) // 0x800A1BD0
@@ -986,7 +986,7 @@ s32 SdUtGetVVol(s16 voice, u16* volLeft, u16* volRight) // 0x800A1CE8
 
 u16 SdGetTempo(s16 seq_access_num) // 0x800A1D68
 {
-    return smf_song[seq_access_num].tracks_0[0].tempo_16;
+    return smf_song[seq_access_num].tracks_0[0].mf_tempo2_16;
 }
 
 void SdSetTempo(s16 seq_access_num, s16 tempo) // 0x800A1DA4
@@ -995,19 +995,19 @@ void SdSetTempo(s16 seq_access_num, s16 tempo) // 0x800A1DA4
 
     for (i = 0; i < smf_song[seq_access_num].num_tracks_526; i++)
     {
-        smf_song[seq_access_num].tracks_0[i].tempo_16 = tempo;
-        smf_song[seq_access_num].tracks_0[i].tempo_14 = tempo;
+        smf_song[seq_access_num].tracks_0[i].mf_tempo2_16 = tempo;
+        smf_song[seq_access_num].tracks_0[i].mf_tempo_14  = tempo;
     }
 }
 
 void SdSetSeqWide(s16 seq_access_num, u16 seq_wide) // 0x800A1E18
 {
-    smf_song[seq_access_num].seq_wide_534 = seq_wide;
+    smf_song[seq_access_num].seq_wide_flag_534 = seq_wide;
 }
 
 u8 SdGetMidiVol(s16 device, s16 channel) // 0x800A1E50
 {
-    return smf_midi[channel + (device * 0x10)].vol_3;
+    return smf_midi[channel + (device * 0x10)].mvol_3;
 }
 
 void SdSetMidiVol(s16 device, s16 channel, s32 vol) // 0x800A1E90
@@ -1022,7 +1022,7 @@ void SdSetMidiExpress(s16 device, s16 channel, s32 expression) // 0x800A1EC4
 
 u8 SdGetMidiExpress(s16 device, s16 channel) // 0x800A1EF8
 {
-    return smf_midi[channel + (device * 0x10)].expression_5;
+    return smf_midi[channel + (device * 0x10)].express_5;
 }
 
 u8 SdGetMidiPan(s16 device, s16 channel) // 0x800A1F38
@@ -1037,12 +1037,12 @@ void SdSetMidiPan(s16 device, s16 channel, s32 pan) // 0x800A1F78
 
 u8 SdGetMidiPitchBendFine(s16 device, s16 channel) // 0x800A1FAC
 {
-    return smf_midi[channel + (device * 0x10)].pitchBendFine_7;
+    return smf_midi[channel + (device * 0x10)].pbend_7;
 }
 
 s32 SdSetMidiPitchBendFine(s16 device, s16 channel, u8 pitchBendFine) // 0x800A1FEC
 {
-    smf_midi[channel + (device * 0x10)].pitchBendFine_7 = pitchBendFine & 0x7F;
+    smf_midi[channel + (device * 0x10)].pbend_7 = pitchBendFine & 0x7F;
     return 0;
 }
 
@@ -1058,12 +1058,12 @@ s32 SdSetTrackTranspause() // 0x800A2038
 
 s32 SdGetTrackMute(s16 seq_access_num, s32 channel) // 0x800A2040
 {
-    return smf_song[seq_access_num].muted_channels_510 & spu_ch_tbl[channel];
+    return smf_song[seq_access_num].sd_seq_track_mute_510 & spu_ch_tbl[channel];
 }
 
 s32 SdSetTrackMute(s16 seq_access_num, s32 channel) // 0x800A2090
 {
-    smf_song[seq_access_num].muted_channels_510 |= spu_ch_tbl[channel];
+    smf_song[seq_access_num].sd_seq_track_mute_510 |= spu_ch_tbl[channel];
     return 0;
 }
 
@@ -1079,24 +1079,24 @@ s32 SdGetSeqControlStatus(s16 seq_access_num) // 0x800A20EC
 
 s16 SdGetSeqPlayStatus(s32 seq_access_num) // 0x800A2134
 {
-    if (smf_song[seq_access_num].play_status_50A == 1 && midi_smf_stat(seq_access_num) == 3)
+    if (smf_song[seq_access_num].sd_seq_stat_50A == 1 && midi_smf_stat(seq_access_num) == 3)
     {
-        smf_song[seq_access_num].play_status_50A = 3;
+        smf_song[seq_access_num].sd_seq_stat_50A = 3;
     }
 
-    return smf_song[seq_access_num].play_status_50A;
+    return smf_song[seq_access_num].sd_seq_stat_50A;
 }
 
 u32 SdGetSeqBeat(s16 seq_access_num) // 0x800A21E0
 {
     if (seq_access_num >= 0)
     {
-        if (smf_song[seq_access_num].beat_51C == 0)
+        if (smf_song[seq_access_num].mf_seq_beat_51C == 0)
         {
             return 0;
         }
 
-        return smf_song[seq_access_num].beat_51C / 60;
+        return smf_song[seq_access_num].mf_seq_beat_51C / 60;
     }
 
     return -1;

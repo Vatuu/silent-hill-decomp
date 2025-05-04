@@ -49,15 +49,17 @@ typedef struct
 typedef struct _VAB_S // Pachinko Dream uses similar VAB_S struct.
 {
     s16            vab_id_0;
-    s_VabHeader*   vab_header_4; // libsnd.h
-    s32            vab_prog_size_8;
-    s32            vab_addr_C;
-    s32            vab_start_10;
-    s32            vab_total_14;
-    s8             master_vol_18;
-    char           field_19; // lvol? Read by some funcs but haven't seen it written to.
-    char           field_1A; // rvol? ^
-    s8             master_pan_1B;
+    s_VabHeader*   vh_addr_4; // libsnd.h
+    s32            vh_size_8;
+    s32            vb_addr_C;
+    s32            vb_start_addr_10;
+    s32            vb_size_14;
+
+    // u8 in soundcd.irx?
+    s8 mvol_18;
+    s8 mvoll_19;
+    s8 mvolr_1A;
+    s8 mpan_1B;
 } s_VAB_S;
 STATIC_ASSERT_SIZEOF(s_VAB_S, 28);
 
@@ -65,18 +67,18 @@ extern s_VAB_S vab_h[SD_VAB_SLOTS];
 
 typedef struct _SMF_TRACK_S
 {
-    u32 dword0;
-    u32 dword4;
-    u32 dword8;
-    u32 dwordC;
-    u32 dword10;
-    u16 tempo_14;
-    u16 tempo_16;
-    u16 deltaTimeRemainder_18;
-    u16 field_1A;
-    u16 deltaTimeTicks_1C;
-    u16 field_1E;
-    u8  byte20;
+    u32 mf_data_loc_0;
+    u32 mf_loop_point_4;
+    u32 mf_track_length_8;
+    u32 mf_track_size_C;
+    u32 mf_repeat_ptr_10;
+    u16 mf_tempo_14;
+    u16 mf_tempo2_16;
+    u16 time_hosei_18;
+    u16 time_hosei_wk_1A;
+    u16 mf_delta_time_1C;
+    u16 mf_delta_time_wk_1E;
+    u8  mf_eof_flag_20;
     u8  byte21;
     u8  byte22;
     u8  byte23;
@@ -91,29 +93,29 @@ STATIC_ASSERT_SIZEOF(s_SMF_TRACK_S, 40);
 typedef struct _SMF_S
 {
     s_SMF_TRACK_S tracks_0[32];
-    s8            unk_500[4];
-    u8*           play_ptr_504;
-    s16           vab_id_508;
-    s16           play_status_50A;
-    s16           vol_left_50C;
-    s16           vol_right_50E;
-    u32           muted_channels_510;
-    void*         seq_data_ptr_514;
-    s32           field_518;
-    u32           beat_51C;
+    u8*           mf_data_ptr2_500;
+    u8*           mf_data_ptr_504;
+    s16           sd_seq_vab_id_508;
+    s16           sd_seq_stat_50A;
+    s16           sd_seq_mvoll_50C;
+    s16           sd_seq_mvolr_50E;
+    u32           sd_seq_track_mute_510;
+    void*         sd_seq_start_addr_514;
+    s32           mf_data_size_518;
+    u32           mf_seq_beat_51C;
     s32           field_520;
     u16           field_524;
     u16           num_tracks_526;
-    u16           midi_ppqn_528;
+    u16           mf_division_528;
     u16           field_52A;
     u8            field_52C;
     u8            field_52D;
     u8            beat2_52E;
     u8            control_status_52F;
-    u16           field_530;
-    u16           field_532;
-    u16           seq_wide_534;
-    u16           field_536;
+    u16           seq_vol_set_flag_530;
+    u16           seq_rev_set_flag_532;
+    u16           seq_wide_flag_534;
+    u16           seq_reverb_depth_536;
     u16           field_538;
     u8            unk_53A[2];
 } s_SMF_S;
@@ -123,39 +125,47 @@ STATIC_ASSERT_SIZEOF(s_SMF_S, 1340);
  * Seems that func accepts some change IDs that are undefined in MIDI specs though... */
 typedef struct _SMF_MIDI
 {
-    u8  vabProgNum_0;
+    u8  prog_no_0;
     u8  pan_1;
-    u8  field_2;
-    u8  vol_3;
-    u8  field_4;
-    u8  expression_5;
-    u8  damperPedalEnabled_6;
-    u8  pitchBendFine_7;
-    u32 field_8;
-    u32 field_C;
+    u8  mod_2;
+    u8  mvol_3;
+    u8  velo_4;
+    u8  express_5;
+    u8  pedal_6;
+    u8  pbend_7;
+    u32 l_vol_8;
+    u32 r_vol_C;
+
+    // soundcd.irx todo:
     u8  footPedal_10;
     u8  effect1Controller_11;
     u8  monoMode_12;
     u8  field_13;
-    u16 field_14;
-    u8  unk_16[2];
-    u16 field_18;
-    s16 field_1A;
-    s16 field_1C;
-    s16 field_1E;
-    u8  field_20;
-    u8  field_21;
+
+    u16 mod_w_14;
+    u16 mod_time_16;
+    u16 mod_speed_18;
+    s16 mod_add_1A;
+    s16 mod_depth_1C;
+    s16 mod_limit_1E;
+    u8  mod_mode_20;
+    u8  wide_flag_21;
+
+    // soundcd.irx todo:
     u16 field_22;
     u8  effect1Depth_24;
     u8  nrpnLsb_25;
     u8  nrpnMsb_26;
     u8  nrpnData_27;
-    s16 portamentoTime_28;
-    s16 field_2A;
-    s16 field_2C;
-    u16 field_2E;
-    u16 field_30;
-    u16 field_32;
+
+    s16 porta_28;
+    s16 porta_depth_2A;
+    s16 porta_add_2C;
+    u16 porta_limit_2E;
+    u16 porta_wk_30;
+    u16 pitch_32;
+
+    // soundcd.irx todo:
     u8  field_34;
     u8  unk_35[1];
     u8  field_36;
@@ -185,7 +195,7 @@ typedef struct _SMF_MIDI
     u8  effect2Controller_57;
     u8  field_58;
     u8  field_59;
-    u8  bank_idx_5A;
+    u8  bank_change_5A;
     u8  unk_5B[1];
 } s_SMF_MIDI;
 STATIC_ASSERT_SIZEOF(s_SMF_MIDI, 92);
