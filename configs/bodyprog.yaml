@@ -76,6 +76,8 @@ segments:
       - [0x6044, rodata]
       # - [0x64A4, .rodata, bodyprog_80085D78] # Jumptable: `func_8008A2E0`
       # - [0x6504, rodata]
+      - [0x99e8, .rodata, libsd/smf_mid]
+      - [0x9ad0, rodata]
       - [0x9ad0, c, bodyprog]
       - [0x1b4ec, c, view/vc_util]
       - [0x1bf04, c, bodyprog_80040A64]
@@ -230,36 +232,37 @@ segments:
       - [0x78698, asm, psyq/libpad/waitrc2]
       - [0x78758, asm, psyq/libspu/s_crwa]
       - [0x788f8, asm, psyq/libapi/a10]
-      - [0x78908, asm, psyq/libspu/s_m_util]
-      - [0x78a18, asm, psyq/libspu/s_stm]
-      - [0x78a48, asm, psyq/libspu/s_sva]
-      - [0x79048, asm, psyq/libspu/s_n2p]
-      - [0x79248, asm, psyq/libspu/s_gva]
+
+      - [0x78908, asm, psyq/libspu/s_m_util] # _SpuIsInAllocateArea _SpuIsInAllocateArea_
+      - [0x78a18, asm, psyq/libspu/s_stm] # SpuSetTransferMode
+      - [0x78a48, asm, psyq/libspu/s_sva] # SpuSetVoiceAttr
+      - [0x79048, asm, psyq/libspu/s_n2p] # _spu_note2pitch _spu_pitch2note
+      - [0x79248, asm, psyq/libspu/s_gva] # SpuGetVoiceAttr
       - [0x79638, asm, lib_unk/lib_8009E198]
 
       - [0x7a244, c, libsd/smf_snd]
 
-      - [0x7d7fc, asm, psyq/libspu/s_q]
-      - [0x7d87c, asm, psyq/libapi/a13]
-      - [0x7d88c, asm, psyq/libspu/s_m_init]
-      - [0x7d8ec, asm, psyq/libspu/s_sr]
-      - [0x7d9bc, asm, psyq/libspu/s_srmp]
-      - [0x7de9c, asm, psyq/libspu/s_sra]
-      - [0x7e36c, asm, psyq/libspu/s_rrwa]
-      - [0x7e3bc, asm, psyq/libspu/s_srv]
-      - [0x7e3ec, asm, psyq/libspu/s_sav]
-      - [0x7e6ac, asm, psyq/libspu/s_sk]
-      - [0x7e86c, asm, psyq/libspu/s_gks]
-      - [0x7e8fc, asm, psyq/libspu/s_skowa]
-      - [0x7e92c, asm, psyq/libspu/s_w]
-      - [0x7e98c, asm, psyq/libspu/s_stsa]
-      - [0x7e9ec, asm, psyq/libspu/s_itc]
-      - [0x7ea9c, asm, psyq/libspu/s_sca]
+      - [0x7d7fc, asm, psyq/libspu/s_q] # SpuQuit
+      - [0x7d87c, asm, psyq/libapi/a13] # DisableEvent
+      - [0x7d88c, asm, psyq/libspu/s_m_init] # SpuInitMalloc
+      - [0x7d8ec, asm, psyq/libspu/s_sr] # SpuSetReverb
+      - [0x7d9bc, asm, psyq/libspu/s_srmp] # SpuSetReverbModeParam
+      - [0x7de9c, asm, psyq/libspu/s_sra] # _spu_setReverbAttr
+      - [0x7e36c, asm, psyq/libspu/s_rrwa] # SpuReserveReverbWorkArea
+      - [0x7e3bc, asm, psyq/libspu/s_srv] # SpuSetReverbVoice
+      - [0x7e3ec, asm, psyq/libspu/s_sav] # _SpuSetAnyVoice
+      - [0x7e6ac, asm, psyq/libspu/s_sk] # SpuSetKey
+      - [0x7e86c, asm, psyq/libspu/s_gks] # SpuGetKeyStatus
+      - [0x7e8fc, asm, psyq/libspu/s_skowa] # SpuSetKeyOnWithAttr
+      - [0x7e92c, asm, psyq/libspu/s_w] # SpuWrite
+      - [0x7e98c, asm, psyq/libspu/s_stsa] # SpuSetTransferStartAddr
+      - [0x7e9ec, asm, psyq/libspu/s_itc] # SpuIsTransferCompleted
+      - [0x7ea9c, asm, psyq/libspu/s_sca] # SpuSetCommonAttr
 
       - [0x7ee1c, c, libsd/smf_io]
 
-      - [0x82158, asm, psyq/libspu/s_grv]
-      - [0x82188, asm, psyq/libspu/s_gav]
+      - [0x82158, asm, psyq/libspu/s_grv] # SpuGetReverbVoice
+      - [0x82188, asm, psyq/libspu/s_gav] # _SpuGetAnyVoice
 
       - [0x821b8, c, libsd/smf_main]
       - [0x82458, c, libsd/smf_mid]

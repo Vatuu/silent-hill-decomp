@@ -253,9 +253,6 @@ u8 readtrack(SMF* p) // 0x800A80C4
     return 0;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_mid", readtrack2);
-
-/* TODO: needs jump table jtbl_8002E548
 u8 readtrack2(SMF* p) // 0x800A81F4
 {
     u8  c;
@@ -275,7 +272,7 @@ u8 readtrack2(SMF* p) // 0x800A81F4
         {
             key_off(p->midi_ch_27, c & 0x7F, 0);
         }
-        p->status_value_25 = (u8)c;
+        p->status_value_25 = c;
     }
     else
     {
@@ -291,7 +288,7 @@ u8 readtrack2(SMF* p) // 0x800A81F4
                 c1 = egetc(p);
                 for (tr = 0; tr < smf_song[smf_file_no].mf_tracks_526; tr++)
                 {
-                    tempo                                                    = (((c1 & 0x7F) * 2) + 2);
+                    tempo = (((c1 & 0x7F) * 2) + 2);
                     smf_song[(p->midi_ch_27 >> 4)].tracks_0[tr].mf_tempo2_16 = tempo;
                 }
                 break;
@@ -318,7 +315,7 @@ u8 readtrack2(SMF* p) // 0x800A81F4
         }
     }
     return (c1 & 0x80) > 0;
-}*/
+}
 
 s32 track_head_read(SMF* p)
 {
