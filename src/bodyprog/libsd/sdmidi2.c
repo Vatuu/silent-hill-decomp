@@ -359,7 +359,7 @@ void midi_smf_stop(s32 seq_access_num) // 0x800A8C74
 {
     s32 i;
 
-    for (i = 0; i < smf_song[seq_access_num].num_tracks_526; i++)
+    for (i = 0; i < smf_song[seq_access_num].mf_tracks_526; i++)
     {
         smf_song[seq_access_num].tracks_0[i].mf_eof_flag_20 = 1;
         smf_song[seq_access_num].tracks_0[i].mf_data_loc_0  = 0;
@@ -370,7 +370,7 @@ s16 midi_smf_stat(s32 seq_access_num) // 0x800A8D00
 {
     s32 i;
 
-    for (i = 0; i < smf_song[seq_access_num].num_tracks_526; i++)
+    for (i = 0; i < smf_song[seq_access_num].mf_tracks_526; i++)
     {
         if (smf_song[seq_access_num].tracks_0[i].mf_eof_flag_20 != 1)
         {

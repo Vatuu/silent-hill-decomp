@@ -49,17 +49,15 @@ typedef struct
 typedef struct Vab_h
 {
     s16            vab_id_0;
-    s_VabHeader*   vh_addr_4; // libsnd.h
+    s_VabHeader*   vh_addr_4;
     s32            vh_size_8;
     s32            vb_addr_C;
     s32            vb_start_addr_10;
     s32            vb_size_14;
-
-    // u8 in soundcd.irx?
-    s8 mvol_18;
-    s8 mvoll_19;
-    s8 mvolr_1A;
-    s8 mpan_1B;
+    s8             mvol_18; // these s8s are u8 in soundcd.irx
+    s8             mvoll_19;
+    s8             mvolr_1A;
+    s8             mpan_1B;
 } VAB_H;
 STATIC_ASSERT_SIZEOF(VAB_H, 28);
 
@@ -79,13 +77,13 @@ typedef struct SMF_data
     u16 mf_delta_time_1C;
     u16 mf_delta_time_wk_1E;
     u8  mf_eof_flag_20;
-    u8  byte21;
-    u8  byte22;
-    u8  byte23;
-    u8  byte24;
-    u8  byte25;
-    u8  byte26;
-    u8  byte27;
+    u8  mf_eof_flag_wk_21;
+    u8  mf_loop_count_22;
+    u8  ti_flag_23;
+    u8  running_status_flag_24;
+    u8  status_value_25;
+    u8  status_value_wk_26;
+    u8  midi_ch_27;
 } SMF;
 STATIC_ASSERT_SIZEOF(SMF, 40);
 
@@ -103,20 +101,20 @@ typedef struct Smf_Song
     void*         sd_seq_start_addr_514;
     s32           mf_data_size_518;
     u32           mf_seq_beat_51C;
-    s32           field_520;
-    u16           field_524;
-    u16           num_tracks_526;
+    s32           mf_seq_beat_wk_520;
+    u16           mf_format_524;
+    u16           mf_tracks_526;
     u16           mf_division_528;
-    u16           field_52A;
-    u8            field_52C;
-    u8            field_52D;
-    u8            beat2_52E;
-    u8            control_status_52F;
+    u16           mf_head_len_52A;
+    u8            smf_seq_flag_52C;
+    u8            loop_start_flag_52D;
+    u8            smf_beat_stat_52E;
+    u8            smf_control_stat_52F;
     u16           seq_vol_set_flag_530;
     u16           seq_rev_set_flag_532;
     u16           seq_wide_flag_534;
     u16           seq_reverb_depth_536;
-    u16           field_538;
+    u16           midi_master_vol_538;
     u8            unk_53A[2];
 } SMF_SONG;
 STATIC_ASSERT_SIZEOF(SMF_SONG, 1340);
@@ -135,13 +133,10 @@ typedef struct SMF_midi
     u8  pbend_7;
     u32 l_vol_8;
     u32 r_vol_C;
-
-    // soundcd.irx todo:
-    u8  footPedal_10;
-    u8  effect1Controller_11;
-    u8  monoMode_12;
-    u8  field_13;
-
+    u8  bend_mode_10;
+    u8  vol_mode_11;
+    u8  mode_12;
+    u8  before_note_13;
     u16 mod_w_14;
     u16 mod_time_16;
     u16 mod_speed_18;
@@ -150,51 +145,46 @@ typedef struct SMF_midi
     s16 mod_limit_1E;
     u8  mod_mode_20;
     u8  wide_flag_21;
-
-    // soundcd.irx todo:
-    u16 field_22;
-    u8  effect1Depth_24;
-    u8  nrpnLsb_25;
-    u8  nrpnMsb_26;
-    u8  nrpnData_27;
-
+    u16 key_pan_22;
+    u8  rev_depth_24;
+    u8  nrpn_lsb_25;
+    u8  nrpn_msb_26;
+    u8  data_entry_27;
     s16 porta_28;
     s16 porta_depth_2A;
     s16 porta_add_2C;
     u16 porta_limit_2E;
     u16 porta_wk_30;
     u16 pitch_32;
-
-    // soundcd.irx todo:
-    u8  field_34;
-    u8  unk_35[1];
-    u8  field_36;
-    u8  field_37;
-    u8  field_38;
-    u8  field_39;
-    u8  field_3A;
-    u8  field_3B;
-    u16 field_3C;
-    u16 field_3E;
-    u16 field_40;
-    u8  unk_42[2];
-    u8  field_44;
-    u8  field_45;
-    u8  field_46;
-    u8  field_47;
-    u16 field_48;
-    u16 field_4A;
-    u16 field_4C;
-    u8  unk_4E[2];
-    u8  field_50;
-    u8  field_51;
-    u8  field_52;
-    u8  field_53;
-    u16 field_54;
-    u8  field_56;
-    u8  effect2Controller_57;
-    u8  field_58;
-    u8  field_59;
+    u8  vibcadw_34;
+    u8  vibcadw2_35;
+    u8  vibhc_36;
+    s8  vibc_37;
+    u8  vibcc_38;
+    u8  vibhs_39;
+    u8  vibcs_3A;
+    u8  vibcad_3B;
+    u16 vibd_3C;
+    u16 vibdm_3E;
+    u16 vibad_40;
+    u16 vib_data_42;
+    u8  trecadw_44;
+    u8  trecadw2_45;
+    u8  trehc_46;
+    s8  trec_47;
+    u16 tred_48;
+    u16 tredm_4A;
+    u16 tread_4C;
+    u16 tre_data_4E;
+    u8  trecc_50;
+    u8  trehs_51;
+    u8  trecs_52;
+    u8  trecad_53;
+    u16 rdmd_54;
+    u8  rdmo_56;
+    u8  rdms_57;
+    u8  rdmc_58;
+    u8  rdmdm_59;
     u8  bank_change_5A;
     u8  unk_5B[1];
 } MIDI;
@@ -278,7 +268,7 @@ extern PORT     smf_port[24];
 extern SMF_SONG smf_song[2];
 
 extern SD_SPU_ALLOC sd_spu_alloc[SD_ALLOC_SLOTS];
-extern s32        sd_reverb_area_size[10];
+extern s32          sd_reverb_area_size[10];
 
 // sdmain.c
 

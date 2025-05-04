@@ -993,7 +993,7 @@ void SdSetTempo(s16 seq_access_num, s16 tempo) // 0x800A1DA4
 {
     s32 i;
 
-    for (i = 0; i < smf_song[seq_access_num].num_tracks_526; i++)
+    for (i = 0; i < smf_song[seq_access_num].mf_tracks_526; i++)
     {
         smf_song[seq_access_num].tracks_0[i].mf_tempo2_16 = tempo;
         smf_song[seq_access_num].tracks_0[i].mf_tempo_14  = tempo;
@@ -1071,7 +1071,7 @@ s32 SdGetSeqControlStatus(s16 seq_access_num) // 0x800A20EC
 {
     if (seq_access_num >= 0)
     {
-        return smf_song[seq_access_num].control_status_52F;
+        return smf_song[seq_access_num].smf_control_stat_52F;
     }
 
     return -1;
@@ -1106,7 +1106,7 @@ s32 SdGetSeqBeat2(s16 seq_access_num) // 0x800A224C
 {
     if (seq_access_num >= 0)
     {
-        return smf_song[seq_access_num].beat2_52E;
+        return smf_song[seq_access_num].smf_beat_stat_52E;
     }
 
     return -1;
