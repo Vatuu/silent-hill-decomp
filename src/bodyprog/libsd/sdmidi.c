@@ -18,7 +18,7 @@ void set_midi_info(s32 type, u8 midiChannel, u32 value) // 0x800A39B8
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmidi", Note2Pitch);
 
-void tre_calc(s_SMF_PORT* midiPort) // 0x800A3B20
+void tre_calc(PORT* midiPort) // 0x800A3B20
 {
     s32 vol;
     s32 var0;
@@ -134,7 +134,7 @@ void tre_calc(s_SMF_PORT* midiPort) // 0x800A3B20
     SpuSetVoiceAttr(&s_attr);
 }
 
-void vib_calc(s_SMF_PORT* midiPort) // 0x800A3D30
+void vib_calc(PORT* midiPort) // 0x800A3D30
 {
     s32 var0;
     s8  var1;
@@ -211,7 +211,7 @@ void vib_calc(s_SMF_PORT* midiPort) // 0x800A3D30
     }
 }
 
-void random_calc(s_SMF_PORT* midiPort) // 0x800A3E70
+void random_calc(PORT* midiPort) // 0x800A3E70
 {
     extern u8 random_tbl[];
 
@@ -324,9 +324,9 @@ void toremoro_set() // 0x800A439C
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmidi", pitch_bend_calc);
 
-void pitch_calc(s_SMF_PORT* midiPort, s32 forceSpuUpdate) // 0x800A4494
+void pitch_calc(PORT* midiPort, s32 forceSpuUpdate) // 0x800A4494
 {
-    s_SMF_MIDI* midi;
+    MIDI*       midi;
     s32         temp_s0;
     s32         temp_a0;
 
@@ -352,7 +352,7 @@ void pitch_calc(s_SMF_PORT* midiPort, s32 forceSpuUpdate) // 0x800A4494
     }
 }
 
-void midi_mod(s_SMF_MIDI* midiTrack) // 0x800A4608
+void midi_mod(MIDI* midiTrack) // 0x800A4608
 {
     if (midiTrack->mod_2 != 0)
     {
@@ -384,7 +384,7 @@ void midi_mod(s_SMF_MIDI* midiTrack) // 0x800A4608
     }
 }
 
-void midi_porta(s_SMF_MIDI* midiTrack) // 0x800A46B8
+void midi_porta(MIDI* midiTrack) // 0x800A46B8
 {
     if (midiTrack->porta_28 != 0)
     {
@@ -545,7 +545,7 @@ void sound_off() // 0x800A4D20
 
 void func_800A4E90() {} // 0x800A4E90
 
-void adsr_set(s32 voice, s_SMF_PORT* midiPort) // 0x800A4E98
+void adsr_set(s32 voice, PORT* midiPort) // 0x800A4E98
 {
     s_attr.mask   = SPU_VOICE_ADSR_AMODE | SPU_VOICE_ADSR_ADSR1 | SPU_VOICE_ADSR_ADSR2;
     s_attr.voice  = spu_ch_tbl[voice];
@@ -615,7 +615,7 @@ void key_off(u8 midiNum, u8 keyNum)
 
 void key_press() {} // 0x800A5DCC
 
-VagAtr* get_vab_tone(s_SMF_MIDI* midiTrack, u16 tone, u8 midiChannel) // 0x800A5DD4
+VagAtr* get_vab_tone(MIDI* midiTrack, u16 tone, u8 midiChannel) // 0x800A5DD4
 {
     s_VabHeader* vab;
 

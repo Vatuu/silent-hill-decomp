@@ -182,7 +182,7 @@ s32 readEOF(u32 offset) // 0x800A717C
     return offset;
 }
 
-s32 egetc(s_SMF_TRACK_S* track) // 0x800A723C
+s32 egetc(SMF* track) // 0x800A723C
 {
     u32 ret = smf_song[smf_file_no].mf_data_ptr_504[track->mf_data_loc_0];
 
@@ -197,7 +197,7 @@ s32 egetc(s_SMF_TRACK_S* track) // 0x800A723C
     return ret;
 }
 
-s32 readvarinum(s_SMF_TRACK_S* track) // 0x800A72B4
+s32 readvarinum(SMF* track) // 0x800A72B4
 {
     s32 curByte;
     s32 num;
@@ -241,7 +241,7 @@ s32 to16bit(char arg0, char arg1) // 0x800A7368
     return (arg0 << 8) | arg1;
 }
 
-s32 read32bit(s_SMF_TRACK_S* track) // 0x800A737C
+s32 read32bit(SMF* track) // 0x800A737C
 {
     s8 b0 = egetc(track);
     s8 b1 = egetc(track);
@@ -250,7 +250,7 @@ s32 read32bit(s_SMF_TRACK_S* track) // 0x800A737C
     return to32bit(b0, b1, b2, b3);
 }
 
-s32 read16bit(s_SMF_TRACK_S* track) // 0x800A73E8
+s32 read16bit(SMF* track) // 0x800A73E8
 {
     s8 b0 = egetc(track);
     s8 b1 = egetc(track);
@@ -266,7 +266,7 @@ void len_add(s32* ptr, s32 val) // 0x800A7814
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmidi2", metaevent);
 
-void sysex(s_SMF_TRACK_S* track) // 0x800A7AEC
+void sysex(SMF* track) // 0x800A7AEC
 {
     u32 i     = 0;
     u32 count = readvarinum(track);
@@ -288,7 +288,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmidi2", readtrack);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmidi2", readtrack2);
 
-s32 track_head_read(s_SMF_TRACK_S* track)
+s32 track_head_read(SMF* track)
 {
     track->mf_data_loc_0 = readMTrk(track->mf_data_loc_0);
     if (track->mf_data_loc_0 == NO_VALUE)
@@ -302,7 +302,7 @@ s32 track_head_read(s_SMF_TRACK_S* track)
     return 0;
 }
 
-void delta_time_conv(s_SMF_TRACK_S* track) // 0x800A84B0
+void delta_time_conv(SMF* track) // 0x800A84B0
 {
     switch (smf_song[smf_file_no].mf_division_528)
     {
