@@ -202,7 +202,7 @@ STATIC_ASSERT_SIZEOF(MIDI, 92);
 
 typedef struct SMF_port
 {
-    u8  vc_0; // soundcd.irx has vab_id_0 here, and vc_1 after, but the reads/writes to +0x0 in SH are to +0x1 in soundcd, so this is likely vc
+    u8  vc_0; // soundcd.irx has vab_id_0 here, and vc_1 after, but the reads/writes to +0x1 in soundcd are to +0x0 in SH, so this is likely vc
     u8  field_1;
     u8  prog_2;
     u8  midi_ch_3;
@@ -260,7 +260,7 @@ typedef struct SMF_port
     s16 tremoro_wk_4C;
     u16 pbend_wk_4E;
     u16 pbend_50;
-    u8  vab_id_52; // soundcd.irx accesses this at +0x0 instead of +0x52, lines up with comment on vc_0
+    u8  vab_id_52; // soundcd.irx accesses this at +0x0 while SH accesses at +0x52, lines up with comment on vc_0
     u8  unk_53[1]; // core_no or vh_mode?
 } PORT;
 STATIC_ASSERT_SIZEOF(PORT, 84);
