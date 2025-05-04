@@ -279,7 +279,7 @@ extern SMF_SONG smf_song[2];
 extern SD_SPU_ALLOC sd_spu_alloc[SD_ALLOC_SLOTS];
 extern s32          sd_reverb_area_size[10];
 
-// sdmain.c
+// smf_snd.c
 
 void tone_adsr_mem(s16 vabid);
 void tone_adsr_back(s16 vabid);
@@ -357,7 +357,14 @@ s16  SdGetSeqPlayStatus(s32 seq_access_num); /** Returns SMF_STAT. */
 u32  SdGetSeqBeat(s16 seq_access_num);
 s32  SdGetSeqBeat2(s16 seq_access_num);
 
-// sdmidi.c
+// Wrappers for standard PsyQ Ss* funcs
+void SsSetMVol(s16 left, s16 right);
+void SsEnd();
+void SsSetSerialAttr(char s_num, char attr, char mode);
+void SsSetSerialVol(char s_num, s16 voll, s16 volr);
+void SsUtAllKeyOff(s16 mode);
+
+// smf_io.c
 
 void set_note_on(s16 arg0, u8 arg1, u8 arg2, s16 arg3, s16 arg4);
 void set_midi_info(s32 type, u8 midiChannel, u32 value);
@@ -394,13 +401,16 @@ void pitch_bend(u8 midiChannel, s32 unused, u8 pitchBend);
 
 void control_code_set(s32 seq_access_num);
 
-// sdmidi2.c
+// smf_main.c
 
 s32  smf_timer();
 void smf_timer_set();
 void smf_timer_end();
 void smf_timer_stop();
 void smf_vsync();
+
+// smf_mid.c
+
 s32  MemCmp(u8* str1, u8* str2, s32 count);
 s32  readMThd(u32 offset);
 s32  readMTrk(u32 offset);
@@ -408,7 +418,7 @@ s32  readEOF(u32 offset);
 s32  egetc(SMF* track);
 s32  readvarinum(SMF* track);
 
-// to32bit/to16bit/len_add only seem used inside sdmidi2.c, can probably be removed from header.
+// to32bit/to16bit/len_add only seem used inside smf_mid.c, can probably be removed from header.
 s32  to32bit(char arg0, char arg1, char arg2, char arg3);
 s32  to16bit(char arg0, char arg1);
 s32  read32bit(SMF* track);
@@ -424,12 +434,5 @@ void midi_file_out(s16);
 void midi_smf_main();
 void midi_smf_stop(s32 seq_access_num);
 s16  midi_smf_stat(s32 seq_access_num); /** Returns SMF_STAT. */
-
-// ssmain.c
-void SsSetMVol(s16 left, s16 right);
-void SsEnd();
-void SsSetSerialAttr(char s_num, char attr, char mode);
-void SsSetSerialVol(char s_num, s16 voll, s16 volr);
-void SsUtAllKeyOff(s16 mode);
 
 #endif /* _LIBSD_H */

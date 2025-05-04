@@ -16,7 +16,7 @@ void set_midi_info(s32 type, u8 midiChannel, u32 value) // 0x800A39B8
     func_800485B8(type, midiChannel, value); // Nullsub
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmidi", Note2Pitch);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_io", Note2Pitch);
 
 void tre_calc(PORT* midiPort) // 0x800A3B20
 {
@@ -251,7 +251,7 @@ void random_calc(PORT* midiPort) // 0x800A3E70
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmidi", volume_calc);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_io", volume_calc);
 
 void smf_vol_set(s32 midiChannel, s32 voice, s32 volLeft, s32 volRight) // 0x800A4150
 {
@@ -322,13 +322,13 @@ void toremoro_set() // 0x800A439C
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmidi", pitch_bend_calc);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_io", pitch_bend_calc);
 
 void pitch_calc(PORT* midiPort, s32 forceSpuUpdate) // 0x800A4494
 {
-    MIDI*       midi;
-    s32         temp_s0;
-    s32         temp_a0;
+    MIDI* midi;
+    s32   temp_s0;
+    s32   temp_a0;
 
     midi = &smf_midi[midiPort->midi_ch_3];
     if (midiPort->vibdm_26 != 0 || midi->mod_2 != 0 || midi->porta_28 != 0 || midiPort->rdms_43 != 0 || midi->pbend_7 != midiPort->pbend_wk_4E || forceSpuUpdate)
@@ -487,7 +487,7 @@ void midi_vsync() // 0x800A4838
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmidi", sound_seq_off);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_io", sound_seq_off);
 
 void sound_off() // 0x800A4D20
 {
@@ -520,27 +520,25 @@ void sound_off() // 0x800A4D20
         {
             SpuSetKey(0, voice);
             keyStatus = SpuGetKeyStatus(voice);
-        }
-        while (keyStatus != 2 && keyStatus != 0);
+        } while (keyStatus != 2 && keyStatus != 0);
     }
 
-    smf_midi_sound_off.mvol_3               = 0x7F;
-    smf_midi_sound_off.pan_1                = 0x40;
-    smf_midi_sound_off.pbend_7              = 0x40;
-    smf_midi_sound_off.pedal_6              = 0;
-    smf_midi_sound_off.express_5            = 0x7F;
-    smf_midi_sound_off.l_vol_8              = 0x7F;
-    smf_midi_sound_off.r_vol_C              = 0x7F;
-    smf_midi_sound_off.mod_2                = 0;
-    smf_midi_sound_off.pitch_32             = 0;
-    smf_midi_sound_off.porta_28             = 0;
+    smf_midi_sound_off.mvol_3    = 0x7F;
+    smf_midi_sound_off.pan_1     = 0x40;
+    smf_midi_sound_off.pbend_7   = 0x40;
+    smf_midi_sound_off.pedal_6   = 0;
+    smf_midi_sound_off.express_5 = 0x7F;
+    smf_midi_sound_off.l_vol_8   = 0x7F;
+    smf_midi_sound_off.r_vol_C   = 0x7F;
+    smf_midi_sound_off.mod_2     = 0;
+    smf_midi_sound_off.pitch_32  = 0;
+    smf_midi_sound_off.porta_28  = 0;
 
     do
     {
         SpuSetKey(0, voices);
         keyStatus = SpuGetKeyStatus(voices);
-    }
-    while (keyStatus != 2 && keyStatus != 0);
+    } while (keyStatus != 2 && keyStatus != 0);
 }
 
 void func_800A4E90() {} // 0x800A4E90
@@ -565,9 +563,9 @@ void rr_off(s32 voice) // 0x800A4F08
     SpuSetVoiceAttr(&s_attr);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmidi", voice_check);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_io", voice_check);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmidi", key_on);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_io", key_on);
 
 void key_off(u8 midiNum, u8 keyNum)
 {
@@ -590,8 +588,7 @@ void key_off(u8 midiNum, u8 keyNum)
                 {
                     SpuSetKey(0, spu_ch_tbl[i]);
                     keyStatus = SpuGetKeyStatus(spu_ch_tbl[i]);
-                }
-                while (keyStatus != 2 && keyStatus != 0);
+                } while (keyStatus != 2 && keyStatus != 0);
 
                 smf_port[i].stat_16 = 0;
             }
@@ -608,8 +605,7 @@ void key_off(u8 midiNum, u8 keyNum)
         {
             SpuSetKey(0, voices);
             keyStatus = SpuGetKeyStatus(voices);
-        }
-        while (keyStatus != 2 && keyStatus != 0);
+        } while (keyStatus != 2 && keyStatus != 0);
     }
 }
 
@@ -631,9 +627,9 @@ VagAtr* get_vab_tone(MIDI* midiTrack, u16 tone, u8 midiChannel) // 0x800A5DD4
     return &vab->vag_atr[(midiTrack->prog_no_0 * 16) + tone];
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmidi", smf_data_entry);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_io", smf_data_entry);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmidi", control_change);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_io", control_change);
 
 void program_change(u8 midiChannel, u8 progNum) // 0x800A6C2C
 {

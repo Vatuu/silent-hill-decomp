@@ -4,104 +4,6 @@
 
 #include "bodyprog/libsd.h"
 
-extern s32 sd_timer_flag; // Only used in this file
-
-s32 smf_timer() // 0x800A6D18
-{
-    if (sd_interrupt_start_flag == 0 || sd_int_flag != 0)
-    {
-        return 1;
-    }
-
-    if (sd_int_flag2 == 0)
-    {
-        sd_int_flag2 = 1;
-        midi_smf_main();
-
-        if (sd_timer_sync >= 11)
-        {
-            midi_vsync();
-            SdAutoKeyOffCheck();
-            sd_timer_sync = 0;
-        }
-
-        sd_int_flag2 = 0;
-        sd_timer_sync++;
-    }
-
-    return 0;
-}
-
-void smf_timer_set() // 0x800A6DC0
-{
-    if (sd_timer_flag == 0)
-    {
-        sd_timer_flag = 1;
-
-        EnterCriticalSection();
-        sd_timer_event = OpenEvent(RCntCNT2, EvSpINT, EvMdINTR, smf_timer);
-        EnableEvent(sd_timer_event);
-        SetRCnt(RCntCNT2, 7328, RCntMdINTR); // ~30Hz?
-        StartRCnt(RCntCNT2);
-        ExitCriticalSection();
-
-        sd_int_flag   = 0;
-        sd_timer_flag = 0;
-    }
-}
-
-void smf_timer_end() // 0x800A6E58
-{
-    sd_timer_flag = 1;
-
-    EnterCriticalSection();
-    StopRCnt(RCntCNT2);
-    DisableEvent(sd_timer_event);
-    CloseEvent(sd_timer_event);
-    ExitCriticalSection();
-
-    sd_timer_flag = 0;
-    sd_int_flag   = 0;
-}
-
-void smf_timer_stop() // 0x800A6EC8
-{
-    sd_timer_flag = 1;
-
-    EnterCriticalSection();
-    StopRCnt(RCntCNT2);
-    ExitCriticalSection();
-
-    sd_timer_flag = 0;
-    sd_int_flag   = 0;
-}
-
-void smf_vsync() // 0x800A6F14
-{
-    if (sd_int_flag2 != 0)
-        return;
-
-    sd_int_flag2 = 1;
-
-    if (smf_start_flag != 0)
-    {
-        midi_smf_main();
-        midi_smf_main();
-        midi_smf_main();
-        midi_smf_main();
-        midi_smf_main();
-        midi_smf_main();
-        midi_smf_main();
-        midi_smf_main();
-        midi_smf_main();
-        midi_smf_main();
-    }
-
-    midi_vsync();
-    SdAutoKeyOffCheck();
-    sd_int_flag2 = 0;
-}
-
 s32 MemCmp(u8* str1, u8* str2, s32 count) // 0x800A6FB8
 {
     if (!count)
@@ -224,8 +126,7 @@ s32 readvarinum(SMF* track) // 0x800A72B4
         {
             curByte = egetc(track);
             num     = (num << 7) + (curByte & 0x7F);
-        }
-        while (curByte & 0x80);
+        } while (curByte & 0x80);
     }
 
     return num;
@@ -257,14 +158,14 @@ s32 read16bit(SMF* track) // 0x800A73E8
     return to16bit(b0, b1) & 0xFFFF;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmidi2", readheader);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_mid", readheader);
 
 void len_add(s32* ptr, s32 val) // 0x800A7814
 {
     *ptr += val;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmidi2", metaevent);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_mid", metaevent);
 
 void sysex(SMF* track) // 0x800A7AEC
 {
@@ -278,15 +179,14 @@ void sysex(SMF* track) // 0x800A7AEC
         {
             break;
         }
-    }
-    while (i < count);
+    } while (i < count);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmidi2", chanmessage);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_mid", chanmessage);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmidi2", readtrack);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_mid", readtrack);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmidi2", readtrack2);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_mid", readtrack2);
 
 s32 track_head_read(SMF* track)
 {
@@ -351,9 +251,9 @@ void delta_time_conv(SMF* track) // 0x800A84B0
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmidi2", midi_file_out);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_mid", midi_file_out);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmidi2", midi_smf_main);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_mid", midi_smf_main);
 
 void midi_smf_stop(s32 seq_access_num) // 0x800A8C74
 {

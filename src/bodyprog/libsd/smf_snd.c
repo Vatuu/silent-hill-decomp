@@ -84,9 +84,9 @@ void sd_alloc_sort() // 0x8009EEBC
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmain", SdSpuMalloc);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_snd", SdSpuMalloc);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmain", SdSpuMallocWithStartAddr);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_snd", SdSpuMallocWithStartAddr);
 
 void SdSpuFree(u32 addr) // 0x8009F364
 {
@@ -272,8 +272,8 @@ void SdSetSerialAttr(char s_num, char attr, char mode) // 0x8009F67C
 
 void SdSetSerialVol(s16 s_num, s16 voll, s16 volr) // 0x8009F700
 {
-    // TODO: libsnd SsSetSerialVol uses char for s_num, callers also seem to
-    // pass char but only matches with s16 right now?
+    // TODO: libsnd SsSetSerialVol uses char for s_num
+    // callers also seem to pass char, but only matches with s16 right now?
 
     SpuCommonAttr attr;
 
@@ -300,7 +300,7 @@ void SdSetMVol(s16 left, s16 right) // 0x8009F75C
 {
     SpuCommonAttr attr;
 
-    attr.mask = SPU_COMMON_MVOLL | SPU_COMMON_MVOLR | SPU_COMMON_MVOLMODEL | SPU_COMMON_MVOLMODER;
+    attr.mask           = SPU_COMMON_MVOLL | SPU_COMMON_MVOLR | SPU_COMMON_MVOLMODEL | SPU_COMMON_MVOLMODER;
     attr.mvol.left      = left << 7;
     attr.mvol.right     = right << 7;
     attr.mvolmode.left  = 0;
@@ -309,13 +309,13 @@ void SdSetMVol(s16 left, s16 right) // 0x8009F75C
     SpuSetCommonAttr(&attr);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmain", SdVabOpenHead);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_snd", SdVabOpenHead);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmain", SdVabOpenHeadSticky);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_snd", SdVabOpenHeadSticky);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmain", SdVabFakeHead);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_snd", SdVabFakeHead);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmain", SdVbOpenOne);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_snd", SdVbOpenOne);
 
 s16 SdVabTransBody(u8* addr, s16 vabid) // 0x8009FD38
 {
@@ -782,7 +782,7 @@ s32 SdUtGetVabHdr(s16 vabId, VabHdr* vabhdrptr) // 0x800A0A40
     return 0;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmain", SdVoKeyOn);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_snd", SdVoKeyOn);
 
 void SdVoKeyOff(s32 vab_pro, s32 pitch) // 0x800A0CFC
 {
@@ -858,11 +858,11 @@ void SdVoKeyOffWithRROff(s32 vab_pro, s32 pitch) // 0x800A0E40
     sd_int_flag = 0;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmain", SdUtKeyOnV);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_snd", SdUtKeyOnV);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmain", SdUtKeyOn);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_snd", SdUtKeyOn);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmain", SdVbKeyOn);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_snd", SdVbKeyOn);
 
 s32 SdUtKeyOffV(s16 voice) // 0x800A18F4
 {
@@ -1113,4 +1113,29 @@ s32 SdGetSeqBeat2(s16 seq_access_num) // 0x800A224C
     }
 
     return -1;
+}
+
+void SsSetMVol(s16 left, s16 right) // 0x800A2294
+{
+    SdSetMVol(left, right);
+}
+
+void SsEnd() // 0x800A22C0
+{
+    SdEnd();
+}
+
+void SsSetSerialAttr(char s_num, char attr, char mode) // 0x800A22E0
+{
+    SdSetSerialAttr(s_num, attr, mode);
+}
+
+void SsSetSerialVol(char s_num, s16 voll, s16 volr) // 0x800A2308
+{
+    SdSetSerialVol(s_num, voll, volr);
+}
+
+void SsUtAllKeyOff(s16 mode) // 0x800A2338
+{
+    SdUtAllKeyOff(mode);
 }

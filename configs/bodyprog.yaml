@@ -237,10 +237,7 @@ segments:
       - [0x79248, asm, psyq/libspu/s_gva]
       - [0x79638, asm, lib_unk/lib_8009E198]
 
-      # libsd filenames likely aren't accurate since Konami Rally symbols didn't include object names.
-      # Maybe libsd was built from libsnd source code and object names can be taken from that.
-      - [0x7a244, c, libsd/sdmain]
-      - [0x7d734, c, libsd/ssmain]
+      - [0x7a244, c, libsd/smf_snd]
 
       - [0x7d7fc, asm, psyq/libspu/s_q]
       - [0x7d87c, asm, psyq/libapi/a13]
@@ -259,12 +256,13 @@ segments:
       - [0x7e9ec, asm, psyq/libspu/s_itc]
       - [0x7ea9c, asm, psyq/libspu/s_sca]
 
-      - [0x7ee1c, c, libsd/sdmidi]
+      - [0x7ee1c, c, libsd/smf_io]
 
       - [0x82158, asm, psyq/libspu/s_grv]
       - [0x82188, asm, psyq/libspu/s_gav]
 
-      - [0x821b8, c, libsd/sdmidi2]
+      - [0x821b8, c, libsd/smf_main]
+      - [0x82458, c, libsd/smf_mid]
 
       - [0x84238, data, bodyprog]
 
