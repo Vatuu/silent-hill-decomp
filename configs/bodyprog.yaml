@@ -77,7 +77,8 @@ segments:
       # - [0x64A4, .rodata, bodyprog_80085D78] # Jumptable: `func_8008A2E0`
       # - [0x6504, rodata]
       - [0x9744, .rodata, libsd/smf_io]
-      - [0x97DC, rodata]
+      - [0x97dc, .rodata, libsd/smf_io]
+      - [0x99d8, rodata]
       - [0x99e8, .rodata, libsd/smf_mid]
       - [0x9ad0, rodata]
       - [0x9ad0, c, bodyprog]
