@@ -500,6 +500,7 @@ time_flag = 0x800B25B8;
 smf_file_no = 0x800B25BC;
 print_start = 0x800B25C0;
 eof_char = 0x800B25C4; // type:s8 size:3 static?
+chantype = 0x800B25C8; // type:s32 static for readtrack?
 
 vab_h = 0x800C7418;
 sd_vb_malloc_rec = 0x800C75D8;

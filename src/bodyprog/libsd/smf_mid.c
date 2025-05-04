@@ -186,9 +186,139 @@ void sysex(SMF* p) // 0x800A7AEC
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_mid", chanmessage);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_mid", readtrack);
+u8 readtrack(SMF* p) // 0x800A80C4
+{
+    extern s32 chantype[]; // static
+
+    u8  c1;
+    u8  c2;
+    u8  c;
+    u8  type;
+    u8  stat;
+    s32 needed;
+
+    c2 = 0;
+
+    type = egetc(p);
+
+    if ((type & 0x80) == 0)
+    {
+        stat                      = p->status_value_25;
+        p->running_status_flag_24 = 1;
+    }
+    else
+    {
+        if (type != 0xFF)
+        {
+            p->status_value_25 = type;
+        }
+
+        stat                      = type;
+        p->running_status_flag_24 = 0;
+    }
+
+    needed = chantype[(stat >> 4) & 0xF];
+
+    if (needed != 0)
+    {
+        if (p->running_status_flag_24 != 0)
+        {
+            c1 = type;
+        }
+        else
+        {
+            c1 = egetc(p);
+        }
+
+        if (needed == 2)
+        {
+            c2 = egetc(p);
+        }
+
+        chanmessage(p, stat, c1, c2);
+        return 0;
+    }
+
+    if (type != 0xF0)
+    {
+        if (type == 0xFF)
+        {
+            c = egetc(p);
+            metaevent(p, c);
+        }
+        return 0;
+    }
+
+    sysex(p);
+    return 0;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_mid", readtrack2);
+
+/* TODO: needs jump table jtbl_8002E548
+u8 readtrack2(SMF* p) // 0x800A81F4
+{
+    u8  c;
+    s8  c1;
+    s32 tempo;
+    s32 tr;
+
+    c = egetc(p);
+    if (!(c & 0x80))
+    {
+        c1 = egetc(p);
+        if ((c1 & 0x7F) != 0)
+        {
+            key_on(p->midi_ch_27, c & 0x7F, c1 & 0x7F);
+        }
+        else
+        {
+            key_off(p->midi_ch_27, c & 0x7F, 0);
+        }
+        p->status_value_25 = (u8)c;
+    }
+    else
+    {
+        switch (c & 0x7F)
+        {
+            case 0x4A:
+                key_off(p->midi_ch_27, p->status_value_25, 0);
+                return 0;
+            case 0x4B:
+                key_off(p->midi_ch_27, p->status_value_25, 0);
+                return 1;
+            case 0x47:
+                c1 = egetc(p);
+                for (tr = 0; tr < smf_song[smf_file_no].mf_tracks_526; tr++)
+                {
+                    tempo                                                    = (((c1 & 0x7F) * 2) + 2);
+                    smf_song[(p->midi_ch_27 >> 4)].tracks_0[tr].mf_tempo2_16 = tempo;
+                }
+                break;
+            case 0x48:
+                c1 = egetc(p);
+                pitch_bend(p->midi_ch_27, 0, c1 & 0x7F);
+                break;
+            case 0x49:
+                c1 = egetc(p);
+                program_change(p->midi_ch_27, c1 & 0x7F);
+                break;
+            case 0x46:
+                c1 = egetc(p);
+                p->midi_ch_27 = (c1 & 0xF) + ((u8)smf_file_no * 0x10);
+                break;
+            case 0x7F:
+                c1 = egetc(p);
+                p->mf_eof_flag_20 = 1;
+                break;
+            default:
+                c1 = egetc(p);
+                chanmessage(p, (p->midi_ch_27 & 0xF) | 0xB0, c & 0x7F, c1 & 0x7F);
+                break;
+        }
+    }
+    return (c1 & 0x80) > 0;
+}*/
 
 s32 track_head_read(SMF* p)
 {

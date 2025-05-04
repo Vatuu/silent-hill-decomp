@@ -568,7 +568,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_io", voice_check);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_io", key_on);
 
-void key_off(u8 chan, u8 c1)
+void key_off(u8 chan, u8 c1, u8 c2)
 {
     s32 keyStatus;
     s32 vo;

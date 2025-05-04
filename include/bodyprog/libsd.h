@@ -387,7 +387,8 @@ void sound_off();
 void adsr_set(s32 vo, PORT* p);
 void rr_off(s32 vo);
 
-void    key_off(u8 chan, u8 c1);
+void    key_on(u8 chan, u8 c1, u8 c2);
+void    key_off(u8 chan, u8 c1, u8 c2);
 void    key_press();
 VagAtr* get_vab_tone(MIDI* p, u16 tone, u8 chan);
 
@@ -422,9 +423,11 @@ s32 read32bit(SMF* p);
 s32 read16bit(SMF* p);
 
 void len_add(SMF* p, s32 len);
-
+void metaevent(SMF* p, u8 type);
 void sysex(SMF* p);
-
+void chanmessage(SMF* p, u8 status, u8 c1, u8 c2);
+u8   readtrack(SMF* p);
+u8   readtrack2(SMF* p);
 s32  track_head_read(SMF* p);
 void delta_time_conv(SMF* p);
 void midi_file_out(s16 file_no);
