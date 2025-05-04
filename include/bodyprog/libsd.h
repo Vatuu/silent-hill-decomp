@@ -192,82 +192,82 @@ STATIC_ASSERT_SIZEOF(s_SMF_MIDI, 92);
 
 typedef struct _SMF_PORT
 {
-    u8  field_0;
-    u8  unk_1[1];
-    u8  midiProgramNum_2;
-    u8  smf_midi_num_3;
-    u16 field_4;
-    u16 midiKeyNum_6;
-    u16 field_8;
-    u8  unk_A[2];
-    u16 vol_left_C;
-    u16 vol_right_E;
-    u8  field_10;
-    u8  field_11;
-    u8  field_12;
-    u8  field_13;
-    u16 field_14;
-    u16 field_16;
-    u8  unk_18[2];
-    u8  field_1A;
-    u8  field_1B;
-    u8  field_1C;
-    u8  field_1D;
-    u8  field_1E;
-    u8  field_1F;
-    u8  field_20;
-    u8  field_21;
-    u8  field_22;
-    s8  field_23;
-    u16 field_24;
-    u16 field_26;
-    u8  field_28;
-    u8  field_29;
-    u8  field_2A;
-    u8  field_2B;
-    u16 field_2C;
-    u16 field_2E;
-    u8  field_30;
-    u8  field_31;
-    u8  field_32;
-    s8  field_33;
-    u16 field_34;
-    u16 field_36;
-    u8  field_38;
-    u8  field_39;
-    u8  field_3A;
-    u8  field_3B;
-    u16 field_3C;
-    s16 field_3E;
-    u16 field_40;
-    u8  randomTblIndex_42;
-    u8  field_43;
-    u8  field_44;
-    u8  field_45;
-    u16 field_46;
-    u16 field_48;
-    u16 field_4A;
-    s16 field_4C;
-    u16 field_4E;
-    u16 field_50;
-    u8  vabId_52;
-    u8  unk_53[1];
+    u8  vc_0; // soundcd.irx has vab_id_0 here, and vc_1 after, but the reads/writes to +0x0 in SH are to +0x1 in soundcd, so this is likely vc
+    u8  field_1;
+    u8  prog_2;
+    u8  midi_ch_3;
+    u16 tone_4;
+    u16 note_6;
+    u16 note_wk_8;
+    u16 fine_A;
+    u16 l_vol_C;
+    u16 r_vol_E;
+    u8  pvol_10;
+    u8  tvol_11;
+    u8  ppan_12;
+    u8  tpan_13;
+    u16 pan_14;
+    u16 stat_16;
+    u16 pitch_18;
+    u8  velo_1A;
+    u8  pedal_1B;
+    u8  bend_max_1C;
+    u8  bend_min_1D;
+    u8  center_1E;
+    u8  shift_1F;
+    u8  vibcadw_20;
+    u8  vibcadw2_21;
+    u8  vibhc_22;
+    s8  vibc_23;
+    u16 vibd_24;
+    u16 vibdm_26;
+    u8  vibcc_28;
+    u8  vibhs_29;
+    u8  vibcs_2A;
+    u8  vibcad_2B;
+    u16 vibad_2C;
+    u16 vib_data_2E; // s16 in soundcd.irx?
+    u8  trecadw_30;
+    u8  trecadw2_31;
+    u8  trehc_32;
+    s8  trec_33;
+    u16 tred_34;
+    u16 tredm_36;
+    u8  trecc_38;
+    u8  trehs_39;
+    u8  trecs_3A;
+    u8  trecad_3B;
+    u16 tread_3C;
+    s16 tre_data_3E;
+    u16 rdmd_40; // s16 in soundcd.irx?
+    u8  rdmo_42;
+    u8  rdms_43;
+    u8  rdmc_44;
+    u8  rdmdm_45;
+    u16 adsr1_46;
+    u16 adsr2_48;
+    u16 a_mode_4A;
+    s16 tremoro_wk_4C;
+    u16 pbend_wk_4E;
+    u16 pbend_50;
+    u8  vab_id_52; // soundcd.irx accesses this at +0x0 instead of +0x52, lines up with comment on vc_0
+    u8  unk_53[1]; // core_no or vh_mode?
 } s_SMF_PORT;
 STATIC_ASSERT_SIZEOF(s_SMF_PORT, 84);
 
-typedef struct _SD_ALLOC
+typedef struct SD_Spu_Alloc
 {
     u32 addr_0;
     s32 size_4;
-} s_SD_ALLOC;
-STATIC_ASSERT_SIZEOF(s_SD_ALLOC, 8);
+} SD_SPU_ALLOC;
+STATIC_ASSERT_SIZEOF(SD_SPU_ALLOC, 8);
 
 extern s_SMF_MIDI smf_midi[2 * 16];   // 2 devices with 16 channels each?
 extern s_SMF_MIDI smf_midi_sound_off; // Set by sound_off(), could be smf_midi[32], but game doesn't use offsets for [32]?
 extern s_SMF_PORT smf_port[24];
 extern s_SMF_S smf_song[2];
 
-extern s_SD_ALLOC sd_spu_alloc[SD_ALLOC_SLOTS];
+extern SD_SPU_ALLOC sd_spu_alloc[SD_ALLOC_SLOTS];
 extern s32        sd_reverb_area_size[10];
 
 // sdmain.c

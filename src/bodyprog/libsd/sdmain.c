@@ -70,7 +70,7 @@ void sd_alloc_sort() // 0x8009EEBC
         {
             if (sd_spu_alloc[frontIdx].addr_0 > sd_spu_alloc[backIdx].addr_0)
             {
-                s_SD_ALLOC temp;
+                SD_SPU_ALLOC temp;
                 temp.size_4 = sd_spu_alloc[frontIdx].size_4;
                 temp.addr_0 = sd_spu_alloc[frontIdx].addr_0;
 
@@ -414,9 +414,9 @@ void SdAutoKeyOffCheck() // 0x8009FF70
     {
         for (voiceIdx = 0; voiceIdx < sd_reserved_voice; voiceIdx++)
         {
-            if (smf_port[voiceIdx].field_16 != 0 && SpuGetKeyStatus(spu_ch_tbl[voiceIdx]) == 3)
+            if (smf_port[voiceIdx].stat_16 != 0 && SpuGetKeyStatus(spu_ch_tbl[voiceIdx]) == 3)
             {
-                if (smf_port[voiceIdx].field_16 >= 2U)
+                if (smf_port[voiceIdx].stat_16 >= 2U)
                 {
                     voices |= spu_ch_tbl[voiceIdx];
 
@@ -426,13 +426,13 @@ void SdAutoKeyOffCheck() // 0x8009FF70
                         keyStatus = SpuGetKeyStatus(spu_ch_tbl[voiceIdx]);
                     } while (keyStatus != 2 && keyStatus != 0);
 
-                    smf_port[voiceIdx].field_16 = 0;
+                    smf_port[voiceIdx].stat_16 = 0;
 
                     func_800485C0(voiceIdx);
                 }
                 else
                 {
-                    smf_port[voiceIdx].field_16++;
+                    smf_port[voiceIdx].stat_16++;
                 }
             }
         }
@@ -584,7 +584,7 @@ void SdSeqPause(s16 seq_access_num) // 0x800A0418
 
     for (i = 0; i < sd_reserved_voice; i++)
     {
-        if ((smf_port[i].smf_midi_num_3 >> 4) == seq_access_num && smf_port[i].field_16 != 0)
+        if ((smf_port[i].midi_ch_3 >> 4) == seq_access_num && smf_port[i].stat_16 != 0)
         {
             voice.mask         = (SPU_VOICE_VOLL | SPU_VOICE_VOLR);
             voice.voice        = spu_ch_tbl[i];
@@ -615,13 +615,13 @@ void SdSeqReplay(s16 seq_access_num) // 0x800A0534
 
     for (i = 0; i < sd_reserved_voice; i++)
     {
-        temp_v1 = (smf_port[i].smf_midi_num_3 >> 4);
-        if (temp_v1 == seq_access_num && smf_port[i].field_16 != 0)
+        temp_v1 = (smf_port[i].midi_ch_3 >> 4);
+        if (temp_v1 == seq_access_num && smf_port[i].stat_16 != 0)
         {
             voice.mask         = (SPU_VOICE_VOLL | SPU_VOICE_VOLR);
             voice.voice        = spu_ch_tbl[i];
-            voice.volume.left  = ((smf_port[i].vol_left_C * smf_song[temp_v1].vol_left_50C) >> 7);
-            voice.volume.right = ((smf_port[i].vol_right_E * smf_song[temp_v1].vol_right_50E) >> 7);
+            voice.volume.left  = ((smf_port[i].l_vol_C * smf_song[temp_v1].vol_left_50C) >> 7);
+            voice.volume.right = ((smf_port[i].r_vol_E * smf_song[temp_v1].vol_right_50E) >> 7);
             SpuSetVoiceAttr(&voice);
         }
     }
@@ -722,11 +722,11 @@ void SdUtSEAllKeyOff() // 0x800A08DC
 
     for (i = 0; i < sd_reserved_voice; i++)
     {
-        if (smf_port[i].smf_midi_num_3 == 0x20)
+        if (smf_port[i].midi_ch_3 == 0x20)
         {
             voices |= spu_ch_tbl[i];
-            smf_port[i].field_16     = 0;
-            smf_port[i].midiKeyNum_6 = 0;
+            smf_port[i].stat_16 = 0;
+            smf_port[i].note_6  = 0;
             SpuSetKey(0, spu_ch_tbl[i]);
             adsr_set(i, &smf_port[i]);
             rr_off(i);
@@ -793,16 +793,16 @@ void SdVoKeyOff(s32 vab_pro, s32 pitch) // 0x800A0CFC
         // Of the lower 16 bits of vab_pro, the upper 8 bits are used for VAB id, and the lower 8 bits specify a program number
         // Of the lower 16 bits of pitch, the upper 8 bits specify a key number in MIDI standard.
         // To specify a finer pitch, specify a key number in the lower 8 bits of pitch in 1/128 semitones.
-        if (smf_port[i].field_16 != 0 &&
-            smf_port[i].smf_midi_num_3 == 0x20 &&
-            smf_port[i].midiKeyNum_6 == (pitch >> 8) &&
-            smf_port[i].vabId_52 == (vab_pro >> 8) &&
-            smf_port[i].midiProgramNum_2 == (vab_pro & 0x7F))
+        if (smf_port[i].stat_16 != 0 &&
+            smf_port[i].midi_ch_3 == 0x20 &&
+            smf_port[i].note_6 == (pitch >> 8) &&
+            smf_port[i].vab_id_52 == (vab_pro >> 8) &&
+            smf_port[i].prog_2 == (vab_pro & 0x7F))
         {
             voices |= spu_ch_tbl[i];
 
-            smf_port[i].field_16     = 0;
-            smf_port[i].midiKeyNum_6 = 0;
+            smf_port[i].stat_16 = 0;
+            smf_port[i].note_6  = 0;
 
             adsr_set(i, &smf_port[i]);
             SpuSetKey(0, spu_ch_tbl[i]);
@@ -830,16 +830,16 @@ void SdVoKeyOffWithRROff(s32 vab_pro, s32 pitch) // 0x800A0E40
         // Of the lower 16 bits of vab_pro, the upper 8 bits are used for VAB id, and the lower 8 bits specify a program number
         // Of the lower 16 bits of pitch, the upper 8 bits specify a key number in MIDI standard.
         // To specify a finer pitch, specify a key number in the lower 8 bits of pitch in 1/128 semitones.
-        if (smf_port[i].field_16 != 0 &&
-            smf_port[i].smf_midi_num_3 == 0x20 &&
-            smf_port[i].midiKeyNum_6 == (pitch >> 8) &&
-            smf_port[i].vabId_52 == (vab_pro >> 8) &&
-            smf_port[i].midiProgramNum_2 == (vab_pro & 0x7F))
+        if (smf_port[i].stat_16 != 0 &&
+            smf_port[i].midi_ch_3 == 0x20 &&
+            smf_port[i].note_6 == (pitch >> 8) &&
+            smf_port[i].vab_id_52 == (vab_pro >> 8) &&
+            smf_port[i].prog_2 == (vab_pro & 0x7F))
         {
             voices |= spu_ch_tbl[i];
 
-            smf_port[i].field_16     = 0;
-            smf_port[i].midiKeyNum_6 = 0;
+            smf_port[i].stat_16 = 0;
+            smf_port[i].note_6  = 0;
 
             adsr_set(i, &smf_port[i]);
             rr_off(i);
@@ -867,12 +867,12 @@ s32 SdUtKeyOffV(s16 voice) // 0x800A18F4
     u32 voiceChannel;
 
     sd_int_flag = 1;
-    if (smf_port[voice].field_16 != 0 && smf_port[voice].smf_midi_num_3 == 0x20)
+    if (smf_port[voice].stat_16 != 0 && smf_port[voice].midi_ch_3 == 0x20)
     {
         voiceChannel = spu_ch_tbl[voice];
 
-        smf_port[voice].field_16     = 0;
-        smf_port[voice].midiKeyNum_6 = 0;
+        smf_port[voice].stat_16 = 0;
+        smf_port[voice].note_6  = 0;
 
         adsr_set(voice, &smf_port[voice]);
         SpuSetKey(0, spu_ch_tbl[voice]);
@@ -898,12 +898,12 @@ s32 SdUtKeyOffVWithRROff(s16 voice) // 0x800A1A18
     u32 voiceChannel;
 
     sd_int_flag = 1;
-    if (smf_port[voice].field_16 != 0 && smf_port[voice].smf_midi_num_3 == 0x20)
+    if (smf_port[voice].stat_16 != 0 && smf_port[voice].midi_ch_3 == 0x20)
     {
         voiceChannel = spu_ch_tbl[voice];
 
-        smf_port[voice].field_16     = 0;
-        smf_port[voice].midiKeyNum_6 = 0;
+        smf_port[voice].stat_16 = 0;
+        smf_port[voice].note_6  = 0;
 
         adsr_set(voice, &smf_port[voice]);
         rr_off(voice);
