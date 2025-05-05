@@ -167,7 +167,99 @@ void len_add(SMF* p, s32 len) // 0x800A7814
     p->mf_data_loc_0 += len;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_mid", metaevent);
+void metaevent(SMF* p, u8 type)
+{
+    u32 tempo;
+    u32 len;
+    u32 a;
+
+    switch (type)
+    {
+        case 0x2F:
+            p->mf_eof_flag_20 = 1;
+            egetc(p);
+            break;
+
+        case 0x51:
+            if (smf_song[smf_file_no].smf_seq_flag_52C == 1)
+            {
+                tempo = read32bit(p) & 0xFFFFFF;
+            }
+            else
+            {
+                tempo = egetc(p) << 0x10;
+                tempo = tempo | (egetc(p) << 8);
+                tempo = tempo | egetc(p);
+            }
+
+            tempo = 60000000 / tempo;
+            tempo = (100 * tempo) / 115;
+
+            if (tempo > 255)
+            {
+                tempo = 255;
+            }
+
+            switch (smf_song[smf_file_no].mf_division_528)
+            {
+                case 60:
+                case 24:
+                    tempo = tempo / 2;
+                    break;
+                case 30:
+                    tempo = tempo / 4;
+                    break;
+            }
+
+            for (a = 0; a < smf_song[smf_file_no].mf_tracks_526; a++)
+            {
+                smf_song[smf_file_no].tracks_0[a].mf_tempo2_16 = tempo;
+                smf_song[smf_file_no].tracks_0[a].mf_tempo_14  = tempo;
+            }
+
+            break;
+        case 0x54:
+            egetc(p);
+            egetc(p);
+            egetc(p);
+            egetc(p);
+            egetc(p);
+            egetc(p);
+            break;
+
+        case 0x58:
+            egetc(p);
+            read32bit(p);
+            break;
+
+        case 0x59:
+            egetc(p);
+            egetc(p);
+            egetc(p);
+            break;
+
+        case 0x0:
+        case 0x1:
+        case 0x2:
+        case 0x3:
+        case 0x4:
+        case 0x5:
+        case 0x6:
+        case 0x7:
+        case 0x8:
+        case 0x9:
+        case 0xA:
+        case 0xB:
+        case 0xC:
+        case 0xD:
+        case 0xE:
+        case 0xF:
+        default:
+            len = readvarinum(p);
+            len_add(p, len);
+            break;
+    }
+}
 
 void sysex(SMF* p) // 0x800A7AEC
 {

@@ -61,14 +61,14 @@ INSERT_OVLS_FLAGS   := -exe $(ROM_DIR)/SLUS_007.07 -fs $(ROM_DIR)/SILENT. -ftb $
 
 # Main executable uses -G8 while overlays use -G0.
 # This function redefines required parameters for compilation checking depending on whether a file's route is from main executable or an overlay.
-# libsd smf_io.c also needs --expand-div maspsx flag, which the rest of the build has issues with.
+# libsd also needs --expand-div maspsx flag, which the rest of the build has issues with.
 define DL_FlagsSwitch
 	$(if $(or $(filter MAIN,$(patsubst build/src/main/%,MAIN,$(1))), $(filter MAIN,$(patsubst build/asm/main/%,MAIN,$(1)))), $(eval DL_FLAGS = -G8), $(eval DL_FLAGS = -G0))
 	$(eval AS_FLAGS = $(ENDIAN) $(INCLUDE_FLAGS) $(OPT_FLAGS) $(DL_FLAGS) -march=r3000 -mtune=r3000 -no-pad-sections)
 	$(eval CC_FLAGS = $(OPT_FLAGS) $(DL_FLAGS) -mips1 -mcpu=3000 -w -funsigned-char -fpeephole -ffunction-cse -fpcc-struct-return -fcommon -fverbose-asm -msoft-float -mgas -fgnu-linker -quiet)
 	$(eval MASPSX_FLAGS = --aspsx-version=2.77 --run-assembler $(AS_FLAGS))
 
-	$(if $(filter build/src/bodyprog/libsd/smf_io.c.o,$(1)), \
+	$(if $(filter build/src/bodyprog/libsd/smf_io.c.o build/src/bodyprog/libsd/smf_mid.c.o,$(1)), \
 		$(eval MASPSX_FLAGS = --expand-div $(MASPSX_FLAGS)))
 endef
 
