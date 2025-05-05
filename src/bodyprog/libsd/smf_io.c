@@ -839,7 +839,7 @@ void control_change(u8 chan, u8 c1, u8 c2)
                     }
                 }
             }
-            set_midi_info(4, chan, p->mod_2);
+            set_midi_info(SD_MIDI_MOD, chan, p->mod_2);
             break;
         case 0x2:
             if (p->mod_mode_20 < 0x40)
@@ -863,7 +863,7 @@ void control_change(u8 chan, u8 c1, u8 c2)
         case 0x7:
             p->mvol_3 = c2;
             vol_flag  = 1;
-            set_midi_info(3, chan, p->mvol_3);
+            set_midi_info(SD_MIDI_VOL, chan, p->mvol_3);
             break;
         case 0xA:
             if (c2)
@@ -875,12 +875,12 @@ void control_change(u8 chan, u8 c1, u8 c2)
                 p->pan_1 = 1;
             }
             vol_flag = 1;
-            set_midi_info(2, chan, p->pan_1);
+            set_midi_info(SD_MIDI_PAN, chan, p->pan_1);
             break;
         case 0xB:
             p->express_5 = c2;
             vol_flag     = 1;
-            set_midi_info(5, chan, p->express_5);
+            set_midi_info(SD_MIDI_EXP, chan, p->express_5);
             break;
         case 0xC:
             p->vol_mode_11 = c2;
@@ -1089,7 +1089,7 @@ void chan_press() {} // 0x800A6C58
 void pitch_bend(u8 chan, s32 c1, u8 c2)
 {
     smf_midi[chan].pbend_7 = c2 & 0x7F;
-    set_midi_info(1, chan, c2);
+    set_midi_info(SD_MIDI_BEND, chan, c2);
 }
 
 void control_code_set(s32 seq_access_num) {} // 0x800A6CB0

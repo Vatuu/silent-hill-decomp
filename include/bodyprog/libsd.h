@@ -21,15 +21,6 @@
 #define SD_MAGIC_KDT  0x2054444B
 #define SD_MAGIC_KDT1 0x3154444B
 
-enum SMF_STAT
-{
-    SEQ_NON   = 0,
-    SEQ_PLAY  = 1,
-    SEQ_STOP  = 2,
-    SEQ_END   = 3,
-    SEQ_PAUSE = 4
-};
-
 extern s32 sd_reverb_mode;
 extern s16 sd_keyoff_mode;
 extern s32 sd_interrupt_start_flag;
@@ -46,6 +37,24 @@ extern s16 sd_seq_loop_mode;
 extern s32 sd_timer_event;
 extern s32 smf_file_no;
 extern u32 spu_ch_tbl[24];
+
+enum SMF_STAT
+{
+    SEQ_NON   = 0,
+    SEQ_PLAY  = 1,
+    SEQ_STOP  = 2,
+    SEQ_END   = 3,
+    SEQ_PAUSE = 4
+};
+
+enum SMF_MIDI_STAT
+{
+    SD_MIDI_BEND = 1,
+    SD_MIDI_PAN = 2,
+    SD_MIDI_VOL = 3,
+    SD_MIDI_MOD = 4,
+    SD_MIDI_EXP = 5
+};
 
 typedef struct SD_Vab_H
 {
@@ -365,7 +374,7 @@ void SsUtAllKeyOff(s16 mode);
 // smf_io.c
 
 void set_note_on(s16 arg0, u8 arg1, u8 arg2, s16 arg3, s16 arg4);
-void set_midi_info(s32 type, u8 midiChannel, u32 value);
+void set_midi_info(s32 type, u8 midiChannel, u32 value); /** type = `SMF_MIDI_STAT` */
 u16  Note2Pitch(s32 arg0, s32 arg1, u8 arg2, u8 arg3);
 void tre_calc(PORT* p);
 void vib_calc(PORT* p);
