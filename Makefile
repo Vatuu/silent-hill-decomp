@@ -189,6 +189,7 @@ all: build
 
 build: prepare-macro $(TARGET_OUT)
 
+# Workaround for objdiff .global issue https://github.com/Vatuu/silent-hill-decomp/issues/104, allows switching with macro.inc without .global.
 prepare-macro:
 	cp include/$(MACRO_FILE) $(MACRO_INC)
 
