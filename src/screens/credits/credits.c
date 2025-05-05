@@ -5,6 +5,56 @@
 #include "main/rng.h"
 #include "screens/credits/credits.h"
 
+s_UnkCredits1 D_801E5558[6] =
+{
+    {
+        .field_0 = 0x12D5,
+        .field_2 = 0x0000,
+        .field_4 = 0x21FC,
+    },
+    {
+        .field_0 = 0x12D3,
+        .field_2 = 0xF6A0,
+        .field_4 = 0x20D0,
+    },
+    {
+        .field_0 = 0x12D4,
+        .field_2 = 0xFC7C,
+        .field_4 = 0x21FC,
+    },
+    {
+        .field_0 = 0x12D5,
+        .field_2 = 0xFF4C,
+        .field_4 = 0x2148,
+    },
+    {
+        .field_0 = 0x12D6,
+        .field_2 = 0xFF4C,
+        .field_4 = 0x2274,
+    },
+    {
+        .field_0 = 0x12D6,
+        .field_2 = 0xFF88,
+        .field_4 = 0x20D0
+    }
+};
+
+RECT D_801E557C[2] = 
+{
+    {
+        .x = 320, 
+        .y = 256, 
+        .w = 160, 
+        .h = 240
+    },
+    {
+        .x = 480,
+        .y = 16,
+        .w = 32,
+        .h = 480
+    }
+};
+
 void func_801E2E28(s32 idx) // 0x801E2E28
 {
     s32 var0;
@@ -398,6 +448,548 @@ void func_801E386C() // 0x801E386C
     D_801E5E80 = 0x10000 / D_801E5E7C;
 }
 
+char D_801E558C[] = "";
+
+char* D_801E5590[] =
+{
+    "\xD0\xF0" "Executive Producer\xD8",
+    D_801E558C,
+    D_801E558C,
+    "\xD0\xF0" "Makoto Y" "\x18" "ano\xD8",
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    "\xD0\xF0" "Producer\xD8",
+    D_801E558C,
+    D_801E558C,
+    "\xD0\xF0" "Gozo Kitao\xD8",
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    "\xD0\xF0" "Director\xD8",
+    D_801E558C,
+    D_801E558C,
+    "\xD0\xF0" "K" "\x18" "eiichiro T" "\x19" "oyama\xD8",
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    "\xD0\xF0" "Game System Programmer\xD8",
+    D_801E558C,
+    D_801E558C,
+    "\xD0\xF0" "Akihiro Imamura\xD8",
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    "\xD0\xF0" "Graphic System Programmer\xD8",
+    D_801E558C,
+    D_801E558C,
+    "\xD0\xF0" "Naoto Oshima\xD8",
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    "\xD0\xF0" "Character System Programmer\xD8",
+    D_801E558C,
+    D_801E558C,
+    "\xD0\xF0" "Y" "\x18" "uki Mizuochi\xD8",
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    "\xD0\xF0" "Enemy Programmer\xD8",
+    D_801E558C,
+    D_801E558C,
+    "\xD0\xF0" "Kazutoshi Sugai\xD8",
+    D_801E558C,
+    "\xD0\xF0" "Hiroyuki Owaku\xD8",
+    D_801E558C,
+    "\xD0\xF0" "Kazumasa Ogiso\xD8",
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    "\xD0\xF0" "Event Programmer\xD8",
+    D_801E558C,
+    D_801E558C,
+    "\xD0\xF0" "Hiroyuki Owaku\xD8",
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    "\xD0\xF0" "Background Designer\xD8",
+    D_801E558C,
+    D_801E558C,
+    "\xD0\xF0" "Isao Takahashi\xD8",
+    D_801E558C,
+    "\xD0\xF0" "Masahiro Ito\xD8",
+    D_801E558C,
+    "\xD0\xF0" "Masashi Tsuboyama\xD8",
+    D_801E558C,
+    "\xD0\xF0" "Mihoko Kimura\xD8",
+    D_801E558C,
+    "\xD0\xF0" "Takayuki Ando\xD8",
+    D_801E558C,
+    "\xD0\xF0" "Tomohisa Koike\xD8",
+    D_801E558C,
+    "\xD0\xF0" "Takamitsu Nemoto\xD8",
+    D_801E558C,
+    "\xD0\xF0" "Kazuyuki Kaiho\xD8",
+    D_801E558C,
+    "\xD0\xF0" "Tatsuto Y""\x18""abe\xD8",
+    D_801E558C,
+    "\xD0\xF0" "Soichiro Kitai\xD8",
+    D_801E558C,
+    "\xD0\xF0" "K" "\x18" "eiichiro T" "\x19" "oyama\xD8",
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    "\xD0\xF0" "Monster Designer\xD8",
+    D_801E558C,
+    D_801E558C,
+    "\xD0\xF0" "Naoko Sato\xD8",
+    D_801E558C,
+    "\xD0\xF0" "Masahiro Ito\xD8",
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    "\xD0\xF0" "Motion, Story Demo Designer\xD8",
+    D_801E558C,
+    D_801E558C,
+    "\xD0\xF0" "Naoko Sato\xD8",
+    D_801E558C,
+    "\xD0\xF0" "Takayuki Ando\xD8",
+    D_801E558C,
+    "\xD0\xF0" "Masashi Tsuboyama\xD8",
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    "\xD0\xF0" "Character Designer\xD8",
+    D_801E558C,
+    D_801E558C,
+    "\xD0\xF0" "Takayoshi Sato\xD8",
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    "\xD0\xF0" "CG" "\x10" "I Creator\xD8",
+    D_801E558C,
+    D_801E558C,
+    "\xD0\xF0" "Takayoshi Sato\xD8",
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    "\xD0\xF0" "Digital Technician\xD8",
+    D_801E558C,
+    D_801E558C,
+    "\xD0\xF0" "K" "\x18" "enichiro Imaizumi\xD8",
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    "\xD0\xF0" "Sound Director\xD8",
+    D_801E558C,
+    D_801E558C,
+    "\xD0\xF0" "Akira Y" "\x18" "amaoka\xD8",
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    "\xD0\xF0" "Sound Programmer\xD8",
+    D_801E558C,
+    D_801E558C,
+    "\xD0\xF0" "AKT\xD8",
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    "\xD0\xF0" "Ending Theme\xD8",
+    D_801E558C,
+    "\xD0\xF0\x82" "Esper""\xD7""a""\xDF\xF7\xD6\xF6\\\xDE\xF6\xE7""ndote\"""\xD8",
+    D_801E558C,
+    "\x1D\xD0\xF8" "Produced\xD8\xD1 by ""\xD9""Rika Muranaka",
+    D_801E558C,
+    "\x1D\xD0\xF8" "Music and words\xD8\xD1 by ""\xD9""Rika Muranaka",
+    D_801E558C,
+    "\x1D\xD0\xF8" "Translated\xD8\xD1 by ""\xD9""Daniel Monteverde",
+    D_801E558C,
+    "\x1D\xD0\xF8" "Arranged\xD8\xD1 by \xD9Rika Muranaka &",
+    "\x1D\xD0\xF8" "\xD8\xD0\xD8\xF8\xE9Omar V""\x18""alente",
+    D_801E558C,
+    "\xD0\xF0" "Lead V""\x18""ocal\x11:  V""\x18""anesa Quiroz\xD8",
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    "\xD0\xF0" "Package Designer\xD8",
+    D_801E558C,
+    D_801E558C,
+    "\xD0\xF0" "Daisuke Nakayama\xD8",
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    "\xD0\xF0" "Publicity\xD8",
+    D_801E558C,
+    D_801E558C,
+    "\xD0\xF0" "Shigeyuki Tamura\xD8",
+    D_801E558C,
+    "\xD0\xF0" "Kanako Nakahara\xD8",
+    D_801E558C,
+    "\xD0\xF0" "Taro Miyake\xD8",
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    "\xD0\xF0" "Play Check\xD8",
+    D_801E558C,
+    D_801E558C,
+    "\xD0\xF0" "Tatsuhiko Urushibara\xD8",
+    D_801E558C,
+    "\xD0\xF0" "RMC\xD8",
+    D_801E558C,
+    "\xD0\xF0" "STUD" "\x18" "IO ST" "\x19" "A" "\x19" "T\xD8",
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    "\xD0\xF0" "English Staffs\xD8",
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    "\xD0\xF0" "R""\x18""ecording Director\xD8",
+    D_801E558C,
+    D_801E558C,
+    "\xD0\xF0" "Harry Inaba\xD8",
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    "\xD0\xF0" "A""\x18""udio Engineer\xD8",
+    D_801E558C,
+    D_801E558C,
+    "\xD0\xF0" "Scott Greiner (Transmedia)\xD8",
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    "\xD0\xF0" "Senior Product Coordinator\xD8",
+    D_801E558C,
+    D_801E558C,
+    "\xD0\xF0" "Harry Inaba\xD8",
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    "\xD0\xF0" "Product Coordinator\xD8",
+    D_801E558C,
+    D_801E558C,
+    "\xD0\xF0" "Aki Saito\xD8",
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    "\xD0\xF0" "Script Translation by \xD8",
+    D_801E558C,
+    D_801E558C,
+    "\xD0\xF0" "Latina International Corporation\xD8",
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    "\xD0\xF0" "R""\x18""ecording Studio\xD8",
+    D_801E558C,
+    D_801E558C,
+    "\xD0\xF0" "Transmedia\xD8",
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    "\xD0\xF0" "V""\x18""oice Talent Agency\xD8",
+    D_801E558C,
+    D_801E558C,
+    "\xD0\xF0" "ST""\x19""ARS\xD8",
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    "\xD0\xF0" "V""\x18""oice Talents\xD8",
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    "\x1D\xD0\xF8" "Harry\x13\x14\xD8\x15Michael G",
+    D_801E558C,
+    D_801E558C,
+    "\x1D\xD0\xF8" "Cybil\x13\x14\xD8\x15Susan Papa",
+    D_801E558C,
+    D_801E558C,
+    "\x1D\xD0\xF8" "Lisa\x13\x14\xD8\x15Thessaly Lerner",
+    D_801E558C,
+    D_801E558C,
+    "\x1D\xD0\xF8" "Dr. Kaufmann\x13\x14\xD8\x15Jarion Monroe",
+    D_801E558C,
+    D_801E558C,
+    "\x1D\xD0\xF8" "Alessa/Cheryl\x13\x14\xD8\x15Sandra Wane",
+    D_801E558C,
+    D_801E558C,
+    "\x1D\xD0\xF8" "Dahlia\x13\x14\xD8\x15Liz Mamorsky",
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    "\xD0\xF0" "Special Thanks\xD8",
+    D_801E558C,
+    D_801E558C,
+    D_801E558C,
+    "\xD0\xF0" "HALKY\xD8",
+    D_801E558C,
+    "\xD0\xF0" "Mike Gallo (KO""\x18""A)\xD8",
+    D_801E558C,
+    "\xD0\xF0" "K" "\x18" "en Ogasawara (KO" "\x18" "A)\xD8",
+    D_801E558C,
+    "\xD0\xF0" "K""\x18""elly N. Pine (Transmedia)\xD8",
+    D_801E558C,
+    "\xD0\xF0" "Britney L. Y""\x18""unker (ST""\x19""ARS)\xD8",
+    D_801E558C,
+    "\xD0\xF0" "Kiyohiko Y""\x18""amane\xD8",
+    D_801E558C,
+    "\xD0\xF0" "Nobuaki Y""\x18""amazaki\xD8",
+    D_801E558C,
+    "\xD0\xF0" "Kazuaki Sugawara\xD8",
+    D_801E558C,
+    "\xD0\xF0" "Akihito Ichihara\xD8",
+    D_801E558C,
+    "\xD0\xF0" "Emi Kori\xD8",
+    D_801E558C,
+    D_801E558C,
+    NULL
+};
+
+char D_801E5BD0[] =
+{
+    0xD0, 0xD0, 0xF0, 0xA0, 0xA1, 0xA2, 0xA2, 0xA2,
+    0xBF, 0xAA, 0xAE, 0xAD, 0xA3, 0xAC, 0xA9, 0xBF,
+    0xA4, 0xAE, 0xAC, 0xAF, 0xBB, 0xBC, 0xA6, 0xBE,
+    0xBF, 0xA6, 0xAD, 0x18, 0xBC, 0xA6, 0xBE, 0xBC,
+    0x19, 0xA3, 0xA9, 0xAD, 0xAC, 0xA6, 0xAD, 0xBC,
+    0xBF, 0xBC, 0xAE, 0xAA, 0xB9, 0x18, 0xAE, 0xD8,
+    0x0A, 0xD0, 0xF0, 0xA3, 0xAB, 0xAB, 0xBF, 0xBE,
+    0xA9, 0xA7, 0xA8, 0xBC, 0xBD, 0xBF, 0xBE, 0x18,
+    0xA6, 0xBD, 0xA6, 0xBE, 0x18, 0xBA, 0x18, 0xA6,
+    0x18, 0xA5, 0xB8, 0xD8, 0x00, 0x00, 0x00, 0x00
+};
+
+s32 D_801E5C20 = 400;
+
+s16 D_801E5C24[256] = 
+{
+    0,     0,     0,     0,
+    0,     0,     0,     0,
+    -6,    16,     0,     0,
+    0,     0,     0,     0,
+    1,     2,     4,     8,
+    16,    32,    64,   128,
+    -1,    -2,    -4,    -8,
+    -16,   -32,   -64,  -128,
+    6,     5,    10,    16,
+    16,    21,    20,     5,
+    7,     7,    16,    16,
+    5,    16,     6,    16,
+    16,    16,    16,    16,
+    16,    16,    16,    16,
+    16,    16,     5,     6,
+    16,    16,    16,    10,
+    19,    18,    14,    16,
+    20,    13,    14,    16,
+    17,     7,    11,    16,
+    15,    22,    18,    19,
+    14,    19,    16,    12,
+    16,    17,    18,    23,
+    15,    16,    13,     8,
+    7,     8,     8,    16,
+    5,    13,    15,    11,
+    15,    13,     9,    13,
+    15,     7,     8,    14,
+    7,    22,    15,    14,
+    16,    15,    11,    10,
+    9,    15,    15,    20,
+    14,    15,    11,     7,
+    3,     7,    16,    24,
+    14,    16,    10,     9,
+    5,     0,     0,     0,
+    0,     0,     0,     0,
+    0,     0,     0,     0,
+    0,     0,     0,     0,
+    0,     0,     0,     0,
+    0,     0,     0,     0,
+    16,     9,    10,    13,
+    12,    14,    11,    12,
+    13,     6,    12,    10,
+    16,    13,    13,    11,
+    0,     0,     0,     0,
+    0,     0,     0,     0,
+    5,    13,    15,    13,
+    12,     9,    11,     5,
+    0,     0,     0,     0,
+    0,     0,     0,     0,
+    0,     0,     0,     0,
+    0,     0,     0,     0,
+    0,     0,     0,     0,
+    0,     0,     0,     0,
+    0,     0,     0,     0,
+    0,     0,     0,     0,
+    0,     0,     0,     0,
+    0,     0,     0,     0,
+    0,     0,     0,     0,
+    0,     0,     0,     0,
+    0,     0,     0,     0,
+};
+
+s32 D_801E5E24[7] =
+{
+    0x64FF0000,
+    0x640000FF,
+    0x64FF00FF,
+    0x6400FF00,
+    0x64FFFF00,
+    0x6400FFFF,
+    0x64FFFFFF,
+};
+
+s32 D_801E5E40[7] =
+{
+    0x2CFF0000,
+    0x2C0000FF,
+    0x2CFF00FF,
+    0x2C00FF00,
+    0x2CFFFF00,
+    0x2C00FFFF,
+    0x2CFFFFFF
+};
+
+u8 D_801E5E5C[16] = 
+{
+    '\x7F', '1', '9', 'A', 'C', 'D', 'E', 'G', 'H', 'I', 'K', 'L', 'M', 'N', 'O', 'P'
+};
+
+u8 D_801E5E6C[8] = 
+{
+    '.', 'Y', 'V', 'U', 'T', 'S', 'R', ' ' 
+};
+
+s32 D_801E5E74 = 0;
+
+s32 D_801E5E78 = 0;
+
+s32 D_801E5E7C = 0;
+
+s32 D_801E5E80 = 0;
+
+s32 D_801E5E84 = 0;
+
+s32 D_801E5E88 = 0;
+
+s32 D_801E5E8C = 0;
+
+u8 D_801E5E90[320];
+
+u8 D_801E5FD0[40];
+
+u8 D_801E5FF8[20];
+
+s32 D_801E600C = 0;
+
+
+
 bool func_801E3970() // 0x801E3970
 {
     bool   showKcet;
@@ -564,7 +1156,245 @@ s32 func_801E3DF8(s32 arg0) // 0x801E3DF8
     return ((u32)((arg0 & 0xFF) * 0x31) >> 6) | 0x38;
 }
 
-INCLUDE_ASM("asm/screens/credits/nonmatchings/credits", func_801E3E18);
+void func_801E3E18(s32 arg0, s32 arg1) // 0x801E3E18
+{
+    s32 j;
+    s32 i;
+    PACKET* packet;
+    s32* addr;
+    u8* bufA;
+    u8* bufB;
+    POLY_G4 *poly;
+    u32 x0;
+    u16 x1, x2, x3;
+    
+    u32 color0;
+    u32 color1;
+    u32 color2;
+    u32 color3;
+    u8 *ptr;
+    u8 *ptr2;
+    
+    s32 temp_t6;
+    s32 temp_t1;
+    u32 sp1C;
+    u32 sp20;
+    u32 sp24;
+    u32 sp28;
+    u32 sp2C;
+    u32 temp_v1_2;
+    s32 var_s4;
+    s32* var_a0;
+    s32* var_a1_2;
+    u32 temp_a2;
+    u32 temp_v1;
+    u32 var_v1;
+    u8 temp_a0;
+    u32 var_a1;
+    u32 var_a2;
+    u32 var_a3;
+    s32* var_a0_2;
+    u8* var_s1_2;
+    u8* var_s2_2;
+    u8* var_t0;
+    s32* temp_t2;
+
+    
+    packet = GsOUT_PACKET_P;
+    temp_t2 = (s32 *)((g_ObjectTableIdx << 4) + &D_800B5C58);
+    addr = temp_t2 + 1;
+    temp_a2 = D_801E600C;
+    
+    bufA = &D_801E5FD0[0];
+    
+    for (i = 1; i < 17; i++)
+    {
+        temp_a2 = temp_a2 * 0x19660D + 0x3C6EF35F;
+        temp_v1 = (temp_a2 >> 0x14);
+        temp_v1 -= 0x200;
+        if (temp_v1 >= 0xC00)
+        {
+            var_v1 = 0xFF;
+        } 
+        else if (temp_v1 >= 0xA00)
+        {
+            temp_v1 = (temp_v1 - 0xE00) >> 3;
+            var_v1 = temp_v1 + 0xC0;
+        } 
+        else if (temp_v1 < 0x200U)
+        {
+            var_v1 = temp_v1 >> 3;
+        } 
+        else 
+        {
+            temp_v1 = (temp_v1 - 0x200) >> 4;
+            var_v1 = temp_v1 + 0x40;
+        }
+        D_801E5FD0[i] = var_v1;
+    }
+
+    D_801E600C = temp_a2;
+    D_801E5FD0[0] = D_801E5FD0[16];
+    D_801E5FD0[17] = D_801E5FD0[1];
+    
+    bufA = &D_801E5FD0[0];
+    bufB = &D_801E5FD0[20];
+    
+    j = 0; 
+    var_s4 = 0;
+    temp_t1 = arg0 + 0x1E0;
+    sp1C = 0xffffff;
+    temp_t6 = sp28 = temp_t1 << 0x10;
+    sp2C = temp_t6 + 0x200000;
+    
+    for (; j < 16; j++, var_s4 -= 16, sp28 += 0xFFE00000, sp2C += 0xFFE00000, temp_t1 -= 0x20)
+    {
+        ptr2 = D_801E5FF8;
+        
+        ptr = bufB;
+        bufB = bufA;
+        bufA = ptr;
+        
+        ptr = D_801E5E90 + j * 20;
+        
+        var_a1_2 = (s32 *)D_801E5FF8;
+        var_a0 = (s32 *)ptr;
+        
+        for (i = 0; i < 20; i += 4)
+        {
+            var_a1_2[i * 5] = var_a0[i * 5];
+        }
+
+        var_s2_2 = ptr2;
+        var_a1 = *var_s2_2++;
+        var_a3 = *var_s2_2++;
+
+        var_t0 = bufA + 1;
+
+        var_s1_2 = bufB;
+        var_a2 = *bufB;
+        var_s1_2++;
+        
+        for (i = 16; i > 0; i--)
+        {
+            s16 var = 0x1000;
+            
+            temp_v1_2 = var_a1;
+           
+            temp_a0 = var_a2;
+            var_a1 = var_a3;
+            temp_v1_2 += temp_a0;
+
+            var_a3 = *var_s2_2;
+            var_a2 = *var_s1_2;
+            var_a3 += var_a2;
+            
+            var_s2_2++;
+            var_s1_2++;
+            
+            var_a1 = var_a1 + (((temp_v1_2 * (var - arg1)) + (var_a3 * arg1)) >> 0xD);
+            var_a1 = var_a1 + ((temp_a0 + var_a2) >> 1);
+            var_a1 = ((var_a1  + var_a2 + temp_a0) * 2 + (var_a3 + temp_v1_2)) >> 1;
+            var_a1--;
+            
+            *var_t0 = var_a1;
+            var_t0++;
+        }
+    
+        bufA[0] = bufA[16];
+        bufA[17] = bufA[1];
+
+        var_a1_2 = (s32 *)ptr;
+        var_a0_2 = (s32 *)bufA;
+
+        for (i = 0; i < 20; i += 4)
+        {
+            var_a1_2[i * 5] = var_a0_2[i * 5];
+        }
+        
+        if (temp_t1 >= 0x1E0)
+        {
+            continue;
+        }            
+
+        var_s2_2 = bufA;
+        color1 = func_801E3DF8(*var_s2_2++);
+
+        var_s1_2 = bufB;
+        color3 = func_801E3DF8(*var_s1_2++);
+        
+        sp20 = sp2C;
+        sp24 = sp28;
+        
+        for (i = 0; i < 16; i++)
+        {
+            color0 = color1;
+            color1 = func_801E3DF8(*var_s2_2++);
+            var_s2_2++;
+
+            color2 = color3;
+            color3 = func_801E3DF8(*var_s1_2++);
+            var_s1_2++;
+
+            var_v1 = 0x200;
+            var_a1 = var_v1;
+            x0 = var_s4 + var_a1;
+            
+            if (var_s4 + 0x30 > 0)
+            {
+                x0 = var_s4;
+                if (var_s4 < 0)
+                {
+                    poly = (POLY_G4 *)packet;
+                    //addPrimFast(addr, poly, 8);
+                    poly->tag = ((*addr & sp1C) | 0x08000000);
+                    *addr = (*addr & 0xFF000000) | ((u32)poly & sp1C);
+                    
+                    x0 = var_s4 + 0x200;
+                    x1 = var_s4 + 0x220;
+                    x2 = var_s4 + 0x210;
+                    x3 = var_s4 + 0x230;
+                    
+                    *(u32*)(&poly->x0) = (((x0) & 0xFFFF) + (sp28));
+                    *(u32*)(&poly->x1) = (((x1) & 0xFFFF) + (sp28));
+                    *(u32*)(&poly->x2) = (((x2) & 0xFFFF) + (sp20));
+                    *(u32*)(&poly->x3) = (((x3) & 0xFFFF) + (sp20));
+                    
+                    *(u32*)(&poly->r0) = color0;
+                    *(u32*)(&poly->r1) = color1;
+                    *(u32*)(&poly->r2) = color2;
+                    *(u32*)(&poly->r3) = color3;
+                
+                    packet += sizeof(POLY_G4);
+
+                    x0 = var_s4;
+                }
+            }
+
+            x1 = x0 + 0x20;
+            x2 = x0 + 0x10;
+            x3 = x0 + 0x30;
+            
+            poly = (POLY_G4 *)packet;
+            //addPrimFast(addr, poly, 8);
+            poly->tag = ((*addr & sp1C) | 0x08000000);
+            *addr = (*addr & 0xFF000000) | ((u32)poly & sp1C);
+
+            *(u32*)(&poly->x0) = (((x0) & 0xFFFF) + (sp24));
+            *(u32*)(&poly->x1) = (((x1) & 0xFFFF) + (sp24));
+            *(u32*)(&poly->x2) = (((x2) & 0xFFFF) + (sp20));
+            *(u32*)(&poly->x3) = (((x3) & 0xFFFF) + (sp20));
+            
+            *(u32*)(&poly->r0) = color0;
+            *(u32*)(&poly->r1) = color1;
+            *(u32*)(&poly->r2) = color2;
+            *(u32*)(&poly->r3) = color3;
+            
+            packet += sizeof(POLY_G4);
+        }
+    }
+    GsOUT_PACKET_P = packet;
+}
 
 void func_801E42F8(s32 arg0, s32 arg1) // 0x801E42F8
 {
