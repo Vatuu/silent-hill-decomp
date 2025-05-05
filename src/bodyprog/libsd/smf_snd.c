@@ -4,22 +4,22 @@
 
 #include "bodyprog/libsd.h"
 
-void tone_adsr_mem(s16 vabid) // 0x8009EDA4
+void tone_adsr_mem(s16 vab_id) // 0x8009EDA4
 {
-    s_VabHeader* vabData;
-    VagAtr*      vagAtr;
-    VabHdr*      vabHdr;
-    s32          vagNum;
-    s32          progNum;
+    SD_VAB_H* vabData;
+    VagAtr*   vagAtr;
+    VabHdr*   vabHdr;
+    s32       vagNum;
+    s32       progNum;
 
-    vabData = vab_h[vabid].vab_header_4;
-    vabHdr  = &vabData->header;
+    vabData = vab_h[vab_id].vh_addr_4;
+    vabHdr  = &vabData->vab_h;
 
     for (progNum = 0; progNum < vabHdr->ps; progNum++)
     {
         for (vagNum = 0; vagNum < 0x10; vagNum++)
         {
-            vagAtr = &vabData->vag[(progNum * 0x10) + vagNum];
+            vagAtr = &vabData->vag_atr[(progNum * 0x10) + vagNum];
 
             vagAtr->reserved[0] = vagAtr->adsr1;
             vagAtr->reserved[1] = vagAtr->adsr2;
@@ -27,22 +27,22 @@ void tone_adsr_mem(s16 vabid) // 0x8009EDA4
     }
 }
 
-void tone_adsr_back(s16 vabid) // 0x8009EE30
+void tone_adsr_back(s16 vab_id) // 0x8009EE30
 {
-    s_VabHeader* vabData;
-    VagAtr*      vagAtr;
-    VabHdr*      vabHdr;
-    s32          vagNum;
-    s32          progNum;
+    SD_VAB_H* vabData;
+    VagAtr*   vagAtr;
+    VabHdr*   vabHdr;
+    s32       vagNum;
+    s32       progNum;
 
-    vabData = vab_h[vabid].vab_header_4;
-    vabHdr  = &vabData->header;
+    vabData = vab_h[vab_id].vh_addr_4;
+    vabHdr  = &vabData->vab_h;
 
     for (progNum = 0; progNum < vabHdr->ps; progNum++)
     {
         for (vagNum = 0; vagNum < 0x10; vagNum++)
         {
-            vagAtr = &vabData->vag[(progNum * 0x10) + vagNum];
+            vagAtr = &vabData->vag_atr[(progNum * 0x10) + vagNum];
 
             vagAtr->adsr1 = vagAtr->reserved[0];
             vagAtr->adsr2 = vagAtr->reserved[1];
@@ -70,7 +70,7 @@ void sd_alloc_sort() // 0x8009EEBC
         {
             if (sd_spu_alloc[frontIdx].addr_0 > sd_spu_alloc[backIdx].addr_0)
             {
-                s_SD_ALLOC temp;
+                SD_SPU_ALLOC temp;
                 temp.size_4 = sd_spu_alloc[frontIdx].size_4;
                 temp.addr_0 = sd_spu_alloc[frontIdx].addr_0;
 
@@ -84,9 +84,9 @@ void sd_alloc_sort() // 0x8009EEBC
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmain", SdSpuMalloc);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_snd", SdSpuMalloc);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmain", SdSpuMallocWithStartAddr);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_snd", SdSpuMallocWithStartAddr);
 
 void SdSpuFree(u32 addr) // 0x8009F364
 {
@@ -121,19 +121,19 @@ void SdWorkInit() // 0x8009F400
     for (i = 0; i < SD_VAB_SLOTS; i++)
     {
         vab_h[i].vab_id_0      = -1;
-        vab_h[i].field_19      = 0x7F;
-        vab_h[i].field_1A      = 0x7F;
-        vab_h[i].master_pan_1B = 0x40;
+        vab_h[i].mvoll_19      = 0x7F;
+        vab_h[i].mvolr_1A      = 0x7F;
+        vab_h[i].mpan_1B       = 0x40;
         sd_spu_alloc[i].size_4 = 0;
         sd_spu_alloc[i].addr_0 = 0;
     }
 
     for (i = 0; i < 2; i++)
     {
-        smf_song[i].vab_id_508      = -1;
-        smf_song[i].play_status_50A = 0;
-        smf_song[i].vol_right_50E   = 0x7F;
-        smf_song[i].vol_left_50C    = 0x7F;
+        smf_song[i].sd_seq_vab_id_508 = -1;
+        smf_song[i].sd_seq_stat_50A   = SEQ_NON;
+        smf_song[i].sd_seq_mvolr_50E  = 0x7F;
+        smf_song[i].sd_seq_mvoll_50C  = 0x7F;
     }
 
     sd_tick_mode = 4096;
@@ -223,7 +223,7 @@ void SdEnd() // 0x8009F5C0
     {
         if (vab_h[i].vab_id_0 >= 0)
         {
-            SdSpuFree(vab_h[i].vab_start_10);
+            SdSpuFree(vab_h[i].vb_start_addr_10);
         }
     }
 
@@ -272,8 +272,8 @@ void SdSetSerialAttr(char s_num, char attr, char mode) // 0x8009F67C
 
 void SdSetSerialVol(s16 s_num, s16 voll, s16 volr) // 0x8009F700
 {
-    // TODO: libsnd SsSetSerialVol uses char for s_num, callers also seem to
-    // pass char but only matches with s16 right now?
+    // TODO: libsnd SsSetSerialVol uses char for s_num
+    // callers also seem to pass char, but only matches with s16 right now?
 
     SpuCommonAttr attr;
 
@@ -296,26 +296,26 @@ void SdSetSerialVol(s16 s_num, s16 voll, s16 volr) // 0x8009F700
     SpuSetCommonAttr(&attr);
 }
 
-void SdSetMVol(s16 left, s16 right) // 0x8009F75C
+void SdSetMVol(s16 voll, s16 volr) // 0x8009F75C
 {
     SpuCommonAttr attr;
 
-    attr.mask = SPU_COMMON_MVOLL | SPU_COMMON_MVOLR | SPU_COMMON_MVOLMODEL | SPU_COMMON_MVOLMODER;
-    attr.mvol.left      = left << 7;
-    attr.mvol.right     = right << 7;
+    attr.mask           = SPU_COMMON_MVOLL | SPU_COMMON_MVOLR | SPU_COMMON_MVOLMODEL | SPU_COMMON_MVOLMODER;
+    attr.mvol.left      = voll << 7;
+    attr.mvol.right     = volr << 7;
     attr.mvolmode.left  = 0;
     attr.mvolmode.right = 0;
 
     SpuSetCommonAttr(&attr);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmain", SdVabOpenHead);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_snd", SdVabOpenHead);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmain", SdVabOpenHeadSticky);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_snd", SdVabOpenHeadSticky);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmain", SdVabFakeHead);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_snd", SdVabFakeHead);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmain", SdVbOpenOne);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_snd", SdVbOpenOne);
 
 s16 SdVabTransBody(u8* addr, s16 vabid) // 0x8009FD38
 {
@@ -329,10 +329,10 @@ s16 SdVabTransBody(u8* addr, s16 vabid) // 0x8009FD38
     vab_h_id = vab_h[vabid].vab_id_0;
     if (vab_h_id >= 0 && vab_h_id == vabid)
     {
-        SpuSetTransferStartAddr(vab_h[vabid].vab_start_10);
-        if (SpuWrite(addr, vab_h[vabid].vab_total_14) == vab_h[vabid].vab_total_14)
+        SpuSetTransferStartAddr(vab_h[vabid].vb_start_addr_10);
+        if (SpuWrite(addr, vab_h[vabid].vb_size_14) == vab_h[vabid].vb_size_14)
         {
-            vab_h[vabid].vab_addr_C = addr;
+            vab_h[vabid].vb_addr_C = addr;
             return vab_h_id;
         }
     }
@@ -355,20 +355,20 @@ s16 SdVabTransBodyPartly(u8* addr, u32 bufsize, s16 vabid) // 0x8009FDDC
 
     if (vab_h_id >= 0 && vab_h_id == vabid)
     {
-        SpuSetTransferStartAddr(vab_h[vabid].vab_start_10 + sd_vab_transfer_offset);
-        if (vab_h[vabid].vab_total_14 - sd_vab_transfer_offset < bufsize)
+        SpuSetTransferStartAddr(vab_h[vabid].vb_start_addr_10 + body_partly_size);
+        if (vab_h[vabid].vb_size_14 - body_partly_size < bufsize)
         {
-            bufsize = vab_h[vabid].vab_total_14 - sd_vab_transfer_offset;
+            bufsize = vab_h[vabid].vb_size_14 - body_partly_size;
         }
         if (SpuWrite(addr, bufsize) != bufsize)
         {
             return -1;
         }
 
-        sd_vab_transfer_offset += bufsize;
+        body_partly_size += bufsize;
         retval = vab_h_id;
 
-        if (sd_vab_transfer_offset < vab_h[vabid].vab_total_14)
+        if (body_partly_size < vab_h[vabid].vb_size_14)
         {
             return -2;
         }
@@ -392,7 +392,7 @@ void SdVabClose(s16 vab_id) // 0x8009FF00
 {
     if (vab_h[vab_id].vab_id_0 != -1)
     {
-        SdSpuFree(vab_h[vab_id].vab_start_10);
+        SdSpuFree(vab_h[vab_id].vb_start_addr_10);
         vab_h[vab_id].vab_id_0 = -1;
     }
 }
@@ -405,34 +405,34 @@ void SdSetAutoKeyOffMode(s16 mode) // 0x8009FF64
 void SdAutoKeyOffCheck() // 0x8009FF70
 {
     s32 keyStatus;
-    s32 voiceIdx;
+    s32 vo;
     u32 voices;
 
     voices = 0;
 
     if (sd_keyoff_mode == 0)
     {
-        for (voiceIdx = 0; voiceIdx < sd_reserved_voice; voiceIdx++)
+        for (vo = 0; vo < sd_reserved_voice; vo++)
         {
-            if (smf_port[voiceIdx].field_16 != 0 && SpuGetKeyStatus(spu_ch_tbl[voiceIdx]) == 3)
+            if (smf_port[vo].stat_16 != 0 && SpuGetKeyStatus(spu_ch_tbl[vo]) == 3)
             {
-                if (smf_port[voiceIdx].field_16 >= 2U)
+                if (smf_port[vo].stat_16 >= 2U)
                 {
-                    voices |= spu_ch_tbl[voiceIdx];
+                    voices |= spu_ch_tbl[vo];
 
                     do
                     {
-                        SpuSetKey(0, spu_ch_tbl[voiceIdx]);
-                        keyStatus = SpuGetKeyStatus(spu_ch_tbl[voiceIdx]);
+                        SpuSetKey(0, spu_ch_tbl[vo]);
+                        keyStatus = SpuGetKeyStatus(spu_ch_tbl[vo]);
                     } while (keyStatus != 2 && keyStatus != 0);
 
-                    smf_port[voiceIdx].field_16 = 0;
+                    smf_port[vo].stat_16 = 0;
 
-                    func_800485C0(voiceIdx);
+                    func_800485C0(vo);
                 }
                 else
                 {
-                    smf_port[voiceIdx].field_16++;
+                    smf_port[vo].stat_16++;
                 }
             }
         }
@@ -457,12 +457,13 @@ s16 SdSeqOpen(s32* addr, s16 vab_id) // 0x800A00A4
 
     for (i = 0; i < 2; i++)
     {
-        if (smf_song[i].vab_id_508 == -1)
+        if (smf_song[i].sd_seq_vab_id_508 == -1)
         {
-            smf_song[i].play_status_50A  = 2;
-            smf_song[i].seq_data_ptr_514 = addr;
-            smf_song[i].vab_id_508       = vab_id;
-            sd_int_flag                  = 0;
+            smf_song[i].sd_seq_stat_50A       = SEQ_STOP;
+            smf_song[i].sd_seq_start_addr_514 = addr;
+            smf_song[i].sd_seq_vab_id_508     = vab_id;
+
+            sd_int_flag = 0;
             return i;
         }
     }
@@ -471,7 +472,7 @@ s16 SdSeqOpen(s32* addr, s16 vab_id) // 0x800A00A4
     return -1;
 }
 
-s16 SdSeqOpenWithAccNum(s32* addr, s16 vab_id, s16 seq_access_num) // 0x800A0154
+s16 SdSeqOpenWithAccNum(s32* addr, s16 vab_id, s16 acc_num) // 0x800A0154
 {
     sd_int_flag = 1;
 
@@ -480,13 +481,14 @@ s16 SdSeqOpenWithAccNum(s32* addr, s16 vab_id, s16 seq_access_num) // 0x800A0154
         return -1;
     }
 
-    if (smf_song[seq_access_num].vab_id_508 == -1)
+    if (smf_song[acc_num].sd_seq_vab_id_508 == -1)
     {
-        smf_song[seq_access_num].play_status_50A  = 2;
-        smf_song[seq_access_num].seq_data_ptr_514 = addr;
-        smf_song[seq_access_num].vab_id_508       = vab_id;
-        sd_int_flag                               = 0;
-        return seq_access_num;
+        smf_song[acc_num].sd_seq_stat_50A       = SEQ_STOP;
+        smf_song[acc_num].sd_seq_start_addr_514 = addr;
+        smf_song[acc_num].sd_seq_vab_id_508     = vab_id;
+
+        sd_int_flag = 0;
+        return acc_num;
     }
 
     sd_int_flag = 0;
@@ -502,7 +504,7 @@ void SdSeqPlay(s16 seq_access_num, u8 play_mode, s16 l_count) // 0x800A0210
 
     sd_int_flag = 1;
 
-    if (smf_song[seq_access_num].vab_id_508 == -1)
+    if (smf_song[seq_access_num].sd_seq_vab_id_508 == -1)
     {
         sd_int_flag = 0;
         return;
@@ -510,19 +512,20 @@ void SdSeqPlay(s16 seq_access_num, u8 play_mode, s16 l_count) // 0x800A0210
 
     sd_seq_loop_mode = l_count;
 
-    smf_song[seq_access_num].field_518    = 0x10000;
-    smf_song[seq_access_num].play_ptr_504 = smf_song[seq_access_num].seq_data_ptr_514;
+    smf_song[seq_access_num].mf_data_size_518 = 0x10000;
+    smf_song[seq_access_num].mf_data_ptr_504  = smf_song[seq_access_num].sd_seq_start_addr_514;
 
     midi_file_out(seq_access_num);
 
     if (!play_mode)
     {
-        smf_song[seq_access_num].play_status_50A = 4;
+        smf_song[seq_access_num].sd_seq_stat_50A = SEQ_PAUSE;
     }
     else
     {
-        smf_start_flag                           = 1;
-        smf_song[seq_access_num].play_status_50A = 1;
+        smf_start_flag = 1;
+
+        smf_song[seq_access_num].sd_seq_stat_50A = SEQ_PLAY;
     }
 
     sd_int_flag = 0;
@@ -535,15 +538,15 @@ void SdSeqStop(s16 seq_access_num) // 0x800A02D8
         return;
     }
 
-    if (smf_song[seq_access_num].vab_id_508 != -1)
+    if (smf_song[seq_access_num].sd_seq_vab_id_508 != -1)
     {
         sd_int_flag = 1;
 
         midi_smf_stop(seq_access_num);
         sound_seq_off(seq_access_num);
-        smf_song[seq_access_num].vol_right_50E   = 127;
-        smf_song[seq_access_num].vol_left_50C    = 127;
-        smf_song[seq_access_num].play_status_50A = 2;
+        smf_song[seq_access_num].sd_seq_mvolr_50E = 127;
+        smf_song[seq_access_num].sd_seq_mvoll_50C = 127;
+        smf_song[seq_access_num].sd_seq_stat_50A  = SEQ_STOP;
 
         sd_int_flag = 0;
     }
@@ -556,15 +559,15 @@ void SdSeqClose(s16 seq_access_num) // 0x800A037C
         return;
     }
 
-    if (smf_song[seq_access_num].vab_id_508 != -1)
+    if (smf_song[seq_access_num].sd_seq_vab_id_508 != -1)
     {
         sd_int_flag = 1;
 
-        tone_adsr_back(smf_song[seq_access_num].vab_id_508);
-        smf_song[seq_access_num].vab_id_508      = -1;
-        smf_song[seq_access_num].play_status_50A = 0;
-        smf_song[seq_access_num].vol_right_50E   = 127;
-        smf_song[seq_access_num].vol_left_50C    = 127;
+        tone_adsr_back(smf_song[seq_access_num].sd_seq_vab_id_508);
+        smf_song[seq_access_num].sd_seq_vab_id_508 = -1;
+        smf_song[seq_access_num].sd_seq_stat_50A   = SEQ_NON;
+        smf_song[seq_access_num].sd_seq_mvolr_50E  = 127;
+        smf_song[seq_access_num].sd_seq_mvoll_50C  = 127;
 
         sd_int_flag = 0;
     }
@@ -572,8 +575,8 @@ void SdSeqClose(s16 seq_access_num) // 0x800A037C
 
 void SdSeqPause(s16 seq_access_num) // 0x800A0418
 {
-    SpuVoiceAttr voice;
-    s32          i;
+    SpuVoiceAttr s_attr;
+    s32          vc;
 
     if (seq_access_num == -1)
     {
@@ -582,28 +585,28 @@ void SdSeqPause(s16 seq_access_num) // 0x800A0418
 
     sd_int_flag = 1;
 
-    for (i = 0; i < sd_reserved_voice; i++)
+    for (vc = 0; vc < sd_reserved_voice; vc++)
     {
-        if ((smf_port[i].smf_midi_num_3 >> 4) == seq_access_num && smf_port[i].field_16 != 0)
+        if ((smf_port[vc].midi_ch_3 >> 4) == seq_access_num && smf_port[vc].stat_16 != 0)
         {
-            voice.mask         = (SPU_VOICE_VOLL | SPU_VOICE_VOLR);
-            voice.voice        = spu_ch_tbl[i];
-            voice.volume.left  = 0;
-            voice.volume.right = 0;
-            SpuSetVoiceAttr(&voice);
+            s_attr.mask         = (SPU_VOICE_VOLL | SPU_VOICE_VOLR);
+            s_attr.voice        = spu_ch_tbl[vc];
+            s_attr.volume.left  = 0;
+            s_attr.volume.right = 0;
+            SpuSetVoiceAttr(&s_attr);
         }
     }
 
-    smf_song[seq_access_num].play_status_50A = 4;
+    smf_song[seq_access_num].sd_seq_stat_50A = SEQ_PAUSE;
 
     sd_int_flag = 0;
 }
 
 void SdSeqReplay(s16 seq_access_num) // 0x800A0534
 {
-    SpuVoiceAttr  voice;
-    SpuReverbAttr reverb;
-    s32           i;
+    SpuVoiceAttr  s_attr;
+    SpuReverbAttr rev_attr;
+    s32           vc;
     u32           temp_v1;
 
     if (seq_access_num == -1)
@@ -613,30 +616,30 @@ void SdSeqReplay(s16 seq_access_num) // 0x800A0534
 
     sd_int_flag = 1;
 
-    for (i = 0; i < sd_reserved_voice; i++)
+    for (vc = 0; vc < sd_reserved_voice; vc++)
     {
-        temp_v1 = (smf_port[i].smf_midi_num_3 >> 4);
-        if (temp_v1 == seq_access_num && smf_port[i].field_16 != 0)
+        temp_v1 = (smf_port[vc].midi_ch_3 >> 4);
+        if (temp_v1 == seq_access_num && smf_port[vc].stat_16 != 0)
         {
-            voice.mask         = (SPU_VOICE_VOLL | SPU_VOICE_VOLR);
-            voice.voice        = spu_ch_tbl[i];
-            voice.volume.left  = ((smf_port[i].vol_left_C * smf_song[temp_v1].vol_left_50C) >> 7);
-            voice.volume.right = ((smf_port[i].vol_right_E * smf_song[temp_v1].vol_right_50E) >> 7);
-            SpuSetVoiceAttr(&voice);
+            s_attr.mask         = (SPU_VOICE_VOLL | SPU_VOICE_VOLR);
+            s_attr.voice        = spu_ch_tbl[vc];
+            s_attr.volume.left  = ((smf_port[vc].l_vol_C * smf_song[temp_v1].sd_seq_mvoll_50C) >> 7);
+            s_attr.volume.right = ((smf_port[vc].r_vol_E * smf_song[temp_v1].sd_seq_mvolr_50E) >> 7);
+            SpuSetVoiceAttr(&s_attr);
         }
     }
 
-    if (smf_song[seq_access_num].field_536 != 0)
+    if (smf_song[seq_access_num].seq_reverb_depth_536 != 0)
     {
-        reverb.mask        = (SPU_REV_DEPTHL | SPU_REV_DEPTHR);
-        reverb.depth.right = 0;
-        reverb.depth.left  = 0;
-        SpuSetReverbModeParam(&reverb);
+        rev_attr.mask        = (SPU_REV_DEPTHL | SPU_REV_DEPTHR);
+        rev_attr.depth.right = 0;
+        rev_attr.depth.left  = 0;
+        SpuSetReverbModeParam(&rev_attr);
         SpuSetReverb(1);
-        smf_song[seq_access_num].field_532 = 1;
+        smf_song[seq_access_num].seq_rev_set_flag_532 = 1;
     }
 
-    smf_song[seq_access_num].play_status_50A = 1;
+    smf_song[seq_access_num].sd_seq_stat_50A = SEQ_PLAY;
     control_code_set(seq_access_num);
 
     sd_int_flag = 0;
@@ -644,18 +647,18 @@ void SdSeqReplay(s16 seq_access_num) // 0x800A0534
 
 void SdSeqSetVol(s16 seq_access_num, s16 voll, s16 volr) // 0x800A06F0
 {
-    smf_song[seq_access_num].vol_left_50C  = voll & 0x7F;
-    smf_song[seq_access_num].vol_right_50E = volr & 0x7F;
-    if (smf_song[seq_access_num].play_status_50A != 2)
+    smf_song[seq_access_num].sd_seq_mvoll_50C = voll & 0x7F;
+    smf_song[seq_access_num].sd_seq_mvolr_50E = volr & 0x7F;
+    if (smf_song[seq_access_num].sd_seq_stat_50A != SEQ_STOP)
     {
-        smf_song[seq_access_num].field_530 = 1;
+        smf_song[seq_access_num].seq_vol_set_flag_530 = 1;
     }
 }
 
 void SdSeqGetVol(s16 seq_access_num, s16* voll, s16* volr) // 0x800A074C
 {
-    *voll = smf_song[seq_access_num].vol_left_50C;
-    *volr = smf_song[seq_access_num].vol_right_50E;
+    *voll = smf_song[seq_access_num].sd_seq_mvoll_50C;
+    *volr = smf_song[seq_access_num].sd_seq_mvolr_50E;
 }
 
 void SdUtFlush() // 0x800A0794
@@ -678,12 +681,12 @@ void SdUtReverbOff() // 0x800A07DC
 
 s16 SdUtSetReverbType(s16 type) // 0x800A080C
 {
-    SpuReverbAttr attr;
+    SpuReverbAttr r_attr;
 
-    attr.mask = SPU_REV_MODE;
-    attr.mode = type;
+    r_attr.mask = SPU_REV_MODE;
+    r_attr.mode = type;
 
-    if (SpuSetReverbModeParam(&attr))
+    if (SpuSetReverbModeParam(&r_attr))
     {
         return -1;
     }
@@ -692,26 +695,26 @@ s16 SdUtSetReverbType(s16 type) // 0x800A080C
     return type;
 }
 
-void SdUtSetReverbDepth(s16 left, s16 right) // 0x800A085C
+void SdUtSetReverbDepth(s16 ldepth, s16 rdepth) // 0x800A085C
 {
-    SpuReverbAttr attr;
+    SpuReverbAttr r_attr;
 
-    attr.mask        = SPU_REV_DEPTHL | SPU_REV_DEPTHR;
-    attr.depth.left  = (left << 0x10) >> 8;
-    attr.depth.right = (right << 0x10) >> 8;
+    r_attr.mask        = SPU_REV_DEPTHL | SPU_REV_DEPTHR;
+    r_attr.depth.left  = (ldepth << 0x10) >> 8;
+    r_attr.depth.right = (rdepth << 0x10) >> 8;
 
-    SpuSetReverbModeParam(&attr);
+    SpuSetReverbModeParam(&r_attr);
 }
 
-void SdSetRVol(s16 left, s16 right) // 0x800A089C
+void SdSetRVol(s16 ldepth, s16 rdepth) // 0x800A089C
 {
-    SpuReverbAttr attr;
+    SpuReverbAttr r_attr;
 
-    attr.mask        = SPU_REV_DEPTHL | SPU_REV_DEPTHR;
-    attr.depth.left  = (left << 0x10) >> 8;
-    attr.depth.right = (right << 0x10) >> 8;
+    r_attr.mask        = SPU_REV_DEPTHL | SPU_REV_DEPTHR;
+    r_attr.depth.left  = (ldepth << 0x10) >> 8;
+    r_attr.depth.right = (rdepth << 0x10) >> 8;
 
-    SpuSetReverbModeParam(&attr);
+    SpuSetReverbModeParam(&r_attr);
 }
 
 void SdUtSEAllKeyOff() // 0x800A08DC
@@ -722,11 +725,11 @@ void SdUtSEAllKeyOff() // 0x800A08DC
 
     for (i = 0; i < sd_reserved_voice; i++)
     {
-        if (smf_port[i].smf_midi_num_3 == 0x20)
+        if (smf_port[i].midi_ch_3 == 0x20)
         {
             voices |= spu_ch_tbl[i];
-            smf_port[i].field_16     = 0;
-            smf_port[i].midiKeyNum_6 = 0;
+            smf_port[i].stat_16 = 0;
+            smf_port[i].note_6  = 0;
             SpuSetKey(0, spu_ch_tbl[i]);
             adsr_set(i, &smf_port[i]);
             rr_off(i);
@@ -769,7 +772,7 @@ s32 SdUtGetVabHdr(s16 vabId, VabHdr* vabhdrptr) // 0x800A0A40
     }
 
     dest = (u8*)vabhdrptr;
-    src  = (u8*)vab_h[vabId].vab_header_4;
+    src  = (u8*)vab_h[vabId].vh_addr_4;
 
     for (i = 0; i < sizeof(VabHdr); i++)
     {
@@ -779,7 +782,7 @@ s32 SdUtGetVabHdr(s16 vabId, VabHdr* vabhdrptr) // 0x800A0A40
     return 0;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmain", SdVoKeyOn);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_snd", SdVoKeyOn);
 
 void SdVoKeyOff(s32 vab_pro, s32 pitch) // 0x800A0CFC
 {
@@ -793,16 +796,16 @@ void SdVoKeyOff(s32 vab_pro, s32 pitch) // 0x800A0CFC
         // Of the lower 16 bits of vab_pro, the upper 8 bits are used for VAB id, and the lower 8 bits specify a program number
         // Of the lower 16 bits of pitch, the upper 8 bits specify a key number in MIDI standard.
         // To specify a finer pitch, specify a key number in the lower 8 bits of pitch in 1/128 semitones.
-        if (smf_port[i].field_16 != 0 &&
-            smf_port[i].smf_midi_num_3 == 0x20 &&
-            smf_port[i].midiKeyNum_6 == (pitch >> 8) &&
-            smf_port[i].vabId_52 == (vab_pro >> 8) &&
-            smf_port[i].midiProgramNum_2 == (vab_pro & 0x7F))
+        if (smf_port[i].stat_16 != 0 &&
+            smf_port[i].midi_ch_3 == 0x20 &&
+            smf_port[i].note_6 == (pitch >> 8) &&
+            smf_port[i].vab_id_52 == (vab_pro >> 8) &&
+            smf_port[i].prog_2 == (vab_pro & 0x7F))
         {
             voices |= spu_ch_tbl[i];
 
-            smf_port[i].field_16     = 0;
-            smf_port[i].midiKeyNum_6 = 0;
+            smf_port[i].stat_16 = 0;
+            smf_port[i].note_6  = 0;
 
             adsr_set(i, &smf_port[i]);
             SpuSetKey(0, spu_ch_tbl[i]);
@@ -830,16 +833,16 @@ void SdVoKeyOffWithRROff(s32 vab_pro, s32 pitch) // 0x800A0E40
         // Of the lower 16 bits of vab_pro, the upper 8 bits are used for VAB id, and the lower 8 bits specify a program number
         // Of the lower 16 bits of pitch, the upper 8 bits specify a key number in MIDI standard.
         // To specify a finer pitch, specify a key number in the lower 8 bits of pitch in 1/128 semitones.
-        if (smf_port[i].field_16 != 0 &&
-            smf_port[i].smf_midi_num_3 == 0x20 &&
-            smf_port[i].midiKeyNum_6 == (pitch >> 8) &&
-            smf_port[i].vabId_52 == (vab_pro >> 8) &&
-            smf_port[i].midiProgramNum_2 == (vab_pro & 0x7F))
+        if (smf_port[i].stat_16 != 0 &&
+            smf_port[i].midi_ch_3 == 0x20 &&
+            smf_port[i].note_6 == (pitch >> 8) &&
+            smf_port[i].vab_id_52 == (vab_pro >> 8) &&
+            smf_port[i].prog_2 == (vab_pro & 0x7F))
         {
             voices |= spu_ch_tbl[i];
 
-            smf_port[i].field_16     = 0;
-            smf_port[i].midiKeyNum_6 = 0;
+            smf_port[i].stat_16 = 0;
+            smf_port[i].note_6  = 0;
 
             adsr_set(i, &smf_port[i]);
             rr_off(i);
@@ -855,33 +858,33 @@ void SdVoKeyOffWithRROff(s32 vab_pro, s32 pitch) // 0x800A0E40
     sd_int_flag = 0;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmain", SdUtKeyOnV);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_snd", SdUtKeyOnV);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmain", SdUtKeyOn);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_snd", SdUtKeyOn);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/sdmain", SdVbKeyOn);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_snd", SdVbKeyOn);
 
-s32 SdUtKeyOffV(s16 voice) // 0x800A18F4
+s32 SdUtKeyOffV(s16 vo) // 0x800A18F4
 {
-    s32 keyStatus;
-    u32 voiceChannel;
+    s32 stat;
+    u32 port;
 
     sd_int_flag = 1;
-    if (smf_port[voice].field_16 != 0 && smf_port[voice].smf_midi_num_3 == 0x20)
+    if (smf_port[vo].stat_16 != 0 && smf_port[vo].midi_ch_3 == 0x20)
     {
-        voiceChannel = spu_ch_tbl[voice];
+        port = spu_ch_tbl[vo];
 
-        smf_port[voice].field_16     = 0;
-        smf_port[voice].midiKeyNum_6 = 0;
+        smf_port[vo].stat_16 = 0;
+        smf_port[vo].note_6  = 0;
 
-        adsr_set(voice, &smf_port[voice]);
-        SpuSetKey(0, spu_ch_tbl[voice]);
+        adsr_set(vo, &smf_port[vo]);
+        SpuSetKey(0, spu_ch_tbl[vo]);
         do
         {
-            adsr_set(voice, &smf_port[voice]);
-            SpuSetKey(0, voiceChannel);
-            keyStatus = SpuGetKeyStatus(voiceChannel);
-        } while (keyStatus != 2 && keyStatus != 0);
+            adsr_set(vo, &smf_port[vo]);
+            SpuSetKey(0, port);
+            stat = SpuGetKeyStatus(port);
+        } while (stat != 2 && stat != 0);
     }
     else
     {
@@ -892,27 +895,27 @@ s32 SdUtKeyOffV(s16 voice) // 0x800A18F4
     return 0;
 }
 
-s32 SdUtKeyOffVWithRROff(s16 voice) // 0x800A1A18
+s32 SdUtKeyOffVWithRROff(s16 vo) // 0x800A1A18
 {
-    s32 keyStatus;
-    u32 voiceChannel;
+    s32 stat;
+    u32 port;
 
     sd_int_flag = 1;
-    if (smf_port[voice].field_16 != 0 && smf_port[voice].smf_midi_num_3 == 0x20)
+    if (smf_port[vo].stat_16 != 0 && smf_port[vo].midi_ch_3 == 0x20)
     {
-        voiceChannel = spu_ch_tbl[voice];
+        port = spu_ch_tbl[vo];
 
-        smf_port[voice].field_16     = 0;
-        smf_port[voice].midiKeyNum_6 = 0;
+        smf_port[vo].stat_16 = 0;
+        smf_port[vo].note_6  = 0;
 
-        adsr_set(voice, &smf_port[voice]);
-        rr_off(voice);
-        SpuSetKey(0, spu_ch_tbl[voice]);
+        adsr_set(vo, &smf_port[vo]);
+        rr_off(vo);
+        SpuSetKey(0, spu_ch_tbl[vo]);
         do
         {
-            SpuSetKey(0, voiceChannel);
-            keyStatus = SpuGetKeyStatus(voiceChannel);
-        } while (keyStatus != 2 && keyStatus != 0);
+            SpuSetKey(0, port);
+            stat = SpuGetKeyStatus(port);
+        } while (stat != 2 && stat != 0);
     }
     else
     {
@@ -923,126 +926,127 @@ s32 SdUtKeyOffVWithRROff(s16 voice) // 0x800A1A18
     return 0;
 }
 
-s16 SdGetSeqStatus(s16 seq_access_num) // 0x800A1B14
+s16 SdGetSeqStatus(s16 access_num) // 0x800A1B14
 {
-    if (smf_song[seq_access_num].play_status_50A == 1 && midi_smf_stat(seq_access_num) == 3)
+    if (smf_song[access_num].sd_seq_stat_50A == SEQ_PLAY && midi_smf_stat(access_num) == SEQ_END)
     {
-        smf_song[seq_access_num].play_status_50A = 3;
+        smf_song[access_num].sd_seq_stat_50A = SEQ_END;
     }
 
-    return smf_song[seq_access_num].play_status_50A;
+    return smf_song[access_num].sd_seq_stat_50A;
 }
 
-s32 SdUtSetDetVVol(s16 voice, s16 volLeft, s16 volRight) // 0x800A1BD0
+s32 SdUtSetDetVVol(s16 vc, s16 voll, s16 volr) // 0x800A1BD0
 {
-    SpuVoiceAttr voiceAttr;
-    voiceAttr.mask         = SPU_VOICE_VOLL | SPU_VOICE_VOLR;
-    voiceAttr.voice        = spu_ch_tbl[voice];
-    voiceAttr.volume.left  = volLeft;
-    voiceAttr.volume.right = volRight;
+    SpuVoiceAttr s_attr;
 
-    SpuSetVoiceAttr(&voiceAttr);
+    s_attr.mask         = SPU_VOICE_VOLL | SPU_VOICE_VOLR;
+    s_attr.voice        = spu_ch_tbl[vc];
+    s_attr.volume.left  = voll;
+    s_attr.volume.right = volr;
+
+    SpuSetVoiceAttr(&s_attr);
     return 0;
 }
 
-s32 SdUtSetVVol(s16 voice, s16 volLeft, s16 volRight) // 0x800A1C1C
+s32 SdUtSetVVol(s16 vc, s16 voll, s16 volr) // 0x800A1C1C
 {
-    SpuVoiceAttr voiceAttr;
+    SpuVoiceAttr s_attr;
 
-    voiceAttr.mask         = SPU_VOICE_VOLL | SPU_VOICE_VOLR;
-    voiceAttr.voice        = spu_ch_tbl[voice];
-    voiceAttr.volume.left  = (volLeft & 0x7F) << 7;
-    voiceAttr.volume.right = (volRight & 0x7F) << 7;
+    s_attr.mask         = SPU_VOICE_VOLL | SPU_VOICE_VOLR;
+    s_attr.voice        = spu_ch_tbl[vc];
+    s_attr.volume.left  = (voll & 0x7F) << 7;
+    s_attr.volume.right = (volr & 0x7F) << 7;
 
-    SpuSetVoiceAttr(&voiceAttr);
+    SpuSetVoiceAttr(&s_attr);
     return 0;
 }
 
-s32 SdUtGetDetVVol(s16 voice, u16* volLeft, u16* volRight) // 0x800A1C78
+s32 SdUtGetDetVVol(s16 vc, u16* voll, u16* volr) // 0x800A1C78
 {
-    SpuVoiceAttr voiceAttr;
-    voiceAttr.mask  = 0;
-    voiceAttr.voice = spu_ch_tbl[voice];
+    SpuVoiceAttr s_attr;
+    s_attr.mask  = 0;
+    s_attr.voice = spu_ch_tbl[vc];
 
-    SpuGetVoiceAttr(&voiceAttr);
+    SpuGetVoiceAttr(&s_attr);
 
-    *volLeft  = voiceAttr.volume.left;
-    *volRight = voiceAttr.volume.right;
+    *voll = s_attr.volume.left;
+    *volr = s_attr.volume.right;
     return 0;
 }
 
-s32 SdUtGetVVol(s16 voice, u16* volLeft, u16* volRight) // 0x800A1CE8
+s32 SdUtGetVVol(s16 vc, u16* voll, u16* volr) // 0x800A1CE8
 {
-    SpuVoiceAttr voiceAttr;
-    voiceAttr.mask  = 0;
-    voiceAttr.voice = spu_ch_tbl[voice];
+    SpuVoiceAttr s_attr;
+    s_attr.mask  = 0;
+    s_attr.voice = spu_ch_tbl[vc];
 
-    SpuGetVoiceAttr(&voiceAttr);
+    SpuGetVoiceAttr(&s_attr);
 
-    *volLeft  = voiceAttr.volume.left >> 7;
-    *volRight = voiceAttr.volume.right >> 7;
+    *voll = s_attr.volume.left >> 7;
+    *volr = s_attr.volume.right >> 7;
     return 0;
 }
 
 u16 SdGetTempo(s16 seq_access_num) // 0x800A1D68
 {
-    return smf_song[seq_access_num].tracks_0[0].tempo_16;
+    return smf_song[seq_access_num].tracks_0[0].mf_tempo2_16;
 }
 
 void SdSetTempo(s16 seq_access_num, s16 tempo) // 0x800A1DA4
 {
-    s32 i;
+    s32 a;
 
-    for (i = 0; i < smf_song[seq_access_num].num_tracks_526; i++)
+    for (a = 0; a < smf_song[seq_access_num].mf_tracks_526; a++)
     {
-        smf_song[seq_access_num].tracks_0[i].tempo_16 = tempo;
-        smf_song[seq_access_num].tracks_0[i].tempo_14 = tempo;
+        smf_song[seq_access_num].tracks_0[a].mf_tempo2_16 = tempo;
+        smf_song[seq_access_num].tracks_0[a].mf_tempo_14  = tempo;
     }
 }
 
 void SdSetSeqWide(s16 seq_access_num, u16 seq_wide) // 0x800A1E18
 {
-    smf_song[seq_access_num].seq_wide_534 = seq_wide;
+    smf_song[seq_access_num].seq_wide_flag_534 = seq_wide;
 }
 
-u8 SdGetMidiVol(s16 device, s16 channel) // 0x800A1E50
+u8 SdGetMidiVol(s16 seq_access_num, s16 midi_ch) // 0x800A1E50
 {
-    return smf_midi[channel + (device * 0x10)].vol_3;
+    return smf_midi[midi_ch + (seq_access_num * 0x10)].mvol_3;
 }
 
-void SdSetMidiVol(s16 device, s16 channel, s32 vol) // 0x800A1E90
+void SdSetMidiVol(s16 seq_access_num, s16 midi_ch, s32 vol) // 0x800A1E90
 {
-    control_change(channel + (device * 0x10), 7, vol & 0x7F);
+    control_change(midi_ch + (seq_access_num * 0x10), 7, vol & 0x7F);
 }
 
-void SdSetMidiExpress(s16 device, s16 channel, s32 expression) // 0x800A1EC4
+void SdSetMidiExpress(s16 seq_access_num, s16 midi_ch, s32 expression) // 0x800A1EC4
 {
-    control_change(channel + (device * 0x10), 11, expression & 0x7F);
+    control_change(midi_ch + (seq_access_num * 0x10), 11, expression & 0x7F);
 }
 
-u8 SdGetMidiExpress(s16 device, s16 channel) // 0x800A1EF8
+u8 SdGetMidiExpress(s16 seq_access_num, s16 midi_ch) // 0x800A1EF8
 {
-    return smf_midi[channel + (device * 0x10)].expression_5;
+    return smf_midi[midi_ch + (seq_access_num * 0x10)].express_5;
 }
 
-u8 SdGetMidiPan(s16 device, s16 channel) // 0x800A1F38
+u8 SdGetMidiPan(s16 seq_access_num, s16 midi_ch) // 0x800A1F38
 {
-    return smf_midi[channel + (device * 0x10)].pan_1;
+    return smf_midi[midi_ch + (seq_access_num * 0x10)].pan_1;
 }
 
-void SdSetMidiPan(s16 device, s16 channel, s32 pan) // 0x800A1F78
+void SdSetMidiPan(s16 seq_access_num, s16 midi_ch, s32 pan) // 0x800A1F78
 {
-    control_change(channel + (device * 0x10), 10, pan & 0x7F);
+    control_change(midi_ch + (seq_access_num * 0x10), 10, pan & 0x7F);
 }
 
-u8 SdGetMidiPitchBendFine(s16 device, s16 channel) // 0x800A1FAC
+u8 SdGetMidiPitchBendFine(s16 seq_access_num, s16 midi_ch) // 0x800A1FAC
 {
-    return smf_midi[channel + (device * 0x10)].pitchBendFine_7;
+    return smf_midi[midi_ch + (seq_access_num * 0x10)].pbend_7;
 }
 
-s32 SdSetMidiPitchBendFine(s16 device, s16 channel, u8 pitchBendFine) // 0x800A1FEC
+s32 SdSetMidiPitchBendFine(s16 seq_access_num, s16 midi_ch, u8 pitchBendFine) // 0x800A1FEC
 {
-    smf_midi[channel + (device * 0x10)].pitchBendFine_7 = pitchBendFine & 0x7F;
+    smf_midi[midi_ch + (seq_access_num * 0x10)].pbend_7 = pitchBendFine & 0x7F;
     return 0;
 }
 
@@ -1056,14 +1060,14 @@ s32 SdSetTrackTranspause() // 0x800A2038
     return 0;
 }
 
-s32 SdGetTrackMute(s16 seq_access_num, s32 channel) // 0x800A2040
+s32 SdGetTrackMute(s16 seq_access_num, s32 midi_ch) // 0x800A2040
 {
-    return smf_song[seq_access_num].muted_channels_510 & spu_ch_tbl[channel];
+    return smf_song[seq_access_num].sd_seq_track_mute_510 & spu_ch_tbl[midi_ch];
 }
 
-s32 SdSetTrackMute(s16 seq_access_num, s32 channel) // 0x800A2090
+s32 SdSetTrackMute(s16 seq_access_num, s32 midi_ch) // 0x800A2090
 {
-    smf_song[seq_access_num].muted_channels_510 |= spu_ch_tbl[channel];
+    smf_song[seq_access_num].sd_seq_track_mute_510 |= spu_ch_tbl[midi_ch];
     return 0;
 }
 
@@ -1071,32 +1075,32 @@ s32 SdGetSeqControlStatus(s16 seq_access_num) // 0x800A20EC
 {
     if (seq_access_num >= 0)
     {
-        return smf_song[seq_access_num].control_status_52F;
+        return smf_song[seq_access_num].smf_control_stat_52F;
     }
 
     return -1;
 }
 
-s16 SdGetSeqPlayStatus(s32 seq_access_num) // 0x800A2134
+s16 SdGetSeqPlayStatus(s32 access_num) // 0x800A2134
 {
-    if (smf_song[seq_access_num].play_status_50A == 1 && midi_smf_stat(seq_access_num) == 3)
+    if (smf_song[access_num].sd_seq_stat_50A == SEQ_PLAY && midi_smf_stat(access_num) == SEQ_END)
     {
-        smf_song[seq_access_num].play_status_50A = 3;
+        smf_song[access_num].sd_seq_stat_50A = SEQ_END;
     }
 
-    return smf_song[seq_access_num].play_status_50A;
+    return smf_song[access_num].sd_seq_stat_50A;
 }
 
 u32 SdGetSeqBeat(s16 seq_access_num) // 0x800A21E0
 {
     if (seq_access_num >= 0)
     {
-        if (smf_song[seq_access_num].beat_51C == 0)
+        if (smf_song[seq_access_num].mf_seq_beat_51C == 0)
         {
             return 0;
         }
 
-        return smf_song[seq_access_num].beat_51C / 60;
+        return smf_song[seq_access_num].mf_seq_beat_51C / 60;
     }
 
     return -1;
@@ -1106,8 +1110,33 @@ s32 SdGetSeqBeat2(s16 seq_access_num) // 0x800A224C
 {
     if (seq_access_num >= 0)
     {
-        return smf_song[seq_access_num].beat2_52E;
+        return smf_song[seq_access_num].smf_beat_stat_52E;
     }
 
     return -1;
+}
+
+void SsSetMVol(s16 voll, s16 volr) // 0x800A2294
+{
+    SdSetMVol(voll, volr);
+}
+
+void SsEnd() // 0x800A22C0
+{
+    SdEnd();
+}
+
+void SsSetSerialAttr(char s_num, char attr, char mode) // 0x800A22E0
+{
+    SdSetSerialAttr(s_num, attr, mode);
+}
+
+void SsSetSerialVol(char s_num, s16 voll, s16 volr) // 0x800A2308
+{
+    SdSetSerialVol(s_num, voll, volr);
+}
+
+void SsUtAllKeyOff(s16 mode) // 0x800A2338
+{
+    SdUtAllKeyOff(mode);
 }
