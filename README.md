@@ -649,15 +649,22 @@ Clone `https://github.com/Vatuu/silent-hill-decomp` to your desired directory. M
 git clone --recursive https://github.com/Vatuu/silent-hill-decomp.git && cd silent-hill-decomp
 ```
 
-### Install Python3 requirements
-Run `pip3 install -r requirements.txt`
-
 ### Place the ROM
 You will need to provide your own ROM dump of the game. The required version is Silent Hill NTSC-U 1.1.
 If done correctly, you will end up with a .BIN and a .CUE file. These must be placed in the `rom/image` folder and renamed to SLUS-00707.bin/.cue, respectively.
 SHA1 Hashes:
 - .cue: `299D08DCB44E7516F394C3DD5BA40690AE33FD22` 84 Bytes
 - .bin: `34278D31D9B9B12B3B5DB5E45BCBE548991ECBC7` 616,494,480 Bytes / 587 MiB
+
+### Setup Python virtual environment and requirements
+Modern Linux distros require a virtual environment to be setup before installing requirements with pip.
+
+You can setup an environment in the repo folder with the following:
+```bash
+python3 -m venv .venv # creates a .venv folder with the environment
+source .venv/bin/activate # activates the environment (needs to be run in every new terminal session)
+python3 -m pip install -r requirements.txt # installs the project requirements from requirements.txt
+```
 
 ### Build the code
 Run `make setup` to extract needed assets and code from the binary.
