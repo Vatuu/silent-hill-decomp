@@ -199,9 +199,16 @@ check: build
 progress:
 	$(MAKE) build NON_MATCHING=1 SKIP_ASM=1
 
-expected: build
+expected:
+	# Switching to macro.objdiff.inc to workaround objdiff jtbl global issue (https://github.com/Vatuu/silent-hill-decomp/issues/104)
+	mv include/macro.inc include/macro.orig.inc
+	mv include/macro.objdiff.inc include/macro.inc
+	$(MAKE) build NON_MATCHING=1 SKIP_ASM=1
 	mkdir -p $(EXPECTED_DIR)
 	mv build/asm $(EXPECTED_DIR)/asm
+	# Restoring macro.orig.inc
+	mv include/macro.inc include/macro.objdiff.inc
+	mv include/macro.orig.inc include/macro.inc
 
 iso:
 	$(INSERT_OVLS) $(INSERT_OVLS_FLAGS)
