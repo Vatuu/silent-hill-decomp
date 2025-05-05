@@ -9,6 +9,7 @@
     \label:
 .endm
 
+/* macro.objdiff.inc: removed .global line from jlabel */
 .macro jlabel label
     \label:
 .endm

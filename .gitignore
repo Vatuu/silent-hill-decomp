@@ -10,6 +10,7 @@ permuter/
 expected/
 .venv/
 
+include/macro.inc
 objdiff.json
 null.d
 !*/place-the-bin-and-cue-here
