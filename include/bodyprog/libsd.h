@@ -50,10 +50,10 @@ enum SMF_STAT
 enum SMF_MIDI_STAT
 {
     SD_MIDI_BEND = 1,
-    SD_MIDI_PAN = 2,
-    SD_MIDI_VOL = 3,
-    SD_MIDI_MOD = 4,
-    SD_MIDI_EXP = 5
+    SD_MIDI_PAN  = 2,
+    SD_MIDI_VOL  = 3,
+    SD_MIDI_MOD  = 4,
+    SD_MIDI_EXP  = 5
 };
 
 typedef struct SD_Vab_H
