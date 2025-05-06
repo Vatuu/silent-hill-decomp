@@ -1068,20 +1068,6 @@ void func_8002EB88(); // Return type assumed.
 
 void func_8002ECE0(s_800B55E8* arg0);
 
-/** Copies savegame into an s_ShSaveGameContainer and calculates footer checksum. */
-void SaveGame_CopyWithChecksum(s_ShSaveGameContainer* dest, s_ShSaveGame* src);
-
-/** Updates the footer with the checksum of the given data. */
-void SaveGame_ChecksumUpdate(s_ShSaveGameFooter* saveFooter, s8* saveData, s32 saveDataLength);
-
-/** Generates a checksum of the given saveData and compares it against the checksum value in the footer.
- * Returns 1 if the checksums match, otherwise 0.
- */
-s32 SaveGame_ChecksumValidate(s_ShSaveGameFooter* saveFooter, s8* saveData, s32 saveDataLength);
-
-/** Generates an 8-bit XOR checksum over the given data, only appears used with s_ShSaveGame data. */
-u8 SaveGame_ChecksumGenerate(s8* saveData, s32 saveDataLength);
-
 void func_80030444();
 
 void func_8003045C();
@@ -1769,6 +1755,20 @@ s32 Math_GetMagnitudeShift(s32 mag);
 
 /** Copies user config into an `s_ShSaveUserConfigContainer` and calculates footer checksum. */
 void SaveGame_UserConfigCopyWithChecksum(s_ShSaveUserConfigContainer* dest, s_ShSaveUserConfig* src);
+
+/** Copies savegame into an s_ShSaveGameContainer and calculates footer checksum. */
+void SaveGame_CopyWithChecksum(s_ShSaveGameContainer* dest, s_ShSaveGame* src);
+
+/** Updates the footer with the checksum of the given data. */
+void SaveGame_ChecksumUpdate(s_ShSaveGameFooter* saveFooter, s8* saveData, s32 saveDataLength);
+
+/** Generates a checksum of the given saveData and compares it against the checksum value in the footer.
+ * Returns 1 if the checksums match, otherwise 0.
+ */
+s32 SaveGame_ChecksumValidate(s_ShSaveGameFooter* saveFooter, s8* saveData, s32 saveDataLength);
+
+/** Generates an 8-bit XOR checksum over the given data, only appears used with s_ShSaveGame data. */
+u8 SaveGame_ChecksumGenerate(s8* saveData, s32 saveDataLength);
 
 s32 Demo_SequenceAdvance(s32 incrementAmt);
 
