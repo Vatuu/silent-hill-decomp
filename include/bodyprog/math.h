@@ -23,7 +23,7 @@
 #define MAX(a, b) \
     (((a) > (b)) ? (a) : (b))
 
-/** @brief Clamps a value to the range [min, max]. */
+/** @brief Clamps a value to the range `[min, max]`. */
 #define CLAMP(x, min, max) \
     (((x) < (min)) ? (min) : (((x) > (max)) ? (max) : (x)))
 
@@ -55,11 +55,11 @@
 #define FP_MULTIPLY_PRECISE(a, b, shift) \
     Math_MulFixed((a), FP_FLOAT_TO((b), (shift)), (shift))
 
-/** @brief Converts a floating-point alpha in the range [0.0f, 1.0f] to a fixed-point alpha in Q3.12 format. */
+/** @brief Converts a floating-point alpha in the range `[0.0f, 1.0f]` to a fixed-point alpha in Q3.12 format. */
 #define FP_ALPHA(alpha) \
-    (s16)FP_FLOAT_TO(alpha, (Q12_SHIFT))
+    (s16)FP_FLOAT_TO((alpha), (Q12_SHIFT))
 
-/** @brief Converts a normalized color value in the range [0.0f, 1.0f] to an 8-bit color value in the range [0, 255]. */
+/** @brief Converts a normalized color value in the range `[0.0f, 1.0f]` to an 8-bit color value in the range `[0, 255]`. */
 #define FP_COLOR(val) \
     (u8)((val) * (FP_FLOAT_TO(1.0f, Q8_SHIFT) - 1))
 

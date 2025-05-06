@@ -28,6 +28,7 @@ s32 MemCmp(u8* src, u8* des, s32 num) // 0x800A6FB8
 s32 readMThd(u32 loc) // 0x800A6FFC
 {
     extern char D_8002E538[4]; // "MThd"
+
     while (true)
     {
         if (!MemCmp(D_8002E538, smf_song[smf_file_no].mf_data_ptr_504 + loc, 4))
@@ -128,7 +129,8 @@ s32 readvarinum(SMF* p) // 0x800A72B4
         {
             c     = egetc(p);
             value = (value << 7) + (c & 0x7F);
-        } while (c & 0x80);
+        }
+        while (c & 0x80);
     }
 
     return value;
@@ -206,6 +208,7 @@ void metaevent(SMF* p, u8 type)
                 case 24:
                     tempo = tempo / 2;
                     break;
+
                 case 30:
                     tempo = tempo / 4;
                     break;
@@ -216,8 +219,8 @@ void metaevent(SMF* p, u8 type)
                 smf_song[smf_file_no].tracks_0[a].mf_tempo2_16 = tempo;
                 smf_song[smf_file_no].tracks_0[a].mf_tempo_14  = tempo;
             }
-
             break;
+
         case 0x54:
             egetc(p);
             egetc(p);
@@ -273,7 +276,8 @@ void sysex(SMF* p) // 0x800A7AEC
         {
             break;
         }
-    } while (cou < len);
+    }
+    while (cou < len);
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_mid", chanmessage);
@@ -373,9 +377,11 @@ u8 readtrack2(SMF* p) // 0x800A81F4
             case 0x4A:
                 key_off(p->midi_ch_27, p->status_value_25, 0);
                 return 0;
+
             case 0x4B:
                 key_off(p->midi_ch_27, p->status_value_25, 0);
                 return 1;
+
             case 0x47:
                 c1 = egetc(p);
                 for (tr = 0; tr < smf_song[smf_file_no].mf_tracks_526; tr++)
@@ -384,28 +390,34 @@ u8 readtrack2(SMF* p) // 0x800A81F4
                     smf_song[(p->midi_ch_27 >> 4)].tracks_0[tr].mf_tempo2_16 = tempo;
                 }
                 break;
+
             case 0x48:
                 c1 = egetc(p);
                 pitch_bend(p->midi_ch_27, 0, c1 & 0x7F);
                 break;
+
             case 0x49:
                 c1 = egetc(p);
                 program_change(p->midi_ch_27, c1 & 0x7F);
                 break;
+
             case 0x46:
                 c1 = egetc(p);
                 p->midi_ch_27 = (c1 & 0xF) + ((u8)smf_file_no * 0x10);
                 break;
+
             case 0x7F:
                 c1 = egetc(p);
                 p->mf_eof_flag_20 = 1;
                 break;
+
             default:
                 c1 = egetc(p);
                 chanmessage(p, (p->midi_ch_27 & 0xF) | 0xB0, c & 0x7F, c1 & 0x7F);
                 break;
         }
     }
+
     return (c1 & 0x80) > 0;
 }
 

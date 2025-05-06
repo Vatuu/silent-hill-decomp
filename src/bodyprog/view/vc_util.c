@@ -87,7 +87,7 @@ void vcMoveAndSetCamera(s32 in_connect_f, s32 change_debug_mode, s32 for_f, s32 
             D_800BCE18.vcCameraInternalInfo_1BDC.mode = 0;
 
             first_cam_pos.vy = FP_METER(-35.2f);
-            first_cam_pos.vx = g_SysWork.player_4C.chara_0.position_18.vx + FP_METER(112.f);
+            first_cam_pos.vx = g_SysWork.player_4C.chara_0.position_18.vx + FP_METER(112.0f);
             first_cam_pos.vz = g_SysWork.player_4C.chara_0.position_18.vz;
 
             vcSetFirstCamWork(&first_cam_pos, g_SysWork.player_4C.chara_0.rotation_24.vy, 0);
