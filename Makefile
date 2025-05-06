@@ -225,7 +225,7 @@ generate: $(LD_FILES)
 clean:
 	rm -rf $(BUILD_DIR)
 	rm -rf $(PERMUTER_DIR)
-	rm $(MACRO_INC)
+	[ -f $(MACRO_INC) ] && rm $(MACRO_INC) || true
 
 reset: clean
 	rm -rf $(ASM_DIR)
