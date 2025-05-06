@@ -55,7 +55,7 @@ segments:
     subsegments:
       - [0x0, pad]
       - [0x8, .rodata, credits]
-      - [0x44, rodata] # Most (if not all) of this data are strings.
       - [0x828, c, credits]
-      - [0x2F58, data, credits]
+      - [0x2F58, .data, credits]
+      - [0x3A10, data]
   - [0x3B00]

@@ -20,6 +20,8 @@ extern char D_801E5BD0[]; // KCET string.
 
 extern s32 D_801E5C20;
 
+extern u8 D_801E5FF8[];
+
 extern u8 D_801E5E5C[];
 
 extern u8 D_801E5E6C[];
@@ -37,6 +39,10 @@ extern s32 D_801E5E84;
 extern s32 D_801E5E88;
 
 extern s32 D_801E5E8C; // Index for some array used by most recent `func_801E2E28` call. `func_801E2ED8` accesses it.
+
+extern u8 D_801E5E90[];
+
+extern u8 D_801E5FD0[];
 
 extern s32 D_801E600C; // Random 16-bit number.
 
