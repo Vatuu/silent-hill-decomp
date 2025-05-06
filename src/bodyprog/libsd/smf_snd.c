@@ -9,17 +9,17 @@ void tone_adsr_mem(s16 vab_id) // 0x8009EDA4
     SD_VAB_H* vabData;
     VagAtr*   vagAtr;
     VabHdr*   vabHdr;
-    s32       vagNum;
-    s32       progNum;
+    s32       vagIdx;
+    s32       progIdx;
 
     vabData = vab_h[vab_id].vh_addr_4;
     vabHdr  = &vabData->vab_h;
 
-    for (progNum = 0; progNum < vabHdr->ps; progNum++)
+    for (progIdx = 0; progIdx < vabHdr->ps; progIdx++)
     {
-        for (vagNum = 0; vagNum < 0x10; vagNum++)
+        for (vagIdx = 0; vagIdx < 16; vagIdx++)
         {
-            vagAtr = &vabData->vag_atr[(progNum * 0x10) + vagNum];
+            vagAtr = &vabData->vag_atr[(progIdx * 16) + vagIdx];
 
             vagAtr->reserved[0] = vagAtr->adsr1;
             vagAtr->reserved[1] = vagAtr->adsr2;
@@ -32,17 +32,17 @@ void tone_adsr_back(s16 vab_id) // 0x8009EE30
     SD_VAB_H* vabData;
     VagAtr*   vagAtr;
     VabHdr*   vabHdr;
-    s32       vagNum;
-    s32       progNum;
+    s32       vagIdx;
+    s32       progIdx;
 
     vabData = vab_h[vab_id].vh_addr_4;
     vabHdr  = &vabData->vab_h;
 
-    for (progNum = 0; progNum < vabHdr->ps; progNum++)
+    for (progIdx = 0; progIdx < vabHdr->ps; progIdx++)
     {
-        for (vagNum = 0; vagNum < 0x10; vagNum++)
+        for (vagIdx = 0; vagIdx < 16; vagIdx++)
         {
-            vagAtr = &vabData->vag_atr[(progNum * 0x10) + vagNum];
+            vagAtr = &vabData->vag_atr[(progIdx * 16) + vagIdx];
 
             vagAtr->adsr1 = vagAtr->reserved[0];
             vagAtr->adsr2 = vagAtr->reserved[1];
@@ -416,7 +416,7 @@ void SdAutoKeyOffCheck() // 0x8009FF70
         {
             if (smf_port[vo].stat_16 != 0 && SpuGetKeyStatus(spu_ch_tbl[vo]) == 3)
             {
-                if (smf_port[vo].stat_16 >= 2U)
+                if (smf_port[vo].stat_16 >= 2u)
                 {
                     voices |= spu_ch_tbl[vo];
 
@@ -424,7 +424,8 @@ void SdAutoKeyOffCheck() // 0x8009FF70
                     {
                         SpuSetKey(0, spu_ch_tbl[vo]);
                         keyStatus = SpuGetKeyStatus(spu_ch_tbl[vo]);
-                    } while (keyStatus != 2 && keyStatus != 0);
+                    }
+                    while (keyStatus != 2 && keyStatus != 0);
 
                     smf_port[vo].stat_16 = 0;
 
@@ -870,7 +871,7 @@ s32 SdUtKeyOffV(s16 vo) // 0x800A18F4
     u32 port;
 
     sd_int_flag = 1;
-    if (smf_port[vo].stat_16 != 0 && smf_port[vo].midi_ch_3 == 0x20)
+    if (smf_port[vo].stat_16 != 0 && smf_port[vo].midi_ch_3 == 32)
     {
         port = spu_ch_tbl[vo];
 
@@ -884,13 +885,15 @@ s32 SdUtKeyOffV(s16 vo) // 0x800A18F4
             adsr_set(vo, &smf_port[vo]);
             SpuSetKey(0, port);
             stat = SpuGetKeyStatus(port);
-        } while (stat != 2 && stat != 0);
+        }
+        while (stat != 2 && stat != 0);
     }
     else
     {
         sd_int_flag = 0;
         return -1;
     }
+ 
     sd_int_flag = 0;
     return 0;
 }
@@ -915,13 +918,15 @@ s32 SdUtKeyOffVWithRROff(s16 vo) // 0x800A1A18
         {
             SpuSetKey(0, port);
             stat = SpuGetKeyStatus(port);
-        } while (stat != 2 && stat != 0);
+        }
+        while (stat != 2 && stat != 0);
     }
     else
     {
         sd_int_flag = 0;
         return -1;
     }
+ 
     sd_int_flag = 0;
     return 0;
 }

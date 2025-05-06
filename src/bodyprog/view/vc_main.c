@@ -465,6 +465,7 @@ s32 vcRetFarWatchRate(s32 far_watch_button_prs_f, VC_CAM_MV_TYPE cur_cam_mv_type
             case VC_MV_SETTLE:
                 far_watch_rate = FP_TO(far_watch_button_prs_f != 0, Q12_SHIFT);
                 break;
+
             case VC_MV_THROUGH_DOOR:
                 far_watch_rate = FP_METER(16.f); // FP_ANGLE(22.5f);
                 if (!far_watch_button_prs_f)
@@ -481,11 +482,11 @@ s32 vcRetFarWatchRate(s32 far_watch_button_prs_f, VC_CAM_MV_TYPE cur_cam_mv_type
                         far_watch_rate = 0;
                     }
 
-                    if (dist > FP_METER(8.f))
+                    if (dist > FP_METER(8.0f))
                     {
                         railDistX = w_p->chara_pos_114.vx - w_p->through_door_10.rail_sta_pos_C.vx;
                         railDistZ = w_p->chara_pos_114.vz - w_p->through_door_10.rail_sta_pos_C.vz;
-                        if (((w_p->chara_eye_ang_y_144 - ratan2(railDistX, railDistZ)) << 0x14) < 0)
+                        if (((w_p->chara_eye_ang_y_144 - ratan2(railDistX, railDistZ)) << 20) < 0)
                         {
                             abs_ofs_ang_y = -shAngleRegulate(w_p->chara_eye_ang_y_144 - ratan2(railDistX, railDistZ));
                         }
@@ -493,6 +494,7 @@ s32 vcRetFarWatchRate(s32 far_watch_button_prs_f, VC_CAM_MV_TYPE cur_cam_mv_type
                         {
                             abs_ofs_ang_y = shAngleRegulate(w_p->chara_eye_ang_y_144 - ratan2(railDistX, railDistZ));
                         }
+
                         far_watch_rate = (far_watch_rate * (FP_METER(3.11f) - abs_ofs_ang_y)) / FP_METER(3.11f);
                         // far_watch_rate = (far_watch_rate * (FP_ANGLE(4.375f) - abs_ofs_ang_y)) / FP_ANGLE(4.375f);
                         if (far_watch_rate < 0)
@@ -502,6 +504,7 @@ s32 vcRetFarWatchRate(s32 far_watch_button_prs_f, VC_CAM_MV_TYPE cur_cam_mv_type
                     }
                 }
                 break;
+
             default:
             case VC_MV_FIX_ANG:
             case VC_MV_SELF_VIEW:
@@ -512,8 +515,8 @@ s32 vcRetFarWatchRate(s32 far_watch_button_prs_f, VC_CAM_MV_TYPE cur_cam_mv_type
 
     if (g_GameWorkPtr0->config_0.optViewMode_29 != 0)
     {
-        prsFViewFlag = vcWork.flags_8 >> 9; /** VC_PRS_F_VIEW_F */
-        prsFViewFlag = prsFViewFlag & 1;
+        prsFViewFlag = vcWork.flags_8 >> 9; /** `VC_PRS_F_VIEW_F` */
+        prsFViewFlag = prsFViewFlag & (1 << 0);
 
         if ((g_GameWorkPtr0->config_0.optViewCtrl_28 != 0 && (prsFViewFlag ^ 1) != 0) ||
             (g_GameWorkPtr0->config_0.optViewCtrl_28 == 0 && prsFViewFlag != 0))
@@ -616,15 +619,19 @@ void vcSetFlagsByCamMvType(VC_CAM_MV_TYPE cam_mv_type, s32 far_watch_rate, s32 a
             case VC_MV_CHASE:
                 vcWork_FlagSet(VC_VISIBLE_CHARA_F);
                 break;
+
             case VC_MV_SETTLE:
                 vcWork_FlagSet(VC_VISIBLE_CHARA_F);
                 break;
+
             case VC_MV_FIX_ANG:
                 vcWork_FlagClear(VC_VISIBLE_CHARA_F);
                 break;
+
             case VC_MV_SELF_VIEW:
                 vcWork_FlagClear(VC_VISIBLE_CHARA_F);
                 break;
+
             case VC_MV_THROUGH_DOOR:
                 vcWork_FlagClear(VC_VISIBLE_CHARA_F);
                 break;
@@ -639,7 +646,7 @@ void vcSetFlagsByCamMvType(VC_CAM_MV_TYPE cam_mv_type, s32 far_watch_rate, s32 a
     {
         vcWork_FlagSet(VC_WARP_CAM_F | VC_WARP_CAM_TGT_F);
 
-        vcPrsFViewFlag = (vcWork.flags_8 >> 9); /** VC_PRS_F_VIEW_F */
+        vcPrsFViewFlag = (vcWork.flags_8 >> 9); /** `VC_PRS_F_VIEW_F` */
         vcPrsFViewFlag = vcPrsFViewFlag & 1;
 
         // optViewCtrl != 0 && vcPrsFViewFlag == 0 OR
@@ -647,8 +654,8 @@ void vcSetFlagsByCamMvType(VC_CAM_MV_TYPE cam_mv_type, s32 far_watch_rate, s32 a
         if ((g_GameWorkPtr0->config_0.optViewCtrl_28 != 0 && (vcPrsFViewFlag ^ 1) != 0) ||
             (g_GameWorkPtr0->config_0.optViewCtrl_28 == 0 && vcPrsFViewFlag != 0))
         {
-            vcOldPrsFViewFlag = (vcWork.flags_8 >> 0xA); /** VC_OLD_PRS_F_VIEW_F */
-            vcOldPrsFViewFlag = vcOldPrsFViewFlag & 1;
+            vcOldPrsFViewFlag = (vcWork.flags_8 >> 10); /** `VC_OLD_PRS_F_VIEW_F` */
+            vcOldPrsFViewFlag = vcOldPrsFViewFlag & (1 << 0);
 
             // (optViewCtrl != 0 && vcOldPrsFViewFlag == 0) == false AND
             // (optViewCtrl == 0 && vcOldPrsFViewFlag == 1) == false

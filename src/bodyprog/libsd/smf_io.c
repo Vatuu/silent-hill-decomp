@@ -539,7 +539,8 @@ void sound_off() // 0x800A4D20
     {
         SpuSetKey(0, voices);
         keyStatus = SpuGetKeyStatus(voices);
-    } while (keyStatus != 2 && keyStatus != 0);
+    }
+    while (keyStatus != 2 && keyStatus != 0);
 }
 
 void vol_calc() {} // 0x800A4E90
@@ -589,7 +590,8 @@ void key_off(u8 chan, u8 c1, u8 c2)
                 {
                     SpuSetKey(0, spu_ch_tbl[vo]);
                     keyStatus = SpuGetKeyStatus(spu_ch_tbl[vo]);
-                } while (keyStatus != 2 && keyStatus != 0);
+                }
+                while (keyStatus != 2 && keyStatus != 0);
 
                 smf_port[vo].stat_16 = 0;
             }
@@ -606,7 +608,8 @@ void key_off(u8 chan, u8 c1, u8 c2)
         {
             SpuSetKey(0, voices);
             keyStatus = SpuGetKeyStatus(voices);
-        } while (keyStatus != 2 && keyStatus != 0);
+        }
+        while (keyStatus != 2 && keyStatus != 0);
     }
 }
 
@@ -630,7 +633,7 @@ VagAtr* get_vab_tone(MIDI* p, u16 tone, u8 chan) // 0x800A5DD4
 
 void smf_data_entry(MIDI* p, u8 chan)
 {
-    SpuReverbAttr rev_attr; // used in AUDIO.IRX but unused here
+    SpuReverbAttr rev_attr; // Used in `AUDIO.IRX` but unused here.
     VagAtr*       vp;
     s32           i;
 
@@ -643,39 +646,51 @@ void smf_data_entry(MIDI* p, u8 chan)
             {
                 case 0:
                     break;
+
                 case 1:
                     vp->mode = p->data_entry_27;
                     break;
+
                 case 2:
                     vp->min = p->data_entry_27;
                     break;
+
                 case 3:
                     vp->max = p->data_entry_27;
                     break;
+
                 case 4:
                     vp->adsr1 = (vp->adsr1 & 0xFF) | ((0x7F - p->data_entry_27) << 8);
                     break;
+
                 case 5:
                     vp->adsr1 = (vp->adsr1 & 0xFF) | ((0x7F - p->data_entry_27) << 8) | 0x8000;
                     break;
+
                 case 6:
                     vp->adsr1 = (vp->adsr1 & 0xFF0F) | ((p->data_entry_27 * 2) & 0xF0);
                     break;
+
                 case 7:
                     vp->adsr1 = (vp->adsr1 & 0xFFF0) | ((p->data_entry_27 >> 3));
                     break;
+
                 case 8:
                     vp->adsr2 = (vp->adsr2 & 0x603F) | ((0x7F - p->data_entry_27) << 6);
                     break;
+
                 case 9:
                     vp->adsr2 = (vp->adsr2 & 0x603F) | ((0x7F - p->data_entry_27) << 6) | 0x8000;
                     break;
+
                 case 10:
                     vp->adsr2 = (vp->adsr2 & 0xFFC0) | ((0x7F - p->data_entry_27) >> 3);
                     break;
+
                 case 11:
                     vp->adsr2 = (vp->adsr2 & 0xFFC0) | ((0x7F - p->data_entry_27) >> 3) | 0x20;
                     break;
+
                 case 12:
                     if (p->data_entry_27 <= 0x40)
                     {
@@ -686,6 +701,7 @@ void smf_data_entry(MIDI* p, u8 chan)
                         vp->adsr2 &= 0xBFFF;
                     }
                     break;
+
                 case 13:
                     vp->adsr1 = vp->reserved[0];
                     vp->adsr2 = vp->reserved[1];
@@ -696,44 +712,55 @@ void smf_data_entry(MIDI* p, u8 chan)
     else
     {
         vp = get_vab_tone(p, p->nrpn_msb_26 & 0xF, chan);
-
         switch (p->nrpn_lsb_25)
         {
             case 0:
                 break;
+
             case 1:
                 vp->mode = p->data_entry_27;
                 break;
+
             case 2:
                 vp->min = p->data_entry_27;
                 break;
+
             case 3:
                 vp->max = p->data_entry_27;
                 break;
+
             case 4:
                 vp->adsr1 = (vp->adsr1 & 0xFF) | ((0x7F - p->data_entry_27) << 8);
                 break;
+
             case 5:
                 vp->adsr1 = (vp->adsr1 & 0xFF) | ((0x7F - p->data_entry_27) << 8) | 0x8000;
                 break;
+
             case 6:
                 vp->adsr1 = (vp->adsr1 & 0xFF0F) | ((p->data_entry_27 * 2) & 0xF0);
                 break;
+
             case 7:
                 vp->adsr1 = (vp->adsr1 & 0xFFF0) | (p->data_entry_27 >> 3);
                 break;
+
             case 8:
                 vp->adsr2 = (vp->adsr2 & 0x603F) | ((0x7F - p->data_entry_27) << 6);
                 break;
+
             case 9:
                 vp->adsr2 = (vp->adsr2 & 0x603F) | ((0x7F - p->data_entry_27) << 6) | 0x8000;
                 break;
+
             case 10:
                 vp->adsr2 = (vp->adsr2 & 0xFFC0) | ((0x7F - p->data_entry_27) >> 3);
                 break;
+
             case 11:
                 vp->adsr2 = (vp->adsr2 & 0xFFC0) | ((0x7F - p->data_entry_27) >> 3) | 0x20;
                 break;
+
             case 12:
                 if (p->data_entry_27 <= 0x40)
                 {
@@ -744,10 +771,12 @@ void smf_data_entry(MIDI* p, u8 chan)
                     vp->adsr2 &= 0xBFFF;
                 }
                 break;
+
             case 13:
                 vp->adsr1 = vp->reserved[0];
                 vp->adsr2 = vp->reserved[1];
                 return;
+
             case 23:
                 p->before_note_13 = p->data_entry_27;
                 break;
@@ -774,6 +803,7 @@ void control_change(u8 chan, u8 c1, u8 c2)
         case 0x0:
             p->bank_change_5A = c2;
             break;
+
         case 0x1:
             if (p->mod_mode_20 < 0x40)
             {
@@ -839,8 +869,10 @@ void control_change(u8 chan, u8 c1, u8 c2)
                     }
                 }
             }
+
             set_midi_info(SD_MIDI_MOD, chan, p->mod_2);
             break;
+
         case 0x2:
             if (p->mod_mode_20 < 0x40)
             {
@@ -851,20 +883,25 @@ void control_change(u8 chan, u8 c1, u8 c2)
                 p->mod_limit_1E = c2 << 1;
             }
             break;
+
         case 0x3:
             p->mod_mode_20 = c2;
             break;
+
         case 0x4:
             p->bend_mode_10 = c2;
             break;
+
         case 0x5:
             p->porta_28 = c2;
             break;
+
         case 0x7:
             p->mvol_3 = c2;
             vol_flag  = 1;
             set_midi_info(SD_MIDI_VOL, chan, p->mvol_3);
             break;
+
         case 0xA:
             if (c2)
             {
@@ -874,18 +911,22 @@ void control_change(u8 chan, u8 c1, u8 c2)
             {
                 p->pan_1 = 1;
             }
+
             vol_flag = 1;
             set_midi_info(SD_MIDI_PAN, chan, p->pan_1);
             break;
+
         case 0xB:
             p->express_5 = c2;
             vol_flag     = 1;
             set_midi_info(SD_MIDI_EXP, chan, p->express_5);
             break;
+
         case 0xC:
             p->vol_mode_11 = c2;
             vol_flag       = 1;
             break;
+
         case 0xD:
             p->rdms_57 = c2;
             for (vc = 0; vc < sd_reserved_voice; vc++)
@@ -896,6 +937,7 @@ void control_change(u8 chan, u8 c1, u8 c2)
                 }
             }
             break;
+
         case 0xE:
             p->rdmdm_59 = c2;
 
@@ -907,24 +949,30 @@ void control_change(u8 chan, u8 c1, u8 c2)
                 }
             }
             break;
+
         case 0xF:
             p->wide_flag_21 = c2;
             break;
+
         case 0x10:
             p->key_pan_22 = c2;
             break;
+
         case 0x14:
             p->vibhs_39 = c2 << 1;
             break;
+
         case 0x15:
             p->vibcad_3B = c2;
             break;
+
         case 0x16:
             p->vibdm_3E   = c2 << 4;
             p->vibd_3C    = c2 << 4;
             p->vibcs_3A   = 0;
             p->vibcadw_34 = 1;
             break;
+
         case 0x17:
             p->vibcs_3A = c2;
             if (c2 != 0)
@@ -939,18 +987,22 @@ void control_change(u8 chan, u8 c1, u8 c2)
                 }
             }
             break;
+
         case 0x19:
             p->trehs_51 = c2 << 1;
             break;
+
         case 0x1A:
             p->trecad_53 = c2;
             break;
+
         case 0x1B:
             p->tredm_4A   = c2 << 7;
             p->tred_48    = c2 << 7;
             p->trecs_52   = 0;
             p->trecadw_44 = 1;
             break;
+
         case 0x1C:
             p->trecs_52 = c2;
             if (c2 != 0)
@@ -965,10 +1017,12 @@ void control_change(u8 chan, u8 c1, u8 c2)
                 }
             }
             break;
+
         case 0x1E:
             smf_song[chan >> 4].midi_master_vol_538 = c2;
             seq_master_vol_set(chan >> 4);
             break;
+
         case 0x40:
             for (vc = 0; vc < sd_reserved_voice; vc++)
             {
@@ -986,7 +1040,8 @@ void control_change(u8 chan, u8 c1, u8 c2)
                                 {
                                     SpuSetKey(0, spu_ch_tbl[i]);
                                     stat = SpuGetKeyStatus(spu_ch_tbl[i]);
-                                } while (stat != 2 && stat != 0);
+                                }
+                                while (stat != 2 && stat != 0);
 
                                 smf_port[i].pedal_1B = 0;
                                 smf_port[i].stat_16  = 0;
@@ -1000,6 +1055,7 @@ void control_change(u8 chan, u8 c1, u8 c2)
                     }
                 }
             }
+
             if (c2 < 0x40)
             {
                 smf_midi[chan].pedal_6 = 0;
@@ -1009,9 +1065,11 @@ void control_change(u8 chan, u8 c1, u8 c2)
                 smf_midi[chan].pedal_6 = 1;
             }
             break;
+
         case 0x5B:
             p->rev_depth_24 = c2 & 0x7F;
             break;
+
         case 0x6:
             p->data_entry_27 = c2;
 
@@ -1020,12 +1078,15 @@ void control_change(u8 chan, u8 c1, u8 c2)
                 smf_data_entry(p, chan);
             }
             break;
+
         case 0x62:
             p->nrpn_lsb_25 = c2;
             break;
+
         case 0x63:
             p->nrpn_msb_26 = c2;
             break;
+
         case 0x76:
             if (c2 < 0x40)
             {
@@ -1044,14 +1105,17 @@ void control_change(u8 chan, u8 c1, u8 c2)
                 smf_song[chan >> 4].smf_control_stat_52F = c2;
             }
             break;
+
         case 0x77:
             tone_adsr_back(smf_song[chan >> 4].sd_seq_vab_id_508);
             break;
+
         case 0x78:
         case 0x79:
         case 0x7B:
             sound_seq_off(chan >> 4);
             break;
+
         case 0x7E:
             p->mode_12 = c2;
             break;
@@ -1063,7 +1127,8 @@ void control_change(u8 chan, u8 c1, u8 c2)
         {
             SpuSetKey(0, port);
             stat = SpuGetKeyStatus(port);
-        } while (stat != 2 && stat != 0);
+        }
+        while (stat != 2 && stat != 0);
     }
 
     if (vol_flag != 0)

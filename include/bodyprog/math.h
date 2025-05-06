@@ -57,7 +57,7 @@
 
 /** @brief Converts a floating-point alpha in the range `[0.0f, 1.0f]` to a fixed-point alpha in Q3.12 format. */
 #define FP_ALPHA(alpha) \
-    (s16)FP_FLOAT_TO(alpha, (Q12_SHIFT))
+    (s16)FP_FLOAT_TO((alpha), (Q12_SHIFT))
 
 /** @brief Converts a normalized color value in the range `[0.0f, 1.0f]` to an 8-bit color value in the range `[0, 255]`. */
 #define FP_COLOR(val) \

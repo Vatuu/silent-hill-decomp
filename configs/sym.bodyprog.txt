@@ -158,8 +158,8 @@ g_Sd_VolumeXa = 0x800C1686;
 g_Sd_ReverbDepth = 0x800C1687;
 g_Game_VSyncTimeSinceBoot = 0x800C1690;
 
-g_Demo_DemoFileIndex = 0x800C4840; // type:s32
-g_Demo_PlayFileIndex = 0x800C4844; // type:s32
+g_Demo_DemoFileIdx = 0x800C4840; // type:s32
+g_Demo_PlayFileIdx = 0x800C4844; // type:s32
 g_Demo_UserConfigBackup = 0x800C4850; // type:ShSaveUserConfig size:0x38
 g_Demo_PrevRandSeed = 0x800C4888;
 g_Demo_RandSeedBackup = 0x800C488C;
@@ -167,7 +167,7 @@ g_Demo_CurFrameData = 0x800C4890;
 g_Demo_DemoStep = 0x800C4894;
 g_Demo_VideoPresentInterval = 0x800C4898;
 
-g_Demo_DemoNum = 0x800AFDB8; // type:s32
+g_Demo_DemoId = 0x800AFDB8; // type:s32
 g_Demo_RandSeed = 0x800AFDBC; // type:u16
 g_Demo_PlayFileBufferPtr = 0x800AFDC0; // type:s32
 g_Demo_FileIds = 0x800AFDC4; // type:DemoFileInfo size:0x28

@@ -4,7 +4,7 @@
 #include "gpu.h"
 #include "types.h"
 
-#define TICKS_PER_SECOND 60 // Theorised. It's unclear if the game has a fixed timestep.
+#define TICKS_PER_SECOND 60 // Game has a variable timestep with 60 ticks max.
 
 #define SCREEN_WIDTH                   320
 #define SCREEN_HEIGHT                  240
@@ -442,8 +442,8 @@ typedef struct _ShSaveUserConfig
 } s_ShSaveUserConfig;
 STATIC_ASSERT_SIZEOF(s_ShSaveUserConfig, 56);
 
-/** @brief Appended to ShSaveGame & ShSaveUserConfig during game save. Contains 8-bit XOR checksum + magic.
- * Checksum generated via the SaveGame_ChecksumGenerate function.
+/** @brief Appended to `ShSaveGame` and `ShSaveUserConfig` during game save. Contains 8-bit XOR checksum + magic.
+ * Checksum generated via `SaveGame_ChecksumGenerate`.
  */
 typedef struct _ShSaveGameFooter
 {
@@ -452,7 +452,7 @@ typedef struct _ShSaveGameFooter
 } s_ShSaveGameFooter;
 STATIC_ASSERT_SIZEOF(s_ShSaveGameFooter, 4);
 
-/** Contains s_ShSaveGame data with the footer appended to the end containing the checksum + magic. */
+/** @brief Contains `s_ShSaveGame` data with the footer appended to the end containing the checksum + magic. */
 typedef struct _ShSaveGameContainer
 {
     s_ShSaveGame       saveGame_0;
@@ -460,7 +460,7 @@ typedef struct _ShSaveGameContainer
 } s_ShSaveGameContainer;
 STATIC_ASSERT_SIZEOF(s_ShSaveGameContainer, 640);
 
-/** Contains s_ShSaveUserConfig data padded to 128 bytes, with footer at the end containing checksum + magic. */
+/** @brief Contains `s_ShSaveUserConfig` data padded to 128 bytes, with footer at the end containing checksum + magic. */
 typedef struct _ShSaveUserConfigContainer
 {
     s_ShSaveUserConfig config_0;
@@ -470,37 +470,37 @@ typedef struct _ShSaveUserConfigContainer
 
 typedef struct _GameWork
 {
-    s_ShSaveUserConfig   config_0;
-    s_ControllerData     controllers_38[2];
-    s_ShSaveGame         saveGame_90; // Backup savegame?
-    s_ShSaveGame         saveGame_30C;
-    u16                  gsScreenWidth_588;
-    u16                  gsScreenHeight_58A;
-    u8                   field_58C; // R?
-    u8                   field_58D; // G?
-    u8                   field_58E; // B?
-    u8                   field_58F; // A or graphics command code?
-    s32                  gameStatePrev_590;    /** `e_GameState` */
-    s32                  gameState_594;        /** `e_GameState` */
-    s32                  gameStateStep_598[3]; /** Temp data used by current gameState. Can be another state ID or other data. */
-    s8                   unk_5A4[4];
-    s32                  field_5A8;
-    s32                  field_5AC;
-    s8                   unk_5B0;
-    s8                   mapAnimIdx_5B1;
-    s8                   unk_5B2[2];
-    s_AnalogPadData      rawPadData_5B4;
-    s8                   unk_5BC[28];
+    s_ShSaveUserConfig config_0;
+    s_ControllerData   controllers_38[2];
+    s_ShSaveGame       saveGame_90; // Backup savegame?
+    s_ShSaveGame       saveGame_30C;
+    u16                gsScreenWidth_588;
+    u16                gsScreenHeight_58A;
+    u8                 field_58C; // R?
+    u8                 field_58D; // G?
+    u8                 field_58E; // B?
+    u8                 field_58F; // A or graphics command code?
+    s32                gameStatePrev_590;    /** `e_GameState` */
+    s32                gameState_594;        /** `e_GameState` */
+    s32                gameStateStep_598[3]; /** Temp data used by current gameState. Can be another state ID or other data. */
+    s8                 unk_5A4[4];
+    s32                field_5A8;
+    s32                field_5AC;
+    s8                 unk_5B0;
+    s8                 mapAnimIdx_5B1;
+    s8                 unk_5B2[2];
+    s_AnalogPadData    rawPadData_5B4;
+    s8                 unk_5BC[28];
 } s_GameWork;
 STATIC_ASSERT_SIZEOF(s_GameWork, 1496);
 
 typedef struct _ModelAnimData
 {
-    // Following 4 bytes might be packed into an s32 called "animStatus",
+    // Following 4 bytes might be packed into an s32 called `animStatus`,
     // implied by an original param name in `vcMixSelfViewEffectToWatchTgtPos`.
 
     u8  animIdx_0;
-    u8  maybeSomeState_1; // State says if `animTime_4` is anim time or a func ptr? That field could be a union. -- emoose
+    u8  maybeSomeState_1; // State says if `animTime_4` is anim time or a func ptr? That field could be a union.
     u16 flags_2;          /** `e_AnimFlags` */ // Bit 1: movement unlockled(?), bit 2: visible.
     s32 time_4;           /** Fixed-point time along keyframe timeline. */ 
     s16 keyframeIdx0_8;

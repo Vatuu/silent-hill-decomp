@@ -923,22 +923,20 @@ extern s32 D_800C48F0;
 
 extern RECT D_801E557C[];
 
-// TODO: Order these by address.
-
 extern s32 g_MainLoop_FrameCount; // 0x800B9CCC
 
-/** Initial demo game state data, stored inside MISC/DEMOXXXX.DAT files. */
+/** @brief Initial demo game state data, stored inside MISC/DEMOXXXX.DAT files. */
 typedef struct _DemoWork
 {
     s_ShSaveUserConfig config_0;
-    u8                 unk_38[0xC8];
+    u8                 unk_38[200];
     s_ShSaveGame       saveGame_100;
-    u8                 unk_37C[0x480];
+    u8                 unk_37C[1152];
     u16                randSeed_7FC;
 } s_DemoWork;
 STATIC_ASSERT_SIZEOF(s_DemoWork, 2048);
 
-/** Per-frame demo data, stored inside MISC/PLAYXXXX.DAT files. */
+/** @brief Per-frame demo data, stored inside MISC/PLAYXXXX.DAT files. */
 typedef struct _DemoFrameData
 {
     s_AnalogPadData analogPad_0;
@@ -949,18 +947,18 @@ typedef struct _DemoFrameData
 } s_DemoFrameData;
 STATIC_ASSERT_SIZEOF(s_DemoFrameData, 16);
 
-/** Associates a demo number/ID with PLAYXXXX.DAT/DEMOXXXX.DAT file IDs. */
+/** @brief Associates a demo number/ID with PLAYXXXX.DAT/DEMOXXXX.DAT file IDs. */
 typedef struct _DemoFileInfo
 {
-    s16 demoFileId_0;       /** MISC/DEMOXXXX.DAT, initial gamestate for the demo & user config override. */
+    s16 demoFileId_0;       /** MISC/DEMOXXXX.DAT, initial gamestate for the demo and user config override. */
     s16 playFileId_2;       /** MISC/PLAYXXXX.DAT, data of button presses/randseed for each frame. */
     s32 (*canPlayDemo_4)(); /** Optional funcptr, returns whether this demo is eligible to be played (unused in retail demos). */
 } s_DemoFileInfo;
 STATIC_ASSERT_SIZEOF(s_DemoFileInfo, 8);
 
-extern s32 g_Demo_DemoFileIndex; // 0x800C4840
+extern s32 g_Demo_DemoFileIdx; // 0x800C4840
 
-extern s32 g_Demo_PlayFileIndex; // 0x800C4844
+extern s32 g_Demo_PlayFileIdx; // 0x800C4844
 
 extern s_ShSaveUserConfig g_Demo_UserConfigBackup; // 0x800C4850
 
@@ -974,7 +972,7 @@ extern s32 g_Demo_DemoStep; // 0x800C4894
 
 extern s32 g_Demo_VideoPresentInterval; // 0x800C4898
 
-extern s32 g_Demo_DemoNum; // 0x800AFDB8
+extern s32 g_Demo_DemoId; // 0x800AFDB8
 
 extern u16 g_Demo_RandSeed; // 0x800AFDBC
 
@@ -1769,7 +1767,7 @@ s32 func_800808AC();
 /** Returns a Q shift based on a magnitude. */
 s32 Math_GetMagnitudeShift(s32 mag);
 
-/** Copies user config into an s_ShSaveUserConfigContainer and calculates footer checksum. */
+/** Copies user config into an `s_ShSaveUserConfigContainer` and calculates footer checksum. */
 void SaveGame_UserConfigCopyWithChecksum(s_ShSaveUserConfigContainer* dest, s_ShSaveUserConfig* src);
 
 s32 Demo_SequenceAdvance(s32 incrementAmt);

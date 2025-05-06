@@ -3,12 +3,12 @@
 
 #include "common.h"
 
-#define FS_BLOCK_SIZE    0x100 /** Units in which file size is measured in file table. */
+#define FS_BLOCK_SIZE    0x100 /** Units in which file size is measured in THE file table. */
 #define FS_SECTOR_SIZE   0x800 /** Size of a CD sector (2048 bytes). */
-#define FS_SECTOR_SHIFT  11    /** For dividing by FS_SECTOR_SIZE. */
+#define FS_SECTOR_SHIFT  11    /** For dividing by `FS_SECTOR_SIZE`. */
 #define FS_NAME_CHAR_MAX 8     /** Maximum amount of characters in a file name (excluding extension and path). */
 #define FS_INVALID_TYPE  0x0f  /** Unspecified file type (or empty extension). */
-#define FS_FILE_COUNT    2074  /** Number of files in g_FileTable. Probably depends on version. */
+#define FS_FILE_COUNT    2074  /** Number of files in `g_FileTable`. Probably depends on version. */
 
 /** @brief Enum containing index of each filename, for use with FS functions.
  *

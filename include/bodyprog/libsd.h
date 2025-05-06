@@ -71,7 +71,7 @@ typedef struct Vab_h
     s32       vb_addr_C;
     s32       vb_start_addr_10;
     s32       vb_size_14;
-    s8        mvol_18; // these s8s are u8 in soundcd.irx
+    s8        mvol_18; // These `s8`s are `u8` in `soundcd.irx`.
     s8        mvoll_19;
     s8        mvolr_1A;
     s8        mpan_1B;
@@ -102,7 +102,7 @@ typedef struct SMF_data
 } SMF;
 STATIC_ASSERT_SIZEOF(SMF, 40);
 
-/** Standard MIDI File */
+/** @brief Standard MIDI File */
 typedef struct Smf_Song
 {
     SMF   tracks_0[32];
@@ -134,8 +134,9 @@ typedef struct Smf_Song
 } SMF_SONG;
 STATIC_ASSERT_SIZEOF(SMF_SONG, 1340);
 
-/** SMF_midi fields are mainly changed by control_change(), which takes in a MIDI control change ID and adjusts appropriate field
- * Seems that func accepts some change IDs that are undefined in MIDI specs though... */
+/** @brief `SMF_midi` fields are mainly changed by `control_change`, which takes in a MIDI control change ID and adjusts the appropriate field.
+ * Seems that func accepts some change IDs that are undefined in MIDI specs though...
+ */
 typedef struct SMF_midi
 {
     u8  prog_no_0;
@@ -207,7 +208,7 @@ STATIC_ASSERT_SIZEOF(MIDI, 92);
 
 typedef struct SMF_port
 {
-    u8  vc_0; // soundcd.irx has vab_id_0 here, and vc_1 after, but the reads/writes to +0x1 in soundcd are to +0x0 in SH, so this is likely vc
+    u8  vc_0; // `soundcd.irx` has `vab_id_0` here, and `vc_1` after, but the reads/writes to +0x1 in soundcd are to +0x0 in SH, so this is likely `vc`.
     u8  field_1;
     u8  prog_2;
     u8  midi_ch_3;
@@ -241,7 +242,7 @@ typedef struct SMF_port
     u8  vibcs_2A;
     u8  vibcad_2B;
     u16 vibad_2C;
-    u16 vib_data_2E; // s16 in soundcd.irx?
+    u16 vib_data_2E; // `s16` in `soundcd.irx`?
     u8  trecadw_30;
     u8  trecadw2_31;
     u8  trehc_32;
@@ -254,7 +255,7 @@ typedef struct SMF_port
     u8  trecad_3B;
     u16 tread_3C;
     s16 tre_data_3E;
-    u16 rdmd_40; // s16 in soundcd.irx?
+    u16 rdmd_40; // `s16` in `soundcd.irx`?
     u8  rdmo_42;
     u8  rdms_43;
     u8  rdmc_44;
@@ -265,8 +266,8 @@ typedef struct SMF_port
     s16 tremoro_wk_4C;
     u16 pbend_wk_4E;
     u16 pbend_50;
-    u8  vab_id_52; // soundcd.irx accesses this at +0x0 while SH accesses at +0x52, lines up with comment on vc_0
-    u8  unk_53[1]; // core_no or vh_mode?
+    u8  vab_id_52; // `soundcd.irx` accesses this at +0x0 while SH accesses at +0x52, lines up with comment on `vc_0`.
+    u8  unk_53[1]; // `core_no` or `vh_mode`?
 } PORT;
 STATIC_ASSERT_SIZEOF(PORT, 84);
 
@@ -279,7 +280,7 @@ STATIC_ASSERT_SIZEOF(SD_SPU_ALLOC, 8);
 
 extern VAB_H    vab_h[SD_VAB_SLOTS];
 extern MIDI     smf_midi[2 * 16];   // 2 devices with 16 channels each?
-extern MIDI     smf_midi_sound_off; // Set by sound_off(), could be smf_midi[32], but game doesn't use offsets for [32]?
+extern MIDI     smf_midi_sound_off; // Set by `sound_off`, could be `smf_midi[32]`, but game doesn't use offsets for `[32]`?
 extern PORT     smf_port[24];
 extern SMF_SONG smf_song[2];
 
@@ -360,11 +361,12 @@ s32  SdSetTrackTranspause();
 s32  SdGetTrackMute(s16 seq_access_num, s32 midi_ch);
 s32  SdSetTrackMute(s16 seq_access_num, s32 midi_ch);
 s32  SdGetSeqControlStatus(s16 seq_access_num);
-s16  SdGetSeqPlayStatus(s32 access_num); /** Returns SMF_STAT. */
+s16  SdGetSeqPlayStatus(s32 access_num); /** Returns `SMF_STAT`. */
 u32  SdGetSeqBeat(s16 seq_access_num);
 s32  SdGetSeqBeat2(s16 seq_access_num);
 
-// Wrappers for standard PsyQ Ss* funcs
+// Wrappers for standard `PsyQ Ss*` funcs.
+
 void SsSetMVol(s16 voll, s16 volr);
 void SsEnd();
 void SsSetSerialAttr(char s_num, char attr, char mode);
@@ -425,7 +427,7 @@ s32 readEOF(u32 loc);
 s32 egetc(SMF* p);
 s32 readvarinum(SMF* p);
 
-// to32bit/to16bit/len_add only seem used inside smf_mid.c, can probably be removed from header.
+// `to32bit`/`to16bit`/`len_add` only seem used inside `smf_mid.c`, can probably be removed from header.
 s32 to32bit(char c1, char c2, char c3, char c4);
 s32 to16bit(char c1, char c2);
 s32 read32bit(SMF* p);
