@@ -9,7 +9,7 @@
 #include "main/fsqueue.h"
 #include "main/rng.h"
 
-void func_8002E630() 
+void func_8002E630() // 0x8002E630
 {
     s_800B5508* ptr;
     s32 i;
@@ -49,7 +49,7 @@ void func_8002E630()
     } 
 }
 
-void func_8002E6E4(s32 idx)
+void func_8002E6E4(s32 idx) // 0x8002E6E4
 {
     s_800B5508* temp_v0;
     s_800B5508* temp_s0;
@@ -64,7 +64,7 @@ void func_8002E6E4(s32 idx)
     temp_s0->field_18 = 0;
 }
 
-void func_8002E730(s32 idx) 
+void func_8002E730(s32 idx) // 0x8002E730
 {
     s32 i;
 
@@ -74,7 +74,7 @@ void func_8002E730(s32 idx)
     }
 }
 
-s32 func_8002E76C(s32 idx) 
+s32 func_8002E76C(s32 idx) // 0x8002E76C
 {
     s32 ret;
     s32 i;
@@ -93,17 +93,19 @@ s32 func_8002E76C(s32 idx)
     return ret;
 }
 
-void func_8002E7BC()
+void func_8002E7BC() // 0x8002E7BC
 {
-    s_800B55E8* unk;
+    s_800B55E8* ptr;
 
     if (D_800B5480 == 1)
+    {
         return;
-    
+    }
+
     D_800B5480 = 1;
     func_8002E8E4();
     func_80030414();
-    
+
     D_800B55E8[0].field_0 = 0;
     D_800B55E8[0].field_4 = 0;
     D_800B55E8[0].field_8 = 0;
@@ -112,15 +114,15 @@ void func_8002E7BC()
     D_800B55E8[0].field_14 = 0;
     D_800B55E8[1].field_0 = 0;
 
-    unk = &D_800B55E8[1];
-    unk->field_4 = 0;
-    unk->field_8 = 0;
-    unk->field_C = 0;
-    unk->field_10 = 0;
-    unk->field_14 = 0;
+    ptr = &D_800B55E8[1];
+    ptr->field_4 = 0;
+    ptr->field_8 = 0;
+    ptr->field_C = 0;
+    ptr->field_10 = 0;
+    ptr->field_14 = 0;
 }
 
-void func_8002E830()
+void func_8002E830() // 0x8002E830
 {
     if (D_800B5480 != 0) 
     {
@@ -129,14 +131,14 @@ void func_8002E830()
     }
 }
 
-void func_8002E85C()
+void func_8002E85C() // 0x8002E85C
 {
     D_800B5618 = 1;
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8002E86C);
 
-s32 func_8002E898() 
+s32 func_8002E898() // 0x8002E898
 {
     s32 ret;
     s32 i;
@@ -151,14 +153,28 @@ s32 func_8002E898()
     return ret;
 }
 
-void func_8002E8D4()
+void func_8002E8D4() // 0x8002E8D4
 {
     D_800B5618 = 1;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8002E8E4);
+void func_8002E8E4() // 0x8002E8E4
+{
+    s_800B55E8* ptr;
 
-s32 func_8002E914() 
+    D_800B5508[9].field_14 = NULL;
+    D_800B5508[8].field_18 = 0;
+    
+    ptr = &D_800B5508[8].field_18;
+    
+    ptr->field_4 = 0;
+    ptr->field_8 = 0;
+    ptr->field_C = 0;
+    ptr->field_10 = 0;
+    ptr->field_14 = 1;
+}
+
+s32 func_8002E914() // 0x8002E914
 {
     s32 ret;
     s32 i;
@@ -174,12 +190,12 @@ s32 func_8002E914()
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8002E94C);
 
-s32 func_8002E990()
+s32 func_8002E990() // 0x8002E990
 {
     return D_800B55FC;
 }
 
-s32 func_8002E9A0(s32 idx) 
+s32 func_8002E9A0(s32 idx) // 0x8002E9A0
 {
     s32 ret;
     s32 i;
@@ -194,9 +210,19 @@ s32 func_8002E9A0(s32 idx)
     return ret;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8002E9EC);
+s32 func_8002E9EC(s32 arg0, s32 arg1, s32 arg2) // 0x8002E9EC
+{
+    s32 var0;
+    s32 var1;
+    s32 var2;
 
-s32 func_8002EA28(s32 idx) 
+    var0 = D_800B5508[arg0].field_14;
+    var1 = arg1 << 8; 
+    var2 = (arg2 * 12) + 4; 
+    return var0 + var1 + var2;
+}
+
+s32 func_8002EA28(s32 idx) // 0x8002EA28
 {
     s32 ret;
     s32 i;
@@ -214,7 +240,7 @@ s32 func_8002EA28(s32 idx)
     return ret;
 }
 
-s32 func_8002EA78(s32 idx) 
+s32 func_8002EA78(s32 idx) // 0x8002EA78
 {
     return D_800B5508[idx].field_18 - func_8002EA28(idx);
 }
@@ -223,7 +249,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8002EABC);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8002EB88);
 
-void func_8002ECE0(s_800B55E8* arg0)
+void func_8002ECE0(s_800B55E8* arg0) // 0x8002ECE0
 {
     if (func_8003030C(arg0->field_4) != 0)
     {
@@ -322,7 +348,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80030370);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_800303E4);
 
-void func_80030414() 
+void func_80030414() // 0x80030414
 {
     func_80030444();
     func_8003045C();
@@ -349,7 +375,10 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80030810);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80030820);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80030884);
+void func_80030884() // 0x80030884
+{
+    D_800B54BC = 4;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80030894);
 
@@ -383,7 +412,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80031260);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_800314A4);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_800314EC);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", Gfx_BackgroundSpriteDraw);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_800317CC);
 
@@ -503,7 +532,7 @@ void Settings_DispEnvXYSet(DISPENV* display, s32 x, s32 y) // 0x80032524
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_800325A4);
-/*void func_800325A4(DR_MODE* arg0) 
+/*void func_800325A4(DR_MODE* arg0) // 0x800325A4
 {
     char* temp[2];
 
@@ -523,7 +552,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_800325A4);
 
 extern s32 D_800B5C28;
 
-int func_800325F8() 
+int func_800325F8() // 0x800325F8
 {
     return 4096 - D_800B5C28;
 }
@@ -663,7 +692,7 @@ void GameState_Unk0_Update() // 0x80032D1C
     }
 
     func_80033548();
-    func_800314EC(&g_MainImg0);
+    Gfx_BackgroundSpriteDraw(&g_MainImg0);
     func_80089090(1);
 }
 
@@ -703,6 +732,7 @@ void MainLoop() // 0x80032EE0
     {
         g_MainLoop_FrameCount++;
 
+        // Update input.
         Joy_ReadP1();
         Demo_ControllerDataUpdate();
         Joy_ControllerDataUpdate();
@@ -758,6 +788,7 @@ void MainLoop() // 0x80032EE0
         func_8008D78C(); // Camera update?
         DrawSync(0);
 
+        // Handle V sync.
         if (g_SysWork.flags_22A4 & (1 << 1))
         {
             vBlanks = VSync(-1);
@@ -818,12 +849,12 @@ void MainLoop() // 0x80032EE0
                 }
             }
 
-            // Update VBlanks.
+            // Update V blanks.
             g_UncappedVBlanks = g_VBlanks;
             g_VBlanks = MIN(g_VBlanks, V_BLANKS_MAX);
             
             // Update V count.
-            vCount = MIN(GsGetVcount(), H_BLANKS_PER_FRAME_MIN); // NOTE: Will call GsGetVcount() twice.
+            vCount = MIN(GsGetVcount(), H_BLANKS_PER_FRAME_MIN); // NOTE: Will call `GsGetVcount` twice.
             vCountCopy = vCount;
         }
 
@@ -841,7 +872,7 @@ void MainLoop() // 0x80032EE0
     }
 }
 
-void Settings_ScreenAndVolUpdate()
+void Settings_ScreenAndVolUpdate() // 0x0x800333CC
 {
     s32 soundCmd;
 
@@ -895,7 +926,7 @@ s32 MainLoop_ShouldWarmReset() // 0x80034108
         return 0;
     }
 
-    if (g_GameWork.gameState_594 == GameState_Unk8 && g_GameWork.gameStateStep_598[0] == 4)
+    if (g_GameWork.gameState_594 == GameState_SaveScreen && g_GameWork.gameStateStep_598[0] == 4)
     {
         return 0;
     }
@@ -984,7 +1015,7 @@ void func_800348C0()
     bzero(&D_800A9944, 0x48);
 }
 
-void GameState_LoadScreen_Update() // 0x800348E8
+void GameState_MainLoadScreen_Update() // 0x800348E8
 {
     u8 temp;
 
@@ -1118,7 +1149,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80035BE0);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80035DB4);
 
-void func_80035E1C()
+void func_80035E1C() // 0x80035E1C
 {
     s32 i;
     for (i = 0; i < 9; i++)
@@ -1752,12 +1783,12 @@ void SysState_GameOver_Update() // 0x8003A52C
         case 6:
             func_8008616C(2, 0, 0, 0x2000, 0);
             g_SysWork.field_28 = 0;
-            func_800314EC(&D_800A9054);
+            Gfx_BackgroundSpriteDraw(&D_800A9054);
             break;
 
         case 7:
             g_SysWork.field_28++;
-            func_800314EC(&D_800A9054);
+            Gfx_BackgroundSpriteDraw(&D_800A9054);
 
             if (!(g_ControllerPtr0->btns_new_10 & (g_GameWorkPtr1->config_0.controllerBinds_0.enter | g_GameWorkPtr1->config_0.controllerBinds_0.cancel)))
             {
@@ -1775,7 +1806,7 @@ void SysState_GameOver_Update() // 0x8003A52C
             break;
 
         case 8:
-            func_800314EC(&D_800A9054);
+            Gfx_BackgroundSpriteDraw(&D_800A9054);
             func_8008616C(2, 1, 0, 0x2000, 0);
             break;
 
@@ -1807,7 +1838,7 @@ void GameState_MapEvent_Update() // 0x8003AA4C
 
     g_MapOverlayHeader.mapEventFuncs_20[g_MapEventIdx]();
 
-    func_800314EC(&D_800A902C);
+    Gfx_BackgroundSpriteDraw(&D_800A902C);
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", GameState_MainMenu_Update); // 0x8003AB28

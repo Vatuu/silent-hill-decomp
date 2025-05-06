@@ -155,11 +155,11 @@ void Settings_BrightnessScreen() // 0x801E6018
 
     if (g_GameWork.gameStatePrev_590 == GameState_MainMenu)
 	{
-        func_800314EC(&D_800A9044);
+        Gfx_BackgroundSpriteDraw(&D_800A9044);
     }
 	else
 	{
-        func_800314EC(&D_800A904C);
+        Gfx_BackgroundSpriteDraw(&D_800A904C);
     }
 
     func_8003E5E8(g_GameWork.config_0.optBrightness_22);

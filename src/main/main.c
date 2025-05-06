@@ -163,7 +163,7 @@ int main(void)
     }
 
     // Fade image back out?
-    func_800314EC(&g_MainImg0);
+    Gfx_BackgroundSpriteDraw(&g_MainImg0);
 
     // Run main loop.
     MainLoop();

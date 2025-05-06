@@ -572,6 +572,7 @@ extern s_FsImageDesc D_800A901C;
 
 extern s_FsImageDesc D_800A9024;
 
+/** Save screen background image. */
 extern s_FsImageDesc D_800A902C;
 
 extern s_FsImageDesc D_800A9044;
@@ -684,6 +685,8 @@ extern s_800B55E8 D_800B4580[];
 extern s32 D_800B5480;
 
 extern s32 D_800B5488; // Index or state?
+
+extern s32 D_800B54BC;
 
 extern s_800B5508 D_800B5508[];
 
@@ -921,22 +924,20 @@ extern s32 D_800C48F0;
 
 extern RECT D_801E557C[];
 
-// TODO: Order these by address.
-
 extern s32 g_MainLoop_FrameCount; // 0x800B9CCC
 
-/** Initial demo game state data, stored inside MISC/DEMOXXXX.DAT files. */
+/** @brief Initial demo game state data, stored inside MISC/DEMOXXXX.DAT files. */
 typedef struct _DemoWork
 {
     s_ShSaveUserConfig config_0;
-    u8                 unk_38[0xC8];
+    u8                 unk_38[200];
     s_ShSaveGame       saveGame_100;
-    u8                 unk_37C[0x480];
+    u8                 unk_37C[1152];
     u16                randSeed_7FC;
 } s_DemoWork;
 STATIC_ASSERT_SIZEOF(s_DemoWork, 2048);
 
-/** Per-frame demo data, stored inside MISC/PLAYXXXX.DAT files. */
+/** @brief Per-frame demo data, stored inside MISC/PLAYXXXX.DAT files. */
 typedef struct _DemoFrameData
 {
     s_AnalogPadData analogPad_0;
@@ -947,18 +948,18 @@ typedef struct _DemoFrameData
 } s_DemoFrameData;
 STATIC_ASSERT_SIZEOF(s_DemoFrameData, 16);
 
-/** Associates a demo number/ID with PLAYXXXX.DAT/DEMOXXXX.DAT file IDs. */
+/** @brief Associates a demo number/ID with PLAYXXXX.DAT/DEMOXXXX.DAT file IDs. */
 typedef struct _DemoFileInfo
 {
-    s16 demoFileId_0;       /** MISC/DEMOXXXX.DAT, initial gamestate for the demo & user config override. */
+    s16 demoFileId_0;       /** MISC/DEMOXXXX.DAT, initial gamestate for the demo and user config override. */
     s16 playFileId_2;       /** MISC/PLAYXXXX.DAT, data of button presses/randseed for each frame. */
     s32 (*canPlayDemo_4)(); /** Optional funcptr, returns whether this demo is eligible to be played (unused in retail demos). */
 } s_DemoFileInfo;
 STATIC_ASSERT_SIZEOF(s_DemoFileInfo, 8);
 
-extern s32 g_Demo_DemoFileIndex; // 0x800C4840
+extern s32 g_Demo_DemoFileIdx; // 0x800C4840
 
-extern s32 g_Demo_PlayFileIndex; // 0x800C4844
+extern s32 g_Demo_PlayFileIdx; // 0x800C4844
 
 extern s_ShSaveUserConfig g_Demo_UserConfigBackup; // 0x800C4850
 
@@ -972,7 +973,7 @@ extern s32 g_Demo_DemoStep; // 0x800C4894
 
 extern s32 g_Demo_VideoPresentInterval; // 0x800C4898
 
-extern s32 g_Demo_DemoNum; // 0x800AFDB8
+extern s32 g_Demo_DemoId; // 0x800AFDB8
 
 extern u16 g_Demo_RandSeed; // 0x800AFDBC
 
@@ -1037,6 +1038,8 @@ void func_8002E6E4(s32 idx);
 
 void func_8002E730(s32 idx);
 
+s32 func_8002E76C(s32 idx);
+
 /** Initializer for something before the game loop. */
 void func_8002E7BC();
 
@@ -1044,9 +1047,23 @@ void func_8002E830();
 
 void func_8002E85C();
 
+s32 func_8002E898();
+
 void func_8002E8D4();
 
+void func_8002E8E4();
+
+s32 func_8002E914();
+
 s32 func_8002E990();
+
+s32 func_8002E9A0(s32 idx);
+
+s32 func_8002E9EC(s32 arg0, s32 arg1, s32 arg2);
+
+s32 func_8002EA28(s32 idx);
+
+s32 func_8002EA78(s32 idx);
 
 void func_8002EB88(); // Return type assumed.
 
@@ -1060,14 +1077,15 @@ void func_80030530();
 
 void func_800303E4();
 
-/** Bodyprog function that fades the screen out?
- * Called by:
- * - `main` in main.c
- * - 'func_801E709C' in saveload.c
- * */
-void func_800314EC(s_FsImageDesc* image);
+// `Gfx_DrawBackgroundImage`
+/** Draws a background image. */
+void Gfx_BackgroundSpriteDraw(s_FsImageDesc* image);
 
 void func_80031CCC(s32);
+
+void func_80030414();
+
+void func_80030884();
 
 void Gfx_DebugStringPosition(s16 x, s16 y);
 
@@ -1098,7 +1116,7 @@ void func_80037188();
 
 void func_8003943C();
 
-/** SysState_Fmv update function.
+/** `SysState_Fmv` update function.
  * Movie to play is decided by `2072 - g_MapEventIdx`
  * After playback, savegame gets `D_800BCDD8->eventFlagNum_2` event flag set. */
 void SysState_Fmv_Update();
@@ -1123,12 +1141,12 @@ s32 func_80041ADC(s32 queueIdx);
 
 void func_80041C24(s_80041CEC* arg0, s32 arg1, s32 arg2);
 
-/** arg0 might be s_Skeleton, arg1 might be s_Bone. */
+/** `arg0` might be `s_Skeleton`, `arg1` might be `s_Bone`. */
 void func_80041CB4(s_Skeleton* skel, s_80041CEC* arg1);
 
 void func_80041CEC(s_80041CEC*);
 
-/** Clears field_4 field in array of skeletons? Might not be skeletons, but the struct fits. */
+/** Clears `field_4` in array of skeletons? Might not be skeletons, but the struct fits. */
 void func_80041D10(s_Skeleton* skels, s32 size);
 
 void func_80041E98();
@@ -1591,6 +1609,8 @@ void Joy_Update();
 
 void func_800348C0();
 
+void GameState_MainLoadScreen_Update();
+
 void func_800348E8();
 
 void Game_SaveGameInitialize(s8 overlayIdx, s32 difficulty);
@@ -1733,7 +1753,7 @@ s32 func_800808AC();
 /** Returns a Q shift based on a magnitude. */
 s32 Math_GetMagnitudeShift(s32 mag);
 
-/** Copies user config into an s_ShSaveUserConfigContainer and calculates footer checksum. */
+/** Copies user config into an `s_ShSaveUserConfigContainer` and calculates footer checksum. */
 void SaveGame_UserConfigCopyWithChecksum(s_ShSaveUserConfigContainer* dest, s_ShSaveUserConfig* src);
 
 /** Copies savegame into an s_ShSaveGameContainer and calculates footer checksum. */

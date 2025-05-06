@@ -3,8 +3,7 @@
 
 #include "common.h"
 
-/**
- * @brief Custom implementation of `memmove` that copies word-by-word.
+/** @brief Custom implementation of `memmove` that copies word-by-word.
  *
  * This function copies a specified number of bytes from the source
  * memory location to the destination memory location.

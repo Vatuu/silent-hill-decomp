@@ -166,7 +166,7 @@ INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E5898);
 
 INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E5E18);
 
-void GameState_Unk8_Update() // 0x801E6320
+void GameState_SaveScreen_Update() // 0x801E6320
 {
     D_801E76D0 = 1;
 
@@ -202,7 +202,7 @@ void func_801E63C0() // 0x801E63C0
     g_GameWork.field_58E = 0;
 
     D_800BCD39 = 0;
-    if (g_GameWork.gameState_594 == GameState_Unk4 || g_GameWork.gameState_594 == GameState_Unk8)
+    if (g_GameWork.gameState_594 == GameState_DeathLoadScreen || g_GameWork.gameState_594 == GameState_SaveScreen)
     {
         if (D_800A97D8 != 0)
         {
@@ -371,12 +371,12 @@ void func_801E6F38() // 0x801E6F38
 
         case GameState_KonamiLogo:
         {
-            if ((D_800BCD0C & 7) == 5)
+            if ((D_800BCD0C & 0x7) == 0x5)
             {
                 Fs_QueueWaitForEmpty();
                 Settings_ScreenAndVolUpdate();
 
-                Game_StateSetNext(GameState_LoadScreen);
+                Game_StateSetNext(GameState_MainLoadScreen);
             }
             break;
         }
@@ -388,8 +388,11 @@ void func_801E6F38() // 0x801E6F38
 
 void func_801E709C() // 0x801E709C
 {
+    // Draw "SLOT 1"/"SLOT 2" strings and bottom transparent frame.
     func_801E2EBC();
-    func_800314EC(&D_800A902C);
+
+    // Draws background image.
+    Gfx_BackgroundSpriteDraw(&D_800A902C);
 }
 
 INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E70C8);
@@ -407,7 +410,7 @@ void func_801E7244() // 0x801E7244
     switch (D_801E751C) 
     {
         case 1:
-            func_801E3910(D_801E751C, (D_800BCD34 >> (D_800BCD40 * 3)) & 7);
+            func_801E3910(D_801E751C, (D_800BCD34 >> (D_800BCD40 * 3)) & 0x7);
             break;
 
         case 2:
@@ -422,7 +425,7 @@ void func_801E72DC() // 0x801E72DC
     func_801E3C44();
 }
 
-void GameState_Unk4_Update() // 0x801E72FC
+void GameState_DeathLoadScreen_Update() // 0x801E72FC
 {
     if (g_GameWork.gameStateStep_598[0] == 0)
     {
@@ -445,7 +448,7 @@ void func_801E737C() // 0x801E737C
 
     if (D_800BCD28 == 0 || D_800BCD39 != 0 || !func_80033548())
     {
-        g_GameWork.gameState_594 = GameState_Unk8;
+        g_GameWork.gameState_594 = GameState_SaveScreen;
 
         if (g_GameWork.gameStatePrev_590 == GameState_KcetLogo)
         {
