@@ -932,7 +932,8 @@ typedef struct _DemoWork
     s_ShSaveUserConfig config_0;
     u8                 unk_38[200];
     s_ShSaveGame       saveGame_100;
-    u8                 unk_37C[1152];
+    u8                 unk_37C[1148];
+    u32                frameCount_7F8;
     u16                randSeed_7FC;
 } s_DemoWork;
 STATIC_ASSERT_SIZEOF(s_DemoWork, 2048);
@@ -941,7 +942,7 @@ STATIC_ASSERT_SIZEOF(s_DemoWork, 2048);
 typedef struct _DemoFrameData
 {
     s_AnalogPadData analogPad_0;
-    u8              unk_8;
+    s8              gameStateExpected_8; /** Expected value of `g_GameWork.gameState_594` before `analogPad_0` is processed, if it doesn't match `Demo_Update` will display `STEP ERROR` and stop reading demo. */
     u8              videoPresentInterval_9;
     u8              unk_A[2];
     u32             randSeed_C;
