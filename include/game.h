@@ -404,24 +404,6 @@ typedef struct _ShSaveGame
 } s_ShSaveGame;
 STATIC_ASSERT_SIZEOF(s_ShSaveGame, 636);
 
-/** @brief Appended to ShSaveGame during game save. Contains 8-bit XOR checksum + magic
- * checksum generated via the SaveGame_ChecksumGenerate function.
- */
-typedef struct _ShSaveGameFooter
-{
-    u8  checksum_0[2];
-    u16 magic_2;
-} s_ShSaveGameFooter;
-STATIC_ASSERT_SIZEOF(s_ShSaveGameFooter, 4);
-
-/** Contains s_ShSaveGame data with the footer appended to the end containing the checksum + magic. */
-typedef struct _ShSaveGameContainer
-{
-    s_ShSaveGame       saveGame_0;
-    s_ShSaveGameFooter footer_27C;
-} s_ShSaveGameContainer;
-STATIC_ASSERT_SIZEOF(s_ShSaveGameContainer, 640);
-
 typedef struct _ShEventParam
 {
     u8  unk_0[2];
@@ -433,7 +415,7 @@ typedef struct _ShEventParam
 } s_ShEventParam;
 STATIC_ASSERT_SIZEOF(s_ShEventParam, 12);
 
-typedef struct _GameWork
+typedef struct _ShSaveUserConfig
 {
     s_ControllerBindings controllerBinds_0;
     s8                   screenPosX_1C;             /** Range: [-11, 11], default: 0. */
@@ -455,7 +437,40 @@ typedef struct _GameWork
     u8                   optAutoAiming_2C;          /** On: 0, Off: 1, default: On. */
     s8                   optBulletAdjust_2D;        /** x1-x6: Range [0, 5], default: x1. */
     u16                  seenGameOverTips_2E[1];    /** Bitfield tracking seen game-over tips. Each bit corresponds to a tip index (0–15), set bits indicate seen tips. */
-    s8                   unk_30[8];
+    s8                   unk_30[4];
+    u32                  unk_34[1];
+} s_ShSaveUserConfig;
+STATIC_ASSERT_SIZEOF(s_ShSaveUserConfig, 56);
+
+/** @brief Appended to ShSaveGame & ShSaveUserConfig during game save. Contains 8-bit XOR checksum + magic.
+ * Checksum generated via the SaveGame_ChecksumGenerate function.
+ */
+typedef struct _ShSaveGameFooter
+{
+    u8  checksum_0[2];
+    u16 magic_2;
+} s_ShSaveGameFooter;
+STATIC_ASSERT_SIZEOF(s_ShSaveGameFooter, 4);
+
+/** Contains s_ShSaveGame data with the footer appended to the end containing the checksum + magic. */
+typedef struct _ShSaveGameContainer
+{
+    s_ShSaveGame       saveGame_0;
+    s_ShSaveGameFooter footer_27C;
+} s_ShSaveGameContainer;
+STATIC_ASSERT_SIZEOF(s_ShSaveGameContainer, 640);
+
+/** Contains s_ShSaveUserConfig data padded to 128 bytes, with footer at the end containing checksum + magic. */
+typedef struct _ShSaveUserConfigContainer
+{
+    s_ShSaveUserConfig config_0;
+    u8                 pad_38[68];
+    s_ShSaveGameFooter footer_7C;
+} s_ShSaveUserConfigContainer;
+
+typedef struct _GameWork
+{
+    s_ShSaveUserConfig   config_0;
     s_ControllerData     controllers_38[2];
     s_ShSaveGame         saveGame_90; // Backup savegame?
     s_ShSaveGame         saveGame_30C;
@@ -542,9 +557,11 @@ typedef struct _SubCharacter
     s32 properties_E4[CHARA_PROPERTY_COUNT_MAX];
     s8  unk_10C;
     u8  field_10D;
-    s8  unk_10E[5];
-    s32 field_112;
-    s8  unk_116[14];
+    s8  unk_10E[6];
+    s32 field_114;
+    s8  unk_118[4];
+    s32 field_11C;
+    s8  unk_120[6];
     s16 field_126;
 } s_SubCharacter;
 STATIC_ASSERT_SIZEOF(s_SubCharacter, 296);

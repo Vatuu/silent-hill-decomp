@@ -1401,9 +1401,9 @@ void func_80048424() // 0x80048424
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80048498);
 
-void func_800485B0() {}
+void func_800485B0(s16 arg0, u8 arg1, u8 arg2, s16 arg3, s16 arg4) {}
 
-void func_800485B8() {}
+void func_800485B8(s32 arg0, u8 arg1, u32 arg2) {}
 
 void func_800485C0(s32 idx)
 {

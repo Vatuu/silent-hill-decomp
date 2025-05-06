@@ -1,12 +1,12 @@
-#include "game.h"
-
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math.h"
+#include "main/rng.h"
+#include "maps/shared.h"
 #include "maps/map0/s00.h"
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800CB6B0);
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800CBBBC);
+#include "maps/shared/sharedFunc_800CBBBC_0_s00.h" // 0x800CBBBC
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800CBC94);
 
@@ -40,7 +40,7 @@ void func_800D0124() {}
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D012C);
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D01BC);
+#include "maps/shared/sharedFunc_800D01BC_0_s00.h" // 0x800D01BC
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D0274);
 
@@ -58,10 +58,7 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D0B18);
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D0CB8);
 
-void func_800D0E04()
-{
-    func_8004690C(0x550);
-}
+#include "maps/shared/sharedFunc_800D0E04_0_s00.h" // 0x800D0E04
 
 void func_800D0E24() {}
 
@@ -71,114 +68,31 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D0E34);
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D1C38);
 
-void func_800D209C()
-{
-    g_SysWork.field_47 = NO_VALUE;
-    g_SaveGamePtr->equippedWeapon_AA = 0;
+#include "maps/shared/sharedFunc_800D209C_0_s00.h" // 0x800D209C
 
-    func_800D20E4();
-    func_800D2C7C(84);
-}
+#include "maps/shared/sharedFunc_800D20D8_0_s00.h" // 0x800D20D8
 
-void func_800D20D8()
-{
-    g_SysWork.field_2358 = 0;
-}
-
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D20E4);
+#include "maps/shared/sharedFunc_800D20E4_0_s00.h" // 0x800D20E4
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D2244);
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D23EC);
 
-void func_800D2C7C(s32 arg0)
-{
-    s_MainCharacterExtra* extra = &g_SysWork.player_4C.extra_128;
-    s_SubCharacter*       chara = &g_SysWork.player_4C.chara_0;
+#include "maps/shared/sharedFunc_800D2C7C_0_s00.h" // 0x800D2C7C
 
-    extra = &g_SysWork.player_4C.extra_128;
-    chara = &g_SysWork.player_4C.chara_0;
+#include "maps/shared/sharedFunc_800D2D2C_0_s00.h" // 0x800D2D2C
 
-    g_SysWork.player_4C.chara_0.field_126 = 0;
+#include "maps/shared/sharedFunc_800D2D44_0_s00.h" // 0x800D2D44
 
-    D_800C4606 = 0;
-    
-    switch (arg0)
-    {
-        case 0x36:
-            D_800C457C = 0;
-            break;
+#include "maps/shared/sharedFunc_800D2D6C_0_s00.h" // 0x800D2D6C
 
-        case 0x35:
-            D_800C457C = 1;
-            break;
-
-        case 0x38:
-            D_800C457C = 3;
-            break;
-
-        case 0x39:
-            D_800C457C = 4;
-            break;
-    }
-
-    g_SysWork.player_4C.extra_128.field_1C = arg0;
-
-    chara->model_0.isAnimStateUnchanged_3 = 0;
-    chara->model_0.field_2 = 0;
-
-    extra->model_0.isAnimStateUnchanged_3 = 0;
-    extra->model_0.field_2 = 0;
-
-    g_SysWork.player_4C.extra_128.field_20 = 0;
-    g_SysWork.player_4C.extra_128.field_24 = 0;
-}
-
-void func_800D2D2C()
-{
-    D_800C4606++;
-}
-
-void func_800D2D44()
-{
-    s_MainCharacterExtra* extra = &g_SysWork.player_4C.extra_128;
-    s_SubCharacter*       chara = &g_SysWork.player_4C.chara_0;
-
-    extra = &g_SysWork.player_4C.extra_128;
-    chara = &g_SysWork.player_4C.chara_0;
-
-    extra->model_0.anim_4.flags_2 &= ~AnimFlag_Unk1;
-    chara->model_0.anim_4.flags_2 &= ~AnimFlag_Unk1;
-}
-
-s32 func_800D2D6C()
-{
-    return ~(g_SysWork.player_4C.chara_0.model_0.anim_4.flags_2 & AnimFlag_Unk1);
-}
-
-void func_800D2D84()
-{
-    s_MainCharacterExtra* extra = &g_SysWork.player_4C.extra_128;
-    s_SubCharacter*       chara = &g_SysWork.player_4C.chara_0;
-
-    extra = &g_SysWork.player_4C.extra_128;
-    chara = &g_SysWork.player_4C.chara_0;
-
-    extra->model_0.anim_4.flags_2 |= AnimFlag_Unk1;
-    chara->model_0.anim_4.flags_2 |= AnimFlag_Unk1;
-}
+#include "maps/shared/sharedFunc_800D2D84_0_s00.h" // 0x800D2D84
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D2DAC);
 
-s32 func_800D2E50()
-{
-    return g_SysWork.player_4C.chara_0.field_126 == 0;
-}
+#include "maps/shared/sharedFunc_800D2E50_0_s00.h" // 0x800D2E50
 
-void func_800D2E60()
-{
-    g_SysWork.player_4C.chara_0.field_126 = 0;
-}
+#include "maps/shared/sharedFunc_800D2E60_0_s00.h" // 0x800D2E60
 
 void func_800D2E6C() {}
 
@@ -197,26 +111,11 @@ s32 func_800D2E94()
 
 void func_800D2E9C() {}
 
-u8 func_800D2EA4()
-{
-    return g_SysWork.player_4C.chara_0.field_10D;
-}
+#include "maps/shared/sharedFunc_800D2EA4_0_s00.h" // 0x800D2EA4
 
-void func_800D2EB4()
-{
-    u8 var;
+#include "maps/shared/sharedFunc_800D2EB4_0_s00.h" // 0x800D2EB4
 
-    var = g_SysWork.field_47;
-    g_SysWork.field_47 = NO_VALUE;
-    D_800DD59C = var;
-
-    func_8003DD80(1, 17);
-}
-
-void func_800D2EF4()
-{
-    g_SysWork.field_47 = D_800DD59C;
-}
+#include "maps/shared/sharedFunc_800D2EF4_0_s00.h" // 0x800D2EF4
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D2F08);
 
@@ -272,7 +171,7 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D8748);
 
 void func_800D8888(s_SubCharacter* chara)
 {
-    func_800D923C(chara);
+    sharedFunc_800D923C_0_s00(chara);
     D_800E3A30 = 0;
 }
 
@@ -280,77 +179,27 @@ void func_800D8888(s_SubCharacter* chara)
 // Probably all player-specific.
 // Possibly shared .c file or separate SubCharacter library?
 
-void func_800D88AC(s_SubCharacter* playerChara)
-{
-    playerChara->properties_E4[PlayerProperty_Unk4] = 0;
-    playerChara->properties_E4[PlayerProperty_Unk3] = 0;
-    playerChara->properties_E4[PlayerProperty_PositionY] = 0;
-    playerChara->field_126 = 0;
-}
-// Shared functions end.
+#include "maps/shared/sharedFunc_800D88AC_0_s00.h" // 0x800D88AC
 
-void func_800D88C0(s_SubCharacter* playerChara, s32 arg1)
-{
-    playerChara->properties_E4[PlayerProperty_Unk4] = 1;
+#include "maps/shared/sharedFunc_800D88C0_0_s00.h" // 0x800D88C0
 
-    if (arg1 != 0)
-    {
-        playerChara->model_0.anim_4.animIdx_0 = 3;
-        playerChara->model_0.anim_4.keyframeIdx0_8 = 0;
-        playerChara->model_0.anim_4.time_4 = 0;
-        playerChara->model_0.anim_4.keyframeIdx1_A = FP_TO(1, Q12_SHIFT);
-    }
-    else
-    {
-        playerChara->properties_E4[PlayerProperty_AfkTimer] = 0;
-        playerChara->model_0.isAnimStateUnchanged_3 = 0;
-    }
+#include "maps/shared/sharedFunc_800D8904_0_s00.h" // 0x800D8904
 
-    playerChara->model_0.anim_4.flags_2 |= AnimFlag_Unk1;
-}
+#include "maps/shared/sharedFunc_800D891C_0_s00.h" // 0x800D891C
 
-void func_800D8904(s_SubCharacter* playerChara, s32 afkTime)
-{
-    playerChara->field_126 = 0;
-    playerChara->properties_E4[PlayerProperty_RunTimer0] = 0;
-    playerChara->properties_E4[PlayerProperty_Unk3] = 0;
-    playerChara->properties_E4[PlayerProperty_AfkTimer] = afkTime;
-    playerChara->model_0.isAnimStateUnchanged_3 = 0;
-}
+#include "maps/shared/sharedFunc_800D8928_0_s00.h" // 0x800D8928
 
-void func_800D891C(s_SubCharacter* playerChara)
-{
-    playerChara->properties_E4[PlayerProperty_RunTimer0] = 1;
-}
+#include "maps/shared/sharedFunc_800D893C_0_s00.h" // 0x800D893C
 
-void func_800D8928(s_SubCharacter* chara)
-{
-    chara->model_0.anim_4.flags_2 &= ~AnimFlag_Unk1;
-}
-
-s32 func_800D893C(s_SubCharacter* chara)
-{
-    return ~(chara->model_0.anim_4.flags_2 & AnimFlag_Unk1);
-}
-
-void func_800D8950(s_SubCharacter* chara)
-{
-    chara->model_0.anim_4.flags_2 |= AnimFlag_Unk1;
-}
+#include "maps/shared/sharedFunc_800D8950_0_s00.h" // 0x800D8950
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D8964);
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D8A00);
 
-void func_800D9064(s_SubCharacter* chara)
-{
-    chara->model_0.anim_4.flags_2 |= AnimFlag_Unk2;
-}
+#include "maps/shared/sharedFunc_800D9064_0_s00.h" // 0x800D9064
 
-void func_800D9078(s_SubCharacter* chara)
-{
-    chara->model_0.anim_4.flags_2 &= ~AnimFlag_Unk2;
-}
+#include "maps/shared/sharedFunc_800D9078_0_s00.h" // 0x800D9078
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D908C);
 
@@ -358,36 +207,9 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D9188);
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D921C);
 
-void func_800D923C(s_SubCharacter* playerChara)
-{
-    s32 flags;
-    
-    flags = playerChara->flags_E0;
-    flags = flags & ~((1 << 8) | (1 << 9) | (1 << 10) | (1 << 11));
+#include "maps/shared/sharedFunc_800D923C_0_s00.h" // 0x800D923C
 
-    playerChara->model_0.isAnimStateUnchanged_3 = 0;
-    playerChara->field_C8 = 0;
-    playerChara->field_CA = 0;
-    playerChara->field_CE = 0;
-    playerChara->field_D4 = 0;
-    playerChara->field_D6 = 0;
-    playerChara->field_DE = 0;
-    playerChara->field_DC = 0;
-    playerChara->field_DA = 0;
-    playerChara->field_D8 = 0;
-    playerChara->properties_E4[PlayerProperty_PositionY] = 0;
-    playerChara->properties_E4[PlayerProperty_AfkTimer] = 0;
-    playerChara->properties_E4[PlayerProperty_PositionY] = 0;
-    playerChara->properties_E4[PlayerProperty_Unk3] = 0;
-    playerChara->properties_E4[PlayerProperty_Unk4] = 0;
-    playerChara->flags_E0 = flags | ((1 << 8) | (1 << 9));
-    playerChara->model_0.field_2++;
-}
-
-s32 func_800D929C()
-{
-    return D_800A999C;
-}
+#include "maps/shared/sharedFunc_800D929C_0_s00.h" // 0x800D929C
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D92AC);
 

@@ -39,6 +39,15 @@ enum PrimRectFlags
 #define setXY0Fast(p, x, y) \
     *(u32*)(&(p)->x0) = (((x) & 0xFFFF) + ((y) << 16))
 
+#define setXY1Fast(p, x, y) \
+    *(u32*)(&(p)->x1) = (((x) & 0xFFFF) + ((y) << 16))
+
+#define setXY2Fast(p, x, y) \
+    *(u32*)(&(p)->x2) = (((x) & 0xFFFF) + ((y) << 16))
+
+#define setXY3Fast(p, x, y) \
+    *(u32*)(&(p)->x3) = (((x) & 0xFFFF) + ((y) << 16))
+
 /** Same as `setWH()`, but uses 1x 32-bit store instead of 2x 16-bit stores. */
 #define setWHFast(p, _w, _h) \
     *(u32*)(&(p)->w) = (((_w) & 0xFFFF) + ((_h) << 16))

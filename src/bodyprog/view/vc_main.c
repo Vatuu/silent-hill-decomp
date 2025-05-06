@@ -246,7 +246,7 @@ s32 vcExecCamera() // 0x80080FBC
     cur_cam_mv_type  = vcRetCurCamMvType(&vcWork);
 
     // TODO: This checks for `VC_PRS_F_VIEW_F` flag in a weird way.
-    far_watch_rate     = vcRetFarWatchRate(((vcWork.flags_8 >> 9) & (1 << 0)) ^ (g_GameWorkPtr0->optViewCtrl_28 != 0), cur_cam_mv_type, &vcWork);
+    far_watch_rate     = vcRetFarWatchRate(((vcWork.flags_8 >> 9) & (1 << 0)) ^ (g_GameWorkPtr0->config_0.optViewCtrl_28 != 0), cur_cam_mv_type, &vcWork);
     self_view_eff_rate = vcRetSelfViewEffectRate(cur_cam_mv_type, far_watch_rate, &vcWork);
 
     if (!(vcWork.flags_8 & (VC_USER_CAM_F | VC_USER_WATCH_F)))
@@ -356,13 +356,13 @@ VC_CAM_MV_TYPE vcRetCurCamMvType(VC_WORK* w_p) // 0x80081428
 {
     s32 hasViewFlag;
 
-    if (g_GameWorkPtr0->optViewMode_29 != 0)
+    if (g_GameWorkPtr0->config_0.optViewMode_29 != 0)
     {
-        // If `g_GameWorkPtr0->optViewCtrl_28 == 1` then it flips check against `VC_PRS_F_VIEW_F` flag?
+        // If `g_GameWorkPtr0->config_0.optViewCtrl_28 == 1` then it flips check against `VC_PRS_F_VIEW_F` flag?
         // Code below matches but duplicates the return `VC_MV_SELF_VIEW` code, and doesn't really seem like something written by a dev. -- emoose
         hasViewFlag = (vcWork.flags_8 & VC_PRS_F_VIEW_F) == VC_PRS_F_VIEW_F;
 
-        if (g_GameWorkPtr0->optViewCtrl_28)
+        if (g_GameWorkPtr0->config_0.optViewCtrl_28)
         {
             if ((hasViewFlag ^ (1 << 0)) != 0)
             {
@@ -443,7 +443,91 @@ s32 vcRetThroughDoorCamEndF(VC_WORK* w_p) // 0x800815F0
     return 0;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vc_main", vcRetFarWatchRate);
+s32 vcRetFarWatchRate(s32 far_watch_button_prs_f, VC_CAM_MV_TYPE cur_cam_mv_type, VC_WORK* w_p) // 0x800816B0
+{
+    s32 dist;
+    s32 far_watch_rate;
+    s32 abs_ofs_ang_y;
+
+    s32 railDistX;
+    s32 railDistZ;
+    s32 prsFViewFlag;
+
+    if ((vcWork.flags_8 & (VC_USER_WATCH_F | VC_INHIBIT_FAR_WATCH_F)))
+    {
+        far_watch_rate = 0;
+    }
+    else
+    {
+        switch (cur_cam_mv_type)
+        {
+            case VC_MV_CHASE:
+            case VC_MV_SETTLE:
+                far_watch_rate = FP_TO(far_watch_button_prs_f != 0, Q12_SHIFT);
+                break;
+            case VC_MV_THROUGH_DOOR:
+                far_watch_rate = FP_METER(16.f); // FP_ANGLE(22.5f);
+                if (!far_watch_button_prs_f)
+                {
+                    // TODO: unsure if these should use FP_METER or FP_ANGLE
+                    // gets multiplied by `dist` so FP_METER fits
+                    // but then it gets subtracted by `abs_ofs_ang_y`, so FP_ANGLE would also fit?
+
+                    dist           = w_p->through_door_10.rail_sta_to_chara_dist_18;
+                    far_watch_rate = FP_METER(14.4f) - ((dist * FP_METER(14.4f)) / FP_METER(36.8f));
+                    // far_watch_rate = FP_ANGLE(20.25f) - ((dist * FP_ANGLE(20.25f)) / FP_ANGLE(51.75f));
+                    if (far_watch_rate < 0)
+                    {
+                        far_watch_rate = 0;
+                    }
+
+                    if (dist > FP_METER(8.f))
+                    {
+                        railDistX = w_p->chara_pos_114.vx - w_p->through_door_10.rail_sta_pos_C.vx;
+                        railDistZ = w_p->chara_pos_114.vz - w_p->through_door_10.rail_sta_pos_C.vz;
+                        if (((w_p->chara_eye_ang_y_144 - ratan2(railDistX, railDistZ)) << 0x14) < 0)
+                        {
+                            abs_ofs_ang_y = -shAngleRegulate(w_p->chara_eye_ang_y_144 - ratan2(railDistX, railDistZ));
+                        }
+                        else
+                        {
+                            abs_ofs_ang_y = shAngleRegulate(w_p->chara_eye_ang_y_144 - ratan2(railDistX, railDistZ));
+                        }
+                        far_watch_rate = (far_watch_rate * (FP_METER(3.11f) - abs_ofs_ang_y)) / FP_METER(3.11f);
+                        // far_watch_rate = (far_watch_rate * (FP_ANGLE(4.375f) - abs_ofs_ang_y)) / FP_ANGLE(4.375f);
+                        if (far_watch_rate < 0)
+                        {
+                            far_watch_rate = 0;
+                        }
+                    }
+                }
+                break;
+            default:
+            case VC_MV_FIX_ANG:
+            case VC_MV_SELF_VIEW:
+                far_watch_rate = 0;
+                break;
+        }
+    }
+
+    if (g_GameWorkPtr0->config_0.optViewMode_29 != 0)
+    {
+        prsFViewFlag = vcWork.flags_8 >> 9; /** VC_PRS_F_VIEW_F */
+        prsFViewFlag = prsFViewFlag & 1;
+
+        if ((g_GameWorkPtr0->config_0.optViewCtrl_28 != 0 && (prsFViewFlag ^ 1) != 0) ||
+            (g_GameWorkPtr0->config_0.optViewCtrl_28 == 0 && prsFViewFlag != 0))
+        {
+            if (!(w_p->flags_8 & (VC_USER_CAM_F | VC_USER_WATCH_F | VC_INHIBIT_FAR_WATCH_F)) &&
+                func_8008150C(w_p->chara_pos_114.vx, w_p->chara_pos_114.vz))
+            {
+                far_watch_rate = 0;
+            }
+        }
+    }
+
+    return far_watch_rate;
+}
 
 s32 vcRetSelfViewEffectRate(VC_CAM_MV_TYPE cur_cam_mv_type, s32 far_watch_rate, VC_WORK* w_p) // 0x800818D4
 {
@@ -520,7 +604,75 @@ s32 vcRetSelfViewEffectRate(VC_CAM_MV_TYPE cur_cam_mv_type, s32 far_watch_rate, 
     return ret_eff_rate;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vc_main", vcSetFlagsByCamMvType);
+void vcSetFlagsByCamMvType(VC_CAM_MV_TYPE cam_mv_type, s32 far_watch_rate, s32 all_warp_f) // 0x80081A0C
+{
+    s32 vcOldPrsFViewFlag;
+    s32 vcPrsFViewFlag;
+
+    if (!far_watch_rate)
+    {
+        switch (cam_mv_type)
+        {
+            case VC_MV_CHASE:
+                vcWork_FlagSet(VC_VISIBLE_CHARA_F);
+                break;
+            case VC_MV_SETTLE:
+                vcWork_FlagSet(VC_VISIBLE_CHARA_F);
+                break;
+            case VC_MV_FIX_ANG:
+                vcWork_FlagClear(VC_VISIBLE_CHARA_F);
+                break;
+            case VC_MV_SELF_VIEW:
+                vcWork_FlagClear(VC_VISIBLE_CHARA_F);
+                break;
+            case VC_MV_THROUGH_DOOR:
+                vcWork_FlagClear(VC_VISIBLE_CHARA_F);
+                break;
+        }
+    }
+    else
+    {
+        vcWork_FlagClear(VC_VISIBLE_CHARA_F);
+    }
+
+    if (cam_mv_type == VC_MV_SELF_VIEW)
+    {
+        vcWork_FlagSet(VC_WARP_CAM_F | VC_WARP_CAM_TGT_F);
+
+        vcPrsFViewFlag = (vcWork.flags_8 >> 9); /** VC_PRS_F_VIEW_F */
+        vcPrsFViewFlag = vcPrsFViewFlag & 1;
+
+        // optViewCtrl != 0 && vcPrsFViewFlag == 0 OR
+        // optViewCtrl == 0 && vcPrsFViewFlag == 1
+        if ((g_GameWorkPtr0->config_0.optViewCtrl_28 != 0 && (vcPrsFViewFlag ^ 1) != 0) ||
+            (g_GameWorkPtr0->config_0.optViewCtrl_28 == 0 && vcPrsFViewFlag != 0))
+        {
+            vcOldPrsFViewFlag = (vcWork.flags_8 >> 0xA); /** VC_OLD_PRS_F_VIEW_F */
+            vcOldPrsFViewFlag = vcOldPrsFViewFlag & 1;
+
+            // (optViewCtrl != 0 && vcOldPrsFViewFlag == 0) == false AND
+            // (optViewCtrl == 0 && vcOldPrsFViewFlag == 1) == false
+            if (!(g_GameWorkPtr0->config_0.optViewCtrl_28 != 0 && (vcOldPrsFViewFlag ^ 1) != 0) &&
+                !(g_GameWorkPtr0->config_0.optViewCtrl_28 == 0 && vcOldPrsFViewFlag != 0))
+            {
+                if (g_GameWorkPtr0->config_0.optViewMode_29 != 0)
+                {
+                    vcWork_FlagSet(VC_WARP_WATCH_F);
+                }
+            }
+        }
+    }
+
+    if (all_warp_f != 0)
+    {
+        vcWork_FlagSet(VC_WARP_CAM_F | VC_WARP_WATCH_F | VC_WARP_CAM_TGT_F);
+    }
+
+    if (far_watch_rate != 0)
+    {
+        vcWork_FlagSet(VC_WARP_CAM_TGT_F);
+    }
+}
 
 void vcPreSetDataInVC_WORK(VC_WORK* w_p, VC_ROAD_DATA* vc_road_ary_list) // 0x80081B6C
 {
@@ -535,7 +687,7 @@ void vcPreSetDataInVC_WORK(VC_WORK* w_p, VC_ROAD_DATA* vc_road_ary_list) // 0x80
             vcWork.flags_8 &= ~VC_OLD_PRS_F_VIEW_F;
         }
 
-        if (g_ControllerPtr0->btns_held_C & g_GameWorkPtr1->controllerBinds_0.view)
+        if (g_ControllerPtr0->btns_held_C & g_GameWorkPtr1->config_0.controllerBinds_0.view)
         {
             vcWork.flags_8 |= VC_PRS_F_VIEW_F;
         }
@@ -807,7 +959,7 @@ void vcMakeIdealCamPosByHeadPos(VECTOR3* ideal_pos, VC_WORK* w_p, VC_AREA_SIZE_T
         return;
     }
 
-    if (g_GameWorkPtr0->optViewMode_29)
+    if (g_GameWorkPtr0->config_0.optViewMode_29)
     {
         chara2cam_ang_y = w_p->chara_eye_ang_y_144 + FP_ANGLE(8.75f);
         ideal_pos->vy   = w_p->chara_head_pos_130.vy + FP_METER(1.12f);

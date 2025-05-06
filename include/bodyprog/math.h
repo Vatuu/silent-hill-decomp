@@ -27,6 +27,10 @@
 #define CLAMP(x, min, max) \
     (((x) < (min)) ? (min) : (((x) > (max)) ? (max) : (x)))
 
+/** @brief Computes the absolute difference between two values. */
+#define ABS_DIFF(a, b) \
+    ((((a) - (b)) < 0) ? ((b) - (a)) : ((a) - (b)))
+
 /** @brief Converts an integer to a fixed-point Q format. */
 #define FP_TO(x, shift) \
 	((x) << (shift))
@@ -57,7 +61,7 @@
 
 /** @brief Converts a normalized color value in the range `[0.0f, 1.0f]` to an 8-bit color value in the range `[0, 255]`. */
 #define FP_COLOR(val) \
-    ((u8)(val * (FP_TO(1, (Q8_SHIFT)) - 1)))
+    (u8)((val) * (FP_FLOAT_TO(1.0f, Q8_SHIFT) - 1))
 
 /** @brief Converts floating-point degrees to fixed-point angles in Q1.15 format. */
 #define FP_ANGLE(deg) \

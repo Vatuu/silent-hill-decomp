@@ -16,12 +16,12 @@ INCLUDE_ASM("asm/screens/options/nonmatchings/options", Settings_MainScreen); //
 
 void Gfx_BgmBarDraw() // 0x801E3F68
 {
-    Gfx_BarDraw(0, g_GameWork.optVolumeBgm_1F);
+    Gfx_BarDraw(0, g_GameWork.config_0.optVolumeBgm_1F);
 }
 
 void Gfx_SfxBarDraw() // 0x801E3F90
 {
-    Gfx_BarDraw(1, g_GameWork.optVolumeSe_20);
+    Gfx_BarDraw(1, g_GameWork.config_0.optVolumeSe_20);
 }
 
 /** Related to drawing strings.
@@ -102,25 +102,25 @@ void Settings_BrightnessScreen() // 0x801E6018
         case 2:
             if (g_ControllerPtr0->field_18 & Pad_LStickLeft)
             {
-                if (g_GameWork.optBrightness_22 != 0)
+                if (g_GameWork.config_0.optBrightness_22 != 0)
                 {
-                    g_GameWork.optBrightness_22--;
+                    g_GameWork.config_0.optBrightness_22--;
                     func_80046048(0x519, 0, 0x40);
                 }
             }
 
             if (g_ControllerPtr0->field_18 & Pad_LStickRight)
             {
-                if (g_GameWork.optBrightness_22 < 7)
+                if (g_GameWork.config_0.optBrightness_22 < 7)
                 {
-                    g_GameWork.optBrightness_22++;
+                    g_GameWork.config_0.optBrightness_22++;
                     func_80046048(0x519, 0, 0x40);
                 }
             }
 
-            if (g_ControllerPtr0->btns_new_10 & (g_GameWorkPtr1->controllerBinds_0.enter | g_GameWorkPtr1->controllerBinds_0.cancel))
+            if (g_ControllerPtr0->btns_new_10 & (g_GameWorkPtr1->config_0.controllerBinds_0.enter | g_GameWorkPtr1->config_0.controllerBinds_0.cancel))
             {
-                if (g_ControllerPtr0->btns_new_10 & g_GameWorkPtr1->controllerBinds_0.enter)
+                if (g_ControllerPtr0->btns_new_10 & g_GameWorkPtr1->config_0.controllerBinds_0.enter)
                 {
                     func_80046048(0x51B, 0, 0x40);
                 }
@@ -162,7 +162,7 @@ void Settings_BrightnessScreen() // 0x801E6018
         func_800314EC(&D_800A904C);
     }
 
-    func_8003E5E8(g_GameWork.optBrightness_22);
+    func_8003E5E8(g_GameWork.config_0.optBrightness_22);
     Gfx_BrightnessLevelArrowsDraw();
     Gfx_BrightnessLevelTextDraw();
 }
@@ -174,7 +174,7 @@ void Gfx_BrightnessLevelTextDraw() // 0x801E6238
     Gfx_StringSetColor(ColorId_White);
     Gfx_StringSetPosition(SCREEN_POSITION_X(25.0f), SCREEN_POSITION_Y(79.5f));
     Gfx_StringDraw(D_801E2C64, 20);
-    Gfx_StringDrawInt(1, g_GameWork.optBrightness_22);
+    Gfx_StringDrawInt(1, g_GameWork.config_0.optBrightness_22);
 }
 
 void Gfx_BrightnessLevelArrowsDraw() // 0x801E628C

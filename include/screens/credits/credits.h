@@ -14,11 +14,15 @@ STATIC_ASSERT_SIZEOF(s_UnkCredits1, 6);
 
 extern s_UnkCredits1 D_801E5558[];
 
-extern s32 D_801E5590[];
+extern char* D_801E5590[]; // Credits string table.
 
-extern s32 D_801E5BD0;
+extern char D_801E5BD0[]; // KCET string.
 
 extern s32 D_801E5C20;
+
+extern u8 D_801E5E5C[];
+
+extern u8 D_801E5E6C[];
 
 extern s32 D_801E5E74;
 
@@ -43,6 +47,8 @@ s32 func_801E2ED8();
 s32 func_801E2FC0();
 
 void func_801E386C();
+
+bool func_801E3970();
 
 void func_801E3DD0();
 
@@ -76,8 +82,11 @@ void func_801E4340(s8 arg0);
 
 void func_801E434C(u32 arg0, u32 arg1);
 
-/**
- * @brief Sets the current RGB+command color for D_800AFE2C.
+void func_801E4394(u8* str);
+
+void func_801E47E0(s32 arg0, s32 arg1);
+
+/** @brief Sets the current RGB+command color for D_800AFE2C.
  *
  * This function sets the packed RGB+command color for D_800AFE10 with
  * the fourth component hard set to 0x2C, possibly a graphics command.
@@ -94,5 +103,7 @@ void func_801E4BC8(s8 arg0);
 
 /** Identical to `func_801E434C` except for the global variable it modifies. */
 void func_801E4BD4(u32 arg0, u32 arg1);
+
+void func_801E4C1C(u8* str);
 
 #endif
