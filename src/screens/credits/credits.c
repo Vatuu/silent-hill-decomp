@@ -6,54 +6,46 @@
 #include "screens/credits/credits.h"
 
 s_UnkCredits1 D_801E5558[6] =
-{
     {
-        .field_0 = 0x12D5,
-        .field_2 = 0x0000,
-        .field_4 = 0x21FC,
-    },
-    {
-        .field_0 = 0x12D3,
-        .field_2 = 0xF6A0,
-        .field_4 = 0x20D0,
-    },
-    {
-        .field_0 = 0x12D4,
-        .field_2 = 0xFC7C,
-        .field_4 = 0x21FC,
-    },
-    {
-        .field_0 = 0x12D5,
-        .field_2 = 0xFF4C,
-        .field_4 = 0x2148,
-    },
-    {
-        .field_0 = 0x12D6,
-        .field_2 = 0xFF4C,
-        .field_4 = 0x2274,
-    },
-    {
-        .field_0 = 0x12D6,
-        .field_2 = 0xFF88,
-        .field_4 = 0x20D0
-    }
-};
+        {
+            .field_0 = 0x12D5,
+            .field_2 = 0x0000,
+            .field_4 = 0x21FC,
+        },
+        {
+            .field_0 = 0x12D3,
+            .field_2 = 0xF6A0,
+            .field_4 = 0x20D0,
+        },
+        {
+            .field_0 = 0x12D4,
+            .field_2 = 0xFC7C,
+            .field_4 = 0x21FC,
+        },
+        {
+            .field_0 = 0x12D5,
+            .field_2 = 0xFF4C,
+            .field_4 = 0x2148,
+        },
+        {
+            .field_0 = 0x12D6,
+            .field_2 = 0xFF4C,
+            .field_4 = 0x2274,
+        },
+        {.field_0 = 0x12D6,
+         .field_2 = 0xFF88,
+         .field_4 = 0x20D0}};
 
-RECT D_801E557C[2] = 
-{
+RECT D_801E557C[2] =
     {
-        .x = 320, 
-        .y = 256, 
-        .w = 160, 
-        .h = 240
-    },
-    {
-        .x = 480,
-        .y = 16,
-        .w = 32,
-        .h = 480
-    }
-};
+        {.x = 320,
+         .y = 256,
+         .w = 160,
+         .h = 240},
+        {.x = 480,
+         .y = 16,
+         .w = 32,
+         .h = 480}};
 
 void func_801E2E28(s32 idx) // 0x801E2E28
 {
@@ -142,9 +134,9 @@ void GameState_Unk15_Update() // 0x801E3094
     s32* (*routines[3])() = {func_801E3124, func_801E342C, func_801E3304};
 
     D_800C48F0 += g_VBlanks;
-    if (routines[g_GameWork.gameStateStep_598[0]]() != 0) 
+    if (routines[g_GameWork.gameStateStep_598[0]]() != 0)
     {
-        g_SysWork.timer_20 = 0;
+        g_SysWork.timer_20              = 0;
         g_GameWork.gameStateStep_598[1] = 0;
         g_GameWork.gameStateStep_598[2] = 0;
         g_GameWork.gameStateStep_598[0]++;
@@ -199,13 +191,13 @@ s32 func_801E3124() // 0x801E3124
         case 2:
             Gfx_Init(0x200, 1);
             g_IntervalVBlanks = 1;
-            D_801E5E74 = 0x3C;
+            D_801E5E74        = 0x3C;
             g_GameWork.gameStateStep_598[1]++;
             break;
 
         case 3:
             D_801E5E74--;
-            
+
             if (D_801E5E74 <= 0 && func_80045B28() < 2)
             {
                 g_GameWork.field_58C = 0;
@@ -275,7 +267,7 @@ s32 func_801E342C() // 0x801E342C
     GsOUT_PACKET_P += sizeof(TILE);
     temp = func_801E3684();
 
-    switch(g_GameWork.gameStateStep_598[1])
+    switch (g_GameWork.gameStateStep_598[1])
     {
         case 0:
             switch (D_800BCD0C)
@@ -307,11 +299,11 @@ s32 func_801E342C() // 0x801E342C
             }
             break;
 
-         case 2:
+        case 2:
             D_801E5E78--;
             if (D_801E5E78 <= 0)
             {
-                D_800BCD0C = g_GameWork.gameStateStep_598[1];
+                D_800BCD0C                      = g_GameWork.gameStateStep_598[1];
                 g_GameWork.gameStateStep_598[1] = 3;
             }
             break;
@@ -325,7 +317,7 @@ s32 func_801E342C() // 0x801E342C
             break;
 
         default:
-        break;
+            break;
     }
 
     return 0;
@@ -338,36 +330,33 @@ s32 D_801E5C20 = 400;
 #include "widthtable.h"
 
 s32 D_801E5E24[7] =
-{
-    0x64FF0000,
-    0x640000FF,
-    0x64FF00FF,
-    0x6400FF00,
-    0x64FFFF00,
-    0x6400FFFF,
-    0x64FFFFFF,
+    {
+        0x64FF0000,
+        0x640000FF,
+        0x64FF00FF,
+        0x6400FF00,
+        0x64FFFF00,
+        0x6400FFFF,
+        0x64FFFFFF,
 };
 
 s32 D_801E5E40[7] =
-{
-    0x2CFF0000,
-    0x2C0000FF,
-    0x2CFF00FF,
-    0x2C00FF00,
-    0x2CFFFF00,
-    0x2C00FFFF,
-    0x2CFFFFFF
-};
+    {
+        0x2CFF0000,
+        0x2C0000FF,
+        0x2CFF00FF,
+        0x2C00FF00,
+        0x2CFFFF00,
+        0x2C00FFFF,
+        0x2CFFFFFF};
 
-u8 D_801E5E5C[16] = 
-{
-    '\x7F', '1', '9', 'A', 'C', 'D', 'E', 'G', 'H', 'I', 'K', 'L', 'M', 'N', 'O', 'P'
-};
+u8 D_801E5E5C[16] =
+    {
+        '\x7F', '1', '9', 'A', 'C', 'D', 'E', 'G', 'H', 'I', 'K', 'L', 'M', 'N', 'O', 'P'};
 
-u8 D_801E5E6C[8] = 
-{
-    '.', 'Y', 'V', 'U', 'T', 'S', 'R', ' ' 
-};
+u8 D_801E5E6C[8] =
+    {
+        '.', 'Y', 'V', 'U', 'T', 'S', 'R', ' '};
 
 s32 D_801E5E74 = 0;
 
@@ -383,63 +372,62 @@ s32 D_801E5E88 = 0;
 
 s32 D_801E5E8C = 0;
 
-u8 D_801E5E90[320] = { 0 };
+u8 D_801E5E90[320] = {0};
 
-u8 D_801E5FD0[40] = { 0 };
+u8 D_801E5FD0[40] = {0};
 
-u8 D_801E5FF8[20] = { 0 };
+u8 D_801E5FF8[20] = {0};
 
 s32 D_801E600C = 0;
 
-
 bool func_801E3684() // 0x801E3684
 {
-    s32 sp10;
-    s32 sp14;
-    s32 sp18;
-    s8* temp_s0;
+    s32  sp10;
+    s32  sp14;
+    s32  sp18;
+    s8*  temp_s0;
     s32* var_s2;
-    s32 temp_fp;
-    s32 temp_v1;
-    s32 var_s0;
-    s32 var_s1;
-    s32 var_s3;
-    s32 var_s4;
-    s32 var_s5;
-    s32 var_s6;
-    s32 var_v1;
+    s32  temp_fp;
+    s32  temp_v1;
+    s32  var_s0;
+    s32  var_s1;
+    s32  var_s3;
+    s32  var_s4;
+    s32  var_s5;
+    s32  var_s6;
+    s32  var_v1;
     bool ret;
 
     temp_v1 = D_800C48F0 * 2;
-    var_s0 = (s32)((temp_v1 - 504) * D_801E5E80);
-    var_s0 = var_s0 >> 16;
-    var_s6 = D_801E5E84;
-    sp10 = D_801E5E7C;
-    
+    var_s0  = (s32)((temp_v1 - 504) * D_801E5E80);
+    var_s0  = var_s0 >> 16;
+    var_s6  = D_801E5E84;
+    sp10    = D_801E5E7C;
+
     if (var_s0 < 0)
     {
         var_s0 = 0;
     }
-    
+
     var_v1 = (s32)(temp_v1 * D_801E5E80);
     var_v1 = var_v1 >> 16;
     if (var_v1 >= D_801E5C20)
     {
         var_v1 = D_801E5C20 - 1;
     }
-    
+
     sp14 = ((var_s0 * sp10) - temp_v1) + SCREEN_HEIGHT;
     sp18 = (var_v1 - var_s0) + 1;
 
-    var_s6 = (var_s6 - temp_v1);
-    var_s6 = var_s6 + SCREEN_HEIGHT;
+    var_s6  = (var_s6 - temp_v1);
+    var_s6  = var_s6 + SCREEN_HEIGHT;
     temp_fp = var_s6 < SCREEN_HEIGHT;
-    
+
     if (temp_fp != 0)
     {
-        ret = var_s6 < -23;
+        ret    = var_s6 < -23;
         var_s4 = -1;
-        
+
         if (ret)
         {
             var_s6 = -24;
@@ -447,13 +435,13 @@ bool func_801E3684() // 0x801E3684
     }
     else
     {
-        ret = false;
+        ret    = false;
         var_s4 = -1;
     }
-    
+
     func_801E434C(1, 1);
     func_801E4310(FP_COLOR(0.19f), FP_COLOR(0.19f), FP_COLOR(0.19f));
-    
+
     for (var_s5 = 2; var_s5 >= 0; var_s5--, var_s4 += 2)
     {
         if (var_s5 == 0)
@@ -462,7 +450,7 @@ bool func_801E3684() // 0x801E3684
             func_801E434C(0, 0);
             func_801E4310(FP_COLOR(0.2525f), FP_COLOR(0.2525f), FP_COLOR(0.2525f));
         }
-        
+
         var_s3 = sp14 + var_s4;
         var_s2 = &D_801E5590[var_s0];
 
@@ -472,14 +460,14 @@ bool func_801E3684() // 0x801E3684
             func_801E42F8(0, var_s3);
             func_801E4394(temp_s0);
         }
-        
+
         if (temp_fp != 0)
         {
             func_801E42F8(0, var_s6 + var_s4);
             func_801E4394(D_801E5BD0);
         }
-    } 
-    
+    }
+
     return ret;
 }
 
@@ -491,10 +479,10 @@ void func_801E386C() // 0x801E386C
     s32            var2;
 
     var2 = 5;
-    
+
     func_8009185C(0, 0, SCREEN_HEIGHT, 0x1000, 0, 0x22000, 0xF0000, 0xB33, 899, -0xF9C);
-    ptr = D_801E5558;
-    ptr = &ptr[5];
+    ptr  = D_801E5558;
+    ptr  = &ptr[5];
     var0 = (u16)ptr->field_4;
 
     var1 = (s16)var0;
@@ -508,7 +496,6 @@ void func_801E386C() // 0x801E386C
     D_801E5E84 = (D_801E5E7C * D_801E5C20) + SCREEN_HEIGHT;
     D_801E5E80 = 0x10000 / D_801E5E7C;
 }
-
 
 bool func_801E3970() // 0x801E3970
 {
@@ -637,7 +624,7 @@ bool func_801E3970() // 0x801E3970
             else
             {
                 isFinished = true;
-                showKcet = false;
+                showKcet   = false;
             }
         }
     }
@@ -666,7 +653,7 @@ bool func_801E3970() // 0x801E3970
     return isFinished;
 }
 
-void func_801E3DD0() // 0x801E3DD0 
+void func_801E3DD0() // 0x801E3DD0
 {
     D_801E600C = Rng_Rand16();
 }
@@ -678,55 +665,54 @@ s32 func_801E3DF8(s32 arg0) // 0x801E3DF8
 
 void func_801E3E18(s32 arg0, s32 arg1) // 0x801E3E18
 {
-    s32 j;
-    s32 i;
-    PACKET* packet;
-    s32* addr;
-    u8* bufA;
-    u8* bufB;
-    POLY_G4 *poly;
-    u32 x0;
-    u16 x1, x2, x3;
-    
+    s32      j;
+    s32      i;
+    PACKET*  packet;
+    s32*     addr;
+    u8*      bufA;
+    u8*      bufB;
+    POLY_G4* poly;
+    u32      x0;
+    u16      x1, x2, x3;
+
     u32 color0;
     u32 color1;
     u32 color2;
     u32 color3;
-    u8 *ptr;
-    u8 *ptr2;
-    
-    s32 temp_t6;
-    s32 temp_t1;
-    u32 sp1C;
-    u32 sp20;
-    u32 sp24;
-    u32 sp28;
-    u32 sp2C;
-    u32 temp_v1_2;
-    s32 var_s4;
+    u8* ptr;
+    u8* ptr2;
+
+    s32  temp_t6;
+    s32  temp_t1;
+    u32  sp1C;
+    u32  sp20;
+    u32  sp24;
+    u32  sp28;
+    u32  sp2C;
+    u32  temp_v1_2;
+    s32  var_s4;
     s32* var_a0;
     s32* var_a1_2;
-    u32 temp_a2;
-    u32 temp_v1;
-    u32 var_v1;
-    u8 temp_a0;
-    u32 var_a1;
-    u32 var_a2;
-    u32 var_a3;
+    u32  temp_a2;
+    u32  temp_v1;
+    u32  var_v1;
+    u8   temp_a0;
+    u32  var_a1;
+    u32  var_a2;
+    u32  var_a3;
     s32* var_a0_2;
-    u8* var_s1_2;
-    u8* var_s2_2;
-    u8* var_t0;
+    u8*  var_s1_2;
+    u8*  var_s2_2;
+    u8*  var_t0;
     s32* temp_t2;
 
-    
-    packet = GsOUT_PACKET_P;
-    temp_t2 = (s32 *)((g_ObjectTableIdx << 4) + &D_800B5C58);
-    addr = temp_t2 + 1;
+    packet  = GsOUT_PACKET_P;
+    temp_t2 = (s32*)((g_ObjectTableIdx << 4) + &D_800B5C58);
+    addr    = temp_t2 + 1;
     temp_a2 = D_801E600C;
-    
+
     bufA = &D_801E5FD0[0];
-    
+
     for (i = 1; i < 17; i++)
     {
         temp_a2 = temp_a2 * 0x19660D + 0x3C6EF35F;
@@ -735,117 +721,117 @@ void func_801E3E18(s32 arg0, s32 arg1) // 0x801E3E18
         if (temp_v1 >= 0xC00)
         {
             var_v1 = 0xFF;
-        } 
+        }
         else if (temp_v1 >= 0xA00)
         {
             temp_v1 = (temp_v1 - 0xE00) >> 3;
-            var_v1 = temp_v1 + 0xC0;
-        } 
+            var_v1  = temp_v1 + 0xC0;
+        }
         else if (temp_v1 < 0x200U)
         {
             var_v1 = temp_v1 >> 3;
-        } 
-        else 
+        }
+        else
         {
             temp_v1 = (temp_v1 - 0x200) >> 4;
-            var_v1 = temp_v1 + 0x40;
+            var_v1  = temp_v1 + 0x40;
         }
         D_801E5FD0[i] = var_v1;
     }
 
-    D_801E600C = temp_a2;
-    D_801E5FD0[0] = D_801E5FD0[16];
+    D_801E600C     = temp_a2;
+    D_801E5FD0[0]  = D_801E5FD0[16];
     D_801E5FD0[17] = D_801E5FD0[1];
-    
+
     bufA = &D_801E5FD0[0];
     bufB = &D_801E5FD0[20];
-    
-    j = 0; 
-    var_s4 = 0;
+
+    j       = 0;
+    var_s4  = 0;
     temp_t1 = arg0 + 0x1E0;
-    sp1C = 0xffffff;
+    sp1C    = 0xffffff;
     temp_t6 = sp28 = temp_t1 << 0x10;
-    sp2C = temp_t6 + 0x200000;
-    
+    sp2C           = temp_t6 + 0x200000;
+
     for (; j < 16; j++, var_s4 -= 16, sp28 += 0xFFE00000, sp2C += 0xFFE00000, temp_t1 -= 0x20)
     {
         ptr2 = D_801E5FF8;
-        
-        ptr = bufB;
+
+        ptr  = bufB;
         bufB = bufA;
         bufA = ptr;
-        
+
         ptr = D_801E5E90 + j * 20;
-        
-        var_a1_2 = (s32 *)D_801E5FF8;
-        var_a0 = (s32 *)ptr;
-        
+
+        var_a1_2 = (s32*)D_801E5FF8;
+        var_a0   = (s32*)ptr;
+
         for (i = 0; i < 20; i += 4)
         {
             var_a1_2[i * 5] = var_a0[i * 5];
         }
 
         var_s2_2 = ptr2;
-        var_a1 = *var_s2_2++;
-        var_a3 = *var_s2_2++;
+        var_a1   = *var_s2_2++;
+        var_a3   = *var_s2_2++;
 
         var_t0 = bufA + 1;
 
         var_s1_2 = bufB;
-        var_a2 = *bufB;
+        var_a2   = *bufB;
         var_s1_2++;
-        
+
         for (i = 16; i > 0; i--)
         {
             s16 var = 0x1000;
-            
+
             temp_v1_2 = var_a1;
-           
+
             temp_a0 = var_a2;
-            var_a1 = var_a3;
+            var_a1  = var_a3;
             temp_v1_2 += temp_a0;
 
             var_a3 = *var_s2_2;
             var_a2 = *var_s1_2;
             var_a3 += var_a2;
-            
+
             var_s2_2++;
             var_s1_2++;
-            
+
             var_a1 = var_a1 + (((temp_v1_2 * (var - arg1)) + (var_a3 * arg1)) >> 0xD);
             var_a1 = var_a1 + ((temp_a0 + var_a2) >> 1);
-            var_a1 = ((var_a1  + var_a2 + temp_a0) * 2 + (var_a3 + temp_v1_2)) >> 1;
+            var_a1 = ((var_a1 + var_a2 + temp_a0) * 2 + (var_a3 + temp_v1_2)) >> 1;
             var_a1--;
-            
+
             *var_t0 = var_a1;
             var_t0++;
         }
-    
-        bufA[0] = bufA[16];
+
+        bufA[0]  = bufA[16];
         bufA[17] = bufA[1];
 
-        var_a1_2 = (s32 *)ptr;
-        var_a0_2 = (s32 *)bufA;
+        var_a1_2 = (s32*)ptr;
+        var_a0_2 = (s32*)bufA;
 
         for (i = 0; i < 20; i += 4)
         {
             var_a1_2[i * 5] = var_a0_2[i * 5];
         }
-        
+
         if (temp_t1 >= 0x1E0)
         {
             continue;
-        }            
+        }
 
         var_s2_2 = bufA;
-        color1 = func_801E3DF8(*var_s2_2++);
+        color1   = func_801E3DF8(*var_s2_2++);
 
         var_s1_2 = bufB;
-        color3 = func_801E3DF8(*var_s1_2++);
-        
+        color3   = func_801E3DF8(*var_s1_2++);
+
         sp20 = sp2C;
         sp24 = sp28;
-        
+
         for (i = 0; i < 16; i++)
         {
             color0 = color1;
@@ -858,33 +844,33 @@ void func_801E3E18(s32 arg0, s32 arg1) // 0x801E3E18
 
             var_v1 = 0x200;
             var_a1 = var_v1;
-            x0 = var_s4 + var_a1;
-            
+            x0     = var_s4 + var_a1;
+
             if (var_s4 + 0x30 > 0)
             {
                 x0 = var_s4;
                 if (var_s4 < 0)
                 {
-                    poly = (POLY_G4 *)packet;
-                    //addPrimFast(addr, poly, 8);
+                    poly = (POLY_G4*)packet;
+                    // addPrimFast(addr, poly, 8);
                     poly->tag = ((*addr & sp1C) | 0x08000000);
-                    *addr = (*addr & 0xFF000000) | ((u32)poly & sp1C);
-                    
+                    *addr     = (*addr & 0xFF000000) | ((u32)poly & sp1C);
+
                     x0 = var_s4 + 0x200;
                     x1 = var_s4 + 0x220;
                     x2 = var_s4 + 0x210;
                     x3 = var_s4 + 0x230;
-                    
+
                     *(u32*)(&poly->x0) = (((x0) & 0xFFFF) + (sp28));
                     *(u32*)(&poly->x1) = (((x1) & 0xFFFF) + (sp28));
                     *(u32*)(&poly->x2) = (((x2) & 0xFFFF) + (sp20));
                     *(u32*)(&poly->x3) = (((x3) & 0xFFFF) + (sp20));
-                    
+
                     *(u32*)(&poly->r0) = color0;
                     *(u32*)(&poly->r1) = color1;
                     *(u32*)(&poly->r2) = color2;
                     *(u32*)(&poly->r3) = color3;
-                
+
                     packet += sizeof(POLY_G4);
 
                     x0 = var_s4;
@@ -894,22 +880,22 @@ void func_801E3E18(s32 arg0, s32 arg1) // 0x801E3E18
             x1 = x0 + 0x20;
             x2 = x0 + 0x10;
             x3 = x0 + 0x30;
-            
-            poly = (POLY_G4 *)packet;
-            //addPrimFast(addr, poly, 8);
+
+            poly = (POLY_G4*)packet;
+            // addPrimFast(addr, poly, 8);
             poly->tag = ((*addr & sp1C) | 0x08000000);
-            *addr = (*addr & 0xFF000000) | ((u32)poly & sp1C);
+            *addr     = (*addr & 0xFF000000) | ((u32)poly & sp1C);
 
             *(u32*)(&poly->x0) = (((x0) & 0xFFFF) + (sp24));
             *(u32*)(&poly->x1) = (((x1) & 0xFFFF) + (sp24));
             *(u32*)(&poly->x2) = (((x2) & 0xFFFF) + (sp20));
             *(u32*)(&poly->x3) = (((x3) & 0xFFFF) + (sp20));
-            
+
             *(u32*)(&poly->r0) = color0;
             *(u32*)(&poly->r1) = color1;
             *(u32*)(&poly->r2) = color2;
             *(u32*)(&poly->r3) = color3;
-            
+
             packet += sizeof(POLY_G4);
         }
     }
@@ -943,9 +929,9 @@ void func_801E434C(u32 arg0, u32 arg1) // 0x801E434C
 
     if (arg1 < 4)
     {
-        maskedField_18 = D_800AFE08.field_18;
+        maskedField_18  = D_800AFE08.field_18;
         shiftedField_18 = (maskedField_18 << 4) & 0x100;
-        
+
         maskedField_18 &= 0xF;
         shiftedField_18 >>= 4;
 
@@ -970,8 +956,8 @@ void func_801E4394(u8* str) // 0x801E4394
     PACKET* packet     = GsOUT_PACKET_P;
     u32     blendFlag  = (u8)D_800AFE08.field_7;
     u32     charCode   = *strPtr;
-    u32     colorCode  = D_800AFE08.field_8 | (blendFlag << 25);        // RBG + code + semi-transparency flag.
-    u32     clut       = (u16)D_800AFE08.field_16;                      // Clut Y, clut Y.
+    u32     colorCode  = D_800AFE08.field_8 | (blendFlag << 25); // RBG + code + semi-transparency flag.
+    u32     clut       = (u16)D_800AFE08.field_16;               // Clut Y, clut Y.
     s32*    addr       = (s32*)((g_ObjectTableIdx << 4) + &D_800B5C58);
 
     s32       charWidth;
@@ -1188,7 +1174,7 @@ void func_801E4BD4(u32 arg0, u32 arg1) // 0x801E4BD4
 
     if (arg1 < 4)
     {
-        maskedField_18 = D_800AFE24.field_18;
+        maskedField_18  = D_800AFE24.field_18;
         shiftedField_18 = (maskedField_18 << 4) & 0x100;
 
         maskedField_18 &= 0xF;
