@@ -9,6 +9,7 @@ options:
 
   asm_path: asm/screens/credits
   src_path: src/screens/credits
+  asset_path: asm/screens/credits
   build_path: build/
 
   ld_script_path: linkers/screens/credits.ld
@@ -57,5 +58,8 @@ segments:
       - [0x8, .rodata, credits]
       - [0x828, c, credits]
       - [0x2F58, .data, credits]
-      - [0x3A10, data]
+  # Random garbage data at end, define as bin file to make Splat ignore it.
+  - name: footer_data
+    type: bin
+    start: 0x3A10
   - [0x3B00]

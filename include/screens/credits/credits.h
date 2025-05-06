@@ -9,10 +9,10 @@ typedef struct
     s16 field_0;
     s16 field_2;
     s16 field_4;
-} s_UnkCredits1;
-STATIC_ASSERT_SIZEOF(s_UnkCredits1, 6);
+} s_801E5558;
+STATIC_ASSERT_SIZEOF(s_801E5558, 6);
 
-extern s_UnkCredits1 D_801E5558[];
+extern s_801E5558 D_801E5558[];
 
 extern char* D_801E5590[]; // Credits string table.
 

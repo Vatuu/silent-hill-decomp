@@ -5,47 +5,55 @@
 #include "main/rng.h"
 #include "screens/credits/credits.h"
 
-s_UnkCredits1 D_801E5558[6] =
-    {
-        {
-            .field_0 = 0x12D5,
-            .field_2 = 0x0000,
-            .field_4 = 0x21FC,
-        },
-        {
-            .field_0 = 0x12D3,
-            .field_2 = 0xF6A0,
-            .field_4 = 0x20D0,
-        },
-        {
-            .field_0 = 0x12D4,
-            .field_2 = 0xFC7C,
-            .field_4 = 0x21FC,
-        },
-        {
-            .field_0 = 0x12D5,
-            .field_2 = 0xFF4C,
-            .field_4 = 0x2148,
-        },
-        {
-            .field_0 = 0x12D6,
-            .field_2 = 0xFF4C,
-            .field_4 = 0x2274,
-        },
-        {.field_0 = 0x12D6,
-         .field_2 = 0xFF88,
-         .field_4 = 0x20D0}};
+s_801E5558 D_801E5558[6] =
+{
+	{
+        .field_0 = 0x12D5,
+        .field_2 = 0x0000,
+		.field_4 = 0x21FC,
+	},
+	{
+        .field_0 = 0x12D3,
+        .field_2 = 0xF6A0,
+        .field_4 = 0x20D0,
+	},
+	{
+        .field_0 = 0x12D4,
+        .field_2 = 0xFC7C,
+        .field_4 = 0x21FC,
+	},
+	{
+        .field_0 = 0x12D5,
+        .field_2 = 0xFF4C,
+        .field_4 = 0x2148,
+	},
+	{
+        .field_0 = 0x12D6,
+        .field_2 = 0xFF4C,
+        .field_4 = 0x2274,
+	},
+	{
+        .field_0 = 0x12D6,
+        .field_2 = 0xFF88,
+        .field_4 = 0x20D0
+	}
+};
 
 RECT D_801E557C[2] =
+{
     {
-        {.x = 320,
-         .y = 256,
-         .w = 160,
-         .h = 240},
-        {.x = 480,
-         .y = 16,
-         .w = 32,
-         .h = 480}};
+        .x = 320,
+        .y = 256,
+        .w = 160,
+        .h = 240
+    },
+    {
+        .x = 480,
+        .y = 16,
+        .w = 32,
+        .h = 480
+    }
+};
 
 void func_801E2E28(s32 idx) // 0x801E2E28
 {
@@ -325,38 +333,54 @@ s32 func_801E342C() // 0x801E342C
 
 #include "stringtable.h"
 
+/** Unknown Rodata values.
+The types are assumed. It is unknown where
+are this applied, they could be also some
+sort of value defined with an macro.
+*/
+static const s16 D_801E2E1E = 0x50;		// 80
+static const s32 D_801E2E20 = 0x1800;	// 6144
+static const s32 D_801E2E24 = 0x21700;	// 136960
+
 s32 D_801E5C20 = 400;
 
 #include "widthtable.h"
 
 s32 D_801E5E24[7] =
-    {
-        0x64FF0000,
-        0x640000FF,
-        0x64FF00FF,
-        0x6400FF00,
-        0x64FFFF00,
-        0x6400FFFF,
-        0x64FFFFFF,
+{
+    0x64FF0000,
+    0x640000FF,
+    0x64FF00FF,
+    0x6400FF00,
+    0x64FFFF00,
+    0x6400FFFF,
+    0x64FFFFFF,
 };
 
 s32 D_801E5E40[7] =
-    {
-        0x2CFF0000,
-        0x2C0000FF,
-        0x2CFF00FF,
-        0x2C00FF00,
-        0x2CFFFF00,
-        0x2C00FFFF,
-        0x2CFFFFFF};
+{
+    0x2CFF0000,
+    0x2C0000FF,
+    0x2CFF00FF,
+    0x2C00FF00,
+    0x2CFFFF00,
+    0x2C00FFFF,
+    0x2CFFFFFF
+};
 
 u8 D_801E5E5C[16] =
-    {
-        '\x7F', '1', '9', 'A', 'C', 'D', 'E', 'G', 'H', 'I', 'K', 'L', 'M', 'N', 'O', 'P'};
+{
+    '\x7F', '1', '9', 'A',
+	'C', 'D', 'E', 'G',
+	'H', 'I', 'K', 'L',
+	'M', 'N', 'O', 'P'
+};
 
 u8 D_801E5E6C[8] =
-    {
-        '.', 'Y', 'V', 'U', 'T', 'S', 'R', ' '};
+{
+    '.', 'Y', 'V', 'U',
+	'T', 'S', 'R', ' '
+};
 
 s32 D_801E5E74 = 0;
 
@@ -473,7 +497,7 @@ bool func_801E3684() // 0x801E3684
 
 void func_801E386C() // 0x801E386C
 {
-    s_UnkCredits1* ptr;
+    s_801E5558* ptr;
     s32            var0;
     s64            var1;
     s32            var2;
