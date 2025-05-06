@@ -331,138 +331,7 @@ s32 func_801E342C() // 0x801E342C
     return 0;
 }
 
-bool func_801E3684() // 0x801E3684
-{
-    s32 sp10;
-    s32 sp14;
-    s32 sp18;
-    s8* temp_s0;
-    s32* var_s2;
-    s32 temp_fp;
-    s32 temp_v1;
-    s32 var_s0;
-    s32 var_s1;
-    s32 var_s3;
-    s32 var_s4;
-    s32 var_s5;
-    s32 var_s6;
-    s32 var_v1;
-    bool ret;
-
-    temp_v1 = D_800C48F0 * 2;
-    var_s0 = (s32)((temp_v1 - 504) * D_801E5E80);
-    var_s0 = var_s0 >> 16;
-    var_s6 = D_801E5E84;
-    sp10 = D_801E5E7C;
-    
-    if (var_s0 < 0)
-    {
-        var_s0 = 0;
-    }
-    
-    var_v1 = (s32)(temp_v1 * D_801E5E80);
-    var_v1 = var_v1 >> 16;
-    if (var_v1 >= D_801E5C20)
-    {
-        var_v1 = D_801E5C20 - 1;
-    }
-    
-    sp14 = ((var_s0 * sp10) - temp_v1) + SCREEN_HEIGHT;
-    sp18 = (var_v1 - var_s0) + 1;
-
-    var_s6 = (var_s6 - temp_v1);
-    var_s6 = var_s6 + SCREEN_HEIGHT;
-    temp_fp = var_s6 < SCREEN_HEIGHT;
-    
-    if (temp_fp != 0)
-    {
-        ret = var_s6 < -23;
-        var_s4 = -1;
-        
-        if (ret)
-        {
-            var_s6 = -24;
-        }
-    }
-    else
-    {
-        ret = false;
-        var_s4 = -1;
-    }
-    
-    func_801E434C(1, 1);
-    func_801E4310(FP_COLOR(0.19f), FP_COLOR(0.19f), FP_COLOR(0.19f));
-    
-    for (var_s5 = 2; var_s5 >= 0; var_s5--, var_s4 += 2)
-    {
-        if (var_s5 == 0)
-        {
-            var_s4 = 0;
-            func_801E434C(0, 0);
-            func_801E4310(FP_COLOR(0.2525f), FP_COLOR(0.2525f), FP_COLOR(0.2525f));
-        }
-        
-        var_s3 = sp14 + var_s4;
-        var_s2 = &D_801E5590[var_s0];
-
-        for (var_s1 = sp18; var_s1 > 0; var_s1--, var_s2++, var_s3 += sp10)
-        {
-            temp_s0 = *var_s2;
-            func_801E42F8(0, var_s3);
-            func_801E4394(temp_s0);
-        }
-        
-        if (temp_fp != 0)
-        {
-            func_801E42F8(0, var_s6 + var_s4);
-            func_801E4394(D_801E5BD0);
-        }
-    } 
-    
-    return ret;
-}
-
-void func_801E386C() // 0x801E386C
-{
-    s_UnkCredits1* ptr;
-    s32            var0;
-    s64            var1;
-    s32            var2;
-
-    var2 = 5;
-    
-    func_8009185C(0, 0, SCREEN_HEIGHT, 0x1000, 0, 0x22000, 0xF0000, 0xB33, 899, -0xF9C);
-    ptr = D_801E5558;
-    ptr = &ptr[5];
-    var0 = (u16)ptr->field_4;
-
-    var1 = (s16)var0;
-    var1 = FP_TO(var1, Q12_SHIFT);
-    var1 = FP_FROM(var1, Q12_SHIFT);
-
-    D_801E5E8C = var2;
-    D_801E5E7C = var1 - 264;
-    D_800C48F0 = (s32)ptr->field_2;
-    D_801E5E7C = D_801E5E7C / D_801E5C20;
-    D_801E5E84 = (D_801E5E7C * D_801E5C20) + SCREEN_HEIGHT;
-    D_801E5E80 = 0x10000 / D_801E5E7C;
-}
-
 #include "stringtable.h"
-
-char D_801E5BD0[] =
-{
-    0xD0, 0xD0, 0xF0, 0xA0, 0xA1, 0xA2, 0xA2, 0xA2,
-    0xBF, 0xAA, 0xAE, 0xAD, 0xA3, 0xAC, 0xA9, 0xBF,
-    0xA4, 0xAE, 0xAC, 0xAF, 0xBB, 0xBC, 0xA6, 0xBE,
-    0xBF, 0xA6, 0xAD, 0x18, 0xBC, 0xA6, 0xBE, 0xBC,
-    0x19, 0xA3, 0xA9, 0xAD, 0xAC, 0xA6, 0xAD, 0xBC,
-    0xBF, 0xBC, 0xAE, 0xAA, 0xB9, 0x18, 0xAE, 0xD8,
-    0x0A, 0xD0, 0xF0, 0xA3, 0xAB, 0xAB, 0xBF, 0xBE,
-    0xA9, 0xA7, 0xA8, 0xBC, 0xBD, 0xBF, 0xBE, 0x18,
-    0xA6, 0xBD, 0xA6, 0xBE, 0x18, 0xBA, 0x18, 0xA6,
-    0x18, 0xA5, 0xB8, 0xD8, 0x00, 0x00, 0x00, 0x00
-};
 
 s32 D_801E5C20 = 400;
 
@@ -584,6 +453,124 @@ u8 D_801E5FD0[40] = { 0 };
 u8 D_801E5FF8[20] = { 0 };
 
 s32 D_801E600C = 0;
+
+
+bool func_801E3684() // 0x801E3684
+{
+    s32 sp10;
+    s32 sp14;
+    s32 sp18;
+    s8* temp_s0;
+    s32* var_s2;
+    s32 temp_fp;
+    s32 temp_v1;
+    s32 var_s0;
+    s32 var_s1;
+    s32 var_s3;
+    s32 var_s4;
+    s32 var_s5;
+    s32 var_s6;
+    s32 var_v1;
+    bool ret;
+
+    temp_v1 = D_800C48F0 * 2;
+    var_s0 = (s32)((temp_v1 - 504) * D_801E5E80);
+    var_s0 = var_s0 >> 16;
+    var_s6 = D_801E5E84;
+    sp10 = D_801E5E7C;
+    
+    if (var_s0 < 0)
+    {
+        var_s0 = 0;
+    }
+    
+    var_v1 = (s32)(temp_v1 * D_801E5E80);
+    var_v1 = var_v1 >> 16;
+    if (var_v1 >= D_801E5C20)
+    {
+        var_v1 = D_801E5C20 - 1;
+    }
+    
+    sp14 = ((var_s0 * sp10) - temp_v1) + SCREEN_HEIGHT;
+    sp18 = (var_v1 - var_s0) + 1;
+
+    var_s6 = (var_s6 - temp_v1);
+    var_s6 = var_s6 + SCREEN_HEIGHT;
+    temp_fp = var_s6 < SCREEN_HEIGHT;
+    
+    if (temp_fp != 0)
+    {
+        ret = var_s6 < -23;
+        var_s4 = -1;
+        
+        if (ret)
+        {
+            var_s6 = -24;
+        }
+    }
+    else
+    {
+        ret = false;
+        var_s4 = -1;
+    }
+    
+    func_801E434C(1, 1);
+    func_801E4310(FP_COLOR(0.19f), FP_COLOR(0.19f), FP_COLOR(0.19f));
+    
+    for (var_s5 = 2; var_s5 >= 0; var_s5--, var_s4 += 2)
+    {
+        if (var_s5 == 0)
+        {
+            var_s4 = 0;
+            func_801E434C(0, 0);
+            func_801E4310(FP_COLOR(0.2525f), FP_COLOR(0.2525f), FP_COLOR(0.2525f));
+        }
+        
+        var_s3 = sp14 + var_s4;
+        var_s2 = &D_801E5590[var_s0];
+
+        for (var_s1 = sp18; var_s1 > 0; var_s1--, var_s2++, var_s3 += sp10)
+        {
+            temp_s0 = *var_s2;
+            func_801E42F8(0, var_s3);
+            func_801E4394(temp_s0);
+        }
+        
+        if (temp_fp != 0)
+        {
+            func_801E42F8(0, var_s6 + var_s4);
+            func_801E4394(D_801E5BD0);
+        }
+    } 
+    
+    return ret;
+}
+
+void func_801E386C() // 0x801E386C
+{
+    s_UnkCredits1* ptr;
+    s32            var0;
+    s64            var1;
+    s32            var2;
+
+    var2 = 5;
+    
+    func_8009185C(0, 0, SCREEN_HEIGHT, 0x1000, 0, 0x22000, 0xF0000, 0xB33, 899, -0xF9C);
+    ptr = D_801E5558;
+    ptr = &ptr[5];
+    var0 = (u16)ptr->field_4;
+
+    var1 = (s16)var0;
+    var1 = FP_TO(var1, Q12_SHIFT);
+    var1 = FP_FROM(var1, Q12_SHIFT);
+
+    D_801E5E8C = var2;
+    D_801E5E7C = var1 - 264;
+    D_800C48F0 = (s32)ptr->field_2;
+    D_801E5E7C = D_801E5E7C / D_801E5C20;
+    D_801E5E84 = (D_801E5E7C * D_801E5C20) + SCREEN_HEIGHT;
+    D_801E5E80 = 0x10000 / D_801E5E7C;
+}
 
 
 bool func_801E3970() // 0x801E3970
