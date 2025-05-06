@@ -3,6 +3,9 @@
 
 #include "common.h"
 
+/** "STAGE 0-0" string */
+extern char D_800CAE7C[];
+
 extern s32 D_800E3A30;
 
 void func_800D0124();
@@ -32,6 +35,8 @@ void func_800D654C();
 void func_800D8888(s_SubCharacter* chara);
 
 s32 func_800D929C();
+
+void func_800D95D4();
 
 void func_800DBE00();
 

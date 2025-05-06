@@ -215,7 +215,13 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D92AC);
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D94F8);
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D95D4);
+/** Debug function??? It is unused here... */
+void func_800D95D4() // 0x800D95D4
+{
+    D_800BCD0C = 7;
+    Gfx_DebugStringPosition(100, 100);
+    Gfx_DebugStringDraw(&D_800CAE7C); // String "STAGE 0-0"
+}
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D9610);
 
@@ -245,11 +251,40 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800DB26C);
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800DB514);
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800DB870);
+void func_800DB870() // 0x800DB870
+{
+    switch (g_SysWork.sysStateStep_C)
+	{
+    case 0:
+        sharedFunc_800D20E4_0_s00();
+        g_SysWork.field_28 = 0;
+        g_SysWork.field_10 = 0;
+        g_SysWork.timer_2C = 0;
+        g_SysWork.field_14 = 0;
+        g_SysWork.sysStateStep_C++;
+    case 1:
+        func_80085DF0();
+        return;
+    case 2:
+        func_800860B0(0, 0x1A, 0, 0, 0, 0);
+        return;
+    default:
+        func_800D2244(0);
+        g_SysWork.sysState_8 = 0;
+        g_SysWork.timer_24 = 0;
+        g_SysWork.sysStateStep_C = 0;
+        g_SysWork.field_28 = 0;
+        g_SysWork.field_10 = 0;
+        g_SysWork.timer_2C = 0;
+        g_SysWork.field_14 = 0;
+        return;
+    }
+}
+
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800DB94C);
 
-void func_800DBE00()
+void func_800DBE00() // 0x800DBE00
 {
     func_8004690C(0x54F);
     func_8004690C(0x551);
