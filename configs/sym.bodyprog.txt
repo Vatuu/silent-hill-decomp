@@ -174,7 +174,7 @@ g_Demo_FileIds = 0x800AFDC4; // type:DemoFileInfo size:0x28
 
 GameState_Unk0_Update = 0x80032D1C; // type:func
 GameState_MainMenu_Update = 0x8003AB28; // type:func
-GameState_LoadScreen_Update = 0x800348E8; // type:func
+GameState_MainLoadScreen_Update = 0x800348E8; // type:func
 GameState_InGame_Update = 0x80038BD4; // type:func
 GameState_MapEvent_Update = 0x8003AA4C; // type:func
 GameState_StatusScreen_Update = 0x8004C9B0; // type:func
@@ -223,6 +223,7 @@ Anim_Update1 = 0x80044B38; // type:func
 Anim_Update2 = 0x80044CA4; // type:func
 Anim_Update3 = 0x80044DF0; // type:func
 
+Gfx_BackgroundSpriteDraw = 0x800314EC; // type:func
 Gfx_DebugStringPosition = 0x80031EFC; // type:func
 Gfx_DebugStringDraw = 0x80031F40; // type:func
 Math_IntegerToString = 0x80032154; // type:func

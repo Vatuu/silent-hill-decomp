@@ -16,11 +16,11 @@
 #define INVENTORY_ITEM_COUNT_MAX 40
 #define SAVEGAME_FOOTER_MAGIC    0xDCDC
 
-/** Converts a floating-point X screen position in percent to a fixed-point X screen coodinate. */
+/** @brief Converts a floating-point X screen position in percent to a fixed-point X screen coodinate. */
 #define SCREEN_POSITION_X(percent) \
     (s32)((SCREEN_WIDTH) * ((percent) / 100.0f))
 
-/** Converts a floating-point Y screen position in percent to a fixed-point Y screen coodinate. */
+/** @brief Converts a floating-point Y screen position in percent to a fixed-point Y screen coodinate. */
 #define SCREEN_POSITION_Y(percent) \
     (s32)((SCREEN_HEIGHT) * ((percent) / 100.0f))
 
@@ -83,13 +83,13 @@ typedef enum _GameState
     GameState_KonamiLogo          = 1,
     GameState_KcetLogo            = 2,
     GameState_StartMovieIntro     = 3,
-    GameState_Unk4                = 4,
+    GameState_DeathLoadScreen     = 4,
     GameState_MovieIntroAlternate = 5,
     GameState_MovieIntro          = 6,
     GameState_MainMenu            = 7,
-    GameState_Unk8                = 8,
+    GameState_SaveScreen          = 8,
     GameState_MovieOpening        = 9,
-    GameState_LoadScreen          = 10,
+    GameState_MainLoadScreen      = 10,
     GameState_InGame              = 11,
     GameState_MapEvent            = 12,
     GameState_ExitMovie           = 13,
@@ -101,7 +101,7 @@ typedef enum _GameState
     GameState_LoadStatusScreen    = 19,
     GameState_LoadMapScreen       = 20,
     GameState_Unk15               = 21,
-    GameState_Unk16               = 22 /** Removed debug menu? Doesn't exist in function array, but DebugMoviePlayer state tries to switch to it. */
+    GameState_Unk16               = 22 /** Removed debug menu? Doesn't exist in function array, but `DebugMoviePlayer` state tries to switch to it. */
 } e_GameState;
 
 /** @brief State IDs used by `GameState_InGame`.

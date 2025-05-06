@@ -29,7 +29,7 @@ extern u8* D_800CA50C;
 
 extern s32 D_800CA510;
 
-/** Display Konami logo and start loading base hero animations. */
+/** Displays the Konami logo and start loading base hero animations. */
 void GameState_KonamiLogo_Update();
 
 s32 func_800C9874();

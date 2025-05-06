@@ -37,7 +37,7 @@ void GameState_StartMovieIntro_Update() // 0x801E2654
             break;
     }
 
-    func_800314EC(D_800A900C);
+    Gfx_BackgroundSpriteDraw(D_800A900C);
 }
 
 void GameState_MovieIntro_Update() // 0x801E279C
@@ -58,7 +58,7 @@ void GameState_MovieIntro_Update() // 0x801E279C
 void GameState_MovieOpening_Update() // 0x801E2838
 {
     open_main(FILE_XA_M1_03500, 0);
-    Game_StateSetNext(GameState_LoadScreen);
+    Game_StateSetNext(GameState_MainLoadScreen);
 }
 
 void GameState_ExitMovie_Update() // 0x801E28B0

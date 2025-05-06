@@ -94,7 +94,8 @@ void func_801E326C(s8* arg0, s8* arg1, s32 arg2, s32 arg3);
 
 void func_801E4D90(s8* arg0, s8* arg1, s32 arg2, s32 arg3);
 
-void GameState_Unk8_Update();
+/** Updates the save screen. */
+void GameState_SaveScreen_Update();
 
 void func_801E63C0();
 
@@ -104,15 +105,21 @@ void func_801E6DB0();
 
 void func_801E6F38();
 
+/** Draws "SLOT1"/"SLOT2" strings, bottom transparent frame, and background image.*/
 void func_801E709C();
 
+/** Draws all file box strings and graphics, as well as the strings in the transparent frame at the bottom. */
 void func_801E70C8();
 
+/** Draws "Now saving..." and "Finished saving." strings. Handle something else too.
+ *  Used in `GameState_SaveScreen_Update` and `GameState_DeathLoadScreen_Update`.
+ */
 void func_801E7244();
 
 void func_801E72DC();
 
-void GameState_Unk4_Update();
+/** Updates the death load screen. */
+void GameState_DeathLoadScreen_Update();
 
 void func_801E737C();
 

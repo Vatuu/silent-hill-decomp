@@ -572,6 +572,7 @@ extern s_FsImageDesc D_800A901C;
 
 extern s_FsImageDesc D_800A9024;
 
+/** Save screen background image. */
 extern s_FsImageDesc D_800A902C;
 
 extern s_FsImageDesc D_800A9044;
@@ -1076,12 +1077,9 @@ void func_80030530();
 
 void func_800303E4();
 
-/** Bodyprog function that fades the screen out?
- * Called by:
- * - `main` in main.c
- * - 'func_801E709C' in saveload.c
- * */
-void func_800314EC(s_FsImageDesc* image);
+// `Gfx_DrawBackgroundImage`
+/** Draws a background image. */
+void Gfx_BackgroundSpriteDraw(s_FsImageDesc* image);
 
 void func_80031CCC(s32);
 
@@ -1610,6 +1608,8 @@ void Joy_ReadP1();
 void Joy_Update();
 
 void func_800348C0();
+
+void GameState_MainLoadScreen_Update();
 
 void func_800348E8();
 

@@ -336,7 +336,7 @@ void func_800867B4(s32 caseParam, s32 idx) // 0x800867B4
             break;
 
         case 1:
-            func_800314EC(&D_800A901C);
+            Gfx_BackgroundSpriteDraw(&D_800A901C);
             break;
 
         case 2:

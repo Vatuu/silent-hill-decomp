@@ -412,7 +412,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80031260);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_800314A4);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_800314EC);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", Gfx_BackgroundSpriteDraw);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_800317CC);
 
@@ -692,7 +692,7 @@ void GameState_Unk0_Update() // 0x80032D1C
     }
 
     func_80033548();
-    func_800314EC(&g_MainImg0);
+    Gfx_BackgroundSpriteDraw(&g_MainImg0);
     func_80089090(1);
 }
 
@@ -926,7 +926,7 @@ s32 MainLoop_ShouldWarmReset() // 0x80034108
         return 0;
     }
 
-    if (g_GameWork.gameState_594 == GameState_Unk8 && g_GameWork.gameStateStep_598[0] == 4)
+    if (g_GameWork.gameState_594 == GameState_SaveScreen && g_GameWork.gameStateStep_598[0] == 4)
     {
         return 0;
     }
@@ -1015,7 +1015,7 @@ void func_800348C0()
     bzero(&D_800A9944, 0x48);
 }
 
-void GameState_LoadScreen_Update() // 0x800348E8
+void GameState_MainLoadScreen_Update() // 0x800348E8
 {
     u8 temp;
 
@@ -1783,12 +1783,12 @@ void SysState_GameOver_Update() // 0x8003A52C
         case 6:
             func_8008616C(2, 0, 0, 0x2000, 0);
             g_SysWork.field_28 = 0;
-            func_800314EC(&D_800A9054);
+            Gfx_BackgroundSpriteDraw(&D_800A9054);
             break;
 
         case 7:
             g_SysWork.field_28++;
-            func_800314EC(&D_800A9054);
+            Gfx_BackgroundSpriteDraw(&D_800A9054);
 
             if (!(g_ControllerPtr0->btns_new_10 & (g_GameWorkPtr1->config_0.controllerBinds_0.enter | g_GameWorkPtr1->config_0.controllerBinds_0.cancel)))
             {
@@ -1806,7 +1806,7 @@ void SysState_GameOver_Update() // 0x8003A52C
             break;
 
         case 8:
-            func_800314EC(&D_800A9054);
+            Gfx_BackgroundSpriteDraw(&D_800A9054);
             func_8008616C(2, 1, 0, 0x2000, 0);
             break;
 
@@ -1838,7 +1838,7 @@ void GameState_MapEvent_Update() // 0x8003AA4C
 
     g_MapOverlayHeader.mapEventFuncs_20[g_MapEventIdx]();
 
-    func_800314EC(&D_800A902C);
+    Gfx_BackgroundSpriteDraw(&D_800A902C);
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", GameState_MainMenu_Update); // 0x8003AB28
