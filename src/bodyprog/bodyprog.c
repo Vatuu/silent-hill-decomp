@@ -727,6 +727,7 @@ void MainLoop() // 0x80032EE0
     {
         g_MainLoop_FrameCount++;
 
+        // Update input.
         Joy_ReadP1();
         Demo_JoyUpdate();
         Joy_ControllerDataUpdate();
@@ -782,6 +783,7 @@ void MainLoop() // 0x80032EE0
         func_8008D78C(); // Camera update?
         DrawSync(0);
 
+        // Handle V sync.
         if (g_SysWork.flags_22A4 & (1 << 1))
         {
             vBlanks = VSync(-1);
@@ -842,12 +844,12 @@ void MainLoop() // 0x80032EE0
                 }
             }
 
-            // Update VBlanks.
+            // Update V blanks.
             g_UncappedVBlanks = g_VBlanks;
             g_VBlanks = MIN(g_VBlanks, V_BLANKS_MAX);
             
             // Update V count.
-            vCount = MIN(GsGetVcount(), H_BLANKS_PER_FRAME_MIN); // NOTE: Will call GsGetVcount() twice.
+            vCount = MIN(GsGetVcount(), H_BLANKS_PER_FRAME_MIN); // NOTE: Will call `GsGetVcount` twice.
             vCountCopy = vCount;
         }
 

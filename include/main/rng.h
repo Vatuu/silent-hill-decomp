@@ -8,24 +8,24 @@
  * This macro evaluates the probability by performing a bitwise AND
  * operation with a mask that has the specified number of bits set to 1.
  *
- * Bits | Chance  | Mask
- * -----|---------|------
- * 1    | 50%     | 0x1
- * 2    | 25%     | 0x3
- * 3    | 12.5%   | 0x7
- * 4    | 6.25%   | 0xF
- * 5    | 3.125%  | 0x1F
- * 6    | 1.563%  | 0x3F
- * 7    | 0.781%  | 0x7F
- * 8    | 0.391%  | 0xFF
- * 9    | 0.195%  | 0x1FF
- * 10   | 0.098%  | 0x3FF
- * 11   | 0.049%  | 0x7FF
- * 12   | 0.024%  | 0xFFF
- * 13   | 0.012%  | 0x1FFF
- * 14   | 0.006%  | 0x3FFF
- * 15   | 0.003%  | 0x7FFF
- * 16   | 0.002%  | 0xFFFF
+ * Bits | Mask   | Chance  
+ * -----|------  |---------
+ * 1    | 0x1    | 50%     
+ * 2    | 0x3    | 25%     
+ * 3    | 0x7    | 12.5%   
+ * 4    | 0xF    | 6.25%   
+ * 5    | 0x1F   | 3.125%  
+ * 6    | 0x3F   | 1.563%  
+ * 7    | 0x7F   | 0.781%  
+ * 8    | 0xFF   | 0.391%  
+ * 9    | 0x1FF  | 0.195%  
+ * 10   | 0x3FF  | 0.098%  
+ * 11   | 0x7FF  | 0.049%  
+ * 12   | 0xFFF  | 0.024%  
+ * 13   | 0x1FFF | 0.012%  
+ * 14   | 0x3FFF | 0.006%  
+ * 15   | 0x7FFF | 0.003%  
+ * 16   | 0xFFFF | 0.002%  
  */
 #define TEST_RNG(bits) \
     (Rng_Rand16() & ((1 << (bits)) - 1))
@@ -83,7 +83,7 @@ void Rng_SetSeed(u32 newSeed);
  * shifts the result right to produce a value within the range
  * of `0` to `0xFFF` (12-bit).
  *
- * @return A random 12-bit short integer (`0` to `0xFFF`).
+ * @return A random 12-bit short integer in the range `[0, 0xFFF]`.
  */
 u16 Rng_Rand12();
 

@@ -1095,12 +1095,12 @@ s32 func_80041ADC(s32 queueIdx);
 
 void func_80041C24(s_80041CEC* arg0, s32 arg1, s32 arg2);
 
-/** arg0 might be s_Skeleton, arg1 might be s_Bone. */
+/** `arg0` might be `s_Skeleton`, `arg1` might be `s_Bone`. */
 void func_80041CB4(s_Skeleton* skel, s_80041CEC* arg1);
 
 void func_80041CEC(s_80041CEC*);
 
-/** Clears field_4 field in array of skeletons? Might not be skeletons, but the struct fits. */
+/** Clears `field_4` in array of skeletons? Might not be skeletons, but the struct fits. */
 void func_80041D10(s_Skeleton* skels, s32 size);
 
 void func_80041E98();
