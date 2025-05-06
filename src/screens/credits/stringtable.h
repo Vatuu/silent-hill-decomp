@@ -2,7 +2,7 @@ char D_801E558C[] = "";
 
 char* D_801E5590[] =
 {
-    "\xD0\xF0" "Executive Producer\xD8""\x00\x50\x00\x00\x18\x00\x00\x00\x17\x02",
+    "\xD0\xF0" "Executive Producer\xD8",
     D_801E558C,
     D_801E558C,
     "\xD0\xF0" "Makoto Y" "\x18" "ano\xD8",
