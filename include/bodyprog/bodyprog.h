@@ -1000,6 +1000,17 @@ extern s_800ACAA8 D_800ACAA8[];
 
 extern s_800AD4C8 D_800AD4C8[];
 
+typedef struct _SpawnInfo
+{
+    s32 posX_0;
+    s8  chara_type_4; /** `e_ShCharacterId` */
+    s8  rot_5;
+    s8  isAnimStateUnchanged_3_6; /** Copied to `isAnimStateUnchanged_3` in `s_Model` */
+    s8  unk_7;
+    s32 posZ_8;
+} s_SpawnInfo;
+STATIC_ASSERT_SIZEOF(s_SpawnInfo, 12);
+
 /** TODO: `g_MapOverlayHeader` is part of the overlay bin files. Maybe should be moved to `maps/s00.h` or `dynamic/dynamic.h`. */
 typedef struct _MapOverlayHeader
 {
@@ -1010,8 +1021,10 @@ typedef struct _MapOverlayHeader
     s8           field_14;
     u8           unk_15[3];
     u8           unk_18[8];
-    void         (**mapEventFuncs_20)(); // Points to array of event functions.
-    u8           unk_24[28];
+    void         (**mapEventFuncs_20)(); /** Points to array of event functions. */
+    u8           unk_24[12];
+    char**       mapMessageStrings_30; /** Points to array of `char*` for each displayed message in the map. */
+    u8           unk_34[12];
     void         (*func_40)();
     void         (*func_44)();
     u8           unk_48[128];
@@ -1025,10 +1038,16 @@ typedef struct _MapOverlayHeader
     u8           unk_140[40];
     void         (*func_168)(void*, void*, void*);
     u8           unk_16C[4];
-    u8           unk_170[604];
-    VC_ROAD_DATA roadDataList_3CC[48]; // Ends at 0x84C.
+    u8           unk_170[0x24];
+    void         (*charaUpdateFuncs_194[44])(s_SubCharacter*, void*, s32); /** Guessed params, funcptrs for each `e_ShCharacterId`, set to 0 for types not included in the map overlay, called by `func_80038354` */
+    u8           unk_244[4];
+    u8           roamingCharas_248[2]; /** Holds 2 `e_ShCharacterId` values without set spawn locations, possibly for roaming monsters, read by `func_80037F24` */
+    u8           unk_24A[2];
+    s_SpawnInfo  charaSpawns_24C[32]; /** Array of chara type / position / flags, many maps leave this set to all 0 and only use roaming charas, read by `func_80037F24` */
+    VC_ROAD_DATA roadDataList_3CC[48];
     // TODO: A lot more in here.
 } s_MapOverlayHeader;
+STATIC_ASSERT_SIZEOF(s_MapOverlayHeader, 2124); // Size incomplete.
 
 extern s_MapOverlayHeader g_MapOverlayHeader; // 0x800C957C
 

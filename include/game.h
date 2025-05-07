@@ -510,9 +510,58 @@ typedef struct _ModelAnimData
 } s_ModelAnim;
 STATIC_ASSERT_SIZEOF(s_ModelAnim, 20);
 
+/** Table at 0x800A90FC associates each character ID with anim/model/texture files. */
+enum e_ShCharacterId
+{
+    CHARA_UNKNOWN             = 0,
+    CHARA_HERO                = 1,
+    CHARA_AIR_SCREAMER        = 2,
+    CHARA_NIGHT_FLUTTER       = 3,
+    CHARA_GROANER             = 4,
+    CHARA_WORMHEAD            = 5,
+    CHARA_LARVAL_STALKER      = 6,
+    CHARA_STALKER             = 7,
+    CHARA_GREY_CHILD          = 8,
+    CHARA_MUMBLER             = 9,
+    CHARA_HANGED_SCRATCHER    = 10,
+    CHARA_CREAPER             = 11,
+    CHARA_ROMPER              = 12,
+    CHARA_UNUSED_CHICKEN      = 13,
+    CHARA_SPLITHEAD           = 14,
+    CHARA_FLOATSTINGER        = 15,
+    CHARA_PUPPET_NURSE        = 16,
+    CHARA_DUMMY_A             = 17,
+    CHARA_PUPPET_DOCTOR       = 18,
+    CHARA_DUMMY_B             = 19,
+    CHARA_TWINFEELER          = 20,
+    CHARA_BLOODSUCKER         = 21,
+    CHARA_INCUBUS             = 22,
+    CHARA_UNKNOWN23           = 23,
+    CHARA_MONSTER_CYBIL       = 24,
+    CHARA_LOCKER_DEAD_BODY    = 25,
+    CHARA_CYBIL               = 26,
+    CHARA_ENDING_CYBIL        = 27,
+    CHARA_CHERYL              = 28,
+    CHARA_CAT                 = 29,
+    CHARA_DAHLIA              = 30,
+    CHARA_ENDING_DAHLIA       = 31,
+    CHARA_LISA                = 32,
+    CHARA_BLOODY_LISA         = 33,
+    CHARA_ALESSA              = 34,
+    CHARA_GHOST_CHILD_ALESSA  = 35,
+    CHARA_INCUBATOR           = 36,
+    CHARA_BLOODY_INCUBATOR    = 37,
+    CHARA_KAUFMANN            = 38,
+    CHARA_ENDING_KAUFMANN     = 39,
+    CHARA_FLAUROS             = 40,
+    CHARA_LITTLE_INCUBUS      = 41,
+    CHARA_GHOST_DOCTOR        = 42,
+    CHARA_INTENSIVE_CARE_UNIT = 43
+};
+
 typedef struct _Model
 {
-    s8 chara_type_0;
+    s8 chara_type_0; /** `e_ShCharacterId` */
     u8 field_1;
     u8 field_2;
     u8 isAnimStateUnchanged_3; // Educated guess. In `s_MainCharacterExtra`, always 1, set to 0 for 1 tick when anim state appears to change.
