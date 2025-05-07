@@ -92,7 +92,7 @@ s32 Fs_QueueStartReadAnm(s32 arg0, s32 arg1, void* arg2, s32 arg3)
     s32 fileIdx;
     s_FsQueueExtra extra;
 
-    fileIdx = D_800A90FC[arg1].fileIdx;
+    fileIdx           = g_Chara_FileInfo[arg1].animFileIdx;
     extra.anm.field_4 = arg1;
     extra.anm.field_0 = arg0;
     extra.anm.field_8 = arg3;

@@ -510,10 +510,10 @@ typedef struct _ModelAnimData
 } s_ModelAnim;
 STATIC_ASSERT_SIZEOF(s_ModelAnim, 20);
 
-/** Table at 0x800A90FC associates each character ID with anim/model/texture files. */
+/** Names for each character index used in the game, g_Chara_FileInfo array associates each character ID with anim/model/texture files. */
 enum e_ShCharacterId
 {
-    CHARA_UNKNOWN             = 0,
+    CHARA_NONE                = 0,
     CHARA_HERO                = 1,
     CHARA_AIR_SCREAMER        = 2,
     CHARA_NIGHT_FLUTTER       = 3,
@@ -530,9 +530,9 @@ enum e_ShCharacterId
     CHARA_SPLITHEAD           = 14,
     CHARA_FLOATSTINGER        = 15,
     CHARA_PUPPET_NURSE        = 16,
-    CHARA_DUMMY_A             = 17,
+    CHARA_DUMMY_A             = 17, /** Uses dummy anim file without model/texture, but uses same update funcptr as `CHARA_PUPPET_NURSE`. */
     CHARA_PUPPET_DOCTOR       = 18,
-    CHARA_DUMMY_B             = 19,
+    CHARA_DUMMY_B             = 19, /** Uses dummy anim file without model/texture, but uses same update funcptr as `CHARA_PUPPET_DOCTOR`. */
     CHARA_TWINFEELER          = 20,
     CHARA_BLOODSUCKER         = 21,
     CHARA_INCUBUS             = 22,

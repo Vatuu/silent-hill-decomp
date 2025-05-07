@@ -147,16 +147,6 @@ typedef struct
     s32 field_8;
 } s_8008E51C;
 
-/** Something related to ANM files. See `D_800A90FC`. */
-typedef struct
-{
-    s16 fileIdx;
-    s16 field_2;
-    u32 field_4;
-    u32 field_8;
-    u32 field_C;
-} s_800A90FC;
-
 typedef struct
 {
     s8  unk_0[4];
@@ -388,6 +378,18 @@ typedef struct
     s32     field_20;
 } s_800C4818;
 
+/** Holds file IDs of anim/model/texture for each `e_ShCharacterId`, along with some data used in VC camera code. */
+typedef struct
+{
+    s16   animFileIdx;
+    s16   modelFileIdx;
+    s16   textureFileIdx;
+    s16   field_6;
+    void* field_8;
+    u32   field_C;
+} s_CharaFileInfo;
+STATIC_ASSERT_SIZEOF(s_CharaFileInfo, 16);
+
 // Contains animation data? Size is rather small, so if it does, it would be indices to
 // larger arrays containing actual data.
 typedef struct
@@ -583,8 +585,8 @@ extern s_FsImageDesc D_800A9054;
 
 extern s_FsImageDesc D_800A906C;
 
-/** Unknown bodyprog var. Used in `Fs_QueueStartReadAnm`. */
-extern s_800A90FC D_800A90FC[];
+/** Array containg file IDs used for each `e_ShCharacterId`, used in `Fs_QueueStartReadAnm`. */
+extern s_CharaFileInfo g_Chara_FileInfo[45]; // 0x800A90FC
 
 extern u16 D_800A9774[];
 

@@ -158,6 +158,8 @@ g_Sd_VolumeXa = 0x800C1686;
 g_Sd_ReverbDepth = 0x800C1687;
 g_Game_VSyncTimeSinceBoot = 0x800C1690;
 
+g_Chara_FileInfo = 0x800A90FC; // type:CharaFileInfo size:0x2D0
+
 g_Demo_DemoFileIdx = 0x800C4840; // type:s32
 g_Demo_PlayFileIdx = 0x800C4844; // type:s32
 g_Demo_UserConfigBackup = 0x800C4850; // type:ShSaveUserConfig size:0x38
