@@ -240,7 +240,8 @@ void Settings_ExtraScreen() // 0x801E318C
     if (D_801E73E4 == 8)
     {
         D_801E7300 = D_801E72F8;
-        if (((g_GameWork.gameStatePrev_590 == GameState_InGame) && ((g_ControllerPtr0->btns_new_10 & g_GameWorkPtr1->config_0.controllerBinds_0.enter) == 0)) &&
+        if (((g_GameWork.gameStatePrev_590 == GameState_InGame) && 
+			((g_ControllerPtr0->btns_new_10 & g_GameWorkPtr1->config_0.controllerBinds_0.enter) == 0)) &&
             ((g_ControllerPtr0->btns_new_10 & g_GameWorkPtr1->config_0.controllerBinds_0.option) != 0))
         {
             func_80046048(0x51A, 0, 0x40);
@@ -368,7 +369,8 @@ void Settings_ExtraScreen() // 0x801E318C
         }
     }
 
-    if ((g_ControllerPtr0->btns_new_10 & (g_GameWorkPtr1->config_0.controllerBinds_0.cancel | (Pad_L2 | Pad_R2 | Pad_L1 | Pad_R1))) &&
+    if ((g_ControllerPtr0->btns_new_10 & (g_GameWorkPtr1->config_0.controllerBinds_0.cancel |
+		(Pad_L2 | Pad_R2 | Pad_L1 | Pad_R1))) &&
         (g_GameWork.gameStateStep_598[0] != 0xf))
     {
         if (g_ControllerPtr0->btns_new_10 & g_GameWorkPtr1->config_0.controllerBinds_0.cancel)
@@ -426,7 +428,8 @@ void Settings_MainScreen() // 0x801E3770
 
     D_801E72FC = D_801E72F4;
 
-    if (((g_GameWork.gameStatePrev_590 == GameState_InGame) && ((g_ControllerPtr0->btns_new_10 & g_GameWorkPtr1->config_0.controllerBinds_0.enter) == 0)) &&
+    if (((g_GameWork.gameStatePrev_590 == GameState_InGame) && 
+		((g_ControllerPtr0->btns_new_10 & g_GameWorkPtr1->config_0.controllerBinds_0.enter) == 0)) &&
         (g_ControllerPtr0->btns_new_10 & g_GameWorkPtr1->config_0.controllerBinds_0.option))
     {
         func_80046048(0x51A, 0, 0x40);
@@ -454,7 +457,8 @@ void Settings_MainScreen() // 0x801E3770
     switch (D_801E72F4)
     {
         case 0:
-            if (g_ControllerPtr0->btns_new_10 & (g_GameWorkPtr1->config_0.controllerBinds_0.enter | g_GameWorkPtr1->config_0.controllerBinds_0.cancel))
+            if (g_ControllerPtr0->btns_new_10 & (g_GameWorkPtr1->config_0.controllerBinds_0.enter |
+				g_GameWorkPtr1->config_0.controllerBinds_0.cancel))
             {
                 func_80046048(0x51A, 0, 0x40);
                 g_GameWork.gameStateStep_598[0] = 5;
@@ -914,7 +918,6 @@ void Gfx_SelectedOptionMain() // 0x801E472C
 /** Related to drawing.
 Draws the vignette for the main and extra options screens.
 */
-// INCLUDE_ASM("asm/screens/options/nonmatchings/options", Gfx_VignetteDraw); // 0x801E49F0
 void Gfx_VignetteDraw() // 0x801E49F0
 {
     GsOT*    ot = &g_ObjectTable0[g_ObjectTableIdx];
@@ -1527,7 +1530,6 @@ void Gfx_ArrowDraw(s_ArrowVectors* vec, s32 arg1, s32 arg2) // 0x801E662C
 /** Related to drawing.
 Draws the button next to options in the main and extra option screens.
 */
-// INCLUDE_ASM("asm/screens/options/nonmatchings/options", Gfx_ButtonDraw); // 0x801E67B0
 void Gfx_ButtonDraw(s_ButtonVectors* vec, s32 arg1, s32 arg2) // 0x801E67B0
 {
     GsOT*    ot = &g_ObjectTable1[g_ObjectTableIdx];
