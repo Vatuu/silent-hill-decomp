@@ -556,7 +556,9 @@ enum e_ShCharacterId
     CHARA_FLAUROS             = 40,
     CHARA_LITTLE_INCUBUS      = 41,
     CHARA_GHOST_DOCTOR        = 42,
-    CHARA_INTENSIVE_CARE_UNIT = 43
+    CHARA_INTENSIVE_CARE_UNIT = 43,
+    CHARA_NULL                = 44,
+    CHARA_COUNT
 };
 
 typedef struct _Model

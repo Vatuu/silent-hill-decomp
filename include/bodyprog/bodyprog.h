@@ -1041,8 +1041,7 @@ typedef struct _MapOverlayHeader
     void         (*func_168)(void*, void*, void*);
     u8           unk_16C[4];
     u8           unk_170[0x24];
-    void         (*charaUpdateFuncs_194[44])(s_SubCharacter*, void*, s32); /** Guessed params, funcptrs for each `e_ShCharacterId`, set to 0 for types not included in the map overlay, called by `func_80038354` */
-    u8           unk_244[4];
+    void         (*charaUpdateFuncs_194[CHARA_COUNT])(s_SubCharacter*, void*, s32); /** Guessed params, funcptrs for each `e_ShCharacterId`, set to 0 for IDs not included in the map overlay, called by `func_80038354` */
     u8           roamingCharas_248[2]; /** Holds 2 `e_ShCharacterId` values without set spawn locations, possibly for roaming monsters, read by `func_80037F24` */
     u8           unk_24A[2];
     s_SpawnInfo  charaSpawns_24C[32]; /** Array of chara type / position / flags, many maps leave this set to all 0 and only use roaming charas, read by `func_80037F24` */
