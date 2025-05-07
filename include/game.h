@@ -427,14 +427,14 @@ typedef struct _ShSaveUserConfig
     u8                   optBrightness_22;          /** Range: [0, 7], default: 3. */
     u8                   optWeaponCtrl_23;          /** Switch: 0, Press: 1, default: Press. */
     u8                   optBloodColor_24;          /** Normal: 0, Green: 2, Violet: 5, Black: 13, default: Normal */
-    u8                   optAutoLoad_25;            /** Off: 0, On: 1, default: Off. */
+    s8                   optAutoLoad_25;            /** Off: 0, On: 1, default: Off. */
     u8                   unk_26;
     u8                   optExtraOptionsEnabled_27;
     s8                   optViewCtrl_28;            /** Normal: 0, Reverse: 1, default: Normal. */
     s8                   optViewMode_29;            /** Normal: 0, Self View: 1, default: Normal. */
-    u8                   optRetreatTurn_2A;         /** Normal: 0, Reverse: 1, default: Normal. */
-    u8                   optWalkRunCtrl_2B;         /** Normal: 0, Reverse: 1, default: Normal. */
-    u8                   optAutoAiming_2C;          /** On: 0, Off: 1, default: On. */
+    s8                   optRetreatTurn_2A;         /** Normal: 0, Reverse: 1, default: Normal. */
+    s8                   optWalkRunCtrl_2B;         /** Normal: 0, Reverse: 1, default: Normal. */
+    s8                   optAutoAiming_2C;          /** On: 0, Off: 1, default: On. */
     s8                   optBulletAdjust_2D;        /** x1-x6: Range [0, 5], default: x1. */
     u16                  seenGameOverTips_2E[1];    /** Bitfield tracking seen game-over tips. Each bit corresponds to a tip index (0–15), set bits indicate seen tips. */
     s8                   unk_30[4];

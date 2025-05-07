@@ -577,6 +577,8 @@ extern s_FsImageDesc D_800A9024;
 /** Save screen background image. */
 extern s_FsImageDesc D_800A902C;
 
+extern s_FsImageDesc D_800A903C;
+
 extern s_FsImageDesc D_800A9044;
 
 extern s_FsImageDesc D_800A904C;
@@ -1269,7 +1271,7 @@ void func_800472BC(s32 arg0);
 void func_8004760C();
 
 /** Args are volume levels. */
-void Sd_SetVolume(u8 arg0, u8 arg1, u8 arg2);
+void Sd_SetVolume(u8 arg0, s16 arg1, u8 arg2);
 
 void func_8004692C(u16);
 

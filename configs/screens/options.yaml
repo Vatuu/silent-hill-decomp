@@ -54,7 +54,9 @@ segments:
     subalign: 4
     subsegments:
       - [0x0, rodata]
-      - [0x664, .rodata, options]
+      - [0x8, .rodata, options]
+      - [0x5EC, rodata]
+      - [0x664, rodata]
       - [0x6A4, rodata]
       - [0x744, c, options]
       #- [0x2DA0, c, options_position]

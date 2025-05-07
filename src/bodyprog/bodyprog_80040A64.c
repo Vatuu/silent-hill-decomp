@@ -1085,7 +1085,7 @@ void func_8004760C() // 0x8004760C
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80047634);
 
-void Sd_SetVolume(u8 arg0, u8 arg1, u8 arg2) // 0x80047798
+void Sd_SetVolume(u8 arg0, s16 arg1, u8 arg2) // 0x80047798
 {
     D_800C1678.field_E = arg0;
     D_800C1678.field_D = arg1;
