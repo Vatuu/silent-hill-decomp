@@ -3,13 +3,13 @@
 
 #include "common.h"
 
-typedef struct
+typedef struct _LineVectors
 {
     DVECTOR field_0;
     DVECTOR field_4;
 } s_LineVectors;
 
-typedef struct
+typedef struct _ButtonVectors
 {
     DVECTOR field_0;
     DVECTOR field_4;
@@ -17,7 +17,7 @@ typedef struct
     DVECTOR field_C;
 } s_ButtonVectors;
 
-typedef struct
+typedef struct _ArrowVectors
 {
     DVECTOR field_0;
     DVECTOR field_4;
@@ -33,6 +33,7 @@ typedef struct
     s16 field_8;
     s16 field_A;
 } s_sub_801E2C74;
+STATIC_ASSERT_SIZEOF(s_sub_801E2C74, 12);
 
 typedef struct
 {

@@ -334,13 +334,13 @@ s32 func_801E342C() // 0x801E342C
 #include "stringtable.h"
 
 /** Unknown Rodata values.
-The types are assumed. It is unknown where
-are this applied, they could be also some
-sort of value defined with an macro.
+ * The types are assumed. It is unknown where
+ * are this applied, they could be also some
+ * sort of value defined with an macro.
 */
-static const s16 D_801E2E1E = 0x50;		// 80
-static const s32 D_801E2E20 = 0x1800;	// 6144
-static const s32 D_801E2E24 = 0x21700;	// 136960
+static const s16 D_801E2E1E = 0x50;    // 80
+static const s32 D_801E2E20 = 0x1800;  // 6144
+static const s32 D_801E2E24 = 0x21700; // 136960
 
 s32 D_801E5C20 = 400;
 
@@ -740,7 +740,7 @@ void func_801E3E18(s32 arg0, s32 arg1) // 0x801E3E18
     for (i = 1; i < 17; i++)
     {
         temp_a2 = temp_a2 * 0x19660D + 0x3C6EF35F;
-        temp_v1 = (temp_a2 >> 0x14);
+        temp_v1 = (temp_a2 >> 20);
         temp_v1 -= 0x200;
         if (temp_v1 >= 0xC00)
         {
@@ -749,17 +749,18 @@ void func_801E3E18(s32 arg0, s32 arg1) // 0x801E3E18
         else if (temp_v1 >= 0xA00)
         {
             temp_v1 = (temp_v1 - 0xE00) >> 3;
-            var_v1  = temp_v1 + 0xC0;
+            var_v1  = temp_v1 + 192;
         }
-        else if (temp_v1 < 0x200U)
+        else if (temp_v1 < 0x200u)
         {
             var_v1 = temp_v1 >> 3;
         }
         else
         {
             temp_v1 = (temp_v1 - 0x200) >> 4;
-            var_v1  = temp_v1 + 0x40;
+            var_v1  = temp_v1 + 64;
         }
+
         D_801E5FD0[i] = var_v1;
     }
 
@@ -774,10 +775,11 @@ void func_801E3E18(s32 arg0, s32 arg1) // 0x801E3E18
     var_s4  = 0;
     temp_t1 = arg0 + 0x1E0;
     sp1C    = 0xffffff;
-    temp_t6 = sp28 = temp_t1 << 0x10;
-    sp2C           = temp_t6 + 0x200000;
+    temp_t6 =
+    sp28    = temp_t1 << 0x10;
+    sp2C    = temp_t6 + 0x200000;
 
-    for (; j < 16; j++, var_s4 -= 16, sp28 += 0xFFE00000, sp2C += 0xFFE00000, temp_t1 -= 0x20)
+    for (; j < 16; j++, var_s4 -= 16, sp28 += 0xFFE00000, sp2C += 0xFFE00000, temp_t1 -= 32)
     {
         ptr2 = D_801E5FF8;
 
@@ -822,9 +824,9 @@ void func_801E3E18(s32 arg0, s32 arg1) // 0x801E3E18
             var_s2_2++;
             var_s1_2++;
 
-            var_a1 = var_a1 + (((temp_v1_2 * (var - arg1)) + (var_a3 * arg1)) >> 0xD);
+            var_a1 = var_a1 + (((temp_v1_2 * (var - arg1)) + (var_a3 * arg1)) >> 13);
             var_a1 = var_a1 + ((temp_a0 + var_a2) >> 1);
-            var_a1 = ((var_a1 + var_a2 + temp_a0) * 2 + (var_a3 + temp_v1_2)) >> 1;
+            var_a1 = (((var_a1 + var_a2 + temp_a0) * 2) + (var_a3 + temp_v1_2)) >> 1;
             var_a1--;
 
             *var_t0 = var_a1;
@@ -870,7 +872,7 @@ void func_801E3E18(s32 arg0, s32 arg1) // 0x801E3E18
             var_a1 = var_v1;
             x0     = var_s4 + var_a1;
 
-            if (var_s4 + 0x30 > 0)
+            if ((var_s4 + 48) > 0)
             {
                 x0 = var_s4;
                 if (var_s4 < 0)
@@ -901,9 +903,9 @@ void func_801E3E18(s32 arg0, s32 arg1) // 0x801E3E18
                 }
             }
 
-            x1 = x0 + 0x20;
-            x2 = x0 + 0x10;
-            x3 = x0 + 0x30;
+            x1 = x0 + 32;
+            x2 = x0 + 16;
+            x3 = x0 + 48;
 
             poly = (POLY_G4*)packet;
             // addPrimFast(addr, poly, 8);
@@ -954,7 +956,7 @@ void func_801E434C(u32 arg0, u32 arg1) // 0x801E434C
     if (arg1 < 4)
     {
         maskedField_18  = D_800AFE08.field_18;
-        shiftedField_18 = (maskedField_18 << 4) & 0x100;
+        shiftedField_18 = (maskedField_18 << 4) & (1 << 8);
 
         maskedField_18 &= 0xF;
         shiftedField_18 >>= 4;

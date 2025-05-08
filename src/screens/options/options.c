@@ -56,7 +56,7 @@ void GameState_OptionScreen_Update() // 0x801E2D44
 
             for (i = 0; i < 5; i++)
             {
-                if ((extraOptions >> i) & 1)
+                if ((extraOptions >> i) & (1 << 0))
                 {
                     D_801E73F0++;
                 }
@@ -115,6 +115,7 @@ void GameState_OptionScreen_Update() // 0x801E2D44
             if ((D_800BCD0C & 7) == 5)
             {
                 Fs_QueueWaitForEmpty();
+
                 g_GameWork.gameStateStep_598[0] = 3;
                 g_GameWork.gameStateStep_598[0] = 3;
                 g_SysWork.timer_20              = 0;
@@ -151,18 +152,20 @@ void GameState_OptionScreen_Update() // 0x801E2D44
             break;
 
         case 6:
-            if ((D_800BCD0C & 7) == 5)
+            if ((D_800BCD0C & 0x7) == 0x5)
             {
-                // TODO: this is likely Game_StateSetPrevious inline
-                // but the gameState_594 / gameStatePrev_590 loads inside are switched?
+                // TODO: Likely Game_StateSetPrevious inline, but `gameState_594`/`gameStatePrev_590` loads inside are switched?
 
-                e_GameState prevPrevState       = g_GameWork.gameStatePrev_590;
-                e_GameState prevState           = g_GameWork.gameState_594;
+                e_GameState prevPrevState = g_GameWork.gameStatePrev_590;
+                e_GameState prevState     = g_GameWork.gameState_594;
+
                 g_SysWork.timer_1C              = 0;
                 g_SysWork.timer_20              = 0;
                 g_GameWork.gameStateStep_598[1] = 0;
                 g_GameWork.gameStateStep_598[2] = 0;
+
                 SysWork_StateSetNext(SysState_Gameplay);
+
                 g_GameWork.gameStateStep_598[0] = prevState;
                 g_GameWork.gameState_594        = prevPrevState;
                 g_GameWork.gameStatePrev_590    = prevState;
@@ -172,9 +175,9 @@ void GameState_OptionScreen_Update() // 0x801E2D44
             break;
 
         case 13:
-            if ((D_800BCD0C & 7) == 5)
+            if ((D_800BCD0C & 0x7) == 0x5)
             {
-                g_GameWork.gameStateStep_598[0] = 0xe;
+                g_GameWork.gameStateStep_598[0] = 0xE;
                 g_SysWork.timer_20              = 0;
                 D_800BCD0C                      = 7;
                 g_GameWork.gameStateStep_598[1] = 0;
@@ -206,6 +209,7 @@ void GameState_OptionScreen_Update() // 0x801E2D44
         case 0xd:
             Settings_MainScreen();
             break;
+
         case 0xe:
         case 0xf:
             Settings_ExtraScreen();
@@ -223,7 +227,7 @@ void Settings_ExtraScreen() // 0x801E318C
     Gfx_VignetteDraw();
     Gfx_BackgroundSpriteDraw(&D_800A902C);
 
-    if (g_GameWork.gameStateStep_598[0] != 0xe)
+    if (g_GameWork.gameStateStep_598[0] != 0xE)
     {
         return;
     }
@@ -240,18 +244,22 @@ void Settings_ExtraScreen() // 0x801E318C
     if (D_801E73E4 == 8)
     {
         D_801E7300 = D_801E72F8;
+
         if (((g_GameWork.gameStatePrev_590 == GameState_InGame) && 
 			((g_ControllerPtr0->btns_new_10 & g_GameWorkPtr1->config_0.controllerBinds_0.enter) == 0)) &&
             ((g_ControllerPtr0->btns_new_10 & g_GameWorkPtr1->config_0.controllerBinds_0.option) != 0))
         {
             func_80046048(0x51A, 0, 0x40);
+
             g_GameWork.gameStateStep_598[0] = 5;
             g_SysWork.timer_20              = 0;
             g_GameWork.gameStateStep_598[1] = 0;
             g_GameWork.gameStateStep_598[2] = 0;
             return;
         }
+
         controllerPtr = g_ControllerPtr0;
+
         if (controllerPtr->field_18 & Pad_LStickUp)
         {
             s32 var = 1;
@@ -259,6 +267,7 @@ void Settings_ExtraScreen() // 0x801E318C
             D_801E72F8 = ((D_801E72F8 - var) + D_801E73E8) % D_801E73E8;
             D_801E73E4 = 0;
         }
+
         if (controllerPtr->field_18 & Pad_LStickDown)
         {
             func_80046048(0x519, 0, 0x40);
@@ -364,14 +373,14 @@ void Settings_ExtraScreen() // 0x801E318C
                     func_80046048(0x519, 0, 0x40);
                     g_GameWork.config_0.optBulletAdjust_2D = g_GameWork.config_0.optBulletAdjust_2D + (D_801E73F0 - 1);
                 }
+
                 g_GameWork.config_0.optBulletAdjust_2D = g_GameWork.config_0.optBulletAdjust_2D % D_801E73F0;
                 break;
         }
     }
 
-    if ((g_ControllerPtr0->btns_new_10 & (g_GameWorkPtr1->config_0.controllerBinds_0.cancel |
-		(Pad_L2 | Pad_R2 | Pad_L1 | Pad_R1))) &&
-        (g_GameWork.gameStateStep_598[0] != 0xf))
+    if ((g_ControllerPtr0->btns_new_10 & (g_GameWorkPtr1->config_0.controllerBinds_0.cancel | (Pad_L2 | Pad_R2 | Pad_L1 | Pad_R1))) &&
+        g_GameWork.gameStateStep_598[0] != 0xF)
     {
         if (g_ControllerPtr0->btns_new_10 & g_GameWorkPtr1->config_0.controllerBinds_0.cancel)
         {
@@ -381,8 +390,9 @@ void Settings_ExtraScreen() // 0x801E318C
         {
             func_80046048(0x51B, 0, 0x40);
         }
+
         D_800BCD0C                      = 2;
-        g_GameWork.gameStateStep_598[0] = 0xf;
+        g_GameWork.gameStateStep_598[0] = 0xF;
         g_SysWork.timer_20              = 0;
         g_GameWork.gameStateStep_598[1] = 0;
         g_GameWork.gameStateStep_598[2] = 0;
@@ -391,7 +401,8 @@ void Settings_ExtraScreen() // 0x801E318C
 
 void Settings_MainScreen() // 0x801E3770
 {
-#define IMAGE_BUFFER_3 ((u_long*)0x801EB600)
+    #define IMAGE_BUFFER_3 ((u_long*)0x801EB600)
+    #define SOUND_VOL_STEP 8
 
     s32               sdCmd;
     s32               newVolume;
@@ -433,6 +444,7 @@ void Settings_MainScreen() // 0x801E3770
         (g_ControllerPtr0->btns_new_10 & g_GameWorkPtr1->config_0.controllerBinds_0.option))
     {
         func_80046048(0x51A, 0, 0x40);
+
         g_GameWork.gameStateStep_598[0] = 5;
         g_SysWork.timer_20              = 0;
         g_GameWork.gameStateStep_598[1] = 0;
@@ -444,12 +456,14 @@ void Settings_MainScreen() // 0x801E3770
     if (controllerPtr->field_18 & Pad_LStickUp)
     {
         func_80046048(0x519, 0, 0x40);
+
         D_801E73E4 = 0;
         D_801E72F4 = (D_801E72F4 + 8) % 9;
     }
     if (controllerPtr->field_18 & Pad_LStickDown)
     {
         func_80046048(0x519, 0, 0x40);
+
         D_801E73E4 = 0;
         D_801E72F4 = (D_801E72F4 + 1) % 9;
     }
@@ -461,6 +475,7 @@ void Settings_MainScreen() // 0x801E3770
 				g_GameWorkPtr1->config_0.controllerBinds_0.cancel))
             {
                 func_80046048(0x51A, 0, 0x40);
+
                 g_GameWork.gameStateStep_598[0] = 5;
                 g_SysWork.timer_20              = 0;
                 g_GameWork.gameStateStep_598[1] = 0;
@@ -473,6 +488,7 @@ void Settings_MainScreen() // 0x801E3770
             {
                 func_80046048(0x51B, 0, 0x40);
                 Fs_QueueStartReadTim(FILE_TIM_OPTION2_TIM, IMAGE_BUFFER_3, &D_800A903C);
+
                 D_800BCD0C                      = 2;
                 g_GameWork.gameStateStep_598[0] = 9;
                 g_SysWork.timer_20              = 0;
@@ -485,6 +501,7 @@ void Settings_MainScreen() // 0x801E3770
             if (g_ControllerPtr0->btns_new_10 & g_GameWorkPtr1->config_0.controllerBinds_0.enter)
             {
                 func_80046048(0x51B, 0, 0x40);
+
                 D_800BCD0C                      = 2;
                 g_GameWork.gameStateStep_598[0] = 7;
                 g_SysWork.timer_20              = 0;
@@ -505,6 +522,7 @@ void Settings_MainScreen() // 0x801E3770
                 {
                     Fs_QueueStartReadTim(FILE_TIM_OP_BRT_E_TIM, IMAGE_BUFFER_3, &D_800A904C);
                 }
+
                 D_800BCD0C                      = 2;
                 g_GameWork.gameStateStep_598[0] = 8;
                 g_SysWork.timer_20              = 0;
@@ -533,6 +551,7 @@ void Settings_MainScreen() // 0x801E3770
             if (g_ControllerPtr0->btns_new_10 & (Pad_LStickRight | Pad_LStickLeft))
             {
                 func_80046048(0x519, 0, 0x40);
+
                 sdCmd                               = 2;
                 g_GameWork.config_0.optSoundType_1E = !g_GameWork.config_0.optSoundType_1E;
                 if (g_GameWork.config_0.optSoundType_1E)
@@ -545,57 +564,57 @@ void Settings_MainScreen() // 0x801E3770
 
         case 7:
             currentVolume = g_GameWork.config_0.optVolumeBgm_1F;
-            if ((currentVolume < 128 && (g_ControllerPtr0->field_18 & Pad_LStickRight)) ||
+            if ((currentVolume < OPT_SOUND_VOLUME_MAX && (g_ControllerPtr0->field_18 & Pad_LStickRight)) ||
                 (currentVolume > 0 && (g_ControllerPtr0->field_18 & Pad_LStickLeft)))
             {
                 Sd_EngineCmd(0x519);
             }
-            if ((currentVolume == 128 && (g_ControllerPtr0->btns_new_10 & Pad_LStickRight)) ||
+            if ((currentVolume == OPT_SOUND_VOLUME_MAX && (g_ControllerPtr0->btns_new_10 & Pad_LStickRight)) ||
                 (currentVolume == 0 && (g_ControllerPtr0->btns_new_10 & Pad_LStickLeft)))
             {
                 Sd_EngineCmd(0x518);
             }
             if (g_ControllerPtr0->field_18 & Pad_LStickRight)
             {
-                currentVolume = currentVolume + 8;
+                currentVolume = currentVolume + SOUND_VOL_STEP;
             }
             if (g_ControllerPtr0->field_18 & Pad_LStickLeft)
             {
-                currentVolume = currentVolume - 8;
+                currentVolume = currentVolume - SOUND_VOL_STEP;
             }
 
-            currentVolume = currentVolume < 0 ? 0 : (currentVolume > 128 ? 128 : currentVolume);
+            currentVolume = currentVolume < 0 ? 0 : ((currentVolume > OPT_SOUND_VOLUME_MAX) ? OPT_SOUND_VOLUME_MAX : currentVolume);
             newVolume     = currentVolume;
 
-            Sd_SetVolume(128, newVolume, g_GameWork.config_0.optVolumeSe_20);
+            Sd_SetVolume(OPT_SOUND_VOLUME_MAX, newVolume, g_GameWork.config_0.optVolumeSe_20);
             g_GameWork.config_0.optVolumeBgm_1F = newVolume;
             break;
 
         case 8:
             currentVolume = g_GameWork.config_0.optVolumeSe_20;
-            if ((currentVolume < 128 && (g_ControllerPtr0->field_18 & Pad_LStickRight)) ||
+            if ((currentVolume < OPT_SOUND_VOLUME_MAX && (g_ControllerPtr0->field_18 & Pad_LStickRight)) ||
                 (currentVolume > 0 && (g_ControllerPtr0->field_18 & Pad_LStickLeft)))
             {
                 Sd_EngineCmd(0x519);
             }
-            if ((currentVolume == 128 && (g_ControllerPtr0->btns_new_10 & Pad_LStickRight)) ||
+            if ((currentVolume == OPT_SOUND_VOLUME_MAX && (g_ControllerPtr0->btns_new_10 & Pad_LStickRight)) ||
                 (currentVolume == 0 && (g_ControllerPtr0->btns_new_10 & Pad_LStickLeft)))
             {
                 Sd_EngineCmd(0x518);
             }
             if (g_ControllerPtr0->field_18 & Pad_LStickRight)
             {
-                currentVolume = currentVolume + 8;
+                currentVolume = currentVolume + SOUND_VOL_STEP;
             }
             if (g_ControllerPtr0->field_18 & Pad_LStickLeft)
             {
-                currentVolume = currentVolume - 8;
+                currentVolume = currentVolume - SOUND_VOL_STEP;
             }
 
-            currentVolume = currentVolume < 0 ? 0 : (currentVolume > 128 ? 128 : currentVolume);
+            currentVolume = currentVolume < 0 ? 0 : ((currentVolume > OPT_SOUND_VOLUME_MAX) ? OPT_SOUND_VOLUME_MAX : currentVolume);
             newVolume     = currentVolume;
 
-            Sd_SetVolume(128, newVolume, g_GameWork.config_0.optVolumeSe_20);
+            Sd_SetVolume(OPT_SOUND_VOLUME_MAX, newVolume, g_GameWork.config_0.optVolumeSe_20);
             g_GameWork.config_0.optVolumeSe_20 = newVolume;
             break;
 
@@ -608,20 +627,20 @@ void Settings_MainScreen() // 0x801E3770
 
     if (g_ControllerPtr0->btns_new_10 & (Pad_L2 | Pad_R2 | Pad_L1 | Pad_R1))
     {
-        if (g_GameWork.gameStateStep_598[0] == 0xd)
+        if (g_GameWork.gameStateStep_598[0] == 0xD)
         {
             return;
         }
         func_80046048(0x51B, 0, 0x40);
         D_800BCD0C                      = 2;
-        g_GameWork.gameStateStep_598[0] = 0xd;
+        g_GameWork.gameStateStep_598[0] = 0xD;
         g_SysWork.timer_20              = 0;
         g_GameWork.gameStateStep_598[1] = 0;
         g_GameWork.gameStateStep_598[2] = 0;
     }
 
-    if ((((g_GameWork.gameStateStep_598[0] != 0xd) && (D_801E72F4 != 0)) &&
-         ((controllerPtr2->btns_new_10 & g_GameWorkPtr1->config_0.controllerBinds_0.enter) == 0)) &&
+    if (((g_GameWork.gameStateStep_598[0] != 0xD && D_801E72F4 != 0) &&
+        ((controllerPtr2->btns_new_10 & g_GameWorkPtr1->config_0.controllerBinds_0.enter) == 0)) &&
         (controllerPtr2->btns_new_10 & g_GameWorkPtr1->config_0.controllerBinds_0.cancel))
     {
         func_80046048(0x51A, 0, 0x40);
@@ -641,45 +660,46 @@ void Gfx_SfxBarDraw() // 0x801E3F90
 }
 
 /** Related to drawing strings.
-Generates and draws the bars used for SFX and BGM audio options.
-*/
+ * Generates and draws the bars used for SFX and BGM audio options.
+ */
 INCLUDE_ASM("asm/screens/options/nonmatchings/options", Gfx_BarDraw); // 0x801E3FB8
 
 /** Related to drawing strings.
-Draws the option strings in the extra options screen.
-*/
+ * Draws the option strings in the extra options screen.
+ */
 void Gfx_OptionsStringsExtraDraw() // 0x801E416C
 {
     s32 i;
 
     DVECTOR textPos =
-        {
-            .vx = 0x56,
-            .vy = 0x14,
-        };
+    {
+        .vx = 0x56,
+        .vy = 0x14,
+    };
 
     char* D_801E26CC = "EXTRA_OPTION_\x01\x01\x01\x01\x01S";
 
     char* D_801E2764[] =
-        {
-            "Weapon_Control",
-            "Blood_Color",
-            "View_Control",
-            "Retreat_Turn",
-            "\x01W"
-            "\x01"
-            "a\x01l\x01k/R\x01\x01u\x01n_\x01\x01\x01\x01"
-            "Co\x01n\x01t\x01ro\x01l",
-            "Auto_Aiming",
-            "View_Mode",
-            "Bullet_Adjust"};
+    {
+        "Weapon_Control",
+        "Blood_Color",
+        "View_Control",
+        "Retreat_Turn",
+        "\x01W"
+        "\x01"
+        "a\x01l\x01k/R\x01\x01u\x01n_\x01\x01\x01\x01"
+        "Co\x01n\x01t\x01ro\x01l",
+        "Auto_Aiming",
+        "View_Mode",
+        "Bullet_Adjust"
+    };
 
     if (D_801E73E4 == 0)
     {
-        D_801E73B4.vx = 0x30;
-        D_801E73B8.vx = 0x40;
-        D_801E73B4.vy = ((u16)D_801E72FC * 0x10) + 0x40;
-        D_801E73B8.vy = ((u16)D_801E72F4 * 0x10) + 0x40;
+        D_801E73B4.vx = 48;
+        D_801E73B8.vx = 64;
+        D_801E73B4.vy = ((u16)D_801E72FC * 16) + 64;
+        D_801E73B8.vy = ((u16)D_801E72F4 * 16) + 64;
     }
 
     shRsin(D_801E73E4 << 7);
@@ -690,67 +710,68 @@ void Gfx_OptionsStringsExtraDraw() // 0x801E416C
 
     for (i = 0; i < D_801E73E8; i++)
     {
-        Gfx_StringSetPosition(0x40, 0x40 + i * 16);
+        Gfx_StringSetPosition(64, 64 + (i * 16));
         func_8004A8C0(8);
-        Gfx_StringDraw(D_801E2764[i], 0x63);
+        Gfx_StringDraw(D_801E2764[i], 99);
     }
 }
 
 /** Related to drawing strings.
-Draws the option strings in the main options screen.
-*/
+ * Draws the option strings in the main options screen.
+ */
 void Gfx_OptionsStringsMainDraw() // 0x801E42EC
 {
     s32 i;
 
     DVECTOR textPos =
-        {
-            .vx = 0x79,
-            .vy = 0x14,
-        };
+    {
+        .vx = 0x79,
+        .vy = 0x14,
+    };
 
     char* OPTION_ = "OPTION_\x01\x01\x01\x01\x01S";
 
     char* D_801E280C[] =
-        {
-            "Exit",
-            "Brightness_Level",
-            "Controller_Config",
-            "Screen_Position",
-            "Vibration",
-            "Auto_Load",
-            "Sound",
-            "BGM_Volume",
-            "SE_Volume"};
+    {
+        "Exit",
+        "Brightness_Level",
+        "Controller_Config",
+        "Screen_Position",
+        "Vibration",
+        "Auto_Load",
+        "Sound",
+        "BGM_Volume",
+        "SE_Volume"
+    };
 
     if (D_801E73E4 == 0)
     {
-        D_801E73BC.vx = 0x30;
-        D_801E73C0.vx = 0x40;
-        D_801E73BC.vy = ((u16)D_801E72FC * 0x10) + 0x38;
-        D_801E73C0.vy = ((u16)D_801E72F4 * 0x10) + 0x38;
+        D_801E73BC.vx = 48;
+        D_801E73C0.vx = 64;
+        D_801E73BC.vy = ((u16)D_801E72FC * 16) + 56;
+        D_801E73C0.vy = ((u16)D_801E72F4 * 16) + 56;
     }
 
     shRsin(D_801E73E4 << 7);
     Gfx_StringSetColor(ColorId_White);
     Gfx_StringSetPosition(textPos.vx, textPos.vy);
     func_8004A8C0(8);
-    Gfx_StringDraw(OPTION_, 0x63);
+    Gfx_StringDraw(OPTION_, 99);
 
     for (i = 0; i < 9; i++)
     {
-        Gfx_StringSetPosition(0x40, 0x38 + i * 16);
+        Gfx_StringSetPosition(64, 56 + (i * 16));
         func_8004A8C0(8);
-        Gfx_StringDraw(D_801E280C[i], 0x63);
+        Gfx_StringDraw(D_801E280C[i], 99);
     }
 
     func_8004A8CC();
 }
 
 /** Related to drawing.
-Draws the buttons next to options and lines indicating the
-selected option in the extra options screen.
-*/
+ * Draws the buttons next to options and lines indicating the
+ * selected option in the extra options screen.
+ */
 void Gfx_SelectedOptionExtra() // 0x801E4450
 {
     DVECTOR*        vecPtrOut;
@@ -761,47 +782,64 @@ void Gfx_SelectedOptionExtra() // 0x801E4450
     s_ButtonVectors buttonVec[2];
 
     u8 D_801E2830[] =
-        {
-            0x9D, 0x7E, 0x87, 0x87, 0x9D, 0x82, 0x70, 0x86};
+    {
+        0x9D, 0x7E, 0x87, 0x87, 0x9D, 0x82, 0x70, 0x86
+    };
 
     DVECTOR D_801E2838[] =
+    {
         {
-            {.vx = 0xFF88,
-             .vy = 0xFFD1},
-            {.vx = 0xFF88,
-             .vy = 0xFFDD},
-            {.vx = 0xFF94,
-             .vy = 0xFFD1},
-            {.vx = 0xFF94,
-             .vy = 0xFFDD},
-        };
+            .vx = 0xFF88,
+            .vy = 0xFFD1
+        },
+        {
+            .vx = 0xFF88,
+            .vy = 0xFFDD
+        },
+        {
+            .vx = 0xFF94,
+            .vy = 0xFFD1
+        },
+        {
+            .vx = 0xFF94,
+            .vy = 0xFFDD
+        },
+    };
 
     DVECTOR D_801E2848[] =
+    {
         {
-            {.vx = 0xFF87,
-             .vy = 0xFFD0},
-            {.vx = 0xFF87,
-             .vy = 0xFFDE},
-            {.vx = 0xFF95,
-             .vy = 0xFFD0},
-            {.vx = 0xFF95,
-             .vy = 0xFFDE},
-        };
+            .vx = 0xFF87,
+            .vy = 0xFFD0
+        },
+        {
+            .vx = 0xFF87,
+            .vy = 0xFFDE
+        },
+        {
+            .vx = 0xFF95,
+            .vy = 0xFFD0
+        },
+        {
+            .vx = 0xFF95,
+            .vy = 0xFFDE
+        },
+    };
 
     if (D_801E73E4 == 0)
     {
         D_801E73C4.vx = D_801E2830[D_801E7300] + 0xFF87;
-        D_801E73C4.vy = (u16)D_801E7300 * 0x10 - 0x32;
+        D_801E73C4.vy = ((u16)D_801E7300 * 16) - 50;
 
         D_801E73C8.vx = D_801E2830[D_801E72F8] + 0xFF87;
-        D_801E73C8.vy = (u16)D_801E72F8 * 0x10 - 0x32;
+        D_801E73C8.vy = ((u16)D_801E72F8 * 16) - 50;
     }
 
     sin = shRsin(D_801E73E4 << 7);
 
-    lineVec.field_0.vx = -0x79;
+    lineVec.field_0.vx = -121;
     lineVec.field_4.vx = D_801E73C4.vx + FP_FROM((D_801E73C8.vx - D_801E73C4.vx) * sin, Q12_SHIFT);
-    lineVec.field_4.vy = D_801E73C4.vy + FP_FROM((D_801E73C8.vy - D_801E73C4.vy) * sin, Q12_SHIFT) + 0x10;
+    lineVec.field_4.vy = D_801E73C4.vy + FP_FROM((D_801E73C8.vy - D_801E73C4.vy) * sin, Q12_SHIFT) + 16;
     lineVec.field_0.vy = lineVec.field_4.vy;
 
     Gfx_LineDraw(&lineVec, 1, 0);
@@ -813,9 +851,9 @@ void Gfx_SelectedOptionExtra() // 0x801E4450
         for (j = 0; j < 4; j++)
         {
             vecPtrOut[j].vx     = D_801E2838[j].vx;
-            vecPtrOut[j].vy     = D_801E2838[j].vy + i * 0x10;
+            vecPtrOut[j].vy     = D_801E2838[j].vy + (i * 16);
             vecPtrOut[j + 4].vx = D_801E2848[j].vx;
-            vecPtrOut[j + 4].vy = D_801E2848[j].vy + i * 0x10;
+            vecPtrOut[j + 4].vy = D_801E2848[j].vy + (i * 16);
         }
 
         if (i == D_801E72F8)
@@ -832,9 +870,9 @@ void Gfx_SelectedOptionExtra() // 0x801E4450
 }
 
 /** Related to drawing.
-Draws the buttons next to options and lines indicating the
-selected option in the main options screen.
-*/
+ * Draws the buttons next to options and lines indicating the
+ * selected option in the main options screen.
+ */
 void Gfx_SelectedOptionMain() // 0x801E472C
 {
     DVECTOR*        vecPtrOut;
@@ -845,47 +883,64 @@ void Gfx_SelectedOptionMain() // 0x801E472C
     s_ButtonVectors buttonVec[2];
 
     u8 D_801E2858[] =
-        {
-            0x3B, 0xA9, 0xAE, 0x9C, 0x68, 0x70, 0x4B, 0x81, 0x70};
+    {
+        0x3B, 0xA9, 0xAE, 0x9C, 0x68, 0x70, 0x4B, 0x81, 0x70
+    };
 
     DVECTOR D_801E2864[] =
+    {
         {
-            {.vx = 0xFF88,
-             .vy = 0xFFC9},
-            {.vx = 0xFF88,
-             .vy = 0xFFD5},
-            {.vx = 0xFF94,
-             .vy = 0xFFC9},
-            {.vx = 0xFF94,
-             .vy = 0xFFD5},
-        };
+            .vx = 0xFF88,
+            .vy = 0xFFC9
+        },
+        {
+            .vx = 0xFF88,
+            .vy = 0xFFD5
+        },
+        {
+            .vx = 0xFF94,
+            .vy = 0xFFC9
+        },
+        {
+            .vx = 0xFF94,
+            .vy = 0xFFD5
+        },
+    };
 
     DVECTOR D_801E2874[] =
+    {
         {
-            {.vx = 0xFF87,
-             .vy = 0xFFC8},
-            {.vx = 0xFF87,
-             .vy = 0xFFD6},
-            {.vx = 0xFF95,
-             .vy = 0xFFC8},
-            {.vx = 0xFF95,
-             .vy = 0xFFD6},
-        };
+            .vx = 0xFF87,
+            .vy = 0xFFC8
+        },
+        {
+            .vx = 0xFF87,
+            .vy = 0xFFD6
+        },
+        {
+            .vx = 0xFF95,
+            .vy = 0xFFC8
+        },
+        {
+            .vx = 0xFF95,
+            .vy = 0xFFD6
+        },
+    };
 
     if (D_801E73E4 == 0)
     {
         D_801E73CC.vx = D_801E2858[D_801E72FC] + 0xFF87;
-        D_801E73CC.vy = (u16)D_801E72FC * 0x10 - 0x3A;
+        D_801E73CC.vy = ((u16)D_801E72FC * 16) - 58;
 
         D_801E73D0.vx = D_801E2858[D_801E72F4] + 0xFF87;
-        D_801E73D0.vy = (u16)D_801E72F4 * 0x10 - 0x3A;
+        D_801E73D0.vy = ((u16)D_801E72F4 * 16) - 58;
     }
 
     sin = shRsin(D_801E73E4 << 7);
 
-    lineVec.field_0.vx = -0x79;
+    lineVec.field_0.vx = -121;
     lineVec.field_4.vx = D_801E73CC.vx + FP_FROM((D_801E73D0.vx - D_801E73CC.vx) * sin, Q12_SHIFT);
-    lineVec.field_4.vy = D_801E73CC.vy + FP_FROM((D_801E73D0.vy - D_801E73CC.vy) * sin, Q12_SHIFT) + 0x10;
+    lineVec.field_4.vy = D_801E73CC.vy + FP_FROM((D_801E73D0.vy - D_801E73CC.vy) * sin, Q12_SHIFT) + 16;
     lineVec.field_0.vy = lineVec.field_4.vy;
 
     Gfx_LineDraw(&lineVec, 1, 0);
@@ -897,9 +952,9 @@ void Gfx_SelectedOptionMain() // 0x801E472C
         for (j = 0; j < 4; j++)
         {
             vecPtrOut[j].vx     = D_801E2864[j].vx;
-            vecPtrOut[j].vy     = D_801E2864[j].vy + i * 0x10;
+            vecPtrOut[j].vy     = D_801E2864[j].vy + (i * 16);
             vecPtrOut[j + 4].vx = D_801E2874[j].vx;
-            vecPtrOut[j + 4].vy = D_801E2874[j].vy + i * 0x10;
+            vecPtrOut[j + 4].vy = D_801E2874[j].vy + (i * 16);
         }
 
         if (i == D_801E72F4)
@@ -916,8 +971,8 @@ void Gfx_SelectedOptionMain() // 0x801E472C
 }
 
 /** Related to drawing.
-Draws the vignette for the main and extra options screens.
-*/
+ * Draws the vignette for the main and extra options screens.
+ */
 void Gfx_VignetteDraw() // 0x801E49F0
 {
     GsOT*    ot = &g_ObjectTable0[g_ObjectTableIdx];
@@ -953,12 +1008,13 @@ void Gfx_VignetteDraw() // 0x801E49F0
         addPrim((u8*)ot->org + 0x1FD4, poly);
         GsOUT_PACKET_P = (u8*)poly + sizeof(POLY_G4);
     }
+
     func_80052088(0, 0, 0x7F5, 6);
 }
 
 /** Related to drawing.
-Draws the options for each setting used in the extra options screen.
-*/
+ * Draws the options for each setting used in the extra options screen.
+ */
 void Gfx_SettingsOptionsExtraDraw() // 0x801E4B2C
 {
     s32               textPosX;
@@ -967,64 +1023,67 @@ void Gfx_SettingsOptionsExtraDraw() // 0x801E4B2C
     s_ControllerData* controllerPtr;
 
     s_ArrowVectors D_801E2884[] =
-        {
-            {{0x0026, 0xFFD6}, {0x002E, 0xFFCE}, {0x002E, 0xFFDE}},
-            {{0x0078, 0xFFD6}, {0x0070, 0xFFCE}, {0x0070, 0xFFDE}},
-            {{0x0026, 0xFFE6}, {0x002E, 0xFFDE}, {0x002E, 0xFFEE}},
-            {{0x0078, 0xFFE6}, {0x0070, 0xFFDE}, {0x0070, 0xFFEE}},
-            {{0x0023, 0xFFF6}, {0x002B, 0xFFEE}, {0x002B, 0xFFFE}},
-            {{0x007B, 0xFFF6}, {0x0073, 0xFFEE}, {0x0073, 0xFFFE}},
-            {{0x0023, 0x0006}, {0x002B, 0xFFFE}, {0x002B, 0x000E}},
-            {{0x007B, 0x0006}, {0x0073, 0xFFFE}, {0x0073, 0x000E}},
-            {{0x0023, 0x0016}, {0x002B, 0x000E}, {0x002B, 0x001E}},
-            {{0x007B, 0x0016}, {0x0073, 0x000E}, {0x0073, 0x001E}},
-            {{0x0033, 0x0026}, {0x003B, 0x001E}, {0x003B, 0x002E}},
-            {{0x006B, 0x0026}, {0x0063, 0x001E}, {0x0063, 0x002E}},
-            {{0x0018, 0x0036}, {0x0020, 0x002E}, {0x0020, 0x003E}},
-            {{0x0083, 0x0036}, {0x007B, 0x002E}, {0x007B, 0x003E}},
-            {{0x0039, 0x0046}, {0x0041, 0x003E}, {0x0041, 0x004E}},
-            {{0x0068, 0x0046}, {0x0060, 0x003E}, {0x0060, 0x004E}}};
+    {
+        { { 0x0026, 0xFFD6 }, { 0x002E, 0xFFCE }, { 0x002E, 0xFFDE } },
+        { { 0x0078, 0xFFD6 }, { 0x0070, 0xFFCE }, { 0x0070, 0xFFDE } },
+        { { 0x0026, 0xFFE6 }, { 0x002E, 0xFFDE }, { 0x002E, 0xFFEE } },
+        { { 0x0078, 0xFFE6 }, { 0x0070, 0xFFDE }, { 0x0070, 0xFFEE } },
+        { { 0x0023, 0xFFF6 }, { 0x002B, 0xFFEE }, { 0x002B, 0xFFFE } },
+        { { 0x007B, 0xFFF6 }, { 0x0073, 0xFFEE }, { 0x0073, 0xFFFE } },
+        { { 0x0023, 0x0006 }, { 0x002B, 0xFFFE }, { 0x002B, 0x000E } },
+        { { 0x007B, 0x0006 }, { 0x0073, 0xFFFE }, { 0x0073, 0x000E } },
+        { { 0x0023, 0x0016 }, { 0x002B, 0x000E }, { 0x002B, 0x001E } },
+        { { 0x007B, 0x0016 }, { 0x0073, 0x000E }, { 0x0073, 0x001E } },
+        { { 0x0033, 0x0026 }, { 0x003B, 0x001E }, { 0x003B, 0x002E } },
+        { { 0x006B, 0x0026 }, { 0x0063, 0x001E }, { 0x0063, 0x002E } },
+        { { 0x0018, 0x0036 }, { 0x0020, 0x002E }, { 0x0020, 0x003E } },
+        { { 0x0083, 0x0036 }, { 0x007B, 0x002E }, { 0x007B, 0x003E } },
+        { { 0x0039, 0x0046 }, { 0x0041, 0x003E }, { 0x0041, 0x004E } },
+        { { 0x0068, 0x0046 }, { 0x0060, 0x003E }, { 0x0060, 0x004E } }
+    };
 
     s_ArrowVectors D_801E2944[] =
-        {
-            {{0x0025, 0xFFD6}, {0x002F, 0xFFCC}, {0x002F, 0xFFE0}},
-            {{0x0079, 0xFFD6}, {0x006F, 0xFFCC}, {0x006F, 0xFFE0}},
-            {{0x0025, 0xFFE6}, {0x002F, 0xFFDC}, {0x002F, 0xFFF0}},
-            {{0x0079, 0xFFE6}, {0x006F, 0xFFDC}, {0x006F, 0xFFF0}},
-            {{0x0022, 0xFFF6}, {0x002C, 0xFFEC}, {0x002C, 0x0000}},
-            {{0x007C, 0xFFF6}, {0x0072, 0xFFEC}, {0x0072, 0x0000}},
-            {{0x0022, 0x0006}, {0x002C, 0xFFFC}, {0x002C, 0x0010}},
-            {{0x007C, 0x0006}, {0x0072, 0xFFFC}, {0x0072, 0x0010}},
-            {{0x0022, 0x0016}, {0x002C, 0x000C}, {0x002C, 0x0020}},
-            {{0x007C, 0x0016}, {0x0072, 0x000C}, {0x0072, 0x0020}},
-            {{0x0032, 0x0026}, {0x003C, 0x001C}, {0x003C, 0x0030}},
-            {{0x006C, 0x0026}, {0x0062, 0x001C}, {0x0062, 0x0030}},
-            {{0x0017, 0x0036}, {0x0021, 0x002C}, {0x0021, 0x0040}},
-            {{0x0084, 0x0036}, {0x007A, 0x002C}, {0x007A, 0x0040}},
-            {{0x0038, 0x0046}, {0x0042, 0x003C}, {0x0042, 0x0050}},
-            {{0x0069, 0x0046}, {0x005F, 0x003C}, {0x005F, 0x0050}}};
+    {
+        { { 0x0025, 0xFFD6 }, { 0x002F, 0xFFCC }, { 0x002F, 0xFFE0 } },
+        { { 0x0079, 0xFFD6 }, { 0x006F, 0xFFCC }, { 0x006F, 0xFFE0 } },
+        { { 0x0025, 0xFFE6 }, { 0x002F, 0xFFDC }, { 0x002F, 0xFFF0 } },
+        { { 0x0079, 0xFFE6 }, { 0x006F, 0xFFDC }, { 0x006F, 0xFFF0 } },
+        { { 0x0022, 0xFFF6 }, { 0x002C, 0xFFEC }, { 0x002C, 0x0000 } },
+        { { 0x007C, 0xFFF6 }, { 0x0072, 0xFFEC }, { 0x0072, 0x0000 } },
+        { { 0x0022, 0x0006 }, { 0x002C, 0xFFFC }, { 0x002C, 0x0010 } },
+        { { 0x007C, 0x0006 }, { 0x0072, 0xFFFC }, { 0x0072, 0x0010 } },
+        { { 0x0022, 0x0016 }, { 0x002C, 0x000C }, { 0x002C, 0x0020 } },
+        { { 0x007C, 0x0016 }, { 0x0072, 0x000C }, { 0x0072, 0x0020 } },
+        { { 0x0032, 0x0026 }, { 0x003C, 0x001C }, { 0x003C, 0x0030 } },
+        { { 0x006C, 0x0026 }, { 0x0062, 0x001C }, { 0x0062, 0x0030 } },
+        { { 0x0017, 0x0036 }, { 0x0021, 0x002C }, { 0x0021, 0x0040 } },
+        { { 0x0084, 0x0036 }, { 0x007A, 0x002C }, { 0x007A, 0x0040 } },
+        { { 0x0038, 0x0046 }, { 0x0042, 0x003C }, { 0x0042, 0x0050 } },
+        { { 0x0069, 0x0046 }, { 0x005F, 0x003C }, { 0x005F, 0x0050 } }
+    };
 
     char* D_801E2A6C[] =
-        {
-            "Press",
-            "Switch",
-            "Normal",
-            "Green",
-            "Violet",
-            "Black",
-            "_",
-            "Normal",
-            "Reverse",
-            "On",
-            "Off",
-            "Normal",
-            "Self_View",
-            "x1",
-            "x2",
-            "x3",
-            "x4",
-            "x5",
-            "x6"};
+    {
+        "Press",
+        "Switch",
+        "Normal",
+        "Green",
+        "Violet",
+        "Black",
+        "_",
+        "Normal",
+        "Reverse",
+        "On",
+        "Off",
+        "Normal",
+        "Self_View",
+        "x1",
+        "x2",
+        "x3",
+        "x4",
+        "x5",
+        "x6"
+    };
 
     Gfx_StringSetColor(ColorId_White);
 
@@ -1051,74 +1110,75 @@ void Gfx_SettingsOptionsExtraDraw() // 0x801E4B2C
         switch (j)
         {
             case 0:
-                textPosX = g_GameWork.config_0.optWeaponCtrl_23 != 0 ? 0xD9 : 0xD4;
-                Gfx_StringSetPosition(textPosX, 0x40);
-                Gfx_StringDraw(D_801E2A6C[!g_GameWork.config_0.optWeaponCtrl_23], 0xA);
+                textPosX = (g_GameWork.config_0.optWeaponCtrl_23 != 0) ? 217 : 212;
+                Gfx_StringSetPosition(textPosX, 64);
+                Gfx_StringDraw(D_801E2A6C[!g_GameWork.config_0.optWeaponCtrl_23], 10);
                 break;
 
             case 1:
                 switch (D_801E73EC)
                 {
                     case 0:
-                        Gfx_StringSetPosition(0xD2, 0x50);
+                        Gfx_StringSetPosition(210, 80);
                         break;
 
                     case 1:
-                        Gfx_StringSetPosition(0xD6, 0x50);
+                        Gfx_StringSetPosition(214, 80);
                         break;
 
                     case 2:
-                        Gfx_StringSetPosition(0xD6, 0x50);
+                        Gfx_StringSetPosition(214, 80);
                         break;
 
                     case 3:
-                        Gfx_StringSetPosition(0xD9, 0x50);
+                        Gfx_StringSetPosition(217, 80);
                         break;
                 }
-                Gfx_StringDraw(D_801E2A6C[D_801E73EC + 2], 0xA);
+
+                Gfx_StringDraw(D_801E2A6C[D_801E73EC + 2], 10);
                 break;
 
             case 2:
-                textPosX = g_GameWork.config_0.optViewCtrl_28 == 0 ? 0xD2 : 0xCE;
-                Gfx_StringSetPosition(textPosX, 0x60);
-                Gfx_StringDraw(D_801E2A6C[(g_GameWork.config_0.optViewCtrl_28 != 0 ? 0x20 : 0x1C) >> 2], 0xA);
+                textPosX = (g_GameWork.config_0.optViewCtrl_28 == 0) ? 210 : 206;
+                Gfx_StringSetPosition(textPosX, 96);
+                Gfx_StringDraw(D_801E2A6C[((g_GameWork.config_0.optViewCtrl_28 != 0) ? 32 : 28) >> 2], 10);
                 break;
 
             case 3:
-                textPosX = g_GameWork.config_0.optRetreatTurn_2A == 0 ? 0xD2 : 0xCE;
-                Gfx_StringSetPosition(textPosX, 0x70);
-                Gfx_StringDraw(D_801E2A6C[(g_GameWork.config_0.optRetreatTurn_2A != 0 ? 0x20 : 0x1C) >> 2], 0xA);
+                textPosX = (g_GameWork.config_0.optRetreatTurn_2A == 0) ? 210 : 206;
+                Gfx_StringSetPosition(textPosX, 112);
+                Gfx_StringDraw(D_801E2A6C[((g_GameWork.config_0.optRetreatTurn_2A != 0) ? 32 : 28) >> 2], 10);
                 break;
 
             case 4:
-                textPosX = g_GameWork.config_0.optWalkRunCtrl_2B == 0 ? 0xD2 : 0xCE;
-                Gfx_StringSetPosition(textPosX, 0x80);
-                Gfx_StringDraw(D_801E2A6C[(g_GameWork.config_0.optWalkRunCtrl_2B != 0 ? 0x20 : 0x1C) >> 2], 0xA);
+                textPosX = (g_GameWork.config_0.optWalkRunCtrl_2B == 0) ? 210 : 206;
+                Gfx_StringSetPosition(textPosX, 128);
+                Gfx_StringDraw(D_801E2A6C[((g_GameWork.config_0.optWalkRunCtrl_2B != 0) ? 32 : 28) >> 2], 10);
                 break;
 
             case 5:
-                textPosX = g_GameWork.config_0.optAutoAiming_2C == 0 ? 0xE4 : 0xE2;
-                Gfx_StringSetPosition(textPosX, 0x90);
-                Gfx_StringDraw(D_801E2A6C[(g_GameWork.config_0.optAutoAiming_2C != 0 ? 0x28 : 0x24) >> 2], 0xA);
+                textPosX = (g_GameWork.config_0.optAutoAiming_2C == 0) ? 228 : 226;
+                Gfx_StringSetPosition(textPosX, 144);
+                Gfx_StringDraw(D_801E2A6C[((g_GameWork.config_0.optAutoAiming_2C != 0) ? 40 : 36) >> 2], 10);
                 break;
 
             case 6:
-                textPosX = g_GameWork.config_0.optViewMode_29 == 0 ? 0xD2 : 0xC8;
-                Gfx_StringSetPosition(textPosX, 0xA0);
-                Gfx_StringDraw(D_801E2A6C[(g_GameWork.config_0.optViewMode_29 ? 0x30 : 0x2C) >> 2], 0xA);
+                textPosX = (g_GameWork.config_0.optViewMode_29 == 0) ? 210 : 200;
+                Gfx_StringSetPosition(textPosX, 160);
+                Gfx_StringDraw(D_801E2A6C[(g_GameWork.config_0.optViewMode_29 ? 48 : 44) >> 2], 10);
                 break;
 
             case 7:
-                Gfx_StringSetPosition(0xE6, 0xB0);
-                Gfx_StringDraw(D_801E2A6C[g_GameWork.config_0.optBulletAdjust_2D + 0xD], 0xA);
+                Gfx_StringSetPosition(230, 176);
+                Gfx_StringDraw(D_801E2A6C[g_GameWork.config_0.optBulletAdjust_2D + 13], 10);
                 break;
         }
     }
 }
 
 /** Related to drawing.
-Draws the options for each setting used in the main options screen.
-*/
+ * Draws the options for each setting used in the main options screen.
+ */
 void Gfx_SettingsOptionsMainDraw() // 0x801E4FFC
 {
     s32               textPosX;
@@ -1127,44 +1187,44 @@ void Gfx_SettingsOptionsMainDraw() // 0x801E4FFC
     s_ControllerData* controllerPtr;
 
     s_ArrowVectors D_801E2AD8[] =
-        {
-            {{0x0028, 0x000E}, {0x0030, 0x0006}, {0x0030, 0x0016}},
-            {{0x0060, 0x000E}, {0x0058, 0x0006}, {0x0058, 0x0016}},
-            {{0x0028, 0x001E}, {0x0030, 0x0016}, {0x0030, 0x0026}},
-            {{0x0060, 0x001E}, {0x0058, 0x0016}, {0x0058, 0x0026}},
-            {{0x0013, 0x002E}, {0x001B, 0x0026}, {0x001B, 0x0036}},
-            {{0x007C, 0x002E}, {0x0074, 0x0026}, {0x0074, 0x0036}},
-            {{0x000C, 0x003E}, {0x0014, 0x0036}, {0x0014, 0x0046}},
-            {{0x0083, 0x003E}, {0x007B, 0x0036}, {0x007B, 0x0046}},
-            {{0x000C, 0x004E}, {0x0014, 0x0046}, {0x0014, 0x0056}},
-            {{0x0083, 0x004E}, {0x007B, 0x0046}, {0x007B, 0x0056}},
-        };
+    {
+        { { 0x0028, 0x000E }, { 0x0030, 0x0006 }, { 0x0030, 0x0016 } },
+        { { 0x0060, 0x000E }, { 0x0058, 0x0006 }, { 0x0058, 0x0016 } },
+        { { 0x0028, 0x001E }, { 0x0030, 0x0016 }, { 0x0030, 0x0026 } },
+        { { 0x0060, 0x001E }, { 0x0058, 0x0016 }, { 0x0058, 0x0026 } },
+        { { 0x0013, 0x002E }, { 0x001B, 0x0026 }, { 0x001B, 0x0036 } },
+        { { 0x007C, 0x002E }, { 0x0074, 0x0026 }, { 0x0074, 0x0036 } },
+        { { 0x000C, 0x003E }, { 0x0014, 0x0036 }, { 0x0014, 0x0046 } },
+        { { 0x0083, 0x003E }, { 0x007B, 0x0036 }, { 0x007B, 0x0046 } },
+        { { 0x000C, 0x004E }, { 0x0014, 0x0046 }, { 0x0014, 0x0056 } },
+        { { 0x0083, 0x004E }, { 0x007B, 0x0046 }, { 0x007B, 0x0056 } }
+    };
 
     s_ArrowVectors D_801E2B50[] =
-        {
-            {{0x0027, 0x000E}, {0x0031, 0x0004}, {0x0031, 0x0018}},
-            {{0x0061, 0x000E}, {0x0057, 0x0004}, {0x0057, 0x0018}},
-            {{0x0027, 0x001E}, {0x0031, 0x0014}, {0x0031, 0x0028}},
-            {{0x0061, 0x001E}, {0x0057, 0x0014}, {0x0057, 0x0028}},
-            {{0x0012, 0x002E}, {0x001C, 0x0024}, {0x001C, 0x0038}},
-            {{0x007D, 0x002E}, {0x0073, 0x0024}, {0x0073, 0x0038}},
-            {{0x000B, 0x003E}, {0x0015, 0x0034}, {0x0015, 0x0048}},
-            {{0x0084, 0x003E}, {0x007A, 0x0034}, {0x007A, 0x0048}},
-            {{0x000B, 0x004E}, {0x0015, 0x0044}, {0x0015, 0x0058}},
-            {{0x0084, 0x004E}, {0x007A, 0x0044}, {0x007A, 0x0058}},
-        };
+    {
+        { { 0x0027, 0x000E }, { 0x0031, 0x0004 }, { 0x0031, 0x0018 } },
+        { { 0x0061, 0x000E }, { 0x0057, 0x0004 }, { 0x0057, 0x0018 } },
+        { { 0x0027, 0x001E }, { 0x0031, 0x0014 }, { 0x0031, 0x0028 } },
+        { { 0x0061, 0x001E }, { 0x0057, 0x0014 }, { 0x0057, 0x0028 } },
+        { { 0x0012, 0x002E }, { 0x001C, 0x0024 }, { 0x001C, 0x0038 } },
+        { { 0x007D, 0x002E }, { 0x0073, 0x0024 }, { 0x0073, 0x0038 } },
+        { { 0x000B, 0x003E }, { 0x0015, 0x0034 }, { 0x0015, 0x0048 } },
+        { { 0x0084, 0x003E }, { 0x007A, 0x0034 }, { 0x007A, 0x0048 } },
+        { { 0x000B, 0x004E }, { 0x0015, 0x0044 }, { 0x0015, 0x0058 } },
+        { { 0x0084, 0x004E }, { 0x007A, 0x0044 }, { 0x007A, 0x0058 } }
+    };
 
     char* D_801E2BDC[] =
-        {
-            "On",
-            "Off",
-            "Stereo",
-            "Monaural",
-        };
+    {
+        "On",
+        "Off",
+        "Stereo",
+        "Monaural"
+    };
 
     Gfx_StringSetColor(ColorId_White);
 
-    if ((D_801E72F4 - 4) < 5U)
+    if ((D_801E72F4 - 4) < 5u)
     {
         for (i = 0; i < 2; i++)
         {
@@ -1187,24 +1247,24 @@ void Gfx_SettingsOptionsMainDraw() // 0x801E4FFC
         switch (i)
         {
             case 0:
-                textPosX = g_GameWork.config_0.optVibrationEnabled_21 == 0 ? 0xD6 : 0xD8;
-                Gfx_StringSetPosition(textPosX, 0x78);
+                textPosX = (g_GameWork.config_0.optVibrationEnabled_21 == 0) ? 214 : 216;
+                Gfx_StringSetPosition(textPosX, 120);
                 stringIdx = g_GameWork.config_0.optVibrationEnabled_21 == 0;
-                Gfx_StringDraw(D_801E2BDC[stringIdx], 0xA);
+                Gfx_StringDraw(D_801E2BDC[stringIdx], 10);
                 break;
 
             case 1:
-                textPosX = g_GameWork.config_0.optAutoLoad_25 == 0 ? 0xD6 : 0xD8;
-                Gfx_StringSetPosition(textPosX, 0x88);
+                textPosX = g_GameWork.config_0.optAutoLoad_25 == 0 ? 214 : 216;
+                Gfx_StringSetPosition(textPosX, 136);
                 stringIdx = g_GameWork.config_0.optAutoLoad_25 == 0;
-                Gfx_StringDraw(D_801E2BDC[stringIdx], 0xA);
+                Gfx_StringDraw(D_801E2BDC[stringIdx], 10);
                 break;
 
             case 2:
-                textPosX = g_GameWork.config_0.optSoundType_1E != 0 ? 0xC2 : 0xCE;
-                Gfx_StringSetPosition(textPosX, 0x98);
+                textPosX = g_GameWork.config_0.optSoundType_1E != 0 ? 194 : 206;
+                Gfx_StringSetPosition(textPosX, 152);
                 stringIdx = g_GameWork.config_0.optSoundType_1E + 2;
-                Gfx_StringDraw(D_801E2BDC[stringIdx], 0xA);
+                Gfx_StringDraw(D_801E2BDC[stringIdx], 10);
                 break;
         }
     }
@@ -1219,9 +1279,9 @@ INCLUDE_ASM("asm/screens/options/nonmatchings/options", Settings_PositionScreen)
 INCLUDE_ASM("asm/screens/options/nonmatchings/options", Gfx_PositionArrowsDraw); // 0x801E5A08
 
 /** Related to drawing.
-Draws the box that indicates the screen position in the
-position screen configuration.
-*/
+ * Draws the box that indicates the screen position in the
+ * position screen configuration.
+ */
 INCLUDE_ASM("asm/screens/options/nonmatchings/options", Gfx_PositionIndicatorDraw); // 0x801E5CBC
 
 // ========================
@@ -1337,7 +1397,7 @@ INCLUDE_ASM("asm/screens/options/nonmatchings/options", Gfx_BrightnessLevelArrow
 
             64, 84,
             56, 76,
-            56, 92,
+            56, 92
         }
     };
 
@@ -1351,7 +1411,7 @@ INCLUDE_ASM("asm/screens/options/nonmatchings/options", Gfx_BrightnessLevelArrow
 
             65, 84,
             55, 74,
-            55, 94,
+            55, 94
         }
     };
 
@@ -1391,8 +1451,8 @@ INCLUDE_ASM("asm/screens/options/nonmatchings/options", Gfx_BrightnessLevelArrow
 // ========================================
 
 /** Related to drawing.
-Draws the line on the selected option in options screens.
-*/
+ * Draws the line on the selected option in options screens.
+ */
 void Gfx_LineDraw(s_LineVectors* vec, s32 arg1, s32 arg2) // 0x801E641C
 {
     GsOT*          ot = &g_ObjectTable1[g_ObjectTableIdx];
@@ -1432,8 +1492,8 @@ void Gfx_LineDraw(s_LineVectors* vec, s32 arg1, s32 arg2) // 0x801E641C
         setRGB1(poly, 0x60, 0x60, 0x60);
         setRGB2(poly, 0, 0, 0);
         setRGB3(poly, 0x60, 0x60, 0x60);
-        setXY4(poly, vecPtr->field_0.vx, vecPtr->field_0.vy - 0x10, vecPtr->field_0.vx, vecPtr->field_0.vy,
-               vecPtr->field_4.vx, vecPtr->field_4.vy - 0x10, vecPtr->field_4.vx, vecPtr->field_4.vy);
+        setXY4(poly, vecPtr->field_0.vx, vecPtr->field_0.vy - 16, vecPtr->field_0.vx, vecPtr->field_0.vy,
+               vecPtr->field_4.vx, vecPtr->field_4.vy - 16, vecPtr->field_4.vx, vecPtr->field_4.vy);
 
         addPrim((u8*)ot->org + 0x24, poly);
 
@@ -1444,8 +1504,8 @@ void Gfx_LineDraw(s_LineVectors* vec, s32 arg1, s32 arg2) // 0x801E641C
 }
 
 /** Related to drawing.
-Draws the arrows used in options screens.
-*/
+ * Draws the arrows used in options screens.
+ */
 void Gfx_ArrowDraw(s_ArrowVectors* vec, s32 arg1, s32 arg2) // 0x801E662C
 {
     GsOT*    ot = &g_ObjectTable1[g_ObjectTableIdx];
@@ -1458,7 +1518,8 @@ void Gfx_ArrowDraw(s_ArrowVectors* vec, s32 arg1, s32 arg2) // 0x801E662C
     {
         do
         {
-        } while (0); // HACK: probably some unused code related to arg2
+        }
+        while (0); // HACK: Probably some unused code related to `arg2`.
     }
 
     timerCount = g_SysWork.timer_1C & 0x7F;
@@ -1528,8 +1589,8 @@ void Gfx_ArrowDraw(s_ArrowVectors* vec, s32 arg1, s32 arg2) // 0x801E662C
 }
 
 /** Related to drawing.
-Draws the button next to options in the main and extra option screens.
-*/
+ * Draws the button next to options in the main and extra option screens.
+ */
 void Gfx_ButtonDraw(s_ButtonVectors* vec, s32 arg1, s32 arg2) // 0x801E67B0
 {
     GsOT*    ot = &g_ObjectTable1[g_ObjectTableIdx];
@@ -1614,8 +1675,8 @@ void Gfx_ButtonDraw(s_ButtonVectors* vec, s32 arg1, s32 arg2) // 0x801E67B0
 INCLUDE_ASM("asm/screens/options/nonmatchings/options", Settings_ControllerScreen); // 0x801E69BC
 
 /** Related to controller mapping.
-Changes the button mapping based on the input.
-*/
+ * Changes the button mapping based on the input.
+ */
 INCLUDE_ASM("asm/screens/options/nonmatchings/options", Settings_ButtonChange); // 0x801E6CF4
 
 INCLUDE_ASM("asm/screens/options/nonmatchings/options", Gfx_ControllerScreenDraw); // 0x801E6F60

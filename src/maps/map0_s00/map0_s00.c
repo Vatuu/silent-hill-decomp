@@ -255,29 +255,34 @@ void func_800DB870() // 0x800DB870
 {
     switch (g_SysWork.sysStateStep_C)
 	{
-    case 0:
-        sharedFunc_800D20E4_0_s00();
-        g_SysWork.field_28 = 0;
-        g_SysWork.field_10 = 0;
-        g_SysWork.timer_2C = 0;
-        g_SysWork.field_14 = 0;
-        g_SysWork.sysStateStep_C++;
-    case 1:
-        func_80085DF0();
-        return;
-    case 2:
-        func_800860B0(0, 0x1A, 0, 0, 0, 0);
-        return;
-    default:
-        func_800D2244(0);
-        g_SysWork.sysState_8 = 0;
-        g_SysWork.timer_24 = 0;
-        g_SysWork.sysStateStep_C = 0;
-        g_SysWork.field_28 = 0;
-        g_SysWork.field_10 = 0;
-        g_SysWork.timer_2C = 0;
-        g_SysWork.field_14 = 0;
-        return;
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+
+            g_SysWork.field_28 = 0;
+            g_SysWork.field_10 = 0;
+            g_SysWork.timer_2C = 0;
+            g_SysWork.field_14 = 0;
+            g_SysWork.sysStateStep_C++;
+
+        case 1:
+            func_80085DF0();
+            break;
+
+        case 2:
+            func_800860B0(0, 26, 0, 0, 0, 0);
+            break;
+
+        default:
+            func_800D2244(0);
+
+            g_SysWork.sysState_8 = 0;
+            g_SysWork.timer_24 = 0;
+            g_SysWork.sysStateStep_C = 0;
+            g_SysWork.field_28 = 0;
+            g_SysWork.field_10 = 0;
+            g_SysWork.timer_2C = 0;
+            g_SysWork.field_14 = 0;
+            break;
     }
 }
 

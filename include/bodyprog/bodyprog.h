@@ -1007,9 +1007,9 @@ extern s_800AD4C8 D_800AD4C8[];
 typedef struct _SpawnInfo
 {
     s32 posX_0;
-    s8  chara_type_4; /** `e_ShCharacterId` */
+    s8  chara_type_4;             /** `e_ShCharacterId` */
     s8  rot_5;
-    s8  isAnimStateUnchanged_3_6; /** Copied to `isAnimStateUnchanged_3` in `s_Model` */
+    s8  isAnimStateUnchanged_3_6; /** Copied to `isAnimStateUnchanged_3` in `s_Model`. */
     s8  unk_7;
     s32 posZ_8;
 } s_SpawnInfo;
@@ -1027,7 +1027,7 @@ typedef struct _MapOverlayHeader
     u8           unk_18[8];
     void         (**mapEventFuncs_20)(); /** Points to array of event functions. */
     u8           unk_24[12];
-    char**       mapMessageStrings_30; /** Points to array of `char*` for each displayed message in the map. */
+    char**       mapMessageStrings_30;   /** Points to array of `char*` for each displayed message in the map. */
     u8           unk_34[12];
     void         (*func_40)();
     void         (*func_44)();
@@ -1042,11 +1042,11 @@ typedef struct _MapOverlayHeader
     u8           unk_140[40];
     void         (*func_168)(void*, void*, void*);
     u8           unk_16C[4];
-    u8           unk_170[0x24];
-    void         (*charaUpdateFuncs_194[CHARA_COUNT])(s_SubCharacter*, void*, s32); /** Guessed params, funcptrs for each `e_ShCharacterId`, set to 0 for IDs not included in the map overlay, called by `func_80038354` */
-    u8           roamingCharas_248[2]; /** Holds 2 `e_ShCharacterId` values without set spawn locations, possibly for roaming monsters, read by `func_80037F24` */
+    u8           unk_170[36];
+    void         (*charaUpdateFuncs_194[Chara_Count])(s_SubCharacter*, void*, s32); /** Guessed params. Funcptrs for each `e_ShCharacterId`, set to 0 for IDs not included in the map overlay. Called by `func_80038354` */
+    u8           roamingCharas_248[2]; /** Holds 2 `e_ShCharacterId` values without set spawn locations, possibly for roaming monsters. Read by `func_80037F24`. */
     u8           unk_24A[2];
-    s_SpawnInfo  charaSpawns_24C[32]; /** Array of chara type / position / flags, many maps leave this set to all 0 and only use roaming charas, read by `func_80037F24` */
+    s_SpawnInfo  charaSpawns_24C[32]; /** Array of chara type/position/flags. Many maps leave this set to all 0 and only use roaming charas. Read by `func_80037F24`. */
     VC_ROAD_DATA roadDataList_3CC[48];
     // TODO: A lot more in here.
 } s_MapOverlayHeader;

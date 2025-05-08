@@ -268,6 +268,58 @@ typedef enum _PlayerProperty
     PlayerProperty_RunTimer1     = 9  // Increments every tick indefinitely.
 } s_PlayerProperty;
 
+/** @brief Names for each character index used in the game, `g_Chara_FileInfo` array associates each character ID with anim/model/texture files. */
+enum e_ShCharacterId
+{
+    Chara_None                = 0,
+    Chara_Hero                = 1,
+    Chara_AirScreamer         = 2,
+    Chara_NightFlutter        = 3,
+    Chara_Groaner             = 4,
+    Chara_Wormhead            = 5,
+    Chara_LarvalStalker       = 6,
+    Chara_Stalker             = 7,
+    Chara_GreyChild           = 8,
+    Chara_Mumbler             = 9,
+    Chara_HangedScratcher     = 10,
+    Chara_Creaper             = 11,
+    Chara_Romper              = 12,
+    Chara_UnusedChicken       = 13,
+    Chara_Splithead           = 14,
+    Chara_Floatstinger        = 15,
+    Chara_PuppetNurse         = 16,
+    Chara_DummyA              = 17, /** Uses dummy anim file without model/texture, but uses same update funcptr as `Chara_PuppetNurse`. */
+    Chara_PuppetDoctor        = 18,
+    Chara_DummyB              = 19, /** Uses dummy anim file without model/texture, but uses same update funcptr as `Chara_PuppetDoctor`. */
+    Chara_Twinfeeler          = 20,
+    Chara_Bloodsucker         = 21,
+    Chara_Incubus             = 22,
+    Chara_Unknown23           = 23,
+    Chara_MonsterCybil        = 24,
+    Chara_LockerDeadBody      = 25,
+    Chara_Cybil               = 26,
+    Chara_EndingCybil         = 27,
+    Chara_Cheryl              = 28,
+    Chara_Cat                 = 29,
+    Chara_Dahlia              = 30,
+    Chara_EndingDahlia        = 31,
+    Chara_Lisa                = 32,
+    Chara_BloodyLisa          = 33,
+    Chara_Alessa              = 34,
+    Chara_GhostChildAlessa    = 35,
+    Chara_Incubator           = 36,
+    Chara_BloodyIncubator     = 37,
+    Chara_Kaufmann            = 38,
+    Chara_EndingKaufmann      = 39,
+    Chara_Flauros             = 40,
+    Chara_LittleIncubus       = 41,
+    Chara_GhostDoctor         = 42,
+    Chara_IntensiveCareUnit   = 43,
+    Chara_Null                = 44,
+
+    Chara_Count
+};
+
 /** Based on LIBOVR.PDF `Buffer Data Format` section. */
 typedef enum _PadTerminalType
 {
@@ -509,57 +561,6 @@ typedef struct _ModelAnimData
     s32 field_10;
 } s_ModelAnim;
 STATIC_ASSERT_SIZEOF(s_ModelAnim, 20);
-
-/** Names for each character index used in the game, g_Chara_FileInfo array associates each character ID with anim/model/texture files. */
-enum e_ShCharacterId
-{
-    CHARA_NONE                = 0,
-    CHARA_HERO                = 1,
-    CHARA_AIR_SCREAMER        = 2,
-    CHARA_NIGHT_FLUTTER       = 3,
-    CHARA_GROANER             = 4,
-    CHARA_WORMHEAD            = 5,
-    CHARA_LARVAL_STALKER      = 6,
-    CHARA_STALKER             = 7,
-    CHARA_GREY_CHILD          = 8,
-    CHARA_MUMBLER             = 9,
-    CHARA_HANGED_SCRATCHER    = 10,
-    CHARA_CREAPER             = 11,
-    CHARA_ROMPER              = 12,
-    CHARA_UNUSED_CHICKEN      = 13,
-    CHARA_SPLITHEAD           = 14,
-    CHARA_FLOATSTINGER        = 15,
-    CHARA_PUPPET_NURSE        = 16,
-    CHARA_DUMMY_A             = 17, /** Uses dummy anim file without model/texture, but uses same update funcptr as `CHARA_PUPPET_NURSE`. */
-    CHARA_PUPPET_DOCTOR       = 18,
-    CHARA_DUMMY_B             = 19, /** Uses dummy anim file without model/texture, but uses same update funcptr as `CHARA_PUPPET_DOCTOR`. */
-    CHARA_TWINFEELER          = 20,
-    CHARA_BLOODSUCKER         = 21,
-    CHARA_INCUBUS             = 22,
-    CHARA_UNKNOWN23           = 23,
-    CHARA_MONSTER_CYBIL       = 24,
-    CHARA_LOCKER_DEAD_BODY    = 25,
-    CHARA_CYBIL               = 26,
-    CHARA_ENDING_CYBIL        = 27,
-    CHARA_CHERYL              = 28,
-    CHARA_CAT                 = 29,
-    CHARA_DAHLIA              = 30,
-    CHARA_ENDING_DAHLIA       = 31,
-    CHARA_LISA                = 32,
-    CHARA_BLOODY_LISA         = 33,
-    CHARA_ALESSA              = 34,
-    CHARA_GHOST_CHILD_ALESSA  = 35,
-    CHARA_INCUBATOR           = 36,
-    CHARA_BLOODY_INCUBATOR    = 37,
-    CHARA_KAUFMANN            = 38,
-    CHARA_ENDING_KAUFMANN     = 39,
-    CHARA_FLAUROS             = 40,
-    CHARA_LITTLE_INCUBUS      = 41,
-    CHARA_GHOST_DOCTOR        = 42,
-    CHARA_INTENSIVE_CARE_UNIT = 43,
-    CHARA_NULL                = 44,
-    CHARA_COUNT
-};
 
 typedef struct _Model
 {
