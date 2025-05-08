@@ -1,6 +1,6 @@
-# maptool.py
-#
-# Main mode compares ASM of funcs in map1 folder against funcs in map2, and prints matching filenames.
+#!/usr/bin/env python3
+
+# maptool.py main mode compares ASM of funcs in map1 folder against funcs in map2, and prints matching filenames.
 # Funcs are compared by removing any block-comments and data/func refs, and then checking Levenshtein distance.
 # Any with distance = 0 will then be printed.
 #
@@ -8,10 +8,19 @@
 # It'll also print out lines to add in map2 sym.txt file and #includes to add in .c file, to allow the func to be shared.
 #
 # maptool also allows parsing/listing map file headers, and searching map files for specific character IDs
-
 #
-# If --replace flag is provided it'll try replacing the INCLUDE_ASM line in map2 .c with #include lines.
-# Similarly --updsyms will update map2 sym.txt file with the extra symbols needed for it to share function names.
+# Usage: maptool.py [options] [map1] [map2]
+#
+# Map comparison options (map1/map2 required):
+#   --matchings              Only compare map1 'matchings' against map2 'nonmatchings'
+#   --nonmatchings           Only compare map1 'nonmatchings' against map2 'nonmatchings'
+#   If none of above are set, will compare both against map2 'nonmatchings'
+#   --replace                Replace INCLUDE_ASM for 'sharedFunc' funcs in map2 .c with #include
+#   --updsyms                Update and reorder map2 sym.txt with shared functions
+#
+# Map header options:
+#   --list [MAP_NAME]        List character spawns from MAP_NAME map headers
+#   --searchChara [CHAR_ID]  Search and list any maps that contain CHAR_ID
 #
 # (more info at https://github.com/Vatuu/silent-hill-decomp/issues/74#issuecomment-2816256817)
 
