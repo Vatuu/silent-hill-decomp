@@ -31,3 +31,4 @@ sharedData_800E323C_0_s00 = 0x800D6E98; // type:VECTOR3 size:0xC
 sharedData_800E324C_0_s00 = 0x800D6EA8; // type:VECTOR3 size:0xC
 sharedData_800E3260_0_s00 = 0x800D6EBC; // type:s16
 sharedData_800E39D8_0_s00 = 0x800D6ECC; // type:s32
+AI_Lisa_Update = 0x800CFEA0; // type:func

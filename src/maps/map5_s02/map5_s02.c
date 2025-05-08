@@ -73,7 +73,7 @@ void func_800CDB9C(void) {}
 
 #include "maps/shared/sharedFunc_800D2EF4_0_s00.h" // 0x800CDBF4
 
-INCLUDE_ASM("asm/maps/map5_s02/nonmatchings/map5_s02", func_800CDC08);
+INCLUDE_ASM("asm/maps/map5_s02/nonmatchings/map5_s02", AI_Stalker_Update); // 0x800CDC08
 
 INCLUDE_ASM("asm/maps/map5_s02/nonmatchings/map5_s02", func_800CDD9C);
 
@@ -115,7 +115,7 @@ INCLUDE_ASM("asm/maps/map5_s02/nonmatchings/map5_s02", func_800D2AD8);
 
 INCLUDE_ASM("asm/maps/map5_s02/nonmatchings/map5_s02", func_800D2CF4);
 
-INCLUDE_ASM("asm/maps/map5_s02/nonmatchings/map5_s02", func_800D2EA8);
+INCLUDE_ASM("asm/maps/map5_s02/nonmatchings/map5_s02", AI_Kaufmann_Update); // 0x800D2EA8
 
 INCLUDE_ASM("asm/maps/map5_s02/nonmatchings/map5_s02", func_800D2F1C);
 

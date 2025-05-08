@@ -21,3 +21,5 @@ sharedData_800E323C_0_s00 = 0x800E0E60; // type:VECTOR3 size:0xC
 sharedData_800E324C_0_s00 = 0x800E0E70; // type:VECTOR3 size:0xC
 sharedData_800E3260_0_s00 = 0x800E0E84; // type:s16
 sharedData_800E39D8_0_s00 = 0x800E0E88; // type:s32
+AI_LarvalStalker_Update = 0x800CF050; // type:func
+AI_Stalker_Update = 0x800D24F8; // type:func

@@ -29,3 +29,4 @@ sharedFunc_800D929C_0_s00 = 0x800CE87C; // type:func
 sharedData_800DD59C_0_s00 = 0x800D37A4; // type:u8
 
 sharedData_800E39D8_0_s00 = 0x800D4DFC; // type:s32
+AI_Alessa_Update = 0x800CD734; // type:func

@@ -95,7 +95,7 @@ void func_800CF08C(void) {}
 
 #include "maps/shared/sharedFunc_800D2EF4_0_s00.h" // 0x800CF0E4
 
-INCLUDE_ASM("asm/maps/map3_s06/nonmatchings/map3_s06", func_800CF0F8);
+INCLUDE_ASM("asm/maps/map3_s06/nonmatchings/map3_s06", AI_Dahlia_Update); // 0x800CF0F8
 
 INCLUDE_ASM("asm/maps/map3_s06/nonmatchings/map3_s06", func_800CF16C);
 

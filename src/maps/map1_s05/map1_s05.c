@@ -93,7 +93,7 @@ void func_800CF7AC(void) {}
 
 #include "maps/shared/sharedFunc_800D2EF4_0_s00.h" // 0x800CF804
 
-INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800CF818);
+INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", AI_Splithead_Update); // 0x800CF818
 
 INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800CF8D8);
 
