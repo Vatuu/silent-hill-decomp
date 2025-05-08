@@ -234,7 +234,7 @@ typedef struct
     u8                unk_1650[0x55C];
     s32               field_1BAC;
     u8                unk_1BB0[0x14];
-	s32               field_1BC4;
+    s32               field_1BC4;
     u8                unk_1BC8[0x10];
     s32               field_1BD8;
     VC_CAMERA_INTINFO vcCameraInternalInfo_1BDC; // Debug camera info.
@@ -1044,7 +1044,7 @@ STATIC_ASSERT_SIZEOF(s_SpawnInfo, 12);
 typedef struct _800B5494
 {
     s32 field_0;
-	s32 unk_4[9];
+    s32 unk_4[9];
 } s_800B5494;
 STATIC_ASSERT_SIZEOF(s_800B5494, 0x28);
 
@@ -1182,7 +1182,7 @@ void SysState_Fmv_Update();
 void func_8003B550();
 
 /** Unknown bodyprog func. Called by `Fs_QueueDoThingWhenEmpty`. */
-s32 func_8003c850();
+s32 func_8003C850();
 
 /** Return type assumed. */
 void func_8003D160();

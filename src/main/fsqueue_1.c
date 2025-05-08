@@ -30,7 +30,7 @@ s32 Fs_QueueDoThingWhenEmpty(void)
 
     if (Fs_QueueGetLength() == 0)
     {
-        result = func_8003c850() != 0;
+        result = func_8003C850() != 0;
     }
 
     return result;

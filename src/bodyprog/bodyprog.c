@@ -362,7 +362,7 @@ void func_80030414() // 0x80030414
 
 void func_80030444() // 0x80030444
 {
-	s_800B5488* var = &D_800B5488;
+    s_800B5488* var = &D_800B5488;
     var->field_4 = 0;
     var->field_8 = 0;
     var->field_C = 0;
@@ -1579,7 +1579,7 @@ void SysState_Fmv_Update() // 0x80039A58
             g_SysWork.sysStateStep_C = 1;
 
         case 1:
-            if (func_8003c850() != 0)
+            if (func_8003C850() != 0)
             {
                 GameFs_StreamBinLoad();
                 g_SysWork.sysStateStep_C++;
@@ -2011,7 +2011,9 @@ void func_8003C3A0() // 0x8003C3A0
     D_800BCE18.field_4 = 0;
 }
 
-s32 func_8003c850() // 0x8003c850
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003C3AC);
+
+s32 func_8003C850() // 0x8003C850
 {
     func_8003C3AC();
     func_80043740();
