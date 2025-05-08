@@ -323,12 +323,44 @@ void toremoro_set() // 0x800A439C
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_io", pitch_bend_calc);
+s32 pitch_bend_calc(PORT* p, u32 pit) // 0x800A441C
+{
+    u16 bendMultiplier = 2; // Hack to get regalloc order correct, not included in PS2 `AUDIO.IRX` syms.
+    s16 pitch;
+
+    if (pit < 0x40U)
+    {
+        if (!p->bend_min_1D)
+        {
+            return 0;
+        }
+        else
+        {
+            pitch = -((p->bend_min_1D * bendMultiplier) * (0x40 - pit));
+        }
+    }
+    else if (pit == 0x40)
+    {
+        return 0;
+    }
+    else
+    {
+        if (!p->bend_max_1C)
+        {
+            return 0;
+        }
+        else
+        {
+            pitch = (short)(p->bend_max_1C * bendMultiplier) * (pit - 0x3F);
+        }
+    }
+    return pitch;
+}
 
 void pitch_calc(PORT* p, s32 forceSpuUpdate) // 0x800A4494
 {
     MIDI* m;
-    s32   pitch;
+    s16   pitch;
     s32   note;
 
     m = &smf_midi[p->midi_ch_3];
@@ -337,7 +369,7 @@ void pitch_calc(PORT* p, s32 forceSpuUpdate) // 0x800A4494
         p->pbend_wk_4E = m->pbend_7;
 
         pitch = p->rdmd_40 + (p->vib_data_2E + ((u16)m->mod_depth_1C + (u16)m->porta_depth_2A));
-        pitch += (p->note_wk_8 << 7) + pitch_bend_calc(p, m->pbend_7, m);
+        pitch += (p->note_wk_8 << 7) + pitch_bend_calc(p, m->pbend_7);
         note = pitch << 16;
 
         s_attr.mask  = SPU_VOICE_PITCH;
