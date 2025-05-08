@@ -219,14 +219,24 @@ typedef struct
 } s_800BCDA8;
 STATIC_ASSERT_SIZEOF(s_800BCDA8, 4);
 
-typedef struct _s_800BCE18
+typedef struct
 {
     s8                unk_0[4];
     s8                field_4;
     u8                unk_5[3];
-    u8                unk_8[5700];
+    s32               field_8;
+    s32               field_C;
+    s32               field_10;
+    s8                unk_14[0xD18];
+    s32               field_D2C;
+    u8                unk_D30[0x91C];
     s32               field_164C;
-    u8                unk_1650[1420];
+    u8                unk_1650[0x55C];
+    s32               field_1BAC;
+    u8                unk_1BB0[0x14];
+	s32               field_1BC4;
+    u8                unk_1BC8[0x10];
+    s32               field_1BD8;
     VC_CAMERA_INTINFO vcCameraInternalInfo_1BDC; // Debug camera info.
     s_800BE9FC        field_1BE4;
     s32               field_2BE8;
@@ -577,6 +587,8 @@ extern s_FsImageDesc D_800A9024;
 /** Save screen background image. */
 extern s_FsImageDesc D_800A902C;
 
+extern s_FsImageDesc D_800A9034;
+
 extern s_FsImageDesc D_800A903C;
 
 extern s_FsImageDesc D_800A9044;
@@ -635,6 +647,8 @@ extern void (*D_800A9A2C[])(); // SysState func table.
 
 extern s32 D_800A9A68;
 
+extern s32 D_800A9A78;
+
 extern RECT D_800A9A6C; // RECT <320, 256, 160, 240>, only used in SysState_Fmv_Update?
 
 extern s_FsImageDesc D_800A9EB4;
@@ -688,7 +702,18 @@ extern s_800B55E8 D_800B4580[];
 
 extern s32 D_800B5480;
 
-extern s32 D_800B5488; // Index or state?
+typedef struct
+{
+    s32 unk_0;
+    s32 field_4;
+    s32 field_8;
+    s32 field_C;
+} s_800B5488;
+
+extern s_800B5488* D_800B5488; // Index or state
+							   // Is a pointer to an struct. See `func_80030444`
+
+extern s32 D_800B548C;
 
 extern s32 D_800B54BC;
 
@@ -1014,6 +1039,16 @@ typedef struct _SpawnInfo
     s32 posZ_8;
 } s_SpawnInfo;
 STATIC_ASSERT_SIZEOF(s_SpawnInfo, 12);
+
+
+typedef struct _800B5494
+{
+    s32 field_0;
+	s32 unk_4[9];
+} s_800B5494;
+STATIC_ASSERT_SIZEOF(s_800B5494, 0x28);
+
+extern s_800B5494 D_800B5494;
 
 /** TODO: `g_MapOverlayHeader` is part of the overlay bin files. Maybe should be moved to `maps/s00.h` or `dynamic/dynamic.h`. */
 typedef struct _MapOverlayHeader
@@ -1723,6 +1758,8 @@ u8 func_8003ED64();
 void func_8003EDA8();
 
 void func_8003F170();
+
+void func_80043740();
 
 /** Resets player info in the savegame buffer (inventory, health, playtime). */
 void Game_SaveGameResetPlayer();
