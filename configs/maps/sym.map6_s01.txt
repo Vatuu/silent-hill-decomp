@@ -29,3 +29,5 @@ sharedFunc_800D929C_0_s00 = 0x800D0DD0; // type:func
 sharedData_800DD59C_0_s00 = 0x800D359C; // type:u8
 
 sharedData_800E39D8_0_s00 = 0x800D5330; // type:s32
+AI_Cybil_Update = 0x800CE4FC; // type:func
+AI_Dahlia_Update = 0x800CF7D0; // type:func

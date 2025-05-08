@@ -95,7 +95,7 @@ void func_800CF870(void) {}
 
 #include "maps/shared/sharedFunc_800D2EF4_0_s00.h" // 0x800CF8C8
 
-INCLUDE_ASM("asm/maps/map5_s03/nonmatchings/map5_s03", func_800CF8DC);
+INCLUDE_ASM("asm/maps/map5_s03/nonmatchings/map5_s03", AI_Kaufmann_Update); // 0x800CF8DC
 
 INCLUDE_ASM("asm/maps/map5_s03/nonmatchings/map5_s03", func_800CF950);
 

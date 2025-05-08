@@ -70,7 +70,7 @@ void func_800CE9CC(void) {}
 
 #include "maps/shared/sharedFunc_800D2EF4_0_s00.h" // 0x800CEA24
 
-INCLUDE_ASM("asm/maps/map7_s00/nonmatchings/map7_s00", func_800CEA38);
+INCLUDE_ASM("asm/maps/map7_s00/nonmatchings/map7_s00", AI_Lisa_Update); // 0x800CEA38
 
 INCLUDE_ASM("asm/maps/map7_s00/nonmatchings/map7_s00", func_800CEAAC);
 
