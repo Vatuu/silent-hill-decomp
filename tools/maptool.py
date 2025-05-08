@@ -192,17 +192,17 @@ def main():
                 for index, funcAddr in enumerate(map_data.update_funcs):
                     if index == search_id and funcAddr != 0:
                         found = True
-                        foundIn += "updateFuncs "
-                        break
-                for spawn in map_data.chara_spawns:
-                    if spawn.chara_type == search_id:
-                        found = True
-                        foundIn += "charaSpawns "
+                        foundIn += f"updateFuncs(0x{funcAddr:08X}) "
                         break
                 for charaId in map_data.group_charas:
                     if charaId == search_id:
                         found = True
                         foundIn += "charaGroupIds "
+                        break
+                for spawn in map_data.chara_spawns:
+                    if spawn.chara_type == search_id:
+                        found = True
+                        foundIn += "charaSpawns "
                         break
                 if found:
                     print(f"Found {charaName(search_id, False)} in {filename} - {foundIn}")
