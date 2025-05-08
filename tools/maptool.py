@@ -187,24 +187,20 @@ def main():
                     continue
                     
                 # Check if any spawns/updatefuncs/group are setup for this chara ID
-                found = False
                 foundIn = ""
                 for index, funcAddr in enumerate(map_data.update_funcs):
                     if index == search_id and funcAddr != 0:
-                        found = True
                         foundIn += f"updateFuncs(0x{funcAddr:08X}) "
                         break
                 for charaId in map_data.group_charas:
                     if charaId == search_id:
-                        found = True
                         foundIn += "charaGroupIds "
                         break
                 for spawn in map_data.chara_spawns:
                     if spawn.chara_type == search_id:
-                        found = True
                         foundIn += "charaSpawns "
                         break
-                if found:
+                if foundIn:
                     print(f"Found {charaName(search_id, False)} in {filename} - {foundIn}")
 
     elif input_file:
