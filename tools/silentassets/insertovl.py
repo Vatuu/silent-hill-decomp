@@ -126,8 +126,9 @@ def main():
     "/1ST/"
     ]
     ovlNames = [
-    "STREAM",
     "B_KONAMI",
+    "BODYPROG",
+    "STREAM",
     "STF_ROLL",
     "OPTION",
     "SAVELOAD",
