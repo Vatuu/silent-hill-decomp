@@ -5,7 +5,6 @@ BUILD_SCREENS  ?= 1
 BUILD_MAPS     ?= 1
 NON_MATCHING   ?= 0
 SKIP_ASM       ?= 0
-MACRO_FILE     ?= macro.build.inc
 
 # Names and Paths
 
@@ -179,19 +178,13 @@ TARGET_OUT := $(foreach target,$(TARGET_IN),$(call get_target_out,$(target)))
 CONFIG_FILES := $(foreach target,$(TARGET_IN),$(call get_yaml_path,$(target)))
 LD_FILES     := $(addsuffix .ld,$(addprefix $(LINKER_DIR)/,$(TARGET_IN)))
 
-MACRO_INC := include/macro.inc
-
 # Rules
 
 default: all
 
 all: build
 
-build: prepare-macro $(TARGET_OUT)
-
-# Workaround for objdiff .global issue https://github.com/Vatuu/silent-hill-decomp/issues/104, allows switching with macro.inc without .global.
-prepare-macro:
-	cp include/$(MACRO_FILE) $(MACRO_INC)
+build: $(TARGET_OUT)
 
 objdiff-config: regenerate
 	@$(MAKE) NON_MATCHING=1 SKIP_ASM=1 expected
@@ -206,11 +199,9 @@ check: build
 progress:
 	$(MAKE) build NON_MATCHING=1 SKIP_ASM=1
 
-expected:
-	$(MAKE) build NON_MATCHING=1 SKIP_ASM=1 MACRO_FILE=macro.objdiff.inc
+expected: build
 	mkdir -p $(EXPECTED_DIR)
 	mv build/asm $(EXPECTED_DIR)/asm
-	$(MAKE) prepare-macro MACRO_FILE=macro.build.inc
 
 iso:
 	$(INSERT_OVLS) $(INSERT_OVLS_FLAGS)
@@ -225,7 +216,6 @@ generate: $(LD_FILES)
 clean:
 	rm -rf $(BUILD_DIR)
 	rm -rf $(PERMUTER_DIR)
-	[ -f $(MACRO_INC) ] && rm $(MACRO_INC) || true
 
 reset: clean
 	rm -rf $(ASM_DIR)
