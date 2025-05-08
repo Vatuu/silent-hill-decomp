@@ -19,8 +19,6 @@ typedef struct
     u8 field_0[25];
 } s_801E2728;
 
-extern s_FsImageDesc D_800A902C;
-
 extern s8 D_800A97D7;
 
 extern s8 D_800A97D8;

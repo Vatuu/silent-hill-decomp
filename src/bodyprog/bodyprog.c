@@ -346,7 +346,12 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80030334);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80030370);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_800303E4);
+void func_800303E4()
+{
+    InitCARD(0);
+    StartCARD();
+    D_800B5488 = NO_VALUE;
+}
 
 void func_80030414() // 0x80030414
 {
@@ -355,13 +360,23 @@ void func_80030414() // 0x80030414
     func_80030530();
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80030444);
+void func_80030444() // 0x80030444
+{
+	s_800B5488* var = &D_800B5488;
+    var->field_4 = 0;
+    var->field_8 = 0;
+    var->field_C = 0;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003045C);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80030530);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80030640);
+void func_80030640() // 0x80030640
+{
+    func_80030668();
+    func_800306C8();
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80030668);
 
@@ -371,7 +386,10 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80030734);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_800307BC);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80030810);
+s32 func_80030810() // 0x80030810
+{
+    return D_800B54BC;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80030820);
 
@@ -380,19 +398,37 @@ void func_80030884() // 0x80030884
     D_800B54BC = 4;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80030894);
+void func_80030894() // 0x80030894
+{
+    D_800B54BC = 0x8000;
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_800308A4);
+void func_800308A4() // 0x800308A4
+{
+    D_800B54BC = 0x2000;
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_800308B4);
+void func_800308B4() // 0x800308B4
+{
+    D_800B54BC = 0x100;
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_800308C4);
+void func_800308C4() // 0x800308C4
+{
+    D_800B54BC = 0x200;
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_800308D4);
+s32 func_800308D4() // 0x800308D4
+{
+    return D_800B5494.field_0;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_800308E4);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_800309FC);
+s32 func_800309FC() // 0x800309FC
+{
+    return D_800B548C == 0;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80030A0C);
 
@@ -1129,11 +1165,20 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_800358DC);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80035924);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003596C);
+void func_8003596C() // 0x8003596C
+{
+    if (g_MapOverlayHeader.field_14 == 1)
+    {
+        func_80035DB4(1);
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003599C);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80035AB0);
+s32 func_80035AB0(s32 arg0) // 0x80035AB0
+{
+    return g_GameWork.field_5B3 != arg0;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80035AC8);
 
@@ -1141,9 +1186,15 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80035B04);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80035B58);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80035B98);
+void func_80035B98() // 0x80035B98
+{
+    Gfx_BackgroundSpriteDraw(&D_800A902C);
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80035BBC);
+void func_80035BBC() // 0x80035BBC
+{
+    Gfx_BackgroundSpriteDraw(&D_800A9034);
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80035BE0);
 
@@ -1585,7 +1636,14 @@ void AreaLoad_UpdatePlayerPosition() // 0x80039F30
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80039F54);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80039F90);
+s8 func_80039F90() // 0x80039F90
+{
+    if (g_SysWork.flags_2298 & 3)
+    {
+        return g_SysWork.field_2282;
+    }
+    return 0;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", SysState_ReadMessage_Update);
 
@@ -1843,7 +1901,10 @@ void GameState_MapEvent_Update() // 0x8003AA4C
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", GameState_MainMenu_Update); // 0x8003AB28
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003B550);
+void func_8003B550() // 0x8003B550
+{
+    D_800A9A78 = 1;
+}
 
 void func_8003B560() {}
 
@@ -1936,7 +1997,10 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003C1AC);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003C220);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003C2EC);
+void func_8003C2EC()
+{
+    func_80041FF0();
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003C30C);
 
@@ -1947,9 +2011,11 @@ void func_8003C3A0() // 0x8003C3A0
     D_800BCE18.field_4 = 0;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003C3AC);
-
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003c850);
+s32 func_8003c850() // 0x8003c850
+{
+    func_8003C3AC();
+    func_80043740();
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003C878);
 
@@ -1968,15 +2034,24 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003CBA4);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003CC7C);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003CD5C);
+s32 func_8003CD5C() // 0x8003CD5C
+{
+    return D_800BCE18.field_1BAC;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003CD6C);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003CDA0);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003D01C);
+void func_8003D01C(void)
+{
+    D_800BCE18.field_1BC4 &= 0x7FFFFFFF;
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003D03C);
+void func_8003D03C() // 0x8003D03C
+{
+    D_800BCE18.field_1BC4 |= 0x80000000;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003D058);
 
@@ -2015,7 +2090,10 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003D9C8);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003DA9C);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003DD74);
+s32 func_8003DD74(s32 arg0, s32 arg1) // 0x8003DD74
+{
+    return (arg1 << 0xA) & 0xFC00;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003DD80);
 
@@ -2126,6 +2204,9 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003FEC0);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003FF2C);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80040004);
+void func_80040004(s_800BCE18* arg0) // 0x80040004
+{
+    D_800BCE18.field_1BD8 = &arg0->field_D2C;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80040014);
