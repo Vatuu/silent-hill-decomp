@@ -101,7 +101,7 @@ void func_800CFBB8(void) {}
 
 #include "maps/shared/sharedFunc_800D2EF4_0_s00.h" // 0x800CFC10
 
-INCLUDE_ASM("asm/maps/map5_s00/nonmatchings/map5_s00", func_800CFC24);
+INCLUDE_ASM("asm/maps/map5_s00/nonmatchings/map5_s00", AI_HangedScratcher_Update); // 0x800CFC24
 
 INCLUDE_ASM("asm/maps/map5_s00/nonmatchings/map5_s00", func_800CFCA8);
 
@@ -151,7 +151,7 @@ INCLUDE_ASM("asm/maps/map5_s00/nonmatchings/map5_s00", func_800D3214);
 
 INCLUDE_ASM("asm/maps/map5_s00/nonmatchings/map5_s00", func_800D3300);
 
-INCLUDE_ASM("asm/maps/map5_s00/nonmatchings/map5_s00", func_800D387C);
+INCLUDE_ASM("asm/maps/map5_s00/nonmatchings/map5_s00", AI_Creaper_Update); // 0x800D387C
 
 INCLUDE_ASM("asm/maps/map5_s00/nonmatchings/map5_s00", func_800D390C);
 

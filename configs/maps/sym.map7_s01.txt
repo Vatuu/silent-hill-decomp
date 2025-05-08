@@ -29,3 +29,8 @@ sharedFunc_800D929C_0_s00 = 0x800D6768; // type:func
 sharedData_800DD59C_0_s00 = 0x800DF300; // type:u8
 
 sharedData_800E39D8_0_s00 = 0x800E2C28; // type:s32
+AI_PuppetNurse_Update = 0x800D1D24; // type:func
+AI_PuppetDoctor_Update = 0x800D1D80; // type:func
+AI_Lisa_Update = 0x800D4DFC; // type:func
+AI_BloodyLisa_Update = 0x800D58E8; // type:func
+AI_GhostChildAlessa_Update = 0x800D49B8; // type:func

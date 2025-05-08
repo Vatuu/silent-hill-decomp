@@ -31,3 +31,4 @@ sharedData_800E323C_0_s00 = 0x800D5E18; // type:VECTOR3 size:0xC
 sharedData_800E324C_0_s00 = 0x800D5E28; // type:VECTOR3 size:0xC
 sharedData_800E3260_0_s00 = 0x800D5E3C; // type:s16
 sharedData_800E39D8_0_s00 = 0x800D5EC4; // type:s32
+AI_Dahlia_Update = 0x800CF0F8; // type:func

@@ -93,9 +93,9 @@ INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800CDAB8);
 
 INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800CDB5C);
 
-INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800CDD30);
+INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", AI_PuppetNurse_Update); // 0x800CDD30
 
-INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800CDD8C);
+INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", AI_PuppetDoctor_Update); // 0x800CDD8C
 
 INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800CDDE8);
 
@@ -155,7 +155,7 @@ INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800D0828);
 
 INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800D0968);
 
-INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800D09C4);
+INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", AI_Bloodsucker_Update); // 0x800D09C4
 
 INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800D0CDC);
 

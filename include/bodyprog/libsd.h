@@ -287,6 +287,11 @@ extern SMF_SONG smf_song[2];
 extern SD_SPU_ALLOC sd_spu_alloc[SD_ALLOC_SLOTS];
 extern s32          sd_reverb_area_size[10];
 
+static inline PORT* SmfGetPort(s32 voice)
+{
+    return &smf_port[voice];
+}
+
 // smf_snd.c
 
 void tone_adsr_mem(s16 vab_id);
@@ -338,6 +343,9 @@ s32  SdUtGetVabHdr(s16 vabId, VabHdr* vabhdrptr);
 void SdVoKeyOff(s32 vab_pro, s32 pitch);
 void SdVoKeyOffWithRROff(s32 vab_pro, s32 pitch);
 
+s16  SdUtKeyOnV(s16 voice, s16 vabid, s16 prog, s16 tone, s16 note, s16 fine, s16 voll, s16 volr);
+s16  SdUtKeyOn(s16 vabid, s16 prog, s16 tone, s16 note, s16 fine, s16 voll, s16 volr);
+
 s32  SdUtKeyOffV(s16 vo);
 s32  SdUtKeyOffVWithRROff(s16 vo);
 s16  SdGetSeqStatus(s16 access_num);
@@ -386,7 +394,7 @@ void smf_vol_set(s32 ch, s32 vc, s32 l_vol, s32 r_vol);
 void master_vol_set();
 void seq_master_vol_set(s32 access_num);
 void toremoro_set();
-s32  pitch_bend_calc(PORT* p, u8 arg2, MIDI* midiPort1);
+s32  pitch_bend_calc(PORT* p, u32 pit);
 void pitch_calc(PORT* p, s32 forceSpuUpdate);
 void midi_mod(MIDI* p);
 void midi_porta(MIDI* p);

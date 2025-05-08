@@ -18,3 +18,6 @@ sharedFunc_800D929C_0_s00 = 0x800D1168; // type:func
 sharedData_800DD59C_0_s00 = 0x800D514C; // type:u8
 
 sharedData_800E39D8_0_s00 = 0x800D8138; // type:s32
+AI_PuppetNurse_Update = 0x800CDD30; // type:func
+AI_PuppetDoctor_Update = 0x800CDD8C; // type:func
+AI_Bloodsucker_Update = 0x800D09C4; // type:func

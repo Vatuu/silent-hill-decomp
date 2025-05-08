@@ -95,7 +95,7 @@ void func_800CEDE0(void) {}
 
 #include "maps/shared/sharedFunc_800D2EF4_0_s00.h" // 0x800CEE38
 
-INCLUDE_ASM("asm/maps/map3_s01/nonmatchings/map3_s01", func_800CEE4C);
+INCLUDE_ASM("asm/maps/map3_s01/nonmatchings/map3_s01", AI_Creaper_Update); // 0x800CEE4C
 
 INCLUDE_ASM("asm/maps/map3_s01/nonmatchings/map3_s01", func_800CEEDC);
 

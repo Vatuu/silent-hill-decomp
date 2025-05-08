@@ -29,3 +29,11 @@ sharedFunc_800D929C_0_s00 = 0x800D9754; // type:func
 sharedData_800DD59C_0_s00 = 0x800E5B38; // type:u8
 
 sharedData_800E39D8_0_s00 = 0x800EB620; // type:s32
+AI_Stalker_Update = 0x800D06F8; // type:func
+AI_Bloodsucker_Update = 0x800D6874; // type:func
+AI_Dahlia_Update = 0x800D6ED4; // type:func
+AI_Lisa_Update = 0x800D5998; // type:func
+AI_BloodyLisa_Update = 0x800D6484; // type:func
+AI_GhostChildAlessa_Update = 0x800D7A68; // type:func
+AI_Kaufmann_Update = 0x800D7EAC; // type:func
+AI_GhostDoctor_Update = 0x800D8AF0; // type:func

@@ -21,3 +21,5 @@ sharedData_800E323C_0_s00 = 0x800F50FC; // type:VECTOR3 size:0xC
 sharedData_800E324C_0_s00 = 0x800F510C; // type:VECTOR3 size:0xC
 sharedData_800E3260_0_s00 = 0x800F5120; // type:s16
 sharedData_800E39D8_0_s00 = 0x800F518C; // type:s32
+AI_AirScreamer_Update = 0x800D1F40; // type:func
+AI_Groaner_Update = 0x800E2F78; // type:func
