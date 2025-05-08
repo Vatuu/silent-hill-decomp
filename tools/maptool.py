@@ -61,7 +61,7 @@ OFFSET_charaSpawns = 0x24C
 MapBasePath = "assets/VIN/"
 
 def charaName(i, includeNum: bool = True):
-    charName = e_ShCharacterId[i] if i < len(e_ShCharacterId) else f"CHARA_UNKNOWN_{i}"
+    charName = e_ShCharacterId[i] if i < len(e_ShCharacterId) else f"Chara_Unknown{i}"
     if includeNum:
         return f"{i:>2} {charName}"
     return charName
