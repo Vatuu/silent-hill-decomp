@@ -127,7 +127,7 @@ void vcMoveAndSetCamera(s32 in_connect_f, s32 change_debug_mode, s32 for_f, s32 
 
             vcSetSubjChara(&hr_p->position_18, hero_bottom_y, hero_top_y, grnd_y,
                            &hr_head_pos, hr_p->moveSpeed_38, hr_p->headingAngle_3C, hr_p->rotationSpeed_2C.vy, hr_p->rotation_24.vy,
-                           FP_ANGLE(7.5f), FP_METER(176.0f));
+                           FP_ANGLE(120.0f), FP_METER(176.0f));
 
             D_800BCE18.vcCameraInternalInfo_1BDC.mv_smooth = vcExecCamera();
             break;
@@ -147,7 +147,7 @@ void vcMoveAndSetCamera(s32 in_connect_f, s32 change_debug_mode, s32 for_f, s32 
             vcSetRefPosAndSysRef2CamParam(&vcRefPosSt, &g_SysWork, for_f, back_f, right_f, left_f, up_f, down_f);
             vwSetCoordRefAndEntou(&g_SysWork.playerBoneCoords_890[PlayerBone_Head],
                                   FP_METER(0.0f), FP_METER(-2.4f), FP_METER(16.0f),
-                                  FP_ANGLE(10.315f), FP_ANGLE(0.0f), FP_METER(-3.2f), FP_METER(16.0f));
+                                  FP_ANGLE(165.0f), FP_ANGLE(0.0f), FP_METER(-3.2f), FP_METER(16.0f));
             break;
     }
 
@@ -312,7 +312,7 @@ void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, s_SysWork* sys_p) // 0x80040
                 var0 = -0x1A;
             }
 
-            var1 = var0 * shRsin(cam_ang.vy + FP_ANGLE(5.625f));
+            var1 = var0 * shRsin(cam_ang.vy + FP_ANGLE(90.0f));
             if (var1 < 0)
             {
                 var1 += 0xFFF;
@@ -320,7 +320,7 @@ void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, s_SysWork* sys_p) // 0x80040
 
             vec0.vx += FP_FROM(var1, Q12_SHIFT);
 
-            var2 = var0 * shRcos(cam_ang.vy + FP_ANGLE(5.625f));
+            var2 = var0 * shRcos(cam_ang.vy + FP_ANGLE(90.0f));
             if (var2 < 0)
             {
                 var2 += 0xFFF;
@@ -346,7 +346,7 @@ void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, s_SysWork* sys_p) // 0x80040
         ref_pos->vy = FP_TO(vec0.vy + vec1.vy, Q4_SHIFT);
         ref_pos->vz = FP_TO(vec0.vz + vec1.vz, Q4_SHIFT);
 
-        sys_p->cameraAngleY_237A   = shAngleRegulate(cam_ang.vy + FP_ANGLE(11.25f));
+        sys_p->cameraAngleY_237A   = shAngleRegulate(cam_ang.vy + FP_ANGLE(180.0f));
         sys_p->cameraY_2384        = FP_TO(-vec1.vy, Q4_SHIFT);
         sys_p->cameraRadiusXz_2380 = FP_TO(SquareRoot0(SQUARE(vec1.vx) + SQUARE(vec1.vz)), Q4_SHIFT);
     }

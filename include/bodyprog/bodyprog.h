@@ -1033,7 +1033,7 @@ typedef struct _SpawnInfo
 {
     s32 posX_0;
     s8  chara_type_4;             /** `e_ShCharacterId` */
-    s8  rot_5;
+    u8  rot_5;
     s8  flags_6; /** Copied to `isAnimStateUnchanged_3` in `s_Model`. */
     s8  unk_7;
     s32 posZ_8;

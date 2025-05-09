@@ -449,7 +449,7 @@ def MapHeader_Read(filepath: str) -> MapHeader:
         chara_spawns = []
         for i in range(32):
             data = f.read(12)
-            posX, chara_type, rot, anim_flag, unk, posZ = struct.unpack("<i4bi", data)
+            posX, chara_type, rot, anim_flag, unk, posZ = struct.unpack("<ibBbbi", data)
                          
             # When chara_type is 0 chara ID is taken from the group section, group[0] if current spawn id is 15 or below, group[1] if 16 or above
             if chara_type == 0:
