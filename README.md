@@ -136,7 +136,7 @@ Progress bars powered by [decomp.dev](https://decomp.dev)
         </tr>
         <tr>
             <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?unit=maps/map0_s00/map0_s00"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&color=%23003cc7&measure=fuzzy_match&unit=maps/map0_s00/map0_s00"/></a></td>
-            <td colspan=2>Old Silent Hill.</td>
+            <td colspan=2>Nightmare intro sequence in the Old Silent Hill.</td>
         </tr>
         <tr>
             <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?unit=maps/map0_s01/map0_s01"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&color=%23003cc7&measure=fuzzy_match&unit=maps/map0_s01/map0_s01"/></a></td>
@@ -175,8 +175,7 @@ Progress bars powered by [decomp.dev](https://decomp.dev)
         </tr>
         <tr>
             <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?unit=maps/map1_s05/map1_s05"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&measure=fuzzy_match&unit=maps/map1_s05/map1_s05"/></a></td>
-            <td>Unknown</td>
-            <td>School location, likely in Otherworld.</td>
+            <td colspan=2>School boss fight</td>
         </tr>
         <tr>
             <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?unit=maps/map1_s06/map1_s06"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&measure=fuzzy_match&unit=maps/map1_s06/map1_s06"/></a></td>
@@ -219,18 +218,15 @@ Progress bars powered by [decomp.dev](https://decomp.dev)
         </tr>
         <tr>
             <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?unit=maps/map3_s00/map3_s00"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&measure=fuzzy_match&unit=maps/map3_s00/map3_s00"/></a></td>
-            <td>Unknown</td>
-            <td>Hospital, possibly only the reception<br/>and examination rooms but none of<br/>the rooms around them.</td>
+            <td colspan=2>Hospital beginning. Ends after meeting with Kaufmann.</td>
         </tr>
         <tr>
             <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?unit=maps/map3_s01/map3_s01"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&measure=fuzzy_match&unit=maps/map3_s01/map3_s01"/></a></td>
-            <td>Unknown</td>
-            <td>Hospital, possibly the rest of the first floor<br/>not covered by <code>MAP3_S00.BIN</code><br/>and the basement.</td>
+            <td colspan=2>Hospital 1st and basement floors, after meeting with Kaufmann.</td>
         </tr>
         <tr>
             <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?unit=maps/map3_s02/map3_s02"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&measure=fuzzy_match&unit=maps/map3_s02/map3_s02"/></a></td>
-            <td>Unknown</td>
-            <td>Hospital, the part when Harry goes<br/>in the elevator and it goes dark.</td>
+            <td colspan=2>Green Lion Antique Shop cutscene in the Hospital.</td>
         </tr>
         <tr>
             <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?unit=maps/map3_s03/map3_s03"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&measure=fuzzy_match&unit=maps/map3_s03/map3_s03"/></a></td>
@@ -261,12 +257,11 @@ Progress bars powered by [decomp.dev](https://decomp.dev)
         </tr>
         <tr>
             <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?unit=maps/map4_s01/map4_s01"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&color=%23003cc7&measure=fuzzy_match&unit=maps/map4_s01/map4_s01"/></a></td>
-            <td colspan=2>Green Lion Antique Shop in Old Silent Hill and Otherworld.</td>
+            <td colspan=2>Green Lion Antique Shop in Central Silent Hill and Otherworld.</td>
         </tr>
         <tr>
             <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?unit=maps/map4_s02/map4_s02"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&color=%23003cc7&measure=fuzzy_match&unit=maps/map4_s02/map4_s02"/></a></td>
-            <td>Unknown</td>
-            <td>Possibly one of the two parts where<br/>Harry goes through Central Silent Hill<br/>in Otherworld.</td>
+            <td colspan=2>Central Silent Hill in Otherworld .</td>
         </tr>
         <tr>
             <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?unit=maps/map4_s03/map4_s03"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&color=%23003cc7&measure=fuzzy_match&unit=maps/map4_s03/map4_s03"/></a></td>
@@ -279,8 +274,7 @@ Progress bars powered by [decomp.dev](https://decomp.dev)
         </tr>
         <tr>
             <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?unit=maps/map4_s05/map4_s05"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&color=%23003cc7&measure=fuzzy_match&unit=maps/map4_s05/map4_s05"/></a></td>
-            <td>Unknown</td>
-            <td>Possibly one of the two parts when<br/>Harry goes through Central Silent Hill<br/>in Otherworld.</td>
+            <td colspan=2>Central Silent Hill Floatstinger boss fight in Otherworld .</td>
         </tr>
         <tr>
             <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?unit=maps/map4_s06/map4_s06"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&color=%23003cc7&measure=fuzzy_match&unit=maps/map4_s06/map4_s06"/></a></td>
@@ -317,7 +311,7 @@ Progress bars powered by [decomp.dev](https://decomp.dev)
         </tr>
         <tr>
             <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?unit=maps/map6_s02/map6_s02"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&color=%23003cc7&measure=fuzzy_match&unit=maps/map6_s02/map6_s02"/></a></td>
-            <td colspan=2>Lakeside Pier</td>
+            <td colspan=2>Lakeside Pier and Lighthouse.</td>
         </tr>
         <tr>
             <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?unit=maps/map6_s03/map6_s03"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&color=%23003cc7&measure=fuzzy_match&unit=maps/map6_s03/map6_s03"/></a></td>
@@ -340,7 +334,7 @@ Progress bars powered by [decomp.dev](https://decomp.dev)
         </tr>
         <tr>
             <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?unit=maps/map7_s00/map7_s00"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&measure=fuzzy_match&unit=maps/map7_s00/map7_s00"/></a></td>
-            <td colspan=2>Hospital first floor in Nowhere.</td>
+            <td colspan=2>Hospital first floor in Nowhere and Lisa cutscene.</td>
         </tr>
         <tr>
             <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?unit=maps/map7_s01/map7_s01"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&measure=fuzzy_match&unit=maps/map7_s01/map7_s01"/></a></td>
