@@ -364,23 +364,11 @@ VC_CAM_MV_TYPE vcRetCurCamMvType(VC_WORK* w_p) // 0x80081428
 
     if (g_GameWorkPtr0->config_0.optViewMode_29 != 0)
     {
-        // If `g_GameWorkPtr0->config_0.optViewCtrl_28 == 1` then it flips check against `VC_PRS_F_VIEW_F` flag?
-        // Code below matches but duplicates the return `VC_MV_SELF_VIEW` code, and doesn't really seem like something written by a dev. -- emoose
         hasViewFlag = (vcWork.flags_8 & VC_PRS_F_VIEW_F) == VC_PRS_F_VIEW_F;
 
-        if (g_GameWorkPtr0->config_0.optViewCtrl_28)
-        {
-            if ((hasViewFlag ^ (1 << 0)) != 0)
-            {
-                // TODO: Can this be merged with block below somehow?
-                if ((w_p->flags_8 & (VC_USER_CAM_F | VC_USER_WATCH_F | VC_INHIBIT_FAR_WATCH_F)) == 0 &&
-                    func_8008150C(w_p->chara_pos_114.vx, w_p->chara_pos_114.vz) == 0)
-                {
-                    return VC_MV_SELF_VIEW;
-                }
-            }
-        }
-        else if (hasViewFlag)
+        // TODO: Can this weird XOR be removed? (XOR 1) should be same as `hasViewFlag == 0`?
+        if ((g_GameWorkPtr0->config_0.optViewCtrl_28 && (hasViewFlag ^ 1) != 0) ||
+            (!g_GameWorkPtr0->config_0.optViewCtrl_28 && hasViewFlag))
         {
             if ((w_p->flags_8 & (VC_USER_CAM_F | VC_USER_WATCH_F | VC_INHIBIT_FAR_WATCH_F)) == 0 &&
                 func_8008150C(w_p->chara_pos_114.vx, w_p->chara_pos_114.vz) == 0)
