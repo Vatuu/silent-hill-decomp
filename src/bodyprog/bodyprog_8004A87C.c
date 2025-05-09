@@ -52,7 +52,7 @@ void func_8004B684() // 0x8004B684
     D_800C38B0.field_1 = 1;
     g_StringPositionX1 = SCREEN_POSITION_X(-37.5f);
     g_StringColorId = ColorId_White;
-    g_SysWork.field_2350 &= ~0xF;
+    g_SysWork.field_2350_0 = 0;
 }
 
 void func_8004B6D4(s16 arg0, s16 arg1) // 0x8004B6D4

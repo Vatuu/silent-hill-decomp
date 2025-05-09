@@ -750,7 +750,85 @@ void vcSetTHROUGH_DOOR_CAM_PARAM_in_VC_WORK(VC_WORK* w_p, enum _THROUGH_DOOR_SET
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vc_main", vcSetNearestEnemyDataInVC_WORK);
+void vcSetNearestEnemyDataInVC_WORK(VC_WORK* w_p)
+{
+    #define ENEMY_MAX_DEAD_TIMER 1.5f
+    #define ENEMY_MAX_DISTANCE 240.0f
+
+    s32             set_active_data_f;
+    s32             xz_dist;
+    s32             ofs_x;
+    s32             ofs_z;
+    s_SubCharacter* sc_p            = NULL;
+    s_SubCharacter* all_min_sc_p    = NULL;
+    s_SubCharacter* active_min_sc_p = NULL;
+    s32             all_min_dist    = FP_METER(ENEMY_MAX_DISTANCE);
+    s32             active_min_dist = FP_METER(ENEMY_MAX_DISTANCE);
+
+    if (g_SysWork.flags_22A4 & (1 << 5)) // sh2jms->player.battle(ShBattleInfo).status & 0x10 in SH2
+    {
+        w_p->nearest_enemy_p_2DC       = NULL;
+        w_p->nearest_enemy_xz_dist_2E0 = FP_METER(ENEMY_MAX_DISTANCE);
+        return;
+    }
+
+    for (sc_p = &g_SysWork.npcs_1A0[0]; sc_p < &g_SysWork.npcs_1A0[NPC_COUNT_MAX]; sc_p++)
+    {
+        if ((((u8)sc_p->model_0.chara_type_0 - 2) < 0x17U) &&
+            (sc_p->dead_timer_C4 <= FP_FLOAT_TO(ENEMY_MAX_DEAD_TIMER, Q12_SHIFT) || sc_p->health_B0 >= 0) &&
+            !(sc_p->field_3E & (1 << 4))) // sc_p->battle(ShBattleInfo).status & 0x20 in SH2
+        {
+            ofs_x = sc_p->position_18.vx - w_p->chara_pos_114.vx;
+            ofs_z = sc_p->position_18.vz - w_p->chara_pos_114.vz;
+
+            if (abs(ofs_x) >= FP_METER(ENEMY_MAX_DISTANCE) || abs(ofs_z) >= FP_METER(ENEMY_MAX_DISTANCE))
+            {
+                continue;
+            }
+
+            xz_dist = Math_VectorMagnitude(ofs_x, 0, ofs_z);
+            ratan2(ofs_x, ofs_z); // result unused?
+
+            if (xz_dist < all_min_dist)
+            {
+                all_min_dist = xz_dist;
+                all_min_sc_p = sc_p;
+            }
+
+            // TODO: Not sure how to move the `set_active_data_f = 1` part out of this if.
+            if (sc_p->model_0.chara_type_0 >= Chara_HangedScratcher ||
+                (set_active_data_f = 1, (sc_p->model_0.chara_type_0 < Chara_Stalker)))
+            {
+                set_active_data_f = 1;
+                if (sc_p->field_3E & (1 << 1)) // sc_p->battle(ShBattleInfo).status & 4 in SH2
+                {
+                    set_active_data_f = 0;
+                    if (sc_p == &g_SysWork.npcs_1A0[g_SysWork.field_2353])
+                    {
+                        set_active_data_f = g_SysWork.isPlayerInCombatMode_4B > 0;
+                    }
+                }
+            }
+
+            if (set_active_data_f && xz_dist < active_min_dist)
+            {
+                active_min_dist = xz_dist;
+                active_min_sc_p = sc_p;
+            }
+        }
+    }
+
+    if (active_min_sc_p)
+    {
+        w_p->nearest_enemy_p_2DC       = active_min_sc_p;
+        w_p->nearest_enemy_xz_dist_2E0 = active_min_dist;
+    }
+    else
+    {
+        w_p->nearest_enemy_p_2DC       = all_min_sc_p;
+        w_p->nearest_enemy_xz_dist_2E0 = all_min_dist;
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vc_main", vcSetNearRoadAryByCharaPos);
 
