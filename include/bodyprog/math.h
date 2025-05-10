@@ -5,7 +5,7 @@
 #define Q8_SHIFT       8         /** Used for: Q8.8 camera AABBs. Q24.8 meters. */
 #define Q12_SHIFT      12        /** Used for: Q3.12 alphas. Q19.12 timers, trigonometry. */
 #define SIN_LUT_SIZE   4096      /** Number of entries in the sine lookup table. */
-#define FP_ANGLE_COUNT (1 << 16) /** Number of fixed-point angles in Q1.15 format. */
+#define FP_ANGLE_COUNT (1 << 12) /** Number of fixed-point angles in Q4.12 format. */
 
 /** @brief Squares a value. */
 #define SQUARE(x) \
@@ -63,7 +63,7 @@
 #define FP_COLOR(val) \
     (u8)((val) * (FP_FLOAT_TO(1.0f, Q8_SHIFT) - 1))
 
-/** @brief Converts floating-point degrees to fixed-point angles in Q1.15 format. */
+/** @brief Converts floating-point degrees to fixed-point angles in Q4.12 format. */
 #define FP_ANGLE(deg) \
     (s16)((deg) * ((FP_ANGLE_COUNT) / 360.0f))
 

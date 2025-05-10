@@ -103,12 +103,12 @@ void vwMatrixToAngleYXZ(SVECTOR* ang, MATRIX* mat) // 0x800495D4
     s32 r_xz = SquareRoot0((mat->m[0][2] * mat->m[0][2]) + (mat->m[2][2] * mat->m[2][2]));
     ang->vx  = ratan2(-mat->m[1][2], r_xz);
 
-    if (ang->vx == FP_ANGLE(5.625f))
+    if (ang->vx == FP_ANGLE(90.0f))
     {
         ang->vz = 0;
         ang->vy = ratan2(mat->m[0][1], mat->m[2][1]);
     }
-    else if (ang->vx == FP_ANGLE(-5.625f))
+    else if (ang->vx == FP_ANGLE(-90.0f))
     {
         ang->vz = 0;
         ang->vy = ratan2(-mat->m[0][1], -mat->m[2][1]);

@@ -72,7 +72,7 @@ void vcSetFirstCamWork(VECTOR3* cam_pos, s16 chara_eye_ang_y, s32 use_through_do
     vcWork.cam_mv_ang_y_5C = 0;
     vcWork.cam_tgt_spd_110 = 0;
 
-    vcWork.cam_chara2ideal_ang_y_FE = shAngleRegulate(chara_eye_ang_y + FP_ANGLE(11.25f));
+    vcWork.cam_chara2ideal_ang_y_FE = shAngleRegulate(chara_eye_ang_y + FP_ANGLE(180.0f));
 
     vcWork_CurNearRoadSet(&vcWork, &vcNullNearRoad);
 
@@ -319,8 +319,8 @@ void vcSetAllNpcDeadTimer() // 0x8008123C
 s32 vcRetSmoothCamMvF(VECTOR3* old_pos, VECTOR3* now_pos, SVECTOR* old_ang, SVECTOR* now_ang) // 0x800812CC
 {
     #define MOVEMENT_MAX_METER 0.2f
-    #define ROT_X_MAX_ANGLE 1.25f
-    #define ROT_Y_MAX_ANGLE 1.875f
+    #define ROT_X_MAX_ANGLE 20.0f
+    #define ROT_Y_MAX_ANGLE 30.0f
     #define INTRPT_MIN_TIME 1.0f
     #define INTRPT_MAX_TIME 4.0f
 
@@ -428,7 +428,7 @@ s32 vcRetThroughDoorCamEndF(VC_WORK* w_p) // 0x800815F0
             abs_ofs_ang_y = -abs_ofs_ang_y;
         }
 
-        if (abs_ofs_ang_y > FP_ANGLE(4.375f))
+        if (abs_ofs_ang_y > FP_ANGLE(70.0f))
         {
             return 1;
         }
@@ -461,7 +461,7 @@ s32 vcRetFarWatchRate(s32 far_watch_button_prs_f, VC_CAM_MV_TYPE cur_cam_mv_type
                 break;
 
             case VC_MV_THROUGH_DOOR:
-                far_watch_rate = FP_METER(16.f); // FP_ANGLE(22.5f);
+                far_watch_rate = FP_METER(16.0f); // FP_ANGLE(256.0f);
                 if (!far_watch_button_prs_f)
                 {
                     // TODO: unsure if these should use FP_METER or FP_ANGLE
@@ -470,7 +470,7 @@ s32 vcRetFarWatchRate(s32 far_watch_button_prs_f, VC_CAM_MV_TYPE cur_cam_mv_type
 
                     dist           = w_p->through_door_10.rail_sta_to_chara_dist_18;
                     far_watch_rate = FP_METER(14.4f) - ((dist * FP_METER(14.4f)) / FP_METER(36.8f));
-                    // far_watch_rate = FP_ANGLE(20.25f) - ((dist * FP_ANGLE(20.25f)) / FP_ANGLE(51.75f));
+                    // far_watch_rate = FP_ANGLE(324.0f) - ((dist * FP_ANGLE(324.0f)) / FP_ANGLE(828.0f));
                     if (far_watch_rate < 0)
                     {
                         far_watch_rate = 0;
@@ -490,7 +490,7 @@ s32 vcRetFarWatchRate(s32 far_watch_button_prs_f, VC_CAM_MV_TYPE cur_cam_mv_type
                         }
 
                         far_watch_rate = (far_watch_rate * (FP_METER(3.11f) - abs_ofs_ang_y)) / FP_METER(3.11f);
-                        // far_watch_rate = (far_watch_rate * (FP_ANGLE(4.375f) - abs_ofs_ang_y)) / FP_ANGLE(4.375f);
+                        // far_watch_rate = (far_watch_rate * (FP_ANGLE(70.0f) - abs_ofs_ang_y)) / FP_ANGLE(70.0f);
                         if (far_watch_rate < 0)
                         {
                             far_watch_rate = 0;
@@ -932,9 +932,9 @@ void vcAdjustWatchYLimitHighWhenFarView(VECTOR3* watch_pos, VECTOR3* cam_pos, s1
 {
     s16 max_cam_ang_x = ratan2(cam_pos->vy + FP_METER(80.0f), FP_METER(208.0f)) - ratan2(g_GameWork.gsScreenHeight_58A / 2, sy);
     s32 dist          = Math_VectorMagnitude(watch_pos->vx - cam_pos->vx, 0, watch_pos->vz - cam_pos->vz);
-    s32 cam_ang_x     = ratan2(-watch_pos->vy + cam_pos->vy, dist) * FP_ANGLE_COUNT;
+    s16 cam_ang_x     = ratan2(-watch_pos->vy + cam_pos->vy, dist);
 
-    if ((max_cam_ang_x * FP_ANGLE_COUNT) < cam_ang_x)
+    if (cam_ang_x > max_cam_ang_x)
     {
         s32 ofs_y     = FP_TO(((FP_FROM(dist, Q4_SHIFT)) * shRsin(max_cam_ang_x)) / shRcos(max_cam_ang_x), Q4_SHIFT);
         watch_pos->vy = cam_pos->vy - ofs_y;
@@ -1040,17 +1040,17 @@ void vcMakeIdealCamPosByHeadPos(VECTOR3* ideal_pos, VC_WORK* w_p, VC_AREA_SIZE_T
 
     if (g_GameWorkPtr0->config_0.optViewMode_29)
     {
-        chara2cam_ang_y = w_p->chara_eye_ang_y_144 + FP_ANGLE(8.75f);
+        chara2cam_ang_y = w_p->chara_eye_ang_y_144 + FP_ANGLE(140.0f);
         ideal_pos->vy   = w_p->chara_head_pos_130.vy + FP_METER(1.12f);
     }
     else
     {
-        chara2cam_ang_y = w_p->chara_eye_ang_y_144 + FP_ANGLE(10.625f);
+        chara2cam_ang_y = w_p->chara_eye_ang_y_144 + FP_ANGLE(170.0f);
         ideal_pos->vy   = w_p->chara_head_pos_130.vy + FP_METER(1.6f);
     }
 
-    ideal_pos->vx = w_p->chara_head_pos_130.vx + FP_MULTIPLY(shRsin(chara2cam_ang_y), FP_ANGLE(4.05f), Q12_SHIFT);
-    ideal_pos->vz = w_p->chara_head_pos_130.vz + FP_MULTIPLY(shRcos(chara2cam_ang_y), FP_ANGLE(4.05f), Q12_SHIFT);
+    ideal_pos->vx = w_p->chara_head_pos_130.vx + FP_MULTIPLY(shRsin(chara2cam_ang_y), FP_ANGLE(64.8f), Q12_SHIFT);
+    ideal_pos->vz = w_p->chara_head_pos_130.vz + FP_MULTIPLY(shRcos(chara2cam_ang_y), FP_ANGLE(64.8f), Q12_SHIFT);
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vc_main", vcMakeIdealCamPosForFixAngCam);
@@ -1237,8 +1237,8 @@ void vcGetUseWatchAndCamMvParam(VC_WATCH_MV_PARAM** watch_mv_prm_pp, VC_CAM_MV_P
 
         *watch_mv_prm_pp = &vcWatchMvPrmSt;
 
-        add_ang_accel_y = FP_FROM((s64)w_p->chara_mv_spd_13C * FP_ANGLE(22.5f), Q12_SHIFT);
-        add_ang_accel_y = CLAMP(add_ang_accel_y, 0, FP_ANGLE(45.0f));
+        add_ang_accel_y = FP_FROM((s64)w_p->chara_mv_spd_13C * FP_ANGLE(360.0f), Q12_SHIFT);
+        add_ang_accel_y = CLAMP(add_ang_accel_y, 0, FP_ANGLE(720.0f));
 
         vcWatchMvPrmSt.ang_accel_y += add_ang_accel_y;
     }
@@ -1409,17 +1409,16 @@ void vcAdjCamOfsAngByCharaInScreen(SVECTOR* cam_ang, SVECTOR* ofs_cam2chara_btm_
         var_a1 = watch2chr_top_ofs_ang_x - w_p->scr_half_ang_wy_2C;
     }
 
-    // SH2 uses similar checks with 0.52359879 / 30 degrees.
-    if (var_a1 < FP_ANGLE(-1.875f))
+    if (var_a1 < FP_ANGLE(-30.0f))
     {
-        adj_cam_ang_x = FP_ANGLE(-1.875f);
+        adj_cam_ang_x = FP_ANGLE(-30.0f);
     }
     else
     {
         adj_cam_ang_x = var_a1;
-        if (var_a1 > FP_ANGLE(1.875f))
+        if (var_a1 > FP_ANGLE(30.0f))
         {
-            adj_cam_ang_x = FP_ANGLE(1.875f);
+            adj_cam_ang_x = FP_ANGLE(30.0f);
         }
     }
 
@@ -1475,7 +1474,7 @@ void vcSetDataToVwSystem(VC_WORK* w_p, VC_CAM_MV_TYPE cam_mv_type) // 0x80085884
         w_p->field_D8 = 0;
         vwSetCoordRefAndEntou(&g_SysWork.playerBoneCoords_890[PlayerBone_Head],
                               0, FP_METER(-0.8f), FP_METER(4.8f),
-                              FP_ANGLE(11.25f), FP_ANGLE(0.0f), FP_METER(-3.2f), FP_METER(16.0f));
+                              FP_ANGLE(180.0f), FP_ANGLE(0.0f), FP_METER(-3.2f), FP_METER(16.0f));
     }
     else if (w_p->field_FC != 0)
     {
@@ -1486,17 +1485,19 @@ void vcSetDataToVwSystem(VC_WORK* w_p, VC_CAM_MV_TYPE cam_mv_type) // 0x80085884
     {
         vcSelfViewTimer += g_DeltaTime0;
 
-        noise_ang.vx = vcCamMatNoise(4, FP_ANGLE(31.25f), FP_ANGLE(50.0f), vcSelfViewTimer);
-        noise_ang.vy = vcCamMatNoise(2, FP_ANGLE(25.0f), FP_ANGLE(62.5f), vcSelfViewTimer);
+        // TODO: in SH2 these FP_ANGLEs are using radian float values, while rest of SH2 used degrees.
+        // Maybe these are meant to be radians encoded as Q4.12 somehow, but haven't found a good way for it yet.
+        noise_ang.vx = vcCamMatNoise(4, FP_ANGLE(500.0f), FP_ANGLE(800.0f), vcSelfViewTimer);
+        noise_ang.vy = vcCamMatNoise(2, FP_ANGLE(400.0f), FP_ANGLE(1000.0f), vcSelfViewTimer);
         noise_ang.vz = 0;
         func_80096C94(&noise_ang, &noise_mat);
 
-        noise_mat.m[0][0] += vcCamMatNoise(12, FP_ANGLE(43.75f), FP_ANGLE(56.25f), vcSelfViewTimer);
-        noise_mat.m[0][1] += vcCamMatNoise(12, FP_ANGLE(37.5f), FP_ANGLE(62.5f), vcSelfViewTimer);
-        noise_mat.m[0][2] += vcCamMatNoise(12, FP_ANGLE(37.5f), FP_ANGLE(50.0f), vcSelfViewTimer);
-        noise_mat.m[1][0] += vcCamMatNoise(12, FP_ANGLE(31.25f), FP_ANGLE(31.25f), vcSelfViewTimer);
-        noise_mat.m[1][1] += vcCamMatNoise(12, FP_ANGLE(56.25f), FP_ANGLE(25.0f), vcSelfViewTimer);
-        noise_mat.m[1][2] += vcCamMatNoise(12, FP_ANGLE(40.625f), FP_ANGLE(59.375f), vcSelfViewTimer);
+        noise_mat.m[0][0] += vcCamMatNoise(12, FP_ANGLE(700.0f), FP_ANGLE(900.0f), vcSelfViewTimer);
+        noise_mat.m[0][1] += vcCamMatNoise(12, FP_ANGLE(600.0f), FP_ANGLE(1000.0f), vcSelfViewTimer);
+        noise_mat.m[0][2] += vcCamMatNoise(12, FP_ANGLE(600.0f), FP_ANGLE(800.0f), vcSelfViewTimer);
+        noise_mat.m[1][0] += vcCamMatNoise(12, FP_ANGLE(500.0f), FP_ANGLE(500.0f), vcSelfViewTimer);
+        noise_mat.m[1][1] += vcCamMatNoise(12, FP_ANGLE(900.0f), FP_ANGLE(400.0f), vcSelfViewTimer);
+        noise_mat.m[1][2] += vcCamMatNoise(12, FP_ANGLE(650.0f), FP_ANGLE(950.0f), vcSelfViewTimer);
         MulMatrix0(&w_p->cam_mat_98, &noise_mat, &noise_cam_mat);
 
         noise_cam_mat.t[0] = w_p->cam_mat_98.t[0];

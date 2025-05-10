@@ -410,10 +410,10 @@ MapBasePath = "assets/VIN/"
 
 @dataclass
 class CharaSpawn:
-    posX: float
-    posZ: float
+    positionX: float
+    positionZ: float
     chara_type: int
-    rot: int
+    rotationY: int
     anim_unchanged_flag: int
     unk: int
 
@@ -442,21 +442,21 @@ def MapHeader_Read(filepath: str) -> MapHeader:
             update_funcs.append(value)
 
         f.seek(OFFSET_mapOverlayHeader + OFFSET_charaGroupIds)
-        data = f.read(2)
+        data = f.read(4)
         group = list(data)
 
         f.seek(OFFSET_mapOverlayHeader + OFFSET_charaSpawns)
         chara_spawns = []
         for i in range(32):
             data = f.read(12)
-            posX, chara_type, rot, anim_flag, unk, posZ = struct.unpack("<i4bi", data)
+            positionX, chara_type, rotationY, anim_flag, unk, positionZ = struct.unpack("<ibBbbi", data)
                          
             # When chara_type is 0 chara ID is taken from the group section, group[0] if current spawn id is 15 or below, group[1] if 16 or above
             if chara_type == 0:
                 chara_type = group[1] if i >= 16 else group[0]
             
             chara_spawns.append(
-                CharaSpawn(q20_12(posX), q20_12(posZ), chara_type, q4_12(16 * rot), anim_flag, unk)
+                CharaSpawn(q20_12(positionX), q20_12(positionZ), chara_type, q4_12(16 * rotationY), anim_flag, unk)
             )
 
         return MapHeader(update_funcs=update_funcs, group_charas=group, chara_spawns=chara_spawns)
@@ -472,19 +472,29 @@ def MapHeader_Print(map_header: MapHeader):
     if map_header.group_charas:
         print("charaGroupIds_248:")
         for index, charaId in enumerate(map_header.group_charas):
-            group_str = " 0 - 15: " if index == 0 else "16 - 31: "
+            if index == 0:
+                group_str = "  0 - 15: "
+            elif index == 1:
+                group_str = " 16 - 31: "
+            else:
+                if charaId == 0:
+                    continue # Skip empty extra entries
+                if index == 2:
+                    group_str = "Extra[2]: "
+                else:
+                    group_str = "Extra[3]: "
             print(f"  {group_str}{charaName(charaId)}")
         print()
 
     if map_header.chara_spawns:
         print("charaSpawns_24C:")
         for index, spawn in enumerate(map_header.chara_spawns):
-            if spawn.anim_unchanged_flag != 0 or spawn.posX != 0 or spawn.posZ != 0 or spawn.rot != 0:
+            if spawn.anim_unchanged_flag != 0 or spawn.positionX != 0 or spawn.positionZ != 0 or spawn.rotationY != 0:
 
                 # func_80037F24 only seems to count as valid if anim_unchanged_flag != 0   
                 unused_text = "" if spawn.anim_unchanged_flag != 0 else " (flag == 0, slot unused?)"
                 print(f"  [{index:>2}] {charaName(spawn.chara_type)} = "
-                      f"({spawn.posX},{spawn.posZ}) rot {spawn.rot} "
+                      f"({spawn.positionX},{spawn.positionZ}) rotY {spawn.rotationY} "
                       f"flag 0x{spawn.anim_unchanged_flag:X} unk 0x{spawn.unk:X}{unused_text}")
                       
 def MapHeader_SearchForChara(charaId: int):
@@ -494,7 +504,7 @@ def MapHeader_SearchForChara(charaId: int):
         if filename.lower().startswith("map") and filename.lower().endswith(".bin"):  # Only process .bin files
             map_header = MapHeader_Read(filename)
             if map_header is None:
-                continue
+                continue # Skip empty map files (mapT/mapX)
                 
             # Check if any spawns/updatefuncs/group are setup for this chara ID
             foundIn = ""
