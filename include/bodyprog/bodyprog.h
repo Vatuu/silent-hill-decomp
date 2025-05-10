@@ -1031,12 +1031,12 @@ extern s_800AD4C8 D_800AD4C8[];
 
 typedef struct _SpawnInfo
 {
-    s32 posX_0;
+    s32 positionX_0;
     s8  chara_type_4;             /** `e_ShCharacterId` */
-    u8  rot_5;
+    u8  rotationY_5; /** Multiplied by 16 to get `s_SubCharacter.rotation_24.vy` value. */
     s8  flags_6; /** Copied to `isAnimStateUnchanged_3` in `s_Model`. */
     s8  unk_7;
-    s32 posZ_8;
+    s32 positionZ_8;
 } s_SpawnInfo;
 STATIC_ASSERT_SIZEOF(s_SpawnInfo, 12);
 
