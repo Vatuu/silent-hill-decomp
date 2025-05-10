@@ -339,7 +339,7 @@ void SdSetRVol(s16 ldepth, s16 rdepth);
 void SdUtSEAllKeyOff();
 void SdUtAllKeyOff(s16 mode);
 s32  SdUtGetVabHdr(s16 vabId, VabHdr* vabhdrptr);
-
+s32  SdVoKeyOn(s32 vab_pro, s32 pitch, u16 voll, u16 volr);
 void SdVoKeyOff(s32 vab_pro, s32 pitch);
 void SdVoKeyOffWithRROff(s32 vab_pro, s32 pitch);
 

@@ -783,7 +783,85 @@ s32 SdUtGetVabHdr(s16 vabId, VabHdr* vabhdrptr) // 0x800A0A40
     return 0;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_snd", SdVoKeyOn);
+s32 SdVoKeyOn(s32 vab_pro, s32 pitch, u16 voll, u16 volr) // 0x800A0AA0
+{
+    ProgAtr*  sd_vab_prog;
+    SD_VAB_H* sd_vh;
+    VagAtr*   sd_vag_atr;
+    s32       prog;
+    s32       vc;
+    s32       tone;
+    s32       note;
+    s32       voice;
+    s32       pc;
+    s32       c;
+    s16       vabid;
+
+    prog  = vab_pro & 0x7F;
+    vabid = vab_pro >> 8;
+    note  = pitch >> 8;
+
+    sd_vh = vab_h[vabid].vh_addr_4;
+
+    sd_int_flag = 1;
+
+    c = 0;
+    for (pc = 0; pc < prog; pc++)
+    {
+        if (sd_vh->vab_prog[pc].tones != 0)
+        {
+            c += 1;
+        }
+    }
+
+    sd_vab_prog = &sd_vh->vab_prog[prog];
+
+    for (tone = 0; tone < sd_vab_prog->tones; tone++)
+    {
+        sd_vag_atr = &sd_vh->vag_atr[(c * 0x10) + tone];
+
+        if (sd_vag_atr->vag == 0 || sd_vag_atr->min > note || sd_vag_atr->max < note)
+        {
+            continue;
+        }
+
+        vc = 0;
+
+        while (SpuGetKeyStatus(spu_ch_tbl[vc]) != 0)
+        {
+            if (++vc > (sd_reserved_voice - 1))
+            {
+                vc = -1;
+                break;
+            }
+        }
+
+        voice = vc << 0x10;
+        if (vc == -1)
+        {
+            vc = 0;
+
+            while (SmfGetPort(vc)->stat_16 != 0)
+            {
+                if (++vc > (sd_reserved_voice - 1))
+                {
+                    vc = -1;
+                    break;
+                }
+            }
+
+            voice = vc << 0x10;
+        }
+
+        if (vc != -1)
+        {
+            vc = SdUtKeyOnV((voice >> 0x10), vabid, prog, tone, note, pitch & 0xFF, voll, volr);
+        }
+    }
+
+    sd_int_flag = 0;
+    return vc;
+}
 
 void SdVoKeyOff(s32 vab_pro, s32 pitch) // 0x800A0CFC
 {
