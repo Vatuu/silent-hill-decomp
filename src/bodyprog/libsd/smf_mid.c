@@ -4,6 +4,8 @@
 
 #include "bodyprog/libsd.h"
 
+extern s32 time_flag; // Only used in this file.
+
 s32 MemCmp(u8* src, u8* des, s32 num) // 0x800A6FB8
 {
     if (!num)
@@ -614,7 +616,136 @@ void delta_time_conv(SMF* p) // 0x800A84B0
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_mid", midi_file_out);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_mid", midi_smf_main);
+// TODO: goto jumps below which I'm not sure how to remove yet, maybe code actually included them.
+u8 midi_smf_main()
+{
+    SMF_SONG* s;
+    SMF*      p;
+    s32       wk;
+    s32       tr;
+
+    wk = smf_file_no;
+
+    for (smf_file_no = 0; smf_file_no < 2; smf_file_no++)
+    {
+        s = &smf_song[smf_file_no];
+
+        if (s->sd_seq_stat_50A == 1)
+        {
+            for (tr = 0; tr < s->mf_tracks_526; tr++)
+            {
+                p = &s->tracks_0[tr];
+
+                if (p->mf_eof_flag_20 == 0)
+                {
+                    p->mf_tempo_14 += p->mf_tempo2_16;
+
+                    if (p->mf_tempo_14 > 0xFF)
+                    {
+                        p->mf_tempo_14 = p->mf_tempo_14 & 0xFF;
+
+                        if (tr == s->mf_format_524)
+                        {
+                            s->mf_seq_beat_51C++;
+                        }
+
+                        if (p->mf_delta_time_1C != 0)
+                        {
+                            p->mf_delta_time_1C--;
+                        }
+                        else
+                        {
+                            while (true)
+                            {
+                                if (s->smf_seq_flag_52C != 2)
+                                {
+                                    readtrack(p);
+                                    goto block_12;
+                                }
+                                if (!readtrack2(p))
+                                {
+                                block_12:
+                                    if (p->mf_eof_flag_20 == 0)
+                                    {
+                                        p->mf_delta_time_1C = readvarinum(p);
+                                        goto block_15;
+                                    }
+                                }
+                                else if (p->mf_eof_flag_20 == 0)
+                                {
+                                block_15:
+                                    if (p->mf_delta_time_1C != 0 && time_flag != 0)
+                                    {
+                                        delta_time_conv(p);
+                                    }
+
+                                    if (p->mf_delta_time_1C == 0)
+                                    {
+                                        continue;
+                                    }
+                                }
+
+                                if (p->mf_delta_time_1C != 0)
+                                {
+                                    p->mf_delta_time_1C--;
+                                }
+
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (s->smf_seq_flag_52C == 2 && s->loop_start_flag_52D != 0)
+            {
+                for (tr = 0; tr < s->mf_tracks_526; tr++)
+                {
+                    p = &s->tracks_0[tr];
+
+                    if (s->loop_start_flag_52D == 2)
+                    {
+                        p->mf_loop_count_22    = 127;
+                        p->mf_loop_point_4     = p->mf_data_loc_0;
+                        p->mf_delta_time_wk_1E = p->mf_delta_time_1C;
+                        p->time_hosei_wk_1A    = p->time_hosei_18;
+                        p->mf_eof_flag_wk_21   = p->mf_eof_flag_20;
+                        p->status_value_wk_26  = p->status_value_25;
+                    }
+                    else if (s->loop_start_flag_52D == 1)
+                    {
+                        if (p->mf_loop_count_22 != 0)
+                        {
+                            if (p->mf_loop_count_22 < 127)
+                            {
+                                p->mf_loop_count_22 = p->mf_loop_count_22 - 1;
+                            }
+                            p->mf_data_loc_0    = p->mf_loop_point_4;
+                            p->mf_delta_time_1C = p->mf_delta_time_wk_1E;
+                            p->time_hosei_18    = p->time_hosei_wk_1A;
+                            p->mf_eof_flag_20   = p->mf_eof_flag_wk_21;
+                            p->status_value_25  = p->status_value_wk_26;
+                        }
+                    }
+                }
+
+                if (s->loop_start_flag_52D == 2)
+                {
+                    s->mf_seq_beat_wk_520 = s->mf_seq_beat_51C;
+                }
+                else if (s->loop_start_flag_52D == 1)
+                {
+                    s->mf_seq_beat_51C = s->mf_seq_beat_wk_520;
+                }
+
+                s->loop_start_flag_52D = 0;
+            }
+        }
+    }
+    smf_file_no = wk;
+
+    return 0;
+}
 
 void midi_smf_stop(s32 access_value) // 0x800A8C74
 {

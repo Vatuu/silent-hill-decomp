@@ -450,7 +450,7 @@ u8   readtrack2(SMF* p);
 s32  track_head_read(SMF* p);
 void delta_time_conv(SMF* p);
 void midi_file_out(s16 file_no);
-void midi_smf_main();
+u8   midi_smf_main();
 void midi_smf_stop(s32 access_value);
 s16  midi_smf_stat(s32 access_no); /** Returns SMF_STAT. */
 
