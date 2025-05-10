@@ -24,27 +24,6 @@ typedef struct _ArrowVectors
     DVECTOR field_8;
 } s_ArrowVectors;
 
-typedef struct
-{
-    s16 field_0;
-    s16 field_2;
-    s16 field_4;
-    s16 field_6;
-    s16 field_8;
-    s16 field_A;
-} s_sub_801E2C74;
-STATIC_ASSERT_SIZEOF(s_sub_801E2C74, 12);
-
-typedef struct
-{
-    s_sub_801E2C74 field_0[2];
-} s_801E2C74;
-STATIC_ASSERT_SIZEOF(s_801E2C74, 24);
-
-extern s_801E2C74 D_801E2C74;
-
-extern s_801E2C74 D_801E2C8C;
-
 extern s32 D_801E72F4;
 
 extern s32 D_801E72F8;
@@ -52,6 +31,14 @@ extern s32 D_801E72F8;
 extern s32 D_801E72FC;
 
 extern s32 D_801E7300;
+
+extern DR_MODE D_801E730C[];
+
+extern POLY_G4 D_801E7324[];
+
+extern char* D_801E736C[];
+
+extern char* D_801E737C[];
 
 extern DVECTOR D_801E73B4;
 

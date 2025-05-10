@@ -1274,15 +1274,128 @@ void Gfx_SettingsOptionsMainDraw() // 0x801E4FFC
 // SCREEN POSITION OPTION SCREEN
 // ==============================
 
-INCLUDE_ASM("asm/screens/options/nonmatchings/options", Settings_PositionScreen); // 0x801E53A0 
+INCLUDE_ASM("asm/screens/options/nonmatchings/options", Settings_PositionScreen); // 0x801E53A0
 
-INCLUDE_ASM("asm/screens/options/nonmatchings/options", Gfx_PositionArrowsDraw); // 0x801E5A08
+void Gfx_PositionArrowsDraw() // 0x801E5A08
+{
+    s_ArrowVectors D_801E2BEC[] =
+        {
+            {{0x0000, 0xFF9C}, {0xFFF8, 0xFFA4}, {0x0008, 0xFFA4}},
+            {{0x0000, 0x0064}, {0xFFF8, 0x005C}, {0x0008, 0x005C}},
+            {{0xFF6C, 0x0000}, {0xFF74, 0xFFF8}, {0xFF74, 0x0008}},
+            {{0x0094, 0x0000}, {0x008C, 0xFFF8}, {0x008C, 0x0008}},
+        };
+
+    s_ArrowVectors D_801E2C1C[] =
+        {
+            {{0x0000, 0xFF9B}, {0xFFF6, 0xFFA5}, {0x0009, 0xFFA5}},
+            {{0x0000, 0x0065}, {0xFFF6, 0x005B}, {0x0009, 0x005B}},
+            {{0xFF6B, 0x0000}, {0xFF75, 0xFFF6}, {0xFF75, 0x000A}},
+            {{0x0095, 0x0000}, {0x008B, 0xFFF6}, {0x008B, 0x000A}},
+        };
+
+    u8  dir[4];
+    s32 i;
+
+    memset(dir, 0, 4);
+
+    for (i = 0; i < 4; i++)
+    {
+        Gfx_ArrowDraw(&D_801E2BEC[i], 1, 0);
+    }
+
+    if ((g_ControllerPtr0->btns_new_10 & Pad_LStickUp) ||
+        (g_ControllerPtr0->btns_held_C & Pad_LStickUp))
+    {
+        dir[0] = 1;
+    }
+    if ((g_ControllerPtr0->btns_new_10 & Pad_LStickDown) ||
+        (g_ControllerPtr0->btns_held_C & Pad_LStickDown))
+    {
+        dir[1] = 1;
+    }
+    if ((g_ControllerPtr0->btns_new_10 & Pad_LStickLeft) ||
+        (g_ControllerPtr0->btns_held_C & Pad_LStickLeft))
+    {
+        dir[2] = 1;
+    }
+    if ((g_ControllerPtr0->btns_new_10 & Pad_LStickRight) ||
+        (g_ControllerPtr0->btns_held_C & Pad_LStickRight))
+    {
+        dir[3] = 1;
+    }
+
+    for (i = 0; i < 4; i++)
+    {
+        if (dir[i] != 0)
+        {
+            Gfx_ArrowDraw(&D_801E2C1C[i], 0, 0);
+        }
+    }
+}
 
 /** Related to drawing.
  * Draws the box that indicates the screen position in the
  * position screen configuration.
  */
-INCLUDE_ASM("asm/screens/options/nonmatchings/options", Gfx_PositionIndicatorDraw); // 0x801E5CBC
+void Gfx_PositionIndicatorDraw() // 0x801E5CBC
+{
+    GsOT*               ot     = &g_ObjectTable1[g_ObjectTableIdx];
+    s_ShSaveUserConfig* config = &g_GameWorkPtr0->config_0;
+    s32                 i;
+    s_GameWork*         gameWork;
+    LINE_F2*            line;
+    POLY_F4*            poly;
+
+    DVECTOR D_801E2C4C[] =
+        {
+            {0xFFC4, 0x0028},
+            {0xFFC4, 0x0046},
+            {0x003C, 0x0046},
+            {0x003C, 0x0028}};
+
+    char* offsetStr[] =
+        {
+            "X:_",
+            "Y:_"};
+
+    for (i = 0; i < 4; i++)
+    {
+        line = (LINE_F2*)GsOUT_PACKET_P;
+
+        setLineF2(line);
+        setCodeWord(line, 0x40, i < 2 ? 0xF0F0F0 : 0x808080);
+
+        setXY0Fast(line, (u16)(D_801E2C4C[i].vx - config->screenPosX_1C), D_801E2C4C[i].vy - config->screenPosY_1D);
+        setXY1Fast(line, (u16)(D_801E2C4C[(i + 1) & 3].vx - config->screenPosX_1C), D_801E2C4C[(i + 1) & 3].vy - config->screenPosY_1D);
+
+        addPrim((u8*)ot->org + 0x28, line);
+        GsOUT_PACKET_P = (u8*)line + sizeof(LINE_F2);
+    }
+
+    poly = (POLY_F4*)GsOUT_PACKET_P;
+    setPolyF4(poly);
+
+    gameWork = g_GameWorkPtr0;
+
+    setCodeWord(poly, 0x28, 0);
+    setXY0Fast(poly, (u16)(D_801E2C4C[0].vx - gameWork->config_0.screenPosX_1C), D_801E2C4C[0].vy - gameWork->config_0.screenPosY_1D);
+    setXY1Fast(poly, (u16)(D_801E2C4C[1].vx - gameWork->config_0.screenPosX_1C), D_801E2C4C[1].vy - gameWork->config_0.screenPosY_1D);
+    setXY2Fast(poly, (u16)(D_801E2C4C[3].vx - gameWork->config_0.screenPosX_1C), D_801E2C4C[3].vy - gameWork->config_0.screenPosY_1D);
+    setXY3Fast(poly, (u16)(D_801E2C4C[2].vx - gameWork->config_0.screenPosX_1C), D_801E2C4C[2].vy - gameWork->config_0.screenPosY_1D);
+
+    config = &gameWork->config_0;
+
+    addPrim((u8*)ot->org + 0x28, poly);
+    GsOUT_PACKET_P = (u8*)poly + sizeof(POLY_F4);
+
+    Gfx_StringSetPosition(0x6C - config->screenPosX_1C, 0xA2 - config->screenPosY_1D);
+    Gfx_StringDraw(offsetStr[0], 0xA);
+    Gfx_StringDrawInt(3, config->screenPosX_1C);
+    Gfx_StringSetPosition(0xA8 - config->screenPosX_1C, 0xA2 - config->screenPosY_1D);
+    Gfx_StringDraw(offsetStr[1], 0xA);
+    Gfx_StringDrawInt(3, gameWork->config_0.screenPosY_1D);
+}
 
 // ========================
 // BRIGHTNESS OPTION SCREEN
@@ -1371,9 +1484,7 @@ void Settings_BrightnessScreen() // 0x801E6018
     Gfx_BrightnessLevelTextDraw();
 }
 
-// TODO: Matched but .rodata needs to be redefined.
-INCLUDE_ASM("asm/screens/options/nonmatchings/options", Gfx_BrightnessLevelTextDraw);
-/*void Gfx_BrightnessLevelTextDraw() // 0x801E6238
+void Gfx_BrightnessLevelTextDraw() // 0x801E6238
 {
     char* D_801E2C64 = "LEVEL_________";
 
@@ -1381,39 +1492,19 @@ INCLUDE_ASM("asm/screens/options/nonmatchings/options", Gfx_BrightnessLevelTextD
     Gfx_StringSetPosition(SCREEN_POSITION_X(25.0f), SCREEN_POSITION_Y(79.5f));
     Gfx_StringDraw(D_801E2C64, 20);
     Gfx_StringDrawInt(1, g_GameWork.config_0.optBrightness_22);
-}*/
+}
 
-// TODO: Matched but .rodata needs to be redefined.
-INCLUDE_ASM("asm/screens/options/nonmatchings/options", Gfx_BrightnessLevelArrowsDraw);
-/*void Gfx_BrightnessLevelArrowsDraw() // 0x801E628C
+void Gfx_BrightnessLevelArrowsDraw() // 0x801E628C
 {
-    // D_801E2C74
-    s_801E2C74 var0 =
-    {
+    s_ArrowVectors D_801E2C74[] =
         {
-            8, 84,
-            16, 76,
-            16, 92,
+            {{8, 84}, {16, 76}, {16, 92}},
+            {{64, 84}, {56, 76}, {56, 92}}};
 
-            64, 84,
-            56, 76,
-            56, 92
-        }
-    };
-
-    // D_801E2C8C
-    s_801E2C74 var1 =
-    {
+    s_ArrowVectors D_801E2C8C[] =
         {
-            7, 84,
-            17, 74,
-            17, 94,
-
-            65, 84,
-            55, 74,
-            55, 94
-        }
-    };
+            {{7, 84}, {17, 74}, {17, 94}},
+            {{65, 84}, {55, 74}, {55, 94}}};
 
     s32 btnInput;
     s32 i;
@@ -1437,14 +1528,14 @@ INCLUDE_ASM("asm/screens/options/nonmatchings/options", Gfx_BrightnessLevelArrow
 
     for (i = 0; i < 2; i++)
     {
-        Gfx_ArrowDraw(&var0.field_0[i], 1, 0);
+        Gfx_ArrowDraw(&D_801E2C74[i], 1, 0);
     }
 
     for (i = dir - 1; i < dir; i++)
     {
-        Gfx_ArrowDraw(&var1.field_0[i], 0, 0);
+        Gfx_ArrowDraw(&D_801E2C8C[i], 0, 0);
     }
-}*/
+}
 
 // ========================================
 // DRAW OPTIONS FEATURES SCREEN
@@ -1514,18 +1605,17 @@ void Gfx_ArrowDraw(s_ArrowVectors* vec, s32 arg1, s32 arg2) // 0x801E662C
     s32      colorMod1;
     POLY_G3* poly;
 
-    if (arg2)
+    if (arg2) /*Probably some unused code related to `arg2`.*/
     {
-        do
-        {
-        }
-        while (0); // HACK: Probably some unused code related to `arg2`.
+        colorMod0 = 0;
+        colorMod1 = 0;
     }
 
     timerCount = g_SysWork.timer_1C & 0x7F;
 
     if (timerCount >= 0x20)
     {
+        colorMod1 = 0x20;
         if (timerCount < 0x40)
         {
             colorMod1 = 0x20;
@@ -1679,6 +1769,109 @@ INCLUDE_ASM("asm/screens/options/nonmatchings/options", Settings_ControllerScree
  */
 INCLUDE_ASM("asm/screens/options/nonmatchings/options", Settings_ButtonChange); // 0x801E6CF4
 
-INCLUDE_ASM("asm/screens/options/nonmatchings/options", Gfx_ControllerScreenDraw); // 0x801E6F60
+void Gfx_ControllerScreenDraw(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x801E6F60
+{
+    s16      y0;
+    s16      y1;
+    u16*     bindPtr;
+    POLY_G4* poly;
+    GsOT*    ot;
+    DR_MODE* drMode;
+    s32      strYPos;
+    s32      i;
 
-INCLUDE_ASM("asm/screens/options/nonmatchings/options", Gfx_ControllerButtonsDraw); // 0x801E716C
+    ot     = (GsOT*)((g_ObjectTableIdx << 6) + (u8*)&D_800B5C7C);
+    poly   = &D_801E7324[g_ObjectTableIdx];
+    drMode = &D_801E730C[g_ObjectTableIdx];
+
+    for (i = 0; i < 4; i++)
+    {
+        Gfx_StringSetPosition(0x18, 0x16 + i * 0x14);
+        Gfx_StringDraw(D_801E736C[i], 0x14);
+    }
+
+    if (arg0 == 0)
+    {
+        y1 = arg1 * 0x14;
+        y0 = y1 - 0x5B;
+        setXY4(poly, -0x89, y0, -0x4C, y0, -0x89, y1 - 0x4C, -0x4C, y1 - 0x4C);
+    }
+
+    strYPos = 0x16;
+    y0      = -0x12C;
+
+    for (i = 0, bindPtr = (u16*)&g_GameWorkPtr1->config_0.controllerBinds_0; i < (u32)0xE; i++, bindPtr++)
+    {
+        Gfx_DebugStringPosition(0x60, strYPos);
+        Gfx_DebugStringDraw(D_801E737C[i]);
+
+        if (i != arg3)
+        {
+            Gfx_ControllerButtonsDraw(-0xC, strYPos - 0x72, *bindPtr);
+        }
+
+        if (i == arg2)
+        {
+            y0 = strYPos - 0x71;
+        }
+
+        strYPos = strYPos + 0xC + (i == 2 ? 0xC : 0);
+    }
+
+    if (arg0 == 1)
+    {
+        setXY4(poly, -0x41, y0, -0xF, y0, -0x41, y0 + 0xA, -0xF, y0 + 0xA);
+    }
+
+    AddPrim(ot, poly);
+    AddPrim(ot, drMode);
+}
+
+void Gfx_ControllerButtonsDraw(s32 arg0, s32 arg1, u16 arg2) // 0x801E716C
+{
+    s32            i;
+    s32            x0;
+    u16            clutX;
+    u32            clutY;
+    int            temp;
+    GsOT*          ot;
+    SPRT*          prim;
+    DR_TPAGE*      tpage;
+    int            v0;
+    PACKET*        packet;
+    s_FsImageDesc* image = &D_800A903C;
+
+    ot     = &D_800B5D04[g_ObjectTableIdx];
+    packet = GsOUT_PACKET_P;
+
+    for (x0 = arg0, i = 0xC; i < 0x1C; i++)
+    {
+        temp = i & 0xF;
+        v0   = ((temp + 8) & 0xF) << 4;
+
+        if ((arg2 >> temp) & 1)
+        {
+            prim = (SPRT*)packet;
+            addPrimFast(ot, prim, 4);
+            setCodeWord(prim, PRIM_RECT | RECT_TEXTURE, 0x808080);
+            setWH(prim, 12, 12);
+
+            clutY = image->clutY;
+            clutX = image->clutX;
+
+            setXY0Fast(prim, x0, arg1);
+            x0 += 0xE;
+
+            // setUV0AndClut(prim, 0xF4, v0, clutY, clutX);
+            *(u32*)(&prim->u0) = 0xF4 + (v0 << 8) + (((clutY << 6) | ((clutX >> 4) & 0x3F)) << 0x10);
+
+            packet = (u8*)prim + sizeof(SPRT);
+            tpage  = (DR_TPAGE*)packet;
+
+            setDrawTPage(tpage, 0, 1, 7);
+            AddPrim(ot, tpage);
+            packet = (u8*)tpage + sizeof(DR_TPAGE);
+        }
+    }
+    GsOUT_PACKET_P = packet;
+}
