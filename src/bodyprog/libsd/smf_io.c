@@ -773,7 +773,7 @@ void key_off(u8 chan, u8 c1, u8 c2)
     }
 }
 
-void key_press() {} // 0x800A5DCC
+void key_press(u8 chan, u8 c1, u8 c2) {} // 0x800A5DCC
 
 VagAtr* get_vab_tone(MIDI* p, u16 tone, u8 chan) // 0x800A5DD4
 {
@@ -1309,7 +1309,7 @@ void program_change(u8 chan, u8 c1) // 0x800A6C2C
     smf_midi[chan].prog_no_0 = c1;
 }
 
-void chan_press() {} // 0x800A6C58
+void chan_press(u8 chan, u8 c1) {} // 0x800A6C58
 
 void pitch_bend(u8 chan, s32 c1, u8 c2)
 {

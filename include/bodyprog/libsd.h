@@ -408,12 +408,12 @@ void rr_off(s32 vo);
 
 void    key_on(u8 chan, u8 c1, u8 c2);
 void    key_off(u8 chan, u8 c1, u8 c2);
-void    key_press();
+void    key_press(u8 chan, u8 c1, u8 c2); // Nullsub.
 VagAtr* get_vab_tone(MIDI* p, u16 tone, u8 chan);
 void    smf_data_entry(MIDI* p, u8 chan);
 void    control_change(u8 chan, u8 c1, u8 c2);
 void    program_change(u8 chan, u8 c1);
-void    chan_press();
+void    chan_press(u8 chan, u8 c1); // Nullsub.
 void    pitch_bend(u8 chan, s32 c1, u8 c2);
 
 void control_code_set(s32 seq_access_num);

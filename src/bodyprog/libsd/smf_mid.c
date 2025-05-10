@@ -280,7 +280,135 @@ void sysex(SMF* p) // 0x800A7AEC
     while (cou < len);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_mid", chanmessage);
+void chanmessage(SMF* p, u8 status, u8 c1, u8 c2) // 0x800A7B54
+{
+    SMF* pp;
+    s32  i;
+    u8   chan;
+
+    chan = (status & 0xF) | ((u8)smf_file_no * 0x10);
+    switch (status & 0xF0)
+    {
+        case 0x80:
+            key_off(chan, c1, c2);
+            break;
+        case 0x90:
+            if ((c2 & 0xFF) != 0)
+            {
+                key_on(chan, c1, c2);
+            }
+            else
+            {
+                key_off(chan, c1, 0);
+            }
+            break;
+        case 0xA0:
+            key_press(chan, c1, c2);
+            break;
+        case 0xB0:
+            if (c1 == 0x63)
+            {
+                if (c2 == 0x14)
+                {
+                    if (smf_song[smf_file_no].smf_seq_flag_52C == 2)
+                    {
+                        smf_song[smf_file_no].loop_start_flag_52D = smf_song[smf_file_no].smf_seq_flag_52C;
+                    }
+                    else if (smf_song[smf_file_no].mf_format_524 != 0)
+                    {
+                        for (i = 0; i < smf_song[smf_file_no].mf_tracks_526; i++)
+                        {
+                            pp = &smf_song[smf_file_no].tracks_0[i];
+
+                            pp->mf_loop_count_22    = c2;
+                            pp->mf_eof_flag_wk_21   = pp->mf_eof_flag_20;
+                            pp->status_value_wk_26  = pp->status_value_25;
+                            pp->mf_loop_point_4     = pp->mf_data_loc_0;
+                            pp->mf_delta_time_wk_1E = pp->mf_delta_time_1C;
+                            pp->time_hosei_wk_1A    = pp->time_hosei_18;
+                        }
+
+                        smf_song[smf_file_no].mf_seq_beat_wk_520 = smf_song[smf_file_no].mf_seq_beat_51C;
+                    }
+                    else
+                    {
+                        p->mf_loop_count_22 = 0x7F;
+                        p->mf_loop_point_4  = p->mf_data_loc_0;
+                    }
+                }
+                else
+                {
+                    if (c2 == 0x1E)
+                    {
+                        if (smf_song[smf_file_no].smf_seq_flag_52C == 2)
+                        {
+                            smf_song[smf_file_no].loop_start_flag_52D = 1;
+                        }
+                        else
+                        {
+                            if (p->mf_loop_count_22 != 0)
+                            {
+                                if (p->mf_loop_count_22 < 0x7F)
+                                {
+                                    p->mf_loop_count_22 = p->mf_loop_count_22 - 1;
+                                }
+
+                                if (smf_song[smf_file_no].mf_format_524 != 0)
+                                {
+                                    for (i = 0; i < smf_song[smf_file_no].mf_tracks_526; i++)
+                                    {
+                                        pp = &smf_song[smf_file_no].tracks_0[i];
+
+                                        pp->mf_eof_flag_20   = pp->mf_eof_flag_wk_21;
+                                        pp->status_value_25  = pp->status_value_wk_26;
+                                        pp->mf_data_loc_0    = pp->mf_loop_point_4;
+                                        pp->mf_delta_time_1C = pp->mf_delta_time_wk_1E;
+                                        pp->time_hosei_18    = pp->time_hosei_wk_1A;
+                                    }
+
+                                    smf_song[smf_file_no].mf_seq_beat_51C = smf_song[smf_file_no].mf_seq_beat_wk_520;
+                                }
+                                else
+                                {
+                                    p->mf_data_loc_0 = p->mf_loop_point_4;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (c1 == 6)
+            {
+                if (smf_midi[chan & 0xFF].nrpn_msb_26 == 0x14)
+                {
+                    if (smf_song[smf_file_no].mf_format_524 != 0)
+                    {
+                        for (i = 0; i < smf_song[smf_file_no].mf_tracks_526; i++)
+                        {
+                            smf_song[smf_file_no].tracks_0[i].mf_loop_count_22 = c2;
+                        }
+                    }
+                    else
+                    {
+                        p->mf_loop_count_22 = c2;
+                        break;
+                    }
+                }
+            }
+            control_change(chan, c1, c2);
+            break;
+        case 0xE0:
+            pitch_bend(chan, c1, c2);
+            break;
+        case 0xC0:
+            program_change(chan, c1);
+            break;
+        case 0xD0:
+            chan_press(chan, c1);
+            break;
+    }
+}
 
 u8 readtrack(SMF* p) // 0x800A80C4
 {
