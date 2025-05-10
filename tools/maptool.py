@@ -442,7 +442,7 @@ def MapHeader_Read(filepath: str) -> MapHeader:
             update_funcs.append(value)
 
         f.seek(OFFSET_mapOverlayHeader + OFFSET_charaGroupIds)
-        data = f.read(2)
+        data = f.read(4)
         group = list(data)
 
         f.seek(OFFSET_mapOverlayHeader + OFFSET_charaSpawns)
@@ -472,7 +472,17 @@ def MapHeader_Print(map_header: MapHeader):
     if map_header.group_charas:
         print("charaGroupIds_248:")
         for index, charaId in enumerate(map_header.group_charas):
-            group_str = " 0 - 15: " if index == 0 else "16 - 31: "
+            if index == 0:
+                group_str = "  0 - 15: "
+            elif index == 1:
+                group_str = " 16 - 31: "
+            else:
+                if charaId == 0:
+                    continue # Skip empty extra entries
+                if index == 2:
+                    group_str = "Extra[2]: "
+                else:
+                    group_str = "Extra[3]: "
             print(f"  {group_str}{charaName(charaId)}")
         print()
 
@@ -494,7 +504,7 @@ def MapHeader_SearchForChara(charaId: int):
         if filename.lower().startswith("map") and filename.lower().endswith(".bin"):  # Only process .bin files
             map_header = MapHeader_Read(filename)
             if map_header is None:
-                continue
+                continue # Skip empty map files (mapT/mapX)
                 
             # Check if any spawns/updatefuncs/group are setup for this chara ID
             foundIn = ""

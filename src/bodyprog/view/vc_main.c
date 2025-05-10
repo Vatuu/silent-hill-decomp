@@ -1485,6 +1485,8 @@ void vcSetDataToVwSystem(VC_WORK* w_p, VC_CAM_MV_TYPE cam_mv_type) // 0x80085884
     {
         vcSelfViewTimer += g_DeltaTime0;
 
+        // TODO: in SH2 these FP_ANGLEs are using radian float values, while rest of SH2 used degrees.
+        // Maybe these are meant to be radians encoded as Q4.12 somehow, but haven't found a good way for it yet.
         noise_ang.vx = vcCamMatNoise(4, FP_ANGLE(500.0f), FP_ANGLE(800.0f), vcSelfViewTimer);
         noise_ang.vy = vcCamMatNoise(2, FP_ANGLE(400.0f), FP_ANGLE(1000.0f), vcSelfViewTimer);
         noise_ang.vz = 0;

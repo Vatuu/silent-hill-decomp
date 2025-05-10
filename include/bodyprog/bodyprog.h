@@ -1079,8 +1079,7 @@ typedef struct _MapOverlayHeader
     u8           unk_16C[4];
     u8           unk_170[36];
     void         (*charaUpdateFuncs_194[Chara_Count])(s_SubCharacter*, void*, s32); /** Guessed params. Funcptrs for each `e_ShCharacterId`, set to 0 for IDs not included in the map overlay. Called by `func_80038354`. */
-    u8           charaGroupIds_248[2]; /** `e_ShCharacterId` values used for charaSpawns with chara_type_4 == 0, first value is used for charaSpawns[0:15], second value for charaSpawns[16:31]. */
-    u8           unk_24A[2];
+    u8           charaGroupIds_248[4]; /** `e_ShCharacterId` values used for charaSpawns with chara_type_4 == 0, [0] is used for charaSpawns[0:15], [1] for charaSpawns[16:31]. */
     s_SpawnInfo  charaSpawns_24C[32]; /** Array of chara type/position/flags, flags_6 == 0 are unused slots?, read by `func_80037F24`. */
     VC_ROAD_DATA roadDataList_3CC[48];
     // TODO: A lot more in here.
