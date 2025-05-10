@@ -744,7 +744,7 @@ void vcSetTHROUGH_DOOR_CAM_PARAM_in_VC_WORK(VC_WORK* w_p, enum _THROUGH_DOOR_SET
     }
 }
 
-void vcSetNearestEnemyDataInVC_WORK(VC_WORK* w_p)
+void vcSetNearestEnemyDataInVC_WORK(VC_WORK* w_p) // 0x80081D90
 {
     #define ENEMY_MAX_DEAD_TIMER 1.5f
     #define ENEMY_MAX_DISTANCE 240.0f

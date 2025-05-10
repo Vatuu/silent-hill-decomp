@@ -520,7 +520,135 @@ void midi_vsync() // 0x800A4838
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_io", sound_seq_off);
+void sound_seq_off(s32 access_num) // 0x800A4A34
+{
+    MIDI* m;
+    s32   vo;
+    u32   voice;
+    s32   stat;
+    u32   chan;
+
+    voice = 0;
+
+    smf_song[access_num].midi_master_vol_538  = 127;
+    smf_song[access_num].seq_vol_set_flag_530 = 0;
+    smf_song[access_num].seq_rev_set_flag_532 = 0;
+    smf_song[access_num].seq_reverb_depth_536 = 0;
+
+    for (vo = 0; vo < 0x20; vo++)
+    {
+        SMF* track = &smf_song[access_num].tracks_0[vo];
+
+        track->mf_eof_flag_20         = 1;
+        track->running_status_flag_24 = 0xFF;
+        track->mf_data_loc_0          = 0;
+        track->mf_loop_point_4        = 0;
+        track->mf_loop_count_22       = 0;
+        track->mf_delta_time_1C       = 0;
+        track->mf_track_length_8      = 0;
+        track->mf_track_size_C        = 0;
+        track->mf_tempo_14            = 114;
+        track->mf_tempo2_16           = 114;
+        track->mf_repeat_ptr_10       = 0;
+        track->time_hosei_18          = 0;
+        track->ti_flag_23             = 0;
+        track->status_value_25        = 0;
+        track->midi_ch_27             = access_num * 0x10;
+    }
+
+    for (vo = 0; vo < sd_reserved_voice; vo++)
+    {
+        PORT* port = &smf_port[vo];
+
+        if ((port->midi_ch_3 >> 4) != access_num)
+        {
+            continue;
+        }
+
+        smf_vol_set(0, vo, 0, 0);
+
+        port->vc_0        = vo;
+        port->stat_16     = 0;
+        port->pan_14      = 64;
+        port->pedal_1B    = 0;
+        port->vibc_23     = 0;
+        port->vibhc_22    = 0;
+        port->vibcc_28    = 0;
+        port->vibd_24     = 0;
+        port->vibdm_26    = 0;
+        port->vib_data_2E = 0;
+        port->trec_33     = 0;
+        port->trehc_32    = 0;
+        port->trecc_38    = 0;
+        port->tred_34     = 0;
+        port->tredm_36    = 0;
+        port->tre_data_3E = 0;
+        port->rdmd_40     = 0;
+        port->rdmo_42     = 0;
+        port->rdms_43     = 0;
+        port->rdmc_44     = 0;
+        port->rdmdm_45    = 0;
+        port->pbend_wk_4E = 64;
+        port->pbend_50    = 64;
+
+        chan = spu_ch_tbl[vo];
+        voice |= chan;
+
+        rr_off(vo);
+
+        do
+        {
+            SpuSetKey(0, chan);
+            stat = SpuGetKeyStatus(chan);
+        }
+        while (stat != 2 && stat != 0);
+    }
+
+    for (vo = 0; vo < 0x10; vo++)
+    {
+        m = &smf_midi[(access_num * 0x10) + vo];
+
+        m->mvol_3         = 127;
+        m->before_note_13 = 60;
+        m->pan_1          = 64;
+        m->pedal_6        = 0;
+        m->pbend_7        = 64;
+        m->express_5      = 127;
+        m->l_vol_8        = 127;
+        m->r_vol_C        = 127;
+        m->mod_2          = 0;
+        m->mod_depth_1C   = 0;
+        m->mod_speed_18   = 0;
+        m->mod_limit_1E   = 0;
+        m->mod_mode_20    = 0;
+        m->pitch_32       = 0;
+        m->rev_depth_24   = 0;
+        m->wide_flag_21   = 0;
+        m->vibc_37        = 0;
+        m->vibhc_36       = 0;
+        m->vibcc_38       = 0;
+        m->vibd_3C        = 0;
+        m->vibdm_3E       = 0;
+        m->trec_47        = 0;
+        m->trehc_46       = 0;
+        m->trecc_50       = 0;
+        m->tred_48        = 0;
+        m->tredm_4A       = 0;
+        m->rdmd_54        = 0;
+        m->rdmo_56        = 0;
+        m->rdms_57        = 0;
+        m->rdmc_58        = 0;
+        m->rdmdm_59       = 0;
+        m->bend_mode_10   = 0;
+        m->vol_mode_11    = 0;
+        m->porta_28       = 0;
+        m->mode_12        = 0;
+        m->key_pan_22     = 0;
+        m->bank_change_5A = 127;
+    }
+
+    SpuSetKey(0, voice);
+}
 
 void sound_off() // 0x800A4D20
 {

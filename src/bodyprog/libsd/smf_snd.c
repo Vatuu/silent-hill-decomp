@@ -859,9 +859,9 @@ void SdVoKeyOffWithRROff(s32 vab_pro, s32 pitch) // 0x800A0E40
     sd_int_flag = 0;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_snd", SdUtKeyOnV);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_snd", SdUtKeyOnV); // 0x800A0F80
 
-s16 SdUtKeyOn(s16 vabid, s16 prog, s16 tone, s16 note, s16 fine, s16 voll, s16 volr)
+s16 SdUtKeyOn(s16 vabid, s16 prog, s16 tone, s16 note, s16 fine, s16 voll, s16 volr) // 0x800A1534
 {
     s32 vc;
     s32 voice;
