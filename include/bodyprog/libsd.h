@@ -345,7 +345,7 @@ void SdVoKeyOffWithRROff(s32 vab_pro, s32 pitch);
 
 s16  SdUtKeyOnV(s16 voice, s16 vabid, s16 prog, s16 tone, s16 note, s16 fine, s16 voll, s16 volr);
 s16  SdUtKeyOn(s16 vabid, s16 prog, s16 tone, s16 note, s16 fine, s16 voll, s16 volr);
-
+s16  SdVbKeyOn(s16 vabid, s32 voice, s16 center, s16 shift, s16 note, s16 voll, s16 volr);
 s32  SdUtKeyOffV(s16 vo);
 s32  SdUtKeyOffVWithRROff(s16 vo);
 s16  SdGetSeqStatus(s16 access_num);
@@ -385,7 +385,7 @@ void SsUtAllKeyOff(s16 mode);
 
 void set_note_on(s16 arg0, u8 arg1, u8 arg2, s16 arg3, s16 arg4);
 void set_midi_info(s32 type, u8 midiChannel, u32 value); /** type = `SMF_MIDI_STAT` */
-u16  Note2Pitch(s32 arg0, s32 arg1, u8 arg2, u8 arg3);
+u16  Note2Pitch(s16, s16, s16, s16);
 void tre_calc(PORT* p);
 void vib_calc(PORT* p);
 void random_calc(PORT* p);

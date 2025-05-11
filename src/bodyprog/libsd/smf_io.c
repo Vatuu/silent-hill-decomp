@@ -378,7 +378,7 @@ void pitch_calc(PORT* p, s32 forceSpuUpdate) // 0x800A4494
         SpuSetVoiceAttr(&s_attr);
     }
 
-    if (p->vibdm_26 != 0 && !SpuGetKeyStatus(spu_ch_tbl[p->vc_0]))
+    if (p->vibdm_26 != 0 && SpuGetKeyStatus(spu_ch_tbl[p->vc_0]) == SPU_OFF)
     {
         p->vibdm_26    = 0;
         p->vib_data_2E = 0;
@@ -598,10 +598,10 @@ void sound_seq_off(s32 access_num) // 0x800A4A34
 
         do
         {
-            SpuSetKey(0, chan);
+            SpuSetKey(SPU_OFF, chan);
             stat = SpuGetKeyStatus(chan);
         }
-        while (stat != 2 && stat != 0);
+        while (stat != SPU_OFF_ENV_ON && stat != SPU_OFF);
     }
 
     for (vo = 0; vo < 0x10; vo++)
@@ -647,13 +647,13 @@ void sound_seq_off(s32 access_num) // 0x800A4A34
         m->bank_change_5A = 127;
     }
 
-    SpuSetKey(0, voice);
+    SpuSetKey(SPU_OFF, voice);
 }
 
 void sound_off() // 0x800A4D20
 {
     u32 voice;
-    s32 keyStatus;
+    s32 stat;
     s32 vo;
     u32 voices;
 
@@ -679,9 +679,10 @@ void sound_off() // 0x800A4D20
 
         do
         {
-            SpuSetKey(0, voice);
-            keyStatus = SpuGetKeyStatus(voice);
-        } while (keyStatus != 2 && keyStatus != 0);
+            SpuSetKey(SPU_OFF, voice);
+            stat = SpuGetKeyStatus(voice);
+        }
+        while (stat != SPU_OFF_ENV_ON && stat != SPU_OFF);
     }
 
     smf_midi_sound_off.mvol_3    = 0x7F;
@@ -697,10 +698,10 @@ void sound_off() // 0x800A4D20
 
     do
     {
-        SpuSetKey(0, voices);
-        keyStatus = SpuGetKeyStatus(voices);
+        SpuSetKey(SPU_OFF, voices);
+        stat = SpuGetKeyStatus(voices);
     }
-    while (keyStatus != 2 && keyStatus != 0);
+    while (stat != SPU_OFF_ENV_ON && stat != SPU_OFF);
 }
 
 void vol_calc() {} // 0x800A4E90
@@ -731,7 +732,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_io", key_on);
 
 void key_off(u8 chan, u8 c1, u8 c2)
 {
-    s32 keyStatus;
+    s32 stat;
     s32 vo;
     u32 voices;
 
@@ -748,10 +749,10 @@ void key_off(u8 chan, u8 c1, u8 c2)
 
                 do
                 {
-                    SpuSetKey(0, spu_ch_tbl[vo]);
-                    keyStatus = SpuGetKeyStatus(spu_ch_tbl[vo]);
+                    SpuSetKey(SPU_OFF, spu_ch_tbl[vo]);
+                    stat = SpuGetKeyStatus(spu_ch_tbl[vo]);
                 }
-                while (keyStatus != 2 && keyStatus != 0);
+                while (stat != SPU_OFF_ENV_ON && stat != SPU_OFF);
 
                 smf_port[vo].stat_16 = 0;
             }
@@ -766,10 +767,10 @@ void key_off(u8 chan, u8 c1, u8 c2)
     {
         do
         {
-            SpuSetKey(0, voices);
-            keyStatus = SpuGetKeyStatus(voices);
+            SpuSetKey(SPU_OFF, voices);
+            stat = SpuGetKeyStatus(voices);
         }
-        while (keyStatus != 2 && keyStatus != 0);
+        while (stat != SPU_OFF_ENV_ON && stat != SPU_OFF);
     }
 }
 
@@ -1198,10 +1199,10 @@ void control_change(u8 chan, u8 c1, u8 c2)
 
                                 do
                                 {
-                                    SpuSetKey(0, spu_ch_tbl[i]);
+                                    SpuSetKey(SPU_OFF, spu_ch_tbl[i]);
                                     stat = SpuGetKeyStatus(spu_ch_tbl[i]);
                                 }
-                                while (stat != 2 && stat != 0);
+                                while (stat != SPU_OFF_ENV_ON && stat != SPU_OFF);
 
                                 smf_port[i].pedal_1B = 0;
                                 smf_port[i].stat_16  = 0;
@@ -1285,10 +1286,10 @@ void control_change(u8 chan, u8 c1, u8 c2)
     {
         do
         {
-            SpuSetKey(0, port);
+            SpuSetKey(SPU_OFF, port);
             stat = SpuGetKeyStatus(port);
         }
-        while (stat != 2 && stat != 0);
+        while (stat != SPU_OFF_ENV_ON && stat != SPU_OFF);
     }
 
     if (vol_flag != 0)
