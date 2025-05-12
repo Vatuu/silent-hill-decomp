@@ -130,8 +130,8 @@ typedef enum _SysState
 /** @brief Inventory command IDs. */
 typedef enum _InventoryCommandId
 {
-    InventoryCommandId_UseHealth     = 0,
-    InventoryCommandId_Use           = 1,  /** Text is "Use", but this one is used explusively on health items. */
+    InventoryCommandId_UseHealth     = 0,  /** Text is "Use", but this one is used explusively on health items. */
+    InventoryCommandId_Use           = 1,
     InventoryCommandId_Equip         = 2,
     InventoryCommandId_Unequip       = 3,
     InventoryCommandId_EquipReload   = 4,
@@ -589,7 +589,7 @@ typedef struct _SubCharacter
     s8      unk_46[2];
     s8      unk_48[104];
     q19_12  health_B0;
-    s8      unk_B4[12];
+    s8      unk_B4[16];
     s32     field_C0;
     u16     dead_timer_C4; // Part of `shBattleInfo` struct in SH2, may use something similar here.
     u16     field_C6;
@@ -628,6 +628,7 @@ typedef struct _MainCharacterExtra
     s32     field_20; // Some kind of anim state related to current action (running, walking, sidestepping, etc.).
     s32     field_24; // Some kind of anim state related to current action (running, walking, sidestepping, etc.). Sometimes same as above, but not always.
     s8      field_28; // Forcefully setting to 1 opens options menu.
+	u8      pad_29[3];
 } s_MainCharacterExtra;
 STATIC_ASSERT_SIZEOF(s_MainCharacterExtra, 44);
 
