@@ -9,6 +9,7 @@ options:
 
   asm_path: asm/screens/saveload
   src_path: src/screens/saveload
+  asset_path: asm/screens/saveload
   build_path: build/
 
   ld_script_path: linkers/screens/saveload.ld
@@ -56,4 +57,8 @@ segments:
       - [0x0, rodata]
       - [0x78C, c, saveload]
       - [0x4EA8, data, saveload]
+  # Random garbage data at end, define as bin file to make Splat ignore it.
+  - name: footer_data
+    type: bin
+    start: 0x50D8
   - [0x5100]

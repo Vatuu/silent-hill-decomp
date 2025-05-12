@@ -1,2 +1,11 @@
+
+Gfx_SaveBackgroundDraw = 0x801E2EBC; // type:func
 GameState_DeathLoadScreen_Update = 0x801E72FC; // type:func
 GameState_SaveScreen_Update = 0x801E6320; // type:func
+Gfx_SelectedMemBarDraw = 0x801E4010; // type:func
+Gfx_SavesTransparentBgDraw = 0x801E451C; // type:func
+Gfx_SavesOutlineDraw = 0x801E4D90; // type:func
+Gfx_RectMemLoadDraw = 0x801E54DC; // type:func
+Gfx_RectSaveInfoDraw = 0x801E5898; // type:func
+Save_SaveDataInfoDraw = 0x801E5E18; // type:func
+Gfx_SaveBackground = 0x801E709C; // type:func
