@@ -297,7 +297,8 @@ static inline PORT* SmfGetPort(s32 voice)
 void tone_adsr_mem(s16 vab_id);
 void tone_adsr_back(s16 vab_id);
 void sd_alloc_sort();
-
+s32  SdSpuMalloc(s32);
+s32  SdSpuMallocWithStartAddr(s32, s32);
 void SdSpuFree(u32 addr);
 void SdWorkInit();
 void SdInit();
@@ -314,6 +315,9 @@ void SdQuit();
 void SdSetSerialAttr(char s_num, char attr, char mode);
 void SdSetSerialVol(s16 s_num, s16 voll, s16 volr);
 void SdSetMVol(s16 voll, s16 volr);
+s16  SdVabOpenHead(u8* addr, s16 vabid);
+s16  SdVabOpenHeadSticky(u8* addr, s16 vabid, s32 sbaddr);
+s16  SdVabFakeHead(u8* addr, s16 vabid, u32 sbaddr);
 
 s16  SdVabTransBody(u8* addr, s16 vabid);
 s16  SdVabTransBodyPartly(u8* addr, u32 bufsize, s16 vabid);

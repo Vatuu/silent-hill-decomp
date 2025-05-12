@@ -309,11 +309,182 @@ void SdSetMVol(s16 voll, s16 volr) // 0x8009F75C
     SpuSetCommonAttr(&attr);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_snd", SdVabOpenHead);
+s16 SdVabOpenHead(u8* addr, s16 vabid) // 0x8009F79C
+{
+    VAB_H*  p;
+    s16     i;
+    VabHdr* sd_vab_h;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_snd", SdVabOpenHeadSticky);
+    body_partly_size = 0;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_snd", SdVabFakeHead);
+    if (*addr != 0x70)
+    {
+        return -1;
+    }
+
+    i = 0;
+    if (vabid == -1)
+    {
+        while (true)
+        {
+            if (vab_h[i].vab_id_0 == -1)
+            {
+                break;
+            }
+
+            i++;
+
+            if (i >= 0x10)
+            {
+                return -1;
+            }
+        }
+    }
+    else
+    {
+        i = vabid;
+
+        if (vab_h[i].vab_id_0 != -1)
+        {
+            SdSpuFree(vab_h[i].vb_start_addr_10);
+        }
+    }
+
+    p        = &vab_h[i];
+    sd_vab_h = (VabHdr*)addr;
+
+    p->vab_id_0         = i;
+    p->vh_addr_4        = (SD_VAB_H*)sd_vab_h;
+    p->vh_size_8        = 0xA20 + (sd_vab_h->ps * 0x200);
+    p->vb_size_14       = sd_vab_h->fsize - p->vh_size_8;
+    p->mvol_18          = sd_vab_h->mvol;
+    p->mpan_1B          = sd_vab_h->pan;
+    p->vb_start_addr_10 = SdSpuMalloc(p->vb_size_14);
+
+    if (p->vb_start_addr_10 == -1)
+    {
+        return -1;
+    }
+
+    tone_adsr_mem(i);
+    return i;
+}
+
+s16 SdVabOpenHeadSticky(u8* addr, s16 vabid, s32 sbaddr) // 0x8009F91C
+{
+    VAB_H*  p;
+    s16     i;
+    VabHdr* sd_vab_h;
+
+    i                = 0;
+    body_partly_size = 0;
+
+    if (*addr != 0x70)
+    {
+        return -1;
+    }
+
+    sd_vab_h = (VabHdr*)addr;
+
+    if (vabid == -1)
+    {
+        while (true)
+        {
+            if (vab_h[i].vab_id_0 == -1)
+            {
+                break;
+            }
+
+            i++;
+
+            if (i >= 0x10)
+            {
+                return -1;
+            }
+        }
+    }
+    else
+    {
+        i = vabid;
+        if (i >= 0x10)
+        {
+            return -1;
+        }
+
+        if (vab_h[i].vab_id_0 != -1)
+        {
+            SdSpuFree(vab_h[i].vb_start_addr_10);
+        }
+    }
+
+    p = &vab_h[i];
+
+    p->vab_id_0         = i;
+    p->vh_addr_4        = (SD_VAB_H*)addr;
+    p->vh_size_8        = 0xA20 + (sd_vab_h->ps * 0x200);
+    p->vb_start_addr_10 = sbaddr;
+    p->vb_size_14       = sd_vab_h->fsize - p->vh_size_8;
+    p->mvol_18          = sd_vab_h->mvol;
+    p->mpan_1B          = sd_vab_h->pan;
+    p->vb_start_addr_10 = SdSpuMallocWithStartAddr(sbaddr, p->vb_size_14);
+
+    if (p->vb_start_addr_10 == -1)
+    {
+        return -1;
+    }
+
+    tone_adsr_mem(i);
+    return i;
+}
+
+s16 SdVabFakeHead(u8* addr, s16 vabid, u32 sbaddr) // 0x8009FAC0
+{
+    VAB_H*  p;
+    VabHdr* sd_vab_h;
+    s16     i;
+
+    if (*addr != 0x70)
+    {
+        return -1;
+    }
+
+    i = 0;
+
+    if (vabid == -1)
+    {
+        while (true)
+        {
+            if (vab_h[i].vab_id_0 == -1)
+            {
+                break;
+            }
+
+            i++;
+
+            if (i >= 0x10)
+            {
+                return -1;
+            }
+        }
+    }
+    else
+    {
+        i = vabid;
+    }
+
+    p        = &vab_h[i];
+    sd_vab_h = (VabHdr*)addr;
+
+    p->vab_id_0         = i;
+    p->vh_addr_4        = (SD_VAB_H*)sd_vab_h;
+    p->vh_size_8        = 0xA20 + (sd_vab_h->ps * 0x200);
+    p->vb_size_14       = sd_vab_h->fsize - p->vh_size_8;
+    p->mvol_18          = sd_vab_h->mvol;
+    p->mpan_1B          = sd_vab_h->pan;
+    p->vb_start_addr_10 = sbaddr;
+
+    return i;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_snd", SdVbOpenOne);
 
