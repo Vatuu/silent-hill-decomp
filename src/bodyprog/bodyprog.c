@@ -1234,12 +1234,12 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80036420);
 
 s32 func_8003647C() // 0x8003647C
 {
-    return g_SaveGamePtr->field_A5 > g_MapOverlayHeader.field_8;
+    return g_SaveGamePtr->mapRoomIdx_A5 > g_MapOverlayHeader.field_8;
 }
 
 s32 func_80036498() // 80036498
 {
-    return !(g_SaveGamePtr->field_A5 > g_MapOverlayHeader.field_8);
+    return !(g_SaveGamePtr->mapRoomIdx_A5 > g_MapOverlayHeader.field_8);
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_800364BC);

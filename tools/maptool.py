@@ -50,9 +50,9 @@ e_ShCharacterId = [
     "Chara_Splithead",
     "Chara_Floatstinger",
     "Chara_PuppetNurse",
-    "Chara_DummyA",
+    "Chara_DummyNurse",
     "Chara_PuppetDoctor",
-    "Chara_DummyB",
+    "Chara_DummyDoctor",
     "Chara_Twinfeeler",
     "Chara_Bloodsucker",
     "Chara_Incubus",
@@ -76,7 +76,7 @@ e_ShCharacterId = [
     "Chara_Flauros",
     "Chara_LittleIncubus",
     "Chara_GhostDoctor",
-    "Chara_IntensiveCareUnit",
+    "Chara_Parasite",
     "Chara_Null"
 ]
 Chara_Count = 45
@@ -87,10 +87,10 @@ def charaName(i, includeNum: bool = True):
         return f"{i:>2} {charName}"
     return charName
 
-def q20_12(value):
+def q19_12(value):
     return round(value / 4096.0, 3)
     
-def q4_12(value):
+def q3_12(value):
     return round(value / 4096.0 * 360, 3)
 
 def count_lines_in_file(file_path):
@@ -412,7 +412,7 @@ MapBasePath = "assets/VIN/"
 class CharaSpawn:
     positionX: float
     positionZ: float
-    chara_type: int
+    charaId: int
     rotationY: int
     anim_unchanged_flag: int
     unk: int
@@ -449,14 +449,14 @@ def MapHeader_Read(filepath: str) -> MapHeader:
         chara_spawns = []
         for i in range(32):
             data = f.read(12)
-            positionX, chara_type, rotationY, anim_flag, unk, positionZ = struct.unpack("<ibBbbi", data)
+            positionX, charaId, rotationY, anim_flag, unk, positionZ = struct.unpack("<ibBbbi", data)
                          
-            # When chara_type is 0 chara ID is taken from the group section, group[0] if current spawn id is 15 or below, group[1] if 16 or above
-            if chara_type == 0:
-                chara_type = group[1] if i >= 16 else group[0]
+            # When charaId is 0 chara ID is taken from the group section, group[0] if current spawn id is 15 or below, group[1] if 16 or above
+            if charaId == 0:
+                charaId = group[1] if i >= 16 else group[0]
             
             chara_spawns.append(
-                CharaSpawn(q20_12(positionX), q20_12(positionZ), chara_type, q4_12(16 * rotationY), anim_flag, unk)
+                CharaSpawn(q19_12(positionX), q19_12(positionZ), charaId, q3_12(16 * rotationY), anim_flag, unk)
             )
 
         return MapHeader(update_funcs=update_funcs, group_charas=group, chara_spawns=chara_spawns)
@@ -493,7 +493,7 @@ def MapHeader_Print(map_header: MapHeader):
 
                 # func_80037F24 only seems to count as valid if anim_unchanged_flag != 0   
                 unused_text = "" if spawn.anim_unchanged_flag != 0 else " (flag == 0, slot unused?)"
-                print(f"  [{index:>2}] {charaName(spawn.chara_type)} = "
+                print(f"  [{index:>2}] {charaName(spawn.charaId)} = "
                       f"({spawn.positionX},{spawn.positionZ}) rotY {spawn.rotationY} "
                       f"flag 0x{spawn.anim_unchanged_flag:X} unk 0x{spawn.unk:X}{unused_text}")
                       
@@ -517,7 +517,7 @@ def MapHeader_SearchForChara(charaId: int):
                     foundIn += "charaGroupIds "
                     break
             for spawn in map_header.chara_spawns:
-                if spawn.chara_type == charaId:
+                if spawn.charaId == charaId:
                     foundIn += "charaSpawns "
                     break
             if foundIn:
