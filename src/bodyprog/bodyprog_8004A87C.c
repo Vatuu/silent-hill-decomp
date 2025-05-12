@@ -961,7 +961,7 @@ static inline SaveGame_PlayerReset(s_ShSaveGame* save)
     save->walkDistance_258 = 0;
     save->pickedUpItemCount_23C = 0;
     save->field_24A = 0;
-    save->field_25C &= ~6;
+    save->enemyKillCountPacked_25C &= ~6; // Redo to `rangedKillCount : 8; meleeKillCount : 16; pad : 8` or `u8 pad; u16 meleeKillCount; s8 rangedKillCount;`.
 }
 
 void Game_SaveGameResetPlayer() // 0x8007E530

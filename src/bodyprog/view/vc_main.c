@@ -295,7 +295,7 @@ void vcSetAllNpcDeadTimer() // 0x8008123C
 
     for (chara = &g_SysWork.npcs_1A0[0]; chara < &g_SysWork.npcs_1A0[NPC_COUNT_MAX]; chara++)
     {
-        if (chara->model_0.chara_type_0 == 0)
+        if (chara->model_0.charaId_0 == 0)
         {
             continue;
         }
@@ -768,7 +768,7 @@ void vcSetNearestEnemyDataInVC_WORK(VC_WORK* w_p) // 0x80081D90
 
     for (sc_p = &g_SysWork.npcs_1A0[0]; sc_p < &g_SysWork.npcs_1A0[NPC_COUNT_MAX]; sc_p++)
     {
-        if ((((u8)sc_p->model_0.chara_type_0 - 2) < 0x17U) &&
+        if ((((u8)sc_p->model_0.charaId_0 - 2) < 0x17U) &&
             (sc_p->dead_timer_C4 <= FP_FLOAT_TO(ENEMY_MAX_DEAD_TIMER, Q12_SHIFT) || sc_p->health_B0 >= 0) &&
             !(sc_p->field_3E & (1 << 4))) // sc_p->battle(ShBattleInfo).status & 0x20 in SH2
         {
@@ -790,8 +790,8 @@ void vcSetNearestEnemyDataInVC_WORK(VC_WORK* w_p) // 0x80081D90
             }
 
             // TODO: Not sure how to move the `set_active_data_f = 1` part out of this if.
-            if (sc_p->model_0.chara_type_0 >= Chara_HangedScratcher ||
-                (set_active_data_f = 1, (sc_p->model_0.chara_type_0 < Chara_Stalker)))
+            if (sc_p->model_0.charaId_0 >= Chara_HangedScratcher ||
+                (set_active_data_f = 1, (sc_p->model_0.charaId_0 < Chara_Stalker)))
             {
                 set_active_data_f = 1;
                 if (sc_p->field_3E & (1 << 1)) // sc_p->battle(ShBattleInfo).status & 4 in SH2
@@ -1486,7 +1486,7 @@ void vcSetDataToVwSystem(VC_WORK* w_p, VC_CAM_MV_TYPE cam_mv_type) // 0x80085884
         vcSelfViewTimer += g_DeltaTime0;
 
         // TODO: in SH2 these FP_ANGLEs are using radian float values, while rest of SH2 used degrees.
-        // Maybe these are meant to be radians encoded as Q4.12 somehow, but haven't found a good way for it yet.
+        // Maybe these are meant to be radians encoded as Q3.12 somehow, but haven't found a good way for it yet.
         noise_ang.vx = vcCamMatNoise(4, FP_ANGLE(500.0f), FP_ANGLE(800.0f), vcSelfViewTimer);
         noise_ang.vy = vcCamMatNoise(2, FP_ANGLE(400.0f), FP_ANGLE(1000.0f), vcSelfViewTimer);
         noise_ang.vz = 0;

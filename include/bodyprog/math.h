@@ -1,11 +1,9 @@
 #ifndef _BODYPROG_MATH_H
 #define _BODYPROG_MATH_H
 
-#define Q4_SHIFT       4         /** Used for: Q27.4 positions. */
-#define Q8_SHIFT       8         /** Used for: Q8.8 camera AABBs. Q24.8 meters. */
-#define Q12_SHIFT      12        /** Used for: Q3.12 alphas. Q19.12 timers, trigonometry. */
-#define SIN_LUT_SIZE   4096      /** Number of entries in the sine lookup table. */
-#define FP_ANGLE_COUNT (1 << 12) /** Number of fixed-point angles in Q4.12 format. */
+#define Q4_SHIFT  4  /** Used for: Q27.4 positions. */
+#define Q8_SHIFT  8  /** Used for: Q7.8 camera AABBs. Q23.8 meters. */
+#define Q12_SHIFT 12 /** Used for: Q3.12 alphas and angles, Q19.12 timers and trigonometry, number of entries in the sine lookup table.*/
 
 /** @brief Squares a value. */
 #define SQUARE(x) \
@@ -63,11 +61,11 @@
 #define FP_COLOR(val) \
     (u8)((val) * (FP_FLOAT_TO(1.0f, Q8_SHIFT) - 1))
 
-/** @brief Converts floating-point degrees to fixed-point angles in Q4.12 format. */
+/** @brief Converts floating-point degrees to fixed-point angles in Q3.12 format. */
 #define FP_ANGLE(deg) \
-    (s16)((deg) * ((FP_ANGLE_COUNT) / 360.0f))
+    (s16)((deg) * ((FP_TO(1, Q12_SHIFT)) / 360.0f))
 
-/** @brief Converts floating-point meters to fixed-point meters in Q24.8 format. */
+/** @brief Converts floating-point meters to fixed-point meters in Q23.8 format. */
 #define FP_METER(met) \
     FP_FLOAT_TO(met, Q8_SHIFT)
 

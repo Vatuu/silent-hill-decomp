@@ -130,7 +130,7 @@ typedef enum _SysState
 /** @brief Inventory command IDs. */
 typedef enum _InventoryCommandId
 {
-    InventoryCommandId_UseHealth     = 0,
+    InventoryCommandId_UseHealth     = 0,  /** Text is "Use", but this one is used explusively on health items. */
     InventoryCommandId_Use           = 1,
     InventoryCommandId_Equip         = 2,
     InventoryCommandId_Unequip       = 3,
@@ -288,9 +288,9 @@ enum e_ShCharacterId
     Chara_Splithead           = 14,
     Chara_Floatstinger        = 15,
     Chara_PuppetNurse         = 16,
-    Chara_DummyA              = 17, /** Uses dummy anim file without model/texture, but uses same update funcptr as `Chara_PuppetNurse`. */
+    Chara_DummyNurse          = 17, /** Uses dummy anim file without model/texture, but uses same update funcptr as `Chara_PuppetNurse`. */
     Chara_PuppetDoctor        = 18,
-    Chara_DummyB              = 19, /** Uses dummy anim file without model/texture, but uses same update funcptr as `Chara_PuppetDoctor`. */
+    Chara_DummyDoctor         = 19, /** Uses dummy anim file without model/texture, but uses same update funcptr as `Chara_PuppetDoctor`. */
     Chara_Twinfeeler          = 20,
     Chara_Bloodsucker         = 21,
     Chara_Incubus             = 22,
@@ -314,7 +314,7 @@ enum e_ShCharacterId
     Chara_Flauros             = 40,
     Chara_LittleIncubus       = 41,
     Chara_GhostDoctor         = 42,
-    Chara_IntensiveCareUnit   = 43,
+    Chara_Parasite            = 43,
     Chara_Null                = 44,
 
     Chara_Count
@@ -405,47 +405,47 @@ typedef struct _ShSaveGame
     s_ShInventoryItem items_0[INVENTORY_ITEM_COUNT_MAX];
     s8                field_A0;
     s8                field_A1[3];
-    s8                mapOverlayIdx_A4;
-    s8                field_A5;
+    s8                mapOverlayIdx_A4;         /** Index to overlay `*.BIN` files. */
+    s8                mapRoomIdx_A5;            /** Index to local map geometry `*.IPD` files. */
     s16               saveGameCount_A6;
     s8                mapEventIdx_A8;          // See Sparagas' `SaveTitle` enum for details of every value.
-    u8                mapIdx_A9; 
-    s8                equippedWeapon_AA;       /** `InventoryItemId` */
+    u8                mapIdx_A9;                /** Index to global map geometry `*.PLM` files. */
+    s8                equippedWeapon_AA;        /** `InventoryItemId` */
     u8                field_AB;
     u32               flags_AC;
     s32               field_B0[45];
-    s32               hasMapsFlags_164;        // See Sparagas' `HasMapsFlags` struct for details of every bit.
-    s32               eventFlags_168[6];       //----------------------------------------
-    s32               field_180[2];            //
-    s32               field_188;               //
-    s32               field_18C;               // Only tested a few, but it seems all are related to events and pick-up flags, grouped by location and not item types.
-    s32               field_190[4];            //
-    s32               field_1A0;               //
-    s32               field_1A4[12];           //----------------------------------------
-    s32               mapFlags_1D4[2];         //----------------------------------------
-    s32               field_1DC;               // These 3 are one `u32 mapMarkingsFlags[25];` (or maybe `u8 mapMarkingsFlags[100];`?) See Sparagas' `MapMarkingsFlags` struct for details of every bit.
-    s32               field_1E0[22];           //----------------------------------------
+    s32               hasMapsFlags_164;         // See Sparagas' `HasMapsFlags` struct for details of every bit.
+    s32               eventFlags_168[6];        //----------------------------------------
+    s32               eventFlags_180[2];        //
+    s32               eventFlags_188;           //
+    s32               eventFlags_18C;           // Only tested a few, but it seems all are related to events and pick-up flags, grouped by location and not item types.
+    s32               eventFlags_190[4];        //
+    s32               eventFlags_1A0;           //
+    s32               eventFlags_1A4[12];       //----------------------------------------
+    s32               mapMarkingsFlags_1D4[2];  //----------------------------------------
+    s32               mapMarkingsFlags_1DC;     // These 3 are one `u32 mapMarkingsFlags[25];` (or maybe `u8 mapMarkingsFlags[100];`?) See Sparagas' `MapMarkingsFlags` struct for details of every bit.
+    s32               mapMarkingsFlags_1E0[22]; //----------------------------------------
     s32               field_238;
     s16               pickedUpItemCount_23C;
     s8                field_23E;
     s8                field_23F;
-    s32               playerHealth_240;        /** Q20.12, default: 100 */
-    s32               playerPositionX_244;     /** Q20.12 */
-    s16               playerRotationY_248;     /** Q4.12, Range [0, 0.999755859375], Positive Z: 0, clockwise rotation. It can be multiplied by 360 to get degrees. */
+    q19_12            playerHealth_240;         /** Default: 100 */
+    q19_12            playerPositionX_244;
+    q3_12             playerRotationY_248;      /** Range [0, 0.999755859375], Positive Z: 0, clockwise rotation. It can be multiplied by 360 to get degrees. */
     u8                field_24A;
     u8                field_24B;
-    s32               playerPositionZ_24C;     /** Q20.12 */
-    s32               gameplayTimer_250;       /** Q20.12 */
-    s32               runDistance_254;         /** Q20.12 */
-    s32               walkDistance_258;        /** Q20.12 */
-    s32               field_25C;
-    s32               field_260;               /** Packed data. Stores game difficulty and something else. Last byte is -16 on easy, 0 on normal, and 16 on hard. */
-    s16               firedShotCount_264;      /** Missed shot count = firedShotCount - (closeRangeShotCount + midRangeShotCount + longRangeShotCount). */
-    s16               closeRangeShotCount_266; /** Only hits counted. */
-    s16               midRangeShotCount_268;   /** Only hits counted. */
-    s16               longRangeShotCount_26A;  /** Only hits counted. */
+    q19_12            playerPositionZ_24C;
+    q19_12            gameplayTimer_250;
+    q19_12            runDistance_254;
+    q19_12            walkDistance_258;
+    s32               enemyKillCountPacked_25C; // Redo to `rangedKillCount : 8; meleeKillCount : 16; pad : 8` or `u8 pad; u16 meleeKillCount; s8 rangedKillCount;`.
+    s32               field_260;                /** Packed data. Stores game difficulty and something else. Last byte is -16 on easy, 0 on normal, and 16 on hard. */
+    s16               firedShotCount_264;       /** Missed shot count = firedShotCount - (closeRangeShotCount + midRangeShotCount + longRangeShotCount). */
+    s16               closeRangeShotCount_266;  /** Only hits counted. */
+    s16               midRangeShotCount_268;    /** Only hits counted. */
+    s16               longRangeShotCount_26A;   /** Only hits counted. */
     s16               field_26C;
-    s16               field_26E; // Related to enemy kills.
+    s16               field_26E;                // Related to enemy kills.
     s16               field_270;
     s16               field_272;
     s16               field_274;
@@ -488,9 +488,9 @@ typedef struct _ShSaveUserConfig
     s8                   optWalkRunCtrl_2B;         /** Normal: 0, Reverse: 1, default: Normal. */
     s8                   optAutoAiming_2C;          /** On: 0, Off: 1, default: On. */
     s8                   optBulletAdjust_2D;        /** x1-x6: Range [0, 5], default: x1. */
-    u16                  seenGameOverTips_2E[1];    /** Bitfield tracking seen game-over tips. Each bit corresponds to a tip index (0–15), set bits indicate seen tips. */
+    u16                  seenGameOverTips_2E[1];    /** Bitfield tracking seen game-over tips. Each bit corresponds to a tip index (0–14), set bits indicate seen tips. Resets after picking all 15. */
     s8                   unk_30[4];
-    u32                  unk_34[1];
+    u32                  palLanguageId[1];
 } s_ShSaveUserConfig;
 STATIC_ASSERT_SIZEOF(s_ShSaveUserConfig, 56);
 
@@ -565,7 +565,7 @@ STATIC_ASSERT_SIZEOF(s_ModelAnim, 20);
 
 typedef struct _Model
 {
-    s8 chara_type_0; /** `e_ShCharacterId` */
+    s8 charaId_0; /** `e_ShCharacterId` */
     u8 field_1;
     u8 field_2;
     u8 isAnimStateUnchanged_3; // Educated guess. In `s_MainCharacterExtra`, always 1, set to 0 for 1 tick when anim state appears to change.
@@ -577,9 +577,9 @@ STATIC_ASSERT_SIZEOF(s_Model, 24);
 typedef struct _SubCharacter
 {
     s_Model model_0;
-    VECTOR3 position_18;
-    SVECTOR rotation_24;
-    SVECTOR rotationSpeed_2C;
+    VECTOR3 position_18;       /** `Q19.12` */
+    SVECTOR rotation_24;       // maybe `SVECTOR3` instead of `SVECTOR` because 4rd field is a copy of the `.xy` field.
+    SVECTOR rotationSpeed_2C;  /** Range [-0x700, 0x700]. */
     s32     field_34;
     s32     moveSpeed_38;
     s16     headingAngle_3C;
@@ -588,7 +588,7 @@ typedef struct _SubCharacter
     s16     field_44;
     s8      unk_46[2];
     s8      unk_48[104];
-    s32     health_B0; // Bits 3-4 contain `s16` associated with player's rate of heavy breathing, always set to 6. Can't split into `s16`s? Maybe packed data.
+    q19_12  health_B0;
     s8      unk_B4[16];
     u16     dead_timer_C4; // Part of `shBattleInfo` struct in SH2, may use something similar here.
     u16     field_C6;
@@ -627,6 +627,7 @@ typedef struct _MainCharacterExtra
     s32     field_20; // Some kind of anim state related to current action (running, walking, sidestepping, etc.).
     s32     field_24; // Some kind of anim state related to current action (running, walking, sidestepping, etc.). Sometimes same as above, but not always.
     s8      field_28; // Forcefully setting to 1 opens options menu.
+    u8      pad_29[3];
 } s_MainCharacterExtra;
 STATIC_ASSERT_SIZEOF(s_MainCharacterExtra, 44);
 
