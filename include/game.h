@@ -130,8 +130,8 @@ typedef enum _SysState
 /** @brief Inventory command IDs. */
 typedef enum _InventoryCommandId
 {
-    InventoryCommandId_UseHealth     = 0,  /** Text is "Use", but this one is used explusively on health items. */
-    InventoryCommandId_Use           = 1,
+    InventoryCommandId_UseHealth     = 0,
+    InventoryCommandId_Use           = 1,  /** Text is "Use", but this one is used explusively on health items. */
     InventoryCommandId_Equip         = 2,
     InventoryCommandId_Unequip       = 3,
     InventoryCommandId_EquipReload   = 4,
@@ -589,7 +589,8 @@ typedef struct _SubCharacter
     s8      unk_46[2];
     s8      unk_48[104];
     q19_12  health_B0;
-    s8      unk_B4[16];
+    s8      unk_B4[12];
+    s32     field_C0;
     u16     dead_timer_C4; // Part of `shBattleInfo` struct in SH2, may use something similar here.
     u16     field_C6;
 
@@ -627,7 +628,6 @@ typedef struct _MainCharacterExtra
     s32     field_20; // Some kind of anim state related to current action (running, walking, sidestepping, etc.).
     s32     field_24; // Some kind of anim state related to current action (running, walking, sidestepping, etc.). Sometimes same as above, but not always.
     s8      field_28; // Forcefully setting to 1 opens options menu.
-    u8      pad_29[3];
 } s_MainCharacterExtra;
 STATIC_ASSERT_SIZEOF(s_MainCharacterExtra, 44);
 
@@ -638,6 +638,28 @@ typedef struct _MainCharacter
     s_MainCharacterExtra extra_128;
 } s_MainCharacter;
 STATIC_ASSERT_SIZEOF(s_MainCharacter, 340);
+
+typedef struct _MapWork
+{
+	s32 field_0;
+    s8  unk_4[11];
+    s8  field_F;
+} s_MapWork;
+STATIC_ASSERT_SIZEOF(s_MapWork, 0x10);
+
+typedef struct
+{
+	s32 field_0;
+	s32 field_4;
+	s32 field_8;
+} s_StructUnk0;
+
+typedef struct
+{
+	s16 field_0;
+	s16 field_2;
+	s16 field_4;
+} s_StructUnk1;
 
 typedef struct _SysWork
 {
@@ -654,9 +676,7 @@ typedef struct _SysWork
     s32             timer_2C;
     s32             field_30;
     s8              unk_34[4];
-    s32             field_38; // Something related to map loading.
-    s8              unk_3C[11];
-    s8              field_47; // Something related to map loading.
+    s_MapWork       field_38; // Something related to map loading. Likely a struct as `func_8003CD6C` requires a struct and `GameFs_MapLoad` input it pointing here.
     s8              unk_48[3];
     u8              isPlayerInCombatMode_4B;
     s_MainCharacter player_4C;
@@ -677,7 +697,13 @@ typedef struct _SysWork
     s32             field_2353 : 8; // Some index into npcs_1A0
     s8              unk_2354[4];
     u8              field_2358;
-    s8              unk_2359[33];
+    s8              unk_2359[3];
+    GsCOORDINATE2*  field_235C;
+    s_StructUnk0    field_2360;
+    GsCOORDINATE2*  field_236C;
+    s_StructUnk1    field_2370;
+    s16             unk_2376;
+    s16             field_2378;
     s16             cameraAngleY_237A;
     s16             cameraAngleZ_237C;
     s16             field_237E;

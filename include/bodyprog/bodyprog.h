@@ -622,6 +622,8 @@ extern u8 D_800A97D4[]; // Something related to save slots.
 
 extern s8 D_800A97D6; // Save slot index?
 
+extern u16 D_800A98AC[];
+
 extern s_800A992C D_800A992C[];
 
 extern u8 D_800A9944;
@@ -1190,6 +1192,8 @@ void func_8003B550();
 
 /** Unknown bodyprog func. Called by `Fs_QueueDoThingWhenEmpty`. */
 s32 func_8003C850();
+
+void func_8003CD6C(s_MapWork* arg0);
 
 /** Return type assumed. */
 void func_8003D160();
