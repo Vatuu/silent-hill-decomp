@@ -90,7 +90,7 @@ s32 func_801E3078(s_UnkSaveload0* arg0);
 
 void func_801E326C(s8* arg0, s8* arg1, s32 arg2, s32 arg3);
 
-void func_801E4D90(s8* arg0, s8* arg1, s32 arg2, s32 arg3);
+void Gfx_SavesTransparentBgDraw(s8* arg0, s8* arg1, s32 arg2, s32 arg3);
 
 /** Updates the save screen. */
 void GameState_SaveScreen_Update();
@@ -104,7 +104,7 @@ void func_801E6DB0();
 void func_801E6F38();
 
 /** Draws "SLOT1"/"SLOT2" strings, bottom transparent frame, and background image.*/
-void func_801E709C();
+void Gfx_SaveBackground(); // 0x801E709C
 
 /** Draws all file box strings and graphics, as well as the strings in the transparent frame at the bottom. */
 void func_801E70C8();

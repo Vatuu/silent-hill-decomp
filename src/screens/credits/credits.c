@@ -476,7 +476,7 @@ bool func_801E3684() // 0x801E3684
         }
 
         var_s3 = sp14 + var_s4;
-        var_s2 = &D_801E5590[var_s0];
+        var_s2 = &g_CreditList[var_s0];
 
         for (var_s1 = sp18; var_s1 > 0; var_s1--, var_s2++, var_s3 += sp10)
         {
@@ -604,7 +604,7 @@ bool func_801E3970() // 0x801E3970
     func_801E434C(0, 0);
 
     lineY          = currentLinePosY;
-    currentLinePtr = &D_801E5590[lineIdx];
+    currentLinePtr = &g_CreditList[lineIdx];
 
     for (i = linesToDraw; i > 0; i--, lineY += lineHeight, currentLinePtr++)
     {

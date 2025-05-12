@@ -1,6 +1,6 @@
 char D_801E558C[] = "";
 
-char* D_801E5590[] =
+char* g_CreditList[] =
 {
     "\xD0\xF0" "Executive Producer\xD8",
     D_801E558C,
