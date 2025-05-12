@@ -639,6 +639,28 @@ typedef struct _MainCharacter
 } s_MainCharacter;
 STATIC_ASSERT_SIZEOF(s_MainCharacter, 340);
 
+typedef struct _MapWork
+{
+	s32 field_0;
+    s8  unk_4[11];
+    s8  field_F;
+} s_MapWork;
+STATIC_ASSERT_SIZEOF(s_MapWork, 0x10);
+
+typedef struct
+{
+	s32 field_0;
+	s32 field_4;
+	s32 field_8;
+} s_StructUnk0;
+
+typedef struct
+{
+	s16 field_0;
+	s16 field_2;
+	s16 field_4;
+} s_StructUnk1;
+
 typedef struct _SysWork
 {
     s8              unk_0[8];
@@ -654,9 +676,7 @@ typedef struct _SysWork
     s32             timer_2C;
     s32             field_30;
     s8              unk_34[4];
-    s32             field_38; // Something related to map loading.
-    s8              unk_3C[11];
-    s8              field_47; // Something related to map loading.
+    s_MapWork       field_38; // Something related to map loading. Likely a struct as `func_8003CD6C` requires a struct and `GameFs_MapLoad` input it pointing here.
     s8              unk_48[3];
     u8              isPlayerInCombatMode_4B;
     s_MainCharacter player_4C;
@@ -677,7 +697,13 @@ typedef struct _SysWork
     s32             field_2353 : 8; // Some index into npcs_1A0
     s8              unk_2354[4];
     u8              field_2358;
-    s8              unk_2359[33];
+    s8              unk_2359[3];
+    GsCOORDINATE2*  field_235C;
+    s_StructUnk0    field_2360;
+    GsCOORDINATE2*  field_236C;
+    s_StructUnk1    field_2370;
+    s16             unk_2376;
+    s16             field_2378;
     s16             cameraAngleY_237A;
     s16             cameraAngleZ_237C;
     s16             field_237E;

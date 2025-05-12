@@ -52,8 +52,8 @@ void sharedFunc_800D20E4_0_s00()
     chara->field_3E |= 8;
     chara->flags_E0 = ((chara->flags_E0 & ~0xF00) | (1 << 10));
 
-    if (sysWork->field_47 < 32)
+    if (sysWork->field_38.field_F < 32)
     {
-        sysWork->field_47 = (sysWork->field_47 % 10);
+        sysWork->field_38.field_F = (sysWork->field_38.field_F % 10);
     }
 }

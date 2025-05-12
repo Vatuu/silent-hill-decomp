@@ -1125,7 +1125,7 @@ void GameFs_MapLoad(s32 mapIdx) // 0x8003521C
         func_8003CD6C(&g_SysWork.field_38);
     }
 
-    func_800546A8((u8)g_SysWork.field_47);
+    func_800546A8((u8)g_SysWork.field_38.field_F);
 }
 
 s32 func_8003528C(s32 idx0, s32 idx1)
@@ -1180,9 +1180,24 @@ s32 func_80035AB0(s32 arg0) // 0x80035AB0
     return g_GameWork.field_5B3 != arg0;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80035AC8);
+void func_80035AC8(s32 arg0) // 0x80035AC8
+{
+    g_GameWork.field_5B3 = arg0;
+    Sd_EngineCmd(D_800A98AC[arg0]);
+}
 
+#ifdef NON_MATCHING
+void func_80035B04(VECTOR3* arg0, SVECTOR* arg1, GsCOORDINATE2* arg2) // 0x80035B04
+{
+    arg2->flg = 0;
+    arg2->coord.t[0] = arg0->vx >> 4;
+    arg2->coord.t[1] = arg0->vy >> 4;
+    arg2->coord.t[2] = arg0->vz >> 4;
+    func_80096E78(&arg1, &arg2->coord);
+}
+#else
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80035B04);
+#endif
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80035B58);
 
@@ -1328,7 +1343,15 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80037C5C);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80037DC4);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80037E40);
+void func_80037E40(s_SubCharacter* arg0) // 0x80037E40
+{
+    if (arg0->field_C0 > 0)
+    {
+        arg0->field_3E |= 0x20;
+        return;
+    }
+    arg0->field_3E &= 0xFFDF;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80037E78);
 
@@ -2041,7 +2064,19 @@ s32 func_8003CD5C() // 0x8003CD5C
     return D_800BCE18.field_1BAC;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003CD6C);
+void func_8003CD6C(s_MapWork* arg0) // 0x8003CD6C
+{
+    s32 var_a0;
+    s8 temp_v0;
+
+    temp_v0 = arg0->field_F;
+    var_a0 = NO_VALUE;
+    if (temp_v0 != NO_VALUE)
+    {
+        var_a0 = temp_v0 + 0x80;
+    }
+    func_8003CDA0(var_a0);
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003CDA0);
 
@@ -2126,7 +2161,39 @@ void GameFs_FlameGfxLoad() // 0x8003E710
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003E740);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003EB54);
+/**
+Please investigate me!
+*/
+void func_8003EB54() // 0x8003EB54
+{
+    s_StructUnk0* temp_a0;
+    s_StructUnk1* temp_v0;
+    GsCOORDINATE2* temp_v1;
+
+    g_SysWork.field_2378 = 0x1000;
+	
+	
+    temp_v1 = &g_SysWork.playerBoneCoords_890[0];
+    temp_a0 = &g_SysWork.field_2360;
+	
+	
+    g_SysWork.field_235C = temp_v1;
+    g_SysWork.field_236C = temp_v1;
+    g_SysWork.field_2360.field_0 = 0;
+	
+	
+    temp_a0->field_4 = -0x333;
+    temp_a0->field_8 = -0x2000;
+	
+	
+    g_SysWork.field_2370.field_0 = 0x71;
+	
+	
+    temp_v0 = &g_SysWork.field_2370;
+    temp_v0->field_2 = 0;
+    temp_v0->field_4 = 0;
+}
+
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003EBA0);
 
@@ -2211,4 +2278,7 @@ void func_80040004(s_800BCE18* arg0) // 0x80040004
     D_800BCE18.field_1BD8 = &arg0->field_D2C;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80040014);
+void func_80040014() // 0x80040014
+{
+    func_80069860(g_SysWork.player_4C.chara_0.position_18.vx, g_SysWork.player_4C.chara_0.position_18.vz, D_800BCE18.field_1BD8);
+};
