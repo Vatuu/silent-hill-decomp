@@ -10,7 +10,7 @@ extern int StCdIntrFlag; // Not included in SDK docs/headers, but movie player s
 
 extern s32 D_800B5C30;
 
-extern u8  D_800A900C[];
+extern u8 D_800A900C[];
 
 typedef struct
 {
@@ -53,14 +53,14 @@ typedef struct
     u_long user;
 } CDSECTOR;
 
-#define RING_SIZE  23
+#define RING_SIZE 23
 #define MOVIE_WAIT 2000
-#define PPW        3 / 2
+#define PPW 3 / 2
 
 extern MOVIE_STR* m;
 extern s32        frame_cnt;
-extern DISPENV	  disp;
-extern s32 		  max_frame;
+extern DISPENV    disp;
+extern s32        max_frame;
 
 // Handlers for movie-related GameStates
 
