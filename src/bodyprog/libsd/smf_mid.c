@@ -294,6 +294,7 @@ void chanmessage(SMF* p, u8 status, u8 c1, u8 c2) // 0x800A7B54
         case 0x80:
             key_off(chan, c1, c2);
             break;
+
         case 0x90:
             if ((c2 & 0xFF) != 0)
             {
@@ -304,9 +305,11 @@ void chanmessage(SMF* p, u8 status, u8 c1, u8 c2) // 0x800A7B54
                 key_off(chan, c1, 0);
             }
             break;
+
         case 0xA0:
             key_press(chan, c1, c2);
             break;
+
         case 0xB0:
             if (c1 == 0x63)
             {
@@ -398,14 +401,18 @@ void chanmessage(SMF* p, u8 status, u8 c1, u8 c2) // 0x800A7B54
                     }
                 }
             }
+
             control_change(chan, c1, c2);
             break;
+
         case 0xE0:
             pitch_bend(chan, c1, c2);
             break;
+
         case 0xC0:
             program_change(chan, c1);
             break;
+
         case 0xD0:
             chan_press(chan, c1);
             break;

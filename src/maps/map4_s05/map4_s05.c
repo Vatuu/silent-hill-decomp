@@ -106,7 +106,7 @@ void func_800D1690(void) {}
 
 #include "maps/shared/sharedFunc_800D2EF4_0_s00.h" // 0x800D16E8
 
-INCLUDE_ASM("asm/maps/map4_s05/nonmatchings/map4_s05", AI_Floatstinger_Update); // 0x800D16FC
+INCLUDE_ASM("asm/maps/map4_s05/nonmatchings/map4_s05", Ai_Floatstinger_Update); // 0x800D16FC
 
 INCLUDE_ASM("asm/maps/map4_s05/nonmatchings/map4_s05", func_800D1790);
 

@@ -73,7 +73,7 @@ void func_800CD1A0(void) {}
 
 #include "maps/shared/sharedFunc_800D2EF4_0_s00.h" // 0x800CD1F8
 
-INCLUDE_ASM("asm/maps/map2_s01/nonmatchings/map2_s01", AI_Dahlia_Update); // 0x800CD20C
+INCLUDE_ASM("asm/maps/map2_s01/nonmatchings/map2_s01", Ai_Dahlia_Update); // 0x800CD20C
 
 INCLUDE_ASM("asm/maps/map2_s01/nonmatchings/map2_s01", func_800CD280);
 

@@ -429,9 +429,9 @@ typedef struct _ShSaveGame
     s32               eventFlags_190[4];        //
     s32               eventFlags_1A0;           //
     s32               eventFlags_1A4[12];       //----------------------------------------
-    s32               mapMarkingsFlags_1D4[2];  //----------------------------------------
-    s32               mapMarkingsFlags_1DC;     // These 3 are one `u32 mapMarkingsFlags[25];` (or maybe `u8 mapMarkingsFlags[100];`?) See Sparagas' `MapMarkingsFlags` struct for details of every bit.
-    s32               mapMarkingsFlags_1E0[22]; //----------------------------------------
+    s32               mapMarkingFlags_1D4[2];   //----------------------------------------
+    s32               mapMarkingFlags_1DC;      // These 3 are one `u32 mapMarkingFlags[25];` (or maybe `u8 mapMarkingFlags[100];`?) See Sparagas' `MapMarkingsFlags` struct for details of every bit.
+    s32               mapMarkingFlags_1E0[22];  //----------------------------------------
     s32               field_238;
     s16               pickedUpItemCount_23C;
     s8                field_23E;
@@ -585,7 +585,7 @@ typedef struct _SubCharacter
 {
     s_Model model_0;
     VECTOR3 position_18;       /** `Q19.12` */
-    SVECTOR rotation_24;       // maybe `SVECTOR3` instead of `SVECTOR` because 4rd field is a copy of the `.xy` field.
+    SVECTOR rotation_24;       // Maybe `SVECTOR3` instead of `SVECTOR` because 4th field is copy of `.xy` field.
     SVECTOR rotationSpeed_2C;  /** Range [-0x700, 0x700]. */
     s32     field_34;
     s32     moveSpeed_38;
@@ -653,7 +653,7 @@ typedef struct _MapWork
     s8  unk_4[11];
     s8  field_F;
 } s_MapWork;
-STATIC_ASSERT_SIZEOF(s_MapWork, 0x10);
+STATIC_ASSERT_SIZEOF(s_MapWork, 16);
 
 typedef struct
 {
@@ -684,7 +684,7 @@ typedef struct _SysWork
     s32             timer_2C;
     s32             field_30;
     s8              unk_34[4];
-    s_MapWork       field_38; // Something related to map loading. Likely a struct as `func_8003CD6C` requires a struct and `GameFs_MapLoad` input it pointing here.
+    s_MapWork       field_38; // Something related to map loading. Likely a struct as `func_8003CD6C` requires one and `GameFs_MapLoad` input is pointing here.
     s8              unk_48[3];
     u8              isPlayerInCombatMode_4B;
     s_MainCharacter player_4C;
@@ -709,7 +709,7 @@ typedef struct _SysWork
     s32             field_2350_0 : 4;
     s32             field_2350_4 : 4;
     s32             field_2351 : 16;
-    s32             field_2353 : 8; // Some index into npcs_1A0
+    s32             field_2353 : 8; // Some index into `npcs_1A0`.
     s8              unk_2354[4];
     u8              field_2358;
     s8              unk_2359[3];

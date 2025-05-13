@@ -318,11 +318,11 @@ void vcSetAllNpcDeadTimer() // 0x8008123C
 
 s32 vcRetSmoothCamMvF(VECTOR3* old_pos, VECTOR3* now_pos, SVECTOR* old_ang, SVECTOR* now_ang) // 0x800812CC
 {
-    #define MOVEMENT_MAX_METER 0.2f
-    #define ROT_X_MAX_ANGLE 20.0f
-    #define ROT_Y_MAX_ANGLE 30.0f
-    #define INTRPT_MIN_TIME 1.0f
-    #define INTRPT_MAX_TIME 4.0f
+    #define MOVEMENT_METER_MAX 0.2f
+    #define ROT_X_ANGLE_MAX    20.0f
+    #define ROT_Y_ANGLE_MAX    30.0f
+    #define INTRPT_TIME_MIN    1.0f
+    #define INTRPT_TIME_MAX    4.0f
 
     s32 intrpt; // Interpolation time (i.e. alpha)?
     s32 mv_vec;
@@ -330,20 +330,20 @@ s32 vcRetSmoothCamMvF(VECTOR3* old_pos, VECTOR3* now_pos, SVECTOR* old_ang, SVEC
     s32 rot_y;
 
     intrpt = FP_TO(g_DeltaTime0, Q12_SHIFT) / FP_FLOAT_TO(1.0f / TICKS_PER_SECOND, Q12_SHIFT);
-    intrpt = CLAMP(intrpt, FP_FLOAT_TO(INTRPT_MIN_TIME, Q12_SHIFT), FP_FLOAT_TO(INTRPT_MAX_TIME, Q12_SHIFT));
+    intrpt = CLAMP(intrpt, FP_FLOAT_TO(INTRPT_TIME_MIN, Q12_SHIFT), FP_FLOAT_TO(INTRPT_TIME_MAX, Q12_SHIFT));
 
     mv_vec = Math_VectorMagnitude(FP_FROM(now_pos->vx - old_pos->vx, Q4_SHIFT),
                                   FP_FROM(now_pos->vy - old_pos->vy, Q4_SHIFT),
                                   FP_FROM(now_pos->vz - old_pos->vz, Q4_SHIFT));
 
     mv_vec = FP_TO(mv_vec, Q12_SHIFT) / intrpt;
-    if (mv_vec > FP_METER(MOVEMENT_MAX_METER))
+    if (mv_vec > FP_METER(MOVEMENT_METER_MAX))
     {
         return 0;
     }
 
     rot_x = FP_TO(((now_ang->vx - old_ang->vx) >= 0) ? (now_ang->vx - old_ang->vx) : (old_ang->vx - now_ang->vx), Q12_SHIFT) / intrpt;
-    if (rot_x > FP_ANGLE(ROT_X_MAX_ANGLE))
+    if (rot_x > FP_ANGLE(ROT_X_ANGLE_MAX))
     {
         return 0;
     }
@@ -355,7 +355,7 @@ s32 vcRetSmoothCamMvF(VECTOR3* old_pos, VECTOR3* now_pos, SVECTOR* old_ang, SVEC
     rot_x = ((now_ang->vx - old_ang->vx) >= 0) ? now_ang->vx : old_ang->vx;
 
     rot_y = FP_MULTIPLY(rot_y, shRcos(now_ang->vx), Q12_SHIFT);
-    return rot_y <= FP_ANGLE(ROT_Y_MAX_ANGLE);
+    return rot_y <= FP_ANGLE(ROT_Y_ANGLE_MAX);
 }
 
 VC_CAM_MV_TYPE vcRetCurCamMvType(VC_WORK* w_p) // 0x80081428
@@ -408,8 +408,8 @@ s32 func_8008150C(s32 posX, s32 posZ)
             {
                 return 1;
             }
-
             break;
+
         case 3:
             if ((posX + FP_METER(3680.0f)) > (u32)FP_METER(464.0f))
             {
@@ -423,7 +423,6 @@ s32 func_8008150C(s32 posX, s32 posZ)
             {
                 return 1;
             }
-
             break;
     }
 
@@ -783,8 +782,8 @@ void vcSetTHROUGH_DOOR_CAM_PARAM_in_VC_WORK(VC_WORK* w_p, enum _THROUGH_DOOR_SET
 
 void vcSetNearestEnemyDataInVC_WORK(VC_WORK* w_p) // 0x80081D90
 {
-    #define ENEMY_MAX_DEAD_TIMER 1.5f
-    #define ENEMY_MAX_DISTANCE 240.0f
+    #define ENEMY_DEAD_TIMER_MAX 1.5f
+    #define ENEMY_METERS_MAX     240.0f
 
     s32             set_active_data_f;
     s32             xz_dist;
@@ -793,32 +792,32 @@ void vcSetNearestEnemyDataInVC_WORK(VC_WORK* w_p) // 0x80081D90
     s_SubCharacter* sc_p            = NULL;
     s_SubCharacter* all_min_sc_p    = NULL;
     s_SubCharacter* active_min_sc_p = NULL;
-    s32             all_min_dist    = FP_METER(ENEMY_MAX_DISTANCE);
-    s32             active_min_dist = FP_METER(ENEMY_MAX_DISTANCE);
+    s32             all_min_dist    = FP_METER(ENEMY_METERS_MAX);
+    s32             active_min_dist = FP_METER(ENEMY_METERS_MAX);
 
-    if (g_SysWork.flags_22A4 & (1 << 5)) // sh2jms->player.battle(ShBattleInfo).status & 0x10 in SH2
+    if (g_SysWork.flags_22A4 & (1 << 5)) // `sh2jms->player.battle(ShBattleInfo).status & 0x10` in SH2.
     {
         w_p->nearest_enemy_p_2DC       = NULL;
-        w_p->nearest_enemy_xz_dist_2E0 = FP_METER(ENEMY_MAX_DISTANCE);
+        w_p->nearest_enemy_xz_dist_2E0 = FP_METER(ENEMY_METERS_MAX);
         return;
     }
 
     for (sc_p = &g_SysWork.npcs_1A0[0]; sc_p < &g_SysWork.npcs_1A0[NPC_COUNT_MAX]; sc_p++)
     {
-        if ((((u8)sc_p->model_0.charaId_0 - 2) < 0x17U) &&
-            (sc_p->dead_timer_C4 <= FP_FLOAT_TO(ENEMY_MAX_DEAD_TIMER, Q12_SHIFT) || sc_p->health_B0 >= 0) &&
-            !(sc_p->field_3E & (1 << 4))) // sc_p->battle(ShBattleInfo).status & 0x20 in SH2
+        if ((((u8)sc_p->model_0.charaId_0 - 2) < 0x17u) &&
+            (sc_p->dead_timer_C4 <= FP_FLOAT_TO(ENEMY_DEAD_TIMER_MAX, Q12_SHIFT) || sc_p->health_B0 >= 0) &&
+            !(sc_p->field_3E & (1 << 4))) // `sc_p->battle(ShBattleInfo).status & 0x20` in SH2.
         {
             ofs_x = sc_p->position_18.vx - w_p->chara_pos_114.vx;
             ofs_z = sc_p->position_18.vz - w_p->chara_pos_114.vz;
 
-            if (abs(ofs_x) >= FP_METER(ENEMY_MAX_DISTANCE) || abs(ofs_z) >= FP_METER(ENEMY_MAX_DISTANCE))
+            if (abs(ofs_x) >= FP_METER(ENEMY_METERS_MAX) || abs(ofs_z) >= FP_METER(ENEMY_METERS_MAX))
             {
                 continue;
             }
 
             xz_dist = Math_VectorMagnitude(ofs_x, 0, ofs_z);
-            ratan2(ofs_x, ofs_z); // result unused?
+            ratan2(ofs_x, ofs_z); // Result unused?
 
             if (xz_dist < all_min_dist)
             {
@@ -831,7 +830,7 @@ void vcSetNearestEnemyDataInVC_WORK(VC_WORK* w_p) // 0x80081D90
                 (set_active_data_f = 1, (sc_p->model_0.charaId_0 < Chara_Stalker)))
             {
                 set_active_data_f = 1;
-                if (sc_p->field_3E & (1 << 1)) // sc_p->battle(ShBattleInfo).status & 4 in SH2
+                if (sc_p->field_3E & (1 << 1)) // `sc_p->battle(ShBattleInfo).status & (1 << 2)` in SH2.
                 {
                     set_active_data_f = 0;
                     if (sc_p == &g_SysWork.npcs_1A0[g_SysWork.field_2353])

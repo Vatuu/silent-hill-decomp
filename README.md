@@ -136,7 +136,7 @@ Progress bars powered by [decomp.dev](https://decomp.dev)
         </tr>
         <tr>
             <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?unit=maps/map0_s00/map0_s00"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&color=%23003cc7&measure=fuzzy_match&unit=maps/map0_s00/map0_s00"/></a></td>
-            <td colspan=2>Nightmare intro sequence in the Old Silent Hill.</td>
+            <td colspan=2>Nightmare intro sequence in Old Silent Hill.</td>
         </tr>
         <tr>
             <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?unit=maps/map0_s01/map0_s01"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&color=%23003cc7&measure=fuzzy_match&unit=maps/map0_s01/map0_s01"/></a></td>
@@ -222,7 +222,7 @@ Progress bars powered by [decomp.dev](https://decomp.dev)
         </tr>
         <tr>
             <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?unit=maps/map3_s01/map3_s01"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&measure=fuzzy_match&unit=maps/map3_s01/map3_s01"/></a></td>
-            <td colspan=2>Hospital 1st and basement floors, after meeting with Kaufmann.</td>
+            <td colspan=2>Hospital 1st and basement floors after meeting with Kaufmann.</td>
         </tr>
         <tr>
             <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?unit=maps/map3_s02/map3_s02"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&measure=fuzzy_match&unit=maps/map3_s02/map3_s02"/></a></td>
