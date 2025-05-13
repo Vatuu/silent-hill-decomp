@@ -317,6 +317,8 @@ Demo_ControllerDataUpdate = 0x8008F7CC; // type:func
 Demo_PresentIntervalUpdate = 0x8008F87C; // type:func
 Demo_GameRandSeedSet = 0x8008F8A8; // type:func
 
+GameFs_StfRollBinLoad = 0x80091778; // type:func
+
 // Custom Konami rotation matrix library?
 // TODO: identify the other RotMatrix funcs here
 shRsin = 0x8009687C; // type:func

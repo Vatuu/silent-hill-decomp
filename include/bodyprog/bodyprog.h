@@ -13,6 +13,7 @@
 #define IMAGE_BUFFER_0 ((u_long*)0x801CFA00)
 #define IMAGE_BUFFER_1 ((u_long*)0x801C8200)
 #define IMAGE_BUFFER_2 ((u_long*)0x801ABE00)
+#define FONT24_BUFFER ((u_long*)0x801F5600) // Loaded by `GameFs_StfRollBinLoad`.
 
 #define CD_ADDR_0 0x801E2600
 
@@ -598,6 +599,8 @@ extern s_FsImageDesc D_800A904C;
 extern s_FsImageDesc D_800A9054;
 
 extern s_FsImageDesc D_800A906C;
+
+extern s_FsImageDesc D_800A909C; // Passed to `func_800917C0` for loading FONT24.TIM.
 
 /** Array containg file IDs used for each `e_ShCharacterId`, used in `Fs_QueueStartReadAnm`. */
 extern s_CharaFileInfo g_Chara_FileInfo[45]; // 0x800A90FC
@@ -1190,6 +1193,8 @@ void SysState_Fmv_Update();
 
 void func_8003B550();
 
+s32 func_8003BD2C();
+
 /** Unknown bodyprog func. Called by `Fs_QueueDoThingWhenEmpty`. */
 s32 func_8003C850();
 
@@ -1590,6 +1595,8 @@ s32 func_8008F914();
 void func_8009185C(s16 arg0, s16 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8, s32 arg9);
 
 void func_80091380();
+
+void func_800917C0(void*, s32, s_FsImageDesc*);
 
 // TODO: Arrange these in address order for better insight into the original interface. -- Sezz
 // ------------------------------------------------------------------

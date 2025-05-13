@@ -2037,7 +2037,16 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800914C4);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8009151C);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80091778);
+void GameFs_StfRollBinLoad() // 0x80091778
+{
+    if (D_800A909C.tPage != 0)
+    {
+    }
+
+    Fs_QueueStartRead(FILE_VIN_STF_ROLL_BIN, FS_BUFFER_1);
+
+    func_800917C0(FONT24_BUFFER, 1, &D_800A909C);
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800917C0);
 
