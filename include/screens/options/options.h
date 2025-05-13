@@ -3,6 +3,32 @@
 
 #include "common.h"
 
+typedef enum _BindingMenu
+{
+    BindingMenu_Exit = 0,
+    BindingMenu_Type_1,
+    BindingMenu_Type_2,
+    BindingMenu_Type_3
+} e_BindingMenu;
+
+typedef enum _BindingAction
+{
+    BindingAction_Enter = 0,
+    BindingAction_Cancel,
+    BindingAction_Skip,
+    BindingAction_Action,
+    BindingAction_Aim,
+    BindingAction_Light,
+    BindingAction_Run,
+    BindingAction_View,
+    BindingAction_Step_L,
+    BindingAction_Step_R,
+    BindingAction_Pause,
+    BindingAction_Item,
+    BindingAction_Map,
+    BindingAction_Option
+} e_BindingAction;
+
 typedef struct _LineVectors
 {
     DVECTOR field_0;
@@ -24,6 +50,12 @@ typedef struct _ArrowVectors
     DVECTOR field_8;
 } s_ArrowVectors;
 
+typedef struct
+{
+    e_BindingMenu   field_0;
+    e_BindingAction field_4;
+} s_801E73DC;
+
 extern s32 D_801E72F4;
 
 extern s32 D_801E72F8;
@@ -31,6 +63,10 @@ extern s32 D_801E72F8;
 extern s32 D_801E72FC;
 
 extern s32 D_801E7300;
+
+extern s32 D_801E7304;
+
+extern s32 D_801E7308;
 
 extern DR_MODE D_801E730C[];
 
@@ -55,6 +91,14 @@ extern DVECTOR D_801E73C8;
 extern DVECTOR D_801E73CC;
 
 extern DVECTOR D_801E73D0;
+
+extern s32 D_801E73D4;
+
+extern s16 D_801E73D8;
+
+extern s_801E73DC D_801E73DC;
+
+extern s16 D_801E73DA;
 
 extern s32 D_801E73E4;
 
