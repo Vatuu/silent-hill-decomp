@@ -87,9 +87,9 @@ INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800CD9F4);
 
 INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800CDA44);
 
-INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800CDA88);
+INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", sharedFunc_800CDA88_3_s03);
 
-INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800CDAB8);
+#include "maps/shared/sharedFunc_800CDAB8_3_s03.h" // 0x800CDAB8
 
 INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800CDB5C);
 
@@ -99,7 +99,7 @@ INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", Ai_PuppetDoctor_Update); 
 
 INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800CDDE8);
 
-INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800CDF24);
+INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", sharedFunc_800CDF24_3_s03);
 
 INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800CE0E4);
 
@@ -143,17 +143,17 @@ INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800CFDD4);
 
 INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800D0110);
 
-INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800D01D0);
+INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", sharedFunc_800D01D0_3_s03);
 
-INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800D02E4);
+INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", sharedFunc_800D02E4_3_s03);
 
-INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800D03E4);
+INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", sharedFunc_800D03E4_3_s03);
 
-INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800D06AC);
+INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", sharedFunc_800D06AC_3_s03);
 
 INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800D0828);
 
-INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800D0968);
+INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", sharedFunc_800D0968_3_s03);
 
 INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", Ai_Bloodsucker_Update); // 0x800D09C4
 

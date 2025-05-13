@@ -88,9 +88,9 @@ INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D19E8);
 
 INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D1A38);
 
-INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D1A7C);
+INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", sharedFunc_800CDA88_3_s03); // 0x800D1A7C
 
-INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D1AAC);
+#include "maps/shared/sharedFunc_800CDAB8_3_s03.h" // 0x800D1AAC
 
 INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D1B50);
 
@@ -100,7 +100,7 @@ INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", Ai_PuppetDoctor_Update); 
 
 INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D1DDC);
 
-INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D1F18);
+INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", sharedFunc_800CDF24_3_s03); // 0x800D1F18
 
 INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D20D8);
 
@@ -144,17 +144,17 @@ INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D3DC8);
 
 INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D4104);
 
-INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D41C4);
+INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", sharedFunc_800D01D0_3_s03); // 0x800D41C4
 
-INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D42D8);
+INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", sharedFunc_800D02E4_3_s03); // 0x800D42D8
 
-INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D43D8);
+INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", sharedFunc_800D03E4_3_s03); // 0x800D43D8
 
-INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D46A0);
+INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", sharedFunc_800D06AC_3_s03); // 0x800D46A0
 
 INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D481C);
 
-INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D495C);
+INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", sharedFunc_800D0968_3_s03); // 0x800D495C
 
 INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", Ai_GhostChildAlessa_Update); // 0x800D49B8
 

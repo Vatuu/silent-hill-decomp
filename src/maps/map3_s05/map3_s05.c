@@ -116,9 +116,9 @@ INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", func_800D2464);
 
 INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", func_800D24B4);
 
-INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", func_800D24F8);
+INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", sharedFunc_800CDA88_3_s03); // 0x800D24F8
 
-INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", func_800D2528);
+#include "maps/shared/sharedFunc_800CDAB8_3_s03.h" // 0x800D2528
 
 INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", func_800D25CC);
 
@@ -128,7 +128,7 @@ INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", Ai_PuppetDoctor_Update); 
 
 INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", func_800D2858);
 
-INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", func_800D2994);
+INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", sharedFunc_800CDF24_3_s03); // 0x800D2994
 
 INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", func_800D2B54);
 
@@ -172,17 +172,17 @@ INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", func_800D4844);
 
 INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", func_800D4B80);
 
-INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", func_800D4C40);
+INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", sharedFunc_800D01D0_3_s03); // 0x800D4C40
 
-INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", func_800D4D54);
+INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", sharedFunc_800D02E4_3_s03); // 0x800D4D54
 
-INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", func_800D4E54);
+INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", sharedFunc_800D03E4_3_s03); // 0x800D4E54
 
-INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", func_800D511C);
+INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", sharedFunc_800D06AC_3_s03); // 0x800D511C
 
 INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", func_800D5298);
 
-INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", func_800D53D8);
+INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", sharedFunc_800D0968_3_s03); // 0x800D53D8
 
 #include "maps/shared/sharedFunc_800D929C_0_s00.h" // 0x800D5434
 
