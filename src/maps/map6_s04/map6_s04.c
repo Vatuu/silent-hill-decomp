@@ -233,7 +233,7 @@ INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04", func_800DDFEC);
 
 INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04", Ai_Flauros_Update); // 0x800DE0C4
 
-INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04", Ai_IntensiveCareUnit_Update); // 0x800DE1CC
+INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04", Ai_Parasite_Update); // 0x800DE1CC
 
 void func_800DE26C(void) {}
 
