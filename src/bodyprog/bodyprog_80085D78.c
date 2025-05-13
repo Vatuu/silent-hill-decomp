@@ -2044,7 +2044,6 @@ void GameFs_StfRollBinLoad() // 0x80091778
     }
 
     Fs_QueueStartRead(FILE_VIN_STF_ROLL_BIN, FS_BUFFER_1);
-
     func_800917C0(FONT24_BUFFER, 1, &D_800A909C);
 }
 

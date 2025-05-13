@@ -11,7 +11,7 @@ void sharedFunc_800D6554_0_s00(s_SubCharacter* chara)
 
     someRotY = func_8005BF38((s16)(ratan2(g_SysWork.player_4C.chara_0.position_18.vx - chara->position_18.vx,
                                           g_SysWork.player_4C.chara_0.position_18.vz - chara->position_18.vz) -
-                                   chara->rotation_24.vy));
+                             chara->rotation_24.vy));
 
     if ((g_SysWork.field_24DC & 0x3) == 0)
     {

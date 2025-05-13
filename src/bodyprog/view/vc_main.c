@@ -408,8 +408,8 @@ s32 func_8008150C(s32 posX, s32 posZ)
             {
                 return 1;
             }
-
             break;
+
         case 3:
             if ((posX + FP_METER(3680.0f)) > (u32)FP_METER(464.0f))
             {
@@ -423,7 +423,6 @@ s32 func_8008150C(s32 posX, s32 posZ)
             {
                 return 1;
             }
-
             break;
     }
 

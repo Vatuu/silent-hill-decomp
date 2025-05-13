@@ -38,7 +38,7 @@ void sharedFunc_800D5098_0_s00(s_SubCharacter* chara)
         {
             temp_3    = func_8005BF38((ratan2(g_SysWork.player_4C.chara_0.position_18.vx - chara->position_18.vx,
                                               g_SysWork.player_4C.chara_0.position_18.vz - chara->position_18.vz) -
-                                    chara->rotation_24.vy));
+                                      chara->rotation_24.vy));
             temp_v1_2 = ((g_DeltaTime0 / 3) >> 3) + 1;
 
             if ((temp_3 >= 0 && temp_v1_2 < temp_3) || (temp_3 < 0 && temp_v1_2 < -temp_3))
@@ -104,7 +104,7 @@ void sharedFunc_800D5098_0_s00(s_SubCharacter* chara)
                 return;
             }
 
-            // TODO: this code is duplicated in the block below, can it be shared somehow?
+            // TODO: This code is duplicated in block below, can it be shared somehow?
             if (chara->moveSpeed_38 > 0)
             {
                 newMoveSpeed1 = chara->moveSpeed_38 - FP_MULTIPLY_FLOAT((s64)g_DeltaTime0, 6.0f, Q12_SHIFT);
