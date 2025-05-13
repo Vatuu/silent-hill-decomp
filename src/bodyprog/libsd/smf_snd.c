@@ -1054,7 +1054,7 @@ s32 SdVoKeyOn(s32 vab_pro, s32 pitch, u16 voll, u16 volr) // 0x800A0AA0
     {
         if (sd_vh->vab_prog[pc].tones != 0)
         {
-            c += 1;
+            c++;
         }
     }
 
@@ -1062,7 +1062,7 @@ s32 SdVoKeyOn(s32 vab_pro, s32 pitch, u16 voll, u16 volr) // 0x800A0AA0
 
     for (tone = 0; tone < sd_vab_prog->tones; tone++)
     {
-        sd_vag_atr = &sd_vh->vag_atr[(c * 0x10) + tone];
+        sd_vag_atr = &sd_vh->vag_atr[(c * 16) + tone];
 
         if (sd_vag_atr->vag == 0 || sd_vag_atr->min > note || sd_vag_atr->max < note)
         {
@@ -1080,7 +1080,7 @@ s32 SdVoKeyOn(s32 vab_pro, s32 pitch, u16 voll, u16 volr) // 0x800A0AA0
             }
         }
 
-        voice = vc << 0x10;
+        voice = vc << 16;
         if (vc == -1)
         {
             vc = 0;
@@ -1094,12 +1094,12 @@ s32 SdVoKeyOn(s32 vab_pro, s32 pitch, u16 voll, u16 volr) // 0x800A0AA0
                 }
             }
 
-            voice = vc << 0x10;
+            voice = vc << 16;
         }
 
         if (vc != -1)
         {
-            vc = SdUtKeyOnV((voice >> 0x10), vabid, prog, tone, note, pitch & 0xFF, voll, volr);
+            vc = SdUtKeyOnV((voice >> 16), vabid, prog, tone, note, pitch & 0xFF, voll, volr);
         }
     }
 
@@ -1157,7 +1157,7 @@ void SdVoKeyOffWithRROff(s32 vab_pro, s32 pitch) // 0x800A0E40
         // Of the lower 16 bits of pitch, the upper 8 bits specify a key number in MIDI standard.
         // To specify a finer pitch, specify a key number in the lower 8 bits of pitch in 1/128 semitones.
         if (smf_port[i].stat_16 != 0 &&
-            smf_port[i].midi_ch_3 == 0x20 &&
+            smf_port[i].midi_ch_3 == 32 &&
             smf_port[i].note_6 == (pitch >> 8) &&
             smf_port[i].vab_id_52 == (vab_pro >> 8) &&
             smf_port[i].prog_2 == (vab_pro & 0x7F))
@@ -1215,12 +1215,12 @@ s16 SdUtKeyOn(s16 vabid, s16 prog, s16 tone, s16 note, s16 fine, s16 voll, s16 v
             }
         }
 
-        voice = vc << 0x10;
+        voice = vc << 16;
     }
 
     if (vc != -1)
     {
-        vc = SdUtKeyOnV((voice >> 0x10), vabid, prog, tone, note, fine, voll, volr);
+        vc = SdUtKeyOnV((voice >> 16), vabid, prog, tone, note, fine, voll, volr);
     }
 
     sd_int_flag = 0;
@@ -1332,7 +1332,7 @@ s32 SdUtKeyOffVWithRROff(s16 vo) // 0x800A1A18
     u32 port;
 
     sd_int_flag = 1;
-    if (smf_port[vo].stat_16 != 0 && smf_port[vo].midi_ch_3 == 0x20)
+    if (smf_port[vo].stat_16 != 0 && smf_port[vo].midi_ch_3 == 32)
     {
         port = spu_ch_tbl[vo];
 
@@ -1444,42 +1444,42 @@ void SdSetSeqWide(s16 seq_access_num, u16 seq_wide) // 0x800A1E18
 
 u8 SdGetMidiVol(s16 seq_access_num, s16 midi_ch) // 0x800A1E50
 {
-    return smf_midi[midi_ch + (seq_access_num * 0x10)].mvol_3;
+    return smf_midi[midi_ch + (seq_access_num * 16)].mvol_3;
 }
 
 void SdSetMidiVol(s16 seq_access_num, s16 midi_ch, s32 vol) // 0x800A1E90
 {
-    control_change(midi_ch + (seq_access_num * 0x10), 7, vol & 0x7F);
+    control_change(midi_ch + (seq_access_num * 16), 7, vol & 0x7F);
 }
 
 void SdSetMidiExpress(s16 seq_access_num, s16 midi_ch, s32 expression) // 0x800A1EC4
 {
-    control_change(midi_ch + (seq_access_num * 0x10), 11, expression & 0x7F);
+    control_change(midi_ch + (seq_access_num * 16), 11, expression & 0x7F);
 }
 
 u8 SdGetMidiExpress(s16 seq_access_num, s16 midi_ch) // 0x800A1EF8
 {
-    return smf_midi[midi_ch + (seq_access_num * 0x10)].express_5;
+    return smf_midi[midi_ch + (seq_access_num * 16)].express_5;
 }
 
 u8 SdGetMidiPan(s16 seq_access_num, s16 midi_ch) // 0x800A1F38
 {
-    return smf_midi[midi_ch + (seq_access_num * 0x10)].pan_1;
+    return smf_midi[midi_ch + (seq_access_num * 16)].pan_1;
 }
 
 void SdSetMidiPan(s16 seq_access_num, s16 midi_ch, s32 pan) // 0x800A1F78
 {
-    control_change(midi_ch + (seq_access_num * 0x10), 10, pan & 0x7F);
+    control_change(midi_ch + (seq_access_num * 16), 10, pan & 0x7F);
 }
 
 u8 SdGetMidiPitchBendFine(s16 seq_access_num, s16 midi_ch) // 0x800A1FAC
 {
-    return smf_midi[midi_ch + (seq_access_num * 0x10)].pbend_7;
+    return smf_midi[midi_ch + (seq_access_num * 16)].pbend_7;
 }
 
 s32 SdSetMidiPitchBendFine(s16 seq_access_num, s16 midi_ch, u8 pitchBendFine) // 0x800A1FEC
 {
-    smf_midi[midi_ch + (seq_access_num * 0x10)].pbend_7 = pitchBendFine & 0x7F;
+    smf_midi[midi_ch + (seq_access_num * 16)].pbend_7 = pitchBendFine & 0x7F;
     return 0;
 }
 
