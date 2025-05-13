@@ -84,7 +84,79 @@ void sd_alloc_sort() // 0x8009EEBC
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_snd", SdSpuMalloc);
+s32 SdSpuMalloc(s32 size)
+{
+    s32 i;
+    s32 bytesToNextAlloc;
+    u32 addr;
+
+    addr = 0x1010;
+
+    if (sd_spu_alloc[0].addr_0 == 0)
+    {
+        if (addr + size < 0x80000 - sd_reverb_area_size[sd_reverb_mode])
+        {
+            sd_spu_alloc[0].addr_0 = addr;
+            sd_spu_alloc[0].size_4 = size;
+
+            sd_alloc_sort();
+            return addr;
+        }
+
+        return -1;
+    }
+
+    for (i = 0; i < 0x10; i++)
+    {
+        if (sd_spu_alloc[i].size_4 == 0)
+        {
+            if (addr + size < 0x80000 - sd_reverb_area_size[sd_reverb_mode])
+            {
+                sd_spu_alloc[i].addr_0 = addr;
+                sd_spu_alloc[i].size_4 = size;
+                sd_alloc_sort();
+                return addr;
+            }
+
+            return -1U;
+        }
+
+        if (sd_spu_alloc[i + 1].size_4 != 0)
+        {
+            bytesToNextAlloc = sd_spu_alloc[i + 1].addr_0 - (addr + sd_spu_alloc[i].size_4);
+
+            // If there's enough free space between this block and the next alloc to fit `size` bytes, allocate new block in that gap.
+            if (bytesToNextAlloc >= size)
+            {
+                bytesToNextAlloc = sd_spu_alloc[i].size_4; // Not sure why it replaces the var here...
+
+                for (; i < 0x10; i++)
+                {
+                    if (sd_spu_alloc[i].size_4 != 0)
+                    {
+                        continue;
+                    }
+                    sd_spu_alloc[i].addr_0 = addr + bytesToNextAlloc; // Set addr to end of this alloc (blockStart + blockSize)
+                    sd_spu_alloc[i].size_4 = size;
+                    break;
+                }
+
+                if (i != 0x10)
+                {
+                    sd_alloc_sort();
+                    return addr;
+                }
+
+                return -1U;
+            }
+        }
+
+        addr = sd_spu_alloc[i].addr_0 + sd_spu_alloc[i].size_4;
+    }
+
+    sd_alloc_sort();
+    return addr;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_snd", SdSpuMallocWithStartAddr);
 
