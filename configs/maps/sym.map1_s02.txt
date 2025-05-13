@@ -19,6 +19,7 @@ sharedFunc_800D2EF4_0_s00 = 0x800D2934; // type:func
 AI_Stalker_Update = 0x800D2948; // type:func
 sharedFunc_800D5098_0_s00 = 0x800D4C78; // type:func
 sharedFunc_800D63D0_0_s00 = 0x800D5FB0; // type:func
+sharedFunc_800D6554_0_s00 = 0x800D6134; // type:func
 sharedFunc_800D670C_0_s00 = 0x800D62EC; // type:func
 sharedFunc_800D67FC_0_s00 = 0x800D63DC; // type:func
 sharedFunc_800D7E04_0_s00 = 0x800D79E4; // type:func

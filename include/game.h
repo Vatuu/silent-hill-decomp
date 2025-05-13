@@ -24,6 +24,13 @@
 #define SCREEN_POSITION_Y(percent) \
     (s32)((SCREEN_HEIGHT) * ((percent) / 100.0f))
 
+/** @brief Accessors for low & high parts of each character property, returns a pointer which can be read or written to. */
+#define GET_PROPERTY_LOW(prop) \
+    ((u16*)&(prop))
+
+#define GET_PROPERTY_HIGH(prop) \
+    ((u16*)&(prop) + 1)
+
 /** @brief Color IDs used by strings displayed on the screen. */
 typedef enum _ColorId
 {

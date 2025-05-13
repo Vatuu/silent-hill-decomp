@@ -1642,6 +1642,10 @@ void func_8006BDDC(s_func_8006BDDC* arg0, s16 arg1, s16 arg2);
 
 s32 func_8006CC44(s32 arg0, s32 arg1, s_func_8006CC44* arg2);
 
+s32 func_8006FD90(s_SubCharacter*, s32, s32, s32);
+
+s32 func_80070360(s_SubCharacter*, s32, s32);
+
 void func_80074254(s32 arg0, s32 arg1); // `arg1` is pointer?
 
 void Gfx_ClearRectInterlaced(s16 x, s16 y, s16 w, s16 h, u8 r, u8 g, u8 b);

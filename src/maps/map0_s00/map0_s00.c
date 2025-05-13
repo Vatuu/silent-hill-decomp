@@ -145,9 +145,8 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D5FCC);
 
 void func_800D654C() {}
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D6554);
+#include "maps/shared/sharedFunc_800D6554_0_s00.h" // 0x800D6554
 
-// NPC func?
 #include "maps/shared/sharedFunc_800D670C_0_s00.h" // 0x800D670C
 
 #include "maps/shared/sharedFunc_800D67FC_0_s00.h" // 0x800D67FC
