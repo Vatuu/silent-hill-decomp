@@ -81,7 +81,7 @@ void GameState_OptionScreen_Update() // 0x801E2D44
                     break;
             }
 
-            D_801E73E8                      = g_GameWork.config_0.optExtraOptionsEnabled_27 != 0 ? 8 : 6;
+            D_801E73E8                      = (g_GameWork.config_0.optExtraOptionsEnabled_27 != 0) ? 8 : 6;
             g_GameWork.gameStateStep_598[0] = 1;
             g_SysWork.timer_20              = 0;
             g_GameWork.gameStateStep_598[1] = 0;
@@ -177,7 +177,7 @@ void GameState_OptionScreen_Update() // 0x801E2D44
         case 13:
             if ((D_800BCD0C & 0x7) == 0x5)
             {
-                g_GameWork.gameStateStep_598[0] = 0xE;
+                g_GameWork.gameStateStep_598[0] = 14;
                 g_SysWork.timer_20              = 0;
                 D_800BCD0C                      = 7;
                 g_GameWork.gameStateStep_598[1] = 0;
@@ -227,7 +227,7 @@ void Settings_ExtraScreen() // 0x801E318C
     Gfx_VignetteDraw();
     Gfx_BackgroundSpriteDraw(&D_800A902C);
 
-    if (g_GameWork.gameStateStep_598[0] != 0xE)
+    if (g_GameWork.gameStateStep_598[0] != 14)
     {
         return;
     }
@@ -380,7 +380,7 @@ void Settings_ExtraScreen() // 0x801E318C
     }
 
     if ((g_ControllerPtr0->btns_new_10 & (g_GameWorkPtr1->config_0.controllerBinds_0.cancel | (Pad_L2 | Pad_R2 | Pad_L1 | Pad_R1))) &&
-        g_GameWork.gameStateStep_598[0] != 0xF)
+        g_GameWork.gameStateStep_598[0] != 15)
     {
         if (g_ControllerPtr0->btns_new_10 & g_GameWorkPtr1->config_0.controllerBinds_0.cancel)
         {
@@ -392,7 +392,7 @@ void Settings_ExtraScreen() // 0x801E318C
         }
 
         D_800BCD0C                      = 2;
-        g_GameWork.gameStateStep_598[0] = 0xF;
+        g_GameWork.gameStateStep_598[0] = 15;
         g_SysWork.timer_20              = 0;
         g_GameWork.gameStateStep_598[1] = 0;
         g_GameWork.gameStateStep_598[2] = 0;
@@ -627,19 +627,20 @@ void Settings_MainScreen() // 0x801E3770
 
     if (g_ControllerPtr0->btns_new_10 & (Pad_L2 | Pad_R2 | Pad_L1 | Pad_R1))
     {
-        if (g_GameWork.gameStateStep_598[0] == 0xD)
+        if (g_GameWork.gameStateStep_598[0] == 13)
         {
             return;
         }
+
         func_80046048(0x51B, 0, 0x40);
         D_800BCD0C                      = 2;
-        g_GameWork.gameStateStep_598[0] = 0xD;
+        g_GameWork.gameStateStep_598[0] = 13;
         g_SysWork.timer_20              = 0;
         g_GameWork.gameStateStep_598[1] = 0;
         g_GameWork.gameStateStep_598[2] = 0;
     }
 
-    if (((g_GameWork.gameStateStep_598[0] != 0xD && D_801E72F4 != 0) &&
+    if (((g_GameWork.gameStateStep_598[0] != 13 && D_801E72F4 != 0) &&
         ((controllerPtr2->btns_new_10 & g_GameWorkPtr1->config_0.controllerBinds_0.enter) == 0)) &&
         (controllerPtr2->btns_new_10 & g_GameWorkPtr1->config_0.controllerBinds_0.cancel))
     {
@@ -803,7 +804,7 @@ void Gfx_SelectedOptionExtra() // 0x801E4450
         {
             .vx = 0xFF94,
             .vy = 0xFFDD
-        },
+        }
     };
 
     DVECTOR D_801E2848[] =
@@ -823,7 +824,7 @@ void Gfx_SelectedOptionExtra() // 0x801E4450
         {
             .vx = 0xFF95,
             .vy = 0xFFDE
-        },
+        }
     };
 
     if (D_801E73E4 == 0)
@@ -1087,11 +1088,11 @@ void Gfx_SettingsOptionsExtraDraw() // 0x801E4B2C
 
     Gfx_StringSetColor(ColorId_White);
 
-    if (D_801E72F8 < 8U)
+    if (D_801E72F8 < 8u)
     {
         for (i = 0; i < 2; i++)
         {
-            Gfx_ArrowDraw(&D_801E2884[D_801E72F8 * 2 + i], 1, 0);
+            Gfx_ArrowDraw(&D_801E2884[(D_801E72F8 * 2) + i], 1, 0);
         }
 
         controllerPtr = g_ControllerPtr0;
@@ -1254,14 +1255,14 @@ void Gfx_SettingsOptionsMainDraw() // 0x801E4FFC
                 break;
 
             case 1:
-                textPosX = g_GameWork.config_0.optAutoLoad_25 == 0 ? 214 : 216;
+                textPosX = (g_GameWork.config_0.optAutoLoad_25 == 0) ? 214 : 216;
                 Gfx_StringSetPosition(textPosX, 136);
                 stringIdx = g_GameWork.config_0.optAutoLoad_25 == 0;
                 Gfx_StringDraw(D_801E2BDC[stringIdx], 10);
                 break;
 
             case 2:
-                textPosX = g_GameWork.config_0.optSoundType_1E != 0 ? 194 : 206;
+                textPosX = (g_GameWork.config_0.optSoundType_1E != 0) ? 194 : 206;
                 Gfx_StringSetPosition(textPosX, 152);
                 stringIdx = g_GameWork.config_0.optSoundType_1E + 2;
                 Gfx_StringDraw(D_801E2BDC[stringIdx], 10);
