@@ -224,8 +224,8 @@ void movie_main(char* file_name, s32 f_size, s32 sector) // 0x801E2B9C
 
     SsSetSerialVol(0, 0, 0);
 
-    param = 0x80;
-    CdControlB(CdlSetmode, &param, NULL);
+    param = CdlModeSpeed;
+    CdControlB(CdlSetmode, &param, 0);
     CdControlB(CdlPause, NULL, NULL);
 
     StUnSetRing();
