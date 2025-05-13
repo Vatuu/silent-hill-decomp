@@ -58,5 +58,5 @@ sharedData_800E324C_0_s00 = 0x800E324C; // type:VECTOR3 size:0xC
 sharedData_800E3260_0_s00 = 0x800E3260; // type:s16
 
 sharedData_800E39D8_0_s00 = 0x800E39D8; // type:s32
-AI_Stalker_Update = 0x800D2F08; // type:func
-AI_Cheryl_Update = 0x800D7FB8; // type:func
+Ai_Stalker_Update = 0x800D2F08; // type:func
+Ai_Cheryl_Update = 0x800D7FB8; // type:func

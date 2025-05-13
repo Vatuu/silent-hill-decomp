@@ -301,7 +301,7 @@ INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D5DF4);
 
 INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D5E30);
 
-INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", AI_Twinfeeler_Update); // 0x800D5F28
+INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", Ai_Twinfeeler_Update); // 0x800D5F28
 
 #include "maps/shared/sharedFunc_800D929C_0_s00.h" // 0x800D606C
 

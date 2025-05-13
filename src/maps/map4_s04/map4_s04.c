@@ -97,7 +97,7 @@ void func_800CFE34(void) {}
 
 #include "maps/shared/sharedFunc_800D2EF4_0_s00.h" // 0x800CFE8C
 
-INCLUDE_ASM("asm/maps/map4_s04/nonmatchings/map4_s04", AI_Lisa_Update); // 0x800CFEA0
+INCLUDE_ASM("asm/maps/map4_s04/nonmatchings/map4_s04", Ai_Lisa_Update); // 0x800CFEA0
 
 INCLUDE_ASM("asm/maps/map4_s04/nonmatchings/map4_s04", func_800CFF14);
 
