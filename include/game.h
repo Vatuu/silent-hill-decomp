@@ -612,7 +612,7 @@ typedef struct _SubCharacter
 
     s16 field_C8;
     s16 field_CA;
-    s8  unk_CC[2];
+    s16 field_CC;
     s16 field_CE;
     s8  unk_D0[4];
     s16 field_D4;

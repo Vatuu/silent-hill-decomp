@@ -17,6 +17,7 @@
 #   If none of above are set, will compare both against map2 'nonmatchings'
 #   --replace                Replace INCLUDE_ASM for 'sharedFunc' funcs in map2 .c with #include
 #   --updsyms                Update and reorder map2 sym.txt with shared functions
+#   --when [funcName]        Only apply --replace / --updsyms if funcName has been matched in this map (to help with sub-function false-positives)
 #
 # Map header options:
 #   --list [MAP_NAME]        List character spawns from MAP_NAME map headers
@@ -33,6 +34,14 @@ from dataclasses import dataclass
 from typing import List
 
 MapVramAddress = 0x800C9578
+
+# Known funcs that cause false positive matches
+# Usually small funcs that have matching code but might call into different funcs
+# Can be removed once they're figured out
+FalsePositiveMatches = {
+    "map7_s03": [0x800DF044, 0x800E08E4], # close match to sharedFunc_800CDA88_3_s03 but func it calls is different
+    "map4_s03": [0x800D5BC8] # ditto above
+}
 
 e_ShCharacterId = [
     "Chara_None",
@@ -174,9 +183,42 @@ def match_shared_data_vars(text, shared_data_map, funcName):
 
     return list(result_dict.items())
 
+def parse_sym_addrs(content):
+    func_dict = {}
+    pattern = re.compile(r'^\s*(func_[a-zA-Z0-9_]+)\s*=\s*(0x[0-9A-Fa-f]+)(?:\s*//.*)?\s*$')
+
+    lines = content.strip().splitlines()
+    for line in lines:
+        # Strip leading/trailing spaces and ignore empty lines
+        line = line.strip()
+        if not line or line.startswith('//'):
+            continue  # Skip empty lines and full-line comments
+
+        # Split by '='
+        parts = line.split('=')
+        if len(parts) != 2:
+            continue  # Skip lines that don't have exactly one '='
+
+        # Get function name and value
+        func_name = parts[0].strip()
+        value_part = parts[1].split('//')[0].strip()  # Ignore anything after a comment
+
+        # Ensure value is a valid hex number
+        if value_part.startswith("0x"):
+            try:
+                if value_part.endswith(";"):
+                    value_part = value_part[:-1]
+                value = int(value_part, 16)  # Convert hex string to integer
+                func_dict[func_name] = value
+            except ValueError:
+                continue  # Skip invalid hex values
+        else:
+            continue  # Skip lines without a valid hex value
+
+    return func_dict
+
 def parse_sym_comments(content):
     comment_map = {}
-    # Split the string into individual lines
     lines = content.strip().splitlines()
 
     for line in lines:
@@ -382,7 +424,7 @@ def clean_file(content, funcName):
 
     return content
 
-def find_equal_asm_files(searchType, map1, map2, maxdistance, replaceIncludeAsm, updateSymTxtFile):
+def find_equal_asm_files(searchType, map1, map2, maxdistance, replaceIncludeAsm, updateSymTxtFile, funcToMatchBeforeUpdating):
     map1_asm_path = os.path.join("asm", "maps", map1)
     map2_asm_path = os.path.join("asm", "maps", map2)
 
@@ -461,6 +503,10 @@ def find_equal_asm_files(searchType, map1, map2, maxdistance, replaceIncludeAsm,
             file2_text = read_file(file2)
             content1 = clean_file(file1_text, funcname_file1)
             content2 = clean_file(file2_text, funcname_file2)
+
+            file2_sym_path = f"configs/maps/sym.{map2}.txt"
+            file2_sym_text = read_file(file2_sym_path)
+            file2_syms = parse_sym_addrs(file2_sym_text)
             
             if content1 is not None and content2 is not None:
                 # Compute Levenshtein distance
@@ -482,24 +528,40 @@ def find_equal_asm_files(searchType, map1, map2, maxdistance, replaceIncludeAsm,
 
                     # If first dir func is named sharedFunc, print symbol names/includes for user to add to second map
                     if "sharedFunc" in name_file1:
-                        addr = name_file2.split("_")[1]
-                        addr = addr.split(".")[0]
-                        addr_int = int(addr, 16)
-                        
-                        if addr_int not in sharedFuncSymbols:
-                            sharedFuncSymbols[addr_int] = funcname_file1
+                        addr = 0
 
-                        include_key = f'INCLUDE_ASM("asm/maps/{map2}/nonmatchings/{map2}", func_{addr});'
-                        include_value = f'#include "maps/shared/{funcname_file1}.h" // 0x{addr}'
-                        includeLines += "\n" + include_value
-                        replacements[include_key] = include_value
+                        # Try searching file2_syms for the addr of this func, in case this func had been renamed already
+                        if funcname_file2 in file2_syms:
+                            addr = file2_syms[funcname_file2]
+                        else:
+                            addr_str = name_file2.split("_")[1]
+                            addr_str = addr_str.split(".")[0]
+                            addr = int(addr_str, 16)
+
+                        if map2 in FalsePositiveMatches:
+                            if addr in FalsePositiveMatches[map2]:
+                                continue
+                        
+                        if addr not in sharedFuncSymbols:
+                            sharedFuncSymbols[addr] = funcname_file1
+
+                        include_search = f'INCLUDE_ASM("asm/maps/{map2}/nonmatchings/{map2}", {funcname_file2});'
+                        sharedFilePath = f"maps/shared/{funcname_file1}.h"
+                        if os.path.exists("include/" + sharedFilePath):
+                            include_replace = f'#include "{sharedFilePath}" // 0x{addr:08X}'
+                        else:
+                            include_replace = f'INCLUDE_ASM("asm/maps/{map2}/nonmatchings/{map2}", {funcname_file1}); // 0x{addr:08X}'
+
+                        includeLines += "\n" + include_replace
+                        replacements[include_search] = include_replace
 
                         # If second map file2_text contains jtbls, add to our jtbl list
-                        pattern = r'jtbl_[0-9a-fA-F]{4,8}'
-                        for match in re.findall(pattern, file2_text):
-                            jtbl_name = f"{match}"
-                            if jtbl_name not in jtbl_list:
-                                jtbl_list[jtbl_name] = funcname_file2
+                        if os.path.exists(sharedFilePath):
+                            pattern = r'jtbl_[0-9a-fA-F]{4,8}'
+                            for match in re.findall(pattern, file2_text):
+                                jtbl_name = f"{match}"
+                                if jtbl_name not in jtbl_list:
+                                    jtbl_list[jtbl_name] = funcname_file2
 
         if sharedFuncSymbols:
             print(f"\nsym.{map2}.txt adds:")
@@ -510,8 +572,16 @@ def find_equal_asm_files(searchType, map1, map2, maxdistance, replaceIncludeAsm,
             print("\n.c includes:")
             print(includeLines)
 
+        # If user specified a --when func, check if that's being added, if not then skip adding anything to this map
+        if (replaceIncludeAsm and replacements) or (updateSymTxtFile and sharedFuncSymbols):
+            if funcToMatchBeforeUpdating is not None:
+                present = funcToMatchBeforeUpdating in sharedFuncSymbols.values() or funcToMatchBeforeUpdating in file2_syms.keys()
+                if not present:
+                    print(f"\n{funcToMatchBeforeUpdating} not found in this map, skipping --replace/--updsyms");
+                    return
+
         # Optional replacement in .c file
-        if replacements and replaceIncludeAsm:
+        if replaceIncludeAsm and replacements:
             c_path = f"src/maps/{map2}/{map2}.c"
             print(f"\nReplacing INCLUDE_ASM lines inside {c_path}...\n")
             try:
@@ -528,6 +598,9 @@ def find_equal_asm_files(searchType, map1, map2, maxdistance, replaceIncludeAsm,
                         print(f"Could not find line to replace: {key}")
 
                 if replaced:
+                    # Remove any duplicate funcaddr comments
+                    c_code = re.sub(r'(\s*//\s*(0x[a-fA-F0-9]+)\s*)\1+', r'\1', c_code)
+
                     with open(c_path, "w", encoding="utf-8") as f:
                         f.write(c_code)
                     print(f"Updated {c_path} with new includes.")
@@ -551,38 +624,34 @@ def find_equal_asm_files(searchType, map1, map2, maxdistance, replaceIncludeAsm,
             file1_sym_text = read_file(file1_sym_path)
             file1_syms = parse_sym_comments(file1_sym_text)
 
-            sym_path = f"configs/maps/sym.{map2}.txt"
-            print(f"\nAdding symbol lines to {sym_path}...\n")
+            print(f"\nAdding symbol lines to {file2_sym_path}...\n")
             try:
-                with open(sym_path, "r", encoding="utf-8") as f:
-                    sym_code = f.read()
-
                 updated = False
                 for sym_addr in sorted(sharedFuncSymbols.keys()):
                     sym_addr_text = f"0x{sym_addr:08X}"
                     sym_name = sharedFuncSymbols[sym_addr]
-                    if sym_addr_text not in sym_code:
+                    if sym_addr_text not in file2_sym_text:
                         if sym_name in file1_syms:
                             sym_line = f"{sym_name} = {sym_addr_text}; // {file1_syms[sym_name]}"
-                            sym_code = sym_code + "\n" + sym_line
+                            file2_sym_text = file2_sym_text + "\n" + sym_line
                             print(f"Added line: {sym_line}")
                             updated = True
                         else:
                             print(f"Symbol {sym_name} not found in sym.{map1}.txt?")
                     else:
-                        print(f"Address 0x{addr_text} already has symbol defined")
+                        print(f"Address {sym_addr_text} already has symbol defined")
 
                 if updated:
-                    sym_code = sort_sym_by_address(sym_code)
-                    sym_code += "\n" # end file with newline
-                    with open(sym_path, "w", encoding="utf-8") as f:
-                        f.write(sym_code)
-                    print(f"\nUpdated {sym_path}.")
+                    file2_sym_text = sort_sym_by_address(file2_sym_text)
+                    file2_sym_text += "\n" # end file with newline
+                    with open(file2_sym_path, "w", encoding="utf-8") as f:
+                        f.write(file2_sym_text)
+                    print(f"\nUpdated {file2_sym_path}.")
                 else:
-                    print(f"\nNothing added to {sym_path}.")
+                    print(f"\nNothing added to {file2_sym_path}.")
 
             except FileNotFoundError:
-                print(f"\nError: File {sym_path} not found.")
+                print(f"\nError: File {file2_sym_path} not found.")
     else:
         print("\nNo matching files found.")
         
@@ -719,6 +788,7 @@ def print_usage():
     print("  If none of above are set, will compare both against map2 'nonmatchings'")
     print("  --replace                Replace INCLUDE_ASM for 'sharedFunc' funcs in map2 .c with #include")
     print("  --updsyms                Update and reorder map2 sym.txt with shared functions")
+    print("  --when [funcName]        Only apply --replace / --updsyms if funcName has been matched in this map (to help with sub-function false-positives)")
     print()
     print("Map header options:")
     print("  --list [MAP_NAME]        List character spawns from MAP_NAME map headers")
@@ -739,6 +809,7 @@ def main():
     parser.add_argument("--nonmatchings", action="store_true", help="Only compare map1 `nonmatchings` against map2 `nonmatchings`")
     parser.add_argument("--replace", action="store_true", help="Replace INCLUDE_ASM with #include for shared funcs")
     parser.add_argument("--updsyms", action="store_true", help="Update and reorder sym.txt with shared functions")
+    parser.add_argument("--when", type=str, help="Only apply --replace / --updsyms if funcName has been matched in this map")
     
     parser.add_argument("--list", action="store_true", help="List character spawns from map headers")
     parser.add_argument("--searchChara", type=int, help="Search all maps for character ID")
@@ -791,9 +862,9 @@ def main():
             ]
             for map_name in TARGET_MAPS:
                 if map_name != args.map1:
-                    find_equal_asm_files(searchType, args.map1, map_name, 0, args.replace, args.updsyms)
+                    find_equal_asm_files(searchType, args.map1, map_name, 0, args.replace, args.updsyms, args.when)
         else:
-            find_equal_asm_files(searchType, args.map1, args.map2, 0, args.replace, args.updsyms)
+            find_equal_asm_files(searchType, args.map1, args.map2, 0, args.replace, args.updsyms, args.when)
             
 if __name__ == "__main__":
     main()
