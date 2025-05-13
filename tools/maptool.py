@@ -35,6 +35,14 @@ from typing import List
 
 MapVramAddress = 0x800C9578
 
+# Known funcs that cause false positive matches
+# Usually small funcs that have matching code but might call into different funcs
+# Can be removed once they're figured out
+FalsePositiveMatches = {
+    "map7_s03": [0x800DF044, 0x800E08E4], # close match to sharedFunc_800CDA88_3_s03 but func it calls is different
+    "map4_s03": [0x800D5BC8] # ditto above
+}
+
 e_ShCharacterId = [
     "Chara_None",
     "Chara_Hero",
@@ -529,6 +537,10 @@ def find_equal_asm_files(searchType, map1, map2, maxdistance, replaceIncludeAsm,
                             addr_str = name_file2.split("_")[1]
                             addr_str = addr_str.split(".")[0]
                             addr = int(addr_str, 16)
+
+                        if map2 in FalsePositiveMatches:
+                            if addr in FalsePositiveMatches[map2]:
+                                continue
                         
                         if addr not in sharedFuncSymbols:
                             sharedFuncSymbols[addr] = funcname_file1
@@ -563,7 +575,7 @@ def find_equal_asm_files(searchType, map1, map2, maxdistance, replaceIncludeAsm,
         # If user specified a --when func, check if that's being added, if not then skip adding anything to this map
         if (replaceIncludeAsm and replacements) or (updateSymTxtFile and sharedFuncSymbols):
             if funcToMatchBeforeUpdating is not None:
-                present = funcToMatchBeforeUpdating in sharedFuncSymbols.values()
+                present = funcToMatchBeforeUpdating in sharedFuncSymbols.values() or funcToMatchBeforeUpdating in file2_syms.keys()
                 if not present:
                     print(f"\n{funcToMatchBeforeUpdating} not found in this map, skipping --replace/--updsyms");
                     return
@@ -586,6 +598,9 @@ def find_equal_asm_files(searchType, map1, map2, maxdistance, replaceIncludeAsm,
                         print(f"Could not find line to replace: {key}")
 
                 if replaced:
+                    # Remove any duplicate funcaddr comments
+                    c_code = re.sub(r'(\s*//\s*(0x[a-fA-F0-9]+)\s*)\1+', r'\1', c_code)
+
                     with open(c_path, "w", encoding="utf-8") as f:
                         f.write(c_code)
                     print(f"Updated {c_path} with new includes.")
