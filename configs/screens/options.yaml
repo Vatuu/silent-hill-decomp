@@ -55,7 +55,7 @@ segments:
     subsegments:
       - [0x0, rodata]
       - [0x8, .rodata, options]
-      - [0x6A4, rodata]
+      - [0x6C0, rodata]
       - [0x744, c, options]
       #- [0x2DA0, c, options_position]
       #- [0x3A18, c, options_brightness]

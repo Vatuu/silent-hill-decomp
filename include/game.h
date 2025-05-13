@@ -755,7 +755,7 @@ extern s_GameWork        g_GameWork;
 extern s_GameWork* const g_GameWorkPtr0;
 extern s_GameWork*       g_GameWorkPtr1;
 extern s_ShSaveGame*     g_SaveGamePtr;
-extern s_ControllerData* g_ControllerPtr0;
+extern s_ControllerData* const g_ControllerPtr0;
 extern s_ControllerData* g_ControllerPtr1;
 
 extern s32  g_ObjectTableIdx;

@@ -219,8 +219,6 @@ void GameState_OptionScreen_Update() // 0x801E2D44
 
 void Settings_ExtraScreen() // 0x801E318C
 {
-    s_ControllerData* controllerPtr;
-
     Gfx_OptionsStringsExtraDraw();
     Gfx_SettingsOptionsExtraDraw();
     Gfx_SelectedOptionExtra();
@@ -258,9 +256,7 @@ void Settings_ExtraScreen() // 0x801E318C
             return;
         }
 
-        controllerPtr = g_ControllerPtr0;
-
-        if (controllerPtr->field_18 & Pad_LStickUp)
+        if (g_ControllerPtr0->field_18 & Pad_LStickUp)
         {
             s32 var = 1;
             func_80046048(0x519, 0, 0x40);
@@ -268,7 +264,7 @@ void Settings_ExtraScreen() // 0x801E318C
             D_801E73E4 = 0;
         }
 
-        if (controllerPtr->field_18 & Pad_LStickDown)
+        if (g_ControllerPtr0->field_18 & Pad_LStickDown)
         {
             func_80046048(0x519, 0, 0x40);
             D_801E72F8++;
@@ -287,13 +283,12 @@ void Settings_ExtraScreen() // 0x801E318C
                 break;
 
             case 1:
-                controllerPtr = g_ControllerPtr0;
-                if (controllerPtr->btns_new_10 & Pad_LStickRight)
+                if (g_ControllerPtr0->btns_new_10 & Pad_LStickRight)
                 {
                     func_80046048(0x519, 0, 0x40);
                     D_801E73EC++;
                 }
-                if (controllerPtr->btns_new_10 & Pad_LStickLeft)
+                if (g_ControllerPtr0->btns_new_10 & Pad_LStickLeft)
                 {
                     func_80046048(0x519, 0, 0x40);
                     D_801E73EC += 3;
@@ -362,13 +357,12 @@ void Settings_ExtraScreen() // 0x801E318C
                 break;
 
             case 7:
-                controllerPtr = g_ControllerPtr0;
-                if (controllerPtr->btns_new_10 & Pad_LStickRight)
+                if (g_ControllerPtr0->btns_new_10 & Pad_LStickRight)
                 {
                     func_80046048(0x519, 0, 0x40);
                     g_GameWork.config_0.optBulletAdjust_2D++;
                 }
-                if (controllerPtr->btns_new_10 & Pad_LStickLeft)
+                if (g_ControllerPtr0->btns_new_10 & Pad_LStickLeft)
                 {
                     func_80046048(0x519, 0, 0x40);
                     g_GameWork.config_0.optBulletAdjust_2D = g_GameWork.config_0.optBulletAdjust_2D + (D_801E73F0 - 1);
@@ -407,8 +401,6 @@ void Settings_MainScreen() // 0x801E3770
     s32               sdCmd;
     s32               newVolume;
     s32               currentVolume;
-    s_ControllerData* controllerPtr;
-    s_ControllerData* controllerPtr2;
 
     Gfx_OptionsStringsMainDraw();
     Gfx_SettingsOptionsMainDraw();
@@ -452,15 +444,14 @@ void Settings_MainScreen() // 0x801E3770
         return;
     }
 
-    controllerPtr = g_ControllerPtr0;
-    if (controllerPtr->field_18 & Pad_LStickUp)
+    if (g_ControllerPtr0->field_18 & Pad_LStickUp)
     {
         func_80046048(0x519, 0, 0x40);
 
         D_801E73E4 = 0;
         D_801E72F4 = (D_801E72F4 + 8) % 9;
     }
-    if (controllerPtr->field_18 & Pad_LStickDown)
+    if (g_ControllerPtr0->field_18 & Pad_LStickDown)
     {
         func_80046048(0x519, 0, 0x40);
 
@@ -622,8 +613,7 @@ void Settings_MainScreen() // 0x801E3770
             break;
     }
 
-    currentVolume  = 0;
-    controllerPtr2 = g_ControllerPtr0;
+    currentVolume = 0;
 
     if (g_ControllerPtr0->btns_new_10 & (Pad_L2 | Pad_R2 | Pad_L1 | Pad_R1))
     {
@@ -641,8 +631,8 @@ void Settings_MainScreen() // 0x801E3770
     }
 
     if (((g_GameWork.gameStateStep_598[0] != 13 && D_801E72F4 != 0) &&
-        ((controllerPtr2->btns_new_10 & g_GameWorkPtr1->config_0.controllerBinds_0.enter) == 0)) &&
-        (controllerPtr2->btns_new_10 & g_GameWorkPtr1->config_0.controllerBinds_0.cancel))
+         ((g_ControllerPtr0->btns_new_10 & g_GameWorkPtr1->config_0.controllerBinds_0.enter) == 0)) &&
+        (g_ControllerPtr0->btns_new_10 & g_GameWorkPtr1->config_0.controllerBinds_0.cancel))
     {
         func_80046048(0x51A, 0, 0x40);
         D_801E73E4 = 0;
@@ -1021,7 +1011,6 @@ void Gfx_SettingsOptionsExtraDraw() // 0x801E4B2C
     s32               textPosX;
     s32               i;
     s32               j;
-    s_ControllerData* controllerPtr;
 
     s_ArrowVectors D_801E2884[] =
     {
@@ -1095,12 +1084,11 @@ void Gfx_SettingsOptionsExtraDraw() // 0x801E4B2C
             Gfx_ArrowDraw(&D_801E2884[(D_801E72F8 * 2) + i], 1, 0);
         }
 
-        controllerPtr = g_ControllerPtr0;
-        if (controllerPtr->btns_held_C & Pad_LStickLeft)
+        if (g_ControllerPtr0->btns_held_C & Pad_LStickLeft)
         {
             Gfx_ArrowDraw(&D_801E2944[D_801E72F8 << 1], 0, 0);
         }
-        if (controllerPtr->btns_held_C & Pad_LStickRight)
+        if (g_ControllerPtr0->btns_held_C & Pad_LStickRight)
         {
             Gfx_ArrowDraw(&D_801E2944[(D_801E72F8 << 1) + 1], 0, 0);
         }
@@ -1185,7 +1173,6 @@ void Gfx_SettingsOptionsMainDraw() // 0x801E4FFC
     s32               textPosX;
     s32               i;
     s32               stringIdx;
-    s_ControllerData* controllerPtr;
 
     s_ArrowVectors D_801E2AD8[] =
     {
@@ -1232,12 +1219,11 @@ void Gfx_SettingsOptionsMainDraw() // 0x801E4FFC
             Gfx_ArrowDraw(&D_801E2AD8[(((D_801E72F4 - 4) * 2) + i)], 1, 0);
         }
 
-        controllerPtr = g_ControllerPtr0;
-        if (controllerPtr->btns_held_C & Pad_LStickLeft)
+        if (g_ControllerPtr0->btns_held_C & Pad_LStickLeft)
         {
             Gfx_ArrowDraw(&D_801E2B50[(D_801E72F4 - 4) << 1], 0, 0);
         }
-        if (controllerPtr->btns_held_C & Pad_LStickRight)
+        if (g_ControllerPtr0->btns_held_C & Pad_LStickRight)
         {
             Gfx_ArrowDraw(&D_801E2B50[((D_801E72F4 - 4) << 1) + 1], 0, 0);
         }
@@ -1275,7 +1261,180 @@ void Gfx_SettingsOptionsMainDraw() // 0x801E4FFC
 // SCREEN POSITION OPTION SCREEN
 // ==============================
 
-INCLUDE_ASM("asm/screens/options/nonmatchings/options", Settings_PositionScreen); // 0x801E53A0
+void Settings_PositionScreen() // 0x801E53A0
+{
+    s32     i;
+    s8      posX;
+    TILE*   tile;
+    PACKET* packet;
+
+    posX = g_GameWorkPtr0->config_0.screenPosX_1C;
+    if ((posX != D_801E73D8) || (g_GameWorkPtr0->config_0.screenPosY_1D != D_801E73DA))
+    {
+        Settings_ScreenXYSet(posX, g_GameWorkPtr0->config_0.screenPosY_1D);
+    }
+
+    D_801E73D8 = g_GameWorkPtr0->config_0.screenPosX_1C;
+    D_801E73DA = g_GameWorkPtr0->config_0.screenPosY_1D;
+
+    switch (g_GameWork.gameStateStep_598[1])
+    { /* irregular */
+        case 0:
+            D_800BCD0C                      = 6;
+            D_801E73D4                      = 0xFF;
+            g_GameWork.gameStateStep_598[1] = 1;
+            g_GameWork.gameStateStep_598[2] = 0;
+
+        case 1:
+            g_GameWork.gameStateStep_598[2] = 0;
+            g_GameWork.gameStateStep_598[1] += 1;
+            break;
+
+        case 2:
+            if (g_ControllerPtr0->field_18 & Pad_LStickUp)
+            {
+                g_GameWorkPtr0->config_0.screenPosY_1D--;
+            }
+            if (g_ControllerPtr0->field_18 & Pad_LStickDown)
+            {
+                g_GameWorkPtr0->config_0.screenPosY_1D++;
+            }
+            if (g_ControllerPtr0->field_18 & Pad_LStickLeft)
+            {
+                g_GameWorkPtr0->config_0.screenPosX_1C--;
+            }
+            if (g_ControllerPtr0->field_18 & Pad_LStickRight)
+            {
+                g_GameWorkPtr0->config_0.screenPosX_1C++;
+            }
+
+            g_GameWorkPtr0->config_0.screenPosX_1C = CLAMP(g_GameWorkPtr0->config_0.screenPosX_1C, -11, 11);
+            g_GameWorkPtr0->config_0.screenPosY_1D = CLAMP(g_GameWorkPtr0->config_0.screenPosY_1D, -8, 8);
+
+            if ((g_GameWorkPtr0->config_0.screenPosX_1C != D_801E73D8) || (g_GameWorkPtr0->config_0.screenPosY_1D != D_801E73DA))
+            {
+                func_80046048(0x519U, 0, 0x40);
+            }
+            if (g_ControllerPtr0->btns_new_10 & g_GameWorkPtr1->config_0.controllerBinds_0.enter)
+            {
+                if (D_801E73D4 == 0xFF)
+                {
+                    D_801E73D4 = 0;
+                    D_801E7304 = (D_801E7304 + 1) & 1;
+                }
+            }
+            if (g_ControllerPtr0->btns_new_10 & g_GameWorkPtr1->config_0.controllerBinds_0.cancel)
+            {
+                func_80046048(0x51AU, 0, 0x40);
+                D_800BCD0C                      = 2;
+                g_GameWork.gameStateStep_598[2] = 0;
+                g_GameWork.gameStateStep_598[1] += 1;
+            }
+            break;
+
+        case 3:
+            if ((D_800BCD0C & 7) == 5)
+            {
+                D_800BCD0C                      = 6;
+                g_GameWork.gameStateStep_598[0] = 0xA;
+                g_SysWork.timer_20              = 0;
+                g_GameWork.gameStateStep_598[1] = 0;
+                g_GameWork.gameStateStep_598[2] = 0;
+                g_GameWork.field_58C            = 0;
+                g_GameWork.field_58D            = 0;
+                g_GameWork.field_58E            = 0;
+                return;
+            }
+            break;
+    }
+
+    D_801E73D4 += 0x10;
+    D_801E73D4 = CLAMP(D_801E73D4, 0, 0xFF);
+
+    switch (D_801E7304)
+    {
+        case 0: /* switch 1 */
+            g_GameWork.field_58C = ~D_801E73D4;
+            g_GameWork.field_58D = ~D_801E73D4;
+            g_GameWork.field_58E = ~D_801E73D4;
+            break;
+
+        case 1: /* switch 1 */
+            g_GameWork.field_58C = D_801E73D4;
+            g_GameWork.field_58D = D_801E73D4;
+            g_GameWork.field_58E = D_801E73D4;
+            break;
+    }
+
+    packet = GsOUT_PACKET_P;
+
+    for (i = 0; i < 6; i++)
+    {
+        tile = (TILE*)packet;
+
+        setTile(tile);
+
+        if (D_801E7304 == 0)
+        {
+            setRGB0(tile, 0xFF, 0, 0);
+        }
+        else if (D_801E7304 == 1)
+        {
+            setRGB0(tile, 0xFF, 0, 0);
+        }
+
+        if (i < 3)
+        {
+            setXY0(tile, -0xA0, (-0x61 + 0x60 * i));
+            setWH(tile, 0x140, 2);
+        }
+        else
+        {
+            setXY0(tile, (-0x241 + 0x90 * i), -0x78);
+            setWH(tile, 2, 0xF0);
+        }
+
+        addPrim(g_ObjectTable0[g_ObjectTableIdx].org, (TILE*)packet);
+        packet += sizeof(TILE);
+    }
+
+    for (i = 0; i < 0x1C; i++)
+    {
+        tile = (TILE*)packet;
+
+        setTile(tile);
+
+        switch (D_801E7304)
+        {
+            case 0:
+                setRGB0(tile, D_801E73D4, D_801E73D4, D_801E73D4);
+                break;
+
+            case 1:
+                setRGB0(tile, ~D_801E73D4, ~D_801E73D4, ~D_801E73D4);
+                break;
+        }
+
+        if (i < 0xB)
+        {
+            setXY0(tile, -0xA0, (-0x51 + 0x10 * i));
+            setWH(tile, 0x140, 2);
+        }
+        else
+        {
+            setXY0(tile, (-0x131 + 0x10 * i), -0x78);
+            setWH(tile, 2, 0xF0);
+        }
+
+        addPrim(g_ObjectTable0[g_ObjectTableIdx].org, (TILE*)packet);
+        packet += sizeof(TILE);
+    }
+
+    GsOUT_PACKET_P = packet;
+
+    Gfx_PositionArrowsDraw();
+    Gfx_PositionIndicatorDraw();
+}
 
 void Gfx_PositionArrowsDraw() // 0x801E5A08
 {
@@ -1341,12 +1500,10 @@ void Gfx_PositionArrowsDraw() // 0x801E5A08
  */
 void Gfx_PositionIndicatorDraw() // 0x801E5CBC
 {
-    GsOT*               ot     = &g_ObjectTable1[g_ObjectTableIdx];
-    s_ShSaveUserConfig* config = &g_GameWorkPtr0->config_0;
-    s32                 i;
-    s_GameWork*         gameWork;
-    LINE_F2*            line;
-    POLY_F4*            poly;
+    GsOT*    ot = &g_ObjectTable1[g_ObjectTableIdx];
+    s32      i;
+    LINE_F2* line;
+    POLY_F4* poly;
 
     DVECTOR D_801E2C4C[] =
     {
@@ -1369,8 +1526,8 @@ void Gfx_PositionIndicatorDraw() // 0x801E5CBC
         setLineF2(line);
         setCodeWord(line, 0x40, i < 2 ? 0xF0F0F0 : 0x808080);
 
-        setXY0Fast(line, (u16)(D_801E2C4C[i].vx - config->screenPosX_1C), D_801E2C4C[i].vy - config->screenPosY_1D);
-        setXY1Fast(line, (u16)(D_801E2C4C[(i + 1) & 3].vx - config->screenPosX_1C), D_801E2C4C[(i + 1) & 3].vy - config->screenPosY_1D);
+        setXY0Fast(line, (u16)(D_801E2C4C[i].vx - g_GameWorkPtr0->config_0.screenPosX_1C), D_801E2C4C[i].vy - g_GameWorkPtr0->config_0.screenPosY_1D);
+        setXY1Fast(line, (u16)(D_801E2C4C[(i + 1) & 3].vx - g_GameWorkPtr0->config_0.screenPosX_1C), D_801E2C4C[(i + 1) & 3].vy - g_GameWorkPtr0->config_0.screenPosY_1D);
 
         addPrim((u8*)ot->org + 0x28, line);
         GsOUT_PACKET_P = (u8*)line + sizeof(LINE_F2);
@@ -1379,25 +1536,21 @@ void Gfx_PositionIndicatorDraw() // 0x801E5CBC
     poly = (POLY_F4*)GsOUT_PACKET_P;
     setPolyF4(poly);
 
-    gameWork = g_GameWorkPtr0;
-
     setCodeWord(poly, 0x28, 0);
-    setXY0Fast(poly, (u16)(D_801E2C4C[0].vx - gameWork->config_0.screenPosX_1C), D_801E2C4C[0].vy - gameWork->config_0.screenPosY_1D);
-    setXY1Fast(poly, (u16)(D_801E2C4C[1].vx - gameWork->config_0.screenPosX_1C), D_801E2C4C[1].vy - gameWork->config_0.screenPosY_1D);
-    setXY2Fast(poly, (u16)(D_801E2C4C[3].vx - gameWork->config_0.screenPosX_1C), D_801E2C4C[3].vy - gameWork->config_0.screenPosY_1D);
-    setXY3Fast(poly, (u16)(D_801E2C4C[2].vx - gameWork->config_0.screenPosX_1C), D_801E2C4C[2].vy - gameWork->config_0.screenPosY_1D);
-
-    config = &gameWork->config_0;
+    setXY0Fast(poly, (u16)(D_801E2C4C[0].vx - g_GameWorkPtr0->config_0.screenPosX_1C), D_801E2C4C[0].vy - g_GameWorkPtr0->config_0.screenPosY_1D);
+    setXY1Fast(poly, (u16)(D_801E2C4C[1].vx - g_GameWorkPtr0->config_0.screenPosX_1C), D_801E2C4C[1].vy - g_GameWorkPtr0->config_0.screenPosY_1D);
+    setXY2Fast(poly, (u16)(D_801E2C4C[3].vx - g_GameWorkPtr0->config_0.screenPosX_1C), D_801E2C4C[3].vy - g_GameWorkPtr0->config_0.screenPosY_1D);
+    setXY3Fast(poly, (u16)(D_801E2C4C[2].vx - g_GameWorkPtr0->config_0.screenPosX_1C), D_801E2C4C[2].vy - g_GameWorkPtr0->config_0.screenPosY_1D);
 
     addPrim((u8*)ot->org + 0x28, poly);
     GsOUT_PACKET_P = (u8*)poly + sizeof(POLY_F4);
 
-    Gfx_StringSetPosition(108 - config->screenPosX_1C, 162 - config->screenPosY_1D);
+    Gfx_StringSetPosition(0x6C - g_GameWorkPtr0->config_0.screenPosX_1C, 0xA2 - g_GameWorkPtr0->config_0.screenPosY_1D);
     Gfx_StringDraw(offsetStr[0], 0xA);
-    Gfx_StringDrawInt(3, config->screenPosX_1C);
-    Gfx_StringSetPosition(168 - config->screenPosX_1C, 162 - config->screenPosY_1D);
-    Gfx_StringDraw(offsetStr[1], 10);
-    Gfx_StringDrawInt(3, gameWork->config_0.screenPosY_1D);
+    Gfx_StringDrawInt(3, g_GameWorkPtr0->config_0.screenPosX_1C);
+    Gfx_StringSetPosition(0xA8 - g_GameWorkPtr0->config_0.screenPosX_1C, 0xA2 - g_GameWorkPtr0->config_0.screenPosY_1D);
+    Gfx_StringDraw(offsetStr[1], 0xA);
+    Gfx_StringDrawInt(3, g_GameWorkPtr0->config_0.screenPosY_1D);
 }
 
 // ========================
@@ -1767,7 +1920,143 @@ void Gfx_ButtonDraw(s_ButtonVectors* vec, s32 arg1, s32 arg2) // 0x801E67B0
 // CONTROLS OPTION SCREEN
 // ========================================
 
-INCLUDE_ASM("asm/screens/options/nonmatchings/options", Settings_ControllerScreen); // 0x801E69BC
+void Settings_ControllerScreen() // 0x801E69BC
+{
+    s32             bindResult = -1;
+    e_BindingAction bindAction;
+
+    switch (g_GameWork.gameStateStep_598[1])
+    {
+        case 0:
+            D_800BCD0C         = 7;
+            D_801E73DC.field_0 = BindingMenu_Exit;
+
+            if (g_ControllerPtr0->btns_new_10 & (g_GameWorkPtr1->config_0.controllerBinds_0.enter | g_GameWorkPtr1->config_0.controllerBinds_0.cancel))
+            {
+                Sd_EngineCmd(0x51AU);
+                D_800BCD0C                      = 3;
+                g_GameWork.gameStateStep_598[1] = -2;
+                g_GameWork.gameStateStep_598[2] = 0;
+                break;
+            }
+            if (g_ControllerPtr0->field_1C & Pad_LStickUp)
+            {
+                g_GameWork.gameStateStep_598[1] = 3;
+                g_GameWork.gameStateStep_598[2] = 0;
+            }
+            else if (g_ControllerPtr0->field_1C & Pad_LStickDown)
+            {
+                g_GameWork.gameStateStep_598[1] = 1;
+                g_GameWork.gameStateStep_598[2] = 0;
+            }
+            else if (g_ControllerPtr0->field_1C & (Pad_LStickLeft | Pad_LStickRight))
+            {
+                g_GameWork.gameStateStep_598[1] = -1;
+                g_GameWork.gameStateStep_598[2] = 0;
+            }
+            break;
+
+        case 1:
+        case 2:
+        case 3:
+            D_801E73DC.field_0 = g_GameWork.gameStateStep_598[1];
+            if (g_ControllerPtr0->btns_new_10 & g_GameWorkPtr1->config_0.controllerBinds_0.enter)
+            {
+                Sd_EngineCmd(0x51BU);
+                Settings_RestoreControlDefaults(g_GameWork.gameStateStep_598[1] - 1);
+            }
+            else if (g_ControllerPtr0->btns_new_10 & g_GameWorkPtr1->config_0.controllerBinds_0.cancel)
+            {
+                Sd_EngineCmd(0x51AU);
+                g_GameWork.gameStateStep_598[1] = 0;
+                g_GameWork.gameStateStep_598[2] = 0;
+            }
+            else
+            {
+                if (g_ControllerPtr0->field_1C & Pad_LStickUp)
+                {
+                    g_GameWork.gameStateStep_598[1] = (g_GameWork.gameStateStep_598[1] - 1) & 3;
+                    g_GameWork.gameStateStep_598[2] = 0;
+                }
+                else if (g_ControllerPtr0->field_1C & Pad_LStickDown)
+                {
+                    g_GameWork.gameStateStep_598[1] = (g_GameWork.gameStateStep_598[1] + 1) & 3;
+                    g_GameWork.gameStateStep_598[2] = 0;
+                }
+                else if (g_ControllerPtr0->field_1C & (Pad_LStickLeft | Pad_LStickRight))
+                {
+                    g_GameWork.gameStateStep_598[1] = -1;
+                    g_GameWork.gameStateStep_598[2] = 0;
+                }
+            }
+            break;
+
+        case -1:
+            bindAction = D_801E73DC.field_4;
+            if (g_ControllerPtr0->field_1C & Pad_LStickUp)
+            {
+                if (bindAction != BindingAction_Enter)
+                {
+                    D_801E73DC.field_4 = bindAction - 1;
+                }
+                else
+                {
+                    D_801E73DC.field_4 = BindingAction_Option;
+                }
+            }
+            else if (g_ControllerPtr0->field_1C & Pad_LStickDown)
+            {
+                if (bindAction != BindingAction_Option)
+                {
+                    D_801E73DC.field_4 = bindAction + 1;
+                }
+                else
+                {
+                    D_801E73DC.field_4 = BindingAction_Enter;
+                }
+            }
+            else if (g_ControllerPtr0->field_1C & (Pad_LStickLeft | Pad_LStickRight))
+            {
+                g_GameWork.gameStateStep_598[2] = 0;
+                g_GameWork.gameStateStep_598[1] = D_801E73DC.field_0;
+            }
+            else
+            {
+                bindResult = Settings_ButtonChange(bindAction);
+            }
+            break;
+
+        case -2:
+            if ((D_800BCD0C & 7) == 5)
+            {
+                D_800BCD0C                      = 6;
+                g_GameWork.gameStateStep_598[0] = 0xC;
+                g_SysWork.timer_20              = 0;
+                g_GameWork.gameStateStep_598[1] = 0;
+                g_GameWork.gameStateStep_598[2] = 0;
+            }
+            break;
+
+        default:
+            break;
+    }
+
+    if (g_GameWork.gameStateStep_598[1] == -1)
+    {
+        D_801E7308 = 1;
+    }
+    else
+    {
+        D_801E7308 = 0;
+    }
+
+    if (g_ControllerPtr0->field_1C & (Pad_LStickUp | Pad_LStickRight | Pad_LStickDown | Pad_LStickLeft))
+    {
+        Sd_EngineCmd(0x519U);
+    }
+
+    Gfx_ControllerScreenDraw(D_801E7308, D_801E73DC.field_0, D_801E73DC.field_4, bindResult);
+}
 
 /** Related to controller mapping.
  * Changes the button mapping based on the input.
