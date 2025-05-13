@@ -1662,10 +1662,11 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80039F54);
 
 s8 func_80039F90() // 0x80039F90
 {
-    if (g_SysWork.flags_2298 & 3)
+    if (g_SysWork.flags_2298 & 0x3)
     {
         return g_SysWork.field_2282;
     }
+
     return 0;
 }
 
@@ -2131,7 +2132,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003DA9C);
 
 s32 func_8003DD74(s32 arg0, s32 arg1) // 0x8003DD74
 {
-    return (arg1 << 0xA) & 0xFC00;
+    return (arg1 << 10) & 0xFC00;
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003DD80);

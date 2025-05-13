@@ -720,8 +720,7 @@ typedef struct
     s32 unk_0[2048];
 } s_800B5D04;
 
-extern s_800B5488* D_800B5488; // Index or state
-							   // Is a pointer to an struct. See `func_80030444`
+extern s_800B5488* D_800B5488; // Index or state, pointer to struct. See `func_80030444`.
 
 extern s32 D_800B548C;
 
@@ -1058,7 +1057,7 @@ typedef struct _800B5494
     s32 field_0;
     s32 unk_4[9];
 } s_800B5494;
-STATIC_ASSERT_SIZEOF(s_800B5494, 0x28);
+STATIC_ASSERT_SIZEOF(s_800B5494, 40);
 
 extern s_800B5494 D_800B5494;
 

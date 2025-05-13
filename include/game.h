@@ -709,7 +709,7 @@ typedef struct _SysWork
     s32             field_2350_0 : 4;
     s32             field_2350_4 : 4;
     s32             field_2351 : 16;
-    s32             field_2353 : 8; // Some index into npcs_1A0
+    s32             field_2353 : 8; // Some index into `npcs_1A0`.
     s8              unk_2354[4];
     u8              field_2358;
     s8              unk_2359[3];
