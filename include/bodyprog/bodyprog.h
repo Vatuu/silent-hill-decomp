@@ -1423,9 +1423,13 @@ void func_80054928();
 
 void func_80054A04(s8 arg0);
 
+s32 func_8005C7D0(s_SubCharacter*, s32);
+
 void func_8005E0DC(s32 arg0); // Types assumed.
 
 void func_8005E89C();
+
+void func_8005F6B0(s_SubCharacter*, s32*, s32, s32);
 
 /** Unknown bodyprog func. Called by `Fs_QueueWaitForEmpty`. */
 void func_80089128();
@@ -1621,6 +1625,8 @@ void func_8005B474(s32* arg0, u32 arg1, s32 idx);
 void func_8005BF0C(s16 unused, s16 x, s16 y);
 
 s16 func_8005BF38(s32 arg0);
+
+void func_800622B8(s32, s_SubCharacter*, s32, s32);
 
 void func_80066E40();
 
