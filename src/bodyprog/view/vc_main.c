@@ -318,11 +318,11 @@ void vcSetAllNpcDeadTimer() // 0x8008123C
 
 s32 vcRetSmoothCamMvF(VECTOR3* old_pos, VECTOR3* now_pos, SVECTOR* old_ang, SVECTOR* now_ang) // 0x800812CC
 {
-    #define MOVEMENT_MAX_METER 0.2f
-    #define ROT_X_MAX_ANGLE 20.0f
-    #define ROT_Y_MAX_ANGLE 30.0f
-    #define INTRPT_MIN_TIME 1.0f
-    #define INTRPT_MAX_TIME 4.0f
+    #define MOVEMENT_METER_MAX 0.2f
+    #define ROT_X_ANGLE_MAX    20.0f
+    #define ROT_Y_ANGLE_MAX    30.0f
+    #define INTRPT_TIME_MIN    1.0f
+    #define INTRPT_TIME_MAX    4.0f
 
     s32 intrpt; // Interpolation time (i.e. alpha)?
     s32 mv_vec;
@@ -330,20 +330,20 @@ s32 vcRetSmoothCamMvF(VECTOR3* old_pos, VECTOR3* now_pos, SVECTOR* old_ang, SVEC
     s32 rot_y;
 
     intrpt = FP_TO(g_DeltaTime0, Q12_SHIFT) / FP_FLOAT_TO(1.0f / TICKS_PER_SECOND, Q12_SHIFT);
-    intrpt = CLAMP(intrpt, FP_FLOAT_TO(INTRPT_MIN_TIME, Q12_SHIFT), FP_FLOAT_TO(INTRPT_MAX_TIME, Q12_SHIFT));
+    intrpt = CLAMP(intrpt, FP_FLOAT_TO(INTRPT_TIME_MIN, Q12_SHIFT), FP_FLOAT_TO(INTRPT_TIME_MAX, Q12_SHIFT));
 
     mv_vec = Math_VectorMagnitude(FP_FROM(now_pos->vx - old_pos->vx, Q4_SHIFT),
                                   FP_FROM(now_pos->vy - old_pos->vy, Q4_SHIFT),
                                   FP_FROM(now_pos->vz - old_pos->vz, Q4_SHIFT));
 
     mv_vec = FP_TO(mv_vec, Q12_SHIFT) / intrpt;
-    if (mv_vec > FP_METER(MOVEMENT_MAX_METER))
+    if (mv_vec > FP_METER(MOVEMENT_METER_MAX))
     {
         return 0;
     }
 
     rot_x = FP_TO(((now_ang->vx - old_ang->vx) >= 0) ? (now_ang->vx - old_ang->vx) : (old_ang->vx - now_ang->vx), Q12_SHIFT) / intrpt;
-    if (rot_x > FP_ANGLE(ROT_X_MAX_ANGLE))
+    if (rot_x > FP_ANGLE(ROT_X_ANGLE_MAX))
     {
         return 0;
     }
@@ -355,7 +355,7 @@ s32 vcRetSmoothCamMvF(VECTOR3* old_pos, VECTOR3* now_pos, SVECTOR* old_ang, SVEC
     rot_x = ((now_ang->vx - old_ang->vx) >= 0) ? now_ang->vx : old_ang->vx;
 
     rot_y = FP_MULTIPLY(rot_y, shRcos(now_ang->vx), Q12_SHIFT);
-    return rot_y <= FP_ANGLE(ROT_Y_MAX_ANGLE);
+    return rot_y <= FP_ANGLE(ROT_Y_ANGLE_MAX);
 }
 
 VC_CAM_MV_TYPE vcRetCurCamMvType(VC_WORK* w_p) // 0x80081428

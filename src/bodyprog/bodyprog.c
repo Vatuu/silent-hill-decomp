@@ -1347,9 +1347,10 @@ void func_80037E40(s_SubCharacter* arg0) // 0x80037E40
 {
     if (arg0->field_C0 > 0)
     {
-        arg0->field_3E |= 0x20;
+        arg0->field_3E |= 1 << 5;
         return;
     }
+
     arg0->field_3E &= 0xFFDF;
 }
 
@@ -2067,14 +2068,15 @@ s32 func_8003CD5C() // 0x8003CD5C
 void func_8003CD6C(s_MapWork* arg0) // 0x8003CD6C
 {
     s32 var_a0;
-    s8 temp_v0;
+    s8  temp_v0;
 
     temp_v0 = arg0->field_F;
-    var_a0 = NO_VALUE;
+    var_a0  = NO_VALUE;
     if (temp_v0 != NO_VALUE)
     {
         var_a0 = temp_v0 + 0x80;
     }
+
     func_8003CDA0(var_a0);
 }
 
@@ -2162,38 +2164,32 @@ void GameFs_FlameGfxLoad() // 0x8003E710
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003E740);
 
 /**
-Please investigate me!
-*/
+ * TODO: Please investigate me!
+ */
 void func_8003EB54() // 0x8003EB54
 {
-    s_StructUnk0* temp_a0;
-    s_StructUnk1* temp_v0;
+    s_StructUnk0*  temp_a0;
+    s_StructUnk1*  temp_v0;
     GsCOORDINATE2* temp_v1;
 
     g_SysWork.field_2378 = 0x1000;
 	
-	
     temp_v1 = &g_SysWork.playerBoneCoords_890[0];
     temp_a0 = &g_SysWork.field_2360;
-	
 	
     g_SysWork.field_235C = temp_v1;
     g_SysWork.field_236C = temp_v1;
     g_SysWork.field_2360.field_0 = 0;
 	
-	
     temp_a0->field_4 = -0x333;
     temp_a0->field_8 = -0x2000;
 	
-	
     g_SysWork.field_2370.field_0 = 0x71;
-	
 	
     temp_v0 = &g_SysWork.field_2370;
     temp_v0->field_2 = 0;
     temp_v0->field_4 = 0;
 }
-
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003EBA0);
 

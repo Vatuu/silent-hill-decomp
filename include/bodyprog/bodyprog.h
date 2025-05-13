@@ -1044,9 +1044,9 @@ extern s_800AD4C8 D_800AD4C8[];
 typedef struct _SpawnInfo
 {
     q19_12 positionX_0;
-    s8     charaId_4;             /** `e_ShCharacterId` */
+    s8     charaId_4;   /** `e_ShCharacterId` */
     u8     rotationY_5; /** Multiplied by 16 to get `s_SubCharacter.rotation_24.vy` value. */
-    s8     flags_6; /** Copied to `isAnimStateUnchanged_3` in `s_Model`. */
+    s8     flags_6;     /** Copied to `isAnimStateUnchanged_3` in `s_Model`. */
     s8     unk_7;
     q19_12 positionZ_8;
 } s_SpawnInfo;
@@ -1072,9 +1072,9 @@ typedef struct _MapOverlayHeader
     s8           field_14;
     u8           unk_15[3];
     u8           unk_18[8];
-    void         (**mapEventFuncs_20)(); /** Points to array of event functions. */
+    void         (**mapEventFuncs_20)();                                            /** Points to array of event functions. */
     u8           unk_24[12];
-    char**       mapMessageStrings_30;   /** Points to array of `char*` for each displayed message in the map. */
+    char**       mapMessageStrings_30;                                              /** Points to array of `char*` for each displayed message in the map. */
     u8           unk_34[12];
     void         (*func_40)();
     void         (*func_44)();
@@ -1091,9 +1091,9 @@ typedef struct _MapOverlayHeader
     u8           unk_16C[4];
     u8           unk_170[36];
     void         (*charaUpdateFuncs_194[Chara_Count])(s_SubCharacter*, void*, s32); /** Guessed params. Funcptrs for each `e_ShCharacterId`, set to 0 for IDs not included in the map overlay. Called by `func_80038354`. */
-    u8           charaGroupIds_248[4]; /** `e_ShCharacterId` values where if `s_SpawnInfo.charaId_4` == 0, `charaGroupIds_248[0]` is used for `charaSpawnsA_24C` and `charaGroupIds_248[1]` for `charaSpawnsB_30C`. */
-    s_SpawnInfo  charaSpawnsA_24C[16]; /** Array of chara type/position/flags, flags_6 == 0 are unused slots?, read by `func_80037F24`. */
-    s_SpawnInfo  charaSpawnsB_30C[16]; /** Array of chara type/position/flags, flags_6 == 0 are unused slots?, read by `func_80037F24`. */
+    u8           charaGroupIds_248[4];                                              /** `e_ShCharacterId` values where if `s_SpawnInfo.charaId_4` == 0, `charaGroupIds_248[0]` is used for `charaSpawnsA_24C` and `charaGroupIds_248[1]` for `charaSpawnsB_30C`. */
+    s_SpawnInfo  charaSpawnsA_24C[16];                                              /** Array of chara type/position/flags, flags_6 == 0 are unused slots? Read by `func_80037F24`. */
+    s_SpawnInfo  charaSpawnsB_30C[16];                                              /** Array of chara type/position/flags, flags_6 == 0 are unused slots? Read by `func_80037F24`. */
     VC_ROAD_DATA roadDataList_3CC[48];
     // TODO: A lot more in here.
 } s_MapOverlayHeader;
