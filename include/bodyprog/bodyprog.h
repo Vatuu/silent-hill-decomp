@@ -1626,6 +1626,8 @@ void func_8005BF0C(s16 unused, s16 x, s16 y);
 
 s16 func_8005BF38(s16 arg0);
 
+void func_8005CB20(s_SubCharacter*, void*, s16, s16);
+
 void func_800622B8(s32, s_SubCharacter*, s32, s32);
 
 void func_80066E40();

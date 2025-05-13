@@ -18,6 +18,7 @@ AI_Stalker_Update = 0x800D3560; // type:func
 sharedFunc_800D5098_0_s00 = 0x800D5890; // type:func
 sharedFunc_800D63D0_0_s00 = 0x800D6BC8; // type:func
 sharedFunc_800D670C_0_s00 = 0x800D6F04; // type:func
+sharedFunc_800D67FC_0_s00 = 0x800D6FF4; // type:func
 sharedFunc_800D7E04_0_s00 = 0x800D85FC; // type:func
 AI_MonsterCybil_Update = 0x800D8908; // type:func
 AI_Alessa_Update = 0x800DC2B4; // type:func
