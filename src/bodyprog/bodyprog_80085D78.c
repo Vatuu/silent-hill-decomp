@@ -1131,7 +1131,7 @@ void func_80089314(s32 arg0) // 0x80089314
     s32 var0;
     s32 var1;
 
-    var0 = 24;
+    var0        = 24;
     D_800AFD05 += g_VBlanks;
     
     if (arg0 != 0)
@@ -1157,7 +1157,25 @@ void func_80089314(s32 arg0) // 0x80089314
     func_800892DC(0x15, (D_800AFD04 + 32) & 0xFF);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800893D0);
+void func_800893D0(s32 arg0) // 0x800893D0
+{
+    u32 var;
+
+    if (arg0 > FP_TO(25, Q12_SHIFT)) // 25 in Q19.12.
+    {
+        var = 200;
+    }
+    else if (arg0 < FP_TO(5, Q12_SHIFT)) // 5 in Q19.12.
+    {
+        var = 100;
+    }
+    else 
+    {
+        var = ((arg0 + FP_TO(15, Q12_SHIFT)) / FP_TO(5, Q12_SHIFT)) * 25; // 15 and 5 in Q19.12.
+    }
+    
+    func_800892DC(10, (u8)var);
+}
 
 void func_8008944C() // 0x8008944C
 {
