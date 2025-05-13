@@ -97,7 +97,7 @@ void sharedFunc_800D923C_0_s00(s_SubCharacter* playerChara);
 
 // MAP3_S03 puppet nurse/doctor funcs
 void sharedFunc_800CDA88_3_s03(s_SubCharacter*);
-void sharedFunc_800CDF24_3_s03();
+void sharedFunc_800CDF24_3_s03(s_SubCharacter*);
 void sharedFunc_800D01D0_3_s03(s_SubCharacter*);
 void sharedFunc_800D02E4_3_s03(s_SubCharacter*, s32);
 void sharedFunc_800D03E4_3_s03(s_SubCharacter*);
