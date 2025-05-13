@@ -151,9 +151,9 @@ INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", sharedFunc_800D03E4_3_s03
 
 INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", sharedFunc_800D06AC_3_s03);
 
-INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800D0828);
+INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", sharedFunc_800D0828_3_s03);
 
-INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", sharedFunc_800D0968_3_s03);
+#include "maps/shared/sharedFunc_800D0968_3_s03.h" // 0x800D0968
 
 INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", Ai_Bloodsucker_Update); // 0x800D09C4
 

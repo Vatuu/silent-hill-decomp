@@ -102,6 +102,7 @@ void sharedFunc_800D01D0_3_s03(s_SubCharacter*);
 void sharedFunc_800D02E4_3_s03(s_SubCharacter*, s32);
 void sharedFunc_800D03E4_3_s03(s_SubCharacter*);
 void sharedFunc_800D06AC_3_s03(s_SubCharacter*, s32, s32);
+void sharedFunc_800D0828_3_s03(s_SubCharacter*, s32);
 void sharedFunc_800D0968_3_s03(s_SubCharacter*, s32);
 void sharedFunc_800CDAB8_3_s03(s_SubCharacter* chara, s32 arg1, s32 arg2);
 
