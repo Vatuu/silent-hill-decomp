@@ -581,6 +581,13 @@ typedef struct _Model
 } s_Model;
 STATIC_ASSERT_SIZEOF(s_Model, 24);
 
+typedef union 
+{
+    s32 val32;
+    s16 val16[2];
+    s8  val8[4];
+} u_Property;
+
 typedef struct _SubCharacter
 {
     s_Model model_0;
@@ -615,7 +622,7 @@ typedef struct _SubCharacter
     s16 field_DC;
     s16 field_DE;
     s32 flags_E0;
-    s32 properties_E4[CHARA_PROPERTY_COUNT_MAX];
+    s32 properties_E4[CHARA_PROPERTY_COUNT_MAX]; // TODO: Integrate as `u_Property`.
     s8  unk_10C;
     u8  field_10D;
     s8  unk_10E[6];
