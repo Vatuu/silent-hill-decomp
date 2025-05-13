@@ -391,7 +391,44 @@ VC_CAM_MV_TYPE vcRetCurCamMvType(VC_WORK* w_p) // 0x80081428
     return w_p->cur_near_road_2B8.road_p_0->cam_mv_type_14;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vc_main", func_8008150C);
+s32 func_8008150C(s32 posX, s32 posZ)
+{
+    switch (func_8003BD2C())
+    {
+        case 0:
+            if ((posX - FP_METER(3228.8f)) > (u32)FP_METER(451.205f))
+            {
+                return 0;
+            }
+            else if (posZ < -FP_METER(1472.0f))
+            {
+                return 0;
+            }
+            else if (posZ <= -FP_METER(1088.0f))
+            {
+                return 1;
+            }
+
+            break;
+        case 3:
+            if ((posX + FP_METER(3680.0f)) > (u32)FP_METER(464.0f))
+            {
+                return 0;
+            }
+            else if (posZ < -FP_METER(192.0f))
+            {
+                return 0;
+            }
+            else if (posZ <= FP_METER(192.0f))
+            {
+                return 1;
+            }
+
+            break;
+    }
+
+    return 0;
+}
 
 s32 vcRetThroughDoorCamEndF(VC_WORK* w_p) // 0x800815F0
 {

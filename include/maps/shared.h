@@ -1,6 +1,17 @@
 #ifndef _MAPS_SHARED_H
 #define _MAPS_SHARED_H
 
+extern s32 sharedData_800CAB70_0_s00; // Type assumed.
+
+extern s32 sharedData_800DFB6C_0_s00;
+extern s32 sharedData_800DFB70_0_s00;
+extern s32 sharedData_800E0CA8_0_s00;
+extern s32 sharedData_800E0CAC_0_s00;
+extern u16 sharedData_800E0CB4_0_s00;
+extern u16 sharedData_800E0CB6_0_s00;
+extern u16 sharedData_800E0CB8_0_s00;
+extern s32 sharedData_800E32D0_0_s00;
+
 extern s8 sharedData_800DD59C_0_s00;
 
 extern s16 sharedData_800E0C6E_0_s00;
@@ -16,6 +27,8 @@ extern s32 sharedData_800E39D8_0_s00;
 s32 sharedFunc_800CBBBC_0_s00();
 
 void sharedFunc_800D01BC_0_s00(u16* arg0, VECTOR3* arg1, s32 arg2);
+
+s32 sharedFunc_800D0B18_0_s00(s32 arg0);
 
 void sharedFunc_800D0E04_0_s00();
 
@@ -45,6 +58,18 @@ u8 sharedFunc_800D2EA4_0_s00();
 void sharedFunc_800D2EB4_0_s00();
 
 void sharedFunc_800D2EF4_0_s00();
+
+void sharedFunc_800D5098_0_s00(s_SubCharacter* chara);
+
+void sharedFunc_800D63D0_0_s00(s_SubCharacter* chara, s32 arg1);
+
+void sharedFunc_800D6554_0_s00(s_SubCharacter* chara);
+
+void sharedFunc_800D670C_0_s00(s_SubCharacter* arg0);
+
+void sharedFunc_800D67FC_0_s00(s_SubCharacter* chara);
+
+void sharedFunc_800D7E04_0_s00(s_SubCharacter* chara, s32 caseArg);
 
 void sharedFunc_800D88AC_0_s00(s_SubCharacter* playerChara);
 

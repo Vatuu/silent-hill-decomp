@@ -87,7 +87,7 @@ INCLUDE_ASM("asm/maps/map5_s02/nonmatchings/map5_s02", func_800CEBFC);
 
 INCLUDE_ASM("asm/maps/map5_s02/nonmatchings/map5_s02", func_800CF7CC);
 
-INCLUDE_ASM("asm/maps/map5_s02/nonmatchings/map5_s02", func_800CFF38);
+#include "maps/shared/sharedFunc_800D5098_0_s00.h" // 0x800CFF38
 
 INCLUDE_ASM("asm/maps/map5_s02/nonmatchings/map5_s02", func_800D0348);
 
@@ -101,11 +101,11 @@ INCLUDE_ASM("asm/maps/map5_s02/nonmatchings/map5_s02", func_800D1270);
 
 void func_800D143C(void) {}
 
-INCLUDE_ASM("asm/maps/map5_s02/nonmatchings/map5_s02", func_800D1444);
+#include "maps/shared/sharedFunc_800D6554_0_s00.h" // 0x800D1444
 
-INCLUDE_ASM("asm/maps/map5_s02/nonmatchings/map5_s02", func_800D15FC);
+#include "maps/shared/sharedFunc_800D670C_0_s00.h" // 0x800D15FC
 
-INCLUDE_ASM("asm/maps/map5_s02/nonmatchings/map5_s02", func_800D16EC);
+#include "maps/shared/sharedFunc_800D67FC_0_s00.h" // 0x800D16EC
 
 INCLUDE_ASM("asm/maps/map5_s02/nonmatchings/map5_s02", func_800D1860);
 
@@ -113,7 +113,7 @@ INCLUDE_ASM("asm/maps/map5_s02/nonmatchings/map5_s02", func_800D1FB4);
 
 INCLUDE_ASM("asm/maps/map5_s02/nonmatchings/map5_s02", func_800D2AD8);
 
-INCLUDE_ASM("asm/maps/map5_s02/nonmatchings/map5_s02", func_800D2CF4);
+#include "maps/shared/sharedFunc_800D7E04_0_s00.h" // 0x800D2CF4
 
 INCLUDE_ASM("asm/maps/map5_s02/nonmatchings/map5_s02", AI_Kaufmann_Update); // 0x800D2EA8
 

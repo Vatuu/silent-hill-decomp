@@ -1,3 +1,4 @@
+sharedData_800CAB70_0_s00 = 0x800CA618; // type:s32
 sharedFunc_800D0E04_0_s00 = 0x800CBBD0; // type:func
 sharedFunc_800D209C_0_s00 = 0x800CD5F4; // type:func
 sharedFunc_800D20D8_0_s00 = 0x800CD630; // type:func
@@ -12,7 +13,13 @@ sharedFunc_800D2E60_0_s00 = 0x800CDB60; // type:func
 sharedFunc_800D2EA4_0_s00 = 0x800CDBA4; // type:func
 sharedFunc_800D2EB4_0_s00 = 0x800CDBB4; // type:func
 sharedFunc_800D2EF4_0_s00 = 0x800CDBF4; // type:func
-
+AI_Stalker_Update = 0x800CDC08; // type:func
+sharedFunc_800D5098_0_s00 = 0x800CFF38; // type:func
+sharedFunc_800D6554_0_s00 = 0x800D1444; // type:func
+sharedFunc_800D670C_0_s00 = 0x800D15FC; // type:func
+sharedFunc_800D67FC_0_s00 = 0x800D16EC; // type:func
+sharedFunc_800D7E04_0_s00 = 0x800D2CF4; // type:func
+AI_Kaufmann_Update = 0x800D2EA8; // type:func
 sharedFunc_800D88AC_0_s00 = 0x800D3AFC; // type:func
 sharedFunc_800D88C0_0_s00 = 0x800D3B10; // type:func
 sharedFunc_800D8904_0_s00 = 0x800D3B54; // type:func
@@ -23,11 +30,7 @@ sharedFunc_800D8950_0_s00 = 0x800D3BA0; // type:func
 sharedFunc_800D9064_0_s00 = 0x800D42B4; // type:func
 sharedFunc_800D9078_0_s00 = 0x800D42C8; // type:func
 sharedFunc_800D923C_0_s00 = 0x800D44AC; // type:func
-
 sharedFunc_800D929C_0_s00 = 0x800D450C; // type:func
-
 sharedData_800DD59C_0_s00 = 0x800D7270; // type:u8
-
+sharedData_800E0CB8_0_s00 = 0x800DA648; // type:u16
 sharedData_800E39D8_0_s00 = 0x800DA668; // type:s32
-AI_Stalker_Update = 0x800CDC08; // type:func
-AI_Kaufmann_Update = 0x800D2EA8; // type:func

@@ -13,6 +13,7 @@
 #define IMAGE_BUFFER_0 ((u_long*)0x801CFA00)
 #define IMAGE_BUFFER_1 ((u_long*)0x801C8200)
 #define IMAGE_BUFFER_2 ((u_long*)0x801ABE00)
+#define FONT24_BUFFER ((u_long*)0x801F5600) // Loaded by `GameFs_StfRollBinLoad`.
 
 #define CD_ADDR_0 0x801E2600
 
@@ -598,6 +599,8 @@ extern s_FsImageDesc D_800A904C;
 extern s_FsImageDesc D_800A9054;
 
 extern s_FsImageDesc D_800A906C;
+
+extern s_FsImageDesc D_800A909C; // Passed to `func_800917C0` for loading FONT24.TIM.
 
 /** Array containg file IDs used for each `e_ShCharacterId`, used in `Fs_QueueStartReadAnm`. */
 extern s_CharaFileInfo g_Chara_FileInfo[45]; // 0x800A90FC
@@ -1190,6 +1193,8 @@ void SysState_Fmv_Update();
 
 void func_8003B550();
 
+s32 func_8003BD2C();
+
 /** Unknown bodyprog func. Called by `Fs_QueueDoThingWhenEmpty`. */
 s32 func_8003C850();
 
@@ -1423,9 +1428,13 @@ void func_80054928();
 
 void func_80054A04(s8 arg0);
 
+s32 func_8005C7D0(s_SubCharacter*, s32);
+
 void func_8005E0DC(s32 arg0); // Types assumed.
 
 void func_8005E89C();
+
+void func_8005F6B0(s_SubCharacter*, s32*, s32, s32);
 
 /** Unknown bodyprog func. Called by `Fs_QueueWaitForEmpty`. */
 void func_80089128();
@@ -1587,6 +1596,8 @@ void func_8009185C(s16 arg0, s16 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s
 
 void func_80091380();
 
+void func_800917C0(void*, s32, s_FsImageDesc*);
+
 // TODO: Arrange these in address order for better insight into the original interface. -- Sezz
 // ------------------------------------------------------------------
 
@@ -1620,7 +1631,11 @@ void func_8005B474(s32* arg0, u32 arg1, s32 idx);
 /** Sets the debug string position. */
 void func_8005BF0C(s16 unused, s16 x, s16 y);
 
-s16 func_8005BF38(s32 arg0);
+s16 func_8005BF38(s16 arg0);
+
+void func_8005CB20(s_SubCharacter*, void*, s16, s16);
+
+void func_800622B8(s32, s_SubCharacter*, s32, s32);
 
 void func_80066E40();
 
@@ -1633,6 +1648,10 @@ s32 func_8006A3B4(s32 arg0, s32 arg1, s32 arg2);
 void func_8006BDDC(s_func_8006BDDC* arg0, s16 arg1, s16 arg2);
 
 s32 func_8006CC44(s32 arg0, s32 arg1, s_func_8006CC44* arg2);
+
+s32 func_8006FD90(s_SubCharacter*, s32, s32, s32);
+
+s32 func_80070360(s_SubCharacter*, s32, s32);
 
 void func_80074254(s32 arg0, s32 arg1); // `arg1` is pointer?
 

@@ -1,3 +1,4 @@
+sharedData_800CAB70_0_s00 = 0x800CACD8; // type:s32
 sharedFunc_800D0E04_0_s00 = 0x800CE168; // type:func
 sharedFunc_800D209C_0_s00 = 0x800D00E4; // type:func
 sharedFunc_800D20D8_0_s00 = 0x800D0120; // type:func
@@ -12,7 +13,19 @@ sharedFunc_800D2E60_0_s00 = 0x800D0650; // type:func
 sharedFunc_800D2EA4_0_s00 = 0x800D0694; // type:func
 sharedFunc_800D2EB4_0_s00 = 0x800D06A4; // type:func
 sharedFunc_800D2EF4_0_s00 = 0x800D06E4; // type:func
-
+AI_Stalker_Update = 0x800D06F8; // type:func
+sharedFunc_800D5098_0_s00 = 0x800D2A28; // type:func
+sharedFunc_800D6554_0_s00 = 0x800D3F34; // type:func
+sharedFunc_800D670C_0_s00 = 0x800D40EC; // type:func
+sharedFunc_800D67FC_0_s00 = 0x800D41DC; // type:func
+sharedFunc_800D7E04_0_s00 = 0x800D57E4; // type:func
+AI_Lisa_Update = 0x800D5998; // type:func
+AI_BloodyLisa_Update = 0x800D6484; // type:func
+AI_Bloodsucker_Update = 0x800D6874; // type:func
+AI_Dahlia_Update = 0x800D6ED4; // type:func
+AI_GhostChildAlessa_Update = 0x800D7A68; // type:func
+AI_Kaufmann_Update = 0x800D7EAC; // type:func
+AI_GhostDoctor_Update = 0x800D8AF0; // type:func
 sharedFunc_800D88AC_0_s00 = 0x800D8C74; // type:func
 sharedFunc_800D88C0_0_s00 = 0x800D8C88; // type:func
 sharedFunc_800D8904_0_s00 = 0x800D8CCC; // type:func
@@ -23,17 +36,7 @@ sharedFunc_800D8950_0_s00 = 0x800D8D18; // type:func
 sharedFunc_800D9064_0_s00 = 0x800D949C; // type:func
 sharedFunc_800D9078_0_s00 = 0x800D94B0; // type:func
 sharedFunc_800D923C_0_s00 = 0x800D96F4; // type:func
-
 sharedFunc_800D929C_0_s00 = 0x800D9754; // type:func
-
 sharedData_800DD59C_0_s00 = 0x800E5B38; // type:u8
-
+sharedData_800E0CB8_0_s00 = 0x800EB600; // type:u16
 sharedData_800E39D8_0_s00 = 0x800EB620; // type:s32
-AI_Stalker_Update = 0x800D06F8; // type:func
-AI_Bloodsucker_Update = 0x800D6874; // type:func
-AI_Dahlia_Update = 0x800D6ED4; // type:func
-AI_Lisa_Update = 0x800D5998; // type:func
-AI_BloodyLisa_Update = 0x800D6484; // type:func
-AI_GhostChildAlessa_Update = 0x800D7A68; // type:func
-AI_Kaufmann_Update = 0x800D7EAC; // type:func
-AI_GhostDoctor_Update = 0x800D8AF0; // type:func

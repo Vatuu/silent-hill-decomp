@@ -24,6 +24,13 @@
 #define SCREEN_POSITION_Y(percent) \
     (s32)((SCREEN_HEIGHT) * ((percent) / 100.0f))
 
+/** @brief Accessors for low & high parts of each character property, returns a pointer which can be read or written to. */
+#define GET_PROPERTY_LOW(prop) \
+    ((u16*)&(prop))
+
+#define GET_PROPERTY_HIGH(prop) \
+    ((u16*)&(prop) + 1)
+
 /** @brief Color IDs used by strings displayed on the screen. */
 typedef enum _ColorId
 {
@@ -686,12 +693,19 @@ typedef struct _SysWork
     s8              pad_E30[400];  // Might be part of previous array for 5 exra coords which go unused.
     s8              unk_FC0[4802]; // Start is tightly-packed buffer for NPC bone coords. Size unclear, appears to be enough for 60 before what might be AI data.
     s8              field_2282;
-    s8              unk_2283[21];
+    s8              unk_2283[7];
+    u16             field_228A;
+    s8              unk_228C[12];
     s32             flags_2298;    // Something related to map loading.
     s8              unk_229C[4];
     s32             field_22A0;
     s32             flags_22A4;
-    s8              unk_22A8[168];
+    s8              unk_22A8[160];
+    s8              field_2348;
+    s8              field_2349;
+    u8              field_234A;
+    u8              unk_234B[1];
+    u8              unk_234C[4];
     s32             field_2350_0 : 4;
     s32             field_2350_4 : 4;
     s32             field_2351 : 16;
