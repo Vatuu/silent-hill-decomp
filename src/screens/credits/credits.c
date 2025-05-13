@@ -1001,7 +1001,7 @@ void func_801E4394(u8* str) // 0x801E4394
         charWidth = widthTable[charCode];
 
         // Normal font.
-        if ((charCode - 0x21) < 0x64)
+        if (charCode >= 0x21 && charCode < 0x85)
         {
             sprite = (SPRT*)packet;
             addPrimFast(addr, sprite, 4);
@@ -1021,7 +1021,7 @@ void func_801E4394(u8* str) // 0x801E4394
             sprite16 = (SPRT_16*)packet;
 
             // KCET font.
-            if ((charCode - 0xA0) < 0x10)
+            if (charCode >= 0xA0 && charCode < 0xB0)
             {
                 addPrimFast(addr, sprite16, 3);
                 *(u32*)(&sprite16->r0) = colorCode ^ (0x18 << 24); // GP0(7Ch) - Textured Rectangle, 16x16, opaque, texture-blending.
@@ -1032,7 +1032,7 @@ void func_801E4394(u8* str) // 0x801E4394
                 packet += sizeof(SPRT_16);
             }
             // KCET font, .YVUTSR.
-            else if ((charCode - 0xB8) < 7)
+            else if (charCode >= 0xB8 && charCode < 0xBF)
             {
                 addPrimFast(addr, sprite16, 3);
                 *(u32*)(&sprite16->r0) = colorCode ^ (0x18 << 24); // GP0(7Ch) - Textured Rectangle, 16x16, opaque, texture-blending.
@@ -1043,12 +1043,12 @@ void func_801E4394(u8* str) // 0x801E4394
                 packet += sizeof(SPRT_16);
             }
             // Change font color.
-            else if ((charCode - 1) < 7)
+            else if (charCode >= 1 && charCode < 8)
             {
                 colorCode = colorTable[charCode - 1] | ((u8)D_800AFE08.field_7 << 25);
             }
             // Change font width table?
-            else if ((charCode - 0xD0) < 8)
+            else if (charCode >= 0xD0 && charCode < 0xD8)
             {
                 scanPtr  = strPtr + 1;
                 widthSum = 0;
@@ -1291,7 +1291,7 @@ void func_801E4C1C(u8* str) // 0x801E4C1C
         charWidth = widthTable[charCode];
 
         // Normal font.
-        if (charCode - 0x21 < 0x64u)
+        if (charCode >= 0x21 && charCode < 0x85)
         {
             s32 offset         = 24 * 256;
             idx                = charCode - 0x21;
@@ -1331,12 +1331,12 @@ void func_801E4C1C(u8* str) // 0x801E4C1C
             packet += sizeof(POLY_FT4);
         }
         // Change font color.
-        else if ((charCode - 1) < 7u)
+        else if (charCode >= 1 && charCode < 8)
         {
             colorCode = colorTable[charCode - 1] | ((u8)D_800AFE24.field_7 << 25);
         }
         // Change font width table?
-        else if ((charCode - 0xD0) < 8u)
+        else if (charCode >= 0xD0 && charCode < 0xD8)
         {
             widthSum = 0;
             scanPtr  = str + 1;
@@ -1351,7 +1351,7 @@ void func_801E4C1C(u8* str) // 0x801E4C1C
 
                 if ((nextChar - 0xF0) >= var && (nextChar - 0xF8) >= 8u && (nextChar - 0xE0) >= 8u && (nextChar - 0xE8) >= 8u)
                 {
-                    var_t0 = (nextChar - 0xA0) < 0x10u | (nextChar - 0xB8 < 7u) << 1;
+                    var_t0 = (nextChar >= 0xA0 && nextChar < 0xB0) | (nextChar >= 0xB8 && nextChar < 0xBF) << 1;
                     if (var_t0 != 0) // map kcet font to normal
                     {
                         if (var_t0 == 1)
