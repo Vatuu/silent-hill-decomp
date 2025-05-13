@@ -1225,7 +1225,7 @@ void Gfx_SettingsOptionsMainDraw() // 0x801E4FFC
 
     Gfx_StringSetColor(ColorId_White);
 
-    if ((D_801E72F4 - 4) < 5u)
+    if (D_801E72F4 >= 4 && D_801E72F4 < 9)
     {
         for (i = 0; i < 2; i++)
         {

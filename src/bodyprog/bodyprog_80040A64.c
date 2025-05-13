@@ -932,12 +932,12 @@ void func_80045BD8(u16 caseArg) // 0x80045BD8
             break;
     }
 
-    if ((u16)(caseArg - 160) < 85)
+    if (caseArg >= 160 && caseArg < 245)
     {
         func_80047B24(caseArg);
     }
 
-    if ((u16)(caseArg - 32) < 40)
+    if (caseArg >= 32 && caseArg < 72)
     {
         func_80048244(caseArg);
     }

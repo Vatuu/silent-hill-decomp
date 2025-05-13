@@ -781,7 +781,7 @@ void MainLoop() // 0x80032EE0
 
         g_ObjectTableIdx = GsGetActiveBuff();
 
-        if ((u32)(g_GameWork.gameState_594 - 10) < 2)
+        if (g_GameWork.gameState_594 >= GameState_MainLoadScreen && g_GameWork.gameState_594 < GameState_MapEvent)
         {
             GsOUT_PACKET_P = (PACKET*)(TEMP_MEMORY_ADDR + (g_ObjectTableIdx << 17));
         }
