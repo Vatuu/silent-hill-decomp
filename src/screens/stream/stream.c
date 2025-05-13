@@ -128,43 +128,42 @@ void open_main(s32 file_idx, s16 num_frames) // 0x801E2AA4
     GsSwapDispBuff();
 }
 
-#ifdef NON_MATCHING
-void movie_main(char* file_name, s32 f_size, s32 sector)
+void movie_main(char* file_name, s32 f_size, s32 sector) // 0x801E2B9C
 {
     CdlFILE file;
-    CdlLOC loc;
-    u8 param;
-    s32 frame_no;
-    s32 search_times;
-    s_GameWork* temp_s2;
-    s32 prev_frame_no;
+    CdlLOC  loc;
+    u8      param;
+    s32     frame_no;
+    s32     search_times;
+    s32     prev_frame_no;
 
     frame_cnt = 0;
     max_frame = f_size;
 
-    m = (MOVIE_STR*)TEMP_MEMORY_ADDR;
+    m         = (MOVIE_STR*)TEMP_MEMORY_ADDR;
     m->width  = SCREEN_WIDTH;
     m->height = SCREEN_HEIGHT;
 
     if (sector == 0)
     {
         search_times = 0;
-        while (CdSearchFile(&file, file_name) == NULL)
-		{
-			if (search_times++ > 10000)
-			{
-				return;
-			}
-		}
 
-		m->loc.minute = file.pos.minute;
-		m->loc.second = file.pos.second;
-		m->loc.sector = file.pos.sector;
+        while (CdSearchFile(&file, file_name) == NULL)
+        {
+            if (search_times++ > 10000)
+            {
+                return;
+            }
+        }
+
+        m->loc.minute = file.pos.minute;
+        m->loc.second = file.pos.second;
+        m->loc.sector = file.pos.sector;
     }
     else
     {
         CdIntToPos(sector, &m->loc);
-	}
+    }
 
     strSetDefDecEnv(&m->dec, 0, 16, 0, 256);
     VSync(0);
@@ -181,65 +180,57 @@ void movie_main(char* file_name, s32 f_size, s32 sector)
     VSync(0);
 
     prev_frame_no = 0;
-    temp_s2 = g_GameWorkPtr0;
 
-    while (true)
+    do
     {
-        // TODO: maybe this disp setup code is part of some inlined func? custom SetDefDispEnv?
-        // DISPENV *SetDefDispEnv(DISPENV *env, int x, int y, int w, int h);
-        // making a static inline setupDispEnv(DISPENV*, MOVIE_STR*, s_GameWork**) func got it very close
-        // but still had register differences
-
         disp.disp.y   = 256 - (m->dec.rectid * SCREEN_HEIGHT);
-        disp.screen.x = temp_s2->config_0.screenPosX_1C;
-        disp.screen.y = 8 + ((224 - m->height) / 2) + (temp_s2->config_0.screenPosY_1D);
+        disp.screen.x = g_GameWorkPtr0->config_0.screenPosX_1C;
+        disp.screen.y = 8 + ((224 - m->height) / 2) + (g_GameWorkPtr0->config_0.screenPosY_1D);
 
-        disp.disp.y = (disp.disp.y < 16) ? 16 : (disp.disp.y > 256) ? 256 : disp.disp.y;
-        disp.screen.h = (disp.screen.h <= 0) ? 1 : (disp.screen.h > 208) ? 208 : disp.screen.h;
+        disp.disp.y   = (disp.disp.y < 16) ? 16 : (disp.disp.y > 256) ? 256
+                                                                      : disp.disp.y;
+        disp.screen.h = (disp.screen.h <= 0) ? 1 : (disp.screen.h > 208) ? 208
+                                                                         : disp.screen.h;
 
         PutDispEnv(&disp);
         nullsub_800334C8();
         Joy_Update();
         DecDCTin(m->dec.vlcbuf[m->dec.vlcid], 3);
-        DecDCTout((u_long* ) m->dec.imgbuf, m->dec.slice.w * m->dec.slice.h / 2);
+        DecDCTout((u_long*)m->dec.imgbuf, m->dec.slice.w * m->dec.slice.h / 2);
 
         while (strNextVlc(&m->dec) == NO_VALUE)
         {
             frame_no = StGetBackloc(&loc);
+
             if (max_frame < frame_no || frame_no <= 0)
             {
                 loc = file.pos;
             }
+
             strKickCD(&loc);
         }
 
-        if (frame_cnt >= max_frame)
+        if (frame_cnt >= max_frame || prev_frame_no > frame_cnt)
+        {
             break;
-
-        if (prev_frame_no > frame_cnt)
-            break;
+        }
 
         prev_frame_no = frame_cnt;
 
         strSync(&m->dec);
         VSync(0);
-
-        if ((g_ControllerPtr0->btns_new_10 & g_GameWorkPtr1->config_0.controllerBinds_0.skip))
-            break;
-        if (MainLoop_ShouldWarmReset() > 0)
-            break;
     }
+    while (!(g_ControllerPtr0->btns_new_10 & g_GameWorkPtr1->config_0.controllerBinds_0.skip) && MainLoop_ShouldWarmReset() <= 0);
 
     SsSetSerialVol(0, 0, 0);
+
     param = 0x80;
     CdControlB(CdlSetmode, &param, NULL);
     CdControlB(CdlPause, NULL, NULL);
+
     StUnSetRing();
     DecDCToutCallback(NULL);
 }
-#else
-INCLUDE_ASM("asm/screens/stream/nonmatchings/stream", movie_main);
-#endif
 
 void strSetDefDecEnv(DECENV* dec, s32 x0, s32 y0, s32 x1, s32 y1) // 0x801E2F8C
 {

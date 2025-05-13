@@ -59,10 +59,8 @@ typedef struct
 
 extern MOVIE_STR* m;
 extern s32        frame_cnt;
-#ifdef NON_MATCHING
 extern DISPENV	  disp;
 extern s32 		  max_frame;
-#endif
 
 // Handlers for movie-related GameStates
 
