@@ -1,4 +1,5 @@
 sharedData_800CAB70_0_s00 = 0x800CAE48; // type:s32
+sharedFunc_800D0A60_0_s00 = 0x800CD694; // type:func
 sharedFunc_800D0E04_0_s00 = 0x800CD8B0; // type:func
 sharedFunc_800D209C_0_s00 = 0x800CFA4C; // type:func
 sharedFunc_800D20D8_0_s00 = 0x800CFA88; // type:func
@@ -38,5 +39,6 @@ AI_Flauros_Update = 0x800DE0C4; // type:func
 AI_IntensiveCareUnit_Update = 0x800DE1CC; // type:func
 sharedFunc_800D929C_0_s00 = 0x800E1104; // type:func
 sharedData_800DD59C_0_s00 = 0x800E81C8; // type:u8
+sharedData_800E0CB0_0_s00 = 0x800ED4B4; // type:u32
 sharedData_800E0CB8_0_s00 = 0x800ED4BC; // type:u16
 sharedData_800E39D8_0_s00 = 0x800ED4DC; // type:s32

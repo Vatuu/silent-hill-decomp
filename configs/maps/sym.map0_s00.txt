@@ -2,6 +2,7 @@ sharedData_800CAB70_0_s00 = 0x800CAB70; // type:s32
 
 sharedFunc_800CBBBC_0_s00 = 0x800CBBBC; // type:func
 sharedFunc_800D01BC_0_s00 = 0x800D01BC; // type:func
+sharedFunc_800D0A60_0_s00 = 0x800D0A60; // type:func
 sharedFunc_800D0B18_0_s00 = 0x800D0B18; // type:func
 sharedFunc_800D0E04_0_s00 = 0x800D0E04; // type:func
 sharedFunc_800D209C_0_s00 = 0x800D209C; // type:func
@@ -45,6 +46,7 @@ sharedData_800DFB6C_0_s00 = 0x800DFB6C; // type:s32
 sharedData_800DFB70_0_s00 = 0x800DFB70; // type:s32
 sharedData_800E0CA8_0_s00 = 0x800E0CA8; // type:s32
 sharedData_800E0CAC_0_s00 = 0x800E0CAC; // type:s32
+sharedData_800E0CB0_0_s00 = 0x800E0CB0; // type:u32
 sharedData_800E0CB4_0_s00 = 0x800E0CB4; // type:u16
 sharedData_800E0CB6_0_s00 = 0x800E0CB6; // type:u16
 sharedData_800E0CB8_0_s00 = 0x800E0CB8; // type:u16

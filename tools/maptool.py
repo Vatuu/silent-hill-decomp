@@ -32,6 +32,8 @@ import struct
 from dataclasses import dataclass
 from typing import List
 
+MapVramAddress = 0x800C9578
+
 e_ShCharacterId = [
     "Chara_None",
     "Chara_Hero",
@@ -94,14 +96,24 @@ def q3_12(value):
     return round(value / 4096.0 * 360, 3)
 
 def count_lines_in_file(file_path):
+    glabelStr = "glabel "
     try:
         with open(file_path, 'r') as file:
-            return sum(1 for _ in file)
+            count = 0
+            start_counting = False
+
+            for line in file:
+                if start_counting:
+                    count += 1
+                elif glabelStr in line:
+                    start_counting = True  # Start counting after the glabel line
+
+            return count
     except Exception as e:
         print(f"Error reading {file_path}: {e}")
         return -1
 
-def find_shared_data_lines(text):
+def find_shared_data_lines(text, funcName):
     """
     Checks each line in `text` for sharedData_, returning each line number and sharedData var name
 
@@ -114,6 +126,12 @@ def find_shared_data_lines(text):
     pattern = r'sharedData_[a-fA-F0-9]{8}_[0-9]{1}_[a-zA-Z0-9]{3}'
     result = {}
 
+    # If we have glabel then only return contents following it (in case .rodata/jtbls preceed the func)
+    glabelStr = "glabel " + funcName
+    index = text.find(glabelStr)
+    if index != -1:
+        text = text[index + len(glabelStr):].strip()
+
     lines = text.splitlines()
     for i, line in enumerate(lines):
         if " + 0x" in line:
@@ -124,10 +142,10 @@ def find_shared_data_lines(text):
 
     return result
 
-def match_shared_data_vars(text, shared_data_map):
+def match_shared_data_vars(text, shared_data_map, funcName):
     """
-    For each line number in shared_data_map, searches the corresponding line in text
-    for the pattern D_[8 chars] and associates it with the sharedData_ value.
+    For each line number in `shared_data_map`, searches the corresponding line in `text`
+    for the pattern D_[8 chars], and associates it with the `shared_data_map` value.
 
     Args:
         new_text (str): A multiline string to scan for D_ patterns.
@@ -138,6 +156,12 @@ def match_shared_data_vars(text, shared_data_map):
     """
     d_pattern = r'D_[a-zA-Z0-9]{8}'
     result_dict = {}
+
+    # If we have glabel then only return contents following it (in case .rodata/jtbls preceed the func)
+    glabelStr = "glabel " + funcName
+    index = text.find(glabelStr)
+    if index != -1:
+        text = text[index + len(glabelStr):].strip()
 
     lines = text.splitlines()
     for line_num, shared_data_val in shared_data_map.items():
@@ -181,6 +205,138 @@ def sort_sym_by_address(input_text):
     sorted_lines = [addr_dict[addr] for addr in sorted(addr_dict.keys())]
     return "\n".join(sorted_lines)
 
+def fetch_jtbl_size(mapName, jtbl_name):
+    target_dir = os.path.join("asm", "maps", mapName, "data")
+    target_dlabel = f"dlabel {jtbl_name}"
+    target_size = f".size {jtbl_name}"
+
+    for root, _, files in os.walk(target_dir):
+        for filename in files:
+            if filename.endswith(".rodata.s"):
+                filepath = os.path.join(root, filename)
+                with open(filepath, "r", encoding="utf-8") as f:
+                    lines = f.readlines()
+
+                dlabel_index = -1
+                size_index = -1
+
+                for i, line in enumerate(lines):
+                    if target_dlabel in line:
+                        dlabel_index = i
+                    elif dlabel_index != -1 and target_size in line:
+                        size_index = i
+                        break
+
+                if dlabel_index != -1 and size_index != -1:
+                    line_count = size_index - dlabel_index - 1
+                    return line_count * 4 # each jtbl entry is 4 bytes
+
+    return None  # jtbl not found
+
+def fetch_jtbl_file_offset(jtbl_name):
+    try:
+        hex_part = jtbl_name.split('_')[1]
+        value = int(hex_part, 16)
+        offset = value - MapVramAddress # maps begin at 0x800C9578
+        return offset
+    except (IndexError, ValueError):
+        return None
+
+def insert_jtbl_to_config(mapName, jtblName):
+    # Kinda ugly func to parse config yaml, since we can't rely on python yaml packages to keep the layout of our config files :/
+    #
+    # This func parses each subsegment in config yaml, then inserts a rodata segment for the jtbl
+    # If jtbl offset + jtbl size doesn't equal the next segment, a new "rodata" segment is then added
+
+    jtbl_offset = fetch_jtbl_file_offset(jtblName)
+    if jtbl_offset is None:
+        print(f"insert_jtbl_to_config: error fetching offset of {mapName} {jtblName}")
+        return False
+
+    jtbl_size = fetch_jtbl_size(mapName, jtblName)
+    if jtbl_offset is None or jtbl_size is None:
+        print(f"insert_jtbl_to_config: error fetching size of {mapName} {jtblName}")
+        return False
+
+    config_path = os.path.join("configs", "maps", f"{mapName}.yaml")
+
+    with open(config_path, "r", encoding="utf-8") as f:
+        lines = f.readlines()
+
+    output_lines = []
+    in_subsegments = False
+    subsegment_lines = []
+    subsegment_start_idx = 0
+
+    # First pass: extract subsegments block
+    for i, line in enumerate(lines):
+        stripped = line.strip()
+        if stripped.startswith("subsegments:"):
+            in_subsegments = True
+            subsegment_start_idx = i
+            output_lines.append(line)  # include the subsegments: line
+            continue
+
+        if in_subsegments:
+            if not stripped.startswith("- ["):
+                in_subsegments = False
+                continue
+            subsegment_lines.append((i, line))
+
+    # Parse entries as (offset, line_index, line_text)
+    parsed_segments = []
+    for idx, line in subsegment_lines:
+        try:
+            start = line.index("[") + 1
+            end = line.index("]")
+            items = line[start:end].split(",")
+            offset = int(items[0].strip(), 16)
+            parsed_segments.append((offset, idx, line))
+        except Exception:
+            pass  # leave invalid lines alone
+
+    # Insert jtbl and optional rodata filler entry
+    jtbl_entry = f"      - [0x{jtbl_offset:X}, .rodata, {mapName}]\n"
+    jtbl_end = jtbl_offset + jtbl_size
+    offsets = [entry[0] for entry in parsed_segments]
+    inserted = False
+    filler_needed = True
+
+    for i in range(len(parsed_segments)):
+        cur_offset, _, _ = parsed_segments[i]
+        if cur_offset > jtbl_offset:
+            parsed_segments.insert(i, (jtbl_offset, -1, jtbl_entry))
+            inserted = True
+
+            if jtbl_end != cur_offset:
+                filler_line = f"      - [0x{jtbl_end:X}, rodata]\n"
+                parsed_segments.insert(i + 1, (jtbl_end, -1, filler_line))
+            else:
+                filler_needed = False
+            break
+
+    if not inserted:
+        parsed_segments.append((jtbl_offset, -1, jtbl_entry))
+        if filler_needed:
+            filler_line = f"      - [0x{jtbl_end:X}, rodata]\n"
+            parsed_segments.append((jtbl_end, -1, filler_line))
+
+    # Sort and reconstruct the subsegment block
+    parsed_segments.sort(key=lambda x: x[0])
+    new_subsegment_lines = [entry[2] for entry in parsed_segments]
+
+    # Reassemble full file
+    result_lines = (
+        lines[:subsegment_start_idx + 1]
+        + new_subsegment_lines
+        + lines[subsegment_start_idx + 1 + len(subsegment_lines):]
+    )
+
+    with open(config_path, "w", encoding="utf-8") as f:
+        f.writelines(result_lines)
+
+    return True
+
 def read_file(path):
     try:
         with open(path, 'r') as file:
@@ -190,15 +346,23 @@ def read_file(path):
         print(f"Error reading {path}: {e}")
         return None
 
-def clean_file(content):
+def clean_file(content, funcName):
     if content is None:
         return None
+
+    # If we have glabel then only return contents following it (in case .rodata/jtbls preceed the func)
+    glabelStr = "glabel " + funcName
+    index = content.find(glabelStr)
+    if index != -1:
+        content = content[index + len(glabelStr):].strip()
+
     # Remove /* blockquote comments */
     content = re.sub(r'/\*.*?\*/', '', content, flags=re.DOTALL)
     # Remove func_[8 chars], sharedFunc_[8 chars]_[digit]_[3 chars], L[8 chars], jtbl_[8 chars]
     content = re.sub(r'func_[a-fA-F0-9]{8}', 'func', content)
     content = re.sub(r'sharedFunc_[a-fA-F0-9]{8}_[0-9]{1}_[a-zA-Z0-9]{3}', 'func', content)
-    content = re.sub(r'L[a-fA-F0-9]{8}', 'L', content)
+    content = re.sub(r'L[a-fA-F0-9]{8}:', 'L', content) # first try stripping any that have ":" appended
+    content = re.sub(r'L[a-fA-F0-9]{8}', 'L', content) # then remove any labels that didn't have ":"
     content = re.sub(r'jtbl_[a-fA-F0-9]{8}', 'jtbl', content)
 
     # Remove D_[8 chars], shared_[8 chars]_[digit]_[3 chars], along with optional "+ 0xXX" offset
@@ -212,6 +376,10 @@ def clean_file(content):
         'D',
         content
     )
+
+    # Remove jlabel text, so we can compare properly against matched C versions that are missing it
+    content = content.replace("jlabel ", "")
+
     return content
 
 def find_equal_asm_files(searchType, map1, map2, maxdistance, replaceIncludeAsm, updateSymTxtFile):
@@ -273,58 +441,70 @@ def find_equal_asm_files(searchType, map1, map2, maxdistance, replaceIncludeAsm,
 
     # search-replace changes to make inside .c file, if --replace is specified
     replacements = {}
+
+    # jtbls to add to config file
+    jtbl_list = {}
     
     if matched_files:
         print(f"Matches for distance <= {maxdistance}:")
         for file1, file2, count in matched_files:
+
+            relative_file1 = os.path.relpath(file1, map1_asm_path)
+            relative_file2 = os.path.relpath(file2, map2_asm_path)
+            name_file1 = os.path.basename(file1)
+            name_file2 = os.path.basename(file2)
+            funcname_file1 = os.path.splitext(name_file1)[0]
+            funcname_file2 = os.path.splitext(name_file2)[0]
             
             # Read and clean the contents
             file1_text = read_file(file1)
             file2_text = read_file(file2)
-            content1 = clean_file(file1_text)
-            content2 = clean_file(file2_text)
+            content1 = clean_file(file1_text, funcname_file1)
+            content2 = clean_file(file2_text, funcname_file2)
             
             if content1 is not None and content2 is not None:
                 # Compute Levenshtein distance
                 distance = Levenshtein.distance(content1, content2)
                 if distance <= maxdistance:
 
-                    relative_file1 = os.path.relpath(file1, map1_asm_path)
-                    relative_file2 = os.path.relpath(file2, map2_asm_path)
-                    name_file1 = os.path.basename(file1)
-                    name_file2 = os.path.basename(file2)
-
                     print(f"  {relative_file1} and {relative_file2}: {distance}")
 
                     # If first map file contains sharedData_ lines, try to find the D_ reference on the same line # inside second map, and build up symbol list
-                    shared_data_refs = find_shared_data_lines(file1_text)
+                    shared_data_refs = find_shared_data_lines(file1_text, funcname_file1)
                     if len(shared_data_refs):
-                        matched_data = match_shared_data_vars(file2_text, shared_data_refs)
+                        matched_data = match_shared_data_vars(file2_text, shared_data_refs, funcname_file2)
                         for key, value in matched_data:
                             addr = key.split("_")[1]
                             addr_int = int(addr, 16)
                             if addr_int not in sharedFuncSymbols:
                                 sharedFuncSymbols[addr_int] = value
 
+
                     # If first dir func is named sharedFunc, print symbol names/includes for user to add to second map
                     if "sharedFunc" in name_file1:
-                        funcName = name_file1.split(".")[0]
                         addr = name_file2.split("_")[1]
                         addr = addr.split(".")[0]
                         addr_int = int(addr, 16)
                         
                         if addr_int not in sharedFuncSymbols:
-                            sharedFuncSymbols[addr_int] = funcName
+                            sharedFuncSymbols[addr_int] = funcname_file1
 
                         include_key = f'INCLUDE_ASM("asm/maps/{map2}/nonmatchings/{map2}", func_{addr});'
-                        include_value = f'#include "maps/shared/{funcName}.h" // 0x{addr}'
+                        include_value = f'#include "maps/shared/{funcname_file1}.h" // 0x{addr}'
                         includeLines += "\n" + include_value
                         replacements[include_key] = include_value
+
+                        # If second map file2_text contains jtbls, add to our jtbl list
+                        pattern = r'jtbl_[0-9a-fA-F]{4,8}'
+                        for match in re.findall(pattern, file2_text):
+                            jtbl_name = f"{match}"
+                            if jtbl_name not in jtbl_list:
+                                jtbl_list[jtbl_name] = funcname_file2
 
         if sharedFuncSymbols:
             print(f"\nsym.{map2}.txt adds:")
             for addr_int in sorted(sharedFuncSymbols.keys()):
-                print(f"{sharedFuncSymbols[addr_int]} = 0x{addr_int:08X}; // type unknown, use --updsyms to read sym.{map1}.txt")
+                print(f"{sharedFuncSymbols[addr_int]} = 0x{addr_int:08X};")
 
         if includeLines:
             print("\n.c includes:")
@@ -351,6 +531,13 @@ def find_equal_asm_files(searchType, map1, map2, maxdistance, replaceIncludeAsm,
                     with open(c_path, "w", encoding="utf-8") as f:
                         f.write(c_code)
                     print(f"Updated {c_path} with new includes.")
+
+                    if jtbl_list:
+                        print(f"\nAdding jtbls to configs/maps/{map2}.yaml...")
+                        for jtbl, func_name in jtbl_list.items():
+                            print(f"  {func_name} -> {jtbl}")
+                            insert_jtbl_to_config(map2, jtbl)
+
                 else:
                     print(f"\nNo matching INCLUDE_ASM lines found in {c_path}. Nothing replaced.")
 

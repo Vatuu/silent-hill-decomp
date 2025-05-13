@@ -37,7 +37,7 @@ INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", func_800CF434);
 
 INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", func_800CF4F4);
 
-INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", func_800CF69C);
+#include "maps/shared/sharedFunc_800D0A60_0_s00.h" // 0x800CF69C
 
 #include "maps/shared/sharedFunc_800D0B18_0_s00.h" // 0x800CF754
 

@@ -7,6 +7,7 @@ extern s32 sharedData_800DFB6C_0_s00;
 extern s32 sharedData_800DFB70_0_s00;
 extern s32 sharedData_800E0CA8_0_s00;
 extern s32 sharedData_800E0CAC_0_s00;
+extern u32 sharedData_800E0CB0_0_s00;
 extern u16 sharedData_800E0CB4_0_s00;
 extern u16 sharedData_800E0CB6_0_s00;
 extern u16 sharedData_800E0CB8_0_s00;
@@ -27,6 +28,8 @@ extern s32 sharedData_800E39D8_0_s00;
 s32 sharedFunc_800CBBBC_0_s00();
 
 void sharedFunc_800D01BC_0_s00(u16* arg0, VECTOR3* arg1, s32 arg2);
+
+void sharedFunc_800D0A60_0_s00(s32 caseArg);
 
 s32 sharedFunc_800D0B18_0_s00(s32 arg0);
 
