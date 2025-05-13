@@ -66,18 +66,20 @@ Progress bars powered by [decomp.dev](https://decomp.dev)
         <tr>
             <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?unit=screens/b_konami/b_konami"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&measure=fuzzy_match&unit=screens/b_konami/b_konami&color=rgb(255,215,0)"/></a></td>
             <td>Boot screen logic.</td>
-            <td>First fully decompiled and matching overlay!</td>
+            <td><a href="https://github.com/Vatuu/silent-hill-decomp/commit/349b284d61a6901df3b96b99a612a66653d97238">First fully decompiled and matching overlay!</a></td>
         </tr>
         <tr>
           <th colspan=3>🎞 STREAM.BIN 🎞</th>
         </tr>
         <tr>
             <td>Progress</td>
-            <td colspan=2>Purpose</td>
+            <td>Purpose</td>
+            <td>Note</td>
         </tr>
         <tr>
-            <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?unit=screens/stream/stream"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&measure=fuzzy_match&unit=screens/stream/stream&color=rgb(0,200,0)"/></a></td>
-            <td colspan=2>Full motion videos stream logic.</td>
+            <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?unit=screens/stream/stream"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&measure=fuzzy_match&unit=screens/stream/stream&color=rgb(255,215,0)"/></a></td>
+            <td>Full motion videos stream logic.</td>
+            <td><a href="https://github.com/Vatuu/silent-hill-decomp/commit/d2541f2c10667860048a6bd17bc39bbd87280d47">Third fully decompiled and matching overlay!</a></td>
         </tr>
         <tr>
           <th colspan=3>💾 SAVELOAD.BIN 💾</th>
@@ -95,12 +97,13 @@ Progress bars powered by [decomp.dev](https://decomp.dev)
         </tr>
         <tr>
             <td>Progress</td>
-            <td colspan=2>Purpose</td>
+            <td>Purpose</td>
+            <td>Note</td>
         </tr>
         <tr>
             <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?unit=screens/credits/credits"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&measure=fuzzy_match&unit=screens/credits/credits&color=rgb(255,215,0)""/></a></td>
             <td>Credits roll logic.</td>
-            <td>Second fully decompiled and matching overlay!</td>
+            <td><a href="https://github.com/Vatuu/silent-hill-decomp/commit/701c1223daa79fa6317ee4d09d54ff3d99112abc">Second fully decompiled and matching overlay!</a></td>
         </tr>
         <tr>
           <th colspan=3>🛠 OPTION.BIN 🛠</th>
@@ -261,7 +264,7 @@ Progress bars powered by [decomp.dev](https://decomp.dev)
         </tr>
         <tr>
             <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?unit=maps/map4_s02/map4_s02"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&color=%23003cc7&measure=fuzzy_match&unit=maps/map4_s02/map4_s02"/></a></td>
-            <td colspan=2>Central Silent Hill in Otherworld .</td>
+            <td colspan=2>Central Silent Hill in Otherworld.</td>
         </tr>
         <tr>
             <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?unit=maps/map4_s03/map4_s03"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&color=%23003cc7&measure=fuzzy_match&unit=maps/map4_s03/map4_s03"/></a></td>
@@ -274,7 +277,7 @@ Progress bars powered by [decomp.dev](https://decomp.dev)
         </tr>
         <tr>
             <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?unit=maps/map4_s05/map4_s05"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&color=%23003cc7&measure=fuzzy_match&unit=maps/map4_s05/map4_s05"/></a></td>
-            <td colspan=2>Central Silent Hill Floatstinger boss fight in Otherworld .</td>
+            <td colspan=2>Central Silent Hill Floatstinger boss fight in Otherworld.</td>
         </tr>
         <tr>
             <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?unit=maps/map4_s06/map4_s06"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&color=%23003cc7&measure=fuzzy_match&unit=maps/map4_s06/map4_s06"/></a></td>
