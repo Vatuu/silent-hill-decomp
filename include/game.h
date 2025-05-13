@@ -686,7 +686,9 @@ typedef struct _SysWork
     s8              pad_E30[400];  // Might be part of previous array for 5 exra coords which go unused.
     s8              unk_FC0[4802]; // Start is tightly-packed buffer for NPC bone coords. Size unclear, appears to be enough for 60 before what might be AI data.
     s8              field_2282;
-    s8              unk_2283[21];
+    s8              unk_2283[7];
+    u16             field_228A;
+    s8              unk_228C[12];
     s32             flags_2298;    // Something related to map loading.
     s8              unk_229C[4];
     s32             field_22A0;

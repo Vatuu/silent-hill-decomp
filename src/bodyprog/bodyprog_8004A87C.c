@@ -522,7 +522,7 @@ void func_8005BF0C(s16 unused, s16 x, s16 y) // 0x8005BF0C
     Gfx_DebugStringPosition(x, y);
 }
 
-s16 func_8005BF38(s32 arg0) // 0x8005BF38
+s16 func_8005BF38(s16 arg0) // 0x8005BF38
 {
     s16 temp;
     s16 res;

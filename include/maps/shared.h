@@ -28,6 +28,8 @@ s32 sharedFunc_800CBBBC_0_s00();
 
 void sharedFunc_800D01BC_0_s00(u16* arg0, VECTOR3* arg1, s32 arg2);
 
+s32 sharedFunc_800D0B18_0_s00(s32 arg0);
+
 void sharedFunc_800D0E04_0_s00();
 
 void sharedFunc_800D209C_0_s00();
@@ -57,7 +59,11 @@ void sharedFunc_800D2EB4_0_s00();
 
 void sharedFunc_800D2EF4_0_s00();
 
+void sharedFunc_800D5098_0_s00(s_SubCharacter* chara);
+
 void sharedFunc_800D63D0_0_s00(s_SubCharacter* chara, s32 arg1);
+
+void sharedFunc_800D670C_0_s00(s_SubCharacter* arg0);
 
 void sharedFunc_800D7E04_0_s00(s_SubCharacter* chara, s32 caseArg);
 

@@ -1624,7 +1624,7 @@ void func_8005B474(s32* arg0, u32 arg1, s32 idx);
 /** Sets the debug string position. */
 void func_8005BF0C(s16 unused, s16 x, s16 y);
 
-s16 func_8005BF38(s32 arg0);
+s16 func_8005BF38(s16 arg0);
 
 void func_800622B8(s32, s_SubCharacter*, s32, s32);
 
