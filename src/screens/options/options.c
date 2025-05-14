@@ -2061,7 +2061,117 @@ void Settings_ControllerScreen() // 0x801E69BC
 /** Related to controller mapping.
  * Changes the button mapping based on the input.
  */
-INCLUDE_ASM("asm/screens/options/nonmatchings/options", Settings_ButtonChange); // 0x801E6CF4
+s32 Settings_ButtonChange(s32 actionIdx) // 0x801E6CF4
+{
+    u16  btnFlag;
+    s32  i;
+    s32  res;
+    u16  boundBtnFlag;
+    u32  j;
+    s32  curActionIdx;
+    u16* bindings;
+
+    res      = NO_VALUE;
+    bindings = (u16*)&g_GameWorkPtr->config_0.controllerBinds_0;
+
+    // Loop through all button flags, excluding stick axes.
+    for (i = 0; i < 16; i++)
+    {
+        btnFlag = 1 << i;
+
+        if ((btnFlag & (Pad_DpadUp | Pad_DpadRight | Pad_DpadDown | Pad_DpadLeft)) ||
+            !(btnFlag & g_ControllerPtrConst->btns_new_10))
+        {
+            continue;
+        }
+
+        boundBtnFlag = bindings[actionIdx];
+        // Remove binding.
+        if (boundBtnFlag & btnFlag)
+        {
+            if ((actionIdx < 2 || actionIdx == 3 || actionIdx == 4 || actionIdx == 11) &&
+                !(bindings[actionIdx] & ~btnFlag))
+            {
+                res = actionIdx;
+                Sd_EngineCmd(0x518);
+            }
+            else
+            {
+                bindings[actionIdx] &= ~btnFlag;
+                Sd_EngineCmd(0x51B);
+            }
+        }
+        else
+        {
+            curActionIdx = NO_VALUE;
+
+            switch (actionIdx)
+            {
+                case 0:
+                case 1:
+                    curActionIdx = actionIdx == 0;
+                    if (bindings[curActionIdx] & btnFlag)
+                    {
+                        if (!(bindings[curActionIdx] & ~btnFlag))
+                        {
+                            res = curActionIdx;
+                            Sd_EngineCmd(0x518);
+                        }
+                        else
+                        {
+                            bindings[curActionIdx] &= ~btnFlag;
+                            bindings[actionIdx] |= btnFlag;
+                            Sd_EngineCmd(0x51B);
+                        }
+                    }
+                    else
+                    {
+                        bindings[actionIdx] = boundBtnFlag | btnFlag;
+                        Sd_EngineCmd(0x51B);
+                    }
+                    break;
+
+                case 2:
+                    bindings[InputAction_Skip] |= btnFlag;
+                    Sd_EngineCmd(0x51B);
+                    break;
+
+                default:
+                    curActionIdx = NO_VALUE;
+                    for (j = InputAction_Action; j < InputAction_Count; j++)
+                    {
+                        if (bindings[j] & btnFlag)
+                        {
+                            curActionIdx = j;
+                            break;
+                        }
+                    }
+                    if (curActionIdx != NO_VALUE)
+                    {
+                        if ((curActionIdx < 2 || curActionIdx == 3 || curActionIdx == 4 || curActionIdx == 11) &&
+                            !(bindings[curActionIdx] & ~btnFlag))
+                        {
+                            Sd_EngineCmd(0x518);
+                            res = curActionIdx;
+                        }
+                        else
+                        {
+                            bindings[curActionIdx] &= ~btnFlag;
+                            bindings[actionIdx] |= btnFlag;
+                            Sd_EngineCmd(0x51B);
+                        }
+                    }
+                    else
+                    {
+                        bindings[actionIdx] |= btnFlag;
+                        Sd_EngineCmd(0x51B);
+                    }
+                    break;
+            }
+        }
+    }
+    return res;
+}
 
 void Gfx_ControllerScreenDraw(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x801E6F60
 {
