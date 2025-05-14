@@ -258,7 +258,7 @@ s32 func_801E342C() // 0x801E342C
     TILE* tile;
 
     if (((g_GameWork.config_0.optExtraOptionsEnabled_27 >> (D_801E5E8C - 1)) & (1 << 0)) &&
-        (g_ControllerPtr0->btns_new_10 & g_GameWorkPtr1->config_0.controllerBinds_0.skip))
+        (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerBinds_0.skip))
     {
         D_800C48F0 = D_801E5558[D_801E5E8C].field_4 + (D_801E5E84 / 2);
         Sd_EngineCmd(19);
@@ -653,7 +653,7 @@ bool func_801E3970() // 0x801E3970
         }
     }
     else if (((g_GameWork.config_0.optExtraOptionsEnabled_27 >> (D_801E5E8C - 1)) & (1 << 0)) &&
-             (g_ControllerPtr0->btns_new_10 & g_GameWorkPtr1->config_0.controllerBinds_0.skip))
+             (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerBinds_0.skip))
     {
         skipTo    = D_801E5E84 + 168;
         skipToInt = FP_TO(skipTo, Q12_SHIFT);
@@ -1007,12 +1007,14 @@ void func_801E4394(u8* str) // 0x801E4394
             addPrimFast(addr, sprite, 4);
             *(u32*)(&sprite->r0) = colorCode;
             setXY0Fast(sprite, textX, textY);
-            idx                  = charCode - 0x21;
-            temp                 = idx / 10;
-            idx                  = idx % 10;
-            idx                  = idx * 24;
-            *(u32*)(&sprite->u0) = idx + (temp * 24 * 256);
+
+            idx                   = charCode - 0x21;
+            temp                  = idx / 10;
+            idx                   = idx % 10;
+            idx                   = idx * 24;
+            *(u32*)(&sprite->u0)  = idx + ((temp * 24) * 256);
             *(u32*)(&sprite->u0) += clut << 16;
+
             setWHFast(sprite, 24, 24);
             packet += sizeof(SPRT);
         }
@@ -1026,9 +1028,11 @@ void func_801E4394(u8* str) // 0x801E4394
                 addPrimFast(addr, sprite16, 3);
                 *(u32*)(&sprite16->r0) = colorCode ^ (0x18 << 24); // GP0(7Ch) - Textured Rectangle, 16x16, opaque, texture-blending.
                 setXY0Fast(sprite16, textX, textY + 4);
-                idx                    = charCode - 0xA0;
-                *(u32*)(&sprite16->u0) = (idx * 256 * 16) + 16 * (16 - 1);
+
+                idx                     = charCode - 0xA0;
+                *(u32*)(&sprite16->u0)  = ((idx * 256 )* 16) + (16 * (16 - 1));
                 *(u32*)(&sprite16->u0) += clut << 16;
+
                 packet += sizeof(SPRT_16);
             }
             // KCET font, .YVUTSR.
@@ -1037,9 +1041,11 @@ void func_801E4394(u8* str) // 0x801E4394
                 addPrimFast(addr, sprite16, 3);
                 *(u32*)(&sprite16->r0) = colorCode ^ (0x18 << 24); // GP0(7Ch) - Textured Rectangle, 16x16, opaque, texture-blending.
                 setXY0Fast(sprite16, textX, textY + 4);
-                idx                    = charCode - 0xB8;
-                *(u32*)(&sprite16->u0) = (idx * 16) + (256 * 16 * (16 - 1) + 16 * 8);
+
+                idx                     = charCode - 0xB8;
+                *(u32*)(&sprite16->u0)  = (idx * 16) + (((256 * 16) * (16 - 1)) + (16 * 8));
                 *(u32*)(&sprite16->u0) += clut << 16;
+
                 packet += sizeof(SPRT_16);
             }
             // Change font color.

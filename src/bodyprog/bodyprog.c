@@ -542,7 +542,7 @@ void Gfx_Init(u16 screenWidth, s32 isInterlaced) // 0x80032428
     D_800C6E26 = FRAMEBUFFER_HEIGHT_PROGRESSIVE;
 
     GsInit3D();
-    Settings_ScreenXYSet(g_GameWorkPtr0->config_0.screenPosX_1C, g_GameWorkPtr0->config_0.screenPosY_1D);
+    Settings_ScreenXYSet(g_GameWorkConst->config_0.screenPosX_1C, g_GameWorkConst->config_0.screenPosY_1D);
     GsSwapDispBuff();
     GsSwapDispBuff();
 }
@@ -559,7 +559,7 @@ void Settings_DispEnvXYSet(DISPENV* display, s32 x, s32 y) // 0x80032524
     x = (x < -11) ? -11 : ((x > 11) ? 11 : x);
     y = (y < -8) ? -8 : ((y > 8) ? 8 : y);
 
-    gameWorkPtr = g_GameWorkPtr0;
+    gameWorkPtr = g_GameWorkConst;
     gameWorkPtr->config_0.screenPosX_1C = x;
     gameWorkPtr->config_0.screenPosY_1D = y;
 
@@ -990,7 +990,7 @@ s32 MainLoop_ShouldWarmReset() // 0x80034108
     }
 
     // Reset something.
-    if ((g_ControllerPtr0->btns_held_C & RESET_BTN_FLAGS) != RESET_BTN_FLAGS)
+    if ((g_ControllerPtrConst->btns_held_C & RESET_BTN_FLAGS) != RESET_BTN_FLAGS)
     {
         D_800A976C = 0;
     }
@@ -999,11 +999,11 @@ s32 MainLoop_ShouldWarmReset() // 0x80034108
     {
         return 2; 
     }
-    else if (g_ControllerPtr0->btns_held_C == UNK_BTN_FLAGS_0 && (g_ControllerPtr0->btns_new_10 & UNK_BTN_FLAGS_0))
+    else if (g_ControllerPtrConst->btns_held_C == UNK_BTN_FLAGS_0 && (g_ControllerPtrConst->btns_new_10 & UNK_BTN_FLAGS_0))
     {
         return 2; 
     }
-    else if (g_ControllerPtr0->btns_held_C == UNK_BTN_FLAGS_1 && (g_ControllerPtr0->btns_new_10 & Pad_Start))
+    else if (g_ControllerPtrConst->btns_held_C == UNK_BTN_FLAGS_1 && (g_ControllerPtrConst->btns_new_10 & Pad_Start))
     {
         return 2; 
     }
@@ -1015,7 +1015,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", Game_WarmBoot);
 
 void Joy_Init() // 0x8003441C
 {
-    PadInitDirect(&g_GameWork.rawPadData_5B4, g_ControllerPtr1);
+    PadInitDirect(&g_GameWork.rawPadData_5B4, g_ControllerPtr);
     PadStartCom();
 }
 
@@ -1502,8 +1502,8 @@ void SysState_GamePaused_Update() // 0x800391E8
 
     // Debug button combo to bring up save screen from pause screen.
     // DPad-Left + L2 + L1 + LS-Left + RS-Left + L3
-    if ((g_ControllerPtr0->btns_held_C == (Pad_L3 | Pad_DpadLeft | Pad_L2 | Pad_L1 | Pad_LStickLeft2 | Pad_RStickLeft | Pad_LStickLeft)) &&
-        (g_ControllerPtr0->btns_new_10 & Pad_L3))
+    if ((g_ControllerPtrConst->btns_held_C == (Pad_L3 | Pad_DpadLeft | Pad_L2 | Pad_L1 | Pad_LStickLeft2 | Pad_RStickLeft | Pad_LStickLeft)) &&
+        (g_ControllerPtrConst->btns_new_10 & Pad_L3))
     {
         D_800A9A68 = 0;
         Sd_EngineCmd(4);
@@ -1512,7 +1512,7 @@ void SysState_GamePaused_Update() // 0x800391E8
         return;
     }
 
-    if (g_ControllerPtr0->btns_new_10 & g_GameWorkPtr1->config_0.controllerBinds_0.pause)
+    if (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerBinds_0.pause)
     {
         D_800A9A68 = 0;
         Sd_EngineCmd(4);
@@ -1832,7 +1832,7 @@ void SysState_GameOver_Update() // 0x8003A52C
             Gfx_StringDraw(D_80025448, 0x63); // "\aGAME_OVER" - needs rodata migration.
             g_SysWork.field_28++;
 
-            if ((g_ControllerPtr0->btns_new_10 & (g_GameWorkPtr1->config_0.controllerBinds_0.enter | g_GameWorkPtr1->config_0.controllerBinds_0.cancel)) ||
+            if ((g_ControllerPtrConst->btns_new_10 & (g_GameWorkPtr->config_0.controllerBinds_0.enter | g_GameWorkPtr->config_0.controllerBinds_0.cancel)) ||
                 g_SysWork.field_28 > 240)
             {
                 SysWork_StateStepIncrement();
@@ -1873,7 +1873,7 @@ void SysState_GameOver_Update() // 0x8003A52C
             g_SysWork.field_28++;
             Gfx_BackgroundSpriteDraw(&D_800A9054);
 
-            if (!(g_ControllerPtr0->btns_new_10 & (g_GameWorkPtr1->config_0.controllerBinds_0.enter | g_GameWorkPtr1->config_0.controllerBinds_0.cancel)))
+            if (!(g_ControllerPtrConst->btns_new_10 & (g_GameWorkPtr->config_0.controllerBinds_0.enter | g_GameWorkPtr->config_0.controllerBinds_0.cancel)))
             {
                 if (g_SysWork.field_28 <= 480)
                 {

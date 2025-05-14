@@ -21,7 +21,7 @@ void GameState_StartMovieIntro_Update() // 0x801E2654
             break;
 
         case 1:
-            if (g_ControllerPtr0->btns_held_C != 0 || g_SysWork.timer_1C >= 301)
+            if (g_ControllerPtrConst->btns_held_C != 0 || g_SysWork.timer_1C >= 301)
             {
                 D_800BCD0C = 3;
                 g_GameWork.gameStateStep_598[0] = 2;
@@ -44,7 +44,7 @@ void GameState_MovieIntro_Update() // 0x801E279C
 {
     s32 fileIdx = FILE_XA_C1_20670;
 
-    if (g_GameWorkPtr0->config_0.optExtraOptionsEnabled_27 & 1)
+    if (g_GameWorkConst->config_0.optExtraOptionsEnabled_27 & (1 << 0))
     {
         fileIdx = FILE_XA_C2_20670;
     }
@@ -68,17 +68,17 @@ void GameState_ExitMovie_Update() // 0x801E28B0
 
 void GameState_DebugMoviePlayer_Update() // 0x801E2908
 {
-    extern s32 g_Debug_MoviePlayerIdx; // Only used in this func, maybe a static.
+    extern s32 g_Debug_MoviePlayerIdx; // Only used in this func, maybe static.
 
     s_GameWork*       gameWork;
     s_ControllerData* controller;
 
-    gameWork   = g_GameWorkPtr1;
-    controller = g_ControllerPtr0;
+    gameWork   = g_GameWorkPtr;
+    controller = g_ControllerPtrConst;
 
     if (controller->btns_new_10 & gameWork->config_0.controllerBinds_0.cancel)
     {
-        Game_StateSetNext(GameState_Unk16); // Changes to nonexistent state 0x16 (22) and crashes, maybe removed debug menu.
+        Game_StateSetNext(GameState_Unk16); // Changes to non-existent state 22 and crashes. Maybe removed debug menu.
     }
 
     if (controller->field_18 & Pad_LStickLeft)
@@ -107,7 +107,7 @@ void GameState_DebugMoviePlayer_Update() // 0x801E2908
 
 void GameState_MovieIntroAlternate_Update() // 0x801E2A24
 {
-    open_main(FILE_XA_C1_20670, 2060); // Second param looks like file ID for FILE_XA_M6_02112, but is actually frame count?
+    open_main(FILE_XA_C1_20670, 2060); // Second param looks like file ID for `FILE_XA_M6_02112`, but is actually frame count?
     Game_StateSetNext(GameState_MainMenu);
 
     D_800B5C30 = 0x1000;
@@ -184,13 +184,10 @@ void movie_main(char* file_name, s32 f_size, s32 sector) // 0x801E2B9C
     do
     {
         disp.disp.y   = 256 - (m->dec.rectid * SCREEN_HEIGHT);
-        disp.screen.x = g_GameWorkPtr0->config_0.screenPosX_1C;
-        disp.screen.y = 8 + ((224 - m->height) / 2) + (g_GameWorkPtr0->config_0.screenPosY_1D);
-
-        disp.disp.y   = (disp.disp.y < 16) ? 16 : (disp.disp.y > 256) ? 256
-                                                                      : disp.disp.y;
-        disp.screen.h = (disp.screen.h <= 0) ? 1 : (disp.screen.h > 208) ? 208
-                                                                         : disp.screen.h;
+        disp.screen.x = g_GameWorkConst->config_0.screenPosX_1C;
+        disp.screen.y = (8 + ((224 - m->height) / 2)) + (g_GameWorkConst->config_0.screenPosY_1D);
+        disp.disp.y   = (disp.disp.y   < 16) ? 16 : ((disp.disp.y > 256)   ? 256 : disp.disp.y);
+        disp.screen.h = (disp.screen.h <= 0) ? 1  : ((disp.screen.h > 208) ? 208 : disp.screen.h);
 
         PutDispEnv(&disp);
         nullsub_800334C8();
@@ -201,7 +198,6 @@ void movie_main(char* file_name, s32 f_size, s32 sector) // 0x801E2B9C
         while (strNextVlc(&m->dec) == NO_VALUE)
         {
             frame_no = StGetBackloc(&loc);
-
             if (max_frame < frame_no || frame_no <= 0)
             {
                 loc = file.pos;
@@ -220,7 +216,7 @@ void movie_main(char* file_name, s32 f_size, s32 sector) // 0x801E2B9C
         strSync(&m->dec);
         VSync(0);
     }
-    while (!(g_ControllerPtr0->btns_new_10 & g_GameWorkPtr1->config_0.controllerBinds_0.skip) && MainLoop_ShouldWarmReset() <= 0);
+    while (!(g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerBinds_0.skip) && MainLoop_ShouldWarmReset() <= 0);
 
     SsSetSerialVol(0, 0, 0);
 

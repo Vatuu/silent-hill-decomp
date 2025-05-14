@@ -721,7 +721,7 @@ void func_8008716C(s32 arg0, s32 arg1, s32 arg2) // 0x8008716C
 
         case 4:
             func_800862F8(2, 0, 0);
-            if (g_ControllerPtr0->btns_new_10 & (g_GameWorkPtr1->config_0.controllerBinds_0.enter | g_GameWorkPtr1->config_0.controllerBinds_0.cancel))
+            if (g_ControllerPtrConst->btns_new_10 & (g_GameWorkPtr->config_0.controllerBinds_0.enter | g_GameWorkPtr->config_0.controllerBinds_0.cancel))
             {
                 g_SysWork.timer_2C = 0;
                 g_SysWork.field_14 = 0;
@@ -844,7 +844,7 @@ void func_80087540(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x800875
                 break;
             }
 
-            if (g_ControllerPtr0->btns_new_10 & (g_GameWorkPtr1->config_0.controllerBinds_0.enter | g_GameWorkPtr1->config_0.controllerBinds_0.cancel))
+            if (g_ControllerPtrConst->btns_new_10 & (g_GameWorkPtr->config_0.controllerBinds_0.enter | g_GameWorkPtr->config_0.controllerBinds_0.cancel))
             {
                 g_SysWork.timer_2C = 0;
                 g_SysWork.field_14 = 0;
@@ -1975,7 +1975,7 @@ s32 Demo_ControllerDataUpdate() // 0x8008F7CC
         return 0;
     }
 
-    btns = g_ControllerPtr0->analogPad_0.digitalButtons;
+    btns = g_ControllerPtrConst->analogPad_0.digitalButtons;
     if (btns != 0xFFFF)
     {
         Demo_ExitDemo();
@@ -1986,11 +1986,11 @@ s32 Demo_ControllerDataUpdate() // 0x8008F7CC
 
     if (g_Demo_CurFrameData != NULL)
     {
-        g_ControllerPtr0->analogPad_0 = g_Demo_CurFrameData->analogPad_0;
+        g_ControllerPtrConst->analogPad_0 = g_Demo_CurFrameData->analogPad_0;
         return 1;
     }
 
-    ControllerData_Reset(g_ControllerPtr0, btns);
+    ControllerData_Reset(g_ControllerPtrConst, btns);
     return 1;
 }
 

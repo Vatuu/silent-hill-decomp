@@ -69,7 +69,7 @@ void GameState_KonamiLogo_Update() // 0x800C95AC
                 break;
 
             case 2:
-                if (g_ControllerPtr0->btns_held_C != 0 || g_SysWork.timer_1C >= 181)
+                if (g_ControllerPtrConst->btns_held_C != 0 || g_SysWork.timer_1C >= 181)
                 {
                     D_800BCD0C = 3;
                     D_800B5C30 = 0x333;
@@ -215,7 +215,7 @@ void GameState_KcetLogo_Update() // 0x800C99A4
             case 5:
                 if ((s32)g_GameWork.gameStateStep_598[1] < 3)
                 {
-                    ptr = g_GameWorkPtr0; 
+                    ptr = g_GameWorkConst; 
                     do
                     {
                         switch ((s32)g_GameWork.gameStateStep_598[1])
@@ -266,7 +266,7 @@ void GameState_KcetLogo_Update() // 0x800C99A4
                 break;
 
             case 6:
-                if (g_ControllerPtr0->btns_held_C != 0 || g_SysWork.timer_1C > 180)
+                if (g_ControllerPtrConst->btns_held_C != 0 || g_SysWork.timer_1C > 180)
                 {
                     D_800BCD0C = 3;
                     D_800B5C30 = 0x333;

@@ -2,11 +2,11 @@ g_MainLoop_FrameCount = 0x800B9CCC;
 g_ObjectTableIdx = 0x800B9FB8;
 g_SysWork = 0x800B9FC0; // type:SysWork size:0x2768 - should use s_SysWork here, but splat only supports custom structs with capital letter at beginning.
 g_GameWork = 0x800BC728; // type:GameWork size:0x5D8
-g_GameWorkPtr0 = 0x80024D44; // type:u32
+g_GameWorkConst = 0x80024D44; // type:u32
 g_SaveGamePtr = 0x80024D48; // type:u32
-g_ControllerPtr0 = 0x80024D4C; // type:u32
-g_ControllerPtr1 = 0x80024D50; // type:u32
-g_GameWorkPtr1 = 0x80024D54; // type:u32 same as g_GameWorkPtr0?
+g_ControllerPtrConst = 0x80024D4C; // type:u32
+g_ControllerPtr = 0x80024D50; // type:u32
+g_GameWorkPtr = 0x80024D54; // type:u32
 
 g_ObjectTable0 = 0x800A8F74; // type:s8
 g_ObjectTable1 = 0x800A8FC4; // type:s8

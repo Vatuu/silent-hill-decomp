@@ -5,29 +5,29 @@
 
 typedef enum _BindingMenu
 {
-    BindingMenu_Exit = 0,
-    BindingMenu_Type_1,
-    BindingMenu_Type_2,
-    BindingMenu_Type_3
+    BindingMenu_Exit   = 0,
+    BindingMenu_Type_1 = 1,
+    BindingMenu_Type_2 = 2,
+    BindingMenu_Type_3 = 3
 } e_BindingMenu;
 
-typedef enum _BindingAction
+typedef enum _InputAction
 {
-    BindingAction_Enter = 0,
-    BindingAction_Cancel,
-    BindingAction_Skip,
-    BindingAction_Action,
-    BindingAction_Aim,
-    BindingAction_Light,
-    BindingAction_Run,
-    BindingAction_View,
-    BindingAction_Step_L,
-    BindingAction_Step_R,
-    BindingAction_Pause,
-    BindingAction_Item,
-    BindingAction_Map,
-    BindingAction_Option
-} e_BindingAction;
+    InputAction_Enter  = 0,
+    InputAction_Cancel = 1,
+    InputAction_Skip   = 2,
+    InputAction_Action = 3,
+    InputAction_Aim    = 4,
+    InputAction_Light  = 5,
+    InputAction_Run    = 6,
+    InputAction_View   = 7,
+    InputAction_StepL  = 8,
+    InputAction_StepR  = 9,
+    InputAction_Pause  = 10,
+    InputAction_Item   = 11,
+    InputAction_Map    = 12,
+    InputAction_Option = 13
+} e_InputAction;
 
 typedef struct _LineVectors
 {
@@ -52,8 +52,8 @@ typedef struct _ArrowVectors
 
 typedef struct
 {
-    e_BindingMenu   field_0;
-    e_BindingAction field_4;
+    e_BindingMenu menuIdx_0;
+    e_InputAction actionIdx_4;
 } s_801E73DC;
 
 extern s32 D_801E72F4;

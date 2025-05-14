@@ -562,7 +562,7 @@ typedef struct _ModelAnimData
     u8  animIdx_0;
     u8  maybeSomeState_1; // State says if `animTime_4` is anim time or a func ptr? That field could be a union.
     u16 flags_2;          /** `e_AnimFlags` */ // Bit 1: movement unlockled(?), bit 2: visible.
-    s32 time_4;           /** Fixed-point time along keyframe timeline. */ 
+    s32 time_4;           /** Time along keyframe timeline in Q19.12. */ 
     s16 keyframeIdx0_8;
     s16 keyframeIdx1_A;
     s32 field_C;
@@ -750,13 +750,13 @@ STATIC_ASSERT_SIZEOF(s_SysWork, 10088);
 extern void* g_OvlBodyprog;
 extern void* g_OvlDynamic;
 
-extern s_SysWork         g_SysWork; // 0x800B9FC0
-extern s_GameWork        g_GameWork;
-extern s_GameWork* const g_GameWorkPtr0;
-extern s_GameWork*       g_GameWorkPtr1;
-extern s_ShSaveGame*     g_SaveGamePtr;
-extern s_ControllerData* const g_ControllerPtr0;
-extern s_ControllerData* g_ControllerPtr1;
+extern s_SysWork               g_SysWork; // 0x800B9FC0
+extern s_GameWork              g_GameWork;
+extern s_GameWork* const       g_GameWorkConst;
+extern s_GameWork*             g_GameWorkPtr;
+extern s_ShSaveGame*           g_SaveGamePtr;
+extern s_ControllerData* const g_ControllerPtrConst;
+extern s_ControllerData*       g_ControllerPtr;
 
 extern s32  g_ObjectTableIdx;
 extern GsOT g_ObjectTable0[];

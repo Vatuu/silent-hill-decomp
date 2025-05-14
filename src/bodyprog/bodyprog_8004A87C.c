@@ -1101,7 +1101,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_800803FC);
 
 void func_80080458() // 0x80080458
 {
-    g_ControllerPtr1->btns_new_10 |= Pad_Select;
+    g_ControllerPtr->btns_new_10 |= Pad_Select;
 }
 
 s32 func_80080478(VECTOR3* pos0, VECTOR3* pos1) // 0x80080478

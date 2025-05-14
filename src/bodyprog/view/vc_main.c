@@ -246,7 +246,7 @@ s32 vcExecCamera() // 0x80080FBC
     cur_cam_mv_type  = vcRetCurCamMvType(&vcWork);
 
     // TODO: This checks for `VC_PRS_F_VIEW_F` flag in a weird way.
-    far_watch_rate     = vcRetFarWatchRate(((vcWork.flags_8 >> 9) & (1 << 0)) ^ (g_GameWorkPtr0->config_0.optViewCtrl_28 != 0), cur_cam_mv_type, &vcWork);
+    far_watch_rate     = vcRetFarWatchRate(((vcWork.flags_8 >> 9) & (1 << 0)) ^ (g_GameWorkConst->config_0.optViewCtrl_28 != 0), cur_cam_mv_type, &vcWork);
     self_view_eff_rate = vcRetSelfViewEffectRate(cur_cam_mv_type, far_watch_rate, &vcWork);
 
     if (!(vcWork.flags_8 & (VC_USER_CAM_F | VC_USER_WATCH_F)))
@@ -362,13 +362,13 @@ VC_CAM_MV_TYPE vcRetCurCamMvType(VC_WORK* w_p) // 0x80081428
 {
     s32 hasViewFlag;
 
-    if (g_GameWorkPtr0->config_0.optViewMode_29 != 0)
+    if (g_GameWorkConst->config_0.optViewMode_29 != 0)
     {
         hasViewFlag = (vcWork.flags_8 & VC_PRS_F_VIEW_F) == VC_PRS_F_VIEW_F;
 
         // TODO: Can this weird XOR be removed? (XOR 1) should be same as `hasViewFlag == 0`?
-        if ((g_GameWorkPtr0->config_0.optViewCtrl_28 && (hasViewFlag ^ 1) != 0) ||
-            (!g_GameWorkPtr0->config_0.optViewCtrl_28 && hasViewFlag))
+        if ((g_GameWorkConst->config_0.optViewCtrl_28 && (hasViewFlag ^ 1) != 0) ||
+            (!g_GameWorkConst->config_0.optViewCtrl_28 && hasViewFlag))
         {
             if ((w_p->flags_8 & (VC_USER_CAM_F | VC_USER_WATCH_F | VC_INHIBIT_FAR_WATCH_F)) == 0 &&
                 func_8008150C(w_p->chara_pos_114.vx, w_p->chara_pos_114.vz) == 0)
@@ -543,13 +543,13 @@ s32 vcRetFarWatchRate(s32 far_watch_button_prs_f, VC_CAM_MV_TYPE cur_cam_mv_type
         }
     }
 
-    if (g_GameWorkPtr0->config_0.optViewMode_29 != 0)
+    if (g_GameWorkConst->config_0.optViewMode_29 != 0)
     {
         prsFViewFlag = vcWork.flags_8 >> 9; /** `VC_PRS_F_VIEW_F` */
         prsFViewFlag = prsFViewFlag & (1 << 0);
 
-        if ((g_GameWorkPtr0->config_0.optViewCtrl_28 != 0 && (prsFViewFlag ^ 1) != 0) ||
-            (g_GameWorkPtr0->config_0.optViewCtrl_28 == 0 && prsFViewFlag != 0))
+        if ((g_GameWorkConst->config_0.optViewCtrl_28 != 0 && (prsFViewFlag ^ 1) != 0) ||
+            (g_GameWorkConst->config_0.optViewCtrl_28 == 0 && prsFViewFlag != 0))
         {
             if (!(w_p->flags_8 & (VC_USER_CAM_F | VC_USER_WATCH_F | VC_INHIBIT_FAR_WATCH_F)) &&
                 func_8008150C(w_p->chara_pos_114.vx, w_p->chara_pos_114.vz))
@@ -681,18 +681,18 @@ void vcSetFlagsByCamMvType(VC_CAM_MV_TYPE cam_mv_type, s32 far_watch_rate, s32 a
 
         // optViewCtrl != 0 && vcPrsFViewFlag == 0 OR
         // optViewCtrl == 0 && vcPrsFViewFlag == 1
-        if ((g_GameWorkPtr0->config_0.optViewCtrl_28 != 0 && (vcPrsFViewFlag ^ 1) != 0) ||
-            (g_GameWorkPtr0->config_0.optViewCtrl_28 == 0 && vcPrsFViewFlag != 0))
+        if ((g_GameWorkConst->config_0.optViewCtrl_28 != 0 && (vcPrsFViewFlag ^ 1) != 0) ||
+            (g_GameWorkConst->config_0.optViewCtrl_28 == 0 && vcPrsFViewFlag != 0))
         {
             vcOldPrsFViewFlag = (vcWork.flags_8 >> 10); /** `VC_OLD_PRS_F_VIEW_F` */
             vcOldPrsFViewFlag = vcOldPrsFViewFlag & (1 << 0);
 
             // (optViewCtrl != 0 && vcOldPrsFViewFlag == 0) == false AND
             // (optViewCtrl == 0 && vcOldPrsFViewFlag == 1) == false
-            if (!(g_GameWorkPtr0->config_0.optViewCtrl_28 != 0 && (vcOldPrsFViewFlag ^ 1) != 0) &&
-                !(g_GameWorkPtr0->config_0.optViewCtrl_28 == 0 && vcOldPrsFViewFlag != 0))
+            if (!(g_GameWorkConst->config_0.optViewCtrl_28 != 0 && (vcOldPrsFViewFlag ^ 1) != 0) &&
+                !(g_GameWorkConst->config_0.optViewCtrl_28 == 0 && vcOldPrsFViewFlag != 0))
             {
-                if (g_GameWorkPtr0->config_0.optViewMode_29 != 0)
+                if (g_GameWorkConst->config_0.optViewMode_29 != 0)
                 {
                     vcWork_FlagSet(VC_WARP_WATCH_F);
                 }
@@ -724,7 +724,7 @@ void vcPreSetDataInVC_WORK(VC_WORK* w_p, VC_ROAD_DATA* vc_road_ary_list) // 0x80
             vcWork.flags_8 &= ~VC_OLD_PRS_F_VIEW_F;
         }
 
-        if (g_ControllerPtr0->btns_held_C & g_GameWorkPtr1->config_0.controllerBinds_0.view)
+        if (g_ControllerPtrConst->btns_held_C & g_GameWorkPtr->config_0.controllerBinds_0.view)
         {
             vcWork.flags_8 |= VC_PRS_F_VIEW_F;
         }
@@ -1074,7 +1074,7 @@ void vcMakeIdealCamPosByHeadPos(VECTOR3* ideal_pos, VC_WORK* w_p, VC_AREA_SIZE_T
         return;
     }
 
-    if (g_GameWorkPtr0->config_0.optViewMode_29)
+    if (g_GameWorkConst->config_0.optViewMode_29)
     {
         chara2cam_ang_y = w_p->chara_eye_ang_y_144 + FP_ANGLE(140.0f);
         ideal_pos->vy   = w_p->chara_head_pos_130.vy + FP_METER(1.12f);
