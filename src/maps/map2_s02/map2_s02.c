@@ -429,13 +429,13 @@ void func_800E1748(void) {}
 
 INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", func_800E1750);
 
-INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", Ai_Groaner_Update); // 0x800E1760
+#include "maps/shared/Ai_Groaner_Update.h" // 0x800E1760
 
-INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", func_800E185C);
+INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", sharedFunc_800E3074_2_s00); // 0x800E185C - Differs to `map2_s00` version, shared sym needed for `Ai_Groaner_Update`.
 
-INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", func_800E1A5C);
+INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", sharedFunc_800E33DC_2_s00); // 0x800E1A5C
 
-INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", func_800E1ECC);
+INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", sharedFunc_800E384C_2_s00); // 0x800E1ECC - Differs to `map2_s00` version, shared sym needed for `Ai_Groaner_Update`.
 
 INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", func_800E2058);
 
@@ -451,13 +451,13 @@ INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", func_800E3C30);
 
 INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", func_800E3FB0);
 
-INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", func_800E4124);
+INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", sharedFunc_800E5AA4_2_s00); // 0x800E4124
 
-INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", func_800E4544);
+INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", sharedFunc_800E5EC4_2_s00); // 0x800E4544
 
-INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", func_800E49B8);
+INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", sharedFunc_800E6338_2_s00); // 0x800E49B8
 
-INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", func_800E5868);
+INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", sharedFunc_800E71E8_2_s00); // 0x800E5868
 
 #include "maps/shared/Ai_Romper_Update.h" // 0x800E5D38
 

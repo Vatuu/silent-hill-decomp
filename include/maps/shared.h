@@ -182,4 +182,20 @@ void sharedFunc_800E8A40_2_s02(s_SubCharacter*, s32, s32);
 
 void sharedFunc_800E8DFC_2_s02(s_SubCharacter*);
 
+void Ai_Groaner_Update(s_SubCharacter* chara, s32 arg1, s32 arg2);
+
+void sharedFunc_800E3074_2_s00(s_SubCharacter*); // `map2_s00` has different version to the other 4 maps which share this, shared sym is needed to share `Ai_Groaner_Update`.
+
+void sharedFunc_800E33DC_2_s00(s_SubCharacter*);
+
+void sharedFunc_800E384C_2_s00(s_SubCharacter*); // `map2_s00` has different version to the other 4 maps which share this, shared sym is needed to share `Ai_Groaner_Update`.
+
+void sharedFunc_800E5AA4_2_s00(s_SubCharacter*);
+
+void sharedFunc_800E5EC4_2_s00(s_SubCharacter*, s32, s32);
+
+void sharedFunc_800E6338_2_s00(s_SubCharacter*);
+
+void sharedFunc_800E71E8_2_s00(s_SubCharacter*);
+
 #endif
