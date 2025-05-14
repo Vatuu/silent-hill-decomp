@@ -94,7 +94,19 @@ s32 vwRetNewAngSpdToTargetAng(s32 now_ang_spd, s16 now_ang, s16 tgt_ang, s32 acc
     return vwRetNewVelocityToTargetVal(now_ang_spd, 0, ((tgt_ang - now_ang) << 20) >> 20, accel_spd, total_max_ang_spd, dec_val_lim_spd);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vw_calc", func_800494B0);
+s32 func_800494B0(s32 arg0, s32 arg1, s32 arg2)
+{
+    s32 range  = FP_MULTIPLY((s64)arg2, (s64)g_DeltaTime0, Q12_SHIFT);
+    s32 arange = arg1 - arg0;
+    arange     = CLAMP(arange, -range, range);
+
+    if (g_DeltaTime0 == 0)
+    {
+        return 0;
+    }
+
+    return FP_TO(arange, Q12_SHIFT) / g_DeltaTime0;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vw_calc", func_80049530);
 
