@@ -2063,13 +2063,13 @@ void Settings_ControllerScreen() // 0x801E69BC
  */
 s32 Settings_ButtonChange(s32 actionIdx) // 0x801E6CF4
 {
-    u16  btnFlag;
-    s32  i;
-    s32  res;
-    u16  boundBtnFlag;
-    u32  j;
-    s32  curActionIdx;
     u16* bindings;
+    u16  boundBtnFlag;
+    u16  btnFlag;
+    s32  curActionIdx;
+    s32  res;
+    s32  i;
+    u32  j;
 
     res      = NO_VALUE;
     bindings = (u16*)&g_GameWorkPtr->config_0.controllerBinds_0;
@@ -2086,10 +2086,14 @@ s32 Settings_ButtonChange(s32 actionIdx) // 0x801E6CF4
         }
 
         boundBtnFlag = bindings[actionIdx];
+
         // Remove binding.
         if (boundBtnFlag & btnFlag)
         {
-            if ((actionIdx < 2 || actionIdx == 3 || actionIdx == 4 || actionIdx == 11) &&
+            if ((actionIdx < InputAction_Skip ||
+                 actionIdx == InputAction_Action ||
+                 actionIdx == InputAction_Aim ||
+                 actionIdx == InputAction_Item) &&
                 !(bindings[actionIdx] & ~btnFlag))
             {
                 res = actionIdx;
@@ -2104,7 +2108,6 @@ s32 Settings_ButtonChange(s32 actionIdx) // 0x801E6CF4
         else
         {
             curActionIdx = NO_VALUE;
-
             switch (actionIdx)
             {
                 case 0:
@@ -2120,7 +2123,7 @@ s32 Settings_ButtonChange(s32 actionIdx) // 0x801E6CF4
                         else
                         {
                             bindings[curActionIdx] &= ~btnFlag;
-                            bindings[actionIdx] |= btnFlag;
+                            bindings[actionIdx]    |= btnFlag;
                             Sd_EngineCmd(0x51B);
                         }
                     }
@@ -2146,9 +2149,13 @@ s32 Settings_ButtonChange(s32 actionIdx) // 0x801E6CF4
                             break;
                         }
                     }
+
                     if (curActionIdx != NO_VALUE)
                     {
-                        if ((curActionIdx < 2 || curActionIdx == 3 || curActionIdx == 4 || curActionIdx == 11) &&
+                        if ((curActionIdx < InputAction_Skip ||
+                             curActionIdx == InputAction_Action ||
+                             curActionIdx == InputAction_Aim ||
+                             curActionIdx == InputAction_Item) &&
                             !(bindings[curActionIdx] & ~btnFlag))
                         {
                             Sd_EngineCmd(0x518);
@@ -2157,7 +2164,7 @@ s32 Settings_ButtonChange(s32 actionIdx) // 0x801E6CF4
                         else
                         {
                             bindings[curActionIdx] &= ~btnFlag;
-                            bindings[actionIdx] |= btnFlag;
+                            bindings[actionIdx]    |= btnFlag;
                             Sd_EngineCmd(0x51B);
                         }
                     }
@@ -2170,6 +2177,7 @@ s32 Settings_ButtonChange(s32 actionIdx) // 0x801E6CF4
             }
         }
     }
+
     return res;
 }
 
