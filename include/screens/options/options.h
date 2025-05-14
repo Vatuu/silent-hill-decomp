@@ -26,7 +26,9 @@ typedef enum _InputAction
     InputAction_Pause  = 10,
     InputAction_Item   = 11,
     InputAction_Map    = 12,
-    InputAction_Option = 13
+    InputAction_Option = 13,
+
+    InputAction_Count = 14
 } e_InputAction;
 
 typedef struct _LineVectors
