@@ -185,7 +185,6 @@ def match_shared_data_vars(text, shared_data_map, funcName):
 
 def parse_sym_addrs(content):
     func_dict = {}
-    pattern = re.compile(r'^\s*(func_[a-zA-Z0-9_]+)\s*=\s*(0x[0-9A-Fa-f]+)(?:\s*//.*)?\s*$')
 
     lines = content.strip().splitlines()
     for line in lines:
@@ -418,6 +417,9 @@ def clean_file(content, funcName):
         content
     )
 
+    # Strip AI func refs (Ai_xxxx)
+    content = re.sub(r'(Ai_[a-zA-Z_]+)(?=(,)?(\s|$))', 'func', content)
+
     # Remove jlabel text, so we can compare properly against matched C versions that are missing it
     content = content.replace("jlabel ", "")
 
@@ -515,7 +517,7 @@ def find_equal_asm_files(searchType, map1, map2, maxdistance, replaceIncludeAsm,
 
             # If file2 funcname begins with sharedFunc and name + status (matching/nonmatching) matches with file1, skip this func
             # (most likely was already sym-shared but not yet code-matched, no point in us comparing them)
-            if funcname_file2.startswith("sharedFunc_") and status_file1 == status_file2 and funcname_file1 == funcname_file2:
+            if (funcname_file2.startswith("sharedFunc_") or funcname_file2.startswith("Ai_")) and status_file1 == status_file2 and funcname_file1 == funcname_file2:
                 continue
             
             # Read and clean the contents
@@ -547,7 +549,7 @@ def find_equal_asm_files(searchType, map1, map2, maxdistance, replaceIncludeAsm,
 
 
                     # If first dir func is named sharedFunc, print symbol names/includes for user to add to second map
-                    if "sharedFunc" in name_file1:
+                    if "sharedFunc" in name_file1 or "Ai_" in name_file1:
                         addr = 0
 
                         # Try searching file2_syms for the addr of this func, in case this func had been renamed already

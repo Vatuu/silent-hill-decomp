@@ -136,4 +136,18 @@ void sharedFunc_800D0828_3_s03(s_SubCharacter*, s32);
 
 void sharedFunc_800D0968_3_s03(s_SubCharacter*, s32);
 
+void Ai_Creaper_Update(s_SubCharacter* chara, s32 arg1, s32 arg2);
+
+void sharedFunc_800D7C28_1_s02(s_SubCharacter*); // `map5_s00` version has extra code at end of func, other maps are 1:1, shared symbol name is needed for `Ai_Creaper_Update`.
+
+void sharedFunc_800D7EE8_1_s02(s_SubCharacter*);
+
+void sharedFunc_800D8244_1_s02(s_SubCharacter*);
+
+void sharedFunc_800D983C_1_s02(s_SubCharacter*);
+
+void sharedFunc_800D9960_1_s02(s_SubCharacter*, s32, s32);
+
+void sharedFunc_800D99D0_1_s02(s_SubCharacter*);
+
 #endif
