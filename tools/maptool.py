@@ -252,6 +252,7 @@ def fetch_jtbl_size(mapName, jtbl_name):
     target_dlabel = f"dlabel {jtbl_name}"
     target_size = f".size {jtbl_name}"
 
+    # Search through each .rodata.s file in maps data folder
     for root, _, files in os.walk(target_dir):
         for filename in files:
             if filename.endswith(".rodata.s"):
@@ -259,21 +260,19 @@ def fetch_jtbl_size(mapName, jtbl_name):
                 with open(filepath, "r", encoding="utf-8") as f:
                     lines = f.readlines()
 
-                dlabel_index = -1
-                size_index = -1
+                counting = False
+                count = 0
 
-                for i, line in enumerate(lines):
-                    if target_dlabel in line:
-                        dlabel_index = i
-                    elif dlabel_index != -1 and target_size in line:
-                        size_index = i
-                        break
-
-                if dlabel_index != -1 and size_index != -1:
-                    line_count = size_index - dlabel_index - 1
-                    return line_count * 4 # each jtbl entry is 4 bytes
-
-    return None  # jtbl not found
+                for line in lines:
+                    if target_dlabel in line: # If we've found the jtbl start counting from next line
+                        counting = True
+                        continue
+                    if counting:
+                        if target_size in line: # Reached end of jtbl, return line count * 4
+                            return count * 4
+                        if "0x00000000" not in line: # Don't count lines with 0x00..
+                            count += 1
+    return None # jtbl not found
 
 def fetch_jtbl_file_offset(jtbl_name):
     try:
@@ -284,7 +283,7 @@ def fetch_jtbl_file_offset(jtbl_name):
     except (IndexError, ValueError):
         return None
 
-def insert_jtbl_to_config(mapName, jtblName):
+def insert_jtbl_to_config(mapName, jtblName, tuName):
     # Kinda ugly func to parse config yaml, since we can't rely on python yaml packages to keep the layout of our config files :/
     #
     # This func parses each subsegment in config yaml, then inserts a rodata segment for the jtbl
@@ -338,7 +337,7 @@ def insert_jtbl_to_config(mapName, jtblName):
             pass  # leave invalid lines alone
 
     # Insert jtbl and optional rodata filler entry
-    jtbl_entry = f"      - [0x{jtbl_offset:X}, .rodata, {mapName}]\n"
+    jtbl_entry = f"      - [0x{jtbl_offset:X}, .rodata, {tuName}]\n"
     jtbl_end = jtbl_offset + jtbl_size
     offsets = [entry[0] for entry in parsed_segments]
     inserted = False
@@ -428,45 +427,57 @@ def find_equal_asm_files(searchType, map1, map2, maxdistance, replaceIncludeAsm,
     map1_asm_path = os.path.join("asm", "maps", map1)
     map2_asm_path = os.path.join("asm", "maps", map2)
 
-    path1 = os.path.join(map1_asm_path, searchType, map1)
-    path2 = os.path.join(map2_asm_path, "nonmatchings", map2)
-    path3 = ""
+    path1_base = os.path.join(map1_asm_path, searchType)
+    path2_base = os.path.join(map2_asm_path, "nonmatchings")
+    path3_base = ""
 
     if searchType == "all":
-        path1 = os.path.join(map1_asm_path, "nonmatchings", map1)
-        path3 = os.path.join(map1_asm_path, "matchings", map1)
-    
-    if not os.path.isdir(path1):
-        print(f"First path not found: {path1}")
-        return
-    
-    if not os.path.isdir(path2):
-        print(f"Second path not found: {path2}")
+        path1_base = os.path.join(map1_asm_path, "nonmatchings")
+        path3_base = os.path.join(map1_asm_path, "matchings")
+
+    if not os.path.isdir(path1_base):
+        print(f"First base path not found: {path1_base}")
         return
 
-    if path3 and not os.path.isdir(path2):
-        print(f"Third path not found: {path3}")
+    if not os.path.isdir(path2_base):
+        print(f"Second base path not found: {path2_base}")
         return
-    
-    # Count lines in .s files from path1
-    line_counts1 = {
-        os.path.join(path1, f): count_lines_in_file(os.path.join(path1, f))
-        for f in os.listdir(path1) if f.endswith('.s')
-    }
-    
-    # If "all", also count lines in "matchings" and merge into line_counts1
-    if searchType == "all":
-        matchings_counts = {
-            os.path.join(path3, f): count_lines_in_file(os.path.join(path3, f))
-            for f in os.listdir(path3) if f.endswith('.s')
-        }
-        line_counts1.update(matchings_counts)
 
-    # Count lines in .s files from path2
-    line_counts2 = {
-        os.path.join(path2, f): count_lines_in_file(os.path.join(path2, f))
-        for f in os.listdir(path2) if f.endswith('.s')
-    }
+    if path3_base and not os.path.isdir(path3_base):
+        print(f"Third base path not found: {path3_base}")
+        return
+
+    # Initialize dictionaries to store line counts
+    line_counts1 = {}
+    line_counts2 = {}
+
+    # Process files from path1_base (all subdirectories)
+    for subdir in os.listdir(path1_base):
+        subdir_path = os.path.join(path1_base, subdir)
+        if os.path.isdir(subdir_path):
+            for file in os.listdir(subdir_path):
+                if file.endswith('.s'):
+                    file_path = os.path.join(subdir_path, file)
+                    line_counts1[file_path] = count_lines_in_file(file_path)
+
+    # If "all", also process files from path3_base (all subdirectories)
+    if searchType == "all" and path3_base:
+        for subdir in os.listdir(path3_base):
+            subdir_path = os.path.join(path3_base, subdir)
+            if os.path.isdir(subdir_path):
+                for file in os.listdir(subdir_path):
+                    if file.endswith('.s'):
+                        file_path = os.path.join(subdir_path, file)
+                        line_counts1[file_path] = count_lines_in_file(file_path)
+
+    # Process files from path2_base (all subdirectories)
+    for subdir in os.listdir(path2_base):
+        subdir_path = os.path.join(path2_base, subdir)
+        if os.path.isdir(subdir_path):
+            for file in os.listdir(subdir_path):
+                if file.endswith('.s'):
+                    file_path = os.path.join(subdir_path, file)
+                    line_counts2[file_path] = count_lines_in_file(file_path)
     
     # Find matching line counts
     matched_files = []
@@ -484,7 +495,7 @@ def find_equal_asm_files(searchType, map1, map2, maxdistance, replaceIncludeAsm,
     # search-replace changes to make inside .c file, if --replace is specified
     replacements = {}
 
-    # jtbls to add to config file
+    # jtbls to add to config file (jtbl_sym_name -> func_name, tu_file)
     jtbl_list = {}
     
     if matched_files:
@@ -497,6 +508,15 @@ def find_equal_asm_files(searchType, map1, map2, maxdistance, replaceIncludeAsm,
             name_file2 = os.path.basename(file2)
             funcname_file1 = os.path.splitext(name_file1)[0]
             funcname_file2 = os.path.splitext(name_file2)[0]
+            tu_file1 = os.path.normpath(relative_file1).split(os.sep)[1]
+            tu_file2 = os.path.normpath(relative_file2).split(os.sep)[1]
+            status_file1 = os.path.normpath(relative_file1).split(os.sep)[0]
+            status_file2 = os.path.normpath(relative_file2).split(os.sep)[0]
+
+            # If file2 funcname begins with sharedFunc and name + status (matching/nonmatching) matches with file1, skip this func
+            # (most likely was already sym-shared but not yet code-matched, no point in us comparing them)
+            if funcname_file2.startswith("sharedFunc_") and status_file1 == status_file2 and funcname_file1 == funcname_file2:
+                continue
             
             # Read and clean the contents
             file1_text = read_file(file1)
@@ -545,23 +565,24 @@ def find_equal_asm_files(searchType, map1, map2, maxdistance, replaceIncludeAsm,
                         if addr not in sharedFuncSymbols:
                             sharedFuncSymbols[addr] = funcname_file1
 
-                        include_search = f'INCLUDE_ASM("asm/maps/{map2}/nonmatchings/{map2}", {funcname_file2});'
+                        include_search = f'INCLUDE_ASM("asm/maps/{map2}/nonmatchings/{tu_file2}", {funcname_file2});'
                         sharedFilePath = f"maps/shared/{funcname_file1}.h"
                         if os.path.exists("include/" + sharedFilePath):
                             include_replace = f'#include "{sharedFilePath}" // 0x{addr:08X}'
                         else:
-                            include_replace = f'INCLUDE_ASM("asm/maps/{map2}/nonmatchings/{map2}", {funcname_file1}); // 0x{addr:08X}'
+                            include_replace = f'INCLUDE_ASM("asm/maps/{map2}/nonmatchings/{tu_file2}", {funcname_file1}); // 0x{addr:08X}'
 
                         includeLines += "\n" + include_replace
                         replacements[include_search] = include_replace
 
                         # If second map file2_text contains jtbls, add to our jtbl list
-                        if os.path.exists(sharedFilePath):
+                        if os.path.exists("include/" + sharedFilePath):
                             pattern = r'jtbl_[0-9a-fA-F]{4,8}'
                             for match in re.findall(pattern, file2_text):
                                 jtbl_name = f"{match}"
+                                print(f"{jtbl_name}")
                                 if jtbl_name not in jtbl_list:
-                                    jtbl_list[jtbl_name] = funcname_file2
+                                    jtbl_list[jtbl_name] = (funcname_file2, tu_file2)
 
         if sharedFuncSymbols:
             print(f"\nsym.{map2}.txt adds:")
@@ -582,40 +603,44 @@ def find_equal_asm_files(searchType, map1, map2, maxdistance, replaceIncludeAsm,
 
         # Optional replacement in .c file
         if replaceIncludeAsm and replacements:
-            c_path = f"src/maps/{map2}/{map2}.c"
-            print(f"\nReplacing INCLUDE_ASM lines inside {c_path}...\n")
-            try:
-                with open(c_path, "r", encoding="utf-8") as f:
-                    c_code = f.read()
+                dir_path = f"src/maps/{map2}/"
+                print(f"\nReplacing INCLUDE_ASM lines in {dir_path}...\n")
 
-                replaced = False
-                for key, value in replacements.items():
-                    if key in c_code:
-                        c_code = c_code.replace(key, value)
-                        print(f"Old: {key}\nNew: {value}\n")
-                        replaced = True
-                    else:
-                        print(f"Could not find line to replace: {key}")
+                try:
+                    c_files = [f for f in os.listdir(dir_path) if f.endswith(".c")]
+                    any_replaced = False
 
-                if replaced:
-                    # Remove any duplicate funcaddr comments
-                    c_code = re.sub(r'(\s*//\s*(0x[a-fA-F0-9]+)\s*)\1+', r'\1', c_code)
+                    for c_file in c_files:
+                        c_path = os.path.join(dir_path, c_file)
+                        with open(c_path, "r", encoding="utf-8") as f:
+                            c_code = f.read()
 
-                    with open(c_path, "w", encoding="utf-8") as f:
-                        f.write(c_code)
-                    print(f"Updated {c_path} with new includes.")
+                        replaced = False
+                        for key, value in replacements.items():
+                            if key in c_code:
+                                c_code = c_code.replace(key, value)
+                                print(f"{c_file}:\n  Old: {key}\n  New: {value}\n")
+                                replaced = True
 
-                    if jtbl_list:
+                        if replaced:
+                            # Remove duplicate funcaddr comments
+                            c_code = re.sub(r'(\s*//\s*(0x[a-fA-F0-9]+)\s*)\1+', r'\1', c_code)
+                            with open(c_path, "w", encoding="utf-8") as f:
+                                f.write(c_code)
+                            print(f"Updated {c_file} with new includes.")
+                            any_replaced = True
+
+                    if any_replaced and jtbl_list:
                         print(f"\nAdding jtbls to configs/maps/{map2}.yaml...")
-                        for jtbl, func_name in jtbl_list.items():
-                            print(f"  {func_name} -> {jtbl}")
-                            insert_jtbl_to_config(map2, jtbl)
+                        for jtbl, (func_name, tu_file) in jtbl_list.items():
+                            print(f"  {jtbl} = {tu_file}/{func_name}")
+                            insert_jtbl_to_config(map2, jtbl, tu_file)
 
-                else:
-                    print(f"\nNo matching INCLUDE_ASM lines found in {c_path}. Nothing replaced.")
+                    elif not any_replaced:
+                        print(f"\nNo matching INCLUDE_ASM lines found in any .c files in {dir_path}. Nothing replaced.")
 
-            except FileNotFoundError:
-                print(f"\nError: File {c_path} not found.")
+                except FileNotFoundError:
+                    print(f"\nError: Directory {dir_path} not found.")
 
         # Optional sym.[map2].txt update
         if updateSymTxtFile and sharedFuncSymbols:
@@ -793,6 +818,10 @@ def print_usage():
     print("Map header options:")
     print("  --list [MAP_NAME]        List character spawns from MAP_NAME map headers")
     print("  --searchChara [CHAR_ID]  Search and list any maps that contain CHAR_ID")
+    print()
+    print("Misc:")
+    print("  --jtbl [JTBL_NAME] [MAP] Add rodata for jtbl to map1.yaml")
+    print("  --sortsym [MAP_NAME]     sort map symbols")
     
 def main():
     import argparse
@@ -813,13 +842,36 @@ def main():
     
     parser.add_argument("--list", action="store_true", help="List character spawns from map headers")
     parser.add_argument("--searchChara", type=int, help="Search all maps for character ID")
+
+    parser.add_argument("--jtbl", type=str)
+    parser.add_argument("--sortsym", type=str)
     
     args = parser.parse_args()
     
     if args.help:
         print_usage()
         return
-    
+
+    if args.jtbl is not None:
+        if args.map1 is None:
+            print_usage()
+            return
+        
+        if insert_jtbl_to_config(args.map1, args.jtbl):
+            print(f"Inserted rodata for {args.jtbl} into configs/maps/{args.map1}.yaml")
+
+        return
+
+    elif args.sortsym is not None:
+        sym_path = f"configs/maps/sym.{args.sortsym}.txt"
+        sym_text = read_file(sym_path)
+        sym_text = sort_sym_by_address(sym_text)
+        sym_text += "\n" # end file with newline
+        with open(sym_path, "w", encoding="utf-8") as f:
+            f.write(sym_text)
+        print(f"\nUpdated {sym_path}.")
+        return
+        
     if args.searchChara is not None:
         MapHeader_SearchForChara(args.searchChara)
         
