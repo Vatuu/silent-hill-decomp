@@ -150,4 +150,18 @@ void sharedFunc_800D9960_1_s02(s_SubCharacter*, s32, s32);
 
 void sharedFunc_800D99D0_1_s02(s_SubCharacter*);
 
+void sharedFunc_800CFCA8_5_s00(s_SubCharacter*);
+
+void sharedFunc_800CFF74_5_s00(s_SubCharacter*);
+
+void sharedFunc_800D029C_5_s00(s_SubCharacter*);
+
+void sharedFunc_800D26D8_5_s00(s_SubCharacter*);
+
+void sharedFunc_800D2844_5_s00(s_SubCharacter*, s32, s32);
+
+void sharedFunc_800D2C18_5_s00(s_SubCharacter*);
+
+void sharedFunc_800D3300_5_s00(s_SubCharacter*);
+
 #endif
