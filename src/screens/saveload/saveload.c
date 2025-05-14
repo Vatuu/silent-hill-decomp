@@ -144,7 +144,175 @@ void func_801E326C(s8* arg0, s8* arg1, s32 arg2, s32 arg3) // 0x801E326C
 
 INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E3304); // 0x801E3304
 
-INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E3910); // 0x801E3910
+// TODO: Check objdiff. Jumptable already added.
+// `arg0` = what it's doing. Formatting, saving, or loading.
+#ifdef NON_MATCHING
+void func_801E3910(s32 arg0, s32 arg1) // 0x801E3910
+{
+    s32 strIdx;
+
+    char* strs[] =
+    {
+        " ",
+        "\x07You_\x01\x01removed_\x01\x01the_\x01\x01MEMORY_\x01\x01""CARD!",
+        "\x07Now_formatting...",
+        "\x07Now_saving...",
+        "\x07Unable_to_create_a_new_file.",
+        "\x07""Finished_saving.",
+        "\x07""Failed_to_save!",
+        "\x07The_data_is_not_found!",
+        "\x07The_data_is_damaged!",
+        "\x07""Failed_to_load!",
+        "\x07""FInished_loading.",
+        "\x07Now_loading..."
+    };
+
+    s16 xOffsets[] =
+    {
+        0,   16,
+        141, 107,
+        223, 136,
+        119, 182,
+        170, 117,
+        111, 114
+    };
+
+    switch (arg0)
+    {
+        // Format.
+        case 1:
+            strIdx = (arg1 == arg0) ? 1 : 2;
+            break;
+
+        // Save.
+        case 2:
+            switch (arg1)
+            {
+                // Memory card removed.
+                case 0:
+                    strIdx = 1; 
+                    break;
+
+                // Now saving.
+                case 1:
+                    strIdx = 3; 
+                    break;
+
+                // Unable to create new file.
+                case 7:
+                    strIdx = 4;
+                    break;
+
+                // Finished saving.
+                case 11:
+                    strIdx = 5; 
+                    break;
+
+                // Failed to save.
+                case 10:
+                    strIdx = 6; 
+                    break;
+
+                default:
+                    strIdx = 0; 
+                    break;
+            }
+            break;
+
+        // Load.
+        case 3:
+            switch (arg1)
+            {
+                // Now loading.
+                case 1:
+                    strIdx = 11;
+                    break;
+
+                // Data is damaged.
+                case 101:
+                    strIdx = 8;
+                    break;
+
+                // Failed to load.
+                case 10:
+                    strIdx = 9;
+                    break;
+
+                // Finished loading.
+                case 11:
+                    strIdx = 10;
+                    break;
+
+                // Memory card removed.
+                case 0:
+                    strIdx = 1;
+                    break;
+
+                // Memory card removed.
+                case 100:
+                    strIdx = 1;
+                    break;
+
+                default:
+                    strIdx = 0;
+                    break;
+            }
+            break;
+
+        default:
+            strIdx = 0;
+            break;
+    }
+
+    switch (D_801E7510)
+    {
+        case 0:
+            D_801E750C = 0;
+            D_801E7554 = 0;
+
+            if (strIdx == 1)
+            {
+                g_GameWork.gameStateStep_598[2] = 0;
+                D_801E7570[D_800A97D6] = NO_VALUE;
+                D_801E7578[D_800A97D6] = NO_VALUE;
+            }
+
+            D_801E7554 = strIdx;
+            D_801E7510++;
+            
+        case 1:
+            // Loading and something.
+            if (arg0 == 2 && arg1 == 1)
+            {
+                D_801E76D6 = arg1;
+            }
+
+            // Finished saving and `D_801E7554` isn't required string.
+            if (strIdx == 5 && D_801E7554 != strIdx)
+            {
+                D_801E76CE[D_800A97D6] = D_800A97D4[D_800A97D6];
+                D_801E76CE[1 - D_800A97D6] = NO_VALUE;
+                D_801E76D4 = 0;
+            }
+
+            D_801E7554 = strIdx;
+            Gfx_StringSetPosition(160 - (xOffsets[strIdx] >> 1), 186);
+            Gfx_StringDraw(strs[strIdx], 99);
+
+            // Finished saving.
+            if (strIdx == 5)
+            {
+                D_801E76D6 = 0;
+            }
+            break;
+
+        default:
+            break;
+    }
+}
+#else
+INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E3910);
+#endif
 
 INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E3C44); // 0x801E3C44
 

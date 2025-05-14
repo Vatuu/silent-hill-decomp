@@ -49,6 +49,8 @@ extern void (*D_801E7524[])(); // func table
 
 extern void (*D_801E7544[])(); // func table
 
+extern s32 D_801E7554;
+
 extern s32 D_801E7564[MEMORY_CARD_SLOT_COUNT];
 
 extern s16 D_801E756C[MEMORY_CARD_SLOT_COUNT];
@@ -89,6 +91,8 @@ void func_801E30C4(s_UnkSaveload0* ptr, s32 arg1, s32 idx);
 s32 func_801E3078(s_UnkSaveload0* arg0);
 
 void func_801E326C(s8* arg0, s8* arg1, s32 arg2, s32 arg3);
+
+void func_801E3910(s32 arg0, s32 arg1);
 
 void Gfx_SavesTransparentBgDraw(s8* arg0, s8* arg1, s32 arg2, s32 arg3);
 
