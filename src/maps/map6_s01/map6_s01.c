@@ -77,15 +77,15 @@ void func_800CE490(void) {}
 
 #include "maps/shared/sharedFunc_800D2EF4_0_s00.h" // 0x800CE4E8
 
-INCLUDE_ASM("asm/maps/map6_s01/nonmatchings/map6_s01", Ai_Cybil_Update); // 0x800CE4FC
+#include "maps/shared/Ai_Cybil_Update.h" // 0x800CE4FC
 
-INCLUDE_ASM("asm/maps/map6_s01/nonmatchings/map6_s01", func_800CE570);
+INCLUDE_ASM("asm/maps/map6_s01/nonmatchings/map6_s01", sharedFunc_800D8888_0_s01); // 0x800CE570
 
-INCLUDE_ASM("asm/maps/map6_s01/nonmatchings/map6_s01", func_800CE5B8);
+INCLUDE_ASM("asm/maps/map6_s01/nonmatchings/map6_s01", sharedFunc_800D88D0_0_s01); // 0x800CE5B8
 
-INCLUDE_ASM("asm/maps/map6_s01/nonmatchings/map6_s01", func_800CE750);
+INCLUDE_ASM("asm/maps/map6_s01/nonmatchings/map6_s01", sharedSymbol_800D8A68_0_s01); // 0x800CE750 - Differs from `map0_s01`/`map4_s01` version.
 
-INCLUDE_ASM("asm/maps/map6_s01/nonmatchings/map6_s01", func_800CF794);
+INCLUDE_ASM("asm/maps/map6_s01/nonmatchings/map6_s01", sharedSymbol_800D9AD0_0_s01); // 0x800CF794
 
 INCLUDE_ASM("asm/maps/map6_s01/nonmatchings/map6_s01", Ai_Dahlia_Update); // 0x800CF7D0
 

@@ -93,15 +93,15 @@ void func_800CF7AC(void) {}
 
 #include "maps/shared/sharedFunc_800D2EF4_0_s00.h" // 0x800CF804
 
-INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", Ai_Splithead_Update); // 0x800CF818
+#include "maps/shared/Ai_Splithead_Update.h" // 0x800CF818
 
-INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800CF8D8);
+INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", sharedFunc_800CF8D8_1_s05); // 0x800CF8D8
 
-INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800CF990);
+INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", sharedFunc_800CF990_1_s05); // 0x800CF990
 
-INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800CFE94);
+INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", sharedFunc_800CFE94_1_s05); // 0x800CFE94
 
-INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800D0054);
+INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", sharedFunc_800D0054_1_s05); // 0x800D0054
 
 INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800D00D0);
 
@@ -119,19 +119,19 @@ INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800D2444);
 
 INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800D263C);
 
-INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800D267C);
+INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", sharedFunc_800D267C_1_s05); // 0x800D267C
 
-INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800D274C);
+INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", sharedFunc_800D274C_1_s05); // 0x800D274C
 
-INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800D2D74);
+INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", sharedFunc_800D2D74_1_s05); // 0x800D2D74
 
 INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800D3388);
 
-INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800D3AFC);
+INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", sharedFunc_800D3AFC_1_s05); // 0x800D3AFC
 
-INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800D3B30);
+INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", sharedFunc_800D3B30_1_s05); // 0x800D3B30
 
-INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800D4070);
+INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", sharedFunc_800D4070_1_s05); // 0x800D4070
 
 INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800D4408);
 

@@ -343,15 +343,15 @@ void func_800D87FC(void) {}
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D8804);
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", Ai_Cybil_Update); // 0x800D8814
+#include "maps/shared/Ai_Cybil_Update.h" // 0x800D8814
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D8888);
+INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800D8888_0_s01);
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D88D0);
+INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800D88D0_0_s01);
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D8A68);
+INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedSymbol_800D8A68_0_s01);
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D9AD0);
+INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedSymbol_800D9AD0_0_s01);
 
 #include "maps/shared/sharedFunc_800D88AC_0_s00.h" // 0x800D9B0C
 

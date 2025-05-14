@@ -198,4 +198,38 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter*);
 
 void sharedFunc_800E71E8_2_s00(s_SubCharacter*);
 
+void Ai_Splithead_Update(s_SubCharacter* chara, s32 arg1, s32 arg2);
+
+void sharedFunc_800CF8D8_1_s05(s_SubCharacter*);
+
+void sharedFunc_800CF990_1_s05(s_SubCharacter*);
+
+void sharedFunc_800CFE94_1_s05(s_SubCharacter*);
+
+void sharedFunc_800D0054_1_s05(s_SubCharacter*);
+
+void sharedFunc_800D267C_1_s05(s_SubCharacter*);
+
+void sharedFunc_800D274C_1_s05(s_SubCharacter*, s32);
+
+void sharedFunc_800D2D74_1_s05(s_SubCharacter*);
+
+void sharedFunc_800D3AFC_1_s05(s_SubCharacter*);
+
+void sharedFunc_800D3B30_1_s05(s_SubCharacter*);
+
+void sharedFunc_800D4070_1_s05(s_SubCharacter*);
+
+extern s32 sharedData_800D8610_1_s05;
+
+void Ai_Cybil_Update(s_SubCharacter* chara, s32 arg1, s32 arg2);
+
+void sharedFunc_800D8888_0_s01(s_SubCharacter*, s32, s32);
+
+void sharedFunc_800D88D0_0_s01(s_SubCharacter*, s32);
+
+void sharedSymbol_800D8A68_0_s01(s_SubCharacter*, s32);
+
+void sharedSymbol_800D9AD0_0_s01(s_SubCharacter*);
+
 #endif
