@@ -70,15 +70,15 @@ void func_800CE9CC(void) {}
 
 #include "maps/shared/sharedFunc_800D2EF4_0_s00.h" // 0x800CEA24
 
-INCLUDE_ASM("asm/maps/map7_s00/nonmatchings/map7_s00", Ai_Lisa_Update); // 0x800CEA38
+#include "maps/shared/Ai_Lisa_Update.h" // 0x800CEA38
 
-INCLUDE_ASM("asm/maps/map7_s00/nonmatchings/map7_s00", func_800CEAAC);
+INCLUDE_ASM("asm/maps/map7_s00/nonmatchings/map7_s00", sharedFunc_800D08FC_3_s04); // 0x800CEAAC
 
-INCLUDE_ASM("asm/maps/map7_s00/nonmatchings/map7_s00", func_800CEAF4);
+INCLUDE_ASM("asm/maps/map7_s00/nonmatchings/map7_s00", sharedFunc_800D0944_3_s04); // 0x800CEAF4
 
-INCLUDE_ASM("asm/maps/map7_s00/nonmatchings/map7_s00", func_800CEC8C);
+INCLUDE_ASM("asm/maps/map7_s00/nonmatchings/map7_s00", sharedSymbol_800D0ADC_3_s04); // 0x800CEC8C
 
-INCLUDE_ASM("asm/maps/map7_s00/nonmatchings/map7_s00", func_800CF514);
+INCLUDE_ASM("asm/maps/map7_s00/nonmatchings/map7_s00", sharedFunc_800D1350_3_s04); // 0x800CF514
 
 #include "maps/shared/sharedFunc_800D88AC_0_s00.h" // 0x800CF538
 

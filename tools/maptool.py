@@ -35,13 +35,27 @@ from typing import List
 
 MapVramAddress = 0x800C9578
 
-# Known funcs that cause false positive matches
-# Usually small funcs that have matching code but might call into different funcs
-# Can be removed once they're figured out
-FalsePositiveMatches = {
-    "map7_s03": [0x800DF044, 0x800E08E4], # close match to sharedFunc_800CDA88_3_s03 but func it calls is different
-    "map4_s03": [0x800D5BC8] # ditto above
-}
+# Funcs that have already been symbol-matched between all valid matching funcs in the project
+# Will only allow code sharing for these with funcs under the same symbol name
+# (workaround for some small non-related AI funcs that can have false-positive matches with these)
+SymbolMatchedFuncs = [
+    "sharedFunc_800D8888_0_s01",
+    "sharedFunc_800D88D0_0_s01",
+    "sharedFunc_800CDA88_3_s03",
+    "sharedFunc_800D08FC_3_s04",
+    "sharedFunc_800D0944_3_s04",
+    "sharedFunc_800D1350_3_s04",
+    "Ai_Lisa_Update",
+    "Ai_BloodyLisa_Update",
+    "sharedFunc_800D595C_7_s01",
+    "sharedFunc_800D59A4_7_s01",
+    "sharedFunc_800D5B3C_7_s01",
+    "sharedFunc_800D5CB4_7_s01",
+    "sharedFunc_800D4A2C_7_s01",
+    "sharedFunc_800D4A74_7_s01",
+    "sharedFunc_800D4C0C_7_s01",
+    "sharedFunc_800D4DD8_7_s01"
+]
 
 e_ShCharacterId = [
     "Chara_None",
@@ -515,8 +529,13 @@ def find_equal_asm_files(searchType, map1, map2, maxdistance, replaceIncludeAsm,
             status_file1 = os.path.normpath(relative_file1).split(os.sep)[0]
             status_file2 = os.path.normpath(relative_file2).split(os.sep)[0]
 
+            # If funcname_file1 is in SymbolMatchedFuncs, the project has already renamed all valid matches for this
+            # So if funcname_file2 name doesn't match it must be a false positive
+            if funcname_file1 in SymbolMatchedFuncs and funcname_file1 != funcname_file2:
+                continue
+
             # If file2 funcname begins with sharedFunc and name + status (matching/nonmatching) matches with file1, skip this func
-            # (most likely was already sym-shared but not yet code-matched, no point in us comparing them)
+            # (most likely was already sym-shared but not yet code-matched, no point in us comparing them until they've been matched)
             if (funcname_file2.startswith("sharedFunc_") or funcname_file2.startswith("Ai_")) and status_file1 == status_file2 and funcname_file1 == funcname_file2:
                 continue
             
@@ -559,10 +578,6 @@ def find_equal_asm_files(searchType, map1, map2, maxdistance, replaceIncludeAsm,
                             addr_str = name_file2.split("_")[1]
                             addr_str = addr_str.split(".")[0]
                             addr = int(addr_str, 16)
-
-                        if map2 in FalsePositiveMatches:
-                            if addr in FalsePositiveMatches[map2]:
-                                continue
                         
                         if addr not in sharedFuncSymbols:
                             sharedFuncSymbols[addr] = funcname_file1

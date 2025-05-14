@@ -232,4 +232,56 @@ void sharedSymbol_800D8A68_0_s01(s_SubCharacter*, s32);
 
 void sharedSymbol_800D9AD0_0_s01(s_SubCharacter*);
 
+void Ai_AirScreamer_Update(s_SubCharacter* chara, s32 arg1, s32 arg2);
+
+void sharedFunc_800D21E4_0_s01(s32, s32);
+
+void sharedFunc_800D2200_0_s01(s_SubCharacter*);
+
+void sharedFunc_800D2274_0_s01(s_SubCharacter*);
+
+void sharedFunc_800D2390_0_s01(s_SubCharacter*);
+
+void sharedFunc_800D2974_0_s01(s_SubCharacter*);
+
+void sharedFunc_800D3928_0_s01(s_SubCharacter*);
+
+void sharedFunc_800D62D8_0_s01(s_SubCharacter*);
+
+void sharedFunc_800D7AB0_0_s01(s_SubCharacter*);
+
+void sharedFunc_800D7EBC_0_s01(s_SubCharacter*);
+
+void sharedFunc_800D81B0_0_s01(s_SubCharacter*);
+
+void Ai_Lisa_Update(s_SubCharacter* chara, s32 arg1, s32 arg2);
+
+void sharedFunc_800D08FC_3_s04(s_SubCharacter*, s32, s32);
+
+void sharedFunc_800D0944_3_s04(s_SubCharacter*, s32);
+
+void sharedSymbol_800D0ADC_3_s04(s_SubCharacter*, s32); // `Ai_Lisa_Control`
+
+void sharedFunc_800D1350_3_s04(s_SubCharacter*);
+
+void Ai_BloodyLisa_Update(s_SubCharacter* chara, s32 arg1, s32 arg2);
+
+void sharedFunc_800D595C_7_s01(s_SubCharacter*, s32, s32);
+
+void sharedFunc_800D59A4_7_s01(s_SubCharacter*, s32);
+
+void sharedFunc_800D5B3C_7_s01(s_SubCharacter*, s32);
+
+void sharedFunc_800D5CB4_7_s01(s_SubCharacter*);
+
+void Ai_GhostChildAlessa_Update(s_SubCharacter* chara, s32 arg1, s32 arg2);
+
+void sharedFunc_800D4A2C_7_s01(s_SubCharacter*, s32, s32);
+
+void sharedFunc_800D4A74_7_s01(s_SubCharacter*, s32);
+
+void sharedFunc_800D4C0C_7_s01(s_SubCharacter*, s32);
+
+void sharedFunc_800D4DD8_7_s01(s_SubCharacter*);
+
 #endif

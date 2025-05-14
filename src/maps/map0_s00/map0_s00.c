@@ -159,7 +159,17 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D7BE8);
 
 #include "maps/shared/sharedFunc_800D7E04_0_s00.h" // 0x800D7E04
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", Ai_Cheryl_Update); // 0x800D7FB8
+void Ai_Cheryl_Update(s_SubCharacter* chara, s32 arg1, s32 arg2) // 0x800D7FB8
+{
+    if (chara->model_0.charaId_0 != Chara_Cheryl)
+    {
+        func_800D8888(chara);
+    }
+
+    func_800D8310(chara, arg2);
+    func_800D8124(chara, arg2);
+    func_800D802C(chara, arg1, arg2);
+}
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D802C);
 
