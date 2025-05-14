@@ -150,6 +150,8 @@ void sharedFunc_800D9960_1_s02(s_SubCharacter*, s32, s32);
 
 void sharedFunc_800D99D0_1_s02(s_SubCharacter*);
 
+void Ai_HangedScratcher_Update(s_SubCharacter* chara, s32 arg1, s32 arg2);
+
 void sharedFunc_800CFCA8_5_s00(s_SubCharacter*);
 
 void sharedFunc_800CFF74_5_s00(s_SubCharacter*);
@@ -163,5 +165,21 @@ void sharedFunc_800D2844_5_s00(s_SubCharacter*, s32, s32);
 void sharedFunc_800D2C18_5_s00(s_SubCharacter*);
 
 void sharedFunc_800D3300_5_s00(s_SubCharacter*);
+
+void Ai_Romper_Update(s_SubCharacter* chara, s32 arg1, s32 arg2);
+
+void sharedFunc_800E5DD8_2_s02(s_SubCharacter*);
+
+void sharedFunc_800E60FC_2_s02(s_SubCharacter*);
+
+void sharedFunc_800E6420_2_s02(s_SubCharacter*);
+
+void sharedFunc_800E66E8_2_s02(s_SubCharacter*);
+
+void sharedFunc_800E8730_2_s02(s_SubCharacter*);
+
+void sharedFunc_800E8A40_2_s02(s_SubCharacter*, s32, s32);
+
+void sharedFunc_800E8DFC_2_s02(s_SubCharacter*);
 
 #endif
