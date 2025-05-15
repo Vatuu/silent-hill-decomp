@@ -3,6 +3,8 @@
 #include "main/rng.h"
 #include "maps/shared.h"
 
+extern s_AnimInfo D_800E1410[8];
+
 INCLUDE_ASM("asm/maps/map1_s03/nonmatchings/map1_s03", func_800CBCE0);
 
 INCLUDE_ASM("asm/maps/map1_s03/nonmatchings/map1_s03", func_800CBF2C);
@@ -183,7 +185,64 @@ INCLUDE_ASM("asm/maps/map1_s03/nonmatchings/map1_s03", sharedFunc_800D9960_1_s02
 
 INCLUDE_ASM("asm/maps/map1_s03/nonmatchings/map1_s03", sharedFunc_800D99D0_1_s02); // 0x800D9E48
 
-INCLUDE_ASM("asm/maps/map1_s03/nonmatchings/map1_s03", Ai_LockerDeadBody_Update); // 0x800DA284
+void Ai_LockerDeadBody_Update(s_SubCharacter* chara, s32 arg1, s32 arg2) // 0x800DA284
+{
+    s_AnimInfo* structPtr;
+
+    if (chara->model_0.field_2 == 0)
+    {
+        chara->model_0.anim_4.keyframeIdx1_A = 0;
+        chara->model_0.anim_4.animIdx_0      = 5;
+        chara->model_0.anim_4.time_4         = 0;
+        chara->model_0.anim_4.keyframeIdx0_8 = 0;
+        chara->model_0.field_2++;
+        chara->position_18.vy = 0;
+    }
+
+    if (!(g_SaveGamePtr->eventFlags_168[3] & (1 << 9)))
+    {
+        chara->model_0.anim_4.flags_2 &= ~2;
+        chara->flags_E0 &= ~0xF00;
+        return;
+    }
+
+    chara->model_0.anim_4.flags_2 |= 1 << 1;
+
+    if (!(g_SaveGamePtr->eventFlags_168[3] & (1 << 10)))
+    {
+        if (chara->model_0.anim_4.animIdx_0 == 5)
+        {
+            chara->model_0.anim_4.animIdx_0 = 3;
+        }
+
+        chara->flags_E0 &= ~0xF00;
+    }
+    else
+    {
+        chara->model_0.anim_4.animIdx_0      = 7;
+        chara->model_0.anim_4.time_4         = FP_TO(16, Q12_SHIFT);
+        chara->model_0.anim_4.keyframeIdx0_8 = 16;
+        chara->flags_E0                      = (chara->flags_E0 & ~0xF00) | 0x300; // Seen this exact pattern frequently.
+    }
+
+    func_80035B04(&chara->position_18, &chara->rotation_24, arg2);
+
+    structPtr = &D_800E1410[chara->model_0.anim_4.animIdx_0];
+    structPtr->funcPtr_0(chara, arg1, arg2, structPtr);
+
+    chara->field_C8 = -0x4CC;
+    chara->field_DC = 0xF5;
+    chara->field_DE = 0xEE1;
+    chara->field_CA = 0;
+    chara->field_CC = 0;
+    chara->field_CE = 0;
+    chara->field_D8 = 0;
+    chara->field_DA = 0;
+    chara->field_D6 = 0;
+    chara->field_D4 = 0x547;
+
+    func_8005C814(&chara->field_D8, chara);
+}
 
 #include "maps/shared/sharedFunc_800D929C_0_s00.h" // 0x800DA424
 

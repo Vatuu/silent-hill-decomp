@@ -441,6 +441,19 @@ typedef struct
 } s_Skeleton;
 STATIC_ASSERT_SIZEOF(s_Skeleton, 28);
 
+/** Const data passed over to `Anim_Update` funcs, struct itself contains which `Anim_Update` func is to be called. */
+typedef struct _AnimInfo
+{
+    void (*funcPtr_0)(s_SubCharacter*, s32, s32, struct _AnimInfo*); // TODO: funcPtr signature doesn't currently match Anim_Update.
+    u16 field_4;
+    u16 animIdx_6;
+    u16 field_8;
+    u16 field_A;
+    s16 keyframeIdx0_C;
+    s16 keyframeIdx1_E;
+} s_AnimInfo;
+STATIC_ASSERT_SIZEOF(s_AnimInfo, 16);
+
 typedef struct
 {
     SVECTOR3 posTarget_0;
@@ -1263,17 +1276,21 @@ s_80043F2C* func_80043F2C(s_80043F2C* arg0, s_80043F2C* arg1);
 
 void func_80044044(s_80044044* arg0, s32 arg1, s32 arg2);
 
+void func_800446D8(s_Skeleton*, GsCOORDINATE2*, s32, s32, s32);
+
+s32 func_800449AC(s_Model*, s_AnimInfo*);
+
 /** Updates a character's animation, variant 0. First param might be `s_SubCharacter` instead. */
-void Anim_Update0(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Model* targetModel);
+void Anim_Update0(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_AnimInfo* targetAnim);
 
 /** Updates a character's animation, variant 1. */
-void Anim_Update1(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Model* targetModel);
+void Anim_Update1(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_AnimInfo* targetAnim);
 
 /** Updates a character's animation, variant 2. */
-void Anim_Update2(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Model* targetModel);
+void Anim_Update2(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_AnimInfo* targetAnim);
 
 /** Updates a character's animation, variant 3. */
-void Anim_Update3(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Model* targetModel);
+void Anim_Update3(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_AnimInfo* targetAnim);
 
 void func_80044F14(s32 mat, s16 z, s16 x, s16 y);
 
@@ -1430,6 +1447,8 @@ void func_80054928();
 void func_80054A04(s8 arg0);
 
 s32 func_8005C7D0(s_SubCharacter*, s32);
+
+void func_8005C814(s16*, s_SubCharacter*);
 
 void func_8005E0DC(s32 arg0); // Types assumed.
 
