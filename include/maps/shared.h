@@ -139,6 +139,8 @@ void func_800CDB5C(s_SubCharacter*, s32);
 
 void Ai_PuppetNurse_Update(s_SubCharacter* chara, s32 arg1, s32 arg2);
 
+void Ai_PuppetDoctor_Update(s_SubCharacter* chara, s32 arg1, s32 arg2);
+
 void sharedFunc_800CDF24_3_s03(s_SubCharacter*);
 
 void sharedFunc_800CE3CC_3_s03(s_SubCharacter*);
