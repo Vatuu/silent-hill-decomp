@@ -325,6 +325,4 @@ void sharedFunc_800D4C0C_7_s01(s_SubCharacter*, s32);
 
 void sharedFunc_800D4DD8_7_s01(s_SubCharacter*);
 
-
-
 #endif

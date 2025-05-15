@@ -37,7 +37,48 @@ void func_801E2D8C() // 0x801E2D8C
     }
 }
 
-INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", Gfx_SaveBackgroundDraw); // 0x801E2EBC
+// TODO: Check objdiff
+#ifdef NON_MATCHING
+void Gfx_SaveBackgroundDraw() // 0x801E2EBC
+{
+    s_func_801E5898 var;
+    s32             i;
+    
+    DVECTOR posTable[] = 
+    {
+        {
+            .vx = 59,
+            .vy = 16
+        },
+        {
+            .vx = 209,
+            .vy = 16
+        }
+    };
+
+    char* strs[] =
+    {
+        "SLOT1",
+        "SLOT2"
+    };
+
+    Gfx_StringSetColor(ColorId_White);
+    
+    for (i = 0; i < MEMORY_CARD_SLOT_COUNT; i++)
+    {
+        Gfx_StringSetPosition(posTable[i].vx, posTable[i].vy);
+        Gfx_StringDraw(strs[i], 50);
+    }
+
+    var.field_0.vx = -136;
+    var.field_0.vy = 60;
+    var.field_4.vx = 272;
+    var.field_4.vy = 40;
+    Gfx_RectSaveInfoDraw(&var);
+}
+#else
+INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", Gfx_SaveBackgroundDraw); // 0x801E3304
+#endif
 
 void func_801E2F90(s32 saveSlotIdx) // 0x801E2F90
 {

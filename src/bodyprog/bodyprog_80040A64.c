@@ -420,12 +420,12 @@ void Anim_Update0(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Anim
     timeStep = Anim_GetTimeStep(model, targetAnim);
 
     // Compute new time.
-    newTime = model->anim_4.time_4;
+    newTime         = model->anim_4.time_4;
     newKeyframeIdx0 = FP_FROM(newTime, Q12_SHIFT);
     if (timeStep != 0)
     {
         // Clamp new time against target time?
-        newTime += timeStep;
+        newTime   += timeStep;
         targetTime = FP_TO(targetAnim->keyframeIdx1_E, Q12_SHIFT);
         if (newTime < targetTime)
         {
@@ -438,7 +438,7 @@ void Anim_Update0(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Anim
         }
         else
         {
-            newTime = targetTime;
+            newTime    = targetTime;
             setAnimIdx = 1;
         }
 
@@ -453,7 +453,7 @@ void Anim_Update0(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Anim
     }
 
     // Update frame data.
-    model->anim_4.time_4 = newTime;
+    model->anim_4.time_4         = newTime;
     model->anim_4.keyframeIdx0_8 = newKeyframeIdx0;
     model->anim_4.keyframeIdx1_A = 0;
 
@@ -482,11 +482,11 @@ void Anim_Update1(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Anim
     keyframeIdx0    = targetAnim->keyframeIdx0_C;
     keyframeIdx1    = targetAnim->keyframeIdx1_E;
     nextKeyframeIdx = keyframeIdx1 + 1;
-    keyframeDelta = nextKeyframeIdx - keyframeIdx0;
+    keyframeDelta   = nextKeyframeIdx - keyframeIdx0;
 
     currentKeyframeTime = FP_TO(keyframeIdx0, Q12_SHIFT);
-    nextKeyframeTime = FP_TO(nextKeyframeIdx, Q12_SHIFT);
-    keyframeTimeDelta = FP_TO(keyframeDelta, Q12_SHIFT);
+    nextKeyframeTime    = FP_TO(nextKeyframeIdx, Q12_SHIFT);
+    keyframeTimeDelta   = FP_TO(keyframeDelta, Q12_SHIFT);
 
     // Get time step.
     timeStep = Anim_GetTimeStep(model, targetAnim);
@@ -518,7 +518,7 @@ void Anim_Update1(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Anim
     }
 
     // Update frame data.
-    model->anim_4.time_4 = newTime;
+    model->anim_4.time_4         = newTime;
     model->anim_4.keyframeIdx0_8 = newKeyframeIdx0;
     model->anim_4.keyframeIdx1_A = 0;
 }
@@ -531,7 +531,7 @@ void Anim_Update2(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Anim
     s32 timeStep;
     s32 alpha;
     
-    setAnimIdx = 0;
+    setAnimIdx      = 0;
     newKeyframeIdx0 = targetAnim->keyframeIdx0_C;
     newKeyframeIdx1 = targetAnim->keyframeIdx1_E;
 
@@ -545,7 +545,7 @@ void Anim_Update2(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Anim
     timeStep = Anim_GetTimeStep(model, targetAnim);
 
     // Set time.
-    alpha = model->anim_4.keyframeIdx1_A;
+    alpha  = model->anim_4.keyframeIdx1_A;
     alpha += timeStep;
     if (alpha >= FP_ALPHA(0.5f))
     {
@@ -559,7 +559,7 @@ void Anim_Update2(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Anim
     // Progress keyframes.
     if (alpha >= FP_ALPHA(1.0f))
     {
-        newKeyframeIdx0 = newKeyframeIdx1;
+        newKeyframeIdx0              = newKeyframeIdx1;
         model->anim_4.keyframeIdx0_8 = newKeyframeIdx1;
         
         alpha = 0;
@@ -608,12 +608,12 @@ void Anim_Update3(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Anim
     }
 
     // Update keyframe 1.
-    newKeyframeIdx1 = model->anim_4.keyframeIdx1_A + timeStep;
+    newKeyframeIdx1              = model->anim_4.keyframeIdx1_A + timeStep;
     model->anim_4.keyframeIdx1_A = newKeyframeIdx1;
 
     // Sine-based easing?
     sinValue = shRsin((newKeyframeIdx1 / 2) - FP_ALPHA(0.25f));
-    alpha = (sinValue / 2) + FP_ALPHA(0.5f);
+    alpha    = (sinValue / 2) + FP_ALPHA(0.5f);
 
     // Clamp new time to keyframe 0 or 1.
     if (alpha >= FP_ALPHA(0.5f))

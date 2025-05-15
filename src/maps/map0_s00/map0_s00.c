@@ -159,6 +159,7 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", sharedFunc_800D7BE8_0_s00
 
 #include "maps/shared/sharedFunc_800D7E04_0_s00.h" // 0x800D7E04
 
+// `arg2` = another `s_SubCharacter`?
 void Ai_Cheryl_Update(s_SubCharacter* chara, s32 arg1, s32 arg2) // 0x800D7FB8
 {
     if (chara->model_0.charaId_0 != Chara_Cheryl)
@@ -166,9 +167,9 @@ void Ai_Cheryl_Update(s_SubCharacter* chara, s32 arg1, s32 arg2) // 0x800D7FB8
         func_800D8888(chara);
     }
 
-    func_800D8310(chara, arg2);
-    func_800D8124(chara, arg2);
-    func_800D802C(chara, arg1, arg2);
+    func_800D8310(chara, arg2); // Control.
+    func_800D8124(chara, arg2); // Translate + rotate.
+    func_800D802C(chara, arg1, arg2); // Modulate speed and something else?
 }
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D802C);
