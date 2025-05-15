@@ -25,6 +25,12 @@ extern s16 sharedData_800E3260_0_s00;
 
 extern s32 sharedData_800E39D8_0_s00;
 
+// Next 4 set by `Ai_Stalker_Update`.
+extern s32 sharedData_800E3A20_0_s00;
+extern s32 sharedData_800E3A24_0_s00;
+extern s32 sharedData_800E3A28_0_s00;
+extern s32 sharedData_800E3A2C_0_s00;
+
 s32 sharedFunc_800CBBBC_0_s00();
 
 void sharedFunc_800D01BC_0_s00(u16* arg0, VECTOR3* arg1, s32 arg2);
@@ -75,6 +81,20 @@ void sharedFunc_800D67FC_0_s00(s_SubCharacter* chara);
 void sharedFunc_800D7E04_0_s00(s_SubCharacter* chara, s32 caseArg);
 
 void sharedFunc_800D88AC_0_s00(s_SubCharacter* playerChara);
+
+void Ai_Stalker_Update(s_SubCharacter* chara, s32 arg1, s32 arg2);
+
+void sharedSymbol_800D309C_0_s00(s_SubCharacter*, s32); // Matches across all maps except `map6_s03`.
+
+void sharedFunc_800D3308_0_s00(s_SubCharacter*);
+
+void sharedFunc_800D3B44_0_s00(s_SubCharacter*);
+
+void sharedFunc_800D6970_0_s00(s_SubCharacter*, s32, s32);
+
+void sharedFunc_800D70C4_0_s00(s_SubCharacter*);
+
+void sharedFunc_800D7BE8_0_s00(s_SubCharacter*);
 
 /** Among other things, sets the players's anim to anim 3 (which might actually be flags if the field packs more data). */
 void sharedFunc_800D88C0_0_s00(s_SubCharacter* playerChara, s32 arg1);
@@ -283,5 +303,7 @@ void sharedFunc_800D4A74_7_s01(s_SubCharacter*, s32);
 void sharedFunc_800D4C0C_7_s01(s_SubCharacter*, s32);
 
 void sharedFunc_800D4DD8_7_s01(s_SubCharacter*);
+
+
 
 #endif
