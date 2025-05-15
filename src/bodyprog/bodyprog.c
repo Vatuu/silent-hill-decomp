@@ -1329,7 +1329,19 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80037188);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", Chara_PositionUpdateFromParams);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80037334);
+void func_80037334() // 0x80037334
+{
+    s_func_800699F8 sp10;
+    void (*temp_v0)();
+
+    temp_v0 = g_MapOverlayHeader.func_40;
+    if (temp_v0 != 0)
+    {
+        temp_v0();
+    }
+    func_800699F8(&sp10, g_SysWork.player_4C.chara_0.position_18.vx, g_SysWork.player_4C.chara_0.position_18.vz);
+    g_SysWork.player_4C.chara_0.position_18.vy = sp10.chara_grnd_0;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80037388);
 
