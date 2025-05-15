@@ -407,6 +407,14 @@ typedef struct _ShInventoryItem
 } s_ShInventoryItem;
 STATIC_ASSERT_SIZEOF(s_ShInventoryItem, 4);
 
+typedef enum _GameDifficulty
+{
+    GameDifficulty_Easy = -1,
+    GameDifficulty_Normal = 0,
+    GameDifficulty_Hard = 1,
+    // TODO: Does this increase further on NG+?
+} e_GameDifficulty;
+
 typedef struct _ShSaveGame
 {
     s_ShInventoryItem items_0[INVENTORY_ITEM_COUNT_MAX];
@@ -446,7 +454,8 @@ typedef struct _ShSaveGame
     q19_12            runDistance_254;
     q19_12            walkDistance_258;
     s32               enemyKillCountPacked_25C; // Redo to `rangedKillCount : 8; meleeKillCount : 16; pad : 8` or `u8 pad; u16 meleeKillCount; s8 rangedKillCount;`.
-    s32               field_260;                /** Packed data. Stores game difficulty and something else. Last byte is -16 on easy, 0 on normal, and 16 on hard. */
+    s32               field_260 : 28;
+    s32               gameDifficulty_260 : 4;   /** `e_GameDifficulty`. */
     s16               firedShotCount_264;       /** Missed shot count = firedShotCount - (closeRangeShotCount + midRangeShotCount + longRangeShotCount). */
     s16               closeRangeShotCount_266;  /** Only hits counted. */
     s16               midRangeShotCount_268;    /** Only hits counted. */

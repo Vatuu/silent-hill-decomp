@@ -1092,12 +1092,12 @@ void Game_SaveGameInitialize(s8 overlayIdx, s32 difficulty) // 0x800350BC
 
     g_SaveGamePtr->mapOverlayIdx_A4 = overlayIdx;
 
-    // -1 = easy, 0 = normal, 1 = hard.
-    difficulty = CLAMP(difficulty, -1, 1);
+    // `e_GameDifficulty`
+    difficulty = CLAMP(difficulty, GameDifficulty_Easy, GameDifficulty_Hard);
 
     var_a2 = g_SaveGamePtr->field_B0;
 
-    g_SaveGamePtr->field_260      = (g_SaveGamePtr->field_260 & 0x0FFFFFFF) | (difficulty << 28);
+    g_SaveGamePtr->gameDifficulty_260 = difficulty;
     g_SaveGamePtr->mapIdx_A9 = 1;
 
     for (i = 0; i < 45; i++)
@@ -1846,7 +1846,7 @@ void SysState_GameOver_Update() // 0x8003A52C
             break;
 
         case 5:
-            if ((g_SaveGamePtr->field_260 >> 28) == 1)
+            if (g_SaveGamePtr->gameDifficulty_260 == GameDifficulty_Hard)
             {
                 // TODO: Create `inline SysWork_StateStepReset` if other code matching is needed.
                 g_SysWork.sysStateStep_C = NO_VALUE;

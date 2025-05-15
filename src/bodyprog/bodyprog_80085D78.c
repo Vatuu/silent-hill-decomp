@@ -893,7 +893,7 @@ void func_800879FC(u32 arg0, s32 arg1) // 0x800879FC
     s32 var4;
 
     newBulletAdjust = g_GameWork.config_0.optBulletAdjust_2D + 1;
-    if ((g_SaveGamePtr->field_260 >> 28) == NO_VALUE)
+    if (g_SaveGamePtr->gameDifficulty_260 == GameDifficulty_Easy)
     {
         var4 = 2;
         if (newBulletAdjust >= var4)
