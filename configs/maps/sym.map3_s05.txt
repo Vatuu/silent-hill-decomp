@@ -22,6 +22,7 @@ sharedFunc_800D9960_1_s02 = 0x800D1C74; // type:func
 sharedFunc_800D99D0_1_s02 = 0x800D1CE4; // type:func
 sharedFunc_800CDA88_3_s03 = 0x800D24F8; // type:func
 sharedFunc_800CDAB8_3_s03 = 0x800D2528; // type:func
+sharedFunc_800CDB5C_3_s03 = 0x800D25CC; // type:func
 Ai_PuppetNurse_Update = 0x800D27A0; // type:func
 Ai_PuppetDoctor_Update = 0x800D27FC; // type:func
 sharedFunc_800CDF24_3_s03 = 0x800D2994; // type:func

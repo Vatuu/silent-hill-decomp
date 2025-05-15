@@ -91,11 +91,11 @@ INCLUDE_ASM("asm/maps/map3_s04/nonmatchings/map3_s04", func_800CD908);
 
 #include "maps/shared/sharedFunc_800CDAB8_3_s03.h" // 0x800CD97C
 
-INCLUDE_ASM("asm/maps/map3_s04/nonmatchings/map3_s04", func_800CDA20);
+INCLUDE_ASM("asm/maps/map3_s04/nonmatchings/map3_s04", sharedFunc_800CDB5C_3_s03); // 0x800CDA20
 
-INCLUDE_ASM("asm/maps/map3_s04/nonmatchings/map3_s04", Ai_PuppetNurse_Update); // 0x800CDBF4
+#include "maps/shared/Ai_PuppetNurse_Update.h" // 0x800CDBF4
 
-INCLUDE_ASM("asm/maps/map3_s04/nonmatchings/map3_s04", Ai_PuppetDoctor_Update); // 0x800CDC50
+#include "maps/shared/Ai_PuppetDoctor_Update.h" // 0x800CDC50
 
 INCLUDE_ASM("asm/maps/map3_s04/nonmatchings/map3_s04", func_800CDCAC);
 

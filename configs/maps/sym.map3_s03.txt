@@ -15,6 +15,7 @@ sharedFunc_800D2EB4_0_s00 = 0x800CD65C; // type:func
 sharedFunc_800D2EF4_0_s00 = 0x800CD69C; // type:func
 sharedFunc_800CDA88_3_s03 = 0x800CDA88; // type:func
 sharedFunc_800CDAB8_3_s03 = 0x800CDAB8; // type:func
+sharedFunc_800CDB5C_3_s03 = 0x800CDB5C; // type:func
 Ai_PuppetNurse_Update = 0x800CDD30; // type:func
 Ai_PuppetDoctor_Update = 0x800CDD8C; // type:func
 sharedFunc_800CDF24_3_s03 = 0x800CDF24; // type:func
