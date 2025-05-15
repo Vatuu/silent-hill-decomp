@@ -4,16 +4,10 @@
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math.h"
-#include "bodyprog/vw_system.h"
 #include "main/fsqueue.h"
 #include "main/rng.h"
-#include "screens/stream/stream.h"
 
-void func_80035338(s32 arg0, s8 arg1, u32 arg2, s32 arg3); // arg3 type assumed.
-void func_8003D5B4(s8 arg0);
-void func_8003D6E0(s32 arg0, s32 arg1, s32 arg2, void* arg3);
-
-void func_80085D78(s32 arg0)
+void func_80085D78(s32 arg0) // 0x80085D78
 {
     if (arg0 != 0)
     {
@@ -30,7 +24,7 @@ void func_80085D78(s32 arg0)
     g_SysWork.sysStateStep_C++;
 }
 
-void func_80085DC0(s32 arg0, s32 sysStateStep)
+void func_80085DC0(s32 arg0, s32 sysStateStep) // 0x80085DC0
 {
     if (arg0 != 0)
     {
@@ -48,7 +42,7 @@ void func_80085DC0(s32 arg0, s32 sysStateStep)
     }
 }
 
-void func_80085DF0()
+void func_80085DF0() // 0x80085DF0
 {
     g_SysWork.timer_2C += g_DeltaTime1;
 
@@ -62,7 +56,7 @@ void func_80085DF0()
     }
 }
 
-void func_80085E6C(s32 arg0, s32 arg1)
+void func_80085E6C(s32 arg0, s32 arg1) // 0x80085E6C
 {
     s32 unkTime;
 
@@ -79,7 +73,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80085EB8);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008605C);
 
-void func_800860B0(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 sysStateStep, s32 arg5)
+void func_800860B0(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 sysStateStep, s32 arg5) // 0x800860B0
 {
     s32 ret;
 
@@ -110,7 +104,7 @@ void func_800860B0(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 sysStateStep, s32
 }
 
 // TODO: Get rid of gotos.
-void func_8008616C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4)
+void func_8008616C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x8008616C
 {
     s32 caseVar;
     s32 var0;

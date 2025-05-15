@@ -27,6 +27,8 @@ extern s32 D_800B9FE0[];
 
 extern u32 D_800BCD34;
 
+extern u8 D_800BCD3C[];
+
 extern s8 D_800BCD39;
 
 extern s_801E2728 D_801E2728; // Probably an array instead.

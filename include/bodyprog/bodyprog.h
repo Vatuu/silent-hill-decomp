@@ -167,6 +167,12 @@ STATIC_ASSERT_SIZEOF(s_800AA894, 12);
 
 typedef struct
 {
+    s8 field_0;
+	s8 field_1[43];
+} s_800A93CC;
+
+typedef struct
+{
     s16 unk_0;
     s16 field_2;
     s8  field_4;
@@ -190,6 +196,14 @@ typedef struct
 
 typedef struct
 {
+    s32 unk_0;
+    s32 field_4;
+    s32 field_8;
+    s32 field_C;
+} s_800B5488;
+
+typedef struct
+{
     s32                field_0;
     s8                 field_4[16]; 
     struct s_800B5508* field_14;
@@ -210,6 +224,11 @@ typedef struct
 {
     s32 field_0[16];
 } s_800B5C40;
+
+typedef struct
+{
+    s32 unk_0[2048];
+} s_800B5D04;
 
 typedef struct
 {
@@ -686,6 +705,8 @@ extern s_FsImageDesc D_800A9EB4;
 
 extern s_800C37D8 D_800AA274[];
 
+extern s_800A93CC D_800A93CC[];
+
 extern s_800AA894 D_800AA894[];
 
 /** String color. */
@@ -732,19 +753,6 @@ extern s_800B55E8 D_800B3680[];
 extern s_800B55E8 D_800B4580[];
 
 extern s32 D_800B5480;
-
-typedef struct
-{
-    s32 unk_0;
-    s32 field_4;
-    s32 field_8;
-    s32 field_C;
-} s_800B5488;
-
-typedef struct
-{
-    s32 unk_0[2048];
-} s_800B5D04;
 
 extern s_800B5488* D_800B5488; // Index or state, pointer to struct. See `func_80030444`.
 
@@ -1206,6 +1214,8 @@ void MainLoop();
 
 s32 func_80033548();
 
+void func_80035338(s32 arg0, s8 arg1, u32 arg2, s32 arg3); // arg3 type assumed.
+
 /** Unknown bodyprog func. Called by `Fs_QueuePostLoadAnm`. */
 void func_80035560(s32 arg0, s32 arg1, void* arg2, s32 arg3);
 
@@ -1232,8 +1242,18 @@ void func_8003CD6C(s_MapWork* arg0);
 /** Return type assumed. */
 void func_8003D160();
 
+void func_8003D5B4(s8 arg0);
+
+void func_8003D6E0(s32 arg0, s32 arg1, s32 arg2, void* arg3);
+
 /** Param types assumed. */
 void func_8003DD80(s32, s32);
+
+void func_8003ED74(s32 arg0, s32 arg1);
+
+void func_8003EDA8();
+
+void func_8003EF10(s32 idx0, s32 idx1, s32 arg4, s32 arg5, s32 arg6, s32 arg7);
 
 void func_80040014();
 
@@ -1391,7 +1411,7 @@ void func_800480FC();
 
 void func_800481F8();
 
-void func_80048244(s16 cmd);
+void func_80048244(u16 cmd);
 
 void func_800482D8();
 
@@ -1638,6 +1658,11 @@ void func_800917C0(void*, s32, s_FsImageDesc*);
 // TODO: Arrange these in address order for better insight into the original interface. -- Sezz
 // ------------------------------------------------------------------
 
+/**
+Could `arg5` be a struct pointer?
+`func_8003D6E0` uses this function and in the last argument
+it input `arg5` and `arg5` is an undetermined function pointer
+*/
 s32 Chara_Load(s32 arg0, s8 arg1, s32 arg2, s8 arg3, s32 arg4, s32 arg5); // arg2 type assumed.
 
 /** Seeks for the English title screen background graphic. */

@@ -61,12 +61,11 @@ segments:
       - [0x0, rodata]
       - [0x8F8, .rodata, bodyprog] # Jumptable: `SysState_GameOver_Update`
       - [0x91C, rodata]
-      - [0x109C, .rodata, bodyprog_80040A64] # Jumptable: `Sd_EngineCmd`
-      - [0x10F8, rodata]
-      #- [0x10FC, .rodata, bodyprog_80040A64] # Jumptable: `func_80045BD8`
-      #- [0x1158, rodata]
-      #- [0x11C4, .rodata, bodyprog_80040A64] # Jumptable: `func_800482D8`
-      #- [0x11D8, rodata]
+      - [0x109C, .rodata, libsd/bodyprog_80045A7C]  # Jumptable: `Sd_EngineCmd`
+                                                    # Jumptable: `func_80045BD8`
+      - [0x1158, rodata]
+      - [0x11C4, .rodata, bodyprog_CD_80047D50] # Jumptable: `func_800482D8`
+      - [0x11D8, rodata]
       - [0x3938, .rodata, bodyprog_8004A87C] # Jumptable
       - [0x39C4, rodata]
       - [0x5CF0, .rodata, view/vc_main] # Jumptable: `vcRetFarWatchRate`
@@ -84,6 +83,8 @@ segments:
       - [0x9ad0, c, bodyprog]
       - [0x1b4ec, c, view/vc_util]
       - [0x1bf04, c, bodyprog_80040A64]
+      - [0x20F1C, c, libsd/bodyprog_80045A7C]
+      - [0x231F0, c, bodyprog_CD_80047D50]
       - [0x23ed8, c, view/vw_main]
       - [0x243c8, c, view/vw_calc] # Contains part of SH2's `vb_main`?
       - [0x25d1c, c, bodyprog_8004A87C]

@@ -142,10 +142,182 @@ void func_801E326C(s8* arg0, s8* arg1, s32 arg2, s32 arg3) // 0x801E326C
     }
 }
 
-INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E3304); // 0x801E3304
+#ifdef NON_MATCHING
+void func_801E3304(s8* arg0, s32 arg1, s32 arg2) // 0x801E3304
+{
+    char* D_801E2830[] =
+    {
+        "\x07MEMORY_CARD\nis_not_inserted",
+        "\x07MEMORY_CARD\nis_\x01not_\x01""formatted",
+        "\x07MEMORY_CARD\nmay_be_broken",
+        "\x07Now_checking\nMEMORY_CARD",
+        "\x07Out_of_blocks",
+        "\x07No_data_file",
+        "\x07No_data_file",
+        "\x07____Fil""\x01""e_\x01\x01is_\x01\x01""da\x01ma\x01g\x01""ed",
+        "\x07",
+        "\x07________\x01New_save",
+        "\x07____Crea\x01t\x01""e_\x01n\x01""e\x01w_\x01""fi\x01le"
+    };
+    
+    s32 i;
+    s32 temp_s2;
 
-// TODO: Check objdiff. Jumptable already added.
-// `arg0` = what it's doing. Formatting, saving, or loading.
+    temp_s2 = arg0[4];
+    
+    if (D_800A97D6 == arg2 && arg1 == 0 && temp_s2 >= 7)
+    { 
+        Gfx_SelectedMemBarDraw();
+    }
+    
+    if (arg1 == 0) 
+    {
+        func_801E3E78();
+
+        D_801E76D4++;
+        D_801E76D4 = CLAMP(D_801E76D4, 0, 40);
+            
+        if (temp_s2 != 3) 
+        {
+            D_801E7518[arg2] = 0;
+        }
+
+        if (D_801E7570[arg2] == NO_VALUE)
+        {
+            D_801E7570[arg2] = 0;
+        }
+            
+        if ((u8)D_801E76D2[arg2] != 0)
+        {
+            if (D_800A97D4[arg2] == D_800BCD3C[arg2] - 2)
+            {
+                D_801E7570[arg2] = D_800A97D4[arg2] - 3;
+            } 
+            else 
+            {
+                D_801E7570[arg2] = D_800A97D4[arg2] - 2;
+            }
+        }
+        
+        if ((D_800BCD3C[arg2] < 6) || D_800A97D4[arg2] == 0) 
+        {
+            D_801E7570[arg2] = 0;
+        } 
+        else 
+        {
+            if ((D_800BCD3C[arg2] - 2) < D_800A97D4[arg2]) 
+            {
+                D_801E7570[arg2] = D_800BCD3C[arg2] - 5;
+            } 
+            else 
+            {
+                while (D_800A97D4[arg2] - D_801E7570[arg2] >= 4)
+                {
+                    D_801E7570[arg2]++;
+                }
+                while (D_800A97D4[arg2] - 1 < D_801E7570[arg2]) 
+                {
+                    D_801E7570[arg2]--;
+                }
+            }
+        }
+        if (D_801E7570[arg2] != D_801E7574[arg2]) 
+        {
+            D_801E7514[arg2] = 1;
+        }
+    }
+
+    switch (temp_s2)
+    {
+        case 1:
+            D_801E76D2[arg2] = 0;
+            if (g_GameWork.gameState_594 == 16) 
+            {
+                func_801E43C8(arg2);
+            }
+            break;
+        
+        case 3:
+            D_801E76D2[arg2] = 1;
+            for (i = 0; i < 165; i++) 
+            {
+                D_801E7584[i + (arg2 * 165)] = 0;
+            }
+            D_801E7570[arg2] = NO_VALUE;
+            break;
+
+        case 7:
+        case 8:
+        case 9:
+        case 10:
+            D_801E76D2[arg2] = 0;
+            if (arg1 == 0) 
+            {
+                Gfx_SavesTransparentBgDraw(arg2, D_800BCD3C[arg2], D_800A97D4[arg2], D_801E7578[arg2]);
+            }
+            break;
+    }
+
+    if ((arg1 < D_801E7570[arg2]) || ((D_801E7570[arg2] + 4) < arg1)) 
+    {
+        return;
+    }
+    
+    D_801E7514[arg2] = 1;
+    Gfx_StringSetColor(ColorId_White);
+        
+    switch (temp_s2) 
+    {
+        case 0:
+        case 1:
+        case 2:
+        case 3:
+            Gfx_StringSetPosition((arg2 * 150) + 22, 82);
+            break;
+        
+        case 5:
+        case 6:
+            Gfx_StringSetPosition((arg2 * 150) + 38, 90);
+            break;
+        
+        case 4:
+            Gfx_StringSetPosition((arg2 * 150) + 32, 90);
+            break;
+        
+        default:
+            Gfx_StringSetPosition((arg2 * 150) + 6, (D_801E7518[arg2] * 20) + 53);
+            break;
+    }
+    
+    Gfx_StringDraw(D_801E2830[temp_s2], 50);
+        
+    if (temp_s2 < 7) 
+    {
+        func_801E52D8(arg2, temp_s2);
+    }
+        
+    D_801E7518[arg2]++;
+        
+    if (D_801E7518[arg2] == 5 || arg1 == D_800BCD3C[arg2] - 1)
+    {
+        if (D_801E7564[arg2] == 0) 
+        {
+            D_801E7564[arg2] = 1;
+        }
+        
+        D_801E7514[arg2] = 0;
+        
+        if (temp_s2 != 3) 
+        {
+            D_801E7518[arg2] = 0;
+        }
+    }
+    
+}
+#else
+INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E3304); // 0x801E3910
+#endif
+
 #ifdef NON_MATCHING
 void func_801E3910(s32 arg0, s32 arg1) // 0x801E3910
 {
@@ -163,18 +335,18 @@ void func_801E3910(s32 arg0, s32 arg1) // 0x801E3910
         "\x07The_data_is_not_found!",
         "\x07The_data_is_damaged!",
         "\x07""Failed_to_load!",
-        "\x07""FInished_loading.",
+        "\x07""Finished_loading.",
         "\x07Now_loading..."
     };
-
+	
     s16 xOffsets[] =
     {
-        0,   16,
-        141, 107,
-        223, 136,
-        119, 182,
-        170, 117,
-        111, 114
+        0x0000, 0x010C,
+        0x008D, 0x006B,
+        0x00DF, 0x0088,
+        0x0077, 0x00B6,
+        0x00AA, 0x0075,
+        0x008F, 0x0072
     };
 
     switch (arg0)
@@ -311,7 +483,7 @@ void func_801E3910(s32 arg0, s32 arg1) // 0x801E3910
     }
 }
 #else
-INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E3910);
+INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E3910); // 0x801E3910
 #endif
 
 INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E3C44); // 0x801E3C44

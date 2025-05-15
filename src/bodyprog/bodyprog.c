@@ -2271,7 +2271,11 @@ u8 func_8003ED64() // 0x8003ED64
     return g_SysWork.field_239D;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003ED74);
+void func_8003ED74(s32 arg0, s32 arg1) // 0x8003ED74
+{
+    func_8003EF10(arg0, arg1, 0, 0, 0, 0);
+    func_8003F170();
+}
 
 void func_8003EDA8() // 0x8003EDA8
 {
@@ -2284,7 +2288,14 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003EE30);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003EEDC);
 
+#ifdef NON_MATCHING
+void func_8003EF10(s32 idx0, s32 idx1, s32 arg4, s32 arg5, s32 arg6, s32 arg7) // 0x8003EF10
+{
+    func_8003EF74(D_800A93CC[idx0].field_0, D_800A93CC[idx1].field_0, arg4, arg5, arg6, arg7);  
+}
+#else
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003EF10);
+#endif
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003EF74);
 
