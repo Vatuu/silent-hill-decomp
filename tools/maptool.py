@@ -106,6 +106,17 @@ e_ShCharacterId = [
 ]
 Chara_Count = 45
 
+MapFileNames = [
+    "map0_s00", "map0_s01", "map0_s02",
+    "map1_s00", "map1_s01", "map1_s02", "map1_s03", "map1_s04", "map1_s05", "map1_s06",
+    "map2_s00", "map2_s01", "map2_s02", "map2_s03", "map2_s04",
+    "map3_s00", "map3_s01", "map3_s02", "map3_s03", "map3_s04", "map3_s05", "map3_s06",
+    "map4_s00", "map4_s01", "map4_s02", "map4_s03", "map4_s04", "map4_s05", "map4_s06",
+    "map5_s00", "map5_s01", "map5_s02", "map5_s03",
+    "map6_s00", "map6_s01", "map6_s02", "map6_s03", "map6_s04", "map6_s05",
+    "map7_s00", "map7_s01", "map7_s02", "map7_s03",
+]
+
 def charaName(i, includeNum: bool = True):
     charName = e_ShCharacterId[i] if i < len(e_ShCharacterId) else f"Chara_Unknown{i}"
     if includeNum:
@@ -825,20 +836,21 @@ def print_usage():
     print(f"Usage: maptool.py [options] [map1] [map2]")
     print()
     print("Map comparison options (map1/map2 required):")
-    print("  --matchings              Only compare map1 'matchings' against map2 'nonmatchings'")
-    print("  --nonmatchings           Only compare map1 'nonmatchings' against map2 'nonmatchings'")
+    print("  --matchings                 Only compare map1 'matchings' against map2 'nonmatchings'")
+    print("  --nonmatchings              Only compare map1 'nonmatchings' against map2 'nonmatchings'")
     print("  If none of above are set, will compare both against map2 'nonmatchings'")
-    print("  --replace                Replace INCLUDE_ASM for 'sharedFunc' funcs in map2 .c with #include")
-    print("  --updsyms                Update and reorder map2 sym.txt with shared functions")
-    print("  --when [funcName]        Only apply --replace / --updsyms if funcName has been matched in this map (to help with sub-function false-positives)")
+    print("  --replace                   Replace INCLUDE_ASM for 'sharedFunc' funcs in map2 .c with #include")
+    print("  --updsyms                   Update and reorder map2 sym.txt with shared functions")
+    print("  --when [funcName]           Only apply --replace / --updsyms if funcName has been matched in this map (to help with sub-function false-positives)")
     print()
     print("Map header options:")
-    print("  --list [MAP_NAME]        List character spawns from MAP_NAME map headers")
-    print("  --searchChara [CHAR_ID]  Search and list any maps that contain CHAR_ID")
+    print("  --list [MAP_NAME]           List character spawns from MAP_NAME map headers")
+    print("  --searchChara [CHAR_ID]     Search and list any maps that contain CHAR_ID")
     print()
     print("Misc:")
-    print("  --jtbl [JTBL_NAME] [MAP] Add rodata for jtbl to map1.yaml")
-    print("  --sortsym [MAP_NAME]     sort map symbols")
+    print("  --jtbl [JTBL_NAME] [MAP]    Add rodata for jtbl to map1.yaml")
+    print("  --sortsym [MAP_NAME]        sort map symbols ('all' to sort all map symbol files)")
+    print("  --compareFuncs [FUNC1_ASM_PATH] [FUNC2_ASM_PATH]    compare two functions, print Levenshtein distance, write clean files for comparing")
     
 def main():
     import argparse
@@ -862,6 +874,7 @@ def main():
 
     parser.add_argument("--jtbl", type=str)
     parser.add_argument("--sortsym", type=str)
+    parser.add_argument("--compareFuncs", action="store_true")
     
     args = parser.parse_args()
     
@@ -880,13 +893,46 @@ def main():
         return
 
     elif args.sortsym is not None:
-        sym_path = f"configs/maps/sym.{args.sortsym}.txt"
-        sym_text = read_file(sym_path)
-        sym_text = sort_sym_by_address(sym_text)
-        sym_text += "\n" # end file with newline
-        with open(sym_path, "w", encoding="utf-8") as f:
-            f.write(sym_text)
-        print(f"\nUpdated {sym_path}.")
+        map_files = [args.sortsym]
+        if args.sortsym == "all":
+            map_files = MapFileNames
+
+        print()
+
+        for map_name in map_files:
+            sym_path = f"configs/maps/sym.{map_name}.txt"
+            sym_text = sort_sym_by_address(read_file(sym_path))
+            sym_text += "\n" # end file with newline
+            with open(sym_path, "w", encoding="utf-8") as f:
+                f.write(sym_text)
+            print(f"Updated {sym_path}.")
+        return
+
+    elif args.compareFuncs:
+        if args.map1 is None:
+            print("--compareFuncs: func1 path not specified!\n")
+        elif args.map2 is None:
+            print("--compareFuncs: func2 path not specified!\n")
+
+        if args.map1 is None or args.map2 is None:
+            print_usage()
+            return
+
+        name_file1 = os.path.basename(args.map1)
+        name_file2 = os.path.basename(args.map2)
+        funcname_file1 = os.path.splitext(name_file1)[0]
+        funcname_file2 = os.path.splitext(name_file2)[0]
+
+        func1 = clean_file(read_file(args.map1), funcname_file1)
+        func2 = clean_file(read_file(args.map2), funcname_file2)
+        distance = Levenshtein.distance(func1, func2)
+        print(f"Func distance: {distance}")
+        if distance != 0:
+            with open("func1.clean.txt", "w", encoding="utf-8") as f:
+                f.write(func1)
+            with open("func2.clean.txt", "w", encoding="utf-8") as f:
+                f.write(func2)
+            print("Wrote clean funcs to func1.clean.txt / func2.clean.txt")
         return
         
     if args.searchChara is not None:
@@ -919,17 +965,7 @@ def main():
             searchType = "nonmatchings"
 
         if args.map2 == "all":
-            TARGET_MAPS = [
-                "map0_s00", "map0_s01", "map0_s02",
-                "map1_s00", "map1_s01", "map1_s02", "map1_s03", "map1_s04", "map1_s05", "map1_s06",
-                "map2_s00", "map2_s01", "map2_s02", "map2_s03", "map2_s04",
-                "map3_s00", "map3_s01", "map3_s02", "map3_s03", "map3_s04", "map3_s05", "map3_s06",
-                "map4_s00", "map4_s01", "map4_s02", "map4_s03", "map4_s04", "map4_s05", "map4_s06",
-                "map5_s00", "map5_s01", "map5_s02", "map5_s03",
-                "map6_s00", "map6_s01", "map6_s02", "map6_s03", "map6_s04", "map6_s05",
-                "map7_s00", "map7_s01", "map7_s02", "map7_s03",
-            ]
-            for map_name in TARGET_MAPS:
+            for map_name in MapFileNames:
                 if map_name != args.map1:
                     find_equal_asm_files(searchType, args.map1, map_name, 0, args.replace, args.updsyms, args.when)
         else:

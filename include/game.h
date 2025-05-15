@@ -615,7 +615,7 @@ typedef struct _SubCharacter
     s8      unk_B4[12];
     s32     field_C0;
     u16     dead_timer_C4; // Part of `shBattleInfo` struct in SH2, may use something similar here.
-    u16     field_C6;
+    s16     timer_C6;      // Some sort of timer, value written by `Ai_LarvalStalker_Update`.
 
     // Fields seen used inside maps (eg. `map0_s00` `func_800D923C`)
 

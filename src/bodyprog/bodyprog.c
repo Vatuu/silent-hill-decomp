@@ -1464,7 +1464,7 @@ void GameState_InGame_Update() // 0x80038BD4
         Demo_DemoRandSeedRestore();
         if (player->model_0.anim_4.flags_2 & (1 << 1))
         {
-            func_8003DA9C(1, g_SysWork.playerBoneCoords_890, 1, g_SysWork.player_4C.chara_0.field_C6, 0);
+            func_8003DA9C(1, g_SysWork.playerBoneCoords_890, 1, g_SysWork.player_4C.chara_0.timer_C6, 0);
             func_8008A384(&g_SysWork.player_4C.chara_0);
             func_8007D970(&g_SysWork.player_4C, g_SysWork.playerBoneCoords_890);
             func_8008A3AC(&g_SysWork.player_4C.chara_0);

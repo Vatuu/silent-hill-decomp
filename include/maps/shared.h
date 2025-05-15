@@ -115,6 +115,21 @@ void sharedFunc_800D9078_0_s00(s_SubCharacter* chara);
 
 void sharedFunc_800D923C_0_s00(s_SubCharacter* playerChara);
 
+// MAP1_S00 LarvalStalker funcs
+void Ai_LarvalStalker_Update(s_SubCharacter* chara, s32 arg1, s32 arg2);
+
+void sharedFunc_800CF168_1_s00(s_SubCharacter*);
+
+void sharedFunc_800D140C_1_s00(s_SubCharacter*, s32);
+
+void sharedFunc_800D1524_1_s00(s_SubCharacter*, s32, s32);
+
+void sharedFunc_800D16FC_1_s00(s_SubCharacter*);
+
+void sharedFunc_800D17BC_1_s00(s_SubCharacter*);
+
+void sharedFunc_800D1DBC_1_s00(s_SubCharacter*);
+
 // MAP3_S03 puppet nurse/doctor funcs
 void sharedFunc_800CDA88_3_s03(s_SubCharacter*);
 
