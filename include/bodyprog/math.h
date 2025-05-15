@@ -88,6 +88,13 @@ static inline void Math_Vector3Zero(VECTOR3* vec)
     vec->vz = 0;
 }
 
+static inline void Math_SVectorSet(SVECTOR* vec, s16 x, s16 y, s16 z)
+{
+    vec->vx = x;
+    vec->vy = y;
+    vec->vz = z;
+}
+
 void func_80096C94(SVECTOR* vec, MATRIX* mat); // Custom vwRotMatrix[...]?
 void func_80096E78(SVECTOR* vec, MATRIX* mat); // Another custom vwRotMatrix[...]?
 

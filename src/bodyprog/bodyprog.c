@@ -1327,7 +1327,38 @@ void func_80037154() // 0x80037154
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80037188);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", Chara_PositionUpdateFromParams);
+void Chara_PositionUpdateFromParams(s_AreaLoadParams* p) // 0x800371E8
+{
+    s32 rotation = p->rotationY_4_16 * 16;
+
+    Math_SVectorSet(&g_SysWork.player_4C.chara_0.rotation_24, 0, rotation, 0);
+
+    g_SysWork.player_4C.chara_0.position_18.vy = 0;
+    g_SysWork.player_4C.chara_0.position_18.vx = p->char_x_0;
+    g_SysWork.player_4C.chara_0.position_18.vz = p->char_z_8;
+
+    if (p->field_4_24 >= 2)
+    {
+        g_SysWork.player_4C.chara_0.position_18.vx += FP_MULTIPLY_FLOAT((s64)shRsin(rotation), 0.4f, Q12_SHIFT);
+        g_SysWork.player_4C.chara_0.position_18.vz += FP_MULTIPLY_FLOAT((s64)shRcos(rotation), 0.4f, Q12_SHIFT);
+    }
+
+    g_SysWork.field_2281 = p->field_4_9;
+
+    if (p->mapIdx_4_0 == 0x18)
+    {
+        g_SaveGamePtr->mapIdx_A9 = 0;
+    }
+    else if (p->mapIdx_4_0 != 0)
+    {
+        g_SaveGamePtr->mapIdx_A9 = p->mapIdx_4_0;
+    }
+
+    g_SysWork.cameraAngleY_237A = rotation;
+
+    func_8007E9C4();
+    func_80036420();
+}
 
 void func_80037334() // 0x80037334
 {

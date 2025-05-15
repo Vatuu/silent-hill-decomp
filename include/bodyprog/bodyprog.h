@@ -565,6 +565,19 @@ typedef struct
     s32  field_54;
 } s_800AFE24; // Size: 85
 
+/** Part of map headers, pointer passed to `Chara_PositionUpdateFromParams`. */
+typedef struct _AreaLoadParams
+{
+    s32 char_x_0;
+    u32 mapIdx_4_0 : 5;
+    u32 field_4_5 : 4;
+    u32 field_4_9 : 3;
+    u32 field_4_12 : 4;
+    u32 rotationY_4_16 : 8;
+    u32 field_4_24 : 8;
+    s32 char_z_8;
+} s_AreaLoadParams;
+
 extern s_FsImageDesc g_MainImg0; // 0x80022C74 - TODO: part of main exe, move to main/ headers?
 
 extern s8* D_8002510C;
@@ -1198,6 +1211,8 @@ void func_80035560(s32 arg0, s32 arg1, void* arg2, s32 arg3);
 
 void func_80037188();
 
+void Chara_PositionUpdateFromParams(s_AreaLoadParams* p);
+
 void func_8003943C();
 
 /** `SysState_Fmv` update function.
@@ -1822,6 +1837,8 @@ void GameFs_PlayerMapAnimLoad(s32 mapIdx);
 void func_800717D0(s_SubCharacter* chara, void* arg1, GsCOORDINATE2* coord);
 
 void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord);
+
+void func_8007E9C4();
 
 /** Resets several global variables to 0. */
 void func_8007F1CC();
