@@ -581,11 +581,11 @@ STATIC_ASSERT_SIZEOF(s_ModelAnim, 20);
 
 typedef struct _Model
 {
-    s8 charaId_0; /** `e_ShCharacterId` */
-    u8 field_1;
-    u8 field_2;
-    u8 isAnimStateUnchanged_3; // Educated guess. In `s_MainCharacterExtra`, always 1, set to 0 for 1 tick when anim state appears to change.
-                               // Used differently in player's `s_SubCharacter`. 0: anim transitioning(?), bit 1: animated, bit 2: turning.
+    s8 charaId_0;      /** `e_ShCharacterId` */
+    u8 paletteIdx_1;   /** Changes texture palette index for this model. */
+    u8 stage_2;
+    u8 stageStep_3; // Step number for the current `stage_2`? In `s_MainCharacterExtra`, always 1, set to 0 for 1 tick when anim state appears to change.
+                    // Used differently in player's `s_SubCharacter`. 0: anim transitioning(?), bit 1: animated, bit 2: turning.
     s_ModelAnim anim_4;
 } s_Model;
 STATIC_ASSERT_SIZEOF(s_Model, 24);

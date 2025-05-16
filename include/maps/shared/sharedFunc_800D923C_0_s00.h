@@ -1,6 +1,6 @@
 void sharedFunc_800D923C_0_s00(s_SubCharacter* playerChara)
 {
-    playerChara->model_0.isAnimStateUnchanged_3 = 0;
+    playerChara->model_0.stageStep_3 = 0;
 
     playerChara->field_C8 = 0;
     playerChara->field_CA = 0;
@@ -18,7 +18,7 @@ void sharedFunc_800D923C_0_s00(s_SubCharacter* playerChara)
     playerChara->properties_E4.player.properties_E4[PlayerProperty_Unk3]      = 0;
     playerChara->properties_E4.player.properties_E4[PlayerProperty_Unk4]      = 0;
 
-    playerChara->model_0.field_2++;
+    playerChara->model_0.stage_2++;
 
     playerChara->field_E0_8 = 3;
 }

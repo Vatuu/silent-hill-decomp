@@ -352,11 +352,11 @@ INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D6554);
     {
         if (!(chara->properties_E4.player.properties_E4[1].val16[0] & (1 << 1)))
         {
-            chara->model_0.field_2 = 3;
+            chara->model_0.stage_2 = 3;
         }
         else
         {
-            chara->model_0.field_2 = 2;
+            chara->model_0.stage_2 = 2;
         }
 
         chara->model_0.anim_4.animIdx_0 = 60;

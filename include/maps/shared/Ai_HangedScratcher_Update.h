@@ -1,6 +1,6 @@
 void Ai_HangedScratcher_Update(s_SubCharacter* chara, s32 arg1, s32 arg2)
 {
-    if (chara->model_0.field_2 == 0)
+    if (chara->model_0.stage_2 == 0)
     {
         sharedFunc_800CFCA8_5_s00(chara);
     }

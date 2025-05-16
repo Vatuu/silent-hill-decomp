@@ -41,11 +41,11 @@ void sharedFunc_800D6554_0_s00(s_SubCharacter* chara)
         flags = &chara->properties_E4.player.properties_E4[1];
         if (!(*flags & (1 << 1)))
         {
-            chara->model_0.field_2 = 3;
+            chara->model_0.stage_2 = 3;
         }
         else
         {
-            chara->model_0.field_2 = 2;
+            chara->model_0.stage_2 = 2;
         }
 
         chara->model_0.anim_4.animIdx_0 = 60;

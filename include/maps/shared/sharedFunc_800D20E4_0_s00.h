@@ -22,11 +22,12 @@ void sharedFunc_800D20E4_0_s00()
     chara->properties_E4.player.properties_E4[PlayerProperty_AfkTimer]      = 0;
     chara->properties_E4.player.properties_E4[PlayerProperty_RunTimer0]     = 0;
     chara->properties_E4.player.properties_E4[PlayerProperty_ExertionTimer] = 0;
-    sysWork->player_4C.extra_128.field_1C              = 52;
-    chara->model_0.isAnimStateUnchanged_3              = 0;
-    chara->model_0.field_2                             = 0;
-    extra->model_0.isAnimStateUnchanged_3              = 0;
-    extra->model_0.field_2                             = 0;
+
+    sysWork->player_4C.extra_128.field_1C = 52;
+    chara->model_0.stageStep_3            = 0;
+    chara->model_0.stage_2                = 0;
+    extra->model_0.stageStep_3            = 0;
+    extra->model_0.stage_2                = 0;
 
     D_800C45C0 = 0;
     D_800C45BE = 0;

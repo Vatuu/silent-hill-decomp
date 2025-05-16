@@ -46,7 +46,7 @@ void sharedFunc_800D67FC_0_s00(s_SubCharacter* chara)
     origMoveSpeed = chara->moveSpeed_38;
     if ((u16)chara->properties_E4.player.properties_E4[1] & (1 << 12))
     {
-        if (chara->model_0.field_2 == 2)
+        if (chara->model_0.stage_2 == 2)
         {
             chara->moveSpeed_38 *= 8;
         }

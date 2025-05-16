@@ -1,6 +1,6 @@
 void sharedFunc_800D01D0_3_s03(s_SubCharacter* arg0)
 {
-    switch (arg0->model_0.field_2)
+    switch (arg0->model_0.stage_2)
     {
         case 1:
             sharedFunc_800CE3CC_3_s03(arg0);

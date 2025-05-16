@@ -34,11 +34,11 @@ void Ai_PuppetNurse_Init(s_SubCharacter* chara, s32 isPuppetDoctor)
     chara->properties_E4.npc.field_122 = 0;
     chara->properties_E4.npc.field_108 = chara->position_18.vx;
     chara->properties_E4.npc.field_10C = chara->position_18.vz;
-    
-    stageStepDiv3 = (chara->model_0.isAnimStateUnchanged_3 - 1) / 3;
-    charPalette = (chara->model_0.isAnimStateUnchanged_3 - 1) % 3;
+
+    stageStepDiv3  = (chara->model_0.stageStep_3 - 1) / 3;
+    charPalette    = (chara->model_0.stageStep_3 - 1) % 3;
     modelVariation = stageStepDiv3 % 3;
-    charaStage = stageStepDiv3 / 3;
+    charaStage     = stageStepDiv3 / 3;
     
     chara->properties_E4.npc.field_11A = 0;
     chara->field_3E |= 4; // rename to flags_3E
@@ -59,25 +59,25 @@ void Ai_PuppetNurse_Init(s_SubCharacter* chara, s32 isPuppetDoctor)
 
     chara->health_B0 = chara2->properties_E4.npc.field_124->health_0;
 
-    chara->model_0.field_1 = charPalette;
+    chara->model_0.paletteIdx_1 = charPalette;
     
     switch(charaStage)
     {
     case 0:
-        chara->model_0.field_2 = 11;
-        chara->model_0.isAnimStateUnchanged_3 = 0;
+        chara->model_0.stage_2       = 11;
+        chara->model_0.stageStep_3   = 0;
         chara->model_0.anim_4.time_4 = FP_TO(459, Q12_SHIFT);
         chara->model_0.anim_4.keyframeIdx0_8 = 459;
         break;
     case 1:
-        chara->model_0.field_2 = 10;
-        chara->model_0.isAnimStateUnchanged_3 = 0;
+        chara->model_0.stage_2       = 10;
+        chara->model_0.stageStep_3   = 0;
         chara->model_0.anim_4.time_4 = FP_TO(459, Q12_SHIFT);
         chara->model_0.anim_4.keyframeIdx0_8 = 459;
         break;
     case 2:
-        chara->model_0.field_2 = 9;
-        chara->model_0.isAnimStateUnchanged_3 = 0;
+        chara->model_0.stage_2       = 9;
+        chara->model_0.stageStep_3   = 0;
         chara->model_0.anim_4.time_4 = FP_TO(459, Q12_SHIFT);
         chara->model_0.anim_4.keyframeIdx0_8 = 459;
         break;

@@ -1104,7 +1104,7 @@ typedef struct _SpawnInfo
     q19_12 positionX_0;
     s8     charaId_4;   /** `e_ShCharacterId` */
     u8     rotationY_5; /** Multiplied by 16 to get `s_SubCharacter.rotation_24.vy` value. */
-    s8     flags_6;     /** Copied to `isAnimStateUnchanged_3` in `s_Model`. */
+    s8     flags_6;     /** Copied to `stageStep_3` in `s_Model`, with `stage_2 = 0`. */
     s8     unk_7;
     q19_12 positionZ_8;
 } s_SpawnInfo;
