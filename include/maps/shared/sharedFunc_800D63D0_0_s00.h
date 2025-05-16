@@ -5,7 +5,7 @@ void sharedFunc_800D63D0_0_s00(s_SubCharacter* chara, s32 arg1)
     s32  newMoveSpeed;
     s32  animVar;
 
-    flags = &chara->properties_E4[1];
+    flags = &chara->properties_E4.player.properties_E4[1];
 
     moveSpeed = arg1;
     if (!(*flags & (1 << 13)))
@@ -32,16 +32,16 @@ void sharedFunc_800D63D0_0_s00(s_SubCharacter* chara, s32 arg1)
 
     if (chara->health_B0 == 0)
     {
-        chara->field_3E = chara->field_3E & ~(1 << 1);
+        chara->flags_3E &= ~(1 << 1);
 
         if (g_SysWork.field_2353 != func_8005C7D0(chara, moveSpeed))
         {
             chara->health_B0 = NO_VALUE;
-            chara->flags_E0 &= ~((1 << 8) | (1 << 9) | (1 << 10) | (1 << 11));
+            chara->field_E0_8 = 0;
         }
     }
 
-    if (chara->moveSpeed_38 == 0 && !(chara->properties_E4[1] & ((1 << 8) | (1 << 9))))
+    if (chara->moveSpeed_38 == 0 && !(chara->properties_E4.player.properties_E4[1] & ((1 << 8) | (1 << 9))))
     {
         animVar = chara->model_0.anim_4.animIdx_0 == 63;
         if (chara->model_0.anim_4.animIdx_0 == 65)
@@ -56,7 +56,7 @@ void sharedFunc_800D63D0_0_s00(s_SubCharacter* chara, s32 arg1)
         {
             func_800622B8(3, chara, animVar, 3);
 
-            flags = &chara->properties_E4[1];
+            flags = &chara->properties_E4.player.properties_E4[1];
             *flags |= 1 << 9;
         }
     }

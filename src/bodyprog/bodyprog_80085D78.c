@@ -1287,17 +1287,17 @@ s32 func_8008A35C(s_8008A35C* arg0, s32 arg1) // 0x8008A35C
 
 void func_8008A384(s_SubCharacter* chara) // 0x8008A384
 {
-    chara->field_3E &= ~(1 << 7);
+    chara->flags_3E &= ~(1 << 7);
 }
 
 void func_8008A398(s_SubCharacter* chara) // 0x8008A398
 {
-    chara->field_3E |= 1 << 7;
+    chara->flags_3E |= 1 << 7;
 }
 
 void func_8008A3AC(s_SubCharacter* chara) // 0x8008A3AC
 {
-    if (!(chara->field_3E & (1 << 7)))
+    if (!(chara->flags_3E & (1 << 7)))
     {
         chara->field_44 = 0;
         func_8008A3E0();

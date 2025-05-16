@@ -25,13 +25,13 @@ void Ai_Stalker_Update(s_SubCharacter* chara, s32 arg1, s32 arg2)
     }
     
     sharedData_800E3A2C_0_s00 = var_a1;
-    
-    if (chara->model_0.field_2 == 0)
+
+    if (chara->model_0.state_2 == 0)
     {
         sharedSymbol_800D309C_0_s00(chara, var_a1);
     }
-    
-    if (chara->model_0.field_2 != 1)
+
+    if (chara->model_0.state_2 != 1)
     {
         if (g_DeltaTime0 != 0)
         {
@@ -47,7 +47,7 @@ void Ai_Stalker_Update(s_SubCharacter* chara, s32 arg1, s32 arg2)
         {
             sharedFunc_800D7BE8_0_s00(chara);
         }
-        
-        *(u16*)&chara->properties_E4[1] &= 0xEFFF;
+
+        *(u16*)&chara->properties_E4.player.properties_E4[1] &= 0xEFFF;
     }
 }

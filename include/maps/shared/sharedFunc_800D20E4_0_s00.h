@@ -19,14 +19,15 @@ void sharedFunc_800D20E4_0_s00()
 
     D_800AF216 = 0;
 
-    chara->properties_E4[PlayerProperty_AfkTimer]      = 0;
-    chara->properties_E4[PlayerProperty_RunTimer0]     = 0;
-    chara->properties_E4[PlayerProperty_ExertionTimer] = 0;
-    sysWork->player_4C.extra_128.field_1C              = 52;
-    chara->model_0.isAnimStateUnchanged_3              = 0;
-    chara->model_0.field_2                             = 0;
-    extra->model_0.isAnimStateUnchanged_3              = 0;
-    extra->model_0.field_2                             = 0;
+    chara->properties_E4.player.properties_E4[PlayerProperty_AfkTimer]      = 0;
+    chara->properties_E4.player.properties_E4[PlayerProperty_RunTimer0]     = 0;
+    chara->properties_E4.player.properties_E4[PlayerProperty_ExertionTimer] = 0;
+
+    sysWork->player_4C.extra_128.field_1C = 52;
+    chara->model_0.stateStep_3            = 0;
+    chara->model_0.state_2                = 0;
+    extra->model_0.stateStep_3            = 0;
+    extra->model_0.state_2                = 0;
 
     D_800C45C0 = 0;
     D_800C45BE = 0;
@@ -48,9 +49,9 @@ void sharedFunc_800D20E4_0_s00()
     sharedData_800E39D8_0_s00 = 0;
 
     chara->field_D6 = 0;
-    sysWork->player_4C.chara_0.field_11C |= 0x30;
-    chara->field_3E |= 8;
-    chara->flags_E0 = ((chara->flags_E0 & ~0xF00) | (1 << 10));
+    sysWork->player_4C.chara_0.properties_E4.player.flags_11C |= ((1 << 4) | (1 << 5));
+    chara->flags_3E |= (1 << 3);
+    chara->field_E0_8 = 4;
 
     if (sysWork->field_38.field_F < 32)
     {

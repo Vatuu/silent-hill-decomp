@@ -1412,11 +1412,12 @@ void func_80037E40(s_SubCharacter* arg0) // 0x80037E40
 {
     if (arg0->field_C0 > 0)
     {
-        arg0->field_3E |= 1 << 5;
-        return;
+        arg0->flags_3E |= (1 << 5);
     }
-
-    arg0->field_3E &= 0xFFDF;
+    else
+    {
+        arg0->flags_3E &= ~(1 << 5);
+    }
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80037E78);

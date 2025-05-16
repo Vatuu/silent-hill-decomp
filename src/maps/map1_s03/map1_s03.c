@@ -189,20 +189,20 @@ void Ai_LockerDeadBody_Update(s_SubCharacter* chara, s32 arg1, s32 arg2) // 0x80
 {
     s_AnimInfo* structPtr;
 
-    if (chara->model_0.field_2 == 0)
+    if (chara->model_0.state_2 == 0)
     {
         chara->model_0.anim_4.keyframeIdx1_A = 0;
         chara->model_0.anim_4.animIdx_0      = 5;
         chara->model_0.anim_4.time_4         = 0;
         chara->model_0.anim_4.keyframeIdx0_8 = 0;
-        chara->model_0.field_2++;
+        chara->model_0.state_2++;
         chara->position_18.vy = 0;
     }
 
     if (!(g_SaveGamePtr->eventFlags_168[3] & (1 << 9)))
     {
         chara->model_0.anim_4.flags_2 &= ~2;
-        chara->flags_E0 &= ~0xF00;
+        chara->field_E0_8 = 0;
         return;
     }
 
@@ -215,14 +215,14 @@ void Ai_LockerDeadBody_Update(s_SubCharacter* chara, s32 arg1, s32 arg2) // 0x80
             chara->model_0.anim_4.animIdx_0 = 3;
         }
 
-        chara->flags_E0 &= ~0xF00;
+        chara->field_E0_8 = 0;
     }
     else
     {
         chara->model_0.anim_4.animIdx_0      = 7;
         chara->model_0.anim_4.time_4         = FP_TO(16, Q12_SHIFT);
         chara->model_0.anim_4.keyframeIdx0_8 = 16;
-        chara->flags_E0                      = (chara->flags_E0 & ~0xF00) | 0x300; // Seen this exact pattern frequently.
+        chara->field_E0_8                    = 3;
     }
 
     func_80035B04(&chara->position_18, &chara->rotation_24, arg2);
