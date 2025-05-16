@@ -92,7 +92,7 @@ INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D1A38);
 
 #include "maps/shared/sharedFunc_800CDAB8_3_s03.h" // 0x800D1AAC
 
-INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", sharedFunc_800CDB5C_3_s03); // 0x800D1B50
+#include "maps/shared/Ai_PuppetNurse_Init.h" // 0x800D1B50
 
 #include "maps/shared/Ai_PuppetNurse_Update.h" // 0x800D1D24
 

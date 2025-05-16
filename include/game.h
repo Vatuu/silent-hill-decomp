@@ -662,7 +662,9 @@ typedef struct _SubCharacter
     s8      unk_46[2];
     s8      unk_48[104];
     q19_12  health_B0;
-    s8      unk_B4[12];
+    s32     field_B4;
+    s32     field_B8;
+    s32     field_BC;
     s32     field_C0;
     u16     dead_timer_C4; // Part of `shBattleInfo` struct in SH2, may use something similar here.
     s16     timer_C6;      // Some sort of timer, value written by `Ai_LarvalStalker_Update`.
