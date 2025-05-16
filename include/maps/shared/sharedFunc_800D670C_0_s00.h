@@ -1,9 +1,9 @@
 
 void sharedFunc_800D670C_0_s00(s_SubCharacter* arg0)
 {
-    if (arg0->model_0.stageStep_3 == 1)
+    if (arg0->model_0.stateStep_3 == 1)
     {
-        arg0->model_0.stageStep_3++;
+        arg0->model_0.stateStep_3++;
         arg0->model_0.anim_4.animIdx_0 = 30;
     }
 
@@ -15,9 +15,9 @@ void sharedFunc_800D670C_0_s00(s_SubCharacter* arg0)
         *(u16*)&arg0->properties_E4.player.properties_E4[1] = (u16)arg0->properties_E4.player.properties_E4[1] | (1 << 14);
     }
 
-    if (arg0->model_0.stageStep_3 == 3)
+    if (arg0->model_0.stateStep_3 == 3)
     {
-        arg0->model_0.stageStep_3++;
+        arg0->model_0.stateStep_3++;
         arg0->model_0.anim_4.animIdx_0      = 95;
         arg0->model_0.anim_4.keyframeIdx0_8 = 294;
         arg0->model_0.anim_4.time_4         = FP_TO(294, Q12_SHIFT);

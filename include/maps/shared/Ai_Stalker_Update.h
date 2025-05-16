@@ -26,12 +26,12 @@ void Ai_Stalker_Update(s_SubCharacter* chara, s32 arg1, s32 arg2)
     
     sharedData_800E3A2C_0_s00 = var_a1;
 
-    if (chara->model_0.stage_2 == 0)
+    if (chara->model_0.state_2 == 0)
     {
         sharedSymbol_800D309C_0_s00(chara, var_a1);
     }
 
-    if (chara->model_0.stage_2 != 1)
+    if (chara->model_0.state_2 != 1)
     {
         if (g_DeltaTime0 != 0)
         {

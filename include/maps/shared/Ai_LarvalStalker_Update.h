@@ -2,7 +2,7 @@ void Ai_LarvalStalker_Update(s_SubCharacter* chara, s32 arg1, s32 arg2)
 {
     s8* mapOverlayPtr;
 
-    if (chara->model_0.stage_2 == 0)
+    if (chara->model_0.state_2 == 0)
     {
         sharedFunc_800D16FC_1_s00(chara);
     }
@@ -29,7 +29,7 @@ void Ai_LarvalStalker_Update(s_SubCharacter* chara, s32 arg1, s32 arg2)
     mapOverlayPtr = &g_SaveGamePtr->mapOverlayIdx_A4;
 
     chara->timer_C6        = FP_TO(1, Q12_SHIFT);
-    chara->model_0.stage_2 = 1;
+    chara->model_0.state_2 = 1;
 
     if (*mapOverlayPtr == 37 || !TEST_RNG(2))
     {

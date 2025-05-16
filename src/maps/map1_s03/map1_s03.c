@@ -189,13 +189,13 @@ void Ai_LockerDeadBody_Update(s_SubCharacter* chara, s32 arg1, s32 arg2) // 0x80
 {
     s_AnimInfo* structPtr;
 
-    if (chara->model_0.stage_2 == 0)
+    if (chara->model_0.state_2 == 0)
     {
         chara->model_0.anim_4.keyframeIdx1_A = 0;
         chara->model_0.anim_4.animIdx_0      = 5;
         chara->model_0.anim_4.time_4         = 0;
         chara->model_0.anim_4.keyframeIdx0_8 = 0;
-        chara->model_0.stage_2++;
+        chara->model_0.state_2++;
         chara->position_18.vy = 0;
     }
 

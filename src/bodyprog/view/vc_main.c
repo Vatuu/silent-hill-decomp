@@ -806,7 +806,7 @@ void vcSetNearestEnemyDataInVC_WORK(VC_WORK* w_p) // 0x80081D90
     {
         if ((((u8)sc_p->model_0.charaId_0 - 2) < 0x17u) &&
             (sc_p->dead_timer_C4 <= FP_FLOAT_TO(ENEMY_DEAD_TIMER_MAX, Q12_SHIFT) || sc_p->health_B0 >= 0) &&
-            !(sc_p->field_3E & (1 << 4))) // `sc_p->battle(ShBattleInfo).status & 0x20` in SH2.
+            !(sc_p->flags_3E & (1 << 4))) // `sc_p->battle(ShBattleInfo).status & 0x20` in SH2.
         {
             ofs_x = sc_p->position_18.vx - w_p->chara_pos_114.vx;
             ofs_z = sc_p->position_18.vz - w_p->chara_pos_114.vz;
@@ -830,7 +830,7 @@ void vcSetNearestEnemyDataInVC_WORK(VC_WORK* w_p) // 0x80081D90
                 (set_active_data_f = 1, (sc_p->model_0.charaId_0 < Chara_Stalker)))
             {
                 set_active_data_f = 1;
-                if (sc_p->field_3E & (1 << 1)) // `sc_p->battle(ShBattleInfo).status & (1 << 2)` in SH2.
+                if (sc_p->flags_3E & (1 << 1)) // `sc_p->battle(ShBattleInfo).status & (1 << 2)` in SH2.
                 {
                     set_active_data_f = 0;
                     if (sc_p == &g_SysWork.npcs_1A0[g_SysWork.field_2353])

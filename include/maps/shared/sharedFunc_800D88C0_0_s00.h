@@ -13,7 +13,7 @@ void sharedFunc_800D88C0_0_s00(s_SubCharacter* playerChara, s32 arg1)
     {
         playerChara->properties_E4.player.properties_E4[PlayerProperty_AfkTimer] = 0;
 
-        playerChara->model_0.stageStep_3 = 0;
+        playerChara->model_0.stateStep_3 = 0;
     }
 
     playerChara->model_0.anim_4.flags_2 |= AnimFlag_Unk1;

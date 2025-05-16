@@ -583,9 +583,9 @@ typedef struct _Model
 {
     s8 charaId_0;      /** `e_ShCharacterId` */
     u8 paletteIdx_1;   /** Changes texture palette index for this model. */
-    u8 stage_2;
-    u8 stageStep_3; // Step number for the current `stage_2`? In `s_MainCharacterExtra`, always 1, set to 0 for 1 tick when anim state appears to change.
-                    // Used differently in player's `s_SubCharacter`. 0: anim transitioning(?), bit 1: animated, bit 2: turning.
+    u8 state_2;        /** Current state for this model/character, 0 usually means it still has to be inited. */
+    u8 stateStep_3;    // Step number / temp data for the current `state_2`? In `s_MainCharacterExtra`, always 1, set to 0 for 1 tick when anim state appears to change.
+                       // Used differently in player's `s_SubCharacter`. 0: anim transitioning(?), bit 1: animated, bit 2: turning.
     s_ModelAnim anim_4;
 } s_Model;
 STATIC_ASSERT_SIZEOF(s_Model, 24);
@@ -617,7 +617,7 @@ typedef struct _SubCharPropertiesPlayer
     s8  unk_10E[6];
     s32 field_114;
     s8  unk_118[4];
-    s32 field_11C;
+    s32 flags_11C;
     s8  unk_120[6];
     s16 field_126;
 } s_SubCharPropertiesPlayer;
@@ -656,7 +656,7 @@ typedef struct _SubCharacter
     s32     field_34;
     s32     moveSpeed_38;
     s16     headingAngle_3C;
-    s16     field_3E;
+    s16     flags_3E;
     s8      unk_40[4];
     s16     field_44;
     s8      unk_46[2];

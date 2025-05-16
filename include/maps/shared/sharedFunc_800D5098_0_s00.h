@@ -16,7 +16,7 @@ void sharedFunc_800D5098_0_s00(s_SubCharacter* chara)
 
     if ((chara->model_0.anim_4.animIdx_0 >> 1) == 0x1E)
     {
-        chara->model_0.stage_2 = 4;
+        chara->model_0.state_2 = 4;
         g_SysWork.field_228A &= ~(1 << 1);
         return;
     }
