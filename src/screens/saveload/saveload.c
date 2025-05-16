@@ -126,14 +126,15 @@ void func_801E30C4(s_UnkSaveload0* ptr, s32 arg1, s32 idx) // 0x801E30C4
 
     u8 D_801E2728[] =
     {
-        0x52, 0x25, 0x1E, 0x2C,
-        0x51, 0x51, 0x3D, 0x3D,
-        0x3B, 0x33, 0x54, 0x51,
-        0x51, 0x6D, 0x4B, 0x6F,
-        0x61, 0x26, 0x37, 0x2D,
-        0x5F, 0x30, 0x47, 0x66,
-        0x4D
+        82, 37, 30, 44,
+        81, 81, 61, 61,
+        59, 51, 84, 81,
+        81, 109, 75, 111,
+        97, 38, 55, 45,
+        95, 48, 71, 102,
+        77
     };
+
 
     s32 var0;
     s16 var1;
@@ -192,24 +193,16 @@ void func_801E3304(s8* arg0, s32 arg1, s32 arg2) // 0x801E3304
     char* D_801E2830[] =
     {
         "\x07MEMORY_CARD\nis_not_inserted",
-        "\x07MEMORY_CARD\nis_\x01not_\x01"
-        "formatted",
+        "\x07MEMORY_CARD\nis_\x01not_\x01""formatted",
         "\x07MEMORY_CARD\nmay_be_broken",
         "\x07Now_checking\nMEMORY_CARD",
         "\x07Out_of_blocks",
         "\x07No_data_file",
         "\x07No_data_file",
-        "\x07____Fil"
-        "\x01"
-        "e_\x01\x01is_\x01\x01"
-        "da\x01ma\x01g\x01"
-        "ed",
+        "\x07____Fil""\x01""e_\x01\x01is_\x01\x01""da\x01ma\x01g\x01""ed",
         "\x07",
         "\x07________\x01New_save",
-        "\x07____Crea\x01t\x01"
-        "e_\x01n\x01"
-        "e\x01w_\x01"
-        "fi\x01le"
+        "\x07____Crea\x01t\x01""e_\x01n\x01""e\x01w_\x01""fi\x01le"
     };
 
     s32 i;
@@ -238,6 +231,7 @@ void func_801E3304(s8* arg0, s32 arg1, s32 arg2) // 0x801E3304
         {
             D_801E7570[arg2] = 0;
         }
+
         if ((u8)D_801E76D2[arg2] != 0)
         {
             if (D_800A97D4[arg2] == D_800BCD3C[arg2] - 2)
@@ -266,12 +260,14 @@ void func_801E3304(s8* arg0, s32 arg1, s32 arg2) // 0x801E3304
                 {
                     D_801E7570[arg2]++;
                 }
+
                 while (D_800A97D4[arg2] - 1 < D_801E7570[arg2])
                 {
                     D_801E7570[arg2]--;
                 }
             }
         }
+
         if (D_801E7570[arg2] != D_801E7574[arg2])
         {
             D_801E7514[arg2] = 1;
@@ -282,18 +278,22 @@ void func_801E3304(s8* arg0, s32 arg1, s32 arg2) // 0x801E3304
     {
         case 1:
             D_801E76D2[arg2] = 0;
+
             if (g_GameWork.gameState_594 == 16)
             {
                 func_801E43C8(arg2);
             }
+
             break;
 
         case 3:
             D_801E76D2[arg2] = 1;
+
             for (i = 0; i < 165; i++)
             {
                 D_801E7584[i + (arg2 * 165)] = 0;
             }
+
             D_801E7570[arg2] = NO_VALUE;
             break;
 
@@ -302,10 +302,12 @@ void func_801E3304(s8* arg0, s32 arg1, s32 arg2) // 0x801E3304
         case 9:
         case 10:
             D_801E76D2[arg2] = 0;
+
             if (arg1 == 0)
             {
                 Gfx_SavesTransparentBgDraw(arg2, D_800BCD3C[arg2], D_800A97D4[arg2], D_801E7578[arg2]);
             }
+
             break;
     }
 
@@ -325,6 +327,7 @@ void func_801E3304(s8* arg0, s32 arg1, s32 arg2) // 0x801E3304
         case 3:
             Gfx_StringSetPosition((arg2 * 150) + 22, 82);
             break;
+
         case 5:
         case 6:
             Gfx_StringSetPosition((arg2 * 150) + 38, 90);
@@ -372,32 +375,28 @@ void func_801E3910(s32 arg0, s32 arg1) // 0x801E3910
     char* strs[] =
     {
         " ",
-        "\x07You_\x01\x01removed_\x01\x01the_\x01\x01MEMORY_\x01\x01"
-        "CARD!",
+        "\x07You_\x01\x01removed_\x01\x01the_\x01\x01MEMORY_\x01\x01""CARD!",
         "\x07Now_formatting...",
         "\x07Now_saving...",
         "\x07Unable_to_create_a_new_file.",
-        "\x07"
-        "Finished_saving.",
-        "\x07"
-        "Failed_to_save!",
+        "\x07""Finished_saving.",
+        "\x07""Failed_to_save!",
         "\x07The_data_is_not_found!",
         "\x07The_data_is_damaged!",
-        "\x07"
-        "Failed_to_load!",
-        "\x07"
-        "Finished_loading.",
+        "\x07""Failed_to_load!",
+        "\x07""Finished_loading.",
         "\x07Now_loading..."
     };
 
     s16 xOffsets[] =
-        {
-            0, 268,
-            141, 107,
-            223, 136,
-            119, 182,
-            170, 117,
-            143, 114};
+    {
+        0, 268,
+        141, 107,
+        223, 136,
+        119, 182,
+        170, 117,
+        143, 114
+    };
 
     switch (arg0)
     {
@@ -536,11 +535,9 @@ void func_801E3910(s32 arg0, s32 arg1) // 0x801E3910
 void func_801E3C44(s32 arg0, s32 arg1) // 0x801E3C44
 {
     GsOT*     ot;
-    GsOT_TAG* temp_t0;
     s8        color;
     u32       time;
-
-    POLY_F4* poly;
+    POLY_F4*  poly;
 
     char* D_801E2A3C[] =
     {
@@ -551,7 +548,7 @@ void func_801E3C44(s32 arg0, s32 arg1) // 0x801E3C44
 
     u8 xOffsets[] =
     {
-        0xb4, 0x9a
+        180, 154
     };
 
     D_801E76D0 = 0;
@@ -566,33 +563,33 @@ void func_801E3C44(s32 arg0, s32 arg1) // 0x801E3C44
             D_801E750C = 1;
 
         case 1:
-            Gfx_StringSetPosition(0xA0 - (xOffsets[arg0] / 2), 0xB2);
-            Gfx_StringDraw(D_801E2A3C[arg0], 0x63);
+            Gfx_StringSetPosition(160 - (xOffsets[arg0] / 2), 178);
+            Gfx_StringDraw(D_801E2A3C[arg0], 99);
             Gfx_StringSetPosition(0x68, 0xC4);
-            Gfx_StringDraw("\x07Yes__________No", 0x63);
+            Gfx_StringDraw("\x07Yes__________No", 99);
 
             poly = (POLY_F4*)GsOUT_PACKET_P;
             setlen(poly, 5);
             setcode(poly, 0x2A);
 
-            if (time < 0x20u)
+            if (time < 32)
             {
-                color = (time * 2) + 0x20;
-                setRGB0(poly, color, color, 0x20);
+                color = (time * 2) + 32;
+                setRGB0(poly, color, color, 32);
             }
             else
             {
-                color = 0x60 - ((time - 0x20) * 2);
-                setRGB0(poly, color, color, 0x20);
+                color = 96 - ((time - 32) * 2);
+                setRGB0(poly, color, color, 32);
             }
 
             if (arg1 != 0)
             {
-                setXY4(poly, -0x42, 0x52, -0x42, 0x62, -0x12, 0x52, -0x12, 0x62);
+                setXY4(poly, -66, 82, -66, 98, -18, 82, -18, 98);
             }
             else
             {
-                setXY4(poly, 0x12, 0x52, 0x12, 0x62, 0x42, 0x52, 0x42, 0x62);
+                setXY4(poly, 18, 82, 18, 98, 66, 82, 66, 98);
             }
 
             GsOUT_PACKET_P = (u8*)poly + sizeof(POLY_F4);
@@ -607,8 +604,8 @@ void func_801E3E78() // 0x801E3E78
 {
     GsOT*    ot;
     s32      temp_s0;
-    s32      temp_v0;
-    s8       temp_v1;
+    s32      sin;
+    s8       color;
     u32      temp_s1;
     POLY_F4* poly;
 
@@ -618,19 +615,19 @@ void func_801E3E78() // 0x801E3E78
 
     if (temp_s1 < 5U)
     {
-        temp_v0 = shRsin((D_801E76D4 << 0xA) / 40);
+        sin = shRsin((D_801E76D4 << 0xA) / 40);
         poly    = (POLY_F4*)GsOUT_PACKET_P;
         setlen(poly, 5);
         setcode(poly, 0x2A);
 
-        temp_v1 = ~FP_FROM(temp_v0 * 0xFF, Q12_SHIFT);
-        setRGB0(poly, temp_v1, temp_v1, temp_v1);
+        color = ~FP_FROM(sin * 0xFF, Q12_SHIFT);
+        setRGB0(poly, color, color, color);
 
         setXY4(poly,
-               temp_s0 * 0x96 - 0x82, temp_s1 * 0x14 - 0x3E,
-               temp_s0 * 0x96 - 0x82, temp_s1 * 0x14 - 0x2B,
-               temp_s0 * 0x96 - 0x0B, temp_s1 * 0x14 - 0x3E,
-               temp_s0 * 0x96 - 0x0B, temp_s1 * 0x14 - 0x2B);
+               temp_s0 * 150 - 130, temp_s1 * 20 - 62,
+               temp_s0 * 150 - 130, temp_s1 * 20 - 43,
+               temp_s0 * 150 - 11, temp_s1 * 20 - 62,
+               temp_s0 * 150 - 11, temp_s1 * 20 - 43);
 
         GsOUT_PACKET_P = (u8*)poly + sizeof(POLY_F4);
         addPrim((u8*)ot->org + 0x18, poly);
@@ -642,52 +639,50 @@ void func_801E3E78() // 0x801E3E78
 void Gfx_SelectedMemBarDraw() // 0x801E4010
 {
     s_801E2A98 D_801E2A48[5][2] =
+    {
         {
-
-            {
-                {{0xFF95, 0xFFA8}, {0xFF6E, 0xFFA8}},
-                {{0xFF95, 0xFFA9}, {0xFF6E, 0xFFA9}},
-            },
-            {
-                {{0xFFD6, 0xFFA8}, {0xFFFE, 0xFFA8}},
-                {{0xFFD6, 0xFFA9}, {0xFFFE, 0xFFA9}},
-            },
-            {
-                {{0xFF6E, 0xFFA8}, {0xFF6E, 0x002A}},
-                {{0xFF6F, 0xFFA9}, {0xFF6F, 0x0029}},
-            },
-            {
-                {{0xFFFE, 0xFFA8}, {0xFFFE, 0x002A}},
-                {{0xFFFD, 0xFFA9}, {0xFFFD, 0x0029}},
-            },
-            {
-                {{0xFF6E, 0x002A}, {0xFFFE, 0x002A}},
-                {{0xFF6F, 0x0029}, {0xFFFD, 0x0029}},
-            }
-
-        };
+            {{-107, -88}, {-146, -88}},
+            {{-107, -87}, {-146, -87}},
+        },
+        {
+            {{-42, -88}, {-2, -88}},
+            {{-42, -87}, {-2, -87}},
+        },
+        {
+            {{-146, -88}, {-146, 42}},
+            {{-145, -87}, {-145, 41}},
+        },
+        {
+            {{-2, -88}, {-2, 42}},
+            {{-3, -87}, {-3, 41}},
+        },
+        {
+            {{-146, 42}, {-2, 42}},
+            {{-145, 41}, {-3, 41}},
+        }
+    };
 
     s_801E2A48 D_801E2A98[5][2] =
     {
         {
-            {{0xFF96, 0xFFA8}, {0xFF96, 0xFFA4}, {0xFF6E, 0xFFA8}, {0xFF6A, 0xFFA4}},
-            {{0xFF96, 0xFFA9}, {0xFF96, 0xFFAD}, {0xFF6E, 0xFFA9}, {0xFF72, 0xFFAD}},
+            {{-106, -88}, {-106, -92}, {-146, -88}, {-150, -92}},
+            {{-106, -87}, {-106, -83}, {-146, -87}, {-142, -83}},
         },
         {
-            {{0xFFD6, 0xFFA8}, {0xFFD6, 0xFFA4}, {0xFFFE, 0xFFA8}, {0x0002, 0xFFA4}},
-            {{0xFFD6, 0xFFA9}, {0xFFD6, 0xFFAD}, {0xFFFE, 0xFFA9}, {0xFFFA, 0xFFAD}},
+            {{-42, -88}, {-42, -92}, {-2, -88}, {2, -92}},
+            {{-42, -87}, {-42, -83}, {-2, -87}, {-6, -83}},
         },
         {
-            {{0xFF6E, 0xFFA8}, {0xFF6A, 0xFFA4}, {0xFF6E, 0x002A}, {0xFF6A, 0x002E}},
-            {{0xFF6F, 0xFFA9}, {0xFF73, 0xFFAD}, {0xFF6F, 0x0029}, {0xFF73, 0x0025}},
+            {{-146, -88}, {-150, -92}, {-146, 42}, {-150, 46}},
+            {{-145, -87}, {-141, -83}, {-145, 41}, {-141, 37}},
         },
         {
-            {{0xFFFE, 0xFFA8}, {0x0002, 0xFFA4}, {0xFFFE, 0x002A}, {0x0002, 0x002E}},
-            {{0xFFFD, 0xFFA9}, {0xFFF9, 0xFFAD}, {0xFFFD, 0x0029}, {0xFFF9, 0x0025}},
+            {{-2, -88}, {2, -92}, {-2, 42}, {2, 46}},
+            {{-3, -87}, {-7, -83}, {-3, 41}, {-7, 37}},
         },
         {
-            {{0xFF6E, 0x002A}, {0xFF6A, 0x002E}, {0xFFFE, 0x002A}, {0x0002, 0x002E}},
-            {{0xFF6F, 0x0029}, {0xFF73, 0x0025}, {0xFFFD, 0x0029}, {0xFFF9, 0x0025}},
+            {{-146, 42}, {-150, 46}, {-2, 42}, {2, 46}},
+            {{-145, 41}, {-141, 37}, {-3, 41}, {-7, 37}},
         }
     };
 
@@ -708,8 +703,8 @@ void Gfx_SelectedMemBarDraw() // 0x801E4010
             setRGB0(line, 0, 0xFF, 0);
 
             setXY2(line,
-                   D_801E2A48[j][i].field_0.vx + D_800A97D6 * 0x96, D_801E2A48[j][i].field_0.vy,
-                   D_801E2A48[j][i].field_4.vx + D_800A97D6 * 0x96, D_801E2A48[j][i].field_4.vy);
+                   D_801E2A48[j][i].field_0.vx + D_800A97D6 * 150, D_801E2A48[j][i].field_0.vy,
+                   D_801E2A48[j][i].field_4.vx + D_800A97D6 * 150, D_801E2A48[j][i].field_4.vy);
 
             addPrim((u8*)ot->org + 0x1C, line);
             GsOUT_PACKET_P = (u8*)line + sizeof(LINE_F2);
@@ -730,10 +725,10 @@ void Gfx_SelectedMemBarDraw() // 0x801E4010
             setRGB3(poly, 0, 0, 0);
 
             setXY4(poly,
-                   D_801E2A98[j][i].field_0.vx + D_800A97D6 * 0x96, D_801E2A98[j][i].field_0.vy,
-                   D_801E2A98[j][i].field_4.vx + D_800A97D6 * 0x96, D_801E2A98[j][i].field_4.vy,
-                   D_801E2A98[j][i].field_8.vx + D_800A97D6 * 0x96, D_801E2A98[j][i].field_8.vy,
-                   D_801E2A98[j][i].field_C.vx + D_800A97D6 * 0x96, D_801E2A98[j][i].field_C.vy);
+                   D_801E2A98[j][i].field_0.vx + D_800A97D6 * 150, D_801E2A98[j][i].field_0.vy,
+                   D_801E2A98[j][i].field_4.vx + D_800A97D6 * 150, D_801E2A98[j][i].field_4.vy,
+                   D_801E2A98[j][i].field_8.vx + D_800A97D6 * 150, D_801E2A98[j][i].field_8.vy,
+                   D_801E2A98[j][i].field_C.vx + D_800A97D6 * 150, D_801E2A98[j][i].field_C.vy);
 
             addPrim((u8*)ot->org + 0x1C, poly);
             GsOUT_PACKET_P = (u8*)poly + sizeof(POLY_G4);
@@ -746,14 +741,14 @@ void Gfx_SelectedMemBarDraw() // 0x801E4010
 void func_801E43C8(s32 arg0) // 0x801E43C8
 {
     GsOT*    ot;
-    s16      temp_v1_3;
-    s32      temp_a2;
-    s8       temp_v0;
+    s16      time;
+    s32      temp;
+    s8       color;
     POLY_F4* poly;
 
-    temp_a2   = ((u8)g_SysWork.timer_1C) & 0x3F;
-    temp_v1_3 = temp_a2;
-    ot        = &g_ObjectTable1[g_ObjectTableIdx];
+    temp = ((u8)g_SysWork.timer_1C) & 0x3F;
+    time = temp;
+    ot   = &g_ObjectTable1[g_ObjectTableIdx];
 
     if (D_800A97D6 == arg0)
     {
@@ -761,20 +756,20 @@ void func_801E43C8(s32 arg0) // 0x801E43C8
         setlen(poly, 5);
         setcode(poly, 0x2A);
 
-        if (temp_v1_3 < 0x20U)
+        if ((u16)time < 32)
         {
-            temp_v0 = (temp_v1_3 * 2) + 0x20;
-            setRGB0(poly, temp_v0, temp_v0, 0x20);
+            color = (time * 2) + 32;
+            setRGB0(poly, color, color, 32);
         }
         else
         {
-            temp_v0 = 0x60 - ((temp_v1_3 - 0x20) * 2);
-            setRGB0(poly, temp_v0, temp_v0, 0x20);
+            color = 96 - ((time - 32) * 2);
+            setRGB0(poly, color, color, 32);
         }
 
         setXY4(poly,
-               arg0 * 0x96 - 0x8E, -0x23, arg0 * 0x96 - 0x8E, 2,
-               arg0 * 0x96 - 6, -0x23, arg0 * 0x96 - 6, 2);
+               arg0 * 150 - 142, -35, arg0 * 150 - 142, 2,
+               arg0 * 150 - 6, -35, arg0 * 150 - 6, 2);
 
         GsOUT_PACKET_P = (u8*)poly + sizeof(POLY_F4);
         addPrim((u8*)ot->org + 0x1C, poly);
