@@ -836,6 +836,8 @@ extern s32 D_800BCDB0; // Type assumed.
 
 extern u8 D_800BCDD4;
 
+extern s8* D_800BCDE0; // Type assumed.
+
 extern u16 D_800BCE14;
 
 extern s_800BCE18 D_800BCE18;

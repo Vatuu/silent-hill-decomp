@@ -2005,7 +2005,14 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003B678);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003B758);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003B7BC);
+void func_8003B7BC()
+{
+    // It can't be s32* since 462 doesn't divide by 4, so I'm guessing it's s8.
+    s8* s0 = 0x801E2432;
+
+    memset(s0, 0, 0x1CE); // 462
+    D_800BCDE0 = s0;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003B7FC);
 
