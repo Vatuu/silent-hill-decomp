@@ -1090,12 +1090,12 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8007FC48);
 
 s32 func_8007FD2C() // 0x8007FD2C
 {
-    return g_SysWork.player_4C.chara_0.properties_E4[PlayerProperty_Unk8];
+    return g_SysWork.player_4C.chara_0.properties_E4.player.properties_E4[PlayerProperty_Unk8];
 }
 
 s32 func_8007FD3C() // 0x8007FD3C
 {
-    return g_SysWork.player_4C.chara_0.field_114;
+    return g_SysWork.player_4C.chara_0.properties_E4.player.field_114;
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8007FD4C);

@@ -26,10 +26,10 @@ void Ai_Groaner_Update(s_SubCharacter* chara, s32 arg1, s32 arg2)
 
         if (chara->model_0.field_2 != (var & 0xFF))
         {
-            *(u16*)&chara->properties_E4[1] &= ~(1 << 8);
+            *(u16*)&chara->properties_E4.player.properties_E4[1] &= ~(1 << 8);
         }
 
-        if ((u16)chara->properties_E4[1] & (1 << 7))
+        if ((u16)chara->properties_E4.player.properties_E4[1] & (1 << 7))
         {
             chara->field_3E |= 1 << 2;
         }

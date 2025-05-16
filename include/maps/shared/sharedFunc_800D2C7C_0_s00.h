@@ -6,7 +6,7 @@ void sharedFunc_800D2C7C_0_s00(s32 arg0)
     extra = &g_SysWork.player_4C.extra_128;
     chara = &g_SysWork.player_4C.chara_0;
 
-    g_SysWork.player_4C.chara_0.field_126 = 0;
+    g_SysWork.player_4C.chara_0.properties_E4.player.field_126 = 0;
 
     D_800C4606 = 0;
 

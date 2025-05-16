@@ -47,7 +47,7 @@ void Ai_Stalker_Update(s_SubCharacter* chara, s32 arg1, s32 arg2)
         {
             sharedFunc_800D7BE8_0_s00(chara);
         }
-        
-        *(u16*)&chara->properties_E4[1] &= 0xEFFF;
+
+        *(u16*)&chara->properties_E4.player.properties_E4[1] &= 0xEFFF;
     }
 }

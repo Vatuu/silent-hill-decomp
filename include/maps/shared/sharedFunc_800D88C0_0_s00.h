@@ -1,6 +1,6 @@
 void sharedFunc_800D88C0_0_s00(s_SubCharacter* playerChara, s32 arg1)
 {
-    playerChara->properties_E4[PlayerProperty_Unk4] = 1;
+    playerChara->properties_E4.player.properties_E4[PlayerProperty_Unk4] = 1;
 
     if (arg1 != 0)
     {
@@ -11,7 +11,7 @@ void sharedFunc_800D88C0_0_s00(s_SubCharacter* playerChara, s32 arg1)
     }
     else
     {
-        playerChara->properties_E4[PlayerProperty_AfkTimer] = 0;
+        playerChara->properties_E4.player.properties_E4[PlayerProperty_AfkTimer] = 0;
         playerChara->model_0.isAnimStateUnchanged_3         = 0;
     }
 

@@ -319,12 +319,12 @@ INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D6554);
     s16 someRotY;
     s32 var;
 
-    someDist = FP_TO(SquareRoot0(SQUARE(FP_FROM(g_SysWork.player_4C.chara_0.position_18.vx - chara->position_18.vx, 6)) + 
+    someDist = FP_TO(SquareRoot0(SQUARE(FP_FROM(g_SysWork.player_4C.chara_0.position_18.vx - chara->position_18.vx, 6)) +
                                  SQUARE(FP_FROM(g_SysWork.player_4C.chara_0.position_18.vz - chara->position_18.vz, 6))), 6);
-    
+
     someRotY = func_8005BF38((s16)(ratan2(g_SysWork.player_4C.chara_0.position_18.vx - chara->position_18.vx,
                                          g_SysWork.player_4C.chara_0.position_18.vz - chara->position_18.vz) - chara->rotation_24.vy));
-    
+
     if ((g_SysWork.field_24DC & 0x3) == 0)
     {
         var = func_8006FD90(chara, 0, 0x7800, 0x7800);
@@ -339,18 +339,18 @@ INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D6554);
     }
 
     var |= func_80070360(chara, someDist, 0x1000);
-    
+
     if (var == 0)
     {
         return;
     }
 
-    chara->properties_E4[3].val32 = g_SysWork.player_4C.chara_0.position_18.vx;
-    chara->properties_E4[4].val32 = g_SysWork.player_4C.chara_0.position_18.vz;
-    
+    chara->properties_E4.player.properties_E4[3].val32 = g_SysWork.player_4C.chara_0.position_18.vx;
+    chara->properties_E4.player.properties_E4[4].val32 = g_SysWork.player_4C.chara_0.position_18.vz;
+
     if (someDist < FP_METER(19.2f) && someRotY < FP_ANGLE(11.25f))
     {
-        if (!(chara->properties_E4[1].val16[0] & (1 << 1)))
+        if (!(chara->properties_E4.player.properties_E4[1].val16[0] & (1 << 1)))
         {
             chara->model_0.field_2 = 3;
         }
@@ -361,9 +361,9 @@ INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D6554);
 
         chara->model_0.anim_4.animIdx_0 = 60;
 
-        chara->properties_E4[6].val16[0] = 0x37;
-        chara->properties_E4[6].val16[1] = FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT) - 0x1AB;
-        chara->properties_E4[1].val16[0] |= 1 << 10;
+        chara->properties_E4.player.properties_E4[6].val16[0] = 0x37;
+        chara->properties_E4.player.properties_E4[6].val16[1] = FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT) - 0x1AB;
+        chara->properties_E4.player.properties_E4[1].val16[0] |= 1 << 10;
 
         func_800D7E04(chara, 0x553);
     }

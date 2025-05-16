@@ -597,6 +597,56 @@ typedef union
     s8  val8[4];
 } u_Property;
 
+// TODO: Unsure if this is puppet doctor specific or shared with all chars, pointer gets set at puppetDoc+0x124
+typedef struct
+{
+    s32   health_0;
+    u8    unk_4[0x20];
+    void* field_24; // Pointer to some const data.
+    u8    unk_28[0xC];
+} s_800D5710;
+STATIC_ASSERT_SIZEOF(s_800D5710, 0x34);
+
+// TODO: re-offset `s_SubCharPropertiesPlayer` / `s_SubCharPropertiesNPC`
+// Probably be easier to do that after it's merged with rest of code.
+typedef struct _SubCharPropertiesPlayer
+{
+    s32 properties_E4[CHARA_PROPERTY_COUNT_MAX]; // TODO: Integrate as `u_Property`.
+    s8  unk_10C;
+    u8  field_10D;
+    s8  unk_10E[6];
+    s32 field_114;
+    s8  unk_118[4];
+    s32 field_11C;
+    s8  unk_120[6];
+    s16 field_126;
+} s_SubCharPropertiesPlayer;
+STATIC_ASSERT_SIZEOF(s_SubCharPropertiesPlayer, 68);
+
+// TODO: this may be a puppet doctor/nurse specific struct, need to compare with other NPCs.
+typedef struct _SubCharPropertiesNPC
+{
+    s32         unk_E4;
+    VECTOR3     field_E8;
+    s32         field_F4;
+    s32         field_F8;
+    s32         field_FC;
+    s32         field_100;
+    s32         field_104;
+    s32         field_108;
+    s32         field_10C;
+    s8          unk_110[4];
+    s32         field_114;
+    s8          field_118;
+    s8          modelVariation_119;
+    s16         field_11A;
+    s32         field_11C;
+    s16         field_120;
+    s16         field_122;
+    s_800D5710* field_124;
+} s_SubCharPropertiesNPC;
+STATIC_ASSERT_SIZEOF(s_SubCharPropertiesNPC, 68);
+
 typedef struct _SubCharacter
 {
     s_Model model_0;
@@ -635,15 +685,11 @@ typedef struct _SubCharacter
     s32 field_E0_8 : 4;
     s32 unk_E0_12 : 20;
 
-    s32 properties_E4[CHARA_PROPERTY_COUNT_MAX]; // TODO: Integrate as `u_Property`.
-    s8  unk_10C;
-    u8  field_10D;
-    s8  unk_10E[6];
-    s32 field_114;
-    s8  unk_118[4];
-    s32 field_11C;
-    s8  unk_120[6];
-    s16 field_126;
+    union
+    {
+        s_SubCharPropertiesPlayer player;
+        s_SubCharPropertiesNPC    npc;
+    } properties_E4;
 } s_SubCharacter;
 STATIC_ASSERT_SIZEOF(s_SubCharacter, 296);
 
