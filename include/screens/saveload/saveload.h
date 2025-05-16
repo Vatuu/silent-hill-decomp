@@ -19,6 +19,12 @@ typedef struct
     u8 field_0[25];
 } s_801E2728;
 
+typedef struct
+{
+    DVECTOR field_0;
+    DVECTOR field_4;
+} s_func_801E5898;
+
 extern s8 D_800A97D7;
 
 extern s8 D_800A97D8;

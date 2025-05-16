@@ -588,12 +588,12 @@ typedef struct
 typedef struct _AreaLoadParams
 {
     s32 char_x_0;
-    u32 mapIdx_4_0 : 5;
-    u32 field_4_5 : 4;
-    u32 field_4_9 : 3;
-    u32 field_4_12 : 4;
+    u32 mapIdx_4_0	   : 5;
+    u32 field_4_5 	   : 4;
+    u32 field_4_9	   : 3;
+    u32 field_4_12	   : 4;
     u32 rotationY_4_16 : 8;
-    u32 field_4_24 : 8;
+    u32 field_4_24	   : 8;
     s32 char_z_8;
 } s_AreaLoadParams;
 
@@ -1221,7 +1221,7 @@ void func_80035560(s32 arg0, s32 arg1, void* arg2, s32 arg3);
 
 void func_80037188();
 
-void Chara_PositionUpdateFromParams(s_AreaLoadParams* p);
+void Chara_PositionUpdateFromParams(s_AreaLoadParams* params);
 
 void func_8003943C();
 

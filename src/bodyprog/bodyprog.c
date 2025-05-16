@@ -1092,7 +1092,6 @@ void Game_SaveGameInitialize(s8 overlayIdx, s32 difficulty) // 0x800350BC
 
     g_SaveGamePtr->mapOverlayIdx_A4 = overlayIdx;
 
-    // `e_GameDifficulty`
     difficulty = CLAMP(difficulty, GameDifficulty_Easy, GameDifficulty_Hard);
 
     var_a2 = g_SaveGamePtr->field_B0;
@@ -1327,34 +1326,34 @@ void func_80037154() // 0x80037154
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80037188);
 
-void Chara_PositionUpdateFromParams(s_AreaLoadParams* p) // 0x800371E8
+void Chara_PositionUpdateFromParams(s_AreaLoadParams* params) // 0x800371E8
 {
-    s32 rotation = p->rotationY_4_16 * 16;
+    s32 rot = params->rotationY_4_16 * 16;
 
-    Math_SVectorSet(&g_SysWork.player_4C.chara_0.rotation_24, 0, rotation, 0);
+    Math_SVectorSet(&g_SysWork.player_4C.chara_0.rotation_24, 0, rot, 0);
 
     g_SysWork.player_4C.chara_0.position_18.vy = 0;
-    g_SysWork.player_4C.chara_0.position_18.vx = p->char_x_0;
-    g_SysWork.player_4C.chara_0.position_18.vz = p->char_z_8;
+    g_SysWork.player_4C.chara_0.position_18.vx = params->char_x_0;
+    g_SysWork.player_4C.chara_0.position_18.vz = params->char_z_8;
 
-    if (p->field_4_24 >= 2)
+    if (params->field_4_24 >= 2)
     {
-        g_SysWork.player_4C.chara_0.position_18.vx += FP_MULTIPLY_FLOAT((s64)shRsin(rotation), 0.4f, Q12_SHIFT);
-        g_SysWork.player_4C.chara_0.position_18.vz += FP_MULTIPLY_FLOAT((s64)shRcos(rotation), 0.4f, Q12_SHIFT);
+        g_SysWork.player_4C.chara_0.position_18.vx += FP_MULTIPLY_FLOAT((s64)shRsin(rot), 0.4f, Q12_SHIFT);
+        g_SysWork.player_4C.chara_0.position_18.vz += FP_MULTIPLY_FLOAT((s64)shRcos(rot), 0.4f, Q12_SHIFT);
     }
 
-    g_SysWork.field_2281 = p->field_4_9;
+    g_SysWork.field_2281 = params->field_4_9;
 
-    if (p->mapIdx_4_0 == 0x18)
+    if (params->mapIdx_4_0 == 24)
     {
         g_SaveGamePtr->mapIdx_A9 = 0;
     }
-    else if (p->mapIdx_4_0 != 0)
+    else if (params->mapIdx_4_0 != 0)
     {
-        g_SaveGamePtr->mapIdx_A9 = p->mapIdx_4_0;
+        g_SaveGamePtr->mapIdx_A9 = params->mapIdx_4_0;
     }
 
-    g_SysWork.cameraAngleY_237A = rotation;
+    g_SysWork.cameraAngleY_237A = rot;
 
     func_8007E9C4();
     func_80036420();
@@ -1368,7 +1367,7 @@ void func_80037334() // 0x80037334
     {
         g_MapOverlayHeader.func_40();
     }
-    
+
     func_800699F8(&sp10, g_SysWork.player_4C.chara_0.position_18.vx, g_SysWork.player_4C.chara_0.position_18.vz);
     g_SysWork.player_4C.chara_0.position_18.vy = sp10.chara_grnd_0;
 }
