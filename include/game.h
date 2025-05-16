@@ -411,7 +411,7 @@ typedef enum _GameDifficulty
 {
     GameDifficulty_Easy   = -1,
     GameDifficulty_Normal = 0,
-    GameDifficulty_Hard   = 1,
+    GameDifficulty_Hard	  = 1,
     // TODO: Does this increase further on NG+?
 } e_GameDifficulty;
 

@@ -125,14 +125,15 @@ void func_801E30C4(s_UnkSaveload0* ptr, s32 arg1, s32 idx) // 0x801E30C4
     s32 idxVar = (s8)ptr->field_8;
 
     u8 D_801E2728[] =
-        {
-            0x52, 0x25, 0x1E, 0x2C,
-            0x51, 0x51, 0x3D, 0x3D,
-            0x3B, 0x33, 0x54, 0x51,
-            0x51, 0x6D, 0x4B, 0x6F,
-            0x61, 0x26, 0x37, 0x2D,
-            0x5F, 0x30, 0x47, 0x66,
-            0x4D};
+    {
+        0x52, 0x25, 0x1E, 0x2C,
+        0x51, 0x51, 0x3D, 0x3D,
+        0x3B, 0x33, 0x54, 0x51,
+        0x51, 0x6D, 0x4B, 0x6F,
+        0x61, 0x26, 0x37, 0x2D,
+        0x5F, 0x30, 0x47, 0x66,
+        0x4D
+    };
 
     s32 var0;
     s16 var1;
@@ -189,26 +190,27 @@ void func_801E326C(s8* arg0, s8* arg1, s32 arg2, s32 arg3) // 0x801E326C
 void func_801E3304(s8* arg0, s32 arg1, s32 arg2) // 0x801E3304
 {
     char* D_801E2830[] =
-        {
-            "\x07MEMORY_CARD\nis_not_inserted",
-            "\x07MEMORY_CARD\nis_\x01not_\x01"
-            "formatted",
-            "\x07MEMORY_CARD\nmay_be_broken",
-            "\x07Now_checking\nMEMORY_CARD",
-            "\x07Out_of_blocks",
-            "\x07No_data_file",
-            "\x07No_data_file",
-            "\x07____Fil"
-            "\x01"
-            "e_\x01\x01is_\x01\x01"
-            "da\x01ma\x01g\x01"
-            "ed",
-            "\x07",
-            "\x07________\x01New_save",
-            "\x07____Crea\x01t\x01"
-            "e_\x01n\x01"
-            "e\x01w_\x01"
-            "fi\x01le"};
+    {
+        "\x07MEMORY_CARD\nis_not_inserted",
+        "\x07MEMORY_CARD\nis_\x01not_\x01"
+        "formatted",
+        "\x07MEMORY_CARD\nmay_be_broken",
+        "\x07Now_checking\nMEMORY_CARD",
+        "\x07Out_of_blocks",
+        "\x07No_data_file",
+        "\x07No_data_file",
+        "\x07____Fil"
+        "\x01"
+        "e_\x01\x01is_\x01\x01"
+        "da\x01ma\x01g\x01"
+        "ed",
+        "\x07",
+        "\x07________\x01New_save",
+        "\x07____Crea\x01t\x01"
+        "e_\x01n\x01"
+        "e\x01w_\x01"
+        "fi\x01le"
+    };
 
     s32 i;
     s32 temp_s2;
@@ -236,7 +238,6 @@ void func_801E3304(s8* arg0, s32 arg1, s32 arg2) // 0x801E3304
         {
             D_801E7570[arg2] = 0;
         }
-
         if ((u8)D_801E76D2[arg2] != 0)
         {
             if (D_800A97D4[arg2] == D_800BCD3C[arg2] - 2)
@@ -324,7 +325,6 @@ void func_801E3304(s8* arg0, s32 arg1, s32 arg2) // 0x801E3304
         case 3:
             Gfx_StringSetPosition((arg2 * 150) + 22, 82);
             break;
-
         case 5:
         case 6:
             Gfx_StringSetPosition((arg2 * 150) + 38, 90);
@@ -370,24 +370,25 @@ void func_801E3910(s32 arg0, s32 arg1) // 0x801E3910
     s32 strIdx;
 
     char* strs[] =
-        {
-            " ",
-            "\x07You_\x01\x01removed_\x01\x01the_\x01\x01MEMORY_\x01\x01"
-            "CARD!",
-            "\x07Now_formatting...",
-            "\x07Now_saving...",
-            "\x07Unable_to_create_a_new_file.",
-            "\x07"
-            "Finished_saving.",
-            "\x07"
-            "Failed_to_save!",
-            "\x07The_data_is_not_found!",
-            "\x07The_data_is_damaged!",
-            "\x07"
-            "Failed_to_load!",
-            "\x07"
-            "Finished_loading.",
-            "\x07Now_loading..."};
+    {
+        " ",
+        "\x07You_\x01\x01removed_\x01\x01the_\x01\x01MEMORY_\x01\x01"
+        "CARD!",
+        "\x07Now_formatting...",
+        "\x07Now_saving...",
+        "\x07Unable_to_create_a_new_file.",
+        "\x07"
+        "Finished_saving.",
+        "\x07"
+        "Failed_to_save!",
+        "\x07The_data_is_not_found!",
+        "\x07The_data_is_damaged!",
+        "\x07"
+        "Failed_to_load!",
+        "\x07"
+        "Finished_loading.",
+        "\x07Now_loading..."
+    };
 
     s16 xOffsets[] =
         {
@@ -542,14 +543,16 @@ void func_801E3C44(s32 arg0, s32 arg1) // 0x801E3C44
     POLY_F4* poly;
 
     char* D_801E2A3C[] =
-        {
-            "\x07Is_it_OK_to_overwrite?",
-            "\x07Is_it_OK_to_format?",
-            "\x07Yes__________No"};
+    {
+        "\x07Is_it_OK_to_overwrite?",
+        "\x07Is_it_OK_to_format?",
+        "\x07Yes__________No"
+    };
 
     u8 xOffsets[] =
-        {
-            0xb4, 0x9a};
+    {
+        0xb4, 0x9a
+    };
 
     D_801E76D0 = 0;
     time       = (u8)g_SysWork.timer_1C & 0x3F;
@@ -665,27 +668,28 @@ void Gfx_SelectedMemBarDraw() // 0x801E4010
         };
 
     s_801E2A48 D_801E2A98[5][2] =
+    {
         {
-            {
-                {{0xFF96, 0xFFA8}, {0xFF96, 0xFFA4}, {0xFF6E, 0xFFA8}, {0xFF6A, 0xFFA4}},
-                {{0xFF96, 0xFFA9}, {0xFF96, 0xFFAD}, {0xFF6E, 0xFFA9}, {0xFF72, 0xFFAD}},
-            },
-            {
-                {{0xFFD6, 0xFFA8}, {0xFFD6, 0xFFA4}, {0xFFFE, 0xFFA8}, {0x0002, 0xFFA4}},
-                {{0xFFD6, 0xFFA9}, {0xFFD6, 0xFFAD}, {0xFFFE, 0xFFA9}, {0xFFFA, 0xFFAD}},
-            },
-            {
-                {{0xFF6E, 0xFFA8}, {0xFF6A, 0xFFA4}, {0xFF6E, 0x002A}, {0xFF6A, 0x002E}},
-                {{0xFF6F, 0xFFA9}, {0xFF73, 0xFFAD}, {0xFF6F, 0x0029}, {0xFF73, 0x0025}},
-            },
-            {
-                {{0xFFFE, 0xFFA8}, {0x0002, 0xFFA4}, {0xFFFE, 0x002A}, {0x0002, 0x002E}},
-                {{0xFFFD, 0xFFA9}, {0xFFF9, 0xFFAD}, {0xFFFD, 0x0029}, {0xFFF9, 0x0025}},
-            },
-            {
-                {{0xFF6E, 0x002A}, {0xFF6A, 0x002E}, {0xFFFE, 0x002A}, {0x0002, 0x002E}},
-                {{0xFF6F, 0x0029}, {0xFF73, 0x0025}, {0xFFFD, 0x0029}, {0xFFF9, 0x0025}},
-            }};
+            {{0xFF96, 0xFFA8}, {0xFF96, 0xFFA4}, {0xFF6E, 0xFFA8}, {0xFF6A, 0xFFA4}},
+            {{0xFF96, 0xFFA9}, {0xFF96, 0xFFAD}, {0xFF6E, 0xFFA9}, {0xFF72, 0xFFAD}},
+        },
+        {
+            {{0xFFD6, 0xFFA8}, {0xFFD6, 0xFFA4}, {0xFFFE, 0xFFA8}, {0x0002, 0xFFA4}},
+            {{0xFFD6, 0xFFA9}, {0xFFD6, 0xFFAD}, {0xFFFE, 0xFFA9}, {0xFFFA, 0xFFAD}},
+        },
+        {
+            {{0xFF6E, 0xFFA8}, {0xFF6A, 0xFFA4}, {0xFF6E, 0x002A}, {0xFF6A, 0x002E}},
+            {{0xFF6F, 0xFFA9}, {0xFF73, 0xFFAD}, {0xFF6F, 0x0029}, {0xFF73, 0x0025}},
+        },
+        {
+            {{0xFFFE, 0xFFA8}, {0x0002, 0xFFA4}, {0xFFFE, 0x002A}, {0x0002, 0x002E}},
+            {{0xFFFD, 0xFFA9}, {0xFFF9, 0xFFAD}, {0xFFFD, 0x0029}, {0xFFF9, 0x0025}},
+        },
+        {
+            {{0xFF6E, 0x002A}, {0xFF6A, 0x002E}, {0xFFFE, 0x002A}, {0x0002, 0x002E}},
+            {{0xFF6F, 0x0029}, {0xFF73, 0x0025}, {0xFFFD, 0x0029}, {0xFFF9, 0x0025}},
+        }
+    };
 
     GsOT*    ot;
     s32      i;
