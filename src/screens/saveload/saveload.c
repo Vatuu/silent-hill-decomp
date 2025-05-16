@@ -87,8 +87,7 @@ void func_801E2FCC(s32 arg0, s32 saveSlotIdx, s32 fileId, s32 arg3) // 0x801E2FC
     #define FILE_ID_STR_MARGIN_X FILE_STR_MARGIN_X + SCREEN_POSITION_X(15.75f)
     #define POS_Y                SCREEN_POSITION_Y(14.75f)
 
-    extern char D_801E2720[]; // "FILE" - needs rodata migration.
-    char*       str = D_801E2720;
+    char* str = "FILE";
 
     if (arg0 == D_800A97D4[saveSlotIdx] && arg3 >= 4)
     {
@@ -123,16 +122,27 @@ void func_801E30C4(s_UnkSaveload0* ptr, s32 arg1, s32 idx) // 0x801E30C4
     #define OFFSET_Y SCREEN_POSITION_Y(8.5f)
     #define MARGIN_Y SCREEN_POSITION_Y(22.25f)
 
-    s32        var0;
-    s32        var1;
-    s_801E2728 var2;
-    s32        idxVar;
-    s32        colorId;
+    s32 idxVar = (s8)ptr->field_8;
 
-    idxVar = (s8)ptr->field_8;
-    var2 = D_801E2728;
+    u8 D_801E2728[] =
+    {
+        82, 37, 30, 44,
+        81, 81, 61, 61,
+        59, 51, 84, 81,
+        81, 109, 75, 111,
+        97, 38, 55, 45,
+        95, 48, 71, 102,
+        77
+    };
+
+
+    s32 var0;
+    s16 var1;
+    s32 colorId;
+    u8* var2;
 
     var1 = D_801E7570[idx];
+
     if (arg1 >= var1 && (var1 + 4) >= arg1)
     {
         var0 = arg1 - var1;
@@ -152,7 +162,7 @@ void func_801E30C4(s_UnkSaveload0* ptr, s32 arg1, s32 idx) // 0x801E30C4
             Gfx_StringSetColor(colorId);
         }
 
-        Gfx_StringSetPosition(((idx * OFFSET_X) + MARGIN_X) - (var2.field_0[idxVar] / 2),
+        Gfx_StringSetPosition(((idx * OFFSET_X) + MARGIN_X) - (D_801E2728[idxVar] / 2),
                               (var0 * OFFSET_Y) + MARGIN_Y);
         Gfx_StringDraw(D_801E74A8[idxVar], 50);
     }
@@ -178,7 +188,6 @@ void func_801E326C(s8* arg0, s8* arg1, s32 arg2, s32 arg3) // 0x801E326C
     }
 }
 
-#ifdef NON_MATCHING
 void func_801E3304(s8* arg0, s32 arg1, s32 arg2) // 0x801E3304
 {
     char* D_801E2830[] =
@@ -195,25 +204,25 @@ void func_801E3304(s8* arg0, s32 arg1, s32 arg2) // 0x801E3304
         "\x07________\x01New_save",
         "\x07____Crea\x01t\x01""e_\x01n\x01""e\x01w_\x01""fi\x01le"
     };
-    
+
     s32 i;
     s32 temp_s2;
 
     temp_s2 = arg0[4];
-    
+
     if (D_800A97D6 == arg2 && arg1 == 0 && temp_s2 >= 7)
-    { 
+    {
         Gfx_SelectedMemBarDraw();
     }
-    
-    if (arg1 == 0) 
+
+    if (arg1 == 0)
     {
         func_801E3E78();
 
         D_801E76D4++;
         D_801E76D4 = CLAMP(D_801E76D4, 0, 40);
-            
-        if (temp_s2 != 3) 
+
+        if (temp_s2 != 3)
         {
             D_801E7518[arg2] = 0;
         }
@@ -222,42 +231,44 @@ void func_801E3304(s8* arg0, s32 arg1, s32 arg2) // 0x801E3304
         {
             D_801E7570[arg2] = 0;
         }
-            
+
         if ((u8)D_801E76D2[arg2] != 0)
         {
             if (D_800A97D4[arg2] == D_800BCD3C[arg2] - 2)
             {
                 D_801E7570[arg2] = D_800A97D4[arg2] - 3;
-            } 
-            else 
+            }
+            else
             {
                 D_801E7570[arg2] = D_800A97D4[arg2] - 2;
             }
         }
-        
-        if ((D_800BCD3C[arg2] < 6) || D_800A97D4[arg2] == 0) 
+
+        if ((D_800BCD3C[arg2] < 6) || D_800A97D4[arg2] == 0)
         {
             D_801E7570[arg2] = 0;
-        } 
-        else 
+        }
+        else
         {
-            if ((D_800BCD3C[arg2] - 2) < D_800A97D4[arg2]) 
+            if ((D_800BCD3C[arg2] - 2) < D_800A97D4[arg2])
             {
                 D_801E7570[arg2] = D_800BCD3C[arg2] - 5;
-            } 
-            else 
+            }
+            else
             {
                 while (D_800A97D4[arg2] - D_801E7570[arg2] >= 4)
                 {
                     D_801E7570[arg2]++;
                 }
-                while (D_800A97D4[arg2] - 1 < D_801E7570[arg2]) 
+
+                while (D_800A97D4[arg2] - 1 < D_801E7570[arg2])
                 {
                     D_801E7570[arg2]--;
                 }
             }
         }
-        if (D_801E7570[arg2] != D_801E7574[arg2]) 
+
+        if (D_801E7570[arg2] != D_801E7574[arg2])
         {
             D_801E7514[arg2] = 1;
         }
@@ -267,18 +278,22 @@ void func_801E3304(s8* arg0, s32 arg1, s32 arg2) // 0x801E3304
     {
         case 1:
             D_801E76D2[arg2] = 0;
-            if (g_GameWork.gameState_594 == 16) 
+
+            if (g_GameWork.gameState_594 == 16)
             {
                 func_801E43C8(arg2);
             }
+
             break;
-        
+
         case 3:
             D_801E76D2[arg2] = 1;
-            for (i = 0; i < 165; i++) 
+
+            for (i = 0; i < 165; i++)
             {
                 D_801E7584[i + (arg2 * 165)] = 0;
             }
+
             D_801E7570[arg2] = NO_VALUE;
             break;
 
@@ -287,22 +302,24 @@ void func_801E3304(s8* arg0, s32 arg1, s32 arg2) // 0x801E3304
         case 9:
         case 10:
             D_801E76D2[arg2] = 0;
-            if (arg1 == 0) 
+
+            if (arg1 == 0)
             {
                 Gfx_SavesTransparentBgDraw(arg2, D_800BCD3C[arg2], D_800A97D4[arg2], D_801E7578[arg2]);
             }
+
             break;
     }
 
-    if ((arg1 < D_801E7570[arg2]) || ((D_801E7570[arg2] + 4) < arg1)) 
+    if ((arg1 < D_801E7570[arg2]) || ((D_801E7570[arg2] + 4) < arg1))
     {
         return;
     }
-    
+
     D_801E7514[arg2] = 1;
     Gfx_StringSetColor(ColorId_White);
-        
-    switch (temp_s2) 
+
+    switch (temp_s2)
     {
         case 0:
         case 1:
@@ -310,51 +327,47 @@ void func_801E3304(s8* arg0, s32 arg1, s32 arg2) // 0x801E3304
         case 3:
             Gfx_StringSetPosition((arg2 * 150) + 22, 82);
             break;
-        
+
         case 5:
         case 6:
             Gfx_StringSetPosition((arg2 * 150) + 38, 90);
             break;
-        
+
         case 4:
             Gfx_StringSetPosition((arg2 * 150) + 32, 90);
             break;
-        
+
         default:
             Gfx_StringSetPosition((arg2 * 150) + 6, (D_801E7518[arg2] * 20) + 53);
             break;
     }
-    
+
     Gfx_StringDraw(D_801E2830[temp_s2], 50);
-        
-    if (temp_s2 < 7) 
+
+    if (temp_s2 < 7)
     {
         func_801E52D8(arg2, temp_s2);
     }
-        
+
     D_801E7518[arg2]++;
-        
+
     if (D_801E7518[arg2] == 5 || arg1 == D_800BCD3C[arg2] - 1)
     {
-        if (D_801E7564[arg2] == 0) 
+        if (D_801E7564[arg2] == 0)
         {
             D_801E7564[arg2] = 1;
         }
-        
+
         D_801E7514[arg2] = 0;
-        
-        if (temp_s2 != 3) 
+
+        if (temp_s2 != 3)
         {
             D_801E7518[arg2] = 0;
         }
     }
-    
 }
-#else
-INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E3304); // 0x801E3910
-#endif
 
-#ifdef NON_MATCHING
+// `arg0` = what it's doing. Formatting, saving, or loading.
 void func_801E3910(s32 arg0, s32 arg1) // 0x801E3910
 {
     s32 strIdx;
@@ -374,15 +387,15 @@ void func_801E3910(s32 arg0, s32 arg1) // 0x801E3910
         "\x07""Finished_loading.",
         "\x07Now_loading..."
     };
-	
+
     s16 xOffsets[] =
     {
-        0x0000, 0x010C,
-        0x008D, 0x006B,
-        0x00DF, 0x0088,
-        0x0077, 0x00B6,
-        0x00AA, 0x0075,
-        0x008F, 0x0072
+        0, 268,
+        141, 107,
+        223, 136,
+        119, 182,
+        170, 117,
+        143, 114
     };
 
     switch (arg0)
@@ -518,17 +531,252 @@ void func_801E3910(s32 arg0, s32 arg1) // 0x801E3910
             break;
     }
 }
-#else
-INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E3910); // 0x801E3910
-#endif
 
-INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E3C44); // 0x801E3C44
+void func_801E3C44(s32 arg0, s32 arg1) // 0x801E3C44
+{
+    GsOT*     ot;
+    s8        color;
+    u32       time;
+    POLY_F4*  poly;
 
-INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E3E78); // 0x801E3E78
+    char* D_801E2A3C[] =
+    {
+        "\x07Is_it_OK_to_overwrite?",
+        "\x07Is_it_OK_to_format?",
+        "\x07Yes__________No"
+    };
 
-INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", Gfx_SelectedMemBarDraw); // 0x801E4010
+    u8 xOffsets[] =
+    {
+        180, 154
+    };
 
-INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E43C8); // 0x801E43C8
+    D_801E76D0 = 0;
+    time       = (u8)g_SysWork.timer_1C & 0x3F;
+    ot         = &g_ObjectTable1[g_ObjectTableIdx];
+
+    switch (D_801E750C)
+    {
+        case 0:
+            D_801E7510 = 0;
+            D_801E7558 = arg0 != 0;
+            D_801E750C = 1;
+
+        case 1:
+            Gfx_StringSetPosition(160 - (xOffsets[arg0] / 2), 178);
+            Gfx_StringDraw(D_801E2A3C[arg0], 99);
+            Gfx_StringSetPosition(0x68, 0xC4);
+            Gfx_StringDraw("\x07Yes__________No", 99);
+
+            poly = (POLY_F4*)GsOUT_PACKET_P;
+            setlen(poly, 5);
+            setcode(poly, 0x2A);
+
+            if (time < 32)
+            {
+                color = (time * 2) + 32;
+                setRGB0(poly, color, color, 32);
+            }
+            else
+            {
+                color = 96 - ((time - 32) * 2);
+                setRGB0(poly, color, color, 32);
+            }
+
+            if (arg1 != 0)
+            {
+                setXY4(poly, -66, 82, -66, 98, -18, 82, -18, 98);
+            }
+            else
+            {
+                setXY4(poly, 18, 82, 18, 98, 66, 82, 66, 98);
+            }
+
+            GsOUT_PACKET_P = (u8*)poly + sizeof(POLY_F4);
+            addPrim((u8*)ot->org + 0x1C, poly);
+
+            func_80052088(0, 0, 7, 1);
+            break;
+    }
+}
+
+void func_801E3E78() // 0x801E3E78
+{
+    GsOT*    ot;
+    s32      temp_s0;
+    s32      sin;
+    s8       color;
+    u32      temp_s1;
+    POLY_F4* poly;
+
+    ot      = &g_ObjectTable1[g_ObjectTableIdx];
+    temp_s0 = ~D_801E76CE[0] == 0;
+    temp_s1 = D_801E76CE[temp_s0] - D_801E7570[temp_s0];
+
+    if (temp_s1 < 5U)
+    {
+        sin = shRsin((D_801E76D4 << 0xA) / 40);
+        poly    = (POLY_F4*)GsOUT_PACKET_P;
+        setlen(poly, 5);
+        setcode(poly, 0x2A);
+
+        color = ~FP_FROM(sin * 0xFF, Q12_SHIFT);
+        setRGB0(poly, color, color, color);
+
+        setXY4(poly,
+               temp_s0 * 150 - 130, temp_s1 * 20 - 62,
+               temp_s0 * 150 - 130, temp_s1 * 20 - 43,
+               temp_s0 * 150 - 11, temp_s1 * 20 - 62,
+               temp_s0 * 150 - 11, temp_s1 * 20 - 43);
+
+        GsOUT_PACKET_P = (u8*)poly + sizeof(POLY_F4);
+        addPrim((u8*)ot->org + 0x18, poly);
+
+        func_80052088(0, 0, 6, 1);
+    }
+}
+
+void Gfx_SelectedMemBarDraw() // 0x801E4010
+{
+    s_801E2A98 D_801E2A48[5][2] =
+    {
+        {
+            {{-107, -88}, {-146, -88}},
+            {{-107, -87}, {-146, -87}},
+        },
+        {
+            {{-42, -88}, {-2, -88}},
+            {{-42, -87}, {-2, -87}},
+        },
+        {
+            {{-146, -88}, {-146, 42}},
+            {{-145, -87}, {-145, 41}},
+        },
+        {
+            {{-2, -88}, {-2, 42}},
+            {{-3, -87}, {-3, 41}},
+        },
+        {
+            {{-146, 42}, {-2, 42}},
+            {{-145, 41}, {-3, 41}},
+        }
+    };
+
+    s_801E2A48 D_801E2A98[5][2] =
+    {
+        {
+            {{-106, -88}, {-106, -92}, {-146, -88}, {-150, -92}},
+            {{-106, -87}, {-106, -83}, {-146, -87}, {-142, -83}},
+        },
+        {
+            {{-42, -88}, {-42, -92}, {-2, -88}, {2, -92}},
+            {{-42, -87}, {-42, -83}, {-2, -87}, {-6, -83}},
+        },
+        {
+            {{-146, -88}, {-150, -92}, {-146, 42}, {-150, 46}},
+            {{-145, -87}, {-141, -83}, {-145, 41}, {-141, 37}},
+        },
+        {
+            {{-2, -88}, {2, -92}, {-2, 42}, {2, 46}},
+            {{-3, -87}, {-7, -83}, {-3, 41}, {-7, 37}},
+        },
+        {
+            {{-146, 42}, {-150, 46}, {-2, 42}, {2, 46}},
+            {{-145, 41}, {-141, 37}, {-3, 41}, {-7, 37}},
+        }
+    };
+
+    GsOT*    ot;
+    s32      i;
+    s32      j;
+    LINE_F2* line;
+    POLY_G4* poly;
+
+    ot = &g_ObjectTable1[g_ObjectTableIdx];
+
+    for (i = 0; i < 2; i++)
+    {
+        for (j = 0; j < 5; j++)
+        {
+            line = (LINE_F2*)GsOUT_PACKET_P;
+            setLineF2(line);
+            setRGB0(line, 0, 0xFF, 0);
+
+            setXY2(line,
+                   D_801E2A48[j][i].field_0.vx + D_800A97D6 * 150, D_801E2A48[j][i].field_0.vy,
+                   D_801E2A48[j][i].field_4.vx + D_800A97D6 * 150, D_801E2A48[j][i].field_4.vy);
+
+            addPrim((u8*)ot->org + 0x1C, line);
+            GsOUT_PACKET_P = (u8*)line + sizeof(LINE_F2);
+        }
+    }
+
+    for (i = 0; i < 2; i++)
+    {
+        for (j = 0; j < 5; j++)
+        {
+            poly = (POLY_G4*)GsOUT_PACKET_P;
+            setlen(poly, 8);
+            setcode(poly, 0x3A);
+
+            setRGB0(poly, 0, 0x80, 0);
+            setRGB1(poly, 0, 0, 0);
+            setRGB2(poly, 0, 0x80, 0);
+            setRGB3(poly, 0, 0, 0);
+
+            setXY4(poly,
+                   D_801E2A98[j][i].field_0.vx + D_800A97D6 * 150, D_801E2A98[j][i].field_0.vy,
+                   D_801E2A98[j][i].field_4.vx + D_800A97D6 * 150, D_801E2A98[j][i].field_4.vy,
+                   D_801E2A98[j][i].field_8.vx + D_800A97D6 * 150, D_801E2A98[j][i].field_8.vy,
+                   D_801E2A98[j][i].field_C.vx + D_800A97D6 * 150, D_801E2A98[j][i].field_C.vy);
+
+            addPrim((u8*)ot->org + 0x1C, poly);
+            GsOUT_PACKET_P = (u8*)poly + sizeof(POLY_G4);
+        }
+    }
+
+    func_80052088(0, 0, 7, 1);
+}
+
+void func_801E43C8(s32 arg0) // 0x801E43C8
+{
+    GsOT*    ot;
+    s16      time;
+    s32      temp;
+    s8       color;
+    POLY_F4* poly;
+
+    temp = ((u8)g_SysWork.timer_1C) & 0x3F;
+    time = temp;
+    ot   = &g_ObjectTable1[g_ObjectTableIdx];
+
+    if (D_800A97D6 == arg0)
+    {
+        poly = (POLY_F4*)GsOUT_PACKET_P;
+        setlen(poly, 5);
+        setcode(poly, 0x2A);
+
+        if ((u16)time < 32)
+        {
+            color = (time * 2) + 32;
+            setRGB0(poly, color, color, 32);
+        }
+        else
+        {
+            color = 96 - ((time - 32) * 2);
+            setRGB0(poly, color, color, 32);
+        }
+
+        setXY4(poly,
+               arg0 * 150 - 142, -35, arg0 * 150 - 142, 2,
+               arg0 * 150 - 6, -35, arg0 * 150 - 6, 2);
+
+        GsOUT_PACKET_P = (u8*)poly + sizeof(POLY_F4);
+        addPrim((u8*)ot->org + 0x1C, poly);
+
+        func_80052088(0, 0, 7, 1);
+    }
+}
 
 INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", Gfx_SavesTransparentBgDraw); // 0x801E451C
 
@@ -796,9 +1044,9 @@ void func_801E7244() // 0x801E7244
     }
 }
 
-void func_801E72DC() // 0x801E72DC
+void func_801E72DC(s32 arg0, s32 arg1) // 0x801E72DC
 {
-    func_801E3C44();
+    func_801E3C44(arg0, arg1);
 }
 
 void GameState_DeathLoadScreen_Update() // 0x801E72FC

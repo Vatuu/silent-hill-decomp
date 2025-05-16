@@ -16,14 +16,23 @@ typedef struct
 
 typedef struct
 {
-    u8 field_0[25];
-} s_801E2728;
+    DVECTOR field_0;
+    DVECTOR field_4;
+} s_func_801E5898;
 
 typedef struct
 {
     DVECTOR field_0;
     DVECTOR field_4;
-} s_func_801E5898;
+} s_801E2A98;
+
+typedef struct
+{
+    DVECTOR field_0;
+    DVECTOR field_4;
+    DVECTOR field_8;
+    DVECTOR field_C;
+} s_801E2A48;
 
 extern s8 D_800A97D7;
 
@@ -37,7 +46,7 @@ extern u8 D_800BCD3C[];
 
 extern s8 D_800BCD39;
 
-extern s_801E2728 D_801E2728; // Probably an array instead.
+extern u8 D_800BCD3C[];
 
 extern char* D_801E74A8[];
 
@@ -58,6 +67,8 @@ extern void (*D_801E7524[])(); // func table
 extern void (*D_801E7544[])(); // func table
 
 extern s32 D_801E7554;
+
+extern s32 D_801E7558;
 
 extern s32 D_801E7564[MEMORY_CARD_SLOT_COUNT];
 
