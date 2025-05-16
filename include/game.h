@@ -630,7 +630,11 @@ typedef struct _SubCharacter
     s16 field_DA;
     s16 field_DC;
     s16 field_DE;
-    s32 flags_E0;
+
+    s32 unk_E0 : 8;
+    s32 field_E0_8 : 4;
+    s32 unk_E0_12 : 20;
+
     s32 properties_E4[CHARA_PROPERTY_COUNT_MAX]; // TODO: Integrate as `u_Property`.
     s8  unk_10C;
     u8  field_10D;

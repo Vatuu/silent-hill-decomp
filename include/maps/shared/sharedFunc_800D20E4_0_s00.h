@@ -50,7 +50,7 @@ void sharedFunc_800D20E4_0_s00()
     chara->field_D6 = 0;
     sysWork->player_4C.chara_0.field_11C |= 0x30;
     chara->field_3E |= 8;
-    chara->flags_E0 = ((chara->flags_E0 & ~0xF00) | (1 << 10));
+    chara->field_E0_8 = 4;
 
     if (sysWork->field_38.field_F < 32)
     {

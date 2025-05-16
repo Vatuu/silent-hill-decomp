@@ -37,7 +37,7 @@ void sharedFunc_800D63D0_0_s00(s_SubCharacter* chara, s32 arg1)
         if (g_SysWork.field_2353 != func_8005C7D0(chara, moveSpeed))
         {
             chara->health_B0 = NO_VALUE;
-            chara->flags_E0 &= ~((1 << 8) | (1 << 9) | (1 << 10) | (1 << 11));
+            chara->field_E0_8 = 0;
         }
     }
 
