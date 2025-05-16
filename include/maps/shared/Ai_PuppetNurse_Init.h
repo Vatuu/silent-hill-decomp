@@ -6,16 +6,16 @@ static inline void ModelAnim_UpdateFieldC(s_ModelAnim* anim, s32 fieldCValue)
 
 void Ai_PuppetNurse_Init(s_SubCharacter* chara, s32 isPuppetDoctor)
 {
-    extern s_800D5710 sharedData_800D5710_3_s03[4];
+    extern s_800D5710 sharedData_800D5710_3_s03[4]; // Likely static.
 
-    s32             charaStage;
+    s32             charaState;
     s32             charStatIdx;
     s32             charPalette;
     s32             modelVariation;
     s32             stateStepDiv3;
     s_SubCharacter* chara2;
 
-    chara2 = chara; // TODO: not sure why this is needed, possibly an inline here somewhere?
+    chara2 = chara; // TODO: Not sure why this is needed, possibly an inline here somewhere?
 
     chara->moveSpeed_38                = 0;
     chara->field_E0_8                  = 3;
@@ -35,10 +35,10 @@ void Ai_PuppetNurse_Init(s_SubCharacter* chara, s32 isPuppetDoctor)
     chara->properties_E4.npc.field_108 = chara->position_18.vx;
     chara->properties_E4.npc.field_10C = chara->position_18.vz;
 
-    stateStepDiv3  = (chara->model_0.stateStep_3 - 1) / 3;
     charPalette    = (chara->model_0.stateStep_3 - 1) % 3;
+    stateStepDiv3  = (chara->model_0.stateStep_3 - 1) / 3;
     modelVariation = stateStepDiv3 % 3;
-    charaStage     = stateStepDiv3 / 3;
+    charaState     = stateStepDiv3 / 3;
 
     chara->properties_E4.npc.field_11A = 0;
 
@@ -62,7 +62,7 @@ void Ai_PuppetNurse_Init(s_SubCharacter* chara, s32 isPuppetDoctor)
 
     chara->model_0.paletteIdx_1 = charPalette;
 
-    switch (charaStage)
+    switch (charaState)
     {
         case 0:
             chara->model_0.state_2               = 11;
