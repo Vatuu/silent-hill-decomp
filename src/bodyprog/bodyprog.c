@@ -350,7 +350,7 @@ void func_800303E4()
 {
     InitCARD(0);
     StartCARD();
-    D_800B5488 = NO_VALUE;
+    D_800B5488.field_0 = NO_VALUE;
 }
 
 void func_80030414() // 0x80030414
@@ -363,6 +363,7 @@ void func_80030414() // 0x80030414
 void func_80030444() // 0x80030444
 {
     s_800B5488* var = &D_800B5488;
+
     var->field_4 = 0;
     var->field_8 = 0;
     var->field_C = 0;
@@ -382,7 +383,30 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80030668);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_800306C8);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80030734);
+s32 func_80030734() // 0x80030734
+{
+    if (TestEvent(D_800B5488.field_14) == 1)
+    {
+        return 1 << 15;
+    }
+
+    if (TestEvent(D_800B5488.field_18) == 1)
+    {
+        return 1 << 8;
+    }
+
+    if (TestEvent(D_800B5488.field_1C) == 1)
+    {
+        return 1 << 13;
+    }
+
+    if (TestEvent(D_800B5488.field_10) == 1)
+    {
+        return 1 << 2;
+    }
+
+    return 0;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_800307BC);
 

@@ -196,10 +196,20 @@ typedef struct
 
 typedef struct
 {
-    s32 unk_0;
+    s32 field_0;
     s32 field_4;
     s32 field_8;
     s32 field_C;
+    s32 field_10;
+    s32 field_14;
+    s32 field_18;
+    s32 field_1C;
+    s32 field_20;
+    s32 field_24;
+    s32 field_28;
+    s32 field_2C;
+    s32 field_30;
+    s32 field_34;
 } s_800B5488;
 
 typedef struct
@@ -535,6 +545,19 @@ typedef struct _s_func_800699F8
 } s_func_800699F8;
 STATIC_ASSERT_SIZEOF(s_func_800699F8, 12);
 
+typedef struct
+{
+    s32 field_0;
+    s32 field_4;
+    s32 field_8;
+    s32 field_C;
+    s16 field_10;
+    s16 field_12;
+    s8  field_14;
+    s8  unk_15[3];
+    s32 field_18;
+} s_func_8006A178;
+
 /** @brief Used for normal credits screen. */
 typedef struct
 {
@@ -754,7 +777,7 @@ extern s_800B55E8 D_800B4580[];
 
 extern s32 D_800B5480;
 
-extern s_800B5488* D_800B5488; // Index or state, pointer to struct. See `func_80030444`.
+extern s_800B5488 D_800B5488;
 
 extern s32 D_800B548C;
 
@@ -1704,6 +1727,8 @@ void func_80066E40();
 void func_80066E7C();
 
 void func_800699F8(s_func_800699F8* arg0, s32 arg1, s32 arg2);
+
+void func_8006A178(s_func_8006A178* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 
 s32 func_8006A3B4(s32 arg0, s32 arg1, s32 arg2);
 
