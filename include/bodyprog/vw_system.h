@@ -315,8 +315,6 @@ s32  vwVectorToAngle(SVECTOR* ang, SVECTOR* vec);
 /** Performs linear interpolation between Y values based on an input X within the given range. */
 s32 vwOresenHokan(s32* y_ary, s32 y_suu, s32 input_x, s32 min_x, s32 max_x);
 
-s32 Math_MulFixed(s32 x, s32 y, s8 fractionalBits);
-
 // vc_main.c
 
 void vcInitVCSystem(VC_ROAD_DATA* vc_road_ary_list);
