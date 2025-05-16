@@ -399,7 +399,6 @@ void Settings_MainScreen() // 0x801E3770
     #define SOUND_VOL_STEP 8
 
     s32               sdCmd;
-    s32               newVolume;
     s32               currentVolume;
 
     Gfx_OptionsStringsMainDraw();
@@ -574,11 +573,10 @@ void Settings_MainScreen() // 0x801E3770
                 currentVolume = currentVolume - SOUND_VOL_STEP;
             }
 
-            currentVolume = currentVolume < 0 ? 0 : ((currentVolume > OPT_SOUND_VOLUME_MAX) ? OPT_SOUND_VOLUME_MAX : currentVolume);
-            newVolume     = currentVolume;
+            currentVolume = CLAMP(currentVolume, 0, OPT_SOUND_VOLUME_MAX);
 
-            Sd_SetVolume(OPT_SOUND_VOLUME_MAX, newVolume, g_GameWork.config_0.optVolumeSe_20);
-            g_GameWork.config_0.optVolumeBgm_1F = newVolume;
+            Sd_SetVolume(OPT_SOUND_VOLUME_MAX, currentVolume, g_GameWork.config_0.optVolumeSe_20);
+            g_GameWork.config_0.optVolumeBgm_1F = currentVolume;
             break;
 
         case 8:
@@ -602,11 +600,10 @@ void Settings_MainScreen() // 0x801E3770
                 currentVolume = currentVolume - SOUND_VOL_STEP;
             }
 
-            currentVolume = currentVolume < 0 ? 0 : ((currentVolume > OPT_SOUND_VOLUME_MAX) ? OPT_SOUND_VOLUME_MAX : currentVolume);
-            newVolume     = currentVolume;
+            currentVolume = CLAMP(currentVolume, 0, OPT_SOUND_VOLUME_MAX);
 
-            Sd_SetVolume(OPT_SOUND_VOLUME_MAX, newVolume, g_GameWork.config_0.optVolumeSe_20);
-            g_GameWork.config_0.optVolumeSe_20 = newVolume;
+            Sd_SetVolume(OPT_SOUND_VOLUME_MAX, currentVolume, g_GameWork.config_0.optVolumeSe_20);
+            g_GameWork.config_0.optVolumeSe_20 = currentVolume;
             break;
 
         default:
