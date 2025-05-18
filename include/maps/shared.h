@@ -30,6 +30,8 @@ extern s32 sharedData_800E3A20_0_s00;
 extern s32 sharedData_800E3A24_0_s00;
 extern s32 sharedData_800E3A28_0_s00;
 extern s32 sharedData_800E3A2C_0_s00;
+// This is set by `Ai_Stalker_Init`.
+extern s8 sharedData_800DA6C8_0_s00;
 
 s32 sharedFunc_800CBBBC_0_s00();
 
@@ -124,7 +126,7 @@ void sharedFunc_800D140C_1_s00(s_SubCharacter*, s32);
 
 void sharedFunc_800D1524_1_s00(s_SubCharacter*, s32, s32);
 
-void sharedFunc_800D16FC_1_s00(s_SubCharacter*);
+void Ai_LarvalStalker_Init(s_SubCharacter*);
 
 void sharedFunc_800D17BC_1_s00(s_SubCharacter*);
 

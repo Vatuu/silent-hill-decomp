@@ -4,7 +4,7 @@ void Ai_LarvalStalker_Update(s_SubCharacter* chara, s32 arg1, s32 arg2)
 
     if (chara->model_0.state_2 == 0)
     {
-        sharedFunc_800D16FC_1_s00(chara);
+        Ai_LarvalStalker_Init(chara);
     }
 
     sharedFunc_800D17BC_1_s00(chara);

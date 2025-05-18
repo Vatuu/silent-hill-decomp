@@ -1396,17 +1396,30 @@ void func_80037334() // 0x80037334
     g_SysWork.player_4C.chara_0.position_18.vy = sp10.chara_grnd_0;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80037388);
+void func_80037388() // 0x80037388
+{
+    volatile s32 v1;
+    s32 v2;
+    s32 i;
+    
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_800373CC);
+    v1 = v2;
+    for (i = 0; i < 5; i++) 
+    { 
+        D_800BCDC0[i] = NO_VALUE;
+        D_800BCD90[i] = 0;
+    } 
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_800378D4);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_800373CC); // 0x800373CC
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80037A4C);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_800378D4); // 0x800378D4
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80037C5C);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80037A4C); // 0x80037A4C
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80037DC4);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80037C5C); // 0x80037C5C
+
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80037DC4); // 0x80037DC4
 
 void func_80037E40(s_SubCharacter* arg0) // 0x80037E40
 {
@@ -2047,7 +2060,11 @@ void func_8003BCF4() // 0x8003BCF4
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003BD2C);
+// TODO: Remake this whenever we have further context of `D_8002500C`.
+s32 func_8003BD2C() // 0x8003BD2C
+{
+    return (D_800BCE18.field_0 - &D_8002500C) >> 2;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003BD48);
 

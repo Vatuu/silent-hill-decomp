@@ -89,7 +89,7 @@ INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04", sharedFunc_800D140C_1_s00
 
 INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04", sharedFunc_800D1524_1_s00); // 0x800D258C
 
-INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04", sharedFunc_800D16FC_1_s00); // 0x800D2764
+#include "maps/shared/Ai_LarvalStalker_Init.h" // 0x800D2764
 
 INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04", sharedFunc_800D17BC_1_s00); // 0x800D2824
 

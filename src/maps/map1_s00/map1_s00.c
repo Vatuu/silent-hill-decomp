@@ -101,7 +101,7 @@ INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", sharedFunc_800D140C_1_s00
 
 INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", sharedFunc_800D1524_1_s00); // 0x800D1524
 
-INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", sharedFunc_800D16FC_1_s00); // 0x800D16FC
+INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", Ai_LarvalStalker_Init); // 0x800D16FC
 
 INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", sharedFunc_800D17BC_1_s00); // 0x800D17BC
 
