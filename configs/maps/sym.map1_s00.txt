@@ -1,3 +1,4 @@
+sharedData_800DA6C8_0_s00 = 0x800DA6C8;
 sharedData_800CAB70_0_s00 = 0x800CAAA8; // type:s32
 sharedFunc_800CBBBC_0_s00 = 0x800CBC34; // type:func
 sharedFunc_800D01BC_0_s00 = 0x800CCF48; // type:func
@@ -20,7 +21,7 @@ Ai_LarvalStalker_Update = 0x800CF050; // type:func
 sharedFunc_800CF168_1_s00 = 0x800CF168; // type:func
 sharedFunc_800D140C_1_s00 = 0x800D140C; // type:func
 sharedFunc_800D1524_1_s00 = 0x800D1524; // type:func
-sharedFunc_800D16FC_1_s00 = 0x800D16FC; // type:func
+Ai_LarvalStalker_Init = 0x800D16FC; // type:func
 sharedFunc_800D17BC_1_s00 = 0x800D17BC; // type:func
 sharedFunc_800D1DBC_1_s00 = 0x800D1DBC; // type:func
 Ai_Stalker_Update = 0x800D24F8; // type:func

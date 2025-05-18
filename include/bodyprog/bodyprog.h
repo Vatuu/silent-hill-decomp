@@ -251,7 +251,7 @@ STATIC_ASSERT_SIZEOF(s_800BCDA8, 4);
 
 typedef struct
 {
-    s8                unk_0[4];
+    s32*              field_0;
     s8                field_4;
     u8                unk_5[3];
     s32               field_8;
@@ -622,6 +622,8 @@ typedef struct _AreaLoadParams
 
 extern s_FsImageDesc g_MainImg0; // 0x80022C74 - TODO: part of main exe, move to main/ headers?
 
+extern s32 D_8002500C; // Some sort of struct inside RODATA, likely a constant.
+
 extern s8* D_8002510C;
 
 /** "\x07PAUSED" string */
@@ -830,9 +832,13 @@ extern s8 D_800BCD78;
 
 extern s32 D_800BCD84;
 
+extern s32 D_800BCD90[];
+
 extern s_800BCDA8 D_800BCDA8[];
 
 extern s32 D_800BCDB0; // Type assumed.
+
+extern s32 D_800BCDC0[];
 
 extern u8 D_800BCDD4;
 
@@ -1038,6 +1044,10 @@ typedef struct _DemoWork
     u16                randSeed_7FC;
 } s_DemoWork;
 STATIC_ASSERT_SIZEOF(s_DemoWork, 2048);
+
+extern u8 D_800BCD30[];
+
+extern s8 D_800BCD38;
 
 /** @brief Per-frame demo data, stored inside MISC/PLAYXXXX.DAT files. */
 typedef struct _DemoFrameData
@@ -1816,6 +1826,8 @@ void func_8003708C(s16* ptr0, u16* ptr1);
 void func_80037124();
 
 void func_80037154();
+
+void func_80037388();
 
 void func_800373CC(s32);
 

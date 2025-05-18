@@ -39,8 +39,8 @@ void func_801E2D8C() // 0x801E2D8C
 
 void Gfx_SaveBackgroundDraw() // 0x801E2EBC
 {
-    s_func_801E5898 var;
-    s32             i;
+    s_801E2A98 var;
+    s32        i;
     
     DVECTOR posTable[] = 
     {
@@ -782,9 +782,119 @@ INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", Gfx_SavesTransparentBg
 
 INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", Gfx_SavesOutlineDraw); // 0x801E4D90
 
-INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E52D8); // 0x801E52D8
+// TODO: Rodata migration
+#ifdef NON_MATCHING
+void func_801E52D8(s32 arg0, s32 arg1) // 0x801E52D8
+{
+    s_801E2C8C D_801E2C8C[2] =
+    {
+        {
+            { 0xFF72, 0xFFDF }, { 0x0088, 0x0021 }, 0x00FF, 0x0000, 0x0000, 0x0000,
+        },
+        {
+            { 0xFF72, 0xFFDF }, { 0x0088, 0x0021 }, 0x0000, 0x00FF, 0x0000, 0x0000
+        }
+    };
 
-INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", Gfx_RectMemLoadDraw); // 0x801E54DC
+    s_801E2CAC D_801E2CAC =
+    { 
+        {
+            {{ 0xFF70, 0xFFDC }, { 0xFFFC, 0xFFDC }},
+            {{ 0xFF70, 0x0002 }, { 0xFFFC, 0x0002 }},
+            {{ 0xFF70, 0xFFDC }, { 0xFF70, 0x0002 }},
+            {{ 0xFFFC, 0xFFDC }, { 0xFFFC, 0x0002 }}
+        }    
+    };
+
+    s_801E2CCC D_801E2CCC =
+    {
+        {
+            {{ 0xFF70, 0xFFDC }, { 0xFF6C, 0xFFD8 }, { 0xFFFC, 0xFFDC }, { 0x0000, 0xFFD8 }},
+            {{ 0xFF70, 0x0002 }, { 0xFF6C, 0x0006 }, { 0xFFFC, 0x0002 }, { 0x0000, 0x0006 }},
+            {{ 0xFF70, 0xFFDC }, { 0xFF6C, 0xFFD8 }, { 0xFF70, 0x0002 }, { 0xFF6C, 0x0006 }},
+            {{ 0xFFFC, 0xFFDC }, { 0x0000, 0xFFD8 }, { 0xFFFC, 0x0002 }, { 0x0000, 0x0006 }}
+        }
+    };
+    
+    if (arg1 == 1 && g_GameWork.gameState_594 == GameState_Unk10) 
+    {
+        Gfx_RectMemLoadDraw(&D_801E2CAC, &D_801E2CCC, &D_801E2C8C[1], arg0);
+    } 
+    else 
+    {
+        Gfx_RectMemLoadDraw(&D_801E2CAC, &D_801E2CCC, &D_801E2C8C[0], arg0);
+    }
+}
+#else
+INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E52D8); // 0x801E52D8
+#endif
+
+void Gfx_RectMemLoadDraw(s_801E2CAC* arg0, s_801E2CCC* arg1, s_801E2C8C* arg2, s32 arg3) // 0x801E54DC
+{
+    GsOT*       ot;
+    s32         i;
+    s_801E2A98* temp;
+    LINE_F2*    line;
+    POLY_G4*    poly_g4;
+    POLY_F4*    poly_f4;
+    
+    ot = &g_ObjectTable1[g_ObjectTableIdx];
+    
+    for (i = 0; i < 4; i++)
+    {
+        line = (LINE_F2*)GsOUT_PACKET_P;
+        setLineF2(line);
+        setRGB0(line, arg2->field_8, arg2->field_A, arg2->field_C);
+        setXY2(line,
+            arg0->field_0[i].field_0.vx + arg3 * 0x96, arg0->field_0[i].field_0.vy,
+            arg0->field_0[i].field_4.vx + arg3 * 0x96, arg0->field_0[i].field_4.vy
+        );
+        addPrim((u8*)ot->org + 0x1C, line);
+        GsOUT_PACKET_P = (u8*)line + sizeof(LINE_F2);
+    }
+    
+    for (i = 0; i < 4; i++)
+    {
+        poly_g4 = (POLY_G4*)GsOUT_PACKET_P;
+        setlen(poly_g4, 8);
+        setcode(poly_g4, 0x3A);
+        setRGB0(poly_g4, arg2->field_8 / 2, arg2->field_A / 2, arg2->field_C / 2);
+        setRGB1(poly_g4, 0, 0, 0);
+        setRGB2(poly_g4, arg2->field_8 / 2, arg2->field_A / 2, arg2->field_C / 2);
+        setRGB3(poly_g4, 0, 0, 0);
+
+        temp = (s_801E2A98*)&arg1->field_0[i].field_8;
+
+        setXY4(poly_g4,
+            arg1->field_0[i].field_0.vx + arg3 * 0x96, arg1->field_0[i].field_0.vy,
+            arg1->field_0[i].field_4.vx + arg3 * 0x96, arg1->field_0[i].field_4.vy,
+            arg1->field_0[i].field_8.vx + arg3 * 0x96, temp->field_0.vy,
+            temp->field_4.vx + arg3 * 0x96, temp->field_4.vy
+        );
+
+        addPrim((u8*)ot->org + 0x20, poly_g4);
+        GsOUT_PACKET_P = (u8*)poly_g4 + sizeof(POLY_G4);
+    }
+    
+    func_80052088(0, 0, 5, 1);
+    
+    poly_f4 = (POLY_F4*)GsOUT_PACKET_P;
+    setlen(poly_f4, 5);
+    setcode(poly_f4, 0x2A);
+    setRGB0(poly_f4, 0x30, 0x30, 0x30);
+
+    setXY4(poly_f4,
+        arg2->field_0.vx + arg3 * 0x96, arg2->field_0.vy,
+        arg2->field_0.vx + arg3 * 0x96, arg2->field_0.vy + arg2->field_4.vy,
+        arg2->field_0.vx + arg2->field_4.vx + arg3 * 0x96, arg2->field_0.vy,
+        arg2->field_0.vx + arg2->field_4.vx + arg3 * 0x96, arg2->field_0.vy + arg2->field_4.vy
+    );
+    
+    addPrim((u8*)ot->org + 0x20, poly_f4);
+    GsOUT_PACKET_P = (u8*)poly_f4 + sizeof(POLY_F4);
+    
+    func_80052088(0, 0, 8, 1);
+}
 
 INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", Gfx_RectSaveInfoDraw); // 0x801E5898
 
@@ -845,7 +955,196 @@ void func_801E63C0() // 0x801E63C0
     g_GameWork.gameStateStep_598[2] = 0;
 }
 
+/**
+D_800BCD2C seems to be supposed to be a pointer struct, but it
+was defined previously as a pointer byte (s8*) and defining it
+as a pointer struct causes a big missmatch in `func_800C9874`.
+
+Alternatively declaring it as a pointer int (s32*) doesn't
+help too much.
+*/
+#ifdef NON_MATCHING
+void func_801E649C() // 0x801E649C
+{
+    s32             step = g_GameWork.gameStateStep_598[1];
+    s_UnkSaveload0* ptr;
+
+    switch (step) 
+    {
+        case 0:
+            if (func_80033548() == 0) 
+            {
+                break;
+            }
+            
+            if (D_800BCD30[0] != 0 && D_800BCD30[1] != 0 && 
+                (g_ControllerPtrConst->btns_new_10 & (Pad_LStickRight | Pad_LStickLeft))) 
+            {
+                D_800A97D6 ^= 1;
+                Sd_EngineCmd(0x519);
+            }
+            
+            if (D_800BCD3A > 0) 
+            {
+                D_801E753C = 0;
+                D_801E7540 = 0;
+                D_800BCD2C = (s_UnkSaveload0*)((D_800A97D6 * 0xA50) + BOOT_ADDR_0);
+                
+                if (g_ControllerPtrConst->field_18 & Pad_LStickUp) 
+                {
+                    if (D_800A97D4[D_800A97D6] != 0) 
+                    {
+                        D_800A97D4[D_800A97D6]--;
+                        Sd_EngineCmd(0x519);
+                    }
+                }
+                
+                if (g_ControllerPtrConst->field_18 & Pad_LStickDown) 
+                {
+                    if (D_800A97D4[D_800A97D6] < D_800BCD30[D_800A97D6] - 1)
+                    {
+                        D_800A97D4[D_800A97D6]++;
+                        Sd_EngineCmd(0x519);
+                    }
+                }
+                
+                ptr        = &D_800BCD2C[D_800A97D4[D_800A97D6]];
+                D_800BCD2C = ptr;
+                D_800BCD40 = ptr->field_5;
+                D_800BCD3F = ptr->field_6;
+                D_800BCD3E = ptr->field_7;
+                
+                if (D_800BCD38 == 2) 
+                {
+                    if (ptr->field_0 == 0x7B70)
+                    {
+                        D_801E753C = 1;
+                    }
+                    
+                    if ((u16)ptr->field_0 - 1 < 0x797B) 
+                    {
+                        D_801E7540 = 1;
+                    }
+                }
+                
+                if (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerBinds_0.enter) 
+                {
+                    if ((D_801E753C | D_801E7540) != 0) 
+                    {
+                        D_801E755C                       = 0;
+                        g_GameWork.gameStateStep_598[2]  = 0;
+                        g_GameWork.gameStateStep_598[1] += 1;
+                    }
+                    else
+                    {
+                        g_SysWork.timer_20               = 0;
+                        g_GameWork.gameStateStep_598[1]  = 0;
+                        g_GameWork.gameStateStep_598[2]  = 0;
+                        g_GameWork.gameStateStep_598[0] += D_800BCD38;
+                    }
+                    Sd_EngineCmd(0x51B);
+                }
+            }
+            
+            if (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerBinds_0.cancel) 
+            {
+                D_800BCD0C                      = 3;
+                g_GameWork.gameStateStep_598[1] = 2;
+                g_GameWork.gameStateStep_598[2] = 0;
+                
+                Sd_EngineCmd(0x51A);
+                
+                if (g_GameWork.gameStatePrev_590 == GameState_StatusScreen) 
+                {
+                    Sd_EngineCmd(0x17);
+                    GameFs_TitleGfxLoad();
+                    GameFs_StreamBinSeek();
+                }
+            }
+            break;
+        
+        case 1:
+            if (func_80033548() == 0) 
+            {
+                break;
+            }
+
+            D_801E7520 = 0;
+            
+            if (g_ControllerPtrConst->btns_new_10 & Pad_LStickLeft) 
+            {
+                D_801E755C = step;
+                Sd_EngineCmd(0x519);
+            }
+            
+            if (g_ControllerPtrConst->btns_new_10 & Pad_LStickRight) 
+            {
+                D_801E755C = 0;
+                Sd_EngineCmd(0x519);
+            }
+            
+            if (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerBinds_0.enter) 
+            {
+                if (D_801E755C == 0) 
+                {
+                    g_GameWork.gameStateStep_598[0] = step;
+                    g_SysWork.timer_20              = 0;
+                    g_GameWork.gameStateStep_598[1] = 0;
+                    g_GameWork.gameStateStep_598[2] = 0;
+                }
+                else
+                {
+                    g_SysWork.timer_20              = 0;
+                    g_GameWork.gameStateStep_598[1] = 0;
+                    g_GameWork.gameStateStep_598[2] = 0;
+                    g_GameWork.gameStateStep_598[0] = D_801E7540 + 2;
+                }
+                Sd_EngineCmd(0x51B);
+            }
+            
+            if (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerBinds_0.cancel) 
+            {
+                g_GameWork.gameStateStep_598[1] = 0;
+                g_GameWork.gameStateStep_598[2] = 0;
+                Sd_EngineCmd(0x51A);
+            }
+            
+            func_801E72DC(D_801E753C, D_801E755C);
+            
+            break;
+        
+        case 2:
+            if ((D_800BCD0C & 7) == 5)
+            {
+                g_GameWork.field_58C = 0;
+                g_GameWork.field_58D = 0;
+                g_GameWork.field_58E = 0;
+                
+                Fs_QueueWaitForEmpty();
+                
+                if (g_GameWork.gameStatePrev_590 == GameState_StatusScreen)
+                {
+                    Game_StateSetNext(g_GameWork.gameStatePrev_590);
+                }
+                else
+                {
+                    if (D_800BCD38 == step)
+                    {
+                        func_8002E830();
+                        Game_StateSetNext(GameState_InGame);
+                    }
+                    else
+                    {
+                        Game_StateSetNext(GameState_MainMenu);
+                    }
+                }
+            }
+            break;
+    }
+}
+#else
 INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E649C); // 0x801E649C
+#endif
 
 void func_801E69E8() // 0x801E69E8
 {
