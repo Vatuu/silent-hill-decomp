@@ -1,4 +1,4 @@
-void sharedFunc_800D01D0_3_s03(s_SubCharacter* arg0)
+void Ai_PuppetNurse_Control(s_SubCharacter* arg0)
 {
     switch (arg0->model_0.state_2)
     {

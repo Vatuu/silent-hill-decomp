@@ -59,6 +59,6 @@ segments:
       - [0x10B8, .rodata, map3_s04_2]
       - [0x10EC, rodata]
       - [0x1E04, c, map3_s04]
-      - [0x4D18, c, map3_s04_2]
+      - [0x3FFC, c, map3_s04_2]
       - [0xAE90, data, map3_s04]
   - [0xD900]

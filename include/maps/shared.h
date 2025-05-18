@@ -135,7 +135,7 @@ void sharedFunc_800D1DBC_1_s00(s_SubCharacter*);
 // MAP3_S03 puppet nurse/doctor funcs
 void sharedFunc_800CDA88_3_s03(s_SubCharacter*);
 
-void sharedFunc_800CDAB8_3_s03(s_SubCharacter* chara, s32 arg1, s32 arg2);
+void Ai_PuppetNurse_UpdateMain(s_SubCharacter* chara, s32 arg1, s32 arg2);
 
 void func_800CDB5C(s_SubCharacter*, s32);
 
@@ -169,7 +169,7 @@ void sharedFunc_800CFDD4_3_s03(s_SubCharacter*);
 
 void sharedFunc_800D0110_3_s03(s_SubCharacter*);
 
-void sharedFunc_800D01D0_3_s03(s_SubCharacter* chara);
+void Ai_PuppetNurse_Control(s_SubCharacter* chara);
 
 void sharedFunc_800D02E4_3_s03(s_SubCharacter*, s32);
 

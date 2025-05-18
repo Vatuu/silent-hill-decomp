@@ -59,6 +59,6 @@ segments:
       - [0x1148, .rodata, map3_s03_2]
       - [0x117C, rodata]
       - [0x1EE8, c, map3_s03]
-      - [0x4E54, c, map3_s03_2]
+      - [0x4138, c, map3_s03_2]
       - [0xB910, data, map3_s03]
   - [0xF000]
