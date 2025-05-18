@@ -131,7 +131,7 @@ s32 func_8004C45C() // 0x8004C45C
         }
 
         // Game completed with some condition met?
-        if (g_SaveGamePtr->field_24A != 0 && (g_SaveGamePtr->field_24B & (1 << 4)) != 0)
+        if (g_SaveGamePtr->clearGameCount_24A != 0 && (g_SaveGamePtr->field_24B & (1 << 4)) != 0)
         {
             return 1;
         }
@@ -970,8 +970,8 @@ static inline SaveGame_PlayerReset(s_ShSaveGame* save)
     save->runDistance_254 = 0;
     save->walkDistance_258 = 0;
     save->pickedUpItemCount_23C = 0;
-    save->field_24A = 0;
-    save->enemyKillCountPacked_25C &= ~6; // Redo to `rangedKillCount : 8; meleeKillCount : 16; pad : 8` or `u8 pad; u16 meleeKillCount; s8 rangedKillCount;`.
+    save->clearGameCount_24A = 0;
+    save->add290Hours_25C_1 = 0;
 }
 
 void Game_SaveGameResetPlayer() // 0x8007E530
