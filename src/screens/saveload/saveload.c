@@ -831,12 +831,12 @@ INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E52D8); // 0x8
 
 void Gfx_RectMemLoadDraw(s_801E2CAC* arg0, s_801E2CCC* arg1, s_801E2C8C* arg2, s32 arg3) // 0x801E54DC
 {
-    GsOT* ot;
-    s32 i;
+    GsOT*       ot;
+    s32         i;
     s_801E2A98* temp;
-    LINE_F2* line;
-    POLY_G4* poly_g4;
-    POLY_F4* poly_f4;
+    LINE_F2*    line;
+    POLY_G4*    poly_g4;
+    POLY_F4*    poly_f4;
     
     ot = &g_ObjectTable1[g_ObjectTableIdx];
     
@@ -964,9 +964,9 @@ Alternatively declaring it as a pointer int (s32*) doesn't
 help too much.
 */
 #ifdef NON_MATCHING
-void func_801E649C()
+void func_801E649C() // 0x801E649C
 {
-    s32				step = g_GameWork.gameStateStep_598[1];
+    s32             step = g_GameWork.gameStateStep_598[1];
     s_UnkSaveload0* ptr;
 
     switch (step) 
@@ -1008,7 +1008,7 @@ void func_801E649C()
                     }
                 }
                 
-                ptr		   = &D_800BCD2C[D_800A97D4[D_800A97D6]];
+                ptr        = &D_800BCD2C[D_800A97D4[D_800A97D6]];
                 D_800BCD2C = ptr;
                 D_800BCD40 = ptr->field_5;
                 D_800BCD3F = ptr->field_6;
@@ -1031,13 +1031,13 @@ void func_801E649C()
                 {
                     if ((D_801E753C | D_801E7540) != 0) 
                     {
-                        D_801E755C 						 = 0;
+                        D_801E755C                       = 0;
                         g_GameWork.gameStateStep_598[2]  = 0;
                         g_GameWork.gameStateStep_598[1] += 1;
                     }
                     else
                     {
-                        g_SysWork.timer_20 				 = 0;
+                        g_SysWork.timer_20               = 0;
                         g_GameWork.gameStateStep_598[1]  = 0;
                         g_GameWork.gameStateStep_598[2]  = 0;
                         g_GameWork.gameStateStep_598[0] += D_800BCD38;
@@ -1048,7 +1048,7 @@ void func_801E649C()
             
             if (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerBinds_0.cancel) 
             {
-                D_800BCD0C						= 3;
+                D_800BCD0C                      = 3;
                 g_GameWork.gameStateStep_598[1] = 2;
                 g_GameWork.gameStateStep_598[2] = 0;
                 
@@ -1088,13 +1088,13 @@ void func_801E649C()
                 if (D_801E755C == 0) 
                 {
                     g_GameWork.gameStateStep_598[0] = step;
-                    g_SysWork.timer_20 				= 0;
+                    g_SysWork.timer_20              = 0;
                     g_GameWork.gameStateStep_598[1] = 0;
                     g_GameWork.gameStateStep_598[2] = 0;
                 }
                 else
                 {
-                    g_SysWork.timer_20 				= 0;
+                    g_SysWork.timer_20              = 0;
                     g_GameWork.gameStateStep_598[1] = 0;
                     g_GameWork.gameStateStep_598[2] = 0;
                     g_GameWork.gameStateStep_598[0] = D_801E7540 + 2;
