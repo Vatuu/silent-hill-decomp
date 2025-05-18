@@ -73,35 +73,3 @@ void func_800D1638(void) {}
 #include "maps/shared/sharedFunc_800D2EB4_0_s00.h" // 0x800D1650
 
 #include "maps/shared/sharedFunc_800D2EF4_0_s00.h" // 0x800D1690
-
-INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D16A4);
-
-INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D17EC);
-
-INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D1914);
-
-INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D1934);
-
-INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D1974);
-
-INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D19E8);
-
-INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D1A38);
-
-#include "maps/shared/sharedFunc_800CDA88_3_s03.h" // 0x800D1A7C
-
-#include "maps/shared/Ai_PuppetNurse_UpdateMain.h" // 0x800D1AAC
-
-#include "maps/shared/Ai_PuppetNurse_Init.h" // 0x800D1B50
-
-#include "maps/shared/Ai_PuppetNurse_Update.h" // 0x800D1D24
-
-#include "maps/shared/Ai_PuppetDoctor_Update.h" // 0x800D1D80
-
-INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D1DDC);
-
-INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", sharedFunc_800CDF24_3_s03); // 0x800D1F18
-
-INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D20D8);
-
-INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D238C);

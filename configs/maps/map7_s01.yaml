@@ -59,6 +59,6 @@ segments:
       - [0x17F0, .rodata, map7_s01_2]
       - [0x1824, rodata]
       - [0x342C, c, map7_s01]
-      - [0x8E48, c, map7_s01_2]
+      - [0x812C, c, map7_s01_2]
       - [0x159D0, data, map7_s01]
   - [0x19F00]
