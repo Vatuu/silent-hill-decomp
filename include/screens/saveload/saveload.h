@@ -8,12 +8,12 @@
 
 typedef struct
 {
-    s16 				   field_0;
-    u16 				   unk_2;
-    s8  				   unk_4;
-    s8  				   field_5;
-    s8  				   field_6;
-    s8  				   field_7;
+    s16                    field_0;
+    u16                    unk_2;
+    s8                     unk_4;
+    s8                     field_5;
+    s8                     field_6;
+    s8                     field_7;
     s32                    field_8; // Maybe bitfield.
     struct s_UnkSaveload0* field_C;
 } s_UnkSaveload0; // Size: >=12

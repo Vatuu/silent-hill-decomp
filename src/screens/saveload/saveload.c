@@ -40,7 +40,7 @@ void func_801E2D8C() // 0x801E2D8C
 void Gfx_SaveBackgroundDraw() // 0x801E2EBC
 {
     s_801E2A98 var;
-    s32		   i;
+    s32        i;
     
     DVECTOR posTable[] = 
     {

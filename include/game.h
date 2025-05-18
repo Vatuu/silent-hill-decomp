@@ -697,8 +697,8 @@ typedef struct _SubCharacter
 
     union
     {
-        s_SubCharPropertiesPlayer 		 player;
-        s_SubCharPropertiesNPC    		 npc;
+        s_SubCharPropertiesPlayer        player;
+        s_SubCharPropertiesNPC           npc;
         s_SubCharPropertiesLarvalStalker larvalStalker;
     } properties_E4;
 } s_SubCharacter;
