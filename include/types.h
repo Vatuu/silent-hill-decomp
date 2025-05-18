@@ -19,6 +19,7 @@ typedef unsigned long long u64;
 
 typedef signed short       q3_12;  // Q3.12 fixed-point.
 typedef signed int         q19_12; // Q19.12 fixed-point.
+typedef unsigned int       q20_12; // Q20.12 fixed-point.
 
 #ifndef __cplusplus
 typedef enum { false, true } bool;

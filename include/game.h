@@ -137,7 +137,7 @@ typedef enum _SysState
 /** @brief Inventory command IDs. */
 typedef enum _InventoryCommandId
 {
-    InventoryCommandId_UseHealth     = 0,  /** Text is "Use", but this one is used explusively on health items. */
+    InventoryCommandId_UseHealth     = 0,  /** Text is "Use", but this one is used exclusively on health items. */
     InventoryCommandId_Use           = 1,
     InventoryCommandId_Equip         = 2,
     InventoryCommandId_Unequip       = 3,
@@ -412,7 +412,7 @@ typedef enum _GameDifficulty
     GameDifficulty_Easy   = -1,
     GameDifficulty_Normal = 0,
     GameDifficulty_Hard	  = 1,
-    // TODO: Does this increase further on NG+?
+    // TODO: Does this increase further on NG+? No
 } e_GameDifficulty;
 
 typedef struct _ShSaveGame
@@ -446,14 +446,20 @@ typedef struct _ShSaveGame
     s8                field_23F;
     q19_12            playerHealth_240;         /** Default: 100 */
     q19_12            playerPositionX_244;
-    q3_12             playerRotationY_248;      /** Range [0, 0.999755859375], Positive Z: 0, clockwise rotation. It can be multiplied by 360 to get degrees. */
-    u8                field_24A;
+    q3_12             playerRotationY_248;      /** Range [0, 0.999755859375], positive Z: 0, clockwise rotation. It can be multiplied by 360 to get degrees. */
+    u8                clearGameCount_24A;       /** Range [0, 99]. */
     u8                field_24B;
     q19_12            playerPositionZ_24C;
-    q19_12            gameplayTimer_250;
+    q20_12            gameplayTimer_250;
     q19_12            runDistance_254;
     q19_12            walkDistance_258;
-    s32               enemyKillCountPacked_25C; // Redo to `rangedKillCount : 8; meleeKillCount : 16; pad : 8` or `u8 pad; u16 meleeKillCount; s8 rangedKillCount;`.
+    u8                isTitleYellowFlag_25C_0 : 1;  // Is title in save-load screen is yellow (next fear mode).
+    u8                add290Hours_25C_1       : 2;  // adds 290 hours per 1 bit. So 290, 580, 870
+    u8                unknwon_25C_3           : 3;
+    u8                hyperBlasterColor_25C_6 : 2;  // Red/None: 0, Yellow: 1, Green: 2, Rainbow: 4 (imposible to obtain)
+    u8                meleeKillCount_25D;
+    u8                meleeKillCountB_25E;          // can't be packed if used as `u16`
+    u8                rangedKillCount_25F;
     s32               field_260 : 28;
     s32               gameDifficulty_260 : 4;   /** `e_GameDifficulty`. */
     s16               firedShotCount_264;       /** Missed shot count = firedShotCount - (closeRangeShotCount + midRangeShotCount + longRangeShotCount). */
@@ -770,7 +776,7 @@ typedef struct _SysWork
     s8              pad_E30[400];  // Might be part of previous array for 5 exra coords which go unused.
     s8              unk_FC0[4800]; // Start is tightly-packed buffer for NPC bone coords. Size unclear, appears to be enough for 60 before what might be AI data.
     s8              unk_2280;
-    s8              field_2281; // Set by `Chara_PositionUpdateFromParams`.
+    s8              field_2281;    // Set by `Chara_PositionUpdateFromParams`.
     s8              field_2282;
     s8              unk_2283[7];
     u16             field_228A;
