@@ -33,6 +33,8 @@ extern s32 sharedData_800E3A2C_0_s00;
 // This is set by `Ai_Stalker_Init`.
 extern s8 sharedData_800DA6C8_0_s00;
 
+extern s32 sharedData_800DD5A8_0_s00; // Pointer used by `Ai_Stalker_Init`.
+
 s32 sharedFunc_800CBBBC_0_s00();
 
 void sharedFunc_800D01BC_0_s00(u16* arg0, VECTOR3* arg1, s32 arg2);
@@ -86,7 +88,7 @@ void sharedFunc_800D88AC_0_s00(s_SubCharacter* playerChara);
 
 void Ai_Stalker_Update(s_SubCharacter* chara, s32 arg1, s32 arg2);
 
-void sharedSymbol_800D309C_0_s00(s_SubCharacter*, s32); // Matches across all maps except `map6_s03`.
+void Ai_Stalker_Init(s_SubCharacter*); // Matches across all maps except `map6_s03`.
 
 void sharedFunc_800D3308_0_s00(s_SubCharacter*);
 

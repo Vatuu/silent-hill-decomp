@@ -28,7 +28,7 @@ void Ai_Stalker_Update(s_SubCharacter* chara, s32 arg1, s32 arg2)
 
     if (chara->model_0.state_2 == 0)
     {
-        sharedSymbol_800D309C_0_s00(chara, var_a1);
+        Ai_Stalker_Init(chara);
     }
 
     if (chara->model_0.state_2 != 1)
