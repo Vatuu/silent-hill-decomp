@@ -257,7 +257,8 @@ typedef struct
     s32               field_8;
     s32               field_C;
     s32               field_10;
-    s8                unk_14[0xD18];
+    s8                unk_14[4];
+    s32               field_18[0x345];
     s32               field_D2C;
     u8                unk_D30[0x91C];
     s32               field_164C;
@@ -271,7 +272,7 @@ typedef struct
     s_800BE9FC        field_1BE4;
     s32               field_2BE8;
 } s_800BCE18;
-STATIC_ASSERT_SIZEOF(s_800BCE18, 0x2BEC); // TODO: Likely even larger. `func_8003CB44` accesses some 16 byte fields at 0x2BEC.
+STATIC_ASSERT_SIZEOF(s_800BCE18, 0x2BEC); // TODO: Likely even larger. `func_8003CB44` accesses some 16 byte fields at 0x2BEC. Also func_8003BE50 uses it.
 
 typedef struct
 {
