@@ -59,9 +59,10 @@ MKPSXISO_FLAGS      := -y -q $(ROM_DIR)/shgame.xml
 SILENT_ASSETS_FLAGS := -exe $(ROM_DIR)/SLUS_007.07 -fs $(ROM_DIR)/SILENT. -fh $(ROM_DIR)/HILL. $(ASSETS_DIR)
 INSERT_OVLS_FLAGS   := -exe $(ROM_DIR)/SLUS_007.07 -fs $(ROM_DIR)/SILENT. -ftb $(ASSETS_DIR)/filetable.c.inc -b $(OUT_DIR) -xml $(ROM_DIR)/layout.xml -o $(ROM_DIR)
 
-# Main executable uses -G8 while overlays use -G0.
-# This function redefines required parameters for compilation checking depending on whether a file's route is from main executable or an overlay.
-# libsd also needs --expand-div maspsx flag, which the rest of the build has issues with.
+# Adjusts compiler and assembler flags based on source file location.
+# - Files under main executable paths use -G8; overlay files use -G0.
+# - Enables `--expand-div` for certain `libsd` sources which require it (others can't build with it).
+# - Adds overlay-specific compiler flags based on files directory (currently only per-map defines).
 define DL_FlagsSwitch
 	$(if $(or $(filter MAIN,$(patsubst build/src/main/%,MAIN,$(1))), $(filter MAIN,$(patsubst build/asm/main/%,MAIN,$(1)))), $(eval DL_FLAGS = -G8), $(eval DL_FLAGS = -G0))
 	$(eval AS_FLAGS = $(ENDIAN) $(INCLUDE_FLAGS) $(OPT_FLAGS) $(DL_FLAGS) -march=r3000 -mtune=r3000 -no-pad-sections)
@@ -70,6 +71,12 @@ define DL_FlagsSwitch
 
 	$(if $(filter build/src/bodyprog/libsd/smf_io.c.o build/src/bodyprog/libsd/smf_mid.c.o,$(1)), \
 		$(eval MASPSX_FLAGS = --expand-div $(MASPSX_FLAGS)))
+
+	$(eval _rel_path := $(patsubst build/src/maps/%,%,$(patsubst build/asm/maps/%,%,$(1))))
+	$(eval _map_name := $(shell echo $(word 1, $(subst /, ,$(_rel_path))) | tr a-z A-Z))
+	$(if $(and $(findstring MAP,$(_map_name)),$(findstring _S,$(_map_name))), \
+		$(eval OVL_FLAGS := -D$(_map_name)), \
+		$(eval OVL_FLAGS :=))
 endef
 
 ifeq ($(NON_MATCHING),1)
@@ -259,7 +266,7 @@ $(foreach target,$(TARGET_IN),$(eval $(call make_elf_target,$(target),$(call get
 $(BUILD_DIR)/%.i: %.c
 	@mkdir -p $(dir $@)
 	$(call DL_FlagsSwitch, $@)
-	$(CPP) -P -MMD -MP -MT $@ -MF $@.d $(CPP_FLAGS) -o $@ $<
+	$(CPP) -P -MMD -MP -MT $@ -MF $@.d $(CPP_FLAGS) $(OVL_FLAGS) -o $@ $<
 
 $(BUILD_DIR)/%.c.s: $(BUILD_DIR)/%.i
 	@mkdir -p $(dir $@)

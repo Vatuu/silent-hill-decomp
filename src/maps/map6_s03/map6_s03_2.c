@@ -3,10 +3,6 @@
 #include "main/rng.h"
 #include "maps/shared.h"
 
-// TODO: Get Makefile to define map define per-map.
-// (needed for code differences in `Ai_Stalker_Init`)
-#define MAP6_S03 1
-
 #include "maps/shared/Ai_Stalker_Update.h" // 0x800CEFCC
 
 #include "maps/shared/Ai_Stalker_Init.h" // 0x800CF160 - Differs to other maps `Ai_Stalker_Init`.
