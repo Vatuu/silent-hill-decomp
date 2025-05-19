@@ -1,6 +1,6 @@
 # Configuration
 
-BUILD_OVERLAYS ?= 1
+BUILD_ENGINE   ?= 1
 BUILD_SCREENS  ?= 1
 BUILD_MAPS     ?= 1
 NON_MATCHING   ?= 0
@@ -63,14 +63,14 @@ INSERT_OVLS_FLAGS   := -exe $(ROM_DIR)/SLUS_007.07 -fs $(ROM_DIR)/SILENT. -ftb $
 # - Files under main executable paths use -G8; overlay files use -G0.
 # - Enables `--expand-div` for certain `libsd` sources which require it (others can't build with it).
 # - Adds overlay-specific compiler flags based on files directory (currently only per-map defines).
-define DL_FlagsSwitch
-	$(if $(or $(filter MAIN,$(patsubst build/src/main/%,MAIN,$(1))), $(filter MAIN,$(patsubst build/asm/main/%,MAIN,$(1)))), $(eval DL_FLAGS = -G8), $(eval DL_FLAGS = -G0))
+define FlagsSwitch
+	$(if $(findstring /main/,$(1)), $(eval DL_FLAGS = -G8), $(eval DL_FLAGS = -G0))
 	$(eval AS_FLAGS = $(ENDIAN) $(INCLUDE_FLAGS) $(OPT_FLAGS) $(DL_FLAGS) -march=r3000 -mtune=r3000 -no-pad-sections)
 	$(eval CC_FLAGS = $(OPT_FLAGS) $(DL_FLAGS) -mips1 -mcpu=3000 -w -funsigned-char -fpeephole -ffunction-cse -fpcc-struct-return -fcommon -fverbose-asm -msoft-float -mgas -fgnu-linker -quiet)
-	$(eval MASPSX_FLAGS = --aspsx-version=2.77 --run-assembler $(AS_FLAGS))
-
-	$(if $(filter build/src/bodyprog/libsd/smf_io.c.o build/src/bodyprog/libsd/smf_mid.c.o,$(1)), \
-		$(eval MASPSX_FLAGS = --expand-div $(MASPSX_FLAGS)))
+	
+	$(if $(or $(findstring smf_mid,$(1)), $(findstring smf_io,$(1)),), \
+		$(eval MASPSX_FLAGS = --aspsx-version=2.77 --run-assembler --expand-div $(AS_FLAGS)), \
+		$(eval MASPSX_FLAGS = --aspsx-version=2.77 --run-assembler $(AS_FLAGS)))
 
 	$(eval _rel_path := $(patsubst build/src/maps/%,%,$(patsubst build/asm/maps/%,%,$(1))))
 	$(eval _map_name := $(shell echo $(word 1, $(subst /, ,$(_rel_path))) | tr a-z A-Z))
@@ -148,7 +148,7 @@ TARGET_MAPS_SRC_DIR := maps
 
 TARGET_MAIN := main
 
-ifeq ($(BUILD_OVERLAYS), 1)
+ifeq ($(BUILD_ENGINE), 1)
 
 TARGET_BODYPROG := bodyprog
 
@@ -265,23 +265,22 @@ $(foreach target,$(TARGET_IN),$(eval $(call make_elf_target,$(target),$(call get
 # Generate objects.
 $(BUILD_DIR)/%.i: %.c
 	@mkdir -p $(dir $@)
-	$(call DL_FlagsSwitch, $@)
+	$(call FlagsSwitch, $@)
 	$(CPP) -P -MMD -MP -MT $@ -MF $@.d $(CPP_FLAGS) $(OVL_FLAGS) -o $@ $<
 
 $(BUILD_DIR)/%.c.s: $(BUILD_DIR)/%.i
 	@mkdir -p $(dir $@)
-	$(call DL_FlagsSwitch, $@)
 	$(CC) $(CC_FLAGS) -o $@ $<
 
 $(BUILD_DIR)/%.c.o: $(BUILD_DIR)/%.c.s
 	@mkdir -p $(dir $@)
-	$(call DL_FlagsSwitch, $@)
+	$(call FlagsSwitch, $@)
 	-$(MASPSX) $(MASPSX_FLAGS) -o $@ $<
 	-$(OBJDUMP) $(OBJDUMP_FLAGS) $@ > $(@:.o=.dump.s)
 
 $(BUILD_DIR)/%.s.o: %.s
 	@mkdir -p $(dir $@)
-	$(call DL_FlagsSwitch, $@)
+	$(call FlagsSwitch, $@)
 	$(AS) $(AS_FLAGS) -o $@ $<
 
 $(BUILD_DIR)/%.bin.o: %.bin
