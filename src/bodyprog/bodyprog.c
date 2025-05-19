@@ -2073,7 +2073,10 @@ void func_8003BE28() // 0x8003BE28
     func_80069820(D_800BCE14);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003BE50);
+s32 func_8003BE50(s32 idx) // 0x8003BE50
+{
+    return D_800BCE18.field_18[idx] + 32;
+}
 
 void GameFs_BgEtcGfxLoad() // 0x8003BE6C
 {
