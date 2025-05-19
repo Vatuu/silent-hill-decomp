@@ -2196,7 +2196,10 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003D354);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003D3BC);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003D444);
+s32 func_8003D444(s32 idx) // 0x8003D444
+{
+    return D_800BCE18.field_18[idx] != 0;
+}
 
 void func_8003D460() {}
 
