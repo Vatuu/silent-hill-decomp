@@ -1,0 +1,35 @@
+name: Check Executables Match
+
+on:
+  push:
+
+jobs:
+  build:
+    container: ghcr.io/vatuu/decomp-images-silent-hill:master
+
+    strategy:
+      fail-fast: true
+      matrix:
+        game_id: [ SLUS-00707 ]
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          lfs: true
+
+      - name: "Setup Python"
+        run: pip3 install -r requirements.txt --break-system-packages
+
+      - name: "Copy ROM"
+        run: |
+          mkdir -p ./rom/image
+          cp -r -p /rom/* ./rom/image
+
+      - name: Setup Environment
+        run: make extract
+
+      - name: Check Executables Match
+        run: make check
