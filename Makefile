@@ -270,6 +270,7 @@ $(BUILD_DIR)/%.i: %.c
 
 $(BUILD_DIR)/%.c.s: $(BUILD_DIR)/%.i
 	@mkdir -p $(dir $@)
+	$(call FlagsSwitch, $@)
 	$(CC) $(CC_FLAGS) -o $@ $<
 
 $(BUILD_DIR)/%.c.o: $(BUILD_DIR)/%.c.s
