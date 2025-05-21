@@ -297,7 +297,7 @@ void sharedFunc_800D2974_0_s01(s_SubCharacter*);
 
 void sharedFunc_800D3928_0_s01(s_SubCharacter*);
 
-void sharedFunc_800D62D8_0_s01(s_SubCharacter*);
+s32 sharedFunc_800D62D8_0_s01(s_SubCharacter* chara);
 
 void sharedFunc_800D7AB0_0_s01(s_SubCharacter*);
 
@@ -334,5 +334,13 @@ void sharedFunc_800D4A74_7_s01(s_SubCharacter*, s32);
 void sharedFunc_800D4C0C_7_s01(s_SubCharacter*, s32);
 
 void sharedFunc_800D4DD8_7_s01(s_SubCharacter*);
+
+s32  sharedFunc_800D4A80_0_s01(s_SubCharacter*);
+void sharedFunc_800D633C_0_s01(s_SubCharacter*);
+void sharedFunc_800D63A4_0_s01(s_SubCharacter*);
+void sharedFunc_800D6600_0_s01(s_SubCharacter*);
+void sharedFunc_800D7560_0_s01(s_SubCharacter*);
+
+extern s32 sharedData_800E21D0_0_s01;
 
 #endif
