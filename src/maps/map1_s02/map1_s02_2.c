@@ -47,7 +47,7 @@ INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02_2", sharedFunc_800D7BE8_0_s
 
 #include "maps/shared/Ai_Creaper_Update.h" // 0x800D7B98
 
-INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02_2", sharedFunc_800D7C28_1_s02); // 0x800D7C28
+#include "maps/shared/Ai_Creaper_Init.h" // 0x800D7C28
 
 INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02_2", sharedFunc_800D7EE8_1_s02); // 0x800D7EE8
 

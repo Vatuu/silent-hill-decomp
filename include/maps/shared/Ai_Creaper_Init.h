@@ -1,0 +1,117 @@
+static inline void ModelAnim_UpdateField_Creaper(s_ModelAnim* chara, s32 arg1)
+{
+    chara->field_C  = arg1;
+    chara->field_10 = 0;
+}
+
+// This inline allows getting rid of some ugly gotos, couldn't find a different way to handle it.
+static inline void Ai_Creaper_PropertiesUpdateFromStep(s_SubCharacter* chara)
+{
+    s32 stateStep = chara->model_0.stateStep_3;
+    if (chara->model_0.stateStep_3 != 3)
+    {
+        if (stateStep < 3)
+        {
+            return;
+        }
+
+        if (stateStep >= 0xE)
+        {
+            return;
+        }
+
+        if (stateStep < 0xC)
+        {
+            return;
+        }
+
+        chara->properties_E4.larvalStalker.properties_E8[0].val16[0] |= (1 << 4);
+        chara->properties_E4.larvalStalker.properties_E8[5].val32 = chara->position_18.vx;
+        chara->properties_E4.larvalStalker.properties_E8[6].val32 = chara->position_18.vz;
+    }
+
+    if (chara->model_0.stateStep_3 == 0xD || chara->model_0.stateStep_3 == 3)
+    {
+        chara->properties_E4.larvalStalker.properties_E8[0].val16[0] |= (1 << 6);
+    }
+
+    chara->model_0.state_2               = 1;
+    chara->model_0.anim_4.animIdx_0      = 23;
+    chara->model_0.anim_4.time_4         = FP_TO(94, Q12_SHIFT);
+    chara->model_0.anim_4.keyframeIdx0_8 = 94;
+}
+
+void Ai_Creaper_Init(s_SubCharacter* chara)
+{
+// TODO: Values used in the rand calls at the end, not sure of the actual purpose yet.
+#define BASE_VAL_EASY 0.7f
+#define BASE_VAL_NORMAL 0.9f
+#define BASE_VAL_HARD 1.2f
+#define RAND_MAX_EASY 0.2f
+#define RAND_MAX_NORMAL 0.2f
+#define RAND_MAX_HARD 0.4f
+
+    s32 i;
+
+    i = 0;
+
+    // Checks if any other Creaper NPCs are also present, making sure to skip this SubChara instance in the npcs array.
+    do
+    {
+        if (chara == &g_SysWork.npcs_1A0[i] || g_SysWork.npcs_1A0[i].model_0.charaId_0 != Chara_Creaper)
+        {
+            i++;
+            continue;
+        }
+        break;
+    }
+    while (i < NPC_COUNT_MAX);
+
+    if (i == NPC_COUNT_MAX)
+    {
+        // No other Creaper present.
+        sharedData_800E57CC_1_s02 = 0;
+    }
+
+    chara->health_B0                                             = FP_TO(200, Q12_SHIFT);
+    chara->properties_E4.larvalStalker.properties_E8[0].val16[0] = 0;
+    chara->model_0.anim_4.keyframeIdx1_A                         = 0;
+    chara->moveSpeed_38                                          = 0;
+    chara->headingAngle_3C                                       = chara->rotation_24.vy;
+
+    chara->field_E0_8 = 2;
+
+    for (i = 0; i < 0x10; i++)
+    {
+        chara->properties_E4.larvalStalker.properties_E8[i].val32 = 0;
+    }
+
+    Ai_Creaper_PropertiesUpdateFromStep(chara);
+
+    ModelAnim_UpdateField_Creaper(&chara->model_0.anim_4, &sharedData_800E0D38_1_s02);
+
+    chara->field_C0 = 0;
+    chara->field_BC = 0;
+    chara->field_B8 = 0;
+    chara->field_B4 = 0;
+
+    chara->properties_E4.larvalStalker.properties_E8[3].val32 = chara->position_18.vx;
+    chara->properties_E4.larvalStalker.properties_E8[4].val32 = chara->position_18.vz;
+
+    if (g_SaveGamePtr->gameDifficulty_260 == GameDifficulty_Easy)
+    {
+        chara->properties_E4.larvalStalker.properties_E8[9].val16[0] = FP_MULTIPLY_FLOAT((s64)(FP_FLOAT_TO(BASE_VAL_EASY, Q12_SHIFT) + ((s32)Rng_Rand16() % FP_FLOAT_TO(RAND_MAX_EASY, Q12_SHIFT))), 2.0f, Q12_SHIFT);
+    }
+    else if (g_SaveGamePtr->gameDifficulty_260 == GameDifficulty_Normal)
+    {
+        chara->properties_E4.larvalStalker.properties_E8[9].val16[0] = FP_MULTIPLY_FLOAT((s64)(FP_FLOAT_TO(BASE_VAL_NORMAL, Q12_SHIFT) + ((s32)Rng_Rand16() % FP_FLOAT_TO(RAND_MAX_NORMAL, Q12_SHIFT))), 2.0f, Q12_SHIFT);
+    }
+    else
+    {
+        chara->properties_E4.larvalStalker.properties_E8[9].val16[0] = FP_MULTIPLY_FLOAT((s64)(FP_FLOAT_TO(BASE_VAL_HARD, Q12_SHIFT) + ((s32)Rng_Rand16() % FP_FLOAT_TO(RAND_MAX_HARD, Q12_SHIFT))), 2.0f, Q12_SHIFT);
+    }
+
+#ifdef MAP5_S00
+    chara->flags_3E |= (1 << 8);
+#endif
+}

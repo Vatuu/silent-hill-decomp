@@ -2,7 +2,7 @@ void Ai_Creaper_Update(s_SubCharacter* chara, s32 arg1, s32 arg2)
 {
     if (chara->model_0.state_2 == 0)
     {
-        sharedFunc_800D7C28_1_s02(chara);
+        Ai_Creaper_Init(chara);
     }
 
     if (g_DeltaTime0 != 0)

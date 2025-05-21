@@ -75,7 +75,7 @@ void func_800CC9A8(void) {}
 
 #include "maps/shared/Ai_Creaper_Update.h" // 0x800CCA14
 
-INCLUDE_ASM("asm/maps/map3_s02/nonmatchings/map3_s02", sharedFunc_800D7C28_1_s02); // 0x800CCAA4
+#include "maps/shared/Ai_Creaper_Init.h" // 0x800CCAA4
 
 INCLUDE_ASM("asm/maps/map3_s02/nonmatchings/map3_s02", sharedFunc_800D7EE8_1_s02); // 0x800CCD64
 
