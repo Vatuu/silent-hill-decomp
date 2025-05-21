@@ -258,7 +258,7 @@ s32 func_801E342C() // 0x801E342C
     TILE* tile;
 
     if (((g_GameWork.config_0.optExtraOptionsEnabled_27 >> (D_801E5E8C - 1)) & (1 << 0)) &&
-        (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerBinds_0.skip))
+        (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip))
     {
         D_800C48F0 = D_801E5558[D_801E5E8C].field_4 + (D_801E5E84 / 2);
         Sd_EngineCmd(19);
@@ -653,7 +653,7 @@ bool func_801E3970() // 0x801E3970
         }
     }
     else if (((g_GameWork.config_0.optExtraOptionsEnabled_27 >> (D_801E5E8C - 1)) & (1 << 0)) &&
-             (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerBinds_0.skip))
+             (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip))
     {
         skipTo    = D_801E5E84 + 168;
         skipToInt = FP_TO(skipTo, Q12_SHIFT);

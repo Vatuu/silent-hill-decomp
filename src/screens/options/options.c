@@ -244,8 +244,8 @@ void Settings_ExtraScreen() // 0x801E318C
         D_801E7300 = D_801E72F8;
 
         if (((g_GameWork.gameStatePrev_590 == GameState_InGame) && 
-			((g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerBinds_0.enter) == 0)) &&
-            ((g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerBinds_0.option) != 0))
+			((g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter) == 0)) &&
+            ((g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerConfig_0.option) != 0))
         {
             func_80046048(0x51A, 0, 0x40);
 
@@ -373,10 +373,10 @@ void Settings_ExtraScreen() // 0x801E318C
         }
     }
 
-    if ((g_ControllerPtrConst->btns_new_10 & (g_GameWorkPtr->config_0.controllerBinds_0.cancel | (Pad_L2 | Pad_R2 | Pad_L1 | Pad_R1))) &&
+    if ((g_ControllerPtrConst->btns_new_10 & (g_GameWorkPtr->config_0.controllerConfig_0.cancel | (Pad_L2 | Pad_R2 | Pad_L1 | Pad_R1))) &&
         g_GameWork.gameStateStep_598[0] != 15)
     {
-        if (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerBinds_0.cancel)
+        if (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel)
         {
             func_80046048(0x51A, 0, 0x40);
         }
@@ -398,8 +398,8 @@ void Settings_MainScreen() // 0x801E3770
     #define IMAGE_BUFFER_3 ((u_long*)0x801EB600)
     #define SOUND_VOL_STEP 8
 
-    s32               sdCmd;
-    s32               currentVolume;
+    s32 sdCmd;
+    s32 vol;
 
     Gfx_OptionsStringsMainDraw();
     Gfx_SettingsOptionsMainDraw();
@@ -431,8 +431,8 @@ void Settings_MainScreen() // 0x801E3770
     D_801E72FC = D_801E72F4;
 
     if (((g_GameWork.gameStatePrev_590 == GameState_InGame) && 
-		((g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerBinds_0.enter) == 0)) &&
-        (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerBinds_0.option))
+		((g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter) == 0)) &&
+        (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerConfig_0.option))
     {
         func_80046048(0x51A, 0, 0x40);
 
@@ -461,8 +461,8 @@ void Settings_MainScreen() // 0x801E3770
     switch (D_801E72F4)
     {
         case 0:
-            if (g_ControllerPtrConst->btns_new_10 & (g_GameWorkPtr->config_0.controllerBinds_0.enter |
-				g_GameWorkPtr->config_0.controllerBinds_0.cancel))
+            if (g_ControllerPtrConst->btns_new_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter |
+				g_GameWorkPtr->config_0.controllerConfig_0.cancel))
             {
                 func_80046048(0x51A, 0, 0x40);
 
@@ -474,7 +474,7 @@ void Settings_MainScreen() // 0x801E3770
             break;
 
         case 2:
-            if (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerBinds_0.enter)
+            if (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter)
             {
                 func_80046048(0x51B, 0, 0x40);
                 Fs_QueueStartReadTim(FILE_TIM_OPTION2_TIM, IMAGE_BUFFER_3, &D_800A903C);
@@ -488,7 +488,7 @@ void Settings_MainScreen() // 0x801E3770
             break;
 
         case 3:
-            if (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerBinds_0.enter)
+            if (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter)
             {
                 func_80046048(0x51B, 0, 0x40);
 
@@ -501,7 +501,7 @@ void Settings_MainScreen() // 0x801E3770
             break;
 
         case 1:
-            if (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerBinds_0.enter)
+            if (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter)
             {
                 func_80046048(0x51B, 0, 0x40);
                 if (g_GameWork.gameStatePrev_590 == GameState_MainMenu)
@@ -553,64 +553,64 @@ void Settings_MainScreen() // 0x801E3770
             break;
 
         case 7:
-            currentVolume = g_GameWork.config_0.optVolumeBgm_1F;
-            if ((currentVolume < OPT_SOUND_VOLUME_MAX && (g_ControllerPtrConst->field_18 & Pad_LStickRight)) ||
-                (currentVolume > 0 && (g_ControllerPtrConst->field_18 & Pad_LStickLeft)))
+            vol = g_GameWork.config_0.optVolumeBgm_1F;
+            if ((vol < OPT_SOUND_VOLUME_MAX && (g_ControllerPtrConst->field_18 & Pad_LStickRight)) ||
+                (vol > 0 && (g_ControllerPtrConst->field_18 & Pad_LStickLeft)))
             {
                 Sd_EngineCmd(0x519);
             }
-            if ((currentVolume == OPT_SOUND_VOLUME_MAX && (g_ControllerPtrConst->btns_new_10 & Pad_LStickRight)) ||
-                (currentVolume == 0 && (g_ControllerPtrConst->btns_new_10 & Pad_LStickLeft)))
+            if ((vol == OPT_SOUND_VOLUME_MAX && (g_ControllerPtrConst->btns_new_10 & Pad_LStickRight)) ||
+                (vol == 0 && (g_ControllerPtrConst->btns_new_10 & Pad_LStickLeft)))
             {
                 Sd_EngineCmd(0x518);
             }
             if (g_ControllerPtrConst->field_18 & Pad_LStickRight)
             {
-                currentVolume = currentVolume + SOUND_VOL_STEP;
+                vol = vol + SOUND_VOL_STEP;
             }
             if (g_ControllerPtrConst->field_18 & Pad_LStickLeft)
             {
-                currentVolume = currentVolume - SOUND_VOL_STEP;
+                vol = vol - SOUND_VOL_STEP;
             }
 
-            currentVolume = CLAMP(currentVolume, 0, OPT_SOUND_VOLUME_MAX);
+            vol = CLAMP(vol, 0, OPT_SOUND_VOLUME_MAX);
 
-            Sd_SetVolume(OPT_SOUND_VOLUME_MAX, currentVolume, g_GameWork.config_0.optVolumeSe_20);
-            g_GameWork.config_0.optVolumeBgm_1F = currentVolume;
+            Sd_SetVolume(OPT_SOUND_VOLUME_MAX, vol, g_GameWork.config_0.optVolumeSe_20);
+            g_GameWork.config_0.optVolumeBgm_1F = vol;
             break;
 
         case 8:
-            currentVolume = g_GameWork.config_0.optVolumeSe_20;
-            if ((currentVolume < OPT_SOUND_VOLUME_MAX && (g_ControllerPtrConst->field_18 & Pad_LStickRight)) ||
-                (currentVolume > 0 && (g_ControllerPtrConst->field_18 & Pad_LStickLeft)))
+            vol = g_GameWork.config_0.optVolumeSe_20;
+            if ((vol < OPT_SOUND_VOLUME_MAX && (g_ControllerPtrConst->field_18 & Pad_LStickRight)) ||
+                (vol > 0 && (g_ControllerPtrConst->field_18 & Pad_LStickLeft)))
             {
                 Sd_EngineCmd(0x519);
             }
-            if ((currentVolume == OPT_SOUND_VOLUME_MAX && (g_ControllerPtrConst->btns_new_10 & Pad_LStickRight)) ||
-                (currentVolume == 0 && (g_ControllerPtrConst->btns_new_10 & Pad_LStickLeft)))
+            if ((vol == OPT_SOUND_VOLUME_MAX && (g_ControllerPtrConst->btns_new_10 & Pad_LStickRight)) ||
+                (vol == 0 && (g_ControllerPtrConst->btns_new_10 & Pad_LStickLeft)))
             {
                 Sd_EngineCmd(0x518);
             }
             if (g_ControllerPtrConst->field_18 & Pad_LStickRight)
             {
-                currentVolume = currentVolume + SOUND_VOL_STEP;
+                vol = vol + SOUND_VOL_STEP;
             }
             if (g_ControllerPtrConst->field_18 & Pad_LStickLeft)
             {
-                currentVolume = currentVolume - SOUND_VOL_STEP;
+                vol = vol - SOUND_VOL_STEP;
             }
 
-            currentVolume = CLAMP(currentVolume, 0, OPT_SOUND_VOLUME_MAX);
+            vol = CLAMP(vol, 0, OPT_SOUND_VOLUME_MAX);
 
-            Sd_SetVolume(OPT_SOUND_VOLUME_MAX, currentVolume, g_GameWork.config_0.optVolumeSe_20);
-            g_GameWork.config_0.optVolumeSe_20 = currentVolume;
+            Sd_SetVolume(OPT_SOUND_VOLUME_MAX, vol, g_GameWork.config_0.optVolumeSe_20);
+            g_GameWork.config_0.optVolumeSe_20 = vol;
             break;
 
         default:
             break;
     }
 
-    currentVolume = 0;
+    vol = 0;
 
     if (g_ControllerPtrConst->btns_new_10 & (Pad_L2 | Pad_R2 | Pad_L1 | Pad_R1))
     {
@@ -628,8 +628,8 @@ void Settings_MainScreen() // 0x801E3770
     }
 
     if (((g_GameWork.gameStateStep_598[0] != 13 && D_801E72F4 != 0) &&
-         ((g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerBinds_0.enter) == 0)) &&
-        (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerBinds_0.cancel))
+         ((g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter) == 0)) &&
+        (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel))
     {
         func_80046048(0x51A, 0, 0x40);
         D_801E73E4 = 0;
@@ -1312,7 +1312,7 @@ void Settings_PositionScreen() // 0x801E53A0
             {
                 func_80046048(0x519U, 0, 0x40);
             }
-            if (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerBinds_0.enter)
+            if (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter)
             {
                 if (D_801E73D4 == 0xFF)
                 {
@@ -1320,7 +1320,7 @@ void Settings_PositionScreen() // 0x801E53A0
                     D_801E7304 = (D_801E7304 + 1) & 1;
                 }
             }
-            if (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerBinds_0.cancel)
+            if (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel)
             {
                 func_80046048(0x51AU, 0, 0x40);
                 D_800BCD0C                      = 2;
@@ -1588,9 +1588,9 @@ void Settings_BrightnessScreen() // 0x801E6018
                 }
             }
 
-            if (g_ControllerPtrConst->btns_new_10 & (g_GameWorkPtr->config_0.controllerBinds_0.enter | g_GameWorkPtr->config_0.controllerBinds_0.cancel))
+            if (g_ControllerPtrConst->btns_new_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter | g_GameWorkPtr->config_0.controllerConfig_0.cancel))
             {
-                if (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerBinds_0.enter)
+                if (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter)
                 {
                     func_80046048(0x51B, 0, 0x40);
                 }
@@ -1928,7 +1928,7 @@ void Settings_ControllerScreen() // 0x801E69BC
             D_800BCD0C           = 7;
             D_801E73DC.menuIdx_0 = BindingMenu_Exit;
 
-            if (g_ControllerPtrConst->btns_new_10 & (g_GameWorkPtr->config_0.controllerBinds_0.enter | g_GameWorkPtr->config_0.controllerBinds_0.cancel))
+            if (g_ControllerPtrConst->btns_new_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter | g_GameWorkPtr->config_0.controllerConfig_0.cancel))
             {
                 Sd_EngineCmd(0x51Au);
                 D_800BCD0C                      = 3;
@@ -1957,12 +1957,12 @@ void Settings_ControllerScreen() // 0x801E69BC
         case 2:
         case 3:
             D_801E73DC.menuIdx_0 = g_GameWork.gameStateStep_598[1];
-            if (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerBinds_0.enter)
+            if (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter)
             {
                 Sd_EngineCmd(0x51Bu);
                 Settings_RestoreControlDefaults(g_GameWork.gameStateStep_598[1] - 1);
             }
-            else if (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerBinds_0.cancel)
+            else if (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel)
             {
                 Sd_EngineCmd(0x51Au);
                 g_GameWork.gameStateStep_598[1] = 0;
@@ -2069,7 +2069,7 @@ s32 Settings_ButtonChange(s32 actionIdx) // 0x801E6CF4
     u32  j;
 
     res      = NO_VALUE;
-    bindings = (u16*)&g_GameWorkPtr->config_0.controllerBinds_0;
+    bindings = (u16*)&g_GameWorkPtr->config_0.controllerConfig_0;
 
     // Loop through all button flags, excluding stick axes.
     for (i = 0; i < 16; i++)
@@ -2209,7 +2209,7 @@ void Gfx_ControllerScreenDraw(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x801E6
     strYPos = 22;
     y0      = -300;
 
-    for (i = 0, bindPtr = (u16*)&g_GameWorkPtr->config_0.controllerBinds_0; i < (u32)0xE; i++, bindPtr++)
+    for (i = 0, bindPtr = (u16*)&g_GameWorkPtr->config_0.controllerConfig_0; i < (u32)0xE; i++, bindPtr++)
     {
         Gfx_DebugStringPosition(96, strYPos);
         Gfx_DebugStringDraw(D_801E737C[i]);

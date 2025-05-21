@@ -379,7 +379,7 @@ STATIC_ASSERT_SIZEOF(s_ControllerData, 44);
 /** Key bindings for input actions. */
 // TODO: Instead of `u16`s, it should use 1-bit packed 16-bit `u32`, similar to `PadButtonFlags` but not an enum because it can have multiple values.
 // Only the first 16 values are counted (analog directions are not included). Also, D-Pad is not registered.
-typedef struct _ControllerBindings
+typedef struct _ControllerConfig
 {
     u16 enter;
     u16 cancel;
@@ -395,8 +395,8 @@ typedef struct _ControllerBindings
     u16 item;
     u16 map;
     u16 option;
-} s_ControllerBindings;
-STATIC_ASSERT_SIZEOF(s_ControllerBindings, 28);
+} s_ControllerConfig;
+STATIC_ASSERT_SIZEOF(s_ControllerConfig, 28);
 
 typedef struct _ShInventoryItem
 {
@@ -446,18 +446,18 @@ typedef struct _ShSaveGame
     q19_12            playerHealth_240;         /** Default: 100 */
     q19_12            playerPositionX_244;
     q3_12             playerRotationY_248;      /** Range [0, 0.999755859375], positive Z: 0, clockwise rotation. It can be multiplied by 360 to get degrees. */
-    u8                clearGameCount_24A;       /** Range [0, 99]. */
+    u8                clearGameCount_24A;       /** Range [0, 99] */
     u8                field_24B;
     q19_12            playerPositionZ_24C;
     q20_12            gameplayTimer_250;
     q19_12            runDistance_254;
     q19_12            walkDistance_258;
     u8                isTitleYellowFlag_25C_0 : 1;  // Is title in save-load screen is yellow (next fear mode).
-    u8                add290Hours_25C_1       : 2;  // adds 290 hours per 1 bit. So 290, 580, 870
+    u8                add290Hours_25C_1       : 2;  // Adds 290 hours per 1 bit. So 290, 580, 870
     u8                unknwon_25C_3           : 3;
-    u8                hyperBlasterColor_25C_6 : 2;  // Red/None: 0, Yellow: 1, Green: 2, Rainbow: 4 (imposible to obtain)
+    u8                hyperBlasterColor_25C_6 : 2;  // Red/None: 0, Yellow: 1, Green: 2, Rainbow: 4 (unobtainable).
     u8                meleeKillCount_25D;
-    u8                meleeKillCountB_25E;          // can't be packed if used as `u16`
+    u8                meleeKillCountB_25E;          // Can't be packed if used as `u16`.
     u8                rangedKillCount_25F;
     s32               field_260 : 28;
     s32               gameDifficulty_260 : 4;   /** `e_GameDifficulty`. */
@@ -490,28 +490,28 @@ STATIC_ASSERT_SIZEOF(s_ShEventParam, 12);
 
 typedef struct _ShSaveUserConfig
 {
-    s_ControllerBindings controllerBinds_0;
-    s8                   screenPosX_1C;             /** Range: [-11, 11], default: 0. */
-    s8                   screenPosY_1D;             /** Range: [-8, 8], default: 0. */
-    u8                   optSoundType_1E;           /** Stereo: 0, Monaural: 1, default: Stereo. */
-    u8                   optVolumeBgm_1F;           /** Range: [0, 128] with steps of 8, default: 16. */
-    u8                   optVolumeSe_20;            /** Range: [0, 128] with steps of 8, default: 16. */
-    u8                   optVibrationEnabled_21;    /** Off: 0, On: 128, default: On. */
-    u8                   optBrightness_22;          /** Range: [0, 7], default: 3. */
-    u8                   optWeaponCtrl_23;          /** Switch: 0, Press: 1, default: Press. */
-    u8                   optBloodColor_24;          /** Normal: 0, Green: 2, Violet: 5, Black: 13, default: Normal */
-    s8                   optAutoLoad_25;            /** Off: 0, On: 1, default: Off. */
-    u8                   unk_26;
-    u8                   optExtraOptionsEnabled_27;
-    s8                   optViewCtrl_28;            /** Normal: 0, Reverse: 1, default: Normal. */
-    s8                   optViewMode_29;            /** Normal: 0, Self View: 1, default: Normal. */
-    s8                   optRetreatTurn_2A;         /** Normal: 0, Reverse: 1, default: Normal. */
-    s8                   optWalkRunCtrl_2B;         /** Normal: 0, Reverse: 1, default: Normal. */
-    s8                   optAutoAiming_2C;          /** On: 0, Off: 1, default: On. */
-    s8                   optBulletAdjust_2D;        /** x1-x6: Range [0, 5], default: x1. */
-    u16                  seenGameOverTips_2E[1];    /** Bitfield tracking seen game-over tips. Each bit corresponds to a tip index (0–14), set bits indicate seen tips. Resets after picking all 15. */
-    s8                   unk_30[4];
-    u32                  palLanguageId[1];
+    s_ControllerConfig controllerConfig_0;
+    s8                 screenPosX_1C;             /** Range: [-11, 11], default: 0. */
+    s8                 screenPosY_1D;             /** Range: [-8, 8], default: 0. */
+    u8                 optSoundType_1E;           /** Stereo: 0, Monaural: 1, default: Stereo. */
+    u8                 optVolumeBgm_1F;           /** Range: [0, 128] with steps of 8, default: 16. */
+    u8                 optVolumeSe_20;            /** Range: [0, 128] with steps of 8, default: 16. */
+    u8                 optVibrationEnabled_21;    /** Off: 0, On: 128, default: On. */
+    u8                 optBrightness_22;          /** Range: [0, 7], default: 3. */
+    u8                 optWeaponCtrl_23;          /** Switch: 0, Press: 1, default: Press. */
+    u8                 optBloodColor_24;          /** Normal: 0, Green: 2, Violet: 5, Black: 13, default: Normal */
+    s8                 optAutoLoad_25;            /** Off: 0, On: 1, default: Off. */
+    u8                 unk_26;
+    u8                 optExtraOptionsEnabled_27;
+    s8                 optViewCtrl_28;            /** Normal: 0, Reverse: 1, default: Normal. */
+    s8                 optViewMode_29;            /** Normal: 0, Self View: 1, default: Normal. */
+    s8                 optRetreatTurn_2A;         /** Normal: 0, Reverse: 1, default: Normal. */
+    s8                 optWalkRunCtrl_2B;         /** Normal: 0, Reverse: 1, default: Normal. */
+    s8                 optAutoAiming_2C;          /** On: 0, Off: 1, default: On. */
+    s8                 optBulletAdjust_2D;        /** x1-x6: Range [0, 5], default: x1. */
+    u16                seenGameOverTips_2E[1];    /** Bitfield tracking seen game-over tips. Each bit corresponds to a tip index (0–14), set bits indicate seen tips. Resets after picking all 15. */
+    s8                 unk_30[4];
+    u32                palLanguageId[1];
 } s_ShSaveUserConfig;
 STATIC_ASSERT_SIZEOF(s_ShSaveUserConfig, 56);
 
@@ -587,9 +587,9 @@ STATIC_ASSERT_SIZEOF(s_ModelAnim, 20);
 typedef struct _Model
 {
     s8 charaId_0;      /** `e_ShCharacterId` */
-    u8 paletteIdx_1;   /** Changes texture palette index for this model. */
-    u8 state_2;        /** Current state for this model/character, 0 usually means it still has to be inited. */
-    u8 stateStep_3;    // Step number / temp data for the current `state_2`? In `s_MainCharacterExtra`, always 1, set to 0 for 1 tick when anim state appears to change.
+    u8 paletteIdx_1;   /** Changes the texture palette index for this model. */
+    u8 state_2;        /** Current state for this model/character. 0 usually means it still has to be initialize. */
+    u8 stateStep_3;    // Step number or temp data for the current `state_2`? In `s_MainCharacterExtra` always 1, set to 0 for 1 tick when anim state appears to change.
                        // Used differently in player's `s_SubCharacter`. 0: anim transitioning(?), bit 1: animated, bit 2: turning.
     s_ModelAnim anim_4;
 } s_Model;
@@ -606,14 +606,14 @@ typedef union
 typedef struct
 {
     s32   health_0;
-    u8    unk_4[0x20];
+    u8    unk_4[32];
     void* field_24; // Pointer to some const data.
-    u8    unk_28[0xC];
+    u8    unk_28[12];
 } s_800D5710;
 STATIC_ASSERT_SIZEOF(s_800D5710, 0x34);
 
-// TODO: re-offset `s_SubCharPropertiesPlayer` / `s_SubCharPropertiesNPC`
-// Probably be easier to do that after it's merged with rest of code.
+// TODO: Re-offset `s_SubCharaPropertiesPlayer` / `s_SubCharaPropertiesNpc`.
+// Probably easier to do that after it's merged with rest of code.
 typedef struct _SubCharPropertiesPlayer
 {
     s32 properties_E4[CHARA_PROPERTY_COUNT_MAX]; // TODO: Integrate as `u_Property`.
@@ -625,11 +625,11 @@ typedef struct _SubCharPropertiesPlayer
     s32 flags_11C;
     s8  unk_120[6];
     s16 field_126;
-} s_SubCharPropertiesPlayer;
-STATIC_ASSERT_SIZEOF(s_SubCharPropertiesPlayer, 68);
+} s_SubCharaPropertiesPlayer;
+STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesPlayer, 68);
 
-// TODO: this may be a puppet doctor/nurse specific struct, need to compare with other NPCs.
-typedef struct _SubCharPropertiesNPC
+// TODO: This may be a puppet doctor/nurse specific struct, need to compare with other NPCs.
+typedef struct _SubCharaPropertiesNpc
 {
     s32         unk_E4;
     VECTOR3     field_E8;
@@ -649,16 +649,15 @@ typedef struct _SubCharPropertiesNPC
     s16         field_120;
     s16         field_122;
     s_800D5710* field_124;
-} s_SubCharPropertiesNPC;
-STATIC_ASSERT_SIZEOF(s_SubCharPropertiesNPC, 68);
+} s_SubCharaPropertiesNpc;
+STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesNpc, 68);
 
 typedef struct _SubCharPropertiesLarvalStalker
 {
-    s32 unk_E4; // is this part of subchara?
-
-    u_Property properties_E8[0x10];
-} s_SubCharPropertiesLarvalStalker;
-STATIC_ASSERT_SIZEOF(s_SubCharPropertiesLarvalStalker, 68);
+    s32        unk_E4;            // Is this part of `a_SubCharacter`?
+    u_Property properties_E8[16];
+} s_SubCharaPropertiesLarvalStalker;
+STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesLarvalStalker, 68);
 
 typedef struct _SubCharacter
 {
@@ -696,15 +695,15 @@ typedef struct _SubCharacter
     s16 field_DC;
     s16 field_DE;
 
-    s32 unk_E0 : 8;
+    s32 unk_E0     : 8;
     s32 field_E0_8 : 4;
-    s32 unk_E0_12 : 20;
+    s32 unk_E0_12  : 20;
 
     union
     {
-        s_SubCharPropertiesPlayer        player;
-        s_SubCharPropertiesNPC           npc;
-        s_SubCharPropertiesLarvalStalker larvalStalker;
+        s_SubCharaPropertiesPlayer        player;
+        s_SubCharaPropertiesNpc           npc;
+        s_SubCharaPropertiesLarvalStalker larvalStalker;
     } properties_E4;
 } s_SubCharacter;
 STATIC_ASSERT_SIZEOF(s_SubCharacter, 296);

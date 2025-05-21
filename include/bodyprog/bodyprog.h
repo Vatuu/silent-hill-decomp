@@ -258,21 +258,21 @@ typedef struct
     s32               field_C;
     s32               field_10;
     s8                unk_14[4];
-    s32               field_18[0x345];
+    s32               field_18[837];
     s32               field_D2C;
-    u8                unk_D30[0x91C];
+    u8                unk_D30[2332];
     s32               field_164C;
-    u8                unk_1650[0x55C];
+    u8                unk_1650[1372];
     s32               field_1BAC;
-    u8                unk_1BB0[0x14];
+    u8                unk_1BB0[20];
     s32               field_1BC4;
-    u8                unk_1BC8[0x10];
+    u8                unk_1BC8[16];
     s32               field_1BD8;
     VC_CAMERA_INTINFO vcCameraInternalInfo_1BDC; // Debug camera info.
     s_800BE9FC        field_1BE4;
     s32               field_2BE8;
 } s_800BCE18;
-STATIC_ASSERT_SIZEOF(s_800BCE18, 0x2BEC); // TODO: Likely even larger. `func_8003CB44` accesses some 16 byte fields at 0x2BEC. Also func_8003BE50 uses it.
+STATIC_ASSERT_SIZEOF(s_800BCE18, 11244); // TODO: Likely even larger. `func_8003CB44` accesses some 16 byte fields at 0x2BEC. `func_8003BE50` also uses it.
 
 typedef struct
 {
@@ -1275,6 +1275,12 @@ s32 func_8003C850();
 
 void func_8003CD6C(s_MapWork* arg0);
 
+void func_8003D01C();
+
+void func_8003D03C();
+
+s32 func_8003D444(s32 idx);
+
 /** Return type assumed. */
 void func_8003D160();
 
@@ -1857,6 +1863,8 @@ void func_8003BC8C();
 void func_8003BCF4();
 
 void func_8003BE28();
+
+s32 func_8003BE50(s32 idx);
 
 void GameFs_BgEtcGfxLoad();
 

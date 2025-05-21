@@ -189,7 +189,7 @@ void sharedFunc_800D0968_3_s03(s_SubCharacter*, s32);
 
 void Ai_Creaper_Update(s_SubCharacter* chara, s32 arg1, s32 arg2);
 
-void Ai_Creaper_Init(s_SubCharacter*); // `map5_s00` version has extra code at end of func
+void Ai_Creaper_Init(s_SubCharacter*); // `map5_s00` version has extra code at end of func.
 
 void sharedFunc_800D7EE8_1_s02(s_SubCharacter*);
 

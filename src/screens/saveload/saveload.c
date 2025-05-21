@@ -135,7 +135,6 @@ void func_801E30C4(s_UnkSaveload0* ptr, s32 arg1, s32 idx) // 0x801E30C4
         77
     };
 
-
     s32 var0;
     s16 var1;
     s32 colorId;
@@ -641,48 +640,48 @@ void Gfx_SelectedMemBarDraw() // 0x801E4010
     s_801E2A98 D_801E2A48[5][2] =
     {
         {
-            {{-107, -88}, {-146, -88}},
-            {{-107, -87}, {-146, -87}},
+            { {-107, -88 }, { -146, -88 } },
+            { {-107, -87 }, { -146, -87 } }
         },
         {
-            {{-42, -88}, {-2, -88}},
-            {{-42, -87}, {-2, -87}},
+            { { -42, -88 }, { -2, -88 } },
+            { { -42, -87 }, { -2, -87 } }
         },
         {
-            {{-146, -88}, {-146, 42}},
-            {{-145, -87}, {-145, 41}},
+            { { -146, -88 }, { -146, 42 } },
+            { { -145, -87 }, { -145, 41 } }
         },
         {
-            {{-2, -88}, {-2, 42}},
-            {{-3, -87}, {-3, 41}},
+            { { -2, -88 }, { -2, 42 } },
+            { { -3, -87 }, { -3, 41 } }
         },
         {
-            {{-146, 42}, {-2, 42}},
-            {{-145, 41}, {-3, 41}},
+            { { -146, 42 }, { -2, 42 } },
+            { { -145, 41 }, { -3, 41 } }
         }
     };
 
     s_801E2A48 D_801E2A98[5][2] =
     {
         {
-            {{-106, -88}, {-106, -92}, {-146, -88}, {-150, -92}},
-            {{-106, -87}, {-106, -83}, {-146, -87}, {-142, -83}},
+            { { -106, -88 }, { -106, -92 }, { -146, -88 }, { -150, -92 } },
+            { { -106, -87 }, { -106, -83 }, { -146, -87 }, { -142, -83 } },
         },
         {
-            {{-42, -88}, {-42, -92}, {-2, -88}, {2, -92}},
-            {{-42, -87}, {-42, -83}, {-2, -87}, {-6, -83}},
+            { { -42, -88 }, { -42, -92 }, { -2, -88 }, { 2, -92 } },
+            { { -42, -87 }, { -42, -83 }, { -2, -87 }, { -6, -83 } },
         },
         {
-            {{-146, -88}, {-150, -92}, {-146, 42}, {-150, 46}},
-            {{-145, -87}, {-141, -83}, {-145, 41}, {-141, 37}},
+            { { -146, -88 }, { -150, -92}, {-146, 42}, {-150, 46 } },
+            { { -145, -87 }, { -141, -83}, {-145, 41}, {-141, 37 } },
         },
         {
-            {{-2, -88}, {2, -92}, {-2, 42}, {2, 46}},
-            {{-3, -87}, {-7, -83}, {-3, 41}, {-7, 37}},
+            { { -2, -88 }, { 2, -92 }, { -2, 42 }, { 2, 46 } },
+            { { -3, -87 }, { -7, -83 }, { -3, 41 }, { -7, 37 } },
         },
         {
-            {{-146, 42}, {-150, 46}, {-2, 42}, {2, 46}},
-            {{-145, 41}, {-141, 37}, {-3, 41}, {-7, 37}},
+            { { -146, 42 }, { -150, 46 }, { -2, 42 }, { 2, 46 } },
+            { { -145, 41 }, { -141, 37 }, { -3, 41 }, { -7, 37 } },
         }
     };
 
@@ -799,23 +798,23 @@ void func_801E52D8(s32 arg0, s32 arg1) // 0x801E52D8
     s_801E2CAC D_801E2CAC =
     { 
         {
-            {{ 0xFF70, 0xFFDC }, { 0xFFFC, 0xFFDC }},
-            {{ 0xFF70, 0x0002 }, { 0xFFFC, 0x0002 }},
-            {{ 0xFF70, 0xFFDC }, { 0xFF70, 0x0002 }},
-            {{ 0xFFFC, 0xFFDC }, { 0xFFFC, 0x0002 }}
+            { { 0xFF70, 0xFFDC }, { 0xFFFC, 0xFFDC } },
+            { { 0xFF70, 0x0002 }, { 0xFFFC, 0x0002 } },
+            { { 0xFF70, 0xFFDC }, { 0xFF70, 0x0002 } },
+            { { 0xFFFC, 0xFFDC }, { 0xFFFC, 0x0002 } }
         }    
     };
 
     s_801E2CCC D_801E2CCC =
     {
         {
-            {{ 0xFF70, 0xFFDC }, { 0xFF6C, 0xFFD8 }, { 0xFFFC, 0xFFDC }, { 0x0000, 0xFFD8 }},
-            {{ 0xFF70, 0x0002 }, { 0xFF6C, 0x0006 }, { 0xFFFC, 0x0002 }, { 0x0000, 0x0006 }},
-            {{ 0xFF70, 0xFFDC }, { 0xFF6C, 0xFFD8 }, { 0xFF70, 0x0002 }, { 0xFF6C, 0x0006 }},
-            {{ 0xFFFC, 0xFFDC }, { 0x0000, 0xFFD8 }, { 0xFFFC, 0x0002 }, { 0x0000, 0x0006 }}
+            { { 0xFF70, 0xFFDC }, { 0xFF6C, 0xFFD8 }, { 0xFFFC, 0xFFDC }, { 0x0000, 0xFFD8 } },
+            { { 0xFF70, 0x0002 }, { 0xFF6C, 0x0006 }, { 0xFFFC, 0x0002 }, { 0x0000, 0x0006 } },
+            { { 0xFF70, 0xFFDC }, { 0xFF6C, 0xFFD8 }, { 0xFF70, 0x0002 }, { 0xFF6C, 0x0006 } },
+            { { 0xFFFC, 0xFFDC }, { 0x0000, 0xFFD8 }, { 0xFFFC, 0x0002 }, { 0x0000, 0x0006 } }
         }
     };
-    
+
     if (arg1 == 1 && g_GameWork.gameState_594 == GameState_Unk10) 
     {
         Gfx_RectMemLoadDraw(&D_801E2CAC, &D_801E2CCC, &D_801E2C8C[1], arg0);
@@ -837,22 +836,21 @@ void Gfx_RectMemLoadDraw(s_801E2CAC* arg0, s_801E2CCC* arg1, s_801E2C8C* arg2, s
     LINE_F2*    line;
     POLY_G4*    poly_g4;
     POLY_F4*    poly_f4;
-    
+
     ot = &g_ObjectTable1[g_ObjectTableIdx];
-    
+
     for (i = 0; i < 4; i++)
     {
         line = (LINE_F2*)GsOUT_PACKET_P;
         setLineF2(line);
         setRGB0(line, arg2->field_8, arg2->field_A, arg2->field_C);
         setXY2(line,
-            arg0->field_0[i].field_0.vx + arg3 * 0x96, arg0->field_0[i].field_0.vy,
-            arg0->field_0[i].field_4.vx + arg3 * 0x96, arg0->field_0[i].field_4.vy
-        );
-        addPrim((u8*)ot->org + 0x1C, line);
+               arg0->field_0[i].field_0.vx + arg3 * 150, arg0->field_0[i].field_0.vy,
+               arg0->field_0[i].field_4.vx + arg3 * 150, arg0->field_0[i].field_4.vy);
+        addPrim((u8*)ot->org + 28, line);
         GsOUT_PACKET_P = (u8*)line + sizeof(LINE_F2);
     }
-    
+
     for (i = 0; i < 4; i++)
     {
         poly_g4 = (POLY_G4*)GsOUT_PACKET_P;
@@ -866,13 +864,12 @@ void Gfx_RectMemLoadDraw(s_801E2CAC* arg0, s_801E2CCC* arg1, s_801E2C8C* arg2, s
         temp = (s_801E2A98*)&arg1->field_0[i].field_8;
 
         setXY4(poly_g4,
-            arg1->field_0[i].field_0.vx + arg3 * 0x96, arg1->field_0[i].field_0.vy,
-            arg1->field_0[i].field_4.vx + arg3 * 0x96, arg1->field_0[i].field_4.vy,
-            arg1->field_0[i].field_8.vx + arg3 * 0x96, temp->field_0.vy,
-            temp->field_4.vx + arg3 * 0x96, temp->field_4.vy
-        );
+               arg1->field_0[i].field_0.vx + (arg3 * 150), arg1->field_0[i].field_0.vy,
+               arg1->field_0[i].field_4.vx + (arg3 * 150), arg1->field_0[i].field_4.vy,
+               arg1->field_0[i].field_8.vx + (arg3 * 150), temp->field_0.vy,
+               temp->field_4.vx + (arg3 * 150), temp->field_4.vy);
 
-        addPrim((u8*)ot->org + 0x20, poly_g4);
+        addPrim((u8*)ot->org + 32, poly_g4);
         GsOUT_PACKET_P = (u8*)poly_g4 + sizeof(POLY_G4);
     }
     
@@ -881,18 +878,17 @@ void Gfx_RectMemLoadDraw(s_801E2CAC* arg0, s_801E2CCC* arg1, s_801E2C8C* arg2, s
     poly_f4 = (POLY_F4*)GsOUT_PACKET_P;
     setlen(poly_f4, 5);
     setcode(poly_f4, 0x2A);
-    setRGB0(poly_f4, 0x30, 0x30, 0x30);
+    setRGB0(poly_f4, 48, 48, 48);
 
     setXY4(poly_f4,
-        arg2->field_0.vx + arg3 * 0x96, arg2->field_0.vy,
-        arg2->field_0.vx + arg3 * 0x96, arg2->field_0.vy + arg2->field_4.vy,
-        arg2->field_0.vx + arg2->field_4.vx + arg3 * 0x96, arg2->field_0.vy,
-        arg2->field_0.vx + arg2->field_4.vx + arg3 * 0x96, arg2->field_0.vy + arg2->field_4.vy
-    );
-    
-    addPrim((u8*)ot->org + 0x20, poly_f4);
+           arg2->field_0.vx + (arg3 * 150), arg2->field_0.vy,
+           arg2->field_0.vx + (arg3 * 150), arg2->field_0.vy + arg2->field_4.vy,
+           arg2->field_0.vx + arg2->field_4.vx + (arg3 * 150), arg2->field_0.vy,
+           arg2->field_0.vx + arg2->field_4.vx + (arg3 * 150), arg2->field_0.vy + arg2->field_4.vy);
+
+    addPrim((u8*)ot->org + 32, poly_f4);
     GsOUT_PACKET_P = (u8*)poly_f4 + sizeof(POLY_F4);
-    
+
     func_80052088(0, 0, 8, 1);
 }
 
@@ -956,13 +952,12 @@ void func_801E63C0() // 0x801E63C0
 }
 
 /**
-D_800BCD2C seems to be supposed to be a pointer struct, but it
-was defined previously as a pointer byte (s8*) and defining it
-as a pointer struct causes a big missmatch in `func_800C9874`.
-
-Alternatively declaring it as a pointer int (s32*) doesn't
-help too much.
-*/
+ * D_800BCD2C seems to be a pointer struct, but it
+ * was defined previously as a pointer byte (`s8*`) and defining it
+ * as a pointer struct causes a big missmatch in `func_800C9874`.
+ * 
+ * Alternatively declaring it as a pointer int (`s32*`) doesn't help too much.
+ */
 #ifdef NON_MATCHING
 void func_801E649C() // 0x801E649C
 {
@@ -976,20 +971,20 @@ void func_801E649C() // 0x801E649C
             {
                 break;
             }
-            
+
             if (D_800BCD30[0] != 0 && D_800BCD30[1] != 0 && 
                 (g_ControllerPtrConst->btns_new_10 & (Pad_LStickRight | Pad_LStickLeft))) 
             {
                 D_800A97D6 ^= 1;
                 Sd_EngineCmd(0x519);
             }
-            
+
             if (D_800BCD3A > 0) 
             {
                 D_801E753C = 0;
                 D_801E7540 = 0;
                 D_800BCD2C = (s_UnkSaveload0*)((D_800A97D6 * 0xA50) + BOOT_ADDR_0);
-                
+
                 if (g_ControllerPtrConst->field_18 & Pad_LStickUp) 
                 {
                     if (D_800A97D4[D_800A97D6] != 0) 
@@ -998,7 +993,7 @@ void func_801E649C() // 0x801E649C
                         Sd_EngineCmd(0x519);
                     }
                 }
-                
+
                 if (g_ControllerPtrConst->field_18 & Pad_LStickDown) 
                 {
                     if (D_800A97D4[D_800A97D6] < D_800BCD30[D_800A97D6] - 1)
@@ -1007,27 +1002,27 @@ void func_801E649C() // 0x801E649C
                         Sd_EngineCmd(0x519);
                     }
                 }
-                
+
                 ptr        = &D_800BCD2C[D_800A97D4[D_800A97D6]];
                 D_800BCD2C = ptr;
                 D_800BCD40 = ptr->field_5;
                 D_800BCD3F = ptr->field_6;
                 D_800BCD3E = ptr->field_7;
-                
+
                 if (D_800BCD38 == 2) 
                 {
                     if (ptr->field_0 == 0x7B70)
                     {
                         D_801E753C = 1;
                     }
-                    
+
                     if ((u16)ptr->field_0 - 1 < 0x797B) 
                     {
                         D_801E7540 = 1;
                     }
                 }
-                
-                if (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerBinds_0.enter) 
+
+                if (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter) 
                 {
                     if ((D_801E753C | D_801E7540) != 0) 
                     {
@@ -1045,15 +1040,15 @@ void func_801E649C() // 0x801E649C
                     Sd_EngineCmd(0x51B);
                 }
             }
-            
-            if (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerBinds_0.cancel) 
+
+            if (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel) 
             {
                 D_800BCD0C                      = 3;
                 g_GameWork.gameStateStep_598[1] = 2;
                 g_GameWork.gameStateStep_598[2] = 0;
-                
+
                 Sd_EngineCmd(0x51A);
-                
+
                 if (g_GameWork.gameStatePrev_590 == GameState_StatusScreen) 
                 {
                     Sd_EngineCmd(0x17);
@@ -1062,7 +1057,7 @@ void func_801E649C() // 0x801E649C
                 }
             }
             break;
-        
+
         case 1:
             if (func_80033548() == 0) 
             {
@@ -1070,20 +1065,20 @@ void func_801E649C() // 0x801E649C
             }
 
             D_801E7520 = 0;
-            
+
             if (g_ControllerPtrConst->btns_new_10 & Pad_LStickLeft) 
             {
                 D_801E755C = step;
                 Sd_EngineCmd(0x519);
             }
-            
+
             if (g_ControllerPtrConst->btns_new_10 & Pad_LStickRight) 
             {
                 D_801E755C = 0;
                 Sd_EngineCmd(0x519);
             }
-            
-            if (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerBinds_0.enter) 
+
+            if (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter) 
             {
                 if (D_801E755C == 0) 
                 {
@@ -1101,16 +1096,15 @@ void func_801E649C() // 0x801E649C
                 }
                 Sd_EngineCmd(0x51B);
             }
-            
-            if (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerBinds_0.cancel) 
+
+            if (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel) 
             {
                 g_GameWork.gameStateStep_598[1] = 0;
                 g_GameWork.gameStateStep_598[2] = 0;
                 Sd_EngineCmd(0x51A);
             }
-            
+
             func_801E72DC(D_801E753C, D_801E755C);
-            
             break;
         
         case 2:
@@ -1119,9 +1113,9 @@ void func_801E649C() // 0x801E649C
                 g_GameWork.field_58C = 0;
                 g_GameWork.field_58D = 0;
                 g_GameWork.field_58E = 0;
-                
+
                 Fs_QueueWaitForEmpty();
-                
+
                 if (g_GameWork.gameStatePrev_590 == GameState_StatusScreen)
                 {
                     Game_StateSetNext(g_GameWork.gameStatePrev_590);

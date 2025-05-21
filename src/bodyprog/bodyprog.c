@@ -1401,14 +1401,13 @@ void func_80037388() // 0x80037388
     volatile s32 v1;
     s32 v2;
     s32 i;
-    
 
     v1 = v2;
-    for (i = 0; i < 5; i++) 
+    for (i = 0; i < 5; i++)
     { 
         D_800BCDC0[i] = NO_VALUE;
         D_800BCD90[i] = 0;
-    } 
+    }
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_800373CC); // 0x800373CC
@@ -1425,7 +1424,7 @@ void func_80037E40(s_SubCharacter* arg0) // 0x80037E40
 {
     if (arg0->field_C0 > 0)
     {
-        arg0->flags_3E |= (1 << 5);
+        arg0->flags_3E |= 1 << 5;
     }
     else
     {
@@ -1591,7 +1590,7 @@ void SysState_GamePaused_Update() // 0x800391E8
         return;
     }
 
-    if (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerBinds_0.pause)
+    if (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerConfig_0.pause)
     {
         D_800A9A68 = 0;
         Sd_EngineCmd(4);
@@ -1911,7 +1910,7 @@ void SysState_GameOver_Update() // 0x8003A52C
             Gfx_StringDraw(D_80025448, 0x63); // "\aGAME_OVER" - needs rodata migration.
             g_SysWork.field_28++;
 
-            if ((g_ControllerPtrConst->btns_new_10 & (g_GameWorkPtr->config_0.controllerBinds_0.enter | g_GameWorkPtr->config_0.controllerBinds_0.cancel)) ||
+            if ((g_ControllerPtrConst->btns_new_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter | g_GameWorkPtr->config_0.controllerConfig_0.cancel)) ||
                 g_SysWork.field_28 > 240)
             {
                 SysWork_StateStepIncrement();
@@ -1952,7 +1951,7 @@ void SysState_GameOver_Update() // 0x8003A52C
             g_SysWork.field_28++;
             Gfx_BackgroundSpriteDraw(&D_800A9054);
 
-            if (!(g_ControllerPtrConst->btns_new_10 & (g_GameWorkPtr->config_0.controllerBinds_0.enter | g_GameWorkPtr->config_0.controllerBinds_0.cancel)))
+            if (!(g_ControllerPtrConst->btns_new_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter | g_GameWorkPtr->config_0.controllerConfig_0.cancel)))
             {
                 if (g_SysWork.field_28 <= 480)
                 {
@@ -2020,10 +2019,10 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003B758);
 
 void func_8003B7BC()
 {
-    // It can't be s32* since 462 doesn't divide by 4, so I'm guessing it's s8.
+    // Can't be `s32*` since 462 doesn't divide by 4, so I'm guessing it's `s8`.
     s8* s0 = 0x801E2432;
 
-    memset(s0, 0, 0x1CE); // 462
+    memset(s0, 0, 462);
     D_800BCDE0 = s0;
 }
 
@@ -2176,14 +2175,14 @@ void func_8003CD6C(s_MapWork* arg0) // 0x8003CD6C
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003CDA0);
 
-void func_8003D01C(void)
+void func_8003D01C() // 0x8003D01C
 {
-    D_800BCE18.field_1BC4 &= 0x7FFFFFFF;
+    D_800BCE18.field_1BC4 &= ~(1 << 31);
 }
 
 void func_8003D03C() // 0x8003D03C
 {
-    D_800BCE18.field_1BC4 |= 0x80000000;
+    D_800BCE18.field_1BC4 |= 1 << 31;
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003D058);

@@ -1223,8 +1223,8 @@ s32 Math_MulFixed(s32 val0, s32 val1, s32 shift) // 0x800808D4
 {
     u32 lo;
 
-    // Use inline asm to fetch high/low parts of mult
-    // Only method found to allow C to keep same insn/reg order so far
+    // Use inline asm to fetch high/low parts of mult.
+    // Only method found to allow C to keep same insn/reg order so far.
     __asm__ volatile(
         "mult %0, %1\n" // Multiply val0 and val1
         "mfhi %0\n"     // Move high result back into val0?
@@ -1233,7 +1233,7 @@ s32 Math_MulFixed(s32 val0, s32 val1, s32 shift) // 0x800808D4
         : "0"(val0), "1"(val1));
 
 #if 0
-    // equivalent C version of above (non-matching)
+    // Equivalent C version of above (non-matching).
     s64 res = (s64)val0 * (s64)val1;
     val0 = (u32)(res >> 32);
     lo = (u32)res;
