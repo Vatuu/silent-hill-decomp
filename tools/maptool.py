@@ -849,7 +849,7 @@ def print_usage():
     print()
     print("Misc:")
     print("  --jtbl [JTBL_NAME] [MAP]    Add rodata for jtbl to map1.yaml")
-    print("  --sortsym [MAP_NAME]        sort map symbols ('all' to sort all map symbol files)")
+    print("  --sortsyms [MAP_NAME]        sort map symbols ('all' to sort all map symbol files)")
     print("  --compareFuncs [FUNC1_ASM_PATH] [FUNC2_ASM_PATH]    compare two functions, print Levenshtein distance, write clean files for comparing")
     
 def main():
@@ -873,7 +873,7 @@ def main():
     parser.add_argument("--searchChara", type=int, help="Search all maps for character ID")
 
     parser.add_argument("--jtbl", type=str)
-    parser.add_argument("--sortsym", type=str)
+    parser.add_argument("--sortsyms", type=str)
     parser.add_argument("--compareFuncs", action="store_true")
     
     args = parser.parse_args()
@@ -892,9 +892,9 @@ def main():
 
         return
 
-    elif args.sortsym is not None:
-        map_files = [args.sortsym]
-        if args.sortsym == "all":
+    elif args.sortsyms is not None:
+        map_files = [args.sortsyms]
+        if args.sortsyms == "all":
             map_files = MapFileNames
 
         print()

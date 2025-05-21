@@ -1,9 +1,3 @@
-static inline void ModelAnim_UpdateFieldC_Stalker(s_ModelAnim* anim, s32 fieldCValue)
-{
-    anim->field_C  = fieldCValue;
-    anim->field_10 = 0;
-}
-
 void Ai_Stalker_Init(s_SubCharacter* arg0)
 {
     s32 i;
@@ -104,7 +98,7 @@ void Ai_Stalker_Init(s_SubCharacter* arg0)
     arg0->properties_E4.larvalStalker.properties_E8[3].val32    = arg0->position_18.vz;
     arg0->properties_E4.larvalStalker.properties_E8[0xA].val32  = arg0->health_B0;
 
-    ModelAnim_UpdateFieldC_Stalker(&arg0->model_0.anim_4, &sharedData_800DD5A8_0_s00);
+    ModelAnim_UpdateField(&arg0->model_0.anim_4, &sharedData_800DD5A8_0_s00);
 
     arg0->field_C0 = 0;
     arg0->field_BC = 0;

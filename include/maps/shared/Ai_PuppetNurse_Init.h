@@ -1,9 +1,3 @@
-static inline void ModelAnim_UpdateField_PuppetNurse(s_ModelAnim* anim, s32 fieldCValue)
-{
-    anim->field_10 = 0;
-    anim->field_C  = fieldCValue;
-}
-
 void Ai_PuppetNurse_Init(s_SubCharacter* chara, s32 isPuppetDoctor)
 {
     extern s_800D5710 sharedData_800D5710_3_s03[4]; // Likely static.
@@ -84,7 +78,7 @@ void Ai_PuppetNurse_Init(s_SubCharacter* chara, s32 isPuppetDoctor)
             break;
     }
 
-    ModelAnim_UpdateField_PuppetNurse(&chara->model_0.anim_4, chara2->properties_E4.npc.field_124->field_24);
+    ModelAnim_UpdateField(&chara->model_0.anim_4, chara2->properties_E4.npc.field_124->field_24);
 
     chara->model_0.anim_4.animIdx_0      = 34;
     chara->model_0.anim_4.keyframeIdx1_A = 0;

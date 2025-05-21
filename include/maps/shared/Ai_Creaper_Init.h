@@ -1,9 +1,3 @@
-static inline void ModelAnim_UpdateField_Creaper(s_ModelAnim* chara, s32 arg1)
-{
-    chara->field_C  = arg1;
-    chara->field_10 = 0;
-}
-
 // This inline allows getting rid of some ugly gotos, couldn't find a different way to handle it.
 static inline void Ai_Creaper_PropertiesUpdateFromStep(s_SubCharacter* chara)
 {
@@ -89,7 +83,7 @@ void Ai_Creaper_Init(s_SubCharacter* chara)
 
     Ai_Creaper_PropertiesUpdateFromStep(chara);
 
-    ModelAnim_UpdateField_Creaper(&chara->model_0.anim_4, &sharedData_800E0D38_1_s02);
+    ModelAnim_UpdateField(&chara->model_0.anim_4, &sharedData_800E0D38_1_s02);
 
     chara->field_C0 = 0;
     chara->field_BC = 0;

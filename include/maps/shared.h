@@ -39,6 +39,10 @@ extern s32 sharedData_800DD5A8_0_s00; // Pointer used by `Ai_Stalker_Init`.
 extern s32 sharedData_800E0D38_1_s02;
 extern s8  sharedData_800E57CC_1_s02;
 
+extern s32 sharedData_800E21D0_0_s01;
+
+extern s32 sharedData_800EC954_2_s02; // Used by `Ai_Romper_Init`.
+
 s32 sharedFunc_800CBBBC_0_s00();
 
 void sharedFunc_800D01BC_0_s00(u16* arg0, VECTOR3* arg1, s32 arg2);
@@ -219,7 +223,7 @@ void sharedFunc_800D3300_5_s00(s_SubCharacter*);
 
 void Ai_Romper_Update(s_SubCharacter* chara, s32 arg1, s32 arg2);
 
-void sharedFunc_800E5DD8_2_s02(s_SubCharacter*);
+void Ai_Romper_Init(s_SubCharacter*);
 
 void sharedFunc_800E60FC_2_s02(s_SubCharacter*);
 
@@ -341,6 +345,10 @@ void sharedFunc_800D63A4_0_s01(s_SubCharacter*);
 void sharedFunc_800D6600_0_s01(s_SubCharacter*);
 void sharedFunc_800D7560_0_s01(s_SubCharacter*);
 
-extern s32 sharedData_800E21D0_0_s01;
+static inline void ModelAnim_UpdateField(s_ModelAnim* anim, s32 arg1)
+{
+    anim->field_C  = arg1;
+    anim->field_10 = 0;
+}
 
 #endif

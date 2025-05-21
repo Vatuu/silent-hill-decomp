@@ -481,7 +481,7 @@ INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", sharedFunc_800E71E8_2_s00
 
 #include "maps/shared/Ai_Romper_Update.h" // 0x800E786C
 
-INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", sharedFunc_800E5DD8_2_s02); // 0x800E790C
+#include "maps/shared/Ai_Romper_Init.h" // 0x800E790C
 
 INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800E7AFC);
 
