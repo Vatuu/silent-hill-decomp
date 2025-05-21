@@ -431,7 +431,7 @@ INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", func_800E1750);
 
 #include "maps/shared/Ai_Groaner_Update.h" // 0x800E1760
 
-INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", sharedFunc_800E3074_2_s00); // 0x800E185C
+#include "maps/shared/Ai_Groaner_Init.h" // 0x800E185C
 
 INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", sharedFunc_800E33DC_2_s00); // 0x800E1A5C
 

@@ -428,7 +428,7 @@ INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800E2F68);
 
 #include "maps/shared/Ai_Groaner_Update.h" // 0x800E2F78
 
-INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", sharedFunc_800E3074_2_s00); // 0x800E3074 - `map2_s00` version differs to the 4 other maps which share `Ai_Groaner_Update`.
+#include "maps/shared/Ai_Groaner_Init.h" // 0x800E3074 - `map2_s00` includes extra block at end of function compared to other maps.
 
 INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", sharedFunc_800E33DC_2_s00); // 0x800E33DC
 

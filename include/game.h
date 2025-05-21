@@ -830,7 +830,7 @@ extern s_SysWork               g_SysWork; // 0x800B9FC0
 extern s_GameWork              g_GameWork;
 extern s_GameWork* const       g_GameWorkConst;
 extern s_GameWork*             g_GameWorkPtr;
-extern s_ShSaveGame*           g_SaveGamePtr;
+extern s_ShSaveGame* const     g_SaveGamePtr;
 extern s_ControllerData* const g_ControllerPtrConst;
 extern s_ControllerData*       g_ControllerPtr;
 

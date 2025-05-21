@@ -43,6 +43,8 @@ extern s32 sharedData_800E21D0_0_s01;
 
 extern s32 sharedData_800EC954_2_s02; // Used by `Ai_Romper_Init`.
 
+extern s32 sharedData_800EEB14_2_s00; // Used by `Ai_Groaner_Init`.
+
 s32 sharedFunc_800CBBBC_0_s00();
 
 void sharedFunc_800D01BC_0_s00(u16* arg0, VECTOR3* arg1, s32 arg2);
@@ -239,7 +241,7 @@ void sharedFunc_800E8DFC_2_s02(s_SubCharacter*);
 
 void Ai_Groaner_Update(s_SubCharacter* chara, s32 arg1, s32 arg2);
 
-void sharedFunc_800E3074_2_s00(s_SubCharacter*); // `map2_s00` has different version to the other 4 maps which share this, shared sym is needed to share `Ai_Groaner_Update`.
+void Ai_Groaner_Init(s_SubCharacter*); // `map2_s00` has extra block at end of func compared to other maps.
 
 void sharedFunc_800E33DC_2_s00(s_SubCharacter*);
 

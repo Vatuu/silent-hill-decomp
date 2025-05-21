@@ -2,10 +2,9 @@ void Ai_Groaner_Update(s_SubCharacter* chara, s32 arg1, s32 arg2)
 {
     u8 var;
 
-    // `state_2` suggests it's initialized?
     if (chara->model_0.state_2 == 0)
     {
-        sharedFunc_800E3074_2_s00(chara); // Init func?
+        Ai_Groaner_Init(chara);
     }
 
     var = chara->model_0.state_2;
