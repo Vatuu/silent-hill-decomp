@@ -51,17 +51,10 @@ void func_8002E630() // 0x8002E630
 
 void func_8002E6E4(s32 idx) // 0x8002E6E4
 {
-    s_800B5508* temp_v0;
-    s_800B5508* temp_s0;
-
-    temp_v0 = &D_800B5508;
-    temp_s0 = &temp_v0[idx];
-    temp_s0->field_0 = 0;
-
+    D_800B5508[idx].field_0 = 0;
     func_8002E730(idx);
-    bzero(temp_s0->field_14, 3840);
-
-    temp_s0->field_18 = 0;
+    bzero(D_800B5508[idx].field_14, 0xF00);
+    D_800B5508[idx].field_18 = 0;
 }
 
 void func_8002E730(s32 idx) // 0x8002E730
@@ -1432,7 +1425,24 @@ void func_80037E40(s_SubCharacter* arg0) // 0x80037E40
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80037E78);
+void func_80037E78(s_SubCharacter* chara) // 0x80037E78
+{
+    s8  idx;
+    s32 cond;
+
+    // TODO: Strange `chara->headingAngle_3C` access.
+    if (chara->health_B0 <= 0 && (*(s32*)&chara->headingAngle_3C & 0x600000) == 0x200000)
+    {
+        idx = chara->unk_40[1];
+        if (idx < 39)
+        {
+            cond = D_800AD4C8[idx].field_10 == 3;
+            func_800914C4(cond, func_8009146C(cond) + 1);
+        }
+
+        chara->flags_3E |= 1 << 6;
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80037F24);
 

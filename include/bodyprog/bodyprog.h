@@ -182,7 +182,8 @@ typedef struct
 {
     s8 unk_0[15];
     s8 field_F;
-    s8 unk_10[8];
+    u8 field_10;
+    s8 field_14[7];
 } s_800AD4C8;
 STATIC_ASSERT_SIZEOF(s_800AD4C8, 24);
 
@@ -1838,9 +1839,27 @@ void func_80037388();
 
 void func_800373CC(s32);
 
+void func_80037E40(s_SubCharacter* arg0);
+
+void func_80037E78(s_SubCharacter* chara);
+
 void func_80037F24(s32);
 
 void func_80038354();
+
+void GameState_InGame_Update();
+
+void SysState_GamePaused_Update();
+
+void GameState_LoadStatusScreen_Update();
+
+void GameState_LoadMapScreen_Update();
+
+void SysState_Fmv_Update();
+
+void AreaLoad_UpdatePlayerPosition();
+
+s8 func_80039F90();
 
 void SysWork_SaveGameUpdatePlayer();
 
