@@ -8,18 +8,6 @@
 
 typedef struct
 {
-    s16                    field_0;
-    u16                    unk_2;
-    s8                     unk_4;
-    s8                     field_5;
-    s8                     field_6;
-    s8                     field_7;
-    s32                    field_8; // Maybe bitfield.
-    struct s_UnkSaveload0* field_C;
-} s_UnkSaveload0; // Size: >=12
-
-typedef struct
-{
     DVECTOR field_0;
     DVECTOR field_4;
 } s_801E2A98;
@@ -31,6 +19,13 @@ typedef struct
     DVECTOR field_8;
     DVECTOR field_C;
 } s_801E2A48;
+
+typedef struct
+{
+    DVECTOR field_0;
+    DVECTOR field_4;
+    DVECTOR field_8;
+} s_801E2B58;
 
 typedef struct
 {
@@ -49,32 +44,13 @@ typedef struct
 
 typedef struct
 {
-    DVECTOR field_0;
-    DVECTOR field_4;
-    DVECTOR field_8;
-    DVECTOR field_C;
-} s_Sub_801E2CCC;
+    s_801E2A48 field_0[4];
+} s_801E2CCC;
 
 typedef struct
 {
-    s_Sub_801E2CCC field_0[4];
-} s_801E2CCC;
-
-extern s8 D_800A97D7;
-
-extern s8 D_800A97D8;
-
-extern s32 D_800B9FE0[];
-
-extern u32 D_800BCD34;
-
-extern s16 D_800BCD3A;
-
-extern u8 D_800BCD3C[];
-
-extern s8 D_800BCD39;
-
-extern u8 D_800BCD3C[];
+    u8 r, g, b, p;
+} s_primColor;
 
 extern char* D_801E74A8[];
 
@@ -116,6 +92,8 @@ extern s16 D_801E7578[MEMORY_CARD_SLOT_COUNT];
 
 extern s8 D_801E7584[];
 
+extern s8 D_801E76CE[MEMORY_CARD_SLOT_COUNT];
+
 extern s8 D_801E76D0;
 
 extern s8 D_801E76D2[MEMORY_CARD_SLOT_COUNT];
@@ -125,8 +103,6 @@ extern s8 D_801E76D4;
 extern u8 D_801E76D5;
 
 extern u8 D_801E76D6;
-
-extern s8 D_801E76CE[MEMORY_CARD_SLOT_COUNT];
 
 /** Clears all saves? */
 void func_801E2D8C();
@@ -143,13 +119,13 @@ void func_801E30C4(s_UnkSaveload0* ptr, s32 arg1, s32 idx);
 /** Sets the color of the string to be drawn based on some flag. */
 s32 func_801E3078(s_UnkSaveload0* arg0);
 
-void func_801E326C(s8* arg0, s8* arg1, s32 arg2, s32 arg3);
+void func_801E326C(s_UnkSaveload0* arg0, s_UnkSaveload0* arg1, s32 arg2, s32 arg3);
 
 void func_801E3910(s32 arg0, s32 arg1);
 
 void func_801E43C8(s32 arg0);
 
-void Gfx_SavesTransparentBgDraw(s8* arg0, s8* arg1, s32 arg2, s32 arg3);
+void Gfx_SavesTransparentBgDraw(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 
 void func_801E52D8(s32 arg0, s32 arg1);
 

@@ -56,7 +56,7 @@ segments:
     subsegments:
       - [0x0, rodata]
       - [0x108, .rodata, saveload]
-      - [0x538, rodata]
+      - [0x70C, rodata]
       - [0x78C, c, saveload]
       - [0x4EA8, data, saveload]
 
