@@ -115,11 +115,11 @@ s32 func_800C9874() // 0x800C9874
         return 1;
     }
 
-    D_800BCD2C = BOOT_ADDR_0;
-    var0 = (s32)D_800BCD2C[4];
+    D_800BCD2C = (s_UnkSaveload0*)BOOT_ADDR_0;
+    var0       = D_800BCD2C->field_4;
 
-    D_800BCD2C = BOOT_ADDR_1;
-    var1 = (s32)D_800BCD2C[4];
+    D_800BCD2C = (s_UnkSaveload0*)BOOT_ADDR_1;
+    var1       = D_800BCD2C->field_4;
 
     if (var0 == 0 && var1 == 0)
     {
@@ -132,12 +132,12 @@ s32 func_800C9874() // 0x800C9874
     }
     else if (var0 == 8 || var1 == 8)
     {
-        D_800BCD2C = &BOOT_ADDR_0[D_800A97D6 * 2640];
-        D_800BCD2C = &D_800BCD2C[D_800A97D4[D_800A97D6] * 16];
-        
-        D_800BCD40 = D_800BCD2C[5];
-        D_800BCD3F = D_800BCD2C[6];
-        D_800BCD3E = D_800BCD2C[7];
+        D_800BCD2C = (s_UnkSaveload0*)&BOOT_ADDR_0[D_800A97D6 * 0xA50];
+        D_800BCD2C = &D_800BCD2C[D_800A97D4[D_800A97D6]];
+
+        D_800BCD40 = D_800BCD2C->field_5;
+        D_800BCD3F = D_800BCD2C->field_6;
+        D_800BCD3E = D_800BCD2C->field_7;
         return 5;
     }
     

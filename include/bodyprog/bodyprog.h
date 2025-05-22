@@ -622,6 +622,18 @@ typedef struct _AreaLoadParams
     s32 char_z_8;
 } s_AreaLoadParams;
 
+typedef struct
+{
+    s16                    field_0;
+    u16                    unk_2;
+    s8                     field_4;
+    s8                     field_5;
+    s8                     field_6;
+    s8                     field_7;
+    s32                    field_8; // Maybe bitfield.
+    struct s_UnkSaveload0* field_C;
+} s_UnkSaveload0; // Size: >=12
+
 extern s_FsImageDesc g_MainImg0; // 0x80022C74 - TODO: part of main exe, move to main/ headers?
 
 extern s32 D_8002500C; // Some sort of struct inside RODATA, likely a constant.
@@ -696,6 +708,10 @@ extern void (*D_800A977C[])(); // Function pointer array, maybe state funcs of s
 extern u8 D_800A97D4[]; // Something related to save slots.
 
 extern s8 D_800A97D6; // Save slot index?
+
+extern s8 D_800A97D7;
+
+extern s8 D_800A97D8;
 
 extern u16 D_800A98AC[];
 
@@ -822,7 +838,15 @@ extern s32 D_800BCD0C;
 
 extern s16 D_800BCD28;
 
-extern s8* D_800BCD2C;
+extern s_UnkSaveload0* D_800BCD2C; // Type assumed.
+
+extern u32 D_800BCD34;
+
+extern s8 D_800BCD39;
+
+extern s16 D_800BCD3A;
+
+extern u8 D_800BCD3C[];
 
 extern u8 D_800BCD3E;
 
