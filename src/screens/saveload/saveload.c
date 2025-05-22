@@ -167,7 +167,7 @@ void func_801E30C4(s_UnkSaveload0* ptr, s32 arg1, s32 idx) // 0x801E30C4
     }
 }
 
-void func_801E326C(s8* arg0, s8* arg1, s32 arg2, s32 arg3) // 0x801E326C
+void func_801E326C(s_UnkSaveload0* arg0, s_UnkSaveload0* arg1, s32 arg2, s32 arg3) // 0x801E326C
 {
     if (arg2 == 0)
     {
@@ -176,9 +176,9 @@ void func_801E326C(s8* arg0, s8* arg1, s32 arg2, s32 arg3) // 0x801E326C
 
     if (arg2 < D_801E7570[arg3] || (D_801E7570[arg3] + 4) < arg2)
     {
-        if (D_801E756C[arg3] != arg0[6])
+        if (D_801E756C[arg3] != arg0->field_6)
         {
-            D_801E756C[arg3] = arg0[6];
+            D_801E756C[arg3] = arg0->field_6;
         }
     }
     else
@@ -187,7 +187,7 @@ void func_801E326C(s8* arg0, s8* arg1, s32 arg2, s32 arg3) // 0x801E326C
     }
 }
 
-void func_801E3304(s8* arg0, s32 arg1, s32 arg2) // 0x801E3304
+void func_801E3304(s_UnkSaveload0* arg0, s32 arg1, s32 arg2) // 0x801E3304
 {
     char* D_801E2830[] =
     {
@@ -207,7 +207,7 @@ void func_801E3304(s8* arg0, s32 arg1, s32 arg2) // 0x801E3304
     s32 i;
     s32 temp_s2;
 
-    temp_s2 = arg0[4];
+    temp_s2 = arg0->field_4;
 
     if (D_800A97D6 == arg2 && arg1 == 0 && temp_s2 >= 7)
     {
@@ -564,7 +564,7 @@ void func_801E3C44(s32 arg0, s32 arg1) // 0x801E3C44
         case 1:
             Gfx_StringSetPosition(160 - (xOffsets[arg0] / 2), 178);
             Gfx_StringDraw(D_801E2A3C[arg0], 99);
-            Gfx_StringSetPosition(0x68, 0xC4);
+            Gfx_StringSetPosition(104, 196);
             Gfx_StringDraw("\x07Yes__________No", 99);
 
             poly = (POLY_F4*)GsOUT_PACKET_P;
