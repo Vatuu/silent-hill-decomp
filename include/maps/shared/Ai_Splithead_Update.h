@@ -4,7 +4,7 @@ void Ai_Splithead_Update(s_SubCharacter* chara, s32 arg1, s32 arg2)
 
     if (chara->model_0.state_2 == 0)
     {
-        sharedFunc_800CF8D8_1_s05(chara);
+        Ai_Splithead_Init(chara);
     }
 
     if (g_DeltaTime0 != 0)
