@@ -103,9 +103,9 @@ void func_801E2FCC(s32 arg0, s32 saveSlotIdx, s32 fileId, s32 arg3) // 0x801E2FC
     }
 }
 
-s32 func_801E3078(s_UnkSaveload0* arg0) // 0x801E3078
+s32 func_801E3078(s_UnkSaveload1* arg0) // 0x801E3078
 {
-    if (arg0 != NULL && (arg0->field_8 & (1 << 24)))
+    if (arg0 != NULL && arg0->isTitleYellowFlag_B_0)
     {
         Gfx_StringSetColor(ColorId_Gold);
         return 1;
@@ -1207,9 +1207,248 @@ void Gfx_RectMemLoadDraw(s_801E2CAC* arg0, s_801E2CCC* arg1, s_801E2C8C* arg2, s
     func_80052088(0, 0, 8, 1);
 }
 
-INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", Gfx_RectSaveInfoDraw); // 0x801E5898
+void Gfx_RectSaveInfoDraw(s_801E2A98* arg0) // 0x801E5898
+{
+    GsOT*    ot;
+    s32      color;
+    s32      i;
+    POLY_F3* poly_f3;
+    POLY_F4* poly_f4;
+    LINE_G2* line_g2;
 
-INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", Save_SaveDataInfoDraw); // 0x801E5E18
+    DVECTOR sp10[] =
+    {
+        {.vx = arg0->field_0.vx, .vy = arg0->field_0.vy},
+        {.vx = (arg0->field_0.vx + arg0->field_4.vx) - 8, .vy = arg0->field_0.vy},
+        {.vx = arg0->field_0.vx + arg0->field_4.vx, .vy = arg0->field_0.vy + 8},
+        {.vx = arg0->field_0.vx + arg0->field_4.vx, .vy = arg0->field_0.vy + arg0->field_4.vy},
+        {.vx = arg0->field_0.vx + 8, .vy = arg0->field_0.vy + arg0->field_4.vy},
+        {.vx = arg0->field_0.vx, .vy = (arg0->field_0.vy + arg0->field_4.vy) - 8}
+    };
+
+    s_801E2B58 sp28[] =
+    {
+        {
+            {.vx = arg0->field_0.vx + arg0->field_4.vx, .vy = arg0->field_0.vy},
+            {.vx = (arg0->field_0.vx + arg0->field_4.vx) - 8, .vy = arg0->field_0.vy},
+            {.vx = arg0->field_0.vx + arg0->field_4.vx, .vy = arg0->field_0.vy + 8},
+        },
+        {
+            {.vx = arg0->field_0.vx, .vy = arg0->field_0.vy + arg0->field_4.vy},
+            {.vx = arg0->field_0.vx + 8, .vy = arg0->field_0.vy + arg0->field_4.vy},
+            {.vx = arg0->field_0.vx, .vy = (arg0->field_0.vy + arg0->field_4.vy) - 8}
+        }
+    };
+
+    ot = &g_ObjectTable1[g_ObjectTableIdx];
+
+    for (i = 0; i < 2; i++)
+    {
+        poly_f3 = (POLY_F3*)GsOUT_PACKET_P;
+        setlen(poly_f3, 4);
+
+        color = 0x30; // HACK
+
+        setcode(poly_f3, 0x22);
+        setRGB0(poly_f3, color, 0x30, 0x30);
+        setXY3(poly_f3,
+               sp28[i].field_0.vx, sp28[i].field_0.vy,
+               sp28[i].field_4.vx, sp28[i].field_4.vy,
+               sp28[i].field_8.vx, sp28[i].field_8.vy);
+        addPrim((u8*)ot->org + 0x20, poly_f3);
+
+        GsOUT_PACKET_P = (u8*)poly_f3;
+        GsOUT_PACKET_P += sizeof(POLY_F3);
+    }
+
+    func_80052088(0, 0, 8, 2);
+
+    poly_f4 = (POLY_F4*)GsOUT_PACKET_P;
+    setlen(poly_f4, 5);
+    setcode(poly_f4, 0x2A);
+    setRGB0(poly_f4, 0x30, 0x30, 0x30);
+    setXY4(poly_f4,
+           arg0->field_0.vx, arg0->field_0.vy,
+           arg0->field_0.vx, arg0->field_0.vy + arg0->field_4.vy,
+           arg0->field_0.vx + arg0->field_4.vx, arg0->field_0.vy,
+           arg0->field_0.vx + arg0->field_4.vx, arg0->field_0.vy + arg0->field_4.vy);
+    addPrim((u8*)ot->org + 0x24, poly_f4);
+    GsOUT_PACKET_P = (u8*)poly_f4 + sizeof(POLY_F4);
+
+    func_80052088(0, 0, 9, 1);
+
+    for (i = 0; i < 6; i++)
+    {
+        line_g2 = (LINE_G2*)GsOUT_PACKET_P;
+        setLineG2(line_g2);
+
+        if (i & 1)
+        {
+            setRGB0(line_g2, 0xA0, 0x80, 0x40);
+            setRGB1(line_g2, 0xB0, 0xB0, 0xB0);
+        }
+        else
+        {
+            setRGB0(line_g2, 0xB0, 0xB0, 0xB0);
+            setRGB1(line_g2, 0xA0, 0x80, 0x40);
+        }
+
+        setXY2(line_g2,
+               sp10[i].vx, sp10[i].vy,
+               sp10[(i + 1) % 6].vx, sp10[(i + 1) % 6].vy);
+
+        addPrim((u8*)ot->org + 0x1C, line_g2);
+        GsOUT_PACKET_P = (u8*)line_g2 + sizeof(LINE_G2);
+    }
+}
+
+void Save_SaveDataInfoDraw(s32 arg0, s32 arg1) // 0x801E5E18
+{
+    char* D_801E2D70[] =
+    {
+        "Data",
+        "Save",
+        "Time",
+        "hyper blaster",
+        "power up",
+        "You_need_1_free_block\n__to_create_a_new_file."
+    };
+
+    GsOT*           ot;
+    s32             saveNumber;
+    s32             minutes;
+    s32             hasFlag;
+    s32             seconds;
+    s32             hours;
+    s32             saveDataIndex;
+    s32             i;
+    s32             numberOfDigits;
+    s32             offset;
+    u32             saveFlags;
+    u32             flags;
+    u32             timeInSeconds;
+    s_UnkSaveload1* ptr;
+    POLY_G4*        poly;
+
+    ot = &g_ObjectTable1[g_ObjectTableIdx];
+
+    D_800BCD2C = (s_UnkSaveload0*)&BOOT_ADDR_0[arg0 * 0xA50];
+
+    if (D_800BCD2C[arg1].field_4 == 10)
+    {
+        Gfx_StringSetColor(7);
+        Gfx_StringSetPosition(66, 178);
+        Gfx_StringDraw("You_need_1_free_block\n__to_create_a_new_file.", 0x32);
+    }
+    else if (D_800BCD2C[arg1].field_4 == 8)
+    {
+        saveNumber    = D_800BCD2C[arg1].field_2;     // Game's save counter
+        saveDataIndex = D_800BCD2C[arg1].field_7 + 1; // Save data index
+
+        saveNumber = CLAMP(saveNumber, 0, 999);
+
+        ptr = D_800BCD2C[arg1].field_C;
+
+        timeInSeconds = FP_FROM(ptr->gameplayTimer_4, Q12_SHIFT);
+
+        offset = ptr->add290Hours_B_1;
+        hours  = (timeInSeconds / 3600) + offset * 290;
+
+        flags = ptr->hyperBlasterFlags_B_3;
+
+        minutes = (timeInSeconds / 60) % 60;
+        seconds = timeInSeconds % 60;
+
+        Gfx_StringSetColor(7);
+        Gfx_StringSetPosition(40, 178);
+        Gfx_StringDraw("Data", 5);
+
+        numberOfDigits = saveDataIndex < 10;
+
+        Gfx_StringSetPosition(numberOfDigits * 5 + 92, 178);
+        Gfx_StringDrawInt(2, saveDataIndex);
+
+        Gfx_StringSetPosition(40, 196);
+        Gfx_StringDraw("Save", 5);
+
+        numberOfDigits = saveNumber < 10;
+
+        Gfx_StringSetPosition(numberOfDigits * 5 + 92, 196);
+        Gfx_StringDrawInt(2, saveNumber);
+
+        Gfx_StringSetPosition(128, 178);
+        Gfx_StringDraw("Time", 5);
+
+        numberOfDigits = 0;
+        if (hours < 100)
+        {
+            if (hours >= 10)
+            {
+                numberOfDigits = 1;
+            }
+            else
+            {
+                numberOfDigits = 2;
+            }
+        }
+
+        Gfx_StringSetPosition((numberOfDigits * 10) + 176, 178);
+        Gfx_StringDrawInt(3, hours);
+        Gfx_StringDraw("_:_", 3);
+
+        numberOfDigits = minutes < 10;
+
+        Gfx_StringSetPosition(numberOfDigits * 10 + 220, 178);
+        Gfx_StringDrawInt(2, minutes);
+        Gfx_StringDraw("_:_", 3);
+
+        numberOfDigits = seconds < 10;
+
+        Gfx_StringSetPosition(numberOfDigits * 10 + 254, 178);
+        Gfx_StringDrawInt(2, seconds);
+
+        if (!(flags & 0x18))
+        {
+            return;
+        }
+
+        Gfx_DebugStringPosition(152, 194);
+        Gfx_DebugStringDraw("hyper blaster");
+        Gfx_DebugStringPosition(172, 202);
+        Gfx_DebugStringDraw("power up");
+
+        for (i = 0; i < 2; i++)
+        {
+            poly = (POLY_G4*)GsOUT_PACKET_P;
+            setlen(poly, 8);
+            setcode(poly, 0x3A);
+
+            hasFlag = (flags & 0x10);
+
+            if (i != 0)
+            {
+                setRGB0(poly, hasFlag > 0 ? 0 : 0xFF, 0xFF, 0);
+                setRGB2(poly, hasFlag > 0 ? 0 : 0xFF, 0xFF, 0);
+                setRGB1(poly, 0, 0, 0);
+                setRGB3(poly, 0, 0, 0);
+                setXY4(poly, -30, 89, -30, 93, 120, 89, 120, 93);
+            }
+            else
+            {
+                setRGB0(poly, 0, 0, 0);
+                setRGB2(poly, 0, 0, 0);
+                setRGB1(poly, hasFlag > 0 ? 0 : 0xFF, 0xFF, 0);
+                setRGB3(poly, hasFlag > 0 ? 0 : 0xFF, 0xFF, 0);
+                setXY4(poly, -30, 85, -30, 89, 120, 85, 120, 89);
+            }
+
+            GsOUT_PACKET_P = (u8*)poly + sizeof(POLY_G4);
+            addPrim((u8*)ot->org + 0x1C, poly);
+
+            func_80052088(0, 0, 7, 1);
+        }
+    }
+}
 
 void GameState_SaveScreen_Update() // 0x801E6320
 {
@@ -1494,7 +1733,84 @@ void func_801E69E8() // 0x801E69E8
     }
 }
 
-INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E6B18); // 0x801E6B18
+void func_801E6B18() // 0x801E6B18
+{
+    s_UnkSaveload1* ptr;
+
+    switch (g_GameWork.gameStateStep_598[1])
+    {
+        case 0:
+            D_801E751C = 2;
+            ptr        = func_8002E9EC(D_800BCD40, D_800BCD3F, D_800BCD3E);
+
+            if (g_SaveGamePtr->mapEventIdx_A8 == 24)
+            {
+                ptr->saveGameCount_8 = 0;
+            }
+            else
+            {
+                g_SaveGamePtr->saveGameCount_A6++;
+                ptr->saveGameCount_8 = g_SaveGamePtr->saveGameCount_A6;
+            }
+
+            ptr->mapEventIdx_A   = g_SaveGamePtr->mapEventIdx_A8;
+            ptr->gameplayTimer_4 = g_SaveGamePtr->gameplayTimer_250;
+
+            D_801E76D5 = ptr->isTitleYellowFlag_B_0;
+
+            ptr->isTitleYellowFlag_B_0 = g_SaveGamePtr->isTitleYellowFlag_25C_0;
+            ptr->add290Hours_B_1       = g_SaveGamePtr->add290Hours_25C_1;
+            ptr->hyperBlasterFlags_B_3 = g_SaveGamePtr->hyperBlasterFlags_25C_3;
+
+            func_8002E94C(5, D_800BCD40, D_800BCD3F, D_800BCD3E);
+            g_GameWork.gameStateStep_598[1]++;
+            g_GameWork.gameStateStep_598[2] = 0;
+
+        case 1:
+            switch (func_8002E990())
+            {
+                default:
+                    g_GameWork.gameStateStep_598[0] = 1;
+                    g_SysWork.timer_20              = 0;
+                    g_GameWork.gameStateStep_598[1] = 0;
+                    g_GameWork.gameStateStep_598[2] = 0;
+                    break;
+
+                case 1:
+                    D_801E7520 = 30;
+                    break;
+
+                case 11:
+                    func_8002E94C(3, D_800BCD40, D_800BCD3F, 0);
+                    g_GameWork.gameStateStep_598[1]++;
+                    g_GameWork.gameStateStep_598[2] = 0;
+                    break;
+            }
+            break;
+
+        case 2:
+            switch (func_8002E990())
+            {
+                case 1:
+                    D_801E7520 = 30;
+                    break;
+
+                case 11:
+                    g_GameWork.saveGame_90 = g_GameWork.saveGame_30C;
+
+                default:
+                    g_GameWork.gameStateStep_598[0] = 1;
+                    g_SysWork.timer_20              = 0;
+                    g_GameWork.gameStateStep_598[1] = 0;
+                    g_GameWork.gameStateStep_598[2] = 0;
+                    break;
+            }
+            break;
+
+        default:
+            break;
+    }
+}
 
 void func_801E6DB0() // 0x801E6DB0
 {
