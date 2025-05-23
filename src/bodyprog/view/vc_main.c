@@ -880,11 +880,301 @@ s32 vcRetRoadUsePriority(VC_ROAD_TYPE rd_type) // 0x8008227C
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vc_main", vcSetCurNearRoadInVC_WORK);
+s32 vcSetCurNearRoadInVC_WORK(VC_WORK* w_p) // 0x800822B8
+{
+    VC_NEAR_ROAD_DATA* new_cur_p;
+    VC_NEAR_ROAD_DATA* n_rd_p;
+    VC_NEAR_ROAD_DATA* old_cur_p;
+    s16                old_cur_rd_ang_y;
+    s16                ofs_ang_y;
+    s32                old_cur_sum_dist;
+    s32                adv_old_cur_dist;
+    s32                new_cur_sum_dist;
+    s32                proj_frame;
+    s32                ret_warp_f;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vc_main", vcGetBestNewCurNearRoad);
+    ret_warp_f       = 0;
+    new_cur_sum_dist = vcGetBestNewCurNearRoad(&new_cur_p, VC_CHK_NEAREST_SWITCH_TYPE, &w_p->chara_pos_114, w_p);
+    old_cur_p        = NULL;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vc_main", vcGetNearestNEAR_ROAD_DATA);
+    for (n_rd_p = w_p->near_road_ary_14C; n_rd_p < &w_p->near_road_ary_14C[w_p->near_road_suu_2B4]; n_rd_p++)
+    {
+        if (n_rd_p->road_p_0 == w_p->cur_near_road_2B8.road_p_0)
+        {
+            old_cur_p = n_rd_p;
+        }
+    }
+
+    if (old_cur_p == NULL)
+    {
+        if (new_cur_p->road_p_0->flags_10 & VC_RD_WARP_IN_F)
+        {
+            ret_warp_f = 1;
+        }
+        if (w_p->cur_near_road_2B8.road_p_0->flags_10 & VC_RD_WARP_OUT_F)
+        {
+            ret_warp_f = 1;
+        }
+
+        w_p->cur_near_road_2B8 = *new_cur_p;
+
+        return ret_warp_f;
+    }
+
+    adv_old_cur_dist = vcAdvantageDistOfOldCurRoad(old_cur_p);
+
+    if (new_cur_p->use_priority_5 < old_cur_p->use_priority_5 && old_cur_p->chara2road_sum_dist_8 < (adv_old_cur_dist * 2))
+    {
+        w_p->cur_near_road_2B8 = *old_cur_p;
+    }
+    else
+    {
+        if (old_cur_p->use_priority_5 < new_cur_p->use_priority_5 && new_cur_p->chara2road_sum_dist_8 <= 0)
+        {
+            if (new_cur_p->road_p_0->flags_10 & VC_RD_WARP_IN_F)
+            {
+                ret_warp_f = 1;
+            }
+
+            if (w_p->cur_near_road_2B8.road_p_0->flags_10 & VC_RD_WARP_OUT_F)
+            {
+                ret_warp_f = 1;
+            }
+
+            w_p->cur_near_road_2B8 = *new_cur_p;
+            return ret_warp_f;
+        }
+
+        old_cur_sum_dist = old_cur_p->chara2road_sum_dist_8;
+
+        switch (old_cur_p->rd_dir_type_4_mb)
+        {
+            case 0:
+                old_cur_rd_ang_y = 0;
+                break;
+            case 1:
+                old_cur_rd_ang_y = FP_ANGLE(90.0f);
+                break;
+            default:
+                old_cur_rd_ang_y = 0;
+                break;
+        }
+
+        ofs_ang_y = shAngleRegulate(w_p->chara_mv_ang_y_140 - old_cur_rd_ang_y);
+
+        if (ofs_ang_y < 0)
+        {
+            ofs_ang_y += FP_ANGLE(180.0f);
+        }
+
+        if (ofs_ang_y > FP_ANGLE(90.0f))
+        {
+            ofs_ang_y = FP_ANGLE(180.0f) - ofs_ang_y;
+        }
+
+        proj_frame = old_cur_sum_dist - adv_old_cur_dist;
+
+        if (new_cur_sum_dist >= proj_frame)
+        {
+            w_p->cur_near_road_2B8 = *old_cur_p;
+        }
+        else if (old_cur_sum_dist < 0 && ofs_ang_y < FP_ANGLE(20.0f))
+        {
+            w_p->cur_near_road_2B8 = *old_cur_p;
+        }
+        else
+        {
+            if (new_cur_p->road_p_0->flags_10 & VC_RD_WARP_IN_F)
+            {
+                ret_warp_f = 1;
+            }
+
+            if (w_p->cur_near_road_2B8.road_p_0->flags_10 & VC_RD_WARP_OUT_F)
+            {
+                ret_warp_f = 1;
+            }
+
+            w_p->cur_near_road_2B8 = *new_cur_p;
+        }
+    }
+    return ret_warp_f;
+}
+
+s32 vcGetBestNewCurNearRoad(VC_NEAR_ROAD_DATA** new_cur_pp, VC_CAM_CHK_TYPE chk_type, VECTOR3* pos, VC_WORK* w_p) // 0x800826AC
+{
+    s32                dummy;
+    VC_NEAR_ROAD_DATA* evnt_nearest_p;
+    VC_NEAR_ROAD_DATA* eff_nearest_p;
+    VC_NEAR_ROAD_DATA* road_nearest_p;
+    VC_NEAR_ROAD_DATA* new_cur_p;
+    s32                road_min_dist;
+    s32                eff_min_dist;
+    s32                evnt_min_dist;
+    s32                renewal_f;
+    s32                new_cur_dist;
+    s32                new_cur_priority;
+
+    new_cur_p    = NULL;
+    new_cur_dist = 0x7FFFFFFF;
+
+    evnt_min_dist = vcGetNearestNEAR_ROAD_DATA(&evnt_nearest_p, chk_type, VC_RD_TYPE_EVENT, pos, w_p, 0);
+    eff_min_dist  = vcGetNearestNEAR_ROAD_DATA(&eff_nearest_p, chk_type, VC_RD_TYPE_EFFECT, pos, w_p, 0);
+    road_min_dist = vcGetNearestNEAR_ROAD_DATA(&road_nearest_p, chk_type, VC_RD_TYPE_ROAD, pos, w_p, 0);
+
+    new_cur_priority = 0;
+    renewal_f        = 0;
+
+    if (evnt_nearest_p != NULL)
+    {
+        if (new_cur_priority < evnt_nearest_p->use_priority_5)
+        {
+            if (evnt_min_dist <= 0 || evnt_min_dist < new_cur_dist)
+            {
+                renewal_f = 1;
+            }
+        }
+        else if (evnt_nearest_p->use_priority_5 >= new_cur_priority)
+        {
+            if (evnt_min_dist < new_cur_dist)
+            {
+                renewal_f = 1;
+            }
+        }
+        else if (new_cur_dist > 0 && evnt_min_dist < new_cur_dist)
+        {
+            renewal_f = 1;
+        }
+    }
+
+    if (renewal_f != 0)
+    {
+        new_cur_p        = evnt_nearest_p;
+        new_cur_dist     = evnt_min_dist;
+        new_cur_priority = new_cur_p->use_priority_5;
+    }
+
+    renewal_f = 0;
+
+    if (road_nearest_p != NULL)
+    {
+        if (new_cur_priority < road_nearest_p->use_priority_5)
+        {
+            if (road_min_dist <= 0 || road_min_dist < new_cur_dist)
+            {
+                renewal_f = 1;
+            }
+        }
+        else if (road_nearest_p->use_priority_5 >= new_cur_priority)
+        {
+            if (road_min_dist < new_cur_dist)
+            {
+                renewal_f = 1;
+            }
+        }
+        else if (new_cur_dist > 0 && road_min_dist < new_cur_dist)
+        {
+            renewal_f = 1;
+        }
+    }
+
+    if (renewal_f != 0)
+    {
+        new_cur_p        = road_nearest_p;
+        new_cur_dist     = road_min_dist;
+        new_cur_priority = new_cur_p->use_priority_5;
+    }
+
+    renewal_f = 0;
+
+    if (eff_nearest_p != NULL)
+    {
+        if (new_cur_priority < eff_nearest_p->use_priority_5)
+        {
+            if (eff_min_dist <= 0 || eff_min_dist < new_cur_dist)
+            {
+                renewal_f = 1;
+            }
+        }
+        else if (eff_nearest_p->use_priority_5 >= new_cur_priority)
+        {
+            if (eff_min_dist < new_cur_dist)
+            {
+                renewal_f = 1;
+            }
+        }
+        else if (new_cur_dist > 0 && eff_min_dist < new_cur_dist)
+        {
+            renewal_f = 1;
+        }
+    }
+
+    if (renewal_f != 0)
+    {
+        new_cur_p    = eff_nearest_p;
+        new_cur_dist = eff_min_dist;
+    }
+
+    if (new_cur_p == NULL)
+    {
+        new_cur_p    = &vcNullNearRoad;
+        new_cur_dist = vcGetXZSumDistFromLimArea(&dummy, &dummy, pos->vx, pos->vz, vcNullNearRoad.rd_14.min_hx << 8, vcNullNearRoad.rd_14.max_hx << 8, vcNullNearRoad.rd_14.min_hz << 8, vcNullNearRoad.rd_14.max_hz << 8, vcNullNearRoad.road_p_0->flags_10 & 0x80);
+    }
+
+    *new_cur_pp = new_cur_p;
+    return new_cur_dist;
+}
+
+s32 vcGetNearestNEAR_ROAD_DATA(VC_NEAR_ROAD_DATA** out_nearest_p_addr, VC_CAM_CHK_TYPE chk_type, VC_ROAD_TYPE rd_type, VECTOR3* pos, VC_WORK* w_p, s32 chk_only_set_marge_f) // 0x80082908
+{
+    s32                dummy;
+    VC_NEAR_ROAD_DATA* n_rd_p;
+    VC_NEAR_ROAD_DATA* nearest_p;
+    s32                min_x;
+    s32                max_x;
+    s32                min_z;
+    s32                max_z;
+    s32                dist;
+    s32                min_sum_dist;
+
+    nearest_p    = NULL;
+    n_rd_p       = w_p->near_road_ary_14C;
+    min_sum_dist = 0x7FFFFFFF;
+
+    for (n_rd_p = w_p->near_road_ary_14C; n_rd_p < &w_p->near_road_ary_14C[w_p->near_road_suu_2B4]; n_rd_p++)
+    {
+        if (n_rd_p->road_p_0->rd_type_11 == rd_type && (chk_only_set_marge_f == 0 || n_rd_p->road_p_0->flags_10 & VC_RD_MARGE_ROAD_F))
+        {
+            switch (chk_type)
+            {
+                case VC_CHK_NEAREST_ROAD_TYPE:
+                    min_x = n_rd_p->rd_14.min_hx << 8;
+                    max_x = n_rd_p->rd_14.max_hx << 8;
+                    min_z = n_rd_p->rd_14.min_hz << 8;
+                    max_z = n_rd_p->rd_14.max_hz << 8;
+                    break;
+                case VC_CHK_NEAREST_SWITCH_TYPE:
+                    min_x = n_rd_p->sw_1C.min_hx << 8;
+                    max_x = n_rd_p->sw_1C.max_hx << 8;
+                    min_z = n_rd_p->sw_1C.min_hz << 8;
+                    max_z = n_rd_p->sw_1C.max_hz << 8;
+                    break;
+                default:
+                    continue;
+            }
+
+            dist = vcGetXZSumDistFromLimArea(&dummy, &dummy, pos->vx, pos->vz, min_x, max_x, min_z, max_z, n_rd_p->road_p_0->flags_10 & VC_RD_MARGE_ROAD_F);
+
+            if (min_sum_dist >= dist)
+            {
+                min_sum_dist = dist;
+                nearest_p    = n_rd_p;
+            }
+        }
+    }
+
+    *out_nearest_p_addr = nearest_p;
+    return min_sum_dist;
+}
 
 s32 vcAdvantageDistOfOldCurRoad(VC_NEAR_ROAD_DATA* old_cur_p) // 0x80082AD0
 {
