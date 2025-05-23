@@ -53,7 +53,7 @@ INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", sharedFunc_800D0944_3_s
 
 INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", sharedSymbol_800D0ADC_3_s04); // 0x800D5BEC
 
-INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", sharedFunc_800D1350_3_s04); // 0x800D6460
+#include "maps/shared/Ai_Lisa_Init.h" // 0x800D6460
 
 #include "maps/shared/Ai_BloodyLisa_Update.h" // 0x800D6484
 
@@ -63,7 +63,7 @@ INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", sharedFunc_800D59A4_7_s
 
 INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", sharedFunc_800D5B3C_7_s01); // 0x800D66D8
 
-INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", sharedFunc_800D5CB4_7_s01); // 0x800D6850
+#include "maps/shared/Ai_BloodyLisa_Init.h" // 0x800D6850
 
 INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", Ai_Bloodsucker_Update); // 0x800D6874
 
@@ -97,7 +97,7 @@ INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", sharedFunc_800D4A74_7_s
 
 INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", sharedFunc_800D4C0C_7_s01); // 0x800D7CBC
 
-INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", sharedFunc_800D4DD8_7_s01); // 0x800D7E88
+#include "maps/shared/Ai_GhostChildAlessa_Init.h" // 0x800D7E88
 
 INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", Ai_Kaufmann_Update); // 0x800D7EAC
 

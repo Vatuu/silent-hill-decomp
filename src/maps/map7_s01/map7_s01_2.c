@@ -93,7 +93,7 @@ INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01_2", sharedFunc_800D4A74_7_s
 
 INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01_2", sharedFunc_800D4C0C_7_s01); // 0x800D4C0C
 
-INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01_2", sharedFunc_800D4DD8_7_s01); // 0x800D4DD8
+#include "maps/shared/Ai_GhostChildAlessa_Init.h" // 0x800D4DD8
 
 #include "maps/shared/Ai_Lisa_Update.h" // 0x800D4DFC
 
@@ -103,7 +103,7 @@ INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01_2", sharedFunc_800D0944_3_s
 
 INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01_2", sharedSymbol_800D0ADC_3_s04); // 0x800D5050
 
-INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01_2", sharedFunc_800D1350_3_s04); // 0x800D58C4
+#include "maps/shared/Ai_Lisa_Init.h" // 0x800D58C4
 
 #include "maps/shared/Ai_BloodyLisa_Update.h" // 0x800D58E8
 
@@ -113,7 +113,7 @@ INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01_2", sharedFunc_800D59A4_7_s
 
 INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01_2", sharedFunc_800D5B3C_7_s01); // 0x800D5B3C
 
-INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01_2", sharedFunc_800D5CB4_7_s01); // 0x800D5CB4
+#include "maps/shared/Ai_BloodyLisa_Init.h" // 0x800D5CB4
 
 #include "maps/shared/sharedFunc_800D88AC_0_s00.h" // 0x800D5CD8
 

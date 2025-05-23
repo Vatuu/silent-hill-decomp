@@ -45,6 +45,21 @@ extern s32 sharedData_800EC954_2_s02; // Used by `Ai_Romper_Init`.
 
 extern s32 sharedData_800EEB14_2_s00; // Used by `Ai_Groaner_Init`.
 
+extern s32 sharedData_800D91A0_5_s00; // Used by `Ai_HangedScratcher_Init`.
+
+// Three variables used by `Ai_Splithead_Init`.
+extern s32 sharedData_800D5888_1_s05; // Unknown type.
+extern s16 sharedData_800D8614_1_s05; // These two s16s could be DVECTOR?
+extern s16 sharedData_800D8616_1_s05;
+
+extern s32 sharedData_800D6BB8_3_s04; // Used by `Ai_Lisa_Init`.
+
+extern s32 sharedData_800E2C38_7_s01; // Used by `Ai_BloodyLisa_Init`.
+
+// Two variables used by `Ai_Cybil_init`.
+extern s32 sharedData_800E2378_0_s01;
+extern s32 sharedData_800E237C_0_s01;
+
 s32 sharedFunc_800CBBBC_0_s00();
 
 void sharedFunc_800D01BC_0_s00(u16* arg0, VECTOR3* arg1, s32 arg2);
@@ -98,7 +113,7 @@ void sharedFunc_800D88AC_0_s00(s_SubCharacter* playerChara);
 
 void Ai_Stalker_Update(s_SubCharacter* chara, s32 arg1, s32 arg2);
 
-void Ai_Stalker_Init(s_SubCharacter*); // Matches across all maps except `map6_s03`.
+void Ai_Stalker_Init(s_SubCharacter* chara); // Matches across all maps except `map6_s03`.
 
 void sharedFunc_800D3308_0_s00(s_SubCharacter*);
 
@@ -127,7 +142,7 @@ void sharedFunc_800D9064_0_s00(s_SubCharacter* chara);
 
 void sharedFunc_800D9078_0_s00(s_SubCharacter* chara);
 
-void sharedFunc_800D923C_0_s00(s_SubCharacter* playerChara);
+void sharedFunc_800D923C_0_s00(s_SubCharacter* chara); // Humanoid init function?
 
 // MAP1_S00 LarvalStalker funcs
 void Ai_LarvalStalker_Update(s_SubCharacter* chara, s32 arg1, s32 arg2);
@@ -138,7 +153,7 @@ void sharedFunc_800D140C_1_s00(s_SubCharacter*, s32);
 
 void sharedFunc_800D1524_1_s00(s_SubCharacter*, s32, s32);
 
-void Ai_LarvalStalker_Init(s_SubCharacter*);
+void Ai_LarvalStalker_Init(s_SubCharacter* chara);
 
 void sharedFunc_800D17BC_1_s00(s_SubCharacter*);
 
@@ -195,7 +210,7 @@ void sharedFunc_800D0968_3_s03(s_SubCharacter*, s32);
 
 void Ai_Creaper_Update(s_SubCharacter* chara, s32 arg1, s32 arg2);
 
-void Ai_Creaper_Init(s_SubCharacter*); // `map5_s00` version has extra code at end of func.
+void Ai_Creaper_Init(s_SubCharacter* chara); // `map5_s00` version has extra code at end of func.
 
 void sharedFunc_800D7EE8_1_s02(s_SubCharacter*);
 
@@ -209,7 +224,7 @@ void sharedFunc_800D99D0_1_s02(s_SubCharacter*);
 
 void Ai_HangedScratcher_Update(s_SubCharacter* chara, s32 arg1, s32 arg2);
 
-void sharedFunc_800CFCA8_5_s00(s_SubCharacter*);
+void Ai_HangedScratcher_Init(s_SubCharacter* chara);
 
 void sharedFunc_800CFF74_5_s00(s_SubCharacter*);
 
@@ -225,7 +240,7 @@ void sharedFunc_800D3300_5_s00(s_SubCharacter*);
 
 void Ai_Romper_Update(s_SubCharacter* chara, s32 arg1, s32 arg2);
 
-void Ai_Romper_Init(s_SubCharacter*);
+void Ai_Romper_Init(s_SubCharacter* chara);
 
 void sharedFunc_800E60FC_2_s02(s_SubCharacter*);
 
@@ -241,7 +256,7 @@ void sharedFunc_800E8DFC_2_s02(s_SubCharacter*);
 
 void Ai_Groaner_Update(s_SubCharacter* chara, s32 arg1, s32 arg2);
 
-void Ai_Groaner_Init(s_SubCharacter*); // `map2_s00` has extra block at end of func compared to other maps.
+void Ai_Groaner_Init(s_SubCharacter* chara); // `map2_s00` has extra block at end of func compared to other maps.
 
 void sharedFunc_800E33DC_2_s00(s_SubCharacter*);
 
@@ -257,7 +272,7 @@ void sharedFunc_800E71E8_2_s00(s_SubCharacter*);
 
 void Ai_Splithead_Update(s_SubCharacter* chara, s32 arg1, s32 arg2);
 
-void sharedFunc_800CF8D8_1_s05(s_SubCharacter*);
+void Ai_Splithead_Init(s_SubCharacter* chara);
 
 void sharedFunc_800CF990_1_s05(s_SubCharacter*);
 
@@ -287,7 +302,7 @@ void sharedFunc_800D88D0_0_s01(s_SubCharacter*, s32);
 
 void sharedSymbol_800D8A68_0_s01(s_SubCharacter*, s32);
 
-void sharedSymbol_800D9AD0_0_s01(s_SubCharacter*);
+void Ai_Cybil_Init(s_SubCharacter* chara);
 
 void Ai_AirScreamer_Update(s_SubCharacter* chara, s32 arg1, s32 arg2);
 
@@ -319,7 +334,7 @@ void sharedFunc_800D0944_3_s04(s_SubCharacter*, s32);
 
 void sharedSymbol_800D0ADC_3_s04(s_SubCharacter*, s32); // `Ai_Lisa_Control`
 
-void sharedFunc_800D1350_3_s04(s_SubCharacter*);
+void Ai_Lisa_Init(s_SubCharacter* chara);
 
 void Ai_BloodyLisa_Update(s_SubCharacter* chara, s32 arg1, s32 arg2);
 
@@ -329,7 +344,7 @@ void sharedFunc_800D59A4_7_s01(s_SubCharacter*, s32);
 
 void sharedFunc_800D5B3C_7_s01(s_SubCharacter*, s32);
 
-void sharedFunc_800D5CB4_7_s01(s_SubCharacter*);
+void Ai_BloodyLisa_Init(s_SubCharacter* chara);
 
 void Ai_GhostChildAlessa_Update(s_SubCharacter* chara, s32 arg1, s32 arg2);
 
@@ -339,7 +354,7 @@ void sharedFunc_800D4A74_7_s01(s_SubCharacter*, s32);
 
 void sharedFunc_800D4C0C_7_s01(s_SubCharacter*, s32);
 
-void sharedFunc_800D4DD8_7_s01(s_SubCharacter*);
+void Ai_GhostChildAlessa_Init(s_SubCharacter* chara);
 
 s32  sharedFunc_800D4A80_0_s01(s_SubCharacter*);
 void sharedFunc_800D633C_0_s01(s_SubCharacter*);

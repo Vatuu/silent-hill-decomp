@@ -44,17 +44,17 @@ SymbolMatchedFuncs = [
     "sharedFunc_800CDA88_3_s03",
     "sharedFunc_800D08FC_3_s04",
     "sharedFunc_800D0944_3_s04",
-    "sharedFunc_800D1350_3_s04",
+    "Ai_Lisa_Init",
     "Ai_Lisa_Update",
     "Ai_BloodyLisa_Update",
     "sharedFunc_800D595C_7_s01",
     "sharedFunc_800D59A4_7_s01",
     "sharedFunc_800D5B3C_7_s01",
-    "sharedFunc_800D5CB4_7_s01",
+    "Ai_BloodyLisa_Init",
     "sharedFunc_800D4A2C_7_s01",
     "sharedFunc_800D4A74_7_s01",
     "sharedFunc_800D4C0C_7_s01",
-    "sharedFunc_800D4DD8_7_s01"
+    "Ai_GhostChildAlessa_Init"
 ]
 
 e_ShCharacterId = [
@@ -849,8 +849,8 @@ def print_usage():
     print()
     print("Misc:")
     print("  --jtbl [JTBL_NAME] [MAP]    Add rodata for jtbl to map1.yaml")
-    print("  --sortsyms [MAP_NAME]        sort map symbols ('all' to sort all map symbol files)")
-    print("  --compareFuncs [FUNC1_ASM_PATH] [FUNC2_ASM_PATH]    compare two functions, print Levenshtein distance, write clean files for comparing")
+    print("  --sortsyms [MAP_NAME]       Sort map symbols ('all' to sort all map symbol files)")
+    print("  --compareFuncs [FUNC1_ASM_PATH] [FUNC2_ASM_PATH]    Compare two functions, print Levenshtein distance, write clean files for comparing")
     
 def main():
     import argparse
@@ -887,8 +887,8 @@ def main():
             print_usage()
             return
         
-        if insert_jtbl_to_config(args.map1, args.jtbl):
-            print(f"Inserted rodata for {args.jtbl} into configs/maps/{args.map1}.yaml")
+        if insert_jtbl_to_config(args.map1, args.jtbl, args.map1):
+            print(f"Inserted rodata for {args.jtbl} into configs/maps/{args.map1}.yaml as {args.map1} TU (may need changing)")
 
         return
 
