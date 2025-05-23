@@ -51,7 +51,7 @@ void Ai_Cheryl_Update(s_SubCharacter* chara, s32 arg1, s32 arg2) // 0x800D7FB8
 {
     if (chara->model_0.charaId_0 != Chara_Cheryl)
     {
-        func_800D8888(chara);
+        Ai_Cheryl_Init(chara);
     }
 
     func_800D8310(chara, arg2);       // Control.
@@ -67,15 +67,11 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00_2", func_800D8310);
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00_2", func_800D8748);
 
-void func_800D8888(s_SubCharacter* chara)
+void Ai_Cheryl_Init(s_SubCharacter* chara) // 0x800D8888
 {
     sharedFunc_800D923C_0_s00(chara);
     D_800E3A30 = 0;
 }
-
-// Following funcs taking `s_SubCharacter*` arg are shared with other maps too.
-// Probably all player-specific.
-// Possibly shared .c file or separate SubCharacter library?
 
 #include "maps/shared/sharedFunc_800D88AC_0_s00.h" // 0x800D88AC
 

@@ -78,7 +78,7 @@ INCLUDE_ASM("asm/maps/map7_s00/nonmatchings/map7_s00", sharedFunc_800D0944_3_s04
 
 INCLUDE_ASM("asm/maps/map7_s00/nonmatchings/map7_s00", sharedSymbol_800D0ADC_3_s04); // 0x800CEC8C
 
-INCLUDE_ASM("asm/maps/map7_s00/nonmatchings/map7_s00", sharedFunc_800D1350_3_s04); // 0x800CF514
+#include "maps/shared/Ai_Lisa_Init.h" // 0x800CF514
 
 #include "maps/shared/sharedFunc_800D88AC_0_s00.h" // 0x800CF538
 

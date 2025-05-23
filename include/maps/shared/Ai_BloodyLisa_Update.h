@@ -2,7 +2,7 @@ void Ai_BloodyLisa_Update(s_SubCharacter* chara, s32 arg1, s32 arg2)
 {
     if (chara->model_0.state_2 == 0)
     {
-        sharedFunc_800D5CB4_7_s01(chara);
+        Ai_BloodyLisa_Init(chara);
     }
 
     sharedFunc_800D5B3C_7_s01(chara, arg2);

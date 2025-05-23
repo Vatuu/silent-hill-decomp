@@ -52,6 +52,14 @@ extern s32 sharedData_800D5888_1_s05; // Unknown type.
 extern s16 sharedData_800D8614_1_s05; // These two s16s could be DVECTOR?
 extern s16 sharedData_800D8616_1_s05;
 
+extern s32 sharedData_800D6BB8_3_s04; // Used by `Ai_Lisa_Init`.
+
+extern s32 sharedData_800E2C38_7_s01; // Used by `Ai_BloodyLisa_Init`.
+
+// Two variables used by `Ai_Cybil_init`.
+extern s32 sharedData_800E2378_0_s01;
+extern s32 sharedData_800E237C_0_s01;
+
 s32 sharedFunc_800CBBBC_0_s00();
 
 void sharedFunc_800D01BC_0_s00(u16* arg0, VECTOR3* arg1, s32 arg2);
@@ -134,7 +142,7 @@ void sharedFunc_800D9064_0_s00(s_SubCharacter* chara);
 
 void sharedFunc_800D9078_0_s00(s_SubCharacter* chara);
 
-void sharedFunc_800D923C_0_s00(s_SubCharacter* playerChara);
+void sharedFunc_800D923C_0_s00(s_SubCharacter* chara); // Humanoid init function?
 
 // MAP1_S00 LarvalStalker funcs
 void Ai_LarvalStalker_Update(s_SubCharacter* chara, s32 arg1, s32 arg2);
@@ -294,7 +302,7 @@ void sharedFunc_800D88D0_0_s01(s_SubCharacter*, s32);
 
 void sharedSymbol_800D8A68_0_s01(s_SubCharacter*, s32);
 
-void sharedSymbol_800D9AD0_0_s01(s_SubCharacter*);
+void Ai_Cybil_Init(s_SubCharacter* chara);
 
 void Ai_AirScreamer_Update(s_SubCharacter* chara, s32 arg1, s32 arg2);
 
@@ -326,7 +334,7 @@ void sharedFunc_800D0944_3_s04(s_SubCharacter*, s32);
 
 void sharedSymbol_800D0ADC_3_s04(s_SubCharacter*, s32); // `Ai_Lisa_Control`
 
-void sharedFunc_800D1350_3_s04(s_SubCharacter*);
+void Ai_Lisa_Init(s_SubCharacter* chara);
 
 void Ai_BloodyLisa_Update(s_SubCharacter* chara, s32 arg1, s32 arg2);
 
@@ -336,7 +344,7 @@ void sharedFunc_800D59A4_7_s01(s_SubCharacter*, s32);
 
 void sharedFunc_800D5B3C_7_s01(s_SubCharacter*, s32);
 
-void sharedFunc_800D5CB4_7_s01(s_SubCharacter*);
+void Ai_BloodyLisa_Init(s_SubCharacter* chara);
 
 void Ai_GhostChildAlessa_Update(s_SubCharacter* chara, s32 arg1, s32 arg2);
 
@@ -346,7 +354,7 @@ void sharedFunc_800D4A74_7_s01(s_SubCharacter*, s32);
 
 void sharedFunc_800D4C0C_7_s01(s_SubCharacter*, s32);
 
-void sharedFunc_800D4DD8_7_s01(s_SubCharacter*);
+void Ai_GhostChildAlessa_Init(s_SubCharacter* chara);
 
 s32  sharedFunc_800D4A80_0_s01(s_SubCharacter*);
 void sharedFunc_800D633C_0_s01(s_SubCharacter*);

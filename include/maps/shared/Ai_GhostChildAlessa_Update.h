@@ -2,7 +2,7 @@ void Ai_GhostChildAlessa_Update(s_SubCharacter* chara, s32 arg1, s32 arg2)
 {
     if (chara->model_0.charaId_0 != Chara_GhostChildAlessa)
     {
-        sharedFunc_800D4DD8_7_s01(chara);
+        Ai_GhostChildAlessa_Init(chara);
     }
 
     sharedFunc_800D4C0C_7_s01(chara, arg2);

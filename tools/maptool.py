@@ -44,17 +44,17 @@ SymbolMatchedFuncs = [
     "sharedFunc_800CDA88_3_s03",
     "sharedFunc_800D08FC_3_s04",
     "sharedFunc_800D0944_3_s04",
-    "sharedFunc_800D1350_3_s04",
+    "Ai_Lisa_Init",
     "Ai_Lisa_Update",
     "Ai_BloodyLisa_Update",
     "sharedFunc_800D595C_7_s01",
     "sharedFunc_800D59A4_7_s01",
     "sharedFunc_800D5B3C_7_s01",
-    "sharedFunc_800D5CB4_7_s01",
+    "Ai_BloodyLisa_Init",
     "sharedFunc_800D4A2C_7_s01",
     "sharedFunc_800D4A74_7_s01",
     "sharedFunc_800D4C0C_7_s01",
-    "sharedFunc_800D4DD8_7_s01"
+    "Ai_GhostChildAlessa_Init"
 ]
 
 e_ShCharacterId = [

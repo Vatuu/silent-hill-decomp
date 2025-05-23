@@ -351,7 +351,7 @@ INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800D88D0_0_s01
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedSymbol_800D8A68_0_s01); // 0x800D8A68
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedSymbol_800D9AD0_0_s01); // 0x800D9AD0
+#include "maps/shared/Ai_Cybil_Init.h" // 0x800D9AD0
 
 #include "maps/shared/sharedFunc_800D88AC_0_s00.h" // 0x800D9B0C
 

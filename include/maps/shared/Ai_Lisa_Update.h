@@ -2,7 +2,7 @@ void Ai_Lisa_Update(s_SubCharacter* chara, s32 arg1, s32 arg2)
 {
     if (chara->model_0.state_2 == 0)
     {
-        sharedFunc_800D1350_3_s04(chara);
+        Ai_Lisa_Init(chara);
     }
 
     sharedSymbol_800D0ADC_3_s04(chara, arg2);
