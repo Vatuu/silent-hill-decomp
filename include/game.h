@@ -454,8 +454,7 @@ typedef struct _ShSaveGame
     q19_12            walkDistance_258;
     u8                isTitleYellowFlag_25C_0 : 1;  // Is title in save-load screen is yellow (next fear mode).
     u8                add290Hours_25C_1       : 2;  // Adds 290 hours per 1 bit. So 290, 580, 870
-    u8                unknwon_25C_3           : 3;
-    u8                hyperBlasterColor_25C_6 : 2;  // Red/None: 0, Yellow: 1, Green: 2, Rainbow: 4 (unobtainable).
+    u8                hyperBlasterFlags_25C_3 : 5;  // Red/None: 0, Yellow: 1, Green: 2, Rainbow: 4 (unobtainable).
     u8                meleeKillCount_25D;
     u8                meleeKillCountB_25E;          // Can't be packed if used as `u16`.
     u8                rangedKillCount_25F;

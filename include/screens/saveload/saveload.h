@@ -117,7 +117,7 @@ void func_801E2FCC(s32 arg0, s32 saveSlotIdx, s32 fileId, s32 arg3);
 void func_801E30C4(s_UnkSaveload0* ptr, s32 arg1, s32 idx);
 
 /** Sets the color of the string to be drawn based on some flag. */
-s32 func_801E3078(s_UnkSaveload0* arg0);
+s32 func_801E3078(s_UnkSaveload1* arg0);
 
 void func_801E326C(s_UnkSaveload0* arg0, s_UnkSaveload0* arg1, s32 arg2, s32 arg3);
 
