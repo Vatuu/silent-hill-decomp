@@ -1280,11 +1280,13 @@ void func_800303E4();
 /** Draws a background image. */
 void Gfx_BackgroundSpriteDraw(s_FsImageDesc* image);
 
-void func_80031CCC(s32);
-
 void func_80030414();
 
 void func_80030884();
+
+void func_800314A4(s32 arg0, s_80024C90* arg1);
+
+void func_80031CCC(s32);
 
 void Gfx_DebugStringPosition(s16 x, s16 y);
 

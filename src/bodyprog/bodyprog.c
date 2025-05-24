@@ -348,7 +348,19 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80030288);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003030C);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80030334);
+void func_80030334(s32 arg0, s32 arg1) // 0x80030334
+{
+    s_80024C90 sp10;
+    s_80024C90 unused1;
+    s_80024C90 unused2;
+    s_80024C90 unused3;
+
+    func_800314A4(arg0, &sp10); 
+    
+    strcat(&sp10, arg1); 
+    
+    erase(&sp10); 
+} 
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80030370);
 
