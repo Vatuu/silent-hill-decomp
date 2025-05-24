@@ -2320,7 +2320,22 @@ void func_8003EB54() // 0x8003EB54
     temp_v0->field_4 = 0;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003EBA0);
+void func_8003EBA0() // 0x8003EBA0
+{
+    s_SysWork*    tmp  = &g_SysWork;
+    s_StructUnk0* tmp2 = &tmp->field_2360;
+    s_StructUnk1* tmp3 = &tmp->field_2370;
+
+    tmp->field_2378 = 0x1000;
+    tmp->field_235C = &g_SysWork.playerBoneCoords_890[1];
+    tmp->field_236C = g_SysWork.playerBoneCoords_890;
+    tmp2->field_0   = -0x147;
+    tmp2->field_4   = -0x47A;
+    tmp2->field_8   = 0x1EB;
+    tmp3->field_0   = -0xAA;
+    tmp3->field_2   = 0;
+    tmp3->field_4   = 0;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003EBF4);
 
