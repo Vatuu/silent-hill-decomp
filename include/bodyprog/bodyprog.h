@@ -22,6 +22,16 @@
 #define OPT_VIBRATION_DISABLED 0
 #define OPT_VIBRATION_ENABLED  128
 
+typedef struct 
+{
+    s32  field_0;
+    u8   unk_4[12];
+    s8*  field_16;
+    u8   unk_20[4];
+    s8   field_24;
+    s8   field_25;
+} s_func_8003C8F8;
+
 typedef struct
 {
     s8  field_0;
@@ -1954,6 +1964,8 @@ void func_8003EDA8();
 void func_8003F170();
 
 void func_80043740();
+
+void func_80056D64(s8* oldString);
 
 /** Resets player info in the savegame buffer (inventory, health, playtime). */
 void Game_SaveGameResetPlayer();

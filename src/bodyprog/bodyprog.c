@@ -2161,7 +2161,15 @@ s32 func_8003C850() // 0x8003C850
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003C878);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003C8F8);
+void func_8003C8F8(s_func_8003C8F8* arg0) // 0x8003C8F8
+{
+    arg0->field_25 = 0;
+    arg0->field_0 = 0;
+    
+    func_80056D64((s8*)&arg0->field_16);
+    
+    arg0->field_24 = 0;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003C92C);
 
