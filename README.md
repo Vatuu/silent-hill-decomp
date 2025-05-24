@@ -86,11 +86,12 @@ Progress bars powered by [decomp.dev](https://decomp.dev)
         </tr>
         <tr>
             <td>Progress</td>
-            <td colspan=2>Purpose</td>
-        </tr>
+            <td>Purpose</td>
+            <td>Note</td>
         <tr>
-            <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?unit=screens/saveload/saveload"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&measure=fuzzy_match&unit=screens/saveload/saveload"/></a></td>
-            <td colspan=2>Save and load screen logic.</td>
+            <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?unit=screens/saveload/saveload"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&measure=fuzzy_match&unit=screens/saveload/saveload&color=rgb(255,215,0)""/></a></td>
+            <td>Save and load screen logic.</td>
+            <td><a href="https://github.com/Vatuu/silent-hill-decomp/commit/f72646453302f8c84933decf1326c9b9ebd3d622">Fourth fully decompiled and matching overlay!</a></td>
         </tr>
         <tr>
           <th colspan=3>📜 STF_ROLL.BIN 📜</th>
