@@ -1319,6 +1319,8 @@ s32 func_8003BD2C();
 /** Unknown bodyprog func. Called by `Fs_QueueDoThingWhenEmpty`. */
 s32 func_8003C850();
 
+void func_8003C8F8(s_func_8003C8F8* arg0, s8* arg1);
+
 void func_8003CD6C(s_MapWork* arg0);
 
 void func_8003D01C();
