@@ -1645,6 +1645,8 @@ void func_80085DF0();
 
 void func_80085E6C(s32 arg0, s32 arg1);
 
+void func_8008605C(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
+
 void func_800860B0(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 sysStateStep, s32 arg5);
 
 void func_8008616C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
