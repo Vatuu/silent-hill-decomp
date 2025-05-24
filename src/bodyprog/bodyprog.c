@@ -2231,7 +2231,17 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003D550);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003D5B4);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003D6A4);
+void func_8003D6A4(u8* arg0) // 0x8003D6A4
+{
+    u8 temp_v0;
+
+    temp_v0 = *arg0;
+    if (temp_v0 != 0)
+    {
+        D_800BCE18.field_18[temp_v0] = 0;
+        func_8003C1AC();
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003D6E0);
 
