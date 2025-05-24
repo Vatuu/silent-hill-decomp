@@ -476,7 +476,13 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80031184);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80031260);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_800314A4);
+void func_800314A4(s32 arg0, s_80024C90* arg1) // 0x800314A4
+{
+    *arg1 = D_80024C90;
+     
+    arg1->field_2 = ((arg0 & 0x4) >> 2) + 48;
+    arg1->field_3 = (arg0 & 0x3) + 48;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", Gfx_BackgroundSpriteDraw);
 

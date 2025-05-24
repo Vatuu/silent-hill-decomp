@@ -71,7 +71,7 @@ void func_80085E6C(s32 arg0, s32 arg1) // 0x80085E6C
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80085EB8);
 
-void func_8008605C(s32 arg0, s32 arg1, s32 arg2, s32 arg3)
+void func_8008605C(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x8008605C
 {
     if (!(g_SaveGamePtr->eventFlags_168[arg0 >> 5] & (u32)(1 << (arg0 & 0x1F))))
     {

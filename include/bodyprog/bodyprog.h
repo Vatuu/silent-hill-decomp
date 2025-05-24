@@ -52,6 +52,14 @@ typedef struct
     s32 field_94;
 } s_func_8006CC44;
 
+typedef struct 
+{
+    u8 unk_0[2];
+    s8 field_2;
+    s8 field_3; 
+    u8 unk_4[2];
+} s_80024C90;
+
 typedef struct
 {
     s8 unk_0[16];
@@ -658,6 +666,8 @@ typedef struct
 } s_UnkSaveload0; // Size: >=12
 
 extern s_FsImageDesc g_MainImg0; // 0x80022C74 - TODO: part of main exe, move to main/ headers?
+
+extern s_80024C90 D_80024C90; 
 
 extern s32 D_8002500C; // Some sort of struct inside RODATA, likely a constant.
 
