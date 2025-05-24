@@ -4,6 +4,105 @@
 #include "bodyprog/math.h"
 #include "screens/saveload/saveload.h"
 
+/*
+char* D_801E74A8[] =
+{
+    "Anywhere",
+    "Cafe",
+    "Bus",
+    "Store",
+    "Infirmary",
+    "Doghouse",
+    "Gordon",
+    "Church",
+    "Garage",
+    "Police",
+    "Reception",
+    "Room_302",
+    "Director's",
+    "Jewelry_shop",
+    "Pool_hall",
+    "Antique_shop",
+    "Theme_park",
+    "Boat",
+    "Bridge",
+    "Motel",
+    "Lighthouse",
+    "Sewer",
+    "Nowhere",
+    "Child's_room",
+    "Next_fear"
+};
+
+s32 D_801E750C = 0;
+
+s32 D_801E7510 = 0;
+
+s16 D_801E7514[MEMORY_CARD_SLOT_COUNT] = { 0, 0 };
+
+s16 D_801E7518[MEMORY_CARD_SLOT_COUNT] = { 0, 0 };
+
+s32 D_801E751C = 0;
+
+s32 D_801E7520 = 0;
+
+void (*D_801E7524[])() =
+{
+    func_801E63C0,
+    func_801E649C,
+    func_801E69E8,
+    func_801E6B18,
+    func_801E6DB0,
+    func_801E6F38
+};
+
+s32 D_801E753C = 0;
+
+s32 D_801E7540 = 0;
+
+void (*D_801E7544[])() =
+{
+    func_801E63C0,
+    func_801E737C,
+    func_801E6DB0,
+    func_801E6F38
+};
+
+s32 D_801E7554 = 0;
+
+s32 D_801E7558 = 0;
+
+s32 D_801E755C = 0;
+
+s32 D_801E7560 = 0; // Unused.
+
+s32 D_801E7564[MEMORY_CARD_SLOT_COUNT] = { 0, 0 };
+
+s16 D_801E756C[MEMORY_CARD_SLOT_COUNT] = { 0, 0 };
+
+s16 D_801E7570[MEMORY_CARD_SLOT_COUNT] = { 0, 0 };
+
+s16 D_801E7574[MEMORY_CARD_SLOT_COUNT] = { 0, 0 };
+
+s16 D_801E7578[6] = { 0, 0, 0, 0, 0, 0 };
+
+s8 D_801E7584[330] = { 0 };
+
+s8 D_801E76CE[MEMORY_CARD_SLOT_COUNT] = { 0, 0 };
+
+s8 D_801E76D0 = 0;
+
+s8 D_801E76D1 = 0; // Unused.
+
+s8 D_801E76D2[MEMORY_CARD_SLOT_COUNT] = { 0, 0 };
+
+s8 D_801E76D4 = 0;
+
+u8 D_801E76D5 = 0;
+
+u8 D_801E76D6 = 0;
+*/
+
 void func_801E2D8C() // 0x801E2D8C
 {
     s32 i;
@@ -75,7 +174,7 @@ void Gfx_SaveBackgroundDraw() // 0x801E2EBC
     Gfx_RectSaveInfoDraw(&var);
 }
 
-void func_801E2F90(s32 saveSlotIdx) // 0x801E2F90
+void func_801E2F90(s32 saveSlotIdx, s32 arg1) // 0x801E2F90
 {
     D_801E7578[saveSlotIdx] = D_800A97D4[saveSlotIdx] - D_801E7570[saveSlotIdx];
 }
@@ -278,7 +377,7 @@ void func_801E3304(s_UnkSaveload0* arg0, s32 arg1, s32 arg2) // 0x801E3304
         case 1:
             D_801E76D2[arg2] = 0;
 
-            if (g_GameWork.gameState_594 == 16)
+            if (g_GameWork.gameState_594 == GameState_Unk10)
             {
                 func_801E43C8(arg2);
             }
@@ -307,6 +406,9 @@ void func_801E3304(s_UnkSaveload0* arg0, s32 arg1, s32 arg2) // 0x801E3304
                 Gfx_SavesTransparentBgDraw(arg2, D_800BCD3C[arg2], D_800A97D4[arg2], D_801E7578[arg2]);
             }
 
+            break;
+
+        default:
             break;
     }
 
@@ -1932,7 +2034,53 @@ void Gfx_SaveBackground() // 0x801E709C
     Gfx_BackgroundSpriteDraw(&D_800A902C);
 }
 
-INCLUDE_ASM("asm/screens/saveload/nonmatchings/saveload", func_801E70C8); // 0x801E70C8
+void func_801E70C8() // 0x801E70C8
+{
+    s_UnkSaveload0* ptr;
+    s32             i;
+    s32             j;
+
+    for (i = 0; i < MEMORY_CARD_SLOT_COUNT; i++)
+    {
+        D_800BCD2C = (s_UnkSaveload0*)&BOOT_ADDR_0[2640 * i];
+
+        for (j = 0; j < (s32)D_800BCD3C[i]; j++)
+        {
+            if (D_800BCD2C->field_0 >= 0)
+            {
+                func_801E2FCC(j, i, D_800BCD2C->field_6 + 1, D_800BCD2C->field_4);
+            }
+
+            func_801E3304(D_800BCD2C, j, i);
+
+            if (D_800BCD2C->field_4 >= 7)
+            {
+                ptr = D_800BCD2C;
+                if (j != D_800BCD3C[i])
+                {
+                    ptr++;
+                }
+                func_801E326C(D_800BCD2C, ptr, j, i);
+            }
+
+            if (D_800BCD2C->field_4 == 8)
+            {
+                func_801E30C4(D_800BCD2C, j, i);
+            }
+
+            D_800BCD2C++;
+        }
+
+        if (g_GameWork.gameState_594 == GameState_DeathLoadScreen)
+        {
+            func_801E2F90(i, D_800BCD28);
+        }
+        else
+        {
+            func_801E2F90(i, D_800BCD3A);
+        }
+    }
+}
 
 void func_801E7244() // 0x801E7244
 {
