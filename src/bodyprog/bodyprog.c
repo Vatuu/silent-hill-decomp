@@ -129,7 +129,20 @@ void func_8002E85C() // 0x8002E85C
     D_800B5618 = 1;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8002E86C);
+void func_8002E86C() // 0x8002E86C
+{
+    s32* ptr;
+
+    D_800B5508[9].field_14 = 0;
+    D_800B5508[8].field_18 = 0;
+
+    ptr    = &D_800B5508[8].field_18;
+    ptr[1] = 0;
+    ptr[2] = 0;
+    ptr[3] = 0;
+    ptr[4] = 0;
+    ptr[5] = 0;
+}
 
 s32 func_8002E898() // 0x8002E898
 {
