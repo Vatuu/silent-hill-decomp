@@ -1569,6 +1569,8 @@ void func_80054928();
 
 void func_80054A04(s8 arg0);
 
+void func_80056D64(s8* oldString, s8* newString);
+
 s32 func_8005C7D0(s_SubCharacter*, s32);
 
 void func_8005C814(s16*, s_SubCharacter*);
@@ -1964,8 +1966,6 @@ void func_8003EDA8();
 void func_8003F170();
 
 void func_80043740();
-
-void func_80056D64(s8* oldString);
 
 /** Resets player info in the savegame buffer (inventory, health, playtime). */
 void Game_SaveGameResetPlayer();
