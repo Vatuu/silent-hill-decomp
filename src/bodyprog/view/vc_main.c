@@ -1,7 +1,10 @@
 #include "game.h"
 
-#include "bodyprog/vw_system.h"
+#include <limits.h>
+
+#include "bodyprog/bodyprog.h"
 #include "bodyprog/math.h"
+#include "bodyprog/vw_system.h"
 
 #define MIN_IN_ROAD_DIST FP_METER(16.0f) // vcGetMinInRoadDist() in SH2, hardcoded to FP_METER(16.0f) in SH1.
 
@@ -1015,7 +1018,7 @@ s32 vcGetBestNewCurNearRoad(VC_NEAR_ROAD_DATA** new_cur_pp, VC_CAM_CHK_TYPE chk_
     s32                new_cur_priority;
 
     new_cur_p    = NULL;
-    new_cur_dist = 0x7FFFFFFF;
+    new_cur_dist = INT_MAX;
 
     evnt_min_dist = vcGetNearestNEAR_ROAD_DATA(&evnt_nearest_p, chk_type, VC_RD_TYPE_EVENT, pos, w_p, 0);
     eff_min_dist  = vcGetNearestNEAR_ROAD_DATA(&eff_nearest_p, chk_type, VC_RD_TYPE_EFFECT, pos, w_p, 0);
@@ -1117,7 +1120,7 @@ s32 vcGetBestNewCurNearRoad(VC_NEAR_ROAD_DATA** new_cur_pp, VC_CAM_CHK_TYPE chk_
     if (new_cur_p == NULL)
     {
         new_cur_p    = &vcNullNearRoad;
-        new_cur_dist = vcGetXZSumDistFromLimArea(&dummy, &dummy, pos->vx, pos->vz, vcNullNearRoad.rd_14.min_hx << 8, vcNullNearRoad.rd_14.max_hx << 8, vcNullNearRoad.rd_14.min_hz << 8, vcNullNearRoad.rd_14.max_hz << 8, vcNullNearRoad.road_p_0->flags_10 & 0x80);
+        new_cur_dist = vcGetXZSumDistFromLimArea(&dummy, &dummy, pos->vx, pos->vz, vcNullNearRoad.rd_14.min_hx << 8, vcNullNearRoad.rd_14.max_hx << 8, vcNullNearRoad.rd_14.min_hz << 8, vcNullNearRoad.rd_14.max_hz << 8, vcNullNearRoad.road_p_0->flags_10 & VC_RD_MARGE_ROAD_F);
     }
 
     *new_cur_pp = new_cur_p;
@@ -1138,7 +1141,7 @@ s32 vcGetNearestNEAR_ROAD_DATA(VC_NEAR_ROAD_DATA** out_nearest_p_addr, VC_CAM_CH
 
     nearest_p    = NULL;
     n_rd_p       = w_p->near_road_ary_14C;
-    min_sum_dist = 0x7FFFFFFF;
+    min_sum_dist = INT_MAX;
 
     for (n_rd_p = w_p->near_road_ary_14C; n_rd_p < &w_p->near_road_ary_14C[w_p->near_road_suu_2B4]; n_rd_p++)
     {
@@ -1147,16 +1150,16 @@ s32 vcGetNearestNEAR_ROAD_DATA(VC_NEAR_ROAD_DATA** out_nearest_p_addr, VC_CAM_CH
             switch (chk_type)
             {
                 case VC_CHK_NEAREST_ROAD_TYPE:
-                    min_x = n_rd_p->rd_14.min_hx << 8;
-                    max_x = n_rd_p->rd_14.max_hx << 8;
-                    min_z = n_rd_p->rd_14.min_hz << 8;
-                    max_z = n_rd_p->rd_14.max_hz << 8;
+                    min_x = FP_TO(n_rd_p->rd_14.min_hx, Q8_SHIFT);
+                    max_x = FP_TO(n_rd_p->rd_14.max_hx, Q8_SHIFT);
+                    min_z = FP_TO(n_rd_p->rd_14.min_hz, Q8_SHIFT);
+                    max_z = FP_TO(n_rd_p->rd_14.max_hz, Q8_SHIFT);
                     break;
                 case VC_CHK_NEAREST_SWITCH_TYPE:
-                    min_x = n_rd_p->sw_1C.min_hx << 8;
-                    max_x = n_rd_p->sw_1C.max_hx << 8;
-                    min_z = n_rd_p->sw_1C.min_hz << 8;
-                    max_z = n_rd_p->sw_1C.max_hz << 8;
+                    min_x = FP_TO(n_rd_p->sw_1C.min_hx, Q8_SHIFT);
+                    max_x = FP_TO(n_rd_p->sw_1C.max_hx, Q8_SHIFT);
+                    min_z = FP_TO(n_rd_p->sw_1C.min_hz, Q8_SHIFT);
+                    max_z = FP_TO(n_rd_p->sw_1C.max_hz, Q8_SHIFT);
                     break;
                 default:
                     continue;
@@ -1223,7 +1226,100 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vc_main", vcMakeNormalWatchTgtPos);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vc_main", vcMixSelfViewEffectToWatchTgtPos);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vc_main", vcMakeFarWatchTgtPos);
+void vcMakeFarWatchTgtPos(VECTOR3* watch_tgt_pos, VC_WORK* w_p, VC_AREA_SIZE_TYPE cur_rd_area_size) // 0x800832B4
+{
+    s_func_800699F8 sp10;
+    s32             dist;
+    s32             ofs_y;
+    s32             lim_y;
+    s32             watch_y;
+    s32             use_dist;
+    s32             adj_dist;
+    s_SubCharacter* sc_p;
+
+    if (cur_rd_area_size == VC_AREA_TINY)
+    {
+        use_dist = FP_FLOAT_TO(2.8f, Q12_SHIFT);
+    }
+    else if (cur_rd_area_size == VC_AREA_SMALL)
+    {
+        use_dist = FP_FLOAT_TO(5.5f, Q12_SHIFT);
+    }
+    else
+    {
+        use_dist = FP_FLOAT_TO(10.0f, Q12_SHIFT);
+        ;
+    }
+
+    watch_y = w_p->chara_pos_114.vy - FP_FLOAT_TO(0.8f, Q12_SHIFT);
+
+    if (w_p->nearest_enemy_p_2DC != NULL)
+    {
+        sc_p = w_p->nearest_enemy_p_2DC;
+
+        dist = w_p->nearest_enemy_xz_dist_2E0;
+
+        if (dist < FP_FLOAT_TO(1.7f, Q12_SHIFT))
+        {
+            adj_dist = (dist * FP_FLOAT_TO(-0.7f, Q12_SHIFT)) / FP_FLOAT_TO(1.7f, Q12_SHIFT);
+        }
+        else
+        {
+            adj_dist = FP_FLOAT_TO(-0.7f, Q12_SHIFT);
+        }
+
+        dist += adj_dist;
+
+        // TODO: CLAMP or MIN/MAX?
+        if (dist < use_dist)
+        {
+            use_dist = dist;
+        }
+
+        if (use_dist < FP_FLOAT_TO(0.4f, Q12_SHIFT))
+        {
+            use_dist = FP_FLOAT_TO(0.4f, Q12_SHIFT);
+        }
+
+        ofs_y = g_Chara_FileInfo[sc_p->model_0.charaId_0].field_C_2 * 16;
+
+        switch (g_Chara_FileInfo[sc_p->model_0.charaId_0].field_C_0)
+        {
+            case 0:
+            default:
+                watch_y = sc_p->position_18.vy + ofs_y;
+                break;
+
+            case 1:
+                func_800699F8(&sp10, sc_p->position_18.vx, sc_p->position_18.vz);
+
+                if (sp10.field_8 == 0)
+                {
+                    watch_y = sc_p->position_18.vy + ofs_y;
+                }
+                else
+                {
+                    watch_y = sp10.chara_grnd_0 + ofs_y;
+                }
+                break;
+
+            case 2:
+                watch_y = w_p->field_2E4 + ofs_y;
+                break;
+        }
+
+        lim_y = (w_p->nearest_enemy_xz_dist_2E0 >> 1) - FP_FLOAT_TO(0.5f, Q12_SHIFT);
+
+        if (w_p->chara_pos_114.vy + lim_y < watch_y)
+        {
+            watch_y = w_p->chara_pos_114.vy + lim_y;
+        }
+    }
+
+    watch_tgt_pos->vx = w_p->chara_pos_114.vx + FP_FROM(use_dist * shRsin(w_p->chara_eye_ang_y_144), Q12_SHIFT);
+    watch_tgt_pos->vy = watch_y;
+    watch_tgt_pos->vz = w_p->chara_pos_114.vz + FP_FROM(use_dist * shRcos(w_p->chara_eye_ang_y_144), Q12_SHIFT);
+}
 
 void vcSetWatchTgtXzPos(VECTOR3* watch_pos, VECTOR3* center_pos, VECTOR3* cam_pos, s32 tgt_chara2watch_cir_dist, s32 tgt_watch_cir_r, s16 watch_cir_ang_y) // 0x800834A8
 {

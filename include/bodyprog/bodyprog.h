@@ -438,7 +438,9 @@ typedef struct
     s16   textureFileIdx;
     s16   field_6;
     void* field_8;
-    u32   field_C;
+    u16   field_C_0 : 2;
+    s32   field_C_2 : 14;
+    u16   unk_C_16  : 16;
 } s_CharaFileInfo;
 STATIC_ASSERT_SIZEOF(s_CharaFileInfo, 16);
 
