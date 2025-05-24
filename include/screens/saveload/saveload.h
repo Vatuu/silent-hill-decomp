@@ -88,7 +88,7 @@ extern s16 D_801E7570[MEMORY_CARD_SLOT_COUNT];
 
 extern s16 D_801E7574[MEMORY_CARD_SLOT_COUNT];
 
-extern s16 D_801E7578[MEMORY_CARD_SLOT_COUNT];
+extern s16 D_801E7578[6];
 
 extern s8 D_801E7584[];
 
@@ -107,7 +107,7 @@ extern u8 D_801E76D6;
 /** Clears all saves? */
 void func_801E2D8C();
 
-void func_801E2F90(s32 saveSlotIdx);
+void func_801E2F90(s32 saveSlotIdx, s32 arg1);
 
 // TODO: Rename to `SaveLoad_FileStringDraw`.
 /** Draws the "FILE X" string in the save/load screen. */
@@ -159,5 +159,9 @@ void func_801E72DC();
 void GameState_DeathLoadScreen_Update();
 
 void func_801E737C();
+
+void func_801E649C();
+
+void func_801E6B18();
 
 #endif
