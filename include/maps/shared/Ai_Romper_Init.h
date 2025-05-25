@@ -30,7 +30,7 @@ void Ai_Romper_Init(s_SubCharacter* chara)
                 var_v0 = temp_a0 + (2048 - 1);
             }
 
-            chara->health_B0 = FP_MULTIPLY((s64)((temp_a0 - ((var_v0 >> 11) << 11)) + FP_FLOAT_TO(1.5f, Q12_SHIFT)), // Shifts are equivalent to `var_v0_2 % 2048`
+            chara->health_B0 = FP_MULTIPLY((s64)((temp_a0 - ((var_v0 >> 11) << 11)) + FP_FLOAT_TO(1.5f, Q12_SHIFT)), // Shifts are equivalent to `var_v0_2 % 2048`.
                                            FP_TO(BASE_HEALTH, Q12_SHIFT), Q12_SHIFT);
         }
     }

@@ -202,17 +202,15 @@ s32 func_8002E94C(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x8002E94C
     {
         return 0;
     }
-    
+
     D_800B5508[8].field_0 = arg0; 
-    
-    ptr = &D_800B5508[8].field_0;
-    
+    ptr                   = &D_800B5508[8].field_0;
+
     ptr[1] = arg1;
     ptr[2] = arg2; 
     ptr[3] = arg3;
     ptr[4] = 0;
     ptr[5] = 1;
-     
     return 1;
 }
 
@@ -372,7 +370,7 @@ void func_8003030C(s32 arg0) // 0x8003030C
     s_80024C90 unused; 
 
     func_800314A4(arg0, &sp10); 
-    
+
     format(&sp10);
 }
 
@@ -384,9 +382,8 @@ void func_80030334(s32 arg0, s32 arg1) // 0x80030334
     s_80024C90 unused3;
 
     func_800314A4(arg0, &sp10); 
-    
+
     strcat(&sp10, arg1); 
-    
     erase(&sp10); 
 } 
 
@@ -519,8 +516,8 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80031260);
 void func_800314A4(s32 arg0, s_80024C90* arg1) // 0x800314A4
 {
     *arg1 = D_80024C90;
-     
-    arg1->field_2 = ((arg0 & 0x4) >> 2) + 48;
+
+    arg1->field_2 = ((arg0 & (1 << 2)) >> 2) + 48;
     arg1->field_3 = (arg0 & 0x3) + 48;
 }
 
@@ -1264,11 +1261,11 @@ void func_80035AC8(s32 arg0) // 0x80035AC8
 void func_80035B04(VECTOR3* arg0, SVECTOR* arg1, GsCOORDINATE2* arg2) // 0x80035B04
 {
     arg2->flg = 0;
-    
+
     arg2->coord.t[0] = arg0->vx >> 4;
     arg2->coord.t[1] = arg0->vy >> 4;
     arg2->coord.t[2] = arg0->vz >> 4;
-    
+
     func_80096E78(arg1, (MATRIX*)&arg2->coord);
 }
 
@@ -1497,7 +1494,7 @@ void func_80037E78(s_SubCharacter* chara) // 0x80037E78
             func_800914C4(cond, func_8009146C(cond) + 1);
         }
 
-        chara->flags_3E |= 1 << 6;
+        chara->flags_3E |= CharaFlag_Unk7;
     }
 }
 
@@ -2209,9 +2206,9 @@ void func_8003C8F8(s_func_8003C8F8* arg0, s8* arg1) // 0x8003C8F8
 {
     arg0->field_25 = 0;
     arg0->field_0 = 0;
-    
+
     func_80056D64((s8*)&arg0->field_16, arg1);
-    
+
     arg0->field_24 = 0;
 }
 
@@ -2374,19 +2371,19 @@ void func_8003EB54() // 0x8003EB54
 
 void func_8003EBA0() // 0x8003EBA0
 {
-    s_SysWork*    tmp  = &g_SysWork;
-    s_StructUnk0* tmp2 = &tmp->field_2360;
-    s_StructUnk1* tmp3 = &tmp->field_2370;
+    s_SysWork*    temp0 = &g_SysWork;
+    s_StructUnk0* temp1 = &temp0->field_2360;
+    s_StructUnk1* temp2 = &temp0->field_2370;
 
-    tmp->field_2378 = 0x1000;
-    tmp->field_235C = &g_SysWork.playerBoneCoords_890[1];
-    tmp->field_236C = g_SysWork.playerBoneCoords_890;
-    tmp2->field_0   = -0x147;
-    tmp2->field_4   = -0x47A;
-    tmp2->field_8   = 0x1EB;
-    tmp3->field_0   = -0xAA;
-    tmp3->field_2   = 0;
-    tmp3->field_4   = 0;
+    temp0->field_2378 = 0x1000;
+    temp0->field_235C = &g_SysWork.playerBoneCoords_890[1];
+    temp0->field_236C = g_SysWork.playerBoneCoords_890;
+    temp1->field_0    = -0x147;
+    temp1->field_4    = -0x47A;
+    temp1->field_8    = 0x1EB;
+    temp2->field_0    = -0xAA;
+    temp2->field_2    = 0;
+    temp2->field_4    = 0;
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003EBF4);

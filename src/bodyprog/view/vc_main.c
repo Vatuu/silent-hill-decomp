@@ -955,9 +955,11 @@ s32 vcSetCurNearRoadInVC_WORK(VC_WORK* w_p) // 0x800822B8
             case 0:
                 old_cur_rd_ang_y = 0;
                 break;
+
             case 1:
                 old_cur_rd_ang_y = FP_ANGLE(90.0f);
                 break;
+
             default:
                 old_cur_rd_ang_y = 0;
                 break;
@@ -1000,6 +1002,7 @@ s32 vcSetCurNearRoadInVC_WORK(VC_WORK* w_p) // 0x800822B8
             w_p->cur_near_road_2B8 = *new_cur_p;
         }
     }
+
     return ret_warp_f;
 }
 
@@ -1120,7 +1123,10 @@ s32 vcGetBestNewCurNearRoad(VC_NEAR_ROAD_DATA** new_cur_pp, VC_CAM_CHK_TYPE chk_
     if (new_cur_p == NULL)
     {
         new_cur_p    = &vcNullNearRoad;
-        new_cur_dist = vcGetXZSumDistFromLimArea(&dummy, &dummy, pos->vx, pos->vz, vcNullNearRoad.rd_14.min_hx << 8, vcNullNearRoad.rd_14.max_hx << 8, vcNullNearRoad.rd_14.min_hz << 8, vcNullNearRoad.rd_14.max_hz << 8, vcNullNearRoad.road_p_0->flags_10 & VC_RD_MARGE_ROAD_F);
+        new_cur_dist = vcGetXZSumDistFromLimArea(&dummy, &dummy, pos->vx, pos->vz,
+                                                 vcNullNearRoad.rd_14.min_hx << 8, vcNullNearRoad.rd_14.max_hx << 8,
+                                                 vcNullNearRoad.rd_14.min_hz << 8, vcNullNearRoad.rd_14.max_hz << 8,
+                                                 vcNullNearRoad.road_p_0->flags_10 & VC_RD_MARGE_ROAD_F);
     }
 
     *new_cur_pp = new_cur_p;
@@ -1155,12 +1161,14 @@ s32 vcGetNearestNEAR_ROAD_DATA(VC_NEAR_ROAD_DATA** out_nearest_p_addr, VC_CAM_CH
                     min_z = FP_TO(n_rd_p->rd_14.min_hz, Q8_SHIFT);
                     max_z = FP_TO(n_rd_p->rd_14.max_hz, Q8_SHIFT);
                     break;
+
                 case VC_CHK_NEAREST_SWITCH_TYPE:
                     min_x = FP_TO(n_rd_p->sw_1C.min_hx, Q8_SHIFT);
                     max_x = FP_TO(n_rd_p->sw_1C.max_hx, Q8_SHIFT);
                     min_z = FP_TO(n_rd_p->sw_1C.min_hz, Q8_SHIFT);
                     max_z = FP_TO(n_rd_p->sw_1C.max_hz, Q8_SHIFT);
                     break;
+
                 default:
                     continue;
             }
@@ -1284,8 +1292,8 @@ void vcMakeFarWatchTgtPos(VECTOR3* watch_tgt_pos, VC_WORK* w_p, VC_AREA_SIZE_TYP
 
         switch (g_Chara_FileInfo[sc_p->model_0.charaId_0].field_C_0)
         {
-            case 0:
             default:
+            case 0:
                 watch_y = sc_p->position_18.vy + ofs_y;
                 break;
 
@@ -1560,10 +1568,9 @@ void vcAdjTgtMvVecYByCurNearRoad(VECTOR3* tgt_mv_vec, VC_WORK* w_p) // 0x800843F
 
     cur_rd_p = w_p->cur_near_road_2B8.road_p_0;
 
-    to_chara_dist = Math_VectorMagnitude(
-        w_p->chara_pos_114.vx - w_p->cam_tgt_pos_44.vx,
-        0,
-        w_p->chara_pos_114.vz - w_p->cam_tgt_pos_44.vz);
+    to_chara_dist = Math_VectorMagnitude(w_p->chara_pos_114.vx - w_p->cam_tgt_pos_44.vx,
+                                         0,
+                                         w_p->chara_pos_114.vz - w_p->cam_tgt_pos_44.vz);
 
     dist = CLAMP(to_chara_dist, FP_FLOAT_TO(1.2f, Q12_SHIFT), FP_FLOAT_TO(7.0f, Q12_SHIFT));
 
@@ -1584,14 +1591,23 @@ void vcAdjTgtMvVecYByCurNearRoad(VECTOR3* tgt_mv_vec, VC_WORK* w_p) // 0x800843F
             max_tgt_y = (abs_ofs_y + w_p->chara_top_y_124) - FP_FLOAT_TO(0.25f, Q12_SHIFT);
             min_tgt_y = (w_p->chara_top_y_124 - abs_ofs_y) - FP_FLOAT_TO(0.25f, Q12_SHIFT);
             break;
+
         case 1:
-            min_tgt_y = Math_MulFixed(FP_TO(cur_rd_p->lim_rd_max_hy_12, Q8_SHIFT), FP_FLOAT_TO(1.0f, Q12_SHIFT) - near_ratio, Q12_SHIFT) + Math_MulFixed(FP_TO(cur_rd_p->lim_rd_min_hy_13, Q8_SHIFT), near_ratio, Q12_SHIFT);
+            min_tgt_y = Math_MulFixed(FP_TO(cur_rd_p->lim_rd_max_hy_12, Q8_SHIFT),
+                                      FP_FLOAT_TO(1.0f, Q12_SHIFT) - near_ratio, Q12_SHIFT) + Math_MulFixed(FP_TO(cur_rd_p->lim_rd_min_hy_13, Q8_SHIFT),
+                                                                                                            near_ratio,
+                                                                                                            Q12_SHIFT);
             max_tgt_y = min_tgt_y;
             break;
+
         case 2:
-            min_tgt_y = Math_MulFixed(FP_TO(cur_rd_p->lim_rd_min_hy_13, Q8_SHIFT), FP_FLOAT_TO(1.0f, Q12_SHIFT) - near_ratio, Q12_SHIFT) + Math_MulFixed(FP_TO(cur_rd_p->lim_rd_max_hy_12, Q8_SHIFT), near_ratio, Q12_SHIFT);
+            min_tgt_y = Math_MulFixed(FP_TO(cur_rd_p->lim_rd_min_hy_13, Q8_SHIFT),
+                                      FP_FLOAT_TO(1.0f, Q12_SHIFT) - near_ratio, Q12_SHIFT) + Math_MulFixed(FP_TO(cur_rd_p->lim_rd_max_hy_12, Q8_SHIFT),
+                                                                                                            near_ratio,
+                                                                                                            Q12_SHIFT);
             max_tgt_y = min_tgt_y;
             break;
+
         case 3:
             min_tgt_y = FP_TO(cur_rd_p->lim_rd_min_hy_13, Q8_SHIFT);
             max_tgt_y = FP_TO(cur_rd_p->lim_rd_max_hy_12, Q8_SHIFT);

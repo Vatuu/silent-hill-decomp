@@ -107,6 +107,6 @@ void Ai_Creaper_Init(s_SubCharacter* chara)
     }
 
 #ifdef MAP5_S00
-    chara->flags_3E |= 1 << 8;
+    chara->flags_3E |= CharaFlag_Unk9;
 #endif
 }

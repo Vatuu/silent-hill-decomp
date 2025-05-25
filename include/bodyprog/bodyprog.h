@@ -1251,6 +1251,8 @@ void func_8002E830();
 
 void func_8002E85C();
 
+void func_8002E86C();
+
 s32 func_8002E898();
 
 void func_8002E8D4();
@@ -1347,6 +1349,8 @@ void func_8003D01C();
 void func_8003D03C();
 
 s32 func_8003D444(s32 idx);
+
+void func_8003D6A4(u8* arg0);
 
 /** Return type assumed. */
 void func_8003D160();
@@ -1590,7 +1594,7 @@ void func_80054928();
 
 void func_80054A04(s8 arg0);
 
-void func_80056D64(s8* oldString, s8* newString);
+void func_80056D64(s8* prevStr, s8* newStr);
 
 s32 func_8005C7D0(s_SubCharacter*, s32);
 
@@ -1977,6 +1981,10 @@ void func_8003DA9C(s32 arg0, GsCOORDINATE2* coord, s32 arg2, s16 arg3, s32 arg4)
 
 /** Loads a flame graphic. */
 void GameFs_FlameGfxLoad();
+
+void func_8003EB54();
+
+void func_8003EBA0();
 
 void func_8003ECBC();
 

@@ -414,12 +414,11 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_80056C8C);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_80056CB4);
 
-void func_80056D64(s8* oldString, s8* newString) // 0x80056D64
+void func_80056D64(s8* prevStr, s8* newStr) // 0x80056D64
 {
-    *(s32*)&oldString[4] = 0;
-    *(s32*)&oldString[0] = 0;
-    
-    strncpy(oldString, newString, 8);
+    *(s32*)&prevStr[4] = 0;
+    *(s32*)&prevStr[0] = 0;
+    strncpy(prevStr, newStr, 8);
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_80056D8C);

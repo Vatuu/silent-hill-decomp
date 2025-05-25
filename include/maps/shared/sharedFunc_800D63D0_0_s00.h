@@ -32,7 +32,7 @@ void sharedFunc_800D63D0_0_s00(s_SubCharacter* chara, s32 arg1)
 
     if (chara->health_B0 == 0)
     {
-        chara->flags_3E &= ~(1 << 1);
+        chara->flags_3E &= ~CharaFlag_Unk2;
 
         if (g_SysWork.field_2353 != func_8005C7D0(chara, moveSpeed))
         {

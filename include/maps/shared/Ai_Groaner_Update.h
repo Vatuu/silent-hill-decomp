@@ -30,7 +30,7 @@ void Ai_Groaner_Update(s_SubCharacter* chara, s32 arg1, s32 arg2)
 
         if ((u16)chara->properties_E4.player.properties_E4[1] & (1 << 7))
         {
-            chara->flags_3E |= 1 << 2;
+            chara->flags_3E |= CharaFlag_Unk3;
         }
     }
 }

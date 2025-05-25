@@ -31,19 +31,6 @@
 #define GET_PROPERTY_HIGH(prop) \
     ((u16*)&(prop) + 1)
 
-/** @brief Color IDs used by strings displayed on the screen. */
-typedef enum _ColorId
-{
-    ColorId_Gold      = 0,
-    ColorId_DarkGrey  = 1,
-    ColorId_Green0    = 2,
-    ColorId_Nuclear   = 3,
-    ColorId_Red       = 4,
-    ColorId_Green1    = 5,
-    ColorId_LightGrey = 6,
-    ColorId_White     = 7
-} e_ColorId;
-    
 typedef enum _PadButtonFlags
 {
     Pad_Select       = 1 << 0,
@@ -75,6 +62,31 @@ typedef enum _PadButtonFlags
     Pad_LStickDown   = 1 << 26,
     Pad_LStickLeft   = 1 << 27
 } e_PadButtonFlags;
+
+/** @brief Flags with an unknown purpose used frequently for `s_SubCharacter::flags_3E`. */
+typedef enum _CharaFlags
+{
+    CharaFlag_None = 0,
+    CharaFlag_Unk2 = 1 << 1,
+    CharaFlag_Unk3 = 1 << 2,
+    CharaFlag_Unk4 = 1 << 3,
+    CharaFlag_Unk7 = 1 << 6,
+    CharaFlag_Unk8 = 1 << 7,
+    CharaFlag_Unk9 = 1 << 8
+} s_CharaFlags;
+
+/** @brief Color IDs used by strings displayed on the screen. */
+typedef enum _ColorId
+{
+    ColorId_Gold      = 0,
+    ColorId_DarkGrey  = 1,
+    ColorId_Green0    = 2,
+    ColorId_Nuclear   = 3,
+    ColorId_Red       = 4,
+    ColorId_Green1    = 5,
+    ColorId_LightGrey = 6,
+    ColorId_White     = 7
+} e_ColorId;
 
 typedef enum _AnimFlags
 {

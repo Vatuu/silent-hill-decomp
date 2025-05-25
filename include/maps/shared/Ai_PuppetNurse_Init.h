@@ -36,7 +36,7 @@ void Ai_PuppetNurse_Init(s_SubCharacter* chara, s32 isPuppetDoctor)
 
     chara->properties_E4.npc.field_11A = 0;
 
-    chara->flags_3E |= (1 << 2);
+    chara->flags_3E |= CharaFlag_Unk3;
 
     if (!isPuppetDoctor)
     {

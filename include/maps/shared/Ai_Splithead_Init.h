@@ -31,5 +31,5 @@ void Ai_Splithead_Init(s_SubCharacter* chara)
 
     *(u8*)&chara->properties_E4.larvalStalker.properties_E8[0].val8[2] = 196;
 
-    chara->flags_3E |= (1 << 8) | (1 << 2);
+    chara->flags_3E |= CharaFlag_Unk9 | CharaFlag_Unk2;
 }
