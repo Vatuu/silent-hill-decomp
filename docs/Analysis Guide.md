@@ -98,12 +98,15 @@ Adding overlay name to the beginning of the scratch is recommended to help keep 
 If the function uses jump tables, decomp.me/m2c may ask for jtbl data before it can decompile:
 
 - In this case, delete the scratch and start over with a new one.
-- Before the function's assembly, include the jtbl_XXX data that m2c requested (can usually be found in one of the `.rodata.s` file for the `.c`):
+- Before the function's assembly, include the jtbl_XXXX data that m2c requested (can usually be found in one of the `.rodata.s` file for the `.c`):
 
   ```asm
+  .set noat      /* allow manual use of $at */
+  .set noreorder /* don't insert nops after branches */
+
   .section .rodata, "a"
-  ; jump table data here (`dlabel jtbl_XXX` line through `.size jtbl_XXX`)
+  ; jump table data here (`dlabel jtbl_XXXX` line through `.size jtbl_XXXX`)
 
   .section .text, "a"
-  ; original function code here
+  ; original function code here (`glabel func_XXXX` through `.size func_XXXX`)
   ```
