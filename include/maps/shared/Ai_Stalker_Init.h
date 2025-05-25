@@ -13,7 +13,7 @@ void Ai_Stalker_Init(s_SubCharacter* arg0)
 
 #ifdef MAP6_S03
     // MAP6_S03: Change stalker health to 1.5x when not on easy difficulty.
-    if (g_SaveGamePtr->gameDifficulty_260 != GameDifficulty_Easy)
+    if (g_SavegamePtr->gameDifficulty_260 != GameDifficulty_Easy)
     {
         arg0->health_B0 = FP_MULTIPLY_FLOAT((s64)sharedData_800E3A20_0_s00, 1.5f, Q12_SHIFT);
     }

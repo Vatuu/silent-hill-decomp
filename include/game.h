@@ -31,37 +31,37 @@
 #define GET_PROPERTY_HIGH(prop) \
     ((u16*)&(prop) + 1)
 
-typedef enum _PadButtonFlags
+typedef enum _ControllerFlags
 {
-    Pad_Select       = 1 << 0,
-    Pad_L3           = 1 << 1,
-    Pad_R3           = 1 << 2,
-    Pad_Start        = 1 << 3,
-    Pad_DpadUp       = 1 << 4,
-    Pad_DpadRight    = 1 << 5,
-    Pad_DpadDown     = 1 << 6,
-    Pad_DpadLeft     = 1 << 7,
-    Pad_L2           = 1 << 8,
-    Pad_R2           = 1 << 9,
-    Pad_L1           = 1 << 10,
-    Pad_R1           = 1 << 11,
-    Pad_Triangle     = 1 << 12,
-    Pad_Circle       = 1 << 13,
-    Pad_Cross        = 1 << 14,
-    Pad_Square       = 1 << 15,
-    Pad_LStickUp2    = 1 << 16,
-    Pad_LStickRight2 = 1 << 17,
-    Pad_LStickDown2  = 1 << 18,
-    Pad_LStickLeft2  = 1 << 19,
-    Pad_RStickUp     = 1 << 20,
-    Pad_RStickRight  = 1 << 21,
-    Pad_RStickDown   = 1 << 22,
-    Pad_RStickLeft   = 1 << 23,
-    Pad_LStickUp     = 1 << 24,
-    Pad_LStickRight  = 1 << 25,
-    Pad_LStickDown   = 1 << 26,
-    Pad_LStickLeft   = 1 << 27
-} e_PadButtonFlags;
+    ControllerFlag_Select       = 1 << 0,
+    ControllerFlag_L3           = 1 << 1,
+    ControllerFlag_R3           = 1 << 2,
+    ControllerFlag_Start        = 1 << 3,
+    ControllerFlag_DpadUp       = 1 << 4,
+    ControllerFlag_DpadRight    = 1 << 5,
+    ControllerFlag_DpadDown     = 1 << 6,
+    ControllerFlag_DpadLeft     = 1 << 7,
+    ControllerFlag_L2           = 1 << 8,
+    ControllerFlag_R2           = 1 << 9,
+    ControllerFlag_L1           = 1 << 10,
+    ControllerFlag_R1           = 1 << 11,
+    ControllerFlag_Triangle     = 1 << 12,
+    ControllerFlag_Circle       = 1 << 13,
+    ControllerFlag_Cross        = 1 << 14,
+    ControllerFlag_Square       = 1 << 15,
+    ControllerFlag_LStickUp2    = 1 << 16,
+    ControllerFlag_LStickRight2 = 1 << 17,
+    ControllerFlag_LStickDown2  = 1 << 18,
+    ControllerFlag_LStickLeft2  = 1 << 19,
+    ControllerFlag_RStickUp     = 1 << 20,
+    ControllerFlag_RStickRight  = 1 << 21,
+    ControllerFlag_RStickDown   = 1 << 22,
+    ControllerFlag_RStickLeft   = 1 << 23,
+    ControllerFlag_LStickUp     = 1 << 24,
+    ControllerFlag_LStickRight  = 1 << 25,
+    ControllerFlag_LStickDown   = 1 << 26,
+    ControllerFlag_LStickLeft   = 1 << 27
+} e_ControllerFlags;
 
 /** @brief Flags with an unknown purpose used frequently for `s_SubCharacter::flags_3E`. */
 typedef enum _CharaFlags
@@ -70,6 +70,7 @@ typedef enum _CharaFlags
     CharaFlag_Unk2 = 1 << 1,
     CharaFlag_Unk3 = 1 << 2,
     CharaFlag_Unk4 = 1 << 3,
+
     CharaFlag_Unk7 = 1 << 6,
     CharaFlag_Unk8 = 1 << 7,
     CharaFlag_Unk9 = 1 << 8
@@ -124,7 +125,7 @@ typedef enum _GameState
 } e_GameState;
 
 /** @brief State IDs used by `GameState_InGame`.
- * 
+ *
  * The values are used as indices into the 0x800A9A2C function array.
  */
 typedef enum _SysState
@@ -147,20 +148,20 @@ typedef enum _SysState
 } e_SysState;
 
 /** @brief Inventory command IDs. */
-typedef enum _InventoryCommandId
+typedef enum _InventoryCmdId
 {
-    InventoryCommandId_UseHealth     = 0,  /** Text is "Use", but this one is used exclusively on health items. */
-    InventoryCommandId_Use           = 1,
-    InventoryCommandId_Equip         = 2,
-    InventoryCommandId_Unequip       = 3,
-    InventoryCommandId_EquipReload   = 4,
-    InventoryCommandId_UnequipReload = 5,
-    InventoryCommandId_OnOff         = 6,
-    InventoryCommandId_Reload        = 7,
-    InventoryCommandId_Look          = 8,
-    InventoryCommandId_UseLook       = 9
+    InventoryCmdId_UseHealth     = 0,  /** Text is "Use", but this one is used exclusively on health items. */
+    InventoryCmdId_Use           = 1,
+    InventoryCmdId_Equip         = 2,
+    InventoryCmdId_Unequip       = 3,
+    InventoryCmdId_EquipReload   = 4,
+    InventoryCmdId_UnequipReload = 5,
+    InventoryCmdId_OnOff         = 6,
+    InventoryCmdId_Reload        = 7,
+    InventoryCmdId_Look          = 8,
+    InventoryCmdId_UseLook       = 9
     // Flashlight 11 in daytime?
-} s_InventoryCommandId;
+} s_InventoryCmdId;
 
 /** @brief Inventory item IDs. */
 typedef enum _InventoryItemId
@@ -352,7 +353,7 @@ typedef enum _PadTerminalType
     PadTerminalType_MultitapAdapter     = 8
 } e_PadTerminalType;
 
-typedef struct _AnalogPadData
+typedef struct _AnalogController
 {
     u8  status;
     u8  received_bytes : 4; /** Number of bytes received / 2. */
@@ -362,34 +363,34 @@ typedef struct _AnalogPadData
     u8  right_y;
     u8  left_x;
     u8  left_y;
-} s_AnalogPadData;
-STATIC_ASSERT_SIZEOF(s_AnalogPadData, 8);
+} s_AnalogController;
+STATIC_ASSERT_SIZEOF(s_AnalogController, 8);
 
 typedef struct _ControllerData
 {
-    s_AnalogPadData analogPad_0;
-    s8              unk_8[1];
-    u8              field_9;
-    s8              unk_A[2];
-    s32             btns_held_C; /** `e_PadButton` */
-    s32             btns_new_10; /** `e_PadButton` */
-    s8              field_14[4];
-    s32             field_18;    /** `e_PadButton` */
-    s32             field_1C;
-    char            field_20;
-    char            field_21;
-    char            field_22;
-    char            field_23;
-    char            field_24;
-    char            field_25;
-    char            field_26;
-    char            field_27;
-    s32             field_28;
+    s_AnalogController analogController_0;
+    s8                 unk_8[1];
+    u8                 field_9;
+    s8                 unk_A[2];
+    s32                btns_held_C; /** `e_PadButton` */
+    s32                btns_new_10; /** `e_PadButton` */
+    s8                 field_14[4];
+    s32                field_18;    /** `e_PadButton` */
+    s32                field_1C;
+    char               field_20;
+    char               field_21;
+    char               field_22;
+    char               field_23;
+    char               field_24;
+    char               field_25;
+    char               field_26;
+    char               field_27;
+    s32                field_28;
 } s_ControllerData;
 STATIC_ASSERT_SIZEOF(s_ControllerData, 44);
 
 /** Key bindings for input actions. */
-// TODO: Instead of `u16`s, it should use 1-bit packed 16-bit `u32`, similar to `PadButtonFlags` but not an enum because it can have multiple values.
+// TODO: Instead of `u16`s, it should use 1-bit packed 16-bit `u32`, similar to `ControllerFlags` but not an enum because it can have multiple values.
 // Only the first 16 values are counted (analog directions are not included). Also, D-Pad is not registered.
 typedef struct _ControllerConfig
 {
@@ -414,7 +415,7 @@ typedef struct _ShInventoryItem
 {
     u8 id;      /** `InventoryItemId` */
     u8 count;
-    u8 command; /** `InventoryCommandId` */
+    u8 command; /** `InventoryCmdId` */
     u8 unk_3;   // Some sort of index?
 } s_ShInventoryItem;
 STATIC_ASSERT_SIZEOF(s_ShInventoryItem, 4);
@@ -426,14 +427,14 @@ typedef enum _GameDifficulty
     GameDifficulty_Hard	  = 1
 } e_GameDifficulty;
 
-typedef struct _ShSaveGame
+typedef struct _ShSavegame
 {
     s_ShInventoryItem items_0[INVENTORY_ITEM_COUNT_MAX];
     s8                field_A0;
     s8                field_A1[3];
     s8                mapOverlayIdx_A4;         /** Index to overlay `*.BIN` files. */
     s8                mapRoomIdx_A5;            /** Index to local map geometry `*.IPD` files. */
-    s16               saveGameCount_A6;
+    s16               savegameCount_A6;
     s8                mapEventIdx_A8;          // See Sparagas' `SaveTitle` enum for details of every value.
     u8                mapIdx_A9;                /** Index to global map geometry `*.PLM` files. */
     s8                equippedWeapon_AA;        /** `InventoryItemId` */
@@ -485,8 +486,8 @@ typedef struct _ShSaveGame
     s16               field_278;
     s8                field_27A;
     u8                continueCount_27B;
-} s_ShSaveGame;
-STATIC_ASSERT_SIZEOF(s_ShSaveGame, 636);
+} s_ShSavegame;
+STATIC_ASSERT_SIZEOF(s_ShSavegame, 636);
 
 typedef struct _ShEventParam
 {
@@ -526,38 +527,38 @@ typedef struct _ShSaveUserConfig
 } s_ShSaveUserConfig;
 STATIC_ASSERT_SIZEOF(s_ShSaveUserConfig, 56);
 
-/** @brief Appended to `ShSaveGame` and `ShSaveUserConfig` during game save. Contains 8-bit XOR checksum + magic.
- * Checksum generated via `SaveGame_ChecksumGenerate`.
+/** @brief Appended to `ShSavegame` and `ShSaveUserConfig` during game save. Contains 8-bit XOR checksum + magic.
+ * Checksum generated via `Savegame_ChecksumGenerate`.
  */
-typedef struct _ShSaveGameFooter
+typedef struct _ShSavegameFooter
 {
     u8  checksum_0[2];
     u16 magic_2;
-} s_ShSaveGameFooter;
-STATIC_ASSERT_SIZEOF(s_ShSaveGameFooter, 4);
+} s_ShSavegameFooter;
+STATIC_ASSERT_SIZEOF(s_ShSavegameFooter, 4);
 
-/** @brief Contains `s_ShSaveGame` data with the footer appended to the end containing the checksum + magic. */
-typedef struct _ShSaveGameContainer
+/** @brief Contains `s_ShSavegame` data with the footer appended to the end containing the checksum + magic. */
+typedef struct _ShSavegameContainer
 {
-    s_ShSaveGame       saveGame_0;
-    s_ShSaveGameFooter footer_27C;
-} s_ShSaveGameContainer;
-STATIC_ASSERT_SIZEOF(s_ShSaveGameContainer, 640);
+    s_ShSavegame       savegame_0;
+    s_ShSavegameFooter footer_27C;
+} s_ShSavegameContainer;
+STATIC_ASSERT_SIZEOF(s_ShSavegameContainer, 640);
 
 /** @brief Contains `s_ShSaveUserConfig` data padded to 128 bytes, with footer at the end containing checksum + magic. */
 typedef struct _ShSaveUserConfigContainer
 {
     s_ShSaveUserConfig config_0;
     u8                 pad_38[68];
-    s_ShSaveGameFooter footer_7C;
+    s_ShSavegameFooter footer_7C;
 } s_ShSaveUserConfigContainer;
 
 typedef struct _GameWork
 {
     s_ShSaveUserConfig config_0;
     s_ControllerData   controllers_38[2];
-    s_ShSaveGame       saveGame_90; // Backup savegame?
-    s_ShSaveGame       saveGame_30C;
+    s_ShSavegame       savegame_90; // Backup savegame?
+    s_ShSavegame       savegame_30C;
     u16                gsScreenWidth_588;
     u16                gsScreenHeight_58A;
     u8                 field_58C; // R?
@@ -574,7 +575,7 @@ typedef struct _GameWork
     s8                 mapAnimIdx_5B1;
     s8                 field_5B2;
     s8                 field_5B3;
-    s_AnalogPadData    rawPadData_5B4;
+    s_AnalogController rawController_5B4;
     s8                 unk_5BC[28];
 } s_GameWork;
 STATIC_ASSERT_SIZEOF(s_GameWork, 1496);
@@ -837,11 +838,11 @@ STATIC_ASSERT_SIZEOF(s_SysWork, 10088);
 extern void* g_OvlBodyprog;
 extern void* g_OvlDynamic;
 
-extern s_SysWork               g_SysWork; // 0x800B9FC0
-extern s_GameWork              g_GameWork;
-extern s_GameWork* const       g_GameWorkConst;
-extern s_GameWork*             g_GameWorkPtr;
-extern s_ShSaveGame* const     g_SaveGamePtr;
+extern s_SysWork            g_SysWork; // 0x800B9FC0
+extern s_GameWork           g_GameWork;
+extern s_GameWork* const    g_GameWorkConst;
+extern s_GameWork*          g_GameWorkPtr;
+extern s_ShSavegame* const  g_SavegamePtr;
 extern s_ControllerData* const g_ControllerPtrConst;
 extern s_ControllerData*       g_ControllerPtr;
 
@@ -926,12 +927,12 @@ static inline void Game_StateSetPrevious()
 }
 
 /** @brief Sets the given flag ID inside the savegame event flags array. */
-static inline void SaveGame_EventFlagSet(u32 flagId)
+static inline void Savegame_EventFlagSet(u32 flagId)
 {
     s16 flagIdx = flagId / 32;
     s16 flagBit = flagId % 32;
 
-    g_SaveGamePtr->eventFlags_168[flagIdx] |= 1 << flagBit;
+    g_SavegamePtr->eventFlags_168[flagIdx] |= 1 << flagBit;
 }
 
 /** @brief Checks if the given flag ID is set inside the array of 16-bit flag values. */

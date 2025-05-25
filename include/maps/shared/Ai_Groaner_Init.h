@@ -16,12 +16,12 @@ void Ai_Groaner_Init(s_SubCharacter* chara)
 
     chara->health_B0 = FP_TO(GROANER_BASE_HEALTH, Q12_SHIFT) + ((s32)Rng_Rand16() % FP_TO(GROANER_RAND_MAX, Q12_SHIFT));
 
-    if (g_SaveGamePtr->gameDifficulty_260 == GameDifficulty_Normal && !TEST_RNG(3))
+    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Normal && !TEST_RNG(3))
     {
         chara->health_B0 *= 2;
     }
 
-    if (g_SaveGamePtr->gameDifficulty_260 == GameDifficulty_Hard && !TEST_RNG(2))
+    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard && !TEST_RNG(2))
     {
         chara->health_B0 *= 2;
     }
@@ -32,13 +32,13 @@ void Ai_Groaner_Init(s_SubCharacter* chara)
 
     chara->properties_E4.larvalStalker.properties_E8[11].val16[0] = TEST_RNG(9) + 0xF00;
 
-    if (g_SaveGamePtr->gameDifficulty_260 == GameDifficulty_Hard)
+    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
     {
         chara->properties_E4.larvalStalker.properties_E8[11].val16[0] +=
             (u32)chara->properties_E4.larvalStalker.properties_E8[11].val16[0] / 8;
     }
 
-    if (g_SaveGamePtr->gameDifficulty_260 == GameDifficulty_Easy)
+    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
     {
         chara->properties_E4.larvalStalker.properties_E8[11].val16[0] -=
             ((s32)((u16)chara->properties_E4.larvalStalker.properties_E8[11].val16[0] << 16) >> 20); // (value * 0x10000) / 0x100000
@@ -66,9 +66,9 @@ void Ai_Groaner_Init(s_SubCharacter* chara)
     chara->properties_E4.larvalStalker.properties_E8[4].val32 = chara->position_18.vz;
 
 #ifdef MAP2_S00
-    if (g_SaveGamePtr->gameDifficulty_260 != GameDifficulty_Hard)
+    if (g_SavegamePtr->gameDifficulty_260 != GameDifficulty_Hard)
     {
-        if (!(g_SaveGamePtr->eventFlags_168[4] & (1 << 6)))
+        if (!(g_SavegamePtr->eventFlags_168[4] & (1 << 6)))
         {
             chara->properties_E4.larvalStalker.properties_E8[11].val16[0] = FP_MULTIPLY_FLOAT((s64)chara->properties_E4.larvalStalker.properties_E8[11].val16[0], 0.8f, Q12_SHIFT);
         }

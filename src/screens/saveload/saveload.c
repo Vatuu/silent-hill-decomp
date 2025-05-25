@@ -1656,7 +1656,7 @@ void func_801E649C() // 0x801E649C
             }
 
             if (D_800BCD30[0] != 0 && D_800BCD30[1] != 0 && 
-                (g_ControllerPtrConst->btns_new_10 & (Pad_LStickRight | Pad_LStickLeft))) 
+                (g_ControllerPtrConst->btns_new_10 & (ControllerFlag_LStickRight | ControllerFlag_LStickLeft))) 
             {
                 D_800A97D6 ^= 1;
                 Sd_EngineCmd(0x519);
@@ -1668,7 +1668,7 @@ void func_801E649C() // 0x801E649C
                 D_801E7540 = 0;
                 D_800BCD2C = (s_UnkSaveload0*)((D_800A97D6 * 0xA50) + BOOT_ADDR_0);
 
-                if (g_ControllerPtrConst->field_18 & Pad_LStickUp) 
+                if (g_ControllerPtrConst->field_18 & ControllerFlag_LStickUp) 
                 {
                     if (D_800A97D4[D_800A97D6] != 0) 
                     {
@@ -1677,7 +1677,7 @@ void func_801E649C() // 0x801E649C
                     }
                 }
 
-                if (g_ControllerPtrConst->field_18 & Pad_LStickDown) 
+                if (g_ControllerPtrConst->field_18 & ControllerFlag_LStickDown) 
                 {
                     if (D_800A97D4[D_800A97D6] < D_800BCD30[D_800A97D6] - 1)
                     {
@@ -1749,13 +1749,13 @@ void func_801E649C() // 0x801E649C
 
             D_801E7520 = 0;
 
-            if (g_ControllerPtrConst->btns_new_10 & Pad_LStickLeft) 
+            if (g_ControllerPtrConst->btns_new_10 & ControllerFlag_LStickLeft) 
             {
                 D_801E755C = step;
                 Sd_EngineCmd(0x519);
             }
 
-            if (g_ControllerPtrConst->btns_new_10 & Pad_LStickRight) 
+            if (g_ControllerPtrConst->btns_new_10 & ControllerFlag_LStickRight) 
             {
                 D_801E755C = 0;
                 Sd_EngineCmd(0x519);
@@ -1880,24 +1880,24 @@ void func_801E6B18() // 0x801E6B18
             D_801E751C = 2;
             ptr        = func_8002E9EC(D_800BCD40, D_800BCD3F, D_800BCD3E);
 
-            if (g_SaveGamePtr->mapEventIdx_A8 == 24)
+            if (g_SavegamePtr->mapEventIdx_A8 == 24)
             {
-                ptr->saveGameCount_8 = 0;
+                ptr->savegameCount_8 = 0;
             }
             else
             {
-                g_SaveGamePtr->saveGameCount_A6++;
-                ptr->saveGameCount_8 = g_SaveGamePtr->saveGameCount_A6;
+                g_SavegamePtr->savegameCount_A6++;
+                ptr->savegameCount_8 = g_SavegamePtr->savegameCount_A6;
             }
 
-            ptr->mapEventIdx_A   = g_SaveGamePtr->mapEventIdx_A8;
-            ptr->gameplayTimer_4 = g_SaveGamePtr->gameplayTimer_250;
+            ptr->mapEventIdx_A   = g_SavegamePtr->mapEventIdx_A8;
+            ptr->gameplayTimer_4 = g_SavegamePtr->gameplayTimer_250;
 
             D_801E76D5 = ptr->isTitleYellowFlag_B_0;
 
-            ptr->isTitleYellowFlag_B_0 = g_SaveGamePtr->isTitleYellowFlag_25C_0;
-            ptr->add290Hours_B_1       = g_SaveGamePtr->add290Hours_25C_1;
-            ptr->hyperBlasterFlags_B_3 = g_SaveGamePtr->hyperBlasterFlags_25C_3;
+            ptr->isTitleYellowFlag_B_0 = g_SavegamePtr->isTitleYellowFlag_25C_0;
+            ptr->add290Hours_B_1       = g_SavegamePtr->add290Hours_25C_1;
+            ptr->hyperBlasterFlags_B_3 = g_SavegamePtr->hyperBlasterFlags_25C_3;
 
             func_8002E94C(5, D_800BCD40, D_800BCD3F, D_800BCD3E);
             g_GameWork.gameStateStep_598[1]++;
@@ -1933,7 +1933,7 @@ void func_801E6B18() // 0x801E6B18
                     break;
 
                 case 11:
-                    g_GameWork.saveGame_90 = g_GameWork.saveGame_30C;
+                    g_GameWork.savegame_90 = g_GameWork.savegame_30C;
 
                 default:
                     g_GameWork.gameStateStep_598[0] = 1;
@@ -2030,13 +2030,13 @@ void func_801E6F38() // 0x801E6F38
             D_800A97D7 = 1;
 
             // Backup current savegame? Does anything ever restore from this?
-            g_GameWork.saveGame_90 = g_GameWork.saveGame_30C;
+            g_GameWork.savegame_90 = g_GameWork.savegame_30C;
 
             func_80035178();
             
             g_SysWork.flags_2298 = 8;
 
-            GameFs_MapLoad(g_SaveGamePtr->mapOverlayIdx_A4);
+            GameFs_MapLoad(g_SavegamePtr->mapOverlayIdx_A4);
 
             D_800BCD0C = 2;
             g_GameWork.gameStateStep_598[1]++;

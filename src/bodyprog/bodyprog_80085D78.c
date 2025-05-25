@@ -73,7 +73,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80085EB8);
 
 void func_8008605C(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x8008605C
 {
-    if (!(g_SaveGamePtr->eventFlags_168[arg0 >> 5] & (u32)(1 << (arg0 & 0x1F))))
+    if (!(g_SavegamePtr->eventFlags_168[arg0 >> 5] & (u32)(1 << (arg0 & 0x1F))))
     {
         func_80085DC0(arg3, arg2);
     }
@@ -897,7 +897,7 @@ void func_800879FC(u32 arg0, s32 arg1) // 0x800879FC
     s32 var4;
 
     newBulletAdjust = g_GameWork.config_0.optBulletAdjust_2D + 1;
-    if (g_SaveGamePtr->gameDifficulty_260 == GameDifficulty_Easy)
+    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
     {
         var4 = 2;
         if (newBulletAdjust >= var4)
@@ -1809,7 +1809,7 @@ s32 Demo_PlayFileBufferSetup() // 0x8008F0BC
     s32 playFileSize;
 
     // Get map overlay size used in demo.
-    mapOverlaySize = Fs_GetFileSize(FILE_VIN_MAP0_S00_BIN + DEMO_WORK()->saveGame_100.mapOverlayIdx_A4);
+    mapOverlaySize = Fs_GetFileSize(FILE_VIN_MAP0_S00_BIN + DEMO_WORK()->savegame_100.mapOverlayIdx_A4);
 
     // Get play file size, rounded up to next 0x800-byte boundary.
     playFileSize = (Fs_GetFileSize(g_Demo_PlayFileIdx) + 0x7FF) & ~0x7FF;
@@ -1822,9 +1822,9 @@ s32 Demo_PlayFileBufferSetup() // 0x8008F0BC
     return ((u32)g_Demo_PlayFileBufferPtr >= (u32)(g_OvlDynamic + mapOverlaySize));
 }
 
-void Demo_DemoFileSaveGameUpdate() // 0x8008F13C
+void Demo_DemoFileSavegameUpdate() // 0x8008F13C
 {
-    g_GameWork.saveGame_30C = DEMO_WORK()->saveGame_100;
+    g_GameWork.savegame_30C = DEMO_WORK()->savegame_100;
 }
 
 void Demo_GameGlobalsUpdate() // 0x8008F1A0
@@ -1988,9 +1988,9 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", Demo_Update);
 // TODO: Move this to header if any other funcs have same code.
 static inline void ControllerData_Reset(s_ControllerData* controller, u16 btns)
 {
-    *(u16*)&controller->analogPad_0.status  = 0x7300;
-    controller->analogPad_0.digitalButtons  = btns;
-    *(u32*)&controller->analogPad_0.right_x = 0x80808080;
+    *(u16*)&controller->analogController_0.status  = 0x7300;
+    controller->analogController_0.digitalButtons  = btns;
+    *(u32*)&controller->analogController_0.right_x = 0x80808080;
 }
 
 s32 Demo_ControllerDataUpdate() // 0x8008F7CC
@@ -2002,7 +2002,7 @@ s32 Demo_ControllerDataUpdate() // 0x8008F7CC
         return 0;
     }
 
-    btns = g_ControllerPtrConst->analogPad_0.digitalButtons;
+    btns = g_ControllerPtrConst->analogController_0.digitalButtons;
     if (btns != 0xFFFF)
     {
         Demo_ExitDemo();
@@ -2013,7 +2013,7 @@ s32 Demo_ControllerDataUpdate() // 0x8008F7CC
 
     if (g_Demo_CurFrameData != NULL)
     {
-        g_ControllerPtrConst->analogPad_0 = g_Demo_CurFrameData->analogPad_0;
+        g_ControllerPtrConst->analogController_0 = g_Demo_CurFrameData->analogController_0;
         return 1;
     }
 

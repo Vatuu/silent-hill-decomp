@@ -1,13 +1,13 @@
 void Ai_Stalker_Update(s_SubCharacter* chara, s32 arg1, s32 arg2)
 {
-    if (g_SaveGamePtr->gameDifficulty_260 == GameDifficulty_Normal)
+    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Normal)
     {
         sharedData_800E3A20_0_s00 = 0x15E000;
         sharedData_800E3A24_0_s00 = 0x64000;
         sharedData_800E3A28_0_s00 = 0x3000;
         sharedData_800E3A2C_0_s00 = 0x32000;
     }
-    else if (g_SaveGamePtr->gameDifficulty_260 == GameDifficulty_Easy)
+    else if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
     {
         sharedData_800E3A20_0_s00 = 0x15E000;
         sharedData_800E3A24_0_s00 = 0x64000;

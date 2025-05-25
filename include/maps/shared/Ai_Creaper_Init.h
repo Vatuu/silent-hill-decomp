@@ -93,11 +93,11 @@ void Ai_Creaper_Init(s_SubCharacter* chara)
     chara->properties_E4.larvalStalker.properties_E8[3].val32 = chara->position_18.vx;
     chara->properties_E4.larvalStalker.properties_E8[4].val32 = chara->position_18.vz;
 
-    if (g_SaveGamePtr->gameDifficulty_260 == GameDifficulty_Easy)
+    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
     {
         chara->properties_E4.larvalStalker.properties_E8[9].val16[0] = FP_MULTIPLY_FLOAT((s64)(FP_FLOAT_TO(BASE_EASY_VAL, Q12_SHIFT) + ((s32)Rng_Rand16() % FP_FLOAT_TO(RAND_EASY_MAX, Q12_SHIFT))), 2.0f, Q12_SHIFT);
     }
-    else if (g_SaveGamePtr->gameDifficulty_260 == GameDifficulty_Normal)
+    else if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Normal)
     {
         chara->properties_E4.larvalStalker.properties_E8[9].val16[0] = FP_MULTIPLY_FLOAT((s64)(FP_FLOAT_TO(BASE_NORMAL_VAL, Q12_SHIFT) + ((s32)Rng_Rand16() % FP_FLOAT_TO(RAND_NORMAL_MAX, Q12_SHIFT))), 2.0f, Q12_SHIFT);
     }

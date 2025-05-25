@@ -14,7 +14,7 @@ void Ai_HangedScratcher_Init(s_SubCharacter* chara)
 
     chara->health_B0 = FP_TO(350, Q12_SHIFT);
 
-    if (g_SaveGamePtr->gameDifficulty_260 == GameDifficulty_Hard)
+    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
     {
         // TODO: Weird health value, and not sure why `s64` is needed to match - maybe some `s64` multiply was optimized out?
         healthHard       = FP_FLOAT_TO(472.44873f, Q12_SHIFT);
@@ -113,12 +113,12 @@ void Ai_HangedScratcher_Init(s_SubCharacter* chara)
     chara->properties_E4.larvalStalker.properties_E8[3].val32 = chara->position_18.vx;
     chara->properties_E4.larvalStalker.properties_E8[4].val32 = chara->position_18.vz;
 
-    if (g_SaveGamePtr->gameDifficulty_260 == GameDifficulty_Easy)
+    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
     {
         var_s0 = FP_FLOAT_TO(2.7f, Q12_SHIFT);
         var_s2 = FP_FLOAT_TO(2.4f, Q12_SHIFT);
     }
-    else if (g_SaveGamePtr->gameDifficulty_260 == GameDifficulty_Normal)
+    else if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Normal)
     {
         var_s0 = FP_FLOAT_TO(3.0f, Q12_SHIFT);
         var_s2 = FP_FLOAT_TO(2.8f, Q12_SHIFT);

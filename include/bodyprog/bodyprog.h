@@ -651,7 +651,7 @@ typedef struct
 {
     s32 unk_0;
     u32 gameplayTimer_4;
-    u16 saveGameCount_8;
+    u16 savegameCount_8;
     s8  mapEventIdx_A;
     u8  isTitleYellowFlag_B_0 : 1;
     u8  add290Hours_B_1 : 2;
@@ -1102,7 +1102,7 @@ typedef struct _DemoWork
 {
     s_ShSaveUserConfig config_0;
     u8                 unk_38[200];
-    s_ShSaveGame       saveGame_100;
+    s_ShSavegame       savegame_100;
     u8                 unk_37C[1148];
     u32                frameCount_7F8;
     u16                randSeed_7FC;
@@ -1116,8 +1116,8 @@ extern s8 D_800BCD38;
 /** @brief Per-frame demo data, stored inside MISC/PLAYXXXX.DAT files. */
 typedef struct _DemoFrameData
 {
-    s_AnalogPadData analogPad_0;
-    s8              gameStateExpected_8; /** Expected value of `g_GameWork.gameState_594` before `analogPad_0` is processed, if it doesn't match `Demo_Update` will display `STEP ERROR` and stop reading demo. */
+    s_AnalogController analogController_0;
+    s8              gameStateExpected_8; /** Expected value of `g_GameWork.gameState_594` before `analogController_0` is processed, if it doesn't match `Demo_Update` will display `STEP ERROR` and stop reading demo. */
     u8              videoPresentInterval_9;
     u8              unk_A[2];
     u32             randSeed_C;
@@ -1863,10 +1863,10 @@ void Settings_ScreenAndVolUpdate();
 void Settings_RestoreDefaults();
 
 /** Updates the savegame buffer with the current player SysWork info (position, rotation, health, event index). */
-void SysWork_SaveGameUpdatePlayer();
+void SysWork_SavegameUpdatePlayer();
 
 /** Updates SysWork with player info from the savegame buffer (position, rotation, health). */
-void SysWork_SaveGameReadPlayer();
+void SysWork_SavegameReadPlayer();
 
 s32 MainLoop_ShouldWarmReset();
 
@@ -1884,7 +1884,7 @@ void GameState_MainLoadScreen_Update();
 
 void func_800348E8();
 
-void Game_SaveGameInitialize(s8 overlayIdx, s32 difficulty);
+void Game_SavegameInitialize(s8 overlayIdx, s32 difficulty);
 
 /** Loads a map file into `g_OvlDynamic`. */
 void GameFs_MapLoad(s32 mapIdx);
@@ -1937,11 +1937,11 @@ void AreaLoad_UpdatePlayerPosition();
 
 s8 func_80039F90();
 
-void SysWork_SaveGameUpdatePlayer();
+void SysWork_SavegameUpdatePlayer();
 
 void func_8003A16C();
 
-void SysWork_SaveGameReadPlayer();
+void SysWork_SavegameReadPlayer();
 
 void SysState_EventCallFunc_Update();
 
@@ -2001,7 +2001,7 @@ void func_8003F170();
 void func_80043740();
 
 /** Resets player info in the savegame buffer (inventory, health, playtime). */
-void Game_SaveGameResetPlayer();
+void Game_SavegameResetPlayer();
 
 /** Loads player animations for a given map. Maybe for cutscenes? */
 void GameFs_PlayerMapAnimLoad(s32 mapIdx);
@@ -2032,7 +2032,7 @@ s32 func_8007FD2C();
 /** Gets something from player. */
 s32 func_8007FD3C();
 
-/** Forces Pad_Select button press. */
+/** Forces ControllerFlag_Select button press. */
 void func_80080458();
 
 s32 func_80080478(VECTOR3* pos0, VECTOR3* pos1);
@@ -2055,21 +2055,21 @@ s32 func_800808AC();
 s32 Math_GetMagnitudeShift(s32 mag);
 
 /** Copies user config into an `s_ShSaveUserConfigContainer` and calculates footer checksum. */
-void SaveGame_UserConfigCopyWithChecksum(s_ShSaveUserConfigContainer* dest, s_ShSaveUserConfig* src);
+void Savegame_UserConfigCopyWithChecksum(s_ShSaveUserConfigContainer* dest, s_ShSaveUserConfig* src);
 
-/** Copies savegame into an s_ShSaveGameContainer and calculates footer checksum. */
-void SaveGame_CopyWithChecksum(s_ShSaveGameContainer* dest, s_ShSaveGame* src);
+/** Copies savegame into an s_ShSavegameContainer and calculates footer checksum. */
+void Savegame_CopyWithChecksum(s_ShSavegameContainer* dest, s_ShSavegame* src);
 
 /** Updates the footer with the checksum of the given data. */
-void SaveGame_ChecksumUpdate(s_ShSaveGameFooter* saveFooter, s8* saveData, s32 saveDataLength);
+void Savegame_ChecksumUpdate(s_ShSavegameFooter* saveFooter, s8* saveData, s32 saveDataLength);
 
 /** Generates a checksum of the given saveData and compares it against the checksum value in the footer.
  * Returns 1 if the checksums match, otherwise 0.
  */
-s32 SaveGame_ChecksumValidate(s_ShSaveGameFooter* saveFooter, s8* saveData, s32 saveDataLength);
+s32 Savegame_ChecksumValidate(s_ShSavegameFooter* saveFooter, s8* saveData, s32 saveDataLength);
 
-/** Generates an 8-bit XOR checksum over the given data, only appears used with s_ShSaveGame data. */
-u8 SaveGame_ChecksumGenerate(s8* saveData, s32 saveDataLength);
+/** Generates an 8-bit XOR checksum over the given data, only appears used with s_ShSavegame data. */
+u8 Savegame_ChecksumGenerate(s8* saveData, s32 saveDataLength);
 
 s32 Demo_SequenceAdvance(s32 incrementAmt);
 
@@ -2079,7 +2079,7 @@ void Demo_PlayDataRead();
 
 s32 Demo_PlayFileBufferSetup();
 
-void Demo_DemoFileSaveGameUpdate();
+void Demo_DemoFileSavegameUpdate();
 
 void Demo_GameGlobalsUpdate();
 

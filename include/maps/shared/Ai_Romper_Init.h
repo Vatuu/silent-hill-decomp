@@ -10,13 +10,13 @@ void Ai_Romper_Init(s_SubCharacter* chara)
     chara->properties_E4.larvalStalker.properties_E8[0].val32 = 0;
     chara->model_0.anim_4.keyframeIdx1_A                      = 0;
 
-    if (g_SaveGamePtr->gameDifficulty_260 == GameDifficulty_Easy)
+    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
     {
         chara->health_B0 = FP_TO(BASE_HEALTH, Q12_SHIFT) - ((s32)Rng_Rand16() % FP_FLOAT_TO(RAND_MAX, Q12_SHIFT));
     }
     else
     {
-        if (g_SaveGamePtr->gameDifficulty_260 == GameDifficulty_Normal)
+        if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Normal)
         {
             chara->health_B0 = FP_TO(BASE_HEALTH, Q12_SHIFT) + ((s32)Rng_Rand16() % FP_FLOAT_TO(RAND_MAX, Q12_SHIFT));
         }

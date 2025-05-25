@@ -300,20 +300,20 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8002F61C);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8002FB64);
 
-void SaveGame_UserConfigCopyWithChecksum(s_ShSaveUserConfigContainer* dest, s_ShSaveUserConfig* src) // 0x8002FBB4
+void Savegame_UserConfigCopyWithChecksum(s_ShSaveUserConfigContainer* dest, s_ShSaveUserConfig* src) // 0x8002FBB4
 {
     bzero(dest, sizeof(s_ShSaveUserConfigContainer));
     dest->config_0 = *src;
-    SaveGame_ChecksumUpdate(&dest->footer_7C, &dest->config_0, sizeof(s_ShSaveUserConfigContainer));
+    Savegame_ChecksumUpdate(&dest->footer_7C, &dest->config_0, sizeof(s_ShSaveUserConfigContainer));
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8002FC3C);
 
-void SaveGame_CopyWithChecksum(s_ShSaveGameContainer* dest, s_ShSaveGame* src) // 0x8002FCCC
+void Savegame_CopyWithChecksum(s_ShSavegameContainer* dest, s_ShSavegame* src) // 0x8002FCCC
 {
-    bzero(dest, sizeof(s_ShSaveGameContainer));
-    memcpy(&dest->saveGame_0, src, sizeof(s_ShSaveGame));
-    SaveGame_ChecksumUpdate(&dest->footer_27C, &dest->saveGame_0, sizeof(s_ShSaveGameContainer));
+    bzero(dest, sizeof(s_ShSavegameContainer));
+    memcpy(&dest->savegame_0, src, sizeof(s_ShSavegame));
+    Savegame_ChecksumUpdate(&dest->footer_27C, &dest->savegame_0, sizeof(s_ShSavegameContainer));
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8002FD5C);
@@ -322,21 +322,21 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8002FDB0);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8002FE70);
 
-void SaveGame_ChecksumUpdate(s_ShSaveGameFooter* saveFooter, s8* saveData, s32 saveDataLength) // 0x8002FF30
+void Savegame_ChecksumUpdate(s_ShSavegameFooter* saveFooter, s8* saveData, s32 saveDataLength) // 0x8002FF30
 {
     u8 checksum;
 
     saveFooter->checksum_0[0] = saveFooter->checksum_0[1] = 0;
     saveFooter->magic_2                                   = SAVEGAME_FOOTER_MAGIC;
-    checksum                                              = SaveGame_ChecksumGenerate(saveData, saveDataLength);
+    checksum                                              = Savegame_ChecksumGenerate(saveData, saveDataLength);
     saveFooter->checksum_0[0] = saveFooter->checksum_0[1] = checksum;
 }
 
-s32 SaveGame_ChecksumValidate(s_ShSaveGameFooter* saveFooter, s8* saveData, s32 saveDataLength) // 0x8002FF74
+s32 Savegame_ChecksumValidate(s_ShSavegameFooter* saveFooter, s8* saveData, s32 saveDataLength) // 0x8002FF74
 {
     s32 isValid = 0;
 
-    if (saveFooter->checksum_0[0] == SaveGame_ChecksumGenerate(saveData, saveDataLength))
+    if (saveFooter->checksum_0[0] == Savegame_ChecksumGenerate(saveData, saveDataLength))
     {
         isValid = saveFooter->magic_2 == SAVEGAME_FOOTER_MAGIC;
     }
@@ -344,7 +344,7 @@ s32 SaveGame_ChecksumValidate(s_ShSaveGameFooter* saveFooter, s8* saveData, s32 
     return isValid;
 }
 
-u8 SaveGame_ChecksumGenerate(s8* saveData, s32 saveDataLength) // 0x8002FFD0
+u8 Savegame_ChecksumGenerate(s8* saveData, s32 saveDataLength) // 0x8002FFD0
 {
     u8  checksum = 0;
     int i        = 0;
@@ -1026,9 +1026,9 @@ void SysWork_Clear() // 0x800340E0
 
 s32 MainLoop_ShouldWarmReset() // 0x80034108
 {
-    #define RESET_BTN_FLAGS (Pad_Select | Pad_Start)
-    #define UNK_BTN_FLAGS_0 (Pad_Select | Pad_Start | Pad_L2 | Pad_R2 | Pad_L1 | Pad_R1)
-    #define UNK_BTN_FLAGS_1 (Pad_Start | Pad_Triangle | Pad_Square)
+    #define RESET_BTN_FLAGS (ControllerFlag_Select | ControllerFlag_Start)
+    #define UNK_BTN_FLAGS_0 (ControllerFlag_Select | ControllerFlag_Start | ControllerFlag_L2 | ControllerFlag_R2 | ControllerFlag_L1 | ControllerFlag_R1)
+    #define UNK_BTN_FLAGS_1 (ControllerFlag_Start | ControllerFlag_Triangle | ControllerFlag_Square)
 
     if (g_GameWork.gameState_594 < GameState_MovieIntroAlternate)
     {
@@ -1076,7 +1076,7 @@ s32 MainLoop_ShouldWarmReset() // 0x80034108
     {
         return 2; 
     }
-    else if (g_ControllerPtrConst->btns_held_C == UNK_BTN_FLAGS_1 && (g_ControllerPtrConst->btns_new_10 & Pad_Start))
+    else if (g_ControllerPtrConst->btns_held_C == UNK_BTN_FLAGS_1 && (g_ControllerPtrConst->btns_new_10 & ControllerFlag_Start))
     {
         return 2; 
     }
@@ -1088,7 +1088,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", Game_WarmBoot);
 
 void Joy_Init() // 0x8003441C
 {
-    PadInitDirect(&g_GameWork.rawPadData_5B4, g_ControllerPtr);
+    PadInitDirect(&g_GameWork.rawController_5B4, g_ControllerPtr);
     PadStartCom();
 }
 
@@ -1096,15 +1096,15 @@ void Joy_ReadP1() // 0x80034450
 {
     s_ControllerData* cont = &g_GameWork.controllers_38[0];
 
-    // NOTE: memcpy is close, reads rawPadData_5B4 as two s32s, but doesn't give match.
-    // memcpy(&cont->analogPad_0, &g_GameWork.rawPadData_5B4, sizeof(s_AnalogPadData));
+    // NOTE: memcpy is close, reads rawController_5B4 as two s32s, but doesn't give match.
+    // memcpy(&cont->analogController_0, &g_GameWork.rawController_5B4, sizeof(s_AnalogController));
 
-    *(s32*)&cont->analogPad_0 = *(s32*)&g_GameWork.rawPadData_5B4;
-    *(s32*)&cont->analogPad_0.right_x = *(s32*)&g_GameWork.rawPadData_5B4.right_x;
+    *(s32*)&cont->analogController_0 = *(s32*)&g_GameWork.rawController_5B4;
+    *(s32*)&cont->analogController_0.right_x = *(s32*)&g_GameWork.rawController_5B4.right_x;
 
     // Alternate
-    // ((s32*)&cont->analogPad_0)[0] = ((s32*)&g_GameWork.rawPadData_5B4)[0];
-    // ((s32*)&cont->analogPad_0)[1] = ((s32*)&g_GameWork.rawPadData_5B4)[1];
+    // ((s32*)&cont->analogController_0)[0] = ((s32*)&g_GameWork.rawController_5B4)[0];
+    // ((s32*)&cont->analogController_0)[1] = ((s32*)&g_GameWork.rawController_5B4)[1];
 }
 
 void Joy_Update() // 0x8003446C
@@ -1156,21 +1156,21 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80034F18);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80034FB8);
 
-void Game_SaveGameInitialize(s8 overlayIdx, s32 difficulty) // 0x800350BC
+void Game_SavegameInitialize(s8 overlayIdx, s32 difficulty) // 0x800350BC
 {
     s32  i;
     s32* var_a2;
 
-    bzero(g_SaveGamePtr, sizeof(s_ShSaveGame));
+    bzero(g_SavegamePtr, sizeof(s_ShSavegame));
 
-    g_SaveGamePtr->mapOverlayIdx_A4 = overlayIdx;
+    g_SavegamePtr->mapOverlayIdx_A4 = overlayIdx;
 
     difficulty = CLAMP(difficulty, GameDifficulty_Easy, GameDifficulty_Hard);
 
-    var_a2 = g_SaveGamePtr->field_B0;
+    var_a2 = g_SavegamePtr->field_B0;
 
-    g_SaveGamePtr->gameDifficulty_260 = difficulty;
-    g_SaveGamePtr->mapIdx_A9 = 1;
+    g_SavegamePtr->gameDifficulty_260 = difficulty;
+    g_SavegamePtr->mapIdx_A9 = 1;
 
     for (i = 0; i < 45; i++)
     {
@@ -1178,7 +1178,7 @@ void Game_SaveGameInitialize(s8 overlayIdx, s32 difficulty) // 0x800350BC
         var_a2--;
     }
 
-    Game_SaveGameResetPlayer();
+    Game_SavegameResetPlayer();
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80035178);
@@ -1319,12 +1319,12 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80036420);
 
 s32 func_8003647C() // 0x8003647C
 {
-    return g_SaveGamePtr->mapRoomIdx_A5 > g_MapOverlayHeader.field_8;
+    return g_SavegamePtr->mapRoomIdx_A5 > g_MapOverlayHeader.field_8;
 }
 
 s32 func_80036498() // 80036498
 {
-    return !(g_SaveGamePtr->mapRoomIdx_A5 > g_MapOverlayHeader.field_8);
+    return !(g_SavegamePtr->mapRoomIdx_A5 > g_MapOverlayHeader.field_8);
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_800364BC);
@@ -1417,11 +1417,11 @@ void Chara_PositionUpdateFromParams(s_AreaLoadParams* params) // 0x800371E8
 
     if (params->mapIdx_4_0 == 24)
     {
-        g_SaveGamePtr->mapIdx_A9 = 0;
+        g_SavegamePtr->mapIdx_A9 = 0;
     }
     else if (params->mapIdx_4_0 != 0)
     {
-        g_SaveGamePtr->mapIdx_A9 = params->mapIdx_4_0;
+        g_SavegamePtr->mapIdx_A9 = params->mapIdx_4_0;
     }
 
     g_SysWork.cameraAngleY_237A = rot;
@@ -1598,9 +1598,9 @@ void GameState_InGame_Update() // 0x80038BD4
         Demo_DemoRandSeedRestore();
         func_8003F170();
 
-        if (g_SaveGamePtr->mapOverlayIdx_A4 != 42)
+        if (g_SavegamePtr->mapOverlayIdx_A4 != 42)
         {
-            g_MapOverlayHeader.func_168(0, g_SaveGamePtr->mapOverlayIdx_A4, 1);
+            g_MapOverlayHeader.func_168(0, g_SavegamePtr->mapOverlayIdx_A4, 1);
         }
 
         Demo_DemoRandSeedRestore();
@@ -1644,8 +1644,8 @@ void SysState_GamePaused_Update() // 0x800391E8
 
     // Debug button combo to bring up save screen from pause screen.
     // DPad-Left + L2 + L1 + LS-Left + RS-Left + L3
-    if ((g_ControllerPtrConst->btns_held_C == (Pad_L3 | Pad_DpadLeft | Pad_L2 | Pad_L1 | Pad_LStickLeft2 | Pad_RStickLeft | Pad_LStickLeft)) &&
-        (g_ControllerPtrConst->btns_new_10 & Pad_L3))
+    if ((g_ControllerPtrConst->btns_held_C == (ControllerFlag_L3 | ControllerFlag_DpadLeft | ControllerFlag_L2 | ControllerFlag_L1 | ControllerFlag_LStickLeft2 | ControllerFlag_RStickLeft | ControllerFlag_LStickLeft)) &&
+        (g_ControllerPtrConst->btns_new_10 & ControllerFlag_L3))
     {
         D_800A9A68 = 0;
         Sd_EngineCmd(4);
@@ -1670,7 +1670,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", SysState_StatusMenu_Update); /
 
 void GameState_LoadStatusScreen_Update() // 0x800395C0
 {
-    s_ShSaveGame* saveGame;
+    s_ShSavegame* savegame;
 
     if (g_GameWork.gameStateStep_598[0] == 0)
     {
@@ -1685,9 +1685,9 @@ void GameState_LoadStatusScreen_Update() // 0x800395C0
             Sd_EngineCmd(0x13);
         }
 
-        saveGame = g_SaveGamePtr;
-        func_800540A4(saveGame->mapOverlayIdx_A4);
-        func_80054024(saveGame->mapOverlayIdx_A4);
+        savegame = g_SavegamePtr;
+        func_800540A4(savegame->mapOverlayIdx_A4);
+        func_80054024(savegame->mapOverlayIdx_A4);
 
         g_GameWork.gameStateStep_598[0]++;
     }
@@ -1704,7 +1704,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", SysState_Unk3_Update); // 0x80
 
 void GameState_LoadMapScreen_Update() // 0x8003991C
 {
-    s_ShSaveGame* saveGame;
+    s_ShSavegame* savegame;
 
     if (g_GameWork.gameStateStep_598[0] == 0)
     {
@@ -1714,14 +1714,14 @@ void GameState_LoadMapScreen_Update() // 0x8003991C
         func_8003943C();
         func_80066E40();
 
-        saveGame = g_SaveGamePtr;
+        savegame = g_SavegamePtr;
 
-        if (D_800A99CC[saveGame->mapIdx_A9] != NO_VALUE)
+        if (D_800A99CC[savegame->mapIdx_A9] != NO_VALUE)
         {
-            Fs_QueueStartReadTim(FILE_TIM_MR_0TOWN_TIM + D_800A99CC[saveGame->mapIdx_A9], FS_BUFFER_1, &D_800A9024);
+            Fs_QueueStartReadTim(FILE_TIM_MR_0TOWN_TIM + D_800A99CC[savegame->mapIdx_A9], FS_BUFFER_1, &D_800A9024);
         }
 
-        Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + D_800A99B4[saveGame->mapIdx_A9], FS_BUFFER_2, &D_800A901C);
+        Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + D_800A99B4[savegame->mapIdx_A9], FS_BUFFER_2, &D_800A901C);
         g_GameWork.gameStateStep_598[0]++;
     }
 
@@ -1781,7 +1781,7 @@ void SysState_Fmv_Update() // 0x80039A58
     DrawSync(0);
 
     // Set savegame flag based on `D_800BCDD8->eventFlagNum_2` flag ID.
-    SaveGame_EventFlagSet(g_MapEventParam->eventFlagId_2);
+    Savegame_EventFlagSet(g_MapEventParam->eventFlagId_2);
 
     // Return to game.
     Game_StateSetNext(GameState_InGame);
@@ -1814,9 +1814,9 @@ s8 func_80039F90() // 0x80039F90
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", SysState_ReadMessage_Update);
 
-void SysWork_SaveGameUpdatePlayer() // 0x8003A120
+void SysWork_SavegameUpdatePlayer() // 0x8003A120
 {
-    s_ShSaveGame* save = g_SaveGamePtr;
+    s_ShSavegame* save = g_SavegamePtr;
 
     save->mapEventIdx_A8      = g_MapEventIdx;
     save->playerPositionX_244 = g_SysWork.player_4C.chara_0.position_18.vx;
@@ -1829,20 +1829,20 @@ void func_8003A16C() // 0x8003A16C
 {
     if (!(g_SysWork.flags_22A4 & 2))
     {
-        // Update saveGame_30C with player info.
-        SysWork_SaveGameUpdatePlayer();
+        // Update `savegame_30C` with player info.
+        SysWork_SavegameUpdatePlayer();
 
-        // TODO: What is saveGame_90 used for?
-        g_GameWork.saveGame_90 = g_GameWork.saveGame_30C;
+        // TODO: What is `savegame_90` used for?
+        g_GameWork.savegame_90 = g_GameWork.savegame_30C;
     }
 }
 
-void SysWork_SaveGameReadPlayer() // 0x8003A1F4
+void SysWork_SavegameReadPlayer() // 0x8003A1F4
 {
-    g_SysWork.player_4C.chara_0.position_18.vx = g_SaveGamePtr->playerPositionX_244;
-    g_SysWork.player_4C.chara_0.position_18.vz = g_SaveGamePtr->playerPositionZ_24C;
-    g_SysWork.player_4C.chara_0.rotation_24.vy = g_SaveGamePtr->playerRotationY_248;
-    g_SysWork.player_4C.chara_0.health_B0      = g_SaveGamePtr->playerHealth_240;
+    g_SysWork.player_4C.chara_0.position_18.vx = g_SavegamePtr->playerPositionX_244;
+    g_SysWork.player_4C.chara_0.position_18.vz = g_SavegamePtr->playerPositionZ_24C;
+    g_SysWork.player_4C.chara_0.rotation_24.vy = g_SavegamePtr->playerRotationY_248;
+    g_SysWork.player_4C.chara_0.health_B0      = g_SavegamePtr->playerHealth_240;
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", SysState_SaveMenu_Update); // 0x8003A230
@@ -1851,7 +1851,7 @@ void SysState_EventCallFunc_Update() // 0x8003A3C8
 {
     if ((g_MapEventParam->flags_8 >> 13) & 0x3F)
     {
-        SaveGame_EventFlagSet(g_MapEventParam->eventFlagId_2);
+        Savegame_EventFlagSet(g_MapEventParam->eventFlagId_2);
     }
 
     g_DeltaTime0 = D_800BCD84;
@@ -1861,7 +1861,7 @@ void SysState_EventCallFunc_Update() // 0x8003A3C8
 void SysState_EventSetFlag_Update() // 0x8003A460
 {
     g_DeltaTime0 = D_800BCD84;
-    SaveGame_EventFlagSet(g_MapEventParam->eventFlagId_2);
+    Savegame_EventFlagSet(g_MapEventParam->eventFlagId_2);
     g_SysWork.sysState_8 = 0;
 }
 
@@ -1871,7 +1871,7 @@ void SysState_EventPlaySound_Update() // 0x8003A4B4
 
     Sd_EngineCmd(((u16)g_MapEventIdx + 0x500) & 0xFFFF);
 
-    SaveGame_EventFlagSet(g_MapEventParam->eventFlagId_2);
+    Savegame_EventFlagSet(g_MapEventParam->eventFlagId_2);
     g_SysWork.sysState_8 = 0;
 }
 
@@ -1893,9 +1893,9 @@ void SysState_GameOver_Update() // 0x8003A52C
             g_MapOverlayHeader.func_C8();
             g_SysWork.field_28 = 0;
 
-            if (g_GameWork.saveGame_90.continueCount_27B < 99)
+            if (g_GameWork.savegame_90.continueCount_27B < 99)
             {
-                g_GameWork.saveGame_90.continueCount_27B++;
+                g_GameWork.savegame_90.continueCount_27B++;
             }
 
             func_8003B550();
@@ -1988,7 +1988,7 @@ void SysState_GameOver_Update() // 0x8003A52C
             break;
 
         case 5:
-            if (g_SaveGamePtr->gameDifficulty_260 == GameDifficulty_Hard)
+            if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
             {
                 // TODO: Create `inline SysWork_StateStepReset` if other code matching is needed.
                 g_SysWork.sysStateStep_C = NO_VALUE;
@@ -2059,7 +2059,7 @@ void GameState_MapEvent_Update() // 0x8003AA4C
 
     D_800A9A0C = (D_800BCD0C & 7) == 5 && Fs_QueueDoThingWhenEmpty() != 0;
 
-    SaveGame_EventFlagSet(g_MapEventParam->eventFlagId_2);
+    Savegame_EventFlagSet(g_MapEventParam->eventFlagId_2);
 
     g_MapOverlayHeader.mapEventFuncs_20[g_MapEventIdx]();
 
@@ -2391,13 +2391,13 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8003EBF4);
 void func_8003ECBC() // 0x8003ECBC
 {
     g_SysWork.unk_2388[21] = 1;
-    g_SaveGamePtr->flags_AC &= ~2;
+    g_SavegamePtr->flags_AC &= ~2;
 }
 
 void func_8003ECE4() // 0x8003ECE4
 {
     g_SysWork.unk_2388[21] = 0;
-    g_SaveGamePtr->flags_AC |= 1 << 1;
+    g_SavegamePtr->flags_AC |= 1 << 1;
 }
 
 void func_8003ED08() // 0x8003ED08
@@ -2409,11 +2409,11 @@ void func_8003ED08() // 0x8003ED08
 
     if (var == 1)
     {
-        g_SaveGamePtr->flags_AC &= ~(1 << 1);
+        g_SavegamePtr->flags_AC &= ~(1 << 1);
         return;
     }
 
-    g_SaveGamePtr->flags_AC |= 1 << 1;
+    g_SavegamePtr->flags_AC |= 1 << 1;
 }
 
 u8 func_8003ED64() // 0x8003ED64

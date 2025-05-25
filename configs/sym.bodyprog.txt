@@ -3,7 +3,7 @@ g_ObjectTableIdx = 0x800B9FB8;
 g_SysWork = 0x800B9FC0; // type:SysWork size:0x2768 - should use s_SysWork here, but splat only supports custom structs with capital letter at beginning.
 g_GameWork = 0x800BC728; // type:GameWork size:0x5D8
 g_GameWorkConst = 0x80024D44; // type:u32
-g_SaveGamePtr = 0x80024D48; // type:u32
+g_SavegamePtr = 0x80024D48; // type:u32
 g_ControllerPtrConst = 0x80024D4C; // type:u32
 g_ControllerPtr = 0x80024D50; // type:u32
 g_GameWorkPtr = 0x80024D54; // type:u32
@@ -198,20 +198,20 @@ SysState_EventPlaySound_Update = 0x8003A4B4; // type:func
 SysState_GameOver_Update = 0x8003A52C; // type:func
 SysState_GamePaused_Update = 0x800391E8; // type:func
 
-SaveGame_UserConfigCopyWithChecksum = 0x8002FBB4; // type:func
-SaveGame_CopyWithChecksum = 0x8002FCCC; // type:func
-SaveGame_ChecksumUpdate = 0x8002FF30; // type:func
-SaveGame_ChecksumValidate = 0x8002FF74; // type:func
-SaveGame_ChecksumGenerate = 0x8002FFD0; // type:func
-Game_SaveGameInitialize = 0x800350BC; // type:func
+Savegame_UserConfigCopyWithChecksum = 0x8002FBB4; // type:func
+Savegame_CopyWithChecksum = 0x8002FCCC; // type:func
+Savegame_ChecksumUpdate = 0x8002FF30; // type:func
+Savegame_ChecksumValidate = 0x8002FF74; // type:func
+Savegame_ChecksumGenerate = 0x8002FFD0; // type:func
+Game_SavegameInitialize = 0x800350BC; // type:func
 
 // TODO: Naming this function results in an undefined reference.
 //SaveLoad_FileStringDraw = 0x801E2FCC; // type:func
 
-SysWork_SaveGameUpdatePlayer = 0x8003A120; // type:func
-SysWork_SaveGameReadPlayer = 0x8003A1F4; // type:func
+SysWork_SavegameUpdatePlayer = 0x8003A120; // type:func
+SysWork_SavegameReadPlayer = 0x8003A1F4; // type:func
 
-Game_SaveGameResetPlayer = 0x8007E530; // type:func
+Game_SavegameResetPlayer = 0x8007E530; // type:func
 
 Player_AnimUpdate = 0x8004C088; // type:func
 Player_AnimGetSomething = 0x8007F308; // type:func
@@ -301,7 +301,7 @@ Demo_SequenceAdvance = 0x8008EF20; // type:func
 Demo_DemoDataRead = 0x8008F048; // type:func
 Demo_PlayDataRead = 0x8008F07C; // type:func
 Demo_PlayFileBufferSetup = 0x8008F0BC; // type:func
-Demo_DemoFileSaveGameUpdate = 0x8008F13C; // type:func
+Demo_DemoFileSavegameUpdate = 0x8008F13C; // type:func
 Demo_GameGlobalsUpdate = 0x8008F1A0; // type:func
 Demo_GameGlobalsRestore = 0x8008F2BC; // type:func
 Demo_GameRandSeedUpdate = 0x8008F33C; // type:func

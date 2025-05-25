@@ -70,23 +70,23 @@ void GameState_DebugMoviePlayer_Update() // 0x801E2908
 {
     extern s32 g_Debug_MoviePlayerIdx; // Only used in this func, maybe static.
 
-    s_GameWork*       gameWork;
+    s_GameWork*    gameWork;
     s_ControllerData* controller;
 
-    gameWork   = g_GameWorkPtr;
-    controller = g_ControllerPtrConst;
+    gameWork = g_GameWorkPtr;
+    controller  = g_ControllerPtrConst;
 
     if (controller->btns_new_10 & gameWork->config_0.controllerConfig_0.cancel)
     {
         Game_StateSetNext(GameState_Unk16); // Changes to non-existent state 22 and crashes. Maybe removed debug menu.
     }
 
-    if (controller->field_18 & Pad_LStickLeft)
+    if (controller->field_18 & ControllerFlag_LStickLeft)
     {
         g_Debug_MoviePlayerIdx--;
     }
 
-    if (controller->field_18 & Pad_LStickRight)
+    if (controller->field_18 & ControllerFlag_LStickRight)
     {
         g_Debug_MoviePlayerIdx++;
     }

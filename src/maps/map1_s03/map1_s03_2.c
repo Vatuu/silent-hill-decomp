@@ -85,7 +85,7 @@ void Ai_LockerDeadBody_Update(s_SubCharacter* chara, s32 arg1, s32 arg2) // 0x80
         chara->position_18.vy = 0;
     }
 
-    if (!(g_SaveGamePtr->eventFlags_168[3] & (1 << 9)))
+    if (!(g_SavegamePtr->eventFlags_168[3] & (1 << 9)))
     {
         chara->model_0.anim_4.flags_2 &= ~2;
         chara->field_E0_8 = 0;
@@ -94,7 +94,7 @@ void Ai_LockerDeadBody_Update(s_SubCharacter* chara, s32 arg1, s32 arg2) // 0x80
 
     chara->model_0.anim_4.flags_2 |= 1 << 1;
 
-    if (!(g_SaveGamePtr->eventFlags_168[3] & (1 << 10)))
+    if (!(g_SavegamePtr->eventFlags_168[3] & (1 << 10)))
     {
         if (chara->model_0.anim_4.animIdx_0 == 5)
         {

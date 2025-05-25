@@ -114,24 +114,24 @@ s32 func_8004C45C() // 0x8004C45C
     for (i = 0; i < INVENTORY_ITEM_COUNT_MAX; i++)
     {
         // Already in inventory, can't add new one.
-        if (g_SaveGamePtr->items_0[i].id == InventoryItemId_HyperBlaster)
+        if (g_SavegamePtr->items_0[i].id == InventoryItemId_HyperBlaster)
         {
             return NO_VALUE;
         }
     }
 
-    if (g_SaveGamePtr->mapOverlayIdx_A4 > 0)
+    if (g_SavegamePtr->mapOverlayIdx_A4 > 0)
     {
         // Konami gun controller connected.
-        if (g_GameWork.controllers_38[1].analogPad_0.status == 0 &&
-            g_GameWork.controllers_38[1].analogPad_0.received_bytes == 1 &&
-            g_GameWork.controllers_38[1].analogPad_0.terminal_type == PadTerminalType_GunControllerKonami)
+        if (g_GameWork.controllers_38[1].analogController_0.status == 0 &&
+            g_GameWork.controllers_38[1].analogController_0.received_bytes == 1 &&
+            g_GameWork.controllers_38[1].analogController_0.terminal_type == PadTerminalType_GunControllerKonami)
         {
             return 1;
         }
 
         // Game completed with some condition met?
-        if (g_SaveGamePtr->clearGameCount_24A != 0 && (g_SaveGamePtr->field_24B & (1 << 4)) != 0)
+        if (g_SavegamePtr->clearGameCount_24A != 0 && (g_SavegamePtr->field_24B & (1 << 4)) != 0)
         {
             return 1;
         }
@@ -142,17 +142,17 @@ s32 func_8004C45C() // 0x8004C45C
 
 s32 func_8004C4F8() // 0x8004C4F8
 {
-    if (g_SaveGamePtr->mapOverlayIdx_A4 > 0)
+    if (g_SavegamePtr->mapOverlayIdx_A4 > 0)
     {
-        if ((g_SaveGamePtr->field_24B & (1 << 4)) != 0)
+        if ((g_SavegamePtr->field_24B & (1 << 4)) != 0)
         {
             return 2; // Game completed with some condition met?
         }
 
         // Returns 1 if controller port 2 has Konami gun controller connected.
-        return g_GameWork.controllers_38[1].analogPad_0.status == 0 &&
-               g_GameWork.controllers_38[1].analogPad_0.received_bytes == 1 &&
-               g_GameWork.controllers_38[1].analogPad_0.terminal_type == PadTerminalType_GunControllerKonami;
+        return g_GameWork.controllers_38[1].analogController_0.status == 0 &&
+               g_GameWork.controllers_38[1].analogController_0.received_bytes == 1 &&
+               g_GameWork.controllers_38[1].analogController_0.terminal_type == PadTerminalType_GunControllerKonami;
     }
 
     return 0;
@@ -965,7 +965,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8007D6F0);
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8007D970);
 
 // TODO: Can this work without needing inlined func?
-static inline SaveGame_PlayerReset(s_ShSaveGame* save)
+static inline Savegame_PlayerReset(s_ShSavegame* save)
 {
     save->playerHealth_240 = FP_TO(100, Q12_SHIFT);
     save->field_A0 = 0;
@@ -979,12 +979,12 @@ static inline SaveGame_PlayerReset(s_ShSaveGame* save)
     save->add290Hours_25C_1 = 0;
 }
 
-void Game_SaveGameResetPlayer() // 0x8007E530
+void Game_SavegameResetPlayer() // 0x8007E530
 {
-    s_ShSaveGame* save = g_SaveGamePtr;
+    s_ShSavegame* save = g_SavegamePtr;
     s32           i;
 
-    g_SaveGamePtr->field_AB = 8;
+    g_SavegamePtr->field_AB = 8;
 
     for (i = 0; i < INVENTORY_ITEM_COUNT_MAX; i++)
     {
@@ -992,7 +992,7 @@ void Game_SaveGameResetPlayer() // 0x8007E530
         save->items_0[i].count = 0;
     }
 
-    SaveGame_PlayerReset(g_SaveGamePtr);
+    Savegame_PlayerReset(g_SavegamePtr);
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8007E5AC);
@@ -1116,7 +1116,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_800803FC);
 
 void func_80080458() // 0x80080458
 {
-    g_ControllerPtr->btns_new_10 |= Pad_Select;
+    g_ControllerPtr->btns_new_10 |= ControllerFlag_Select;
 }
 
 s32 func_80080478(VECTOR3* pos0, VECTOR3* pos1) // 0x80080478

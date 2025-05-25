@@ -256,7 +256,7 @@ void Settings_ExtraScreen() // 0x801E318C
             return;
         }
 
-        if (g_ControllerPtrConst->field_18 & Pad_LStickUp)
+        if (g_ControllerPtrConst->field_18 & ControllerFlag_LStickUp)
         {
             s32 var = 1;
             func_80046048(0x519, 0, 0x40);
@@ -264,7 +264,7 @@ void Settings_ExtraScreen() // 0x801E318C
             D_801E73E4 = 0;
         }
 
-        if (g_ControllerPtrConst->field_18 & Pad_LStickDown)
+        if (g_ControllerPtrConst->field_18 & ControllerFlag_LStickDown)
         {
             func_80046048(0x519, 0, 0x40);
             D_801E72F8++;
@@ -275,7 +275,7 @@ void Settings_ExtraScreen() // 0x801E318C
         switch (D_801E72F8)
         {
             case 0:
-                if (g_ControllerPtrConst->btns_new_10 & (Pad_LStickRight | Pad_LStickLeft))
+                if (g_ControllerPtrConst->btns_new_10 & (ControllerFlag_LStickRight | ControllerFlag_LStickLeft))
                 {
                     func_80046048(0x519, 0, 0x40);
                     g_GameWork.config_0.optWeaponCtrl_23 = !g_GameWork.config_0.optWeaponCtrl_23;
@@ -283,12 +283,12 @@ void Settings_ExtraScreen() // 0x801E318C
                 break;
 
             case 1:
-                if (g_ControllerPtrConst->btns_new_10 & Pad_LStickRight)
+                if (g_ControllerPtrConst->btns_new_10 & ControllerFlag_LStickRight)
                 {
                     func_80046048(0x519, 0, 0x40);
                     D_801E73EC++;
                 }
-                if (g_ControllerPtrConst->btns_new_10 & Pad_LStickLeft)
+                if (g_ControllerPtrConst->btns_new_10 & ControllerFlag_LStickLeft)
                 {
                     func_80046048(0x519, 0, 0x40);
                     D_801E73EC += 3;
@@ -317,7 +317,7 @@ void Settings_ExtraScreen() // 0x801E318C
                 break;
 
             case 2:
-                if (g_ControllerPtrConst->btns_new_10 & (Pad_LStickRight | Pad_LStickLeft))
+                if (g_ControllerPtrConst->btns_new_10 & (ControllerFlag_LStickRight | ControllerFlag_LStickLeft))
                 {
                     func_80046048(0x519, 0, 0x40);
                     g_GameWork.config_0.optViewCtrl_28 = !g_GameWork.config_0.optViewCtrl_28;
@@ -325,7 +325,7 @@ void Settings_ExtraScreen() // 0x801E318C
                 break;
 
             case 3:
-                if (g_ControllerPtrConst->btns_new_10 & (Pad_LStickRight | Pad_LStickLeft))
+                if (g_ControllerPtrConst->btns_new_10 & (ControllerFlag_LStickRight | ControllerFlag_LStickLeft))
                 {
                     func_80046048(0x519, 0, 0x40);
                     g_GameWork.config_0.optRetreatTurn_2A = (s8)g_GameWork.config_0.optRetreatTurn_2A == 0;
@@ -333,7 +333,7 @@ void Settings_ExtraScreen() // 0x801E318C
                 break;
 
             case 4:
-                if (g_ControllerPtrConst->btns_new_10 & (Pad_LStickRight | Pad_LStickLeft))
+                if (g_ControllerPtrConst->btns_new_10 & (ControllerFlag_LStickRight | ControllerFlag_LStickLeft))
                 {
                     func_80046048(0x519, 0, 0x40);
                     g_GameWork.config_0.optWalkRunCtrl_2B = (s8)g_GameWork.config_0.optWalkRunCtrl_2B == 0;
@@ -341,7 +341,7 @@ void Settings_ExtraScreen() // 0x801E318C
                 break;
 
             case 5:
-                if (g_ControllerPtrConst->btns_new_10 & (Pad_LStickRight | Pad_LStickLeft))
+                if (g_ControllerPtrConst->btns_new_10 & (ControllerFlag_LStickRight | ControllerFlag_LStickLeft))
                 {
                     func_80046048(0x519, 0, 0x40);
                     g_GameWork.config_0.optAutoAiming_2C = (s8)g_GameWork.config_0.optAutoAiming_2C == 0;
@@ -349,7 +349,7 @@ void Settings_ExtraScreen() // 0x801E318C
                 break;
 
             case 6:
-                if (g_ControllerPtrConst->btns_new_10 & (Pad_LStickRight | Pad_LStickLeft))
+                if (g_ControllerPtrConst->btns_new_10 & (ControllerFlag_LStickRight | ControllerFlag_LStickLeft))
                 {
                     func_80046048(0x519, 0, 0x40);
                     g_GameWork.config_0.optViewMode_29 = !g_GameWork.config_0.optViewMode_29;
@@ -357,12 +357,12 @@ void Settings_ExtraScreen() // 0x801E318C
                 break;
 
             case 7:
-                if (g_ControllerPtrConst->btns_new_10 & Pad_LStickRight)
+                if (g_ControllerPtrConst->btns_new_10 & ControllerFlag_LStickRight)
                 {
                     func_80046048(0x519, 0, 0x40);
                     g_GameWork.config_0.optBulletAdjust_2D++;
                 }
-                if (g_ControllerPtrConst->btns_new_10 & Pad_LStickLeft)
+                if (g_ControllerPtrConst->btns_new_10 & ControllerFlag_LStickLeft)
                 {
                     func_80046048(0x519, 0, 0x40);
                     g_GameWork.config_0.optBulletAdjust_2D = g_GameWork.config_0.optBulletAdjust_2D + (D_801E73F0 - 1);
@@ -373,7 +373,7 @@ void Settings_ExtraScreen() // 0x801E318C
         }
     }
 
-    if ((g_ControllerPtrConst->btns_new_10 & (g_GameWorkPtr->config_0.controllerConfig_0.cancel | (Pad_L2 | Pad_R2 | Pad_L1 | Pad_R1))) &&
+    if ((g_ControllerPtrConst->btns_new_10 & (g_GameWorkPtr->config_0.controllerConfig_0.cancel | (ControllerFlag_L2 | ControllerFlag_R2 | ControllerFlag_L1 | ControllerFlag_R1))) &&
         g_GameWork.gameStateStep_598[0] != 15)
     {
         if (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel)
@@ -443,14 +443,14 @@ void Settings_MainScreen() // 0x801E3770
         return;
     }
 
-    if (g_ControllerPtrConst->field_18 & Pad_LStickUp)
+    if (g_ControllerPtrConst->field_18 & ControllerFlag_LStickUp)
     {
         func_80046048(0x519, 0, 0x40);
 
         D_801E73E4 = 0;
         D_801E72F4 = (D_801E72F4 + 8) % 9;
     }
-    if (g_ControllerPtrConst->field_18 & Pad_LStickDown)
+    if (g_ControllerPtrConst->field_18 & ControllerFlag_LStickDown)
     {
         func_80046048(0x519, 0, 0x40);
 
@@ -522,7 +522,7 @@ void Settings_MainScreen() // 0x801E3770
             break;
 
         case 4:
-            if (g_ControllerPtrConst->btns_new_10 & (Pad_LStickRight | Pad_LStickLeft))
+            if (g_ControllerPtrConst->btns_new_10 & (ControllerFlag_LStickRight | ControllerFlag_LStickLeft))
             {
                 func_80046048(0x519, 0, 0x40);
                 g_GameWork.config_0.optVibrationEnabled_21 = !g_GameWork.config_0.optVibrationEnabled_21 << 7;
@@ -530,7 +530,7 @@ void Settings_MainScreen() // 0x801E3770
             break;
 
         case 5:
-            if (g_ControllerPtrConst->btns_new_10 & (Pad_LStickRight | Pad_LStickLeft))
+            if (g_ControllerPtrConst->btns_new_10 & (ControllerFlag_LStickRight | ControllerFlag_LStickLeft))
             {
                 func_80046048(0x519, 0, 0x40);
                 g_GameWork.config_0.optAutoLoad_25 = (s8)g_GameWork.config_0.optAutoLoad_25 == 0;
@@ -538,7 +538,7 @@ void Settings_MainScreen() // 0x801E3770
             break;
 
         case 6:
-            if (g_ControllerPtrConst->btns_new_10 & (Pad_LStickRight | Pad_LStickLeft))
+            if (g_ControllerPtrConst->btns_new_10 & (ControllerFlag_LStickRight | ControllerFlag_LStickLeft))
             {
                 func_80046048(0x519, 0, 0x40);
 
@@ -554,21 +554,21 @@ void Settings_MainScreen() // 0x801E3770
 
         case 7:
             vol = g_GameWork.config_0.optVolumeBgm_1F;
-            if ((vol < OPT_SOUND_VOLUME_MAX && (g_ControllerPtrConst->field_18 & Pad_LStickRight)) ||
-                (vol > 0 && (g_ControllerPtrConst->field_18 & Pad_LStickLeft)))
+            if ((vol < OPT_SOUND_VOLUME_MAX && (g_ControllerPtrConst->field_18 & ControllerFlag_LStickRight)) ||
+                (vol > 0 && (g_ControllerPtrConst->field_18 & ControllerFlag_LStickLeft)))
             {
                 Sd_EngineCmd(0x519);
             }
-            if ((vol == OPT_SOUND_VOLUME_MAX && (g_ControllerPtrConst->btns_new_10 & Pad_LStickRight)) ||
-                (vol == 0 && (g_ControllerPtrConst->btns_new_10 & Pad_LStickLeft)))
+            if ((vol == OPT_SOUND_VOLUME_MAX && (g_ControllerPtrConst->btns_new_10 & ControllerFlag_LStickRight)) ||
+                (vol == 0 && (g_ControllerPtrConst->btns_new_10 & ControllerFlag_LStickLeft)))
             {
                 Sd_EngineCmd(0x518);
             }
-            if (g_ControllerPtrConst->field_18 & Pad_LStickRight)
+            if (g_ControllerPtrConst->field_18 & ControllerFlag_LStickRight)
             {
                 vol = vol + SOUND_VOL_STEP;
             }
-            if (g_ControllerPtrConst->field_18 & Pad_LStickLeft)
+            if (g_ControllerPtrConst->field_18 & ControllerFlag_LStickLeft)
             {
                 vol = vol - SOUND_VOL_STEP;
             }
@@ -581,21 +581,21 @@ void Settings_MainScreen() // 0x801E3770
 
         case 8:
             vol = g_GameWork.config_0.optVolumeSe_20;
-            if ((vol < OPT_SOUND_VOLUME_MAX && (g_ControllerPtrConst->field_18 & Pad_LStickRight)) ||
-                (vol > 0 && (g_ControllerPtrConst->field_18 & Pad_LStickLeft)))
+            if ((vol < OPT_SOUND_VOLUME_MAX && (g_ControllerPtrConst->field_18 & ControllerFlag_LStickRight)) ||
+                (vol > 0 && (g_ControllerPtrConst->field_18 & ControllerFlag_LStickLeft)))
             {
                 Sd_EngineCmd(0x519);
             }
-            if ((vol == OPT_SOUND_VOLUME_MAX && (g_ControllerPtrConst->btns_new_10 & Pad_LStickRight)) ||
-                (vol == 0 && (g_ControllerPtrConst->btns_new_10 & Pad_LStickLeft)))
+            if ((vol == OPT_SOUND_VOLUME_MAX && (g_ControllerPtrConst->btns_new_10 & ControllerFlag_LStickRight)) ||
+                (vol == 0 && (g_ControllerPtrConst->btns_new_10 & ControllerFlag_LStickLeft)))
             {
                 Sd_EngineCmd(0x518);
             }
-            if (g_ControllerPtrConst->field_18 & Pad_LStickRight)
+            if (g_ControllerPtrConst->field_18 & ControllerFlag_LStickRight)
             {
                 vol = vol + SOUND_VOL_STEP;
             }
-            if (g_ControllerPtrConst->field_18 & Pad_LStickLeft)
+            if (g_ControllerPtrConst->field_18 & ControllerFlag_LStickLeft)
             {
                 vol = vol - SOUND_VOL_STEP;
             }
@@ -612,7 +612,7 @@ void Settings_MainScreen() // 0x801E3770
 
     vol = 0;
 
-    if (g_ControllerPtrConst->btns_new_10 & (Pad_L2 | Pad_R2 | Pad_L1 | Pad_R1))
+    if (g_ControllerPtrConst->btns_new_10 & (ControllerFlag_L2 | ControllerFlag_R2 | ControllerFlag_L1 | ControllerFlag_R1))
     {
         if (g_GameWork.gameStateStep_598[0] == 13)
         {
@@ -647,14 +647,10 @@ void Gfx_SfxBarDraw() // 0x801E3F90
     Gfx_BarDraw(1, g_GameWork.config_0.optVolumeSe_20);
 }
 
-/** Related to drawing strings.
- * Generates and draws the bars used for SFX and BGM audio options.
- */
+/** @brief Generates and draws the bars used for SFX and BGM audio options. */
 INCLUDE_ASM("asm/screens/options/nonmatchings/options", Gfx_BarDraw); // 0x801E3FB8
 
-/** Related to drawing strings.
- * Draws the option strings in the extra options screen.
- */
+/** @brief Draws the option strings in the extra options screen. */
 void Gfx_OptionsStringsExtraDraw() // 0x801E416C
 {
     s32 i;
@@ -704,9 +700,7 @@ void Gfx_OptionsStringsExtraDraw() // 0x801E416C
     }
 }
 
-/** Related to drawing strings.
- * Draws the option strings in the main options screen.
- */
+/** @brief Draws the option strings in the main options screen. */
 void Gfx_OptionsStringsMainDraw() // 0x801E42EC
 {
     s32 i;
@@ -756,8 +750,7 @@ void Gfx_OptionsStringsMainDraw() // 0x801E42EC
     func_8004A8CC();
 }
 
-/** Related to drawing.
- * Draws the buttons next to options and lines indicating the
+/** @brief Draws the buttons next to options and lines indicating the
  * selected option in the extra options screen.
  */
 void Gfx_SelectedOptionExtra() // 0x801E4450
@@ -857,8 +850,7 @@ void Gfx_SelectedOptionExtra() // 0x801E4450
     }
 }
 
-/** Related to drawing.
- * Draws the buttons next to options and lines indicating the
+/** @brief Draws the buttons next to options and lines indicating the
  * selected option in the main options screen.
  */
 void Gfx_SelectedOptionMain() // 0x801E472C
@@ -958,9 +950,7 @@ void Gfx_SelectedOptionMain() // 0x801E472C
     }
 }
 
-/** Related to drawing.
- * Draws the vignette for the main and extra options screens.
- */
+/** @brief Draws the vignette for the main and extra options screens. */
 void Gfx_VignetteDraw() // 0x801E49F0
 {
     GsOT*    ot = &g_ObjectTable0[g_ObjectTableIdx];
@@ -1000,9 +990,7 @@ void Gfx_VignetteDraw() // 0x801E49F0
     func_80052088(0, 0, 0x7F5, 6);
 }
 
-/** Related to drawing.
- * Draws the options for each setting used in the extra options screen.
- */
+/** @brief Draws the options for each setting used in the extra options screen. */
 void Gfx_SettingsOptionsExtraDraw() // 0x801E4B2C
 {
     s32               textPosX;
@@ -1081,11 +1069,11 @@ void Gfx_SettingsOptionsExtraDraw() // 0x801E4B2C
             Gfx_ArrowDraw(&D_801E2884[(D_801E72F8 * 2) + i], 1, 0);
         }
 
-        if (g_ControllerPtrConst->btns_held_C & Pad_LStickLeft)
+        if (g_ControllerPtrConst->btns_held_C & ControllerFlag_LStickLeft)
         {
             Gfx_ArrowDraw(&D_801E2944[D_801E72F8 << 1], 0, 0);
         }
-        if (g_ControllerPtrConst->btns_held_C & Pad_LStickRight)
+        if (g_ControllerPtrConst->btns_held_C & ControllerFlag_LStickRight)
         {
             Gfx_ArrowDraw(&D_801E2944[(D_801E72F8 << 1) + 1], 0, 0);
         }
@@ -1162,14 +1150,12 @@ void Gfx_SettingsOptionsExtraDraw() // 0x801E4B2C
     }
 }
 
-/** Related to drawing.
- * Draws the options for each setting used in the main options screen.
- */
+/** @brief Draws the options for each setting used in the main options screen. */
 void Gfx_SettingsOptionsMainDraw() // 0x801E4FFC
 {
-    s32               textPosX;
-    s32               i;
-    s32               stringIdx;
+    s32 textPosX;
+    s32 i;
+    s32 stringIdx;
 
     s_ArrowVectors D_801E2AD8[] =
     {
@@ -1216,11 +1202,11 @@ void Gfx_SettingsOptionsMainDraw() // 0x801E4FFC
             Gfx_ArrowDraw(&D_801E2AD8[(((D_801E72F4 - 4) * 2) + i)], 1, 0);
         }
 
-        if (g_ControllerPtrConst->btns_held_C & Pad_LStickLeft)
+        if (g_ControllerPtrConst->btns_held_C & ControllerFlag_LStickLeft)
         {
             Gfx_ArrowDraw(&D_801E2B50[(D_801E72F4 - 4) << 1], 0, 0);
         }
-        if (g_ControllerPtrConst->btns_held_C & Pad_LStickRight)
+        if (g_ControllerPtrConst->btns_held_C & ControllerFlag_LStickRight)
         {
             Gfx_ArrowDraw(&D_801E2B50[((D_801E72F4 - 4) << 1) + 1], 0, 0);
         }
@@ -1288,19 +1274,19 @@ void Settings_PositionScreen() // 0x801E53A0
             break;
 
         case 2:
-            if (g_ControllerPtrConst->field_18 & Pad_LStickUp)
+            if (g_ControllerPtrConst->field_18 & ControllerFlag_LStickUp)
             {
                 g_GameWorkConst->config_0.screenPosY_1D--;
             }
-            if (g_ControllerPtrConst->field_18 & Pad_LStickDown)
+            if (g_ControllerPtrConst->field_18 & ControllerFlag_LStickDown)
             {
                 g_GameWorkConst->config_0.screenPosY_1D++;
             }
-            if (g_ControllerPtrConst->field_18 & Pad_LStickLeft)
+            if (g_ControllerPtrConst->field_18 & ControllerFlag_LStickLeft)
             {
                 g_GameWorkConst->config_0.screenPosX_1C--;
             }
-            if (g_ControllerPtrConst->field_18 & Pad_LStickRight)
+            if (g_ControllerPtrConst->field_18 & ControllerFlag_LStickRight)
             {
                 g_GameWorkConst->config_0.screenPosX_1C++;
             }
@@ -1461,23 +1447,23 @@ void Gfx_PositionArrowsDraw() // 0x801E5A08
         Gfx_ArrowDraw(&D_801E2BEC[i], 1, 0);
     }
 
-    if ((g_ControllerPtrConst->btns_new_10 & Pad_LStickUp) ||
-        (g_ControllerPtrConst->btns_held_C & Pad_LStickUp))
+    if ((g_ControllerPtrConst->btns_new_10 & ControllerFlag_LStickUp) ||
+        (g_ControllerPtrConst->btns_held_C & ControllerFlag_LStickUp))
     {
         dir[0] = 1;
     }
-    if ((g_ControllerPtrConst->btns_new_10 & Pad_LStickDown) ||
-        (g_ControllerPtrConst->btns_held_C & Pad_LStickDown))
+    if ((g_ControllerPtrConst->btns_new_10 & ControllerFlag_LStickDown) ||
+        (g_ControllerPtrConst->btns_held_C & ControllerFlag_LStickDown))
     {
         dir[1] = 1;
     }
-    if ((g_ControllerPtrConst->btns_new_10 & Pad_LStickLeft) ||
-        (g_ControllerPtrConst->btns_held_C & Pad_LStickLeft))
+    if ((g_ControllerPtrConst->btns_new_10 & ControllerFlag_LStickLeft) ||
+        (g_ControllerPtrConst->btns_held_C & ControllerFlag_LStickLeft))
     {
         dir[2] = 1;
     }
-    if ((g_ControllerPtrConst->btns_new_10 & Pad_LStickRight) ||
-        (g_ControllerPtrConst->btns_held_C & Pad_LStickRight))
+    if ((g_ControllerPtrConst->btns_new_10 & ControllerFlag_LStickRight) ||
+        (g_ControllerPtrConst->btns_held_C & ControllerFlag_LStickRight))
     {
         dir[3] = 1;
     }
@@ -1491,8 +1477,7 @@ void Gfx_PositionArrowsDraw() // 0x801E5A08
     }
 }
 
-/** Related to drawing.
- * Draws the box that indicates the screen position in the
+/** @brief Draws the box that indicates the screen position in the
  * position screen configuration.
  */
 void Gfx_PositionIndicatorDraw() // 0x801E5CBC
@@ -1570,7 +1555,7 @@ void Settings_BrightnessScreen() // 0x801E6018
             break;
 
         case 2:
-            if (g_ControllerPtrConst->field_18 & Pad_LStickLeft)
+            if (g_ControllerPtrConst->field_18 & ControllerFlag_LStickLeft)
             {
                 if (g_GameWork.config_0.optBrightness_22 != 0)
                 {
@@ -1579,7 +1564,7 @@ void Settings_BrightnessScreen() // 0x801E6018
                 }
             }
 
-            if (g_ControllerPtrConst->field_18 & Pad_LStickRight)
+            if (g_ControllerPtrConst->field_18 & ControllerFlag_LStickRight)
             {
                 if (g_GameWork.config_0.optBrightness_22 < 7)
                 {
@@ -1668,11 +1653,11 @@ void Gfx_BrightnessLevelArrowsDraw() // 0x801E628C
     btnInput = g_ControllerPtrConst->btns_held_C;
 
     // Determine direction.
-    if (btnInput & Pad_LStickLeft)
+    if (btnInput & ControllerFlag_LStickLeft)
     {
         dir = 1;
     }
-    else if (btnInput & Pad_LStickRight)
+    else if (btnInput & ControllerFlag_LStickRight)
     {
         dir = 2;
     }
@@ -1696,9 +1681,7 @@ void Gfx_BrightnessLevelArrowsDraw() // 0x801E628C
 // DRAW OPTIONS FEATURES SCREEN
 // ========================================
 
-/** Related to drawing.
- * Draws the line on the selected option in options screens.
- */
+/** @brief Draws the line on the selected option in options screens. */
 void Gfx_LineDraw(s_LineVectors* vec, s32 arg1, s32 arg2) // 0x801E641C
 {
     GsOT*          ot = &g_ObjectTable1[g_ObjectTableIdx];
@@ -1749,9 +1732,7 @@ void Gfx_LineDraw(s_LineVectors* vec, s32 arg1, s32 arg2) // 0x801E641C
     }
 }
 
-/** Related to drawing.
- * Draws the arrows used in options screens.
- */
+/** @brief Draws the arrows used in options screens. */
 void Gfx_ArrowDraw(s_ArrowVectors* vec, s32 arg1, s32 arg2) // 0x801E662C
 {
     GsOT*    ot = &g_ObjectTable1[g_ObjectTableIdx];
@@ -1833,9 +1814,7 @@ void Gfx_ArrowDraw(s_ArrowVectors* vec, s32 arg1, s32 arg2) // 0x801E662C
     GsOUT_PACKET_P = (u8*)poly + sizeof(POLY_G3);
 }
 
-/** Related to drawing.
- * Draws the button next to options in the main and extra option screens.
- */
+/** @brief Draws the button next to options in the main and extra option screens. */
 void Gfx_ButtonDraw(s_ButtonVectors* vec, s32 arg1, s32 arg2) // 0x801E67B0
 {
     GsOT*    ot = &g_ObjectTable1[g_ObjectTableIdx];
@@ -1936,17 +1915,17 @@ void Settings_ControllerScreen() // 0x801E69BC
                 g_GameWork.gameStateStep_598[2] = 0;
                 break;
             }
-            if (g_ControllerPtrConst->field_1C & Pad_LStickUp)
+            if (g_ControllerPtrConst->field_1C & ControllerFlag_LStickUp)
             {
                 g_GameWork.gameStateStep_598[1] = 3;
                 g_GameWork.gameStateStep_598[2] = 0;
             }
-            else if (g_ControllerPtrConst->field_1C & Pad_LStickDown)
+            else if (g_ControllerPtrConst->field_1C & ControllerFlag_LStickDown)
             {
                 g_GameWork.gameStateStep_598[1] = 1;
                 g_GameWork.gameStateStep_598[2] = 0;
             }
-            else if (g_ControllerPtrConst->field_1C & (Pad_LStickLeft | Pad_LStickRight))
+            else if (g_ControllerPtrConst->field_1C & (ControllerFlag_LStickLeft | ControllerFlag_LStickRight))
             {
                 g_GameWork.gameStateStep_598[1] = -1;
                 g_GameWork.gameStateStep_598[2] = 0;
@@ -1970,17 +1949,17 @@ void Settings_ControllerScreen() // 0x801E69BC
             }
             else
             {
-                if (g_ControllerPtrConst->field_1C & Pad_LStickUp)
+                if (g_ControllerPtrConst->field_1C & ControllerFlag_LStickUp)
                 {
                     g_GameWork.gameStateStep_598[1] = (g_GameWork.gameStateStep_598[1] - 1) & 0x3;
                     g_GameWork.gameStateStep_598[2] = 0;
                 }
-                else if (g_ControllerPtrConst->field_1C & Pad_LStickDown)
+                else if (g_ControllerPtrConst->field_1C & ControllerFlag_LStickDown)
                 {
                     g_GameWork.gameStateStep_598[1] = (g_GameWork.gameStateStep_598[1] + 1) & 0x3;
                     g_GameWork.gameStateStep_598[2] = 0;
                 }
-                else if (g_ControllerPtrConst->field_1C & (Pad_LStickLeft | Pad_LStickRight))
+                else if (g_ControllerPtrConst->field_1C & (ControllerFlag_LStickLeft | ControllerFlag_LStickRight))
                 {
                     g_GameWork.gameStateStep_598[1] = -1;
                     g_GameWork.gameStateStep_598[2] = 0;
@@ -1990,7 +1969,7 @@ void Settings_ControllerScreen() // 0x801E69BC
 
         case -1:
             actionIdx = D_801E73DC.actionIdx_4;
-            if (g_ControllerPtrConst->field_1C & Pad_LStickUp)
+            if (g_ControllerPtrConst->field_1C & ControllerFlag_LStickUp)
             {
                 if (actionIdx != InputAction_Enter)
                 {
@@ -2001,7 +1980,7 @@ void Settings_ControllerScreen() // 0x801E69BC
                     D_801E73DC.actionIdx_4 = InputAction_Option;
                 }
             }
-            else if (g_ControllerPtrConst->field_1C & Pad_LStickDown)
+            else if (g_ControllerPtrConst->field_1C & ControllerFlag_LStickDown)
             {
                 if (actionIdx != InputAction_Option)
                 {
@@ -2012,7 +1991,7 @@ void Settings_ControllerScreen() // 0x801E69BC
                     D_801E73DC.actionIdx_4 = InputAction_Enter;
                 }
             }
-            else if (g_ControllerPtrConst->field_1C & (Pad_LStickLeft | Pad_LStickRight))
+            else if (g_ControllerPtrConst->field_1C & (ControllerFlag_LStickLeft | ControllerFlag_LStickRight))
             {
                 g_GameWork.gameStateStep_598[2] = 0;
                 g_GameWork.gameStateStep_598[1] = D_801E73DC.menuIdx_0;
@@ -2047,7 +2026,7 @@ void Settings_ControllerScreen() // 0x801E69BC
         D_801E7308 = 0;
     }
 
-    if (g_ControllerPtrConst->field_1C & (Pad_LStickUp | Pad_LStickRight | Pad_LStickDown | Pad_LStickLeft))
+    if (g_ControllerPtrConst->field_1C & (ControllerFlag_LStickUp | ControllerFlag_LStickRight | ControllerFlag_LStickDown | ControllerFlag_LStickLeft))
     {
         Sd_EngineCmd(0x519u);
     }
@@ -2055,9 +2034,7 @@ void Settings_ControllerScreen() // 0x801E69BC
     Gfx_ControllerScreenDraw(D_801E7308, D_801E73DC.menuIdx_0, D_801E73DC.actionIdx_4, bindResult);
 }
 
-/** Related to controller mapping.
- * Changes the button mapping based on the input.
- */
+/** @brief Changes the button mapping based on the input. */
 s32 Settings_ButtonChange(s32 actionIdx) // 0x801E6CF4
 {
     u16* bindings;
@@ -2071,12 +2048,12 @@ s32 Settings_ButtonChange(s32 actionIdx) // 0x801E6CF4
     res      = NO_VALUE;
     bindings = (u16*)&g_GameWorkPtr->config_0.controllerConfig_0;
 
-    // Loop through all button flags, excluding stick axes.
+    // Loop through all controller flags, excluding stick axes.
     for (i = 0; i < 16; i++)
     {
         btnFlag = 1 << i;
 
-        if ((btnFlag & (Pad_DpadUp | Pad_DpadRight | Pad_DpadDown | Pad_DpadLeft)) ||
+        if ((btnFlag & (ControllerFlag_DpadUp | ControllerFlag_DpadRight | ControllerFlag_DpadDown | ControllerFlag_DpadLeft)) ||
             !(btnFlag & g_ControllerPtrConst->btns_new_10))
         {
             continue;
