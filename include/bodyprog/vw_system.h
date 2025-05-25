@@ -138,12 +138,14 @@ STATIC_ASSERT_SIZEOF(VC_CAM_MV_PARAM, 16);
 typedef struct _VC_ROAD_DATA
 {
     VC_LIMIT_AREA     lim_sw_0;
-    VC_LIMIT_AREA     lim_rd_8;
+    u8                unk_8[8];
     VC_ROAD_FLAGS     flags_10          : 8;
     VC_AREA_SIZE_TYPE area_size_type_11 : 2;
     VC_ROAD_TYPE      rd_type_11        : 3;
-    s32               unk_11            : 19; /** Unnamed fields may contain `mv_y_type`/`rd_dir_type`. */
-    s32               unk_14            : 8;
+    u32               mv_y_type_11      : 3;
+    s32               lim_rd_max_hy_12  : 8; // SH2 accesses these at unk_8?
+    s32               lim_rd_min_hy_13  : 8;
+    s32               unk_14            : 8; /** Unnamed fields may contain `mv_y_type`/`rd_dir_type`. */
     u32               field_15          : 4;
     s16               cam_mv_type_14    : 4; /** `VC_CAM_MV_TYPE` */
 } VC_ROAD_DATA;

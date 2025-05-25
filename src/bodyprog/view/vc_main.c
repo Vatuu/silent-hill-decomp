@@ -1248,7 +1248,6 @@ void vcMakeFarWatchTgtPos(VECTOR3* watch_tgt_pos, VC_WORK* w_p, VC_AREA_SIZE_TYP
     else
     {
         use_dist = FP_FLOAT_TO(10.0f, Q12_SHIFT);
-        ;
     }
 
     watch_y = w_p->chara_pos_114.vy - FP_FLOAT_TO(0.8f, Q12_SHIFT);
@@ -1548,7 +1547,62 @@ void vcMakeBasicCamTgtMvVec(VECTOR3* tgt_mv_vec, VECTOR3* ideal_pos, VC_WORK* w_
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vc_main", vcAdjTgtMvVecYByCurNearRoad);
+void vcAdjTgtMvVecYByCurNearRoad(VECTOR3* tgt_mv_vec, VC_WORK* w_p) // 0x800843F4
+{
+    VC_ROAD_DATA* cur_rd_p;
+    s32           tgt_y;
+    s32           to_chara_dist;
+    s32           abs_ofs_y;
+    s32           max_tgt_y;
+    s32           min_tgt_y;
+    s32           dist;
+    s32           near_ratio;
+
+    cur_rd_p = w_p->cur_near_road_2B8.road_p_0;
+
+    to_chara_dist = Math_VectorMagnitude(
+        w_p->chara_pos_114.vx - w_p->cam_tgt_pos_44.vx,
+        0,
+        w_p->chara_pos_114.vz - w_p->cam_tgt_pos_44.vz);
+
+    dist = CLAMP(to_chara_dist, FP_FLOAT_TO(1.2f, Q12_SHIFT), FP_FLOAT_TO(7.0f, Q12_SHIFT));
+
+    // TODO: Weird multiplier?
+    near_ratio = FP_MULTIPLY_PRECISE(FP_FLOAT_TO(7.0f, Q12_SHIFT) - dist, 0.1724f, Q12_SHIFT);
+    near_ratio = CLAMP(near_ratio, 0, FP_FLOAT_TO(1.0f, Q12_SHIFT));
+
+    switch (w_p->cur_near_road_2B8.road_p_0->mv_y_type_11)
+    {
+        case 0:
+        default:
+            abs_ofs_y = (to_chara_dist - FP_FLOAT_TO(0.3f, Q12_SHIFT)) >> 2;
+            if (abs_ofs_y < 0)
+            {
+                abs_ofs_y = 0;
+            }
+
+            max_tgt_y = (abs_ofs_y + w_p->chara_top_y_124) - FP_FLOAT_TO(0.25f, Q12_SHIFT);
+            min_tgt_y = (w_p->chara_top_y_124 - abs_ofs_y) - FP_FLOAT_TO(0.25f, Q12_SHIFT);
+            break;
+        case 1:
+            min_tgt_y = Math_MulFixed(FP_TO(cur_rd_p->lim_rd_max_hy_12, Q8_SHIFT), FP_FLOAT_TO(1.0f, Q12_SHIFT) - near_ratio, Q12_SHIFT) + Math_MulFixed(FP_TO(cur_rd_p->lim_rd_min_hy_13, Q8_SHIFT), near_ratio, Q12_SHIFT);
+            max_tgt_y = min_tgt_y;
+            break;
+        case 2:
+            min_tgt_y = Math_MulFixed(FP_TO(cur_rd_p->lim_rd_min_hy_13, Q8_SHIFT), FP_FLOAT_TO(1.0f, Q12_SHIFT) - near_ratio, Q12_SHIFT) + Math_MulFixed(FP_TO(cur_rd_p->lim_rd_max_hy_12, Q8_SHIFT), near_ratio, Q12_SHIFT);
+            max_tgt_y = min_tgt_y;
+            break;
+        case 3:
+            min_tgt_y = FP_TO(cur_rd_p->lim_rd_min_hy_13, Q8_SHIFT);
+            max_tgt_y = FP_TO(cur_rd_p->lim_rd_max_hy_12, Q8_SHIFT);
+            break;
+    }
+
+    tgt_y = w_p->cam_tgt_pos_44.vy + tgt_mv_vec->vy;
+    tgt_y = CLAMP(tgt_y, min_tgt_y, max_tgt_y);
+
+    tgt_mv_vec->vy = tgt_y - w_p->cam_tgt_pos_44.vy;
+}
 
 void vcCamTgtMvVecIsFlipedFromCharaFront(VECTOR3* tgt_mv_vec, VC_WORK* w_p, s32 max_tgt_mv_xz_len, VC_AREA_SIZE_TYPE cur_rd_area_size)
 {
