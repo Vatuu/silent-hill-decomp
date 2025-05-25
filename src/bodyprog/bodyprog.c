@@ -1261,18 +1261,16 @@ void func_80035AC8(s32 arg0) // 0x80035AC8
     Sd_EngineCmd(D_800A98AC[arg0]);
 }
 
-#ifdef NON_MATCHING
 void func_80035B04(VECTOR3* arg0, SVECTOR* arg1, GsCOORDINATE2* arg2) // 0x80035B04
 {
     arg2->flg = 0;
+    
     arg2->coord.t[0] = arg0->vx >> 4;
     arg2->coord.t[1] = arg0->vy >> 4;
     arg2->coord.t[2] = arg0->vz >> 4;
-    func_80096E78(&arg1, &arg2->coord);
+    
+    func_80096E78(arg1, (MATRIX*)&arg2->coord);
 }
-#else
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80035B04);
-#endif
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80035B58);
 
