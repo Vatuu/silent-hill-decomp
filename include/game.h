@@ -827,7 +827,7 @@ typedef struct _SysWork
     s32             field_24DC;
     s8              unk_24E0[48];
     s32             field_2510;
-    s32             field_2514[10];
+    s32             field_2514[10]; // This is supossed to be a struct.
     u8              unk_253C[524];
     s16             field_2748[9];
     u8              unk_275A[2];

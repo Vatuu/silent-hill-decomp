@@ -836,6 +836,8 @@ extern u8 D_800AFD04;
 
 extern u8 D_800AFD05;
 
+extern s32 (*D_800AFD08[])(); // Function pointer array.
+
 extern s32 D_800AFD9C;
 
 extern s32 D_800AFDEC;
@@ -1109,6 +1111,9 @@ extern s_800C4818 D_800C4818;
 extern s32 D_800C489C;
 
 extern s32 D_800C48F0;
+
+// TODO: Recognize from what overlay this could be coming as this is not from bodyprog.
+extern s8 (*D_800C9580)(s32, s32);
 
 extern RECT D_801E557C[];
 

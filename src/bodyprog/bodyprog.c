@@ -1333,7 +1333,26 @@ void func_8003640C(s32 arg0) // 0x8003640C
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80036420);
+void func_80036420() 
+{
+    s32 x;
+    s32 z;
+    s8  newMapRoomIdx;
+
+    x = g_SysWork.player_4C.chara_0.position_18.vx;
+    z = g_SysWork.player_4C.chara_0.position_18.vz;
+
+    if (D_800C9580 == NULL)
+    {
+        newMapRoomIdx = 0;
+    } 
+    else 
+    {
+        newMapRoomIdx = D_800C9580(x, z);
+    }
+
+    g_SavegamePtr->mapRoomIdx_A5 = newMapRoomIdx;
+}
 
 s32 func_8003647C() // 0x8003647C
 {
