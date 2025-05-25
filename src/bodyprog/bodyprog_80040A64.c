@@ -58,18 +58,14 @@ void func_80041C24(s_80041CEC* arg0, s32 arg1, s32 arg2) // 0x80041C24
 }
 
 // TODO: Likey not `s_Skeleton` after all. Expected struct fields don't match.
-#ifdef NON_MATCHING
 void func_80041CB4(s_Skeleton* skel, s_80041CEC* arg1) // 0x80041CB4
 {
-    skel->boneCount_0 = arg1; // TODO: `boneCount` isn't a ptr.
+    *(s32*)&skel->boneCount_0 = (s32)arg1; // TODO: `boneCount` isn't a ptr.
     func_80041CEC(arg1);
 
     skel->bones_8 = NULL;
     skel->field_4 = NO_VALUE;
 }
-#else
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80041CB4);
-#endif
 
 void func_80041CEC(s_80041CEC* arg0) // 0x80041CEC
 {
