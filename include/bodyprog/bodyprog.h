@@ -1112,9 +1112,6 @@ extern s32 D_800C489C;
 
 extern s32 D_800C48F0;
 
-// TODO: Recognize from what overlay this could be coming as this is not from bodyprog.
-extern s8 (*D_800C9580)(s32, s32);
-
 extern RECT D_801E557C[];
 
 extern s32 g_MainLoop_FrameCount; // 0x800B9CCC
@@ -1221,7 +1218,8 @@ extern s_800B5494 D_800B5494;
 /** TODO: `g_MapOverlayHeader` is part of the overlay bin files. Maybe should be moved to `maps/s00.h` or `dynamic/dynamic.h`. */
 typedef struct _MapOverlayHeader
 {
-    u8           unk_0[8];
+    u8           unk_0[4];
+    s8           (*func_4)(s32, s32);                                               // Called by `func_80036420`
     s8           field_8;
     u8           unk_9[3];
     u8           unk_C[8];

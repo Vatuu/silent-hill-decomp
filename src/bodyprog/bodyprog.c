@@ -1342,13 +1342,13 @@ void func_80036420()
     x = g_SysWork.player_4C.chara_0.position_18.vx;
     z = g_SysWork.player_4C.chara_0.position_18.vz;
 
-    if (D_800C9580 == NULL)
+    if (g_MapOverlayHeader.func_4 == NULL)
     {
         newMapRoomIdx = 0;
     } 
     else 
     {
-        newMapRoomIdx = D_800C9580(x, z);
+        newMapRoomIdx = g_MapOverlayHeader.func_4(x, z);
     }
 
     g_SavegamePtr->mapRoomIdx_A5 = newMapRoomIdx;
