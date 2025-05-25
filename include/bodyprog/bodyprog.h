@@ -24,6 +24,13 @@
 
 typedef struct 
 {
+    s32                              field_0[10][3];
+    u8                               unk_78[132];
+    s_ShSavegameFooter               field_FC;
+} s_func_8002FB64; 
+
+typedef struct 
+{
     s32  field_0;
     u8   unk_4[12];
     s8*  field_16;
@@ -1284,6 +1291,8 @@ s32 func_8002EA78(s32 idx);
 void func_8002EB88(); // Return type assumed.
 
 void func_8002ECE0(s_800B55E8* arg0);
+
+void func_8002FB64(s_func_8002FB64 *arg0);
 
 void func_80030444();
 

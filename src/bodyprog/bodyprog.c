@@ -298,7 +298,19 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8002F2C4);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8002F61C);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8002FB64);
+void func_8002FB64(s_func_8002FB64 *arg0) // 0x8002FB64
+{
+    s32 i;
+
+    bzero(arg0, sizeof(s_func_8002FB64));
+
+    for (i = 0; i < 11; i++)
+    {
+        arg0->field_0[i][1] = 0;
+    }
+
+    Savegame_ChecksumUpdate(&arg0->field_FC, (s8*)arg0, sizeof(s_func_8002FB64));
+}
 
 void Savegame_UserConfigCopyWithChecksum(s_ShSaveUserConfigContainer* dest, s_ShSaveUserConfig* src) // 0x8002FBB4
 {
