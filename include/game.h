@@ -70,7 +70,8 @@ typedef enum _CharaFlags
     CharaFlag_Unk2 = 1 << 1,
     CharaFlag_Unk3 = 1 << 2,
     CharaFlag_Unk4 = 1 << 3,
-
+    CharaFlag_Unk5 = 1 << 4,
+    CharaFlag_Unk6 = 1 << 5,
     CharaFlag_Unk7 = 1 << 6,
     CharaFlag_Unk8 = 1 << 7,
     CharaFlag_Unk9 = 1 << 8
@@ -838,11 +839,11 @@ STATIC_ASSERT_SIZEOF(s_SysWork, 10088);
 extern void* g_OvlBodyprog;
 extern void* g_OvlDynamic;
 
-extern s_SysWork            g_SysWork; // 0x800B9FC0
-extern s_GameWork           g_GameWork;
-extern s_GameWork* const    g_GameWorkConst;
-extern s_GameWork*          g_GameWorkPtr;
-extern s_ShSavegame* const  g_SavegamePtr;
+extern s_SysWork               g_SysWork; // 0x800B9FC0
+extern s_GameWork              g_GameWork;
+extern s_GameWork* const       g_GameWorkConst;
+extern s_GameWork*             g_GameWorkPtr;
+extern s_ShSavegame* const     g_SavegamePtr;
 extern s_ControllerData* const g_ControllerPtrConst;
 extern s_ControllerData*       g_ControllerPtr;
 

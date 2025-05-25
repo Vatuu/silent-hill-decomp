@@ -1096,7 +1096,7 @@ void Joy_ReadP1() // 0x80034450
 {
     s_ControllerData* cont = &g_GameWork.controllers_38[0];
 
-    // NOTE: memcpy is close, reads rawController_5B4 as two s32s, but doesn't give match.
+    // NOTE: `memcpy` is close, reads `rawController_5B4` as two `s32`s, but doesn't give match.
     // memcpy(&cont->analogController_0, &g_GameWork.rawController_5B4, sizeof(s_AnalogController));
 
     *(s32*)&cont->analogController_0 = *(s32*)&g_GameWork.rawController_5B4;
@@ -1202,13 +1202,13 @@ void GameFs_MapLoad(s32 mapIdx) // 0x8003521C
 
 s32 func_8003528C(s32 idx0, s32 idx1)
 {
-    u32 tempField_8;
-    u32 tempField_4;
+    u32         tempField_8;
+    u32         tempField_4;
     s_800A992C* ptr0;
     s_800A992C* ptr1;
 
-    ptr0 = &D_800A992C[idx0];
-    ptr1 = &D_800A992C[idx1];
+    ptr0        = &D_800A992C[idx0];
+    ptr1        = &D_800A992C[idx1];
     tempField_4 = ptr0->field_4;
     tempField_8 = ptr1->field_8;
 
@@ -1351,7 +1351,7 @@ void func_8003708C(s16* ptr0, u16* ptr1) // 0x8003708C
     for (i = 0; i < 12; i++)
     {
         shift = (i & 3) * 4;
-        var3 = (*ptr1 >> shift) & 0xF;
+        var3  = (*ptr1 >> shift) & 0xF;
         if (i != 0 && var3 == 11 && var0 != 0)
         {
             var1 |= 11 << shift;
@@ -1361,14 +1361,14 @@ void func_8003708C(s16* ptr0, u16* ptr1) // 0x8003708C
         if (var3 != 0 && var3 != 11)
         {
             var1 |= 11 << shift;
-            var0 = 1;
+            var0  = 1;
         }
 
         if ((i & 3) == 3 || i == 12)
         {
             ptr1++;
             *ptr0++ = var1;
-            var1 = 0;
+            var1    = 0;
         }
     } 
 }
@@ -1382,7 +1382,7 @@ void func_80037124() // 0x80037124
 
 void func_80037154() // 0x80037154
 {
-    s32 i;
+    s32         i;
     s_800BCDA8* element;
 
     for (i = 0; i < 2; i++)
@@ -1467,15 +1467,15 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80037C5C); // 0x80037C5C
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_80037DC4); // 0x80037DC4
 
-void func_80037E40(s_SubCharacter* arg0) // 0x80037E40
+void func_80037E40(s_SubCharacter* chara) // 0x80037E40
 {
-    if (arg0->field_C0 > 0)
+    if (chara->field_C0 > 0)
     {
-        arg0->flags_3E |= 1 << 5;
+        chara->flags_3E |= CharaFlag_Unk6;
     }
     else
     {
-        arg0->flags_3E &= ~(1 << 5);
+        chara->flags_3E &= ~CharaFlag_Unk6;
     }
 }
 
