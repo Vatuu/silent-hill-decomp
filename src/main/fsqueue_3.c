@@ -32,9 +32,9 @@ s32 Fs_QueueAllocEntryData(s_FsQueueEntry* entry)
 s32 Fs_QueueCanRead(s_FsQueueEntry* entry)
 {
     s_FsQueueEntry* other;
-    s32 queueLength;
-    s32 overlap;
-    s32 i;
+    s32             queueLength;
+    s32             overlap;
+    s32             i;
 
     queueLength = g_FsQueue.read.idx - g_FsQueue.postLoad.idx;
 
@@ -43,7 +43,7 @@ s32 Fs_QueueCanRead(s_FsQueueEntry* entry)
         i = 0;
         do
         {
-            other = &g_FsQueue.entries[(g_FsQueue.postLoad.idx + i) & (FS_QUEUE_LENGTH - 1)];
+            other   = &g_FsQueue.entries[(g_FsQueue.postLoad.idx + i) & (FS_QUEUE_LENGTH - 1)];
             overlap = false;
             if (other->postLoad || other->allocate)
             {
@@ -107,7 +107,7 @@ s32 Fs_QueueResetTick(s_FsQueueEntry* entry)
 
     if (g_FsQueue.resetTimer0 >= 8)
     {
-        result = true;
+        result                = true;
         g_FsQueue.resetTimer0 = 0;
         g_FsQueue.resetTimer1++;
         
@@ -129,13 +129,13 @@ s32 Fs_QueueResetTick(s_FsQueueEntry* entry)
 
 s32 Fs_QueueTickReadPcDvr(s_FsQueueEntry* entry)
 {
-    s32 handle;
-    s32 temp;
-    s32 retry;
-    s32 result;
+    s32         handle;
+    s32         temp;
+    s32         retry;
+    s32         result;
     s_FileInfo* file = entry->info;
-    char pathBuffer[64];
-    char nameBuffer[32];
+    char        pathBuffer[64];
+    char        nameBuffer[32];
 
     result = 0;
 
@@ -175,10 +175,10 @@ s32 Fs_QueueUpdatePostLoad(s_FsQueueEntry* entry)
 {
     s32 result;
     s32 state;
-    u8 postLoad;
+    u8  postLoad;
 
     result = 0;
-    state = g_FsQueue.postLoadState;
+    state  = g_FsQueue.postLoadState;
 
     switch (state)
     {
@@ -198,26 +198,26 @@ s32 Fs_QueueUpdatePostLoad(s_FsQueueEntry* entry)
             break;
 
         case FSQS_POST_LOAD_EXEC:
-        postLoad = entry->postLoad;
-        switch (postLoad)
-        {
-            case FS_POST_LOAD_NONE:
-                result = 1;
-                break;
+            postLoad = entry->postLoad;
 
-            case FS_POST_LOAD_TIM:
-                result = Fs_QueuePostLoadTim(entry);
+            switch (postLoad)
+            {
+                case FS_POST_LOAD_NONE:
+                    result = 1;
+                    break;
 
+                case FS_POST_LOAD_TIM:
+                    result = Fs_QueuePostLoadTim(entry);
+                    break;
+
+                case FS_POST_LOAD_ANM:
+                    result = Fs_QueuePostLoadAnm(entry);
+                    break;
+
+                default:
+                    break;
+            }
             break;
-            case FS_POST_LOAD_ANM:
-                result = Fs_QueuePostLoadAnm(entry);
-                break;
-
-            default:
-                break;
-        }
-
-        break;
 
         default:
             break;
@@ -229,7 +229,7 @@ s32 Fs_QueueUpdatePostLoad(s_FsQueueEntry* entry)
 s32 Fs_QueuePostLoadTim(s_FsQueueEntry* entry)
 {
     TIM_IMAGE tim;
-    RECT tempRect;
+    RECT      tempRect;
 
     OpenTIM((u64*)entry->externalData);
     ReadTIM(&tim);

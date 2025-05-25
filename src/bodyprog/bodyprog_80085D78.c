@@ -1219,7 +1219,30 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80089644);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008973C);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80089840);
+void func_80089840(s_func_80089840* arg0) // 0x80089840
+{
+    s32* temp_s0;
+    s32* var_a1;
+    s32* temp_s1;
+
+    if (arg0 == NULL)
+    {
+        return;
+    }
+
+    var_a1  = arg0->field_18;
+    temp_s1 = &arg0->field_18;
+    if (var_a1 != temp_s1)
+    {
+        do
+        {
+            temp_s0 = *var_a1;
+            func_8009EC1C(arg0, var_a1);
+            var_a1 = temp_s0;
+        }
+        while (var_a1 != temp_s1);
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008989C);
 

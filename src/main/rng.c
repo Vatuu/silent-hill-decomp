@@ -6,7 +6,7 @@ u32 Rng_Rand32()
 {
     u32 nextSeed = g_RngSeed;
 
-    nextSeed = (nextSeed * 1664525) + 1013904223;
+    nextSeed  = (nextSeed * 1664525) + 1013904223;
     g_RngSeed = nextSeed;
 
     return nextSeed;

@@ -3,7 +3,7 @@
 void Mem_Move32(u32* dest, u32* src, s32 byteCount)
 {
     u32* end;
-    s32 wordCount;
+    s32  wordCount;
 
     if (dest == src)
     {
@@ -25,7 +25,7 @@ void Mem_Move32(u32* dest, u32* src, s32 byteCount)
         end = src;
 
         dest += wordCount;
-        src += wordCount;
+        src  += wordCount;
 
         while (src > end)
         {

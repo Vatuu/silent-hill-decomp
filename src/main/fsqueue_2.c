@@ -27,7 +27,7 @@ s32 Fs_QueueUpdateRead(s_FsQueueEntry* entry)
         case FSQS_READ_CHECK:
             switch (Fs_QueueCanRead(entry))
             {
-                // Can't read yet; memory in use by another operation. Wait until next tick.
+                // Can't read yet, memory in use by another operation. Wait until next tick.
                 case 0:
                     break;
 
@@ -41,7 +41,7 @@ s32 Fs_QueueUpdateRead(s_FsQueueEntry* entry)
         case FSQS_READ_SETLOC:
             switch (Fs_QueueTickSetLoc(entry))
             {
-                // CdlSetloc failed; reset CD.
+                // `CdlSetloc` failed, reset CD.
                 case 0:
                     g_FsQueue.state = FSQS_READ_RESET;
                     break;
@@ -56,7 +56,7 @@ s32 Fs_QueueUpdateRead(s_FsQueueEntry* entry)
         case FSQS_READ_READ:
             switch (Fs_QueueTickRead(entry))
             {
-                // CdRead failed; reset CD and retry.
+                // `CdRead` failed, reset CD and retry.
                 case 0:
                     g_FsQueue.state = FSQS_READ_RESET;
                     break;
@@ -72,12 +72,12 @@ s32 Fs_QueueUpdateRead(s_FsQueueEntry* entry)
         case FSQS_READ_SYNC:
             switch (CdReadSync(1, NULL))
             {
-                // CdReadSync failed; reset CD.
+                // `CdReadSync` failed, reset CD.
                 case NO_VALUE:
                     g_FsQueue.state = FSQS_READ_RESET;
                     break;
 
-                // Done reading; no state transition, let caller know that it's done.
+                // Done reading and no state transition, let caller know that it's done.
                 case 0:
                     result = true;
                     break;
@@ -92,7 +92,7 @@ s32 Fs_QueueUpdateRead(s_FsQueueEntry* entry)
                 case 0:
                     break;
 
-                // Reset done; retry from setloc.
+                // Reset done, retry from `setloc`.
                 case 1:
                     g_FsQueue.state = FSQS_READ_SETLOC;
                     break;

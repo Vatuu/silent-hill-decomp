@@ -11,9 +11,9 @@
 #define FS_BUFFER_2 (void*)0x801CF600
 #define FS_BUFFER_3 (void*)0x801B2600
 #define FS_BUFFER_4 (void*)0x80124384 // Used for player map anim.
-#define FS_BUFFER_5 (void*)0x801E3600 // Used in b_konami.c.
-#define FS_BUFFER_6 (void*)0x801E4600 // Used in b_konami.c.
-#define FS_BUFFER_7 (void*)0x801C2600 // Used in b_konami.c.
+#define FS_BUFFER_5 (void*)0x801E3600 // Used in `b_konami.c`.
+#define FS_BUFFER_6 (void*)0x801E4600 // Used in `b_konami.c`.
+#define FS_BUFFER_7 (void*)0x801C2600 // Used in `b_konami.c`.
 
 /** @brief `FsQueue::state` values when processing a read operation (`Fs_QueueUpdateRead`).
  *
@@ -193,17 +193,17 @@ s32  Fs_QueueIsEntryLoaded(s32 queueIdx);
 /** Get number of operations currently in the queue.
  * @return Number of operations in the queue. Includes both pending reads and pending post-loads.
  */
-s32 Fs_QueueGetLength(void);
+s32 Fs_QueueGetLength();
 
 /** Unknown. If queue is empty, call `func_8003c850`.
- * @return 1 when queue is empty and the call suceeds, 0 otherwise.
+ * @return 1 when queue is empty and the call succeeds, 0 otherwise.
  */
-s32 Fs_QueueDoThingWhenEmpty(void);
+s32 Fs_QueueDoThingWhenEmpty();
 
 /** Spin-waits for the queue to become empty while calling `Fs_QueueUpdate`.
  * Calls some bodyprog functions before and after the wait, `VSync` in the wait and `DrawSync` after the wait.
  */
-void Fs_QueueWaitForEmpty(void);
+void Fs_QueueWaitForEmpty();
 
 /** Add a new seek operation to the queue.
  * @param fileIdx File table index of the file to seek to.
@@ -261,10 +261,10 @@ s32 Fs_QueueEnqueue(s32 fileIdx, u8 op, u8 postLoad, u8 alloc, void* data, u32 u
 /** @brief Initialize FS queue and FS memory.
  * Initializes `g_FsQueue` and calls `Fs_InitializeMem`.
  */
-void Fs_QueueInitialize(void);
+void Fs_QueueInitialize();
 
 /** Seems to clear the queue. */
-void Fs_QueueReset(void);
+void Fs_QueueReset();
 
 /** @brief Ticks the FS queue once.
  *
@@ -274,7 +274,7 @@ void Fs_QueueReset(void);
  * Regardless of the outcome of the above, also ticks postloading (`Fs_QueueUpdatePostLoad`) if there is an entry to postload.
  * If that reports that the current postload entry is done postloading, advances `g_FsQueue.postLoad.idx` and `g_FsQueue.postLoad.ptr`.
  */
-void Fs_QueueUpdate(void);
+void Fs_QueueUpdate();
 
 /** @brief Ticks a seek operation once.
  *

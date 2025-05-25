@@ -64,13 +64,12 @@ u32 g_FileXaLoc[] =
 void Fs_DecryptOverlay(s32* dst, const s32* src, s32 size)
 {
     s32 seed = 0;
-    s32 i = 0;
+    s32 i    = 0;
 
     i = 0;
     while (i < (size >> 2))
     {
         seed = (seed + 0x01309125) * 0x03A452F7;
-
         *dst = *src ^ seed;
 
         i++;
@@ -91,10 +90,10 @@ void Fs_GetFileName(char* outName, s32 fileIdx)
 
 void Fs_GetFileInfoName(char* outName, const s_FileInfo* const fileEntry)
 {
-    s32 i = 0;
-    char decoded;
-    u32 namePart;
-    char fileType;
+    s32   i = 0;
+    char  decoded;
+    u32   namePart;
+    char  fileType;
     char* fileExt;
 
     namePart = fileEntry->name0123;
@@ -122,7 +121,7 @@ void Fs_GetFileInfoName(char* outName, const s_FileInfo* const fileEntry)
         return;
     }
 
-    fileExt = g_FileExts[fileType];
+    fileExt    = g_FileExts[fileType];
     outName[i] = *fileExt;
 
     while (*fileExt)
@@ -142,8 +141,8 @@ void Fs_EncodeFileName(s32* outName0123, s32* outName4567, const char* srcName)
     s32 name0123;
     s32 name4567;
 
-    name0123 = 0;
-    name4567 = 0;
+    name0123     = 0;
+    name4567     = 0;
     currentShift = 0;
     for (i = 0; i < FS_NAME_CHAR_MAX; i++)
     {
@@ -191,10 +190,14 @@ s32 Fs_FindNextFileOfType(s32 fileType, s32 startIdx, s32 dir)
     while (i < FS_FILE_COUNT)
     {
         if (currentIdx >= FS_FILE_COUNT)
+        {
             currentIdx = (dir < 0) ? (FS_FILE_COUNT - 1) : 0;
+        }
 
         if (g_FileTable[currentIdx].type == fileType)
+        {
             return currentIdx;
+        }
 
         currentIdx += inc;
         i++;
@@ -210,7 +213,7 @@ s32 Fs_FindNextFile(const char* name, s32 fileType, s32 startIdx)
     s32 name0123;
     s32 name4567;
 
-    s32 i = startIdx;
+    s32 i        = startIdx;
     s32 foundIdx = NO_VALUE;
 
     Fs_EncodeFileName(&name0123, &name4567, name);
@@ -220,7 +223,7 @@ s32 Fs_FindNextFile(const char* name, s32 fileType, s32 startIdx)
     {
         if (fileEntry->name4567 == name4567 &&
             fileEntry->name0123 == name0123 &&
-            fileEntry->type == fileType)
+            fileEntry->type     == fileType)
         {
             foundIdx = i;
             break;
