@@ -1473,7 +1473,7 @@ void Save_SaveDataInfoDraw(s32 arg0, s32 arg1) // 0x801E5E18
 
     if (D_800BCD2C[arg1].field_4 == 10)
     {
-        Gfx_StringSetColor(7);
+        Gfx_StringSetColor(ColorId_White);
         Gfx_StringSetPosition(66, 178);
         Gfx_StringDraw("You_need_1_free_block\n__to_create_a_new_file.", 0x32);
     }
@@ -1496,7 +1496,7 @@ void Save_SaveDataInfoDraw(s32 arg0, s32 arg1) // 0x801E5E18
         mins = (timeInSec / 60) % 60;
         sec = timeInSec % 60;
 
-        Gfx_StringSetColor(7);
+        Gfx_StringSetColor(ColorId_White);
         Gfx_StringSetPosition(40, 178);
         Gfx_StringDraw("Data", 5);
 

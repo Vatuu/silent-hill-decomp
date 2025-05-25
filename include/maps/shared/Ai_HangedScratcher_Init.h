@@ -132,5 +132,5 @@ void Ai_HangedScratcher_Init(s_SubCharacter* chara)
     chara->properties_E4.larvalStalker.properties_E8[9].val16[0] = ((s32)Rng_Rand16() % (var_s0 >> 2)) + ((var_s0 * 3) >> 2);
     chara->properties_E4.larvalStalker.properties_E8[9].val16[1] = ((s32)Rng_Rand16() % (var_s2 >> 2)) + ((var_s2 * 3) >> 2);
 
-    chara->flags_3E |= CharaFlag_Unk9 | CharaFlag_Unk2;
+    chara->flags_3E |= CharaFlag_Unk9 | CharaFlag_Unk3;
 }
