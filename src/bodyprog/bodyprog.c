@@ -451,7 +451,13 @@ s32 func_80030734() // 0x80030734
     return 0;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_800307BC);
+void func_800307BC() // 0x800307BC
+{
+    TestEvent(D_800B5488.field_14);
+    TestEvent(D_800B5488.field_18);
+    TestEvent(D_800B5488.field_1C);
+    TestEvent(D_800B5488.field_10);
+} 
 
 s32 func_80030810() // 0x80030810
 {

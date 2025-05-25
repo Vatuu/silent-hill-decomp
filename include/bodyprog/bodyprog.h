@@ -1291,6 +1291,8 @@ void func_8003045C();
 
 void func_80030530();
 
+void func_800307BC();
+
 void func_800303E4();
 
 // `Gfx_DrawBackgroundImage`
