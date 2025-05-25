@@ -185,8 +185,7 @@ STATIC_ASSERT_SIZEOF(s_800AA894, 12);
 
 typedef struct
 {
-    s8 field_0;
-	s8 field_1[43];
+    s8 field_0[44];
 } s_800A93CC;
 
 typedef struct
