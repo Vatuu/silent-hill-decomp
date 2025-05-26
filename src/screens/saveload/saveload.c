@@ -174,12 +174,12 @@ void Gfx_SaveBackgroundDraw() // 0x801E2EBC
     Gfx_RectSaveInfoDraw(&var);
 }
 
-void func_801E2F90(s32 saveSlotIdx, s32 arg1) // 0x801E2F90
+void Gfx_SaveSelectedDisplacement(s32 saveSlotIdx, s32 arg1) // 0x801E2F90
 {
     D_801E7578[saveSlotIdx] = D_800A97D4[saveSlotIdx] - D_801E7570[saveSlotIdx];
 }
 
-void func_801E2FCC(s32 arg0, s32 saveSlotIdx, s32 fileId, s32 arg3) // 0x801E2FCC
+void Gfx_SaveFileSelectedDraw(s32 arg0, s32 saveSlotIdx, s32 fileId, s32 arg3) // 0x801E2FCC
 {
     #define OFFSET_X             SCREEN_POSITION_X(47.0f)
     #define FILE_STR_MARGIN_X    SCREEN_POSITION_X(10.0f)
@@ -286,6 +286,8 @@ void func_801E326C(s_UnkSaveload0* arg0, s_UnkSaveload0* arg1, s32 arg2, s32 arg
     }
 }
 
+// Draw and update all the elements of the slots, save information and memory card states
+// Gfx_MainSaveDrawUpdate
 void func_801E3304(s_UnkSaveload0* arg0, s32 arg1, s32 arg2) // 0x801E3304
 {
     char* D_801E2830[] =
@@ -310,12 +312,12 @@ void func_801E3304(s_UnkSaveload0* arg0, s32 arg1, s32 arg2) // 0x801E3304
 
     if (D_800A97D6 == arg2 && arg1 == 0 && temp_s2 >= 7)
     {
-        Gfx_SelectedMemBarDraw();
+        Gfx_MemSelectedBarDraw();
     }
 
     if (arg1 == 0)
     {
-        func_801E3E78();
+        Gfx_SavedFlickerDraw();
 
         D_801E76D4++;
         D_801E76D4 = CLAMP(D_801E76D4, 0, 40);
@@ -633,7 +635,7 @@ void Gfx_MemCardStateDraw(s32 memCardState, s32 arg1) // 0x801E3910
     }
 }
 
-void func_801E3C44(s32 arg0, s32 arg1) // 0x801E3C44
+void Gfx_OverwriteSaveDraw(s32 arg0, s32 arg1) // 0x801E3C44
 {
     GsOT*     ot;
     s8        color;
@@ -653,8 +655,8 @@ void func_801E3C44(s32 arg0, s32 arg1) // 0x801E3C44
     };
 
     g_DisplaySaveDataInfo = 0;
-    time       = (u8)g_SysWork.timer_1C & 0x3F;
-    ot         = &g_ObjectTable1[g_ObjectTableIdx];
+    time                  = (u8)g_SysWork.timer_1C & 0x3F;
+    ot                    = &g_ObjectTable1[g_ObjectTableIdx];
 
     switch (D_801E750C)
     {
@@ -701,7 +703,7 @@ void func_801E3C44(s32 arg0, s32 arg1) // 0x801E3C44
     }
 }
 
-void func_801E3E78() // 0x801E3E78
+void Gfx_SavedFlickerDraw() // 0x801E3E78
 {
     GsOT*    ot;
     s32      temp_s0;
@@ -714,10 +716,10 @@ void func_801E3E78() // 0x801E3E78
     temp_s0 = ~D_801E76CE[0] == 0;
     temp_s1 = D_801E76CE[temp_s0] - D_801E7570[temp_s0];
 
-    if (temp_s1 < 5U)
+    if (temp_s1 < 5)
     {
-        sin = shRsin((D_801E76D4 << 0xA) / 40);
-        poly    = (POLY_F4*)GsOUT_PACKET_P;
+        sin  = shRsin((D_801E76D4 << 10) / 40);
+        poly = (POLY_F4*)GsOUT_PACKET_P;
         setlen(poly, 5);
         setcode(poly, 0x2A);
 
@@ -737,7 +739,7 @@ void func_801E3E78() // 0x801E3E78
     }
 }
 
-void Gfx_SelectedMemBarDraw() // 0x801E4010
+void Gfx_MemSelectedBarDraw() // 0x801E4010
 {
     s_801E2A98 D_801E2A48[5][2] =
     {
@@ -1642,6 +1644,13 @@ void func_801E63C0() // 0x801E63C0
     g_GameWork.gameStateStep_598[2] = 0;
 }
 
+/**
+* Crucial for working with the overlay.
+* If `g_GameWork.gameStateStep_598[1]` comply any of the conditionals this happen:
+* 0 - The user can fully move through the save menu.
+* 1 - This triggers the overwrite save, even when the player is selecting a new save.
+* 2 - Unknown, presumably it is used when the player leaves the save screen.
+*/
 void func_801E649C() // 0x801E649C
 {
     s32             step = g_GameWork.gameStateStep_598[1];
@@ -1787,7 +1796,7 @@ void func_801E649C() // 0x801E649C
                 Sd_EngineCmd(0x51A);
             }
 
-            func_801E72DC(D_801E753C, D_801E755C);
+            Gfx_OverwriteSave(D_801E753C, D_801E755C);
             break;
         
         case 2:
@@ -2069,7 +2078,8 @@ void Gfx_SaveBackground() // 0x801E709C
     Gfx_BackgroundSpriteDraw(&D_800A902C);
 }
 
-// Draws all information related to saves
+// Handles the logic for the drawing of all the information related to saves and the slots
+// Gfx_SaveScreenDrawUpdate
 void func_801E70C8() // 0x801E70C8
 {
     s_UnkSaveload0* ptr;
@@ -2084,7 +2094,7 @@ void func_801E70C8() // 0x801E70C8
         {
             if (D_800BCD2C->field_0 >= 0)
             {
-                func_801E2FCC(j, i, D_800BCD2C->field_6 + 1, D_800BCD2C->field_4);
+                Gfx_SaveFileSelectedDraw(j, i, D_800BCD2C->field_6 + 1, D_800BCD2C->field_4);
             }
 
             func_801E3304(D_800BCD2C, j, i);
@@ -2110,11 +2120,11 @@ void func_801E70C8() // 0x801E70C8
 
         if (g_GameWork.gameState_594 == GameState_DeathLoadScreen)
         {
-            func_801E2F90(i, D_800BCD28);
+            Gfx_SaveSelectedDisplacement(i, D_800BCD28);
         }
         else
         {
-            func_801E2F90(i, D_800BCD3A);
+            Gfx_SaveSelectedDisplacement(i, D_800BCD3A);
         }
     }
 }
@@ -2142,9 +2152,9 @@ void Gfx_MemCardState() // 0x801E7244
     }
 }
 
-void func_801E72DC(s32 arg0, s32 arg1) // 0x801E72DC
+void Gfx_OverwriteSave(s32 arg0, s32 arg1) // 0x801E72DC
 {
-    func_801E3C44(arg0, arg1);
+    Gfx_OverwriteSaveDraw(arg0, arg1);
 }
 
 void GameState_DeathLoadScreen_Update() // 0x801E72FC
