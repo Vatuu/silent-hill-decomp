@@ -114,11 +114,10 @@ extern u8 D_801E76D6;
 /** Clears all saves? */
 void func_801E2D8C();
 
-void func_801E2F90(s32 saveSlotIdx, s32 arg1);
+void Gfx_SaveSelectedDisplacement(s32 saveSlotIdx, s32 arg1);
 
-// TODO: Rename to `SaveLoad_FileStringDraw`.
 /** Draws the "FILE X" string in the save/load screen. */
-void func_801E2FCC(s32 arg0, s32 saveSlotIdx, s32 fileId, s32 arg3);
+void Gfx_SaveFileSelectedDraw(s32 arg0, s32 saveSlotIdx, s32 fileId, s32 arg3);
 
 /** Draws some string. */
 void func_801E30C4(s_UnkSaveload0* ptr, s32 arg1, s32 idx);
@@ -129,6 +128,9 @@ s32 func_801E3078(s_UnkSaveload1* arg0);
 void func_801E326C(s_UnkSaveload0* arg0, s_UnkSaveload0* arg1, s32 arg2, s32 arg3);
 
 void Gfx_MemCardStateDraw(s32 memCardState, s32 arg1);
+
+/** Produces the flicker over the saved game after saving sucessfully. */
+void Gfx_SavedFlickerDraw();
 
 void func_801E43C8(s32 arg0);
 
@@ -160,7 +162,7 @@ void func_801E70C8();
  */
 void Gfx_MemCardState();
 
-void func_801E72DC();
+void Gfx_OverwriteSave();
 
 /** Updates the death load screen. */
 void GameState_DeathLoadScreen_Update();

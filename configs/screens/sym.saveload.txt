@@ -4,10 +4,14 @@ g_MemCardStateTextTimer = 0x801E7520;
 g_DisplaySaveDataInfo = 0x801E76D0;
 
 Gfx_SaveBackgroundDraw = 0x801E2EBC; // type:func
+Gfx_SaveSelectedDisplacement = 0x801E2F90; // type:func
 Gfx_MemCardStateDraw = 0x801E3910; // type:func
+Gfx_OverwriteSaveDraw = 0x801E3C44;
+Gfx_SavedFlickerDraw = 0x801E3E78; // type:func
+Gfx_OverwriteSave = 0x801E72DC; // type:func
 GameState_DeathLoadScreen_Update = 0x801E72FC; // type:func
 GameState_SaveScreen_Update = 0x801E6320; // type:func
-Gfx_SelectedMemBarDraw = 0x801E4010; // type:func
+Gfx_MemSelectedBarDraw = 0x801E4010; // type:func
 Gfx_SavesTransparentBgDraw = 0x801E451C; // type:func
 Gfx_SavesOutlineDraw = 0x801E4D90; // type:func
 Gfx_RectMemLoadDraw = 0x801E54DC; // type:func
