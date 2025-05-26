@@ -5,6 +5,7 @@ g_DisplaySaveDataInfo = 0x801E76D0;
 
 Gfx_SaveBackgroundDraw = 0x801E2EBC; // type:func
 Gfx_SaveSelectedDisplacement = 0x801E2F90; // type:func
+Gfx_SaveFileSelectedDraw = 0x801E2FCC; // type:func
 Gfx_MemCardStateDraw = 0x801E3910; // type:func
 Gfx_OverwriteSaveDraw = 0x801E3C44;
 Gfx_SavedFlickerDraw = 0x801E3E78; // type:func
