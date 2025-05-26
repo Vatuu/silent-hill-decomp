@@ -48,7 +48,7 @@ DRAWENV g_MainDrawEnv =
     .isbg = 1
 };
 
-int main(void)
+int main()
 {
     s16 offsetY;
     s32 fbNext;
@@ -73,7 +73,7 @@ int main(void)
     // Display area = (0, 0, 320, 240)
     PutDispEnv(&g_MainDispEnv);
 
-    // Initialize SPU (should probably be called SpuInit because all it does is call _SpuInit).
+    // Initialize SPU (should probably be called `SpuInit` because all it does is call `_SpuInit`).
     SsUtReverbOff();
 
     // Load \1ST\2ZANKO_E.TIM ("There are violent and disturbing images...").
@@ -90,7 +90,7 @@ int main(void)
 
     SetDispMask(1);
 
-    // Fade in 2ZANKO_E.TIM over 64 frames using TILE with subtractive blending.
+    // Fade in 2ZANKO_E.TIM over 64 frames using `TILE` with subtractive blending.
     fade = 0xFF;
     prim = PSX_SCRATCH;
     while (true)
@@ -111,13 +111,13 @@ int main(void)
         g_MainDrawEnv.clip.y = offsetY;
         PutDrawEnv(&g_MainDrawEnv);
 
-        // Draw image as series of 128x256 SPRTs.
+        // Draw image as series of 128x256 `SPRT`s.
         for (i = 0, sprtX = -64; i < 3; sprtX += 128, i++)
         {
             setDrawTPage((DR_TPAGE*)prim, 0, 1, getTPageN(1, 0, i + 13, 0));
             DrawPrim((DR_TPAGE*)prim);
             setlen((SPRT*)prim, 4);
-            setCodeWord((SPRT*)prim, PRIM_RECT | RECT_TEXTURE, 0x808080); // setSprt(); setRGB0();
+            setCodeWord((SPRT*)prim, PRIM_RECT | RECT_TEXTURE, 0x808080); // `setSprt(); setRGB0();`
             setWH((SPRT*)prim, 256, 256);
             setXY0Fast((SPRT*)prim, sprtX, -8);
             setUV0AndClut((SPRT*)prim, 0, 0, g_MainImg0.clutX, g_MainImg0.clutY);
@@ -130,7 +130,7 @@ int main(void)
 
         // Draw blended fullscreen tile.
         setlen((TILE*)prim, 3);
-        setcode((TILE*)prim, PRIM_RECT | RECT_BLEND); // setTile(); setSemiTrans();
+        setcode((TILE*)prim, PRIM_RECT | RECT_BLEND); // `setTile(); setSemiTrans();`
         setRGB0((TILE*)prim, fade, fade, fade);
         setWHFast((TILE*)prim, 640, 240);
         setXY0Fast((TILE*)prim, 0, 0);

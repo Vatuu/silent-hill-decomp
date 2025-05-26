@@ -220,7 +220,7 @@ s32 Fs_QueueStartSeek(s32 fileIdx);
 s32 Fs_QueueStartRead(s32 fileIdx, void* dest);
 
 /** @brief Add a new TIM read operation to the queue.
- * Adds a read operation with `postload = FS_POST_LOAD_TIM`.
+ * Adds a read operation with `post-load = FS_POST_LOAD_TIM`.
  * 
  * @param fileIdx File table index of the file to read.
  * @param dest Destination buffer. Seems there are no size checks.
@@ -271,8 +271,8 @@ void Fs_QueueReset();
  * Depending on current read entry's operation type, either ticks reading it (`Fs_QueueUpdateRead`) or seeking it (`Fs_QueueUpdateSeek`).
  * If they return 1, advances `g_FsQueue.read.idx` and `g_FsQueue.read.ptr`.
  *
- * Regardless of the outcome of the above, also ticks postloading (`Fs_QueueUpdatePostLoad`) if there is an entry to postload.
- * If that reports that the current postload entry is done postloading, advances `g_FsQueue.postLoad.idx` and `g_FsQueue.postLoad.ptr`.
+ * Regardless of the outcome of the above, also ticks post-loading (`Fs_QueueUpdatePostLoad`) if there is an entry to post-load.
+ * If that reports that the current post-load entry is done post-loading, advances `g_FsQueue.postLoad.idx` and `g_FsQueue.postLoad.ptr`.
  */
 void Fs_QueueUpdate();
 
@@ -355,12 +355,12 @@ s32 Fs_QueueResetTick(s_FsQueueEntry* entry);
  */
 s32 Fs_QueueTickReadPcDvr(s_FsQueueEntry* entry);
 
-/** @brief Ticks postloading once.
+/** @brief Ticks post-loading once.
  *
  * Performs one step in the post-loading process according to `entry->postLoadState`. When the whole process is done, returns 1.
  *
  * @param entry Entry to tick.
- * @return 1 when `entry` is done postloading, 0 otherwise.
+ * @return 1 when `entry` is done post-loading, 0 otherwise.
  */
 s32 Fs_QueueUpdatePostLoad(s_FsQueueEntry* entry);
 

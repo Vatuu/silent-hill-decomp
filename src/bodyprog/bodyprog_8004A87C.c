@@ -666,7 +666,16 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_800699E4);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_800699F8);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_80069B24);
+s32 func_80069B24(s32 arg0, void* arg1, void* arg2) // 0x80069B24
+{
+    s32 var0; 
+    s32 var1;
+
+    var0 = SetSp(0x1F8003D8);
+    var1 = func_80069BA8(arg0, arg1, arg2, func_80069FFC(arg0, arg1, arg2));
+    SetSp(var0);
+    return var1; 
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_80069BA8);
 

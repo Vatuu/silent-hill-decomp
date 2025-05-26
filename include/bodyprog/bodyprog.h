@@ -1850,6 +1850,8 @@ void func_80066E7C();
 
 void func_800699F8(s_func_800699F8* arg0, s32 arg1, s32 arg2);
 
+s32 func_80069B24(s32 arg0, void* arg1, void* arg2);
+
 void func_8006A178(s_func_8006A178* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 
 s32 func_8006A3B4(s32 arg0, s32 arg1, s32 arg2);
