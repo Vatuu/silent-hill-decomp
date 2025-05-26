@@ -24,9 +24,9 @@
 
 typedef struct 
 {
-    s32                              field_0[10][3];
-    u8                               unk_78[132];
-    s_ShSavegameFooter               field_FC;
+    s32                field_0[10][3];
+    u8                 unk_78[132];
+    s_ShSavegameFooter field_FC;
 } s_func_8002FB64; 
 
 typedef struct 
@@ -1219,7 +1219,7 @@ extern s_800B5494 D_800B5494;
 typedef struct _MapOverlayHeader
 {
     u8           unk_0[4];
-    s8           (*func_4)(s32, s32);                                               // Called by `func_80036420`
+    s8           (*getMapRoomIdxFunc_4)(s32 x, s32 y);                                  // Called by `func_80036420`
     s8           field_8;
     u8           unk_9[3];
     u8           unk_C[8];

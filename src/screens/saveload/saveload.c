@@ -1632,7 +1632,7 @@ void func_801E63C0() // 0x801E63C0
     }
 
     g_MemCardStateTextTimer = 0;
-    D_800A97D8 = (g_GameWork.gameState_594 == GameState_Unk10);
+    D_800A97D8 = g_GameWork.gameState_594 == GameState_Unk10;
 
     func_801E2D8C();
 
@@ -1791,7 +1791,7 @@ void func_801E649C() // 0x801E649C
             break;
         
         case 2:
-            if ((D_800BCD0C & 7) == 5)
+            if ((D_800BCD0C & 0x7) == 5)
             {
                 g_GameWork.field_58C = 0;
                 g_GameWork.field_58D = 0;
@@ -1825,8 +1825,8 @@ void func_801E69E8() // 0x801E69E8
     switch (g_GameWork.gameStateStep_598[1])
     {
         case 0:
-            g_MemCardState = 1;
-            g_MemCardStateTextTimer = 30;
+            g_MemCardState                  = 1;
+            g_MemCardStateTextTimer         = 30;
             g_GameWork.gameStateStep_598[1] = 1;
             g_GameWork.gameStateStep_598[2] = 0;
 
@@ -1846,9 +1846,9 @@ void func_801E69E8() // 0x801E69E8
             switch (func_8002E990())
             {
                 case 10:
-                    g_MemCardStateTextTimer = 30;
+                    g_MemCardStateTextTimer         = 30;
                     g_GameWork.gameStateStep_598[0] = 1;
-                    g_SysWork.timer_20 = 0;
+                    g_SysWork.timer_20              = 0;
                     g_GameWork.gameStateStep_598[1] = 0;
                     g_GameWork.gameStateStep_598[2] = 0;
                     break;
@@ -1878,7 +1878,7 @@ void func_801E6B18() // 0x801E6B18
     {
         case 0:
             g_MemCardState = 2;
-            ptr        = func_8002E9EC(D_800BCD40, D_800BCD3F, D_800BCD3E);
+            ptr            = func_8002E9EC(D_800BCD40, D_800BCD3F, D_800BCD3E);
 
             if (g_SavegamePtr->mapEventIdx_A8 == 24)
             {
@@ -2000,14 +2000,14 @@ void func_801E6DB0() // 0x801E6DB0
             {
                 D_800BCD39 = 1;
                 g_GameWork.gameStateStep_598[0] = 1;
-                g_SysWork.timer_20 = 0;
+                g_SysWork.timer_20              = 0;
                 g_GameWork.gameStateStep_598[1] = 0;
                 g_GameWork.gameStateStep_598[2] = 0;
                 break;
             }
 
             g_MemCardStateTextTimer = 300;
-            g_SysWork.timer_20 = 0;
+            g_SysWork.timer_20      = 0;
             g_GameWork.gameStateStep_598[0]++;
             g_GameWork.gameStateStep_598[1] = 0;
             g_GameWork.gameStateStep_598[2] = 0;
@@ -2131,12 +2131,12 @@ void Gfx_MemCardState() // 0x801E7244
 
     switch (g_MemCardState)
     {
-        case 1: // Format
+        case 1: // Format.
             Gfx_MemCardStateDraw(g_MemCardState, (D_800BCD34 >> (D_800BCD40 * 3)) & 0x7);
             break;
 
-        case 2: // Save
-        case 3: // Load
+        case 2: // Save.
+        case 3: // Load.
             Gfx_MemCardStateDraw(g_MemCardState, func_8002E990());
             break;
     }
@@ -2192,7 +2192,7 @@ void func_801E737C() // 0x801E737C
     D_800BCD3E = D_800BCD2C->field_7;
 
     g_GameWork.gameStateStep_598[0]++;
-    g_SysWork.timer_20 = 0;
+    g_SysWork.timer_20              = 0;
     g_GameWork.gameStateStep_598[1] = 0;
     g_GameWork.gameStateStep_598[2] = 0;
 }

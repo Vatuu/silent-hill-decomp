@@ -101,12 +101,16 @@ void Fs_GetFileInfoName(char* outName, const s_FileInfo* const fileEntry)
     while (i < FS_NAME_CHAR_MAX)
     {
         if (i == NAME_PART_CHARS)
+        {
             namePart = fileEntry->name4567;
+        }
 
         decoded = namePart & NAME_CHAR_MASK;
 
         if (decoded == 0)
+        {
             break;
+        }
 
         outName[i] = decoded + NAME_CHAR_OFFSET;
         namePart >>= NAME_CHAR_BITS;

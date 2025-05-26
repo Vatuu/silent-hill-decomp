@@ -64,12 +64,11 @@ extern s16 D_801E7518[MEMORY_CARD_SLOT_COUNT];
 
 extern s32 g_MemCardState; // Format: 1, Save: 2, Load: 3
 
-/**
-* Timer used when displaying the text after finishing any of the this states:
-* Formatting
-* Saving
-* Loading
-* Error
+/** @brief Timer used when displaying the text after finishing any of the following states:
+* - Formatting
+* - Saving
+* - Loading
+* - Error
 */
 extern s32 g_MemCardStateTextTimer;
 

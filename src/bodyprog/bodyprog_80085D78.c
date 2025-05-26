@@ -1075,32 +1075,33 @@ void func_800880F0(s32 arg0) // 0x800880F0
     {
         switch (g_SysWork.field_10)
         {
-        case 0:
-            func_80035E1C();
-            if (arg0 == 0)
-            {
-                Sd_EngineCmd(0x16);
-            }
-            else
-            {
-                Sd_EngineCmd(0x17);
-            }
-            
-            g_SysWork.timer_2C = 0;
-            g_SysWork.field_14 = 0;
-            g_SysWork.field_10++;
-            break;
-        case 1:
-            if (!(func_80045BC8()))
-            {
-                
-                g_SysWork.field_28 = 0;
-                g_SysWork.field_10 = 0;
+            case 0:
+                func_80035E1C();
+
+                if (arg0 == 0)
+                {
+                    Sd_EngineCmd(0x16);
+                }
+                else
+                {
+                    Sd_EngineCmd(0x17);
+                }
+
                 g_SysWork.timer_2C = 0;
                 g_SysWork.field_14 = 0;
-                g_SysWork.sysStateStep_C++; 
-            }
-            break; 
+                g_SysWork.field_10++;
+                break;
+
+            case 1:
+                if (!(func_80045BC8()))
+                {
+                    g_SysWork.field_28 = 0;
+                    g_SysWork.field_10 = 0;
+                    g_SysWork.timer_2C = 0;
+                    g_SysWork.field_14 = 0;
+                    g_SysWork.sysStateStep_C++; 
+                }
+                break; 
         }
     }
 }
@@ -1251,11 +1252,12 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80089524);
 s32 func_800895E4(s_func_8008973C* arg1, s32 arg2)
 {
     s32* sp10 = arg2 & 0xFF;
-	
+
     if (arg1 != NULL)
     {
         return D_800AFD08[arg1->field_4](0, arg1, &sp10);
     }
+
     return 0;
 }
 #else
@@ -1272,46 +1274,47 @@ s32 func_8008973C(s32 arg0, s32 arg1, s_func_8008973C* ptr)
     {
         return 0;
     }
-    
+
     if (ptr == NULL || ptr->field_4 != 3)
     {
         return 0;
     }
-    
+
     switch (ptr->field_5)
     {
         case 0:
             func_8009E2A0(arg0);
             break; 
-        
+
         case 1:
             func_8009E2D8(arg0);
             break;
-        
+
         case 2:
             func_8009E268(arg0);
             break;
-        
+
         case 3:
             func_8009E230(arg0);
             break;
-        
+
         case 4:
             func_80089840(arg0);
             break;
-        
+
         case 5:
             func_8008989C(arg0, ptr->field_6, ptr->field_C);
             break;
-        
+
         case 6:
             func_8008992C(arg0, ptr->field_6, ptr->field_C);
             break;
-        
+
         case 7:
             func_800899BC(arg0, ptr->field_8);
             break;
     }
+
     return 1;
 }
 #else

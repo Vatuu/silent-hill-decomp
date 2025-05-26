@@ -214,7 +214,7 @@ s32 func_8002E94C(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x8002E94C
     return 1;
 }
 
-// Used on `SAVELOAD.BIN`
+// Used in `SAVELOAD.BIN`
 s32 func_8002E990() // 0x8002E990
 {
     return D_800B55FC;
@@ -1344,13 +1344,13 @@ void func_80036420() // 0x80036420
     x = g_SysWork.player_4C.chara_0.position_18.vx;
     z = g_SysWork.player_4C.chara_0.position_18.vz;
 
-    if (g_MapOverlayHeader.func_4 == NULL)
+    if (g_MapOverlayHeader.getMapRoomIdxFunc_4 == NULL)
     {
         newMapRoomIdx = 0;
     } 
     else 
     {
-        newMapRoomIdx = g_MapOverlayHeader.func_4(x, z);
+        newMapRoomIdx = g_MapOverlayHeader.getMapRoomIdxFunc_4(x, z);
     }
 
     g_SavegamePtr->mapRoomIdx_A5 = newMapRoomIdx;
