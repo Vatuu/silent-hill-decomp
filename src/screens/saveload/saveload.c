@@ -1647,9 +1647,9 @@ void func_801E63C0() // 0x801E63C0
 /**
 * Crucial for working with the overlay.
 * If `g_GameWork.gameStateStep_598[1]` comply any of the conditionals this happen:
-* 0: The user can fully move through the save menu.
-* 1: This triggers the overwrite save, even when the player is selecting a new save.
-* 2: Unknown, presumably it is used when the player leaves the save screen.
+* 0 - The user can fully move through the save menu.
+* 1 - This triggers the overwrite save, even when the player is selecting a new save.
+* 2 - Unknown, presumably it is used when the player leaves the save screen.
 */
 void func_801E649C() // 0x801E649C
 {
