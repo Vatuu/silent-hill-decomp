@@ -13,3 +13,4 @@ expected/
 objdiff.json
 null.d
 !*/place-the-bin-and-cue-here
+ctx.c

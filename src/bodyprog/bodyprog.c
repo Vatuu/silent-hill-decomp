@@ -214,6 +214,7 @@ s32 func_8002E94C(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x8002E94C
     return 1;
 }
 
+// Used on `SAVELOAD.BIN`
 s32 func_8002E990() // 0x8002E990
 {
     return D_800B55FC;
@@ -294,6 +295,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8002ED7C);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8002F278);
 
+// Related to saves. Seems to modify constantly `D_800B55FC`.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8002F2C4);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8002F61C);
@@ -1333,7 +1335,7 @@ void func_8003640C(s32 arg0) // 0x8003640C
     }
 }
 
-void func_80036420() 
+void func_80036420() // 0x80036420
 {
     s32 x;
     s32 z;

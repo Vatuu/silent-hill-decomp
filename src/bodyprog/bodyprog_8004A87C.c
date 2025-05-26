@@ -37,7 +37,7 @@ void Gfx_StringSetColor(s16 colorId) // 0x8004A8DC
     g_StringColorId = colorId;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", Gfx_StringDraw);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", Gfx_StringDraw); // 0x8004A8E8
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8004ACF4);
 

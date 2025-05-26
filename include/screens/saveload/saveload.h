@@ -62,9 +62,16 @@ extern s16 D_801E7514[MEMORY_CARD_SLOT_COUNT];
 
 extern s16 D_801E7518[MEMORY_CARD_SLOT_COUNT];
 
-extern s32 D_801E751C;
+extern s32 g_MemCardState; // Format: 1, Save: 2, Load: 3
 
-extern s32 D_801E7520;
+/**
+* Timer used when displaying the text after finishing any of the this states:
+* Formatting
+* Saving
+* Loading
+* Error
+*/
+extern s32 g_MemCardStateTextTimer;
 
 extern void (*D_801E7524[])(); // func table
 
@@ -94,7 +101,7 @@ extern s8 D_801E7584[];
 
 extern s8 D_801E76CE[MEMORY_CARD_SLOT_COUNT];
 
-extern s8 D_801E76D0;
+extern s8 g_DisplaySaveDataInfo;
 
 extern s8 D_801E76D2[MEMORY_CARD_SLOT_COUNT];
 
@@ -121,7 +128,7 @@ s32 func_801E3078(s_UnkSaveload1* arg0);
 
 void func_801E326C(s_UnkSaveload0* arg0, s_UnkSaveload0* arg1, s32 arg2, s32 arg3);
 
-void func_801E3910(s32 arg0, s32 arg1);
+void Gfx_MemCardStateDraw(s32 memCardState, s32 arg1);
 
 void func_801E43C8(s32 arg0);
 
@@ -148,10 +155,10 @@ void Gfx_SaveBackground(); // 0x801E709C
 /** Draws all file box strings and graphics, as well as the strings in the transparent frame at the bottom. */
 void func_801E70C8();
 
-/** Draws "Now saving..." and "Finished saving." strings. Handle something else too.
+/** Handles the text that shows when formatting, saving or loading a file.
  *  Used in `GameState_SaveScreen_Update` and `GameState_DeathLoadScreen_Update`.
  */
-void func_801E7244();
+void Gfx_MemCardState();
 
 void func_801E72DC();
 

@@ -903,7 +903,7 @@ extern s8 D_800BCD39;
 
 extern s16 D_800BCD3A;
 
-extern u8 D_800BCD3C[2]; // Save/Load file count.
+extern u8 g_SaveCount[2]; // Save/Load file count.
 
 extern u8 D_800BCD3E;
 

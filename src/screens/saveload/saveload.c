@@ -42,9 +42,9 @@ s16 D_801E7514[MEMORY_CARD_SLOT_COUNT] = { 0, 0 };
 
 s16 D_801E7518[MEMORY_CARD_SLOT_COUNT] = { 0, 0 };
 
-s32 D_801E751C = 0;
+s32 g_MemCardState = 0;
 
-s32 D_801E7520 = 0;
+s32 g_MemCardStateTextTimer = 0;
 
 void (*D_801E7524[])() =
 {
@@ -90,7 +90,7 @@ s8 D_801E7584[330] = { 0 };
 
 s8 D_801E76CE[MEMORY_CARD_SLOT_COUNT] = { 0, 0 };
 
-s8 D_801E76D0 = 0;
+s8 g_DisplaySaveDataInfo = 0;
 
 s8 D_801E76D1 = 0; // Unused.
 
@@ -132,7 +132,7 @@ void func_801E2D8C() // 0x801E2D8C
             D_801E7584[j + (SAVE_COUNT_MAX * i)] = 0;
         }
 
-        D_801E76D0 = 1;
+        g_DisplaySaveDataInfo = 1;
     }
 }
 
@@ -332,7 +332,7 @@ void func_801E3304(s_UnkSaveload0* arg0, s32 arg1, s32 arg2) // 0x801E3304
 
         if ((u8)D_801E76D2[arg2] != 0)
         {
-            if (D_800A97D4[arg2] == D_800BCD3C[arg2] - 2)
+            if (D_800A97D4[arg2] == g_SaveCount[arg2] - 2)
             {
                 D_801E7570[arg2] = D_800A97D4[arg2] - 3;
             }
@@ -342,15 +342,15 @@ void func_801E3304(s_UnkSaveload0* arg0, s32 arg1, s32 arg2) // 0x801E3304
             }
         }
 
-        if ((D_800BCD3C[arg2] < 6) || D_800A97D4[arg2] == 0)
+        if ((g_SaveCount[arg2] < 6) || D_800A97D4[arg2] == 0)
         {
             D_801E7570[arg2] = 0;
         }
         else
         {
-            if ((D_800BCD3C[arg2] - 2) < D_800A97D4[arg2])
+            if ((g_SaveCount[arg2] - 2) < D_800A97D4[arg2])
             {
-                D_801E7570[arg2] = D_800BCD3C[arg2] - 5;
+                D_801E7570[arg2] = g_SaveCount[arg2] - 5;
             }
             else
             {
@@ -403,7 +403,7 @@ void func_801E3304(s_UnkSaveload0* arg0, s32 arg1, s32 arg2) // 0x801E3304
 
             if (arg1 == 0)
             {
-                Gfx_SavesTransparentBgDraw(arg2, D_800BCD3C[arg2], D_800A97D4[arg2], D_801E7578[arg2]);
+                Gfx_SavesTransparentBgDraw(arg2, g_SaveCount[arg2], D_800A97D4[arg2], D_801E7578[arg2]);
             }
 
             break;
@@ -452,7 +452,7 @@ void func_801E3304(s_UnkSaveload0* arg0, s32 arg1, s32 arg2) // 0x801E3304
 
     D_801E7518[arg2]++;
 
-    if (D_801E7518[arg2] == 5 || arg1 == D_800BCD3C[arg2] - 1)
+    if (D_801E7518[arg2] == 5 || arg1 == g_SaveCount[arg2] - 1)
     {
         if (D_801E7564[arg2] == 0)
         {
@@ -469,7 +469,7 @@ void func_801E3304(s_UnkSaveload0* arg0, s32 arg1, s32 arg2) // 0x801E3304
 }
 
 // `arg0` = what it's doing. Formatting, saving, or loading.
-void func_801E3910(s32 arg0, s32 arg1) // 0x801E3910
+void Gfx_MemCardStateDraw(s32 memCardState, s32 arg1) // 0x801E3910
 {
     s32 strIdx;
 
@@ -499,11 +499,11 @@ void func_801E3910(s32 arg0, s32 arg1) // 0x801E3910
         143, 114
     };
 
-    switch (arg0)
+    switch (memCardState)
     {
         // Format.
         case 1:
-            strIdx = (arg1 == arg0) ? 1 : 2;
+            strIdx = (arg1 == memCardState) ? 1 : 2;
             break;
 
         // Save.
@@ -604,7 +604,7 @@ void func_801E3910(s32 arg0, s32 arg1) // 0x801E3910
             
         case 1:
             // Loading and something.
-            if (arg0 == 2 && arg1 == 1)
+            if (memCardState == 2 && arg1 == 1)
             {
                 D_801E76D6 = arg1;
             }
@@ -652,7 +652,7 @@ void func_801E3C44(s32 arg0, s32 arg1) // 0x801E3C44
         180, 154
     };
 
-    D_801E76D0 = 0;
+    g_DisplaySaveDataInfo = 0;
     time       = (u8)g_SysWork.timer_1C & 0x3F;
     ot         = &g_ObjectTable1[g_ObjectTableIdx];
 
@@ -945,7 +945,7 @@ void Gfx_SavesTransparentBgDraw(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x801
 
     ot = &g_ObjectTable1[g_ObjectTableIdx];
 
-    if ((D_801E76D0 == 1) && (arg0 == D_800A97D6))
+    if ((g_DisplaySaveDataInfo == 1) && (arg0 == D_800A97D6))
     {
         Save_SaveDataInfoDraw(arg0, arg2);
     }
@@ -1169,7 +1169,7 @@ void Gfx_SavesOutlineDraw(s_UnkSaveload0* arg0, s_UnkSaveload0* arg1, s32 arg2, 
         }
     }
 
-    if (temp_s0 != temp_s00 || arg2 + 1 == D_800BCD3C[arg3])
+    if (temp_s0 != temp_s00 || arg2 + 1 == g_SaveCount[arg3])
     {
         for (i = 0; i < 2; i += 1)
         {
@@ -1589,7 +1589,7 @@ void Save_SaveDataInfoDraw(s32 arg0, s32 arg1) // 0x801E5E18
 
 void GameState_SaveScreen_Update() // 0x801E6320
 {
-    D_801E76D0 = 1;
+    g_DisplaySaveDataInfo = 1;
 
     if (g_GameWork.gameStateStep_598[0] == 0)
     {
@@ -1599,7 +1599,7 @@ void GameState_SaveScreen_Update() // 0x801E6320
     D_801E7524[g_GameWork.gameStateStep_598[0]]();
 
     Gfx_SaveBackground();
-    func_801E7244();
+    Gfx_MemCardState();
     func_801E70C8();
 
     if (g_GameWork.gameState_594 == GameState_Unk10)
@@ -1631,7 +1631,7 @@ void func_801E63C0() // 0x801E63C0
         }
     }
 
-    D_801E7520 = 0;
+    g_MemCardStateTextTimer = 0;
     D_800A97D8 = (g_GameWork.gameState_594 == GameState_Unk10);
 
     func_801E2D8C();
@@ -1747,7 +1747,7 @@ void func_801E649C() // 0x801E649C
                 break;
             }
 
-            D_801E7520 = 0;
+            g_MemCardStateTextTimer = 0;
 
             if (g_ControllerPtrConst->btns_new_10 & ControllerFlag_LStickLeft) 
             {
@@ -1825,8 +1825,8 @@ void func_801E69E8() // 0x801E69E8
     switch (g_GameWork.gameStateStep_598[1])
     {
         case 0:
-            D_801E751C = 1;
-            D_801E7520 = 30;
+            g_MemCardState = 1;
+            g_MemCardStateTextTimer = 30;
             g_GameWork.gameStateStep_598[1] = 1;
             g_GameWork.gameStateStep_598[2] = 0;
 
@@ -1846,7 +1846,7 @@ void func_801E69E8() // 0x801E69E8
             switch (func_8002E990())
             {
                 case 10:
-                    D_801E7520 = 30;
+                    g_MemCardStateTextTimer = 30;
                     g_GameWork.gameStateStep_598[0] = 1;
                     g_SysWork.timer_20 = 0;
                     g_GameWork.gameStateStep_598[1] = 0;
@@ -1877,7 +1877,7 @@ void func_801E6B18() // 0x801E6B18
     switch (g_GameWork.gameStateStep_598[1])
     {
         case 0:
-            D_801E751C = 2;
+            g_MemCardState = 2;
             ptr        = func_8002E9EC(D_800BCD40, D_800BCD3F, D_800BCD3E);
 
             if (g_SavegamePtr->mapEventIdx_A8 == 24)
@@ -1914,7 +1914,7 @@ void func_801E6B18() // 0x801E6B18
                     break;
 
                 case 1:
-                    D_801E7520 = 30;
+                    g_MemCardStateTextTimer = 30;
                     break;
 
                 case 11:
@@ -1929,7 +1929,7 @@ void func_801E6B18() // 0x801E6B18
             switch (func_8002E990())
             {
                 case 1:
-                    D_801E7520 = 30;
+                    g_MemCardStateTextTimer = 30;
                     break;
 
                 case 11:
@@ -1957,7 +1957,7 @@ void func_801E6DB0() // 0x801E6DB0
     switch (g_GameWork.gameStateStep_598[1])
     {
         case 0:
-            D_801E751C = 3;
+            g_MemCardState = 3;
 
             func_8002E94C(4, D_800BCD40, D_800BCD3F, D_800BCD3E);
 
@@ -1985,14 +1985,14 @@ void func_801E6DB0() // 0x801E6DB0
                 break;
             }
 
-            D_801E7520 = 30;
+            g_MemCardStateTextTimer = 30;
             break;
 
         case 2:
             var1 = func_8002E990();
             if (var1 == 1)
             {
-                D_801E7520 = 30;
+                g_MemCardStateTextTimer = 30;
                 break;
             }
 
@@ -2006,7 +2006,7 @@ void func_801E6DB0() // 0x801E6DB0
                 break;
             }
 
-            D_801E7520 = 300;
+            g_MemCardStateTextTimer = 300;
             g_SysWork.timer_20 = 0;
             g_GameWork.gameStateStep_598[0]++;
             g_GameWork.gameStateStep_598[1] = 0;
@@ -2069,6 +2069,7 @@ void Gfx_SaveBackground() // 0x801E709C
     Gfx_BackgroundSpriteDraw(&D_800A902C);
 }
 
+// Draws all information related to saves
 void func_801E70C8() // 0x801E70C8
 {
     s_UnkSaveload0* ptr;
@@ -2079,7 +2080,7 @@ void func_801E70C8() // 0x801E70C8
     {
         D_800BCD2C = (s_UnkSaveload0*)&BOOT_ADDR_0[2640 * i];
 
-        for (j = 0; j < (s32)D_800BCD3C[i]; j++)
+        for (j = 0; j < (s32)g_SaveCount[i]; j++)
         {
             if (D_800BCD2C->field_0 >= 0)
             {
@@ -2091,7 +2092,7 @@ void func_801E70C8() // 0x801E70C8
             if (D_800BCD2C->field_4 >= 7)
             {
                 ptr = D_800BCD2C;
-                if (j != D_800BCD3C[i])
+                if (j != g_SaveCount[i])
                 {
                     ptr++;
                 }
@@ -2118,25 +2119,25 @@ void func_801E70C8() // 0x801E70C8
     }
 }
 
-void func_801E7244() // 0x801E7244
+void Gfx_MemCardState() // 0x801E7244
 {
-    if (D_801E7520 <= 0)
+    if (g_MemCardStateTextTimer <= 0)
     {
         return;
     }
 
-    D_801E76D0 = 0;
-    D_801E7520--;
+    g_DisplaySaveDataInfo = 0;
+    g_MemCardStateTextTimer--;
 
-    switch (D_801E751C) 
+    switch (g_MemCardState)
     {
-        case 1:
-            func_801E3910(D_801E751C, (D_800BCD34 >> (D_800BCD40 * 3)) & 0x7);
+        case 1: // Format
+            Gfx_MemCardStateDraw(g_MemCardState, (D_800BCD34 >> (D_800BCD40 * 3)) & 0x7);
             break;
 
-        case 2:
-        case 3:
-            func_801E3910(D_801E751C, func_8002E990());
+        case 2: // Save
+        case 3: // Load
+            Gfx_MemCardStateDraw(g_MemCardState, func_8002E990());
             break;
     }
 }
@@ -2156,7 +2157,7 @@ void GameState_DeathLoadScreen_Update() // 0x801E72FC
     D_801E7544[g_GameWork.gameStateStep_598[0]]();
 
     Gfx_SaveBackground();
-    func_801E7244();
+    Gfx_MemCardState();
     func_801E70C8();
 }
 

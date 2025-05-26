@@ -961,7 +961,7 @@ void func_800879FC(u32 arg0, s32 arg1) // 0x800879FC
 // TODO: Requires jump table.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80087AF4);
 
-void func_80087EA8(s32 arg0)
+void func_80087EA8(s32 arg0) // 0x80087EA8
 {
     if (func_800358A8() == 0)
     {
@@ -971,7 +971,7 @@ void func_80087EA8(s32 arg0)
     func_800358DC(arg0);
 }
 
-void func_80087EDC(s32 arg0)
+void func_80087EDC(s32 arg0) // 0x80087EDC
 {
     if (func_80045B28() || Fs_QueueDoThingWhenEmpty() == 0)
     {
@@ -1030,12 +1030,12 @@ void func_80087EDC(s32 arg0)
     }
 }
 
-void func_80088028()
+void func_80088028() // 0x80088028
 {
     func_80087EDC(0);
 }
 
-void func_80088048()
+void func_80088048() // 0x80088048
 {
     if (func_80045B28())
     {
@@ -1069,7 +1069,41 @@ void func_80088048()
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800880F0);
+void func_800880F0(s32 arg0) // 0x800880F0
+{
+    if (!(func_80045B28()))
+    {
+        switch (g_SysWork.field_10)
+        {
+        case 0:
+            func_80035E1C();
+            if (arg0 == 0)
+            {
+                Sd_EngineCmd(0x16);
+            }
+            else
+            {
+                Sd_EngineCmd(0x17);
+            }
+            
+            g_SysWork.timer_2C = 0;
+            g_SysWork.field_14 = 0;
+            g_SysWork.field_10++;
+            break;
+        case 1:
+            if (!(func_80045BC8()))
+            {
+                
+                g_SysWork.field_28 = 0;
+                g_SysWork.field_10 = 0;
+                g_SysWork.timer_2C = 0;
+                g_SysWork.field_14 = 0;
+                g_SysWork.sysStateStep_C++; 
+            }
+            break; 
+        }
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800881B8);
 
