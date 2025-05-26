@@ -1007,7 +1007,7 @@ void func_80087EDC(s32 arg0) // 0x80087EDC
         case 2:
             g_SysWork.field_22A0 |= 1 << 7;
             
-            if (!(func_80045BC8() & 0xFFFF))
+            if (!func_80045BC8())
             {
                 func_800358DC(arg0);
                 
@@ -1018,11 +1018,7 @@ void func_80087EDC(s32 arg0) // 0x80087EDC
             break;
         
         case 3:
-            g_SysWork.field_28 = 0;
-            g_SysWork.field_10 = 0;
-            g_SysWork.timer_2C = 0;
-            g_SysWork.field_14 = 0;
-            g_SysWork.sysStateStep_C++;
+            SysWork_StateStepIncrement(); // Resets `field_10` to 0.
             break;
 
         default:
@@ -1054,13 +1050,9 @@ void func_80088048() // 0x80088048
             break;
 
         case 1:
-            if (!(func_80045BC8() & 0xFFFF))
+            if (!func_80045BC8())
             {
-                g_SysWork.field_28 = 0;
-                g_SysWork.field_10 = 0;
-                g_SysWork.timer_2C = 0;
-                g_SysWork.field_14 = 0;
-                g_SysWork.sysStateStep_C++;
+                SysWork_StateStepIncrement(); // Resets `field_10` to 0.
             }
             break;
 
@@ -1071,38 +1063,36 @@ void func_80088048() // 0x80088048
 
 void func_800880F0(s32 arg0) // 0x800880F0
 {
-    if (!(func_80045B28()))
+    if (func_80045B28())
     {
-        switch (g_SysWork.field_10)
-        {
-            case 0:
-                func_80035E1C();
+        return;
+    }
 
-                if (arg0 == 0)
-                {
-                    Sd_EngineCmd(0x16);
-                }
-                else
-                {
-                    Sd_EngineCmd(0x17);
-                }
+    switch (g_SysWork.field_10)
+    {
+        case 0:
+            func_80035E1C();
 
-                g_SysWork.timer_2C = 0;
-                g_SysWork.field_14 = 0;
-                g_SysWork.field_10++;
-                break;
+            if (arg0 == 0)
+            {
+                Sd_EngineCmd(0x16);
+            }
+            else
+            {
+                Sd_EngineCmd(0x17);
+            }
 
-            case 1:
-                if (!(func_80045BC8()))
-                {
-                    g_SysWork.field_28 = 0;
-                    g_SysWork.field_10 = 0;
-                    g_SysWork.timer_2C = 0;
-                    g_SysWork.field_14 = 0;
-                    g_SysWork.sysStateStep_C++; 
-                }
-                break; 
-        }
+            g_SysWork.timer_2C = 0;
+            g_SysWork.field_14 = 0;
+            g_SysWork.field_10++;
+            break;
+
+        case 1:
+            if (!func_80045BC8())
+            {
+                SysWork_StateStepIncrement(); // Resets `field_10` to 0.
+            }
+            break; 
     }
 }
 

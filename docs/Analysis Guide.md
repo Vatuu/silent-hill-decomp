@@ -1,6 +1,6 @@
 ## Analysis Guide
 
-Several tools can be used to help disassemble and analyze the game, the guide below explains loading the game/overlays into both **Ghidra** and **IDA Pro**, a guide for using **decomp.me** to create matching function decompilations is also included below.
+Several tools can be used to help disassemble and analyze the game, this guide covers loading the game/overlays into both **Ghidra** and **IDA Pro**, a guide for using **decomp.me** to create matching function decompilations is also included below.
 
 Ghidra is the most recommended thanks to its simple support for overlays, but it's useful to have other tools to check against too.
 
@@ -34,7 +34,7 @@ Ghidra supports MIPS disassembly/decompilation, but a loader extension is needed
 
 If successful the LoadSHOverlays.py script should load in all the overlays for you, and also load in our symbol names from the decomp.
 
-After analyzing most functions should be identified and viewable in the decompiler view, though a couple may still be left undefined (especially map functions, which are often only referenced by data).
+After analysis has completed most functions should be identified and viewable in the decompiler view, though some may still be left undefined, needing to be set as code manually (especially map functions, which are often only referenced by data).
 
 ---
 
@@ -94,6 +94,8 @@ Each scratch is also publicly viewable and forkable, making it easy to collabora
 This should create a scratch for you with decompiled output from `m2c`, sometimes this can make very closely matching C code, though usually it might take a bit of work first.
 
 Adding overlay name to the beginning of the scratch is recommended to help keep track of each function (a comment like `// MAP0_S00`)
+
+### Jump tables
 
 If the function uses jump tables, decomp.me/m2c may ask for jtbl data before it can decompile:
 

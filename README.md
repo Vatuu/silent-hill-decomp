@@ -387,11 +387,9 @@ git clone --recursive https://github.com/Vatuu/silent-hill-decomp.git && cd sile
 ```
 
 ### Place the ROM
-You will need to provide your own ROM dump of the game. The required version is Silent Hill NTSC-U 1.1.
-If done correctly, you will end up with a .BIN and a .CUE file. These must be placed in the `rom/image` folder and renamed to SLUS-00707.bin/.cue, respectively.
-SHA1 Hashes:
-- .cue: `299D08DCB44E7516F394C3DD5BA40690AE33FD22` 84 Bytes
-- .bin: `34278D31D9B9B12B3B5DB5E45BCBE548991ECBC7` 616,494,480 Bytes / 587 MiB
+You will need to provide your own ROM dump of the NTSC-U 1.1 version of the game, if dumped correctly you should have a .BIN file with the SHA1 hash `34278D31D9B9B12B3B5DB5E45BCBE548991ECBC7` (616,494,480 Bytes / 587 MiB).
+
+After dumping, this BIN file must be placed as `rom/image/SLUS-00707.bin` in the repo.
 
 ### Setup Python virtual environment and requirements
 Modern Linux distros require a virtual environment to be setup before installing requirements with pip.

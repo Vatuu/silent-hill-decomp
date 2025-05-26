@@ -60,10 +60,12 @@ OverlayFileNames = [
 def askForFile():
     chooser = JFileChooser()
 
+    # If SH_DECOMP_ROOT environment var is set, use that as base folder for the file picker
     decomp_root = os.environ.get("SH_DECOMP_ROOT")
     if decomp_root:
         chooser.setCurrentDirectory(java.io.File(join(decomp_root, "assets")))
-    chooser.setSelectedFile(java.io.File("Select map overlay, or filetable.inc.c to load all overlays"))
+
+    chooser.setSelectedFile(java.io.File("Select overlay .bin, or filetable.c.inc to load all overlays"))
     result = chooser.showOpenDialog(None)
     if result == JFileChooser.APPROVE_OPTION:
         return chooser.getSelectedFile().getAbsolutePath()
