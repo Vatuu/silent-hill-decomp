@@ -11,6 +11,12 @@
 
 typedef struct 
 {
+    u8  unk_0[315];
+    u8  field_13B[15];
+} s_func_8002F278;
+
+typedef struct 
+{
     s32                field_0[10][3];
     u8                 unk_78[132];
     s_ShSavegameFooter field_FC;
@@ -24,7 +30,7 @@ extern s8 D_800A97D7;
 
 extern s8 D_800A97D8;
 
-extern s_UnkSaveload0* D_800BCD2C[]; // Type assumed.
+extern s_UnkSaveload0* D_800BCD2C; // Type assumed.
 
 extern s16 D_800BCD3A; // Similar to `D_800BCD30` it counts all saves and includes the `New save` to the sum.
 

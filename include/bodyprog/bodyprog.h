@@ -1211,38 +1211,6 @@ extern RECT D_801E557C[];
 
 extern s32 g_MainLoop_FrameCount; // 0x800B9CCC
 
-/** @brief Initial demo game state data, stored inside MISC/DEMOXXXX.DAT files. */
-typedef struct _DemoWork
-{
-    s_ShSaveUserConfig config_0;
-    u8                 unk_38[200];
-    s_ShSavegame       savegame_100;
-    u8                 unk_37C[1148];
-    u32                frameCount_7F8;
-    u16                randSeed_7FC;
-} s_DemoWork;
-STATIC_ASSERT_SIZEOF(s_DemoWork, 2048);
-
-/** @brief Per-frame demo data, stored inside MISC/PLAYXXXX.DAT files. */
-typedef struct _DemoFrameData
-{
-    s_AnalogController analogController_0;
-    s8              gameStateExpected_8; /** Expected value of `g_GameWork.gameState_594` before `analogController_0` is processed, if it doesn't match `Demo_Update` will display `STEP ERROR` and stop reading demo. */
-    u8              videoPresentInterval_9;
-    u8              unk_A[2];
-    u32             randSeed_C;
-} s_DemoFrameData;
-STATIC_ASSERT_SIZEOF(s_DemoFrameData, 16);
-
-/** @brief Associates a demo number/ID with PLAYXXXX.DAT/DEMOXXXX.DAT file IDs. */
-typedef struct _DemoFileInfo
-{
-    s16 demoFileId_0;       /** MISC/DEMOXXXX.DAT, initial gamestate for the demo and user config override. */
-    s16 playFileId_2;       /** MISC/PLAYXXXX.DAT, data of button presses/randseed for each frame. */
-    s32 (*canPlayDemo_4)(); /** Optional funcptr, returns whether this demo is eligible to be played (unused in retail demos). */
-} s_DemoFileInfo;
-STATIC_ASSERT_SIZEOF(s_DemoFileInfo, 8);
-
 extern s32 g_Demo_DemoFileIdx; // 0x800C4840
 
 extern s32 g_Demo_PlayFileIdx; // 0x800C4844
