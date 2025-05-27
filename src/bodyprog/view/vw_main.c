@@ -98,6 +98,59 @@ void vwSetViewInfo() // 0x80048D48
     vwMatrixToAngleYXZ(&vwViewPointInfo.worldang, &vwViewPointInfo.vwcoord.workm);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vw_main", func_80048DA8);
+// `Camera_ClampAngleRange`?
+void func_80048DA8(s16* angleMin, s16* angleMax, s16 angleConstraintMin, s16 angleConstraintMax) // 0x80048DA8
+{
+    s32 prevAngleMax;
+    s32 prevAngleMin;
+    s32 rotToAngleMax;
+    s16 newAngleMin;
+    s16 rotToAngleConstraintMin;
+    s16 rotToAngleConstraintMax;
+
+    prevAngleMax = *angleMax;
+    prevAngleMin = *angleMin;
+
+    rotToAngleMax = prevAngleMax;
+    rotToAngleMax = (prevAngleMax - prevAngleMin) & 0xFFF;
+
+    rotToAngleConstraintMin = (angleConstraintMin - prevAngleMin) & 0xFFF;
+    rotToAngleConstraintMax = (angleConstraintMax - prevAngleMin) & 0xFFF;
+
+    prevAngleMax = 0;
+
+    if (rotToAngleConstraintMin <= rotToAngleConstraintMax)
+    {
+        if (rotToAngleConstraintMin > prevAngleMax)
+        {
+            prevAngleMax = rotToAngleConstraintMin;
+        }
+
+        if (rotToAngleConstraintMax < rotToAngleMax)
+        {
+            rotToAngleMax = rotToAngleConstraintMax;
+        }
+
+        newAngleMin = prevAngleMin + prevAngleMax;
+        if (rotToAngleMax < prevAngleMax)
+        {
+            prevAngleMax = rotToAngleMax;
+        }
+    }
+    else if (rotToAngleConstraintMax > prevAngleMax)
+    {
+        newAngleMin = prevAngleMin;
+
+        if (rotToAngleConstraintMax < rotToAngleMax)
+        {
+            rotToAngleMax = rotToAngleConstraintMax;
+        }
+    }
+
+    newAngleMin = prevAngleMax + prevAngleMin;
+
+    *angleMin = newAngleMin & 0xFFF;
+    *angleMax = (rotToAngleMax + prevAngleMin) & 0xFFF;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vw_main", func_80048E3C);

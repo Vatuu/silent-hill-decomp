@@ -294,6 +294,7 @@ void           func_80048AF4(VECTOR3* arg0, VECTOR3* arg1);
 void           vwSetCoordRefAndEntou(GsCOORDINATE2* parent_p, s32 ref_x, s32 ref_y, s32 ref_z, s16 cam_ang_y, s16 cam_ang_z, s32 cam_y, s32 cam_xz_r);
 void           vwSetViewInfoDirectMatrix(GsCOORDINATE2* pcoord, MATRIX* cammat);
 void           vwSetViewInfo();
+void           func_80048DA8(s16* angleMin, s16* angleMax, s16 angleConstraintMin, s16 angleConstraintMax);
 
 // vw_calc.c
 
