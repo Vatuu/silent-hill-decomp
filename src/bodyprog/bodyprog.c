@@ -324,7 +324,20 @@ void func_8002ECE0(s_800B55E8* arg0) // 0x8002ECE0
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8002ED7C);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8002F278);
+s32 func_8002F278(s32 arg0, s_func_8002F278* arg1) // 0x8002F278
+{
+    s32 ret;
+    s32 i; 
+
+    ret = 15;
+
+    for (i = 0; i < 15; i++) 
+    {
+        ret -= arg1->field_13B[i];
+    }
+
+    return ret + func_8002EA28(arg0);
+}
 
 // Related to saves. Seems to modify constantly `D_800B55FC`.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8002F2C4);

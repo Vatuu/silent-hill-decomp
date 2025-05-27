@@ -24,6 +24,12 @@
 
 typedef struct 
 {
+    u8  unk_0[315];
+    u8  field_13B[15];
+} s_func_8002F278;
+
+typedef struct 
+{
     s32                field_0[10][3];
     u8                 unk_78[132];
     s_ShSavegameFooter field_FC;
