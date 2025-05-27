@@ -1,11 +1,11 @@
 s32 Ai_AirScreamer_Init(s_SubCharacter* chara)
 {
-#define AIRSCREAMER_BASE_HEALTH 380
-#define AIRSCREAMER_RAND_MAX 100
-#define NIGHTFLUTTER_RAND_MAX 300
+    #define AIR_SCREAMER_BASE_HEALTH 380
+    #define AIR_SCREAMER_RAND_MAX    100
+    #define NIGHT_FLUTTER_RAND_MAX   300
 
-#define AIRSCREAMER_RAND_MAX_HEALTHBONUS_EASY -100
-#define AIRSCREAMER_RAND_MAX_HEALTHBONUS_HARD 100
+    #define AIR_SCREAMER_RAND_MAX_HEALTH_BONUS_EASY -100
+    #define AIR_SCREAMER_RAND_MAX_HEALTH_BONUS_HARD  100
 
     if (chara->model_0.state_2 != 0)
     {
@@ -14,22 +14,27 @@ s32 Ai_AirScreamer_Init(s_SubCharacter* chara)
 
     if (chara->model_0.charaId_0 == Chara_NightFlutter)
     {
-        chara->health_B0 = FP_TO(AIRSCREAMER_BASE_HEALTH, Q12_SHIFT) + (func_80080514() * NIGHTFLUTTER_RAND_MAX);
+        chara->health_B0 = FP_TO(AIR_SCREAMER_BASE_HEALTH, Q12_SHIFT) + (func_80080514() * NIGHT_FLUTTER_RAND_MAX);
     }
     else
     {
-        chara->health_B0 = FP_TO(AIRSCREAMER_BASE_HEALTH, Q12_SHIFT) + (func_80080514() * AIRSCREAMER_RAND_MAX);
+        chara->health_B0 = FP_TO(AIR_SCREAMER_BASE_HEALTH, Q12_SHIFT) + (func_80080514() * AIR_SCREAMER_RAND_MAX);
     }
 
     switch (g_SavegamePtr->gameDifficulty_260)
     {
         case GameDifficulty_Easy:
-            chara->health_B0 += (func_80080514() * AIRSCREAMER_RAND_MAX_HEALTHBONUS_EASY);
+            chara->health_B0 += func_80080514() * AIR_SCREAMER_RAND_MAX_HEALTH_BONUS_EASY;
             break;
+
         case GameDifficulty_Normal:
             break;
+
         case GameDifficulty_Hard:
-            chara->health_B0 += (func_80080514() * AIRSCREAMER_RAND_MAX_HEALTHBONUS_HARD);
+            chara->health_B0 += func_80080514() * AIR_SCREAMER_RAND_MAX_HEALTH_BONUS_HARD;
+            break;
+
+        default:
             break;
     }
 

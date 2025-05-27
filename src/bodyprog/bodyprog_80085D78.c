@@ -69,7 +69,85 @@ void func_80085E6C(s32 arg0, s32 arg1) // 0x80085E6C
     }
 }
 
+// TODO: Jumptable. >:(
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80085EB8);
+/*void func_80085EB8(u32 arg0, s_SubCharacter* chara0, s_SubCharacter* chara1, s32 arg3) // 0x80085EB8
+{
+    s32 (*routine)(s_SubCharacter*, s_SubCharacter*);
+    s_SubCharacter* chara2;
+    s32             res;
+
+    switch (arg0)
+    {
+        case 0:
+            if (chara0 == &g_SysWork.player_4C.chara_0)
+            {
+                D_800C9650(chara1, chara1);
+            }
+            else 
+            {
+                D_800C96A0(chara0, chara1);
+            }
+            break;
+
+        case 1:
+            if (chara0 == &g_SysWork.player_4C.chara_0)
+            {
+                res = D_800C9664(chara0, chara1);
+
+                if (res == 1) 
+                {
+                    func_80085D78(arg3);
+                }
+            }
+            else
+            {
+                res = D_800C96B4(chara0, chara1);
+                if (res == 1)
+                {
+                    func_80085D78(arg3);
+                }
+            }
+            break;
+
+        case 2:
+            if (chara0 == &g_SysWork.player_4C.chara_0)
+            {
+                D_800C9658(chara0, chara1);
+            }
+            else
+            {
+                D_800C96A8(chara0, chara1);
+            }
+            break;
+
+        case 3:
+            if (chara0 == &g_SysWork.player_4C.chara_0)
+            {
+                D_800C9660(chara0, chara1);
+            }
+            else 
+            {
+                D_800C96B0(chara0, chara1);
+            }
+            break;
+
+        case 4:
+            if (chara0 == &g_SysWork.player_4C.chara_0)
+            {
+                D_800C957C.routine_E4(chara0, chara1);
+                D_800C957C.routine_D8();
+            }
+            else 
+            {
+                D_800C96A4(chara0, chara1);
+            }
+            break;
+
+        default:
+            break;
+    }
+}*/
 
 void func_8008605C(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x8008605C
 {

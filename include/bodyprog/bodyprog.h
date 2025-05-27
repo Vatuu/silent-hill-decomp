@@ -460,6 +460,14 @@ typedef struct
     s32     field_20;
 } s_800C4818;
 
+typedef struct
+{
+    s8   unk_0[216];
+    void (*routine_D8)();
+    s8   unk_DC[8];
+    s32  (*routine_E4)(s_SubCharacter* chara0, s_SubCharacter* chara1);
+} s_D_800C957C;
+
 /** Holds file IDs of anim/model/texture for each `e_ShCharacterId`, along with some data used in VC camera code. */
 typedef struct
 {
@@ -686,6 +694,108 @@ typedef struct
     s32             field_8; // Maybe bitfield.
     s_UnkSaveload1* field_C;
 } s_UnkSaveload0; // Size: >=12
+
+/** @brief Initial demo game state data, stored inside MISC/DEMOXXXX.DAT files. */
+typedef struct _DemoWork
+{
+    s_ShSaveUserConfig config_0;
+    u8                 unk_38[200];
+    s_ShSavegame       savegame_100;
+    u8                 unk_37C[1148];
+    u32                frameCount_7F8;
+    u16                randSeed_7FC;
+} s_DemoWork;
+STATIC_ASSERT_SIZEOF(s_DemoWork, 2048);
+
+/** @brief Per-frame demo data, stored inside MISC/PLAYXXXX.DAT files. */
+typedef struct _DemoFrameData
+{
+    s_AnalogController analogController_0;
+    s8              gameStateExpected_8; /** Expected value of `g_GameWork.gameState_594` before `analogController_0` is processed, if it doesn't match `Demo_Update` will display `STEP ERROR` and stop reading demo. */
+    u8              videoPresentInterval_9;
+    u8              unk_A[2];
+    u32             randSeed_C;
+} s_DemoFrameData;
+STATIC_ASSERT_SIZEOF(s_DemoFrameData, 16);
+
+/** @brief Associates a demo number/ID with PLAYXXXX.DAT/DEMOXXXX.DAT file IDs. */
+typedef struct _DemoFileInfo
+{
+    s16 demoFileId_0;       /** MISC/DEMOXXXX.DAT, initial gamestate for the demo and user config override. */
+    s16 playFileId_2;       /** MISC/PLAYXXXX.DAT, data of button presses/randseed for each frame. */
+    s32 (*canPlayDemo_4)(); /** Optional funcptr, returns whether this demo is eligible to be played (unused in retail demos). */
+} s_DemoFileInfo;
+STATIC_ASSERT_SIZEOF(s_DemoFileInfo, 8);
+
+#define DEMO_FILE_COUNT_MAX 5
+extern s_DemoFileInfo g_Demo_FileIds[DEMO_FILE_COUNT_MAX]; // 0x800AFDC4
+/* TODO: data migration
+s_DemoFileInfo g_Demo_FileIds[DEMO_FILE_COUNT_MAX] = {
+    { FILE_MISC_DEMO0009_DAT, FILE_MISC_PLAY0009_DAT, NULL },
+    { FILE_MISC_DEMO000A_DAT, FILE_MISC_PLAY000A_DAT, NULL },
+    { FILE_MISC_DEMO0003_DAT, FILE_MISC_PLAY0003_DAT, NULL },
+    { FILE_MISC_DEMO000B_DAT, FILE_MISC_PLAY000B_DAT, NULL },
+    { FILE_MISC_DEMO0005_DAT, FILE_MISC_PLAY0005_DAT, NULL },
+};
+*/
+
+typedef struct _SpawnInfo
+{
+    q19_12 positionX_0;
+    s8     charaId_4;   /** `e_ShCharacterId` */
+    u8     rotationY_5; /** Multiplied by 16 to get `s_SubCharacter.rotation_24.vy` value. */
+    s8     flags_6;     /** Copied to `stateStep_3` in `s_Model`, with `state_2 = 0`. */
+    s8     unk_7;
+    q19_12 positionZ_8;
+} s_SpawnInfo;
+STATIC_ASSERT_SIZEOF(s_SpawnInfo, 12);
+
+typedef struct _800B5494
+{
+    s32 field_0;
+    s32 unk_4[9];
+} s_800B5494;
+STATIC_ASSERT_SIZEOF(s_800B5494, 40);
+
+extern s_800B5494 D_800B5494;
+
+/** TODO: `g_MapOverlayHeader` is part of the overlay bin files. Maybe should be moved to `maps/s00.h` or `dynamic/dynamic.h`. */
+typedef struct _MapOverlayHeader
+{
+    u8           unk_0[4];
+    s8           (*getMapRoomIdxFunc_4)(s32 x, s32 y);                                  // Called by `func_80036420`
+    s8           field_8;
+    u8           unk_9[3];
+    u8           unk_C[8];
+    s8           field_14;
+    u8           unk_15[3];
+    u8           unk_18[8];
+    void         (**mapEventFuncs_20)();                                            /** Points to array of event functions. */
+    u8           unk_24[12];
+    char**       mapMessageStrings_30;                                              /** Points to array of `char*` for each displayed message in the map. */
+    u8           unk_34[12];
+    void         (*func_40)();
+    void         (*func_44)();
+    u8           unk_48[128];
+    void         (*func_C8)();
+    void         (*func_CC)(s32);
+    s32          (*func_D0)(s32, void*, s16, s32); // 0x800C964C
+    u8           unk_D4[24];
+    s32          (*func_EC)();
+    u8           unk_F0[76];
+    s32          (*func_13C)(s32, s32, void*, s16, s32); // 0x800C96B8
+    u8           unk_140[40];
+    void         (*func_168)(void*, void*, void*);
+    u8           unk_16C[4];
+    u8           unk_170[36];
+    void         (*charaUpdateFuncs_194[Chara_Count])(s_SubCharacter*, void*, s32); /** Guessed params. Funcptrs for each `e_ShCharacterId`, set to 0 for IDs not included in the map overlay. Called by `func_80038354`. */
+    u8           charaGroupIds_248[4];                                              /** `e_ShCharacterId` values where if `s_SpawnInfo.charaId_4` == 0, `charaGroupIds_248[0]` is used for `charaSpawnsA_24C` and `charaGroupIds_248[1]` for `charaSpawnsB_30C`. */
+    s_SpawnInfo  charaSpawnsA_24C[16];                                              /** Array of chara type/position/flags, flags_6 == 0 are unused slots? Read by `func_80037F24`. */
+    s_SpawnInfo  charaSpawnsB_30C[16];                                              /** Array of chara type/position/flags, flags_6 == 0 are unused slots? Read by `func_80037F24`. */
+    VC_ROAD_DATA roadDataList_3CC[48];
+    // TODO: A lot more in here.
+} s_MapOverlayHeader;
+STATIC_ASSERT_SIZEOF(s_MapOverlayHeader, 2124); // Size incomplete.
 
 extern s_FsImageDesc g_MainImg0; // 0x80022C74 - TODO: part of main exe, move to main/ headers?
 
@@ -1112,45 +1222,33 @@ extern s32 D_800C489C;
 
 extern s32 D_800C48F0;
 
+extern s_D_800C957C D_800C957C;
+
+extern s32 (*D_800C9650)(s_SubCharacter*, s_SubCharacter*);
+
+extern void (*D_800C9658)(s_SubCharacter*, s_SubCharacter*);
+
+extern void (*D_800C9660)(s_SubCharacter*, s_SubCharacter*);
+
+extern s64 (*D_800C9664)(s_SubCharacter*, s_SubCharacter*); // Is it really s64???
+
+extern void (*D_800C96A0)(s_SubCharacter*, s_SubCharacter*);
+
+extern s32 (*D_800C96A4)(s_SubCharacter*, s_SubCharacter*);
+
+extern s32 (*D_800C96A8)(s_SubCharacter*, s_SubCharacter*);
+
+extern s32 (*D_800C96B0)(s_SubCharacter*, s_SubCharacter*);
+
+extern s32 (*D_800C96B4)(s_SubCharacter*, s_SubCharacter*); // or this???
+
 extern RECT D_801E557C[];
 
 extern s32 g_MainLoop_FrameCount; // 0x800B9CCC
 
-/** @brief Initial demo game state data, stored inside MISC/DEMOXXXX.DAT files. */
-typedef struct _DemoWork
-{
-    s_ShSaveUserConfig config_0;
-    u8                 unk_38[200];
-    s_ShSavegame       savegame_100;
-    u8                 unk_37C[1148];
-    u32                frameCount_7F8;
-    u16                randSeed_7FC;
-} s_DemoWork;
-STATIC_ASSERT_SIZEOF(s_DemoWork, 2048);
-
 extern u8 D_800BCD30[];
 
 extern s8 D_800BCD38;
-
-/** @brief Per-frame demo data, stored inside MISC/PLAYXXXX.DAT files. */
-typedef struct _DemoFrameData
-{
-    s_AnalogController analogController_0;
-    s8              gameStateExpected_8; /** Expected value of `g_GameWork.gameState_594` before `analogController_0` is processed, if it doesn't match `Demo_Update` will display `STEP ERROR` and stop reading demo. */
-    u8              videoPresentInterval_9;
-    u8              unk_A[2];
-    u32             randSeed_C;
-} s_DemoFrameData;
-STATIC_ASSERT_SIZEOF(s_DemoFrameData, 16);
-
-/** @brief Associates a demo number/ID with PLAYXXXX.DAT/DEMOXXXX.DAT file IDs. */
-typedef struct _DemoFileInfo
-{
-    s16 demoFileId_0;       /** MISC/DEMOXXXX.DAT, initial gamestate for the demo and user config override. */
-    s16 playFileId_2;       /** MISC/PLAYXXXX.DAT, data of button presses/randseed for each frame. */
-    s32 (*canPlayDemo_4)(); /** Optional funcptr, returns whether this demo is eligible to be played (unused in retail demos). */
-} s_DemoFileInfo;
-STATIC_ASSERT_SIZEOF(s_DemoFileInfo, 8);
 
 extern s32 g_Demo_DemoFileIdx; // 0x800C4840
 
@@ -1174,18 +1272,6 @@ extern u16 g_Demo_RandSeed; // 0x800AFDBC
 
 extern void* g_Demo_PlayFileBufferPtr; // 0x800AFDC0
 
-#define DEMO_FILE_COUNT_MAX 5
-extern s_DemoFileInfo g_Demo_FileIds[DEMO_FILE_COUNT_MAX]; // 0x800AFDC4
-/* TODO: data migration
-s_DemoFileInfo g_Demo_FileIds[DEMO_FILE_COUNT_MAX] = {
-    { FILE_MISC_DEMO0009_DAT, FILE_MISC_PLAY0009_DAT, NULL },
-    { FILE_MISC_DEMO000A_DAT, FILE_MISC_PLAY000A_DAT, NULL },
-    { FILE_MISC_DEMO0003_DAT, FILE_MISC_PLAY0003_DAT, NULL },
-    { FILE_MISC_DEMO000B_DAT, FILE_MISC_PLAY000B_DAT, NULL },
-    { FILE_MISC_DEMO0005_DAT, FILE_MISC_PLAY0005_DAT, NULL },
-};
-*/
-
 extern s16 D_800C6E26;
 
 extern s16 D_800C6E8E;
@@ -1193,65 +1279,6 @@ extern s16 D_800C6E8E;
 extern s_800ACAA8 D_800ACAA8[];
 
 extern s_800AD4C8 D_800AD4C8[];
-
-typedef struct _SpawnInfo
-{
-    q19_12 positionX_0;
-    s8     charaId_4;   /** `e_ShCharacterId` */
-    u8     rotationY_5; /** Multiplied by 16 to get `s_SubCharacter.rotation_24.vy` value. */
-    s8     flags_6;     /** Copied to `stateStep_3` in `s_Model`, with `state_2 = 0`. */
-    s8     unk_7;
-    q19_12 positionZ_8;
-} s_SpawnInfo;
-STATIC_ASSERT_SIZEOF(s_SpawnInfo, 12);
-
-
-typedef struct _800B5494
-{
-    s32 field_0;
-    s32 unk_4[9];
-} s_800B5494;
-STATIC_ASSERT_SIZEOF(s_800B5494, 40);
-
-extern s_800B5494 D_800B5494;
-
-/** TODO: `g_MapOverlayHeader` is part of the overlay bin files. Maybe should be moved to `maps/s00.h` or `dynamic/dynamic.h`. */
-typedef struct _MapOverlayHeader
-{
-    u8           unk_0[4];
-    s8           (*getMapRoomIdxFunc_4)(s32 x, s32 y);                                  // Called by `func_80036420`
-    s8           field_8;
-    u8           unk_9[3];
-    u8           unk_C[8];
-    s8           field_14;
-    u8           unk_15[3];
-    u8           unk_18[8];
-    void         (**mapEventFuncs_20)();                                            /** Points to array of event functions. */
-    u8           unk_24[12];
-    char**       mapMessageStrings_30;                                              /** Points to array of `char*` for each displayed message in the map. */
-    u8           unk_34[12];
-    void         (*func_40)();
-    void         (*func_44)();
-    u8           unk_48[128];
-    void         (*func_C8)();
-    void         (*func_CC)(s32);
-    s32          (*func_D0)(s32, void*, s16, s32); // 0x800C964C
-    u8           unk_D4[24];
-    s32          (*func_EC)();
-    u8           unk_F0[76];
-    s32          (*func_13C)(s32, s32, void*, s16, s32); // 0x800C96B8
-    u8           unk_140[40];
-    void         (*func_168)(void*, void*, void*);
-    u8           unk_16C[4];
-    u8           unk_170[36];
-    void         (*charaUpdateFuncs_194[Chara_Count])(s_SubCharacter*, void*, s32); /** Guessed params. Funcptrs for each `e_ShCharacterId`, set to 0 for IDs not included in the map overlay. Called by `func_80038354`. */
-    u8           charaGroupIds_248[4];                                              /** `e_ShCharacterId` values where if `s_SpawnInfo.charaId_4` == 0, `charaGroupIds_248[0]` is used for `charaSpawnsA_24C` and `charaGroupIds_248[1]` for `charaSpawnsB_30C`. */
-    s_SpawnInfo  charaSpawnsA_24C[16];                                              /** Array of chara type/position/flags, flags_6 == 0 are unused slots? Read by `func_80037F24`. */
-    s_SpawnInfo  charaSpawnsB_30C[16];                                              /** Array of chara type/position/flags, flags_6 == 0 are unused slots? Read by `func_80037F24`. */
-    VC_ROAD_DATA roadDataList_3CC[48];
-    // TODO: A lot more in here.
-} s_MapOverlayHeader;
-STATIC_ASSERT_SIZEOF(s_MapOverlayHeader, 2124); // Size incomplete.
 
 extern s_MapOverlayHeader g_MapOverlayHeader; // 0x800C957C
 
@@ -1691,6 +1718,8 @@ void func_80085DC0(s32 arg0, s32 sysStateStep);
 void func_80085DF0();
 
 void func_80085E6C(s32 arg0, s32 arg1);
+
+void func_80085EB8(u32 arg0, s_SubCharacter* chara0, s_SubCharacter* chara1, s32 arg3);
 
 void func_8008605C(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 
