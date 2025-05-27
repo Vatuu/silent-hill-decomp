@@ -1,5 +1,9 @@
 g_SaveCount = 0x800BCD3C;
 
+
+g_SaveSelectedIdx = 0x800A97D4;
+g_SlotSelectedIdx = 0x800A97D6;
+
 g_MainLoop_FrameCount = 0x800B9CCC;
 g_ObjectTableIdx = 0x800B9FB8;
 g_SysWork = 0x800B9FC0; // type:SysWork size:0x2768 - should use s_SysWork here, but splat only supports custom structs with capital letter at beginning.

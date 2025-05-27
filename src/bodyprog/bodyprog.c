@@ -5,6 +5,7 @@
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math.h"
+#include "bodyprog/save_system.h"
 #include "bodyprog/vw_system.h"
 #include "main/fsqueue.h"
 #include "main/rng.h"
@@ -704,26 +705,17 @@ void Settings_DispEnvXYSet(DISPENV* display, s32 x, s32 y) // 0x80032524
     display->screen.y = gameWorkPtr->config_0.screenPosY_1D + 8;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_800325A4);
-/*void func_800325A4(DR_MODE* arg0) // 0x800325A4
+void func_800325A4(DR_MODE* arg0) // 0x800325A4
 {
-    char* temp[2];
-
     if (D_800BCD0C & 8) 
     {
-        temp[0] = 0; 
-
         SetDrawMode(arg0, 0, 1, 32, NULL);
     }
     else 
     {
-        temp[0] = 0;
-
         SetDrawMode(arg0, 0, 1, 64, NULL);
     }
-}*/
-
-extern s32 D_800B5C28;
+}
 
 int func_800325F8() // 0x800325F8
 {

@@ -8,6 +8,29 @@
 
 typedef struct
 {
+    s32 unk_0;
+    u32 gameplayTimer_4;
+    u16 savegameCount_8;
+    s8  mapEventIdx_A;
+    u8  isTitleYellowFlag_B_0 : 1;
+    u8  add290Hours_B_1 : 2;
+    u8  hyperBlasterFlags_B_3 : 5;
+} s_UnkSaveload1; // Size assumed.
+
+typedef struct
+{
+    s16             field_0;
+    s16             field_2;
+    s8              field_4;
+    s8              field_5;
+    s8              field_6;
+    s8              field_7;
+    s32             field_8; // Maybe bitfield.
+    s_UnkSaveload1* field_C;
+} s_UnkSaveload0; // Size: >=12
+
+typedef struct
+{
     DVECTOR field_0;
     DVECTOR field_4;
 } s_801E2A98;
@@ -72,13 +95,13 @@ extern s32 g_MemCardState; // Format: 1, Save: 2, Load: 3
 */
 extern s32 g_MemCardStateTextTimer;
 
-extern void (*D_801E7524[])(); // func table
+extern void (*g_GameState_SaveScreen_Funcs[])();
 
 extern s32 D_801E753C;
 
-extern s32 D_801E7540;
+extern s32 g_IsSaveSelected; // 0 - User has `New save` selected, 1 - User has a save selected.
 
-extern void (*D_801E7544[])(); // func table
+extern void (*g_GameState_DeathLoadScreen_Funcs[])();
 
 extern s32 D_801E7554;
 
@@ -110,6 +133,12 @@ extern u8 D_801E76D5;
 
 extern u8 D_801E76D6;
 
+
+// ==========
+// FUNCTIONS
+// ==========
+
+
 /** Clears all saves? */
 void func_801E2D8C();
 
@@ -118,8 +147,8 @@ void Gfx_SaveSelectedDisplacement(s32 saveSlotIdx, s32 arg1);
 /** Draws the "FILE X" string in the save/load screen. */
 void Gfx_SaveFileSelectedDraw(s32 arg0, s32 saveSlotIdx, s32 fileId, s32 arg3);
 
-/** Draws some string. */
-void func_801E30C4(s_UnkSaveload0* ptr, s32 arg1, s32 idx);
+/** Draws the string of the location where the save was done. */
+void Gfx_SavesLocationDraw(s_UnkSaveload0* ptr, s32 arg1, s32 idx);
 
 /** Sets the color of the string to be drawn based on some flag. */
 s32 func_801E3078(s_UnkSaveload1* arg0);
@@ -151,7 +180,7 @@ void func_801E6DB0();
 void func_801E6F38();
 
 /** Draws "SLOT1"/"SLOT2" strings, bottom transparent frame, and background image.*/
-void Gfx_SaveBackground(); // 0x801E709C
+void Gfx_SaveBackground();
 
 /** Draws all file box strings and graphics, as well as the strings in the transparent frame at the bottom. */
 void func_801E70C8();

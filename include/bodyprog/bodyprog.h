@@ -24,19 +24,6 @@
 
 typedef struct 
 {
-    u8  unk_0[315];
-    u8  field_13B[15];
-} s_func_8002F278;
-
-typedef struct 
-{
-    s32                field_0[10][3];
-    u8                 unk_78[132];
-    s_ShSavegameFooter field_FC;
-} s_func_8002FB64; 
-
-typedef struct 
-{
     s32  field_0;
     u8   unk_4[12];
     s8*  field_16;
@@ -678,29 +665,6 @@ typedef struct _AreaLoadParams
     s32 char_z_8;
 } s_AreaLoadParams;
 
-typedef struct
-{
-    s32 unk_0;
-    u32 gameplayTimer_4;
-    u16 savegameCount_8;
-    s8  mapEventIdx_A;
-    u8  isTitleYellowFlag_B_0 : 1;
-    u8  add290Hours_B_1 : 2;
-    u8  hyperBlasterFlags_B_3 : 5;
-} s_UnkSaveload1; // Size assumed.
-
-typedef struct
-{
-    s16             field_0;
-    s16             field_2;
-    s8              field_4;
-    s8              field_5;
-    s8              field_6;
-    s8              field_7;
-    s32             field_8; // Maybe bitfield.
-    s_UnkSaveload1* field_C;
-} s_UnkSaveload0; // Size: >=12
-
 /** @brief Initial demo game state data, stored inside MISC/DEMOXXXX.DAT files. */
 typedef struct _DemoWork
 {
@@ -876,14 +840,6 @@ extern s32 D_800A976C;
 
 extern void (*D_800A977C[])(); // Function pointer array, maybe state funcs of some kind.
 
-extern u8 D_800A97D4[]; // Something related to save slots.
-
-extern s8 D_800A97D6; // Save slot index?
-
-extern s8 D_800A97D7;
-
-extern s8 D_800A97D8;
-
 extern u16 D_800A98AC[];
 
 extern s_800A992C D_800A992C[];
@@ -988,6 +944,8 @@ extern DVECTOR g_Gfx_DebugStringPosition0;
 
 extern DVECTOR g_Gfx_DebugStringPosition1;
 
+extern s32 D_800B5C28;
+
 extern s32 D_800B5C30;
 
 extern s_800B5C40 D_800B5C40[];
@@ -1006,20 +964,21 @@ extern u16 D_800BCCB2;
 
 extern s32 D_800B7CC4;
 
-/** Accessed by credits, options, and saveload. */
+/** @brief
+* Accessed by credits, options, and saveload.
+* Seems to handle the fading effect of the game.
+* 0-1   - Nothing
+* 2-5   - Fades in black and keeps the screen in black
+* 6-7   - Fades out black
+* 10-15 - Fades in white and keeps the screen in white
+* 16    - Fades out in black
+* Other values causes flickers, likely a bug.
+*/
 extern s32 D_800BCD0C;
 
 extern s16 D_800BCD28;
 
-extern s_UnkSaveload0* D_800BCD2C; // Type assumed.
-
-extern u32 D_800BCD34;
-
 extern s8 D_800BCD39;
-
-extern s16 D_800BCD3A;
-
-extern u8 g_SaveCount[2]; // Save/Load file count.
 
 extern u8 D_800BCD3E;
 
@@ -1252,9 +1211,37 @@ extern RECT D_801E557C[];
 
 extern s32 g_MainLoop_FrameCount; // 0x800B9CCC
 
-extern u8 D_800BCD30[];
+/** @brief Initial demo game state data, stored inside MISC/DEMOXXXX.DAT files. */
+typedef struct _DemoWork
+{
+    s_ShSaveUserConfig config_0;
+    u8                 unk_38[200];
+    s_ShSavegame       savegame_100;
+    u8                 unk_37C[1148];
+    u32                frameCount_7F8;
+    u16                randSeed_7FC;
+} s_DemoWork;
+STATIC_ASSERT_SIZEOF(s_DemoWork, 2048);
 
-extern s8 D_800BCD38;
+/** @brief Per-frame demo data, stored inside MISC/PLAYXXXX.DAT files. */
+typedef struct _DemoFrameData
+{
+    s_AnalogController analogController_0;
+    s8              gameStateExpected_8; /** Expected value of `g_GameWork.gameState_594` before `analogController_0` is processed, if it doesn't match `Demo_Update` will display `STEP ERROR` and stop reading demo. */
+    u8              videoPresentInterval_9;
+    u8              unk_A[2];
+    u32             randSeed_C;
+} s_DemoFrameData;
+STATIC_ASSERT_SIZEOF(s_DemoFrameData, 16);
+
+/** @brief Associates a demo number/ID with PLAYXXXX.DAT/DEMOXXXX.DAT file IDs. */
+typedef struct _DemoFileInfo
+{
+    s16 demoFileId_0;       /** MISC/DEMOXXXX.DAT, initial gamestate for the demo and user config override. */
+    s16 playFileId_2;       /** MISC/PLAYXXXX.DAT, data of button presses/randseed for each frame. */
+    s32 (*canPlayDemo_4)(); /** Optional funcptr, returns whether this demo is eligible to be played (unused in retail demos). */
+} s_DemoFileInfo;
+STATIC_ASSERT_SIZEOF(s_DemoFileInfo, 8);
 
 extern s32 g_Demo_DemoFileIdx; // 0x800C4840
 
@@ -1314,8 +1301,6 @@ void func_8002E8E4();
 
 s32 func_8002E914();
 
-s32 func_8002E990();
-
 s32 func_8002E9A0(s32 idx);
 
 s32 func_8002E9EC(s32 arg0, s32 arg1, s32 arg2);
@@ -1327,8 +1312,6 @@ s32 func_8002EA78(s32 idx);
 void func_8002EB88(); // Return type assumed.
 
 void func_8002ECE0(s_800B55E8* arg0);
-
-void func_8002FB64(s_func_8002FB64 *arg0);
 
 void func_80030444();
 
@@ -2116,23 +2099,6 @@ s32 func_800808AC();
 
 /** Returns a Q shift based on a magnitude. */
 s32 Math_GetMagnitudeShift(s32 mag);
-
-/** Copies user config into an `s_ShSaveUserConfigContainer` and calculates footer checksum. */
-void Savegame_UserConfigCopyWithChecksum(s_ShSaveUserConfigContainer* dest, s_ShSaveUserConfig* src);
-
-/** Copies savegame into an s_ShSavegameContainer and calculates footer checksum. */
-void Savegame_CopyWithChecksum(s_ShSavegameContainer* dest, s_ShSavegame* src);
-
-/** Updates the footer with the checksum of the given data. */
-void Savegame_ChecksumUpdate(s_ShSavegameFooter* saveFooter, s8* saveData, s32 saveDataLength);
-
-/** Generates a checksum of the given saveData and compares it against the checksum value in the footer.
- * Returns 1 if the checksums match, otherwise 0.
- */
-s32 Savegame_ChecksumValidate(s_ShSavegameFooter* saveFooter, s8* saveData, s32 saveDataLength);
-
-/** Generates an 8-bit XOR checksum over the given data, only appears used with s_ShSavegame data. */
-u8 Savegame_ChecksumGenerate(s8* saveData, s32 saveDataLength);
 
 s32 Demo_SequenceAdvance(s32 incrementAmt);
 

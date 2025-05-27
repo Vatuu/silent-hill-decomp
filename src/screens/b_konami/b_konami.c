@@ -4,6 +4,7 @@
 #include <libetc.h>
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/save_system.h"
 #include "main/fsqueue.h"
 #include "screens/b_konami/b_konami.h"
 #include "screens/stream/stream.h"
@@ -132,8 +133,8 @@ s32 func_800C9874() // 0x800C9874
     }
     else if (var0 == 8 || var1 == 8)
     {
-        D_800BCD2C = (s_UnkSaveload0*)&BOOT_ADDR_0[D_800A97D6 * 0xA50];
-        D_800BCD2C = &D_800BCD2C[D_800A97D4[D_800A97D6]];
+        D_800BCD2C = (s_UnkSaveload0*)&BOOT_ADDR_0[g_SlotSelectedIdx * 0xA50];
+        D_800BCD2C = &D_800BCD2C[g_SaveSelectedIdx[g_SlotSelectedIdx]];
 
         D_800BCD40 = D_800BCD2C->field_5;
         D_800BCD3F = D_800BCD2C->field_6;
