@@ -270,7 +270,38 @@ s32 func_8002EA78(s32 idx) // 0x8002EA78
     return D_800B5508[idx].field_18 - func_8002EA28(idx);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8002EABC);
+s32 func_8002EABC(s32* arg0, s32* arg1, s32* arg2) // 0x8002EABC
+{
+    VECTOR vec; // vaguely assumed to be a VECTOR
+    s32 i;
+    s32 ret;
+
+    ret = 0;
+    
+    *arg0 = 0;
+    *arg1 = 0;
+    *arg2 = 0;
+    
+    for (i = 0; i < 8; i++) 
+    {
+        if (D_800B5508[i].field_0 == 3) 
+        {
+            func_8002FE70(i, &vec);
+            
+            if (ret < vec.vx) 
+            {
+                *arg0 = i;
+                
+                *arg1 = vec.vy;
+                *arg2 = vec.vz;
+                
+                ret = vec.vx;
+            }
+        }
+    }
+    
+    return ret != 0;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog", func_8002EB88);
 
