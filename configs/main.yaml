@@ -97,7 +97,7 @@ segments:
       - [0x2A3C, asm, psyq/libc/c23] #strcmp
       - [0x2A4C, asm, psyq/libc/c40] #bzero
       - [0x2A5C, asm, psyq/libc/c43] #memset
-      - [0x2A6C, asm, psyq/libsnd/ut_roff]
+      - [0x2A6C, asm, psyq/libspu/s_i] # SpuInit
       - [0x2A8C, asm, psyq/libspu/s_ini]
       - [0x2BEC, asm, psyq/libspu/spu] # Has bss section: https://github.com/lab313ru/psx_psyq_signatures/blob/e9e46e7e133ef275a79bfce650924f98edb086bc/470/LIBSPU.LIB.json#L279
       - [0x372C, asm, psyq/libapi/a07] #DeliverEvent

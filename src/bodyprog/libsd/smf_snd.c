@@ -213,7 +213,7 @@ void SdWorkInit() // 0x8009F400
 
 void SdInit() // 0x8009F490
 {
-    SsUtReverbOff();
+    SpuInit();
     sound_off();
     SdWorkInit();
     SpuInitMalloc(16, &sd_vb_malloc_rec);
