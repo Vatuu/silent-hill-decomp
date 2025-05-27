@@ -41,6 +41,8 @@ extern s8  sharedData_800E57CC_1_s02;
 
 extern s32 sharedData_800E21D0_0_s01;
 
+extern s32 sharedData_800CAA98_0_s01; // Used by `Ai_AirScreamer_Init` / `sharedFunc_800D2BF4_0_s01`
+
 extern s32 sharedData_800EC954_2_s02; // Used by `Ai_Romper_Init`.
 
 extern s32 sharedData_800EEB14_2_s00; // Used by `Ai_Groaner_Init`.
@@ -314,9 +316,25 @@ void sharedFunc_800D2274_0_s01(s_SubCharacter*);
 
 void sharedFunc_800D2390_0_s01(s_SubCharacter*);
 
-void sharedFunc_800D2974_0_s01(s_SubCharacter*);
+s32 Ai_AirScreamer_Init(s_SubCharacter*);
+
+void sharedFunc_800D2B00_0_s01(s_SubCharacter*);
+
+void sharedFunc_800D2B10_0_s01(s_SubCharacter*);
+
+void sharedFunc_800D2B28_0_s01(s_SubCharacter*);
+
+void sharedFunc_800D2B4C_0_s01(s_SubCharacter*);
+
+void sharedFunc_800D2BB0_0_s01(s_SubCharacter*);
+
+void sharedFunc_800D2BE4_0_s01(s_SubCharacter*);
+
+void sharedFunc_800D2BF4_0_s01(s_SubCharacter* chara);
 
 void sharedFunc_800D3928_0_s01(s_SubCharacter*);
+
+void sharedSymbol_800D3B0C_0_s01(s_SubCharacter*);
 
 s32 sharedFunc_800D62D8_0_s01(s_SubCharacter* chara);
 
