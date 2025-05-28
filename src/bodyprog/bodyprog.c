@@ -195,6 +195,7 @@ s32 func_8002E914() // 0x8002E914
     return ret;
 }
 
+// TODO: This function may require some investigation. The few occations it is used is not used for return a value.
 s32 func_8002E94C(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x8002E94C
 {
     s32* ptr;
@@ -204,11 +205,11 @@ s32 func_8002E94C(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x8002E94C
         return 0;
     }
 
-    D_800B5508[8].field_0 = arg0; 
+    D_800B5508[8].field_0 = arg0;
     ptr                   = &D_800B5508[8].field_0;
 
     ptr[1] = arg1;
-    ptr[2] = arg2; 
+    ptr[2] = arg2;
     ptr[3] = arg3;
     ptr[4] = 0;
     ptr[5] = 1;

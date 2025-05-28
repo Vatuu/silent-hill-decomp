@@ -248,14 +248,6 @@ typedef struct
 
 typedef struct
 {
-    s32                field_0;
-    s8                 field_4[16]; 
-    struct s_800B5508* field_14;
-    s32                field_18; 
-} s_800B5508;
-
-typedef struct
-{
     s32 field_0;
     s32 field_4;
     s32 field_8;
@@ -932,8 +924,6 @@ extern s32 D_800B548C;
 
 extern s32 D_800B54BC;
 
-extern s_800B5508 D_800B5508[];
-
 extern s_800B55E8 D_800B55E8[2];
 
 extern s32 D_800B55FC;
@@ -979,10 +969,6 @@ extern s32 D_800BCD0C;
 extern s16 D_800BCD28;
 
 extern s8 D_800BCD39;
-
-extern u8 D_800BCD3E;
-
-extern s8 D_800BCD3F;
 
 extern s8 D_800BCD40;
 
@@ -1270,8 +1256,6 @@ void func_8002E8E4();
 s32 func_8002E914();
 
 s32 func_8002E9A0(s32 idx);
-
-s32 func_8002E9EC(s32 arg0, s32 arg1, s32 arg2);
 
 s32 func_8002EA28(s32 idx);
 

@@ -9,6 +9,12 @@
 * identified to be related to the save game system.
 */
 
+// ================
+// UNKNOWN STRUCTS
+// ================
+/* Struct called by functions
+that haven't been recognized */
+
 typedef struct 
 {
     u8  unk_0[315];
@@ -22,19 +28,53 @@ typedef struct
     s_ShSavegameFooter field_FC;
 } s_func_8002FB64;
 
+
+// ========
+// STRUCTS
+// =========
+
+
+typedef struct
+{
+    s32                field_0; // Pointer
+    s8                 field_4[16]; 
+    struct s_800B5508* field_14;
+    s32                field_18; 
+} s_800B5508;
+
+
+// ========
+// GLOBALS
+// ========
+
 extern u8 g_SaveSelectedIdx[MEMORY_CARD_SLOT_COUNT]; // Selected save index. [0] - Slot 1, [1] - Slot 2.
 
-extern s8 g_SlotSelectedIdx; // Selected save slot index. 0 - Slot 1, 1 - Slot 2
+extern s8 g_SlotSelectedIdx; // Selected save slot index. 0 - Slot 1, 1 - Slot 2.
 
 extern s8 D_800A97D7;
 
 extern s8 D_800A97D8;
 
-extern s_UnkSaveload0* D_800BCD2C; // Type assumed.
+/**
+* Declaration of the struct takes 224 bytes (0xE0 bytes in hex).
+* It is possible that the full size of the struct
+* it is 0x1C/28 bytes as function `func_8002E94C`
+* access to the element 8 and multiplying it by 28 
+* equals 224 bytes.
+* Additionally, investigating the ram could reaffirm
+* that as at some point of the memory each 1C/28 bytes
+* an address is repeated in the space assigned for the
+* struct which the decompiled code seems to be pointing
+* as the first element of the struct.
+*/
+extern s_800B5508 D_800B5508[];
 
-extern s16 D_800BCD3A; // Similar to `D_800BCD30` it counts all saves and includes the `New save` to the sum.
-
-extern u8 g_SaveCount[MEMORY_CARD_SLOT_COUNT]; // Saves count for each slot.
+/** @brief
+* Supposition: access basic information required for draw
+* information of saves.
+* Addreses accessed based on the slot: Slot 1 - 0x801E09E0, Slot 2 - 0x801E1440.
+*/
+extern s_UnkSaveload0* D_800BCD2C;
 
 extern u8 D_800BCD30[]; // It counts saves and the space to make a new save.
 
@@ -42,13 +82,24 @@ extern u32 D_800BCD34;
 
 extern s8 D_800BCD38;
 
+extern s16 D_800BCD3A; // Similar to `D_800BCD30` it counts all saves and includes the `New save` to the sum.
+
+extern u8 g_SaveCount[MEMORY_CARD_SLOT_COUNT]; // Saves count for each slot.
+
+extern u8 g_SelectedSaveIdx;
+
+extern s8 g_SelectedFileIdx;
 
 // ==========
 // FUNCTIONS
 // ==========
 
+s32 func_8002E94C(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 
 s32 func_8002E990();
+
+/** This function is use to get the pointer of a struct which seems to be `s_UnkSaveload1`. */
+s32 func_8002E9EC(s32 arg0, s32 arg1, s32 arg2);
 
 void func_8002FB64(s_func_8002FB64 *arg0);
 
