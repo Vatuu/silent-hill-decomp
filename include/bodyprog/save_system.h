@@ -76,13 +76,17 @@ extern s_800B5508 D_800B5508[];
 */
 extern s_UnkSaveload0* D_800BCD2C;
 
-extern u8 D_800BCD30[]; // It counts saves and the space to make a new save.
+extern u8 D_800BCD30[]; // Counts saves and the space to make a new save.
 
 extern u32 D_800BCD34;
 
 extern s8 D_800BCD38;
 
+extern s8 D_800BCD39;
+
 extern s16 D_800BCD3A; // Similar to `D_800BCD30` it counts all saves and includes the `New save` to the sum.
+
+extern s8 D_800BCD40;
 
 extern u8 g_SaveCount[MEMORY_CARD_SLOT_COUNT]; // Saves count for each slot.
 

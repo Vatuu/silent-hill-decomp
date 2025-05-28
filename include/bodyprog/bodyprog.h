@@ -968,10 +968,6 @@ extern s32 D_800BCD0C;
 
 extern s16 D_800BCD28;
 
-extern s8 D_800BCD39;
-
-extern s8 D_800BCD40;
-
 extern s8 D_800BCD78;
 
 extern s32 D_800BCD84;

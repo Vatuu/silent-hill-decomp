@@ -130,13 +130,27 @@ typedef struct
 
 extern char* g_StageStrings[];
 
+/**
+* This and `D_801E7510` are related each
+* other, when this is 0 `D_801E7510` is 1
+* and when this is 1 the other is 0.
+* It is related to saves and overwrites.
+* If the player have save the game then
+* `D_801E7510` will be 1, but if the player
+* is going to overwrite then `D_801E750C`
+* turns 1 and `D_801E7510` 0 and onces
+* he confirms the overwrite then `D_801E750C`
+* turns 0 and `D_801E7510` 1, but if the
+* player cancels the overwrite then they keep
+* the values (`D_801E750C` 1 and `D_801E7510` 0)
+*/
 extern s32 D_801E750C;
 
 extern s32 D_801E7510;
 
 extern s16 D_801E7514[MEMORY_CARD_SLOT_COUNT];
 
-extern s16 D_801E7518[MEMORY_CARD_SLOT_COUNT];
+extern s16 D_801E7518[MEMORY_CARD_SLOT_COUNT]; // Timer that triggers when loading a detected memory card
 
 extern s32 g_MemCardState; // Format: 1, Save: 2, Load: 3
 
@@ -158,33 +172,51 @@ extern void (*g_GameState_DeathLoadScreen_Funcs[])();
 
 extern s32 D_801E7554;
 
-extern s32 g_OverwriteOptionSelected; // 0 - Nothing/No, 1 - Yes
-
 extern s32 D_801E7558;
+
+extern s32 g_OverwriteOptionSelected; // 0 - Nothing/No, 1 - Yes
 
 extern s32 D_801E7564[MEMORY_CARD_SLOT_COUNT];
 
+/** @brief
+* Detect what memory card are inserted, but seems
+* buggy, it doesn't properly update when a memory
+* card was removed while the player is on the save screen.
+*/
 extern s16 D_801E756C[MEMORY_CARD_SLOT_COUNT];
 
 extern s16 D_801E7570[MEMORY_CARD_SLOT_COUNT];
 
 extern s16 D_801E7574[MEMORY_CARD_SLOT_COUNT];
 
+/** @brief
+* Stores the selected save in each slot.
+* Only the first two values are used.
+* Possibly the next values are an unused
+* which Splat detect incorrectly and merge
+* it.
+*/
 extern s16 D_801E7578[6];
 
 extern s8 D_801E7584[330];
 
-extern s8 D_801E76CE[MEMORY_CARD_SLOT_COUNT];
+extern s8 g_LastSaveIdx[MEMORY_CARD_SLOT_COUNT];
 
 extern s8 g_DisplaySaveDataInfo;
 
+/** Seems to check if the memory cards are
+* loaded, if they aren't then the value
+* of each is 1, otherwise it is 0.
+*/
 extern s8 D_801E76D2[MEMORY_CARD_SLOT_COUNT];
 
+// Timer used for the shine animation after saving a game.
 extern s8 D_801E76D4;
 
 // Use when overwriting a save with yellow text.
 extern u8 D_801E76D5;
 
+// Is game saving flag?
 extern u8 D_801E76D6;
 
 

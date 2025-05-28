@@ -88,9 +88,9 @@ s16 D_801E7574[MEMORY_CARD_SLOT_COUNT] = { 0, 0 };
 
 s16 D_801E7578[6] = { 0, 0, 0, 0, 0, 0 };
 
-s8 D_801E7584[330] = { 0 };
+s8 D_801E7584[330];
 
-s8 D_801E76CE[MEMORY_CARD_SLOT_COUNT] = { 0, 0 };
+s8 g_LastSaveIdx[MEMORY_CARD_SLOT_COUNT] = { 0, 0 };
 
 s8 g_DisplaySaveDataInfo = 0;
 
@@ -114,20 +114,20 @@ void func_801E2D8C() // 0x801E2D8C
 
     D_801E750C = 0;
     D_801E7510 = 0;
-    D_801E76D4 = INVENTORY_ITEM_COUNT_MAX;
+    D_801E76D4 = 40;
     D_801E76D6 = 0;
 
     for (i = 0; i < MEMORY_CARD_SLOT_COUNT; i++)
     {
-        D_801E76D2[i] = 1;
-        D_801E76CE[i] = NO_VALUE;
-        D_801E7564[i] = 0;
-        D_801E756C[i] = 0;
-        D_801E7570[i] = NO_VALUE;
-        D_801E7574[i] = NO_VALUE;
-        D_801E7578[i] = 0;
-        D_801E7514[i] = 1;
-        D_801E7518[i] = 0;
+        D_801E76D2[i]    = 1;
+        g_LastSaveIdx[i] = NO_VALUE;
+        D_801E7564[i]    = 0;
+        D_801E756C[i]    = 0;
+        D_801E7570[i]    = NO_VALUE;
+        D_801E7574[i]    = NO_VALUE;
+        D_801E7578[i]    = 0;
+        D_801E7514[i]    = 1;
+        D_801E7518[i]    = 0;
 
         for (j = 0; j < SAVE_COUNT_MAX; j++)
         {
@@ -597,8 +597,8 @@ void Gfx_MemCardStateDraw(s32 memCardState, s32 arg1) // 0x801E3910
             if (strIdx == 1)
             {
                 g_GameWork.gameStateStep_598[2] = 0;
-                D_801E7570[g_SlotSelectedIdx] = NO_VALUE;
-                D_801E7578[g_SlotSelectedIdx] = NO_VALUE;
+                D_801E7570[g_SlotSelectedIdx]   = NO_VALUE;
+                D_801E7578[g_SlotSelectedIdx]   = NO_VALUE;
             }
 
             D_801E7554 = strIdx;
@@ -614,8 +614,8 @@ void Gfx_MemCardStateDraw(s32 memCardState, s32 arg1) // 0x801E3910
             // Finished saving and `D_801E7554` isn't required string.
             if (strIdx == 5 && D_801E7554 != strIdx)
             {
-                D_801E76CE[g_SlotSelectedIdx] = g_SaveSelectedIdx[g_SlotSelectedIdx];
-                D_801E76CE[1 - g_SlotSelectedIdx] = NO_VALUE;
+                g_LastSaveIdx[g_SlotSelectedIdx]     = g_SaveSelectedIdx[g_SlotSelectedIdx];
+                g_LastSaveIdx[1 - g_SlotSelectedIdx] = NO_VALUE;
                 D_801E76D4 = 0;
             }
 
@@ -713,8 +713,8 @@ void Gfx_SavedShineDraw() // 0x801E3E78
     POLY_F4* poly;
 
     ot      = &g_ObjectTable1[g_ObjectTableIdx];
-    temp_s0 = ~D_801E76CE[0] == 0;
-    temp_s1 = D_801E76CE[temp_s0] - D_801E7570[temp_s0];
+    temp_s0 = ~g_LastSaveIdx[0] == 0;
+    temp_s1 = g_LastSaveIdx[temp_s0] - D_801E7570[temp_s0];
 
     if (temp_s1 < 5)
     {
@@ -1646,7 +1646,7 @@ void Savegame_ScreenInit() // 0x801E63C0
 
 void Savegame_ScreenLogic() // 0x801E649C
 {
-    s32             step = g_GameWork.gameStateStep_598[1];
+    s32                             step = g_GameWork.gameStateStep_598[1];
     s_UnkSaveload0* selectedSaveInfoPtr;
 
     switch (step)
