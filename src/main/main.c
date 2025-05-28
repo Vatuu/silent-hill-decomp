@@ -73,8 +73,8 @@ int main()
     // Display area = (0, 0, 320, 240)
     PutDispEnv(&g_MainDispEnv);
 
-    // Initialize SPU (should probably be called `SpuInit` because all it does is call `_SpuInit`).
-    SsUtReverbOff();
+    // Initialize SPU
+    SpuInit();
 
     // Load \1ST\2ZANKO_E.TIM ("There are violent and disturbing images...").
     Fs_QueueStartReadTim(FILE_1ST_2ZANKO_E_TIM, FS_BUFFER_0, &g_MainImg0);
