@@ -44,7 +44,7 @@ void Ai_Groaner_Init(s_SubCharacter* chara)
             ((s32)((u16)chara->properties_E4.larvalStalker.properties_E8[11].val16[0] << 16) >> 20); // (value * 0x10000) / 0x100000
     }
 
-    ModelAnim_UpdateField(&chara->model_0.anim_4, &sharedData_800EEB14_2_s00);
+    ModelAnim_AnimInfoSet(&chara->model_0.anim_4, sharedData_800EEB14_2_s00);
 
     chara->field_C0 = 0;
     chara->field_BC = 0;

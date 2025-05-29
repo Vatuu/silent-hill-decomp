@@ -30,27 +30,27 @@ extern s32 sharedData_800E3A20_0_s00;
 extern s32 sharedData_800E3A24_0_s00;
 extern s32 sharedData_800E3A28_0_s00;
 extern s32 sharedData_800E3A2C_0_s00;
-// This is set by `Ai_Stalker_Init`.
-extern s8 sharedData_800DA6C8_0_s00;
 
-extern s32 sharedData_800DD5A8_0_s00; // Pointer used by `Ai_Stalker_Init`.
+extern s_AnimInfo sharedData_800DA6C8_0_s00[]; // Used by `Ai_LarvalStalker_Init`.
+
+extern s_AnimInfo sharedData_800DD5A8_0_s00[]; // Used by `Ai_Stalker_Init`.
 
 // Two variables used by `Ai_Creaper_Init`.
-extern s32 sharedData_800E0D38_1_s02;
+extern s_AnimInfo sharedData_800E0D38_1_s02[];
 extern s8  sharedData_800E57CC_1_s02;
 
 extern s32 sharedData_800E21D0_0_s01;
 
-extern s32 sharedData_800CAA98_0_s01; // Used by `Ai_AirScreamer_Init` / `sharedFunc_800D2BF4_0_s01`
+extern s_AnimInfo sharedData_800CAA98_0_s01[]; // Used by `Ai_AirScreamer_Init` / `sharedFunc_800D2BF4_0_s01`
 
-extern s32 sharedData_800EC954_2_s02; // Used by `Ai_Romper_Init`.
+extern s_AnimInfo sharedData_800EC954_2_s02[]; // Used by `Ai_Romper_Init`.
 
-extern s32 sharedData_800EEB14_2_s00; // Used by `Ai_Groaner_Init`.
+extern s_AnimInfo sharedData_800EEB14_2_s00[]; // Used by `Ai_Groaner_Init`.
 
-extern s32 sharedData_800D91A0_5_s00; // Used by `Ai_HangedScratcher_Init`.
+extern s_AnimInfo sharedData_800D91A0_5_s00[]; // Used by `Ai_HangedScratcher_Init`.
 
 // Three variables used by `Ai_Splithead_Init`.
-extern s32 sharedData_800D5888_1_s05; // Unknown type.
+extern s_AnimInfo sharedData_800D5888_1_s05[];
 extern s16 sharedData_800D8614_1_s05; // These two s16s could be DVECTOR?
 extern s16 sharedData_800D8616_1_s05;
 
@@ -69,6 +69,8 @@ extern s8  sharedData_800D16E4_2_s01;
 extern s32 sharedData_800D3150_3_s02; // Used by `Ai_Alessa_Init`.
 
 extern s32 sharedData_800D5CF4_3_s00; // Used by `Ai_Kaufmann_Init`.
+
+extern s_AnimInfo sharedData_800D5ABC_3_s03[]; // Used by `Ai_Bloodsucker_Init`.
 
 s32 sharedFunc_800CBBBC_0_s00();
 
@@ -411,10 +413,10 @@ void sharedFunc_800D0E80_3_s03(s_SubCharacter*);
 void sharedSymbol_800D0ECC_3_s03(s_SubCharacter*);
 void sharedFunc_800D0F28_3_s03(s_SubCharacter*, s32, s32);
 
-static inline void ModelAnim_UpdateField(s_ModelAnim* anim, s32 arg1)
+static inline void ModelAnim_AnimInfoSet(s_ModelAnim* anim, s_AnimInfo* animInfo)
 {
-    anim->field_C  = arg1;
-    anim->field_10 = 0;
+    anim->animInfo_C = animInfo;
+    anim->field_10   = 0;
 }
 
 #endif

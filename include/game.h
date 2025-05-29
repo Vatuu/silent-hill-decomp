@@ -581,6 +581,19 @@ typedef struct _GameWork
 } s_GameWork;
 STATIC_ASSERT_SIZEOF(s_GameWork, 1496);
 
+/** Const data passed over to `Anim_Update` funcs, struct itself contains which `Anim_Update` func is to be called. */
+typedef struct _AnimInfo
+{
+    void (*funcPtr_0)(struct _SubCharacter*, s32, s32, struct _AnimInfo*); // TODO: funcPtr signature doesn't currently match Anim_Update.
+    u16 field_4;
+    u16 animIdx_6;
+    u16 field_8;
+    u16 field_A;
+    s16 keyframeIdx0_C;
+    s16 keyframeIdx1_E;
+} s_AnimInfo;
+STATIC_ASSERT_SIZEOF(s_AnimInfo, 16);
+
 typedef struct _ModelAnimData
 {
     // Following 4 bytes might be packed into an s32 called `animStatus`,
@@ -592,7 +605,7 @@ typedef struct _ModelAnimData
     s32 time_4;           /** Time along keyframe timeline in Q19.12. */ 
     s16 keyframeIdx0_8;
     s16 keyframeIdx1_A;
-    s32 field_C;
+    s_AnimInfo* animInfo_C;
     s32 field_10;
 } s_ModelAnim;
 STATIC_ASSERT_SIZEOF(s_ModelAnim, 20);
@@ -615,12 +628,12 @@ typedef union
     s8  val8[4];
 } u_Property;
 
-// TODO: Unsure if this is puppet doctor specific or shared with all chars, pointer gets set at puppetDoc+0x124
+// TODO: Unsure if this struct is puppet doctor specific or shared with all chars, pointer gets set at puppetDoc+0x124
 typedef struct
 {
     s32   health_0;
     u8    unk_4[32];
-    void* field_24; // Pointer to some const data.
+    s_AnimInfo* animInfo_24;
     u8    unk_28[12];
 } s_800D5710;
 STATIC_ASSERT_SIZEOF(s_800D5710, 0x34);

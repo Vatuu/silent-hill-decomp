@@ -13,7 +13,7 @@ void Ai_LarvalStalker_Init(s_SubCharacter* arg0)
     arg0->model_0.anim_4.keyframeIdx1_A = 0;
     arg0->model_0.stateStep_3           = 0;
 
-    ModelAnim_UpdateField(&arg0->model_0.anim_4, &sharedData_800DA6C8_0_s00);
+    ModelAnim_AnimInfoSet(&arg0->model_0.anim_4, sharedData_800DA6C8_0_s00);
 
     arg0->health_B0       = FP_TO(300, Q12_SHIFT);
     arg0->field_34        = 0;

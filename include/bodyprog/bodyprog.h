@@ -507,19 +507,6 @@ typedef struct
 } s_Skeleton;
 STATIC_ASSERT_SIZEOF(s_Skeleton, 28);
 
-/** Const data passed over to `Anim_Update` funcs, struct itself contains which `Anim_Update` func is to be called. */
-typedef struct _AnimInfo
-{
-    void (*funcPtr_0)(s_SubCharacter*, s32, s32, struct _AnimInfo*); // TODO: funcPtr signature doesn't currently match Anim_Update.
-    u16 field_4;
-    u16 animIdx_6;
-    u16 field_8;
-    u16 field_A;
-    s16 keyframeIdx0_C;
-    s16 keyframeIdx1_E;
-} s_AnimInfo;
-STATIC_ASSERT_SIZEOF(s_AnimInfo, 16);
-
 typedef struct
 {
     SVECTOR3 posTarget_0;

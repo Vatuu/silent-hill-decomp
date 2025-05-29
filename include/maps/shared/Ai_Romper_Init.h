@@ -54,7 +54,7 @@ void Ai_Romper_Init(s_SubCharacter* chara)
 
     chara->moveSpeed_38 = 89;
 
-    ModelAnim_UpdateField(&chara->model_0.anim_4, &sharedData_800EC954_2_s02);
+    ModelAnim_AnimInfoSet(&chara->model_0.anim_4, sharedData_800EC954_2_s02);
 
     chara->field_C0 = 0;
     chara->field_BC = 0;

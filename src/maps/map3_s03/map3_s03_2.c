@@ -87,7 +87,7 @@ INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03_2", sharedFunc_800D0828_3_s
 
 #include "maps/shared/Ai_Bloodsucker_Update.h" // 0x800D09C4
 
-INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03_2", Ai_Bloodsucker_Init); // 0x800D0CDC
+#include "maps/shared/Ai_Bloodsucker_Init.h" // 0x800D0CDC
 
 INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03_2", sharedFunc_800D0E20_3_s03); // 0x800D0E20
 
