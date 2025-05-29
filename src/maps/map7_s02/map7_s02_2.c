@@ -69,13 +69,13 @@ INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", sharedFunc_800D5B3C_7_s
 
 #include "maps/shared/Ai_Bloodsucker_Init.h" // 0x800D6B8C
 
-INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", sharedFunc_800D0E20_3_s03); // 0x800D6C20
+#include "maps/shared/sharedFunc_800D0E20_3_s03.h" // 0x800D6C20
 
-void sharedSymbol_800D0E38_3_s03(s_SubCharacter* chara) {} // 0x800D6C38
+#include "maps/shared/sharedSymbol_800D0E38_3_s03.h" // 0x800D6C38
 
-INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", sharedFunc_800D0E80_3_s03); // 0x800D6C40
+#include "maps/shared/sharedFunc_800D0E80_3_s03.h" // 0x800D6C40
 
-void sharedSymbol_800D0ECC_3_s03(s_SubCharacter* chara) {} // 0x800D6C8C
+#include "maps/shared/sharedSymbol_800D0ECC_3_s03.h" // 0x800D6C8C
 
 INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", sharedFunc_800D0F28_3_s03); // 0x800D6C94
 

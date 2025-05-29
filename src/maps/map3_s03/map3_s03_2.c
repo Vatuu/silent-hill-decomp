@@ -89,13 +89,13 @@ INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03_2", sharedFunc_800D0828_3_s
 
 #include "maps/shared/Ai_Bloodsucker_Init.h" // 0x800D0CDC
 
-INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03_2", sharedFunc_800D0E20_3_s03); // 0x800D0E20
+#include "maps/shared/sharedFunc_800D0E20_3_s03.h" // 0x800D0E20
 
-INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03_2", sharedSymbol_800D0E38_3_s03); // 0x800D0E38
+#include "maps/shared/sharedSymbol_800D0E38_3_s03.h" // 0x800D0E38
 
-INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03_2", sharedFunc_800D0E80_3_s03); // 0x800D0E80
+#include "maps/shared/sharedFunc_800D0E80_3_s03.h" // 0x800D0E80
 
-INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03_2", sharedSymbol_800D0ECC_3_s03); // 0x800D0ECC
+#include "maps/shared/sharedSymbol_800D0ECC_3_s03.h" // 0x800D0ECC
 
 INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03_2", sharedFunc_800D0F28_3_s03); // 0x800D0F28
 
