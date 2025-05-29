@@ -1559,7 +1559,361 @@ void GameState_MapEvent_Update() // 0x8003AA4C
     Gfx_BackgroundSpriteDraw(&D_800A902C);
 }
 
+// TODO: RODATA migration
+#ifdef NON_MATCHING
+void GameState_MainMenu_Update()
+{
+    s32 nextGameStates[5] = // 0x80025480
+    {
+        GameState_SaveScreen, 
+        GameState_DeathLoadScreen,
+        GameState_MovieOpening,
+        GameState_OptionScreen,
+        GameState_MovieIntro
+    };
+    
+    s32 temp_a1_2;
+    s32 temp_s2;
+    s32 temp_v1;
+    s32 var_v0;
+    s32 var_2;
+    s_ShSavegame* save0;
+    e_GameState prevState;
+
+    func_80033548();
+    temp_s2 = ((D_800A9A80 + 1) % 0x3) != 0;
+    
+    if (g_GameWork.gameStateStep_598[0] == 0)
+    {
+        D_800A9A74 = 0;
+        
+        if (temp_s2 != 0)
+        {
+            g_SysWork.flags_2298 = 0x20;
+        }
+        else
+        {
+            g_GameWork.gameStateStep_598[0] = 1;
+        }
+    }
+    
+    switch (D_800A9A74)
+    {
+        case 0:
+            g_GameWork.field_58C = 0;
+            g_GameWork.field_58D = 0;
+            g_GameWork.field_58E = 0;
+            
+            Gfx_ClearRectInterlaced(0, 32, SCREEN_WIDTH, FRAMEBUFFER_HEIGHT_INTERLACED, 0, 0, 0);
+            Gfx_Init(SCREEN_WIDTH, 1);
+            
+            g_IntervalVBlanks = 1;
+            D_800BCD0C = 6;
+            D_800B5C30 = 0x2000;
+            D_800A9A74++;
+        
+        case 1:
+            if (temp_s2 != 0)
+            {
+                func_80034964();
+                
+                if (g_GameWork.gameStateStep_598[0] == 1 && g_SysWork.timer_20 == 0)
+                {
+                    D_800A9A80++;
+                }
+                
+                if (g_GameWork.gameState_594 == GameState_MainLoadScreen)
+                {
+                    D_800A9A80++;
+                }
+            }
+            
+            D_800A9A7C = 12;
+            
+            if (g_GameWork.savegame_90.playerHealth_240 > 0)
+            {
+                D_800A9A7C = 14;
+            }
+            
+            if (D_800BCD28 > 0)
+            {
+                D_800A9A7C |= (1 << 0) | (1 << 1);
+                
+                if (D_800A9A88 < D_800BCD28 && D_800A9A78 != 0)
+                {
+                    D_800A9A78 = 1;
+                }
+            }
+            else if (D_800A9A88 > 0)
+            {
+                while(!(D_800A9A7C & (1 << D_800A9A78)))
+                {
+                    D_800A9A78++;
+                }
+            }
+            
+            D_800A9A7C |= D_800A9A7C << 5;
+            
+            if (g_ControllerPtrConst->field_18 & (ControllerFlag_LStickUp | ControllerFlag_LStickDown))
+            {
+                Sd_EngineCmd(0x519);
+                g_GameWork.gameState_594 = GameState_MainMenu;
+                
+                if (g_GameWork.gameStateStep_598[0] != 1)
+                {
+                    g_GameWork.gameStateStep_598[0] = 1;
+                    Fs_QueueReset();
+                }
+            }
+            
+            if (g_ControllerPtrConst->field_18 & ControllerFlag_LStickUp)
+            {
+                D_800A9A78 += 5;
+                while(!(D_800A9A7C & (1 << --D_800A9A78)))
+                {
+                }
+            }
+            
+            if (g_ControllerPtrConst->field_18 & ControllerFlag_LStickDown)
+            {                
+                while(!(D_800A9A7C & (1 << ++D_800A9A78)))
+                {
+                }
+            }
+            
+            D_800A9A78 = D_800A9A78 % 5;
+            
+            if (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter)
+            {
+                g_GameWork.gameState_594 = GameState_MainMenu;
+                
+                if (g_GameWork.gameStateStep_598[0] != 1)
+                {
+                    g_GameWork.gameStateStep_598[0] = 1;
+                    Fs_QueueReset();
+                }
+                
+                D_800BCD0C = 2;
+                D_800A9A74 += 1;
+                
+                if (D_800A9A78 < 2u)
+                {
+                    Sd_EngineCmd(0x501);
+                }
+                else
+                {
+                    Sd_EngineCmd(0x51B);
+                }
+                
+                switch (D_800A9A78)
+                {
+                    case 1:
+                        if (g_GameWork.savegame_90.playerHealth_240 > 0)
+                        {
+                            g_GameWork.savegame_30C = g_GameWork.savegame_90;
+                        }
+                        else
+                        {
+                            GameFs_SaveLoadBinLoad();
+                        }
+                        
+                        func_80035178();
+                        g_SysWork.flags_2298 = 0x10;
+                        GameFs_MapLoad(g_SavegamePtr->mapOverlayIdx_A4);
+                        break;
+                    
+                    case 0:
+                        GameFs_SaveLoadBinLoad();
+                        break;
+                    
+                    case 2:
+                        D_800BCD0C = 0;
+                        D_800A9A74 = 3;
+                        break;
+                    
+                    case 3:
+                        GameFs_OptionBinLoad();
+                        break;
+                    
+                    case 4:
+                        break;
+                }
+            }
+            
+            D_800A9A88 = D_800BCD28;
+        
+        default:
+            break;
+        
+        case 3:
+            if (temp_s2 != 0)
+            {
+                func_80034964();
+                
+                if ((g_GameWork.gameStateStep_598[0] == 1) && (g_SysWork.timer_20 == 0))
+                {
+                    D_800A9A80++;
+                }
+                
+                if (g_GameWork.gameState_594 == GameState_MainLoadScreen)
+                {
+                    D_800A9A80++;
+                }
+            }
+            
+            if (g_ControllerPtrConst->field_18 & (ControllerFlag_LStickUp | ControllerFlag_LStickDown) || g_ControllerPtrConst->btns_new_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter | g_GameWorkPtr->config_0.controllerConfig_0.cancel))
+            {
+                g_GameWork.gameState_594 = GameState_MainMenu;
+                
+                if (g_GameWork.gameStateStep_598[0] != 1)
+                {
+                    g_GameWork.gameStateStep_598[0] = 1;
+                    Fs_QueueReset();
+                }
+            }
+            
+            if (g_ControllerPtrConst->field_18 & ControllerFlag_LStickUp)
+            {
+                var_v0 = 2;
+                
+                if (D_800A9A84 > 0)
+                {
+                    var_v0 = D_800A9A84 - 1;
+                }
+                
+                D_800A9A84 = var_v0;
+            }
+            
+            if (g_ControllerPtrConst->field_18 & ControllerFlag_LStickDown)
+            {
+                var_2 = 0;
+                
+                if (D_800A9A84 < 2)
+                {
+                    var_2 = D_800A9A84 + 1;
+                }
+                
+                D_800A9A84 = var_2;
+            }
+            
+            if (g_ControllerPtrConst->field_18 & (ControllerFlag_LStickUp | ControllerFlag_LStickDown))
+            {
+                Sd_EngineCmd(0x519u);
+            }
+            
+            if (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter)
+            {
+                Game_SavegameInitialize(0, D_800A9A84 - 1);
+                func_80035178();
+                g_SysWork.flags_2298 = 4;
+                GameFs_MapLoad(0);
+                GameFs_StreamBinLoad();
+                Sd_EngineCmd(0x501);
+                D_800BCD0C = 2;
+                D_800A9A74 = 4;
+            }
+            else if (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel)
+            {
+                Sd_EngineCmd(0x51A);
+                D_800A9A74 = 1;
+            }
+            break;
+        
+        case 2:
+        case 4:
+            if ((D_800BCD0C & 7) == 5)
+            {
+                func_800323C8(320, 0); // old idb Sys_GFXReinit_800323C8(width, interlace_flag)
+                Fs_QueueWaitForEmpty();
+                
+                if (g_GameWork.savegame_90.playerHealth_240 > 0)
+                {
+                    nextGameStates[1] = 10;
+                }
+                
+                if (D_800A9A78 == 2)
+                {
+                    Chara_PositionUpdateFromParams(g_MapOverlayHeader.mapAreaLoadParams_1C);
+                }
+                
+                func_8002E830();
+                
+                prevState = g_GameWork.gameState_594;
+                g_GameWork.gameStateStep_598[0] = prevState;
+                g_GameWork.gameState_594 = nextGameStates[D_800A9A78];
+                g_SysWork.timer_1C = 0;
+                g_GameWork.gameStatePrev_590 = prevState;
+                g_GameWork.gameStateStep_598[0] = 0;
+                g_SysWork.timer_20 = 0;
+                g_GameWork.gameStateStep_598[1] = 0;
+                g_GameWork.gameStateStep_598[2] = 0;
+                SysWork_StateSetNext(SysState_Gameplay);
+            }
+            break;
+    }
+    
+    if (g_ControllerPtrConst->btns_held_C != 0)
+    {
+        g_SysWork.timer_20 = 0;
+    }
+    
+    if (temp_s2 == 0)
+    {
+        switch (g_GameWork.gameStateStep_598[0])
+        {
+            case 1:
+                if (g_SysWork.timer_20 > 1740)
+                {
+                    GameFs_StreamBinLoad();
+                    g_GameWork.gameStateStep_598[0]++;
+                }
+                break;
+            
+            case 2:
+                if (Fs_QueueGetLength() == 0)
+                {
+                    D_800A9A80++;
+                    temp_a1_2 = g_GameWork.gameState_594;
+                    g_GameWork.gameState_594 = GameState_MovieIntro;
+                    g_GameWork.field_58C = 0;
+                    g_GameWork.field_58D = 0;
+                    g_GameWork.field_58E = 0;
+                    g_SysWork.timer_1C = 0;
+                    g_SysWork.timer_20 = 0;
+                    g_GameWork.gameStateStep_598[1] = 0;
+                    g_GameWork.gameStateStep_598[2] = 0;
+                    SysWork_StateSetNext(SysState_Gameplay);
+                    g_GameWork.gameStateStep_598[0] = temp_a1_2;
+                    g_GameWork.gameStatePrev_590 = temp_a1_2;
+                    g_GameWork.gameStateStep_598[0] = 0;
+                }
+                break;
+        }
+    }
+    
+    if (g_GameWork.gameState_594 == GameState_MainMenu)
+    {
+        func_8003B758();
+        func_8003B560();
+        
+        if (D_800A9A74 < 3)
+        {
+            func_8003B568();
+            return;
+        }
+        
+        func_8003B678(D_800A9A84);
+        return;
+    }
+    
+    *(s32*)0x1F800000 = 0x200000;
+    *(s32*)0x1F800004 = 0x01C00140;
+    ClearImage2((RECT* )0x1F800000, 0u, 0u, 0u);
+    Gfx_Init(0x140u, 0);
+}
+#else
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", GameState_MainMenu_Update); // 0x8003AB28
+#endif
 
 void func_8003B550() // 0x8003B550
 {

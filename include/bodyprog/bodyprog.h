@@ -724,37 +724,38 @@ extern s_800B5494 D_800B5494;
 /** TODO: `g_MapOverlayHeader` is part of the overlay bin files. Maybe should be moved to `maps/s00.h` or `dynamic/dynamic.h`. */
 typedef struct _MapOverlayHeader
 {
-    u8           unk_0[4];
-    s8           (*getMapRoomIdxFunc_4)(s32 x, s32 y);                                  // Called by `func_80036420`
-    s8           field_8;
-    u8           unk_9[3];
-    u8           unk_C[8];
-    s8           field_14;
-    u8           unk_15[3];
-    u8           unk_18[8];
-    void         (**mapEventFuncs_20)();                                            /** Points to array of event functions. */
-    u8           unk_24[12];
-    char**       mapMessageStrings_30;                                              /** Points to array of `char*` for each displayed message in the map. */
-    u8           unk_34[12];
-    void         (*func_40)();
-    void         (*func_44)();
-    u8           unk_48[128];
-    void         (*func_C8)();
-    void         (*func_CC)(s32);
-    s32          (*func_D0)(s32, void*, s16, s32); // 0x800C964C
-    u8           unk_D4[24];
-    s32          (*func_EC)();
-    u8           unk_F0[76];
-    s32          (*func_13C)(s32, s32, void*, s16, s32); // 0x800C96B8
-    u8           unk_140[40];
-    void         (*func_168)(void*, void*, void*);
-    u8           unk_16C[4];
-    u8           unk_170[36];
-    void         (*charaUpdateFuncs_194[Chara_Count])(s_SubCharacter*, void*, s32); /** Guessed params. Funcptrs for each `e_ShCharacterId`, set to 0 for IDs not included in the map overlay. Called by `func_80038354`. */
-    u8           charaGroupIds_248[4];                                              /** `e_ShCharacterId` values where if `s_SpawnInfo.charaId_4` == 0, `charaGroupIds_248[0]` is used for `charaSpawnsA_24C` and `charaGroupIds_248[1]` for `charaSpawnsB_30C`. */
-    s_SpawnInfo  charaSpawnsA_24C[16];                                              /** Array of chara type/position/flags, flags_6 == 0 are unused slots? Read by `func_80037F24`. */
-    s_SpawnInfo  charaSpawnsB_30C[16];                                              /** Array of chara type/position/flags, flags_6 == 0 are unused slots? Read by `func_80037F24`. */
-    VC_ROAD_DATA roadDataList_3CC[48];
+    u8                unk_0[4];
+    s8                (*getMapRoomIdxFunc_4)(s32 x, s32 y);                                  // Called by `func_80036420`
+    s8                field_8;
+    u8                unk_9[3];
+    u8                unk_C[8];
+    s8                field_14;
+    u8                unk_15[3];
+    u8                unk_18[4];
+    s_AreaLoadParams* mapAreaLoadParams_1C;
+    void              (**mapEventFuncs_20)();                                            /** Points to array of event functions. */
+    u8                unk_24[12];
+    char**            mapMessageStrings_30;                                              /** Points to array of `char*` for each displayed message in the map. */
+    u8                unk_34[12];
+    void              (*func_40)();
+    void              (*func_44)();
+    u8                unk_48[128];
+    void              (*func_C8)();
+    void              (*func_CC)(s32);
+    s32               (*func_D0)(s32, void*, s16, s32); // 0x800C964C
+    u8                unk_D4[24];
+    s32               (*func_EC)();
+    u8                unk_F0[76];
+    s32               (*func_13C)(s32, s32, void*, s16, s32); // 0x800C96B8
+    u8                unk_140[40];
+    void              (*func_168)(void*, void*, void*);
+    u8                unk_16C[4];
+    u8                unk_170[36];
+    void              (*charaUpdateFuncs_194[Chara_Count])(s_SubCharacter*, void*, s32); /** Guessed params. Funcptrs for each `e_ShCharacterId`, set to 0 for IDs not included in the map overlay. Called by `func_80038354`. */
+    u8                charaGroupIds_248[4];                                              /** `e_ShCharacterId` values where if `s_SpawnInfo.charaId_4` == 0, `charaGroupIds_248[0]` is used for `charaSpawnsA_24C` and `charaGroupIds_248[1]` for `charaSpawnsB_30C`. */
+    s_SpawnInfo       charaSpawnsA_24C[16];                                              /** Array of chara type/position/flags, flags_6 == 0 are unused slots? Read by `func_80037F24`. */
+    s_SpawnInfo       charaSpawnsB_30C[16];                                              /** Array of chara type/position/flags, flags_6 == 0 are unused slots? Read by `func_80037F24`. */
+    VC_ROAD_DATA      roadDataList_3CC[48];
     // TODO: A lot more in here.
 } s_MapOverlayHeader;
 STATIC_ASSERT_SIZEOF(s_MapOverlayHeader, 2124); // Size incomplete.
@@ -859,7 +860,17 @@ extern void (*D_800A9A2C[])(); // SysState func table.
 
 extern s32 D_800A9A68;
 
+extern s32 D_800A9A74;
+
 extern s32 D_800A9A78;
+
+extern u32 D_800A9A7C;
+
+extern s8  D_800A9A80;
+
+extern s32 D_800A9A84;
+
+extern s32 D_800A9A88;
 
 extern RECT D_800A9A6C; // RECT <320, 256, 160, 240>, only used in SysState_Fmv_Update?
 
