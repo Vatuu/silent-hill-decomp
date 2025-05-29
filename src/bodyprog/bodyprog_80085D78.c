@@ -1195,8 +1195,116 @@ void func_800879FC(u32 arg0, s32 arg1) // 0x800879FC
     }
 }
 
-// TODO: Requires jump table.
+// TODO: Jumptable added, but errors still occur.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80087AF4);
+/*void func_80087AF4(s32 mapFlagIdx, s32 eventFlagIdx, s32 arg2) // 0x80087AF4
+{
+    s32 mapFlagIdxCpy;
+
+    g_DeltaTime0  = 0;
+    mapFlagIdxCpy = mapFlagIdx;
+
+    switch (g_SysWork.field_10)
+    {
+        case 0:
+            D_800C9644(mapFlagIdxCpy);
+            Fs_QueueStartSeek(D_800A99B4[mapFlagIdx] + 0x768);
+
+            g_SysWork.timer_2C = 0;
+            g_SysWork.field_14 = 0;
+            g_SysWork.field_10++;
+
+        case 1:
+            func_8008616C(2, 1, 0, 0, 1);
+            break;
+
+        case 2:
+            DrawSync(0);
+            StoreImage(&D_8002ABA4, IMAGE_BUFFER);
+            DrawSync(0);
+            Fs_QueueStartReadTim(D_800A99B4[mapFlagIdx] + 0x768, FS_BUFFER_2, &D_800A901C);
+            Gfx_Init(0x140, 1);
+
+            g_IntervalVBlanks = 1;
+
+            GsSwapDispBuff();
+            func_8008616C(0, 0, 0, 0, 0);
+            Fs_QueueWaitForEmpty();
+
+            g_SysWork.timer_2C = 0;
+            g_SysWork.field_14 = 0;
+            g_SysWork.field_10++;
+
+        case 3:
+            D_800A8E58 = 0x58;
+
+            func_800314EC(&D_800A901C);
+            func_800860B0(1, arg2, 4, 5, 0, 1);
+            break;
+
+        case 4:
+            mapFlagIdxCpy                                            = mapFlagIdx >> 5;
+            ((s32*)&g_SavegamePtr->hasMapsFlags_164)[mapFlagIdxCpy] |= 1 << (mapFlagIdx & 0x1F); // Maybe union?
+
+            switch (mapFlagIdx)
+            {
+                case 6:
+                    g_SavegamePtr->hasMapsFlags_164 |= 0x1FA0;
+                    break;
+
+                case 17:
+                    g_SavegamePtr->hasMapsFlags_164 |= 1 << 18;
+                    g_SavegamePtr->hasMapsFlags_164 |= 1 << 19;
+                    g_SavegamePtr->hasMapsFlags_164 |= 1 << 21;
+                    g_SavegamePtr->hasMapsFlags_164 |= 1 << 22;
+                    g_SavegamePtr->hasMapsFlags_164 |= 1 << 23;
+                    break;
+
+                case 16:
+                    g_SavegamePtr->hasMapsFlags_164 |= 1 << 20;
+                    break;
+
+                case 13:
+                    g_SavegamePtr->hasMapsFlags_164 |= 1 << 14;
+                    break;
+
+                case 2:
+                    g_SavegamePtr->hasMapsFlags_164 |= 1 << 3;
+                    break;
+
+                default:
+                    break;
+            }
+
+            g_SavegamePtr->eventFlags_168[eventFlagIdx >> 5] |= 1 << (eventFlagIdx & 0x1F);
+            g_SysWork.timer_2C                                = 0;
+            g_SysWork.field_14                                = 0;
+            g_SysWork.field_10++;
+
+        case 5:
+            D_800A8E58 = 0x58;
+
+            func_800314EC(&D_800A901C);
+            func_8008616C(2, 1, 0, 0, 1);
+            break;
+
+        default:
+            LoadImage(&D_8002ABA4, IMAGE_BUFFER);
+            DrawSync(0);
+            Gfx_Init(0x140, 0);
+            func_8008616C(0, 0, 0, 0, 0);
+            D_800C9648(0);
+
+            g_SysWork.sysState_8     = 0;
+            g_SysWork.timer_24       = 0;
+            g_SysWork.sysStateStep_C = 0;
+            g_SysWork.field_28       = 0;
+            g_SysWork.field_10       = 0;
+            g_SysWork.timer_2C       = 0;
+            g_SysWork.field_14       = 0;
+            break;
+    }
+}*/
 
 void func_80087EA8(s32 arg0) // 0x80087EA8
 {

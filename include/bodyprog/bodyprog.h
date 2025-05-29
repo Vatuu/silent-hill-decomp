@@ -823,6 +823,8 @@ extern RECT D_80028A20;
 
 extern RECT D_8002AB10;
 
+extern RECT D_8002ABA4;
+
 extern s_8002AC04 D_8002AC04[];
 
 extern s_800BE9FC D_8002B2CC;
@@ -1780,6 +1782,9 @@ void func_80087540(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 
 /** Something to do with bullet adjust setting. */
 void func_800879FC(u32 arg0, s32 arg1);
+
+/** Inventory drawing? */
+void func_80087AF4(s32 mapFlagIdx, s32 eventFlagIdx, s32 arg2);
 
 void func_80087EA8(s32 arg0);
 
