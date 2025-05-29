@@ -1650,7 +1650,7 @@ void func_800546A8(s32 arg0);
 
 void func_80054928();
 
-void func_80054A04(s8 arg0);
+void func_80054A04(s32 arg0);
 
 void func_80056D64(s8* prevStr, s8* newStr);
 
@@ -1735,6 +1735,8 @@ void func_800860B0(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 sysStateStep, s32
 void func_8008616C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 
 void func_800862F8(s32 arg0, s32 arg1, s32 arg2);
+
+void func_80086470(u32 switchVar, s32 arg1, s32 arg2, s32 arg3);
 
 void func_800866D4(s32 arg0, s32 arg1, s32 arg2);
 

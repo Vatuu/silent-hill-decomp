@@ -375,7 +375,76 @@ void func_800862F8(s32 arg0, s32 arg1, s32 arg2) // 0x800862F8
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80086470);
+void func_80086470(u32 switchVar, s32 arg1, s32 arg2, s32 arg3) // 0x80086470
+{
+    s32 switchVarCpy;
+
+    if (switchVar == 6 && g_SysWork.field_14 == 0)
+    {
+        g_SysWork.field_14 = 2;
+    }
+
+    switchVarCpy = switchVar;
+
+    if (switchVar >= 2)
+    {
+        if (switchVar == 2)
+        {
+            switchVarCpy = 3;
+        }
+        else if (switchVar == 3)
+        {
+            switchVarCpy = 2;
+        }
+        else
+        {
+            switchVarCpy = g_SysWork.field_14;
+        }
+    }
+
+    switch (switchVarCpy)
+    {
+        case 0:
+            func_80053B08(arg1 & 0xFF);
+            
+            if (switchVar == 0)
+            {
+                g_SysWork.field_10 += 0;
+                g_SysWork.timer_2C  = 0;
+                g_SysWork.field_14  = 0;
+            }
+
+            g_SysWork.field_14++;
+
+        case 1:
+            if (Fs_QueueDoThingWhenEmpty() == 0)
+            {
+                break;
+            }
+
+            func_80054A04(arg1 & 0xFF);
+
+            if (switchVar == 1 || switchVar == 4)
+            {
+                func_80085D78(arg3);
+                break;
+            }
+
+            g_SysWork.field_14++;
+
+        case 2:
+            g_SysWork.field_14 = 0;
+            
+            if (switchVar == 3 || switchVar == 6)
+            {
+                func_80054CAC(arg1 & 0xFF, arg2 & 0xFF);
+            }
+            break;
+
+        default:
+            break;
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800865FC);
 
