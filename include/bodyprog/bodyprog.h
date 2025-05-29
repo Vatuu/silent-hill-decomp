@@ -736,7 +736,8 @@ typedef struct _MapOverlayHeader
     void              (**mapEventFuncs_20)();                                            /** Points to array of event functions. */
     u8                unk_24[12];
     char**            mapMessageStrings_30;                                              /** Points to array of `char*` for each displayed message in the map. */
-    u8                unk_34[12];
+    s_AnimInfo*       animInfo_34;
+    u8                unk_38[8];
     void              (*func_40)();
     void              (*func_44)();
     u8                unk_48[128];

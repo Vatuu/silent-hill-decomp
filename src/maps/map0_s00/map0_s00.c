@@ -90,30 +90,22 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D23EC);
 
 s32 func_800D2DAC() // 0x800D2DAC
 {
-    void (*animUpdateFunc)(s_Model*, s_Skeleton*, GsCOORDINATE2*, s_AnimInfo*);
-    s32         basePtr;
-    s32         offset;
-    s_AnimInfo* anim;
-    s_Model*    model = &g_SysWork.player_4C.chara_0.model_0;
+    s_Model*    playerModel = &g_SysWork.player_4C.chara_0.model_0;
+    s_AnimInfo* animInfo    = &g_MapOverlayHeader.animInfo_34[playerModel->anim_4.animIdx_0 - 76];
 
-    basePtr        = *(s32*)((char*)&g_MapOverlayHeader + 52);
-    offset         = (model->anim_4.animIdx_0 * 16) - 1216;
-    anim           = (s_AnimInfo*)(basePtr + offset);
-    animUpdateFunc = anim->funcPtr_0;
-
-    if (animUpdateFunc == Anim_Update0)
+    if (animInfo->funcPtr_0 == Anim_Update0)
     {
-        if (func_800449AC(model, anim) > 0)
+        if (func_800449AC(playerModel, animInfo) > 0)
         {
-            return model->anim_4.keyframeIdx0_8 == anim->keyframeIdx1_E;
+            return playerModel->anim_4.keyframeIdx0_8 == animInfo->keyframeIdx1_E;
         }
         else
         {
-            return model->anim_4.keyframeIdx0_8 == anim->keyframeIdx0_C;
+            return playerModel->anim_4.keyframeIdx0_8 == animInfo->keyframeIdx0_C;
         }
     }
 
-    if (animUpdateFunc == Anim_Update2)
+    if (animInfo->funcPtr_0 == Anim_Update2)
     {
         return -2;
     }
