@@ -1586,6 +1586,8 @@ s32 func_8005C7D0(s_SubCharacter*, s32);
 
 void func_8005C814(s16*, s_SubCharacter*);
 
+void func_8005DE0C(s32, VECTOR3*, s32, s32, s32); // Types assumed.
+
 void func_8005E0DC(s32 arg0); // Types assumed.
 
 void func_8005E89C();

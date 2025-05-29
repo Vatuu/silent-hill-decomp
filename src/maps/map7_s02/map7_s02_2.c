@@ -65,19 +65,19 @@ INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", sharedFunc_800D5B3C_7_s
 
 #include "maps/shared/Ai_BloodyLisa_Init.h" // 0x800D6850
 
-INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", Ai_Bloodsucker_Update); // 0x800D6874
+#include "maps/shared/Ai_Bloodsucker_Update.h" // 0x800D6874
 
-INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", func_800D6B8C);
+INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", Ai_Bloodsucker_Init);
 
-INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", func_800D6C20);
+INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", sharedFunc_800D0E20_3_s03);
 
-void func_800D6C38(void) {}
+void sharedSymbol_800D0E38_3_s03(s_SubCharacter* chara) {}
 
-INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", func_800D6C40);
+INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", sharedFunc_800D0E80_3_s03);
 
-void func_800D6C8C(void) {}
+void sharedSymbol_800D0ECC_3_s03(s_SubCharacter* chara) {}
 
-INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", func_800D6C94);
+INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", sharedFunc_800D0F28_3_s03);
 
 #include "maps/shared/Ai_Dahlia_Update.h" // 0x800D6ED4
 

@@ -402,6 +402,15 @@ void sharedFunc_800CD2C8_2_s01(s_SubCharacter*, s32);
 void sharedSymbol_800CD4A0_2_s01(s_SubCharacter*, s32);
 void Ai_Dahlia_Init(s_SubCharacter* chara);
 
+// `Ai_Bloodsucker` related
+void Ai_Bloodsucker_Update(s_SubCharacter* chara, s32 arg1, s32 arg2);
+void Ai_Bloodsucker_Init(s_SubCharacter*);
+void sharedFunc_800D0E20_3_s03(s_SubCharacter*);
+void sharedSymbol_800D0E38_3_s03(s_SubCharacter*);
+void sharedFunc_800D0E80_3_s03(s_SubCharacter*);
+void sharedSymbol_800D0ECC_3_s03(s_SubCharacter*);
+void sharedFunc_800D0F28_3_s03(s_SubCharacter*, s32, s32);
+
 static inline void ModelAnim_UpdateField(s_ModelAnim* anim, s32 arg1)
 {
     anim->field_C  = arg1;
