@@ -70,9 +70,9 @@ extern s32 D_801E7304;
 
 extern s32 D_801E7308;
 
-extern DR_MODE D_801E730C[];
+extern DR_MODE D_801E730C[2];
 
-extern POLY_G4 D_801E7324[];
+extern POLY_G4 D_801E7324[2];
 
 extern char* D_801E736C[];
 
@@ -114,7 +114,7 @@ void Gfx_BGMBarDraw();
 
 void Gfx_SFXBarDraw();
 
-void Gfx_BarDraw(s32 arg0, s32 arg1);
+void Gfx_BarDraw(s32 arg0, u8 arg1);
 
 void Gfx_SettingsOptionsDraw();
 

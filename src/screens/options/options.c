@@ -9,6 +9,18 @@
 // GENERAL, MAIN, AND EXTRA OPTION SCREENS
 // ========================================
 
+s32 D_801E72F4 = 0;
+
+s32 D_801E72F8 = 0;
+
+s32 D_801E72FC = 0;
+
+s32 D_801E7300 = 0;
+
+s32 D_801E7304 = 0;
+
+s32 D_801E7308 = 0;
+
 void GameState_OptionScreen_Update() // 0x801E2D44
 {
     s32 extraOptions;
@@ -648,7 +660,71 @@ void Gfx_SfxBarDraw() // 0x801E3F90
 }
 
 /** @brief Generates and draws the bars used for SFX and BGM audio options. */
-INCLUDE_ASM("asm/screens/options/nonmatchings/options", Gfx_BarDraw); // 0x801E3FB8
+void Gfx_BarDraw(s32 arg0, u8 arg1) // 0x801E3FB8
+{
+#define setMonoColorCode(p, color, code) *(u32*)(&(p)->r0) = ((color + (color << 8)) + (color << 16)) + (code << 24)
+
+    GsOT* ot;
+    s32   x0Offset;
+    s32   x0;
+    s32   offset;
+    s32   yOffset;
+    s32   value;
+    s32   i;
+    s32   j;
+    u32   colorComp;
+    s32   xOffset;
+    s32   color0, color1, color2;
+
+    POLY_F4* poly;
+
+    ot    = &g_ObjectTable1[g_ObjectTableIdx];
+    value = arg1;
+
+    for (i = 0; i < 16; i++)
+    {
+        colorComp = value & 7;
+        colorComp = (colorComp * 12) + 64;
+
+        for (j = 1; j >= 0; j--)
+        {
+            poly = (POLY_F4*)GsOUT_PACKET_P;
+            setPolyF4(poly);
+
+            if (i < (arg1 / 8))
+            {
+                color0 = 0xA0 + (0x40 * j);
+                setMonoColorCode(poly, color0, 0x28);
+            }
+            else if (i > (arg1 / 8))
+            {
+                color1 = 0x40 + (0x40 * j);
+                setMonoColorCode(poly, color1, 0x28);
+            }
+            else
+            {
+                color2 = colorComp + (0x40 * j);
+                setMonoColorCode(poly, color2, 0x28);
+            }
+
+            xOffset = 24 + i * 6;
+            offset  = -69;
+
+            x0Offset = (j + 24);
+            x0       = (x0Offset + (i * 6)) & 0xFFFF;
+            yOffset  = (j + 56);
+
+            setXY0Fast(poly, x0, (arg0 * 16) + yOffset);
+            setXY1Fast(poly, x0, (arg0 * 16) - (j + offset));
+            setXY2Fast(poly, (xOffset - j) + 5, (arg0 * 16) + yOffset);
+            setXY3Fast(poly, (xOffset - j) + 5, (arg0 * 16) - (j + offset));
+
+            addPrim((u8*)ot->org + 0x18, poly);
+
+            GsOUT_PACKET_P = (u8*)poly + sizeof(POLY_F4);
+        }
+    }
+}
 
 /** @brief Draws the option strings in the extra options screen. */
 void Gfx_OptionsStringsExtraDraw() // 0x801E416C
@@ -2154,6 +2230,80 @@ s32 Settings_ButtonChange(s32 actionIdx) // 0x801E6CF4
 
     return res;
 }
+
+DR_MODE D_801E730C[2] =
+    {
+        {.tag = 0x03000000, .code = {0xE1000200, 0}},
+        {.tag = 0x03000000, .code = {0xE1000200, 0}}};
+
+POLY_G4 D_801E7324[2] =
+    {
+        {.tag = 0x08000000, .r0 = 0xFF, .g0 = 0xFF, .b0 = 0xFF, .code = 0x3A, .r3 = 0xFF, .g3 = 0xFF, .b3 = 0xFF},
+        {.tag = 0x08000000, .code = 0x3A, .r1 = 0xFF, .g1 = 0xFF, .b1 = 0xFF, .r2 = 0xFF, .g2 = 0xFF, .b2 = 0xFF},
+};
+
+char* D_801E736C[] =
+    {
+        "EXIT",
+        "TYPE_1",
+        "TYPE_2",
+        "TYPE_3"};
+
+char* D_801E737C[] =
+    {
+        "ENTER",
+        "CANCEL",
+        "SKIP",
+        "ACTION",
+        "AIM",
+        "LIGHT",
+        "RUN",
+        "VIEW",
+        "STEP L",
+        "STEP R",
+        "PAUSE",
+        "ITEM",
+        "MAP",
+        "OPTION"};
+
+/** Unknown Rodata values.
+ * The types are assumed. It is unknown where
+ * are this applied, they could be also some
+ * sort of value defined with an macro.
+ */
+static const u16 D_801E2D42 = 0x1040; // 4160
+
+DVECTOR D_801E73B4 = {0, 0};
+
+DVECTOR D_801E73B8 = {0, 0};
+
+DVECTOR D_801E73BC = {0, 0};
+
+DVECTOR D_801E73C0 = {0, 0};
+
+DVECTOR D_801E73C4 = {0, 0};
+
+DVECTOR D_801E73C8 = {0, 0};
+
+DVECTOR D_801E73CC = {0, 0};
+
+DVECTOR D_801E73D0 = {0, 0};
+
+s32 D_801E73D4 = 0;
+
+s16 D_801E73D8 = 0;
+
+s16 D_801E73DA = 0;
+
+s_801E73DC D_801E73DC = {BindingMenu_Exit, InputAction_Enter};
+
+s32 D_801E73E4 = 0;
+
+s32 D_801E73E8 = 0;
+
+s32 D_801E73EC = 0;
+
+s32 D_801E73F0 = 0;
 
 void Gfx_ControllerScreenDraw(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x801E6F60
 {
