@@ -77,15 +77,15 @@ void func_800CD6C8(void) {}
 
 #include "maps/shared/sharedFunc_800D2EF4_0_s00.h" // 0x800CD720
 
-INCLUDE_ASM("asm/maps/map6_s02/nonmatchings/map6_s02", Ai_Alessa_Update); // 0x800CD734
+#include "maps/shared/Ai_Alessa_Update.h" // 0x800CD734
 
-INCLUDE_ASM("asm/maps/map6_s02/nonmatchings/map6_s02", func_800CD7A8);
+INCLUDE_ASM("asm/maps/map6_s02/nonmatchings/map6_s02", sharedFunc_800CECFC_3_s02); // 0x800CD7A8
 
-INCLUDE_ASM("asm/maps/map6_s02/nonmatchings/map6_s02", func_800CD7F0);
+INCLUDE_ASM("asm/maps/map6_s02/nonmatchings/map6_s02", sharedFunc_800CED44_3_s02); // 0x800CD7F0
 
-INCLUDE_ASM("asm/maps/map6_s02/nonmatchings/map6_s02", func_800CD988);
+INCLUDE_ASM("asm/maps/map6_s02/nonmatchings/map6_s02", sharedFunc_800CEEDC_3_s02); // 0x800CD988
 
-INCLUDE_ASM("asm/maps/map6_s02/nonmatchings/map6_s02", func_800CDE8C);
+#include "maps/shared/Ai_Alessa_Init.h" // 0x800CDE8C
 
 #include "maps/shared/sharedFunc_800D88AC_0_s00.h" // 0x800CDEB0
 

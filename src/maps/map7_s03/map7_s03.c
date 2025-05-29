@@ -113,15 +113,15 @@ INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800D25FC);
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800D2ECC);
 
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", Ai_Alessa_Update); // 0x800D2F08
+#include "maps/shared/Ai_Alessa_Update.h" // 0x800D2F08
 
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800D2F7C);
+INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", sharedFunc_800CECFC_3_s02); // 0x800D2F7C
 
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800D2FC4);
+INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", sharedFunc_800CED44_3_s02); // 0x800D2FC4
 
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800D315C);
+INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", sharedFunc_800CEEDC_3_s02); // 0x800D315C
 
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800D3660);
+#include "maps/shared/Ai_Alessa_Init.h" // 0x800D3660
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", Ai_BloodyIncubator_Update); // 0x800D3684
 

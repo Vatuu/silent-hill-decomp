@@ -62,6 +62,8 @@ extern s32 sharedData_800E2C38_7_s01; // Used by `Ai_BloodyLisa_Init`.
 extern s32 sharedData_800E2378_0_s01;
 extern s32 sharedData_800E237C_0_s01;
 
+extern s32 sharedData_800D3150_3_s02; // Used by `Ai_Alessa_Init`.
+
 s32 sharedFunc_800CBBBC_0_s00();
 
 void sharedFunc_800D01BC_0_s00(u16* arg0, VECTOR3* arg1, s32 arg2);
@@ -379,6 +381,14 @@ void sharedFunc_800D633C_0_s01(s_SubCharacter*);
 void sharedFunc_800D63A4_0_s01(s_SubCharacter*);
 void sharedFunc_800D6600_0_s01(s_SubCharacter*);
 void sharedFunc_800D7560_0_s01(s_SubCharacter*);
+
+// `Ai_Alessa` related
+void Ai_Alessa_Update(s_SubCharacter* chara, s32 arg1, s32 arg2);
+void sharedFunc_800CECFC_3_s02(s_SubCharacter*, s32, s32);
+void func_800CED44_3_s02(s_SubCharacter*, s32);
+void func_800CEEDC_3_s02(s_SubCharacter*, s32);
+void Ai_Alessa_Init(s_SubCharacter* chara);
+
 
 static inline void ModelAnim_UpdateField(s_ModelAnim* anim, s32 arg1)
 {

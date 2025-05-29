@@ -99,11 +99,11 @@ void func_800CFE34(void) {}
 
 #include "maps/shared/Ai_Lisa_Update.h" // 0x800CFEA0
 
-INCLUDE_ASM("asm/maps/map4_s04/nonmatchings/map4_s04", sharedFunc_800D08FC_3_s04);
+INCLUDE_ASM("asm/maps/map4_s04/nonmatchings/map4_s04", sharedFunc_800D08FC_3_s04); // 0x800CFF14
 
-INCLUDE_ASM("asm/maps/map4_s04/nonmatchings/map4_s04", sharedFunc_800D0944_3_s04);
+INCLUDE_ASM("asm/maps/map4_s04/nonmatchings/map4_s04", sharedFunc_800D0944_3_s04); // 0x800CFF5C
 
-INCLUDE_ASM("asm/maps/map4_s04/nonmatchings/map4_s04", sharedSymbol_800D0ADC_3_s04);
+INCLUDE_ASM("asm/maps/map4_s04/nonmatchings/map4_s04", sharedSymbol_800D0ADC_3_s04); // 0x800D00F4
 
 #include "maps/shared/Ai_Lisa_Init.h" // 0x800D0968
 
