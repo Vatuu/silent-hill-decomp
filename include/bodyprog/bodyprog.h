@@ -779,6 +779,8 @@ extern RECT D_80028A20;
 
 extern RECT D_8002AB10;
 
+extern RECT D_8002ABA4;
+
 extern s_8002AC04 D_8002AC04[];
 
 extern s_800BE9FC D_8002B2CC;
@@ -1165,11 +1167,11 @@ extern u8 D_800C4606;
 
 extern s_800C4620 D_800C4620;
 
-extern s32 D_800C4640; // Type assumed.
+extern VECTOR3 D_800C4640[][8]; // Or struct?
 
 extern s32 D_800C46A0;
 
-extern s16 D_800C4700;
+extern s16 D_800C4700[];
 
 extern s16 D_800C4702;
 
@@ -1188,7 +1190,7 @@ extern void (*D_800C9658)(s_SubCharacter*, s_SubCharacter*);
 
 extern void (*D_800C9660)(s_SubCharacter*, s_SubCharacter*);
 
-extern s64 (*D_800C9664)(s_SubCharacter*, s_SubCharacter*); // Is it really s64???
+extern s64 (*D_800C9664)(s_SubCharacter*, s_SubCharacter*); // Is it really `s64`???
 
 extern void (*D_800C96A0)(s_SubCharacter*, s_SubCharacter*);
 
@@ -1203,6 +1205,10 @@ extern s32 (*D_800C96B4)(s_SubCharacter*, s_SubCharacter*); // or this???
 extern RECT D_801E557C[];
 
 extern s32 g_MainLoop_FrameCount; // 0x800B9CCC
+
+extern void (*D_800C9644)(s32);
+
+extern void (*D_800C9648)(s32);
 
 extern s32 g_Demo_DemoFileIdx; // 0x800C4840
 
@@ -1567,7 +1573,7 @@ void func_800546A8(s32 arg0);
 
 void func_80054928();
 
-void func_80054A04(s8 arg0);
+void func_80054A04(s32 arg0);
 
 void func_80056D64(s8* prevStr, s8* newStr);
 
@@ -1653,6 +1659,10 @@ void func_8008616C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 
 void func_800862F8(s32 arg0, s32 arg1, s32 arg2);
 
+void func_80086470(u32 switchVar, s32 arg1, s32 arg2, s32 arg3);
+
+void func_800865FC(s32 arg0, s32 idx0, s32 idx1, s16 arg3, s32 arg4, s32 arg5);
+
 void func_800866D4(s32 arg0, s32 arg1, s32 arg2);
 
 void func_80086728(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
@@ -1690,9 +1700,22 @@ void func_80087540(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 /** Something to do with bullet adjust setting. */
 void func_800879FC(u32 arg0, s32 arg1);
 
+/** Inventory drawing? */
+void func_80087AF4(s32 mapFlagIdx, s32 eventFlagIdx, s32 arg2);
+
 void func_80087EA8(s32 arg0);
 
 void func_80087EDC(s32 arg0);
+
+void func_80088028();
+
+void func_80088048();
+
+void func_800880F0(s32 arg0);
+
+void func_800881B8(s32 x0, s16 y0, s32 x1, s16 y1, s16 arg4, s16 arg5, s16 arg6, s32 arg7, s32 arg8, u32 arg9, s16 argA, s32 argB);
+
+s32 Chara_Load(s32 arg0, s8 arg1, s32 arg2, s8 arg3, s32 arg4, s32 arg5);
 
 s32 func_80088D0C();
 

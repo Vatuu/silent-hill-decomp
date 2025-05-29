@@ -296,7 +296,7 @@ void func_80054928() // 0x80054928
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_800549A0);
 
-void func_80054A04(s8 arg0) // 0x80054A04
+void func_80054A04(s32 arg0) // 0x80054A04
 {
     #define ADDR (void*)0x801E3600
 

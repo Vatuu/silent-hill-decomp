@@ -375,13 +375,100 @@ void func_800862F8(s32 arg0, s32 arg1, s32 arg2) // 0x800862F8
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80086470);
+void func_80086470(u32 switchVar, s32 arg1, s32 arg2, s32 arg3) // 0x80086470
+{
+    s32 switchVarCpy;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800865FC);
+    if (switchVar == 6 && g_SysWork.field_14 == 0)
+    {
+        g_SysWork.field_14 = 2;
+    }
+
+    switchVarCpy = switchVar;
+
+    if (switchVar >= 2)
+    {
+        if (switchVar == 2)
+        {
+            switchVarCpy = 3;
+        }
+        else if (switchVar == 3)
+        {
+            switchVarCpy = 2;
+        }
+        else
+        {
+            switchVarCpy = g_SysWork.field_14;
+        }
+    }
+
+    switch (switchVarCpy)
+    {
+        case 0:
+            func_80053B08(arg1 & 0xFF);
+            
+            if (switchVar == 0)
+            {
+                g_SysWork.field_10 += 0;
+                g_SysWork.timer_2C  = 0;
+                g_SysWork.field_14  = 0;
+            }
+
+            g_SysWork.field_14++;
+
+        case 1:
+            if (Fs_QueueDoThingWhenEmpty() == 0)
+            {
+                break;
+            }
+
+            func_80054A04(arg1 & 0xFF);
+
+            if (switchVar == 1 || switchVar == 4)
+            {
+                func_80085D78(arg3);
+                break;
+            }
+
+            g_SysWork.field_14++;
+
+        case 2:
+            g_SysWork.field_14 = 0;
+            
+            if (switchVar == 3 || switchVar == 6)
+            {
+                func_80054CAC(arg1 & 0xFF, arg2 & 0xFF);
+            }
+            break;
+
+        default:
+            break;
+    }
+}
+
+void func_800865FC(s32 arg0, s32 idx0, s32 idx1, s16 arg3, s32 arg4, s32 arg5) // 0x800865FC
+{
+    if (arg0 == 0) 
+    {
+        D_800C4640[idx0][idx1].vx = g_SysWork.player_4C.chara_0.position_18.vx + arg4;
+        D_800C4640[idx0][idx1].vy = g_SysWork.player_4C.chara_0.position_18.vy;
+        D_800C4640[idx0][idx1].vz = g_SysWork.player_4C.chara_0.position_18.vz + arg5;
+
+        D_800C4700[idx0] = arg3;
+    }
+    else if (arg0 == 1)
+    {
+        D_800C4640[idx0][idx1].vx = arg4;
+        D_800C4640[idx0][idx1].vy = g_SysWork.player_4C.chara_0.position_18.vy;
+        D_800C4640[idx0][idx1].vz = arg5;
+
+        D_800C4700[idx0] = arg3;
+    }
+}
 
 void func_800866D4(s32 arg0, s32 arg1, s32 arg2) // 0x800866D4
 {
-    if (g_MapOverlayHeader.func_D0(arg0, &D_800C4640, D_800C4700, arg1) == 1)
+    if (g_MapOverlayHeader.func_D0(arg0, &D_800C4640, D_800C4700[0], arg1) == 1)
     {
         func_80085D78(arg2);
     }
@@ -953,18 +1040,90 @@ void func_80087540(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x800875
             func_8008616C(0, 0, 0, arg1, 0);
             g_MapOverlayHeader.func_CC(0);
 
-            g_SysWork.sysState_8 = 0;
-            g_SysWork.timer_24 = 0;
+            g_SysWork.sysState_8     = 0;
+            g_SysWork.timer_24       = 0;
             g_SysWork.sysStateStep_C = 0;
-            g_SysWork.field_28 = 0;
-            g_SysWork.field_10 = 0;
-            g_SysWork.timer_2C = 0;
-            g_SysWork.field_14 = 0;
+            g_SysWork.field_28       = 0;
+            g_SysWork.field_10       = 0;
+            g_SysWork.timer_2C       = 0;
+            g_SysWork.field_14       = 0;
             break;
     }
 }
 
+// TODO: Something wrong with references to `D_800C9644` and `D_800C9644`.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800877B8);
+/*void func_800877B8(s32 arg0, s32 arg1, s32 arg2, s32 arg3)
+{
+    s32 i   = arg0;
+    s32 var = arg3;
+
+    if (!(g_SysWork.flags_22A4 & (1 << 5)))
+    {
+        // Traverse NPCs.
+        for (i = 0; i < NPC_COUNT_MAX; i++)
+        {
+            if ((u32)((u8)g_SysWork.npcs_1A0[i].model_0.charaId_0 - 1) >= 24 ||
+                g_SysWork.npcs_1A0[i].health_B0 <= 0)
+            {
+                continue;
+            }
+
+            break;
+        }
+        
+        if (i != 6)
+        {
+            g_DeltaTime0 = 0;
+        }
+    }
+
+    switch (g_SysWork.field_10)
+    {
+        case 0:
+            D_800C9644(i);
+            func_80086470(0, arg0, 0, 0);
+
+            g_SysWork.timer_2C = 0;
+            g_SysWork.field_14 = 0;
+            g_SysWork.field_10++;
+
+        case 1:
+            func_80086470(1, arg0, 0, 1);
+            break;
+
+        case 2:
+            if (func_80054AD8(arg0 & 0xFF) != 0)
+            {
+                func_800860B0(1, var, 3, NO_VALUE, 0, 1);
+            }
+
+            g_SavegamePtr->eventFlags_168[arg2 >> 5] |= 1 << (arg2 & 0x1F);
+            break;
+
+        case 3:
+            func_80086470(3, arg0, arg1, 0);
+            g_SysWork.timer_2C = 0;
+            g_SysWork.field_14 = 0;
+            g_SysWork.field_10++;
+
+        default:    
+            if (g_SysWork.field_10 == NO_VALUE)
+            {
+                g_SavegamePtr->eventFlags_168[arg2 >> 5] &= ~(1 << (arg2 & 0x1F));
+            }
+
+            D_800C9648(0);
+            g_SysWork.sysState_8     = 0;
+            g_SysWork.timer_24       = 0;
+            g_SysWork.sysStateStep_C = 0;
+            g_SysWork.field_28       = 0;
+            g_SysWork.field_10       = 0;
+            g_SysWork.timer_2C       = 0;
+            g_SysWork.field_14       = 0;
+            break;
+    }
+}*/
 
 void func_800879FC(u32 arg0, s32 arg1) // 0x800879FC
 {
@@ -1036,8 +1195,116 @@ void func_800879FC(u32 arg0, s32 arg1) // 0x800879FC
     }
 }
 
-// TODO: Requires jump table.
+// TODO: Jumptable added, but errors still occur.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80087AF4);
+/*void func_80087AF4(s32 mapFlagIdx, s32 eventFlagIdx, s32 arg2) // 0x80087AF4
+{
+    s32 mapFlagIdxCpy;
+
+    g_DeltaTime0  = 0;
+    mapFlagIdxCpy = mapFlagIdx;
+
+    switch (g_SysWork.field_10)
+    {
+        case 0:
+            D_800C9644(mapFlagIdxCpy);
+            Fs_QueueStartSeek(D_800A99B4[mapFlagIdx] + 0x768);
+
+            g_SysWork.timer_2C = 0;
+            g_SysWork.field_14 = 0;
+            g_SysWork.field_10++;
+
+        case 1:
+            func_8008616C(2, 1, 0, 0, 1);
+            break;
+
+        case 2:
+            DrawSync(0);
+            StoreImage(&D_8002ABA4, IMAGE_BUFFER);
+            DrawSync(0);
+            Fs_QueueStartReadTim(D_800A99B4[mapFlagIdx] + 0x768, FS_BUFFER_2, &D_800A901C);
+            Gfx_Init(0x140, 1);
+
+            g_IntervalVBlanks = 1;
+
+            GsSwapDispBuff();
+            func_8008616C(0, 0, 0, 0, 0);
+            Fs_QueueWaitForEmpty();
+
+            g_SysWork.timer_2C = 0;
+            g_SysWork.field_14 = 0;
+            g_SysWork.field_10++;
+
+        case 3:
+            D_800A8E58 = 0x58;
+
+            func_800314EC(&D_800A901C);
+            func_800860B0(1, arg2, 4, 5, 0, 1);
+            break;
+
+        case 4:
+            mapFlagIdxCpy                                            = mapFlagIdx >> 5;
+            ((s32*)&g_SavegamePtr->hasMapsFlags_164)[mapFlagIdxCpy] |= 1 << (mapFlagIdx & 0x1F); // Maybe union?
+
+            switch (mapFlagIdx)
+            {
+                case 6:
+                    g_SavegamePtr->hasMapsFlags_164 |= 0x1FA0;
+                    break;
+
+                case 17:
+                    g_SavegamePtr->hasMapsFlags_164 |= 1 << 18;
+                    g_SavegamePtr->hasMapsFlags_164 |= 1 << 19;
+                    g_SavegamePtr->hasMapsFlags_164 |= 1 << 21;
+                    g_SavegamePtr->hasMapsFlags_164 |= 1 << 22;
+                    g_SavegamePtr->hasMapsFlags_164 |= 1 << 23;
+                    break;
+
+                case 16:
+                    g_SavegamePtr->hasMapsFlags_164 |= 1 << 20;
+                    break;
+
+                case 13:
+                    g_SavegamePtr->hasMapsFlags_164 |= 1 << 14;
+                    break;
+
+                case 2:
+                    g_SavegamePtr->hasMapsFlags_164 |= 1 << 3;
+                    break;
+
+                default:
+                    break;
+            }
+
+            g_SavegamePtr->eventFlags_168[eventFlagIdx >> 5] |= 1 << (eventFlagIdx & 0x1F);
+            g_SysWork.timer_2C                                = 0;
+            g_SysWork.field_14                                = 0;
+            g_SysWork.field_10++;
+
+        case 5:
+            D_800A8E58 = 0x58;
+
+            func_800314EC(&D_800A901C);
+            func_8008616C(2, 1, 0, 0, 1);
+            break;
+
+        default:
+            LoadImage(&D_8002ABA4, IMAGE_BUFFER);
+            DrawSync(0);
+            Gfx_Init(0x140, 0);
+            func_8008616C(0, 0, 0, 0, 0);
+            D_800C9648(0);
+
+            g_SysWork.sysState_8     = 0;
+            g_SysWork.timer_24       = 0;
+            g_SysWork.sysStateStep_C = 0;
+            g_SysWork.field_28       = 0;
+            g_SysWork.field_10       = 0;
+            g_SysWork.timer_2C       = 0;
+            g_SysWork.field_14       = 0;
+            break;
+    }
+}*/
 
 void func_80087EA8(s32 arg0) // 0x80087EA8
 {
@@ -1174,7 +1441,33 @@ void func_800880F0(s32 arg0) // 0x800880F0
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800881B8);
+void func_800881B8(s32 x0, s16 y0, s32 x1, s16 y1, s16 arg4, s16 arg5, s16 arg6, s32 arg7, s32 arg8, u32 arg9, s16 argA, s32 argB) // 0x800881B8
+{
+    POLY_FT4* poly;
+
+    poly = (POLY_FT4*)GsOUT_PACKET_P;
+    setPolyFT4(poly);
+
+    setXY0Fast(poly, x0 - x1, y0 - y1);
+    setXY1Fast(poly, x0 + x1, y0 - y1);
+    setXY2Fast(poly, x0 - x1, y0 + y1);
+    setXY3Fast(poly, x0 + x1, y0 + y1);
+
+    *(u32*)(&poly->u0) = arg4 + (arg5 << 8) + (getClut(arg9, argA) << 16);
+    *(u32*)(&poly->u1) = (arg4 + arg6) + (arg5 << 8) + (getTPage(0, 0, argB << 6, (((argB >> 4) & 1) << 8)) << 16);
+    *(u16*)(&poly->u2) = arg4 + ((arg5 + arg7) << 8);
+    *(u16*)(&poly->u3) = (arg4 + arg6) + ((arg5 + arg7) << 8);
+
+    *(u16*)(&poly->r0) = arg8 + (arg8 << 8);
+    poly->b0 = arg8;
+
+    setSemiTrans(poly, 0);
+
+    addPrim(g_ObjectTable0[g_ObjectTableIdx].org, poly);
+    poly++;
+
+    GsOUT_PACKET_P = (PACKET*)poly;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80088370);
 
@@ -1186,14 +1479,14 @@ s32 Chara_Load(s32 arg0, s8 arg1, s32 arg2, s8 arg3, s32 arg4, s32 arg5) // 0x80
     return 1;
 }
 
-s32 func_80088D0C()
+s32 func_80088D0C() // 0x80088D0C
 {
     Fs_QueueWaitForEmpty();
     func_8003D95C();
     return 1;
 }
 
-void func_80088D34(s32 idx)
+void func_80088D34(s32 idx) // 0x80088D34
 {
     idx++;
     func_800445A4(D_800A992C[idx].field_8, D_800A992C[idx].field_14);

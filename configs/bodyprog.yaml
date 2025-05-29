@@ -73,6 +73,8 @@ segments:
       - [0x5D1C, rodata]
       - [0x5FBC, .rodata, bodyprog_80085D78] # Jumptables
       - [0x6044, rodata]
+      # - [0x604C, .rodata, bodyprog_80085D78] # Jumptable: `func_80087AF4`
+      # - [0x6064, rodata]
       # - [0x641C, .rodata, bodyprog_80085D78] # Jumptable: `func_8008973C`
       # - [0x6444, rodata]
       # - [0x64A4, .rodata, bodyprog_80085D78] # Jumptable: `func_8008A2E0`
@@ -82,7 +84,6 @@ segments:
       - [0x99d8, rodata]
       - [0x99e8, .rodata, libsd/smf_mid]
       - [0x9ad0, rodata]
-      
       
       - [0x9ad0,    c, bodyprog]
       - [0x9DEC,    c, save]
@@ -98,7 +99,6 @@ segments:
       - [0x61218,   c, bodyprog_80085D78]
       - [0x6A3C0,   c, demo]
       - [0x6ADEC,   c, credits]
-
 
       - [0x6cf9c, asm, psyq/libapi/a09]
       - [0x6cfac, asm, psyq/libapi/a11]

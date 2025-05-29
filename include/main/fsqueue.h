@@ -15,6 +15,8 @@
 #define FS_BUFFER_6 (void*)0x801E4600 // Used in `b_konami.c`.
 #define FS_BUFFER_7 (void*)0x801C2600 // Used in `b_konami.c`.
 
+#define IMAGE_BUFFER (u_long*)0x801AFA00
+
 /** @brief `FsQueue::state` values when processing a read operation (`Fs_QueueUpdateRead`).
  *
  * When `Fs_QueueUpdate` is called and the current op is a read, it will perform the corresponding action below.
