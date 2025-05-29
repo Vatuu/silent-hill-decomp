@@ -68,7 +68,7 @@ s32 func_800CED38()
 
 #include "maps/shared/sharedFunc_800D2D84_0_s00.h" // 0x800CEE48
 
-INCLUDE_ASM("asm/maps/map6_s03/nonmatchings/map6_s03", func_800CEE70);
+#include "maps/shared/sharedFunc_800D2DAC_0_s00.h" // 0x800CEE70
 
 #include "maps/shared/sharedFunc_800D2E50_0_s00.h" // 0x800CEF14
 

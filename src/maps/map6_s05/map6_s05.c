@@ -44,7 +44,7 @@ s32 func_800CC510()
 
 #include "maps/shared/sharedFunc_800D2D84_0_s00.h" // 0x800CC620
 
-INCLUDE_ASM("asm/maps/map6_s05/nonmatchings/map6_s05", func_800CC648);
+#include "maps/shared/sharedFunc_800D2DAC_0_s00.h" // 0x800CC648
 
 #include "maps/shared/sharedFunc_800D2E50_0_s00.h" // 0x800CC6EC
 

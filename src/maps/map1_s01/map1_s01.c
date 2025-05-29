@@ -52,7 +52,7 @@ s32 func_800CE3B4()
 
 #include "maps/shared/sharedFunc_800D2D84_0_s00.h" // 0x800CE4C4
 
-INCLUDE_ASM("asm/maps/map1_s01/nonmatchings/map1_s01", func_800CE4EC);
+#include "maps/shared/sharedFunc_800D2DAC_0_s00.h" // 0x800CE4EC
 
 #include "maps/shared/sharedFunc_800D2E50_0_s00.h" // 0x800CE590
 

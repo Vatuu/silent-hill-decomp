@@ -64,7 +64,7 @@ s32 func_800CEDBC()
 
 #include "maps/shared/sharedFunc_800D2D84_0_s00.h" // 0x800CEECC
 
-INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", func_800CEEF4);
+#include "maps/shared/sharedFunc_800D2DAC_0_s00.h" // 0x800CEEF4
 
 #include "maps/shared/sharedFunc_800D2E50_0_s00.h" // 0x800CEF98
 

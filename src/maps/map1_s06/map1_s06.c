@@ -78,7 +78,7 @@ s32 func_800D0038()
 
 #include "maps/shared/sharedFunc_800D2D84_0_s00.h" // 0x800D0148
 
-INCLUDE_ASM("asm/maps/map1_s06/nonmatchings/map1_s06", func_800D0170);
+#include "maps/shared/sharedFunc_800D2DAC_0_s00.h" // 0x800D0170
 
 #include "maps/shared/sharedFunc_800D2E50_0_s00.h" // 0x800D0214
 

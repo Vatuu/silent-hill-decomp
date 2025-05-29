@@ -54,7 +54,8 @@ SymbolMatchedFuncs = [
     "sharedFunc_800D4A2C_7_s01",
     "sharedFunc_800D4A74_7_s01",
     "sharedFunc_800D4C0C_7_s01",
-    "Ai_GhostChildAlessa_Init"
+    "Ai_GhostChildAlessa_Init",
+    "Ai_Cheryl_Init", # Common humanoid init func
 ]
 
 e_ShCharacterId = [

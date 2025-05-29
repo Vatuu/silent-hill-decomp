@@ -52,7 +52,7 @@ s32 func_800CFDCC()
 
 #include "maps/shared/sharedFunc_800D2D84_0_s00.h" // 0x800CFEDC
 
-INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04", func_800CFF04);
+#include "maps/shared/sharedFunc_800D2DAC_0_s00.h" // 0x800CFF04
 
 #include "maps/shared/sharedFunc_800D2E50_0_s00.h" // 0x800CFFA8
 

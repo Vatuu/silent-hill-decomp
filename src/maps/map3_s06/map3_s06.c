@@ -66,7 +66,7 @@ s32 func_800CEE64()
 
 #include "maps/shared/sharedFunc_800D2D84_0_s00.h" // 0x800CEF74
 
-INCLUDE_ASM("asm/maps/map3_s06/nonmatchings/map3_s06", func_800CEF9C);
+#include "maps/shared/sharedFunc_800D2DAC_0_s00.h" // 0x800CEF9C
 
 #include "maps/shared/sharedFunc_800D2E50_0_s00.h" // 0x800CF040
 

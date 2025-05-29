@@ -49,7 +49,7 @@ INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", func_800CF390);
 
 #include "maps/shared/sharedFunc_800D2D84_0_s00.h" // 0x800CFD28
 
-INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", func_800CFD50);
+#include "maps/shared/sharedFunc_800D2DAC_0_s00.h" // 0x800CFD50
 
 #include "maps/shared/sharedFunc_800D2E50_0_s00.h" // 0x800CFDF4
 

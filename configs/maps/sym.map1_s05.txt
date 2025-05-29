@@ -8,6 +8,7 @@ sharedFunc_800D2D2C_0_s00 = 0x800CF2CC; // type:func
 sharedFunc_800D2D44_0_s00 = 0x800CF2E4; // type:func
 sharedFunc_800D2D6C_0_s00 = 0x800CF30C; // type:func
 sharedFunc_800D2D84_0_s00 = 0x800CF324; // type:func
+sharedFunc_800D2DAC_0_s00 = 0x800CF34C; // type:func
 sharedFunc_800D2E50_0_s00 = 0x800CF3F0; // type:func
 sharedFunc_800D2E60_0_s00 = 0x800CF400; // type:func
 sharedFunc_800D2EA4_0_s00 = 0x800CF7B4; // type:func

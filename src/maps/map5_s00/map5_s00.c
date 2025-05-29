@@ -72,7 +72,7 @@ s32 func_800CF990()
 
 #include "maps/shared/sharedFunc_800D2D84_0_s00.h" // 0x800CFAA0
 
-INCLUDE_ASM("asm/maps/map5_s00/nonmatchings/map5_s00", func_800CFAC8);
+#include "maps/shared/sharedFunc_800D2DAC_0_s00.h" // 0x800CFAC8
 
 #include "maps/shared/sharedFunc_800D2E50_0_s00.h" // 0x800CFB6C
 

@@ -66,7 +66,7 @@ s32 func_800D1594()
 
 #include "maps/shared/sharedFunc_800D2D84_0_s00.h" // 0x800D16A4
 
-INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800D16CC);
+#include "maps/shared/sharedFunc_800D2DAC_0_s00.h" // 0x800D16CC
 
 #include "maps/shared/sharedFunc_800D2E50_0_s00.h" // 0x800D1770
 

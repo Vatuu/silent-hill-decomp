@@ -86,7 +86,7 @@ s32 func_800D1B58()
 
 #include "maps/shared/sharedFunc_800D2D84_0_s00.h" // 0x800D1C68
 
-INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800D1C90);
+#include "maps/shared/sharedFunc_800D2DAC_0_s00.h" // 0x800D1C90
 
 #include "maps/shared/sharedFunc_800D2E50_0_s00.h" // 0x800D1D34
 
