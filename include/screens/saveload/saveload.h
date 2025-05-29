@@ -48,7 +48,7 @@ typedef struct
     u8  add290Hours_B_1       : 2;
     u8  hyperBlasterFlags_B_3 : 5;
 } s_SaveBasicInfo;
-/** Possible size is `0xC/0x12` bytes. */
+/** Possible size is `0xC/12` bytes. */
 
 typedef struct
 {
@@ -77,7 +77,7 @@ typedef struct
     s32              mapEventIdx_8;
     s_SaveBasicInfo* field_C;
 } s_SaveSlotElementInfo;
-/** @note Possible size is `0x10/0x16` bytes.
+/** @note Possible size is `0x10/16` bytes.
  * This struct is written in memory each time a
  * new save is created in any slot. The struct
  * always grabs 16 bytes. This pressumption is
