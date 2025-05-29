@@ -24,8 +24,8 @@
 
 typedef struct 
 {
-    u8  unk_0[315];
-    u8  field_13B[15];
+    u8 unk_0[315];
+    u8 field_13B[15];
 } s_func_8002F278;
 
 typedef struct 
@@ -685,10 +685,11 @@ typedef struct
     u16 savegameCount_8;
     s8  mapEventIdx_A;
     u8  isTitleYellowFlag_B_0 : 1;
-    u8  add290Hours_B_1 : 2;
+    u8  add290Hours_B_1       : 2;
     u8  hyperBlasterFlags_B_3 : 5;
 } s_UnkSaveload1; // Size assumed.
 
+/** Something to do with states of GUI elements on the save screen. */
 typedef struct
 {
     s16             field_0;

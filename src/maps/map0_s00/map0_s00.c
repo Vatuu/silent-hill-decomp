@@ -88,31 +88,37 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D23EC);
 
 #include "maps/shared/sharedFunc_800D2D84_0_s00.h" // 0x800D2D84
 
-s32 func_800D2DAC()
+s32 func_800D2DAC() // 0x800D2DAC
 {
-    s32 var_v0;
-    s16 var_v0_2;
-    s_AnimInfo* temp_s0;
-    void (*temp_a0)(s_Model*, s_Skeleton*, GsCOORDINATE2*, s_AnimInfo*);
-    s32 base_ptr;
-    s32 offset;
-    s_Model* model_ptr = &g_SysWork.player_4C.chara_0.model_0;
-    
-    base_ptr = *(s32*)((char*)&g_MapOverlayHeader + 0x34);
-    offset = (model_ptr->anim_4.animIdx_0 * 0x10) - 0x4C0;
-    temp_s0 = (s_AnimInfo*)(base_ptr + offset);
-    temp_a0 = temp_s0->funcPtr_0;
-    if (temp_a0 == Anim_Update0) {
-        if (func_800449AC(model_ptr, temp_s0) > 0) {
-            return model_ptr->anim_4.keyframeIdx0_8 == temp_s0->keyframeIdx1_E;
-        } else {
-            return model_ptr->anim_4.keyframeIdx0_8 == temp_s0->keyframeIdx0_C;
+    void (*animUpdateFunc)(s_Model*, s_Skeleton*, GsCOORDINATE2*, s_AnimInfo*);
+    s32         basePtr;
+    s32         offset;
+    s_AnimInfo* anim;
+    s_Model*    model = &g_SysWork.player_4C.chara_0.model_0;
+
+    basePtr        = *(s32*)((char*)&g_MapOverlayHeader + 52);
+    offset         = (model->anim_4.animIdx_0 * 16) - 1216;
+    anim           = (s_AnimInfo*)(basePtr + offset);
+    animUpdateFunc = anim->funcPtr_0;
+
+    if (animUpdateFunc == Anim_Update0)
+    {
+        if (func_800449AC(model, anim) > 0)
+        {
+            return model->anim_4.keyframeIdx0_8 == anim->keyframeIdx1_E;
+        }
+        else
+        {
+            return model->anim_4.keyframeIdx0_8 == anim->keyframeIdx0_C;
         }
     }
 
-    if (temp_a0 == Anim_Update2) {
+    if (animUpdateFunc == Anim_Update2)
+    {
         return -2;
-    } else {
+    }
+    else
+    {
         return -1;
     }
 }
