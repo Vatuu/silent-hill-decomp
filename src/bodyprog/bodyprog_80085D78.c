@@ -1040,18 +1040,90 @@ void func_80087540(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x800875
             func_8008616C(0, 0, 0, arg1, 0);
             g_MapOverlayHeader.func_CC(0);
 
-            g_SysWork.sysState_8 = 0;
-            g_SysWork.timer_24 = 0;
+            g_SysWork.sysState_8     = 0;
+            g_SysWork.timer_24       = 0;
             g_SysWork.sysStateStep_C = 0;
-            g_SysWork.field_28 = 0;
-            g_SysWork.field_10 = 0;
-            g_SysWork.timer_2C = 0;
-            g_SysWork.field_14 = 0;
+            g_SysWork.field_28       = 0;
+            g_SysWork.field_10       = 0;
+            g_SysWork.timer_2C       = 0;
+            g_SysWork.field_14       = 0;
             break;
     }
 }
 
+// TODO: Something with references to `D_800C9644` and `D_800C9644`.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800877B8);
+/*void func_800877B8(s32 arg0, s32 arg1, s32 arg2, s32 arg3)
+{
+    s32 i   = arg0;
+    s32 var = arg3;
+
+    if (!(g_SysWork.flags_22A4 & (1 << 5)))
+    {
+        // Traverse NPCs.
+        for (i = 0; i < NPC_COUNT_MAX; i++)
+        {
+            if ((u32)((u8)g_SysWork.npcs_1A0[i].model_0.charaId_0 - 1) >= 24 ||
+                g_SysWork.npcs_1A0[i].health_B0 <= 0)
+            {
+                continue;
+            }
+
+            break;
+        }
+        
+        if (i != 6)
+        {
+            g_DeltaTime0 = 0;
+        }
+    }
+
+    switch (g_SysWork.field_10)
+    {
+        case 0:
+            D_800C9644(i);
+            func_80086470(0, arg0, 0, 0);
+
+            g_SysWork.timer_2C = 0;
+            g_SysWork.field_14 = 0;
+            g_SysWork.field_10++;
+
+        case 1:
+            func_80086470(1, arg0, 0, 1);
+            break;
+
+        case 2:
+            if (func_80054AD8(arg0 & 0xFF) != 0)
+            {
+                func_800860B0(1, var, 3, NO_VALUE, 0, 1);
+            }
+
+            g_SavegamePtr->eventFlags_168[arg2 >> 5] |= 1 << (arg2 & 0x1F);
+            break;
+
+        case 3:
+            func_80086470(3, arg0, arg1, 0);
+            g_SysWork.timer_2C = 0;
+            g_SysWork.field_14 = 0;
+            g_SysWork.field_10++;
+
+        default:    
+            if (g_SysWork.field_10 == NO_VALUE)
+            {
+                g_SavegamePtr->eventFlags_168[arg2 >> 5] &= ~(1 << (arg2 & 0x1F));
+            }
+
+            D_800C9648(0);
+            g_SysWork.sysState_8     = 0;
+            g_SysWork.timer_24       = 0;
+            g_SysWork.sysStateStep_C = 0;
+            g_SysWork.field_28       = 0;
+            g_SysWork.field_10       = 0;
+            g_SysWork.timer_2C       = 0;
+            g_SysWork.field_14       = 0;
+            break;
+    }
+}*/
 
 void func_800879FC(u32 arg0, s32 arg1) // 0x800879FC
 {

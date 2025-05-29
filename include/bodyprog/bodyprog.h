@@ -1237,7 +1237,7 @@ extern void (*D_800C9658)(s_SubCharacter*, s_SubCharacter*);
 
 extern void (*D_800C9660)(s_SubCharacter*, s_SubCharacter*);
 
-extern s64 (*D_800C9664)(s_SubCharacter*, s_SubCharacter*); // Is it really s64???
+extern s64 (*D_800C9664)(s_SubCharacter*, s_SubCharacter*); // Is it really `s64`???
 
 extern void (*D_800C96A0)(s_SubCharacter*, s_SubCharacter*);
 
@@ -1252,6 +1252,10 @@ extern s32 (*D_800C96B4)(s_SubCharacter*, s_SubCharacter*); // or this???
 extern RECT D_801E557C[];
 
 extern s32 g_MainLoop_FrameCount; // 0x800B9CCC
+
+extern void (*D_800C9644)(s32);
+
+extern void (*D_800C9648)(s32);
 
 extern u8 D_800BCD30[];
 
