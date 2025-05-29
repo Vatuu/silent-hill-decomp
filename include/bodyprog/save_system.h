@@ -26,7 +26,7 @@ typedef struct
     s32                field_0[10][3];
     u8                 unk_78[132];
     s_ShSavegameFooter field_FC;
-} s_func_8002FB64;
+} s_func_8002FB64; // Likely s_ShSaveUserConfigContainer
 
 
 // ========
@@ -47,7 +47,7 @@ typedef struct
 // GLOBALS
 // ========
 
-extern u8 g_SaveSelectedIdx[MEMORY_CARD_SLOT_COUNT]; // Selected save index. [0] - Slot 1, [1] - Slot 2.
+extern u8 g_SlotElementSelectedIdx[MEMORY_CARD_SLOT_COUNT]; // Selected slot element index. [0] - Slot 1, [1] - Slot 2.
 
 extern s8 g_SlotSelectedIdx; // Selected save slot index. 0 - Slot 1, 1 - Slot 2.
 
@@ -70,13 +70,12 @@ extern s8 D_800A97D8;
 extern s_800B5508 D_800B5508[];
 
 /** @brief
-* Supposition: access basic information required for draw
-* information of saves.
-* Addreses accessed based on the slot: Slot 1 - 0x801E09E0, Slot 2 - 0x801E1440.
+* Basic information required for draw information of elements in save slots.
+* Address accessed based in the slot: Slot 1 - 0x801E09E0, Slot 2 - 0x801E1440.
 */
-extern s_UnkSaveload0* D_800BCD2C;
+extern s_SaveSlotElementInfo* g_SlotsElementsInfo;
 
-extern u8 D_800BCD30[]; // Counts saves and the space to make a new save.
+extern u8 g_MemCardElementCount[MEMORY_CARD_SLOT_COUNT];
 
 extern u32 D_800BCD34;
 
@@ -84,11 +83,11 @@ extern s8 D_800BCD38;
 
 extern s8 D_800BCD39;
 
-extern s16 D_800BCD3A; // Similar to `D_800BCD30` it counts all saves and includes the `New save` to the sum.
+extern s16 g_MemCardsTotalElementCount; // Counts all elements of all inserted memory cards.
 
 extern s8 D_800BCD40;
 
-extern u8 g_SaveCount[MEMORY_CARD_SLOT_COUNT]; // Saves count for each slot.
+extern u8 g_SlotElementsCount[MEMORY_CARD_SLOT_COUNT];
 
 extern u8 g_SelectedSaveIdx;
 
@@ -102,8 +101,20 @@ s32 func_8002E94C(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 
 s32 func_8002E990();
 
-/** This function is use to get the pointer of a struct which seems to be `s_UnkSaveload1`. */
+/** This function is use to get the pointer of a struct which seems to be `s_SaveBasicInfo`. */
 s32 func_8002E9EC(s32 arg0, s32 arg1, s32 arg2);
+
+s32 func_8002EA28(s32 idx);
+
+s32 func_8002EA78(s32 idx);
+
+s32 func_8002EABC(s32* arg0, s32* arg1, s32* arg2);
+
+void func_8002EB88(); // Return type assumed.
+
+void func_8002ECE0(s_800B55E8* arg0);
+
+s32 func_8002F278(s32 arg0, s_func_8002F278* arg1);
 
 void func_8002FB64(s_func_8002FB64 *arg0);
 
@@ -124,5 +135,44 @@ s32 Savegame_ChecksumValidate(s_ShSavegameFooter* saveFooter, s8* saveData, s32 
 /** Generates an 8-bit XOR checksum over the given data, only appears used with s_ShSavegame data. */
 u8 Savegame_ChecksumGenerate(s8* saveData, s32 saveDataLength);
 
+void func_80030334(s32 arg0, s32 arg1);
+
+// void func_8003030C(s32 arg0);
+
+void func_800303E4();
+
+void func_80030414();
+
+void func_80030444();
+
+void func_8003045C();
+
+void func_80030530();
+
+void func_80030640();
+
+void func_800307BC();
+
+s32 func_80030734();
+
+void func_800307BC();
+
+s32 func_80030810();
+
+void func_80030884();
+
+void func_80030894();
+
+void func_800308A4();
+
+void func_800308B4();
+
+void func_800308C4();
+
+s32 func_800308D4();
+
+s32 func_800309FC();
+
+void func_800314A4(s32 arg0, s_80024C90* arg1);
 
 #endif

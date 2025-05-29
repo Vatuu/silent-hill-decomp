@@ -1,11 +1,8 @@
 #include "game.h"
 
-#include <libcd.h>
-
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math.h"
 #include "main/fsqueue.h"
-#include "main/rng.h"
 
 void func_80085D78(s32 arg0) // 0x80085D78
 {
@@ -69,9 +66,9 @@ void func_80085E6C(s32 arg0, s32 arg1) // 0x80085E6C
     }
 }
 
-// TODO: Jumptable. >:(
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80085EB8);
-/*void func_80085EB8(u32 arg0, s_SubCharacter* chara0, s_SubCharacter* chara1, s32 arg3) // 0x80085EB8
+// TODO: RODATA migration
+#ifdef NON_MATCHING
+void func_80085EB8(u32 arg0, s_SubCharacter* chara0, s_SubCharacter* chara1, s32 arg3) // 0x80085EB8
 {
     s32 (*routine)(s_SubCharacter*, s_SubCharacter*);
     s_SubCharacter* chara2;
@@ -147,7 +144,10 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80085EB8);
         default:
             break;
     }
-}*/
+}
+#else
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80085EB8); // 0x80085EB8
+#endif
 
 void func_8008605C(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x8008605C
 {
@@ -1441,13 +1441,9 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008A0E4);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008A270);
 
-// TODO: Has match on decomp.me, some issues getting it to build.
-/** It uses jump table, even though it matches it applies weirdly. The
-address where the jump table is defined on the *.yaml file, but it
-is commented so uncomment it onces we figure out how to apply this one.
-*/
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008A2E0);
-/*u8 func_8008A2E0(s32 arg0)
+// TODO: RODATA migration
+#ifdef NON_MATCHING
+u8 func_8008A2E0(s32 arg0)
 {
     if (g_SysWork.field_275C > 0x100000)
     {
@@ -1471,7 +1467,10 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008A2E0);
     }
 
     return D_800AD4C8[arg0].field_F;
-}*/
+}
+#else
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008A2E0); // 0x8008A2E0
+#endif
 
 s32 func_8008A35C(s_8008A35C* arg0, s32 arg1) // 0x8008A35C
 {
@@ -1507,27 +1506,27 @@ void func_8008A3AC(s_SubCharacter* chara) // 0x8008A3AC
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008A3E0);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008A3E0); // 0x8008A3E0
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008B15C);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008B15C); // 0x8008B15C
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008B1DC);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008B1DC); // 0x8008B1DC
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008B398);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008B398); // 0x8008B398
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008B3E4);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008B3E4); // 0x8008B3E4
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008B40C);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008B40C); // 0x8008B40C
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008B438);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008B438); // 0x8008B438
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008B474);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008B474); // 0x8008B474
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008B664);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008B664); // 0x8008B664
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008B714);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008B714); // 0x8008B714
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008BF84);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008BF84); // 0x8008BF84
 
 void DmsHeader_FixOffsets(s_DmsHeader* header) // 0x8008C9A0
 {
@@ -1829,7 +1828,7 @@ void func_8008D470(s16 arg0, SVECTOR* rot, VECTOR3* pos, s32 arg3) // 0x8008D470
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008D5A0);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008D5A0); // 0x8008D5A0
 
 void func_8008D78C()
 {
@@ -1893,422 +1892,22 @@ s32 func_8008D850() // 0x8008D850
     return (unk.field_0 & 0x7FFF) == 0x7FFF;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008D8C0);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008D8C0); // 0x8008D8C0
 
 // Large function.
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008D990);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008D990); // 0x8008D990
 
 void func_8008E4EC(s32 arg) // 0x8008E4EC
 {
     func_80056504(arg, &D_8002B2CC, &D_800AFD9C, 1);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008E51C);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008E51C); // 0x8008E51C
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008E5B4);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008E5B4); // 0x8008E5B4
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008E794);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008E794); // 0x8008E794
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008EA68);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008EA68); // 0x8008EA68
 
 void func_8008EF18() {}
-
-s32 Demo_SequenceAdvance(s32 incrementAmt)
-{
-    g_Demo_DemoId += incrementAmt;
-
-    while (true)
-    {
-        // Cycle demo ID between 0 - `DEMO_FILE_COUNT_MAX` (5)
-        while (g_Demo_DemoId < 0)
-        {
-            g_Demo_DemoId += DEMO_FILE_COUNT_MAX;
-        }
-
-        while ((u32)g_Demo_DemoId >= DEMO_FILE_COUNT_MAX)
-        {
-            g_Demo_DemoId -= DEMO_FILE_COUNT_MAX;
-        }
-
-        // Call optional funcptr associated with this demo.
-        // If funcptr is set, returns whether demo is eligible to play, possibly based on game progress or other conditions.
-        // In retail demos this pointer is always `NULL`.
-        if (g_Demo_FileIds[g_Demo_DemoId].canPlayDemo_4 == NULL || g_Demo_FileIds[g_Demo_DemoId].canPlayDemo_4() == 1)
-        {
-            break;
-        }
-
-        // If funcptr is set and returned false, skip to next demo.
-        // Direction to skip depends on sign of `incrementAmt` (forward or backward).
-        if (incrementAmt >= 0)
-        {
-            g_Demo_DemoId++;
-        }
-        else
-        {
-            g_Demo_DemoId--;
-        }
-    }
-
-    g_Demo_DemoFileIdx = g_Demo_FileIds[g_Demo_DemoId].demoFileId_0;
-    g_Demo_PlayFileIdx = g_Demo_FileIds[g_Demo_DemoId].playFileId_2;
-    return 1;
-}
-
-void Demo_DemoDataRead() // 0x8008F048
-{
-    if (g_Demo_DemoFileIdx != NO_VALUE)
-    {
-        Fs_QueueStartRead(g_Demo_DemoFileIdx, DEMO_WORK());
-    }
-}
-
-void Demo_PlayDataRead() // 0x8008F07C
-{
-    Demo_SequenceAdvance(0);
-
-    if (g_Demo_PlayFileIdx != NO_VALUE)
-    {
-        Fs_QueueStartRead(g_Demo_PlayFileIdx, g_Demo_PlayFileBufferPtr);
-    }
-}
-
-s32 Demo_PlayFileBufferSetup() // 0x8008F0BC
-{
-    s32 mapOverlaySize;
-    s32 playFileSize;
-
-    // Get map overlay size used in demo.
-    mapOverlaySize = Fs_GetFileSize(FILE_VIN_MAP0_S00_BIN + DEMO_WORK()->savegame_100.mapOverlayIdx_A4);
-
-    // Get play file size, rounded up to next 0x800-byte boundary.
-    playFileSize = (Fs_GetFileSize(g_Demo_PlayFileIdx) + 0x7FF) & ~0x7FF;
-
-    // Try placing play file buffer just before `DEMO_WORK` in memory.
-    g_Demo_PlayFileBufferPtr = (void*)((s32)DEMO_WORK() - playFileSize);
-
-    // If play file or map overlay is too large, buffer ptr may overlap with map.
-    // Return 1 if buffer fits (no overlap with map overlay); otherwise, return 0.
-    return ((u32)g_Demo_PlayFileBufferPtr >= (u32)(g_OvlDynamic + mapOverlaySize));
-}
-
-void Demo_DemoFileSavegameUpdate() // 0x8008F13C
-{
-    g_GameWork.savegame_30C = DEMO_WORK()->savegame_100;
-}
-
-void Demo_GameGlobalsUpdate() // 0x8008F1A0
-{
-    // Backup current user config.
-    g_Demo_UserConfigBackup = g_GameWork.config_0;
-
-    // Update `Demo_RandSeed`.
-    g_Demo_RandSeed = DEMO_WORK()->randSeed_7FC;
-
-    // Replace user config with config from demo file.
-    g_GameWork.config_0 = DEMO_WORK()->config_0;
-
-    // Restore users system settings over demo values.
-    g_GameWork.config_0.screenPosX_1C          = g_Demo_UserConfigBackup.screenPosX_1C;
-    g_GameWork.config_0.screenPosY_1D          = g_Demo_UserConfigBackup.screenPosY_1D;
-    g_GameWork.config_0.optSoundType_1E        = g_Demo_UserConfigBackup.optSoundType_1E;
-    g_GameWork.config_0.optVolumeBgm_1F        = OPT_SOUND_VOLUME_MIN;                     // Disable BGM during demo.
-    g_GameWork.config_0.optVolumeSe_20         = g_Demo_UserConfigBackup.optVolumeSe_20;
-    g_GameWork.config_0.optVibrationEnabled_21 = OPT_VIBRATION_DISABLED;                   // Disable vibration during demo.
-    g_GameWork.config_0.optBrightness_22       = g_Demo_UserConfigBackup.optBrightness_22;
-
-    Sd_SetVolume(OPT_SOUND_VOLUME_MIN, OPT_SOUND_VOLUME_MIN, g_GameWork.config_0.optVolumeSe_20);
-}
-
-void Demo_GameGlobalsRestore() // 0x8008F2BC
-{
-    g_GameWork.config_0 = g_Demo_UserConfigBackup;
-
-    Sd_SetVolume(OPT_SOUND_VOLUME_MAX, g_GameWork.config_0.optVolumeBgm_1F, g_GameWork.config_0.optVolumeSe_20);
-}
-
-void Demo_GameRandSeedUpdate() // 0x8008F33C
-{
-    g_Demo_PrevRandSeed = Rng_GetSeed();
-    Rng_SetSeed(g_Demo_RandSeed);
-}
-
-void Demo_GameRandSeedRestore() // 0x8008F370
-{
-    Rng_SetSeed(g_Demo_PrevRandSeed);
-}
-
-void Demo_Start() // 0x8008F398
-{
-    D_800AFDEC = 1;
-    g_SysWork.flags_22A4 |= 1 << 1;
-
-    Demo_GameGlobalsUpdate();
-    Demo_GameRandSeedUpdate();
-
-    g_GameWork.field_5A8 = 1;
-    g_GameWork.field_5AC = 1;
-}
-
-void Demo_Stop() // 0x8008f3f0
-{
-    D_800AFDEC = 0;
-    g_SysWork.flags_22A4 &= ~(1 << 1);
-
-    Demo_GameGlobalsRestore(-3);
-    Demo_GameRandSeedRestore();
-}
-
-s32 func_8008F434(s32 arg0)
-{
-    s32 caseVar = arg0 & ~1;
-
-    switch (caseVar)
-    {
-        case 2:
-        case 3:
-        case 4:
-        case 5:
-        case 10:
-        case 11:
-        case 12:
-        case 13:
-            return 0;
-
-        default:
-            break;
-    }
-
-    return 1;
-}
-
-s32 func_8008F470(s32 caseArg)
-{
-    switch (caseArg)
-    {
-        case 11:
-            if (g_SysWork.sysState_8 == SysState_GameOver)
-            {
-                return -1;
-            }
-            else if (g_GameWork.gameStatePrev_590 == GameState_Unk10)
-            {
-                return -1;
-            }
-
-        case 12:
-        case 13:
-        case 14:
-        case 15:
-            return 1;
-
-        case 18:
-            return 1;
-
-        default:
-            break;
-    }
-
-    return 0;
-}
-
-void Demo_ExitDemo() // 0x8008F4E4
-{
-    D_800A9768 = 0xEA24;
-    g_Demo_CurFrameData = NULL;
-    g_Demo_DemoStep = 0;
-    g_SysWork.flags_22A4 |= 1 << 8;
-}
-
-void func_8008F518() {}
-
-s32 func_8008F520()
-{
-    return 0;
-}
-
-void Demo_DemoRandSeedBackup() // 0x8008F528
-{
-    if (g_SysWork.flags_22A4 & (1 << 1))
-    {
-        g_Demo_RandSeedBackup = Rng_GetSeed();
-    }
-}
-
-void Demo_DemoRandSeedRestore() // 0x8008F560
-{
-    if (g_SysWork.flags_22A4 & (1 << 1))
-    {
-        Rng_SetSeed(g_Demo_RandSeedBackup);
-    }
-}
-
-void Demo_DemoRandSeedAdvance() // 0x8008F598
-{
-    #define SEED_OFFSET 0x3C6EF35F
-
-    if (g_SysWork.flags_22A4 & (1 << 1))
-    {
-        Rng_SetSeed(g_Demo_RandSeedBackup + SEED_OFFSET);
-    }
-}
-
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", Demo_Update);
-
-// TODO: Move this to header if any other funcs have same code.
-static inline void ControllerData_Reset(s_ControllerData* controller, u16 btns)
-{
-    *(u16*)&controller->analogController_0.status  = 0x7300;
-    controller->analogController_0.digitalButtons  = btns;
-    *(u32*)&controller->analogController_0.right_x = 0x80808080;
-}
-
-s32 Demo_ControllerDataUpdate() // 0x8008F7CC
-{
-    u32 btns;
-
-    if (!(g_SysWork.flags_22A4 & (1 << 1)))
-    {
-        return 0;
-    }
-
-    btns = g_ControllerPtrConst->analogController_0.digitalButtons;
-    if (btns != 0xFFFF)
-    {
-        Demo_ExitDemo();
-        return 1;
-    }
-
-    D_800A9768 = 0; // `Demo_FrameCnt`
-
-    if (g_Demo_CurFrameData != NULL)
-    {
-        g_ControllerPtrConst->analogController_0 = g_Demo_CurFrameData->analogController_0;
-        return 1;
-    }
-
-    ControllerData_Reset(g_ControllerPtrConst, btns);
-    return 1;
-}
-
-s32 Demo_PresentIntervalUpdate() // 0x8008F87C
-{
-    g_Demo_VideoPresentInterval = 1;
-
-    if (g_Demo_CurFrameData == NULL)
-    {
-        return 0;
-    }
-
-    g_Demo_VideoPresentInterval = g_Demo_CurFrameData->videoPresentInterval_9;
-    return 1;
-}
-
-s32 Demo_GameRandSeedSet() // 0x8008F8A8
-{
-    if (!(g_SysWork.flags_22A4 & (1 << 1)))
-    {
-        return 1;
-    }
-    else if (g_Demo_CurFrameData == NULL)
-    {
-        Rng_SetSeed(g_Demo_RandSeed);
-        return 0;
-    }
-    else
-    {
-        Rng_SetSeed(g_Demo_CurFrameData->randSeed_C);
-        return 1;
-    }
-}
-
-s32 func_8008F914()
-{
-    if (g_SysWork.flags_22A4 & (1 << 1))
-    {
-        return func_8004393C();
-    }
-
-    return 1;
-}
-
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008F94C);
-
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800904F4);
-
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80090664);
-
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8009134C);
-
-void func_80091380() {}
-
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80091388);
-
-void func_80091464() {}
-
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8009146C);
-
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800914C4);
-
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8009151C);
-
-void GameFs_StfRollBinLoad() // 0x80091778
-{
-    if (D_800A909C.tPage != 0)
-    {
-    }
-
-    Fs_QueueStartRead(FILE_VIN_STF_ROLL_BIN, FS_BUFFER_1);
-    func_800917C0(FONT24_BUFFER, 1, &D_800A909C);
-}
-
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800917C0);
-
-void func_8009185C(s16 arg0, s16 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8, s32 arg9) // 0x8009185C
-{
-    s32 temp_lo;
-    s32 temp_lo_2;
-    s32 temp_lo_4;
-    s32 temp_lo_7;
-    s32 temp_t1;
-    s32 temp_t2;
-    s32 temp_v0;
-    u16 temp_t0 = 24;
-
-    temp_t1   = arg2 << 22;
-    temp_lo   = temp_t1 / (arg6 >> 2);
-    temp_lo_2 = arg9 * temp_t0;
-    temp_lo_4 = (arg6 + (s32)FP_MULTIPLY((s64)arg3, temp_lo_2, Q12_SHIFT)) >> 2;
-    temp_lo_4 = temp_t1 / temp_lo_4;
-
-    D_800AFE24.field_0  = 0;
-    D_800AFE24.field_2  = 0;
-    D_800AFE24.field_4  = 0;
-    D_800AFE24.field_6  = 24;
-    D_800AFE24.field_7  = 0;
-    D_800AFE24.field_8  = 0x2CFFFFFF;
-    D_800AFE24.field_18 = D_800AFE08.field_18;
-    D_800AFE24.field_16 = D_800AFE08.field_16;
-    D_800AFE24.field_14 = D_800AFE08.field_14;
-    D_800AFE24.field_1C = arg3;
-    D_800AFE24.field_20 = arg0;
-    D_800AFE24.field_22 = arg1;
-    D_800AFE24.field_24 = arg2;
-    D_800AFE24.field_28 = arg4;
-    D_800AFE24.field_2C = arg5;
-    D_800AFE24.field_30 = arg6;
-    D_800AFE24.field_34 = arg7;
-    D_800AFE24.field_38 = arg8;
-    D_800AFE24.field_3C = arg9;
-    D_800AFE24.field_40 = FP_MULTIPLY((s64)temp_lo, arg4, Q12_SHIFT);
-    D_800AFE24.field_44 = FP_MULTIPLY((s64)temp_lo_4, arg4, Q12_SHIFT);
-
-    temp_v0             = arg4 + FP_MULTIPLY((s64)arg3, arg7, Q12_SHIFT);
-    D_800AFE24.field_48 = FP_MULTIPLY((s64)temp_lo, temp_v0, Q12_SHIFT) - D_800AFE24.field_40;
-    D_800AFE24.field_4C = FP_MULTIPLY((s64)temp_lo_4, temp_v0, Q12_SHIFT) - D_800AFE24.field_44;
-    D_800AFE24.field_50 = FP_MULTIPLY((s64)temp_lo, arg5, Q12_SHIFT);
-
-    temp_lo_7           = arg8 * temp_t0;
-    temp_t2             = arg5 + FP_MULTIPLY((s64)arg3, temp_lo_7, Q12_SHIFT);
-    D_800AFE24.field_54 = FP_MULTIPLY((s64)temp_lo_4, temp_t2, Q12_SHIFT);
-}

@@ -59,7 +59,7 @@ segments:
     subalign: 4
     subsegments:
       - [0x0, rodata]
-      - [0x8F8, .rodata, bodyprog] # Jumptable: `SysState_GameOver_Update`
+      - [0x8F8, .rodata, bodyprog_800314EC] # Jumptable: `SysState_GameOver_Update`
       - [0x91C, rodata]
       - [0x109C, .rodata, libsd/bodyprog_80045A7C]  # Jumptable: `Sd_EngineCmd`
                                                     # Jumptable: `func_80045BD8`
@@ -82,16 +82,23 @@ segments:
       - [0x99d8, rodata]
       - [0x99e8, .rodata, libsd/smf_mid]
       - [0x9ad0, rodata]
-      - [0x9ad0, c, bodyprog]
-      - [0x1b4ec, c, view/vc_util]
-      - [0x1bf04, c, bodyprog_80040A64]
-      - [0x20F1C, c, libsd/bodyprog_80045A7C]
-      - [0x231F0, c, bodyprog_CD_80047D50]
-      - [0x23ed8, c, view/vw_main]
-      - [0x243c8, c, view/vw_calc] # Contains part of SH2's `vb_main`?
-      - [0x25d1c, c, bodyprog_8004A87C]
-      - [0x5bde0, c, view/vc_main]
-      - [0x61218, c, bodyprog_80085D78]
+      
+      
+      - [0x9ad0,    c, bodyprog]
+      - [0x9DEC,    c, save]
+      - [0xC98C,    c, bodyprog_800314EC]
+      - [0x1b4ec,   c, view/vc_util]
+      - [0x1bf04,   c, bodyprog_80040A64]
+      - [0x20F1C,   c, libsd/bodyprog_80045A7C]
+      - [0x231F0,   c, bodyprog_CD_80047D50]
+      - [0x23ed8,   c, view/vw_main]
+      - [0x243c8,   c, view/vw_calc] # Contains part of SH2's `vb_main`?
+      - [0x25d1c,   c, bodyprog_8004A87C]
+      - [0x5bde0,   c, view/vc_main]
+      - [0x61218,   c, bodyprog_80085D78]
+      - [0x6A3C0,   c, demo]
+      - [0x6ADEC,   c, credits]
+
 
       - [0x6cf9c, asm, psyq/libapi/a09]
       - [0x6cfac, asm, psyq/libapi/a11]
@@ -246,7 +253,7 @@ segments:
       - [0x79248, asm, psyq/libspu/s_gva] # SpuGetVoiceAttr
       - [0x79638, asm, lib_unk/lib_8009E198]
 
-      - [0x7a244, c, libsd/smf_snd]
+      - [0x7a244,   c, libsd/smf_snd]
 
       - [0x7d7fc, asm, psyq/libspu/s_q] # SpuQuit
       - [0x7d87c, asm, psyq/libapi/a13] # DisableEvent
@@ -265,13 +272,13 @@ segments:
       - [0x7e9ec, asm, psyq/libspu/s_itc] # SpuIsTransferCompleted
       - [0x7ea9c, asm, psyq/libspu/s_sca] # SpuSetCommonAttr
 
-      - [0x7ee1c, c, libsd/smf_io]
+      - [0x7ee1c,   c, libsd/smf_io]
 
       - [0x82158, asm, psyq/libspu/s_grv] # SpuGetReverbVoice
       - [0x82188, asm, psyq/libspu/s_gav] # _SpuGetAnyVoice
 
-      - [0x821b8, c, libsd/smf_main]
-      - [0x82458, c, libsd/smf_mid]
+      - [0x821b8,   c, libsd/smf_main]
+      - [0x82458,   c, libsd/smf_mid]
 
       - [0x84238, data, bodyprog]
 

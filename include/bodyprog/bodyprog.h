@@ -1253,33 +1253,9 @@ s32 func_8002E914();
 
 s32 func_8002E9A0(s32 idx);
 
-s32 func_8002EA28(s32 idx);
-
-s32 func_8002EA78(s32 idx);
-
-void func_8002EB88(); // Return type assumed.
-
-void func_8002ECE0(s_800B55E8* arg0);
-
-void func_80030444();
-
-void func_8003045C();
-
-void func_80030530();
-
-void func_800307BC();
-
-void func_800303E4();
-
 // `Gfx_DrawBackgroundImage`
 /** Draws a background image. */
 void Gfx_BackgroundSpriteDraw(s_FsImageDesc* image);
-
-void func_80030414();
-
-void func_80030884();
-
-void func_800314A4(s32 arg0, s_80024C90* arg1);
 
 void func_80031CCC(s32);
 
@@ -1760,11 +1736,7 @@ s32 func_8008F520();
 
 s32 func_8008F914();
 
-void func_8009185C(s16 arg0, s16 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8, s32 arg9);
-
 void func_80091380();
-
-void func_800917C0(void*, s32, s_FsImageDesc*);
 
 // TODO: Arrange these in address order for better insight into the original interface. -- Sezz
 // ------------------------------------------------------------------
@@ -2047,43 +2019,6 @@ s32 func_800808AC();
 
 /** Returns a Q shift based on a magnitude. */
 s32 Math_GetMagnitudeShift(s32 mag);
-
-s32 Demo_SequenceAdvance(s32 incrementAmt);
-
-void Demo_DemoDataRead();
-
-void Demo_PlayDataRead();
-
-s32 Demo_PlayFileBufferSetup();
-
-void Demo_DemoFileSavegameUpdate();
-
-void Demo_GameGlobalsUpdate();
-
-void Demo_GameGlobalsRestore();
-
-void Demo_GameRandSeedUpdate();
-
-void Demo_GameRandSeedRestore();
-
-void Demo_Start();
-
-void Demo_Stop();
-
-void Demo_ExitDemo();
-
-/** Generates the backup random demo seed and stores it in Demo_RandSeedBackup. */
-void Demo_DemoRandSeedBackup();
-
-void Demo_DemoRandSeedRestore();
-
-void Demo_DemoRandSeedAdvance();
-
-s32 Demo_ControllerDataUpdate();
-
-s32 Demo_PresentIntervalUpdate();
-
-s32 Demo_GameRandSeedSet();
 
 u8 func_8008A2E0(s32 arg0);
 

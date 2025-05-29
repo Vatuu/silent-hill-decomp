@@ -58,7 +58,10 @@ segments:
       - [0x4, rodata]
       - [0x108, .rodata, saveload]
       - [0x78C, c, saveload]
-      - [0x4EA8, data, saveload]
+      - [0x4EA8, data]
+      - [0x4F0C, .data, saveload]
+      - [0x4F78, data]
+      
 
   # Random garbage data at end, define as bin file to make Splat ignore it.
   - name: footer_data
