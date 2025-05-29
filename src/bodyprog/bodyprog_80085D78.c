@@ -1333,7 +1333,33 @@ void func_800880F0(s32 arg0) // 0x800880F0
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800881B8);
+void func_800881B8(s32 x0, s16 y0, s32 x1, s16 y1, s16 arg4, s16 arg5, s16 arg6, s32 arg7, s32 arg8, u32 arg9, s16 argA, s32 argB) // 0x800881B8
+{
+    POLY_FT4* poly;
+
+    poly = (POLY_FT4*)GsOUT_PACKET_P;
+    setPolyFT4(poly);
+
+    setXY0Fast(poly, x0 - x1, y0 - y1);
+    setXY1Fast(poly, x0 + x1, y0 - y1);
+    setXY2Fast(poly, x0 - x1, y0 + y1);
+    setXY3Fast(poly, x0 + x1, y0 + y1);
+
+    *(u32*)(&poly->u0) = arg4 + (arg5 << 8) + (getClut(arg9, argA) << 16);
+    *(u32*)(&poly->u1) = (arg4 + arg6) + (arg5 << 8) + (getTPage(0, 0, argB << 6, (((argB >> 4) & 1) << 8)) << 16);
+    *(u16*)(&poly->u2) = arg4 + ((arg5 + arg7) << 8);
+    *(u16*)(&poly->u3) = (arg4 + arg6) + ((arg5 + arg7) << 8);
+
+    *(u16*)(&poly->r0) = arg8 + (arg8 << 8);
+    poly->b0 = arg8;
+
+    setSemiTrans(poly, 0);
+
+    addPrim(g_ObjectTable0[g_ObjectTableIdx].org, poly);
+    poly++;
+
+    GsOUT_PACKET_P = (PACKET*)poly;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80088370);
 
@@ -1345,14 +1371,14 @@ s32 Chara_Load(s32 arg0, s8 arg1, s32 arg2, s8 arg3, s32 arg4, s32 arg5) // 0x80
     return 1;
 }
 
-s32 func_80088D0C()
+s32 func_80088D0C() // 0x80088D0C
 {
     Fs_QueueWaitForEmpty();
     func_8003D95C();
     return 1;
 }
 
-void func_80088D34(s32 idx)
+void func_80088D34(s32 idx) // 0x80088D34
 {
     idx++;
     func_800445A4(D_800A992C[idx].field_8, D_800A992C[idx].field_14);

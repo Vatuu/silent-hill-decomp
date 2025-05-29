@@ -1785,6 +1785,16 @@ void func_80087EA8(s32 arg0);
 
 void func_80087EDC(s32 arg0);
 
+void func_80088028();
+
+void func_80088048();
+
+void func_800880F0(s32 arg0);
+
+void func_800881B8(s32 x0, s16 y0, s32 x1, s16 y1, s16 arg4, s16 arg5, s16 arg6, s32 arg7, s32 arg8, u32 arg9, s16 argA, s32 argB);
+
+s32 Chara_Load(s32 arg0, s8 arg1, s32 arg2, s8 arg3, s32 arg4, s32 arg5);
+
 s32 func_80088D0C();
 
 void func_80088D34(s32 idx);
