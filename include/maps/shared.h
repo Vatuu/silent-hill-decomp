@@ -68,6 +68,8 @@ extern s8  sharedData_800D16E4_2_s01;
 
 extern s32 sharedData_800D3150_3_s02; // Used by `Ai_Alessa_Init`.
 
+extern s32 sharedData_800D5CF4_3_s00; // Used by `Ai_Kaufmann_Init`.
+
 s32 sharedFunc_800CBBBC_0_s00();
 
 void sharedFunc_800D01BC_0_s00(u16* arg0, VECTOR3* arg1, s32 arg2);

@@ -95,15 +95,15 @@ void func_800CF1B0(void) {}
 
 #include "maps/shared/sharedFunc_800D2EF4_0_s00.h" // 0x800CF208
 
-INCLUDE_ASM("asm/maps/map3_s00/nonmatchings/map3_s00", Ai_Kaufmann_Update); // 0x800CF21C
+#include "maps/shared/Ai_Kaufmann_Update.h" // 0x800CF21C
 
-INCLUDE_ASM("asm/maps/map3_s00/nonmatchings/map3_s00", func_800CF290);
+INCLUDE_ASM("asm/maps/map3_s00/nonmatchings/map3_s00", sharedFunc_800CF290_3_s00); // 0x800CF290
 
-INCLUDE_ASM("asm/maps/map3_s00/nonmatchings/map3_s00", func_800CF2D8);
+INCLUDE_ASM("asm/maps/map3_s00/nonmatchings/map3_s00", sharedFunc_800CF2D8_3_s00); // 0x800CF2D8
 
-INCLUDE_ASM("asm/maps/map3_s00/nonmatchings/map3_s00", func_800CF470);
+INCLUDE_ASM("asm/maps/map3_s00/nonmatchings/map3_s00", sharedSymbol_800CF470_3_s00); // 0x800CF470
 
-INCLUDE_ASM("asm/maps/map3_s00/nonmatchings/map3_s00", func_800CFE48);
+#include "maps/shared/Ai_Kaufmann_Init.h" // 0x800CFE48
 
 #include "maps/shared/sharedFunc_800D88AC_0_s00.h" // 0x800CFE84
 

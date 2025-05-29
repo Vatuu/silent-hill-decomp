@@ -143,15 +143,15 @@ INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800D3E18);
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800D3F38);
 
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", Ai_Kaufmann_Update); // 0x800D3F58
+#include "maps/shared/Ai_Kaufmann_Update.h" // 0x800D3F58
 
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800D3FCC);
+INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", sharedFunc_800CF290_3_s00); // 0x800D3FCC
 
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800D4014);
+INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", sharedFunc_800CF2D8_3_s00); // 0x800D4014
 
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800D41AC);
+INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", sharedSymbol_800CF470_3_s00); // 0x800D41AC
 
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800D4C14);
+#include "maps/shared/Ai_Kaufmann_Init.h" // 0x800D4C14
 
 #include "maps/shared/Ai_BloodyLisa_Update.h" // 0x800D4C50
 

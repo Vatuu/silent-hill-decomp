@@ -99,15 +99,15 @@ INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", sharedFunc_800D4C0C_7_s
 
 #include "maps/shared/Ai_GhostChildAlessa_Init.h" // 0x800D7E88
 
-INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", Ai_Kaufmann_Update); // 0x800D7EAC
+#include "maps/shared/Ai_Kaufmann_Update.h" // 0x800D7EAC
 
-INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", func_800D7F20);
+INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", sharedFunc_800CF290_3_s00); // 0x800D7F20
 
-INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", func_800D7F68);
+INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", sharedFunc_800CF2D8_3_s00); // 0x800D7F68
 
-INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", func_800D8100);
+INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", sharedSymbol_800CF470_3_s00); // 0x800D8100
 
-INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", func_800D8AA8);
+#include "maps/shared/Ai_Kaufmann_Init.h" // 0x800D8AA8
 
 INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", Ai_GhostDoctor_Update); // 0x800D8AF0
 
