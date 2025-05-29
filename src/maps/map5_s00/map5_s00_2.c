@@ -3,9 +3,6 @@
 #include "main/rng.h"
 #include "maps/shared.h"
 
-//INCLUDE_ASM("asm/maps/map5_s00/nonmatchings/map5_s00_2", Ai_HangedScratcher_Init); // 0x800CFCA8
-
-
 #include "maps/shared/Ai_HangedScratcher_Update.h" // 0x800CFC24
 
 #include "maps/shared/Ai_HangedScratcher_Init.h" // 0x800CFCA8
@@ -58,7 +55,7 @@ INCLUDE_ASM("asm/maps/map5_s00/nonmatchings/map5_s00_2", sharedFunc_800D3300_5_s
 
 #include "maps/shared/Ai_Creaper_Update.h" // 0x800D387C
 
-INCLUDE_ASM("asm/maps/map5_s00/nonmatchings/map5_s00_2", Ai_Creaper_Init); // 0x800D390C - doesn't fully match `map1_s02` version, small block of code added to end.
+#include "maps/shared/Ai_Creaper_Init.h" // 0x800D390C - doesn't fully match `map1_s02` version, small block of code added to end.
 
 INCLUDE_ASM("asm/maps/map5_s00/nonmatchings/map5_s00_2", sharedFunc_800D7EE8_1_s02); // 0x800D3BDC
 
