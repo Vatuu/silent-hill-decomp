@@ -1214,11 +1214,11 @@ extern u8 D_800C4606;
 
 extern s_800C4620 D_800C4620;
 
-extern s32 D_800C4640; // Type assumed.
+extern VECTOR3 D_800C4640[][8]; // Or struct?
 
 extern s32 D_800C46A0;
 
-extern s16 D_800C4700;
+extern s16 D_800C4700[];
 
 extern s16 D_800C4702;
 
@@ -1737,6 +1737,8 @@ void func_8008616C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 void func_800862F8(s32 arg0, s32 arg1, s32 arg2);
 
 void func_80086470(u32 switchVar, s32 arg1, s32 arg2, s32 arg3);
+
+void func_800865FC(s32 arg0, s32 idx0, s32 idx1, s16 arg3, s32 arg4, s32 arg5);
 
 void func_800866D4(s32 arg0, s32 arg1, s32 arg2);
 

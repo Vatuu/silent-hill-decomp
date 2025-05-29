@@ -446,11 +446,29 @@ void func_80086470(u32 switchVar, s32 arg1, s32 arg2, s32 arg3) // 0x80086470
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800865FC);
+void func_800865FC(s32 arg0, s32 idx0, s32 idx1, s16 arg3, s32 arg4, s32 arg5) // 0x800865FC
+{
+    if (arg0 == 0) 
+    {
+        D_800C4640[idx0][idx1].vx = g_SysWork.player_4C.chara_0.position_18.vx + arg4;
+        D_800C4640[idx0][idx1].vy = g_SysWork.player_4C.chara_0.position_18.vy;
+        D_800C4640[idx0][idx1].vz = g_SysWork.player_4C.chara_0.position_18.vz + arg5;
+
+        D_800C4700[idx0] = arg3;
+    }
+    else if (arg0 == 1)
+    {
+        D_800C4640[idx0][idx1].vx = arg4;
+        D_800C4640[idx0][idx1].vy = g_SysWork.player_4C.chara_0.position_18.vy;
+        D_800C4640[idx0][idx1].vz = arg5;
+
+        D_800C4700[idx0] = arg3;
+    }
+}
 
 void func_800866D4(s32 arg0, s32 arg1, s32 arg2) // 0x800866D4
 {
-    if (g_MapOverlayHeader.func_D0(arg0, &D_800C4640, D_800C4700, arg1) == 1)
+    if (g_MapOverlayHeader.func_D0(arg0, &D_800C4640, D_800C4700[0], arg1) == 1)
     {
         func_80085D78(arg2);
     }
