@@ -1334,6 +1334,8 @@ void func_8003D03C();
 
 s32 func_8003D444(s32 idx);
 
+void func_8003D468(s32, s32); // Called by some chara init funcs, similar to `func_8003DD80`?
+
 void func_8003D6A4(u8* arg0);
 
 /** Return type assumed. */
@@ -1344,7 +1346,7 @@ void func_8003D5B4(s8 arg0);
 void func_8003D6E0(s32 arg0, s32 arg1, s32 arg2, void* arg3);
 
 /** Param types assumed. */
-void func_8003DD80(s32, s32);
+void func_8003DD80(s32, s32); // Called by some chara init funcs.
 
 void func_8003ED74(s32 arg0, s32 arg1);
 

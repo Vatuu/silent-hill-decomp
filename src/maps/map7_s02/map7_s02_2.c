@@ -79,15 +79,15 @@ void func_800D6C8C(void) {}
 
 INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", func_800D6C94);
 
-INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", Ai_Dahlia_Update); // 0x800D6ED4
+#include "maps/shared/Ai_Dahlia_Update.h" // 0x800D6ED4
 
-INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", func_800D6F48);
+INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", sharedFunc_800CD280_2_s01); // 0x800D6F48
 
-INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", func_800D6F90);
+INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", sharedFunc_800CD2C8_2_s01); // 0x800D6F90
 
-INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", func_800D7168);
+INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", sharedSymbol_800CD4A0_2_s01); // 0x800D7168
 
-INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", func_800D7A20);
+#include "maps/shared/Ai_Dahlia_Init.h" // 0x800D7A20
 
 #include "maps/shared/Ai_GhostChildAlessa_Update.h" // 0x800D7A68
 

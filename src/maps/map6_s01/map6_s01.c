@@ -87,15 +87,15 @@ INCLUDE_ASM("asm/maps/map6_s01/nonmatchings/map6_s01", sharedSymbol_800D8A68_0_s
 
 #include "maps/shared/Ai_Cybil_Init.h" // 0x800CF794
 
-INCLUDE_ASM("asm/maps/map6_s01/nonmatchings/map6_s01", Ai_Dahlia_Update); // 0x800CF7D0
+#include "maps/shared/Ai_Dahlia_Update.h" // 0x800CF7D0
 
-INCLUDE_ASM("asm/maps/map6_s01/nonmatchings/map6_s01", func_800CF844);
+INCLUDE_ASM("asm/maps/map6_s01/nonmatchings/map6_s01", sharedFunc_800CD280_2_s01); // 0x800CF844
 
-INCLUDE_ASM("asm/maps/map6_s01/nonmatchings/map6_s01", func_800CF88C);
+INCLUDE_ASM("asm/maps/map6_s01/nonmatchings/map6_s01", sharedFunc_800CD2C8_2_s01); // 0x800CF88C
 
-INCLUDE_ASM("asm/maps/map6_s01/nonmatchings/map6_s01", func_800CFA64);
+INCLUDE_ASM("asm/maps/map6_s01/nonmatchings/map6_s01", sharedSymbol_800CD4A0_2_s01); // 0x800CFA64
 
-INCLUDE_ASM("asm/maps/map6_s01/nonmatchings/map6_s01", func_800D031C);
+#include "maps/shared/Ai_Dahlia_Init.h" // 0x800D031C
 
 #include "maps/shared/sharedFunc_800D88AC_0_s00.h" // 0x800D0358
 

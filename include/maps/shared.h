@@ -58,9 +58,13 @@ extern s32 sharedData_800D6BB8_3_s04; // Used by `Ai_Lisa_Init`.
 
 extern s32 sharedData_800E2C38_7_s01; // Used by `Ai_BloodyLisa_Init`.
 
-// Two variables used by `Ai_Cybil_init`.
+// Two variables used by `Ai_Cybil_Init`.
 extern s32 sharedData_800E2378_0_s01;
 extern s32 sharedData_800E237C_0_s01;
+
+// Two variables used by `Ai_Dahlia_Init`.
+extern s32 sharedData_800D16E0_2_s01;
+extern s8  sharedData_800D16E4_2_s01;
 
 extern s32 sharedData_800D3150_3_s02; // Used by `Ai_Alessa_Init`.
 
@@ -385,10 +389,16 @@ void sharedFunc_800D7560_0_s01(s_SubCharacter*);
 // `Ai_Alessa` related
 void Ai_Alessa_Update(s_SubCharacter* chara, s32 arg1, s32 arg2);
 void sharedFunc_800CECFC_3_s02(s_SubCharacter*, s32, s32);
-void func_800CED44_3_s02(s_SubCharacter*, s32);
-void func_800CEEDC_3_s02(s_SubCharacter*, s32);
+void sharedFunc_800CED44_3_s02(s_SubCharacter*, s32);
+void sharedFunc_800CEEDC_3_s02(s_SubCharacter*, s32);
 void Ai_Alessa_Init(s_SubCharacter* chara);
 
+// `Ai_Dahlia` related
+void Ai_Dahlia_Update(s_SubCharacter* chara, s32 arg1, s32 arg2);
+void sharedFunc_800CD280_2_s01(s_SubCharacter*, s32, s32);
+void sharedFunc_800CD2C8_2_s01(s_SubCharacter*, s32);
+void sharedSymbol_800CD4A0_2_s01(s_SubCharacter*, s32);
+void Ai_Dahlia_Init(s_SubCharacter* chara);
 
 static inline void ModelAnim_UpdateField(s_ModelAnim* anim, s32 arg1)
 {

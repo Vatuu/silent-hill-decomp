@@ -73,15 +73,15 @@ void func_800CD1A0(void) {}
 
 #include "maps/shared/sharedFunc_800D2EF4_0_s00.h" // 0x800CD1F8
 
-INCLUDE_ASM("asm/maps/map2_s01/nonmatchings/map2_s01", Ai_Dahlia_Update); // 0x800CD20C
+#include "maps/shared/Ai_Dahlia_Update.h" // 0x800CD20C
 
-INCLUDE_ASM("asm/maps/map2_s01/nonmatchings/map2_s01", func_800CD280);
+INCLUDE_ASM("asm/maps/map2_s01/nonmatchings/map2_s01", sharedFunc_800CD280_2_s01); // 0x800CD280
 
-INCLUDE_ASM("asm/maps/map2_s01/nonmatchings/map2_s01", func_800CD2C8);
+INCLUDE_ASM("asm/maps/map2_s01/nonmatchings/map2_s01", sharedFunc_800CD2C8_2_s01); // 0x800CD2C8
 
-INCLUDE_ASM("asm/maps/map2_s01/nonmatchings/map2_s01", func_800CD4A0);
+INCLUDE_ASM("asm/maps/map2_s01/nonmatchings/map2_s01", sharedSymbol_800CD4A0_2_s01); // 0x800CD4A0
 
-INCLUDE_ASM("asm/maps/map2_s01/nonmatchings/map2_s01", func_800CDD64);
+#include "maps/shared/Ai_Dahlia_Init.h" // 0x800CDD64
 
 #include "maps/shared/sharedFunc_800D88AC_0_s00.h" // 0x800CDDA0
 

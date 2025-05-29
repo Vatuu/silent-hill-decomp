@@ -103,15 +103,15 @@ INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", sharedSymbol_800D8A68_0_s
 
 #include "maps/shared/Ai_Cybil_Init.h" // 0x800D232C - Differs to other maps `Ai_Cybil_Init`, possibly `Ai_EndingCybil_Init` if other Cybil funcs are a lot different.
 
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", Ai_Dahlia_Update); // 0x800D2368
+#include "maps/shared/Ai_Dahlia_Update.h" // 0x800D2368
 
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800D23DC);
+INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", sharedFunc_800CD280_2_s01); // 0x800D23DC
 
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800D2424);
+INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", sharedFunc_800CD2C8_2_s01); // 0x800D2424
 
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800D25FC);
+INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", sharedSymbol_800CD4A0_2_s01); // 0x800D25FC
 
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800D2ECC);
+#include "maps/shared/Ai_Dahlia_Init.h" // 0x800D2ECC
 
 #include "maps/shared/Ai_Alessa_Update.h" // 0x800D2F08
 

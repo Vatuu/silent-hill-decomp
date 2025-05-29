@@ -99,15 +99,15 @@ INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04_2", sharedFunc_800CEEDC_3_s
 
 #include "maps/shared/Ai_Alessa_Init.h" // 0x800DCA0C
 
-INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04_2", Ai_Dahlia_Update); // 0x800DCA30
+#include "maps/shared/Ai_Dahlia_Update.h" // 0x800DCA30
 
-INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04_2", func_800DCAA4);
+INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04_2", sharedFunc_800CD280_2_s01); // 0x800DCAA4
 
-INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04_2", func_800DCAEC);
+INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04_2", sharedFunc_800CD2C8_2_s01); // 0x800DCAEC
 
-INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04_2", func_800DCCC4);
+INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04_2", sharedSymbol_800CD4A0_2_s01); // 0x800DCCC4
 
-INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04_2", func_800DD57C);
+#include "maps/shared/Ai_Dahlia_Init.h" // 0x800DD57C
 
 #include "maps/shared/sharedFunc_800D88AC_0_s00.h" // 0x800DD5B8
 
