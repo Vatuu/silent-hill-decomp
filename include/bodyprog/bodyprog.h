@@ -24,19 +24,6 @@
 
 typedef struct 
 {
-    u8 unk_0[315];
-    u8 field_13B[15];
-} s_func_8002F278;
-
-typedef struct 
-{
-    s32                field_0[10][3];
-    u8                 unk_78[132];
-    s_ShSavegameFooter field_FC;
-} s_func_8002FB64; 
-
-typedef struct 
-{
     s32  field_0;
     u8   unk_4[12];
     s8*  field_16;
@@ -258,14 +245,6 @@ typedef struct
     s32 field_30;
     s32 field_34;
 } s_800B5488;
-
-typedef struct
-{
-    s32                field_0;
-    s8                 field_4[16]; 
-    struct s_800B5508* field_14;
-    s32                field_18; 
-} s_800B5508;
 
 typedef struct
 {
@@ -678,30 +657,6 @@ typedef struct _AreaLoadParams
     s32 char_z_8;
 } s_AreaLoadParams;
 
-typedef struct
-{
-    s32 unk_0;
-    u32 gameplayTimer_4;
-    u16 savegameCount_8;
-    s8  mapEventIdx_A;
-    u8  isTitleYellowFlag_B_0 : 1;
-    u8  add290Hours_B_1       : 2;
-    u8  hyperBlasterFlags_B_3 : 5;
-} s_UnkSaveload1; // Size assumed.
-
-/** Something to do with states of GUI elements on the save screen. */
-typedef struct
-{
-    s16             field_0;
-    s16             field_2;
-    s8              field_4;
-    s8              field_5;
-    s8              field_6;
-    s8              field_7;
-    s32             field_8; // Maybe bitfield.
-    s_UnkSaveload1* field_C;
-} s_UnkSaveload0; // Size: >=12
-
 /** @brief Initial demo game state data, stored inside MISC/DEMOXXXX.DAT files. */
 typedef struct _DemoWork
 {
@@ -769,37 +724,38 @@ extern s_800B5494 D_800B5494;
 /** TODO: `g_MapOverlayHeader` is part of the overlay bin files. Maybe should be moved to `maps/s00.h` or `dynamic/dynamic.h`. */
 typedef struct _MapOverlayHeader
 {
-    u8           unk_0[4];
-    s8           (*getMapRoomIdxFunc_4)(s32 x, s32 y);                                  // Called by `func_80036420`
-    s8           field_8;
-    u8           unk_9[3];
-    u8           unk_C[8];
-    s8           field_14;
-    u8           unk_15[3];
-    u8           unk_18[8];
-    void         (**mapEventFuncs_20)();                                            /** Points to array of event functions. */
-    u8           unk_24[12];
-    char**       mapMessageStrings_30;                                              /** Points to array of `char*` for each displayed message in the map. */
-    u8           unk_34[12];
-    void         (*func_40)();
-    void         (*func_44)();
-    u8           unk_48[128];
-    void         (*func_C8)();
-    void         (*func_CC)(s32);
-    s32          (*func_D0)(s32, void*, s16, s32); // 0x800C964C
-    u8           unk_D4[24];
-    s32          (*func_EC)();
-    u8           unk_F0[76];
-    s32          (*func_13C)(s32, s32, void*, s16, s32); // 0x800C96B8
-    u8           unk_140[40];
-    void         (*func_168)(void*, void*, void*);
-    u8           unk_16C[4];
-    u8           unk_170[36];
-    void         (*charaUpdateFuncs_194[Chara_Count])(s_SubCharacter*, void*, s32); /** Guessed params. Funcptrs for each `e_ShCharacterId`, set to 0 for IDs not included in the map overlay. Called by `func_80038354`. */
-    u8           charaGroupIds_248[4];                                              /** `e_ShCharacterId` values where if `s_SpawnInfo.charaId_4` == 0, `charaGroupIds_248[0]` is used for `charaSpawnsA_24C` and `charaGroupIds_248[1]` for `charaSpawnsB_30C`. */
-    s_SpawnInfo  charaSpawnsA_24C[16];                                              /** Array of chara type/position/flags, flags_6 == 0 are unused slots? Read by `func_80037F24`. */
-    s_SpawnInfo  charaSpawnsB_30C[16];                                              /** Array of chara type/position/flags, flags_6 == 0 are unused slots? Read by `func_80037F24`. */
-    VC_ROAD_DATA roadDataList_3CC[48];
+    u8                unk_0[4];
+    s8                (*getMapRoomIdxFunc_4)(s32 x, s32 y);                                  // Called by `func_80036420`
+    s8                field_8;
+    u8                unk_9[3];
+    u8                unk_C[8];
+    s8                field_14;
+    u8                unk_15[3];
+    u8                unk_18[4];
+    s_AreaLoadParams* mapAreaLoadParams_1C;
+    void              (**mapEventFuncs_20)();                                            /** Points to array of event functions. */
+    u8                unk_24[12];
+    char**            mapMessageStrings_30;                                              /** Points to array of `char*` for each displayed message in the map. */
+    u8                unk_34[12];
+    void              (*func_40)();
+    void              (*func_44)();
+    u8                unk_48[128];
+    void              (*func_C8)();
+    void              (*func_CC)(s32);
+    s32               (*func_D0)(s32, void*, s16, s32); // 0x800C964C
+    u8                unk_D4[24];
+    s32               (*func_EC)();
+    u8                unk_F0[76];
+    s32               (*func_13C)(s32, s32, void*, s16, s32); // 0x800C96B8
+    u8                unk_140[40];
+    void              (*func_168)(void*, void*, void*);
+    u8                unk_16C[4];
+    u8                unk_170[36];
+    void              (*charaUpdateFuncs_194[Chara_Count])(s_SubCharacter*, void*, s32); /** Guessed params. Funcptrs for each `e_ShCharacterId`, set to 0 for IDs not included in the map overlay. Called by `func_80038354`. */
+    u8                charaGroupIds_248[4];                                              /** `e_ShCharacterId` values where if `s_SpawnInfo.charaId_4` == 0, `charaGroupIds_248[0]` is used for `charaSpawnsA_24C` and `charaGroupIds_248[1]` for `charaSpawnsB_30C`. */
+    s_SpawnInfo       charaSpawnsA_24C[16];                                              /** Array of chara type/position/flags, flags_6 == 0 are unused slots? Read by `func_80037F24`. */
+    s_SpawnInfo       charaSpawnsB_30C[16];                                              /** Array of chara type/position/flags, flags_6 == 0 are unused slots? Read by `func_80037F24`. */
+    VC_ROAD_DATA      roadDataList_3CC[48];
     // TODO: A lot more in here.
 } s_MapOverlayHeader;
 STATIC_ASSERT_SIZEOF(s_MapOverlayHeader, 2124); // Size incomplete.
@@ -879,14 +835,6 @@ extern s32 D_800A976C;
 
 extern void (*D_800A977C[])(); // Function pointer array, maybe state funcs of some kind.
 
-extern u8 D_800A97D4[]; // Something related to save slots.
-
-extern s8 D_800A97D6; // Save slot index?
-
-extern s8 D_800A97D7;
-
-extern s8 D_800A97D8;
-
 extern u16 D_800A98AC[];
 
 extern s_800A992C D_800A992C[];
@@ -914,7 +862,17 @@ extern void (*D_800A9A2C[])(); // SysState func table.
 
 extern s32 D_800A9A68;
 
+extern s32 D_800A9A74;
+
 extern s32 D_800A9A78;
+
+extern u32 D_800A9A7C;
+
+extern s8  D_800A9A80;
+
+extern s32 D_800A9A84;
+
+extern s32 D_800A9A88;
 
 extern RECT D_800A9A6C; // RECT <320, 256, 160, 240>, only used in SysState_Fmv_Update?
 
@@ -979,8 +937,6 @@ extern s32 D_800B548C;
 
 extern s32 D_800B54BC;
 
-extern s_800B5508 D_800B5508[];
-
 extern s_800B55E8 D_800B55E8[2];
 
 extern s32 D_800B55FC;
@@ -990,6 +946,8 @@ extern s32 D_800B5618;
 extern DVECTOR g_Gfx_DebugStringPosition0;
 
 extern DVECTOR g_Gfx_DebugStringPosition1;
+
+extern s32 D_800B5C28;
 
 extern s32 D_800B5C30;
 
@@ -1009,26 +967,19 @@ extern u16 D_800BCCB2;
 
 extern s32 D_800B7CC4;
 
-/** Accessed by credits, options, and saveload. */
+/** @brief
+* Accessed by credits, options, and saveload.
+* Seems to handle the fading effect of the game.
+* 0-1   - Nothing
+* 2-5   - Fades in black and keeps the screen in black
+* 6-7   - Fades out black
+* 10-15 - Fades in white and keeps the screen in white
+* 16    - Fades out in black
+* Other values causes flickers, likely a bug.
+*/
 extern s32 D_800BCD0C;
 
 extern s16 D_800BCD28;
-
-extern s_UnkSaveload0* D_800BCD2C; // Type assumed.
-
-extern u32 D_800BCD34;
-
-extern s8 D_800BCD39;
-
-extern s16 D_800BCD3A;
-
-extern u8 g_SaveCount[2]; // Save/Load file count.
-
-extern u8 D_800BCD3E;
-
-extern s8 D_800BCD3F;
-
-extern s8 D_800BCD40;
 
 extern s8 D_800BCD78;
 
@@ -1259,10 +1210,6 @@ extern void (*D_800C9644)(s32);
 
 extern void (*D_800C9648)(s32);
 
-extern u8 D_800BCD30[];
-
-extern s8 D_800BCD38;
-
 extern s32 g_Demo_DemoFileIdx; // 0x800C4840
 
 extern s32 g_Demo_PlayFileIdx; // 0x800C4844
@@ -1321,41 +1268,11 @@ void func_8002E8E4();
 
 s32 func_8002E914();
 
-s32 func_8002E990();
-
 s32 func_8002E9A0(s32 idx);
-
-s32 func_8002E9EC(s32 arg0, s32 arg1, s32 arg2);
-
-s32 func_8002EA28(s32 idx);
-
-s32 func_8002EA78(s32 idx);
-
-void func_8002EB88(); // Return type assumed.
-
-void func_8002ECE0(s_800B55E8* arg0);
-
-void func_8002FB64(s_func_8002FB64 *arg0);
-
-void func_80030444();
-
-void func_8003045C();
-
-void func_80030530();
-
-void func_800307BC();
-
-void func_800303E4();
 
 // `Gfx_DrawBackgroundImage`
 /** Draws a background image. */
 void Gfx_BackgroundSpriteDraw(s_FsImageDesc* image);
-
-void func_80030414();
-
-void func_80030884();
-
-void func_800314A4(s32 arg0, s_80024C90* arg1);
 
 void func_80031CCC(s32);
 
@@ -1853,11 +1770,7 @@ s32 func_8008F520();
 
 s32 func_8008F914();
 
-void func_8009185C(s16 arg0, s16 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8, s32 arg9);
-
 void func_80091380();
-
-void func_800917C0(void*, s32, s_FsImageDesc*);
 
 // TODO: Arrange these in address order for better insight into the original interface. -- Sezz
 // ------------------------------------------------------------------
@@ -2140,60 +2053,6 @@ s32 func_800808AC();
 
 /** Returns a Q shift based on a magnitude. */
 s32 Math_GetMagnitudeShift(s32 mag);
-
-/** Copies user config into an `s_ShSaveUserConfigContainer` and calculates footer checksum. */
-void Savegame_UserConfigCopyWithChecksum(s_ShSaveUserConfigContainer* dest, s_ShSaveUserConfig* src);
-
-/** Copies savegame into an s_ShSavegameContainer and calculates footer checksum. */
-void Savegame_CopyWithChecksum(s_ShSavegameContainer* dest, s_ShSavegame* src);
-
-/** Updates the footer with the checksum of the given data. */
-void Savegame_ChecksumUpdate(s_ShSavegameFooter* saveFooter, s8* saveData, s32 saveDataLength);
-
-/** Generates a checksum of the given saveData and compares it against the checksum value in the footer.
- * Returns 1 if the checksums match, otherwise 0.
- */
-s32 Savegame_ChecksumValidate(s_ShSavegameFooter* saveFooter, s8* saveData, s32 saveDataLength);
-
-/** Generates an 8-bit XOR checksum over the given data, only appears used with s_ShSavegame data. */
-u8 Savegame_ChecksumGenerate(s8* saveData, s32 saveDataLength);
-
-s32 Demo_SequenceAdvance(s32 incrementAmt);
-
-void Demo_DemoDataRead();
-
-void Demo_PlayDataRead();
-
-s32 Demo_PlayFileBufferSetup();
-
-void Demo_DemoFileSavegameUpdate();
-
-void Demo_GameGlobalsUpdate();
-
-void Demo_GameGlobalsRestore();
-
-void Demo_GameRandSeedUpdate();
-
-void Demo_GameRandSeedRestore();
-
-void Demo_Start();
-
-void Demo_Stop();
-
-void Demo_ExitDemo();
-
-/** Generates the backup random demo seed and stores it in Demo_RandSeedBackup. */
-void Demo_DemoRandSeedBackup();
-
-void Demo_DemoRandSeedRestore();
-
-void Demo_DemoRandSeedAdvance();
-
-s32 Demo_ControllerDataUpdate();
-
-s32 Demo_PresentIntervalUpdate();
-
-s32 Demo_GameRandSeedSet();
 
 u8 func_8008A2E0(s32 arg0);
 

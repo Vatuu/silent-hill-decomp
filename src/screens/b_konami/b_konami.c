@@ -4,6 +4,8 @@
 #include <libetc.h>
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/save_system.h"
+#include "bodyprog/demo_system.h"
 #include "main/fsqueue.h"
 #include "screens/b_konami/b_konami.h"
 #include "screens/stream/stream.h"
@@ -115,11 +117,11 @@ s32 func_800C9874() // 0x800C9874
         return 1;
     }
 
-    D_800BCD2C = (s_UnkSaveload0*)BOOT_ADDR_0;
-    var0       = D_800BCD2C->field_4;
+    g_SlotsElementsInfo = (s_SaveSlotElementInfo*)BOOT_ADDR_0;
+    var0                = g_SlotsElementsInfo->elementType_4;
 
-    D_800BCD2C = (s_UnkSaveload0*)BOOT_ADDR_1;
-    var1       = D_800BCD2C->field_4;
+    g_SlotsElementsInfo = (s_SaveSlotElementInfo*)BOOT_ADDR_1;
+    var1                = g_SlotsElementsInfo->elementType_4;
 
     if (var0 == 0 && var1 == 0)
     {
@@ -132,12 +134,12 @@ s32 func_800C9874() // 0x800C9874
     }
     else if (var0 == 8 || var1 == 8)
     {
-        D_800BCD2C = (s_UnkSaveload0*)&BOOT_ADDR_0[D_800A97D6 * 0xA50];
-        D_800BCD2C = &D_800BCD2C[D_800A97D4[D_800A97D6]];
+        g_SlotsElementsInfo = (s_SaveSlotElementInfo*)&BOOT_ADDR_0[g_SlotSelectedIdx * 0xA50];
+        g_SlotsElementsInfo = &g_SlotsElementsInfo[g_SlotElementSelectedIdx[g_SlotSelectedIdx]];
 
-        D_800BCD40 = D_800BCD2C->field_5;
-        D_800BCD3F = D_800BCD2C->field_6;
-        D_800BCD3E = D_800BCD2C->field_7;
+        D_800BCD40        = g_SlotsElementsInfo->field_5;
+        g_SelectedFileIdx = g_SlotsElementsInfo->file_Idx_6;
+        g_SelectedSaveIdx = g_SlotsElementsInfo->element_Idx_7;
         return 5;
     }
     
