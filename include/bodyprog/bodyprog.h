@@ -725,7 +725,7 @@ extern s_800B5494 D_800B5494;
 typedef struct _MapOverlayHeader
 {
     u8                unk_0[4];
-    s8                (*getMapRoomIdxFunc_4)(s32 x, s32 y);                                  // Called by `func_80036420`
+    s8                (*getMapRoomIdxFunc_4)(s32 x, s32 y);                              // Called by `func_80036420`
     s8                field_8;
     u8                unk_9[3];
     u8                unk_C[8];
@@ -868,7 +868,7 @@ extern s32 D_800A9A78;
 
 extern u32 D_800A9A7C;
 
-extern s8  D_800A9A80;
+extern s8 D_800A9A80;
 
 extern s32 D_800A9A84;
 
@@ -967,16 +967,18 @@ extern u16 D_800BCCB2;
 
 extern s32 D_800B7CC4;
 
-/** @brief
-* Accessed by credits, options, and saveload.
-* Seems to handle the fading effect of the game.
-* 0-1   - Nothing
-* 2-5   - Fades in black and keeps the screen in black
-* 6-7   - Fades out black
-* 10-15 - Fades in white and keeps the screen in white
-* 16    - Fades out in black
-* Other values causes flickers, likely a bug.
-*/
+/** @brief Seems to handle the screen fade effect.
+ *
+ * Accessed by `credits`, `options`, and `saveload`.
+ *
+ * 0-1   - Nothing.
+ * 2-5   - Fades to black and keeps the screen black.
+ * 6-7   - Fades from black.
+ * 10-15 - Fades to white and keeps the screen white.
+ * 16    - Fades to black.
+ *
+ * @note Other values causes flickers, likely a bug.
+ */
 extern s32 D_800BCD0C;
 
 extern s16 D_800BCD28;

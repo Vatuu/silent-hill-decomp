@@ -1,11 +1,10 @@
 #ifndef _DEMO_SYSTEM_H
 #define _DEMO_SYSTEM_H
 
-/** @brief
-* This file is used for define any variable, struct and
-* function that is part of `BODYPROG.BIN` and has been
-* identified to be related to the demo game system.
-*/
+/** @brief This header is used to declare any variable, struct, or
+ * function part of `BODYPROG.BIN` identified to be related
+ * to the demo game system.
+ */
 
 // ==========
 // FUNCTIONS
@@ -43,7 +42,7 @@ void func_8008F518();
 
 s32 func_8008F520();
 
-/** Generates the backup random demo seed and stores it in Demo_RandSeedBackup. */
+/** Generates the backup random demo seed and stores it in `Demo_RandSeedBackup`. */
 void Demo_DemoRandSeedBackup();
 
 void Demo_DemoRandSeedRestore();

@@ -3,17 +3,16 @@
 
 #include "screens/saveload/saveload.h"
 
-/** @brief
-* This file is used for define any variable, struct and
-* function that is part of `BODYPROG.BIN` and has been
-* identified to be related to the save game system.
-*/
+/** @brief This header is used to declare any variable, struct, or
+ * function part of `BODYPROG.BIN` identified to be related
+ * to the savegame system.
+ */
 
 // ================
 // UNKNOWN STRUCTS
 // ================
-/* Struct called by functions
-that haven't been recognized */
+
+/* Struct called by functions that haven't been identified. */
 
 typedef struct 
 {
@@ -28,11 +27,9 @@ typedef struct
     s_ShSavegameFooter field_FC;
 } s_func_8002FB64; // Likely s_ShSaveUserConfigContainer
 
-
 // ========
 // STRUCTS
 // =========
-
 
 typedef struct
 {
@@ -41,7 +38,6 @@ typedef struct
     struct s_800B5508* field_14;
     s32                field_18; 
 } s_800B5508;
-
 
 // ========
 // GLOBALS
@@ -55,25 +51,20 @@ extern s8 D_800A97D7;
 
 extern s8 D_800A97D8;
 
-/**
-* Declaration of the struct takes 224 bytes (0xE0 bytes in hex).
+/** Declaration of the struct takes 224 bytes (0xE0 bytes in hex).
 * It is possible that the full size of the struct
-* it is 0x1C/28 bytes as function `func_8002E94C`
-* access to the element 8 and multiplying it by 28 
-* equals 224 bytes.
-* Additionally, investigating the ram could reaffirm
-* that as at some point of the memory each 1C/28 bytes
-* an address is repeated in the space assigned for the
-* struct which the decompiled code seems to be pointing
-* as the first element of the struct.
+* is `0x1C/0x28` bytes, as `func_8002E94C`
+* accesses element 8 and multiplies it by 28 (== 224 bytes).
+* Additionally, investigating the RAM affirms
+* that every `0x1C/0x28` bytes is the start address of a new element
+* which the decompiled code seems to point to.
 */
 extern s_800B5508 D_800B5508[];
 
-/** @brief
-* Basic information required for draw information of elements in save slots.
-* Address accessed based in the slot: Slot 1 - 0x801E09E0, Slot 2 - 0x801E1440.
+/** @brief Basic information required to draw information of elements in save slots.
+* Address access is based on the slot: Slot 1 - 0x801E09E0, Slot 2 - 0x801E1440.
 */
-extern s_SaveSlotElementInfo* g_SlotsElementsInfo;
+extern s_SaveSlotElementInfo* g_SlotElementInfo;
 
 extern u8 g_MemCardElementCount[MEMORY_CARD_SLOT_COUNT];
 
@@ -87,7 +78,7 @@ extern s16 g_MemCardsTotalElementCount; // Counts all elements of all inserted m
 
 extern s8 D_800BCD40;
 
-extern u8 g_SlotElementsCount[MEMORY_CARD_SLOT_COUNT];
+extern u8 g_SlotElementCounts[MEMORY_CARD_SLOT_COUNT];
 
 extern u8 g_SelectedSaveIdx;
 
@@ -101,7 +92,7 @@ s32 func_8002E94C(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 
 s32 func_8002E990();
 
-/** This function is use to get the pointer of a struct which seems to be `s_SaveBasicInfo`. */
+/** Used to get the pointer of a struct which seems to be `s_SaveBasicInfo`. */
 s32 func_8002E9EC(s32 arg0, s32 arg1, s32 arg2);
 
 s32 func_8002EA28(s32 idx);

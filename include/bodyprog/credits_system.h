@@ -1,11 +1,10 @@
 #ifndef _CREDITS_SYSTEM_H
 #define _CREDITS_SYSTEM_H
 
-/** @brief
-* This file is used for define any variable, struct and
-* function that is part of `BODYPROG.BIN` and has been
-* identified to be related to the credits system.
-*/
+/** @brief This header is used to declare any variable, struct, or
+ * function part of `BODYPROG.BIN` identified to be related
+ * to the credits system.
+ */
 
 // ==========
 // FUNCTIONS

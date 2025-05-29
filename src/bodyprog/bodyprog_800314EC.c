@@ -762,6 +762,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_80035DB4); // 0x
 void func_80035E1C() // 0x80035E1C
 {
     s32 i;
+
     for (i = 0; i < 9; i++)
     {
         g_SysWork.field_2748[i] = 0;
@@ -1373,7 +1374,7 @@ void SysState_GameOver_Update() // 0x8003A52C
     #define TIP_COUNT 15
 
     extern u8   g_SysState_GameOver_TipIdx; // Only used in this func, maybe static.
-    extern char D_80025448[];                    // "\aGAME_OVER" - needs rodata migration
+    extern char D_80025448[];               // "\aGAME_OVER" - needs rodata migration.
 
     u16  seenTipIdxs[1];
     s32  tipIdx;
@@ -1393,7 +1394,7 @@ void SysState_GameOver_Update() // 0x8003A52C
 
             func_8003B550();
 
-            // If we've seen every game over tip, reset the flag bits
+            // If every game over tip has been seen, reset flag bits.
             if (g_GameWork.config_0.seenGameOverTips_2E[0] == 0x7FFF)
             {
                 g_GameWork.config_0.seenGameOverTips_2E[0] = 0;

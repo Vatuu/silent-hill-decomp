@@ -10,7 +10,7 @@ g_OverwriteOptionSelected         = 0x801E755C;
 g_HiddentElementByDisplacement    = 0x801E7570;
 g_DisplaySaveDataInfo             = 0x801E76D0;
 g_IsMemCardNotInserted            = 0x801E76D2;
-g_LastSaveIdx                     = 0x801E76CE;
+g_PrevSaveIdx                     = 0x801E76CE;
 g_Gfx_SaveShineTimer              = 0x801E76D4;
 g_IsGameSaving                    = 0x801E76D6;
 

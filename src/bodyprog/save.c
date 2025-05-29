@@ -3,9 +3,8 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/save_system.h"
 
-/**
-* It is possible that more functions from `bodyprog.c` are
-* actually functions from save_system.
+/** It is possible that more functions from `bodyprog.c` are
+* actually functions from `save_system`.
 */
 
 // TODO: This function may require some investigation. The few occations it is used is not used for return a value.
@@ -87,34 +86,34 @@ s32 func_8002EA78(s32 idx) // 0x8002EA78
 
 s32 func_8002EABC(s32* arg0, s32* arg1, s32* arg2) // 0x8002EABC
 {
-    VECTOR vec; // vaguely assumed to be a VECTOR
+    VECTOR vec; // Vaguely assumed to be a `VECTOR`.
     s32 i;
     s32 ret;
 
     ret = 0;
-    
+
     *arg0 = 0;
     *arg1 = 0;
     *arg2 = 0;
-    
+
     for (i = 0; i < 8; i++) 
     {
         if (D_800B5508[i].field_0 == 3) 
         {
             func_8002FE70(i, &vec);
-            
+
             if (ret < vec.vx) 
             {
                 *arg0 = i;
-                
+
                 *arg1 = vec.vy;
                 *arg2 = vec.vz;
-                
+
                 ret = vec.vx;
             }
         }
     }
-    
+
     return ret != 0;
 }
 
@@ -126,9 +125,9 @@ void func_8002ECE0(s_800B55E8* arg0) // 0x8002ECE0
     {
         arg0->field_14 = 11;
         D_800B5508[arg0->field_4].field_0 = 3;
-        
+
         func_8002E730(arg0->field_4);
-        
+
         D_800B5508[arg0->field_4].field_18 = 15;
     }
     else
@@ -154,7 +153,7 @@ s32 func_8002F278(s32 arg0, s_func_8002F278* arg1) // 0x8002F278
     return ret + func_8002EA28(arg0);
 }
 
-// Related to saves. Seems to modify constantly `D_800B55FC`.
+// Related to saves. Seems to constantly write to `D_800B55FC`.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/save", func_8002F2C4);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/save", func_8002F61C);
