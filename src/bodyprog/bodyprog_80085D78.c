@@ -219,11 +219,11 @@ void func_8008616C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x800861
             {
                 if (arg2 == 0)
                 {
-                    D_800BCD0C = 3;
+                    g_Gfx_ScreenFade = 3;
                 }
                 else if (arg2 == 1)
                 {
-                    D_800BCD0C = 11;
+                    g_Gfx_ScreenFade = 11;
                 }
                 else
                 {
@@ -237,11 +237,11 @@ void func_8008616C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x800861
             }
             else if (arg2 == 0)
             {
-                D_800BCD0C = 7;
+                g_Gfx_ScreenFade = 7;
             }
             else if (arg2 == 1)
             {
-                D_800BCD0C = 15;
+                g_Gfx_ScreenFade = 15;
             }
             else
             {
@@ -258,12 +258,12 @@ void func_8008616C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x800861
         case 1:
             if (arg2 < 2)
             {
-                if (arg1 != 0 || D_800BCD0C != caseVar)
+                if (arg1 != 0 || g_Gfx_ScreenFade != caseVar)
                 {
                     if (arg1 == caseVar)
                     {
                         var1 = 5;
-                        var0 = D_800BCD0C & 0x7;
+                        var0 = g_Gfx_ScreenFade & 0x7;
 
                         if (var1 == var0)
                         {

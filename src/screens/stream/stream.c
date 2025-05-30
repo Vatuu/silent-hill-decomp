@@ -15,7 +15,7 @@ void GameState_StartMovieIntro_Update() // 0x801E2654
     {
         case 0:
             VSync(8);
-            D_800BCD0C = 6;
+            g_Gfx_ScreenFade = 6;
             GameFs_TitleGfxLoad();
             g_GameWork.gameStateStep_598[0]++;
             break;
@@ -23,13 +23,13 @@ void GameState_StartMovieIntro_Update() // 0x801E2654
         case 1:
             if (g_ControllerPtrConst->btns_held_C != 0 || g_SysWork.timer_1C >= 301)
             {
-                D_800BCD0C = 3;
+                g_Gfx_ScreenFade                = 3;
                 g_GameWork.gameStateStep_598[0] = 2;
             }
             break;
 
         case 2:
-            if ((D_800BCD0C & 7) == 5)
+            if ((g_Gfx_ScreenFade & 7) == 5)
             {
                 Fs_QueueWaitForEmpty();
                 Game_StateSetNext(GameState_MovieIntro);

@@ -35,6 +35,7 @@ g_VBlanks = 0x800B5C34; // type:s32
 g_UncappedVBlanks = 0x800B5C38; // type:s32
 
 g_MaybePlayerAnims = 0x800AF228; // type:MaybeCharacterAnim
+g_Gfx_ScreenFade = 0x800BCD0C;
 
 g_Gfx_DebugStringPosition0 = 0x800B5C20; // type:DVECTOR size:4
 g_Gfx_DebugStringPosition1 = 0x800B5C24; // type:DVECTOR size:4

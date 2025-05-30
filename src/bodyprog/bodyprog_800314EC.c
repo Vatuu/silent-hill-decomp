@@ -125,7 +125,7 @@ void Settings_DispEnvXYSet(DISPENV* display, s32 x, s32 y) // 0x80032524
 
 void func_800325A4(DR_MODE* arg0) // 0x800325A4
 {
-    if (D_800BCD0C & 8) 
+    if (g_Gfx_ScreenFade & 8) 
     {
         SetDrawMode(arg0, 0, 1, 32, NULL);
     }
@@ -238,12 +238,12 @@ void GameState_Unk0_Update() // 0x80032D1C
             Fs_QueueStartReadTim(FILE_1ST_FONT16_TIM, FS_BUFFER_1, &D_800A8FF4);
             Fs_QueueStartReadTim(FILE_1ST_KONAMI_TIM, FS_BUFFER_1, &D_800A8FFC);
 
-            D_800BCD0C = gameStateStep0;
+            g_Gfx_ScreenFade = gameStateStep0;
             g_GameWork.gameStateStep_598[0]++;
             break;
 
         case 3:
-            if ((D_800BCD0C & 7) == ((1 << 0) | (1 << 2)))
+            if ((g_Gfx_ScreenFade & 7) == ((1 << 0) | (1 << 2)))
             {
                 Fs_QueueWaitForEmpty();
 
@@ -412,7 +412,7 @@ void MainLoop() // 0x80032EE0
             }
             else
             {
-                if (D_800BCD0C != 1)
+                if (g_Gfx_ScreenFade != 1)
                 {
                     VSync(0);
                 }
@@ -1013,7 +1013,7 @@ void GameState_InGame_Update() // 0x80038BD4
     switch (g_GameWork.gameStateStep_598[0])
     {
         case 0:
-            D_800BCD0C = 6;
+            g_Gfx_ScreenFade = 6;
             D_800B5C30 = 0x3000;
             g_GameWork.gameStateStep_598[0] = 1;
 
@@ -1064,7 +1064,7 @@ void GameState_InGame_Update() // 0x80038BD4
     }
     Demo_DemoRandSeedRestore();
 
-    D_800A9A0C = ((D_800BCD0C & 7) == 5) && Fs_QueueDoThingWhenEmpty() != 0;
+    D_800A9A0C = ((g_Gfx_ScreenFade & 7) == 5) && Fs_QueueDoThingWhenEmpty() != 0;
 
     if ((g_SysWork.field_22A0 & 1) == 0 && g_MapOverlayHeader.func_40 != NULL)
     {
@@ -1170,7 +1170,7 @@ void GameState_LoadStatusScreen_Update() // 0x800395C0
     {
         DrawSync(0);
         g_IntervalVBlanks = 1;
-        D_800BCD0C = 0;
+        g_Gfx_ScreenFade  = 0;
 
         func_8003943C();
 
@@ -1234,7 +1234,7 @@ void SysState_Fmv_Update() // 0x80039A58
     switch (g_SysWork.sysStateStep_C)
     {
         case 0:
-            D_800BCD0C               = 3;
+            g_Gfx_ScreenFade         = 3;
             D_800A9A0C               = 0;
             g_SysWork.sysStateStep_C = 1;
 
@@ -1546,12 +1546,12 @@ void GameState_MapEvent_Update() // 0x8003AA4C
 {
     if (g_GameWork.gameStateStep_598[0] == 0)
     {
-        g_IntervalVBlanks = 1;
-        D_800BCD0C = 6;
+        g_IntervalVBlanks               = 1;
+        g_Gfx_ScreenFade                = 6;
         g_GameWork.gameStateStep_598[0] = 1;
     }
 
-    D_800A9A0C = (D_800BCD0C & 7) == 5 && Fs_QueueDoThingWhenEmpty() != 0;
+    D_800A9A0C = (g_Gfx_ScreenFade & 7) == 5 && Fs_QueueDoThingWhenEmpty() != 0;
 
     Savegame_EventFlagSet(g_MapEventParam->eventFlagId_2);
 
@@ -1609,8 +1609,8 @@ void GameState_MainMenu_Update()
             Gfx_Init(SCREEN_WIDTH, 1);
             
             g_IntervalVBlanks = 1;
-            D_800BCD0C = 6;
-            D_800B5C30 = 0x2000;
+            g_Gfx_ScreenFade  = 6;
+            D_800B5C30        = 0x2000;
             D_800A9A74++;
         
         case 1:
@@ -1694,10 +1694,10 @@ void GameState_MainMenu_Update()
                     Fs_QueueReset();
                 }
                 
-                D_800BCD0C = 2;
-                D_800A9A74 += 1;
+                g_Gfx_ScreenFade = 2;
+                D_800A9A74      += 1;
                 
-                if (D_800A9A78 < 2u)
+                if (D_800A9A78 < 2U)
                 {
                     Sd_EngineCmd(0x501);
                 }
@@ -1728,8 +1728,8 @@ void GameState_MainMenu_Update()
                         break;
                     
                     case 2:
-                        D_800BCD0C = 0;
-                        D_800A9A74 = 3;
+                        g_Gfx_ScreenFade = 0;
+                        D_800A9A74       = 3;
                         break;
                     
                     case 3:
@@ -1810,8 +1810,8 @@ void GameState_MainMenu_Update()
                 GameFs_MapLoad(0);
                 GameFs_StreamBinLoad();
                 Sd_EngineCmd(0x501);
-                D_800BCD0C = 2;
-                D_800A9A74 = 4;
+                g_Gfx_ScreenFade = 2;
+                D_800A9A74       = 4;
             }
             else if (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel)
             {
@@ -1822,7 +1822,7 @@ void GameState_MainMenu_Update()
         
         case 2:
         case 4:
-            if ((D_800BCD0C & 7) == 5)
+            if ((g_Gfx_ScreenFade & 7) == 5)
             {
                 func_800323C8(320, 0); // old idb Sys_GFXReinit_800323C8(width, interlace_flag)
                 Fs_QueueWaitForEmpty();

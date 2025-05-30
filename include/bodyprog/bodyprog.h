@@ -967,7 +967,7 @@ extern s32 D_800B7CC4;
  *
  * @note Other values causes flickers, likely a bug.
  */
-extern s32 D_800BCD0C;
+extern s32 g_Gfx_ScreenFade;
 
 extern s16 D_800BCD28;
 
@@ -1445,7 +1445,7 @@ void Sd_DriverInit();
 
 u8 func_80045B28();
 
-void func_80046048(u16, s32, s32);
+void func_80046048(u16 cmd, s32 arg1, s32 vol); // SD Func. Last arg is a u8 value.
 
 void func_8004690C(s32);
 

@@ -108,7 +108,7 @@ s32 func_801E2ED8() // 0x801E2ED8
 
 s32 func_801E2FC0() // 0x801E2FC0
 {
-    switch (D_800BCD0C)
+    switch (g_Gfx_ScreenFade)
     {
         case 4:
         case 5:
@@ -129,7 +129,7 @@ s32 func_801E2FC0() // 0x801E2FC0
             break;
 
         default:
-            D_800BCD0C = 10;
+            g_Gfx_ScreenFade = 10;
             D_800B5C30 = 1 << 12;
             break;
     }
@@ -156,7 +156,7 @@ s32 func_801E3124() // 0x801E3124
     switch (g_GameWork.gameStateStep_598[1])
     {
         case 0:
-            switch (D_800BCD0C)
+            switch (g_Gfx_ScreenFade)
             {
                 case 13:
                     g_GameWork.field_58C = FP_COLOR(1.0f);
@@ -181,8 +181,7 @@ s32 func_801E3124() // 0x801E3124
             StoreImage(&D_801E557C[1], (u_long*)IMAGE_BUFFER_1);
             DrawSync(0);
 
-            // Maybe an enum entry check.
-            switch (D_800BCD0C)
+            switch (g_Gfx_ScreenFade)
             {
                 case 13:
                     Gfx_ClearRectInterlaced(0, 32, 512, 448, FP_COLOR(1.0f), FP_COLOR(1.0f), FP_COLOR(1.0f));
@@ -227,7 +226,7 @@ s32 func_801E3304() // 0x801E3304
         if (g_GameWork.gameStateStep_598[1] == 0)
         {
             Gfx_Init(SCREEN_WIDTH, 0);
-            D_800BCD0C = 0;
+            g_Gfx_ScreenFade = 0;
             g_GameWork.gameStateStep_598[1]++;
         }
         else if (g_GameWork.gameStateStep_598[1] != 10)
@@ -278,14 +277,14 @@ s32 func_801E342C() // 0x801E342C
     switch (g_GameWork.gameStateStep_598[1])
     {
         case 0:
-            switch (D_800BCD0C)
+            switch (g_Gfx_ScreenFade)
             {
                 case 13:
-                    D_800BCD0C = 14;
+                    g_Gfx_ScreenFade = 14;
                     break;
 
                 case 5:
-                    D_800BCD0C = 6;
+                    g_Gfx_ScreenFade = 6;
                     break;
             }
 
@@ -311,13 +310,13 @@ s32 func_801E342C() // 0x801E342C
             D_801E5E78--;
             if (D_801E5E78 <= 0)
             {
-                D_800BCD0C                      = g_GameWork.gameStateStep_598[1];
+                g_Gfx_ScreenFade                      = g_GameWork.gameStateStep_598[1];
                 g_GameWork.gameStateStep_598[1] = 3;
             }
             break;
 
         case 3:
-            if (D_800BCD0C == 5)
+            if (g_Gfx_ScreenFade == 5)
             {
                 g_GameWork.gameStateStep_598[1] = 4;
                 return 1;
