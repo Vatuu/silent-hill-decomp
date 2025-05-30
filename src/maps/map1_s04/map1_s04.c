@@ -75,7 +75,7 @@ void func_800CC7AC(void) {}
 
 #include "maps/shared/sharedFunc_800D929C_0_s00.h" // 0x800CC818
 
-INCLUDE_ASM("asm/maps/map1_s04/nonmatchings/map1_s04", func_800CC828);
+#include "maps/shared/sharedFunc_800D7758_1_s00.h" // 0x800CC828
 
 INCLUDE_ASM("asm/maps/map1_s04/nonmatchings/map1_s04", func_800CC8C8);
 

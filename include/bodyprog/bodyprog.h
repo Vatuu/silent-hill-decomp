@@ -773,6 +773,8 @@ extern s_8002AC04 D_8002AC04[];
 
 extern s_800BE9FC D_8002B2CC;
 
+extern s8 D_8002B394;
+
 extern s8 D_800A8E58;
 
 extern s_FsImageDesc D_800A8FF4;

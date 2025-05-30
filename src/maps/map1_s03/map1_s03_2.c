@@ -132,7 +132,7 @@ void Ai_LockerDeadBody_Update(s_SubCharacter* chara, s32 arg1, s32 arg2) // 0x80
 
 #include "maps/shared/sharedFunc_800D929C_0_s00.h" // 0x800DA424
 
-INCLUDE_ASM("asm/maps/map1_s03/nonmatchings/map1_s03_2", func_800DA434);
+#include "maps/shared/sharedFunc_800D7758_1_s00.h" // 0x800DA434
 
 INCLUDE_ASM("asm/maps/map1_s03/nonmatchings/map1_s03_2", func_800DA4D4);
 

@@ -49,7 +49,7 @@ INCLUDE_ASM("asm/maps/map1_s01/nonmatchings/map1_s01_2", Ai_Cat_Update); // 0x80
 
 #include "maps/shared/sharedFunc_800D929C_0_s00.h" // 0x800D6F34
 
-INCLUDE_ASM("asm/maps/map1_s01/nonmatchings/map1_s01_2", func_800D6F44);
+#include "maps/shared/sharedFunc_800D7758_1_s00.h" // 0x800D6F44
 
 INCLUDE_ASM("asm/maps/map1_s01/nonmatchings/map1_s01_2", func_800D6FE4);
 

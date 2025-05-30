@@ -54,6 +54,9 @@ extern s_AnimInfo sharedData_800D5888_1_s05[];
 extern s16 sharedData_800D8614_1_s05; // These two s16s could be DVECTOR?
 extern s16 sharedData_800D8616_1_s05;
 
+extern u8 sharedData_800DCC14_1_s00[];
+
+
 extern s32 sharedData_800D6BB8_3_s04; // Used by `Ai_Lisa_Init`.
 
 extern s32 sharedData_800E2C38_7_s01; // Used by `Ai_BloodyLisa_Init`.
