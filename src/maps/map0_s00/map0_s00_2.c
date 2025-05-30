@@ -112,7 +112,7 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00_2", func_800D94F8);
 /** Debug function??? It is unused here... */
 void func_800D95D4() // 0x800D95D4
 {
-    D_800BCD0C = 7;
+    g_Gfx_ScreenFade = 7;
     Gfx_DebugStringPosition(100, 100);
     Gfx_DebugStringDraw(&D_800CAE7C); // String "STAGE 0-0"
 }

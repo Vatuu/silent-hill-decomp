@@ -14,27 +14,27 @@ extern u8 D_800A900C[];
 
 typedef struct
 {
-    /* 0x00 */ u_long* vlcbuf[2];
-    /* 0x08 */ s32     vlcid;
-    /* 0x0C */ u16*    imgbuf;
-    /* 0x10 */ RECT    rect[2];
-    /* 0x20 */ s32     rectid;
-    /* 0x24 */ RECT    slice;
-    /* 0x2C */ s32     isdone;
+    u_long* vlcbuf[2]; /* 0x00 */
+    s32     vlcid;     /* 0x08 */
+    u16*    imgbuf;    /* 0x0C */
+    RECT    rect[2];   /* 0x10 */
+    s32     rectid;    /* 0x20 */
+    RECT    slice;     /* 0x24 */
+    s32     isdone;    /* 0x2C */
 } DECENV;
 
 typedef struct
 {
-    /* 0x00000 */ CdlLOC loc;
-    /* 0x00004 */ DECENV dec;
-    /* 0x00034 */ s32    Rewind_Switch; // or Clear_Flag
-    /* 0x00038 */ s32    width;
-    /* 0x0003C */ s32    height;
-    /* 0x00040 */ u16    imgbuf0[5760];
-    /* 0x02D40 */ u16    imgbuf1[5760];
-    /* 0x05A40 */ u_long sect_buff[11776];
-    /* 0x11240 */ u_long vlcbuf0[14336];
-    /* 0x1F240 */ u_long vlcbuf1[14336];
+    CdlLOC loc;              /* 0x00000 */
+    DECENV dec;              /* 0x00004 */
+    s32    Rewind_Switch;    /* 0x00034  / or Clear_Flag */
+    s32    width;            /* 0x00038 */
+    s32    height;           /* 0x0003C */
+    u16    imgbuf0[5760];    /* 0x00040 */
+    u16    imgbuf1[5760];    /* 0x02D40 */
+    u_long sect_buff[11776]; /* 0x05A40 */
+    u_long vlcbuf0[14336];   /* 0x11240 */
+    u_long vlcbuf1[14336];   /* 0x1F240 */
 } MOVIE_STR;
 
 // Customised StHEADER?

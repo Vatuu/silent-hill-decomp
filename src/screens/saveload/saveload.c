@@ -1622,7 +1622,7 @@ void Savegame_ScreenInit() // 0x801E63C0
     }
 
     g_IntervalVBlanks = 1;
-    D_800BCD0C        = 6;
+    g_Gfx_ScreenFade        = 6;
 
     g_GameWork.field_58C = 0;
     g_GameWork.field_58D = 0;
@@ -1740,7 +1740,7 @@ void Savegame_ScreenLogic() // 0x801E649C
 			// Exit save screen.
             if (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel) 
             {
-                D_800BCD0C                      = 3;
+                g_Gfx_ScreenFade                      = 3;
                 g_GameWork.gameStateStep_598[1] = 2;
                 g_GameWork.gameStateStep_598[2] = 0;
 
@@ -1806,7 +1806,7 @@ void Savegame_ScreenLogic() // 0x801E649C
             break;
         
         case 2:
-            if ((D_800BCD0C & 0x7) == 5)
+            if ((g_Gfx_ScreenFade & 0x7) == 5)
             {
                 g_GameWork.field_58C = 0;
                 g_GameWork.field_58D = 0;
@@ -2057,14 +2057,14 @@ void Savegame_ContinueLogic() // 0x801E6F38
 
             GameFs_MapLoad(g_SavegamePtr->mapOverlayIdx_A4);
 
-            D_800BCD0C = 2;
+            g_Gfx_ScreenFade = 2;
             g_GameWork.gameStateStep_598[1]++;
             g_GameWork.gameStateStep_598[2] = 0;
             break;
 
         case 1:
         {
-            if ((D_800BCD0C & 0x7) == 0x5)
+            if ((g_Gfx_ScreenFade & 0x7) == 0x5)
             {
                 Fs_QueueWaitForEmpty();
                 Settings_ScreenAndVolUpdate();
@@ -2195,7 +2195,7 @@ void func_801E737C() // 0x801E737C
             g_GameWork.gameStateStep_598[0] = 1;
             g_GameWork.gameStateStep_598[1] = g_GameWork.gameStatePrev_590;
 
-            D_800BCD0C = 3;
+            g_Gfx_ScreenFade = 3;
 
             GameFs_TitleGfxLoad();
         }

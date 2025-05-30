@@ -47,8 +47,8 @@ void GameState_KonamiLogo_Update() // 0x800C95AC
             case 0:
                 Gfx_Init(0x280, 1);
 
-                D_800BCD0C = 6;
-                D_800B5C30 = 0x333;
+                g_Gfx_ScreenFade = 6;
+                D_800B5C30       = 0x333;
 
                 // Load \1ST\KONAMI2.TIM (Konami logo).
                 Fs_QueueStartReadTim(FILE_1ST_KONAMI2_TIM, FS_BUFFER_1, &D_800A9004);
@@ -64,7 +64,7 @@ void GameState_KonamiLogo_Update() // 0x800C95AC
                 break;
 
             case 1:
-                if (D_800BCD0C == g_GameWork.gameStateStep_598[0])
+                if (g_Gfx_ScreenFade == g_GameWork.gameStateStep_598[0])
                 {
                     g_GameWork.gameStateStep_598[0] = 2;
                 }
@@ -73,14 +73,14 @@ void GameState_KonamiLogo_Update() // 0x800C95AC
             case 2:
                 if (g_ControllerPtrConst->btns_held_C != 0 || g_SysWork.timer_1C >= 181)
                 {
-                    D_800BCD0C = 3;
-                    D_800B5C30 = 0x333;
+                    g_Gfx_ScreenFade                = 3;
+                    D_800B5C30                      = 0x333;
                     g_GameWork.gameStateStep_598[0] = 3;
                 }
                 break;
 
             case 3:
-                if ((D_800BCD0C & 7) == 5)
+                if ((g_Gfx_ScreenFade & 7) == 5)
                 {
                     Fs_QueueWaitForEmpty();
                     Game_StateSetNext(GameState_KcetLogo);
@@ -159,8 +159,8 @@ void GameState_KcetLogo_Update() // 0x800C99A4
             case 0:
                 Settings_RestoreDefaults();
 
-                D_800BCD0C = 6;
-                D_800B5C30 = 0x333;
+                g_Gfx_ScreenFade = 6;
+                D_800B5C30       = 0x333;
 
                 GameFs_BgEtcGfxLoad();
                 Fs_QueueStartRead(FILE_BG_HP_SAFE1_BIN, FS_BUFFER_5);
@@ -169,7 +169,7 @@ void GameState_KcetLogo_Update() // 0x800C99A4
                 break;
 
             case 1:
-                if (D_800BCD0C == 1)
+                if (g_Gfx_ScreenFade == 1)
                 {
                     Fs_QueueWaitForEmpty();
                     while (g_GameWork.gameStateStep_598[0] < 2)
@@ -270,14 +270,14 @@ void GameState_KcetLogo_Update() // 0x800C99A4
             case 6:
                 if (g_ControllerPtrConst->btns_held_C != 0 || g_SysWork.timer_1C > 180)
                 {
-                    D_800BCD0C = 3;
-                    D_800B5C30 = 0x333;
+                    g_Gfx_ScreenFade = 3;
+                    D_800B5C30       = 0x333;
                     g_GameWork.gameStateStep_598[0]++;
                 }
                 break;
 
             case 7:
-                if ((D_800BCD0C & 7) == 5)
+                if ((g_Gfx_ScreenFade & 7) == 5)
                 {
                     Settings_ScreenAndVolUpdate();
                     Gfx_Init(SCREEN_WIDTH, 0);
