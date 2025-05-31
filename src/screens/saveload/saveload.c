@@ -103,7 +103,7 @@ s8 D_801E76D1 = 0; // Unused.
 
 s8 g_IsMemCardNotInserted[MEMORY_CARD_SLOT_COUNT] = { 0, 0 };
 
-s8 g_Gfx_SaveShineTimer = 0;
+s8 g_Gfx_SaveFlashTimer = 0;
 
 u8 D_801E76D5 = 0;
 
@@ -119,7 +119,7 @@ void Savegame_ScreenSubInit() // 0x801E2D8C
 
     D_801E750C           = 0;
     D_801E7510           = 0;
-    g_Gfx_SaveShineTimer = 40;
+    g_Gfx_SaveFlashTimer = 40;
     g_IsGameSaving       = 0;
 
     for (i = 0; i < MEMORY_CARD_SLOT_COUNT; i++)
@@ -145,7 +145,7 @@ void Savegame_ScreenSubInit() // 0x801E2D8C
 
 void Gfx_SaveBackgroundDraw() // 0x801E2EBC
 {
-    s_801E2A98 var;
+    s_Line2d var;
     s32        i;
     
     DVECTOR posTable[] = 
@@ -174,10 +174,10 @@ void Gfx_SaveBackgroundDraw() // 0x801E2EBC
         Gfx_StringDraw(strs[i], 50);
     }
 
-    var.field_0.vx = -136;
-    var.field_0.vy = 60;
-    var.field_4.vx = 272;
-    var.field_4.vy = 40;
+    var.vertex0_0.vx = -136;
+    var.vertex0_0.vy = 60;
+    var.vertex1_4.vx = 272;
+    var.vertex1_4.vy = 40;
     Gfx_RectSaveInfoDraw(&var);
 }
 
@@ -274,29 +274,29 @@ void Gfx_SavesLocationDraw(s_SaveSlotElementInfo* ptr, s32 arg1, s32 idx) // 0x8
     }
 }
 
-void func_801E326C(s_SaveSlotElementInfo* arg0, s_SaveSlotElementInfo* arg1, s32 arg2, s32 arg3) // 0x801E326C
+void func_801E326C(s_SaveSlotElementInfo* element0, s_SaveSlotElementInfo* element1, s32 elementIdx, s32 slotIdx) // 0x801E326C
 {
-    if (arg2 == 0)
+    if (elementIdx == 0)
     {
-        D_801E756C[arg3] = 0;
+        D_801E756C[slotIdx] = 0;
     }
 
-    if (arg2 < g_HiddentElementByDisplacement[arg3] || (g_HiddentElementByDisplacement[arg3] + 4) < arg2)
+    if (elementIdx < g_HiddentElementByDisplacement[slotIdx] || (g_HiddentElementByDisplacement[slotIdx] + 4) < elementIdx)
     {
-        if (D_801E756C[arg3] != arg0->file_Idx_6)
+        if (D_801E756C[slotIdx] != element0->fileIdx_6)
         {
-            D_801E756C[arg3] = arg0->file_Idx_6;
+            D_801E756C[slotIdx] = element0->fileIdx_6;
         }
     }
     else
     {
-        Gfx_SavesOutlineDraw(arg0, arg1, arg2, arg3);
+        Gfx_SavesOutlineDraw(element0, element1, elementIdx, slotIdx);
     }
 }
 
 void Gfx_SaveScreenDraw(s_SaveSlotElementInfo* slotsElementsPtr, s32 arg1, s32 slotIdx) // 0x801E3304
 {
-    char* D_801E2830[] =
+    char* strs[] =
     {
         "\x07MEMORY_CARD\nis_not_inserted",
         "\x07MEMORY_CARD\nis_\x01not_\x01""formatted",
@@ -325,8 +325,8 @@ void Gfx_SaveScreenDraw(s_SaveSlotElementInfo* slotsElementsPtr, s32 arg1, s32 s
     {
         Gfx_SavedShineDraw();
 
-        g_Gfx_SaveShineTimer++;
-        g_Gfx_SaveShineTimer = CLAMP(g_Gfx_SaveShineTimer, 0, 40);
+        g_Gfx_SaveFlashTimer++;
+        g_Gfx_SaveFlashTimer = CLAMP(g_Gfx_SaveFlashTimer, 0, 40);
 
         if (elementType != ElementType_LoadMemCard)
         {
@@ -340,7 +340,7 @@ void Gfx_SaveScreenDraw(s_SaveSlotElementInfo* slotsElementsPtr, s32 arg1, s32 s
 
         if ((u8)g_IsMemCardNotInserted[slotIdx] != 0)
         {
-            if (g_SlotElementSelectedIdx[slotIdx] == g_SlotElementCounts[slotIdx] - 2)
+            if (g_SlotElementSelectedIdx[slotIdx] == (g_SlotElementCounts[slotIdx] - 2))
             {
                 g_HiddentElementByDisplacement[slotIdx] = g_SlotElementSelectedIdx[slotIdx] - 3;
             }
@@ -350,7 +350,7 @@ void Gfx_SaveScreenDraw(s_SaveSlotElementInfo* slotsElementsPtr, s32 arg1, s32 s
             }
         }
 
-        if ((g_SlotElementCounts[slotIdx] < 6) || g_SlotElementSelectedIdx[slotIdx] == 0)
+        if (g_SlotElementCounts[slotIdx] < 6 || g_SlotElementSelectedIdx[slotIdx] == 0)
         {
             g_HiddentElementByDisplacement[slotIdx] = 0;
         }
@@ -362,12 +362,12 @@ void Gfx_SaveScreenDraw(s_SaveSlotElementInfo* slotsElementsPtr, s32 arg1, s32 s
             }
             else
             {
-                while (g_SlotElementSelectedIdx[slotIdx] - g_HiddentElementByDisplacement[slotIdx] >= 4)
+                while ((g_SlotElementSelectedIdx[slotIdx] - g_HiddentElementByDisplacement[slotIdx]) >= 4)
                 {
                     g_HiddentElementByDisplacement[slotIdx]++;
                 }
 
-                while (g_SlotElementSelectedIdx[slotIdx] - 1 < g_HiddentElementByDisplacement[slotIdx])
+                while ((g_SlotElementSelectedIdx[slotIdx] - 1) < g_HiddentElementByDisplacement[slotIdx])
                 {
                     g_HiddentElementByDisplacement[slotIdx]--;
                 }
@@ -420,7 +420,7 @@ void Gfx_SaveScreenDraw(s_SaveSlotElementInfo* slotsElementsPtr, s32 arg1, s32 s
             break;
     }
 
-    if ((arg1 < g_HiddentElementByDisplacement[slotIdx]) || ((g_HiddentElementByDisplacement[slotIdx] + 4) < arg1))
+    if (arg1 < g_HiddentElementByDisplacement[slotIdx] || ((g_HiddentElementByDisplacement[slotIdx] + 4) < arg1))
     {
         return;
     }
@@ -451,7 +451,7 @@ void Gfx_SaveScreenDraw(s_SaveSlotElementInfo* slotsElementsPtr, s32 arg1, s32 s
             break;
     }
 
-    Gfx_StringDraw(D_801E2830[elementType], 50);
+    Gfx_StringDraw(strs[elementType], 50);
 
     if (elementType < ElementType_CorruptedSave)
     {
@@ -620,7 +620,7 @@ void Gfx_MemCardStateDraw(s32 memCardState, s32 arg1) // 0x801E3910
             {
                 g_PrevSaveIdx[g_SlotSelectedIdx]     = g_SlotElementSelectedIdx[g_SlotSelectedIdx];
                 g_PrevSaveIdx[1 - g_SlotSelectedIdx] = NO_VALUE;
-                g_Gfx_SaveShineTimer = 0;
+                g_Gfx_SaveFlashTimer = 0;
             }
 
             D_801E7554 = strIdx;
@@ -646,7 +646,7 @@ void Gfx_OverwriteSaveDraw(s32 arg0, s32 arg1) // 0x801E3C44
     u32       time;
     POLY_F4*  poly;
 
-    char* D_801E2A3C[] =
+    char* strs[] =
     {
         "\x07Is_it_OK_to_overwrite?",
         "\x07Is_it_OK_to_format?",
@@ -671,7 +671,7 @@ void Gfx_OverwriteSaveDraw(s32 arg0, s32 arg1) // 0x801E3C44
 
         case 1:
             Gfx_StringSetPosition(160 - (xOffsets[arg0] / 2), 178);
-            Gfx_StringDraw(D_801E2A3C[arg0], 99);
+            Gfx_StringDraw(strs[arg0], 99);
             Gfx_StringSetPosition(104, 196);
             Gfx_StringDraw("\x07Yes__________No", 99);
 
@@ -722,7 +722,7 @@ void Gfx_SavedShineDraw() // 0x801E3E78
 
     if (temp_s1 < 5)
     {
-        sin  = shRsin((g_Gfx_SaveShineTimer << 10) / 40);
+        sin  = shRsin((g_Gfx_SaveFlashTimer << 10) / 40);
         poly = (POLY_F4*)GsOUT_PACKET_P;
         setlen(poly, 5);
         setcode(poly, 0x2A);
@@ -745,7 +745,7 @@ void Gfx_SavedShineDraw() // 0x801E3E78
 
 void Gfx_MemSelectedBarDraw() // 0x801E4010
 {
-    s_801E2A98 D_801E2A48[5][2] =
+    s_Line2d lines[5][2] =
     {
         {
             { {-107, -88 }, { -146, -88 } },
@@ -769,7 +769,7 @@ void Gfx_MemSelectedBarDraw() // 0x801E4010
         }
     };
 
-    s_801E2A48 D_801E2A98[5][2] =
+    s_Quad2d quads[5][2] =
     {
         {
             { { -106, -88 }, { -106, -92 }, { -146, -88 }, { -150, -92 } },
@@ -810,8 +810,8 @@ void Gfx_MemSelectedBarDraw() // 0x801E4010
             setRGB0(line, 0, 0xFF, 0);
 
             setXY2(line,
-                   D_801E2A48[j][i].field_0.vx + g_SlotSelectedIdx * 150, D_801E2A48[j][i].field_0.vy,
-                   D_801E2A48[j][i].field_4.vx + g_SlotSelectedIdx * 150, D_801E2A48[j][i].field_4.vy);
+                   lines[j][i].vertex0_0.vx + g_SlotSelectedIdx * 150, lines[j][i].vertex0_0.vy,
+                   lines[j][i].vertex1_4.vx + g_SlotSelectedIdx * 150, lines[j][i].vertex1_4.vy);
 
             addPrim((u8*)ot->org + 0x1C, line);
             GsOUT_PACKET_P = (u8*)line + sizeof(LINE_F2);
@@ -832,10 +832,10 @@ void Gfx_MemSelectedBarDraw() // 0x801E4010
             setRGB3(poly, 0, 0, 0);
 
             setXY4(poly,
-                   D_801E2A98[j][i].field_0.vx + g_SlotSelectedIdx * 150, D_801E2A98[j][i].field_0.vy,
-                   D_801E2A98[j][i].field_4.vx + g_SlotSelectedIdx * 150, D_801E2A98[j][i].field_4.vy,
-                   D_801E2A98[j][i].field_8.vx + g_SlotSelectedIdx * 150, D_801E2A98[j][i].field_8.vy,
-                   D_801E2A98[j][i].field_C.vx + g_SlotSelectedIdx * 150, D_801E2A98[j][i].field_C.vy);
+                   quads[j][i].vertex0_0.vx + (g_SlotSelectedIdx * 150), quads[j][i].vertex0_0.vy,
+                   quads[j][i].vertex1_4.vx + (g_SlotSelectedIdx * 150), quads[j][i].vertex1_4.vy,
+                   quads[j][i].vertex2_8.vx + (g_SlotSelectedIdx * 150), quads[j][i].vertex2_8.vy,
+                   quads[j][i].vertex3_C.vx + (g_SlotSelectedIdx * 150), quads[j][i].vertex3_C.vy);
 
             addPrim((u8*)ot->org + 0x1C, poly);
             GsOUT_PACKET_P = (u8*)poly + sizeof(POLY_G4);
@@ -889,13 +889,13 @@ void Gfx_SavesTransparentBgDraw(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x801
 {
     u32 temp_s4 = (u8)g_SysWork.timer_1C & 0x3F;
 
-    s_801E2A48 D_801E2B38[] =
+    s_Quad2d quads[] =
     {
         { { 0, 0 }, { 0, 96 }, { 4, 0 }, { 4, 96 } },
         { { 8, 0 }, { 8, 96 }, { 4, 0 }, { 4, 96 } }
     };
 
-    s_801E2B58 D_801E2B58[2][2] =
+    s_Triangle2d tris[2][2] =
     {
         {
             { { 4, -1 }, {-1, 7 }, { 8, 7 } },
@@ -907,6 +907,7 @@ void Gfx_SavesTransparentBgDraw(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x801
         }
     };
 
+    // Height offsets of some kind.
     u8 D_801E2B88[] =
     {
         79, 40, 27, 20, 16, 14, 12, 10,
@@ -980,10 +981,10 @@ void Gfx_SavesTransparentBgDraw(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x801
             temp_a0 = (i - 60);
 
             setXY4(poly_f4,
-                   (D_801E2B38[0].field_0.vx + temp_t1) + i, (D_801E2B38[0].field_0.vy + temp_a2) + temp_a0,
-                   (D_801E2B38[0].field_0.vx + temp_t1) + i, ((D_801E2B38[0].field_0.vy + temp_a2) + temp_t3) - (i + 60),
-                   (D_801E2B38[1].field_0.vx + temp_t1) - i, (D_801E2B38[1].field_0.vy + temp_a2) + temp_a0,
-                   (D_801E2B38[1].field_0.vx + temp_t1) - i, ((D_801E2B38[1].field_0.vy + temp_a2) + temp_t3) - (i + 60));
+                   (quads[0].vertex0_0.vx + temp_t1) + i,  (quads[0].vertex0_0.vy + temp_a2) + temp_a0,
+                   (quads[0].vertex0_0.vx + temp_t1) + i, ((quads[0].vertex0_0.vy + temp_a2) + temp_t3) - (i + 60),
+                   (quads[1].vertex0_0.vx + temp_t1) - i,  (quads[1].vertex0_0.vy + temp_a2) + temp_a0,
+                   (quads[1].vertex0_0.vx + temp_t1) - i, ((quads[1].vertex0_0.vy + temp_a2) + temp_t3) - (i + 60));
 
             addPrim((u8*)ot->org + 0x1C - 4 * i, poly_f4);
             GsOUT_PACKET_P = (u8*)poly_f4 + sizeof(POLY_F4);
@@ -1033,9 +1034,9 @@ void Gfx_SavesTransparentBgDraw(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x801
             temp_t2_2 = (arg0 * 150) - 139;
 
             setXY3(poly_g3,
-                   D_801E2B58[i][j].field_0.vx + temp_t2_2, D_801E2B58[i][j].field_0.vy - 60,
-                   D_801E2B58[i][j].field_4.vx + temp_t2_2, D_801E2B58[i][j].field_4.vy - 60,
-                   D_801E2B58[i][j].field_8.vx + temp_t2_2, D_801E2B58[i][j].field_8.vy - 60);
+                   tris[i][j].vertex0_0.vx + temp_t2_2, tris[i][j].vertex0_0.vy - 60,
+                   tris[i][j].vertex1_4.vx + temp_t2_2, tris[i][j].vertex1_4.vy - 60,
+                   tris[i][j].vertex2_8.vx + temp_t2_2, tris[i][j].vertex2_8.vy - 60);
 
             addPrim((u8*)ot->org + 0x1C, poly_g3);
             GsOUT_PACKET_P = (u8*)poly_g3 + sizeof(POLY_G3);
@@ -1055,10 +1056,10 @@ void Gfx_SavesTransparentBgDraw(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x801
         temp_a2_2 = (arg0 * 150) - 139;
 
         setXY4(poly_g4,
-               D_801E2B38[i].field_0.vx + temp_a2_2, D_801E2B38[i].field_0.vy - 60,
-               D_801E2B38[i].field_4.vx + temp_a2_2, D_801E2B38[i].field_4.vy - 60,
-               D_801E2B38[i].field_8.vx + temp_a2_2, D_801E2B38[i].field_8.vy - 60,
-               D_801E2B38[i].field_C.vx + temp_a2_2, D_801E2B38[i].field_C.vy - 60);
+               quads[i].vertex0_0.vx + temp_a2_2, quads[i].vertex0_0.vy - 60,
+               quads[i].vertex1_4.vx + temp_a2_2, quads[i].vertex1_4.vy - 60,
+               quads[i].vertex2_8.vx + temp_a2_2, quads[i].vertex2_8.vy - 60,
+               quads[i].vertex3_C.vx + temp_a2_2, quads[i].vertex3_C.vy - 60);
 
         addPrim((u8*)ot->org + 0x20, poly_g4);
         GsOUT_PACKET_P = (u8*)poly_g4 + sizeof(POLY_G4);
@@ -1082,29 +1083,29 @@ void Gfx_SavesTransparentBgDraw(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x801
     func_80052088(0, 0, 8, 1);
 }
 
-void Gfx_SavesOutlineDraw(s_SaveSlotElementInfo* arg0, s_SaveSlotElementInfo* arg1, s32 arg2, s32 arg3) // 0x801E4D90
+void Gfx_SavesOutlineDraw(s_SaveSlotElementInfo* element0, s_SaveSlotElementInfo* element1, s32 elementIdx, s32 slotIdx) // 0x801E4D90
 {
     GsOT* ot;
-    u32   temp_s1  = arg0->element_Idx_7;
-    s32   temp_s0  = arg0->file_Idx_6 + 1;
-    s32   temp_s00 = arg1->file_Idx_6 + 1;
+    u32   temp_s1  = element0->elementIdx_7;
+    s32   temp_s0  = element0->fileIdx_6 + 1;
+    s32   temp_s00 = element1->fileIdx_6 + 1;
     s16   var_a2;
     s16   var_t0_3;
-    s32   temp_t2;
-    s32   temp_t3;
+    s32   vertOffsetX;
+    s32   vertOffsetY;
     s32   temp_t7;
     s32   i;
     s32   var_t8;
 
-    s_801E2A98 D_801E2C30[] =
+    s_Line2d lines[] =
     {
         { { -131, -62 }, { -11, -62 } },
         { { -131, -43 }, { -11, -43 } },
         { { -131, -62 }, { -131, -44 } },
-        { { -11, -62 }, { -11, -44 } }
+        { { -11,  -62 }, { -11, -44 } }
     };
 
-    s_primColor D_801E2C50[] =
+    s_PrimColor colors[] =
     {
         { 0x20, 0xA0, 0x20, 0x00 },
         { 0x60, 0xA0, 0x20, 0x00 },
@@ -1127,7 +1128,7 @@ void Gfx_SavesOutlineDraw(s_SaveSlotElementInfo* arg0, s_SaveSlotElementInfo* ar
     TILE*    tile;
 
     ot      = &g_ObjectTable1[g_ObjectTableIdx];
-    temp_t7 = arg2 - g_HiddentElementByDisplacement[arg3];
+    temp_t7 = elementIdx - g_HiddentElementByDisplacement[slotIdx];
 
     var_t8 = temp_t7 ? (temp_s1 > 0) : 0;
 
@@ -1135,22 +1136,22 @@ void Gfx_SavesOutlineDraw(s_SaveSlotElementInfo* arg0, s_SaveSlotElementInfo* ar
     {
         line = (LINE_F2*)GsOUT_PACKET_P;
         setLineF2(line);
-        setRGB0(line, D_801E2C50[temp_s0 - 1].r, D_801E2C50[temp_s0 - 1].g, D_801E2C50[temp_s0 - 1].b);
+        setRGB0(line, colors[temp_s0 - 1].r, colors[temp_s0 - 1].g, colors[temp_s0 - 1].b);
 
-        temp_t3 = arg3 * 150;
-        temp_t2 = temp_t7 * 20;
+        vertOffsetX = slotIdx * 150;
+        vertOffsetY = temp_t7 * 20;
 
         if (var_t8 == 0)
         {
             setXY2(line,
-                   D_801E2C30[i].field_0.vx + temp_t3, D_801E2C30[i].field_0.vy + temp_t2,
-                   D_801E2C30[i].field_4.vx + temp_t3, D_801E2C30[i].field_4.vy + temp_t2);
+                   lines[i].vertex0_0.vx + vertOffsetX, lines[i].vertex0_0.vy + vertOffsetY,
+                   lines[i].vertex1_4.vx + vertOffsetX, lines[i].vertex1_4.vy + vertOffsetY);
         }
         else
         {
             setXY2(line,
-                   D_801E2C30[i].field_0.vx + temp_t3, (D_801E2C30[i].field_0.vy + temp_t2) - ((i + (s32)((u32)i >> 0x1F)) >> 1),
-                   D_801E2C30[i].field_4.vx + temp_t3, D_801E2C30[i].field_4.vy + temp_t2);
+                   lines[i].vertex0_0.vx + vertOffsetX, (lines[i].vertex0_0.vy + vertOffsetY) - ((i + (s32)((u32)i >> 31)) >> 1),
+                   lines[i].vertex1_4.vx + vertOffsetX,  lines[i].vertex1_4.vy + vertOffsetY);
         }
 
         addPrim((u8*)ot->org + 0x18, line);
@@ -1164,9 +1165,9 @@ void Gfx_SavesOutlineDraw(s_SaveSlotElementInfo* arg0, s_SaveSlotElementInfo* ar
             tile = (TILE*)GsOUT_PACKET_P;
             setTile(tile);
 
-            setRGB0(tile, D_801E2C50[temp_s0 - 1].r, D_801E2C50[temp_s0 - 1].g, D_801E2C50[temp_s0 - 1].b);
+            setRGB0(tile, colors[temp_s0 - 1].r, colors[temp_s0 - 1].g, colors[temp_s0 - 1].b);
 
-            var_t0_3 = (arg3 * 150) - 131;
+            var_t0_3 = (slotIdx * 150) - 131;
             setXY0(tile, var_t0_3 + 117 * i, ((temp_t7 * 20) - 62));
             setWH(tile, 4, 4);
 
@@ -1175,45 +1176,49 @@ void Gfx_SavesOutlineDraw(s_SaveSlotElementInfo* arg0, s_SaveSlotElementInfo* ar
         }
     }
 
-    if (temp_s0 != temp_s00 || arg2 + 1 == g_SlotElementCounts[arg3])
+    if (temp_s0 != temp_s00 || (elementIdx + 1) == g_SlotElementCounts[slotIdx])
     {
         for (i = 0; i < 2; i += 1)
         {
             tile = (TILE*)GsOUT_PACKET_P;
             setTile(tile);
 
-            setRGB0(tile, D_801E2C50[temp_s0 - 1].r, D_801E2C50[temp_s0 - 1].g, D_801E2C50[temp_s0 - 1].b);
+            setRGB0(tile, colors[temp_s0 - 1].r, colors[temp_s0 - 1].g, colors[temp_s0 - 1].b);
 
-            var_a2 = (arg3 * 150) - 131;
-            setXY0(tile, var_a2 + 117 * i, ((temp_t7 * 20) - 46));
+            var_a2 = (slotIdx * 150) - 131;
+            setXY0(tile, var_a2 + (117 * i), ((temp_t7 * 20) - 46));
             setWH(tile, 4, 4);
 
-            addPrim((u8*)ot->org + 0x18, tile);
+            addPrim((u8*)ot->org + 24, tile);
             GsOUT_PACKET_P = (u8*)tile + sizeof(TILE);
         }
     }
 
-    if (D_801E756C[arg3] != temp_s0)
+    if (D_801E756C[slotIdx] != temp_s0)
     {
-        D_801E756C[arg3] = temp_s0;
+        D_801E756C[slotIdx] = temp_s0;
     }
 }
 
-void func_801E52D8(s32 arg0, s32 arg1) // 0x801E52D8
+void func_801E52D8(s32 slotIdx, s32 elementType) // 0x801E52D8
 {
     s_801E2C8C D_801E2C8C[2] =
     {
         {
-            { -142, -33 },
-            { 136, 33 },
+            {
+                { -142, -33 },
+                { 136, 33 }
+            },
             255,
             0,
             0,
             0,
         },
         {
-            { -142, -33 }, 
-            { 136, 33 }, 
+            {
+                { -142, -33 }, 
+                { 136, 33 }
+            }, 
             0,
             255,
             0,
@@ -1221,7 +1226,7 @@ void func_801E52D8(s32 arg0, s32 arg1) // 0x801E52D8
         }
     };
 
-    s_801E2CAC D_801E2CAC =
+    s_Lines2d lines =
     {
         {
             { { -144, -36 }, { -4, -36 } },
@@ -1231,7 +1236,7 @@ void func_801E52D8(s32 arg0, s32 arg1) // 0x801E52D8
         }
     };
 
-    s_801E2CCC D_801E2CCC =
+    s_Quads2d quads =
     {
         {
             { { -144, -36 }, { -148, -40 }, { -4, -36 }, { 0, -40 } },
@@ -1241,24 +1246,26 @@ void func_801E52D8(s32 arg0, s32 arg1) // 0x801E52D8
         }
     };
 
-    if (arg1 == 1 && g_GameWork.gameState_594 == GameState_Unk10) 
+    if (elementType == 1 && g_GameWork.gameState_594 == GameState_Unk10) 
     {
-        Gfx_RectMemLoadDraw(&D_801E2CAC, &D_801E2CCC, &D_801E2C8C[1], arg0);
+        Gfx_RectMemLoadDraw(&lines, &quads, &D_801E2C8C[1], slotIdx);
     } 
     else 
     {
-        Gfx_RectMemLoadDraw(&D_801E2CAC, &D_801E2CCC, &D_801E2C8C[0], arg0);
+        Gfx_RectMemLoadDraw(&lines, &quads, &D_801E2C8C[0], slotIdx);
     }
 }
 
-void Gfx_RectMemLoadDraw(s_801E2CAC* arg0, s_801E2CCC* arg1, s_801E2C8C* arg2, s32 arg3) // 0x801E54DC
+void Gfx_RectMemLoadDraw(s_Lines2d* lines, s_Quads2d* quads, s_801E2C8C* arg2, s32 slotIdx) // 0x801E54DC
 {
-    GsOT*       ot;
-    s32         i;
-    s_801E2A98* temp;
-    LINE_F2*    line;
-    POLY_G4*    poly_g4;
-    POLY_F4*    poly_f4;
+    #define SLOT_COLUMN_OFFSET 150
+
+    GsOT*     ot;
+    s32       i;
+    s_Line2d* temp;
+    LINE_F2*  line;
+    POLY_G4*  poly_g4;
+    POLY_F4*  poly_f4;
 
     ot = &g_ObjectTable1[g_ObjectTableIdx];
 
@@ -1268,8 +1275,8 @@ void Gfx_RectMemLoadDraw(s_801E2CAC* arg0, s_801E2CCC* arg1, s_801E2C8C* arg2, s
         setLineF2(line);
         setRGB0(line, arg2->field_8, arg2->field_A, arg2->field_C);
         setXY2(line,
-               arg0->field_0[i].field_0.vx + arg3 * 150, arg0->field_0[i].field_0.vy,
-               arg0->field_0[i].field_4.vx + arg3 * 150, arg0->field_0[i].field_4.vy);
+               lines->lines_0[i].vertex0_0.vx + (slotIdx * SLOT_COLUMN_OFFSET), lines->lines_0[i].vertex0_0.vy,
+               lines->lines_0[i].vertex1_4.vx + (slotIdx * SLOT_COLUMN_OFFSET), lines->lines_0[i].vertex1_4.vy);
         addPrim((u8*)ot->org + 28, line);
         GsOUT_PACKET_P = (u8*)line + sizeof(LINE_F2);
     }
@@ -1284,13 +1291,13 @@ void Gfx_RectMemLoadDraw(s_801E2CAC* arg0, s_801E2CCC* arg1, s_801E2C8C* arg2, s
         setRGB2(poly_g4, arg2->field_8 / 2, arg2->field_A / 2, arg2->field_C / 2);
         setRGB3(poly_g4, 0, 0, 0);
 
-        temp = (s_801E2A98*)&arg1->field_0[i].field_8;
+        temp = (s_Line2d*)&quads->quads_0[i].vertex2_8;
 
         setXY4(poly_g4,
-               arg1->field_0[i].field_0.vx + (arg3 * 150), arg1->field_0[i].field_0.vy,
-               arg1->field_0[i].field_4.vx + (arg3 * 150), arg1->field_0[i].field_4.vy,
-               arg1->field_0[i].field_8.vx + (arg3 * 150), temp->field_0.vy,
-               temp->field_4.vx + (arg3 * 150), temp->field_4.vy);
+               quads->quads_0[i].vertex0_0.vx + (slotIdx * SLOT_COLUMN_OFFSET), quads->quads_0[i].vertex0_0.vy,
+               quads->quads_0[i].vertex1_4.vx + (slotIdx * SLOT_COLUMN_OFFSET), quads->quads_0[i].vertex1_4.vy,
+               quads->quads_0[i].vertex2_8.vx + (slotIdx * SLOT_COLUMN_OFFSET), temp->vertex0_0.vy,
+               temp->vertex1_4.vx + (slotIdx * SLOT_COLUMN_OFFSET), temp->vertex1_4.vy);
 
         addPrim((u8*)ot->org + 32, poly_g4);
         GsOUT_PACKET_P = (u8*)poly_g4 + sizeof(POLY_G4);
@@ -1304,10 +1311,10 @@ void Gfx_RectMemLoadDraw(s_801E2CAC* arg0, s_801E2CCC* arg1, s_801E2C8C* arg2, s
     setRGB0(poly_f4, 48, 48, 48);
 
     setXY4(poly_f4,
-           arg2->field_0.vx + (arg3 * 150), arg2->field_0.vy,
-           arg2->field_0.vx + (arg3 * 150), arg2->field_0.vy + arg2->field_4.vy,
-           arg2->field_0.vx + arg2->field_4.vx + (arg3 * 150), arg2->field_0.vy,
-           arg2->field_0.vx + arg2->field_4.vx + (arg3 * 150), arg2->field_0.vy + arg2->field_4.vy);
+           arg2->line_0.vertex0_0.vx + (slotIdx * SLOT_COLUMN_OFFSET), arg2->line_0.vertex0_0.vy,
+           arg2->line_0.vertex0_0.vx + (slotIdx * SLOT_COLUMN_OFFSET), arg2->line_0.vertex0_0.vy + arg2->line_0.vertex1_4.vy,
+           arg2->line_0.vertex0_0.vx + arg2->line_0.vertex1_4.vx + (slotIdx * SLOT_COLUMN_OFFSET), arg2->line_0.vertex0_0.vy,
+           arg2->line_0.vertex0_0.vx + arg2->line_0.vertex1_4.vx + (slotIdx * SLOT_COLUMN_OFFSET), arg2->line_0.vertex0_0.vy + arg2->line_0.vertex1_4.vy);
 
     addPrim((u8*)ot->org + 32, poly_f4);
     GsOUT_PACKET_P = (u8*)poly_f4 + sizeof(POLY_F4);
@@ -1315,7 +1322,7 @@ void Gfx_RectMemLoadDraw(s_801E2CAC* arg0, s_801E2CCC* arg1, s_801E2C8C* arg2, s
     func_80052088(0, 0, 8, 1);
 }
 
-void Gfx_RectSaveInfoDraw(s_801E2A98* arg0) // 0x801E5898
+void Gfx_RectSaveInfoDraw(s_Line2d* line) // 0x801E5898
 {
     GsOT*    ot;
     s32      color;
@@ -1324,61 +1331,62 @@ void Gfx_RectSaveInfoDraw(s_801E2A98* arg0) // 0x801E5898
     POLY_F4* poly_f4;
     LINE_G2* line_g2;
 
+    // Adjusted lines?
     DVECTOR sp10[] =
     {
         {
-            .vx = arg0->field_0.vx,
-            .vy = arg0->field_0.vy
+            .vx = line->vertex0_0.vx,
+            .vy = line->vertex0_0.vy
         },
         {
-            .vx = (arg0->field_0.vx + arg0->field_4.vx) - 8,
-            .vy = arg0->field_0.vy
+            .vx = (line->vertex0_0.vx + line->vertex1_4.vx) - 8,
+            .vy = line->vertex0_0.vy
         },
         {
-            .vx = arg0->field_0.vx + arg0->field_4.vx,
-            .vy = arg0->field_0.vy + 8},
+            .vx = line->vertex0_0.vx + line->vertex1_4.vx,
+            .vy = line->vertex0_0.vy + 8},
         {
-            .vx = arg0->field_0.vx + arg0->field_4.vx,
-            .vy = arg0->field_0.vy + arg0->field_4.vy
+            .vx = line->vertex0_0.vx + line->vertex1_4.vx,
+            .vy = line->vertex0_0.vy + line->vertex1_4.vy
         },
         {
-            .vx = arg0->field_0.vx + 8,
-            .vy = arg0->field_0.vy + arg0->field_4.vy
+            .vx = line->vertex0_0.vx + 8,
+            .vy = line->vertex0_0.vy + line->vertex1_4.vy
         },
         {
-            .vx = arg0->field_0.vx,
-            .vy = (arg0->field_0.vy + arg0->field_4.vy) - 8
+            .vx = line->vertex0_0.vx,
+            .vy = (line->vertex0_0.vy + line->vertex1_4.vy) - 8
         }
     };
 
-    s_801E2B58 sp28[] =
+    s_Triangle2d tris[] =
     {
         {
             {
-                .vx = arg0->field_0.vx + arg0->field_4.vx,
-                .vy = arg0->field_0.vy
+                .vx = line->vertex0_0.vx + line->vertex1_4.vx,
+                .vy = line->vertex0_0.vy
             },
             {
-                .vx = (arg0->field_0.vx + arg0->field_4.vx) - 8,
-                .vy = arg0->field_0.vy
+                .vx = (line->vertex0_0.vx + line->vertex1_4.vx) - 8,
+                .vy = line->vertex0_0.vy
             },
             {
-                .vx = arg0->field_0.vx + arg0->field_4.vx,
-                .vy = arg0->field_0.vy + 8
+                .vx = line->vertex0_0.vx + line->vertex1_4.vx,
+                .vy = line->vertex0_0.vy + 8
             },
         },
         {
             {
-                .vx = arg0->field_0.vx,
-                .vy = arg0->field_0.vy + arg0->field_4.vy
+                .vx = line->vertex0_0.vx,
+                .vy = line->vertex0_0.vy + line->vertex1_4.vy
             },
             {
-                .vx = arg0->field_0.vx + 8,
-                .vy = arg0->field_0.vy + arg0->field_4.vy
+                .vx = line->vertex0_0.vx + 8,
+                .vy = line->vertex0_0.vy + line->vertex1_4.vy
             },
             {
-                .vx = arg0->field_0.vx,
-                .vy = (arg0->field_0.vy + arg0->field_4.vy) - 8
+                .vx = line->vertex0_0.vx,
+                .vy = (line->vertex0_0.vy + line->vertex1_4.vy) - 8
             }
         }
     };
@@ -1395,9 +1403,9 @@ void Gfx_RectSaveInfoDraw(s_801E2A98* arg0) // 0x801E5898
         setcode(poly_f3, 0x22);
         setRGB0(poly_f3, color, 0x30, 0x30);
         setXY3(poly_f3,
-               sp28[i].field_0.vx, sp28[i].field_0.vy,
-               sp28[i].field_4.vx, sp28[i].field_4.vy,
-               sp28[i].field_8.vx, sp28[i].field_8.vy);
+               tris[i].vertex0_0.vx, tris[i].vertex0_0.vy,
+               tris[i].vertex1_4.vx, tris[i].vertex1_4.vy,
+               tris[i].vertex2_8.vx, tris[i].vertex2_8.vy);
         addPrim((u8*)ot->org + 0x20, poly_f3);
 
         GsOUT_PACKET_P = (u8*)poly_f3;
@@ -1411,10 +1419,10 @@ void Gfx_RectSaveInfoDraw(s_801E2A98* arg0) // 0x801E5898
     setcode(poly_f4, 0x2A);
     setRGB0(poly_f4, 0x30, 0x30, 0x30);
     setXY4(poly_f4,
-           arg0->field_0.vx, arg0->field_0.vy,
-           arg0->field_0.vx, arg0->field_0.vy + arg0->field_4.vy,
-           arg0->field_0.vx + arg0->field_4.vx, arg0->field_0.vy,
-           arg0->field_0.vx + arg0->field_4.vx, arg0->field_0.vy + arg0->field_4.vy);
+           line->vertex0_0.vx, line->vertex0_0.vy,
+           line->vertex0_0.vx, line->vertex0_0.vy + line->vertex1_4.vy,
+           line->vertex0_0.vx + line->vertex1_4.vx, line->vertex0_0.vy,
+           line->vertex0_0.vx + line->vertex1_4.vx, line->vertex0_0.vy + line->vertex1_4.vy);
     addPrim((u8*)ot->org + 0x24, poly_f4);
     GsOUT_PACKET_P = (u8*)poly_f4 + sizeof(POLY_F4);
 
@@ -1447,7 +1455,7 @@ void Gfx_RectSaveInfoDraw(s_801E2A98* arg0) // 0x801E5898
 
 void Gfx_SaveDataInfoDraw(s32 arg0, s32 elementIdx) // 0x801E5E18
 {
-    char* D_801E2D70[] =
+    char* strs[] =
     {
         "Data",
         "Save",
@@ -1457,21 +1465,21 @@ void Gfx_SaveDataInfoDraw(s32 arg0, s32 elementIdx) // 0x801E5E18
         "You_need_1_free_block\n__to_create_a_new_file."
     };
 
-    GsOT*           ot;
-    s32             saveId;
-    s32             mins;
-    s32             hasFlag;
-    s32             sec;
-    s32             hours;
-    s32             saveDataIdx;
-    s32             i;
-    s32             digitCount;
-    s32             offset;
-    u32             saveFlags;
-    u32             flags;
-    u32             timeInSec;
+    GsOT*            ot;
+    s32              saveId;
+    s32              mins;
+    s32              hasFlag;
+    s32              sec;
+    s32              hours;
+    s32              saveDataIdx;
+    s32              i;
+    s32              digitCount;
+    s32              offset;
+    u32              saveFlags;
+    u32              flags;
+    u32              timeInSec;
     s_SaveBasicInfo* ptr;
-    POLY_G4*        poly;
+    POLY_G4*         poly;
 
     ot = &g_ObjectTable1[g_ObjectTableIdx];
 
@@ -1486,7 +1494,7 @@ void Gfx_SaveDataInfoDraw(s32 arg0, s32 elementIdx) // 0x801E5E18
     else if (g_SlotElementInfo[elementIdx].elementType_4 == 8)
     {
         saveId      = g_SlotElementInfo[elementIdx].savegameCount_2;
-        saveDataIdx = g_SlotElementInfo[elementIdx].element_Idx_7 + 1;
+        saveDataIdx = g_SlotElementInfo[elementIdx].elementIdx_7 + 1;
 
         saveId = CLAMP(saveId, 0, 999);
 
@@ -1650,7 +1658,7 @@ void Savegame_ScreenInit() // 0x801E63C0
 
 void Savegame_ScreenLogic() // 0x801E649C
 {
-    s32                                   step = g_GameWork.gameStateStep_598[1];
+    s32                    step = g_GameWork.gameStateStep_598[1];
     s_SaveSlotElementInfo* selectedSaveInfoPtr;
 
     switch (step)
@@ -1701,8 +1709,8 @@ void Savegame_ScreenLogic() // 0x801E649C
                 selectedSaveInfoPtr = &g_SlotElementInfo[g_SlotElementSelectedIdx[g_SlotSelectedIdx]];
                 g_SlotElementInfo   = selectedSaveInfoPtr;
                 D_800BCD40          = selectedSaveInfoPtr->field_5;
-                g_SelectedFileIdx   = selectedSaveInfoPtr->file_Idx_6;
-                g_SelectedSaveIdx   = selectedSaveInfoPtr->element_Idx_7;
+                g_SelectedFileIdx   = selectedSaveInfoPtr->fileIdx_6;
+                g_SelectedSaveIdx   = selectedSaveInfoPtr->elementIdx_7;
 
                 if (D_800BCD38 == 2) 
                 {
@@ -1740,7 +1748,7 @@ void Savegame_ScreenLogic() // 0x801E649C
 			// Exit save screen.
             if (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel) 
             {
-                g_Gfx_ScreenFade                      = 3;
+                g_Gfx_ScreenFade                = 3;
                 g_GameWork.gameStateStep_598[1] = 2;
                 g_GameWork.gameStateStep_598[2] = 0;
 
@@ -1993,7 +2001,7 @@ void Savegame_LoadLogic() // 0x801E6DB0
                 {
                     D_800BCD39 = 1;
                     g_GameWork.gameStateStep_598[0] = 1;
-                    g_SysWork.timer_20 = 0;
+                    g_SysWork.timer_20              = 0;
                     g_GameWork.gameStateStep_598[1] = 0;
                     g_GameWork.gameStateStep_598[2] = 0;
                     break;
@@ -2019,7 +2027,7 @@ void Savegame_LoadLogic() // 0x801E6DB0
 
             if (var1 != 11)
             {
-                D_800BCD39 = 1;
+                D_800BCD39                      = 1;
                 g_GameWork.gameStateStep_598[0] = 1;
                 g_SysWork.timer_20              = 0;
                 g_GameWork.gameStateStep_598[1] = 0;
@@ -2102,7 +2110,7 @@ void Gfx_SaveScreen() // 0x801E70C8
         {
             if (g_SlotElementInfo->field_0 >= 0)
             {
-                Gfx_SaveFileSelectedDraw(j, i, g_SlotElementInfo->file_Idx_6 + 1, g_SlotElementInfo->elementType_4);
+                Gfx_SaveFileSelectedDraw(j, i, g_SlotElementInfo->fileIdx_6 + 1, g_SlotElementInfo->elementType_4);
             }
 
             Gfx_SaveScreenDraw(g_SlotElementInfo, j, i);
@@ -2206,8 +2214,8 @@ void func_801E737C() // 0x801E737C
     g_SlotElementInfo = (s_SaveSlotElementInfo*)&BOOT_ADDR_0[g_SlotSelectedIdx * 2640];
     g_SlotElementInfo = &g_SlotElementInfo[g_SlotElementSelectedIdx[g_SlotSelectedIdx]];
     D_800BCD40        = g_SlotElementInfo->field_5;
-    g_SelectedFileIdx = g_SlotElementInfo->file_Idx_6;
-    g_SelectedSaveIdx = g_SlotElementInfo->element_Idx_7;
+    g_SelectedFileIdx = g_SlotElementInfo->fileIdx_6;
+    g_SelectedSaveIdx = g_SlotElementInfo->elementIdx_7;
 
     g_GameWork.gameStateStep_598[0]++;
     g_SysWork.timer_20              = 0;
