@@ -1202,12 +1202,18 @@ void Gfx_SavesOutlineDraw(s_SaveSlotElementInfo* element0, s_SaveSlotElementInfo
 
 void func_801E52D8(s32 slotIdx, s32 elementType) // 0x801E52D8
 {
-    s_801E2C8C D_801E2C8C[2] =
+    s_ColoredLine2d coloredLines[MEMORY_CARD_SLOT_COUNT] =
     {
         {
             {
-                { -142, -33 },
-                { 136, 33 }
+                {
+                    .vx = -142,
+                    .vy = -33
+                },
+                {
+                    .vx = 136,
+                    .vy = 33
+                }
             },
             255,
             0,
@@ -1216,8 +1222,14 @@ void func_801E52D8(s32 slotIdx, s32 elementType) // 0x801E52D8
         },
         {
             {
-                { -142, -33 }, 
-                { 136, 33 }
+                {
+                    .vx = -142,
+                    .vy = -33
+                }, 
+                {
+                    .vx = 136,
+                    .vy = 33
+                }
             }, 
             0,
             255,
@@ -1226,7 +1238,7 @@ void func_801E52D8(s32 slotIdx, s32 elementType) // 0x801E52D8
         }
     };
 
-    s_Lines2d lines =
+    s_LineBorder lineBorders =
     {
         {
             { { -144, -36 }, { -4, -36 } },
@@ -1236,7 +1248,7 @@ void func_801E52D8(s32 slotIdx, s32 elementType) // 0x801E52D8
         }
     };
 
-    s_Quads2d quads =
+    s_QuadBorder quadBorders =
     {
         {
             { { -144, -36 }, { -148, -40 }, { -4, -36 }, { 0, -40 } },
@@ -1248,15 +1260,15 @@ void func_801E52D8(s32 slotIdx, s32 elementType) // 0x801E52D8
 
     if (elementType == 1 && g_GameWork.gameState_594 == GameState_Unk10) 
     {
-        Gfx_RectMemLoadDraw(&lines, &quads, &D_801E2C8C[1], slotIdx);
+        Gfx_RectMemLoadDraw(&lineBorders, &quadBorders, &coloredLines[1], slotIdx);
     } 
     else 
     {
-        Gfx_RectMemLoadDraw(&lines, &quads, &D_801E2C8C[0], slotIdx);
+        Gfx_RectMemLoadDraw(&lineBorders, &quadBorders, &coloredLines[0], slotIdx);
     }
 }
 
-void Gfx_RectMemLoadDraw(s_Lines2d* lines, s_Quads2d* quads, s_801E2C8C* arg2, s32 slotIdx) // 0x801E54DC
+void Gfx_RectMemLoadDraw(s_LineBorder* lineBorder, s_QuadBorder* quadBorder, s_ColoredLine2d* coloredLine, s32 slotIdx) // 0x801E54DC
 {
     #define SLOT_COLUMN_OFFSET 150
 
@@ -1273,10 +1285,10 @@ void Gfx_RectMemLoadDraw(s_Lines2d* lines, s_Quads2d* quads, s_801E2C8C* arg2, s
     {
         line = (LINE_F2*)GsOUT_PACKET_P;
         setLineF2(line);
-        setRGB0(line, arg2->field_8, arg2->field_A, arg2->field_C);
+        setRGB0(line, coloredLine->r_8, coloredLine->g_A, coloredLine->b_C);
         setXY2(line,
-               lines->lines_0[i].vertex0_0.vx + (slotIdx * SLOT_COLUMN_OFFSET), lines->lines_0[i].vertex0_0.vy,
-               lines->lines_0[i].vertex1_4.vx + (slotIdx * SLOT_COLUMN_OFFSET), lines->lines_0[i].vertex1_4.vy);
+               lineBorder->lines_0[i].vertex0_0.vx + (slotIdx * SLOT_COLUMN_OFFSET), lineBorder->lines_0[i].vertex0_0.vy,
+               lineBorder->lines_0[i].vertex1_4.vx + (slotIdx * SLOT_COLUMN_OFFSET), lineBorder->lines_0[i].vertex1_4.vy);
         addPrim((u8*)ot->org + 28, line);
         GsOUT_PACKET_P = (u8*)line + sizeof(LINE_F2);
     }
@@ -1286,17 +1298,17 @@ void Gfx_RectMemLoadDraw(s_Lines2d* lines, s_Quads2d* quads, s_801E2C8C* arg2, s
         poly_g4 = (POLY_G4*)GsOUT_PACKET_P;
         setlen(poly_g4, 8);
         setcode(poly_g4, 0x3A);
-        setRGB0(poly_g4, arg2->field_8 / 2, arg2->field_A / 2, arg2->field_C / 2);
+        setRGB0(poly_g4, coloredLine->r_8 / 2, coloredLine->g_A / 2, coloredLine->b_C / 2);
         setRGB1(poly_g4, 0, 0, 0);
-        setRGB2(poly_g4, arg2->field_8 / 2, arg2->field_A / 2, arg2->field_C / 2);
+        setRGB2(poly_g4, coloredLine->r_8 / 2, coloredLine->g_A / 2, coloredLine->b_C / 2);
         setRGB3(poly_g4, 0, 0, 0);
 
-        temp = (s_Line2d*)&quads->quads_0[i].vertex2_8;
+        temp = (s_Line2d*)&quadBorder->quads_0[i].vertex2_8;
 
         setXY4(poly_g4,
-               quads->quads_0[i].vertex0_0.vx + (slotIdx * SLOT_COLUMN_OFFSET), quads->quads_0[i].vertex0_0.vy,
-               quads->quads_0[i].vertex1_4.vx + (slotIdx * SLOT_COLUMN_OFFSET), quads->quads_0[i].vertex1_4.vy,
-               quads->quads_0[i].vertex2_8.vx + (slotIdx * SLOT_COLUMN_OFFSET), temp->vertex0_0.vy,
+               quadBorder->quads_0[i].vertex0_0.vx + (slotIdx * SLOT_COLUMN_OFFSET), quadBorder->quads_0[i].vertex0_0.vy,
+               quadBorder->quads_0[i].vertex1_4.vx + (slotIdx * SLOT_COLUMN_OFFSET), quadBorder->quads_0[i].vertex1_4.vy,
+               quadBorder->quads_0[i].vertex2_8.vx + (slotIdx * SLOT_COLUMN_OFFSET), temp->vertex0_0.vy,
                temp->vertex1_4.vx + (slotIdx * SLOT_COLUMN_OFFSET), temp->vertex1_4.vy);
 
         addPrim((u8*)ot->org + 32, poly_g4);
@@ -1311,10 +1323,10 @@ void Gfx_RectMemLoadDraw(s_Lines2d* lines, s_Quads2d* quads, s_801E2C8C* arg2, s
     setRGB0(poly_f4, 48, 48, 48);
 
     setXY4(poly_f4,
-           arg2->line_0.vertex0_0.vx + (slotIdx * SLOT_COLUMN_OFFSET), arg2->line_0.vertex0_0.vy,
-           arg2->line_0.vertex0_0.vx + (slotIdx * SLOT_COLUMN_OFFSET), arg2->line_0.vertex0_0.vy + arg2->line_0.vertex1_4.vy,
-           arg2->line_0.vertex0_0.vx + arg2->line_0.vertex1_4.vx + (slotIdx * SLOT_COLUMN_OFFSET), arg2->line_0.vertex0_0.vy,
-           arg2->line_0.vertex0_0.vx + arg2->line_0.vertex1_4.vx + (slotIdx * SLOT_COLUMN_OFFSET), arg2->line_0.vertex0_0.vy + arg2->line_0.vertex1_4.vy);
+           coloredLine->line_0.vertex0_0.vx + (slotIdx * SLOT_COLUMN_OFFSET), coloredLine->line_0.vertex0_0.vy,
+           coloredLine->line_0.vertex0_0.vx + (slotIdx * SLOT_COLUMN_OFFSET), coloredLine->line_0.vertex0_0.vy + coloredLine->line_0.vertex1_4.vy,
+           coloredLine->line_0.vertex0_0.vx + coloredLine->line_0.vertex1_4.vx + (slotIdx * SLOT_COLUMN_OFFSET), coloredLine->line_0.vertex0_0.vy,
+           coloredLine->line_0.vertex0_0.vx + coloredLine->line_0.vertex1_4.vx + (slotIdx * SLOT_COLUMN_OFFSET), coloredLine->line_0.vertex0_0.vy + coloredLine->line_0.vertex1_4.vy);
 
     addPrim((u8*)ot->org + 32, poly_f4);
     GsOUT_PACKET_P = (u8*)poly_f4 + sizeof(POLY_F4);

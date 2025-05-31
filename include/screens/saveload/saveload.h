@@ -114,21 +114,21 @@ typedef struct
 typedef struct
 {
     s_Line2d line_0;
-    u16      field_8;
-    u16      field_A;
-    u16      field_C;
+    u16      r_8;
+    u16      g_A;
+    u16      b_C;
     u16      pad_E;
-} s_801E2C8C;
+} s_ColoredLine2d;
 
 typedef struct
 {
     s_Line2d lines_0[4];
-} s_Lines2d;
+} s_LineBorder;
 
 typedef struct
 {
     s_Quad2d quads_0[4];
-} s_Quads2d;
+} s_QuadBorder;
 
 typedef struct
 {
@@ -262,7 +262,7 @@ void Gfx_SavesTransparentBgDraw(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 
 void func_801E52D8(s32 slotIdx, s32 elementType);
 
-void Gfx_RectMemLoadDraw(s_Lines2d* lines, s_Quads2d* quads, s_801E2C8C* arg2, s32 slotIdx);
+void Gfx_RectMemLoadDraw(s_LineBorder* lineBorder, s_QuadBorder* quadBorder, s_ColoredLine2d* coloredLine, s32 slotIdx);
 
 /** Updates the save screen. */
 void GameState_SaveScreen_Update();
