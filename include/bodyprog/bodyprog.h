@@ -804,7 +804,9 @@ extern s_FsImageDesc D_800A9054;
 
 extern s_FsImageDesc D_800A906C;
 
-extern s_FsImageDesc D_800A909C; // Passed to `func_800917C0` for loading FONT24.TIM.
+extern s_FsImageDesc D_800A9094; // Used in `Ai_Twinfeeler_TextureLoad` to load `TEST/WARMTEST.TIM`.
+
+extern s_FsImageDesc D_800A909C; // Passed to `func_800917C0` for loading `TIM/FONT24.TIM`.
 
 /** Array containg file IDs used for each `e_ShCharacterId`, used in `Fs_QueueStartReadAnm`. */
 extern s_CharaFileInfo g_Chara_FileInfo[45]; // 0x800A90FC

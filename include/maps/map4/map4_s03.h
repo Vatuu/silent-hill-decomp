@@ -3,7 +3,7 @@
 
 extern s_AnimInfo g_Ai_Twinfeeler_AnimInfo[]; // 0x800DAE90
 
-void Ai_Twinfeeler_TextureLoad(s_SubCharacter*);
+void Ai_Twinfeeler_TextureLoad();
 void func_800D354C(VECTOR3*);
 void func_800D3B44(s32);
 void func_800D3B74(s_SubCharacter*);
