@@ -3,8 +3,7 @@
 
 #include "common.h"
 
-#define MEMORY_CARD_SLOT_COUNT 2
-#define SAVE_COUNT_MAX         165
+#define SAVE_COUNT_MAX 165
 
 /** @brief This header is used to declare any variable, struct, or
  * function part of `SAVELOAD.BIN`.

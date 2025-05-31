@@ -2215,40 +2215,40 @@ s32 Settings_ButtonChange(s32 actionIdx) // 0x801E6CF4
 
 DR_MODE D_801E730C[2] =
 {
-	{.tag = 0x03000000, .code = {0xE1000200, 0}},
-	{.tag = 0x03000000, .code = {0xE1000200, 0}}
+    { .tag = 0x03000000, .code = { 0xE1000200, 0 } },
+    { .tag = 0x03000000, .code = { 0xE1000200, 0 } }
 };
 
 POLY_G4 D_801E7324[2] =
 {
-	{.tag = 0x08000000, .r0 = 0xFF, .g0 = 0xFF, .b0 = 0xFF, .code = 0x3A, .r3 = 0xFF, .g3 = 0xFF, .b3 = 0xFF},
-	{.tag = 0x08000000, .code = 0x3A, .r1 = 0xFF, .g1 = 0xFF, .b1 = 0xFF, .r2 = 0xFF, .g2 = 0xFF, .b2 = 0xFF},
+    { .tag = 0x08000000, .r0 = 0xFF, .g0 = 0xFF, .b0 = 0xFF, .code = 0x3A, .r3 = 0xFF, .g3 = 0xFF, .b3 = 0xFF },
+    { .tag = 0x08000000, .code = 0x3A, .r1 = 0xFF, .g1 = 0xFF, .b1 = 0xFF, .r2 = 0xFF, .g2 = 0xFF, .b2 = 0xFF },
 };
 
 char* g_ScreenCtrl_Options[] =
 {
-	"EXIT",
-	"TYPE_1",
-	"TYPE_2",
-	"TYPE_3"
+    "EXIT",
+    "TYPE_1",
+    "TYPE_2",
+    "TYPE_3"
 };
 
 char* g_ScreenCtrl_Actions[] =
 {
-	"ENTER",
-	"CANCEL",
-	"SKIP",
-	"ACTION",
-	"AIM",
-	"LIGHT",
-	"RUN",
-	"VIEW",
-	"STEP L",
-	"STEP R",
-	"PAUSE",
-	"ITEM",
-	"MAP",
-	"OPTION"
+    "ENTER",
+    "CANCEL",
+    "SKIP",
+    "ACTION",
+    "AIM",
+    "LIGHT",
+    "RUN",
+    "VIEW",
+    "STEP L",
+    "STEP R",
+    "PAUSE",
+    "ITEM",
+    "MAP",
+    "OPTION"
 };
 
 /** Unknown Rodata values.

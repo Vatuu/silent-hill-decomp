@@ -54,7 +54,7 @@ extern s8 D_800A97D8;
 /** Declaration of the struct takes 224 bytes (0xE0 bytes in hex).
 * It is possible that the full size of the struct
 * is `0x1C/28` bytes, as `func_8002E94C`
-* accesses element 8 and multiply it by 28 gives 224.
+* accesses element 8 and multiplies it by 28 to give 224.
 * Additionally, investigating the RAM affirms
 * that every `0x1C/28` bytes is the start address of a new element
 * which the decompiled code seems to point to.

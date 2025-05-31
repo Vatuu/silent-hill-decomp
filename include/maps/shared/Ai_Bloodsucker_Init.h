@@ -20,10 +20,12 @@ static inline void Ai_Bloodsucker_AnimUpdateFromStep(s_SubCharacter* chara)
             chara->health_B0       = 1;
             chara->model_0.state_2 = 2;
             break;
+
         case 19:
         case 20:
             chara->model_0.state_2 = 2;
             break;
+
         default:
             return;
     }

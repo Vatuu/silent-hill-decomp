@@ -34,7 +34,7 @@ INCLUDE_ASM("asm/maps/map4_s05/nonmatchings/map4_s05", func_800CE2FC);
 
 INCLUDE_ASM("asm/maps/map4_s05/nonmatchings/map4_s05", func_800CE3BC);
 
-void func_800CE508(void) {}
+void func_800CE508() {}
 
 #include "maps/shared/sharedFunc_800D01BC_0_s00.h" // 0x800CE510
 
@@ -84,22 +84,22 @@ INCLUDE_ASM("asm/maps/map4_s05/nonmatchings/map4_s05", func_800D0BE0);
 
 #include "maps/shared/sharedFunc_800D2E60_0_s00.h" // 0x800D1654
 
-void func_800D1660(void) {}
+void func_800D1660() {}
 
-void func_800D1668(void) {}
+void func_800D1668() {}
 
-void func_800D1670(void) {}
+void func_800D1670() {}
 
-void func_800D1678(void) {}
+void func_800D1678() {}
 
-void func_800D1680(void) {}
+void func_800D1680() {}
 
 s32 func_800D1688()
 {
     return 0;
 }
 
-void func_800D1690(void) {}
+void func_800D1690() {}
 
 #include "maps/shared/sharedFunc_800D2EA4_0_s00.h" // 0x800D1698
 
@@ -196,14 +196,14 @@ void Ai_Floatstinger_Init(s_SubCharacter* chara) // 0x800D1790
     }
 
     chara->properties_E4.larvalStalker.properties_E8[1].val16[0] = chara->rotation_24.vy;
-    chara->flags_3E |= (1 << 8) | (1 << 2);
+    chara->flags_3E |= CharaFlag_Unk9 | CharaFlag_Unk3;
 
     D_800D7858 = 0;
 
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
     {
         D_800D785C = FP_FLOAT_TO(2.4f, Q12_SHIFT);
-        chara->properties_E4.larvalStalker.properties_E8[0].val16[0] |= (1 << 0);
+        chara->properties_E4.larvalStalker.properties_E8[0].val16[0] |= 1 << 0;
     }
     else if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
     {
@@ -223,7 +223,7 @@ INCLUDE_ASM("asm/maps/map4_s05/nonmatchings/map4_s05", func_800D1BF8);
 
 INCLUDE_ASM("asm/maps/map4_s05/nonmatchings/map4_s05", func_800D2B90);
 
-void func_800D341C(void) {}
+void func_800D341C() {}
 
 INCLUDE_ASM("asm/maps/map4_s05/nonmatchings/map4_s05", func_800D3424);
 
@@ -251,7 +251,7 @@ INCLUDE_ASM("asm/maps/map4_s05/nonmatchings/map4_s05", func_800D5B0C);
 
 INCLUDE_ASM("asm/maps/map4_s05/nonmatchings/map4_s05", func_800D5D08);
 
-void func_800D5FDC(void) {}
+void func_800D5FDC() {}
 
 INCLUDE_ASM("asm/maps/map4_s05/nonmatchings/map4_s05", func_800D5FE4);
 
@@ -259,7 +259,7 @@ INCLUDE_ASM("asm/maps/map4_s05/nonmatchings/map4_s05", func_800D607C);
 
 INCLUDE_ASM("asm/maps/map4_s05/nonmatchings/map4_s05", func_800D6110);
 
-void func_800D61A4(void) {}
+void func_800D61A4() {}
 
 INCLUDE_ASM("asm/maps/map4_s05/nonmatchings/map4_s05", func_800D61AC);
 

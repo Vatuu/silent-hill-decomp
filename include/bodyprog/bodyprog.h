@@ -331,7 +331,7 @@ typedef struct
     u16 field_E;
     union
     {
-        s8  field_00[3];
+        s8  field_0[3];
         s16 field_01;
     } field_F;
     s8  field_14;

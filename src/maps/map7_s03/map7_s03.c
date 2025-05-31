@@ -71,22 +71,22 @@ s32 func_800D0E04()
 
 #include "maps/shared/sharedFunc_800D2E60_0_s00.h" // 0x800D0FF0
 
-void func_800D0FFC(void) {}
+void func_800D0FFC() {}
 
-void func_800D1004(void) {}
+void func_800D1004() {}
 
-void func_800D100C(void) {}
+void func_800D100C() {}
 
-void func_800D1014(void) {}
+void func_800D1014() {}
 
-void func_800D101C(void) {}
+void func_800D101C() {}
 
 s32 func_800D1024()
 {
     return 0;
 }
 
-void func_800D102C(void) {}
+void func_800D102C() {}
 
 #include "maps/shared/sharedFunc_800D2EA4_0_s00.h" // 0x800D1034
 
@@ -363,7 +363,7 @@ INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800D87D4);
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800D8858);
 
-void func_800D88C4(void) {}
+void func_800D88C4() {}
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800D88CC);
 
@@ -560,7 +560,7 @@ s32 Ai_Incubus_Init(s_SubCharacter* chara, s32 arg1) // 0x800DDA1C
     chara->field_E0_8      = 4;
     chara->field_DC        = 0;
     chara->field_DE        = 0;
-    chara->flags_3E |= 1 << 2;
+    chara->flags_3E       |= CharaFlag_Unk3;
 
     chara2->properties_E4.larvalStalker.properties_E8[2].val32 = 0;
     chara2->properties_E4.larvalStalker.properties_E8[1].val32 = 0;
@@ -598,7 +598,7 @@ s32 Ai_Incubus_Init(s_SubCharacter* chara, s32 arg1) // 0x800DDA1C
     chara->field_B8 = 0;
     chara->field_B4 = 0;
 
-    chara->flags_3E |= 1 << 8;
+    chara->flags_3E |= CharaFlag_Unk9;
 
     return 1;
 }
@@ -667,7 +667,7 @@ void Ai_Incubus_Update(s_SubCharacter* chara, s32 arg1, s32 arg2) // 0x800DF0D8
             func_800DEFE8(chara, arg2);
             func_800DED68(chara, arg2);
             func_800DF074(chara);
-            func_800DD98C(chara->flags_3E & 2);
+            func_800DD98C(chara->flags_3E & CharaFlag_Unk2);
         }
         else
         {
@@ -733,7 +733,7 @@ s32 Ai_Unknown23_Init(s_SubCharacter* chara, s32 arg1) // 0x800DFB98
     chara->field_DE        = 0;
     chara->field_E0_8      = 4;
     chara->headingAngle_3C = chara->rotation_24.vy;
-    chara->flags_3E |= 1 << 2;
+    chara->flags_3E       |= CharaFlag_Unk3;
 
     chara2->properties_E4.player.properties_E4[3] = 0;
 
@@ -771,7 +771,7 @@ s32 Ai_Unknown23_Init(s_SubCharacter* chara, s32 arg1) // 0x800DFB98
     func_800DD67C(&chara->position_18, chara, arg1);
     func_800DFA14();
 
-    chara->flags_3E |= 1 << 8;
+    chara->flags_3E |= CharaFlag_Unk9;
     return 1;
 }
 
@@ -826,7 +826,7 @@ void Ai_Unknown23_Update(s_SubCharacter* chara, s32 arg1, s32 arg2) // 0x800E093
             func_800E0888(chara, arg2);
             func_800E0670(chara, arg2);
             func_800E0914(chara);
-            func_800DFB2C(chara->flags_3E & 2);
+            func_800DFB2C(chara->flags_3E & CharaFlag_Unk2);
         }
         else
         {
@@ -853,7 +853,7 @@ INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800E0C10);
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800E0C50);
 
-void func_800E14D4(void) {}
+void func_800E14D4() {}
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800E14DC);
 

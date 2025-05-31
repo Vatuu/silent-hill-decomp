@@ -12,7 +12,7 @@ INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04_2", sharedFunc_800D3308_0_s
 
 INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04_2", sharedFunc_800D3B44_0_s00); // 0x800D419C
 
-void func_800D454C(void) {}
+void func_800D454C() {}
 
 INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04_2", func_800D4554);
 
@@ -30,7 +30,7 @@ INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04_2", func_800D67C4);
 
 #include "maps/shared/sharedFunc_800D63D0_0_s00.h" // 0x800D6BC8
 
-void func_800D6D44(void) {}
+void func_800D6D44() {}
 
 #include "maps/shared/sharedFunc_800D6554_0_s00.h" // 0x800D6D4C
 
@@ -84,17 +84,17 @@ void Ai_MonsterCybil_Init(s_SubCharacter* chara, s_Model* extraModel) // 0x800D8
 
     g_SysWork.npcs_1A0[0].properties_E4.larvalStalker.properties_E8[12].val16[1] = FP_ANGLE(90.0f);
 
-    chara->model_0.anim_4.flags_2 |= (1 << 1) | (1 << 0);
+    chara->model_0.anim_4.flags_2 |= AnimFlag_Unk2 | AnimFlag_Unk1;
 
-    chara->flags_3E |= (1 << 8) | (1 << 2);
+    chara->flags_3E |= CharaFlag_Unk9 | CharaFlag_Unk3;
 
     sharedData_800D16E4_2_s01 = 0;
 
-    extraModel->anim_4.flags_2 |= (1 << 1) | (1 << 0);
+    extraModel->anim_4.flags_2 |= AnimFlag_Unk2 | AnimFlag_Unk1;
 
     chara->health_B0 = FP_TO(4000, Q12_SHIFT);
 
-    g_SysWork.npcs_1A0[0].properties_E4.larvalStalker.properties_E8[7].val16[0] = 0xA;
+    g_SysWork.npcs_1A0[0].properties_E4.larvalStalker.properties_E8[7].val16[0] = 10;
     g_SysWork.npcs_1A0[0].properties_E4.larvalStalker.properties_E8[5].val16[1] = 0;
     g_SysWork.npcs_1A0[0].properties_E4.larvalStalker.properties_E8[7].val16[1] = 0;
     g_SysWork.npcs_1A0[0].properties_E4.larvalStalker.properties_E8[2].val32    = 0;
@@ -104,7 +104,7 @@ void Ai_MonsterCybil_Init(s_SubCharacter* chara, s_Model* extraModel) // 0x800D8
     g_SysWork.npcs_1A0[0].properties_E4.larvalStalker.properties_E8[11].val8[2] = 0;
     g_SysWork.npcs_1A0[0].properties_E4.larvalStalker.properties_E8[3].val32    = 0;
 
-    func_8003DD80(Chara_MonsterCybil, 0x11);
+    func_8003DD80(Chara_MonsterCybil, 17);
 }
 
 INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04_2", func_800D8A90);
@@ -254,7 +254,7 @@ void Ai_Parasite_Update(s_SubCharacter* chara, s32 arg1, s32 arg2) // 0x800DE1CC
     animInfo->funcPtr_0(chara, arg1, arg2, animInfo);
 }
 
-void func_800DE26C(void) {}
+void func_800DE26C() {}
 
 INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04_2", func_800DE274);
 
@@ -370,7 +370,7 @@ INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04_2", func_800E1290);
 
 INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04_2", func_800E12D0);
 
-void func_800E155C(void) {}
+void func_800E155C() {}
 
 INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04_2", func_800E1564);
 
@@ -378,7 +378,7 @@ INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04_2", func_800E15FC);
 
 INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04_2", func_800E1CA0);
 
-void func_800E1D48(void) {}
+void func_800E1D48() {}
 
 INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04_2", func_800E1D50);
 

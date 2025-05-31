@@ -747,7 +747,7 @@ void vcPreSetDataInVC_WORK(VC_WORK* w_p, VC_ROAD_DATA* vc_road_ary_list) // 0x80
 
     vcSetTHROUGH_DOOR_CAM_PARAM_in_VC_WORK(&vcWork, VC_TDSC_MAIN);
     vcSetNearestEnemyDataInVC_WORK(w_p);
-    vcSetNearRoadAryByCharaPos(w_p, vc_road_ary_list, FP_METER(320.0f), 0, w_p->nearest_enemy_p_2DC != NULL);
+    vcSetNearRoadAryByCharaPos(w_p, vc_road_ary_list, FP_METER(320.0f), 0, w_p->nearest_enemy_2DC != NULL);
 }
 
 void vcSetTHROUGH_DOOR_CAM_PARAM_in_VC_WORK(VC_WORK* w_p, enum _THROUGH_DOOR_SET_CMD_TYPE set_cmd_type) // 0x80081CBC
@@ -800,7 +800,7 @@ void vcSetNearestEnemyDataInVC_WORK(VC_WORK* w_p) // 0x80081D90
 
     if (g_SysWork.flags_22A4 & (1 << 5)) // `sh2jms->player.battle(ShBattleInfo).status & 0x10` in SH2.
     {
-        w_p->nearest_enemy_p_2DC       = NULL;
+        w_p->nearest_enemy_2DC       = NULL;
         w_p->nearest_enemy_xz_dist_2E0 = FP_METER(ENEMY_METERS_MAX);
         return;
     }
@@ -853,12 +853,12 @@ void vcSetNearestEnemyDataInVC_WORK(VC_WORK* w_p) // 0x80081D90
 
     if (active_min_sc_p)
     {
-        w_p->nearest_enemy_p_2DC       = active_min_sc_p;
+        w_p->nearest_enemy_2DC       = active_min_sc_p;
         w_p->nearest_enemy_xz_dist_2E0 = active_min_dist;
     }
     else
     {
-        w_p->nearest_enemy_p_2DC       = all_min_sc_p;
+        w_p->nearest_enemy_2DC       = all_min_sc_p;
         w_p->nearest_enemy_xz_dist_2E0 = all_min_dist;
     }
 }
@@ -1260,9 +1260,9 @@ void vcMakeFarWatchTgtPos(VECTOR3* watch_tgt_pos, VC_WORK* w_p, VC_AREA_SIZE_TYP
 
     watch_y = w_p->chara_pos_114.vy - FP_FLOAT_TO(0.8f, Q12_SHIFT);
 
-    if (w_p->nearest_enemy_p_2DC != NULL)
+    if (w_p->nearest_enemy_2DC != NULL)
     {
-        sc_p = w_p->nearest_enemy_p_2DC;
+        sc_p = w_p->nearest_enemy_2DC;
 
         dist = w_p->nearest_enemy_xz_dist_2E0;
 

@@ -13,12 +13,12 @@
 
 typedef enum _BindingMenu
 {
+    BindingMenu_Leave   = -2,
+    BindingMenu_Actions = -1,
     BindingMenu_Exit    = 0,
     BindingMenu_Type_1  = 1,
     BindingMenu_Type_2  = 2,
-    BindingMenu_Type_3  = 3,
-    BindingMenu_Actions = -1,
-    BindingMenu_Leave   = -2
+    BindingMenu_Type_3  = 3
 } e_BindingMenu;
 
 typedef enum _InputAction
@@ -105,12 +105,12 @@ extern s32 g_MainSelectedOptionIdx;
 extern s32 g_ExtraSelectedOptionIdx;
 
 /** @brief Both `g_PrevMainSelectedOptionIdx` and
-`g_PrevExtraSelectedOptionIdx` are being constantly
-updated so it may not appear at first glance that
-they hold the previous selected option, but looking
-at the way they are used and the fact that it updates
-onces `Gfx_LineDraw` finish confirm this.
-*/
+ * `g_PrevExtraSelectedOptionIdx` are being constantly
+ * updated so it may not appear at first glance that
+ * they hold the previous selected option, but looking
+ * at the way they are used and the fact that it updates
+ * onces `Gfx_LineDraw` finish confirm this.
+ */
 extern s32 g_PrevMainSelectedOptionIdx;
 
 extern s32 g_PrevExtraSelectedOptionIdx;
@@ -119,9 +119,9 @@ extern s32 g_Gfx_ScreenPos_InvertColorBg;
 
 extern s32 g_ScreenCtrl_IsOverActions;
 
-extern DR_MODE D_801E730C[2];
+extern DR_MODE D_801E730C[MEMORY_CARD_SLOT_COUNT];
 
-extern POLY_G4 D_801E7324[2];
+extern POLY_G4 D_801E7324[MEMORY_CARD_SLOT_COUNT];
 
 extern char* g_ScreenCtrl_Options[];
 
@@ -154,10 +154,10 @@ extern s16 g_ScreenPos_PosY;
 extern s32 g_Gfx_MoveLineTimer;
 
 /** @brief Defines the amount of options to
-show in the extra options screen.
-Used to show extra unlockable settings in
-case the player has them unlocked.
-*/
+ * show in the extra options screen.
+ * Used to show extra unlockable settings in
+ * case the player has them unlocked.
+ */
 extern s32 g_OptExtra_ShowSettingsCount;
 
 extern s32 g_OptExtra_BloodColorSelected;

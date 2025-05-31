@@ -235,7 +235,7 @@ typedef struct _VC_WORK
     VC_NEAR_ROAD_DATA         near_road_ary_14C[10];
     s32                       near_road_suu_2B4;
     VC_NEAR_ROAD_DATA         cur_near_road_2B8;
-    struct _SubCharacter*     nearest_enemy_p_2DC;            /** Closest enemy. */
+    struct _SubCharacter*     nearest_enemy_2DC;              /** Closest enemy. */
     s32                       nearest_enemy_xz_dist_2E0;      /** Distance to the closest enemy on the XZ plane. */
     s32                       field_2E4;
 } VC_WORK;

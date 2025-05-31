@@ -194,7 +194,7 @@ void func_8002FD5C(s32 arg0, s32 arg1, s32 arg2)
 
     var_s0 = (s_func_8002FB64*)D_800B5508[arg0].field_14;
     var_s0 = &var_s0[arg1];
-    
+
     func_8002FDB0(arg0, arg1, arg2); 
     Savegame_ChecksumUpdate(&var_s0->field_FC, var_s0, sizeof(s_func_8002FB64));  
 }

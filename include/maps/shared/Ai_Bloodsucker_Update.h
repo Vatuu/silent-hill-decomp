@@ -13,12 +13,15 @@ void Ai_Bloodsucker_Update(s_SubCharacter* chara, s32 arg1, s32 arg2)
         case 1:
             sharedFunc_800D0E20_3_s03(chara);
             break;
+
         case 2:
             sharedSymbol_800D0E38_3_s03(chara);
             break;
+
         case 3:
             sharedFunc_800D0E80_3_s03(chara);
             break;
+
         case 4:
             sharedSymbol_800D0ECC_3_s03(chara);
             break;
@@ -40,7 +43,7 @@ void Ai_Bloodsucker_Update(s_SubCharacter* chara, s32 arg1, s32 arg2)
     if (!(chara->properties_E4.larvalStalker.properties_E8[13].val32 & (1 << 0)))
     {
         Sd_EngineCmd(0x5F5U);
-        chara->properties_E4.larvalStalker.properties_E8[13].val32 |= (1 << 0);
+        chara->properties_E4.larvalStalker.properties_E8[13].val32 |= 1 << 0;
     }
 
     func_8005DE0C(0x5F5, &chara->position_18, chara->properties_E4.larvalStalker.properties_E8[1].val32 >> 5, 0x10000, 0);
@@ -71,7 +74,7 @@ void Ai_Bloodsucker_Update(s_SubCharacter* chara, s32 arg1, s32 arg2)
     {
         if (!(chara->properties_E4.larvalStalker.properties_E8[13].val32 & (1 << 1)))
         {
-            chara->properties_E4.larvalStalker.properties_E8[13].val32 |= (1 << 1);
+            chara->properties_E4.larvalStalker.properties_E8[13].val32 |= 1 << 1;
             Sd_EngineCmd(0x5F7U);
         }
 

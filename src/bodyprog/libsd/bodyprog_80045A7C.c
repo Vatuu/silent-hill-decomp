@@ -221,41 +221,42 @@ void sd_work_init() // 0x80045E44
     SpuClearReverbWorkArea(1);
     SdUtReverbOn();
     SpuSetTransferMode(0);
+
     g_Sd_ReverbDepth = 20;
+
     SdUtSetReverbDepth(20, 20);
     Sd_SetReverbEnable(0);
     SdSetSerialAttr(0, 0, 0);
     Sd_SetVolXa(0, 0);
-    D_800C15F0 = 0x80;
+
+    D_800C15F0 = 128;
     func_80048954(14, &D_800C15F0, NULL);
-    
-    
+
     for(D_800C15B8 = 0; D_800C15B8 < 31; D_800C15B8++)
     {
         D_800C16A8[D_800C15B8] = 0;
     }
-    
+
     for(D_800C15B8 = 0; D_800C15B8 < 24; D_800C15B8++)
     {
         D_800C15F8[D_800C15B8] = 0;
     }
 
-    
-    D_800C1658.field_6             = 0;
-    D_800C1658.field_8             = 0;
-    D_800C1658.field_A             = 0;
-    D_800C1658.field_C             = 0;
-    D_800C1658.field_4             = 0;
-    D_800C1658.field_F.field_00[3] = 0;
-    D_800C1658.field_0             = 0;
-    D_800C1658.field_14            = 0;
-    D_800C1658.field_15            = 0;
-    D_800C1658.field_16            = 0;
-    D_800C1658.field_17            = 0;
-    D_800C1678.field_A             = 0x7F;
-	
-    SdSetMVol(0x7F, 0x7F);
-	
+    D_800C1658.field_6            = 0;
+    D_800C1658.field_8            = 0;
+    D_800C1658.field_A            = 0;
+    D_800C1658.field_C            = 0;
+    D_800C1658.field_4            = 0;
+    D_800C1658.field_F.field_0[3] = 0;
+    D_800C1658.field_0            = 0;
+    D_800C1658.field_14           = 0;
+    D_800C1658.field_15           = 0;
+    D_800C1658.field_16           = 0;
+    D_800C1658.field_17           = 0;
+    D_800C1678.field_A            = 127;
+
+    SdSetMVol(127, 127);
+
     D_800C37DC                  = 0;
     D_800C1658.field_E          = 0;
     D_800C1658.field_F.field_01 = 0;
@@ -266,7 +267,7 @@ void sd_work_init() // 0x80045E44
     D_800C1678.volumeXa_0       = 84;
     D_800C1678.volumeBgm_8      = 40;
     D_800C1678.field_6          = 40;
-	
+
     Sd_SetVolBgm(40, 40);
 }
 

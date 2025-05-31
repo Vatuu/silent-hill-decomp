@@ -2,7 +2,7 @@ void Ai_Kaufmann_Init(s_SubCharacter* chara)
 {
     sharedFunc_800D923C_0_s00(chara);
 
-    g_SysWork.npcs_1A0[0].properties_E4.larvalStalker.properties_E8[14].val32 = 0; // TODO: Change to properties_E4.humanoid. ?
+    g_SysWork.npcs_1A0[0].properties_E4.larvalStalker.properties_E8[14].val32 = 0; // TODO: Change to `properties_E4.humanoid`?
 
     sharedData_800D5CF4_3_s00 = 0;
 

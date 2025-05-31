@@ -15,6 +15,7 @@
 #define NPC_COUNT_MAX            6
 #define INVENTORY_ITEM_COUNT_MAX 40
 #define SAVEGAME_FOOTER_MAGIC    0xDCDC
+#define MEMORY_CARD_SLOT_COUNT   2
 
 /** @brief Converts a floating-point X screen position in percent to a fixed-point X screen coodinate. */
 #define SCREEN_POSITION_X(percent) \
@@ -581,7 +582,7 @@ typedef struct _GameWork
 } s_GameWork;
 STATIC_ASSERT_SIZEOF(s_GameWork, 1496);
 
-/** Const data passed over to `Anim_Update` funcs, struct itself contains which `Anim_Update` func is to be called. */
+/** @brief Const data passed over to `Anim_Update` funcs. Struct itself contains which `Anim_Update` func is to be called. */
 typedef struct _AnimInfo
 {
     void (*funcPtr_0)(struct _SubCharacter*, s32, s32, struct _AnimInfo*); // TODO: funcPtr signature doesn't currently match Anim_Update.

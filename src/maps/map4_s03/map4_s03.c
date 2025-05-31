@@ -264,7 +264,7 @@ s32 Ai_Twinfeeler_Init(s_SubCharacter* chara) // 0x800D3CD4
 
     chara->field_DC = 0;
     chara->field_DE = 0;
-    chara->flags_3E |= 1 << 2;
+    chara->flags_3E |= CharaFlag_Unk3;
 
     if (chara->model_0.stateStep_3 != 0)
     {
@@ -293,7 +293,7 @@ s32 Ai_Twinfeeler_Init(s_SubCharacter* chara) // 0x800D3CD4
     chara->field_B4 = 0;
 
     func_800D354C(&chara->position_18);
-    chara->flags_3E |= 1 << 8;
+    chara->flags_3E |= CharaFlag_Unk9;
     return 1;
 }
 
@@ -404,7 +404,7 @@ void Ai_Twinfeeler_Update(s_SubCharacter* chara, s32 arg1, s32 arg2)
             func_800D5DF4(chara, arg2);
             func_800D59EC(chara, arg2);
             func_800D5E30(chara, arg2);
-            func_800D3B44(chara->flags_3E & (1 << 1));
+            func_800D3B44(chara->flags_3E & CharaFlag_Unk2);
 
             if (chara->model_0.state_2 != 10)
             {
