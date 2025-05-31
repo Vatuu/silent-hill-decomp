@@ -1226,7 +1226,7 @@ void func_801E52D8(s32 slotIdx, s32 elementType) // 0x801E52D8
         }
     };
 
-    s_2dLines lines =
+    s_Lines2d lines =
     {
         {
             { { -144, -36 }, { -4, -36 } },
@@ -1236,7 +1236,7 @@ void func_801E52D8(s32 slotIdx, s32 elementType) // 0x801E52D8
         }
     };
 
-    s_2dQuads quads =
+    s_Quads2d quads =
     {
         {
             { { -144, -36 }, { -148, -40 }, { -4, -36 }, { 0, -40 } },
@@ -1256,9 +1256,9 @@ void func_801E52D8(s32 slotIdx, s32 elementType) // 0x801E52D8
     }
 }
 
-void Gfx_RectMemLoadDraw(s_2dLines* lines, s_2dQuads* quads, s_801E2C8C* arg2, s32 slotIdx) // 0x801E54DC
+void Gfx_RectMemLoadDraw(s_Lines2d* lines, s_Quads2d* quads, s_801E2C8C* arg2, s32 slotIdx) // 0x801E54DC
 {
-    #define SLOT_COLUMN_OFFSET SCREEN_POSITION_X(0.47f)
+    #define SLOT_COLUMN_OFFSET 150
 
     GsOT*     ot;
     s32       i;

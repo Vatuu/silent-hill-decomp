@@ -123,12 +123,12 @@ typedef struct
 typedef struct
 {
     s_Line2d lines_0[4];
-} s_2dLines;
+} s_Lines2d;
 
 typedef struct
 {
     s_Quad2d quads_0[4];
-} s_2dQuads;
+} s_Quads2d;
 
 typedef struct
 {
@@ -262,7 +262,7 @@ void Gfx_SavesTransparentBgDraw(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 
 void func_801E52D8(s32 slotIdx, s32 elementType);
 
-void Gfx_RectMemLoadDraw(s_2dLines* lines, s_2dQuads* quads, s_801E2C8C* arg2, s32 slotIdx);
+void Gfx_RectMemLoadDraw(s_Lines2d* lines, s_Quads2d* quads, s_801E2C8C* arg2, s32 slotIdx);
 
 /** Updates the save screen. */
 void GameState_SaveScreen_Update();
