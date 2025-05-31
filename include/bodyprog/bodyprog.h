@@ -1316,7 +1316,7 @@ void Chara_PositionUpdateFromParams(s_AreaLoadParams* params);
 void func_8003943C();
 
 /** `SysState_Fmv` update function.
- * Movie to play is decided by `2072 - g_MapEventIdx`
+ * Movie to play is decided by `2072 - g_SaveTitleId`
  * After playback, savegame gets `D_800BCDD8->eventFlagNum_2` event flag set. */
 void SysState_Fmv_Update();
 
@@ -1898,7 +1898,7 @@ void GameState_MainLoadScreen_Update();
 
 void func_800348E8();
 
-void Game_SavegameInitialize(s8 overlayIdx, s32 difficulty);
+void Game_SavegameInitialize(s8 overlayId, s32 difficulty);
 
 /** Loads a map file into `g_OvlDynamic`. */
 void GameFs_MapLoad(s32 mapIdx);

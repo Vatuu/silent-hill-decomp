@@ -32,6 +32,110 @@
 #define GET_PROPERTY_HIGH(prop) \
     ((u16*)&(prop) + 1)
 
+typedef enum _MapOverlayId
+{
+    MapOverlayId_MAP0_S00 = 0,
+    MapOverlayId_MAP0_S01 = 1,
+    MapOverlayId_MAP0_S02 = 2,
+    MapOverlayId_MAP1_S00 = 3,
+    MapOverlayId_MAP1_S01 = 4,
+    MapOverlayId_MAP1_S02 = 5,
+    MapOverlayId_MAP1_S03 = 6,
+    MapOverlayId_MAP1_S04 = 7,
+    MapOverlayId_MAP1_S05 = 8,
+    MapOverlayId_MAP1_S06 = 9,
+    MapOverlayId_MAP2_S00 = 10,
+    MapOverlayId_MAP2_S01 = 11,
+    MapOverlayId_MAP2_S02 = 12,
+    MapOverlayId_MAP2_S03 = 13,
+    MapOverlayId_MAP2_S04 = 14,
+    MapOverlayId_MAP3_S00 = 15,
+    MapOverlayId_MAP3_S01 = 16,
+    MapOverlayId_MAP3_S02 = 17,
+    MapOverlayId_MAP3_S03 = 18,
+    MapOverlayId_MAP3_S04 = 19,
+    MapOverlayId_MAP3_S05 = 20,
+    MapOverlayId_MAP3_S06 = 21,
+    MapOverlayId_MAP4_S00 = 22,
+    MapOverlayId_MAP4_S01 = 23,
+    MapOverlayId_MAP4_S02 = 24,
+    MapOverlayId_MAP4_S03 = 25,
+    MapOverlayId_MAP4_S04 = 26,
+    MapOverlayId_MAP4_S05 = 27,
+    MapOverlayId_MAP4_S06 = 28,
+    MapOverlayId_MAP5_S00 = 29,
+    MapOverlayId_MAP5_S01 = 30,
+    MapOverlayId_MAP5_S02 = 31,
+    MapOverlayId_MAP5_S03 = 32,
+    MapOverlayId_MAP6_S00 = 33,
+    MapOverlayId_MAP6_S01 = 34,
+    MapOverlayId_MAP6_S02 = 35,
+    MapOverlayId_MAP6_S03 = 36,
+    MapOverlayId_MAP6_S04 = 37,
+    MapOverlayId_MAP6_S05 = 38,
+    MapOverlayId_MAP7_S00 = 39,
+    MapOverlayId_MAP7_S01 = 40,
+    MapOverlayId_MAP7_S02 = 41,
+    MapOverlayId_MAP7_S03 = 42,
+} e_MapOverlayId;
+
+typedef enum _SaveTitleId
+{
+    SaveTitleId_Anywhere     = 0,
+    SaveTitleId_Cafe         = 1,
+    SaveTitleId_Bus          = 2,
+    SaveTitleId_Store        = 3,
+    SaveTitleId_Infirmary    = 4,
+    SaveTitleId_Doghouse     = 5,
+    SaveTitleId_Gordon       = 6,
+    SaveTitleId_Church       = 7,
+    SaveTitleId_Garage       = 8,
+    SaveTitleId_Police       = 9,
+    SaveTitleId_Reception    = 10,
+    SaveTitleId_Room302      = 11,
+    SaveTitleId_Directors    = 12,
+    SaveTitleId_JewelryShop  = 13,
+    SaveTitleId_PoolHall     = 14,
+    SaveTitleId_AntiqueShop  = 15,
+    SaveTitleId_ThemePark    = 16,
+    SaveTitleId_Boat         = 17,
+    SaveTitleId_Bridge       = 18,
+    SaveTitleId_Motel        = 19,
+    SaveTitleId_Lighthouse   = 20,
+    SaveTitleId_Sewer        = 21,
+    SaveTitleId_Nowhere      = 22,
+    SaveTitleId_ChildsRoom   = 23,
+    SaveTitleId_NextFear     = 24
+} e_SaveTitleId;
+
+typedef enum _Current2dMap
+{
+    Current2dMap_OtherPlaces    = 0,
+    Current2dMap_OldTown        = 1,
+    Current2dMap_FogCentralTown = 2,
+    Current2dMap_AltCentralTown = 3,
+    Current2dMap_ResortTown     = 4,
+    Current2dMap_FogSchoolBF    = 5,
+    Current2dMap_FogSchool1F    = 6,
+    Current2dMap_FogSchool2F    = 7,
+    Current2dMap_FogSchoolRF    = 8,
+    Current2dMap_AltSchoolBF    = 9,
+    Current2dMap_AltSchool1F    = 10,
+    Current2dMap_AltSchool2F    = 11,
+    Current2dMap_AltSchoolRF    = 12,
+    Current2dMap_FogSewer1F     = 13,
+    Current2dMap_FogSewer2F     = 14,
+    Current2dMap_AltSewer       = 15,
+    Current2dMap_FogHospitalBF  = 16,
+    Current2dMap_FogHospital1F  = 17,
+    Current2dMap_FogHospital2F  = 18,
+    Current2dMap_FogHospital3F  = 19,
+    Current2dMap_AltHospitalBF  = 20,
+    Current2dMap_AltHospital1F  = 21,
+    Current2dMap_AltHospital2F  = 22,
+    Current2dMap_AltHospital3F  = 23
+} e_Current2dMap;
+
 typedef enum _ControllerFlags
 {
     ControllerFlag_Select       = 1 << 0,
@@ -396,29 +500,29 @@ STATIC_ASSERT_SIZEOF(s_ControllerData, 44);
 // Only the first 16 values are counted (analog directions are not included). Also, D-Pad is not registered.
 typedef struct _ControllerConfig
 {
-    u16 enter;
-    u16 cancel;
-    u16 skip;
-    u16 action;
-    u16 aim;
-    u16 light;
-    u16 run;
-    u16 view;
-    u16 stepLeft;
-    u16 stepRight;
-    u16 pause;
-    u16 item;
-    u16 map;
-    u16 option;
+    u16 enter_0;
+    u16 cancel_2;
+    u16 skip_4;
+    u16 action_6;
+    u16 aim_8;
+    u16 light_A;
+    u16 run_C;
+    u16 view_E;
+    u16 stepLeft_10;
+    u16 stepRight_12;
+    u16 pause_14;
+    u16 item_16;
+    u16 map_18;
+    u16 option_1A;
 } s_ControllerConfig;
 STATIC_ASSERT_SIZEOF(s_ControllerConfig, 28);
 
 typedef struct _ShInventoryItem
 {
-    u8 id;      /** `InventoryItemId` */
-    u8 count;
-    u8 command; /** `InventoryCmdId` */
-    u8 unk_3;   // Some sort of index?
+    u8 id_0;      /** `InventoryItemId` */
+    u8 count_1;
+    u8 command_2; /** `InventoryCmdId` */
+    u8 unk_3;     // Some sort of index?
 } s_ShInventoryItem;
 STATIC_ASSERT_SIZEOF(s_ShInventoryItem, 4);
 
@@ -434,12 +538,12 @@ typedef struct _ShSavegame
     s_ShInventoryItem items_0[INVENTORY_ITEM_COUNT_MAX];
     s8                field_A0;
     s8                field_A1[3];
-    s8                mapOverlayIdx_A4;         /** Index to overlay `*.BIN` files. */
+    s8                mapOverlayId_A4;         /** `e_MapOverlayId` Index to overlay `*.BIN` files. */
     s8                mapRoomIdx_A5;            /** Index to local map geometry `*.IPD` files. */
     s16               savegameCount_A6;
-    s8                mapEventIdx_A8;          // See Sparagas' `SaveTitle` enum for details of every value.
-    u8                mapIdx_A9;                /** Index to global map geometry `*.PLM` files. */
-    s8                equippedWeapon_AA;        /** `InventoryItemId` */
+    s8                SaveTitleId_A8;           /** `e_SaveTitleId` */
+    u8                current2dMap_A9;          /** `e_Current2dMap` Index to 2D map showned than opening the map screen. */
+    s8                equippedWeapon_AA;        /** `e_InventoryItemId` Default: 0. Effects only the visible player weapon model. */
     u8                field_AB;
     u32               flags_AC;
     s32               field_B0[45];
@@ -469,7 +573,7 @@ typedef struct _ShSavegame
     q19_12            walkDistance_258;
     u8                isTitleYellowFlag_25C_0 : 1;  // Is title in save-load screen is yellow (next fear mode).
     u8                add290Hours_25C_1       : 2;  // Adds 290 hours per 1 bit. So 290, 580, 870
-    u8                hyperBlasterFlags_25C_3 : 5;  // Red/None: 0, Yellow: 1, Green: 2, Rainbow: 4 (unobtainable).
+    u8                hyperBlasterFlags_25C_3 : 5;  // Red/None: 0?, Yellow: 8, Green: 16, Rainbow: 24 (unobtainable). Maybe it better to split to bit fields, because you can't have all colors at the same time, but only one.
     u8                meleeKillCount_25D;
     u8                meleeKillCountB_25E;          // Can't be packed if used as `u16`.
     u8                rangedKillCount_25F;
@@ -505,27 +609,27 @@ STATIC_ASSERT_SIZEOF(s_ShEventParam, 12);
 typedef struct _ShSaveUserConfig
 {
     s_ControllerConfig controllerConfig_0;
-    s8                 screenPosX_1C;             /** Range: [-11, 11], default: 0. */
-    s8                 screenPosY_1D;             /** Range: [-8, 8], default: 0. */
+    s8                 optScreenPosX_1C;          /** Range: [-11, 11], default: 0. */
+    s8                 optScreenPosY_1D;          /** Range: [-8, 8], default: 0. */
     u8                 optSoundType_1E;           /** Stereo: 0, Monaural: 1, default: Stereo. */
     u8                 optVolumeBgm_1F;           /** Range: [0, 128] with steps of 8, default: 16. */
     u8                 optVolumeSe_20;            /** Range: [0, 128] with steps of 8, default: 16. */
     u8                 optVibrationEnabled_21;    /** Off: 0, On: 128, default: On. */
     u8                 optBrightness_22;          /** Range: [0, 7], default: 3. */
-    u8                 optWeaponCtrl_23;          /** Switch: 0, Press: 1, default: Press. */
-    u8                 optBloodColor_24;          /** Normal: 0, Green: 2, Violet: 5, Black: 13, default: Normal */
+    u8                 optExtraWeaponCtrl_23;     /** Switch: 0, Press: 1, default: Press. */
+    u8                 optExtraBloodColor_24;     /** Normal: 0, Green: 2, Violet: 5, Black: 13, default: Normal */
     s8                 optAutoLoad_25;            /** Off: 0, On: 1, default: Off. */
     u8                 unk_26;
     u8                 optExtraOptionsEnabled_27;
-    s8                 optViewCtrl_28;            /** Normal: 0, Reverse: 1, default: Normal. */
-    s8                 optViewMode_29;            /** Normal: 0, Self View: 1, default: Normal. */
-    s8                 optRetreatTurn_2A;         /** Normal: 0, Reverse: 1, default: Normal. */
-    s8                 optWalkRunCtrl_2B;         /** Normal: 0, Reverse: 1, default: Normal. */
-    s8                 optAutoAiming_2C;          /** On: 0, Off: 1, default: On. */
-    s8                 optBulletAdjust_2D;        /** x1-x6: Range [0, 5], default: x1. */
+    s8                 optExtraViewCtrl_28;       /** Normal: 0, Reverse: 1, default: Normal. */
+    s8                 optExtraViewMode_29;       /** Normal: 0, Self View: 1, default: Normal. */
+    s8                 optExtraRetreatTurn_2A;    /** Normal: 0, Reverse: 1, default: Normal. */
+    s8                 optExtraWalkRunCtrl_2B;    /** Normal: 0, Reverse: 1, default: Normal. */
+    s8                 optExtraAutoAiming_2C;     /** On: 0, Off: 1, default: On. */
+    s8                 optExtraBulletAdjust_2D;   /** x1-x6: Range [0, 5], default: x1. */
     u16                seenGameOverTips_2E[1];    /** Bitfield tracking seen game-over tips. Each bit corresponds to a tip index (0–14), set bits indicate seen tips. Resets after picking all 15. */
     s8                 unk_30[4];
-    u32                palLanguageId[1];
+    u32                palLanguageId_34;
 } s_ShSaveUserConfig;
 STATIC_ASSERT_SIZEOF(s_ShSaveUserConfig, 56);
 
@@ -868,7 +972,7 @@ extern GsOT g_ObjectTable1[];
 extern s32 g_DeltaTime0;
 extern s32 g_DeltaTime1;
 extern s32 g_DeltaTime2;
-extern u32 g_MapEventIdx;
+extern u32 g_SaveTitleId;
 extern s_ShEventParam* g_MapEventParam;
 
 extern s32 g_IntervalVBlanks;

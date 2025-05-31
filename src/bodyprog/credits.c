@@ -11,13 +11,13 @@ void func_800904F4() // 0x800904F4
 {
     u8 extraOptions;
 
-    g_SavegamePtr->mapEventIdx_A8          = D_800C48B3;
+    g_SavegamePtr->SaveTitleId_A8          = D_800C48B3;
     g_SavegamePtr->clearGameCount_24A      = D_800C48B0;
     g_SavegamePtr->field_24B               = D_800C48B1;
     g_SavegamePtr->field_27A               = ((D_800C48B2 & 0x10) * 8) + 64;
     g_SavegamePtr->isTitleYellowFlag_25C_0 = 1;
-    g_SavegamePtr->mapOverlayIdx_A4        = 1;
-
+    g_SavegamePtr->mapOverlayId_A4         = 1;
+    
     if (D_800C48B6 != 0)
     {
         g_SavegamePtr->eventFlags_168[1] |= 1 << 29;

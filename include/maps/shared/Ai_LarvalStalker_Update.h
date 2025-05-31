@@ -26,7 +26,7 @@ void Ai_LarvalStalker_Update(s_SubCharacter* chara, s32 arg1, s32 arg2)
     }
 
     // TODO: weird hack, or a drunk developer.
-    mapOverlayPtr = &g_SavegamePtr->mapOverlayIdx_A4;
+    mapOverlayPtr = &g_SavegamePtr->mapOverlayId_A4;
 
     chara->timer_C6        = FP_TO(1, Q12_SHIFT);
     chara->model_0.state_2 = 1;

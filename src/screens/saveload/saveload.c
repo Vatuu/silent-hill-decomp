@@ -229,7 +229,7 @@ void Gfx_SavesLocationDraw(s_SaveSlotElementInfo* ptr, s32 arg1, s32 idx) // 0x8
     #define OFFSET_Y SCREEN_POSITION_Y(8.5f)
     #define MARGIN_Y SCREEN_POSITION_Y(22.25f)
 
-    s32 idxVar = (s8)ptr->mapEventIdx_8;
+    s32 idxVar = (s8)ptr->SaveTitleId_8;
 
     u8 D_801E2728[] =
     {
@@ -1736,9 +1736,9 @@ void Savegame_ScreenLogic() // 0x801E649C
                         g_IsSaveSelected = 1;
                     }
                 }
-                
-                // Checks if the player is going to overwrite a save.
-                if (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter) 
+				
+				// Checks if the player is going to overwrite a save.
+                if (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0) 
                 {
                     if ((D_801E753C | g_IsSaveSelected) != 0) 
                     {
@@ -1756,9 +1756,9 @@ void Savegame_ScreenLogic() // 0x801E649C
                     Sd_EngineCmd(0x51B);
                 }
             }
-
-            // Exit save screen.
-            if (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel) 
+			
+			// Exit save screen.
+            if (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2) 
             {
                 g_Gfx_ScreenFade                = 3;
                 g_GameWork.gameStateStep_598[1] = 2;
@@ -1795,7 +1795,7 @@ void Savegame_ScreenLogic() // 0x801E649C
                 Sd_EngineCmd(0x519);
             }
 
-            if (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter) 
+            if (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0) 
             {
                 if (g_OverwriteOptionSelected == 0)
                 {
@@ -1813,9 +1813,9 @@ void Savegame_ScreenLogic() // 0x801E649C
                 }
                 Sd_EngineCmd(0x51B);
             }
-
-            // Cancel overwrite
-            if (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel) 
+			
+			// Cancel overwrite
+            if (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2) 
             {
                 g_GameWork.gameStateStep_598[1] = 0;
                 g_GameWork.gameStateStep_598[2] = 0;
@@ -1921,7 +1921,7 @@ void Savegame_SaveLogic() // 0x801E6B18
             g_MemCardState = 2;
             ptr            = func_8002E9EC(D_800BCD40, g_SelectedFileIdx, g_SelectedSaveIdx);
 
-            if (g_SavegamePtr->mapEventIdx_A8 == 24)
+            if (g_SavegamePtr->SaveTitleId_A8 == 24)
             {
                 ptr->savegameCount_8 = 0;
             }
@@ -1931,7 +1931,7 @@ void Savegame_SaveLogic() // 0x801E6B18
                 ptr->savegameCount_8 = g_SavegamePtr->savegameCount_A6;
             }
 
-            ptr->mapEventIdx_A   = g_SavegamePtr->mapEventIdx_A8;
+            ptr->SaveTitleId_A   = g_SavegamePtr->SaveTitleId_A8;
             ptr->gameplayTimer_4 = g_SavegamePtr->gameplayTimer_250;
 
             D_801E76D5 = ptr->isTitleYellowFlag_B_0;
@@ -2075,7 +2075,7 @@ void Savegame_ContinueLogic() // 0x801E6F38
             
             g_SysWork.flags_2298 = 8;
 
-            GameFs_MapLoad(g_SavegamePtr->mapOverlayIdx_A4);
+            GameFs_MapLoad(g_SavegamePtr->mapOverlayId_A4);
 
             g_Gfx_ScreenFade = 2;
             g_GameWork.gameStateStep_598[1]++;

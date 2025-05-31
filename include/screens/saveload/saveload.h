@@ -42,7 +42,7 @@ typedef struct
     s32 unk_0;                     // Same behaviour as `field_0` in `s_SaveSlotElementInfo`.
     u32 gameplayTimer_4;
     u16 savegameCount_8;
-    s8  mapEventIdx_A;
+    s8  SaveTitleId_A;
     u8  isTitleYellowFlag_B_0 : 1;
     u8  add290Hours_B_1       : 2;
     u8  hyperBlasterFlags_B_3 : 5;
@@ -73,7 +73,7 @@ typedef struct
     s8               field_5;         // The value changes between 0 when the first save slot is selected and 4 when the second is selected.
     s8               fileIdx_6;
     s8               elementIdx_7;
-    s32              mapEventIdx_8;
+    s32              SaveTitleId_8;
     s_SaveBasicInfo* field_C;
 } s_SaveSlotElementInfo;
 /** @note Possible size is `0x10/16` bytes.
