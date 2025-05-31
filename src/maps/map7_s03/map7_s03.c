@@ -124,7 +124,17 @@ INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", sharedFunc_800CEEDC_3_s02
 
 #include "maps/shared/Ai_Alessa_Init.h" // 0x800D3660
 
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", Ai_BloodyIncubator_Update); // 0x800D3684
+void Ai_BloodyIncubator_Update(s_SubCharacter* chara, s32 arg1, s32 arg2) // 0x800D3684
+{
+    if (chara->model_0.charaId_0 != Chara_BloodyIncubator)
+    {
+        Ai_BloodyIncubator_Init(chara);
+    }
+
+    func_800D38D8(chara, arg2);
+    func_800D3740(chara, arg2);
+    func_800D36F8(chara, arg1, arg2);
+}
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800D36F8);
 
@@ -132,9 +142,22 @@ INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800D3740);
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800D38D8);
 
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800D3BA4);
+void Ai_BloodyIncubator_Init(s_SubCharacter* chara) // 0x800D3BA4
+{
+    sharedFunc_800D923C_0_s00(chara);
+}
 
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", Ai_Incubator_Update); // 0x800D3BC4
+void Ai_Incubator_Update(s_SubCharacter* chara, s32 arg1, s32 arg2) // 0x800D3BC4
+{
+    if (chara->model_0.charaId_0 != Chara_Incubator)
+    {
+        Ai_Incubator_Init(chara);
+    }
+
+    func_800D3E18(chara, arg2);
+    func_800D3C80(chara, arg2);
+    func_800D3C38(chara, arg1, arg2);
+}
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800D3C38);
 
@@ -142,7 +165,10 @@ INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800D3C80);
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800D3E18);
 
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800D3F38);
+void Ai_Incubator_Init(s_SubCharacter* chara) // 0x800D3F38
+{
+    sharedFunc_800D923C_0_s00(chara);
+}
 
 #include "maps/shared/Ai_Kaufmann_Update.h" // 0x800D3F58
 
@@ -684,7 +710,70 @@ INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800DFB50);
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800DFB74);
 
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800DFB98);
+s32 Ai_Unknown23_Init(s_SubCharacter* chara, s32 arg1) // 0x800DFB98
+{
+    s_SubCharacter* chara2; // TODO: Not sure why this is needed here, might be an inline in this func.
+
+    chara2 = chara;
+
+    chara->model_0.anim_4.keyframeIdx1_A = 0;
+
+    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
+    {
+        chara->health_B0 = FP_FLOAT_TO(17995.605f, Q12_SHIFT); // Some percentage taken from 30000?
+    }
+    else
+    {
+        chara->health_B0 = FP_FLOAT_TO(30000.f, Q12_SHIFT);
+    }
+
+    chara->moveSpeed_38    = 0;
+    chara->field_D4        = FP_FLOAT_TO(0.3f, Q12_SHIFT);
+    chara->field_DC        = 0;
+    chara->field_DE        = 0;
+    chara->field_E0_8      = 4;
+    chara->headingAngle_3C = chara->rotation_24.vy;
+    chara->flags_3E |= 1 << 2;
+
+    chara2->properties_E4.player.properties_E4[3] = 0;
+
+    if (chara->model_0.stateStep_3 == 0)
+    {
+        chara->model_0.state_2     = 1;
+        chara->model_0.stateStep_3 = 0;
+    }
+    else
+    {
+        chara->model_0.state_2     = chara->model_0.stateStep_3;
+        chara->model_0.stateStep_3 = 0;
+    }
+
+    chara->model_0.anim_4.animIdx_0      = 4;
+    chara->model_0.anim_4.keyframeIdx0_8 = 115;
+    chara->model_0.anim_4.time_4         = FP_TO(115, Q12_SHIFT);
+
+    ModelAnim_AnimInfoSet(&chara->model_0.anim_4, g_Ai_Unknown23_AnimInfo);
+
+    chara->field_C0 = 0;
+    chara->field_BC = 0;
+    chara->field_B8 = 0;
+    chara->field_B4 = 0;
+
+    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
+    {
+        chara2->properties_E4.player.properties_E4[4] = FP_TO(300, Q12_SHIFT);
+    }
+    else
+    {
+        chara2->properties_E4.player.properties_E4[4] = FP_TO(30, Q12_SHIFT);
+    }
+
+    func_800DD67C(&chara->position_18, chara, arg1);
+    func_800DFA14();
+
+    chara->flags_3E |= 1 << 8;
+    return 1;
+}
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800DFCE4);
 
@@ -718,7 +807,35 @@ INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800E08E4);
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800E0914);
 
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", Ai_Unknown23_Update); // 0x800E093C
+void Ai_Unknown23_Update(s_SubCharacter* chara, s32 arg1, s32 arg2) // 0x800E093C
+{
+    if (chara->model_0.state_2 == 0)
+    {
+        Ai_Unknown23_Init(chara, arg2);
+    }
+
+    if (chara->model_0.state_2 != 1)
+    {
+        if (g_DeltaTime0 != 0)
+        {
+            func_800DFCE4(chara);
+            func_800E05DC(chara, arg2);
+            func_800E08E4(chara, arg2);
+            func_800E0728(chara);
+            func_800E0774(chara, arg1, arg2);
+            func_800E0888(chara, arg2);
+            func_800E0670(chara, arg2);
+            func_800E0914(chara);
+            func_800DFB2C(chara->flags_3E & 2);
+        }
+        else
+        {
+            func_800DB608();
+            func_800E0914(chara);
+            func_800E0774(chara, arg1, arg2);
+        }
+    }
+}
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800E0A34);
 

@@ -2,6 +2,7 @@
 #include "bodyprog/math.h"
 #include "main/rng.h"
 #include "maps/shared.h"
+#include "maps/map7/map7_s02.h"
 
 #include "maps/shared/Ai_Stalker_Update.h" // 0x800D06F8
 
@@ -109,13 +110,26 @@ INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", sharedSymbol_800CF470_3
 
 #include "maps/shared/Ai_Kaufmann_Init.h" // 0x800D8AA8
 
-INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", Ai_GhostDoctor_Update); // 0x800D8AF0
+void Ai_GhostDoctor_Update(s_SubCharacter* chara, s32 arg1, s32 arg2) // 0x800D8AF0
+{
+    if (chara->model_0.charaId_0 != Chara_GhostDoctor)
+    {
+        Ai_GhostDoctor_Init(chara);
+    }
+
+    func_800D8C00(chara, arg2);
+    func_800D8BAC(chara, arg2);
+    func_800D8B64(chara, arg1, arg2);
+}
 
 INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", func_800D8B64);
 
 INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", func_800D8BAC);
 
-INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", func_800D8BE0);
+void Ai_GhostDoctor_Init(s_SubCharacter* chara) // 0x800D8BE0
+{
+    sharedFunc_800D923C_0_s00(chara);
+}
 
 INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", func_800D8C00);
 

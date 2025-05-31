@@ -2,9 +2,7 @@
 #include "bodyprog/math.h"
 #include "main/rng.h"
 #include "maps/shared.h"
-
-extern s_AnimInfo g_Ai_Flauros_AnimInfo[];  // 0x800EAE80 - TODO: move to map6_s04.h
-extern s_AnimInfo g_Ai_Parasite_AnimInfo[]; // 0x800EAEC0 - TODO: move to map6_s04.h
+#include "maps/map6/map6_s04.h"
 
 #include "maps/shared/Ai_Stalker_Update.h" // 0x800D3560
 
@@ -54,9 +52,60 @@ INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04_2", func_800D8848);
 
 INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04_2", func_800D8898);
 
-INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04_2", Ai_MonsterCybil_Update); // 0x800D8908
+void Ai_MonsterCybil_Update(s_SubCharacter* chara, s32 arg1, s32 arg2) // 0x800D8908
+{
+    s_Model* extraModelPtr = &g_Ai_MonsterCybil_ExtraModel;
 
-INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04_2", func_800D89CC);
+    if (chara->model_0.state_2 == 0)
+    {
+        Ai_MonsterCybil_Init(chara, extraModelPtr);
+    }
+
+    if (g_DeltaTime0 != 0)
+    {
+        func_800D8B14(chara, extraModelPtr);
+        func_800D8D7C(chara, extraModelPtr, arg2);
+        func_800D9790(chara, extraModelPtr);
+        func_800D99E4(chara, extraModelPtr, arg1, arg2);
+        func_800DB4CC(chara, extraModelPtr, arg2);
+        func_800D9AAC(chara, extraModelPtr);
+    }
+}
+
+void Ai_MonsterCybil_Init(s_SubCharacter* chara, s_Model* extraModel) // 0x800D89CC
+{
+    chara->model_0.state_2++;
+    extraModel->state_2++;
+
+    chara->model_0.stateStep_3 = 0;
+    extraModel->stateStep_3    = 0;
+
+    chara->field_E0_8 = 3;
+
+    g_SysWork.npcs_1A0[0].properties_E4.larvalStalker.properties_E8[12].val16[1] = FP_ANGLE(90.0f);
+
+    chara->model_0.anim_4.flags_2 |= (1 << 1) | (1 << 0);
+
+    chara->flags_3E |= (1 << 8) | (1 << 2);
+
+    sharedData_800D16E4_2_s01 = 0;
+
+    extraModel->anim_4.flags_2 |= (1 << 1) | (1 << 0);
+
+    chara->health_B0 = FP_TO(4000, Q12_SHIFT);
+
+    g_SysWork.npcs_1A0[0].properties_E4.larvalStalker.properties_E8[7].val16[0] = 0xA;
+    g_SysWork.npcs_1A0[0].properties_E4.larvalStalker.properties_E8[5].val16[1] = 0;
+    g_SysWork.npcs_1A0[0].properties_E4.larvalStalker.properties_E8[7].val16[1] = 0;
+    g_SysWork.npcs_1A0[0].properties_E4.larvalStalker.properties_E8[2].val32    = 0;
+    g_SysWork.npcs_1A0[0].properties_E4.larvalStalker.properties_E8[8].val32    = 0;
+    g_SysWork.npcs_1A0[0].properties_E4.larvalStalker.properties_E8[9].val32    = 0;
+    g_SysWork.npcs_1A0[0].properties_E4.larvalStalker.properties_E8[4].val32    = 0;
+    g_SysWork.npcs_1A0[0].properties_E4.larvalStalker.properties_E8[11].val8[2] = 0;
+    g_SysWork.npcs_1A0[0].properties_E4.larvalStalker.properties_E8[3].val32    = 0;
+
+    func_8003DD80(Chara_MonsterCybil, 0x11);
+}
 
 INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04_2", func_800D8A90);
 
@@ -68,7 +117,7 @@ INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04_2", func_800D9790);
 
 INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04_2", func_800D99E4);
 
-void func_800D9AAC(void) {}
+void func_800D9AAC(s_SubCharacter* chara, s_Model* arg1) {}
 
 INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04_2", func_800D9AB4);
 

@@ -2,6 +2,7 @@
 #include "bodyprog/math.h"
 #include "main/rng.h"
 #include "maps/shared.h"
+#include "maps/map7/map7_s02.h"
 
 INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02", func_800CDC64);
 

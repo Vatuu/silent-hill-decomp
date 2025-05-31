@@ -60,6 +60,7 @@ sharedFunc_800CF2D8_3_s00 = 0x800D7F68; // type:func
 sharedSymbol_800CF470_3_s00 = 0x800D8100; // type:func
 Ai_Kaufmann_Init = 0x800D8AA8; // type:func
 Ai_GhostDoctor_Update = 0x800D8AF0; // type:func
+Ai_GhostDoctor_Init = 0x800D8BE0; // type:func
 sharedFunc_800D88AC_0_s00 = 0x800D8C74; // type:func
 sharedFunc_800D88C0_0_s00 = 0x800D8C88; // type:func
 sharedFunc_800D8904_0_s00 = 0x800D8CCC; // type:func
