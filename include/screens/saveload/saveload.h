@@ -51,22 +51,22 @@ typedef struct
 
 typedef struct
 {
-	/** @brief `field_0` is a counter that increments by one each time
-	 * the game is saved to a memory card. However,
-	 * it seems to be buggy or works weirdly as it doesn't
-	 * add saves based on which memory card the player
-	 * used for the save. For example:
-	 * If the player saves to slot 1, the first save
-	 * the value will be 1. If the player saves
-	 * to slot 2, the value will be 2. If the
-	 * player saves to slot 1 again, the value will be 3.
-	 * Another reason to believe this may be a bug
-	 * is that by reproducing this example,
-	 * after the player saves to slot 2, if instead of
-	 * saving in slot 1 the player removes the memory
-	 * card and then saves to slot 1, the value will
+    /** @brief `field_0` is a counter that increments by one each time
+     * the game is saved to a memory card. However,
+     * it seems to be buggy or works weirdly as it doesn't
+     * add saves based on which memory card the player
+     * used for the save. For example:
+     * If the player saves to slot 1, the first save
+     * the value will be 1. If the player saves
+     * to slot 2, the value will be 2. If the
+     * player saves to slot 1 again, the value will be 3.
+     * Another reason to believe this may be a bug
+     * is that by reproducing this example,
+     * after the player saves to slot 2, if instead of
+     * saving in slot 1 the player removes the memory
+     * card and then saves to slot 1, the value will
      * be 2 instead of 3.
-	 */
+     */
     s16              field_0;
     s16              savegameCount_2;
     s8               elementType_4;   /** `e_SlotElementType` */

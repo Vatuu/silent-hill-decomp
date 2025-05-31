@@ -7,36 +7,36 @@
 
 s_801E5558 D_801E5558[6] =
 {
-	{
+    {
         .field_0 = 0x12D5,
         .field_2 = 0x0000,
-		.field_4 = 0x21FC,
-	},
-	{
+        .field_4 = 0x21FC,
+    },
+    {
         .field_0 = 0x12D3,
         .field_2 = 0xF6A0,
         .field_4 = 0x20D0,
-	},
-	{
+    },
+    {
         .field_0 = 0x12D4,
         .field_2 = 0xFC7C,
         .field_4 = 0x21FC,
-	},
-	{
+    },
+    {
         .field_0 = 0x12D5,
         .field_2 = 0xFF4C,
         .field_4 = 0x2148,
-	},
-	{
+    },
+    {
         .field_0 = 0x12D6,
         .field_2 = 0xFF4C,
         .field_4 = 0x2274,
-	},
-	{
+    },
+    {
         .field_0 = 0x12D6,
         .field_2 = 0xFF88,
         .field_4 = 0x20D0
-	}
+    }
 };
 
 RECT D_801E557C[2] =
@@ -370,15 +370,15 @@ s32 D_801E5E40[7] =
 u8 D_801E5E5C[16] =
 {
     '\x7F', '1', '9', 'A',
-	'C', 'D', 'E', 'G',
-	'H', 'I', 'K', 'L',
-	'M', 'N', 'O', 'P'
+    'C', 'D', 'E', 'G',
+    'H', 'I', 'K', 'L',
+    'M', 'N', 'O', 'P'
 };
 
 u8 D_801E5E6C[8] =
 {
     '.', 'Y', 'V', 'U',
-	'T', 'S', 'R', ' '
+    'T', 'S', 'R', ' '
 };
 
 s32 D_801E5E74 = 0;

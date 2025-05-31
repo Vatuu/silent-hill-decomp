@@ -106,7 +106,7 @@ void func_800D2E8C() {}
 
 s32 func_800D2E94()
 {
-	return 0;
+    return 0;
 }
 
 void func_800D2E9C() {}

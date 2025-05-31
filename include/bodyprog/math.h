@@ -31,7 +31,7 @@
 
 /** @brief Converts an integer to a fixed-point Q format. */
 #define FP_TO(x, shift) \
-	((x) << (shift))
+    ((x) << (shift))
 
 /** @brief Converts a float to a fixed-point Q format. */
 #define FP_FLOAT_TO(x, shift) \
@@ -39,7 +39,7 @@
 
 /** @brief Converts an integer from a fixed-point Q format. */
 #define FP_FROM(x, shift) \
-	((x) >> (shift))
+    ((x) >> (shift))
 
 /** @brief Multiplies two integers in a fixed-point Q format and converts the result from the fixed-point Q format. */
 #define FP_MULTIPLY(a, b, shift) \

@@ -18,9 +18,9 @@ void func_80047D50() // 0x80047D50
     CdlLOC* sp10;
 
     if (!(func_80048954(2, CdIntToPos(D_800C37D4->field_8 + ((u32)D_800C37CC >> 11), &sp10), 0) & 0xFF))
-	{
+    {
         D_800C1670.field_0 = 3;
-	}
+    }
 }
 
 void func_80047DB0() // 0x80047DB0

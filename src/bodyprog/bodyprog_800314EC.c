@@ -2199,19 +2199,19 @@ void func_8003EB54() // 0x8003EB54
     GsCOORDINATE2* temp_v1;
 
     g_SysWork.field_2378 = 0x1000;
-	
+
     temp_v1 = &g_SysWork.playerBoneCoords_890[0];
     temp_a0 = &g_SysWork.field_2360;
-	
+
     g_SysWork.field_235C = temp_v1;
     g_SysWork.field_236C = temp_v1;
     g_SysWork.field_2360.field_0 = 0;
-	
+
     temp_a0->field_4 = -0x333;
     temp_a0->field_8 = -0x2000;
-	
+
     g_SysWork.field_2370.field_0 = 0x71;
-	
+
     temp_v0 = &g_SysWork.field_2370;
     temp_v0->field_2 = 0;
     temp_v0->field_4 = 0;

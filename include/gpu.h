@@ -60,6 +60,9 @@ enum PrimRectFlags
 #define setCodeWord(p, c, rgb24) \
     *(u32*)(((u8*)(p)) + 4) = (((c) << 24) | ((rgb24) & 0xFFFFFF))
 
+#define setMonoColorCode(p, color, code) \
+    *(u32*)(&(p)->r0) = (((color + (color << 8)) + (color << 16)) + (code << 24))
+
 /** Combines `addPrim()` and `setlen()`. */
 #define addPrimFast(ot, p ,_len) \
     (((p)->tag = getaddr(ot) | (_len << 24)), setaddr(ot, p))

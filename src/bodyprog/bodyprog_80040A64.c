@@ -444,7 +444,7 @@ void Anim_Update0(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Anim
     }
 
     // Update frame data.
-    model->anim_4.time_4	     = newTime;
+    model->anim_4.time_4         = newTime;
     model->anim_4.keyframeIdx0_8 = newKeyframeIdx0;
     model->anim_4.keyframeIdx1_A = 0;
 

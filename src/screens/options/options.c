@@ -65,8 +65,8 @@ void GameState_OptionScreen_Update() // 0x801E2D44
             g_Gfx_MoveLineTimer          = 0;
             g_OptExtra_BulletMultLimit   = 1;
             OptExtra_Unlockables         = g_GameWork.config_0.optExtraOptionsEnabled_27;
-			
-			// Defines the amount of bullet multiplier that will be available.
+            
+            // Defines the amount of bullet multiplier that will be available.
             for (i = 0; i < 5; i++)
             {
                 if (OptExtra_Unlockables & (1 << i))
@@ -125,7 +125,7 @@ void GameState_OptionScreen_Update() // 0x801E2D44
             break;
 
         case 8:
-            if ((g_Gfx_ScreenFade & 7) == 5)
+            if ((g_Gfx_ScreenFade & 0x7) == 5)
             {
                 Fs_QueueWaitForEmpty();
 
@@ -142,7 +142,7 @@ void GameState_OptionScreen_Update() // 0x801E2D44
             break;
 
         case 9:
-            if ((g_Gfx_ScreenFade & 7) == 5)
+            if ((g_Gfx_ScreenFade & 0x7) == 5)
             {
                 g_GameWork.gameStateStep_598[0] = 4;
                 g_GameWork.gameStateStep_598[0] = 4;
@@ -188,7 +188,7 @@ void GameState_OptionScreen_Update() // 0x801E2D44
             break;
 
         case 13:
-            if ((g_Gfx_ScreenFade & 7) == 5)
+            if ((g_Gfx_ScreenFade & 0x7) == 5)
             {
                 g_GameWork.gameStateStep_598[0] = 14;
                 g_SysWork.timer_20              = 0;
@@ -200,7 +200,7 @@ void GameState_OptionScreen_Update() // 0x801E2D44
             break;
 
         case 15:
-            if ((g_Gfx_ScreenFade & 7) == 5)
+            if ((g_Gfx_ScreenFade & 0x7) == 5)
             {
                 g_GameWork.gameStateStep_598[0] = 0;
                 g_SysWork.timer_20              = 0;
@@ -210,7 +210,7 @@ void GameState_OptionScreen_Update() // 0x801E2D44
             }
             break;
     }
-	
+
     switch (g_GameWork.gameStateStep_598[0])
     {
         case 1:
@@ -219,12 +219,12 @@ void GameState_OptionScreen_Update() // 0x801E2D44
         case 7:
         case 8:
         case 9:
-        case 0xd:
+        case 13:
             Settings_MainScreen();
             break;
 
-        case 0xe:
-        case 0xf:
+        case 14:
+        case 15:
             Settings_ExtraScreen();
             break;
     }
@@ -257,7 +257,7 @@ void Settings_ExtraScreen() // 0x801E318C
         g_PrevExtraSelectedOptionIdx = g_ExtraSelectedOptionIdx;
 
         if (((g_GameWork.gameStatePrev_590 == GameState_InGame) && 
-			((g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter) == 0)) &&
+            ((g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter) == 0)) &&
             ((g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerConfig_0.option) != 0))
         {
             func_80046048(0x51A, 0, 64);
@@ -444,7 +444,7 @@ void Settings_MainScreen() // 0x801E3770
     g_PrevMainSelectedOptionIdx = g_MainSelectedOptionIdx;
 
     if (((g_GameWork.gameStatePrev_590 == GameState_InGame) && 
-		((g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter) == 0)) &&
+        ((g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter) == 0)) &&
         (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerConfig_0.option))
     {
         func_80046048(0x51A, 0, 64);
@@ -475,7 +475,7 @@ void Settings_MainScreen() // 0x801E3770
     {
         case OptMain_Exit:
             if (g_ControllerPtrConst->btns_new_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter |
-				g_GameWorkPtr->config_0.controllerConfig_0.cancel))
+                g_GameWorkPtr->config_0.controllerConfig_0.cancel))
             {
                 func_80046048(0x51A, 0, 64);
 
@@ -662,8 +662,6 @@ void Gfx_SfxBarDraw() // 0x801E3F90
 
 void Gfx_BarDraw(s32 arg0, u8 arg1) // 0x801E3FB8
 {
-#define setMonoColorCode(p, color, code) *(u32*)(&(p)->r0) = ((color + (color << 8)) + (color << 16)) + (code << 24)
-
     GsOT* ot;
     s32   x0Offset;
     s32   x0;
@@ -1671,11 +1669,11 @@ void Settings_BrightnessScreen() // 0x801E6018
     }
 
     if (g_GameWork.gameStatePrev_590 == GameState_MainMenu)
-	{
+    {
         Gfx_BackgroundSpriteDraw(&D_800A9044);
     }
-	else
-	{
+    else
+    {
         Gfx_BackgroundSpriteDraw(&D_800A904C);
     }
 

@@ -426,7 +426,7 @@ typedef enum _GameDifficulty
 {
     GameDifficulty_Easy   = -1,
     GameDifficulty_Normal = 0,
-    GameDifficulty_Hard	  = 1
+    GameDifficulty_Hard   = 1
 } e_GameDifficulty;
 
 typedef struct _ShSavegame
@@ -757,7 +757,7 @@ STATIC_ASSERT_SIZEOF(s_MainCharacter, 340);
 
 typedef struct _MapWork
 {
-	s32 field_0;
+    s32 field_0;
     s8  unk_4[11];
     s8  field_F;
 } s_MapWork;
@@ -765,16 +765,16 @@ STATIC_ASSERT_SIZEOF(s_MapWork, 16);
 
 typedef struct
 {
-	s32 field_0;
-	s32 field_4;
-	s32 field_8;
+    s32 field_0;
+    s32 field_4;
+    s32 field_8;
 } s_StructUnk0;
 
 typedef struct
 {
-	s16 field_0;
-	s16 field_2;
-	s16 field_4;
+    s16 field_0;
+    s16 field_2;
+    s16 field_4;
 } s_StructUnk1;
 
 typedef struct _SysWork

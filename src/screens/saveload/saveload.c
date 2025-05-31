@@ -1680,25 +1680,25 @@ void Savegame_ScreenLogic() // 0x801E649C
             {
                 break;
             }
-			
-			// Does the equivalent to check if the memory cards
-			// are inserted and checks if the user if moving
-			// between slots.
+
+            // Does the equivalent to check if the memory cards
+            // are inserted and checks if the user if moving
+            // between slots.
             if (g_MemCardElementCount[0] != 0 && g_MemCardElementCount[1] != 0 && 
                 (g_ControllerPtrConst->btns_new_10 & (ControllerFlag_LStickRight | ControllerFlag_LStickLeft)))
             {
                 g_SlotSelectedIdx ^= 1;
                 Sd_EngineCmd(0x519);
             }
-			
-			// Does the equivalent to check a memory card is inserted.
+
+            // Does the equivalent to check a memory card is inserted.
             if (g_MemCardsTotalElementCount > 0)
             {
                 D_801E753C        = 0;
                 g_IsSaveSelected  = 0;
                 g_SlotElementInfo = (s_SaveSlotElementInfo*)((g_SlotSelectedIdx * 0xA50) + BOOT_ADDR_0);
-				
-				// If player moves down the save slot.
+
+                // If player moves down the save slot.
                 if (g_ControllerPtrConst->field_18 & ControllerFlag_LStickUp) 
                 {
                     if (g_SlotElementSelectedIdx[g_SlotSelectedIdx] != 0) 
@@ -1707,8 +1707,8 @@ void Savegame_ScreenLogic() // 0x801E649C
                         Sd_EngineCmd(0x519);
                     }
                 }
-				
-				// If player moves up the save slot.
+
+                // If player moves up the save slot.
                 if (g_ControllerPtrConst->field_18 & ControllerFlag_LStickDown) 
                 {
                     if (g_SlotElementSelectedIdx[g_SlotSelectedIdx] < g_MemCardElementCount[g_SlotSelectedIdx] - 1)
@@ -1736,8 +1736,8 @@ void Savegame_ScreenLogic() // 0x801E649C
                         g_IsSaveSelected = 1;
                     }
                 }
-				
-				// Checks if the player is going to overwrite a save.
+                
+                // Checks if the player is going to overwrite a save.
                 if (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter) 
                 {
                     if ((D_801E753C | g_IsSaveSelected) != 0) 
@@ -1756,8 +1756,8 @@ void Savegame_ScreenLogic() // 0x801E649C
                     Sd_EngineCmd(0x51B);
                 }
             }
-			
-			// Exit save screen.
+
+            // Exit save screen.
             if (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel) 
             {
                 g_Gfx_ScreenFade                = 3;
@@ -1813,8 +1813,8 @@ void Savegame_ScreenLogic() // 0x801E649C
                 }
                 Sd_EngineCmd(0x51B);
             }
-			
-			// Cancel overwrite
+
+            // Cancel overwrite
             if (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel) 
             {
                 g_GameWork.gameStateStep_598[1] = 0;
@@ -1833,13 +1833,13 @@ void Savegame_ScreenLogic() // 0x801E649C
                 g_GameWork.field_58E = 0;
 
                 Fs_QueueWaitForEmpty();
-				
-				/** @brief Unused piece of code/Debug cut feature implied?
-				* This piece of code redirect to the status screen/inventory
-				* if the user was in the status screen/inventory before saving,
-				* however, it is impossible to access to the save screen from
-				* there so this may could imply some cut debug feature.
-				*/
+
+                /** @brief Unused piece of code/Debug cut feature implied?
+                * This piece of code redirect to the status screen/inventory
+                * if the user was in the status screen/inventory before saving,
+                * however, it is impossible to access to the save screen from
+                * there so this may could imply some cut debug feature.
+                */
                 if (g_GameWork.gameStatePrev_590 == GameState_StatusScreen)
                 {
                     Game_StateSetNext(g_GameWork.gameStatePrev_590);

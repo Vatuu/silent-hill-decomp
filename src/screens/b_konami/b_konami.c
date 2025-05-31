@@ -446,7 +446,7 @@ void func_800CA2C8(s32 arg0) // 0x800CA2C8
 {
     static const s32 timeVar0 = 25;  // 0x19
     static const s32 timeVar1 = 180; // 0xB4
-	
+
     s32 temp_v0;
     s32 currentTime;
     s32 temp_v1_2;
@@ -472,7 +472,7 @@ void func_800CA2C8(s32 arg0) // 0x800CA2C8
     {
         return;
     }
-    
+
     expectedTime = (arg0 * 263) - timeVar0;
 
     var_s0 = D_800CA500;
