@@ -71,8 +71,8 @@ typedef struct
     s16              savegameCount_2;
     s8               elementType_4;   /** `e_SlotElementType` */
     s8               field_5;         // The value changes between 0 when the first save slot is selected and 4 when the second is selected.
-    s8               file_Idx_6;
-    s8               element_Idx_7;
+    s8               fileIdx_6;
+    s8               elementIdx_7;
     s32              mapEventIdx_8;
     s_SaveBasicInfo* field_C;
 } s_SaveSlotElementInfo;
@@ -92,49 +92,51 @@ typedef struct
 
 typedef struct
 {
-    DVECTOR field_0;
-    DVECTOR field_4;
-} s_801E2A98;
+    DVECTOR vertex0_0;
+    DVECTOR vertex1_4;
+} s_Line2d;
 
 typedef struct
 {
-    DVECTOR field_0;
-    DVECTOR field_4;
-    DVECTOR field_8;
-    DVECTOR field_C;
-} s_801E2A48;
+    DVECTOR vertex0_0;
+    DVECTOR vertex1_4;
+    DVECTOR vertex2_8;
+} s_Triangle2d;
 
 typedef struct
 {
-    DVECTOR field_0;
-    DVECTOR field_4;
-    DVECTOR field_8;
-} s_801E2B58;
+    DVECTOR vertex0_0;
+    DVECTOR vertex1_4;
+    DVECTOR vertex2_8;
+    DVECTOR vertex3_C;
+} s_Quad2d;
 
 typedef struct
 {
-    DVECTOR field_0;
-    DVECTOR field_4;
-    u16     field_8;
-    u16     field_A;
-    u16     field_C;
-    u16     pad_E;
+    s_Line2d line_0;
+    u16      field_8;
+    u16      field_A;
+    u16      field_C;
+    u16      pad_E;
 } s_801E2C8C;
 
 typedef struct
 {
-    s_801E2A98 field_0[4];
-} s_801E2CAC;
+    s_Line2d lines_0[4];
+} s_2dLines;
 
 typedef struct
 {
-    s_801E2A48 field_0[4];
-} s_801E2CCC;
+    s_Quad2d quads_0[4];
+} s_2dQuads;
 
 typedef struct
 {
-    u8 r, g, b, p;
-} s_primColor;
+    u8 r;
+    u8 g;
+    u8 b;
+    u8 p;
+} s_PrimColor;
 
 // ========
 // GLOBALS
@@ -222,7 +224,7 @@ extern s8 g_DisplaySaveDataInfo;
 
 extern s8 g_IsMemCardNotInserted[MEMORY_CARD_SLOT_COUNT]; // 0 - is inserted, 1 - is not inserted.
 
-extern s8 g_Gfx_SaveShineTimer;
+extern s8 g_Gfx_SaveFlashTimer;
 
 // Use when overwriting a save with yellow text.
 extern u8 D_801E76D5;
@@ -258,9 +260,9 @@ void func_801E43C8(s32 arg0);
 
 void Gfx_SavesTransparentBgDraw(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 
-void func_801E52D8(s32 arg0, s32 arg1);
+void func_801E52D8(s32 slotIdx, s32 elementType);
 
-void Gfx_RectMemLoadDraw(s_801E2CAC* arg0, s_801E2CCC* arg1, s_801E2C8C* arg2, s32 arg3);
+void Gfx_RectMemLoadDraw(s_2dLines* lines, s_2dQuads* quads, s_801E2C8C* arg2, s32 slotIdx);
 
 /** Updates the save screen. */
 void GameState_SaveScreen_Update();

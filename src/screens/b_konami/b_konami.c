@@ -138,8 +138,8 @@ s32 func_800C9874() // 0x800C9874
         g_SlotElementInfo = &g_SlotElementInfo[g_SlotElementSelectedIdx[g_SlotSelectedIdx]];
 
         D_800BCD40        = g_SlotElementInfo->field_5;
-        g_SelectedFileIdx = g_SlotElementInfo->file_Idx_6;
-        g_SelectedSaveIdx = g_SlotElementInfo->element_Idx_7;
+        g_SelectedFileIdx = g_SlotElementInfo->fileIdx_6;
+        g_SelectedSaveIdx = g_SlotElementInfo->elementIdx_7;
         return 5;
     }
     
