@@ -83,10 +83,10 @@ typedef enum _ColorId
 {
     ColorId_Gold      = 0,
     ColorId_DarkGrey  = 1,
-    ColorId_Green0    = 2,
+    ColorId_Green     = 2,
     ColorId_Nuclear   = 3,
     ColorId_Red       = 4,
-    ColorId_Green1    = 5,
+    ColorId_GreenDup  = 5, // Gives same color as `ColorId_Green`. Unused?
     ColorId_LightGrey = 6,
     ColorId_White     = 7
 } e_ColorId;
