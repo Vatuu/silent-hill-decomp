@@ -187,7 +187,7 @@ void func_800482D8() // 0x800482D8
     switch (D_800C1670.field_0)
     {
         case 0:
-            D_800C37D8 = &D_800AA274[D_800C16A8];
+            D_800C37D8 = &D_800AA274[D_800C16A8[0]];
             D_800C37C8 = D_800C37D8->field_0;
             D_800C1670.field_0 = 1;
             break;

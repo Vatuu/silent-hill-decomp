@@ -325,11 +325,19 @@ typedef struct
     u16 field_2;
     u16 field_4;
     u16 field_6;
-    s8  unk_8[6];
+    s16 field_8;
+    s16 field_A;
+    s16 field_C;
     u16 field_E;
-    s8  unk_F[4];
+    union
+    {
+        s8  field_00[3];
+        s16 field_01;
+    } field_F;
     s8  field_14;
     u8  field_15;
+    s8  field_16;
+    s8  field_17;
 } s_800C1658;
 
 typedef struct
@@ -346,9 +354,9 @@ typedef struct
     s16 volumeXa_0; // Might be wrong, but it's used in a `Sd_SetVolBXa` call.
     s8  unk_2[2];
     u16 field_4;
-    s8  unk_6[2];
+    s16 field_6;
     s16 volumeBgm_8; // Might be wrong, but it's used in a `Sd_SetVolBgm` call.
-    s8  field_10[2];
+    s16 field_A;
     s8  field_C;     // (?) volume?
     s8  field_D;     // BGM volume?
     s8  field_E;     // SE volume?
@@ -1001,6 +1009,8 @@ extern s_800C117C D_800C117C[];
 
 extern s8* D_800C15B0;
 
+extern s32 D_800C15B8;
+
 extern s8 D_800C15B4;
 
 extern s16 D_800C15C4;
@@ -1008,6 +1018,8 @@ extern s16 D_800C15C4;
 extern s16 D_800C15C6;
 
 extern s16 D_800C15C8;
+
+extern u8 D_800C15F0;
 
 extern s16 D_800C15F8[];
 
@@ -1041,7 +1053,7 @@ extern u8 D_800C1673;
 
 extern s_800C1688 D_800C1688;
 
-extern u8 D_800C16A8;
+extern u8 D_800C16A8[];
 
 extern s32 D_800C16C8; // Type assumed.
 
@@ -1445,9 +1457,11 @@ void func_80045BD8(u16 caseArg);
 
 void func_80045D28(s32 caseArg);
 
-void Sd_DriverInit();
+void sd_init();
 
 u8 func_80045B28();
+
+void sd_work_init();
 
 void func_80046048(u16 cmd, s32 arg1, s32 vol); // SD Func. Last arg is a u8 value.
 

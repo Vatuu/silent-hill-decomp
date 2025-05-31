@@ -275,7 +275,8 @@ GameFs_FlameGfxLoad = 0x8003E710; // type:func
 GameFs_PlayerMapAnimLoad = 0x8007EB64; // type:func
 
 Sd_EngineCmd = 0x80045A7C; // type:func
-Sd_DriverInit = 0x80045DD4; // type:func
+sd_init = 0x80045DD4; // type:func
+sd_work_init = 0x80045E44; // type:func
 Sd_SetVolume = 0x80047798; // type:func
 Sd_SetVolBgm = 0x80047808; // type:func
 Sd_SetVolXa = 0x80047860; // type:func

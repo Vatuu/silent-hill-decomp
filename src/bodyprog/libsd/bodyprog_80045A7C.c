@@ -7,6 +7,11 @@
 #include "bodyprog/math.h"
 #include "main/fsqueue.h"
 
+/** This file could possibly be `sdmgr.c` or
+* at least starting from `sd_init` function it
+* could be.
+*/
+
 void Sd_EngineCmd(u32 cmd) // 0x80045A7C
 {
     switch ((cmd >> 8) & 0xFF)
@@ -193,7 +198,7 @@ void func_80045D28(s32 caseArg) // 0x80045D28
     }
 }
 
-void Sd_DriverInit() // 0x80045DD4
+void sd_init() // 0x80045DD4
 {
     SdInit();
     SdSetTickMode(1);
@@ -206,12 +211,79 @@ void Sd_DriverInit() // 0x80045DD4
     D_800C1678.field_D = OPT_SOUND_VOLUME_MAX - 1;
     D_800C1678.field_E = OPT_SOUND_VOLUME_MAX - 1;
 
-    func_80045E44();
+    sd_work_init();
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/bodyprog_80045A7C", func_80045E44);
+void sd_work_init() // 0x80045E44
+{
+    SdSetAutoKeyOffMode(0);
+    SdUtSetReverbType(1);
+    SpuClearReverbWorkArea(1);
+    SdUtReverbOn();
+    SpuSetTransferMode(0);
+    g_Sd_ReverbDepth = 20;
+    SdUtSetReverbDepth(20, 20);
+    Sd_SetReverbEnable(0);
+    SdSetSerialAttr(0, 0, 0);
+    Sd_SetVolXa(0, 0);
+    D_800C15F0 = 0x80;
+    func_80048954(14, &D_800C15F0, NULL);
+    
+    
+    for(D_800C15B8 = 0; D_800C15B8 < 31; D_800C15B8++)
+    {
+        D_800C16A8[D_800C15B8] = 0;
+    }
+    
+    for(D_800C15B8 = 0; D_800C15B8 < 24; D_800C15B8++)
+    {
+        D_800C15F8[D_800C15B8] = 0;
+    }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/bodyprog_80045A7C", func_80045FF8);
+    
+    D_800C1658.field_6             = 0;
+    D_800C1658.field_8             = 0;
+    D_800C1658.field_A             = 0;
+    D_800C1658.field_C             = 0;
+    D_800C1658.field_4             = 0;
+    D_800C1658.field_F.field_00[3] = 0;
+    D_800C1658.field_0             = 0;
+    D_800C1658.field_14            = 0;
+    D_800C1658.field_15            = 0;
+    D_800C1658.field_16            = 0;
+    D_800C1658.field_17            = 0;
+    D_800C1678.field_A             = 0x7F;
+	
+    SdSetMVol(0x7F, 0x7F);
+	
+    D_800C37DC                  = 0;
+    D_800C1658.field_E          = 0;
+    D_800C1658.field_F.field_01 = 0;
+    D_800C1670.field_0          = 0;
+    D_800C1670.field_1          = 0;
+    D_800C1670.field_2          = 0;
+    D_800C1670.field_3          = 0;
+    D_800C1678.volumeXa_0       = 84;
+    D_800C1678.volumeBgm_8      = 40;
+    D_800C1678.field_6          = 40;
+	
+    Sd_SetVolBgm(40, 40);
+}
+
+void func_80045FF8() // 0x80045FF8
+{
+    s32 i;
+    
+    SdSeqClose(0);
+    
+    for (i = 4; i >= 0; i--)
+    {
+        SdVabClose(i);
+    }
+    
+    SdEnd();
+    SdQuit();
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/bodyprog_80045A7C", func_80046048);
 
@@ -219,7 +291,10 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/bodyprog_80045A7C", func_800463C0);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/bodyprog_80045A7C", func_80046620);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/bodyprog_80045A7C", func_800468EC);
+void func_800468EC() // 0x800468EC
+{
+    SdUtKeyOffV(23);
+}
 
 void func_8004690C(s32 arg0) // 0x8004690C
 {

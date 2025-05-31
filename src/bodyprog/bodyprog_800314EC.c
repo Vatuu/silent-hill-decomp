@@ -308,7 +308,7 @@ void MainLoop() // 0x80032EE0
     InitGeom();
     func_8004BB10(); // Initializes something for graphics.
     func_800890B8();
-    Sd_DriverInit();
+    sd_init();
 
     // Run game.
     while (true)
