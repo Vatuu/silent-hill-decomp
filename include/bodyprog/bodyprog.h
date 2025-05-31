@@ -708,7 +708,7 @@ STATIC_ASSERT_SIZEOF(s_800B5494, 40);
 
 extern s_800B5494 D_800B5494;
 
-/** TODO: `g_MapOverlayHeader` is part of the overlay bin files. Maybe should be moved to `maps/s00.h` or `dynamic/dynamic.h`. */
+/** TODO: `g_MapOverlayHeader` is part of the overlay bin files. Maybe should be moved to `maps/shared.h` or `dynamic/dynamic.h`. */
 typedef struct _MapOverlayHeader
 {
     u8                unk_0[4];
@@ -1832,6 +1832,8 @@ s32 func_8006FD90(s_SubCharacter*, s32, s32, s32);
 
 s32 func_80070360(s_SubCharacter*, s32, s32);
 
+void func_800705E4(s32, s32, s32, s32, s32);
+
 void func_80074254(s32 arg0, s32 arg1); // `arg1` is pointer?
 
 void Gfx_ClearRectInterlaced(s16 x, s16 y, s16 w, s16 h, u8 r, u8 g, u8 b);
@@ -1886,6 +1888,8 @@ void Game_SavegameInitialize(s8 overlayIdx, s32 difficulty);
 void GameFs_MapLoad(s32 mapIdx);
 
 s32 func_8003528C(s32 idx0, s32 idx1);
+
+void func_80035B04(VECTOR3* arg0, SVECTOR* arg1, GsCOORDINATE2* arg2);
 
 void func_80035DB4(s32);
 

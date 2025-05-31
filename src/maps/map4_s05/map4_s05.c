@@ -2,6 +2,7 @@
 #include "bodyprog/math.h"
 #include "main/rng.h"
 #include "maps/shared.h"
+#include "maps/map4/map4_s05.h"
 
 INCLUDE_ASM("asm/maps/map4_s05/nonmatchings/map4_s05", func_800CACA4);
 
@@ -106,9 +107,113 @@ void func_800D1690(void) {}
 
 #include "maps/shared/sharedFunc_800D2EF4_0_s00.h" // 0x800D16E8
 
-INCLUDE_ASM("asm/maps/map4_s05/nonmatchings/map4_s05", Ai_Floatstinger_Update); // 0x800D16FC
+void Ai_Floatstinger_Update(s_SubCharacter* chara, s32 arg1, s32 arg2) // 0x800D16FC
+{
+    D_800DB928 = arg2;
 
-INCLUDE_ASM("asm/maps/map4_s05/nonmatchings/map4_s05", func_800D1790);
+    if (chara->model_0.state_2 == 0)
+    {
+        Ai_Floatstinger_Init(chara);
+    }
+
+    if (g_DeltaTime0 != 0)
+    {
+        func_800D1968(chara);
+        func_800D1B98(chara);
+        func_800D35F0(chara);
+    }
+
+    func_800D37E8(chara, arg1);
+    func_800D3AD4(chara);
+
+    chara->properties_E4.larvalStalker.properties_E8[1].val16[0] = chara->rotation_24.vy;
+}
+
+void Ai_Floatstinger_Init(s_SubCharacter* chara) // 0x800D1790
+{
+    s32 i;
+
+    chara->properties_E4.larvalStalker.properties_E8[0].val16[0] = 0;
+
+    chara->model_0.anim_4.keyframeIdx1_A = 0;
+
+    chara->health_B0 = FP_TO(4000, Q12_SHIFT);
+
+    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
+    {
+        chara->health_B0 = FP_TO(6000, Q12_SHIFT);
+    }
+
+    chara->moveSpeed_38 = 0;
+    chara->field_34     = 0;
+    chara->field_E0_8   = 4;
+
+    for (i = 0; i < 16; i++)
+    {
+        chara->properties_E4.larvalStalker.properties_E8[i].val32 = 0;
+    }
+
+    switch (chara->model_0.stateStep_3)
+    {
+        case 3:
+            chara->model_0.state_2               = 5;
+            chara->model_0.anim_4.animIdx_0      = 19;
+            chara->model_0.anim_4.time_4         = FP_TO(191, Q12_SHIFT);
+            chara->model_0.anim_4.keyframeIdx0_8 = 191;
+
+            chara->properties_E4.larvalStalker.properties_E8[7].val16[1] = -0x90; // Could be FP_ANGLE(-12.7f); ?
+            break;
+        case 4:
+            chara->position_18.vx = FP_FLOAT_TO(-114.5f, Q12_SHIFT);
+            chara->position_18.vy = FP_FLOAT_TO(2.0f, Q12_SHIFT);
+            chara->position_18.vz = FP_FLOAT_TO(108.0f, Q12_SHIFT);
+
+            chara->model_0.state_2               = 2;
+            chara->model_0.anim_4.animIdx_0      = 19;
+            chara->model_0.anim_4.time_4         = FP_TO(191, Q12_SHIFT);
+            chara->model_0.anim_4.keyframeIdx0_8 = 191;
+            chara->rotation_24.vy                = FP_ANGLE(-90.0f);
+            break;
+    }
+
+    chara->model_0.stateStep_3 = 0;
+
+    ModelAnim_AnimInfoSet(&chara->model_0.anim_4, g_Ai_Floatstinger_AnimInfo);
+
+    chara->field_C0 = 0;
+    chara->field_BC = 0;
+    chara->field_B8 = 0;
+    chara->field_B4 = 0;
+
+    D_800DB89C = 0;
+    D_800DB898 = 0;
+
+    chara->headingAngle_3C = chara->rotation_24.vy;
+
+    for (i = 0; i < 15; i++)
+    {
+        D_800DB8A8[i] = 0;
+    }
+
+    chara->properties_E4.larvalStalker.properties_E8[1].val16[0] = chara->rotation_24.vy;
+    chara->flags_3E |= (1 << 8) | (1 << 2);
+
+    D_800D7858 = 0;
+
+    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
+    {
+        D_800D785C = FP_FLOAT_TO(2.4f, Q12_SHIFT);
+        chara->properties_E4.larvalStalker.properties_E8[0].val16[0] |= (1 << 0);
+    }
+    else if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
+    {
+        D_800D785C = FP_FLOAT_TO(4.0f, Q12_SHIFT);
+    }
+    else
+    {
+        D_800D785C = FP_FLOAT_TO(3.2f, Q12_SHIFT);
+    }
+}
 
 INCLUDE_ASM("asm/maps/map4_s05/nonmatchings/map4_s05", func_800D1968);
 

@@ -72,3 +72,5 @@ sharedData_800E3A2C_0_s00 = 0x800ED530; // type:s32
 sharedData_800D16E4_2_s01 = 0x800ED57C; // type:s8
 sharedData_800D3150_3_s02 = 0x800ED580; // type:s32
 sharedData_800D16E0_2_s01 = 0x800ED584; // type:s32
+g_Ai_Flauros_AnimInfo = 0x800EAE80; // type:AnimInfo
+g_Ai_Parasite_AnimInfo = 0x800EAEC0; // type:AnimInfo

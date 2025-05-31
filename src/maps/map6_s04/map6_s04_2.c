@@ -3,6 +3,9 @@
 #include "main/rng.h"
 #include "maps/shared.h"
 
+extern s_AnimInfo g_Ai_Flauros_AnimInfo[];  // 0x800EAE80 - TODO: move to map6_s04.h
+extern s_AnimInfo g_Ai_Parasite_AnimInfo[]; // 0x800EAEC0 - TODO: move to map6_s04.h
+
 #include "maps/shared/Ai_Stalker_Update.h" // 0x800D3560
 
 #include "maps/shared/Ai_Stalker_Init.h" // 0x800D36F4
@@ -139,9 +142,68 @@ INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04_2", func_800DDFEC);
 
 #include "maps/shared/sharedFunc_800D923C_0_s00.h" // 0x800DE064
 
-INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04_2", Ai_Flauros_Update); // 0x800DE0C4
+void Ai_Flauros_Update(s_SubCharacter* chara, s32 arg1, s32 arg2) // 0x800DE0C4
+{
+    s32         i;
+    s32         var_s1;
+    s_AnimInfo* animInfo;
 
-INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04_2", Ai_Parasite_Update); // 0x800DE1CC
+    if (chara->model_0.state_2 == 0)
+    {
+        chara->model_0.anim_4.keyframeIdx1_A = 0;
+        chara->model_0.state_2               = 1;
+        chara->model_0.stateStep_3           = 0;
+        chara->model_0.anim_4.animIdx_0      = 3;
+        chara->model_0.anim_4.time_4         = 0;
+        chara->model_0.anim_4.keyframeIdx0_8 = 0;
+    }
+
+    if (chara->model_0.anim_4.time_4 <= FP_TO(21, Q12_SHIFT))
+    {
+        if (chara->model_0.anim_4.time_4 > FP_TO(13, Q12_SHIFT))
+        {
+            var_s1 = (chara->model_0.anim_4.time_4 - FP_TO(13, Q12_SHIFT)) >> 3;
+        }
+        else
+        {
+            var_s1 = 0;
+        }
+    }
+    else
+    {
+        var_s1 = FP_TO(1, Q12_SHIFT);
+    }
+
+    func_80035B04(&chara->position_18, &chara->rotation_24, (GsCOORDINATE2*)arg2);
+
+    animInfo = &g_Ai_Flauros_AnimInfo[chara->model_0.anim_4.animIdx_0];
+    animInfo->funcPtr_0(chara, arg1, arg2, animInfo);
+
+    for (i = 6; i < 0xB; i++)
+    {
+        func_800705E4(arg2, i, var_s1, var_s1, var_s1);
+    }
+}
+
+void Ai_Parasite_Update(s_SubCharacter* chara, s32 arg1, s32 arg2) // 0x800DE1CC
+{
+    s_AnimInfo* animInfo;
+
+    if (chara->model_0.state_2 == 0)
+    {
+        chara->model_0.anim_4.keyframeIdx1_A = 0;
+        chara->model_0.state_2               = 1;
+        chara->model_0.stateStep_3           = 0;
+        chara->model_0.anim_4.animIdx_0      = 3;
+        chara->model_0.anim_4.time_4         = 0;
+        chara->model_0.anim_4.keyframeIdx0_8 = 0;
+    }
+
+    func_80035B04(&chara->position_18, &chara->rotation_24, arg2);
+
+    animInfo = &g_Ai_Parasite_AnimInfo[chara->model_0.anim_4.animIdx_0];
+    animInfo->funcPtr_0(chara, arg1, arg2, animInfo);
+}
 
 void func_800DE26C(void) {}
 

@@ -2,7 +2,7 @@
 #include "bodyprog/math.h"
 #include "main/rng.h"
 #include "maps/shared.h"
-#include "maps/map0/s00.h"
+#include "maps/map0/map0_s00.h"
 
 #include "maps/shared/Ai_Stalker_Update.h" // 0x800D2F08
 

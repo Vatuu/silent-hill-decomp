@@ -3,6 +3,8 @@
 #include "main/rng.h"
 #include "maps/shared.h"
 
+#include "maps/map4/map4_s03.h"
+
 INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800CB0A4);
 
 INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800CB1B0);
@@ -177,7 +179,7 @@ INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D2D28);
 
 INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D2ED0);
 
-INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D3038);
+INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", Ai_Twinfeeler_TextureLoad); // 0x800D3038
 
 INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D3068);
 
@@ -215,7 +217,79 @@ INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D3B98);
 
 INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D3CBC);
 
-INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D3CD4);
+s32 Ai_Twinfeeler_Init(s_SubCharacter* chara) // 0x800D3CD4
+{
+    s32             charaPosX;
+    s32             charaPosZ;
+    s_SubCharacter* chara2; // TODO: Not sure why this is needed here, could be an inline in this func.
+
+    chara2 = chara;
+
+    if (!Fs_QueueDoThingWhenEmpty())
+    {
+        return 0;
+    }
+
+    charaPosX = chara->position_18.vx;
+    charaPosZ = chara->position_18.vz;
+
+    chara->health_B0 = FP_TO(3000, Q12_SHIFT);
+
+    chara2->properties_E4.larvalStalker.properties_E8[13].val32 = -1;
+
+    chara->field_D4 = FP_FLOAT_TO(0.3f, Q12_SHIFT);
+
+    chara->model_0.anim_4.keyframeIdx1_A = 0;
+
+    chara->moveSpeed_38    = 0;
+    chara->headingAngle_3C = chara->rotation_24.vy;
+    chara->field_E0_8      = 4;
+
+    chara2->properties_E4.larvalStalker.properties_E8[1].val32     = 0;
+    chara2->properties_E4.larvalStalker.properties_E8[2].val32     = 0;
+    chara2->properties_E4.larvalStalker.properties_E8[3].val32     = 0;
+    chara2->properties_E4.larvalStalker.properties_E8[9].val32     = 0;
+    chara2->properties_E4.larvalStalker.properties_E8[10].val16[0] = 0;
+    chara2->properties_E4.larvalStalker.properties_E8[11].val32    = 0;
+    chara2->properties_E4.larvalStalker.properties_E8[6].val32     = charaPosX;
+    chara2->properties_E4.larvalStalker.properties_E8[7].val32     = charaPosZ;
+
+    func_800D3CBC(chara, charaPosX, charaPosZ);
+
+    chara->field_DC = 0;
+    chara->field_DE = 0;
+    chara->flags_3E |= 1 << 2;
+
+    if (chara->model_0.stateStep_3 != 0)
+    {
+        chara->model_0.state_2     = chara->model_0.stateStep_3;
+        chara->model_0.stateStep_3 = 0;
+    }
+    else
+    {
+        chara->model_0.state_2     = 11;
+        chara->model_0.stateStep_3 = 0;
+    }
+
+    *(u16*)&chara2->properties_E4.larvalStalker.properties_E8[0].val16[1] = -1;
+
+    func_800D3B74(chara);
+
+    chara->model_0.anim_4.animIdx_0      = 16;
+    chara->model_0.anim_4.time_4         = FP_TO(258, Q12_SHIFT);
+    chara->model_0.anim_4.keyframeIdx0_8 = 258;
+
+    ModelAnim_AnimInfoSet(&chara->model_0.anim_4, g_Ai_Twinfeeler_AnimInfo);
+
+    chara->field_C0 = 0;
+    chara->field_BC = 0;
+    chara->field_B8 = 0;
+    chara->field_B4 = 0;
+
+    func_800D354C(&chara->position_18);
+    chara->flags_3E |= 1 << 8;
+    return 1;
+}
 
 INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D3E18);
 
@@ -301,7 +375,43 @@ INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D5DF4);
 
 INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D5E30);
 
-INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", Ai_Twinfeeler_Update); // 0x800D5F28
+void Ai_Twinfeeler_Update(s_SubCharacter* chara, s32 arg1, s32 arg2)
+{
+    if (chara->model_0.state_2 == 0)
+    {
+        Ai_Twinfeeler_TextureLoad(chara); // Just calls Fs_QueueStartReadTim, probably not init func
+        chara->model_0.state_2     = 1;
+        chara->model_0.stateStep_3 = 0;
+    }
+
+    if (chara->model_0.state_2 != 1 || Ai_Twinfeeler_Init(chara))
+    {
+        if (g_DeltaTime0 != 0)
+        {
+            func_800D3E58(chara);
+            func_800D53B0(chara, arg2);
+            func_800D55C8(chara);
+            func_800D5BC8(chara, arg2);
+            func_800D5888(chara, arg1, arg2);
+            func_800D5B6C(chara, arg2);
+            func_800D54B4(chara, arg2);
+            func_800D5DF4(chara, arg2);
+            func_800D59EC(chara, arg2);
+            func_800D5E30(chara, arg2);
+            func_800D3B44(chara->flags_3E & (1 << 1));
+
+            if (chara->model_0.state_2 != 10)
+            {
+                func_8004690C(0x61F);
+            }
+        }
+        else
+        {
+            func_800D5888(chara, arg1, arg2);
+            func_800D5DF4(chara, arg2);
+        }
+    }
+}
 
 #include "maps/shared/sharedFunc_800D929C_0_s00.h" // 0x800D606C
 

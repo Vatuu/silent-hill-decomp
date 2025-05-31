@@ -1,0 +1,26 @@
+#ifndef _MAP4_S05_H
+#define _MAP4_S05_H
+
+extern s32 D_800D7858;
+
+extern s16 D_800D785C;
+
+extern s_AnimInfo g_Ai_Floatstinger_AnimInfo[]; // 0x800D7864
+
+extern s16 D_800DB898;
+
+extern s16 D_800DB89C;
+
+extern s16 D_800DB8A8[];
+
+extern s32 D_800DB928;
+
+void Ai_Floatstinger_Update(s_SubCharacter* chara, s32 arg1, s32 arg2);
+void Ai_Floatstinger_Init(s_SubCharacter* chara);
+void func_800D1968(s_SubCharacter*);
+void func_800D1B98(s_SubCharacter*);
+void func_800D35F0(s_SubCharacter*);
+void func_800D37E8(s_SubCharacter*, s32);
+void func_800D3AD4(s_SubCharacter*);
+
+#endif

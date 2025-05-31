@@ -2,6 +2,7 @@
 #include "bodyprog/math.h"
 #include "main/rng.h"
 #include "maps/shared.h"
+#include "maps/map7/map7_s03.h"
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800CD170);
 
@@ -193,7 +194,44 @@ INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800D5AA8);
 
 #include "maps/shared/sharedFunc_800D923C_0_s00.h" // 0x800D5B68
 
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", Ai_LittleIncubus_Update); // 0x800D5BC8
+void Ai_LittleIncubus_Update(s_SubCharacter* chara, s32 arg1, s32 arg2) // 0x800D5BC8
+{
+    s32         temp_s0;
+    s32         var_a2;
+    s_AnimInfo* animInfo;
+
+    if (chara->model_0.state_2 == 0)
+    {
+        chara->model_0.anim_4.keyframeIdx1_A = 0;
+        chara->model_0.state_2               = 1;
+        chara->model_0.stateStep_3           = 0;
+        chara->model_0.anim_4.animIdx_0      = 3;
+        chara->model_0.anim_4.time_4         = 0;
+        chara->model_0.anim_4.keyframeIdx0_8 = 0;
+
+        D_800EDA00 = 0;
+    }
+
+    D_800EDA00 += FP_MULTIPLY_FLOAT((s64)g_DeltaTime0, 10.0f, Q12_SHIFT);
+    var_a2 = FP_TO(D_800EDA00, Q12_SHIFT) / FP_TO(80, Q12_SHIFT);
+
+    temp_s0 = var_a2;
+
+    if (var_a2 > FP_TO(1, Q12_SHIFT))
+    {
+        var_a2 = FP_TO(1, Q12_SHIFT);
+    }
+
+    temp_s0 = shRsin(var_a2 >> 2);
+
+    func_80035B04(&chara->position_18, &chara->rotation_24, (GsCOORDINATE2*)arg2);
+
+    animInfo = &g_Ai_LittleIncubus_AnimInfo[chara->model_0.anim_4.animIdx_0];
+    animInfo->funcPtr_0(chara, arg1, arg2, animInfo);
+
+    func_800705E4(arg2, 1, temp_s0, temp_s0, temp_s0);
+    func_800705E4(arg2, 7, temp_s0, temp_s0, temp_s0);
+}
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800D5D24);
 
@@ -473,7 +511,71 @@ INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800DD9D4);
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800DD9F8);
 
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800DDA1C);
+s32 Ai_Incubus_Init(s_SubCharacter* chara, s32 arg1) // 0x800DDA1C
+{
+    u8              curStateStep;
+    s_SubCharacter* chara2; // TODO: Not sure why this is needed here, could be an inline in this func.
+
+    chara->model_0.anim_4.keyframeIdx1_A = 0;
+    chara2                               = chara;
+
+    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
+    {
+        chara->health_B0 = FP_TO(30000, Q12_SHIFT);
+    }
+    else
+    {
+        chara->health_B0 = FP_TO(40000, Q12_SHIFT);
+    }
+
+    chara->moveSpeed_38    = 0;
+    chara->headingAngle_3C = chara->rotation_24.vy;
+    chara->field_D4        = FP_FLOAT_TO(0.3f, Q12_SHIFT);
+    chara->field_E0_8      = 4;
+    chara->field_DC        = 0;
+    chara->field_DE        = 0;
+    chara->flags_3E |= 1 << 2;
+
+    chara2->properties_E4.larvalStalker.properties_E8[2].val32 = 0;
+    chara2->properties_E4.larvalStalker.properties_E8[1].val32 = 0;
+
+    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
+    {
+        chara2->properties_E4.larvalStalker.properties_E8[3].val32 = FP_TO(300, Q12_SHIFT);
+    }
+    else
+    {
+        chara2->properties_E4.larvalStalker.properties_E8[3].val32 = FP_TO(30, Q12_SHIFT);
+    }
+
+    curStateStep = chara->model_0.stateStep_3;
+
+    if (curStateStep != 0)
+    {
+        chara->model_0.stateStep_3 = 0;
+        chara->model_0.state_2     = curStateStep;
+    }
+    else
+    {
+        chara->model_0.state_2     = 1;
+        chara->model_0.stateStep_3 = 0;
+    }
+
+    chara->model_0.anim_4.animIdx_0      = 6;
+    chara->model_0.anim_4.time_4         = FP_TO(338, Q12_SHIFT);
+    chara->model_0.anim_4.keyframeIdx0_8 = 338;
+
+    ModelAnim_AnimInfoSet(&chara->model_0.anim_4, g_Ai_Incubus_AnimInfo);
+
+    chara->field_C0 = 0;
+    chara->field_BC = 0;
+    chara->field_B8 = 0;
+    chara->field_B4 = 0;
+
+    chara->flags_3E |= 1 << 8;
+
+    return 1;
+}
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800DDB3C);
 
@@ -525,7 +627,30 @@ INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800DF044);
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800DF074);
 
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", Ai_Incubus_Update); // 0x800DF0D8
+void Ai_Incubus_Update(s_SubCharacter* chara, s32 arg1, s32 arg2) // 0x800DF0D8
+{
+    if ((chara->model_0.state_2 != 0 || Ai_Incubus_Init(chara, arg2)) && chara->model_0.state_2 != 1)
+    {
+        if (g_DeltaTime0 != 0)
+        {
+            func_800DDBBC(chara);
+            func_800DEC74(chara, arg2);
+            func_800DF044(chara, arg2);
+            func_800DEE44(chara);
+            func_800DEE90(chara, arg1, arg2);
+            func_800DEFE8(chara, arg2);
+            func_800DED68(chara, arg2);
+            func_800DF074(chara);
+            func_800DD98C(chara->flags_3E & 2);
+        }
+        else
+        {
+            func_800DEE90(chara, arg1, arg2);
+            func_800DB608();
+            func_800DF074(chara);
+        }
+    }
+}
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800DF1D4);
 
