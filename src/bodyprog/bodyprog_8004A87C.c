@@ -19,7 +19,7 @@ void Gfx_StringSetPosition(s32 x, s32 y) // 0x8004A87C
         g_StringPositionY = y - OFFSET_Y;
     }
 
-    D_800AD49C = 6;
+    D_800AD49C = 6; // Maybe `ColorId_LightGrey`.
 }
 
 void func_8004A8C0(s32 arg0) // 0x8004A8C0
@@ -29,7 +29,7 @@ void func_8004A8C0(s32 arg0) // 0x8004A8C0
 
 void func_8004A8CC() // 0x8004A8CC
 {
-    D_800AD49C = 6;
+    D_800AD49C = 6; // Maybe `ColorId_LightGrey`.
 }
 
 void Gfx_StringSetColor(s16 colorId) // 0x8004A8DC
