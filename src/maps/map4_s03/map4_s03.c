@@ -385,7 +385,7 @@ void Ai_Twinfeeler_Update(s_SubCharacter* chara, s32 arg1, s32 arg2)
 {
     if (chara->model_0.state_2 == 0)
     {
-        Ai_Twinfeeler_TextureLoad(); // Just calls Fs_QueueStartReadTim, probably not init func
+        Ai_Twinfeeler_TextureLoad(); // Just calls `Fs_QueueStartReadTim`.
         chara->model_0.state_2     = 1;
         chara->model_0.stateStep_3 = 0;
     }
