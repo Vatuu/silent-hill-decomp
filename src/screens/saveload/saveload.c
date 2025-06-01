@@ -271,9 +271,9 @@ void Gfx_SavesLocationDraw(s_SaveSlotElementInfo* ptr, s32 arg1, s32 idx) // 0x8
             Gfx_StringSetColor(colorId);
         }
 
-        Gfx_StringSetPosition(((idx * OFFSET_X) + MARGIN_X) - (D_801E2728[mapEventIdx] / 2),
+        Gfx_StringSetPosition(((idx * OFFSET_X) + MARGIN_X) - (D_801E2728[g_MapEventIdx] / 2),
                               (var0 * OFFSET_Y) + MARGIN_Y);
-        Gfx_StringDraw(g_StageStrings[mapEventIdx], 50);
+        Gfx_StringDraw(g_StageStrings[g_MapEventIdx], 50);
     }
 }
 
