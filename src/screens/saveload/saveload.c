@@ -776,23 +776,23 @@ void Gfx_MemSelectedBarDraw() // 0x801E4010
     {
         {
             { { -106, -88 }, { -106, -92 }, { -146, -88 }, { -150, -92 } },
-            { { -106, -87 }, { -106, -83 }, { -146, -87 }, { -142, -83 } },
+            { { -106, -87 }, { -106, -83 }, { -146, -87 }, { -142, -83 } }
         },
         {
             { { -42, -88 }, { -42, -92 }, { -2, -88 }, { 2, -92 } },
-            { { -42, -87 }, { -42, -83 }, { -2, -87 }, { -6, -83 } },
+            { { -42, -87 }, { -42, -83 }, { -2, -87 }, { -6, -83 } }
         },
         {
-            { { -146, -88 }, { -150, -92}, {-146, 42}, {-150, 46 } },
-            { { -145, -87 }, { -141, -83}, {-145, 41}, {-141, 37 } },
+            { { -146, -88 }, { -150, -92 }, { -146, 42 }, {-150, 46 } },
+            { { -145, -87 }, { -141, -83 }, { -145, 41 }, {-141, 37 } }
         },
         {
             { { -2, -88 }, { 2, -92 }, { -2, 42 }, { 2, 46 } },
-            { { -3, -87 }, { -7, -83 }, { -3, 41 }, { -7, 37 } },
+            { { -3, -87 }, { -7, -83 }, { -3, 41 }, { -7, 37 } }
         },
         {
             { { -146, 42 }, { -150, 46 }, { -2, 42 }, { 2, 46 } },
-            { { -145, 41 }, { -141, 37 }, { -3, 41 }, { -7, 37 } },
+            { { -145, 41 }, { -141, 37 }, { -3, 41 }, { -7, 37 } }
         }
     };
 
@@ -890,7 +890,9 @@ void func_801E43C8(s32 slotIdx) // 0x801E43C8
 
 void Gfx_SavesTransparentBgDraw(s32 slotIdx, s32 arg1, s32 arg2, s32 arg3) // 0x801E451C
 {
-    u32 temp_s4 = (u8)g_SysWork.timer_1C & 0x3F;
+    #define SCROLL_BAR_ARROW_OFFSET_Y 60
+
+    u32 timeCount = (u8)g_SysWork.timer_1C & 0x3F;
 
     s_Quad2d quads[] =
     {
@@ -898,15 +900,17 @@ void Gfx_SavesTransparentBgDraw(s32 slotIdx, s32 arg1, s32 arg2, s32 arg3) // 0x
         { { 8, 0 }, { 8, 96 }, { 4, 0 }, { 4, 96 } }
     };
 
-    s_Triangle2d tris[2][2] =
+    s_Triangle2d scrollBarArrows[MEMORY_CARD_SLOT_COUNT][2] =
     {
+        // Up arrows.
         {
-            { { 4, -1 }, {-1, 7 }, { 8, 7 } },
-            { { 5, 1 }, { 0, 8 }, { 9, 8 } }
+            { { 4, -1 }, { -1, 7 }, { 8, 7 } }, // Slot 1 up arrow.
+            { { 5, 1 }, { 0, 8 }, { 9, 8 } }    // Slot 2 up arrow.
         },
+        // Down arrows.
         {
-            { { 4, 96 }, { 0, 88 }, { 8, 88 } },
-            { { 5, 97 }, { 1, 89 }, { 9, 89 } }
+            { { 4, 96 }, { 0, 88 }, { 8, 88 } }, // Slot 1 down arrow.
+            { { 5, 97 }, { 1, 89 }, { 9, 89 } }  // Slot 2 down arrow.
         }
     };
 
@@ -941,7 +945,7 @@ void Gfx_SavesTransparentBgDraw(s32 slotIdx, s32 arg1, s32 arg2, s32 arg3) // 0x
     s32      offsetY0;
     s32      temp_a2_2;
     s32      offsetX;
-    s32      temp_t2_2;
+    s32      scrollBarArrowOffsetX;
     s32      temp_v1;
     s32      i;
     s32      j;
@@ -1000,14 +1004,14 @@ void Gfx_SavesTransparentBgDraw(s32 slotIdx, s32 arg1, s32 arg2, s32 arg3) // 0x
         setlen(poly_f4_2, 5);
         setcode(poly_f4_2, 0x2A);
 
-        if (temp_s4 < 0x20u)
+        if (timeCount < 0x20u)
         {
-            color = (temp_s4 * 2) + 0x20;
+            color = (timeCount * 2) + 0x20;
             setRGB0(poly_f4_2, color, color, 0x20);
         }
         else
         {
-            color = 0x60 - ((temp_s4 - 0x20) * 2);
+            color = 0x60 - ((timeCount - 0x20) * 2);
             setRGB0(poly_f4_2, color, color, 0x20);
         }
 
@@ -1023,7 +1027,8 @@ void Gfx_SavesTransparentBgDraw(s32 slotIdx, s32 arg1, s32 arg2, s32 arg3) // 0x
         func_80052088(0, 0, 7, 1);
     }
 
-    for (i = 0; i < 2; i++)
+    // Draw scroll bar arrows.
+    for (i = 0; i < MEMORY_CARD_SLOT_COUNT; i++)
     {
         for (j = 0; j < 1; j++)
         {
@@ -1034,14 +1039,14 @@ void Gfx_SavesTransparentBgDraw(s32 slotIdx, s32 arg1, s32 arg2, s32 arg3) // 0x
             setRGB1(poly_g3, 0xA0, 0xA0, 0xA0);
             setRGB2(poly_g3, 0xA0, 0xA0, 0xA0);
 
-            temp_t2_2 = (slotIdx * SLOT_COLUMN_OFFSET) - 139;
+            scrollBarArrowOffsetX = (slotIdx * SLOT_COLUMN_OFFSET) - 139;
 
             setXY3(poly_g3,
-                   tris[i][j].vertex0_0.vx + temp_t2_2, tris[i][j].vertex0_0.vy - 60,
-                   tris[i][j].vertex1_4.vx + temp_t2_2, tris[i][j].vertex1_4.vy - 60,
-                   tris[i][j].vertex2_8.vx + temp_t2_2, tris[i][j].vertex2_8.vy - 60);
+                   scrollBarArrows[i][j].vertex0_0.vx + scrollBarArrowOffsetX, scrollBarArrows[i][j].vertex0_0.vy - SCROLL_BAR_ARROW_OFFSET_Y,
+                   scrollBarArrows[i][j].vertex1_4.vx + scrollBarArrowOffsetX, scrollBarArrows[i][j].vertex1_4.vy - SCROLL_BAR_ARROW_OFFSET_Y,
+                   scrollBarArrows[i][j].vertex2_8.vx + scrollBarArrowOffsetX, scrollBarArrows[i][j].vertex2_8.vy - SCROLL_BAR_ARROW_OFFSET_Y);
 
-            addPrim((u8*)ot->org + 0x1C, poly_g3);
+            addPrim((u8*)ot->org + 28, poly_g3);
             GsOUT_PACKET_P = (u8*)poly_g3 + sizeof(POLY_G3);
         }
     }
@@ -1455,9 +1460,9 @@ void Gfx_RectSaveInfoDraw(s_Line2d* line) // 0x801E5898
                tris[i].vertex0_0.vx, tris[i].vertex0_0.vy,
                tris[i].vertex1_4.vx, tris[i].vertex1_4.vy,
                tris[i].vertex2_8.vx, tris[i].vertex2_8.vy);
-        addPrim((u8*)ot->org + 0x20, poly_f3);
+        addPrim((u8*)ot->org + 32, poly_f3);
 
-        GsOUT_PACKET_P = (u8*)poly_f3;
+        GsOUT_PACKET_P  = (u8*)poly_f3;
         GsOUT_PACKET_P += sizeof(POLY_F3);
     }
 
@@ -1468,8 +1473,8 @@ void Gfx_RectSaveInfoDraw(s_Line2d* line) // 0x801E5898
     setcode(poly_f4, 0x2A);
     setRGB0(poly_f4, 0x30, 0x30, 0x30);
     setXY4(poly_f4,
-           line->vertex0_0.vx, line->vertex0_0.vy,
-           line->vertex0_0.vx, line->vertex0_0.vy + line->vertex1_4.vy,
+           line->vertex0_0.vx,                      line->vertex0_0.vy,
+           line->vertex0_0.vx,                      line->vertex0_0.vy + line->vertex1_4.vy,
            line->vertex0_0.vx + line->vertex1_4.vx, line->vertex0_0.vy,
            line->vertex0_0.vx + line->vertex1_4.vx, line->vertex0_0.vy + line->vertex1_4.vy);
     addPrim((u8*)ot->org + 0x24, poly_f4);
