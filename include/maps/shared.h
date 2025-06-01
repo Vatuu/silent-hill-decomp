@@ -370,9 +370,11 @@ void Ai_BloodyLisa_Update(s_SubCharacter* chara, s32 arg1, s32 arg2);
 
 void sharedFunc_800D595C_7_s01(s_SubCharacter*, s32, s32);
 
-void sharedFunc_800D59A4_7_s01(s_SubCharacter*, s32);
+void sharedFunc_800D59A4_7_s01(s_SubCharacter* chara, GsCOORDINATE2* coords);
 
-void sharedFunc_800D5B3C_7_s01(s_SubCharacter*, s32);
+void sharedFunc_800D5B3C_7_s01(s_SubCharacter* chara, GsCOORDINATE2* coords);
+
+void sharedFunc_800D6508_7_s01(s32, s_SubCharacter*, s32, s32, s32, s8);
 
 void Ai_BloodyLisa_Init(s_SubCharacter* chara);
 

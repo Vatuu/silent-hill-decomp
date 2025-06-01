@@ -2,6 +2,7 @@
 #include "bodyprog/math.h"
 #include "main/rng.h"
 #include "maps/shared.h"
+#include "maps/map1/map1_s01.h"
 
 #include "maps/shared/Ai_Stalker_Update.h" // 0x800D1AF0
 
@@ -45,7 +46,74 @@ INCLUDE_ASM("asm/maps/map1_s01/nonmatchings/map1_s01_2", sharedFunc_800D7BE8_0_s
 
 #include "maps/shared/sharedFunc_800D7E04_0_s00.h" // 0x800D6B8C
 
-INCLUDE_ASM("asm/maps/map1_s01/nonmatchings/map1_s01_2", Ai_Cat_Update); // 0x800D6D40
+void Ai_Cat_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords) // 0x800D6D40
+{
+    s_AnimInfo* animInfo;
+    s32         var_a0;
+
+    if (chara->model_0.state_2 == 0)
+    {
+        chara->model_0.state_2                                      = 1;
+        chara->model_0.anim_4.animIdx_0                             = 7;
+        chara->model_0.anim_4.time_4                                = FP_TO(7, Q12_SHIFT);
+        chara->model_0.anim_4.keyframeIdx1_A                        = 0;
+        chara->model_0.stateStep_3                                  = 0;
+        chara->model_0.anim_4.keyframeIdx0_8                        = 7;
+        chara->position_18.vy                                       = 0;
+        chara->properties_E4.larvalStalker.properties_E8[0].val8[0] = 0;
+    }
+
+    if (chara->model_0.stateStep_3 == 0)
+    {
+        if (chara->model_0.state_2 == 2)
+        {
+            chara->model_0.anim_4.animIdx_0      = 3;
+            chara->model_0.anim_4.time_4         = FP_TO(7, Q12_SHIFT);
+            chara->model_0.anim_4.keyframeIdx0_8 = 7;
+        }
+        else if (chara->model_0.state_2 == 3)
+        {
+            chara->model_0.anim_4.animIdx_0      = 5;
+            chara->model_0.anim_4.time_4         = FP_TO(23, Q12_SHIFT);
+            chara->model_0.anim_4.keyframeIdx0_8 = 23;
+        }
+
+        chara->model_0.stateStep_3++;
+    }
+
+    func_80035B04(&chara->position_18, &chara->rotation_24, coords);
+
+    animInfo = &g_Ai_Cat_AnimInfo[chara->model_0.anim_4.animIdx_0];
+    animInfo->funcPtr_0(chara, arg1, coords, animInfo);
+
+    var_a0 = 0;
+    if (chara->model_0.anim_4.animIdx_0 == 3)
+    {
+        if ((((u8)chara->properties_E4.larvalStalker.properties_E8[0].val8[0] == 0) &&
+             (FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT) - 20 < 3u)) ||
+            (((u8)chara->properties_E4.larvalStalker.properties_E8[0].val8[0] != 0) &&
+             (FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT) - 25 < 3u)))
+        {
+            var_a0 = 1;
+        }
+    }
+    else
+    {
+        if ((((u8)chara->properties_E4.larvalStalker.properties_E8[0].val8[0] == 0) &&
+             (FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT) - 29 < 3u)) ||
+            (((u8)chara->properties_E4.larvalStalker.properties_E8[0].val8[0] != 0) &&
+             (FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT) - 36 < 3u)))
+        {
+            var_a0 = 1;
+        }
+    }
+
+    if (var_a0 != 0)
+    {
+        func_8005DD44(0x5A7, &chara->position_18, 128, (TEST_RNG(4) - 7));
+        chara->properties_E4.larvalStalker.properties_E8[0].val8[0] ^= 1;
+    }
+}
 
 #include "maps/shared/sharedFunc_800D929C_0_s00.h" // 0x800D6F34
 
