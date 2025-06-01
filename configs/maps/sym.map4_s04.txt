@@ -49,3 +49,4 @@ sharedData_800E3260_0_s00 = 0x800D6EBC; // type:s16
 sharedData_800E32D0_0_s00 = 0x800D6EC4; // type:s32
 sharedData_800E39D8_0_s00 = 0x800D6ECC; // type:s32
 sharedData_800D6BB8_3_s04 = 0x800D6ED4; // type:s32
+sharedFunc_800D908C_0_s00 = 0x800D116C; // type:func

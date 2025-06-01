@@ -69,3 +69,4 @@ sharedData_800E39D8_0_s00 = 0x800E21C0; // type:s32
 sharedData_800E21D0_0_s01 = 0x800E21D0; // type:s32
 sharedData_800E2378_0_s01 = 0x800E2378; // type:s32
 sharedData_800E237C_0_s01 = 0x800E237C; // type:s32
+sharedFunc_800D908C_0_s00 = 0x800DA2EC; // type:func

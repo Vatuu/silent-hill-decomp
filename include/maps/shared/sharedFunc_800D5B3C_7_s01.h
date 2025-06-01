@@ -31,15 +31,15 @@ void sharedFunc_800D5B3C_7_s01(s_SubCharacter* chara, GsCOORDINATE2* coords)
     {
         if (chara->model_0.anim_4.keyframeIdx0_8 < 13)
         {
-            sharedFunc_800D6508_7_s01(3, chara, 12, 27, sp28, sp2C);
+            sharedFunc_800D908C_0_s00(3, chara, 12, 27, sp28, sp2C);
         }
         else if (chara->model_0.anim_4.keyframeIdx0_8 < 50)
         {
-            sharedFunc_800D6508_7_s01(3, chara, 49, 27, sp28, sp2C);
+            sharedFunc_800D908C_0_s00(3, chara, 49, 27, sp28, sp2C);
         }
         else
         {
-            sharedFunc_800D6508_7_s01(3, chara, 92, 69, sp28, sp2C);
+            sharedFunc_800D908C_0_s00(3, chara, 92, 69, sp28, sp2C);
         }
     }
 

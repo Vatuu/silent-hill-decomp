@@ -42,3 +42,4 @@ sharedData_800E324C_0_s00 = 0x800D5C50; // type:VECTOR3 size:0xC
 sharedData_800E3260_0_s00 = 0x800D5C64; // type:s16
 sharedData_800E39D8_0_s00 = 0x800D5CEC; // type:s32
 sharedData_800D5CF4_3_s00 = 0x800D5CF4; // type:s32
+sharedFunc_800D908C_0_s00 = 0x800D0664; // type:func

@@ -64,3 +64,4 @@ sharedData_800E3A20_0_s00 = 0x800E3A20; // type:s32
 sharedData_800E3A24_0_s00 = 0x800E3A24; // type:s32
 sharedData_800E3A28_0_s00 = 0x800E3A28; // type:s32
 sharedData_800E3A2C_0_s00 = 0x800E3A2C; // type:s32
+sharedFunc_800D908C_0_s00 = 0x800D908C; // type:func

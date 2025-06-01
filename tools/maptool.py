@@ -457,6 +457,52 @@ def clean_file(content, funcName):
 
     return content
 
+def find_similar_functions(func1_path, maxDistance):
+    print(f"Searching for functions similar to {func1_path} (max distance: {maxDistance})")
+
+    maps_base_path = os.path.join("asm", "maps")
+
+    func1_fname = os.path.basename(func1_path)
+    func1_name = os.path.splitext(func1_fname)[0]
+
+    func1_text = read_file(func1_path)
+    func1_content = clean_file(func1_text, func1_name)
+
+    # eww
+    map_names = []
+    for map_name in os.listdir(maps_base_path):
+        map_path = os.path.join(maps_base_path, map_name)
+        if os.path.isdir(map_path):
+            map_names.append(map_name)
+
+    map_names.sort()
+    for map_name in map_names:
+        map_path = os.path.join(maps_base_path, map_name)
+        if os.path.isdir(map_path):
+            # asm/maps/[map]/...
+            for match_type in os.listdir(map_path):
+                match_path = os.path.join(map_path, match_type)
+                if os.path.isdir(match_path):
+                    # asm/maps/[map]/[matchings]/
+                    for tu_name in os.listdir(match_path):
+                        tu_path = os.path.join(match_path, tu_name)
+                        if os.path.isdir(tu_path):
+                            # asm/maps/[map]/[matchings]/[tu]...
+                            for asm_file in os.listdir(tu_path):
+                                if asm_file.endswith('.s'):
+                                    asm_path = os.path.join(tu_path, asm_file)
+                                    func2_fname = os.path.basename(asm_file)
+                                    func2_name = os.path.splitext(func2_fname)[0]
+                                    if func2_name != func1_name:
+                                        func2_text = read_file(asm_path)
+                                        func2_content = clean_file(func2_text, func2_name)
+                                        distance = Levenshtein.distance(func1_content, func2_content)
+                                        if distance <= maxDistance:
+                                            print(f"   {asm_path} - distance {distance}")
+
+
+
+
 def find_equal_asm_files(searchType, map1, map2, maxdistance, replaceIncludeAsm, updateSymTxtFile, funcToMatchBeforeUpdating):
     map1_asm_path = os.path.join("asm", "maps", map1)
     map2_asm_path = os.path.join("asm", "maps", map2)
@@ -882,6 +928,7 @@ def main():
     parser.add_argument("--jtbl", type=str)
     parser.add_argument("--sortsyms", type=str)
     parser.add_argument("--compareFuncs", action="store_true")
+    parser.add_argument("--similar", type=int)
     
     args = parser.parse_args()
     
@@ -913,6 +960,15 @@ def main():
             with open(sym_path, "w", encoding="utf-8") as f:
                 f.write(sym_text)
             print(f"Updated {sym_path}.")
+        return
+
+    elif args.similar is not None:
+        if args.map1 is None:
+            print_usage()
+            return
+
+        find_similar_functions(args.map1, args.similar)
+
         return
 
     elif args.compareFuncs:

@@ -1,4 +1,4 @@
-s32 sharedFunc_800D6508_7_s01(s32 arg0, s_SubCharacter* chara, s32 arg2, s32 arg3, s32 arg4, s32 arg5)
+s32 sharedFunc_800D908C_0_s00(s32 arg0, s_SubCharacter* chara, s32 arg2, s32 arg3, s32 arg4, s32 arg5)
 {
     if (chara->model_0.anim_4.animIdx_0 != arg0)
     {
