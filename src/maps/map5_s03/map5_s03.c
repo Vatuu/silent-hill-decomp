@@ -129,9 +129,9 @@ INCLUDE_ASM("asm/maps/map5_s03/nonmatchings/map5_s03", func_800D06A0);
 
 #include "maps/shared/sharedFunc_800D908C_0_s00.h" // 0x800D0D2C
 
-INCLUDE_ASM("asm/maps/map5_s03/nonmatchings/map5_s03", func_800D0E28);
+#include "maps/shared/sharedFunc_800D9188_0_s00.h" // 0x800D0E28
 
-INCLUDE_ASM("asm/maps/map5_s03/nonmatchings/map5_s03", func_800D0EF0);
+#include "maps/shared/sharedFunc_800D921C_0_s00.h" // 0x800D0EF0
 
 #include "maps/shared/sharedFunc_800D923C_0_s00.h" // 0x800D0EFC
 

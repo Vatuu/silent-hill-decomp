@@ -185,9 +185,11 @@ INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04_2", func_800DD764);
 
 #include "maps/shared/sharedFunc_800D908C_0_s00.h" // 0x800DDDF0
 
-INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04_2", func_800DDEEC);
+// TODO: Requires rodata for jump table
+// #include "maps/shared/sharedFunc_800D9188_0_s00.h" // 0x800DDEEC
+INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04_2", sharedFunc_800D9188_0_s00); // 0x800DDEEC
 
-INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04_2", func_800DDFEC);
+#include "maps/shared/sharedFunc_800D921C_0_s00.h" // 0x800DDFEC
 
 #include "maps/shared/sharedFunc_800D923C_0_s00.h" // 0x800DE064
 

@@ -74,6 +74,8 @@ extern s32 sharedData_800D5CF4_3_s00; // Used by `Ai_Kaufmann_Init`.
 
 extern s_AnimInfo sharedData_800D5ABC_3_s03[]; // Used by `Ai_Bloodsucker_Init`.
 
+extern s_AnimInfo sharedData_800DF174_0_s00[]; // Used by `sharedFunc_800D921C_0_s00`.
+
 s32 sharedFunc_800CBBBC_0_s00();
 
 void sharedFunc_800D01BC_0_s00(u16* arg0, VECTOR3* arg1, s32 arg2);
@@ -155,6 +157,8 @@ void sharedFunc_800D8950_0_s00(s_SubCharacter* chara);
 void sharedFunc_800D9064_0_s00(s_SubCharacter* chara);
 
 void sharedFunc_800D9078_0_s00(s_SubCharacter* chara);
+
+s16 sharedFunc_800D921C_0_s00(s_SubCharacter* chara);
 
 void sharedFunc_800D923C_0_s00(s_SubCharacter* chara); // Humanoid init function?
 
