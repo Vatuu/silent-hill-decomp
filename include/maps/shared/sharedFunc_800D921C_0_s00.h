@@ -34,71 +34,71 @@ s16 sharedFunc_800D921C_0_s00(s_SubCharacter* chara)
 #if defined(MAP3_S02) || defined(MAP5_S02) || defined(MAP5_S03) || defined(MAP6_S02)
         // animInfo left as NULL.
 #elif defined(MAP6_S01)
-        case 0x1A:
+        case Chara_Cybil:
             animInfo = &D_800D35A0[chara->model_0.anim_4.animIdx_0];
             break;
         default:
             animInfo = &D_800D39A0[chara->model_0.anim_4.animIdx_0];
             break;
 #elif defined(MAP6_S04)
-        case 24:
+        case Chara_MonsterCybil:
             animInfo = &D_800EA718[chara->model_0.anim_4.animIdx_0];
             break;
-        case 30:
+        case Chara_Dahlia:
             animInfo = &D_800EAB38[chara->model_0.anim_4.animIdx_0];
             break;
-        case 34:
+        case Chara_Alessa:
             animInfo = &D_800EA9D8[chara->model_0.anim_4.animIdx_0];
             break;
 #elif defined(MAP7_S01)
-        case 35:
+        case Chara_GhostChildAlessa:
             animInfo = &D_800DFC78[chara->model_0.anim_4.animIdx_0];
             break;
-        case 32:
+        case Chara_Lisa:
             animInfo = &D_800DFD98[chara->model_0.anim_4.animIdx_0];
             break;
-        case 33:
+        case Chara_BloodyLisa:
             animInfo = &D_800DFFD8[chara->model_0.anim_4.animIdx_0];
             break;
 #elif defined(MAP7_S02)
-        case 30:
+        case Chara_Dahlia:
             animInfo = &D_800E7B68[chara->model_0.anim_4.animIdx_0];
             break;
-        case 35:
+        case Chara_GhostChildAlessa:
             animInfo = &D_800E7EA8[chara->model_0.anim_4.animIdx_0];
             break;
-        case 38:
+        case Chara_Kaufmann:
             animInfo = &D_800E7FC8[chara->model_0.anim_4.animIdx_0];
             break;
-        case 32:
+        case Chara_Lisa:
             animInfo = &D_800E7708[chara->model_0.anim_4.animIdx_0];
             break;
-        case 33:
+        case Chara_BloodyLisa:
             animInfo = &D_800E7948[chara->model_0.anim_4.animIdx_0];
             break;
 #elif defined(MAP7_S03)
-        case 0x1A:
-        case 0x1B:
+        case Chara_Cybil:
+        case Chara_EndingCybil:
             animInfo = &D_800EA1E0[arg0->model_0.anim_4.animIdx_0];
             break;
-        case 30:
-        case 31:
+        case Chara_Dahlia:
+        case Chara_EndingDahlia:
             animInfo = &D_800EA5E0[arg0->model_0.anim_4.animIdx_0];
             break;
-        case 34:
+        case Chara_Alessa:
             animInfo = &D_800EA920[arg0->model_0.anim_4.animIdx_0];
             break;
-        case 38:
-        case 39:
+        case Chara_Kaufmann:
+        case Chara_EndingKaufmann:
             animInfo = &D_800EAC80[arg0->model_0.anim_4.animIdx_0];
             break;
-        case 33:
+        case Chara_BloodyLisa:
             animInfo = &D_800EAF60[arg0->model_0.anim_4.animIdx_0];
             break;
-        case 36:
+        case Chara_Incubator:
             animInfo = &D_800EAC00[arg0->model_0.anim_4.animIdx_0];
             break;
-        case 37:
+        case Chara_BloodyIncubator:
             animInfo = &D_800EAA80[arg0->model_0.anim_4.animIdx_0];
             break;
 #else
