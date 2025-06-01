@@ -468,13 +468,14 @@ def find_similar_functions(func1_path, maxDistance):
     func1_text = read_file(func1_path)
     func1_content = clean_file(func1_text, func1_name)
 
-    # eww
+    # Fetch each map name into array so we can sort + loop through them alphabetically
     map_names = []
     for map_name in os.listdir(maps_base_path):
         map_path = os.path.join(maps_base_path, map_name)
         if os.path.isdir(map_path):
             map_names.append(map_name)
 
+    # Nasty loops in loops
     map_names.sort()
     for map_name in map_names:
         map_path = os.path.join(maps_base_path, map_name)
@@ -904,7 +905,8 @@ def print_usage():
     print("  --jtbl [JTBL_NAME] [MAP]    Add rodata for jtbl to map1.yaml")
     print("  --sortsyms [MAP_NAME]       Sort map symbols ('all' to sort all map symbol files)")
     print("  --compareFuncs [FUNC1_ASM_PATH] [FUNC2_ASM_PATH]    Compare two functions, print Levenshtein distance, write clean files for comparing")
-    
+    print("  --similar [MAX_DIFF] [FN_PATH]   Search for funcs similar to FUNC_ASM_PATH, with max difference of MAX_DIFF")
+
 def main():
     import argparse
 
@@ -968,7 +970,6 @@ def main():
             return
 
         find_similar_functions(args.map1, args.similar)
-
         return
 
     elif args.compareFuncs:
