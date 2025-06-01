@@ -3,6 +3,8 @@
 #include "main/rng.h"
 #include "maps/shared.h"
 
+#include <limits.h>
+
 INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01_2", func_800D16A4);
 
 INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01_2", func_800D17EC);
@@ -109,9 +111,9 @@ INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01_2", sharedSymbol_800D0ADC_3
 
 INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01_2", sharedFunc_800D595C_7_s01); // 0x800D595C
 
-INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01_2", sharedFunc_800D59A4_7_s01); // 0x800D59A4
+#include "maps/shared/sharedFunc_800D59A4_7_s01.h" // 0x800D59A4
 
-INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01_2", sharedFunc_800D5B3C_7_s01); // 0x800D5B3C
+#include "maps/shared/sharedFunc_800D5B3C_7_s01.h" // 0x800D5B3C
 
 #include "maps/shared/Ai_BloodyLisa_Init.h" // 0x800D5CB4
 
@@ -137,7 +139,7 @@ INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01_2", func_800D5E7C);
 
 #include "maps/shared/sharedFunc_800D9078_0_s00.h" // 0x800D64F4
 
-INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01_2", func_800D6508);
+INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01_2", sharedFunc_800D6508_7_s01);
 
 INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01_2", func_800D6604);
 

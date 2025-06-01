@@ -1601,6 +1601,8 @@ s32 func_8005C7D0(s_SubCharacter*, s32);
 
 void func_8005C814(s16*, s_SubCharacter*);
 
+void func_8005DD44(s32, VECTOR3*, s32, s8); // Types assumed.
+
 void func_8005DE0C(s32, VECTOR3*, s32, s32, s32); // Types assumed.
 
 void func_8005E0DC(s32 arg0); // Types assumed.
@@ -2057,6 +2059,9 @@ s32 func_8007FD2C();
 
 /** Gets something from player. */
 s32 func_8007FD3C();
+
+/** Returns data in last 3 pointer args. */
+void func_8007FDE0(s8, s32*, s8*, s8*);
 
 /** Forces ControllerFlag_Select button press. */
 void func_80080458();
