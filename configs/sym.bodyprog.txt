@@ -16,7 +16,7 @@ g_ObjectTable1 = 0x800A8FC4; // type:s8
 g_DeltaTime0 = 0x800B5CC0; // type:s32 - Q19.12 fixed point, usually 0x44 (0.0166..) or 0x88 (0.033..).
 g_DeltaTime1 = 0x800A8FEC; // type:s32
 g_DeltaTime2 = 0x800B9CC8; // type:s32
-g_SaveTitleId = 0x800A9A14; // type:u32
+g_MapEventIdx = 0x800A9A14; // type:u32
 g_SysState_GameOver_TipIdx = 0x800BCD80; // type:u8
 g_MapEventParam = 0x800BCDD8; // type:u32 - pointer to s_ShEventParam
 

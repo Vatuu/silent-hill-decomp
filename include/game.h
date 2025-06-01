@@ -972,7 +972,7 @@ extern GsOT g_ObjectTable1[];
 extern s32 g_DeltaTime0;
 extern s32 g_DeltaTime1;
 extern s32 g_DeltaTime2;
-extern u32 g_SaveTitleId;
+extern u32 g_MapEventIdx;
 extern s_ShEventParam* g_MapEventParam;
 
 extern s32 g_IntervalVBlanks;

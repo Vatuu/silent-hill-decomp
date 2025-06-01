@@ -1143,7 +1143,7 @@ void SysState_GamePaused_Update() // 0x800391E8
     {
         D_800A9A68 = 0;
         Sd_EngineCmd(4);
-        g_SaveTitleId = 0;
+        g_MapEventIdx = 0;
         SysWork_StateSetNext(SysState_SaveMenu1);
         return;
     }
@@ -1263,9 +1263,9 @@ void SysState_Fmv_Update() // 0x80039A58
     func_800892A4(0);
     func_80089128();
 
-    // Start playing movie. File to play is based on file ID `BASE_IDX - g_SaveTitleId`.
+    // Start playing movie. File to play is based on file ID `BASE_IDX - g_MapEventIdx`.
     // Blocks until movie has finished playback or user has skipped it.
-    open_main(BASE_IDX - g_SaveTitleId, g_FileTable[BASE_IDX - g_SaveTitleId].blockCount);
+    open_main(BASE_IDX - g_MapEventIdx, g_FileTable[BASE_IDX - g_MapEventIdx].blockCount);
 
     func_800892A4(1);
 
@@ -1312,7 +1312,7 @@ void SysWork_SavegameUpdatePlayer() // 0x8003A120
 {
     s_ShSavegame* save = g_SavegamePtr;
 
-    save->SaveTitleId_A8      = g_SaveTitleId;
+    save->SaveTitleId_A8      = g_MapEventIdx;
     save->playerPositionX_244 = g_SysWork.player_4C.chara_0.position_18.vx;
     save->playerPositionZ_24C = g_SysWork.player_4C.chara_0.position_18.vz;
     save->playerRotationY_248 = g_SysWork.player_4C.chara_0.rotation_24.vy;
@@ -1349,7 +1349,7 @@ void SysState_EventCallFunc_Update() // 0x8003A3C8
     }
 
     g_DeltaTime0 = D_800BCD84;
-    g_MapOverlayHeader.mapEventFuncs_20[g_SaveTitleId]();
+    g_MapOverlayHeader.mapEventFuncs_20[g_MapEventIdx]();
 }
 
 void SysState_EventSetFlag_Update() // 0x8003A460
@@ -1363,7 +1363,7 @@ void SysState_EventPlaySound_Update() // 0x8003A4B4
 {
     g_DeltaTime0 = D_800BCD84;
 
-    Sd_EngineCmd(((u16)g_SaveTitleId + 0x500) & 0xFFFF);
+    Sd_EngineCmd(((u16)g_MapEventIdx + 0x500) & 0xFFFF);
 
     Savegame_EventFlagSet(g_MapEventParam->eventFlagId_2);
     g_SysWork.sysState_8 = 0;
@@ -1555,7 +1555,7 @@ void GameState_MapEvent_Update() // 0x8003AA4C
 
     Savegame_EventFlagSet(g_MapEventParam->eventFlagId_2);
 
-    g_MapOverlayHeader.mapEventFuncs_20[g_SaveTitleId]();
+    g_MapOverlayHeader.mapEventFuncs_20[g_MapEventIdx]();
 
     Gfx_BackgroundSpriteDraw(&D_800A902C);
 }

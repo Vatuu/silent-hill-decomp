@@ -1316,7 +1316,7 @@ void Chara_PositionUpdateFromParams(s_AreaLoadParams* params);
 void func_8003943C();
 
 /** `SysState_Fmv` update function.
- * Movie to play is decided by `2072 - g_SaveTitleId`
+ * Movie to play is decided by `2072 - g_MapEventIdx`
  * After playback, savegame gets `D_800BCDD8->eventFlagNum_2` event flag set. */
 void SysState_Fmv_Update();
 
