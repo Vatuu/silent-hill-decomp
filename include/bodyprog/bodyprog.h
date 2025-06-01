@@ -1485,7 +1485,15 @@ void Sd_SetVolume(u8 arg0, s16 arg1, u8 arg2);
 
 void func_8004692C(u16);
 
+void func_800469AC();
+
+void func_800469E8();
+
 void func_80046A24(u16);
+
+void func_80046A70();
+
+void func_80046AD8();
 
 void func_80046D3C(u16);
 

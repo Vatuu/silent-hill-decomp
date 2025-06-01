@@ -256,9 +256,9 @@ void Gfx_MemCardStateDraw(s32 memCardState, s32 arg1);
 /** Produces the flicker over the saved game after saving sucessfully. */
 void Gfx_SavedFlickerDraw();
 
-void func_801E43C8(s32 arg0);
+void func_801E43C8(s32 slotIdx);
 
-void Gfx_SavesTransparentBgDraw(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
+void Gfx_SavesTransparentBgDraw(s32 slotIdx, s32 arg1, s32 arg2, s32 arg3);
 
 void func_801E52D8(s32 slotIdx, s32 elementType);
 
