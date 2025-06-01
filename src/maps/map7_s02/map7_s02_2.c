@@ -4,6 +4,8 @@
 #include "maps/shared.h"
 #include "maps/map7/map7_s02.h"
 
+#include <limits.h>
+
 #include "maps/shared/Ai_Stalker_Update.h" // 0x800D06F8
 
 #include "maps/shared/Ai_Stalker_Init.h" // 0x800D088C
@@ -60,9 +62,9 @@ INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", sharedSymbol_800D0ADC_3
 
 INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", sharedFunc_800D595C_7_s01); // 0x800D64F8
 
-INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", sharedFunc_800D59A4_7_s01); // 0x800D6540
+#include "maps/shared/sharedFunc_800D59A4_7_s01.h" // 0x800D6540
 
-INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", sharedFunc_800D5B3C_7_s01); // 0x800D66D8
+#include "maps/shared/sharedFunc_800D5B3C_7_s01.h" // 0x800D66D8
 
 #include "maps/shared/Ai_BloodyLisa_Init.h" // 0x800D6850
 
@@ -155,7 +157,7 @@ INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", func_800D8E38);
 
 #include "maps/shared/sharedFunc_800D9078_0_s00.h" // 0x800D94B0
 
-INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", func_800D94C4);
+#include "maps/shared/sharedFunc_800D908C_0_s00.h" // 0x800D94C4
 
 INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", func_800D95C0);
 

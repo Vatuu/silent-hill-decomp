@@ -56,6 +56,7 @@ sharedFunc_800D893C_0_s00 = 0x800DD648; // type:func
 sharedFunc_800D8950_0_s00 = 0x800DD65C; // type:func
 sharedFunc_800D9064_0_s00 = 0x800DDDC8; // type:func
 sharedFunc_800D9078_0_s00 = 0x800DDDDC; // type:func
+sharedFunc_800D908C_0_s00 = 0x800DDDF0; // type:func
 sharedFunc_800D923C_0_s00 = 0x800DE064; // type:func
 Ai_Flauros_Update = 0x800DE0C4; // type:func
 Ai_Parasite_Update = 0x800DE1CC; // type:func

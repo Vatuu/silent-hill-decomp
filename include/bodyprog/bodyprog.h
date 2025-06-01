@@ -332,7 +332,7 @@ typedef struct
     union
     {
         s8  field_0[3];
-        s16 field_01;
+        u16 field_01;
     } field_F;
     s8  field_14;
     u8  field_15;
@@ -352,7 +352,7 @@ typedef struct
 typedef struct
 {
     s16 volumeXa_0; // Might be wrong, but it's used in a `Sd_SetVolBXa` call.
-    s8  unk_2[2];
+    s16 field_2;
     u16 field_4;
     s16 field_6;
     s16 volumeBgm_8; // Might be wrong, but it's used in a `Sd_SetVolBgm` call.
@@ -1037,6 +1037,8 @@ extern s8 D_800C166F;
 
 extern s16 D_800C167C;
 
+extern s16 D_800C167E;
+
 extern s_800C1670 D_800C1670;
 
 extern s_800C1678 D_800C1678;
@@ -1483,7 +1485,15 @@ void Sd_SetVolume(u8 arg0, s16 arg1, u8 arg2);
 
 void func_8004692C(u16);
 
+void func_800469AC();
+
+void func_800469E8();
+
 void func_80046A24(u16);
+
+void func_80046A70();
+
+void func_80046AD8();
 
 void func_80046D3C(u16);
 
@@ -1590,6 +1600,8 @@ void func_80056D64(s8* prevStr, s8* newStr);
 s32 func_8005C7D0(s_SubCharacter*, s32);
 
 void func_8005C814(s16*, s_SubCharacter*);
+
+void func_8005DD44(s32, VECTOR3*, s32, s8); // Types assumed.
 
 void func_8005DE0C(s32, VECTOR3*, s32, s32, s32); // Types assumed.
 
@@ -2047,6 +2059,9 @@ s32 func_8007FD2C();
 
 /** Gets something from player. */
 s32 func_8007FD3C();
+
+/** Returns data in last 3 pointer args. */
+void func_8007FDE0(s8, s32*, s8*, s8*);
 
 /** Forces ControllerFlag_Select button press. */
 void func_80080458();

@@ -315,15 +315,60 @@ void func_8004692C(u16 arg0) // 0x8004692C
     SdVoKeyOff(D_800C15C6, D_800C15C8);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/bodyprog_80045A7C", func_800469AC);
+void func_800469AC() // 0x800469AC
+{
+    s32 i;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/bodyprog_80045A7C", func_800469E8);
+    for (i = 0; i < 24; i++)
+    {
+        SdUtKeyOffV(i);
+    }
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/bodyprog_80045A7C", func_80046A24);
+void func_800469E8() // 0x800469E8
+{
+    s32 i;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/bodyprog_80045A7C", func_80046A70);
+    for (i = 0; i < 24; i++)
+    {
+        SdUtKeyOffVWithRROff(i);
+    }
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/bodyprog_80045A7C", func_80046AD8);
+void func_80046A24(u16 arg0) // 0x80046A24
+{
+    s32 temp = arg0 & 0xFFFF;
+
+    if (D_800C1658.field_F.field_01 != temp && D_800C1658.field_E != temp)
+    {
+        D_800C1658.field_F.field_01 = arg0;
+        func_800478DC(7);
+    }
+}
+
+void func_80046A70() // 0x80046A70
+{
+    u16 prevVal;
+
+    prevVal                     = D_800C1658.field_F.field_01;
+    D_800C1658.field_14         = 0;
+    D_800C1658.field_F.field_01 = 0;
+    D_800C1658.field_E          = prevVal;
+
+    SdSeqPlay(0, 1, 0);
+
+    D_800C1678.field_6     = 40;
+    D_800C1678.volumeBgm_8 = 40;
+
+    Sd_SetVolBgm(40, 40);
+    func_80047A70();
+}
+
+void func_80046AD8() // 0x80046AD8
+{
+    D_800C1666 = 0xFFFF;
+    func_800478DC(8);
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/bodyprog_80045A7C", func_80046B04);
 
@@ -375,7 +420,61 @@ void func_8004760C() // 0x8004760C
     D_800C166E = 1;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/bodyprog_80045A7C", func_80047634);
+void func_80047634() // 0x80047634
+{
+    D_800C1658.field_F.field_0[3] = 1;
+
+    switch ((u8)D_800C1670.field_2)
+    {
+        case 0:
+            Sd_SetVolXa(D_800C1678.volumeXa_0, D_800C1678.volumeXa_0);
+            D_800C1678.volumeXa_0 = D_800C1678.volumeXa_0 - 24;
+            D_800C1678.field_2    = D_800C1678.volumeXa_0;
+
+            if (D_800C1678.volumeXa_0 < 2)
+            {
+                D_800C1670.field_2 = 1;
+            }
+            break;
+
+        case 1:
+            D_800C1678.volumeXa_0 = 0;
+            D_800C1678.field_2 = 0;
+
+            Sd_SetVolXa(0, 0);
+            SdSetSerialAttr(0, 0, 0);
+
+            D_800C1670.field_2 = 2;
+            break;
+
+        case 2:
+            if (!(func_80048954(9, NULL, NULL) & 0xFF))
+            {
+                D_800C1658.field_0 = 0;
+                D_800C1670.field_2 = 3;
+            }
+
+            D_800C1658.field_0++;
+            break;
+
+        case 3:
+            D_800C1658.field_F.field_0[3] = 0;
+            D_800C1658.field_4            = 0;
+            D_800C1670.field_2            = 0;
+
+            if ((u8)D_800C1658.field_14 == 0)
+            {
+                D_800C167E = 0x28;
+            }
+
+            func_80047A70(&D_800C1658);
+            D_800C1658.field_0 = 0;
+            break;
+
+        default:
+            break;
+    }
+}
 
 void Sd_SetVolume(u8 arg0, s16 arg1, u8 arg2) // 0x80047798
 {
