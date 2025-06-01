@@ -332,7 +332,7 @@ typedef struct
     union
     {
         s8  field_0[3];
-        s16 field_01;
+        u16 field_01;
     } field_F;
     s8  field_14;
     u8  field_15;
@@ -352,7 +352,7 @@ typedef struct
 typedef struct
 {
     s16 volumeXa_0; // Might be wrong, but it's used in a `Sd_SetVolBXa` call.
-    s8  unk_2[2];
+    s16 field_2;
     u16 field_4;
     s16 field_6;
     s16 volumeBgm_8; // Might be wrong, but it's used in a `Sd_SetVolBgm` call.
@@ -1036,6 +1036,8 @@ extern s8 D_800C166E;
 extern s8 D_800C166F;
 
 extern s16 D_800C167C;
+
+extern s16 D_800C167E;
 
 extern s_800C1670 D_800C1670;
 
