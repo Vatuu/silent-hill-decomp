@@ -71,7 +71,7 @@ s32 Demo_PlayFileBufferSetup() // 0x8008F0BC
     s32 playFileSize;
 
     // Get map overlay size used in demo.
-    mapOverlaySize = Fs_GetFileSize(FILE_VIN_MAP0_S00_BIN + DEMO_WORK()->savegame_100.mapOverlayIdx_A4);
+    mapOverlaySize = Fs_GetFileSize(FILE_VIN_MAP0_S00_BIN + DEMO_WORK()->savegame_100.mapOverlayId_A4);
 
     // Get play file size, rounded up to next 0x800-byte boundary.
     playFileSize = (Fs_GetFileSize(g_Demo_PlayFileIdx) + 0x7FF) & ~0x7FF;
@@ -101,8 +101,8 @@ void Demo_GameGlobalsUpdate() // 0x8008F1A0
     g_GameWork.config_0 = DEMO_WORK()->config_0;
 
     // Restore users system settings over demo values.
-    g_GameWork.config_0.screenPosX_1C          = g_Demo_UserConfigBackup.screenPosX_1C;
-    g_GameWork.config_0.screenPosY_1D          = g_Demo_UserConfigBackup.screenPosY_1D;
+    g_GameWork.config_0.optScreenPosX_1C       = g_Demo_UserConfigBackup.optScreenPosX_1C;
+    g_GameWork.config_0.optScreenPosY_1D       = g_Demo_UserConfigBackup.optScreenPosY_1D;
     g_GameWork.config_0.optSoundType_1E        = g_Demo_UserConfigBackup.optSoundType_1E;
     g_GameWork.config_0.optVolumeBgm_1F        = OPT_SOUND_VOLUME_MIN;                     // Disable BGM during demo.
     g_GameWork.config_0.optVolumeSe_20         = g_Demo_UserConfigBackup.optVolumeSe_20;

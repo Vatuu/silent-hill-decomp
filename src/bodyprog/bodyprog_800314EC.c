@@ -98,7 +98,7 @@ void Gfx_Init(u16 screenWidth, s32 isInterlaced) // 0x80032428
     D_800C6E26 = FRAMEBUFFER_HEIGHT_PROGRESSIVE;
 
     GsInit3D();
-    Settings_ScreenXYSet(g_GameWorkConst->config_0.screenPosX_1C, g_GameWorkConst->config_0.screenPosY_1D);
+    Settings_ScreenXYSet(g_GameWorkConst->config_0.optScreenPosX_1C, g_GameWorkConst->config_0.optScreenPosY_1D);
     GsSwapDispBuff();
     GsSwapDispBuff();
 }
@@ -116,11 +116,11 @@ void Settings_DispEnvXYSet(DISPENV* display, s32 x, s32 y) // 0x80032524
     y = (y < -8) ? -8 : ((y > 8) ? 8 : y);
 
     gameWorkPtr = g_GameWorkConst;
-    gameWorkPtr->config_0.screenPosX_1C = x;
-    gameWorkPtr->config_0.screenPosY_1D = y;
+    gameWorkPtr->config_0.optScreenPosX_1C = x;
+    gameWorkPtr->config_0.optScreenPosY_1D = y;
 
-    display->screen.x = gameWorkPtr->config_0.screenPosX_1C;
-    display->screen.y = gameWorkPtr->config_0.screenPosY_1D + 8;
+    display->screen.x = gameWorkPtr->config_0.optScreenPosX_1C;
+    display->screen.y = gameWorkPtr->config_0.optScreenPosY_1D + 8;
 }
 
 void func_800325A4(DR_MODE* arg0) // 0x800325A4
@@ -459,7 +459,7 @@ void Settings_ScreenAndVolUpdate() // 0x0x800333CC
 {
     s32 soundCmd;
 
-    Settings_ScreenXYSet(g_GameWork.config_0.screenPosX_1C, g_GameWork.config_0.screenPosY_1D);
+    Settings_ScreenXYSet(g_GameWork.config_0.optScreenPosX_1C, g_GameWork.config_0.optScreenPosY_1D);
 
     soundCmd = (g_GameWork.config_0.optSoundType_1E != 0) ? 1 : 2;
     Sd_EngineCmd(soundCmd);
@@ -469,7 +469,7 @@ void Settings_ScreenAndVolUpdate() // 0x0x800333CC
 
 void Settings_RestoreDefaults() // 0x8003342c
 {
-    g_GameWork.config_0.optWeaponCtrl_23 = 1;
+    g_GameWork.config_0.optExtraWeaponCtrl_23 = 1;
     g_GameWork.config_0.optBrightness_22 = 3;
 
     Settings_RestoreControlDefaults(0);
@@ -480,7 +480,7 @@ void Settings_RestoreDefaults() // 0x8003342c
 
     Settings_ScreenAndVolUpdate();
 
-    g_GameWork.config_0.optBloodColor_24 = 0;
+    g_GameWork.config_0.optExtraBloodColor_24 = 0;
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", Settings_RestoreControlDefaults);
@@ -630,21 +630,21 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_80034F18);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_80034FB8);
 
-void Game_SavegameInitialize(s8 overlayIdx, s32 difficulty) // 0x800350BC
+void Game_SavegameInitialize(s8 overlayId, s32 difficulty) // 0x800350BC
 {
     s32  i;
     s32* var_a2;
 
     bzero(g_SavegamePtr, sizeof(s_ShSavegame));
 
-    g_SavegamePtr->mapOverlayIdx_A4 = overlayIdx;
+    g_SavegamePtr->mapOverlayId_A4 = overlayId;
 
     difficulty = CLAMP(difficulty, GameDifficulty_Easy, GameDifficulty_Hard);
 
     var_a2 = g_SavegamePtr->field_B0;
 
     g_SavegamePtr->gameDifficulty_260 = difficulty;
-    g_SavegamePtr->mapIdx_A9 = 1;
+    g_SavegamePtr->current2dMap_A9 = 1;
 
     for (i = 0; i < 45; i++)
     {
@@ -911,11 +911,11 @@ void Chara_PositionUpdateFromParams(s_AreaLoadParams* params) // 0x800371E8
 
     if (params->mapIdx_4_0 == 24)
     {
-        g_SavegamePtr->mapIdx_A9 = 0;
+        g_SavegamePtr->current2dMap_A9 = 0;
     }
     else if (params->mapIdx_4_0 != 0)
     {
-        g_SavegamePtr->mapIdx_A9 = params->mapIdx_4_0;
+        g_SavegamePtr->current2dMap_A9 = params->mapIdx_4_0;
     }
 
     g_SysWork.cameraAngleY_237A = rot;
@@ -1092,9 +1092,9 @@ void GameState_InGame_Update() // 0x80038BD4
         Demo_DemoRandSeedRestore();
         func_8003F170();
 
-        if (g_SavegamePtr->mapOverlayIdx_A4 != 42)
+        if (g_SavegamePtr->mapOverlayId_A4 != 42)
         {
-            g_MapOverlayHeader.func_168(0, g_SavegamePtr->mapOverlayIdx_A4, 1);
+            g_MapOverlayHeader.func_168(0, g_SavegamePtr->mapOverlayId_A4, 1);
         }
 
         Demo_DemoRandSeedRestore();
@@ -1148,7 +1148,7 @@ void SysState_GamePaused_Update() // 0x800391E8
         return;
     }
 
-    if (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerConfig_0.pause)
+    if (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerConfig_0.pause_14)
     {
         D_800A9A68 = 0;
         Sd_EngineCmd(4);
@@ -1180,8 +1180,8 @@ void GameState_LoadStatusScreen_Update() // 0x800395C0
         }
 
         savegame = g_SavegamePtr;
-        func_800540A4(savegame->mapOverlayIdx_A4);
-        func_80054024(savegame->mapOverlayIdx_A4);
+        func_800540A4(savegame->mapOverlayId_A4);
+        func_80054024(savegame->mapOverlayId_A4);
 
         g_GameWork.gameStateStep_598[0]++;
     }
@@ -1210,12 +1210,12 @@ void GameState_LoadMapScreen_Update() // 0x8003991C
 
         savegame = g_SavegamePtr;
 
-        if (D_800A99CC[savegame->mapIdx_A9] != NO_VALUE)
+        if (D_800A99CC[savegame->current2dMap_A9] != NO_VALUE)
         {
-            Fs_QueueStartReadTim(FILE_TIM_MR_0TOWN_TIM + D_800A99CC[savegame->mapIdx_A9], FS_BUFFER_1, &D_800A9024);
+            Fs_QueueStartReadTim(FILE_TIM_MR_0TOWN_TIM + D_800A99CC[savegame->current2dMap_A9], FS_BUFFER_1, &D_800A9024);
         }
 
-        Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + D_800A99B4[savegame->mapIdx_A9], FS_BUFFER_2, &D_800A901C);
+        Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + D_800A99B4[savegame->current2dMap_A9], FS_BUFFER_2, &D_800A901C);
         g_GameWork.gameStateStep_598[0]++;
     }
 
@@ -1312,7 +1312,7 @@ void SysWork_SavegameUpdatePlayer() // 0x8003A120
 {
     s_ShSavegame* save = g_SavegamePtr;
 
-    save->mapEventIdx_A8      = g_MapEventIdx;
+    save->SaveTitleId_A8      = g_MapEventIdx;
     save->playerPositionX_244 = g_SysWork.player_4C.chara_0.position_18.vx;
     save->playerPositionZ_24C = g_SysWork.player_4C.chara_0.position_18.vz;
     save->playerRotationY_248 = g_SysWork.player_4C.chara_0.rotation_24.vy;
@@ -1468,7 +1468,7 @@ void SysState_GameOver_Update() // 0x8003A52C
             Gfx_StringDraw(D_80025448, 0x63); // "\aGAME_OVER" - needs rodata migration.
             g_SysWork.field_28++;
 
-            if ((g_ControllerPtrConst->btns_new_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter | g_GameWorkPtr->config_0.controllerConfig_0.cancel)) ||
+            if ((g_ControllerPtrConst->btns_new_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 | g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)) ||
                 g_SysWork.field_28 > 240)
             {
                 SysWork_StateStepIncrement();
@@ -1509,7 +1509,7 @@ void SysState_GameOver_Update() // 0x8003A52C
             g_SysWork.field_28++;
             Gfx_BackgroundSpriteDraw(&D_800A9054);
 
-            if (!(g_ControllerPtrConst->btns_new_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter | g_GameWorkPtr->config_0.controllerConfig_0.cancel)))
+            if (!(g_ControllerPtrConst->btns_new_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 | g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)))
             {
                 if (g_SysWork.field_28 <= 480)
                 {
@@ -1684,7 +1684,7 @@ void GameState_MainMenu_Update()
             
             D_800A9A78 = D_800A9A78 % 5;
             
-            if (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter)
+            if (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
             {
                 g_GameWork.gameState_594 = GameState_MainMenu;
                 
@@ -1720,7 +1720,7 @@ void GameState_MainMenu_Update()
                         
                         func_80035178();
                         g_SysWork.flags_2298 = 0x10;
-                        GameFs_MapLoad(g_SavegamePtr->mapOverlayIdx_A4);
+                        GameFs_MapLoad(g_SavegamePtr->mapOverlayId_A4);
                         break;
                     
                     case 0:
@@ -1762,7 +1762,7 @@ void GameState_MainMenu_Update()
                 }
             }
             
-            if (g_ControllerPtrConst->field_18 & (ControllerFlag_LStickUp | ControllerFlag_LStickDown) || g_ControllerPtrConst->btns_new_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter | g_GameWorkPtr->config_0.controllerConfig_0.cancel))
+            if (g_ControllerPtrConst->field_18 & (ControllerFlag_LStickUp | ControllerFlag_LStickDown) || g_ControllerPtrConst->btns_new_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 | g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
             {
                 g_GameWork.gameState_594 = GameState_MainMenu;
                 
@@ -1802,7 +1802,7 @@ void GameState_MainMenu_Update()
                 Sd_EngineCmd(0x519u);
             }
             
-            if (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter)
+            if (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
             {
                 Game_SavegameInitialize(0, D_800A9A84 - 1);
                 func_80035178();
@@ -1813,7 +1813,7 @@ void GameState_MainMenu_Update()
                 g_Gfx_ScreenFade = 2;
                 D_800A9A74       = 4;
             }
-            else if (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel)
+            else if (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)
             {
                 Sd_EngineCmd(0x51A);
                 D_800A9A74 = 1;

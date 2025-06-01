@@ -114,13 +114,13 @@ s32 func_8004C45C() // 0x8004C45C
     for (i = 0; i < INVENTORY_ITEM_COUNT_MAX; i++)
     {
         // Already in inventory, can't add new one.
-        if (g_SavegamePtr->items_0[i].id == InventoryItemId_HyperBlaster)
+        if (g_SavegamePtr->items_0[i].id_0 == InventoryItemId_HyperBlaster)
         {
             return NO_VALUE;
         }
     }
 
-    if (g_SavegamePtr->mapOverlayIdx_A4 > 0)
+    if (g_SavegamePtr->mapOverlayId_A4 > 0)
     {
         // Konami gun controller connected.
         if (g_GameWork.controllers_38[1].analogController_0.status == 0 &&
@@ -142,7 +142,7 @@ s32 func_8004C45C() // 0x8004C45C
 
 s32 func_8004C4F8() // 0x8004C4F8
 {
-    if (g_SavegamePtr->mapOverlayIdx_A4 > 0)
+    if (g_SavegamePtr->mapOverlayId_A4 > 0)
     {
         if ((g_SavegamePtr->field_24B & (1 << 4)) != 0)
         {
@@ -997,8 +997,8 @@ void Game_SavegameResetPlayer() // 0x8007E530
 
     for (i = 0; i < INVENTORY_ITEM_COUNT_MAX; i++)
     {
-        save->items_0[i].id    = 0xFF;
-        save->items_0[i].count = 0;
+        save->items_0[i].id_0    = 0xFF;
+        save->items_0[i].count_1 = 0;
     }
 
     Savegame_PlayerReset(g_SavegamePtr);

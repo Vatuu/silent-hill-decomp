@@ -1912,7 +1912,7 @@ void GameState_MainLoadScreen_Update();
 
 void func_800348E8();
 
-void Game_SavegameInitialize(s8 overlayIdx, s32 difficulty);
+void Game_SavegameInitialize(s8 overlayId, s32 difficulty);
 
 /** Loads a map file into `g_OvlDynamic`. */
 void GameFs_MapLoad(s32 mapIdx);

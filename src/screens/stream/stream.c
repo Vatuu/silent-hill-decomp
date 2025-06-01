@@ -76,7 +76,7 @@ void GameState_DebugMoviePlayer_Update() // 0x801E2908
     gameWork = g_GameWorkPtr;
     controller  = g_ControllerPtrConst;
 
-    if (controller->btns_new_10 & gameWork->config_0.controllerConfig_0.cancel)
+    if (controller->btns_new_10 & gameWork->config_0.controllerConfig_0.cancel_2)
     {
         Game_StateSetNext(GameState_Unk16); // Changes to non-existent state 22 and crashes. Maybe removed debug menu.
     }
@@ -99,7 +99,7 @@ void GameState_DebugMoviePlayer_Update() // 0x801E2908
     Gfx_DebugStringDraw(Math_IntegerToString(2, g_Debug_MoviePlayerIdx));
 #endif
 
-    if (controller->btns_new_10 & gameWork->config_0.controllerConfig_0.enter)
+    if (controller->btns_new_10 & gameWork->config_0.controllerConfig_0.enter_0)
     {
         open_main(FILE_XA_ZC_14392 - g_Debug_MoviePlayerIdx, 0);
     }
@@ -184,8 +184,8 @@ void movie_main(char* file_name, s32 f_size, s32 sector) // 0x801E2B9C
     do
     {
         disp.disp.y   = 256 - (m->dec.rectid * SCREEN_HEIGHT);
-        disp.screen.x = g_GameWorkConst->config_0.screenPosX_1C;
-        disp.screen.y = (8 + ((224 - m->height) / 2)) + (g_GameWorkConst->config_0.screenPosY_1D);
+        disp.screen.x = g_GameWorkConst->config_0.optScreenPosX_1C;
+        disp.screen.y = (8 + ((224 - m->height) / 2)) + (g_GameWorkConst->config_0.optScreenPosY_1D);
         disp.disp.y   = (disp.disp.y   < 16) ? 16 : ((disp.disp.y > 256)   ? 256 : disp.disp.y);
         disp.screen.h = (disp.screen.h <= 0) ? 1  : ((disp.screen.h > 208) ? 208 : disp.screen.h);
 
@@ -216,7 +216,7 @@ void movie_main(char* file_name, s32 f_size, s32 sector) // 0x801E2B9C
         strSync(&m->dec);
         VSync(0);
     }
-    while (!(g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip) && MainLoop_ShouldWarmReset() <= 0);
+    while (!(g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) && MainLoop_ShouldWarmReset() <= 0);
 
     SsSetSerialVol(0, 0, 0);
 
