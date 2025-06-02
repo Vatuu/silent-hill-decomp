@@ -87,7 +87,7 @@ void Ai_Cheryl_Init(s_SubCharacter* chara) // 0x800D8888
 
 #include "maps/shared/sharedFunc_800D8950_0_s00.h" // 0x800D8950
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00_2", func_800D8964);
+#include "maps/shared/sharedFunc_800D8964_0_s00.h" // 0x800D8964
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00_2", func_800D8A00);
 
