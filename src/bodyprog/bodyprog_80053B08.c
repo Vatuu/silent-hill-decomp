@@ -5,13 +5,13 @@
 
 /** @note For better comprehension related to file handling
 * of inventory items.
-* 
-* `func_80053B08` load model of items individually.
+*
+* `func_80053B08` loads model of items individually.
 * `func_80053DFC` and `func_80054024` load packs of textures and
-* models of items, however while `func_80053B08` seems to load
-* them individually based on what is being passed through the argument,
+* models of items, though while `func_80053B08` seems to load
+* them individually based on what is being passed as argument,
 * `func_80053DFC` and `func_80054024` load the packs based on the 
-* map that is being loaded.
+* map being loaded.
 */
 
 // TODO: RODATA migration.
@@ -20,226 +20,298 @@ void func_80053B08(s32 itemId) // 0x80053B08
 {
     switch (itemId & 0xFF)
     {
-    case InventoryItemId_HealthDrink:
-        Fs_QueueStartRead(FILE_ITEM_UNQ21_TMD, FS_BUFFER_5);
-        break;
-    case InventoryItemId_Ampoule:
-        Fs_QueueStartRead(FILE_ITEM_UNQ22_TMD, FS_BUFFER_5);
-        break;
-    case InventoryItemId_HouseKey:
-        Fs_QueueStartRead(FILE_ITEM_UNQ41_TMD, FS_BUFFER_5);
-        break;
-    case InventoryItemId_KeyOfLion:
-        Fs_QueueStartRead(FILE_ITEM_UNQ42_TMD, FS_BUFFER_5);
-        break;
-    case InventoryItemId_KeyOfWoodman:
-        Fs_QueueStartRead(FILE_ITEM_UNQ43_TMD, FS_BUFFER_5);
-        break;
-    case InventoryItemId_KeyOfScarecrow:
-        Fs_QueueStartRead(FILE_ITEM_UNQ44_TMD, FS_BUFFER_5);
-        break;
-    case InventoryItemId_LibraryReserveKey:
-        Fs_QueueStartRead(FILE_ITEM_UNQ45_TMD, FS_BUFFER_5);
-        break;
-    case InventoryItemId_ClassroomKey:
-        Fs_QueueStartRead(FILE_ITEM_UNQ46_TMD, FS_BUFFER_5);
-        break;
-    case InventoryItemId_KGordonKey:
-        Fs_QueueStartRead(FILE_ITEM_UNQ47_TMD, FS_BUFFER_5);
-        break;
-    case InventoryItemId_DrawbridgeKey:
-        Fs_QueueStartRead(FILE_ITEM_UNQ48_TMD, FS_BUFFER_5);
-        break;
-    case InventoryItemId_BasementKey:
-        Fs_QueueStartRead(FILE_ITEM_UNQ49_TMD, FS_BUFFER_5);
-        break;
-    case InventoryItemId_BasementStoreroomKey:
-        Fs_QueueStartRead(FILE_ITEM_UNQ4A_TMD, FS_BUFFER_5);
-        break;
-    case InventoryItemId_ExaminationRoomKey:
-        Fs_QueueStartRead(FILE_ITEM_UNQ4B_TMD, FS_BUFFER_5);
-        break;
-    case InventoryItemId_AntiqueShopKey:
-        Fs_QueueStartRead(FILE_ITEM_UNQ4C_TMD, FS_BUFFER_5);
-        break;
-    case InventoryItemId_SewerKey:
-    case InventoryItemId_SewerExitKey:
-        Fs_QueueStartRead(FILE_ITEM_UNQ4D_TMD, FS_BUFFER_5);
-        break;
-    case InventoryItemId_KeyOfOphiel:
-        Fs_QueueStartRead(FILE_ITEM_UNQ4E_TMD, FS_BUFFER_5);
-        break;
-    case InventoryItemId_KeyOfHagith:
-        Fs_QueueStartRead(FILE_ITEM_UNQ4F_TMD, FS_BUFFER_5);
-        break;
-    case InventoryItemId_KeyOfPhaleg:
-        Fs_QueueStartRead(FILE_ITEM_UNQ50_TMD, FS_BUFFER_5);
-        break;
-    case InventoryItemId_KeyOfBethor:
-        Fs_QueueStartRead(FILE_ITEM_UNQ51_TMD, FS_BUFFER_5);
-        break;
-    case InventoryItemId_KeyOfAratron:
-        Fs_QueueStartRead(FILE_ITEM_UNQ52_TMD, FS_BUFFER_5);
-        break;
-    case InventoryItemId_NoteToSchool:
-        Fs_QueueStartRead(FILE_ITEM_UNQ53_TMD, FS_BUFFER_5);
-        break;
-    case InventoryItemId_NoteDoghouse:
-        Fs_QueueStartRead(FILE_ITEM_UNQ54_TMD, FS_BUFFER_5);
-        break;
-    case InventoryItemId_PictureCard:
-        Fs_QueueStartRead(FILE_ITEM_UNQ55_TMD, FS_BUFFER_5);
-        break;
-    case InventoryItemId_ChannelingStone:
-        Fs_QueueStartRead(FILE_ITEM_UNQ56_TMD, FS_BUFFER_5);
-        break;
-    case InventoryItemId_Chemical:
-        Fs_QueueStartRead(FILE_ITEM_UNQ60_TMD, FS_BUFFER_5);
-        break;
-    case InventoryItemId_GoldMedallion:
-        Fs_QueueStartRead(FILE_ITEM_UNQ61_TMD, FS_BUFFER_5);
-        break;
-    case InventoryItemId_SilverMedallion:
-        Fs_QueueStartRead(FILE_ITEM_UNQ62_TMD, FS_BUFFER_5);
-        break;
-    case InventoryItemId_RubberBall:
-        Fs_QueueStartRead(FILE_ITEM_UNQ63_TMD, FS_BUFFER_5);
-        break;
-    case InventoryItemId_Flauros:
-        Fs_QueueStartRead(FILE_ITEM_UNQ64_TMD, FS_BUFFER_5);
-        break;
-    case InventoryItemId_PlasticBottle:
-        Fs_QueueStartRead(FILE_ITEM_UNQ65_TMD, FS_BUFFER_5);
-        break;
-    case InventoryItemId_UnknownLiquid:
-        Fs_QueueStartRead(FILE_ITEM_UNQ66_TMD, FS_BUFFER_5);
-        break;
-    case InventoryItemId_PlateOfHatter:
-        Fs_QueueStartRead(FILE_ITEM_UNQ67_TMD, FS_BUFFER_5);
-        break;
-    case InventoryItemId_PlateOfCat:
-        Fs_QueueStartRead(FILE_ITEM_UNQ68_TMD, FS_BUFFER_5);
-        break;
-    case InventoryItemId_PlateOfQueen:
-        Fs_QueueStartRead(FILE_ITEM_UNQ69_TMD, FS_BUFFER_5);
-        break;
-    case InventoryItemId_PlateOfTurtle:
-        Fs_QueueStartRead(FILE_ITEM_UNQ6A_TMD, FS_BUFFER_5);
-        break;
-    case InventoryItemId_BloodPack:
-        Fs_QueueStartRead(FILE_ITEM_UNQ6B_TMD, FS_BUFFER_5);
-        break;
-    case InventoryItemId_DisinfectingAlcohol:
-        Fs_QueueStartRead(FILE_ITEM_UNQ6C_TMD, FS_BUFFER_5);
-        break;
-    case InventoryItemId_Lighter:
-        Fs_QueueStartRead(FILE_ITEM_UNQ6D_TMD, FS_BUFFER_5);
-        break;
-    case InventoryItemId_VideoTape:
-        Fs_QueueStartRead(FILE_ITEM_UNQ6E_TMD, FS_BUFFER_5);
-        break;
-    case InventoryItemId_KaufmannKey:
-        Fs_QueueStartRead(FILE_ITEM_UNQ70_TMD, FS_BUFFER_5);
-        break;
-    case InventoryItemId_Receipt:
-        Fs_QueueStartRead(FILE_ITEM_UNQ71_TMD, FS_BUFFER_5);
-        break;
-    case InventoryItemId_SafeKey:
-        Fs_QueueStartRead(FILE_ITEM_UNQ72_TMD, FS_BUFFER_5);
-        break;
-    case InventoryItemId_Magnet:
-        Fs_QueueStartRead(FILE_ITEM_UNQ73_TMD, FS_BUFFER_5);
-        break;
-    case InventoryItemId_MotorcycleKey:
-        Fs_QueueStartRead(FILE_ITEM_UNQ74_TMD, FS_BUFFER_5);
-        break;
-    case InventoryItemId_BirdCageKey:
-        Fs_QueueStartRead(FILE_ITEM_UNQ75_TMD, FS_BUFFER_5);
-        break;
-    case InventoryItemId_Pliers:
-        Fs_QueueStartRead(FILE_ITEM_UNQ76_TMD, FS_BUFFER_5);
-        break;
-    case InventoryItemId_Screwdriver:
-        Fs_QueueStartRead(FILE_ITEM_UNQ77_TMD, FS_BUFFER_5);
-        break;
-    case InventoryItemId_Camera:
-        Fs_QueueStartRead(FILE_ITEM_UNQ78_TMD, FS_BUFFER_5);
-        break;
-    case InventoryItemId_RingOfContract:
-        Fs_QueueStartRead(FILE_ITEM_UNQ79_TMD, FS_BUFFER_5);
-        break;
-    case InventoryItemId_Unk7A:
-        Fs_QueueStartRead(FILE_ITEM_UNQ7A_TMD, FS_BUFFER_5);
-        break;
-    case InventoryItemId_Unk7B:
-        Fs_QueueStartRead(FILE_ITEM_UNQ7B_TMD, FS_BUFFER_5);
-        break;
-    case InventoryItemId_Unk7C:
-        Fs_QueueStartRead(FILE_ITEM_UNQ7C_TMD, FS_BUFFER_5);
-        break;
-    case InventoryItemId_Unk7D:
-        Fs_QueueStartRead(FILE_ITEM_UNQ7D_TMD, FS_BUFFER_5);
-        break;
-    case InventoryItemId_Unk7E:
-        Fs_QueueStartRead(FILE_ITEM_UNQ7E_TMD, FS_BUFFER_5);
-        break;
-    case InventoryItemId_Unk7F:
-        Fs_QueueStartRead(FILE_ITEM_UNQ7F_TMD, FS_BUFFER_5);
-        break;
-    case InventoryItemId_KitchenKnife:
-        Fs_QueueStartRead(FILE_ITEM_UNQ80_TMD, FS_BUFFER_5);
-        break;
-    case InventoryItemId_SteelPipe:
-        Fs_QueueStartRead(FILE_ITEM_UNQ81_TMD, FS_BUFFER_5);
-        break;
-    case InventoryItemId_Hammer:
-        Fs_QueueStartRead(FILE_ITEM_UNQ82_TMD, FS_BUFFER_5);
-        break;
-    case InventoryItemId_Chainsaw:
-        Fs_QueueStartRead(FILE_ITEM_UNQ83_TMD, FS_BUFFER_5);
-        break;
-    case InventoryItemId_Axe:
-        Fs_QueueStartRead(FILE_ITEM_UNQ84_TMD, FS_BUFFER_5);
-        break;
-    case InventoryItemId_RockDrill:
-        Fs_QueueStartRead(FILE_ITEM_UNQ85_TMD, FS_BUFFER_5);
-        break;
-    case InventoryItemId_Katana:
-        Fs_QueueStartRead(FILE_ITEM_UNQ86_TMD, FS_BUFFER_5);
-        break;
-    case InventoryItemId_Handgun:
-        Fs_QueueStartRead(FILE_ITEM_UNQA0_TMD, FS_BUFFER_5);
-        break;
-    case InventoryItemId_HuntingRifle:
-        Fs_QueueStartRead(FILE_ITEM_UNQA1_TMD, FS_BUFFER_5);
-        break;
-    case InventoryItemId_Shotgun:
-        Fs_QueueStartRead(FILE_ITEM_UNQA2_TMD, FS_BUFFER_5);
-        break;
-    case InventoryItemId_HyperBlaster:
-        Fs_QueueStartRead(FILE_ITEM_UNQA3_TMD, FS_BUFFER_5);
-        break;
-    case InventoryItemId_HandgunBullets:
-        Fs_QueueStartRead(FILE_ITEM_UNQC0_TMD, FS_BUFFER_5);
-        break;
-    case InventoryItemId_RifleShells:
-        Fs_QueueStartRead(FILE_ITEM_UNQC1_TMD, FS_BUFFER_5);
-        break;
-    case InventoryItemId_ShotgunShells:
-        Fs_QueueStartRead(FILE_ITEM_UNQC2_TMD, FS_BUFFER_5);
-        break;
-    case InventoryItemId_Flashlight:
-        Fs_QueueStartRead(FILE_ITEM_UNQE0_TMD, FS_BUFFER_5);
-        break;
-    case InventoryItemId_PocketRadio:
-        Fs_QueueStartRead(FILE_ITEM_UNQE1_TMD, FS_BUFFER_5);
-        break;
-    case InventoryItemId_GasolineTank:
-        Fs_QueueStartRead(FILE_ITEM_UNQE2_TMD, FS_BUFFER_5);
-        break;
-    default:
-        Fs_QueueStartRead(FILE_ITEM_UNQ20_TMD, FS_BUFFER_5);
-        break;
+        case InventoryItemId_HealthDrink:
+            Fs_QueueStartRead(FILE_ITEM_UNQ21_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_Ampoule:
+            Fs_QueueStartRead(FILE_ITEM_UNQ22_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_HouseKey:
+            Fs_QueueStartRead(FILE_ITEM_UNQ41_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_KeyOfLion:
+            Fs_QueueStartRead(FILE_ITEM_UNQ42_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_KeyOfWoodman:
+            Fs_QueueStartRead(FILE_ITEM_UNQ43_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_KeyOfScarecrow:
+            Fs_QueueStartRead(FILE_ITEM_UNQ44_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_LibraryReserveKey:
+            Fs_QueueStartRead(FILE_ITEM_UNQ45_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_ClassroomKey:
+            Fs_QueueStartRead(FILE_ITEM_UNQ46_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_KGordonKey:
+            Fs_QueueStartRead(FILE_ITEM_UNQ47_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_DrawbridgeKey:
+            Fs_QueueStartRead(FILE_ITEM_UNQ48_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_BasementKey:
+            Fs_QueueStartRead(FILE_ITEM_UNQ49_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_BasementStoreroomKey:
+            Fs_QueueStartRead(FILE_ITEM_UNQ4A_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_ExaminationRoomKey:
+            Fs_QueueStartRead(FILE_ITEM_UNQ4B_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_AntiqueShopKey:
+            Fs_QueueStartRead(FILE_ITEM_UNQ4C_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_SewerKey:
+        case InventoryItemId_SewerExitKey:
+            Fs_QueueStartRead(FILE_ITEM_UNQ4D_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_KeyOfOphiel:
+            Fs_QueueStartRead(FILE_ITEM_UNQ4E_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_KeyOfHagith:
+            Fs_QueueStartRead(FILE_ITEM_UNQ4F_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_KeyOfPhaleg:
+            Fs_QueueStartRead(FILE_ITEM_UNQ50_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_KeyOfBethor:
+            Fs_QueueStartRead(FILE_ITEM_UNQ51_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_KeyOfAratron:
+            Fs_QueueStartRead(FILE_ITEM_UNQ52_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_NoteToSchool:
+            Fs_QueueStartRead(FILE_ITEM_UNQ53_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_NoteDoghouse:
+            Fs_QueueStartRead(FILE_ITEM_UNQ54_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_PictureCard:
+            Fs_QueueStartRead(FILE_ITEM_UNQ55_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_ChannelingStone:
+            Fs_QueueStartRead(FILE_ITEM_UNQ56_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_Chemical:
+            Fs_QueueStartRead(FILE_ITEM_UNQ60_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_GoldMedallion:
+            Fs_QueueStartRead(FILE_ITEM_UNQ61_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_SilverMedallion:
+            Fs_QueueStartRead(FILE_ITEM_UNQ62_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_RubberBall:
+            Fs_QueueStartRead(FILE_ITEM_UNQ63_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_Flauros:
+            Fs_QueueStartRead(FILE_ITEM_UNQ64_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_PlasticBottle:
+            Fs_QueueStartRead(FILE_ITEM_UNQ65_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_UnknownLiquid:
+            Fs_QueueStartRead(FILE_ITEM_UNQ66_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_PlateOfHatter:
+            Fs_QueueStartRead(FILE_ITEM_UNQ67_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_PlateOfCat:
+            Fs_QueueStartRead(FILE_ITEM_UNQ68_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_PlateOfQueen:
+            Fs_QueueStartRead(FILE_ITEM_UNQ69_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_PlateOfTurtle:
+            Fs_QueueStartRead(FILE_ITEM_UNQ6A_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_BloodPack:
+            Fs_QueueStartRead(FILE_ITEM_UNQ6B_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_DisinfectingAlcohol:
+            Fs_QueueStartRead(FILE_ITEM_UNQ6C_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_Lighter:
+            Fs_QueueStartRead(FILE_ITEM_UNQ6D_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_VideoTape:
+            Fs_QueueStartRead(FILE_ITEM_UNQ6E_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_KaufmannKey:
+            Fs_QueueStartRead(FILE_ITEM_UNQ70_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_Receipt:
+            Fs_QueueStartRead(FILE_ITEM_UNQ71_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_SafeKey:
+            Fs_QueueStartRead(FILE_ITEM_UNQ72_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_Magnet:
+            Fs_QueueStartRead(FILE_ITEM_UNQ73_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_MotorcycleKey:
+            Fs_QueueStartRead(FILE_ITEM_UNQ74_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_BirdCageKey:
+            Fs_QueueStartRead(FILE_ITEM_UNQ75_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_Pliers:
+            Fs_QueueStartRead(FILE_ITEM_UNQ76_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_Screwdriver:
+            Fs_QueueStartRead(FILE_ITEM_UNQ77_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_Camera:
+            Fs_QueueStartRead(FILE_ITEM_UNQ78_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_RingOfContract:
+            Fs_QueueStartRead(FILE_ITEM_UNQ79_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_Unk7A:
+            Fs_QueueStartRead(FILE_ITEM_UNQ7A_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_Unk7B:
+            Fs_QueueStartRead(FILE_ITEM_UNQ7B_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_Unk7C:
+            Fs_QueueStartRead(FILE_ITEM_UNQ7C_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_Unk7D:
+            Fs_QueueStartRead(FILE_ITEM_UNQ7D_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_Unk7E:
+            Fs_QueueStartRead(FILE_ITEM_UNQ7E_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_Unk7F:
+            Fs_QueueStartRead(FILE_ITEM_UNQ7F_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_KitchenKnife:
+            Fs_QueueStartRead(FILE_ITEM_UNQ80_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_SteelPipe:
+            Fs_QueueStartRead(FILE_ITEM_UNQ81_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_Hammer:
+            Fs_QueueStartRead(FILE_ITEM_UNQ82_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_Chainsaw:
+            Fs_QueueStartRead(FILE_ITEM_UNQ83_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_Axe:
+            Fs_QueueStartRead(FILE_ITEM_UNQ84_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_RockDrill:
+            Fs_QueueStartRead(FILE_ITEM_UNQ85_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_Katana:
+            Fs_QueueStartRead(FILE_ITEM_UNQ86_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_Handgun:
+            Fs_QueueStartRead(FILE_ITEM_UNQA0_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_HuntingRifle:
+            Fs_QueueStartRead(FILE_ITEM_UNQA1_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_Shotgun:
+            Fs_QueueStartRead(FILE_ITEM_UNQA2_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_HyperBlaster:
+            Fs_QueueStartRead(FILE_ITEM_UNQA3_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_HandgunBullets:
+            Fs_QueueStartRead(FILE_ITEM_UNQC0_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_RifleShells:
+            Fs_QueueStartRead(FILE_ITEM_UNQC1_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_ShotgunShells:
+            Fs_QueueStartRead(FILE_ITEM_UNQC2_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_Flashlight:
+            Fs_QueueStartRead(FILE_ITEM_UNQE0_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_PocketRadio:
+            Fs_QueueStartRead(FILE_ITEM_UNQE1_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_GasolineTank:
+            Fs_QueueStartRead(FILE_ITEM_UNQE2_TMD, FS_BUFFER_5);
+            break;
+
+        default:
+            Fs_QueueStartRead(FILE_ITEM_UNQ20_TMD, FS_BUFFER_5);
+            break;
     }
 }
 #else
@@ -248,100 +320,109 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80053B08", func_80053B08); // 0x
 
 void GameFs_Tim00TIMLoad() // 0x80053dA0
 {
-    if (g_SysWork.flags_2352 & 1)
+    if (g_SysWork.flags_2352 & (1 << 0))
     {
         return;
     }
 
     Fs_QueueStartReadTim(FILE_ITEM_TIM00_TIM, FS_BUFFER_1, &D_800A906C);
-    g_SysWork.flags_2352 |= 1;
+    g_SysWork.flags_2352 |= 1 << 0;
 }
 
 // TODO: RODATA migration.
 #ifdef NON_MATCHING
 void func_80053DFC(u32 mapId) // 0x80053DFC
 {
-    if (!(g_SysWork.flags_2352 & 0x80))
+    if (!(g_SysWork.flags_2352 & (1 << 7)))
     {
         Fs_QueueStartReadTim(FILE_ITEM_TIM07_TIM, FS_BUFFER_1, &D_800A9074);
-        g_SysWork.flags_2352 |= 0x80;
+        g_SysWork.flags_2352 |= 1 << 7;
     }
-    
+
     switch (mapId)
     {
-    case MapOverlayId_MAP1_S00:
-    case MapOverlayId_MAP1_S01:
-    case MapOverlayId_MAP1_S02:
-    case MapOverlayId_MAP1_S03:
-    case MapOverlayId_MAP1_S05:
-        if (!(g_SysWork.flags_2352 & 2)) {
-            Fs_QueueStartReadTim(FILE_ITEM_TIM01_TIM, FS_BUFFER_1, &D_800A9064);
-            g_SysWork.flags_2352 = (g_SysWork.flags_2352 & 0x81) | 2;
-        }
-        break;
-    case MapOverlayId_MAP0_S01:
-    case MapOverlayId_MAP0_S02:
-    case MapOverlayId_MAP1_S06:
-    case MapOverlayId_MAP2_S00:
-    case MapOverlayId_MAP2_S01:
-    case MapOverlayId_MAP2_S02:
-    case MapOverlayId_MAP2_S04:
-    case MapOverlayId_MAP4_S00:
-    case MapOverlayId_MAP4_S01:
-    case MapOverlayId_MAP4_S02:
-    case MapOverlayId_MAP4_S03:
-    case MapOverlayId_MAP4_S05:
-        if (!(g_SysWork.flags_2352 & 4)) {
-            Fs_QueueStartReadTim(FILE_ITEM_TIM02_TIM, FS_BUFFER_1, &D_800A9064);
-            g_SysWork.flags_2352 = (g_SysWork.flags_2352 & 0x81) | 4;
-        }
-        break;
-    case MapOverlayId_MAP3_S00:
-    case MapOverlayId_MAP3_S01:
-    case MapOverlayId_MAP3_S02:
-    case MapOverlayId_MAP3_S03:
-    case MapOverlayId_MAP3_S04:
-    case MapOverlayId_MAP3_S05:
-    case MapOverlayId_MAP3_S06:
-    case MapOverlayId_MAP4_S04:
-        if (!(g_SysWork.flags_2352 & 8)) {
-            Fs_QueueStartReadTim(FILE_ITEM_TIM03_TIM, FS_BUFFER_1, &D_800A9064);
-            g_SysWork.flags_2352 = (g_SysWork.flags_2352 & 0x81) | 8;
-        }
-        break;
-    case MapOverlayId_MAP5_S00:
-    case MapOverlayId_MAP5_S01:
-    case MapOverlayId_MAP5_S02:
-    case MapOverlayId_MAP5_S03:
-    case MapOverlayId_MAP6_S00:
-    case MapOverlayId_MAP6_S01:
-    case MapOverlayId_MAP6_S02:
-    case MapOverlayId_MAP6_S03:
-    case MapOverlayId_MAP6_S04:
-        if (!(g_SysWork.flags_2352 & 0x10))
-        {
-            Fs_QueueStartReadTim(FILE_ITEM_TIM04_TIM, FS_BUFFER_1, &D_800A9064);
-            g_SysWork.flags_2352 = (g_SysWork.flags_2352 & 0x81) | 0x10;
-        }
-        break;
-    case MapOverlayId_MAP7_S00:
-    case MapOverlayId_MAP7_S01:
-        if (!(g_SysWork.flags_2352 & 0x20))
-        {
-            Fs_QueueStartReadTim(FILE_ITEM_TIM05_TIM, FS_BUFFER_1, &D_800A9064);
-            g_SysWork.flags_2352 = (g_SysWork.flags_2352 & 0x81) | 0x20;
-        }
-        break;
-    case MapOverlayId_MAP7_S02:
-    case MapOverlayId_MAP7_S03:
-        if (!(g_SysWork.flags_2352 & 0x40))
-        {
-            Fs_QueueStartReadTim(FILE_ITEM_TIM06_TIM, FS_BUFFER_1, &D_800A9064);
-            g_SysWork.flags_2352 = (g_SysWork.flags_2352 & 0x81) | 0x40;
-        }
-        break;
-    case 0:
-        break;
+        case MapOverlayId_MAP1_S00:
+        case MapOverlayId_MAP1_S01:
+        case MapOverlayId_MAP1_S02:
+        case MapOverlayId_MAP1_S03:
+        case MapOverlayId_MAP1_S05:
+            if (!(g_SysWork.flags_2352 & (1 << 1)))
+            {
+                Fs_QueueStartReadTim(FILE_ITEM_TIM01_TIM, FS_BUFFER_1, &D_800A9064);
+                g_SysWork.flags_2352 = (g_SysWork.flags_2352 & 0x81) | (1 << 1);
+            }
+            break;
+
+        case MapOverlayId_MAP0_S01:
+        case MapOverlayId_MAP0_S02:
+        case MapOverlayId_MAP1_S06:
+        case MapOverlayId_MAP2_S00:
+        case MapOverlayId_MAP2_S01:
+        case MapOverlayId_MAP2_S02:
+        case MapOverlayId_MAP2_S04:
+        case MapOverlayId_MAP4_S00:
+        case MapOverlayId_MAP4_S01:
+        case MapOverlayId_MAP4_S02:
+        case MapOverlayId_MAP4_S03:
+        case MapOverlayId_MAP4_S05:
+            if (!(g_SysWork.flags_2352 & (1 << 2)))
+            {
+                Fs_QueueStartReadTim(FILE_ITEM_TIM02_TIM, FS_BUFFER_1, &D_800A9064);
+                g_SysWork.flags_2352 = (g_SysWork.flags_2352 & 0x81) | (1 << 2);
+            }
+            break;
+
+        case MapOverlayId_MAP3_S00:
+        case MapOverlayId_MAP3_S01:
+        case MapOverlayId_MAP3_S02:
+        case MapOverlayId_MAP3_S03:
+        case MapOverlayId_MAP3_S04:
+        case MapOverlayId_MAP3_S05:
+        case MapOverlayId_MAP3_S06:
+        case MapOverlayId_MAP4_S04:
+            if (!(g_SysWork.flags_2352 & (1 << 3)))
+            {
+                Fs_QueueStartReadTim(FILE_ITEM_TIM03_TIM, FS_BUFFER_1, &D_800A9064);
+                g_SysWork.flags_2352 = (g_SysWork.flags_2352 & 0x81) | (1 << 3);
+            }
+            break;
+
+        case MapOverlayId_MAP5_S00:
+        case MapOverlayId_MAP5_S01:
+        case MapOverlayId_MAP5_S02:
+        case MapOverlayId_MAP5_S03:
+        case MapOverlayId_MAP6_S00:
+        case MapOverlayId_MAP6_S01:
+        case MapOverlayId_MAP6_S02:
+        case MapOverlayId_MAP6_S03:
+        case MapOverlayId_MAP6_S04:
+            if (!(g_SysWork.flags_2352 & (1 << 4)))
+            {
+                Fs_QueueStartReadTim(FILE_ITEM_TIM04_TIM, FS_BUFFER_1, &D_800A9064);
+                g_SysWork.flags_2352 = (g_SysWork.flags_2352 & 0x81) | (1 << 4);
+            }
+            break;
+
+        case MapOverlayId_MAP7_S00:
+        case MapOverlayId_MAP7_S01:
+            if (!(g_SysWork.flags_2352 & (1 << 5)))
+            {
+                Fs_QueueStartReadTim(FILE_ITEM_TIM05_TIM, FS_BUFFER_1, &D_800A9064);
+                g_SysWork.flags_2352 = (g_SysWork.flags_2352 & 0x81) | (1 << 5);
+            }
+            break;
+
+        case MapOverlayId_MAP7_S02:
+        case MapOverlayId_MAP7_S03:
+            if (!(g_SysWork.flags_2352 & (1 << 6)))
+            {
+                Fs_QueueStartReadTim(FILE_ITEM_TIM06_TIM, FS_BUFFER_1, &D_800A9064);
+                g_SysWork.flags_2352 = (g_SysWork.flags_2352 & 0x81) | (1 << 6);
+            }
+            break;
+
+        case 0:
+            break;
     }
 }
 #else
@@ -354,59 +435,65 @@ void func_80054024(s32 mapId) // 0x80054024
 {
     switch (mapId)
     {
-    case MapOverlayId_MAP0_S00:
-        Fs_QueueStartRead(FILE_ITEM_IT_000_TMD, FS_BUFFER_8);
-        break;
-    case MapOverlayId_MAP0_S01:
-    case MapOverlayId_MAP0_S02:
-    case MapOverlayId_MAP1_S06:
-    case MapOverlayId_MAP2_S00:
-    case MapOverlayId_MAP2_S01:
-    case MapOverlayId_MAP2_S02:
-    case MapOverlayId_MAP2_S04:
-    case MapOverlayId_MAP4_S00:
-    case MapOverlayId_MAP4_S01:
-    case MapOverlayId_MAP4_S02:
-    case MapOverlayId_MAP4_S03:
-    case MapOverlayId_MAP4_S05:
-        Fs_QueueStartRead(FILE_ITEM_IT_001_TMD, FS_BUFFER_8);
-        break;
-    case MapOverlayId_MAP1_S00:
-    case MapOverlayId_MAP1_S01:
-    case MapOverlayId_MAP1_S02:
-    case MapOverlayId_MAP1_S03:
-    case MapOverlayId_MAP1_S05:
-        Fs_QueueStartRead(FILE_ITEM_IT_002_TMD, FS_BUFFER_8);
-        break;
-    case MapOverlayId_MAP3_S00:
-    case MapOverlayId_MAP3_S01:
-    case MapOverlayId_MAP3_S02:
-    case MapOverlayId_MAP3_S03:
-    case MapOverlayId_MAP3_S04:
-    case MapOverlayId_MAP3_S05:
-    case MapOverlayId_MAP3_S06:
-    case MapOverlayId_MAP4_S04:
-        Fs_QueueStartRead(FILE_ITEM_IT_003_TMD, FS_BUFFER_8);
-        break;
-    case MapOverlayId_MAP5_S00:
-    case MapOverlayId_MAP5_S01:
-    case MapOverlayId_MAP5_S02:
-    case MapOverlayId_MAP5_S03:
-    case MapOverlayId_MAP6_S00:
-    case MapOverlayId_MAP6_S01:
-    case MapOverlayId_MAP6_S02:
-    case MapOverlayId_MAP6_S03:
-    case MapOverlayId_MAP6_S04:
-        Fs_QueueStartRead(FILE_ITEM_IT_004_TMD, FS_BUFFER_8);
-        break;
-    case MapOverlayId_MAP7_S00:
-    case MapOverlayId_MAP7_S01:
-        Fs_QueueStartRead(FILE_ITEM_IT_005_TMD, FS_BUFFER_8);
-        break;
-    case MapOverlayId_MAP7_S02:
-    case MapOverlayId_MAP7_S03:
-        Fs_QueueStartRead(FILE_ITEM_IT_006_TMD, FS_BUFFER_8);
-        break;
+        case MapOverlayId_MAP0_S00:
+            Fs_QueueStartRead(FILE_ITEM_IT_000_TMD, FS_BUFFER_8);
+            break;
+
+        case MapOverlayId_MAP0_S01:
+        case MapOverlayId_MAP0_S02:
+        case MapOverlayId_MAP1_S06:
+        case MapOverlayId_MAP2_S00:
+        case MapOverlayId_MAP2_S01:
+        case MapOverlayId_MAP2_S02:
+        case MapOverlayId_MAP2_S04:
+        case MapOverlayId_MAP4_S00:
+        case MapOverlayId_MAP4_S01:
+        case MapOverlayId_MAP4_S02:
+        case MapOverlayId_MAP4_S03:
+        case MapOverlayId_MAP4_S05:
+            Fs_QueueStartRead(FILE_ITEM_IT_001_TMD, FS_BUFFER_8);
+            break;
+
+        case MapOverlayId_MAP1_S00:
+        case MapOverlayId_MAP1_S01:
+        case MapOverlayId_MAP1_S02:
+        case MapOverlayId_MAP1_S03:
+        case MapOverlayId_MAP1_S05:
+            Fs_QueueStartRead(FILE_ITEM_IT_002_TMD, FS_BUFFER_8);
+            break;
+
+        case MapOverlayId_MAP3_S00:
+        case MapOverlayId_MAP3_S01:
+        case MapOverlayId_MAP3_S02:
+        case MapOverlayId_MAP3_S03:
+        case MapOverlayId_MAP3_S04:
+        case MapOverlayId_MAP3_S05:
+        case MapOverlayId_MAP3_S06:
+        case MapOverlayId_MAP4_S04:
+            Fs_QueueStartRead(FILE_ITEM_IT_003_TMD, FS_BUFFER_8);
+            break;
+
+        case MapOverlayId_MAP5_S00:
+        case MapOverlayId_MAP5_S01:
+        case MapOverlayId_MAP5_S02:
+        case MapOverlayId_MAP5_S03:
+        case MapOverlayId_MAP6_S00:
+        case MapOverlayId_MAP6_S01:
+        case MapOverlayId_MAP6_S02:
+        case MapOverlayId_MAP6_S03:
+        case MapOverlayId_MAP6_S04:
+            Fs_QueueStartRead(FILE_ITEM_IT_004_TMD, FS_BUFFER_8);
+            break;
+
+        case MapOverlayId_MAP7_S00:
+        case MapOverlayId_MAP7_S01:
+            Fs_QueueStartRead(FILE_ITEM_IT_005_TMD, FS_BUFFER_8);
+            break;
+
+        case MapOverlayId_MAP7_S02:
+        case MapOverlayId_MAP7_S03:
+            Fs_QueueStartRead(FILE_ITEM_IT_006_TMD, FS_BUFFER_8);
+            break;
     }
 }
 #else
@@ -698,7 +785,7 @@ void func_8005B474(s32* arg0, u32 arg1, s32 idx) // 0x8005B474
         *ptr = var_a1;
         var_a1 += 24;
         *arg0 += 1;
-        
+
         ptr += 1;
     }
     while (var_a1 < temp_a2);
@@ -980,7 +1067,7 @@ s32 func_8006CC44(s32 arg0, s32 arg1, s_func_8006CC44* arg2) // 0x8006CC44
                FP_MULTIPLY(arg2->field_8C, arg1 - arg2->field_84, Q12_SHIFT) +
                arg2->field_7C;
     }
-    
+
     return 2048;
 }
 
@@ -1164,16 +1251,16 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80053B08", func_8007D970); // 0x
 // TODO: Can this work without needing inlined func?
 static inline Savegame_PlayerReset(s_ShSavegame* save)
 {
-    save->playerHealth_240 = FP_TO(100, Q12_SHIFT);
-    save->field_A0 = 0;
-    save->equippedWeapon_AA = 0;
-    save->field_238 = 0;
-    save->gameplayTimer_250 = 0;
-    save->runDistance_254 = 0;
-    save->walkDistance_258 = 0;
+    save->playerHealth_240      = FP_TO(100, Q12_SHIFT);
+    save->field_A0              = 0;
+    save->equippedWeapon_AA     = 0;
+    save->field_238             = 0;
+    save->gameplayTimer_250     = 0;
+    save->runDistance_254       = 0;
+    save->walkDistance_258      = 0;
     save->pickedUpItemCount_23C = 0;
-    save->clearGameCount_24A = 0;
-    save->add290Hours_25C_1 = 0;
+    save->clearGameCount_24A    = 0;
+    save->add290Hours_25C_1     = 0;
 }
 
 void Game_SavegameResetPlayer() // 0x8007E530
@@ -1204,7 +1291,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80053B08", func_8007E9C4); // 0x
 void GameFs_PlayerMapAnimLoad(s32 mapIdx) // 0x8007EB64
 {
     #define BASE_FILE_IDX FILE_ANIM_HB_M0S00_ANM
-    
+
     if (g_GameWork.mapAnimIdx_5B1 != mapIdx ||
         mapIdx == (FILE_ANIM_HB_M6S04_ANM - BASE_FILE_IDX) ||
         mapIdx == (FILE_ANIM_HB_M7S01_ANM - BASE_FILE_IDX) ||

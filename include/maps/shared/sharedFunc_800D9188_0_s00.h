@@ -13,13 +13,16 @@ s32 sharedFunc_800D9188_0_s00(s32 arg0, s_SubCharacter* arg1, s32 arg2, s32 arg3
                     case 0x654:
                         func_8005DC1C(arg3, &arg1->position_18, 0x40, 0);
                         break;
+
                     case 0x655:
                         func_8005DC1C(arg3, &arg1->position_18, 0x40, 0);
                         break;
+
                     case 0x656:
                     case 0x666:
                         func_8005DC1C(arg3, &arg1->position_18, 0xC0, 0);
                         break;
+
                     case 0x65F:
                     case 0x660:
                         func_8005DC1C(arg3, &arg1->position_18, 0x40, 0);
@@ -29,6 +32,7 @@ s32 sharedFunc_800D9188_0_s00(s32 arg0, s_SubCharacter* arg1, s32 arg2, s32 arg3
                     case 0x5D4:
                         func_8005DC1C(arg3, &arg1->position_18, 0xFF, 2);
                         break;
+
                     case 0x63A:
                         func_8005DC1C(arg3, &arg1->position_18, 0x80, 0);
                         break;
@@ -81,7 +85,7 @@ s32 sharedFunc_800D9188_0_s00(s32 arg0, s_SubCharacter* arg1, s32 arg2, s32 arg3
                         break;
                 }
 
-                arg1->properties_E4.player.flags_11C |= (1 << 13);
+                arg1->properties_E4.player.flags_11C |= 1 << 13;
                 return 1;
             }
         }
@@ -90,5 +94,6 @@ s32 sharedFunc_800D9188_0_s00(s32 arg0, s_SubCharacter* arg1, s32 arg2, s32 arg3
             arg1->properties_E4.player.flags_11C &= ~(1 << 13);
         }
     }
+
     return 0;
 }

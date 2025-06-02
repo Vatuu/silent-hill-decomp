@@ -42,7 +42,8 @@ s32 func_8004C4F8() // 0x8004C4F8
     {
         if ((g_SavegamePtr->field_24B & (1 << 4)) != 0)
         {
-            return 2; // Game completed with some condition met?
+            // Game completed with some condition met?
+            return 2;
         }
 
         // Returns 1 if controller port 2 has Konami gun controller connected.
@@ -86,7 +87,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/inventory_main", func_8004F190); // 0x800
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/inventory_main", func_8004F57C); // 0x8004F57C
 
-/** Likely control handling in inventory screen. */
+/** Likely controls handling in inventory screen. */
 INCLUDE_ASM("asm/bodyprog/nonmatchings/inventory_main", func_8004F5DC); // 0x8004F5DC
 
 /** Controls and graphics related to the inventory screen. */
@@ -94,11 +95,11 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/inventory_main", func_8004F764); // 0x800
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/inventory_main", func_8004FB0C); // 0x8004FB0C
 
-/** Draws many of 2D elements of the menu.
-* This draws the background behind the text
+/** Draws many 2D menu elements.
+* The background behind the text
 * in the upper and lower part of the inventory
 * screen, the box use to indicate what the player
-* has selected and triggers the draw of the health
+* has selected, and triggers the draw of the health
 * status.
 */
 INCLUDE_ASM("asm/bodyprog/nonmatchings/inventory_main", func_8004FBCC); // 0x8004FBCC
@@ -107,11 +108,11 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/inventory_main", Gfx_Inventory_HealthStat
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/inventory_main", Gfx_Inventory_ItemDescription); // 0x8005192C
 
-/** Related to the draw of arrows that are aside
-* of the selected item in the inventory.
-* Breaking it seems to reveal that they are
-* whitening the arrows as without the function
-* the arrows look a bit gray.
+/** Related to the drawing of arrows next to
+* the selected item in the inventory.
+* Breaking it seems to reveal that it
+* whitens the arrows, as without this function,
+* the arrows look a bit grey.
 */
 INCLUDE_ASM("asm/bodyprog/nonmatchings/inventory_main", func_80052088); // 0x80052088
 
