@@ -64,7 +64,7 @@ extern s_800B5508 D_800B5508[];
 /** @brief Basic information required to draw information of elements in save slots.
 * Address access is based on the slot: Slot 1 - 0x801E09E0, Slot 2 - 0x801E1440.
 */
-extern s_SaveSlotElementInfo* g_SlotElementInfo;
+extern s_SavegameEntry* g_CurSavegameEntry;
 
 extern u8 g_MemCardElementCount[MEMORY_CARD_SLOT_COUNT];
 
@@ -92,7 +92,7 @@ s32 func_8002E94C(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 
 s32 func_8002E990();
 
-/** Used to get the pointer of a struct which seems to be `s_SaveBasicInfo`. */
+/** Used to get the pointer of a struct which seems to be `s_SavegameMetadata`. */
 s32 func_8002E9EC(s32 arg0, s32 arg1, s32 arg2);
 
 s32 func_8002EA28(s32 idx);

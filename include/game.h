@@ -76,37 +76,37 @@ typedef enum _MapOverlayId
     MapOverlayId_MAP7_S00 = 39,
     MapOverlayId_MAP7_S01 = 40,
     MapOverlayId_MAP7_S02 = 41,
-    MapOverlayId_MAP7_S03 = 42,
+    MapOverlayId_MAP7_S03 = 42
 } e_MapOverlayId;
 
-typedef enum _SaveTitleId
+typedef enum _SaveLocationId
 {
-    SaveTitleId_Anywhere     = 0,
-    SaveTitleId_Cafe         = 1,
-    SaveTitleId_Bus          = 2,
-    SaveTitleId_Store        = 3,
-    SaveTitleId_Infirmary    = 4,
-    SaveTitleId_Doghouse     = 5,
-    SaveTitleId_Gordon       = 6,
-    SaveTitleId_Church       = 7,
-    SaveTitleId_Garage       = 8,
-    SaveTitleId_Police       = 9,
-    SaveTitleId_Reception    = 10,
-    SaveTitleId_Room302      = 11,
-    SaveTitleId_Directors    = 12,
-    SaveTitleId_JewelryShop  = 13,
-    SaveTitleId_PoolHall     = 14,
-    SaveTitleId_AntiqueShop  = 15,
-    SaveTitleId_ThemePark    = 16,
-    SaveTitleId_Boat         = 17,
-    SaveTitleId_Bridge       = 18,
-    SaveTitleId_Motel        = 19,
-    SaveTitleId_Lighthouse   = 20,
-    SaveTitleId_Sewer        = 21,
-    SaveTitleId_Nowhere      = 22,
-    SaveTitleId_ChildsRoom   = 23,
-    SaveTitleId_NextFear     = 24
-} e_SaveTitleId;
+    SaveLocationId_Anywhere     = 0,
+    SaveLocationId_Cafe         = 1,
+    SaveLocationId_Bus          = 2,
+    SaveLocationId_Store        = 3,
+    SaveLocationId_Infirmary    = 4,
+    SaveLocationId_Doghouse     = 5,
+    SaveLocationId_Gordon       = 6,
+    SaveLocationId_Church       = 7,
+    SaveLocationId_Garage       = 8,
+    SaveLocationId_Police       = 9,
+    SaveLocationId_Reception    = 10,
+    SaveLocationId_Room302      = 11,
+    SaveLocationId_Directors    = 12,
+    SaveLocationId_JewelryShop  = 13,
+    SaveLocationId_PoolHall     = 14,
+    SaveLocationId_AntiqueShop  = 15,
+    SaveLocationId_ThemePark    = 16,
+    SaveLocationId_Boat         = 17,
+    SaveLocationId_Bridge       = 18,
+    SaveLocationId_Motel        = 19,
+    SaveLocationId_Lighthouse   = 20,
+    SaveLocationId_Sewer        = 21,
+    SaveLocationId_Nowhere      = 22,
+    SaveLocationId_ChildsRoom   = 23,
+    SaveLocationId_NextFear     = 24
+} e_SaveLocationId;
 
 typedef enum _Current2dMap
 {
@@ -544,10 +544,10 @@ typedef struct _ShSavegame
     s_ShInventoryItem items_0[INVENTORY_ITEM_COUNT_MAX];
     s8                field_A0;
     s8                field_A1[3];
-    s8                mapOverlayId_A4;         /** `e_MapOverlayId` Index to overlay `*.BIN` files. */
+    s8                mapOverlayId_A4;          /** `e_MapOverlayId` Index to overlay `*.BIN` files. */
     s8                mapRoomIdx_A5;            /** Index to local map geometry `*.IPD` files. */
     s16               savegameCount_A6;
-    s8                SaveTitleId_A8;           /** `e_SaveTitleId` */
+    s8                locationId_A8;            /** `e_SaveLocationId` */
     u8                current2dMap_A9;          /** `e_Current2dMap` Index to 2D map showned than opening the map screen. */
     s8                equippedWeapon_AA;        /** `e_InventoryItemId` Default: 0. Effects only the visible player weapon model. */
     u8                field_AB;
@@ -577,7 +577,7 @@ typedef struct _ShSavegame
     q20_12            gameplayTimer_250;
     q19_12            runDistance_254;
     q19_12            walkDistance_258;
-    u8                isTitleYellowFlag_25C_0 : 1;  // Is title in save-load screen is yellow (next fear mode).
+    u8                isNextFearMode_25C      : 1;  // Makes savegame entry text gold.
     u8                add290Hours_25C_1       : 2;  // Adds 290 hours per 1 bit. So 290, 580, 870
     u8                hyperBlasterFlags_25C_3 : 5;  // Red/None: 0?, Yellow: 8, Green: 16, Rainbow: 24 (unobtainable). Maybe it better to split to bit fields, because you can't have all colors at the same time, but only one.
     u8                meleeKillCount_25D;

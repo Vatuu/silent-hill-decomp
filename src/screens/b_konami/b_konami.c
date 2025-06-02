@@ -117,11 +117,11 @@ s32 func_800C9874() // 0x800C9874
         return 1;
     }
 
-    g_SlotElementInfo = (s_SaveSlotElementInfo*)BOOT_ADDR_0;
-    var0              = g_SlotElementInfo->elementType_4;
+    g_CurSavegameEntry = (s_SavegameEntry*)BOOT_ADDR_0;
+    var0              = g_CurSavegameEntry->elementType_4;
 
-    g_SlotElementInfo = (s_SaveSlotElementInfo*)BOOT_ADDR_1;
-    var1              = g_SlotElementInfo->elementType_4;
+    g_CurSavegameEntry = (s_SavegameEntry*)BOOT_ADDR_1;
+    var1              = g_CurSavegameEntry->elementType_4;
 
     if (var0 == 0 && var1 == 0)
     {
@@ -134,12 +134,12 @@ s32 func_800C9874() // 0x800C9874
     }
     else if (var0 == 8 || var1 == 8)
     {
-        g_SlotElementInfo = (s_SaveSlotElementInfo*)&BOOT_ADDR_0[g_SlotSelectedIdx * 0xA50];
-        g_SlotElementInfo = &g_SlotElementInfo[g_SlotElementSelectedIdx[g_SlotSelectedIdx]];
+        g_CurSavegameEntry = (s_SavegameEntry*)&BOOT_ADDR_0[g_SlotSelectedIdx * 0xA50];
+        g_CurSavegameEntry = &g_CurSavegameEntry[g_SlotElementSelectedIdx[g_SlotSelectedIdx]];
 
-        D_800BCD40        = g_SlotElementInfo->field_5;
-        g_SelectedFileIdx = g_SlotElementInfo->fileIdx_6;
-        g_SelectedSaveIdx = g_SlotElementInfo->elementIdx_7;
+        D_800BCD40        = g_CurSavegameEntry->field_5;
+        g_SelectedFileIdx = g_CurSavegameEntry->fileIdx_6;
+        g_SelectedSaveIdx = g_CurSavegameEntry->elementIdx_7;
         return 5;
     }
     

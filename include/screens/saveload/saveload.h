@@ -13,7 +13,7 @@
 // ENUMERATORS
 // ============
 
-/** @brief Used by `s_SaveSlotElementInfo` to identify
+/** @brief Used by `s_SavegameEntry` to identify
  * the type of element in the slot save.
  */
 typedef enum _SlotElementType
@@ -35,21 +35,20 @@ typedef enum _SlotElementType
 // UNKNOWN STRUCTS
 // ================
 
-/* Struct called by functions that haven't been identified. */
+/* Structs called by functions that haven't been identified. */
 
-typedef struct
+typedef struct _SavegameMetadata
 {
-    s32 unk_0;                     // Same behaviour as `field_0` in `s_SaveSlotElementInfo`.
+    s32 unk_0;                    // Same behaviour as `field_0` in `s_SavegameEntry`.
     u32 gameplayTimer_4;
     u16 savegameCount_8;
-    s8  SaveTitleId_A;
-    u8  isTitleYellowFlag_B_0 : 1;
-    u8  add290Hours_B_1       : 2;
-    u8  hyperBlasterFlags_B_3 : 5;
-} s_SaveBasicInfo;
-/** Possible size is `0xC/12` bytes. */
+    s8  locationId_A;
+    u8  isNextFearMode_B    : 1;
+    u8  add290Hours_C       : 2;
+    u8  hyperBlasterFlags_E : 5;
+} s_SavegameMetadata; // Possible size is 12 bytes.
 
-typedef struct
+typedef struct _SavegameEntry
 {
     /** @brief `field_0` is a counter that increments by one each time
      * the game is saved to a memory card. However,
@@ -69,17 +68,16 @@ typedef struct
      */
     s16              field_0;
     s16              savegameCount_2;
-    s8               elementType_4;   /** `e_SlotElementType` */
-    s8               field_5;         // The value changes between 0 when the first save slot is selected and 4 when the second is selected.
+    s8               elementType_4;     /** `e_SlotElementType` */
+    s8               field_5;           // The value changes between 0 when the first save slot is selected and 4 when the second is selected.
     s8               fileIdx_6;
-    s8               elementIdx_7;
-    s32              SaveTitleId_8;
-    s_SaveBasicInfo* field_C;
-} s_SaveSlotElementInfo;
-/** @note Possible size is `0x10/16` bytes.
- * This struct is written in memory each time a
+    s8               elementIdx_7;      // Index in file?
+    s32              locationId_8;
+    s_SavegameMetadata* field_C;
+} s_SavegameEntry; // Possible size is 16 bytes.
+/** @note This struct is written in memory each time a
  * new save is created in any slot. The struct
- * always grabs 16 bytes. This pressumption is
+ * always grabs 16 bytes. This presumption is
  * affirmed by the observation that the last
  * element of the struct is always a struct pointer.
  *
@@ -142,7 +140,7 @@ typedef struct
 // GLOBALS
 // ========
 
-extern char* g_StageStrings[];
+extern char* g_SaveLocationNames[];
 
 /** This and `D_801E7510` are related.
  * When this is 0, `D_801E7510` is 1
@@ -238,28 +236,28 @@ extern u8 g_IsGameSaving;
 /** Clears all saves? */
 void Savegame_ScreenSubInit();
 
-void Gfx_SaveSelectedDisplacement(s32 saveSlotIdx, s32 arg1);
+void Gfx_SaveSelectedDisplacement(s32 slotIdx, s32 arg1);
 
 /** Draws the "FILE X" string in the save/load screen. */
-void Gfx_SaveFileSelectedDraw(s32 arg0, s32 saveSlotIdx, s32 fileId, s32 arg3);
+void Gfx_SaveSlotDrawFileString(s32 arg0, s32 slotIdx, s32 fileId, s32 arg3);
 
 /** Draws the string of the location where the save was done. */
-void Gfx_SavesLocationDraw(s_SaveSlotElementInfo* ptr, s32 arg1, s32 idx);
+void Gfx_SavegameEntryDrawLocationName(s_SavegameEntry* ptr, s32 arg1, s32 idx);
 
 /** Sets the color of the string to be drawn based on some flag. */
-s32 func_801E3078(s_SaveBasicInfo* arg0);
+s32 Gfx_SavegameEntryStringSetColor(s_SavegameMetadata* saveEntry);
 
-void func_801E326C(s_SaveSlotElementInfo* arg0, s_SaveSlotElementInfo* arg1, s32 arg2, s32 arg3);
+void func_801E326C(s_SavegameEntry* saveEntry, s_SavegameEntry* nextSaveEntry, s32 saveIdx, s32 slotIdx);
 
 void Gfx_MemCardStateDraw(s32 memCardState, s32 arg1);
 
-/** Produces the flicker over the saved game after saving sucessfully. */
-void Gfx_SavedFlickerDraw();
+/** Flashes savegame entry after saving sucessfully. */
+void Gfx_SavegameEntryDrawFlash();
 
 void func_801E43C8(s32 slotIdx);
 
 /** Draws transparent background and scroll bar. */
-void Gfx_SaveSlotBoxDraw(s32 slotIdx, s32 saveCount, s32 selectedSaveIdx, s32 selectedSaveOffsetY);
+void Gfx_SaveSlotDrawBox(s32 slotIdx, s32 saveCount, s32 selectedSaveIdx, s32 selectedSaveOffsetY);
 
 void func_801E52D8(s32 slotIdx, s32 elementType);
 
@@ -274,11 +272,7 @@ void Savegame_LoadLogic();
 
 void Savegame_ContinueLogic();
 
-/** Draws "SLOT1"/"SLOT2" strings, bottom transparent frame, and background image.*/
-void Gfx_SaveBackground();
-
-/** Draws all file box strings and graphics, as well as the strings in the transparent frame at the bottom. */
-void func_801E70C8();
+void Gfx_SavegameDrawBackground();
 
 /** Handles the text that shows when formatting, saving or loading a file.
  *  Used in `GameState_SaveScreen_Update` and `GameState_DeathLoadScreen_Update`.

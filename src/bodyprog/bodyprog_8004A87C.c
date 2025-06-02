@@ -47,11 +47,11 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8004B658); // 0x
 
 void func_8004B684() // 0x8004B684
 {
-    D_800C38B4 = 1;
-    D_800C38B0.field_0 = 0;
-    D_800C38B0.field_1 = 1;
-    g_StringPositionX1 = SCREEN_POSITION_X(-37.5f);
-    g_StringColorId = ColorId_White;
+    D_800C38B4             = 1;
+    D_800C38B0.field_0     = 0;
+    D_800C38B0.field_1     = 1;
+    g_StringPositionX1     = SCREEN_POSITION_X(-37.5f);
+    g_StringColorId        = ColorId_White;
     g_SysWork.field_2350_0 = 0;
 }
 

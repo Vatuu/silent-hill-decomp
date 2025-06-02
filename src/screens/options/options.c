@@ -2254,23 +2254,23 @@ char* g_ScreenCtrl_Actions[] =
  * are this applied, they could be also some
  * sort of value defined with an macro.
  */
-static const u16 D_801E2D42 = 0x1040; // 4160
+static const u16 D_801E2D42 = 4160;
 
-DVECTOR D_801E73B4 = {0, 0};
+DVECTOR D_801E73B4 = { 0, 0 };
 
-DVECTOR D_801E73B8 = {0, 0};
+DVECTOR D_801E73B8 = { 0, 0 };
 
-DVECTOR D_801E73BC = {0, 0};
+DVECTOR D_801E73BC = { 0, 0 };
 
-DVECTOR D_801E73C0 = {0, 0};
+DVECTOR D_801E73C0 = { 0, 0 };
 
-DVECTOR D_801E73C4 = {0, 0};
+DVECTOR D_801E73C4 = { 0, 0 };
 
-DVECTOR D_801E73C8 = {0, 0};
+DVECTOR D_801E73C8 = { 0, 0 };
 
-DVECTOR D_801E73CC = {0, 0};
+DVECTOR D_801E73CC = { 0, 0 };
 
-DVECTOR D_801E73D0 = {0, 0};
+DVECTOR D_801E73D0 = { 0, 0 };
 
 s32 g_Gfx_ScreenPos_InvertColorBg_TransitionCounter = 0;
 
@@ -2278,7 +2278,7 @@ s16 g_ScreenPos_PosX = 0;
 
 s16 g_ScreenPos_PosY = 0;
 
-s_ScreenCtrl_SelectedElement g_ScreenCtrl_SelectedElement = {BindingMenu_Exit, InputAction_Enter};
+s_ScreenCtrl_SelectedElement g_ScreenCtrl_SelectedElement = { BindingMenu_Exit, InputAction_Enter };
 
 s32 g_Gfx_MoveLineTimer = 0;
 

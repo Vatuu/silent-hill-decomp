@@ -1312,7 +1312,7 @@ void SysWork_SavegameUpdatePlayer() // 0x8003A120
 {
     s_ShSavegame* save = g_SavegamePtr;
 
-    save->SaveTitleId_A8      = g_MapEventIdx;
+    save->locationId_A8       = g_MapEventIdx;
     save->playerPositionX_244 = g_SysWork.player_4C.chara_0.position_18.vx;
     save->playerPositionZ_24C = g_SysWork.player_4C.chara_0.position_18.vz;
     save->playerRotationY_248 = g_SysWork.player_4C.chara_0.rotation_24.vy;

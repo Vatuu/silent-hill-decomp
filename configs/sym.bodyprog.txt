@@ -25,7 +25,7 @@ g_SlotElementSelectedIdx = 0x800A97D4;
 g_SlotSelectedIdx = 0x800A97D6;
 g_SelectedFileIdx = 0x800BCD3F;
 g_SelectedSaveIdx = 0x800BCD3E;
-g_SlotElementInfo = 0x800BCD2C;
+g_CurSavegameEntry = 0x800BCD2C;
 g_MemCardElementCount = 0x800BCD30;
 g_MemCardsTotalElementCount = 0x800BCD3A;
 

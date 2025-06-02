@@ -7,7 +7,7 @@
 void func_8002E630() // 0x8002E630
 {
     s_800B5508* ptr;
-    s32 i;
+    s32         i;
 
     func_800303E4();
 
@@ -94,18 +94,18 @@ void func_8002E7BC() // 0x8002E7BC
     func_8002E8E4();
     func_80030414();
 
-    D_800B55E8[0].field_0 = 0;
-    D_800B55E8[0].field_4 = 0;
-    D_800B55E8[0].field_8 = 0;
-    D_800B55E8[0].field_C = 0;
+    D_800B55E8[0].field_0  = 0;
+    D_800B55E8[0].field_4  = 0;
+    D_800B55E8[0].field_8  = 0;
+    D_800B55E8[0].field_C  = 0;
     D_800B55E8[0].field_10 = 0;
     D_800B55E8[0].field_14 = 0;
-    D_800B55E8[1].field_0 = 0;
+    D_800B55E8[1].field_0  = 0;
 
     ptr = &D_800B55E8[1];
-    ptr->field_4 = 0;
-    ptr->field_8 = 0;
-    ptr->field_C = 0;
+    ptr->field_4  = 0;
+    ptr->field_8  = 0;
+    ptr->field_C  = 0;
     ptr->field_10 = 0;
     ptr->field_14 = 0;
 }
@@ -168,9 +168,9 @@ void func_8002E8E4() // 0x8002E8E4
     
     ptr = &D_800B5508[8].field_18;
     
-    ptr->field_4 = 0;
-    ptr->field_8 = 0;
-    ptr->field_C = 0;
+    ptr->field_4  = 0;
+    ptr->field_8  = 0;
+    ptr->field_C  = 0;
     ptr->field_10 = 0;
     ptr->field_14 = 1;
 }
