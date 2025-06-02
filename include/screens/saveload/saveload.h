@@ -258,7 +258,8 @@ void Gfx_SavedFlickerDraw();
 
 void func_801E43C8(s32 slotIdx);
 
-void Gfx_SavesTransparentBgDraw(s32 slotIdx, s32 saveCount, s32 selectedSaveIdx, s32 selectedSaveOffsetY);
+/** Draws transparent background and scroll bar. */
+void Gfx_SaveSlotBoxDraw(s32 slotIdx, s32 saveCount, s32 selectedSaveIdx, s32 selectedSaveOffsetY);
 
 void func_801E52D8(s32 slotIdx, s32 elementType);
 

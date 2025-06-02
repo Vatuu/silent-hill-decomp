@@ -321,7 +321,7 @@ void Gfx_SaveScreenDraw(s_SaveSlotElementInfo* slotsElementsPtr, s32 arg1, s32 s
 
     if (g_SlotSelectedIdx == slotIdx && arg1 == 0 && elementType >= ElementType_CorruptedSave)
     {
-        Gfx_MemSelectedBarDraw();
+        Gfx_SaveSlotBorderDraw();
     }
 
     if (arg1 == 0)
@@ -414,7 +414,7 @@ void Gfx_SaveScreenDraw(s_SaveSlotElementInfo* slotsElementsPtr, s32 arg1, s32 s
 
             if (arg1 == 0)
             {
-                Gfx_SavesTransparentBgDraw(slotIdx, g_SlotElementCounts[slotIdx], g_SlotElementSelectedIdx[slotIdx], D_801E7578[slotIdx]);
+                Gfx_SaveSlotBoxDraw(slotIdx, g_SlotElementCounts[slotIdx], g_SlotElementSelectedIdx[slotIdx], D_801E7578[slotIdx]);
             }
 
             break;
@@ -746,102 +746,121 @@ void Gfx_SavedShineDraw() // 0x801E3E78
     }
 }
 
-void Gfx_MemSelectedBarDraw() // 0x801E4010
+void Gfx_SaveSlotBorderDraw() // 0x801E4010
 {
-    s_Line2d lines[5][2] =
+    #define BORDER_LINE_COUNT  5
+    #define BORDER_PIXEL_WIDTH 2
+    #define LAYER              28
+
+    GsOT*    ot;
+    LINE_F2* borderLine;
+    POLY_G4* glowPoly;
+    s32      i;
+    s32      j;
+
+    // Lines for green border around slot. Each line is doubled for 2-pixel width.
+    s_Line2d borderLines[BORDER_LINE_COUNT][BORDER_PIXEL_WIDTH] =
     {
+        // Top-left.
         {
-            { {-107, -88 }, { -146, -88 } },
-            { {-107, -87 }, { -146, -87 } }
+            { { -107, -88 }, { -146, -88 } },
+            { { -107, -87 }, { -146, -87 } }
         },
+        // Top-right.
         {
             { { -42, -88 }, { -2, -88 } },
             { { -42, -87 }, { -2, -87 } }
         },
+        // Left.
         {
             { { -146, -88 }, { -146, 42 } },
             { { -145, -87 }, { -145, 41 } }
         },
+        // Right.
         {
             { { -2, -88 }, { -2, 42 } },
             { { -3, -87 }, { -3, 41 } }
         },
+        // Bottom.
         {
             { { -146, 42 }, { -2, 42 } },
             { { -145, 41 }, { -3, 41 } }
         }
     };
 
-    s_Quad2d quads[5][2] =
+    // Polygons for green glow of border around slot. Each line has 2 quads for inner and outer glow.
+    s_Quad2d borderGlowQuads[BORDER_LINE_COUNT][BORDER_PIXEL_WIDTH] =
     {
+        // Top-left.
         {
             { { -106, -88 }, { -106, -92 }, { -146, -88 }, { -150, -92 } },
             { { -106, -87 }, { -106, -83 }, { -146, -87 }, { -142, -83 } }
         },
+        // Top-right.
         {
             { { -42, -88 }, { -42, -92 }, { -2, -88 }, { 2, -92 } },
             { { -42, -87 }, { -42, -83 }, { -2, -87 }, { -6, -83 } }
         },
+        // Left.
         {
             { { -146, -88 }, { -150, -92 }, { -146, 42 }, {-150, 46 } },
             { { -145, -87 }, { -141, -83 }, { -145, 41 }, {-141, 37 } }
         },
+        // Right.
         {
             { { -2, -88 }, { 2, -92 }, { -2, 42 }, { 2, 46 } },
             { { -3, -87 }, { -7, -83 }, { -3, 41 }, { -7, 37 } }
         },
+        // Bottom.
         {
             { { -146, 42 }, { -150, 46 }, { -2, 42 }, { 2, 46 } },
             { { -145, 41 }, { -141, 37 }, { -3, 41 }, { -7, 37 } }
         }
     };
 
-    GsOT*    ot;
-    s32      i;
-    s32      j;
-    LINE_F2* line;
-    POLY_G4* poly;
-
     ot = &g_ObjectTable1[g_ObjectTableIdx];
 
-    for (i = 0; i < 2; i++)
+    // Draw green border around slot.
+    for (i = 0; i < BORDER_PIXEL_WIDTH; i++)
     {
-        for (j = 0; j < 5; j++)
+        for (j = 0; j < BORDER_LINE_COUNT; j++)
         {
-            line = (LINE_F2*)GsOUT_PACKET_P;
-            setLineF2(line);
-            setRGB0(line, 0, 0xFF, 0);
+            borderLine = (LINE_F2*)GsOUT_PACKET_P;
+            setLineF2(borderLine);
 
-            setXY2(line,
-                   lines[j][i].vertex0_0.vx + (g_SlotSelectedIdx * SLOT_COLUMN_OFFSET), lines[j][i].vertex0_0.vy,
-                   lines[j][i].vertex1_4.vx + (g_SlotSelectedIdx * SLOT_COLUMN_OFFSET), lines[j][i].vertex1_4.vy);
+            setRGB0(borderLine, 0, 0xFF, 0);
 
-            addPrim((u8*)ot->org + 28, line);
-            GsOUT_PACKET_P = (u8*)line + sizeof(LINE_F2);
+            setXY2(borderLine,
+                   borderLines[j][i].vertex0_0.vx + (g_SlotSelectedIdx * SLOT_COLUMN_OFFSET), borderLines[j][i].vertex0_0.vy,
+                   borderLines[j][i].vertex1_4.vx + (g_SlotSelectedIdx * SLOT_COLUMN_OFFSET), borderLines[j][i].vertex1_4.vy);
+
+            addPrim((u8*)ot->org + LAYER, borderLine);
+            GsOUT_PACKET_P = (u8*)borderLine + sizeof(LINE_F2);
         }
     }
 
-    for (i = 0; i < 2; i++)
+    // Draw green border glow around slot.
+    for (i = 0; i < BORDER_PIXEL_WIDTH; i++)
     {
-        for (j = 0; j < 5; j++)
+        for (j = 0; j < BORDER_LINE_COUNT; j++)
         {
-            poly = (POLY_G4*)GsOUT_PACKET_P;
-            setlen(poly, 8);
-            setcode(poly, 0x3A);
+            glowPoly = (POLY_G4*)GsOUT_PACKET_P;
+            setlen(glowPoly, 8);
+            setcode(glowPoly, 0x3A);
 
-            setRGB0(poly, 0, 0x80, 0);
-            setRGB1(poly, 0, 0, 0);
-            setRGB2(poly, 0, 0x80, 0);
-            setRGB3(poly, 0, 0, 0);
+            setRGB0(glowPoly, 0, 0x80, 0);
+            setRGB1(glowPoly, 0, 0, 0);
+            setRGB2(glowPoly, 0, 0x80, 0);
+            setRGB3(glowPoly, 0, 0, 0);
 
-            setXY4(poly,
-                   quads[j][i].vertex0_0.vx + (g_SlotSelectedIdx * SLOT_COLUMN_OFFSET), quads[j][i].vertex0_0.vy,
-                   quads[j][i].vertex1_4.vx + (g_SlotSelectedIdx * SLOT_COLUMN_OFFSET), quads[j][i].vertex1_4.vy,
-                   quads[j][i].vertex2_8.vx + (g_SlotSelectedIdx * SLOT_COLUMN_OFFSET), quads[j][i].vertex2_8.vy,
-                   quads[j][i].vertex3_C.vx + (g_SlotSelectedIdx * SLOT_COLUMN_OFFSET), quads[j][i].vertex3_C.vy);
+            setXY4(glowPoly,
+                   borderGlowQuads[j][i].vertex0_0.vx + (g_SlotSelectedIdx * SLOT_COLUMN_OFFSET), borderGlowQuads[j][i].vertex0_0.vy,
+                   borderGlowQuads[j][i].vertex1_4.vx + (g_SlotSelectedIdx * SLOT_COLUMN_OFFSET), borderGlowQuads[j][i].vertex1_4.vy,
+                   borderGlowQuads[j][i].vertex2_8.vx + (g_SlotSelectedIdx * SLOT_COLUMN_OFFSET), borderGlowQuads[j][i].vertex2_8.vy,
+                   borderGlowQuads[j][i].vertex3_C.vx + (g_SlotSelectedIdx * SLOT_COLUMN_OFFSET), borderGlowQuads[j][i].vertex3_C.vy);
 
-            addPrim((u8*)ot->org + 28, poly);
-            GsOUT_PACKET_P = (u8*)poly + sizeof(POLY_G4);
+            addPrim((u8*)ot->org + LAYER, glowPoly);
+            GsOUT_PACKET_P = (u8*)glowPoly + sizeof(POLY_G4);
         }
     }
 
@@ -851,14 +870,14 @@ void Gfx_MemSelectedBarDraw() // 0x801E4010
 void func_801E43C8(s32 slotIdx) // 0x801E43C8
 {
     GsOT*    ot;
-    s16      time;
+    s16      colorTimer;
     s32      temp;
     s8       color;
     POLY_F4* poly;
 
-    temp = ((u8)g_SysWork.timer_1C) & 0x3F;
-    time = temp;
-    ot   = &g_ObjectTable1[g_ObjectTableIdx];
+    temp       = ((u8)g_SysWork.timer_1C) & 0x3F;
+    colorTimer = temp;
+    ot         = &g_ObjectTable1[g_ObjectTableIdx];
 
     if (g_SlotSelectedIdx == slotIdx)
     {
@@ -866,14 +885,14 @@ void func_801E43C8(s32 slotIdx) // 0x801E43C8
         setlen(poly, 5);
         setcode(poly, 0x2A);
 
-        if ((u16)time < 32)
+        if ((u16)colorTimer < 32)
         {
-            color = (time * 2) + 32;
+            color = (colorTimer * 2) + 32;
             setRGB0(poly, color, color, 32);
         }
         else
         {
-            color = 96 - ((time - 32) * 2);
+            color = 96 - ((colorTimer - 32) * 2);
             setRGB0(poly, color, color, 32);
         }
 
@@ -888,8 +907,7 @@ void func_801E43C8(s32 slotIdx) // 0x801E43C8
     }
 }
 
-// `Gfx_SaveSlotBoxGraphicsDraw` might be more fitting?
-void Gfx_SavesTransparentBgDraw(s32 slotIdx, s32 saveCount, s32 selectedSaveIdx, s32 selectedSaveOffsetY) // 0x801E451C
+void Gfx_SaveSlotBoxDraw(s32 slotIdx, s32 saveCount, s32 selectedSaveIdx, s32 selectedSaveOffsetY) // 0x801E451C
 {
     #define SCROLL_BAR_THUMB_RECT_COUNT 2
     #define SCROLL_BAR_ARROW_COUNT      2
@@ -897,15 +915,31 @@ void Gfx_SavesTransparentBgDraw(s32 slotIdx, s32 saveCount, s32 selectedSaveIdx,
     #define LAYER_BASE_0                28
     #define LAYER_BASE_1                32
 
+    GsOT*    ot;
+    POLY_F4* thumbPoly;
+    POLY_F4* highlightPoly;
+    POLY_G4* trackPoly;
+    POLY_G3* arrowPoly;
+    POLY_F4* unkPoly;
+    s32      trackOffsetX;
+    s32      thumbOffsetY;
+    s32      thumbOffsetTopY;
+    u32      thumbOffsetBottomY;
+    s32      thumbOffsetX;
+    s32      arrowOffsetX;
+    u8       highlightColor;
+    s32      i;
+    s32      j;
+
     u32 selectedSaveHighlightTimer = (u8)g_SysWork.timer_1C & 0x3F;
 
-    s_Quad2d scrollBarTrack[] =
+    s_Quad2d scrollBarTrackQuads[] =
     {
         { { 0, 0 }, { 0, 96 }, { 4, 0 }, { 4, 96 } }, // Left half.
         { { 8, 0 }, { 8, 96 }, { 4, 0 }, { 4, 96 } }  // Right half.
     };
 
-    s_Triangle2d scrollBarArrows[MEMORY_CARD_SLOT_COUNT][SCROLL_BAR_ARROW_COUNT] =
+    s_Triangle2d scrollBarArrowTris[MEMORY_CARD_SLOT_COUNT][SCROLL_BAR_ARROW_COUNT] =
     {
         // Up arrows.
         {
@@ -919,8 +953,7 @@ void Gfx_SavesTransparentBgDraw(s32 slotIdx, s32 saveCount, s32 selectedSaveIdx,
         }
     };
 
-    // Height offsets of some kind.
-    u8 D_801E2B88[] =
+    u8 thumbOffsetsY[] =
     {
         79, 40, 27, 20, 16, 14, 12, 10,
         9, 8, 8, 7, 7, 6, 6, 5,
@@ -945,22 +978,6 @@ void Gfx_SavesTransparentBgDraw(s32 slotIdx, s32 saveCount, s32 selectedSaveIdx,
         0, 0, 0, 0, 0
     };
 
-    GsOT*    ot;
-    POLY_F4* thumbPoly;
-    POLY_F4* selectedSaveHighlightPoly;
-    POLY_G4* trackPoly;
-    POLY_G3* arrowPoly;
-    POLY_F4* unkPoly;
-    s32      trackOffsetX;
-    s32      thumbOffsetY;
-    s32      thumbOffsetTopY;
-    u32      thumbOffsetBottomY;
-    s32      thumbOffsetX;
-    s32      arrowOffsetX;
-    u8       highlightColor;
-    s32      i;
-    s32      j;
-
     ot = &g_ObjectTable1[g_ObjectTableIdx];
 
     if (g_DisplaySaveDataInfo == 1 && slotIdx == g_SlotSelectedIdx)
@@ -972,7 +989,7 @@ void Gfx_SavesTransparentBgDraw(s32 slotIdx, s32 saveCount, s32 selectedSaveIdx,
     if (saveCount != 0)
     {
         thumbOffsetY       = ((selectedSaveIdx * 79) / saveCount) + 8;
-        thumbOffsetBottomY = D_801E2B88[saveCount - 1];
+        thumbOffsetBottomY = thumbOffsetsY[saveCount - 1];
 
         // Inner and outer rectangles.
         for (i = 0; i < SCROLL_BAR_THUMB_RECT_COUNT; i++)
@@ -995,10 +1012,10 @@ void Gfx_SavesTransparentBgDraw(s32 slotIdx, s32 saveCount, s32 selectedSaveIdx,
             thumbOffsetX    = (slotIdx * SLOT_COLUMN_OFFSET) - 139;
             thumbOffsetTopY = i - SCROLL_BAR_OFFSET_Y;
             setXY4(thumbPoly,
-                   (scrollBarTrack[0].vertex0_0.vx + thumbOffsetX) + i,  (scrollBarTrack[0].vertex0_0.vy + thumbOffsetY) + thumbOffsetTopY,
-                   (scrollBarTrack[0].vertex0_0.vx + thumbOffsetX) + i, ((scrollBarTrack[0].vertex0_0.vy + thumbOffsetY) + thumbOffsetBottomY) - (i + SCROLL_BAR_OFFSET_Y),
-                   (scrollBarTrack[1].vertex0_0.vx + thumbOffsetX) - i,  (scrollBarTrack[1].vertex0_0.vy + thumbOffsetY) + thumbOffsetTopY,
-                   (scrollBarTrack[1].vertex0_0.vx + thumbOffsetX) - i, ((scrollBarTrack[1].vertex0_0.vy + thumbOffsetY) + thumbOffsetBottomY) - (i + SCROLL_BAR_OFFSET_Y));
+                   (scrollBarTrackQuads[0].vertex0_0.vx + thumbOffsetX) + i,  (scrollBarTrackQuads[0].vertex0_0.vy + thumbOffsetY) + thumbOffsetTopY,
+                   (scrollBarTrackQuads[0].vertex0_0.vx + thumbOffsetX) + i, ((scrollBarTrackQuads[0].vertex0_0.vy + thumbOffsetY) + thumbOffsetBottomY) - (i + SCROLL_BAR_OFFSET_Y),
+                   (scrollBarTrackQuads[1].vertex0_0.vx + thumbOffsetX) - i,  (scrollBarTrackQuads[1].vertex0_0.vy + thumbOffsetY) + thumbOffsetTopY,
+                   (scrollBarTrackQuads[1].vertex0_0.vx + thumbOffsetX) - i, ((scrollBarTrackQuads[1].vertex0_0.vy + thumbOffsetY) + thumbOffsetBottomY) - (i + SCROLL_BAR_OFFSET_Y));
 
             // Ensure inner rectangle is on top.
             addPrim(((u8*)ot->org + LAYER_BASE_0) - (i * 4), thumbPoly);
@@ -1009,29 +1026,29 @@ void Gfx_SavesTransparentBgDraw(s32 slotIdx, s32 saveCount, s32 selectedSaveIdx,
     // Draw selected save highlight.
     if (g_SlotSelectedIdx == slotIdx)
     {
-        selectedSaveHighlightPoly = (POLY_F4*)GsOUT_PACKET_P;
-        setlen(selectedSaveHighlightPoly, 5);
-        setcode(selectedSaveHighlightPoly, 0x2A);
+        highlightPoly = (POLY_F4*)GsOUT_PACKET_P;
+        setlen(highlightPoly, 5);
+        setcode(highlightPoly, 0x2A);
 
         // Fade in and out.
         if (selectedSaveHighlightTimer < 0x20u)
         {
             highlightColor = (selectedSaveHighlightTimer * 2) + 0x20;
-            setRGB0(selectedSaveHighlightPoly, highlightColor, highlightColor, 0x20);
+            setRGB0(highlightPoly, highlightColor, highlightColor, 0x20);
         }
         else
         {
             highlightColor = 0x60 - ((selectedSaveHighlightTimer - 0x20) * 2);
-            setRGB0(selectedSaveHighlightPoly, highlightColor, highlightColor, 0x20);
+            setRGB0(highlightPoly, highlightColor, highlightColor, 0x20);
         }
 
-        setXY4(selectedSaveHighlightPoly,
+        setXY4(highlightPoly,
                (slotIdx * SLOT_COLUMN_OFFSET) - 130, (selectedSaveOffsetY * SLOT_ROW_OFFSET) - 62,
                (slotIdx * SLOT_COLUMN_OFFSET) - 130, (selectedSaveOffsetY * SLOT_ROW_OFFSET) - 43,
                (slotIdx * SLOT_COLUMN_OFFSET) - 10,  (selectedSaveOffsetY * SLOT_ROW_OFFSET) - 62,
                (slotIdx * SLOT_COLUMN_OFFSET) - 10,  (selectedSaveOffsetY * SLOT_ROW_OFFSET) - 43);
-        addPrim((u8*)ot->org + LAYER_BASE_0, selectedSaveHighlightPoly);
-        GsOUT_PACKET_P = (u8*)selectedSaveHighlightPoly + sizeof(POLY_F4);
+        addPrim((u8*)ot->org + LAYER_BASE_0, highlightPoly);
+        GsOUT_PACKET_P = (u8*)highlightPoly + sizeof(POLY_F4);
         func_80052088(0, 0, 7, 1);
     }
 
@@ -1049,9 +1066,9 @@ void Gfx_SavesTransparentBgDraw(s32 slotIdx, s32 saveCount, s32 selectedSaveIdx,
 
             arrowOffsetX = (slotIdx * SLOT_COLUMN_OFFSET) - 139;
             setXY3(arrowPoly,
-                   scrollBarArrows[i][j].vertex0_0.vx + arrowOffsetX, scrollBarArrows[i][j].vertex0_0.vy - SCROLL_BAR_OFFSET_Y,
-                   scrollBarArrows[i][j].vertex1_4.vx + arrowOffsetX, scrollBarArrows[i][j].vertex1_4.vy - SCROLL_BAR_OFFSET_Y,
-                   scrollBarArrows[i][j].vertex2_8.vx + arrowOffsetX, scrollBarArrows[i][j].vertex2_8.vy - SCROLL_BAR_OFFSET_Y);
+                   scrollBarArrowTris[i][j].vertex0_0.vx + arrowOffsetX, scrollBarArrowTris[i][j].vertex0_0.vy - SCROLL_BAR_OFFSET_Y,
+                   scrollBarArrowTris[i][j].vertex1_4.vx + arrowOffsetX, scrollBarArrowTris[i][j].vertex1_4.vy - SCROLL_BAR_OFFSET_Y,
+                   scrollBarArrowTris[i][j].vertex2_8.vx + arrowOffsetX, scrollBarArrowTris[i][j].vertex2_8.vy - SCROLL_BAR_OFFSET_Y);
 
             addPrim((u8*)ot->org + LAYER_BASE_0, arrowPoly);
             GsOUT_PACKET_P = (u8*)arrowPoly + sizeof(POLY_G3);
@@ -1071,16 +1088,16 @@ void Gfx_SavesTransparentBgDraw(s32 slotIdx, s32 saveCount, s32 selectedSaveIdx,
 
         trackOffsetX = (slotIdx * SLOT_COLUMN_OFFSET) - 139;
         setXY4(trackPoly,
-               scrollBarTrack[i].vertex0_0.vx + trackOffsetX, scrollBarTrack[i].vertex0_0.vy - SCROLL_BAR_OFFSET_Y,
-               scrollBarTrack[i].vertex1_4.vx + trackOffsetX, scrollBarTrack[i].vertex1_4.vy - SCROLL_BAR_OFFSET_Y,
-               scrollBarTrack[i].vertex2_8.vx + trackOffsetX, scrollBarTrack[i].vertex2_8.vy - SCROLL_BAR_OFFSET_Y,
-               scrollBarTrack[i].vertex3_C.vx + trackOffsetX, scrollBarTrack[i].vertex3_C.vy - SCROLL_BAR_OFFSET_Y);
+               scrollBarTrackQuads[i].vertex0_0.vx + trackOffsetX, scrollBarTrackQuads[i].vertex0_0.vy - SCROLL_BAR_OFFSET_Y,
+               scrollBarTrackQuads[i].vertex1_4.vx + trackOffsetX, scrollBarTrackQuads[i].vertex1_4.vy - SCROLL_BAR_OFFSET_Y,
+               scrollBarTrackQuads[i].vertex2_8.vx + trackOffsetX, scrollBarTrackQuads[i].vertex2_8.vy - SCROLL_BAR_OFFSET_Y,
+               scrollBarTrackQuads[i].vertex3_C.vx + trackOffsetX, scrollBarTrackQuads[i].vertex3_C.vy - SCROLL_BAR_OFFSET_Y);
 
         addPrim((u8*)ot->org + LAYER_BASE_1, trackPoly);
         GsOUT_PACKET_P = (u8*)trackPoly + sizeof(POLY_G4);
     }
 
-    // Draw (???).
+    // Draw transparent background.
     unkPoly = (POLY_F4*)GsOUT_PACKET_P;
     setlen(unkPoly, 5);
     setcode(unkPoly, 0x2A);
