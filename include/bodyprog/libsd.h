@@ -56,6 +56,13 @@ enum SMF_MIDI_STAT
     SD_MIDI_EXP  = 5
 };
 
+enum SMF_FILE_MODE
+{
+    SEQ_MODE = 0,
+    SMF_MODE = 1,
+    KDT_MODE = 2
+};
+
 typedef struct SD_Vab_H
 {
     VabHdr  vab_h;
@@ -119,7 +126,7 @@ typedef struct Smf_Song
     u8*   mf_data_ptr2_500;
     u8*   mf_data_ptr_504;
     s16   sd_seq_vab_id_508;
-    s16   sd_seq_stat_50A; /** SMF_STAT enum */
+    s16   sd_seq_stat_50A; /** `SMF_STAT` enum */
     s16   sd_seq_mvoll_50C;
     s16   sd_seq_mvolr_50E;
     u32   sd_seq_track_mute_510;
@@ -131,7 +138,7 @@ typedef struct Smf_Song
     u16   mf_tracks_526;
     u16   mf_division_528;
     u16   mf_head_len_52A;
-    u8    smf_seq_flag_52C;
+    u8    smf_seq_flag_52C; /** `SMF_FILE_MODE` enum */
     u8    loop_start_flag_52D;
     u8    smf_beat_stat_52E;
     u8    smf_control_stat_52F;
@@ -463,7 +470,7 @@ u8   readtrack(SMF* p);
 u8   readtrack2(SMF* p);
 s32  track_head_read(SMF* p);
 void delta_time_conv(SMF* p);
-void midi_file_out(s16 file_no);
+u8   midi_file_out(s32 file_no);
 u8   midi_smf_main();
 void midi_smf_stop(s32 access_value);
 s16  midi_smf_stat(s32 access_no); /** Returns SMF_STAT. */

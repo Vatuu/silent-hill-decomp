@@ -186,7 +186,7 @@ s32 readheader(s32 file_no) // 0x800A7428
     tmpp = 0;
     switch (smf_song[smf_file_no].smf_seq_flag_52C)
     {
-        case 1:
+        case SMF_MODE:
             loc = readMThd(0U);
             if (loc == -1)
             {
@@ -228,7 +228,7 @@ s32 readheader(s32 file_no) // 0x800A7428
             }
             break;
 
-        case 0:
+        case SEQ_MODE:
             p->mf_data_loc_0 = 8;
 
             smf_song[file_no].mf_division_528  = read16bit(p);
@@ -264,7 +264,7 @@ s32 readheader(s32 file_no) // 0x800A7428
             egetc(p);
             break;
 
-        case 2:
+        case KDT_MODE:
             seqh = smf_song[file_no].mf_data_ptr_504;
 
             smf_song[file_no].mf_division_528 = seqh->tb_8;
@@ -312,7 +312,7 @@ void metaevent(SMF* p, u8 type)
             break;
 
         case 0x51:
-            if (smf_song[smf_file_no].smf_seq_flag_52C == 1)
+            if (smf_song[smf_file_no].smf_seq_flag_52C == SMF_MODE)
             {
                 tempo = read32bit(p) & 0xFFFFFF;
             }
@@ -442,7 +442,7 @@ void chanmessage(SMF* p, u8 status, u8 c1, u8 c2) // 0x800A7B54
             {
                 if (c2 == 0x14)
                 {
-                    if (smf_song[smf_file_no].smf_seq_flag_52C == 2)
+                    if (smf_song[smf_file_no].smf_seq_flag_52C == KDT_MODE)
                     {
                         smf_song[smf_file_no].loop_start_flag_52D = smf_song[smf_file_no].smf_seq_flag_52C;
                     }
@@ -472,7 +472,7 @@ void chanmessage(SMF* p, u8 status, u8 c1, u8 c2) // 0x800A7B54
                 {
                     if (c2 == 0x1E)
                     {
-                        if (smf_song[smf_file_no].smf_seq_flag_52C == 2)
+                        if (smf_song[smf_file_no].smf_seq_flag_52C == KDT_MODE)
                         {
                             smf_song[smf_file_no].loop_start_flag_52D = 1;
                         }
@@ -748,7 +748,108 @@ void delta_time_conv(SMF* p) // 0x800A84B0
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_mid", midi_file_out);
+u8 midi_file_out(s32 file_no) // 0x800A8674
+{
+    Seqhdr* seqh;
+    u32     loc;
+    s32     tr;
+    SMF*    p;
+
+    loc = 0;
+
+    time_flag = 0;
+
+    smf_song[file_no].smf_seq_flag_52C = SMF_MODE;
+
+    if (smf_song[file_no].mf_data_ptr_504[0] == 'p')
+    {
+        smf_song[file_no].smf_seq_flag_52C = SEQ_MODE;
+    }
+    else if (smf_song[file_no].mf_data_ptr_504[0] == 'K')
+    {
+        smf_song[file_no].smf_seq_flag_52C = KDT_MODE;
+    }
+
+    smf_file_no = file_no;
+
+    readheader(file_no);
+
+    switch (smf_song[file_no].smf_seq_flag_52C)
+    {
+        case 0:
+        case 1:
+            for (tr = 0; tr < smf_song[file_no].mf_tracks_526; tr++)
+            {
+                p = &smf_song[file_no].tracks_0[tr];
+
+                if (smf_song[file_no].smf_seq_flag_52C == 1)
+                {
+                    p->mf_data_loc_0 = loc + 1;
+                    p->mf_tempo2_16  = 104;
+                    p->mf_tempo_14   = 104;
+                    track_head_read(p);
+                    loc = p->mf_data_loc_0;
+                }
+
+                p->mf_loop_point_4        = p->mf_data_loc_0;
+                p->mf_delta_time_1C       = readvarinum(p);
+                p->mf_eof_flag_20         = 0;
+                p->ti_flag_23             = 0;
+                p->status_value_25        = 0;
+                p->running_status_flag_24 = 0;
+                p->time_hosei_18          = 0;
+
+                if (time_flag != 0)
+                {
+                    delta_time_conv(p);
+                }
+            }
+            break;
+        case 2:
+            seqh = (Seqhdr*)smf_song[file_no].mf_data_ptr_504;
+
+            if (seqh->form_0[3] == '1')
+            {
+                loc = (smf_song[file_no].mf_tracks_526 * 2) + 0x10;
+            }
+            else
+            {
+                loc = 0x50;
+            }
+
+            for (tr = 0; tr < smf_song[file_no].mf_tracks_526; tr++)
+            {
+                p = &smf_song[file_no].tracks_0[tr];
+
+                p->mf_data_loc_0     = loc;
+                p->mf_track_length_8 = seqh->tr_size_10[tr];
+
+                loc += p->mf_track_length_8;
+
+                p->mf_tempo2_16 = 104;
+                p->mf_tempo_14  = 104;
+
+                p->mf_loop_point_4  = p->mf_data_loc_0;
+                p->mf_repeat_ptr_10 = p->mf_loop_point_4;
+                p->mf_track_size_C  = p->mf_data_loc_0 + p->mf_track_length_8;
+
+                p->mf_delta_time_1C       = readvarinum(p);
+                p->mf_eof_flag_20         = 0;
+                p->ti_flag_23             = 0;
+                p->status_value_25        = 0;
+                p->running_status_flag_24 = 0;
+                p->time_hosei_18          = 0;
+
+                if (time_flag != 0)
+                {
+                    delta_time_conv(p);
+                }
+            }
+            break;
+    }
+
+    return 0;
+}
 
 // TODO: goto jumps below which I'm not sure how to remove yet, maybe code actually included them.
 u8 midi_smf_main()
@@ -791,7 +892,7 @@ u8 midi_smf_main()
                         {
                             while (true)
                             {
-                                if (s->smf_seq_flag_52C != 2)
+                                if (s->smf_seq_flag_52C != KDT_MODE)
                                 {
                                     readtrack(p);
                                     goto block_12;
@@ -831,7 +932,7 @@ u8 midi_smf_main()
                 }
             }
 
-            if (s->smf_seq_flag_52C == 2 && s->loop_start_flag_52D != 0)
+            if (s->smf_seq_flag_52C == KDT_MODE && s->loop_start_flag_52D != 0)
             {
                 for (tr = 0; tr < s->mf_tracks_526; tr++)
                 {
