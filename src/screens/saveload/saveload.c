@@ -1520,10 +1520,10 @@ void Gfx_SaveDataInfoDraw(s32 arg0, s32 elementIdx) // 0x801E5E18
 
         timeInSec = FP_FROM(ptr->gameplayTimer_4, Q12_SHIFT);
 
-        offset = ptr->add290Hours_C;
+        offset = ptr->add290Hours_B_1;
         hours  = (timeInSec / 3600) + offset * 290;
 
-        flags = ptr->hyperBlasterFlags_E;
+        flags = ptr->hyperBlasterFlags_B_3;
 
         mins = (timeInSec / 60) % 60;
         sec = timeInSec % 60;
@@ -1732,12 +1732,12 @@ void Savegame_ScreenLogic() // 0x801E649C
 
                 if (D_800BCD38 == 2) 
                 {
-                    if (selectedSaveInfoPtr->field_0 == 0x7B70)
+                    if (selectedSaveInfoPtr->totalSavegameCount_0 == 0x7B70)
                     {
                         D_801E753C = 1;
                     }
 
-                    if ((u16)(selectedSaveInfoPtr->field_0 - 1) < 0x797B)
+                    if ((u16)(selectedSaveInfoPtr->totalSavegameCount_0 - 1) < 0x797B)
                     {
                         g_IsSaveSelected = 1;
                     }
@@ -1943,8 +1943,8 @@ void Savegame_SaveLogic() // 0x801E6B18
             D_801E76D5 = saveEntry->isNextFearMode_B;
 
             saveEntry->isNextFearMode_B    = g_SavegamePtr->isNextFearMode_25C;
-            saveEntry->add290Hours_C       = g_SavegamePtr->add290Hours_25C_1;
-            saveEntry->hyperBlasterFlags_E = g_SavegamePtr->hyperBlasterFlags_25C_3;
+            saveEntry->add290Hours_B_1     = g_SavegamePtr->add290Hours_25C_1;
+            saveEntry->hyperBlasterFlags_B_3 = g_SavegamePtr->hyperBlasterFlags_25C_3;
 
             func_8002E94C(5, D_800BCD40, g_SelectedFileIdx, g_SelectedSaveIdx);
             g_GameWork.gameStateStep_598[1]++;
@@ -2128,7 +2128,7 @@ void Gfx_SaveScreen() // 0x801E70C8
         // Run through savegame entries.
         for (j = 0; j < (s32)g_SlotElementCounts[i]; j++)
         {
-            if (g_CurSavegameEntry->field_0 >= 0)
+            if (g_CurSavegameEntry->totalSavegameCount_0 >= 0)
             {
                 Gfx_SaveSlotDrawFileString(j, i, g_CurSavegameEntry->fileIdx_6 + 1, g_CurSavegameEntry->elementType_4);
             }

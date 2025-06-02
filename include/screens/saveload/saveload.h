@@ -39,13 +39,13 @@ typedef enum _SlotElementType
 
 typedef struct _SavegameMetadata
 {
-    s32 unk_0;                    // Same behaviour as `field_0` in `s_SavegameEntry`.
+    s32 unk_0;                    // Same behaviour as `totalSavegameCount_0` in `s_SavegameEntry`.
     u32 gameplayTimer_4;
     u16 savegameCount_8;
     s8  locationId_A;
-    u8  isNextFearMode_B    : 1;
-    u8  add290Hours_C       : 2;
-    u8  hyperBlasterFlags_E : 5;
+    u8  isNextFearMode_B      : 1;
+    u8  add290Hours_B_1       : 2;
+    u8  hyperBlasterFlags_B_3 : 5;
 } s_SavegameMetadata; // Possible size is 12 bytes.
 
 typedef struct _SavegameEntry
@@ -66,7 +66,7 @@ typedef struct _SavegameEntry
      * card and then saves to slot 1, the value will
      * be 2 instead of 3.
      */
-    s16              field_0;
+    s16              totalSavegameCount_0;
     s16              savegameCount_2;
     s8               elementType_4;     /** `e_SlotElementType` */
     s8               field_5;           // The value changes between 0 when the first save slot is selected and 4 when the second is selected.
