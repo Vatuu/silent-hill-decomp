@@ -191,7 +191,7 @@ GameState_MainMenu_Update = 0x8003AB28; // type:func
 GameState_MainLoadScreen_Update = 0x800348E8; // type:func
 GameState_InGame_Update = 0x80038BD4; // type:func
 GameState_MapEvent_Update = 0x8003AA4C; // type:func
-GameState_StatusScreen_Update = 0x8004C9B0; // type:func
+GameState_InventoryScreen_Update = 0x8004C9B0; // type:func
 GameState_MapScreen_Update = 0x80066EB0; // type:func
 GameState_LoadStatusScreen_Update = 0x800395C0; // type:func
 GameState_LoadMapScreen_Update = 0x8003991C; // type:func
@@ -241,6 +241,11 @@ Gfx_BackgroundSpriteDraw = 0x800314EC; // type:func
 Gfx_DebugStringPosition = 0x80031EFC; // type:func
 Gfx_DebugStringDraw = 0x80031F40; // type:func
 Math_IntegerToString = 0x80032154; // type:func
+
+Gfx_Inventory_CmdOptions = 0x8004E864; // type:func
+Gfx_Inventory_HealthStatusDraw = 0x80051020; // type:func
+Gfx_Inventory_ItemDescription = 0x8005192C; // type:func
+//GameFs_Inventory_ItemModelsLoad = 0x80054024; // type:func
 
 Gfx_ClearRectInterlaced = 0x80032358; // type:func
 Gfx_Init = 0x80032428; // type:func

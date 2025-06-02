@@ -66,7 +66,7 @@ segments:
       - [0x1158, rodata]
       - [0x11C4, .rodata, bodyprog_CD_80047D50] # Jumptable: `func_800482D8`
       - [0x11D8, rodata]
-      - [0x3938, .rodata, bodyprog_8004A87C] # Jumptable
+      - [0x3938, .rodata, bodyprog_80053B08] # Jumptable
       - [0x39C4, rodata]
       - [0x5CF0, .rodata, view/vc_main] # Jumptable: `vcRetFarWatchRate`
       - [0x5D08, .rodata, view/vc_main] # Jumptable: `vcSetFlagsByCamMvType`
@@ -95,6 +95,8 @@ segments:
       - [0x23ed8,   c, view/vw_main]
       - [0x243c8,   c, view/vw_calc] # Contains part of SH2's `vb_main`?
       - [0x25d1c,   c, bodyprog_8004A87C]
+      - [0x278FC,   c, inventory_main]
+      - [0x2EFA8,   c, bodyprog_80053B08]
       - [0x5bde0,   c, view/vc_main]
       - [0x61218,   c, bodyprog_80085D78]
       - [0x6A3C0,   c, demo]

@@ -1051,9 +1051,7 @@ void func_80087540(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x800875
     }
 }
 
-// TODO: Something wrong with references to `D_800C9644` and `D_800C9644`.
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800877B8);
-/*void func_800877B8(s32 arg0, s32 arg1, s32 arg2, s32 arg3)
+void func_800877B8(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x800877B8
 {
     s32 i   = arg0;
     s32 var = arg3;
@@ -1081,7 +1079,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800877B8);
     switch (g_SysWork.field_10)
     {
         case 0:
-            D_800C9644(i);
+            g_MapOverlayHeader.func_C8();
             func_80086470(0, arg0, 0, 0);
 
             g_SysWork.timer_2C = 0;
@@ -1113,7 +1111,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800877B8);
                 g_SavegamePtr->eventFlags_168[arg2 >> 5] &= ~(1 << (arg2 & 0x1F));
             }
 
-            D_800C9648(0);
+            g_MapOverlayHeader.func_CC(0);
             g_SysWork.sysState_8     = 0;
             g_SysWork.timer_24       = 0;
             g_SysWork.sysStateStep_C = 0;
@@ -1123,7 +1121,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800877B8);
             g_SysWork.field_14       = 0;
             break;
     }
-}*/
+}
 
 void func_800879FC(u32 arg0, s32 arg1) // 0x800879FC
 {
@@ -1195,9 +1193,9 @@ void func_800879FC(u32 arg0, s32 arg1) // 0x800879FC
     }
 }
 
-// TODO: Jumptable added, but errors still occur.
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80087AF4);
-/*void func_80087AF4(s32 mapFlagIdx, s32 eventFlagIdx, s32 arg2) // 0x80087AF4
+// TODO: RODATA migration.
+#ifdef NON_MATCHING
+void func_80087AF4(s32 mapFlagIdx, s32 eventFlagIdx, s32 arg2) // 0x80087AF4
 {
     s32 mapFlagIdxCpy;
 
@@ -1207,7 +1205,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80087AF4);
     switch (g_SysWork.field_10)
     {
         case 0:
-            D_800C9644(mapFlagIdxCpy);
+            g_MapOverlayHeader.func_C8();
             Fs_QueueStartSeek(D_800A99B4[mapFlagIdx] + 0x768);
 
             g_SysWork.timer_2C = 0;
@@ -1293,7 +1291,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80087AF4);
             DrawSync(0);
             Gfx_Init(0x140, 0);
             func_8008616C(0, 0, 0, 0, 0);
-            D_800C9648(0);
+            g_MapOverlayHeader.func_CC(0);
 
             g_SysWork.sysState_8     = 0;
             g_SysWork.timer_24       = 0;
@@ -1304,7 +1302,10 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80087AF4);
             g_SysWork.field_14       = 0;
             break;
     }
-}*/
+}
+#else
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80087AF4); // 0x80087AF4
+#endif
 
 void func_80087EA8(s32 arg0) // 0x80087EA8
 {

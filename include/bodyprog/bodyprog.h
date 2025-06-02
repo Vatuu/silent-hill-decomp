@@ -810,7 +810,11 @@ extern s_FsImageDesc D_800A904C;
 
 extern s_FsImageDesc D_800A9054;
 
+extern s_FsImageDesc D_800A9064;
+
 extern s_FsImageDesc D_800A906C;
+
+extern s_FsImageDesc D_800A9074;
 
 extern s_FsImageDesc D_800A9094; // Used in `Ai_Twinfeeler_TextureLoad` to load `TEST/WARMTEST.TIM`.
 
@@ -1214,10 +1218,6 @@ extern RECT D_801E557C[];
 
 extern s32 g_MainLoop_FrameCount; // 0x800B9CCC
 
-extern void (*D_800C9644)(s32);
-
-extern void (*D_800C9648)(s32);
-
 extern s32 g_Demo_DemoFileIdx; // 0x800C4840
 
 extern s32 g_Demo_PlayFileIdx; // 0x800C4844
@@ -1585,7 +1585,7 @@ s32 func_8004C4F8();
 
 void func_8004C8DC();
 
-void func_80054024(s8);
+void func_80054024(s32);
 
 void func_800540A4(s8);
 

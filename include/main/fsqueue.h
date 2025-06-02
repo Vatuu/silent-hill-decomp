@@ -14,6 +14,7 @@
 #define FS_BUFFER_5 (void*)0x801E3600 // Used in `b_konami.c`.
 #define FS_BUFFER_6 (void*)0x801E4600 // Used in `b_konami.c`.
 #define FS_BUFFER_7 (void*)0x801C2600 // Used in `b_konami.c`.
+#define FS_BUFFER_8 (void*)0x801B5E80 // Used for loading inventory item models.
 
 #define IMAGE_BUFFER (u_long*)0x801AFA00
 
