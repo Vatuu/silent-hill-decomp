@@ -217,27 +217,27 @@ void func_80053B08(s32 itemId) // 0x80053B08
             Fs_QueueStartRead(FILE_ITEM_UNQ79_TMD, FS_BUFFER_5);
             break;
 
-        case InventoryItemId_Unk7A:
+        case InventoryItemId_StoneOfTime:
             Fs_QueueStartRead(FILE_ITEM_UNQ7A_TMD, FS_BUFFER_5);
             break;
 
-        case InventoryItemId_Unk7B:
+        case InventoryItemId_AmuletOfSolomon:
             Fs_QueueStartRead(FILE_ITEM_UNQ7B_TMD, FS_BUFFER_5);
             break;
 
-        case InventoryItemId_Unk7C:
+        case InventoryItemId_CrestOfMercury:
             Fs_QueueStartRead(FILE_ITEM_UNQ7C_TMD, FS_BUFFER_5);
             break;
 
-        case InventoryItemId_Unk7D:
+        case InventoryItemId_Ankh:
             Fs_QueueStartRead(FILE_ITEM_UNQ7D_TMD, FS_BUFFER_5);
             break;
 
-        case InventoryItemId_Unk7E:
+        case InventoryItemId_DaggerOfMelchior:
             Fs_QueueStartRead(FILE_ITEM_UNQ7E_TMD, FS_BUFFER_5);
             break;
 
-        case InventoryItemId_Unk7F:
+        case InventoryItemId_DiskOfOuroboros:
             Fs_QueueStartRead(FILE_ITEM_UNQ7F_TMD, FS_BUFFER_5);
             break;
 
