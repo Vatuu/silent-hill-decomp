@@ -78,6 +78,16 @@ typedef struct Vab_h
 } VAB_H;
 STATIC_ASSERT_SIZEOF(VAB_H, 28);
 
+typedef struct
+{
+    u8  form_0[4];
+    u32 size_4;
+    u32 tb_8;
+    u32 tracks_C;
+    u16 tr_size_10[32];
+} Seqhdr;
+STATIC_ASSERT_SIZEOF(Seqhdr, 80);
+
 typedef struct SMF_data
 {
     u32 mf_data_loc_0;
@@ -440,11 +450,11 @@ s32 egetc(SMF* p);
 s32 readvarinum(SMF* p);
 
 // `to32bit`/`to16bit`/`len_add` only seem used inside `smf_mid.c`, can probably be removed from header.
-s32 to32bit(char c1, char c2, char c3, char c4);
-s32 to16bit(char c1, char c2);
-s32 read32bit(SMF* p);
-s32 read16bit(SMF* p);
-
+s32  to32bit(char c1, char c2, char c3, char c4);
+s32  to16bit(char c1, char c2);
+s32  read32bit(SMF* p);
+s32  read16bit(SMF* p);
+s32  readheader(s32 file_no);
 void len_add(SMF* p, s32 len);
 void metaevent(SMF* p, u8 type);
 void sysex(SMF* p);

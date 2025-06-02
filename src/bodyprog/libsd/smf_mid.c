@@ -164,7 +164,134 @@ s32 read16bit(SMF* p) // 0x800A73E8
     return to16bit(c1, c2) & 0xFFFF;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_mid", readheader);
+s32 readheader(s32 file_no) // 0x800A7428
+{
+    Seqhdr* seqh;
+    SMF*    p;
+    s32     tmpp;
+    u32     loc;
+    u32     tempo;
+    s32     tr;
+
+    p = &smf_song[file_no].tracks_0[0];
+
+    smf_file_no = file_no;
+
+    smf_song[smf_file_no].loop_start_flag_52D  = 0;
+    smf_song[smf_file_no].mf_seq_beat_51C      = 0;
+    smf_song[smf_file_no].smf_beat_stat_52E    = 0x10;
+    smf_song[smf_file_no].smf_control_stat_52F = 0;
+    smf_song[smf_file_no].mf_seq_beat_wk_520   = 0;
+
+    tmpp = 0;
+    switch (smf_song[smf_file_no].smf_seq_flag_52C)
+    {
+        case 1:
+            loc = readMThd(0U);
+            if (loc == -1)
+            {
+                return 0;
+            }
+
+            p->mf_data_loc_0 = loc;
+
+            smf_song[file_no].mf_head_len_52A = read32bit(p);
+            smf_song[file_no].mf_format_524   = read16bit(p);
+            smf_song[file_no].mf_tracks_526   = read16bit(p);
+
+            if (smf_song[file_no].mf_tracks_526 > 32)
+            {
+                smf_song[file_no].mf_tracks_526 = 32;
+            }
+
+            smf_song[file_no].mf_division_528 = read16bit(p);
+
+            if (smf_song[file_no].mf_format_524 == 0)
+            {
+                smf_song[file_no].mf_data_size_518 = 0x10000;
+                smf_song[file_no].mf_data_size_518 = readEOF(0U);
+
+                p->mf_track_size_C = smf_song[file_no].mf_data_size_518;
+            }
+            else
+            {
+                smf_song[file_no].mf_data_size_518 = 0x10000;
+
+                for (tr = 0; tr < smf_song[file_no].mf_tracks_526; tr++)
+                {
+                    tmpp = readEOF(tmpp);
+
+                    p->mf_track_size_C = tmpp;
+                }
+
+                smf_song[file_no].mf_data_size_518 = tmpp;
+            }
+            break;
+
+        case 0:
+            p->mf_data_loc_0 = 8;
+
+            smf_song[file_no].mf_division_528  = read16bit(p);
+            smf_song[file_no].mf_format_524    = 0;
+            smf_song[file_no].mf_tracks_526    = 1;
+            smf_song[file_no].mf_data_size_518 = 0x10000;
+            smf_song[file_no].mf_data_size_518 = readEOF(0U);
+
+            tempo = (u32)read32bit(p) >> 8;
+            tempo = 60000000 / tempo;
+            tempo = (100 * tempo) / 115;
+
+            if (tempo > 255)
+            {
+                tempo = 255;
+            }
+
+            switch (smf_song[file_no].mf_division_528)
+            {
+                case 60:
+                case 24:
+                    tempo = tempo / 2;
+                    break;
+
+                case 30:
+                    tempo = tempo / 4;
+                    break;
+            }
+
+            p->mf_tempo2_16 = tempo & 0xFF;
+            p->mf_tempo_14  = tempo & 0xFF;
+
+            egetc(p);
+            break;
+
+        case 2:
+            seqh = smf_song[file_no].mf_data_ptr_504;
+
+            smf_song[file_no].mf_division_528 = seqh->tb_8;
+            smf_song[file_no].mf_tracks_526   = seqh->tracks_C;
+
+            if (smf_song[file_no].mf_tracks_526 > 32)
+            {
+                smf_song[file_no].mf_tracks_526 = 32;
+            }
+
+            smf_song[file_no].mf_data_size_518 = seqh->size_4;
+            smf_song[file_no].mf_format_524    = 1;
+            break;
+    }
+
+    if (smf_song[file_no].mf_division_528 >= 96)
+    {
+        time_flag = smf_song[file_no].mf_division_528;
+    }
+    else
+    {
+        time_flag = 0;
+    }
+
+    time_flag = smf_song[file_no].mf_division_528;
+    return 1;
+}
 
 void len_add(SMF* p, s32 len) // 0x800A7814
 {
