@@ -214,7 +214,7 @@ extern s16 D_801E7574[MEMORY_CARD_SLOT_COUNT];
  * variable which Splat detects incorrectly
  * and merges it.
  */
-extern s16 D_801E7578[MEMORY_CARD_SLOT_COUNT];
+extern s16 D_801E7578[MEMORY_CARD_SLOT_COUNT]; // `g_SelectedSaveOffsetsY`
 
 extern s8 D_801E7584[SAVE_COUNT_MAX * 2];
 
@@ -258,7 +258,7 @@ void Gfx_SavedFlickerDraw();
 
 void func_801E43C8(s32 slotIdx);
 
-void Gfx_SavesTransparentBgDraw(s32 slotIdx, s32 arg1, s32 arg2, s32 arg3);
+void Gfx_SavesTransparentBgDraw(s32 slotIdx, s32 saveCount, s32 selectedSaveIdx, s32 selectedSaveOffsetY);
 
 void func_801E52D8(s32 slotIdx, s32 elementType);
 
