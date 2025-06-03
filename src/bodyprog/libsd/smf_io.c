@@ -726,7 +726,68 @@ void rr_off(s32 vo) // 0x800A4F08
     SpuSetVoiceAttr(&s_attr);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_io", voice_check);
+s16 voice_check(s32 chan, s32 note, s32 flag) // 0x800A4F64
+{
+    s32 stat;
+    s16 vo;
+
+    vo = 0;
+    do
+    {
+        if (SpuGetKeyStatus(spu_ch_tbl[vo]) == SPU_OFF)
+        {
+            return vo;
+        }
+        vo++;
+    }
+    while (vo < sd_reserved_voice);
+
+    vo = 0;
+    do
+    {
+        stat = SpuGetKeyStatus(spu_ch_tbl[vo]);
+        if (stat == SPU_OFF_ENV_ON || stat == SPU_OFF)
+        {
+            return vo;
+        }
+        vo++;
+    }
+    while (vo < sd_reserved_voice);
+
+    if (flag != 0)
+    {
+        return -1;
+    }
+
+    vo = 0;
+    do
+    {
+        if (chan == smf_port[vo].midi_ch_3 && smf_port[vo].note_6 == note)
+        {
+            return vo;
+        }
+        vo++;
+    }
+    while (vo < sd_reserved_voice);
+
+    vo = 0;
+    do
+    {
+        if (smf_port[vo].stat_16 == 0)
+        {
+            return vo;
+        }
+        vo++;
+    }
+    while (vo < sd_reserved_voice);
+
+    // Dead code needed for match, from permuter
+    if (stat && vo)
+    {
+    }
+
+    return -1;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_io", key_on);
 

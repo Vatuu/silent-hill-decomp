@@ -424,9 +424,9 @@ void midi_vsync();
 void sound_seq_off(s32 access_num);
 void sound_off();
 
-void adsr_set(s32 vo, PORT* p);
-void rr_off(s32 vo);
-
+void    adsr_set(s32 vo, PORT* p);
+void    rr_off(s32 vo);
+s16     voice_check(s32 chan, s32 note, s32 flag);
 void    key_on(u8 chan, u8 c1, u8 c2);
 void    key_off(u8 chan, u8 c1, u8 c2);
 void    key_press(u8 chan, u8 c1, u8 c2); // Nullsub.
