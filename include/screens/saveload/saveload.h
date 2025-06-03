@@ -3,7 +3,13 @@
 
 #include "common.h"
 
-#define SAVE_COUNT_MAX 165
+#define SAVEGAME_ENTRY_ADDR_0 ((u8*)0x801E09E0) // Slot 1 savegame entry.
+#define SAVEGAME_ENTRY_ADDR_1 ((u8*)0x801E1430) // Slot 2 savegame entry.
+
+#define SAVEGAME_COUNT_MAX 165
+
+#define GetActiveSavegameEntry(slotIdx) \
+    ((s_SavegameEntry*)&SAVEGAME_ENTRY_ADDR_0[2640 * (slotIdx)])
 
 /** @brief This header is used to declare any variable, struct, or
  * function part of `SAVELOAD.BIN`.
@@ -13,23 +19,23 @@
 // ENUMERATORS
 // ============
 
-/** @brief Used by `s_SavegameEntry` to identify
- * the type of element in the slot save.
+/** @brief Used by `s_SavegameEntry` to define a
+ * savegame entry's type.
  */
-typedef enum _SlotElementType
+typedef enum _SavegameEntryType
 {
-    ElementType_NoMemCard        = 0,
-    ElementType_Unk1             = 1,
-    ElementType_CorruptedMemCard = 2,
-    ElementType_LoadMemCard      = 3,
-    ElementType_Unk4             = 4,
-    ElementType_Unk5             = 5,
-    ElementType_Unk6             = 6,
-    ElementType_CorruptedSave    = 7,
-    ElementType_Save             = 8,
-    ElementType_NewSave          = 9,
-    ElementType_NewFile          = 10
-} e_SlotElementType;
+    SavegameEntryType_NoMemCard        = 0,
+    SavegameEntryType_Unk1             = 1,
+    SavegameEntryType_CorruptedMemCard = 2,
+    SavegameEntryType_LoadMemCard      = 3,
+    SavegameEntryType_Unk4             = 4,
+    SavegameEntryType_Unk5             = 5,
+    SavegameEntryType_Unk6             = 6,
+    SavegameEntryType_CorruptedSave    = 7,
+    SavegameEntryType_Save             = 8,
+    SavegameEntryType_NewSave          = 9,
+    SavegameEntryType_NewFile          = 10
+} e_SavegameEntryType;
 
 // ================
 // UNKNOWN STRUCTS
@@ -39,7 +45,7 @@ typedef enum _SlotElementType
 
 typedef struct _SavegameMetadata
 {
-    s32 unk_0;                    // Same behaviour as `totalSavegameCount_0` in `s_SavegameEntry`.
+    s32 unk_0;                     // Same behaviour as `totalSavegameCount_0` in `s_SavegameEntry`.
     u32 gameplayTimer_4;
     u16 savegameCount_8;
     s8  locationId_A;
@@ -66,22 +72,20 @@ typedef struct _SavegameEntry
      * card and then saves to slot 1, the value will
      * be 2 instead of 3.
      */
-    s16              totalSavegameCount_0;
-    s16              savegameCount_2;
-    s8               elementType_4;     /** `e_SlotElementType` */
-    s8               field_5;           // The value changes between 0 when the first save slot is selected and 4 when the second is selected.
-    s8               fileIdx_6;
-    s8               elementIdx_7;      // Index in file?
-    s32              locationId_8;
+    s16                 totalSavegameCount_0;
+    s16                 savegameCount_2;
+    s8                  type_4;               /** `e_SavegameEntryType` */
+    s8                  field_5;              // The value changes between 0 when the first save slot is selected and 4 when the second is selected.
+    s8                  fileIdx_6;
+    s8                  elementIdx_7;         // Index in file?
+    s32                 locationId_8;
     s_SavegameMetadata* field_C;
-} s_SavegameEntry; // Possible size is 16 bytes.
-/** @note This struct is written in memory each time a
- * new save is created in any slot. The struct
- * always grabs 16 bytes. This presumption is
- * affirmed by the observation that the last
- * element of the struct is always a struct pointer.
+} s_SavegameEntry;
+STATIC_ASSERT_SIZEOF(s_SavegameEntry, 16);
+/** @note A new instance is written to memory each time a
+ * new save is created in any slot.
  *
- * This struct is also used for the `New save` option.
+ * Also used for the `New save` entry.
  */
 
 // ========
@@ -214,7 +218,7 @@ extern s16 D_801E7574[MEMORY_CARD_SLOT_COUNT];
  */
 extern s16 D_801E7578[MEMORY_CARD_SLOT_COUNT]; // `g_SelectedSaveOffsetsY`
 
-extern s8 D_801E7584[SAVE_COUNT_MAX * 2];
+extern s8 D_801E7584[SAVEGAME_COUNT_MAX * 2];
 
 extern s8 g_PrevSaveIdx[MEMORY_CARD_SLOT_COUNT];
 

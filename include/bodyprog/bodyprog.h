@@ -6,8 +6,6 @@
 #include "main/fsqueue.h"
 
 #define TEMP_MEMORY_ADDR ((s8*)0x801A2600)
-#define BOOT_ADDR_0      ((u8*)0x801E09E0)
-#define BOOT_ADDR_1      ((u8*)0x801E1430)
 #define DEMO_WORK()      ((s_DemoWork*)0x800FDE00) // TODO: Move closer to demo structs (or to separate header?)
 
 #define IMAGE_BUFFER_0 ((u_long*)0x801CFA00)

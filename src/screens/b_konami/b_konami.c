@@ -109,37 +109,39 @@ void GameState_KonamiLogo_Update() // 0x800C95AC
 
 s32 func_800C9874() // 0x800C9874
 {
-    s32 var0;
-    s32 var1;
+    s32 saveEntryType0;
+    s32 saveEntryType1;
 
     if (func_80033548() == 0)
     {
         return 1;
     }
 
-    g_CurSavegameEntry = (s_SavegameEntry*)BOOT_ADDR_0;
-    var0              = g_CurSavegameEntry->elementType_4;
+    g_ActiveSavegameEntry = (s_SavegameEntry*)SAVEGAME_ENTRY_ADDR_0;
+    saveEntryType0        = g_ActiveSavegameEntry->type_4;
 
-    g_CurSavegameEntry = (s_SavegameEntry*)BOOT_ADDR_1;
-    var1              = g_CurSavegameEntry->elementType_4;
+    g_ActiveSavegameEntry = (s_SavegameEntry*)SAVEGAME_ENTRY_ADDR_1;
+    saveEntryType1        = g_ActiveSavegameEntry->type_4;
 
-    if (var0 == 0 && var1 == 0)
+    // No memory cards.
+    if (saveEntryType0 == SavegameEntryType_NoMemCard && saveEntryType1 == SavegameEntryType_NoMemCard)
     {
         return 2;
     }
 
-    if ((var0 == 4 && (var1 == 4 || var1 == 0)) || (var0 == 0 && var1 == 4)) 
+    if ((saveEntryType0 == SavegameEntryType_Unk4 && (saveEntryType1 == SavegameEntryType_Unk4 || saveEntryType1 == SavegameEntryType_NoMemCard)) ||
+        (saveEntryType0 == SavegameEntryType_NoMemCard && saveEntryType1 == SavegameEntryType_Unk4)) 
     {
         return 3;
     }
-    else if (var0 == 8 || var1 == 8)
+    else if (saveEntryType0 == SavegameEntryType_Save || saveEntryType1 == SavegameEntryType_Save)
     {
-        g_CurSavegameEntry = (s_SavegameEntry*)&BOOT_ADDR_0[g_SlotSelectedIdx * 0xA50];
-        g_CurSavegameEntry = &g_CurSavegameEntry[g_SlotElementSelectedIdx[g_SlotSelectedIdx]];
+        g_ActiveSavegameEntry = GetActiveSavegameEntry(g_SelectedSaveSlotIdx);
+        g_ActiveSavegameEntry = &g_ActiveSavegameEntry[g_SlotElementSelectedIdx[g_SelectedSaveSlotIdx]];
 
-        D_800BCD40        = g_CurSavegameEntry->field_5;
-        g_SelectedFileIdx = g_CurSavegameEntry->fileIdx_6;
-        g_SelectedSaveIdx = g_CurSavegameEntry->elementIdx_7;
+        D_800BCD40        = g_ActiveSavegameEntry->field_5;
+        g_SelectedFileIdx = g_ActiveSavegameEntry->fileIdx_6;
+        g_SelectedSaveIdx = g_ActiveSavegameEntry->elementIdx_7;
         return 5;
     }
     

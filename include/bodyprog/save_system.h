@@ -16,8 +16,8 @@
 
 typedef struct 
 {
-    u8  unk_0[315];
-    u8  field_13B[15];
+    u8 unk_0[315];
+    u8 field_13B[15];
 } s_func_8002F278;
 
 typedef struct 
@@ -25,7 +25,7 @@ typedef struct
     s32                field_0[10][3];
     u8                 unk_78[132];
     s_ShSavegameFooter field_FC;
-} s_func_8002FB64; // Likely s_ShSaveUserConfigContainer
+} s_func_8002FB64; // Likely `s_ShSaveUserConfigContainer`.
 
 // ========
 // STRUCTS
@@ -43,9 +43,9 @@ typedef struct
 // GLOBALS
 // ========
 
-extern u8 g_SlotElementSelectedIdx[MEMORY_CARD_SLOT_COUNT]; // Selected slot element index. [0] - Slot 1, [1] - Slot 2.
+extern u8 g_SlotElementSelectedIdx[MEMORY_CARD_SLOT_COUNT]; // 0 - Slot 1, 1 - Slot 2.
 
-extern s8 g_SlotSelectedIdx; // Selected save slot index. 0 - Slot 1, 1 - Slot 2.
+extern s8 g_SelectedSaveSlotIdx; // 0 - Slot 1, 1 - Slot 2.
 
 extern s8 D_800A97D7;
 
@@ -64,7 +64,7 @@ extern s_800B5508 D_800B5508[];
 /** @brief Basic information required to draw information of elements in save slots.
 * Address access is based on the slot: Slot 1 - 0x801E09E0, Slot 2 - 0x801E1440.
 */
-extern s_SavegameEntry* g_CurSavegameEntry;
+extern s_SavegameEntry* g_ActiveSavegameEntry;
 
 extern u8 g_MemCardElementCount[MEMORY_CARD_SLOT_COUNT];
 
