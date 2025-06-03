@@ -375,7 +375,7 @@ void func_800862F8(s32 arg0, s32 arg1, s32 arg2) // 0x800862F8
     }
 }
 
-void func_80086470(u32 switchVar, s32 arg1, s32 arg2, s32 arg3) // 0x80086470
+void func_80086470(u32 switchVar, s32 itemId, s32 itemCount, s32 arg3) // 0x80086470
 {
     s32 switchVarCpy;
 
@@ -405,7 +405,7 @@ void func_80086470(u32 switchVar, s32 arg1, s32 arg2, s32 arg3) // 0x80086470
     switch (switchVarCpy)
     {
         case 0:
-            func_80053B08(arg1 & 0xFF);
+            GameFs_UniqueItemModelLoad(itemId & 0xFF);
             
             if (switchVar == 0)
             {
@@ -422,7 +422,7 @@ void func_80086470(u32 switchVar, s32 arg1, s32 arg2, s32 arg3) // 0x80086470
                 break;
             }
 
-            func_80054A04(arg1 & 0xFF);
+            func_80054A04(itemId & 0xFF);
 
             if (switchVar == 1 || switchVar == 4)
             {
@@ -437,7 +437,7 @@ void func_80086470(u32 switchVar, s32 arg1, s32 arg2, s32 arg3) // 0x80086470
             
             if (switchVar == 3 || switchVar == 6)
             {
-                func_80054CAC(arg1 & 0xFF, arg2 & 0xFF);
+                func_80054CAC(itemId & 0xFF, itemCount & 0xFF);
             }
             break;
 
@@ -1146,21 +1146,21 @@ void func_800879FC(u32 arg0, s32 arg1) // 0x800879FC
     switch (arg0)
     {
         case 0:
-            var0 = 33;
+            var0 = InventoryItemId_FirstAidKit;
             var1 = 1;
             var2 = 5;
             func_800877B8(var0, var1, arg1, var2);
             break;
 
         case 1:
-            var0 = 32;
+            var0 = InventoryItemId_HealthDrink;
             var1 = 1;
             var2 = 6;
             func_800877B8(var0, var1, arg1, var2);
             break;
 
         case 2:
-            var0 = 34;
+            var0 = InventoryItemId_Ampoule;
             var1 = 1;
             var2 = 7;
 
@@ -1168,21 +1168,21 @@ void func_800879FC(u32 arg0, s32 arg1) // 0x800879FC
             break;
 
         case 3:
-            var0 = 192;
+            var0 = InventoryItemId_HandgunBullets;
             var1 = newBulletAdjust * 15;
             var2 = 8;
             func_800877B8(var0, var1, arg1, var2);
             break;
 
         case 5:
-            var0 = 194;
+            var0 = InventoryItemId_ShotgunShells;
             var1 = newBulletAdjust * 6;
             var2 = 10;
             func_800877B8(var0, var1, arg1, var2);
             break;
 
         case 4:
-            var0 = 193;
+            var0 = InventoryItemId_RifleShells;
             var1 = newBulletAdjust * 6;
             var2 = 9;
             func_800877B8(var0, var1, arg1, var2);

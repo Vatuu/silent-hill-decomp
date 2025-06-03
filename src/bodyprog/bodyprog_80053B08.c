@@ -6,17 +6,17 @@
 /** @note For better comprehension related to file handling
 * of inventory items.
 *
-* `func_80053B08` loads model of items individually.
-* `func_80053DFC` and `func_80054024` load packs of textures and
-* models of items, though while `func_80053B08` seems to load
+* `GameFs_UniqueItemModelLoad` loads model of items individually.
+* `GameFs_MapItemsModelLoad` and `GameFs_MapItemsTextureLoad` load packs of textures and
+* models of items, though while `GameFs_UniqueItemModelLoad` seems to load
 * them individually based on what is being passed as argument,
-* `func_80053DFC` and `func_80054024` load the packs based on the 
+* `GameFs_MapItemsModelLoad` and `GameFs_MapItemsTextureLoad` load the packs based on the 
 * map being loaded.
 */
 
 // TODO: RODATA migration.
 #ifdef NON_MATCHING
-void func_80053B08(s32 itemId) // 0x80053B08
+void GameFs_UniqueItemModelLoad(s32 itemId) // 0x80053B08
 {
     switch (itemId & 0xFF)
     {
@@ -315,7 +315,7 @@ void func_80053B08(s32 itemId) // 0x80053B08
     }
 }
 #else
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80053B08", func_80053B08); // 0x80053B08
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80053B08", GameFs_UniqueItemModelLoad); // 0x80053B08
 #endif
 
 void GameFs_Tim00TIMLoad() // 0x80053dA0
@@ -331,7 +331,7 @@ void GameFs_Tim00TIMLoad() // 0x80053dA0
 
 // TODO: RODATA migration.
 #ifdef NON_MATCHING
-void func_80053DFC(u32 mapId) // 0x80053DFC
+void GameFs_MapItemsModelLoad(u32 mapId) // 0x80053DFC
 {
     if (!(g_SysWork.flags_2352 & (1 << 7)))
     {
@@ -426,12 +426,12 @@ void func_80053DFC(u32 mapId) // 0x80053DFC
     }
 }
 #else
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80053B08", func_80053DFC); // 0x80053DFC
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80053B08", GameFs_MapItemsModelLoad); // 0x80053DFC
 #endif
 
 // TODO: RODATA migration.
 #ifdef NON_MATCHING
-void func_80054024(s32 mapId) // 0x80054024
+void GameFs_MapItemsTextureLoad(s32 mapId) // 0x80054024
 {
     switch (mapId)
     {
@@ -497,7 +497,7 @@ void func_80054024(s32 mapId) // 0x80054024
     }
 }
 #else
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80053B08", func_80054024); // 0x80054024
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80053B08", GameFs_MapItemsTextureLoad); // 0x80054024
 #endif
 
 /** @brief Function related to file loading of inventory element.
@@ -508,7 +508,24 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80053B08", func_80054200); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80053B08", func_80054558); // 0x80054558
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80053B08", func_80054634); // 0x80054634
+void func_80054634() // 0x80054634
+{
+    u8 sp10;
+
+    sp10 = (u8) g_SysWork.field_38.field_F;
+    g_SavegamePtr->equippedWeapon_AA = D_800AE184;
+    if (g_SavegamePtr->equippedWeapon_AA & 0xFF)
+    {
+        g_SysWork.field_38.field_F = g_SavegamePtr->equippedWeapon_AA + 0x80;
+    }
+    else
+    {
+        g_SysWork.field_38.field_F = NO_VALUE;
+        g_SysWork.isPlayerInCombatMode_4B = 0;
+    }
+    func_800546A8((u8) g_SysWork.field_38.field_F);
+    Player_AnimUpdate(&sp10);
+}
 
 void func_800546A8(s32 arg0) // 0x800546A8
 {
@@ -573,8 +590,6 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80053B08", func_800549A0); // 0x
 
 void func_80054A04(s32 arg0) // 0x80054A04
 {
-    #define ADDR (void*)0x801E3600
-
     D_800AE187 = arg0;
     D_800AE180 = 0;
     D_800AE1AC = 0;
@@ -587,11 +602,11 @@ void func_80054A04(s32 arg0) // 0x80054A04
     D_800C3BE8.field_184 = 0;
     D_800C3BE8.field_180 = 0;
 
-    func_8004BCBC(ADDR);
+    func_8004BCBC(FS_BUFFER_5);
 
     D_800C3E18.field_24 = 0;
 
-    func_80054720(ADDR, 9, 0);
+    func_80054720(FS_BUFFER_5, 9, 0);
     func_8005487C(9);
 
     D_800C3BE8.field_170 = 1 << 12;

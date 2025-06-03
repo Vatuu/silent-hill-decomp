@@ -1772,7 +1772,7 @@ void Savegame_ScreenLogic() // 0x801E649C
 
                 Sd_EngineCmd(0x51A);
 
-                if (g_GameWork.gameStatePrev_590 == GameState_StatusScreen) 
+                if (g_GameWork.gameStatePrev_590 == GameState_InventoryScreen) 
                 {
                     Sd_EngineCmd(0x17);
                     GameFs_TitleGfxLoad();
@@ -1846,7 +1846,7 @@ void Savegame_ScreenLogic() // 0x801E649C
                 * however, it is impossible to access to the save screen from
                 * there so this may could imply some cut debug feature.
                 */
-                if (g_GameWork.gameStatePrev_590 == GameState_StatusScreen)
+                if (g_GameWork.gameStatePrev_590 == GameState_InventoryScreen)
                 {
                     Game_StateSetNext(g_GameWork.gameStatePrev_590);
                 }

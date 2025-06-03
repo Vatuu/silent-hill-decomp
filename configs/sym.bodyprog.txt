@@ -245,7 +245,11 @@ Math_IntegerToString = 0x80032154; // type:func
 Gfx_Inventory_CmdOptions = 0x8004E864; // type:func
 Gfx_Inventory_HealthStatusDraw = 0x80051020; // type:func
 Gfx_Inventory_ItemDescription = 0x8005192C; // type:func
-//GameFs_Inventory_ItemModelsLoad = 0x80054024; // type:func
+
+
+GameFs_UniqueItemModelLoad = 0x80053B08; // type:func
+GameFs_MapItemsModelLoad = 0x80053DFC; // type:func
+GameFs_MapItemsTextureLoad = 0x80054024; // type:func
 
 Gfx_ClearRectInterlaced = 0x80032358; // type:func
 Gfx_Init = 0x80032428; // type:func

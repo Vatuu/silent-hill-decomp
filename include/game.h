@@ -219,7 +219,7 @@ typedef enum _GameState
     GameState_InGame              = 11,
     GameState_MapEvent            = 12,
     GameState_ExitMovie           = 13,
-    GameState_StatusScreen        = 14,
+    GameState_InventoryScreen     = 14,
     GameState_MapScreen           = 15,
     GameState_Unk10               = 16,
     GameState_DebugMoviePlayer    = 17,
@@ -549,7 +549,7 @@ typedef struct _ShSavegame
     s16               savegameCount_A6;
     s8                locationId_A8;            /** `e_SaveLocationId` */
     u8                current2dMap_A9;          /** `e_Current2dMap` Index to 2D map showned than opening the map screen. */
-    s8                equippedWeapon_AA;        /** `e_InventoryItemId` Default: 0. Effects only the visible player weapon model. */
+    u8                equippedWeapon_AA;        /** `e_InventoryItemId` Default: 0. Effects only the visible player weapon model. */
     u8                field_AB;
     u32               flags_AC;
     s32               field_B0[45];
@@ -679,7 +679,14 @@ typedef struct _GameWork
     u8                 field_58F; // A or graphics command code?
     s32                gameStatePrev_590;    /** `e_GameState` */
     s32                gameState_594;        /** `e_GameState` */
-    s32                gameStateStep_598[3]; /** Temp data used by current gameState. Can be another state ID or other data. */
+    s32                gameStateStep_598[3]; /** Temp data used by current gameState. Can be another state ID or other data. 
+                                              * This states could possibly sub-states for specific events of individual screens
+											  * and due the way how it is normally used on menus. For example: on the settings
+											  * screen [0] is used to define what option the player has selected, [1] is used
+											  * during specific settings screen like the position screen or the brightness screen.
+											  *
+											  * [2] is likely rarely used or maybe only used during maps.
+                                              */
     s8                 unk_5A4[4];
     s32                field_5A8;
     s32                field_5AC;
@@ -852,8 +859,7 @@ typedef struct _MainCharacterExtra
     s32     field_1C; // Some kind of state. 0: nothing, 1: unknown bent over pose, 2: AFK, 8: dying, 5: forcefully turned around.
     s32     field_20; // Some kind of anim state related to current action (running, walking, sidestepping, etc.).
     s32     field_24; // Some kind of anim state related to current action (running, walking, sidestepping, etc.). Sometimes same as above, but not always.
-    s8      field_28; // Forcefully setting to 1 opens options menu.
-    u8      pad_29[3];
+    s32     field_28; // Forcefully setting to 1 opens options menu.
 } s_MainCharacterExtra;
 STATIC_ASSERT_SIZEOF(s_MainCharacterExtra, 44);
 
@@ -928,7 +934,7 @@ typedef struct _SysWork
     u8              unk_234C[4];
     s32             field_2350_0 : 4;
     s32             field_2350_4 : 4;
-    s32             field_2351 : 8;
+    u32             field_2351 : 8;
     u32             flags_2352 : 8;
     s32             field_2353 : 8; // Some index into `npcs_1A0`.
     s8              unk_2354[4];

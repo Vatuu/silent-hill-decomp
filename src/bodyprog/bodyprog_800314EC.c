@@ -332,7 +332,7 @@ void MainLoop() // 0x80032EE0
         {
             GsOUT_PACKET_P = (PACKET*)(TEMP_MEMORY_ADDR + (g_ObjectTableIdx << 17));
         }
-        else if (g_GameWork.gameState_594 == GameState_StatusScreen)
+        else if (g_GameWork.gameState_594 == GameState_InventoryScreen)
         {
             GsOUT_PACKET_P = (PACKET*)(TEMP_MEMORY_ADDR + (g_ObjectTableIdx * 40000));
         }
@@ -1181,7 +1181,7 @@ void GameState_LoadStatusScreen_Update() // 0x800395C0
 
         savegame = g_SavegamePtr;
         func_800540A4(savegame->mapOverlayId_A4);
-        func_80054024(savegame->mapOverlayId_A4);
+        GameFs_MapItemsTextureLoad(savegame->mapOverlayId_A4);
 
         g_GameWork.gameStateStep_598[0]++;
     }
@@ -1190,7 +1190,7 @@ void GameState_LoadStatusScreen_Update() // 0x800395C0
 
     if (Fs_QueueDoThingWhenEmpty() != 0)
     {
-        Game_StateSetNext(GameState_StatusScreen);
+        Game_StateSetNext(GameState_InventoryScreen);
     }
 }
 
