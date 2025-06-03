@@ -3,13 +3,13 @@
 
 #include "common.h"
 
-#define SAVEGAME_ENTRY_ADDR_0 ((u8*)0x801E09E0) // Slot 1 savegame entry.
-#define SAVEGAME_ENTRY_ADDR_1 ((u8*)0x801E1430) // Slot 2 savegame entry.
+#define SAVEGAME_ENTRY_BUFFER_0 ((u8*)0x801E09E0) // Slot 1 savegame entry.
+#define SAVEGAME_ENTRY_BUFFER_1 ((u8*)0x801E1430) // Slot 2 savegame entry.
 
 #define SAVEGAME_COUNT_MAX 165
 
 #define GetActiveSavegameEntry(slotIdx) \
-    ((s_SavegameEntry*)&SAVEGAME_ENTRY_ADDR_0[2640 * (slotIdx)])
+    ((s_SavegameEntry*)&SAVEGAME_ENTRY_BUFFER_0[2640 * (slotIdx)])
 
 /** @brief This header is used to declare any variable, struct, or
  * function part of `SAVELOAD.BIN`.
@@ -19,9 +19,7 @@
 // ENUMERATORS
 // ============
 
-/** @brief Used by `s_SavegameEntry` to define a
- * savegame entry's type.
- */
+/** @brief Used by `s_SavegameEntry`. */
 typedef enum _SavegameEntryType
 {
     SavegameEntryType_NoMemCard        = 0,
@@ -54,6 +52,11 @@ typedef struct _SavegameMetadata
     u8  hyperBlasterFlags_B_3 : 5;
 } s_SavegameMetadata; // Possible size is 12 bytes.
 
+/** @note A new instance is written to memory each time a
+ * new save is created in any slot.
+ *
+ * Also used for the `New save` entry.
+ */
 typedef struct _SavegameEntry
 {
     /** @brief `field_0` is a counter that increments by one each time
@@ -82,11 +85,6 @@ typedef struct _SavegameEntry
     s_SavegameMetadata* field_C;
 } s_SavegameEntry;
 STATIC_ASSERT_SIZEOF(s_SavegameEntry, 16);
-/** @note A new instance is written to memory each time a
- * new save is created in any slot.
- *
- * Also used for the `New save` entry.
- */
 
 // ========
 // STRUCTS
@@ -228,8 +226,7 @@ extern s8 g_IsMemCardNotInserted[MEMORY_CARD_SLOT_COUNT]; // 0 - is inserted, 1 
 
 extern s8 g_Gfx_SaveFlashTimer;
 
-// Use when overwriting a save with yellow text.
-extern u8 D_801E76D5;
+extern u8 g_IsNextFearMode;
 
 extern u8 g_IsGameSaving;
 
@@ -263,9 +260,10 @@ void func_801E43C8(s32 slotIdx);
 /** Draws transparent background and scroll bar. */
 void Gfx_SaveSlotDrawBox(s32 slotIdx, s32 saveCount, s32 selectedSaveIdx, s32 selectedSaveOffsetY);
 
-void func_801E52D8(s32 slotIdx, s32 elementType);
+/** Draws message box that says "Now checking MEMEORY CARD" or "MEMORY CARD is not inserted". */
+void Gfx_SaveSlotDrawMemCardMsgBox(s32 slotIdx, s32 entryType);
 
-void Gfx_RectMemLoadDraw(s_LineBorder* lineBorder, s_QuadBorder* quadBorder, s_ColoredLine2d* coloredLine, s32 slotIdx);
+void Gfx_SaveSlotDrawMemCardMsgBoxSub(s_LineBorder* borderLines, s_QuadBorder* borderGlowQuads, s_ColoredLine2d* coloredLine, s32 slotIdx);
 
 /** Updates the save screen. */
 void GameState_SaveScreen_Update();

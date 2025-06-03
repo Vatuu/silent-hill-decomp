@@ -42,6 +42,7 @@ s32 D_801E750C = 0;
 
 s32 D_801E7510 = 0;
 
+/** Some boolean statuses for each save slot. */
 s16 D_801E7514[MEMORY_CARD_SLOT_COUNT] = { 0, 0 };
 
 s16 g_LoadingMemCardTimer[MEMORY_CARD_SLOT_COUNT] = { 0, 0 };
@@ -50,7 +51,7 @@ s32 g_MemCardState = 0;
 
 s32 g_MemCardStateTextTimer = 0;
 
-// This is only used in `GameState_SaveScreen_Update`
+// This is only used in `GameState_SaveScreen_Update`.
 void (*g_GameState_SaveScreen_Funcs[])() =
 {
     Savegame_ScreenInit,
@@ -65,7 +66,7 @@ s32 D_801E753C = 0;
 
 s32 g_IsSaveSelected = 0;
 
-// This is only used in `GameState_DeathLoadScreen_Update`
+// This is only used in `GameState_DeathLoadScreen_Update`.
 void (*g_GameState_DeathLoadScreen_Funcs[])() =
 {
     Savegame_ScreenInit,
@@ -82,6 +83,7 @@ s32 g_OverwriteOptionSelected = 0;
 
 s32 D_801E7560 = 0; // Unused.
 
+/** Some boolean statuses for each save slot. */
 s32 D_801E7564[MEMORY_CARD_SLOT_COUNT] = { 0, 0 };
 
 s16 D_801E756C[MEMORY_CARD_SLOT_COUNT] = { 0, 0 };
@@ -108,7 +110,7 @@ s8 g_IsMemCardNotInserted[MEMORY_CARD_SLOT_COUNT] = { 0, 0 };
 
 s8 g_Gfx_SaveFlashTimer = 0;
 
-u8 D_801E76D5 = 0;
+u8 g_IsNextFearMode = 0;
 
 u8 g_IsGameSaving = 0;
 */
@@ -253,7 +255,7 @@ void Gfx_SavegameEntryDrawLocationName(s_SavegameEntry* ptr, s32 arg1, s32 idx) 
 
         if (g_IsGameSaving != 0 && g_SelectedSaveSlotIdx == idx && g_SlotElementSelectedIdx[idx] == arg1)
         {
-            if (D_801E76D5 != 0)
+            if (g_IsNextFearMode != 0)
             {
                 colorId = ColorId_Gold;
             }
@@ -424,6 +426,7 @@ void Gfx_SaveScreenDraw(s_SavegameEntry* slotsElementsPtr, s32 arg1, s32 slotIdx
     D_801E7514[slotIdx] = 1;
     Gfx_StringSetColor(ColorId_White);
 
+    // Draw memory card message string.
     switch (entryType)
     {
         case SavegameEntryType_NoMemCard:
@@ -446,23 +449,22 @@ void Gfx_SaveScreenDraw(s_SavegameEntry* slotsElementsPtr, s32 arg1, s32 slotIdx
             Gfx_StringSetPosition((slotIdx * SLOT_COLUMN_OFFSET) + 6, (g_LoadingMemCardTimer[slotIdx] * 20) + 53);
             break;
     }
-
     Gfx_StringDraw(statusStrs[entryType], 50);
 
+    // Draw memory card message box.
     if (entryType < SavegameEntryType_CorruptedSave)
     {
-        func_801E52D8(slotIdx, entryType);
+        Gfx_SaveSlotDrawMemCardMsgBox(slotIdx, entryType);
     }
 
+    // Update memory card load timer.
     g_LoadingMemCardTimer[slotIdx]++;
-
     if (g_LoadingMemCardTimer[slotIdx] == 5 || arg1 == g_SlotElementCounts[slotIdx] - 1)
     {
         if (D_801E7564[slotIdx] == 0)
         {
             D_801E7564[slotIdx] = 1;
         }
-
         D_801E7514[slotIdx] = 0;
 
         if (entryType != SavegameEntryType_LoadMemCard)
@@ -1230,15 +1232,18 @@ void Gfx_SavegameEntryDrawBorder(s_SavegameEntry* saveEntry, s_SavegameEntry* ne
     }
 }
 
-void func_801E52D8(s32 slotIdx, s32 elementType) // 0x801E52D8
+// "Now checking MEMORY CARD"?
+void Gfx_SaveSlotDrawMemCardMsgBox(s32 slotIdx, s32 entryType) // 0x801E52D8
 {
     s_ColoredLine2d coloredLines[MEMORY_CARD_SLOT_COUNT] =
     {
+        // Red line.
         {
             { { -142, -33 }, { 136, 33 } },
             255, 0, 0,
             0,
         },
+        // Green line.
         {
             { { -142, -33 }, { 136, 33 } }, 
             0, 255, 0,
@@ -1246,7 +1251,7 @@ void func_801E52D8(s32 slotIdx, s32 elementType) // 0x801E52D8
         }
     };
 
-    s_LineBorder lineBorders =
+    s_LineBorder borderLines =
     {
         {
             { { -144, -36 }, { -4, -36 } },
@@ -1256,7 +1261,7 @@ void func_801E52D8(s32 slotIdx, s32 elementType) // 0x801E52D8
         }
     };
 
-    s_QuadBorder quadBorders =
+    s_QuadBorder borderGlowQuads =
     {
         {
             { { -144, -36 }, { -148, -40 }, { -4, -36 }, { 0, -40 } },
@@ -1266,76 +1271,82 @@ void func_801E52D8(s32 slotIdx, s32 elementType) // 0x801E52D8
         }
     };
 
-    if (elementType == 1 && g_GameWork.gameState_594 == GameState_Unk10) 
+    if (entryType == SavegameEntryType_Unk1 && g_GameWork.gameState_594 == GameState_Unk10) 
     {
-        Gfx_RectMemLoadDraw(&lineBorders, &quadBorders, &coloredLines[1], slotIdx);
+        Gfx_SaveSlotDrawMemCardMsgBoxSub(&borderLines, &borderGlowQuads, &coloredLines[1], slotIdx);
     } 
     else 
     {
-        Gfx_RectMemLoadDraw(&lineBorders, &quadBorders, &coloredLines[0], slotIdx);
+        Gfx_SaveSlotDrawMemCardMsgBoxSub(&borderLines, &borderGlowQuads, &coloredLines[0], slotIdx);
     }
 }
 
-void Gfx_RectMemLoadDraw(s_LineBorder* lineBorder, s_QuadBorder* quadBorder, s_ColoredLine2d* coloredLine, s32 slotIdx) // 0x801E54DC
+void Gfx_SaveSlotDrawMemCardMsgBoxSub(s_LineBorder* borderLines, s_QuadBorder* borderGlowQuads, s_ColoredLine2d* coloredLine, s32 slotIdx) // 0x801E54DC
 {
     GsOT*     ot;
+    LINE_F2*  borderLine;
+    POLY_G4*  glowPoly;
+    POLY_F4*  unkPoly;
+    s_Line2d* glowLine;
     s32       i;
-    s_Line2d* temp;
-    LINE_F2*  line;
-    POLY_G4*  poly_g4;
-    POLY_F4*  poly_f4;
 
     ot = &g_ObjectTable1[g_ObjectTableIdx];
 
+    // Draw border around message.
     for (i = 0; i < 4; i++)
     {
-        line = (LINE_F2*)GsOUT_PACKET_P;
-        setLineF2(line);
-        setRGB0(line, coloredLine->r_8, coloredLine->g_A, coloredLine->b_C);
-        setXY2(line,
-               lineBorder->lines_0[i].vertex0_0.vx + (slotIdx * SLOT_COLUMN_OFFSET), lineBorder->lines_0[i].vertex0_0.vy,
-               lineBorder->lines_0[i].vertex1_4.vx + (slotIdx * SLOT_COLUMN_OFFSET), lineBorder->lines_0[i].vertex1_4.vy);
-        addPrim((u8*)ot->org + 28, line);
-        GsOUT_PACKET_P = (u8*)line + sizeof(LINE_F2);
+        borderLine = (LINE_F2*)GsOUT_PACKET_P;
+        setLineF2(borderLine);
+        setRGB0(borderLine, coloredLine->r_8, coloredLine->g_A, coloredLine->b_C);
+
+        setXY2(borderLine,
+               borderLines->lines_0[i].vertex0_0.vx + (slotIdx * SLOT_COLUMN_OFFSET), borderLines->lines_0[i].vertex0_0.vy,
+               borderLines->lines_0[i].vertex1_4.vx + (slotIdx * SLOT_COLUMN_OFFSET), borderLines->lines_0[i].vertex1_4.vy);
+
+        addPrim((u8*)ot->org + 28, borderLine);
+        GsOUT_PACKET_P = (u8*)borderLine + sizeof(LINE_F2);
     }
 
+    // Draw border glow around message.
     for (i = 0; i < 4; i++)
     {
-        poly_g4 = (POLY_G4*)GsOUT_PACKET_P;
-        setlen(poly_g4, 8);
-        setcode(poly_g4, 0x3A);
-        setRGB0(poly_g4, coloredLine->r_8 / 2, coloredLine->g_A / 2, coloredLine->b_C / 2);
-        setRGB1(poly_g4, 0, 0, 0);
-        setRGB2(poly_g4, coloredLine->r_8 / 2, coloredLine->g_A / 2, coloredLine->b_C / 2);
-        setRGB3(poly_g4, 0, 0, 0);
+        glowPoly = (POLY_G4*)GsOUT_PACKET_P;
+        setlen(glowPoly, 8);
+        setcode(glowPoly, 0x3A);
 
-        temp = (s_Line2d*)&quadBorder->quads_0[i].vertex2_8;
+        setRGB0(glowPoly, coloredLine->r_8 / 2, coloredLine->g_A / 2, coloredLine->b_C / 2);
+        setRGB1(glowPoly, 0, 0, 0);
+        setRGB2(glowPoly, coloredLine->r_8 / 2, coloredLine->g_A / 2, coloredLine->b_C / 2);
+        setRGB3(glowPoly, 0, 0, 0);
 
-        setXY4(poly_g4,
-               quadBorder->quads_0[i].vertex0_0.vx + (slotIdx * SLOT_COLUMN_OFFSET), quadBorder->quads_0[i].vertex0_0.vy,
-               quadBorder->quads_0[i].vertex1_4.vx + (slotIdx * SLOT_COLUMN_OFFSET), quadBorder->quads_0[i].vertex1_4.vy,
-               quadBorder->quads_0[i].vertex2_8.vx + (slotIdx * SLOT_COLUMN_OFFSET), temp->vertex0_0.vy,
-               temp->vertex1_4.vx + (slotIdx * SLOT_COLUMN_OFFSET), temp->vertex1_4.vy);
+        glowLine = (s_Line2d*)&borderGlowQuads->quads_0[i].vertex2_8;
+        setXY4(glowPoly,
+               borderGlowQuads->quads_0[i].vertex0_0.vx + (slotIdx * SLOT_COLUMN_OFFSET), borderGlowQuads->quads_0[i].vertex0_0.vy,
+               borderGlowQuads->quads_0[i].vertex1_4.vx + (slotIdx * SLOT_COLUMN_OFFSET), borderGlowQuads->quads_0[i].vertex1_4.vy,
+               borderGlowQuads->quads_0[i].vertex2_8.vx + (slotIdx * SLOT_COLUMN_OFFSET), glowLine->vertex0_0.vy,
+               glowLine->vertex1_4.vx + (slotIdx * SLOT_COLUMN_OFFSET), glowLine->vertex1_4.vy);
 
-        addPrim((u8*)ot->org + 32, poly_g4);
-        GsOUT_PACKET_P = (u8*)poly_g4 + sizeof(POLY_G4);
+        addPrim((u8*)ot->org + 32, glowPoly);
+        GsOUT_PACKET_P = (u8*)glowPoly + sizeof(POLY_G4);
     }
     
     func_80052088(0, 0, 5, 1);
     
-    poly_f4 = (POLY_F4*)GsOUT_PACKET_P;
-    setlen(poly_f4, 5);
-    setcode(poly_f4, 0x2A);
-    setRGB0(poly_f4, 48, 48, 48);
+    // Draw (???)'
+    unkPoly = (POLY_F4*)GsOUT_PACKET_P;
+    setlen(unkPoly, 5);
+    setcode(unkPoly, 0x2A);
 
-    setXY4(poly_f4,
-           coloredLine->line_0.vertex0_0.vx + (slotIdx * SLOT_COLUMN_OFFSET), coloredLine->line_0.vertex0_0.vy,
-           coloredLine->line_0.vertex0_0.vx + (slotIdx * SLOT_COLUMN_OFFSET), coloredLine->line_0.vertex0_0.vy + coloredLine->line_0.vertex1_4.vy,
+    setRGB0(unkPoly, 48, 48, 48);
+
+    setXY4(unkPoly,
+           coloredLine->line_0.vertex0_0.vx + (slotIdx * SLOT_COLUMN_OFFSET),                                    coloredLine->line_0.vertex0_0.vy,
+           coloredLine->line_0.vertex0_0.vx + (slotIdx * SLOT_COLUMN_OFFSET),                                    coloredLine->line_0.vertex0_0.vy + coloredLine->line_0.vertex1_4.vy,
            coloredLine->line_0.vertex0_0.vx + coloredLine->line_0.vertex1_4.vx + (slotIdx * SLOT_COLUMN_OFFSET), coloredLine->line_0.vertex0_0.vy,
            coloredLine->line_0.vertex0_0.vx + coloredLine->line_0.vertex1_4.vx + (slotIdx * SLOT_COLUMN_OFFSET), coloredLine->line_0.vertex0_0.vy + coloredLine->line_0.vertex1_4.vy);
 
-    addPrim((u8*)ot->org + 32, poly_f4);
-    GsOUT_PACKET_P = (u8*)poly_f4 + sizeof(POLY_F4);
+    addPrim((u8*)ot->org + 32, unkPoly);
+    GsOUT_PACKET_P = (u8*)unkPoly + sizeof(POLY_F4);
 
     func_80052088(0, 0, 8, 1);
 }
@@ -1352,60 +1363,25 @@ void Gfx_RectSaveInfoDraw(s_Line2d* line) // 0x801E5898
     // Adjusted lines?
     DVECTOR sp10[] =
     {
-        {
-            .vx = line->vertex0_0.vx,
-            .vy = line->vertex0_0.vy
-        },
-        {
-            .vx = (line->vertex0_0.vx + line->vertex1_4.vx) - 8,
-            .vy = line->vertex0_0.vy
-        },
-        {
-            .vx = line->vertex0_0.vx + line->vertex1_4.vx,
-            .vy = line->vertex0_0.vy + 8},
-        {
-            .vx = line->vertex0_0.vx + line->vertex1_4.vx,
-            .vy = line->vertex0_0.vy + line->vertex1_4.vy
-        },
-        {
-            .vx = line->vertex0_0.vx + 8,
-            .vy = line->vertex0_0.vy + line->vertex1_4.vy
-        },
-        {
-            .vx = line->vertex0_0.vx,
-            .vy = (line->vertex0_0.vy + line->vertex1_4.vy) - 8
-        }
+        { line->vertex0_0.vx,                            line->vertex0_0.vy },
+        { (line->vertex0_0.vx + line->vertex1_4.vx) - 8, line->vertex0_0.vy },
+        { line->vertex0_0.vx + line->vertex1_4.vx,       line->vertex0_0.vy + 8},
+        { line->vertex0_0.vx + line->vertex1_4.vx,       line->vertex0_0.vy + line->vertex1_4.vy },
+        { line->vertex0_0.vx + 8,                        line->vertex0_0.vy + line->vertex1_4.vy },
+        { line->vertex0_0.vx,                            (line->vertex0_0.vy + line->vertex1_4.vy) - 8 }
     };
 
     s_Triangle2d tris[] =
     {
         {
-            {
-                .vx = line->vertex0_0.vx + line->vertex1_4.vx,
-                .vy = line->vertex0_0.vy
-            },
-            {
-                .vx = (line->vertex0_0.vx + line->vertex1_4.vx) - 8,
-                .vy = line->vertex0_0.vy
-            },
-            {
-                .vx = line->vertex0_0.vx + line->vertex1_4.vx,
-                .vy = line->vertex0_0.vy + 8
-            },
+            { line->vertex0_0.vx + line->vertex1_4.vx,       line->vertex0_0.vy },
+            { (line->vertex0_0.vx + line->vertex1_4.vx) - 8, line->vertex0_0.vy },
+            { line->vertex0_0.vx + line->vertex1_4.vx,       line->vertex0_0.vy + 8 },
         },
         {
-            {
-                .vx = line->vertex0_0.vx,
-                .vy = line->vertex0_0.vy + line->vertex1_4.vy
-            },
-            {
-                .vx = line->vertex0_0.vx + 8,
-                .vy = line->vertex0_0.vy + line->vertex1_4.vy
-            },
-            {
-                .vx = line->vertex0_0.vx,
-                .vy = (line->vertex0_0.vy + line->vertex1_4.vy) - 8
-            }
+            { line->vertex0_0.vx,     line->vertex0_0.vy + line->vertex1_4.vy },
+            { line->vertex0_0.vx + 8, line->vertex0_0.vy + line->vertex1_4.vy },
+            { line->vertex0_0.vx,     (line->vertex0_0.vy + line->vertex1_4.vy) - 8 }
         }
     };
 
@@ -1417,15 +1393,15 @@ void Gfx_RectSaveInfoDraw(s_Line2d* line) // 0x801E5898
         setlen(poly_f3, 4);
 
         color = 0x30; // HACK
-
         setcode(poly_f3, 0x22);
         setRGB0(poly_f3, color, 0x30, 0x30);
+
         setXY3(poly_f3,
                tris[i].vertex0_0.vx, tris[i].vertex0_0.vy,
                tris[i].vertex1_4.vx, tris[i].vertex1_4.vy,
                tris[i].vertex2_8.vx, tris[i].vertex2_8.vy);
-        addPrim((u8*)ot->org + 32, poly_f3);
 
+        addPrim((u8*)ot->org + 32, poly_f3);
         GsOUT_PACKET_P  = (u8*)poly_f3;
         GsOUT_PACKET_P += sizeof(POLY_F3);
     }
@@ -1435,13 +1411,16 @@ void Gfx_RectSaveInfoDraw(s_Line2d* line) // 0x801E5898
     poly_f4 = (POLY_F4*)GsOUT_PACKET_P;
     setlen(poly_f4, 5);
     setcode(poly_f4, 0x2A);
+
     setRGB0(poly_f4, 0x30, 0x30, 0x30);
+
     setXY4(poly_f4,
            line->vertex0_0.vx,                      line->vertex0_0.vy,
            line->vertex0_0.vx,                      line->vertex0_0.vy + line->vertex1_4.vy,
            line->vertex0_0.vx + line->vertex1_4.vx, line->vertex0_0.vy,
            line->vertex0_0.vx + line->vertex1_4.vx, line->vertex0_0.vy + line->vertex1_4.vy);
-    addPrim((u8*)ot->org + 0x24, poly_f4);
+
+    addPrim((u8*)ot->org + 36, poly_f4);
     GsOUT_PACKET_P = (u8*)poly_f4 + sizeof(POLY_F4);
 
     func_80052088(0, 0, 9, 1);
@@ -1473,7 +1452,7 @@ void Gfx_RectSaveInfoDraw(s_Line2d* line) // 0x801E5898
 
 void Gfx_SaveDataInfoDraw(s32 arg0, s32 elementIdx) // 0x801E5E18
 {
-    char* strs[] =
+    char* labelStrs[] =
     {
         "Data",
         "Save",
@@ -1483,21 +1462,21 @@ void Gfx_SaveDataInfoDraw(s32 arg0, s32 elementIdx) // 0x801E5E18
         "You_need_1_free_block\n__to_create_a_new_file."
     };
 
-    GsOT*            ot;
-    s32              saveId;
-    s32              mins;
-    s32              hasFlag;
-    s32              sec;
-    s32              hours;
-    s32              saveDataIdx;
-    s32              i;
-    s32              digitCount;
-    s32              offset;
-    u32              saveFlags;
-    u32              flags;
-    u32              timeInSec;
+    GsOT*               ot;
+    s32                 saveId;
+    s32                 mins;
+    s32                 hasFlag;
+    s32                 sec;
+    s32                 hours;
+    s32                 saveDataIdx;
+    s32                 i;
+    s32                 digitCount;
+    s32                 offset;
+    u32                 saveFlags;
+    u32                 flags;
+    u32                 timeInSec;
     s_SavegameMetadata* ptr;
-    POLY_G4*         poly;
+    POLY_G4*            poly;
 
     ot = &g_ObjectTable1[g_ObjectTableIdx];
 
@@ -1936,10 +1915,10 @@ void Savegame_SaveLogic() // 0x801E6B18
             saveEntry->locationId_A    = g_SavegamePtr->locationId_A8;
             saveEntry->gameplayTimer_4 = g_SavegamePtr->gameplayTimer_250;
 
-            D_801E76D5 = saveEntry->isNextFearMode_B;
+            g_IsNextFearMode = saveEntry->isNextFearMode_B;
 
-            saveEntry->isNextFearMode_B    = g_SavegamePtr->isNextFearMode_25C;
-            saveEntry->add290Hours_B_1     = g_SavegamePtr->add290Hours_25C_1;
+            saveEntry->isNextFearMode_B      = g_SavegamePtr->isNextFearMode_25C;
+            saveEntry->add290Hours_B_1       = g_SavegamePtr->add290Hours_25C_1;
             saveEntry->hyperBlasterFlags_B_3 = g_SavegamePtr->hyperBlasterFlags_25C_3;
 
             func_8002E94C(5, D_800BCD40, g_SelectedFileIdx, g_SelectedSaveIdx);

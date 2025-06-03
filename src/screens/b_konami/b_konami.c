@@ -117,10 +117,10 @@ s32 func_800C9874() // 0x800C9874
         return 1;
     }
 
-    g_ActiveSavegameEntry = (s_SavegameEntry*)SAVEGAME_ENTRY_ADDR_0;
+    g_ActiveSavegameEntry = (s_SavegameEntry*)SAVEGAME_ENTRY_BUFFER_0;
     saveEntryType0        = g_ActiveSavegameEntry->type_4;
 
-    g_ActiveSavegameEntry = (s_SavegameEntry*)SAVEGAME_ENTRY_ADDR_1;
+    g_ActiveSavegameEntry = (s_SavegameEntry*)SAVEGAME_ENTRY_BUFFER_1;
     saveEntryType1        = g_ActiveSavegameEntry->type_4;
 
     // No memory cards.
