@@ -109,7 +109,7 @@ e_ShCharacterId = [
     "Chara_LittleIncubus",
     "Chara_GhostDoctor",
     "Chara_Parasite",
-    "Chara_Null"
+    "Chara_Padlock"
 ]
 Chara_Count = 45
 
