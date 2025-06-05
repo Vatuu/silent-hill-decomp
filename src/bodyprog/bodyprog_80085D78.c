@@ -191,7 +191,6 @@ void func_800860B0(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 sysStateStep, s32
     }
 }
 
-// TODO: Get rid of gotos.
 void func_8008616C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x8008616C
 {
     s32 caseVar;
@@ -260,40 +259,18 @@ void func_8008616C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x800861
             {
                 if (arg1 != 0 || g_Gfx_ScreenFade != caseVar)
                 {
-                    if (arg1 == caseVar)
+                    if ((arg1 == caseVar && (g_Gfx_ScreenFade & 7) == 5))
                     {
-                        var1 = 5;
-                        var0 = g_Gfx_ScreenFade & 0x7;
-
-                        if (var1 == var0)
-                        {
-                            func_80085D78(arg4);
-                        }
+                        func_80085D78(arg4);
                     }
-                }
-                else
-                {
-                    goto block_32;
+                    break;
                 }
             }
-            else if (arg1 != 0 || g_SysWork.field_30 != caseVar)
+            else if ((arg1 != 0 || g_SysWork.field_30 != caseVar) && !(arg1 == caseVar && g_SysWork.field_30 == 21))
             {
-                if (arg1 == caseVar)
-                {
-                    var1 = g_SysWork.field_30;
-                    var0 = 21;
-                    
-                    if (var1 == var0)
-                    {
-                        goto block_32;
-                    }
-                }
+                break;
             }
-            else
-            {
-block_32:
-                func_80085D78(arg4);
-            }
+            func_80085D78(arg4);
             break;
     }
 }

@@ -132,4 +132,11 @@ typedef struct
 #define addPrimFast(ot, p ,_len) \
     (((p)->tag = getaddr(ot) | (_len << 24)), setaddr(ot, p))
 
+extern _GsFCALL GsFCALL4;
+
+void GsTMDfastG3LFG(void* op, VERT* vp, VERT* np, PACKET* pk, int n, int shift, GsOT* ot, u_long* scratch);
+void GsTMDfastTG3LFG(void* op, VERT* vp, VERT* np, PACKET* pk, int n, int shift, GsOT* ot, u_long* scratch);
+void GsTMDfastG4LFG(void* op, VERT* vp, VERT* np, PACKET* pk, int n, int shift, GsOT* ot, u_long* scratch);
+void GsTMDfastTG4LFG(void* op, VERT* vp, VERT* np, PACKET* pk, int n, int shift, GsOT* ot, u_long* scratch);
+
 #endif

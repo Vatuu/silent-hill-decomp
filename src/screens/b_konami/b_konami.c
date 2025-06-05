@@ -347,7 +347,7 @@ void func_800C9E6C(s_FsImageDesc* image, s32 otz, s32 vramX, s32 vramY, s32 w, s
 {
     DR_TPAGE* tPage;
     SPRT*     prim     = (SPRT*)GsOUT_PACKET_P;
-    u32       vramBase = *((u8*)&image->tPage + 1) + (u32)(vramX >> 8) + (((u32)(vramY >> 8)) << 4);
+    u32       vramBase = image->tPage[1] + (u32)(vramX >> 8) + (((u32)(vramY >> 8)) << 4);
     u32*      addr     = &D_800B5C40[g_ObjectTableIdx].field_0[otz];
 
     addPrimFast(addr, prim, 4);
@@ -363,7 +363,7 @@ void func_800C9E6C(s_FsImageDesc* image, s32 otz, s32 vramX, s32 vramY, s32 w, s
     setXY0Fast(prim, (u16)x, y);
 
     tPage = (DR_TPAGE*)((u8*)prim + sizeof(SPRT));
-    setDrawTPage(tPage, 0, 1, getTPage(*((u8*)&image->tPage), 0, (vramBase << 6), (((vramBase >> 4) & (1 << 0)) << 8)));
+    setDrawTPage(tPage, 0, 1, getTPage(image->tPage[0], 0, (vramBase << 6), (((vramBase >> 4) & (1 << 0)) << 8)));
     AddPrim(addr, tPage);
 
     GsOUT_PACKET_P = (u8*)prim + 28;

@@ -784,7 +784,7 @@ extern s_800BE9FC D_8002B2CC;
 
 extern s8 D_8002B394;
 
-extern s8 D_800A8E58;
+extern u8 D_800A8E58;
 
 extern s_FsImageDesc D_800A8FF4;
 
@@ -968,19 +968,19 @@ extern s32 D_800B5C30;
 
 extern s_800B5C40 D_800B5C40[];
 
-extern s32 D_800B5C58;
+extern s8 D_800B5C58[][64];
 
 extern s32 D_800B5C7C;
 
 extern s_800B5D04 D_800B5D04[];
+
+extern u8 D_800B7CC4[][8192];
 
 extern u8 D_800BC74F;
 
 extern u16 D_800BCCB0;
 
 extern u16 D_800BCCB2;
-
-extern s32 D_800B7CC4;
 
 /** @brief Seems to handle the screen fade effect.
  *

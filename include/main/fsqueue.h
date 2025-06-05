@@ -96,7 +96,7 @@ enum FsQueueOperation
  */
 typedef struct _FsImageDesc
 {
-    u16 tPage;
+    u8  tPage[2];
     u8  u;
     u8  v;
     s16 clutX;

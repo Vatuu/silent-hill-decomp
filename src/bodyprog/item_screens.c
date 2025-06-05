@@ -609,7 +609,29 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/item_screens", Gfx_Inventory_ItemDescript
  * Breaking it reveals that it whitens the arrows,
  * as without this function, the arrows look a bit grey.
  */
-INCLUDE_ASM("asm/bodyprog/nonmatchings/item_screens", func_80052088); // 0x80052088
+void func_80052088(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x80052088
+{
+    GsOT*     ot0;
+    GsOT*     ot1;
+    s32       idx   = g_ObjectTableIdx;
+    DR_TPAGE* tPage = (DR_TPAGE*)GsOUT_PACKET_P;
+
+    setDrawTPage(tPage, 0, 1, getTPage(0, arg3, arg0, arg1));
+
+    ot1 = &g_ObjectTable1[idx];
+    ot0 = &g_ObjectTable0[idx];
+
+    if (arg3 < 4)
+    {
+        addPrim(&ot1->org[arg2], tPage);
+    }
+    else
+    {
+        addPrim(&ot0->org[arg2], tPage);
+    }
+
+    GsOUT_PACKET_P = (PACKET*)tPage + sizeof(DR_TPAGE);
+}
 
 /** Results screen related.
  * Used in: `func_8004F764`

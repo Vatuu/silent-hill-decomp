@@ -4,11 +4,116 @@
 #include "bodyprog/math.h"
 #include "main/fsqueue.h"
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", Gfx_BackgroundSpriteDraw); // 0x800314EC
+void Gfx_BackgroundSpriteDraw(s_FsImageDesc* image) // 0x800314EC
+{
+    s32       baseYOffset;
+    s32       tileX;
+    s32       tileIndexX;
+    s32       x;
+    s32       y;
+    GsOT*     ot;
+    u32       textureShift;
+    s32       texturePageX;
+    u32       textureYOffset;
+    DR_TPAGE* tPage;
+    SPRT*     sprt;
+    PACKET*   packet;
+
+    ot             = (GsOT*)&D_800B7CC4[g_ObjectTableIdx];
+    packet         = GsOUT_PACKET_P;
+    baseYOffset    = -120 << (g_GameWork.gsScreenHeight_58A >> 8);
+    textureShift   = image->tPage[0];
+    texturePageX   = image->tPage[1];
+    textureYOffset = image->v;
+
+    for (y = 0; (g_GameWork.gsScreenHeight_58A >> 8) >= y; y++)
+    {
+        for (x = 0; ((g_GameWork.gsScreenWidth_588 - 1) >> (8 - textureShift)) >= x; x++)
+        {
+            sprt = (SPRT*)packet;
+
+            addPrimFast(ot, sprt, 4);
+            setRGBC0(sprt, D_800A8E58, D_800A8E58, D_800A8E58, 0x64);
+
+            if (y == 0)
+            {
+                setWH(sprt, 256, 256 - textureYOffset);
+                *((u32*)&sprt->u0) = (textureYOffset << 8) + (getClut(image->clutX, image->clutY) << 16);
+            }
+            else
+            {
+                setWH(sprt, 256, 256);
+                *((u32*)&sprt->u0) = getClut(image->clutX, image->clutY) << 16;
+            }
+
+            tileX = x << 8;
+
+            setXY0Fast(sprt,
+                       (tileX - (g_GameWork.gsScreenWidth_588 >> 1)) - (image->u << (2 - textureShift)),
+                       (baseYOffset + ((256 - textureYOffset) * y)));
+
+            packet += sizeof(SPRT);
+            tPage = (DR_TPAGE*)packet;
+
+            tileIndexX = x << textureShift;
+            setDrawTPage(tPage, 0, 1, getTPage(textureShift, 0, (texturePageX + tileIndexX) << 6, ((texturePageX << 4) & 0x100) + (y << 8)));
+
+            AddPrim(ot, tPage);
+            packet = (PACKET*)tPage + sizeof(DR_TPAGE);
+        }
+    }
+
+    GsOUT_PACKET_P = packet;
+    g_SysWork.field_22A0 |= 1;
+    D_800A8E58 = 0x80;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_800317CC);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_80031AAC);
+void func_80031AAC(s_FsImageDesc* image) // 0x80031AAC
+{
+    volatile s32 pad; // Is there a better solution?
+    s32          i;
+    s32          xOffset;
+    u8           tPageY;
+    POLY_FT4*    poly;
+
+    poly = (POLY_FT4*)GsOUT_PACKET_P;
+
+    for (i = 0; i < 3; i++)
+    {
+        setPolyFT4(poly);
+        setXY0Fast(poly, -160 + 128 * i, -120);
+        setXY1Fast(poly, 128 * i + (i == 2 ? -96 : -32), -120);
+
+        xOffset = 128 * i;
+
+        setXY2Fast(poly, -160 + xOffset, 120);
+        setXY3Fast(poly, xOffset + (i == 2 ? -96 : -32), 120);
+
+        *((u32*)&poly->u0) = (image->v << 8) + (getClut(image->clutX, image->clutY) << 16);
+
+        tPageY = image->tPage[1];
+
+        *((u32*)&poly->u1) = (image->v << 8) + (i == 2 ? 64 : 128) +
+                             (getTPage(image->tPage[0], 0, (image->tPage[1] + i) << 6, (tPageY << 4) & 0x100) << 16);
+
+        *((u16*)&poly->u2) = (image->v + 239) << 8;
+        *((u16*)&poly->u3) = ((image->v + 239) << 8) + (i == 2 ? 64 : 128);
+
+        setSemiTrans(poly, 0);
+
+        *((u16*)&poly->r0) = D_800A8E58 + (D_800A8E58 << 8);
+        poly->b0           = D_800A8E58;
+
+        addPrim(&g_ObjectTable0[g_ObjectTableIdx].org[2], poly);
+        poly++;
+    }
+
+    GsOUT_PACKET_P = (PACKET*)poly;
+    g_SysWork.field_22A0 |= 1;
+    D_800A8E58 = 0x80;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_80031CCC);
 
@@ -29,7 +134,65 @@ void Gfx_DebugStringPosition(s16 x, s16 y) // 0x80031EFC
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", Gfx_DebugStringDraw);
+void Gfx_DebugStringDraw(char* str)
+{
+    s32       textX;
+    s32       textY;
+    s32       charIndex;
+    GsOT*     ot;
+    u8*       strPtr;
+    s32       charCode;
+    PACKET*   packet;
+    SPRT_8*   sprt8;
+    DR_TPAGE* tPage;
+
+    ot     = (GsOT*)&D_800B5C58[g_ObjectTableIdx];
+    strPtr = str;
+    packet = GsOUT_PACKET_P;
+    textX  = g_Gfx_DebugStringPosition1.vx;
+    textY  = g_Gfx_DebugStringPosition1.vy;
+
+    while (*strPtr != 0)
+    {
+        charCode = *strPtr;
+        switch (charCode)
+        {
+            default:
+                sprt8 = (SPRT_8*)packet;
+                addPrimFast(ot, sprt8, 3);
+                setRGBC0(sprt8, 0x80, 0x80, 0x80, 0x74);
+                setXY0Fast(sprt8, textX, textY);
+                charIndex           = (char)toupper(charCode) - 0x2A;
+                *((u32*)&sprt8->u0) = ((charIndex & 0x1F) * 8) + ((((charIndex >> 5) * 8) + 0xF0) << 8) + (0x7FD2 << 16);
+
+            case 0x5F:
+            case 32:
+            case 9:
+            case 11:
+                textX += 8;
+                break;
+
+            case 0x7E:
+                textX -= 8;
+                break;
+
+            case 10:
+                textX = g_Gfx_DebugStringPosition0.vx;
+                textY += 8;
+                break;
+        }
+
+        strPtr += 1;
+        packet += sizeof(SPRT_8);
+    }
+
+    *((u32*)&g_Gfx_DebugStringPosition1) = (textX & 0xFFFF) + (textY << 0x10);
+    tPage                                = (DR_TPAGE*)packet;
+    setDrawTPage(tPage, 0, 1, 0x14);
+    addPrim(ot, tPage);
+    packet += sizeof(DR_TPAGE);
+    GsOUT_PACKET_P = packet;
+}
 
 char* Math_IntegerToString(s32 widthMin, s32 value) // 0x80032154
 {

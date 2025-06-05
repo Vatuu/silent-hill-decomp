@@ -17,7 +17,7 @@ void* SECTION(".rodata") g_OvlBodyprog = (void*)0x80024B60;
 
 s_FsImageDesc g_MainImg0 =
 {
-    .tPage = 0x0d01,
+    .tPage = {0x01, 0x0d},
     .u     = 32,
     .v     = 0,
     .clutX = 768,
@@ -26,7 +26,7 @@ s_FsImageDesc g_MainImg0 =
 
 s_FsImageDesc g_MainImg1 =
 {
-    .tPage = 0x1400,
+    .tPage = {0x00, 0x14},
     .u     = 0,
     .v     = 240,
     .clutX = 0,
