@@ -1113,6 +1113,7 @@ extern s16 g_StringPositionY; // 0x800C38AA
 /** String X position as `s32`. It's unclear why there are two. */
 extern s32 g_StringPositionX1; // 0x800C38AC
 
+/** String glyph sprite. */
 extern GsSPRITE D_800C38F8;
 
 extern s16 D_800C38FC;
@@ -1582,6 +1583,9 @@ void func_8004B6D4(s16 arg0, s16 arg1);
 
 void func_8004B74C(s16 arg0);
 
+/** Draws string. */
+void func_8004B76C(char* str, s32 useFixedWidth);
+
 void func_8004BCBC(s32 arg0);
 
 // TODO: Can probably create status enums for the below funcs' return values to avoid magic,
@@ -1882,7 +1886,7 @@ void Gfx_StringSetColor(s16 colorId);
 void Gfx_StringDraw(char* str, s32 arg1);
 
 /** Draws an integer string in display space. */
-void Gfx_StringDrawInt(s32 widthMin, s32 value);
+void Gfx_StringDrawInt(s32 widthMin, s32 val);
 
 void Settings_ScreenXYSet(s32 x, s32 y);
 

@@ -80,124 +80,127 @@ void func_8004B74C(s16 arg0) // 0x8004B74C
     D_800C391E = arg0;
 }
 
-void func_8004B76C(char* text, s32 useFixedWidth) // 0x8004B76C
+void func_8004B76C(char* str, s32 useFixedWidth) // 0x8004B76C
 {
-    GsOT* ot;
-    GsSPRITE* sprite;
-    s32 tileRow;
-    s32 glyphIndex;
+    #define GLYPH_OFFSET 12
+    #define ROW_OFFSET   16
 
-    sprite = (GsSPRITE*)PSX_SCRATCH_ADDR(0x30);
+    GsOT*     ot;
+    GsSPRITE* glyphSprite;
+    s32       tileRow;
+    s32       glyphIdx;
 
-    *sprite = D_800C38F8;
-    ot = &g_ObjectTable1[g_ObjectTableIdx];
+    glyphSprite  = (GsSPRITE*)PSX_SCRATCH_ADDR(0x30);
+    *glyphSprite = D_800C38F8;
+    ot           = &g_ObjectTable1[g_ObjectTableIdx];
     
-    while (*text != 0)
+    while (*str != 0)
     {
-        switch (*text) 
+        switch (*str) 
         {
             default:
-                glyphIndex = *text - 0x27;
-                tileRow = glyphIndex / 21;
-                sprite->u = (glyphIndex % 21) * 12;
-                
+                glyphIdx       = *str - 39;
+                tileRow        = glyphIdx / 21;
+                glyphSprite->u = (glyphIdx % 21) * 12;
+
                 if (useFixedWidth)
                 {
-                    sprite->w = 11;
+                    glyphSprite->w = 11;
                 } 
                 else 
                 {
-                    sprite->w = D_80025D6C[glyphIndex];
+                    glyphSprite->w = D_80025D6C[glyphIdx];
                 }
-                
-                sprite->tpage = (tileRow & 0xF) | 0x10;
-                sprite->cx = 0x130;
-                sprite->cy = D_800C391E + 0x1FA;
-                
-                GsSortFastSprite(sprite, ot, 4);
-                
-                sprite->x = sprite->x + sprite->w;
+
+                glyphSprite->tpage = (tileRow & 0xF) | 0x10;
+                glyphSprite->cx    = 0x130;
+                glyphSprite->cy    = D_800C391E + 0x1FA;
+
+                GsSortFastSprite(glyphSprite, ot, 4);
+
+                glyphSprite->x = glyphSprite->x + glyphSprite->w;
+                break;
+
+            case 32:
+            case 9:
+                glyphSprite->x += GLYPH_OFFSET;
+                break;
+
+            case 126:
+            case 8:
+                glyphSprite->x -= GLYPH_OFFSET;
                 break;
             
-            case 0x20:
-            case 0x9:
-                sprite->x += 12;
+            case 10:
+                glyphSprite->x  = D_800C391C;
+                glyphSprite->y += ROW_OFFSET;
                 break;
-            
-            case 0x7E:
-            case 0x8:
-                sprite->x -= 12;
-                break;
-            
-            case 0xA:
-                sprite->x = D_800C391C;
-                sprite->y += 16;
-                break;
-            
-            case 0xD:
-                sprite->x = D_800C391C;
-                sprite->y -= 16;
+
+            case 13:
+                glyphSprite->x  = D_800C391C;
+                glyphSprite->y -= ROW_OFFSET;
                 break;
         }
-        
-        text++; 
+
+        str++; 
     }
 
-    D_800C38F8 = *sprite;
+    D_800C38F8 = *glyphSprite;
 }
 
-void Gfx_StringDrawInt(s32 widthMin, s32 value) // 0x8004B9F8
+void Gfx_StringDrawInt(s32 widthMin, s32 val) // 0x8004B9F8
 {
-    s32 quotient;
-    s32 isNegative;
-    s32 i;
-    char* ptr;
-    
+    s32   quotient;
+    s32   isNegative;
+    s32   i;
+    char* str;
+
     if (widthMin > 0) 
     {
-        for (i = 0; i < widthMin - 1; i++) 
+        for (i = 0; i < (widthMin - 1); i++) 
         {
             D_800C38F8.x += 11;
         }
     }
-    
-    ptr = (char* )PSX_SCRATCH_ADDR(0x2F);
-    *ptr = 0;
-    
-    if (value < 0) 
+
+    str  = (char*)PSX_SCRATCH_ADDR(0x2F);
+    *str = 0;
+
+    if (val < 0) 
     {
         isNegative = true;
-        value = -value;
+        val        = -val;
     } 
     else 
     {
         isNegative = false;
     }
-    
-    while (value >= 10)
+
+    while (val >= 10)
     {
-        ptr--;
-        quotient = (value / 10) >> 32;
-        *ptr = (value - (quotient * 10)) + '0';
+        str--;
+        quotient = (val / 10) >> 32;
+        *str     = (val - (quotient * 10)) + '0';
             
         if (widthMin > 0) 
         {
             D_800C38F8.x -= 11;
         }
         
-        value = quotient;
+        val = quotient;
     }
-    
-    ptr--;
-    *ptr = value + '0';
-    
+
+    str--;
+    *str = val + '0';
+
     if (isNegative)
     {
-        ptr--;
-        *ptr = '-';
+        str--;
+        *str          = '-';
         D_800C38F8.x -= 11;
     }
-    Gfx_StringDraw(ptr, 5);
+
+    Gfx_StringDraw(str, 5);
     return;
 }
 

@@ -510,21 +510,23 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80053B08", func_80054558); // 0x
 
 void func_80054634() // 0x80054634
 {
-    u8 sp10;
+    u8 field_F;
 
-    sp10 = (u8) g_SysWork.field_38.field_F;
+    field_F                          = (u8)g_SysWork.field_38.field_F;
     g_SavegamePtr->equippedWeapon_AA = D_800AE184;
+
     if (g_SavegamePtr->equippedWeapon_AA & 0xFF)
     {
         g_SysWork.field_38.field_F = g_SavegamePtr->equippedWeapon_AA + 0x80;
     }
     else
     {
-        g_SysWork.field_38.field_F = NO_VALUE;
+        g_SysWork.field_38.field_F        = NO_VALUE;
         g_SysWork.isPlayerInCombatMode_4B = 0;
     }
-    func_800546A8((u8) g_SysWork.field_38.field_F);
-    Player_AnimUpdate(&sp10);
+
+    func_800546A8((u8)g_SysWork.field_38.field_F);
+    Player_AnimUpdate(&field_F);
 }
 
 void func_800546A8(s32 arg0) // 0x800546A8

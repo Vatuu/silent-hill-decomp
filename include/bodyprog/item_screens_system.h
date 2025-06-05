@@ -25,23 +25,23 @@ typedef struct
 
 extern s32 g_Inventory_CmdSelectedIdx;
 
-// g_Inventory_CurrentSelectedStatus
-/** This variable defines what the player has selected.
-* 0 - Items.
-* 1 - Equiped item.
-* 2 - Exit option.
-* 3 - Settings option.
-* 4 - Map option.
-* 5 - Command options for item selected.
-* 6 - Command options for item equiped.
-* 7 - Select health status. (Used for the animation when the player uses a health item)
-* 8 - Examining items.
+// `g_Inventory_CurrentSelectedStatus`
+/** Defines what the player has selected.
+* 0 - Items
+* 1 - Equiped item
+* 2 - Exit option
+* 3 - Settings option
+* 4 - Map option
+* 5 - Command options for item selected
+* 6 - Command options for item equiped
+* 7 - Select health status (used for the animation when the player uses a health item)
+* 8 - Examining items
 *
 * @note
-* `D_800C399C` sames the same behaviour,
-* the main difference is that this can be modified on memory
-* while `D_800C399C` is constatly updating with the same value
-* that this variable has.
+* `D_800C399C` has the same behaviour, with
+* the main difference being that it can be modified in memory
+* while `D_800C399C` is constatly updated to the same value
+* as this variable.
 */
 extern s32 D_800ADB5C;
 

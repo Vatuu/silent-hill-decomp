@@ -209,7 +209,7 @@ s32 readheader(s32 file_no) // 0x800A7428
             if (smf_song[file_no].mf_format_524 == 0)
             {
                 smf_song[file_no].mf_data_size_518 = 0x10000;
-                smf_song[file_no].mf_data_size_518 = readEOF(0U);
+                smf_song[file_no].mf_data_size_518 = readEOF(0u);
 
                 p->mf_track_size_C = smf_song[file_no].mf_data_size_518;
             }
@@ -235,7 +235,7 @@ s32 readheader(s32 file_no) // 0x800A7428
             smf_song[file_no].mf_format_524    = 0;
             smf_song[file_no].mf_tracks_526    = 1;
             smf_song[file_no].mf_data_size_518 = 0x10000;
-            smf_song[file_no].mf_data_size_518 = readEOF(0U);
+            smf_song[file_no].mf_data_size_518 = readEOF(0u);
 
             tempo = (u32)read32bit(p) >> 8;
             tempo = 60000000 / tempo;

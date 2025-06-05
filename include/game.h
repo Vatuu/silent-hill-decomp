@@ -676,14 +676,14 @@ typedef struct _GameWork
     u8                 background2dColor_R_58C;
     u8                 background2dColor_G_58D;
     u8                 background2dColor_B_58E;
-    u8                 field_58F; // A or graphics command code?
+    u8                 field_58F; // Command code? Maybe `s_PrimColor` fits here.
     s32                gameStatePrev_590;    /** `e_GameState` */
     s32                gameState_594;        /** `e_GameState` */
-    s32                gameStateStep_598[3]; /** Temp data used by current gameState. Can be another state ID or other data. 
-                                              * This states could possibly sub-states for specific events of individual screens
-											  * and due the way how it is normally used on menus. For example: on the settings
-											  * screen [0] is used to define what option the player has selected, [1] is used
-											  * during specific settings screen like the position screen or the brightness screen.
+    s32                gameStateStep_598[3]; /** Temp data used by current `gameState`. Can be another state ID or other data. 
+                                              * This states could be sub-states for specific events of individual screens
+											  * because of the way it's normally used in menus. For example: in the settings
+											  * screen, [0] is used to define what option the player has selected, and [1] is used
+											  * during specific settings screens, such as the position screen or the brightness screen.
 											  *
 											  * [2] is likely rarely used or maybe only used during maps.
                                               */
@@ -1015,16 +1015,19 @@ static inline void SysWork_StateStepIncrement()
     g_SysWork.sysStateStep_C++;
 }
 
-// Clears state steps twice for some reason? (only used once below, others use regular Game_StateSetNext)
+/** @brief Clears state steps twice for some reason? Only used once below, others use regular `Game_StateSetNext`. */
 static inline void Game_StateSetNext_ClearStateSteps(e_GameState gameState)
 {
-    e_GameState prevState           = g_GameWork.gameState_594;
+    e_GameState prevState = g_GameWork.gameState_594;
+
     g_GameWork.gameState_594        = gameState;
     g_SysWork.timer_1C              = 0;
     g_SysWork.timer_20              = 0;
     g_GameWork.gameStateStep_598[1] = 0;
     g_GameWork.gameStateStep_598[2] = 0;
+
     SysWork_StateSetNext(SysState_Gameplay);
+
     g_GameWork.gameStateStep_598[1] = 0;
     g_GameWork.gameStateStep_598[2] = 0;
     g_GameWork.gameStateStep_598[0] = prevState;

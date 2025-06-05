@@ -781,7 +781,7 @@ s16 voice_check(s32 chan, s32 note, s32 flag) // 0x800A4F64
     }
     while (vo < sd_reserved_voice);
 
-    // Dead code needed for match, from permuter
+    // Dead code needed for match from permuter.
     if (stat && vo)
     {
     }

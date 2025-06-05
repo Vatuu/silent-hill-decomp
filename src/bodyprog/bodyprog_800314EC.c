@@ -243,25 +243,25 @@ void GameState_Unk0_Update() // 0x80032D1C
             break;
 
         case 3:
-            if ((g_Gfx_ScreenFade & 7) == ((1 << 0) | (1 << 2)))
+            if ((g_Gfx_ScreenFade & 0x7) == ((1 << 0) | (1 << 2)))
             {
                 Fs_QueueWaitForEmpty();
 
                 gameState = g_GameWork.gameState_594;
                 
-                g_SysWork.timer_1C              = 0;
-                g_SysWork.timer_20              = 0;
+                g_SysWork.timer_1C = 0;
+                g_SysWork.timer_20 = 0;
 
                 g_GameWork.gameStateStep_598[1] = 0;
                 g_GameWork.gameStateStep_598[2] = 0;
 
-                g_SysWork.sysState_8            = 0;
-                g_SysWork.timer_24              = 0;
-                g_SysWork.sysStateStep_C        = 0;
-                g_SysWork.field_28              = 0;
-                g_SysWork.field_10              = 0;
-                g_SysWork.timer_2C              = 0;
-                g_SysWork.field_14              = 0;
+                g_SysWork.sysState_8     = 0;
+                g_SysWork.timer_24       = 0;
+                g_SysWork.sysStateStep_C = 0;
+                g_SysWork.field_28       = 0;
+                g_SysWork.field_10       = 0;
+                g_SysWork.timer_2C       = 0;
+                g_SysWork.field_14       = 0;
 
                 g_GameWork.gameStateStep_598[0] = gameState;
                 g_GameWork.gameState_594        = gameState + 1;
@@ -760,6 +760,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_80035BE0); // 0x
 void func_80035DB4(s32 arg0) // 0x80035DB4
 {
     D_800BCD5C = 0;
+
     if (g_MapOverlayHeader.func_10)
     {
         g_MapOverlayHeader.func_10();
@@ -903,12 +904,12 @@ void func_80037154() // 0x80037154
 void func_80037188() // 0x80037188
 {
     s32 i;
-    
+
     for (i = 0; i < 2; i++)
     {
         D_800BCDA8[i].field_0 = NO_VALUE;
     }
-    
+
     for (i = 0; i < 2; i++)
     {
         func_8004690C((i + 0x529) & 0xFFFF);
