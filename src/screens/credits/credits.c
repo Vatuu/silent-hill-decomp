@@ -159,15 +159,15 @@ s32 func_801E3124() // 0x801E3124
             switch (g_Gfx_ScreenFade)
             {
                 case 13:
-                    g_GameWork.field_58C = FP_COLOR(1.0f);
-                    g_GameWork.field_58D = FP_COLOR(1.0f);
-                    g_GameWork.field_58E = FP_COLOR(1.0f);
+                    g_GameWork.background2dColor_R_58C = FP_COLOR(1.0f);
+                    g_GameWork.background2dColor_G_58D = FP_COLOR(1.0f);
+                    g_GameWork.background2dColor_B_58E = FP_COLOR(1.0f);
                     break;
 
                 case 5:
-                    g_GameWork.field_58C = FP_COLOR(0.0f);
-                    g_GameWork.field_58D = FP_COLOR(0.0f);
-                    g_GameWork.field_58E = FP_COLOR(0.0f);
+                    g_GameWork.background2dColor_R_58C = FP_COLOR(0.0f);
+                    g_GameWork.background2dColor_G_58D = FP_COLOR(0.0f);
+                    g_GameWork.background2dColor_B_58E = FP_COLOR(0.0f);
                     break;
             }
 
@@ -207,9 +207,9 @@ s32 func_801E3124() // 0x801E3124
 
             if (D_801E5E74 <= 0 && func_80045B28() < 2)
             {
-                g_GameWork.field_58C = 0;
-                g_GameWork.field_58D = 0;
-                g_GameWork.field_58E = 0;
+                g_GameWork.background2dColor_R_58C = 0;
+                g_GameWork.background2dColor_G_58D = 0;
+                g_GameWork.background2dColor_B_58E = 0;
                 return 1;
             }
 

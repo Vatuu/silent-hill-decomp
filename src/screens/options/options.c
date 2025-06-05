@@ -46,9 +46,9 @@ void GameState_OptionScreen_Update() // 0x801E2D44
                 VSync(8);
             }
 
-            g_GameWork.field_58C = 0;
-            g_GameWork.field_58D = 0;
-            g_GameWork.field_58E = 0;
+            g_GameWork.background2dColor_R_58C = 0;
+            g_GameWork.background2dColor_G_58D = 0;
+            g_GameWork.background2dColor_B_58E = 0;
 
             g_Gfx_ScreenFade  = 7;
             g_IntervalVBlanks = 1;
@@ -1381,14 +1381,14 @@ void Settings_PositionScreen() // 0x801E53A0
         case 3:
             if ((g_Gfx_ScreenFade & 0x7) == 5)
             {
-                g_Gfx_ScreenFade                = 6;
-                g_GameWork.gameStateStep_598[0] = 10;
-                g_SysWork.timer_20              = 0;
-                g_GameWork.gameStateStep_598[1] = 0;
-                g_GameWork.gameStateStep_598[2] = 0;
-                g_GameWork.field_58C            = 0;
-                g_GameWork.field_58D            = 0;
-                g_GameWork.field_58E            = 0;
+                g_Gfx_ScreenFade                   = 6;
+                g_GameWork.gameStateStep_598[0]    = 10;
+                g_SysWork.timer_20                 = 0;
+                g_GameWork.gameStateStep_598[1]    = 0;
+                g_GameWork.gameStateStep_598[2]    = 0;
+                g_GameWork.background2dColor_R_58C = 0;
+                g_GameWork.background2dColor_G_58D = 0;
+                g_GameWork.background2dColor_B_58E = 0;
                 return;
             }
             break;
@@ -1400,15 +1400,15 @@ void Settings_PositionScreen() // 0x801E53A0
     switch (g_Gfx_ScreenPos_InvertColorBg)
     {
         case 0:
-            g_GameWork.field_58C = ~g_Gfx_ScreenPos_InvertColorBg_TransitionCounter;
-            g_GameWork.field_58D = ~g_Gfx_ScreenPos_InvertColorBg_TransitionCounter;
-            g_GameWork.field_58E = ~g_Gfx_ScreenPos_InvertColorBg_TransitionCounter;
+            g_GameWork.background2dColor_R_58C = ~g_Gfx_ScreenPos_InvertColorBg_TransitionCounter;
+            g_GameWork.background2dColor_G_58D = ~g_Gfx_ScreenPos_InvertColorBg_TransitionCounter;
+            g_GameWork.background2dColor_B_58E = ~g_Gfx_ScreenPos_InvertColorBg_TransitionCounter;
             break;
 
         case 1:
-            g_GameWork.field_58C = g_Gfx_ScreenPos_InvertColorBg_TransitionCounter;
-            g_GameWork.field_58D = g_Gfx_ScreenPos_InvertColorBg_TransitionCounter;
-            g_GameWork.field_58E = g_Gfx_ScreenPos_InvertColorBg_TransitionCounter;
+            g_GameWork.background2dColor_R_58C = g_Gfx_ScreenPos_InvertColorBg_TransitionCounter;
+            g_GameWork.background2dColor_G_58D = g_Gfx_ScreenPos_InvertColorBg_TransitionCounter;
+            g_GameWork.background2dColor_B_58E = g_Gfx_ScreenPos_InvertColorBg_TransitionCounter;
             break;
     }
 
@@ -1653,14 +1653,14 @@ void Settings_BrightnessScreen() // 0x801E6018
         case 3:
             if (g_Gfx_ScreenFade & (1 << 2) && (g_Gfx_ScreenFade & (1 << 1)) == 0 && g_Gfx_ScreenFade & (1 << 0))
             {
-                g_Gfx_ScreenFade                = (1 << 2) | (1 << 1);
-                g_GameWork.gameStateStep_598[0] = 11;
-                g_SysWork.timer_20              = 0;
-                g_GameWork.gameStateStep_598[1] = 0;
-                g_GameWork.gameStateStep_598[2] = 0;
-                g_GameWork.field_58C            = 0;
-                g_GameWork.field_58D            = 0;
-                g_GameWork.field_58E            = 0;
+                g_Gfx_ScreenFade                   = (1 << 2) | (1 << 1);
+                g_GameWork.gameStateStep_598[0]    = 11;
+                g_SysWork.timer_20                 = 0;
+                g_GameWork.gameStateStep_598[1]    = 0;
+                g_GameWork.gameStateStep_598[2]    = 0;
+                g_GameWork.background2dColor_R_58C = 0;
+                g_GameWork.background2dColor_G_58D = 0;
+                g_GameWork.background2dColor_B_58E = 0;
             }
             break;
 

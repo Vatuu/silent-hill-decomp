@@ -673,9 +673,9 @@ typedef struct _GameWork
     s_ShSavegame       savegame_30C;
     u16                gsScreenWidth_588;
     u16                gsScreenHeight_58A;
-    u8                 field_58C; // R?
-    u8                 field_58D; // G?
-    u8                 field_58E; // B?
+    u8                 background2dColor_R_58C;
+    u8                 background2dColor_G_58D;
+    u8                 background2dColor_B_58E;
     u8                 field_58F; // A or graphics command code?
     s32                gameStatePrev_590;    /** `e_GameState` */
     s32                gameState_594;        /** `e_GameState` */
@@ -1013,6 +1013,23 @@ static inline void SysWork_StateStepIncrement()
     g_SysWork.timer_2C = 0;
     g_SysWork.field_14 = 0;
     g_SysWork.sysStateStep_C++;
+}
+
+// Clears state steps twice for some reason? (only used once below, others use regular Game_StateSetNext)
+static inline void Game_StateSetNext_ClearStateSteps(e_GameState gameState)
+{
+    e_GameState prevState           = g_GameWork.gameState_594;
+    g_GameWork.gameState_594        = gameState;
+    g_SysWork.timer_1C              = 0;
+    g_SysWork.timer_20              = 0;
+    g_GameWork.gameStateStep_598[1] = 0;
+    g_GameWork.gameStateStep_598[2] = 0;
+    SysWork_StateSetNext(SysState_Gameplay);
+    g_GameWork.gameStateStep_598[1] = 0;
+    g_GameWork.gameStateStep_598[2] = 0;
+    g_GameWork.gameStateStep_598[0] = prevState;
+    g_GameWork.gameStatePrev_590    = prevState;
+    g_GameWork.gameStateStep_598[0] = 0;
 }
 
 /** @brief Sets the GameState to be used in the next game update.

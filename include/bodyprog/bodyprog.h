@@ -266,7 +266,7 @@ typedef struct
 
 typedef struct
 {
-    s8 unk_0;
+    s8 field_0;
     s8 field_1;
     s8 field_2;
     s8 field_3;
@@ -721,7 +721,8 @@ typedef struct _MapOverlayHeader
     s8                (*getMapRoomIdxFunc_4)(s32 x, s32 y);                              // Called by `func_80036420`
     s8                field_8;
     u8                unk_9[3];
-    u8                unk_C[8];
+    u8                unk_C[4];
+    s32               (*func_10)();
     s8                field_14;
     u8                unk_15[3];
     u8                unk_18[4];
@@ -768,6 +769,8 @@ extern char D_80025394[];
 extern s32 D_80025528; // Type assumed.
 
 extern s32 D_80025530; // Type assumed.
+
+extern u8 D_80025D6C[];
 
 extern RECT D_80028A20;
 
@@ -891,9 +894,17 @@ extern s16 g_StringColorId; // 0x800AD498
 
 extern s32 D_800AD49C;
 
+extern s32 D_800AE178;
+
+extern s32 D_800AE17C;
+
 extern s32 D_800AE180;
 
 extern u8 D_800AE184;
+
+extern u8 D_800AE185;
+
+extern u8 D_800AE186;
 
 extern s8 D_800AE187;
 
@@ -987,13 +998,15 @@ extern s32 g_Gfx_ScreenFade;
 
 extern s16 D_800BCD28;
 
+extern s32 D_800BCD5C;
+
 extern s8 D_800BCD78;
 
 extern s32 D_800BCD84;
 
 extern s32 D_800BCD90[];
 
-extern s_800BCDA8 D_800BCDA8[];
+extern s_800BCDA8 D_800BCDA8[2];
 
 extern s32 D_800BCDB0; // Type assumed.
 
@@ -1063,6 +1076,14 @@ extern u8 D_800C16A8[];
 
 extern s32 D_800C16C8; // Type assumed.
 
+extern s32 D_800C3990;
+
+extern s32 D_800C3994;
+
+extern s32 D_800C3998;
+
+extern s32 D_800C399C;
+
 extern u8 D_800C37D0;
 
 extern s_800C37D8* D_800C37D8;
@@ -1091,6 +1112,8 @@ extern s16 g_StringPositionY; // 0x800C38AA
 
 /** String X position as `s32`. It's unclear why there are two. */
 extern s32 g_StringPositionX1; // 0x800C38AC
+
+extern GsSPRITE D_800C38F8;
 
 extern s16 D_800C38FC;
 
@@ -1859,7 +1882,7 @@ void Gfx_StringSetColor(s16 colorId);
 void Gfx_StringDraw(char* str, s32 arg1);
 
 /** Draws an integer string in display space. */
-void Gfx_StringDrawInt(s32 widthMin, s32 val);
+void Gfx_StringDrawInt(s32 widthMin, s32 value);
 
 void Settings_ScreenXYSet(s32 x, s32 y);
 

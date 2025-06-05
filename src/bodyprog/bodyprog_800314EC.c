@@ -204,12 +204,12 @@ void GameState_Unk0_Update() // 0x80032D1C
     switch (gameStateStep0)
     {
         case 0:
-            g_GameWork.field_58C = 0;
-            g_GameWork.field_58D = 0;
-            g_GameWork.field_58E = 0;
+            g_GameWork.background2dColor_R_58C = 0;
+            g_GameWork.background2dColor_G_58D = 0;
+            g_GameWork.background2dColor_B_58E = 0;
 
             Gfx_Init(SCREEN_WIDTH, 0);
-            g_SysWork.timer_20 = 0;
+            g_SysWork.timer_20              = 0;
             g_GameWork.gameStateStep_598[1] = 0;
             g_GameWork.gameStateStep_598[2] = 0;
             g_GameWork.gameStateStep_598[0]++;
@@ -249,23 +249,23 @@ void GameState_Unk0_Update() // 0x80032D1C
 
                 gameState = g_GameWork.gameState_594;
                 
-                g_SysWork.timer_1C = 0;
-                g_SysWork.timer_20 = 0;
+                g_SysWork.timer_1C              = 0;
+                g_SysWork.timer_20              = 0;
 
                 g_GameWork.gameStateStep_598[1] = 0;
                 g_GameWork.gameStateStep_598[2] = 0;
 
-                g_SysWork.sysState_8 = 0;
-                g_SysWork.timer_24 = 0;
-                g_SysWork.sysStateStep_C = 0;
-                g_SysWork.field_28 = 0;
-                g_SysWork.field_10 = 0;
-                g_SysWork.timer_2C = 0;
-                g_SysWork.field_14 = 0;
+                g_SysWork.sysState_8            = 0;
+                g_SysWork.timer_24              = 0;
+                g_SysWork.sysStateStep_C        = 0;
+                g_SysWork.field_28              = 0;
+                g_SysWork.field_10              = 0;
+                g_SysWork.timer_2C              = 0;
+                g_SysWork.field_14              = 0;
 
                 g_GameWork.gameStateStep_598[0] = gameState;
-                g_GameWork.gameState_594 = gameState + 1;
-                g_GameWork.gameStatePrev_590 = gameState;
+                g_GameWork.gameState_594        = gameState + 1;
+                g_GameWork.gameStatePrev_590    = gameState;
                 g_GameWork.gameStateStep_598[0] = 0;
             }
             break;
@@ -449,7 +449,7 @@ void MainLoop() // 0x80032EE0
 
         // Draw objects?
         GsSwapDispBuff();
-        GsSortClear(g_GameWork.field_58C, g_GameWork.field_58D, g_GameWork.field_58E, &g_ObjectTable0[g_ObjectTableIdx]);
+        GsSortClear(g_GameWork.background2dColor_R_58C, g_GameWork.background2dColor_G_58D, g_GameWork.background2dColor_B_58E, &g_ObjectTable0[g_ObjectTableIdx]);
         GsDrawOt(&g_ObjectTable0[g_ObjectTableIdx]);
         GsDrawOt(&g_ObjectTable1[g_ObjectTableIdx]);
     }
@@ -757,7 +757,18 @@ void func_80035BBC() // 0x80035BBC
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_80035BE0); // 0x80035BE0
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_80035DB4); // 0x80035DB4
+void func_80035DB4(s32 arg0) // 0x80035DB4
+{
+    D_800BCD5C = 0;
+    if (g_MapOverlayHeader.func_10)
+    {
+        g_MapOverlayHeader.func_10();
+        if (arg0 == 0 && D_800BCD5C == 0)
+        {
+            func_80035F4C(1, 0xF0000, 0);
+        }
+    }
+}
 
 void func_80035E1C() // 0x80035E1C
 {
@@ -889,7 +900,20 @@ void func_80037154() // 0x80037154
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_80037188); // 0x80037188
+void func_80037188() // 0x80037188
+{
+    s32 i;
+    
+    for (i = 0; i < 2; i++)
+    {
+        D_800BCDA8[i].field_0 = NO_VALUE;
+    }
+    
+    for (i = 0; i < 2; i++)
+    {
+        func_8004690C((i + 0x529) & 0xFFFF);
+    }
+}
 
 void Chara_PositionUpdateFromParams(s_AreaLoadParams* params) // 0x800371E8
 {
@@ -1573,9 +1597,7 @@ void GameState_MainMenu_Update()
         GameState_MovieIntro
     };
     
-    s32 temp_a1_2;
     s32 temp_s2;
-    s32 temp_v1;
     s32 var_v0;
     s32 var_2;
     s_ShSavegame* save0;
@@ -1601,9 +1623,9 @@ void GameState_MainMenu_Update()
     switch (D_800A9A74)
     {
         case 0:
-            g_GameWork.field_58C = 0;
-            g_GameWork.field_58D = 0;
-            g_GameWork.field_58E = 0;
+            g_GameWork.background2dColor_R_58C = 0;
+            g_GameWork.background2dColor_G_58D = 0;
+            g_GameWork.background2dColor_B_58E = 0;
             
             Gfx_ClearRectInterlaced(0, 32, SCREEN_WIDTH, FRAMEBUFFER_HEIGHT_INTERLACED, 0, 0, 0);
             Gfx_Init(SCREEN_WIDTH, 1);
@@ -1839,13 +1861,13 @@ void GameState_MainMenu_Update()
                 
                 func_8002E830();
                 
-                prevState = g_GameWork.gameState_594;
+                prevState                       = g_GameWork.gameState_594;
                 g_GameWork.gameStateStep_598[0] = prevState;
-                g_GameWork.gameState_594 = nextGameStates[D_800A9A78];
-                g_SysWork.timer_1C = 0;
-                g_GameWork.gameStatePrev_590 = prevState;
+                g_GameWork.gameState_594        = nextGameStates[D_800A9A78];
+                g_SysWork.timer_1C              = 0;
+                g_GameWork.gameStatePrev_590    = prevState;
                 g_GameWork.gameStateStep_598[0] = 0;
-                g_SysWork.timer_20 = 0;
+                g_SysWork.timer_20              = 0;
                 g_GameWork.gameStateStep_598[1] = 0;
                 g_GameWork.gameStateStep_598[2] = 0;
                 SysWork_StateSetNext(SysState_Gameplay);
@@ -1874,19 +1896,7 @@ void GameState_MainMenu_Update()
                 if (Fs_QueueGetLength() == 0)
                 {
                     D_800A9A80++;
-                    temp_a1_2 = g_GameWork.gameState_594;
-                    g_GameWork.gameState_594 = GameState_MovieIntro;
-                    g_GameWork.field_58C = 0;
-                    g_GameWork.field_58D = 0;
-                    g_GameWork.field_58E = 0;
-                    g_SysWork.timer_1C = 0;
-                    g_SysWork.timer_20 = 0;
-                    g_GameWork.gameStateStep_598[1] = 0;
-                    g_GameWork.gameStateStep_598[2] = 0;
-                    SysWork_StateSetNext(SysState_Gameplay);
-                    g_GameWork.gameStateStep_598[0] = temp_a1_2;
-                    g_GameWork.gameStatePrev_590 = temp_a1_2;
-                    g_GameWork.gameStateStep_598[0] = 0;
+					Game_StateSetNext_ClearStateSteps(GameState_MovieIntro);
                 }
                 break;
         }
