@@ -53,8 +53,6 @@ void func_800904F4() // 0x800904F4
     }
 }
 
-// TODO: RODATA migration
-#ifdef NON_MATCHING
 void func_80090664() // 0x80090664
 {
     s32      temp_s1;
@@ -418,9 +416,6 @@ void func_80090664() // 0x80090664
         }
     }
 }
-#else
-INCLUDE_ASM("asm/bodyprog/nonmatchings/credits", func_80090664); // 0x80090664
-#endif
 
 u32 func_8009134C(u32 n) // 0x8009134C
 {
@@ -455,7 +450,7 @@ void func_80091388(s32 arg0, s32 arg1, s32 arg2) // 0x80091388
     
     if (arg1 > 0) 
     {
-        Gfx_DebugStringDraw(&D_8002B394);
+        Gfx_DebugStringDraw(".");
         do 
         {
             var_v0 = arg2 < 0 ? (arg2 + 0xFFF) : arg2;
