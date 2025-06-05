@@ -134,7 +134,65 @@ void Gfx_DebugStringPosition(s16 x, s16 y) // 0x80031EFC
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", Gfx_DebugStringDraw);
+void Gfx_DebugStringDraw(char* str)
+{
+    s32       textX;
+    s32       textY;
+    s32       charIndex;
+    GsOT*     ot;
+    u8*       strPtr;
+    s32       charCode;
+    PACKET*   packet;
+    SPRT_8*   sprt8;
+    DR_TPAGE* tPage;
+
+    ot     = (GsOT*)&D_800B5C58[g_ObjectTableIdx];
+    strPtr = str;
+    packet = GsOUT_PACKET_P;
+    textX  = g_Gfx_DebugStringPosition1.vx;
+    textY  = g_Gfx_DebugStringPosition1.vy;
+
+    while (*strPtr != 0)
+    {
+        charCode = *strPtr;
+        switch (charCode)
+        {
+            default:
+                sprt8 = (SPRT_8*)packet;
+                addPrimFast(ot, sprt8, 3);
+                setRGBC0(sprt8, 0x80, 0x80, 0x80, 0x74);
+                setXY0Fast(sprt8, textX, textY);
+                charIndex           = (toupper(charCode) & 0xFF) - 0x2A;
+                *((u32*)&sprt8->u0) = ((charIndex & 0x1F) * 8) + ((((charIndex >> 5) * 8) + 0xF0) << 8) + (0x7FD2 << 16);
+
+            case 0x5F:
+            case 32:
+            case 9:
+            case 11:
+                textX += 8;
+                break;
+
+            case 0x7E:
+                textX -= 8;
+                break;
+
+            case 10:
+                textX = g_Gfx_DebugStringPosition0.vx;
+                textY += 8;
+                break;
+        }
+
+        strPtr += 1;
+        packet += sizeof(SPRT_8);
+    }
+
+    *((u32*)&g_Gfx_DebugStringPosition1) = (textX & 0xFFFF) + (textY << 0x10);
+    tPage                                = (DR_TPAGE*)packet;
+    setDrawTPage(tPage, 0, 1, 0x14);
+    addPrim(ot, tPage);
+    packet += sizeof(DR_TPAGE);
+    GsOUT_PACKET_P = packet;
+}
 
 char* Math_IntegerToString(s32 widthMin, s32 value) // 0x80032154
 {

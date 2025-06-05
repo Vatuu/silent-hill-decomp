@@ -730,7 +730,7 @@ void func_801E3E18(s32 arg0, s32 arg1) // 0x801E3E18
     s32* temp_t2;
 
     packet  = GsOUT_PACKET_P;
-    temp_t2 = (s32*)((g_ObjectTableIdx << 4) + &D_800B5C58);
+    temp_t2 = &D_800B5C58[g_ObjectTableIdx];
     addr    = temp_t2 + 1;
     temp_a2 = D_801E600C;
 
@@ -983,7 +983,7 @@ void func_801E4394(u8* str) // 0x801E4394
     u32     charCode   = *strPtr;
     u32     colorCode  = D_800AFE08.field_8 | (blendFlag << 25); // RBG + code + semi-transparency flag.
     u32     clut       = (u16)D_800AFE08.field_16;               // Clut Y, clut Y.
-    s32*    addr       = (s32*)((g_ObjectTableIdx << 4) + &D_800B5C58);
+    GsOT*   ot         = &D_800B5C58[g_ObjectTableIdx];
 
     s32       charWidth;
     s32       widthSum;
@@ -1003,7 +1003,7 @@ void func_801E4394(u8* str) // 0x801E4394
         if (charCode >= 0x21 && charCode < 0x85)
         {
             sprite = (SPRT*)packet;
-            addPrimFast(addr, sprite, 4);
+            addPrimFast(ot, sprite, 4);
             *(u32*)(&sprite->r0) = colorCode;
             setXY0Fast(sprite, textX, textY);
 
@@ -1024,7 +1024,7 @@ void func_801E4394(u8* str) // 0x801E4394
             // KCET font.
             if (charCode >= 0xA0 && charCode < 0xB0)
             {
-                addPrimFast(addr, sprite16, 3);
+                addPrimFast(ot, sprite16, 3);
                 *(u32*)(&sprite16->r0) = colorCode ^ (0x18 << 24); // GP0(7Ch) - Textured Rectangle, 16x16, opaque, texture-blending.
                 setXY0Fast(sprite16, textX, textY + 4);
 
@@ -1037,7 +1037,7 @@ void func_801E4394(u8* str) // 0x801E4394
             // KCET font, .YVUTSR.
             else if (charCode >= 0xB8 && charCode < 0xBF)
             {
-                addPrimFast(addr, sprite16, 3);
+                addPrimFast(ot, sprite16, 3);
                 *(u32*)(&sprite16->r0) = colorCode ^ (0x18 << 24); // GP0(7Ch) - Textured Rectangle, 16x16, opaque, texture-blending.
                 setXY0Fast(sprite16, textX, textY + 4);
 
@@ -1115,7 +1115,7 @@ void func_801E4394(u8* str) // 0x801E4394
 
     tPage = (DR_TPAGE*)packet;
     setDrawTPage(tPage, 0, 1, D_800AFE08.field_14);
-    addPrim(addr, tPage);
+    addPrim(ot, tPage);
 
     D_800AFE08.field_0 = textX;
     D_800AFE08.field_2 = textY;
@@ -1223,7 +1223,7 @@ void func_801E4BD4(u32 arg0, u32 arg1) // 0x801E4BD4
 void func_801E4C1C(u8* str) // 0x801E4C1C
 {
     PACKET* packet;
-    s32*    addr;
+    GsOT*   ot;
 
     s32 textX   = D_800AFE24.field_0;
     s32 textY   = D_800AFE24.field_2;
@@ -1269,7 +1269,7 @@ void func_801E4C1C(u8* str) // 0x801E4C1C
     s32 idx;
 
     packet = GsOUT_PACKET_P;
-    addr   = (s32*)((g_ObjectTableIdx << 4) + &D_800B5C58);
+    ot     = &D_800B5C58[g_ObjectTableIdx];
 
     charCode  = *str;
     colorCode = D_800AFE24.field_8 | blendFlag; // RGB + code + semi-transparency flag.
@@ -1327,7 +1327,7 @@ void func_801E4C1C(u8* str) // 0x801E4C1C
                 var_a2   = var_t6 * charWidth;
             }
 
-            addPrimFast(addr, (POLY_FT4*)packet, 9);
+            addPrimFast(ot, (POLY_FT4*)packet, 9);
             *(u32*)(&poly->r0) = colorCode; // GP0(2Ch) - Textured four-point polygon, opaque, texture-blending.
             setXY0Fast(poly, FP_FROM(var_a3, Q12_SHIFT), FP_FROM(var_t4, Q12_SHIFT));
             setXY1Fast(poly, FP_FROM(var_a3 + var_a1, Q12_SHIFT), FP_FROM(var_t4, Q12_SHIFT));
