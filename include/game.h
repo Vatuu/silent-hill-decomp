@@ -583,19 +583,19 @@ typedef struct _ShSavegame
     u8                meleeKillCount_25D;
     u8                meleeKillCountB_25E;          // Can't be packed if used as `u16`.
     u8                rangedKillCount_25F;
-    s32               field_260 : 28;
+    u32               field_260 : 28;
     s32               gameDifficulty_260 : 4;   /** `e_GameDifficulty`. */
-    s16               firedShotCount_264;       /** Missed shot count = firedShotCount - (closeRangeShotCount + midRangeShotCount + longRangeShotCount). */
-    s16               closeRangeShotCount_266;  /** Only hits counted. */
-    s16               midRangeShotCount_268;    /** Only hits counted. */
-    s16               longRangeShotCount_26A;   /** Only hits counted. */
-    s16               field_26C;
-    s16               field_26E;                // Related to enemy kills.
-    s16               field_270;
-    s16               field_272;
-    s16               field_274;
-    s16               field_276;
-    s16               field_278;
+    u16               firedShotCount_264;       /** Missed shot count = firedShotCount - (closeRangeShotCount + midRangeShotCount + longRangeShotCount). */
+    u16               closeRangeShotCount_266;  /** Only hits counted. */
+    u16               midRangeShotCount_268;    /** Only hits counted. */
+    u16               longRangeShotCount_26A;   /** Only hits counted. */
+    u16               field_26C;
+    u16               field_26E; // Related to enemy kills.
+    u16               field_270;
+    u16               field_272;
+    u16               field_274;
+    u16               field_276;
+    u16               field_278;
     s8                field_27A;
     u8                continueCount_27B;
 } s_ShSavegame;

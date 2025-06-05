@@ -515,7 +515,116 @@ void func_800914C4(s32 arg0, u32 value) // 0x800914C4
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/credits", func_8009151C); // 0x8009151C
+void func_8009151C(u32 arg0, s32 arg1, s32 arg2)
+{
+    switch (arg0)
+    {
+        case 4:
+            if (g_SavegamePtr->field_278 < 50000)
+            {
+                g_SavegamePtr->field_278++;
+            }
+        case 0:
+        case 1:
+        case 2:
+        case 3:
+        case 5:
+            if (g_SavegamePtr->firedShotCount_264 < 50000)
+            {
+                g_SavegamePtr->firedShotCount_264++;
+
+                if (arg0 != 5)
+                {
+                    if (arg2 > 0x8000)
+                    {
+                        arg2 = 0x8000;
+                    }
+                    g_SavegamePtr->field_260 += (arg2 >> 4);
+                }
+
+                switch (arg0)
+                {
+                    case 0:
+                        if (g_SavegamePtr->closeRangeShotCount_266 < 50000)
+                        {
+                            g_SavegamePtr->closeRangeShotCount_266++;
+                            return;
+                        }
+                        break;
+
+                    case 1:
+                        if (g_SavegamePtr->midRangeShotCount_268 < 50000)
+                        {
+                            g_SavegamePtr->midRangeShotCount_268++;
+                        }
+                        if (arg1 != 0)
+                        {
+                            if (g_SavegamePtr->field_26E < 50000)
+                            {
+                                g_SavegamePtr->field_26E++;
+                                return;
+                            }
+                        }
+                        break;
+
+                    case 2:
+                        if (g_SavegamePtr->longRangeShotCount_26A < 50000)
+                        {
+                            g_SavegamePtr->longRangeShotCount_26A++;
+                        }
+                        if (arg1 != 0)
+                        {
+                            if (g_SavegamePtr->field_270 < 50000)
+                            {
+                                g_SavegamePtr->field_270++;
+                                return;
+                            }
+                        }
+                        break;
+
+                    case 3:
+                        if (g_SavegamePtr->field_26C < 50000)
+                        {
+                            g_SavegamePtr->field_26C++;
+                        }
+                        if (arg1 != 0)
+                        {
+                            if (g_SavegamePtr->field_272 < 50000)
+                            {
+                                g_SavegamePtr->field_272++;
+                                return;
+                            }
+                        }
+                        break;
+                    case 4:
+                    case 5:
+                        break;
+                }
+            }
+            break;
+
+        case 7:
+            if (g_SavegamePtr->field_278 < 50000)
+            {
+                g_SavegamePtr->field_278++;
+            }
+
+        case 6:
+            if (g_SavegamePtr->field_274 < 50000)
+            {
+                g_SavegamePtr->field_274++;
+            }
+
+            if (arg1 != 0)
+            {
+                if (g_SavegamePtr->field_276 < 50000)
+                {
+                    g_SavegamePtr->field_276++;
+                }
+            }
+            break;
+    }
+}
 
 void GameFs_StfRollBinLoad() // 0x80091778
 {

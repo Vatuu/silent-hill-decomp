@@ -510,7 +510,18 @@ s16 Sd_GetVolSe(s16 arg0) // 0x800478B8
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/bodyprog_80045A7C", func_800478DC);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/bodyprog_80045A7C", func_80047A70);
+void func_80047A70()
+{
+    if (D_800C16A8[0] != 0)
+    {
+        for (D_800C15E0 = 0; D_800C15E0 < 0x1F; D_800C15E0++)
+        {
+            D_800C16A8[D_800C15E0] = D_800C16A8[D_800C15E0 + 1];
+        }
+
+        D_800C16A8[0x1F] = 0;
+    }
+}
 
 void Sd_SetReverbDepth(s8 depth)
 {

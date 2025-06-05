@@ -1036,6 +1036,8 @@ extern s16 D_800C15C6;
 
 extern s16 D_800C15C8;
 
+extern s32 D_800C15E0;
+
 extern u8 D_800C15F0;
 
 extern s16 D_800C15F8[];
