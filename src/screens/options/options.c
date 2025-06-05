@@ -692,17 +692,17 @@ void Gfx_BarDraw(s32 arg0, u8 arg1) // 0x801E3FB8
             if (i < (arg1 / 8))
             {
                 color0 = 0xA0 + (0x40 * j);
-                setMonoColorCode(poly, color0, 0x28);
+                setRGBC0(poly, color0, color0, color0, 0x28);
             }
             else if (i > (arg1 / 8))
             {
                 color1 = 0x40 + (0x40 * j);
-                setMonoColorCode(poly, color1, 0x28);
+                setRGBC0(poly, color1, color1, color1, 0x28);
             }
             else
             {
                 color2 = colorComp + (0x40 * j);
-                setMonoColorCode(poly, color2, 0x28);
+                setRGBC0(poly, color2, color2, color2, 0x28);
             }
 
             xOffset = 24 + i * 6;
@@ -1130,16 +1130,16 @@ void Gfx_SettingsOptionsExtraDraw() // 0x801E4B2C
     {
         for (i = 0; i < 2; i++)
         {
-            Gfx_ArrowDraw(&tris0[(g_ExtraSelectedOptionIdx * 2) + i], 1, 0);
+            Gfx_Options_BlueArrowDraw(&tris0[(g_ExtraSelectedOptionIdx * 2) + i], 1, 0);
         }
 
         if (g_ControllerPtrConst->btns_held_C & ControllerFlag_LStickLeft)
         {
-            Gfx_ArrowDraw(&tris1[g_ExtraSelectedOptionIdx << 1], 0, 0);
+            Gfx_Options_BlueArrowDraw(&tris1[g_ExtraSelectedOptionIdx << 1], 0, 0);
         }
         if (g_ControllerPtrConst->btns_held_C & ControllerFlag_LStickRight)
         {
-            Gfx_ArrowDraw(&tris1[(g_ExtraSelectedOptionIdx << 1) + 1], 0, 0);
+            Gfx_Options_BlueArrowDraw(&tris1[(g_ExtraSelectedOptionIdx << 1) + 1], 0, 0);
         }
     }
 
@@ -1262,16 +1262,16 @@ void Gfx_SettingsOptionsMainDraw() // 0x801E4FFC
     {
         for (i = 0; i < 2; i++)
         {
-            Gfx_ArrowDraw(&tris0[(((g_MainSelectedOptionIdx - 4) * 2) + i)], 1, 0);
+            Gfx_Options_BlueArrowDraw(&tris0[(((g_MainSelectedOptionIdx - 4) * 2) + i)], 1, 0);
         }
 
         if (g_ControllerPtrConst->btns_held_C & ControllerFlag_LStickLeft)
         {
-            Gfx_ArrowDraw(&tris1[(g_MainSelectedOptionIdx - 4) << 1], 0, 0);
+            Gfx_Options_BlueArrowDraw(&tris1[(g_MainSelectedOptionIdx - 4) << 1], 0, 0);
         }
         if (g_ControllerPtrConst->btns_held_C & ControllerFlag_LStickRight)
         {
-            Gfx_ArrowDraw(&tris1[((g_MainSelectedOptionIdx - 4) << 1) + 1], 0, 0);
+            Gfx_Options_BlueArrowDraw(&tris1[((g_MainSelectedOptionIdx - 4) << 1) + 1], 0, 0);
         }
     }
 
@@ -1507,7 +1507,7 @@ void Gfx_PositionArrowsDraw() // 0x801E5A08
 
     for (i = 0; i < 4; i++)
     {
-        Gfx_ArrowDraw(&tris0[i], 1, 0);
+        Gfx_Options_BlueArrowDraw(&tris0[i], 1, 0);
     }
 
     if ((g_ControllerPtrConst->btns_new_10 & ControllerFlag_LStickUp) ||
@@ -1535,7 +1535,7 @@ void Gfx_PositionArrowsDraw() // 0x801E5A08
     {
         if (dir[i] != 0)
         {
-            Gfx_ArrowDraw(&tris1[i], 0, 0);
+            Gfx_Options_BlueArrowDraw(&tris1[i], 0, 0);
         }
     }
 }
@@ -1728,12 +1728,12 @@ void Gfx_BrightnessLevelArrowsDraw() // 0x801E628C
 
     for (i = 0; i < 2; i++)
     {
-        Gfx_ArrowDraw(&tris0[i], 1, 0);
+        Gfx_Options_BlueArrowDraw(&tris0[i], 1, 0);
     }
 
     for (i = dir - 1; i < dir; i++)
     {
-        Gfx_ArrowDraw(&tris1[i], 0, 0);
+        Gfx_Options_BlueArrowDraw(&tris1[i], 0, 0);
     }
 }
 
@@ -1755,13 +1755,13 @@ void Gfx_LineDraw(s_Line2d* line, s32 arg1, s32 arg2) // 0x801E641C
     // BUG(?): Same color regardless of `arg2`.
     if (arg2)
     {
-        *((u32*)&linePrim->r0) = 0x50B0B0B0;
-        *((u32*)&linePrim->r1) = 0x504080A0;
+        setRGBC0(linePrim, 0xB0, 0xB0, 0xB0, 0x50);
+        setRGBC1(linePrim, 0xA0, 0x80, 0x40, 0x50);
     }
     else
     {
-        *((u32*)&linePrim->r0) = 0x50B0B0B0;
-        *((u32*)&linePrim->r1) = 0x504080A0;
+        setRGBC0(linePrim, 0xB0, 0xB0, 0xB0, 0x50);
+        setRGBC1(linePrim, 0xA0, 0x80, 0x40, 0x50);
     }
 
     setXY0Fast(linePrim, linePtr->vertex0_0.vx, linePtr->vertex0_0.vy);
@@ -1792,80 +1792,85 @@ void Gfx_LineDraw(s_Line2d* line, s32 arg1, s32 arg2) // 0x801E641C
     }
 }
 
-void Gfx_ArrowDraw(s_Triangle2d* tri, s32 arg1, s32 arg2) // 0x801E662C
+void Gfx_Options_BlueArrowDraw(s_Triangle2d* tri, s32 isFlashing, s32 isColorReset) // 0x801E662C
 {
     GsOT*    ot = &g_ObjectTable1[g_ObjectTableIdx];
-    s32      timerCount;
+    POLY_G3* arrowPoly;
+    s32      colorFade;
     s32      colorStart;
     s32      colorEnd;
-    POLY_G3* arrowPoly;
 
-    // Probably unused.
-    if (arg2)
+    // Leftover or oversight? `isColorReset` doesn't serve any meaningful purpose.
+    if (isColorReset)
     {
+        colorEnd   = 0;
         colorStart = 0;
-        colorEnd = 0;
     }
 
-    timerCount = g_SysWork.timer_1C & 0x7F;
+    colorFade = g_SysWork.timer_1C & 0x7F;
 
     // Fade start color.
-    if (timerCount >= 32)
+    if (colorFade >= 32)
     {
-        colorEnd = 32;
-        if (timerCount < 64)
-        {
-            colorEnd = 32;
-        }
-        else if (timerCount < 96)
-        {
-            colorEnd = 96 - timerCount;
-        }
-        else
-        {
-            colorEnd = 0;
-        }
-    }
-    else
-    {
-        colorEnd = timerCount;
-    }
-
-    // Fade end color.
-    if (timerCount >= 32)
-    {
-        if (timerCount < 64)
-        {
-            colorStart = timerCount - 32;
-        }
-        else if (timerCount >= 96)
-        {
-            colorStart = 128 - timerCount;
-        }
-        else
+        colorStart = 32;
+        if (colorFade < 64)
         {
             colorStart = 32;
         }
+        else if (colorFade < 96)
+        {
+            colorStart = 96 - colorFade;
+        }
+        else
+        {
+            colorStart = 0;
+        }
     }
     else
     {
-        colorStart = 0;
+        colorStart = colorFade;
     }
 
+    // Fade end color.
+    if (colorFade >= 32)
+    {
+        if (colorFade < 64)
+        {
+            colorEnd = colorFade - 32;
+        }
+        else if (colorFade >= 96)
+        {
+            colorEnd = 128 - colorFade;
+        }
+        else
+        {
+            colorEnd = 32;
+        }
+    }
+    else
+    {
+        colorEnd = 0;
+    }
+
+
+    // Draw blue arrow.
     arrowPoly = (POLY_G3*)GsOUT_PACKET_P;
     setPolyG3(arrowPoly);
 
-    if (arg1 != 0)
+    // Flash color from blue to cyan.
+    if (isFlashing != 0)
     {
-        *((u32*)&arrowPoly->r0) = (colorStart * 0x700) + 0x30FF0000;
-        *((u32*)&arrowPoly->r1) = (colorEnd   * 0x700) + 0x30FF0000;
-        *((u32*)&arrowPoly->r2) = (colorEnd   * 0x700) + 0x30FF0000;
+        // Base color is blue. `* 0x700` applies color shift somehow.
+        *((u32*)&arrowPoly->r0) = (colorEnd   * 0x700) + 0x30FF0000;
+        *((u32*)&arrowPoly->r1) = (colorStart * 0x700) + 0x30FF0000;
+        *((u32*)&arrowPoly->r2) = (colorStart * 0x700) + 0x30FF0000;
     }
+    // Set solid cyan color.
     else
     {
-        *((u32*)&arrowPoly->r0) = 0x30F0F000;
-        *((u32*)&arrowPoly->r1) = 0x30F0F000;
-        *((u32*)&arrowPoly->r2) = 0x30F0F000;
+        setRGBC0(arrowPoly, 0x00, 0xF0, 0xF0, 0x30);
+        setRGBC1(arrowPoly, 0x00, 0xF0, 0xF0, 0x30);
+        setRGBC2(arrowPoly, 0x00, 0xF0, 0xF0, 0x30);
     }
 
     setXY0Fast(arrowPoly, tri->vertex0_0.vx, tri->vertex0_0.vy);
@@ -1892,15 +1897,15 @@ void Gfx_ButtonDraw(s_Quad2d* quad, s32 arg1, s32 arg2) // 0x801E67B0
             switch (arg2)
             {
                 case 0:
-                    *((u32*)&poly->r0) = 0x30FFFFFF;
-                    *((u32*)&poly->r1) = 0x304080A0;
-                    *((u32*)&poly->r2) = 0x30404040;
+                    setRGBC0(poly, 0xFF, 0xFF, 0xFF, 0x30);
+                    setRGBC1(poly, 0xA0, 0x80, 0x40, 0x30);
+                    setRGBC2(poly, 0x40, 0x40, 0x40, 0x30);
                     break;
 
                 case 1:
-                    *((u32*)&poly->r0) = 0x30808080;
-                    *((u32*)&poly->r1) = 0x30102028;
-                    *((u32*)&poly->r2) = 0x30101010;
+                    setRGBC0(poly, 0x80, 0x80, 0x80, 0x30);
+                    setRGBC1(poly, 0x28, 0x20, 0x10, 0x30);
+                    setRGBC2(poly, 0x10, 0x10, 0x10, 0x30);
                     break;
             }
 
@@ -1922,15 +1927,15 @@ void Gfx_ButtonDraw(s_Quad2d* quad, s32 arg1, s32 arg2) // 0x801E67B0
             switch (arg2)
             {
                 case 0:
-                    *((u32*)&poly->r0) = 0x304080A0;
-                    *((u32*)&poly->r1) = 0x30FFFFFF;
-                    *((u32*)&poly->r2) = 0x30FFFFFF;
+                    setRGBC0(poly, 0xA0, 0x80, 0x40, 0x30);
+                    setRGBC1(poly, 0xFF, 0xFF, 0xFF, 0x30);
+                    setRGBC2(poly, 0xFF, 0xFF, 0xFF, 0x30);
                     break;
 
                 case 1:
-                    *((u32*)&poly->r0) = 0x30204050;
-                    *((u32*)&poly->r1) = 0x30A0A0A0;
-                    *((u32*)&poly->r2) = 0x30A0A0A0;
+                    setRGBC0(poly, 0x50, 0x40, 0x20, 0x30);
+                    setRGBC1(poly, 0xA0, 0xA0, 0xA0, 0x30);
+                    setRGBC2(poly, 0xA0, 0xA0, 0xA0, 0x30);
                     break;
             }
 

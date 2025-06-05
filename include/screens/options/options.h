@@ -201,7 +201,7 @@ void Gfx_BrightnessLevelArrowsDraw();
 void Gfx_LineDraw(s_Line2d* line, s32 arg1, s32 arg2);
 
 /** @brief Draws the arrows used in options screens. */
-void Gfx_ArrowDraw(s_Triangle2d* tri, s32 arg1, s32 arg2);
+void Gfx_Options_BlueArrowDraw(s_Triangle2d* tri, s32 isFlashing, s32 isColorReset);
 
 /** @brief Draws the button next to options in the main and extra option screens. */
 void Gfx_ButtonDraw(s_Quad2d* quad, s32 arg1, s32 arg2);

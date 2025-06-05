@@ -116,8 +116,17 @@ typedef struct
 #define setCodeWord(p, c, rgb24) \
     *(u32*)(((u8*)(p)) + 4) = (((c) << 24) | ((rgb24) & 0xFFFFFF))
 
-#define setMonoColorCode(p, color, code) \
-    *(u32*)(&(p)->r0) = (((color + (color << 8)) + (color << 16)) + (code << 24))
+/** Combines `setRGB0()` and `setcode()` */
+#define setRGBC0(prim, r, g, b, code) \
+    *(u32*)(&(prim)->r0) = (((r + (g << 8)) + (b << 16)) + (code << 24))
+
+/** Combines `setRGB1()` and applies code to padding component? */
+#define setRGBC1(prim, r, g, b, code) \
+    *(u32*)(&(prim)->r1) = (((r + (g << 8)) + (b << 16)) + (code << 24))
+
+/** Combines `setRGB2()` and applies code to padding component? */
+#define setRGBC2(prim, r, g, b, code) \
+    *(u32*)(&(prim)->r2) = (((r + (g << 8)) + (b << 16)) + (code << 24))
 
 /** Combines `addPrim()` and `setlen()`. */
 #define addPrimFast(ot, p ,_len) \

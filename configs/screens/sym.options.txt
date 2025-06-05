@@ -47,7 +47,7 @@ Gfx_BrightnessLevelTextDraw   = 0x801E6238; // type:func
 Gfx_BrightnessLevelArrowsDraw = 0x801E628C; // type:func
 
 Gfx_LineDraw   = 0x801E641C; // type:func
-Gfx_ArrowDraw  = 0x801E662C; // type:func
+Gfx_Options_BlueArrowDraw  = 0x801E662C; // type:func
 Gfx_ButtonDraw = 0x801E67B0; // type:func
 
 Settings_ControllerScreen = 0x801E69BC; // type:func
