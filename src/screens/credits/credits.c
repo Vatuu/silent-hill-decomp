@@ -253,7 +253,7 @@ s32 func_801E3304() // 0x801E3304
 s32 func_801E342C() // 0x801E342C
 {
     s32   temp;
-    u32*  addr;
+    GsOT* ot;
     TILE* tile;
 
     if (((g_GameWork.config_0.optExtraOptionsEnabled_27 >> (D_801E5E8C - 1)) & (1 << 0)) &&
@@ -263,10 +263,10 @@ s32 func_801E342C() // 0x801E342C
         Sd_EngineCmd(19);
     }
 
-    addr = (g_ObjectTableIdx << 11) + &D_800B7CC4;
+    ot   = (GsOT*)&D_800B7CC4[g_ObjectTableIdx];
     tile = (TILE*)GsOUT_PACKET_P;
 
-    addPrimFast(addr, tile, 3);
+    addPrimFast(ot, tile, 3);
     setCodeWord(tile, PRIM_RECT, 0);
     setXY0Fast(tile, -256, -224);
     setWHFast(tile, 512, 2);

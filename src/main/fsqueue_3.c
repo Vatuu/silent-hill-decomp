@@ -240,10 +240,10 @@ s32 Fs_QueuePostLoadTim(s_FsQueueEntry* entry)
         // This contraption simply extracts XY from tPage value.
         // For some reason it seems to be byte swapped, or maybe tPage is stored as u8[2]?
         // Same as tempRect.x = (entry->extra.image.tPage & 0x0F) * 64 for normal tPage.
-        tempRect.x = entry->extra.image.u + ((*(((u8*)&entry->extra.image.tPage) + 1) & 0xF) << 6);
+        tempRect.x = entry->extra.image.u + ((entry->extra.image.tPage[1] & 0xF) << 6);
 
         // Same as rempRect.y = (entry->extra.image.tPage & 0x10) * 16 for normal tPage.
-        tempRect.y = entry->extra.image.v + ((*(((u8*)&entry->extra.image.tPage) + 1) << 4) & 0x100);
+        tempRect.y = entry->extra.image.v + ((entry->extra.image.tPage[1] << 4) & 0x100);
     }
 
     LoadImage(&tempRect, tim.paddr);
