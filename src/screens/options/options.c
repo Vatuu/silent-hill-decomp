@@ -1057,11 +1057,11 @@ void Gfx_VignetteDraw() // 0x801E49F0
 
 void Gfx_SettingsOptionsExtraDraw() // 0x801E4B2C
 {
-    s32 textPosX;
+    s32 strPosX;
     s32 i;
     s32 j;
 
-    s_Triangle2d tris0[] =
+    s_Triangle2d flashArrows[] =
     {
         { { 0x0026, 0xFFD6 }, { 0x002E, 0xFFCE }, { 0x002E, 0xFFDE } },
         { { 0x0078, 0xFFD6 }, { 0x0070, 0xFFCE }, { 0x0070, 0xFFDE } },
@@ -1081,7 +1081,7 @@ void Gfx_SettingsOptionsExtraDraw() // 0x801E4B2C
         { { 0x0068, 0x0046 }, { 0x0060, 0x003E }, { 0x0060, 0x004E } }
     };
 
-    s_Triangle2d tris1[] =
+    s_Triangle2d borderArrows[] =
     {
         { { 0x0025, 0xFFD6 }, { 0x002F, 0xFFCC }, { 0x002F, 0xFFE0 } },
         { { 0x0079, 0xFFD6 }, { 0x006F, 0xFFCC }, { 0x006F, 0xFFE0 } },
@@ -1126,20 +1126,23 @@ void Gfx_SettingsOptionsExtraDraw() // 0x801E4B2C
 
     Gfx_StringSetColor(ColorId_White);
 
-    if (g_ExtraSelectedOptionIdx < 8U)
+    // Draw left/right arrows for subset of options.
+    if (g_ExtraSelectedOptionIdx < 8u)
     {
+        // Draw flashing left/right arrows.
         for (i = 0; i < 2; i++)
         {
-            Gfx_Options_BlueArrowDraw(&tris0[(g_ExtraSelectedOptionIdx * 2) + i], 1, 0);
+            Gfx_Options_BlueArrowDraw(&flashArrows[(g_ExtraSelectedOptionIdx * 2) + i], 1, 0);
         }
 
+        // Draw border to highlight flashing left/right arrow corresponding to direction of UI movement.
         if (g_ControllerPtrConst->btns_held_C & ControllerFlag_LStickLeft)
         {
-            Gfx_Options_BlueArrowDraw(&tris1[g_ExtraSelectedOptionIdx << 1], 0, 0);
+            Gfx_Options_BlueArrowDraw(&borderArrows[g_ExtraSelectedOptionIdx << 1], 0, 0);
         }
         if (g_ControllerPtrConst->btns_held_C & ControllerFlag_LStickRight)
         {
-            Gfx_Options_BlueArrowDraw(&tris1[(g_ExtraSelectedOptionIdx << 1) + 1], 0, 0);
+            Gfx_Options_BlueArrowDraw(&borderArrows[(g_ExtraSelectedOptionIdx << 1) + 1], 0, 0);
         }
     }
 
@@ -1148,8 +1151,8 @@ void Gfx_SettingsOptionsExtraDraw() // 0x801E4B2C
         switch (j)
         {
             case 0:
-                textPosX = (g_GameWork.config_0.optExtraWeaponCtrl_23 != 0) ? 217 : 212;
-                Gfx_StringSetPosition(textPosX, 64);
+                strPosX = (g_GameWork.config_0.optExtraWeaponCtrl_23 != 0) ? 217 : 212;
+                Gfx_StringSetPosition(strPosX, 64);
                 Gfx_StringDraw(SettingsExtraOptions_str[!g_GameWork.config_0.optExtraWeaponCtrl_23], 10);
                 break;
 
@@ -1177,32 +1180,32 @@ void Gfx_SettingsOptionsExtraDraw() // 0x801E4B2C
                 break;
 
             case 2:
-                textPosX = (g_GameWork.config_0.optExtraViewCtrl_28 == 0) ? 210 : 206;
-                Gfx_StringSetPosition(textPosX, 96);
+                strPosX = (g_GameWork.config_0.optExtraViewCtrl_28 == 0) ? 210 : 206;
+                Gfx_StringSetPosition(strPosX, 96);
                 Gfx_StringDraw(SettingsExtraOptions_str[((g_GameWork.config_0.optExtraViewCtrl_28 != 0) ? 32 : 28) >> 2], 10);
                 break;
 
             case 3:
-                textPosX = (g_GameWork.config_0.optExtraRetreatTurn_2A == 0) ? 210 : 206;
-                Gfx_StringSetPosition(textPosX, 112);
+                strPosX = (g_GameWork.config_0.optExtraRetreatTurn_2A == 0) ? 210 : 206;
+                Gfx_StringSetPosition(strPosX, 112);
                 Gfx_StringDraw(SettingsExtraOptions_str[((g_GameWork.config_0.optExtraRetreatTurn_2A != 0) ? 32 : 28) >> 2], 10);
                 break;
 
             case 4:
-                textPosX = (g_GameWork.config_0.optExtraWalkRunCtrl_2B == 0) ? 210 : 206;
-                Gfx_StringSetPosition(textPosX, 128);
+                strPosX = (g_GameWork.config_0.optExtraWalkRunCtrl_2B == 0) ? 210 : 206;
+                Gfx_StringSetPosition(strPosX, 128);
                 Gfx_StringDraw(SettingsExtraOptions_str[((g_GameWork.config_0.optExtraWalkRunCtrl_2B != 0) ? 32 : 28) >> 2], 10);
                 break;
 
             case 5:
-                textPosX = (g_GameWork.config_0.optExtraAutoAiming_2C == 0) ? 228 : 226;
-                Gfx_StringSetPosition(textPosX, 144);
+                strPosX = (g_GameWork.config_0.optExtraAutoAiming_2C == 0) ? 228 : 226;
+                Gfx_StringSetPosition(strPosX, 144);
                 Gfx_StringDraw(SettingsExtraOptions_str[((g_GameWork.config_0.optExtraAutoAiming_2C != 0) ? 40 : 36) >> 2], 10);
                 break;
 
             case 6:
-                textPosX = (g_GameWork.config_0.optExtraViewMode_29 == 0) ? 210 : 200;
-                Gfx_StringSetPosition(textPosX, 160);
+                strPosX = (g_GameWork.config_0.optExtraViewMode_29 == 0) ? 210 : 200;
+                Gfx_StringSetPosition(strPosX, 160);
                 Gfx_StringDraw(SettingsExtraOptions_str[(g_GameWork.config_0.optExtraViewMode_29 ? 48 : 44) >> 2], 10);
                 break;
 
@@ -1216,11 +1219,11 @@ void Gfx_SettingsOptionsExtraDraw() // 0x801E4B2C
 
 void Gfx_SettingsOptionsMainDraw() // 0x801E4FFC
 {
-    s32 textPosX;
+    s32 strPosX;
+    s32 strIdx;
     s32 i;
-    s32 stringIdx;
 
-    s_Triangle2d tris0[] =
+    s_Triangle2d flashArrows[] =
     {
         { { 0x0028, 0x000E }, { 0x0030, 0x0006 }, { 0x0030, 0x0016 } },
         { { 0x0060, 0x000E }, { 0x0058, 0x0006 }, { 0x0058, 0x0016 } },
@@ -1234,7 +1237,7 @@ void Gfx_SettingsOptionsMainDraw() // 0x801E4FFC
         { { 0x0083, 0x004E }, { 0x007B, 0x0046 }, { 0x007B, 0x0056 } }
     };
 
-    s_Triangle2d tris1[] =
+    s_Triangle2d borderArrows[] =
     {
         { { 0x0027, 0x000E }, { 0x0031, 0x0004 }, { 0x0031, 0x0018 } },
         { { 0x0061, 0x000E }, { 0x0057, 0x0004 }, { 0x0057, 0x0018 } },
@@ -1258,20 +1261,23 @@ void Gfx_SettingsOptionsMainDraw() // 0x801E4FFC
 
     Gfx_StringSetColor(ColorId_White);
 
+    // Draw left/right arrows for subset of options.
     if (g_MainSelectedOptionIdx >= 4 && g_MainSelectedOptionIdx < 9)
     {
+        // Draw flashing left/right arrows.
         for (i = 0; i < 2; i++)
         {
-            Gfx_Options_BlueArrowDraw(&tris0[(((g_MainSelectedOptionIdx - 4) * 2) + i)], 1, 0);
+            Gfx_Options_BlueArrowDraw(&flashArrows[(((g_MainSelectedOptionIdx - 4) * 2) + i)], 1, 0);
         }
 
+        // Draw border to highlight flashing left/right arrow corresponding to direction of UI movement.
         if (g_ControllerPtrConst->btns_held_C & ControllerFlag_LStickLeft)
         {
-            Gfx_Options_BlueArrowDraw(&tris1[(g_MainSelectedOptionIdx - 4) << 1], 0, 0);
+            Gfx_Options_BlueArrowDraw(&borderArrows[(g_MainSelectedOptionIdx - 4) << 1], 0, 0);
         }
         if (g_ControllerPtrConst->btns_held_C & ControllerFlag_LStickRight)
         {
-            Gfx_Options_BlueArrowDraw(&tris1[((g_MainSelectedOptionIdx - 4) << 1) + 1], 0, 0);
+            Gfx_Options_BlueArrowDraw(&borderArrows[((g_MainSelectedOptionIdx - 4) << 1) + 1], 0, 0);
         }
     }
 
@@ -1280,24 +1286,24 @@ void Gfx_SettingsOptionsMainDraw() // 0x801E4FFC
         switch (i)
         {
             case 0:
-                textPosX = (g_GameWork.config_0.optVibrationEnabled_21 == 0) ? 214 : 216;
-                Gfx_StringSetPosition(textPosX, 120);
-                stringIdx = g_GameWork.config_0.optVibrationEnabled_21 == 0;
-                Gfx_StringDraw(D_801E2BDC[stringIdx], 10);
+                strPosX = (g_GameWork.config_0.optVibrationEnabled_21 == 0) ? 214 : 216;
+                Gfx_StringSetPosition(strPosX, 120);
+                strIdx = g_GameWork.config_0.optVibrationEnabled_21 == 0;
+                Gfx_StringDraw(D_801E2BDC[strIdx], 10);
                 break;
 
             case 1:
-                textPosX = (g_GameWork.config_0.optAutoLoad_25 == 0) ? 214 : 216;
-                Gfx_StringSetPosition(textPosX, 136);
-                stringIdx = g_GameWork.config_0.optAutoLoad_25 == 0;
-                Gfx_StringDraw(D_801E2BDC[stringIdx], 10);
+                strPosX = (g_GameWork.config_0.optAutoLoad_25 == 0) ? 214 : 216;
+                Gfx_StringSetPosition(strPosX, 136);
+                strIdx = g_GameWork.config_0.optAutoLoad_25 == 0;
+                Gfx_StringDraw(D_801E2BDC[strIdx], 10);
                 break;
 
             case 2:
-                textPosX = (g_GameWork.config_0.optSoundType_1E != 0) ? 194 : 206;
-                Gfx_StringSetPosition(textPosX, 152);
-                stringIdx = g_GameWork.config_0.optSoundType_1E + 2;
-                Gfx_StringDraw(D_801E2BDC[stringIdx], 10);
+                strPosX = (g_GameWork.config_0.optSoundType_1E != 0) ? 194 : 206;
+                Gfx_StringSetPosition(strPosX, 152);
+                strIdx = g_GameWork.config_0.optSoundType_1E + 2;
+                Gfx_StringDraw(D_801E2BDC[strIdx], 10);
                 break;
         }
     }
@@ -1484,7 +1490,7 @@ void Settings_PositionScreen() // 0x801E53A0
 
 void Gfx_PositionArrowsDraw() // 0x801E5A08
 {
-    s_Triangle2d tris0[] =
+    s_Triangle2d flashArrows[] =
     {
         { { 0x0000, 0xFF9C }, { 0xFFF8, 0xFFA4 }, { 0x0008, 0xFFA4 } },
         { { 0x0000, 0x0064 }, { 0xFFF8, 0x005C }, { 0x0008, 0x005C } },
@@ -1492,7 +1498,7 @@ void Gfx_PositionArrowsDraw() // 0x801E5A08
         { { 0x0094, 0x0000 }, { 0x008C, 0xFFF8 }, { 0x008C, 0x0008 } },
     };
 
-    s_Triangle2d tris1[] =
+    s_Triangle2d borderArrows[] =
     {
         { { 0x0000, 0xFF9B }, { 0xFFF6, 0xFFA5 }, { 0x0009, 0xFFA5 } },
         { { 0x0000, 0x0065 }, { 0xFFF6, 0x005B }, { 0x0009, 0x005B } },
@@ -1503,11 +1509,13 @@ void Gfx_PositionArrowsDraw() // 0x801E5A08
     u8  dir[4];
     s32 i;
 
+    // Clear directions array for no reason.
     memset(dir, 0, 4);
 
+    // Draw flashing up/down/left/right arrows.
     for (i = 0; i < 4; i++)
     {
-        Gfx_Options_BlueArrowDraw(&tris0[i], 1, 0);
+        Gfx_Options_BlueArrowDraw(&flashArrows[i], 1, 0);
     }
 
     if ((g_ControllerPtrConst->btns_new_10 & ControllerFlag_LStickUp) ||
@@ -1531,11 +1539,12 @@ void Gfx_PositionArrowsDraw() // 0x801E5A08
         dir[3] = 1;
     }
 
+    // Draw border to highlight flashing up/down/left/right arrow corresponding to direction of UI movement.
     for (i = 0; i < 4; i++)
     {
         if (dir[i] != 0)
         {
-            Gfx_Options_BlueArrowDraw(&tris1[i], 0, 0);
+            Gfx_Options_BlueArrowDraw(&borderArrows[i], 0, 0);
         }
     }
 }
@@ -1694,13 +1703,13 @@ void Gfx_BrightnessLevelTextDraw() // 0x801E6238
 
 void Gfx_BrightnessLevelArrowsDraw() // 0x801E628C
 {
-    s_Triangle2d tris0[] =
+    s_Triangle2d flashArrows[] =
     {
         { { 8, 84 }, {  16, 76 }, { 16, 92 } },
         { { 64, 84 }, { 56, 76 }, { 56, 92 } }
     };
 
-    s_Triangle2d tris1[] =
+    s_Triangle2d borderArrows[] =
     {
         { { 7, 84 },  { 17, 74 }, { 17, 94 } },
         { { 65, 84 }, { 55, 74 }, { 55, 94 } }
@@ -1710,9 +1719,8 @@ void Gfx_BrightnessLevelArrowsDraw() // 0x801E628C
     s32 i;
     s32 dir;
 
+    // Determine UI movement direction.
     btnInput = g_ControllerPtrConst->btns_held_C;
-
-    // Determine direction.
     if (btnInput & ControllerFlag_LStickLeft)
     {
         dir = 1;
@@ -1726,14 +1734,16 @@ void Gfx_BrightnessLevelArrowsDraw() // 0x801E628C
         dir = 0;
     }
 
+    // Draw flashing left/right arrows.
     for (i = 0; i < 2; i++)
     {
-        Gfx_Options_BlueArrowDraw(&tris0[i], 1, 0);
+        Gfx_Options_BlueArrowDraw(&flashArrows[i], 1, 0);
     }
 
+    // Draw border to highlight flashing left/right arrow corresponding to direction of UI movement.
     for (i = dir - 1; i < dir; i++)
     {
-        Gfx_Options_BlueArrowDraw(&tris1[i], 0, 0);
+        Gfx_Options_BlueArrowDraw(&borderArrows[i], 0, 0);
     }
 }
 
@@ -1792,7 +1802,7 @@ void Gfx_LineDraw(s_Line2d* line, s32 arg1, s32 arg2) // 0x801E641C
     }
 }
 
-void Gfx_Options_BlueArrowDraw(s_Triangle2d* tri, s32 isFlashing, s32 isColorReset) // 0x801E662C
+void Gfx_Options_BlueArrowDraw(s_Triangle2d* arrow, s32 isFlashing, s32 isColorReset) // 0x801E662C
 {
     GsOT*    ot = &g_ObjectTable1[g_ObjectTableIdx];
     POLY_G3* arrowPoly;
@@ -1873,9 +1883,9 @@ void Gfx_Options_BlueArrowDraw(s_Triangle2d* tri, s32 isFlashing, s32 isColorRes
         setRGBC2(arrowPoly, 0x00, 0xF0, 0xF0, 0x30);
     }
 
-    setXY0Fast(arrowPoly, tri->vertex0_0.vx, tri->vertex0_0.vy);
-    setXY1Fast(arrowPoly, tri->vertex1_4.vx, tri->vertex1_4.vy);
-    setXY2Fast(arrowPoly, tri->vertex2_8.vx, tri->vertex2_8.vy);
+    setXY0Fast(arrowPoly, arrow->vertex0_0.vx, arrow->vertex0_0.vy);
+    setXY1Fast(arrowPoly, arrow->vertex1_4.vx, arrow->vertex1_4.vy);
+    setXY2Fast(arrowPoly, arrow->vertex2_8.vx, arrow->vertex2_8.vy);
 
     addPrim((u8*)ot->org + 40, arrowPoly);
     GsOUT_PACKET_P = (u8*)arrowPoly + sizeof(POLY_G3);
