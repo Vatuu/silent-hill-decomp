@@ -32,11 +32,11 @@ void func_800D4924();
 
 void func_800D654C();
 
-void func_800D802C(s_SubCharacter*, s32, s32); // `Chara_Cheryl` related.
+void func_800D802C(s_SubCharacter*, s32, GsCOORDINATE2*); // `Chara_Cheryl` related.
 
-void func_800D8124(s_SubCharacter*, s32); // `Chara_Cheryl` related.
+void func_800D8124(s_SubCharacter*, GsCOORDINATE2*); // `Chara_Cheryl` related.
 
-void func_800D8310(s_SubCharacter*, s32); // `Chara_Cheryl` related.
+void func_800D8310(s_SubCharacter*, GsCOORDINATE2*); // `Chara_Cheryl` related.
 
 void func_800D8888(s_SubCharacter* chara); // `Chara_Cheryl` related.
 

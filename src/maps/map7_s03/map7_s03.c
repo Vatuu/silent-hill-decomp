@@ -126,16 +126,16 @@ INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", sharedFunc_800CEEDC_3_s02
 
 #include "maps/shared/Ai_Alessa_Init.h" // 0x800D3660
 
-void Ai_BloodyIncubator_Update(s_SubCharacter* chara, s32 arg1, s32 arg2) // 0x800D3684
+void Ai_BloodyIncubator_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords) // 0x800D3684
 {
     if (chara->model_0.charaId_0 != Chara_BloodyIncubator)
     {
         Ai_BloodyIncubator_Init(chara);
     }
 
-    func_800D38D8(chara, arg2);
-    func_800D3740(chara, arg2);
-    func_800D36F8(chara, arg1, arg2);
+    func_800D38D8(chara, coords);
+    func_800D3740(chara, coords);
+    func_800D36F8(chara, arg1, coords);
 }
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800D36F8);
@@ -149,16 +149,16 @@ void Ai_BloodyIncubator_Init(s_SubCharacter* chara) // 0x800D3BA4
     sharedFunc_800D923C_0_s00(chara);
 }
 
-void Ai_Incubator_Update(s_SubCharacter* chara, s32 arg1, s32 arg2) // 0x800D3BC4
+void Ai_Incubator_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords) // 0x800D3BC4
 {
     if (chara->model_0.charaId_0 != Chara_Incubator)
     {
         Ai_Incubator_Init(chara);
     }
 
-    func_800D3E18(chara, arg2);
-    func_800D3C80(chara, arg2);
-    func_800D3C38(chara, arg1, arg2);
+    func_800D3E18(chara, coords);
+    func_800D3C80(chara, coords);
+    func_800D3C38(chara, arg1, coords);
 }
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800D3C38);
@@ -226,7 +226,7 @@ INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", sharedFunc_800D921C_0_s00
 
 #include "maps/shared/sharedFunc_800D923C_0_s00.h" // 0x800D5B68
 
-void Ai_LittleIncubus_Update(s_SubCharacter* chara, s32 arg1, s32 arg2) // 0x800D5BC8
+void Ai_LittleIncubus_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords) // 0x800D5BC8
 {
     s32         temp_s0;
     s32         var_a2;
@@ -256,13 +256,13 @@ void Ai_LittleIncubus_Update(s_SubCharacter* chara, s32 arg1, s32 arg2) // 0x800
 
     temp_s0 = shRsin(var_a2 >> 2);
 
-    func_80035B04(&chara->position_18, &chara->rotation_24, (GsCOORDINATE2*)arg2);
+    func_80035B04(&chara->position_18, &chara->rotation_24, coords);
 
     animInfo = &g_Ai_LittleIncubus_AnimInfo[chara->model_0.anim_4.animIdx_0];
-    animInfo->funcPtr_0(chara, arg1, arg2, animInfo);
+    animInfo->funcPtr_0(chara, arg1, coords, animInfo);
 
-    func_800705E4(arg2, 1, temp_s0, temp_s0, temp_s0);
-    func_800705E4(arg2, 7, temp_s0, temp_s0, temp_s0);
+    func_800705E4(coords, 1, temp_s0, temp_s0, temp_s0);
+    func_800705E4(coords, 7, temp_s0, temp_s0, temp_s0);
 }
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800D5D24);
@@ -543,7 +543,7 @@ INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800DD9D4);
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800DD9F8);
 
-s32 Ai_Incubus_Init(s_SubCharacter* chara, s32 arg1) // 0x800DDA1C
+s32 Ai_Incubus_Init(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DDA1C
 {
     u8              curStateStep;
     s_SubCharacter* chara2; // TODO: Not sure why this is needed here, could be an inline in this func.
@@ -659,25 +659,25 @@ INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800DF044);
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800DF074);
 
-void Ai_Incubus_Update(s_SubCharacter* chara, s32 arg1, s32 arg2) // 0x800DF0D8
+void Ai_Incubus_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords) // 0x800DF0D8
 {
-    if ((chara->model_0.state_2 != 0 || Ai_Incubus_Init(chara, arg2)) && chara->model_0.state_2 != 1)
+    if ((chara->model_0.state_2 != 0 || Ai_Incubus_Init(chara, coords)) && chara->model_0.state_2 != 1)
     {
         if (g_DeltaTime0 != 0)
         {
             func_800DDBBC(chara);
-            func_800DEC74(chara, arg2);
-            func_800DF044(chara, arg2);
+            func_800DEC74(chara, coords);
+            func_800DF044(chara, coords);
             func_800DEE44(chara);
-            func_800DEE90(chara, arg1, arg2);
-            func_800DEFE8(chara, arg2);
-            func_800DED68(chara, arg2);
+            func_800DEE90(chara, arg1, coords);
+            func_800DEFE8(chara, coords);
+            func_800DED68(chara, coords);
             func_800DF074(chara);
             func_800DD98C(chara->flags_3E & CharaFlag_Unk2);
         }
         else
         {
-            func_800DEE90(chara, arg1, arg2);
+            func_800DEE90(chara, arg1, coords);
             func_800DB608();
             func_800DF074(chara);
         }
@@ -716,7 +716,7 @@ INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800DFB50);
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800DFB74);
 
-s32 Ai_Unknown23_Init(s_SubCharacter* chara, s32 arg1) // 0x800DFB98
+s32 Ai_Unknown23_Init(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DFB98
 {
     s_SubCharacter* chara2; // TODO: Not sure why this is needed here, might be an inline in this func.
 
@@ -774,7 +774,7 @@ s32 Ai_Unknown23_Init(s_SubCharacter* chara, s32 arg1) // 0x800DFB98
         chara2->properties_E4.player.properties_E4[4] = FP_TO(30, Q12_SHIFT);
     }
 
-    func_800DD67C(&chara->position_18, chara, arg1);
+    func_800DD67C(&chara->position_18, chara, coords);
     func_800DFA14();
 
     chara->flags_3E |= CharaFlag_Unk9;
@@ -813,11 +813,11 @@ INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800E08E4);
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800E0914);
 
-void Ai_Unknown23_Update(s_SubCharacter* chara, s32 arg1, s32 arg2) // 0x800E093C
+void Ai_Unknown23_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords) // 0x800E093C
 {
     if (chara->model_0.state_2 == 0)
     {
-        Ai_Unknown23_Init(chara, arg2);
+        Ai_Unknown23_Init(chara, coords);
     }
 
     if (chara->model_0.state_2 != 1)
@@ -825,12 +825,12 @@ void Ai_Unknown23_Update(s_SubCharacter* chara, s32 arg1, s32 arg2) // 0x800E093
         if (g_DeltaTime0 != 0)
         {
             func_800DFCE4(chara);
-            func_800E05DC(chara, arg2);
-            func_800E08E4(chara, arg2);
+            func_800E05DC(chara, coords);
+            func_800E08E4(chara, coords);
             func_800E0728(chara);
-            func_800E0774(chara, arg1, arg2);
-            func_800E0888(chara, arg2);
-            func_800E0670(chara, arg2);
+            func_800E0774(chara, arg1, coords);
+            func_800E0888(chara, coords);
+            func_800E0670(chara, coords);
             func_800E0914(chara);
             func_800DFB2C(chara->flags_3E & CharaFlag_Unk2);
         }
@@ -838,7 +838,7 @@ void Ai_Unknown23_Update(s_SubCharacter* chara, s32 arg1, s32 arg2) // 0x800E093
         {
             func_800DB608();
             func_800E0914(chara);
-            func_800E0774(chara, arg1, arg2);
+            func_800E0774(chara, arg1, coords);
         }
     }
 }

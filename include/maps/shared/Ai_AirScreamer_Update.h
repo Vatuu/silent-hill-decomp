@@ -1,6 +1,6 @@
-void Ai_AirScreamer_Update(s_SubCharacter* chara, s32 arg1, s32 arg2)
+void Ai_AirScreamer_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords)
 {
-    sharedFunc_800D21E4_0_s01(arg1, arg2);
+    sharedFunc_800D21E4_0_s01(arg1, coords);
     sharedFunc_800D2200_0_s01(chara);
     Ai_AirScreamer_Init(chara);
     sharedFunc_800D2274_0_s01(chara);

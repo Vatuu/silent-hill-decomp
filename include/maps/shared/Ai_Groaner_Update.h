@@ -1,4 +1,4 @@
-void Ai_Groaner_Update(s_SubCharacter* chara, s32 arg1, s32 arg2)
+void Ai_Groaner_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords)
 {
     u8 var;
 
@@ -16,7 +16,7 @@ void Ai_Groaner_Update(s_SubCharacter* chara, s32 arg1, s32 arg2)
         sharedFunc_800E5AA4_2_s00(chara);
     }
 
-    sharedFunc_800E5EC4_2_s00(chara, arg1, arg2);
+    sharedFunc_800E5EC4_2_s00(chara, arg1, coords);
 
     if (g_DeltaTime0 != 0)
     {

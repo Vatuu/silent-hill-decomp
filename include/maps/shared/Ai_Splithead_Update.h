@@ -1,6 +1,6 @@
-void Ai_Splithead_Update(s_SubCharacter* chara, s32 arg1, s32 arg2)
+void Ai_Splithead_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords)
 {
-    sharedData_800D8610_1_s05 = arg2;
+    sharedData_800D8610_1_s05 = coords;
 
     if (chara->model_0.state_2 == 0)
     {

@@ -107,9 +107,9 @@ void func_800D1690() {}
 
 #include "maps/shared/sharedFunc_800D2EF4_0_s00.h" // 0x800D16E8
 
-void Ai_Floatstinger_Update(s_SubCharacter* chara, s32 arg1, s32 arg2) // 0x800D16FC
+void Ai_Floatstinger_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords) // 0x800D16FC
 {
-    D_800DB928 = arg2;
+    D_800DB928 = coords;
 
     if (chara->model_0.state_2 == 0)
     {

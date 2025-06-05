@@ -52,7 +52,7 @@ INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04_2", func_800D8848);
 
 INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04_2", func_800D8898);
 
-void Ai_MonsterCybil_Update(s_SubCharacter* chara, s32 arg1, s32 arg2) // 0x800D8908
+void Ai_MonsterCybil_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords) // 0x800D8908
 {
     s_Model* extraModelPtr = &g_Ai_MonsterCybil_ExtraModel;
 
@@ -64,10 +64,10 @@ void Ai_MonsterCybil_Update(s_SubCharacter* chara, s32 arg1, s32 arg2) // 0x800D
     if (g_DeltaTime0 != 0)
     {
         func_800D8B14(chara, extraModelPtr);
-        func_800D8D7C(chara, extraModelPtr, arg2);
+        func_800D8D7C(chara, extraModelPtr, coords);
         func_800D9790(chara, extraModelPtr);
-        func_800D99E4(chara, extraModelPtr, arg1, arg2);
-        func_800DB4CC(chara, extraModelPtr, arg2);
+        func_800D99E4(chara, extraModelPtr, arg1, coords);
+        func_800DB4CC(chara, extraModelPtr, coords);
         func_800D9AAC(chara, extraModelPtr);
     }
 }
@@ -193,7 +193,7 @@ INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04_2", sharedFunc_800D9188_0_s
 
 #include "maps/shared/sharedFunc_800D923C_0_s00.h" // 0x800DE064
 
-void Ai_Flauros_Update(s_SubCharacter* chara, s32 arg1, s32 arg2) // 0x800DE0C4
+void Ai_Flauros_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords) // 0x800DE0C4
 {
     s32         i;
     s32         var_s1;
@@ -225,18 +225,18 @@ void Ai_Flauros_Update(s_SubCharacter* chara, s32 arg1, s32 arg2) // 0x800DE0C4
         var_s1 = FP_TO(1, Q12_SHIFT);
     }
 
-    func_80035B04(&chara->position_18, &chara->rotation_24, (GsCOORDINATE2*)arg2);
+    func_80035B04(&chara->position_18, &chara->rotation_24, coords);
 
     animInfo = &g_Ai_Flauros_AnimInfo[chara->model_0.anim_4.animIdx_0];
-    animInfo->funcPtr_0(chara, arg1, arg2, animInfo);
+    animInfo->funcPtr_0(chara, arg1, coords, animInfo);
 
     for (i = 6; i < 0xB; i++)
     {
-        func_800705E4(arg2, i, var_s1, var_s1, var_s1);
+        func_800705E4(coords, i, var_s1, var_s1, var_s1);
     }
 }
 
-void Ai_Parasite_Update(s_SubCharacter* chara, s32 arg1, s32 arg2) // 0x800DE1CC
+void Ai_Parasite_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords) // 0x800DE1CC
 {
     s_AnimInfo* animInfo;
 
@@ -250,10 +250,10 @@ void Ai_Parasite_Update(s_SubCharacter* chara, s32 arg1, s32 arg2) // 0x800DE1CC
         chara->model_0.anim_4.keyframeIdx0_8 = 0;
     }
 
-    func_80035B04(&chara->position_18, &chara->rotation_24, arg2);
+    func_80035B04(&chara->position_18, &chara->rotation_24, coords);
 
     animInfo = &g_Ai_Parasite_AnimInfo[chara->model_0.anim_4.animIdx_0];
-    animInfo->funcPtr_0(chara, arg1, arg2, animInfo);
+    animInfo->funcPtr_0(chara, arg1, coords, animInfo);
 }
 
 void func_800DE26C() {}

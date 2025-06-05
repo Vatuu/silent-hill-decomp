@@ -782,8 +782,6 @@ extern s_8002AC04 D_8002AC04[];
 
 extern s_800BE9FC D_8002B2CC;
 
-extern s8 D_8002B394;
-
 extern u8 D_800A8E58;
 
 extern s_FsImageDesc D_800A8FF4;
@@ -1870,7 +1868,7 @@ s32 func_8006FD90(s_SubCharacter*, s32, s32, s32);
 
 s32 func_80070360(s_SubCharacter*, s32, s32);
 
-void func_800705E4(s32, s32, s32, s32, s32);
+void func_800705E4(GsCOORDINATE2*, s32, s32, s32, s32);
 
 void func_80074254(s32 arg0, s32 arg1); // `arg1` is pointer?
 

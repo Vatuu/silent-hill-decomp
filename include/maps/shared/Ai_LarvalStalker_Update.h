@@ -1,4 +1,4 @@
-void Ai_LarvalStalker_Update(s_SubCharacter* chara, s32 arg1, s32 arg2)
+void Ai_LarvalStalker_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords)
 {
     s8* mapOverlayPtr;
 
@@ -9,8 +9,8 @@ void Ai_LarvalStalker_Update(s_SubCharacter* chara, s32 arg1, s32 arg2)
 
     sharedFunc_800D17BC_1_s00(chara);
     sharedFunc_800CF168_1_s00(chara);
-    sharedFunc_800D140C_1_s00(chara, arg2);
-    sharedFunc_800D1524_1_s00(chara, arg1, arg2);
+    sharedFunc_800D140C_1_s00(chara, coords);
+    sharedFunc_800D1524_1_s00(chara, arg1, coords);
     sharedFunc_800D1DBC_1_s00(chara);
 
     if (*((u16*)&chara->properties_E4.player.properties_E4[9] + 1) < 0x3800)
