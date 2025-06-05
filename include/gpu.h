@@ -28,45 +28,51 @@ enum PrimRectFlags
     RECT_MODULATE = 0x01  /** Use primitive color to modulate texture. */
 };
 
-typedef struct
+typedef struct _Line2d
 {
     DVECTOR vertex0_0;
     DVECTOR vertex1_4;
 } s_Line2d;
+STATIC_ASSERT_SIZEOF(s_Line2d, 8);
 
-typedef struct
+typedef struct _Triangle2d
 {
     DVECTOR vertex0_0;
     DVECTOR vertex1_4;
     DVECTOR vertex2_8;
 } s_Triangle2d;
+STATIC_ASSERT_SIZEOF(s_Triangle2d, 12);
 
-typedef struct
+typedef struct _Quad2d
 {
     DVECTOR vertex0_0;
     DVECTOR vertex1_4;
     DVECTOR vertex2_8;
     DVECTOR vertex3_C;
 } s_Quad2d;
+STATIC_ASSERT_SIZEOF(s_Quad2d, 16);
 
-typedef struct
+typedef struct _ColoredLine2d
 {
     s_Line2d line_0;
     u16      r_8;
     u16      g_A;
     u16      b_C;
-    u16      pad_E;
+    u16      pad_E; // Maybe 4th component of RGB + A/code struct?
 } s_ColoredLine2d;
+STATIC_ASSERT_SIZEOF(s_ColoredLine2d, 16);
 
-typedef struct
+typedef struct _LineBorder
 {
     s_Line2d lines_0[RECT_EDGE_COUNT];
 } s_LineBorder;
+STATIC_ASSERT_SIZEOF(s_LineBorder, 32);
 
-typedef struct
+typedef struct _QuadBorder
 {
     s_Quad2d quads_0[RECT_EDGE_COUNT];
 } s_QuadBorder;
+STATIC_ASSERT_SIZEOF(s_QuadBorder, 64);
 
 typedef struct
 {
