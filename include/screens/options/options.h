@@ -69,27 +69,6 @@ typedef enum _OptionsExtra
 // STRUCTS
 // ========
 
-typedef struct _LineVectors
-{
-    DVECTOR field_0;
-    DVECTOR field_4;
-} s_LineVectors;
-
-typedef struct _ButtonVectors
-{
-    DVECTOR field_0;
-    DVECTOR field_4;
-    DVECTOR field_8;
-    DVECTOR field_C;
-} s_ButtonVectors;
-
-typedef struct _ArrowVectors
-{
-    DVECTOR field_0;
-    DVECTOR field_4;
-    DVECTOR field_8;
-} s_ArrowVectors;
-
 typedef struct _ScreenCtrl_SelectedElement
 {
     e_BindingMenu menuIdx_0;
@@ -153,10 +132,10 @@ extern s16 g_ScreenPos_PosY;
 
 extern s32 g_Gfx_MoveLineTimer;
 
-/** @brief Defines the amount of options to
+/** @brief Defines the number of options to
  * show in the extra options screen.
- * Used to show extra unlockable settings in
- * case the player has them unlocked.
+ * Used to show extra unlockable settings if
+ * the player has them unlocked.
  */
 extern s32 g_OptExtra_ShowSettingsCount;
 
@@ -219,13 +198,13 @@ void Gfx_BrightnessLevelTextDraw();
 void Gfx_BrightnessLevelArrowsDraw();
 
 /** @brief Draws the line on the selected option in options screens. */
-void Gfx_LineDraw(s_LineVectors* vec, s32 arg1, s32 arg2);
+void Gfx_LineDraw(s_Line2d* line, s32 arg1, s32 arg2);
 
 /** @brief Draws the arrows used in options screens. */
-void Gfx_ArrowDraw(s_ArrowVectors* vec, s32 arg1, s32 arg2);
+void Gfx_ArrowDraw(s_Triangle2d* tri, s32 arg1, s32 arg2);
 
 /** @brief Draws the button next to options in the main and extra option screens. */
-void Gfx_ButtonDraw(s_ButtonVectors* vec, s32 arg1, s32 arg2);
+void Gfx_ButtonDraw(s_Quad2d* quad, s32 arg1, s32 arg2);
 
 void Settings_ControllerScreen();
 

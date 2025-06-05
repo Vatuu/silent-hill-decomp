@@ -1042,8 +1042,10 @@ void Gfx_SaveSlotDrawBox(s32 slotIdx, s32 saveCount, s32 selectedSaveIdx, s32 se
                (slotIdx * SLOT_COLUMN_OFFSET) - 130, (selectedSaveOffsetY * SLOT_ROW_OFFSET) - 43,
                (slotIdx * SLOT_COLUMN_OFFSET) - 10,  (selectedSaveOffsetY * SLOT_ROW_OFFSET) - 62,
                (slotIdx * SLOT_COLUMN_OFFSET) - 10,  (selectedSaveOffsetY * SLOT_ROW_OFFSET) - 43);
+
         addPrim((u8*)ot->org + LAYER_BASE_0, highlightPoly);
         GsOUT_PACKET_P = (u8*)highlightPoly + sizeof(POLY_F4);
+
         func_80052088(0, 0, 7, 1);
     }
 

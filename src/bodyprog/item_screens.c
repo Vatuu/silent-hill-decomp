@@ -437,7 +437,7 @@ void Gfx_Inventory_ScrollArrows(s32* arg0) // 0x8004EC7C
 
     GsOT* ot = &g_ObjectTable1[g_ObjectTableIdx];
     
-    s_80026264 D_80026264[] =
+    s_Triangle2d tris[] =
     {
         { { 0xFFC4, 0x000C }, { 0xFFCC, 0x0004 }, { 0xFFCC, 0x0014 } },
         { { 0xFFCC, 0x000C }, { 0xFFD4, 0x0004 }, { 0xFFD4, 0x0014 } },
@@ -468,9 +468,9 @@ void Gfx_Inventory_ScrollArrows(s32* arg0) // 0x8004EC7C
         setRGB2(poly, temp_v1 * 8, temp_v1 * 8, temp_v1 * 8);
 
         setXY3(poly,
-            D_80026264[i].field_0.vx, D_80026264[i].field_0.vy,
-            D_80026264[i].field_4.vx, D_80026264[i].field_4.vy,
-            D_80026264[i].field_8.vx, D_80026264[i].field_8.vy
+            tris[i].vertex0_0.vx, tris[i].vertex0_0.vy,
+            tris[i].vertex1_4.vx, tris[i].vertex1_4.vy,
+            tris[i].vertex2_8.vx, tris[i].vertex2_8.vy
         );
 
         addPrim(&ot->org[7], poly);

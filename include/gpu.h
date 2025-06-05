@@ -7,6 +7,8 @@
 #include <libgpu.h>
 #include <libgs.h>
 
+#define RECT_EDGE_COUNT 4
+
 /** Primitive types */
 enum PrimType
 {
@@ -25,6 +27,54 @@ enum PrimRectFlags
     RECT_BLEND    = 0x02, /** Semi-transparency flag. */
     RECT_MODULATE = 0x01  /** Use primitive color to modulate texture. */
 };
+
+typedef struct
+{
+    DVECTOR vertex0_0;
+    DVECTOR vertex1_4;
+} s_Line2d;
+
+typedef struct
+{
+    DVECTOR vertex0_0;
+    DVECTOR vertex1_4;
+    DVECTOR vertex2_8;
+} s_Triangle2d;
+
+typedef struct
+{
+    DVECTOR vertex0_0;
+    DVECTOR vertex1_4;
+    DVECTOR vertex2_8;
+    DVECTOR vertex3_C;
+} s_Quad2d;
+
+typedef struct
+{
+    s_Line2d line_0;
+    u16      r_8;
+    u16      g_A;
+    u16      b_C;
+    u16      pad_E;
+} s_ColoredLine2d;
+
+typedef struct
+{
+    s_Line2d lines_0[RECT_EDGE_COUNT];
+} s_LineBorder;
+
+typedef struct
+{
+    s_Quad2d quads_0[RECT_EDGE_COUNT];
+} s_QuadBorder;
+
+typedef struct
+{
+    u8 r;
+    u8 g;
+    u8 b;
+    u8 p;
+} s_PrimColor;
 
 /** Same as `getTPage()`, but `xn` and `yn` are indices instead of VRAM coordinates. */
 #define getTPageN(tp, abr, xn, yn) \

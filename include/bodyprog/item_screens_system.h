@@ -11,14 +11,6 @@
 // STRUCTS
 // =========
 
-// This function is the same as `s_ArrowVectors` from options.
-typedef struct
-{
-    DVECTOR field_0;
-    DVECTOR field_4;
-    DVECTOR field_8;
-} s_80026264;
-
 typedef struct
 {
     u8 field_0;

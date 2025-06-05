@@ -824,12 +824,12 @@ void Gfx_OptionsStringsMainDraw() // 0x801E42EC
 
 void Gfx_SelectedOptionExtra() // 0x801E4450
 {
-    DVECTOR*        vecPtrOut;
-    s16             sin;
-    s32             j;
-    s32             i;
-    s_LineVectors   lineVec;
-    s_ButtonVectors buttonVec[2];
+    DVECTOR* vecPtrOut;
+    s16      sin;
+    s32      j;
+    s32      i;
+    s_Line2d line;
+    s_Quad2d quads[2];
 
     u8 D_801E2830[] =
     {
@@ -887,16 +887,16 @@ void Gfx_SelectedOptionExtra() // 0x801E4450
 
     sin = shRsin(g_Gfx_MoveLineTimer << 7);
 
-    lineVec.field_0.vx = -121;
-    lineVec.field_4.vx = D_801E73C4.vx + FP_FROM((D_801E73C8.vx - D_801E73C4.vx) * sin, Q12_SHIFT);
-    lineVec.field_4.vy = D_801E73C4.vy + FP_FROM((D_801E73C8.vy - D_801E73C4.vy) * sin, Q12_SHIFT) + 16;
-    lineVec.field_0.vy = lineVec.field_4.vy;
+    line.vertex0_0.vx = -121;
+    line.vertex1_4.vx = D_801E73C4.vx + FP_FROM((D_801E73C8.vx - D_801E73C4.vx) * sin, Q12_SHIFT);
+    line.vertex1_4.vy = D_801E73C4.vy + FP_FROM((D_801E73C8.vy - D_801E73C4.vy) * sin, Q12_SHIFT) + 16;
+    line.vertex0_0.vy = line.vertex1_4.vy;
 
-    Gfx_LineDraw(&lineVec, 1, 0);
+    Gfx_LineDraw(&line, 1, 0);
 
     for (i = 0; i < g_OptExtra_ShowSettingsCount; i++)
     {
-        vecPtrOut = (DVECTOR*)&buttonVec;
+        vecPtrOut = (DVECTOR*)&quads;
 
         for (j = 0; j < 4; j++)
         {
@@ -908,25 +908,25 @@ void Gfx_SelectedOptionExtra() // 0x801E4450
 
         if (i == g_ExtraSelectedOptionIdx)
         {
-            Gfx_ButtonDraw(&buttonVec[0], 0, 0);
-            Gfx_ButtonDraw(&buttonVec[1], 1, 0);
+            Gfx_ButtonDraw(&quads[0], 0, 0);
+            Gfx_ButtonDraw(&quads[1], 1, 0);
         }
         else
         {
-            Gfx_ButtonDraw(&buttonVec[0], 0, 1);
-            Gfx_ButtonDraw(&buttonVec[1], 1, 1);
+            Gfx_ButtonDraw(&quads[0], 0, 1);
+            Gfx_ButtonDraw(&quads[1], 1, 1);
         }
     }
 }
 
 void Gfx_SelectedOptionMain() // 0x801E472C
 {
-    DVECTOR*        vecPtrOut;
-    s16             sin;
-    s32             j;
-    s32             i;
-    s_LineVectors   lineVec;
-    s_ButtonVectors buttonVec[2];
+    DVECTOR* vecPtrOut;
+    s16      sin;
+    s32      j;
+    s32      i;
+    s_Line2d line;
+    s_Quad2d quads[2];
 
     u8 D_801E2858[] =
     {
@@ -984,16 +984,16 @@ void Gfx_SelectedOptionMain() // 0x801E472C
 
     sin = shRsin(g_Gfx_MoveLineTimer << 7);
 
-    lineVec.field_0.vx = -121;
-    lineVec.field_4.vx = D_801E73CC.vx + FP_FROM((D_801E73D0.vx - D_801E73CC.vx) * sin, Q12_SHIFT);
-    lineVec.field_4.vy = D_801E73CC.vy + FP_FROM((D_801E73D0.vy - D_801E73CC.vy) * sin, Q12_SHIFT) + 16;
-    lineVec.field_0.vy = lineVec.field_4.vy;
+    line.vertex0_0.vx = -121;
+    line.vertex1_4.vx = D_801E73CC.vx + FP_FROM((D_801E73D0.vx - D_801E73CC.vx) * sin, Q12_SHIFT);
+    line.vertex1_4.vy = D_801E73CC.vy + FP_FROM((D_801E73D0.vy - D_801E73CC.vy) * sin, Q12_SHIFT) + 16;
+    line.vertex0_0.vy = line.vertex1_4.vy;
 
-    Gfx_LineDraw(&lineVec, 1, 0);
+    Gfx_LineDraw(&line, 1, 0);
 
     for (i = 0; i < 9; i++)
     {
-        vecPtrOut = (DVECTOR*)&buttonVec;
+        vecPtrOut = (DVECTOR*)&quads;
 
         for (j = 0; j < 4; j++)
         {
@@ -1005,13 +1005,13 @@ void Gfx_SelectedOptionMain() // 0x801E472C
 
         if (i == g_MainSelectedOptionIdx)
         {
-            Gfx_ButtonDraw(&buttonVec[0], 0, 0);
-            Gfx_ButtonDraw(&buttonVec[1], 1, 0);
+            Gfx_ButtonDraw(&quads[0], 0, 0);
+            Gfx_ButtonDraw(&quads[1], 1, 0);
         }
         else
         {
-            Gfx_ButtonDraw(&buttonVec[0], 0, 1);
-            Gfx_ButtonDraw(&buttonVec[1], 1, 1);
+            Gfx_ButtonDraw(&quads[0], 0, 1);
+            Gfx_ButtonDraw(&quads[1], 1, 1);
         }
     }
 }
@@ -1061,7 +1061,7 @@ void Gfx_SettingsOptionsExtraDraw() // 0x801E4B2C
     s32 i;
     s32 j;
 
-    s_ArrowVectors D_801E2884[] =
+    s_Triangle2d tris0[] =
     {
         { { 0x0026, 0xFFD6 }, { 0x002E, 0xFFCE }, { 0x002E, 0xFFDE } },
         { { 0x0078, 0xFFD6 }, { 0x0070, 0xFFCE }, { 0x0070, 0xFFDE } },
@@ -1081,7 +1081,7 @@ void Gfx_SettingsOptionsExtraDraw() // 0x801E4B2C
         { { 0x0068, 0x0046 }, { 0x0060, 0x003E }, { 0x0060, 0x004E } }
     };
 
-    s_ArrowVectors D_801E2944[] =
+    s_Triangle2d tris1[] =
     {
         { { 0x0025, 0xFFD6 }, { 0x002F, 0xFFCC }, { 0x002F, 0xFFE0 } },
         { { 0x0079, 0xFFD6 }, { 0x006F, 0xFFCC }, { 0x006F, 0xFFE0 } },
@@ -1130,16 +1130,16 @@ void Gfx_SettingsOptionsExtraDraw() // 0x801E4B2C
     {
         for (i = 0; i < 2; i++)
         {
-            Gfx_ArrowDraw(&D_801E2884[(g_ExtraSelectedOptionIdx * 2) + i], 1, 0);
+            Gfx_ArrowDraw(&tris0[(g_ExtraSelectedOptionIdx * 2) + i], 1, 0);
         }
 
         if (g_ControllerPtrConst->btns_held_C & ControllerFlag_LStickLeft)
         {
-            Gfx_ArrowDraw(&D_801E2944[g_ExtraSelectedOptionIdx << 1], 0, 0);
+            Gfx_ArrowDraw(&tris1[g_ExtraSelectedOptionIdx << 1], 0, 0);
         }
         if (g_ControllerPtrConst->btns_held_C & ControllerFlag_LStickRight)
         {
-            Gfx_ArrowDraw(&D_801E2944[(g_ExtraSelectedOptionIdx << 1) + 1], 0, 0);
+            Gfx_ArrowDraw(&tris1[(g_ExtraSelectedOptionIdx << 1) + 1], 0, 0);
         }
     }
 
@@ -1220,7 +1220,7 @@ void Gfx_SettingsOptionsMainDraw() // 0x801E4FFC
     s32 i;
     s32 stringIdx;
 
-    s_ArrowVectors D_801E2AD8[] =
+    s_Triangle2d tris0[] =
     {
         { { 0x0028, 0x000E }, { 0x0030, 0x0006 }, { 0x0030, 0x0016 } },
         { { 0x0060, 0x000E }, { 0x0058, 0x0006 }, { 0x0058, 0x0016 } },
@@ -1234,7 +1234,7 @@ void Gfx_SettingsOptionsMainDraw() // 0x801E4FFC
         { { 0x0083, 0x004E }, { 0x007B, 0x0046 }, { 0x007B, 0x0056 } }
     };
 
-    s_ArrowVectors D_801E2B50[] =
+    s_Triangle2d tris1[] =
     {
         { { 0x0027, 0x000E }, { 0x0031, 0x0004 }, { 0x0031, 0x0018 } },
         { { 0x0061, 0x000E }, { 0x0057, 0x0004 }, { 0x0057, 0x0018 } },
@@ -1262,16 +1262,16 @@ void Gfx_SettingsOptionsMainDraw() // 0x801E4FFC
     {
         for (i = 0; i < 2; i++)
         {
-            Gfx_ArrowDraw(&D_801E2AD8[(((g_MainSelectedOptionIdx - 4) * 2) + i)], 1, 0);
+            Gfx_ArrowDraw(&tris0[(((g_MainSelectedOptionIdx - 4) * 2) + i)], 1, 0);
         }
 
         if (g_ControllerPtrConst->btns_held_C & ControllerFlag_LStickLeft)
         {
-            Gfx_ArrowDraw(&D_801E2B50[(g_MainSelectedOptionIdx - 4) << 1], 0, 0);
+            Gfx_ArrowDraw(&tris1[(g_MainSelectedOptionIdx - 4) << 1], 0, 0);
         }
         if (g_ControllerPtrConst->btns_held_C & ControllerFlag_LStickRight)
         {
-            Gfx_ArrowDraw(&D_801E2B50[((g_MainSelectedOptionIdx - 4) << 1) + 1], 0, 0);
+            Gfx_ArrowDraw(&tris1[((g_MainSelectedOptionIdx - 4) << 1) + 1], 0, 0);
         }
     }
 
@@ -1484,7 +1484,7 @@ void Settings_PositionScreen() // 0x801E53A0
 
 void Gfx_PositionArrowsDraw() // 0x801E5A08
 {
-    s_ArrowVectors D_801E2BEC[] =
+    s_Triangle2d tris0[] =
     {
         { { 0x0000, 0xFF9C }, { 0xFFF8, 0xFFA4 }, { 0x0008, 0xFFA4 } },
         { { 0x0000, 0x0064 }, { 0xFFF8, 0x005C }, { 0x0008, 0x005C } },
@@ -1492,7 +1492,7 @@ void Gfx_PositionArrowsDraw() // 0x801E5A08
         { { 0x0094, 0x0000 }, { 0x008C, 0xFFF8 }, { 0x008C, 0x0008 } },
     };
 
-    s_ArrowVectors D_801E2C1C[] =
+    s_Triangle2d tris1[] =
     {
         { { 0x0000, 0xFF9B }, { 0xFFF6, 0xFFA5 }, { 0x0009, 0xFFA5 } },
         { { 0x0000, 0x0065 }, { 0xFFF6, 0x005B }, { 0x0009, 0x005B } },
@@ -1507,7 +1507,7 @@ void Gfx_PositionArrowsDraw() // 0x801E5A08
 
     for (i = 0; i < 4; i++)
     {
-        Gfx_ArrowDraw(&D_801E2BEC[i], 1, 0);
+        Gfx_ArrowDraw(&tris0[i], 1, 0);
     }
 
     if ((g_ControllerPtrConst->btns_new_10 & ControllerFlag_LStickUp) ||
@@ -1535,7 +1535,7 @@ void Gfx_PositionArrowsDraw() // 0x801E5A08
     {
         if (dir[i] != 0)
         {
-            Gfx_ArrowDraw(&D_801E2C1C[i], 0, 0);
+            Gfx_ArrowDraw(&tris1[i], 0, 0);
         }
     }
 }
@@ -1694,13 +1694,13 @@ void Gfx_BrightnessLevelTextDraw() // 0x801E6238
 
 void Gfx_BrightnessLevelArrowsDraw() // 0x801E628C
 {
-    s_ArrowVectors D_801E2C74[] =
+    s_Triangle2d tris0[] =
     {
         { { 8, 84 }, {  16, 76 }, { 16, 92 } },
         { { 64, 84 }, { 56, 76 }, { 56, 92 } }
     };
 
-    s_ArrowVectors D_801E2C8C[] =
+    s_Triangle2d tris1[] =
     {
         { { 7, 84 },  { 17, 74 }, { 17, 94 } },
         { { 65, 84 }, { 55, 74 }, { 55, 94 } }
@@ -1728,12 +1728,12 @@ void Gfx_BrightnessLevelArrowsDraw() // 0x801E628C
 
     for (i = 0; i < 2; i++)
     {
-        Gfx_ArrowDraw(&D_801E2C74[i], 1, 0);
+        Gfx_ArrowDraw(&tris0[i], 1, 0);
     }
 
     for (i = dir - 1; i < dir; i++)
     {
-        Gfx_ArrowDraw(&D_801E2C8C[i], 0, 0);
+        Gfx_ArrowDraw(&tris1[i], 0, 0);
     }
 }
 
@@ -1741,138 +1741,142 @@ void Gfx_BrightnessLevelArrowsDraw() // 0x801E628C
 // DRAW OPTIONS FEATURES SCREEN
 // ========================================
 
-void Gfx_LineDraw(s_LineVectors* vec, s32 arg1, s32 arg2) // 0x801E641C
+void Gfx_LineDraw(s_Line2d* line, s32 arg1, s32 arg2) // 0x801E641C
 {
-    GsOT*          ot = &g_ObjectTable1[g_ObjectTableIdx];
-    LINE_G2*       line;
-    s_LineVectors* vecPtr;
+    GsOT*     ot = &g_ObjectTable1[g_ObjectTableIdx];
+    LINE_G2*  linePrim;
+    s_Line2d* linePtr;
 
-    line   = (LINE_G2*)GsOUT_PACKET_P;
-    vecPtr = vec;
+    linePrim = (LINE_G2*)GsOUT_PACKET_P;
+    linePtr  = line;
 
-    setLineG2(line);
+    setLineG2(linePrim);
 
+    // BUG(?): Same color regardless of `arg2`.
     if (arg2)
     {
-        *((u32*)&line->r0) = 0x50B0B0B0;
-        *((u32*)&line->r1) = 0x504080A0;
+        *((u32*)&linePrim->r0) = 0x50B0B0B0;
+        *((u32*)&linePrim->r1) = 0x504080A0;
     }
     else
     {
-        *((u32*)&line->r0) = 0x50B0B0B0;
-        *((u32*)&line->r1) = 0x504080A0;
+        *((u32*)&linePrim->r0) = 0x50B0B0B0;
+        *((u32*)&linePrim->r1) = 0x504080A0;
     }
 
-    setXY0Fast(line, vecPtr->field_0.vx, vecPtr->field_0.vy);
-    setXY1Fast(line, vecPtr->field_4.vx, vecPtr->field_4.vy);
+    setXY0Fast(linePrim, linePtr->vertex0_0.vx, linePtr->vertex0_0.vy);
+    setXY1Fast(linePrim, linePtr->vertex1_4.vx, linePtr->vertex1_4.vy);
 
-    addPrim((u8*)ot->org + (arg1 ? 0x24 : 0x18), line);
-
-    GsOUT_PACKET_P = (u8*)line + sizeof(LINE_G2);
+    addPrim((u8*)ot->org + (arg1 ? 36 : 24), linePrim);
+    GsOUT_PACKET_P = (u8*)linePrim + sizeof(LINE_G2);
 
     if (arg1 != 0)
     {
         POLY_G4* poly = (POLY_G4*)GsOUT_PACKET_P;
-
         setlen(poly, 8);
         setcode(poly, 0x3A);
+
         setRGB0(poly, 0, 0, 0);
         setRGB1(poly, 0x60, 0x60, 0x60);
         setRGB2(poly, 0, 0, 0);
         setRGB3(poly, 0x60, 0x60, 0x60);
-        setXY4(poly, vecPtr->field_0.vx, vecPtr->field_0.vy - 16, vecPtr->field_0.vx, vecPtr->field_0.vy,
-               vecPtr->field_4.vx, vecPtr->field_4.vy - 16, vecPtr->field_4.vx, vecPtr->field_4.vy);
 
-        addPrim((u8*)ot->org + 0x24, poly);
+        setXY4(poly,
+               linePtr->vertex0_0.vx, linePtr->vertex0_0.vy - 16, linePtr->vertex0_0.vx, linePtr->vertex0_0.vy,
+               linePtr->vertex1_4.vx, linePtr->vertex1_4.vy - 16, linePtr->vertex1_4.vx, linePtr->vertex1_4.vy);
 
+        addPrim((u8*)ot->org + 36, poly);
         GsOUT_PACKET_P = (u8*)poly + sizeof(POLY_G4);
 
         func_80052088(0, 0, 9, 2);
     }
 }
 
-void Gfx_ArrowDraw(s_ArrowVectors* vec, s32 arg1, s32 arg2) // 0x801E662C
+void Gfx_ArrowDraw(s_Triangle2d* tri, s32 arg1, s32 arg2) // 0x801E662C
 {
     GsOT*    ot = &g_ObjectTable1[g_ObjectTableIdx];
     s32      timerCount;
-    s32      colorMod0;
-    s32      colorMod1;
-    POLY_G3* poly;
+    s32      colorStart;
+    s32      colorEnd;
+    POLY_G3* arrowPoly;
 
-    if (arg2) /*Probably some unused code related to `arg2`.*/
+    // Probably unused.
+    if (arg2)
     {
-        colorMod0 = 0;
-        colorMod1 = 0;
+        colorStart = 0;
+        colorEnd = 0;
     }
 
     timerCount = g_SysWork.timer_1C & 0x7F;
 
-    if (timerCount >= 0x20)
+    // Fade start color.
+    if (timerCount >= 32)
     {
-        colorMod1 = 0x20;
-        if (timerCount < 0x40)
+        colorEnd = 32;
+        if (timerCount < 64)
         {
-            colorMod1 = 0x20;
+            colorEnd = 32;
         }
-        else if (timerCount < 0x60)
+        else if (timerCount < 96)
         {
-            colorMod1 = 0x60 - timerCount;
+            colorEnd = 96 - timerCount;
         }
         else
         {
-            colorMod1 = 0;
+            colorEnd = 0;
         }
     }
     else
     {
-        colorMod1 = timerCount;
+        colorEnd = timerCount;
     }
 
-    if (timerCount >= 0x20)
+    // Fade end color.
+    if (timerCount >= 32)
     {
-        if (timerCount < 0x40)
+        if (timerCount < 64)
         {
-            colorMod0 = timerCount - 0x20;
+            colorStart = timerCount - 32;
         }
-        else if (timerCount >= 0x60)
+        else if (timerCount >= 96)
         {
-            colorMod0 = 0x80 - timerCount;
+            colorStart = 128 - timerCount;
         }
         else
         {
-            colorMod0 = 0x20;
+            colorStart = 32;
         }
     }
     else
     {
-        colorMod0 = 0;
+        colorStart = 0;
     }
 
-    poly = (POLY_G3*)GsOUT_PACKET_P;
-    setPolyG3(poly);
+    arrowPoly = (POLY_G3*)GsOUT_PACKET_P;
+    setPolyG3(arrowPoly);
 
     if (arg1 != 0)
     {
-        *((u32*)&poly->r0) = (colorMod0 * 0x700) + 0x30FF0000;
-        *((u32*)&poly->r1) = (colorMod1 * 0x700) + 0x30FF0000;
-        *((u32*)&poly->r2) = (colorMod1 * 0x700) + 0x30FF0000;
+        *((u32*)&arrowPoly->r0) = (colorStart * 0x700) + 0x30FF0000;
+        *((u32*)&arrowPoly->r1) = (colorEnd   * 0x700) + 0x30FF0000;
+        *((u32*)&arrowPoly->r2) = (colorEnd   * 0x700) + 0x30FF0000;
     }
     else
     {
-        *((u32*)&poly->r0) = 0x30F0F000;
-        *((u32*)&poly->r1) = 0x30F0F000;
-        *((u32*)&poly->r2) = 0x30F0F000;
+        *((u32*)&arrowPoly->r0) = 0x30F0F000;
+        *((u32*)&arrowPoly->r1) = 0x30F0F000;
+        *((u32*)&arrowPoly->r2) = 0x30F0F000;
     }
 
-    setXY0Fast(poly, vec->field_0.vx, vec->field_0.vy);
-    setXY1Fast(poly, vec->field_4.vx, vec->field_4.vy);
-    setXY2Fast(poly, vec->field_8.vx, vec->field_8.vy);
+    setXY0Fast(arrowPoly, tri->vertex0_0.vx, tri->vertex0_0.vy);
+    setXY1Fast(arrowPoly, tri->vertex1_4.vx, tri->vertex1_4.vy);
+    setXY2Fast(arrowPoly, tri->vertex2_8.vx, tri->vertex2_8.vy);
 
-    addPrim((u8*)ot->org + 0x28, poly);
-    GsOUT_PACKET_P = (u8*)poly + sizeof(POLY_G3);
+    addPrim((u8*)ot->org + 40, arrowPoly);
+    GsOUT_PACKET_P = (u8*)arrowPoly + sizeof(POLY_G3);
 }
 
-void Gfx_ButtonDraw(s_ButtonVectors* vec, s32 arg1, s32 arg2) // 0x801E67B0
+void Gfx_ButtonDraw(s_Quad2d* quad, s32 arg1, s32 arg2) // 0x801E67B0
 {
     GsOT*    ot = &g_ObjectTable1[g_ObjectTableIdx];
     s32      i;
@@ -1902,15 +1906,15 @@ void Gfx_ButtonDraw(s_ButtonVectors* vec, s32 arg1, s32 arg2) // 0x801E67B0
 
             if (i != 0)
             {
-                setXY0Fast(poly, vec->field_0.vx, vec->field_0.vy);
-                setXY1Fast(poly, vec->field_4.vx, vec->field_4.vy);
-                setXY2Fast(poly, vec->field_C.vx, vec->field_C.vy);
+                setXY0Fast(poly, quad->vertex0_0.vx, quad->vertex0_0.vy);
+                setXY1Fast(poly, quad->vertex1_4.vx, quad->vertex1_4.vy);
+                setXY2Fast(poly, quad->vertex3_C.vx, quad->vertex3_C.vy);
             }
             else
             {
-                setXY0Fast(poly, vec->field_0.vx, vec->field_0.vy);
-                setXY1Fast(poly, vec->field_8.vx, vec->field_8.vy);
-                setXY2Fast(poly, vec->field_C.vx, vec->field_C.vy);
+                setXY0Fast(poly, quad->vertex0_0.vx, quad->vertex0_0.vy);
+                setXY1Fast(poly, quad->vertex2_8.vx, quad->vertex2_8.vy);
+                setXY2Fast(poly, quad->vertex3_C.vx, quad->vertex3_C.vy);
             }
         }
         else
@@ -1932,15 +1936,15 @@ void Gfx_ButtonDraw(s_ButtonVectors* vec, s32 arg1, s32 arg2) // 0x801E67B0
 
             if (i != 0)
             {
-                setXY0Fast(poly, vec->field_C.vx, vec->field_C.vy);
-                setXY1Fast(poly, vec->field_4.vx, vec->field_4.vy);
-                setXY2Fast(poly, vec->field_8.vx, vec->field_8.vy);
+                setXY0Fast(poly, quad->vertex3_C.vx, quad->vertex3_C.vy);
+                setXY1Fast(poly, quad->vertex1_4.vx, quad->vertex1_4.vy);
+                setXY2Fast(poly, quad->vertex2_8.vx, quad->vertex2_8.vy);
             }
             else
             {
-                setXY0Fast(poly, vec->field_0.vx, vec->field_0.vy);
-                setXY1Fast(poly, vec->field_4.vx, vec->field_4.vy);
-                setXY2Fast(poly, vec->field_8.vx, vec->field_8.vy);
+                setXY0Fast(poly, quad->vertex0_0.vx, quad->vertex0_0.vy);
+                setXY1Fast(poly, quad->vertex1_4.vx, quad->vertex1_4.vy);
+                setXY2Fast(poly, quad->vertex2_8.vx, quad->vertex2_8.vy);
             }
         }
 

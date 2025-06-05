@@ -87,58 +87,6 @@ typedef struct _SavegameEntry
 STATIC_ASSERT_SIZEOF(s_SavegameEntry, 16);
 
 // ========
-// STRUCTS
-// ========
-
-typedef struct
-{
-    DVECTOR vertex0_0;
-    DVECTOR vertex1_4;
-} s_Line2d;
-
-typedef struct
-{
-    DVECTOR vertex0_0;
-    DVECTOR vertex1_4;
-    DVECTOR vertex2_8;
-} s_Triangle2d;
-
-typedef struct
-{
-    DVECTOR vertex0_0;
-    DVECTOR vertex1_4;
-    DVECTOR vertex2_8;
-    DVECTOR vertex3_C;
-} s_Quad2d;
-
-typedef struct
-{
-    s_Line2d line_0;
-    u16      r_8;
-    u16      g_A;
-    u16      b_C;
-    u16      pad_E;
-} s_ColoredLine2d;
-
-typedef struct
-{
-    s_Line2d lines_0[4];
-} s_LineBorder;
-
-typedef struct
-{
-    s_Quad2d quads_0[4];
-} s_QuadBorder;
-
-typedef struct
-{
-    u8 r;
-    u8 g;
-    u8 b;
-    u8 p;
-} s_PrimColor;
-
-// ========
 // GLOBALS
 // ========
 
