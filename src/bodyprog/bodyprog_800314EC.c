@@ -162,7 +162,7 @@ void Gfx_DebugStringDraw(char* str)
                 addPrimFast(ot, sprt8, 3);
                 setRGBC0(sprt8, 0x80, 0x80, 0x80, 0x74);
                 setXY0Fast(sprt8, textX, textY);
-                charIndex           = (toupper(charCode) & 0xFF) - 0x2A;
+                charIndex           = (char)toupper(charCode) - 0x2A;
                 *((u32*)&sprt8->u0) = ((charIndex & 0x1F) * 8) + ((((charIndex >> 5) * 8) + 0xF0) << 8) + (0x7FD2 << 16);
 
             case 0x5F:
