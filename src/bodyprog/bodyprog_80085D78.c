@@ -32,10 +32,10 @@ void func_80085DC0(s32 arg0, s32 sysStateStep) // 0x80085DC0
     else
     {
         g_SysWork.sysStateStep_C = sysStateStep;
-        g_SysWork.field_28 = 0;
-        g_SysWork.field_10 = 0;
-        g_SysWork.timer_2C = 0;
-        g_SysWork.field_14 = 0;
+        g_SysWork.field_28       = 0;
+        g_SysWork.field_10       = 0;
+        g_SysWork.timer_2C       = 0;
+        g_SysWork.field_14       = 0;
     }
 }
 
@@ -43,7 +43,7 @@ void func_80085DF0() // 0x80085DF0
 {
     g_SysWork.timer_2C += g_DeltaTime1;
 
-    if (g_MapOverlayHeader.func_EC() != 0 || g_SysWork.timer_2C > 4096)
+    if (g_MapOverlayHeader.func_EC() != NULL || g_SysWork.timer_2C > 4096)
     {
         g_SysWork.field_28 = 0;
         g_SysWork.field_10 = 0;
@@ -57,7 +57,7 @@ void func_80085E6C(s32 arg0, s32 arg1) // 0x80085E6C
 {
     s32 unkTime;
 
-    unkTime = g_SysWork.timer_2C + g_DeltaTime1;
+    unkTime            = g_SysWork.timer_2C + g_DeltaTime1;
     g_SysWork.timer_2C = unkTime;
 
     if (arg0 < unkTime)
@@ -259,7 +259,7 @@ void func_8008616C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x800861
             {
                 if (arg1 != 0 || g_Gfx_ScreenFade != caseVar)
                 {
-                    if ((arg1 == caseVar && (g_Gfx_ScreenFade & 7) == 5))
+                    if (arg1 == caseVar && (g_Gfx_ScreenFade & 0x7) == 5)
                     {
                         func_80085D78(arg4);
                     }
@@ -270,6 +270,7 @@ void func_8008616C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x800861
             {
                 break;
             }
+
             func_80085D78(arg4);
             break;
     }

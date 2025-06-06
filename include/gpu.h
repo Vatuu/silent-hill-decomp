@@ -12,20 +12,20 @@
 /** Primitive types */
 enum PrimType
 {
-    PRIM_POLY = 0x20, /** Polygon (`POLY`) */
-    PRIM_LINE = 0x40, /** Line (`LINE`) */
-    PRIM_RECT = 0x60  /** Rectangle (`TILE` or `SPRT`) */
+    PRIM_POLY = 0x20, /** Polygon (`POLY`). */
+    PRIM_LINE = 0x40, /** Line (`LINE`). */
+    PRIM_RECT = 0x60  /** Rectangle (`TILE` or `SPRT`). */
 };
 
 /** Rectangle flags */
 enum PrimRectFlags
 {
-    RECT_SIZE_16  = 0x18, /** Rectangle is 16x16 (`TILE_16` or `SPRT_16`). */
-    RECT_SIZE_8   = 0x10, /** Rectangle is 8x8 (`TILE_8` or `SPRT_8`). */
-    RECT_SIZE_1   = 0x08, /** Rectangle is 1x1 (`TILE_1`). */
-    RECT_TEXTURE  = 0x04, /** Rectangle is textured (is a `SPRT`). */
-    RECT_BLEND    = 0x02, /** Semi-transparency flag. */
-    RECT_MODULATE = 0x01  /** Use primitive color to modulate texture. */
+    RECT_SIZE_16  = (1 << 3) | (1 << 4), /** Rectangle is 16x16 (`TILE_16` or `SPRT_16`). */
+    RECT_SIZE_8   = 1 << 4,              /** Rectangle is 8x8 (`TILE_8` or `SPRT_8`). */
+    RECT_SIZE_1   = 1 << 3,              /** Rectangle is 1x1 (`TILE_1`). */
+    RECT_TEXTURE  = 1 << 2,              /** Rectangle is textured (is a `SPRT`). */
+    RECT_BLEND    = 1 << 1,              /** Semi-transparency flag. */
+    RECT_MODULATE = 1 << 0               /** Use primitive color to modulate texture. */
 };
 
 typedef struct _Line2d

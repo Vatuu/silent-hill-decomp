@@ -50,10 +50,10 @@ void Gfx_BackgroundSpriteDraw(s_FsImageDesc* image) // 0x800314EC
 
             setXY0Fast(sprt,
                        (tileX - (g_GameWork.gsScreenWidth_588 >> 1)) - (image->u << (2 - textureShift)),
-                       (baseYOffset + ((256 - textureYOffset) * y)));
+                       baseYOffset + ((256 - textureYOffset) * y));
 
             packet += sizeof(SPRT);
-            tPage = (DR_TPAGE*)packet;
+            tPage   = (DR_TPAGE*)packet;
 
             tileIndexX = x << textureShift;
             setDrawTPage(tPage, 0, 1, getTPage(textureShift, 0, (texturePageX + tileIndexX) << 6, ((texturePageX << 4) & 0x100) + (y << 8)));
@@ -63,9 +63,9 @@ void Gfx_BackgroundSpriteDraw(s_FsImageDesc* image) // 0x800314EC
         }
     }
 
-    GsOUT_PACKET_P = packet;
+    GsOUT_PACKET_P        = packet;
     g_SysWork.field_22A0 |= 1;
-    D_800A8E58 = 0x80;
+    D_800A8E58            = 0x80;
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_800317CC);
@@ -138,7 +138,7 @@ void Gfx_DebugStringDraw(char* str)
 {
     s32       textX;
     s32       textY;
-    s32       charIndex;
+    s32       charIdx;
     GsOT*     ot;
     u8*       strPtr;
     s32       charCode;
@@ -162,8 +162,9 @@ void Gfx_DebugStringDraw(char* str)
                 addPrimFast(ot, sprt8, 3);
                 setRGBC0(sprt8, 0x80, 0x80, 0x80, 0x74);
                 setXY0Fast(sprt8, textX, textY);
-                charIndex           = (char)toupper(charCode) - 0x2A;
-                *((u32*)&sprt8->u0) = ((charIndex & 0x1F) * 8) + ((((charIndex >> 5) * 8) + 0xF0) << 8) + (0x7FD2 << 16);
+
+                charIdx             = (char)toupper(charCode) - 0x2A;
+                *((u32*)&sprt8->u0) = ((charIdx & 0x1F) * 8) + ((((charIdx >> 5) * 8) + 0xF0) << 8) + (0x7FD2 << 16);
 
             case 0x5F:
             case 32:
@@ -177,12 +178,12 @@ void Gfx_DebugStringDraw(char* str)
                 break;
 
             case 10:
-                textX = g_Gfx_DebugStringPosition0.vx;
+                textX  = g_Gfx_DebugStringPosition0.vx;
                 textY += 8;
                 break;
         }
 
-        strPtr += 1;
+        strPtr++;
         packet += sizeof(SPRT_8);
     }
 

@@ -1777,6 +1777,7 @@ void func_800894DC();
 
 void func_80089500();
 
+// `arg0` is a pointer.
 s32 func_8008973C(s32 arg0, s32 arg1, s_func_8008973C* ptr);
 
 void func_80089840(s_func_80089840* arg0);
