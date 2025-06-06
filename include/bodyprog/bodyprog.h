@@ -1789,6 +1789,14 @@ void func_8008A398(s_SubCharacter* chara);
 
 void func_8008A3AC(s_SubCharacter* chara);
 
+void func_8008B398();
+
+void func_8008B3E4(s32 arg0);
+
+void func_8008B40C(s32 arg0, s32 arg1);
+
+void func_8008B438(s32 arg0, s32 arg1, s32 arg2);
+
 s32 func_8008D850();
 
 void func_8008E4EC();
