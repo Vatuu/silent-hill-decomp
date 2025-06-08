@@ -1,4 +1,6 @@
 #include "game.h"
+#include "inline_no_dmpsx.h"
+#include "gtemac.h"
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math.h"
@@ -212,9 +214,65 @@ void func_8004BB10() // 0x8004BB10
     GsFCALL4.tg4[GsDivMODE_NDIV][GsLMODE_FOG] = GsTMDfastTG4LFG;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8004BB4C); // 0x8004BB4C
+void func_8004BB4C(VbRVIEW* arg0, GsCOORDINATE2* arg1, SVECTOR3* arg2) // 0x8004BB4C
+{
+    arg0->vr.vz = 0xA;
+    arg0->vp.vx = 0;
+    arg0->vp.vy = 0;
+    arg0->vp.vz = 0;
+    arg0->vr.vx = 0;
+    arg0->vr.vy = 0;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8004BBF4); // 0x8004BBF4
+    arg0->rz = 0;
+
+    arg0->super      = arg1;
+    arg1->coord.t[2] = -0x2800;
+    arg1->super      = NULL;
+    arg1->coord.t[0] = 0;
+    arg1->coord.t[1] = 0;
+
+    arg2->vx = 0;
+    arg2->vy = 0;
+    arg2->vz = 0;
+
+    D_800C3928.scale.vz  = 0x1000;
+    D_800C3928.scale.vy  = 0x1000;
+    D_800C3928.scale.vx  = 0x1000;
+    D_800C3928.rotate.vz = 0;
+    D_800C3928.rotate.vy = 0;
+    D_800C3928.rotate.vx = 0;
+    D_800C3928.trans.vz  = 0;
+    D_800C3928.trans.vy  = 0;
+    D_800C3928.trans.vx  = 0;
+
+    arg1->param = &D_800C3928;
+
+    func_8004BCDC(arg2, arg1);
+    vbSetRefView(arg0);
+}
+
+void func_8004BBF4(VbRVIEW* arg0, GsCOORDINATE2* arg1, SVECTOR* arg2) // 0x8004BBF4
+{
+    u16     vx;
+    VECTOR  vect;
+    SVECTOR svect;
+
+    vx  = arg2->vx;
+    arg2->vx = 0;
+
+    func_8004BCDC(arg2, arg1);
+
+    arg2->vx = vx;
+
+    func_8004BCDC(arg2, arg1);
+
+    svect.vx = 0;
+    svect.vy = 0;
+    svect.vz = 0;
+
+    gte_ApplyMatrix(&arg1->coord, &svect, &vect);
+    vbSetRefView(arg0);
+}
 
 void func_8004BCBC(s32 arg0) // 0x8004BCBC
 {
@@ -222,14 +280,41 @@ void func_8004BCBC(s32 arg0) // 0x8004BCBC
 }
 
 /** Used for item rotation and item scrolling in the inventory. */
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8004BCDC); // 0x8004BCDC
+void func_8004BCDC(SVECTOR* arg0, GsCOORDINATE2* arg1) // 0x8004BCDC
+{
+    MATRIX mat;
+
+    mat.t[0] = arg1->coord.t[0];
+    mat.t[1] = arg1->coord.t[1];
+    mat.t[2] = arg1->coord.t[2];
+
+    func_80096E78(arg0, &mat);
+
+    arg1->coord = mat;
+
+    ScaleMatrix(&arg1->coord, arg1->param);
+
+    arg1->flg = 0;
+}
 
 /** Used for displaying model items in the inventory. */
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8004BD74); // 0x8004BD74
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8004BFE8); // 0x8004BFE8
+void func_8004BFE8() // 0x8004BFE8
+{
+    PushMatrix();
+    D_800C3954 = ReadGeomScreen();
+    ReadGeomOffset(&D_800C3958, &D_800C395C);
+    GsSetProjection(0x3E8);
+    D_800C3950 = g_SysWork.field_38.field_F;
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8004C040); // 0x8004C040
+void func_8004C040() // 0x8004C040
+{
+    PopMatrix();
+    GsSetProjection(D_800C3954);
+    SetGeomOffset(D_800C3958, D_800C395C);
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", Player_AnimUpdate); // 0x8004C088
 
