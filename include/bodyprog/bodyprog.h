@@ -1076,6 +1076,16 @@ extern u8 D_800C16A8[];
 
 extern s32 D_800C16C8; // Type assumed.
 
+extern GsCOORD2PARAM D_800C3928;
+
+extern u8 D_800C3950;
+
+extern s32 D_800C3954;
+
+extern s32 D_800C3958;
+
+extern s32 D_800C395C;
+
 extern s32 D_800C3990;
 
 extern s32 D_800C3994;
