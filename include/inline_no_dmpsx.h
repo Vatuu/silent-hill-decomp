@@ -393,4 +393,4 @@
 
 #undef gte_mvmva
 #define gte_mvmva(sf, mx, v, cv, lm) gte_mvmva_core(0x4A400012 | \
-                                                    ((sf) << 25) | ((mx) << 23) | ((v) << 21) | ((cv) << 19) | ((lm) << 18))
+    ((sf) << 25) | ((mx) << 23) | ((v) << 21) | ((cv) << 19) | ((lm) << 18))
