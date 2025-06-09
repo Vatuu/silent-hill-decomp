@@ -214,26 +214,26 @@ void func_8004BB10() // 0x8004BB10
     GsFCALL4.tg4[GsDivMODE_NDIV][GsLMODE_FOG] = GsTMDfastTG4LFG;
 }
 
-void func_8004BB4C(VbRVIEW* arg0, GsCOORDINATE2* arg1, SVECTOR3* arg2) // 0x8004BB4C
+void func_8004BB4C(VbRVIEW* view, GsCOORDINATE2* coord, SVECTOR3* vec, s32 arg3) // 0x8004BB4C
 {
-    arg0->vr.vz = 0xA;
-    arg0->vp.vx = 0;
-    arg0->vp.vy = 0;
-    arg0->vp.vz = 0;
-    arg0->vr.vx = 0;
-    arg0->vr.vy = 0;
+    view->vr.vz = 10;
+    view->vp.vx = 0;
+    view->vp.vy = 0;
+    view->vp.vz = 0;
+    view->vr.vx = 0;
+    view->vr.vy = 0;
 
-    arg0->rz = 0;
+    view->rz = 0;
 
-    arg0->super      = arg1;
-    arg1->coord.t[2] = -0x2800;
-    arg1->super      = NULL;
-    arg1->coord.t[0] = 0;
-    arg1->coord.t[1] = 0;
+    view->super      = coord;
+    coord->coord.t[2] = -0x2800;
+    coord->super      = NULL;
+    coord->coord.t[0] = 0;
+    coord->coord.t[1] = 0;
 
-    arg2->vx = 0;
-    arg2->vy = 0;
-    arg2->vz = 0;
+    vec->vx = 0;
+    vec->vy = 0;
+    vec->vz = 0;
 
     D_800C3928.scale.vz  = 0x1000;
     D_800C3928.scale.vy  = 0x1000;
@@ -245,17 +245,17 @@ void func_8004BB4C(VbRVIEW* arg0, GsCOORDINATE2* arg1, SVECTOR3* arg2) // 0x8004
     D_800C3928.trans.vy  = 0;
     D_800C3928.trans.vx  = 0;
 
-    arg1->param = &D_800C3928;
+    coord->param = &D_800C3928;
 
-    func_8004BCDC(arg2, arg1);
-    vbSetRefView(arg0);
+    func_8004BCDC(vec, coord);
+    vbSetRefView(view);
 }
 
 void func_8004BBF4(VbRVIEW* arg0, GsCOORDINATE2* arg1, SVECTOR* arg2) // 0x8004BBF4
 {
     u16     vx;
-    VECTOR  vect;
-    SVECTOR svect;
+    VECTOR  vec;
+    SVECTOR svec;
 
     vx  = arg2->vx;
     arg2->vx = 0;
@@ -266,11 +266,11 @@ void func_8004BBF4(VbRVIEW* arg0, GsCOORDINATE2* arg1, SVECTOR* arg2) // 0x8004B
 
     func_8004BCDC(arg2, arg1);
 
-    svect.vx = 0;
-    svect.vy = 0;
-    svect.vz = 0;
+    svec.vx = 0;
+    svec.vy = 0;
+    svec.vz = 0;
 
-    gte_ApplyMatrix(&arg1->coord, &svect, &vect);
+    gte_ApplyMatrix(&arg1->coord, &svec, &vec);
     vbSetRefView(arg0);
 }
 
@@ -279,7 +279,6 @@ void func_8004BCBC(s32 arg0) // 0x8004BCBC
     GsMapModelingData(arg0 + 4);
 }
 
-/** Used for item rotation and item scrolling in the inventory. */
 void func_8004BCDC(SVECTOR* arg0, GsCOORDINATE2* arg1) // 0x8004BCDC
 {
     MATRIX mat;

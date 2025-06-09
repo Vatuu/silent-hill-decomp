@@ -631,11 +631,20 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80053B08", func_800550D0); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80053B08", func_80055330); // 0x80055330
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80053B08", func_800553C4); // 0x800553C4
+void func_800553C4(s8 arg0, s8 arg1, s8 arg2, s8 arg3) // 0x800553C4
+{
+    D_800C4168.field_1  = arg0;
+    D_800C4168.field_1C = arg1;
+    D_800C4168.field_1D = arg2;
+    D_800C4168.field_1E = arg3;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80053B08", func_800553E0); // 0x800553E0
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80053B08", func_80055434); // 0x80055434
+void func_80055434(VECTOR3* vec) // 0x80055434
+{
+    *vec = D_800C4168.field_60;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80053B08", func_8005545C); // 0x8005545C
 

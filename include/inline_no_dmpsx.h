@@ -14,10 +14,10 @@
     "nop;"                           \
     ".word 0x4A280030")
 
-/*#define gte_rt() __asm__ volatile (				\
-        "nop;"							\
-        "nop;"							\
-        ".word 0x000000ff" )*/
+/*#define gte_rt() __asm__ volatile ( \
+        "nop;"                      \
+        "nop;"                      \
+        ".word 0x000000ff")*/
 
 #undef gte_rtv0
 #define gte_rtv0() __asm__ volatile( \
@@ -392,5 +392,5 @@
     ".word 0x4BA0003E")
 
 #undef gte_mvmva
-#define gte_mvmva(sf, mx, v, cv, lm) gte_mvmva_core(0x4A400012 | \
-    ((sf) << 25) | ((mx) << 23) | ((v) << 21) | ((cv) << 19) | ((lm) << 18))
+#define gte_mvmva(sf, mx, v, cv, lm) \
+    gte_mvmva_core(0x4A400012 | ((sf) << 25) | ((mx) << 23) | ((v) << 21) | ((cv) << 19) | ((lm) << 18))

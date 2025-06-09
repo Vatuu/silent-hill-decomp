@@ -431,6 +431,42 @@ typedef struct
 
 typedef struct
 {
+    s8      field_0;
+    s8      field_1;
+    s8      field_2;
+    s8      field_3;
+    s32     field_4;
+    s32     field_8;
+    s8      unk_C[12];
+    s32     field_18;
+    s8      field_1C;
+    s8      field_1D;
+    s8      field_1E;
+    s32     field_20;
+    s8      field_24;
+    s8      field_25;
+    s8      field_26;
+    s8      unk_27;
+    s8      field_28;
+    s8      field_29;
+    s8      field_2A;
+    s16     field_2C;
+    s16     field_2E;
+    s16     field_30;
+    s16     field_32;
+    s16     field_34;
+    s16     field_36;
+    s16     field_38;
+    s16     field_3A;
+    s16     field_3C;
+    s32     field_4C;
+    s32     field_50;
+    s8      unk_54[24];
+    VECTOR3 field_60; // Type assumed.
+} s_D_800C4168;
+
+typedef struct
+{
     s32 field_0;
     s8  unk_4[4];
     s8  field_8;
@@ -1138,15 +1174,17 @@ extern u8 D_800C39A0;
 
 extern s_800C39A8 D_800C39A8[];
 
-extern s32 D_800C3AE8; // Type assumed.
+extern GsCOORDINATE2 D_800C3AE8;
 
-extern s32 D_800C3B38; // Type assumed.
+extern SVECTOR3 D_800C3B38;
 
-extern s32 D_800C3B48; // Type assumed.
+extern VbRVIEW D_800C3B48;
 
 extern s_800C3BE8 D_800C3BE8;
 
 extern s_800C3E18 D_800C3E18;
+
+extern s_D_800C4168 D_800C4168;
 
 extern s32 D_800C4558;
 
@@ -1598,6 +1636,13 @@ void func_8004B76C(char* str, s32 useFixedWidth);
 
 void func_8004BCBC(s32 arg0);
 
+/** Used for item rotation and item scrolling in the inventory. */
+void func_8004BCDC(SVECTOR* arg0, GsCOORDINATE2* arg1);
+
+void func_8004BFE8();
+
+void func_8004C040();
+
 // TODO: Can probably create status enums for the below funcs' return values to avoid magic,
 // but other funcs using similar return patterns should be identified first if they exist.
 
@@ -1605,7 +1650,14 @@ void GameFs_MapItemsTextureLoad(s32);
 
 void func_800540A4(s8);
 
+void func_80054634();
+
 void func_800546A8(s32 arg0);
+
+void func_800553C4(s8 arg0, s8 arg1, s8 arg2, s8 arg3);
+
+/** `arg0` type assumed. */
+void func_80055434(VECTOR3* vec);
 
 void func_80054928();
 
@@ -1906,6 +1958,12 @@ void Gfx_StringDraw(char* str, s32 arg1);
 
 /** Draws an integer string in display space. */
 void Gfx_StringDrawInt(s32 widthMin, s32 val);
+
+void func_8004BB10();
+
+void func_8004BB4C(VbRVIEW* view, GsCOORDINATE2* coord, SVECTOR3* vec, s32 arg3);
+
+void func_8004BBF4(VbRVIEW* arg0, GsCOORDINATE2* arg1, SVECTOR* arg2);
 
 void Settings_ScreenXYSet(s32 x, s32 y);
 
