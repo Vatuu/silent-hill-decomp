@@ -847,6 +847,12 @@ extern u8 D_800A9944;
 /** Used in func_800D929C from map0_s00.c. */
 extern s32 D_800A999C;
 
+/** Used in func_800D92AC from map0_s00_2.c. */
+extern u8 D_800DF1FC[0xE0];
+
+/** Used in func_800D92AC from map0_s00_2.c. */
+extern u8 D_800DF2DC[0x1C];
+
 /** Array of indices? */
 extern s8 D_800A99B4[];
 
