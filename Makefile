@@ -136,6 +136,7 @@ $2.elf: $(call gen_o_files, $1)
 		-T $(LINKER_DIR)/$1.ld \
 		-T $(LINKER_DIR)/$(filter-out ./,$(dir $1))undefined_syms_auto.$(notdir $1).txt \
 		-T $(LINKER_DIR)/$(filter-out ./,$(dir $1))undefined_funcs_auto.$(notdir $1).txt \
+		-T $(CONFIG_DIR)/lib_externs.ld \
 		-o $$@
 endef
 
@@ -201,6 +202,7 @@ report: objdiff-config
 	@$(OBJDIFF) report generate > $(BUILD_DIR)/progress.json
 
 check: build
+	-tools/postbuild.sh
 	@sha256sum --ignore-missing --check checksum.sha
 
 progress:
@@ -292,6 +294,7 @@ $(BUILD_DIR)/%.bin.o: %.bin
 $(LINKER_DIR)/%.ld: $(CONFIG_DIR)/%.yaml
 	@mkdir -p $(dir $@)
 	$(SPLAT) $(SPLAT_FLAGS) $<
+	-tools/prebuild.sh
 
 ### Settings
 .SECONDARY:

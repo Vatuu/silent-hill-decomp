@@ -57,11 +57,6 @@ typedef struct
 #define MOVIE_WAIT 2000
 #define PPW 3 / 2
 
-extern MOVIE_STR* m;
-extern s32        frame_cnt;
-extern DISPENV    disp;
-extern s32        max_frame;
-
 // Handlers for movie-related GameStates
 
 void GameState_StartMovieIntro_Update();

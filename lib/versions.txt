@@ -1,0 +1,15 @@
+SLUS_007.07:    libc (1):       4.4.0.0
+SLUS_007.07:    libapi (0):     4.4.0.0
+SLUS_007.07:    libspu (17):    4.4.0.0
+SLUS_007.07:    libetc (6):     4.4.0.0
+SLUS_007.07:    libcd (4):      4.3.1.0
+SLUS_007.07:    libgpu (7):     4.3.0.0
+BODYPROG.bin:   libgte (9):     4.3.0.0
+BODYPROG.bin:   libcard (3):    4.3.0.0
+BODYPROG.bin:   libgs (8):      4.3.0.0
+BODYPROG.bin:   libpad (12):    4.3.0.0
+STREAM.bin:     libpress (14):  4.3.0.0
+
+need to double-check libds version
+
+libcd/cdrom.o has been edited to reorder weak .bss variables (https://github.com/Vatuu/silent-hill-decomp/issues/142#issuecomment-2957853899)
