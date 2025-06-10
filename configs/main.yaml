@@ -162,5 +162,5 @@ segments:
       - [0x139B8, lib, libcd, cdread, .bss]
       - [0x139EC, bss, psyq_unk2]
       - [0x139F0, lib, libgpu, tmd, .bss]
-      - [0x13A10, lib, libgpu, sys, .bss] # Adds a lot of extra data past end of file, needs sys.o .bss size edited to 0x5F0.
+      - [0x13A10, lib, libgpu, sys, .bss] # Resized sys.o .bss section to 0x5F0.
   - [0x14000]
