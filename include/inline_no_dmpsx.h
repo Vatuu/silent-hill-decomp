@@ -14,10 +14,11 @@
     "nop;"                           \
     ".word 0x4A280030")
 
-/*#define gte_rt() __asm__ volatile ( \
-        "nop;"                      \
-        "nop;"                      \
-        ".word 0x000000ff")*/
+#undef gte_rt
+#define gte_rt() __asm__ volatile( \
+    "nop;"                         \
+    "nop;"                         \
+    ".word 0x4A480012")
 
 #undef gte_rtv0
 #define gte_rtv0() __asm__ volatile( \

@@ -517,9 +517,8 @@ void Gfx_Inventory_ScrollArrows(s32* arg0) // 0x8004EC7C
         temp_v1 = g_SysWork.timer_1C & 0x1F;
 
         poly = (POLY_G3*)GsOUT_PACKET_P;
-        setlen(poly, 6);
-
-        setcode(poly, 0x32);
+        setPolyG3(poly);
+        setSemiTrans(poly, 1);
 
         temp_v0 = 0xFF - temp_v1 * 8;
 
@@ -589,7 +588,25 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/item_screens", func_8004F5DC); // 0x8004F
 /** This function is some sort of handler for the inventory and result screen. */
 INCLUDE_ASM("asm/bodyprog/nonmatchings/item_screens", func_8004F764); // 0x8004F764
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/item_screens", func_8004FB0C); // 0x8004FB0C
+void func_8004FB0C() // 0x8004FB0C
+{
+    GsOT*    ot;
+    POLY_F4* poly;
+
+    ot   = &g_ObjectTable1[g_ObjectTableIdx];
+    poly = (POLY_F4*)GsOUT_PACKET_P;
+
+    setPolyF4(poly);
+    setRGB0(poly, 0, 0, 0);
+    setXY4(poly,
+           -160, -224,
+           -160, -222,
+           160, -224,
+           160, -222);
+    addPrim(ot->org, poly);
+
+    GsOUT_PACKET_P = (PACKET*)poly + sizeof(POLY_F4);
+}
 
 /** Draws many 2D menu elements.
  * The background behind the text
