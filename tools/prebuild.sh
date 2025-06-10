@@ -7,11 +7,13 @@ sed -i 's/\.a:/\//g' linkers/main.ld
 sed -i 's/\.a:/\//g' linkers/bodyprog.ld
 sed -i 's/\.a:/\//g' linkers/screens/stream.ld
 
-# .bss section includes 16 random padding bytes, which prevent us from marking them as .bss
-# We'll replace those bytes with 00 so that build can link properly, postbuild.sh will then patch them back in
-sed -i 's/0x622E090A/0x00000000/g' asm/bodyprog/data/bodyprog_A23DC.bss.s
-sed -i 's/0x090A0D38/0x00000000/g' asm/bodyprog/data/bodyprog_A24CC.bss.s
-sed -i 's/0x2E090A0D/0x00000000/g' asm/bodyprog/data/bodyprog_A28B0.bss.s
-sed -i 's/0x61783009/0x00000000/g' asm/bodyprog/data/bodyprog_A28B0.bss.s
+# BODYPROG .bss section contains 16 random padding bytes, which prevents us marking them as .bss in linker script
+# We'll replace those bytes with 00 so that build can link properly
+# postbuild.sh will then patch them back in after linking
+sed -i 's/0x622E090A/0x00000000/g' asm/bodyprog/data/bodyprog_800C6F3C.bss.s
+sed -i 's/0x090A0D38/0x00000000/g' asm/bodyprog/data/bodyprog_800C702C.bss.s
+sed -i 's/0x2E090A0D/0x00000000/g' asm/bodyprog/data/bodyprog_800C7410.bss.s
+sed -i 's/0x61783009/0x00000000/g' asm/bodyprog/data/bodyprog_800C7410.bss.s
 
-sed -i 's/0xAC4073E4/0x00000000/g' asm/screens/stream/data/stream_12AE4.bss.s
+# STREAM.BIN also includes 4 random bytes in .bss
+sed -i 's/0xAC4073E4/0x00000000/g' asm/screens/stream/data/stream_801F50E4.bss.s
