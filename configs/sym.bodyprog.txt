@@ -927,6 +927,7 @@ PSDOFSY = 0x800C6E0C;
 HWD0 = 0x800C6F28;
 VWD0 = 0x800C6F2C;
 GsLIGHTWSMATRIX = 0x800C6F40;
+_LC = 0x800C6F60;
 PSDBASEX = 0x800C6E10;
 PSDBASEY = 0x800C6E14;
 POSITION = 0x800C6E18;
@@ -1026,7 +1027,11 @@ GsLinkObject4 = 0x80095e5c; // type:func
 // objt3.o
 GsSortObject4J = 0x80095fec; // type:func
 
-// global.o globals
+// global.o .data
+GsADIVZ = 0x800AFFBC;
+GsADIVW = 0x800AFFC0;
+GsADIVH = 0x800AFFC2;
+// global.o .bss
 GsLIOFF = 0x800C7004;
 GsLMODE = 0x800C7008;
 GsLIGNR = 0x800C700C;
