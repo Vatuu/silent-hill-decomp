@@ -305,12 +305,12 @@ void vwDecreaseSideOfVector(s32* vec_x, s32* vec_z, s32 dec_val, s32 max_side_ve
 s32  vwRetNewVelocityToTargetVal(s32 now_spd, s32 mv_pos, s32 tgt_pos, s32 accel, s32 total_max_spd, s32 dec_val_lim_spd);
 s32  vwRetNewAngSpdToTargetAng(s32 now_ang_spd, s16 now_ang, s16 tgt_ang, s32 accel_spd, s32 total_max_ang_spd, s32 dec_val_lim_spd);
 void vwMatrixToAngleYXZ(SVECTOR* ang, MATRIX* mat);
-void func_800496AC(MATRIX* mat0, MATRIX* mat1, SVECTOR* vec);
+void func_800496AC(MATRIX* mat0, MATRIX* mat1, MATRIX* mat2);
 void vbSetWorldScreenMatrix(GsCOORDINATE2* coord);
 void vbSetRefView(VbRVIEW* rview);
 void func_80049984(GsCOORDINATE2*, MATRIX*);
-void func_80049AF8(GsCOORDINATE2* coord, SVECTOR* vec);
-void func_80049B6C(GsCOORDINATE2* coord, MATRIX* mat, SVECTOR* vec);
+void func_80049AF8(GsCOORDINATE2* coord, MATRIX* mat);
+void func_80049B6C(GsCOORDINATE2* coord, MATRIX* mat0, MATRIX* mat1);
 void func_80049C2C(MATRIX* mat, s32 x, s32 y, s32 z);
 void vwAngleToVector(SVECTOR* vec, SVECTOR* ang, s32 r);
 s32  vwVectorToAngle(SVECTOR* ang, SVECTOR* vec);
