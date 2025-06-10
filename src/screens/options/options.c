@@ -1035,8 +1035,8 @@ void Gfx_VignetteDraw() // 0x801E49F0
     {
         poly = (POLY_G4*)GsOUT_PACKET_P;
 
-        setlen(poly, 8);
-        setcode(poly, 0x3A);
+        setPolyG4(poly);
+        setSemiTrans(poly, 1);
 
         setRGB0(poly, 0x60, 0x60, 0x60);
         setRGB1(poly, 0, 0, 0);
@@ -1783,8 +1783,8 @@ void Gfx_LineDraw(s_Line2d* line, s32 arg1, s32 arg2) // 0x801E641C
     if (arg1 != 0)
     {
         POLY_G4* poly = (POLY_G4*)GsOUT_PACKET_P;
-        setlen(poly, 8);
-        setcode(poly, 0x3A);
+        setPolyG4(poly);
+        setSemiTrans(poly, 1);
 
         setRGB0(poly, 0, 0, 0);
         setRGB1(poly, 0x60, 0x60, 0x60);

@@ -1,5 +1,6 @@
 #include "game.h"
-
+#include "inline_no_dmpsx.h"
+#include "gtemac.h"
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math.h"
 
@@ -1478,8 +1479,30 @@ s32 PreservedSignSubtract(s32 value, s32 subtractor) // 0x80080594
     return ((absDiff & ~(absDiff >> 31)) ^ signBit) - signBit; 
 }
 
-// Unknown instruction error?
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80053B08", func_800805BC);
+void func_800805BC(VECTOR3* arg0, SVECTOR* arg1, GsCOORDINATE2* arg2, s32 arg3) // 0x800805BC
+{
+    MATRIX mat;
+    VECTOR vec;
+
+    func_80049984(arg2, &mat);
+    gte_SetRotMatrix(&mat);
+    gte_SetTransMatrix(&mat);
+
+    while (arg3 > 0)
+    {
+        gte_ldv0(arg1);
+        gte_rt();
+        gte_stlvnl(&vec);
+
+        arg0->vx = vec.vx * 16;
+        arg0->vy = vec.vy * 16;
+        arg0->vz = vec.vz * 16;
+
+        arg3--;
+        arg1++;
+        arg0++;
+    }
+}
 
 u32 func_800806AC(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x800806AC
 {
@@ -1513,12 +1536,10 @@ u32 func_800806AC(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x800806AC
     return res;
 }
 
-// TODO: Matched, but args don't fit with real `func_800806AC` siganture.
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80053B08", func_8008074C); // 0x8008074C
-/*void func_8008074C(int arg0, int arg1) // 0x8008074C
+void func_8008074C(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x8008074C
 {
-    func_800806AC(arg0, arg1, 1 << 31);
-}*/
+    func_800806AC(arg0, arg1, 1 << 31, arg3);
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80053B08", func_8008076C); // 0x8008076C
 

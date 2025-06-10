@@ -1,5 +1,6 @@
 #include "game.h"
-
+#include "inline_no_dmpsx.h"
+#include "gtemac.h"
 #include "bodyprog/vw_system.h"
 #include "bodyprog/math.h"
 
@@ -132,7 +133,23 @@ void vwMatrixToAngleYXZ(SVECTOR* ang, MATRIX* mat) // 0x800495D4
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vw_calc", func_800496AC);
+void func_800496AC(MATRIX* mat0, MATRIX* mat1, MATRIX* mat2) // 0x800496AC
+{
+    gte_SetRotMatrix(mat0);
+    gte_SetTransMatrix(mat0);
+    gte_ldclmv(mat1);
+    gte_rtir();
+    gte_stclmv(mat2);
+    gte_ldclmv((MATRIX*)(mat1->m[0] + 1));
+    gte_rtir();
+    gte_stclmv((MATRIX*)(mat2->m[0] + 1));
+    gte_ldclmv((MATRIX*)(mat1->m[0] + 2));
+    gte_rtir();
+    gte_stclmv((MATRIX*)(mat2->m[0] + 2));
+    gte_ldlvl((VECTOR*)mat1->t);
+    gte_rtirtr();
+    gte_stlvnl((VECTOR*)mat2->t);
+}
 
 void vbSetWorldScreenMatrix(GsCOORDINATE2* coord) // 0x800497E4
 {
@@ -185,30 +202,30 @@ void vbSetRefView(VbRVIEW* rview) // 0x800498D8
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vw_calc", func_80049984);
 
-void func_80049AF8(GsCOORDINATE2* coord, SVECTOR* vec)
+void func_80049AF8(GsCOORDINATE2* coord, MATRIX* mat)
 {
-    MATRIX mat;
+    MATRIX localmat;
 
-    func_80049984(coord, &mat);
+    func_80049984(coord, &localmat);
 
-    mat.t[0] -= D_800C3868.t[0];
-    mat.t[1] -= D_800C3868.t[1];
-    mat.t[2] -= D_800C3868.t[2];
+    localmat.t[0] -= D_800C3868.t[0];
+    localmat.t[1] -= D_800C3868.t[1];
+    localmat.t[2] -= D_800C3868.t[2];
 
-    func_800496AC(&VbWvsMatrix, &mat, vec);
+    func_800496AC(&VbWvsMatrix, &localmat, mat);
 }
 
-void func_80049B6C(GsCOORDINATE2* coord, MATRIX* mat, SVECTOR* vec)
+void func_80049B6C(GsCOORDINATE2* coord, MATRIX* mat0, MATRIX* mat1)
 {
-    func_80049984(coord, mat);
-    mat->t[0] -= D_800C3868.t[0];
-    mat->t[1] -= D_800C3868.t[1];
-    mat->t[2] -= D_800C3868.t[2];
+    func_80049984(coord, mat0);
+    mat0->t[0] -= D_800C3868.t[0];
+    mat0->t[1] -= D_800C3868.t[1];
+    mat0->t[2] -= D_800C3868.t[2];
 
-    func_800496AC(&VbWvsMatrix, mat, vec);
-    mat->t[0] += D_800C3868.t[0];
-    mat->t[1] += D_800C3868.t[1];
-    mat->t[2] += D_800C3868.t[2];
+    func_800496AC(&VbWvsMatrix, mat0, mat1);
+    mat0->t[0] += D_800C3868.t[0];
+    mat0->t[1] += D_800C3868.t[1];
+    mat0->t[2] += D_800C3868.t[2];
 }
 
 void func_80049C2C(MATRIX* mat, s32 x, s32 y, s32 z)
