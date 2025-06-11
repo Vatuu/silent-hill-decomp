@@ -11,13 +11,14 @@
 // STRUCTS
 // =========
 
-typedef struct
+typedef struct _ResultStringOffset
 {
-    u8 field_0;
-    u8 field_1;
-    u8 field_2;
-    u8 field_3;
-} s_80025FFC;
+    u8 x0_0;
+    u8 y0_1;
+    u8 x1_2;
+    u8 y1_3;
+} s_ResultStringOffset;
+STATIC_ASSERT_SIZEOF(s_ResultStringOffset, 4);
 
 // ========
 // GLOBALS

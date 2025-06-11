@@ -86,7 +86,7 @@ u8 sharedFunc_800D92AC_0_s00(s32 x, s32 y)
     s32 yIdx;
     u8  res;
     
-    // Check if coordinates are within primary grid bounds
+    // Check if coordinates are within primary grid bounds.
     if (x < FP_METER_REAL(-320.0f) || x >= FP_METER_REAL(240.0f))
     {
         res = 0;

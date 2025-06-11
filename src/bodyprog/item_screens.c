@@ -366,42 +366,42 @@ void GameState_ItemScreens_Update()
 void Gfx_Results_Save() // 0x8004D1A0
 {
     s32      i;
-    s32      var_v0;
-    s32      var_v0_2;
-    s8       temp_v0;
+    s32      colorVar0;
+    s32      colorVar1;
+    s8       rgColor;
     LINE_F2* line;
 
-    s_80025FFC D_80025FFC[] = 
+    s_ResultStringOffset strOffsets[] = 
     {
-        { 0x00, 0x00, 0x00, 0x40 }, 
-        { 0x00, 0x00, 0x64, 0x00 },
-        { 0xd0, 0x90, 0xd0, 0x50 }, 
-        { 0xd0, 0x90, 0x6c, 0x90 },
-        { 0x04, 0x08, 0xcc, 0x08 }, 
-        { 0x04, 0x88, 0xcc, 0x88 }, 
-        { 0x04, 0x08, 0x04, 0x88 },
-        { 0xcc, 0x08, 0xcc, 0x88 }, 
-        { 0x00, 0x01, 0x64, 0x01 },
-        { 0xd0, 0x8f, 0x6c, 0x8f },
-        { 0x04, 0x07, 0xcc, 0x07 },
-        { 0x04, 0x89, 0xcc, 0x89 },
-        { 0x00, 0x00, 0x00, 0x14 },
-        { 0x00, 0x00, 0x16, 0x00 },
-        { 0x30, 0x30, 0x30, 0x1c },
-        { 0x30, 0x30, 0x1a, 0x30 },
-        { 0x02, 0x04, 0x2e, 0x04 },
-        { 0x02, 0x2c, 0x2e, 0x2c },
-        { 0x02, 0x04, 0x02, 0x2c },
-        { 0x2e, 0x04, 0x2e, 0x2c },
-        { 0x00, 0x01, 0x16, 0x01 },
-        { 0x30, 0x2f, 0x1a, 0x2f },
-        { 0x02, 0x03, 0x2e, 0x03 },
-        { 0x02, 0x2d, 0x2e, 0x2d }
+        {   0,   0,   0,  64 },
+        {   0,   0, 100,   0 },
+        { 208, 144, 208,  80 },
+        { 208, 144, 108, 144 },
+        {   4,   8, 204,   8 },
+        {   4, 136, 204, 136 },
+        {   4,   8,   4, 136 },
+        { 204,   8, 204, 136 },
+        {   0,   1, 100,   1 },
+        { 208, 143, 108, 143 },
+        {   4,   7, 204,   7 },
+        {   4, 137, 204, 137 },
+        {   0,   0,   0,  20 },
+        {   0,   0,  22,   0 },
+        {  48,  48,  48,  28 },
+        {  48,  48,  26,  48 },
+        {   2,   4,  46,   4 },
+        {   2,  44,  46,  44 },
+        {   2,   4,   2,  44 },
+        {  46,   4,  46,  44 },
+        {   0,   1,  22,   1 },
+        {  48,  47,  26,  47 },
+        {   2,   3,  46,   3 },
+        {   2,  45,  46,  45 }
     };
 
     GsOT* ot = &g_ObjectTable1[g_ObjectTableIdx];
 
-    char* D_8002605C[] =
+    char* saveDialogStrs[] =
     {
         "\x07Is_it_OK_to_save?",
         "\x07Yes_____________No"
@@ -414,30 +414,30 @@ void Gfx_Results_Save() // 0x8004D1A0
         
         if (i % 12 < 8) 
         {
-            var_v0 = i % 12;
-            var_v0 += (i % 12) < 0 ? 3 : 0;
-            var_v0_2 = var_v0 >> 2;
-            temp_v0 = 0x60 - (var_v0_2 << 6);
-            setRGB0(line, temp_v0, temp_v0, 0xFF);
+            colorVar0  = i % 12;
+            colorVar0 += ((i % 12) < 0) ? 3 : 0;
+            colorVar1  = colorVar0 >> 2;
+            rgColor    = 0x60 - (colorVar1 << 6);
+            setRGB0(line, rgColor, rgColor, 0xFF);
         } 
         else 
         {
-            var_v0_2 = (i % 12 - 4) / 2;
-            temp_v0 = 0x60 - (var_v0_2 << 6);
-            setRGB0(line, temp_v0, temp_v0, 0xFF);
+            colorVar1 = ((i % 12) - 4) / 2;
+            rgColor   = 0x60 - (colorVar1 << 6);
+            setRGB0(line, rgColor, rgColor, 0xFF);
         }
 
         if (i < 12) 
         {
             setXY2(line,
-                   D_80025FFC[i].field_0 + 0xFF98, D_80025FFC[i].field_1 + 0xFFB8,
-                   D_80025FFC[i].field_2 + 0xFF98, D_80025FFC[i].field_3 + 0xFFB8);
+                   strOffsets[i].x0_0 + 0xFF98, strOffsets[i].y0_1 + 0xFFB8,
+                   strOffsets[i].x1_2 + 0xFF98, strOffsets[i].y1_3 + 0xFFB8);
         }
         else 
         {
             setXY2(line,
-                   D_80025FFC[i].field_0 + 0xFFB4 + D_800ADB5C * 0x66, D_80025FFC[i].field_1 + 6,
-                   D_80025FFC[i].field_2 + 0xFFB4 + D_800ADB5C * 0x66, D_80025FFC[i].field_3 + 6);
+                   strOffsets[i].x0_0 + 0xFFB4 + (D_800ADB5C * 102), strOffsets[i].y0_1 + 6,
+                   strOffsets[i].x1_2 + 0xFFB4 + (D_800ADB5C * 102), strOffsets[i].y1_3 + 6);
         }
 
         addPrim(&ot->org[7], line);

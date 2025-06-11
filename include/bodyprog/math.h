@@ -2,8 +2,8 @@
 #define _BODYPROG_MATH_H
 
 #define Q4_SHIFT  4  /** Used for: Q27.4 positions. */
-#define Q8_SHIFT  8  /** Used for: Q7.8 camera AABBs. Q23.8 meters. */
-#define Q12_SHIFT 12 /** Used for: Q3.12 alphas and angles, Q19.12 timers and trigonometry, number of entries in the sine lookup table.*/
+#define Q8_SHIFT  8  /** Used for: Q7.8 camera AABBs. */
+#define Q12_SHIFT 12 /** Used for: Q3.12 alphas, angles. Q19.12 meters, timers, trigonometry. */
 
 /** @brief Squares a value. */
 #define SQUARE(x) \
