@@ -43,6 +43,8 @@ MKPSXISO        := $(TOOLS_DIR)/psxiso/mkpsxiso
 SILENT_ASSETS   := $(PYTHON) $(TOOLS_DIR)/silentassets/extract.py
 INSERT_OVLS     := $(PYTHON) $(TOOLS_DIR)/silentassets/insertovl.py
 GET_YAML_TARGET := $(PYTHON) $(TOOLS_DIR)/get_yaml_target.py
+PREBUILD        := $(TOOLS_DIR)/prebuild.sh
+POSTBUILD       := $(TOOLS_DIR)/postbuild.sh
 
 # Flags
 OPT_FLAGS           := -O2
@@ -58,6 +60,12 @@ DUMPSXISO_FLAGS     := -x $(ROM_DIR) -s $(ROM_DIR)/layout.xml $(IMAGE_DIR)/$(GAM
 MKPSXISO_FLAGS      := -y -q $(ROM_DIR)/shgame.xml
 SILENT_ASSETS_FLAGS := -exe $(ROM_DIR)/SLUS_007.07 -fs $(ROM_DIR)/SILENT. -fh $(ROM_DIR)/HILL. $(ASSETS_DIR)
 INSERT_OVLS_FLAGS   := -exe $(ROM_DIR)/SLUS_007.07 -fs $(ROM_DIR)/SILENT. -ftb $(ASSETS_DIR)/filetable.c.inc -b $(OUT_DIR) -xml $(ROM_DIR)/layout.xml -o $(ROM_DIR)
+
+# Targets that will run tools/prebuild.sh after splat has finished, before being built.
+TARGET_PREBUILD  := main bodyprog screens/stream
+
+# Targets that will run tools/postbuild.sh after being linked & extracted from ELF.
+TARGET_POSTBUILD := bodyprog screens/stream
 
 # Adjusts compiler and assembler flags based on source file location.
 # - Files under main executable paths use -G8; overlay files use -G0.
@@ -128,6 +136,9 @@ else
 define make_elf_target
 $2: $2.elf
 	$(OBJCOPY) $(OBJCOPY_FLAGS) $$< $$@
+ifneq (,$(filter $1,$(TARGET_POSTBUILD)))
+	-$(POSTBUILD) $1
+endif
 
 $2.elf: $(call gen_o_files, $1)
 	@mkdir -p $(dir $2)
@@ -136,6 +147,7 @@ $2.elf: $(call gen_o_files, $1)
 		-T $(LINKER_DIR)/$1.ld \
 		-T $(LINKER_DIR)/$(filter-out ./,$(dir $1))undefined_syms_auto.$(notdir $1).txt \
 		-T $(LINKER_DIR)/$(filter-out ./,$(dir $1))undefined_funcs_auto.$(notdir $1).txt \
+		-T $(CONFIG_DIR)/lib_externs.ld \
 		-o $$@
 endef
 
@@ -292,6 +304,7 @@ $(BUILD_DIR)/%.bin.o: %.bin
 $(LINKER_DIR)/%.ld: $(CONFIG_DIR)/%.yaml
 	@mkdir -p $(dir $@)
 	$(SPLAT) $(SPLAT_FLAGS) $<
+	$(if $(filter $*,$(TARGET_PREBUILD)),@-$(PREBUILD) $*,@true)
 
 ### Settings
 .SECONDARY:
