@@ -137,7 +137,7 @@ define make_elf_target
 $2: $2.elf
 	$(OBJCOPY) $(OBJCOPY_FLAGS) $$< $$@
 ifneq (,$(filter $1,$(TARGET_POSTBUILD)))
-	-$(POSTBUILD) 2>/dev/null
+	-$(POSTBUILD) $1
 endif
 
 $2.elf: $(call gen_o_files, $1)
@@ -304,7 +304,7 @@ $(BUILD_DIR)/%.bin.o: %.bin
 $(LINKER_DIR)/%.ld: $(CONFIG_DIR)/%.yaml
 	@mkdir -p $(dir $@)
 	$(SPLAT) $(SPLAT_FLAGS) $<
-	$(if $(filter $*,$(TARGET_PREBUILD)),@-$(PREBUILD) 2>/dev/null,@true)
+	$(if $(filter $*,$(TARGET_PREBUILD)),@-$(PREBUILD) $*,@true)
 
 ### Settings
 .SECONDARY:
