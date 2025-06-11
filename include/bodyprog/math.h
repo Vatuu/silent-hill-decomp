@@ -69,6 +69,11 @@
 #define FP_METER(met) \
     FP_FLOAT_TO(met, Q8_SHIFT)
 
+// TODO: `FP_METER` above uses an incorrect format and should be phased out. Meters are actually in Q12.19 format.
+/** @brief Converts floating-point meters to fixed-point meters in Q23.8 format. */
+#define FP_METER_REAL(met) \
+    FP_FLOAT_TO(met, Q12_SHIFT)
+
 static inline s16 shAngleRegulate(s32 angle)
 {
     return (angle << 20) >> 20;
