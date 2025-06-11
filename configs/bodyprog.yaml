@@ -102,7 +102,7 @@ segments:
       - [0x99d8, rodata]
       - [0x99e8, .rodata, libsd/smf_mid]
       - [0x9ad0, rodata]
-      
+
       - [0x9ad0,    c, bodyprog]
       - [0x9DEC,    c, save]
       - [0xC98C,    c, bodyprog_800314EC]
@@ -131,7 +131,7 @@ segments:
       - [0x6d01c, lib, libapi, a69]
       - [0x6d02c, lib, libapi, a81]
       - [0x6d03c, lib, libapi, first]
-      - [0x6d2dc, lib, libapi, a66] ## misID as libc
+      - [0x6d2dc, lib, libapi, a66]
       - [0x6d2ec, lib, libc, a56]
       - [0x6d2fc, lib, libc, c24]
       - [0x6d30c, lib, libc, c25]
@@ -261,12 +261,12 @@ segments:
       - [0x78698, lib, libpad, waitrc2]
       - [0x78758, lib, libspu, s_crwa]
       - [0x788f8, lib, libapi, a10]
-
       - [0x78908, lib, libspu, s_m_util] # _SpuIsInAllocateArea _SpuIsInAllocateArea_
       - [0x78a18, lib, libspu, s_stm] # SpuSetTransferMode
       - [0x78a48, lib, libspu, s_sva] # SpuSetVoiceAttr
       - [0x79048, lib, libspu, s_n2p] # _spu_note2pitch _spu_pitch2note
       - [0x79248, lib, libspu, s_gva] # SpuGetVoiceAttr
+
       - [0x79638, asm, lib_unk/lib_8009E198]
 
       - [0x7a244,   c, libsd/smf_snd]
@@ -324,6 +324,7 @@ segments:
       - [0x8C36C, lib, libspu, zerobuf, .data]
       - [0x8C76C, lib, libspu, s_n2p, .data]
       - [0x8C88C, data, bodyprog_800B13EC]
+
       - [0x9FD98, lib, libapi, first, .bss]
       - [0x9FDC8, lib, libapi, pad, .bss]
       - [0x9FDD8, lib, libapi, patch, .bss]

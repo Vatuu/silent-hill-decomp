@@ -61,10 +61,10 @@ MKPSXISO_FLAGS      := -y -q $(ROM_DIR)/shgame.xml
 SILENT_ASSETS_FLAGS := -exe $(ROM_DIR)/SLUS_007.07 -fs $(ROM_DIR)/SILENT. -fh $(ROM_DIR)/HILL. $(ASSETS_DIR)
 INSERT_OVLS_FLAGS   := -exe $(ROM_DIR)/SLUS_007.07 -fs $(ROM_DIR)/SILENT. -ftb $(ASSETS_DIR)/filetable.c.inc -b $(OUT_DIR) -xml $(ROM_DIR)/layout.xml -o $(ROM_DIR)
 
-# Targets that will run tools/prebuild.sh after splat has finished, but before being built.
+# Targets that will run tools/prebuild.sh after splat has finished, before being built.
 TARGET_PREBUILD  := main bodyprog screens/stream
 
-# Targets that will run tools/postbuild.sh after being linked & extracted.
+# Targets that will run tools/postbuild.sh after being linked & extracted from ELF.
 TARGET_POSTBUILD := bodyprog screens/stream
 
 # Adjusts compiler and assembler flags based on source file location.
