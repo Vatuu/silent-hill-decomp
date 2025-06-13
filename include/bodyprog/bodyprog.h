@@ -1318,6 +1318,8 @@ extern s16 D_800C6E8E;
 
 extern s_800ACAA8 D_800ACAA8[];
 
+extern u8 D_800AD480[24];
+
 extern s_800AD4C8 D_800AD4C8[];
 
 extern s_MapOverlayHeader g_MapOverlayHeader; // 0x800C957C

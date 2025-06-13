@@ -259,6 +259,25 @@ typedef struct _VW_VIEW_WORK
 } VW_VIEW_WORK;
 STATIC_ASSERT_SIZEOF(VW_VIEW_WORK, 132);
 
+typedef struct _s_func_80049F38
+{
+    MATRIX  field_0;
+    SVECTOR field_20[8];
+    VECTOR3 field_60[8];
+    s32     field_C0;
+    SVECTOR field_C4[10];
+    s32     field_114;
+    DVECTOR field_118[24];
+    s32     field_178;
+} s_func_80049F38;
+STATIC_ASSERT_SIZEOF(s_func_80049F38, 380);
+
+typedef struct _s_func_8004A54C
+{
+    u8 field_0[3][3];
+} s_func_8004A54C;
+STATIC_ASSERT_SIZEOF(s_func_8004A54C, 9);
+
 extern VC_ROAD_DATA      vcNullRoadArray[2];
 extern VC_NEAR_ROAD_DATA vcNullNearRoad;
 extern VC_WATCH_MV_PARAM deflt_watch_mv_prm;
