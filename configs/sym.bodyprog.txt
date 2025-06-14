@@ -730,6 +730,26 @@ HADR1 = 0x800AFEA0;
 HADR2 = 0x800AFEA4;
 HADR3 = 0x800AFEA8;
 
+// cdrom.o bss (different order to actual cdrom.o, reordered by linker?)
+Stframe_no = 0x800C4978;
+Stsector_offset = 0x800C497C;
+StRgb24 = 0x800C4980;
+StCdIntrFlag = 0x800C4984;
+StCHANNEL = 0x800C4988;
+StStartFrame = 0x800C498C;
+CChannel = 0x800C4990;
+StFinalSector = 0x800C4994;
+StEmu_Idx = 0x800C4998;
+StRingIdx1 = 0x800C499C;
+StRingIdx2 = 0x800C49A0;
+StRingIdx3 = 0x800C49A4;
+StEmu_Addr = 0x800C49A8;
+StEndFrame = 0x800C49AC;
+StSTART_FLAG = 0x800C49B0;
+StRingBase = 0x800C49B4;
+StRingAddr = 0x800C49B8;
+StRingSize = 0x800C49BC;
+
 // iso9660.o
 CdSearchFile = 0x8009277C; // type:func
 _cmp = 0x80092A54; // type:func
@@ -786,6 +806,9 @@ HADR0_3 = 0x800AFEEC;
 HADR1_3 = 0x800AFEF0;
 HADR2_3 = 0x800AFEF4;
 HADR3_3 = 0x800AFEF8;
+// c_005.o bss
+StFunc1 = 0x800C6DD0;
+StFunc2 = 0x800C6DD4;
 
 // c_007.o
 // TODO: Same as c_002.
@@ -850,7 +873,6 @@ i_mask_0 = 0x800AFF80; // i_mask
 debug_cause = 0x800AFF84;
 count.3 = 0x800AFF88;
 HeaderArea.2 = 0x800C6DD8;
-StCdIntrFlag = 0x800C4984; // TODO Why wasn't this named before?
 
 // e00.o
 LoadTPage = 0x800940BC; // type:func
@@ -905,6 +927,7 @@ PSDOFSY = 0x800C6E0C;
 HWD0 = 0x800C6F28;
 VWD0 = 0x800C6F2C;
 GsLIGHTWSMATRIX = 0x800C6F40;
+_LC = 0x800C6F60;
 PSDBASEX = 0x800C6E10;
 PSDBASEY = 0x800C6E14;
 POSITION = 0x800C6E18;
@@ -1004,7 +1027,11 @@ GsLinkObject4 = 0x80095e5c; // type:func
 // objt3.o
 GsSortObject4J = 0x80095fec; // type:func
 
-// global.o globals
+// global.o .data
+GsADIVZ = 0x800AFFBC;
+GsADIVW = 0x800AFFC0;
+GsADIVH = 0x800AFFC2;
+// global.o .bss
 GsLIOFF = 0x800C7004;
 GsLMODE = 0x800C7008;
 GsLIGNR = 0x800C700C;

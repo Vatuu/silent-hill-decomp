@@ -6,9 +6,7 @@ categories:
   - id: sdk
     name: Psy-Q SDK
     paths:
-      - bodyprog/psyq
       - main/psyq
-      - screens/stream/psyq
   - id: main
     name: Main Executable
     paths:
