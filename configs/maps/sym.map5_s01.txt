@@ -1,6 +1,7 @@
 sharedData_800CAA98_0_s01 = 0x800CA898; // type:s32 - unknown type
 sharedFunc_800CBBBC_0_s00 = 0x800CE76C; // type:func
 sharedFunc_800D01BC_0_s00 = 0x800CFD6C; // type:func
+sharedFunc_800D0700_0_s00 = 0x800CFEAC; // type:func
 sharedFunc_800D0A60_0_s00 = 0x800D01E4; // type:func
 sharedFunc_800D0E04_0_s00 = 0x800D0434; // type:func
 sharedFunc_800D209C_0_s00 = 0x800D17D8; // type:func
