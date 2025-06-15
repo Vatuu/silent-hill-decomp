@@ -74,9 +74,16 @@ extern s32 sharedData_800D5CF4_3_s00; // Used by `Ai_Kaufmann_Init`.
 
 extern s_AnimInfo sharedData_800D5ABC_3_s03[]; // Used by `Ai_Bloodsucker_Init`.
 
+extern u8 sharedData_800DD591_0_s00;
+
 extern s_AnimInfo sharedData_800DF174_0_s00[]; // Used by `sharedFunc_800D921C_0_s00`.
 
+extern s32 sharedData_800DFB64_0_s00;
+extern s32 sharedData_800DFB68_0_s00;
+
 s32 sharedFunc_800CBBBC_0_s00();
+
+void sharedFunc_800CFFF8_0_s00(s32 arg0, s_func_800CFFF8* arg1);
 
 void sharedFunc_800D01BC_0_s00(u16* arg0, VECTOR3* arg1, s32 arg2);
 
