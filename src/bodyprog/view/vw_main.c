@@ -32,30 +32,33 @@ void vwGetViewAngle(SVECTOR* ang) // 0x80048AC4
     *ang = vwViewPointInfo.worldang;
 }
 
-void func_80048AF4(VECTOR3* arg0, VECTOR3* arg1)
+void View_SetLookAtMatrix(VECTOR3* pos, VECTOR3* lookAt) // 0x80048AF4
 {
-    s32     temp_x;
-    s32     temp_y;
-    s32     temp_z;
-    MATRIX  mat;
-    SVECTOR vec;
+    s32     deltaX;
+    s32     deltaY;
+    s32     deltaZ;
+    MATRIX  viewMat;
+    SVECTOR rot;
 
-    temp_x = FP_FROM(arg1->vx - arg0->vx, Q4_SHIFT);
-    temp_y = FP_FROM(arg1->vy - arg0->vy, Q4_SHIFT);
-    temp_z = FP_FROM(arg1->vz - arg0->vz, Q4_SHIFT);
+    // Compute direction vector components.
+    deltaX = FP_FROM(lookAt->vx - pos->vx, Q4_SHIFT);
+    deltaY = FP_FROM(lookAt->vy - pos->vy, Q4_SHIFT);
+    deltaZ = FP_FROM(lookAt->vz - pos->vz, Q4_SHIFT);
 
-    vec.vz = 0;
-    vec.vy = ratan2(temp_x, temp_z);
-    vec.vx = ratan2(-temp_y, SquareRoot0((temp_x * temp_x) + (temp_z * temp_z)));
+    // Compute camera rotation.
+    rot.vz = 0;
+    rot.vy = ratan2(deltaX, deltaZ);
+    rot.vx = ratan2(-deltaY, SquareRoot0(SQUARE(deltaX) + SQUARE(deltaZ)));
 
-    func_80096C94(&vec, &mat);
-
-    mat.t[0] = FP_FROM(arg0->vx, Q4_SHIFT);
-    mat.t[1] = FP_FROM(arg0->vy, Q4_SHIFT);
-    mat.t[2] = FP_FROM(arg0->vz, Q4_SHIFT);
-    vwSetViewInfoDirectMatrix(NULL, &mat);
+    // Compute view transform matrix and set global info.
+    func_80096C94(&rot, &viewMat);
+    viewMat.t[0] = FP_FROM(pos->vx, Q4_SHIFT);
+    viewMat.t[1] = FP_FROM(pos->vy, Q4_SHIFT);
+    viewMat.t[2] = FP_FROM(pos->vz, Q4_SHIFT);
+    vwSetViewInfoDirectMatrix(NULL, &viewMat);
 }
 
+/* "Entou" means "cylinder" in Japanese. Refers to the radius on the XZ plane. */
 void vwSetCoordRefAndEntou(GsCOORDINATE2* parent_p, s32 ref_x, s32 ref_y, s32 ref_z, s16 cam_ang_y, s16 cam_ang_z, s32 cam_y, s32 cam_xz_r) // 0x80048BE0
 {
     SVECTOR view_ang;

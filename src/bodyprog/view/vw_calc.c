@@ -92,8 +92,8 @@ void vwDecreaseSideOfVector(s32* vec_x, s32* vec_z, s32 dec_val, s32 max_side_ve
     s32 temp_s1;
     s32 var_s1;
 
-    var_s1 = Math_MulFixed(*vec_x, shRsin(dir_ang_y + 0x400), 0xC) +
-             Math_MulFixed(*vec_z, shRcos(dir_ang_y + 0x400), 0xC);
+    var_s1 = Math_MulFixed(*vec_x, shRsin(dir_ang_y + FP_ANGLE(90.0f)), Q12_SHIFT) +
+             Math_MulFixed(*vec_z, shRcos(dir_ang_y + FP_ANGLE(90.0f)), Q12_SHIFT);
 
     temp_s1 = var_s1;
     var_s1  = CLAMP(var_s1, -max_side_vec_len, max_side_vec_len);
@@ -114,8 +114,8 @@ void vwDecreaseSideOfVector(s32* vec_x, s32* vec_z, s32 dec_val, s32 max_side_ve
         }
     }
 
-    *vec_x += Math_MulFixed(var_s1 - temp_s1, shRsin(dir_ang_y + 0x400), 0xC);
-    *vec_z += Math_MulFixed(var_s1 - temp_s1, shRcos(dir_ang_y + 0x400), 0xC);
+    *vec_x += Math_MulFixed(var_s1 - temp_s1, shRsin(dir_ang_y + FP_ANGLE(90.0f)), Q12_SHIFT);
+    *vec_z += Math_MulFixed(var_s1 - temp_s1, shRcos(dir_ang_y + FP_ANGLE(90.0f)), Q12_SHIFT);
 }
 
 s32 vwRetNewVelocityToTargetVal(s32 now_spd, s32 mv_pos, s32 tgt_pos, s32 accel, s32 total_max_spd, s32 dec_val_lim_spd)
@@ -266,7 +266,7 @@ void func_800496AC(MATRIX* mat0, MATRIX* mat1, MATRIX* mat2) // 0x800496AC
 void vbSetWorldScreenMatrix(GsCOORDINATE2* coord) // 0x800497E4
 {
     MATRIX work;
-    VECTOR sp30;
+    VECTOR vec;
 
     func_80049984(coord, &D_800C3868);
     TransposeMatrix(&D_800C3868, &work);
@@ -286,10 +286,10 @@ void vbSetWorldScreenMatrix(GsCOORDINATE2* coord) // 0x800497E4
     GsWSMATRIX.m[2][1] = VbWvsMatrix.m[2][1];
     GsWSMATRIX.m[2][2] = VbWvsMatrix.m[2][2];
 
-    sp30.vx = -D_800C3868.t[0];
-    sp30.vy = -D_800C3868.t[1];
-    sp30.vz = -D_800C3868.t[2];
-    ApplyMatrixLV(&VbWvsMatrix, &sp30, (VECTOR*)&GsWSMATRIX.t);
+    vec.vx = -D_800C3868.t[0];
+    vec.vy = -D_800C3868.t[1];
+    vec.vz = -D_800C3868.t[2];
+    ApplyMatrixLV(&VbWvsMatrix, &vec, (VECTOR*)&GsWSMATRIX.t);
 }
 
 void vbSetRefView(VbRVIEW* rview) // 0x800498D8
@@ -370,20 +370,20 @@ void func_80049984(GsCOORDINATE2* coord, MATRIX* mat) // 0x80049984
     *mat = coord->workm;
 }
 
-void func_80049AF8(GsCOORDINATE2* coord, MATRIX* mat)
+void func_80049AF8(GsCOORDINATE2* coord, MATRIX* mat) // 0x80049AF8
 {
-    MATRIX localmat;
+    MATRIX localMat;
 
-    func_80049984(coord, &localmat);
+    func_80049984(coord, &localMat);
 
-    localmat.t[0] -= D_800C3868.t[0];
-    localmat.t[1] -= D_800C3868.t[1];
-    localmat.t[2] -= D_800C3868.t[2];
+    localMat.t[0] -= D_800C3868.t[0];
+    localMat.t[1] -= D_800C3868.t[1];
+    localMat.t[2] -= D_800C3868.t[2];
 
-    func_800496AC(&VbWvsMatrix, &localmat, mat);
+    func_800496AC(&VbWvsMatrix, &localMat, mat);
 }
 
-void func_80049B6C(GsCOORDINATE2* coord, MATRIX* mat0, MATRIX* mat1)
+void func_80049B6C(GsCOORDINATE2* coord, MATRIX* mat0, MATRIX* mat1) // 0x80049B6C
 {
     func_80049984(coord, mat0);
     mat0->t[0] -= D_800C3868.t[0];
@@ -396,125 +396,103 @@ void func_80049B6C(GsCOORDINATE2* coord, MATRIX* mat0, MATRIX* mat1)
     mat0->t[2] += D_800C3868.t[2];
 }
 
-void func_80049C2C(MATRIX* mat, s32 x, s32 y, s32 z)
+void func_80049C2C(MATRIX* mat, s32 x, s32 y, s32 z) // 0x80049C2C
 {
-    VECTOR input;
-    VECTOR output;
+    VECTOR in;
+    VECTOR out;
 
-    input.vx = FP_FROM(x, Q4_SHIFT);
-    input.vy = FP_FROM(y, Q4_SHIFT);
-    input.vz = FP_FROM(z, Q4_SHIFT);
-    ApplyMatrixLV(&GsWSMATRIX, &input, &output);
+    in.vx = FP_FROM(x, Q4_SHIFT);
+    in.vy = FP_FROM(y, Q4_SHIFT);
+    in.vz = FP_FROM(z, Q4_SHIFT);
+    ApplyMatrixLV(&GsWSMATRIX, &in, &out);
 
-    // Copies matrix fields as 32-bit words, maybe an inlined CopyMatrix func?
+    // Copy matrix fields as 32-bit words. Maybe inlined `CopyMatrix` func?
     *(u32*)&mat->m[0][0] = *(u32*)&GsWSMATRIX.m[0][0];
     *(u32*)&mat->m[0][2] = *(u32*)&GsWSMATRIX.m[0][2];
     *(u32*)&mat->m[1][1] = *(u32*)&GsWSMATRIX.m[1][1];
     *(u32*)&mat->m[2][0] = *(u32*)&GsWSMATRIX.m[2][0];
     mat->m[2][2]         = GsWSMATRIX.m[2][2];
 
-    mat->t[0] = output.vx + GsWSMATRIX.t[0];
-    mat->t[1] = output.vy + GsWSMATRIX.t[1];
-    mat->t[2] = output.vz + GsWSMATRIX.t[2];
+    mat->t[0] = out.vx + GsWSMATRIX.t[0];
+    mat->t[1] = out.vy + GsWSMATRIX.t[1];
+    mat->t[2] = out.vz + GsWSMATRIX.t[2];
 }
 
-s32 func_80049D04(s32 x0, s32 x1, s32 y0, s32 y1, s32 z0, s32 z1) // 0x80049D04
+s32 View_IsAabbVisible(s32 xMin, s32 xMax, s32 yMin, s32 yMax, s32 zMin, s32 zMax) // 0x80049D04
 {
     s32     i;
-    MATRIX  mat;
-    SVECTOR rot;
-    DVECTOR sxy;
-    s32     dmy;
-    s32     sp44;
-    s32     var_fp;
-    s32     var_s5;
-    s32     var_s7;
+    MATRIX  worldMat;
+    SVECTOR vertOffset;
+    DVECTOR screenPos;
+    s32     depthDmy;
+    s32     screenMinY;
+    s32     screenMaxY;
+    s32     screenMinX;
+    s32     screenMaxX;
     s32     temp;
-    s32     posX;
-    s32     poxY;
-    u32     otz;
+    s32     screenCenterX;
+    s32     screenCenterY;
+    u32     screenDepth;
 
-    func_80049C2C(&mat, x0, y0, z0);
-    SetRotMatrix(&mat);
-    SetTransMatrix(&mat);
+    func_80049C2C(&worldMat, xMin, yMin, zMin);
+    SetRotMatrix(&worldMat);
+    SetTransMatrix(&worldMat);
+    
+    screenMaxY = 0x80000000;
+    screenMaxX = 0x80000000;
+    screenMinY = 0x7FFFFFFF;
+    screenMinX = 0x7FFFFFFF;
 
-    var_fp = 0x80000000;
-    var_s7 = 0x80000000;
-    sp44   = 0x7FFFFFFF;
-    var_s5 = 0x7FFFFFFF;
-
-    for (i = 0; i < 8; i++)
+    for (i = 0; i < BOX_CORNER_COUNT; i++)
     {
-        if (i & 1 != 0)
-        {
-            rot.vx = (x1 - x0) >> 4;
-        }
-        else
-        {
-            rot.vx = 0;
-        }
+        vertOffset.vx = (i & (1 << 0)) ? FP_FROM(xMax - xMin, Q4_SHIFT) : 0;
+        vertOffset.vy = (i & (1 << 1)) ? FP_FROM(yMax - yMin, Q4_SHIFT) : 0;
+        vertOffset.vz = (i & (1 << 2)) ? FP_FROM(zMax - zMin, Q4_SHIFT) : 0;
 
-        if (i & 2)
-        {
-            rot.vy = (y1 - y0) >> 4;
-        }
-        else
-        {
-            rot.vy = 0;
-        }
+        screenDepth = RotTransPers(&vertOffset, &screenPos, &depthDmy, &depthDmy) - 1;
 
-        if (i & 4)
+        if (screenDepth < 0x3FFE)
         {
-            rot.vz = (z1 - z0) >> 4;
-        }
-        else
-        {
-            rot.vz = 0;
-        }
-
-        otz = RotTransPers(&rot, &sxy, &dmy, &dmy) - 1;
-
-        if (otz < 0x3FFE)
-        {
-            temp = sxy.vx;
-            if (temp < var_s7)
+            temp = screenPos.vx;
+            if (temp < screenMaxX)
             {
-                temp = var_s7;
+                temp = screenMaxX;
             }
-            var_s7 = temp;
+            screenMaxX = temp;
 
-            temp = var_s5;
-            if (sxy.vx < temp)
+            temp = screenMinX;
+            if (screenPos.vx < temp)
             {
-                temp = sxy.vx;
+                temp = screenPos.vx;
             }
-            var_s5 = temp;
+            screenMinX = temp;
 
-            temp = sxy.vy;
-            if (temp < var_fp)
+            temp = screenPos.vy;
+            if (temp < screenMaxY)
             {
-                temp = var_fp;
+                temp = screenMaxY;
             }
-            var_fp = temp;
+            screenMaxY = temp;
 
-            temp = sp44;
-            if (sxy.vy < temp)
+            temp = screenMinY;
+            if (screenPos.vy < temp)
             {
-                temp = sxy.vy;
+                temp = screenPos.vy;
             }
-            sp44 = temp;
+            screenMinY = temp;
         }
     }
 
-    if (var_s7 == 0x7FFFFFFF)
+    if (screenMaxX == 0x7FFFFFFF)
     {
         return 0;
     }
 
-    posX = (g_GameWork.gsScreenWidth_588 / 2) + 2;
-    poxY = (g_GameWork.gsScreenHeight_58A / 2) + 2;
+    screenCenterX = (g_GameWork.gsScreenWidth_588  / 2) + 2;
+    screenCenterY = (g_GameWork.gsScreenHeight_58A / 2) + 2;
 
-    if (var_s7 < -posX || posX < var_s5 || var_fp < -poxY || poxY < sp44)
+    if (screenMaxX < -screenCenterX || screenCenterX < screenMinX ||
+        screenMaxY < -screenCenterY || screenCenterY < screenMinY)
     {
         return 0;
     }
@@ -649,9 +627,9 @@ s32 func_80049F38(MATRIX* arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 arg5
                 var_a0_2 = 0;
             }
 
-            sp10[var_a2] |= 1;
-            sp18[var_a0_2] |= 1;
-            sp20.field_0[var_a0_2][var_a2] |= 1;
+            sp10[var_a2]                   |= 1 << 0;
+            sp18[var_a0_2]                 |= 1 << 0;
+            sp20.field_0[var_a0_2][var_a2] |= 1 << 0;
         }
     }
 
@@ -677,7 +655,7 @@ s32 func_80049F38(MATRIX* arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 arg5
             RotTrans(&ptr->field_20[i], &ptr->field_60[i], &ptr->field_178);
         }
 
-        for (var_t1_2 = D_800AD480; (u32)var_t1_2 < (u32)D_800AD480 + 24; var_t1_2 += 2)
+        for (var_t1_2 = D_800AD480; (u32)var_t1_2 < ((u32)D_800AD480 + 24); var_t1_2 += 2)
         {
             temp_a1_2 = ptr->field_60[*var_t1_2].vz;
             temp_a0_2 = ptr->field_60[*(var_t1_2 + 1)].vz;
@@ -749,21 +727,21 @@ s32 func_80049F38(MATRIX* arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 arg5
                 var_a0_2 = 0;
             }
 
-            sp10[var_a2] |= 1;
-            sp18[var_a0_2] |= 1;
+            sp10[var_a2]   |= 1 << 0;
+            sp18[var_a0_2] |= 1 << 0;
 
             ptr->field_114++;
         }
 
-        if ((sp10[0] == 0) && (sp10[1] == 0))
+        if (sp10[0] == 0 && sp10[1] == 0)
         {
             return 0;
         }
-        else if ((sp10[2] == 0) && (sp10[1] == 0))
+        else if (sp10[2] == 0 && sp10[1] == 0)
         {
             return 0;
         }
-        else if ((sp18[0] == 0) && (sp18[1] == 0))
+        else if (sp18[0] == 0 && sp18[1] == 0)
         {
             return 0;
         }
@@ -776,6 +754,7 @@ s32 func_80049F38(MATRIX* arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 arg5
             return 0;
         }
     }
+
     return 1;
 }
 
@@ -822,7 +801,7 @@ s32 func_8004A54C(s_func_8004A54C* arg0) // 0x8004A54C
 
 void vwAngleToVector(SVECTOR* vec, SVECTOR* ang, s32 r) // 0x8004A66C
 {
-    s32 entou_r;
+    s32 entou_r; // "Entou" means "cylinder" in Japanese. Refers to radius on XZ plane.
     
     entou_r = FP_MULTIPLY(r, shRcos(ang->vx), Q12_SHIFT);
     vec->vy = FP_MULTIPLY(-r, shRsin(ang->vx), Q12_SHIFT);

@@ -100,8 +100,8 @@ static inline void Math_SVectorSet(SVECTOR* vec, s16 x, s16 y, s16 z)
     vec->vz = z;
 }
 
-void func_80096C94(SVECTOR* vec, MATRIX* mat); // Custom vwRotMatrix[...]?
-void func_80096E78(SVECTOR* vec, MATRIX* mat); // Another custom vwRotMatrix[...]?
+void func_80096C94(SVECTOR* rot, MATRIX* mat); // Custom `vwRotMatrix[...]`?
+void func_80096E78(SVECTOR* rot, MATRIX* mat); // Another custom `vwRotMatrix[...]`?
 
 s32 Math_MulFixed(s32 val0, s32 val1, s32 shift);
 

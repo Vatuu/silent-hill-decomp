@@ -10,17 +10,17 @@
 #include "screens/stream/stream.h"
 
 s32 g_Debug_MoviePlayerIdx = 0;
-s32 max_frame = 0;
-s32 frame_cnt = 0;
+s32 max_frame              = 0;
+s32 frame_cnt              = 0;
 
 DISPENV disp =
 {
-    {0, 256, 320, 240},  // disp
-    {0, 8,   256, 208},  // screen
-    0,                   // isinter
-    1,                   // isrgb24
-    0,                   // pad0
-    0                    // pad1
+    { 0, 256, 320, 240 }, // `disp`
+    { 0, 8,   256, 208 }, // `screen`
+    0,                    // `isinter`
+    1,                    // `isrgb24`
+    0,                    // `pad0`
+    0                     // `pad1`
 };
 
 MOVIE_STR* m;

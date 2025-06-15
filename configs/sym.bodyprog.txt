@@ -137,26 +137,28 @@ Sd_SetReverbDepth = 0x80047AD0; // type:func
 Sd_SetReverbEnable = 0x80047AFC; // type:func
 Sd_StopSeq = 0x8004839C; // type:func
 
-vwInitViewInfo = 0x80048a38; // type:func
-vwGetViewCoord = 0x80048a90; // type:func guessed name
-vwGetViewPosition = 0x80048a9c; // type:func
-vwGetViewAngle = 0x80048ac4; // type:func
-vwSetCoordRefAndEntou = 0x80048be0; // type:func
-vwSetViewInfoDirectMatrix = 0x80048cf0; // type:func
-vwSetViewInfo = 0x80048d48; // type:func
+vwInitViewInfo                 = 0x80048a38; // type:func
+vwGetViewCoord                 = 0x80048a90; // type:func guessed name
+vwGetViewPosition              = 0x80048a9c; // type:func
+vwGetViewAngle                 = 0x80048AC4; // type:func
+View_SetLookAtMatrix           = 0x80048AF4; // type:func
+vwSetCoordRefAndEntou          = 0x80048be0; // type:func
+vwSetViewInfoDirectMatrix      = 0x80048cf0; // type:func
+vwSetViewInfo                  = 0x80048d48; // type:func
 vwRenewalXZVelocityToTargetPos = 0x80048f28; // type:func
-vwLimitOverLimVector = 0x8004914c; // type:func
-vwDecreaseSideOfVector = 0x80049228; // type:func
-vwRetNewVelocityToTargetVal = 0x80049388; // type:func
-vwRetNewAngSpdToTargetAng = 0x80049464; // type:func
-vwMatrixToAngleYXZ = 0x800495d4; // type:func
+vwLimitOverLimVector           = 0x8004914c; // type:func
+vwDecreaseSideOfVector         = 0x80049228; // type:func
+vwRetNewVelocityToTargetVal    = 0x80049388; // type:func
+vwRetNewAngSpdToTargetAng      = 0x80049464; // type:func
+vwMatrixToAngleYXZ             = 0x800495d4; // type:func
 
 vbSetWorldScreenMatrix = 0x800497e4; // type:func
 vbSetRefView = 0x800498d8; // type:func
 
-vwAngleToVector = 0x8004A66C; // type:func
-vwVectorToAngle = 0x8004A714; // type:func
-vwOresenHokan = 0x8004A7C8; // type:func
+vwAngleToVector    = 0x8004A66C; // type:func
+View_IsAabbVisible = 0x80049D04; // type:func
+vwVectorToAngle    = 0x8004A714; // type:func
+vwOresenHokan      = 0x8004A7C8; // type:func
 
 Gfx_StringSetPosition = 0x8004A87C; // type:func
 Gfx_StringSetColor = 0x8004A8DC; // type:func

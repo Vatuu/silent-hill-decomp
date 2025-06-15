@@ -7,7 +7,8 @@
 #include <libgpu.h>
 #include <libgs.h>
 
-#define RECT_EDGE_COUNT 4
+#define RECT_EDGE_COUNT  4
+#define BOX_CORNER_COUNT 8
 
 /** Primitive types */
 enum PrimType

@@ -309,7 +309,7 @@ void           vwInitViewInfo();
 GsCOORDINATE2* vwGetViewCoord();
 void           vwGetViewPosition(VECTOR3* pos);
 void           vwGetViewAngle(SVECTOR* ang);
-void           func_80048AF4(VECTOR3* arg0, VECTOR3* arg1);
+void           View_SetLookAtMatrix(VECTOR3* pos, VECTOR3* lookAt);
 void           vwSetCoordRefAndEntou(GsCOORDINATE2* parent_p, s32 ref_x, s32 ref_y, s32 ref_z, s16 cam_ang_y, s16 cam_ang_z, s32 cam_y, s32 cam_xz_r);
 void           vwSetViewInfoDirectMatrix(GsCOORDINATE2* pcoord, MATRIX* cammat);
 void           vwSetViewInfo();
@@ -331,6 +331,9 @@ void func_80049984(GsCOORDINATE2*, MATRIX*);
 void func_80049AF8(GsCOORDINATE2* coord, MATRIX* mat);
 void func_80049B6C(GsCOORDINATE2* coord, MATRIX* mat0, MATRIX* mat1);
 void func_80049C2C(MATRIX* mat, s32 x, s32 y, s32 z);
+s32  View_IsAabbVisible(s32 xMin, s32 xMax, s32 yMin, s32 yMax, s32 zMin, s32 zMax);
+s32  func_80049F38(MATRIX* arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 arg5, s32 arg6, u16 arg7, u16 arg8);
+s32  func_8004A54C(s_func_8004A54C* arg0);
 void vwAngleToVector(SVECTOR* vec, SVECTOR* ang, s32 r);
 s32  vwVectorToAngle(SVECTOR* ang, SVECTOR* vec);
 
