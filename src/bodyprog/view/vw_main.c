@@ -101,8 +101,7 @@ void vwSetViewInfo() // 0x80048D48
     vwMatrixToAngleYXZ(&vwViewPointInfo.worldang, &vwViewPointInfo.vwcoord.workm);
 }
 
-// `Camera_ClampAngleRange`?
-void func_80048DA8(s16* angleMin, s16* angleMax, s16 angleConstraintMin, s16 angleConstraintMax) // 0x80048DA8
+void View_ClampAngleRange(s16* angleMin, s16* angleMax, s16 angleConstraintMin, s16 angleConstraintMax) // 0x80048DA8
 {
     s32 prevAngleMax;
     s32 prevAngleMin;

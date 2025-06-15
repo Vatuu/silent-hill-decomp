@@ -245,22 +245,22 @@ void vwMatrixToAngleYXZ(SVECTOR* ang, MATRIX* mat) // 0x800495D4
     }
 }
 
-void func_800496AC(MATRIX* mat0, MATRIX* mat1, MATRIX* mat2) // 0x800496AC
+void View_MultiplyAndTransformMatrix(MATRIX* transformMat, MATRIX* inMat, MATRIX* outMat) // 0x800496AC
 {
-    gte_SetRotMatrix(mat0);
-    gte_SetTransMatrix(mat0);
-    gte_ldclmv(mat1);
+    gte_SetRotMatrix(transformMat);
+    gte_SetTransMatrix(transformMat);
+    gte_ldclmv(inMat);
     gte_rtir();
-    gte_stclmv(mat2);
-    gte_ldclmv((MATRIX*)(mat1->m[0] + 1));
+    gte_stclmv(outMat);
+    gte_ldclmv((MATRIX*)(inMat->m[0] + 1));
     gte_rtir();
-    gte_stclmv((MATRIX*)(mat2->m[0] + 1));
-    gte_ldclmv((MATRIX*)(mat1->m[0] + 2));
+    gte_stclmv((MATRIX*)(outMat->m[0] + 1));
+    gte_ldclmv((MATRIX*)(inMat->m[0] + 2));
     gte_rtir();
-    gte_stclmv((MATRIX*)(mat2->m[0] + 2));
-    gte_ldlvl((VECTOR*)mat1->t);
+    gte_stclmv((MATRIX*)(outMat->m[0] + 2));
+    gte_ldlvl((VECTOR*)inMat->t);
     gte_rtirtr();
-    gte_stlvnl((VECTOR*)mat2->t);
+    gte_stlvnl((VECTOR*)outMat->t);
 }
 
 void vbSetWorldScreenMatrix(GsCOORDINATE2* coord) // 0x800497E4
@@ -360,11 +360,12 @@ void func_80049984(GsCOORDINATE2* coord, MATRIX* mat) // 0x80049984
             }
             else
             {
-                func_800496AC(&coord0->workm, &coord2->coord, &coord2->workm);
+                View_MultiplyAndTransformMatrix(&coord0->workm, &coord2->coord, &coord2->workm);
             }
 
             coord2 = coord2->sub;
-        } while (coord2 != NULL);
+        }
+        while (coord2 != NULL);
     }
 
     *mat = coord->workm;
@@ -380,7 +381,7 @@ void func_80049AF8(GsCOORDINATE2* coord, MATRIX* mat) // 0x80049AF8
     localMat.t[1] -= D_800C3868.t[1];
     localMat.t[2] -= D_800C3868.t[2];
 
-    func_800496AC(&VbWvsMatrix, &localMat, mat);
+    View_MultiplyAndTransformMatrix(&VbWvsMatrix, &localMat, mat);
 }
 
 void func_80049B6C(GsCOORDINATE2* coord, MATRIX* mat0, MATRIX* mat1) // 0x80049B6C
@@ -390,7 +391,7 @@ void func_80049B6C(GsCOORDINATE2* coord, MATRIX* mat0, MATRIX* mat1) // 0x80049B
     mat0->t[1] -= D_800C3868.t[1];
     mat0->t[2] -= D_800C3868.t[2];
 
-    func_800496AC(&VbWvsMatrix, mat0, mat1);
+    View_MultiplyAndTransformMatrix(&VbWvsMatrix, mat0, mat1);
     mat0->t[0] += D_800C3868.t[0];
     mat0->t[1] += D_800C3868.t[1];
     mat0->t[2] += D_800C3868.t[2];
@@ -828,6 +829,9 @@ s32 vwVectorToAngle(SVECTOR* ang, SVECTOR* vec) // 0x8004A714
 
 s32 vwOresenHokan(s32* y_ary, s32 y_suu, s32 input_x, s32 min_x, s32 max_x) // 0x8004A7C8
 {
+    // `y_ary` = array of Y values.
+    // `y_suu` = `y_ary` size.
+
     s32 amari;    // Remainder when calculating position within interval.
     s32 kukan_w;  // Width of each interval between Y values.
     s32 kukan_no; // Index of the interval containing input_x.

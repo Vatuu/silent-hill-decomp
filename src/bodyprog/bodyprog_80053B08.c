@@ -1061,7 +1061,7 @@ void func_8006BDDC(s_func_8006BDDC* arg0, s16 arg1, s16 arg2) // 0x8006BDDC
     }
 
     arg0->field_0++;
-    func_80048DA8(&arg0->field_2, &arg0->field_4, arg1, arg2);
+    View_ClampAngleRange(&arg0->field_2, &arg0->field_4, arg1, arg2);
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80053B08", func_8006BE40); // 0x8006BE40
