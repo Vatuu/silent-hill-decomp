@@ -97,10 +97,10 @@ STATIC_ASSERT_SIZEOF(THROUGH_DOOR_SET_CMD_TYPE, 4);
  */
 typedef struct _VC_LIMIT_AREA
 {
-    s16 min_hx;
-    s16 max_hx;
-    s16 min_hz;
-    s16 max_hz;
+    q7_8 min_hx;
+    q7_8 max_hx;
+    q7_8 min_hz;
+    q7_8 max_hz;
 } VC_LIMIT_AREA;
 STATIC_ASSERT_SIZEOF(VC_LIMIT_AREA, 8);
 
