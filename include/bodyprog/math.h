@@ -29,6 +29,10 @@
 #define ABS_DIFF(a, b) \
     ((((a) - (b)) < 0) ? ((b) - (a)) : ((a) - (b)))
 
+/** @brief Adds the absolute value of a to b. */
+#define ABS_ADD(a,b) \
+    (((a) >= 0) ? ((b) + (a)) : ((b) - (a)))
+
 /** @brief Converts an integer to a fixed-point Q format. */
 #define FP_TO(x, shift) \
     ((x) << (shift))

@@ -791,6 +791,16 @@ typedef struct _MapOverlayHeader
 } s_MapOverlayHeader;
 STATIC_ASSERT_SIZEOF(s_MapOverlayHeader, 2124); // Size incomplete.
 
+typedef struct
+{
+    VECTOR3 field_0;
+    VECTOR3 field_C;
+    u8 unk_18[6];
+    u8 field_1E;
+    u8 field_1F;
+    
+} s_func_800CFFF8;
+
 extern s_FsImageDesc g_MainImg0; // 0x80022C74 - TODO: part of main exe, move to main/ headers?
 
 extern s_80024C90 D_80024C90; 
