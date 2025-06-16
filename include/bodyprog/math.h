@@ -26,7 +26,7 @@
     (((x) < (min)) ? (min) : (((x) > (max)) ? (max) : (x)))
 
 /** @brief Computes the absolute sum of two values. */
-#define ABS_ADD(a,b) \
+#define ABS_ADD(a, b) \
     (((a) >= 0) ? ((b) + (a)) : ((b) - (a)))
 
 /** @brief Computes the absolute difference between two values. */

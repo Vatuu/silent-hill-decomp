@@ -24,7 +24,7 @@ void vcInitVCSystem(VC_ROAD_DATA* vc_road_ary_list) // 0x80080940
     vcWork_CurNearRoadSet(&vcWork, &vcNullNearRoad);
 
     vcWork.old_cam_excl_area_r_6C = NO_VALUE;
-    vcWork.watch_tgt_max_y_88     = FP_METER(480.0f);
+    vcWork.watch_tgt_max_y_88     = FP_METER_REAL(30.0f);
     vcWork.field_D8               = 0;
     vcWork.field_FC               = 0;
 }
@@ -321,7 +321,7 @@ void vcSetAllNpcDeadTimer() // 0x8008123C
 
 s32 vcRetSmoothCamMvF(VECTOR3* old_pos, VECTOR3* now_pos, SVECTOR* old_ang, SVECTOR* now_ang) // 0x800812CC
 {
-    #define MOVEMENT_METER_MAX 0.2f
+    #define MOVEMENT_METER_MAX 0.0125f
     #define ROT_X_ANGLE_MAX    20.0f
     #define ROT_Y_ANGLE_MAX    30.0f
     #define INTRPT_TIME_MIN    1.0f
@@ -340,7 +340,7 @@ s32 vcRetSmoothCamMvF(VECTOR3* old_pos, VECTOR3* now_pos, SVECTOR* old_ang, SVEC
                                   FP_FROM(now_pos->vz - old_pos->vz, Q4_SHIFT));
 
     mv_vec = FP_TO(mv_vec, Q12_SHIFT) / intrpt;
-    if (mv_vec > FP_METER(MOVEMENT_METER_MAX))
+    if (mv_vec > FP_METER_REAL(MOVEMENT_METER_MAX))
     {
         return 0;
     }
@@ -399,30 +399,30 @@ s32 func_8008150C(s32 posX, s32 posZ)
     switch (func_8003BD2C())
     {
         case 0:
-            if ((posX - FP_METER(3228.8f)) > (u32)FP_METER(451.205f))
+            if ((posX - FP_METER_REAL(201.8f)) > (u32)FP_METER_REAL(28.2002f))
             {
                 return 0;
             }
-            else if (posZ < -FP_METER(1472.0f))
+            else if (posZ < FP_METER_REAL(-92.0f))
             {
                 return 0;
             }
-            else if (posZ <= -FP_METER(1088.0f))
+            else if (posZ <= FP_METER_REAL(-68.0f))
             {
                 return 1;
             }
             break;
 
         case 3:
-            if ((posX + FP_METER(3680.0f)) > (u32)FP_METER(464.0f))
+            if ((posX + FP_METER_REAL(230.0f)) > (u32)FP_METER_REAL(29.0f))
             {
                 return 0;
             }
-            else if (posZ < -FP_METER(192.0f))
+            else if (posZ < FP_METER_REAL(-12.0f))
             {
                 return 0;
             }
-            else if (posZ <= FP_METER(192.0f))
+            else if (posZ <= FP_METER_REAL(12.0f))
             {
                 return 1;
             }
@@ -447,17 +447,17 @@ s32 vcRetThroughDoorCamEndF(VC_WORK* w_p) // 0x800815F0
     }
 
     // TODO: Timer field treated as distance here? Maybe misnamed, need to check usages in SH2 against SH.
-    if (prm_p->timer_4 > FP_METER(19.2f) && w_p->nearest_enemy_xz_dist_2E0 < FP_METER(19.2f))
+    if (prm_p->timer_4 > FP_METER_REAL(1.2f) && w_p->nearest_enemy_xz_dist_2E0 < FP_METER_REAL(1.2f))
     {
         return 1;
     }
 
-    if (rail2chara_dist > FP_METER(36.8f))
+    if (rail2chara_dist > FP_METER_REAL(2.3f))
     {
         return 1;
     }
 
-    if (rail2chara_dist > FP_METER(8.0f))
+    if (rail2chara_dist > FP_METER_REAL(0.5f))
     {
         abs_ofs_ang_y = shAngleRegulate(w_p->chara_eye_ang_y_144 -
                         ratan2(w_p->chara_pos_114.vx - w_p->through_door_10.rail_sta_pos_C.vx, w_p->chara_pos_114.vz - w_p->through_door_10.rail_sta_pos_C.vz));
@@ -500,22 +500,22 @@ s32 vcRetFarWatchRate(s32 far_watch_button_prs_f, VC_CAM_MV_TYPE cur_cam_mv_type
                 break;
 
             case VC_MV_THROUGH_DOOR:
-                far_watch_rate = FP_METER(16.0f); // FP_ANGLE(256.0f);
+                far_watch_rate = FP_METER_REAL(1.0f); // FP_ANGLE(256.0f);
                 if (!far_watch_button_prs_f)
                 {
-                    // TODO: unsure if these should use FP_METER or FP_ANGLE
-                    // gets multiplied by `dist` so FP_METER fits
-                    // but then it gets subtracted by `abs_ofs_ang_y`, so FP_ANGLE would also fit?
+                    // TODO: Unsure if these should use `FP_METER` or `FP_ANGLE`.
+                    // Gets multiplied by `dist`, so `FP_METER` fits,
+                    // but then it gets subtracted by `abs_ofs_ang_y`, so `FP_ANGLE` would also fits?
 
                     dist           = w_p->through_door_10.rail_sta_to_chara_dist_18;
-                    far_watch_rate = FP_METER(14.4f) - ((dist * FP_METER(14.4f)) / FP_METER(36.8f));
+                    far_watch_rate = FP_METER_REAL(0.9f) - ((dist * FP_METER_REAL(0.9f)) / FP_METER_REAL(2.3f));
                     // far_watch_rate = FP_ANGLE(324.0f) - ((dist * FP_ANGLE(324.0f)) / FP_ANGLE(828.0f));
                     if (far_watch_rate < 0)
                     {
                         far_watch_rate = 0;
                     }
 
-                    if (dist > FP_METER(8.0f))
+                    if (dist > FP_METER_REAL(0.5f))
                     {
                         railDistX = w_p->chara_pos_114.vx - w_p->through_door_10.rail_sta_pos_C.vx;
                         railDistZ = w_p->chara_pos_114.vz - w_p->through_door_10.rail_sta_pos_C.vz;
@@ -786,7 +786,7 @@ void vcSetTHROUGH_DOOR_CAM_PARAM_in_VC_WORK(VC_WORK* w_p, enum _THROUGH_DOOR_SET
 void vcSetNearestEnemyDataInVC_WORK(VC_WORK* w_p) // 0x80081D90
 {
     #define ENEMY_DEAD_TIMER_MAX 1.5f
-    #define ENEMY_METERS_MAX     240.0f
+    #define ENEMY_METERS_MAX     15.0f
 
     s32             set_active_data_f;
     s32             xz_dist;
@@ -795,26 +795,26 @@ void vcSetNearestEnemyDataInVC_WORK(VC_WORK* w_p) // 0x80081D90
     s_SubCharacter* sc_p            = NULL;
     s_SubCharacter* all_min_sc_p    = NULL;
     s_SubCharacter* active_min_sc_p = NULL;
-    s32             all_min_dist    = FP_METER(ENEMY_METERS_MAX);
-    s32             active_min_dist = FP_METER(ENEMY_METERS_MAX);
+    s32             all_min_dist    = FP_METER_REAL(ENEMY_METERS_MAX);
+    s32             active_min_dist = FP_METER_REAL(ENEMY_METERS_MAX);
 
     if (g_SysWork.flags_22A4 & (1 << 5)) // `sh2jms->player.battle(ShBattleInfo).status & 0x10` in SH2.
     {
-        w_p->nearest_enemy_2DC       = NULL;
-        w_p->nearest_enemy_xz_dist_2E0 = FP_METER(ENEMY_METERS_MAX);
+        w_p->nearest_enemy_2DC         = NULL;
+        w_p->nearest_enemy_xz_dist_2E0 = FP_METER_REAL(ENEMY_METERS_MAX);
         return;
     }
 
     for (sc_p = &g_SysWork.npcs_1A0[0]; sc_p < &g_SysWork.npcs_1A0[NPC_COUNT_MAX]; sc_p++)
     {
-        if ((((u8)sc_p->model_0.charaId_0 - 2) < 0x17u) &&
+        if ((((u8)sc_p->model_0.charaId_0 - 2) < 23u) &&                                                     // `Chara_Unknown23`
             (sc_p->dead_timer_C4 <= FP_FLOAT_TO(ENEMY_DEAD_TIMER_MAX, Q12_SHIFT) || sc_p->health_B0 >= 0) &&
-            !(sc_p->flags_3E & (1 << 4))) // `sc_p->battle(ShBattleInfo).status & 0x20` in SH2.
+            !(sc_p->flags_3E & (1 << 4)))                                                                    // `sc_p->battle(ShBattleInfo).status & 0x20` in SH2.
         {
             ofs_x = sc_p->position_18.vx - w_p->chara_pos_114.vx;
             ofs_z = sc_p->position_18.vz - w_p->chara_pos_114.vz;
 
-            if (abs(ofs_x) >= FP_METER(ENEMY_METERS_MAX) || abs(ofs_z) >= FP_METER(ENEMY_METERS_MAX))
+            if (abs(ofs_x) >= FP_METER_REAL(ENEMY_METERS_MAX) || abs(ofs_z) >= FP_METER_REAL(ENEMY_METERS_MAX))
             {
                 continue;
             }
@@ -1023,9 +1023,9 @@ s32 vcGetBestNewCurNearRoad(VC_NEAR_ROAD_DATA** new_cur_pp, VC_CAM_CHK_TYPE chk_
     new_cur_p    = NULL;
     new_cur_dist = INT_MAX;
 
-    evnt_min_dist = vcGetNearestNEAR_ROAD_DATA(&evnt_nearest_p, chk_type, VC_RD_TYPE_EVENT, pos, w_p, 0);
-    eff_min_dist  = vcGetNearestNEAR_ROAD_DATA(&eff_nearest_p, chk_type, VC_RD_TYPE_EFFECT, pos, w_p, 0);
-    road_min_dist = vcGetNearestNEAR_ROAD_DATA(&road_nearest_p, chk_type, VC_RD_TYPE_ROAD, pos, w_p, 0);
+    evnt_min_dist = vcGetNearestNEAR_ROAD_DATA(&evnt_nearest_p, chk_type, VC_RD_TYPE_EVENT,  pos, w_p, 0);
+    eff_min_dist  = vcGetNearestNEAR_ROAD_DATA(&eff_nearest_p,  chk_type, VC_RD_TYPE_EFFECT, pos, w_p, 0);
+    road_min_dist = vcGetNearestNEAR_ROAD_DATA(&road_nearest_p, chk_type, VC_RD_TYPE_ROAD,   pos, w_p, 0);
 
     new_cur_priority = 0;
     renewal_f        = 0;
@@ -1124,8 +1124,8 @@ s32 vcGetBestNewCurNearRoad(VC_NEAR_ROAD_DATA** new_cur_pp, VC_CAM_CHK_TYPE chk_
     {
         new_cur_p    = &vcNullNearRoad;
         new_cur_dist = vcGetXZSumDistFromLimArea(&dummy, &dummy, pos->vx, pos->vz,
-                                                 vcNullNearRoad.rd_14.min_hx << 8, vcNullNearRoad.rd_14.max_hx << 8,
-                                                 vcNullNearRoad.rd_14.min_hz << 8, vcNullNearRoad.rd_14.max_hz << 8,
+                                                 FP_TO(vcNullNearRoad.rd_14.min_hx, Q8_SHIFT), FP_TO(vcNullNearRoad.rd_14.max_hx, Q8_SHIFT),
+                                                 FP_TO(vcNullNearRoad.rd_14.min_hz, Q8_SHIFT), FP_TO(vcNullNearRoad.rd_14.max_hz, Q8_SHIFT),
                                                  vcNullNearRoad.road_p_0->flags_10 & VC_RD_MARGE_ROAD_F);
     }
 
@@ -1247,18 +1247,18 @@ void vcMakeFarWatchTgtPos(VECTOR3* watch_tgt_pos, VC_WORK* w_p, VC_AREA_SIZE_TYP
 
     if (cur_rd_area_size == VC_AREA_TINY)
     {
-        use_dist = FP_FLOAT_TO(2.8f, Q12_SHIFT);
+        use_dist = FP_METER_REAL(2.8f);
     }
     else if (cur_rd_area_size == VC_AREA_SMALL)
     {
-        use_dist = FP_FLOAT_TO(5.5f, Q12_SHIFT);
+        use_dist = FP_METER_REAL(5.5f);
     }
     else
     {
-        use_dist = FP_FLOAT_TO(10.0f, Q12_SHIFT);
+        use_dist = FP_METER_REAL(10.0f);
     }
 
-    watch_y = w_p->chara_pos_114.vy - FP_FLOAT_TO(0.8f, Q12_SHIFT);
+    watch_y = w_p->chara_pos_114.vy - FP_METER_REAL(0.8f);
 
     if (w_p->nearest_enemy_2DC != NULL)
     {
@@ -1266,13 +1266,13 @@ void vcMakeFarWatchTgtPos(VECTOR3* watch_tgt_pos, VC_WORK* w_p, VC_AREA_SIZE_TYP
 
         dist = w_p->nearest_enemy_xz_dist_2E0;
 
-        if (dist < FP_FLOAT_TO(1.7f, Q12_SHIFT))
+        if (dist < FP_METER_REAL(1.7f))
         {
-            adj_dist = (dist * FP_FLOAT_TO(-0.7f, Q12_SHIFT)) / FP_FLOAT_TO(1.7f, Q12_SHIFT);
+            adj_dist = (dist * FP_METER_REAL(-0.7f)) / FP_METER_REAL(1.7f);
         }
         else
         {
-            adj_dist = FP_FLOAT_TO(-0.7f, Q12_SHIFT);
+            adj_dist = FP_METER_REAL(-0.7f);
         }
 
         dist += adj_dist;
@@ -1283,9 +1283,9 @@ void vcMakeFarWatchTgtPos(VECTOR3* watch_tgt_pos, VC_WORK* w_p, VC_AREA_SIZE_TYP
             use_dist = dist;
         }
 
-        if (use_dist < FP_FLOAT_TO(0.4f, Q12_SHIFT))
+        if (use_dist < FP_METER_REAL(0.4f))
         {
-            use_dist = FP_FLOAT_TO(0.4f, Q12_SHIFT);
+            use_dist = FP_METER_REAL(0.4f);
         }
 
         ofs_y = g_Chara_FileInfo[sc_p->model_0.charaId_0].field_C_2 * 16;
@@ -1315,7 +1315,7 @@ void vcMakeFarWatchTgtPos(VECTOR3* watch_tgt_pos, VC_WORK* w_p, VC_AREA_SIZE_TYP
                 break;
         }
 
-        lim_y = (w_p->nearest_enemy_xz_dist_2E0 >> 1) - FP_FLOAT_TO(0.5f, Q12_SHIFT);
+        lim_y = (w_p->nearest_enemy_xz_dist_2E0 >> 1) - FP_METER_REAL(0.5f);
 
         if (w_p->chara_pos_114.vy + lim_y < watch_y)
         {
@@ -1323,9 +1323,9 @@ void vcMakeFarWatchTgtPos(VECTOR3* watch_tgt_pos, VC_WORK* w_p, VC_AREA_SIZE_TYP
         }
     }
 
-    watch_tgt_pos->vx = w_p->chara_pos_114.vx + FP_FROM(use_dist * shRsin(w_p->chara_eye_ang_y_144), Q12_SHIFT);
+    watch_tgt_pos->vx = w_p->chara_pos_114.vx + FP_MULTIPLY(use_dist, shRsin(w_p->chara_eye_ang_y_144), Q12_SHIFT);
     watch_tgt_pos->vy = watch_y;
-    watch_tgt_pos->vz = w_p->chara_pos_114.vz + FP_FROM(use_dist * shRcos(w_p->chara_eye_ang_y_144), Q12_SHIFT);
+    watch_tgt_pos->vz = w_p->chara_pos_114.vz + FP_MULTIPLY(use_dist, shRcos(w_p->chara_eye_ang_y_144), Q12_SHIFT);
 }
 
 void vcSetWatchTgtXzPos(VECTOR3* watch_pos, VECTOR3* center_pos, VECTOR3* cam_pos, s32 tgt_chara2watch_cir_dist, s32 tgt_watch_cir_r, s16 watch_cir_ang_y) // 0x800834A8
@@ -1572,39 +1572,39 @@ void vcAdjTgtMvVecYByCurNearRoad(VECTOR3* tgt_mv_vec, VC_WORK* w_p) // 0x800843F
                                          0,
                                          w_p->chara_pos_114.vz - w_p->cam_tgt_pos_44.vz);
 
-    dist = CLAMP(to_chara_dist, FP_FLOAT_TO(1.2f, Q12_SHIFT), FP_FLOAT_TO(7.0f, Q12_SHIFT));
+    dist = CLAMP(to_chara_dist, FP_METER_REAL(1.2f), FP_METER_REAL(7.0f));
 
     // TODO: Weird multiplier?
-    near_ratio = FP_MULTIPLY_PRECISE(FP_FLOAT_TO(7.0f, Q12_SHIFT) - dist, 0.1724f, Q12_SHIFT);
-    near_ratio = CLAMP(near_ratio, 0, FP_FLOAT_TO(1.0f, Q12_SHIFT));
+    near_ratio = FP_MULTIPLY_PRECISE(FP_METER_REAL(7.0f) - dist, 0.1724f, Q12_SHIFT);
+    near_ratio = CLAMP(near_ratio, 0, FP_METER_REAL(1.0f));
 
     switch (w_p->cur_near_road_2B8.road_p_0->mv_y_type_11)
     {
         case 0:
         default:
-            abs_ofs_y = (to_chara_dist - FP_FLOAT_TO(0.3f, Q12_SHIFT)) >> 2;
+            abs_ofs_y = (to_chara_dist - FP_METER_REAL(0.3f)) >> 2;
             if (abs_ofs_y < 0)
             {
                 abs_ofs_y = 0;
             }
 
-            max_tgt_y = (abs_ofs_y + w_p->chara_top_y_124) - FP_FLOAT_TO(0.25f, Q12_SHIFT);
-            min_tgt_y = (w_p->chara_top_y_124 - abs_ofs_y) - FP_FLOAT_TO(0.25f, Q12_SHIFT);
+            max_tgt_y = (abs_ofs_y + w_p->chara_top_y_124) - FP_METER_REAL(0.25f);
+            min_tgt_y = (w_p->chara_top_y_124 - abs_ofs_y) - FP_METER_REAL(0.25f);
             break;
 
         case 1:
             min_tgt_y = Math_MulFixed(FP_TO(cur_rd_p->lim_rd_max_hy_12, Q8_SHIFT),
-                                      FP_FLOAT_TO(1.0f, Q12_SHIFT) - near_ratio, Q12_SHIFT) + Math_MulFixed(FP_TO(cur_rd_p->lim_rd_min_hy_13, Q8_SHIFT),
-                                                                                                            near_ratio,
-                                                                                                            Q12_SHIFT);
+                                      FP_METER_REAL(1.0f) - near_ratio, Q12_SHIFT) + Math_MulFixed(FP_TO(cur_rd_p->lim_rd_min_hy_13, Q8_SHIFT),
+                                                                                                   near_ratio,
+                                                                                                   Q12_SHIFT);
             max_tgt_y = min_tgt_y;
             break;
 
         case 2:
             min_tgt_y = Math_MulFixed(FP_TO(cur_rd_p->lim_rd_min_hy_13, Q8_SHIFT),
-                                      FP_FLOAT_TO(1.0f, Q12_SHIFT) - near_ratio, Q12_SHIFT) + Math_MulFixed(FP_TO(cur_rd_p->lim_rd_max_hy_12, Q8_SHIFT),
-                                                                                                            near_ratio,
-                                                                                                            Q12_SHIFT);
+                                      FP_METER_REAL(1.0f) - near_ratio, Q12_SHIFT) + Math_MulFixed(FP_TO(cur_rd_p->lim_rd_max_hy_12, Q8_SHIFT),
+                                                                                                   near_ratio,
+                                                                                                   Q12_SHIFT);
             max_tgt_y = min_tgt_y;
             break;
 
