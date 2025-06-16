@@ -1484,7 +1484,7 @@ void func_800805BC(VECTOR3* arg0, SVECTOR* arg1, GsCOORDINATE2* arg2, s32 arg3) 
     MATRIX mat;
     VECTOR vec;
 
-    func_80049984(arg2, &mat);
+    View_CoordHierarchyMatrixCompute(arg2, &mat);
     gte_SetRotMatrix(&mat);
     gte_SetTransMatrix(&mat);
 

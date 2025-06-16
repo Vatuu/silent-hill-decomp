@@ -89,7 +89,7 @@ void func_80080B58(GsCOORDINATE2* a1, SVECTOR* a2, VECTOR3* a3) // 0x80080B58
 
     vcWork.field_FC = 1;
 
-    func_80049984(a1, &vcWork.field_DC);
+    View_CoordHierarchyMatrixCompute(a1, &vcWork.field_DC);
     func_80096C94(a2, &mat);
     MulMatrix(&vcWork.field_DC, &mat);
 

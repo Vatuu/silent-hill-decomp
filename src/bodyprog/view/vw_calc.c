@@ -5,6 +5,7 @@
 #include "bodyprog/vw_system.h"
 #include "bodyprog/math.h"
 
+// Reference view transform?
 extern MATRIX D_800C3868;
 
 void vwRenewalXZVelocityToTargetPos(s32* velo_x, s32* velo_z, VECTOR3* now_pos, VECTOR3* tgt_pos, s32 tgt_r,
@@ -268,7 +269,7 @@ void vbSetWorldScreenMatrix(GsCOORDINATE2* coord) // 0x800497E4
     MATRIX work;
     VECTOR vec;
 
-    func_80049984(coord, &D_800C3868);
+    View_CoordHierarchyMatrixCompute(coord, &D_800C3868);
     TransposeMatrix(&D_800C3868, &work);
     MulMatrix0(&work, &GsIDMATRIX2, &VbWvsMatrix);
 
@@ -312,33 +313,40 @@ void vbSetRefView(VbRVIEW* rview) // 0x800498D8
     vbSetWorldScreenMatrix(&sp10);
 }
 
-void func_80049984(GsCOORDINATE2* coord, MATRIX* mat) // 0x80049984
+// Something to do with bone hierarchy?
+void View_CoordHierarchyMatrixCompute(GsCOORDINATE2* rootCoord, MATRIX* outMat) // 0x80049984
 {
-    GsCOORDINATE2* coord0;
-    GsCOORDINATE2* coord1;
-    GsCOORDINATE2* coord2;
+    GsCOORDINATE2* prevCoord;
+    GsCOORDINATE2* parentCoord;
+    GsCOORDINATE2* curCoord;
 
-    if (coord == NULL)
+    // If no root coord, set output matrix to identity.
+    if (rootCoord == NULL)
     {
-        *mat = GsIDMATRIX;
+        *outMat = GsIDMATRIX;
     }
 
-    coord2 = coord;
-    coord0 = NULL;
+    curCoord  = rootCoord;
+    prevCoord = NULL;
 
+    // Traverse coord parent hierarchy upward.
     while (true)
     {
-        coord1 = coord2->super;
-        if (coord2->flg != 0)
+        parentCoord = curCoord->super;
+
+        // Stop if node has already been processed.
+        if (curCoord->flg != 0)
         {
             break;
         }
 
-        coord0 = coord2;
-        if (coord1 != NULL)
+        prevCoord = curCoord;
+
+        // If parent node exists, link it downward for later traversal.
+        if (parentCoord != NULL)
         {
-            coord1->sub = coord2;
-            coord2      = coord1;
+            parentCoord->sub = curCoord;
+            curCoord         = parentCoord;
         }
         else
         {
@@ -346,58 +354,60 @@ void func_80049984(GsCOORDINATE2* coord, MATRIX* mat) // 0x80049984
         }
     }
 
-    if (coord0 != NULL)
+    // If found at least one unprocessed node, process coord hierarchy downward.
+    if (prevCoord != NULL)
     {
-        coord2     = coord0;
-        coord->sub = NULL;
+        curCoord     = prevCoord;
+        rootCoord->sub = NULL;    // Detach child link to prevent cycles.
         do
         {
-            coord0 = coord2->super;
-            coord2->flg++;
-            if (coord0 == NULL)
+            prevCoord = curCoord->super;
+            curCoord->flg++;             // Mark node as processed.
+
+            // Compute cumulative transformation matrix.
+            if (prevCoord == NULL)
             {
-                coord2->workm = coord2->coord;
+                curCoord->workm = curCoord->coord;
             }
             else
             {
-                View_MultiplyAndTransformMatrix(&coord0->workm, &coord2->coord, &coord2->workm);
+                View_MultiplyAndTransformMatrix(&prevCoord->workm, &curCoord->coord, &curCoord->workm);
             }
 
-            coord2 = coord2->sub;
+            curCoord = curCoord->sub;
         }
-        while (coord2 != NULL);
+        while (curCoord != NULL);
     }
 
-    *mat = coord->workm;
+    // Set output.
+    *outMat = rootCoord->workm;
 }
 
-void func_80049AF8(GsCOORDINATE2* coord, MATRIX* mat) // 0x80049AF8
+void func_80049AF8(GsCOORDINATE2* rootCoord, MATRIX* outMat) // 0x80049AF8
 {
     MATRIX localMat;
 
-    func_80049984(coord, &localMat);
-
+    View_CoordHierarchyMatrixCompute(rootCoord, &localMat);
     localMat.t[0] -= D_800C3868.t[0];
     localMat.t[1] -= D_800C3868.t[1];
     localMat.t[2] -= D_800C3868.t[2];
-
-    View_MultiplyAndTransformMatrix(&VbWvsMatrix, &localMat, mat);
+    View_MultiplyAndTransformMatrix(&VbWvsMatrix, &localMat, outMat);
 }
 
-void func_80049B6C(GsCOORDINATE2* coord, MATRIX* mat0, MATRIX* mat1) // 0x80049B6C
+void func_80049B6C(GsCOORDINATE2* rootCoord, MATRIX* outMat0, MATRIX* outMat1) // 0x80049B6C
 {
-    func_80049984(coord, mat0);
-    mat0->t[0] -= D_800C3868.t[0];
-    mat0->t[1] -= D_800C3868.t[1];
-    mat0->t[2] -= D_800C3868.t[2];
+    View_CoordHierarchyMatrixCompute(rootCoord, outMat0);
+    outMat0->t[0] -= D_800C3868.t[0];
+    outMat0->t[1] -= D_800C3868.t[1];
+    outMat0->t[2] -= D_800C3868.t[2];
 
-    View_MultiplyAndTransformMatrix(&VbWvsMatrix, mat0, mat1);
-    mat0->t[0] += D_800C3868.t[0];
-    mat0->t[1] += D_800C3868.t[1];
-    mat0->t[2] += D_800C3868.t[2];
+    View_MultiplyAndTransformMatrix(&VbWvsMatrix, outMat0, outMat1);
+    outMat0->t[0] += D_800C3868.t[0];
+    outMat0->t[1] += D_800C3868.t[1];
+    outMat0->t[2] += D_800C3868.t[2];
 }
 
-void func_80049C2C(MATRIX* mat, s32 x, s32 y, s32 z) // 0x80049C2C
+void func_80049C2C(MATRIX* outMat, s32 x, s32 y, s32 z) // 0x80049C2C
 {
     VECTOR in;
     VECTOR out;
@@ -408,18 +418,18 @@ void func_80049C2C(MATRIX* mat, s32 x, s32 y, s32 z) // 0x80049C2C
     ApplyMatrixLV(&GsWSMATRIX, &in, &out);
 
     // Copy matrix fields as 32-bit words. Maybe inlined `CopyMatrix` func?
-    *(u32*)&mat->m[0][0] = *(u32*)&GsWSMATRIX.m[0][0];
-    *(u32*)&mat->m[0][2] = *(u32*)&GsWSMATRIX.m[0][2];
-    *(u32*)&mat->m[1][1] = *(u32*)&GsWSMATRIX.m[1][1];
-    *(u32*)&mat->m[2][0] = *(u32*)&GsWSMATRIX.m[2][0];
-    mat->m[2][2]         = GsWSMATRIX.m[2][2];
+    *(u32*)&outMat->m[0][0] = *(u32*)&GsWSMATRIX.m[0][0];
+    *(u32*)&outMat->m[0][2] = *(u32*)&GsWSMATRIX.m[0][2];
+    *(u32*)&outMat->m[1][1] = *(u32*)&GsWSMATRIX.m[1][1];
+    *(u32*)&outMat->m[2][0] = *(u32*)&GsWSMATRIX.m[2][0];
+    outMat->m[2][2]         = GsWSMATRIX.m[2][2];
 
-    mat->t[0] = out.vx + GsWSMATRIX.t[0];
-    mat->t[1] = out.vy + GsWSMATRIX.t[1];
-    mat->t[2] = out.vz + GsWSMATRIX.t[2];
+    outMat->t[0] = out.vx + GsWSMATRIX.t[0];
+    outMat->t[1] = out.vy + GsWSMATRIX.t[1];
+    outMat->t[2] = out.vz + GsWSMATRIX.t[2];
 }
 
-s32 View_IsAabbVisible(s32 xMin, s32 xMax, s32 yMin, s32 yMax, s32 zMin, s32 zMax) // 0x80049D04
+s32 View_AabbVisibleCheck(s32 xMin, s32 xMax, s32 yMin, s32 yMax, s32 zMin, s32 zMax) // 0x80049D04
 {
     s32     i;
     MATRIX  worldMat;

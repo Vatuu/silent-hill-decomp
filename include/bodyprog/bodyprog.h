@@ -495,6 +495,16 @@ typedef struct
     s32  (*routine_E4)(s_SubCharacter* chara0, s_SubCharacter* chara1);
 } s_D_800C957C;
 
+typedef struct
+{
+    VECTOR3 field_0;
+    VECTOR3 field_C;
+    u8      unk_18[6];
+    u8      field_1E;
+    u8      field_1F;
+    
+} s_func_800CFFF8;
+
 /** Holds file IDs of anim/model/texture for each `e_ShCharacterId`, along with some data used in VC camera code. */
 typedef struct
 {
@@ -790,16 +800,6 @@ typedef struct _MapOverlayHeader
     // TODO: A lot more in here.
 } s_MapOverlayHeader;
 STATIC_ASSERT_SIZEOF(s_MapOverlayHeader, 2124); // Size incomplete.
-
-typedef struct
-{
-    VECTOR3 field_0;
-    VECTOR3 field_C;
-    u8 unk_18[6];
-    u8 field_1E;
-    u8 field_1F;
-    
-} s_func_800CFFF8;
 
 extern s_FsImageDesc g_MainImg0; // 0x80022C74 - TODO: part of main exe, move to main/ headers?
 

@@ -25,13 +25,13 @@
 #define CLAMP(x, min, max) \
     (((x) < (min)) ? (min) : (((x) > (max)) ? (max) : (x)))
 
+/** @brief Computes the absolute sum of two values. */
+#define ABS_ADD(a,b) \
+    (((a) >= 0) ? ((b) + (a)) : ((b) - (a)))
+
 /** @brief Computes the absolute difference between two values. */
 #define ABS_DIFF(a, b) \
     ((((a) - (b)) < 0) ? ((b) - (a)) : ((a) - (b)))
-
-/** @brief Adds the absolute value of a to b. */
-#define ABS_ADD(a,b) \
-    (((a) >= 0) ? ((b) + (a)) : ((b) - (a)))
 
 /** @brief Converts an integer to a fixed-point Q format. */
 #define FP_TO(x, shift) \
