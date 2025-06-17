@@ -914,15 +914,15 @@ typedef struct _SysWork
     s_MainCharacter player_4C;
     s_SubCharacter  npcs_1A0[NPC_COUNT_MAX];
     GsCOORDINATE2   playerBoneCoords_890[PlayerBone_Count];
-    s8              pad_E30[400];  // Might be part of previous array for 5 exra coords which go unused.
-    s8              unk_FC0[4800]; // Start is tightly-packed buffer for NPC bone coords. Size unclear, appears to be enough for 60 before what might be AI data.
-    s8              unk_2280;
-    s8              field_2281;    // Set by `Chara_PositionUpdateFromParams`.
+    GsCOORDINATE2   unkCoords_E30[5];  // Might be part of previous array for 5 exra coords which go unused.
+    GsCOORDINATE2   npcCoords_FC0[60]; // Dynamic coord buffer? Array end is unclear, but 10 coords per NPC (given max of 6 NPCs) seems reasonable.
+    s8              unk_2280;          // Maybe NPC AI data past this point.
+    s8              field_2281;        // Set by `Chara_PositionUpdateFromParams`.
     s8              field_2282;
     s8              unk_2283[7];
     u16             field_228A;
     s8              unk_228C[12];
-    s32             flags_2298;    // Something related to map loading.
+    s32             flags_2298; // Something related to map loading.
     s8              unk_229C[4];
     s32             field_22A0;
     s32             flags_22A4;
@@ -934,9 +934,9 @@ typedef struct _SysWork
     u8              unk_234C[4];
     s32             field_2350_0 : 4;
     s32             field_2350_4 : 4;
-    u32             field_2351 : 8;
-    u32             flags_2352 : 8;
-    s32             field_2353 : 8; // Some index into `npcs_1A0`.
+    u32             field_2351   : 8;
+    u32             flags_2352   : 8;
+    s32             field_2353   : 8; // Some index into `npcs_1A0`.
     s8              unk_2354[4];
     u8              field_2358;
     s8              unk_2359[3];
