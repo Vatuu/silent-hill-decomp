@@ -499,10 +499,9 @@ typedef struct
 {
     VECTOR3 field_0;
     VECTOR3 field_C;
-    u8      unk_18[6];
+    s8      unk_18[6];
     u8      field_1E;
     u8      field_1F;
-    
 } s_func_800CFFF8;
 
 /** Holds file IDs of anim/model/texture for each `e_ShCharacterId`, along with some data used in VC camera code. */
@@ -1781,10 +1780,10 @@ void func_800868DC(s32 idx);
 
 void func_800869E4(u8* arg0, u8* arg1, u16* arg2);
 
-void Camera_SetTranslation(VECTOR3* pos, s32 xPosOffset, s32 yPosOffset, s32 zPosOffset,
+void Camera_TranslationSet(VECTOR3* pos, s32 xPosOffset, s32 yPosOffset, s32 zPosOffset,
                            s32 xzAccel, s32 yAccel, s32 xzSpeedMax, s32 ySpeedMax, s32 warpCamFlag);
 
-void Camera_SetRotation(VECTOR3* lookAt, s32 xLookAtOffset, s32 yLookAtOffset, s32 zLookAtOffset,
+void Camera_RotationSet(VECTOR3* lookAt, s32 xLookAtOffset, s32 yLookAtOffset, s32 zLookAtOffset,
                         s32 xAngularAccel, s32 yAngularAccel, s32 xAngularSpeedMax, s32 yAngularSpeedMax, s32 warpLookAtFlag);
 
 void func_80086C58(s32 arg0, s32 arg1);

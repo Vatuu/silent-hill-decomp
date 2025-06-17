@@ -32,7 +32,7 @@ void vwGetViewAngle(SVECTOR* ang) // 0x80048AC4
     *ang = vwViewPointInfo.worldang;
 }
 
-void View_LookAtMatrixSet(VECTOR3* pos, VECTOR3* lookAt) // 0x80048AF4
+void Vw_LookAtMatrixSet(VECTOR3* pos, VECTOR3* lookAt) // 0x80048AF4
 {
     s32     deltaX;
     s32     deltaY;
@@ -101,7 +101,7 @@ void vwSetViewInfo() // 0x80048D48
     vwMatrixToAngleYXZ(&vwViewPointInfo.worldang, &vwViewPointInfo.vwcoord.workm);
 }
 
-void View_ClampAngleRange(s16* angleMin, s16* angleMax, s16 angleConstraintMin, s16 angleConstraintMax) // 0x80048DA8
+void Vw_ClampAngleRange(s16* angleMin, s16* angleMax, s16 angleConstraintMin, s16 angleConstraintMax) // 0x80048DA8
 {
     s32 prevAngleMax;
     s32 prevAngleMin;

@@ -539,7 +539,7 @@ void func_800869E4(u8* arg0, u8* arg1, u16* arg2) // 0x800869E4
     }
 }
 
-void Camera_SetTranslation(VECTOR3* pos, s32 xPosOffset, s32 yPosOffset, s32 zPosOffset,
+void Camera_TranslationSet(VECTOR3* pos, s32 xPosOffset, s32 yPosOffset, s32 zPosOffset,
                            s32 xzAccel, s32 yAccel, s32 xzSpeedMax, s32 ySpeedMax, s32 warpCamFlag) // 0x80086A94
 {
     VECTOR3         posTarget;
@@ -603,7 +603,7 @@ void Camera_SetTranslation(VECTOR3* pos, s32 xPosOffset, s32 yPosOffset, s32 zPo
     vcUserCamTarget(&posTarget, &camTranslationParams, warpCamFlag);
 }
 
-void Camera_SetRotation(VECTOR3* lookAt, s32 xLookAtOffset, s32 yLookAtOffset, s32 zLookAtOffset,
+void Camera_RotationSet(VECTOR3* lookAt, s32 xLookAtOffset, s32 yLookAtOffset, s32 zLookAtOffset,
                         s32 xAngularAccel, s32 yAngularAccel, s32 xAngularSpeedMax, s32 yAngularSpeedMax, s32 warpLookAtFlag) // 0x80086B70
 {
     VECTOR3           lookAtTarget;

@@ -89,7 +89,7 @@ void func_80080B58(GsCOORDINATE2* a1, SVECTOR* a2, VECTOR3* a3) // 0x80080B58
 
     vcWork.field_FC = 1;
 
-    View_CoordHierarchyMatrixCompute(a1, &vcWork.field_DC);
+    Vw_CoordHierarchyMatrixCompute(a1, &vcWork.field_DC);
     func_80096C94(a2, &mat);
     MulMatrix(&vcWork.field_DC, &mat);
 
@@ -103,11 +103,14 @@ void vcWorkSetFlags(VC_FLAGS enable, VC_FLAGS disable) // 0x80080BF8
     vcWork.flags_8 = (vcWork.flags_8 | enable) & ~disable;
 }
 
-s32 func_80080C18(s32 lookAtAngleYMax) // 0x80080C18
+// An accurate guess might be `vcSetWatchTgtMaxY`.
+s32 Vc_LookAtAngleYMaxSet(s32 lookAtAngleYMax) // 0x80080C18
 {
-    s32 prev_val              = vcWork.watch_tgt_max_y_88;
+    s32 prevVal;
+    
+    prevVal                   = vcWork.watch_tgt_max_y_88;
     vcWork.watch_tgt_max_y_88 = lookAtAngleYMax;
-    return prev_val;
+    return prevVal;
 }
 
 void vcUserWatchTarget(VECTOR3* watch_tgt_pos, VC_WATCH_MV_PARAM* watch_prm_p, s32 warp_watch_f) // 0x80080C2C

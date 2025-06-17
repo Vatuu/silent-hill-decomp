@@ -246,7 +246,7 @@ void vwMatrixToAngleYXZ(SVECTOR* ang, MATRIX* mat) // 0x800495D4
     }
 }
 
-void View_MultiplyAndTransformMatrix(MATRIX* transformMat, MATRIX* inMat, MATRIX* outMat) // 0x800496AC
+void Vw_MultiplyAndTransformMatrix(MATRIX* transformMat, MATRIX* inMat, MATRIX* outMat) // 0x800496AC
 {
     gte_SetRotMatrix(transformMat);
     gte_SetTransMatrix(transformMat);
@@ -269,7 +269,7 @@ void vbSetWorldScreenMatrix(GsCOORDINATE2* coord) // 0x800497E4
     MATRIX work;
     VECTOR vec;
 
-    View_CoordHierarchyMatrixCompute(coord, &D_800C3868);
+    Vw_CoordHierarchyMatrixCompute(coord, &D_800C3868);
     TransposeMatrix(&D_800C3868, &work);
     MulMatrix0(&work, &GsIDMATRIX2, &VbWvsMatrix);
 
@@ -314,7 +314,7 @@ void vbSetRefView(VbRVIEW* rview) // 0x800498D8
 }
 
 // Something to do with bone hierarchy?
-void View_CoordHierarchyMatrixCompute(GsCOORDINATE2* rootCoord, MATRIX* outMat) // 0x80049984
+void Vw_CoordHierarchyMatrixCompute(GsCOORDINATE2* rootCoord, MATRIX* outMat) // 0x80049984
 {
     GsCOORDINATE2* prevCoord;
     GsCOORDINATE2* parentCoord;
@@ -371,7 +371,7 @@ void View_CoordHierarchyMatrixCompute(GsCOORDINATE2* rootCoord, MATRIX* outMat) 
             }
             else
             {
-                View_MultiplyAndTransformMatrix(&prevCoord->workm, &curCoord->coord, &curCoord->workm);
+                Vw_MultiplyAndTransformMatrix(&prevCoord->workm, &curCoord->coord, &curCoord->workm);
             }
 
             curCoord = curCoord->sub;
@@ -387,21 +387,21 @@ void func_80049AF8(GsCOORDINATE2* rootCoord, MATRIX* outMat) // 0x80049AF8
 {
     MATRIX localMat;
 
-    View_CoordHierarchyMatrixCompute(rootCoord, &localMat);
+    Vw_CoordHierarchyMatrixCompute(rootCoord, &localMat);
     localMat.t[0] -= D_800C3868.t[0];
     localMat.t[1] -= D_800C3868.t[1];
     localMat.t[2] -= D_800C3868.t[2];
-    View_MultiplyAndTransformMatrix(&VbWvsMatrix, &localMat, outMat);
+    Vw_MultiplyAndTransformMatrix(&VbWvsMatrix, &localMat, outMat);
 }
 
 void func_80049B6C(GsCOORDINATE2* rootCoord, MATRIX* outMat0, MATRIX* outMat1) // 0x80049B6C
 {
-    View_CoordHierarchyMatrixCompute(rootCoord, outMat0);
+    Vw_CoordHierarchyMatrixCompute(rootCoord, outMat0);
     outMat0->t[0] -= D_800C3868.t[0];
     outMat0->t[1] -= D_800C3868.t[1];
     outMat0->t[2] -= D_800C3868.t[2];
 
-    View_MultiplyAndTransformMatrix(&VbWvsMatrix, outMat0, outMat1);
+    Vw_MultiplyAndTransformMatrix(&VbWvsMatrix, outMat0, outMat1);
     outMat0->t[0] += D_800C3868.t[0];
     outMat0->t[1] += D_800C3868.t[1];
     outMat0->t[2] += D_800C3868.t[2];
@@ -429,7 +429,7 @@ void func_80049C2C(MATRIX* outMat, s32 x, s32 y, s32 z) // 0x80049C2C
     outMat->t[2] = out.vz + GsWSMATRIX.t[2];
 }
 
-s32 View_AabbVisibleCheck(s32 xMin, s32 xMax, s32 yMin, s32 yMax, s32 zMin, s32 zMax) // 0x80049D04
+s32 Vw_AabbVisibleInScreenCheck(s32 xMin, s32 xMax, s32 yMin, s32 yMax, s32 zMin, s32 zMax) // 0x80049D04
 {
     s32     i;
     MATRIX  worldMat;
@@ -513,102 +513,102 @@ s32 View_AabbVisibleCheck(s32 xMin, s32 xMax, s32 yMin, s32 yMax, s32 zMin, s32 
     }
 }
 
-s32 func_80049F38(MATRIX* arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 arg5, s32 arg6, u16 arg7, u16 arg8) // 0x80049F38
+s32 Vw_AabbVisibleInFrustumCheck(MATRIX* modelMat, s16 minX, s16 minY, s16 minZ, s32 maxX, s32 maxY, s32 maxZ, u16 nearPlane, u16 farPlane) // 0x80049F38
 {
-    u8               sp10[3];
-    u8               sp18[3];
-    s_func_8004A54C  sp20;
-    DVECTOR          sxy;
-    s32              temp_a0_2;
-    s32              temp_a1_2;
-    s32              temp_lo;
-    s32              otz;
-    s32              var_a0_2;
-    s32              var_a2;
-    s32              var_fp;
-    s32              i;
-    s32              var_t0;
-    s32              var_v1;
-    DVECTOR*         var_s0_2;
-    u8*              var_t1_2;
-    SVECTOR*         temp_a1_3;
-    SVECTOR*         temp_a2;
-    SVECTOR*         temp_a3;
-    s_func_80049F38* ptr;
+    u8                              flags0[3];
+    u8                              flags1[3];
+    s_func_8004A54C                 sp20;
+    DVECTOR                         screenPos;
+    s32                             distToNearPlane;
+    s32                             distToFarPlane;
+    s32                             interpAlpha;
+    s32                             transformedZ;
+    s32                             var_a0_2;
+    s32                             var_a2;
+    s32                             pointsOutsideNearPlaneCount;
+    s32                             i;
+    s32                             pointsOutsideFarClipCount;
+    s32                             var_v1;
+    DVECTOR*                        screenPoints;
+    u8*                             var_t1_2;
+    SVECTOR*                        temp_a1_3;
+    SVECTOR*                        temp_a2;
+    SVECTOR*                        temp_a3;
+    s_Vw_AabbVisibleInFrustumCheck* cullData;
 
-    sp10[2] = 0;
-    sp10[1] = 0;
-    sp10[0] = 0;
-    sp18[2] = 0;
-    sp18[1] = 0;
-    sp18[0] = 0;
+    flags0[2] = 0;
+    flags0[1] = 0;
+    flags0[0] = 0;
+    flags1[2] = 0;
+    flags1[1] = 0;
+    flags1[0] = 0;
 
     sp20.field_0[2][2] = 0;
 
-    ptr          = (s_func_80049F38*)PSX_SCRATCH;
-    ptr->field_0 = *arg0;
+    cullData          = (s_Vw_AabbVisibleInFrustumCheck*)PSX_SCRATCH;
+    cullData->field_0 = *modelMat;
 
     ((u32*)&sp20)[1] = 0;
     ((u32*)&sp20)[0] = 0;
 
-    GsSetLsMatrix(&ptr->field_0);
+    GsSetLsMatrix(&cullData->field_0);
 
-    ptr->field_20[0].vx = arg1;
-    ptr->field_20[0].vy = arg2;
-    ptr->field_20[0].vz = arg3;
+    cullData->field_20[0].vx = minX;
+    cullData->field_20[0].vy = minY;
+    cullData->field_20[0].vz = minZ;
 
-    ptr->field_20[1].vx = arg4;
-    ptr->field_20[1].vy = arg2;
-    ptr->field_20[1].vz = arg3;
+    cullData->field_20[1].vx = maxX;
+    cullData->field_20[1].vy = minY;
+    cullData->field_20[1].vz = minZ;
 
-    ptr->field_20[2].vx = arg4;
-    ptr->field_20[2].vy = arg5;
-    ptr->field_20[2].vz = arg3;
+    cullData->field_20[2].vx = maxX;
+    cullData->field_20[2].vy = maxY;
+    cullData->field_20[2].vz = minZ;
 
-    ptr->field_20[3].vx = arg1;
-    ptr->field_20[3].vy = arg5;
-    ptr->field_20[3].vz = arg3;
+    cullData->field_20[3].vx = minX;
+    cullData->field_20[3].vy = maxY;
+    cullData->field_20[3].vz = minZ;
 
-    ptr->field_20[4].vx = arg1;
-    ptr->field_20[4].vy = arg2;
-    ptr->field_20[4].vz = arg6;
+    cullData->field_20[4].vx = minX;
+    cullData->field_20[4].vy = minY;
+    cullData->field_20[4].vz = maxZ;
 
-    ptr->field_20[5].vx = arg4;
-    ptr->field_20[5].vy = arg2;
-    ptr->field_20[5].vz = arg6;
+    cullData->field_20[5].vx = maxX;
+    cullData->field_20[5].vy = minY;
+    cullData->field_20[5].vz = maxZ;
 
-    ptr->field_20[6].vx = arg4;
-    ptr->field_20[6].vy = arg5;
-    ptr->field_20[6].vz = arg6;
+    cullData->field_20[6].vx = maxX;
+    cullData->field_20[6].vy = maxY;
+    cullData->field_20[6].vz = maxZ;
 
-    ptr->field_20[7].vx = arg1;
-    ptr->field_20[7].vy = arg5;
-    ptr->field_20[7].vz = arg6;
+    cullData->field_20[7].vx = minX;
+    cullData->field_20[7].vy = maxY;
+    cullData->field_20[7].vz = maxZ;
 
-    ptr->field_C0  = 0;
-    ptr->field_114 = 0;
+    cullData->field_C0  = 0;
+    cullData->field_114 = 0;
 
-    for (i = 0, var_t0 = 0, var_fp = 0; i < 8; i++)
+    for (i = 0, pointsOutsideFarClipCount = 0, pointsOutsideNearPlaneCount = 0; i < 8; i++)
     {
-        otz = 4;
-        otz = RotTransPers(&ptr->field_20[i], &sxy, &ptr->field_178, &ptr->field_178) * otz;
+        transformedZ = 4;
+        transformedZ = RotTransPers(&cullData->field_20[i], &screenPos, &cullData->field_178, &cullData->field_178) * transformedZ;
 
-        if (arg7 < otz)
+        if (nearPlane < transformedZ)
         {
-            var_fp++;
+            pointsOutsideNearPlaneCount++;
         }
 
-        if (otz < arg8)
+        if (transformedZ < farPlane)
         {
-            var_t0++;
+            pointsOutsideFarClipCount++;
         }
         else
         {
-            ptr->field_118[ptr->field_114++] = sxy;
+            cullData->field_118[cullData->field_114++] = screenPos;
 
-            if (sxy.vx >= -(g_GameWork.gsScreenWidth_588 >> 1))
+            if (screenPos.vx >= -(g_GameWork.gsScreenWidth_588 >> 1))
             {
-                if ((g_GameWork.gsScreenWidth_588 >> 1) < sxy.vx)
+                if ((g_GameWork.gsScreenWidth_588 >> 1) < screenPos.vx)
                 {
                     var_a2 = 2;
                 }
@@ -622,9 +622,9 @@ s32 func_80049F38(MATRIX* arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 arg5
                 var_a2 = 0;
             }
 
-            if (sxy.vy >= -(g_GameWork.gsScreenHeight_58A >> 1))
+            if (screenPos.vy >= -(g_GameWork.gsScreenHeight_58A >> 1))
             {
-                if ((g_GameWork.gsScreenHeight_58A >> 1) < sxy.vy)
+                if ((g_GameWork.gsScreenHeight_58A >> 1) < screenPos.vy)
                 {
                     var_a0_2 = 2;
                 }
@@ -638,18 +638,18 @@ s32 func_80049F38(MATRIX* arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 arg5
                 var_a0_2 = 0;
             }
 
-            sp10[var_a2]                   |= 1 << 0;
-            sp18[var_a0_2]                 |= 1 << 0;
+            flags0[var_a2]                 |= 1 << 0;
+            flags1[var_a0_2]               |= 1 << 0;
             sp20.field_0[var_a0_2][var_a2] |= 1 << 0;
         }
     }
 
-    if (var_t0 == 8)
+    if (pointsOutsideFarClipCount == 8)
     {
         return 0;
     }
 
-    if (var_fp == 8)
+    if (pointsOutsideNearPlaneCount == 8)
     {
         return 0;
     }
@@ -663,52 +663,52 @@ s32 func_80049F38(MATRIX* arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 arg5
     {
         for (i = 0; i < 8; i++)
         {
-            RotTrans(&ptr->field_20[i], &ptr->field_60[i], &ptr->field_178);
+            RotTrans(&cullData->field_20[i], &cullData->field_60[i], &cullData->field_178);
         }
 
         for (var_t1_2 = D_800AD480; (u32)var_t1_2 < ((u32)D_800AD480 + 24); var_t1_2 += 2)
         {
-            temp_a1_2 = ptr->field_60[*var_t1_2].vz;
-            temp_a0_2 = ptr->field_60[*(var_t1_2 + 1)].vz;
+            distToFarPlane  = cullData->field_60[*var_t1_2].vz;
+            distToNearPlane = cullData->field_60[*(var_t1_2 + 1)].vz;
 
             var_v1 = 0;
 
-            if (temp_a1_2 != temp_a0_2)
+            if (distToFarPlane != distToNearPlane)
             {
-                if (arg8 < temp_a1_2)
+                if (farPlane < distToFarPlane)
                 {
-                    var_v1 = (arg8 < temp_a0_2) ^ 1;
+                    var_v1 = (farPlane < distToNearPlane) ^ 1;
                 }
-                else if (arg8 < temp_a0_2)
+                else if (farPlane < distToNearPlane)
                 {
                     var_v1 = 1;
                 }
 
                 if (var_v1 == 1)
                 {
-                    temp_lo = ((arg8 - temp_a1_2) << 8) / (temp_a0_2 - temp_a1_2);
+                    interpAlpha = FP_TO(farPlane - distToFarPlane, Q8_SHIFT) / (distToNearPlane - distToFarPlane);
 
-                    temp_a3   = &ptr->field_20[*var_t1_2];
-                    temp_a1_3 = &ptr->field_20[*(var_t1_2 + 1)];
+                    temp_a3   = &cullData->field_20[*var_t1_2];
+                    temp_a1_3 = &cullData->field_20[*(var_t1_2 + 1)];
 
-                    temp_a2 = &ptr->field_C4[ptr->field_C0];
+                    temp_a2 = &cullData->field_C4[cullData->field_C0];
 
-                    temp_a2->vx = temp_a3->vx + ((temp_lo * (temp_a1_3->vx - temp_a3->vx)) >> 8);
-                    temp_a2->vy = temp_a3->vy + ((temp_lo * (temp_a1_3->vy - temp_a3->vy)) >> 8);
-                    temp_a2->vz = temp_a3->vz + ((temp_lo * (temp_a1_3->vz - temp_a3->vz)) >> 8);
+                    temp_a2->vx = temp_a3->vx + FP_FROM(interpAlpha * (temp_a1_3->vx - temp_a3->vx), Q8_SHIFT);
+                    temp_a2->vy = temp_a3->vy + FP_FROM(interpAlpha * (temp_a1_3->vy - temp_a3->vy), Q8_SHIFT);
+                    temp_a2->vz = temp_a3->vz + FP_FROM(interpAlpha * (temp_a1_3->vz - temp_a3->vz), Q8_SHIFT);
 
-                    ptr->field_C0++;
+                    cullData->field_C0++;
                 }
             }
         }
 
-        for (var_s0_2 = &ptr->field_118[ptr->field_114], i = 0; i < ptr->field_C0; i++, var_s0_2++)
+        for (screenPoints = &cullData->field_118[cullData->field_114], i = 0; i < cullData->field_C0; i++, screenPoints++)
         {
-            RotTransPers(&ptr->field_C4[i], var_s0_2, &ptr->field_178, &ptr->field_178);
+            RotTransPers(&cullData->field_C4[i], screenPoints, &cullData->field_178, &cullData->field_178);
 
-            if (var_s0_2->vx >= -(g_GameWork.gsScreenWidth_588 >> 1))
+            if (screenPoints->vx >= -(g_GameWork.gsScreenWidth_588 >> 1))
             {
-                if ((g_GameWork.gsScreenWidth_588 >> 1) < var_s0_2->vx)
+                if ((g_GameWork.gsScreenWidth_588 >> 1) < screenPoints->vx)
                 {
                     var_a2 = 2;
                 }
@@ -722,9 +722,9 @@ s32 func_80049F38(MATRIX* arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 arg5
                 var_a2 = 0;
             }
 
-            if (var_s0_2->vy >= -(g_GameWork.gsScreenHeight_58A >> 1))
+            if (screenPoints->vy >= -(g_GameWork.gsScreenHeight_58A >> 1))
             {
-                if ((g_GameWork.gsScreenHeight_58A >> 1) < var_s0_2->vy)
+                if ((g_GameWork.gsScreenHeight_58A >> 1) < screenPoints->vy)
                 {
                     var_a0_2 = 2;
                 }
@@ -738,29 +738,29 @@ s32 func_80049F38(MATRIX* arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 arg5
                 var_a0_2 = 0;
             }
 
-            sp10[var_a2]   |= 1 << 0;
-            sp18[var_a0_2] |= 1 << 0;
+            flags0[var_a2]   |= 1 << 0;
+            flags1[var_a0_2] |= 1 << 0;
 
-            ptr->field_114++;
+            cullData->field_114++;
         }
 
-        if (sp10[0] == 0 && sp10[1] == 0)
+        if (flags0[0] == 0 && flags0[1] == 0)
         {
             return 0;
         }
-        else if (sp10[2] == 0 && sp10[1] == 0)
+        else if (flags0[2] == 0 && flags0[1] == 0)
         {
             return 0;
         }
-        else if (sp18[0] == 0 && sp18[1] == 0)
+        else if (flags1[0] == 0 && flags1[1] == 0)
         {
             return 0;
         }
-        else if (sp18[2] != 0)
+        else if (flags1[2] != 0)
         {
             return 1;
         }
-        else if (sp18[1] == 0)
+        else if (flags1[1] == 0)
         {
             return 0;
         }

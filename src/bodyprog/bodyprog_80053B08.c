@@ -1061,7 +1061,7 @@ void func_8006BDDC(s_func_8006BDDC* arg0, s16 arg1, s16 arg2) // 0x8006BDDC
     }
 
     arg0->field_0++;
-    View_ClampAngleRange(&arg0->field_2, &arg0->field_4, arg1, arg2);
+    Vw_ClampAngleRange(&arg0->field_2, &arg0->field_4, arg1, arg2);
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80053B08", func_8006BE40); // 0x8006BE40
@@ -1484,7 +1484,7 @@ void func_800805BC(VECTOR3* arg0, SVECTOR* arg1, GsCOORDINATE2* arg2, s32 arg3) 
     MATRIX mat;
     VECTOR vec;
 
-    View_CoordHierarchyMatrixCompute(arg2, &mat);
+    Vw_CoordHierarchyMatrixCompute(arg2, &mat);
     gte_SetRotMatrix(&mat);
     gte_SetTransMatrix(&mat);
 

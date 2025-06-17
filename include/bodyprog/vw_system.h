@@ -236,7 +236,7 @@ typedef struct _VC_WORK
     s32                       near_road_suu_2B4;
     VC_NEAR_ROAD_DATA         cur_near_road_2B8;
     struct _SubCharacter*     nearest_enemy_2DC;              /** Closest enemy. */
-    s32                       nearest_enemy_xz_dist_2E0;      /** Distance to the closest enemy on the XZ plane. */
+    q19_12                    nearest_enemy_xz_dist_2E0;      /** Distance to the closest enemy on the XZ plane. */
     s32                       field_2E4;
 } VC_WORK;
 STATIC_ASSERT_SIZEOF(VC_WORK, 744);
@@ -259,7 +259,7 @@ typedef struct _VW_VIEW_WORK
 } VW_VIEW_WORK;
 STATIC_ASSERT_SIZEOF(VW_VIEW_WORK, 132);
 
-typedef struct _s_func_80049F38
+typedef struct _s_Vw_AabbVisibleInFrustumCheck
 {
     MATRIX  field_0;
     SVECTOR field_20[8];
@@ -269,8 +269,8 @@ typedef struct _s_func_80049F38
     s32     field_114;
     DVECTOR field_118[24];
     s32     field_178;
-} s_func_80049F38;
-STATIC_ASSERT_SIZEOF(s_func_80049F38, 380);
+} s_Vw_AabbVisibleInFrustumCheck;
+STATIC_ASSERT_SIZEOF(s_Vw_AabbVisibleInFrustumCheck, 380);
 
 typedef struct _s_func_8004A54C
 {
@@ -309,11 +309,11 @@ void           vwInitViewInfo();
 GsCOORDINATE2* vwGetViewCoord();
 void           vwGetViewPosition(VECTOR3* pos);
 void           vwGetViewAngle(SVECTOR* ang);
-void           View_LookAtMatrixSet(VECTOR3* pos, VECTOR3* lookAt);
+void           Vw_LookAtMatrixSet(VECTOR3* pos, VECTOR3* lookAt);
 void           vwSetCoordRefAndEntou(GsCOORDINATE2* parent_p, s32 ref_x, s32 ref_y, s32 ref_z, s16 cam_ang_y, s16 cam_ang_z, s32 cam_y, s32 cam_xz_r);
 void           vwSetViewInfoDirectMatrix(GsCOORDINATE2* pcoord, MATRIX* cammat);
 void           vwSetViewInfo();
-void           View_ClampAngleRange(s16* angleMin, s16* angleMax, s16 angleConstraintMin, s16 angleConstraintMax);
+void           Vw_ClampAngleRange(s16* angleMin, s16* angleMax, s16 angleConstraintMin, s16 angleConstraintMax);
 
 // vw_calc.c
 
@@ -324,15 +324,15 @@ void vwDecreaseSideOfVector(s32* vec_x, s32* vec_z, s32 dec_val, s32 max_side_ve
 s32  vwRetNewVelocityToTargetVal(s32 now_spd, s32 mv_pos, s32 tgt_pos, s32 accel, s32 total_max_spd, s32 dec_val_lim_spd);
 s32  vwRetNewAngSpdToTargetAng(s32 now_ang_spd, s16 now_ang, s16 tgt_ang, s32 accel_spd, s32 total_max_ang_spd, s32 dec_val_lim_spd);
 void vwMatrixToAngleYXZ(SVECTOR* ang, MATRIX* mat);
-void View_MultiplyAndTransformMatrix(MATRIX* transformMat, MATRIX* inMat, MATRIX* outMat);
+void Vw_MultiplyAndTransformMatrix(MATRIX* transformMat, MATRIX* inMat, MATRIX* outMat);
 void vbSetWorldScreenMatrix(GsCOORDINATE2* coord);
 void vbSetRefView(VbRVIEW* rview);
-void View_CoordHierarchyMatrixCompute(GsCOORDINATE2* rootCoord, MATRIX* outMat);
+void Vw_CoordHierarchyMatrixCompute(GsCOORDINATE2* rootCoord, MATRIX* outMat);
 void func_80049AF8(GsCOORDINATE2* rootCoord, MATRIX* outMat);
 void func_80049B6C(GsCOORDINATE2* rootCoord, MATRIX* outMat0, MATRIX* outMat1);
 void func_80049C2C(MATRIX* mat, s32 x, s32 y, s32 z);
-s32  View_AabbVisibleCheck(s32 xMin, s32 xMax, s32 yMin, s32 yMax, s32 zMin, s32 zMax);
-s32  func_80049F38(MATRIX* arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 arg5, s32 arg6, u16 arg7, u16 arg8);
+s32  Vw_AabbVisibleInScreenCheck(s32 xMin, s32 xMax, s32 yMin, s32 yMax, s32 zMin, s32 zMax);
+s32  Vw_AabbVisibleInFrustumCheck(MATRIX* modelMat, s16 minX, s16 minY, s16 minZ, s32 maxX, s32 maxY, s32 maxZ, u16 nearPlane, u16 farPlane);
 s32  func_8004A54C(s_func_8004A54C* arg0);
 void vwAngleToVector(SVECTOR* vec, SVECTOR* ang, s32 r);
 s32  vwVectorToAngle(SVECTOR* ang, SVECTOR* vec);
@@ -347,7 +347,7 @@ void vcStartCameraSystem();
 void vcEndCameraSystem();
 void vcSetFirstCamWork(VECTOR3* cam_pos, s16 chara_eye_ang_y, s32 use_through_door_cam_f);
 void vcWorkSetFlags(VC_FLAGS enable, VC_FLAGS disable);
-s32  func_80080C18(s32 lookAtAngleYMax);
+s32  Vc_LookAtAngleYMaxSet(s32 lookAtAngleYMax);
 void vcUserWatchTarget(VECTOR3* watch_tgt_pos, VC_WATCH_MV_PARAM* watch_prm_p, s32 warp_watch_f);
 void vcUserCamTarget(VECTOR3* cam_tgt_pos, VC_CAM_MV_PARAM* cam_prm_p, s32 warp_cam_f);
 void vcChangeProjectionValue(s16 scr_y);
