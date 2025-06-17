@@ -27,6 +27,9 @@ Progress bars powered by [decomp.dev](https://decomp.dev)
             <td colspan=2>Main executable.</td>
         </tr>
         <tr>
+            <th colspan=3>🧟‍♂️⚔⚙🎮 BODYPROG.BIN 🎮⚙⚔🧟‍♂️</th>
+        </tr>
+        <tr>
             <td>Progress</td>
             <td colspan=2>Purpose</td>
         </tr>
