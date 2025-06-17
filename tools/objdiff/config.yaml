@@ -3,10 +3,6 @@ categories:
     name: Engine
     paths:
       - bodyprog
-  - id: sdk
-    name: Psy-Q SDK
-    paths:
-      - main/psyq
   - id: main
     name: Main Executable
     paths:
