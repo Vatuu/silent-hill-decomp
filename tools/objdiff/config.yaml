@@ -22,5 +22,6 @@ expected_paths:
 
 ignored_files:
   - main/header
+  - main/psyq/libsn/snmain
 
 output: ./objdiff.json
