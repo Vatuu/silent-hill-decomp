@@ -19,6 +19,15 @@
 // ENUMERATORS
 // ============
 
+/** @brief Used by `g_MemCardState`. */
+typedef enum _MemCardState
+{
+    MemCardState_None   = 0,
+    MemCardState_Format = 1,
+    MemCardState_Save   = 2,
+    MemCardState_Load   = 3
+} s_MemCardState;
+
 /** @brief Used by `s_SavegameEntry`. */
 typedef enum _SavegameEntryType
 {
@@ -117,7 +126,7 @@ extern s16 D_801E7514[MEMORY_CARD_SLOT_COUNT];
 
 extern s16 g_LoadingMemCardTimer[MEMORY_CARD_SLOT_COUNT]; // Timer that triggers when loading a detected memory card.
 
-extern s32 g_MemCardState; // Format: 1, Save: 2, Load: 3
+extern s32 g_MemCardState; /** `s_MemCardState` */
 
 /** @brief Timer used when displaying the text after finishing any of the following states:
  * - Formatting
@@ -185,13 +194,13 @@ extern u8 g_IsGameSaving;
 /** Clears all saves? */
 void Savegame_ScreenSubInit();
 
-void Gfx_SaveSelectedDisplacement(s32 slotIdx, s32 arg1);
+void Gfx_SaveSelectedDisplacement(s32 slotIdx, s32 unusedSaveCount);
 
 /** Draws the "FILE X" string in the save/load screen. */
-void Gfx_SaveSlotDrawFileString(s32 arg0, s32 slotIdx, s32 fileId, s32 arg3);
+void Gfx_SaveSlotDrawFileString(s32 saveIdx, s32 slotIdx, s32 fileId, s32 entryType);
 
 /** Draws the string of the location where the save was done. */
-void Gfx_SavegameEntryDrawLocationName(s_SavegameEntry* ptr, s32 arg1, s32 idx);
+void Gfx_SavegameEntryDrawLocationName(s_SavegameEntry* saveEntry, s32 saveIdx, s32 slotIdx);
 
 /** Sets the color of the string to be drawn based on some flag. */
 s32 Gfx_SavegameEntryStringSetColor(s_SavegameMetadata* saveEntry);
@@ -229,7 +238,7 @@ void Gfx_SavegameDrawBackground();
  */
 void Gfx_MemCardState();
 
-void Gfx_OverwriteSave();
+void Gfx_OverwriteSave(s32 arg0, s32 optionIdx);
 
 /** Updates the death load screen. */
 void GameState_DeathLoadScreen_Update();

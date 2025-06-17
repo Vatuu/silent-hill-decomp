@@ -357,8 +357,8 @@ void Vw_CoordHierarchyMatrixCompute(GsCOORDINATE2* rootCoord, MATRIX* outMat) //
     // If found at least one unprocessed node, process coord hierarchy downward.
     if (prevCoord != NULL)
     {
-        curCoord     = prevCoord;
-        rootCoord->sub = NULL;    // Detach child link to prevent cycles.
+        curCoord       = prevCoord;
+        rootCoord->sub = NULL;      // Detach child link to prevent cycles.
         do
         {
             prevCoord = curCoord->super;
