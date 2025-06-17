@@ -32,7 +32,7 @@ Progress bars powered by [decomp.dev](https://decomp.dev)
         </tr>
         <tr>
             <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?category=engine"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&measure=fuzzy_match&category=engine"/></a></td>
-            <td colspan=2>Main game logic</td>
+            <td colspan=2>Main game logic.</td>
         </tr>
         <tr>
             <th colspan=3>🎮 Game System Overlays 🎮</th>
