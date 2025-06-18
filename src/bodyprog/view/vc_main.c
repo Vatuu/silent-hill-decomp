@@ -6,7 +6,7 @@
 #include "bodyprog/math.h"
 #include "bodyprog/vw_system.h"
 
-#define MIN_IN_ROAD_DIST FP_METER_REAL(1.0f) // vcGetMinInRoadDist() in SH2, hardcoded to FP_METER_REAL(1.0f) in SH1.
+#define MIN_IN_ROAD_DIST FP_METER(1.0f) // vcGetMinInRoadDist() in SH2, hardcoded to FP_METER(1.0f) in SH1.
 
 void vcInitVCSystem(VC_ROAD_DATA* vc_road_ary_list) // 0x80080940
 {
@@ -24,7 +24,7 @@ void vcInitVCSystem(VC_ROAD_DATA* vc_road_ary_list) // 0x80080940
     vcWork_CurNearRoadSet(&vcWork, &vcNullNearRoad);
 
     vcWork.old_cam_excl_area_r_6C = NO_VALUE;
-    vcWork.watch_tgt_max_y_88     = FP_METER_REAL(30.0f);
+    vcWork.watch_tgt_max_y_88     = FP_METER(30.0f);
     vcWork.field_D8               = 0;
     vcWork.field_FC               = 0;
 }
@@ -343,7 +343,7 @@ s32 vcRetSmoothCamMvF(VECTOR3* old_pos, VECTOR3* now_pos, SVECTOR* old_ang, SVEC
                                   FP_FROM(now_pos->vz - old_pos->vz, Q4_SHIFT));
 
     mv_vec = FP_TO(mv_vec, Q12_SHIFT) / intrpt;
-    if (mv_vec > FP_METER_REAL(MOVEMENT_METER_MAX))
+    if (mv_vec > FP_METER(MOVEMENT_METER_MAX))
     {
         return 0;
     }
@@ -402,30 +402,30 @@ s32 func_8008150C(s32 posX, s32 posZ)
     switch (func_8003BD2C())
     {
         case 0:
-            if ((posX - FP_METER_REAL(201.8f)) > (u32)FP_METER_REAL(28.2002f))
+            if ((posX - FP_METER(201.8f)) > (u32)FP_METER(28.2002f))
             {
                 return 0;
             }
-            else if (posZ < FP_METER_REAL(-92.0f))
+            else if (posZ < FP_METER(-92.0f))
             {
                 return 0;
             }
-            else if (posZ <= FP_METER_REAL(-68.0f))
+            else if (posZ <= FP_METER(-68.0f))
             {
                 return 1;
             }
             break;
 
         case 3:
-            if ((posX + FP_METER_REAL(230.0f)) > (u32)FP_METER_REAL(29.0f))
+            if ((posX + FP_METER(230.0f)) > (u32)FP_METER(29.0f))
             {
                 return 0;
             }
-            else if (posZ < FP_METER_REAL(-12.0f))
+            else if (posZ < FP_METER(-12.0f))
             {
                 return 0;
             }
-            else if (posZ <= FP_METER_REAL(12.0f))
+            else if (posZ <= FP_METER(12.0f))
             {
                 return 1;
             }
@@ -450,17 +450,17 @@ s32 vcRetThroughDoorCamEndF(VC_WORK* w_p) // 0x800815F0
     }
 
     // TODO: Timer field treated as distance here? Maybe misnamed, need to check usages in SH2 against SH.
-    if (prm_p->timer_4 > FP_METER_REAL(1.2f) && w_p->nearest_enemy_xz_dist_2E0 < FP_METER_REAL(1.2f))
+    if (prm_p->timer_4 > FP_METER(1.2f) && w_p->nearest_enemy_xz_dist_2E0 < FP_METER(1.2f))
     {
         return 1;
     }
 
-    if (rail2chara_dist > FP_METER_REAL(2.3f))
+    if (rail2chara_dist > FP_METER(2.3f))
     {
         return 1;
     }
 
-    if (rail2chara_dist > FP_METER_REAL(0.5f))
+    if (rail2chara_dist > FP_METER(0.5f))
     {
         abs_ofs_ang_y = shAngleRegulate(w_p->chara_eye_ang_y_144 -
                         ratan2(w_p->chara_pos_114.vx - w_p->through_door_10.rail_sta_pos_C.vx, w_p->chara_pos_114.vz - w_p->through_door_10.rail_sta_pos_C.vz));
@@ -503,7 +503,7 @@ s32 vcRetFarWatchRate(s32 far_watch_button_prs_f, VC_CAM_MV_TYPE cur_cam_mv_type
                 break;
 
             case VC_MV_THROUGH_DOOR:
-                far_watch_rate = FP_METER_REAL(1.0f); // FP_ANGLE(256.0f);
+                far_watch_rate = FP_METER(1.0f); // FP_ANGLE(256.0f);
                 if (!far_watch_button_prs_f)
                 {
                     // TODO: Unsure if these should use `FP_METER` or `FP_ANGLE`.
@@ -511,14 +511,14 @@ s32 vcRetFarWatchRate(s32 far_watch_button_prs_f, VC_CAM_MV_TYPE cur_cam_mv_type
                     // but then it gets subtracted by `abs_ofs_ang_y`, so `FP_ANGLE` would also fits?
 
                     dist           = w_p->through_door_10.rail_sta_to_chara_dist_18;
-                    far_watch_rate = FP_METER_REAL(0.9f) - ((dist * FP_METER_REAL(0.9f)) / FP_METER_REAL(2.3f));
+                    far_watch_rate = FP_METER(0.9f) - ((dist * FP_METER(0.9f)) / FP_METER(2.3f));
                     // far_watch_rate = FP_ANGLE(324.0f) - ((dist * FP_ANGLE(324.0f)) / FP_ANGLE(828.0f));
                     if (far_watch_rate < 0)
                     {
                         far_watch_rate = 0;
                     }
 
-                    if (dist > FP_METER_REAL(0.5f))
+                    if (dist > FP_METER(0.5f))
                     {
                         railDistX = w_p->chara_pos_114.vx - w_p->through_door_10.rail_sta_pos_C.vx;
                         railDistZ = w_p->chara_pos_114.vz - w_p->through_door_10.rail_sta_pos_C.vz;
@@ -531,7 +531,7 @@ s32 vcRetFarWatchRate(s32 far_watch_button_prs_f, VC_CAM_MV_TYPE cur_cam_mv_type
                             abs_ofs_ang_y = shAngleRegulate(w_p->chara_eye_ang_y_144 - ratan2(railDistX, railDistZ));
                         }
 
-                        far_watch_rate = (far_watch_rate * (FP_METER(3.11f) - abs_ofs_ang_y)) / FP_METER(3.11f);
+                        far_watch_rate = (far_watch_rate * (FP_METER(0.1945f) - abs_ofs_ang_y)) / FP_METER(0.1945f);
                         // far_watch_rate = (far_watch_rate * (FP_ANGLE(70.0f) - abs_ofs_ang_y)) / FP_ANGLE(70.0f);
                         if (far_watch_rate < 0)
                         {
@@ -586,21 +586,21 @@ s32 vcRetSelfViewEffectRate(VC_CAM_MV_TYPE cur_cam_mv_type, s32 far_watch_rate, 
         return 0;
     }
 
-    cam_max_rate = (cur_cam_mv_type == VC_MV_SELF_VIEW) ? FP_METER_REAL(1.0f) : FP_METER_REAL(0.35f);
+    cam_max_rate = (cur_cam_mv_type == VC_MV_SELF_VIEW) ? FP_METER(1.0f) : FP_METER(0.35f);
 
     xyz_dist = Math_VectorMagnitude(FP_FROM(w_p->cam_pos_50.vx - w_p->chara_head_pos_130.vx, Q4_SHIFT),
                                     FP_FROM(w_p->cam_pos_50.vy - w_p->chara_head_pos_130.vy, Q4_SHIFT),
                                     FP_FROM(w_p->cam_pos_50.vz - w_p->chara_head_pos_130.vz, Q4_SHIFT));
 
-    if (xyz_dist >= FP_METER(0.5f))
+    if (xyz_dist >= FP_METER(0.03125f))
     {
-        if (xyz_dist > FP_METER_REAL(0.075f))
+        if (xyz_dist > FP_METER(0.075f))
         {
             max_rate = 0;
         }
         else
         {
-            max_rate = (cam_max_rate * (FP_METER_REAL(0.075f) - xyz_dist)) / FP_METER(0.7f);
+            max_rate = (cam_max_rate * (FP_METER(0.075f) - xyz_dist)) / FP_METER(0.04375f);
         }
     }
     else
@@ -608,19 +608,19 @@ s32 vcRetSelfViewEffectRate(VC_CAM_MV_TYPE cur_cam_mv_type, s32 far_watch_rate, 
         max_rate = cam_max_rate;
     }
 
-    if (w_p->nearest_enemy_xz_dist_2E0 > FP_METER_REAL(4.0f))
+    if (w_p->nearest_enemy_xz_dist_2E0 > FP_METER(4.0f))
     {
-        mul_rate = FP_METER_REAL(1.0f);
+        mul_rate = FP_METER(1.0f);
     }
     else
     {
-        if (w_p->nearest_enemy_xz_dist_2E0 < FP_METER_REAL(2.0f))
+        if (w_p->nearest_enemy_xz_dist_2E0 < FP_METER(2.0f))
         {
             mul_rate = 0;
         }
         else
         {
-            mul_rate = (w_p->nearest_enemy_xz_dist_2E0 - FP_METER_REAL(2.0f)) / 2;
+            mul_rate = (w_p->nearest_enemy_xz_dist_2E0 - FP_METER(2.0f)) / 2;
         }
     }
 
@@ -750,7 +750,7 @@ void vcPreSetDataInVC_WORK(VC_WORK* w_p, VC_ROAD_DATA* vc_road_ary_list) // 0x80
 
     vcSetTHROUGH_DOOR_CAM_PARAM_in_VC_WORK(&vcWork, VC_TDSC_MAIN);
     vcSetNearestEnemyDataInVC_WORK(w_p);
-    vcSetNearRoadAryByCharaPos(w_p, vc_road_ary_list, FP_METER(320.0f), 0, w_p->nearest_enemy_2DC != NULL);
+    vcSetNearRoadAryByCharaPos(w_p, vc_road_ary_list, FP_METER(20.0f), 0, w_p->nearest_enemy_2DC != NULL);
 }
 
 void vcSetTHROUGH_DOOR_CAM_PARAM_in_VC_WORK(VC_WORK* w_p, enum _THROUGH_DOOR_SET_CMD_TYPE set_cmd_type) // 0x80081CBC
@@ -764,7 +764,7 @@ void vcSetTHROUGH_DOOR_CAM_PARAM_in_VC_WORK(VC_WORK* w_p, enum _THROUGH_DOOR_SET
             prm_p->timer_4                  = 0;
             prm_p->rail_ang_y_8             = w_p->chara_eye_ang_y_144;
             prm_p->rail_sta_pos_C.vx        = w_p->chara_pos_114.vx;
-            prm_p->rail_sta_pos_C.vy        = w_p->chara_grnd_y_12C - FP_METER(31.2f);
+            prm_p->rail_sta_pos_C.vy        = w_p->chara_grnd_y_12C - FP_METER(1.95f);
             prm_p->rail_sta_pos_C.vz        = w_p->chara_pos_114.vz;
             break;
 
@@ -798,13 +798,13 @@ void vcSetNearestEnemyDataInVC_WORK(VC_WORK* w_p) // 0x80081D90
     s_SubCharacter* sc_p            = NULL;
     s_SubCharacter* all_min_sc_p    = NULL;
     s_SubCharacter* active_min_sc_p = NULL;
-    s32             all_min_dist    = FP_METER_REAL(ENEMY_METERS_MAX);
-    s32             active_min_dist = FP_METER_REAL(ENEMY_METERS_MAX);
+    s32             all_min_dist    = FP_METER(ENEMY_METERS_MAX);
+    s32             active_min_dist = FP_METER(ENEMY_METERS_MAX);
 
     if (g_SysWork.flags_22A4 & (1 << 5)) // `sh2jms->player.battle(ShBattleInfo).status & 0x10` in SH2.
     {
         w_p->nearest_enemy_2DC         = NULL;
-        w_p->nearest_enemy_xz_dist_2E0 = FP_METER_REAL(ENEMY_METERS_MAX);
+        w_p->nearest_enemy_xz_dist_2E0 = FP_METER(ENEMY_METERS_MAX);
         return;
     }
 
@@ -817,7 +817,7 @@ void vcSetNearestEnemyDataInVC_WORK(VC_WORK* w_p) // 0x80081D90
             ofs_x = sc_p->position_18.vx - w_p->chara_pos_114.vx;
             ofs_z = sc_p->position_18.vz - w_p->chara_pos_114.vz;
 
-            if (abs(ofs_x) >= FP_METER_REAL(ENEMY_METERS_MAX) || abs(ofs_z) >= FP_METER_REAL(ENEMY_METERS_MAX))
+            if (abs(ofs_x) >= FP_METER(ENEMY_METERS_MAX) || abs(ofs_z) >= FP_METER(ENEMY_METERS_MAX))
             {
                 continue;
             }
@@ -1197,10 +1197,10 @@ s32 vcAdvantageDistOfOldCurRoad(VC_NEAR_ROAD_DATA* old_cur_p) // 0x80082AD0
         case VC_RD_TYPE_ROAD:
         case VC_RD_TYPE_EFFECT:
         default:
-            return FP_METER_REAL(0.35f);
+            return FP_METER(0.35f);
 
         case VC_RD_TYPE_EVENT:
-            return FP_METER_REAL(0.15f);
+            return FP_METER(0.15f);
     }
 }
 
@@ -1250,18 +1250,18 @@ void vcMakeFarWatchTgtPos(VECTOR3* watch_tgt_pos, VC_WORK* w_p, VC_AREA_SIZE_TYP
 
     if (cur_rd_area_size == VC_AREA_TINY)
     {
-        use_dist = FP_METER_REAL(2.8f);
+        use_dist = FP_METER(2.8f);
     }
     else if (cur_rd_area_size == VC_AREA_SMALL)
     {
-        use_dist = FP_METER_REAL(5.5f);
+        use_dist = FP_METER(5.5f);
     }
     else
     {
-        use_dist = FP_METER_REAL(10.0f);
+        use_dist = FP_METER(10.0f);
     }
 
-    watch_y = w_p->chara_pos_114.vy - FP_METER_REAL(0.8f);
+    watch_y = w_p->chara_pos_114.vy - FP_METER(0.8f);
 
     if (w_p->nearest_enemy_2DC != NULL)
     {
@@ -1269,13 +1269,13 @@ void vcMakeFarWatchTgtPos(VECTOR3* watch_tgt_pos, VC_WORK* w_p, VC_AREA_SIZE_TYP
 
         dist = w_p->nearest_enemy_xz_dist_2E0;
 
-        if (dist < FP_METER_REAL(1.7f))
+        if (dist < FP_METER(1.7f))
         {
-            adj_dist = (dist * FP_METER_REAL(-0.7f)) / FP_METER_REAL(1.7f);
+            adj_dist = (dist * FP_METER(-0.7f)) / FP_METER(1.7f);
         }
         else
         {
-            adj_dist = FP_METER_REAL(-0.7f);
+            adj_dist = FP_METER(-0.7f);
         }
 
         dist += adj_dist;
@@ -1286,9 +1286,9 @@ void vcMakeFarWatchTgtPos(VECTOR3* watch_tgt_pos, VC_WORK* w_p, VC_AREA_SIZE_TYP
             use_dist = dist;
         }
 
-        if (use_dist < FP_METER_REAL(0.4f))
+        if (use_dist < FP_METER(0.4f))
         {
-            use_dist = FP_METER_REAL(0.4f);
+            use_dist = FP_METER(0.4f);
         }
 
         ofs_y = g_Chara_FileInfo[sc_p->model_0.charaId_0].field_C_2 * 16;
@@ -1318,7 +1318,7 @@ void vcMakeFarWatchTgtPos(VECTOR3* watch_tgt_pos, VC_WORK* w_p, VC_AREA_SIZE_TYP
                 break;
         }
 
-        lim_y = (w_p->nearest_enemy_xz_dist_2E0 >> 1) - FP_METER_REAL(0.5f);
+        lim_y = (w_p->nearest_enemy_xz_dist_2E0 >> 1) - FP_METER(0.5f);
 
         if (w_p->chara_pos_114.vy + lim_y < watch_y)
         {
@@ -1362,7 +1362,7 @@ void vcSetWatchTgtYParam(VECTOR3* watch_pos, VC_WORK* w_p, s32 cam_mv_type, s32 
 
 void vcAdjustWatchYLimitHighWhenFarView(VECTOR3* watch_pos, VECTOR3* cam_pos, s16 sy) // 0x800835E0
 {
-    s16 max_cam_ang_x = ratan2(cam_pos->vy + FP_METER(80.0f), FP_METER(208.0f)) - ratan2(g_GameWork.gsScreenHeight_58A / 2, sy);
+    s16 max_cam_ang_x = ratan2(cam_pos->vy + FP_METER(5.0f), FP_METER(13.0f)) - ratan2(g_GameWork.gsScreenHeight_58A / 2, sy);
     s32 dist          = Math_VectorMagnitude(watch_pos->vx - cam_pos->vx, 0, watch_pos->vz - cam_pos->vz);
     s16 cam_ang_x     = ratan2(-watch_pos->vy + cam_pos->vy, dist);
 
@@ -1422,7 +1422,7 @@ void vcAutoRenewalCamTgtPos(VC_WORK* w_p, VC_CAM_MV_TYPE cam_mv_type, VC_CAM_MV_
             break;
 
         case 1:
-            vcMakeBasicCamTgtMvVec(&tgt_vec, &ideal_pos, w_p, FP_METER_REAL(1.0f));
+            vcMakeBasicCamTgtMvVec(&tgt_vec, &ideal_pos, w_p, FP_METER(1.0f));
             break;
     }
 
@@ -1451,8 +1451,8 @@ s32 vcRetMaxTgtMvXzLen(VC_WORK* w_p, VC_CAM_MV_PARAM* cam_mv_prm_p) // 0x8008395
 {
     s32 max_spd_xz;
 
-    max_spd_xz = w_p->chara_mv_spd_13C + FP_METER_REAL(1.0f) + abs(w_p->chara_ang_spd_y_142 * 8);
-    max_spd_xz = (max_spd_xz < FP_METER(35.2f)) ? FP_METER(35.2f) : max_spd_xz;
+    max_spd_xz = w_p->chara_mv_spd_13C + FP_METER(1.0f) + abs(w_p->chara_ang_spd_y_142 * 8);
+    max_spd_xz = (max_spd_xz < FP_METER(2.2f)) ? FP_METER(2.2f) : max_spd_xz;
     max_spd_xz = (cam_mv_prm_p->max_spd_xz > max_spd_xz) ? max_spd_xz : cam_mv_prm_p->max_spd_xz;
 
     return Math_MulFixed(max_spd_xz, g_DeltaTime0, Q12_SHIFT);
@@ -1473,12 +1473,12 @@ void vcMakeIdealCamPosByHeadPos(VECTOR3* ideal_pos, VC_WORK* w_p, VC_AREA_SIZE_T
     if (g_GameWorkConst->config_0.optExtraViewMode_29)
     {
         chara2cam_ang_y = w_p->chara_eye_ang_y_144 + FP_ANGLE(140.0f);
-        ideal_pos->vy   = w_p->chara_head_pos_130.vy + FP_METER(1.12f);
+        ideal_pos->vy   = w_p->chara_head_pos_130.vy + FP_METER(0.07f);
     }
     else
     {
         chara2cam_ang_y = w_p->chara_eye_ang_y_144 + FP_ANGLE(170.0f);
-        ideal_pos->vy   = w_p->chara_head_pos_130.vy + FP_METER_REAL(0.1f);
+        ideal_pos->vy   = w_p->chara_head_pos_130.vy + FP_METER(0.1f);
     }
 
     ideal_pos->vx = w_p->chara_head_pos_130.vx + FP_MULTIPLY(shRsin(chara2cam_ang_y), FP_ANGLE(64.8f), Q12_SHIFT);
@@ -1575,29 +1575,29 @@ void vcAdjTgtMvVecYByCurNearRoad(VECTOR3* tgt_mv_vec, VC_WORK* w_p) // 0x800843F
                                          0,
                                          w_p->chara_pos_114.vz - w_p->cam_tgt_pos_44.vz);
 
-    dist = CLAMP(to_chara_dist, FP_METER_REAL(1.2f), FP_METER_REAL(7.0f));
+    dist = CLAMP(to_chara_dist, FP_METER(1.2f), FP_METER(7.0f));
 
     // TODO: Weird multiplier?
-    near_ratio = FP_MULTIPLY_PRECISE(FP_METER_REAL(7.0f) - dist, 0.1724f, Q12_SHIFT);
-    near_ratio = CLAMP(near_ratio, 0, FP_METER_REAL(1.0f));
+    near_ratio = FP_MULTIPLY_PRECISE(FP_METER(7.0f) - dist, 0.1724f, Q12_SHIFT);
+    near_ratio = CLAMP(near_ratio, 0, FP_METER(1.0f));
 
     switch (w_p->cur_near_road_2B8.road_p_0->mv_y_type_11)
     {
         case 0:
         default:
-            abs_ofs_y = (to_chara_dist - FP_METER_REAL(0.3f)) >> 2;
+            abs_ofs_y = (to_chara_dist - FP_METER(0.3f)) >> 2;
             if (abs_ofs_y < 0)
             {
                 abs_ofs_y = 0;
             }
 
-            max_tgt_y = (abs_ofs_y + w_p->chara_top_y_124) - FP_METER_REAL(0.25f);
-            min_tgt_y = (w_p->chara_top_y_124 - abs_ofs_y) - FP_METER_REAL(0.25f);
+            max_tgt_y = (abs_ofs_y + w_p->chara_top_y_124) - FP_METER(0.25f);
+            min_tgt_y = (w_p->chara_top_y_124 - abs_ofs_y) - FP_METER(0.25f);
             break;
 
         case 1:
             min_tgt_y = Math_MulFixed(FP_TO(cur_rd_p->lim_rd_max_hy_12, Q8_SHIFT),
-                                      FP_METER_REAL(1.0f) - near_ratio, Q12_SHIFT) + Math_MulFixed(FP_TO(cur_rd_p->lim_rd_min_hy_13, Q8_SHIFT),
+                                      FP_METER(1.0f) - near_ratio, Q12_SHIFT) + Math_MulFixed(FP_TO(cur_rd_p->lim_rd_min_hy_13, Q8_SHIFT),
                                                                                                    near_ratio,
                                                                                                    Q12_SHIFT);
             max_tgt_y = min_tgt_y;
@@ -1605,7 +1605,7 @@ void vcAdjTgtMvVecYByCurNearRoad(VECTOR3* tgt_mv_vec, VC_WORK* w_p) // 0x800843F
 
         case 2:
             min_tgt_y = Math_MulFixed(FP_TO(cur_rd_p->lim_rd_min_hy_13, Q8_SHIFT),
-                                      FP_METER_REAL(1.0f) - near_ratio, Q12_SHIFT) + Math_MulFixed(FP_TO(cur_rd_p->lim_rd_max_hy_12, Q8_SHIFT),
+                                      FP_METER(1.0f) - near_ratio, Q12_SHIFT) + Math_MulFixed(FP_TO(cur_rd_p->lim_rd_max_hy_12, Q8_SHIFT),
                                                                                                    near_ratio,
                                                                                                    Q12_SHIFT);
             max_tgt_y = min_tgt_y;
@@ -1645,9 +1645,9 @@ void vcCamTgtMvVecIsFlipedFromCharaFront(VECTOR3* tgt_mv_vec, VC_WORK* w_p, s32 
     if (flip_dist > 0)
     {
         mv_len = flip_dist;
-        if (flip_dist > FP_METER_REAL(0.5f))
+        if (flip_dist > FP_METER(0.5f))
         {
-            mv_len = FP_METER_REAL(0.5f);
+            mv_len = FP_METER(0.5f);
         }
 
         // chk_pos is unused?
@@ -1762,7 +1762,7 @@ void vcRenewalCamData(VC_WORK* w_p, VC_CAM_MV_PARAM* cam_mv_prm_p) // 0x80084BD8
     dec_spd_per_dist_y  = FP_MULTIPLY_PRECISE(cam_mv_prm_p->accel_y, 1.0f, Q12_SHIFT);
 
     vwRenewalXZVelocityToTargetPos(&w_p->cam_velo_60.vx, &w_p->cam_velo_60.vz, &w_p->cam_pos_50,
-                                   &w_p->cam_tgt_pos_44, FP_METER_REAL(0.1f), cam_mv_prm_p->accel_xz,
+                                   &w_p->cam_tgt_pos_44, FP_METER(0.1f), cam_mv_prm_p->accel_xz,
                                    cam_mv_prm_p->max_spd_xz, dec_spd_per_dist_xz, FP_TO(12, Q12_SHIFT));
 
     w_p->cam_velo_60.vy  = vwRetNewVelocityToTargetVal(w_p->cam_velo_60.vy, w_p->cam_pos_50.vy, w_p->cam_tgt_pos_44.vy,
@@ -1968,8 +1968,8 @@ void vcSetDataToVwSystem(VC_WORK* w_p, VC_CAM_MV_TYPE cam_mv_type) // 0x80085884
     {
         w_p->field_D8 = 0;
         vwSetCoordRefAndEntou(&g_SysWork.playerBoneCoords_890[PlayerBone_Head],
-                              0, FP_METER_REAL(-0.05f), FP_METER_REAL(0.3f),
-                              FP_ANGLE(180.0f), FP_ANGLE(0.0f), FP_METER(-3.2f), FP_METER_REAL(1.0f));
+                              0, FP_METER(-0.05f), FP_METER(0.3f),
+                              FP_ANGLE(180.0f), FP_ANGLE(0.0f), FP_METER(-0.2f), FP_METER(1.0f));
     }
     else if (w_p->field_FC != 0)
     {

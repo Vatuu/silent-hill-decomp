@@ -6,22 +6,22 @@
 
 static inline s32 GetXIndex(s32 x)
 {
-    if (CheckRange(x + FP_METER_REAL(240.0f), FP_METER_REAL(-24.0f), FP_METER_REAL(24.0f)))
+    if (CheckRange(x + FP_METER(240.0f), FP_METER(-24.0f), FP_METER(24.0f)))
     {
         return 1;
     }
 
-    if (CheckRange(x + FP_METER_REAL(120.0f), FP_METER_REAL(-24.0f), FP_METER_REAL(24.0f)))
+    if (CheckRange(x + FP_METER(120.0f), FP_METER(-24.0f), FP_METER(24.0f)))
     {
         return 2;
     }
 
-    if (CheckRange(x + FP_METER_REAL(16.0f), 0, FP_METER_REAL(40)))
+    if (CheckRange(x + FP_METER(16.0f), 0, FP_METER(40)))
     {
         return 3;
     }
 
-    if (CheckRange(x - FP_METER_REAL(120.0f), FP_METER_REAL(-24.0f), FP_METER_REAL(24.0f)))
+    if (CheckRange(x - FP_METER(120.0f), FP_METER(-24.0f), FP_METER(24.0f)))
     {
         return 4;
     }
@@ -31,22 +31,22 @@ static inline s32 GetXIndex(s32 x)
 
 static inline s32 GetYIndex(s32 x, u32 y)
 {
-    if (CheckRange(y + FP_METER_REAL(202.0f), FP_METER_REAL(-18.0f), FP_METER_REAL(18.0f)))
+    if (CheckRange(y + FP_METER(202.0f), FP_METER(-18.0f), FP_METER(18.0f)))
     {
         return 1;
     }
 
-    if (CheckRange(y + FP_METER_REAL(79.0f), FP_METER_REAL(-15.0f), FP_METER_REAL(15.0f)) && x < FP_METER_REAL(160.0f))
+    if (CheckRange(y + FP_METER(79.0f), FP_METER(-15.0f), FP_METER(15.0f)) && x < FP_METER(160.0f))
     {
         return 2;
     }
 
-    if (CheckRange(y + FP_METER_REAL(16.0f), 0, FP_METER_REAL(32.0f)))
+    if (CheckRange(y + FP_METER(16.0f), 0, FP_METER(32.0f)))
     {
         return 3;
     }
 
-    if (CheckRange(y - FP_METER_REAL(124.0f), FP_METER_REAL(-20.0f), FP_METER_REAL(20.0f)))
+    if (CheckRange(y - FP_METER(124.0f), FP_METER(-20.0f), FP_METER(20.0f)))
     {
         return 4;
     }
@@ -64,15 +64,15 @@ u8 sharedFunc_800D92AC_0_s00(s32 x, s32 y)
     u8  res;
     
     // Check if coordinates are within primary grid bounds.
-    if (x < FP_METER_REAL(-320.0f) || x >= FP_METER_REAL(240.0f))
+    if (x < FP_METER(-320.0f) || x >= FP_METER(240.0f))
     {
         res = 0;
     }
-    else if (y < FP_METER_REAL(-240.0f))
+    else if (y < FP_METER(-240.0f))
     {
         res = 0;
     }
-    else if (y >= FP_METER_REAL(200.0f))
+    else if (y >= FP_METER(200.0f))
     {
         res = 0;
     }
@@ -87,21 +87,21 @@ u8 sharedFunc_800D92AC_0_s00(s32 x, s32 y)
     // If no match in primary grid, try fallback grid.
     if (res == 0)
     {   
-        if (x < FP_METER_REAL(-320.0f) || x >= FP_METER_REAL(240.0f))
+        if (x < FP_METER(-320.0f) || x >= FP_METER(240.0f))
         {
             return 0;
         }
-        else if (y < FP_METER_REAL(-240.0f))
+        else if (y < FP_METER(-240.0f))
         {
             return 0;
         }
-        else if (y >= FP_METER_REAL(400.0f))
+        else if (y >= FP_METER(400.0f))
         {
             return 0;
         }
 
-        x   = (x + FP_METER_REAL(320.0f)) / FP_METER_REAL(40.0f);
-        y   = (y + FP_METER_REAL(240.0f)) / FP_METER_REAL(40.0f);
+        x   = (x + FP_METER(320.0f)) / FP_METER(40.0f);
+        y   = (y + FP_METER(240.0f)) / FP_METER(40.0f);
         res = sharedData_800DF1FC_0_s00[(x * 16) + y];
         if (res == 0)
         {

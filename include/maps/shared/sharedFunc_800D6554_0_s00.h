@@ -36,7 +36,7 @@ void sharedFunc_800D6554_0_s00(s_SubCharacter* chara)
     chara->properties_E4.player.properties_E4[3] = g_SysWork.player_4C.chara_0.position_18.vx;
     chara->properties_E4.player.properties_E4[4] = g_SysWork.player_4C.chara_0.position_18.vz;
 
-    if (someDist < FP_METER(19.2f) && someRotY < FP_ANGLE(180.0f))
+    if (someDist < FP_METER(1.2f) && someRotY < FP_ANGLE(180.0f))
     {
         flags = &chara->properties_E4.player.properties_E4[1];
         if (!(*flags & (1 << 1)))

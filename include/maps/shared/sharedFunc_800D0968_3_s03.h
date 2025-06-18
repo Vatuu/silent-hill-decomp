@@ -12,6 +12,6 @@ void sharedFunc_800D0968_3_s03(s_SubCharacter* chara, GsCOORDINATE2* coords)
 
     chara->field_CA = posY;
     chara->field_CC = posY;
-    chara->field_C8 = posY - FP_METER(27.2f);
-    chara->field_CE = posY - FP_METER_REAL(1.0f);
+    chara->field_C8 = posY - FP_METER(1.7f);
+    chara->field_CE = posY - FP_METER(1.0f);
 }
