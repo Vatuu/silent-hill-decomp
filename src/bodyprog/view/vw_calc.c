@@ -48,7 +48,7 @@ void vwRenewalXZVelocityToTargetPos(s32* velo_x, s32* velo_z, VECTOR3* now_pos, 
     *velo_x += FP_MULTIPLY(add_spd, shRsin(temp_v0), Q12_SHIFT);
     *velo_z += FP_MULTIPLY(add_spd, shRcos(temp_v0), Q12_SHIFT);
 
-    temp_v0_2 = Math_VectorMagnitude(*velo_x, 0, *velo_z);
+    temp_v0_2 = Vc_VectorMagnitudeCalc(*velo_x, 0, *velo_z);
     if (total_max_spd < temp_v0_2)
     {
         temp_s1_2 = temp_v0_2 - total_max_spd;
@@ -60,7 +60,7 @@ void vwRenewalXZVelocityToTargetPos(s32* velo_x, s32* velo_z, VECTOR3* now_pos, 
     temp_s1_3    = tgt_pos->vx - now_pos->vx;
     temp_s0      = tgt_pos->vz - now_pos->vz;
     to_tgt_ang_y = ratan2(temp_s1_3, temp_s0);
-    var_s1       = Math_MulFixed(dec_forwd_lim_spd, Math_VectorMagnitude(temp_s1_3, 0, temp_s0) - tgt_r, Q12_SHIFT);
+    var_s1       = Math_MulFixed(dec_forwd_lim_spd, Vc_VectorMagnitudeCalc(temp_s1_3, 0, temp_s0) - tgt_r, Q12_SHIFT);
 
     if (var_s1 < 0)
     {

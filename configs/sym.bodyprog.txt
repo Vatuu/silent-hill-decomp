@@ -262,7 +262,7 @@ vcAdjCamOfsAngByOfsAngSpd                   = 0x8008555C; // type:func
 vcMakeCamMatAndCamAngByBaseAngAndOfsAng     = 0x800857EC; // type:func
 vcSetDataToVwSystem                         = 0x80085884; // type:func
 vcCamMatNoise                               = 0x80085A7C; // type:func
-Math_VectorMagnitude                        = 0x80085B1C; // type:func Originally could've be something like `vcGetXZSumDist`.
+Vc_VectorMagnitudeCalc                      = 0x80085B1C; // type:func Originally could've be something like `vcGetXZSumDist`.
 vcGetXZSumDistFromLimArea                   = 0x80085C80; // type:func
 
 Camera_TranslationSet = 0x80086A94; // type:func

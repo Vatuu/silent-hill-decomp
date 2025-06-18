@@ -6,9 +6,10 @@
 #include <libgs.h>
 
 // TODO:
+// - Split into 4 separate headers.
 // - Add doc comments above func delcarations.
+// - Code that accesses `VC_ROAD_DATA` and `VC_NEAR_ROAD_DATA` is odd, might need extra work.
 // - Flags below are from SH2, most seem to match with SH but there might be some differences.
-// - Code that accesses VC_ROAD_DATA & VC_NEAR_ROAD_DATA is odd, might need extra work.
 
 struct _MapOverlayHeader; // `bodyprog.h` forward declaration.
 
@@ -293,8 +294,6 @@ extern MATRIX            VbWvsMatrix;
 extern VC_WATCH_MV_PARAM vcWatchMvPrmSt;
 extern s32               vcSelfViewTimer;
 
-// TODO: Split these into 4 separate headers.
-
 // vc_util.c
 
 void vcInitCamera(struct _MapOverlayHeader* map_overlay_ptr, VECTOR3* chr_pos);
@@ -411,25 +410,23 @@ void vcAdjCamOfsAngByOfsAngSpd(SVECTOR* ofs_ang, SVECTOR* ofs_ang_spd, SVECTOR* 
 void vcMakeCamMatAndCamAngByBaseAngAndOfsAng(SVECTOR* cam_mat_ang, MATRIX* cam_mat, SVECTOR* base_cam_ang, SVECTOR* ofs_cam_ang, VECTOR3* cam_pos);
 void vcSetDataToVwSystem(VC_WORK* w_p, VC_CAM_MV_TYPE cam_mv_type);
 s32  vcCamMatNoise(s32 noise_w, s32 ang_spd1, s32 ang_spd2, s32 vcSelfViewTimer);
-
-s32 Math_VectorMagnitude(s32 x, s32 y, s32 z);
-
-s32 vcGetXZSumDistFromLimArea(s32* out_vec_x_p, s32* out_vec_z_p, s32 chk_wld_x, s32 chk_wld_z,
+s32  Vc_VectorMagnitudeCalc(s32 x, s32 y, s32 z);
+s32  vcGetXZSumDistFromLimArea(s32* out_vec_x_p, s32* out_vec_z_p, s32 chk_wld_x, s32 chk_wld_z,
                               s32 lim_min_x, s32 lim_max_x, s32 lim_min_z, s32 lim_max_z, s32 can_ret_minus_dist_f);
 
-static inline void vcWork_CurNearRoadSet(VC_WORK* work, VC_NEAR_ROAD_DATA* road)
+static inline void Vc_CurNearRoadSet(VC_WORK* work, VC_NEAR_ROAD_DATA* road)
 {
     memcpy(&work->cur_near_road_2B8, road, sizeof(VC_NEAR_ROAD_DATA));
 }
 
-static inline void vcWork_FlagClear(s32 flag)
+static inline void Vc_FlagClear(s32 flag)
 {
     vcWork.flags_8 &= ~flag;
 }
 
-static inline void vcWork_FlagSet(s32 flag)
+static inline void Vc_FlagSet(s32 flag)
 {
     vcWork.flags_8 |= flag;
 }
 
-#endif /* _VW_SYSTEM_H */
+#endif
