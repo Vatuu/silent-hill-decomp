@@ -29,11 +29,22 @@ typedef struct
 
 // ========
 // STRUCTS
-// =========
+// ========
 
 typedef struct
 {
-    s32                field_0; // Pointer
+    s32 field_0;
+    s32 field_4;
+    s32 fileIdx_8;
+    s32 saveIdx_C;
+    s32 field_10;
+    s32 field_14;
+} s_800B5508_sub;
+
+typedef struct
+{
+    //s_800B5508_sub*    field_0; // TODO: Use this instead.
+    s32                field_0; // Pointer.
     s8                 field_4[16]; 
     struct s_800B5508* field_14;
     s32                field_18; 
@@ -88,12 +99,12 @@ extern s8 g_SelectedFileIdx;
 // FUNCTIONS
 // ==========
 
-s32 func_8002E94C(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
+s32 func_8002E94C(s32 arg0, s32 arg1, s32 fileIdx, s32 saveIdx);
 
 s32 func_8002E990();
 
 /** Used to get the pointer of a struct which seems to be `s_SavegameMetadata`. */
-s32 func_8002E9EC(s32 arg0, s32 arg1, s32 arg2);
+s32 func_8002E9EC(s32 arg0, s32 fileIdx, s32 saveIdx);
 
 s32 func_8002EA28(s32 idx);
 

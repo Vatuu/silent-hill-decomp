@@ -896,15 +896,15 @@ void func_80035AC8(s32 arg0) // 0x80035AC8
     Sd_EngineCmd(D_800A98AC[arg0]);
 }
 
-void func_80035B04(VECTOR3* arg0, SVECTOR* arg1, GsCOORDINATE2* arg2) // 0x80035B04
+void func_80035B04(VECTOR3* pos, SVECTOR* rot, GsCOORDINATE2* coord) // 0x80035B04
 {
-    arg2->flg = 0;
+    coord->flg = 0;
 
-    arg2->coord.t[0] = arg0->vx >> 4;
-    arg2->coord.t[1] = arg0->vy >> 4;
-    arg2->coord.t[2] = arg0->vz >> 4;
+    coord->coord.t[0] = FP_FROM(pos->vx, Q4_SHIFT);
+    coord->coord.t[1] = FP_FROM(pos->vy, Q4_SHIFT);
+    coord->coord.t[2] = FP_FROM(pos->vz, Q4_SHIFT);
 
-    func_80096E78(arg1, (MATRIX*)&arg2->coord);
+    func_80096E78(rot, (MATRIX*)&coord->coord);
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_80035B58); // 0x80035B58

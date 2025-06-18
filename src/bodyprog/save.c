@@ -7,9 +7,9 @@
 * actually functions from `save_system`.
 */
 
-// TODO: This function may require some investigation. The few occations it is used is not used for return a value.
-s32 func_8002E94C(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x8002E94C
+s32 func_8002E94C(s32 arg0, s32 arg1, s32 fileIdx, s32 saveIdx) // 0x8002E94C
 {
+    //s_800B5508_sub* ptr; // TODO: Use this instead.
     s32* ptr;
 
     if (D_800B5508[8].field_0 != 0) 
@@ -20,9 +20,16 @@ s32 func_8002E94C(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x8002E94C
     D_800B5508[8].field_0 = arg0;
     ptr                   = &D_800B5508[8].field_0;
 
+    // TODO: Use this instead.
+    /*ptr->field_4   = arg1;
+    ptr->fileIdx_8 = fileIdx;
+    ptr->saveIdx_C = saveIdx;
+    ptr->field_10  = 0;
+    ptr->field_14  = 1;*/
+
     ptr[1] = arg1;
-    ptr[2] = arg2;
-    ptr[3] = arg3;
+    ptr[2] = fileIdx;
+    ptr[3] = saveIdx;
     ptr[4] = 0;
     ptr[5] = 1;
     return 1;
@@ -49,15 +56,15 @@ s32 func_8002E9A0(s32 idx) // 0x8002E9A0
     return ret;
 }
 
-s32 func_8002E9EC(s32 arg0, s32 arg1, s32 arg2) // 0x8002E9EC
+s32 func_8002E9EC(s32 arg0, s32 fileIdx, s32 saveIdx) // 0x8002E9EC
 {
     s32 var0;
     s32 var1;
     s32 var2;
 
     var0 = D_800B5508[arg0].field_14;
-    var1 = arg1 << 8; 
-    var2 = (arg2 * 12) + 4; 
+    var1 = fileIdx << 8; 
+    var2 = (saveIdx * 12) + 4; 
     return var0 + var1 + var2;
 }
 

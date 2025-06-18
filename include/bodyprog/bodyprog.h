@@ -2013,7 +2013,7 @@ void GameFs_MapLoad(s32 mapIdx);
 
 s32 func_8003528C(s32 idx0, s32 idx1);
 
-void func_80035B04(VECTOR3* arg0, SVECTOR* arg1, GsCOORDINATE2* arg2);
+void func_80035B04(VECTOR3* pos, SVECTOR* rot, GsCOORDINATE2* coord);
 
 void func_80035DB4(s32);
 

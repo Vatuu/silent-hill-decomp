@@ -4,8 +4,9 @@
 #include "bodyprog/save_system.h"
 #include "bodyprog/math.h"
 
-#define SLOT_COLUMN_OFFSET 150
-#define SLOT_ROW_OFFSET    20
+#define SAVE_FLASH_TIMER_MAX 40
+#define SLOT_COLUMN_OFFSET   150
+#define SLOT_ROW_OFFSET      20
 
 /*
 char* g_SaveLocationNames[] =
@@ -40,6 +41,7 @@ char* g_SaveLocationNames[] =
 
 s32 D_801E750C = 0;
 
+// Some kind of state. 0 or 1.
 s32 D_801E7510 = 0;
 
 /** Some boolean statuses for each save slot. */
@@ -51,7 +53,7 @@ s32 g_MemCardState = MemCardState_None;
 
 s32 g_MemCardStateTextTimer = 0;
 
-// This is only used in `GameState_SaveScreen_Update`.
+// Only used in `GameState_SaveScreen_Update`.
 void (*g_GameState_SaveScreen_Funcs[])() =
 {
     Savegame_ScreenInit,
@@ -66,7 +68,7 @@ s32 D_801E753C = 0;
 
 s32 g_IsSaveSelected = 0;
 
-// This is only used in `GameState_DeathLoadScreen_Update`.
+// Only used in `GameState_DeathLoadScreen_Update`.
 void (*g_GameState_DeathLoadScreen_Funcs[])() =
 {
     Savegame_ScreenInit,
@@ -124,7 +126,7 @@ void Savegame_ScreenSubInit() // 0x801E2D8C
 
     D_801E750C           = 0;
     D_801E7510           = 0;
-    g_Gfx_SaveFlashTimer = 40;
+    g_Gfx_SaveFlashTimer = SAVE_FLASH_TIMER_MAX;
     g_IsGameSaving       = 0;
 
     for (i = 0; i < MEMORY_CARD_SLOT_COUNT; i++)
@@ -150,8 +152,8 @@ void Savegame_ScreenSubInit() // 0x801E2D8C
 
 void Gfx_SaveScreenDrawBase() // 0x801E2EBC
 {
-    s_Line2d var;
-    s32        i;
+    s_Line2d line;
+    s32      i;
     
     DVECTOR slotStrPosTable[] = 
     {
@@ -173,11 +175,11 @@ void Gfx_SaveScreenDrawBase() // 0x801E2EBC
         Gfx_StringDraw(slotStrs[i], 50);
     }
 
-    var.vertex0_0.vx = -136;
-    var.vertex0_0.vy = 60;
-    var.vertex1_4.vx = 272;
-    var.vertex1_4.vy = 40;
-    Gfx_RectSaveInfoDraw(&var);
+    line.vertex0_0.vx = -136;
+    line.vertex0_0.vy = 60;
+    line.vertex1_4.vx = 272;
+    line.vertex1_4.vy = 40;
+    Gfx_RectSaveInfoDraw(&line);
 }
 
 void Gfx_SaveSelectedDisplacement(s32 slotIdx, s32 unusedSaveCount) // 0x801E2F90
@@ -229,7 +231,7 @@ void Gfx_SavegameEntryDrawLocationName(s_SavegameEntry* saveEntry, s32 saveIdx, 
 
     s32 nameIdx = (s8)saveEntry->locationId_8;
 
-    u8 D_801E2728[] =
+    u8 xOffsets[] =
     {
         82, 37, 30, 44,
         81, 81, 61, 61,
@@ -266,7 +268,7 @@ void Gfx_SavegameEntryDrawLocationName(s_SavegameEntry* saveEntry, s32 saveIdx, 
             Gfx_StringSetColor(colorId);
         }
 
-        Gfx_StringSetPosition(((slotIdx * OFFSET_X) + MARGIN_X) - (D_801E2728[nameIdx] / 2),
+        Gfx_StringSetPosition(((slotIdx * OFFSET_X) + MARGIN_X) - (xOffsets[nameIdx] / 2),
                               (var0 * OFFSET_Y) + MARGIN_Y);
         Gfx_StringDraw(g_SaveLocationNames[nameIdx], 50);
     }
@@ -324,7 +326,7 @@ void Gfx_SaveScreenDraw(s_SavegameEntry* saveEntry, s32 saveIdx, s32 slotIdx) //
         Gfx_SavedShineDraw();
 
         g_Gfx_SaveFlashTimer++;
-        g_Gfx_SaveFlashTimer = CLAMP(g_Gfx_SaveFlashTimer, 0, 40);
+        g_Gfx_SaveFlashTimer = CLAMP(g_Gfx_SaveFlashTimer, 0, SAVE_FLASH_TIMER_MAX);
 
         if (entryType != SavegameEntryType_LoadMemCard)
         {
@@ -459,7 +461,7 @@ void Gfx_SaveScreenDraw(s_SavegameEntry* saveEntry, s32 saveIdx, s32 slotIdx) //
 
     // Update memory card load timer.
     g_LoadingMemCardTimer[slotIdx]++;
-    if (g_LoadingMemCardTimer[slotIdx] == 5 || saveIdx == g_SlotElementCounts[slotIdx] - 1)
+    if (g_LoadingMemCardTimer[slotIdx] == 5 || saveIdx == (g_SlotElementCounts[slotIdx] - 1))
     {
         if (D_801E7564[slotIdx] == 0)
         {
@@ -506,13 +508,11 @@ void Gfx_MemCardStateDraw(s32 memCardState, s32 arg1) // 0x801E3910
 
     switch (memCardState)
     {
-        // Format.
-        case 1:
+        case MemCardState_Format:
             strIdx = (arg1 == memCardState) ? 1 : 2;
             break;
 
-        // Save.
-        case 2:
+        case MemCardState_Save:
             switch (arg1)
             {
                 // Memory card removed.
@@ -546,8 +546,7 @@ void Gfx_MemCardStateDraw(s32 memCardState, s32 arg1) // 0x801E3910
             }
             break;
 
-        // Load.
-        case 3:
+        case MemCardState_Load:
             switch (arg1)
             {
                 // Now loading.
@@ -608,7 +607,7 @@ void Gfx_MemCardStateDraw(s32 memCardState, s32 arg1) // 0x801E3910
             D_801E7510++;
             
         case 1:
-            if (memCardState == 2 && arg1 == 1)
+            if (memCardState == MemCardState_Save && arg1 == 1)
             {
                 g_IsGameSaving = arg1;
             }
@@ -720,7 +719,7 @@ void Gfx_SavedShineDraw() // 0x801E3E78
 
     if (rowIdx < 5)
     {
-        sin  = shRsin((g_Gfx_SaveFlashTimer << 10) / 40);
+        sin  = shRsin((g_Gfx_SaveFlashTimer << 10) / SAVE_FLASH_TIMER_MAX);
         poly = (POLY_F4*)GsOUT_PACKET_P;
         setPolyF4(poly);
         setSemiTrans(poly, 1);
@@ -1508,7 +1507,7 @@ void Gfx_SaveDataInfoDraw(s32 slotIdx, s32 selectedSaveIdx) // 0x801E5E18
         flags = ptr->hyperBlasterFlags_B_3;
 
         mins = (timeInSec / 60) % 60;
-        sec = timeInSec % 60;
+        sec  = timeInSec % 60;
 
         Gfx_StringSetColor(ColorId_White);
         Gfx_StringSetPosition(40, 178);
@@ -1650,7 +1649,7 @@ void Savegame_ScreenInit() // 0x801E63C0
 
     Savegame_ScreenSubInit();
 
-    g_SysWork.timer_20              = 0;
+    g_SysWork.timer_20 = 0;
     g_GameWork.gameStateStep_598[0]++;
     g_GameWork.gameStateStep_598[1] = 0;
     g_GameWork.gameStateStep_598[2] = 0;
