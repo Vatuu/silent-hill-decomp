@@ -167,7 +167,7 @@ void func_800DB870() // 0x800DB870
             break;
 
         default:
-            func_800D2244(0);
+            sharedFunc_800D2244_0_s00(0);
 
             g_SysWork.sysState_8     = 0;
             g_SysWork.timer_24       = 0;

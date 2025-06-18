@@ -974,6 +974,10 @@ extern s32 D_800AE1AC;
 
 extern s32 D_800AE1B0;
 
+extern s16 D_800AF210;
+
+extern s16 D_800AF212;
+
 extern s8 D_800AF214;
 
 extern s8 D_800AF215;
@@ -1271,6 +1275,8 @@ extern s8 D_800C4562;
  cutscene and doesn't change until the player makes an input.
 */
 extern s8 D_800C457C;
+
+extern VECTOR3 D_800C45F8;
 
 extern u8 D_800C4606;
 

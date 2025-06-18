@@ -1096,4 +1096,18 @@ static inline s32 Flags16b_IsSet(u16* array, s32 flagId)
     return (array[flagId >> 5] >> (flagId & 0x1F)) & (1 << 0);
 }
 
+/** @brief Sets the given animation flag on both player character & player extra data. */
+// TODO: Move to separate character/player header.
+static inline void Player_AnimFlag_Set(u32 flag)
+{
+    s_MainCharacterExtra* extra;
+    s_SubCharacter*       chara;
+
+    extra = &g_SysWork.player_4C.extra_128;
+    chara = &g_SysWork.player_4C.chara_0;
+
+    extra->model_0.anim_4.flags_2 |= flag;
+    chara->model_0.anim_4.flags_2 |= flag;
+}
+
 #endif
