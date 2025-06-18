@@ -145,7 +145,7 @@ typedef struct _VC_ROAD_DATA
     u32               mv_y_type_11      : 3;
     s32               lim_rd_max_hy_12  : 8; // SH2 accesses these at `unk_8`?
     s32               lim_rd_min_hy_13  : 8;
-    s32               field_14 : 8; /** Unnamed fields may contain `mv_y_type`/`rd_dir_type`. */
+    s32               field_14          : 8; /** May contain `mv_y_type`/`rd_dir_type`. */
     u32               field_15          : 4;
     s16               cam_mv_type_14    : 4; /** `VC_CAM_MV_TYPE` */
     u8                field_16;
@@ -159,7 +159,7 @@ typedef struct _VC_THROUGH_DOOR_CAM_PARAM
     u8      active_f_0;
     s8      unk_1[3];
     s32     timer_4;
-    s16     rail_ang_y_8; /** Rail's Y angle. */
+    s16     rail_ang_y_8;              /** Rail's Y angle. */
     s8      unk_A[2];
     VECTOR3 rail_sta_pos_C;            /** Rail's start position. */
     s32     rail_sta_to_chara_dist_18; /** Distance from the rail's start position to a locked-on character's position. */
@@ -372,7 +372,7 @@ void vcPreSetDataInVC_WORK(VC_WORK* w_p, VC_ROAD_DATA* vc_road_ary_list);
 void vcSetTHROUGH_DOOR_CAM_PARAM_in_VC_WORK(VC_WORK* w_p, THROUGH_DOOR_SET_CMD_TYPE set_cmd_type);
 void vcSetNearestEnemyDataInVC_WORK(VC_WORK* w_p);
 void vcSetNearRoadAryByCharaPos(VC_WORK* w_p, VC_ROAD_DATA* road_ary_list, s32 half_w, s32 unused, s32 near_enemy_f);
-s32            vcRetRoadUsePriority(VC_ROAD_TYPE rd_type, s32 arg1);
+s32  vcRetRoadUsePriority(VC_ROAD_TYPE rd_type, s32 arg1);
 s32  vcSetCurNearRoadInVC_WORK(VC_WORK* w_p);
 s32  vcGetBestNewCurNearRoad(VC_NEAR_ROAD_DATA** new_cur_pp, VC_CAM_CHK_TYPE chk_type, VECTOR3* pos, VC_WORK* w_p);
 s32  vcGetNearestNEAR_ROAD_DATA(VC_NEAR_ROAD_DATA** out_nearest_p_addr, VC_CAM_CHK_TYPE chk_type, VC_ROAD_TYPE rd_type, VECTOR3* pos, VC_WORK* w_p, s32 chk_only_set_marge_f);
