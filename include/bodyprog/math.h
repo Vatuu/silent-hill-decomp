@@ -69,7 +69,7 @@
 #define FP_ANGLE(deg) \
     (s16)((deg) * ((FP_TO(1, Q12_SHIFT)) / 360.0f))
 
-/** @brief Converts floating-point meters to fixed-point meters in Q23.8 format. */
+/** @brief Converts floating-point meters to fixed-point meters in Q12.19 format. */
 #define FP_METER(met) \
     FP_FLOAT_TO(met, Q12_SHIFT)
 
