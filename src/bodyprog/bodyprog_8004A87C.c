@@ -12,13 +12,13 @@ void Gfx_StringSetPosition(s32 x, s32 y) // 0x8004A87C
 
     if (x != NO_VALUE)
     {
-        g_StringPositionX0 = x - OFFSET_X;
-        g_StringPositionX1 = (s16)(x - OFFSET_X);
+        g_StringPosition.vx = x - OFFSET_X;
+        g_StringPositionX1  = (s16)(x - OFFSET_X);
     }
 
     if (y != NO_VALUE)
     {
-        g_StringPositionY = y - OFFSET_Y;
+        g_StringPosition.vy = y - OFFSET_Y;
     }
 
     D_800AD49C = 6; // Maybe `ColorId_LightGrey`.

@@ -340,10 +340,9 @@ g_Gfx_DebugStringPosition1 = 0x800B5C24; // type:DVECTOR size:4
 // Including here for now since all map configs include this sym file, and bodyprog also reads from this header.
 g_MapOverlayHeader = 0x800C957C; // type:MapOverlayHeader size:0x84C - size incomplete
 
-g_StringColorId = 0x800AD498; // type:s16
-g_StringPositionX0 = 0x800C38A8; // type:s16
+g_StringColorId    = 0x800AD498; // type:s16
+g_StringPosition   = 0x800C38A8; // type:DVECTOR
 g_StringPositionX1 = 0x800C38AC; // type:s32
-g_StringPositionY = 0x800C38AA; // type:s16
 
 hack_D_800FE5FC_fix = 0x800FE5FC; // ignore:true - Part of temp memory block at 800FDE00, has to be unsymbolized for C to match.
 

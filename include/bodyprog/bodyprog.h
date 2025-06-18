@@ -150,6 +150,20 @@ typedef struct
 
 typedef struct
 {
+    s32 field_0;
+    s32 field_4;
+    s16 field_8;
+    s8  unk_A;
+    s8  field_B;
+    s8  field_C;
+    s8  field_D;
+    s16 field_E;
+    s32 field_10;
+} s_func_800625F4;
+STATIC_ASSERT_SIZEOF(s_func_800625F4, 20);
+
+typedef struct
+{
     s8  unk_0[4];
     u8  field_4;
     u8  field_5;
@@ -762,35 +776,38 @@ extern s_800B5494 D_800B5494;
 /** TODO: `g_MapOverlayHeader` is part of the overlay bin files. Maybe should be moved to `maps/shared.h` or `dynamic/dynamic.h`. */
 typedef struct _MapOverlayHeader
 {
-    u8                unk_0[4];
-    s8                (*getMapRoomIdxFunc_4)(s32 x, s32 y);                              // Called by `func_80036420`
+    s8                unk_0[4];
+    s8                (*getMapRoomIdxFunc_4)(s32 x, s32 y);                              // Called by `func_80036420`.
     s8                field_8;
-    u8                unk_9[3];
-    u8                unk_C[4];
+    s8                unk_9[3];
+    s8                unk_C[4];
     s32               (*func_10)();
     s8                field_14;
-    u8                unk_15[3];
-    u8                unk_18[4];
+    s8                unk_15[3];
+    s8                unk_18[4];
     s_AreaLoadParams* mapAreaLoadParams_1C;
     void              (**mapEventFuncs_20)();                                            /** Points to array of event functions. */
-    u8                unk_24[12];
+    s8                unk_24[12];
     char**            mapMessageStrings_30;                                              /** Points to array of `char*` for each displayed message in the map. */
     s_AnimInfo*       animInfo_34;
-    u8                unk_38[8];
+    s8                unk_38[8];
     void              (*func_40)();
     void              (*func_44)();
-    u8                unk_48[128];
+    s8                unk_48[4];
+    s_func_800625F4*  field_4C;
+    s8                unk_50[16];
+    s8                unk_60[104];
     void              (*func_C8)();
     void              (*func_CC)(s32);
     s32               (*func_D0)(s32, void*, s16, s32); // 0x800C964C
-    u8                unk_D4[24];
+    s8                unk_D4[24];
     s32               (*func_EC)();
-    u8                unk_F0[76];
+    s8                unk_F0[76];
     s32               (*func_13C)(s32, s32, void*, s16, s32); // 0x800C96B8
-    u8                unk_140[40];
+    s8                unk_140[40];
     void              (*func_168)(void*, void*, void*);
-    u8                unk_16C[4];
-    u8                unk_170[36];
+    s8                unk_16C[4];
+    s8                unk_170[36];
     void              (*charaUpdateFuncs_194[Chara_Count])(s_SubCharacter*, void*, s32); /** Guessed params. Funcptrs for each `e_ShCharacterId`, set to 0 for IDs not included in the map overlay. Called by `func_80038354`. */
     u8                charaGroupIds_248[4];                                              /** `e_ShCharacterId` values where if `s_SpawnInfo.charaId_4` == 0, `charaGroupIds_248[0]` is used for `charaSpawnsA_24C` and `charaGroupIds_248[1]` for `charaSpawnsB_30C`. */
     s_SpawnInfo       charaSpawnsA_24C[16];                                              /** Array of chara type/position/flags, flags_6 == 0 are unused slots? Read by `func_80037F24`. */
@@ -816,6 +833,8 @@ extern s32 D_80025528; // Type assumed.
 extern s32 D_80025530; // Type assumed.
 
 extern u8 D_80025D6C[];
+
+extern u32 D_80025DC0[];
 
 extern RECT D_80028A20;
 
@@ -1159,11 +1178,8 @@ extern u8 D_800C37DC;
 
 extern u8 D_800C37DD;
 
-/** String X position. */
-extern s16 g_StringPositionX0; // 0x800C38A8
-
-/** String Y position. */
-extern s16 g_StringPositionY; // 0x800C38AA
+/** String position. */
+extern DVECTOR g_StringPosition; // 0x800C38A8
 
 /** String X position as `s32`. It's unclear why there are two. */
 extern s32 g_StringPositionX1; // 0x800C38AC
@@ -1925,6 +1941,9 @@ void func_8005B474(s32* arg0, u32 arg1, s32 idx);
 void func_8005BF0C(s16 unused, s16 x, s16 y);
 
 s16 func_8005BF38(s16 arg0);
+
+/** `arg0` type assumed. */
+void func_800625F4(VECTOR3* arg0, s16 arg1, s32 arg2, s32 arg3);
 
 void func_8005CB20(s_SubCharacter*, void*, s16, s16);
 
