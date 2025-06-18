@@ -293,6 +293,8 @@ extern MATRIX            VbWvsMatrix;
 extern VC_WATCH_MV_PARAM vcWatchMvPrmSt;
 extern s32               vcSelfViewTimer;
 
+// TODO: Split these into 4 separate headers.
+
 // vc_util.c
 
 void vcInitCamera(struct _MapOverlayHeader* map_overlay_ptr, VECTOR3* chr_pos);

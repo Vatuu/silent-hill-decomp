@@ -1893,16 +1893,18 @@ void vcMakeIdealCamPosForFixAngCam(VECTOR3* ideal_pos, VC_WORK* w_p) // 0x80083A
     }
     else if (chara_to_cam_dist > FP_METER(1.5f))
     {
-        cam_offset_forward = FP_MULTIPLY(FP_TO((chara_to_cam_dist - FP_METER(7.0f)), Q12_SHIFT) / -22528, 0xB33, Q12_SHIFT);
+        cam_offset_forward = FP_MULTIPLY(FP_TO((chara_to_cam_dist - FP_METER(7.0f)), Q12_SHIFT) / FP_METER(-5.5f), FP_METER(0.7f), Q12_SHIFT);
     }
     else
     {
-        cam_offset_forward = 0xB33;
+        cam_offset_forward = FP_METER(0.7f);
     }
 
-    ideal_pos->vx = w_p->chara_pos_114.vx + FP_MULTIPLY(cam_offset_forward, shRsin(w_p->chara_eye_ang_y_144), Q12_SHIFT) +
+    ideal_pos->vx = w_p->chara_pos_114.vx +
+                    FP_MULTIPLY(cam_offset_forward, shRsin(w_p->chara_eye_ang_y_144), Q12_SHIFT) +
                     FP_MULTIPLY(offset_dist, shRsin(cam_angle_vec.vy + FP_ANGLE(180.0f)), Q12_SHIFT);
-    ideal_pos->vz = w_p->chara_pos_114.vz + FP_MULTIPLY(cam_offset_forward, shRcos(w_p->chara_eye_ang_y_144), Q12_SHIFT) +
+    ideal_pos->vz = w_p->chara_pos_114.vz +
+                    FP_MULTIPLY(cam_offset_forward, shRcos(w_p->chara_eye_ang_y_144), Q12_SHIFT) +
                     FP_MULTIPLY(offset_dist, shRcos(cam_angle_vec.vy + FP_ANGLE(180.0f)), Q12_SHIFT);
     ideal_pos->vy = w_p->chara_pos_114.vy;
 
@@ -1925,7 +1927,7 @@ void vcMakeIdealCamPosForThroughDoorCam(VECTOR3* ideal_pos, VC_WORK* w_p) // 0x8
     {
         if (w_p->through_door_activate_init_f_C != 0)
         {
-            offset_forward = -0x14CC;
+            offset_forward = FP_METER(-1.3f);
             offset_lateral = 0;
         }
         else
@@ -1935,17 +1937,17 @@ void vcMakeIdealCamPosForThroughDoorCam(VECTOR3* ideal_pos, VC_WORK* w_p) // 0x8
                 case 10:
                 case 13:
                 case 14:
-                    angle_threshold = 0xAA;
-                    offset_forward  = 0xD99;
-                    offset_lateral  = 0x999;
-                    offset_scale    = 0xB33;
+                    angle_threshold = FP_ANGLE(14.95f);
+                    offset_forward  = FP_METER(0.85f);
+                    offset_lateral  = FP_METER(0.6f);
+                    offset_scale    = FP_METER(0.7f);
                     break;
 
                 default:
-                    angle_threshold = 0x200;
-                    offset_forward  = 0xC00;
-                    offset_lateral  = 0xB33;
-                    offset_scale    = 0x999;
+                    angle_threshold = FP_ANGLE(45.0f);
+                    offset_forward  = FP_METER(0.75f);
+                    offset_lateral  = FP_METER(0.7f);
+                    offset_scale    = FP_METER(0.6f);
                     break;
             }
 
@@ -1965,12 +1967,18 @@ void vcMakeIdealCamPosForThroughDoorCam(VECTOR3* ideal_pos, VC_WORK* w_p) // 0x8
                 delta_angle_clamped = angle_diff_abs - angle_threshold;
             }
 
-            offset_forward = offset_forward + FP_MULTIPLY(-offset_lateral, shRcos((delta_angle_clamped * (0x800000 / (0x800 - angle_threshold)) * 16) >> 16), Q12_SHIFT);
+            offset_forward = offset_forward +
+                             FP_MULTIPLY(-offset_lateral,
+                                          shRcos((delta_angle_clamped * (0x800000 / (FP_ANGLE(180.0f) - angle_threshold)) * 16) >> 16), Q12_SHIFT);
             offset_lateral = FP_MULTIPLY(-offset_scale, shRsin(w_p->chara_eye_ang_y_144 - through_door_param->rail_ang_y_8), Q12_SHIFT);
         }
 
-        ideal_pos->vx = through_door_param->rail_sta_pos_C.vx + FP_MULTIPLY(offset_forward, shRsin(through_door_param->rail_ang_y_8), Q12_SHIFT) + FP_MULTIPLY(offset_lateral, shRcos(through_door_param->rail_ang_y_8), Q12_SHIFT);
-        ideal_pos->vz = through_door_param->rail_sta_pos_C.vz + FP_MULTIPLY(offset_forward, shRcos(through_door_param->rail_ang_y_8), Q12_SHIFT) + FP_MULTIPLY(offset_lateral, -shRsin(through_door_param->rail_ang_y_8), Q12_SHIFT);
+        ideal_pos->vx = through_door_param->rail_sta_pos_C.vx +
+                        FP_MULTIPLY(offset_forward, shRsin(through_door_param->rail_ang_y_8), Q12_SHIFT) +
+                        FP_MULTIPLY(offset_lateral, shRcos(through_door_param->rail_ang_y_8), Q12_SHIFT);
+        ideal_pos->vz = through_door_param->rail_sta_pos_C.vz +
+                        FP_MULTIPLY(offset_forward, shRcos(through_door_param->rail_ang_y_8), Q12_SHIFT) +
+                        FP_MULTIPLY(offset_lateral, -shRsin(through_door_param->rail_ang_y_8), Q12_SHIFT);
         ideal_pos->vy = through_door_param->rail_sta_pos_C.vy;
     }
 }
@@ -1992,41 +2000,41 @@ void vcMakeIdealCamPosUseVC_ROAD_DATA(VECTOR3* ideal_pos, VC_WORK* w_p, enum _VC
     s32                final_cam_dist;
     s32                default_cam_dist;
 
-    base_angle  = w_p->chara_eye_ang_y_144 + 0x800;
+    base_angle  = w_p->chara_eye_ang_y_144 + FP_ANGLE(180.0f);
     delta_angle = shAngleRegulate(w_p->cam_chara2ideal_ang_y_FE - base_angle);
 
-    if (abs(w_p->chara_ang_spd_y_142) >= 0xE4)
+    if (abs(w_p->chara_ang_spd_y_142) > FP_ANGLE(20.0f))
     {
-        delta_angle = CLAMP(delta_angle, -0x88, 0x88);
+        delta_angle = CLAMP(delta_angle, FP_ANGLE(-12.0f), FP_ANGLE(12.0f));
     }
     else if (delta_angle >= 0)
     {
-        delta_angle = 0x88;
+        delta_angle = FP_ANGLE(12.0f);
     }
     else
     {
-        delta_angle = -0x88;
+        delta_angle = FP_ANGLE(-12.0f);
     }
 
     w_p->cam_chara2ideal_ang_y_FE = shAngleRegulate(delta_angle + base_angle);
 
     if (cur_rd_area_size == VC_AREA_TINY)
     {
-        default_cam_dist = 0x1CCC;
+        default_cam_dist = FP_METER(1.8f);
     }
     else if (cur_rd_area_size == VC_AREA_SMALL)
     {
-        default_cam_dist = 0x2000;
+        default_cam_dist = FP_METER(2.0f);
     }
     else
     {
-        default_cam_dist = 0x2800;
+        default_cam_dist = FP_METER(2.5f);
     }
 
     near_road_data = &w_p->cur_near_road_2B8;
 
     ideal_pos->vx = w_p->chara_pos_114.vx + FP_MULTIPLY(default_cam_dist, shRsin(w_p->cam_chara2ideal_ang_y_FE), Q12_SHIFT);
-    ideal_pos->vy = w_p->chara_top_y_124 - 0x666;
+    ideal_pos->vy = w_p->chara_top_y_124 - FP_METER(0.4f);
     ideal_pos->vz = w_p->chara_pos_114.vz + FP_MULTIPLY(default_cam_dist, shRcos(w_p->cam_chara2ideal_ang_y_FE), Q12_SHIFT);
 
     cam_pos_y   = w_p->cam_pos_50.vy;
@@ -2041,7 +2049,7 @@ void vcMakeIdealCamPosUseVC_ROAD_DATA(VECTOR3* ideal_pos, VC_WORK* w_p, enum _VC
         delta_y_clamped = chara_pos_y - cam_pos_y;
     }
 
-    delta_y_clamped -= 0x1800;
+    delta_y_clamped -= FP_METER(1.5f);
     if (delta_y_clamped < 0)
     {
         delta_y_clamped = 0;
@@ -2060,25 +2068,26 @@ void vcMakeIdealCamPosUseVC_ROAD_DATA(VECTOR3* ideal_pos, VC_WORK* w_p, enum _VC
 
     if (cur_rd_area_size == VC_AREA_TINY)
     {
-        blend_min_dist = 0xB3;
-        blend_max_dist = 0x200;
+        blend_min_dist = FP_METER(0.04375f);
+        blend_max_dist = FP_METER(0.125);
     }
     else if (cur_rd_area_size < 2)
     {
-        blend_min_dist = 0xB3;
-        blend_max_dist = 0x300;
+        blend_min_dist = FP_METER(0.04375f);
+        blend_max_dist = FP_METER(0.1875);
     }
     else
     {
-        blend_min_dist = 0x200;
-        blend_max_dist = 0x500;
+        blend_min_dist = FP_METER(0.125);
+        blend_max_dist = FP_METER(0.3125);
     }
 
     if (blend_max_dist >= horizontal_distance_fp)
     {
         if (blend_min_dist < horizontal_distance_fp)
         {
-            final_cam_dist = default_cam_dist + ((0x666 - default_cam_dist) * (horizontal_distance_fp - blend_min_dist)) / (blend_max_dist - blend_min_dist);
+            final_cam_dist = default_cam_dist +
+                             ((FP_METER(0.4f) - default_cam_dist) * (horizontal_distance_fp - blend_min_dist)) / (blend_max_dist - blend_min_dist);
         }
         else
         {
@@ -2087,7 +2096,7 @@ void vcMakeIdealCamPosUseVC_ROAD_DATA(VECTOR3* ideal_pos, VC_WORK* w_p, enum _VC
     }
     else
     {
-        final_cam_dist = 0x666;
+        final_cam_dist = FP_METER(0.4f);
     }
 
     ideal_pos->vx = w_p->chara_pos_114.vx + Math_MulFixed(final_cam_dist, shRsin(w_p->cam_chara2ideal_ang_y_FE), Q12_SHIFT);
@@ -2133,7 +2142,7 @@ void vcMakeBasicCamTgtMvVec(VECTOR3* tgt_mv_vec, VECTOR3* ideal_pos, VC_WORK* w_
 {
     s32 now2ideal_tgt_dist;
     s16 now2ideal_tgt_ang_y;
-    s32 temp_s0; // SH2: float xz_vec[4];
+    s32 temp_s0;             // SH2: `float xz_vec[4];`
     s32 temp_s1;
 
     temp_s1 = ideal_pos->vx - w_p->cam_tgt_pos_44.vx;
@@ -2236,7 +2245,7 @@ void vcCamTgtMvVecIsFlipedFromCharaFront(VECTOR3* tgt_mv_vec, VC_WORK* w_p, s32 
     s16                flip_ang_y;
     VC_NEAR_ROAD_DATA* use_nearest_p;
     s16                ang_y;
-    s32                flip_dist; // TODO: Name maybe switched with mv_len.
+    s32                flip_dist; // TODO: Name maybe switched with `mv_len`.
     s32                chk_near_dist;
     s32                mv_len;
     s32                min_z;
@@ -2255,7 +2264,7 @@ void vcCamTgtMvVecIsFlipedFromCharaFront(VECTOR3* tgt_mv_vec, VC_WORK* w_p, s32 
             mv_len = FP_METER(0.5f);
         }
 
-        // chk_pos is unused?
+        // `chk_pos` is unused?
         chk_pos.vx = pre_tgt_pos.vx + Math_MulFixed(mv_len, shRsin(flip_ang_y), Q12_SHIFT);
         chk_pos.vz = pre_tgt_pos.vz + Math_MulFixed(mv_len, shRcos(flip_ang_y), Q12_SHIFT);
 
@@ -2335,28 +2344,28 @@ s32 vcFlipFromCamExclusionArea(s16* flip_ang_y_p, s32* old_cam_excl_area_r_p, VE
     switch (cur_rd_area_size)
     {
         case VC_AREA_SMALL:
-            base_radius = 0x1000;
+            base_radius = FP_METER(1.0f);
             break;
 
         case VC_AREA_TINY:
-            base_radius = 0xB33;
+            base_radius = FP_METER(0.7f);
             break;
 
         case VC_AREA_WIDE:
-            base_radius = 0x1000;
+            base_radius = FP_METER(1.0f);
             break;
 
         default:
-            base_radius = 0xB33;
+            base_radius = FP_METER(0.7f);
             break;
     }
 
-    desired_radius = FP_FROM(base_radius * vwOresenHokan(excl_r_ary, 9, abs_relative_angle_y, 0, 0x800), Q12_SHIFT);
+    desired_radius = FP_FROM(base_radius * vwOresenHokan(excl_r_ary, 9, abs_relative_angle_y, 0, FP_ANGLE(180.0f)), Q12_SHIFT);
 
-    if (*old_cam_excl_area_r_p != -1)
+    if (*old_cam_excl_area_r_p != NO_VALUE)
     {
         delta_radius = desired_radius - *old_cam_excl_area_r_p;
-        min_step     = FP_MULTIPLY((s64)g_DeltaTime0, (s64)-0x800, Q12_SHIFT);
+        min_step     = FP_MULTIPLY((s64)g_DeltaTime0, (s64)FP_ANGLE(-180.0f), Q12_SHIFT);
 
         if (delta_radius < min_step)
         {
@@ -2611,7 +2620,7 @@ void vcAdjCamOfsAngByOfsAngSpd(SVECTOR* ofs_ang, SVECTOR* ofs_ang_spd, SVECTOR* 
 
     ofs_ang_spd->vx = vwRetNewAngSpdToTargetAng(ofs_ang_spd->vx, ofs_ang->vx, ofs_tgt_ang->vx, prm_p->ang_accel_x, prm_p->max_ang_spd_x, max_spd_dec_per_dist.vx);
     ofs_ang_spd->vy = vwRetNewAngSpdToTargetAng(ofs_ang_spd->vy, ofs_ang->vy, ofs_tgt_ang->vy, prm_p->ang_accel_y, prm_p->max_ang_spd_y, max_spd_dec_per_dist.vy);
-    ofs_ang_spd->vz = vwRetNewAngSpdToTargetAng(ofs_ang_spd->vz, ofs_ang->vz, ofs_tgt_ang->vz, FP_FLOAT_TO(0.4f, Q12_SHIFT), FP_FLOAT_TO(0.4f, Q12_SHIFT), FP_FLOAT_TO(3.0f, Q12_SHIFT));
+    ofs_ang_spd->vz = vwRetNewAngSpdToTargetAng(ofs_ang_spd->vz, ofs_ang->vz, ofs_tgt_ang->vz, FP_METER(0.4f), FP_ANGLE(144.0f), FP_METER(3.0f));
 
     ofs_ang->vx += FP_MULTIPLY(ofs_ang_spd->vx, (s64)g_DeltaTime0, Q12_SHIFT);
     ofs_ang->vy += FP_MULTIPLY(ofs_ang_spd->vy, (s64)g_DeltaTime0, Q12_SHIFT);
@@ -2655,7 +2664,9 @@ void vcSetDataToVwSystem(VC_WORK* w_p, VC_CAM_MV_TYPE cam_mv_type) // 0x80085884
     {
         vcSelfViewTimer += g_DeltaTime0;
 
-        // TODO: in SH2 these FP_ANGLEs are using radian float values, while rest of SH2 used degrees.
+        // TODO: There should really be two angle macros: `FP_DEG` (currently named `FP_ANGLE`) and `FP_RAD`.
+        // Need to figure out the format used by fixed-point radians.
+        // In SH2 these `FP_ANGLE`s are using radian `float`s, while rest of SH2 uses degrees.
         // Maybe these are meant to be radians encoded as Q3.12 somehow, but haven't found a good way for it yet.
         noise_ang.vx = vcCamMatNoise(4, FP_ANGLE(500.0f), FP_ANGLE(800.0f), vcSelfViewTimer);
         noise_ang.vy = vcCamMatNoise(2, FP_ANGLE(400.0f), FP_ANGLE(1000.0f), vcSelfViewTimer);
