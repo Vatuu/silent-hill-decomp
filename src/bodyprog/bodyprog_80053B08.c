@@ -1,19 +1,21 @@
 #include "game.h"
 #include "inline_no_dmpsx.h"
 #include "gtemac.h"
+
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math.h"
+#include "main/rng.h"
 
 /** @note For better comprehension related to file handling
-* of inventory items.
-*
-* `GameFs_UniqueItemModelLoad` loads model of items individually.
-* `GameFs_MapItemsModelLoad` and `GameFs_MapItemsTextureLoad` load packs of textures and
-* models of items, though while `GameFs_UniqueItemModelLoad` seems to load
-* them individually based on what is being passed as argument,
-* `GameFs_MapItemsModelLoad` and `GameFs_MapItemsTextureLoad` load the packs based on the 
-* map being loaded.
-*/
+ * of inventory items.
+ *
+ * - `GameFs_UniqueItemModelLoad` loads model of items individually.
+ * - `GameFs_MapItemsModelLoad` and `GameFs_MapItemsTextureLoad` load packs of textures and
+ *   models of items, though while `GameFs_UniqueItemModelLoad` seems to load
+ *   them individually based on what is being passed as argument,
+ * - `GameFs_MapItemsModelLoad` and `GameFs_MapItemsTextureLoad` load the packs based on the 
+ *   map being loaded.
+ */
 
 // TODO: RODATA migration.
 #ifdef NON_MATCHING
@@ -567,16 +569,16 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80053B08", func_800548D8); // 0x
 
 void func_80054928() // 0x80054928
 {
-    s32 i;
+    s32         i;
     s_800C39A8* ptr;
 
     for (i = 0; i < 10; i++)
     {
         u8 val = 0xFF;
         ptr = &D_800C39A8[i];
-        ptr->field_C = val;
-        ptr->field_D = val;
-        ptr->field_E = val;
+        ptr->field_C  = val;
+        ptr->field_D  = val;
+        ptr->field_E  = val;
         ptr->field_10 = 1 << 12;
         ptr->field_14 = 0;
         ptr->field_18 = 0;
@@ -794,13 +796,13 @@ void func_8005B46C(s32* arg0) // 0x8005B46C
 
 void func_8005B474(s32* arg0, u32 arg1, s32 idx) // 0x8005B474
 {
-    u32 temp_a2;
-    u32 var_a1;
     u32* ptr;
+    u32  temp_a2;
+    u32  var_a1;
 
-    var_a1 = arg1;
+    var_a1  = arg1;
     temp_a2 = var_a1 + (idx * 24);
-    ptr = arg0 + 1;
+    ptr     = arg0 + 1;
 
     if (var_a1 >= temp_a2)
     {
@@ -809,9 +811,9 @@ void func_8005B474(s32* arg0, u32 arg1, s32 idx) // 0x8005B474
 
     do
     {
-        *ptr = var_a1;
+        *ptr   = var_a1;
         var_a1 += 24;
-        *arg0 += 1;
+        *arg0  += 1;
 
         ptr += 1;
     }
@@ -831,11 +833,11 @@ void func_8005BF0C(s16 unused, s16 x, s16 y) // 0x8005BF0C
 
 s16 func_8005BF38(s16 arg0) // 0x8005BF38
 {
-    s16 temp;
     s16 res;
+    s16 temp;
 
     temp = arg0 & 0xFFF;
-    res = temp;
+    res  = temp;
 
     if (temp >= 0x801)
     {
@@ -903,7 +905,28 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80053B08", func_800611C0); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80053B08", func_800622B8); // 0x800622B8
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80053B08", func_800625F4); // 0x800625F4
+void func_800625F4(VECTOR3* arg0, s16 arg1, s32 arg2, s32 arg3) // 0x800625F4
+{
+    s32 idx;
+    s8  var;
+
+    var = func_8005F55C(arg2);
+
+    idx = func_8005E7E0(4);
+    if (idx == NO_VALUE)
+    {
+        return;
+    }
+
+    g_MapOverlayHeader.field_4C[idx].field_0  = arg0->vx;
+    g_MapOverlayHeader.field_4C[idx].field_8  = arg0->vy;
+    g_MapOverlayHeader.field_4C[idx].field_4  = arg0->vz;
+    g_MapOverlayHeader.field_4C[idx].field_E  = arg1;
+    g_MapOverlayHeader.field_4C[idx].field_D  = var;
+    g_MapOverlayHeader.field_4C[idx].field_B  = TEST_RNG(2);
+    g_MapOverlayHeader.field_4C[idx].field_C  = 6;
+    g_MapOverlayHeader.field_4C[idx].field_10 = arg3 * 0x5000;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80053B08", func_80062708); // 0x80062708
 
