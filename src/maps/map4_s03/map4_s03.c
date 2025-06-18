@@ -464,7 +464,7 @@ INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D6554);
     chara->properties_E4.player.properties_E4[3].val32 = g_SysWork.player_4C.chara_0.position_18.vx;
     chara->properties_E4.player.properties_E4[4].val32 = g_SysWork.player_4C.chara_0.position_18.vz;
 
-    if (someDist < FP_METER(19.2f) && someRotY < FP_ANGLE(11.25f))
+    if (someDist < FP_METER_REAL(1.2f) && someRotY < FP_ANGLE(11.25f))
     {
         if (!(chara->properties_E4.player.properties_E4[1].val16[0] & (1 << 1)))
         {

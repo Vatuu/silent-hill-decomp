@@ -139,7 +139,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80042C3C);
 
 s32 func_80042DE8(s32 posX, s32 posZ, s32 fileChunkCoordX, s32 fileChunkCoordZ, s32 clip) // 0x80042DE8
 {
-    #define DIST_THRESHOLD FP_METER(16.0f)
+    #define DIST_THRESHOLD FP_METER_REAL(1.0f)
 
     s32 dist;
 

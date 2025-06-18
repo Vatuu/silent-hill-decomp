@@ -6,7 +6,7 @@
 #include "bodyprog/math.h"
 #include "bodyprog/vw_system.h"
 
-#define MIN_IN_ROAD_DIST FP_METER(16.0f) // vcGetMinInRoadDist() in SH2, hardcoded to FP_METER(16.0f) in SH1.
+#define MIN_IN_ROAD_DIST FP_METER_REAL(1.0f) // vcGetMinInRoadDist() in SH2, hardcoded to FP_METER_REAL(1.0f) in SH1.
 
 void vcInitVCSystem(VC_ROAD_DATA* vc_road_ary_list) // 0x80080940
 {
@@ -586,7 +586,7 @@ s32 vcRetSelfViewEffectRate(VC_CAM_MV_TYPE cur_cam_mv_type, s32 far_watch_rate, 
         return 0;
     }
 
-    cam_max_rate = (cur_cam_mv_type == VC_MV_SELF_VIEW) ? FP_METER(16.0f) : FP_METER(5.6f);
+    cam_max_rate = (cur_cam_mv_type == VC_MV_SELF_VIEW) ? FP_METER_REAL(1.0f) : FP_METER_REAL(0.35f);
 
     xyz_dist = Math_VectorMagnitude(FP_FROM(w_p->cam_pos_50.vx - w_p->chara_head_pos_130.vx, Q4_SHIFT),
                                     FP_FROM(w_p->cam_pos_50.vy - w_p->chara_head_pos_130.vy, Q4_SHIFT),
@@ -594,13 +594,13 @@ s32 vcRetSelfViewEffectRate(VC_CAM_MV_TYPE cur_cam_mv_type, s32 far_watch_rate, 
 
     if (xyz_dist >= FP_METER(0.5f))
     {
-        if (xyz_dist > FP_METER(1.2f))
+        if (xyz_dist > FP_METER_REAL(0.075f))
         {
             max_rate = 0;
         }
         else
         {
-            max_rate = (cam_max_rate * (FP_METER(1.2f) - xyz_dist)) / FP_METER(0.7f);
+            max_rate = (cam_max_rate * (FP_METER_REAL(0.075f) - xyz_dist)) / FP_METER(0.7f);
         }
     }
     else
@@ -608,19 +608,19 @@ s32 vcRetSelfViewEffectRate(VC_CAM_MV_TYPE cur_cam_mv_type, s32 far_watch_rate, 
         max_rate = cam_max_rate;
     }
 
-    if (w_p->nearest_enemy_xz_dist_2E0 > FP_METER(64.0f))
+    if (w_p->nearest_enemy_xz_dist_2E0 > FP_METER_REAL(4.0f))
     {
-        mul_rate = FP_METER(16.0f);
+        mul_rate = FP_METER_REAL(1.0f);
     }
     else
     {
-        if (w_p->nearest_enemy_xz_dist_2E0 < FP_METER(32.0f))
+        if (w_p->nearest_enemy_xz_dist_2E0 < FP_METER_REAL(2.0f))
         {
             mul_rate = 0;
         }
         else
         {
-            mul_rate = (w_p->nearest_enemy_xz_dist_2E0 - FP_METER(32.0f)) / 2;
+            mul_rate = (w_p->nearest_enemy_xz_dist_2E0 - FP_METER_REAL(2.0f)) / 2;
         }
     }
 
@@ -1197,10 +1197,10 @@ s32 vcAdvantageDistOfOldCurRoad(VC_NEAR_ROAD_DATA* old_cur_p) // 0x80082AD0
         case VC_RD_TYPE_ROAD:
         case VC_RD_TYPE_EFFECT:
         default:
-            return FP_METER(5.6f);
+            return FP_METER_REAL(0.35f);
 
         case VC_RD_TYPE_EVENT:
-            return FP_METER(2.4f);
+            return FP_METER_REAL(0.15f);
     }
 }
 
@@ -1422,7 +1422,7 @@ void vcAutoRenewalCamTgtPos(VC_WORK* w_p, VC_CAM_MV_TYPE cam_mv_type, VC_CAM_MV_
             break;
 
         case 1:
-            vcMakeBasicCamTgtMvVec(&tgt_vec, &ideal_pos, w_p, FP_METER(16.0f));
+            vcMakeBasicCamTgtMvVec(&tgt_vec, &ideal_pos, w_p, FP_METER_REAL(1.0f));
             break;
     }
 
@@ -1451,7 +1451,7 @@ s32 vcRetMaxTgtMvXzLen(VC_WORK* w_p, VC_CAM_MV_PARAM* cam_mv_prm_p) // 0x8008395
 {
     s32 max_spd_xz;
 
-    max_spd_xz = w_p->chara_mv_spd_13C + FP_METER(16.0f) + abs(w_p->chara_ang_spd_y_142 * 8);
+    max_spd_xz = w_p->chara_mv_spd_13C + FP_METER_REAL(1.0f) + abs(w_p->chara_ang_spd_y_142 * 8);
     max_spd_xz = (max_spd_xz < FP_METER(35.2f)) ? FP_METER(35.2f) : max_spd_xz;
     max_spd_xz = (cam_mv_prm_p->max_spd_xz > max_spd_xz) ? max_spd_xz : cam_mv_prm_p->max_spd_xz;
 
@@ -1478,7 +1478,7 @@ void vcMakeIdealCamPosByHeadPos(VECTOR3* ideal_pos, VC_WORK* w_p, VC_AREA_SIZE_T
     else
     {
         chara2cam_ang_y = w_p->chara_eye_ang_y_144 + FP_ANGLE(170.0f);
-        ideal_pos->vy   = w_p->chara_head_pos_130.vy + FP_METER(1.6f);
+        ideal_pos->vy   = w_p->chara_head_pos_130.vy + FP_METER_REAL(0.1f);
     }
 
     ideal_pos->vx = w_p->chara_head_pos_130.vx + FP_MULTIPLY(shRsin(chara2cam_ang_y), FP_ANGLE(64.8f), Q12_SHIFT);
@@ -1645,9 +1645,9 @@ void vcCamTgtMvVecIsFlipedFromCharaFront(VECTOR3* tgt_mv_vec, VC_WORK* w_p, s32 
     if (flip_dist > 0)
     {
         mv_len = flip_dist;
-        if (flip_dist > FP_METER(8.0f))
+        if (flip_dist > FP_METER_REAL(0.5f))
         {
-            mv_len = FP_METER(8.0f);
+            mv_len = FP_METER_REAL(0.5f);
         }
 
         // chk_pos is unused?
@@ -1762,7 +1762,7 @@ void vcRenewalCamData(VC_WORK* w_p, VC_CAM_MV_PARAM* cam_mv_prm_p) // 0x80084BD8
     dec_spd_per_dist_y  = FP_MULTIPLY_PRECISE(cam_mv_prm_p->accel_y, 1.0f, Q12_SHIFT);
 
     vwRenewalXZVelocityToTargetPos(&w_p->cam_velo_60.vx, &w_p->cam_velo_60.vz, &w_p->cam_pos_50,
-                                   &w_p->cam_tgt_pos_44, FP_METER(1.6f), cam_mv_prm_p->accel_xz,
+                                   &w_p->cam_tgt_pos_44, FP_METER_REAL(0.1f), cam_mv_prm_p->accel_xz,
                                    cam_mv_prm_p->max_spd_xz, dec_spd_per_dist_xz, FP_TO(12, Q12_SHIFT));
 
     w_p->cam_velo_60.vy  = vwRetNewVelocityToTargetVal(w_p->cam_velo_60.vy, w_p->cam_pos_50.vy, w_p->cam_tgt_pos_44.vy,
@@ -1968,8 +1968,8 @@ void vcSetDataToVwSystem(VC_WORK* w_p, VC_CAM_MV_TYPE cam_mv_type) // 0x80085884
     {
         w_p->field_D8 = 0;
         vwSetCoordRefAndEntou(&g_SysWork.playerBoneCoords_890[PlayerBone_Head],
-                              0, FP_METER(-0.8f), FP_METER(4.8f),
-                              FP_ANGLE(180.0f), FP_ANGLE(0.0f), FP_METER(-3.2f), FP_METER(16.0f));
+                              0, FP_METER_REAL(-0.05f), FP_METER_REAL(0.3f),
+                              FP_ANGLE(180.0f), FP_ANGLE(0.0f), FP_METER(-3.2f), FP_METER_REAL(1.0f));
     }
     else if (w_p->field_FC != 0)
     {
