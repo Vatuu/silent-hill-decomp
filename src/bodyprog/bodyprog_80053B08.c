@@ -17,8 +17,6 @@
  *   map being loaded.
  */
 
-// TODO: RODATA migration.
-#ifdef NON_MATCHING
 void GameFs_UniqueItemModelLoad(s32 itemId) // 0x80053B08
 {
     switch (itemId & 0xFF)
@@ -317,9 +315,6 @@ void GameFs_UniqueItemModelLoad(s32 itemId) // 0x80053B08
             break;
     }
 }
-#else
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80053B08", GameFs_UniqueItemModelLoad); // 0x80053B08
-#endif
 
 void GameFs_Tim00TIMLoad() // 0x80053dA0
 {
@@ -332,8 +327,6 @@ void GameFs_Tim00TIMLoad() // 0x80053dA0
     g_SysWork.flags_2352 |= 1 << 0;
 }
 
-// TODO: RODATA migration.
-#ifdef NON_MATCHING
 void GameFs_MapItemsModelLoad(u32 mapId) // 0x80053DFC
 {
     if (!(g_SysWork.flags_2352 & (1 << 7)))
@@ -428,12 +421,7 @@ void GameFs_MapItemsModelLoad(u32 mapId) // 0x80053DFC
             break;
     }
 }
-#else
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80053B08", GameFs_MapItemsModelLoad); // 0x80053DFC
-#endif
 
-// TODO: RODATA migration.
-#ifdef NON_MATCHING
 void GameFs_MapItemsTextureLoad(s32 mapId) // 0x80054024
 {
     switch (mapId)
@@ -499,15 +487,132 @@ void GameFs_MapItemsTextureLoad(s32 mapId) // 0x80054024
             break;
     }
 }
-#else
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80053B08", GameFs_MapItemsTextureLoad); // 0x80054024
-#endif
 
 /** @brief Function related to file loading of inventory element.
 * This function loads Harry's potrait for the status image. */
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80053B08", func_800540A4); // 0x800540A4
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80053B08", func_80054200); // 0x80054200
+void func_80054200() // 0x80054200
+{
+    s32  temp_s5;
+    s32  i;
+    s32  itemIdx;
+    s32  specialItemIdx;
+    s32* var_s1;
+    s32* var_s2;
+
+    func_8004BFE8();
+
+    D_800AE190 = 0;
+
+    func_8004BB4C(&D_800C3B48, &D_800C3AE8, &D_800C3B38, 0);
+
+    for (i = 0; i < 10; i++)
+    {
+        D_800C3E18[i] = NO_VALUE;
+
+        D_800C3BE8[i].field_0.vz  = FP_METER(1.0f);
+        D_800C3BE8[i].field_0.vy  = FP_METER(1.0f);
+        D_800C3BE8[i].field_0.vx  = FP_METER(1.0f);
+        D_800C3BE8[i].field_10.vz = 0;
+        D_800C3BE8[i].field_10.vy = 0;
+        D_800C3BE8[i].field_10.vx = 0;
+        D_800C3BE8[i].field_18.vz = 0;
+        D_800C3BE8[i].field_18.vy = 0;
+        D_800C3BE8[i].field_18.vx = 0;
+    }
+
+    func_8004BCBC(FS_BUFFER_8);
+
+    temp_s5 = (g_SysWork.field_2351 - 3 + g_SavegamePtr->field_AB) % g_SavegamePtr->field_AB;
+
+    if (g_GameWork.gameStateStep_598[1] < 21)
+    {
+        for (specialItemIdx = 0; specialItemIdx < 7; specialItemIdx++)
+        {
+            D_800C3E18[specialItemIdx] = (temp_s5 + specialItemIdx) % g_SavegamePtr->field_AB;
+
+            if (g_SavegamePtr->items_0[D_800C3E18[specialItemIdx]].id_0 == 0xFF)
+            {
+                continue;
+            }
+
+            for (itemIdx = 0; itemIdx < 40; itemIdx++)
+            {
+                if (g_SavegamePtr->items_0[D_800C3E18[specialItemIdx]].id_0 == D_800C3BB8[itemIdx])
+                {
+                    func_80054720(FS_BUFFER_8, specialItemIdx, itemIdx);
+                    func_8005487C(specialItemIdx);
+
+                    itemIdx = 40;
+                }
+            }
+        }
+
+        D_800AE184 = g_SavegamePtr->equippedWeapon_AA;
+
+        for (i = 0; i < g_SavegamePtr->field_AB; i++)
+        {
+            if (g_SavegamePtr->items_0[i].id_0 == D_800AE184)
+            {
+                D_800C3E18[7] = i;
+
+                i = g_SavegamePtr->field_AB;
+            }
+        }
+
+        if (D_800C3E34 != NO_VALUE)
+        {
+            for (itemIdx = 0; itemIdx < 40; itemIdx++)
+            {
+                if (D_800AE184 == D_800C3BB8[itemIdx])
+                {
+                    func_80054720(FS_BUFFER_8, 7, itemIdx);
+                    func_8005487C(7);
+
+                    itemIdx = 40;
+                }
+            }
+        }
+
+        D_800C3E48.field_248.vx = 0;
+        D_800C3E48.field_248.vy = FP_METER(-0.15625f);
+        D_800C3E48.field_248.vz = 0;
+    }
+    else
+    {
+        u8 itemIds[] = // 0x8002848C .rodata
+        {
+            InventoryItemId_GasolineTank,
+            InventoryItemId_Chainsaw,
+            InventoryItemId_RockDrill,
+            InventoryItemId_Katana,
+            InventoryItemId_ChannelingStone,
+            InventoryItemId_HyperBlaster
+        };
+
+        if (g_SavegamePtr->clearGameCount_24A == 0)
+        {
+            g_SavegamePtr->clearGameCount_24A = 1;
+        }
+
+        for (specialItemIdx = 0; specialItemIdx < 6; specialItemIdx++)
+        {
+            D_800C3E18[specialItemIdx] = specialItemIdx;
+
+            for (itemIdx = 0; itemIdx < 40; itemIdx++)
+            {
+                if (itemIds[specialItemIdx] == D_800C3BB8[itemIdx])
+                {
+                    func_80054720(FS_BUFFER_8, specialItemIdx, itemIdx);
+                    func_8005487C(specialItemIdx);
+
+                    itemIdx = 40;
+                }
+            }
+        }
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80053B08", func_80054558); // 0x80054558
 
@@ -599,24 +704,25 @@ void func_80054A04(s32 arg0) // 0x80054A04
     D_800AE180 = 0;
     D_800AE1AC = 0;
     D_800AE1B0 = 0;
-    D_800C3E18.field_24 = NO_VALUE;
-    D_800C3BE8.field_17C = 0;
-    D_800C3BE8.field_17A = 0;
-    D_800C3BE8.field_178 = 0;
-    D_800C3BE8.field_188 = 0;
-    D_800C3BE8.field_184 = 0;
-    D_800C3BE8.field_180 = 0;
+
+    D_800C3E18[9]             = NO_VALUE;
+    D_800C3BE8[9].field_10.vz = 0;
+    D_800C3BE8[9].field_10.vy = 0;
+    D_800C3BE8[9].field_10.vx = 0;
+    D_800C3BE8[9].field_18.vz = 0;
+    D_800C3BE8[9].field_18.vy = 0;
+    D_800C3BE8[9].field_18.vx = 0;
 
     func_8004BCBC(FS_BUFFER_5);
 
-    D_800C3E18.field_24 = 0;
+    D_800C3E18[9] = 0;
 
     func_80054720(FS_BUFFER_5, 9, 0);
     func_8005487C(9);
 
-    D_800C3BE8.field_170 = 1 << 12;
-    D_800C3BE8.field_16C = 1 << 12;
-    D_800C3BE8.field_168 = 1 << 12;
+    D_800C3BE8[9].field_0.vz = 1 << 12;
+    D_800C3BE8[9].field_0.vy = 1 << 12;
+    D_800C3BE8[9].field_0.vx = 1 << 12;
 
     func_800549A0();
     func_8004BB4C(&D_800C3B48, &D_800C3AE8, &D_800C3B38, 0);

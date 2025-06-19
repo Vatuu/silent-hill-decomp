@@ -455,26 +455,16 @@ STATIC_ASSERT_SIZEOF(s_800C39A8, 32);
 
 typedef struct
 {
-    s32 unk_0[36];
-    s32 field_24;
-    s8  unk_2[212];
-    s32 field_168;
-    s32 field_16C;
-    s32 field_170;
-    s32 unk_174;
-    s16 field_178;
-    s16 field_17A;
-    s16 field_17C;
-    s32 field_180;
-    s32 field_184;
-    s32 field_188;
+    VECTOR  field_0;
+    SVECTOR field_10;
+    VECTOR  field_18;
 } s_800C3BE8;
 
 typedef struct
 {
-    s8  unk_0[36];
-    s32 field_24;
-} s_800C3E18;
+    u8      unk_0[0x248];
+    VECTOR3 field_248;
+} s_800C3E48;
 
 typedef struct
 {
@@ -1003,6 +993,8 @@ extern u8 D_800AE186;
 
 extern s8 D_800AE187;
 
+extern s32 D_800AE190;
+
 extern s32 D_800AE1AC;
 
 extern s32 D_800AE1B0;
@@ -1242,9 +1234,15 @@ extern SVECTOR3 D_800C3B38;
 
 extern VbRVIEW D_800C3B48;
 
-extern s_800C3BE8 D_800C3BE8;
+extern u8 D_800C3BB8[INVENTORY_ITEM_COUNT_MAX];
 
-extern s_800C3E18 D_800C3E18;
+extern s_800C3BE8 D_800C3BE8[10];
+
+extern s32 D_800C3E18[10];
+
+extern s32 D_800C3E34;
+
+extern s_800C3E48 D_800C3E48;
 
 extern s_D_800C4168 D_800C4168;
 
@@ -1719,6 +1717,10 @@ void func_800540A4(s8);
 void func_80054634();
 
 void func_800546A8(s32 arg0);
+
+void func_80054720(void*, s32, s32);
+
+void func_8005487C(s32);
 
 void func_800553C4(s8 arg0, s8 arg1, s8 arg2, s8 arg3);
 
