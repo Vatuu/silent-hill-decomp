@@ -20,9 +20,9 @@ void sharedFunc_800D2244_0_s00(s32 arg0)
         extra->model_0.anim_4.keyframeIdx0_8  = 503;
 
         player->model_0.anim_4.time_4         = FP_TO(503, Q12_SHIFT);
-        player->model_0.anim_4.keyframeIdx1_A = 4096;
+        player->model_0.anim_4.keyframeIdx1_A = FP_TO(1, Q12_SHIFT);
         extra->model_0.anim_4.time_4          = FP_TO(503, Q12_SHIFT);
-        extra->model_0.anim_4.keyframeIdx1_A  = 4096;
+        extra->model_0.anim_4.keyframeIdx1_A  = FP_TO(1, Q12_SHIFT);
     }
     else
     {
@@ -37,10 +37,10 @@ void sharedFunc_800D2244_0_s00(s32 arg0)
         g_SysWork.player_4C.extra_128.field_24 = 0;
     }
 
-    player->unk_40[1]     = -1;
-    player->unk_40[0]     = -1;
-    g_SysWork.unk_2354[1] = -1;
-    g_SysWork.unk_2354[0] = -1;
+    player->unk_40[1]     = NO_VALUE;
+    player->unk_40[0]     = NO_VALUE;
+    g_SysWork.unk_2354[1] = NO_VALUE;
+    g_SysWork.unk_2354[0] = NO_VALUE;
 
 #if !defined(MAP0_S00) && !defined(MAP0_S01)
     func_8003D01C();
@@ -64,13 +64,13 @@ void sharedFunc_800D2244_0_s00(s32 arg0)
 
     player->field_D6 = 942;
 
-    g_SysWork.player_4C.chara_0.field_C8 = -0x1999; // TODO: Q19.12?
-    g_SysWork.player_4C.chara_0.field_CE = -0x1199;
-    g_SysWork.player_4C.chara_0.field_CA = 0;
-    g_SysWork.player_4C.chara_0.field_DE = 0;
-    g_SysWork.player_4C.chara_0.field_DC = 0;
-    g_SysWork.player_4C.chara_0.field_DA = 0;
-    g_SysWork.player_4C.chara_0.field_D8 = 0;
+    g_SysWork.player_4C.chara_0.field_C8                        = FP_FLOAT_TO(-1.6f, Q12_SHIFT);
+    g_SysWork.player_4C.chara_0.field_CE                        = FP_FLOAT_TO(-1.1f, Q12_SHIFT);
+    g_SysWork.player_4C.chara_0.field_CA                        = 0;
+    g_SysWork.player_4C.chara_0.field_DE                        = 0;
+    g_SysWork.player_4C.chara_0.field_DC                        = 0;
+    g_SysWork.player_4C.chara_0.field_DA                        = 0;
+    g_SysWork.player_4C.chara_0.field_D8                        = 0;
     g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~((1 << 2) | (1 << 13) | (1 << 14) | (1 << 15));
 
     player->flags_3E &= ~CharaFlag_Unk4;

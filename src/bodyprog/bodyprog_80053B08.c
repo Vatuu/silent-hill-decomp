@@ -697,9 +697,51 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80053B08", func_80056504); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80053B08", func_80056558); // 0x80056558
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80053B08", func_8005660C); // 0x8005660C
+void func_8005660C(s_func_8005660C_0* arg0, s_func_8005660C_1* arg1, s32 arg2) // 0x8005660C
+{
+    s32 coeff;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80053B08", func_800566B4); // 0x800566B4
+    coeff = 4;
+    switch (arg1->field_0)
+    {
+        default:
+        case 0:
+            break;
+
+        case 1:
+            coeff = 2;
+            break;
+
+        case 2:
+            coeff = 1;
+            break;
+    }
+
+    arg0->field_14 = arg1->field_2 * coeff;
+    arg0->field_15 = arg1->field_3;
+
+    arg0->field_E  = ((arg1->field_0 & 0x3) << 7) | ((arg2 & 0x3) << 5) | (arg1->field_1 & (1 << 4)) | (arg1->field_1 & 0xF);
+    arg0->field_10 = (arg1->field_6 << 6) | ((arg1->field_4 >> 4) & 0x3F);
+}
+
+void func_800566B4(s_func_800566B4* arg0, s_FsImageDesc* image, s8 unused, s32 startIdx, s32 arg4) // 0x800566B4
+{
+    char                 filename[16];
+    s_func_800566B4_sub* var_s0;
+    s_FsImageDesc*       imagePtr;
+    s32                  i;
+
+    // Loop could be using `&image[i]`/`&arg0->field_4[i]` instead? Wasn't able to make that match though.
+    imagePtr = image;
+    var_s0   = arg0->field_4;
+
+    for (i = 0; i < arg0->field_3; i++, var_s0++, imagePtr++)
+    {
+        func_8005B3BC(filename, var_s0);
+        Fs_QueueStartReadTim(Fs_FindNextFile(filename, 0, startIdx), FS_BUFFER_9, imagePtr);
+        func_8005660C(var_s0, imagePtr, arg4);
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80053B08", func_80056774); // 0x80056774
 

@@ -150,6 +150,39 @@ typedef struct
 
 typedef struct
 {
+    s8  unk_0[14];
+    s8  field_E;
+    s16 field_10;
+    s8  unk_12[2];
+    u8  field_14;
+    u8  field_15;
+} s_func_8005660C_0;
+
+typedef struct
+{
+    u8  field_0;
+    u8  field_1;
+    u8  field_2;
+    u8  field_3;
+    s16 field_4;
+    s16 field_6;
+} s_func_8005660C_1;
+
+typedef struct
+{
+  u8 unk_0[24];
+} s_func_800566B4_sub;
+STATIC_ASSERT_SIZEOF(s_func_800566B4_sub, 24);
+
+typedef struct
+{
+    s8                   unk_0[3];
+    u8                   field_3; // Size of `field_4` array.
+    s_func_800566B4_sub* field_4;
+} s_func_800566B4;
+
+typedef struct
+{
     s32 field_0;
     s32 field_4;
     s16 field_8;
@@ -1695,6 +1728,10 @@ void func_80055434(VECTOR3* vec);
 void func_80054928();
 
 void func_80054A04(s32 arg0);
+
+void func_8005660C(s_func_8005660C_0* arg0, s_func_8005660C_1* arg1, s32 arg2);
+
+void func_800566B4(s_func_800566B4* arg0, s_FsImageDesc* image, s8 unused, s32 startIdx, s32 arg4);
 
 void func_80056D64(s8* prevStr, s8* newStr);
 
