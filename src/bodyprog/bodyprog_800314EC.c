@@ -1170,7 +1170,7 @@ void func_80037E78(s_SubCharacter* chara) // 0x80037E78
     // TODO: Strange `chara->headingAngle_3C` access.
     if (chara->health_B0 <= 0 && (*(s32*)&chara->headingAngle_3C & 0x600000) == 0x200000)
     {
-        idx = chara->unk_40[1];
+        idx = chara->field_41;
         if (idx < 39)
         {
             cond = D_800AD4C8[idx].field_10 == 3;

@@ -813,7 +813,9 @@ typedef struct _SubCharacter
     s32     moveSpeed_38;
     s16     headingAngle_3C;
     s16     flags_3E;
-    s8      unk_40[4];
+    s8      field_40; // Used by `sharedFunc_800D2244_0_s00`.
+    s8      field_41; // Used by `sharedFunc_800D2244_0_s00`.
+    s8      unk_42[2];
     s16     field_44;
     s8      unk_46[2];
     s8      unk_48[104];
@@ -937,7 +939,9 @@ typedef struct _SysWork
     u32             field_2351   : 8;
     u32             flags_2352   : 8;
     s32             field_2353   : 8; // Some index into `npcs_1A0`.
-    s8              unk_2354[4];
+    s8              field_2354; // Used by `sharedFunc_800D2244_0_s00`.
+    s8              field_2355; // Used by `sharedFunc_800D2244_0_s00`.
+    s8              unk_2356[2];
     u8              field_2358;
     s8              unk_2359[3];
     GsCOORDINATE2*  field_235C;
