@@ -1327,8 +1327,8 @@ void vcMakeNormalWatchTgtPos(VECTOR3* watch_tgt_pos, s16* watch_tgt_ang_z_p, VC_
 
     if (cam_mv_type == VC_MV_FIX_ANG)
     {
-        ang.vx = shAngleRegulate(FP_TO(w_p->cur_near_road_2B8.road_p_0->field_16, Q4_SHIFT));
-        ang.vy = shAngleRegulate(FP_TO(w_p->cur_near_road_2B8.road_p_0->field_17, Q4_SHIFT));
+        ang.vx = shAngleRegulate(FP_TO((u8)w_p->cur_near_road_2B8.road_p_0->field_16, Q4_SHIFT));
+        ang.vy = shAngleRegulate(FP_TO((u8)w_p->cur_near_road_2B8.road_p_0->field_17, Q4_SHIFT));
         ang.vz = 0;
 
         vwAngleToVector(&vec, &ang, FP_METER(0.25f));
@@ -1418,33 +1418,23 @@ void vcMixSelfViewEffectToWatchTgtPos(VECTOR3* watch_tgt_pos, s16* watch_tgt_ang
     vwMatrixToAngleYXZ(&vec, head_mat);
     angle_delta_y = shAngleRegulate(vec.vy - sys_work->player_4C.chara_0.rotation_24.vy);
 
-    if (anim_status >= 6)
+    switch (anim_status)
     {
-        if (anim_status >= 8)
-        {
-            if (anim_status < 36)
+        case 6:
+        case 7:
+            break;
+
+        case 34:
+        case 35:
+            if (w_p->nearest_enemy_2DC != NULL)
             {
-                if (anim_status >= 34)
-                {
-                    if (w_p->nearest_enemy_2DC != NULL)
-                    {
-                        vec.vz = 0;
-                    }
-                }
-                else
-                {
-                    vec.vz = vec.vz >> 1;
-                }
+                vec.vz = 0;
             }
-            else
-            {
-                vec.vz = vec.vz >> 1;
-            }
-        }
-    }
-    else
-    {
-        vec.vz = vec.vz >> 1;
+            break;
+
+        default:
+            vec.vz = vec.vz >> 1;
+            break;
     }
 
     switch (anim_status)
@@ -2505,7 +2495,99 @@ void vcRenewalCamMatAng(VC_WORK* w_p, VC_WATCH_MV_PARAM* watch_mv_prm_p, VC_CAM_
     vcMakeCamMatAndCamAngByBaseAngAndOfsAng(&w_p->cam_mat_ang_8E, &w_p->cam_mat_98, &new_base_cam_ang, &w_p->ofs_cam_ang_B8, &w_p->cam_pos_50);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vc_main", vcMakeNewBaseCamAng);
+void vcMakeNewBaseCamAng(SVECTOR* new_base_ang, VC_CAM_MV_TYPE cam_mv_type, VC_WORK* w_p) // 0x80084EDC
+{
+    s_8002AAE0 sp18;
+    s16        temp_a0_3;
+    s16        temp_v0;
+    s16        new_base_ang_x;
+    s16        new_base_ang_y;
+    s16        var_v1_2;
+    s16        temp_a0_2;
+    s16        temp_2; // angle
+    s16        temp_t0;
+    s16        temp_v0_2;
+    s16        temp_v1;
+    s16        temp_v1_2;
+    s32        zDelta;
+    s32        yDelta;
+    s32        xDelta;
+
+    xDelta = FP_FROM(w_p->watch_tgt_pos_7C.vx - w_p->cam_pos_50.vx, Q4_SHIFT);
+    yDelta = FP_FROM(w_p->watch_tgt_pos_7C.vy - w_p->cam_pos_50.vy, Q4_SHIFT);
+    zDelta = FP_FROM(w_p->watch_tgt_pos_7C.vz - w_p->cam_pos_50.vz, Q4_SHIFT);
+
+    if (w_p->flags_8 & VC_USER_WATCH_F)
+    {
+        new_base_ang->vx = 0;
+        new_base_ang->vy = 0;
+        new_base_ang->vz = 0;
+    }
+    else if (cam_mv_type != VC_MV_SETTLE)
+    {
+        new_base_ang->vx = 0;
+        new_base_ang->vy = 0;
+        new_base_ang->vz = 0;
+    }
+    else
+    {
+        temp_2  = ratan2(-yDelta, Vc_VectorMagnitudeCalc(xDelta, 0, zDelta));
+        temp_v0 = ratan2(xDelta, zDelta);
+
+        temp_v1   = FP_TO(w_p->cur_near_road_2B8.road_p_0->field_16, Q4_SHIFT);
+        temp_a0_2 = FP_TO(w_p->cur_near_road_2B8.road_p_0->field_17, Q4_SHIFT);
+
+        temp_v1_2 = ((temp_v0 - temp_v1) << 20) >> 20;
+        temp_v0_2 = ((temp_v0 - temp_a0_2) << 20) >> 20;
+
+        if (temp_v1_2 >= 0 && temp_v0_2 <= 0)
+        {
+            new_base_ang_y = temp_v0;
+        }
+        else if (ABS(temp_v1_2) < ABS(temp_v0_2))
+        {
+            new_base_ang_y = temp_v1;
+        }
+        else
+        {
+            new_base_ang_y = temp_a0_2;
+        }
+
+        if (!(w_p->flags_8 & VC_WARP_WATCH_F))
+        {
+            if (w_p->chara_mv_spd_13C != 0 && temp_2 < FP_ANGLE(75.0f) && temp_2 >= FP_ANGLE(-74.9f))
+            {
+                temp_t0        = ((new_base_ang_y - w_p->base_cam_ang_C8.vy) << 20) >> 20;
+                temp_a0_3      = FP_MULTIPLY((s64)g_DeltaTime0, 0x555, Q12_SHIFT);
+                var_v1_2       = CLAMP(temp_t0, -temp_a0_3, temp_a0_3);
+                new_base_ang_y = w_p->base_cam_ang_C8.vy + var_v1_2;
+            }
+            else
+            {
+                new_base_ang_y = w_p->base_cam_ang_C8.vy;
+            }
+        }
+
+        new_base_ang_x = temp_2;
+        if (new_base_ang_x < 0)
+        {
+            new_base_ang_x = -new_base_ang_x;
+        }
+
+        sp18           = D_8002AAE0;
+        new_base_ang_x = vwOresenHokan(&sp18.field_0, 5, new_base_ang_x, 0, FP_METER(0.25f));
+        new_base_ang_x = CLAMP(new_base_ang_x, 0, FP_ANGLE(90.0f));
+
+        if (temp_2 < 0)
+        {
+            new_base_ang_x = -new_base_ang_x;
+        }
+
+        new_base_ang->vx = new_base_ang_x;
+        new_base_ang->vy = new_base_ang_y;
+        new_base_ang->vz = 0;
+    }
+}
 
 void vcRenewalBaseCamAngAndAdjustOfsCamAng(VC_WORK* w_p, SVECTOR* new_base_cam_ang) // 0x800851B0
 {
