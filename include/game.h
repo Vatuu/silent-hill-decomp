@@ -717,14 +717,14 @@ typedef struct _ModelAnimData
     // Following 4 bytes might be packed into an s32 called `animStatus`,
     // implied by an original param name in `vcMixSelfViewEffectToWatchTgtPos`.
 
-    u8  animIdx_0;
-    u8  maybeSomeState_1; // State says if `animTime_4` is anim time or a func ptr? That field could be a union.
-    u16 flags_2;          /** `e_AnimFlags` */ // Bit 1: movement unlockled(?), bit 2: visible.
-    s32 time_4;           /** Time along keyframe timeline in Q19.12. */ 
-    s16 keyframeIdx0_8;
-    s16 keyframeIdx1_A;
+    u8          animIdx_0;
+    u8          maybeSomeState_1; // State says if `animTime_4` is anim time or a func ptr? That field could be a union.
+    u16         flags_2;          /** `e_AnimFlags` */ // Bit 1: movement unlockled(?), bit 2: visible.
+    s32         time_4;           /** Time along keyframe timeline in Q19.12. */ 
+    s16         keyframeIdx0_8;
+    s16         keyframeIdx1_A;
     s_AnimInfo* animInfo_C;
-    s32 field_10;
+    s32         field_10;
 } s_ModelAnim;
 STATIC_ASSERT_SIZEOF(s_ModelAnim, 20);
 
@@ -749,10 +749,10 @@ typedef union
 // TODO: Unsure if this struct is puppet doctor specific or shared with all chars, pointer gets set at puppetDoc+0x124
 typedef struct
 {
-    s32   health_0;
-    u8    unk_4[32];
+    s32         health_0;
+    s8          unk_4[32];
     s_AnimInfo* animInfo_24;
-    u8    unk_28[12];
+    s8          unk_28[12];
 } s_800D5710;
 STATIC_ASSERT_SIZEOF(s_800D5710, 0x34);
 

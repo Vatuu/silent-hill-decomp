@@ -653,7 +653,22 @@ INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800DEE90);
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800DEF50);
 
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800DEFE8);
+void func_800DEFE8(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x800DEFE8
+{
+    s32 yPos;
+
+    if (chara->model_0.anim_4.flags_2 & AnimFlag_Unk2)
+    {
+        func_800DEF50();
+        return;
+    }
+
+    yPos            = chara->position_18.vy;
+    chara->field_CA = yPos;
+    chara->field_CC = yPos;
+    chara->field_C8 = yPos - FP_METER(1.0f);
+    chara->field_CE = yPos - FP_METER(0.5f);
+}
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800DF044);
 
@@ -799,7 +814,25 @@ INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800E0528);
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800E05DC);
 
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800E0670);
+void func_800E0670(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x800E0670
+{
+    s32 xDelta;
+    s32 zDelta;
+
+    func_800DB608();
+
+    if (chara->model_0.state_2 == 3)
+    {
+        func_800DFF60(chara, coord);
+    }
+
+    xDelta = (g_SysWork.player_4C.chara_0.position_18.vx - chara->position_18.vx) >> 6;
+    zDelta = (g_SysWork.player_4C.chara_0.position_18.vz - chara->position_18.vz) >> 6;
+    if ((SquareRoot0(SQUARE(xDelta) + SQUARE(zDelta)) << 6) < FP_METER(2.5f) && func_800DFB04() == 0)
+    {
+        func_800DFA48(&g_SysWork.player_4C.chara_0.position_18, &chara->position_18);
+    }
+}
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800E0728);
 
@@ -809,9 +842,19 @@ INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800E07F0);
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800E0888);
 
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800E08E4);
+void func_800E08E4(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x800E08E4
+{
+    if (chara->model_0.stateStep_3 == 0)
+    {
+        func_800E05DC(chara, coord);
+    }
+}
 
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800E0914);
+void func_800E0914(s_SubCharacter* chara) // 0x800E0914
+{
+    func_800DD6CC();
+    func_800DF944();
+}
 
 void Ai_Unknown23_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords) // 0x800E093C
 {
