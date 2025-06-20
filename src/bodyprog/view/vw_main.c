@@ -155,4 +155,54 @@ void Vw_ClampAngleRange(s16* angleMin, s16* angleMax, s16 angleConstraintMin, s1
     *angleMax = (rotToAngleMax + prevAngleMin) & 0xFFF;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vw_main", func_80048E3C);
+s16 func_80048E3C(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4) // 0x80048E3C
+{
+    s16 var_v0;
+    s32 var_v0_3;
+    s32 temp_a0;
+    s16 temp_lo;
+    s32 temp_v0;
+    s32 var_a1;
+    s32 var_v0_2;
+    s16 new_var;
+
+    if (arg1 > 0)
+    {
+        if (arg2 < 0)
+        {
+            return FP_TO(1, Q12_SHIFT);
+        }
+    }
+    else if (arg1 >= 0 || arg2 > 0)
+    {
+        return FP_TO(1, Q12_SHIFT);
+    }
+
+    if (arg2 == 0)
+    {
+        if (arg3 <= 0 && arg4 >= 0)
+        {
+            return 0;
+        }
+        return FP_TO(1, Q12_SHIFT);
+    }
+
+    if (ABS(arg2) > ABS(arg1))
+    {
+        return FP_TO(1, Q12_SHIFT);
+    }
+    else
+    {
+        temp_lo = FP_FROM(arg2 << 16, Q4_SHIFT) / arg1;
+        temp_a0 = FP_MULTIPLY(arg0, temp_lo, Q12_SHIFT);
+
+        if (temp_a0 < arg3 || arg4 < temp_a0)
+        {
+            return FP_TO(1, Q12_SHIFT);
+        }
+        else
+        {
+            return temp_lo;
+        }
+    }
+}
