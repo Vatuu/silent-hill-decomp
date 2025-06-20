@@ -25,6 +25,10 @@
 #define CLAMP(x, min, max) \
     (((x) < (min)) ? (min) : (((x) > (max)) ? (max) : (x)))
 
+/** @brief Computes the absolute value. */
+#define ABS(x) \
+    ((x) < 0 ? -(x) : (x))
+
 /** @brief Computes the absolute sum of two values. */
 #define ABS_ADD(a, b) \
     (((a) >= 0) ? ((b) + (a)) : ((b) - (a)))

@@ -149,8 +149,8 @@ typedef struct _VC_ROAD_DATA
     s32               field_14          : 8; /** May contain `mv_y_type`/`rd_dir_type`. */
     u32               field_15          : 4;
     s16               cam_mv_type_14    : 4; /** `VC_CAM_MV_TYPE` */
-    u8                field_16;
-    u8                field_17;
+    s8                field_16;
+    s8                field_17;
 } VC_ROAD_DATA;
 STATIC_ASSERT_SIZEOF(VC_ROAD_DATA, 24);
 
