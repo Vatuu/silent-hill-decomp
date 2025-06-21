@@ -14,7 +14,7 @@ s32 sharedFunc_800D8964_0_s00(s_SubCharacter* chara)
 #elif defined(MAP7_S02)
     extern s_AnimInfo D_800E7B68[];
     extern s_AnimInfo D_800E7EA8[];
-    extern s_AnimInfo D_800E7FC8[];
+    extern s_AnimInfo sharedData_800DF174_0_s00[];
     extern s_AnimInfo D_800E82A8[];
 #elif defined(MAP7_S03)
     extern s_AnimInfo D_800EA1E0[];
@@ -76,7 +76,7 @@ s32 sharedFunc_800D8964_0_s00(s_SubCharacter* chara)
             break;
 
         case Chara_Kaufmann:
-            animInfo = &D_800E7FC8[chara->model_0.anim_4.animIdx_0];
+            animInfo = &sharedData_800DF174_0_s00[chara->model_0.anim_4.animIdx_0];
             break;
 
         case Chara_GhostDoctor:

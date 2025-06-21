@@ -174,7 +174,7 @@ void Ai_Incubator_Init(s_SubCharacter* chara) // 0x800D3F38
 
 #include "maps/shared/Ai_Kaufmann_Update.h" // 0x800D3F58
 
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", sharedFunc_800CF290_3_s00); // 0x800D3FCC
+#include "maps/shared/sharedFunc_800CF290_3_s00.h" // 0x800D3FCC
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", sharedFunc_800CF2D8_3_s00); // 0x800D4014
 

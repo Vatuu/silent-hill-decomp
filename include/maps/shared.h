@@ -76,7 +76,7 @@ extern s_AnimInfo sharedData_800D5ABC_3_s03[]; // Used by `Ai_Bloodsucker_Init`.
 
 extern u8 sharedData_800DD591_0_s00;
 
-extern s_AnimInfo sharedData_800DF174_0_s00[]; // Used by `sharedFunc_800D921C_0_s00`.
+extern s_AnimInfo sharedData_800DF174_0_s00[]; // Used by `sharedFunc_800D921C_0_s00`, `Ai_Kaufmann` related?
 
 extern s32 sharedData_800DFB64_0_s00;
 extern s32 sharedData_800DFB68_0_s00;
@@ -396,7 +396,7 @@ void Ai_BloodyLisa_Init(s_SubCharacter* chara);
 void Ai_Kaufmann_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords);
 void sharedSymbol_800CF470_3_s00(s_SubCharacter*, GsCOORDINATE2*);
 void sharedFunc_800CF2D8_3_s00(s_SubCharacter*, GsCOORDINATE2*);
-void sharedFunc_800CF290_3_s00(s_SubCharacter*, s32, GsCOORDINATE2*);
+void sharedFunc_800CF290_3_s00(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coord);
 void Ai_Kaufmann_Init(s_SubCharacter* chara);
 
 // `Ai_GhostChildAlessa` related

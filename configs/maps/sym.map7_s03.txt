@@ -67,6 +67,7 @@ Ai_Unknown23_Init = 0x800DFB98; // type:func
 Ai_Unknown23_Update = 0x800E093C; // type:func
 sharedFunc_800D929C_0_s00 = 0x800E0A80; // type:func
 sharedData_800DD59C_0_s00 = 0x800EA1DC; // type:u8
+sharedData_800DF174_0_s00 = 0x800EAC80; // type:AnimInfo
 g_Ai_LittleIncubus_AnimInfo = 0x800EAFA8; // type:AnimInfo
 g_Ai_Incubus_AnimInfo = 0x800EC808; // type:AnimInfo
 g_Ai_Unknown23_AnimInfo = 0x800ECE50; // type:AnimInfo

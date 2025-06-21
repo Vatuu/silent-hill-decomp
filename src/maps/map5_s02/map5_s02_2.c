@@ -47,7 +47,7 @@ INCLUDE_ASM("asm/maps/map5_s02/nonmatchings/map5_s02_2", sharedFunc_800D7BE8_0_s
 
 #include "maps/shared/Ai_Kaufmann_Update.h" // 0x800D2EA8
 
-INCLUDE_ASM("asm/maps/map5_s02/nonmatchings/map5_s02_2", sharedFunc_800CF290_3_s00); // 0x800D2F1C
+#include "maps/shared/sharedFunc_800CF290_3_s00.h" // 0x800D2F1C
 
 INCLUDE_ASM("asm/maps/map5_s02/nonmatchings/map5_s02_2", sharedFunc_800CF2D8_3_s00); // 0x800D2F64
 

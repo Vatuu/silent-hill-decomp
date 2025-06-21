@@ -104,7 +104,7 @@ INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", sharedFunc_800D4C0C_7_s
 
 #include "maps/shared/Ai_Kaufmann_Update.h" // 0x800D7EAC
 
-INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", sharedFunc_800CF290_3_s00); // 0x800D7F20
+#include "maps/shared/sharedFunc_800CF290_3_s00.h" // 0x800D7F20
 
 INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", sharedFunc_800CF2D8_3_s00); // 0x800D7F68
 
