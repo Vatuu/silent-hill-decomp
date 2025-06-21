@@ -27,7 +27,7 @@
 
 /** @brief Computes the absolute value. */
 #define ABS(x) \
-    ((x) < 0 ? -(x) : (x))
+    (((x) < 0) ? -(x) : (x))
 
 /** @brief Computes the absolute sum of two values. */
 #define ABS_ADD(a, b) \

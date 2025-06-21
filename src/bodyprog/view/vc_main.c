@@ -1387,7 +1387,8 @@ void vcMakeNormalWatchTgtPos(VECTOR3* watch_tgt_pos, s16* watch_tgt_ang_z_p, VC_
 
 void vcMixSelfViewEffectToWatchTgtPos(VECTOR3* watch_tgt_pos, s16* watch_tgt_ang_z_p, s16 effect_rate, VC_WORK* w_p, MATRIX* head_mat, s32 anim_status) // 0x80082DF8
 {
-    SVECTOR    vec;
+    // TODO: Most aren't original names. Try substituting with ones found in symbols.
+    SVECTOR    cam_ang;       // Original name.
     s32        angle_delta_y;
     s32        delta_y;
     s32        new_y;
@@ -1415,8 +1416,8 @@ void vcMixSelfViewEffectToWatchTgtPos(VECTOR3* watch_tgt_pos, s16* watch_tgt_ang
 
     sys_work = &g_SysWork;
 
-    vwMatrixToAngleYXZ(&vec, head_mat);
-    angle_delta_y = shAngleRegulate(vec.vy - sys_work->player_4C.chara_0.rotation_24.vy);
+    vwMatrixToAngleYXZ(&cam_ang, head_mat);
+    angle_delta_y = shAngleRegulate(cam_ang.vy - sys_work->player_4C.chara_0.rotation_24.vy);
 
     switch (anim_status)
     {
@@ -1428,12 +1429,12 @@ void vcMixSelfViewEffectToWatchTgtPos(VECTOR3* watch_tgt_pos, s16* watch_tgt_ang
         case 35:
             if (w_p->nearest_enemy_2DC != NULL)
             {
-                vec.vz = 0;
+                cam_ang.vz = FP_ANGLE(0.0f);
             }
             break;
 
         default:
-            vec.vz = vec.vz >> 1;
+            cam_ang.vz = cam_ang.vz >> 1;
             break;
     }
 
@@ -1446,25 +1447,25 @@ void vcMixSelfViewEffectToWatchTgtPos(VECTOR3* watch_tgt_pos, s16* watch_tgt_ang
             break;
 
         default:
-            vec.vy = g_SysWork.player_4C.chara_0.rotation_24.vy;
+            cam_ang.vy = g_SysWork.player_4C.chara_0.rotation_24.vy;
             break;
 
         case 34:
         case 35:
             if (w_p->nearest_enemy_2DC != NULL)
             {
-                vec.vy = g_SysWork.player_4C.chara_0.rotation_24.vy;
+                cam_ang.vy = g_SysWork.player_4C.chara_0.rotation_24.vy;
             }
             else
             {
-                vec.vy += 0x155;
+                cam_ang.vy += FP_ANGLE(30.0f);
             }
             break;
 
         case 52:
         case 53:
             abs_angle_delta_y = angle_delta_y;
-            if (angle_delta_y < 0)
+            if (angle_delta_y < FP_ANGLE(0.0f))
             {
                 abs_angle_delta_y = -angle_delta_y;
             }
@@ -1472,7 +1473,7 @@ void vcMixSelfViewEffectToWatchTgtPos(VECTOR3* watch_tgt_pos, s16* watch_tgt_ang
             if (abs_angle_delta_y > FP_ANGLE(4.0f))
             {
                 corrected_angle_y = ((abs_angle_delta_y - FP_ANGLE(4.0f)) >> 3) + FP_ANGLE(4.0f);
-                if (angle_delta_y < 0)
+                if (angle_delta_y < FP_ANGLE(0.0f))
                 {
                     corrected_angle_y = -corrected_angle_y;
                 }
@@ -1481,7 +1482,7 @@ void vcMixSelfViewEffectToWatchTgtPos(VECTOR3* watch_tgt_pos, s16* watch_tgt_ang
             {
                 corrected_angle_y = angle_delta_y;
             }
-            vec.vy = g_SysWork.player_4C.chara_0.rotation_24.vy + corrected_angle_y;
+            cam_ang.vy = g_SysWork.player_4C.chara_0.rotation_24.vy + corrected_angle_y;
             break;
 
         case 4:
@@ -1506,7 +1507,7 @@ void vcMixSelfViewEffectToWatchTgtPos(VECTOR3* watch_tgt_pos, s16* watch_tgt_ang
             {
                 corrected_angle_y = FP_ANGLE(-10.0f);
             }
-            vec.vy = g_SysWork.player_4C.chara_0.rotation_24.vy + corrected_angle_y;
+            cam_ang.vy = g_SysWork.player_4C.chara_0.rotation_24.vy + corrected_angle_y;
             break;
     }
 
@@ -1517,22 +1518,22 @@ void vcMixSelfViewEffectToWatchTgtPos(VECTOR3* watch_tgt_pos, s16* watch_tgt_ang
 
         case 54:
         case 55:
-            vec.vx = vec.vx >> 1;
+            cam_ang.vx = cam_ang.vx >> 1;
 
         case 52:
         case 53:
-            vec.vx -= 0x5B;
+            cam_ang.vx -= FP_ANGLE(8.0f);
             break;
 
         case 34:
         case 35:
             if (w_p->nearest_enemy_2DC != NULL)
             {
-                vec.vx = -0x4F;
+                cam_ang.vx = FP_ANGLE(-7.0f);
             }
             else
             {
-                vec.vx -= 0x5B;
+                cam_ang.vx -= FP_ANGLE(8.0f);
             }
             break;
 
@@ -1543,17 +1544,17 @@ void vcMixSelfViewEffectToWatchTgtPos(VECTOR3* watch_tgt_pos, s16* watch_tgt_ang
             temp_dir = (g_SysWork.player_4C.chara_0.rotation_24.vy >> 7) & 0xF;
             if (temp_dir == 0 || temp_dir == 5)
             {
-                vec.vx -= 0xB;
+                cam_ang.vx -= FP_ANGLE(1.0f);
             }
 
-            vec.vx -= 0x44;
+            cam_ang.vx -= FP_ANGLE(6.0f);
             break;
     }
 
     switch (anim_status)
     {
         default:
-            vec.vx = FP_MULTIPLY(vertical_angle, 0xB33, Q12_SHIFT);
+            cam_ang.vx = FP_MULTIPLY(vertical_angle, FP_ANGLE(252.0f), Q12_SHIFT);
             break;
 
         case 4:
@@ -1568,17 +1569,17 @@ void vcMixSelfViewEffectToWatchTgtPos(VECTOR3* watch_tgt_pos, s16* watch_tgt_ang
         case 35:
         case 52:
         case 53:
-            vec.vx = vec.vx + (vertical_angle >> 1);
+            cam_ang.vx = cam_ang.vx + (vertical_angle >> 1);
             break;
     }
 
-    limitRange(vec.vx, -0x38E, 0x38E);
+    limitRange(cam_ang.vx, FP_ANGLE(-80.0f), FP_ANGLE(80.0f));
 
-    *watch_tgt_ang_z_p += Math_MulFixed(shAngleRegulate(vec.vz - *watch_tgt_ang_z_p), effect_rate, Q12_SHIFT);
+    *watch_tgt_ang_z_p += Math_MulFixed(shAngleRegulate(cam_ang.vz - *watch_tgt_ang_z_p), effect_rate, Q12_SHIFT);
 
-    new_x = w_p->cam_pos_50.vx + FP_MULTIPLY(shRcos(vec.vx), FP_MULTIPLY(dist_to_target, shRsin(vec.vy), Q12_SHIFT), Q12_SHIFT);
-    new_z = w_p->cam_pos_50.vz + FP_MULTIPLY(shRcos(vec.vx), FP_MULTIPLY(dist_to_target, shRcos(vec.vy), Q12_SHIFT), Q12_SHIFT);
-    new_y = w_p->cam_pos_50.vy - FP_MULTIPLY(dist_to_target, shRsin(vec.vx), Q12_SHIFT);
+    new_x = w_p->cam_pos_50.vx + FP_MULTIPLY(shRcos(cam_ang.vx), FP_MULTIPLY(dist_to_target, shRsin(cam_ang.vy), Q12_SHIFT), Q12_SHIFT);
+    new_z = w_p->cam_pos_50.vz + FP_MULTIPLY(shRcos(cam_ang.vx), FP_MULTIPLY(dist_to_target, shRcos(cam_ang.vy), Q12_SHIFT), Q12_SHIFT);
+    new_y = w_p->cam_pos_50.vy - FP_MULTIPLY(dist_to_target, shRsin(cam_ang.vx), Q12_SHIFT);
 
     watch_tgt_pos->vx += Math_MulFixed(new_x - watch_tgt_pos->vx, effect_rate, Q12_SHIFT);
     watch_tgt_pos->vy += Math_MulFixed(new_y - watch_tgt_pos->vy, effect_rate, Q12_SHIFT);
@@ -2504,7 +2505,7 @@ void vcMakeNewBaseCamAng(SVECTOR* new_base_ang, VC_CAM_MV_TYPE cam_mv_type, VC_W
     s16        new_base_ang_y;
     s16        var_v1_2;
     s16        temp_a0_2;
-    s16        temp_2; // angle
+    s16        angle;
     s16        temp_t0;
     s16        temp_v0_2;
     s16        temp_v1;
@@ -2531,13 +2532,13 @@ void vcMakeNewBaseCamAng(SVECTOR* new_base_ang, VC_CAM_MV_TYPE cam_mv_type, VC_W
     }
     else
     {
-        temp_2  = ratan2(-yDelta, Vc_VectorMagnitudeCalc(xDelta, 0, zDelta));
+        angle   = ratan2(-yDelta, Vc_VectorMagnitudeCalc(xDelta, 0, zDelta));
         temp_v0 = ratan2(xDelta, zDelta);
 
         temp_v1   = FP_TO(w_p->cur_near_road_2B8.road_p_0->field_16, Q4_SHIFT);
         temp_a0_2 = FP_TO(w_p->cur_near_road_2B8.road_p_0->field_17, Q4_SHIFT);
 
-        temp_v1_2 = ((temp_v0 - temp_v1) << 20) >> 20;
+        temp_v1_2 = ((temp_v0 - temp_v1)   << 20) >> 20;
         temp_v0_2 = ((temp_v0 - temp_a0_2) << 20) >> 20;
 
         if (temp_v1_2 >= 0 && temp_v0_2 <= 0)
@@ -2555,7 +2556,7 @@ void vcMakeNewBaseCamAng(SVECTOR* new_base_ang, VC_CAM_MV_TYPE cam_mv_type, VC_W
 
         if (!(w_p->flags_8 & VC_WARP_WATCH_F))
         {
-            if (w_p->chara_mv_spd_13C != 0 && temp_2 < FP_ANGLE(75.0f) && temp_2 >= FP_ANGLE(-74.9f))
+            if (w_p->chara_mv_spd_13C != 0 && angle < FP_ANGLE(75.0f) && angle >= FP_ANGLE(-74.9f))
             {
                 temp_t0        = ((new_base_ang_y - w_p->base_cam_ang_C8.vy) << 20) >> 20;
                 temp_a0_3      = FP_MULTIPLY((s64)g_DeltaTime0, 0x555, Q12_SHIFT);
@@ -2568,7 +2569,7 @@ void vcMakeNewBaseCamAng(SVECTOR* new_base_ang, VC_CAM_MV_TYPE cam_mv_type, VC_W
             }
         }
 
-        new_base_ang_x = temp_2;
+        new_base_ang_x = angle;
         if (new_base_ang_x < 0)
         {
             new_base_ang_x = -new_base_ang_x;
@@ -2578,7 +2579,7 @@ void vcMakeNewBaseCamAng(SVECTOR* new_base_ang, VC_CAM_MV_TYPE cam_mv_type, VC_W
         new_base_ang_x = vwOresenHokan(&sp18.field_0, 5, new_base_ang_x, 0, FP_METER(0.25f));
         new_base_ang_x = CLAMP(new_base_ang_x, 0, FP_ANGLE(90.0f));
 
-        if (temp_2 < 0)
+        if (angle < 0)
         {
             new_base_ang_x = -new_base_ang_x;
         }
@@ -2789,7 +2790,18 @@ s32 vcCamMatNoise(s32 noise_w, s32 ang_spd1, s32 ang_spd2, s32 vcSelfViewTimer) 
     return FP_MULTIPLY(noise_w, noise, Q12_SHIFT);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/view/vc_main", Vc_VectorMagnitudeCalc);
+s32 Vc_VectorMagnitudeCalc(s32 x, s32 y, s32 z) // 0x80085B1C
+{
+    s32 mag;
+    s32 shift;
+
+    mag   = MAX(MAX(ABS(x), ABS(y)), ABS(z));
+    shift = Math_GetMagnitudeShift(mag);
+    x >>= shift;
+    y >>= shift;
+    z >>= shift;
+    return SquareRoot0(SQUARE(x) + SQUARE(y) + SQUARE(z)) << shift;
+}
 
 s32 vcGetXZSumDistFromLimArea(s32* out_vec_x_p, s32* out_vec_z_p, s32 chk_wld_x, s32 chk_wld_z,
                               s32 lim_min_x, s32 lim_max_x, s32 lim_min_z, s32 lim_max_z, s32 can_ret_minus_dist_f) // 0x80085C80

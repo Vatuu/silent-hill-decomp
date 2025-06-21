@@ -184,6 +184,7 @@ s16 func_80048E3C(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4) // 0x80048E3
         {
             return 0;
         }
+
         return FP_TO(1, Q12_SHIFT);
     }
 
