@@ -4,8 +4,6 @@
 #include "maps/shared.h"
 #include "maps/map7/map7_s02.h"
 
-#include <limits.h>
-
 #include "maps/shared/Ai_Stalker_Update.h" // 0x800D06F8
 
 #include "maps/shared/Ai_Stalker_Init.h" // 0x800D088C
@@ -52,7 +50,7 @@ INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", sharedFunc_800D7BE8_0_s
 
 INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", sharedFunc_800D08FC_3_s04); // 0x800D5A0C
 
-INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", sharedFunc_800D0944_3_s04); // 0x800D5A54
+#include "maps/shared/sharedFunc_800D0944_3_s04.h" // 0x800D5A54
 
 INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", sharedSymbol_800D0ADC_3_s04); // 0x800D5BEC
 
@@ -96,7 +94,7 @@ INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", sharedSymbol_800CD4A0_2
 
 INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", sharedFunc_800D4A2C_7_s01); // 0x800D7ADC
 
-INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", sharedFunc_800D4A74_7_s01); // 0x800D7B24
+#include "maps/shared/sharedFunc_800D4A74_7_s01.h" // 0x800D7B24
 
 INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", sharedFunc_800D4C0C_7_s01); // 0x800D7CBC
 
@@ -106,7 +104,7 @@ INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", sharedFunc_800D4C0C_7_s
 
 #include "maps/shared/sharedFunc_800CF290_3_s00.h" // 0x800D7F20
 
-INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", sharedFunc_800CF2D8_3_s00); // 0x800D7F68
+#include "maps/shared/sharedFunc_800CF2D8_3_s00.h" // 0x800D7F68
 
 INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", sharedSymbol_800CF470_3_s00); // 0x800D8100
 

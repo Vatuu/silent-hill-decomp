@@ -99,7 +99,7 @@ void func_800CF1B0(void) {}
 
 #include "maps/shared/sharedFunc_800CF290_3_s00.h" // 0x800CF290
 
-INCLUDE_ASM("asm/maps/map3_s00/nonmatchings/map3_s00", sharedFunc_800CF2D8_3_s00); // 0x800CF2D8
+#include "maps/shared/sharedFunc_800CF2D8_3_s00.h" // 0x800CF2D8
 
 INCLUDE_ASM("asm/maps/map3_s00/nonmatchings/map3_s00", sharedSymbol_800CF470_3_s00); // 0x800CF470
 

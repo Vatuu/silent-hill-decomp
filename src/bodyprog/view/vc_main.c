@@ -1,7 +1,5 @@
 #include "game.h"
 
-#include <limits.h>
-
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math.h"
 #include "bodyprog/vw_system.h"

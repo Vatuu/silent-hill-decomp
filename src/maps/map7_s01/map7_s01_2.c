@@ -3,8 +3,6 @@
 #include "main/rng.h"
 #include "maps/shared.h"
 
-#include <limits.h>
-
 INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01_2", func_800D16A4);
 
 INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01_2", func_800D17EC);
@@ -91,7 +89,7 @@ INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01_2", sharedFunc_800D0828_3_s
 
 INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01_2", sharedFunc_800D4A2C_7_s01); // 0x800D4A2C
 
-INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01_2", sharedFunc_800D4A74_7_s01); // 0x800D4A74
+#include "maps/shared/sharedFunc_800D4A74_7_s01.h" // 0x800D4A74
 
 INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01_2", sharedFunc_800D4C0C_7_s01); // 0x800D4C0C
 
@@ -101,7 +99,7 @@ INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01_2", sharedFunc_800D4C0C_7_s
 
 INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01_2", sharedFunc_800D08FC_3_s04); // 0x800D4E70
 
-INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01_2", sharedFunc_800D0944_3_s04); // 0x800D4EB8
+#include "maps/shared/sharedFunc_800D0944_3_s04.h" // 0x800D4EB8
 
 INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01_2", sharedSymbol_800D0ADC_3_s04); // 0x800D5050
 

@@ -4,8 +4,6 @@
 #include "maps/shared.h"
 #include "maps/map7/map7_s03.h"
 
-#include <limits.h>
-
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800CD170);
 
 #include "maps/shared/sharedFunc_800CBBBC_0_s00.h" // 0x800CD608
@@ -100,7 +98,7 @@ void func_800D102C() {}
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", sharedFunc_800D8888_0_s01); // 0x800D110C
 
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", sharedFunc_800D88D0_0_s01); // 0x800D1154
+#include "maps/shared/sharedFunc_800D88D0_0_s01.h" // 0x800D1154
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", sharedSymbol_800D8A68_0_s01); // 0x800D12EC - Differs from `map0_s01`/`map6_s01` versions, matches `map4_s01`.
 
@@ -120,7 +118,7 @@ INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", sharedSymbol_800CD4A0_2_s
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", sharedFunc_800CECFC_3_s02); // 0x800D2F7C
 
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", sharedFunc_800CED44_3_s02); // 0x800D2FC4
+#include "maps/shared/sharedFunc_800CED44_3_s02.h" // 0x800D2FC4
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", sharedFunc_800CEEDC_3_s02); // 0x800D315C
 
@@ -176,7 +174,7 @@ void Ai_Incubator_Init(s_SubCharacter* chara) // 0x800D3F38
 
 #include "maps/shared/sharedFunc_800CF290_3_s00.h" // 0x800D3FCC
 
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", sharedFunc_800CF2D8_3_s00); // 0x800D4014
+#include "maps/shared/sharedFunc_800CF2D8_3_s00.h" // 0x800D4014
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", sharedSymbol_800CF470_3_s00); // 0x800D41AC
 

@@ -101,7 +101,7 @@ void func_800CFE34(void) {}
 
 INCLUDE_ASM("asm/maps/map4_s04/nonmatchings/map4_s04", sharedFunc_800D08FC_3_s04); // 0x800CFF14
 
-INCLUDE_ASM("asm/maps/map4_s04/nonmatchings/map4_s04", sharedFunc_800D0944_3_s04); // 0x800CFF5C
+#include "maps/shared/sharedFunc_800D0944_3_s04.h" // 0x800CFF5C
 
 INCLUDE_ASM("asm/maps/map4_s04/nonmatchings/map4_s04", sharedSymbol_800D0ADC_3_s04); // 0x800D00F4
 

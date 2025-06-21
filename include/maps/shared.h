@@ -330,7 +330,7 @@ void Ai_Cybil_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords);
 
 void sharedFunc_800D8888_0_s01(s_SubCharacter*, s32, GsCOORDINATE2*);
 
-void sharedFunc_800D88D0_0_s01(s_SubCharacter*, GsCOORDINATE2*);
+void sharedFunc_800D88D0_0_s01(s_SubCharacter* chara, GsCOORDINATE2* coord);
 
 void sharedSymbol_800D8A68_0_s01(s_SubCharacter*, GsCOORDINATE2*);
 
@@ -383,7 +383,7 @@ void sharedFunc_800D81B0_0_s01(s_SubCharacter*);
 // `Ai_Lisa` related
 void Ai_Lisa_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords);
 void sharedFunc_800D08FC_3_s04(s_SubCharacter*, s32, GsCOORDINATE2*);
-void sharedFunc_800D0944_3_s04(s_SubCharacter*, GsCOORDINATE2*);
+void sharedFunc_800D0944_3_s04(s_SubCharacter* chara, GsCOORDINATE2* coord);
 void sharedSymbol_800D0ADC_3_s04(s_SubCharacter*, GsCOORDINATE2*); // `Ai_Lisa_Control`
 void Ai_Lisa_Init(s_SubCharacter* chara);
 
@@ -398,21 +398,21 @@ void Ai_BloodyLisa_Init(s_SubCharacter* chara);
 // `Ai_Kaufmann` related
 void Ai_Kaufmann_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords);
 void sharedSymbol_800CF470_3_s00(s_SubCharacter*, GsCOORDINATE2*);
-void sharedFunc_800CF2D8_3_s00(s_SubCharacter*, GsCOORDINATE2*);
+void sharedFunc_800CF2D8_3_s00(s_SubCharacter* chara, GsCOORDINATE2* coord);
 void sharedFunc_800CF290_3_s00(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coord);
 void Ai_Kaufmann_Init(s_SubCharacter* chara);
 
 // `Ai_GhostChildAlessa` related
 void Ai_GhostChildAlessa_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords);
 void sharedFunc_800D4A2C_7_s01(s_SubCharacter*, s32, GsCOORDINATE2*);
-void sharedFunc_800D4A74_7_s01(s_SubCharacter*, GsCOORDINATE2*);
+void sharedFunc_800D4A74_7_s01(s_SubCharacter* chara, GsCOORDINATE2* coord);
 void sharedFunc_800D4C0C_7_s01(s_SubCharacter*, GsCOORDINATE2*);
 void Ai_GhostChildAlessa_Init(s_SubCharacter* chara);
 
 // `Ai_Alessa` related
 void Ai_Alessa_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords);
 void sharedFunc_800CECFC_3_s02(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coord);
-void sharedFunc_800CED44_3_s02(s_SubCharacter*, GsCOORDINATE2*);
+void sharedFunc_800CED44_3_s02(s_SubCharacter* chara, GsCOORDINATE2* coord);
 void sharedFunc_800CEEDC_3_s02(s_SubCharacter*, GsCOORDINATE2*);
 void Ai_Alessa_Init(s_SubCharacter* chara);
 

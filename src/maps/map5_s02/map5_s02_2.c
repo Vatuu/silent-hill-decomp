@@ -49,7 +49,7 @@ INCLUDE_ASM("asm/maps/map5_s02/nonmatchings/map5_s02_2", sharedFunc_800D7BE8_0_s
 
 #include "maps/shared/sharedFunc_800CF290_3_s00.h" // 0x800D2F1C
 
-INCLUDE_ASM("asm/maps/map5_s02/nonmatchings/map5_s02_2", sharedFunc_800CF2D8_3_s00); // 0x800D2F64
+#include "maps/shared/sharedFunc_800CF2D8_3_s00.h" // 0x800D2F64
 
 INCLUDE_ASM("asm/maps/map5_s02/nonmatchings/map5_s02_2", sharedSymbol_800CF470_3_s00); // 0x800D30FC
 

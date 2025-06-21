@@ -85,7 +85,7 @@ void func_800CFD84(void) {}
 
 INCLUDE_ASM("asm/maps/map4_s01/nonmatchings/map4_s01", sharedFunc_800D8888_0_s01); // 0x800CFE64
 
-INCLUDE_ASM("asm/maps/map4_s01/nonmatchings/map4_s01", sharedFunc_800D88D0_0_s01); // 0x800CFEAC
+#include "maps/shared/sharedFunc_800D88D0_0_s01.h" // 0x800CFEAC
 
 INCLUDE_ASM("asm/maps/map4_s01/nonmatchings/map4_s01", sharedSymbol_800D8A68_0_s01); // 0x800D0044 - Differs from `map0_s01`/`map6_s01` version.
 

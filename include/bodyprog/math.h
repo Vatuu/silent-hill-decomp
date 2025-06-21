@@ -1,6 +1,8 @@
 #ifndef _BODYPROG_MATH_H
 #define _BODYPROG_MATH_H
 
+#include <limits.h>
+
 #define PI 3.1415927f
 
 #define Q4_SHIFT  4  /** Used for: Q27.4 positions. */
