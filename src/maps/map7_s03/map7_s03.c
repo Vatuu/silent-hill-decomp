@@ -184,7 +184,7 @@ INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", sharedSymbol_800CF470_3_s
 
 #include "maps/shared/Ai_BloodyLisa_Update.h" // 0x800D4C50
 
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", sharedFunc_800D595C_7_s01); // 0x800D4CC4
+#include "maps/shared/sharedFunc_800D595C_7_s01.h" // 0x800D4CC4
 
 #include "maps/shared/sharedFunc_800D59A4_7_s01.h" // 0x800D4D0C
 

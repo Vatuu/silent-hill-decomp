@@ -5,16 +5,13 @@ s32 sharedFunc_800D8964_0_s00(s_SubCharacter* chara)
     extern s_AnimInfo D_800D39A0[];
 #elif defined(MAP6_S04)
     extern s_AnimInfo D_800EA718[];
-    extern s_AnimInfo D_800EA9D8[];
     extern s_AnimInfo D_800EAB38[];
 #elif defined(MAP7_S01)
     extern s_AnimInfo D_800DFC78[];
     extern s_AnimInfo D_800DFD98[];
-    extern s_AnimInfo D_800DFFD8[];
 #elif defined(MAP7_S02)
     extern s_AnimInfo D_800E7B68[];
     extern s_AnimInfo D_800E7EA8[];
-    extern s_AnimInfo sharedData_800DF174_0_s00[];
     extern s_AnimInfo D_800E82A8[];
 #elif defined(MAP7_S03)
     extern s_AnimInfo D_800EA1E0[];
@@ -50,7 +47,7 @@ s32 sharedFunc_800D8964_0_s00(s_SubCharacter* chara)
             break;
 
         case Chara_Alessa:
-            animInfo = &D_800EA9D8[chara->model_0.anim_4.animIdx_0];
+            animInfo = &sharedData_800D1B6C_3_s02[chara->model_0.anim_4.animIdx_0];
             break;
 
 #elif defined(MAP7_S01)
@@ -63,7 +60,7 @@ s32 sharedFunc_800D8964_0_s00(s_SubCharacter* chara)
             break;
 
         case Chara_BloodyLisa:
-            animInfo = &D_800DFFD8[chara->model_0.anim_4.animIdx_0];
+            animInfo = &sharedData_800DFFD8_7_s01[chara->model_0.anim_4.animIdx_0];
             break;
 
 #elif defined(MAP7_S02)

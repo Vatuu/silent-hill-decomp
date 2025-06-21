@@ -68,6 +68,7 @@ extern s32 sharedData_800E237C_0_s01;
 extern s32 sharedData_800D16E0_2_s01;
 extern s8  sharedData_800D16E4_2_s01;
 
+extern s_AnimInfo sharedData_800D1B6C_3_s02[]; // `Ai_Alessa` related?
 extern s32 sharedData_800D3150_3_s02; // Used by `Ai_Alessa_Init`.
 
 extern s32 sharedData_800D5CF4_3_s00; // Used by `Ai_Kaufmann_Init`.
@@ -77,6 +78,8 @@ extern s_AnimInfo sharedData_800D5ABC_3_s03[]; // Used by `Ai_Bloodsucker_Init`.
 extern u8 sharedData_800DD591_0_s00;
 
 extern s_AnimInfo sharedData_800DF174_0_s00[]; // Used by `sharedFunc_800D921C_0_s00`, `Ai_Kaufmann` related?
+
+extern s_AnimInfo sharedData_800DFFD8_7_s01[]; // `Ai_BloodyLisa` related?
 
 extern s32 sharedData_800DFB64_0_s00;
 extern s32 sharedData_800DFB68_0_s00;
@@ -386,7 +389,7 @@ void Ai_Lisa_Init(s_SubCharacter* chara);
 
 // `Ai_BloodyLisa` related
 void Ai_BloodyLisa_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords);
-void sharedFunc_800D595C_7_s01(s_SubCharacter*, s32, GsCOORDINATE2*);
+void sharedFunc_800D595C_7_s01(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coord);
 void sharedFunc_800D59A4_7_s01(s_SubCharacter* chara, GsCOORDINATE2* coords);
 void sharedFunc_800D5B3C_7_s01(s_SubCharacter* chara, GsCOORDINATE2* coords);
 s32  sharedFunc_800D908C_0_s00(s32 arg0, s_SubCharacter* chara, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
@@ -408,7 +411,7 @@ void Ai_GhostChildAlessa_Init(s_SubCharacter* chara);
 
 // `Ai_Alessa` related
 void Ai_Alessa_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords);
-void sharedFunc_800CECFC_3_s02(s_SubCharacter*, s32, GsCOORDINATE2*);
+void sharedFunc_800CECFC_3_s02(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coord);
 void sharedFunc_800CED44_3_s02(s_SubCharacter*, GsCOORDINATE2*);
 void sharedFunc_800CEEDC_3_s02(s_SubCharacter*, GsCOORDINATE2*);
 void Ai_Alessa_Init(s_SubCharacter* chara);

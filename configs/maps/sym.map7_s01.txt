@@ -70,6 +70,7 @@ sharedFunc_800D923C_0_s00 = 0x800D6708; // type:func
 sharedFunc_800D929C_0_s00 = 0x800D6768; // type:func
 sharedData_800DD59C_0_s00 = 0x800DF300; // type:u8
 sharedData_800D5710_3_s03 = 0x800DF8CC; // size:0xD0 - s_800D5710
+sharedData_800DFFD8_7_s01 = 0x800DFFD8; // type:AnimInfo
 sharedData_800E0CAC_0_s00 = 0x800E2C18; // type:s32
 sharedData_800E0CB0_0_s00 = 0x800E2C1C; // type:u32
 sharedData_800E0CB8_0_s00 = 0x800E2C24; // type:u16

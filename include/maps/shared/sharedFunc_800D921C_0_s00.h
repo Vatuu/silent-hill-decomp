@@ -6,12 +6,10 @@ s16 sharedFunc_800D921C_0_s00(s_SubCharacter* chara)
     extern s_AnimInfo D_800D39A0[];
 #elif defined(MAP6_S04)
     extern s_AnimInfo D_800EA718[];
-    extern s_AnimInfo D_800EA9D8[];
     extern s_AnimInfo D_800EAB38[];
 #elif defined(MAP7_S01)
     extern s_AnimInfo D_800DFC78[];
     extern s_AnimInfo D_800DFD98[];
-    extern s_AnimInfo D_800DFFD8[];
 #elif defined(MAP7_S02)
     extern s_AnimInfo D_800E7708[];
     extern s_AnimInfo D_800E7948[];
@@ -52,7 +50,7 @@ s16 sharedFunc_800D921C_0_s00(s_SubCharacter* chara)
             break;
 
         case Chara_Alessa:
-            animInfo = &D_800EA9D8[chara->model_0.anim_4.animIdx_0];
+            animInfo = &sharedData_800D1B6C_3_s02[chara->model_0.anim_4.animIdx_0];
             break;
 
 #elif defined(MAP7_S01)
@@ -65,7 +63,7 @@ s16 sharedFunc_800D921C_0_s00(s_SubCharacter* chara)
             break;
 
         case Chara_BloodyLisa:
-            animInfo = &D_800DFFD8[chara->model_0.anim_4.animIdx_0];
+            animInfo = &sharedData_800DFFD8_7_s01[chara->model_0.anim_4.animIdx_0];
             break;
 
 #elif defined(MAP7_S02)

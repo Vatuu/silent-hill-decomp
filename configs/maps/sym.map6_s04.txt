@@ -68,6 +68,7 @@ sharedFunc_800D929C_0_s00 = 0x800E1104; // type:func
 sharedData_800DD59C_0_s00 = 0x800E81C8; // type:u8
 sharedData_800DA6C8_0_s00 = 0x800E81CC;
 sharedData_800DD5A8_0_s00 = 0x800E8B4C; // type:s32 unknown type
+sharedData_800D1B6C_3_s02 = 0x800EA9D8; // type:AnimInfo
 g_Ai_Flauros_AnimInfo = 0x800EAE80; // type:AnimInfo
 g_Ai_Parasite_AnimInfo = 0x800EAEC0; // type:AnimInfo
 sharedData_800E0CAC_0_s00 = 0x800ED4B0; // type:s32
