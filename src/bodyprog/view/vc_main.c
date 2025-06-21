@@ -1482,6 +1482,7 @@ void vcMixSelfViewEffectToWatchTgtPos(VECTOR3* watch_tgt_pos, s16* watch_tgt_ang
             {
                 corrected_angle_y = angle_delta_y;
             }
+
             cam_ang.vy = g_SysWork.player_4C.chara_0.rotation_24.vy + corrected_angle_y;
             break;
 
@@ -1494,7 +1495,6 @@ void vcMixSelfViewEffectToWatchTgtPos(VECTOR3* watch_tgt_pos, s16* watch_tgt_ang
         case 26:
         case 27:
             angle_delta_y = angle_delta_y >> 3;
-
             if (angle_delta_y >= FP_ANGLE(-10.0f))
             {
                 corrected_angle_y = angle_delta_y;
@@ -1507,6 +1507,7 @@ void vcMixSelfViewEffectToWatchTgtPos(VECTOR3* watch_tgt_pos, s16* watch_tgt_ang
             {
                 corrected_angle_y = FP_ANGLE(-10.0f);
             }
+
             cam_ang.vy = g_SysWork.player_4C.chara_0.rotation_24.vy + corrected_angle_y;
             break;
     }
@@ -2752,21 +2753,22 @@ void vcSetDataToVwSystem(VC_WORK* w_p, VC_CAM_MV_TYPE cam_mv_type) // 0x80085884
     {
         vcSelfViewTimer += g_DeltaTime0;
 
-        // TODO: There should really be two angle macros: `FP_DEG` (currently named `FP_ANGLE`) and `FP_RAD`.
+        // TODO: There should really be two angle macros: `FP_DEGREE` (currently named `FP_ANGLE`) and `FP_RADIAN`.
         // Need to figure out the format used by fixed-point radians.
-        // In SH2 these `FP_ANGLE`s are using radian `float`s, while rest of SH2 uses degrees.
-        // Maybe these are meant to be radians encoded as Q3.12 somehow, but haven't found a good way for it yet.
-        noise_ang.vx = vcCamMatNoise(4, FP_ANGLE(500.0f), FP_ANGLE(800.0f), vcSelfViewTimer);
-        noise_ang.vy = vcCamMatNoise(2, FP_ANGLE(400.0f), FP_ANGLE(1000.0f), vcSelfViewTimer);
+        // These hex values correspond to `float` radians in SH2. In both SH1 and SH2, radians are only used in this func.
+        // Maybe these are meant to be encoded as Q3.12 somehow, but haven't found a good way for it yet.
+        // Might be calculated according to a fixed-point sine wave? Same with noise args.
+        noise_ang.vx = vcCamMatNoise(4, 0x1638, 0x238E, vcSelfViewTimer); // 0.0034906585f, (PI / 9.0f) * 7.0f, (PI / 9.0f) * 4.0f
+        noise_ang.vy = vcCamMatNoise(2, 0x11C7, 0x2C71, vcSelfViewTimer); // 0.0021816615f, (PI / 9.0f) * 2.0f, (PI / 9.0f) * -4.0f
         noise_ang.vz = 0;
         func_80096C94(&noise_ang, &noise_mat);
 
-        noise_mat.m[0][0] += vcCamMatNoise(12, FP_ANGLE(700.0f), FP_ANGLE(900.0f), vcSelfViewTimer);
-        noise_mat.m[0][1] += vcCamMatNoise(12, FP_ANGLE(600.0f), FP_ANGLE(1000.0f), vcSelfViewTimer);
-        noise_mat.m[0][2] += vcCamMatNoise(12, FP_ANGLE(600.0f), FP_ANGLE(800.0f), vcSelfViewTimer);
-        noise_mat.m[1][0] += vcCamMatNoise(12, FP_ANGLE(500.0f), FP_ANGLE(500.0f), vcSelfViewTimer);
-        noise_mat.m[1][1] += vcCamMatNoise(12, FP_ANGLE(900.0f), FP_ANGLE(400.0f), vcSelfViewTimer);
-        noise_mat.m[1][2] += vcCamMatNoise(12, FP_ANGLE(650.0f), FP_ANGLE(950.0f), vcSelfViewTimer);
+        noise_mat.m[0][0] += vcCamMatNoise(12, 0x1F1C, 0x2800, vcSelfViewTimer); // 0.004f, PI / 9.0f, PI
+        noise_mat.m[0][1] += vcCamMatNoise(12, 0x1AAA, 0x2C71, vcSelfViewTimer); // 0.004f, (PI / 9.0f) * -6.0f, (PI / 9.0f) * -4.0f
+        noise_mat.m[0][2] += vcCamMatNoise(12, 0x1AAA, 0x238E, vcSelfViewTimer); // 0.004f, (PI / 9.0f) * -6.0f, (PI / 9.0f) * 4.0f
+        noise_mat.m[1][0] += vcCamMatNoise(12, 0x1638, 0x1638, vcSelfViewTimer); // 0.004f, (PI / 9.0f) * 7.0f, (PI / 9.0f) * 7.0f
+        noise_mat.m[1][1] += vcCamMatNoise(12, 0x2800, 0x11C7, vcSelfViewTimer); // 0.004f, PI, (PI / 9.0f) * 2.0f
+        noise_mat.m[1][2] += vcCamMatNoise(12, 0x1CE3, 0x2A38, vcSelfViewTimer); // 0.004f, (PI / 18.0f) * -7.0f, (PI / 18.0f) * -13.0f
         MulMatrix0(&w_p->cam_mat_98, &noise_mat, &noise_cam_mat);
 
         noise_cam_mat.t[0] = w_p->cam_mat_98.t[0];
