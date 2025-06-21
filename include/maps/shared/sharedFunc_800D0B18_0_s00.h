@@ -34,7 +34,12 @@ s32 sharedFunc_800D0B18_0_s00(s32 arg0)
 
             case 2:
                 sharedData_800DFB70_0_s00 = 1;
+#if !defined(MAP0_S01) && !defined(MAP0_S02) && !defined(MAP1_S00) && \
+    !defined(MAP1_S06) && !defined(MAP2_S00) && !defined(MAP2_S02) && \
+    !defined(MAP3_S00) && !defined(MAP3_S01) && !defined(MAP3_S06) && \
+    !defined(MAP5_S01) && !defined(MAP5_S03) && !defined(MAP7_S03)
                 sharedData_800E32D0_0_s00 = 0;
+#endif
                 break;
 
             default:

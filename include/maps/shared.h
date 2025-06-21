@@ -13,6 +13,12 @@ extern u16 sharedData_800E0CB6_0_s00;
 extern u16 sharedData_800E0CB8_0_s00;
 extern s32 sharedData_800E32D0_0_s00;
 
+extern s32 sharedData_800DE25C_0_s01;
+extern s32 sharedData_800DE260_0_s01;
+extern s32 sharedData_800DFB9C_0_s01;
+extern u16 sharedData_800DFBA8_0_s01;
+extern u16 sharedData_800DFBAA_0_s01;
+
 extern s8 sharedData_800DD59C_0_s00;
 
 extern s16 sharedData_800E0C6E_0_s00;
