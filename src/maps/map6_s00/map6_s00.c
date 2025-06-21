@@ -29,7 +29,7 @@ void func_800CEF3C(void) {}
 
 INCLUDE_ASM("asm/maps/map6_s00/nonmatchings/map6_s00", func_800CEFFC);
 
-INCLUDE_ASM("asm/maps/map6_s00/nonmatchings/map6_s00", func_800CF11C);
+#include "maps/shared/sharedFunc_800D08B8_0_s00.h" // 0x800CF11C
 
 #include "maps/shared/sharedFunc_800D0A60_0_s00.h" // 0x800CF2C4
 

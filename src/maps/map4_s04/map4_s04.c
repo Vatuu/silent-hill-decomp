@@ -27,7 +27,7 @@ void func_800CD6EC(void) {}
 
 INCLUDE_ASM("asm/maps/map4_s04/nonmatchings/map4_s04", func_800CD7AC);
 
-INCLUDE_ASM("asm/maps/map4_s04/nonmatchings/map4_s04", func_800CD86C);
+#include "maps/shared/sharedFunc_800D08B8_0_s00.h" // 0x800CD86C
 
 #include "maps/shared/sharedFunc_800D0A60_0_s00.h" // 0x800CDA14
 

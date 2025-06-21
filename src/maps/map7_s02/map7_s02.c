@@ -6,7 +6,7 @@
 
 INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02", func_800CDC64);
 
-INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02", func_800CDDCC);
+#include "maps/shared/sharedFunc_800D08B8_0_s00.h" // 0x800CDDCC
 
 #include "maps/shared/sharedFunc_800D0A60_0_s00.h" // 0x800CDF4C
 

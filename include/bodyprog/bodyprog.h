@@ -1232,7 +1232,7 @@ extern s16 D_800C391C;
 
 extern s16 D_800C391E;
 
-extern u8 D_800C39A0;
+extern s8 D_800C39A0;
 
 extern s_800C39A8 D_800C39A8[];
 

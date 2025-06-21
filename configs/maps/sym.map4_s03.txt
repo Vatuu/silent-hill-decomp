@@ -1,6 +1,7 @@
 sharedFunc_800CBBBC_0_s00 = 0x800CCB4C; // type:func
 sharedFunc_800D01BC_0_s00 = 0x800CE134; // type:func
 sharedFunc_800D0700_0_s00 = 0x800CE2AC; // type:func
+sharedFunc_800D08B8_0_s00 = 0x800CE464; // type:func
 sharedFunc_800D0A60_0_s00 = 0x800CE60C; // type:func
 sharedFunc_800D0B18_0_s00 = 0x800CE6C4; // type:func
 sharedFunc_800D0E04_0_s00 = 0x800CE9B0; // type:func
@@ -36,6 +37,7 @@ sharedData_800E0CB0_0_s00 = 0x800DCF24; // type:u32
 sharedData_800E0CB4_0_s00 = 0x800DCF28; // type:u16
 sharedData_800E0CB6_0_s00 = 0x800DCF2A; // type:u16
 sharedData_800E0CB8_0_s00 = 0x800DCF2C; // type:u16
+sharedData_800E0CBA_0_s00 = 0x800DCF2E; // type:s8
 sharedData_800E323C_0_s00 = 0x800DF4B0; // type:VECTOR3 size:0xC
 sharedData_800E324C_0_s00 = 0x800DF4C0; // type:VECTOR3 size:0xC
 sharedData_800E3260_0_s00 = 0x800DF4D4; // type:s16

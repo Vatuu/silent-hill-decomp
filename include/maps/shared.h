@@ -11,6 +11,7 @@ extern u32 sharedData_800E0CB0_0_s00;
 extern u16 sharedData_800E0CB4_0_s00;
 extern u16 sharedData_800E0CB6_0_s00;
 extern u16 sharedData_800E0CB8_0_s00;
+extern s8  sharedData_800E0CBA_0_s00;
 extern s32 sharedData_800E32D0_0_s00;
 
 extern s8 sharedData_800DD59C_0_s00;

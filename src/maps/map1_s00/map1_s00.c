@@ -25,7 +25,7 @@ void func_800CCF40(void) {}
 
 INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", func_800CD000);
 
-INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", func_800CD088);
+#include "maps/shared/sharedFunc_800D08B8_0_s00.h" // 0x800CD088
 
 #include "maps/shared/sharedFunc_800D0A60_0_s00.h" // 0x800CD208
 
