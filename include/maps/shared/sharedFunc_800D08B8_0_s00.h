@@ -55,7 +55,7 @@ void sharedFunc_800D08B8_0_s00(s8 arg0, u32 arg1)
             sharedData_800DFB6C_0_s00 = 0;
             sharedData_800DFB70_0_s00 = 1;
 #ifdef SET_800E32D0
-            sharedData_800E32D0_0_s00 = 0x20F58;
+            sharedData_800E32D0_0_s00 = 135000;
 #endif
             break;
         case 6:
@@ -64,7 +64,7 @@ void sharedFunc_800D08B8_0_s00(s8 arg0, u32 arg1)
             sharedData_800DFB6C_0_s00 = 0;
             sharedData_800DFB70_0_s00 = 1;
 #ifdef SET_800E32D0
-            sharedData_800E32D0_0_s00 = 0x20F58;
+            sharedData_800E32D0_0_s00 = 135000;
 #endif
             break;
         default:
@@ -89,7 +89,7 @@ void sharedFunc_800D08B8_0_s00(s8 arg0, u32 arg1)
         sharedData_800E0CB0_0_s00 = sharedData_800E0CB0_0_s00 | (temp_a1 << shiftAmt) | (temp_a1 << (shiftAmt + 3));
     }
 
-    sharedFunc_800D0A60_0_s00((s8)D_800C39A0);
+    sharedFunc_800D0A60_0_s00(D_800C39A0);
 
     sharedData_800E0CA8_0_s00 = var_s1;
     sharedData_800E0CAC_0_s00 = var_s0;
