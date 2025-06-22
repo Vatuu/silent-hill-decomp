@@ -33,7 +33,7 @@ INCLUDE_ASM("asm/maps/map6_s03/nonmatchings/map6_s03", func_800CCDCC);
 
 #include "maps/shared/sharedFunc_800D0B18_0_s00.h" // 0x800CD0E8
 
-INCLUDE_ASM("asm/maps/map6_s03/nonmatchings/map6_s03", func_800CD288);
+#include "maps/shared/sharedFunc_800D0CB8_0_s00.h" // 0x800CD288
 
 #include "maps/shared/sharedFunc_800D0E04_0_s00.h" // 0x800CD3D4
 

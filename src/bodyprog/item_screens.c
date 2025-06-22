@@ -17,7 +17,7 @@ s32 func_8004C45C() // 0x8004C45C
         }
     }
 
-    if (g_SavegamePtr->mapOverlayId_A4 > 0)
+    if (g_SavegamePtr->mapOverlayId_A4 > MapOverlayId_MAP0_S00)
     {
         // Konami gun controller connected.
         if (g_GameWork.controllers_38[1].analogController_0.status == 0 &&
@@ -39,7 +39,7 @@ s32 func_8004C45C() // 0x8004C45C
 
 s32 func_8004C4F8() // 0x8004C4F8
 {
-    if (g_SavegamePtr->mapOverlayId_A4 > 0)
+    if (g_SavegamePtr->mapOverlayId_A4 > MapOverlayId_MAP0_S00)
     {
         if ((g_SavegamePtr->field_24B & (1 << 4)) != 0)
         {

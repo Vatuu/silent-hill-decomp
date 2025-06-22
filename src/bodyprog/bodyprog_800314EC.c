@@ -1281,7 +1281,7 @@ void GameState_InGame_Update() // 0x80038BD4
         Demo_DemoRandSeedRestore();
         func_8003F170();
 
-        if (g_SavegamePtr->mapOverlayId_A4 != 42)
+        if (g_SavegamePtr->mapOverlayId_A4 != MapOverlayId_MAP7_S03)
         {
             g_MapOverlayHeader.func_168(0, g_SavegamePtr->mapOverlayId_A4, 1);
         }

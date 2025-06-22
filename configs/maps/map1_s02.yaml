@@ -55,7 +55,7 @@ segments:
     subsegments:
       - [0x0, rodata]
       - [0x1150, .rodata, map1_s02]
-      - [0x11A0, rodata]
+      - [0x1204, rodata]
       - [0x14E8, .rodata, map1_s02_2]
       - [0x1524, rodata]
       - [0x24D4, c, map1_s02]

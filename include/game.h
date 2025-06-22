@@ -929,10 +929,11 @@ typedef struct _SysWork
     s32             field_22A0;
     s32             flags_22A4;
     s8              unk_22A8[160];
-    s8              field_2348;
-    s8              field_2349;
-    u8              field_234A;
-    u8              unk_234B[1];
+    s8              field_2348   : 8;
+    s8              field_2349   : 8;
+    u8              field_234A   : 8;
+    u8              field_234B_0 : 4;
+    u8              field_234B_4 : 4;
     u8              unk_234C[4];
     s32             field_2350_0 : 4;
     s32             field_2350_4 : 4;

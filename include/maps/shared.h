@@ -85,6 +85,9 @@ extern s_AnimInfo sharedData_800DFFD8_7_s01[]; // `Ai_BloodyLisa` related?
 extern s32 sharedData_800DFB64_0_s00;
 extern s32 sharedData_800DFB68_0_s00;
 
+extern s32 sharedData_800DD58C_0_s00;
+extern s32 sharedData_800E32CC_0_s00;
+
 s32 sharedFunc_800CBBBC_0_s00();
 
 void sharedFunc_800CFFF8_0_s00(s32 arg0, s_func_800CFFF8* arg1);
