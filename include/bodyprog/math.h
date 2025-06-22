@@ -3,7 +3,8 @@
 
 #include <limits.h>
 
-#define PI 3.1415927f
+#define PI    3.1415927f
+#define FP_PI (0x5000 / 2)
 
 #define Q4_SHIFT  4  /** Used for: Q27.4 positions. */
 #define Q8_SHIFT  8  /** Used for: Q7.8 camera AABBs. */
@@ -67,7 +68,7 @@
 
 /** @brief Converts a floating-point alpha in the range `[0.0f, 1.0f]` to a fixed-point alpha in Q3.12 format. */
 #define FP_ALPHA(alpha) \
-    (s16)FP_FLOAT_TO((alpha), (Q12_SHIFT))
+    (s16)FP_FLOAT_TO((alpha), Q12_SHIFT)
 
 /** @brief Converts a normalized color value in the range `[0.0f, 1.0f]` to an 8-bit color value in the range `[0, 255]`. */
 #define FP_COLOR(val) \
@@ -77,9 +78,13 @@
 #define FP_ANGLE(deg) \
     (s16)((deg) * ((FP_TO(1, Q12_SHIFT)) / 360.0f))
 
+/** @brief Converts floating-point radians in the range `[-PI, PI]` to fixed-point radians in the range `[0, 0x5000]`. */
+#define FP_RADIAN(rad) \
+    (s32)(((((rad) < 0.0f) ? (PI + (PI - ABS(rad))) : (rad)) * ((float)(FP_PI * 2) / PI)) * (((rad) < 0.0f || (rad) >= PI) ? 0.5f : 1.0f))
+
 /** @brief Converts floating-point meters to fixed-point meters in Q12.19 format. */
 #define FP_METER(met) \
-    FP_FLOAT_TO(met, Q12_SHIFT)
+    FP_FLOAT_TO((met), Q12_SHIFT)
 
 static inline s16 shAngleRegulate(s32 angle)
 {
