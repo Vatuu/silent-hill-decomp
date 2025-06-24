@@ -239,7 +239,8 @@ typedef struct
 
 typedef struct
 {
-    s8  unk_0[8];
+    u8  field_0;
+    s8  unk_1[7];
     s32 field_8;
 } s_800AA894;
 STATIC_ASSERT_SIZEOF(s_800AA894, 12);
@@ -251,9 +252,11 @@ typedef struct
 
 typedef struct
 {
-    s16 unk_0;
-    s16 field_2;
+    u8  field_0;
+    u8  unk_1;
+    u16 field_2;
     u8  field_4;
+    s8  field_5;
 } s_800ACAA8;
 
 typedef struct
@@ -413,6 +416,19 @@ typedef struct
     s32 field_4;
     s32 field_8;
 } s_800C1688;
+
+typedef struct
+{
+    u8  field_0;
+    u8  field_1;
+    s16 field_2;
+    s16 field_4;
+    s16 field_6;
+    s16 field_8;
+    s16 field_A;
+    s16 field_C;
+    s16 field_E;
+} s_800C1698;
 
 typedef struct
 {
@@ -917,6 +933,8 @@ extern s_FsImageDesc D_800A909C; // Passed to `func_800917C0` for loading `TIM/F
 /** Array containg file IDs used for each `e_ShCharacterId`, used in `Fs_QueueStartReadAnm`. */
 extern s_CharaFileInfo g_Chara_FileInfo[45]; // 0x800A90FC
 
+extern s_800A93CC D_800A93CC[];
+
 extern u16 D_800A9774[];
 
 extern s32 D_800A9EB0;
@@ -978,7 +996,7 @@ extern s_FsImageDesc D_800A9EB4;
 
 extern s_800C37D8 D_800AA274[];
 
-extern s_800A93CC D_800A93CC[];
+extern u8 D_800AA604[][16];
 
 extern s_800AA894 D_800AA894[];
 
@@ -1125,9 +1143,17 @@ extern s_800C117C D_800C117C[];
 
 extern s8* D_800C15B0;
 
+extern s8 D_800C15B4;
+
 extern s32 D_800C15B8;
 
-extern s8 D_800C15B4;
+extern s16 D_800C15BC;
+
+extern s16 D_800C15BE;
+
+extern u16 D_800C15C0;
+
+extern s16 D_800C15C2;
 
 extern s16 D_800C15C4;
 
@@ -1143,13 +1169,15 @@ extern s32 D_800C15E0;
 
 extern u8 D_800C15F0;
 
-extern s16 D_800C15F8[];
+extern u16 D_800C15F8[];
+
+extern s16 D_800C1628[];
 
 extern s_800C1658 D_800C1658;
 
 extern u16 D_800C1666;
 
-extern s8 D_800C166A;
+extern u8 D_800C166A;
 
 extern s8 D_800C166C;
 
@@ -1176,6 +1204,10 @@ extern s8 g_Sd_ReverbDepth; // 0x800C1687;
 extern u8 D_800C1673;
 
 extern s_800C1688 D_800C1688;
+
+extern s_800C1698 D_800C1698;
+
+extern s16 D_800C16A4;
 
 extern u8 D_800C16A8[];
 
@@ -1613,7 +1645,7 @@ u8 func_80045B28();
 
 void sd_work_init();
 
-void func_80046048(u16 cmd, s32 arg1, s32 vol); // SD Func. Last arg is a u8 value.
+u8 func_80046048(u16 cmd, s8 arg1, u8 vol); // SD Func. Last arg is a u8 value.
 
 void func_8004690C(s32);
 

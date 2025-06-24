@@ -1,6 +1,7 @@
 #include "game.h"
 
 #include <libcd.h>
+#include <libspu.h>
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/libsd.h"
@@ -286,11 +287,241 @@ void func_80045FF8() // 0x80045FF8
     SdQuit();
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/bodyprog_80045A7C", func_80046048);
+static inline void writeVol(s16* left, s16* right, s16 vol)
+{
+    *left  = vol;
+    *right = vol;
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/bodyprog_80045A7C", func_800463C0);
+u8 func_80046048(u16 arg0, s8 arg1, u8 arg2) // 0x80046048
+{
+    SpuVoiceAttr s_attr;
+    s16          temp_a0;
+    s16          temp_a0_2;
+    s32          i;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/bodyprog_80045A7C", func_80046620);
+    if (arg0 == 0x500)
+    {
+        return -1;
+    }
+
+    D_800C15BC = arg0 - 0x500;
+    temp_a0_2  = arg2;
+
+    D_800C1698.field_2 = D_800ACAA8[D_800C15BC].field_2 >> 8;
+    D_800C1698.field_4 = D_800ACAA8[D_800C15BC].field_2 & 0xFF;
+    D_800C1698.field_8 = D_800ACAA8[D_800C15BC].field_4;
+
+    temp_a0 = D_800C167C + D_800ACAA8[D_800C15BC].field_5;
+    temp_a0 = temp_a0 - (temp_a0 * temp_a0_2) / 255;
+
+    writeVol(&D_800C1698.field_C, &D_800C1698.field_E, temp_a0);
+
+    if (D_800C166A == 1)
+    {
+        if (arg1 < 0)
+        {
+            D_800C1698.field_E -= (D_800C1698.field_C * ABS(arg1)) >> 7;
+        }
+        else
+        {
+            D_800C1698.field_C -= (D_800C1698.field_C * arg1) >> 7;
+        }
+    }
+
+    if (D_800C1698.field_C < 0)
+    {
+        D_800C1698.field_C = 0;
+    }
+
+    if (D_800C1698.field_E < 0)
+    {
+        D_800C1698.field_E = 0;
+    }
+
+    if (arg0 == 0x529)
+    {
+        D_800C1698.field_6 = D_800ACAA8[D_800C15BC].field_0;
+        SdUtKeyOnV(0x16, D_800C1698.field_2, D_800C1698.field_4, D_800C1698.field_6, D_800C1698.field_8, 0, Sd_GetVolSe(D_800C1698.field_C), Sd_GetVolSe(D_800C1698.field_E));
+        D_800C1698.field_0 = 0x16;
+    }
+    else if (arg0 == 0x52A)
+    {
+        D_800C1698.field_6 = D_800ACAA8[D_800C15BC].field_0;
+        SdUtKeyOnV(0x17, D_800C1698.field_2, D_800C1698.field_4, D_800C1698.field_6, D_800C1698.field_8, 0x78, Sd_GetVolSe(D_800C1698.field_C), Sd_GetVolSe(D_800C1698.field_E));
+        D_800C1698.field_0 = 0x17;
+    }
+    else
+    {
+        D_800C1698.field_0 = SdVoKeyOn(D_800ACAA8[D_800C15BC].field_2, D_800C1698.field_8 * 256, Sd_GetVolSe(D_800C1698.field_C), Sd_GetVolSe(D_800C1698.field_E));
+    }
+
+    for (i = 0; i < 24; i++)
+    {
+        if (D_800C15F8[i] == arg0)
+        {
+            D_800C15F8[i] = 0;
+        }
+    }
+
+    if (D_800C1698.field_0 < 24)
+    {
+        D_800C15F8[D_800C1698.field_0] = arg0;
+        s_attr.voice                   = 1 << D_800C1698.field_0;
+        SpuGetVoiceAttr(&s_attr);
+        D_800C1628[D_800C1698.field_0] = s_attr.pitch;
+        return D_800C1698.field_0;
+    }
+
+    return -1;
+}
+
+void func_800463C0(u16 arg0, s8 arg1, u8 arg2, s8 arg3) // 0x800463C0
+{
+    SpuVoiceAttr sp10;
+    s16          temp_a0;
+    s32          var_t0;
+    s32          i;
+
+    if (arg0 == 0x500)
+    {
+        return;
+    }
+
+    D_800C15BE = arg0 - 0x500;
+    D_800C16A4 = D_800C167C + D_800ACAA8[D_800C15BE].field_5;
+
+    if (arg0 == 0x529)
+    {
+        var_t0     = 0x16;
+        sp10.voice = 0x400000;
+    }
+    else if (arg0 == 0x52A)
+    {
+        var_t0     = 0x17;
+        sp10.voice = 0x800000;
+    }
+    else
+    {
+        var_t0 = -1;
+
+        for (i = 0; i < 24; i++)
+        {
+            if (D_800C15F8[i] == arg0)
+            {
+                var_t0 = i;
+            }
+        }
+
+        if (var_t0 < 0)
+        {
+            return;
+        }
+
+        sp10.voice = 1 << var_t0;
+    }
+
+    D_800C1698.field_A = 0;
+    D_800C1698.field_8 = (u8)D_800ACAA8[D_800C15BE].field_4;
+    D_800C15C0         = D_800C1628[var_t0] + arg3 * 2;
+    temp_a0            = arg2;
+    temp_a0            = D_800C1698.field_C - ((D_800C1698.field_C * (temp_a0)) / 255);
+
+    writeVol(&D_800C1698.field_C, &D_800C1698.field_E, temp_a0);
+
+    if (D_800C166A == 1)
+    {
+        if (arg1 < 0)
+        {
+            D_800C1698.field_E -= (temp_a0 * ABS(arg1)) >> 7;
+        }
+        else
+        {
+            D_800C1698.field_C -= (temp_a0 * arg1) >> 7;
+        }
+    }
+
+    SpuGetVoiceAttr(&sp10);
+
+    sp10.mask          = 0x1F;
+    sp10.volmode.left  = 0;
+    sp10.volmode.right = 0;
+    sp10.volmode.left  = 0;
+    sp10.volmode.right = 0;
+
+    if (D_800C1698.field_C < 0)
+    {
+        D_800C1698.field_C = 0;
+    }
+
+    if (D_800C1698.field_E < 0)
+    {
+        D_800C1698.field_E = 0;
+    }
+
+    sp10.volume.right = Sd_GetVolSe(D_800C1698.field_E << 7);
+    sp10.volume.left  = Sd_GetVolSe(D_800C1698.field_C << 7);
+    sp10.pitch        = D_800C15C0;
+
+    SpuSetVoiceAttr(&sp10);
+}
+
+void func_80046620(u16 arg0, s8 arg1, u8 arg2, s8 arg3) // 0x80046620
+{
+    s16 temp_a0_2;
+    s16 temp_a0_3;
+
+    if (arg0 == 0x500)
+    {
+        return;
+    }
+
+    D_800C15C2         = arg0 - 0x500;
+    D_800C1698.field_2 = D_800ACAA8[D_800C15C2].field_2 >> 8;
+    D_800C1698.field_4 = D_800ACAA8[D_800C15C2].field_2 & 0xFF;
+    D_800C1698.field_6 = D_800ACAA8[D_800C15C2].field_0;
+    D_800C1698.field_8 = D_800ACAA8[D_800C15C2].field_4 + (s8)(arg3 * 5 / 127);
+
+    if (arg3 > 0)
+    {
+        D_800C1698.field_A = ABS(arg3 * 5) % 127;
+    }
+    else
+    {
+        D_800C1698.field_A = 0x7F - ABS(arg3 * 5) % 127;
+    }
+
+    temp_a0_2          = D_800C167C + D_800ACAA8[D_800C15C2].field_5;
+    temp_a0_3          = arg2;
+    D_800C1698.field_C = temp_a0_2 - (temp_a0_2 * temp_a0_3) / 255;
+
+    writeVol(&D_800C1698.field_C, &D_800C1698.field_E, D_800C1698.field_C);
+
+    if (D_800C166A == 1)
+    {
+        if (arg1 < 0)
+        {
+            D_800C1698.field_E -= (D_800C1698.field_E * ABS(arg1)) >> 7;
+        }
+        else
+        {
+            D_800C1698.field_C -= (D_800C1698.field_C * arg1) >> 7;
+        }
+    }
+
+    if (D_800C1698.field_C < 0)
+    {
+        D_800C1698.field_C = 0;
+    }
+
+    if (D_800C1698.field_E < 0)
+    {
+        D_800C1698.field_E = 0;
+    }
+
+    D_800C1698.field_0 = SdUtKeyOn(D_800C1698.field_2, D_800C1698.field_4, D_800C1698.field_6,
+                                   D_800C1698.field_8, D_800C1698.field_A, Sd_GetVolSe(D_800C1698.field_C), Sd_GetVolSe(D_800C1698.field_E));
+}
 
 void func_800468EC() // 0x800468EC
 {
@@ -395,11 +626,76 @@ void func_80046B78() // 0x80046B78
     D_800C1658.field_E = 0;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/bodyprog_80045A7C", func_80046BB4);
+u8 func_80046BB4(u8 arg0) // 0x80046BB4
+{
+    u32 i;
+    u8  ret;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/bodyprog_80045A7C", func_80046C54);
+    if (arg0 == 0)
+    {
+        return 0;
+    }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/bodyprog_80045A7C", func_80046D3C);
+    if (D_800C1658.field_E >= 0x329)
+    {
+        return 0;
+    }
+
+    ret = 0;
+
+    for (i = 0; i < 15; i++)
+    {
+        if (D_800AA604[(u8)D_800C1658.field_E][i] == arg0)
+        {
+            ret = SdGetMidiVol(0, i);
+            break;
+        }
+    }
+    return ret;
+}
+
+void func_80046C54(u8 arg0, u8 arg1) // 0x80046C54
+{
+    u32 i;
+    s16 new_var;
+    u8  new_var2;
+    u8  idx;
+
+    if (arg0 == 0)
+    {
+        D_800C167E = (arg1 * 0x28) / 127;
+    }
+    else if (D_800C1658.field_E < 0x329)
+    {
+        idx = (u8)D_800C1658.field_E;
+
+        for (i = 0; i < 15; i++)
+        {
+            new_var2 = D_800AA604[idx][i];
+            new_var  = arg1;
+
+            if (new_var2 == arg0)
+            {
+                SdSetMidiVol(0, i, new_var);
+            }
+        }
+    }
+}
+
+void func_80046D3C(u16 arg0) // 0x80046D3C
+{
+    D_800C1658.field_2 = arg0 & 0xFFF;
+
+    if (D_800AA894[D_800C1658.field_2].field_0 != 0)
+    {
+        D_800C37DC         = 1;
+        D_800C1688.field_8 = VSync(-1);
+        D_800C1688.field_4 = 0;
+        func_800478DC(2);
+        D_800C1658.field_4 = D_800C1658.field_2;
+        func_800478DC(1);
+    }
+}
 
 s32 func_80046DCC(s32 idx) // 0x80046DCC
 {
