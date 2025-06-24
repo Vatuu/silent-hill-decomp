@@ -682,7 +682,6 @@ void func_80046C54(u8 arg0, u8 arg1) // 0x80046C54
     }
 }
 
-// INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/bodyprog_80045A7C", func_80046D3C);
 void func_80046D3C(u16 arg0) // 0x80046D3C
 {
     D_800C1658.field_2 = arg0 & 0xFFF;
