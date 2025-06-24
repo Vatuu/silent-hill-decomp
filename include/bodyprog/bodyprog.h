@@ -253,7 +253,7 @@ typedef struct
 {
     s16 unk_0;
     s16 field_2;
-    s8  field_4;
+    u8  field_4;
 } s_800ACAA8;
 
 typedef struct
@@ -379,7 +379,7 @@ typedef struct
         s8  field_0[3];
         u16 field_01;
     } field_F;
-    s8  field_14;
+    u8  field_14;
     u8  field_15;
     s8  field_16;
     s8  field_17;
@@ -389,7 +389,7 @@ typedef struct
 {
     u8 field_0;
     s8 field_1;
-    s8 field_2;
+    u8 field_2;
     s8 field_3;
 } s_800C1670;
 
@@ -1135,6 +1135,10 @@ extern s16 D_800C15C6;
 
 extern s16 D_800C15C8;
 
+extern s32 D_800C15D8;
+
+extern s32 D_800C15DC;
+
 extern s32 D_800C15E0;
 
 extern u8 D_800C15F0;
@@ -1601,7 +1605,7 @@ u16 func_80045BC8();
 
 void func_80045BD8(u16 caseArg);
 
-void func_80045D28(s32 caseArg);
+void func_80045D28(u8 caseArg);
 
 void sd_init();
 
@@ -1623,6 +1627,8 @@ void func_8004729C(u16 arg0);
 void func_800472BC(s32 arg0);
 
 void func_8004760C();
+
+void func_800478DC(u8 arg0);
 
 /** Args are volume levels. */
 void Sd_SetVolume(u8 arg0, s16 arg1, u8 arg2);
@@ -1649,7 +1655,7 @@ void Sd_SetVolXa(s16 volLeft, s16 volRight);
 
 s16 Sd_GetVolSe(s16 arg0);
 
-void Sd_SetReverbDepth(s8 depth);
+void Sd_SetReverbDepth(u8 depth);
 
 void Sd_SetReverbEnable(s32 mode);
 
@@ -1689,7 +1695,7 @@ void func_800485B8(s32 arg0, u8 arg1, u32 arg2);
 
 void func_800485C0(s32 idx);
 
-s32 func_80048954(s32 com, u8* param, u8* res);
+u8 func_80048954(s32 com, u8* param, u8* res);
 
 void func_8004729C(u16);
 

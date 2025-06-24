@@ -17,7 +17,7 @@ void func_80047D50() // 0x80047D50
 {
     CdlLOC* sp10;
 
-    if (!(func_80048954(2, CdIntToPos(D_800C37D4->field_8 + ((u32)D_800C37CC >> 11), &sp10), 0) & 0xFF))
+    if (!func_80048954(2, CdIntToPos(D_800C37D4->field_8 + ((u32)D_800C37CC >> 11), &sp10), 0))
     {
         D_800C1670.field_0 = 3;
     }
@@ -88,7 +88,7 @@ void func_80048000() // 0x80048000
         i = D_800C37D4->field_8 + ((D_800C37CC + 0x7FF) >> 11);
         cdLocRes = CdIntToPos(i, &cdLocArg);
 
-        if (!(func_80048954(2, cdLocRes, 0) & 0xFF))
+        if (!func_80048954(2, cdLocRes, 0))
         {
             D_800C1670.field_0 = 7;
         }
@@ -141,7 +141,7 @@ void func_800480FC() // 0x800480FC
         D_800C1670.field_0 = 6;
     }
 
-    if (var0 == NO_VALUE && (u8)D_800C37D0 < 16)
+    if (var0 == NO_VALUE && D_800C37D0 < 16)
     {
         D_800C37D0++;
         D_800C1670.field_0 = 1;
@@ -175,8 +175,8 @@ void func_80048244(u16 cmd) // 0x80048244
     
     func_80046AD8();
     Sd_EngineCmd((u16)(cmd + 0xAD));
-    func_800478DC((u8)cmd);
-    
+    func_800478DC(cmd);
+
     D_800C37D0 = 0;
     D_800C1658.field_6 = cmd;
     D_800C1658.field_15 = 1;
@@ -225,7 +225,7 @@ void func_800483D4() // 0x800483D4
 {
     CdlLOC* cdLoc;
 
-    if (!(func_80048954(2, CdIntToPos(D_800C37D8->field_8, &cdLoc), 0) & 0xFF))
+    if (!func_80048954(2, CdIntToPos(D_800C37D8->field_8, &cdLoc), 0))
     {
         D_800C1670.field_0 = 3;
     }
@@ -257,7 +257,7 @@ void func_800485C0(s32 idx)
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_CD_80047D50", func_800485D8);
 
-s32 func_80048954(s32 com, u8* param, u8* res) // 0x80048954
+u8 func_80048954(s32 com, u8* param, u8* res) // 0x80048954
 {
     u8 syncRes;
     u8 comCopy;
@@ -271,7 +271,7 @@ s32 func_80048954(s32 com, u8* param, u8* res) // 0x80048954
     }
 
     D_800C1658.field_0 ++;
-    if ((D_800C1658.field_0  & ~(1 << 16)) >= 0x259)
+    if (D_800C1658.field_0 >= 0x259)
     {
         CdReset(0);
         CdControlB(1, 0, 0);

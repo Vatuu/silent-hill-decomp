@@ -165,11 +165,11 @@ void func_80045BD8(u16 caseArg) // 0x80045BD8
     }
 }
 
-void func_80045D28(s32 caseArg) // 0x80045D28
+void func_80045D28(u8 caseArg) // 0x80045D28
 {
     CdlATV vol;
 
-    switch (caseArg & 0xFF)
+    switch (caseArg)
     {
         case 0:
             SdSetMono();
@@ -311,7 +311,7 @@ void func_8004692C(u16 arg0) // 0x8004692C
 
     D_800C15C4 = arg0 - 0x500;
     D_800C15C6 = D_800ACAA8[D_800C15C4].field_2;
-    D_800C15C8 = (D_800ACAA8[D_800C15C4].field_4 & 0xFF) << 8;
+    D_800C15C8 = D_800ACAA8[D_800C15C4].field_4 << 8;
     SdVoKeyOff(D_800C15C6, D_800C15C8);
 }
 
@@ -337,9 +337,7 @@ void func_800469E8() // 0x800469E8
 
 void func_80046A24(u16 arg0) // 0x80046A24
 {
-    s32 temp = arg0 & 0xFFFF;
-
-    if (D_800C1658.field_F.field_01 != temp && D_800C1658.field_E != temp)
+    if (D_800C1658.field_F.field_01 != arg0 && D_800C1658.field_E != arg0)
     {
         D_800C1658.field_F.field_01 = arg0;
         func_800478DC(7);
@@ -370,7 +368,23 @@ void func_80046AD8() // 0x80046AD8
     func_800478DC(8);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/bodyprog_80045A7C", func_80046B04);
+void func_80046B04()
+{
+    if (D_800C1678.volumeBgm_8 > 0)
+    {
+        D_800C1678.volumeBgm_8 -= 4;
+    }
+
+    if (D_800C1678.volumeBgm_8 <= 0)
+    {
+        D_800C1678.volumeBgm_8 = 0;
+        func_80046B78();
+        func_80047A70();
+    }
+
+    D_800C1678.field_6 = D_800C1678.volumeBgm_8;
+    Sd_SetVolBgm(D_800C1678.field_6, D_800C1678.field_6);
+}
 
 void func_80046B78() // 0x80046B78
 {
@@ -396,7 +410,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/bodyprog_80045A7C", func_80046E00);
 
 void func_8004729C(u16 arg0) // 0x8004729C
 {
-    func_800472BC(arg0 & 0xFFFF);
+    func_800472BC(arg0);
 }
 
 void func_800472BC(s32 arg0) // 0x800472BC
@@ -424,7 +438,7 @@ void func_80047634() // 0x80047634
 {
     D_800C1658.field_F.field_0[3] = 1;
 
-    switch ((u8)D_800C1670.field_2)
+    switch (D_800C1670.field_2)
     {
         case 0:
             Sd_SetVolXa(D_800C1678.volumeXa_0, D_800C1678.volumeXa_0);
@@ -448,7 +462,7 @@ void func_80047634() // 0x80047634
             break;
 
         case 2:
-            if (!(func_80048954(9, NULL, NULL) & 0xFF))
+            if (!func_80048954(9, NULL, NULL))
             {
                 D_800C1658.field_0 = 0;
                 D_800C1670.field_2 = 3;
@@ -462,7 +476,7 @@ void func_80047634() // 0x80047634
             D_800C1658.field_4            = 0;
             D_800C1670.field_2            = 0;
 
-            if ((u8)D_800C1658.field_14 == 0)
+            if (D_800C1658.field_14 == 0)
             {
                 D_800C167E = 0x28;
             }
@@ -508,9 +522,51 @@ s16 Sd_GetVolSe(s16 arg0) // 0x800478B8
     return (arg0 * g_Sd_VolumeSe) >> 7;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/bodyprog_80045A7C", func_800478DC);
+void func_800478DC(u8 arg0) // 0x800478DC
+{
+    if (arg0 == 2)
+    {
+        for (D_800C15D8 = 1; D_800C15D8 < 0x1E; D_800C15D8++)
+        {
+            if (D_800C16A8[D_800C15D8] == 1)
+            {
+                for (D_800C15DC = D_800C15D8; D_800C15DC < 0x1E; D_800C15DC++)
+                {
+                    D_800C16A8[D_800C15DC] = D_800C16A8[D_800C15DC + 1];
+                }
 
-void func_80047A70()
+                D_800C16A8[0x1F] = 0;
+                D_800C37DC       = 0;
+            }
+        }
+    }
+
+    for (D_800C15D8 = 1; D_800C15D8 < 0x1E; D_800C15D8++)
+    {
+        if (D_800C16A8[D_800C15D8] == arg0)
+        {
+            for (D_800C15DC = D_800C15D8; D_800C15DC < 0x1E; D_800C15DC++)
+            {
+                D_800C16A8[D_800C15DC] = D_800C16A8[D_800C15DC + 1];
+            }
+
+            D_800C16A8[0x1F] = 0;
+        }
+    }
+
+    for (D_800C15D8 = 0; D_800C15D8 < 0x1F; D_800C15D8++)
+    {
+        if (D_800C16A8[D_800C15D8] == 0)
+        {
+            D_800C16A8[D_800C15D8] = arg0;
+            break;
+        }
+    }
+
+    D_800C37DD = D_800C16A8[0];
+}
+
+void func_80047A70() // 0x80047A70
 {
     if (D_800C16A8[0] != 0)
     {
@@ -523,19 +579,19 @@ void func_80047A70()
     }
 }
 
-void Sd_SetReverbDepth(s8 depth)
+void Sd_SetReverbDepth(u8 depth) // 0x80047AD0
 {
     s32 left;
 
     g_Sd_ReverbDepth = depth;
 
-    left = depth & 0xFF;
+    left = depth;
     SdUtSetReverbDepth(left, left);
 }
 
-void Sd_SetReverbEnable(s32 mode)
+void Sd_SetReverbEnable(s32 mode) // 0x80047AFC
 {
-    SdSetSerialAttr(0, 1, mode & 0xFF);
+    SdSetSerialAttr(0, 1, mode);
 }
 
 void func_80047B24(s32 arg0) // 0x80047B24
@@ -546,7 +602,7 @@ void func_80047B24(s32 arg0) // 0x80047B24
     }
 
     D_800C37D0 = 0;
-    func_800478DC(arg0 & 0xFF);
+    func_800478DC(arg0);
     D_800C1658.field_15 = 1;
 }
 
