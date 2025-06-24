@@ -7,6 +7,8 @@
 #include "bodyprog/math.h"
 #include "main/fsqueue.h"
 
+#define CD_ERROR_LIMIT 600 // Matches value used in beatmania `FSCD.C`.
+
 /**
 * Either this file contain more file to split
 * Or this file is related to audio load from CD.
@@ -17,7 +19,7 @@ void func_80047D50() // 0x80047D50
 {
     CdlLOC* sp10;
 
-    if (!func_80048954(2, CdIntToPos(D_800C37D4->field_8 + ((u32)D_800C37CC >> 11), &sp10), 0))
+    if (!func_80048954(CdlSetloc, CdIntToPos(D_800C37D4->field_8 + (D_800C37CC >> 11), &sp10), 0))
     {
         D_800C1670.field_0 = 3;
     }
@@ -88,7 +90,7 @@ void func_80048000() // 0x80048000
         i = D_800C37D4->field_8 + ((D_800C37CC + 0x7FF) >> 11);
         cdLocRes = CdIntToPos(i, &cdLocArg);
 
-        if (!func_80048954(2, cdLocRes, 0))
+        if (!func_80048954(CdlSetloc, cdLocRes, 0))
         {
             D_800C1670.field_0 = 7;
         }
@@ -225,7 +227,7 @@ void func_800483D4() // 0x800483D4
 {
     CdlLOC* cdLoc;
 
-    if (!func_80048954(2, CdIntToPos(D_800C37D8->field_8, &cdLoc), 0))
+    if (!func_80048954(CdlSetloc, CdIntToPos(D_800C37D8->field_8, &cdLoc), 0))
     {
         D_800C1670.field_0 = 3;
     }
@@ -238,10 +240,10 @@ void func_80048424() // 0x80048424
         CdRead((D_800C37D8->field_4 + 2047) / 2048, FS_BUFFER_1, 128);
         
         D_800C1670.field_0 = 4;
-        D_800C1658.field_0  = 0;
+        D_800C1658.field_0 = 0;
     }
 
-    D_800C1658.field_0 ++;
+    D_800C1658.field_0++;
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_CD_80047D50", func_80048498);
@@ -264,14 +266,15 @@ u8 func_80048954(s32 com, u8* param, u8* res) // 0x80048954
     
     comCopy = com;
 
-    if (CdSync(1, &syncRes) == 2 && CdControl(comCopy, param, res) != 0)
+    if (CdSync(1, &syncRes) == CdlComplete && CdControl(comCopy, param, res) != 0)
     {
-        D_800C1658.field_0  = 0;
+        D_800C1658.field_0 = 0;
         return 0;
     }
 
-    D_800C1658.field_0 ++;
-    if (D_800C1658.field_0 >= 0x259)
+    D_800C1658.field_0++;
+
+    if (D_800C1658.field_0 > CD_ERROR_LIMIT)
     {
         CdReset(0);
         CdControlB(1, 0, 0);

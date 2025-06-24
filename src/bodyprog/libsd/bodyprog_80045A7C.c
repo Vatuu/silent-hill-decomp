@@ -229,8 +229,8 @@ void sd_work_init() // 0x80045E44
     SdSetSerialAttr(0, 0, 0);
     Sd_SetVolXa(0, 0);
 
-    D_800C15F0 = 128;
-    func_80048954(14, &D_800C15F0, NULL);
+    D_800C15F0 = CdlModeSpeed;
+    func_80048954(CdlSetmode, &D_800C15F0, NULL);
 
     for(D_800C15B8 = 0; D_800C15B8 < 31; D_800C15B8++)
     {
@@ -462,7 +462,7 @@ void func_80047634() // 0x80047634
             break;
 
         case 2:
-            if (!func_80048954(9, NULL, NULL))
+            if (!func_80048954(CdlPause, NULL, NULL))
             {
                 D_800C1658.field_0 = 0;
                 D_800C1670.field_2 = 3;

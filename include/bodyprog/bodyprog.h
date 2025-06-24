@@ -1617,6 +1617,8 @@ void func_80046048(u16 cmd, s32 arg1, s32 vol); // SD Func. Last arg is a u8 val
 
 void func_8004690C(s32);
 
+void func_80046B04();
+
 /** Sound func. */
 void func_80046B78();
 
