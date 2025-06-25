@@ -158,7 +158,127 @@ s32 SdSpuMalloc(s32 size)
     return addr;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_snd", SdSpuMallocWithStartAddr);
+u32 SdSpuMallocWithStartAddr(u32 addr, s32 size) // 0x8009F120
+{
+    s32 i;
+    u32 end_addr;
+
+    if (addr - 0x1010 > 0x7EFEFU || addr + size > 0x7FFFFU)
+    {
+        return -1;
+    }
+
+    if (sd_spu_alloc[0].addr_0 == 0)
+    {
+        if (addr + size < 0x80000 - sd_reverb_area_size[sd_reverb_mode])
+        {
+            sd_spu_alloc[0].addr_0 = addr;
+            sd_spu_alloc[0].size_4 = size;
+
+            sd_alloc_sort();
+            return addr;
+        }
+
+        return -1;
+    }
+
+    for (i = 0; i < 0x10; i++)
+    {
+        if (i == 0 && addr < sd_spu_alloc[i].addr_0)
+        {
+            if (sd_spu_alloc[i].addr_0 < addr + size)
+            {
+                return -1;
+            }
+
+            for (; i < 0x10; i++)
+            {
+                if (sd_spu_alloc[i].size_4 != 0)
+                {
+                    continue;
+                }
+
+                sd_spu_alloc[i].addr_0 = addr;
+                sd_spu_alloc[i].size_4 = size;
+                break;
+            }
+
+            if (i != 0x10)
+            {
+                break;
+            }
+            else
+            {
+                return -1;
+            }
+        }
+        else
+        {
+            if (addr < sd_spu_alloc[i].addr_0)
+            {
+                continue;
+            }
+        }
+
+        if (sd_spu_alloc[i].addr_0 == addr)
+        {
+            sd_spu_alloc[i].addr_0 = addr;
+            sd_spu_alloc[i].size_4 = size;
+            return addr;
+        }
+
+        if (sd_spu_alloc[i + 1].size_4 == 0)
+        {
+            if (addr + size < 0x80000 - sd_reverb_area_size[sd_reverb_mode])
+            {
+                sd_spu_alloc[i + 1].addr_0 = addr;
+                sd_spu_alloc[i + 1].size_4 = size;
+                break;
+            }
+            return -1;
+        }
+
+        if (sd_spu_alloc[i].addr_0 < addr && addr < sd_spu_alloc[i + 1].addr_0)
+        {
+            if (addr < sd_spu_alloc[i].addr_0 + sd_spu_alloc[i].size_4)
+            {
+                return -1;
+            }
+
+            end_addr = addr;
+            end_addr = end_addr + size;
+
+            if (sd_spu_alloc[i + 1].addr_0 < end_addr)
+            {
+                return -1;
+            }
+
+            for (; i < 0x10; i++)
+            {
+                if (sd_spu_alloc[i].size_4 != 0)
+                {
+                    continue;
+                }
+
+                sd_spu_alloc[i].addr_0 = addr;
+                sd_spu_alloc[i].size_4 = size;
+                break;
+            }
+
+            if (i != 0x10)
+            {
+                break;
+            }
+            else
+            {
+                return -1;
+            }
+        }
+    }
+
+    sd_alloc_sort();
+    return addr;
+}
 
 void SdSpuFree(u32 addr) // 0x8009F364
 {
@@ -558,7 +678,67 @@ s16 SdVabFakeHead(u8* addr, s16 vabid, u32 sbaddr) // 0x8009FAC0
     return i;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_snd", SdVbOpenOne);
+// INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_snd", SdVbOpenOne);
+s32 SdVbOpenOne(u8* addr, s32 sbaddr, s32 sbsize, s16 vabid) // 0x8009FBAC
+{
+    VAB_H* p;
+    s16    i;
+
+    body_partly_size = 0;
+    i                = 0;
+
+    if (vabid == -1)
+    {
+        while (true)
+        {
+            if (vab_h[i].vab_id_0 == -1)
+            {
+                break;
+            }
+
+            i++;
+
+            if (i >= 0x10)
+            {
+                return -1;
+            }
+        }
+    }
+    else
+    {
+        i = vabid;
+        if (vab_h[i].vab_id_0 != -1)
+        {
+            SdSpuFree(vab_h[i].vb_start_addr_10);
+        }
+    }
+
+    p             = &vab_h[i];
+    p->vb_size_14 = sbsize;
+    p->vab_id_0   = i;
+    p->vh_addr_4  = addr;
+    p->vh_size_8  = sbsize;
+    p->mvol_18    = 0x7F;
+    p->vb_size_14 = sbsize;
+    p->mpan_1B    = 0x40;
+
+    p->vb_start_addr_10 = sbaddr;
+    p->vb_start_addr_10 = SdSpuMallocWithStartAddr(sbaddr, p->vb_size_14);
+
+    if (p->vb_start_addr_10 == -1)
+    {
+        return -1;
+    }
+
+    SpuSetTransferStartAddr(p->vb_start_addr_10);
+    if (SpuWrite(addr, p->vb_size_14) != p->vb_size_14)
+    {
+        return -1;
+    }
+
+    p->vb_addr_C = addr;
+    return i;
+}
 
 s16 SdVabTransBody(u8* addr, s16 vabid) // 0x8009FD38
 {
@@ -1181,7 +1361,171 @@ void SdVoKeyOffWithRROff(s32 vab_pro, s32 pitch) // 0x800A0E40
     sd_int_flag = 0;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_snd", SdUtKeyOnV); // 0x800A0F80
+s16 SdUtKeyOnV(s16 voice, s16 vabid, s16 prog, s16 tone, s16 note, s16 fine, s16 voll, s16 volr) // 0x800A0F80
+{
+    SpuVoiceAttr s_attr;
+    ProgAtr*     sd_vab_prog;
+    SD_VAB_H*    sd_vh;
+    VagAtr*      sd_vag_atr;
+    s32          vo;
+    s32          master_vol_temp;
+    s32          stat;
+    s32          i;
+    s32          r_vol;
+    s32          vag_offset;
+    s32          l_vol;
+    s32          pan;
+    u16*         addr_p;
+    u8           master_vol_byte;
+    u16          adsr1_raw;
+    s32          note_base;
+    s32          volume_scale;
+    s32          note_value;
+
+    if (tone >= 0x10 || prog >= 0x80 || note >= 0x80)
+    {
+        return -1;
+    }
+
+    sd_int_flag = 1;
+
+    vo = voice;
+    if ((sd_reserved_voice - 1) < vo)
+    {
+        vo = -1;
+    }
+
+    if (vo != -1)
+    {
+        sd_vh       = vab_h[vabid].vh_addr_4;
+        sd_vab_prog = &sd_vh->vab_prog[prog];
+        note_base   = note << 8;
+        note_value  = note_base + fine;
+        sd_vag_atr  = &sd_vh->vag_atr[(prog * 0x10) + tone];
+
+        if (sd_vag_atr->vag == 0)
+        {
+            return -1;
+        }
+
+        if (note >= sd_vag_atr->min && sd_vag_atr->max >= note)
+        {
+            rr_off(vo);
+            do
+            {
+                SpuSetKey(0, spu_ch_tbl[vo]);
+                stat = SpuGetKeyStatus(spu_ch_tbl[vo]);
+            } while (stat != 2 && stat != 0);
+
+            addr_p = (u8*)vab_h[vabid].vh_addr_4 + (sd_vh->vab_h.ps << 9) + 0x820;
+
+            for (vag_offset = 0, i = 0; i < sd_vag_atr->vag; i++)
+            {
+                vag_offset += *addr_p++;
+            }
+
+            s_attr.mask = 0x7019F;
+
+            s_attr.volmode.left  = 0;
+            s_attr.volmode.right = 0;
+            vag_offset           = (vag_offset * 8);
+            s_attr.voice         = spu_ch_tbl[vo];
+            s_attr.addr          = vab_h[vabid].vb_start_addr_10 + vag_offset;
+
+            s_attr.adsr1          = sd_vag_atr->adsr1;
+            smf_port[vo].adsr1_46 = s_attr.adsr1;
+            s_attr.adsr2          = sd_vag_atr->adsr2;
+            smf_port[vo].adsr2_48 = s_attr.adsr2;
+
+            adsr1_raw        = sd_vag_atr->adsr1;
+            s_attr.a_mode    = !(adsr1_raw & 0x80) ? 1 : 5;
+            s_attr.loop_addr = s_attr.addr;
+
+            smf_port[vo].center_1E   = sd_vag_atr->center;
+            smf_port[vo].shift_1F    = sd_vag_atr->shift;
+            smf_port[vo].bend_min_1D = sd_vag_atr->pbmin;
+            smf_port[vo].bend_max_1C = sd_vag_atr->pbmax;
+            smf_port[vo].vc_0        = vo;
+            smf_port[vo].prog_2      = prog;
+            smf_port[vo].tone_4      = tone;
+            smf_port[vo].note_6      = note_value >> 8;
+
+            smf_port[vo].midi_ch_3 = 0x20;
+            smf_port[vo].stat_16   = 1;
+            smf_port[vo].pvol_10   = sd_vab_prog->mvol;
+            smf_port[vo].ppan_12   = sd_vab_prog->mpan;
+            smf_port[vo].tvol_11   = sd_vag_atr->vol;
+            smf_port[vo].tpan_13   = sd_vag_atr->pan;
+            smf_port[vo].vab_id_52 = vabid;
+
+            pan = ((u8)vab_h[vabid].mpan_1B + smf_port[vo].ppan_12 + smf_port[vo].tpan_13) - 0x80;
+            if (pan < 0)
+            {
+                pan = 0;
+            }
+            if (pan > 0x7F)
+            {
+                pan = 0x7F;
+            }
+            smf_port[vo].pan_14 = pan;
+
+            master_vol_temp = (u8)vab_h[vabid].mvol_18;
+            master_vol_temp = ((master_vol_temp * smf_port[vo].pvol_10) * smf_port[vo].tvol_11) >> 7;
+            volume_scale    = 2;
+
+            if (pan >= 0x40)
+            {
+                r_vol = master_vol_temp;
+                l_vol = ((0x40 - (pan & 0x3F)) * (r_vol * volume_scale)) >> 7;
+            }
+            else
+            {
+                l_vol = master_vol_temp;
+                r_vol = pan;
+                r_vol = (r_vol * (l_vol * volume_scale)) >> 7;
+            }
+            master_vol_byte = vab_h[vabid].mvol_18;
+
+            l_vol                = ((l_vol * master_vol_byte) >> 7);
+            smf_port[vo].l_vol_C = (l_vol * voll) >> 7;
+
+            r_vol                = ((r_vol * master_vol_byte) >> 7);
+            smf_port[vo].r_vol_E = (r_vol * volr) >> 7;
+
+            if (sd_mono_st_flag != 0)
+            {
+                l_vol                = (smf_port[vo].l_vol_C + smf_port[vo].r_vol_E) >> 1;
+                smf_port[vo].r_vol_E = l_vol;
+                smf_port[vo].l_vol_C = l_vol;
+            }
+
+            s_attr.volume.left  = smf_port[vo].l_vol_C;
+            s_attr.volume.right = smf_port[vo].r_vol_E;
+            s_attr.pitch        = Note2Pitch(note, fine, sd_vag_atr->center, sd_vag_atr->shift);
+
+            do
+            {
+                SpuSetKeyOnWithAttr(&s_attr);
+            } while (SpuGetKeyStatus(spu_ch_tbl[vo] == 1) == 0);
+
+            if (sd_vag_atr->mode & 4)
+            {
+                SpuSetReverbVoice(1, spu_ch_tbl[vo]);
+            }
+            else
+            {
+                SpuSetReverbVoice(0, spu_ch_tbl[vo]);
+            }
+        }
+        else
+        {
+            vo = -1;
+        }
+    }
+
+    sd_int_flag = 0;
+    return vo;
+}
 
 s16 SdUtKeyOn(s16 vabid, s16 prog, s16 tone, s16 note, s16 fine, s16 voll, s16 volr) // 0x800A1534
 {
