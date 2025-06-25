@@ -678,7 +678,6 @@ s16 SdVabFakeHead(u8* addr, s16 vabid, u32 sbaddr) // 0x8009FAC0
     return i;
 }
 
-// INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_snd", SdVbOpenOne);
 s32 SdVbOpenOne(u8* addr, s32 sbaddr, s32 sbsize, s16 vabid) // 0x8009FBAC
 {
     VAB_H* p;
