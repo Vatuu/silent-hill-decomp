@@ -315,7 +315,7 @@ void tone_adsr_mem(s16 vab_id);
 void tone_adsr_back(s16 vab_id);
 void sd_alloc_sort();
 s32  SdSpuMalloc(s32 size);
-s32  SdSpuMallocWithStartAddr(s32, s32);
+u32  SdSpuMallocWithStartAddr(u32, s32);
 void SdSpuFree(u32 addr);
 void SdWorkInit();
 void SdInit();
