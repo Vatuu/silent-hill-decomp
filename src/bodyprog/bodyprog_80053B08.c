@@ -1369,7 +1369,63 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80053B08", func_800713E8); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80053B08", func_80071620); // 0x80071620
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80053B08", func_800717D0); // 0x800717D0
+void func_800717D0(s_SubCharacter* chara, void* arg1, GsCOORDINATE2* coord) // 0x800717D0
+{
+    // Called by `GameState_InGame_Update`, might be player update function.
+    // `chara` always `&g_SysWork.player_4C.chara_0`
+    // `arg1`  always `0x8010A600` / `FS_BUFFER_0` (holds anim related data?)
+    // `coord` always `&g_SysWork.playerBoneCoords_890`
+
+    s_MainCharacterExtra* extra = &g_SysWork.player_4C.extra_128;
+
+    if (g_DeltaTime0 != 0)
+    {
+        func_8007C800(chara, extra);
+
+        if (D_800AF214 != 0)
+        {
+            D_800C455C = 0;
+            D_800C4558 = 0;
+            D_800C45C0 = 0;
+            D_800C45BE = 0;
+            D_800C45BC = 0;
+            D_800C457E = 0;
+            D_800C4604 = 0;
+            D_800C45F0 = 0;
+            D_800C45E8 = 0;
+            D_800C4582 = 0;
+            D_800C45AE = 0;
+            D_800C4586 = 0;
+            D_800C4580 = 0;
+            D_800C45AC = 0;
+            D_800C4584 = 0;
+        }
+
+        if (D_800AF215 == 0)
+        {
+            func_80071CE8(chara, extra, coord);
+        }
+        else
+        {
+            g_MapOverlayHeader.func_B8(chara, extra, coord);
+        }
+
+        if (D_800AF215 == 0)
+        {
+            func_8007C0D8(chara, extra, coord);
+        }
+        else
+        {
+            g_MapOverlayHeader.func_BC(chara, extra, coord);
+        }
+
+        func_80071968(chara, extra, arg1, coord);
+        func_8007D090(chara, extra, coord);
+    }
+
+    D_800C45B0.vx = 0;
+    D_800C45B0.vz = 0;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80053B08", func_80071968); // 0x80071968
 
@@ -1377,7 +1433,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80053B08", func_80071CE8); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80053B08", func_80073FC0); // 0x80073FC0
 
-void func_80074254(s32 arg0, s32 arg1) // 0x0074254
+void func_80074254(s32 arg0, s32 arg1) // 0x80074254
 {
     s32 var0;
 

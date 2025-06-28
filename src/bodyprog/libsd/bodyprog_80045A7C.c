@@ -422,7 +422,7 @@ void func_800463C0(u16 arg0, s8 arg1, u8 arg2, s8 arg3) // 0x800463C0
     }
 
     D_800C1698.field_A = 0;
-    D_800C1698.field_8 = (u8)D_800ACAA8[D_800C15BE].field_4;
+    D_800C1698.field_8 = D_800ACAA8[D_800C15BE].field_4;
     D_800C15C0         = D_800C1628[var_t0] + arg3 * 2;
     temp_a0            = arg2;
     temp_a0            = D_800C1698.field_C - ((D_800C1698.field_C * (temp_a0)) / 255);
@@ -667,7 +667,7 @@ void func_80046C54(u8 arg0, u8 arg1) // 0x80046C54
     }
     else if (D_800C1658.field_E < 0x329)
     {
-        idx = (u8)D_800C1658.field_E;
+        idx = D_800C1658.field_E;
 
         for (i = 0; i < 15; i++)
         {

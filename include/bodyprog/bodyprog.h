@@ -835,7 +835,10 @@ typedef struct _MapOverlayHeader
     s8                unk_48[4];
     s_func_800625F4*  field_4C;
     s8                unk_50[16];
-    s8                unk_60[104];
+    s8                unk_60[88];
+    void              (*func_B8)(s_SubCharacter*, s_MainCharacterExtra*, GsCOORDINATE2*);
+    void              (*func_BC)(s_SubCharacter*, s_MainCharacterExtra*, GsCOORDINATE2*);
+    s8                unk_C0[8];
     void              (*func_C8)();
     void              (*func_CC)(s32);
     s32               (*func_D0)(s32, void*, s16, s32); // 0x800C964C
@@ -1029,9 +1032,9 @@ extern s16 D_800AF210;
 
 extern s16 D_800AF212;
 
-extern s8 D_800AF214;
+extern u8 D_800AF214;
 
-extern s8 D_800AF215;
+extern u8 D_800AF215;
 
 extern s8 D_800AF216;
 
@@ -1309,6 +1312,8 @@ extern s8 D_800C4588;
 extern s16 D_800C45AC;
 
 extern s16 D_800C45AE;
+
+extern VECTOR3 D_800C45B0; // Assumed type
 
 extern s16 D_800C45BC;
 
@@ -2243,6 +2248,16 @@ void Game_SavegameResetPlayer();
 void GameFs_PlayerMapAnimLoad(s32 mapIdx);
 
 void func_800717D0(s_SubCharacter* chara, void* arg1, GsCOORDINATE2* coord);
+
+void func_80071968(s_SubCharacter*, s_MainCharacterExtra*, void*, GsCOORDINATE2*);
+
+void func_80071CE8(s_SubCharacter*, s_MainCharacterExtra*, GsCOORDINATE2*);
+
+void func_8007C0D8(s_SubCharacter*, s_MainCharacterExtra*, GsCOORDINATE2*);
+
+void func_8007C800(s_SubCharacter*, s_MainCharacterExtra*);
+
+void func_8007D090(s_SubCharacter*, s_MainCharacterExtra*, GsCOORDINATE2*);
 
 void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord);
 
