@@ -295,13 +295,14 @@ void volume_calc(PORT* p, MIDI* mp) // 0x800A3F14
 
     if ((u8)sd_mono_st_flag == 0)
     {
-        pan = ((u8)vab_h[sd_seq_play_no].mpan_1B + p->ppan_12 + p->tpan_13 + mp->pan_1) - 0xC0; // mpan_1B s8 to u8
+        pan = ((u8)vab_h[sd_seq_play_no].mpan_1B + p->ppan_12 + p->tpan_13 + mp->pan_1) - 0xC0; // `mpan_1B` `s8` to `u8`.
         if (mp->key_pan_22 != 0)
         {
             s32 temp = (((s32)(p->note_6 * mp->key_pan_22) >> 6) + 0x40);
             pan      = (pan + (temp - mp->key_pan_22)) - 0x40;
         }
     }
+
     if (pan < 0)
     {
         pan = 0;
@@ -313,10 +314,10 @@ void volume_calc(PORT* p, MIDI* mp) // 0x800A3F14
 
     p->pan_14 = pan;
 
-    // mvol_18 s8 to u8
-    l_vol = ((u8)vab_h[sd_seq_play_no].mvol_18 * smf_song[p->midi_ch_3 >> 4].midi_master_vol_538 * mp->express_5 * mp->mvol_3) >> 0xE;
+    // `mvol_18` `s8` to `u8`.
+    l_vol = ((u8)vab_h[sd_seq_play_no].mvol_18 * smf_song[p->midi_ch_3 >> 4].midi_master_vol_538 * mp->express_5 * mp->mvol_3) >> 14;
     l_vol = l_vol * p->pvol_10;
-    l_vol = (l_vol * p->tvol_11) >> 0xE;
+    l_vol = (l_vol * p->tvol_11) >> 14;
 
     scale = 2;
 
@@ -341,16 +342,16 @@ void volume_calc(PORT* p, MIDI* mp) // 0x800A3F14
     p->l_vol_C = (l_vol * (p->velo_1A & 0x7F)) >> 7;
     p->r_vol_E = (r_vol * (p->velo_1A & 0x7F)) >> 7;
 
-    if (mp->vol_mode_11 >= 0x40U)
+    if (mp->vol_mode_11 >= 0x40u)
     {
-        p->l_vol_C = (p->l_vol_C * p->l_vol_C) >> 0xE;
-        p->r_vol_E = (p->r_vol_E * p->r_vol_E) >> 0xE;
+        p->l_vol_C = (p->l_vol_C * p->l_vol_C) >> 14;
+        p->r_vol_E = (p->r_vol_E * p->r_vol_E) >> 14;
     }
 }
 
 void smf_vol_set(s32 ch, s32 vc, s32 l_vol, s32 r_vol) // 0x800A4150
 {
-    s_attr.mask  = (SPU_VOICE_VOLL | SPU_VOICE_VOLR | SPU_VOICE_VOLMODEL | SPU_VOICE_VOLMODER);
+    s_attr.mask  = SPU_VOICE_VOLL | SPU_VOICE_VOLR | SPU_VOICE_VOLMODEL | SPU_VOICE_VOLMODER;
     s_attr.voice = spu_ch_tbl[vc];
 
     if (l_vol | r_vol)
@@ -932,7 +933,7 @@ void key_on(u8 chan, u8 c1, u8 c2) // 0x800A5158
 
     for (tone = 0; tone < sp40->tones; tone++)
     {
-        sd_vag_atr = &sp38->vag_atr[(sp28 * 0x10) + tone];
+        sd_vag_atr = &sp38->vag_atr[(sp28 * 16) + tone];
         sp48       = 0;
 
         if (sd_vag_atr->vag != 0 && c1 >= sd_vag_atr->min && sd_vag_atr->max >= c1)
@@ -966,7 +967,8 @@ void key_on(u8 chan, u8 c1, u8 c2) // 0x800A5158
                         {
                             SpuSetKey(0, spu_ch_tbl[vo]);
                             stat = SpuGetKeyStatus(spu_ch_tbl[vo]);
-                        } while (stat != 2 && stat != 0);
+                        }
+                        while (stat != 2 && stat != 0);
                     }
                     else
                     {
@@ -987,7 +989,7 @@ void key_on(u8 chan, u8 c1, u8 c2) // 0x800A5158
                     {
                         m->porta_wk_30    = 1;
                         m->porta_limit_2E = (c1 - m->before_note_13) << 7;
-                        m->porta_add_2C   = ((m->porta_limit_2E * 4) / m->porta_28);
+                        m->porta_add_2C   = (m->porta_limit_2E * 4) / m->porta_28;
                     }
                     else if (m->before_note_13 == c1)
                     {
@@ -998,7 +1000,7 @@ void key_on(u8 chan, u8 c1, u8 c2) // 0x800A5158
                     {
                         m->porta_wk_30    = 0;
                         m->porta_limit_2E = (m->before_note_13 - c1) << 7;
-                        m->porta_add_2C   = ((m->porta_limit_2E * 4) / m->porta_28);
+                        m->porta_add_2C   = (m->porta_limit_2E * 4) / m->porta_28;
                     }
                 }
                 else
@@ -1010,7 +1012,7 @@ void key_on(u8 chan, u8 c1, u8 c2) // 0x800A5158
             {
                 if (m->porta_28 != 0)
                 {
-                    note              = (m->before_note_13 & 0x7F);
+                    note              = m->before_note_13 & 0x7F;
                     m->porta_depth_2A = 0;
 
                     if (m->before_note_13 < c1)
@@ -1028,7 +1030,7 @@ void key_on(u8 chan, u8 c1, u8 c2) // 0x800A5158
                     {
                         m->porta_wk_30    = 0;
                         m->porta_limit_2E = (m->before_note_13 - c1) << 7;
-                        m->porta_add_2C   = ((m->porta_limit_2E * 4) / m->porta_28);
+                        m->porta_add_2C   = (m->porta_limit_2E * 4) / m->porta_28;
                     }
                 }
                 else
@@ -1054,7 +1056,8 @@ void key_on(u8 chan, u8 c1, u8 c2) // 0x800A5158
                 {
                     SpuSetKey(0, spu_ch_tbl[vo]);
                     stat = SpuGetKeyStatus(spu_ch_tbl[vo]);
-                } while (stat != 2 && stat != 0);
+                }
+                while (stat != 2 && stat != 0);
             }
 
             for (i = 0, vag_addr = 0, addr_p = (u8*)vab_h[sp44].vh_addr_4 + (sp3C->vab_h.ps * 0x200) + 0x820; i < sd_vag_atr->vag; addr_p++, i++)
@@ -1161,11 +1164,11 @@ void key_on(u8 chan, u8 c1, u8 c2) // 0x800A5158
             p->pbend_50    = (u16)m->pbend_7;
             p->pbend_wk_4E = 0xFFFF;
 
-            if (m->bend_mode_10 < 0x40U)
+            if (m->bend_mode_10 < 0x40u)
             {
                 temp_s0_5 = p->vib_data_2E + (m->mod_depth_1C + m->porta_depth_2A);
                 temp_s0_5 += (p->note_wk_8 << 7) + pitch_bend_calc(p, m->pbend_7);
-                s_attr.pitch = Note2Pitch(temp_s0_5 >> 0x7, temp_s0_5 & 0x7F, sd_vag_atr->center, sd_vag_atr->shift);
+                s_attr.pitch = Note2Pitch(temp_s0_5 >> 7, temp_s0_5 & 0x7F, sd_vag_atr->center, sd_vag_atr->shift);
             }
             else
             {
@@ -1180,7 +1183,8 @@ void key_on(u8 chan, u8 c1, u8 c2) // 0x800A5158
                 do
                 {
                     SpuSetKeyOnWithAttr(&s_attr);
-                } while (SpuGetKeyStatus(spu_ch_tbl[vo] == 1) == 0);
+                }
+                while (SpuGetKeyStatus(spu_ch_tbl[vo] == 1) == 0);
             }
 
             if (m->rev_depth_24 == 0)

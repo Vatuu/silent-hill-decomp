@@ -1,6 +1,15 @@
 #ifndef _DEMO_SYSTEM_H
 #define _DEMO_SYSTEM_H
 
+// TODO: Make local. Used in `Demo_Update`.
+extern char D_8002B2D8[]; // "STEP ERROR:[H:"
+extern char D_8002B2E8[]; // "]/[M:"
+extern char D_8002B2F0[]; // "]"
+
+extern s32 D_800AFDF0;
+
+extern u32 D_800FE5F8;
+
 /** @brief This header is used to declare any variable, struct, or
  * function part of `BODYPROG.BIN` identified to be related
  * to the demo game system.
@@ -48,6 +57,8 @@ void Demo_DemoRandSeedBackup();
 void Demo_DemoRandSeedRestore();
 
 void Demo_DemoRandSeedAdvance();
+
+s32 Demo_Update();
 
 s32 Demo_ControllerDataUpdate();
 

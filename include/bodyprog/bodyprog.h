@@ -764,10 +764,10 @@ STATIC_ASSERT_SIZEOF(s_DemoWork, 2048);
 typedef struct _DemoFrameData
 {
     s_AnalogController analogController_0;
-    s8              gameStateExpected_8; /** Expected value of `g_GameWork.gameState_594` before `analogController_0` is processed, if it doesn't match `Demo_Update` will display `STEP ERROR` and stop reading demo. */
-    u8              videoPresentInterval_9;
-    u8              unk_A[2];
-    u32             randSeed_C;
+    s8                 gameStateExpected_8; /** Expected value of `g_GameWork.gameState_594` before `analogController_0` is processed, if it doesn't match `Demo_Update` will display `STEP ERROR` and stop reading demo. */
+    u8                 videoPresentInterval_9;
+    s8                 unk_A[2];
+    u32                randSeed_C;
 } s_DemoFrameData;
 STATIC_ASSERT_SIZEOF(s_DemoFrameData, 16);
 
@@ -1054,6 +1054,12 @@ extern s32 D_800AFD9C;
 
 extern s32 D_800AFDEC;
 
+extern s32 g_Demo_DemoId; // 0x800AFDB8
+
+extern u16 g_Demo_RandSeed; // 0x800AFDBC
+
+extern s_DemoFrameData* g_Demo_PlayFileBufferPtr; // 0x800AFDC0
+
 extern s_800AFE08 D_800AFE08;
 
 extern s_800AFE24 D_800AFE24;
@@ -1166,7 +1172,7 @@ extern s16 D_800C15C8;
 
 extern s32 D_800C15D8;
 
-extern s32 D_800C15DC;
+extern s32 D_800C15DC; // Index.
 
 extern s32 D_800C15E0;
 
@@ -1411,17 +1417,12 @@ extern u32 g_Demo_PrevRandSeed; // 0x800C4888
 
 extern u32 g_Demo_RandSeedBackup; // 0x800C488C
 
+// Current packet/frame in buffer.
 extern s_DemoFrameData* g_Demo_CurFrameData; // 0x800C4890
 
 extern s32 g_Demo_DemoStep; // 0x800C4894
 
 extern s32 g_Demo_VideoPresentInterval; // 0x800C4898
-
-extern s32 g_Demo_DemoId; // 0x800AFDB8
-
-extern u16 g_Demo_RandSeed; // 0x800AFDBC
-
-extern void* g_Demo_PlayFileBufferPtr; // 0x800AFDC0
 
 extern s16 D_800C6E26;
 

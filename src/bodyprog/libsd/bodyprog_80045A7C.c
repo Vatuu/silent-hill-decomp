@@ -302,7 +302,7 @@ u8 func_80046048(u16 arg0, s8 arg1, u8 arg2) // 0x80046048
 
     if (arg0 == 0x500)
     {
-        return -1;
+        return NO_VALUE;
     }
 
     D_800C15BC = arg0 - 0x500;
@@ -342,13 +342,15 @@ u8 func_80046048(u16 arg0, s8 arg1, u8 arg2) // 0x80046048
     if (arg0 == 0x529)
     {
         D_800C1698.field_6 = D_800ACAA8[D_800C15BC].field_0;
-        SdUtKeyOnV(0x16, D_800C1698.field_2, D_800C1698.field_4, D_800C1698.field_6, D_800C1698.field_8, 0, Sd_GetVolSe(D_800C1698.field_C), Sd_GetVolSe(D_800C1698.field_E));
+        SdUtKeyOnV(0x16, D_800C1698.field_2, D_800C1698.field_4, D_800C1698.field_6, D_800C1698.field_8, 0,
+                   Sd_GetVolSe(D_800C1698.field_C), Sd_GetVolSe(D_800C1698.field_E));
         D_800C1698.field_0 = 0x16;
     }
     else if (arg0 == 0x52A)
     {
         D_800C1698.field_6 = D_800ACAA8[D_800C15BC].field_0;
-        SdUtKeyOnV(0x17, D_800C1698.field_2, D_800C1698.field_4, D_800C1698.field_6, D_800C1698.field_8, 0x78, Sd_GetVolSe(D_800C1698.field_C), Sd_GetVolSe(D_800C1698.field_E));
+        SdUtKeyOnV(0x17, D_800C1698.field_2, D_800C1698.field_4, D_800C1698.field_6, D_800C1698.field_8, 0x78,
+                   Sd_GetVolSe(D_800C1698.field_C), Sd_GetVolSe(D_800C1698.field_E));
         D_800C1698.field_0 = 0x17;
     }
     else
@@ -373,7 +375,7 @@ u8 func_80046048(u16 arg0, s8 arg1, u8 arg2) // 0x80046048
         return D_800C1698.field_0;
     }
 
-    return -1;
+    return NO_VALUE;
 }
 
 void func_800463C0(u16 arg0, s8 arg1, u8 arg2, s8 arg3) // 0x800463C0
@@ -519,8 +521,8 @@ void func_80046620(u16 arg0, s8 arg1, u8 arg2, s8 arg3) // 0x80046620
         D_800C1698.field_E = 0;
     }
 
-    D_800C1698.field_0 = SdUtKeyOn(D_800C1698.field_2, D_800C1698.field_4, D_800C1698.field_6,
-                                   D_800C1698.field_8, D_800C1698.field_A, Sd_GetVolSe(D_800C1698.field_C), Sd_GetVolSe(D_800C1698.field_E));
+    D_800C1698.field_0 = SdUtKeyOn(D_800C1698.field_2, D_800C1698.field_4, D_800C1698.field_6, D_800C1698.field_8, D_800C1698.field_A,
+                                   Sd_GetVolSe(D_800C1698.field_C), Sd_GetVolSe(D_800C1698.field_E));
 }
 
 void func_800468EC() // 0x800468EC
@@ -599,7 +601,7 @@ void func_80046AD8() // 0x80046AD8
     func_800478DC(8);
 }
 
-void func_80046B04()
+void func_80046B04() // 0x80046B04
 {
     if (D_800C1678.volumeBgm_8 > 0)
     {
@@ -636,7 +638,7 @@ u8 func_80046BB4(u8 arg0) // 0x80046BB4
         return 0;
     }
 
-    if (D_800C1658.field_E >= 0x329)
+    if (D_800C1658.field_E >= 809)
     {
         return 0;
     }
@@ -651,32 +653,33 @@ u8 func_80046BB4(u8 arg0) // 0x80046BB4
             break;
         }
     }
+
     return ret;
 }
 
 void func_80046C54(u8 arg0, u8 arg1) // 0x80046C54
 {
     u32 i;
-    s16 new_var;
-    u8  new_var2;
+    s16 var0;
+    u8  var1;
     u8  idx;
 
     if (arg0 == 0)
     {
-        D_800C167E = (arg1 * 0x28) / 127;
+        D_800C167E = (arg1 * 40) / 127;
     }
-    else if (D_800C1658.field_E < 0x329)
+    else if (D_800C1658.field_E < 809)
     {
         idx = D_800C1658.field_E;
 
         for (i = 0; i < 15; i++)
         {
-            new_var2 = D_800AA604[idx][i];
-            new_var  = arg1;
+            var1 = D_800AA604[idx][i];
+            var0  = arg1;
 
-            if (new_var2 == arg0)
+            if (var1 == arg0)
             {
-                SdSetMidiVol(0, i, new_var);
+                SdSetMidiVol(0, i, var0);
             }
         }
     }
@@ -822,35 +825,35 @@ void func_800478DC(u8 arg0) // 0x800478DC
 {
     if (arg0 == 2)
     {
-        for (D_800C15D8 = 1; D_800C15D8 < 0x1E; D_800C15D8++)
+        for (D_800C15D8 = 1; D_800C15D8 < 30; D_800C15D8++)
         {
             if (D_800C16A8[D_800C15D8] == 1)
             {
-                for (D_800C15DC = D_800C15D8; D_800C15DC < 0x1E; D_800C15DC++)
+                for (D_800C15DC = D_800C15D8; D_800C15DC < 30; D_800C15DC++)
                 {
                     D_800C16A8[D_800C15DC] = D_800C16A8[D_800C15DC + 1];
                 }
 
-                D_800C16A8[0x1F] = 0;
-                D_800C37DC       = 0;
+                D_800C16A8[31] = 0;
+                D_800C37DC     = 0;
             }
         }
     }
 
-    for (D_800C15D8 = 1; D_800C15D8 < 0x1E; D_800C15D8++)
+    for (D_800C15D8 = 1; D_800C15D8 < 30; D_800C15D8++)
     {
         if (D_800C16A8[D_800C15D8] == arg0)
         {
-            for (D_800C15DC = D_800C15D8; D_800C15DC < 0x1E; D_800C15DC++)
+            for (D_800C15DC = D_800C15D8; D_800C15DC < 30; D_800C15DC++)
             {
                 D_800C16A8[D_800C15DC] = D_800C16A8[D_800C15DC + 1];
             }
 
-            D_800C16A8[0x1F] = 0;
+            D_800C16A8[31] = 0;
         }
     }
 
-    for (D_800C15D8 = 0; D_800C15D8 < 0x1F; D_800C15D8++)
+    for (D_800C15D8 = 0; D_800C15D8 < 31; D_800C15D8++)
     {
         if (D_800C16A8[D_800C15D8] == 0)
         {

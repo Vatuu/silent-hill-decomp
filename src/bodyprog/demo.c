@@ -245,7 +245,80 @@ void Demo_DemoRandSeedAdvance() // 0x8008F598
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/demo", Demo_Update); // 0x8008F5D8
+s32 Demo_Update() // 0x8008F5D8
+{
+    s32               var0;
+    s32               var1;
+    u32               demoStep;
+    s_ControllerData* cont;
+    s_GameWork*       work;
+
+    var0       = D_800AFDF0;
+    var1       = D_800C489C;
+    D_800C489C = 0;
+    D_800AFDF0 = g_Gfx_ScreenFade;
+
+    if (!(g_SysWork.flags_22A4 & (1 << 1)))
+    {
+        g_Demo_CurFrameData = NULL;
+        g_Demo_DemoStep     = 0;
+        return 1;
+    }
+
+    if (g_Demo_PlayFileBufferPtr == NULL)
+    {
+        g_Demo_CurFrameData = NULL;
+        return 0;
+    }
+
+    demoStep = g_Demo_DemoStep;
+    do {} while (false);
+    if (D_800FE5F8 <= demoStep)
+    {
+        func_8008F518();
+        Demo_ExitDemo();
+        return 0;
+    }
+
+    if (func_8008F434(var0) == 0 || func_8008F434(g_Gfx_ScreenFade) == 0 || var1 != 0)
+    {
+        g_Demo_CurFrameData = NULL;
+        return 1;
+    }
+
+    work = &g_GameWork;
+    switch (func_8008F470(work->gameState_594))
+    {
+        case 1:
+            g_Demo_CurFrameData = &g_Demo_PlayFileBufferPtr[g_Demo_DemoStep];
+            if (g_Demo_CurFrameData->gameStateExpected_8 != work->gameState_594)
+            {
+                Gfx_DebugStringPosition(8, 0x50);
+                Gfx_DebugStringDraw(D_8002B2D8); // "STEP ERROR:[H:"
+                Gfx_DebugStringDraw(Math_IntegerToString(2, g_Demo_CurFrameData->gameStateExpected_8));
+                Gfx_DebugStringDraw(D_8002B2E8); // "]/[M:"
+                Gfx_DebugStringDraw(Math_IntegerToString(2, work->gameState_594));
+                Gfx_DebugStringDraw(D_8002B2F0); // "]"
+
+                g_Demo_CurFrameData = NULL;
+            }
+
+            g_Demo_DemoStep++;
+            func_8008F518();
+            return 1;
+
+        case -1:
+            func_8008F518();
+            Demo_ExitDemo();
+            return 0;
+
+        case 0:
+            break;
+    }
+
+    g_Demo_CurFrameData = NULL;
+    return 1;
+}
 
 // TODO: Move this to header if any other funcs have same code.
 static inline void ControllerData_Reset(s_ControllerData* controller, u16 btns)

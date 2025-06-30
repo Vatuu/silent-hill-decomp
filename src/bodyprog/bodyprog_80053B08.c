@@ -1372,9 +1372,9 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80053B08", func_80071620); // 0x
 void func_800717D0(s_SubCharacter* chara, void* arg1, GsCOORDINATE2* coord) // 0x800717D0
 {
     // Called by `GameState_InGame_Update`, might be player update function.
-    // `chara` always `&g_SysWork.player_4C.chara_0`
-    // `arg1`  always `0x8010A600` / `FS_BUFFER_0` (holds anim related data?)
-    // `coord` always `&g_SysWork.playerBoneCoords_890`
+    // - `chara` always `&g_SysWork.player_4C.chara_0`.
+    // - `arg1`  always `0x8010A600`/`FS_BUFFER_0` (holds anim related data?).
+    // - `coord` always `&g_SysWork.playerBoneCoords_890`.
 
     s_MainCharacterExtra* extra = &g_SysWork.player_4C.extra_128;
 

@@ -163,14 +163,14 @@ u32 SdSpuMallocWithStartAddr(u32 addr, s32 size) // 0x8009F120
     s32 i;
     u32 end_addr;
 
-    if (addr - 0x1010 > 0x7EFEFU || addr + size > 0x7FFFFU)
+    if (addr - 0x1010 > 0x7EFEFu || addr + size > 0x7FFFFu)
     {
         return -1;
     }
 
     if (sd_spu_alloc[0].addr_0 == 0)
     {
-        if (addr + size < 0x80000 - sd_reverb_area_size[sd_reverb_mode])
+        if ((addr + size) < (0x80000 - sd_reverb_area_size[sd_reverb_mode]))
         {
             sd_spu_alloc[0].addr_0 = addr;
             sd_spu_alloc[0].size_4 = size;
@@ -182,7 +182,7 @@ u32 SdSpuMallocWithStartAddr(u32 addr, s32 size) // 0x8009F120
         return -1;
     }
 
-    for (i = 0; i < 0x10; i++)
+    for (i = 0; i < 16; i++)
     {
         if (i == 0 && addr < sd_spu_alloc[i].addr_0)
         {
@@ -191,7 +191,7 @@ u32 SdSpuMallocWithStartAddr(u32 addr, s32 size) // 0x8009F120
                 return -1;
             }
 
-            for (; i < 0x10; i++)
+            for (; i < 16; i++)
             {
                 if (sd_spu_alloc[i].size_4 != 0)
                 {
@@ -203,7 +203,7 @@ u32 SdSpuMallocWithStartAddr(u32 addr, s32 size) // 0x8009F120
                 break;
             }
 
-            if (i != 0x10)
+            if (i != 16)
             {
                 break;
             }
@@ -229,12 +229,13 @@ u32 SdSpuMallocWithStartAddr(u32 addr, s32 size) // 0x8009F120
 
         if (sd_spu_alloc[i + 1].size_4 == 0)
         {
-            if (addr + size < 0x80000 - sd_reverb_area_size[sd_reverb_mode])
+            if ((addr + size) < (0x80000 - sd_reverb_area_size[sd_reverb_mode]))
             {
                 sd_spu_alloc[i + 1].addr_0 = addr;
                 sd_spu_alloc[i + 1].size_4 = size;
                 break;
             }
+
             return -1;
         }
 
@@ -253,7 +254,7 @@ u32 SdSpuMallocWithStartAddr(u32 addr, s32 size) // 0x8009F120
                 return -1;
             }
 
-            for (; i < 0x10; i++)
+            for (; i < 16; i++)
             {
                 if (sd_spu_alloc[i].size_4 != 0)
                 {
@@ -265,7 +266,7 @@ u32 SdSpuMallocWithStartAddr(u32 addr, s32 size) // 0x8009F120
                 break;
             }
 
-            if (i != 0x10)
+            if (i != 16)
             {
                 break;
             }
@@ -697,7 +698,7 @@ s32 SdVbOpenOne(u8* addr, s32 sbaddr, s32 sbsize, s16 vabid) // 0x8009FBAC
 
             i++;
 
-            if (i >= 0x10)
+            if (i >= 16)
             {
                 return -1;
             }
@@ -717,9 +718,9 @@ s32 SdVbOpenOne(u8* addr, s32 sbaddr, s32 sbsize, s16 vabid) // 0x8009FBAC
     p->vab_id_0   = i;
     p->vh_addr_4  = addr;
     p->vh_size_8  = sbsize;
-    p->mvol_18    = 0x7F;
+    p->mvol_18    = 127;
     p->vb_size_14 = sbsize;
-    p->mpan_1B    = 0x40;
+    p->mpan_1B    = 64;
 
     p->vb_start_addr_10 = sbaddr;
     p->vb_start_addr_10 = SdSpuMallocWithStartAddr(sbaddr, p->vb_size_14);
@@ -1400,7 +1401,7 @@ s16 SdUtKeyOnV(s16 voice, s16 vabid, s16 prog, s16 tone, s16 note, s16 fine, s16
         sd_vab_prog = &sd_vh->vab_prog[prog];
         note_base   = note << 8;
         note_value  = note_base + fine;
-        sd_vag_atr  = &sd_vh->vag_atr[(prog * 0x10) + tone];
+        sd_vag_atr  = &sd_vh->vag_atr[(prog * 16) + tone];
 
         if (sd_vag_atr->vag == 0)
         {
@@ -1414,7 +1415,8 @@ s16 SdUtKeyOnV(s16 voice, s16 vabid, s16 prog, s16 tone, s16 note, s16 fine, s16
             {
                 SpuSetKey(0, spu_ch_tbl[vo]);
                 stat = SpuGetKeyStatus(spu_ch_tbl[vo]);
-            } while (stat != 2 && stat != 0);
+            }
+            while (stat != 2 && stat != 0);
 
             addr_p = (u8*)vab_h[vabid].vh_addr_4 + (sd_vh->vab_h.ps << 9) + 0x820;
 
@@ -1505,7 +1507,8 @@ s16 SdUtKeyOnV(s16 voice, s16 vabid, s16 prog, s16 tone, s16 note, s16 fine, s16
             do
             {
                 SpuSetKeyOnWithAttr(&s_attr);
-            } while (SpuGetKeyStatus(spu_ch_tbl[vo] == 1) == 0);
+            }
+            while (SpuGetKeyStatus(spu_ch_tbl[vo] == 1) == 0);
 
             if (sd_vag_atr->mode & 4)
             {

@@ -187,7 +187,7 @@ void Gfx_DebugStringDraw(char* str)
         packet += sizeof(SPRT_8);
     }
 
-    *((u32*)&g_Gfx_DebugStringPosition1) = (textX & 0xFFFF) + (textY << 0x10);
+    *((u32*)&g_Gfx_DebugStringPosition1) = (textX & 0xFFFF) + (textY << 16);
     tPage                                = (DR_TPAGE*)packet;
     setDrawTPage(tPage, 0, 1, 0x14);
     addPrim(ot, tPage);
@@ -218,7 +218,8 @@ char* Math_IntegerToString(s32 widthMin, s32 value) // 0x80032154
         widthMin--;
         *string = '0' + (value % 10);
         value /= 10;
-    } while (value > 0);
+    }
+    while (value > 0);
 
     if (isNegative)
     {
@@ -277,7 +278,7 @@ void Settings_DispEnvXYSet(DISPENV* display, s32 x, s32 y) // 0x80032524
     s_GameWork* gameWorkPtr;
 
     x = (x < -11) ? -11 : ((x > 11) ? 11 : x);
-    y = (y < -8) ? -8 : ((y > 8) ? 8 : y);
+    y = (y < -8)  ? -8  : ((y > 8)  ? 8  : y);
 
     gameWorkPtr = g_GameWorkConst;
     gameWorkPtr->config_0.optScreenPosX_1C = x;

@@ -151,7 +151,6 @@ s32 func_8002F278(s32 arg0, s_func_8002F278* arg1) // 0x8002F278
     s32 i; 
 
     ret = 15;
-
     for (i = 0; i < 15; i++) 
     {
         ret -= arg1->field_13B[i];
