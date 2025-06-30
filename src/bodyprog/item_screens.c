@@ -61,9 +61,186 @@ u32 func_8004C54C() // 0x8004C54C
     return g_SavegamePtr->hyperBlasterFlags_25C_3 >> 3;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/item_screens", func_8004C564); // 0x8004C564
+void func_8004C564(u8 arg0, s32 arg1) // 0x8004C564
+{
+    s32 temp_v1;
+    s8  temp_a1;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/item_screens", func_8004C8DC); // 0x8004C8DC
+    temp_a1 = arg1 + 1;
+    switch (temp_a1)
+    {
+        case 0:
+            D_800C3960 = g_SavegamePtr->mapOverlayId_A4;
+            D_800C3962 = 0;
+            D_800C3963 = 0;
+            D_800C3961 = 0x20;
+            func_8008B398();
+            g_SysWork.player_4C.chara_0.properties_E4.player.field_114 = 0;
+            break;
+
+        case 1:
+            D_800C3960 = g_SavegamePtr->mapOverlayId_A4;
+            D_800C3962 = 0;
+            D_800C3961 = 0x20;
+
+            func_8008B438(arg0 != 2, 0x20, 0);
+            func_8008B3E4(0);
+
+            if (arg0 != 2)
+            {
+                D_800C3963 |= 1;
+            }
+            else
+            {
+                D_800C3963 |= 2;
+            }
+            break;
+
+        case 2:
+            if (arg0 == 2)
+            {
+                func_8008B40C((u8)D_800C3961, D_800C3962);
+                D_800C3963 |= 4;
+            }
+            break;
+
+        case 3:
+            if (D_800C3961 != 0)
+            {
+                D_800C3961 -= g_DeltaTime0 / 68 == 0 ? 1 : g_DeltaTime0 / 68;
+                D_800C3962 = D_800C3961 - 0x20;
+                D_800C3961 = CLAMP(D_800C3961, 0, 0x20);
+
+                func_8008B438(arg0 != 2, 0, 0);
+                func_8008B3E4(-1);
+
+                if (arg0 == 2)
+                {
+                    func_8008B40C((u8)D_800C3961, D_800C3962);
+                }
+
+                if (D_800C3961 == 0)
+                {
+                    func_8008B398();
+                    D_800C3963                                                 = 0;
+                    D_800C3962                                                 = 0;
+                    g_SysWork.player_4C.chara_0.properties_E4.player.field_114 = 0;
+                    g_SysWork.player_4C.chara_0.field_44                       = 0;
+                }
+            }
+            break;
+
+        case 4:
+            if (D_800C3963 & 2)
+            {
+                if (!(D_800C3963 & 4))
+                {
+                    func_8008B438(0, 0, 0);
+                    func_8008B3E4(0);
+                    g_SysWork.player_4C.chara_0.properties_E4.player.field_114 = 0;
+                    D_800C3963 -= 2;
+                }
+            }
+            break;
+
+        case 5:
+            if (g_SavegamePtr->mapOverlayId_A4 != D_800C3960)
+            {
+                D_800C3960 = g_SavegamePtr->mapOverlayId_A4;
+                D_800C3963 = 0;
+                D_800C3962 = 0;
+                D_800C3961 = 0x20;
+
+                temp_v1 = arg0;
+
+                if (temp_v1 != 2)
+                {
+                    D_800C3963 = 1;
+                }
+                else
+                {
+                    D_800C3963 = temp_v1;
+                }
+
+                if (arg0 == 2)
+                {
+                    D_800C3963 |= 4;
+                }
+            }
+
+            func_8008B438(arg0 != 2, (u8)D_800C3961, D_800C3962);
+            if (arg0 == 2)
+            {
+                func_8008B40C((u8)D_800C3961, D_800C3962);
+            }
+            func_8008B3E4(-1);
+            break;
+    }
+}
+
+static const int pad = 0; // Rodata padding.
+
+static const s8 D_80025EB0[] =
+{
+    0x00, 0x01, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x4a, 0x16, 0x17, 0x18, 0x19, 0x20, 0x1f, 0x21,
+    0x23, 0x26, 0x27, 0x28, 0x31, 0x32, 0x3f, 0x40,
+    0x41, 0x42, 0x43, 0x14, 0x15, 0x1e, 0x00, 0x33,
+    0x49, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x1a, 0x1b, 0x1c, 0x1d, 0x22, 0x24, 0x25, 0x2f,
+    0x2e, 0x30, 0x2d, 0x29, 0x2a, 0x2b, 0x2c, 0x00,
+    0x34, 0x35, 0x36, 0x37, 0x38, 0x39, 0x3a, 0x3b,
+    0x3c, 0x3d, 0x3e, 0x44, 0x45, 0x46, 0x47, 0x48,
+    0x0a, 0x0b, 0x0f, 0x00, 0x0c, 0x0e, 0x10, 0x0d,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x03, 0x07, 0x05, 0x09, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x04, 0x08, 0x06, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x11, 0x12, 0x13, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xff,
+    0x00, 0x00, 0x00, 0x00
+};
+
+void func_8004C8DC() // 0x8004C8DC
+{
+#define TIME_290_HOURS FP_TO(290 * 60 * 60, Q12_SHIFT)
+#define TIME_130_HOURS FP_TO(130 * 60 * 60, Q12_SHIFT)
+#define TIME_290_OVERFLOW_MAX 3 // add290Hours_25C_1 has max value of 3
+
+    g_SavegamePtr->gameplayTimer_250 += g_DeltaTime1;
+
+    if (g_SavegamePtr->gameplayTimer_250 >= TIME_290_HOURS)
+    {
+        if (g_SavegamePtr->add290Hours_25C_1 < TIME_290_OVERFLOW_MAX)
+        {
+            g_SavegamePtr->add290Hours_25C_1++;
+            g_SavegamePtr->gameplayTimer_250 += (UINT_MAX - TIME_290_HOURS + 1); // Wrap timer to 0 using unsigned overflow
+        }
+        else
+        {
+            g_SavegamePtr->gameplayTimer_250 = TIME_290_HOURS - 1;
+        }
+    }
+
+    if (g_SavegamePtr->add290Hours_25C_1 == TIME_290_OVERFLOW_MAX)
+    {
+        g_SavegamePtr->gameplayTimer_250 = CLAMP(g_SavegamePtr->gameplayTimer_250, 1, TIME_130_HOURS);
+    }
+
+#undef TIME_290_HOURS
+}
 
 void GameState_ItemScreens_Update()
 {
@@ -481,7 +658,44 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/item_screens", Inventory_Logic); // 0x800
 /** Something related to items commands.
  * This is used when the player does some action in in the commands space.
  */
-INCLUDE_ASM("asm/bodyprog/nonmatchings/item_screens", func_8004E6D4); // 0x8004E6D4
+void func_8004E6D4(s32 arg0) // 0x8004E6D4
+{
+    s32 i;
+
+    g_GameWork.gameStateStep_598[1] = 12;
+    g_GameWork.gameStateStep_598[2] = 0;
+
+    if (g_SavegamePtr->mapOverlayId_A4 == MapOverlayId_MAP6_S04)
+    {
+        if (func_80038A6C(&g_SysWork.player_4C.chara_0.position_18, &g_SysWork.npcs_1A0[0].position_18, 0xB33) == 0 &&
+            ABS(g_SysWork.player_4C.chara_0.position_18.vy - g_SysWork.npcs_1A0[0].position_18.vy) < 0x4CC &&
+            g_SysWork.player_4C.extra_128.field_1C == 0 && g_SavegamePtr->items_0[arg0].id_0 == InventoryItemId_UnknownLiquid)
+        {
+            D_800C3998                      = 1;
+            D_800ADB5C                      = 0;
+            g_GameWork.gameStateStep_598[1] = 11;
+            g_GameWork.gameStateStep_598[2] = 0;
+            func_8003ECBC();
+            g_SavegamePtr->eventFlags_1A0 |= 1;
+        }
+    }
+    else
+    {
+        for (i = 0; D_800BCDC0[i] != -1; i++)
+        {
+            if (D_800BCDC0[i] == g_SavegamePtr->items_0[arg0].id_0)
+            {
+                D_800C3998                      = 1;
+                D_800ADB5C                      = 0;
+                g_GameWork.gameStateStep_598[1] = 11;
+                g_GameWork.gameStateStep_598[2] = 0;
+                func_8003ECBC();
+                g_SysWork.player_4C.extra_128.field_28 = D_800BCDC0[i];
+                break;
+            }
+        }
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/item_screens", Gfx_Inventory_CmdOptionsDraw); // 0x8004E864
 
@@ -543,7 +757,31 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/item_screens", Gfx_Inventory_ScrollArrows
 #endif
 
 // Unused?
-INCLUDE_ASM("asm/bodyprog/nonmatchings/item_screens", func_8004EE94); // 0x8004EE94
+s32 func_8004EE94(u8 arg0, u8 arg1) // 0x8004EE94
+{
+    s32 i;
+
+    for (i = 0; i < g_SavegamePtr->field_AB; i++)
+    {
+        if (arg0 == g_SavegamePtr->items_0[i].id_0)
+        {
+            if (arg1 != 0)
+            {
+                if (arg1 == 1)
+                {
+                    g_SavegamePtr->items_0[i].count_1--;
+                    if (!(g_SavegamePtr->items_0[i].count_1 & 0xFF))
+                    {
+                        g_SavegamePtr->items_0[i].id_0 = 0xFF;
+                        g_SavegamePtr->field_AB        = func_8004F190(g_SavegamePtr);
+                    }
+                }
+            }
+            return 1;
+        }
+    }
+    return 0;
+}
 
 /** Does something with data of items and also something with map.
  * Used in:
@@ -553,7 +791,23 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/item_screens", func_8004EE94); // 0x8004E
 INCLUDE_ASM("asm/bodyprog/nonmatchings/item_screens", func_8004EF48); // 0x8004EF48
 
 // Unused?
-INCLUDE_ASM("asm/bodyprog/nonmatchings/item_screens", func_8004F10C); // 0x8004F10C
+void func_8004F10C(s32* arg0) // 0x8004F10C
+{
+    s32 i;
+
+    g_SavegamePtr->field_AB = func_8004F190(g_SavegamePtr);
+
+    for (i = *arg0; i >= 0; i--)
+    {
+        if (g_SavegamePtr->items_0[i].id_0 != 0xFF)
+        {
+            *arg0 = i;
+            return;
+        }
+    }
+
+    *arg0 = 0;
+}
 
 /** Used in:
  * `func_8004EE94`
@@ -583,7 +837,36 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/item_screens", Gfx_Inventory_UnavailableM
 #endif
 
 /** Likely controls handling in inventory screen. */
-INCLUDE_ASM("asm/bodyprog/nonmatchings/item_screens", func_8004F5DC); // 0x8004F5DC
+void func_8004F5DC() // 0x8004F5DC
+{
+    if (g_ControllerPtrConst->field_23 < -64 || g_ControllerPtrConst->field_23 >= 64 ||
+        g_ControllerPtrConst->field_22 < -64 || g_ControllerPtrConst->field_22 >= 64)
+    {
+        D_800C3968 = g_ControllerPtrConst->btns_new_10 & ControllerFlag_LStickUp2;
+        D_800C3978 = g_ControllerPtrConst->field_18 & ControllerFlag_LStickUp2;
+        D_800C396C = g_ControllerPtrConst->btns_new_10 & ControllerFlag_LStickDown2;
+        D_800C397C = g_ControllerPtrConst->field_18 & ControllerFlag_LStickDown2;
+        D_800C3970 = g_ControllerPtrConst->btns_new_10 & ControllerFlag_LStickLeft2;
+        D_800C3988 = g_ControllerPtrConst->btns_held_C & ControllerFlag_LStickLeft2;
+        D_800C3980 = g_ControllerPtrConst->field_18 & ControllerFlag_LStickLeft2;
+        D_800C3974 = g_ControllerPtrConst->btns_new_10 & ControllerFlag_LStickRight2;
+        D_800C398C = g_ControllerPtrConst->btns_held_C & ControllerFlag_LStickRight2;
+        D_800C3984 = g_ControllerPtrConst->field_18 & ControllerFlag_LStickRight2;
+    }
+    else
+    {
+        D_800C3968 = g_ControllerPtrConst->btns_new_10 & ControllerFlag_LStickUp;
+        D_800C3978 = g_ControllerPtrConst->field_18 & ControllerFlag_LStickUp;
+        D_800C396C = g_ControllerPtrConst->btns_new_10 & ControllerFlag_LStickDown;
+        D_800C397C = g_ControllerPtrConst->field_18 & ControllerFlag_LStickDown;
+        D_800C3970 = g_ControllerPtrConst->btns_new_10 & ControllerFlag_LStickLeft;
+        D_800C3988 = g_ControllerPtrConst->btns_held_C & ControllerFlag_LStickLeft;
+        D_800C3980 = g_ControllerPtrConst->field_18 & ControllerFlag_LStickLeft;
+        D_800C3974 = g_ControllerPtrConst->btns_new_10 & ControllerFlag_LStickRight;
+        D_800C398C = g_ControllerPtrConst->btns_held_C & ControllerFlag_LStickRight;
+        D_800C3984 = g_ControllerPtrConst->field_18 & ControllerFlag_LStickRight;
+    }
+}
 
 /** This function is some sort of handler for the inventory and result screen. */
 INCLUDE_ASM("asm/bodyprog/nonmatchings/item_screens", func_8004F764); // 0x8004F764
@@ -653,7 +936,23 @@ void func_80052088(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x80052088
 /** Results screen related.
  * Used in: `func_8004F764`
  */
-INCLUDE_ASM("asm/bodyprog/nonmatchings/item_screens", func_800521A8); // 0x800521A8
+void func_800521A8() // 0x800521A8
+{
+    GsDOBJ2* ptr;
+    s32      i;
+
+    for (i = 0, ptr = D_800C3D78; i < 6; i++, ptr++)
+    {
+        if ((D_800C3E40 >> i) & 1)
+        {
+            func_8004BCDC(&D_800C3E48[i].param->rotate, &D_800C3E48[i]);
+            func_800548D8(i);
+            GsSetFlatLight(0, &D_800C39A8[i][0]);
+            GsSetFlatLight(1, &D_800C39A8[i][1]);
+            func_8004BD74(i, ptr, 3);
+        }
+    }
+}
 
 /** Results screen related.
  * Used in: `func_8004F764`
@@ -681,4 +980,49 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/item_screens", Inventory_PlayerItemScroll
  * Removing some parts will result in no issues rotating one way, but
  * will in the other.
  */
-INCLUDE_ASM("asm/bodyprog/nonmatchings/item_screens", func_800539A4); // 0x800539A4
+void func_800539A4(s32 arg0, s32 arg1) // 0x800539A4
+{
+    s32 sp10[10];
+    s32 i;
+    s32 var_a3_2;
+    s32 var_s0;
+
+    var_s0 = 0;
+
+    for (i = 0; i < 10; i++)
+    {
+        sp10[i] = D_800C3E18[i];
+    }
+
+    var_a3_2 = (arg0 != 0) ? -7 : 7;
+    var_a3_2 = (arg1 + var_a3_2 + g_SavegamePtr->field_AB) % g_SavegamePtr->field_AB;
+
+    for (i = 0; i < 7; i++)
+    {
+        if (sp10[i] == var_a3_2)
+        {
+            var_s0 = i;
+            i      = 7;
+        }
+    }
+
+    sp10[var_s0] = arg1;
+
+    if (g_SavegamePtr->items_0[arg1].id_0 != 0xFF)
+    {
+        for (i = 0; i < 40; i++)
+        {
+            if (g_SavegamePtr->items_0[arg1].id_0 == D_800C3BB8[i])
+            {
+                func_80054720(FS_BUFFER_8, var_s0, i);
+                func_8005487C(var_s0);
+                i = 40;
+            }
+        }
+    }
+
+    for (i = 0; i < 10; i++)
+    {
+        D_800C3E18[i] = sp10[i];
+    }
+}
