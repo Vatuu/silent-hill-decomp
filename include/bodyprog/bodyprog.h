@@ -454,33 +454,10 @@ typedef struct
 
 typedef struct
 {
-    s8  unk_0[12];
-    s8  field_C;
-    s8  field_D;
-    s8  field_E;
-    s8  unk_F;
-    s32 field_10;
-    s32 field_14;
-    s32 field_18;
-    s8  field_1C;
-    s8  field_1D;
-    s8  field_1E;
-    s8  unk_1F;
-} s_800C39A8;
-STATIC_ASSERT_SIZEOF(s_800C39A8, 32);
-
-typedef struct
-{
     VECTOR  field_0;
     SVECTOR field_10;
     VECTOR  field_18;
 } s_800C3BE8;
-
-typedef struct
-{
-    u8      unk_0[0x248];
-    VECTOR3 field_248;
-} s_800C3E48;
 
 typedef struct
 {
