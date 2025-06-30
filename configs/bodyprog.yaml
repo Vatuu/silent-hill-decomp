@@ -66,8 +66,7 @@ segments:
       - [0x1158, rodata]
       - [0x11C4, .rodata, bodyprog_CD_80047D50] # Jumptable: `func_800482D8`
       - [0x11D8, rodata]
-      - [0x1434, .rodata, item_screens] # Jumptable: `GameState_ItemScreens_Update`
-                                        # Data: `Gfx_Results_Save`
+      - [0x1334, .rodata, item_screens]
       - [0x1544, rodata]
       #- [0x1704, .rodata, item_screens] # Data: `Gfx_Inventory_ScrollArrows`
       #- [0x174C, rodata]

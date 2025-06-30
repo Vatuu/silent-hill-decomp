@@ -491,8 +491,8 @@ typedef struct _ControllerData
     s32                field_1C;
     char               field_20;
     char               field_21;
-    char               field_22;
-    char               field_23;
+    s8                 field_22;
+    s8                 field_23;
     char               field_24;
     char               field_25;
     char               field_26;

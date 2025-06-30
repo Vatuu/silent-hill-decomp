@@ -575,9 +575,9 @@ void func_80054200() // 0x80054200
             }
         }
 
-        D_800C3E48.field_248.vx = 0;
-        D_800C3E48.field_248.vy = FP_METER(-0.15625f);
-        D_800C3E48.field_248.vz = 0;
+        D_800C3E48[7].coord.t[0] = 0;
+        D_800C3E48[7].coord.t[1] = FP_METER(-0.15625f);
+        D_800C3E48[7].coord.t[2] = 0;
     }
     else
     {
@@ -675,21 +675,18 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80053B08", func_800548D8); // 0x
 void func_80054928() // 0x80054928
 {
     s32         i;
-    s_800C39A8* ptr;
 
     for (i = 0; i < 10; i++)
     {
-        u8 val = 0xFF;
-        ptr = &D_800C39A8[i];
-        ptr->field_C  = val;
-        ptr->field_D  = val;
-        ptr->field_E  = val;
-        ptr->field_10 = 1 << 12;
-        ptr->field_14 = 0;
-        ptr->field_18 = 0;
-        ptr->field_1C = val;
-        ptr->field_1D = val;
-        ptr->field_1E = val;
+        D_800C39A8[i][0].r  = 0xFF;
+        D_800C39A8[i][0].g  = 0xFF;
+        D_800C39A8[i][0].b  = 0xFF;
+        D_800C39A8[i][1].vx = FP_TO(1, Q12_SHIFT);
+        D_800C39A8[i][1].vy = 0;
+        D_800C39A8[i][1].vz = 0;
+        D_800C39A8[i][1].r  = 0xFF;
+        D_800C39A8[i][1].g  = 0xFF;
+        D_800C39A8[i][1].b  = 0xFF;
     }
 
     GsSetAmbient(1024, 1024, 1024);

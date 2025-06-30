@@ -454,33 +454,10 @@ typedef struct
 
 typedef struct
 {
-    s8  unk_0[12];
-    s8  field_C;
-    s8  field_D;
-    s8  field_E;
-    s8  unk_F;
-    s32 field_10;
-    s32 field_14;
-    s32 field_18;
-    s8  field_1C;
-    s8  field_1D;
-    s8  field_1E;
-    s8  unk_1F;
-} s_800C39A8;
-STATIC_ASSERT_SIZEOF(s_800C39A8, 32);
-
-typedef struct
-{
     VECTOR  field_0;
     SVECTOR field_10;
     VECTOR  field_18;
 } s_800C3BE8;
-
-typedef struct
-{
-    u8      unk_0[0x248];
-    VECTOR3 field_248;
-} s_800C3E48;
 
 typedef struct
 {
@@ -1232,6 +1209,34 @@ extern s32 D_800C3958;
 
 extern s32 D_800C395C;
 
+extern s8 D_800C3960;
+
+extern s8 D_800C3961;
+
+extern s8 D_800C3962;
+
+extern u8 D_800C3963;
+
+extern s32 D_800C3968;
+
+extern s32 D_800C396C;
+
+extern s32 D_800C3970;
+
+extern s32 D_800C3974;
+
+extern s32 D_800C3978;
+
+extern s32 D_800C397C;
+
+extern s32 D_800C3980;
+
+extern s32 D_800C3984;
+
+extern s32 D_800C3988;
+
+extern s32 D_800C398C;
+
 extern s32 D_800C3990;
 
 extern s32 D_800C3994;
@@ -1279,7 +1284,7 @@ extern s16 D_800C391E;
 
 extern s8 D_800C39A0;
 
-extern s_800C39A8 D_800C39A8[];
+extern GsF_LIGHT D_800C39A8[][2];
 
 extern GsCOORDINATE2 D_800C3AE8;
 
@@ -1291,11 +1296,15 @@ extern u8 D_800C3BB8[INVENTORY_ITEM_COUNT_MAX];
 
 extern s_800C3BE8 D_800C3BE8[10];
 
+extern GsDOBJ2 D_800C3D78[];
+
 extern s32 D_800C3E18[10];
 
 extern s32 D_800C3E34;
 
-extern s_800C3E48 D_800C3E48;
+extern u8 D_800C3E40;
+
+extern GsCOORDINATE2 D_800C3E48[];
 
 extern s_D_800C4168 D_800C4168;
 
