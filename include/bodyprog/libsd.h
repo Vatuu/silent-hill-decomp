@@ -37,6 +37,7 @@ extern s16 sd_seq_loop_mode;
 extern s32 sd_timer_event;
 extern s32 smf_file_no;
 extern u32 spu_ch_tbl[24];
+extern u16 PitchTbl[12][128];
 
 enum SMF_STAT
 {

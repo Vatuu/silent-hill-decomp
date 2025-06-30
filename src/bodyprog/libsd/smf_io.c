@@ -16,7 +16,37 @@ void set_midi_info(s32 type, u8 midiChannel, u32 value) // 0x800A39B8
     func_800485B8(type, midiChannel, value); // Nullsub
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_io", Note2Pitch);
+u16 Note2Pitch(s16 note, s16 cent, s16 sample_note, s16 sample_cent) // 0x800A39D8
+{
+    s16 total_cent;
+    s16 cent_offset;
+    s16 note_diff;
+    s32 pitch_steps;
+    s16 final_note;
+    s32 temp;
+    s16 abs_diff;
+
+    total_cent = cent + sample_cent;
+
+    pitch_steps = (total_cent < 0) ? (total_cent + 127) : total_cent;
+
+    pitch_steps = (pitch_steps >> 7);
+    final_note  = note + pitch_steps;
+
+    temp        = total_cent;
+    cent_offset = temp - (pitch_steps << 7);
+    note_diff   = final_note - sample_note;
+
+    if (note_diff >= 0)
+    {
+        return PitchTbl[note_diff % 12][cent_offset] << (note_diff / 12);
+    }
+    else
+    {
+        abs_diff = -note_diff;
+        return PitchTbl[(12 - (abs_diff % 12)) % 12][cent_offset] >> ((abs_diff + 11) / 12);
+    }
+}
 
 void tre_calc(PORT* p) // 0x800A3B20
 {
@@ -252,7 +282,71 @@ void random_calc(PORT* p) // 0x800A3E70
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_io", volume_calc);
+void volume_calc(PORT* p, MIDI* mp) // 0x800A3F14
+{
+    s32 sd_seq_play_no;
+    s32 r_vol;
+    s32 pan;
+    s32 l_vol;
+    s32 scale;
+
+    sd_seq_play_no = smf_song[p->midi_ch_3 >> 4].sd_seq_vab_id_508;
+    pan            = 0x40;
+
+    if ((u8)sd_mono_st_flag == 0)
+    {
+        pan = ((u8)vab_h[sd_seq_play_no].mpan_1B + p->ppan_12 + p->tpan_13 + mp->pan_1) - 0xC0; // mpan_1B s8 to u8
+        if (mp->key_pan_22 != 0)
+        {
+            s32 temp = (((s32)(p->note_6 * mp->key_pan_22) >> 6) + 0x40);
+            pan      = (pan + (temp - mp->key_pan_22)) - 0x40;
+        }
+    }
+    if (pan < 0)
+    {
+        pan = 0;
+    }
+    if (pan > 0x7F)
+    {
+        pan = 0x7F;
+    }
+
+    p->pan_14 = pan;
+
+    // mvol_18 s8 to u8
+    l_vol = ((u8)vab_h[sd_seq_play_no].mvol_18 * smf_song[p->midi_ch_3 >> 4].midi_master_vol_538 * mp->express_5 * mp->mvol_3) >> 0xE;
+    l_vol = l_vol * p->pvol_10;
+    l_vol = (l_vol * p->tvol_11) >> 0xE;
+
+    scale = 2;
+
+    if (pan >= 0x40)
+    {
+        if (pan == 0x40)
+        {
+            pan   = l_vol;
+            r_vol = l_vol;
+        }
+        else
+        {
+            r_vol = l_vol;
+            l_vol = ((0x40 - (pan & 0x3F)) * (l_vol * scale)) >> 7;
+        }
+    }
+    else
+    {
+        r_vol = (pan * (l_vol * scale)) >> 7;
+    }
+
+    p->l_vol_C = (l_vol * (p->velo_1A & 0x7F)) >> 7;
+    p->r_vol_E = (r_vol * (p->velo_1A & 0x7F)) >> 7;
+
+    if (mp->vol_mode_11 >= 0x40U)
+    {
+        p->l_vol_C = (p->l_vol_C * p->l_vol_C) >> 0xE;
+        p->r_vol_E = (p->r_vol_E * p->r_vol_E) >> 0xE;
+    }
+}
 
 void smf_vol_set(s32 ch, s32 vc, s32 l_vol, s32 r_vol) // 0x800A4150
 {
@@ -789,7 +883,340 @@ s16 voice_check(s32 chan, s32 note, s32 flag) // 0x800A4F64
     return -1;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/smf_io", key_on);
+void key_on(u8 chan, u8 c1, u8 c2) // 0x800A5158
+{
+    u16       tone;
+    s32       sp28;
+    u16       sp30;
+    SD_VAB_H* sp38;
+    SD_VAB_H* sp3C;
+    ProgAtr*  sp40;
+    s32       sp44;
+    s32       sp48;
+    MIDI*     m;
+    PORT*     p;
+    VagAtr*   sd_vag_atr;
+    s16       vo;
+    s16       temp_s0_5;
+    s32       stat;
+    s32       i;
+    u32       vag_addr;
+    u16       note;
+    u16*      addr_p;
+
+    m    = &smf_midi[chan];
+    sp30 = m->prog_no_0;
+
+    if (m->bank_change_5A > 0x10)
+    {
+        sp44 = smf_song[chan >> 4].sd_seq_vab_id_508;
+    }
+    else
+    {
+        sp44 = m->bank_change_5A;
+    }
+
+    sp3C = vab_h[sp44].vh_addr_4;
+    sp38 = vab_h[sp44].vh_addr_4;
+    sp28 = 0;
+
+    for (i = 0; i < sp30; i++)
+    {
+        if (sp3C->vab_prog[i].tones != 0)
+        {
+            sp28 += 1;
+        }
+    }
+    sp40 = &sp38->vab_prog[sp30];
+    note = c1;
+
+    for (tone = 0; tone < sp40->tones; tone++)
+    {
+        sd_vag_atr = &sp38->vag_atr[(sp28 * 0x10) + tone];
+        sp48       = 0;
+
+        if (sd_vag_atr->vag != 0 && c1 >= sd_vag_atr->min && sd_vag_atr->max >= c1)
+        {
+            vo = -1;
+            if (m->mode_12 != 0)
+            {
+                vo = 0;
+                while (true)
+                {
+                    if (chan == smf_port[vo].midi_ch_3)
+                    {
+                        break;
+                    }
+
+                    vo++;
+
+                    if (vo >= sd_reserved_voice)
+                    {
+                        vo = -1;
+                        break;
+                    }
+                }
+
+                if (vo != -1)
+                {
+                    if (smf_port[vo].stat_16 == 0)
+                    {
+                        rr_off(vo);
+                        do
+                        {
+                            SpuSetKey(0, spu_ch_tbl[vo]);
+                            stat = SpuGetKeyStatus(spu_ch_tbl[vo]);
+                        } while (stat != 2 && stat != 0);
+                    }
+                    else
+                    {
+                        sp48 = 1;
+                    }
+                }
+                else
+                {
+                    vo = voice_check(chan, c1, 1);
+                }
+
+                if (m->porta_28 != 0)
+                {
+                    note              = (m->before_note_13 & 0x7F);
+                    m->porta_depth_2A = 0;
+
+                    if (m->before_note_13 < c1)
+                    {
+                        m->porta_wk_30    = 1;
+                        m->porta_limit_2E = (c1 - m->before_note_13) << 7;
+                        m->porta_add_2C   = ((m->porta_limit_2E * 4) / m->porta_28);
+                    }
+                    else if (m->before_note_13 == c1)
+                    {
+                        m->porta_add_2C = 0;
+                        note            = c1;
+                    }
+                    else
+                    {
+                        m->porta_wk_30    = 0;
+                        m->porta_limit_2E = (m->before_note_13 - c1) << 7;
+                        m->porta_add_2C   = ((m->porta_limit_2E * 4) / m->porta_28);
+                    }
+                }
+                else
+                {
+                    m->porta_depth_2A = 0;
+                }
+            }
+            else
+            {
+                if (m->porta_28 != 0)
+                {
+                    note              = (m->before_note_13 & 0x7F);
+                    m->porta_depth_2A = 0;
+
+                    if (m->before_note_13 < c1)
+                    {
+                        m->porta_wk_30    = 1;
+                        m->porta_limit_2E = (c1 - m->before_note_13) << 7;
+                        m->porta_add_2C   = ((m->porta_limit_2E * 4) / m->porta_28);
+                    }
+                    else if (m->before_note_13 == c1)
+                    {
+                        m->porta_add_2C = 0;
+                        note            = c1;
+                    }
+                    else
+                    {
+                        m->porta_wk_30    = 0;
+                        m->porta_limit_2E = (m->before_note_13 - c1) << 7;
+                        m->porta_add_2C   = ((m->porta_limit_2E * 4) / m->porta_28);
+                    }
+                }
+                else
+                {
+                    m->porta_depth_2A = 0;
+                }
+            }
+
+            if (vo == -1)
+            {
+                vo = voice_check(chan, c1, 0);
+                if (vo == -1)
+                {
+                    continue;
+                }
+            }
+
+            p = &smf_port[vo];
+            if (m->mode_12 == 0)
+            {
+                rr_off(vo);
+                do
+                {
+                    SpuSetKey(0, spu_ch_tbl[vo]);
+                    stat = SpuGetKeyStatus(spu_ch_tbl[vo]);
+                } while (stat != 2 && stat != 0);
+            }
+
+            for (i = 0, vag_addr = 0, addr_p = (u8*)vab_h[sp44].vh_addr_4 + (sp3C->vab_h.ps * 0x200) + 0x820; i < sd_vag_atr->vag; addr_p++, i++)
+            {
+                vag_addr += *addr_p;
+            }
+
+            s_attr.mask          = 0x6019F;
+            s_attr.volmode.left  = 0;
+            s_attr.volmode.right = 0;
+            s_attr.voice         = spu_ch_tbl[vo];
+            vag_addr             = vag_addr * 8;
+            s_attr.addr          = vab_h[sp44].vb_start_addr_10 + vag_addr;
+            s_attr.adsr1         = sd_vag_atr->adsr1;
+            p->adsr1_46          = s_attr.adsr1;
+            s_attr.adsr2         = sd_vag_atr->adsr2;
+            p->adsr2_48          = s_attr.adsr2;
+
+            if (!(sd_vag_atr->adsr1 & 0x80))
+            {
+                s_attr.a_mode = 1;
+            }
+            else
+            {
+                s_attr.a_mode = 5;
+            }
+
+            p->a_mode_4A      = s_attr.a_mode;
+            m->before_note_13 = c1;
+            m->velo_4         = c2;
+            p->center_1E      = sd_vag_atr->center;
+            p->shift_1F       = sd_vag_atr->shift;
+            p->bend_min_1D    = sd_vag_atr->pbmin;
+            p->bend_max_1C    = sd_vag_atr->pbmax;
+            p->vc_0           = vo;
+            p->prog_2         = sp30;
+            p->tone_4         = tone;
+            p->note_6         = note & 0x7F;
+            p->note_wk_8      = note & 0x7F;
+            p->midi_ch_3      = chan;
+            p->stat_16        = 1;
+            m->mod_depth_1C   = 0;
+            p->pvol_10        = sp40->mvol;
+            p->ppan_12        = sp40->mpan;
+            p->tvol_11        = sd_vag_atr->vol;
+            p->tpan_13        = sd_vag_atr->pan;
+            p->velo_1A        = c2;
+            p->vibdm_26       = 0;
+
+            if (m->vibdm_3E != 0)
+            {
+                p->vibc_23    = 0;
+                p->vibhc_22   = 0;
+                p->vibcc_28   = 0;
+                p->vibhs_29   = m->vibhs_39;
+                p->vibcad_2B  = m->vibcad_3B;
+                p->vibad_2C   = m->vibad_40;
+                p->vibdm_26   = m->vibdm_3E;
+                p->vibcs_2A   = m->vibcs_3A;
+                p->vibcadw_20 = m->vibcadw_34;
+            }
+
+            p->vibd_24     = 0;
+            p->vib_data_2E = 0;
+            p->tredm_36    = 0;
+
+            if (m->tredm_4A != 0)
+            {
+                p->trec_33    = 0;
+                p->trehc_32   = 0;
+                p->trecc_38   = 0;
+                p->trehs_39   = m->trehs_51;
+                p->trecad_3B  = m->trecad_53;
+                p->tread_3C   = m->tread_4C;
+                p->tredm_36   = m->tredm_4A;
+                p->trecs_3A   = m->trecs_52;
+                p->trecadw_30 = m->trecadw_44;
+            }
+
+            p->tred_34     = 0;
+            p->tre_data_3E = 0;
+            p->rdmdm_45    = 0;
+
+            if (m->rdms_57 != 0)
+            {
+                p->rdmd_40  = m->rdmd_54;
+                p->rdms_43  = m->rdms_57;
+                p->rdmc_44  = m->rdmc_58;
+                p->rdmdm_45 = m->rdmdm_59;
+            }
+
+            volume_calc(&smf_port[vo], &smf_midi[chan]);
+
+            s_attr.volume.left  = (p->l_vol_C * smf_song[chan >> 4].sd_seq_mvoll_50C) >> 7;
+            s_attr.volume.right = (p->r_vol_E * smf_song[chan >> 4].sd_seq_mvolr_50E) >> 7;
+
+            if (m->wide_flag_21 != 0 || smf_song[chan >> 4].seq_wide_flag_534 != 0)
+            {
+                s_attr.volume.right = -s_attr.volume.right;
+            }
+
+            p->pedal_1B    = m->pedal_6;
+            p->note_6      = c1 & 0x7F;
+            p->pbend_50    = (u16)m->pbend_7;
+            p->pbend_wk_4E = 0xFFFF;
+
+            if (m->bend_mode_10 < 0x40U)
+            {
+                temp_s0_5 = p->vib_data_2E + (m->mod_depth_1C + m->porta_depth_2A);
+                temp_s0_5 += (p->note_wk_8 << 7) + pitch_bend_calc(p, m->pbend_7);
+                s_attr.pitch = Note2Pitch(temp_s0_5 >> 0x7, temp_s0_5 & 0x7F, sd_vag_atr->center, sd_vag_atr->shift);
+            }
+            else
+            {
+                m->pbend_7   = 0x40;
+                s_attr.pitch = Note2Pitch(note, 0, sd_vag_atr->center, sd_vag_atr->shift);
+            }
+
+            set_note_on(vo, c1, chan, s_attr.volume.left, s_attr.volume.right);
+
+            if (sp48 == 0 && (s_attr.volume.right | s_attr.volume.left) != 0)
+            {
+                do
+                {
+                    SpuSetKeyOnWithAttr(&s_attr);
+                } while (SpuGetKeyStatus(spu_ch_tbl[vo] == 1) == 0);
+            }
+
+            if (m->rev_depth_24 == 0)
+            {
+                if (sd_vag_atr->mode & 4)
+                {
+                    while (!(SpuGetReverbVoice() & spu_ch_tbl[vo]))
+                    {
+                        SpuSetReverbVoice(1, spu_ch_tbl[vo]);
+                    }
+                }
+                else
+                {
+                    while (SpuGetReverbVoice() & spu_ch_tbl[vo])
+                    {
+                        SpuSetReverbVoice(0, spu_ch_tbl[vo]);
+                    }
+                }
+            }
+            else if (m->rev_depth_24 != 1)
+            {
+                while (!(SpuGetReverbVoice() & spu_ch_tbl[vo]))
+                {
+                    SpuSetReverbVoice(1, spu_ch_tbl[vo]);
+                }
+            }
+            else
+            {
+                while (SpuGetReverbVoice() & spu_ch_tbl[vo])
+                {
+                    SpuSetReverbVoice(0, spu_ch_tbl[vo]);
+                }
+            }
+        }
+    }
+}
 
 void key_off(u8 chan, u8 c1, u8 c2)
 {
