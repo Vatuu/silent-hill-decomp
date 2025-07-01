@@ -242,6 +242,8 @@ void func_8004C8DC() // 0x8004C8DC
         g_SavegamePtr->gameplayTimer_250 = CLAMP(g_SavegamePtr->gameplayTimer_250, 1, TIME_130_HOURS);
     }
 
+    #undef TIME_290_OVERFLOW_MAX
+    #undef TIME_130_HOURS
     #undef TIME_290_HOURS
 }
 
