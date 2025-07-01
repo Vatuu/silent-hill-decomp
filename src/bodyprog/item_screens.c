@@ -73,7 +73,8 @@ void func_8004C564(u8 arg0, s32 arg1) // 0x8004C564
             D_800C3960 = g_SavegamePtr->mapOverlayId_A4;
             D_800C3962 = 0;
             D_800C3963 = 0;
-            D_800C3961 = 0x20;
+            D_800C3961 = 32;
+
             func_8008B398();
             g_SysWork.player_4C.chara_0.properties_E4.player.field_114 = 0;
             break;
@@ -81,38 +82,38 @@ void func_8004C564(u8 arg0, s32 arg1) // 0x8004C564
         case 1:
             D_800C3960 = g_SavegamePtr->mapOverlayId_A4;
             D_800C3962 = 0;
-            D_800C3961 = 0x20;
+            D_800C3961 = 32;
 
-            func_8008B438(arg0 != 2, 0x20, 0);
+            func_8008B438(arg0 != (1 << 1), 32, 0);
             func_8008B3E4(0);
 
-            if (arg0 != 2)
+            if (arg0 != (1 << 1))
             {
-                D_800C3963 |= 1;
+                D_800C3963 |= 1 << 0;
             }
             else
             {
-                D_800C3963 |= 2;
+                D_800C3963 |= 1 << 1;
             }
             break;
 
         case 2:
-            if (arg0 == 2)
+            if (arg0 == (1 << 1))
             {
                 func_8008B40C((u8)D_800C3961, D_800C3962);
-                D_800C3963 |= 4;
+                D_800C3963 |= 1 << 2;
             }
             break;
 
         case 3:
             if (D_800C3961 != 0)
             {
-                D_800C3961 -= g_DeltaTime0 / 68 == 0 ? 1 : g_DeltaTime0 / 68;
-                D_800C3962 = D_800C3961 - 0x20;
-                D_800C3961 = CLAMP(D_800C3961, 0, 0x20);
+                D_800C3961 -= ((g_DeltaTime0 / 68) == 0) ? 1 : (g_DeltaTime0 / 68);
+                D_800C3962  = D_800C3961 - 32;
+                D_800C3961  = CLAMP(D_800C3961, 0, 32);
 
                 func_8008B438(arg0 != 2, 0, 0);
-                func_8008B3E4(-1);
+                func_8008B3E4(NO_VALUE);
 
                 if (arg0 == 2)
                 {
@@ -131,14 +132,15 @@ void func_8004C564(u8 arg0, s32 arg1) // 0x8004C564
             break;
 
         case 4:
-            if (D_800C3963 & 2)
+            if (D_800C3963 & (1 << 1))
             {
-                if (!(D_800C3963 & 4))
+                if (!(D_800C3963 & (1 << 2)))
                 {
                     func_8008B438(0, 0, 0);
                     func_8008B3E4(0);
+
                     g_SysWork.player_4C.chara_0.properties_E4.player.field_114 = 0;
-                    D_800C3963 -= 2;
+                    D_800C3963                                                -= 2;
                 }
             }
             break;
@@ -149,31 +151,32 @@ void func_8004C564(u8 arg0, s32 arg1) // 0x8004C564
                 D_800C3960 = g_SavegamePtr->mapOverlayId_A4;
                 D_800C3963 = 0;
                 D_800C3962 = 0;
-                D_800C3961 = 0x20;
+                D_800C3961 = 32;
 
                 temp_v1 = arg0;
-
-                if (temp_v1 != 2)
+                if (temp_v1 != (1 << 1))
                 {
-                    D_800C3963 = 1;
+                    D_800C3963 = 1 << 0;
                 }
                 else
                 {
                     D_800C3963 = temp_v1;
                 }
 
-                if (arg0 == 2)
+                if (arg0 == (1 << 1))
                 {
-                    D_800C3963 |= 4;
+                    D_800C3963 |= 1 << 2;
                 }
             }
 
             func_8008B438(arg0 != 2, (u8)D_800C3961, D_800C3962);
-            if (arg0 == 2)
+
+            if (arg0 == (1 << 1))
             {
                 func_8008B40C((u8)D_800C3961, D_800C3962);
             }
-            func_8008B3E4(-1);
+
+            func_8008B3E4(NO_VALUE);
             break;
     }
 }
@@ -215,9 +218,9 @@ static const s8 D_80025EB0[] =
 
 void func_8004C8DC() // 0x8004C8DC
 {
-#define TIME_290_HOURS FP_TO(290 * 60 * 60, Q12_SHIFT)
-#define TIME_130_HOURS FP_TO(130 * 60 * 60, Q12_SHIFT)
-#define TIME_290_OVERFLOW_MAX 3 // add290Hours_25C_1 has max value of 3
+    #define TIME_290_HOURS        FP_TO(290 * 60 * 60, Q12_SHIFT)
+    #define TIME_130_HOURS        FP_TO(130 * 60 * 60, Q12_SHIFT)
+    #define TIME_290_OVERFLOW_MAX 3                               // `add290Hours_25C_1` has max value of 3.
 
     g_SavegamePtr->gameplayTimer_250 += g_DeltaTime1;
 
@@ -226,7 +229,7 @@ void func_8004C8DC() // 0x8004C8DC
         if (g_SavegamePtr->add290Hours_25C_1 < TIME_290_OVERFLOW_MAX)
         {
             g_SavegamePtr->add290Hours_25C_1++;
-            g_SavegamePtr->gameplayTimer_250 += (UINT_MAX - TIME_290_HOURS + 1); // Wrap timer to 0 using unsigned overflow
+            g_SavegamePtr->gameplayTimer_250 += (UINT_MAX - TIME_290_HOURS + 1); // Wrap timer to 0 using unsigned overflow.
         }
         else
         {
@@ -239,10 +242,10 @@ void func_8004C8DC() // 0x8004C8DC
         g_SavegamePtr->gameplayTimer_250 = CLAMP(g_SavegamePtr->gameplayTimer_250, 1, TIME_130_HOURS);
     }
 
-#undef TIME_290_HOURS
+    #undef TIME_290_HOURS
 }
 
-void GameState_ItemScreens_Update()
+void GameState_ItemScreens_Update() // 0x8004C9B0
 {
     Gfx_StringSetColor(7);
     func_800363D0();
@@ -278,7 +281,7 @@ void GameState_ItemScreens_Update()
                 func_80054CAC(163, 1);
             }
 
-            Gfx_ClearRectInterlaced(0, 0x20, 0x140, 0x1C0, 0U, 0U, 0U);
+            Gfx_ClearRectInterlaced(0, 0x20, 0x140, 0x1C0, 0u, 0u, 0u);
             Gfx_Init(0x140, 1);
 
             g_IntervalVBlanks = 1;
@@ -336,7 +339,9 @@ void GameState_ItemScreens_Update()
         case 12:
         case 13:
         case 16:
-            if (g_SysWork.field_2351 == D_800AE17C && g_GameWork.gameState_594 == GameState_InventoryScreen && g_Gfx_ScreenFade == 1)
+            if (g_SysWork.field_2351 == D_800AE17C &&
+                g_GameWork.gameState_594 == GameState_InventoryScreen &&
+                g_Gfx_ScreenFade == 1)
             {
                 s32 prevGameState;
                 prevGameState = g_GameWork.gameStateStep_598[2];
@@ -387,6 +392,7 @@ void GameState_ItemScreens_Update()
                 g_GameWork.gameStateStep_598[2] = prevGameState;
             }
             break;
+
         case 18:
             if ((g_Gfx_ScreenFade & 0x7) == 5)
             {
@@ -667,21 +673,23 @@ void func_8004E6D4(s32 arg0) // 0x8004E6D4
 
     if (g_SavegamePtr->mapOverlayId_A4 == MapOverlayId_MAP6_S04)
     {
-        if (func_80038A6C(&g_SysWork.player_4C.chara_0.position_18, &g_SysWork.npcs_1A0[0].position_18, 0xB33) == 0 &&
-            ABS(g_SysWork.player_4C.chara_0.position_18.vy - g_SysWork.npcs_1A0[0].position_18.vy) < 0x4CC &&
-            g_SysWork.player_4C.extra_128.field_1C == 0 && g_SavegamePtr->items_0[arg0].id_0 == InventoryItemId_UnknownLiquid)
+        if (func_80038A6C(&g_SysWork.player_4C.chara_0.position_18, &g_SysWork.npcs_1A0[0].position_18, FP_METER(0.7f)) == 0 &&
+            ABS(g_SysWork.player_4C.chara_0.position_18.vy - g_SysWork.npcs_1A0[0].position_18.vy) < FP_METER(0.3f) &&
+            g_SysWork.player_4C.extra_128.field_1C == 0 &&
+            g_SavegamePtr->items_0[arg0].id_0 == InventoryItemId_UnknownLiquid)
         {
             D_800C3998                      = 1;
             D_800ADB5C                      = 0;
             g_GameWork.gameStateStep_598[1] = 11;
             g_GameWork.gameStateStep_598[2] = 0;
+
             func_8003ECBC();
             g_SavegamePtr->eventFlags_1A0 |= 1;
         }
     }
     else
     {
-        for (i = 0; D_800BCDC0[i] != -1; i++)
+        for (i = 0; D_800BCDC0[i] != NO_VALUE; i++)
         {
             if (D_800BCDC0[i] == g_SavegamePtr->items_0[arg0].id_0)
             {
@@ -689,6 +697,7 @@ void func_8004E6D4(s32 arg0) // 0x8004E6D4
                 D_800ADB5C                      = 0;
                 g_GameWork.gameStateStep_598[1] = 11;
                 g_GameWork.gameStateStep_598[2] = 0;
+
                 func_8003ECBC();
                 g_SysWork.player_4C.extra_128.field_28 = D_800BCDC0[i];
                 break;
@@ -699,7 +708,7 @@ void func_8004E6D4(s32 arg0) // 0x8004E6D4
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/item_screens", Gfx_Inventory_CmdOptionsDraw); // 0x8004E864
 
-// TODO: RODATA Migration
+// TODO: RODATA migration.
 #ifdef NON_MATCHING
 void Gfx_Inventory_ScrollArrows(s32* arg0) // 0x8004EC7C
 {
@@ -756,7 +765,6 @@ void Gfx_Inventory_ScrollArrows(s32* arg0) // 0x8004EC7C
 INCLUDE_ASM("asm/bodyprog/nonmatchings/item_screens", Gfx_Inventory_ScrollArrows); // 0x8004EC7C
 #endif
 
-// Unused?
 s32 func_8004EE94(u8 arg0, u8 arg1) // 0x8004EE94
 {
     s32 i;
@@ -777,9 +785,11 @@ s32 func_8004EE94(u8 arg0, u8 arg1) // 0x8004EE94
                     }
                 }
             }
+
             return 1;
         }
     }
+
     return 0;
 }
 
@@ -820,7 +830,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/item_screens", func_8004F190); // 0x8004F
  */
 // TODO: RODATA Migration
 #ifdef NON_MATCHING
-void Gfx_Inventory_UnavailableMapText(s32 stringIdx)
+void Gfx_Inventory_UnavailableMapText(s32 strIdx) // 0x0x8004F57C
 {
     char* D_800262AC[2] =
     {
@@ -830,45 +840,44 @@ void Gfx_Inventory_UnavailableMapText(s32 stringIdx)
 
     Gfx_StringSetPosition(30, 232);
     Gfx_StringSetColor(7);
-    Gfx_StringDraw(D_800262AC[stringIdx], 0x63);
+    Gfx_StringDraw(D_800262AC[strIdx], 0x63);
 }
 #else
 INCLUDE_ASM("asm/bodyprog/nonmatchings/item_screens", Gfx_Inventory_UnavailableMapText); // 0x8004F57C
 #endif
 
-/** Likely controls handling in inventory screen. */
 void func_8004F5DC() // 0x8004F5DC
 {
     if (g_ControllerPtrConst->field_23 < -64 || g_ControllerPtrConst->field_23 >= 64 ||
         g_ControllerPtrConst->field_22 < -64 || g_ControllerPtrConst->field_22 >= 64)
     {
         D_800C3968 = g_ControllerPtrConst->btns_new_10 & ControllerFlag_LStickUp2;
-        D_800C3978 = g_ControllerPtrConst->field_18 & ControllerFlag_LStickUp2;
+        D_800C3978 = g_ControllerPtrConst->field_18    & ControllerFlag_LStickUp2;
         D_800C396C = g_ControllerPtrConst->btns_new_10 & ControllerFlag_LStickDown2;
-        D_800C397C = g_ControllerPtrConst->field_18 & ControllerFlag_LStickDown2;
+        D_800C397C = g_ControllerPtrConst->field_18    & ControllerFlag_LStickDown2;
         D_800C3970 = g_ControllerPtrConst->btns_new_10 & ControllerFlag_LStickLeft2;
         D_800C3988 = g_ControllerPtrConst->btns_held_C & ControllerFlag_LStickLeft2;
-        D_800C3980 = g_ControllerPtrConst->field_18 & ControllerFlag_LStickLeft2;
+        D_800C3980 = g_ControllerPtrConst->field_18    & ControllerFlag_LStickLeft2;
         D_800C3974 = g_ControllerPtrConst->btns_new_10 & ControllerFlag_LStickRight2;
         D_800C398C = g_ControllerPtrConst->btns_held_C & ControllerFlag_LStickRight2;
-        D_800C3984 = g_ControllerPtrConst->field_18 & ControllerFlag_LStickRight2;
+        D_800C3984 = g_ControllerPtrConst->field_18    & ControllerFlag_LStickRight2;
     }
     else
     {
         D_800C3968 = g_ControllerPtrConst->btns_new_10 & ControllerFlag_LStickUp;
-        D_800C3978 = g_ControllerPtrConst->field_18 & ControllerFlag_LStickUp;
+        D_800C3978 = g_ControllerPtrConst->field_18    & ControllerFlag_LStickUp;
         D_800C396C = g_ControllerPtrConst->btns_new_10 & ControllerFlag_LStickDown;
-        D_800C397C = g_ControllerPtrConst->field_18 & ControllerFlag_LStickDown;
+        D_800C397C = g_ControllerPtrConst->field_18    & ControllerFlag_LStickDown;
         D_800C3970 = g_ControllerPtrConst->btns_new_10 & ControllerFlag_LStickLeft;
         D_800C3988 = g_ControllerPtrConst->btns_held_C & ControllerFlag_LStickLeft;
-        D_800C3980 = g_ControllerPtrConst->field_18 & ControllerFlag_LStickLeft;
+        D_800C3980 = g_ControllerPtrConst->field_18    & ControllerFlag_LStickLeft;
         D_800C3974 = g_ControllerPtrConst->btns_new_10 & ControllerFlag_LStickRight;
         D_800C398C = g_ControllerPtrConst->btns_held_C & ControllerFlag_LStickRight;
-        D_800C3984 = g_ControllerPtrConst->field_18 & ControllerFlag_LStickRight;
+        D_800C3984 = g_ControllerPtrConst->field_18    & ControllerFlag_LStickRight;
     }
 }
 
-/** This function is some sort of handler for the inventory and result screen. */
+/** Some sort of handler for the inventory and result screen. */
 INCLUDE_ASM("asm/bodyprog/nonmatchings/item_screens", func_8004F764); // 0x8004F764
 
 void func_8004FB0C() // 0x8004FB0C
@@ -884,8 +893,8 @@ void func_8004FB0C() // 0x8004FB0C
     setXY4(poly,
            -160, -224,
            -160, -222,
-           160, -224,
-           160, -222);
+            160, -224,
+            160, -222);
     addPrim(ot->org, poly);
 
     GsOUT_PACKET_P = (PACKET*)poly + sizeof(POLY_F4);
@@ -904,11 +913,6 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/item_screens", Gfx_Inventory_HealthStatus
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/item_screens", Gfx_Inventory_ItemDescription); // 0x8005192C
 
-/** Related to the drawing of arrows next to
- * the selected item in the inventory.
- * Breaking it reveals that it whitens the arrows,
- * as without this function, the arrows look a bit grey.
- */
 void func_80052088(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x80052088
 {
     GsOT*     ot0;
@@ -933,9 +937,6 @@ void func_80052088(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x80052088
     GsOUT_PACKET_P = (PACKET*)tPage + sizeof(DR_TPAGE);
 }
 
-/** Results screen related.
- * Used in: `func_8004F764`
- */
 void func_800521A8() // 0x800521A8
 {
     GsDOBJ2* ptr;
@@ -943,7 +944,7 @@ void func_800521A8() // 0x800521A8
 
     for (i = 0, ptr = D_800C3D78; i < 6; i++, ptr++)
     {
-        if ((D_800C3E40 >> i) & 1)
+        if ((D_800C3E40 >> i) & (1 << 0))
         {
             func_8004BCDC(&D_800C3E48[i].param->rotate, &D_800C3E48[i]);
             func_800548D8(i);
@@ -971,15 +972,6 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/item_screens", func_8005227C); // 0x80052
  */
 INCLUDE_ASM("asm/bodyprog/nonmatchings/item_screens", Inventory_PlayerItemScroll); // 0x800523D8
 
-/** Used to toggle visibility of object while the inventory scrolring rotates.
- *
- * Used in: `Inventory_Logic`
- *
- * If removed, it may cause items to no longer appear when scrolling,
- * and seems to depend on the scroll direction.
- * Removing some parts will result in no issues rotating one way, but
- * will in the other.
- */
 void func_800539A4(s32 arg0, s32 arg1) // 0x800539A4
 {
     s32 sp10[10];

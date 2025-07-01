@@ -163,7 +163,7 @@ u32 SdSpuMallocWithStartAddr(u32 addr, s32 size) // 0x8009F120
     s32 i;
     u32 end_addr;
 
-    if (addr - 0x1010 > 0x7EFEFu || addr + size > 0x7FFFFu)
+    if ((addr - 0x1010) > 0x7EFEFu || (addr + size) > 0x7FFFFu)
     {
         return -1;
     }

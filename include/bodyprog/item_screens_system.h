@@ -69,9 +69,57 @@ s32 func_8004C45C();
  */
 s32 func_8004C4F8();
 
+u32 func_8004C54C();
+
+/** `arg0` is probably a bit flag. */
+void func_8004C564(u8 arg0, s32 arg1);
+
 void func_8004C8DC();
 
-// Also updates both inventory screen and result screen... what
+// Also updates both inventory screen and result screen?
 void GameState_ItemScreens_Update();
+
+void Gfx_Results_Save();
+
+void func_8004E6D4(s32 arg0);
+
+void Gfx_Inventory_ScrollArrows(s32* arg0);
+
+// Unused?
+s32 func_8004EE94(u8 arg0, u8 arg1);
+
+// Unused?
+void func_8004F10C(s32* arg0);
+
+void Gfx_Inventory_UnavailableMapText(s32 strIdx);
+
+/** Likely controls handling in inventory screen. */
+void func_8004F5DC();
+
+/** Draws some rectangle. */
+void func_8004FB0C();
+
+/** Related to the drawing of arrows next to
+ * the selected item in the inventory.
+ * Breaking it reveals that it whitens the arrows,
+ * as without this function, the arrows look a bit grey.
+ */
+void func_80052088(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
+
+/** Results screen related.
+ * Used in: `func_8004F764`
+ */
+void func_800521A8();
+
+/** Used to toggle visibility of object while the inventory scrolring rotates.
+ *
+ * Used in: `Inventory_Logic`
+ *
+ * If removed, it may cause items to no longer appear when scrolling,
+ * and seems to depend on the scroll direction.
+ * Removing some parts will result in no issues rotating one way, but
+ * will in the other.
+ */
+void func_800539A4(s32 arg0, s32 arg1);
 
 #endif

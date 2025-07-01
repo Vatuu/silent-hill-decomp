@@ -391,7 +391,7 @@ void GameState_Unk0_Update() // 0x80032D1C
                 }
                 else
                 {
-                    g_SysWork.timer_20 = 0;
+                    g_SysWork.timer_20              = 0;
                     g_GameWork.gameStateStep_598[1] = 0;
                     g_GameWork.gameStateStep_598[2] = 0;
                     g_GameWork.gameStateStep_598[0]++;
@@ -448,7 +448,7 @@ void MainLoop() // 0x80032EE0
 {
     #define TICKS_PER_SECOND_MIN (TICKS_PER_SECOND / 4)
     #define H_BLANKS_PER_TICK    263
-    #define ONE_SEC_FIXED        FP_TO(1, Q12_SHIFT)
+    #define ONE_SEC_FIXED        FP_FLOAT_TO(1.0f, Q12_SHIFT)
 
     #define H_BLANKS_PER_SECOND               (H_BLANKS_PER_TICK * TICKS_PER_SECOND)              // 15780
     #define H_BLANKS_TO_SEC_CONVERSION_FACTOR ((float)ONE_SEC_FIXED / (float)H_BLANKS_PER_SECOND) // 0.25956907477f
