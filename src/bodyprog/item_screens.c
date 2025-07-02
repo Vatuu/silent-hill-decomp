@@ -1749,6 +1749,8 @@ static const DVECTOR D_800262FC[] =
 /** Some sort of handler for the inventory and result screen. */
 // TODO: RODATA migration.
 #ifdef NON_MATCHING
+extern DVECTOR D_800262FC[];
+
 void func_8004F764(s32 arg0) // 0x8004F764
 {
     GsDOBJ2* ptr;
