@@ -172,7 +172,7 @@ void Gfx_DebugStringDraw(char* str)
                 setRGBC0(glyphSprt, 0x80, 0x80, 0x80, 0x74);
                 setXY0Fast(glyphSprt, posX, posY);
 
-                charIdx = (char)toupper(charCode) - 42;
+                charIdx = (char)toupper(charCode) - '*';
                 SET_SPRT_U_V_CLUT(glyphSprt, charIdx, 0x7FD2); // TODO: Demagic CLUT arg.
 
             case 95:

@@ -1481,6 +1481,7 @@ void func_80031CCC(s32);
 
 void Gfx_DebugStringPosition(s16 x, s16 y);
 
+/** Draws debug strings using 8x8 glyphs from `FONT8.TIM`. Valid `char` range: `[42, 95]` (`*` to `_`). */
 void Gfx_DebugStringDraw(char* str);
 
 char* Math_IntegerToString(s32 widthMin, s32 value);
