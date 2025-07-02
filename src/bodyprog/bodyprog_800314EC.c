@@ -136,62 +136,73 @@ void Gfx_DebugStringPosition(s16 x, s16 y) // 0x80031EFC
 
 void Gfx_DebugStringDraw(char* str)
 {
-    s32       textX;
-    s32       textY;
+    #define GLYPH_SIZE_X 8
+    #define GLYPH_SIZE_Y 8
+    #define ATLAS_BASE_Y 240
+
+    #define SET_SPRT_U_V_CLUT(sprt, charIdx, clut)                                                                                      \
+        *((u32*)&(sprt)->u0) = (((charIdx) & 0x1F) * GLYPH_SIZE_X)                       + /* Set `u0` as column in 32-column atlas. */ \
+                               (((((charIdx) >> 5) * GLYPH_SIZE_Y) + ATLAS_BASE_Y) << 8) + /* Set `v0` as row in 32-column atlas. */    \
+                               ((clut) << 16)                                              /* Set `clut`. */
+
+    s32       posX;
+    s32       posY;
     s32       charIdx;
     GsOT*     ot;
-    u8*       strPtr;
+    u8*       strCpy;
     s32       charCode;
     PACKET*   packet;
-    SPRT_8*   sprt8;
+    SPRT_8*   glyphSprt;
     DR_TPAGE* tPage;
 
     ot     = (GsOT*)&D_800B5C58[g_ObjectTableIdx];
-    strPtr = str;
+    strCpy = str;
     packet = GsOUT_PACKET_P;
-    textX  = g_Gfx_DebugStringPosition1.vx;
-    textY  = g_Gfx_DebugStringPosition1.vy;
+    posX   = g_Gfx_DebugStringPosition1.vx;
+    posY   = g_Gfx_DebugStringPosition1.vy;
 
-    while (*strPtr != 0)
+    while (*strCpy != 0)
     {
-        charCode = *strPtr;
+        charCode = *strCpy;
         switch (charCode)
         {
             default:
-                sprt8 = (SPRT_8*)packet;
-                addPrimFast(ot, sprt8, 3);
-                setRGBC0(sprt8, 0x80, 0x80, 0x80, 0x74);
-                setXY0Fast(sprt8, textX, textY);
+                glyphSprt = (SPRT_8*)packet;
+                addPrimFast(ot, glyphSprt, 3);
+                setRGBC0(glyphSprt, 0x80, 0x80, 0x80, 0x74);
+                setXY0Fast(glyphSprt, posX, posY);
 
-                charIdx             = (char)toupper(charCode) - 0x2A;
-                *((u32*)&sprt8->u0) = ((charIdx & 0x1F) * 8) + ((((charIdx >> 5) * 8) + 0xF0) << 8) + (0x7FD2 << 16);
+                charIdx = (char)toupper(charCode) - 42;
+                SET_SPRT_U_V_CLUT(glyphSprt, charIdx, 0x7FD2); // TODO: Demagic CLUT arg.
 
-            case 0x5F:
+            case 95:
             case 32:
             case 9:
             case 11:
-                textX += 8;
+                posX += GLYPH_SIZE_X;
                 break;
 
-            case 0x7E:
-                textX -= 8;
+            case 126:
+                posX -= GLYPH_SIZE_X;
                 break;
 
             case 10:
-                textX  = g_Gfx_DebugStringPosition0.vx;
-                textY += 8;
+                posX  = g_Gfx_DebugStringPosition0.vx;
+                posY += GLYPH_SIZE_Y;
                 break;
         }
 
-        strPtr++;
+        strCpy++;
         packet += sizeof(SPRT_8);
     }
 
-    *((u32*)&g_Gfx_DebugStringPosition1) = (textX & 0xFFFF) + (textY << 16);
+    *((u32*)&g_Gfx_DebugStringPosition1) = (posX & 0xFFFF) + (posY << 16);
     tPage                                = (DR_TPAGE*)packet;
+
     setDrawTPage(tPage, 0, 1, 0x14);
     addPrim(ot, tPage);
-    packet += sizeof(DR_TPAGE);
+
+    packet        += sizeof(DR_TPAGE);
     GsOUT_PACKET_P = packet;
 }
 

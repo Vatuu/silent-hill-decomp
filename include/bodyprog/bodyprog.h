@@ -2091,10 +2091,10 @@ void Gfx_StringSetPosition(s32 x, s32 y);
 /** Sets the color of the next string drawn by `Gfx_StringDraw`. (TODO: add color list) */
 void Gfx_StringSetColor(s16 colorId);
 
-/** Draws a string in display space. */
-void Gfx_StringDraw(char* str, s32 arg1);
+/** Draws a string in screen space. */
+bool Gfx_StringDraw(char* str, s32 size);
 
-/** Draws an integer string in display space. */
+/** Draws an integer string in screen space. */
 void Gfx_StringDrawInt(s32 widthMin, s32 val);
 
 void func_8004BB10();

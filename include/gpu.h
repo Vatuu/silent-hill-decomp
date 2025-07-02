@@ -83,16 +83,16 @@ typedef struct
     u8 p;
 } s_PrimColor;
 
-/** Same as `getTPage()`, but `xn` and `yn` are indices instead of VRAM coordinates. */
+/** @brief Same as `getTPage`, but `xn` and `yn` are indices instead of VRAM coordinates. */
 #define getTPageN(tp, abr, xn, yn) \
     ((((tp) & 0x3) << 7)|(((abr) & 0x3) << 5)|((xn) & 0xF)|(((yn) & 1) << 4))
 
-/** Same as `setRECT()`, but uses 2x 32-bit stores instead of 4x 16-bit stores. */
+/** @brief Same as `setRECT`, but uses 2x 32-bit stores instead of 4x 16-bit stores. */
 #define setRECTFast(r, x, y, w, h) \
     ((u32*)(r))[0] = ((x) | ((y) << 16)), \
     ((u32*)(r))[1] = ((w) | ((h) << 16))
 
-/** Same as `setXY0()`, but uses 1x 32-bit store instead of 2x 16-bit stores. */
+/** @brief Same as `setXY0`, but uses 1x 32-bit store instead of 2x 16-bit stores. */
 #define setXY0Fast(p, x, y) \
     *(u32*)(&(p)->x0) = (((x) & 0xFFFF) + ((y) << 16))
 
@@ -105,31 +105,31 @@ typedef struct
 #define setXY3Fast(p, x, y) \
     *(u32*)(&(p)->x3) = (((x) & 0xFFFF) + ((y) << 16))
 
-/** Same as `setWH()`, but uses 1x 32-bit store instead of 2x 16-bit stores. */
+/** @brief Same as `setWH`, but uses 1x 32-bit store instead of 2x 16-bit stores. */
 #define setWHFast(p, _w, _h) \
     *(u32*)(&(p)->w) = (((_w) & 0xFFFF) + ((_h) << 16))
 
-/** Combines `setUV0()` and `setClut()` into a single 32-bit stores; also does not call `GetClut()`. */
+/** @brief Combines `setUV0` and `setClut` into a single 32-bit stores; also does not call `GetClut`. */
 #define setUV0AndClut(p, u, v, cx, cy) \
     *(u32*)(&(p)->u0) = (((((cy) << 6) | (((cx) >> 4) & 0x3F)) << 16) | ((v) << 8) | (u))
 
-/** Combines `setcode()` and `setRGB0()`. */
+/** @brief Combines `setcode` and `setRGB0`. */
 #define setCodeWord(p, c, rgb24) \
     *(u32*)(((u8*)(p)) + 4) = (((c) << 24) | ((rgb24) & 0xFFFFFF))
 
-/** Combines `setRGB0()` and `setcode()` */
+/** @brief Combines `setRGB0` and `setcode` */
 #define setRGBC0(prim, r, g, b, code) \
     *(u32*)(&(prim)->r0) = (((r + (g << 8)) + (b << 16)) + (code << 24))
 
-/** Combines `setRGB1()` and applies code to padding component? */
+/** @brief Combines `setRGB1` and applies code to padding component? */
 #define setRGBC1(prim, r, g, b, code) \
     *(u32*)(&(prim)->r1) = (((r + (g << 8)) + (b << 16)) + (code << 24))
 
-/** Combines `setRGB2()` and applies code to padding component? */
+/** @brief Combines `setRGB2` and applies code to padding component? */
 #define setRGBC2(prim, r, g, b, code) \
     *(u32*)(&(prim)->r2) = (((r + (g << 8)) + (b << 16)) + (code << 24))
 
-/** Combines `addPrim()` and `setlen()`. */
+/** @brief Combines `addPrim` and `setlen`. */
 #define addPrimFast(ot, p ,_len) \
     (((p)->tag = getaddr(ot) | (_len << 24)), setaddr(ot, p))
 
