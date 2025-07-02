@@ -32,6 +32,10 @@
 #define GET_PROPERTY_HIGH(prop) \
     ((u16*)&(prop) + 1)
 
+/** @brief Checks if the player has specific map by index. */
+#define HAS_MAP(mapIndex) \
+    ((((u32*)&g_SavegamePtr->hasMapsFlags_164)[(mapIndex) / 32] >> ((mapIndex) % 32)) & 1)
+
 typedef enum _MapOverlayId
 {
     MapOverlayId_MAP0_S00 = 0,
@@ -911,7 +915,8 @@ typedef struct _SysWork
     s32             field_30;
     s8              unk_34[4];
     s_MapWork       field_38; // Something related to map loading. Likely a struct as `func_8003CD6C` requires one and `GameFs_MapLoad` input is pointing here.
-    s8              unk_48[3];
+    s8              unk_48[2];
+    s8              field_4A;
     u8              isPlayerInCombatMode_4B;
     s_MainCharacter player_4C;
     s_SubCharacter  npcs_1A0[NPC_COUNT_MAX];
@@ -959,7 +964,12 @@ typedef struct _SysWork
     s8              unk_2388[20];
     s8              field_239C;
     u8              field_239D; // Index?
-    s8              unk_239E[318];
+    u8              field_239E;
+    s8              unk_239F[5];
+    u8              field_23A4;
+    s8              unk_23A5[51];
+    u8              field_23D8;
+    s8              unk_23D9[259];
     s32             field_24DC;
     s8              unk_24E0[48];
     s32             field_2510;
