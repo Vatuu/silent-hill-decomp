@@ -44,7 +44,7 @@ extern s32 g_Inventory_CmdSelectedIdx;
 * while `D_800C399C` is constatly updated to the same value
 * as this variable.
 */
-extern s32 D_800ADB5C;
+extern u32 D_800ADB5C;
 
 // ==========
 // FUNCTIONS

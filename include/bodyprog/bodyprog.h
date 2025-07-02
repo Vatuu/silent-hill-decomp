@@ -20,6 +20,11 @@
 #define OPT_VIBRATION_DISABLED 0
 #define OPT_VIBRATION_ENABLED  128
 
+#define SFX_DENIED 0x518
+#define SFX_BACK 0x519
+#define SFX_CANCEL 0x51A
+#define SFX_CONFIRM 0x51B
+
 typedef struct 
 {
     s32  field_0;
@@ -1285,6 +1290,8 @@ extern s16 D_800C391E;
 extern s8 D_800C39A0;
 
 extern GsF_LIGHT D_800C39A8[][2];
+
+extern GsF_LIGHT D_800C3A88[];
 
 extern GsCOORDINATE2 D_800C3AE8;
 
