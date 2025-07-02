@@ -1761,24 +1761,25 @@ void func_8004F764(s32 arg0) // 0x8004F764
     };
 
     char* D_80027E34[] =
-        {
-            "Equipment",
-            "Exit",
-            "Option",
-            "Map",
-            "Command",
-            "Status",
-            "No.",
-            "Name:"};
+    {
+        "Equipment",
+        "Exit",
+        "Option",
+        "Map",
+        "Command",
+        "Status",
+        "No.",
+        "Name:"
+    };
 
-    Gfx_StringSetColor(7);
+    Gfx_StringSetColor(ColorId_White);
 
     if (g_GameWork.gameStateStep_598[1] < 21)
     {
         for (i = 0; i < 8; i++)
         {
             Gfx_StringSetPosition(D_80027DD8[i].vx, D_80027DD8[i].vy);
-            Gfx_StringDraw(D_80027E34[i], 0xA);
+            Gfx_StringDraw(D_80027E34[i], 10);
         }
 
         func_800523D8(arg0);
@@ -1789,8 +1790,8 @@ void func_8004F764(s32 arg0) // 0x8004F764
             {
                 if (g_SavegamePtr->items_0[D_800C3E18[i]].id_0 != 0xFF)
                 {
-                    D_800C3BE8[i].field_10.vx = D_800262FC[g_SavegamePtr->items_0[D_800C3E18[i]].id_0 - 0x20].vx;
-                    D_800C3BE8[i].field_10.vz = D_800262FC[g_SavegamePtr->items_0[D_800C3E18[i]].id_0 - 0x20].vy;
+                    D_800C3BE8[i].field_10.vx = D_800262FC[g_SavegamePtr->items_0[D_800C3E18[i]].id_0 - 32].vx;
+                    D_800C3BE8[i].field_10.vz = D_800262FC[g_SavegamePtr->items_0[D_800C3E18[i]].id_0 - 32].vy;
 
                     func_8004BCDC(&D_800C3E48[i].param->rotate, &D_800C3E48[i]);
                     func_800548D8(i);
@@ -1803,8 +1804,8 @@ void func_8004F764(s32 arg0) // 0x8004F764
 
         if ((g_SavegamePtr->items_0[D_800C3E34].id_0 != 0xFF) && (D_800C3E34 != -1))
         {
-            D_800C3BE8[7].field_10.vx = D_800262FC[g_SavegamePtr->items_0[D_800C3E34].id_0 - 0x20].vx;
-            D_800C3BE8[7].field_10.vz = D_800262FC[g_SavegamePtr->items_0[D_800C3E34].id_0 - 0x20].vy;
+            D_800C3BE8[7].field_10.vx = D_800262FC[g_SavegamePtr->items_0[D_800C3E34].id_0 - 32].vx;
+            D_800C3BE8[7].field_10.vz = D_800262FC[g_SavegamePtr->items_0[D_800C3E34].id_0 - 32].vy;
 
             func_8004BCDC(&D_800C3E48[7].param->rotate, &D_800C3E48[7]);
             func_800548D8(7);
