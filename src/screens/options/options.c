@@ -1052,7 +1052,7 @@ void Gfx_VignetteDraw() // 0x801E49F0
         GsOUT_PACKET_P = (u8*)poly + sizeof(POLY_G4);
     }
 
-    func_80052088(0, 0, 0x7F5, 6);
+    Gfx_Primitive2dTextureSet(0, 0, 0x7F5, 6);
 }
 
 void Gfx_SettingsOptionsExtraDraw() // 0x801E4B2C
@@ -1798,7 +1798,7 @@ void Gfx_LineDraw(s_Line2d* line, s32 arg1, s32 arg2) // 0x801E641C
         addPrim((u8*)ot->org + 36, poly);
         GsOUT_PACKET_P = (u8*)poly + sizeof(POLY_G4);
 
-        func_80052088(0, 0, 9, 2);
+        Gfx_Primitive2dTextureSet(0, 0, 9, 2);
     }
 }
 

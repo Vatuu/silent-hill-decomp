@@ -18,7 +18,7 @@ typedef enum _InventorySelectionId
     InventorySelectionId_EquippedItemCmd = 6,
     InventorySelectionId_Health          = 7, // Used for animation when user selects health item.
     InventorySelectionId_Examine         = 8
-} s_InventorySelectionId; 
+} s_InventorySelectionId;
 
 // ========
 // STRUCTS
@@ -105,18 +105,12 @@ void func_8004F10C(s32* arg0);
  */
 void Gfx_Inventory_UnavailableMapText(s32 strIdx);
 
-/** Likely controls handling in inventory screen. */
-void func_8004F5DC();
+void Inventory_DirectionalInputSet();
 
 /** Draws some rectangle. */
 void func_8004FB0C();
 
-/** Related to the drawing of arrows next to
- * the selected item in the inventory.
- * Breaking it reveals that it whitens the arrows,
- * as without this function, the arrows look a bit grey.
- */
-void func_80052088(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
+void Gfx_Primitive2dTextureSet(s32 x, s32 y, s32 otIdx, s32 abr);
 
 /** Results screen related.
  * Used in: `func_8004F764`

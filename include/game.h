@@ -490,15 +490,15 @@ typedef struct _ControllerData
     u8                 field_9;
     s8                 unk_A[2];
     s32                btns_held_C; /** `e_PadButton` */
-    s32                btns_new_10; /** `e_PadButton` */
-    s8                 field_14[4];
-    s32                field_18;    /** `e_PadButton` */
-    s32                field_1C;
+    s32                btns_new_10; /** `e_PadButton` */ // Button clicked.
+    s8                 field_14[4]; /** `e_PadButton` */ // Button released.
+    s32                field_18;    /** `e_PadButton` */ // Button pulsed.
+    s32                field_1C;    /** `e_PadButton` */ // Button pulsed. Duplicate?
     char               field_20;
     char               field_21;
     s8                 field_22;
     s8                 field_23;
-    char               field_24;
+    char               field_24; // Following 4 fields are updated simultaneously with `field_28`.
     char               field_25;
     char               field_26;
     char               field_27;

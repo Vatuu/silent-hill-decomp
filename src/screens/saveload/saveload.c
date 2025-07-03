@@ -699,7 +699,7 @@ void Gfx_OverwriteSaveDraw(s32 arg0, s32 optionIdx) // 0x801E3C44
             GsOUT_PACKET_P = (u8*)poly + sizeof(POLY_F4);
             addPrim((u8*)ot->org + 28, poly);
 
-            func_80052088(0, 0, 7, 1);
+            Gfx_Primitive2dTextureSet(0, 0, 7, 1);
             break;
     }
 }
@@ -734,9 +734,9 @@ void Gfx_SavedShineDraw() // 0x801E3E78
                (slotIdx * SLOT_COLUMN_OFFSET) - 11,  (rowIdx * SLOT_ROW_OFFSET) - 43);
 
         GsOUT_PACKET_P = (u8*)poly + sizeof(POLY_F4);
-        addPrim((u8*)ot->org + 0x18, poly);
+        addPrim((u8*)ot->org + 24, poly);
 
-        func_80052088(0, 0, 6, 1);
+        Gfx_Primitive2dTextureSet(0, 0, 6, 1);
     }
 }
 
@@ -858,7 +858,7 @@ void Gfx_SaveSlotBorderDraw() // 0x801E4010
         }
     }
 
-    func_80052088(0, 0, 7, 1);
+    Gfx_Primitive2dTextureSet(0, 0, 7, 1);
 }
 
 void func_801E43C8(s32 slotIdx) // 0x801E43C8
@@ -897,7 +897,7 @@ void func_801E43C8(s32 slotIdx) // 0x801E43C8
         GsOUT_PACKET_P = (u8*)poly + sizeof(POLY_F4);
         addPrim((u8*)ot->org + 28, poly);
 
-        func_80052088(0, 0, 7, 1);
+        Gfx_Primitive2dTextureSet(0, 0, 7, 1);
     }
 }
 
@@ -1045,7 +1045,7 @@ void Gfx_SaveSlotDrawBox(s32 slotIdx, s32 saveCount, s32 selectedSaveIdx, s32 se
         addPrim((u8*)ot->org + LAYER_BASE_0, highlightPoly);
         GsOUT_PACKET_P = (u8*)highlightPoly + sizeof(POLY_F4);
 
-        func_80052088(0, 0, 7, 1);
+        Gfx_Primitive2dTextureSet(0, 0, 7, 1);
     }
 
     // Draw scroll bar arrows.
@@ -1109,7 +1109,7 @@ void Gfx_SaveSlotDrawBox(s32 slotIdx, s32 saveCount, s32 selectedSaveIdx, s32 se
     addPrim((u8*)ot->org + LAYER_BASE_1, unkPoly);
     GsOUT_PACKET_P = (u8*)unkPoly + sizeof(POLY_F4);
 
-    func_80052088(0, 0, 8, 1);
+    Gfx_Primitive2dTextureSet(0, 0, 8, 1);
 }
 
 void Gfx_SavegameEntryDrawBorder(s_SavegameEntry* saveEntry, s_SavegameEntry* nextSaveEntry, s32 saveIdx, s32 slotIdx) // 0x801E4D90
@@ -1331,7 +1331,7 @@ void Gfx_SaveSlotDrawMemCardMsgBoxSub(s_LineBorder* borderLines, s_QuadBorder* b
         GsOUT_PACKET_P = (u8*)glowPoly + sizeof(POLY_G4);
     }
     
-    func_80052088(0, 0, 5, 1);
+    Gfx_Primitive2dTextureSet(0, 0, 5, 1);
     
     // Draw (???)'
     unkPoly = (POLY_F4*)GsOUT_PACKET_P;
@@ -1349,7 +1349,7 @@ void Gfx_SaveSlotDrawMemCardMsgBoxSub(s_LineBorder* borderLines, s_QuadBorder* b
     addPrim((u8*)ot->org + 32, unkPoly);
     GsOUT_PACKET_P = (u8*)unkPoly + sizeof(POLY_F4);
 
-    func_80052088(0, 0, 8, 1);
+    Gfx_Primitive2dTextureSet(0, 0, 8, 1);
 }
 
 void Gfx_RectSaveInfoDraw(s_Line2d* line) // 0x801E5898
@@ -1408,7 +1408,7 @@ void Gfx_RectSaveInfoDraw(s_Line2d* line) // 0x801E5898
         GsOUT_PACKET_P += sizeof(POLY_F3);
     }
 
-    func_80052088(0, 0, 8, 2);
+    Gfx_Primitive2dTextureSet(0, 0, 8, 2);
 
     poly_f4 = (POLY_F4*)GsOUT_PACKET_P;
     setPolyF4(poly_f4);
@@ -1425,7 +1425,7 @@ void Gfx_RectSaveInfoDraw(s_Line2d* line) // 0x801E5898
     addPrim((u8*)ot->org + 36, poly_f4);
     GsOUT_PACKET_P = (u8*)poly_f4 + sizeof(POLY_F4);
 
-    func_80052088(0, 0, 9, 1);
+    Gfx_Primitive2dTextureSet(0, 0, 9, 1);
 
     for (i = 0; i < 6; i++)
     {
@@ -1595,7 +1595,7 @@ void Gfx_SaveDataInfoDraw(s32 slotIdx, s32 selectedSaveIdx) // 0x801E5E18
             GsOUT_PACKET_P = (u8*)poly + sizeof(POLY_G4);
             addPrim((u8*)ot->org + 28, poly);
 
-            func_80052088(0, 0, 7, 1);
+            Gfx_Primitive2dTextureSet(0, 0, 7, 1);
         }
     }
 }

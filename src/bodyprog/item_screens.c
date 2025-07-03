@@ -241,10 +241,6 @@ void func_8004C8DC() // 0x8004C8DC
     {
         g_SavegamePtr->gameplayTimer_250 = CLAMP(g_SavegamePtr->gameplayTimer_250, 1, TIME_130_HOURS);
     }
-
-    #undef TIME_290_OVERFLOW_MAX
-    #undef TIME_130_HOURS
-    #undef TIME_290_HOURS
 }
 
 void GameState_ItemScreens_Update() // 0x8004C9B0
@@ -667,7 +663,7 @@ void Inventory_Logic() // 0x8004D518
     s32 temp;
     s32 curItemIdx;
 
-    func_8004F5DC();
+    Inventory_DirectionalInputSet();
 
     D_800C3998++;
 
@@ -1551,7 +1547,8 @@ void Gfx_Inventory_ScrollArrowsDraw(s32* invSelectionId) // 0x8004EC7C
         GsOUT_PACKET_P = (PACKET*)arrowPoly + sizeof(POLY_G3);
     }
 
-    func_80052088(0, 0, 7, 1);
+    // Set texture.
+    Gfx_Primitive2dTextureSet(0, 0, 7, 1);
 }
 
 s32 func_8004EE94(u8 arg0, u8 arg1) // 0x8004EE94
@@ -1631,31 +1628,45 @@ void Gfx_Inventory_UnavailableMapText(s32 strIdx) // 0x0x8004F57C
 static const u8  unk0 = 0x2A; // '*' as `char`.
 static const s32 unk1 = 0;
 
-void func_8004F5DC() // 0x8004F5DC
+void Inventory_DirectionalInputSet() // 0x8004F5DC
 {
     if (g_ControllerPtrConst->field_23 < -64 || g_ControllerPtrConst->field_23 >= 64 ||
         g_ControllerPtrConst->field_22 < -64 || g_ControllerPtrConst->field_22 >= 64)
     {
+        // Up.
         D_800C3968 = g_ControllerPtrConst->btns_new_10 & ControllerFlag_LStickUp2;
         D_800C3978 = g_ControllerPtrConst->field_18    & ControllerFlag_LStickUp2;
+
+        // Down.
         D_800C396C = g_ControllerPtrConst->btns_new_10 & ControllerFlag_LStickDown2;
         D_800C397C = g_ControllerPtrConst->field_18    & ControllerFlag_LStickDown2;
+
+        // Left.
         D_800C3970 = g_ControllerPtrConst->btns_new_10 & ControllerFlag_LStickLeft2;
         D_800C3988 = g_ControllerPtrConst->btns_held_C & ControllerFlag_LStickLeft2;
         D_800C3980 = g_ControllerPtrConst->field_18    & ControllerFlag_LStickLeft2;
+
+        // Right.
         D_800C3974 = g_ControllerPtrConst->btns_new_10 & ControllerFlag_LStickRight2;
         D_800C398C = g_ControllerPtrConst->btns_held_C & ControllerFlag_LStickRight2;
         D_800C3984 = g_ControllerPtrConst->field_18    & ControllerFlag_LStickRight2;
     }
     else
     {
+        // Up.
         D_800C3968 = g_ControllerPtrConst->btns_new_10 & ControllerFlag_LStickUp;
         D_800C3978 = g_ControllerPtrConst->field_18    & ControllerFlag_LStickUp;
+
+        // Down.
         D_800C396C = g_ControllerPtrConst->btns_new_10 & ControllerFlag_LStickDown;
         D_800C397C = g_ControllerPtrConst->field_18    & ControllerFlag_LStickDown;
+
+        // Left.
         D_800C3970 = g_ControllerPtrConst->btns_new_10 & ControllerFlag_LStickLeft;
         D_800C3988 = g_ControllerPtrConst->btns_held_C & ControllerFlag_LStickLeft;
         D_800C3980 = g_ControllerPtrConst->field_18    & ControllerFlag_LStickLeft;
+
+        // Right.
         D_800C3974 = g_ControllerPtrConst->btns_new_10 & ControllerFlag_LStickRight;
         D_800C398C = g_ControllerPtrConst->btns_held_C & ControllerFlag_LStickRight;
         D_800C3984 = g_ControllerPtrConst->field_18    & ControllerFlag_LStickRight;
@@ -1906,25 +1917,25 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/item_screens", Gfx_Inventory_HealthStatus
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/item_screens", Gfx_Inventory_ItemDescription); // 0x8005192C
 
-void func_80052088(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x80052088
+void Gfx_Primitive2dTextureSet(s32 x, s32 y, s32 otIdx, s32 abr) // 0x80052088
 {
     GsOT*     ot0;
     GsOT*     ot1;
     s32       idx   = g_ObjectTableIdx;
     DR_TPAGE* tPage = (DR_TPAGE*)GsOUT_PACKET_P;
 
-    setDrawTPage(tPage, 0, 1, getTPage(0, arg3, arg0, arg1));
+    setDrawTPage(tPage, 0, 1, getTPage(0, abr, x, y));
 
     ot1 = &g_ObjectTable1[idx];
     ot0 = &g_ObjectTable0[idx];
 
-    if (arg3 < 4)
+    if (abr < 4)
     {
-        addPrim(&ot1->org[arg2], tPage);
+        addPrim(&ot1->org[otIdx], tPage);
     }
     else
     {
-        addPrim(&ot0->org[arg2], tPage);
+        addPrim(&ot0->org[otIdx], tPage);
     }
 
     GsOUT_PACKET_P = (PACKET*)tPage + sizeof(DR_TPAGE);
