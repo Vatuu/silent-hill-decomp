@@ -722,11 +722,11 @@ s32 MainLoop_ShouldWarmReset() // 0x80034108
     {
         return 2; 
     }
-    else if (g_ControllerPtrConst->btns_held_C == UNK_BTN_FLAGS_0 && (g_ControllerPtrConst->btns_new_10 & UNK_BTN_FLAGS_0))
+    else if (g_ControllerPtrConst->btns_held_C == UNK_BTN_FLAGS_0 && (g_ControllerPtrConst->btns_clicked_10 & UNK_BTN_FLAGS_0))
     {
         return 2; 
     }
-    else if (g_ControllerPtrConst->btns_held_C == UNK_BTN_FLAGS_1 && (g_ControllerPtrConst->btns_new_10 & ControllerFlag_Start))
+    else if (g_ControllerPtrConst->btns_held_C == UNK_BTN_FLAGS_1 && (g_ControllerPtrConst->btns_clicked_10 & ControllerFlag_Start))
     {
         return 2; 
     }
@@ -1340,7 +1340,7 @@ void SysState_GamePaused_Update() // 0x800391E8
     // Debug button combo to bring up save screen from pause screen.
     // DPad-Left + L2 + L1 + LS-Left + RS-Left + L3
     if ((g_ControllerPtrConst->btns_held_C == (ControllerFlag_L3 | ControllerFlag_DpadLeft | ControllerFlag_L2 | ControllerFlag_L1 | ControllerFlag_LStickLeft2 | ControllerFlag_RStickLeft | ControllerFlag_LStickLeft)) &&
-        (g_ControllerPtrConst->btns_new_10 & ControllerFlag_L3))
+        (g_ControllerPtrConst->btns_clicked_10 & ControllerFlag_L3))
     {
         D_800A9A68 = 0;
         Sd_EngineCmd(4);
@@ -1349,7 +1349,7 @@ void SysState_GamePaused_Update() // 0x800391E8
         return;
     }
 
-    if (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerConfig_0.pause_14)
+    if (g_ControllerPtrConst->btns_clicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.pause_14)
     {
         D_800A9A68 = 0;
         Sd_EngineCmd(4);
@@ -1669,7 +1669,7 @@ void SysState_GameOver_Update() // 0x8003A52C
             Gfx_StringDraw(D_80025448, 0x63); // "\aGAME_OVER" - needs rodata migration.
             g_SysWork.field_28++;
 
-            if ((g_ControllerPtrConst->btns_new_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 | g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)) ||
+            if ((g_ControllerPtrConst->btns_clicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 | g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)) ||
                 g_SysWork.field_28 > 240)
             {
                 SysWork_StateStepIncrement();
@@ -1710,7 +1710,7 @@ void SysState_GameOver_Update() // 0x8003A52C
             g_SysWork.field_28++;
             Gfx_BackgroundSpriteDraw(&D_800A9054);
 
-            if (!(g_ControllerPtrConst->btns_new_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 | g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)))
+            if (!(g_ControllerPtrConst->btns_clicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 | g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)))
             {
                 if (g_SysWork.field_28 <= 480)
                 {

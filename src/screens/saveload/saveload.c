@@ -1670,7 +1670,7 @@ void Savegame_ScreenLogic() // 0x801E649C
 
             // Memory cards are inserted and user is moving between slots.
             if (g_MemCardElementCount[0] != 0 && g_MemCardElementCount[1] != 0 && 
-                (g_ControllerPtrConst->btns_new_10 & (ControllerFlag_LStickRight | ControllerFlag_LStickLeft)))
+                (g_ControllerPtrConst->btns_clicked_10 & (ControllerFlag_LStickRight | ControllerFlag_LStickLeft)))
             {
                 g_SelectedSaveSlotIdx ^= 1;
                 Sd_EngineCmd(0x519);
@@ -1684,7 +1684,7 @@ void Savegame_ScreenLogic() // 0x801E649C
                 g_ActiveSavegameEntry = GetActiveSavegameEntry(g_SelectedSaveSlotIdx);
 
                 // Move down savegame entry.
-                if (g_ControllerPtrConst->field_18 & ControllerFlag_LStickUp) 
+                if (g_ControllerPtrConst->btns_pulsed_18 & ControllerFlag_LStickUp) 
                 {
                     if (g_SlotElementSelectedIdx[g_SelectedSaveSlotIdx] != 0) 
                     {
@@ -1694,7 +1694,7 @@ void Savegame_ScreenLogic() // 0x801E649C
                 }
 
                 // Move up savegame entry.
-                if (g_ControllerPtrConst->field_18 & ControllerFlag_LStickDown) 
+                if (g_ControllerPtrConst->btns_pulsed_18 & ControllerFlag_LStickDown) 
                 {
                     if (g_SlotElementSelectedIdx[g_SelectedSaveSlotIdx] < g_MemCardElementCount[g_SelectedSaveSlotIdx] - 1)
                     {
@@ -1723,7 +1723,7 @@ void Savegame_ScreenLogic() // 0x801E649C
                 }
 				
 				// Overwrite savegame entry.
-                if (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0) 
+                if (g_ControllerPtrConst->btns_clicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0) 
                 {
                     if ((D_801E753C | g_IsSaveSelected) != 0) 
                     {
@@ -1743,7 +1743,7 @@ void Savegame_ScreenLogic() // 0x801E649C
             }
 			
 			// Exit save screen.
-            if (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2) 
+            if (g_ControllerPtrConst->btns_clicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2) 
             {
                 g_Gfx_ScreenFade                = 3;
                 g_GameWork.gameStateStep_598[1] = 2;
@@ -1768,19 +1768,19 @@ void Savegame_ScreenLogic() // 0x801E649C
 
             g_MemCardStateTextTimer = 0;
 
-            if (g_ControllerPtrConst->btns_new_10 & ControllerFlag_LStickLeft) 
+            if (g_ControllerPtrConst->btns_clicked_10 & ControllerFlag_LStickLeft) 
             {
                 g_OverwriteOptionSelected = gameStateStep;
                 Sd_EngineCmd(0x519);
             }
 
-            if (g_ControllerPtrConst->btns_new_10 & ControllerFlag_LStickRight) 
+            if (g_ControllerPtrConst->btns_clicked_10 & ControllerFlag_LStickRight) 
             {
                 g_OverwriteOptionSelected = 0;
                 Sd_EngineCmd(0x519);
             }
 
-            if (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0) 
+            if (g_ControllerPtrConst->btns_clicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0) 
             {
                 if (g_OverwriteOptionSelected == 0)
                 {
@@ -1800,7 +1800,7 @@ void Savegame_ScreenLogic() // 0x801E649C
             }
 			
 			// Cancel overwrite.
-            if (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2) 
+            if (g_ControllerPtrConst->btns_clicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2) 
             {
                 g_GameWork.gameStateStep_598[1] = 0;
                 g_GameWork.gameStateStep_598[2] = 0;

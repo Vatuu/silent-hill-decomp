@@ -373,6 +373,17 @@ D_800C16A8 = 0x800C16A8; // type:u8 size:0x20
 
 g_Chara_FileInfo = 0x800A90FC; // type:CharaFileInfo size:0x2D0
 
+g_Inventory_IsUpClicked    = 0x800C3968; // type:s32
+g_Inventory_IsDownClicked  = 0x800C396C; // type:s32
+g_Inventory_IsLeftClicked  = 0x800C3970; // type:s32
+g_Inventory_IsRightClicked = 0x800C3974; // type:s32
+g_Inventory_IsUpPulsed     = 0x800C3978; // type:s32
+g_Inventory_IsDownPulsed   = 0x800C397C; // type:s32
+g_Inventory_IsLeftPulsed   = 0x800C3980; // type:s32
+g_Inventory_IsRightPulsed  = 0x800C3984; // type:s32
+g_Inventory_IsLeftHeld     = 0x800C3988; // type:s32
+g_Inventory_IsRightHeld    = 0x800C398C; // type:s32
+
 g_Demo_DemoFileIdx = 0x800C4840; // type:s32
 g_Demo_PlayFileIdx = 0x800C4844; // type:s32
 g_Demo_UserConfigBackup = 0x800C4850; // type:ShSaveUserConfig size:0x38

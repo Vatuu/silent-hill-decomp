@@ -49,6 +49,26 @@ extern s32 g_Inventory_CmdSelectedIdx; // 0x800ADB58
  */
 extern u32 g_Inventory_SelectionId; /** `s_InventorySelectionId` */ // 0x800ADB5C
 
+extern s32 g_Inventory_IsUpClicked; // 0x800C3968
+
+extern s32 g_Inventory_IsDownClicked; // 0x800C396C
+
+extern s32 g_Inventory_IsLeftClicked; // 0x800C3970
+
+extern s32 g_Inventory_IsRightClicked; // 0x800C3974
+
+extern s32 g_Inventory_IsUpPulsed; // 0x800C3978
+
+extern s32 g_Inventory_IsDownPulsed; // 0x800C397C
+
+extern s32 g_Inventory_IsLeftPulsed; // 0x800C3980
+
+extern s32 g_Inventory_IsRightPulsed; // 0x800C3984
+
+extern s32 g_Inventory_IsLeftHeld; // 0x800C3988
+
+extern s32 g_Inventory_IsRightHeld; // 0x800C398C
+
 // ==========
 // FUNCTIONS
 // ==========

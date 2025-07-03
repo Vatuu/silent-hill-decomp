@@ -489,11 +489,11 @@ typedef struct _ControllerData
     s8                 unk_8[1];
     u8                 field_9;
     s8                 unk_A[2];
-    s32                btns_held_C; /** `e_PadButton` */
-    s32                btns_new_10; /** `e_PadButton` */ // Button clicked.
-    s8                 field_14[4]; /** `e_PadButton` */ // Button released.
-    s32                field_18;    /** `e_PadButton` */ // Button pulsed.
-    s32                field_1C;    /** `e_PadButton` */ // Button pulsed. Duplicate?
+    s32                btns_held_C;      /** `e_PadButton` */
+    s32                btns_clicked_10;  /** `e_PadButton` */
+    s32                btns_released_14; /** `e_PadButton` */
+    s32                btns_pulsed_18;   /** `e_PadButton` */
+    s32                btns_pulsed_1C;   /** `e_PadButton` */ // Duplicate?
     char               field_20;
     char               field_21;
     s8                 field_22;

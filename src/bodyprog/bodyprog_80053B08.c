@@ -1651,7 +1651,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80053B08", func_800803FC); // 0x
 
 void func_80080458() // 0x80080458
 {
-    g_ControllerPtr->btns_new_10 |= ControllerFlag_Select;
+    g_ControllerPtr->btns_clicked_10 |= ControllerFlag_Select;
 }
 
 s32 func_80080478(VECTOR3* pos0, VECTOR3* pos1) // 0x80080478

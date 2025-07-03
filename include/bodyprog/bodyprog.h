@@ -1223,26 +1223,6 @@ extern s8 D_800C3962;
 
 extern u8 D_800C3963;
 
-extern s32 D_800C3968;
-
-extern s32 D_800C396C;
-
-extern s32 D_800C3970; // Boolean.
-
-extern s32 D_800C3974;
-
-extern s32 D_800C3978;
-
-extern s32 D_800C397C;
-
-extern s32 D_800C3980;
-
-extern s32 D_800C3984;
-
-extern s32 D_800C3988; // Boolean.
-
-extern s32 D_800C398C;
-
 extern s32 D_800C3990; // Boolean.
 
 extern s32 D_800C3994;
