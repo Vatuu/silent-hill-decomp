@@ -20,9 +20,9 @@ s32 func_8004C45C() // 0x8004C45C
     if (g_SavegamePtr->mapOverlayId_A4 > MapOverlayId_MAP0_S00)
     {
         // Konami gun controller connected.
-        if (g_GameWork.controllers_38[1].analogController_0.status == 0 &&
+        if (g_GameWork.controllers_38[1].analogController_0.status         == 0 &&
             g_GameWork.controllers_38[1].analogController_0.received_bytes == 1 &&
-            g_GameWork.controllers_38[1].analogController_0.terminal_type == PadTerminalType_GunControllerKonami)
+            g_GameWork.controllers_38[1].analogController_0.terminal_type  == PadTerminalType_GunControllerKonami)
         {
             return 1;
         }
@@ -48,9 +48,9 @@ s32 func_8004C4F8() // 0x8004C4F8
         }
 
         // Returns 1 if controller port 2 has Konami gun controller connected.
-        return g_GameWork.controllers_38[1].analogController_0.status == 0 &&
+        return g_GameWork.controllers_38[1].analogController_0.status         == 0 &&
                g_GameWork.controllers_38[1].analogController_0.received_bytes == 1 &&
-               g_GameWork.controllers_38[1].analogController_0.terminal_type == PadTerminalType_GunControllerKonami;
+               g_GameWork.controllers_38[1].analogController_0.terminal_type  == PadTerminalType_GunControllerKonami;
     }
 
     return 0;
@@ -694,10 +694,10 @@ void Inventory_Logic() // 0x8004D518
     switch (g_Inventory_SelectionId)
     {
         case InventorySelectionId_Item:
-            if ((g_Inventory_IsLeftClicked != 0 && D_800C3998 == InventorySelectionId_Examine) ||
-                (g_Inventory_IsLeftHeld != 0 && (D_800C3990 != 0 || D_800C3998 == InventorySelectionId_Examine)))
+            if ((g_Inventory_IsLeftClicked && D_800C3998 == InventorySelectionId_Examine) ||
+                (g_Inventory_IsLeftHeld && (D_800C3990 != 0 || D_800C3998 == InventorySelectionId_Examine)))
             {
-                if (g_Inventory_IsLeftClicked != 0 || g_Inventory_IsLeftHeld != 0)
+                if (g_Inventory_IsLeftClicked || g_Inventory_IsLeftHeld)
                 {
                     D_800C3990 = 1;
                 }
@@ -711,10 +711,10 @@ void Inventory_Logic() // 0x8004D518
                 temp                 = g_SavegamePtr->field_AB - 3;
                 func_800539A4(0, (g_SysWork.field_2351 + temp) % g_SavegamePtr->field_AB);
             }
-            else if (((g_Inventory_IsRightClicked != 0 || g_Inventory_IsRightPulsed != 0) && D_800C3998 == InventorySelectionId_Examine) ||
-                     (g_Inventory_IsRightHeld != 0 && (D_800C3990 != 0 || D_800C3998 == InventorySelectionId_Examine)))
+            else if (((g_Inventory_IsRightClicked || g_Inventory_IsRightPulsed) && D_800C3998 == InventorySelectionId_Examine) ||
+                     (g_Inventory_IsRightHeld && (D_800C3990 != 0 || D_800C3998 == InventorySelectionId_Examine)))
             {
-                if (g_Inventory_IsRightClicked != 0 || g_Inventory_IsRightHeld != 0)
+                if (g_Inventory_IsRightClicked || g_Inventory_IsRightHeld)
                 {
                     D_800C3990 = 1;
                 }
@@ -835,19 +835,19 @@ void Inventory_Logic() // 0x8004D518
             break;
 
         case InventorySelectionId_Exit:
-            if (g_Inventory_IsUpClicked != 0)
+            if (g_Inventory_IsUpClicked)
             {
                 D_800C3998 = InventorySelectionId_EquippedItem;
                 func_80046048(SFX_BACK, 0, 64);
                 g_Inventory_SelectionId = InventorySelectionId_Item;
             }
-            else if (g_Inventory_IsLeftClicked != 0)
+            else if (g_Inventory_IsLeftClicked)
             {
                 D_800C3998 = InventorySelectionId_EquippedItem;
                 func_80046048(SFX_BACK, -64, 64);
                 g_Inventory_SelectionId = InventorySelectionId_Settings;
             }
-            else if (g_Inventory_IsRightClicked != 0)
+            else if (g_Inventory_IsRightClicked)
             {
                 D_800C3998 = InventorySelectionId_EquippedItem;
                 func_80046048(SFX_BACK, 64, 64);
@@ -869,17 +869,17 @@ void Inventory_Logic() // 0x8004D518
             break;
 
         case InventorySelectionId_Settings:
-            if (g_Inventory_IsUpClicked != 0)
+            if (g_Inventory_IsUpClicked)
             {
                 D_800C3998 = InventorySelectionId_EquippedItem;
                 func_80046048(SFX_BACK, 0, 64);
                 g_Inventory_SelectionId = InventorySelectionId_Item;
             }
-            else if (g_Inventory_IsRightClicked != 0 || (g_ControllerPtrConst->btns_clicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
+            else if (g_Inventory_IsRightClicked || (g_ControllerPtrConst->btns_clicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
             {
                 D_800C3998 = InventorySelectionId_EquippedItem;
 
-                if (g_Inventory_IsRightClicked == 0 || (g_ControllerPtrConst->btns_clicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
+                if (!g_Inventory_IsRightClicked || (g_ControllerPtrConst->btns_clicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
                 {
                     func_80046048(SFX_CANCEL, 0, 64);
                     g_Inventory_SelectionId = InventorySelectionId_Exit;
@@ -915,17 +915,17 @@ void Inventory_Logic() // 0x8004D518
             break;
 
         case InventorySelectionId_Map:
-            if (g_Inventory_IsUpClicked != 0)
+            if (g_Inventory_IsUpClicked)
             {
                 D_800C3998 = InventorySelectionId_EquippedItem;
                 func_80046048(SFX_BACK, 0, 64);
                 g_Inventory_SelectionId = InventorySelectionId_Item;
             }
-            else if (g_Inventory_IsLeftClicked != 0 || g_ControllerPtrConst->btns_clicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)
+            else if (g_Inventory_IsLeftClicked || g_ControllerPtrConst->btns_clicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)
             {
                 D_800C3998 = InventorySelectionId_EquippedItem;
 
-                if (g_Inventory_IsLeftClicked == 0 || g_ControllerPtrConst->btns_clicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)
+                if (!g_Inventory_IsLeftClicked || g_ControllerPtrConst->btns_clicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)
                 {
                     func_80046048(SFX_CANCEL, 0, 64);
                 }
@@ -1016,7 +1016,7 @@ void Inventory_Logic() // 0x8004D518
                     break;
             }
 
-            if (g_Inventory_IsDownPulsed != 0)
+            if (g_Inventory_IsDownPulsed)
             {
                 if (g_Inventory_CmdSelectedIdx < (cmdCountMax - 1))
                 {
@@ -1025,7 +1025,7 @@ void Inventory_Logic() // 0x8004D518
                     func_80046048(SFX_BACK, 64, 64);
                 }
             }
-            else if (g_Inventory_IsUpPulsed != 0)
+            else if (g_Inventory_IsUpPulsed)
             {
                 if (g_Inventory_CmdSelectedIdx > 0)
                 {
