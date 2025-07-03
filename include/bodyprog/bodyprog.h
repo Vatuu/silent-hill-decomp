@@ -881,6 +881,12 @@ extern s_800BE9FC D_8002B2CC;
 
 extern u8 D_800A8E58;
 
+extern DR_MODE D_800A8E5C[];
+
+extern TILE D_800A8E74[];
+
+extern s32 D_800A8E94;
+
 extern s_FsImageDesc D_800A8FF4;
 
 extern s_FsImageDesc D_800A8FFC;
@@ -1076,6 +1082,9 @@ extern s32 D_800B5C28;
 extern s32 D_800B5C30;
 
 extern s_800B5C40 D_800B5C40[];
+
+// TODO: Overlapped variables
+extern s8 D_800B5C54[][64];
 
 extern s8 D_800B5C58[][64];
 
@@ -1425,6 +1434,8 @@ extern s16 D_800C6E26;
 
 extern s16 D_800C6E8E;
 
+extern u8 D_800C6E90;
+
 extern s_800ACAA8 D_800ACAA8[];
 
 extern u8 D_800AD480[24];
@@ -1465,7 +1476,7 @@ s32 func_8002E9A0(s32 idx);
 /** Draws a background image. */
 void Gfx_BackgroundSpriteDraw(s_FsImageDesc* image);
 
-void func_80031CCC(s32);
+s32 func_80031CCC(s32);
 
 void Gfx_DebugStringPosition(s16 x, s16 y);
 
@@ -1474,7 +1485,7 @@ void Gfx_DebugStringDraw(char* str);
 
 char* Math_IntegerToString(s32 widthMin, s32 value);
 
-void Gfx_Init(u16 screenWidth, s32 isInterlaced);
+void Gfx_Init(s32 screenWidth, s32 isInterlaced);
 
 void func_8003260C(); // Return type assumed.
 

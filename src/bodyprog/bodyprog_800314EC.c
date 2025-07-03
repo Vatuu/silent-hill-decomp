@@ -68,7 +68,59 @@ void Gfx_BackgroundSpriteDraw(s_FsImageDesc* image) // 0x800314EC
     D_800A8E58            = 0x80;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_800317CC);
+void func_800317CC(s_FsImageDesc* arg0, s_FsImageDesc* arg1, s16 arg2) // 0x800317CC
+{
+    volatile int   pad;
+    s32            i;
+    s32            j;
+    u32            color;
+    s_FsImageDesc* image;
+    POLY_FT4*      poly;
+    u8             tPageY;
+    s32            xOffset;
+
+    poly = (POLY_FT4*)GsOUT_PACKET_P;
+
+    for (i = 0; i < 3; i++)
+    {
+        image = i > 0 ? arg0 : arg1;
+        color = i < 2 ? FP_MULTIPLY((s64)arg2, 128, Q12_SHIFT) : 0x80;
+
+        for (j = 0; j < 3; j++)
+        {
+            setPolyFT4(poly);
+
+            setXY0Fast(poly, -160 + 128 * j, -120);
+            setXY1Fast(poly, 128 * j + (j != 2 ? -32 : -96), -120);
+
+            xOffset = 128 * j;
+
+            setXY2Fast(poly, -160 + xOffset, 120);
+            setXY3Fast(poly, xOffset + (j != 2 ? -32 : -96), 120);
+
+            *((u32*)&poly->u0) = (image->v << 8) + (getClut(image->clutX, image->clutY) << 16);
+
+            tPageY = image->tPage[1];
+
+            *((u32*)&poly->u1) = (image->v << 8) + (j != 2 ? 128 : 64) +
+                                 (getTPage(image->tPage[0], i + 1, (image->tPage[1] + j) << 6, (tPageY << 4) & 0x100) << 16);
+
+            *((u16*)&poly->u2) = (image->v + 239) << 8;
+            *((u16*)&poly->u3) = ((image->v + 239) << 8) + (j != 2 ? 128 : 64);
+
+            setSemiTrans(poly, i < 2);
+
+            *((u16*)&poly->r0) = color + (color << 8);
+            poly->b0           = color;
+
+            addPrim(g_ObjectTable0[g_ObjectTableIdx].org, poly);
+            poly++;
+        }
+    }
+
+    g_SysWork.field_22A0 |= 1;
+    GsOUT_PACKET_P = (PACKET*)poly;
+}
 
 void func_80031AAC(s_FsImageDesc* image) // 0x80031AAC
 {
@@ -115,7 +167,68 @@ void func_80031AAC(s_FsImageDesc* image) // 0x80031AAC
     D_800A8E58 = 0x80;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_80031CCC);
+s32 func_80031CCC(s32 arg0) // 0x80031CCC
+{
+    s32       sp10;
+    s32       i;
+    s32       yOffset;
+    s32       textureUOffset;
+    s32       tPageYOffset;
+    s32       j;
+    GsOT*     ot;
+    SPRT*     sprt;
+    DR_TPAGE* tPage;
+
+    ot   = (GsOT*)&D_800B7CC4[g_ObjectTableIdx];
+    sprt = (SPRT*)GsOUT_PACKET_P;
+    sp10 = D_800C6E90;
+
+    for (i = 0; (i == 0 || (sp10 != 0 && i == 1)); i++)
+    {
+        for (j = 0; j < 3; j++)
+        {
+            if (sp10 != 0)
+            {
+                textureUOffset = (-(i == 0)) & 0x20;
+                yOffset        = i == 0 ? -0xE0 : 0;
+                tPageYOffset   = i << 8;
+            }
+            else
+            {
+                yOffset        = -0x70;
+                textureUOffset = (g_ObjectTableIdx == 0) << 5;
+                tPageYOffset   = g_ObjectTableIdx << 8;
+            }
+
+            addPrimFast(ot, sprt, 4);
+
+            if ((VSync(-1) % arg0) == 0)
+            {
+                setRGBC0(sprt, 0x7F, 0x7F, 0x7F, 0x64);
+            }
+            else
+            {
+                setRGBC0(sprt, 0x80, 0x80, 0x80, 0x64);
+            }
+
+            setWH(sprt, 0x100, 0xE0);
+            *((u32*)&sprt->u0) = textureUOffset << 8;
+
+            setXY0Fast(sprt, -g_GameWork.gsScreenWidth_588 / 2 + (j << 8), yOffset);
+
+            sprt++;
+            tPage = (DR_TPAGE*)sprt;
+
+            setDrawTPage(tPage, 0, 1, getTPage(2, 0, (j << 8), tPageYOffset));
+            AddPrim(ot, tPage);
+
+            sprt = (PACKET*)sprt + sizeof(DR_TPAGE);
+        }
+    }
+
+    GsOUT_PACKET_P = sprt;
+    return 0;
+}
 
 void Gfx_DebugStringPosition(s16 x, s16 y) // 0x80031EFC
 {
@@ -249,7 +362,67 @@ char* Math_IntegerToString(s32 widthMin, s32 value) // 0x80032154
     return string;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_800321EC);
+void func_800321EC(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x800321EC
+{
+    s32  quotient;
+    s32  i;
+    bool isNegative;
+    s8*  str;
+
+    for (i = 0; i < arg0 - 1; i++)
+    {
+        g_Gfx_DebugStringPosition1.vx = g_Gfx_DebugStringPosition1.vx + 8;
+    }
+
+    str  = PSX_SCRATCH_ADDR(0x2F);
+    *str = 0;
+
+    if (arg2 < 0)
+    {
+        isNegative = true;
+        arg2       = -arg2;
+    }
+    else
+    {
+        isNegative = false;
+    }
+
+    if (arg3 != 0)
+    {
+        arg2 = (arg2 + 5) / 10;
+    }
+
+    if (arg1 != 0)
+    {
+        for (i = 0; i < arg1; i++)
+        {
+            str--;
+            *str = (arg2 % 10) + '0';
+            arg2 /= 10;
+        }
+        str--;
+        *str = '.';
+    }
+
+    while (arg2 >= 10)
+    {
+        str--;
+        quotient                      = arg2 / 10;
+        *str                          = (arg2 - (quotient * 10)) + '0';
+        arg2                          = quotient;
+        g_Gfx_DebugStringPosition1.vx = g_Gfx_DebugStringPosition1.vx - 8;
+    }
+
+    str--;
+    *str = arg2 + '0';
+
+    if (isNegative != 0)
+    {
+        str--;
+        *str                          = '-';
+        g_Gfx_DebugStringPosition1.vx = g_Gfx_DebugStringPosition1.vx - 8;
+    }
+}
 
 void Gfx_ClearRectInterlaced(s16 x, s16 y, s16 w, s16 h, u8 r, u8 g, u8 b)
 {
@@ -259,9 +432,14 @@ void Gfx_ClearRectInterlaced(s16 x, s16 y, s16 w, s16 h, u8 r, u8 g, u8 b)
     DrawSync(0);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_800323C8);
+void func_800323C8(s32 screenWidth, s32 isInterlaced) // 0x800323C8
+{
+    DrawSync(0);
+    Gfx_ClearRectInterlaced(0, 32, 320, 448, 0, 0, 0);
+    Gfx_Init(screenWidth, isInterlaced);
+}
 
-void Gfx_Init(u16 screenWidth, s32 isInterlaced) // 0x80032428
+void Gfx_Init(s32 screenWidth, s32 isInterlaced) // 0x80032428
 {
     g_GameWork.gsScreenWidth_588  = screenWidth;
     g_GameWork.gsScreenHeight_58A = !isInterlaced ? FRAMEBUFFER_HEIGHT_PROGRESSIVE : FRAMEBUFFER_HEIGHT_INTERLACED;
@@ -316,9 +494,150 @@ int func_800325F8() // 0x800325F8
     return 4096 - D_800B5C28;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003260C);
+// TODO: RODATA migration
+#ifdef NON_MATCHING
+void func_8003260C() // 0x8003260C
+{
+    s32      queueLength;
+    s32      temp;
+    GsOT*    ot;
+    TILE*    tile;
+    DR_MODE* drMode;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003289C);
+    drMode     = &D_800A8E5C[g_ObjectTableIdx];
+    tile       = &D_800A8E74[g_ObjectTableIdx];
+    D_800B5C28 = D_800A8E94;
+
+    switch (g_Gfx_ScreenFade)
+    {
+        case 2:
+        case 10:
+            D_800A8E94 = 0;
+            g_Gfx_ScreenFade++;
+
+        case 3:
+        case 11:
+            func_800325A4(drMode);
+            queueLength = Fs_QueueGetLength();
+
+            if (D_800B5C30 > 0)
+            {
+                temp = D_800B5C30;
+            }
+            else
+            {
+                temp = 0x3000 / (queueLength + 1);
+            }
+
+            D_800A8E94 += FP_MULTIPLY((s64)temp, g_DeltaTime1, Q12_SHIFT);
+
+            if (D_800A8E94 >= 0xFFF)
+            {
+                D_800A8E94 = 0xFFF;
+                g_Gfx_ScreenFade++;
+            }
+
+            tile->r0 = D_800A8E94 >> 4;
+            tile->g0 = D_800A8E94 >> 4;
+            tile->b0 = D_800A8E94 >> 4;
+            break;
+
+        case 4:
+        case 12:
+            D_800B5C30 = 0;
+
+        case 6:
+        case 14:
+            D_800A8E94 = 0xFFF;
+            g_Gfx_ScreenFade++;
+
+        case 5:
+        case 13:
+            func_800325A4(drMode);
+            tile->r0 = D_800A8E94 >> 4;
+            tile->g0 = D_800A8E94 >> 4;
+            tile->b0 = D_800A8E94 >> 4;
+            break;
+
+        case 7:
+        case 15:
+            func_800325A4(drMode);
+
+            if (D_800B5C30 > 0)
+            {
+                temp = D_800B5C30;
+            }
+            else
+            {
+                temp = 0x3000;
+            }
+
+            D_800A8E94 -= FP_MULTIPLY((s64)temp, g_DeltaTime1, Q12_SHIFT);
+
+            if (D_800A8E94 <= 0)
+            {
+                D_800A8E94       = 0;
+                g_Gfx_ScreenFade = 0;
+                return;
+            }
+
+            tile->r0 = D_800A8E94 >> 4;
+            tile->g0 = D_800A8E94 >> 4;
+            tile->b0 = D_800A8E94 >> 4;
+            break;
+
+        case 0:
+            D_800B5C30       = 0;
+            D_800A8E94       = 0;
+            g_Gfx_ScreenFade = 1;
+            return;
+
+        case 1:
+            return;
+    }
+
+    ot = &D_800B5C54[g_ObjectTableIdx];
+    AddPrim(ot, tile);
+    AddPrim(ot, drMode);
+}
+#else
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003260C);
+#endif
+
+void func_8003289C(POLY_G4* arg0, s32 arg1) // 0x8003289C
+{
+    s32 i;
+    s32 unused_v0;
+    s32 color0;
+    s32 color1;
+    s32 unused_arr[2];
+
+    unused_arr[0] = unused_v0;
+
+    color0 = arg1 >> 4;
+    color1 = arg1 >> 5;
+
+    if (arg1 == 4095)
+    {
+        color1 = 255;
+    }
+
+    for (i = 0; i < 2; i++)
+    {
+        arg0[i * 2].r0 = color0;
+        arg0[i * 2].g0 = color0;
+        arg0[i * 2].b0 = color0;
+        arg0[i * 2].r1 = color0;
+        arg0[i * 2].g1 = color0;
+        arg0[i * 2].b1 = color0;
+        arg0[i * 2].r2 = color1;
+        arg0[i * 2].g2 = color1;
+        arg0[i * 2].b2 = color1;
+        arg0[i * 2].r3 = color1;
+        arg0[i * 2].g3 = color1;
+        arg0[i * 2].b3 = color1;
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_80032904);
 
