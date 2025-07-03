@@ -307,7 +307,8 @@ Demo_GameRandSeedSet = 0x8008F8A8; // type:func
 g_ObjectTable0 = 0x800A8F74; // type:s8
 g_ObjectTable1 = 0x800A8FC4; // type:s8
 
-g_Inventory_CmdSelectedIdx = 0x800ADB58;
+g_Inventory_CmdSelectedIdx = 0x800ADB58; // type:s32
+g_Inventory_SelectionId    = 0x800ADB5C; // type:u32
 
 g_DeltaTime0 = 0x800B5CC0; // type:s32 - Q19.12 fixed point, usually 0x44 (0.0166..) or 0x88 (0.033..).
 g_DeltaTime1 = 0x800A8FEC; // type:s32
@@ -728,7 +729,7 @@ _c_vend = 0x80092748; // type:label
 store_2 = 0x800C4968;
 
 // cdrom.o
- // TODO: Check in other SDKs for the global this uses.
+// TODO: Check in other SDKs for the global this uses.
 StSetRing = 0x8009274C; // type:func
 // cdrom.o globals
 HADR0 = 0x800AFE9C; // All unused?

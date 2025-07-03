@@ -7,6 +7,19 @@
  * screen system.
  */
 
+typedef enum _InventorySelectionId
+{
+    InventorySelectionId_Item            = 0,
+    InventorySelectionId_EquippedItem    = 1,
+    InventorySelectionId_Exit            = 2,
+    InventorySelectionId_Settings        = 3,
+    InventorySelectionId_Map             = 4,
+    InventorySelectionId_ItemCmd         = 5,
+    InventorySelectionId_EquippedItemCmd = 6,
+    InventorySelectionId_Health          = 7, // Used for animation when user selects health item.
+    InventorySelectionId_Examine         = 8
+} s_InventorySelectionId; 
+
 // ========
 // STRUCTS
 // =========
@@ -24,27 +37,17 @@ STATIC_ASSERT_SIZEOF(s_ResultStringOffset, 4);
 // GLOBALS
 // ========
 
-extern s32 g_Inventory_CmdSelectedIdx;
+extern s32 g_Inventory_CmdSelectedIdx; // 0x800ADB58
 
-// `g_Inventory_CurrentSelectedStatus`
-/** Defines what the player has selected.
-* 0 - Items
-* 1 - Equiped item
-* 2 - Exit option
-* 3 - Settings option
-* 4 - Map option
-* 5 - Command options for item selected
-* 6 - Command options for item equiped
-* 7 - Select health status (used for the animation when the player uses a health item)
-* 8 - Examining items
-*
-* @note
-* `D_800C399C` has the same behaviour, with
-* the main difference being that it can be modified in memory
-* while `D_800C399C` is constatly updated to the same value
-* as this variable.
-*/
-extern u32 D_800ADB5C;
+/** Defines what the user has selected. `s_InventorySelectionId`.
+ *
+ * @note
+ * `D_800C399C` has the same behaviour, with
+ * the main difference being that it can be modified in memory
+ * while `D_800C399C` is constatly updated to the same value
+ * as this variable.
+ */
+extern u32 g_Inventory_SelectionId; /** `s_InventorySelectionId` */ // 0x800ADB5C
 
 // ==========
 // FUNCTIONS
@@ -81,9 +84,15 @@ void GameState_ItemScreens_Update();
 
 void Gfx_Results_Save();
 
+/** Function mainly responsible for handling the inventory screen. */
+void Inventory_Logic();
+
+/** Something related to items commands.
+ * This is used when the user does some action in in the commands space.
+ */
 void func_8004E6D4(s32 arg0);
 
-void Gfx_Inventory_ScrollArrows(s32* arg0);
+void Gfx_Inventory_ScrollArrows(s32* invSelectionId);
 
 // Unused?
 s32 func_8004EE94(u8 arg0, u8 arg1);
@@ -91,6 +100,9 @@ s32 func_8004EE94(u8 arg0, u8 arg1);
 // Unused?
 void func_8004F10C(s32* arg0);
 
+/** Draws the two messages that indicate when
+ * the user can't open the map in the inventory.
+ */
 void Gfx_Inventory_UnavailableMapText(s32 strIdx);
 
 /** Likely controls handling in inventory screen. */
@@ -111,7 +123,7 @@ void func_80052088(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
  */
 void func_800521A8();
 
-/** Used to toggle visibility of object while the inventory scrolring rotates.
+/** Used to toggle visibility of object while the inventory scrolling rotates.
  *
  * Used in: `Inventory_Logic`
  *

@@ -140,10 +140,10 @@ void Gfx_DebugStringDraw(char* str)
     #define GLYPH_SIZE_Y 8
     #define ATLAS_BASE_Y 240
 
-    #define SET_SPRT_U_V_CLUT(sprt, charIdx, clut)                                                                                      \
-        *((u32*)&(sprt)->u0) = (((charIdx) & 0x1F) * GLYPH_SIZE_X)                       + /* Set `u0` as column in 32-column atlas. */ \
-                               (((((charIdx) >> 5) * GLYPH_SIZE_Y) + ATLAS_BASE_Y) << 8) + /* Set `v0` as row in 32-column atlas. */    \
-                               ((clut) << 16)                                              /* Set `clut`. */
+    #define SET_SPRT_U_V_CLUT(sprt, charIdx, clut)                                                                                           \
+        *((u32*)&(sprt)->u0) = (((charIdx) & 0x1F) * GLYPH_SIZE_X)                       + /* `u0`:   column in 32-column atlas. */          \
+                               (((((charIdx) >> 5) * GLYPH_SIZE_Y) + ATLAS_BASE_Y) << 8) + /* `v0`:   row in 32-column atlas with offset. */ \
+                               ((clut) << 16)                                              /* `clut`: packed magic value. */
 
     s32       posX;
     s32       posY;

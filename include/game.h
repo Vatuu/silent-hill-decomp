@@ -32,9 +32,9 @@
 #define GET_PROPERTY_HIGH(prop) \
     ((u16*)&(prop) + 1)
 
-/** @brief Checks if the player has specific map by index. */
-#define HAS_MAP(mapIndex) \
-    ((((u32*)&g_SavegamePtr->hasMapsFlags_164)[(mapIndex) / 32] >> ((mapIndex) % 32)) & 1)
+/** @brief Checks if the player has a specific map by index. */
+#define HAS_MAP(mapIdx) \
+    ((((u32*)&g_SavegamePtr->hasMapsFlags_164)[(mapIdx) / 32] >> ((mapIdx) % 32)) & (1 << 0))
 
 typedef enum _MapOverlayId
 {
@@ -85,31 +85,31 @@ typedef enum _MapOverlayId
 
 typedef enum _SaveLocationId
 {
-    SaveLocationId_Anywhere     = 0,
-    SaveLocationId_Cafe         = 1,
-    SaveLocationId_Bus          = 2,
-    SaveLocationId_Store        = 3,
-    SaveLocationId_Infirmary    = 4,
-    SaveLocationId_Doghouse     = 5,
-    SaveLocationId_Gordon       = 6,
-    SaveLocationId_Church       = 7,
-    SaveLocationId_Garage       = 8,
-    SaveLocationId_Police       = 9,
-    SaveLocationId_Reception    = 10,
-    SaveLocationId_Room302      = 11,
-    SaveLocationId_Directors    = 12,
-    SaveLocationId_JewelryShop  = 13,
-    SaveLocationId_PoolHall     = 14,
-    SaveLocationId_AntiqueShop  = 15,
-    SaveLocationId_ThemePark    = 16,
-    SaveLocationId_Boat         = 17,
-    SaveLocationId_Bridge       = 18,
-    SaveLocationId_Motel        = 19,
-    SaveLocationId_Lighthouse   = 20,
-    SaveLocationId_Sewer        = 21,
-    SaveLocationId_Nowhere      = 22,
-    SaveLocationId_ChildsRoom   = 23,
-    SaveLocationId_NextFear     = 24
+    SaveLocationId_Anywhere    = 0,
+    SaveLocationId_Cafe        = 1,
+    SaveLocationId_Bus         = 2,
+    SaveLocationId_Store       = 3,
+    SaveLocationId_Infirmary   = 4,
+    SaveLocationId_Doghouse    = 5,
+    SaveLocationId_Gordon      = 6,
+    SaveLocationId_Church      = 7,
+    SaveLocationId_Garage      = 8,
+    SaveLocationId_Police      = 9,
+    SaveLocationId_Reception   = 10,
+    SaveLocationId_Room302     = 11,
+    SaveLocationId_Directors   = 12,
+    SaveLocationId_JewelryShop = 13,
+    SaveLocationId_PoolHall    = 14,
+    SaveLocationId_AntiqueShop = 15,
+    SaveLocationId_ThemePark   = 16,
+    SaveLocationId_Boat        = 17,
+    SaveLocationId_Bridge      = 18,
+    SaveLocationId_Motel       = 19,
+    SaveLocationId_Lighthouse  = 20,
+    SaveLocationId_Sewer       = 21,
+    SaveLocationId_Nowhere     = 22,
+    SaveLocationId_ChildsRoom  = 23,
+    SaveLocationId_NextFear    = 24
 } e_SaveLocationId;
 
 typedef enum _Current2dMap
@@ -269,8 +269,9 @@ typedef enum _InventoryCmdId
     InventoryCmdId_OnOff         = 6,
     InventoryCmdId_Reload        = 7,
     InventoryCmdId_Look          = 8,
-    InventoryCmdId_UseLook       = 9
-    // Flashlight 11 in daytime?
+    InventoryCmdId_UseLook       = 9,
+    InventoryCmdId_Unk10         = 10,
+    InventoryCmdId_Unk11         = 11 // Flashlight in daytime?
 } s_InventoryCmdId;
 
 /** @brief Inventory item IDs. */
@@ -600,7 +601,7 @@ typedef struct _ShSavegame
     u16               field_274;
     u16               field_276;
     u16               field_278;
-    s8                field_27A;
+    s8                field_27A; // Flags.
     u8                continueCount_27B;
 } s_ShSavegame;
 STATIC_ASSERT_SIZEOF(s_ShSavegame, 636);
@@ -966,11 +967,11 @@ typedef struct _SysWork
     u8              field_239D; // Index?
     u8              field_239E;
     s8              unk_239F[5];
-    u8              field_23A4;
+    u8              field_23A4; // Flags.
     s8              unk_23A5[51];
-    u8              field_23D8;
+    u8              field_23D8; // Flags.
     s8              unk_23D9[259];
-    s32             field_24DC;
+    s32             field_24DC; // Flags.
     s8              unk_24E0[48];
     s32             field_2510;
     s32             field_2514[10]; // This is supossed to be a struct.

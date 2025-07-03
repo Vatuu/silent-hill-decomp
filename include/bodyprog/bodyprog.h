@@ -20,9 +20,10 @@
 #define OPT_VIBRATION_DISABLED 0
 #define OPT_VIBRATION_ENABLED  128
 
-#define SFX_DENIED 0x518
-#define SFX_BACK 0x519
-#define SFX_CANCEL 0x51A
+// TODO: Could be part of a larger SFX enum with every sound effect? Maybe registered like filesystem assets.
+#define SFX_DENIED  0x518
+#define SFX_BACK    0x519
+#define SFX_CANCEL  0x51A
 #define SFX_CONFIRM 0x51B
 
 typedef struct 
@@ -1226,7 +1227,7 @@ extern s32 D_800C3968;
 
 extern s32 D_800C396C;
 
-extern s32 D_800C3970;
+extern s32 D_800C3970; // Boolean.
 
 extern s32 D_800C3974;
 
@@ -1238,17 +1239,17 @@ extern s32 D_800C3980;
 
 extern s32 D_800C3984;
 
-extern s32 D_800C3988;
+extern s32 D_800C3988; // Boolean.
 
 extern s32 D_800C398C;
 
-extern s32 D_800C3990;
+extern s32 D_800C3990; // Boolean.
 
 extern s32 D_800C3994;
 
 extern s32 D_800C3998;
 
-extern s32 D_800C399C;
+extern s32 D_800C399C; /** `s_InventorySelectionId` */
 
 extern u8 D_800C37D0;
 

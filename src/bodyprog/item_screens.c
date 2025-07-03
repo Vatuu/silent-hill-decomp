@@ -260,14 +260,14 @@ void GameState_ItemScreens_Update() // 0x8004C9B0
     switch (g_GameWork.gameStateStep_598[1])
     {
         case 0:
-            if (g_SavegamePtr->field_27A & 31)
+            if (g_SavegamePtr->field_27A & 0x1F)
             {
                 g_GameWork.gameStateStep_598[1] = 21;
                 g_GameWork.gameStateStep_598[2] = 0;
                 return;
             }
 
-            if ((g_SavegamePtr->field_27A & 64) &&
+            if ((g_SavegamePtr->field_27A & (1 << 6)) &&
                 g_GameWork.gameStatePrev_590 == 16)
             {
                 D_800A9A80 = 0;
@@ -301,18 +301,18 @@ void GameState_ItemScreens_Update() // 0x8004C9B0
             switch (g_GameWork.gameStatePrev_590)
             {
                 case 19:
-                    D_800ADB5C = 0;
-                    D_800C399C = 0;
+                    g_Inventory_SelectionId = InventorySelectionId_Item;
+                    D_800C399C              = InventorySelectionId_Item;
                     break;
 
                 case 18:
-                    D_800ADB5C = 3;
-                    D_800C399C = 3;
+                    g_Inventory_SelectionId = InventorySelectionId_Settings;
+                    D_800C399C              = InventorySelectionId_Settings;
                     break;
 
                 case 15:
-                    D_800ADB5C = 4;
-                    D_800C399C = 4;
+                    g_Inventory_SelectionId = InventorySelectionId_Map;
+                    D_800C399C              = InventorySelectionId_Map;
                     break;
 
                 default:
@@ -449,7 +449,7 @@ void GameState_ItemScreens_Update() // 0x8004C9B0
             g_GameWork.background2dColor_R_58C = 0;
             g_GameWork.background2dColor_G_58D = 0;
             g_GameWork.background2dColor_B_58E = 0;
-            D_800ADB5C                         = 0;
+            g_Inventory_SelectionId            = InventorySelectionId_Item;
 
             func_80054558();
             func_8008F94C();
@@ -479,7 +479,7 @@ void GameState_ItemScreens_Update() // 0x8004C9B0
         case 23:
             if (g_ControllerPtrConst->btns_new_10 & (ControllerFlag_LStickRight | ControllerFlag_LStickLeft))
             {
-                D_800ADB5C = D_800ADB5C == 0;
+                g_Inventory_SelectionId = g_Inventory_SelectionId == 0;
                 func_80046048(0x519, 0, 0x40);
             }
 
@@ -491,7 +491,7 @@ void GameState_ItemScreens_Update() // 0x8004C9B0
 
                 func_80046048(0x51B, 0, 0x40);
 
-                if (!D_800ADB5C)
+                if (g_Inventory_SelectionId == InventorySelectionId_Item)
                 {
                     GameFs_SaveLoadBinLoad();
                     g_GameWork.gameStateStep_598[1] = 24;
@@ -535,11 +535,11 @@ void GameState_ItemScreens_Update() // 0x8004C9B0
             break;
     }
 
-    func_8004F764(&D_800ADB5C);
+    func_8004F764(&g_Inventory_SelectionId);
 
     if (g_GameWork.gameStateStep_598[1] < 21)
     {
-        Gfx_Inventory_ScrollArrows(&D_800ADB5C);
+        Gfx_Inventory_ScrollArrows(&g_Inventory_SelectionId);
     }
 
     if (g_GameWork.gameStateStep_598[1] >= 23)
@@ -621,8 +621,8 @@ void Gfx_Results_Save() // 0x8004D1A0
         else 
         {
             setXY2(line,
-                   strOffsets[i].x0_0 + 0xFFB4 + (D_800ADB5C * 102), strOffsets[i].y0_1 + 6,
-                   strOffsets[i].x1_2 + 0xFFB4 + (D_800ADB5C * 102), strOffsets[i].y1_3 + 6);
+                   (strOffsets[i].x0_0 + 0xFFB4) + (g_Inventory_SelectionId * 102), strOffsets[i].y0_1 + 6,
+                   (strOffsets[i].x1_2 + 0xFFB4) + (g_Inventory_SelectionId * 102), strOffsets[i].y1_3 + 6);
         }
 
         addPrim(&ot->org[7], line);
@@ -632,27 +632,27 @@ void Gfx_Results_Save() // 0x8004D1A0
     g_SysWork.field_2350_0 = 1;
 
     Gfx_StringSetPosition(90, 92);
-    Gfx_StringDraw("\x07Is_it_OK_to_save?", 0x63);
+    Gfx_StringDraw("\x07Is_it_OK_to_save?", 99);
 
     Gfx_StringSetPosition(94, 122);
-    Gfx_StringDraw("\x07Yes_____________No", 0x63);
+    Gfx_StringDraw("\x07Yes_____________No", 99);
 
     g_SysWork.field_2350_0 = 0;
 
     Gfx_StringSetPosition(82, 200);
-    Gfx_StringDraw("NEXT_GAME_MODE", 0xF);
+    Gfx_StringDraw("NEXT_GAME_MODE", 15);
 
     switch (D_800C3994)
     {
         case GameDifficulty_Easy:
             Gfx_StringSetPosition(123, 240);
-            Gfx_StringDraw("NORMAL", 0xA);
+            Gfx_StringDraw("NORMAL", 10);
             break;
 
         case GameDifficulty_Normal:
         case GameDifficulty_Hard:
             Gfx_StringSetPosition(136, 240);
-            Gfx_StringDraw("HARD", 0xA);
+            Gfx_StringDraw("HARD", 10);
             break;
 
         default:
@@ -660,53 +660,54 @@ void Gfx_Results_Save() // 0x8004D1A0
     }
 }
 
-/** Function mainly responsible for handling the inventory screen. */
 void Inventory_Logic() // 0x8004D518
 {
     s32 step;
-    s32 maxCmds = 0;
+    s32 cmdCountMax = 0;
     s32 temp;
-    s32 currentItemIdx;
+    s32 curItemIdx;
 
     func_8004F5DC();
 
     D_800C3998++;
 
-    if (D_800C3998 >= 8)
+    if (D_800C3998 >= InventorySelectionId_Examine)
     {
-        D_800C399C = D_800ADB5C;
+        D_800C399C = g_Inventory_SelectionId;
     }
 
-    D_800C3998 = CLAMP(D_800C3998, 0, 8);
+    D_800C3998 = CLAMP(D_800C3998, InventorySelectionId_Item, InventorySelectionId_Examine);
 
     if (g_GameWork.gameStateStep_598[1] != 1)
     {
         return;
     }
 
-    if (D_800ADB5C == 0)
+    if (g_Inventory_SelectionId == InventorySelectionId_Item)
     {
-        if (D_800C3998 < 4)
+        if (D_800C3998 <= InventorySelectionId_Settings)
         {
             return;
         }
     }
-    else if (D_800C3998 < 8)
+    else if (D_800C3998 <= InventorySelectionId_Health)
     {
         return;
     }
 
-    switch (D_800ADB5C)
+    switch (g_Inventory_SelectionId)
     {
-        case 0:
-            if ((D_800C3970 != 0 && D_800C3998 == 8) || (D_800C3988 != 0 && (D_800C3990 != 0 || D_800C3998 == 8)))
+        case InventorySelectionId_Item:
+            if ((D_800C3970 != 0 && D_800C3998 == InventorySelectionId_Examine) ||
+                (D_800C3988 != 0 && (D_800C3990 != 0 || D_800C3998 == InventorySelectionId_Examine)))
             {
-                if ((D_800C3970 != 0) || (D_800C3988 != 0))
+                if (D_800C3970 != 0 || D_800C3988 != 0)
                 {
                     D_800C3990 = 1;
                 }
+
                 D_800AE178                 = 1;
-                D_800C3998                 = 2;
+                D_800C3998                 = InventorySelectionId_Exit;
                 g_Inventory_CmdSelectedIdx = 0;
                 func_80046048(SFX_BACK, -64, 64);
 
@@ -714,31 +715,36 @@ void Inventory_Logic() // 0x8004D518
                 temp                 = g_SavegamePtr->field_AB - 3;
                 func_800539A4(0, (g_SysWork.field_2351 + temp) % g_SavegamePtr->field_AB);
             }
-            else if (((D_800C3974 != 0 || D_800C3984 != 0) && D_800C3998 == 8) || (D_800C398C != 0 && (D_800C3990 != 0 || D_800C3998 == 8)))
+            else if (((D_800C3974 != 0 || D_800C3984 != 0) && D_800C3998 == InventorySelectionId_Examine) ||
+                     (D_800C398C != 0 && (D_800C3990 != 0 || D_800C3998 == InventorySelectionId_Examine)))
             {
                 if (D_800C3974 != 0 || D_800C398C != 0)
                 {
                     D_800C3990 = 1;
                 }
+
                 D_800AE178                 = 1;
-                D_800C3998                 = 2;
+                D_800C3998                 = InventorySelectionId_Exit;
                 g_Inventory_CmdSelectedIdx = 0;
                 func_80046048(SFX_BACK, 64, 64);
+
                 g_SysWork.field_2351 = (g_SysWork.field_2351 + 1) % g_SavegamePtr->field_AB;
                 func_800539A4(1, (g_SysWork.field_2351 + 3) % g_SavegamePtr->field_AB);
             }
-            else if (D_800C3968 != 0 && D_800C3998 == 8)
+            else if (D_800C3968 != InventorySelectionId_Item && D_800C3998 == InventorySelectionId_Examine)
             {
-                D_800C3998 = 1;
+                D_800C3998 = InventorySelectionId_EquippedItem;
+
                 if (g_SysWork.field_38.field_F >= 0)
                 {
-                    D_800ADB5C = 1;
+                    g_Inventory_SelectionId = InventorySelectionId_EquippedItem;
                     func_80046048(SFX_BACK, 0, 64);
                 }
             }
             else if ((g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2 || D_800C396C != 0) && D_800C3998 == 8)
             {
-                D_800C3998 = 1;
+                D_800C3998 = InventorySelectionId_EquippedItem;
+
                 if (D_800C396C != 0)
                 {
                     func_80046048(SFX_BACK, 0, 64);
@@ -747,16 +753,18 @@ void Inventory_Logic() // 0x8004D518
                 {
                     func_80046048(SFX_CANCEL, 0, 64);
                 }
-                D_800ADB5C = 2;
+
+                g_Inventory_SelectionId = InventorySelectionId_Exit;
             }
-            else if (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0 && D_800C3998 >= 8)
+            else if (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0 &&
+                     D_800C3998 >= InventorySelectionId_Examine)
             {
                 if (g_SavegamePtr->items_0[g_SysWork.field_2351].id_0 == InventoryItemId_Flauros ||
                     (g_SysWork.field_239E != 0 && g_SavegamePtr->items_0[g_SysWork.field_2351].id_0 == InventoryItemId_Flashlight))
                 {
                     func_80046048(SFX_DENIED, 64, 64);
                 }
-                else if (g_SavegamePtr->items_0[g_SysWork.field_2351].command_2 == 0xA)
+                else if (g_SavegamePtr->items_0[g_SysWork.field_2351].command_2 == InventoryCmdId_Unk10)
                 {
                     g_GameWork.gameStateStep_598[1] = 12;
                     g_GameWork.gameStateStep_598[2] = 0;
@@ -764,11 +772,12 @@ void Inventory_Logic() // 0x8004D518
                 }
                 else
                 {
-                    D_800C3998                 = 1;
+                    D_800C3998                 = InventorySelectionId_EquippedItem;
                     g_Inventory_CmdSelectedIdx = 0;
-                    if (g_SavegamePtr->items_0[g_SysWork.field_2351].command_2 != 0xB)
+
+                    if (g_SavegamePtr->items_0[g_SysWork.field_2351].command_2 != InventoryCmdId_Unk11)
                     {
-                        D_800ADB5C = 5;
+                        g_Inventory_SelectionId = InventorySelectionId_ItemCmd;
                         func_80046048(SFX_CONFIRM, 64, 64);
                     }
                 }
@@ -781,131 +790,145 @@ void Inventory_Logic() // 0x8004D518
             {
                 step = g_GameWork.gameStateStep_598[2];
                 func_80046048(SFX_CANCEL, 0, 64);
+
                 g_Gfx_ScreenFade                = 2;
                 g_GameWork.gameStateStep_598[1] = 20;
                 g_GameWork.gameStateStep_598[2] = 0;
                 func_8007EBBC();
+
                 g_GameWork.gameStateStep_598[2] = step;
             }
             break;
 
-        case 1:
+        case InventorySelectionId_EquippedItem:
             if (D_800C396C != 0)
             {
-                D_800C3998 = 1;
+                D_800C3998 = InventorySelectionId_EquippedItem;
                 func_80046048(SFX_BACK, 0, 64);
-                D_800ADB5C = 0;
+                g_Inventory_SelectionId = InventorySelectionId_Item;
             }
             else if (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
             {
-                D_800C3998                 = 1;
+                D_800C3998                 = InventorySelectionId_EquippedItem;
                 g_Inventory_CmdSelectedIdx = 0;
-                if (g_SavegamePtr->items_0[g_SysWork.field_4A].command_2 != 0xB)
+
+                if (g_SavegamePtr->items_0[g_SysWork.field_4A].command_2 != InventoryCmdId_Unk11)
                 {
-                    D_800ADB5C = 6;
+                    g_Inventory_SelectionId = InventorySelectionId_EquippedItemCmd;
                     func_80046048(SFX_CONFIRM, 0, 64);
                 }
             }
             else if (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)
             {
-                D_800C3998 = 1;
-                D_800ADB5C = 2;
+                D_800C3998 = InventorySelectionId_EquippedItem;
+                g_Inventory_SelectionId = InventorySelectionId_Exit;
                 func_80046048(SFX_CANCEL, 0, 64);
             }
             else if (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerConfig_0.item_16)
             {
                 step = g_GameWork.gameStateStep_598[2];
                 func_80046048(SFX_CANCEL, 0, 64);
+
                 g_Gfx_ScreenFade                = 2;
                 g_GameWork.gameStateStep_598[1] = 20;
                 g_GameWork.gameStateStep_598[2] = 0;
                 func_8007EBBC();
+
                 g_GameWork.gameStateStep_598[2] = step;
             }
             break;
 
-        case 2:
+        case InventorySelectionId_Exit:
             if (D_800C3968 != 0)
             {
-                D_800C3998 = 1;
+                D_800C3998 = InventorySelectionId_EquippedItem;
                 func_80046048(SFX_BACK, 0, 64);
-                D_800ADB5C = 0;
+                g_Inventory_SelectionId = InventorySelectionId_Item;
             }
             else if (D_800C3970 != 0)
             {
-                D_800C3998 = 1;
+                D_800C3998 = InventorySelectionId_EquippedItem;
                 func_80046048(SFX_BACK, -64, 64);
-                D_800ADB5C = 3;
+                g_Inventory_SelectionId = InventorySelectionId_Settings;
             }
             else if (D_800C3974 != 0)
             {
-                D_800C3998 = 1;
+                D_800C3998 = InventorySelectionId_EquippedItem;
                 func_80046048(SFX_BACK, 64, 64);
-                D_800ADB5C = 4;
+                g_Inventory_SelectionId = InventorySelectionId_Map;
             }
-            else if (g_ControllerPtrConst->btns_new_10 & (g_GameWorkPtr->config_0.controllerConfig_0.item_16 | (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 | g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)))
+            else if (g_ControllerPtrConst->btns_new_10 & (g_GameWorkPtr->config_0.controllerConfig_0.item_16 | (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 |
+                                                                                                                g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)))
             {
                 step = g_GameWork.gameStateStep_598[2];
                 func_80046048(SFX_CANCEL, 0, 64);
+
                 g_Gfx_ScreenFade                = 2;
                 g_GameWork.gameStateStep_598[1] = 20;
                 g_GameWork.gameStateStep_598[2] = 0;
                 func_8007EBBC();
+
                 g_GameWork.gameStateStep_598[2] = step;
             }
             break;
 
-        case 3:
+        case InventorySelectionId_Settings:
             if (D_800C3968 != 0)
             {
-                D_800C3998 = 1;
+                D_800C3998 = InventorySelectionId_EquippedItem;
                 func_80046048(SFX_BACK, 0, 64);
-                D_800ADB5C = 0;
+                g_Inventory_SelectionId = InventorySelectionId_Item;
             }
             else if (D_800C3974 != 0 || (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
             {
-                D_800C3998 = 1;
+                D_800C3998 = InventorySelectionId_EquippedItem;
+
                 if (D_800C3974 == 0 || (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
                 {
                     func_80046048(SFX_CANCEL, 0, 64);
-                    D_800ADB5C = 2;
+                    g_Inventory_SelectionId = InventorySelectionId_Exit;
                 }
                 else
                 {
                     func_80046048(SFX_BACK, 0, 64);
-                    D_800ADB5C = 2;
+                    g_Inventory_SelectionId = InventorySelectionId_Exit;
                 }
             }
             else if (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
             {
                 func_80046048(SFX_CONFIRM, -64, 64);
+
                 g_Gfx_ScreenFade                = 2;
                 g_GameWork.gameStateStep_598[1] = 18;
                 g_GameWork.gameStateStep_598[2] = 0;
+
                 GameFs_OptionBinLoad();
             }
             else if (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerConfig_0.item_16)
             {
                 step = g_GameWork.gameStateStep_598[2];
                 func_80046048(SFX_CANCEL, 0, 64);
+
                 g_Gfx_ScreenFade                = 2;
                 g_GameWork.gameStateStep_598[1] = 20;
                 g_GameWork.gameStateStep_598[2] = 0;
                 func_8007EBBC();
+
                 g_GameWork.gameStateStep_598[2] = step;
             }
             break;
 
-        case 4:
+        case InventorySelectionId_Map:
             if (D_800C3968 != 0)
             {
-                D_800C3998 = 1;
+                D_800C3998 = InventorySelectionId_EquippedItem;
                 func_80046048(SFX_BACK, 0, 64);
-                D_800ADB5C = 0;
+                g_Inventory_SelectionId = InventorySelectionId_Item;
             }
             else if (D_800C3970 != 0 || g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)
             {
-                D_800C3998 = 1;
+                D_800C3998 = InventorySelectionId_EquippedItem;
+
                 if (D_800C3970 == 0 || g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)
                 {
                     func_80046048(SFX_CANCEL, 0, 64);
@@ -914,11 +937,12 @@ void Inventory_Logic() // 0x8004D518
                 {
                     func_80046048(SFX_BACK, 0, 64);
                 }
-                D_800ADB5C = 2;
+
+                g_Inventory_SelectionId = InventorySelectionId_Exit;
             }
             else if (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
             {
-                if ((!((u8)g_SysWork.field_24DC & 2) || g_SysWork.field_239D != 0 || (!(g_SysWork.field_23A4 & 1) && !(g_SysWork.field_23D8 & 1))) &&
+                if ((!((u8)g_SysWork.field_24DC & (1 << 1)) || g_SysWork.field_239D != 0 || (!(g_SysWork.field_23A4 & (1 << 0)) && !(g_SysWork.field_23D8 & (1 << 0)))) &&
                     HAS_MAP(g_SavegamePtr->current2dMap_A9))
                 {
                     func_80046048(SFX_CONFIRM, 64, 64);
@@ -927,8 +951,8 @@ void Inventory_Logic() // 0x8004D518
                     {
                         Fs_QueueStartReadTim(D_800A99CC[g_SavegamePtr->current2dMap_A9] + 0x776, FS_BUFFER_1, &D_800A9024);
                     }
-
                     Fs_QueueStartSeek(D_800A99B4[g_SavegamePtr->current2dMap_A9] + 0x768);
+
                     g_Gfx_ScreenFade                = 2;
                     g_GameWork.gameStateStep_598[1] = 19;
                     g_GameWork.gameStateStep_598[2] = 0;
@@ -942,10 +966,12 @@ void Inventory_Logic() // 0x8004D518
             {
                 step = g_GameWork.gameStateStep_598[2];
                 func_80046048(SFX_CANCEL, 0, 64);
+
                 g_Gfx_ScreenFade                = 2;
                 g_GameWork.gameStateStep_598[1] = 20;
                 g_GameWork.gameStateStep_598[2] = 0;
                 func_8007EBBC();
+
                 g_GameWork.gameStateStep_598[2] = step;
             }
 
@@ -953,51 +979,52 @@ void Inventory_Logic() // 0x8004D518
             {
                 Gfx_Inventory_UnavailableMapText(1);
             }
-            else if ((u8)g_SysWork.field_24DC & 2 && g_SysWork.field_239D == 0 && (g_SysWork.field_23A4 & 1 || g_SysWork.field_23D8 & 1))
+            else if ((u8)g_SysWork.field_24DC & (1 << 1) && g_SysWork.field_239D == 0 &&
+                     (g_SysWork.field_23A4 & (1 << 0) || g_SysWork.field_23D8 & (1 << 0)))
             {
                 Gfx_Inventory_UnavailableMapText(0);
             }
             break;
 
-        case 5:
-        case 6:
-            if (D_800ADB5C == 5)
+        case InventorySelectionId_ItemCmd:
+        case InventorySelectionId_EquippedItemCmd:
+            if (g_Inventory_SelectionId == InventorySelectionId_ItemCmd)
             {
-                currentItemIdx = g_SysWork.field_2351;
+                curItemIdx = g_SysWork.field_2351;
             }
             else
             {
-                currentItemIdx = g_SysWork.field_4A;
+                curItemIdx = g_SysWork.field_4A;
             }
 
-            switch (g_SavegamePtr->items_0[currentItemIdx].command_2)
+            switch (g_SavegamePtr->items_0[curItemIdx].command_2)
             {
-                case 0:
-                case 1:
-                case 2:
-                case 3:
-                case 7:
-                case 8:
-                    maxCmds = 1;
+                case InventoryCmdId_UseHealth:
+                case InventoryCmdId_Use:
+                case InventoryCmdId_Equip:
+                case InventoryCmdId_Unequip:
+                case InventoryCmdId_Reload:
+                case InventoryCmdId_Look:
+                    cmdCountMax = 1;
                     break;
 
-                case 4:
-                case 5:
-                case 6:
-                case 9:
-                    maxCmds = 2;
+                case InventoryCmdId_EquipReload:
+                case InventoryCmdId_UnequipReload:
+                case InventoryCmdId_OnOff:
+                case InventoryCmdId_UseLook:
+                    cmdCountMax = 2;
                     break;
 
-                case 10:
-                    maxCmds = 0;
+                case InventoryCmdId_Unk10:
+                    cmdCountMax = 0;
                     break;
             }
 
             if (D_800C397C != 0)
             {
-                if (g_Inventory_CmdSelectedIdx < (maxCmds - 1))
+                if (g_Inventory_CmdSelectedIdx < (cmdCountMax - 1))
                 {
-                    D_800C3998 = 1;
+                    D_800C3998 = InventorySelectionId_EquippedItem;
                     g_Inventory_CmdSelectedIdx++;
                     func_80046048(SFX_BACK, 64, 64);
                 }
@@ -1006,46 +1033,48 @@ void Inventory_Logic() // 0x8004D518
             {
                 if (g_Inventory_CmdSelectedIdx > 0)
                 {
-                    D_800C3998 = 1;
+                    D_800C3998 = InventorySelectionId_EquippedItem;
                     g_Inventory_CmdSelectedIdx--;
                     func_80046048(SFX_BACK, 64, 64);
                 }
             }
             else if (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
             {
-                D_800C3998 = 1;
+                D_800C3998 = InventorySelectionId_EquippedItem;
 
-                switch (g_SavegamePtr->items_0[currentItemIdx].command_2)
+                switch (g_SavegamePtr->items_0[curItemIdx].command_2)
                 {
                     case InventoryCmdId_OnOff:
-                        D_800C3998 = 1;
-                        D_800ADB5C = 0;
+                        D_800C3998              = InventorySelectionId_EquippedItem;
+                        g_Inventory_SelectionId = InventorySelectionId_Item;
+
                         if (g_Inventory_CmdSelectedIdx == 0)
                         {
-                            switch (g_SavegamePtr->items_0[currentItemIdx].id_0)
+                            switch (g_SavegamePtr->items_0[curItemIdx].id_0)
                             {
                                 case InventoryItemId_Flashlight:
                                     func_8003ECBC();
                                     break;
 
                                 case InventoryItemId_PocketRadio:
-                                    g_SavegamePtr->flags_AC |= 1;
+                                    g_SavegamePtr->flags_AC |= 1 << 0;
                                     break;
                             }
                         }
                         else
                         {
-                            switch (g_SavegamePtr->items_0[currentItemIdx].id_0)
+                            switch (g_SavegamePtr->items_0[curItemIdx].id_0)
                             {
                                 case InventoryItemId_Flashlight:
                                     func_8003ECE4();
                                     break;
 
                                 case InventoryItemId_PocketRadio:
-                                    g_SavegamePtr->flags_AC &= ~1;
+                                    g_SavegamePtr->flags_AC &= ~(1 << 0);
                                     break;
                             }
                         }
+
                         g_GameWork.gameStateStep_598[1] = 1;
                         g_GameWork.gameStateStep_598[2] = 0;
                         break;
@@ -1053,14 +1082,15 @@ void Inventory_Logic() // 0x8004D518
                     case InventoryCmdId_UseLook:
                         if (g_Inventory_CmdSelectedIdx != 0)
                         {
-                            if (!((u8)g_SysWork.field_24DC & 2) || g_SysWork.field_239D != 0 || (!(g_SysWork.field_23A4 & 1) && !(g_SysWork.field_23D8 & 1)))
+                            if (!((u8)g_SysWork.field_24DC & (1 << 1)) || g_SysWork.field_239D != 0 ||
+                                (!(g_SysWork.field_23A4 & (1 << 0)) && !(g_SysWork.field_23D8 & (1 << 0))))
                             {
-                                D_800C3998                      = 1;
-                                D_800ADB5C                      = 8;
+                                D_800C3998                      = InventorySelectionId_EquippedItem;
+                                g_Inventory_SelectionId         = InventorySelectionId_Examine;
                                 g_GameWork.gameStateStep_598[1] = 13;
                                 g_GameWork.gameStateStep_598[2] = 0;
 
-                                switch (g_SavegamePtr->items_0[currentItemIdx].id_0)
+                                switch (g_SavegamePtr->items_0[curItemIdx].id_0)
                                 {
                                     case InventoryItemId_KeyOfLion:
                                         Fs_QueueStartReadTim(FILE_TIM_LION_TIM, FS_BUFFER_1, &D_800A902C);
@@ -1103,10 +1133,11 @@ void Inventory_Logic() // 0x8004D518
                                         break;
 
                                     case InventoryItemId_AntiqueShopKey:
-                                        if (g_SavegamePtr->eventFlags_168[5] & 0x800)
+                                        if (g_SavegamePtr->eventFlags_168[5] & (1 << 11))
                                         {
-                                            g_SavegamePtr->mapMarkingFlags_1DC |= 0x10000;
+                                            g_SavegamePtr->mapMarkingFlags_1DC |= 1 << 16;
                                         }
+
                                         Fs_QueueStartReadTim(FILE_TIM_ANTIQUE_TIM, FS_BUFFER_1, &D_800A902C);
                                         break;
 
@@ -1123,19 +1154,20 @@ void Inventory_Logic() // 0x8004D518
                         }
                         else
                         {
-                            func_8004E6D4(currentItemIdx);
+                            func_8004E6D4(curItemIdx);
                         }
                         break;
 
                     case InventoryCmdId_Look:
-                        if (!((u8)g_SysWork.field_24DC & 2) || g_SysWork.field_239D != 0 || (!(g_SysWork.field_23A4 & 1) && !(g_SysWork.field_23D8 & 1)))
+                        if (!((u8)g_SysWork.field_24DC & (1 << 1)) || g_SysWork.field_239D != 0 ||
+                            (!(g_SysWork.field_23A4 & (1 << 0)) && !(g_SysWork.field_23D8 & (1 << 0))))
                         {
-                            D_800C3998                      = 1;
-                            D_800ADB5C                      = 8;
+                            D_800C3998                      = InventorySelectionId_EquippedItem;
+                            g_Inventory_SelectionId         = InventorySelectionId_Examine;
                             g_GameWork.gameStateStep_598[1] = 13;
                             g_GameWork.gameStateStep_598[2] = 0;
 
-                            switch (g_SavegamePtr->items_0[currentItemIdx].id_0)
+                            switch (g_SavegamePtr->items_0[curItemIdx].id_0)
                             {
                                 case InventoryItemId_NoteToSchool:
                                     Fs_QueueStartReadTim(FILE_TIM_TOSCHOOL_TIM, FS_BUFFER_1, &D_800A902C);
@@ -1159,33 +1191,34 @@ void Inventory_Logic() // 0x8004D518
                         break;
 
                     case InventoryCmdId_UseHealth:
-                        D_800C3998                      = 1;
-                        D_800ADB5C                      = 7;
+                        D_800C3998                      = InventorySelectionId_EquippedItem;
+                        g_Inventory_SelectionId         = InventorySelectionId_Health;
                         g_GameWork.gameStateStep_598[1] = 9;
                         g_GameWork.gameStateStep_598[2] = 0;
                         break;
 
                     case InventoryCmdId_Use:
-                        func_8004E6D4(currentItemIdx);
+                        func_8004E6D4(curItemIdx);
                         break;
 
                     case InventoryCmdId_Equip:
-                        D_800C3998                      = 1;
-                        D_800ADB5C                      = 1;
+                        D_800C3998                      = InventorySelectionId_EquippedItem;
+                        g_Inventory_SelectionId         = InventorySelectionId_EquippedItem;
                         g_GameWork.gameStateStep_598[1] = 5;
                         g_GameWork.gameStateStep_598[2] = 0;
                         break;
 
                     case InventoryCmdId_Unequip:
-                        D_800C3998                      = 1;
-                        D_800ADB5C                      = 1;
+                        D_800C3998                      = InventorySelectionId_EquippedItem;
+                        g_Inventory_SelectionId         = InventorySelectionId_EquippedItem;
                         g_GameWork.gameStateStep_598[1] = 6;
                         g_GameWork.gameStateStep_598[2] = 0;
                         break;
 
                     case InventoryCmdId_Reload:
-                        D_800C3998 = 1;
-                        if (currentItemIdx != g_SysWork.field_4A)
+                        D_800C3998 = InventorySelectionId_EquippedItem;
+
+                        if (curItemIdx != g_SysWork.field_4A)
                         {
                             g_GameWork.gameStateStep_598[1] = 8;
                             g_GameWork.gameStateStep_598[2] = 0;
@@ -1198,14 +1231,15 @@ void Inventory_Logic() // 0x8004D518
                         break;
 
                     case InventoryCmdId_EquipReload:
-                        D_800C3998 = 1;
+                        D_800C3998 = InventorySelectionId_EquippedItem;
+
                         if (g_Inventory_CmdSelectedIdx == 0)
                         {
-                            D_800ADB5C                      = 1;
+                            g_Inventory_SelectionId         = InventorySelectionId_EquippedItem;
                             g_GameWork.gameStateStep_598[1] = 5;
                             g_GameWork.gameStateStep_598[2] = 0;
                         }
-                        else if (currentItemIdx != g_SysWork.field_4A)
+                        else if (curItemIdx != g_SysWork.field_4A)
                         {
                             g_GameWork.gameStateStep_598[1] = 8;
                             g_GameWork.gameStateStep_598[2] = 0;
@@ -1218,14 +1252,15 @@ void Inventory_Logic() // 0x8004D518
                         break;
 
                     case InventoryCmdId_UnequipReload:
-                        D_800C3998 = 1;
+                        D_800C3998 = InventorySelectionId_EquippedItem;
+
                         if (g_Inventory_CmdSelectedIdx == 0)
                         {
-                            D_800ADB5C                      = 1;
+                            g_Inventory_SelectionId         = InventorySelectionId_EquippedItem;
                             g_GameWork.gameStateStep_598[1] = 6;
                             g_GameWork.gameStateStep_598[2] = 0;
                         }
-                        else if (currentItemIdx != g_SysWork.field_4A)
+                        else if (curItemIdx != g_SysWork.field_4A)
                         {
                             g_GameWork.gameStateStep_598[1] = 8;
                             g_GameWork.gameStateStep_598[2] = 0;
@@ -1249,23 +1284,21 @@ void Inventory_Logic() // 0x8004D518
             }
             else if (g_ControllerPtrConst->btns_new_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)
             {
-                D_800C3998                 = 1;
+                D_800C3998                 = InventorySelectionId_EquippedItem;
                 g_Inventory_CmdSelectedIdx = 0;
-                D_800ADB5C                 = 0;
+                g_Inventory_SelectionId    = InventorySelectionId_Item;
                 func_80046048(SFX_CANCEL, 0, 64);
             }
-            do {} while (0); // HACK
+
+            do {} while (0); // HACK: Required for match.
             break;
 
-        case 8:
-            D_800C3998 = 1;
+        case InventorySelectionId_Examine:
+            D_800C3998 = InventorySelectionId_EquippedItem;
             break;
     }
 }
 
-/** Something related to items commands.
- * This is used when the player does some action in in the commands space.
- */
 void func_8004E6D4(s32 arg0) // 0x8004E6D4
 {
     s32 i;
@@ -1280,13 +1313,13 @@ void func_8004E6D4(s32 arg0) // 0x8004E6D4
             g_SysWork.player_4C.extra_128.field_1C == 0 &&
             g_SavegamePtr->items_0[arg0].id_0 == InventoryItemId_UnknownLiquid)
         {
-            D_800C3998                      = 1;
-            D_800ADB5C                      = 0;
+            D_800C3998                      = InventorySelectionId_EquippedItem;
+            g_Inventory_SelectionId         = InventorySelectionId_Item;
             g_GameWork.gameStateStep_598[1] = 11;
             g_GameWork.gameStateStep_598[2] = 0;
 
             func_8003ECBC();
-            g_SavegamePtr->eventFlags_1A0 |= 1;
+            g_SavegamePtr->eventFlags_1A0 |= 1 << 0;
         }
     }
     else
@@ -1295,8 +1328,8 @@ void func_8004E6D4(s32 arg0) // 0x8004E6D4
         {
             if (D_800BCDC0[i] == g_SavegamePtr->items_0[arg0].id_0)
             {
-                D_800C3998                      = 1;
-                D_800ADB5C                      = 0;
+                D_800C3998                      = InventorySelectionId_EquippedItem;
+                g_Inventory_SelectionId         = InventorySelectionId_Item;
                 g_GameWork.gameStateStep_598[1] = 11;
                 g_GameWork.gameStateStep_598[2] = 0;
 
@@ -1317,7 +1350,7 @@ void Gfx_Inventory_CmdOptionsDraw() // 0x8004E864
     s32      x0;
     s32      y0;
 
-    char* D_80026214[] =
+    char* strs[] = // 0x80026214
     {
         "Use",
         "Equip",
@@ -1331,7 +1364,8 @@ void Gfx_Inventory_CmdOptionsDraw() // 0x8004E864
 
     ot = &g_ObjectTable1[g_ObjectTableIdx];
 
-    if (D_800ADB5C >= 5 && D_800ADB5C < 7)
+    if (g_Inventory_SelectionId >= InventorySelectionId_ItemCmd &&
+        g_Inventory_SelectionId <= InventorySelectionId_EquippedItemCmd)
     {
         Gfx_StringSetColor(ColorId_White);
     }
@@ -1340,7 +1374,8 @@ void Gfx_Inventory_CmdOptionsDraw() // 0x8004E864
         Gfx_StringSetColor(ColorId_DarkGrey);
     }
 
-    if (D_800ADB5C != 1 && D_800ADB5C != 6)
+    if (g_Inventory_SelectionId != InventorySelectionId_EquippedItem &&
+        g_Inventory_SelectionId != InventorySelectionId_EquippedItemCmd)
     {
         idx = g_SysWork.field_2351;
     }
@@ -1352,60 +1387,60 @@ void Gfx_Inventory_CmdOptionsDraw() // 0x8004E864
     switch (g_SavegamePtr->items_0[idx].command_2)
     {
         case InventoryCmdId_OnOff:
-            if ((g_SysWork.field_239E == 0) || (g_SavegamePtr->items_0[idx].id_0 != InventoryItemId_Flashlight))
+            if (g_SysWork.field_239E == 0 || g_SavegamePtr->items_0[idx].id_0 != InventoryItemId_Flashlight)
             {
                 Gfx_StringSetPosition(222, -42);
-                Gfx_StringDraw(D_80026214[5], 10);
+                Gfx_StringDraw(strs[5], 10);
                 Gfx_StringSetPosition(222, -26);
-                Gfx_StringDraw(D_80026214[6], 10);
+                Gfx_StringDraw(strs[6], 10);
             }
             break;
 
         case InventoryCmdId_UseHealth:
         case InventoryCmdId_Use:
             Gfx_StringSetPosition(222, -34);
-            Gfx_StringDraw(D_80026214[0], 10);
+            Gfx_StringDraw(strs[0], 10);
             break;
 
         case InventoryCmdId_Equip:
             Gfx_StringSetPosition(222, -34);
-            Gfx_StringDraw(D_80026214[1], 10);
+            Gfx_StringDraw(strs[1], 10);
             break;
 
         case InventoryCmdId_Unequip:
             Gfx_StringSetPosition(222, -34);
-            Gfx_StringDraw(D_80026214[2], 10);
+            Gfx_StringDraw(strs[2], 10);
             break;
 
         case InventoryCmdId_Reload:
             Gfx_StringSetPosition(222, -34);
-            Gfx_StringDraw(D_80026214[3], 10);
+            Gfx_StringDraw(strs[3], 10);
             break;
 
         case InventoryCmdId_UseLook:
             Gfx_StringSetPosition(222, -42);
-            Gfx_StringDraw(D_80026214[0], 10);
+            Gfx_StringDraw(strs[0], 10);
             Gfx_StringSetPosition(222, -26);
-            Gfx_StringDraw(D_80026214[7], 10);
+            Gfx_StringDraw(strs[7], 10);
             break;
 
         case InventoryCmdId_EquipReload:
             Gfx_StringSetPosition(222, -42);
-            Gfx_StringDraw(D_80026214[1], 10);
+            Gfx_StringDraw(strs[1], 10);
             Gfx_StringSetPosition(222, -26);
-            Gfx_StringDraw(D_80026214[3], 10);
+            Gfx_StringDraw(strs[3], 10);
             break;
 
         case InventoryCmdId_UnequipReload:
             Gfx_StringSetPosition(222, -42);
-            Gfx_StringDraw(D_80026214[2], 10);
+            Gfx_StringDraw(strs[2], 10);
             Gfx_StringSetPosition(222, -26);
-            Gfx_StringDraw(D_80026214[3], 10);
+            Gfx_StringDraw(strs[3], 10);
             break;
 
         case InventoryCmdId_Look:
             Gfx_StringSetPosition(222, -34);
-            Gfx_StringDraw(D_80026214[7], 10);
+            Gfx_StringDraw(strs[7], 10);
             break;
 
         case 10:
@@ -1413,7 +1448,8 @@ void Gfx_Inventory_CmdOptionsDraw() // 0x8004E864
             break;
     }
 
-    if (D_800ADB5C >= 5 && D_800ADB5C < 7)
+    if (g_Inventory_SelectionId >= InventorySelectionId_ItemCmd &&
+        g_Inventory_SelectionId <= InventorySelectionId_EquippedItemCmd)
     {
         switch (g_SavegamePtr->items_0[idx].command_2)
         {
@@ -1453,10 +1489,10 @@ void Gfx_Inventory_CmdOptionsDraw() // 0x8004E864
             }
 
             setXY4(poly,
-                   x0, (y0 + (i * 6)) + (u16)g_Inventory_CmdSelectedIdx * 16,
-                   x0, (y0 + ((i + 1) * 6)) + (u16)g_Inventory_CmdSelectedIdx * 16,
-                   136, (y0 + (i * 6)) + (u16)g_Inventory_CmdSelectedIdx * 16,
-                   136, (y0 + ((i + 1) * 6)) + (u16)g_Inventory_CmdSelectedIdx * 16);
+                   x0,  (y0 + (i * 6))       + ((u16)g_Inventory_CmdSelectedIdx * 16),
+                   x0,  (y0 + ((i + 1) * 6)) + ((u16)g_Inventory_CmdSelectedIdx * 16),
+                   136, (y0 + (i * 6))       + ((u16)g_Inventory_CmdSelectedIdx * 16),
+                   136, (y0 + ((i + 1) * 6)) + ((u16)g_Inventory_CmdSelectedIdx * 16));
 
             addPrim(&ot->org[7], poly);
             GsOUT_PACKET_P = (PACKET*)poly + sizeof(POLY_G4);
@@ -1464,11 +1500,11 @@ void Gfx_Inventory_CmdOptionsDraw() // 0x8004E864
     }
 }
 
-void Gfx_Inventory_ScrollArrows(s32* arg0) // 0x8004EC7C
+void Gfx_Inventory_ScrollArrows(s32* invSelectionId) // 0x8004EC7C
 {
     s32 i;
-    s32 temp_v0;
-    s8 temp_v1;
+    s32 color;
+    s8  timeStep;
 
     POLY_G3* poly;
 
@@ -1484,24 +1520,24 @@ void Gfx_Inventory_ScrollArrows(s32* arg0) // 0x8004EC7C
         { { 0x0060, 0xFFA4 }, { 0x005B, 0xFF98 }, { 0x0065, 0xFF98 } }
     };
 
-    if (*arg0 != 0) 
+    if (*invSelectionId != InventorySelectionId_Item) 
     {
         return;
     }
 
     for (i = 0; i < 4; i++) 
     {
-        temp_v1 = g_SysWork.timer_1C & 0x1F;
+        timeStep = g_SysWork.timer_1C & 0x1F;
 
         poly = (POLY_G3*)GsOUT_PACKET_P;
         setPolyG3(poly);
         setSemiTrans(poly, 1);
 
-        temp_v0 = 0xFF - temp_v1 * 8;
+        color = 0xFF - (timeStep * 8);
 
-        setRGB0(poly, temp_v0, temp_v0, temp_v0);
-        setRGB1(poly, temp_v1 * 8, temp_v1 * 8, temp_v1 * 8);
-        setRGB2(poly, temp_v1 * 8, temp_v1 * 8, temp_v1 * 8);
+        setRGB0(poly, color, color, color);
+        setRGB1(poly, timeStep * 8, timeStep * 8, timeStep * 8);
+        setRGB2(poly, timeStep * 8, timeStep * 8, timeStep * 8);
 
         setXY3(poly,
                tris[i].vertex0_0.vx, tris[i].vertex0_0.vy,
@@ -1576,9 +1612,6 @@ void func_8004F10C(s32* arg0) // 0x8004F10C
  */
 INCLUDE_ASM("asm/bodyprog/nonmatchings/item_screens", func_8004F190); // 0x8004F190
 
-/** This function draws the two messages that indicate
- * the player can't open the map in the inventory.
- */
 void Gfx_Inventory_UnavailableMapText(s32 strIdx) // 0x0x8004F57C
 {
     char* D_800262AC[2] =
@@ -1592,8 +1625,8 @@ void Gfx_Inventory_UnavailableMapText(s32 strIdx) // 0x0x8004F57C
     Gfx_StringDraw(D_800262AC[strIdx], 0x63);
 }
 
-// Unknown RODATA values
-static const u8  unk0 = 0x2A; // '*' as char
+// Unknown RODATA values.
+static const u8  unk0 = 0x2A; // '*' as `char`.
 static const s32 unk1 = 0;
 
 void func_8004F5DC() // 0x8004F5DC
@@ -1627,7 +1660,7 @@ void func_8004F5DC() // 0x8004F5DC
     }
 }
 
-// TODO: D_800262FC is used by functions in different files (func_8004F764 and func_80054AD8 from bodyprog_80053B08).
+// TODO: `D_800262FC` is used by functions in different files (`func_8004F764` and `func_80054AD8` from `bodyprog_80053B08`).
 #if 0
 static const DVECTOR D_800262FC[] =
 {
@@ -1756,13 +1789,19 @@ void func_8004F764(s32 arg0) // 0x8004F764
     GsDOBJ2* ptr;
     s32      i;
 
-    DVECTOR D_80027DD8[] =
+    DVECTOR strPosTable[] = // 0x80027DD8
     {
-        { 0x0076, 0xFFB0 }, { 0x0090, 0x0130 }, { 0x0024, 0x0130 }, { 0x00F0, 0x0130 }, 
-        { 0x00DA, 0xFFB0 }, { 0x0028, 0xFFB0 }, { 0x0010, 0x00B8 }, { 0x0010, 0x00C8 }
+        { 0x0076, 0xFFB0 },
+        { 0x0090, 0x0130 },
+        { 0x0024, 0x0130 },
+        { 0x00F0, 0x0130 }, 
+        { 0x00DA, 0xFFB0 },
+        { 0x0028, 0xFFB0 },
+        { 0x0010, 0x00B8 },
+        { 0x0010, 0x00C8 }
     };
 
-    char* D_80027E34[] =
+    char* strs[] = // 0x80027E34
     {
         "Equipment",
         "Exit",
@@ -1780,15 +1819,15 @@ void func_8004F764(s32 arg0) // 0x8004F764
     {
         for (i = 0; i < 8; i++)
         {
-            Gfx_StringSetPosition(D_80027DD8[i].vx, D_80027DD8[i].vy);
-            Gfx_StringDraw(D_80027E34[i], 10);
+            Gfx_StringSetPosition(strPosTable[i].vx, strPosTable[i].vy);
+            Gfx_StringDraw(strs[i], 10);
         }
 
         func_800523D8(arg0);
 
         for (i = 0, ptr = &D_800C3D78; i < 7; i++, ptr++)
         {
-            if (D_800C3E18[i] != -1)
+            if (D_800C3E18[i] != NO_VALUE)
             {
                 if (g_SavegamePtr->items_0[D_800C3E18[i]].id_0 != 0xFF)
                 {
@@ -1804,7 +1843,7 @@ void func_8004F764(s32 arg0) // 0x8004F764
             }
         }
 
-        if ((g_SavegamePtr->items_0[D_800C3E34].id_0 != 0xFF) && (D_800C3E34 != -1))
+        if ((g_SavegamePtr->items_0[D_800C3E34].id_0 != 0xFF) && (D_800C3E34 != NO_VALUE))
         {
             D_800C3BE8[7].field_10.vx = D_800262FC[g_SavegamePtr->items_0[D_800C3E34].id_0 - 32].vx;
             D_800C3BE8[7].field_10.vz = D_800262FC[g_SavegamePtr->items_0[D_800C3E34].id_0 - 32].vy;
@@ -1954,13 +1993,13 @@ void func_800539A4(s32 arg0, s32 arg1) // 0x800539A4
 
     if (g_SavegamePtr->items_0[arg1].id_0 != 0xFF)
     {
-        for (i = 0; i < 40; i++)
+        for (i = 0; i < INVENTORY_ITEM_COUNT_MAX; i++)
         {
             if (g_SavegamePtr->items_0[arg1].id_0 == D_800C3BB8[i])
             {
                 func_80054720(FS_BUFFER_8, var_s0, i);
                 func_8005487C(var_s0);
-                i = 40;
+                i = INVENTORY_ITEM_COUNT_MAX;
             }
         }
     }
