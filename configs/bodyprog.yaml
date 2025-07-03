@@ -68,7 +68,7 @@ segments:
       - [0x11D8, rodata]
       - [0x1334, .rodata, item_screens]
       - [0x179C, rodata]
-      #- [0x1704, .rodata, item_screens] # Data: `Gfx_Inventory_ScrollArrows`
+      #- [0x1704, .rodata, item_screens] # Data: `Gfx_Inventory_ScrollArrowsDraw`
       #- [0x174C, rodata]
       - [0x34C0, .rodata, bodyprog_80053B08] # Jumptables, `func_80054200` rodata
       - [0x39C4, rodata]

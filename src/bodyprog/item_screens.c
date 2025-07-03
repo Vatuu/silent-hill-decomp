@@ -539,7 +539,7 @@ void GameState_ItemScreens_Update() // 0x8004C9B0
 
     if (g_GameWork.gameStateStep_598[1] < 21)
     {
-        Gfx_Inventory_ScrollArrows(&g_Inventory_SelectionId);
+        Gfx_Inventory_ScrollArrowsDraw(&g_Inventory_SelectionId);
     }
 
     if (g_GameWork.gameStateStep_598[1] >= 23)
@@ -1500,53 +1500,55 @@ void Gfx_Inventory_CmdOptionsDraw() // 0x8004E864
     }
 }
 
-void Gfx_Inventory_ScrollArrows(s32* invSelectionId) // 0x8004EC7C
+void Gfx_Inventory_ScrollArrowsDraw(s32* invSelectionId) // 0x8004EC7C
 {
-    s32 i;
-    s32 color;
-    s8  timeStep;
+    #define ARROW_COUNT 4
 
-    POLY_G3* poly;
+    POLY_G3* arrowPoly;
+    s32      baseColor;
+    s32      i;
+    s8       timeStep;
 
     GsOT* ot = &g_ObjectTable1[g_ObjectTableIdx];
 
-    s_Triangle2d tris[] =
+    // TODO: Why the large values for some positions?
+    s_Triangle2d arrowTris[] =
     {
         { { 0xFFC4, 0x000C }, { 0xFFCC, 0x0004 }, { 0xFFCC, 0x0014 } },
         { { 0xFFCC, 0x000C }, { 0xFFD4, 0x0004 }, { 0xFFD4, 0x0014 } },
         { { 0x0034, 0x000C }, { 0x002C, 0x0004 }, { 0x002C, 0x0014 } },
         { { 0x003C, 0x000C }, { 0x0034, 0x0004 }, { 0x0034, 0x0014 } },
-        { { 0x0060, 0xFF53 }, { 0x0066, 0xFF60 }, { 0x005A, 0xFF60 } },
-        { { 0x0060, 0xFFA4 }, { 0x005B, 0xFF98 }, { 0x0065, 0xFF98 } }
+        { { 0x0060, 0xFF53 }, { 0x0066, 0xFF60 }, { 0x005A, 0xFF60 } }, // Unused.
+        { { 0x0060, 0xFFA4 }, { 0x005B, 0xFF98 }, { 0x0065, 0xFF98 } }  // Unused.
     };
 
+    // Only draw arrows when item is selected.
     if (*invSelectionId != InventorySelectionId_Item) 
     {
         return;
     }
 
-    for (i = 0; i < 4; i++) 
+    // Draw 2 flashing left/right double arrows.
+    for (i = 0; i < ARROW_COUNT; i++) 
     {
         timeStep = g_SysWork.timer_1C & 0x1F;
 
-        poly = (POLY_G3*)GsOUT_PACKET_P;
-        setPolyG3(poly);
-        setSemiTrans(poly, 1);
+        arrowPoly = (POLY_G3*)GsOUT_PACKET_P;
+        setPolyG3(arrowPoly);
+        setSemiTrans(arrowPoly, 1);
 
-        color = 0xFF - (timeStep * 8);
+        baseColor = 0xFF - (timeStep * 8);
+        setRGB0(arrowPoly, baseColor, baseColor, baseColor);
+        setRGB1(arrowPoly, timeStep * 8, timeStep * 8, timeStep * 8);
+        setRGB2(arrowPoly, timeStep * 8, timeStep * 8, timeStep * 8);
 
-        setRGB0(poly, color, color, color);
-        setRGB1(poly, timeStep * 8, timeStep * 8, timeStep * 8);
-        setRGB2(poly, timeStep * 8, timeStep * 8, timeStep * 8);
+        setXY3(arrowPoly,
+               arrowTris[i].vertex0_0.vx, arrowTris[i].vertex0_0.vy,
+               arrowTris[i].vertex1_4.vx, arrowTris[i].vertex1_4.vy,
+               arrowTris[i].vertex2_8.vx, arrowTris[i].vertex2_8.vy);
 
-        setXY3(poly,
-               tris[i].vertex0_0.vx, tris[i].vertex0_0.vy,
-               tris[i].vertex1_4.vx, tris[i].vertex1_4.vy,
-               tris[i].vertex2_8.vx, tris[i].vertex2_8.vy);
-
-        addPrim(&ot->org[7], poly);
-
-        GsOUT_PACKET_P = (PACKET*)poly + sizeof(POLY_G3);
+        addPrim(&ot->org[7], arrowPoly);
+        GsOUT_PACKET_P = (PACKET*)arrowPoly + sizeof(POLY_G3);
     }
 
     func_80052088(0, 0, 7, 1);

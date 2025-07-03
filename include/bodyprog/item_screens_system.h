@@ -92,7 +92,7 @@ void Inventory_Logic();
  */
 void func_8004E6D4(s32 arg0);
 
-void Gfx_Inventory_ScrollArrows(s32* invSelectionId);
+void Gfx_Inventory_ScrollArrowsDraw(s32* invSelectionId);
 
 // Unused?
 s32 func_8004EE94(u8 arg0, u8 arg1);
