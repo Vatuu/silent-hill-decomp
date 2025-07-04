@@ -985,7 +985,32 @@ void nullsub_800334C8() {}
 
 void func_800334D0() {}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_800334D8);
+s32 func_800334D8(s32 idx) // 0x800334D8
+{
+    s32 i;
+    s32 res;
+    s32 var0;
+    s32 var1;
+
+    res  = 0;
+    var0 = func_8002E9A0(idx);
+
+    for (i = 0; i < 15; i++)
+    {
+        var1 = (var0 >> (i * 2)) & 0x3;
+        if (var1 == 1)
+        {
+            return 0;
+        }
+
+        if (var1 == 3)
+        {
+            res = 1;
+        }
+    }
+
+    return res;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_80033548);
 
@@ -1379,7 +1404,47 @@ void func_8003596C() // 0x8003596C
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003599C); // 0x8003599C
+s32 func_8003599C() // 0x8003599C
+{
+    if ((func_80045B28() & 0xFF) || Fs_QueueGetLength() > 0)
+    {
+        return NO_VALUE;
+    }
+
+    switch (g_GameWork.gameStateStep_598[1])
+    {
+        case 0:
+            if (g_SavegamePtr->mapOverlayId_A4 == 10)
+            {
+                if ((g_SavegamePtr->eventFlags_168[4] & (1 << 5)) || (g_SavegamePtr->eventFlags_168[5] & (1 << 21)))
+                {
+                    g_MapOverlayHeader.field_15 = 11;
+                }
+                else
+                {
+                    g_MapOverlayHeader.field_15 = 4;
+                }
+            }
+
+            if (func_80035AB0((s8)g_MapOverlayHeader.field_15) != 0)
+            {
+                Sd_EngineCmd(17);
+                g_GameWork.gameStateStep_598[1]++;
+                return 1;
+            }
+            break;
+            
+        case 1:
+            func_80035AC8((s8)g_MapOverlayHeader.field_15);
+            g_GameWork.gameStateStep_598[1]++;
+            return 1;
+
+        default:
+           break;
+    }
+
+    return 0;
+}
 
 s32 func_80035AB0(s32 arg0) // 0x80035AB0
 {

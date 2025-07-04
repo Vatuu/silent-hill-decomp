@@ -1313,8 +1313,8 @@ void func_80087EDC(s32 arg0) // 0x80087EDC
                 return;
             }
             
-            g_SysWork.timer_2C = 0;
-            g_SysWork.field_14 = 0;
+            g_SysWork.timer_2C    = 0;
+            g_SysWork.field_14    = 0;
             g_SysWork.field_22A0 |= 1 << 7;
             g_SysWork.field_10++;
             return;

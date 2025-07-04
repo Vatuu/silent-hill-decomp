@@ -923,7 +923,7 @@ typedef struct _SysWork
     s_SubCharacter  npcs_1A0[NPC_COUNT_MAX];
     GsCOORDINATE2   playerBoneCoords_890[PlayerBone_Count];
     GsCOORDINATE2   unkCoords_E30[5];  // Might be part of previous array for 5 exra coords which go unused.
-    GsCOORDINATE2   npcCoords_FC0[60]; // Dynamic coord buffer? Array end is unclear, but 10 coords per NPC (given max of 6 NPCs) seems reasonable.
+    GsCOORDINATE2   npcCoords_FC0[60]; // Dynamic coord buffer? 10 coords per NPC (given max of 6 NPCs).
     s8              unk_2280;          // Maybe NPC AI data past this point.
     s8              field_2281;        // Set by `Chara_PositionUpdateFromParams`.
     s8              field_2282;

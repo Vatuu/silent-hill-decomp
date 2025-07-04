@@ -239,7 +239,7 @@ typedef struct
     s8  field_1;
     s8  unk_2[2];
     u32 field_4; // `field_4` and `field_8` are related.
-    u32 field_8;
+    u32 field_8; // Pointer?
     s32 field_C;
     s32 field_10;
     s32 field_14;
@@ -808,11 +808,14 @@ typedef struct _MapOverlayHeader
     s8                unk_C[4];
     s32               (*func_10)();
     s8                field_14;
-    s8                unk_15[3];
+    u8                field_15;
+    s8                unk_16[2];
     void              (**func_18)();
     s_AreaLoadParams* mapAreaLoadParams_1C;
     void              (**mapEventFuncs_20)();                                            /** Points to array of event functions. */
-    s8                unk_24[12];
+    s8                unk_24[4];
+    s32               field_28;
+    s8                unk_2C[4];
     char**            mapMessageStrings_30;                                              /** Points to array of `char*` for each displayed message in the map. */
     s_AnimInfo*       animInfo_34;
     s8                unk_38[8];
@@ -2130,6 +2133,8 @@ void Settings_ScreenAndVolUpdate();
 
 void Settings_RestoreDefaults();
 
+s32 func_800334D8(s32 idx);
+
 /** Updates the savegame buffer with the current player SysWork info (position, rotation, health, event index). */
 void SysWork_SavegameUpdatePlayer();
 
@@ -2172,6 +2177,14 @@ s32 func_800358A8(s32 cmd);
 
 /** Executes sound command. */
 void func_80035924();
+
+void func_8003596C();
+
+s32 func_8003599C();
+
+s32 func_80035AB0(s32 arg0);
+
+void func_80035AC8(s32 arg0);
 
 void func_80035B04(VECTOR3* pos, SVECTOR* rot, GsCOORDINATE2* coord);
 
