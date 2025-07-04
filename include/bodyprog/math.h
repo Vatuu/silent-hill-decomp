@@ -79,8 +79,9 @@
     (s16)((deg) * ((FP_TO(1, Q12_SHIFT)) / 360.0f))
 
 /** @brief Converts floating-point radians in the range `[-PI, PI]` to fixed-point radians in the range `[0, 0x5000]`. */
-#define FP_RADIAN(rad) \
-    (s32)(((((rad) < 0.0f) ? (PI + (PI - ABS(rad))) : (rad)) * ((float)(FP_PI * 2) / PI)) * (((rad) < 0.0f || (rad) >= PI) ? 0.5f : 1.0f))
+#define FP_RADIAN(rad)                                                                \
+    (s32)(((((rad) < 0.0f) ? (PI + (PI - ABS(rad))) : (rad)) * ((float)FP_PI / PI)) * \
+          (((rad) < 0.0f || (rad) >= PI) ? 1.0f : 2.0f))
 
 /** @brief Converts floating-point meters to fixed-point meters in Q12.19 format. */
 #define FP_METER(met) \
