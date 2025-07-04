@@ -697,7 +697,7 @@ typedef struct _GameWork
     s32                field_5AC;
     s8                 unk_5B0;
     s8                 mapAnimIdx_5B1;
-    s8                 field_5B2;
+    s8                 soundCmd_5B2; // Sound command.
     s8                 field_5B3;
     s_AnalogController rawController_5B4;
     s8                 unk_5BC[28];

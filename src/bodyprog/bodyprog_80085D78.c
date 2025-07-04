@@ -1285,14 +1285,14 @@ void func_80087AF4(s32 mapFlagIdx, s32 eventFlagIdx, s32 arg2) // 0x80087AF4
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80087AF4); // 0x80087AF4
 #endif
 
-void func_80087EA8(s32 arg0) // 0x80087EA8
+void func_80087EA8(s32 cmd) // 0x80087EA8
 {
-    if (func_800358A8() == 0)
+    if (func_800358A8(cmd) == 0)
     {
         return;
     }
-    
-    func_800358DC(arg0);
+
+    func_800358DC(cmd);
 }
 
 void func_80087EDC(s32 arg0) // 0x80087EDC

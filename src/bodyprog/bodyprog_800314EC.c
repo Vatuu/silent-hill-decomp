@@ -1296,7 +1296,7 @@ void GameFs_MapLoad(s32 mapIdx) // 0x8003521C
     func_800546A8((u8)g_SysWork.field_38.field_F);
 }
 
-s32 func_8003528C(s32 idx0, s32 idx1)
+s32 func_8003528C(s32 idx0, s32 idx1) // 0x8003528C
 {
     u32         tempField_8;
     u32         tempField_4;
@@ -1317,7 +1317,21 @@ s32 func_8003528C(s32 idx0, s32 idx1)
     return 1;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_800352F8); // 0x800352F8
+s32 func_800352F8(s32 arg0) // 0x800352F8
+{
+    s32         i;
+    s_800A992C* ptr;
+
+    for (i = 1; i < 4; i++)
+    {
+        if (D_800A992C[i].field_1 == arg0)
+        {
+            return i;
+        }
+    }
+
+    return 0;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_80035338); // 0x80035338
 
@@ -1327,11 +1341,35 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003569C); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_80035780); // 0x80035780
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_800358A8); // 0x800358A8
+s32 func_800358A8(s32 cmd) // 0x800358A8
+{
+    if (cmd == 0)
+    {
+        return 0;
+    }
+
+    if (cmd == 1)
+    {
+        return 0;
+    }
+
+    return g_GameWork.soundCmd_5B2 != cmd;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_800358DC); // 0x800358DC
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_80035924); // 0x80035924
+void func_80035924() // 0x80035924
+{
+    s8 cmd;
+
+    cmd = g_GameWork.soundCmd_5B2;
+    if (cmd == 0 || g_GameWork.soundCmd_5B2 == 1)
+    {
+        return;
+    }
+
+    Sd_EngineCmd(D_800A9858[cmd]);
+}
 
 void func_8003596C() // 0x8003596C
 {

@@ -235,13 +235,16 @@ typedef struct
 
 typedef struct
 {
-    s8  unk_0[4];
-    u32 field_4; // Fields 4 and 8 are related.
+    s8  unk_0;
+    s8  field_1;
+    s8  unk_2[2];
+    u32 field_4; // `field_4` and `field_8` are related.
     u32 field_8;
     s32 field_C;
     s32 field_10;
     s32 field_14;
 } s_800A992C;
+STATIC_ASSERT_SIZEOF(s_800A992C, 24);
 
 typedef struct
 {
@@ -928,6 +931,8 @@ extern s_CharaFileInfo g_Chara_FileInfo[45]; // 0x800A90FC
 extern s_800A93CC D_800A93CC[];
 
 extern u16 D_800A9774[];
+
+extern u16 D_800A9858[];
 
 extern s32 D_800A9EB0;
 
@@ -1950,7 +1955,7 @@ void func_800879FC(u32 arg0, s32 arg1);
 /** Inventory drawing? */
 void func_80087AF4(s32 mapFlagIdx, s32 eventFlagIdx, s32 arg2);
 
-void func_80087EA8(s32 arg0);
+void func_80087EA8(s32 cmd);
 
 void func_80087EDC(s32 arg0);
 
@@ -2159,6 +2164,14 @@ void func_80035178();
 void GameFs_MapLoad(s32 mapIdx);
 
 s32 func_8003528C(s32 idx0, s32 idx1);
+
+s32 func_800352F8(s32 arg0);
+
+/** Sets sound command. */
+s32 func_800358A8(s32 cmd);
+
+/** Executes sound command. */
+void func_80035924();
 
 void func_80035B04(VECTOR3* pos, SVECTOR* rot, GsCOORDINATE2* coord);
 
