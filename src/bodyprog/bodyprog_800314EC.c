@@ -1167,17 +1167,13 @@ void func_800348C0()
 
 void GameState_MainLoadScreen_Update() // 0x800348E8
 {
-    u8 temp;
-
     func_80034E58();
     func_80034964();
 
     if (g_SysWork.flags_22A4 & (1 << 10))
     {
-        temp = D_800BCDD4 + 1;
-        D_800BCDD4 = temp;
-
-        if ((temp & 0xFF) >= 21)
+        D_800BCDD4++;
+        if ((D_800BCDD4 & 0xFF) >= 21)
         {
             g_SysWork.flags_22A4 &= ~(1 << 10);
 
@@ -1189,18 +1185,55 @@ void GameState_MainLoadScreen_Update() // 0x800348E8
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_80034964);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_80034E58);
+void func_80034E58() // 0x80034E58
+{
+    if (g_SysWork.field_2281 != 0 && g_GameWork.gameStateStep_598[0] < 10)
+    {
+        g_Gfx_ScreenFade = 7;
+        D_800B5C30       = FP_FLOAT_TO(0.8f, Q12_SHIFT);
+        g_MapOverlayHeader.func_18[g_SysWork.field_2281]();
+    }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_80034EC8);
+    func_80031CCC(2);
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_80034F18);
+void func_80034EC8() // 0x80034EC8
+{
+    s32 i;
+
+    g_SysWork.field_228C = 0;
+    g_SysWork.field_2290 = 0;
+
+    bzero(g_SysWork.npcs_1A0, NPC_COUNT_MAX * sizeof(s_SubCharacter));
+
+    for(i = 0; i < 4; i++)
+    {
+        g_SysWork.field_2284[i] = 0;
+    }
+}
+
+void func_80034F18() // 0x80034F18
+{
+    vcSetCameraUseWarp(&g_SysWork.player_4C.chara_0.position_18, g_SysWork.cameraAngleY_237A);
+    func_8005E70C();
+
+    if (g_SysWork.field_234A != 0)
+    {
+        g_MapOverlayHeader.func_16C(g_SysWork.field_2349, 0x7F);
+        g_MapOverlayHeader.func_168(NULL, g_SavegamePtr->mapOverlayId_A4, NULL);
+    }
+
+    func_80034EC8();
+    func_80037F24(0);
+    func_80037334();
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_80034FB8);
 
 void Game_SavegameInitialize(s8 overlayId, s32 difficulty) // 0x800350BC
 {
     s32  i;
-    s32* var_a2;
+    s32* var;
 
     bzero(g_SavegamePtr, sizeof(s_ShSavegame));
 
@@ -1208,21 +1241,43 @@ void Game_SavegameInitialize(s8 overlayId, s32 difficulty) // 0x800350BC
 
     difficulty = CLAMP(difficulty, GameDifficulty_Easy, GameDifficulty_Hard);
 
-    var_a2 = g_SavegamePtr->field_B0;
+    var = g_SavegamePtr->field_B0;
 
     g_SavegamePtr->gameDifficulty_260 = difficulty;
-    g_SavegamePtr->current2dMap_A9 = 1;
+    g_SavegamePtr->current2dMap_A9    = 1;
 
     for (i = 0; i < 45; i++)
     {
-        var_a2[44] = NO_VALUE;
-        var_a2--;
+        var[44] = NO_VALUE;
+        var--;
     }
 
     Game_SavegameResetPlayer();
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_80035178);
+void func_80035178() // 0x80035178
+{
+    func_8003C048();
+    func_8003C110();
+    func_8003C0C0();
+    func_800445A4(FS_BUFFER_0, g_SysWork.playerBoneCoords_890);
+    func_8003D938();
+
+    g_SysWork.field_229C = NO_VALUE;
+
+    if ((g_SavegamePtr->flags_AC >> 1) & (1 << 0))
+    {
+        func_8003ECE4();
+    }
+    else
+    {
+        func_8003ECBC();
+    }
+
+    D_800A992C->field_10 = 0x2E630;
+    D_800A992C->field_C  = 0x2E630;
+    func_8007E5AC();
+}
 
 void GameFs_MapLoad(s32 mapIdx) // 0x8003521C
 {

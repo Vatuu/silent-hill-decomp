@@ -806,7 +806,7 @@ typedef struct _MapOverlayHeader
     s32               (*func_10)();
     s8                field_14;
     s8                unk_15[3];
-    s8                unk_18[4];
+    void              (**func_18)();
     s_AreaLoadParams* mapAreaLoadParams_1C;
     void              (**mapEventFuncs_20)();                                            /** Points to array of event functions. */
     s8                unk_24[12];
@@ -831,7 +831,7 @@ typedef struct _MapOverlayHeader
     s32               (*func_13C)(s32, s32, void*, s16, s32); // 0x800C96B8
     s8                unk_140[40];
     void              (*func_168)(void*, void*, void*);
-    s8                unk_16C[4];
+    void              (*func_16C)(VECTOR3*, s16);
     s8                unk_170[36];
     void              (*charaUpdateFuncs_194[Chara_Count])(s_SubCharacter*, void*, s32); /** Guessed params. Funcptrs for each `e_ShCharacterId`, set to 0 for IDs not included in the map overlay. Called by `func_80038354`. */
     u8                charaGroupIds_248[4];                                              /** `e_ShCharacterId` values where if `s_SpawnInfo.charaId_4` == 0, `charaGroupIds_248[0]` is used for `charaSpawnsA_24C` and `charaGroupIds_248[1]` for `charaSpawnsB_30C`. */
@@ -2145,9 +2145,15 @@ void func_800348C0();
 
 void GameState_MainLoadScreen_Update();
 
-void func_800348E8();
+void func_80034E58();
+
+void func_80034EC8();
+
+void func_80034F18();
 
 void Game_SavegameInitialize(s8 overlayId, s32 difficulty);
+
+void func_80035178();
 
 /** Loads a map file into `g_OvlDynamic`. */
 void GameFs_MapLoad(s32 mapIdx);

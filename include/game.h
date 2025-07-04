@@ -489,11 +489,11 @@ typedef struct _ControllerData
     s8                 unk_8[1];
     u8                 field_9;
     s8                 unk_A[2];
-    s32                btns_held_C;      /** `e_PadButton` */
-    s32                btns_clicked_10;  /** `e_PadButton` */
-    s32                btns_released_14; /** `e_PadButton` */
-    s32                btns_pulsed_18;   /** `e_PadButton` */
-    s32                btns_pulsed_1C;   /** `e_PadButton` */ // Duplicate?
+    s32                btns_held_C;      /** `e_ControllerFlags` */ // `event_held_flags_C`
+    s32                btns_clicked_10;  /** `e_ControllerFlags` */ // `event_clicked_flags_10`
+    s32                btns_released_14; /** `e_ControllerFlags` */ // `event_released_flags_14`
+    s32                btns_pulsed_18;   /** `e_ControllerFlags` */ // `event_pulsed_flags_18`
+    s32                btns_pulsed_1C;   /** `e_ControllerFlags` */ // Duplicate?
     char               field_20;
     char               field_21;
     s8                 field_22;
@@ -927,11 +927,14 @@ typedef struct _SysWork
     s8              unk_2280;          // Maybe NPC AI data past this point.
     s8              field_2281;        // Set by `Chara_PositionUpdateFromParams`.
     s8              field_2282;
-    s8              unk_2283[7];
+    s8              unk_2283;
+    u16             field_2284[3];
     u16             field_228A;
-    s8              unk_228C[12];
+    s32             field_228C;
+    s32             field_2290;
+    s8              unk_2294[4];
     s32             flags_2298; // Something related to map loading.
-    s8              unk_229C[4];
+    s32             field_229C;
     s32             field_22A0;
     s32             flags_22A4;
     s8              unk_22A8[160];
