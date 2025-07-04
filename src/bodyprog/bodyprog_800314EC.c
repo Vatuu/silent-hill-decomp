@@ -1054,7 +1054,78 @@ s32 MainLoop_ShouldWarmReset() // 0x80034108
     return (g_SysWork.flags_22A4 & (1 << 8)) ? 2 : 0;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", Game_WarmBoot);
+void Game_WarmBoot() // 0x80034264
+{
+    e_GameState prevState;
+
+    DrawSync(0);
+    Gfx_ClearRectInterlaced(0, 32, 512, 448, 0, 0, 0);
+    func_800892A4(4);
+    func_80089128();
+    Sd_EngineCmd(19);
+
+    while (func_80045B28())
+    {
+        func_800485D8();
+        VSync(0);
+    }
+
+    Sd_EngineCmd(20);
+
+    while (func_80045B28())
+    {
+        func_800485D8();
+        VSync(0);
+    }
+
+    Fs_QueueReset();
+    Fs_QueueWaitForEmpty();
+    sd_work_init();
+    func_80035AC8(1);
+
+    while (func_80045B28())
+    {
+        func_800485D8();
+        VSync(0);
+    }
+
+    if (g_SysWork.flags_22A4 & (1 << 1))
+    {
+        Demo_Stop();
+    }
+
+    SysWork_Clear();
+    Demo_SequenceAdvance(1);
+    Demo_DemoDataRead();
+    GameFs_TitleGfxLoad();
+    Fs_QueueWaitForEmpty();
+    Joy_Update();
+
+    prevState                = g_GameWork.gameState_594;
+    g_GameWork.gameState_594 = GameState_MainMenu;
+
+    g_SysWork.timer_1C = 0;
+    g_SysWork.timer_20 = 0;
+
+    g_GameWork.gameStateStep_598[1] = 0;
+    g_GameWork.gameStateStep_598[2] = 0;
+
+    g_SysWork.sysState_8     = SysState_Gameplay;
+    g_SysWork.timer_24       = 0;
+    g_SysWork.sysStateStep_C = 0;
+    g_SysWork.field_28       = 0;
+    g_SysWork.field_10       = 0;
+    g_SysWork.timer_2C       = 0;
+    g_SysWork.field_14       = 0;
+
+    g_Gfx_ScreenFade = 6;
+
+    g_GameWork.gameStateStep_598[0] = prevState;
+    g_GameWork.gameStatePrev_590    = prevState;
+    g_GameWork.gameStateStep_598[0] = 0;
+
+    D_800B5C30 = 0;
+}
 
 void Joy_Init() // 0x8003441C
 {
