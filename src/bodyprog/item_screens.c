@@ -854,7 +854,7 @@ void Inventory_Logic() // 0x8004D518
                 g_Inventory_SelectionId = InventorySelectionId_Map;
             }
             else if (g_ControllerPtrConst->btns_clicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.item_16 | (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 |
-                                                                                                                g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)))
+                                                                                                                    g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)))
             {
                 step = g_GameWork.gameStateStep_598[2];
                 func_80046048(SFX_CANCEL, 0, 64);

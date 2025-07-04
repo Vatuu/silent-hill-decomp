@@ -1476,18 +1476,36 @@ s32 func_8002E9A0(s32 idx);
 /** Draws a background image. */
 void Gfx_BackgroundSpriteDraw(s_FsImageDesc* image);
 
-s32 func_80031CCC(s32);
+void func_800317CC(s_FsImageDesc* image0, s_FsImageDesc* image1, s16 arg2);
+
+void func_80031AAC(s_FsImageDesc* image);
+
+s32 func_80031CCC(s32 arg0);
 
 void Gfx_DebugStringPosition(s16 x, s16 y);
 
 /** Draws debug strings using 8x8 glyphs from `FONT8.TIM`. Valid `char` range: `[42, 95]` (`*` to `_`). */
 void Gfx_DebugStringDraw(char* str);
 
+void func_8003260C(); // Return type assumed.
+
 char* Math_IntegerToString(s32 widthMin, s32 value);
+
+void func_800321EC(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
+
+void Gfx_ClearRectInterlaced(s16 x, s16 y, s16 w, s16 h, u8 r, u8 g, u8 b);
+
+void func_800323C8(s32 screenWidth, s32 isInterlaced);
 
 void Gfx_Init(s32 screenWidth, s32 isInterlaced);
 
-void func_8003260C(); // Return type assumed.
+void Settings_ScreenXYSet(s32 x, s32 y);
+
+void Settings_DispEnvXYSet(DISPENV* display, s32 x, s32 y);
+
+void func_800325A4(DR_MODE* arg0);
+
+int func_800325F8();
 
 void func_80032904();
 
@@ -2081,10 +2099,6 @@ void func_800705E4(GsCOORDINATE2*, s32, s32, s32, s32);
 
 void func_80074254(s32 arg0, s32 arg1); // `arg1` is pointer?
 
-void Gfx_ClearRectInterlaced(s16 x, s16 y, s16 w, s16 h, u8 r, u8 g, u8 b);
-
-void Gfx_VSyncCallback();
-
 /** Sets the position of the next string to be drawn by `Gfx_StringDraw`. */
 void Gfx_StringSetPosition(s32 x, s32 y);
 
@@ -2103,9 +2117,9 @@ void func_8004BB4C(VbRVIEW* view, GsCOORDINATE2* coord, SVECTOR3* vec, s32 arg3)
 
 void func_8004BBF4(VbRVIEW* arg0, GsCOORDINATE2* arg1, SVECTOR* arg2);
 
-void Settings_ScreenXYSet(s32 x, s32 y);
+void func_8003289C(POLY_G4* arg0, s32 arg1);
 
-void Settings_DispEnvXYSet(DISPENV* display, s32 x, s32 y);
+void Gfx_VSyncCallback();
 
 void Settings_ScreenAndVolUpdate();
 

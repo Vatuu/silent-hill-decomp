@@ -68,7 +68,7 @@ void Gfx_BackgroundSpriteDraw(s_FsImageDesc* image) // 0x800314EC
     D_800A8E58            = 0x80;
 }
 
-void func_800317CC(s_FsImageDesc* arg0, s_FsImageDesc* arg1, s16 arg2) // 0x800317CC
+void func_800317CC(s_FsImageDesc* image0, s_FsImageDesc* image1, s16 arg2) // 0x800317CC
 {
     volatile int   pad;
     s32            i;
@@ -83,30 +83,30 @@ void func_800317CC(s_FsImageDesc* arg0, s_FsImageDesc* arg1, s16 arg2) // 0x8003
 
     for (i = 0; i < 3; i++)
     {
-        image = i > 0 ? arg0 : arg1;
-        color = i < 2 ? FP_MULTIPLY((s64)arg2, 128, Q12_SHIFT) : 0x80;
+        image = (i > 0) ? image0 : image1;
+        color = (i < 2) ? FP_MULTIPLY((s64)arg2, 128, Q12_SHIFT) : 0x80;
 
         for (j = 0; j < 3; j++)
         {
             setPolyFT4(poly);
 
-            setXY0Fast(poly, -160 + 128 * j, -120);
-            setXY1Fast(poly, 128 * j + (j != 2 ? -32 : -96), -120);
+            setXY0Fast(poly, -160 + (128 * j), -120);
+            setXY1Fast(poly, (128 * j) + ((j != 2) ? -32 : -96), -120);
 
             xOffset = 128 * j;
 
             setXY2Fast(poly, -160 + xOffset, 120);
-            setXY3Fast(poly, xOffset + (j != 2 ? -32 : -96), 120);
+            setXY3Fast(poly, xOffset + ((j != 2) ? -32 : -96), 120);
 
             *((u32*)&poly->u0) = (image->v << 8) + (getClut(image->clutX, image->clutY) << 16);
 
             tPageY = image->tPage[1];
 
-            *((u32*)&poly->u1) = (image->v << 8) + (j != 2 ? 128 : 64) +
+            *((u32*)&poly->u1) = (image->v << 8) + ((j != 2) ? 128 : 64) +
                                  (getTPage(image->tPage[0], i + 1, (image->tPage[1] + j) << 6, (tPageY << 4) & 0x100) << 16);
 
             *((u16*)&poly->u2) = (image->v + 239) << 8;
-            *((u16*)&poly->u3) = ((image->v + 239) << 8) + (j != 2 ? 128 : 64);
+            *((u16*)&poly->u3) = ((image->v + 239) << 8) + ((j != 2) ? 128 : 64);
 
             setSemiTrans(poly, i < 2);
 
@@ -118,7 +118,7 @@ void func_800317CC(s_FsImageDesc* arg0, s_FsImageDesc* arg1, s16 arg2) // 0x8003
         }
     }
 
-    g_SysWork.field_22A0 |= 1;
+    g_SysWork.field_22A0 |= 1 << 0;
     GsOUT_PACKET_P = (PACKET*)poly;
 }
 
@@ -135,8 +135,8 @@ void func_80031AAC(s_FsImageDesc* image) // 0x80031AAC
     for (i = 0; i < 3; i++)
     {
         setPolyFT4(poly);
-        setXY0Fast(poly, -160 + 128 * i, -120);
-        setXY1Fast(poly, 128 * i + (i == 2 ? -96 : -32), -120);
+        setXY0Fast(poly, -160 + (128 * i), -120);
+        setXY1Fast(poly, (128 * i) + ((i == 2) ? -96 : -32), -120);
 
         xOffset = 128 * i;
 
@@ -147,11 +147,11 @@ void func_80031AAC(s_FsImageDesc* image) // 0x80031AAC
 
         tPageY = image->tPage[1];
 
-        *((u32*)&poly->u1) = (image->v << 8) + (i == 2 ? 64 : 128) +
+        *((u32*)&poly->u1) = (image->v << 8) + ((i == 2) ? 64 : 128) +
                              (getTPage(image->tPage[0], 0, (image->tPage[1] + i) << 6, (tPageY << 4) & 0x100) << 16);
 
         *((u16*)&poly->u2) = (image->v + 239) << 8;
-        *((u16*)&poly->u3) = ((image->v + 239) << 8) + (i == 2 ? 64 : 128);
+        *((u16*)&poly->u3) = ((image->v + 239) << 8) + ((i == 2) ? 64 : 128);
 
         setSemiTrans(poly, 0);
 
@@ -163,7 +163,7 @@ void func_80031AAC(s_FsImageDesc* image) // 0x80031AAC
     }
 
     GsOUT_PACKET_P = (PACKET*)poly;
-    g_SysWork.field_22A0 |= 1;
+    g_SysWork.field_22A0 |= 1 << 0;
     D_800A8E58 = 0x80;
 }
 
@@ -190,7 +190,7 @@ s32 func_80031CCC(s32 arg0) // 0x80031CCC
             if (sp10 != 0)
             {
                 textureUOffset = (-(i == 0)) & 0x20;
-                yOffset        = i == 0 ? -0xE0 : 0;
+                yOffset        = (i == 0) ? -0xE0 : 0;
                 tPageYOffset   = i << 8;
             }
             else
@@ -214,7 +214,7 @@ s32 func_80031CCC(s32 arg0) // 0x80031CCC
             setWH(sprt, 0x100, 0xE0);
             *((u32*)&sprt->u0) = textureUOffset << 8;
 
-            setXY0Fast(sprt, -g_GameWork.gsScreenWidth_588 / 2 + (j << 8), yOffset);
+            setXY0Fast(sprt, (-g_GameWork.gsScreenWidth_588 / 2) + (j << 8), yOffset);
 
             sprt++;
             tPage = (DR_TPAGE*)sprt;
@@ -322,7 +322,7 @@ void Gfx_DebugStringDraw(char* str)
 char* Math_IntegerToString(s32 widthMin, s32 value) // 0x80032154
 {
     s32   isNegative;
-    char* string = PSX_SCRATCH_ADDR(0x1E);
+    char* str = PSX_SCRATCH_ADDR(0x1E);
 
     if (value < 0)
     {
@@ -334,32 +334,32 @@ char* Math_IntegerToString(s32 widthMin, s32 value) // 0x80032154
         isNegative = 0;
     }
 
-    *string = 0;
+    *str = 0;
 
     do
     {
-        string--;
+        str--;
         widthMin--;
-        *string = '0' + (value % 10);
+        *str = '0' + (value % 10);
         value /= 10;
     }
     while (value > 0);
 
     if (isNegative)
     {
-        string--;
-        *string = '-';
+        str--;
+        *str = '-';
         widthMin--;
     }
 
     while (widthMin > 0)
     {
-        string--;
-        *string = '\v';
+        str--;
+        *str = '\v';
         widthMin--;
     }
 
-    return string;
+    return str;
 }
 
 void func_800321EC(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x800321EC
@@ -369,7 +369,7 @@ void func_800321EC(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x800321EC
     bool isNegative;
     s8*  str;
 
-    for (i = 0; i < arg0 - 1; i++)
+    for (i = 0; i < (arg0 - 1); i++)
     {
         g_Gfx_DebugStringPosition1.vx = g_Gfx_DebugStringPosition1.vx + 8;
     }
@@ -400,6 +400,7 @@ void func_800321EC(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x800321EC
             *str = (arg2 % 10) + '0';
             arg2 /= 10;
         }
+
         str--;
         *str = '.';
     }
@@ -424,7 +425,7 @@ void func_800321EC(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x800321EC
     }
 }
 
-void Gfx_ClearRectInterlaced(s16 x, s16 y, s16 w, s16 h, u8 r, u8 g, u8 b)
+void Gfx_ClearRectInterlaced(s16 x, s16 y, s16 w, s16 h, u8 r, u8 g, u8 b) // 0x80032358
 {
     setRECT((RECT*)PSX_SCRATCH, x, y, w, h);
     VSync(0);
@@ -607,19 +608,19 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003260C);
 void func_8003289C(POLY_G4* arg0, s32 arg1) // 0x8003289C
 {
     s32 i;
-    s32 unused_v0;
+    s32 unused;
     s32 color0;
     s32 color1;
-    s32 unused_arr[2];
+    s32 unusedArr[2];
 
-    unused_arr[0] = unused_v0;
+    unusedArr[0] = unused;
 
     color0 = arg1 >> 4;
     color1 = arg1 >> 5;
 
     if (arg1 == 4095)
     {
-        color1 = 255;
+        color1 = 0xFF;
     }
 
     for (i = 0; i < 2; i++)
