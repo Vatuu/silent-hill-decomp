@@ -979,7 +979,16 @@ void Settings_RestoreDefaults() // 0x8003342c
     g_GameWork.config_0.optExtraBloodColor_24 = 0;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", Settings_RestoreControlDefaults);
+void Settings_RestoreControlDefaults(s32 arg0) // 0x80033480
+{
+    u32  i;
+    u16* ptr;
+
+    for (i = 0, ptr = &g_GameWorkPtr->config_0.controllerConfig_0; i < INPUT_ACTION_COUNT; i++, ptr++)
+    {
+        *ptr = (&D_8002511C[arg0].enter_0)[i];
+    }
+}
 
 void nullsub_800334C8() {}
 
@@ -1253,7 +1262,40 @@ void func_80034F18() // 0x80034F18
     func_80037334();
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_80034FB8);
+void func_80034FB8() // 0x80034FB8
+{
+    s32        mapOverlayId;
+    s_SysWork* sysWork;
+
+    mapOverlayId = g_SavegamePtr->mapOverlayId_A4;
+
+    vcInitCamera(&g_MapOverlayHeader, &g_SysWork.player_4C.chara_0.position_18);
+
+    sysWork = &g_SysWork;
+
+    vcSetCameraUseWarp(&g_SysWork.player_4C.chara_0.position_18, sysWork->cameraAngleY_237A);
+    func_80040004(&g_MapOverlayHeader);
+    func_80035B58(0);
+    func_8003D95C();
+    func_8003EBA0();
+
+    g_MapOverlayHeader.func_168(NULL, (void*)mapOverlayId, (void*)NO_VALUE);
+
+    func_80034EC8();
+
+    sysWork->field_2280 = 5;
+
+    func_8005E650(mapOverlayId);
+    func_80037124();
+    func_8007E8C0();
+    func_80037F24(0);
+    func_80037334();
+    func_8003569C();
+    func_8007EBBC();
+    GameFs_Tim00TIMLoad();
+    Fs_QueueWaitForEmpty();
+    GameFs_MapItemsModelLoad(mapOverlayId);
+}
 
 void Game_SavegameInitialize(s8 overlayId, s32 difficulty) // 0x800350BC
 {
@@ -1364,7 +1406,52 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_80035560); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003569C); // 0x8003569C
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_80035780); // 0x80035780
+s32 func_80035780() // 0x80035780
+{
+    if (func_80045B28() & 0xFF)
+    {
+        return NO_VALUE;
+    }
+
+    if (Fs_QueueGetLength() > 0)
+    {
+        return NO_VALUE;
+    }
+
+    switch (g_GameWork.gameStateStep_598[1])
+    {
+        case 0:
+            func_8003596C();
+            g_GameWork.gameStateStep_598[1]++;
+
+        case 1:
+            if (func_800358A8(g_MapOverlayHeader.field_14) == 0)
+            {
+                g_GameWork.gameStateStep_598[1] += 2;
+            }
+            else
+            {
+                Sd_EngineCmd(18);
+                func_80035E1C();
+        
+                g_GameWork.gameStateStep_598[1]++;
+            }
+            break;
+
+        case 2:
+            if (!(func_80045BC8() & 0xFFFF))
+            {
+                func_800358DC(g_MapOverlayHeader.field_14);
+                g_GameWork.gameStateStep_598[1]++;
+            }
+            break;
+
+        default:
+            return 0;
+    }
+
+    return 1;
+}
 
 s32 func_800358A8(s32 cmd) // 0x800358A8
 {
@@ -1381,7 +1468,21 @@ s32 func_800358A8(s32 cmd) // 0x800358A8
     return g_GameWork.soundCmd_5B2 != cmd;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_800358DC); // 0x800358DC
+void func_800358DC(s32 cmd) // 0x800358DC
+{
+    if (cmd == 0)
+    {
+        return;
+    }
+
+    if (cmd == 1)
+    {
+        return;
+    }
+
+    g_GameWork.soundCmd_5B2 = cmd;
+    Sd_EngineCmd(D_800A9804[cmd]);
+}
 
 void func_80035924() // 0x80035924
 {

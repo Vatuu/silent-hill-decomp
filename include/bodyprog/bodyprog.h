@@ -858,9 +858,13 @@ extern s_FsImageDesc g_MainImg0; // 0x80022C74 - TODO: part of main exe, move to
 
 extern s_80024C90 D_80024C90; 
 
-extern s32 D_8002500C; // Some sort of struct inside RODATA, likely a constant.
+/** Some sort of struct inside RODATA, likely a constant. */
+extern s32 D_8002500C;
 
 extern s8* D_8002510C;
+
+/** Default key bindings. Multiple configs probably? */
+extern s_ControllerConfig D_8002511C[];
 
 /** "\x07PAUSED" string */
 extern char D_80025394[];
@@ -949,7 +953,11 @@ extern s32 D_800A9768;
 
 extern s32 D_800A976C;
 
-extern void (*D_800A977C[])(); // Function pointer array, maybe state funcs of some kind.
+/** Function pointer array, maybe state funcs of some kind. */
+extern void (*D_800A977C[])();
+
+/** Related to sound commands. */
+extern u16 D_800A9804[];
 
 extern u16 D_800A98AC[];
 
@@ -957,7 +965,7 @@ extern s_800A992C D_800A992C[];
 
 extern u8 D_800A9944;
 
-/** Used in func_800D929C from map0_s00.c. */
+/** Used in `func_800D929C` from `map0_s00.c`. */
 extern s32 D_800A999C;
 
 /** Array of indices? */
@@ -968,7 +976,7 @@ extern s8 D_800A99CC[];
 
 extern s_FsImageDesc D_800A9A04;
 
-extern s32 D_800A9A0C; // Old IDB name FS_AllFilesLoaded, though FS code doesn't set it.
+extern s32 D_800A9A0C; // Old IDB name `FS_AllFilesLoaded`, though FS code doesn't set it.
 
 extern s32 D_800A9A10;
 
@@ -990,7 +998,7 @@ extern s32 D_800A9A84;
 
 extern s32 D_800A9A88;
 
-extern RECT D_800A9A6C; // RECT <320, 256, 160, 240>, only used in SysState_Fmv_Update?
+extern RECT D_800A9A6C; // `RECT<320, 256, 160, 240>`, only used in `SysState_Fmv_Update`?
 
 extern s_FsImageDesc D_800A9EB4;
 
@@ -1000,7 +1008,6 @@ extern u8 D_800AA604[][16];
 
 extern s_800AA894 D_800AA894[];
 
-/** String color. */
 extern s16 g_StringColorId; // 0x800AD498
 
 extern s32 D_800AD49C;
@@ -2133,6 +2140,8 @@ void Settings_ScreenAndVolUpdate();
 
 void Settings_RestoreDefaults();
 
+void Settings_RestoreControlDefaults(s32 arg0);
+
 s32 func_800334D8(s32 idx);
 
 /** Updates the savegame buffer with the current player SysWork info (position, rotation, health, event index). */
@@ -2161,6 +2170,8 @@ void func_80034EC8();
 
 void func_80034F18();
 
+void func_80034FB8();
+
 void Game_SavegameInitialize(s8 overlayId, s32 difficulty);
 
 void func_80035178();
@@ -2172,8 +2183,12 @@ s32 func_8003528C(s32 idx0, s32 idx1);
 
 s32 func_800352F8(s32 arg0);
 
+s32 func_80035780();
+
 /** Sets sound command. */
 s32 func_800358A8(s32 cmd);
+
+void func_800358DC(s32 cmd);
 
 /** Executes sound command. */
 void func_80035924();
