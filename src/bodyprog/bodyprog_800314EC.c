@@ -3217,11 +3217,22 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003F654);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003F6F0);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003F7E4);
+s32 Math_GetWeightedAverage(s32 a, s32 b, s32 weight) // 0x8003F7E4
+{
+    return Math_MulFixed(a, FP_TO(1, Q12_SHIFT) - weight, Q12_SHIFT) + Math_MulFixed(b, weight, Q12_SHIFT);
+}
 
+// Big
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003F838);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003FCB0);
+void func_8003FCB0(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x8003FCB0
+{
+    s32 p0;
+
+    p0 = 0x1000 - arg3;
+    LoadAverageCol(arg1 + 0x21, arg2 + 0x21, p0, arg3, arg0 + 0x21);
+    LoadAverageCol(arg1 + 0x25, arg2 + 0x25, p0, arg3, arg0 + 0x25);
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003FD38);
 

@@ -7,7 +7,31 @@
 // Known contents:
 // - Animation funcs
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80040A64);
+s8 func_80040A64(VECTOR3* pos) // 0x80040A64
+{
+    VECTOR3 camPos;
+    VECTOR  vec0;
+    VECTOR  vec1;
+    MATRIX  mat;
+    s32     dot;
+    s32     res;
+
+    if (g_GameWork.config_0.optSoundType_1E != 0)
+    {
+        return 0;
+    }
+
+    vwGetViewPosition(&camPos);
+    vec0.vx = (pos->vx - camPos.vx) >> 6;
+    vec0.vy = (pos->vy - camPos.vy) >> 6;
+    vec0.vz = (pos->vz - camPos.vz) >> 6;
+    VectorNormal(&vec0, &vec1);
+
+    Vw_CoordHierarchyMatrixCompute(vwGetViewCoord(), &mat);
+    dot = FP_MULTIPLY_MATRIX(mat, vec1);
+    res = CLAMP(dot, -127, 127);
+    return res;
+}
 
 void func_80040B6C() {}
 

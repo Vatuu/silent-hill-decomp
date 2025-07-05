@@ -66,6 +66,12 @@
 #define FP_MULTIPLY_PRECISE(a, b, shift) \
     Math_MulFixed((a), FP_FLOAT_TO((b), (shift)), (shift))
 
+/** @brief Computes the dot product of the first column of a matrix with a vector in Q17.15 format. */
+#define FP_MULTIPLY_MATRIX(mat, vec)    \
+    (s32)((((mat).m[0][0] * (vec).vx) + \
+           ((mat).m[1][0] * (vec).vy) + \
+           ((mat).m[2][0] * (vec).vz)) >> 17)
+
 /** @brief Converts a floating-point alpha in the range `[0.0f, 1.0f]` to a fixed-point alpha in Q3.12 format. */
 #define FP_ALPHA(alpha) \
     (s16)FP_FLOAT_TO((alpha), Q12_SHIFT)

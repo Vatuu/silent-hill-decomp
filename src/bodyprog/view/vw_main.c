@@ -32,7 +32,7 @@ void vwGetViewAngle(SVECTOR* ang) // 0x80048AC4
     *ang = vwViewPointInfo.worldang;
 }
 
-void Vw_LookAtMatrixSet(VECTOR3* pos, VECTOR3* lookAt) // 0x80048AF4
+void Vw_SetLookAtMatrix(VECTOR3* pos, VECTOR3* lookAt) // 0x80048AF4
 {
     s32     deltaX;
     s32     deltaY;

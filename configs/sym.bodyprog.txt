@@ -75,40 +75,31 @@ GameFs_MapLoad = 0x8003521C; // type:func
 
 Chara_PositionUpdateFromParams = 0x800371E8; // type:func
 
-GameState_InGame_Update = 0x80038BD4; // type:func
-
-SysState_Gameplay_Update = 0x80038F6C; // type:func
-SysState_GamePaused_Update = 0x800391E8; // type:func
-SysState_OptionsMenu_Update = 0x80039344; // type:func
-SysState_StatusMenu_Update = 0x80039568; // type:func
-
+GameState_InGame_Update           = 0x80038BD4; // type:func
+SysState_Gameplay_Update          = 0x80038F6C; // type:func
+SysState_GamePaused_Update        = 0x800391E8; // type:func
+SysState_OptionsMenu_Update       = 0x80039344; // type:func
+SysState_StatusMenu_Update        = 0x80039568; // type:func
 GameState_LoadStatusScreen_Update = 0x800395C0; // type:func
-
-SysState_Unk3_Update = 0x800396D4; // type:func
-
-GameState_LoadMapScreen_Update = 0x8003991C; // type:func
-
-SysState_Fmv_Update = 0x80039A58; // type:func
-SysState_LoadArea_Update = 0x80039C40; // type:func
-
-AreaLoad_UpdatePlayerPosition = 0x80039F30; // type:func
-
-SysState_ReadMessage_Update = 0x80039FB8; // type:func
-
-SysWork_SavegameUpdatePlayer = 0x8003A120; // type:func
-SysWork_SavegameReadPlayer = 0x8003A1F4; // type:func
-
-SysState_SaveMenu_Update = 0x8003A230; // type:func
-SysState_EventCallFunc_Update = 0x8003A3C8; // type:func
-SysState_EventSetFlag_Update = 0x8003A460; // type:func
-SysState_EventPlaySound_Update = 0x8003A4B4; // type:func
-SysState_GameOver_Update = 0x8003A52C; // type:func
-
-GameState_MapEvent_Update = 0x8003AA4C; // type:func
-GameState_MainMenu_Update = 0x8003AB28; // type:func
+SysState_Unk3_Update              = 0x800396D4; // type:func
+GameState_LoadMapScreen_Update    = 0x8003991C; // type:func
+SysState_Fmv_Update               = 0x80039A58; // type:func
+SysState_LoadArea_Update          = 0x80039C40; // type:func
+AreaLoad_UpdatePlayerPosition     = 0x80039F30; // type:func
+SysState_ReadMessage_Update       = 0x80039FB8; // type:func
+Math_GetWeightedAverage           = 0x8003F7E4; // type:func
+SysWork_SavegameUpdatePlayer      = 0x8003A120; // type:func
+SysWork_SavegameReadPlayer        = 0x8003A1F4; // type:func
+SysState_SaveMenu_Update          = 0x8003A230; // type:func
+SysState_EventCallFunc_Update     = 0x8003A3C8; // type:func
+SysState_EventSetFlag_Update      = 0x8003A460; // type:func
+SysState_EventPlaySound_Update    = 0x8003A4B4; // type:func
+SysState_GameOver_Update          = 0x8003A52C; // type:func
+GameState_MapEvent_Update         = 0x8003AA4C; // type:func
+GameState_MainMenu_Update         = 0x8003AB28; // type:func
 
 GameFs_BgEtcGfxLoad = 0x8003BE6c; // type:func
-GameFs_BgItemLoad = 0x8003BE9c; // type:func
+GameFs_BgItemLoad   = 0x8003BE9c; // type:func
 GameFs_FlameGfxLoad = 0x8003E710; // type:func
 
 vcInitCamera                  = 0x8004004C; // type:func
@@ -141,7 +132,7 @@ vwInitViewInfo                 = 0x80048A38; // type:func
 vwGetViewCoord                 = 0x80048A90; // type:func guessed name
 vwGetViewPosition              = 0x80048A9C; // type:func
 vwGetViewAngle                 = 0x80048AC4; // type:func
-Vw_LookAtMatrixSet             = 0x80048AF4; // type:func
+Vw_SetLookAtMatrix             = 0x80048AF4; // type:func
 vwSetCoordRefAndEntou          = 0x80048BE0; // type:func
 vwSetViewInfoDirectMatrix      = 0x80048CF0; // type:func
 vwSetViewInfo                  = 0x80048D48; // type:func
@@ -178,7 +169,7 @@ Inventory_Logic                  = 0x8004D518; // type:func
 Gfx_Inventory_CmdOptionsDraw     = 0x8004E864; // type:func
 Gfx_Inventory_ScrollArrowsDraw   = 0x8004EC7C; // type:func
 Gfx_Inventory_UnavailableMapText = 0x8004F57C; // type:func
-Inventory_DirectionalInputSet 	 = 0x8004F5DC; // type:func
+Inventory_DirectionalInputSet    = 0x8004F5DC; // type:func
 Gfx_Inventory_HealthStatusDraw   = 0x80051020; // type:func
 Gfx_Inventory_ItemDescription    = 0x8005192C; // type:func
 Gfx_Primitive2dTextureSet        = 0x80052088; // type:func

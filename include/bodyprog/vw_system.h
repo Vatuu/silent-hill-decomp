@@ -312,7 +312,7 @@ void           vwInitViewInfo();
 GsCOORDINATE2* vwGetViewCoord();
 void           vwGetViewPosition(VECTOR3* pos);
 void           vwGetViewAngle(SVECTOR* ang);
-void           Vw_LookAtMatrixSet(VECTOR3* pos, VECTOR3* lookAt);
+void           Vw_SetLookAtMatrix(VECTOR3* pos, VECTOR3* lookAt);
 void           vwSetCoordRefAndEntou(GsCOORDINATE2* parent_p, s32 ref_x, s32 ref_y, s32 ref_z, s16 cam_ang_y, s16 cam_ang_z, s32 cam_y, s32 cam_xz_r);
 void           vwSetViewInfoDirectMatrix(GsCOORDINATE2* pcoord, MATRIX* cammat);
 void           vwSetViewInfo();

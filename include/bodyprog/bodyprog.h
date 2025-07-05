@@ -1594,9 +1594,16 @@ void func_8003EDA8();
 
 void func_8003EF10(s32 idx0, s32 idx1, s32 arg4, s32 arg5, s32 arg6, s32 arg7);
 
+/** Computes the weighted average of `a` and `b`. */
+s32 Math_GetWeightedAverage(s32 a, s32 b, s32 weight);
+
+void func_8003FCB0(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
+
 void func_80040014();
 
 void func_800410D8(VECTOR3*, s32*, s32*, SVECTOR*, VECTOR3*);
+
+s8 func_80040A64(VECTOR3* pos);
 
 /** Some kind of queue entry load status getter. */
 s32 func_80041ADC(s32 queueIdx);
