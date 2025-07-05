@@ -868,7 +868,9 @@ void func_8008716C(s32 arg0, s32 arg1, s32 arg2) // 0x8008716C
 
         case 4:
             func_800862F8(2, 0, 0);
-            if (g_ControllerPtrConst->btns_clicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 | g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
+
+            if (g_ControllerPtrConst->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 |
+                                                         g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
             {
                 g_SysWork.timer_2C = 0;
                 g_SysWork.field_14 = 0;
@@ -887,13 +889,13 @@ void func_8008716C(s32 arg0, s32 arg1, s32 arg2) // 0x8008716C
             func_8008616C(0, 0, 0, arg1, 0);
             g_MapOverlayHeader.func_CC(0);
 
-            g_SysWork.sysState_8 = 0;
-            g_SysWork.timer_24 = 0;
+            g_SysWork.sysState_8     = 0;
+            g_SysWork.timer_24       = 0;
             g_SysWork.sysStateStep_C = 0;
-            g_SysWork.field_28 = 0;
-            g_SysWork.field_10 = 0;
-            g_SysWork.timer_2C = 0;
-            g_SysWork.field_14 = 0;
+            g_SysWork.field_28       = 0;
+            g_SysWork.field_10       = 0;
+            g_SysWork.timer_2C       = 0;
+            g_SysWork.field_14       = 0;
             break;
     }
 }
@@ -943,13 +945,13 @@ void func_80087360(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x80087360
             func_8008616C(0, 0, 0, arg1, 0);
             g_MapOverlayHeader.func_CC(0);
 
-            g_SysWork.sysState_8 = 0;
-            g_SysWork.timer_24 = 0;
+            g_SysWork.sysState_8     = 0;
+            g_SysWork.timer_24       = 0;
             g_SysWork.sysStateStep_C = 0;
-            g_SysWork.field_28 = 0;
-            g_SysWork.field_10 = 0;
-            g_SysWork.timer_2C = 0;
-            g_SysWork.field_14 = 0;
+            g_SysWork.field_28       = 0;
+            g_SysWork.field_10       = 0;
+            g_SysWork.timer_2C       = 0;
+            g_SysWork.field_14       = 0;
             break;
     }
 }
@@ -991,7 +993,7 @@ void func_80087540(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x800875
                 break;
             }
 
-            if (g_ControllerPtrConst->btns_clicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 | g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
+            if (g_ControllerPtrConst->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 | g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
             {
                 g_SysWork.timer_2C = 0;
                 g_SysWork.field_14 = 0;

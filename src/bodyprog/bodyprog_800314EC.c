@@ -1067,7 +1067,7 @@ s32 MainLoop_ShouldWarmReset() // 0x80034108
     }
 
     // Reset something.
-    if ((g_ControllerPtrConst->btns_held_C & RESET_BTN_FLAGS) != RESET_BTN_FLAGS)
+    if ((g_ControllerPtrConst->btnsHeld_C & RESET_BTN_FLAGS) != RESET_BTN_FLAGS)
     {
         D_800A976C = 0;
     }
@@ -1076,11 +1076,11 @@ s32 MainLoop_ShouldWarmReset() // 0x80034108
     {
         return 2; 
     }
-    else if (g_ControllerPtrConst->btns_held_C == UNK_BTN_FLAGS_0 && (g_ControllerPtrConst->btns_clicked_10 & UNK_BTN_FLAGS_0))
+    else if (g_ControllerPtrConst->btnsHeld_C == UNK_BTN_FLAGS_0 && (g_ControllerPtrConst->btnsClicked_10 & UNK_BTN_FLAGS_0))
     {
         return 2; 
     }
-    else if (g_ControllerPtrConst->btns_held_C == UNK_BTN_FLAGS_1 && (g_ControllerPtrConst->btns_clicked_10 & ControllerFlag_Start))
+    else if (g_ControllerPtrConst->btnsHeld_C == UNK_BTN_FLAGS_1 && (g_ControllerPtrConst->btnsClicked_10 & ControllerFlag_Start))
     {
         return 2; 
     }
@@ -2059,8 +2059,8 @@ void SysState_GamePaused_Update() // 0x800391E8
 
     // Debug button combo to bring up save screen from pause screen.
     // DPad-Left + L2 + L1 + LS-Left + RS-Left + L3
-    if ((g_ControllerPtrConst->btns_held_C == (ControllerFlag_L3 | ControllerFlag_DpadLeft | ControllerFlag_L2 | ControllerFlag_L1 | ControllerFlag_LStickLeft2 | ControllerFlag_RStickLeft | ControllerFlag_LStickLeft)) &&
-        (g_ControllerPtrConst->btns_clicked_10 & ControllerFlag_L3))
+    if ((g_ControllerPtrConst->btnsHeld_C == (ControllerFlag_L3 | ControllerFlag_DpadLeft | ControllerFlag_L2 | ControllerFlag_L1 | ControllerFlag_LStickLeft2 | ControllerFlag_RStickLeft | ControllerFlag_LStickLeft)) &&
+        (g_ControllerPtrConst->btnsClicked_10 & ControllerFlag_L3))
     {
         D_800A9A68 = 0;
         Sd_EngineCmd(4);
@@ -2069,7 +2069,7 @@ void SysState_GamePaused_Update() // 0x800391E8
         return;
     }
 
-    if (g_ControllerPtrConst->btns_clicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.pause_14)
+    if (g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.pause_14)
     {
         D_800A9A68 = 0;
         Sd_EngineCmd(4);
@@ -2389,7 +2389,7 @@ void SysState_GameOver_Update() // 0x8003A52C
             Gfx_StringDraw(D_80025448, 0x63); // "\aGAME_OVER" - needs rodata migration.
             g_SysWork.field_28++;
 
-            if ((g_ControllerPtrConst->btns_clicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 | g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)) ||
+            if ((g_ControllerPtrConst->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 | g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)) ||
                 g_SysWork.field_28 > 240)
             {
                 SysWork_StateStepIncrement();
@@ -2430,7 +2430,7 @@ void SysState_GameOver_Update() // 0x8003A52C
             g_SysWork.field_28++;
             Gfx_BackgroundSpriteDraw(&D_800A9054);
 
-            if (!(g_ControllerPtrConst->btns_clicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 | g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)))
+            if (!(g_ControllerPtrConst->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 | g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)))
             {
                 if (g_SysWork.field_28 <= 480)
                 {
@@ -2574,7 +2574,7 @@ void GameState_MainMenu_Update()
 
             D_800A9A7C |= D_800A9A7C << 5;
 
-            if (g_ControllerPtrConst->btns_pulsed_18 & (ControllerFlag_LStickUp | ControllerFlag_LStickDown))
+            if (g_ControllerPtrConst->btnsPulsed_18 & (ControllerFlag_LStickUp | ControllerFlag_LStickDown))
             {
                 Sd_EngineCmd(0x519);
                 g_GameWork.gameState_594 = GameState_MainMenu;
@@ -2586,7 +2586,7 @@ void GameState_MainMenu_Update()
                 }
             }
 
-            if (g_ControllerPtrConst->btns_pulsed_18 & ControllerFlag_LStickUp)
+            if (g_ControllerPtrConst->btnsPulsed_18 & ControllerFlag_LStickUp)
             {
                 D_800A9A78 += 5;
                 while(!(D_800A9A7C & (1 << --D_800A9A78)))
@@ -2594,7 +2594,7 @@ void GameState_MainMenu_Update()
                 }
             }
 
-            if (g_ControllerPtrConst->btns_pulsed_18 & ControllerFlag_LStickDown)
+            if (g_ControllerPtrConst->btnsPulsed_18 & ControllerFlag_LStickDown)
             {                
                 while(!(D_800A9A7C & (1 << ++D_800A9A78)))
                 {
@@ -2603,7 +2603,7 @@ void GameState_MainMenu_Update()
 
             D_800A9A78 = D_800A9A78 % 5;
 
-            if (g_ControllerPtrConst->btns_clicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
+            if (g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
             {
                 g_GameWork.gameState_594 = GameState_MainMenu;
 
@@ -2681,8 +2681,8 @@ void GameState_MainMenu_Update()
                 }
             }
 
-            if (g_ControllerPtrConst->btns_pulsed_18 & (ControllerFlag_LStickUp | ControllerFlag_LStickDown) ||
-                g_ControllerPtrConst->btns_clicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 | g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
+            if (g_ControllerPtrConst->btnsPulsed_18 & (ControllerFlag_LStickUp | ControllerFlag_LStickDown) ||
+                g_ControllerPtrConst->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 | g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
             {
                 g_GameWork.gameState_594 = GameState_MainMenu;
                 
@@ -2693,7 +2693,7 @@ void GameState_MainMenu_Update()
                 }
             }
 
-            if (g_ControllerPtrConst->btns_pulsed_18 & ControllerFlag_LStickUp)
+            if (g_ControllerPtrConst->btnsPulsed_18 & ControllerFlag_LStickUp)
             {
                 var_v0 = 2;
 
@@ -2705,7 +2705,7 @@ void GameState_MainMenu_Update()
                 D_800A9A84 = var_v0;
             }
 
-            if (g_ControllerPtrConst->btns_pulsed_18 & ControllerFlag_LStickDown)
+            if (g_ControllerPtrConst->btnsPulsed_18 & ControllerFlag_LStickDown)
             {
                 var_2 = 0;
 
@@ -2717,12 +2717,12 @@ void GameState_MainMenu_Update()
                 D_800A9A84 = var_2;
             }
 
-            if (g_ControllerPtrConst->btns_pulsed_18 & (ControllerFlag_LStickUp | ControllerFlag_LStickDown))
+            if (g_ControllerPtrConst->btnsPulsed_18 & (ControllerFlag_LStickUp | ControllerFlag_LStickDown))
             {
                 Sd_EngineCmd(0x519u);
             }
 
-            if (g_ControllerPtrConst->btns_clicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
+            if (g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
             {
                 Game_SavegameInitialize(0, D_800A9A84 - 1);
                 func_80035178();
@@ -2736,7 +2736,7 @@ void GameState_MainMenu_Update()
                 g_Gfx_ScreenFade = 2;
                 D_800A9A74       = 4;
             }
-            else if (g_ControllerPtrConst->btns_clicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)
+            else if (g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)
             {
                 Sd_EngineCmd(0x51A);
                 D_800A9A74 = 1;
@@ -2776,7 +2776,7 @@ void GameState_MainMenu_Update()
             break;
     }
 
-    if (g_ControllerPtrConst->btns_held_C != 0)
+    if (g_ControllerPtrConst->btnsHeld_C != 0)
     {
         g_SysWork.timer_20 = 0;
     }

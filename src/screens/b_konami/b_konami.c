@@ -71,7 +71,7 @@ void GameState_KonamiLogo_Update() // 0x800C95AC
                 break;
 
             case 2:
-                if (g_ControllerPtrConst->btns_held_C != 0 || g_SysWork.timer_1C >= 181)
+                if (g_ControllerPtrConst->btnsHeld_C != 0 || g_SysWork.timer_1C >= 181)
                 {
                     g_Gfx_ScreenFade                = 3;
                     D_800B5C30                      = 0x333;
@@ -270,7 +270,7 @@ void GameState_KcetLogo_Update() // 0x800C99A4
                 break;
 
             case 6:
-                if (g_ControllerPtrConst->btns_held_C != 0 || g_SysWork.timer_1C > 180)
+                if (g_ControllerPtrConst->btnsHeld_C != 0 || g_SysWork.timer_1C > 180)
                 {
                     g_Gfx_ScreenFade = 3;
                     D_800B5C30       = 0x333;

@@ -490,11 +490,11 @@ typedef struct _ControllerData
     s8                 unk_8[1];
     u8                 field_9;
     s8                 unk_A[2];
-    s32                btns_held_C;      /** `e_ControllerFlags` */ // `event_held_flags_C`
-    s32                btns_clicked_10;  /** `e_ControllerFlags` */ // `event_clicked_flags_10`
-    s32                btns_released_14; /** `e_ControllerFlags` */ // `event_released_flags_14`
-    s32                btns_pulsed_18;   /** `e_ControllerFlags` */ // `event_pulsed_flags_18`
-    s32                btns_pulsed_1C;   /** `e_ControllerFlags` */ // Duplicate?
+    s32                btnsHeld_C;      /** `e_ControllerFlags` */
+    s32                btnsClicked_10;  /** `e_ControllerFlags` */
+    s32                btnsReleased_14; /** `e_ControllerFlags` */
+    s32                btnsPulsed_18;   /** `e_ControllerFlags` */
+    s32                btnsPulsed_1C;   /** `e_ControllerFlags` */ // Duplicate?
     char               field_20;
     char               field_21;
     s8                 field_22;
