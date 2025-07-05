@@ -809,7 +809,8 @@ typedef struct _MapOverlayHeader
     s32               (*func_10)();
     s8                field_14;
     u8                field_15;
-    s8                unk_16[2];
+    s8                field_16;
+    s8                field_17;
     void              (**func_18)();
     s_AreaLoadParams* mapAreaLoadParams_1C;
     void              (**mapEventFuncs_20)();                                            /** Points to array of event functions. */
@@ -964,6 +965,12 @@ extern u16 D_800A98AC[];
 extern s_800A992C D_800A992C[];
 
 extern u8 D_800A9944;
+
+/** Player anim info? */
+extern s_AnimInfo D_800A998C;
+
+/** Current player anim index store? */
+extern u8 D_800A9990;
 
 /** Used in `func_800D929C` from `map0_s00.c`. */
 extern s32 D_800A999C;
@@ -2203,9 +2210,20 @@ void func_80035AC8(s32 arg0);
 
 void func_80035B04(VECTOR3* pos, SVECTOR* rot, GsCOORDINATE2* coord);
 
+void func_80035B58(s32 arg0);
+
+void func_80035B98();
+
+void func_80035BBC();
+
+/** Player camera func. */
+void func_80035BE0();
+
 void func_80035DB4(s32);
 
-void AreaLoad_UpdatePlayerPosition();
+void func_80035E1C();
+
+void func_80035ED0();
 
 void func_800363D0();
 

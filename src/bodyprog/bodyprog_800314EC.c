@@ -1569,7 +1569,11 @@ void func_80035B04(VECTOR3* pos, SVECTOR* rot, GsCOORDINATE2* coord) // 0x80035B
     func_80096E78(rot, (MATRIX*)&coord->coord);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_80035B58); // 0x80035B58
+void func_80035B58(s32 arg0) // 0x80035B58
+{
+    func_8003EBF4(&g_MapOverlayHeader);
+    g_MapOverlayHeader.func_16C(g_MapOverlayHeader.field_17, g_MapOverlayHeader.field_16);
+}
 
 void func_80035B98() // 0x80035B98
 {
@@ -1581,7 +1585,58 @@ void func_80035BBC() // 0x80035BBC
     Gfx_BackgroundSpriteDraw(&D_800A9034);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_80035BE0); // 0x80035BE0
+void func_80035BE0() // 0x80035BE0
+{
+    GsCOORDINATE2* boneCoords;
+    VECTOR3        camLookAt;
+    s_Model*       model;
+    s32            temp;
+
+    boneCoords = g_SysWork.playerBoneCoords_890;
+    model      = &g_SysWork.player_4C.chara_0.model_0;
+
+    if (g_SysWork.sysState_8 == 0)
+    {
+        if (g_SysWork.flags_2298 == 2)
+        {
+            AreaLoad_UpdatePlayerPosition();
+        }
+
+        vcInitCamera(&g_MapOverlayHeader, &g_SysWork.player_4C.chara_0.position_18);
+        func_80040004(&g_MapOverlayHeader);
+
+        camLookAt.vy = FP_METER(-0.6f);
+        camLookAt.vx = g_SysWork.player_4C.chara_0.position_18.vx;
+        camLookAt.vz = g_SysWork.player_4C.chara_0.position_18.vz;
+
+        vcUserWatchTarget(&camLookAt, NULL, 1);
+
+        camLookAt.vx -= shRsin(g_SysWork.player_4C.chara_0.rotation_24.vy - FP_ANGLE(22.5f)) * 2;
+        temp          = shRcos(g_SysWork.player_4C.chara_0.rotation_24.vy - FP_ANGLE(22.5f));
+        camLookAt.vy  = FP_METER(-1.0f);
+        camLookAt.vz -= temp * 2;
+
+        vcUserCamTarget(&camLookAt, NULL, 1);
+        func_8003EB54();
+        func_8003EEDC(0, 0);
+
+        model->anim_4.flags_2                     |= AnimFlag_Unk2;
+        g_SysWork.player_4C.extra_128.field_18     = 0;
+        model->anim_4.flags_2                     |= AnimFlag_Unk1 | AnimFlag_Unk2;
+        model->anim_4.time_4                       = FP_FLOAT_TO(26.0f, Q12_SHIFT);
+        g_SysWork.player_4C.chara_0.position_18.vy = FP_METER(0.2f);
+
+        D_800A9990 = model->anim_4.animIdx_0;
+
+        func_80035B04(&g_SysWork.player_4C.chara_0.position_18, &g_SysWork.player_4C.chara_0.rotation_24, boneCoords);
+        g_SysWork.sysState_8++;
+    }
+
+    Anim_Update1(model, (s_Skeleton*)FS_BUFFER_0, boneCoords, &D_800A998C);
+    vcMoveAndSetCamera(1, 0, 0, 0, 0, 0, 0, 0);
+    func_8003F170();
+    func_8003DA9C(1, boneCoords, 1, g_SysWork.player_4C.chara_0.timer_C6, 0);
+}
 
 void func_80035DB4(s32 arg0) // 0x80035DB4
 {
@@ -1609,7 +1664,22 @@ void func_80035E1C() // 0x80035E1C
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_80035E44); // 0x80035E44
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_80035ED0); // 0x80035ED0
+void func_80035ED0() // 0x80035ED0
+{
+    s32 i;
+
+    for (i = 1; i < 8; i++)
+    {
+        g_SysWork.field_2748[i] = (func_80046BB4(i & 0xFF) & 0xFF) << 5;
+    }
+
+    if (!(func_80045BC8() & 0xFFFF))
+    {
+        g_SysWork.field_2748[0] = 0x1000;
+    }
+
+    g_SysWork.field_2748[8] = 0;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_80035F4C); // 0x80035F4C
 
