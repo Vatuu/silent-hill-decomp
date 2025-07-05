@@ -55,7 +55,7 @@ typedef struct _SavegameMetadata
     s32 unk_0;                     // Same behaviour as `totalSavegameCount_0` in `s_SavegameEntry`.
     u32 gameplayTimer_4;
     u16 savegameCount_8;
-    s8  locationId_A;
+    u8  locationId_A;
     u8  isNextFearMode_B      : 1;
     u8  add290Hours_B_1       : 2;
     u8  hyperBlasterFlags_B_3 : 5;
@@ -90,7 +90,8 @@ typedef struct _SavegameEntry
     s8                  field_5;              // The value changes between 0 when the first save slot is selected and 4 when the second is selected.
     s8                  fileIdx_6;
     s8                  elementIdx_7;         // Index in file?
-    s32                 locationId_8;
+    s8                  locationId_8;
+    s8                  unk_9[3]; // Probably padding.
     s_SavegameMetadata* field_C;
 } s_SavegameEntry;
 STATIC_ASSERT_SIZEOF(s_SavegameEntry, 16);
