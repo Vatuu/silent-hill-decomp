@@ -2389,7 +2389,8 @@ void SysState_GameOver_Update() // 0x8003A52C
             Gfx_StringDraw(D_80025448, 0x63); // "\aGAME_OVER" - needs rodata migration.
             g_SysWork.field_28++;
 
-            if ((g_ControllerPtrConst->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 | g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)) ||
+            if ((g_ControllerPtrConst->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 |
+                                                         g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)) ||
                 g_SysWork.field_28 > 240)
             {
                 SysWork_StateStepIncrement();
@@ -2430,7 +2431,8 @@ void SysState_GameOver_Update() // 0x8003A52C
             g_SysWork.field_28++;
             Gfx_BackgroundSpriteDraw(&D_800A9054);
 
-            if (!(g_ControllerPtrConst->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 | g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)))
+            if (!(g_ControllerPtrConst->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 |
+                                                          g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)))
             {
                 if (g_SysWork.field_28 <= 480)
                 {
@@ -2682,7 +2684,8 @@ void GameState_MainMenu_Update()
             }
 
             if (g_ControllerPtrConst->btnsPulsed_18 & (ControllerFlag_LStickUp | ControllerFlag_LStickDown) ||
-                g_ControllerPtrConst->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 | g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
+                g_ControllerPtrConst->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 |
+                                                        g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
             {
                 g_GameWork.gameState_594 = GameState_MainMenu;
                 

@@ -45,7 +45,13 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8004ACF4); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8004AF18); // 0x8004AF18
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8004B658); // 0x8004B658
+void func_8004B658() // 0x8004B658
+{
+    D_800C38F8.attribute = 64;
+    D_800C38F8.cx        = 304;
+    D_800C38F8.v         = 240;
+    D_800C38F8.h         = 16;
+}
 
 void func_8004B684() // 0x8004B684
 {

@@ -336,7 +336,12 @@ void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, s_SysWork* sys_p) // 0x80040
     mat.t[2] = vec0.vz;
     vwSetViewInfoDirectMatrix(NULL, &mat);
 
-    if (g_ControllerPtr->btnsHeld_C & (ControllerFlag_LStickUp | ControllerFlag_LStickRight | ControllerFlag_LStickDown | ControllerFlag_LStickLeft | ControllerFlag_Cross | ControllerFlag_Triangle))
+    if (g_ControllerPtr->btnsHeld_C & (ControllerFlag_LStickUp |
+                                       ControllerFlag_LStickRight |
+                                       ControllerFlag_LStickDown |
+                                       ControllerFlag_LStickLeft |
+                                       ControllerFlag_Cross |
+                                       ControllerFlag_Triangle))
     {
         SVECTOR vec1;
 

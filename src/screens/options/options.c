@@ -386,7 +386,8 @@ void Settings_ExtraScreen() // 0x801E318C
         }
     }
 
-    if ((g_ControllerPtrConst->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.cancel_2 | (ControllerFlag_L2 | ControllerFlag_R2 | ControllerFlag_L1 | ControllerFlag_R1))) &&
+    if ((g_ControllerPtrConst->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.cancel_2 |
+                                                 (ControllerFlag_L2 | ControllerFlag_R2 | ControllerFlag_L1 | ControllerFlag_R1))) &&
         g_GameWork.gameStateStep_598[0] != 15)
     {
         if (g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)
@@ -475,7 +476,7 @@ void Settings_MainScreen() // 0x801E3770
     {
         case OptMain_Exit:
             if (g_ControllerPtrConst->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 |
-				g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
+				                                        g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
             {
                 func_80046048(0x51A, 0, 64);
 
@@ -1642,7 +1643,8 @@ void Settings_BrightnessScreen() // 0x801E6018
                 }
             }
 
-            if (g_ControllerPtrConst->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 | g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
+            if (g_ControllerPtrConst->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 |
+                                                        g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
             {
                 if (g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
                 {
@@ -1983,7 +1985,8 @@ void Settings_ControllerScreen() // 0x801E69BC
             g_Gfx_ScreenFade                       = 7;
             g_ScreenCtrl_SelectedElement.menuIdx_0 = BindingMenu_Exit;
 
-            if (g_ControllerPtrConst->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 | g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
+            if (g_ControllerPtrConst->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 |
+                                                        g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
             {
                 Sd_EngineCmd(0x51A);
                 g_Gfx_ScreenFade                = 3;

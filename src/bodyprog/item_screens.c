@@ -465,7 +465,8 @@ void GameState_ItemScreens_Update() // 0x8004C9B0
             break;
 
         case 22:
-            if (g_ControllerPtrConst->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 | g_GameWorkPtr->config_0.controllerConfig_0.skip_4))
+            if (g_ControllerPtrConst->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 |
+                                                        g_GameWorkPtr->config_0.controllerConfig_0.skip_4))
             {
                 g_GameWork.gameStateStep_598[1] = 23;
                 g_GameWork.gameStateStep_598[2] = 0;
@@ -737,7 +738,8 @@ void Inventory_Logic() // 0x8004D518
                     func_80046048(SFX_BACK, 0, 64);
                 }
             }
-            else if ((g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2 || g_Inventory_IsDownClicked != 0) && D_800C3998 == 8)
+            else if ((g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2 || g_Inventory_IsDownClicked != 0) &&
+                     D_800C3998 == 8)
             {
                 D_800C3998 = InventorySelectionId_EquippedItem;
 
@@ -853,8 +855,9 @@ void Inventory_Logic() // 0x8004D518
                 func_80046048(SFX_BACK, 64, 64);
                 g_Inventory_SelectionId = InventorySelectionId_Map;
             }
-            else if (g_ControllerPtrConst->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.item_16 | (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 |
-                                                                                                                    g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)))
+            else if (g_ControllerPtrConst->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.item_16 |
+                                                             (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 |
+                                                              g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)))
             {
                 step = g_GameWork.gameStateStep_598[2];
                 func_80046048(SFX_CANCEL, 0, 64);
