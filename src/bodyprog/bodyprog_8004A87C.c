@@ -347,12 +347,11 @@ s32 func_8004C328() // 0x8004C328
             hasShotgun = true;
         }
 
-        if (g_SysWork.unk_48[2] != NO_VALUE && itemIndex == g_SysWork.unk_48[2])
+        if (g_SysWork.field_4A != NO_VALUE && itemIndex == g_SysWork.field_4A)
         {
             if (itemId >= InventoryItemId_Handgun && itemId <= InventoryItemId_Shotgun)
             {
-                // This field is probably unsigned byte
-                if ((u8)g_SysWork.unk_48[0] != 0)
+                if (g_SysWork.field_48 != 0)
                 {
                     return true;
                 }

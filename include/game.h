@@ -917,7 +917,8 @@ typedef struct _SysWork
     s32             field_30;
     s8              unk_34[4];
     s_MapWork       field_38; // Something related to map loading. Likely a struct as `func_8003CD6C` requires one and `GameFs_MapLoad` input is pointing here.
-    s8              unk_48[2];
+    u8              field_48;
+    s8              unk_49[1];
     s8              field_4A;
     u8              isPlayerInCombatMode_4B;
     s_MainCharacter player_4C;
