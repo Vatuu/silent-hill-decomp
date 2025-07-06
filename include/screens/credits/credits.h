@@ -67,7 +67,7 @@ s32 func_801E3304();
 
 bool func_801E3684();
 
-s32 func_801E3DF8(s32 arg0);
+s32 func_801E3DF8(u8 arg0);
 
 void func_801E42F8(s32 arg0, s32 arg1);
 

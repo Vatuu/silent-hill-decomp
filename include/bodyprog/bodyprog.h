@@ -1743,12 +1743,15 @@ void sd_work_init();
 
 u8 func_80046048(u16 cmd, s8 arg1, u8 vol); // SD Func. Last arg is a u8 value.
 
+
 void func_8004690C(s32);
 
 void func_80046B04();
 
 /** Sound func. */
 void func_80046B78();
+
+u8 func_80046BB4(u8 arg0);
 
 s32 func_80046DCC(s32 idx);
 

@@ -1496,7 +1496,7 @@ void control_change(u8 chan, u8 c1, u8 c2)
                 p->mod_speed_18 = c2;
                 if (p->mod_speed_18 != 0 && p->mod_limit_1E != 0)
                 {
-                    p->mod_add_1A = (p->mod_limit_1E / (p->mod_speed_18 & 0xFFFF)) * 2;
+                    p->mod_add_1A = (p->mod_limit_1E / p->mod_speed_18) * 2;
                 }
                 else
                 {

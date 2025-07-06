@@ -1867,7 +1867,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003569C); // 0x
 
 s32 func_80035780() // 0x80035780
 {
-    if (func_80045B28() & 0xFF)
+    if (func_80045B28())
     {
         return NO_VALUE;
     }
@@ -1898,7 +1898,7 @@ s32 func_80035780() // 0x80035780
             break;
 
         case 2:
-            if (!(func_80045BC8() & 0xFFFF))
+            if (!func_80045BC8())
             {
                 func_800358DC(g_MapOverlayHeader.field_14);
                 g_GameWork.gameStateStep_598[1]++;
@@ -1966,7 +1966,7 @@ void func_8003596C() // 0x8003596C
 
 s32 func_8003599C() // 0x8003599C
 {
-    if ((func_80045B28() & 0xFF) || Fs_QueueGetLength() > 0)
+    if (func_80045B28() || Fs_QueueGetLength() > 0)
     {
         return NO_VALUE;
     }
@@ -2129,10 +2129,10 @@ void func_80035ED0() // 0x80035ED0
 
     for (i = 1; i < 8; i++)
     {
-        g_SysWork.field_2748[i] = (func_80046BB4(i & 0xFF) & 0xFF) << 5;
+        g_SysWork.field_2748[i] = func_80046BB4(i) << 5;
     }
 
-    if (!(func_80045BC8() & 0xFFFF))
+    if (!func_80045BC8())
     {
         g_SysWork.field_2748[0] = 0x1000;
     }

@@ -300,7 +300,7 @@ s32 func_801E342C() // 0x801E342C
             }
 
             D_801E5E78--;
-            if (!(func_80045B28() & 0xFF))
+            if (!func_80045B28())
             {
                 g_GameWork.gameStateStep_598[1]++;
             }
@@ -681,9 +681,9 @@ void func_801E3DD0() // 0x801E3DD0
     D_801E600C = Rng_Rand16();
 }
 
-s32 func_801E3DF8(s32 arg0) // 0x801E3DF8
+s32 func_801E3DF8(u8 arg0) // 0x801E3DF8
 {
-    return ((u32)((arg0 & 0xFF) * 0x31) >> 6) | 0x38;
+    return ((u32)(arg0 * 0x31) >> 6) | 0x38;
 }
 
 void func_801E3E18(s32 arg0, s32 arg1) // 0x801E3E18

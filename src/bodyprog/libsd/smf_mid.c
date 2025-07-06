@@ -423,7 +423,7 @@ void chanmessage(SMF* p, u8 status, u8 c1, u8 c2) // 0x800A7B54
             break;
 
         case 0x90:
-            if ((c2 & 0xFF) != 0)
+            if (c2 != 0)
             {
                 key_on(chan, c1, c2);
             }
@@ -512,7 +512,7 @@ void chanmessage(SMF* p, u8 status, u8 c1, u8 c2) // 0x800A7B54
 
             if (c1 == 6)
             {
-                if (smf_midi[chan & 0xFF].nrpn_msb_26 == 0x14)
+                if (smf_midi[chan].nrpn_msb_26 == 0x14)
                 {
                     if (smf_song[smf_file_no].mf_format_524 != 0)
                     {
