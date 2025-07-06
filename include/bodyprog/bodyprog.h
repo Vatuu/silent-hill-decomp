@@ -1335,19 +1335,21 @@ extern GsCOORDINATE2 D_800C3E48[];
 
 extern s_D_800C4168 D_800C4168;
 
+extern s32 D_800C454C;
+
 extern s32 D_800C4558;
 
 extern s32 D_800C455C;
 
 extern s16 D_800C457E;
 
-extern s16 D_800C4580;
+extern u16 D_800C4580;
 
-extern s16 D_800C4582;
+extern u16 D_800C4582;
 
-extern s16 D_800C4584;
+extern u16 D_800C4584;
 
-extern s16 D_800C4586;
+extern u16 D_800C4586;
 
 extern s8 D_800C4588;
 
@@ -2352,6 +2354,14 @@ void Game_SavegameResetPlayer();
 
 /** Loads player animations for a given map. Maybe for cutscenes? */
 void GameFs_PlayerMapAnimLoad(s32 mapIdx);
+
+void func_800711C4(s32 arg1, s32 arg2);
+
+void func_80071224(s32 arg1, s32 arg2);
+
+void func_80071284(s32 arg0);
+
+void func_800713B4(s_SubCharacter* chara, s32 arg1);
 
 void func_800717D0(s_SubCharacter* chara, void* arg1, GsCOORDINATE2* coord);
 

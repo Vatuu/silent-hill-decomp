@@ -954,7 +954,9 @@ typedef struct _SysWork
     s8              field_2355; // Used by `sharedFunc_800D2244_0_s00`.
     s8              unk_2356[2];
     u8              field_2358;
-    s8              unk_2359[3];
+    s8              unk_2359[1];
+    u8              field_235A; // Assumed type.
+    s8              unk_235B[1];
     GsCOORDINATE2*  field_235C;
     s_StructUnk0    field_2360;
     GsCOORDINATE2*  field_236C;
