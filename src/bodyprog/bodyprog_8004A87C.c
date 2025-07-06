@@ -323,4 +323,81 @@ void func_8004C040() // 0x8004C040
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", Player_AnimUpdate); // 0x8004C088
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8004A87C", func_8004C328); // 0x8004C328
+s32 func_8004C328() // 0x8004C328
+{
+    // Returns `true` if player has usable ammo in inventory (ie: ammo + gun needed for it, or gun with ammo loaded)
+    u32 itemIndex;
+    u8  itemId;
+    u32 hasHuntingRifle;
+    u32 hasShotgun;
+
+    itemIndex       = 0;
+    hasHuntingRifle = false;
+    hasShotgun      = false;
+
+    for (; (itemId = g_SavegamePtr->items_0[itemIndex].id_0) != 0; itemIndex++)
+    {
+        if (itemId == InventoryItemId_HuntingRifle)
+        {
+            hasHuntingRifle = true;
+        }
+
+        if (itemId == InventoryItemId_Shotgun)
+        {
+            hasShotgun = true;
+        }
+
+        if (g_SysWork.unk_48[2] != NO_VALUE && itemIndex == g_SysWork.unk_48[2])
+        {
+            if (itemId >= InventoryItemId_Handgun && itemId <= InventoryItemId_Shotgun)
+            {
+                // This field is probably unsigned byte
+                if ((u8)g_SysWork.unk_48[0] != 0)
+                {
+                    return true;
+                }
+            }
+            continue;
+        }
+
+        if (itemId == InventoryItemId_Handgun || itemId == InventoryItemId_HandgunBullets)
+        {
+            if (g_SavegamePtr->items_0[itemIndex].count_1 != 0)
+            {
+                return true;
+            }
+            continue;
+        }
+
+        switch (itemId)
+        {
+            case InventoryItemId_HuntingRifle:
+            case InventoryItemId_Shotgun:
+                if (g_SavegamePtr->items_0[itemIndex].count_1 != 0) // loaded ammo?
+                {
+                    return true;
+                }
+                break;
+            case InventoryItemId_RifleShells:
+                if (hasHuntingRifle)
+                {
+                    if (g_SavegamePtr->items_0[itemIndex].count_1 != 0)
+                    {
+                        return true;
+                    }
+                }
+                break;
+            case InventoryItemId_ShotgunShells:
+                if (hasShotgun)
+                {
+                    if (g_SavegamePtr->items_0[itemIndex].count_1 != 0)
+                    {
+                        return true;
+                    }
+                }
+                break;
+        }
+    }
+
+    return false;
+}
