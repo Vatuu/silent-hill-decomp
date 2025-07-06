@@ -23,7 +23,7 @@ void Ai_Groaner_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords)
         sharedFunc_800E6338_2_s00(chara); // Control func with state machine?
         sharedFunc_800E71E8_2_s00(chara);
 
-        if (chara->model_0.state_2 != (var & 0xFF))
+        if (chara->model_0.state_2 != var)
         {
             *(u16*)&chara->properties_E4.player.properties_E4[1] &= ~(1 << 8);
         }

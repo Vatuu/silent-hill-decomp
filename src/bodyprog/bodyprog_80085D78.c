@@ -383,7 +383,7 @@ void func_80086470(u32 switchVar, s32 itemId, s32 itemCount, s32 arg3) // 0x8008
     switch (switchVarCpy)
     {
         case 0:
-            GameFs_UniqueItemModelLoad(itemId & 0xFF);
+            GameFs_UniqueItemModelLoad(itemId);
             
             if (switchVar == 0)
             {
@@ -400,7 +400,7 @@ void func_80086470(u32 switchVar, s32 itemId, s32 itemCount, s32 arg3) // 0x8008
                 break;
             }
 
-            func_80054A04(itemId & 0xFF);
+            func_80054A04(itemId);
 
             if (switchVar == 1 || switchVar == 4)
             {
@@ -415,7 +415,7 @@ void func_80086470(u32 switchVar, s32 itemId, s32 itemCount, s32 arg3) // 0x8008
             
             if (switchVar == 3 || switchVar == 6)
             {
-                func_80054CAC(itemId & 0xFF, itemCount & 0xFF);
+                func_80054CAC(itemId, itemCount);
             }
             break;
 
@@ -1072,7 +1072,7 @@ void func_800877B8(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x800877B8
             break;
 
         case 2:
-            if (func_80054AD8(arg0 & 0xFF) != 0)
+            if (func_80054AD8(arg0) != 0)
             {
                 func_800860B0(1, var, 3, NO_VALUE, 0, 1);
             }
@@ -1503,9 +1503,9 @@ void func_800892A4(s32 idx) // 0x800892A4
     func_800895E4(g_SysWork.field_2514, &D_8002AC04[idx], 0x80);
 }
 
-void func_800892DC(s32 idx, s32 arg1) // 0x800892DC
+void func_800892DC(s32 idx, u8 arg1) // 0x800892DC
 {
-    func_800895E4(g_SysWork.field_2514, &D_8002AC04[idx], arg1 & 0xFF, idx * sizeof(s_8002AC04));
+    func_800895E4(g_SysWork.field_2514, &D_8002AC04[idx], arg1);
 }
 
 void func_80089314(s32 arg0) // 0x80089314
@@ -1536,7 +1536,7 @@ void func_80089314(s32 arg0) // 0x80089314
         D_800AFD04 = (D_800AFD04 + var1) & 0x7F;
     }
     
-    func_800892DC(0x15, (D_800AFD04 + 32) & 0xFF);
+    func_800892DC(0x15, D_800AFD04 + 32);
 }
 
 void func_800893D0(s32 arg0) // 0x800893D0
@@ -1556,7 +1556,7 @@ void func_800893D0(s32 arg0) // 0x800893D0
         var = ((arg0 + FP_TO(15, Q12_SHIFT)) / FP_TO(5, Q12_SHIFT)) * 25; // 15 and 5 in Q19.12.
     }
     
-    func_800892DC(10, (u8)var);
+    func_800892DC(10, var);
 }
 
 void func_8008944C() // 0x8008944C
@@ -1576,7 +1576,7 @@ void func_80089494() // 0x80089494
 
 void func_800894B8(s32 arg0) // 0x800894B8
 {
-    func_800892DC(9, arg0 & 0xFF);
+    func_800892DC(9, arg0);
 }
 
 void func_800894DC() // 0x800894DC

@@ -1743,8 +1743,7 @@ void sd_work_init();
 
 u8 func_80046048(u16 cmd, s8 arg1, u8 vol); // SD Func. Last arg is a u8 value.
 
-
-void func_8004690C(s32);
+void func_8004690C(u16 arg0);
 
 void func_80046B04();
 
@@ -1860,7 +1859,9 @@ s32 func_8004C328();
 // TODO: Can probably create status enums for the below funcs' return values to avoid magic,
 // but other funcs using similar return patterns should be identified first if they exist.
 
-void GameFs_MapItemsTextureLoad(s32);
+void GameFs_UniqueItemModelLoad(u8 itemId);
+
+void GameFs_MapItemsTextureLoad(s32 mapId);
 
 void func_800540A4(s8);
 
@@ -1879,7 +1880,11 @@ void func_80055434(VECTOR3* vec);
 
 void func_80054928();
 
-void func_80054A04(s32 arg0);
+void func_80054A04(u8 arg0);
+
+s32 func_80054AD8(u8);
+
+void func_80054CAC(u8, u8);
 
 void func_8005660C(s_func_8005660C_0* arg0, s_func_8005660C_1* arg1, s32 arg2);
 
@@ -2043,7 +2048,7 @@ void func_800890B8();
 
 void func_800892A4(s32 idx);
 
-void func_800892DC(s32 idx, s32 arg1);
+void func_800892DC(s32 idx, u8 arg1);
 
 void func_80089314(s32 arg0);
 

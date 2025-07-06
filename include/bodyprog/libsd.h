@@ -461,7 +461,7 @@ s32 readvarinum(SMF* p);
 s32  to32bit(char c1, char c2, char c3, char c4);
 s32  to16bit(char c1, char c2);
 s32  read32bit(SMF* p);
-s32  read16bit(SMF* p);
+u16  read16bit(SMF* p);
 s32  readheader(s32 file_no);
 void len_add(SMF* p, s32 len);
 void metaevent(SMF* p, u8 type);

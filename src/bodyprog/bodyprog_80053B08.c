@@ -17,9 +17,9 @@
  *   map being loaded.
  */
 
-void GameFs_UniqueItemModelLoad(s32 itemId) // 0x80053B08
+void GameFs_UniqueItemModelLoad(u8 itemId) // 0x80053B08
 {
-    switch (itemId & 0xFF)
+    switch (itemId)
     {
         case InventoryItemId_HealthDrink:
             Fs_QueueStartRead(FILE_ITEM_UNQ21_TMD, FS_BUFFER_5);
@@ -623,7 +623,7 @@ void func_80054634() // 0x80054634
     field_F                          = (u8)g_SysWork.field_38.field_F;
     g_SavegamePtr->equippedWeapon_AA = D_800AE184;
 
-    if (g_SavegamePtr->equippedWeapon_AA & 0xFF)
+    if (g_SavegamePtr->equippedWeapon_AA)
     {
         g_SysWork.field_38.field_F = g_SavegamePtr->equippedWeapon_AA + 0x80;
     }
@@ -695,7 +695,7 @@ void func_80054928() // 0x80054928
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80053B08", func_800549A0); // 0x800549A0
 
-void func_80054A04(s32 arg0) // 0x80054A04
+void func_80054A04(u8 arg0) // 0x80054A04
 {
     D_800AE187 = arg0;
     D_800AE180 = 0;
@@ -1739,7 +1739,7 @@ s32 func_80080478(VECTOR3* pos0, VECTOR3* pos1) // 0x80080478
     s32 z1;
     s32 xDelta;
     s32 zDelta;
-    s32 atan2Delta;
+    u16 atan2Delta;
     s32 unk;
 
     x0 = pos0->vx;
@@ -1754,7 +1754,7 @@ s32 func_80080478(VECTOR3* pos0, VECTOR3* pos1) // 0x80080478
     atan2Delta = ratan2(xDelta, zDelta);
 
     unk = func_8008A058(func_80080540(xDelta, 0, zDelta));
-    return (ratan2(unk, y1 - y0) << 0x10) | (atan2Delta & 0xFFFF);
+    return (ratan2(unk, y1 - y0) << 0x10) | atan2Delta;
 }
 
 s32 func_80080514() // 0x80080514

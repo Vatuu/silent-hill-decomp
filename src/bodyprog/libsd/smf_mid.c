@@ -157,11 +157,11 @@ s32 read32bit(SMF* p) // 0x800A737C
     return to32bit(c1, c2, c3, c4);
 }
 
-s32 read16bit(SMF* p) // 0x800A73E8
+u16 read16bit(SMF* p) // 0x800A73E8
 {
     s8 c1 = egetc(p);
     s8 c2 = egetc(p);
-    return to16bit(c1, c2) & 0xFFFF;
+    return to16bit(c1, c2);
 }
 
 s32 readheader(s32 file_no) // 0x800A7428

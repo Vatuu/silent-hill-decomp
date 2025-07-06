@@ -530,7 +530,7 @@ void func_800468EC() // 0x800468EC
     SdUtKeyOffV(23);
 }
 
-void func_8004690C(s32 arg0) // 0x8004690C
+void func_8004690C(u16 arg0) // 0x8004690C
 {
     func_8004692C(arg0);
 }
