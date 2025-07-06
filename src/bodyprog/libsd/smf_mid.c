@@ -6,7 +6,7 @@
 
 extern s32 time_flag; // Only used in this file.
 
-s32 MemCmp(u8* src, u8* des, s32 num) // 0x800A6FB8
+s32 MemCmp(u8* src, u8* des, u32 num) // 0x800A6FB8
 {
     if (!num)
     {
@@ -27,7 +27,7 @@ s32 MemCmp(u8* src, u8* des, s32 num) // 0x800A6FB8
     return *src - *des;
 }
 
-s32 readMThd(u32 loc) // 0x800A6FFC
+u32 readMThd(u32 loc) // 0x800A6FFC
 {
     extern char D_8002E538[4]; // "MThd"
 
@@ -47,7 +47,7 @@ s32 readMThd(u32 loc) // 0x800A6FFC
     return loc;
 }
 
-s32 readMTrk(u32 loc) // 0x800A70BC
+u32 readMTrk(u32 loc) // 0x800A70BC
 {
     extern char D_8002E540[4]; // "MTrk"
 
@@ -67,7 +67,7 @@ s32 readMTrk(u32 loc) // 0x800A70BC
     return loc;
 }
 
-s32 readEOF(u32 loc) // 0x800A717C
+u32 readEOF(u32 loc) // 0x800A717C
 {
     extern char eof_char[3]; // 0x00002FFF
 
@@ -87,7 +87,7 @@ s32 readEOF(u32 loc) // 0x800A717C
     return loc;
 }
 
-s32 egetc(SMF* p) // 0x800A723C
+u32 egetc(SMF* p) // 0x800A723C
 {
     u32 data;
 
@@ -104,7 +104,7 @@ s32 egetc(SMF* p) // 0x800A723C
     return data;
 }
 
-s32 readvarinum(SMF* p) // 0x800A72B4
+u32 readvarinum(SMF* p) // 0x800A72B4
 {
     s32 c;
     s32 value;
@@ -138,17 +138,17 @@ s32 readvarinum(SMF* p) // 0x800A72B4
     return value;
 }
 
-s32 to32bit(char c1, char c2, char c3, char c4) // 0x800A733C
+u32 to32bit(u8 c1, u8 c2, u8 c3, u8 c4) // 0x800A733C
 {
     return (((((c1 << 8) + c2) << 8) + c3) << 8) | c4;
 }
 
-s32 to16bit(char c1, char c2) // 0x800A7368
+u32 to16bit(u8 c1, u8 c2) // 0x800A7368
 {
     return (c1 << 8) | c2;
 }
 
-s32 read32bit(SMF* p) // 0x800A737C
+u32 read32bit(SMF* p) // 0x800A737C
 {
     s8 c1 = egetc(p);
     s8 c2 = egetc(p);
@@ -164,7 +164,7 @@ u16 read16bit(SMF* p) // 0x800A73E8
     return to16bit(c1, c2);
 }
 
-s32 readheader(s32 file_no) // 0x800A7428
+u8 readheader(s32 file_no) // 0x800A7428
 {
     Seqhdr* seqh;
     SMF*    p;
@@ -293,7 +293,7 @@ s32 readheader(s32 file_no) // 0x800A7428
     return 1;
 }
 
-void len_add(SMF* p, s32 len) // 0x800A7814
+void len_add(SMF* p, u32 len) // 0x800A7814
 {
     p->mf_data_loc_0 += len;
 }
@@ -685,7 +685,7 @@ u8 readtrack2(SMF* p) // 0x800A81F4
     return (c1 & 0x80) > 0;
 }
 
-s32 track_head_read(SMF* p)
+u8 track_head_read(SMF* p)
 {
     p->mf_data_loc_0 = readMTrk(p->mf_data_loc_0);
     if (p->mf_data_loc_0 == NO_VALUE)
@@ -982,14 +982,14 @@ u8 midi_smf_main()
     return 0;
 }
 
-void midi_smf_stop(s32 access_value) // 0x800A8C74
+void midi_smf_stop(s32 access_num) // 0x800A8C74
 {
     s32 tr;
 
-    for (tr = 0; tr < smf_song[access_value].mf_tracks_526; tr++)
+    for (tr = 0; tr < smf_song[access_num].mf_tracks_526; tr++)
     {
-        smf_song[access_value].tracks_0[tr].mf_eof_flag_20 = 1;
-        smf_song[access_value].tracks_0[tr].mf_data_loc_0  = 0;
+        smf_song[access_num].tracks_0[tr].mf_eof_flag_20 = 1;
+        smf_song[access_num].tracks_0[tr].mf_data_loc_0  = 0;
     }
 }
 

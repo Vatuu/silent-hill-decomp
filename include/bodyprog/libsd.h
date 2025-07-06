@@ -450,30 +450,30 @@ void smf_vsync();
 
 // smf_mid.c
 
-s32 MemCmp(u8* src, u8* des, s32 num);
-s32 readMThd(u32 loc);
-s32 readMTrk(u32 loc);
-s32 readEOF(u32 loc);
-s32 egetc(SMF* p);
-s32 readvarinum(SMF* p);
+s32 MemCmp(u8* src, u8* des, u32 num);
+u32 readMThd(u32 loc);
+u32 readMTrk(u32 loc);
+u32 readEOF(u32 loc);
+u32 egetc(SMF* p);
+u32 readvarinum(SMF* p);
 
 // `to32bit`/`to16bit`/`len_add` only seem used inside `smf_mid.c`, can probably be removed from header.
-s32  to32bit(char c1, char c2, char c3, char c4);
-s32  to16bit(char c1, char c2);
-s32  read32bit(SMF* p);
+u32  to32bit(u8 c1, u8 c2, u8 c3, u8 c4);
+u32  to16bit(u8 c1, u8 c2);
+u32  read32bit(SMF* p);
 u16  read16bit(SMF* p);
-s32  readheader(s32 file_no);
-void len_add(SMF* p, s32 len);
+u8   readheader(s32 file_no);
+void len_add(SMF* p, u32 len);
 void metaevent(SMF* p, u8 type);
 void sysex(SMF* p);
 void chanmessage(SMF* p, u8 status, u8 c1, u8 c2);
 u8   readtrack(SMF* p);
 u8   readtrack2(SMF* p);
-s32  track_head_read(SMF* p);
+u8   track_head_read(SMF* p);
 void delta_time_conv(SMF* p);
 u8   midi_file_out(s32 file_no);
 u8   midi_smf_main();
-void midi_smf_stop(s32 access_value);
+void midi_smf_stop(s32 access_num);
 s16  midi_smf_stat(s32 access_no); /** Returns SMF_STAT. */
 
 #endif /* _LIBSD_H */
