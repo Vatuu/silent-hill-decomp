@@ -2501,7 +2501,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", SysState_Gameplay_Upd
 void SysState_GamePaused_Update() // 0x800391E8
 {
     D_800A9A68 += g_DeltaTime1;
-    if (((D_800A9A68 >> 11) & 1) == 0)
+    if (((D_800A9A68 >> 11) & (1 << 0)) == 0)
     {
         Gfx_StringSetPosition(SCREEN_POSITION_X(39.25f), SCREEN_POSITION_Y(43.5f));
         Gfx_StringDraw(D_80025394, 99); // "\x07PAUSED"
@@ -2538,7 +2538,100 @@ void SysState_GamePaused_Update() // 0x800391E8
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", SysState_OptionsMenu_Update); // 0x80039344
 
+// TODO: RODATA migration.
+#ifdef NON_MATCHING
+void func_8003943C()
+{
+    s32 roundedVal0;
+    s32 roundedVal1;
+    s32 val0;
+    s32 val1;
+
+    func_8008B3E4(0);
+
+    if (g_SysWork.field_275C > FP_TO(256, Q12_SHIFT))
+    {
+        val0        = g_SysWork.field_275C - FP_TO(256, Q12_SHIFT);
+        roundedVal0 = FP_ROUND_TOWARD_ZERO(val0, Q12_SHIFT);
+        func_8008B438(g_SysWork.field_38.field_F != 2, roundedVal0, 0);
+
+        if (g_SysWork.field_38.field_F == 2)
+        {
+            val1        = g_SysWork.field_2764 - FP_TO(256, Q12_SHIFT);
+            roundedVal1 = FP_ROUND_TOWARD_ZERO(val1, Q12_SHIFT);
+            func_8008B40C(roundedVal1, 0);
+        }
+    }
+    else
+    {
+        func_8008B438(g_SysWork.field_38.field_F != 2, 0, 0);
+
+        if (g_SysWork.field_38.field_F == 2)
+        {
+            func_8008B40C(0, 0);
+        }
+    }
+    
+    switch (g_SavegamePtr->mapOverlayId_A4)
+    {
+        case MapOverlayId_MAP0_S01:
+        case MapOverlayId_MAP0_S02:
+        case MapOverlayId_MAP1_S00:
+        case MapOverlayId_MAP1_S01:
+        case MapOverlayId_MAP1_S02:
+        case MapOverlayId_MAP1_S03:
+        case MapOverlayId_MAP1_S04:
+        case MapOverlayId_MAP1_S05:
+        case MapOverlayId_MAP1_S06:
+        case MapOverlayId_MAP2_S00:
+        case MapOverlayId_MAP2_S01:
+        case MapOverlayId_MAP2_S02:
+        case MapOverlayId_MAP2_S03:
+        case MapOverlayId_MAP2_S04:
+        case MapOverlayId_MAP3_S00:
+        case MapOverlayId_MAP3_S01:
+        case MapOverlayId_MAP3_S02:
+        case MapOverlayId_MAP3_S04:
+        case MapOverlayId_MAP3_S05:
+        case MapOverlayId_MAP3_S06:
+        case MapOverlayId_MAP4_S00:
+        case MapOverlayId_MAP4_S01:
+        case MapOverlayId_MAP4_S02:
+        case MapOverlayId_MAP4_S03:
+        case MapOverlayId_MAP4_S04:
+        case MapOverlayId_MAP4_S05:
+        case MapOverlayId_MAP4_S06:
+        case MapOverlayId_MAP5_S00:
+        case MapOverlayId_MAP5_S01:
+        case MapOverlayId_MAP5_S02:
+        case MapOverlayId_MAP5_S03:
+        case MapOverlayId_MAP6_S00:
+        case MapOverlayId_MAP6_S01:
+        case MapOverlayId_MAP6_S02:
+        case MapOverlayId_MAP6_S03:
+        case MapOverlayId_MAP6_S04:
+        case MapOverlayId_MAP6_S05:
+        case MapOverlayId_MAP7_S00:
+        case MapOverlayId_MAP7_S01:
+        case MapOverlayId_MAP7_S02:
+            break;
+
+        case MapOverlayId_MAP3_S03:
+            func_8004690C(0x5F5);
+            func_8004690C(0x5F7);
+            break;
+
+        case MapOverlayId_MAP0_S00:
+            func_8004690C(0x54E);
+            break;
+
+        default:
+            break;
+    }
+}
+#else
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003943C);
+#endif
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", SysState_StatusMenu_Update); // 0x80039568
 

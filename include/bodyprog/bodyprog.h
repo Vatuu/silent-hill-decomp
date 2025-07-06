@@ -2077,6 +2077,7 @@ void func_8008B3E4(s32 arg0);
 
 void func_8008B40C(s32 arg0, s32 arg1);
 
+/** `arg0` is boolean. */
 void func_8008B438(s32 arg0, s32 arg1, s32 arg2);
 
 s32 func_8008D850();
@@ -2304,6 +2305,8 @@ void func_80038354();
 void GameState_InGame_Update();
 
 void SysState_GamePaused_Update();
+
+void func_8003943C();
 
 void GameState_LoadStatusScreen_Update();
 

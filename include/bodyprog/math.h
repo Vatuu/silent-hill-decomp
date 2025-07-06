@@ -42,6 +42,10 @@
 #define ABS_DIFF(a, b) \
     ((((a) - (b)) < 0) ? ((b) - (a)) : ((a) - (b)))
 
+/** @brief Rounds an integer in a fixed-point Q format toward 0. */
+#define FP_ROUND_TOWARD_ZERO(x, shift) \
+    ((s32)(FP_FROM((x), (shift)) + ((u32)(x) >> 31)) >> 1)
+
 /** @brief Converts an integer to a fixed-point Q format. */
 #define FP_TO(x, shift) \
     ((x) << (shift))
