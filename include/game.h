@@ -824,7 +824,19 @@ typedef struct _SubCharacter
     s8      unk_42[2];
     s16     field_44;
     s8      unk_46[2];
-    s8      unk_48[104];
+    s8      unk_48[4];
+    s32     field_4C; // }
+    s16     field_50; // }
+    s16     field_52; // } Fields used by `func_8008A3E0`. Types guessed for now.
+    s16     field_54; // }
+    s16     field_56; // }
+    s32     field_58; // }
+    VECTOR3 field_5C;
+    s8      unk_68[24]; // Probably `VECTOR3`s too. Indicates array?
+    VECTOR3 field_80;
+    VECTOR3 field_8C;
+    VECTOR3 field_98;
+    s8      unk_A4[12]; // Probably `VECTOR3`s too. Indicates array?
     q19_12  health_B0;
     s32     field_B4;
     s32     field_B8;

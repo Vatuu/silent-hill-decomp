@@ -287,10 +287,17 @@ typedef struct
 
 typedef struct
 {
-    s8 unk_0[15];
+    s8 field_0;
+    s8 unk_1[5];
+    s8 field_6;
+    s8 unk_7;
+    u8 field_8;
+    u8 field_9;
+    s8 unk_A[5];
     s8 field_F;
     u8 field_10;
-    s8 field_14[7];
+    u8 field_11;
+    s8 field_12[6];
 } s_800AD4C8;
 STATIC_ASSERT_SIZEOF(s_800AD4C8, 24);
 
