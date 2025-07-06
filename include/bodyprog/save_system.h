@@ -62,6 +62,14 @@ extern s8 D_800A97D7;
 
 extern s8 D_800A97D8;
 
+extern s8 D_800A97D9;
+
+extern s32 D_800A97DC;
+
+extern s8 D_800A97E0;
+
+extern u32 D_800A97E4[];
+
 /** Declaration of the struct takes 224 bytes (0xE0 bytes in hex).
 * It is possible that the full size of the struct
 * is `0x1C/28` bytes, as `func_8002E94C`
@@ -78,6 +86,10 @@ extern s_800B5508 D_800B5508[];
 extern s_SavegameEntry* g_ActiveSavegameEntry;
 
 extern u8 g_MemCardElementCount[MEMORY_CARD_SLOT_COUNT];
+
+extern s32 D_800BCD18[];
+
+extern s32 D_800BCD20[];
 
 extern u32 D_800BCD34;
 

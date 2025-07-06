@@ -898,6 +898,12 @@ extern TILE D_800A8E74[];
 
 extern s32 D_800A8E94;
 
+extern DR_MODE D_800A8E98[];
+
+extern POLY_G4 D_800A8EB0[];
+
+extern s32 D_800A8F40;
+
 extern s_FsImageDesc D_800A8FF4;
 
 extern s_FsImageDesc D_800A8FFC;
@@ -1106,6 +1112,8 @@ extern s32 D_800B5C30;
 extern s_800B5C40 D_800B5C40[];
 
 // TODO: Overlapped variables
+extern s8 D_800B5C50[][64];
+
 extern s8 D_800B5C54[][64];
 
 extern s8 D_800B5C58[][64];

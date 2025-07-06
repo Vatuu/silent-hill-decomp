@@ -229,7 +229,7 @@ void Gfx_SavegameEntryDrawLocationName(s_SavegameEntry* saveEntry, s32 saveIdx, 
     #define OFFSET_Y SCREEN_POSITION_Y(8.5f)
     #define MARGIN_Y SCREEN_POSITION_Y(22.25f)
 
-    s32 nameIdx = (s8)saveEntry->locationId_8;
+    s32 nameIdx = saveEntry->locationId_8;
 
     u8 xOffsets[] =
     {
