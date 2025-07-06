@@ -610,34 +610,34 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003260C);
 #ifdef NON_MATCHING
 void func_80032904()
 {
-    void func_8003289C(POLY_G4 * arg0, s32 arg1)
+    void func_8003289C(POLY_G4* poly, s32 color)
     {
         s32 i;
         s32 color0;
         s32 color1;
 
-        color0 = arg1 >> 4;
-        color1 = arg1 >> 5;
+        color0 = color >> 4;
+        color1 = color >> 5;
 
-        if (arg1 == 4095)
+        if (color == 4095)
         {
             color1 = 255;
         }
 
         for (i = 0; i < 2; i++)
         {
-            arg0[i * 2].r0 = color0;
-            arg0[i * 2].g0 = color0;
-            arg0[i * 2].b0 = color0;
-            arg0[i * 2].r1 = color0;
-            arg0[i * 2].g1 = color0;
-            arg0[i * 2].b1 = color0;
-            arg0[i * 2].r2 = color1;
-            arg0[i * 2].g2 = color1;
-            arg0[i * 2].b2 = color1;
-            arg0[i * 2].r3 = color1;
-            arg0[i * 2].g3 = color1;
-            arg0[i * 2].b3 = color1;
+            poly[i * 2].r0 = color0;
+            poly[i * 2].g0 = color0;
+            poly[i * 2].b0 = color0;
+            poly[i * 2].r1 = color0;
+            poly[i * 2].g1 = color0;
+            poly[i * 2].b1 = color0;
+            poly[i * 2].r2 = color1;
+            poly[i * 2].g2 = color1;
+            poly[i * 2].b2 = color1;
+            poly[i * 2].r3 = color1;
+            poly[i * 2].g3 = color1;
+            poly[i * 2].b3 = color1;
         }
     }
 
@@ -650,7 +650,7 @@ void func_80032904()
 
     vcSetEvCamRate(D_800A8F40);
 
-    if (g_SysWork.field_22A0 & 1)
+    if (g_SysWork.field_22A0 & (1 << 0))
     {
         return;
     }
@@ -658,42 +658,46 @@ void func_80032904()
     switch (g_SysWork.field_30)
     {
         case 18:
-            g_SysWork.field_30 += 1;
+            g_SysWork.field_30++;
 
         case 19:
-            D_800A8F40 += FP_MULTIPLY((s64)g_DeltaTime0, 0x1000, Q12_SHIFT);
+            D_800A8F40 += FP_MULTIPLY_FLOAT((s64)g_DeltaTime0, 1.0f, Q12_SHIFT);
+
             if (D_800A8F40 >= 0xFFF)
             {
                 D_800A8F40 = 0xFFF;
-                g_SysWork.field_30 += 1;
+                g_SysWork.field_30++;
             }
+
             func_8003289C(poly, D_800A8F40);
             break;
 
         case 20:
         case 22:
             D_800A8F40 = 0xFFF;
-            g_SysWork.field_30 += 1;
+            g_SysWork.field_30++;
 
         case 21:
             func_8003289C(poly, D_800A8F40);
             break;
 
         case 23:
-            D_800A8F40 -= FP_MULTIPLY((s64)g_DeltaTime0, 0x1000, Q12_SHIFT);
+            D_800A8F40 -= FP_MULTIPLY_FLOAT((s64)g_DeltaTime0, 1.0f, Q12_SHIFT);
+
             if (D_800A8F40 <= 0)
             {
                 D_800A8F40         = 0;
                 g_SysWork.field_30 = 0;
                 return;
             }
+
             func_8003289C(poly, D_800A8F40);
             break;
 
         case 0:
-            D_800A8F40         = 0;
-            g_SysWork.field_30 = 1;
-            g_SysWork.flags_22A4 &= ~8;
+            D_800A8F40            = 0;
+            g_SysWork.field_30    = 1;
+            g_SysWork.flags_22A4 &= ~(1 << 3);
             return;
 
         case 1:
@@ -707,7 +711,7 @@ void func_80032904()
 
     if (!(g_SysWork.flags_22A4 & 8))
     {
-        vcChangeProjectionValue(g_GameWork.gsScreenHeight_58A + FP_MULTIPLY(0x179 - g_GameWork.gsScreenHeight_58A, D_800A8F40, Q12_SHIFT));
+        vcChangeProjectionValue(g_GameWork.gsScreenHeight_58A + FP_MULTIPLY(377 - g_GameWork.gsScreenHeight_58A, D_800A8F40, Q12_SHIFT));
     }
 }
 #else
@@ -1097,12 +1101,12 @@ s32 func_800334D8(s32 idx) // 0x800334D8
 
 // TODO: RODATA migration
 #ifdef NON_MATCHING
-static inline s32 wrap_idx(s32 idx)
+static inline s32 WrapIdx(s32 idx)
 {
-    return idx < 0 ? idx + 3 : idx;
+    return (idx < 0) ? (idx + 3) : idx;
 }
 
-s32 func_80033548()
+s32 func_80033548() // 0x80033548
 {
     u32                 sp10[2];
     s32                 sp18[8];
@@ -1144,16 +1148,16 @@ s32 func_80033548()
 
     for (i = 0; i < 8; i += 4)
     {
-        temp_a2 = (D_800BCD34 >> i * 3) & 7;
-        sp3C *= temp_a2;
-        temp_t0 = (sp38 >> i * 3) & 7;
-        var_a0  = wrap_idx(i);
+        temp_a2 = (D_800BCD34 >> (i * 3)) & 0x7;
+        sp3C   *= temp_a2;
+        temp_t0 = (sp38 >> (i * 3)) & 0x7;
+        var_a0  = WrapIdx(i);
 
         g_ActiveSavegameEntry                       = GetActiveSavegameEntry(var_a0 >> 2);
         g_SlotElementCounts[var_a0 >> 2]            = 0;
         g_MemCardElementCount[var_a0 >> 2]          = 0;
         sp18[i]                                     = 0;
-        g_ActiveSavegameEntry->totalSavegameCount_0 = -1;
+        g_ActiveSavegameEntry->totalSavegameCount_0 = NO_VALUE;
         g_ActiveSavegameEntry->field_5              = i;
         g_ActiveSavegameEntry->fileIdx_6            = 0;
         g_ActiveSavegameEntry->elementIdx_7         = 0;
@@ -1175,12 +1179,12 @@ s32 func_80033548()
         {
             if (temp_t0 == 4 && temp_a2 != temp_t0)
             {
-                sp10[wrap_idx(i) >> 2] = 1;
+                sp10[WrapIdx(i) >> 2] = 1;
             }
 
             if (temp_t0 != 4 && temp_a2 == 4)
             {
-                sp10[wrap_idx(i) >> 2] = 1;
+                sp10[WrapIdx(i) >> 2] = 1;
             }
         }
 
@@ -1189,59 +1193,59 @@ s32 func_80033548()
             switch (temp_a2)
             {
                 case 1:
-                    g_ActiveSavegameEntry->type_4 = 0;
+                    g_ActiveSavegameEntry->type_4 = SavegameEntryType_NoMemCard;
                     break;
 
                 case 4:
                     if (D_800BCD38 == 2)
                     {
                         g_ActiveSavegameEntry->totalSavegameCount_0 = 31600;
-                        var_a0                                      = wrap_idx(i);
+                        var_a0                                      = WrapIdx(i);
                         g_MemCardElementCount[var_a0 >> 2]++;
                     }
-                    g_ActiveSavegameEntry->type_4 = 1;
+                    g_ActiveSavegameEntry->type_4 = SavegameEntryType_Unk1;
                     break;
 
                 case 5:
-                    g_ActiveSavegameEntry->type_4 = 2;
+                    g_ActiveSavegameEntry->type_4 = SavegameEntryType_CorruptedMemCard;
                     break;
 
                 case 0:
                 case 2:
-                    g_ActiveSavegameEntry->type_4 = 3;
+                    g_ActiveSavegameEntry->type_4 = SavegameEntryType_LoadMemCard;
                     break;
             }
 
-            g_SlotElementCounts[wrap_idx(i) >> 2]++;
+            g_SlotElementCounts[WrapIdx(i) >> 2]++;
             g_ActiveSavegameEntry++;
         }
         else if (func_8002EA28(i) == 0)
         {
             if (D_800BCD38 == 3)
             {
-                g_ActiveSavegameEntry->type_4 = 5;
+                g_ActiveSavegameEntry->type_4 = SavegameEntryType_Unk5;
             }
             else if (func_8002EA78(i) == 0)
             {
-                g_ActiveSavegameEntry->type_4 = 4;
+                g_ActiveSavegameEntry->type_4 = SavegameEntryType_Unk4;
             }
             else
             {
                 g_ActiveSavegameEntry->totalSavegameCount_0 = 31700;
-                g_ActiveSavegameEntry->type_4               = 10;
+                g_ActiveSavegameEntry->type_4               = SavegameEntryType_NewFile;
 
-                var_a0 = wrap_idx(i);
+                var_a0 = WrapIdx(i);
                 g_MemCardElementCount[var_a0 >> 2]++;
             }
 
-            g_SlotElementCounts[wrap_idx(i) >> 2]++;
+            g_SlotElementCounts[WrapIdx(i) >> 2]++;
             g_ActiveSavegameEntry++;
         }
         else if (D_800BCD38 == 3 && func_800334D8(i) != 0)
         {
-            g_ActiveSavegameEntry->type_4 = 7;
+            g_ActiveSavegameEntry->type_4 = SavegameEntryType_CorruptedSave;
 
-            var_a0 = wrap_idx(i);
+            var_a0 = WrapIdx(i);
             g_SlotElementCounts[var_a0 >> 2]++;
             g_ActiveSavegameEntry++;
         }
@@ -1251,7 +1255,7 @@ s32 func_80033548()
 
             for (j = 0; j < 15; j++)
             {
-                temp_v0_4 = (D_800A97E4[i] >> (j * 2)) & 3;
+                temp_v0_4 = (D_800A97E4[i] >> (j * 2)) & 0x3;
 
                 if (temp_v0_4 == 0)
                 {
@@ -1264,9 +1268,9 @@ s32 func_80033548()
                     g_ActiveSavegameEntry->field_5              = i;
                     g_ActiveSavegameEntry->fileIdx_6            = j;
                     g_ActiveSavegameEntry->elementIdx_7         = 0;
-                    g_ActiveSavegameEntry->type_4               = 7;
+                    g_ActiveSavegameEntry->type_4               = SavegameEntryType_CorruptedSave;
 
-                    var_a0 = wrap_idx(i);
+                    var_a0 = WrapIdx(i);
 
                     g_MemCardElementCount[var_a0 >> 2]++;
                     D_800BCD28--;
@@ -1282,18 +1286,17 @@ s32 func_80033548()
 
                         g_ActiveSavegameEntry->totalSavegameCount_0 = savegameMetaPtr->unk_0;
                         g_ActiveSavegameEntry->field_5              = i;
-
-                        g_ActiveSavegameEntry->fileIdx_6       = j;
-                        g_ActiveSavegameEntry->elementIdx_7    = k;
-                        g_ActiveSavegameEntry->savegameCount_2 = savegameMetaPtr->savegameCount_8;
-                        g_ActiveSavegameEntry->locationId_8    = savegameMetaPtr->locationId_A;
-                        g_ActiveSavegameEntry->field_C         = savegameMetaPtr;
+                        g_ActiveSavegameEntry->fileIdx_6            = j;
+                        g_ActiveSavegameEntry->elementIdx_7         = k;
+                        g_ActiveSavegameEntry->savegameCount_2      = savegameMetaPtr->savegameCount_8;
+                        g_ActiveSavegameEntry->locationId_8         = savegameMetaPtr->locationId_A;
+                        g_ActiveSavegameEntry->field_C              = savegameMetaPtr;
 
                         if (savegameMetaPtr->unk_0 > 0)
                         {
-                            g_ActiveSavegameEntry->type_4 = 8;
+                            g_ActiveSavegameEntry->type_4 = SavegameEntryType_Save;
 
-                            var_v1 = wrap_idx(i);
+                            var_v1 = WrapIdx(i);
 
                             g_MemCardElementCount[var_v1 >> 2]++;
                             g_SlotElementCounts[var_v1 >> 2]++;
@@ -1302,10 +1305,10 @@ s32 func_80033548()
                         else if (D_800BCD38 == 2 && sp18[i] == 0)
                         {
                             sp18[i]                                     = 1;
-                            g_ActiveSavegameEntry->type_4               = 9;
+                            g_ActiveSavegameEntry->type_4               = SavegameEntryType_NewSave;
                             g_ActiveSavegameEntry->totalSavegameCount_0 = 31900;
 
-                            var_a1 = wrap_idx(i);
+                            var_a1 = WrapIdx(i);
                             g_MemCardElementCount[var_a1 >> 2]++;
                             g_SlotElementCounts[var_a1 >> 2]++;
                             g_ActiveSavegameEntry++;
@@ -1321,12 +1324,12 @@ s32 func_80033548()
                 sp18[i]                                     = 1;
                 g_ActiveSavegameEntry->totalSavegameCount_0 = 31800;
                 temp_v1_7                                   = D_800A97E4[i];
-                temp_v0_6                                   = temp_v1_7 & 3;
+                temp_v0_6                                   = temp_v1_7 & 0x3;
 
-                for (j = 0; (temp_v0_6 == 3 || temp_v0_6 == 1); j++)
+                for (j = 0; temp_v0_6 == 3 || temp_v0_6 == 1; j++)
                 {
                     j++;
-                    temp_v0_6 = (temp_v1_7 >> (j * 2)) & 3;
+                    temp_v0_6 = (temp_v1_7 >> (j * 2)) & 0x3;
                     j--;
                 }
 
@@ -1334,37 +1337,37 @@ s32 func_80033548()
                 g_ActiveSavegameEntry->fileIdx_6 = j;
 
                 g_ActiveSavegameEntry->elementIdx_7 = 0;
-                g_ActiveSavegameEntry->type_4       = 10;
+                g_ActiveSavegameEntry->type_4       = SavegameEntryType_NewFile;
 
-                var_a0 = wrap_idx(i);
+                var_a0 = WrapIdx(i);
 
                 g_MemCardElementCount[var_a0 >> 2]++;
 
-                temp_v0_4 = ((D_800A97E4[i]) >> (j * 2)) & 3; // Not needed here but fixes stack order.
+                temp_v0_4 = ((D_800A97E4[i]) >> (j * 2)) & 0x3; // Not needed here but fixes stack order.
 
                 g_SlotElementCounts[var_a0 >> 2]++;
                 g_ActiveSavegameEntry++;
             }
         }
 
-        g_MemCardsTotalElementCount += g_MemCardElementCount[wrap_idx(i) >> 2];
+        g_MemCardsTotalElementCount += g_MemCardElementCount[WrapIdx(i) >> 2];
     }
 
     D_800BCD28 += g_MemCardsTotalElementCount;
 
     for (i = 0; i < 8; i += 4)
     {
-        temp_v0_8 = (D_800BCD34 >> i * 3) & 7;
+        temp_v0_8 = (D_800BCD34 >> (i * 3)) & 0x7;
         if (temp_v0_8 == 0 || temp_v0_8 == 2)
         {
-            D_800A97E0            = (wrap_idx(i) >> 2) == 0;
+            D_800A97E0            = (WrapIdx(i) >> 2) == 0;
             g_ActiveSavegameEntry = GetActiveSavegameEntry(D_800A97E0);
 
-            if (g_ActiveSavegameEntry->type_4 == 0)
+            if (g_ActiveSavegameEntry->type_4 == SavegameEntryType_NoMemCard)
             {
                 D_800A97DC = 24;
             }
-            else if (g_ActiveSavegameEntry->type_4 == 1)
+            else if (g_ActiveSavegameEntry->type_4 == SavegameEntryType_Unk1)
             {
                 if (D_800BCD38 == 2)
                 {
@@ -1388,31 +1391,34 @@ s32 func_80033548()
     if (D_800A97DC == 0)
     {
         sp10[D_800A97E0 == 0] = 1;
-        D_800A97E0            = -1;
+        D_800A97E0            = NO_VALUE;
     }
 
     if (D_800A97E0 >= 0)
     {
         g_ActiveSavegameEntry = GetActiveSavegameEntry(D_800A97E0 == 0);
 
-        g_ActiveSavegameEntry->totalSavegameCount_0 = -1;
+        g_ActiveSavegameEntry->totalSavegameCount_0 = NO_VALUE;
         g_ActiveSavegameEntry->field_5              = 0;
         g_ActiveSavegameEntry->fileIdx_6            = 0;
         g_ActiveSavegameEntry->elementIdx_7         = 0;
-        g_ActiveSavegameEntry->type_4               = 3;
+        g_ActiveSavegameEntry->type_4               = SavegameEntryType_LoadMemCard;
         g_SlotElementCounts[D_800A97E0 == 0]        = 1;
         g_ActiveSavegameEntry                       = GetActiveSavegameEntry(D_800A97E0);
 
-        if ((g_ActiveSavegameEntry->type_4 == 1 && D_800BCD38 == 2) || g_ActiveSavegameEntry->type_4 == 8 ||
-            g_ActiveSavegameEntry->type_4 == 9 || g_ActiveSavegameEntry->type_4 == 10)
+        if ((g_ActiveSavegameEntry->type_4 == SavegameEntryType_Unk1 && D_800BCD38 == SavegameEntryType_CorruptedMemCard) ||
+            g_ActiveSavegameEntry->type_4 == SavegameEntryType_Save ||
+            g_ActiveSavegameEntry->type_4 == SavegameEntryType_NewSave ||
+            g_ActiveSavegameEntry->type_4 == SavegameEntryType_NewFile)
         {
-            g_ActiveSavegameEntry->totalSavegameCount_0 = -1;
+            g_ActiveSavegameEntry->totalSavegameCount_0 = NO_VALUE;
             g_ActiveSavegameEntry->field_5              = 0;
             g_ActiveSavegameEntry->fileIdx_6            = 0;
             g_ActiveSavegameEntry->elementIdx_7         = 0;
-            g_ActiveSavegameEntry->type_4               = 3;
+            g_ActiveSavegameEntry->type_4               = SavegameEntryType_LoadMemCard;
             g_SlotElementCounts[D_800A97E0]             = 1;
         }
+
         sp3C = 0;
     }
 
@@ -1431,6 +1437,7 @@ s32 func_80033548()
                     D_800BCD18[j] = g_ActiveSavegameEntry->totalSavegameCount_0;
                     D_800BCD20[j] = i;
                 }
+
                 g_ActiveSavegameEntry++;
             }
 
@@ -3665,7 +3672,37 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003F170);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003F4DC);
 
+// TODO: RODATA migration.
+#ifdef NON_MATCHING
+u32 func_8003F654(s_func_8003F654* arg0)
+{
+    switch (arg0->field_0)
+    {
+        default:
+        case PrimitiveType_None:
+            break;
+
+        case PrimitiveType_S8:
+            return *arg0->field_4;
+
+        case PrimitiveType_U8:
+            return *(u8*)arg0->field_4;
+
+        case PrimitiveType_S16:
+            return *(s16*)arg0->field_4;
+
+        case PrimitiveType_U16:
+            return *(u16*)arg0->field_4;
+
+        case PrimitiveType_S32:
+            return *(s32*)arg0->field_4;
+    }
+
+    return 0;
+}
+#else
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003F654);
+#endif
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003F6F0);
 

@@ -64,7 +64,7 @@ extern s8 D_800A97D8;
 
 extern s8 D_800A97D9;
 
-extern s32 D_800A97DC;
+extern s32 D_800A97DC; // `e_SavegameEntryType`
 
 extern s8 D_800A97E0;
 

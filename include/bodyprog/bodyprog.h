@@ -26,6 +26,17 @@
 #define SFX_CANCEL  0x51A
 #define SFX_CONFIRM 0x51B
 
+/** Used by `func_8003F654` to cast a specific field to the desired type. */
+typedef enum _PrimitiveType
+{
+    PrimitiveType_None = 0,
+    PrimitiveType_S8   = 1,
+    PrimitiveType_U8   = 2,
+    PrimitiveType_S16  = 3,
+    PrimitiveType_U16  = 4,
+    PrimitiveType_S32  = 5
+} s_PrimitiveType;
+
 typedef struct 
 {
     s32  field_0;
@@ -35,6 +46,12 @@ typedef struct
     s8   field_24;
     s8   field_25;
 } s_func_8003C8F8;
+
+typedef struct
+{
+    s32 field_0;
+    s8* field_4;
+} s_func_8003F654;
 
 typedef struct
 {
@@ -1549,8 +1566,6 @@ void func_80032D1C();
 /** Bodyprog entrypoint. Called by `main`. */
 void MainLoop();
 
-s32 func_80033548();
-
 void func_80035338(s32 arg0, s8 arg1, u32 arg2, s32 arg3); // arg3 type assumed.
 
 /** Unknown bodyprog func. Called by `Fs_QueuePostLoadAnm`. */
@@ -1603,6 +1618,8 @@ void func_8003ED74(s32 arg0, s32 arg1);
 void func_8003EDA8();
 
 void func_8003EF10(s32 idx0, s32 idx1, s32 arg4, s32 arg5, s32 arg6, s32 arg7);
+
+u32 func_8003F654(s_func_8003F654* arg0);
 
 /** Computes the weighted average of `a` and `b`. */
 s32 Math_GetWeightedAverage(s32 a, s32 b, s32 weight);
@@ -1826,6 +1843,9 @@ void func_8004BCDC(SVECTOR* arg0, GsCOORDINATE2* arg1);
 void func_8004BFE8();
 
 void func_8004C040();
+
+/** Returns `true` if player has usable ammo in inventory (i.e. ammo + gun needed for it, or gun with ammo loaded). */
+s32 func_8004C328();
 
 // TODO: Can probably create status enums for the below funcs' return values to avoid magic,
 // but other funcs using similar return patterns should be identified first if they exist.
@@ -2169,6 +2189,8 @@ void Settings_RestoreDefaults();
 void Settings_RestoreControlDefaults(s32 arg0);
 
 s32 func_800334D8(s32 idx);
+
+s32 func_80033548();
 
 /** Updates the savegame buffer with the current player SysWork info (position, rotation, health, event index). */
 void SysWork_SavegameUpdatePlayer();

@@ -2757,8 +2757,8 @@ void vcSetDataToVwSystem(VC_WORK* w_p, VC_CAM_MV_TYPE cam_mv_type) // 0x80085884
         func_80096C94(&noise_ang, &noise_mat);
 
         noise_mat.m[0][0] += vcCamMatNoise(12, FP_RADIAN((PI / 18.0f) * 7.0f),  FP_RADIAN(PI),                    vcSelfViewTimer); // Noise: 0.004f
-        noise_mat.m[0][1] += vcCamMatNoise(12, FP_RADIAN((PI / 9.0f) * 3.0f),   FP_RADIAN((PI / 9.0f) * -8.0f),   vcSelfViewTimer); // Noise: 0.004f
-        noise_mat.m[0][2] += vcCamMatNoise(12, FP_RADIAN((PI / 9.0f) * 3.0f),   FP_RADIAN((PI / 9.0f) * 4.0f),    vcSelfViewTimer); // Noise: 0.004f
+        noise_mat.m[0][1] += vcCamMatNoise(12, FP_RADIAN(PI / 3.0f),            FP_RADIAN((PI / 9.0f) * -8.0f),   vcSelfViewTimer); // Noise: 0.004f
+        noise_mat.m[0][2] += vcCamMatNoise(12, FP_RADIAN(PI / 3.0f),            FP_RADIAN((PI / 9.0f) * 4.0f),    vcSelfViewTimer); // Noise: 0.004f
         noise_mat.m[1][0] += vcCamMatNoise(12, FP_RADIAN((PI / 18.0f) * 5.0f),  FP_RADIAN((PI / 18.0f) * 5.0f),   vcSelfViewTimer); // Noise: 0.004f
         noise_mat.m[1][1] += vcCamMatNoise(12, FP_RADIAN(PI),                   FP_RADIAN((PI / 9.0f) * 2.0f),    vcSelfViewTimer); // Noise: 0.004f
         noise_mat.m[1][2] += vcCamMatNoise(12, FP_RADIAN((PI / 36.0f) * 13.0f), FP_RADIAN((PI / 18.0f) * -17.0f), vcSelfViewTimer); // Noise: 0.004f

@@ -169,8 +169,8 @@ void GameState_OptionScreen_Update() // 0x801E2D44
             {
                 // TODO: Likely Game_StateSetPrevious inline, but `gameState_594`/`gameStatePrev_590` loads inside are switched?
 
-                e_GameState prevPrevState = g_GameWork.gameStatePrev_590;
-                e_GameState prevState     = g_GameWork.gameState_594;
+                e_GameState prevGameState = g_GameWork.gameStatePrev_590;
+                e_GameState gameState     = g_GameWork.gameState_594;
 
                 g_SysWork.timer_1C              = 0;
                 g_SysWork.timer_20              = 0;
@@ -179,9 +179,9 @@ void GameState_OptionScreen_Update() // 0x801E2D44
 
                 SysWork_StateSetNext(SysState_Gameplay);
 
-                g_GameWork.gameStateStep_598[0] = prevState;
-                g_GameWork.gameState_594        = prevPrevState;
-                g_GameWork.gameStatePrev_590    = prevState;
+                g_GameWork.gameStateStep_598[0] = gameState;
+                g_GameWork.gameState_594        = prevGameState;
+                g_GameWork.gameStatePrev_590    = gameState;
                 g_GameWork.gameStateStep_598[0] = 0;
             }
 
