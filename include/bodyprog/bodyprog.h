@@ -1170,6 +1170,8 @@ extern s32 g_Gfx_ScreenFade;
 
 extern s16 D_800BCD28;
 
+extern s32 D_800BCD48;
+
 extern s32 D_800BCD5C;
 
 extern s8 D_800BCD78;
@@ -1902,7 +1904,7 @@ void func_8005DD44(s32, VECTOR3*, s32, s8); // Types assumed.
 
 void func_8005DE0C(s32, VECTOR3*, s32, s32, s32); // Types assumed.
 
-void func_8005E0DC(s32 arg0); // Types assumed.
+void func_8005E0DC(s32 mapIdx); // Types assumed.
 
 void func_8005E89C();
 
@@ -2229,6 +2231,9 @@ void Joy_ControllerDataUpdate();
 void func_800348C0();
 
 void GameState_MainLoadScreen_Update();
+
+/** Handles `g_GameWork.gameStateStep_598[0]`. */
+void func_80034964();
 
 void func_80034E58();
 

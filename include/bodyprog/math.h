@@ -54,8 +54,8 @@
 #define FP_FROM(x, shift) \
     ((x) >> (shift))
 
-/** @brief Rounds an integer in a fixed-point Q format toward 0. */
-#define FP_ROUND_TOWARD_ZERO(x, shift) \
+/** @brief Converts an integer from a fixed-point Q format, rounded toward 0. */
+#define FP_ROUND_TO_ZERO(x, shift) \
     ((s32)(FP_FROM((x), (shift)) + ((u32)(x) >> 31)) >> 1)
 
 /** @brief Multiplies two integers in a fixed-point Q format and converts the result from the fixed-point Q format. */
