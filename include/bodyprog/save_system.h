@@ -152,11 +152,11 @@ u8 Savegame_ChecksumGenerate(s8* saveData, s32 saveDataLength);
 /** Generates a save filename for the given save number. */
 void Savegame_FilenameGenerate(char* dest, s32 saveNum);
 
-void func_80030334(s32 arg0, s32 arg1);
+s32 func_8003030C(s32 deviceId);
 
-void func_80030370(s32* arg0, char* arg1, char* arg2);
+s32 func_80030334(s32 deviceId, char* fileName);
 
-// void func_8003030C(s32 arg0);
+s32 func_80030370(s32 deviceId, char* oldName, char* newName);
 
 void func_800303E4();
 
@@ -192,6 +192,6 @@ s32 func_800308D4();
 
 s32 func_800309FC();
 
-void func_800314A4(s32 arg0, s_80024C90* arg1);
+void Savegame_DevicePathGenerate(s32 deviceId, char* result);
 
 #endif

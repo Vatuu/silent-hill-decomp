@@ -245,7 +245,7 @@ u8 Savegame_ChecksumGenerate(s8* saveData, s32 saveDataLength) // 0x8002FFD0
     return checksum;
 }
 
-void Savegame_FilenameGenerate(char* dest, s32 saveNum)
+void Savegame_FilenameGenerate(char* dest, s32 saveNum) // 0x80030000
 {
     // TODO: likely local .rodata for this func.
     extern char D_80024C0C[]; // "BA"
@@ -270,41 +270,38 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/save", func_800300B4);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/save", func_80030288);
 
-void func_8003030C(s32 arg0) // 0x8003030C
+s32 func_8003030C(s32 deviceId) // 0x8003030C
 {
-    s_80024C90 sp10;
-    s_80024C90 unused; 
+    char buf[16];
 
-    func_800314A4(arg0, &sp10); 
+    Savegame_DevicePathGenerate(deviceId, buf);
 
-    format(&sp10);
+    return format(buf);
 }
 
-void func_80030334(s32 arg0, s32 arg1) // 0x80030334
+s32 func_80030334(s32 deviceId, char* fileName) // 0x80030334
 {
-    s_80024C90 sp10;
-    s_80024C90 unused1;
-    s_80024C90 unused2;
-    s_80024C90 unused3;
+    char buf[32];
 
-    func_800314A4(arg0, &sp10); 
+    Savegame_DevicePathGenerate(deviceId, buf);
 
-    strcat(&sp10, arg1); 
-    erase(&sp10); 
+    strcat(buf, fileName);
+
+    return erase(buf);
 }
 
-void func_80030370(s32* arg0, char* arg1, char* arg2)
+s32 func_80030370(s32 deviceId, char* oldName, char* newName)
 {
-    char* old[7];
-    char* new[7];
+    char oldBuf[32];
+    char newBuf[32];
 
-    func_800314A4(arg0, old);
-    func_800314A4(arg0, new);
+    Savegame_DevicePathGenerate(deviceId, oldBuf);
+    Savegame_DevicePathGenerate(deviceId, newBuf);
 
-    strcat(old, arg1);
-    strcat(new, arg2);
+    strcat(oldBuf, oldName);
+    strcat(newBuf, newName);
 
-    rename(old, new);
+    return rename(oldBuf, newBuf);
 }
 
 void func_800303E4()
@@ -437,10 +434,10 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/save", func_80031184);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/save", func_80031260);
 
-void func_800314A4(s32 arg0, s_80024C90* arg1) // 0x800314A4
+void Savegame_DevicePathGenerate(s32 deviceId, char* result) // 0x800314A4
 {
-    *arg1 = D_80024C90;
+    memcpy(result, D_80024C90, 6); // TODO: .rodata "buXX:" string
 
-    arg1->field_2 = ((arg0 & (1 << 2)) >> 2) + 48;
-    arg1->field_3 = (arg0 & 0x3) + 48;
+    result[2] = '0' + ((deviceId & (1 << 2)) >> 2); // Packed device ID?
+    result[3] = '0' + (deviceId & 3);
 }
