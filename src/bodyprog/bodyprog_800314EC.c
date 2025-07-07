@@ -2550,7 +2550,39 @@ void func_80035E1C() // 0x80035E1C
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_80035E44); // 0x80035E44
+s32 func_80035E44()
+{
+    s32 i;
+    u16 val;
+    
+    for (i = 0; i < 8; i++)
+    {
+        if (g_SysWork.field_2748[i] != 0) 
+        {
+            return 0;
+        }
+    }
+
+    val = func_80045BC8();
+    if (val == 0) 
+    {
+        return 1;
+    }
+    else if (val == 0xFFFF) 
+    {
+        return 0;
+    }
+
+    for (i = 1; i < 8; i++) 
+    {
+        if (func_80046BB4(i))
+        {
+            return 0;
+        }
+    }
+
+    return 1;
+}
 
 void func_80035ED0() // 0x80035ED0
 {

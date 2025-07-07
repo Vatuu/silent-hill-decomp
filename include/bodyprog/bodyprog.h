@@ -2294,6 +2294,9 @@ void func_80035DB4(s32);
 
 void func_80035E1C();
 
+/** Returns boolean status. */
+s32 func_80035E44();
+
 void func_80035ED0();
 
 void func_800363D0();
