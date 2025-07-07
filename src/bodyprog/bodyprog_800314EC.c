@@ -2601,7 +2601,224 @@ void func_80035ED0() // 0x80035ED0
     g_SysWork.field_2748[8] = 0;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_80035F4C); // 0x80035F4C
+void func_80035F4C(s32 arg0, s32 arg1, u8* arg2) // 0x80035F4C
+{
+    s16  temp_v0;
+    s32  var_a0;
+    s32  var_a2;
+    s32  var_a3;
+    s32  var_v1;
+    s32  temp_s2;
+    s32  i;
+    s32  var_s1;
+    s32  var_s3;
+    s32  var_s4;
+    s32  var_t0;
+    s32  var_v0_2;
+    s32  temp_s7;
+    s16* ptr;
+    u8*  var_t4;
+
+    var_s1 = arg0;
+    var_t4 = arg2;
+    ptr    = g_SysWork.field_2748;
+
+    if (var_t4 == NULL)
+    {
+        var_t4 = D_800A99A4;
+    }
+
+    if (g_SysWork.player_4C.chara_0.health_B0 <= 0 || g_SysWork.sysState_8 == SysState_GameOver)
+    {
+        var_s1 &= 1 << 8;
+        var_s1 |= 1 << 0;
+        arg1    = 0x333;
+    }
+    
+    if ((var_s1 & (1 << 8)) == 0)
+    {
+        if (D_800A9A1C > 0 && (g_SavegamePtr->flags_AC & (1 << 0)))
+        {
+            g_SysWork.field_22A0 |= 1 << 2;
+        }
+    }
+
+    if (g_SysWork.field_22A0 & (1 << 7))
+    {
+        var_s1                = (1 << 0) | (1 << 9);
+        g_SysWork.field_22A0 |= 1 << 1;
+    }
+
+    if (var_s1 & (1 << 0))
+    {
+        var_s1 &= (1 << 8) | (1 << 9);
+    }
+    else
+    {
+        var_s1 ^= 1 << 0;
+    }
+
+    for (i = 0, temp_s7 = 8; i < 9; i++)
+    {
+        var_a3 = ptr[i];
+
+        if (i == temp_s7) 
+        {
+            var_t0 = FP_MULTIPLY_FLOAT((s64)g_DeltaTime1, 0.25f, Q12_SHIFT);
+            if (g_SysWork.field_22A0 & (1 << 1)) 
+            {
+                var_a0 = 0x1000;
+            } 
+            else if (g_SysWork.field_22A0 & (1 << 2)) 
+            {
+                var_a0 = 0xC00;
+            } 
+            else 
+            {
+                var_a0 = (g_SysWork.field_22A0 << 8) & 0x800;
+            }
+        } 
+        else 
+        {
+            if ((var_s1 >> i) & (1 << 0)) 
+            {
+                var_t0 = FP_MULTIPLY(g_DeltaTime1, arg1, Q12_SHIFT - 1); // Should be multiplied by 2 but doesn't match.
+                var_a0 = 0x1000;
+            } 
+            else 
+            {
+                var_t0 = FP_MULTIPLY(g_DeltaTime1, arg1, Q12_SHIFT);
+                var_a0 = 0;
+            }
+        }
+
+        var_a2 = var_a0 - var_a3;
+
+        if (var_a3 != var_a0) 
+        {
+            if (var_t0 < var_a2) 
+            {
+                var_a3 += var_t0;
+            } 
+            else if (var_a2 >= -var_t0) 
+            {
+                var_a3 = var_a0;
+            }
+            else
+            {
+                var_a3 -= var_t0;
+            }
+        }
+
+        ptr[i] = var_a3;
+    }
+
+    var_s3  = 0;
+    temp_v0 = 0x1000 - ptr[8];
+
+    for (i = 0; i < 8; i++)
+    {
+        var_v1  = ptr[i];
+        var_s3 |= var_v1 != 0;
+
+        if (i == 0) 
+        {
+            var_v1 = FP_MULTIPLY((s64)var_v1, temp_v0, Q12_SHIFT);
+        }
+
+        var_v1 = FP_MULTIPLY((s64)var_v1, 0x7F, Q12_SHIFT);
+        if (var_v1 >= 0x80) 
+        {
+            var_v1 = 0x7F;
+        }
+
+        var_v1 = (var_v1 * var_t4[i]) >> 7;
+        if (var_v1 >= 0x80) 
+        {
+            var_v1 = 0x7F;
+        }
+
+        D_800BCD50[i] = var_v1;
+    }
+
+    var_s4 = 0;
+    temp_s2 = func_80045BC8();
+
+    var_v0_2 = temp_s2;
+    var_v0_2 = temp_s2 != 0 && var_v0_2 != 0xFFFF;
+
+    if (var_s3 != 0) 
+    {
+        switch (D_800A99A0) 
+        {
+            case 3:
+                func_80035E1C();
+
+                if (var_v0_2 != 0) 
+                {
+                    D_800A99A0 = 0;
+                } 
+                else 
+                {
+                    func_80035924();
+                    D_800A99A0 = 2;
+                }
+                break;
+
+            case 2:
+                func_80035E1C();
+                D_800A99A0 = 1;
+                break;
+
+            case 1:
+                if (var_v0_2 != 0) 
+                {
+                    func_80035ED0();
+                } 
+                else 
+                {
+                    func_80035E1C();
+                }
+
+                D_800A99A0 = 0;
+                break;
+
+            case 0:
+                var_s4 = 1;
+                break;
+        }
+    } 
+    else if (var_s1 & (1 << 9)) 
+    {
+        if (D_800A99A0 != 3) 
+        {
+            D_800A99A0 = 3;
+            Sd_EngineCmd(0x12u);
+        }
+    } 
+    else if (D_800A99A0 == 0) 
+    {
+        var_s4 = 1;
+    }
+
+    if (var_s4 != 0) 
+    {
+        if (var_v0_2 != 0) 
+        {
+            for (i = 0; i < 8; i++)
+            {
+                func_80046C54(i, D_800BCD50[i]);
+            }
+        } 
+        else 
+        {
+            func_80035E1C();
+            D_800A99A0 = 3;
+        }
+    }
+
+    D_800BCD5C = 1;
+}
 
 void func_800363D0() // 0x800363D0
 {

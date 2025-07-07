@@ -1006,6 +1006,10 @@ extern s_AnimInfo D_800A998C;
 /** Current player anim index store? */
 extern u8 D_800A9990;
 
+extern s32 D_800A99A0;
+
+extern u8 D_800A99A4[];
+
 /** Used in `func_800D929C` from `map0_s00.c`. */
 extern s32 D_800A999C;
 
@@ -1175,6 +1179,8 @@ extern s32 g_Gfx_ScreenFade;
 extern s16 D_800BCD28;
 
 extern s32 D_800BCD48;
+
+extern s8 D_800BCD50[]; // Size: 8?
 
 extern s32 D_800BCD5C;
 
@@ -1753,6 +1759,8 @@ void func_80046B78();
 
 u8 func_80046BB4(u8 arg0);
 
+void func_80046C54(u8 arg0, u8 arg1);
+
 s32 func_80046DCC(s32 idx);
 
 void func_8004729C(u16 arg0);
@@ -2298,6 +2306,8 @@ void func_80035E1C();
 s32 func_80035E44();
 
 void func_80035ED0();
+
+void func_80035F4C(s32 arg0, s32 arg1, u8* arg2);
 
 void func_800363D0();
 
