@@ -2904,7 +2904,108 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003652C); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_800365B8); // 0x800365B8
 
+// TODO: RODATA migration.
+#ifdef NON_MATCHING
+s32 func_80036B5C(u8 arg0, s32* arg1)
+{
+    #define STRING_LINE_OFFSET 16
+
+    s32 i;
+    s32 posY;
+    s32 res;
+    s16 temp;
+    s8* str;
+
+    res = func_8004AF18(g_MapOverlayHeader.mapMessageStrings_30[arg0], *arg1);
+
+    D_800A99B0 += g_DeltaTime1;
+    if (D_800A99B0 >= 0x800)
+    {
+        D_800A99B0 -= 0x800;
+    }
+
+    switch (res)
+    {
+        case NO_VALUE:
+        case 0:
+            D_800A99B0 = 0;
+            break;
+
+        case 2:
+        case 3:
+        case 4:
+            D_800BCD78[0] = 1;
+
+            D_800BCD7B = (res == 3) ? 2 : 1;
+
+            if (res == 4)
+            {
+                for (i = 0; i < 2; i++)
+                {
+                    if (D_800BCD78[1] == i)
+                    {
+                        Gfx_StringSetColor(((D_800A99B0 >> 10) * 3) + 4);
+                    }
+                    else
+                    {
+                        Gfx_StringSetColor(ColorId_White);
+                    }
+
+                    Gfx_StringSetPosition(32, (STRING_LINE_OFFSET * i) + 98);
+                    Gfx_StringDraw(g_MapOverlayHeader.mapMessageStrings_30[i], 400);
+                }
+
+                res = 2;
+            }
+            else
+            {
+                for (i = 0; i < res; i++)
+                {
+                    if (D_800BCD78[1] == i)
+                    {
+                        Gfx_StringSetColor(((D_800A99B0 >> 10) * 3) + 4);
+                    }
+                    else
+                    {
+                        Gfx_StringSetColor(ColorId_White);
+                    }
+
+                    Gfx_StringSetPosition(32, (STRING_LINE_OFFSET * i) + 98);
+                    Gfx_StringDraw(g_MapOverlayHeader.mapMessageStrings_30[(arg0 + i) + 1], 400);
+                }
+            }
+
+            if (g_ControllerPtrConst->btnsClicked_10 & ControllerFlag_LStickUp &&
+                D_800BCD78[1] != 0)
+            {
+                D_800A99B0 = 0;
+                D_800BCD78[1]--;
+
+                func_80046048(0x519, 0, 0x40);
+            }
+
+            if (g_ControllerPtrConst->btnsClicked_10 & ControllerFlag_LStickDown &&
+                D_800BCD78[1] != (res - 1))
+            {
+                D_800A99B0 = 0;
+                D_800BCD78[1]++;
+                
+                func_80046048(0x519, 0, 0x40);
+            }
+
+            res = NO_VALUE;
+            break;
+
+        case 20:
+            *arg1 = 0x190;
+            break;
+    }
+
+    return res;
+}
+#else
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_80036B5C); // 0x80036B5C
+#endif
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_80036E48); // 0x80036E48
 
@@ -2946,7 +3047,7 @@ void func_8003708C(s16* ptr0, u16* ptr1) // 0x8003708C
 
 void func_80037124() // 0x80037124
 {
-    D_800BCD78 = NO_VALUE;
+    D_800BCD78[0] = NO_VALUE;
     func_8003652C();
     DrawSync(0);
 }

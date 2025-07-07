@@ -1013,6 +1013,8 @@ extern u8 D_800A99A4[];
 /** Used in `func_800D929C` from `map0_s00.c`. */
 extern s32 D_800A999C;
 
+extern s16 D_800A99B0;
+
 /** Array of indices? */
 extern s8 D_800A99B4[];
 
@@ -1186,7 +1188,9 @@ extern u32 D_800BCD58;
 
 extern s32 D_800BCD5C;
 
-extern s8 D_800BCD78;
+extern s8 D_800BCD78[2];
+
+extern s8 D_800BCD7B;
 
 extern s32 D_800BCD84;
 
@@ -2324,6 +2328,8 @@ s32 func_80036498();
 u32 func_800364BC();
 
 void func_8003652C();
+
+s32 func_80036B5C(u8 arg0, s32* arg1);
 
 void func_8003708C(s16* ptr0, u16* ptr1);
 
