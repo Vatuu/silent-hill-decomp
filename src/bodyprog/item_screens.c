@@ -1839,8 +1839,7 @@ void func_8004F764(s32 arg0) // 0x8004F764
             Gfx_StringDraw(strs[i], 10);
         }
 
-        // TODO: No longer matching.
-        func_800523D8(arg0, 0, 0, 0);
+        func_800523D8(arg0);
 
         for (i = 0, ptr = &D_800C3D78; i < 7; i++, ptr++)
         {
@@ -1966,7 +1965,46 @@ void func_800521A8() // 0x800521A8
 /** Results screen related.
  * Used in: `func_8004F764`
  */
+// TODO: RODATA migration.
+#ifdef NON_MATCHING
+void func_8005227C() // 0x8005227C
+{
+    s32 i;
+
+    SVECTOR D_80027FB0[] =
+        {
+            {0x0000, 0xFCC0, 0x1400, 0x0000},
+            {0xFCF8, 0xFE80, 0x1400, 0x0000},
+            {0x0308, 0xFE80, 0x1400, 0x0000},
+            {0xFCF8, 0x0200, 0x1400, 0x0000},
+            {0x0308, 0x0200, 0x1400, 0x0000},
+            {0x0000, 0x03C0, 0x1400, 0x0000},
+        };
+
+    if (g_SavegamePtr->clearGameCount_24A == 0)
+    {
+        g_SavegamePtr->clearGameCount_24A = 1;
+    }
+
+    for (i = 0; i < 6; i++)
+    {
+        if ((D_800C3E40 >> i) & 1)
+        {
+            D_800C3E48[i].coord.t[0]  = D_80027FB0[i].vx;
+            D_800C3E48[i].coord.t[1]  = D_80027FB0[i].vy;
+            D_800C3E48[i].coord.t[2]  = D_80027FB0[i].vz;
+            D_800C3BE8[i].field_10.vx = 0x200;
+            D_800C3BE8[i].field_10.vz = 0x200;
+            D_800C3BE8[i].field_0.vz  = 0x1000;
+            D_800C3BE8[i].field_0.vy  = 0x1000;
+            D_800C3BE8[i].field_0.vx  = 0x1000;
+            D_800C3BE8[i].field_10.vy = D_800C3BE8[i].field_10.vy + 8;
+        }
+    }
+}
+#else
 INCLUDE_ASM("asm/bodyprog/nonmatchings/item_screens", func_8005227C); // 0x8005227C
+#endif
 
 /** Name could be inaccurate.
  * Breaking this function call makes items no longer rotate,

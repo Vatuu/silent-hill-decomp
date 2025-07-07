@@ -841,7 +841,7 @@ typedef struct _MapOverlayHeader
     s_AreaLoadParams* mapAreaLoadParams_1C;
     void              (**mapEventFuncs_20)();                                            /** Points to array of event functions. */
     s8                unk_24[4];
-    s32               field_28;
+    GsCOORDINATE2*    field_28;
     s8                unk_2C[4];
     char**            mapMessageStrings_30;                                              /** Points to array of `char*` for each displayed message in the map. */
     s_AnimInfo*       animInfo_34;
@@ -880,6 +880,12 @@ typedef struct _s_8002AAE0
     s32 field_0[5];
 } s_8002AAE0;
 STATIC_ASSERT_SIZEOF(s_8002AAE0, 20);
+
+typedef struct
+{
+    s8 field_0;
+    s8 field_1;
+} s_800BCD78;
 
 extern s_FsImageDesc g_MainImg0; // 0x80022C74 - TODO: part of main exe, move to main/ headers?
 
@@ -1188,7 +1194,7 @@ extern u32 D_800BCD58;
 
 extern s32 D_800BCD5C;
 
-extern s8 D_800BCD78[2];
+extern s_800BCD78 D_800BCD78;
 
 extern s8 D_800BCD7B;
 
@@ -1849,6 +1855,8 @@ void func_8004729C(u16);
 void func_8004A8C0(s32 arg0);
 
 void func_8004A8CC();
+
+s32 func_8004AF18(char* arg0, s32 arg1);
 
 void func_8004B684();
 

@@ -190,13 +190,13 @@ s32 func_80031CCC(s32 arg0) // 0x80031CCC
         {
             if (sp10 != 0)
             {
-                textureUOffset = (-(i == 0)) & 0x20;
-                yOffset        = (i == 0) ? -0xE0 : 0;
+                textureUOffset = (-(i == 0)) & 32;
+                yOffset        = (i == 0) ? -224 : 0;
                 tPageYOffset   = i << 8;
             }
             else
             {
-                yOffset        = -0x70;
+                yOffset        = -112;
                 textureUOffset = (g_ObjectTableIdx == 0) << 5;
                 tPageYOffset   = g_ObjectTableIdx << 8;
             }
@@ -205,14 +205,14 @@ s32 func_80031CCC(s32 arg0) // 0x80031CCC
 
             if ((VSync(-1) % arg0) == 0)
             {
-                setRGBC0(sprt, 0x7F, 0x7F, 0x7F, 0x64);
+                setRGBC0(sprt, 0x7F, 0x7F, 0x7F, (PRIM_RECT | RECT_TEXTURE));
             }
             else
             {
-                setRGBC0(sprt, 0x80, 0x80, 0x80, 0x64);
+                setRGBC0(sprt, 0x80, 0x80, 0x80, (PRIM_RECT | RECT_TEXTURE));
             }
 
-            setWH(sprt, 0x100, 0xE0);
+            setWH(sprt, 256, 224);
             *((u32*)&sprt->u0) = textureUOffset << 8;
 
             setXY0Fast(sprt, (-g_GameWork.gsScreenWidth_588 / 2) + (j << 8), yOffset);
@@ -372,7 +372,7 @@ void func_800321EC(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x800321EC
 
     for (i = 0; i < (arg0 - 1); i++)
     {
-        g_Gfx_DebugStringPosition1.vx = g_Gfx_DebugStringPosition1.vx + 8;
+        g_Gfx_DebugStringPosition1.vx += 8;
     }
 
     str  = PSX_SCRATCH_ADDR(0x2F);
@@ -412,7 +412,7 @@ void func_800321EC(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x800321EC
         quotient                      = arg2 / 10;
         *str                          = (arg2 - (quotient * 10)) + '0';
         arg2                          = quotient;
-        g_Gfx_DebugStringPosition1.vx = g_Gfx_DebugStringPosition1.vx - 8;
+        g_Gfx_DebugStringPosition1.vx -= 8;
     }
 
     str--;
@@ -422,7 +422,7 @@ void func_800321EC(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x800321EC
     {
         str--;
         *str                          = '-';
-        g_Gfx_DebugStringPosition1.vx = g_Gfx_DebugStringPosition1.vx - 8;
+        g_Gfx_DebugStringPosition1.vx -= 8;
     }
 }
 
@@ -1784,10 +1784,6 @@ static inline void Game_StateStepIncrement()
 #ifdef NON_MATCHING
 void func_80034964() // 0x80034964
 {
-    s32         gameStateStep0;
-    s_GameWork* gameWork0;
-    s_GameWork* gamework1;
-
     switch (g_GameWork.gameStateStep_598[0])
     {
         case 0:
@@ -1842,9 +1838,6 @@ void func_80034964() // 0x80034964
                     g_SysWork.timer_20 = 0;
                     break;
                 }
-            }
-            else
-            {
             }
             break;
 
@@ -2242,7 +2235,7 @@ void func_80035560(s32 idx0, s32 idx1, s_800A992C_sub* ptr, GsCOORDINATE2* coord
     {
         if (idx0 == 1)
         {
-            coordCpy = (GsCOORDINATE2*)&g_SysWork.npcCoords_FC0[0];
+            coordCpy = &g_SysWork.npcCoords_FC0[0];
         }
         else if (idx0 >= 2)
         {
@@ -2253,7 +2246,7 @@ void func_80035560(s32 idx0, s32 idx1, s_800A992C_sub* ptr, GsCOORDINATE2* coord
             // Check for end of `g_SysWork.npcCoords_FC0` array.
             if ((&coordCpy[ptr->field_6] + 1) >= (u32)&g_SysWork.field_2280)
             {
-                coordCpy = (GsCOORDINATE2*)g_MapOverlayHeader.field_28;
+                coordCpy = g_MapOverlayHeader.field_28;
             }
         }
     }
@@ -2934,7 +2927,7 @@ s32 func_80036B5C(u8 arg0, s32* arg1)
         case 2:
         case 3:
         case 4:
-            D_800BCD78[0] = 1;
+            D_800BCD78.field_0 = 1;
 
             D_800BCD7B = (res == 3) ? 2 : 1;
 
@@ -2942,7 +2935,7 @@ s32 func_80036B5C(u8 arg0, s32* arg1)
             {
                 for (i = 0; i < 2; i++)
                 {
-                    if (D_800BCD78[1] == i)
+                    if (D_800BCD78.field_1 == i)
                     {
                         Gfx_StringSetColor(((D_800A99B0 >> 10) * 3) + 4);
                     }
@@ -2961,7 +2954,7 @@ s32 func_80036B5C(u8 arg0, s32* arg1)
             {
                 for (i = 0; i < res; i++)
                 {
-                    if (D_800BCD78[1] == i)
+                    if (D_800BCD78.field_1 == i)
                     {
                         Gfx_StringSetColor(((D_800A99B0 >> 10) * 3) + 4);
                     }
@@ -2976,20 +2969,20 @@ s32 func_80036B5C(u8 arg0, s32* arg1)
             }
 
             if (g_ControllerPtrConst->btnsClicked_10 & ControllerFlag_LStickUp &&
-                D_800BCD78[1] != 0)
+                D_800BCD78.field_1 != 0)
             {
                 D_800A99B0 = 0;
-                D_800BCD78[1]--;
+                D_800BCD78.field_1--;
 
                 func_80046048(0x519, 0, 0x40);
             }
 
             if (g_ControllerPtrConst->btnsClicked_10 & ControllerFlag_LStickDown &&
-                D_800BCD78[1] != (res - 1))
+                D_800BCD78.field_1 != (res - 1))
             {
                 D_800A99B0 = 0;
-                D_800BCD78[1]++;
-                
+                D_800BCD78.field_1++;
+
                 func_80046048(0x519, 0, 0x40);
             }
 
@@ -3047,7 +3040,7 @@ void func_8003708C(s16* ptr0, u16* ptr1) // 0x8003708C
 
 void func_80037124() // 0x80037124
 {
-    D_800BCD78[0] = NO_VALUE;
+    D_800BCD78.field_0 = NO_VALUE;
     func_8003652C();
     DrawSync(0);
 }
@@ -4163,7 +4156,12 @@ void GameState_MainMenu_Update()
                 if (Fs_QueueGetLength() == 0)
                 {
                     D_800A9A80++;
-					Game_StateSetNext_ClearStateSteps(GameState_MovieIntro);
+
+                    g_GameWork.background2dColor_R_58C = 0;
+                    g_GameWork.background2dColor_G_58D = 0;
+                    g_GameWork.background2dColor_B_58E = 0;
+
+                    Game_StateSetNext(GameState_MovieIntro);
                 }
                 break;
         }
