@@ -2866,9 +2866,41 @@ s32 func_80036498() // 80036498
     return !(g_SavegamePtr->mapRoomIdx_A5 > g_MapOverlayHeader.field_8);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_800364BC); // 0x800364BC
+u32 func_800364BC() // 0x800364BC
+{
+    u32 var0;
+    u32 var1;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003652C); // 0x8003652C
+    D_800BCD58 += g_DeltaTime1 * 0x40001;
+
+    var0  = 0x40000;
+    var0 += shRsin(D_800BCD58 >> 18) * 8;
+    var1  = shRsin((D_800BCD58 & 0xFFFF) / 16) * 32;
+    return FP_FROM(var0 + var1, Q12_SHIFT);
+}
+
+// TODO: RODATA migration.
+#ifdef NON_MATCHING
+void func_8003652C() // 0x8003652C
+{
+    RECT rect;
+
+    u32 D_8002523C[] = // 0x8002523C
+    {
+        0xFFFF0000, 0xBBEEE318, 0xFFEC9304, 0x83FFE30C,
+        0x001F8318, 0x90840018, 0x90808080, 0x80048084
+    };
+
+    rect.x = 304;
+    rect.y = 510;
+    rect.w = 16;
+    rect.h = 1;
+
+    LoadImage(&rect, D_8002523C);
+}
+#else
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003652C); // 0x800365B8
+#endif
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_800365B8); // 0x800365B8
 
@@ -3616,7 +3648,7 @@ void SysState_GameOver_Update() // 0x8003A52C
 
         case 3:
             Gfx_StringSetPosition(SCREEN_POSITION_X(32.5f), SCREEN_POSITION_Y(43.5f));
-            Gfx_StringDraw(D_80025448, 0x63); // "\aGAME_OVER" - needs rodata migration.
+            Gfx_StringDraw(D_80025448, 0x63); // "\aGAME_OVER" TODO: Needs rodata migration.
             g_SysWork.field_28++;
 
             if ((g_ControllerPtrConst->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 |
@@ -3629,7 +3661,7 @@ void SysState_GameOver_Update() // 0x8003A52C
 
         case 4:
             Gfx_StringSetPosition(SCREEN_POSITION_X(32.5f), SCREEN_POSITION_Y(43.5f));
-            Gfx_StringDraw(D_80025448, 0x63); // "\aGAME_OVER" - needs rodata migration.
+            Gfx_StringDraw(D_80025448, 0x63); // "\aGAME_OVER" TODO: Needs rodata migration.
             func_8008616C(2, 1, 0, 0x2000, 0);
             break;
 
@@ -3704,7 +3736,7 @@ void GameState_MapEvent_Update() // 0x8003AA4C
         g_GameWork.gameStateStep_598[0] = 1;
     }
 
-    D_800A9A0C = (g_Gfx_ScreenFade & 7) == 5 && Fs_QueueDoThingWhenEmpty() != 0;
+    D_800A9A0C = (g_Gfx_ScreenFade & 0x7) == 5 && Fs_QueueDoThingWhenEmpty() != 0;
 
     Savegame_EventFlagSet(g_MapEventParam->eventFlagId_2);
 

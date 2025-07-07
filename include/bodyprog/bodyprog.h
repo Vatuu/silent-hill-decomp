@@ -1180,7 +1180,9 @@ extern s16 D_800BCD28;
 
 extern s32 D_800BCD48;
 
-extern s8 D_800BCD50[]; // Size: 8?
+extern s8 D_800BCD50[8];
+
+extern u32 D_800BCD58;
 
 extern s32 D_800BCD5C;
 
@@ -2318,6 +2320,10 @@ void func_80036420();
 s32 func_8003647C();
 
 s32 func_80036498();
+
+u32 func_800364BC();
+
+void func_8003652C();
 
 void func_8003708C(s16* ptr0, u16* ptr1);
 
