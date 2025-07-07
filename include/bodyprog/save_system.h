@@ -150,9 +150,11 @@ s32 Savegame_ChecksumValidate(s_ShSavegameFooter* saveFooter, s8* saveData, s32 
 u8 Savegame_ChecksumGenerate(s8* saveData, s32 saveDataLength);
 
 /** Generates a save filename for the given save number. */
-void Savegame_FilenameGenerate(char* dest, int saveNum);
+void Savegame_FilenameGenerate(char* dest, s32 saveNum);
 
 void func_80030334(s32 arg0, s32 arg1);
+
+void func_80030370(s32* arg0, char* arg1, char* arg2);
 
 // void func_8003030C(s32 arg0);
 

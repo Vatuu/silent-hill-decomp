@@ -245,7 +245,7 @@ u8 Savegame_ChecksumGenerate(s8* saveData, s32 saveDataLength) // 0x8002FFD0
     return checksum;
 }
 
-void Savegame_FilenameGenerate(char* dest, int saveNum)
+void Savegame_FilenameGenerate(char* dest, s32 saveNum)
 {
     // TODO: likely local .rodata for this func.
     extern char D_80024C0C[]; // "BA"
@@ -291,9 +291,21 @@ void func_80030334(s32 arg0, s32 arg1) // 0x80030334
 
     strcat(&sp10, arg1); 
     erase(&sp10); 
-} 
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/save", func_80030370);
+void func_80030370(s32* arg0, char* arg1, char* arg2)
+{
+    char* old[7];
+    char* new[7];
+
+    func_800314A4(arg0, old);
+    func_800314A4(arg0, new);
+
+    strcat(old, arg1);
+    strcat(new, arg2);
+
+    rename(old, new);
+}
 
 void func_800303E4()
 {
