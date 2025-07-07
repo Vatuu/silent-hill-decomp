@@ -248,14 +248,20 @@ typedef struct
 
 typedef struct
 {
-    s8  field_0;
-    s8  field_1;
-    s8  unk_2[2];
-    u32 field_4; // `field_4` and `field_8` are related.
-    u32 field_8; // Pointer?
-    s32 field_C;
-    s32 field_10;
-    s32 field_14;
+    u8 unk_0[6];
+    u8 field_6;
+} s_800A992C_sub; // Size: 80?
+
+typedef struct
+{
+    s8              field_0;
+    s8              field_1; // Index.
+    s8              unk_2[2];
+    u32             field_4; // Size of `field_8` array?
+    s_800A992C_sub* field_8;
+    s32             field_C;
+    s32             field_10;
+    s32             field_14;
 } s_800A992C;
 STATIC_ASSERT_SIZEOF(s_800A992C, 24);
 
@@ -968,6 +974,8 @@ extern u16 D_800A9774[];
 
 extern u16 D_800A9858[];
 
+extern s8 D_800A98FC[];
+
 extern s32 D_800A9EB0;
 
 extern s32 D_800A9EBC; // Type assumed.
@@ -1570,9 +1578,6 @@ void func_80032D1C();
 
 /** Bodyprog entrypoint. Called by `main`. */
 void MainLoop();
-
-/** Unknown bodyprog func. Called by `Fs_QueuePostLoadAnm`. */
-void func_80035560(s32 arg0, s32 arg1, void* arg2, s32 arg3);
 
 void func_80037188();
 
@@ -2250,6 +2255,9 @@ s32 func_8003528C(s32 idx0, s32 idx1);
 s32 func_800352F8(s32 arg0);
 
 void func_80035338(s32 arg0, s32 arg1, u32 arg2, s32 arg3);
+
+/** Called by `Fs_QueuePostLoadAnm`. */
+void func_80035560(s32 idx0, s32 idx1, s_800A992C_sub* ptr, GsCOORDINATE2* coord);
 
 s32 func_80035780();
 
