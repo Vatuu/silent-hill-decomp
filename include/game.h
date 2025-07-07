@@ -487,14 +487,12 @@ STATIC_ASSERT_SIZEOF(s_AnalogController, 8);
 typedef struct _ControllerData
 {
     s_AnalogController analogController_0;
-    s8                 unk_8[1];
-    u8                 field_9;
-    s8                 unk_A[2];
-    s32                btnsHeld_C;      /** `e_ControllerFlags` */
-    s32                btnsClicked_10;  /** `e_ControllerFlags` */
-    s32                btnsReleased_14; /** `e_ControllerFlags` */
-    s32                btnsPulsed_18;   /** `e_ControllerFlags` */
-    s32                btnsPulsed_1C;   /** `e_ControllerFlags` */ // Duplicate?
+    s32                pulseTicks_8;
+    s32                btnsHeld_C;       /** `e_ControllerFlags` */
+    s32                btnsClicked_10;   /** `e_ControllerFlags` */
+    s32                btnsReleased_14;  /** `e_ControllerFlags` */
+    s32                btnsPulsed_18;    /** `e_ControllerFlags` */
+    s32                btnsPulsedGui_1C; /** `e_ControllerFlags` */
     char               field_20;
     char               field_21;
     s8                 field_22;

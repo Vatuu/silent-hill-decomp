@@ -1647,7 +1647,101 @@ void Joy_Update() // 0x8003446C
     Joy_ControllerDataUpdate();
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", Joy_ControllerDataUpdate);
+void Joy_ControllerDataUpdate() // 0x80034494
+{
+    #define CONTROLLER_COUNT             2
+    #define PULSE_INITIAL_INTERVAL_TICKS 30
+    #define PULSE_INTERVAL_TICKS         3
+
+    s_ControllerData* cont;
+    s32               i;
+    s32               prevBtnsHeld;
+    s32               pulseTicks;
+    s32               btnsPulsed;
+
+    // Update controller button flags.
+    for (i = CONTROLLER_COUNT, cont = g_ControllerPtrConst; i > 0; i--, cont++)
+    {
+        prevBtnsHeld = cont->btnsHeld_C;
+
+        // Update held button flags.
+        if (cont->analogController_0.status == 0xFF)
+        {
+            cont->btnsHeld_C = 0;
+        }
+        else
+        {
+            cont->btnsHeld_C = ~cont->analogController_0.digitalButtons & 0xFFFF;
+        }
+
+        // TODO: Demagic hex values.
+        ControllerData_AnalogToDigital(cont, (*(u16*)&cont->analogController_0.status & 0x5300) == 0x5300);
+
+        // Directional held flag sanitation? TODO: Find out what it's doing.
+        cont->btnsHeld_C = cont->btnsHeld_C | (((cont->btnsHeld_C << 20) | (cont->btnsHeld_C << 8)) &
+                                                (ControllerFlag_LStickUp | ControllerFlag_LStickRight | ControllerFlag_LStickDown | ControllerFlag_LStickLeft));
+
+        // Clear up/down held flags if concurrent.
+        if ((cont->btnsHeld_C & (ControllerFlag_LStickUp | ControllerFlag_LStickDown)) == (ControllerFlag_LStickUp | ControllerFlag_LStickDown))
+        {
+            cont->btnsHeld_C &= ~(ControllerFlag_LStickUp | ControllerFlag_LStickDown);
+        }
+
+        // Clear left/right held flags if concurrent.
+        if ((cont->btnsHeld_C & (ControllerFlag_LStickRight | ControllerFlag_LStickLeft)) == (ControllerFlag_LStickRight | ControllerFlag_LStickLeft))
+        {
+            cont->btnsHeld_C = cont->btnsHeld_C & ~(ControllerFlag_LStickRight | ControllerFlag_LStickLeft);
+        }
+
+        // Update clicked and released button flags.
+        cont->btnsClicked_10  = ~prevBtnsHeld & cont->btnsHeld_C;
+        cont->btnsReleased_14 = prevBtnsHeld  & ~cont->btnsHeld_C;
+
+        // Update pulse ticks.
+        pulseTicks = cont->pulseTicks_8;
+        if (cont->btnsHeld_C != prevBtnsHeld)
+        {
+            pulseTicks = 0;
+        }
+        else
+        {
+            pulseTicks += g_VBlanks;
+        }
+
+        // Update pulsed button flags.
+        if (pulseTicks >= PULSE_INITIAL_INTERVAL_TICKS)
+        {
+            cont->btnsPulsed_18 = cont->btnsHeld_C;
+            pulseTicks          = PULSE_INITIAL_INTERVAL_TICKS - PULSE_INTERVAL_TICKS;
+        }
+        else
+        {
+            cont->btnsPulsed_18 = cont->btnsClicked_10;
+        }
+
+        btnsPulsed             = cont->btnsPulsed_18;
+        cont->pulseTicks_8     = pulseTicks;
+        cont->btnsPulsedGui_1C = btnsPulsed;
+
+        // Clear left/right pulse flags if concurrent.
+        if ((btnsPulsed & (ControllerFlag_LStickRight | ControllerFlag_LStickLeft)) == (ControllerFlag_LStickRight | ControllerFlag_LStickLeft))
+        {
+            cont->btnsPulsedGui_1C &= ~(ControllerFlag_LStickRight | ControllerFlag_LStickLeft);
+        }
+
+        // Clear up/down pulse flags if concurrent.
+        if ((cont->btnsPulsedGui_1C & (ControllerFlag_LStickUp | ControllerFlag_LStickDown)) == (ControllerFlag_LStickUp | ControllerFlag_LStickDown))
+        {
+            cont->btnsPulsedGui_1C &= ~(ControllerFlag_LStickUp | ControllerFlag_LStickDown);
+        }
+
+        // Clear left/right pulse flags if up/down concurrent.
+        if ((cont->btnsPulsedGui_1C & (ControllerFlag_LStickUp | ControllerFlag_LStickDown)) != 0)
+        {
+            cont->btnsPulsedGui_1C &= ~(ControllerFlag_LStickRight | ControllerFlag_LStickLeft);
+        }
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", ControllerData_AnalogToDigital);
 

@@ -2224,6 +2224,8 @@ void Joy_ReadP1();
 
 void Joy_Update();
 
+void Joy_ControllerDataUpdate();
+
 void func_800348C0();
 
 void GameState_MainLoadScreen_Update();

@@ -60,9 +60,9 @@ MainLoop_ShouldWarmReset = 0x80034108; // type:func
 
 Game_WarmBoot = 0x80034264; // type:func
 
-Joy_Init = 0x8003441C; // type:func
-Joy_ReadP1 = 0x80034450; // type:func
-Joy_Update = 0x8003446C; // type:func
+Joy_Init                 = 0x8003441C; // type:func
+Joy_ReadP1               = 0x80034450; // type:func
+Joy_Update               = 0x8003446C; // type:func
 Joy_ControllerDataUpdate = 0x80034494; // type:func
 
 ControllerData_AnalogToDigital = 0x80034670; // type:func

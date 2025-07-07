@@ -1994,17 +1994,17 @@ void Settings_ControllerScreen() // 0x801E69BC
                 g_GameWork.gameStateStep_598[2] = 0;
                 break;
             }
-            if (g_ControllerPtrConst->btnsPulsed_1C & ControllerFlag_LStickUp)
+            if (g_ControllerPtrConst->btnsPulsedGui_1C & ControllerFlag_LStickUp)
             {
                 g_GameWork.gameStateStep_598[1] = 3;
                 g_GameWork.gameStateStep_598[2] = 0;
             }
-            else if (g_ControllerPtrConst->btnsPulsed_1C & ControllerFlag_LStickDown)
+            else if (g_ControllerPtrConst->btnsPulsedGui_1C & ControllerFlag_LStickDown)
             {
                 g_GameWork.gameStateStep_598[1] = 1;
                 g_GameWork.gameStateStep_598[2] = 0;
             }
-            else if (g_ControllerPtrConst->btnsPulsed_1C & (ControllerFlag_LStickLeft | ControllerFlag_LStickRight))
+            else if (g_ControllerPtrConst->btnsPulsedGui_1C & (ControllerFlag_LStickLeft | ControllerFlag_LStickRight))
             {
                 g_GameWork.gameStateStep_598[1] = -1;
                 g_GameWork.gameStateStep_598[2] = 0;
@@ -2028,17 +2028,17 @@ void Settings_ControllerScreen() // 0x801E69BC
             }
             else
             {
-                if (g_ControllerPtrConst->btnsPulsed_1C & ControllerFlag_LStickUp)
+                if (g_ControllerPtrConst->btnsPulsedGui_1C & ControllerFlag_LStickUp)
                 {
                     g_GameWork.gameStateStep_598[1] = (g_GameWork.gameStateStep_598[1] - 1) & 0x3;
                     g_GameWork.gameStateStep_598[2] = 0;
                 }
-                else if (g_ControllerPtrConst->btnsPulsed_1C & ControllerFlag_LStickDown)
+                else if (g_ControllerPtrConst->btnsPulsedGui_1C & ControllerFlag_LStickDown)
                 {
                     g_GameWork.gameStateStep_598[1] = (g_GameWork.gameStateStep_598[1] + 1) & 0x3;
                     g_GameWork.gameStateStep_598[2] = 0;
                 }
-                else if (g_ControllerPtrConst->btnsPulsed_1C & (ControllerFlag_LStickLeft | ControllerFlag_LStickRight))
+                else if (g_ControllerPtrConst->btnsPulsedGui_1C & (ControllerFlag_LStickLeft | ControllerFlag_LStickRight))
                 {
                     g_GameWork.gameStateStep_598[1] = -1;
                     g_GameWork.gameStateStep_598[2] = 0;
@@ -2048,7 +2048,7 @@ void Settings_ControllerScreen() // 0x801E69BC
 
         case BindingMenu_Actions:
             actionIdx = g_ScreenCtrl_SelectedElement.actionIdx_4;
-            if (g_ControllerPtrConst->btnsPulsed_1C & ControllerFlag_LStickUp)
+            if (g_ControllerPtrConst->btnsPulsedGui_1C & ControllerFlag_LStickUp)
             {
                 if (actionIdx != InputAction_Enter)
                 {
@@ -2059,7 +2059,7 @@ void Settings_ControllerScreen() // 0x801E69BC
                     g_ScreenCtrl_SelectedElement.actionIdx_4 = InputAction_Option;
                 }
             }
-            else if (g_ControllerPtrConst->btnsPulsed_1C & ControllerFlag_LStickDown)
+            else if (g_ControllerPtrConst->btnsPulsedGui_1C & ControllerFlag_LStickDown)
             {
                 if (actionIdx != InputAction_Option)
                 {
@@ -2070,7 +2070,7 @@ void Settings_ControllerScreen() // 0x801E69BC
                     g_ScreenCtrl_SelectedElement.actionIdx_4 = InputAction_Enter;
                 }
             }
-            else if (g_ControllerPtrConst->btnsPulsed_1C & (ControllerFlag_LStickLeft | ControllerFlag_LStickRight))
+            else if (g_ControllerPtrConst->btnsPulsedGui_1C & (ControllerFlag_LStickLeft | ControllerFlag_LStickRight))
             {
                 g_GameWork.gameStateStep_598[2] = 0;
                 g_GameWork.gameStateStep_598[1] = g_ScreenCtrl_SelectedElement.menuIdx_0;
@@ -2105,7 +2105,7 @@ void Settings_ControllerScreen() // 0x801E69BC
         g_ScreenCtrl_IsOverActions = 0;
     }
 
-    if (g_ControllerPtrConst->btnsPulsed_1C & (ControllerFlag_LStickUp | ControllerFlag_LStickRight | ControllerFlag_LStickDown | ControllerFlag_LStickLeft))
+    if (g_ControllerPtrConst->btnsPulsedGui_1C & (ControllerFlag_LStickUp | ControllerFlag_LStickRight | ControllerFlag_LStickDown | ControllerFlag_LStickLeft))
     {
         Sd_EngineCmd(0x519);
     }
