@@ -23,6 +23,8 @@ Savegame_ChecksumUpdate = 0x8002FF30; // type:func
 Savegame_ChecksumValidate = 0x8002FF74; // type:func
 Savegame_ChecksumGenerate = 0x8002FFD0; // type:func
 
+Savegame_FilenameGenerate = 0x80030000; // type:func
+
 Gfx_BackgroundSpriteDraw = 0x800314EC; // type:func
 Gfx_DebugStringPosition = 0x80031EFC; // type:func
 Gfx_DebugStringDraw = 0x80031F40; // type:func

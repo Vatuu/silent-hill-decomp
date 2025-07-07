@@ -149,6 +149,9 @@ s32 Savegame_ChecksumValidate(s_ShSavegameFooter* saveFooter, s8* saveData, s32 
 /** Generates an 8-bit XOR checksum over the given data, only appears used with s_ShSavegame data. */
 u8 Savegame_ChecksumGenerate(s8* saveData, s32 saveDataLength);
 
+/** Generates a save filename for the given save number. */
+void Savegame_FilenameGenerate(char* dest, int saveNum);
+
 void func_80030334(s32 arg0, s32 arg1);
 
 // void func_8003030C(s32 arg0);
