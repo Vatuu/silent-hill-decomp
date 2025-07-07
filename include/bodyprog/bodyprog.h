@@ -2259,6 +2259,8 @@ void func_80035338(s32 arg0, s32 arg1, u32 arg2, s32 arg3);
 /** Called by `Fs_QueuePostLoadAnm`. */
 void func_80035560(s32 idx0, s32 idx1, s_800A992C_sub* ptr, GsCOORDINATE2* coord);
 
+void func_8003569C();
+
 s32 func_80035780();
 
 /** Sets sound command. */

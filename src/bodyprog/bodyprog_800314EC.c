@@ -2250,7 +2250,7 @@ void func_80035560(s32 idx0, s32 idx1, s_800A992C_sub* ptr, GsCOORDINATE2* coord
             coordCpy  = D_800A992C[idx0 - 1].field_14;
             coordCpy += idx2 + 1;
 
-            // Check for end of `npcCoords_FC0` array.
+            // Check for end of `g_SysWork.npcCoords_FC0` array.
             if ((&coordCpy[ptr->field_6] + 1) >= (u32)&g_SysWork.field_2280)
             {
                 coordCpy = (GsCOORDINATE2*)g_MapOverlayHeader.field_28;
@@ -2261,14 +2261,38 @@ void func_80035560(s32 idx0, s32 idx1, s_800A992C_sub* ptr, GsCOORDINATE2* coord
     tempPtr0->field_1  = idx1;
     tempPtr0->field_8  = ptr;
     tempPtr0->field_10 = Fs_GetFileSectorAlignedSize(g_Chara_FileInfo[idx1].animFileIdx);
-    tempPtr0->field_14  = coordCpy;
+    tempPtr0->field_14 = coordCpy;
 
     func_800445A4(ptr, coordCpy);
 
     D_800A98FC[idx1] = idx0;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003569C); // 0x8003569C
+void func_8003569C() // 0x8003569C
+{
+    s32             i;
+    GsCOORDINATE2*  coord;
+    s_800A992C_sub* ptr;
+
+    for (i = 1; i < 3; i++)
+    {
+        if ((s8)g_MapOverlayHeader.charaGroupIds_248[i] != 0)
+        {
+            coord  = D_800A992C[i].field_14;
+            ptr    = D_800A992C[i + 1].field_8;
+            coord += D_800A992C[i].field_8->field_6 + 1;
+
+            // Check for end of `g_SysWork.npcCoords_FC0` array.
+            if ((&coord[ptr->field_6] + 1) >= &g_SysWork.field_2280)
+            {
+                coord = g_MapOverlayHeader.field_28;
+            }
+
+            D_800A992C[i + 1].field_14 = coord;
+            func_800445A4(ptr, coord);
+        }
+    }
+}
 
 s32 func_80035780() // 0x80035780
 {
