@@ -248,7 +248,7 @@ typedef struct
 
 typedef struct
 {
-    s8  unk_0;
+    s8  field_0;
     s8  field_1;
     s8  unk_2[2];
     u32 field_4; // `field_4` and `field_8` are related.
@@ -1571,8 +1571,6 @@ void func_80032D1C();
 /** Bodyprog entrypoint. Called by `main`. */
 void MainLoop();
 
-void func_80035338(s32 arg0, s8 arg1, u32 arg2, s32 arg3); // arg3 type assumed.
-
 /** Unknown bodyprog func. Called by `Fs_QueuePostLoadAnm`. */
 void func_80035560(s32 arg0, s32 arg1, void* arg2, s32 arg3);
 
@@ -2250,6 +2248,8 @@ void GameFs_MapLoad(s32 mapIdx);
 s32 func_8003528C(s32 idx0, s32 idx1);
 
 s32 func_800352F8(s32 arg0);
+
+void func_80035338(s32 arg0, s32 arg1, u32 arg2, s32 arg3);
 
 s32 func_80035780();
 

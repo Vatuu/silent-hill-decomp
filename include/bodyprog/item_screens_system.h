@@ -127,6 +127,8 @@ void Gfx_Inventory_UnavailableMapText(s32 strIdx);
 
 void Inventory_DirectionalInputSet();
 
+void func_8004F764(s32 arg0);
+
 /** Draws some rectangle. */
 void func_8004FB0C();
 

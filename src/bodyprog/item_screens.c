@@ -1839,7 +1839,8 @@ void func_8004F764(s32 arg0) // 0x8004F764
             Gfx_StringDraw(strs[i], 10);
         }
 
-        func_800523D8(arg0);
+        // TODO: No longer matching.
+        func_800523D8(arg0, 0, 0, 0);
 
         for (i = 0, ptr = &D_800C3D78; i < 7; i++, ptr++)
         {
@@ -1859,7 +1860,7 @@ void func_8004F764(s32 arg0) // 0x8004F764
             }
         }
 
-        if ((g_SavegamePtr->items_0[D_800C3E34].id_0 != 0xFF) && (D_800C3E34 != NO_VALUE))
+        if (g_SavegamePtr->items_0[D_800C3E34].id_0 != 0xFF && D_800C3E34 != NO_VALUE)
         {
             D_800C3BE8[7].field_10.vx = D_800262FC[g_SavegamePtr->items_0[D_800C3E34].id_0 - 32].vx;
             D_800C3BE8[7].field_10.vz = D_800262FC[g_SavegamePtr->items_0[D_800C3E34].id_0 - 32].vy;

@@ -2161,7 +2161,72 @@ s32 func_800352F8(s32 arg0) // 0x800352F8
     return 0;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_80035338); // 0x80035338
+void func_80035338(s32 arg0, s32 arg1, u32 arg2, s32 arg3) // 0x80035338
+{
+    s32         i;
+    u32         var;
+    s_800A992C* ptr0;
+    s_800A992C* ptr1;
+
+    var  = arg2;
+    ptr0 = &D_800A992C[arg0];
+
+    if (arg1 == 0)
+    {
+        return;
+    }
+
+    for (ptr1 = ptr0 - 1; var == 0; ptr1--)
+    {
+        var = ptr1->field_4 + ptr1->field_C;
+    }
+    
+    if (ptr0->field_1 == arg1)
+    {
+        if (arg0 == 1 || var == ptr0->field_8)
+        {
+            func_80035560(arg0, arg1, ptr0->field_8, arg3);
+            return;
+        }
+
+        if (var < ptr0->field_8)
+        {
+            ptr0->field_4 = var;
+
+            Mem_Move32(var, D_800A992C[arg0].field_8, D_800A992C[arg0].field_10);
+            func_80035560(arg0, arg1, var, arg3);
+            return;
+        }
+    }
+
+    ptr0->field_14 = g_SysWork.npcCoords_FC0;
+    ptr0->field_1  = 0;
+    ptr0->field_8  = 0;
+    ptr0->field_10 = 0;
+    ptr0->field_0  = arg1;
+    ptr0->field_4  = var;
+    ptr0->field_C  = Fs_GetFileSectorAlignedSize(g_Chara_FileInfo[arg1].animFileIdx);
+
+    i = func_800352F8(arg1);
+
+    if (i > 0)
+    {
+        Mem_Move32(D_800A992C[arg0].field_4, D_800A992C[i].field_8, D_800A992C[i].field_10);
+        func_80035560(arg0, arg1, ptr0->field_4, arg3);
+    }
+    else
+    {
+        Fs_QueueStartReadAnm(arg0, arg1, var, arg3);
+    }
+
+    for (i = 1; i < 4; i++)
+    {
+        if (i != arg0 && D_800A992C[i].field_1 != 0 && func_8003528C(arg0, i) != 0)
+        {
+            bzero(&D_800A992C[i], sizeof(s_800A992C));
+        }
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_80035560); // 0x80035560
 

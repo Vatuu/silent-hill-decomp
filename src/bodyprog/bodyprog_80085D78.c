@@ -1597,7 +1597,7 @@ s32 func_800895E4(s_SysWork_2514* arg0, s_8002AC04* arg1, u8 arg2)
 
     sp10 = arg2;
 
-    if (!arg1)
+    if (arg1 == NULL)
     {
         return 0;
     }
