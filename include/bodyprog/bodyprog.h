@@ -83,9 +83,15 @@ typedef struct
 
 typedef struct
 {
-    s8 unk_0[16];
+    s8  unk_0[4];
+    u8  field_4;
+    u8  field_5;
+    u16 field_6;
+    s32 field_8;
+    s32 field_C;
 } s_8002AC04;
 STATIC_ASSERT_SIZEOF(s_8002AC04, 16);
+
 // Maybe same.
 typedef struct
 {
@@ -217,16 +223,6 @@ typedef struct
     s32 field_10;
 } s_func_800625F4;
 STATIC_ASSERT_SIZEOF(s_func_800625F4, 20);
-
-typedef struct
-{
-    s8  unk_0[4];
-    u8  field_4;
-    u8  field_5;
-    u16 field_6;
-    s32 field_8;
-    s32 field_C;
-} s_func_8008973C;
 
 typedef struct
 {
@@ -1089,7 +1085,7 @@ extern u8 D_800AFD04;
 
 extern u8 D_800AFD05;
 
-extern s32 (*D_800AFD08[])(); // Function pointer array.
+extern s32 (*D_800AFD08[])(s_SysWork_2514* arg0, s32 arg1, s_8002AC04* ptr, u32* arg3); // Function pointer array.
 
 extern s32 D_800AFD9C;
 
@@ -2068,8 +2064,9 @@ void func_800894DC();
 
 void func_80089500();
 
-// `arg0` is a pointer.
-s32 func_8008973C(s32 arg0, s32 arg1, s_func_8008973C* ptr);
+s32 func_800895E4(s_SysWork_2514* arg0, s_8002AC04* arg1, u8 arg2);
+
+s32 func_8008973C(s_SysWork_2514* arg0, s32 arg1, s_8002AC04* ptr, u32* arg3);
 
 void func_80089840(s_func_80089840* arg0);
 

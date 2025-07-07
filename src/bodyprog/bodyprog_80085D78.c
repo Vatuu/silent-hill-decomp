@@ -1486,9 +1486,9 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80089090);
 
 void func_800890B8() // 0x800890B8
 {
-    func_8009E198(&g_SysWork.field_2514[0], 0);
-    func_8009E310(&g_SysWork.field_2514[0], &g_SysWork.field_2514[8], 2);
-    func_8009EBB8(&g_SysWork.field_2514[0], &g_SysWork.field_2514[12], 16);
+    func_8009E198(&g_SysWork.field_2514.field_0[0], 0);
+    func_8009E310(&g_SysWork.field_2514.field_0[0], &g_SysWork.field_2514.field_0[8], 2);
+    func_8009EBB8(&g_SysWork.field_2514.field_0[0], &g_SysWork.field_2514.field_0[12], 16);
 
     g_SysWork.field_2510 = func_8009E4F8();
 
@@ -1500,12 +1500,12 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80089128);
 
 void func_800892A4(s32 idx) // 0x800892A4
 {
-    func_800895E4(g_SysWork.field_2514, &D_8002AC04[idx], 0x80);
+    func_800895E4(&g_SysWork.field_2514, &D_8002AC04[idx], 0x80);
 }
 
 void func_800892DC(s32 idx, u8 arg1) // 0x800892DC
 {
-    func_800895E4(g_SysWork.field_2514, &D_8002AC04[idx], arg1);
+    func_800895E4(&g_SysWork.field_2514, &D_8002AC04[idx], arg1);
 }
 
 void func_80089314(s32 arg0) // 0x80089314
@@ -1591,27 +1591,25 @@ void func_80089500() // 0x80089500
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80089524);
 
-#ifdef NON_MATCHING
-s32 func_800895E4(s_func_8008973C* arg1, s32 arg2)
+s32 func_800895E4(s_SysWork_2514* arg0, s_8002AC04* arg1, u8 arg2)
 {
-    s32* sp10 = arg2 & 0xFF;
+    u32 sp10;
 
-    if (arg1 != NULL)
+    sp10 = arg2;
+
+    if (!arg1)
     {
-        return D_800AFD08[arg1->field_4](0, arg1, &sp10);
+        return 0;
     }
 
-    return 0;
+    return D_800AFD08[arg1->field_4](arg0, 0, arg1, &sp10);
 }
-#else
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800895E4);
-#endif
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80089644);
 
 // TODO: Rodata migration.
 #ifdef NON_MATCHING
-s32 func_8008973C(s32 arg0, s32 arg1, s_func_8008973C* ptr)
+s32 func_8008973C(s_SysWork_2514* arg0, s32 arg1, s_8002AC04* ptr, u32* arg3)
 {
     if (!arg0 || arg1)
     {

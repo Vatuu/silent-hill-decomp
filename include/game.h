@@ -911,6 +911,12 @@ typedef struct
     s16 field_4;
 } s_StructUnk1;
 
+typedef struct
+{
+    // Assumed fields, need to check actual usage (funcs called by `func_800895E4`)
+    s32 field_0[10];
+} s_SysWork_2514;
+
 typedef struct _SysWork
 {
     s8              unk_0[8];
@@ -991,7 +997,7 @@ typedef struct _SysWork
     s32             field_24DC; // Flags.
     s8              unk_24E0[48];
     s32             field_2510;
-    s32             field_2514[10]; // This is supossed to be a struct.
+    s_SysWork_2514  field_2514;
     u8              unk_253C[524];
     s16             field_2748[9];  // `func_80035ED0` loops over this.
     u8              unk_275A[2];
