@@ -1633,8 +1633,8 @@ static const s32 unk1 = 0;
 
 void Inventory_DirectionalInputSet() // 0x8004F5DC
 {
-    if (g_ControllerPtrConst->field_23 < -64 || g_ControllerPtrConst->field_23 >= 64 ||
-        g_ControllerPtrConst->field_22 < -64 || g_ControllerPtrConst->field_22 >= 64)
+    if (g_ControllerPtrConst->field_20.sticks_0.left_y < -64 || g_ControllerPtrConst->field_20.sticks_0.left_y >= 64 ||
+        g_ControllerPtrConst->field_20.sticks_0.left_x < -64 || g_ControllerPtrConst->field_20.sticks_0.left_x >= 64)
     {
         // Up.
         g_Inventory_IsUpClicked = g_ControllerPtrConst->btnsClicked_10 & ControllerFlag_LStickUp2;
