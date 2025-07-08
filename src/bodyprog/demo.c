@@ -320,14 +320,6 @@ s32 Demo_Update() // 0x8008F5D8
     return 1;
 }
 
-// TODO: Move this to header if any other funcs have same code.
-static inline void ControllerData_Reset(s_ControllerData* controller, u16 btns)
-{
-    *(u16*)&controller->analogController_0.status  = 0x7300;
-    controller->analogController_0.digitalButtons  = btns;
-    *(u32*)&controller->analogController_0.right_x = 0x80808080;
-}
-
 s32 Demo_ControllerDataUpdate() // 0x8008F7CC
 {
     u32 btns;
@@ -352,7 +344,9 @@ s32 Demo_ControllerDataUpdate() // 0x8008F7CC
         return 1;
     }
 
-    ControllerData_Reset(g_ControllerPtrConst, btns);
+    *(u16*)&g_ControllerPtrConst->analogController_0.status  = 0x7300;
+    g_ControllerPtrConst->analogController_0.digitalButtons  = btns;
+    *(u32*)&g_ControllerPtrConst->analogController_0.right_x = 0x80808080;
     return 1;
 }
 

@@ -471,6 +471,18 @@ typedef enum _PadTerminalType
     PadTerminalType_MultitapAdapter     = 8
 } e_PadTerminalType;
 
+typedef union
+{
+    u32 rawData_0;
+    struct
+    {
+        s8 right_x;
+        s8 right_y;
+        s8 left_x;
+        s8 left_y;
+    } sticks_0;
+} s_AnalogSticks;
+
 typedef struct _AnalogController
 {
     u8  status;
@@ -493,14 +505,8 @@ typedef struct _ControllerData
     s32                btnsReleased_14;  /** `e_ControllerFlags` */
     s32                btnsPulsed_18;    /** `e_ControllerFlags` */
     s32                btnsPulsedGui_1C; /** `e_ControllerFlags` */
-    char               field_20;
-    char               field_21;
-    s8                 field_22;
-    s8                 field_23;
-    char               field_24; // Following 4 fields are updated simultaneously with `field_28`.
-    char               field_25;
-    char               field_26;
-    char               field_27;
+    s_AnalogSticks     field_20;
+    s32                field_24; // Following 4 fields are updated simultaneously with `field_28`.
     s32                field_28;
 } s_ControllerData;
 STATIC_ASSERT_SIZEOF(s_ControllerData, 44);

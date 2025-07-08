@@ -1744,11 +1744,146 @@ void Joy_ControllerDataUpdate() // 0x80034494
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", ControllerData_AnalogToDigital);
+void ControllerData_AnalogToDigital(s_ControllerData* arg0, s32 arg1) // 0x80034670
+{
+    s32 value;
+    s32 axisIndex;
+    s32 processedInputFlags;
+    s32 normalizedAnalogData;
+    s32 xorShiftedRawAnalog;
+    s32 digitalButtonState;
+    s32 signedRawAnalog;
+    s32 negativeDirectionBitIndex;
+    s32 positiveDirectionBitIndex;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003483C);
+    digitalButtonState = arg0->btnsHeld_C;
 
-void func_800348C0()
+    if (arg1 != 0)
+    {
+        signedRawAnalog     = *(u32*)&arg0->analogController_0.right_x ^ 0x80808080;
+        xorShiftedRawAnalog = signedRawAnalog;
+
+        for (normalizedAnalogData = 0, axisIndex = 3; axisIndex >= 0; axisIndex--)
+        {
+            normalizedAnalogData <<= 8;
+            value = xorShiftedRawAnalog >> 0x18;
+            xorShiftedRawAnalog <<= 8;
+
+            if (value < -0x40)
+            {
+                normalizedAnalogData |= (value + 0x40) & 0xFF;
+                negativeDirectionBitIndex = 0x17 - (axisIndex & 1);
+                digitalButtonState |= 1 << (negativeDirectionBitIndex - (axisIndex * 2));
+            }
+            else if (value >= 0x40)
+            {
+                normalizedAnalogData |= (value - 0x3F) & 0xFF;
+                positiveDirectionBitIndex = ((axisIndex & 1) + 0x15);
+                digitalButtonState |= 1 << (positiveDirectionBitIndex - ((axisIndex >> 1) * 4));
+            }
+        }
+
+        arg0->btnsHeld_C = digitalButtonState;
+    }
+    else
+    {
+        signedRawAnalog      = 0;
+        normalizedAnalogData = 0;
+    }
+
+    processedInputFlags      = normalizedAnalogData;
+    arg0->field_20.rawData_0 = signedRawAnalog;
+
+    if (arg0 == g_ControllerPtrConst)
+    {
+        if (!(processedInputFlags & 0xFF000000))
+        {
+            value = digitalButtonState & 0x50;
+            if (value == 0x40)
+            {
+                normalizedAnalogData = processedInputFlags | 0x2D000000;
+            }
+            else if (value == 0x10)
+            {
+                normalizedAnalogData = processedInputFlags | 0xD3000000;
+            }
+        }
+        if (!(normalizedAnalogData & 0xFF0000))
+        {
+            value = digitalButtonState & 0xA0;
+            if (value == 0x20)
+            {
+                normalizedAnalogData |= 0x2D0000;
+            }
+            else if (value == 0x80)
+            {
+                normalizedAnalogData |= 0xD30000;
+            }
+        }
+        if (!(processedInputFlags & 0xFF000000))
+        {
+            value = digitalButtonState & 0x50;
+            if (value == 0x40)
+            {
+                processedInputFlags |= 0x20000000;
+            }
+            else if (value == 0x10)
+            {
+                if (!(digitalButtonState & g_GameWorkPtr->config_0.controllerConfig_0.run_C))
+                {
+                    processedInputFlags |= 0xE0000000;
+                }
+                else
+                {
+                    processedInputFlags |= 0xC0000000;
+                }
+            }
+        }
+        if (!(processedInputFlags & 0xFF0000))
+        {
+            value = digitalButtonState & 0xA0;
+            if (value == 0x20)
+            {
+                processedInputFlags |= 0x200000;
+            }
+            else if (value == 0x80)
+            {
+                processedInputFlags |= 0xE00000;
+            }
+        }
+    }
+
+    arg0->field_24 = normalizedAnalogData;
+    arg0->field_28 = processedInputFlags;
+}
+
+s32 func_8003483C(u16* arg0) // 0x8003483C
+{
+    if (g_ControllerPtrConst->btnsClicked_10 & *(*arg0 + arg0))
+    {
+        *arg0 = *arg0 + 1;
+    }
+    else if (g_ControllerPtrConst->btnsClicked_10 & (*(arg0 + 1)))
+    {
+        *arg0 = 2;
+    }
+    else if (g_ControllerPtrConst->btnsClicked_10 & 0xFFFF)
+    {
+        *arg0 = 1;
+    }
+
+    if (*(*arg0 + arg0) == 0xFFFF)
+    {
+        *arg0 = 1;
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+void func_800348C0() // 0x800348C0
 {
     bzero(&D_800A9944, 0x48);
 }
@@ -3209,7 +3344,113 @@ s32 func_80036B5C(u8 arg0, s32* arg1)
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_80036B5C); // 0x80036B5C
 #endif
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_80036E48); // 0x80036E48
+void func_80036E48(u16* arg0, s16* arg1) // 0x80036E48
+{
+    u16  sp10[4];
+    u8   sp18[16];
+    u8   sp28[12];
+    s16* var_t2;
+    s32  temp_a0;
+    s32  temp_v0_2;
+    s32  var_a2;
+    s32  var_t3;
+    u8   var_t4;
+    s32  var_v0;
+    u16  temp_v0;
+    u16  var_a3;
+    u16* var_t7;
+
+    var_t2 = arg1;
+    var_t4 = 0;
+    var_t7 = arg0;
+
+    for (var_t3 = 0; var_t3 < 0xF;)
+    {
+        temp_v0 = *var_t7;
+
+        for (var_a2 = 0; var_a2 < 0xF; var_a2++)
+        {
+            if ((((temp_v0 >> 8) | ((temp_v0 & 0xFF) << 8)) >> (0xF - var_a2)) & 1)
+            {
+                sp18[var_a2] = 1;
+            }
+            else
+            {
+                sp18[var_a2] = 0;
+            }
+        }
+
+        sp18[15] = 0;
+        sp28[0]  = sp18[0];
+        sp28[1]  = sp18[1] | sp18[2];
+        sp28[2]  = sp18[3];
+        sp28[3]  = sp18[4];
+        sp28[4]  = sp18[5] | sp18[6];
+        sp28[5]  = sp18[7];
+        sp28[6]  = sp18[8] | sp18[9];
+        sp28[7]  = sp18[10];
+        sp28[8]  = sp18[11];
+        sp28[9]  = sp18[12] | sp18[13];
+        var_v0   = 2;
+        sp28[10] = sp18[14];
+        sp28[11] = 0;
+
+        for (var_a3 = 0, var_a2 = 0; var_a2 < 0xC; var_a2++)
+        {
+            var_v0  = 2;
+            temp_a0 = (var_a2 & 3) * 4;
+
+            if (sp28[var_a2] != 0)
+            {
+                var_a3 |= var_v0 << temp_a0;
+            }
+            else
+            {
+                if (var_a2 > 0 && sp28[var_a2 - 1] != 0)
+                {
+                    var_a3 |= 0xB << temp_a0;
+                }
+
+                if (var_t3 > 0)
+                {
+                    if (var_a2 != 0 && ((sp10[var_a2 >> 2] >> temp_a0) & 0xF) == 0xB && (var_t4 & 0xFF))
+                    {
+                        var_a3 |= 0xB << temp_a0;
+                    }
+
+                    temp_v0_2 = (sp10[var_a2 >> 2] >> temp_a0) & 0xF;
+
+                    if (temp_v0_2 > 0 && temp_v0_2 != 0xB)
+                    {
+                        var_a3 |= 0xB << temp_a0;
+                        var_t4 = 1;
+                    }
+                    else
+                    {
+                        var_t4 = 0;
+                    }
+                }
+            }
+
+            if ((var_a2 & 3) == 3)
+            {
+                sp10[var_a2 >> 2] = var_a3;
+                *var_t2           = var_a3;
+                var_t2++;
+                var_a3 = 0;
+            }
+        }
+
+        do
+        {
+            var_t3++;
+        } while (0); // HACK
+        var_t7++;
+        var_t2 += (D_800C3920 - 1) * 3;
+    }
+
+    func_8003708C(var_t2, sp10);
+}
 
 void func_8003708C(s16* ptr0, u16* ptr1) // 0x8003708C
 {

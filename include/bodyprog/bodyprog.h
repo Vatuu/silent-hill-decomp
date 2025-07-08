@@ -1311,6 +1311,8 @@ extern u8 D_800C16A8[];
 
 extern s32 D_800C16C8; // Type assumed.
 
+extern s32 D_800C3920;
+
 extern GsCOORD2PARAM D_800C3928;
 
 extern u8 D_800C3950;
