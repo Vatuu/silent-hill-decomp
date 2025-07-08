@@ -312,22 +312,26 @@ typedef struct
     s32 queueIdx_1000;
 } s_800BE9FC;
 
+// Save-system related struct.
+// TODO: move to `save_system.h` if never used outside of `save.c`.
 typedef struct
 {
     s32 field_0;
     s32 field_4;
     s32 field_8;
     s32 field_C;
-    s32 field_10;
-    s32 field_14;
-    s32 field_18;
-    s32 field_1C;
-    s32 field_20;
-    s32 field_24;
-    s32 field_28;
-    s32 field_2C;
-    s32 field_30;
+    s32 event_10;
+    s32 event_14;
+    s32 event_18;
+    s32 event_1C;
+    s32 event_20;
+    s32 event_24;
+    s32 event_28;
+    s32 event_2C;
+    s32 event_30;
     s32 field_34;
+    u8  unk_38[4];
+    s32 field_3C;
 } s_800B5488;
 
 typedef struct

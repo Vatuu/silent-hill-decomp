@@ -3,6 +3,8 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/save_system.h"
 
+#include <libapi.h>
+
 /** It is possible that more functions from `bodyprog.c` are
 * actually functions from `save_system`.
 */
@@ -268,7 +270,20 @@ void Savegame_FilenameGenerate(char* dest, s32 saveIdx) // 0x80030000
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/save", func_800300B4);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/save", func_80030288);
+s32 func_80030288(s32 deviceId) // 0x80030288
+{
+    u8 cardBuf[128];
+
+    memset(cardBuf, 0xFF, 128);
+
+    func_80030820();
+    _new_card();
+    _card_write(((deviceId & 4) * 4) | (deviceId & 3), 0, cardBuf);
+
+    D_800B5488.field_0 |= 1 << D_800B5488.field_3C;
+
+    return func_80030810() != 0;
+}
 
 s32 func_8003030C(s32 deviceId) // 0x8003030C
 {
@@ -343,28 +358,45 @@ void func_80030640() // 0x80030640
     func_800306C8();
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/save", func_80030668);
+void func_80030668() // 0x80030668
+{
+    EnterCriticalSection();
+    CloseEvent(D_800B5488.event_10);
+    CloseEvent(D_800B5488.event_14);
+    CloseEvent(D_800B5488.event_18);
+    CloseEvent(D_800B5488.event_1C);
+    ExitCriticalSection();
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/save", func_800306C8);
+void func_800306C8() // 0x800306C8
+{
+    EnterCriticalSection();
+    CloseEvent(D_800B5488.event_20);
+    CloseEvent(D_800B5488.event_24);
+    CloseEvent(D_800B5488.event_28);
+    CloseEvent(D_800B5488.event_2C);
+    CloseEvent(D_800B5488.event_30);
+    ExitCriticalSection();
+}
 
 s32 func_80030734() // 0x80030734
 {
-    if (TestEvent(D_800B5488.field_14) == 1)
+    if (TestEvent(D_800B5488.event_14) == 1)
     {
         return 1 << 15;
     }
 
-    if (TestEvent(D_800B5488.field_18) == 1)
+    if (TestEvent(D_800B5488.event_18) == 1)
     {
         return 1 << 8;
     }
 
-    if (TestEvent(D_800B5488.field_1C) == 1)
+    if (TestEvent(D_800B5488.event_1C) == 1)
     {
         return 1 << 13;
     }
 
-    if (TestEvent(D_800B5488.field_10) == 1)
+    if (TestEvent(D_800B5488.event_10) == 1)
     {
         return 1 << 2;
     }
@@ -374,10 +406,10 @@ s32 func_80030734() // 0x80030734
 
 void func_800307BC() // 0x800307BC
 {
-    TestEvent(D_800B5488.field_14);
-    TestEvent(D_800B5488.field_18);
-    TestEvent(D_800B5488.field_1C);
-    TestEvent(D_800B5488.field_10);
+    TestEvent(D_800B5488.event_14);
+    TestEvent(D_800B5488.event_18);
+    TestEvent(D_800B5488.event_1C);
+    TestEvent(D_800B5488.event_10);
 } 
 
 s32 func_80030810() // 0x80030810
@@ -385,7 +417,15 @@ s32 func_80030810() // 0x80030810
     return D_800B54BC;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/save", func_80030820);
+void func_80030820()
+{
+    TestEvent(D_800B5488.event_24);
+    TestEvent(D_800B5488.event_28);
+    TestEvent(D_800B5488.event_2C);
+    TestEvent(D_800B5488.event_20);
+    TestEvent(D_800B5488.event_30);
+    D_800B5488.field_34 = 0;
+}
 
 void func_80030884() // 0x80030884
 {
