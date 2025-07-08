@@ -55,26 +55,6 @@ typedef struct
 
 typedef struct
 {
-    s8  field_0;
-    s8  unk_1;
-    s16 field_2;
-    s16 field_4;
-} s_func_8006BDDC;
-
-typedef struct
-{
-    s8  unk_0[124];
-    s32 field_7C;
-    s32 field_80;
-    s32 field_84;
-    s32 field_88;
-    s32 field_8C;
-    s8  unk_90[4];
-    s32 field_94;
-} s_func_8006CC44;
-
-typedef struct
-{
     s8  unk_0[4];
     u8  field_4;
     u8  field_5;
@@ -83,6 +63,15 @@ typedef struct
     s32 field_C;
 } s_8002AC04;
 STATIC_ASSERT_SIZEOF(s_8002AC04, 16);
+
+typedef struct
+{
+    s8  field_0;
+    s8  field_1;
+    s8  field_2;
+    s8  field_3;
+    s32 field_4[4];
+} s_800382B0;
 
 // Maybe same.
 typedef struct
@@ -215,6 +204,26 @@ typedef struct
     s32 field_10;
 } s_func_800625F4;
 STATIC_ASSERT_SIZEOF(s_func_800625F4, 20);
+
+typedef struct
+{
+    s8  field_0;
+    s8  unk_1;
+    s16 field_2;
+    s16 field_4;
+} s_func_8006BDDC;
+
+typedef struct
+{
+    s8  unk_0[124];
+    s32 field_7C;
+    s32 field_80;
+    s32 field_84;
+    s32 field_88;
+    s32 field_8C;
+    s8  unk_90[4];
+    s32 field_94;
+} s_func_8006CC44;
 
 typedef struct
 {
@@ -2366,6 +2375,8 @@ void func_800373CC(s32);
 void func_80037E40(s_SubCharacter* chara);
 
 void func_80037E78(s_SubCharacter* chara);
+
+s32 func_800382B0(s32 arg0);
 
 void func_80037F24(s32);
 

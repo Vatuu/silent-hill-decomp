@@ -3387,7 +3387,24 @@ void func_80037E78(s_SubCharacter* chara) // 0x80037E78
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_80037F24);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_800382B0);
+s32 func_800382B0(s32 arg0) // 0x800382B0
+{
+    s32         i;
+    s_800382B0* ptr;
+    s_800382B0* stack[2];
+
+    stack[0] = ptr;
+
+    for (i = 0; i < 2; ++i)
+    {
+        if (arg0 == ptr[i].field_0)
+        {
+            return i;
+        }
+    }
+
+    return NO_VALUE;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_800382EC);
 
