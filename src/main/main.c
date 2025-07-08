@@ -7,6 +7,7 @@
 #include <libsnd.h>
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/math.h"
 #include "main/fsqueue.h"
 
 // @HACK: Explicit rodata here because these need to be referenced externally to end up in .rodata,
@@ -17,7 +18,7 @@ void* SECTION(".rodata") g_OvlBodyprog = (void*)0x80024B60;
 
 s_FsImageDesc g_MainImg0 =
 {
-    .tPage = { 0x01, 0x0D },
+    .tPage = { 1, 13 },
     .u     = 32,
     .v     = 0,
     .clutX = 768,
@@ -73,10 +74,10 @@ int main()
     // Display area = (0, 0, 320, 240)
     PutDispEnv(&g_MainDispEnv);
 
-    // Initialize SPU
+    // Initialize SPU.
     SpuInit();
 
-    // Load \1ST\2ZANKO_E.TIM ("There are violent and disturbing images...").
+    // Load `1ST\2ZANKO_E.TIM` ("There are violent and disturbing images...").
     Fs_QueueStartReadTim(FILE_1ST_2ZANKO_E_TIM, FS_BUFFER_0, &g_MainImg0);
     while (Fs_QueueGetLength() > 0)
     {
@@ -84,29 +85,30 @@ int main()
         VSync(0);
     }
 
-    // Start loading \1ST\BODYPROG.BIN and \1ST\B_KONAMI.BIN.
+    // Start loading `1ST\BODYPROG.BIN` and `1ST\B_KONAMI.BIN`.
     Fs_QueueStartRead(FILE_1ST_BODYPROG_BIN, FS_BUFFER_0);
     Fs_QueueStartRead(FILE_1ST_B_KONAMI_BIN, FS_BUFFER_1);
 
     SetDispMask(1);
 
-    // Fade in 2ZANKO_E.TIM over 64 frames using `TILE` with subtractive blending.
-    fade = 0xFF;
+    // Fade in `1ST\2ZANKO_E.TIM` over 64 frames using `TILE` with subtractive blending.
+    fade = FP_COLOR(1.0f);;
     prim = PSX_SCRATCH;
     while (true)
     {
         g_MainDispEnv.disp.y = 256 - (g_MainFbIdx * 224);
         PutDispEnv(&g_MainDispEnv);
 
+        // Finished fading.
         if (fade < 0)
         {
             break;
         }
 
         // Swap buffers.
-        fbNext = (g_MainFbIdx == 0);
-        offsetY = 256 - (fbNext * 224);
-        g_MainFbIdx = fbNext;
+        fbNext               = (g_MainFbIdx == 0);
+        offsetY              = 256 - (fbNext * 224);
+        g_MainFbIdx          = fbNext;
         g_MainDrawEnv.ofs[1] = offsetY; // Draw Y offset.
         g_MainDrawEnv.clip.y = offsetY;
         PutDrawEnv(&g_MainDrawEnv);
@@ -150,11 +152,11 @@ int main()
         VSync(0);
     }
 
-    // Decrypt BODYPROG and B_KONAMI into place.
+    // Decrypt `BODYPROG` and `B_KONAMI` into place.
     Fs_DecryptOverlay(g_OvlBodyprog, FS_BUFFER_0, Fs_GetFileSize(FILE_1ST_BODYPROG_BIN));
     Fs_DecryptOverlay(g_OvlDynamic, FS_BUFFER_1, Fs_GetFileSize(FILE_1ST_B_KONAMI_BIN));
 
-    // Load 1ST\FONT8NOC.TIM (8x8 font).
+    // Load `1ST\FONT8NOC.TIM` (8x8 font).
     Fs_QueueStartReadTim(FILE_1ST_FONT8NOC_TIM, FS_BUFFER_1, &g_MainImg1);
     while (Fs_QueueGetLength() > 0)
     {

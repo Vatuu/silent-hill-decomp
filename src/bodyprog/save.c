@@ -245,7 +245,7 @@ u8 Savegame_ChecksumGenerate(s8* saveData, s32 saveDataLength) // 0x8002FFD0
     return checksum;
 }
 
-void Savegame_FilenameGenerate(char* dest, s32 saveNum) // 0x80030000
+void Savegame_FilenameGenerate(char* dest, s32 saveIdx) // 0x80030000
 {
     // TODO: likely local .rodata for this func.
     extern char D_80024C0C[]; // "BA"
@@ -259,8 +259,8 @@ void Savegame_FilenameGenerate(char* dest, s32 saveNum) // 0x80030000
     strcat(dest, D_80024C10);
     strcat(dest, D_80024C1C);
 
-    buf[0] = '0' + (saveNum / 10);
-    buf[1] = '0' + (saveNum % 10);
+    buf[0] = '0' + (saveIdx / 10);
+    buf[1] = '0' + (saveIdx % 10);
     buf[2] = 0;
 
     strcat(dest, buf);
@@ -272,7 +272,9 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/save", func_80030288);
 
 s32 func_8003030C(s32 deviceId) // 0x8003030C
 {
-    char buf[16];
+    #define BUF_SIZE 16
+
+    char buf[BUF_SIZE];
 
     Savegame_DevicePathGenerate(deviceId, buf);
 
@@ -281,7 +283,9 @@ s32 func_8003030C(s32 deviceId) // 0x8003030C
 
 s32 func_80030334(s32 deviceId, char* fileName) // 0x80030334
 {
-    char buf[32];
+    #define BUF_SIZE 32
+
+    char buf[BUF_SIZE];
 
     Savegame_DevicePathGenerate(deviceId, buf);
 
@@ -290,18 +294,20 @@ s32 func_80030334(s32 deviceId, char* fileName) // 0x80030334
     return erase(buf);
 }
 
-s32 func_80030370(s32 deviceId, char* oldName, char* newName)
+s32 func_80030370(s32 deviceId, char* prevName, char* newName)
 {
-    char oldBuf[32];
-    char newBuf[32];
+    #define BUF_SIZE 32
 
-    Savegame_DevicePathGenerate(deviceId, oldBuf);
+    char prevBuf[BUF_SIZE];
+    char newBuf[BUF_SIZE];
+
+    Savegame_DevicePathGenerate(deviceId, prevBuf);
     Savegame_DevicePathGenerate(deviceId, newBuf);
 
-    strcat(oldBuf, oldName);
+    strcat(prevBuf, prevName);
     strcat(newBuf, newName);
 
-    return rename(oldBuf, newBuf);
+    return rename(prevBuf, newBuf);
 }
 
 void func_800303E4()

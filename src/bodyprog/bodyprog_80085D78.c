@@ -505,7 +505,7 @@ void func_800868DC(s32 idx)
 s32 func_800868F4(s32 arg0, s32 arg1, s32 idx)
 {
     D_800C4710[idx] += g_DeltaTime0;
-    D_800C4710[idx] = (arg1 < D_800C4710[idx]) ? arg1 : D_800C4710[idx];
+    D_800C4710[idx]  = (arg1 < D_800C4710[idx]) ? arg1 : D_800C4710[idx];
 
     return (arg0 * D_800C4710[idx]) / arg1;
 }
@@ -523,7 +523,7 @@ void func_800869E4(u8* arg0, u8* arg1, u16* arg2) // 0x800869E4
 
     g_SysWork.field_22A0 |= 1 << 5;
 
-    ret = func_800365B8();
+    ret = func_800365B8(arg0);
     if (ret == 1)
     {
         g_SysWork.field_28 = 0;

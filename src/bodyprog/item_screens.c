@@ -1971,15 +1971,15 @@ void func_8005227C() // 0x8005227C
 {
     s32 i;
 
-    SVECTOR D_80027FB0[] =
-        {
-            {0x0000, 0xFCC0, 0x1400, 0x0000},
-            {0xFCF8, 0xFE80, 0x1400, 0x0000},
-            {0x0308, 0xFE80, 0x1400, 0x0000},
-            {0xFCF8, 0x0200, 0x1400, 0x0000},
-            {0x0308, 0x0200, 0x1400, 0x0000},
-            {0x0000, 0x03C0, 0x1400, 0x0000},
-        };
+    SVECTOR vecs[] = // 0x80027FB0
+    {
+        { 0x0000, 0xFCC0, 0x1400, 0x0000 },
+        { 0xFCF8, 0xFE80, 0x1400, 0x0000 },
+        { 0x0308, 0xFE80, 0x1400, 0x0000 },
+        { 0xFCF8, 0x0200, 0x1400, 0x0000 },
+        { 0x0308, 0x0200, 0x1400, 0x0000 },
+        { 0x0000, 0x03C0, 0x1400, 0x0000 },
+    };
 
     if (g_SavegamePtr->clearGameCount_24A == 0)
     {
@@ -1988,17 +1988,17 @@ void func_8005227C() // 0x8005227C
 
     for (i = 0; i < 6; i++)
     {
-        if ((D_800C3E40 >> i) & 1)
+        if ((D_800C3E40 >> i) & (1 << 0))
         {
-            D_800C3E48[i].coord.t[0]  = D_80027FB0[i].vx;
-            D_800C3E48[i].coord.t[1]  = D_80027FB0[i].vy;
-            D_800C3E48[i].coord.t[2]  = D_80027FB0[i].vz;
-            D_800C3BE8[i].field_10.vx = 0x200;
-            D_800C3BE8[i].field_10.vz = 0x200;
-            D_800C3BE8[i].field_0.vz  = 0x1000;
-            D_800C3BE8[i].field_0.vy  = 0x1000;
-            D_800C3BE8[i].field_0.vx  = 0x1000;
-            D_800C3BE8[i].field_10.vy = D_800C3BE8[i].field_10.vy + 8;
+            D_800C3E48[i].coord.t[0]   = vecs[i].vx;
+            D_800C3E48[i].coord.t[1]   = vecs[i].vy;
+            D_800C3E48[i].coord.t[2]   = vecs[i].vz;
+            D_800C3BE8[i].field_10.vx  = 0x200;
+            D_800C3BE8[i].field_10.vz  = 0x200;
+            D_800C3BE8[i].field_0.vz   = 0x1000;
+            D_800C3BE8[i].field_0.vy   = 0x1000;
+            D_800C3BE8[i].field_0.vx   = 0x1000;
+            D_800C3BE8[i].field_10.vy += 8;
         }
     }
 }

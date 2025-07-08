@@ -63,8 +63,8 @@ u32 g_FileXaLoc[] =
 
 void Fs_DecryptOverlay(s32* dst, const s32* src, s32 size)
 {
-    s32 seed = 0;
     s32 i    = 0;
+    s32 seed = 0;
 
     i = 0;
     while (i < (size >> 2))

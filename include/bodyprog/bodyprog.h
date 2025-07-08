@@ -1004,12 +1004,14 @@ extern s_AnimInfo D_800A998C;
 /** Current player anim index store? */
 extern u8 D_800A9990;
 
+/** Used in `func_800D929C` from `map0_s00.c`. */
+extern s32 D_800A999C;
+
 extern s32 D_800A99A0;
 
 extern u8 D_800A99A4[];
 
-/** Used in `func_800D929C` from `map0_s00.c`. */
-extern s32 D_800A999C;
+extern s32 D_800A99AC;
 
 extern s16 D_800A99B0;
 
@@ -1186,7 +1188,23 @@ extern u32 D_800BCD58;
 
 extern s32 D_800BCD5C;
 
-extern s_800BCD78 D_800BCD78;
+extern s32 D_800BCD60;
+
+extern s32 D_800BCD64;
+
+extern s32 D_800BCD68;
+
+extern s32 D_800BCD6C;
+
+extern s32 D_800BCD70;
+
+extern s32 D_800BCD74;
+
+extern s_800BCD78 D_800BCD78; // `s_800BCD78` might also encompass vars below.
+
+extern u8 D_800BCD79;
+
+extern u8 D_800BCD7A;
 
 extern s8 D_800BCD7B;
 
@@ -1989,6 +2007,7 @@ void func_80085EB8(u32 arg0, s_SubCharacter* chara0, s_SubCharacter* chara1, s32
 
 void func_8008605C(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 
+/** `arg1` might be `u8*`. */
 void func_800860B0(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 sysStateStep, s32 arg5);
 
 void func_8008616C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
@@ -2328,6 +2347,9 @@ s32 func_80036498();
 u32 func_800364BC();
 
 void func_8003652C();
+
+/** `arg0` might be `u8*`. */
+s32 func_800365B8(s32 arg0);
 
 s32 func_80036B5C(u8 arg0, s32* arg1);
 

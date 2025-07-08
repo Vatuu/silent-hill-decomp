@@ -1,6 +1,7 @@
 #include "game.h"
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/item_screens_system.h"
 #include "bodyprog/math.h"
 #include "bodyprog/save_system.h"
 #include "main/fsqueue.h"
@@ -65,7 +66,7 @@ void Gfx_BackgroundSpriteDraw(s_FsImageDesc* image) // 0x800314EC
     }
 
     GsOUT_PACKET_P        = packet;
-    g_SysWork.field_22A0 |= 1;
+    g_SysWork.field_22A0 |= 1 << 0;
     D_800A8E58            = 0x80;
 }
 
@@ -948,12 +949,12 @@ void MainLoop() // 0x80032EE0
         // Handle V sync.
         if (g_SysWork.flags_22A4 & (1 << 1))
         {
-            vBlanks = VSync(-1);
+            vBlanks   = VSync(-1);
             g_VBlanks = vBlanks - g_PrevVBlanks;
 
             Demo_PresentIntervalUpdate();
 
-            interval = g_Demo_VideoPresentInterval;
+            interval      = g_Demo_VideoPresentInterval;
             g_PrevVBlanks = vBlanks;
 
             if (interval < g_IntervalVBlanks)
@@ -970,17 +971,17 @@ void MainLoop() // 0x80032EE0
             while (g_VBlanks < interval);
 
             g_UncappedVBlanks = g_VBlanks;
-            g_VBlanks = MIN(g_VBlanks, 4);
+            g_VBlanks         = MIN(g_VBlanks, 4);
 
-            vCount = g_Demo_VideoPresentInterval * H_BLANKS_PER_TICK;
+            vCount     = g_Demo_VideoPresentInterval * H_BLANKS_PER_TICK;
             vCountCopy = g_UncappedVBlanks * H_BLANKS_PER_TICK;
-            g_VBlanks = g_Demo_VideoPresentInterval;
+            g_VBlanks  = g_Demo_VideoPresentInterval;
         }
         else
         {
             if (g_SysWork.sysState_8 != SysState_Gameplay)
             {
-                g_VBlanks = VSync(-1) - g_PrevVBlanks;
+                g_VBlanks     = VSync(-1) - g_PrevVBlanks;
                 g_PrevVBlanks = VSync(-1);
                 VSync(0);
             }
@@ -991,7 +992,7 @@ void MainLoop() // 0x80032EE0
                     VSync(0);
                 }
 
-                g_VBlanks = VSync(-1) - g_PrevVBlanks;
+                g_VBlanks     = VSync(-1) - g_PrevVBlanks;
                 g_PrevVBlanks = VSync(-1);
 
                 if (g_VBlanks < g_IntervalVBlanks)
@@ -1008,10 +1009,10 @@ void MainLoop() // 0x80032EE0
 
             // Update V blanks.
             g_UncappedVBlanks = g_VBlanks;
-            g_VBlanks = MIN(g_VBlanks, V_BLANKS_MAX);
+            g_VBlanks         = MIN(g_VBlanks, V_BLANKS_MAX);
             
             // Update V count.
-            vCount = MIN(GsGetVcount(), H_BLANKS_PER_FRAME_MIN); // NOTE: Will call `GsGetVcount` twice.
+            vCount     = MIN(GsGetVcount(), H_BLANKS_PER_FRAME_MIN); // NOTE: Will call `GsGetVcount` twice.
             vCountCopy = vCount;
         }
 
@@ -2878,7 +2879,7 @@ void func_8003652C() // 0x8003652C
 {
     RECT rect;
 
-    u32 D_8002523C[] = // 0x8002523C
+    u32 vals[] = // 0x8002523C
     {
         0xFFFF0000, 0xBBEEE318, 0xFFEC9304, 0x83FFE30C,
         0x001F8318, 0x90840018, 0x90808080, 0x80048084
@@ -2889,13 +2890,221 @@ void func_8003652C() // 0x8003652C
     rect.w = 16;
     rect.h = 1;
 
-    LoadImage(&rect, D_8002523C);
+    LoadImage(&rect, vals);
 }
 #else
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003652C); // 0x800365B8
 #endif
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_800365B8); // 0x800365B8
+s32 func_800365B8(s32 arg0) // 0x800365B8
+{
+    s32  temp_s1;
+    s32  temp_v0;
+    s32  temp_v1;
+    s32  temp_v1_2;
+    s32  var_a0;
+    s32  var_a1;
+    s32  var_s3;
+    s32  res;
+    s32  var_v1;
+    u16  var_a0_2;
+    u32* new_var;
+    s32  temp;
+
+    var_s3 = 0;
+    if ((g_ControllerPtrConst->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 | g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)) ||
+        (g_ControllerPtrConst->btnsHeld_C & g_GameWorkPtr->config_0.controllerConfig_0.skip_4))
+    {
+        var_s3 = 1;
+    }
+
+    g_SysWork.player_4C.chara_0.properties_E4.player.field_114 = 0;
+    func_8004C564(g_SysWork.field_38.field_F, 2);
+
+    if (D_800BCD6C != arg0)
+    {
+        g_SysWork.field_18 = 0;
+    }
+
+    switch (g_SysWork.field_18)
+    {
+        case 0:
+            g_SysWork.field_234C = NO_VALUE;
+            D_800BCD78.field_0   = NO_VALUE;
+            D_800BCD78.field_1   = 0;
+            D_800BCD7A           = 0;
+            D_800A99AC           = arg0;
+            D_800BCD60           = 0;
+            D_800BCD64           = 0;
+            D_800BCD6C           = arg0;
+            D_800BCD68           = 0;
+            D_800BCD70           = 2;
+
+            func_8004B684();
+            func_8004ACF4(D_800A99AC);
+
+            D_800BCD74 = 1;
+            g_SysWork.field_18++;
+            return NO_VALUE;
+
+        case 1:
+            if (g_SysWork.field_22A0 & (1 << 5))
+            {
+                if (func_80045B28() == 4)
+                {
+                    D_800BCD74 = 0;
+                    break;
+                }
+
+                if (D_800BCD74 != 0)
+                {
+                    break;
+                }
+            }
+            else
+            {
+                D_800BCD74 = 0;
+            }
+
+            Gfx_StringSetColor(ColorId_White);
+            Gfx_StringSetPosition(40, 160);
+
+            D_800BCD68 += D_800BCD70;
+            D_800BCD68  = CLAMP(D_800BCD68, 0, 0x190);
+
+            if (D_800BCD7A != 0 && g_SysWork.field_234C > 0)
+            {
+                g_SysWork.field_234C -= g_DeltaTime1;
+                g_SysWork.field_234C  = CLAMP(g_SysWork.field_234C, 0, 0x7FFFFFFF);
+            }
+
+            temp_s1 = D_800BCD60;
+            if (temp_s1 == NO_VALUE)
+            {
+                if (D_800BCD7A == 0)
+                {
+                    func_8004C8DC();
+                }
+
+                temp = D_800BCD64;
+                if (temp == temp_s1)
+                {
+                    if (D_800BCD78.field_0 == temp)
+                    {
+                        if (!((D_800BCD7A & (1 << 0)) || var_s3 == 0) || 
+                            (D_800BCD7A != 0 && g_SysWork.field_234C == 0))
+                        {
+                            D_800BCD64 = 0xFF;
+
+                            if (g_SysWork.field_22A0 & (1 << 5))
+                            {
+                                Sd_EngineCmd(19);
+                            }
+                            break;
+                        }
+                    } 
+                    else if (g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)
+                    {
+                        D_800BCD78.field_0 = temp;
+                        D_800BCD78.field_1 = D_800BCD7B;
+
+                        func_80046048(0x51A, 0, 0x40);
+
+                        if (g_SysWork.field_2350_4 != 0)
+                        {
+                            g_SysWork.field_2350_4 = 0;
+                        }
+
+                        D_800BCD64 = 0xFF;
+                        break;
+                    }
+                    else if (g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
+                    {
+                        D_800BCD78.field_0 = temp;
+                        if ((u8)D_800BCD78.field_1 == (s8)D_800BCD7B)
+                        {
+                            func_80046048(0x51A, 0, 0x40);
+                        }
+                        else if (g_SysWork.field_2350_4 == 0)
+                        {
+                            func_80046048(0x51B, 0, 0x40);
+                        }
+
+                        if (g_SysWork.field_2350_4 != 0)
+                        {
+                            g_SysWork.field_2350_4 = 0;
+                        }
+
+                        D_800BCD64 = 0xFF;
+                        break;
+                    }
+                }
+                else if ((!(D_800BCD7A & (1 << 0)) && var_s3 != 0 && D_800BCD78.field_0 != 0) ||
+                        (D_800BCD7A != 0 && g_SysWork.field_234C == 0))
+                {
+                    if (D_800BCD78.field_0 != NO_VALUE)
+                    {
+                        D_800BCD78.field_0 = NO_VALUE;
+                        D_800BCD64 = 0xFF;
+                        break;
+                    }
+
+                    D_800A99AC++;
+                    g_SysWork.field_234C = D_800BCD78.field_0;
+
+                    func_8004ACF4(D_800A99AC);
+
+                    D_800BCD68 = 0;
+                    D_800BCD60 = 0;
+
+                    if (D_800BCD7A == 3)
+                    {
+                        D_800BCD74 = 0;
+                        return 0;
+                    }
+                        
+                    if (g_SysWork.field_22A0 & (1 << 5))
+                    {
+                        Sd_EngineCmd(0x13);
+                    }
+
+                    D_800BCD74 = 1;
+                    return NO_VALUE;
+                }
+            }
+            else
+            {
+                if (var_s3 != 0)
+                {
+                    D_800BCD68 = 0x190;
+                }
+            }
+
+            D_800BCD60 = 0;
+            D_800BCD64 = func_80036B5C(D_800A99AC, &D_800BCD68);
+
+            if (D_800BCD64 != 0 && D_800BCD64 < 4)
+            {
+                D_800BCD60 = NO_VALUE;
+            }
+    }
+
+    if (D_800BCD64 != 0xFF)
+    {
+        return 0;
+    }
+
+    g_SysWork.field_18     = 0;
+    g_SysWork.field_2350_0 = 0;
+    D_800BCD68             = 0;
+
+    if (g_SysWork.field_22A0 & (1 << 5))
+    {
+        D_800BCD74 = 1;
+    }
+
+    return D_800BCD79 + 1;
+}
 
 // TODO: RODATA migration.
 #ifdef NON_MATCHING
@@ -3972,7 +4181,7 @@ void GameState_MainMenu_Update()
                 }
 
                 g_Gfx_ScreenFade = 2;
-                D_800A9A74      += 1;
+                D_800A9A74++;
 
                 if (D_800A9A78 < 2u)
                 {

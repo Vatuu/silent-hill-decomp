@@ -46,7 +46,7 @@ void nullsub_80011cfc() {}
 
 void* Fs_AllocMem(s32 size)
 {
-    s_FsMemBlock  bufferMin; // Seems to use this struct for some reason.
+    s_FsMemBlock  bufMin; // Seems to use this struct for some reason.
     s_FsMemBlock* blockMin;
     s_FsMemBlock* iter;
     s32           clampedSize;
@@ -67,10 +67,10 @@ void* Fs_AllocMem(s32 size)
         return NULL;
     }
 
-    iter            = &g_FsMemory.allocList;
-    bufferMin.start = NULL;
-    bufferMin.size  = 0x0FFFFFFF;
-    blockMin        = NULL;
+    iter         = &g_FsMemory.allocList;
+    bufMin.start = NULL;
+    bufMin.size  = 0x0FFFFFFF;
+    blockMin     = NULL;
 
     for (; iter != NULL; iter = iter->next)
     {
@@ -90,20 +90,20 @@ void* Fs_AllocMem(s32 size)
         }
 
         // Track smallest possible hole new block can fit into.
-        if (clampedSize >= size && clampedSize < (s32)bufferMin.size)
+        if (clampedSize >= size && clampedSize < (s32)bufMin.size)
         {
-            blockMin        = iter;
-            bufferMin.size  = clampedSize;
-            bufferMin.start = blockMin->start + blockMin->size;
+            blockMin     = iter;
+            bufMin.size  = clampedSize;
+            bufMin.start = blockMin->start + blockMin->size;
         }
     }
 
-    if (bufferMin.start != NULL)
+    if (bufMin.start != NULL)
     {
-        Fs_RelinkMemBlock(&g_FsMemory.freeList, blockMin, bufferMin.start, size);
+        Fs_RelinkMemBlock(&g_FsMemory.freeList, blockMin, bufMin.start, size);
     }
 
-    return bufferMin.start;
+    return bufMin.start;
 }
 
 static inline u8* Fs_ClampToHeapBounds(u8* ptr)
