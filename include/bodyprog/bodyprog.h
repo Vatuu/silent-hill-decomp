@@ -1129,10 +1129,6 @@ extern s32 D_800B5480;
 
 extern s_800B5488 D_800B5488;
 
-extern s32 D_800B548C;
-
-extern s32 D_800B54BC;
-
 extern s_800B55E8 D_800B55E8[2];
 
 extern s32 D_800B55FC;
