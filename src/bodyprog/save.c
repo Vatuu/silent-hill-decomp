@@ -414,10 +414,10 @@ void func_800307BC() // 0x800307BC
 
 s32 func_80030810() // 0x80030810
 {
-    return D_800B54BC;
+    return D_800B5488.field_34;
 }
 
-void func_80030820()
+void func_80030820() // 0x80030820
 {
     TestEvent(D_800B5488.event_24);
     TestEvent(D_800B5488.event_28);
@@ -429,42 +429,77 @@ void func_80030820()
 
 void func_80030884() // 0x80030884
 {
-    D_800B54BC = 4;
+    D_800B5488.field_34 = 4;
 }
 
 void func_80030894() // 0x80030894
 {
-    D_800B54BC = 0x8000;
+    D_800B5488.field_34 = 0x8000;
 }
 
 void func_800308A4() // 0x800308A4
 {
-    D_800B54BC = 0x2000;
+    D_800B5488.field_34 = 0x2000;
 }
 
 void func_800308B4() // 0x800308B4
 {
-    D_800B54BC = 0x100;
+    D_800B5488.field_34 = 0x100;
 }
 
 void func_800308C4() // 0x800308C4
 {
-    D_800B54BC = 0x200;
+    D_800B5488.field_34 = 0x200;
 }
 
 s32 func_800308D4() // 0x800308D4
 {
-    return D_800B5494.field_0;
+    return D_800B5488.field_C;
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/save", func_800308E4);
 
 s32 func_800309FC() // 0x800309FC
 {
-    return D_800B548C == 0;
+    return D_800B5488.field_4 == 0;
 }
 
+#ifdef NON_MATCHING
+// Needs .rodata migration for jtbl
+void func_80030A0C()
+{
+    switch (D_800B5488.field_4)
+    {
+        case 0:
+            // HACK: Probably some optimized out code here.
+            D_800B5488.field_C += 0;
+            break;
+        case 1:
+            D_800B5488.field_C = func_80030AD8();
+            break;
+        case 2:
+            D_800B5488.field_C = func_80030C88();
+            break;
+        case 3:
+            D_800B5488.field_C = func_80030DC8();
+            break;
+        case 4:
+            D_800B5488.field_C = func_80030F7C();
+            break;
+        case 5:
+            D_800B5488.field_C = func_800310B4();
+            break;
+        case 6:
+            D_800B5488.field_C = func_80031184();
+            break;
+        case 7:
+            D_800B5488.field_C = func_80031260();
+            break;
+    }
+}
+#else
 INCLUDE_ASM("asm/bodyprog/nonmatchings/save", func_80030A0C);
+#endif
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/save", func_80030AD8);
 

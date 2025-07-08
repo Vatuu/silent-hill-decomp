@@ -820,15 +820,6 @@ typedef struct _SpawnInfo
 } s_SpawnInfo;
 STATIC_ASSERT_SIZEOF(s_SpawnInfo, 12);
 
-typedef struct _800B5494
-{
-    s32 field_0;
-    s32 unk_4[9];
-} s_800B5494;
-STATIC_ASSERT_SIZEOF(s_800B5494, 40);
-
-extern s_800B5494 D_800B5494;
-
 /** TODO: `g_MapOverlayHeader` is part of the overlay bin files. Maybe should be moved to `maps/shared.h` or `dynamic/dynamic.h`. */
 typedef struct _MapOverlayHeader
 {
