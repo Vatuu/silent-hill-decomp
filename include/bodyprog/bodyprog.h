@@ -2388,6 +2388,8 @@ void SysState_GamePaused_Update();
 
 void func_8003943C();
 
+void SysState_StatusMenu_Update();
+
 void GameState_LoadStatusScreen_Update();
 
 void GameState_LoadMapScreen_Update();

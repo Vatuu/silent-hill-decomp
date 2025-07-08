@@ -3663,7 +3663,31 @@ void func_8003943C()
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003943C);
 #endif
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", SysState_StatusMenu_Update); // 0x80039568
+void SysState_StatusMenu_Update() // 0x80039568
+{
+    e_GameState gameState;
+
+    gameState                = g_GameWork.gameState_594;
+    g_GameWork.gameState_594 = GameState_LoadStatusScreen;
+
+    g_SysWork.timer_1C = 0;
+    g_SysWork.timer_20 = 0;
+
+    g_GameWork.gameStateStep_598[1] = 0;
+    g_GameWork.gameStateStep_598[2] = 0;
+
+    g_SysWork.sysState_8     = 0;
+    g_SysWork.timer_24       = 0;
+    g_SysWork.sysStateStep_C = 0;
+    g_SysWork.field_28       = 0;
+    g_SysWork.field_10       = 0;
+    g_SysWork.timer_2C       = 0;
+    g_SysWork.field_14       = 0;
+
+    g_GameWork.gameStateStep_598[0] = gameState;
+    g_GameWork.gameStatePrev_590    = gameState;
+    g_GameWork.gameStateStep_598[0] = 0;
+}
 
 void GameState_LoadStatusScreen_Update() // 0x800395C0
 {
