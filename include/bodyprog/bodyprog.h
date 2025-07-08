@@ -2406,6 +2406,8 @@ void func_8003A16C();
 
 void SysWork_SavegameReadPlayer();
 
+void SysState_SaveMenu_Update();
+
 void SysState_EventCallFunc_Update();
 
 void SysState_EventSetFlag_Update();

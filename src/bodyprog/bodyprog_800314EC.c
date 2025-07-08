@@ -3667,7 +3667,8 @@ void SysState_StatusMenu_Update() // 0x80039568
 {
     e_GameState gameState;
 
-    gameState                = g_GameWork.gameState_594;
+    gameState = g_GameWork.gameState_594;
+
     g_GameWork.gameState_594 = GameState_LoadStatusScreen;
 
     g_SysWork.timer_1C = 0;
@@ -3866,7 +3867,79 @@ void SysWork_SavegameReadPlayer() // 0x8003A1F4
     g_SysWork.player_4C.chara_0.health_B0      = g_SavegamePtr->playerHealth_240;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", SysState_SaveMenu_Update); // 0x8003A230
+void SysState_SaveMenu_Update() // 0x0x8003A230
+{
+    s32 gameState;
+
+    func_80033548();
+
+    switch (g_SysWork.sysStateStep_C)
+    {
+        case 0:
+            SysWork_SavegameUpdatePlayer();
+
+            if ((g_SavegamePtr->eventFlags_168[5] & (1 << 26)) || g_SavegamePtr->locationId_A8 == 24 || g_MapEventIdx == 0)
+            {
+                GameFs_SaveLoadBinLoad();
+
+                g_Gfx_ScreenFade   = 2;
+                g_SysWork.field_28 = 0;
+                g_SysWork.field_10 = 0;
+                g_SysWork.timer_2C = 0;
+                g_SysWork.field_14 = 0;
+                g_SysWork.sysStateStep_C++;
+            }
+
+            else if (func_800365B8(2) == 1)
+            {
+                g_SavegamePtr->eventFlags_168[5] |= 1 << 26;
+
+                GameFs_SaveLoadBinLoad();
+
+                g_Gfx_ScreenFade   = 2;
+                g_SysWork.field_28 = 0;
+                g_SysWork.field_10 = 0;
+                g_SysWork.timer_2C = 0;
+                g_SysWork.field_14 = 0;
+                g_SysWork.sysStateStep_C++;
+            }
+            break;
+        
+        case 1:
+            if (D_800A9A0C != 0)
+            {
+                g_Gfx_ScreenFade = 6;
+
+                func_8003943C();
+
+                gameState = g_GameWork.gameState_594;
+
+                g_GameWork.gameState_594 = GameState_Unk10;
+
+                g_SysWork.timer_1C = 0;
+                g_SysWork.timer_20 = 0;
+
+                g_GameWork.gameStateStep_598[1] = 0;
+                g_GameWork.gameStateStep_598[2] = 0;
+
+                g_SysWork.sysState_8     = 0;
+                g_SysWork.timer_24       = 0;
+                g_SysWork.sysStateStep_C = 0;
+                g_SysWork.field_28       = 0;
+                g_SysWork.field_10       = 0;
+                g_SysWork.timer_2C       = 0;
+                g_SysWork.field_14       = 0;
+
+                g_GameWork.gameStateStep_598[0] = gameState;
+                g_GameWork.gameStatePrev_590    = gameState;
+                g_GameWork.gameStateStep_598[0] = 0;
+            }
+            break;
+
+        default:
+            break;
+    }
+}
 
 void SysState_EventCallFunc_Update() // 0x8003A3C8
 {
