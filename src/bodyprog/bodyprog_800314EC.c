@@ -1634,8 +1634,8 @@ void Joy_ReadP1() // 0x80034450
     // NOTE: `memcpy` is close, reads `rawController_5B4` as two `s32`s, but doesn't give match.
     // memcpy(&cont->analogController_0, &g_GameWork.rawController_5B4, sizeof(s_AnalogController));
 
-    *(s32*)&cont->analogController_0 = *(s32*)&g_GameWork.rawController_5B4;
-    *(s32*)&cont->analogController_0.right_x = *(s32*)&g_GameWork.rawController_5B4.right_x;
+    *(s32*)&cont->analogController_0        = *(s32*)&g_GameWork.rawController_5B4;
+    *(s32*)&cont->analogController_0.rightX = *(s32*)&g_GameWork.rawController_5B4.rightX;
 
     // Alternate
     // ((s32*)&cont->analogController_0)[0] = ((s32*)&g_GameWork.rawController_5B4)[0];
@@ -1746,44 +1746,44 @@ void Joy_ControllerDataUpdate() // 0x80034494
 
 void ControllerData_AnalogToDigital(s_ControllerData* arg0, s32 arg1) // 0x80034670
 {
-    s32 value;
-    s32 axisIndex;
+    s32 val;
+    s32 axisIdx;
     s32 processedInputFlags;
     s32 normalizedAnalogData;
     s32 xorShiftedRawAnalog;
-    s32 digitalButtonState;
+    s32 btnsHeld;
     s32 signedRawAnalog;
-    s32 negativeDirectionBitIndex;
-    s32 positiveDirectionBitIndex;
+    s32 negativeDirBitIdx;
+    s32 positiveDirBitIdx;
 
-    digitalButtonState = arg0->btnsHeld_C;
+    btnsHeld = arg0->btnsHeld_C;
 
     if (arg1 != 0)
     {
-        signedRawAnalog     = *(u32*)&arg0->analogController_0.right_x ^ 0x80808080;
+        signedRawAnalog     = *(u32*)&arg0->analogController_0.rightX ^ 0x80808080;
         xorShiftedRawAnalog = signedRawAnalog;
 
-        for (normalizedAnalogData = 0, axisIndex = 3; axisIndex >= 0; axisIndex--)
+        for (normalizedAnalogData = 0, axisIdx = 3; axisIdx >= 0; axisIdx--)
         {
             normalizedAnalogData <<= 8;
-            value = xorShiftedRawAnalog >> 0x18;
-            xorShiftedRawAnalog <<= 8;
+            val                    = xorShiftedRawAnalog >> 24;
+            xorShiftedRawAnalog  <<= 8;
 
-            if (value < -0x40)
+            if (val < -0x40)
             {
-                normalizedAnalogData |= (value + 0x40) & 0xFF;
-                negativeDirectionBitIndex = 0x17 - (axisIndex & 1);
-                digitalButtonState |= 1 << (negativeDirectionBitIndex - (axisIndex * 2));
+                normalizedAnalogData |= (val + 0x40) & 0xFF;
+                negativeDirBitIdx     = 23 - (axisIdx & 1);
+                btnsHeld             |= 1 << (negativeDirBitIdx - (axisIdx * 2));
             }
-            else if (value >= 0x40)
+            else if (val >= 0x40)
             {
-                normalizedAnalogData |= (value - 0x3F) & 0xFF;
-                positiveDirectionBitIndex = ((axisIndex & 1) + 0x15);
-                digitalButtonState |= 1 << (positiveDirectionBitIndex - ((axisIndex >> 1) * 4));
+                normalizedAnalogData |= (val - 0x3F) & 0xFF;
+                positiveDirBitIdx     = ((axisIdx & 0x1) + 21);
+                btnsHeld             |= 1 << (positiveDirBitIdx - ((axisIdx >> 1) * 4));
             }
         }
 
-        arg0->btnsHeld_C = digitalButtonState;
+        arg0->btnsHeld_C = btnsHeld;
     }
     else
     {
@@ -1798,38 +1798,38 @@ void ControllerData_AnalogToDigital(s_ControllerData* arg0, s32 arg1) // 0x80034
     {
         if (!(processedInputFlags & 0xFF000000))
         {
-            value = digitalButtonState & 0x50;
-            if (value == 0x40)
+            val = btnsHeld & 0x50;
+            if (val == 0x40)
             {
                 normalizedAnalogData = processedInputFlags | 0x2D000000;
             }
-            else if (value == 0x10)
+            else if (val == 0x10)
             {
                 normalizedAnalogData = processedInputFlags | 0xD3000000;
             }
         }
         if (!(normalizedAnalogData & 0xFF0000))
         {
-            value = digitalButtonState & 0xA0;
-            if (value == 0x20)
+            val = btnsHeld & 0xA0;
+            if (val == 0x20)
             {
                 normalizedAnalogData |= 0x2D0000;
             }
-            else if (value == 0x80)
+            else if (val == 0x80)
             {
                 normalizedAnalogData |= 0xD30000;
             }
         }
         if (!(processedInputFlags & 0xFF000000))
         {
-            value = digitalButtonState & 0x50;
-            if (value == 0x40)
+            val = btnsHeld & 0x50;
+            if (val == 0x40)
             {
                 processedInputFlags |= 0x20000000;
             }
-            else if (value == 0x10)
+            else if (val == 0x10)
             {
-                if (!(digitalButtonState & g_GameWorkPtr->config_0.controllerConfig_0.run_C))
+                if (!(btnsHeld & g_GameWorkPtr->config_0.controllerConfig_0.run_C))
                 {
                     processedInputFlags |= 0xE0000000;
                 }
@@ -1841,12 +1841,12 @@ void ControllerData_AnalogToDigital(s_ControllerData* arg0, s32 arg1) // 0x80034
         }
         if (!(processedInputFlags & 0xFF0000))
         {
-            value = digitalButtonState & 0xA0;
-            if (value == 0x20)
+            val = btnsHeld & 0xA0;
+            if (val == 0x20)
             {
                 processedInputFlags |= 0x200000;
             }
-            else if (value == 0x80)
+            else if (val == 0x80)
             {
                 processedInputFlags |= 0xE00000;
             }
@@ -3364,7 +3364,7 @@ void func_80036E48(u16* arg0, s16* arg1) // 0x80036E48
     var_t4 = 0;
     var_t7 = arg0;
 
-    for (var_t3 = 0; var_t3 < 0xF;)
+    for (var_t3 = 0; var_t3 < 15;)
     {
         temp_v0 = *var_t7;
 
@@ -3395,7 +3395,7 @@ void func_80036E48(u16* arg0, s16* arg1) // 0x80036E48
         sp28[10] = sp18[14];
         sp28[11] = 0;
 
-        for (var_a3 = 0, var_a2 = 0; var_a2 < 0xC; var_a2++)
+        for (var_a3 = 0, var_a2 = 0; var_a2 < 12; var_a2++)
         {
             var_v0  = 2;
             temp_a0 = (var_a2 & 3) * 4;
@@ -3441,10 +3441,7 @@ void func_80036E48(u16* arg0, s16* arg1) // 0x80036E48
             }
         }
 
-        do
-        {
-            var_t3++;
-        } while (0); // HACK
+        do { var_t3++; } while (0); // HACK: Required for match.
         var_t7++;
         var_t2 += (D_800C3920 - 1) * 3;
     }

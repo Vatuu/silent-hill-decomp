@@ -56,13 +56,13 @@ typedef struct
     char magic_0[2];
     u8   iconDisplayFlag_2;
     u8   blockCount_3;
-    u16  titleNameShiftJIS_4[0x20];
-    s8   field_44[0x1C];       // Reserved/unused?
-    s8   iconPalette_60[0x20]; // CLUT data copied from TIM_IMAGE.caddr
-    s8   textureData_80[0x20]; // Copied from TIM_IMAGE.paddr
-    s8   unk_A0[0x160];
-} s_PSXSaveBlock;
-STATIC_ASSERT_SIZEOF(s_PSXSaveBlock, 0x200);
+    u16  titleNameShiftJis_4[32];
+    s8   field_44[28];       // Reserved/unused?
+    s8   iconPalette_60[32]; // CLUT data copied from `TIM_IMAGE.caddr`.
+    s8   textureData_80[32]; // Copied from `TIM_IMAGE.paddr`.
+    s8   unk_A0[352];
+} s_PsxSaveBlock;
+STATIC_ASSERT_SIZEOF(s_PsxSaveBlock, 512);
 
 // ========
 // GLOBALS
@@ -156,6 +156,8 @@ void Savegame_UserConfigCopyWithChecksum(s_ShSaveUserConfigContainer* dest, s_Sh
 /** Copies savegame into an s_ShSavegameContainer and calculates footer checksum. */
 void Savegame_CopyWithChecksum(s_ShSavegameContainer* dest, s_ShSavegame* src);
 
+void func_8002FD5C(s32 arg0, s32 arg1, s32 arg2);
+
 /** Updates the footer with the checksum of the given data. */
 void Savegame_ChecksumUpdate(s_ShSavegameFooter* saveFooter, s8* saveData, s32 saveDataLength);
 
@@ -170,7 +172,7 @@ u8 Savegame_ChecksumGenerate(s8* saveData, s32 saveDataLength);
 /** Generates a save filename for the given save index. */
 void Savegame_FilenameGenerate(char* dest, s32 saveIdx);
 
-void func_800300B4(s_PSXSaveBlock* saveBlock, s8 blockCount, s32 saveIdx);
+void func_800300B4(s_PsxSaveBlock* saveBlock, s8 blockCount, s32 saveIdx);
 
 s32 func_80030288(s32 deviceId);
 
@@ -217,6 +219,8 @@ void func_800308B4();
 void func_800308C4();
 
 s32 func_800308D4();
+
+s32 func_800308E4(s32 arg0, s32 arg1, s32 arg2, char* str, s32 arg4, s32 arg5, s32 arg6, s32 arg7);
 
 s32 func_800309FC();
 

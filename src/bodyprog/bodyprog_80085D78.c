@@ -1476,13 +1476,34 @@ void func_80088D34(s32 idx) // 0x80088D34
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", Chara_Spawn);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80088F94);
+void func_80088F94(s_SubCharacter* chara) // 0x80088F94
+{
+    u8   temp0;
+    s32* temp1;
+
+    if (chara == NULL)
+    {
+        return;
+    }
+
+    if (chara->model_0.charaId_0 <= Chara_MonsterCybil)
+    {
+        temp0   = chara->field_40;
+        temp1   = &(&g_SysWork.field_228C)[(temp0 << 24) >> 29];
+        *temp1 &= ~(1 << (temp0 & 0x1F));
+    }
+
+    chara->model_0.charaId_0 = Chara_None;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80088FF4);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80089034);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80089090);
+void func_80089090(s32 arg0) // 0x80089090
+{
+    func_80089524(&g_SysWork.field_2514, arg0);
+}
 
 void func_800890B8() // 0x800890B8
 {

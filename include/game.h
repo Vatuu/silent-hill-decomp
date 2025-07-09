@@ -477,10 +477,10 @@ typedef union
     u32 rawData_0;
     struct
     {
-        s8 right_x;
-        s8 right_y;
-        s8 left_x;
-        s8 left_y;
+        s8 rightX;
+        s8 rightY;
+        s8 leftX;
+        s8 leftY;
     } sticks_0;
 } s_AnalogSticks;
 
@@ -490,10 +490,10 @@ typedef struct _AnalogController
     u8  received_bytes : 4; /** Number of bytes received / 2. */
     u8  terminal_type  : 4; /** `e_PadTerminalType` */
     u16 digitalButtons;
-    u8  right_x;
-    u8  right_y;
-    u8  left_x;
-    u8  left_y;
+    u8  rightX;
+    u8  rightY;
+    u8  leftX;
+    u8  leftY;
 } s_AnalogController;
 STATIC_ASSERT_SIZEOF(s_AnalogController, 8);
 
@@ -507,7 +507,7 @@ typedef struct _ControllerData
     s32                btnsPulsed_18;    /** `e_ControllerFlags` */
     s32                btnsPulsedGui_1C; /** `e_ControllerFlags` */
     s_AnalogSticks     field_20;
-    s32                field_24; // Following 4 fields are updated simultaneously with `field_28`.
+    s32                field_24;
     s32                field_28;
 } s_ControllerData;
 STATIC_ASSERT_SIZEOF(s_ControllerData, 44);

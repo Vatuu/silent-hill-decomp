@@ -313,16 +313,16 @@ typedef struct
 } s_800BE9FC;
 
 // Save-system related structs.
-// TODO: move to `save_system.h` if never used outside of `save.c`.
+// TODO: Move to `save_system.h` if never used outside of `save.c`.
 typedef struct
 {
     char fileNames_0[15][21];
-    s8   blockCounts_13B[15]; // size of each file in 8192 byte blocks
+    s8   blockCounts_13B[15]; // Size of each file in 8192 byte blocks.
 } s_800B5488_40;
 typedef struct
 {
     s32            field_0;
-    s32            field_4;
+    s32            field_4; // State.
     s32            field_8;
     s32            field_C;
     s32            event_10;
@@ -346,7 +346,7 @@ typedef struct
     s32            field_70;
     s8             unk_74[12];
 } s_800B5488;
-STATIC_ASSERT_SIZEOF(s_800B5488, 0x80);
+STATIC_ASSERT_SIZEOF(s_800B5488, 128);
 
 typedef struct
 {
@@ -2091,7 +2091,11 @@ s32 func_80088D0C();
 
 void func_80088D34(s32 idx);
 
+void func_80088F94(s_SubCharacter* chara);
+
 s32 func_8008F434(s32 arg0);
+
+void func_80089090(s32 arg0);
 
 void func_800890B8();
 
@@ -2276,6 +2280,8 @@ void Joy_Update();
 
 void Joy_ControllerDataUpdate();
 
+void ControllerData_AnalogToDigital(s_ControllerData* arg0, s32 arg1);
+
 void func_800348C0();
 
 void GameState_MainLoadScreen_Update();
@@ -2367,6 +2373,8 @@ void func_8003652C();
 s32 func_800365B8(s32 arg0);
 
 s32 func_80036B5C(u8 arg0, s32* arg1);
+
+void func_80036E48(u16* arg0, s16* arg1);
 
 void func_8003708C(s16* ptr0, u16* ptr1);
 

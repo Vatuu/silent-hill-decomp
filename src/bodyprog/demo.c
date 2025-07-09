@@ -346,7 +346,7 @@ s32 Demo_ControllerDataUpdate() // 0x8008F7CC
 
     *(u16*)&g_ControllerPtrConst->analogController_0.status  = 0x7300;
     g_ControllerPtrConst->analogController_0.digitalButtons  = btns;
-    *(u32*)&g_ControllerPtrConst->analogController_0.right_x = 0x80808080;
+    *(u32*)&g_ControllerPtrConst->analogController_0.rightX = 0x80808080;
     return 1;
 }
 

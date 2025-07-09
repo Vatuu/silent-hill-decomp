@@ -198,13 +198,13 @@ void Savegame_CopyWithChecksum(s_ShSavegameContainer* dest, s_ShSavegame* src) /
 
 void func_8002FD5C(s32 arg0, s32 arg1, s32 arg2) // 0x8002FD5C
 { 
-    s_func_8002FB64* var_s0;
+    s_func_8002FB64* ptr;
 
-    var_s0 = (s_func_8002FB64*)D_800B5508[arg0].field_14;
-    var_s0 = &var_s0[arg1];
+    ptr = (s_func_8002FB64*)D_800B5508[arg0].field_14;
+    ptr = &ptr[arg1];
 
     func_8002FDB0(arg0, arg1, arg2); 
-    Savegame_ChecksumUpdate(&var_s0->field_FC, var_s0, sizeof(s_func_8002FB64));  
+    Savegame_ChecksumUpdate(&ptr->field_FC, ptr, sizeof(s_func_8002FB64));  
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/save", func_8002FDB0);
@@ -263,26 +263,26 @@ void Savegame_FilenameGenerate(char* dest, s32 saveIdx) // 0x80030000
     strcat(dest, buf);
 }
 
-void func_800300B4(s_PSXSaveBlock* saveBlock, s8 blockCount, s32 saveIdx) // 0x800300B4
+void func_800300B4(s_PsxSaveBlock* saveBlock, s8 blockCount, s32 saveIdx) // 0x800300B4
 {
     char      saveIdxStr[8];
     TIM_IMAGE iconTexture;
 
-    bzero(saveBlock, sizeof(s_PSXSaveBlock));
+    bzero(saveBlock, sizeof(s_PsxSaveBlock));
 
     saveBlock->magic_0[0]        = 'S';
     saveBlock->magic_0[1]        = 'C';
     saveBlock->iconDisplayFlag_2 = 0x11; // ICON_HAS_1_STATIC_FRAME
     saveBlock->blockCount_3      = blockCount;
-    bzero(saveBlock->titleNameShiftJIS_4, 0x40);
+    bzero(saveBlock->titleNameShiftJis_4, 0x40);
 
     strcpy(saveIdxStr, "００");
     saveIdxStr[1] += (saveIdx + 1) / 10;
     saveIdxStr[3] += (saveIdx + 1) % 10;
 
-    strcpy(saveBlock->titleNameShiftJIS_4, "ＳＩＬＥＮＴ　ＨＩＬＬ");
-    strcat(saveBlock->titleNameShiftJIS_4, "　　ＦＩＬＥ");
-    strcat(saveBlock->titleNameShiftJIS_4, saveIdxStr);
+    strcpy(saveBlock->titleNameShiftJis_4, "ＳＩＬＥＮＴ　ＨＩＬＬ");
+    strcat(saveBlock->titleNameShiftJis_4, "　　ＦＩＬＥ");
+    strcat(saveBlock->titleNameShiftJis_4, saveIdxStr);
 
     bzero(saveBlock->field_44, 0x1C);
 
@@ -301,7 +301,7 @@ s32 func_80030288(s32 deviceId) // 0x80030288
 
     func_80030820();
     _new_card();
-    _card_write(((deviceId & 4) * 4) | (deviceId & 3), 0, cardBuf);
+    _card_write(((deviceId & 0x4) * 4) | (deviceId & 0x3), 0, cardBuf);
 
     D_800B5488.field_0 |= 1 << D_800B5488.field_3C;
 
@@ -447,6 +447,7 @@ void func_80030820() // 0x80030820
     TestEvent(D_800B5488.event_2C);
     TestEvent(D_800B5488.event_20);
     TestEvent(D_800B5488.event_30);
+
     D_800B5488.field_34 = 0;
 }
 
@@ -480,7 +481,7 @@ s32 func_800308D4() // 0x800308D4
     return D_800B5488.field_C;
 }
 
-s32 func_800308E4(s32 arg0, s32 arg1, s32 arg2, char* arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7) // 0x800308E4
+s32 func_800308E4(s32 arg0, s32 arg1, s32 arg2, char* str, s32 arg4, s32 arg5, s32 arg6, s32 arg7) // 0x800308E4
 {
     if (!func_800309FC())
     {
@@ -496,14 +497,19 @@ s32 func_800308E4(s32 arg0, s32 arg1, s32 arg2, char* arg3, s32 arg4, s32 arg5, 
             D_800B5488.field_4 = 1;
             D_800B5488.field_8 = 0;
             break;
+
         case 2:
         case 3:
             D_800B5488.field_4 = 6;
             D_800B5488.field_8 = 0;
             break;
+
         case 4:
             D_800B5488.field_4 = 5;
             D_800B5488.field_8 = 0;
+            break;
+
+        default:
             break;
     }
 
@@ -511,7 +517,7 @@ s32 func_800308E4(s32 arg0, s32 arg1, s32 arg2, char* arg3, s32 arg4, s32 arg5, 
     D_800B5488.field_40 = arg2;
 
     Savegame_DevicePathGenerate(arg1, &D_800B5488.field_44);
-    strcat(&D_800B5488.field_44, arg3);
+    strcat(&D_800B5488.field_44, str);
 
     D_800B5488.field_60 = arg4;
     D_800B5488.field_64 = arg5;
@@ -534,26 +540,36 @@ void func_80030A0C() // 0x80030A0C
             // HACK: Probably some optimized out code here.
             D_800B5488.field_C += 0;
             break;
+
         case 1:
             D_800B5488.field_C = func_80030AD8();
             break;
+
         case 2:
             D_800B5488.field_C = func_80030C88();
             break;
+
         case 3:
             D_800B5488.field_C = func_80030DC8();
             break;
+
         case 4:
             D_800B5488.field_C = func_80030F7C();
             break;
+
         case 5:
             D_800B5488.field_C = func_800310B4();
             break;
+
         case 6:
             D_800B5488.field_C = func_80031184();
             break;
+
         case 7:
             D_800B5488.field_C = func_80031260();
+            break;
+
+        default:
             break;
     }
 }
@@ -574,7 +590,7 @@ s32 func_80030F7C() // 0x80030F7C
 
     for (i = 0; i < 15; i++)
     {
-        *D_800B5488.field_40->fileNames_0[i]    = D_80024B64; // `00` byte near start of bodyprog rodata, far from save.c rodata section?
+        *D_800B5488.field_40->fileNames_0[i]    = D_80024B64; // `00` byte near start of bodyprog rodata, far from `save.c` rodata section?
         D_800B5488.field_40->blockCounts_13B[i] = 0;
     }
 
@@ -598,7 +614,7 @@ s32 func_80030F7C() // 0x80030F7C
         D_800B5488.field_40->blockCounts_13B[i] = (fileInfo.size + (8192 - 1)) / 8192;
     }
 
-    retval = (D_800B5488.field_70 == 1 ? 5 : 6);
+    retval = (D_800B5488.field_70 == 1) ? 5 : 6;
 
     D_800B5488.field_4 = 0;
     D_800B5488.field_8 = 0;
