@@ -280,7 +280,10 @@ $(BUILD_DIR)/%.i: %.c
 	$(call FlagsSwitch, $@)
 	$(CPP) -P -MMD -MP -MT $@ -MF $@.d $(CPP_FLAGS) $(OVL_FLAGS) -o $@ $<
 
-$(BUILD_DIR)/%.c.s: $(BUILD_DIR)/%.i
+$(BUILD_DIR)/%.sjis.i: $(BUILD_DIR)/%.i
+	iconv -f UTF-8 -t SHIFT-JIS $< -o $@
+
+$(BUILD_DIR)/%.c.s: $(BUILD_DIR)/%.sjis.i
 	@mkdir -p $(dir $@)
 	$(call FlagsSwitch, $@)
 	$(CC) $(CC_FLAGS) -o $@ $<

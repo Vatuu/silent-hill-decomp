@@ -196,7 +196,7 @@ void Savegame_CopyWithChecksum(s_ShSavegameContainer* dest, s_ShSavegame* src) /
     Savegame_ChecksumUpdate(&dest->footer_27C, &dest->savegame_0, sizeof(s_ShSavegameContainer));
 }
 
-void func_8002FD5C(s32 arg0, s32 arg1, s32 arg2) 
+void func_8002FD5C(s32 arg0, s32 arg1, s32 arg2) // 0x8002FD5C
 { 
     s_func_8002FB64* var_s0;
 
@@ -249,17 +249,12 @@ u8 Savegame_ChecksumGenerate(s8* saveData, s32 saveDataLength) // 0x8002FFD0
 
 void Savegame_FilenameGenerate(char* dest, s32 saveIdx) // 0x80030000
 {
-    // TODO: likely local .rodata for this func.
-    extern char D_80024C0C[]; // "BA"
-    extern char D_80024C10[]; // "SLUS-00707"
-    extern char D_80024C1C[]; // "SILENT"
-
     char buf[3];
 
-    memcpy(dest, D_80024C0C, 3);
+    memcpy(dest, "BA", 3);
 
-    strcat(dest, D_80024C10);
-    strcat(dest, D_80024C1C);
+    strcat(dest, "SLUS-00707");
+    strcat(dest, "SILENT");
 
     buf[0] = '0' + (saveIdx / 10);
     buf[1] = '0' + (saveIdx % 10);
@@ -268,7 +263,35 @@ void Savegame_FilenameGenerate(char* dest, s32 saveIdx) // 0x80030000
     strcat(dest, buf);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/save", func_800300B4);
+void func_800300B4(s_PSXSaveBlock* saveBlock, s8 blockCount, s32 saveIdx) // 0x800300B4
+{
+    char      saveIdxStr[8];
+    TIM_IMAGE iconTexture;
+
+    bzero(saveBlock, sizeof(s_PSXSaveBlock));
+
+    saveBlock->magic_0[0]        = 'S';
+    saveBlock->magic_0[1]        = 'C';
+    saveBlock->iconDisplayFlag_2 = 0x11; // ICON_HAS_1_STATIC_FRAME
+    saveBlock->blockCount_3      = blockCount;
+    bzero(saveBlock->titleNameShiftJIS_4, 0x40);
+
+    strcpy(saveIdxStr, "００");
+    saveIdxStr[1] += (saveIdx + 1) / 10;
+    saveIdxStr[3] += (saveIdx + 1) % 10;
+
+    strcpy(saveBlock->titleNameShiftJIS_4, "ＳＩＬＥＮＴ　ＨＩＬＬ");
+    strcat(saveBlock->titleNameShiftJIS_4, "　　ＦＩＬＥ");
+    strcat(saveBlock->titleNameShiftJIS_4, saveIdxStr);
+
+    bzero(saveBlock->field_44, 0x1C);
+
+    OpenTIM(D_800A8D98);
+    ReadTIM(&iconTexture);
+
+    memcpy(saveBlock->iconPalette_60, iconTexture.caddr, iconTexture.crect->w * iconTexture.crect->h * 2);
+    memcpy(saveBlock->textureData_80, iconTexture.paddr, iconTexture.prect->w * iconTexture.prect->h * 2);
+}
 
 s32 func_80030288(s32 deviceId) // 0x80030288
 {
@@ -309,7 +332,7 @@ s32 func_80030334(s32 deviceId, char* fileName) // 0x80030334
     return erase(buf);
 }
 
-s32 func_80030370(s32 deviceId, char* prevName, char* newName)
+s32 func_80030370(s32 deviceId, char* prevName, char* newName) // 0x80030370
 {
     #define BUF_SIZE 32
 
@@ -325,7 +348,7 @@ s32 func_80030370(s32 deviceId, char* prevName, char* newName)
     return rename(prevBuf, newBuf);
 }
 
-void func_800303E4()
+void func_800303E4() // 0x800303E4
 {
     InitCARD(0);
     StartCARD();

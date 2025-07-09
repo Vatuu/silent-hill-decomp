@@ -50,6 +50,20 @@ typedef struct
     s32                field_18; 
 } s_800B5508;
 
+// https://github.com/Sparagas/Silent-Hill/blob/1f24eb097a4b99129bc7c9793d23c82244848a27/010%20Editor%20-%20Binary%20Templates/ps1_memory_card.bt#L122C8-L122C17
+typedef struct
+{
+    char magic_0[2];
+    u8   iconDisplayFlag_2;
+    u8   blockCount_3;
+    u16  titleNameShiftJIS_4[0x20];
+    s8   field_44[0x1C];       // Reserved/unused?
+    s8   iconPalette_60[0x20]; // CLUT data copied from TIM_IMAGE.caddr
+    s8   textureData_80[0x20]; // Copied from TIM_IMAGE.paddr
+    s8   unk_A0[0x160];
+} s_PSXSaveBlock;
+STATIC_ASSERT_SIZEOF(s_PSXSaveBlock, 0x200);
+
 // ========
 // GLOBALS
 // ========
@@ -57,6 +71,8 @@ typedef struct
 extern u8 g_SlotElementSelectedIdx[MEMORY_CARD_SLOT_COUNT]; // 0 - Slot 1, 1 - Slot 2.
 
 extern s8 g_SelectedSaveSlotIdx; // 0 - Slot 1, 1 - Slot 2.
+
+extern u8 D_800A8D98[]; // TIM image for save file?
 
 extern s8 D_800A97D7;
 
@@ -151,6 +167,8 @@ u8 Savegame_ChecksumGenerate(s8* saveData, s32 saveDataLength);
 
 /** Generates a save filename for the given save index. */
 void Savegame_FilenameGenerate(char* dest, s32 saveIdx);
+
+void func_800300B4(s_PSXSaveBlock* saveBlock, s8 blockCount, s32 saveIdx);
 
 s32 func_80030288(s32 deviceId);
 
