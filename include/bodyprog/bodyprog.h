@@ -2402,6 +2402,8 @@ void SysState_Gameplay_Update();
 
 void SysState_GamePaused_Update();
 
+void SysState_OptionsMenu_Update();
+
 void func_8003943C();
 
 void SysState_StatusMenu_Update();

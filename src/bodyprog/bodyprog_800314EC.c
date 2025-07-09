@@ -3914,7 +3914,36 @@ void SysState_GamePaused_Update() // 0x800391E8
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", SysState_OptionsMenu_Update); // 0x80039344
+void SysState_OptionsMenu_Update() // 0x80039344
+{
+    s32 gameState;
+
+    switch (g_SysWork.sysStateStep_C)
+    {
+        case 0:
+            g_Gfx_ScreenFade         = 2;
+            D_800B5C30               = 0;
+            g_SysWork.sysStateStep_C = 1;
+
+        case 1:
+            if (func_8003C850() != 0)
+            {
+                Sd_EngineCmd(19);
+                GameFs_OptionBinLoad();
+
+                g_SysWork.sysStateStep_C++;
+            }
+            break;
+
+        default:
+            break;
+    }
+
+    if (D_800A9A0C != 0)
+    {
+        Game_StateSetNext(GameState_OptionScreen);
+    }
+}
 
 // TODO: RODATA migration.
 #ifdef NON_MATCHING
@@ -4070,7 +4099,7 @@ void GameState_LoadStatusScreen_Update() // 0x800395C0
     }
 }
 
-void SysState_Unk3_Update()
+void SysState_Unk3_Update() // 0x800396D4
 {
     s32           idx;
     s_ShSavegame* save;
