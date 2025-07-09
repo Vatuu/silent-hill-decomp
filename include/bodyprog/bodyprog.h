@@ -834,11 +834,11 @@ typedef struct _SpawnInfo
 } s_SpawnInfo;
 STATIC_ASSERT_SIZEOF(s_SpawnInfo, 12);
 
-/** TODO: `g_MapOverlayHeader` is part of the overlay bin files. Maybe should be moved to `maps/shared.h` or `dynamic/dynamic.h`. */
+/** TODO: `g_MapOverlayHeader` is part of the overlay BIN files. Maybe should be moved to `maps/shared.h` or `dynamic/dynamic.h`. */
 typedef struct _MapOverlayHeader
 {
     s8                unk_0[4];
-    s8                (*getMapRoomIdxFunc_4)(s32 x, s32 y);                              // Called by `func_80036420`.
+    s8                (*getMapRoomIdxFunc_4)(s32 x, s32 y); // Called by `func_80036420`.
     s8                field_8;
     s8                unk_9[3];
     s8                unk_C[4];
@@ -849,11 +849,11 @@ typedef struct _MapOverlayHeader
     s8                field_17;
     void              (**func_18)();
     s_AreaLoadParams* mapAreaLoadParams_1C;
-    void              (**mapEventFuncs_20)();                                            /** Points to array of event functions. */
+    void              (**mapEventFuncs_20)(); /** Points to array of event functions. */
     s8                unk_24[4];
     GsCOORDINATE2*    field_28;
     s8                unk_2C[4];
-    char**            mapMessageStrings_30;                                              /** Points to array of `char*` for each displayed message in the map. */
+    char**            mapMessageStrings_30; /** Points to array of `char*` for each displayed message in the map. */
     s_AnimInfo*       animInfo_34;
     s8                unk_38[8];
     void              (*func_40)();
@@ -870,7 +870,9 @@ typedef struct _MapOverlayHeader
     s32               (*func_D0)(s32, void*, s16, s32); // 0x800C964C
     s8                unk_D4[24];
     s32               (*func_EC)();
-    s8                unk_F0[76];
+    s8                unk_F0[24];
+    s32               (*func_108)(s32, s32);
+    s8                unk_10C[48];
     s32               (*func_13C)(s32, s32, void*, s16, s32); // 0x800C96B8
     s8                unk_140[40];
     void              (*func_168)(void*, void*, void*);
