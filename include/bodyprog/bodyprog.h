@@ -912,6 +912,16 @@ extern s_ControllerConfig D_8002511C[];
 /** "\x07PAUSED" string. */
 extern char D_80025394[];
 
+extern u8 D_800254EC[]; // `func_8003B568` string X offsets. TODO: Local .rodata.
+
+extern s8 D_800254F4; // `func_8003B568` string. TODO: Local .rodata.
+
+extern s8 D_800254F8; // `func_8003B568` string. TODO: Local .rodata.
+
+extern s8 D_800254FC; // `func_8003B568` string. TODO: Local .rodata.
+
+extern s8 D_80025500; // `func_8003B568` string. TODO: Local .rodata.
+
 extern s32 D_80025528; // Type assumed.
 
 extern s32 D_80025530; // Type assumed.
@@ -989,6 +999,8 @@ extern s_800A93CC D_800A93CC[];
 extern u16 D_800A9774[];
 
 extern u16 D_800A9858[];
+
+extern char* D_800A9A8C[]; // `func_8003B568` strings. TODO: Local .rodata.
 
 extern s8 D_800A98FC[];
 
@@ -1636,6 +1648,8 @@ void func_8003943C();
 void SysState_Fmv_Update();
 
 void func_8003B550();
+
+void func_8003B568();
 
 s32 func_8003BD2C();
 

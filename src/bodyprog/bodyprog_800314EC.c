@@ -4941,7 +4941,40 @@ void func_8003B550() // 0x8003B550
 
 void func_8003B560() {}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003B568); // 0x8003B568
+void func_8003B568() // 0x8003B568
+{
+    #define STR_POS_X_BASE 158
+    #define STR_POS_Y_BASE 184
+
+    s32 i;
+
+    for (i = 0; i < 5; i++)
+    {
+        if (D_800A9A7C & (1 << i))
+        {
+            Gfx_StringSetPosition(STR_POS_X_BASE - D_800254EC[i], STR_POS_Y_BASE + (i * 20));
+            Gfx_StringSetColor(ColorId_White);
+
+            if (i == D_800A9A78)
+            {
+                Gfx_StringDraw(&D_800254F4, 99);
+            }
+            else
+            {
+                Gfx_StringDraw(&D_800254F8, 99);
+            }
+
+            Gfx_StringDraw(D_800A9A8C[i], 99);
+
+            if (i == D_800A9A78)
+            {
+                Gfx_StringDraw(&D_800254FC, 99);
+            }
+
+            Gfx_StringDraw(&D_80025500, 99);
+        }
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003B678); // 0x8003B678
 
