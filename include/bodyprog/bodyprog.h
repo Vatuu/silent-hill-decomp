@@ -312,27 +312,41 @@ typedef struct
     s32 queueIdx_1000;
 } s_800BE9FC;
 
-// Save-system related struct.
+// Save-system related structs.
 // TODO: move to `save_system.h` if never used outside of `save.c`.
 typedef struct
 {
-    s32 field_0;
-    s32 field_4;
-    s32 field_8;
-    s32 field_C;
-    s32 event_10;
-    s32 event_14;
-    s32 event_18;
-    s32 event_1C;
-    s32 event_20;
-    s32 event_24;
-    s32 event_28;
-    s32 event_2C;
-    s32 event_30;
-    s32 field_34;
-    u8  unk_38[4];
-    s32 field_3C;
+    char fileNames_0[15][21];
+    s8   blockCounts_13B[15]; // size of each file in 8192 byte blocks
+} s_800B5488_40;
+typedef struct
+{
+    s32            field_0;
+    s32            field_4;
+    s32            field_8;
+    s32            field_C;
+    s32            event_10;
+    s32            event_14;
+    s32            event_18;
+    s32            event_1C;
+    s32            event_20;
+    s32            event_24;
+    s32            event_28;
+    s32            event_2C;
+    s32            event_30;
+    s32            field_34;
+    s32            field_38;
+    s32            field_3C;
+    s_800B5488_40* field_40;
+    char           field_44[28];
+    s32            field_60;
+    s32            field_64;
+    s32            field_68;
+    s32            field_6C;
+    s32            field_70;
+    s8             unk_74[12];
 } s_800B5488;
+STATIC_ASSERT_SIZEOF(s_800B5488, 0x80);
 
 typedef struct
 {
@@ -884,8 +898,6 @@ typedef struct
 } s_800BCD78;
 
 extern s_FsImageDesc g_MainImg0; // 0x80022C74 - TODO: part of main exe, move to main/ headers?
-
-extern char D_80024C90[6];
 
 /** Some sort of struct inside RODATA, likely a constant. */
 extern s32 D_8002500C;

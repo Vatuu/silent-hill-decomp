@@ -480,16 +480,53 @@ s32 func_800308D4() // 0x800308D4
     return D_800B5488.field_C;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/save", func_800308E4);
+s32 func_800308E4(s32 arg0, s32 arg1, s32 arg2, char* arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7) // 0x800308E4
+{
+    if (!func_800309FC())
+    {
+        return 0;
+    }
+
+    D_800B5488.field_38 = arg0;
+
+    switch (arg0)
+    {
+        case 0:
+        case 1:
+            D_800B5488.field_4 = 1;
+            D_800B5488.field_8 = 0;
+            break;
+        case 2:
+        case 3:
+            D_800B5488.field_4 = 6;
+            D_800B5488.field_8 = 0;
+            break;
+        case 4:
+            D_800B5488.field_4 = 5;
+            D_800B5488.field_8 = 0;
+            break;
+    }
+
+    D_800B5488.field_3C = arg1;
+    D_800B5488.field_40 = arg2;
+
+    Savegame_DevicePathGenerate(arg1, &D_800B5488.field_44);
+    strcat(&D_800B5488.field_44, arg3);
+
+    D_800B5488.field_60 = arg4;
+    D_800B5488.field_64 = arg5;
+    D_800B5488.field_68 = arg6;
+    D_800B5488.field_6C = arg7;
+    D_800B5488.field_70 = 0;
+    return 1;
+}
 
 s32 func_800309FC() // 0x800309FC
 {
     return D_800B5488.field_4 == 0;
 }
 
-#ifdef NON_MATCHING
-// Needs .rodata migration for jtbl
-void func_80030A0C()
+void func_80030A0C() // 0x80030A0C
 {
     switch (D_800B5488.field_4)
     {
@@ -520,9 +557,6 @@ void func_80030A0C()
             break;
     }
 }
-#else
-INCLUDE_ASM("asm/bodyprog/nonmatchings/save", func_80030A0C);
-#endif
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/save", func_80030AD8);
 
@@ -530,7 +564,47 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/save", func_80030C88);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/save", func_80030DC8);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/save", func_80030F7C);
+s32 func_80030F7C() // 0x80030F7C
+{
+    struct DIRENTRY  fileInfo;
+    struct DIRENTRY* curFile;
+    char             filePath[16];
+    s32              retval;
+    s32              i;
+
+    for (i = 0; i < 15; i++)
+    {
+        *D_800B5488.field_40->fileNames_0[i]    = D_80024B64; // `00` byte near start of bodyprog rodata, far from save.c rodata section?
+        D_800B5488.field_40->blockCounts_13B[i] = 0;
+    }
+
+    for (i = 0; i < 15; i++)
+    {
+        if (i == 0)
+        {
+            Savegame_DevicePathGenerate(D_800B5488.field_3C, filePath);
+            strcat(filePath, "*");
+            curFile = firstfile(filePath, &fileInfo);
+        }
+        else
+        {
+            curFile = nextfile(&fileInfo);
+        }
+
+        if (curFile == NULL)
+            break;
+
+        strcpy(&D_800B5488.field_40->fileNames_0[i], fileInfo.name);
+        D_800B5488.field_40->blockCounts_13B[i] = (fileInfo.size + (8192 - 1)) / 8192;
+    }
+
+    retval = (D_800B5488.field_70 == 1 ? 5 : 6);
+
+    D_800B5488.field_4 = 0;
+    D_800B5488.field_8 = 0;
+
+    return retval;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/save", func_800310B4);
 
@@ -540,7 +614,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/save", func_80031260);
 
 void Savegame_DevicePathGenerate(s32 deviceId, char* result) // 0x800314A4
 {
-    memcpy(result, D_80024C90, 6); // TODO: .rodata "buXX:" string
+    strcpy(result, "buXX:");
 
     result[2] = '0' + ((deviceId & (1 << 2)) >> 2); // Packed device ID?
     result[3] = '0' + (deviceId & 3);

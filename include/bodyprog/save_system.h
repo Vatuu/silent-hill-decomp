@@ -68,6 +68,8 @@ STATIC_ASSERT_SIZEOF(s_PSXSaveBlock, 0x200);
 // GLOBALS
 // ========
 
+extern char D_80024B64;
+
 extern u8 g_SlotElementSelectedIdx[MEMORY_CARD_SLOT_COUNT]; // 0 - Slot 1, 1 - Slot 2.
 
 extern s8 g_SelectedSaveSlotIdx; // 0 - Slot 1, 1 - Slot 2.
