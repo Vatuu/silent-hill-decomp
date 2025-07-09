@@ -2408,6 +2408,8 @@ void SysState_StatusMenu_Update();
 
 void GameState_LoadStatusScreen_Update();
 
+void SysState_Unk3_Update();
+
 void GameState_LoadMapScreen_Update();
 
 void SysState_Fmv_Update();

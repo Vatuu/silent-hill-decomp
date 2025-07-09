@@ -174,7 +174,7 @@ s32 func_80031CCC(s32 arg0) // 0x80031CCC
     s32       sp10;
     s32       i;
     s32       yOffset;
-    s32       textureUOffset;
+    s32       texUOffset;
     s32       tPageYOffset;
     s32       j;
     GsOT*     ot;
@@ -191,15 +191,15 @@ s32 func_80031CCC(s32 arg0) // 0x80031CCC
         {
             if (sp10 != 0)
             {
-                textureUOffset = (-(i == 0)) & 32;
-                yOffset        = (i == 0) ? -224 : 0;
-                tPageYOffset   = i << 8;
+                texUOffset   = (-(i == 0)) & 0x20;
+                yOffset      = (i == 0) ? -224 : 0;
+                tPageYOffset = i << 8;
             }
             else
             {
-                yOffset        = -112;
-                textureUOffset = (g_ObjectTableIdx == 0) << 5;
-                tPageYOffset   = g_ObjectTableIdx << 8;
+                yOffset      = -112;
+                texUOffset   = (g_ObjectTableIdx == 0) << 5;
+                tPageYOffset = g_ObjectTableIdx << 8;
             }
 
             addPrimFast(ot, sprt, 4);
@@ -214,7 +214,7 @@ s32 func_80031CCC(s32 arg0) // 0x80031CCC
             }
 
             setWH(sprt, 256, 224);
-            *((u32*)&sprt->u0) = textureUOffset << 8;
+            *((u32*)&sprt->u0) = texUOffset << 8;
 
             setXY0Fast(sprt, (-g_GameWork.gsScreenWidth_588 / 2) + (j << 8), yOffset);
 
@@ -4070,11 +4070,54 @@ void GameState_LoadStatusScreen_Update() // 0x800395C0
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", SysState_Unk3_Update); // 0x800396D4
+void SysState_Unk3_Update()
+{
+    s32           idx;
+    s_ShSavegame* save;
+
+    if (!HAS_MAP(g_SavegamePtr->current2dMap_A9))
+    {
+        if (g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.map_18 ||
+            func_800365B8(3) > 0)
+        {
+            SysWork_StateSetNext(GameState_Unk0);
+        }
+    }
+    else if (((u8)g_SysWork.field_24DC & (1 << 1)) && g_SysWork.field_239D == 0 &&
+             (((u8)g_SysWork.field_23A4 & (1 << 0)) || ((u8)g_SysWork.field_23D8 & (1 << 0))))
+    {
+        if (g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.map_18 ||
+            func_800365B8(4) > 0)
+        {
+            SysWork_StateSetNext(GameState_Unk0);
+        }
+    }
+    else
+    {
+        if (g_SysWork.sysStateStep_C == 0)
+        {
+            if (D_800A99CC[g_SavegamePtr->current2dMap_A9] != NO_VALUE)
+            {
+                Fs_QueueStartReadTim(D_800A99CC[g_SavegamePtr->current2dMap_A9] + 0x776, FS_BUFFER_1, &D_800A9024);
+            }
+
+            Fs_QueueStartSeek(D_800A99B4[g_SavegamePtr->current2dMap_A9] + 0x768);
+
+            g_Gfx_ScreenFade = 2;
+            D_800B5C30       = 0;
+            g_SysWork.sysStateStep_C++;
+        }
+
+        if (D_800A9A0C != 0)
+        {
+            Game_StateSetNext(GameState_MapScreen);
+        }
+    }
+}
 
 void GameState_LoadMapScreen_Update() // 0x8003991C
 {
-    s_ShSavegame* savegame;
+    s_ShSavegame* save;
 
     if (g_GameWork.gameStateStep_598[0] == 0)
     {
@@ -4084,14 +4127,14 @@ void GameState_LoadMapScreen_Update() // 0x8003991C
         func_8003943C();
         func_80066E40();
 
-        savegame = g_SavegamePtr;
+        save = g_SavegamePtr;
 
-        if (D_800A99CC[savegame->current2dMap_A9] != NO_VALUE)
+        if (D_800A99CC[save->current2dMap_A9] != NO_VALUE)
         {
-            Fs_QueueStartReadTim(FILE_TIM_MR_0TOWN_TIM + D_800A99CC[savegame->current2dMap_A9], FS_BUFFER_1, &D_800A9024);
+            Fs_QueueStartReadTim(FILE_TIM_MR_0TOWN_TIM + D_800A99CC[save->current2dMap_A9], FS_BUFFER_1, &D_800A9024);
         }
 
-        Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + D_800A99B4[savegame->current2dMap_A9], FS_BUFFER_2, &D_800A901C);
+        Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + D_800A99B4[save->current2dMap_A9], FS_BUFFER_2, &D_800A901C);
         g_GameWork.gameStateStep_598[0]++;
     }
 
