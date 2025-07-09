@@ -907,7 +907,7 @@ extern s8* D_8002510C;
 /** Default key bindings. Multiple configs probably? */
 extern s_ControllerConfig D_8002511C[];
 
-/** "\x07PAUSED" string */
+/** "\x07PAUSED" string. */
 extern char D_80025394[];
 
 extern s32 D_80025528; // Type assumed.
@@ -1041,6 +1041,7 @@ extern s_FsImageDesc D_800A9A04;
 
 extern s32 D_800A9A0C; // Old IDB name `FS_AllFilesLoaded`, though FS code doesn't set it.
 
+/** `e_SysState` */
 extern s32 D_800A9A10;
 
 extern s32 D_800A9A1C;
@@ -2388,6 +2389,8 @@ void func_80037F24(s32);
 void func_80038354();
 
 void GameState_InGame_Update();
+
+void SysState_Gameplay_Update();
 
 void SysState_GamePaused_Update();
 

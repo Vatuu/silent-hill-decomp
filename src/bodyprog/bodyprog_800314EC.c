@@ -3767,7 +3767,117 @@ void GameState_InGame_Update() // 0x80038BD4
     }
 }
 
+// TODO: .rodata migration.
+#ifdef NON_MATCHING
+void SysState_Gameplay_Update() // 0x80038BD4
+{
+    s32             state;
+    s_SubCharacter* playerChara = &g_SysWork.player_4C.chara_0;
+
+    func_800373CC(~playerChara->field_41 != 0);
+    func_80036420();
+
+    switch (FP_ROUND_SCALED(playerChara->health_B0, 10, Q12_SHIFT))
+    {
+        case 0:
+            func_800892A4(17);
+            break;
+
+        case 1:
+        case 2:
+            func_800892A4(16);
+            break;
+
+        case 3:
+            func_800892A4(15);
+            break;
+
+        case 4:
+            func_800892A4(14);
+            break;
+
+        case 5:
+            func_800892A4(13);
+            break;
+
+        case 6:
+            func_800892A4(12);
+            break;
+
+        default:
+            break;
+    }
+
+    if (g_SysWork.player_4C.chara_0.health_B0 <= FP_FLOAT_TO(0.0f, Q12_SHIFT))
+    {
+        return;
+    }
+
+    if (g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.light_A &&
+        g_SysWork.field_24DC & (1 << 1))
+    {
+        func_8003ED08();
+    }
+
+    if (D_800A9A10 != SysState_Unk15)
+    {
+        SysWork_StateSetNext(D_800A9A10);
+    }
+    else if (g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.pause_14)
+    {
+        //SysWork_StateSetNext(SysState_GamePaused); // TODO: Doesn't match?
+        g_SysWork.sysState_8     = SysState_GamePaused;
+        g_SysWork.timer_24       = 0;
+        g_SysWork.sysStateStep_C = 0;
+        g_SysWork.field_28       = 0;
+        g_SysWork.field_10       = 0;
+        g_SysWork.timer_2C       = 0;
+        g_SysWork.field_14       = 0;
+    }
+    else if (func_8007F26C() == 1)
+    {
+        return;
+    }
+    else if (g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.item_16)
+    {
+        //SysWork_StateSetNext(SysState_StatusMenu); // TODO: Doesn't match?
+        g_SysWork.sysState_8     = SysState_StatusMenu;
+        g_SysWork.timer_24       = 0;
+        g_SysWork.sysStateStep_C = 0;
+        g_SysWork.field_28       = 0;
+        g_SysWork.field_10       = 0;
+        g_SysWork.timer_2C       = 0;
+        g_SysWork.field_14       = 0;
+    }
+    else if (g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.map_18)
+    {
+        //SysWork_StateSetNext(SysState_Unk3); // TODO: Doesn't match?
+        g_SysWork.sysState_8     = SysState_Unk3;
+        g_SysWork.timer_24       = 0;
+        g_SysWork.sysStateStep_C = 0;
+        g_SysWork.field_28       = 0;
+        g_SysWork.field_10       = 0;
+        g_SysWork.timer_2C       = 0;
+        g_SysWork.field_14       = 0;
+        g_SysWork.field_18       = 0;
+    }
+    else if (g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.option_1A)
+    {
+        SysWork_StateSetNext(SysState_OptionsMenu);
+    }
+
+    if ((u32)(g_SysWork.sysState_8 - 1) < SysState_Unk3)
+    {
+        g_SysWork.flags_22A4 |= 1 << 7;
+    }
+    else if (g_Gfx_ScreenFade == 1)
+    {
+        g_SysWork.flags_22A4 &= ~(1 << 7);
+    }
+}
+#else
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", SysState_Gameplay_Update);
+#endif
 
 void SysState_GamePaused_Update() // 0x800391E8
 {

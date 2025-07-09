@@ -54,7 +54,11 @@
 #define FP_FROM(x, shift) \
     ((x) >> (shift))
 
-/** @brief Converts an integer from a fixed-point Q format, rounded toward 0. */
+/** @brief Converts an integer from a scaled fixed-point Q format rounded to the nearest value. */
+#define FP_ROUND_SCALED(x, scale, shift) \
+    (((x) + ((FP_TO(1, shift) * scale) - 1)) / (FP_TO(1, shift) * scale))
+
+/** @brief Converts an integer from a fixed-point Q format rounded toward 0. */
 #define FP_ROUND_TO_ZERO(x, shift) \
     ((s32)(FP_FROM((x), (shift)) + ((u32)(x) >> 31)) >> 1)
 

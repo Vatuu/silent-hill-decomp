@@ -255,7 +255,8 @@ typedef enum _SysState
     SysState_EventSetFlag   = 11,
     SysState_EventPlaySound = 12,
     SysState_GameOver       = 13,
-    SysState_GamePaused     = 14
+    SysState_GamePaused     = 14,
+    SysState_Unk15          = 15
 } e_SysState;
 
 /** @brief Inventory command IDs. */
