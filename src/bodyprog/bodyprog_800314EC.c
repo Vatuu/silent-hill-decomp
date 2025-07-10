@@ -435,7 +435,7 @@ void Gfx_ClearRectInterlaced(s16 x, s16 y, s16 w, s16 h, u8 r, u8 g, u8 b) // 0x
     DrawSync(0);
 }
 
-void func_800323C8(s32 screenWidth, s32 isInterlaced) // 0x800323C8
+void Gfx_ScreenRefresh(s32 screenWidth, s32 isInterlaced) // 0x800323C8
 {
     DrawSync(0);
     Gfx_ClearRectInterlaced(0, 32, 320, 448, 0, 0, 0);
@@ -2247,10 +2247,10 @@ void GameFs_MapLoad(s32 mapIdx) // 0x8003521C
 
     if (g_SysWork.flags_2298 & UNK_FLAGS)
     {
-        func_8003CD6C(&g_SysWork.field_38);
+        func_8003CD6C(&g_SysWork.playerCombatInfo_38);
     }
 
-    func_800546A8((u8)g_SysWork.field_38.field_F);
+    func_800546A8((u8)g_SysWork.playerCombatInfo_38.field_F);
 }
 
 s32 func_8003528C(s32 idx0, s32 idx1) // 0x8003528C
@@ -3054,7 +3054,7 @@ s32 func_800365B8(s32 arg0) // 0x800365B8
     }
 
     g_SysWork.player_4C.chara_0.properties_E4.player.field_114 = 0;
-    func_8004C564(g_SysWork.field_38.field_F, 2);
+    func_8004C564(g_SysWork.playerCombatInfo_38.field_F, 2);
 
     if (D_800BCD6C != arg0)
     {
@@ -3960,9 +3960,9 @@ void func_8003943C()
     {
         val0        = g_SysWork.field_275C - FP_TO(256, Q12_SHIFT);
         roundedVal0 = FP_ROUND_TO_ZERO(val0, Q12_SHIFT);
-        func_8008B438(g_SysWork.field_38.field_F != 2, roundedVal0, 0);
+        func_8008B438(g_SysWork.playerCombatInfo_38.field_F != 2, roundedVal0, 0);
 
-        if (g_SysWork.field_38.field_F == 2)
+        if (g_SysWork.playerCombatInfo_38.field_F == 2)
         {
             val1        = g_SysWork.field_2764 - FP_TO(256, Q12_SHIFT);
             roundedVal1 = FP_ROUND_TO_ZERO(val1, Q12_SHIFT);
@@ -3971,9 +3971,9 @@ void func_8003943C()
     }
     else
     {
-        func_8008B438(g_SysWork.field_38.field_F != 2, 0, 0);
+        func_8008B438(g_SysWork.playerCombatInfo_38.field_F != 2, 0, 0);
 
-        if (g_SysWork.field_38.field_F == 2)
+        if (g_SysWork.playerCombatInfo_38.field_F == 2)
         {
             func_8008B40C(0, 0);
         }
@@ -4907,7 +4907,7 @@ void GameState_MainMenu_Update()
         case 4:
             if ((g_Gfx_ScreenFade & 0x7) == 5)
             {
-                func_800323C8(320, 0); // Old idb `Sys_GFXReinit_800323C8(width, interlace_flag)`.
+                Gfx_ScreenRefresh(320, 0); // Old idb `Sys_GFXReinit_800323C8(width, interlace_flag)`.
                 Fs_QueueWaitForEmpty();
 
                 if (g_GameWork.savegame_90.playerHealth_240 > 0)
@@ -5187,7 +5187,7 @@ s32 func_8003CD5C() // 0x8003CD5C
     return D_800BCE18.field_1BAC;
 }
 
-void func_8003CD6C(s_MapWork* arg0) // 0x8003CD6C
+void func_8003CD6C(s_PlayerCombat* arg0) // 0x8003CD6C
 {
     s32 var_a0;
     s8  temp_v0;

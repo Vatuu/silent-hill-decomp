@@ -840,6 +840,11 @@ typedef struct _SpawnInfo
 } s_SpawnInfo;
 STATIC_ASSERT_SIZEOF(s_SpawnInfo, 12);
 
+typedef struct s_UnkStruct_MapOverlay
+{
+    u8 field_0[4];
+} s_UnkStruct_MO;
+
 /** TODO: `g_MapOverlayHeader` is part of the overlay BIN files. Maybe should be moved to `maps/shared.h` or `dynamic/dynamic.h`. */
 typedef struct _MapOverlayHeader
 {
@@ -858,7 +863,7 @@ typedef struct _MapOverlayHeader
     void              (**mapEventFuncs_20)(); /** Points to array of event functions. */
     s8                unk_24[4];
     GsCOORDINATE2*    field_28;
-    s8                unk_2C[4];
+    s_UnkStruct_MO*   field_2C;
     char**            mapMessageStrings_30; /** Points to array of `char*` for each displayed message in the map. */
     s_AnimInfo*       animInfo_34;
     s8                unk_38[8];
@@ -1104,8 +1109,6 @@ extern s32 D_800AE17C;
 
 extern s32 D_800AE180;
 
-extern u8 D_800AE184;
-
 extern u8 D_800AE185;
 
 extern u8 D_800AE186;
@@ -1113,6 +1116,20 @@ extern u8 D_800AE186;
 extern s8 D_800AE187;
 
 extern s32 D_800AE190;
+
+extern s16 D_800AE194;
+
+extern s16 D_800AE196;
+
+extern s16 D_800AE198;
+
+extern s16 D_800AE19A;
+
+extern s32 D_800AE19C;
+
+extern s32 D_800AE1A0;
+
+extern s32 D_800AE1A4;
 
 extern s32 D_800AE1AC;
 
@@ -1124,7 +1141,7 @@ extern s16 D_800AF212;
 
 extern u8 D_800AF214;
 
-extern u8 D_800AF215;
+extern u8 g_PlayerControl;
 
 extern s8 D_800AF216;
 
@@ -1434,7 +1451,7 @@ extern s32 D_800C454C;
 
 extern s32 D_800C4558;
 
-extern s32 D_800C455C;
+extern s32 D_800C455C; // 0 = Player has control, 1 = Player do not have control
 
 extern s16 D_800C457E;
 
@@ -1622,7 +1639,7 @@ void func_800321EC(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 
 void Gfx_ClearRectInterlaced(s16 x, s16 y, s16 w, s16 h, u8 r, u8 g, u8 b);
 
-void func_800323C8(s32 screenWidth, s32 isInterlaced);
+void Gfx_ScreenRefresh(s32 screenWidth, s32 isInterlaced);
 
 void Gfx_Init(s32 screenWidth, s32 isInterlaced);
 
@@ -1666,7 +1683,7 @@ s32 func_8003C850();
 
 void func_8003C8F8(s_func_8003C8F8* arg0, s8* arg1);
 
-void func_8003CD6C(s_MapWork* arg0);
+void func_8003CD6C(s_PlayerCombat* arg0);
 
 void func_8003D01C();
 
@@ -1920,8 +1937,6 @@ void func_8004BCBC(s32 arg0);
 
 /** Used for item rotation and item scrolling in the inventory. */
 void func_8004BCDC(SVECTOR* arg0, GsCOORDINATE2* arg1);
-
-void func_8004BFE8();
 
 void func_8004C040();
 
@@ -2267,8 +2282,6 @@ bool Gfx_StringDraw(char* str, s32 size);
 void Gfx_StringDrawInt(s32 widthMin, s32 val);
 
 void func_8004BB10();
-
-void func_8004BB4C(VbRVIEW* view, GsCOORDINATE2* coord, SVECTOR3* vec, s32 arg3);
 
 void func_8004BBF4(VbRVIEW* arg0, GsCOORDINATE2* arg1, SVECTOR* arg2);
 

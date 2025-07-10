@@ -896,13 +896,17 @@ typedef struct _MainCharacter
 } s_MainCharacter;
 STATIC_ASSERT_SIZEOF(s_MainCharacter, 340);
 
-typedef struct _MapWork
+typedef struct _PlayerCombat
 {
     s32 field_0;
     s8  unk_4[11];
-    s8  field_F;
-} s_MapWork;
-STATIC_ASSERT_SIZEOF(s_MapWork, 16);
+    s8  field_F; // Current weapon selected, doesn't seems to be related with `e_InventoryItemId`
+    u8  currentWeaponAmmo_10;
+    s8  totalWeaponAmmo_11;
+    s8  field_12;
+    u8  isPlayerAiming_13;
+} s_PlayerCombat;
+STATIC_ASSERT_SIZEOF(s_PlayerCombat, 20);
 
 typedef struct
 {
@@ -939,11 +943,7 @@ typedef struct _SysWork
     s32             timer_2C;
     s32             field_30;
     s8              unk_34[4];
-    s_MapWork       field_38; // Something related to map loading. Likely a struct as `func_8003CD6C` requires one and `GameFs_MapLoad` input is pointing here.
-    u8              field_48;
-    s8              unk_49[1];
-    s8              field_4A;
-    u8              isPlayerInCombatMode_4B;
+    s_PlayerCombat  playerCombatInfo_38; // Something related to weapons and attack. This is a struct as `func_8003CD6C` requires one and `GameFs_MapLoad` input is pointing here.
     s_MainCharacter player_4C;
     s_SubCharacter  npcs_1A0[NPC_COUNT_MAX];
     GsCOORDINATE2   playerBoneCoords_890[PlayerBone_Count];

@@ -1,8 +1,194 @@
 #include "game.h"
+#include "inline_no_dmpsx.h"
+#include "gtemac.h"
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/item_screens_system.h"
 #include "bodyprog/math.h"
+
+void func_8004BB4C(VbRVIEW* view, GsCOORDINATE2* coord, SVECTOR3* vec, s32 arg3) // 0x8004BB4C
+{
+    view->vr.vz = 10;
+    view->vp.vx = 0;
+    view->vp.vy = 0;
+    view->vp.vz = 0;
+    view->vr.vx = 0;
+    view->vr.vy = 0;
+
+    view->rz = 0;
+
+    view->super       = coord;
+    coord->coord.t[2] = -0x2800;
+    coord->super      = NULL;
+    coord->coord.t[0] = 0;
+    coord->coord.t[1] = 0;
+
+    vec->vx = 0;
+    vec->vy = 0;
+    vec->vz = 0;
+
+    D_800C3928.scale.vz  = 0x1000;
+    D_800C3928.scale.vy  = 0x1000;
+    D_800C3928.scale.vx  = 0x1000;
+    D_800C3928.rotate.vz = 0;
+    D_800C3928.rotate.vy = 0;
+    D_800C3928.rotate.vx = 0;
+    D_800C3928.trans.vz  = 0;
+    D_800C3928.trans.vy  = 0;
+    D_800C3928.trans.vx  = 0;
+
+    coord->param = &D_800C3928;
+
+    func_8004BCDC(vec, coord);
+    vbSetRefView(view);
+}
+
+void func_8004BBF4(VbRVIEW* arg0, GsCOORDINATE2* arg1, SVECTOR* arg2) // 0x8004BBF4
+{
+    u16     vx;
+    VECTOR  vec;
+    SVECTOR svec;
+
+    vx  = arg2->vx;
+    arg2->vx = 0;
+
+    func_8004BCDC(arg2, arg1);
+
+    arg2->vx = vx;
+
+    func_8004BCDC(arg2, arg1);
+
+    svec.vx = 0;
+    svec.vy = 0;
+    svec.vz = 0;
+
+    gte_ApplyMatrix(&arg1->coord, &svec, &vec);
+    vbSetRefView(arg0);
+}
+
+void func_8004BCBC(s32 buffer) // 0x8004BCBC
+{
+    GsMapModelingData(buffer + 4);
+}
+
+void func_8004BCDC(SVECTOR* arg0, GsCOORDINATE2* arg1) // 0x8004BCDC
+{
+    MATRIX mat;
+
+    mat.t[0] = arg1->coord.t[0];
+    mat.t[1] = arg1->coord.t[1];
+    mat.t[2] = arg1->coord.t[2];
+
+    func_80096E78(arg0, &mat);
+
+    arg1->coord = mat;
+
+    ScaleMatrix(&arg1->coord, arg1->param);
+
+    arg1->flg = 0;
+}
+
+/** Used for displaying model items in the inventory. */
+INCLUDE_ASM("asm/bodyprog/nonmatchings/item_screens", func_8004BD74); // 0x8004BD74
+
+/** Aparently adjust the position of the items of the inventory */
+void func_8004BFE8() // 0x8004BFE8
+{
+    PushMatrix();
+    D_800C3954 = ReadGeomScreen();
+    ReadGeomOffset(&D_800C3958, &D_800C395C);
+    GsSetProjection(0x3E8);
+    D_800C3950 = g_SysWork.playerCombatInfo_38.field_F;
+}
+
+void func_8004C040() // 0x8004C040
+{
+    PopMatrix();
+    GsSetProjection(D_800C3954);
+    SetGeomOffset(D_800C3958, D_800C395C);
+}
+
+INCLUDE_ASM("asm/bodyprog/nonmatchings/item_screens", Player_AnimUpdate); // 0x8004C088
+
+s32 func_8004C328() // 0x8004C328
+{
+    u32 itemIdx;
+    u8  itemId;
+    u32 hasHuntingRifle;
+    u32 hasShotgun;
+
+    itemIdx         = 0;
+    hasHuntingRifle = false;
+    hasShotgun      = false;
+
+    for (; (itemId = g_SavegamePtr->items_0[itemIdx].id_0) != 0; itemIdx++)
+    {
+        if (itemId == InventoryItemId_HuntingRifle)
+        {
+            hasHuntingRifle = true;
+        }
+
+        if (itemId == InventoryItemId_Shotgun)
+        {
+            hasShotgun = true;
+        }
+
+        if (g_SysWork.playerCombatInfo_38.field_12 != NO_VALUE && itemIdx == g_SysWork.playerCombatInfo_38.field_12)
+        {
+            if (itemId >= InventoryItemId_Handgun && itemId <= InventoryItemId_Shotgun)
+            {
+                if (g_SysWork.playerCombatInfo_38.currentWeaponAmmo_10 != 0)
+                {
+                    return true;
+                }
+            }
+            continue;
+        }
+
+        if (itemId == InventoryItemId_Handgun || itemId == InventoryItemId_HandgunBullets)
+        {
+            if (g_SavegamePtr->items_0[itemIdx].count_1 != 0)
+            {
+                return true;
+            }
+            continue;
+        }
+
+        switch (itemId)
+        {
+            case InventoryItemId_HuntingRifle:
+            case InventoryItemId_Shotgun:
+                // Loaded ammo?
+                if (g_SavegamePtr->items_0[itemIdx].count_1 != 0)
+                {
+                    return true;
+                }
+                break;
+
+            case InventoryItemId_RifleShells:
+                if (hasHuntingRifle)
+                {
+                    if (g_SavegamePtr->items_0[itemIdx].count_1 != 0)
+                    {
+                        return true;
+                    }
+                }
+                break;
+
+            case InventoryItemId_ShotgunShells:
+                if (hasShotgun)
+                {
+                    if (g_SavegamePtr->items_0[itemIdx].count_1 != 0)
+                    {
+                        return true;
+                    }
+                }
+                break;
+        }
+    }
+
+    return false;
+}
 
 s32 func_8004C45C() // 0x8004C45C
 {
@@ -396,12 +582,12 @@ void GameState_ItemScreens_Update() // 0x8004C9B0
             {
                 s32 prevGameState;
 
-                func_800323C8(0x140, 0);
+                Gfx_ScreenRefresh(320, 0);
                 Fs_QueueWaitForEmpty();
                 func_8004C040();
 
-                D_800AE185 = 0xFF;
-                D_800AE186 = 0xFF;
+                D_800AE185 = NO_VALUE;
+                D_800AE186 = NO_VALUE;
 
                 Game_StateSetNext_ClearStateSteps(GameState_OptionScreen);
                 return;
@@ -416,16 +602,17 @@ void GameState_ItemScreens_Update() // 0x8004C9B0
                 return;
             }
             break;
-
+			
+		// Exiting inventory screen.
         case 20:
             if ((g_Gfx_ScreenFade & 0x7) == 5)
             {
-                func_800323C8(0x140, 0);
+                Gfx_ScreenRefresh(320, 0);
                 func_80054634();
 
                 g_SavegamePtr->field_AB = func_8004F190(g_SavegamePtr);
 
-                func_8003CD6C(&g_SysWork.field_38);
+                func_8003CD6C(&g_SysWork.playerCombatInfo_38);
                 func_8003D01C();
                 Fs_QueueWaitForEmpty();
                 
@@ -507,7 +694,7 @@ void GameState_ItemScreens_Update() // 0x8004C9B0
         case 24:
             if ((g_Gfx_ScreenFade & 0x7) == 5)
             {
-                func_800323C8(0x140, 0);
+                Gfx_ScreenRefresh(320, 0);
                 GameFs_SaveLoadBinLoad();
                 Fs_QueueWaitForEmpty();
                 Game_StateSetNext(GameState_Unk10);
@@ -732,7 +919,7 @@ void Inventory_Logic() // 0x8004D518
             {
                 D_800C3998 = InventorySelectionId_EquippedItem;
 
-                if (g_SysWork.field_38.field_F >= 0)
+                if (g_SysWork.playerCombatInfo_38.field_F >= 0)
                 {
                     g_Inventory_SelectionId = InventorySelectionId_EquippedItem;
                     func_80046048(SFX_BACK, 0, 64);
@@ -810,7 +997,7 @@ void Inventory_Logic() // 0x8004D518
                 D_800C3998                 = InventorySelectionId_EquippedItem;
                 g_Inventory_CmdSelectedIdx = 0;
 
-                if (g_SavegamePtr->items_0[g_SysWork.field_4A].command_2 != InventoryCmdId_Unk11)
+                if (g_SavegamePtr->items_0[g_SysWork.playerCombatInfo_38.field_12].command_2 != InventoryCmdId_Unk11)
                 {
                     g_Inventory_SelectionId = InventorySelectionId_EquippedItemCmd;
                     func_80046048(SFX_CONFIRM, 0, 64);
@@ -856,8 +1043,8 @@ void Inventory_Logic() // 0x8004D518
                 g_Inventory_SelectionId = InventorySelectionId_Map;
             }
             else if (g_ControllerPtrConst->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.item_16 |
-                                                             (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 |
-                                                              g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)))
+                                                            (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 |
+                                                             g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)))
             {
                 step = g_GameWork.gameStateStep_598[2];
                 func_80046048(SFX_CANCEL, 0, 64);
@@ -993,7 +1180,7 @@ void Inventory_Logic() // 0x8004D518
             }
             else
             {
-                curItemIdx = g_SysWork.field_4A;
+                curItemIdx = g_SysWork.playerCombatInfo_38.field_12;
             }
 
             switch (g_SavegamePtr->items_0[curItemIdx].command_2)
@@ -1217,7 +1404,7 @@ void Inventory_Logic() // 0x8004D518
                     case InventoryCmdId_Reload:
                         D_800C3998 = InventorySelectionId_EquippedItem;
 
-                        if (curItemIdx != g_SysWork.field_4A)
+                        if (curItemIdx != g_SysWork.playerCombatInfo_38.field_12)
                         {
                             g_GameWork.gameStateStep_598[1] = 8;
                             g_GameWork.gameStateStep_598[2] = 0;
@@ -1238,7 +1425,7 @@ void Inventory_Logic() // 0x8004D518
                             g_GameWork.gameStateStep_598[1] = 5;
                             g_GameWork.gameStateStep_598[2] = 0;
                         }
-                        else if (curItemIdx != g_SysWork.field_4A)
+                        else if (curItemIdx != g_SysWork.playerCombatInfo_38.field_12)
                         {
                             g_GameWork.gameStateStep_598[1] = 8;
                             g_GameWork.gameStateStep_598[2] = 0;
@@ -1259,7 +1446,7 @@ void Inventory_Logic() // 0x8004D518
                             g_GameWork.gameStateStep_598[1] = 6;
                             g_GameWork.gameStateStep_598[2] = 0;
                         }
-                        else if (curItemIdx != g_SysWork.field_4A)
+                        else if (curItemIdx != g_SysWork.playerCombatInfo_38.field_12)
                         {
                             g_GameWork.gameStateStep_598[1] = 8;
                             g_GameWork.gameStateStep_598[2] = 0;
@@ -1380,7 +1567,7 @@ void Gfx_Inventory_CmdOptionsDraw() // 0x8004E864
     }
     else
     {
-        idx = g_SysWork.field_4A;
+        idx = g_SysWork.playerCombatInfo_38.field_12;
     }
 
     switch (g_SavegamePtr->items_0[idx].command_2)

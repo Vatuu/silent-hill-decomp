@@ -3,6 +3,7 @@
 #include "gtemac.h"
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/item_screens_system.h"
 #include "bodyprog/math.h"
 #include "main/rng.h"
 
@@ -492,6 +493,7 @@ void GameFs_MapItemsTextureLoad(s32 mapId) // 0x80054024
 * This function loads Harry's potrait for the status image. */
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80053B08", func_800540A4); // 0x800540A4
 
+// Item rendering related.
 void func_80054200() // 0x80054200
 {
     s32  temp_s5;
@@ -507,6 +509,9 @@ void func_80054200() // 0x80054200
 
     func_8004BB4C(&D_800C3B48, &D_800C3AE8, &D_800C3B38, 0);
 
+	/** This loops define the position, rotation and scale of the item that
+	* the player has initially equipped in the inventory.
+	*/
     for (i = 0; i < 10; i++)
     {
         D_800C3E18[i] = NO_VALUE;
@@ -526,7 +531,7 @@ void func_80054200() // 0x80054200
 
     temp_s5 = (g_SysWork.field_2351 - 3 + g_SavegamePtr->field_AB) % g_SavegamePtr->field_AB;
 
-    if (g_GameWork.gameStateStep_598[1] < 21)
+    if (g_GameWork.gameStateStep_598[1] < 21) // If screen is inventory
     {
         for (specialItemIdx = 0; specialItemIdx < 7; specialItemIdx++)
         {
@@ -549,11 +554,11 @@ void func_80054200() // 0x80054200
             }
         }
 
-        D_800AE184 = g_SavegamePtr->equippedWeapon_AA;
+        g_Inventory_EquippedItem = g_SavegamePtr->equippedWeapon_AA;
 
         for (i = 0; i < g_SavegamePtr->field_AB; i++)
         {
-            if (g_SavegamePtr->items_0[i].id_0 == D_800AE184)
+            if (g_SavegamePtr->items_0[i].id_0 == g_Inventory_EquippedItem)
             {
                 D_800C3E18[7] = i;
 
@@ -565,7 +570,7 @@ void func_80054200() // 0x80054200
         {
             for (itemIdx = 0; itemIdx < 40; itemIdx++)
             {
-                if (D_800AE184 == D_800C3BB8[itemIdx])
+                if (g_Inventory_EquippedItem == D_800C3BB8[itemIdx])
                 {
                     func_80054720(FS_BUFFER_8, 7, itemIdx);
                     func_8005487C(7);
@@ -614,26 +619,57 @@ void func_80054200() // 0x80054200
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80053B08", func_80054558); // 0x80054558
+void func_80054558() // 0x80054558
+{
+    s32 i;
 
+    D_800AE180 = 0;
+    D_800AE187 = 0;
+    D_800AE194 = 32;
+    D_800AE196 = 0;
+    D_800AE198 = 0;
+    D_800AE19A = -0x12C;
+    D_800AE19C = 0;
+    D_800AE1A0 = 0;
+    D_800AE1A4 = 0;
+    
+    for (i = 0; g_MapOverlayHeader.field_2C->field_0[i] != 0; i++)
+    {
+        D_800C3BB8[i] = g_MapOverlayHeader.field_2C->field_0[i];
+    }
+    D_800C3BB8[i] = 0;
+    func_80054200();
+    func_80054928();
+}
+
+/** Used when exiting the inventory screen.
+ * Related to the item selected in the inventory when exiting the inventory.
+ * Could also be related to animations? Breaking it, then in between the
+ * transition of the aim animation and the idle animation enter to the
+ * inventory and then change the weapon to another type of weapon
+ * (example: from short fire weapon to melee) causes a bug where Harry keep
+ * the aiming animation until he does an interaction or run.
+ * Used in:
+ * `GameState_ItemScreens_Update`
+ */
 void func_80054634() // 0x80054634
 {
     u8 field_F;
 
-    field_F                          = (u8)g_SysWork.field_38.field_F;
-    g_SavegamePtr->equippedWeapon_AA = D_800AE184;
+    field_F                          = (u8)g_SysWork.playerCombatInfo_38.field_F;
+    g_SavegamePtr->equippedWeapon_AA = g_Inventory_EquippedItem;
 
     if (g_SavegamePtr->equippedWeapon_AA)
     {
-        g_SysWork.field_38.field_F = g_SavegamePtr->equippedWeapon_AA + 0x80;
+        g_SysWork.playerCombatInfo_38.field_F = g_SavegamePtr->equippedWeapon_AA + 0x80;
     }
     else
     {
-        g_SysWork.field_38.field_F        = NO_VALUE;
-        g_SysWork.isPlayerInCombatMode_4B = 0;
+        g_SysWork.playerCombatInfo_38.field_F           = NO_VALUE;
+        g_SysWork.playerCombatInfo_38.isPlayerAiming_13 = 0;
     }
 
-    func_800546A8((u8)g_SysWork.field_38.field_F);
+    func_800546A8((u8)g_SysWork.playerCombatInfo_38.field_F);
     Player_AnimUpdate(&field_F);
 }
 
@@ -674,19 +710,19 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80053B08", func_800548D8); // 0x
 
 void func_80054928() // 0x80054928
 {
-    s32         i;
+    s32 i;
 
     for (i = 0; i < 10; i++)
     {
-        D_800C39A8[i][0].r  = 0xFF;
-        D_800C39A8[i][0].g  = 0xFF;
-        D_800C39A8[i][0].b  = 0xFF;
+        D_800C39A8[i][0].r  = NO_VALUE;
+        D_800C39A8[i][0].g  = NO_VALUE;
+        D_800C39A8[i][0].b  = NO_VALUE;
         D_800C39A8[i][1].vx = FP_TO(1, Q12_SHIFT);
         D_800C39A8[i][1].vy = 0;
         D_800C39A8[i][1].vz = 0;
-        D_800C39A8[i][1].r  = 0xFF;
-        D_800C39A8[i][1].g  = 0xFF;
-        D_800C39A8[i][1].b  = 0xFF;
+        D_800C39A8[i][1].r  = NO_VALUE;
+        D_800C39A8[i][1].g  = NO_VALUE;
+        D_800C39A8[i][1].b  = NO_VALUE;
     }
 
     GsSetAmbient(1024, 1024, 1024);
@@ -1473,7 +1509,7 @@ void func_800717D0(s_SubCharacter* chara, void* arg1, GsCOORDINATE2* coord) // 0
             D_800C4584 = 0;
         }
 
-        if (D_800AF215 == 0)
+        if (g_PlayerControl == 0)
         {
             func_80071CE8(chara, extra, coord);
         }
@@ -1482,7 +1518,7 @@ void func_800717D0(s_SubCharacter* chara, void* arg1, GsCOORDINATE2* coord) // 0
             g_MapOverlayHeader.func_B8(chara, extra, coord);
         }
 
-        if (D_800AF215 == 0)
+        if (g_PlayerControl == 0)
         {
             func_8007C0D8(chara, extra, coord);
         }
@@ -1673,10 +1709,10 @@ s32 func_8007F26C() // 0x8007F26C
 
 s32 func_8007F2AC() // 0x8007F2AC
 {
-    if (g_SysWork.player_4C.chara_0.health_B0 <= 0 ||
-        g_SysWork.isPlayerInCombatMode_4B != 0 ||
-        g_SysWork.player_4C.extra_128.field_1C == 5 ||
-        g_SysWork.player_4C.extra_128.field_1C == 6 ||
+    if (g_SysWork.player_4C.chara_0.health_B0           <= 0 ||
+        g_SysWork.playerCombatInfo_38.isPlayerAiming_13 != 0 ||
+        g_SysWork.player_4C.extra_128.field_1C          == 5 ||
+        g_SysWork.player_4C.extra_128.field_1C          == 6 ||
         (g_SysWork.player_4C.extra_128.field_1C - 7) < 44u) // TODO: Probably not how OG condition was.
     {
         return 1;

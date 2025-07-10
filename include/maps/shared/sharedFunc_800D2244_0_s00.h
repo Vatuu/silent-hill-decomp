@@ -3,7 +3,7 @@ void sharedFunc_800D2244_0_s00(s32 arg0)
     s_MainCharacterExtra* extra;
     s_SubCharacter*       player;
 
-    D_800AF215 = 0;
+    g_PlayerControl = 0;
 
     extra  = &g_SysWork.player_4C.extra_128;
     player = &g_SysWork.player_4C.chara_0;
@@ -60,7 +60,7 @@ void sharedFunc_800D2244_0_s00(s32 arg0)
     D_800C45AC = 0;
     D_800C4584 = 0;
 
-    g_SysWork.isPlayerInCombatMode_4B = 0;
+    g_SysWork.playerCombatInfo_38.isPlayerAiming_13 = 0;
 
     player->field_D6 = 942;
 

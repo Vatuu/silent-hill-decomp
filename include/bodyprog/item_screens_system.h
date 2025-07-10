@@ -7,6 +7,10 @@
  * screen system.
  */
 
+// ======
+// ENUMS
+// ======
+
 typedef enum _InventorySelectionId
 {
     InventorySelectionId_Item            = 0,
@@ -37,18 +41,6 @@ STATIC_ASSERT_SIZEOF(s_ResultStringOffset, 4);
 // GLOBALS
 // ========
 
-extern s32 g_Inventory_CmdSelectedIdx; // 0x800ADB58
-
-/** Defines what the user has selected. `s_InventorySelectionId`.
- *
- * @note
- * `D_800C399C` has the same behaviour, with
- * the main difference being that it can be modified in memory
- * while `D_800C399C` is constatly updated to the same value
- * as this variable.
- */
-extern u32 g_Inventory_SelectionId; /** `s_InventorySelectionId` */ // 0x800ADB5C
-
 extern s32 g_Inventory_IsUpClicked; // 0x800C3968
 
 extern s32 g_Inventory_IsDownClicked; // 0x800C396C
@@ -69,9 +61,28 @@ extern s32 g_Inventory_IsLeftHeld; // 0x800C3988
 
 extern s32 g_Inventory_IsRightHeld; // 0x800C398C
 
+extern s32 g_Inventory_CmdSelectedIdx; // 0x800ADB58
+
+/** @brief Defines what the user has selected in the inventory. `s_InventorySelectionId`
+ *
+ * @note
+ * `D_800C399C` has the same behaviour, with
+ * the main difference being that it can be modified in memory
+ * while `D_800C399C` is constantly updated to the same value
+ * as this variable.
+ */
+extern u32 g_Inventory_SelectionId; /** `s_InventorySelectionId` */ // 0x800ADB5C
+
+extern u8 g_Inventory_EquippedItem; // 0x800AE184
+
 // ==========
 // FUNCTIONS
 // ==========
+
+// Use to render items.
+void func_8004BB4C(VbRVIEW* view, GsCOORDINATE2* coord, SVECTOR3* vec, s32 arg3);
+
+void func_8004BFE8();
 
 // TODO: The name `Inventory_HyperBlasterCanAdd` may be suitable, though inventory
 // funcs seem to be bunched at a different address.
@@ -149,5 +160,7 @@ void func_800521A8();
  * will in the other.
  */
 void func_800539A4(s32 arg0, s32 arg1);
+
+void func_80054200();
 
 #endif
