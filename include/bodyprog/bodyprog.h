@@ -37,6 +37,12 @@ typedef enum _PrimitiveType
     PrimitiveType_S32  = 5
 } s_PrimitiveType;
 
+typedef struct
+{
+    u16 field_0;
+    u16 field_2;
+} s_800252BC;
+
 typedef struct 
 {
     s32  field_0;
@@ -908,6 +914,8 @@ extern s8* D_8002510C;
 
 /** Default key bindings. Multiple configs probably? */
 extern s_ControllerConfig D_8002511C[];
+
+extern s_800252BC const D_800252BC[];
 
 /** "\x07PAUSED" string. */
 extern char D_80025394[];
@@ -2432,6 +2440,8 @@ void GameState_LoadMapScreen_Update();
 void SysState_Fmv_Update();
 
 void AreaLoad_UpdatePlayerPosition();
+
+void func_80039F54();
 
 s8 func_80039F90();
 

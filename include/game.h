@@ -952,7 +952,7 @@ typedef struct _SysWork
     s8              field_2280;        // Maybe NPC AI data past this point.
     s8              field_2281;        // Set by `Chara_PositionUpdateFromParams`.
     s8              field_2282;
-    s8              unk_2283;
+    s8              field_2283;
     u16             field_2284[3];
     u16             field_228A;
     s32             field_228C;

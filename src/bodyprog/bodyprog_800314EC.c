@@ -4177,7 +4177,7 @@ void GameState_LoadMapScreen_Update() // 0x8003991C
 
 void SysState_Fmv_Update() // 0x80039A58
 {
-    #define BASE_IDX 2072
+    #define BASE_FILE_IDX 2072
 
     switch (g_SysWork.sysStateStep_C)
     {
@@ -4211,9 +4211,9 @@ void SysState_Fmv_Update() // 0x80039A58
     func_800892A4(0);
     func_80089128();
 
-    // Start playing movie. File to play is based on file ID `BASE_IDX - g_MapEventIdx`.
+    // Start playing movie. File to play is based on file ID `BASE_FILE_IDX - g_MapEventIdx`.
     // Blocks until movie has finished playback or user has skipped it.
-    open_main(BASE_IDX - g_MapEventIdx, g_FileTable[BASE_IDX - g_MapEventIdx].blockCount);
+    open_main(BASE_FILE_IDX - g_MapEventIdx, g_FileTable[BASE_FILE_IDX - g_MapEventIdx].blockCount);
 
     func_800892A4(1);
 
@@ -4229,7 +4229,7 @@ void SysState_Fmv_Update() // 0x80039A58
     Game_StateSetNext(GameState_InGame);
 
     // If flag is set, returns to `GameState_InGame` with `gameStateStep[0]` = 1.
-    if ((g_MapEventParam->flags_8 >> 13) & (1 << 1)) // flags_8 & (1 << 14)? Does shift imply bitfield?
+    if ((g_MapEventParam->flags_8 >> 13) & (1 << 1)) // `flags_8 & (1 << 14)`? Does shift imply bitfield?
     {
         g_GameWork.gameStateStep_598[0] = 1;
     }
@@ -4242,11 +4242,14 @@ void AreaLoad_UpdatePlayerPosition() // 0x80039F30
     Chara_PositionUpdateFromParams(&D_800BCDB0);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_80039F54);
+void func_80039F54() // 0x80039F54
+{
+    Sd_EngineCmd(D_800252BC[g_SysWork.field_2283].field_2);
+}
 
 s8 func_80039F90() // 0x80039F90
 {
-    if (g_SysWork.flags_2298 & 0x3)
+    if (g_SysWork.flags_2298 & ((1 << 0) | (1 << 1)))
     {
         return g_SysWork.field_2282;
     }
