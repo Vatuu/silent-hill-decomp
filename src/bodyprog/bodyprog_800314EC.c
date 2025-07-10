@@ -5521,15 +5521,31 @@ void func_8003FCB0(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x8003FCB0
     LoadAverageCol(arg1 + 0x25, arg2 + 0x25, p0, arg3, arg0 + 0x25);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003FD38);
-
-void func_8003FE04(s_func_8003FE04* arg0, s_func_8003FE04* arg1, s_func_8003FE04* arg2, s32 arg3)
+void func_8003FD38(s_func_8003FE04* arg0, s_func_8003FE04* arg1, s_func_8003FE04* arg2, s32 weight0, s32 weight1, s32 alphaTo) // 0x8003FD38
 {
-    s32 p0;
+    if (arg1->field_2E != arg2->field_2E)
+    {
+        arg0->field_2E = Math_GetWeightedAverage(arg1->field_2E, arg2->field_2E, weight0);
+    }
+    else
+    {
+        arg0->field_2E = arg2->field_2E;
+    }
 
-    p0 = 0x1000 - arg3;
-    LoadAverageCol(&arg1->field_18.vec_0[1], &arg2->field_18.vec_0[1], p0, arg3, &arg0->field_18.vec_0[1]);
-    LoadAverageCol(&arg1->field_1C.vec_0[1], &arg2->field_1C.vec_0[1], p0, arg3, &arg0->field_1C.vec_0[1]);
+    arg0->field_30 = Math_GetWeightedAverage(arg1->field_30, arg2->field_30, weight0);
+    arg0->field_10 = Math_GetWeightedAverage(arg1->field_10, arg2->field_10, weight1);
+    arg0->field_6  = Math_GetWeightedAverage(arg1->field_6, arg2->field_6, weight0);
+
+    LoadAverageCol(arg1->field_14.vec_0, arg2->field_14.vec_0, FP_ALPHA(1.0f) - alphaTo, alphaTo, arg0->field_14.vec_0);
+}
+
+void func_8003FE04(s_func_8003FE04* arg0, s_func_8003FE04* arg1, s_func_8003FE04* arg2, s32 alphaTo) // 0x8003FE04
+{
+    s32 alphaFrom;
+
+    alphaFrom = FP_ALPHA(1.0f) - alphaTo;
+    LoadAverageCol(&arg1->field_18.vec_0[1], &arg2->field_18.vec_0[1], alphaFrom, alphaTo, &arg0->field_18.vec_0[1]);
+    LoadAverageCol(&arg1->field_1C.vec_0[1], &arg2->field_1C.vec_0[1], alphaFrom, alphaTo, &arg0->field_1C.vec_0[1]);
 
     if ((arg0->field_18.field_0 & ~0xFF) || (arg0->field_1C.field_0 & ~0xFF))
     {

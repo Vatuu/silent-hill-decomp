@@ -1750,7 +1750,9 @@ s32 Math_GetWeightedAverage(s32 a, s32 b, s32 weight);
 
 void func_8003FCB0(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 
-void func_8003FE04(s_func_8003FE04* arg0, s_func_8003FE04* arg1, s_func_8003FE04* arg2, s32 arg3);
+void func_8003FD38(s_func_8003FE04* arg0, s_func_8003FE04* arg1, s_func_8003FE04* arg2, s32 weight0, s32 weight1, s32 alphaTo);
+
+void func_8003FE04(s_func_8003FE04* arg0, s_func_8003FE04* arg1, s_func_8003FE04* arg2, s32 alphaTo);
 
 s32 func_8003FEC0(s_func_8003FEC0* arg0);
 
