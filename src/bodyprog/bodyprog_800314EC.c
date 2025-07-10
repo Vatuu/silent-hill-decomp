@@ -4254,7 +4254,62 @@ s8 func_80039F90() // 0x80039F90
     return 0;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", SysState_ReadMessage_Update);
+void SysState_ReadMessage_Update(s32 arg0) // 0x80039FB8
+{
+    s32 i;
+    u32 charaId;
+    void (**func)(s32);
+
+    i = arg0;
+
+    if (!((g_MapEventParam->flags_8 >> 13) & (1 << 0)) && !(g_SysWork.flags_22A4 & (1 << 5)))
+    {
+        for (i = 0; i < NPC_COUNT_MAX; i++) 
+        {
+            charaId = (u8)g_SysWork.npcs_1A0[i].model_0.charaId_0 - 1;
+            if (charaId < Chara_MonsterCybil && g_SysWork.npcs_1A0[i].health_B0 > FP_FLOAT_TO(0.0f, Q12_SHIFT))
+            {
+                break;
+            }
+        }
+
+        if (i == 6)
+        {
+            g_DeltaTime0 = D_800BCD84;
+        }
+    }
+    else
+    {
+        g_DeltaTime0 = D_800BCD84;
+    }
+
+    if (g_SysWork.field_18 == 0)
+    {
+        g_MapOverlayHeader.func_C8(i);
+    }
+
+    switch (func_800365B8(g_MapEventIdx)) 
+    {
+        case -1:
+            break;
+
+        case 0:
+            break;
+        
+        case 1:
+            Savegame_EventFlagSet(g_MapEventParam->eventFlagId_2);
+
+            func = &g_MapOverlayHeader.func_CC;
+
+            SysWork_StateSetNext(SysState_Gameplay);
+
+            (*func)(0);
+            break;
+
+        default:
+            break;
+    }
+}
 
 void SysWork_SavegameUpdatePlayer() // 0x8003A120
 {

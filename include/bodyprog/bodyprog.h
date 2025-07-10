@@ -2385,7 +2385,6 @@ u32 func_800364BC();
 
 void func_8003652C();
 
-/** `arg0` might be `u8*`. */
 s32 func_800365B8(s32 arg0);
 
 s32 func_80036B5C(u8 arg0, s32* arg1);
@@ -2435,6 +2434,8 @@ void SysState_Fmv_Update();
 void AreaLoad_UpdatePlayerPosition();
 
 s8 func_80039F90();
+
+void SysState_ReadMessage_Update(s32 arg0);
 
 void SysWork_SavegameUpdatePlayer();
 

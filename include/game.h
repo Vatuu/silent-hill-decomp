@@ -843,9 +843,9 @@ typedef struct _SubCharacter
     VECTOR3 field_98;
     s8      unk_A4[12]; // Probably `VECTOR3`s too. Indicates array?
     q19_12  health_B0;
-    s32     field_B4;
-    s32     field_B8;
-    s32     field_BC;
+    s32     field_B4; // X?
+    s32     field_B8; // Y?
+    s32     field_BC; // Z?
     s32     field_C0;
     u16     dead_timer_C4; // Part of `shBattleInfo` struct in SH2, may use something similar here.
     s16     timer_C6;      // Some sort of timer, value written by `Ai_LarvalStalker_Update`.
