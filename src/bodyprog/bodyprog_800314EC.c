@@ -5523,7 +5523,23 @@ void func_8003FCB0(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x8003FCB0
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003FD38);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003FE04);
+void func_8003FE04(s_func_8003FE04* arg0, s_func_8003FE04* arg1, s_func_8003FE04* arg2, s32 arg3)
+{
+    s32 p0;
+
+    p0 = 0x1000 - arg3;
+    LoadAverageCol(&arg1->field_18.vec_0[1], &arg2->field_18.vec_0[1], p0, arg3, &arg0->field_18.vec_0[1]);
+    LoadAverageCol(&arg1->field_1C.vec_0[1], &arg2->field_1C.vec_0[1], p0, arg3, &arg0->field_1C.vec_0[1]);
+
+    if ((arg0->field_18.field_0 & ~0xFF) || (arg0->field_1C.field_0 & ~0xFF))
+    {
+        arg0->field_18.vec_0[0] = 1;
+    }
+    else
+    {
+        arg0->field_18.vec_0[0] = 0;
+    }
+}
 
 // TODO: Requires `D_800C4168` to be `const`, but `func_800553C4` writes to it so it can't be?
 #ifdef NON_MATCHING

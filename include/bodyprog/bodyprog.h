@@ -43,6 +43,17 @@ typedef struct
     u16 field_2; // Engine cmd.
 } s_800252BC;
 
+typedef struct
+{
+    s8  unk_0[4];
+    u8  field_4;
+    u8  field_5;
+    u16 field_6;
+    s32 field_8;
+    s32 field_C;
+} s_8002AC04;
+STATIC_ASSERT_SIZEOF(s_8002AC04, 16);
+
 typedef struct 
 {
     s32  field_0;
@@ -61,23 +72,32 @@ typedef struct
 
 typedef struct
 {
-    s8  unk_0[4];
-    u8  field_4;
-    u8  field_5;
-    u16 field_6;
-    s32 field_8;
-    s32 field_C;
-} s_8002AC04;
-STATIC_ASSERT_SIZEOF(s_8002AC04, 16);
-
-typedef struct
-{
     s8  field_0;
     s8  field_1;
     s8  field_2;
     s8  field_3;
     s32 field_4[4];
 } s_800382B0;
+
+typedef union
+{
+    s32 field_0;
+    u8  vec_0[4];
+} s_Color;
+
+typedef struct
+{
+    s8      unk_0[6];
+    s16     field_6;
+    s8      unk_8[8];
+    s32     field_10;
+    s_Color field_14;
+    s_Color field_18;
+    s_Color field_1C;
+    s8      unk_20[14];
+    s16     field_2E;
+    s32     field_30;
+} s_func_8003FE04;
 
 typedef struct
 {
@@ -1729,6 +1749,8 @@ u32 func_8003F654(s_func_8003F654* arg0);
 s32 Math_GetWeightedAverage(s32 a, s32 b, s32 weight);
 
 void func_8003FCB0(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
+
+void func_8003FE04(s_func_8003FE04* arg0, s_func_8003FE04* arg1, s_func_8003FE04* arg2, s32 arg3);
 
 s32 func_8003FEC0(s_func_8003FEC0* arg0);
 
