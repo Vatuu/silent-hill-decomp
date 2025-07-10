@@ -3047,7 +3047,8 @@ s32 func_800365B8(s32 arg0) // 0x800365B8
     s32  temp;
 
     var_s3 = 0;
-    if ((g_ControllerPtrConst->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 | g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)) ||
+    if ((g_ControllerPtrConst->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 |
+                                                 g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)) ||
         (g_ControllerPtrConst->btnsHeld_C & g_GameWorkPtr->config_0.controllerConfig_0.skip_4))
     {
         var_s3 = 1;
@@ -5463,7 +5464,25 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003FD38);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003FE04);
 
+// TODO: Requires `D_800C4168` to be `const`, but `func_800553C4` writes to it so it can't be?
+#ifdef NON_MATCHING
+s32 func_8003FEC0(s_func_8003FEC0* arg0) // 0x8003FEC0
+{
+    if (D_800C4168.field_1 != 0)
+    {
+        return arg0->field_14;
+    }
+
+    if (D_800C4168.field_0 == 1)
+    {
+        return vwOresenHokan(D_800A9FB4, 5, arg0->field_4, 0, FP_FLOAT_TO(2.0f, Q12_SHIFT));
+    }
+
+    return FP_FLOAT_TO(20.0f, Q12_SHIFT);
+}
+#else
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003FEC0);
+#endif
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003FF2C);
 

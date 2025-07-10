@@ -332,7 +332,7 @@ g_VBlanks = 0x800B5C34; // type:s32
 g_UncappedVBlanks = 0x800B5C38; // type:s32
 
 
-g_PlayerControl = 0x800AF215;
+g_EnablePlayerControl = 0x800AF215;
 
 
 g_MaybePlayerAnims = 0x800AF228; // type:MaybeCharacterAnim

@@ -575,7 +575,7 @@ typedef struct _ShSavegame
     s32               mapMarkingFlags_1D4[2];   //----------------------------------------
     s32               mapMarkingFlags_1DC;      // These 3 are one `u32 mapMarkingFlags[25];` (or maybe `u8 mapMarkingFlags[100];`?) See Sparagas' `MapMarkingsFlags` struct for details of every bit.
     s32               mapMarkingFlags_1E0[22];  //----------------------------------------
-    s32               field_238;
+    s32               field_238;                // Another player health store?
     s16               pickedUpItemCount_23C;
     s8                field_23E;
     s8                field_23F;
@@ -900,11 +900,11 @@ typedef struct _PlayerCombat
 {
     s32 field_0;
     s8  unk_4[11];
-    s8  field_F; // Current weapon selected, doesn't seems to be related with `e_InventoryItemId`
+    s8  field_F; // Current weapon selected, doesn't seem to be related to `e_InventoryItemId`.
     u8  currentWeaponAmmo_10;
     s8  totalWeaponAmmo_11;
     s8  field_12;
-    u8  isPlayerAiming_13;
+    u8  isAiming_13;
 } s_PlayerCombat;
 STATIC_ASSERT_SIZEOF(s_PlayerCombat, 20);
 

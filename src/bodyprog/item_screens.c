@@ -27,9 +27,9 @@ void func_8004BB4C(VbRVIEW* view, GsCOORDINATE2* coord, SVECTOR3* vec, s32 arg3)
     vec->vy = 0;
     vec->vz = 0;
 
-    D_800C3928.scale.vz  = 0x1000;
-    D_800C3928.scale.vy  = 0x1000;
-    D_800C3928.scale.vx  = 0x1000;
+    D_800C3928.scale.vz  = FP_ALPHA(1.0f);
+    D_800C3928.scale.vy  = FP_ALPHA(1.0f);
+    D_800C3928.scale.vx  = FP_ALPHA(1.0f);
     D_800C3928.rotate.vz = 0;
     D_800C3928.rotate.vy = 0;
     D_800C3928.rotate.vx = 0;
@@ -47,7 +47,7 @@ void func_8004BBF4(VbRVIEW* arg0, GsCOORDINATE2* arg1, SVECTOR* arg2) // 0x8004B
 {
     u16     vx;
     VECTOR  vec;
-    SVECTOR svec;
+    SVECTOR sVec;
 
     vx  = arg2->vx;
     arg2->vx = 0;
@@ -58,11 +58,11 @@ void func_8004BBF4(VbRVIEW* arg0, GsCOORDINATE2* arg1, SVECTOR* arg2) // 0x8004B
 
     func_8004BCDC(arg2, arg1);
 
-    svec.vx = 0;
-    svec.vy = 0;
-    svec.vz = 0;
+    sVec.vx = 0;
+    sVec.vy = 0;
+    sVec.vz = 0;
 
-    gte_ApplyMatrix(&arg1->coord, &svec, &vec);
+    gte_ApplyMatrix(&arg1->coord, &sVec, &vec);
     vbSetRefView(arg0);
 }
 
@@ -91,7 +91,6 @@ void func_8004BCDC(SVECTOR* arg0, GsCOORDINATE2* arg1) // 0x8004BCDC
 /** Used for displaying model items in the inventory. */
 INCLUDE_ASM("asm/bodyprog/nonmatchings/item_screens", func_8004BD74); // 0x8004BD74
 
-/** Aparently adjust the position of the items of the inventory */
 void func_8004BFE8() // 0x8004BFE8
 {
     PushMatrix();
@@ -1043,8 +1042,8 @@ void Inventory_Logic() // 0x8004D518
                 g_Inventory_SelectionId = InventorySelectionId_Map;
             }
             else if (g_ControllerPtrConst->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.item_16 |
-                                                            (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 |
-                                                             g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)))
+                                                             (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 |
+                                                              g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)))
             {
                 step = g_GameWork.gameStateStep_598[2];
                 func_80046048(SFX_CANCEL, 0, 64);

@@ -79,9 +79,10 @@ extern u8 g_Inventory_EquippedItem; // 0x800AE184
 // FUNCTIONS
 // ==========
 
-// Use to render items.
+/** Renders items. */
 void func_8004BB4C(VbRVIEW* view, GsCOORDINATE2* coord, SVECTOR3* vec, s32 arg3);
 
+/** Aparently adjusts the position of items in the inventory. */
 void func_8004BFE8();
 
 // TODO: The name `Inventory_HyperBlasterCanAdd` may be suitable, though inventory

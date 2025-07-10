@@ -632,26 +632,18 @@ void func_80054558() // 0x80054558
     D_800AE19C = 0;
     D_800AE1A0 = 0;
     D_800AE1A4 = 0;
-    
+
     for (i = 0; g_MapOverlayHeader.field_2C->field_0[i] != 0; i++)
     {
         D_800C3BB8[i] = g_MapOverlayHeader.field_2C->field_0[i];
     }
+
     D_800C3BB8[i] = 0;
+
     func_80054200();
     func_80054928();
 }
 
-/** Used when exiting the inventory screen.
- * Related to the item selected in the inventory when exiting the inventory.
- * Could also be related to animations? Breaking it, then in between the
- * transition of the aim animation and the idle animation enter to the
- * inventory and then change the weapon to another type of weapon
- * (example: from short fire weapon to melee) causes a bug where Harry keep
- * the aiming animation until he does an interaction or run.
- * Used in:
- * `GameState_ItemScreens_Update`
- */
 void func_80054634() // 0x80054634
 {
     u8 field_F;
@@ -665,8 +657,8 @@ void func_80054634() // 0x80054634
     }
     else
     {
-        g_SysWork.playerCombatInfo_38.field_F           = NO_VALUE;
-        g_SysWork.playerCombatInfo_38.isPlayerAiming_13 = 0;
+        g_SysWork.playerCombatInfo_38.field_F     = NO_VALUE;
+        g_SysWork.playerCombatInfo_38.isAiming_13 = 0;
     }
 
     func_800546A8((u8)g_SysWork.playerCombatInfo_38.field_F);
@@ -1509,7 +1501,7 @@ void func_800717D0(s_SubCharacter* chara, void* arg1, GsCOORDINATE2* coord) // 0
             D_800C4584 = 0;
         }
 
-        if (g_PlayerControl == 0)
+        if (!g_EnablePlayerControl)
         {
             func_80071CE8(chara, extra, coord);
         }
@@ -1518,7 +1510,7 @@ void func_800717D0(s_SubCharacter* chara, void* arg1, GsCOORDINATE2* coord) // 0
             g_MapOverlayHeader.func_B8(chara, extra, coord);
         }
 
-        if (g_PlayerControl == 0)
+        if (!g_EnablePlayerControl)
         {
             func_8007C0D8(chara, extra, coord);
         }
@@ -1709,11 +1701,11 @@ s32 func_8007F26C() // 0x8007F26C
 
 s32 func_8007F2AC() // 0x8007F2AC
 {
-    if (g_SysWork.player_4C.chara_0.health_B0           <= 0 ||
-        g_SysWork.playerCombatInfo_38.isPlayerAiming_13 != 0 ||
-        g_SysWork.player_4C.extra_128.field_1C          == 5 ||
-        g_SysWork.player_4C.extra_128.field_1C          == 6 ||
-        (g_SysWork.player_4C.extra_128.field_1C - 7) < 44u) // TODO: Probably not how OG condition was.
+    if (g_SysWork.player_4C.chara_0.health_B0     <= 0 ||
+        g_SysWork.playerCombatInfo_38.isAiming_13 != 0 ||
+        g_SysWork.player_4C.extra_128.field_1C    == 5 ||
+        g_SysWork.player_4C.extra_128.field_1C    == 6 ||
+        (g_SysWork.player_4C.extra_128.field_1C - 7) < 44u) // TODO: Probably not how OG condition looked.
     {
         return 1;
     }
@@ -1790,7 +1782,7 @@ s32 func_80080478(VECTOR3* pos0, VECTOR3* pos1) // 0x80080478
     atan2Delta = ratan2(xDelta, zDelta);
 
     unk = func_8008A058(func_80080540(xDelta, 0, zDelta));
-    return (ratan2(unk, y1 - y0) << 0x10) | atan2Delta;
+    return (ratan2(unk, y1 - y0) << 16) | atan2Delta;
 }
 
 s32 func_80080514() // 0x80080514

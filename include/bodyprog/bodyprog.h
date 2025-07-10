@@ -40,7 +40,7 @@ typedef enum _PrimitiveType
 typedef struct
 {
     u16 field_0;
-    u16 field_2;
+    u16 field_2; // Engine cmd.
 } s_800252BC;
 
 typedef struct 
@@ -78,6 +78,16 @@ typedef struct
     s8  field_3;
     s32 field_4[4];
 } s_800382B0;
+
+typedef struct
+{
+    s8  unk_0[4];
+    s16 field_4;
+    s8  unk_6[2];
+    s8  unk_8[3];
+    s8  unk_10[4];
+    s32 field_14;
+} s_func_8003FEC0;
 
 // Maybe same.
 typedef struct
@@ -1093,6 +1103,8 @@ extern RECT D_800A9A6C; // `RECT<320, 256, 160, 240>`, only used in `SysState_Fm
 
 extern s_FsImageDesc D_800A9EB4;
 
+extern s32 D_800A9FB4[];
+
 extern s_800C37D8 D_800AA274[];
 
 extern u8 D_800AA604[][16];
@@ -1141,7 +1153,7 @@ extern s16 D_800AF212;
 
 extern u8 D_800AF214;
 
-extern u8 g_PlayerControl;
+extern u8 g_EnablePlayerControl;
 
 extern s8 D_800AF216;
 
@@ -1451,7 +1463,7 @@ extern s32 D_800C454C;
 
 extern s32 D_800C4558;
 
-extern s32 D_800C455C; // 0 = Player has control, 1 = Player do not have control
+extern s32 D_800C455C; // 0 = player has control, 1 = player doesn't have control.
 
 extern s16 D_800C457E;
 
@@ -1718,6 +1730,8 @@ s32 Math_GetWeightedAverage(s32 a, s32 b, s32 weight);
 
 void func_8003FCB0(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 
+s32 func_8003FEC0(s_func_8003FEC0* arg0);
+
 void func_80040014();
 
 void func_800410D8(VECTOR3*, s32*, s32*, SVECTOR*, VECTOR3*);
@@ -1952,6 +1966,17 @@ void GameFs_MapItemsTextureLoad(s32 mapId);
 
 void func_800540A4(s8);
 
+/** Used when exiting the inventory screen.
+ * Related to the item selected in the inventory when exiting the inventory.
+ * Could also be related to animations? Breaking it, then in between the
+ * transition of the aim animation and the idle animation enter to the
+ * inventory and then change the weapon to another type of weapon
+ * (example: from short fire weapon to melee) causes a bug where Harry keep
+ * the aiming animation until he does an interaction or run.
+ *
+ * Called in:
+ * `GameState_ItemScreens_Update`
+ */
 void func_80054634();
 
 void func_800546A8(s32 arg0);
