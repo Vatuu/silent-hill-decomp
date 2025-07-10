@@ -1278,7 +1278,7 @@ extern s32 D_800BCD90[];
 
 extern s_800BCDA8 D_800BCDA8[2];
 
-extern s32 D_800BCDB0; // Type assumed.
+extern s_AreaLoadParams D_800BCDB0;
 
 extern s32 D_800BCDC0[];
 
@@ -2476,6 +2476,8 @@ void SysState_Unk3_Update();
 void GameState_LoadMapScreen_Update();
 
 void SysState_Fmv_Update();
+
+void SysState_LoadArea_Update();
 
 void AreaLoad_UpdatePlayerPosition();
 

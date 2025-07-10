@@ -4236,7 +4236,68 @@ void SysState_Fmv_Update() // 0x80039A58
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", SysState_LoadArea_Update);
+void SysState_LoadArea_Update() // 0x0x80039C40
+{
+    s32               var0;
+    u32               var1;
+    s_AreaLoadParams* areaLoadParams;
+
+    g_SysWork.field_229C = 0;
+    g_SysWork.field_2281 = D_800BCDB0.field_4_9;
+    g_SysWork.field_2283 = (g_MapEventParam->flags_8 >> 19) & 0x1F;
+    g_SysWork.field_2282 = (g_MapEventParam->flags_8 >> 13) & 0x3F;
+
+    Sd_EngineCmd(D_800252BC[g_SysWork.field_2283].field_0);
+
+    if (g_SysWork.field_2283 == 7)
+    {
+        D_800BCDD4            = 0;
+        g_SysWork.flags_22A4 |= 1 << 10;
+    }
+
+    memcpy(&D_800BCDB0, &g_MapOverlayHeader.mapAreaLoadParams_1C[(g_MapEventParam->flags_8 >> 5) & 0xFF], sizeof(s_AreaLoadParams));
+
+    if (D_800BCDB0.field_4_24 == 1)
+    {
+        areaLoadParams       = &g_MapOverlayHeader.mapAreaLoadParams_1C[g_MapEventParam->field_5];
+        var1                 = g_SysWork.player_4C.chara_0.position_18.vz - areaLoadParams->char_z_8;
+        D_800BCDB0.char_x_0 += g_SysWork.player_4C.chara_0.position_18.vx - areaLoadParams->char_x_0;
+        D_800BCDB0.char_z_8 += var1;
+    }
+
+    if (g_SysWork.sysState_8 == 5)
+    {
+        g_SysWork.flags_2298           = 1 << 1;
+        g_SavegamePtr->mapOverlayId_A4 = (g_MapEventParam->flags_8 >> 25) & 0x3F; // This doesn't match when `flags_8` is defined as bitfields.
+        GameFs_MapLoad(g_SavegamePtr->mapOverlayId_A4);
+    }
+    else
+    {
+        g_SysWork.flags_2298 = 1 << 0;
+        func_8003640C((g_MapEventParam->flags_8 >> 25) & 0x3F);
+
+        var0 = (g_MapOverlayHeader.mapAreaLoadParams_1C[(g_MapEventParam->flags_8 >> 5) & 0xFF].field_4_5);
+        if (var0 != 0)
+        {
+            g_SysWork.field_2349 = var0 - 1;
+        }
+    }
+
+    Savegame_EventFlagSet(g_MapEventParam->eventFlagId_2);
+
+    if ((g_MapEventParam->flags_8 >> 24) & (1 << 0))
+    {
+        g_SysWork.flags_22A4 |= 1 << 6;
+    }
+    else
+    {
+        g_SysWork.flags_22A4 &= ~(1 << 6);
+    }
+
+    g_SysWork.field_22A0 |= 1 << 0;
+    Game_StateSetNext(GameState_MainLoadScreen);
+    func_80031CCC(1);
+}
 
 void AreaLoad_UpdatePlayerPosition() // 0x80039F30
 {
