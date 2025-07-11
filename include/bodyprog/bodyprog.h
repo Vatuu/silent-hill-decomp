@@ -433,6 +433,15 @@ STATIC_ASSERT_SIZEOF(s_800BCE18_0, 1376);
 
 typedef struct
 {
+    s32 field_0;
+    s32 field_4;
+    s32 field_8;
+    s32 field_C; // Packed bitfield?
+} s_800BCE18_2BEC;
+STATIC_ASSERT_SIZEOF(s_800BCE18_2BEC, 16);
+
+typedef struct
+{
     s_800BCE18_0      field_0[4];
     u8                unk_1580[204];
     s32               field_164C;
@@ -445,8 +454,9 @@ typedef struct
     VC_CAMERA_INTINFO vcCameraInternalInfo_1BDC; // Debug camera info.
     s_800BE9FC        field_1BE4;
     s32               field_2BE8;
+    s_800BCE18_2BEC   field_2BEC[1]; // Unknown size, valid count determined by field_2BE8?
 } s_800BCE18;
-STATIC_ASSERT_SIZEOF(s_800BCE18, 11244); // TODO: Likely even larger. `func_8003CB44` accesses some 16 byte fields at 0x2BEC. `func_8003BE50` also uses it.
+STATIC_ASSERT_SIZEOF(s_800BCE18, 11260);
 
 typedef struct
 {
@@ -2542,6 +2552,10 @@ void func_8003C3AC();
 void func_8003C878(s32);
 
 void func_8003CB3C(s_800BCE18* arg0);
+
+void func_8003CB44(s_800BCE18* arg0);
+
+void func_8003CBA4(s_800BCE18_2BEC* arg0);
 
 void func_8003D938();
 

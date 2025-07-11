@@ -5233,14 +5233,50 @@ void func_8003C8F8(s_func_8003C8F8* arg0, s8* arg1) // 0x8003C8F8
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003C92C);
 
-void func_8003CB3C(s_800BCE18* arg0)
+void func_8003CB3C(s_800BCE18* arg0) // 0x8003CB3C
 {
     arg0->field_2BE8 = 0;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003CB44);
+void func_8003CB44(s_800BCE18* arg0) // 0x8003CB44
+{
+    s_800BCE18_2BEC* ptr;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003CBA4);
+    for (ptr = &arg0->field_2BEC[0]; ptr < &arg0->field_2BEC[arg0->field_2BE8]; ptr++)
+    {
+        func_8003CBA4(ptr);
+    }
+
+    arg0->field_2BE8 = 0;
+}
+
+void func_8003CBA4(s_800BCE18_2BEC* arg0) // 0x8003CBA4
+{
+    GsCOORDINATE2 coord;
+    SVECTOR       vec;
+    MATRIX        mtx[2];
+
+    coord.flg   = 0;
+    coord.super = 0;
+
+    // Possibly sign-extending fixed-point 18.14 value back to 32-bit signed int?
+    coord.coord.t[0] = (arg0->field_4 << 14) >> 14;
+
+    // Extract high bits only (>> 18), probably gets coarse integer offset.
+    coord.coord.t[1] = arg0->field_4 >> 18;
+
+    // Same sign-extension logic for Z coordinate
+    coord.coord.t[2] = (arg0->field_8 << 14) >> 14;
+
+    // TODO: field_C is likely a bitfield, haven't been able to make a match yet.
+    vec.vx = ((arg0->field_C << 22) >> 20); // likely signed 10-bit value (bits 22–31)
+    vec.vy = ((arg0->field_C << 10) >> 20); // another 10-bit segment (bits 10–21)
+    vec.vz = (arg0->field_C >> 22) << 2;    // extract lower 10 bits and scale
+
+    func_80096C94(&vec, &coord.coord);
+    func_80049B6C(&coord, &mtx[1], &mtx[0]);
+    func_8003CC7C(arg0->field_0, &mtx[0], &mtx[1]);
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003CC7C);
 
