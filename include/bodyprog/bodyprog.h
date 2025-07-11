@@ -415,16 +415,26 @@ STATIC_ASSERT_SIZEOF(s_800BCDA8, 4);
 
 typedef struct
 {
-    s32*              field_0;
-    s8                field_4;
-    u8                unk_5[3];
-    s32               field_8;
-    s32               field_C;
-    s32               field_10;
-    s8                unk_14[4];
-    s32               field_18[837];
-    s32               field_D2C;
-    u8                unk_D30[2332];
+    s32* field_0;
+    s8   field_4;
+    u8   unk_5[3];
+    s32  field_8;
+    s32  field_C;
+    s32  field_10;
+    s8   unk_14[4];
+    s32  field_18[45]; // Size likely incorrect.
+    u8   field_CC;
+    u8   unk_CD[3];
+    u8   unk_D0[412];
+    s32  field_26C;
+    u8   unk_270[752];
+} s_800BCE18_0;
+STATIC_ASSERT_SIZEOF(s_800BCE18_0, 1376);
+
+typedef struct
+{
+    s_800BCE18_0      field_0[4];
+    u8                unk_1580[204];
     s32               field_164C;
     u8                unk_1650[1372];
     s32               field_1BAC;
@@ -1744,9 +1754,11 @@ s32 func_8003FEC0(s_func_8003FEC0* arg0);
 
 void func_80040014();
 
-void func_800410D8(VECTOR3*, s32*, s32*, SVECTOR*, VECTOR3*);
-
 s8 func_80040A64(VECTOR3* pos);
+
+s32 func_80040B74(s32 arg0);
+
+void func_800410D8(VECTOR3*, s32*, s32*, SVECTOR*, VECTOR3*);
 
 /** Some kind of queue entry load status getter. */
 s32 func_80041ADC(s32 queueIdx);

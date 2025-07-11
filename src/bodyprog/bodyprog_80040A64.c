@@ -35,7 +35,20 @@ s8 func_80040A64(VECTOR3* pos) // 0x80040A64
 
 void func_80040B6C() {}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80040B74);
+s32 func_80040B74(s32 arg0) // 0x80040B74
+{
+    s32 i;
+
+    for (i = 0; i < 4; i++)
+    {
+        if (D_800BCE18.field_0[i].field_CC == arg0)
+        {
+            return 1;
+        }
+    }
+
+    return 0;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80040BAC);
 

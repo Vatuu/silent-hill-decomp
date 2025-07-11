@@ -5145,7 +5145,7 @@ void func_8003BCF4() // 0x8003BCF4
 // TODO: Remake this whenever we have further context of `D_8002500C`.
 s32 func_8003BD2C() // 0x8003BD2C
 {
-    return (D_800BCE18.field_0 - &D_8002500C) >> 2;
+    return (D_800BCE18.field_0[0].field_0 - &D_8002500C) >> 2;
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003BD48);
@@ -5157,7 +5157,7 @@ void func_8003BE28() // 0x8003BE28
 
 s32 func_8003BE50(s32 idx) // 0x8003BE50
 {
-    return D_800BCE18.field_18[idx] + 32;
+    return D_800BCE18.field_0[0].field_18[idx] + 32;
 }
 
 void GameFs_BgEtcGfxLoad() // 0x8003BE6C
@@ -5208,7 +5208,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003C368); // 0x
 
 void func_8003C3A0() // 0x8003C3A0
 {
-    D_800BCE18.field_4 = 0;
+    D_800BCE18.field_0[0].field_4 = 0;
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003C3AC); // 0x8003C3AC
@@ -5288,7 +5288,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003D3BC);
 
 s32 func_8003D444(s32 idx) // 0x8003D444
 {
-    return D_800BCE18.field_18[idx] != 0;
+    return D_800BCE18.field_0[0].field_18[idx] != 0;
 }
 
 void func_8003D460() {}
@@ -5306,7 +5306,7 @@ void func_8003D6A4(u8* arg0) // 0x8003D6A4
     temp_v0 = *arg0;
     if (temp_v0 != 0)
     {
-        D_800BCE18.field_18[temp_v0] = 0;
+        D_800BCE18.field_0[0].field_18[temp_v0] = 0;
         func_8003C1AC();
     }
 }
@@ -5581,7 +5581,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003FF2C);
 
 void func_80040004(s_800BCE18* arg0) // 0x80040004
 {
-    D_800BCE18.field_1BD8 = &arg0->field_D2C;
+    D_800BCE18.field_1BD8 = &arg0->field_0[2].field_26C;
 }
 
 void func_80040014() // 0x80040014
