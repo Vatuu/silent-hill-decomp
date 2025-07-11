@@ -422,7 +422,7 @@ typedef struct
     s32  field_C;
     s32  field_10;
     s8   unk_14[4];
-    s32  field_18[45]; // Size likely incorrect.
+    s32  field_18[Chara_Count]; // Per-chara data? So far only seen accessed by `map4_s03::800D59EC` which calls `func_8003BE50(Chara_Twinfeeler)`.
     u8   field_CC;
     u8   unk_CD[3];
     u8   unk_D0[412];
