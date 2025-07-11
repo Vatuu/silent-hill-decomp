@@ -872,7 +872,7 @@ STATIC_ASSERT_SIZEOF(s_SpawnInfo, 12);
 
 typedef struct s_UnkStruct_MapOverlay
 {
-    u8 field_0[4];
+    u8 field_0[34]; /** `e_InventoryItemId` */
 } s_UnkStruct_MO;
 
 /** TODO: `g_MapOverlayHeader` is part of the overlay BIN files. Maybe should be moved to `maps/shared.h` or `dynamic/dynamic.h`. */
@@ -1137,8 +1137,6 @@ extern s32 D_800AD49C;
 
 extern s32 D_800AE178;
 
-extern s32 D_800AE17C;
-
 extern s32 D_800AE180;
 
 extern u8 D_800AE185;
@@ -1149,19 +1147,11 @@ extern s8 D_800AE187;
 
 extern s32 D_800AE190;
 
-extern s16 D_800AE194;
-
-extern s16 D_800AE196;
-
 extern s16 D_800AE198;
 
 extern s16 D_800AE19A;
 
 extern s32 D_800AE19C;
-
-extern s32 D_800AE1A0;
-
-extern s32 D_800AE1A4;
 
 extern s32 D_800AE1AC;
 
@@ -1463,15 +1453,11 @@ extern SVECTOR3 D_800C3B38;
 
 extern VbRVIEW D_800C3B48;
 
-extern u8 D_800C3BB8[INVENTORY_ITEM_COUNT_MAX];
+extern u8 D_800C3BB8[48];
 
 extern s_800C3BE8 D_800C3BE8[10];
 
 extern GsDOBJ2 D_800C3D78[];
-
-extern s32 D_800C3E18[10];
-
-extern s32 D_800C3E34;
 
 extern u8 D_800C3E40;
 
@@ -2013,8 +1999,6 @@ void func_800553C4(s8 arg0, s8 arg1, s8 arg2, s8 arg3);
 
 /** `arg0` type assumed. */
 void func_80055434(VECTOR3* vec);
-
-void func_80054928();
 
 void func_80054A04(u8 arg0);
 

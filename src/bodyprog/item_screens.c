@@ -473,11 +473,11 @@ void GameState_ItemScreens_Update() // 0x8004C9B0
 
             func_80037188();
 
-            D_800C3990                 = 1;
-            D_800C3998                 = 0;
-            D_800AE178                 = 0;
-            g_Inventory_CmdSelectedIdx = 0;
-            D_800AE17C                 = g_SysWork.field_2351;
+            D_800C3990                  = 1;
+            D_800C3998                  = 0;
+            D_800AE178                  = 0;
+            g_Inventory_CmdSelectedIdx  = 0;
+            g_Inventory_SelectedItemIdx = g_SysWork.inventoryItemSelectedIdx_2351;
 
             switch (g_GameWork.gameStatePrev_590)
             {
@@ -522,14 +522,14 @@ void GameState_ItemScreens_Update() // 0x8004C9B0
         case 12:
         case 13:
         case 16:
-            if (g_SysWork.field_2351 == D_800AE17C &&
+            if (g_SysWork.inventoryItemSelectedIdx_2351 == g_Inventory_SelectedItemIdx &&
                 g_GameWork.gameState_594 == GameState_InventoryScreen &&
                 g_Gfx_ScreenFade == 1)
             {
                 s32 prevGameState;
                 prevGameState = g_GameWork.gameStateStep_598[2];
 
-                Inventory_Logic(g_SysWork.field_2351);
+                Inventory_Logic(g_SysWork.inventoryItemSelectedIdx_2351);
 
                 g_GameWork.gameStateStep_598[2] = prevGameState;
             }
@@ -609,7 +609,7 @@ void GameState_ItemScreens_Update() // 0x8004C9B0
                 Gfx_ScreenRefresh(320, 0);
                 func_80054634();
 
-                g_SavegamePtr->field_AB = func_8004F190(g_SavegamePtr);
+                g_SavegamePtr->inventoryItemSpaces_AB = func_8004F190(g_SavegamePtr);
 
                 func_8003CD6C(&g_SysWork.playerCombatInfo_38);
                 func_8003D01C();
@@ -894,9 +894,9 @@ void Inventory_Logic() // 0x8004D518
                 g_Inventory_CmdSelectedIdx = 0;
                 func_80046048(SFX_BACK, -64, 64);
 
-                g_SysWork.field_2351 = ((g_SysWork.field_2351 + g_SavegamePtr->field_AB) - 1) % g_SavegamePtr->field_AB;
-                temp                 = g_SavegamePtr->field_AB - 3;
-                func_800539A4(0, (g_SysWork.field_2351 + temp) % g_SavegamePtr->field_AB);
+                g_SysWork.inventoryItemSelectedIdx_2351 = ((g_SysWork.inventoryItemSelectedIdx_2351 + g_SavegamePtr->inventoryItemSpaces_AB) - 1) % g_SavegamePtr->inventoryItemSpaces_AB;
+                temp                                    = g_SavegamePtr->inventoryItemSpaces_AB - 3;
+                func_800539A4(0, (g_SysWork.inventoryItemSelectedIdx_2351 + temp) % g_SavegamePtr->inventoryItemSpaces_AB);
             }
             else if (((g_Inventory_IsRightClicked || g_Inventory_IsRightPulsed) && D_800C3998 == InventorySelectionId_Examine) ||
                      (g_Inventory_IsRightHeld && (D_800C3990 != 0 || D_800C3998 == InventorySelectionId_Examine)))
@@ -911,8 +911,8 @@ void Inventory_Logic() // 0x8004D518
                 g_Inventory_CmdSelectedIdx = 0;
                 func_80046048(SFX_BACK, 64, 64);
 
-                g_SysWork.field_2351 = (g_SysWork.field_2351 + 1) % g_SavegamePtr->field_AB;
-                func_800539A4(1, (g_SysWork.field_2351 + 3) % g_SavegamePtr->field_AB);
+                g_SysWork.inventoryItemSelectedIdx_2351 = (g_SysWork.inventoryItemSelectedIdx_2351 + 1) % g_SavegamePtr->inventoryItemSpaces_AB;
+                func_800539A4(1, (g_SysWork.inventoryItemSelectedIdx_2351 + 3) % g_SavegamePtr->inventoryItemSpaces_AB);
             }
             else if (g_Inventory_IsUpClicked != InventorySelectionId_Item && D_800C3998 == InventorySelectionId_Examine)
             {
@@ -943,12 +943,12 @@ void Inventory_Logic() // 0x8004D518
             else if (g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0 &&
                      D_800C3998 >= InventorySelectionId_Examine)
             {
-                if (g_SavegamePtr->items_0[g_SysWork.field_2351].id_0 == InventoryItemId_Flauros ||
-                    (g_SysWork.field_239E != 0 && g_SavegamePtr->items_0[g_SysWork.field_2351].id_0 == InventoryItemId_Flashlight))
+                if (g_SavegamePtr->items_0[g_SysWork.inventoryItemSelectedIdx_2351].id_0 == InventoryItemId_Flauros ||
+                    (g_SysWork.field_239E != 0 && g_SavegamePtr->items_0[g_SysWork.inventoryItemSelectedIdx_2351].id_0 == InventoryItemId_Flashlight))
                 {
                     func_80046048(SFX_DENIED, 64, 64);
                 }
-                else if (g_SavegamePtr->items_0[g_SysWork.field_2351].command_2 == InventoryCmdId_Unk10)
+                else if (g_SavegamePtr->items_0[g_SysWork.inventoryItemSelectedIdx_2351].command_2 == InventoryCmdId_Unk10)
                 {
                     g_GameWork.gameStateStep_598[1] = 12;
                     g_GameWork.gameStateStep_598[2] = 0;
@@ -959,7 +959,7 @@ void Inventory_Logic() // 0x8004D518
                     D_800C3998                 = InventorySelectionId_EquippedItem;
                     g_Inventory_CmdSelectedIdx = 0;
 
-                    if (g_SavegamePtr->items_0[g_SysWork.field_2351].command_2 != InventoryCmdId_Unk11)
+                    if (g_SavegamePtr->items_0[g_SysWork.inventoryItemSelectedIdx_2351].command_2 != InventoryCmdId_Unk11)
                     {
                         g_Inventory_SelectionId = InventorySelectionId_ItemCmd;
                         func_80046048(SFX_CONFIRM, 64, 64);
@@ -1175,7 +1175,7 @@ void Inventory_Logic() // 0x8004D518
         case InventorySelectionId_EquippedItemCmd:
             if (g_Inventory_SelectionId == InventorySelectionId_ItemCmd)
             {
-                curItemIdx = g_SysWork.field_2351;
+                curItemIdx = g_SysWork.inventoryItemSelectedIdx_2351;
             }
             else
             {
@@ -1562,7 +1562,7 @@ void Gfx_Inventory_CmdOptionsDraw() // 0x8004E864
     if (g_Inventory_SelectionId != InventorySelectionId_EquippedItem &&
         g_Inventory_SelectionId != InventorySelectionId_EquippedItemCmd)
     {
-        idx = g_SysWork.field_2351;
+        idx = g_SysWork.inventoryItemSelectedIdx_2351;
     }
     else
     {
@@ -1744,7 +1744,7 @@ s32 func_8004EE94(u8 arg0, u8 arg1) // 0x8004EE94
 {
     s32 i;
 
-    for (i = 0; i < g_SavegamePtr->field_AB; i++)
+    for (i = 0; i < g_SavegamePtr->inventoryItemSpaces_AB; i++)
     {
         if (arg0 == g_SavegamePtr->items_0[i].id_0)
         {
@@ -1756,7 +1756,7 @@ s32 func_8004EE94(u8 arg0, u8 arg1) // 0x8004EE94
                     if (!(g_SavegamePtr->items_0[i].count_1 & 0xFF))
                     {
                         g_SavegamePtr->items_0[i].id_0 = 0xFF;
-                        g_SavegamePtr->field_AB        = func_8004F190(g_SavegamePtr);
+                        g_SavegamePtr->inventoryItemSpaces_AB        = func_8004F190(g_SavegamePtr);
                     }
                 }
             }
@@ -1780,7 +1780,7 @@ void func_8004F10C(s32* arg0) // 0x8004F10C
 {
     s32 i;
 
-    g_SavegamePtr->field_AB = func_8004F190(g_SavegamePtr);
+    g_SavegamePtr->inventoryItemSpaces_AB = func_8004F190(g_SavegamePtr);
 
     for (i = *arg0; i >= 0; i--)
     {
@@ -2045,10 +2045,10 @@ void func_8004F764(s32 arg0) // 0x8004F764
             }
         }
 
-        if (g_SavegamePtr->items_0[D_800C3E34].id_0 != 0xFF && D_800C3E34 != NO_VALUE)
+        if (g_SavegamePtr->items_0[g_Inventory_EquippedItemIdx].id_0 != 0xFF && g_Inventory_EquippedItemIdx != NO_VALUE)
         {
-            D_800C3BE8[7].field_10.vx = D_800262FC[g_SavegamePtr->items_0[D_800C3E34].id_0 - 32].vx;
-            D_800C3BE8[7].field_10.vz = D_800262FC[g_SavegamePtr->items_0[D_800C3E34].id_0 - 32].vy;
+            D_800C3BE8[7].field_10.vx = D_800262FC[g_SavegamePtr->items_0[g_Inventory_EquippedItemIdx].id_0 - 32].vx;
+            D_800C3BE8[7].field_10.vz = D_800262FC[g_SavegamePtr->items_0[g_Inventory_EquippedItemIdx].id_0 - 32].vy;
 
             func_8004BCDC(&D_800C3E48[7].param->rotate, &D_800C3E48[7]);
             func_800548D8(7);
@@ -2219,7 +2219,7 @@ void func_800539A4(s32 arg0, s32 arg1) // 0x800539A4
     }
 
     var_a3_2 = (arg0 != 0) ? -7 : 7;
-    var_a3_2 = (arg1 + var_a3_2 + g_SavegamePtr->field_AB) % g_SavegamePtr->field_AB;
+    var_a3_2 = (arg1 + var_a3_2 + g_SavegamePtr->inventoryItemSpaces_AB) % g_SavegamePtr->inventoryItemSpaces_AB;
 
     for (i = 0; i < 7; i++)
     {

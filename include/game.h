@@ -561,7 +561,7 @@ typedef struct _ShSavegame
     s8                locationId_A8;            /** `e_SaveLocationId` */
     u8                current2dMap_A9;          /** `e_Current2dMap` Index to 2D map showned than opening the map screen. */
     u8                equippedWeapon_AA;        /** `e_InventoryItemId` Default: 0. Effects only the visible player weapon model. */
-    u8                field_AB;
+    u8                inventoryItemSpaces_AB;   /** Item spaces. `INVENTORY_ITEM_COUNT_MAX` */
     u32               flags_AC;
     s32               field_B0[45];
     s32               hasMapsFlags_164;         // See Sparagas' `HasMapsFlags` struct for details of every bit.
@@ -963,17 +963,17 @@ typedef struct _SysWork
     s32             field_22A0;
     s32             flags_22A4;
     s8              unk_22A8[160];
-    s8              field_2348   : 8;
-    s8              field_2349   : 8;
-    u8              field_234A   : 8;
-    u8              field_234B_0 : 4;
-    u8              field_234B_4 : 4;
-    s32             field_234C;
-    u8              field_2350_0 : 4;
-    u8              field_2350_4 : 4;
-    u32             field_2351   : 8;
-    u32             flags_2352   : 8;
-    s32             field_2353   : 8; // Some index into `npcs_1A0`.
+    s8              field_2348                    : 8;
+    s8              field_2349                    : 8;
+    u8              field_234A                    : 8;
+    u8              field_234B_0                  : 4;
+    u8              field_234B_4                  : 4;
+    s32             field_234C;                   
+    u8              field_2350_0                  : 4;
+    u8              field_2350_4                  : 4;
+    u32             inventoryItemSelectedIdx_2351 : 8;
+    u32             flags_2352                    : 8;
+    s32             field_2353                    : 8; // Some index into `npcs_1A0`.
     s8              field_2354; // Used by `sharedFunc_800D2244_0_s00`.
     s8              field_2355; // Used by `sharedFunc_800D2244_0_s00`.
     s8              unk_2356[2];

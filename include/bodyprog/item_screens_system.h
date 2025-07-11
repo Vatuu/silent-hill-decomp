@@ -41,6 +41,36 @@ STATIC_ASSERT_SIZEOF(s_ResultStringOffset, 4);
 // GLOBALS
 // ========
 
+extern s32 g_Inventory_CmdSelectedIdx; // 0x800ADB58
+
+/** @brief Defines what the user has selected in the inventory. `s_InventorySelectionId`
+ *
+ * @note
+ * `D_800C399C` has the same behaviour, with
+ * the main difference being that it can be modified in memory
+ * while `D_800C399C` is constantly updated to the same value
+ * as this variable.
+ */
+extern u32 g_Inventory_SelectionId; /** `s_InventorySelectionId` */ // 0x800ADB5C
+
+extern s32 g_Inventory_SelectedItemIdx; // 0x800AE17C
+
+extern u8 g_Inventory_EquippedItem; // 0x800AE184
+
+/** @brief Timer used for displaying the description of items in the inventory */
+extern s32 g_Inventory_DescriptonRollTimer; // 0x800AE1A0
+
+/** @brief Timer used for displaying the transition of selected items
+* when scrolling through the inventory
+*/
+extern s32 g_Inventory_ScrollTransitionTimer; // 0x800AE1A4
+
+/** Timer used for the black gradiant effect in the health status. */
+extern s16 g_Inventory_StatusScanlineTimer; // 0x800AE194
+
+/** Timer used for the gradiant health effect in the health status. */
+extern s16 g_Inventory_StatusDarkGradiantTimer; // 0x800AE196
+
 extern s32 g_Inventory_IsUpClicked; // 0x800C3968
 
 extern s32 g_Inventory_IsDownClicked; // 0x800C396C
@@ -61,19 +91,16 @@ extern s32 g_Inventory_IsLeftHeld; // 0x800C3988
 
 extern s32 g_Inventory_IsRightHeld; // 0x800C398C
 
-extern s32 g_Inventory_CmdSelectedIdx; // 0x800ADB58
+/** This is used to organize the items displaying in the inventory.
+* It's size is 28/0x1C.
+*/
+extern s32 D_800C3E18[7]; // 0x800C3E18
 
-/** @brief Defines what the user has selected in the inventory. `s_InventorySelectionId`
- *
- * @note
- * `D_800C399C` has the same behaviour, with
- * the main difference being that it can be modified in memory
- * while `D_800C399C` is constantly updated to the same value
- * as this variable.
- */
-extern u32 g_Inventory_SelectionId; /** `s_InventorySelectionId` */ // 0x800ADB5C
-
-extern u8 g_Inventory_EquippedItem; // 0x800AE184
+/** This value is based in the index (of the item available in the inventory)
+* of the item equipped.
+* If the player has nothing equipped the value is -1.
+*/
+extern s32 g_Inventory_EquippedItemIdx; // 0x800C3E34
 
 // ==========
 // FUNCTIONS
@@ -163,5 +190,7 @@ void func_800521A8();
 void func_800539A4(s32 arg0, s32 arg1);
 
 void func_80054200();
+
+void Gfx_Items_SetAmbientLighting(); // 0x80054928
 
 #endif

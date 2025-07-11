@@ -188,6 +188,8 @@ GameFs_MapItemsTextureLoad = 0x80054024; // type:func
 
 GameState_MapScreen_Update = 0x80066EB0; // type:func
 
+Gfx_Items_SetAmbientLighting = 0x80054928; // type:func
+
 Game_SavegameResetPlayer = 0x8007E530; // type:func
 GameFs_PlayerMapAnimLoad = 0x8007EB64; // type:func
 Player_AnimGetSomething = 0x8007F308; // type:func
@@ -305,9 +307,14 @@ Demo_GameRandSeedSet = 0x8008F8A8; // type:func
 g_ObjectTable0 = 0x800A8F74; // type:s8
 g_ObjectTable1 = 0x800A8FC4; // type:s8
 
-g_Inventory_CmdSelectedIdx = 0x800ADB58; // type:s32
-g_Inventory_SelectionId    = 0x800ADB5C; // type:u32
-g_Inventory_EquippedItem   = 0x800AE184;
+g_Inventory_CmdSelectedIdx          = 0x800ADB58; // type:s32
+g_Inventory_SelectionId             = 0x800ADB5C; // type:u32
+g_Inventory_SelectedItemIdx         = 0x800AE17C;
+g_Inventory_EquippedItem            = 0x800AE184;
+g_Inventory_StatusScanlineTimer     = 0x800AE194;
+g_Inventory_StatusDarkGradiantTimer = 0x800AE196;
+g_Inventory_DescriptonRollTimer     = 0x800AE1A0;
+g_Inventory_ScrollTransitionTimer   = 0x800AE1A4;
 
 
 g_DeltaTime0 = 0x800B5CC0; // type:s32 - Q19.12 fixed point, usually 0x44 (0.0166..) or 0x88 (0.033..).
@@ -348,6 +355,8 @@ g_MapOverlayHeader = 0x800C957C; // type:MapOverlayHeader size:0x84C - size inco
 g_StringColorId    = 0x800AD498; // type:s16
 g_StringPosition   = 0x800C38A8; // type:DVECTOR
 g_StringPositionX1 = 0x800C38AC; // type:s32
+
+g_Inventory_EquippedItemIdx = 0x800C3E34;
 
 hack_D_800FE5FC_fix = 0x800FE5FC; // ignore:true - Part of temp memory block at 800FDE00, has to be unsymbolized for C to match.
 
