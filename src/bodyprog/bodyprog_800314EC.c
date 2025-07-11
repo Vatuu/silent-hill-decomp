@@ -5219,7 +5219,19 @@ s32 func_8003C850() // 0x8003C850
     func_80043740();
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003C878);
+void func_8003C878(s32 arg0) // 0x8003C878
+{
+    func_8003CB44(&D_800BCE18);
+
+    while (func_80043830())
+    {
+        func_8003C3AC();
+        Fs_QueueWaitForEmpty();
+    }
+
+    func_80043A24(&g_ObjectTable0[g_ObjectTableIdx], arg0);
+    func_800550D0();
+}
 
 void func_8003C8F8(s_func_8003C8F8* arg0, s8* arg1) // 0x8003C8F8
 {
@@ -5278,7 +5290,38 @@ void func_8003CBA4(s_800BCE18_2BEC* arg0) // 0x8003CBA4
     func_8003CC7C(arg0->field_0, &mtx[0], &mtx[1]);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003CC7C);
+void func_8003CC7C(s_800BCE18_2BEC_0* arg0, MATRIX* arg1, MATRIX* arg2) // 0x8003CC7C
+{
+    s8                    temp_a0;
+    s_800BCE18_2BEC_0_10* temp_s1;
+    s_800BCE18_2BEC_0_10* temp_s2;
+
+    temp_a0 = arg0->field_10[0].field_9;
+
+    if (!temp_a0)
+    {
+        return;
+    }
+
+    temp_s2 = arg0->field_8;
+    temp_s1 = arg0->field_10;
+
+    if (temp_a0 >= 3 && temp_a0 < 7)
+    {
+        if (!func_80042C04(temp_a0 - 3))
+        {
+            arg0->field_10[0].field_9 = 0;
+        }
+    }
+
+    if (temp_s1->field_0 != temp_s2->field_0 || temp_s1->field_4 != temp_s2->field_4)
+    {
+        arg0->field_10[0].field_9 = 0;
+        return;
+    }
+
+    func_80057090(arg0, &g_ObjectTable0[g_ObjectTableIdx], 1, arg1, arg2, 0);
+}
 
 s32 func_8003CD5C() // 0x8003CD5C
 {

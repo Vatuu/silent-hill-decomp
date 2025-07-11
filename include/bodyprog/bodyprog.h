@@ -435,6 +435,22 @@ typedef struct
 {
     s32 field_0;
     s32 field_4;
+    u8  unk_8;
+    s8  field_9;
+} s_800BCE18_2BEC_0_10;
+
+typedef struct
+{
+    s8                    unk_0[8];
+    s_800BCE18_2BEC_0_10* field_8;
+    s8                    unk_C[4];
+    s_800BCE18_2BEC_0_10  field_10[1]; // Unknown length.
+} s_800BCE18_2BEC_0;
+
+typedef struct
+{
+    s_800BCE18_2BEC_0* field_0;
+    s32                field_4;
     s32 field_8;
     s32 field_C; // Packed bitfield?
 } s_800BCE18_2BEC;
@@ -1719,6 +1735,8 @@ s32 func_8003BD2C();
 /** Unknown bodyprog func. Called by `Fs_QueueDoThingWhenEmpty`. */
 s32 func_8003C850();
 
+void func_8003C878(s32 arg0);
+
 void func_8003C8F8(s_func_8003C8F8* arg0, s8* arg1);
 
 void func_8003CD6C(s_PlayerCombat* arg0);
@@ -2556,6 +2574,8 @@ void func_8003CB3C(s_800BCE18* arg0);
 void func_8003CB44(s_800BCE18* arg0);
 
 void func_8003CBA4(s_800BCE18_2BEC* arg0);
+
+void func_8003CC7C(s_800BCE18_2BEC_0* arg0, MATRIX* arg1, MATRIX* arg2);
 
 void func_8003D938();
 
