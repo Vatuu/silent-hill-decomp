@@ -924,9 +924,27 @@ typedef struct
 
 typedef struct
 {
-    // Assumed fields, need to check actual usage (funcs called by `func_800895E4`)
-    s32 field_0[10];
+    s8  unk_0[4];
+    s32 field_4;
+    s8  unk_8[4];
+    s32 field_C;
+} s_SysWork_2514_C;
+
+typedef struct
+{
+    u32               unk_0 : 8;
+    u8                field_1 : 8;
+    u32               field_2_0 : 1;
+    u32               field_2_1 : 1;
+    u32               field_2_2 : 14;
+    u8                unk_4[8];
+    s_SysWork_2514_C* field_C;
+    u8                unk_10[16];
+    s32               field_20[2]; // `func_8009E310` takes pointer to this and writes to [0] / [1], maybe a substruct.
+    u8                unk_28[8];
+    s32               field_30[2]; // `func_8009EBB8` takes pointer to this and writes to [0] / [1], maybe a substruct.
 } s_SysWork_2514;
+STATIC_ASSERT_SIZEOF(s_SysWork_2514, 56);
 
 typedef struct _SysWork
 {
@@ -1005,7 +1023,7 @@ typedef struct _SysWork
     s8              unk_24E0[48];
     s32             field_2510;
     s_SysWork_2514  field_2514;
-    u8              unk_253C[524];
+    u8              unk_254C[508];
     s16             field_2748[9];  // `func_80035ED0` loops over this.
     u8              unk_275A[2];
     s32             field_275C; // `q19_12`?

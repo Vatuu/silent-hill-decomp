@@ -1507,9 +1507,9 @@ void func_80089090(s32 arg0) // 0x80089090
 
 void func_800890B8() // 0x800890B8
 {
-    func_8009E198(&g_SysWork.field_2514.field_0[0], 0);
-    func_8009E310(&g_SysWork.field_2514.field_0[0], &g_SysWork.field_2514.field_0[8], 2);
-    func_8009EBB8(&g_SysWork.field_2514.field_0[0], &g_SysWork.field_2514.field_0[12], 16);
+    func_8009E198(&g_SysWork.field_2514, 0);
+    func_8009E310(&g_SysWork.field_2514, g_SysWork.field_2514.field_20, 2);
+    func_8009EBB8(&g_SysWork.field_2514, g_SysWork.field_2514.field_30, 16);
 
     g_SysWork.field_2510 = func_8009E4F8();
 
@@ -1517,7 +1517,77 @@ void func_800890B8() // 0x800890B8
     func_8009E97C(g_SysWork.field_2510);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80089128);
+s32 func_80089128() // 0x80089128
+{
+    s32             temp_s0;
+    s32             temp_s1;
+    s32             temp_v0;
+    s32             var_s0;
+    s_SysWork_2514* var_s2;
+    s32             var_s3;
+    s32             var_s5;
+    s32             var_s6;
+
+    var_s2 = &g_SysWork.field_2514;
+
+    temp_s0 = g_SysWork.field_2510;
+
+    if (!var_s2->field_2_0)
+    {
+        func_800890B8();
+    }
+
+    if (g_GameWork.config_0.optVibrationEnabled_21)
+    {
+        func_8009E2A0(var_s2);
+        var_s2->field_1 = 1 << 7;
+    }
+    else
+    {
+        func_8009E2D8(var_s2);
+        var_s2->field_1 = 0;
+    }
+
+    if (PadChkVsync())
+    {
+        func_8009E61C(var_s2, func_8009E550(var_s2, temp_s0), temp_s0);
+    }
+
+    var_s5 = 0;
+
+    var_s2->field_C->field_4 = 0;
+    var_s2->field_C->field_C = 0;
+
+    temp_v0 = func_8009ED74(var_s2);
+    var_s0  = func_8009ED7C(temp_v0);
+
+    if (!var_s2->field_2_1)
+    {
+        var_s3 = g_VBlanks;
+    }
+    else
+    {
+        var_s3 = 0;
+    }
+
+    var_s6 = 0xFFFF;
+
+    for (; var_s0 != temp_v0; var_s5++)
+    {
+        temp_s1 = func_8009ED7C(var_s0);
+
+        if (func_80089644(var_s2, var_s0, var_s6 & 0xFFFF, var_s3) == 0)
+        {
+            func_8009EC1C(var_s2, var_s0);
+        }
+
+        var_s0 = temp_s1;
+    }
+
+    func_8009E718(var_s2);
+
+    return var_s5;
+}
 
 void func_800892A4(s32 idx) // 0x800892A4
 {

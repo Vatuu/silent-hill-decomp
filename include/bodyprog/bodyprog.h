@@ -2028,12 +2028,6 @@ void func_8005E89C();
 
 void func_8005F6B0(s_SubCharacter*, s32*, s32, s32);
 
-/** Unknown bodyprog func. Called by `Fs_QueueWaitForEmpty`. */
-void func_80089128();
-
-/** Unknown bodyprog func. Called by `Fs_QueueWaitForEmpty` with `0` and then `1`. */
-void func_800892A4(s32 arg0);
-
 void DmsHeader_FixOffsets(s_DmsHeader* header);
 
 void DmsEntry_FixOffsets(s_DmsEntry* entry, s_DmsHeader* header);
@@ -2170,6 +2164,8 @@ s32 func_8008F434(s32 arg0);
 void func_80089090(s32 arg0);
 
 void func_800890B8();
+
+s32 func_80089128();
 
 void func_800892A4(s32 idx);
 

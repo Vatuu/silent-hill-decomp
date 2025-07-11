@@ -608,7 +608,9 @@ s32 func_80030F7C() // 0x80030F7C
         }
 
         if (curFile == NULL)
+        {
             break;
+        }
 
         strcpy(&D_800B5488.field_40->fileNames_0[i], fileInfo.name);
         D_800B5488.field_40->blockCounts_13B[i] = (fileInfo.size + (8192 - 1)) / 8192;
