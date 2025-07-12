@@ -295,7 +295,15 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_8004393C);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80043A24);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80043B34);
+s32 func_80043B34(s_800C117C* arg0, s_800C1020* arg1)
+{
+    if (arg1->field_580 == arg0->field_8 && arg1->field_584 == arg0->field_A)
+    {
+        return true;
+    }
+
+    return arg1->field_588 != 0;
+}
 
 s32 func_80043B70(s_80043B70* arg0) // 0x80043B70
 {
