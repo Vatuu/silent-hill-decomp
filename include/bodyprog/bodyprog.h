@@ -451,8 +451,10 @@ typedef struct
 {
     s_800BCE18_2BEC_0* field_0;
     s32                field_4;
-    s32 field_8;
-    s32 field_C; // Packed bitfield?
+    s32                field_8;
+    s32                vx_C : 10;
+    s32                vy_C : 12;
+    s32                vz_C : 10;
 } s_800BCE18_2BEC;
 STATIC_ASSERT_SIZEOF(s_800BCE18_2BEC, 16);
 

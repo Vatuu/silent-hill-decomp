@@ -5280,10 +5280,10 @@ void func_8003CBA4(s_800BCE18_2BEC* arg0) // 0x8003CBA4
     // Same sign-extension logic for Z coordinate
     coord.coord.t[2] = (arg0->field_8 << 14) >> 14;
 
-    // TODO: field_C is likely a bitfield, haven't been able to make a match yet.
-    vec.vx = ((arg0->field_C << 22) >> 20); // likely signed 10-bit value (bits 22–31)
-    vec.vy = ((arg0->field_C << 10) >> 20); // another 10-bit segment (bits 10–21)
-    vec.vz = (arg0->field_C >> 22) << 2;    // extract lower 10 bits and scale
+    // Packed vx/vy/vz bitfield (TODO: was this used anywhere else?)
+    vec.vx = arg0->vx_C << 2;
+    vec.vy = arg0->vy_C;
+    vec.vz = arg0->vz_C << 2;
 
     func_80096C94(&vec, &coord.coord);
     func_80049B6C(&coord, &mtx[1], &mtx[0]);
