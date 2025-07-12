@@ -58,7 +58,28 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80041074);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800410D8);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_8004122C);
+void func_8004122C(s32* angle0, s32* angle1, VECTOR* arg2, VECTOR* arg3)
+{
+    VECTOR  vec0;
+    VECTOR  vec1;
+    VECTOR  vec2;
+    SVECTOR svec0;
+    SVECTOR svec1;
+    VECTOR  vec3;
+
+    VectorNormal(arg2, &vec0);
+    VectorNormal(arg3, &vec1);
+    OuterProduct12(&vec0, &vec1, &vec2);
+    VectorNormal(&vec2, &vec2);
+
+    *angle0 = (ratan2(vec2.vy, vec2.vx) - FP_ANGLE(90.0f)) & 0xFFF;
+
+    svec0.vx = FP_FROM((vec0.vx * vec1.vx) + (vec0.vy * vec1.vy) + (vec0.vz * vec1.vz), Q12_SHIFT);
+    OuterProduct12(&vec2, &vec0, &vec3);
+    svec1.vx = FP_FROM((vec1.vx * vec3.vx) + (vec1.vy * vec3.vy) + (vec1.vz * vec3.vz), Q12_SHIFT);
+
+    *angle1 = ratan2(svec1.vx, svec0.vx) & 0xFFF;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_8004137C);
 

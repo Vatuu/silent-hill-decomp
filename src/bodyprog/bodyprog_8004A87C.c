@@ -77,7 +77,7 @@ void func_8004B6D4(s16 arg0, s16 arg1) // 0x8004B6D4
 
 void func_8004B74C(s16 arg0) // 0x8004B74C
 {
-    if ((u32)arg0 >= 5)
+    if (arg0 < 0 || arg0 >= 5)
     {
         D_800C391E = 0;
         return;
