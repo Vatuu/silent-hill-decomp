@@ -1737,7 +1737,7 @@ void Gfx_Inventory_ScrollArrowsDraw(s32* invSelectionId) // 0x8004EC7C
     }
 
     // Set texture.
-    Gfx_Inventory_Primitive2dTextureSet(0, 0, 7, 1);
+    Gfx_Primitive2dTextureSet(0, 0, 7, 1);
 }
 
 s32 func_8004EE94(u8 arg0, u8 arg1) // 0x8004EE94
@@ -2105,7 +2105,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/item_screens", Gfx_Inventory_HealthStatus
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/item_screens", Gfx_Inventory_ItemDescriptionDraw); // 0x8005192C
 
-void Gfx_Inventory_Primitive2dTextureSet(s32 x, s32 y, s32 otIdx, s32 abr) // 0x80052088
+void Gfx_Primitive2dTextureSet(s32 x, s32 y, s32 otIdx, s32 abr) // 0x80052088
 {
     GsOT*     ot0;
     GsOT*     ot1;

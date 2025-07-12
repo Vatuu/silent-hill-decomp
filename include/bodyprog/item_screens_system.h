@@ -188,7 +188,7 @@ void func_8004FB0C();
  */
 void Gfx_Results_ItemsDisplay(); //  0x800521A8
 
-void Gfx_Inventory_Primitive2dTextureSet(s32 x, s32 y, s32 otIdx, s32 abr); // 0x80052088
+void Gfx_Primitive2dTextureSet(s32 x, s32 y, s32 otIdx, s32 abr); // 0x80052088
 
 /** Used to toggle visibility of object while the inventory scrolling rotates.
  *
