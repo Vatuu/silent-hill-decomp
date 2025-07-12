@@ -5271,16 +5271,11 @@ void func_8003CBA4(s_800BCE18_2BEC* arg0) // 0x8003CBA4
     coord.flg   = 0;
     coord.super = 0;
 
-    // Possibly sign-extending fixed-point 18.14 value back to 32-bit signed int?
-    coord.coord.t[0] = (arg0->field_4 << 14) >> 14;
+    coord.coord.t[0] = arg0->gsCoordinate0_4;
+    coord.coord.t[1] = arg0->gsCoordinate1_4;
+    coord.coord.t[2] = arg0->gsCoordinate2_8;
 
-    // Extract high bits only (>> 18), probably gets coarse integer offset.
-    coord.coord.t[1] = arg0->field_4 >> 18;
-
-    // Same sign-extension logic for Z coordinate
-    coord.coord.t[2] = (arg0->field_8 << 14) >> 14;
-
-    // Packed vx/vy/vz bitfield (TODO: was this used anywhere else?)
+    // Unpack vx/vy/vz bitfield (TODO: was this used anywhere else?)
     vec.vx = arg0->vx_C << 2;
     vec.vy = arg0->vy_C;
     vec.vz = arg0->vz_C << 2;
