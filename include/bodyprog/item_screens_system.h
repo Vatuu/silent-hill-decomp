@@ -112,6 +112,18 @@ void func_8004BB4C(VbRVIEW* view, GsCOORDINATE2* coord, SVECTOR3* vec, s32 arg3)
 /** Aparently adjusts the position of items in the inventory. */
 void func_8004BFE8();
 
+/** Used for item rotation and item scrolling in the inventory. */
+void Gfx_Results_ItemsRotate(SVECTOR* arg0, GsCOORDINATE2* arg1); // 0x8004BCDC
+
+/** Used for fixing bugs related to aiming animations when exiting the inventory screen.
+ * This function fixes a bug that makes impossible to attack and generate buggy
+ * animations. If the player enters the inventory in between the transition of
+ * the aim animation and the idle animation enter to the, then changes the weapon
+ * to another type of weapon (example: from short fire weapon to melee) causes
+ * a bug where Harry keep the aiming animation until he does an interaction or run.
+ */
+void Inventory_ExitAnimEquippedItemUpdate(u8*); // 0x8004C088
+
 // TODO: The name `Inventory_HyperBlasterCanAdd` may be suitable, though inventory
 // funcs seem to be bunched at a different address.
 /** @brief Used to check if the Hyper Blaster can be added to the inventory.
@@ -139,19 +151,19 @@ void func_8004C564(u8 arg0, s32 arg1);
 void func_8004C8DC();
 
 // Also updates both inventory screen and result screen?
-void GameState_ItemScreens_Update();
+void GameState_ItemScreens_Update(); // 0x8004C9B0
 
-void Gfx_Results_Save();
+void Gfx_Results_Save(); // 0x8004D1A0
 
 /** Function mainly responsible for handling the inventory screen. */
-void Inventory_Logic();
+void Inventory_Logic(); // 0x8004D518
 
 /** Something related to items commands.
  * This is used when the user does some action in in the commands space.
  */
 void func_8004E6D4(s32 arg0);
 
-void Gfx_Inventory_ScrollArrowsDraw(s32* invSelectionId);
+void Gfx_Inventory_ScrollArrowsDraw(s32* invSelectionId); // 0x8004EC7C
 
 // Unused?
 s32 func_8004EE94(u8 arg0, u8 arg1);
@@ -162,21 +174,21 @@ void func_8004F10C(s32* arg0);
 /** Draws the two messages that indicate when
  * the user can't open the map in the inventory.
  */
-void Gfx_Inventory_UnavailableMapText(s32 strIdx);
+void Gfx_Inventory_UnavailableMapText(s32 strIdx); // 0x8004F57C
 
-void Inventory_DirectionalInputSet();
+void Inventory_DirectionalInputSet(); // 0x8004F5DC
 
-void func_8004F764(s32 arg0);
+void Gfx_ItemScreens_RenderInit(s32 arg0);
 
 /** Draws some rectangle. */
 void func_8004FB0C();
 
-void Gfx_Primitive2dTextureSet(s32 x, s32 y, s32 otIdx, s32 abr);
-
 /** Results screen related.
- * Used in: `func_8004F764`
+ * Used in: `Gfx_ItemScreens_RenderInit`
  */
-void func_800521A8();
+void Gfx_Results_ItemsDisplay(); //  0x800521A8
+
+void Gfx_Inventory_Primitive2dTextureSet(s32 x, s32 y, s32 otIdx, s32 abr); // 0x80052088
 
 /** Used to toggle visibility of object while the inventory scrolling rotates.
  *
@@ -189,7 +201,24 @@ void func_800521A8();
  */
 void func_800539A4(s32 arg0, s32 arg1);
 
-void func_80054200();
+void func_800540A4(s8);
+
+void Gfx_Items_RenderItems(); // 0x80054200
+
+void Gfx_Items_RenderInit(); // 0x80054558
+
+/** Used for fixing bugs related to aiming animations when exiting the inventory screen.
+ *
+ * Used in: `GameState_ItemScreens_Update`
+ *
+ * This function calls two other functions that serves to fix bugs also related
+ * to the animations when exiting the inventory screen and also have specific
+ * code for a specific bug which causes the player to softlock if before entering
+ * the inventory the player was aiming a weapon, then unequip that weapon and
+ * leaves the inventory causing Harry to being unable to move or causing
+ * buggy animations.
+ */
+void Inventory_ExitAnimFixes(); // 0x80054634
 
 void Gfx_Items_SetAmbientLighting(); // 0x80054928
 

@@ -53,7 +53,7 @@ void func_800904F4() // 0x800904F4
     }
 }
 
-void func_80090664() // 0x80090664
+void Results_DisplayInfo() // 0x80090664
 {
     s32      temp_s1;
     s32      i;

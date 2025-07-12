@@ -2015,9 +2015,6 @@ void func_8004B76C(char* str, s32 useFixedWidth);
 
 void func_8004BCBC(s32 arg0);
 
-/** Used for item rotation and item scrolling in the inventory. */
-void func_8004BCDC(SVECTOR* arg0, GsCOORDINATE2* arg1);
-
 void func_8004C040();
 
 /** Returns `true` if player has usable ammo in inventory (i.e. ammo + gun needed for it, or gun with ammo loaded). */
@@ -2029,21 +2026,6 @@ s32 func_8004C328();
 void GameFs_UniqueItemModelLoad(u8 itemId);
 
 void GameFs_MapItemsTextureLoad(s32 mapId);
-
-void func_800540A4(s8);
-
-/** Used when exiting the inventory screen.
- * Related to the item selected in the inventory when exiting the inventory.
- * Could also be related to animations? Breaking it, then in between the
- * transition of the aim animation and the idle animation enter to the
- * inventory and then change the weapon to another type of weapon
- * (example: from short fire weapon to melee) causes a bug where Harry keep
- * the aiming animation until he does an interaction or run.
- *
- * Called in:
- * `GameState_ItemScreens_Update`
- */
-void func_80054634();
 
 void func_800546A8(s32 arg0);
 

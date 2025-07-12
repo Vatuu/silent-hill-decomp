@@ -72,8 +72,8 @@ segments:
       - [0x179C, rodata]
       #- [0x1704, .rodata, item_screens] # Data: `Gfx_Inventory_ScrollArrowsDraw`
       #- [0x174C, rodata]
-      - [0x34C0, .rodata, bodyprog_80053B08] # Jumptables, `func_80054200` rodata
-      - [0x39C4, rodata]
+      #- [0x34C0, .rodata, item_screens]
+      #- [0x39C4, rodata]
       - [0x5CF0, .rodata, view/vc_main] # Jumptable: `vcRetFarWatchRate`
       - [0x5D08, .rodata, view/vc_main] # Jumptable: `vcSetFlagsByCamMvType`
       - [0x5D20, .rodata, view/vc_main] # Jumptable: `vcMixSelfViewEffectToWatchTgtPos`
@@ -116,7 +116,7 @@ segments:
       - [0x243c8,   c, view/vw_calc] # Contains part of SH2's `vb_main`?
       - [0x25d1c,   c, bodyprog_8004A87C]
       - [0x26FEC,   c, item_screens]
-      - [0x2EFA8,   c, bodyprog_80053B08]
+      - [0x304C8,   c, bodyprog_80055028]
       - [0x5bde0,   c, view/vc_main]
       - [0x61218,   c, bodyprog_80085D78]
       - [0x6A3C0,   c, demo]

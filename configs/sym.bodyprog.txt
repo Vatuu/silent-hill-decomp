@@ -168,23 +168,30 @@ Gfx_StringDraw = 0x8004A8E8; // type:func
 
 Gfx_StringDrawInt = 0x8004B9F8; // type:func
 
-Player_AnimUpdate                = 0x8004C088; // type:func
-GameState_ItemScreens_Update     = 0x8004C9B0; // type:func
-Gfx_Results_Save                 = 0x8004D1A0; // type:func
-Inventory_Logic                  = 0x8004D518; // type:func
-Gfx_Inventory_CmdOptionsDraw     = 0x8004E864; // type:func
-Gfx_Inventory_ScrollArrowsDraw   = 0x8004EC7C; // type:func
-Gfx_Inventory_UnavailableMapText = 0x8004F57C; // type:func
-Inventory_DirectionalInputSet    = 0x8004F5DC; // type:func
-Gfx_Inventory_HealthStatusDraw   = 0x80051020; // type:func
-Gfx_Inventory_ItemDescription    = 0x8005192C; // type:func
-Gfx_Primitive2dTextureSet        = 0x80052088; // type:func
-Inventory_PlayerItemScroll       = 0x800523D8; // type:func
-
-GameFs_UniqueItemModelLoad = 0x80053B08; // type:func
-GameFs_Tim00TIMLoad = 0x80053DA0; // type:func
-GameFs_MapItemsModelLoad = 0x80053DFC; // type:func
-GameFs_MapItemsTextureLoad = 0x80054024; // type:func
+Gfx_Results_ItemsRotate              = 0x8004BCDC; // type:func
+Inventory_ExitAnimEquippedItemUpdate = 0x8004C088; // type:func
+GameState_ItemScreens_Update         = 0x8004C9B0; // type:func
+Gfx_Results_Save                     = 0x8004D1A0; // type:func
+Inventory_Logic                      = 0x8004D518; // type:func
+Gfx_Inventory_CmdOptionsDraw         = 0x8004E864; // type:func
+Gfx_Inventory_ScrollArrowsDraw       = 0x8004EC7C; // type:func
+Gfx_ItemScreens_RenderInit           = 0x8004F764; // type:func
+Gfx_Inventory_UnavailableMapText     = 0x8004F57C; // type:func
+Inventory_DirectionalInputSet        = 0x8004F5DC; // type:func
+Gfx_Inventory_2dBackgroundDraw       = 0x8004FBCC; // type:func
+Gfx_Inventory_HealthStatusDraw       = 0x80051020; // type:func
+Gfx_Inventory_ItemDescriptionDraw    = 0x8005192C; // type:func
+Gfx_Inventory_Primitive2dTextureSet  = 0x80052088; // type:func
+Gfx_Results_ItemsDisplay             = 0x800521A8; // type:func
+Gfx_Results_ItemsPosition            = 0x8005227C; // type:func
+Inventory_PlayerItemScroll           = 0x800523D8; // type:func
+GameFs_UniqueItemModelLoad           = 0x80053B08; // type:func
+GameFs_Tim00TIMLoad                  = 0x80053DA0; // type:func
+GameFs_MapItemsModelLoad             = 0x80053DFC; // type:func
+GameFs_MapItemsTextureLoad           = 0x80054024; // type:func
+Gfx_Items_RenderItems                = 0x80054200; // type:func
+Gfx_Items_RenderInit                 = 0x80054558; // type:func
+Inventory_ExitAnimFixes              = 0x80054634; // type:func
 
 GameState_MapScreen_Update = 0x80066EB0; // type:func
 
@@ -302,7 +309,7 @@ Demo_ControllerDataUpdate = 0x8008F7CC; // type:func
 Demo_PresentIntervalUpdate = 0x8008F87C; // type:func
 Demo_GameRandSeedSet = 0x8008F8A8; // type:func
 
-
+Results_DisplayInfo = 0x80090664; // type:func
 
 g_ObjectTable0 = 0x800A8F74; // type:s8
 g_ObjectTable1 = 0x800A8FC4; // type:s8

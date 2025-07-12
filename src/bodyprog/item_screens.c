@@ -39,7 +39,7 @@ void func_8004BB4C(VbRVIEW* view, GsCOORDINATE2* coord, SVECTOR3* vec, s32 arg3)
 
     coord->param = &D_800C3928;
 
-    func_8004BCDC(vec, coord);
+    Gfx_Results_ItemsRotate(vec, coord);
     vbSetRefView(view);
 }
 
@@ -52,11 +52,11 @@ void func_8004BBF4(VbRVIEW* arg0, GsCOORDINATE2* arg1, SVECTOR* arg2) // 0x8004B
     vx  = arg2->vx;
     arg2->vx = 0;
 
-    func_8004BCDC(arg2, arg1);
+    Gfx_Results_ItemsRotate(arg2, arg1);
 
     arg2->vx = vx;
 
-    func_8004BCDC(arg2, arg1);
+    Gfx_Results_ItemsRotate(arg2, arg1);
 
     sVec.vx = 0;
     sVec.vy = 0;
@@ -71,7 +71,7 @@ void func_8004BCBC(s32 buffer) // 0x8004BCBC
     GsMapModelingData(buffer + 4);
 }
 
-void func_8004BCDC(SVECTOR* arg0, GsCOORDINATE2* arg1) // 0x8004BCDC
+void Gfx_Results_ItemsRotate(SVECTOR* arg0, GsCOORDINATE2* arg1) // 0x8004BCDC
 {
     MATRIX mat;
 
@@ -88,7 +88,7 @@ void func_8004BCDC(SVECTOR* arg0, GsCOORDINATE2* arg1) // 0x8004BCDC
     arg1->flg = 0;
 }
 
-/** Used for displaying model items in the inventory. */
+/** Used for displaying model items. */
 INCLUDE_ASM("asm/bodyprog/nonmatchings/item_screens", func_8004BD74); // 0x8004BD74
 
 void func_8004BFE8() // 0x8004BFE8
@@ -107,7 +107,7 @@ void func_8004C040() // 0x8004C040
     SetGeomOffset(D_800C3958, D_800C395C);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/item_screens", Player_AnimUpdate); // 0x8004C088
+INCLUDE_ASM("asm/bodyprog/nonmatchings/item_screens", Inventory_ExitAnimEquippedItemUpdate); // 0x8004C088
 
 s32 func_8004C328() // 0x8004C328
 {
@@ -505,7 +505,7 @@ void GameState_ItemScreens_Update() // 0x8004C9B0
             g_GameWork.background2dColor_G_58D     = 0;
             g_GameWork.background2dColor_B_58E     = 0;
 
-            func_80054558();
+            Gfx_Items_RenderInit();
             func_8004EF48();
 
             g_GameWork.gameStateStep_598[1] = 1;
@@ -607,7 +607,7 @@ void GameState_ItemScreens_Update() // 0x8004C9B0
             if ((g_Gfx_ScreenFade & 0x7) == 5)
             {
                 Gfx_ScreenRefresh(320, 0);
-                func_80054634();
+                Inventory_ExitAnimFixes();
 
                 g_SavegamePtr->inventoryItemSpaces_AB = func_8004F190(g_SavegamePtr);
 
@@ -633,7 +633,7 @@ void GameState_ItemScreens_Update() // 0x8004C9B0
             g_GameWork.background2dColor_B_58E = 0;
             g_Inventory_SelectionId            = InventorySelectionId_Item;
 
-            func_80054558();
+            Gfx_Items_RenderInit();
             func_8008F94C();
 
             D_800C3994 = g_SavegamePtr->gameDifficulty_260;
@@ -718,7 +718,7 @@ void GameState_ItemScreens_Update() // 0x8004C9B0
             break;
     }
 
-    func_8004F764(&g_Inventory_SelectionId);
+    Gfx_ItemScreens_RenderInit(&g_Inventory_SelectionId);
 
     if (g_GameWork.gameStateStep_598[1] < 21)
     {
@@ -1737,7 +1737,7 @@ void Gfx_Inventory_ScrollArrowsDraw(s32* invSelectionId) // 0x8004EC7C
     }
 
     // Set texture.
-    Gfx_Primitive2dTextureSet(0, 0, 7, 1);
+    Gfx_Inventory_Primitive2dTextureSet(0, 0, 7, 1);
 }
 
 s32 func_8004EE94(u8 arg0, u8 arg1) // 0x8004EE94
@@ -1862,7 +1862,6 @@ void Inventory_DirectionalInputSet() // 0x8004F5DC
     }
 }
 
-// TODO: `D_800262FC` is used by functions in different files (`func_8004F764` and `func_80054AD8` from `bodyprog_80053B08`).
 #if 0
 static const DVECTOR D_800262FC[] =
 {
@@ -1981,12 +1980,12 @@ static const DVECTOR D_800262FC[] =
 };
 #endif
 
-/** Some sort of handler for the inventory and result screen. */
 // TODO: RODATA migration.
 #ifdef NON_MATCHING
 extern DVECTOR D_800262FC[];
 
-void func_8004F764(s32 arg0) // 0x8004F764
+/** Some sort of handler for the inventory and result screen. */
+void Gfx_ItemScreens_RenderInit(s32 arg0) // 0x8004F764
 {
     GsDOBJ2* ptr;
     s32      i;
@@ -2017,7 +2016,7 @@ void func_8004F764(s32 arg0) // 0x8004F764
 
     Gfx_StringSetColor(ColorId_White);
 
-    if (g_GameWork.gameStateStep_598[1] < 21)
+    if (g_GameWork.gameStateStep_598[1] < 21) // If screen is inventory
     {
         for (i = 0; i < 8; i++)
         {
@@ -2025,7 +2024,7 @@ void func_8004F764(s32 arg0) // 0x8004F764
             Gfx_StringDraw(strs[i], 10);
         }
 
-        func_800523D8(arg0);
+        Inventory_PlayerItemScroll(arg0);
 
         for (i = 0, ptr = &D_800C3D78; i < 7; i++, ptr++)
         {
@@ -2036,7 +2035,7 @@ void func_8004F764(s32 arg0) // 0x8004F764
                     D_800C3BE8[i].field_10.vx = D_800262FC[g_SavegamePtr->items_0[D_800C3E18[i]].id_0 - 32].vx;
                     D_800C3BE8[i].field_10.vz = D_800262FC[g_SavegamePtr->items_0[D_800C3E18[i]].id_0 - 32].vy;
 
-                    func_8004BCDC(&D_800C3E48[i].param->rotate, &D_800C3E48[i]);
+                    Gfx_Results_ItemsRotate(&D_800C3E48[i].param->rotate, &D_800C3E48[i]);
                     func_800548D8(i);
                     GsSetFlatLight(0, &D_800C39A8[i][0]);
                     GsSetFlatLight(1, &D_800C39A8[i][1]);
@@ -2050,27 +2049,27 @@ void func_8004F764(s32 arg0) // 0x8004F764
             D_800C3BE8[7].field_10.vx = D_800262FC[g_SavegamePtr->items_0[g_Inventory_EquippedItemIdx].id_0 - 32].vx;
             D_800C3BE8[7].field_10.vz = D_800262FC[g_SavegamePtr->items_0[g_Inventory_EquippedItemIdx].id_0 - 32].vy;
 
-            func_8004BCDC(&D_800C3E48[7].param->rotate, &D_800C3E48[7]);
+            Gfx_Results_ItemsRotate(&D_800C3E48[7].param->rotate, &D_800C3E48[7]);
             func_800548D8(7);
             GsSetFlatLight(0, &D_800C3A88[0]);
             GsSetFlatLight(1, &D_800C3A88[1]);
             func_8004BD74(7, ptr, 0);
         }
 
-        Gfx_Inventory_ItemDescription(arg0);
-        func_8004FBCC(arg0);
+        Gfx_Inventory_ItemDescriptionDraw(arg0);
+        Gfx_Inventory_2dBackgroundDraw(arg0);
     }
     else
     {
-        func_8005227C(g_SavegamePtr->clearGameCount_24A);
-        func_800521A8(g_SavegamePtr->clearGameCount_24A);
-        func_80090664(arg0);
+        Gfx_Results_ItemsPosition(g_SavegamePtr->clearGameCount_24A);
+        Gfx_Results_ItemsDisplay(g_SavegamePtr->clearGameCount_24A);
+        Results_DisplayInfo(arg0);
     }
 
     func_8004FB0C();
 }
 #else
-INCLUDE_ASM("asm/bodyprog/nonmatchings/item_screens", func_8004F764); // 0x8004F764
+INCLUDE_ASM("asm/bodyprog/nonmatchings/item_screens", Gfx_ItemScreens_RenderInit); // 0x8004F764
 #endif
 
 void func_8004FB0C() // 0x8004FB0C
@@ -2100,13 +2099,13 @@ void func_8004FB0C() // 0x8004FB0C
  * has selected, and triggers the draw of the health
  * status.
  */
-INCLUDE_ASM("asm/bodyprog/nonmatchings/item_screens", func_8004FBCC); // 0x8004FBCC
+INCLUDE_ASM("asm/bodyprog/nonmatchings/item_screens", Gfx_Inventory_2dBackgroundDraw); // 0x8004FBCC
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/item_screens", Gfx_Inventory_HealthStatusDraw); // 0x80051020
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/item_screens", Gfx_Inventory_ItemDescription); // 0x8005192C
+INCLUDE_ASM("asm/bodyprog/nonmatchings/item_screens", Gfx_Inventory_ItemDescriptionDraw); // 0x8005192C
 
-void Gfx_Primitive2dTextureSet(s32 x, s32 y, s32 otIdx, s32 abr) // 0x80052088
+void Gfx_Inventory_Primitive2dTextureSet(s32 x, s32 y, s32 otIdx, s32 abr) // 0x80052088
 {
     GsOT*     ot0;
     GsOT*     ot1;
@@ -2130,7 +2129,7 @@ void Gfx_Primitive2dTextureSet(s32 x, s32 y, s32 otIdx, s32 abr) // 0x80052088
     GsOUT_PACKET_P = (PACKET*)tPage + sizeof(DR_TPAGE);
 }
 
-void func_800521A8() // 0x800521A8
+void Gfx_Results_ItemsDisplay() // 0x800521A8
 {
     GsDOBJ2* ptr;
     s32      i;
@@ -2139,7 +2138,7 @@ void func_800521A8() // 0x800521A8
     {
         if ((D_800C3E40 >> i) & (1 << 0))
         {
-            func_8004BCDC(&D_800C3E48[i].param->rotate, &D_800C3E48[i]);
+            Gfx_Results_ItemsRotate(&D_800C3E48[i].param->rotate, &D_800C3E48[i]);
             func_800548D8(i);
             GsSetFlatLight(0, &D_800C39A8[i][0]);
             GsSetFlatLight(1, &D_800C39A8[i][1]);
@@ -2148,12 +2147,9 @@ void func_800521A8() // 0x800521A8
     }
 }
 
-/** Results screen related.
- * Used in: `func_8004F764`
- */
 // TODO: RODATA migration.
 #ifdef NON_MATCHING
-void func_8005227C() // 0x8005227C
+void Gfx_Results_ItemsPosition() // 0x8005227C
 {
     s32 i;
 
@@ -2189,7 +2185,7 @@ void func_8005227C() // 0x8005227C
     }
 }
 #else
-INCLUDE_ASM("asm/bodyprog/nonmatchings/item_screens", func_8005227C); // 0x8005227C
+INCLUDE_ASM("asm/bodyprog/nonmatchings/item_screens", Gfx_Results_ItemsPosition); // 0x8005227C
 #endif
 
 /** Name could be inaccurate.
@@ -2250,3 +2246,805 @@ void func_800539A4(s32 arg0, s32 arg1) // 0x800539A4
         D_800C3E18[i] = sp10[i];
     }
 }
+
+/** @note For better comprehension related to file handling
+ * of inventory items.
+ *
+ * - `GameFs_UniqueItemModelLoad` loads model of items individually.
+ * - `GameFs_MapItemsModelLoad` and `GameFs_MapItemsTextureLoad` load packs of textures and
+ *   models of items, though while `GameFs_UniqueItemModelLoad` seems to load
+ *   them individually based on what is being passed as argument,
+ * - `GameFs_MapItemsModelLoad` and `GameFs_MapItemsTextureLoad` load the packs based on the 
+ *   map being loaded.
+ */
+
+// TODO: RODATA migration.
+#ifdef NON_MATCHING
+void GameFs_UniqueItemModelLoad(u8 itemId) // 0x80053B08
+{
+    switch (itemId)
+    {
+        case InventoryItemId_HealthDrink:
+            Fs_QueueStartRead(FILE_ITEM_UNQ21_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_Ampoule:
+            Fs_QueueStartRead(FILE_ITEM_UNQ22_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_HouseKey:
+            Fs_QueueStartRead(FILE_ITEM_UNQ41_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_KeyOfLion:
+            Fs_QueueStartRead(FILE_ITEM_UNQ42_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_KeyOfWoodman:
+            Fs_QueueStartRead(FILE_ITEM_UNQ43_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_KeyOfScarecrow:
+            Fs_QueueStartRead(FILE_ITEM_UNQ44_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_LibraryReserveKey:
+            Fs_QueueStartRead(FILE_ITEM_UNQ45_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_ClassroomKey:
+            Fs_QueueStartRead(FILE_ITEM_UNQ46_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_KGordonKey:
+            Fs_QueueStartRead(FILE_ITEM_UNQ47_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_DrawbridgeKey:
+            Fs_QueueStartRead(FILE_ITEM_UNQ48_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_BasementKey:
+            Fs_QueueStartRead(FILE_ITEM_UNQ49_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_BasementStoreroomKey:
+            Fs_QueueStartRead(FILE_ITEM_UNQ4A_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_ExaminationRoomKey:
+            Fs_QueueStartRead(FILE_ITEM_UNQ4B_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_AntiqueShopKey:
+            Fs_QueueStartRead(FILE_ITEM_UNQ4C_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_SewerKey:
+        case InventoryItemId_SewerExitKey:
+            Fs_QueueStartRead(FILE_ITEM_UNQ4D_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_KeyOfOphiel:
+            Fs_QueueStartRead(FILE_ITEM_UNQ4E_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_KeyOfHagith:
+            Fs_QueueStartRead(FILE_ITEM_UNQ4F_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_KeyOfPhaleg:
+            Fs_QueueStartRead(FILE_ITEM_UNQ50_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_KeyOfBethor:
+            Fs_QueueStartRead(FILE_ITEM_UNQ51_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_KeyOfAratron:
+            Fs_QueueStartRead(FILE_ITEM_UNQ52_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_NoteToSchool:
+            Fs_QueueStartRead(FILE_ITEM_UNQ53_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_NoteDoghouse:
+            Fs_QueueStartRead(FILE_ITEM_UNQ54_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_PictureCard:
+            Fs_QueueStartRead(FILE_ITEM_UNQ55_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_ChannelingStone:
+            Fs_QueueStartRead(FILE_ITEM_UNQ56_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_Chemical:
+            Fs_QueueStartRead(FILE_ITEM_UNQ60_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_GoldMedallion:
+            Fs_QueueStartRead(FILE_ITEM_UNQ61_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_SilverMedallion:
+            Fs_QueueStartRead(FILE_ITEM_UNQ62_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_RubberBall:
+            Fs_QueueStartRead(FILE_ITEM_UNQ63_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_Flauros:
+            Fs_QueueStartRead(FILE_ITEM_UNQ64_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_PlasticBottle:
+            Fs_QueueStartRead(FILE_ITEM_UNQ65_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_UnknownLiquid:
+            Fs_QueueStartRead(FILE_ITEM_UNQ66_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_PlateOfHatter:
+            Fs_QueueStartRead(FILE_ITEM_UNQ67_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_PlateOfCat:
+            Fs_QueueStartRead(FILE_ITEM_UNQ68_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_PlateOfQueen:
+            Fs_QueueStartRead(FILE_ITEM_UNQ69_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_PlateOfTurtle:
+            Fs_QueueStartRead(FILE_ITEM_UNQ6A_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_BloodPack:
+            Fs_QueueStartRead(FILE_ITEM_UNQ6B_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_DisinfectingAlcohol:
+            Fs_QueueStartRead(FILE_ITEM_UNQ6C_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_Lighter:
+            Fs_QueueStartRead(FILE_ITEM_UNQ6D_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_VideoTape:
+            Fs_QueueStartRead(FILE_ITEM_UNQ6E_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_KaufmannKey:
+            Fs_QueueStartRead(FILE_ITEM_UNQ70_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_Receipt:
+            Fs_QueueStartRead(FILE_ITEM_UNQ71_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_SafeKey:
+            Fs_QueueStartRead(FILE_ITEM_UNQ72_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_Magnet:
+            Fs_QueueStartRead(FILE_ITEM_UNQ73_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_MotorcycleKey:
+            Fs_QueueStartRead(FILE_ITEM_UNQ74_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_BirdCageKey:
+            Fs_QueueStartRead(FILE_ITEM_UNQ75_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_Pliers:
+            Fs_QueueStartRead(FILE_ITEM_UNQ76_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_Screwdriver:
+            Fs_QueueStartRead(FILE_ITEM_UNQ77_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_Camera:
+            Fs_QueueStartRead(FILE_ITEM_UNQ78_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_RingOfContract:
+            Fs_QueueStartRead(FILE_ITEM_UNQ79_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_StoneOfTime:
+            Fs_QueueStartRead(FILE_ITEM_UNQ7A_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_AmuletOfSolomon:
+            Fs_QueueStartRead(FILE_ITEM_UNQ7B_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_CrestOfMercury:
+            Fs_QueueStartRead(FILE_ITEM_UNQ7C_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_Ankh:
+            Fs_QueueStartRead(FILE_ITEM_UNQ7D_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_DaggerOfMelchior:
+            Fs_QueueStartRead(FILE_ITEM_UNQ7E_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_DiskOfOuroboros:
+            Fs_QueueStartRead(FILE_ITEM_UNQ7F_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_KitchenKnife:
+            Fs_QueueStartRead(FILE_ITEM_UNQ80_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_SteelPipe:
+            Fs_QueueStartRead(FILE_ITEM_UNQ81_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_Hammer:
+            Fs_QueueStartRead(FILE_ITEM_UNQ82_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_Chainsaw:
+            Fs_QueueStartRead(FILE_ITEM_UNQ83_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_Axe:
+            Fs_QueueStartRead(FILE_ITEM_UNQ84_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_RockDrill:
+            Fs_QueueStartRead(FILE_ITEM_UNQ85_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_Katana:
+            Fs_QueueStartRead(FILE_ITEM_UNQ86_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_Handgun:
+            Fs_QueueStartRead(FILE_ITEM_UNQA0_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_HuntingRifle:
+            Fs_QueueStartRead(FILE_ITEM_UNQA1_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_Shotgun:
+            Fs_QueueStartRead(FILE_ITEM_UNQA2_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_HyperBlaster:
+            Fs_QueueStartRead(FILE_ITEM_UNQA3_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_HandgunBullets:
+            Fs_QueueStartRead(FILE_ITEM_UNQC0_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_RifleShells:
+            Fs_QueueStartRead(FILE_ITEM_UNQC1_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_ShotgunShells:
+            Fs_QueueStartRead(FILE_ITEM_UNQC2_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_Flashlight:
+            Fs_QueueStartRead(FILE_ITEM_UNQE0_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_PocketRadio:
+            Fs_QueueStartRead(FILE_ITEM_UNQE1_TMD, FS_BUFFER_5);
+            break;
+
+        case InventoryItemId_GasolineTank:
+            Fs_QueueStartRead(FILE_ITEM_UNQE2_TMD, FS_BUFFER_5);
+            break;
+
+        default:
+            Fs_QueueStartRead(FILE_ITEM_UNQ20_TMD, FS_BUFFER_5);
+            break;
+    }
+}
+#else
+INCLUDE_ASM("asm/bodyprog/nonmatchings/item_screens", GameFs_UniqueItemModelLoad); // 0x80053B08
+#endif
+
+void GameFs_Tim00TIMLoad() // 0x80053dA0
+{
+    if (g_SysWork.flags_2352 & (1 << 0))
+    {
+        return;
+    }
+
+    Fs_QueueStartReadTim(FILE_ITEM_TIM00_TIM, FS_BUFFER_1, &D_800A906C);
+    g_SysWork.flags_2352 |= 1 << 0;
+}
+
+// TODO: RODATA migration.
+#ifdef NON_MATCHING
+void GameFs_MapItemsModelLoad(u32 mapId) // 0x80053DFC
+{
+    if (!(g_SysWork.flags_2352 & (1 << 7)))
+    {
+        Fs_QueueStartReadTim(FILE_ITEM_TIM07_TIM, FS_BUFFER_1, &D_800A9074);
+        g_SysWork.flags_2352 |= 1 << 7;
+    }
+
+    switch (mapId)
+    {
+        case MapOverlayId_MAP1_S00:
+        case MapOverlayId_MAP1_S01:
+        case MapOverlayId_MAP1_S02:
+        case MapOverlayId_MAP1_S03:
+        case MapOverlayId_MAP1_S05:
+            if (!(g_SysWork.flags_2352 & (1 << 1)))
+            {
+                Fs_QueueStartReadTim(FILE_ITEM_TIM01_TIM, FS_BUFFER_1, &D_800A9064);
+                g_SysWork.flags_2352 = (g_SysWork.flags_2352 & 0x81) | (1 << 1);
+            }
+            break;
+
+        case MapOverlayId_MAP0_S01:
+        case MapOverlayId_MAP0_S02:
+        case MapOverlayId_MAP1_S06:
+        case MapOverlayId_MAP2_S00:
+        case MapOverlayId_MAP2_S01:
+        case MapOverlayId_MAP2_S02:
+        case MapOverlayId_MAP2_S04:
+        case MapOverlayId_MAP4_S00:
+        case MapOverlayId_MAP4_S01:
+        case MapOverlayId_MAP4_S02:
+        case MapOverlayId_MAP4_S03:
+        case MapOverlayId_MAP4_S05:
+            if (!(g_SysWork.flags_2352 & (1 << 2)))
+            {
+                Fs_QueueStartReadTim(FILE_ITEM_TIM02_TIM, FS_BUFFER_1, &D_800A9064);
+                g_SysWork.flags_2352 = (g_SysWork.flags_2352 & 0x81) | (1 << 2);
+            }
+            break;
+
+        case MapOverlayId_MAP3_S00:
+        case MapOverlayId_MAP3_S01:
+        case MapOverlayId_MAP3_S02:
+        case MapOverlayId_MAP3_S03:
+        case MapOverlayId_MAP3_S04:
+        case MapOverlayId_MAP3_S05:
+        case MapOverlayId_MAP3_S06:
+        case MapOverlayId_MAP4_S04:
+            if (!(g_SysWork.flags_2352 & (1 << 3)))
+            {
+                Fs_QueueStartReadTim(FILE_ITEM_TIM03_TIM, FS_BUFFER_1, &D_800A9064);
+                g_SysWork.flags_2352 = (g_SysWork.flags_2352 & 0x81) | (1 << 3);
+            }
+            break;
+
+        case MapOverlayId_MAP5_S00:
+        case MapOverlayId_MAP5_S01:
+        case MapOverlayId_MAP5_S02:
+        case MapOverlayId_MAP5_S03:
+        case MapOverlayId_MAP6_S00:
+        case MapOverlayId_MAP6_S01:
+        case MapOverlayId_MAP6_S02:
+        case MapOverlayId_MAP6_S03:
+        case MapOverlayId_MAP6_S04:
+            if (!(g_SysWork.flags_2352 & (1 << 4)))
+            {
+                Fs_QueueStartReadTim(FILE_ITEM_TIM04_TIM, FS_BUFFER_1, &D_800A9064);
+                g_SysWork.flags_2352 = (g_SysWork.flags_2352 & 0x81) | (1 << 4);
+            }
+            break;
+
+        case MapOverlayId_MAP7_S00:
+        case MapOverlayId_MAP7_S01:
+            if (!(g_SysWork.flags_2352 & (1 << 5)))
+            {
+                Fs_QueueStartReadTim(FILE_ITEM_TIM05_TIM, FS_BUFFER_1, &D_800A9064);
+                g_SysWork.flags_2352 = (g_SysWork.flags_2352 & 0x81) | (1 << 5);
+            }
+            break;
+
+        case MapOverlayId_MAP7_S02:
+        case MapOverlayId_MAP7_S03:
+            if (!(g_SysWork.flags_2352 & (1 << 6)))
+            {
+                Fs_QueueStartReadTim(FILE_ITEM_TIM06_TIM, FS_BUFFER_1, &D_800A9064);
+                g_SysWork.flags_2352 = (g_SysWork.flags_2352 & 0x81) | (1 << 6);
+            }
+            break;
+
+        case 0:
+            break;
+    }
+}
+#else
+INCLUDE_ASM("asm/bodyprog/nonmatchings/item_screens", GameFs_MapItemsModelLoad); // 0x80053DFC
+#endif
+
+// TODO: RODATA migration.
+#ifdef NON_MATCHING
+void GameFs_MapItemsTextureLoad(s32 mapId) // 0x80054024
+{
+    switch (mapId)
+    {
+        case MapOverlayId_MAP0_S00:
+            Fs_QueueStartRead(FILE_ITEM_IT_000_TMD, FS_BUFFER_8);
+            break;
+
+        case MapOverlayId_MAP0_S01:
+        case MapOverlayId_MAP0_S02:
+        case MapOverlayId_MAP1_S06:
+        case MapOverlayId_MAP2_S00:
+        case MapOverlayId_MAP2_S01:
+        case MapOverlayId_MAP2_S02:
+        case MapOverlayId_MAP2_S04:
+        case MapOverlayId_MAP4_S00:
+        case MapOverlayId_MAP4_S01:
+        case MapOverlayId_MAP4_S02:
+        case MapOverlayId_MAP4_S03:
+        case MapOverlayId_MAP4_S05:
+            Fs_QueueStartRead(FILE_ITEM_IT_001_TMD, FS_BUFFER_8);
+            break;
+
+        case MapOverlayId_MAP1_S00:
+        case MapOverlayId_MAP1_S01:
+        case MapOverlayId_MAP1_S02:
+        case MapOverlayId_MAP1_S03:
+        case MapOverlayId_MAP1_S05:
+            Fs_QueueStartRead(FILE_ITEM_IT_002_TMD, FS_BUFFER_8);
+            break;
+
+        case MapOverlayId_MAP3_S00:
+        case MapOverlayId_MAP3_S01:
+        case MapOverlayId_MAP3_S02:
+        case MapOverlayId_MAP3_S03:
+        case MapOverlayId_MAP3_S04:
+        case MapOverlayId_MAP3_S05:
+        case MapOverlayId_MAP3_S06:
+        case MapOverlayId_MAP4_S04:
+            Fs_QueueStartRead(FILE_ITEM_IT_003_TMD, FS_BUFFER_8);
+            break;
+
+        case MapOverlayId_MAP5_S00:
+        case MapOverlayId_MAP5_S01:
+        case MapOverlayId_MAP5_S02:
+        case MapOverlayId_MAP5_S03:
+        case MapOverlayId_MAP6_S00:
+        case MapOverlayId_MAP6_S01:
+        case MapOverlayId_MAP6_S02:
+        case MapOverlayId_MAP6_S03:
+        case MapOverlayId_MAP6_S04:
+            Fs_QueueStartRead(FILE_ITEM_IT_004_TMD, FS_BUFFER_8);
+            break;
+
+        case MapOverlayId_MAP7_S00:
+        case MapOverlayId_MAP7_S01:
+            Fs_QueueStartRead(FILE_ITEM_IT_005_TMD, FS_BUFFER_8);
+            break;
+
+        case MapOverlayId_MAP7_S02:
+        case MapOverlayId_MAP7_S03:
+            Fs_QueueStartRead(FILE_ITEM_IT_006_TMD, FS_BUFFER_8);
+            break;
+    }
+}
+#else
+INCLUDE_ASM("asm/bodyprog/nonmatchings/item_screens", GameFs_MapItemsTextureLoad); // 0x80054024
+#endif
+
+/** @brief Function related to file loading of inventory element.
+* This function loads Harry's potrait for the status image. */
+INCLUDE_ASM("asm/bodyprog/nonmatchings/item_screens", func_800540A4); // 0x800540A4
+
+// TODO: RODATA migration.
+#ifdef NON_MATCHING
+// Item rendering related.
+void Gfx_Items_RenderItems() // 0x80054200
+{
+    s32  temp_s5;
+    s32  i;
+    s32  itemIdx;
+    s32  specialItemIdx;
+    s32* var_s1;
+    s32* var_s2;
+
+    func_8004BFE8();
+
+    D_800AE190 = 0;
+
+    func_8004BB4C(&D_800C3B48, &D_800C3AE8, &D_800C3B38, 0);
+
+	/** This loops define the position, rotation and scale of the item that
+	* the player has initially equipped in the inventory.
+	*/
+    for (i = 0; i < 10; i++)
+    {
+        D_800C3E18[i] = NO_VALUE;
+
+        D_800C3BE8[i].field_0.vz  = FP_METER(1.0f);
+        D_800C3BE8[i].field_0.vy  = FP_METER(1.0f);
+        D_800C3BE8[i].field_0.vx  = FP_METER(1.0f);
+        D_800C3BE8[i].field_10.vz = 0;
+        D_800C3BE8[i].field_10.vy = 0;
+        D_800C3BE8[i].field_10.vx = 0;
+        D_800C3BE8[i].field_18.vz = 0;
+        D_800C3BE8[i].field_18.vy = 0;
+        D_800C3BE8[i].field_18.vx = 0;
+    }
+
+    func_8004BCBC(FS_BUFFER_8);
+
+    temp_s5 = (g_SysWork.inventoryItemSelectedIdx_2351 - 3 + g_SavegamePtr->inventoryItemSpaces_AB) % g_SavegamePtr->inventoryItemSpaces_AB;
+
+    if (g_GameWork.gameStateStep_598[1] < 21) // If screen is inventory
+    {
+        for (specialItemIdx = 0; specialItemIdx < 7; specialItemIdx++)
+        {
+            D_800C3E18[specialItemIdx] = (temp_s5 + specialItemIdx) % g_SavegamePtr->inventoryItemSpaces_AB;
+
+            if (g_SavegamePtr->items_0[D_800C3E18[specialItemIdx]].id_0 == 0xFF)
+            {
+                continue;
+            }
+
+            for (itemIdx = 0; itemIdx < INVENTORY_ITEM_COUNT_MAX; itemIdx++)
+            {
+                if (g_SavegamePtr->items_0[D_800C3E18[specialItemIdx]].id_0 == D_800C3BB8[itemIdx])
+                {
+                    func_80054720(FS_BUFFER_8, specialItemIdx, itemIdx);
+                    func_8005487C(specialItemIdx);
+
+                    itemIdx = INVENTORY_ITEM_COUNT_MAX;
+                }
+            }
+        }
+
+        g_Inventory_EquippedItem = g_SavegamePtr->equippedWeapon_AA;
+
+        for (i = 0; i < g_SavegamePtr->inventoryItemSpaces_AB; i++)
+        {
+            if (g_SavegamePtr->items_0[i].id_0 == g_Inventory_EquippedItem)
+            {
+                D_800C3E18[7] = i;
+
+                i = g_SavegamePtr->inventoryItemSpaces_AB;
+            }
+        }
+
+        if (g_Inventory_EquippedItemIdx != NO_VALUE) // If player has something equipped
+        {
+            for (itemIdx = 0; itemIdx < INVENTORY_ITEM_COUNT_MAX; itemIdx++)
+            {
+                if (g_Inventory_EquippedItem == D_800C3BB8[itemIdx])
+                {
+                    func_80054720(FS_BUFFER_8, 7, itemIdx);
+                    func_8005487C(7);
+
+                    itemIdx = INVENTORY_ITEM_COUNT_MAX;
+                }
+            }
+        }
+
+        D_800C3E48[7].coord.t[0] = 0;
+        D_800C3E48[7].coord.t[1] = FP_METER(-0.15625f);
+        D_800C3E48[7].coord.t[2] = 0;
+    }
+    else
+    {
+        u8 itemIds[] = // 0x8002848C .rodata
+        {
+            InventoryItemId_GasolineTank,
+            InventoryItemId_Chainsaw,
+            InventoryItemId_RockDrill,
+            InventoryItemId_Katana,
+            InventoryItemId_ChannelingStone,
+            InventoryItemId_HyperBlaster
+        };
+
+        if (g_SavegamePtr->clearGameCount_24A == 0)
+        {
+            g_SavegamePtr->clearGameCount_24A = 1;
+        }
+
+        for (specialItemIdx = 0; specialItemIdx < 6; specialItemIdx++)
+        {
+            D_800C3E18[specialItemIdx] = specialItemIdx;
+
+            for (itemIdx = 0; itemIdx < INVENTORY_ITEM_COUNT_MAX; itemIdx++)
+            {
+                if (itemIds[specialItemIdx] == D_800C3BB8[itemIdx])
+                {
+                    func_80054720(FS_BUFFER_8, specialItemIdx, itemIdx);
+                    func_8005487C(specialItemIdx);
+
+                    itemIdx = INVENTORY_ITEM_COUNT_MAX;
+                }
+            }
+        }
+    }
+}
+#else
+INCLUDE_ASM("asm/bodyprog/nonmatchings/item_screens", Gfx_Items_RenderItems); // 0x80054200
+#endif
+
+void Gfx_Items_RenderInit() // 0x80054558
+{
+    s32 i;
+
+    D_800AE180                          = 0;
+    D_800AE187                          = 0;
+    g_Inventory_StatusScanlineTimer     = 32;
+    g_Inventory_StatusDarkGradiantTimer = 0;
+    D_800AE198                          = 0;
+    D_800AE19A                          = -0x12C;
+    D_800AE19C                          = 0;
+    g_Inventory_DescriptonRollTimer     = 0;
+    g_Inventory_ScrollTransitionTimer   = 0;
+
+    for (i = 0; g_MapOverlayHeader.field_2C->field_0[i] != 0; i++)
+    {
+        D_800C3BB8[i] = g_MapOverlayHeader.field_2C->field_0[i];
+    }
+
+    D_800C3BB8[i] = 0;
+
+    Gfx_Items_RenderItems();
+    Gfx_Items_SetAmbientLighting();
+}
+
+void Inventory_ExitAnimFixes() // 0x80054634
+{
+    u8 field_F;
+
+    field_F                          = (u8)g_SysWork.playerCombatInfo_38.field_F;
+    g_SavegamePtr->equippedWeapon_AA = g_Inventory_EquippedItem;
+
+    if (g_SavegamePtr->equippedWeapon_AA)
+    {
+        g_SysWork.playerCombatInfo_38.field_F = g_SavegamePtr->equippedWeapon_AA + 0x80;
+    }
+    else
+    {
+        g_SysWork.playerCombatInfo_38.field_F     = NO_VALUE;
+        g_SysWork.playerCombatInfo_38.isAiming_13 = 0;
+    }
+
+    func_800546A8((u8)g_SysWork.playerCombatInfo_38.field_F);
+    Inventory_ExitAnimEquippedItemUpdate(&field_F);
+}
+
+#ifdef NON_MATCHING
+void func_800546A8(s32 arg0) // 0x800546A8
+{
+    switch ((u8)arg0)
+    {
+        case 0:
+            func_8003DD80(1, 34);
+            break;
+
+        case 1:
+        case 2:
+        case 4:
+        case 5:
+        case 6:
+        case 7:
+            func_8003DD80(1, 34);
+            break;
+
+        case 32:
+        case 33:
+        case 34:
+            func_8003DD80(1, 19);
+            break;
+
+        default:
+            func_8003DD80(1, 1);
+            break;
+    }
+}
+#else
+INCLUDE_ASM("asm/bodyprog/nonmatchings/item_screens", func_800546A8); // 0x800546A8
+#endif
+
+INCLUDE_ASM("asm/bodyprog/nonmatchings/item_screens", func_80054720); // 0x80054720
+
+void func_8005487C(s32 arg0) // 0x8005487C
+{
+    GsInitCoordinate2(NULL, &D_800C3E48[arg0]);
+    D_800C3E48[arg0].param = (GsCOORD2PARAM*) &D_800C3BE8[arg0];
+}
+
+/** Something related to items lighting. */
+void func_800548D8(s32 arg0) // 0x800548D8
+{
+    D_800C39A8[arg0][0].vx = D_800C3E48[arg0].coord.t[0];
+    D_800C39A8[arg0][0].vy = D_800C3E48[arg0].coord.t[1];
+    D_800C39A8[arg0][0].vz = D_800C3E48[arg0].coord.t[2] + 20000;
+}
+
+void Gfx_Items_SetAmbientLighting() // 0x80054928
+{
+    s32 i;
+
+    for (i = 0; i < 10; i++)
+    {
+        D_800C39A8[i][0].r  = NO_VALUE;
+        D_800C39A8[i][0].g  = NO_VALUE;
+        D_800C39A8[i][0].b  = NO_VALUE;
+        D_800C39A8[i][1].vx = FP_TO(1, Q12_SHIFT);
+        D_800C39A8[i][1].vy = 0;
+        D_800C39A8[i][1].vz = 0;
+        D_800C39A8[i][1].r  = NO_VALUE;
+        D_800C39A8[i][1].g  = NO_VALUE;
+        D_800C39A8[i][1].b  = NO_VALUE;
+    }
+
+    GsSetAmbient(1024, 1024, 1024);
+    GsSetLightMode(1);
+}
+
+void func_800549A0() // 0x800549A0
+{
+    #define IDX 9
+
+    D_800C39A8[IDX][0].r  = NO_VALUE;
+    D_800C39A8[IDX][1].vx = FP_TO(1, Q12_SHIFT);
+    D_800C39A8[IDX][0].g  = NO_VALUE;
+    D_800C39A8[IDX][0].b  = NO_VALUE;
+    D_800C39A8[IDX][1].r  = NO_VALUE;
+    D_800C39A8[IDX][1].g  = NO_VALUE;
+    D_800C39A8[IDX][1].b  = NO_VALUE;
+    D_800C39A8[IDX][1].vy = 0;
+    D_800C39A8[IDX][1].vz = 0;
+
+    GsSetAmbient(2048, 2048, 2048);
+    GsSetLightMode(1);
+}
+
+void func_80054A04(u8 itemId) // 0x80054A04
+{
+    D_800AE187 = itemId;
+    D_800AE180 = 0;
+    D_800AE1AC = 0;
+    D_800AE1B0 = 0;
+
+    D_800C3E18[9]             = NO_VALUE;
+    D_800C3BE8[9].field_10.vz = 0;
+    D_800C3BE8[9].field_10.vy = 0;
+    D_800C3BE8[9].field_10.vx = 0;
+    D_800C3BE8[9].field_18.vz = 0;
+    D_800C3BE8[9].field_18.vy = 0;
+    D_800C3BE8[9].field_18.vx = 0;
+
+    func_8004BCBC(FS_BUFFER_5);
+
+    D_800C3E18[9] = 0;
+
+    func_80054720(FS_BUFFER_5, 9, 0);
+    func_8005487C(9);
+
+    D_800C3BE8[9].field_0.vz = 1 << 12;
+    D_800C3BE8[9].field_0.vy = 1 << 12;
+    D_800C3BE8[9].field_0.vx = 1 << 12;
+
+    func_800549A0();
+    func_8004BB4C(&D_800C3B48, &D_800C3AE8, &D_800C3B38, 0);
+}
+
+INCLUDE_ASM("asm/bodyprog/nonmatchings/item_screens", func_80054AD8); // 0x80054AD8
+
+INCLUDE_ASM("asm/bodyprog/nonmatchings/item_screens", func_80054CAC); // 0x80054CAC
+
+INCLUDE_ASM("asm/bodyprog/nonmatchings/item_screens", func_80054FC0); // 0x80054FC0
