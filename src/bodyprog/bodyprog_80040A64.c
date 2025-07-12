@@ -81,7 +81,40 @@ void func_8004122C(s32* angle0, s32* angle1, VECTOR* arg2, VECTOR* arg3)
     *angle1 = ratan2(svec1.vx, svec0.vx) & 0xFFF;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_8004137C);
+void func_8004137C(VECTOR3* result, VECTOR* vec0, VECTOR* vec1, s32 screenDist)
+{
+    VECTOR sp10;
+    s32    ofsX;
+    s32    ofsY;
+    s32    screenDistHalf;
+    s32    var_a0;
+
+    screenDistHalf = screenDist / 2;
+
+    if (screenDistHalf < vec0->vz)
+    {
+        sp10 = *vec0;
+    }
+    else
+    {
+        var_a0 = 1;
+
+        if (vec1->vz != 0)
+        {
+            var_a0 = vec1->vz;
+        }
+
+        sp10.vz = screenDistHalf;
+        sp10.vx = (((screenDistHalf - vec0->vz) * vec1->vx) / var_a0) + vec0->vx;
+        sp10.vy = (((screenDistHalf - vec0->vz) * vec1->vy) / var_a0) + vec0->vy;
+    }
+
+    ReadGeomOffset(&ofsX, &ofsY);
+
+    result->vz = sp10.vz;
+    result->vx = ((sp10.vx * screenDist) / sp10.vz) + ofsX;
+    result->vy = ((sp10.vy * screenDist) / sp10.vz) + ofsY;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800414E0);
 

@@ -1794,6 +1794,8 @@ void func_800410D8(VECTOR3*, s32*, s32*, SVECTOR*, VECTOR3*);
 
 void func_8004122C(s32* angle0, s32* angle1, VECTOR* arg2, VECTOR* arg3);
 
+void func_8004137C(VECTOR3* result, VECTOR* vec0, VECTOR* vec1, s32 screenDist);
+
 /** Some kind of queue entry load status getter. */
 s32 func_80041ADC(s32 queueIdx);
 
