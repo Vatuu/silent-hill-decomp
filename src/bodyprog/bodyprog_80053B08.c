@@ -704,9 +704,9 @@ void func_8005487C(s32 arg0) // 0x8005487C
 
 void func_800548D8(s32 arg0) // 0x800548D8
 {
-    D_800C39A8[arg0]->vx = D_800C3E48[arg0].coord.t[0];
-    D_800C39A8[arg0]->vy = D_800C3E48[arg0].coord.t[1];
-    D_800C39A8[arg0]->vz = D_800C3E48[arg0].coord.t[2] + 0x4E20;
+    D_800C39A8[arg0][0].vx = D_800C3E48[arg0].coord.t[0];
+    D_800C39A8[arg0][0].vy = D_800C3E48[arg0].coord.t[1];
+    D_800C39A8[arg0][0].vz = D_800C3E48[arg0].coord.t[2] + 20000;
 }
 
 void Gfx_Items_SetAmbientLighting() // 0x80054928
