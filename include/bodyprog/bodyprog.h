@@ -27,6 +27,15 @@
 #define SFX_CONFIRM 0x51B
 
 /** Used by `func_8003F654` to cast a specific field to the desired type. */
+typedef enum _MenuState
+{
+    MenuState_Start              = 0,
+    MenuState_Main               = 1,
+    MenuState_LoadGame           = 2,
+    MenuState_DifficultySelector = 3,
+    MenuState_NewGameStart       = 4
+} e_MenuState;
+
 typedef enum _PrimitiveType
 {
     PrimitiveType_None = 0,
@@ -1153,15 +1162,16 @@ extern void (*D_800A9A2C[])(); // SysState func table.
 
 extern s32 D_800A9A68;
 
-extern s32 D_800A9A74;
+extern s32 g_MainMenuState;
 
-extern s32 D_800A9A78;
+extern s32 g_MainMenu_SelectedOptionIdx;
 
 extern u32 D_800A9A7C;
 
-extern s8 D_800A9A80;
+/** Counts the amount of times that demos has been play in the current game session. */
+extern s8 g_Demo_ReproducedCount;
 
-extern s32 D_800A9A84;
+extern s32 g_NewGame_SelectedDifficultyIdx;
 
 extern s32 D_800A9A88;
 
@@ -1206,12 +1216,6 @@ extern s32 D_800AE1B0;
 extern s16 D_800AF210;
 
 extern s16 D_800AF212;
-
-extern u8 D_800AF214;
-
-extern u8 g_EnablePlayerControl;
-
-extern s8 D_800AF216;
 
 extern s_MaybeCharacterAnim g_MaybePlayerAnims[];
 
@@ -1515,7 +1519,7 @@ extern s32 D_800C454C;
 
 extern s32 D_800C4558;
 
-extern s32 D_800C455C; // 0 = player has control, 1 = player doesn't have control.
+extern s32 D_800C455C;
 
 extern s16 D_800C457E;
 
@@ -2391,7 +2395,7 @@ void func_800348C0();
 void GameState_MainLoadScreen_Update();
 
 /** Handles `g_GameWork.gameStateStep_598[0]`. */
-void func_80034964();
+void Demo_StartUp();
 
 void func_80034E58();
 
@@ -2613,8 +2617,6 @@ void func_80071224(s32 arg1, s32 arg2);
 void func_80071284(s32 arg0);
 
 void func_800713B4(s_SubCharacter* chara, s32 arg1);
-
-void func_800717D0(s_SubCharacter* chara, void* arg1, GsCOORDINATE2* coord);
 
 void func_80071968(s_SubCharacter*, s_MainCharacterExtra*, void*, GsCOORDINATE2*);
 

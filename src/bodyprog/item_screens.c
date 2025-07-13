@@ -451,7 +451,7 @@ void GameState_ItemScreens_Update() // 0x8004C9B0
             if ((g_SavegamePtr->field_27A & (1 << 6)) &&
                 g_GameWork.gameStatePrev_590 == 16)
             {
-                D_800A9A80 = 0;
+                g_Demo_ReproducedCount = 0;
                 Game_WarmBoot();
                 GameFs_StreamBinLoad();
                 Fs_QueueWaitForEmpty();
@@ -706,7 +706,7 @@ void GameState_ItemScreens_Update() // 0x8004C9B0
             {
                 if (Fs_QueueDoThingWhenEmpty() != 0)
                 {
-                    D_800A9A80 = 0;
+                    g_Demo_ReproducedCount = 0;
 
                     Game_WarmBoot();
                     GameFs_StreamBinLoad();

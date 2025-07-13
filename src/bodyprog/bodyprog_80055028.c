@@ -3,6 +3,7 @@
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math.h"
+#include "bodyprog/player_logic.h"
 #include "main/rng.h"
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80055028); // 0x80055028
@@ -715,7 +716,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_800713E8); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80071620); // 0x80071620
 
-void func_800717D0(s_SubCharacter* chara, void* arg1, GsCOORDINATE2* coord) // 0x800717D0
+void Player_Logic_Update(s_SubCharacter* chara, void* arg1, GsCOORDINATE2* coord) // 0x800717D0
 {
     // Called by `GameState_InGame_Update`, might be player update function.
     // - `chara` always `&g_SysWork.player_4C.chara_0`.
@@ -728,7 +729,7 @@ void func_800717D0(s_SubCharacter* chara, void* arg1, GsCOORDINATE2* coord) // 0
     {
         func_8007C800(chara, extra);
 
-        if (D_800AF214 != 0)
+        if (g_Player_Walk2RunTransition != 0)
         {
             D_800C455C = 0;
             D_800C4558 = 0;
@@ -747,7 +748,7 @@ void func_800717D0(s_SubCharacter* chara, void* arg1, GsCOORDINATE2* coord) // 0
             D_800C4584 = 0;
         }
 
-        if (!g_EnablePlayerControl)
+        if (!g_Player_EnableControl)
         {
             func_80071CE8(chara, extra, coord);
         }
@@ -756,7 +757,7 @@ void func_800717D0(s_SubCharacter* chara, void* arg1, GsCOORDINATE2* coord) // 0
             g_MapOverlayHeader.func_B8(chara, extra, coord);
         }
 
-        if (!g_EnablePlayerControl)
+        if (!g_Player_EnableControl)
         {
             func_8007C0D8(chara, extra, coord);
         }
@@ -924,7 +925,7 @@ void func_8007F1CC() // 0x8007F1CC
     D_800C4580 = 0;
     D_800C45AC = 0;
     D_800C4584 = 0;
-    D_800AF214 = 0;
+    g_Player_Walk2RunTransition = 0;
 }
 
 void func_8007F250(u8* ptr, s8 arg1) // 0x8007F250
