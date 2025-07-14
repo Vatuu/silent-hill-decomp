@@ -162,7 +162,7 @@ extern s16 D_801E756C[MEMORY_CARD_SLOT_COUNT];
 /** @brief Count of elements that get hidden as the player scrolls
  * through displayed save elements in the slot.
  */
-extern s16 g_HiddentElementByDisplacement[MEMORY_CARD_SLOT_COUNT];
+extern s16 g_HiddenElementByDisplacement[MEMORY_CARD_SLOT_COUNT];
 
 extern s16 D_801E7574[MEMORY_CARD_SLOT_COUNT];
 
@@ -174,9 +174,14 @@ extern s16 D_801E7574[MEMORY_CARD_SLOT_COUNT];
  */
 extern s16 D_801E7578[MEMORY_CARD_SLOT_COUNT]; // `g_SelectedSaveOffsetsY`
 
-extern s8 D_801E7584[SAVEGAME_COUNT_MAX * 2];
+extern s8 D_801E7584[SAVEGAME_COUNT_MAX * MEMORY_CARD_SLOT_COUNT];
 
-extern s8 g_PrevSaveIdx[MEMORY_CARD_SLOT_COUNT];
+/** @brief Stores the index of the last save done.
+ *
+ * Depending on the slot where the last save is done
+ * the value representing the other slot is turn into -1.
+ */
+extern s8 g_LastSaveIdx[MEMORY_CARD_SLOT_COUNT];
 
 extern s8 g_DisplaySaveDataInfo;
 

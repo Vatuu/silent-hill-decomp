@@ -8,7 +8,8 @@
 #define SLOT_COLUMN_OFFSET   150
 #define SLOT_ROW_OFFSET      20
 
-/*
+const s32 pad = 0;
+
 char* g_SaveLocationNames[] =
 {
     "Anywhere",
@@ -37,7 +38,7 @@ char* g_SaveLocationNames[] =
     "Child's_room",
     "Next_fear"
 };
-*/
+
 
 s32 D_801E750C = 0;
 
@@ -90,23 +91,22 @@ s32 D_801E7564[MEMORY_CARD_SLOT_COUNT] = { 0, 0 };
 
 s16 D_801E756C[MEMORY_CARD_SLOT_COUNT] = { 0, 0 };
 
-s16 g_HiddentElementByDisplacement[MEMORY_CARD_SLOT_COUNT] = { 0, 0 };
+s16 g_HiddenElementByDisplacement[MEMORY_CARD_SLOT_COUNT] = { 0, 0 };
 
 s16 D_801E7574[MEMORY_CARD_SLOT_COUNT] = { 0, 0 };
 
-/*
 s16 D_801E7578[MEMORY_CARD_SLOT_COUNT] = { 0, 0 };
 
-s8 D_801E757C[4] = {};
+s8 D_801E757C[8] = {}; // Unused data - Splat even confuse it by merging it with the previous data (`D_801E7578`)
 
-s8 D_801E7584[SAVEGAME_COUNT_MAX * 2] = {
-};
+/*
+s8 D_801E7584[SAVEGAME_COUNT_MAX * MEMORY_CARD_SLOT_COUNT] = { };
 
-s8 g_PrevSaveIdx[MEMORY_CARD_SLOT_COUNT] = { 0, 0 };
+s8 g_LastSaveIdx[MEMORY_CARD_SLOT_COUNT] = { 0, 0 };
 
 s8 g_DisplaySaveDataInfo = 0;
 
-s8 D_801E76D1 = 0; // Unused.
+//s8 D_801E76D1 = 0; // Unused.
 
 s8 g_IsMemCardNotInserted[MEMORY_CARD_SLOT_COUNT] = { 0, 0 };
 
@@ -132,10 +132,10 @@ void Savegame_ScreenSubInit() // 0x801E2D8C
     for (i = 0; i < MEMORY_CARD_SLOT_COUNT; i++)
     {
         g_IsMemCardNotInserted[i]         = 1;
-        g_PrevSaveIdx[i]                  = NO_VALUE;
+        g_LastSaveIdx[i]                  = NO_VALUE;
         D_801E7564[i]                     = 0;
         D_801E756C[i]                     = 0;
-        g_HiddentElementByDisplacement[i] = NO_VALUE;
+        g_HiddenElementByDisplacement[i]  = NO_VALUE;
         D_801E7574[i]                     = NO_VALUE;
         D_801E7578[i]                     = 0;
         D_801E7514[i]                     = 1;
@@ -184,7 +184,7 @@ void Gfx_SaveScreenDrawBase() // 0x801E2EBC
 
 void Gfx_SaveSelectedDisplacement(s32 slotIdx, s32 unusedSaveCount) // 0x801E2F90
 {
-    D_801E7578[slotIdx] = g_SlotElementSelectedIdx[slotIdx] - g_HiddentElementByDisplacement[slotIdx];
+    D_801E7578[slotIdx] = g_SlotElementSelectedIdx[slotIdx] - g_HiddenElementByDisplacement[slotIdx];
 }
 
 void Gfx_SaveSlotDrawFileString(s32 saveIdx, s32 slotIdx, s32 fileId, s32 entryType) // 0x801E2FCC
@@ -247,7 +247,7 @@ void Gfx_SavegameEntryDrawLocationName(s_SavegameEntry* saveEntry, s32 saveIdx, 
     s32 colorId;
     u8* var2;
 
-    var1 = g_HiddentElementByDisplacement[slotIdx];
+    var1 = g_HiddenElementByDisplacement[slotIdx];
 
     if (saveIdx >= var1 && (var1 + 4) >= saveIdx)
     {
@@ -281,7 +281,7 @@ void func_801E326C(s_SavegameEntry* saveEntry, s_SavegameEntry* nextSaveEntry, s
         D_801E756C[slotIdx] = 0;
     }
 
-    if (saveIdx < g_HiddentElementByDisplacement[slotIdx] || (g_HiddentElementByDisplacement[slotIdx] + 4) < saveIdx)
+    if (saveIdx < g_HiddenElementByDisplacement[slotIdx] || (g_HiddenElementByDisplacement[slotIdx] + 4) < saveIdx)
     {
         if (D_801E756C[slotIdx] != saveEntry->fileIdx_6)
         {
@@ -296,7 +296,7 @@ void func_801E326C(s_SavegameEntry* saveEntry, s_SavegameEntry* nextSaveEntry, s
 
 void Gfx_SaveScreenDraw(s_SavegameEntry* saveEntry, s32 saveIdx, s32 slotIdx) // 0x801E3304
 {
-    char* statusStrs[] =
+    char* statusStrs[11] =
     {
         "\x07MEMORY_CARD\nis_not_inserted",
         "\x07MEMORY_CARD\nis_\x01not_\x01""formatted",
@@ -333,48 +333,48 @@ void Gfx_SaveScreenDraw(s_SavegameEntry* saveEntry, s32 saveIdx, s32 slotIdx) //
             g_LoadingMemCardTimer[slotIdx] = 0;
         }
 
-        if (g_HiddentElementByDisplacement[slotIdx] == NO_VALUE)
+        if (g_HiddenElementByDisplacement[slotIdx] == NO_VALUE)
         {
-            g_HiddentElementByDisplacement[slotIdx] = 0;
+            g_HiddenElementByDisplacement[slotIdx] = 0;
         }
 
         if ((u8)g_IsMemCardNotInserted[slotIdx] != 0)
         {
             if (g_SlotElementSelectedIdx[slotIdx] == (g_SlotElementCounts[slotIdx] - 2))
             {
-                g_HiddentElementByDisplacement[slotIdx] = g_SlotElementSelectedIdx[slotIdx] - 3;
+                g_HiddenElementByDisplacement[slotIdx] = g_SlotElementSelectedIdx[slotIdx] - 3;
             }
             else
             {
-                g_HiddentElementByDisplacement[slotIdx] = g_SlotElementSelectedIdx[slotIdx] - 2;
+                g_HiddenElementByDisplacement[slotIdx] = g_SlotElementSelectedIdx[slotIdx] - 2;
             }
         }
 
         if (g_SlotElementCounts[slotIdx] < 6 || g_SlotElementSelectedIdx[slotIdx] == 0)
         {
-            g_HiddentElementByDisplacement[slotIdx] = 0;
+            g_HiddenElementByDisplacement[slotIdx] = 0;
         }
         else
         {
             if ((g_SlotElementCounts[slotIdx] - 2) < g_SlotElementSelectedIdx[slotIdx])
             {
-                g_HiddentElementByDisplacement[slotIdx] = g_SlotElementCounts[slotIdx] - 5;
+                g_HiddenElementByDisplacement[slotIdx] = g_SlotElementCounts[slotIdx] - 5;
             }
             else
             {
-                while ((g_SlotElementSelectedIdx[slotIdx] - g_HiddentElementByDisplacement[slotIdx]) >= 4)
+                while ((g_SlotElementSelectedIdx[slotIdx] - g_HiddenElementByDisplacement[slotIdx]) >= 4)
                 {
-                    g_HiddentElementByDisplacement[slotIdx]++;
+                    g_HiddenElementByDisplacement[slotIdx]++;
                 }
 
-                while ((g_SlotElementSelectedIdx[slotIdx] - 1) < g_HiddentElementByDisplacement[slotIdx])
+                while ((g_SlotElementSelectedIdx[slotIdx] - 1) < g_HiddenElementByDisplacement[slotIdx])
                 {
-                    g_HiddentElementByDisplacement[slotIdx]--;
+                    g_HiddenElementByDisplacement[slotIdx]--;
                 }
             }
         }
 
-        if (g_HiddentElementByDisplacement[slotIdx] != D_801E7574[slotIdx])
+        if (g_HiddenElementByDisplacement[slotIdx] != D_801E7574[slotIdx])
         {
             D_801E7514[slotIdx] = 1;
         }
@@ -400,7 +400,7 @@ void Gfx_SaveScreenDraw(s_SavegameEntry* saveEntry, s32 saveIdx, s32 slotIdx) //
                 D_801E7584[i + (slotIdx * SAVEGAME_COUNT_MAX)] = 0;
             }
 
-            g_HiddentElementByDisplacement[slotIdx] = NO_VALUE;
+            g_HiddenElementByDisplacement[slotIdx] = NO_VALUE;
             break;
 
         case SavegameEntryType_CorruptedSave:
@@ -420,7 +420,7 @@ void Gfx_SaveScreenDraw(s_SavegameEntry* saveEntry, s32 saveIdx, s32 slotIdx) //
             break;
     }
 
-    if (saveIdx < g_HiddentElementByDisplacement[slotIdx] || ((g_HiddentElementByDisplacement[slotIdx] + 4) < saveIdx))
+    if (saveIdx < g_HiddenElementByDisplacement[slotIdx] || ((g_HiddenElementByDisplacement[slotIdx] + 4) < saveIdx))
     {
         return;
     }
@@ -599,7 +599,7 @@ void Gfx_MemCardStateDraw(s32 memCardState, s32 arg1) // 0x801E3910
             if (strIdx == 1)
             {
                 g_GameWork.gameStateStep_598[2]                       = 0;
-                g_HiddentElementByDisplacement[g_SelectedSaveSlotIdx] = NO_VALUE;
+                g_HiddenElementByDisplacement[g_SelectedSaveSlotIdx] = NO_VALUE;
                 D_801E7578[g_SelectedSaveSlotIdx]                     = NO_VALUE;
             }
 
@@ -615,8 +615,8 @@ void Gfx_MemCardStateDraw(s32 memCardState, s32 arg1) // 0x801E3910
             // Finished saving and `D_801E7554` isn't required string.
             if (strIdx == 5 && D_801E7554 != strIdx)
             {
-                g_PrevSaveIdx[g_SelectedSaveSlotIdx]     = g_SlotElementSelectedIdx[g_SelectedSaveSlotIdx];
-                g_PrevSaveIdx[1 - g_SelectedSaveSlotIdx] = NO_VALUE;
+                g_LastSaveIdx[g_SelectedSaveSlotIdx]     = g_SlotElementSelectedIdx[g_SelectedSaveSlotIdx];
+                g_LastSaveIdx[1 - g_SelectedSaveSlotIdx] = NO_VALUE;
                 g_Gfx_SaveFlashTimer = 0;
             }
 
@@ -714,8 +714,8 @@ void Gfx_SavedShineDraw() // 0x801E3E78
     POLY_F4* poly;
 
     ot      = &g_ObjectTable1[g_ObjectTableIdx];
-    slotIdx = ~g_PrevSaveIdx[0] == 0;
-    rowIdx = g_PrevSaveIdx[slotIdx] - g_HiddentElementByDisplacement[slotIdx];
+    slotIdx = ~g_LastSaveIdx[0] == 0;
+    rowIdx = g_LastSaveIdx[slotIdx] - g_HiddenElementByDisplacement[slotIdx];
 
     if (rowIdx < 5)
     {
@@ -1157,7 +1157,7 @@ void Gfx_SavegameEntryDrawBorder(s_SavegameEntry* saveEntry, s_SavegameEntry* ne
     TILE*    cornerTile;
 
     ot     = &g_ObjectTable1[g_ObjectTableIdx];
-    rowIdx = saveIdx - g_HiddentElementByDisplacement[slotIdx];
+    rowIdx = saveIdx - g_HiddenElementByDisplacement[slotIdx];
 
     // Draw border around savegame entry.
     firstLineIdx = rowIdx ? (entryIdx > 0) : 0;

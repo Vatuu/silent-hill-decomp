@@ -1007,18 +1007,15 @@ extern s_ControllerConfig D_8002511C[];
 
 extern s_800252BC const D_800252BC[];
 
-/** "\x07PAUSED" string. */
-extern char D_80025394[];
+extern u8 D_800254EC[]; // `Gfx_MainMenu_MainTextDraw` string X offsets. TODO: Local .rodata.
 
-extern u8 D_800254EC[]; // `func_8003B568` string X offsets. TODO: Local .rodata.
+extern s8 D_800254F4; // `Gfx_MainMenu_MainTextDraw` string. TODO: Local .rodata.
 
-extern s8 D_800254F4; // `func_8003B568` string. TODO: Local .rodata.
+extern s8 D_800254F8; // `Gfx_MainMenu_MainTextDraw` string. TODO: Local .rodata.
 
-extern s8 D_800254F8; // `func_8003B568` string. TODO: Local .rodata.
+extern s8 D_800254FC; // `Gfx_MainMenu_MainTextDraw` string. TODO: Local .rodata.
 
-extern s8 D_800254FC; // `func_8003B568` string. TODO: Local .rodata.
-
-extern s8 D_80025500; // `func_8003B568` string. TODO: Local .rodata.
+extern s8 D_80025500; // `Gfx_MainMenu_MainTextDraw` string. TODO: Local .rodata.
 
 extern s32 D_80025528; // Type assumed.
 
@@ -1098,7 +1095,7 @@ extern u16 D_800A9774[];
 
 extern u16 D_800A9858[];
 
-extern char* D_800A9A8C[]; // `func_8003B568` strings. TODO: Local .rodata.
+extern char* D_800A9A8C[]; // `Gfx_MainMenu_MainTextDraw` strings. TODO: Local .rodata.
 
 extern s8 D_800A98FC[];
 
@@ -1171,7 +1168,7 @@ extern u32 D_800A9A7C;
 /** Counts the amount of times that demos has been play in the current game session. */
 extern s8 g_Demo_ReproducedCount;
 
-extern s32 g_NewGame_SelectedDifficultyIdx;
+extern s32 g_MainMenu_NewGameSelectedDifficultyIdx;
 
 extern s32 D_800A9A88;
 
@@ -1742,7 +1739,7 @@ void SysState_Fmv_Update();
 
 void func_8003B550();
 
-void func_8003B568();
+void Gfx_MainMenu_MainTextDraw();
 
 s32 func_8003BD2C();
 

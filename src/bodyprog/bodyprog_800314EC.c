@@ -3877,6 +3877,10 @@ void SysState_Gameplay_Update() // 0x80038BD4
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", SysState_Gameplay_Update);
 #endif
 
+//extern const char D_80025394[] = "\x07PAUSED";
+
+extern char D_80025394[];
+
 void SysState_GamePaused_Update() // 0x800391E8
 {
     D_800A9A68 += g_DeltaTime1;
@@ -3946,8 +3950,6 @@ void SysState_OptionsMenu_Update() // 0x80039344
     }
 }
 
-// TODO: RODATA migration.
-#ifdef NON_MATCHING
 void func_8003943C()
 {
     s32 roundedVal0;
@@ -4037,9 +4039,6 @@ void func_8003943C()
             break;
     }
 }
-#else
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003943C);
-#endif
 
 void SysState_StatusMenu_Update() // 0x80039568
 {
@@ -4236,7 +4235,7 @@ void SysState_Fmv_Update() // 0x80039A58
     }
 }
 
-void SysState_LoadArea_Update() // 0x0x80039C40
+void SysState_LoadArea_Update() // 0x80039C40
 {
     s32               var0;
     u32               var1;
@@ -4509,12 +4508,13 @@ void SysState_EventPlaySound_Update() // 0x8003A4B4
     g_SysWork.sysState_8 = 0;
 }
 
+extern const char D_80025448[] = "\aGAME_OVER";
+
 void SysState_GameOver_Update() // 0x8003A52C
 {
     #define TIP_COUNT 15
 
     extern u8   g_SysState_GameOver_TipIdx; // Only used in this func, maybe static.
-    extern char D_80025448[];               // "\aGAME_OVER" - needs rodata migration.
 
     u16  seenTipIdxs[1];
     s32  tipIdx;
@@ -4701,6 +4701,8 @@ void GameState_MapEvent_Update() // 0x8003AA4C
 
     Gfx_BackgroundSpriteDraw(&D_800A902C);
 }
+
+const pad = 0;
 
 // TODO: RODATA migration
 #ifdef NON_MATCHING
@@ -4924,24 +4926,24 @@ void GameState_MainMenu_Update() // 0x8003AB28
             {
                 var_v0 = 2;
 
-                if (g_NewGame_SelectedDifficultyIdx > 0)
+                if (g_MainMenu_NewGameSelectedDifficultyIdx > 0)
                 {
-                    var_v0 = g_NewGame_SelectedDifficultyIdx - 1;
+                    var_v0 = g_MainMenu_NewGameSelectedDifficultyIdx - 1;
                 }
 
-                g_NewGame_SelectedDifficultyIdx = var_v0;
+                g_MainMenu_NewGameSelectedDifficultyIdx = var_v0;
             }
 
             if (g_ControllerPtrConst->btnsPulsed_18 & ControllerFlag_LStickDown)
             {
                 var_2 = 0;
 
-                if (g_NewGame_SelectedDifficultyIdx < 2)
+                if (g_MainMenu_NewGameSelectedDifficultyIdx < 2)
                 {
-                    var_2 = g_NewGame_SelectedDifficultyIdx + 1;
+                    var_2 = g_MainMenu_NewGameSelectedDifficultyIdx + 1;
                 }
 
-                g_NewGame_SelectedDifficultyIdx = var_2;
+                g_MainMenu_NewGameSelectedDifficultyIdx = var_2;
             }
 
             if (g_ControllerPtrConst->btnsPulsed_18 & (ControllerFlag_LStickUp | ControllerFlag_LStickDown))
@@ -4951,7 +4953,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
 
             if (g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
             {
-                Game_SavegameInitialize(0, g_NewGame_SelectedDifficultyIdx - 1);
+                Game_SavegameInitialize(0, g_MainMenu_NewGameSelectedDifficultyIdx - 1);
                 func_80035178();
 
                 g_SysWork.flags_2298 = 4;
@@ -5037,16 +5039,16 @@ void GameState_MainMenu_Update() // 0x8003AB28
 
     if (g_GameWork.gameState_594 == GameState_MainMenu)
     {
-        func_8003B758();
+        Gfx_MainMenu_BgDraw();
         func_8003B560();
 
         if (g_MainMenuState < 3)
         {
-            func_8003B568();
+            Gfx_MainMenu_MainTextDraw();
             return;
         }
 
-        func_8003B678(g_NewGame_SelectedDifficultyIdx);
+        Gfx_MainMenu_DifficultyTextDraw(g_MainMenu_NewGameSelectedDifficultyIdx);
         return;
     }
 
@@ -5066,7 +5068,7 @@ void func_8003B550() // 0x8003B550
 
 void func_8003B560() {}
 
-void func_8003B568() // 0x8003B568
+void Gfx_MainMenu_MainTextDraw() // 0x8003B568
 {
     #define STR_POS_X_BASE 158
     #define STR_POS_Y_BASE 184
@@ -5101,9 +5103,9 @@ void func_8003B568() // 0x8003B568
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003B678); // 0x8003B678
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", Gfx_MainMenu_DifficultyTextDraw); // 0x8003B678
 
-void func_8003B758() // 0x8003B758
+void Gfx_MainMenu_BgDraw() // 0x8003B758
 {
     if (g_SysWork.sysState_8 == 0)
     {
