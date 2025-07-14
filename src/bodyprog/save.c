@@ -4,6 +4,7 @@
 #include "bodyprog/save_system.h"
 
 #include <libapi.h>
+#include <sys/file.h>
 
 /** It is possible that more functions from `bodyprog.c` are
 * actually functions from `save_system`.
@@ -364,16 +365,46 @@ void func_80030414() // 0x80030414
 
 void func_80030444() // 0x80030444
 {
-    s_800B5488* var = &D_800B5488;
-
-    var->field_4 = 0;
-    var->field_8 = 0;
-    var->field_C = 0;
+    D_800B5488.field_4 = 0;
+    D_800B5488.field_8 = 0;
+    D_800B5488.field_C = 0;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/save", func_8003045C);
+void func_8003045C()
+{
+    EnterCriticalSection();
+    D_800B5488.event_10 = OpenEvent(SwCARD, EvSpIOE, EvMdNOINTR, NULL);
+    D_800B5488.event_14 = OpenEvent(SwCARD, EvSpERROR, EvMdNOINTR, NULL);
+    D_800B5488.event_18 = OpenEvent(SwCARD, EvSpTIMOUT, EvMdNOINTR, NULL);
+    D_800B5488.event_1C = OpenEvent(SwCARD, EvSpNEW, EvMdNOINTR, NULL);
+    ExitCriticalSection();
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/save", func_80030530);
+    EnableEvent(D_800B5488.event_10);
+    EnableEvent(D_800B5488.event_14);
+    EnableEvent(D_800B5488.event_18);
+    EnableEvent(D_800B5488.event_1C);
+
+    func_800307BC();
+}
+
+void func_80030530() // 0x80030530
+{
+    EnterCriticalSection();
+    D_800B5488.event_20 = OpenEvent(HwCARD, EvSpIOE, EvMdINTR, func_80030884);
+    D_800B5488.event_24 = OpenEvent(HwCARD, EvSpERROR, EvMdINTR, func_80030894);
+    D_800B5488.event_28 = OpenEvent(HwCARD, EvSpTIMOUT, EvMdINTR, func_800308B4);
+    D_800B5488.event_2C = OpenEvent(HwCARD, EvSpNEW, EvMdINTR, func_800308A4);
+    D_800B5488.event_30 = OpenEvent(HwCARD, EvSpUNKNOWN, EvMdINTR, func_800308C4);
+    ExitCriticalSection();
+
+    EnableEvent(D_800B5488.event_20);
+    EnableEvent(D_800B5488.event_24);
+    EnableEvent(D_800B5488.event_28);
+    EnableEvent(D_800B5488.event_2C);
+    EnableEvent(D_800B5488.event_30);
+
+    func_80030820();
+}
 
 void func_80030640() // 0x80030640
 {
@@ -574,11 +605,204 @@ void func_80030A0C() // 0x80030A0C
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/save", func_80030AD8);
+s32 func_80030AD8() // 0x80030AD8
+{
+    s32 deviceId;
+    s32 result;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/save", func_80030C88);
+    result   = 1;
+    deviceId = ((D_800B5488.field_3C & (1 << 2)) << 2) + (D_800B5488.field_3C & 3);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/save", func_80030DC8);
+    switch (D_800B5488.field_8)
+    {
+        case 0:
+            D_800B5488.field_78 = 0;
+            D_800B5488.field_7C = 0;
+            D_800B5488.field_8  = 1;
+
+        case 1:
+            func_800307BC();
+            if (_card_info(deviceId) == 1)
+            {
+                D_800B5488.field_8++;
+            }
+            else
+            {
+                D_800B5488.field_78++;
+            }
+            break;
+
+        case 2:
+            switch (func_80030734())
+            {
+                case 4:
+                    if (D_800B5488.field_38 == 0)
+                    {
+                        result             = 3;
+                        D_800B5488.field_4 = 0;
+                        D_800B5488.field_8 = 0;
+                    }
+                    else if (!((D_800B5488.field_0 >> D_800B5488.field_3C) & 1))
+                    {
+                        D_800B5488.field_4 = 4;
+                        D_800B5488.field_8 = 0;
+                    }
+                    else
+                    {
+                        D_800B5488.field_4 = 2;
+                        D_800B5488.field_8 = 0;
+                    }
+                    break;
+
+                case 0x2000:
+                    D_800B5488.field_70 = 1;
+                    if (D_800B5488.field_38 == 0)
+                    {
+                        result             = 2;
+                        D_800B5488.field_4 = 0;
+                        D_800B5488.field_8 = 0;
+                    }
+                    else
+                    {
+                        D_800B5488.field_4 = 2;
+                        D_800B5488.field_8 = 0;
+                    }
+                    break;
+
+                case 0x100:
+                    result             = 0;
+                    D_800B5488.field_4 = 0;
+                    D_800B5488.field_8 = 0;
+                    break;
+
+                case 0x8000:
+                    D_800B5488.field_8 = 1;
+                    break;
+            }
+            break;
+    }
+
+    return result;
+}
+
+s32 func_80030C88() // 0x80030C88
+{
+    s32 deviceId;
+    s32 result;
+
+    result   = 1;
+    deviceId = ((D_800B5488.field_3C & (1 << 2)) << 2) + (D_800B5488.field_3C & 3);
+
+    switch (D_800B5488.field_8)
+    {
+        case 0:
+            D_800B5488.field_78 = 0;
+            D_800B5488.field_7C = 0;
+            D_800B5488.field_8  = 1;
+
+        case 1:
+            func_80030820();
+            if (_card_clear(deviceId) == 1)
+            {
+                D_800B5488.field_8++;
+            }
+            break;
+
+        case 2:
+            switch (func_80030810())
+            {
+                case 4:
+                    D_800B5488.field_4 = 3;
+                    D_800B5488.field_8 = 0;
+                    break;
+
+                case 0x100:
+                    result             = 0;
+                    D_800B5488.field_4 = 0;
+                    D_800B5488.field_8 = 0;
+                    break;
+
+                case 0x2000:
+                case 0x8000:
+                    D_800B5488.field_8 = 1;
+                    break;
+            }
+            break;
+    }
+
+    return result;
+}
+
+s32 func_80030DC8() // 0x80030DC8
+{
+    s32 deviceId;
+    s32 result;
+
+    result   = 1;
+    deviceId = ((D_800B5488.field_3C & (1 << 2)) << 2) + (D_800B5488.field_3C & 3);
+
+    switch (D_800B5488.field_8)
+    {
+        case 0:
+            D_800B5488.field_78 = 0;
+            D_800B5488.field_7C = 0;
+            D_800B5488.field_8  = 1;
+
+        case 1:
+            func_800307BC();
+            if (_card_load(deviceId) == 1)
+            {
+                D_800B5488.field_8++;
+                if (!(D_800B5488.field_3C & 4))
+                {
+                    D_800B5488.field_0 |= 0xF;
+                }
+                else
+                {
+                    D_800B5488.field_0 |= 0xF0;
+                }
+            }
+            break;
+
+        case 2:
+            switch (func_80030734())
+            {
+                case 4:
+                    D_800B5488.field_4 = 4;
+                    D_800B5488.field_8 = 0;
+                    D_800B5488.field_0 &= ~(1 << D_800B5488.field_3C);
+                    break;
+
+                case 0x2000:
+                    D_800B5488.field_0 |= 1 << D_800B5488.field_3C;
+                    if (D_800B5488.field_78 < 3)
+                    {
+                        D_800B5488.field_78 += 1;
+                        D_800B5488.field_8 = 1;
+                    }
+                    else
+                    {
+                        result             = 4;
+                        D_800B5488.field_4 = 0;
+                        D_800B5488.field_8 = 0;
+                    }
+                    break;
+
+                case 0x100:
+                    result             = 0;
+                    D_800B5488.field_4 = 0;
+                    D_800B5488.field_8 = 0;
+                    break;
+
+                case 0x8000:
+                    D_800B5488.field_8 = 1;
+                    break;
+            }
+            break;
+    }
+
+    return result;
+}
 
 s32 func_80030F7C() // 0x80030F7C
 {
@@ -624,11 +848,189 @@ s32 func_80030F7C() // 0x80030F7C
     return retval;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/save", func_800310B4);
+s32 func_800310B4() // 0x800310B4
+{
+    s32 result;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/save", func_80031184);
+    result = 1;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/save", func_80031260);
+    switch (D_800B5488.field_8)
+    {
+        case 0:
+            D_800B5488.field_78 = 0;
+            D_800B5488.field_7C = 0;
+            D_800B5488.field_8  = 1;
+        case 1:
+            D_800B5488.field_74 = open(D_800B5488.field_44, (D_800B5488.field_60 << 16) | O_CREAT);
+            if (D_800B5488.field_74 == -1)
+            {
+                if (D_800B5488.field_78++ >= 15)
+                {
+                    result             = 7;
+                    D_800B5488.field_4 = 0;
+                    D_800B5488.field_8 = 0;
+                    break;
+                }
+            }
+            else
+            {
+                close(D_800B5488.field_74);
+                D_800B5488.field_4 = 6;
+                D_800B5488.field_8 = 0;
+            }
+            break;
+    }
+    return result;
+}
+
+s32 func_80031184() // 0x80031184
+{
+    s32 mode;
+    s32 result;
+
+    result = 1;
+
+    switch (D_800B5488.field_8)
+    {
+        case 0:
+            D_800B5488.field_78 = 0;
+            D_800B5488.field_7C = 0;
+            D_800B5488.field_8  = 1;
+        case 1:
+            switch (D_800B5488.field_38)
+            {
+                case 2:
+                    mode = O_RDONLY;
+                    break;
+
+                case 3:
+                case 4:
+                    mode = O_WRONLY;
+                    break;
+
+                default:
+                    mode = 0;
+                    break;
+            }
+
+            D_800B5488.field_74 = open(D_800B5488.field_44, mode | O_NOWAIT);
+
+            if (D_800B5488.field_74 == -1)
+            {
+                if (D_800B5488.field_78++ >= 15)
+                {
+                    result             = 8;
+                    D_800B5488.field_4 = 0;
+                    D_800B5488.field_8 = 0;
+                    break;
+                }
+            }
+            else
+            {
+                D_800B5488.field_4 = 7;
+                D_800B5488.field_8 = 0;
+            }
+            break;
+    }
+    return result;
+}
+
+s32 func_80031260() // 0x80031260
+{
+    s32 result;
+    s32 ioResult;
+
+    result = 1;
+
+    switch (D_800B5488.field_8)
+    {
+        case 0:
+            D_800B5488.field_78 = 0;
+            D_800B5488.field_7C = 0;
+            D_800B5488.field_8  = 1;
+
+        case 1:
+            if (lseek(D_800B5488.field_74, D_800B5488.field_64, 0) == -1)
+            {
+                if (D_800B5488.field_78++ >= 15)
+                {
+                    result             = 9;
+                    D_800B5488.field_4 = 0;
+                    D_800B5488.field_8 = 0;
+                }
+            }
+            else
+            {
+                D_800B5488.field_78 = 0;
+                D_800B5488.field_8++;
+            }
+            break;
+
+        case 2:
+            func_800307BC();
+
+            switch (D_800B5488.field_38)
+            {
+                case 2:
+                    ioResult = read(D_800B5488.field_74, (void*)D_800B5488.field_68, D_800B5488.field_6C);
+                    break;
+
+                case 3:
+                case 4:
+                    ioResult = write(D_800B5488.field_74, (void*)D_800B5488.field_68, D_800B5488.field_6C);
+                    break;
+
+                default:
+                    ioResult = -1;
+                    break;
+            }
+
+            if (ioResult == -1)
+            {
+                if (D_800B5488.field_78++ >= 15)
+                {
+                    result             = 10;
+                    D_800B5488.field_4 = 0;
+                    D_800B5488.field_8 = 0;
+                    close(D_800B5488.field_74);
+                }
+            }
+            else
+            {
+                D_800B5488.field_8++;
+            }
+            break;
+
+        case 3:
+            switch (func_80030734())
+            {
+                case 4:
+                    result             = 11;
+                    D_800B5488.field_4 = 0;
+                    D_800B5488.field_8 = 0;
+                    close(D_800B5488.field_74);
+                    break;
+
+                case 0x100:
+                    result             = 0;
+                    D_800B5488.field_4 = 0;
+                    D_800B5488.field_8 = 0;
+                    close(D_800B5488.field_74);
+                    break;
+
+                case 0x2000:
+                    result             = 10;
+                    D_800B5488.field_4 = 0;
+                    D_800B5488.field_8 = 0;
+                    close(D_800B5488.field_74);
+
+                case 0x8000:
+                    D_800B5488.field_8 = 1;
+                    break;
+            }
+    }
+    return result;
+}
 
 void Savegame_DevicePathGenerate(s32 deviceId, char* result) // 0x800314A4
 {

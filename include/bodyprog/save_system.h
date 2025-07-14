@@ -226,6 +226,18 @@ s32 func_800309FC();
 
 void func_80030A0C();
 
+s32 func_80030AD8();
+
+s32 func_80030C88();
+
+s32 func_80030DC8();
+
+s32 func_800310B4();
+
+s32 func_80031184();
+
+s32 func_80031260();
+
 void Savegame_DevicePathGenerate(s32 deviceId, char* result);
 
 #endif
