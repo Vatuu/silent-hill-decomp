@@ -61,7 +61,8 @@ segments:
       - [0x0, rodata]
       - [0xAC, .rodata, save]
       - [0x138, rodata]
-      - [0x840, .rodata, bodyprog_800314EC] # Jumptable: `func_8003943C`
+      - [0x818, .rodata, bodyprog_800314EC] # Jumptable: `SysState_Gameplay_Update`
+                                            # Jumptable: `func_8003943C`
                                             # Jumptable & Data: `SysState_GameOver_Update`
       - [0x920, rodata]
       - [0x109C, .rodata, libsd/bodyprog_80045A7C]  # Jumptable: `Sd_EngineCmd`

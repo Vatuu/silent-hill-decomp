@@ -3765,8 +3765,6 @@ void GameState_InGame_Update() // 0x80038BD4
     }
 }
 
-// TODO: .rodata migration.
-#ifdef NON_MATCHING
 void SysState_Gameplay_Update() // 0x80038BD4
 {
     s32             state;
@@ -3812,7 +3810,7 @@ void SysState_Gameplay_Update() // 0x80038BD4
     }
 
     if (g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.light_A &&
-        g_SysWork.field_2388.field_154.field_0.field_0.field_0 & (1 << 1))
+        g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & (1 << 1))
     {
         func_8003ED08();
     }
@@ -3873,13 +3871,6 @@ void SysState_Gameplay_Update() // 0x80038BD4
         g_SysWork.flags_22A4 &= ~(1 << 7);
     }
 }
-#else
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", SysState_Gameplay_Update);
-#endif
-
-//extern const char D_80025394[] = "\x07PAUSED";
-
-extern char D_80025394[];
 
 void SysState_GamePaused_Update() // 0x800391E8
 {
@@ -3887,7 +3878,7 @@ void SysState_GamePaused_Update() // 0x800391E8
     if (((D_800A9A68 >> 11) & (1 << 0)) == 0)
     {
         Gfx_StringSetPosition(SCREEN_POSITION_X(39.25f), SCREEN_POSITION_Y(43.5f));
-        Gfx_StringDraw(D_80025394, 99); // "\x07PAUSED"
+        Gfx_StringDraw("\x07PAUSED", 99);
     }
 
     func_80091380();
@@ -4509,8 +4500,6 @@ void SysState_EventPlaySound_Update() // 0x8003A4B4
     g_SysWork.sysState_8 = 0;
 }
 
-extern const char D_80025448[] = "\aGAME_OVER";
-
 void SysState_GameOver_Update() // 0x8003A52C
 {
     #define TIP_COUNT 15
@@ -4606,7 +4595,7 @@ void SysState_GameOver_Update() // 0x8003A52C
 
         case 3:
             Gfx_StringSetPosition(SCREEN_POSITION_X(32.5f), SCREEN_POSITION_Y(43.5f));
-            Gfx_StringDraw(D_80025448, 0x63); // "\aGAME_OVER" TODO: Needs rodata migration.
+            Gfx_StringDraw("\aGAME_OVER", 0x63); // "\aGAME_OVER" TODO: Needs rodata migration.
             g_SysWork.field_28++;
 
             if ((g_ControllerPtrConst->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 |
@@ -4619,7 +4608,7 @@ void SysState_GameOver_Update() // 0x8003A52C
 
         case 4:
             Gfx_StringSetPosition(SCREEN_POSITION_X(32.5f), SCREEN_POSITION_Y(43.5f));
-            Gfx_StringDraw(D_80025448, 0x63); // "\aGAME_OVER" TODO: Needs rodata migration.
+            Gfx_StringDraw("\aGAME_OVER", 0x63); // "\aGAME_OVER" TODO: Needs rodata migration.
             func_8008616C(2, 1, 0, 0x2000, 0);
             break;
 

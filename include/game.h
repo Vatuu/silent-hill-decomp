@@ -1092,7 +1092,7 @@ extern void* g_OvlDynamic;
 extern s_SysWork               g_SysWork; // 0x800B9FC0
 extern s_GameWork              g_GameWork;
 extern s_GameWork* const       g_GameWorkConst;
-extern s_GameWork*             g_GameWorkPtr;
+extern s_GameWork* const       g_GameWorkPtr;
 extern s_ShSavegame* const     g_SavegamePtr;
 extern s_ControllerData* const g_ControllerPtrConst;
 extern s_ControllerData*       g_ControllerPtr;
