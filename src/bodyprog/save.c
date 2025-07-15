@@ -148,7 +148,7 @@ void func_8002ECE0(s_800B55E8* arg0) // 0x8002ECE0
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/save", func_8002ED7C);
 
-s32 func_8002F278(s32 arg0, s_func_8002F278* arg1) // 0x8002F278
+s32 func_8002F278(s32 arg0, s_800B5488_40* arg1) // 0x8002F278
 {
     s32 ret;
     s32 i;
@@ -156,7 +156,7 @@ s32 func_8002F278(s32 arg0, s_func_8002F278* arg1) // 0x8002F278
     ret = 15;
     for (i = 0; i < 15; i++)
     {
-        ret -= arg1->field_13B[i];
+        ret -= arg1->blockCounts_13B[i];
     }
 
     return ret + func_8002EA28(arg0);
@@ -365,12 +365,12 @@ void Savegame_CardEventsInit() // 0x80030414
 
 void Savegame_CardStateInit() // 0x80030444
 {
-    D_800B5488.state_4       = 0;
+    D_800B5488.state_4       = CardState_Idle;
     D_800B5488.stateStep_8   = 0;
     D_800B5488.stateResult_C = 0;
 }
 
-void Savegame_CardSwEventsInit()
+void Savegame_CardSwEventsInit() // 0x8003045C
 {
     EnterCriticalSection();
     D_800B5488.eventSwSpIOE_10    = OpenEvent(SwCARD, EvSpIOE, EvMdNOINTR, NULL);
@@ -525,18 +525,18 @@ s32 func_800308E4(s32 arg0, s32 arg1, s32 arg2, char* str, s32 arg4, s32 arg5, s
     {
         case 0:
         case 1:
-            D_800B5488.state_4     = 1;
+            D_800B5488.state_4     = CardState_Init;
             D_800B5488.stateStep_8 = 0;
             break;
 
         case 2:
         case 3:
-            D_800B5488.state_4     = 6;
+            D_800B5488.state_4     = CardState_FileOpen;
             D_800B5488.stateStep_8 = 0;
             break;
 
         case 4:
-            D_800B5488.state_4     = 5;
+            D_800B5488.state_4     = CardState_FileCreate;
             D_800B5488.stateStep_8 = 0;
             break;
 
@@ -547,65 +547,62 @@ s32 func_800308E4(s32 arg0, s32 arg1, s32 arg2, char* str, s32 arg4, s32 arg5, s
     D_800B5488.deviceId_3C = arg1;
     D_800B5488.field_40    = arg2;
 
-    Savegame_DevicePathGenerate(arg1, &D_800B5488.field_44);
-    strcat(&D_800B5488.field_44, str);
+    Savegame_DevicePathGenerate(arg1, &D_800B5488.filePath_44);
+    strcat(&D_800B5488.filePath_44, str);
 
-    D_800B5488.field_60 = arg4;
-    D_800B5488.field_64 = arg5;
-    D_800B5488.field_68 = arg6;
-    D_800B5488.field_6C = arg7;
-    D_800B5488.field_70 = 0;
+    D_800B5488.field_60      = arg4;
+    D_800B5488.seekOffset_64 = arg5;
+    D_800B5488.field_68      = arg6;
+    D_800B5488.field_6C      = arg7;
+    D_800B5488.field_70      = 0;
     return 1;
 }
 
 s32 func_800309FC() // 0x800309FC
 {
-    return D_800B5488.state_4 == 0;
+    return D_800B5488.state_4 == CardState_Idle;
 }
 
 void func_80030A0C() // 0x80030A0C
 {
     switch (D_800B5488.state_4)
     {
-        case 0:
+        case CardState_Idle:
             // HACK: Probably some optimized out code here.
             D_800B5488.stateResult_C += 0;
             break;
 
-        case 1:
-            D_800B5488.stateResult_C = func_80030AD8();
+        case CardState_Init:
+            D_800B5488.stateResult_C = Savegame_CardState_Init();
             break;
 
-        case 2:
-            D_800B5488.stateResult_C = func_80030C88();
+        case CardState_Check:
+            D_800B5488.stateResult_C = Savegame_CardState_Check();
             break;
 
-        case 3:
-            D_800B5488.stateResult_C = func_80030DC8();
+        case CardState_Load:
+            D_800B5488.stateResult_C = Savegame_CardState_Load();
             break;
 
-        case 4:
-            D_800B5488.stateResult_C = func_80030F7C();
+        case CardState_DirRead:
+            D_800B5488.stateResult_C = Savegame_CardState_DirRead();
             break;
 
-        case 5:
-            D_800B5488.stateResult_C = func_800310B4();
+        case CardState_FileCreate:
+            D_800B5488.stateResult_C = Savegame_CardState_FileCreate();
             break;
 
-        case 6:
-            D_800B5488.stateResult_C = func_80031184();
+        case CardState_FileOpen:
+            D_800B5488.stateResult_C = Savegame_CardState_FileOpen();
             break;
 
-        case 7:
-            D_800B5488.stateResult_C = func_80031260();
-            break;
-
-        default:
+        case CardState_FileReadWrite:
+            D_800B5488.stateResult_C = Savegame_CardState_FileReadWrite();
             break;
     }
 }
 
-s32 func_80030AD8() // 0x80030AD8
+s32 Savegame_CardState_Init() // 0x80030AD8
 {
     s32 channel;
     s32 result;
@@ -616,9 +613,9 @@ s32 func_80030AD8() // 0x80030AD8
     switch (D_800B5488.stateStep_8)
     {
         case 0:
-            D_800B5488.field_78    = 0;
-            D_800B5488.field_7C    = 0;
-            D_800B5488.stateStep_8 = 1;
+            D_800B5488.retryCount_78 = 0;
+            D_800B5488.field_7C      = 0;
+            D_800B5488.stateStep_8   = 1;
 
         case 1:
             Savegame_CardSwEventsReset();
@@ -628,7 +625,7 @@ s32 func_80030AD8() // 0x80030AD8
             }
             else
             {
-                D_800B5488.field_78++;
+                D_800B5488.retryCount_78++;
             }
             break;
 
@@ -639,17 +636,17 @@ s32 func_80030AD8() // 0x80030AD8
                     if (D_800B5488.field_38 == 0)
                     {
                         result                 = 3;
-                        D_800B5488.state_4     = 0;
+                        D_800B5488.state_4     = CardState_Idle;
                         D_800B5488.stateStep_8 = 0;
                     }
                     else if (!((D_800B5488.field_0 >> D_800B5488.deviceId_3C) & 1))
                     {
-                        D_800B5488.state_4     = 4;
+                        D_800B5488.state_4     = CardState_DirRead;
                         D_800B5488.stateStep_8 = 0;
                     }
                     else
                     {
-                        D_800B5488.state_4     = 2;
+                        D_800B5488.state_4     = CardState_Check;
                         D_800B5488.stateStep_8 = 0;
                     }
                     break;
@@ -659,19 +656,19 @@ s32 func_80030AD8() // 0x80030AD8
                     if (D_800B5488.field_38 == 0)
                     {
                         result                 = 2;
-                        D_800B5488.state_4     = 0;
+                        D_800B5488.state_4     = CardState_Idle;
                         D_800B5488.stateStep_8 = 0;
                     }
                     else
                     {
-                        D_800B5488.state_4     = 2;
+                        D_800B5488.state_4     = CardState_Check;
                         D_800B5488.stateStep_8 = 0;
                     }
                     break;
 
                 case EvSpTIMOUT:
                     result                 = 0;
-                    D_800B5488.state_4     = 0;
+                    D_800B5488.state_4     = CardState_Idle;
                     D_800B5488.stateStep_8 = 0;
                     break;
 
@@ -685,7 +682,7 @@ s32 func_80030AD8() // 0x80030AD8
     return result;
 }
 
-s32 func_80030C88() // 0x80030C88
+s32 Savegame_CardState_Check() // 0x80030C88
 {
     s32 channel;
     s32 result;
@@ -696,9 +693,9 @@ s32 func_80030C88() // 0x80030C88
     switch (D_800B5488.stateStep_8)
     {
         case 0:
-            D_800B5488.field_78    = 0;
-            D_800B5488.field_7C    = 0;
-            D_800B5488.stateStep_8 = 1;
+            D_800B5488.retryCount_78 = 0;
+            D_800B5488.field_7C      = 0;
+            D_800B5488.stateStep_8   = 1;
 
         case 1:
             Savegame_CardHwEventsReset();
@@ -712,13 +709,13 @@ s32 func_80030C88() // 0x80030C88
             switch (Savegame_CardHwEventsTest())
             {
                 case EvSpIOE:
-                    D_800B5488.state_4     = 3;
+                    D_800B5488.state_4     = CardState_Load;
                     D_800B5488.stateStep_8 = 0;
                     break;
 
                 case EvSpTIMOUT:
                     result                 = 0;
-                    D_800B5488.state_4     = 0;
+                    D_800B5488.state_4     = CardState_Idle;
                     D_800B5488.stateStep_8 = 0;
                     break;
 
@@ -733,7 +730,7 @@ s32 func_80030C88() // 0x80030C88
     return result;
 }
 
-s32 func_80030DC8() // 0x80030DC8
+s32 Savegame_CardState_Load() // 0x80030DC8
 {
     s32 channel;
     s32 result;
@@ -744,9 +741,9 @@ s32 func_80030DC8() // 0x80030DC8
     switch (D_800B5488.stateStep_8)
     {
         case 0:
-            D_800B5488.field_78    = 0;
-            D_800B5488.field_7C    = 0;
-            D_800B5488.stateStep_8 = 1;
+            D_800B5488.retryCount_78 = 0;
+            D_800B5488.field_7C      = 0;
+            D_800B5488.stateStep_8   = 1;
 
         case 1:
             Savegame_CardSwEventsReset();
@@ -768,29 +765,29 @@ s32 func_80030DC8() // 0x80030DC8
             switch (Savegame_CardSwEventsTest())
             {
                 case EvSpIOE:
-                    D_800B5488.state_4     = 4;
+                    D_800B5488.state_4     = CardState_DirRead;
                     D_800B5488.stateStep_8 = 0;
                     D_800B5488.field_0 &= ~(1 << D_800B5488.deviceId_3C);
                     break;
 
                 case EvSpNEW:
                     D_800B5488.field_0 |= 1 << D_800B5488.deviceId_3C;
-                    if (D_800B5488.field_78 < 3)
+                    if (D_800B5488.retryCount_78 < 3)
                     {
-                        D_800B5488.field_78 += 1;
+                        D_800B5488.retryCount_78++;
                         D_800B5488.stateStep_8 = 1;
                     }
                     else
                     {
                         result                 = 4;
-                        D_800B5488.state_4     = 0;
+                        D_800B5488.state_4     = CardState_Idle;
                         D_800B5488.stateStep_8 = 0;
                     }
                     break;
 
                 case EvSpTIMOUT:
                     result                 = 0;
-                    D_800B5488.state_4     = 0;
+                    D_800B5488.state_4     = CardState_Idle;
                     D_800B5488.stateStep_8 = 0;
                     break;
 
@@ -804,7 +801,7 @@ s32 func_80030DC8() // 0x80030DC8
     return result;
 }
 
-s32 func_80030F7C() // 0x80030F7C
+s32 Savegame_CardState_DirRead() // 0x80030F7C
 {
     struct DIRENTRY  fileInfo;
     struct DIRENTRY* curFile;
@@ -842,13 +839,13 @@ s32 func_80030F7C() // 0x80030F7C
 
     retval = (D_800B5488.field_70 == 1) ? 5 : 6;
 
-    D_800B5488.state_4     = 0;
+    D_800B5488.state_4     = CardState_Idle;
     D_800B5488.stateStep_8 = 0;
 
     return retval;
 }
 
-s32 func_800310B4() // 0x800310B4
+s32 Savegame_CardState_FileCreate() // 0x800310B4
 {
     s32 result;
 
@@ -857,25 +854,25 @@ s32 func_800310B4() // 0x800310B4
     switch (D_800B5488.stateStep_8)
     {
         case 0:
-            D_800B5488.field_78    = 0;
-            D_800B5488.field_7C    = 0;
-            D_800B5488.stateStep_8 = 1;
+            D_800B5488.retryCount_78 = 0;
+            D_800B5488.field_7C      = 0;
+            D_800B5488.stateStep_8   = 1;
         case 1:
-            D_800B5488.field_74 = open(D_800B5488.field_44, (D_800B5488.field_60 << 16) | O_CREAT);
-            if (D_800B5488.field_74 == -1)
+            D_800B5488.fileHandle_74 = open(D_800B5488.filePath_44, (D_800B5488.field_60 << 16) | O_CREAT);
+            if (D_800B5488.fileHandle_74 == -1)
             {
-                if (D_800B5488.field_78++ >= 15)
+                if (D_800B5488.retryCount_78++ >= 15)
                 {
                     result                 = 7;
-                    D_800B5488.state_4     = 0;
+                    D_800B5488.state_4     = CardState_Idle;
                     D_800B5488.stateStep_8 = 0;
                     break;
                 }
             }
             else
             {
-                close(D_800B5488.field_74);
-                D_800B5488.state_4     = 6;
+                close(D_800B5488.fileHandle_74);
+                D_800B5488.state_4     = CardState_FileOpen;
                 D_800B5488.stateStep_8 = 0;
             }
             break;
@@ -883,7 +880,7 @@ s32 func_800310B4() // 0x800310B4
     return result;
 }
 
-s32 func_80031184() // 0x80031184
+s32 Savegame_CardState_FileOpen() // 0x80031184
 {
     s32 mode;
     s32 result;
@@ -893,9 +890,9 @@ s32 func_80031184() // 0x80031184
     switch (D_800B5488.stateStep_8)
     {
         case 0:
-            D_800B5488.field_78    = 0;
-            D_800B5488.field_7C    = 0;
-            D_800B5488.stateStep_8 = 1;
+            D_800B5488.retryCount_78 = 0;
+            D_800B5488.field_7C      = 0;
+            D_800B5488.stateStep_8   = 1;
         case 1:
             switch (D_800B5488.field_38)
             {
@@ -913,21 +910,21 @@ s32 func_80031184() // 0x80031184
                     break;
             }
 
-            D_800B5488.field_74 = open(D_800B5488.field_44, mode | O_NOWAIT);
+            D_800B5488.fileHandle_74 = open(D_800B5488.filePath_44, mode | O_NOWAIT);
 
-            if (D_800B5488.field_74 == -1)
+            if (D_800B5488.fileHandle_74 == -1)
             {
-                if (D_800B5488.field_78++ >= 15)
+                if (D_800B5488.retryCount_78++ >= 15)
                 {
                     result                 = 8;
-                    D_800B5488.state_4     = 0;
+                    D_800B5488.state_4     = CardState_Idle;
                     D_800B5488.stateStep_8 = 0;
                     break;
                 }
             }
             else
             {
-                D_800B5488.state_4     = 7;
+                D_800B5488.state_4     = CardState_FileReadWrite;
                 D_800B5488.stateStep_8 = 0;
             }
             break;
@@ -935,7 +932,7 @@ s32 func_80031184() // 0x80031184
     return result;
 }
 
-s32 func_80031260() // 0x80031260
+s32 Savegame_CardState_FileReadWrite() // 0x80031260
 {
     s32 result;
     s32 ioResult;
@@ -945,23 +942,23 @@ s32 func_80031260() // 0x80031260
     switch (D_800B5488.stateStep_8)
     {
         case 0:
-            D_800B5488.field_78    = 0;
-            D_800B5488.field_7C    = 0;
-            D_800B5488.stateStep_8 = 1;
+            D_800B5488.retryCount_78 = 0;
+            D_800B5488.field_7C      = 0;
+            D_800B5488.stateStep_8   = 1;
 
         case 1:
-            if (lseek(D_800B5488.field_74, D_800B5488.field_64, 0) == -1)
+            if (lseek(D_800B5488.fileHandle_74, D_800B5488.seekOffset_64, 0) == -1)
             {
-                if (D_800B5488.field_78++ >= 15)
+                if (D_800B5488.retryCount_78++ >= 15)
                 {
                     result                 = 9;
-                    D_800B5488.state_4     = 0;
+                    D_800B5488.state_4     = CardState_Idle;
                     D_800B5488.stateStep_8 = 0;
                 }
             }
             else
             {
-                D_800B5488.field_78 = 0;
+                D_800B5488.retryCount_78 = 0;
                 D_800B5488.stateStep_8++;
             }
             break;
@@ -972,12 +969,12 @@ s32 func_80031260() // 0x80031260
             switch (D_800B5488.field_38)
             {
                 case 2:
-                    ioResult = read(D_800B5488.field_74, (void*)D_800B5488.field_68, D_800B5488.field_6C);
+                    ioResult = read(D_800B5488.fileHandle_74, (void*)D_800B5488.field_68, D_800B5488.field_6C);
                     break;
 
                 case 3:
                 case 4:
-                    ioResult = write(D_800B5488.field_74, (void*)D_800B5488.field_68, D_800B5488.field_6C);
+                    ioResult = write(D_800B5488.fileHandle_74, (void*)D_800B5488.field_68, D_800B5488.field_6C);
                     break;
 
                 default:
@@ -987,12 +984,12 @@ s32 func_80031260() // 0x80031260
 
             if (ioResult == -1)
             {
-                if (D_800B5488.field_78++ >= 15)
+                if (D_800B5488.retryCount_78++ >= 15)
                 {
                     result                 = 10;
-                    D_800B5488.state_4     = 0;
+                    D_800B5488.state_4     = CardState_Idle;
                     D_800B5488.stateStep_8 = 0;
-                    close(D_800B5488.field_74);
+                    close(D_800B5488.fileHandle_74);
                 }
             }
             else
@@ -1006,23 +1003,23 @@ s32 func_80031260() // 0x80031260
             {
                 case EvSpIOE:
                     result                 = 11;
-                    D_800B5488.state_4     = 0;
+                    D_800B5488.state_4     = CardState_Idle;
                     D_800B5488.stateStep_8 = 0;
-                    close(D_800B5488.field_74);
+                    close(D_800B5488.fileHandle_74);
                     break;
 
                 case EvSpTIMOUT:
                     result                 = 0;
-                    D_800B5488.state_4     = 0;
+                    D_800B5488.state_4     = CardState_Idle;
                     D_800B5488.stateStep_8 = 0;
-                    close(D_800B5488.field_74);
+                    close(D_800B5488.fileHandle_74);
                     break;
 
                 case EvSpNEW:
                     result                 = 10;
-                    D_800B5488.state_4     = 0;
+                    D_800B5488.state_4     = CardState_Idle;
                     D_800B5488.stateStep_8 = 0;
-                    close(D_800B5488.field_74);
+                    close(D_800B5488.fileHandle_74);
 
                 case EvSpERROR:
                     D_800B5488.stateStep_8 = 1;

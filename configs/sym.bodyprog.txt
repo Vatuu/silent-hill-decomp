@@ -49,6 +49,14 @@ Savegame_CardHwEventSpNEW = 0x800308A4; // type:func
 Savegame_CardHwEventSpTIMOUT = 0x800308B4; // type:func
 Savegame_CardHwEventSpUNKNOWN = 0x800308C4; // type:func
 
+Savegame_CardState_Init = 0x80030AD8; // type:func
+Savegame_CardState_Check = 0x80030C88; // type:func
+Savegame_CardState_Load = 0x80030DC8; // type:func
+Savegame_CardState_DirRead = 0x80030F7C; // type:func
+Savegame_CardState_FileCreate = 0x800310B4; // type:func
+Savegame_CardState_FileOpen = 0x80031184; // type:func
+Savegame_CardState_FileReadWrite = 0x80031260; // type:func
+
 Savegame_DevicePathGenerate = 0x800314A4; // type:func
 
 Gfx_BackgroundSpriteDraw = 0x800314EC; // type:func

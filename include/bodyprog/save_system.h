@@ -8,17 +8,27 @@
  * to the savegame system.
  */
 
+// ========
+// ENUMS
+// ========
+
+typedef enum
+{
+    CardState_Idle = 0,
+    CardState_Init = 1,
+    CardState_Check = 2,
+    CardState_Load = 3,
+    CardState_DirRead = 4,
+    CardState_FileCreate = 5,
+    CardState_FileOpen = 6,
+    CardState_FileReadWrite = 7
+} e_CardState;
+
 // ================
 // UNKNOWN STRUCTS
 // ================
 
 /* Struct called by functions that haven't been identified. */
-
-typedef struct 
-{
-    u8 unk_0[315];
-    u8 field_13B[15];
-} s_func_8002F278;
 
 typedef struct 
 {
@@ -63,6 +73,7 @@ typedef struct
     s8   unk_A0[352];
 } s_PsxSaveBlock;
 STATIC_ASSERT_SIZEOF(s_PsxSaveBlock, 512);
+
 
 // ========
 // GLOBALS
@@ -146,7 +157,7 @@ void func_8002EB88(); // Return type assumed.
 
 void func_8002ECE0(s_800B55E8* arg0);
 
-s32 func_8002F278(s32 arg0, s_func_8002F278* arg1);
+s32 func_8002F278(s32 arg0, s_800B5488_40* arg1);
 
 void func_8002FB64(s_func_8002FB64 *arg0);
 
@@ -224,17 +235,19 @@ s32 func_800309FC();
 
 void func_80030A0C();
 
-s32 func_80030AD8();
+s32 Savegame_CardState_1();
 
-s32 func_80030C88();
+s32 Savegame_CardState_2();
 
-s32 func_80030DC8();
+s32 Savegame_CardState_3();
 
-s32 func_800310B4();
+s32 Savegame_CardState_4();
 
-s32 func_80031184();
+s32 Savegame_CardState_5();
 
-s32 func_80031260();
+s32 Savegame_CardState_6();
+
+s32 Savegame_CardState_7();
 
 void Savegame_DevicePathGenerate(s32 deviceId, char* result);
 
