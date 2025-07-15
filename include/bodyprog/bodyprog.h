@@ -352,44 +352,6 @@ typedef struct
     s32 queueIdx_1000;
 } s_800BE9FC;
 
-// Save-system related structs.
-// TODO: Move to `save_system.h` if never used outside of `save.c`.
-typedef struct
-{
-    char fileNames_0[15][21];
-    u8   blockCounts_13B[15]; // Size of each file in 8192 byte blocks.
-} s_800B5488_40;
-typedef struct
-{
-    s32            field_0;
-    s32            state_4; /** `e_CardState` */
-    s32            stateStep_8;
-    s32            stateResult_C;
-    s32            eventSwSpIOE_10;
-    s32            eventSwSpERROR_14;
-    s32            eventSwSpTIMOUT_18;
-    s32            eventSwSpNEW_1C;
-    s32            eventHwSpIOE_20;
-    s32            eventHwSpERROR_24;
-    s32            eventHwSpTIMOUT_28;
-    s32            eventHwSpNEW_2C;
-    s32            eventHwSpUNKNOWN_30;
-    s32            lastEventHw_34;
-    s32            field_38;
-    s32            deviceId_3C;
-    s_800B5488_40* field_40;
-    char           filePath_44[28];
-    s32            field_60;
-    s32            seekOffset_64;
-    s32            field_68;
-    s32            field_6C;
-    s32            field_70;
-    s32            fileHandle_74;
-    s32            retryCount_78;
-    s32            field_7C;
-} s_800B5488;
-STATIC_ASSERT_SIZEOF(s_800B5488, 128);
-
 typedef struct
 {
     s32 field_0;
@@ -1254,8 +1216,6 @@ extern s_800B55E8 D_800B3680[];
 extern s_800B55E8 D_800B4580[];
 
 extern s32 D_800B5480;
-
-extern s_800B5488 D_800B5488;
 
 extern s_800B55E8 D_800B55E8[2];
 

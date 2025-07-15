@@ -304,7 +304,7 @@ s32 func_80030288(s32 deviceId) // 0x80030288
     _new_card();
     _card_write(((deviceId & (1 << 2)) << 2) | (deviceId & 0x3), 0, cardBuf);
 
-    D_800B5488.field_0 |= 1 << D_800B5488.deviceId_3C;
+    D_800B5488.devicesConnected_0 |= 1 << D_800B5488.deviceId_3C;
 
     return Savegame_CardHwEventsTest() != 0;
 }
@@ -353,7 +353,7 @@ void Savegame_CardInit() // 0x800303E4
 {
     InitCARD(0);
     StartCARD();
-    D_800B5488.field_0 = NO_VALUE;
+    D_800B5488.devicesConnected_0 = NO_VALUE;
 }
 
 void Savegame_CardEventsInit() // 0x80030414
@@ -632,14 +632,14 @@ s32 Savegame_CardState_Init() // 0x80030AD8
         case 2:
             switch (Savegame_CardSwEventsTest())
             {
-                case EvSpIOE:
+                case EvSpIOE: // Connected.
                     if (D_800B5488.field_38 == 0)
                     {
                         result                 = 3;
                         D_800B5488.state_4     = CardState_Idle;
                         D_800B5488.stateStep_8 = 0;
                     }
-                    else if (!((D_800B5488.field_0 >> D_800B5488.deviceId_3C) & 1))
+                    else if (!((D_800B5488.devicesConnected_0 >> D_800B5488.deviceId_3C) & 1))
                     {
                         D_800B5488.state_4     = CardState_DirRead;
                         D_800B5488.stateStep_8 = 0;
@@ -651,7 +651,7 @@ s32 Savegame_CardState_Init() // 0x80030AD8
                     }
                     break;
 
-                case EvSpNEW:
+                case EvSpNEW: // "No writing after connection"
                     D_800B5488.field_70 = 1;
                     if (D_800B5488.field_38 == 0)
                     {
@@ -666,13 +666,13 @@ s32 Savegame_CardState_Init() // 0x80030AD8
                     }
                     break;
 
-                case EvSpTIMOUT:
+                case EvSpTIMOUT: // Not connected.
                     result                 = 0;
                     D_800B5488.state_4     = CardState_Idle;
                     D_800B5488.stateStep_8 = 0;
                     break;
 
-                case EvSpERROR:
+                case EvSpERROR: // Error.
                     D_800B5488.stateStep_8 = 1;
                     break;
             }
@@ -708,19 +708,19 @@ s32 Savegame_CardState_Check() // 0x80030C88
         case 2:
             switch (Savegame_CardHwEventsTest())
             {
-                case EvSpIOE:
+                case EvSpIOE: // Completed.
                     D_800B5488.state_4     = CardState_Load;
                     D_800B5488.stateStep_8 = 0;
                     break;
 
-                case EvSpTIMOUT:
+                case EvSpTIMOUT: // Card not connected.
                     result                 = 0;
                     D_800B5488.state_4     = CardState_Idle;
                     D_800B5488.stateStep_8 = 0;
                     break;
 
-                case EvSpNEW:
-                case EvSpERROR:
+                case EvSpNEW:   // New card detected.
+                case EvSpERROR: // Error.
                     D_800B5488.stateStep_8 = 1;
                     break;
             }
@@ -752,11 +752,11 @@ s32 Savegame_CardState_Load() // 0x80030DC8
                 D_800B5488.stateStep_8++;
                 if (!(D_800B5488.deviceId_3C & 4))
                 {
-                    D_800B5488.field_0 |= 0xF;
+                    D_800B5488.devicesConnected_0 |= 0xF;
                 }
                 else
                 {
-                    D_800B5488.field_0 |= 0xF0;
+                    D_800B5488.devicesConnected_0 |= 0xF0;
                 }
             }
             break;
@@ -764,14 +764,14 @@ s32 Savegame_CardState_Load() // 0x80030DC8
         case 2:
             switch (Savegame_CardSwEventsTest())
             {
-                case EvSpIOE:
+                case EvSpIOE: // Read completed.
                     D_800B5488.state_4     = CardState_DirRead;
                     D_800B5488.stateStep_8 = 0;
-                    D_800B5488.field_0 &= ~(1 << D_800B5488.deviceId_3C);
+                    D_800B5488.devicesConnected_0 &= ~(1 << D_800B5488.deviceId_3C);
                     break;
 
-                case EvSpNEW:
-                    D_800B5488.field_0 |= 1 << D_800B5488.deviceId_3C;
+                case EvSpNEW: // Uninitialized card.
+                    D_800B5488.devicesConnected_0 |= 1 << D_800B5488.deviceId_3C;
                     if (D_800B5488.retryCount_78 < 3)
                     {
                         D_800B5488.retryCount_78++;
@@ -785,13 +785,13 @@ s32 Savegame_CardState_Load() // 0x80030DC8
                     }
                     break;
 
-                case EvSpTIMOUT:
+                case EvSpTIMOUT: // Not connected.
                     result                 = 0;
                     D_800B5488.state_4     = CardState_Idle;
                     D_800B5488.stateStep_8 = 0;
                     break;
 
-                case EvSpERROR:
+                case EvSpERROR: // Error.
                     D_800B5488.stateStep_8 = 1;
                     break;
             }
@@ -1001,27 +1001,27 @@ s32 Savegame_CardState_FileReadWrite() // 0x80031260
         case 3:
             switch (Savegame_CardSwEventsTest())
             {
-                case EvSpIOE:
+                case EvSpIOE: // Completed.
                     result                 = 11;
                     D_800B5488.state_4     = CardState_Idle;
                     D_800B5488.stateStep_8 = 0;
                     close(D_800B5488.fileHandle_74);
                     break;
 
-                case EvSpTIMOUT:
+                case EvSpTIMOUT: // Card not connected.
                     result                 = 0;
                     D_800B5488.state_4     = CardState_Idle;
                     D_800B5488.stateStep_8 = 0;
                     close(D_800B5488.fileHandle_74);
                     break;
 
-                case EvSpNEW:
+                case EvSpNEW: // New card detected.
                     result                 = 10;
                     D_800B5488.state_4     = CardState_Idle;
                     D_800B5488.stateStep_8 = 0;
                     close(D_800B5488.fileHandle_74);
 
-                case EvSpERROR:
+                case EvSpERROR: // Error.
                     D_800B5488.stateStep_8 = 1;
                     break;
             }
@@ -1033,6 +1033,7 @@ void Savegame_DevicePathGenerate(s32 deviceId, char* result) // 0x800314A4
 {
     strcpy(result, "buXX:");
 
-    result[2] = '0' + ((deviceId & (1 << 2)) >> 2); // Packed device ID?
+    // Convert sequential device ID to PSX channel number
+    result[2] = '0' + ((deviceId & (1 << 2)) >> 2);
     result[3] = '0' + (deviceId & 3);
 }
