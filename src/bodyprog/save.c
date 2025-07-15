@@ -4,6 +4,7 @@
 #include "bodyprog/save_system.h"
 
 #include <libapi.h>
+#include <limits.h>
 #include <sys/file.h>
 
 /** It is possible that more functions from `bodyprog.c` are
@@ -264,7 +265,7 @@ void Savegame_FilenameGenerate(char* dest, s32 saveIdx) // 0x80030000
     strcat(dest, buf);
 }
 
-void func_800300B4(s_PsxSaveBlock* saveBlock, s8 blockCount, s32 saveIdx) // 0x800300B4
+void Savegame_SaveBlockInit(s_PsxSaveBlock* saveBlock, s8 blockCount, s32 saveIdx) // 0x800300B4
 {
     char      saveIdxStr[8];
     TIM_IMAGE iconTexture;
@@ -294,8 +295,9 @@ void func_800300B4(s_PsxSaveBlock* saveBlock, s8 blockCount, s32 saveIdx) // 0x8
     memcpy(saveBlock->textureData_80, iconTexture.paddr, iconTexture.prect->w * iconTexture.prect->h * 2);
 }
 
-s32 func_80030288(s32 deviceId) // 0x80030288
+s32 Savegame_CardDeviceTest(s32 deviceId) // 0x80030288
 {
+    // Unused function? Appears to write 0xFF to first 128 bytes of card and check if event is triggered.
     u8 cardBuf[128];
 
     memset(cardBuf, 0xFF, 128);
@@ -304,7 +306,7 @@ s32 func_80030288(s32 deviceId) // 0x80030288
     _new_card();
     _card_write(((deviceId & (1 << 2)) << 2) | (deviceId & 0x3), 0, cardBuf);
 
-    D_800B5488.devicesConnected_0 |= 1 << D_800B5488.deviceId_3C;
+    D_800B5488.devicesPending_0 |= 1 << D_800B5488.deviceId_3C;
 
     return Savegame_CardHwEventsTest() != 0;
 }
@@ -353,7 +355,7 @@ void Savegame_CardInit() // 0x800303E4
 {
     InitCARD(0);
     StartCARD();
-    D_800B5488.devicesConnected_0 = NO_VALUE;
+    D_800B5488.devicesPending_0 = UINT_MAX; // All bits set.
 }
 
 void Savegame_CardEventsInit() // 0x80030414
@@ -512,7 +514,7 @@ s32 Savegame_CardResult() // 0x800308D4
     return D_800B5488.stateResult_C;
 }
 
-s32 Savegame_CardRequest(e_CardIoMode mode, s32 deviceId, s_CardDirectory* outDirectory, char* fileName, s32 arg4, s32 fileOffset, s32 outBuffer, s32 outSize) // 0x800308E4
+s32 Savegame_CardRequest(e_CardIoMode mode, s32 deviceId, s_CardDirectory* outDirectory, char* fileName, s32 createBlockCount, s32 fileOffset, s32 outBuffer, s32 outSize) // 0x800308E4
 {
     if (!Savegame_CardIsIdle())
     {
@@ -547,7 +549,7 @@ s32 Savegame_CardRequest(e_CardIoMode mode, s32 deviceId, s_CardDirectory* outDi
     Savegame_DevicePathGenerate(deviceId, &D_800B5488.filePath_44);
     strcat(&D_800B5488.filePath_44, fileName);
 
-    D_800B5488.field_60      = arg4;
+    D_800B5488.createBlockCount_60 = createBlockCount;
     D_800B5488.seekOffset_64 = fileOffset;
     D_800B5488.dataBuffer_68 = outBuffer;
     D_800B5488.dataSize_6C   = outSize;
@@ -636,7 +638,7 @@ s32 Savegame_CardState_Init() // 0x80030AD8
                         D_800B5488.state_4     = CardState_Idle;
                         D_800B5488.stateStep_8 = 0;
                     }
-                    else if (!((D_800B5488.devicesConnected_0 >> D_800B5488.deviceId_3C) & 1))
+                    else if (!((D_800B5488.devicesPending_0 >> D_800B5488.deviceId_3C) & 1))
                     {
                         D_800B5488.state_4     = CardState_DirRead;
                         D_800B5488.stateStep_8 = 0;
@@ -749,11 +751,11 @@ s32 Savegame_CardState_Load() // 0x80030DC8
                 D_800B5488.stateStep_8++;
                 if (!(D_800B5488.deviceId_3C & 4))
                 {
-                    D_800B5488.devicesConnected_0 |= 0xF;
+                    D_800B5488.devicesPending_0 |= 0xF;
                 }
                 else
                 {
-                    D_800B5488.devicesConnected_0 |= 0xF0;
+                    D_800B5488.devicesPending_0 |= 0xF0;
                 }
             }
             break;
@@ -764,11 +766,11 @@ s32 Savegame_CardState_Load() // 0x80030DC8
                 case EvSpIOE: // Read completed.
                     D_800B5488.state_4     = CardState_DirRead;
                     D_800B5488.stateStep_8 = 0;
-                    D_800B5488.devicesConnected_0 &= ~(1 << D_800B5488.deviceId_3C);
+                    D_800B5488.devicesPending_0 &= ~(1 << D_800B5488.deviceId_3C);
                     break;
 
                 case EvSpNEW: // Uninitialized card.
-                    D_800B5488.devicesConnected_0 |= 1 << D_800B5488.deviceId_3C;
+                    D_800B5488.devicesPending_0 |= 1 << D_800B5488.deviceId_3C;
                     if (D_800B5488.retryCount_78 < 3)
                     {
                         D_800B5488.retryCount_78++;
@@ -855,7 +857,7 @@ s32 Savegame_CardState_FileCreate() // 0x800310B4
             D_800B5488.field_7C      = 0;
             D_800B5488.stateStep_8   = 1;
         case 1:
-            D_800B5488.fileHandle_74 = open(D_800B5488.filePath_44, (D_800B5488.field_60 << 16) | O_CREAT);
+            D_800B5488.fileHandle_74 = open(D_800B5488.filePath_44, (D_800B5488.createBlockCount_60 << 16) | O_CREAT);
             if (D_800B5488.fileHandle_74 == -1)
             {
                 if (D_800B5488.retryCount_78++ >= 15)

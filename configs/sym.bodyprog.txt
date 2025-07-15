@@ -24,13 +24,12 @@ Savegame_CopyWithChecksum = 0x8002FCCC; // type:func
 Savegame_ChecksumUpdate = 0x8002FF30; // type:func
 Savegame_ChecksumValidate = 0x8002FF74; // type:func
 Savegame_ChecksumGenerate = 0x8002FFD0; // type:func
-
 Savegame_FilenameGenerate = 0x80030000; // type:func
-
+Savegame_SaveBlockInit = 0x800300B4; // type:func
+Savegame_CardDeviceTest = 0x80030288; // type:func
 Savegame_CardDeviceFormat = 0x8003030C; // type:func
 Savegame_CardFileErase = 0x80030334; // type:func
 Savegame_CardFileRename = 0x80030370; // type:func
-
 Savegame_CardInit = 0x800303E4; // type:func
 Savegame_CardEventsInit = 0x80030414; // type:func
 Savegame_CardStateInit = 0x80030444; // type:func

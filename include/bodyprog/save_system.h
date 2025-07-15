@@ -57,8 +57,8 @@ typedef struct
 
 typedef struct
 {
-    s32 devicesConnected_0; /** Bitfield of known connected device IDs, each bit index corresponds to an ID. */
-    s32 state_4;            /** `e_CardState` */
+    s32 devicesPending_0; /** Bitfield of device IDs, each set bit index is an ID that must be read/inited first. */
+    s32 state_4;          /** `e_CardState` */
     s32 stateStep_8;
     s32 stateResult_C;
     s32 eventSwSpIOE_10;
@@ -77,7 +77,7 @@ typedef struct
     s_CardDirectory* cardDirectory_40; /** Array of files on the card, pointer supplied by caller to `Savegame_CardRequest`. */
 
     char  filePath_44[28];
-    s32   field_60;
+    s32   createBlockCount_60; /** Block count passed to `open` when creating new file. */
     s32   seekOffset_64;
     void* dataBuffer_68;
     s32   dataSize_6C;
@@ -231,9 +231,9 @@ u8 Savegame_ChecksumGenerate(s8* saveData, s32 saveDataLength);
 /** Generates a save filename for the given save index. */
 void Savegame_FilenameGenerate(char* dest, s32 saveIdx);
 
-void func_800300B4(s_PsxSaveBlock* saveBlock, s8 blockCount, s32 saveIdx);
+void Savegame_SaveBlockInit(s_PsxSaveBlock* saveBlock, s8 blockCount, s32 saveIdx);
 
-s32 func_80030288(s32 deviceId);
+s32 Savegame_CardDeviceTest(s32 deviceId);
 
 s32 Savegame_CardDeviceFormat(s32 deviceId);
 
@@ -277,7 +277,7 @@ void Savegame_CardHwEventSpUNKNOWN();
 
 s32 Savegame_CardResult();
 
-s32 Savegame_CardRequest(e_CardIoMode mode, s32 deviceId, s_CardDirectory* outDirectory, char* fileName, s32 arg4, s32 fileOffset, s32 outBuffer, s32 outSize);
+s32 Savegame_CardRequest(e_CardIoMode mode, s32 deviceId, s_CardDirectory* outDirectory, char* fileName, s32 createBlockCount, s32 fileOffset, s32 outBuffer, s32 outSize);
 
 s32 Savegame_CardIsIdle();
 
