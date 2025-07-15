@@ -7,15 +7,15 @@
 #include <sys/file.h>
 
 /** It is possible that more functions from `bodyprog.c` are
-* actually functions from `save_system`.
-*/
+ * actually functions from `save_system`.
+ */
 
 s32 func_8002E94C(s32 arg0, s32 arg1, s32 fileIdx, s32 saveIdx) // 0x8002E94C
 {
-    //s_800B5508_sub* ptr; // TODO: Use this instead.
+    // s_800B5508_sub* ptr; // TODO: Use this instead.
     s32* ptr;
 
-    if (D_800B5508[8].field_0 != 0) 
+    if (D_800B5508[8].field_0 != 0)
     {
         return 0;
     }
@@ -66,8 +66,8 @@ s32 func_8002E9EC(s32 arg0, s32 fileIdx, s32 saveIdx) // 0x8002E9EC
     s32 var2;
 
     var0 = D_800B5508[arg0].field_14;
-    var1 = fileIdx << 8; 
-    var2 = (saveIdx * 12) + 4; 
+    var1 = fileIdx << 8;
+    var2 = (saveIdx * 12) + 4;
     return var0 + var1 + var2;
 }
 
@@ -97,8 +97,8 @@ s32 func_8002EA78(s32 idx) // 0x8002EA78
 s32 func_8002EABC(s32* arg0, s32* arg1, s32* arg2) // 0x8002EABC
 {
     VECTOR vec; // Vaguely assumed to be a `VECTOR`.
-    s32 i;
-    s32 ret;
+    s32    i;
+    s32    ret;
 
     ret = 0;
 
@@ -106,13 +106,13 @@ s32 func_8002EABC(s32* arg0, s32* arg1, s32* arg2) // 0x8002EABC
     *arg1 = 0;
     *arg2 = 0;
 
-    for (i = 0; i < 8; i++) 
+    for (i = 0; i < 8; i++)
     {
-        if (D_800B5508[i].field_0 == 3) 
+        if (D_800B5508[i].field_0 == 3)
         {
             func_8002FE70(i, &vec);
 
-            if (ret < vec.vx) 
+            if (ret < vec.vx)
             {
                 *arg0 = i;
 
@@ -131,9 +131,9 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/save", func_8002EB88);
 
 void func_8002ECE0(s_800B55E8* arg0) // 0x8002ECE0
 {
-    if (func_8003030C(arg0->field_4) != 0)
+    if (Savegame_CardDeviceFormat(arg0->field_4) != 0)
     {
-        arg0->field_14 = 11;
+        arg0->field_14                    = 11;
         D_800B5508[arg0->field_4].field_0 = 3;
 
         func_8002E730(arg0->field_4);
@@ -151,10 +151,10 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/save", func_8002ED7C);
 s32 func_8002F278(s32 arg0, s_func_8002F278* arg1) // 0x8002F278
 {
     s32 ret;
-    s32 i; 
+    s32 i;
 
     ret = 15;
-    for (i = 0; i < 15; i++) 
+    for (i = 0; i < 15; i++)
     {
         ret -= arg1->field_13B[i];
     }
@@ -167,7 +167,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/save", func_8002F2C4);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/save", func_8002F61C);
 
-void func_8002FB64(s_func_8002FB64 *arg0) // 0x8002FB64
+void func_8002FB64(s_func_8002FB64* arg0) // 0x8002FB64
 {
     s32 i;
 
@@ -198,14 +198,14 @@ void Savegame_CopyWithChecksum(s_ShSavegameContainer* dest, s_ShSavegame* src) /
 }
 
 void func_8002FD5C(s32 arg0, s32 arg1, s32 arg2) // 0x8002FD5C
-{ 
+{
     s_func_8002FB64* ptr;
 
     ptr = (s_func_8002FB64*)D_800B5508[arg0].field_14;
     ptr = &ptr[arg1];
 
-    func_8002FDB0(arg0, arg1, arg2); 
-    Savegame_ChecksumUpdate(&ptr->field_FC, ptr, sizeof(s_func_8002FB64));  
+    func_8002FDB0(arg0, arg1, arg2);
+    Savegame_ChecksumUpdate(&ptr->field_FC, ptr, sizeof(s_func_8002FB64));
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/save", func_8002FDB0);
@@ -300,16 +300,16 @@ s32 func_80030288(s32 deviceId) // 0x80030288
 
     memset(cardBuf, 0xFF, 128);
 
-    func_80030820();
+    Savegame_CardHwEventsReset();
     _new_card();
-    _card_write(((deviceId & 0x4) * 4) | (deviceId & 0x3), 0, cardBuf);
+    _card_write(((deviceId & (1 << 2)) << 2) | (deviceId & 0x3), 0, cardBuf);
 
-    D_800B5488.field_0 |= 1 << D_800B5488.field_3C;
+    D_800B5488.field_0 |= 1 << D_800B5488.deviceId_3C;
 
-    return func_80030810() != 0;
+    return Savegame_CardHwEventsTest() != 0;
 }
 
-s32 func_8003030C(s32 deviceId) // 0x8003030C
+s32 Savegame_CardDeviceFormat(s32 deviceId) // 0x8003030C
 {
     #define BUF_SIZE 16
 
@@ -320,7 +320,7 @@ s32 func_8003030C(s32 deviceId) // 0x8003030C
     return format(buf);
 }
 
-s32 func_80030334(s32 deviceId, char* fileName) // 0x80030334
+s32 Savegame_CardFileErase(s32 deviceId, char* fileName) // 0x80030334
 {
     #define BUF_SIZE 32
 
@@ -333,7 +333,7 @@ s32 func_80030334(s32 deviceId, char* fileName) // 0x80030334
     return erase(buf);
 }
 
-s32 func_80030370(s32 deviceId, char* prevName, char* newName) // 0x80030370
+s32 Savegame_CardFileRename(s32 deviceId, char* prevName, char* newName) // 0x80030370
 {
     #define BUF_SIZE 32
 
@@ -349,167 +349,167 @@ s32 func_80030370(s32 deviceId, char* prevName, char* newName) // 0x80030370
     return rename(prevBuf, newBuf);
 }
 
-void func_800303E4() // 0x800303E4
+void Savegame_CardInit() // 0x800303E4
 {
     InitCARD(0);
     StartCARD();
     D_800B5488.field_0 = NO_VALUE;
 }
 
-void func_80030414() // 0x80030414
+void Savegame_CardEventsInit() // 0x80030414
 {
-    func_80030444();
-    func_8003045C();
-    func_80030530();
+    Savegame_CardStateInit();
+    Savegame_CardSwEventsInit();
+    Savegame_CardHwEventsInit();
 }
 
-void func_80030444() // 0x80030444
+void Savegame_CardStateInit() // 0x80030444
 {
-    D_800B5488.field_4 = 0;
-    D_800B5488.field_8 = 0;
-    D_800B5488.field_C = 0;
+    D_800B5488.state_4       = 0;
+    D_800B5488.stateStep_8   = 0;
+    D_800B5488.stateResult_C = 0;
 }
 
-void func_8003045C()
+void Savegame_CardSwEventsInit()
 {
     EnterCriticalSection();
-    D_800B5488.event_10 = OpenEvent(SwCARD, EvSpIOE, EvMdNOINTR, NULL);
-    D_800B5488.event_14 = OpenEvent(SwCARD, EvSpERROR, EvMdNOINTR, NULL);
-    D_800B5488.event_18 = OpenEvent(SwCARD, EvSpTIMOUT, EvMdNOINTR, NULL);
-    D_800B5488.event_1C = OpenEvent(SwCARD, EvSpNEW, EvMdNOINTR, NULL);
+    D_800B5488.eventSwSpIOE_10    = OpenEvent(SwCARD, EvSpIOE, EvMdNOINTR, NULL);
+    D_800B5488.eventSwSpERROR_14  = OpenEvent(SwCARD, EvSpERROR, EvMdNOINTR, NULL);
+    D_800B5488.eventSwSpTIMOUT_18 = OpenEvent(SwCARD, EvSpTIMOUT, EvMdNOINTR, NULL);
+    D_800B5488.eventSwSpNEW_1C    = OpenEvent(SwCARD, EvSpNEW, EvMdNOINTR, NULL);
     ExitCriticalSection();
 
-    EnableEvent(D_800B5488.event_10);
-    EnableEvent(D_800B5488.event_14);
-    EnableEvent(D_800B5488.event_18);
-    EnableEvent(D_800B5488.event_1C);
+    EnableEvent(D_800B5488.eventSwSpIOE_10);
+    EnableEvent(D_800B5488.eventSwSpERROR_14);
+    EnableEvent(D_800B5488.eventSwSpTIMOUT_18);
+    EnableEvent(D_800B5488.eventSwSpNEW_1C);
 
-    func_800307BC();
+    Savegame_CardSwEventsReset();
 }
 
-void func_80030530() // 0x80030530
+void Savegame_CardHwEventsInit() // 0x80030530
 {
     EnterCriticalSection();
-    D_800B5488.event_20 = OpenEvent(HwCARD, EvSpIOE, EvMdINTR, func_80030884);
-    D_800B5488.event_24 = OpenEvent(HwCARD, EvSpERROR, EvMdINTR, func_80030894);
-    D_800B5488.event_28 = OpenEvent(HwCARD, EvSpTIMOUT, EvMdINTR, func_800308B4);
-    D_800B5488.event_2C = OpenEvent(HwCARD, EvSpNEW, EvMdINTR, func_800308A4);
-    D_800B5488.event_30 = OpenEvent(HwCARD, EvSpUNKNOWN, EvMdINTR, func_800308C4);
+    D_800B5488.eventHwSpIOE_20     = OpenEvent(HwCARD, EvSpIOE, EvMdINTR, Savegame_CardHwEventSpIOE);
+    D_800B5488.eventHwSpERROR_24   = OpenEvent(HwCARD, EvSpERROR, EvMdINTR, Savegame_CardHwEventSpERROR);
+    D_800B5488.eventHwSpTIMOUT_28  = OpenEvent(HwCARD, EvSpTIMOUT, EvMdINTR, Savegame_CardHwEventSpTIMOUT);
+    D_800B5488.eventHwSpNEW_2C     = OpenEvent(HwCARD, EvSpNEW, EvMdINTR, Savegame_CardHwEventSpNEW);
+    D_800B5488.eventHwSpUNKNOWN_30 = OpenEvent(HwCARD, EvSpUNKNOWN, EvMdINTR, Savegame_CardHwEventSpUNKNOWN);
     ExitCriticalSection();
 
-    EnableEvent(D_800B5488.event_20);
-    EnableEvent(D_800B5488.event_24);
-    EnableEvent(D_800B5488.event_28);
-    EnableEvent(D_800B5488.event_2C);
-    EnableEvent(D_800B5488.event_30);
+    EnableEvent(D_800B5488.eventHwSpIOE_20);
+    EnableEvent(D_800B5488.eventHwSpERROR_24);
+    EnableEvent(D_800B5488.eventHwSpTIMOUT_28);
+    EnableEvent(D_800B5488.eventHwSpNEW_2C);
+    EnableEvent(D_800B5488.eventHwSpUNKNOWN_30);
 
-    func_80030820();
+    Savegame_CardHwEventsReset();
 }
 
-void func_80030640() // 0x80030640
+void Savegame_CardEventsClose() // 0x80030640
 {
-    func_80030668();
-    func_800306C8();
+    Savegame_CardSwEventsClose();
+    Savegame_CardHwEventsClose();
 }
 
-void func_80030668() // 0x80030668
-{
-    EnterCriticalSection();
-    CloseEvent(D_800B5488.event_10);
-    CloseEvent(D_800B5488.event_14);
-    CloseEvent(D_800B5488.event_18);
-    CloseEvent(D_800B5488.event_1C);
-    ExitCriticalSection();
-}
-
-void func_800306C8() // 0x800306C8
+void Savegame_CardSwEventsClose() // 0x80030668
 {
     EnterCriticalSection();
-    CloseEvent(D_800B5488.event_20);
-    CloseEvent(D_800B5488.event_24);
-    CloseEvent(D_800B5488.event_28);
-    CloseEvent(D_800B5488.event_2C);
-    CloseEvent(D_800B5488.event_30);
+    CloseEvent(D_800B5488.eventSwSpIOE_10);
+    CloseEvent(D_800B5488.eventSwSpERROR_14);
+    CloseEvent(D_800B5488.eventSwSpTIMOUT_18);
+    CloseEvent(D_800B5488.eventSwSpNEW_1C);
     ExitCriticalSection();
 }
 
-s32 func_80030734() // 0x80030734
+void Savegame_CardHwEventsClose() // 0x800306C8
 {
-    if (TestEvent(D_800B5488.event_14) == 1)
+    EnterCriticalSection();
+    CloseEvent(D_800B5488.eventHwSpIOE_20);
+    CloseEvent(D_800B5488.eventHwSpERROR_24);
+    CloseEvent(D_800B5488.eventHwSpTIMOUT_28);
+    CloseEvent(D_800B5488.eventHwSpNEW_2C);
+    CloseEvent(D_800B5488.eventHwSpUNKNOWN_30);
+    ExitCriticalSection();
+}
+
+s32 Savegame_CardSwEventsTest() // 0x80030734
+{
+    if (TestEvent(D_800B5488.eventSwSpERROR_14) == 1)
     {
-        return 1 << 15;
+        return EvSpERROR;
     }
 
-    if (TestEvent(D_800B5488.event_18) == 1)
+    if (TestEvent(D_800B5488.eventSwSpTIMOUT_18) == 1)
     {
-        return 1 << 8;
+        return EvSpTIMOUT;
     }
 
-    if (TestEvent(D_800B5488.event_1C) == 1)
+    if (TestEvent(D_800B5488.eventSwSpNEW_1C) == 1)
     {
-        return 1 << 13;
+        return EvSpNEW;
     }
 
-    if (TestEvent(D_800B5488.event_10) == 1)
+    if (TestEvent(D_800B5488.eventSwSpIOE_10) == 1)
     {
-        return 1 << 2;
+        return EvSpIOE;
     }
 
     return 0;
 }
 
-void func_800307BC() // 0x800307BC
+void Savegame_CardSwEventsReset() // 0x800307BC
 {
-    TestEvent(D_800B5488.event_14);
-    TestEvent(D_800B5488.event_18);
-    TestEvent(D_800B5488.event_1C);
-    TestEvent(D_800B5488.event_10);
-} 
-
-s32 func_80030810() // 0x80030810
-{
-    return D_800B5488.field_34;
+    TestEvent(D_800B5488.eventSwSpERROR_14);
+    TestEvent(D_800B5488.eventSwSpTIMOUT_18);
+    TestEvent(D_800B5488.eventSwSpNEW_1C);
+    TestEvent(D_800B5488.eventSwSpIOE_10);
 }
 
-void func_80030820() // 0x80030820
+s32 Savegame_CardHwEventsTest() // 0x80030810
 {
-    TestEvent(D_800B5488.event_24);
-    TestEvent(D_800B5488.event_28);
-    TestEvent(D_800B5488.event_2C);
-    TestEvent(D_800B5488.event_20);
-    TestEvent(D_800B5488.event_30);
-
-    D_800B5488.field_34 = 0;
+    return D_800B5488.lastEventHw_34;
 }
 
-void func_80030884() // 0x80030884
+void Savegame_CardHwEventsReset() // 0x80030820
 {
-    D_800B5488.field_34 = 4;
+    TestEvent(D_800B5488.eventHwSpERROR_24);
+    TestEvent(D_800B5488.eventHwSpTIMOUT_28);
+    TestEvent(D_800B5488.eventHwSpNEW_2C);
+    TestEvent(D_800B5488.eventHwSpIOE_20);
+    TestEvent(D_800B5488.eventHwSpUNKNOWN_30);
+
+    D_800B5488.lastEventHw_34 = 0;
 }
 
-void func_80030894() // 0x80030894
+void Savegame_CardHwEventSpIOE() // 0x80030884
 {
-    D_800B5488.field_34 = 0x8000;
+    D_800B5488.lastEventHw_34 = EvSpIOE;
 }
 
-void func_800308A4() // 0x800308A4
+void Savegame_CardHwEventSpERROR() // 0x80030894
 {
-    D_800B5488.field_34 = 0x2000;
+    D_800B5488.lastEventHw_34 = EvSpERROR;
 }
 
-void func_800308B4() // 0x800308B4
+void Savegame_CardHwEventSpNEW() // 0x800308A4
 {
-    D_800B5488.field_34 = 0x100;
+    D_800B5488.lastEventHw_34 = EvSpNEW;
 }
 
-void func_800308C4() // 0x800308C4
+void Savegame_CardHwEventSpTIMOUT() // 0x800308B4
 {
-    D_800B5488.field_34 = 0x200;
+    D_800B5488.lastEventHw_34 = EvSpTIMOUT;
+}
+
+void Savegame_CardHwEventSpUNKNOWN() // 0x800308C4
+{
+    D_800B5488.lastEventHw_34 = EvSpUNKNOWN;
 }
 
 s32 func_800308D4() // 0x800308D4
 {
-    return D_800B5488.field_C;
+    return D_800B5488.stateResult_C;
 }
 
 s32 func_800308E4(s32 arg0, s32 arg1, s32 arg2, char* str, s32 arg4, s32 arg5, s32 arg6, s32 arg7) // 0x800308E4
@@ -525,27 +525,27 @@ s32 func_800308E4(s32 arg0, s32 arg1, s32 arg2, char* str, s32 arg4, s32 arg5, s
     {
         case 0:
         case 1:
-            D_800B5488.field_4 = 1;
-            D_800B5488.field_8 = 0;
+            D_800B5488.state_4     = 1;
+            D_800B5488.stateStep_8 = 0;
             break;
 
         case 2:
         case 3:
-            D_800B5488.field_4 = 6;
-            D_800B5488.field_8 = 0;
+            D_800B5488.state_4     = 6;
+            D_800B5488.stateStep_8 = 0;
             break;
 
         case 4:
-            D_800B5488.field_4 = 5;
-            D_800B5488.field_8 = 0;
+            D_800B5488.state_4     = 5;
+            D_800B5488.stateStep_8 = 0;
             break;
 
         default:
             break;
     }
 
-    D_800B5488.field_3C = arg1;
-    D_800B5488.field_40 = arg2;
+    D_800B5488.deviceId_3C = arg1;
+    D_800B5488.field_40    = arg2;
 
     Savegame_DevicePathGenerate(arg1, &D_800B5488.field_44);
     strcat(&D_800B5488.field_44, str);
@@ -560,44 +560,44 @@ s32 func_800308E4(s32 arg0, s32 arg1, s32 arg2, char* str, s32 arg4, s32 arg5, s
 
 s32 func_800309FC() // 0x800309FC
 {
-    return D_800B5488.field_4 == 0;
+    return D_800B5488.state_4 == 0;
 }
 
 void func_80030A0C() // 0x80030A0C
 {
-    switch (D_800B5488.field_4)
+    switch (D_800B5488.state_4)
     {
         case 0:
             // HACK: Probably some optimized out code here.
-            D_800B5488.field_C += 0;
+            D_800B5488.stateResult_C += 0;
             break;
 
         case 1:
-            D_800B5488.field_C = func_80030AD8();
+            D_800B5488.stateResult_C = func_80030AD8();
             break;
 
         case 2:
-            D_800B5488.field_C = func_80030C88();
+            D_800B5488.stateResult_C = func_80030C88();
             break;
 
         case 3:
-            D_800B5488.field_C = func_80030DC8();
+            D_800B5488.stateResult_C = func_80030DC8();
             break;
 
         case 4:
-            D_800B5488.field_C = func_80030F7C();
+            D_800B5488.stateResult_C = func_80030F7C();
             break;
 
         case 5:
-            D_800B5488.field_C = func_800310B4();
+            D_800B5488.stateResult_C = func_800310B4();
             break;
 
         case 6:
-            D_800B5488.field_C = func_80031184();
+            D_800B5488.stateResult_C = func_80031184();
             break;
 
         case 7:
-            D_800B5488.field_C = func_80031260();
+            D_800B5488.stateResult_C = func_80031260();
             break;
 
         default:
@@ -607,24 +607,24 @@ void func_80030A0C() // 0x80030A0C
 
 s32 func_80030AD8() // 0x80030AD8
 {
-    s32 deviceId;
+    s32 channel;
     s32 result;
 
-    result   = 1;
-    deviceId = ((D_800B5488.field_3C & (1 << 2)) << 2) + (D_800B5488.field_3C & 3);
+    result  = 1;
+    channel = ((D_800B5488.deviceId_3C & (1 << 2)) << 2) + (D_800B5488.deviceId_3C & 3);
 
-    switch (D_800B5488.field_8)
+    switch (D_800B5488.stateStep_8)
     {
         case 0:
-            D_800B5488.field_78 = 0;
-            D_800B5488.field_7C = 0;
-            D_800B5488.field_8  = 1;
+            D_800B5488.field_78    = 0;
+            D_800B5488.field_7C    = 0;
+            D_800B5488.stateStep_8 = 1;
 
         case 1:
-            func_800307BC();
-            if (_card_info(deviceId) == 1)
+            Savegame_CardSwEventsReset();
+            if (_card_info(channel) == 1)
             {
-                D_800B5488.field_8++;
+                D_800B5488.stateStep_8++;
             }
             else
             {
@@ -633,50 +633,50 @@ s32 func_80030AD8() // 0x80030AD8
             break;
 
         case 2:
-            switch (func_80030734())
+            switch (Savegame_CardSwEventsTest())
             {
-                case 4:
+                case EvSpIOE:
                     if (D_800B5488.field_38 == 0)
                     {
-                        result             = 3;
-                        D_800B5488.field_4 = 0;
-                        D_800B5488.field_8 = 0;
+                        result                 = 3;
+                        D_800B5488.state_4     = 0;
+                        D_800B5488.stateStep_8 = 0;
                     }
-                    else if (!((D_800B5488.field_0 >> D_800B5488.field_3C) & 1))
+                    else if (!((D_800B5488.field_0 >> D_800B5488.deviceId_3C) & 1))
                     {
-                        D_800B5488.field_4 = 4;
-                        D_800B5488.field_8 = 0;
+                        D_800B5488.state_4     = 4;
+                        D_800B5488.stateStep_8 = 0;
                     }
                     else
                     {
-                        D_800B5488.field_4 = 2;
-                        D_800B5488.field_8 = 0;
+                        D_800B5488.state_4     = 2;
+                        D_800B5488.stateStep_8 = 0;
                     }
                     break;
 
-                case 0x2000:
+                case EvSpNEW:
                     D_800B5488.field_70 = 1;
                     if (D_800B5488.field_38 == 0)
                     {
-                        result             = 2;
-                        D_800B5488.field_4 = 0;
-                        D_800B5488.field_8 = 0;
+                        result                 = 2;
+                        D_800B5488.state_4     = 0;
+                        D_800B5488.stateStep_8 = 0;
                     }
                     else
                     {
-                        D_800B5488.field_4 = 2;
-                        D_800B5488.field_8 = 0;
+                        D_800B5488.state_4     = 2;
+                        D_800B5488.stateStep_8 = 0;
                     }
                     break;
 
-                case 0x100:
-                    result             = 0;
-                    D_800B5488.field_4 = 0;
-                    D_800B5488.field_8 = 0;
+                case EvSpTIMOUT:
+                    result                 = 0;
+                    D_800B5488.state_4     = 0;
+                    D_800B5488.stateStep_8 = 0;
                     break;
 
-                case 0x8000:
-                    D_800B5488.field_8 = 1;
+                case EvSpERROR:
+                    D_800B5488.stateStep_8 = 1;
                     break;
             }
             break;
@@ -687,44 +687,44 @@ s32 func_80030AD8() // 0x80030AD8
 
 s32 func_80030C88() // 0x80030C88
 {
-    s32 deviceId;
+    s32 channel;
     s32 result;
 
-    result   = 1;
-    deviceId = ((D_800B5488.field_3C & (1 << 2)) << 2) + (D_800B5488.field_3C & 3);
+    result  = 1;
+    channel = ((D_800B5488.deviceId_3C & (1 << 2)) << 2) + (D_800B5488.deviceId_3C & 3);
 
-    switch (D_800B5488.field_8)
+    switch (D_800B5488.stateStep_8)
     {
         case 0:
-            D_800B5488.field_78 = 0;
-            D_800B5488.field_7C = 0;
-            D_800B5488.field_8  = 1;
+            D_800B5488.field_78    = 0;
+            D_800B5488.field_7C    = 0;
+            D_800B5488.stateStep_8 = 1;
 
         case 1:
-            func_80030820();
-            if (_card_clear(deviceId) == 1)
+            Savegame_CardHwEventsReset();
+            if (_card_clear(channel) == 1)
             {
-                D_800B5488.field_8++;
+                D_800B5488.stateStep_8++;
             }
             break;
 
         case 2:
-            switch (func_80030810())
+            switch (Savegame_CardHwEventsTest())
             {
-                case 4:
-                    D_800B5488.field_4 = 3;
-                    D_800B5488.field_8 = 0;
+                case EvSpIOE:
+                    D_800B5488.state_4     = 3;
+                    D_800B5488.stateStep_8 = 0;
                     break;
 
-                case 0x100:
-                    result             = 0;
-                    D_800B5488.field_4 = 0;
-                    D_800B5488.field_8 = 0;
+                case EvSpTIMOUT:
+                    result                 = 0;
+                    D_800B5488.state_4     = 0;
+                    D_800B5488.stateStep_8 = 0;
                     break;
 
-                case 0x2000:
-                case 0x8000:
-                    D_800B5488.field_8 = 1;
+                case EvSpNEW:
+                case EvSpERROR:
+                    D_800B5488.stateStep_8 = 1;
                     break;
             }
             break;
@@ -735,25 +735,25 @@ s32 func_80030C88() // 0x80030C88
 
 s32 func_80030DC8() // 0x80030DC8
 {
-    s32 deviceId;
+    s32 channel;
     s32 result;
 
-    result   = 1;
-    deviceId = ((D_800B5488.field_3C & (1 << 2)) << 2) + (D_800B5488.field_3C & 3);
+    result  = 1;
+    channel = ((D_800B5488.deviceId_3C & (1 << 2)) << 2) + (D_800B5488.deviceId_3C & 3);
 
-    switch (D_800B5488.field_8)
+    switch (D_800B5488.stateStep_8)
     {
         case 0:
-            D_800B5488.field_78 = 0;
-            D_800B5488.field_7C = 0;
-            D_800B5488.field_8  = 1;
+            D_800B5488.field_78    = 0;
+            D_800B5488.field_7C    = 0;
+            D_800B5488.stateStep_8 = 1;
 
         case 1:
-            func_800307BC();
-            if (_card_load(deviceId) == 1)
+            Savegame_CardSwEventsReset();
+            if (_card_load(channel) == 1)
             {
-                D_800B5488.field_8++;
-                if (!(D_800B5488.field_3C & 4))
+                D_800B5488.stateStep_8++;
+                if (!(D_800B5488.deviceId_3C & 4))
                 {
                     D_800B5488.field_0 |= 0xF;
                 }
@@ -765,37 +765,37 @@ s32 func_80030DC8() // 0x80030DC8
             break;
 
         case 2:
-            switch (func_80030734())
+            switch (Savegame_CardSwEventsTest())
             {
-                case 4:
-                    D_800B5488.field_4 = 4;
-                    D_800B5488.field_8 = 0;
-                    D_800B5488.field_0 &= ~(1 << D_800B5488.field_3C);
+                case EvSpIOE:
+                    D_800B5488.state_4     = 4;
+                    D_800B5488.stateStep_8 = 0;
+                    D_800B5488.field_0 &= ~(1 << D_800B5488.deviceId_3C);
                     break;
 
-                case 0x2000:
-                    D_800B5488.field_0 |= 1 << D_800B5488.field_3C;
+                case EvSpNEW:
+                    D_800B5488.field_0 |= 1 << D_800B5488.deviceId_3C;
                     if (D_800B5488.field_78 < 3)
                     {
                         D_800B5488.field_78 += 1;
-                        D_800B5488.field_8 = 1;
+                        D_800B5488.stateStep_8 = 1;
                     }
                     else
                     {
-                        result             = 4;
-                        D_800B5488.field_4 = 0;
-                        D_800B5488.field_8 = 0;
+                        result                 = 4;
+                        D_800B5488.state_4     = 0;
+                        D_800B5488.stateStep_8 = 0;
                     }
                     break;
 
-                case 0x100:
-                    result             = 0;
-                    D_800B5488.field_4 = 0;
-                    D_800B5488.field_8 = 0;
+                case EvSpTIMOUT:
+                    result                 = 0;
+                    D_800B5488.state_4     = 0;
+                    D_800B5488.stateStep_8 = 0;
                     break;
 
-                case 0x8000:
-                    D_800B5488.field_8 = 1;
+                case EvSpERROR:
+                    D_800B5488.stateStep_8 = 1;
                     break;
             }
             break;
@@ -822,7 +822,7 @@ s32 func_80030F7C() // 0x80030F7C
     {
         if (i == 0)
         {
-            Savegame_DevicePathGenerate(D_800B5488.field_3C, filePath);
+            Savegame_DevicePathGenerate(D_800B5488.deviceId_3C, filePath);
             strcat(filePath, "*");
             curFile = firstfile(filePath, &fileInfo);
         }
@@ -842,8 +842,8 @@ s32 func_80030F7C() // 0x80030F7C
 
     retval = (D_800B5488.field_70 == 1) ? 5 : 6;
 
-    D_800B5488.field_4 = 0;
-    D_800B5488.field_8 = 0;
+    D_800B5488.state_4     = 0;
+    D_800B5488.stateStep_8 = 0;
 
     return retval;
 }
@@ -854,29 +854,29 @@ s32 func_800310B4() // 0x800310B4
 
     result = 1;
 
-    switch (D_800B5488.field_8)
+    switch (D_800B5488.stateStep_8)
     {
         case 0:
-            D_800B5488.field_78 = 0;
-            D_800B5488.field_7C = 0;
-            D_800B5488.field_8  = 1;
+            D_800B5488.field_78    = 0;
+            D_800B5488.field_7C    = 0;
+            D_800B5488.stateStep_8 = 1;
         case 1:
             D_800B5488.field_74 = open(D_800B5488.field_44, (D_800B5488.field_60 << 16) | O_CREAT);
             if (D_800B5488.field_74 == -1)
             {
                 if (D_800B5488.field_78++ >= 15)
                 {
-                    result             = 7;
-                    D_800B5488.field_4 = 0;
-                    D_800B5488.field_8 = 0;
+                    result                 = 7;
+                    D_800B5488.state_4     = 0;
+                    D_800B5488.stateStep_8 = 0;
                     break;
                 }
             }
             else
             {
                 close(D_800B5488.field_74);
-                D_800B5488.field_4 = 6;
-                D_800B5488.field_8 = 0;
+                D_800B5488.state_4     = 6;
+                D_800B5488.stateStep_8 = 0;
             }
             break;
     }
@@ -890,12 +890,12 @@ s32 func_80031184() // 0x80031184
 
     result = 1;
 
-    switch (D_800B5488.field_8)
+    switch (D_800B5488.stateStep_8)
     {
         case 0:
-            D_800B5488.field_78 = 0;
-            D_800B5488.field_7C = 0;
-            D_800B5488.field_8  = 1;
+            D_800B5488.field_78    = 0;
+            D_800B5488.field_7C    = 0;
+            D_800B5488.stateStep_8 = 1;
         case 1:
             switch (D_800B5488.field_38)
             {
@@ -919,16 +919,16 @@ s32 func_80031184() // 0x80031184
             {
                 if (D_800B5488.field_78++ >= 15)
                 {
-                    result             = 8;
-                    D_800B5488.field_4 = 0;
-                    D_800B5488.field_8 = 0;
+                    result                 = 8;
+                    D_800B5488.state_4     = 0;
+                    D_800B5488.stateStep_8 = 0;
                     break;
                 }
             }
             else
             {
-                D_800B5488.field_4 = 7;
-                D_800B5488.field_8 = 0;
+                D_800B5488.state_4     = 7;
+                D_800B5488.stateStep_8 = 0;
             }
             break;
     }
@@ -942,32 +942,32 @@ s32 func_80031260() // 0x80031260
 
     result = 1;
 
-    switch (D_800B5488.field_8)
+    switch (D_800B5488.stateStep_8)
     {
         case 0:
-            D_800B5488.field_78 = 0;
-            D_800B5488.field_7C = 0;
-            D_800B5488.field_8  = 1;
+            D_800B5488.field_78    = 0;
+            D_800B5488.field_7C    = 0;
+            D_800B5488.stateStep_8 = 1;
 
         case 1:
             if (lseek(D_800B5488.field_74, D_800B5488.field_64, 0) == -1)
             {
                 if (D_800B5488.field_78++ >= 15)
                 {
-                    result             = 9;
-                    D_800B5488.field_4 = 0;
-                    D_800B5488.field_8 = 0;
+                    result                 = 9;
+                    D_800B5488.state_4     = 0;
+                    D_800B5488.stateStep_8 = 0;
                 }
             }
             else
             {
                 D_800B5488.field_78 = 0;
-                D_800B5488.field_8++;
+                D_800B5488.stateStep_8++;
             }
             break;
 
         case 2:
-            func_800307BC();
+            Savegame_CardSwEventsReset();
 
             switch (D_800B5488.field_38)
             {
@@ -989,43 +989,43 @@ s32 func_80031260() // 0x80031260
             {
                 if (D_800B5488.field_78++ >= 15)
                 {
-                    result             = 10;
-                    D_800B5488.field_4 = 0;
-                    D_800B5488.field_8 = 0;
+                    result                 = 10;
+                    D_800B5488.state_4     = 0;
+                    D_800B5488.stateStep_8 = 0;
                     close(D_800B5488.field_74);
                 }
             }
             else
             {
-                D_800B5488.field_8++;
+                D_800B5488.stateStep_8++;
             }
             break;
 
         case 3:
-            switch (func_80030734())
+            switch (Savegame_CardSwEventsTest())
             {
-                case 4:
-                    result             = 11;
-                    D_800B5488.field_4 = 0;
-                    D_800B5488.field_8 = 0;
+                case EvSpIOE:
+                    result                 = 11;
+                    D_800B5488.state_4     = 0;
+                    D_800B5488.stateStep_8 = 0;
                     close(D_800B5488.field_74);
                     break;
 
-                case 0x100:
-                    result             = 0;
-                    D_800B5488.field_4 = 0;
-                    D_800B5488.field_8 = 0;
+                case EvSpTIMOUT:
+                    result                 = 0;
+                    D_800B5488.state_4     = 0;
+                    D_800B5488.stateStep_8 = 0;
                     close(D_800B5488.field_74);
                     break;
 
-                case 0x2000:
-                    result             = 10;
-                    D_800B5488.field_4 = 0;
-                    D_800B5488.field_8 = 0;
+                case EvSpNEW:
+                    result                 = 10;
+                    D_800B5488.state_4     = 0;
+                    D_800B5488.stateStep_8 = 0;
                     close(D_800B5488.field_74);
 
-                case 0x8000:
-                    D_800B5488.field_8 = 1;
+                case EvSpERROR:
+                    D_800B5488.stateStep_8 = 1;
                     break;
             }
     }

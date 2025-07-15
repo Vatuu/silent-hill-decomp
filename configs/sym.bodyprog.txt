@@ -27,6 +27,28 @@ Savegame_ChecksumGenerate = 0x8002FFD0; // type:func
 
 Savegame_FilenameGenerate = 0x80030000; // type:func
 
+Savegame_CardDeviceFormat = 0x8003030C; // type:func
+Savegame_CardFileErase = 0x80030334; // type:func
+Savegame_CardFileRename = 0x80030370; // type:func
+
+Savegame_CardInit = 0x800303E4; // type:func
+Savegame_CardEventsInit = 0x80030414; // type:func
+Savegame_CardStateInit = 0x80030444; // type:func
+Savegame_CardSwEventsInit = 0x8003045C; // type:func
+Savegame_CardHwEventsInit = 0x80030530; // type:func
+Savegame_CardEventsClose = 0x80030640; // type:func
+Savegame_CardSwEventsClose = 0x80030668; // type:func
+Savegame_CardHwEventsClose = 0x800306C8; // type:func
+Savegame_CardSwEventsTest = 0x80030734; // type:func
+Savegame_CardSwEventsReset = 0x800307BC; // type:func
+Savegame_CardHwEventsTest = 0x80030810; // type:func
+Savegame_CardHwEventsReset = 0x80030820; // type:func
+Savegame_CardHwEventSpIOE = 0x80030884; // type:func
+Savegame_CardHwEventSpERROR = 0x80030894; // type:func
+Savegame_CardHwEventSpNEW = 0x800308A4; // type:func
+Savegame_CardHwEventSpTIMOUT = 0x800308B4; // type:func
+Savegame_CardHwEventSpUNKNOWN = 0x800308C4; // type:func
+
 Savegame_DevicePathGenerate = 0x800314A4; // type:func
 
 Gfx_BackgroundSpriteDraw = 0x800314EC; // type:func

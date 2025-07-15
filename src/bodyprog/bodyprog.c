@@ -9,7 +9,7 @@ void func_8002E630() // 0x8002E630
     s_800B5508* ptr;
     s32         i;
 
-    func_800303E4();
+    Savegame_CardInit();
 
     D_800B5480 = 0;
 
@@ -92,7 +92,7 @@ void func_8002E7BC() // 0x8002E7BC
 
     D_800B5480 = 1;
     func_8002E8E4();
-    func_80030414();
+    Savegame_CardEventsInit();
 
     D_800B55E8[0].field_0  = 0;
     D_800B55E8[0].field_4  = 0;
@@ -115,7 +115,7 @@ void func_8002E830() // 0x8002E830
     if (D_800B5480 != 0) 
     {
         D_800B5480 = 0;
-        func_80030640();
+        Savegame_CardEventsClose();
     }
 }
 

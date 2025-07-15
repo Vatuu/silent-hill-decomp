@@ -362,21 +362,21 @@ typedef struct
 typedef struct
 {
     s32            field_0;
-    s32            field_4; // State.
-    s32            field_8;
-    s32            field_C;
-    s32            event_10;
-    s32            event_14;
-    s32            event_18;
-    s32            event_1C;
-    s32            event_20;
-    s32            event_24;
-    s32            event_28;
-    s32            event_2C;
-    s32            event_30;
-    s32            field_34;
+    s32            state_4;
+    s32            stateStep_8;
+    s32            stateResult_C;
+    s32            eventSwSpIOE_10;
+    s32            eventSwSpERROR_14;
+    s32            eventSwSpTIMOUT_18;
+    s32            eventSwSpNEW_1C;
+    s32            eventHwSpIOE_20;
+    s32            eventHwSpERROR_24;
+    s32            eventHwSpTIMOUT_28;
+    s32            eventHwSpNEW_2C;
+    s32            eventHwSpUNKNOWN_30;
+    s32            lastEventHw_34;
     s32            field_38;
-    s32            field_3C;
+    s32            deviceId_3C;
     s_800B5488_40* field_40;
     char           field_44[28];
     s32            field_60;

@@ -176,47 +176,45 @@ void func_800300B4(s_PsxSaveBlock* saveBlock, s8 blockCount, s32 saveIdx);
 
 s32 func_80030288(s32 deviceId);
 
-s32 func_8003030C(s32 deviceId);
+s32 Savegame_CardDeviceFormat(s32 deviceId);
 
-s32 func_80030334(s32 deviceId, char* fileName);
+s32 Savegame_CardFileErase(s32 deviceId, char* fileName);
 
-s32 func_80030370(s32 deviceId, char* prevName, char* newName);
+s32 Savegame_CardFileRename(s32 deviceId, char* prevName, char* newName);
 
-void func_800303E4();
+void Savegame_CardInit();
 
-void func_80030414();
+void Savegame_CardEventsInit();
 
-void func_80030444();
+void Savegame_CardStateInit();
 
-void func_8003045C();
+void Savegame_CardSwEventsInit();
 
-void func_80030530();
+void Savegame_CardHwEventsInit();
 
-void func_80030640();
+void Savegame_CardEventsClose();
 
-void func_80030668();
+void Savegame_CardSwEventsClose();
 
-void func_800306C8();
+void Savegame_CardHwEventsClose();
 
-void func_800307BC();
+s32 Savegame_CardSwEventsTest();
 
-s32 func_80030734();
+void Savegame_CardSwEventsReset();
 
-void func_800307BC();
+s32 Savegame_CardHwEventsTest();
 
-s32 func_80030810();
+void Savegame_CardHwEventsReset();
 
-void func_80030820();
+void Savegame_CardHwEventSpIOE();
 
-void func_80030884();
+void Savegame_CardHwEventSpERROR();
 
-void func_80030894();
+void Savegame_CardHwEventSpNEW();
 
-void func_800308A4();
+void Savegame_CardHwEventSpTIMOUT();
 
-void func_800308B4();
-
-void func_800308C4();
+void Savegame_CardHwEventSpUNKNOWN();
 
 s32 func_800308D4();
 
