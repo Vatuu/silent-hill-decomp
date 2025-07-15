@@ -113,6 +113,13 @@ static inline void Math_SVectorZero(SVECTOR* vec)
     vec->vz = 0;
 }
 
+static inline void Math_SVectorSet(SVECTOR* vec, s16 x, s16 y, s16 z)
+{
+    vec->vx = x;
+    vec->vy = y;
+    vec->vz = z;
+}
+
 static inline void Math_Vector3Zero(VECTOR3* vec)
 {
     vec->vx = 0;
@@ -120,7 +127,7 @@ static inline void Math_Vector3Zero(VECTOR3* vec)
     vec->vz = 0;
 }
 
-static inline void Math_SVectorSet(SVECTOR* vec, s16 x, s16 y, s16 z)
+static inline void Math_Vector3Set(VECTOR3* vec, s32 x, s32 y, s32 z)
 {
     vec->vx = x;
     vec->vy = y;

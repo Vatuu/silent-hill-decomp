@@ -5574,44 +5574,26 @@ void func_8003E740() // 0x8003E740
  */
 void func_8003EB54() // 0x8003EB54
 {
-    VECTOR3*       temp_a0;
-    SVECTOR*       temp_v0;
-    GsCOORDINATE2* temp_v1;
-
     g_SysWork.field_2378 = 0x1000;
 
-    temp_v1 = &g_SysWork.playerBoneCoords_890[0];
-    temp_a0 = &g_SysWork.field_2360;
+    g_SysWork.field_235C = &g_SysWork.playerBoneCoords_890[0];
+    g_SysWork.field_236C = &g_SysWork.playerBoneCoords_890[0];
 
-    g_SysWork.field_235C = temp_v1;
-    g_SysWork.field_236C = temp_v1;
-    g_SysWork.field_2360.vx = 0;
+    Math_Vector3Set(&g_SysWork.field_2360, 0, -0x333, -0x2000);
 
-    temp_a0->vy = -0x333;
-    temp_a0->vz = -0x2000;
-
-    g_SysWork.field_2370.vx = 0x71;
-
-    temp_v0 = &g_SysWork.field_2370;
-    temp_v0->vy = 0;
-    temp_v0->vz = 0;
+    Math_SVectorSet(&g_SysWork.field_2370, 0x71, 0, 0);
 }
 
 void func_8003EBA0() // 0x8003EBA0
 {
-    s_SysWork*    temp0 = &g_SysWork;
-    VECTOR3*      temp1 = &temp0->field_2360;
-    SVECTOR*      temp2 = &temp0->field_2370;
+    g_SysWork.field_2378 = 0x1000;
 
-    temp0->field_2378 = 0x1000;
-    temp0->field_235C = &g_SysWork.playerBoneCoords_890[1];
-    temp0->field_236C = g_SysWork.playerBoneCoords_890;
-    temp1->vx         = -0x147;
-    temp1->vy         = -0x47A;
-    temp1->vz         = 0x1EB;
-    temp2->vx         = -0xAA;
-    temp2->vy         = 0;
-    temp2->vz         = 0;
+    g_SysWork.field_235C = &g_SysWork.playerBoneCoords_890[1];
+    g_SysWork.field_236C = &g_SysWork.playerBoneCoords_890[0];
+
+    Math_Vector3Set(&g_SysWork.field_2360, -0x147, -0x47A, 0x1EB);
+
+    Math_SVectorSet(&g_SysWork.field_2370, -0xAA, 0, 0);
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003EBF4);

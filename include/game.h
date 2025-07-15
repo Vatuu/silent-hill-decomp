@@ -908,13 +908,6 @@ typedef struct _PlayerCombat
 } s_PlayerCombat;
 STATIC_ASSERT_SIZEOF(s_PlayerCombat, 20);
 
-typedef struct
-{
-    s16 field_0;
-    s16 field_2;
-    s16 field_4;
-} s_StructUnk1;
-
 typedef union
 {
     s32 field_0;
