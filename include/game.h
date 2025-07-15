@@ -1066,8 +1066,7 @@ typedef struct _SysWork
     GsCOORDINATE2*  field_235C;
     VECTOR3         field_2360;
     GsCOORDINATE2*  field_236C;
-    s_StructUnk1    field_2370;
-    s16             unk_2376;
+    SVECTOR         field_2370;
     s16             field_2378;
     s16             cameraAngleY_237A;
     s16             cameraAngleZ_237C;
