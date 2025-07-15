@@ -14,15 +14,24 @@
 
 typedef enum
 {
-    CardState_Idle = 0,
-    CardState_Init = 1,
-    CardState_Check = 2,
-    CardState_Load = 3,
-    CardState_DirRead = 4,
-    CardState_FileCreate = 5,
-    CardState_FileOpen = 6,
+    CardState_Idle          = 0,
+    CardState_Init          = 1,
+    CardState_Check         = 2,
+    CardState_Load          = 3,
+    CardState_DirRead       = 4,
+    CardState_FileCreate    = 5,
+    CardState_FileOpen      = 6,
     CardState_FileReadWrite = 7
 } e_CardState;
+
+typedef enum
+{
+    CardIoMode_Init    = 0,
+    CardIoMode_DirRead = 1, // TODO: Not sure if this is actual purpose yet.
+    CardIoMode_Read    = 2,
+    CardIoMode_Write   = 3,
+    CardIoMode_Create  = 4,
+} e_CardIoMode;
 
 // ================
 // UNKNOWN STRUCTS
@@ -44,36 +53,38 @@ typedef struct
 {
     char fileNames_0[15][21];
     u8   blockCounts_13B[15]; // Size of each file in 8192 byte blocks.
-} s_800B5488_40;
+} s_CardDirectory;
 
 typedef struct
 {
-    s32            devicesConnected_0; /** Bitfield of known connected device IDs, each bit index corresponds to an ID. */
-    s32            state_4;            /** `e_CardState` */
-    s32            stateStep_8;
-    s32            stateResult_C;
-    s32            eventSwSpIOE_10;
-    s32            eventSwSpERROR_14;
-    s32            eventSwSpTIMOUT_18;
-    s32            eventSwSpNEW_1C;
-    s32            eventHwSpIOE_20;
-    s32            eventHwSpERROR_24;
-    s32            eventHwSpTIMOUT_28;
-    s32            eventHwSpNEW_2C;
-    s32            eventHwSpUNKNOWN_30;
-    s32            lastEventHw_34;
-    s32            field_38;
-    s32            deviceId_3C;
-    s_800B5488_40* field_40;
-    char           filePath_44[28];
-    s32            field_60;
-    s32            seekOffset_64;
-    s32            field_68;
-    s32            field_6C;
-    s32            field_70;
-    s32            fileHandle_74;
-    s32            retryCount_78;
-    s32            field_7C;
+    s32 devicesConnected_0; /** Bitfield of known connected device IDs, each bit index corresponds to an ID. */
+    s32 state_4;            /** `e_CardState` */
+    s32 stateStep_8;
+    s32 stateResult_C;
+    s32 eventSwSpIOE_10;
+    s32 eventSwSpERROR_14;
+    s32 eventSwSpTIMOUT_18;
+    s32 eventSwSpNEW_1C;
+    s32 eventHwSpIOE_20;
+    s32 eventHwSpERROR_24;
+    s32 eventHwSpTIMOUT_28;
+    s32 eventHwSpNEW_2C;
+    s32 eventHwSpUNKNOWN_30;
+    s32 lastEventHw_34;
+    s32 cardIoMode_38; /** `e_CardIoMode` */
+    s32 deviceId_3C;
+
+    s_CardDirectory* cardDirectory_40; /** Array of files on the card, pointer supplied by caller to `Savegame_CardRequest`. */
+
+    char  filePath_44[28];
+    s32   field_60;
+    s32   seekOffset_64;
+    void* dataBuffer_68;
+    s32   dataSize_6C;
+    s32   field_70;
+    s32   fileHandle_74;
+    s32   retryCount_78;
+    s32   field_7C;
 } s_800B5488;
 STATIC_ASSERT_SIZEOF(s_800B5488, 128);
 
@@ -194,7 +205,7 @@ void func_8002EB88(); // Return type assumed.
 
 void func_8002ECE0(s_800B55E8* arg0);
 
-s32 func_8002F278(s32 arg0, s_800B5488_40* arg1);
+s32 func_8002F278(s32 arg0, s_CardDirectory* arg1);
 
 void func_8002FB64(s_func_8002FB64 *arg0);
 
@@ -264,13 +275,13 @@ void Savegame_CardHwEventSpTIMOUT();
 
 void Savegame_CardHwEventSpUNKNOWN();
 
-s32 func_800308D4();
+s32 Savegame_CardResult();
 
-s32 func_800308E4(s32 arg0, s32 arg1, s32 arg2, char* str, s32 arg4, s32 arg5, s32 arg6, s32 arg7);
+s32 Savegame_CardRequest(e_CardIoMode mode, s32 deviceId, s_CardDirectory* outDirectory, char* fileName, s32 arg4, s32 fileOffset, s32 outBuffer, s32 outSize);
 
-s32 func_800309FC();
+s32 Savegame_CardIsIdle();
 
-void func_80030A0C();
+void Savegame_CardUpdate();
 
 s32 Savegame_CardState_1();
 

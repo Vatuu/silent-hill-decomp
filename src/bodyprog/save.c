@@ -148,7 +148,7 @@ void func_8002ECE0(s_800B55E8* arg0) // 0x8002ECE0
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/save", func_8002ED7C);
 
-s32 func_8002F278(s32 arg0, s_800B5488_40* arg1) // 0x8002F278
+s32 func_8002F278(s32 arg0, s_CardDirectory* arg1) // 0x8002F278
 {
     s32 ret;
     s32 i;
@@ -507,63 +507,60 @@ void Savegame_CardHwEventSpUNKNOWN() // 0x800308C4
     D_800B5488.lastEventHw_34 = EvSpUNKNOWN;
 }
 
-s32 func_800308D4() // 0x800308D4
+s32 Savegame_CardResult() // 0x800308D4
 {
     return D_800B5488.stateResult_C;
 }
 
-s32 func_800308E4(s32 arg0, s32 arg1, s32 arg2, char* str, s32 arg4, s32 arg5, s32 arg6, s32 arg7) // 0x800308E4
+s32 Savegame_CardRequest(e_CardIoMode mode, s32 deviceId, s_CardDirectory* outDirectory, char* fileName, s32 arg4, s32 fileOffset, s32 outBuffer, s32 outSize) // 0x800308E4
 {
-    if (!func_800309FC())
+    if (!Savegame_CardIsIdle())
     {
         return 0;
     }
 
-    D_800B5488.field_38 = arg0;
+    D_800B5488.cardIoMode_38 = mode;
 
-    switch (arg0)
+    switch (mode)
     {
-        case 0:
-        case 1:
+        case CardIoMode_Init:
+        case CardIoMode_DirRead:
             D_800B5488.state_4     = CardState_Init;
             D_800B5488.stateStep_8 = 0;
             break;
 
-        case 2:
-        case 3:
+        case CardIoMode_Read:
+        case CardIoMode_Write:
             D_800B5488.state_4     = CardState_FileOpen;
             D_800B5488.stateStep_8 = 0;
             break;
 
-        case 4:
+        case CardIoMode_Create:
             D_800B5488.state_4     = CardState_FileCreate;
             D_800B5488.stateStep_8 = 0;
             break;
-
-        default:
-            break;
     }
 
-    D_800B5488.deviceId_3C = arg1;
-    D_800B5488.field_40    = arg2;
+    D_800B5488.deviceId_3C      = deviceId;
+    D_800B5488.cardDirectory_40 = outDirectory;
 
-    Savegame_DevicePathGenerate(arg1, &D_800B5488.filePath_44);
-    strcat(&D_800B5488.filePath_44, str);
+    Savegame_DevicePathGenerate(deviceId, &D_800B5488.filePath_44);
+    strcat(&D_800B5488.filePath_44, fileName);
 
     D_800B5488.field_60      = arg4;
-    D_800B5488.seekOffset_64 = arg5;
-    D_800B5488.field_68      = arg6;
-    D_800B5488.field_6C      = arg7;
+    D_800B5488.seekOffset_64 = fileOffset;
+    D_800B5488.dataBuffer_68 = outBuffer;
+    D_800B5488.dataSize_6C   = outSize;
     D_800B5488.field_70      = 0;
     return 1;
 }
 
-s32 func_800309FC() // 0x800309FC
+s32 Savegame_CardIsIdle() // 0x800309FC
 {
     return D_800B5488.state_4 == CardState_Idle;
 }
 
-void func_80030A0C() // 0x80030A0C
+void Savegame_CardUpdate() // 0x80030A0C
 {
     switch (D_800B5488.state_4)
     {
@@ -633,7 +630,7 @@ s32 Savegame_CardState_Init() // 0x80030AD8
             switch (Savegame_CardSwEventsTest())
             {
                 case EvSpIOE: // Connected.
-                    if (D_800B5488.field_38 == 0)
+                    if (D_800B5488.cardIoMode_38 == CardIoMode_Init)
                     {
                         result                 = 3;
                         D_800B5488.state_4     = CardState_Idle;
@@ -653,7 +650,7 @@ s32 Savegame_CardState_Init() // 0x80030AD8
 
                 case EvSpNEW: // "No writing after connection"
                     D_800B5488.field_70 = 1;
-                    if (D_800B5488.field_38 == 0)
+                    if (D_800B5488.cardIoMode_38 == CardIoMode_Init)
                     {
                         result                 = 2;
                         D_800B5488.state_4     = CardState_Idle;
@@ -811,8 +808,8 @@ s32 Savegame_CardState_DirRead() // 0x80030F7C
 
     for (i = 0; i < 15; i++)
     {
-        *D_800B5488.field_40->fileNames_0[i]    = D_80024B64; // `00` byte near start of bodyprog rodata, far from `save.c` rodata section?
-        D_800B5488.field_40->blockCounts_13B[i] = 0;
+        *D_800B5488.cardDirectory_40->fileNames_0[i]    = D_80024B64; // `00` byte near start of bodyprog rodata, far from `save.c` rodata section?
+        D_800B5488.cardDirectory_40->blockCounts_13B[i] = 0;
     }
 
     for (i = 0; i < 15; i++)
@@ -833,8 +830,8 @@ s32 Savegame_CardState_DirRead() // 0x80030F7C
             break;
         }
 
-        strcpy(&D_800B5488.field_40->fileNames_0[i], fileInfo.name);
-        D_800B5488.field_40->blockCounts_13B[i] = (fileInfo.size + (8192 - 1)) / 8192;
+        strcpy(&D_800B5488.cardDirectory_40->fileNames_0[i], fileInfo.name);
+        D_800B5488.cardDirectory_40->blockCounts_13B[i] = (fileInfo.size + (8192 - 1)) / 8192;
     }
 
     retval = (D_800B5488.field_70 == 1) ? 5 : 6;
@@ -894,14 +891,14 @@ s32 Savegame_CardState_FileOpen() // 0x80031184
             D_800B5488.field_7C      = 0;
             D_800B5488.stateStep_8   = 1;
         case 1:
-            switch (D_800B5488.field_38)
+            switch (D_800B5488.cardIoMode_38)
             {
-                case 2:
+                case CardIoMode_Read:
                     mode = O_RDONLY;
                     break;
 
-                case 3:
-                case 4:
+                case CardIoMode_Write:
+                case CardIoMode_Create:
                     mode = O_WRONLY;
                     break;
 
@@ -966,15 +963,15 @@ s32 Savegame_CardState_FileReadWrite() // 0x80031260
         case 2:
             Savegame_CardSwEventsReset();
 
-            switch (D_800B5488.field_38)
+            switch (D_800B5488.cardIoMode_38)
             {
-                case 2:
-                    ioResult = read(D_800B5488.fileHandle_74, (void*)D_800B5488.field_68, D_800B5488.field_6C);
+                case CardIoMode_Read:
+                    ioResult = read(D_800B5488.fileHandle_74, D_800B5488.dataBuffer_68, D_800B5488.dataSize_6C);
                     break;
 
-                case 3:
-                case 4:
-                    ioResult = write(D_800B5488.fileHandle_74, (void*)D_800B5488.field_68, D_800B5488.field_6C);
+                case CardIoMode_Write:
+                case CardIoMode_Create:
+                    ioResult = write(D_800B5488.fileHandle_74, D_800B5488.dataBuffer_68, D_800B5488.dataSize_6C);
                     break;
 
                 default:

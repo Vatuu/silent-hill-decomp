@@ -48,7 +48,10 @@ Savegame_CardHwEventSpERROR = 0x80030894; // type:func
 Savegame_CardHwEventSpNEW = 0x800308A4; // type:func
 Savegame_CardHwEventSpTIMOUT = 0x800308B4; // type:func
 Savegame_CardHwEventSpUNKNOWN = 0x800308C4; // type:func
-
+Savegame_CardResult = 0x800308D4; // type:func
+Savegame_CardRequest = 0x800308E4; // type:func
+Savegame_CardIsIdle = 0x800309FC; // type:func
+Savegame_CardUpdate = 0x80030A0C; // type:func
 Savegame_CardState_Init = 0x80030AD8; // type:func
 Savegame_CardState_Check = 0x80030C88; // type:func
 Savegame_CardState_Load = 0x80030DC8; // type:func
