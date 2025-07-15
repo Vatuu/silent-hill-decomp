@@ -10,9 +10,30 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80055028); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_800550D0); // 0x800550D0
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80055330); // 0x80055330
+void func_80055330(s8 arg0, s32 arg1, s8 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6) // 0x80055330
+{
+    D_800C4168.field_0  = arg0;
+    D_800C4168.field_20 = arg1;
+    D_800C4168.field_3  = arg2;
+    D_800C4168.field_28 = arg3 >> 5;
+    D_800C4168.field_30 = arg3;
+    D_800C4168.field_2E = arg3;
+    D_800C4168.field_2C = arg3;
+    D_800C4168.field_29 = arg4 >> 5;
+    D_800C4168.field_8  = arg6;
+    D_800C4168.field_2A = arg5 >> 5;
+    D_800C4168.field_36 = arg4;
+    D_800C4168.field_34 = arg4;
+    D_800C4168.field_32 = arg4;
+    D_800C4168.field_3C = arg5;
+    D_800C4168.field_3A = arg5;
+    D_800C4168.field_38 = arg5;
+    D_800C4168.field_24 = (arg3 * arg1) >> 0x11;
+    D_800C4168.field_25 = (arg4 * arg1) >> 0x11;
+    D_800C4168.field_26 = (arg5 * arg1) >> 0x11;
+}
 
-void func_800553C4(s8 arg0, s8 arg1, s8 arg2, s8 arg3) // 0x800553C4
+void func_800553C4(u8 arg0, u8 arg1, u8 arg2, u8 arg3) // 0x800553C4
 {
     D_800C4168.field_1  = arg0;
     D_800C4168.field_1C = arg1;
@@ -20,7 +41,15 @@ void func_800553C4(s8 arg0, s8 arg1, s8 arg2, s8 arg3) // 0x800553C4
     D_800C4168.field_1E = arg3;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_800553E0); // 0x800553E0
+void func_800553E0(u32 arg0, u8 arg1, u8 arg2, u8 arg3, u8 arg4, u8 arg5, u8 arg6) // 0x800553E0
+{
+    D_800C416A = arg0;
+
+    if (arg0 != 0)
+    {
+        func_80040E7C(arg1, arg2, arg3, arg4, arg5, arg6);
+    }
+}
 
 void func_80055434(VECTOR3* vec) // 0x80055434
 {
@@ -37,7 +66,12 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80055648); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_800557DC); // 0x800557DC
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80055814); // 0x80055814
+void func_80055814(s32 arg0) // 0x80055814
+{
+    s32 temp;
+    temp       = func_800559A8(arg0);
+    D_800C4180 = 0x1000 - temp;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80055840); // 0x80055840
 

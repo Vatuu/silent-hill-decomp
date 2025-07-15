@@ -944,7 +944,7 @@ void Inventory_Logic() // 0x8004D518
                      D_800C3998 >= InventorySelectionId_Examine)
             {
                 if (g_SavegamePtr->items_0[g_SysWork.inventoryItemSelectedIdx_2351].id_0 == InventoryItemId_Flauros ||
-                    (g_SysWork.field_239E != 0 && g_SavegamePtr->items_0[g_SysWork.inventoryItemSelectedIdx_2351].id_0 == InventoryItemId_Flashlight))
+                    (g_SysWork.field_2388.field_16 != 0 && g_SavegamePtr->items_0[g_SysWork.inventoryItemSelectedIdx_2351].id_0 == InventoryItemId_Flashlight))
                 {
                     func_80046048(SFX_DENIED, 64, 64);
                 }
@@ -1127,7 +1127,9 @@ void Inventory_Logic() // 0x8004D518
             }
             else if (g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
             {
-                if ((!((u8)g_SysWork.field_24DC & (1 << 1)) || g_SysWork.field_239D != 0 || (!(g_SysWork.field_23A4 & (1 << 0)) && !(g_SysWork.field_23D8 & (1 << 0)))) &&
+                if ((!(g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & (1 << 1)) || g_SysWork.field_2388.field_15 != 0 ||
+                     (!(g_SysWork.field_2388.field_1C[0].field_0.field_0.s_field_0.field_0 & (1 << 0)) &&
+                      !(g_SysWork.field_2388.field_1C[1].field_0.field_0.s_field_0.field_0 & (1 << 0)))) &&
                     HAS_MAP(g_SavegamePtr->current2dMap_A9))
                 {
                     func_80046048(SFX_CONFIRM, 64, 64);
@@ -1164,8 +1166,9 @@ void Inventory_Logic() // 0x8004D518
             {
                 Gfx_Inventory_UnavailableMapText(1);
             }
-            else if ((u8)g_SysWork.field_24DC & (1 << 1) && g_SysWork.field_239D == 0 &&
-                     (g_SysWork.field_23A4 & (1 << 0) || g_SysWork.field_23D8 & (1 << 0)))
+            else if (g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & (1 << 1) && g_SysWork.field_2388.field_15 == 0 &&
+                     (g_SysWork.field_2388.field_1C[0].field_0.field_0.s_field_0.field_0 & (1 << 0) ||
+                      g_SysWork.field_2388.field_1C[1].field_0.field_0.s_field_0.field_0 & (1 << 0)))
             {
                 Gfx_Inventory_UnavailableMapText(0);
             }
@@ -1267,8 +1270,9 @@ void Inventory_Logic() // 0x8004D518
                     case InventoryCmdId_UseLook:
                         if (g_Inventory_CmdSelectedIdx != 0)
                         {
-                            if (!((u8)g_SysWork.field_24DC & (1 << 1)) || g_SysWork.field_239D != 0 ||
-                                (!(g_SysWork.field_23A4 & (1 << 0)) && !(g_SysWork.field_23D8 & (1 << 0))))
+                            if (!(g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & (1 << 1)) || g_SysWork.field_2388.field_15 != 0 ||
+                                (!(g_SysWork.field_2388.field_1C[0].field_0.field_0.s_field_0.field_0 & (1 << 0)) &&
+                                 !(g_SysWork.field_2388.field_1C[1].field_0.field_0.s_field_0.field_0 & (1 << 0))))
                             {
                                 D_800C3998                      = InventorySelectionId_EquippedItem;
                                 g_Inventory_SelectionId         = InventorySelectionId_Examine;
@@ -1344,8 +1348,9 @@ void Inventory_Logic() // 0x8004D518
                         break;
 
                     case InventoryCmdId_Look:
-                        if (!((u8)g_SysWork.field_24DC & (1 << 1)) || g_SysWork.field_239D != 0 ||
-                            (!(g_SysWork.field_23A4 & (1 << 0)) && !(g_SysWork.field_23D8 & (1 << 0))))
+                        if (!(g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & (1 << 1)) || g_SysWork.field_2388.field_15 != 0 ||
+                            (!(g_SysWork.field_2388.field_1C[0].field_0.field_0.s_field_0.field_0 & (1 << 0)) &&
+                             !(g_SysWork.field_2388.field_1C[1].field_0.field_0.s_field_0.field_0 & (1 << 0))))
                         {
                             D_800C3998                      = InventorySelectionId_EquippedItem;
                             g_Inventory_SelectionId         = InventorySelectionId_Examine;
@@ -1572,7 +1577,7 @@ void Gfx_Inventory_CmdOptionsDraw() // 0x8004E864
     switch (g_SavegamePtr->items_0[idx].command_2)
     {
         case InventoryCmdId_OnOff:
-            if (g_SysWork.field_239E == 0 || g_SavegamePtr->items_0[idx].id_0 != InventoryItemId_Flashlight)
+            if (g_SysWork.field_2388.field_16 == 0 || g_SavegamePtr->items_0[idx].id_0 != InventoryItemId_Flashlight)
             {
                 Gfx_StringSetPosition(222, -42);
                 Gfx_StringDraw(strs[5], 10);

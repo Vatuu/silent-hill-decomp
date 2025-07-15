@@ -13,11 +13,11 @@ void sharedFunc_800D6554_0_s00(s_SubCharacter* chara)
                                           g_SysWork.player_4C.chara_0.position_18.vz - chara->position_18.vz) -
                              chara->rotation_24.vy));
 
-    if ((g_SysWork.field_24DC & 0x3) == 0)
+    if ((g_SysWork.field_2388.field_154.field_0.field_0.field_0 & 0x3) == 0)
     {
         var = func_8006FD90(chara, 0, 0x7800, 0x7800);
     }
-    else if ((g_SysWork.field_24DC & 0x3) == 2)
+    else if ((g_SysWork.field_2388.field_154.field_0.field_0.field_0 & 0x3) == 2)
     {
         var = func_8006FD90(chara, 0, 0x10000, 0);
     }

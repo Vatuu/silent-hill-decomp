@@ -3812,7 +3812,7 @@ void SysState_Gameplay_Update() // 0x80038BD4
     }
 
     if (g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.light_A &&
-        g_SysWork.field_24DC & (1 << 1))
+        g_SysWork.field_2388.field_154.field_0.field_0.field_0 & (1 << 1))
     {
         func_8003ED08();
     }
@@ -4112,8 +4112,9 @@ void SysState_Unk3_Update() // 0x800396D4
             SysWork_StateSetNext(GameState_Unk0);
         }
     }
-    else if (((u8)g_SysWork.field_24DC & (1 << 1)) && g_SysWork.field_239D == 0 &&
-             (((u8)g_SysWork.field_23A4 & (1 << 0)) || ((u8)g_SysWork.field_23D8 & (1 << 0))))
+    else if ((g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & (1 << 1)) && g_SysWork.field_2388.field_15 == 0 &&
+             ((g_SysWork.field_2388.field_1C[0].field_0.field_0.s_field_0.field_0 & (1 << 0)) ||
+              (g_SysWork.field_2388.field_1C[1].field_0.field_0.s_field_0.field_0 & (1 << 0))))
     {
         if (g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.map_18 ||
             func_800365B8(4) > 0)
@@ -4547,8 +4548,8 @@ void SysState_GameOver_Update() // 0x8003A52C
             {
                 if (!Flags16b_IsSet(seenTipIdxs, tipIdx))
                 {
-                    if ((!(g_SysWork.field_24DC & 0x3) && (tipIdx - 13) >= 2u) ||
-                        ((g_SysWork.field_24DC & 0x3) && (tipIdx - 13) < 2u))
+                    if ((!(g_SysWork.field_2388.field_154.field_0.field_0.field_0 & 0x3) && (tipIdx - 13) >= 2u) ||
+                        ((g_SysWork.field_2388.field_154.field_0.field_0.field_0 & 0x3) && (tipIdx - 13) < 2u))
                     {
                         randTipVal += 3;
                     }
@@ -4567,8 +4568,8 @@ void SysState_GameOver_Update() // 0x8003A52C
             {
                 if (!Flags16b_IsSet(seenTipIdxs, tipIdx))
                 {
-                    if ((!(g_SysWork.field_24DC & 0x3) && (tipIdx - 13) >= 2u) ||
-                        ((g_SysWork.field_24DC & 0x3) && (tipIdx - 13) < 2u))
+                    if ((!(g_SysWork.field_2388.field_154.field_0.field_0.field_0 & 0x3) && (tipIdx - 13) >= 2u) ||
+                        ((g_SysWork.field_2388.field_154.field_0.field_0.field_0 & 0x3) && (tipIdx - 13) < 2u))
                     {
                         if (randTipVal < 3)
                         {
@@ -5167,7 +5168,7 @@ void func_8003BCF4() // 0x8003BCF4
 // TODO: Remake this whenever we have further context of `D_8002500C`.
 s32 func_8003BD2C() // 0x8003BD2C
 {
-    return (D_800BCE18.field_0[0].field_0 - &D_8002500C) >> 2;
+    return ((s32*)D_800BCE18.field_0[0].field_0 - &D_8002500C) >> 2;
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003BD48);
@@ -5454,14 +5455,137 @@ void GameFs_FlameGfxLoad() // 0x8003E710
     Fs_QueueStartReadTim(FILE_TIM_FLAME_TIM, FS_BUFFER_1, &D_800A9FA8);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003E740);
+void func_8003E740() // 0x8003E740
+{
+    DVECTOR   sp10;
+    MATRIX    sp18;
+    SVECTOR   sp38;
+    s32       sp40[4];
+    SVECTOR   sp50;
+    DVECTOR   sp58;
+    s32       sp60;
+    s32       temp_a0;
+    s32       temp_s6;
+    s16*      var_a0;
+    s32       i;
+    s32       var_s5;
+    POLY_FT4* poly;
+    s32       temp_s2 = 0;
+
+    if (g_DeltaTime0 != 0)
+    {
+        D_800A9FB0 += 8;
+        for (i = 0; i < 8; i++)
+        {
+            D_800BCDE8[i] = Rng_Rand16();
+        }
+    }
+
+    sp38.vx = 1;
+    sp38.vy = -7;
+    sp38.vz = 0x21;
+    sp38.vx = FP_MULTIPLY(shAngleRegulate(D_800BCDE8[temp_s2++]), 5, Q12_SHIFT) + 1;
+    sp38.vz = FP_MULTIPLY(shAngleRegulate(D_800BCDE8[temp_s2++]), 5, Q12_SHIFT) + 0x21;
+
+    poly = (POLY_FT4*)GsOUT_PACKET_P;
+
+    func_80049AF8(&g_SysWork.playerBoneCoords_890[PlayerBone_RightHand], &sp18);
+    SetRotMatrix(&sp18);
+    SetTransMatrix(&sp18);
+
+    var_s5 = RotTransPers(&sp38, &sp10, &sp60, &sp60);
+
+    temp_s6 = var_s5 * 4;
+    var_s5 >>= 1;
+    var_s5 -= 2;
+
+    if (var_s5 < 0)
+    {
+        var_s5 = 0;
+    }
+
+    if (temp_s6 >= 0x81 && var_s5 < 0x7FF)
+    {
+        SetPolyFT4(poly);
+        setSemiTrans(poly, 1);
+
+        temp_a0 = D_800BCDE8[temp_s2++];
+
+        if ((temp_a0 & 0xFFF) >= 0xD9A)
+        {
+            D_800A9FB0 -= 0x10 + (temp_a0 & 0xF);
+        }
+
+        if (D_800A9FB0 >= 0x21)
+        {
+            D_800A9FB0 = 0;
+        }
+
+        setRGB0(poly, D_800A9FB0 + 0x30, D_800A9FB0 + 0x30, D_800A9FB0 + 0x30);
+        poly->tpage = 0x2C;
+        poly->clut  = 0x1032;
+
+        var_a0 = &D_800BCDE8[temp_s2++];
+
+        for (i = 0; i < 4; i++)
+        {
+            sp40[i] = (var_a0[i] & 0xF) - 8;
+        }
+
+        SetRotMatrix(&GsIDMATRIX);
+        SetTransMatrix(&GsIDMATRIX);
+
+        sp50.vz = temp_s6;
+        sp50.vx = sp40[0] - 0x33;
+        sp50.vy = sp40[2] - 0x33;
+
+        RotTransPers(&sp50, &sp58, &sp60, &sp60);
+
+        poly->x0 = sp10.vx + sp58.vx;
+        poly->y0 = sp10.vy + sp58.vy;
+        sp50.vx  = sp40[1] + 0x33;
+        sp50.vy  = sp40[3] - 0x33;
+
+        RotTransPers(&sp50, &sp58, &sp60, &sp60);
+
+        poly->x1 = sp10.vx + sp58.vx;
+        poly->y1 = sp10.vy + sp58.vy;
+        sp50.vx  = -0x33 - sp40[1];
+        sp50.vy  = 0x33 - sp40[3];
+
+        RotTransPers(&sp50, &sp58, &sp60, &sp60);
+
+        poly->x2 = sp10.vx + sp58.vx;
+        poly->y2 = sp10.vy + sp58.vy;
+        sp50.vx  = 0x33 - sp40[0];
+        sp50.vy  = 0x33 - sp40[2];
+
+        RotTransPers(&sp50, &sp58, &sp60, &sp60);
+
+        poly->x3 = sp10.vx + sp58.vx;
+        poly->y3 = sp10.vy + sp58.vy;
+
+        poly->u0 = 0x80;
+        poly->u1 = 0xBF;
+        poly->u2 = 0x80;
+        poly->u3 = 0xBF;
+
+        poly->v0 = 0;
+        poly->v1 = 0;
+        poly->v2 = 0x3F;
+        poly->v3 = 0x3F;
+
+        AddPrim(&g_ObjectTable0[g_ObjectTableIdx].org[var_s5], poly);
+        GsOUT_PACKET_P = (PACKET*)poly + sizeof(POLY_FT4);
+    }
+}
 
 /**
  * TODO: Please investigate me!
  */
 void func_8003EB54() // 0x8003EB54
 {
-    s_StructUnk0*  temp_a0;
+    VECTOR3*       temp_a0;
     s_StructUnk1*  temp_v0;
     GsCOORDINATE2* temp_v1;
 
@@ -5472,10 +5596,10 @@ void func_8003EB54() // 0x8003EB54
 
     g_SysWork.field_235C = temp_v1;
     g_SysWork.field_236C = temp_v1;
-    g_SysWork.field_2360.field_0 = 0;
+    g_SysWork.field_2360.vx = 0;
 
-    temp_a0->field_4 = -0x333;
-    temp_a0->field_8 = -0x2000;
+    temp_a0->vy = -0x333;
+    temp_a0->vz = -0x2000;
 
     g_SysWork.field_2370.field_0 = 0x71;
 
@@ -5487,15 +5611,15 @@ void func_8003EB54() // 0x8003EB54
 void func_8003EBA0() // 0x8003EBA0
 {
     s_SysWork*    temp0 = &g_SysWork;
-    s_StructUnk0* temp1 = &temp0->field_2360;
+    VECTOR3*      temp1 = &temp0->field_2360;
     s_StructUnk1* temp2 = &temp0->field_2370;
 
     temp0->field_2378 = 0x1000;
     temp0->field_235C = &g_SysWork.playerBoneCoords_890[1];
     temp0->field_236C = g_SysWork.playerBoneCoords_890;
-    temp1->field_0    = -0x147;
-    temp1->field_4    = -0x47A;
-    temp1->field_8    = 0x1EB;
+    temp1->vx         = -0x147;
+    temp1->vy         = -0x47A;
+    temp1->vz         = 0x1EB;
     temp2->field_0    = -0xAA;
     temp2->field_2    = 0;
     temp2->field_4    = 0;
@@ -5505,13 +5629,13 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003EBF4);
 
 void func_8003ECBC() // 0x8003ECBC
 {
-    g_SysWork.unk_2388[21]   = 1;
+    g_SysWork.field_2388.field_15 = 1;
     g_SavegamePtr->flags_AC &= ~(1 << 1);
 }
 
 void func_8003ECE4() // 0x8003ECE4
 {
-    g_SysWork.unk_2388[21]   = 0;
+    g_SysWork.field_2388.field_15 = 0;
     g_SavegamePtr->flags_AC |= 1 << 1;
 }
 
@@ -5519,8 +5643,8 @@ void func_8003ED08() // 0x8003ED08
 {
     u8 var;
 
-    var                    = g_SysWork.unk_2388[21] ^ 1;
-    g_SysWork.unk_2388[21] = var;
+    var                           = g_SysWork.field_2388.field_15 ^ 1;
+    g_SysWork.field_2388.field_15 = var;
 
     if (var == 1)
     {
@@ -5533,7 +5657,7 @@ void func_8003ED08() // 0x8003ED08
 
 u8 func_8003ED64() // 0x8003ED64
 {
-    return g_SysWork.field_239D;
+    return g_SysWork.field_2388.field_15;
 }
 
 void func_8003ED74(s32 arg0, s32 arg1) // 0x8003ED74
@@ -5544,27 +5668,252 @@ void func_8003ED74(s32 arg0, s32 arg1) // 0x8003ED74
 
 void func_8003EDA8() // 0x8003EDA8
 {
-    g_SysWork.field_239C = 1;
+    g_SysWork.field_2388.field_14 = 1;
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003EDB8);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003EE30);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003EEDC);
+void func_8003EEDC(s32 arg0, s32 arg1) // 0x8003EEDC
+{
+    func_8003EF10(arg0, arg1, 0, 0, 0, 0);
+    func_8003F170();
+}
 
 void func_8003EF10(s32 idx0, s32 idx1, s32 arg4, s32 arg5, s32 arg6, s32 arg7) // 0x8003EF10
 {
-    func_8003EF74(D_800A93CC[idx0].field_0, D_800A93CC[idx1].field_0, arg4, arg5, arg6, arg7);  
+    func_8003EF74(&D_800A93CC[idx0], &D_800A93CC[idx1], arg4, arg5, arg6, arg7);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003EF74);
+void func_8003EF74(s_sub_StructUnk3* arg0, s_sub_StructUnk3* arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) // 0x8003EF74
+{
+    if (arg0 == arg1)
+    {
+        g_SysWork.field_2388.field_16 = 1;
+    }
+    else
+    {
+        g_SysWork.field_2388.field_16 = 0;
+    }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003F08C);
+    g_SysWork.field_2388.field_4 = arg3;
+    g_SysWork.field_2388.field_0 = arg2;
+    g_SysWork.field_2388.field_8 = arg4;
+    g_SysWork.field_2388.field_C = arg5;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003F170);
+    g_SysWork.field_2388.field_EC[0] = g_SysWork.field_2388.field_1C[0];
+    g_SysWork.field_2388.field_EC[1] = g_SysWork.field_2388.field_1C[1];
 
+    func_8003F08C(&g_SysWork.field_2388.field_84[0], arg0);
+    func_8003F08C(&g_SysWork.field_2388.field_84[1], arg1);
+}
+
+void func_8003F08C(s_StructUnk3* arg0, s_sub_StructUnk3* arg1) // 0x8003F08C
+{
+    arg0->field_0 = *arg1;
+
+    if (arg1->field_0.s_field_0.field_0 & 4)
+    {
+        arg0->field_2E = 0x1000;
+    }
+    else
+    {
+        arg0->field_2E = 0;
+    }
+
+    if (arg1->field_0.s_field_0.field_0 & 0x10)
+    {
+        arg0->field_2C = 0x1000;
+    }
+    else
+    {
+        arg0->field_2C = 0;
+    }
+
+    switch (arg1->field_E)
+    {
+        case 0:
+        case 1:
+            arg0->field_30 = arg1->field_10;
+            break;
+
+        case 2:
+            arg0->field_30 = 0;
+            break;
+
+        case 3:
+            arg0->field_30 = arg1->field_10;
+            break;
+
+        default:
+            break;
+    }
+}
+
+void func_8003F170() // 0x8003F170
+{
+    MATRIX          sp28;
+    VECTOR          sp48;
+    SVECTOR         sp58;
+    GsCOORDINATE2*  sp60;
+    s32             temp_v0;
+    u8              temp_v1;
+    s32             temp;
+    s_StructUnk3*   ptr2;
+    s_SysWork_2288* ptr = &g_SysWork.field_2388;
+
+    if (g_SysWork.field_2388.field_15 != 0)
+    {
+        g_SysWork.field_2388.field_18 += FP_MULTIPLY((s64)g_DeltaTime0, 0x4000, Q12_SHIFT);
+    }
+    else
+    {
+        g_SysWork.field_2388.field_18 -= FP_MULTIPLY((s64)g_DeltaTime0, 0x4000, Q12_SHIFT);
+    }
+
+    g_SysWork.field_2388.field_18 = CLAMP(g_SysWork.field_2388.field_18, 0, 0x1000);
+
+    if (g_SysWork.field_2388.field_84[g_SysWork.field_2388.field_18 != 0].field_0.field_E == 3)
+    {
+        func_80049AF8(g_SysWork.field_235C, &sp28);
+        ApplyMatrixLV(&sp28, (VECTOR*)&g_SysWork.field_2360, &sp48); // Bug? g_SysWork.field_2360 is VECTOR3
+        ptr->field_84[g_SysWork.field_2388.field_18 != 0].field_30 = sp48.vz + (sp28.t[2] * 0x10);
+    }
+
+    if (ptr->field_0 == 0)
+    {
+        ptr->field_1C[0] = ptr->field_84[0];
+        ptr->field_1C[1] = ptr->field_84[1];
+    }
+    else
+    {
+        temp_v0 = func_8003F6F0(func_8003F654(ptr), ptr->field_8, ptr->field_C);
+
+        func_8003F838(&ptr->field_1C[0], &ptr->field_EC[0], &ptr->field_84[0], temp_v0);
+        func_8003F838(&ptr->field_1C[1], &ptr->field_EC[1], &ptr->field_84[1], temp_v0);
+
+        if (temp_v0 >= 0x1000)
+        {
+            ptr->field_0 = 0;
+        }
+    }
+
+    func_8003F838(&ptr->field_154, &ptr->field_1C[0], &ptr->field_1C[1], ptr->field_18);
+
+    ptr2 = &ptr->field_154;
+
+    if (ptr->field_14 != 0)
+    {
+        temp_v1       = ptr->field_154.field_0.field_0.s_field_0.field_0;
+        ptr->field_14 = 0;
+
+        if (temp_v1 & 1)
+        {
+            func_8003F08C(ptr2, &D_800A952C);
+        }
+        else if (temp_v1 & 2)
+        {
+            ptr2->field_0.field_4 += 0x4CC;
+        }
+    }
+
+    ptr->field_10 = func_8003FEC0(&ptr2->field_0);
+    func_8003FF2C(ptr2);
+
+    temp = FP_MULTIPLY(func_8003F4DC(&sp60, &sp58, ptr2->field_0.field_4, ptr2->field_0.field_0.s_field_0.field_2, func_80080A10(), &g_SysWork), g_SysWork.field_2378, Q12_SHIFT);
+
+    func_800554C4(temp, ptr2->field_2C, sp60, g_SysWork.field_235C, &sp58, g_SysWork.field_2360.vx, g_SysWork.field_2360.vy, g_SysWork.field_2360.vz, D_800BCE18.field_0[0].field_0->field_8);
+    func_80055814(ptr2->field_30);
+
+    if (ptr->field_154.field_0.field_0.s_field_0.field_0 & 8)
+    {
+        func_8003E740();
+    }
+}
+
+// TODO: RODATA migration.
+#ifdef NON_MATCHING
+s32 func_8003F4DC(GsCOORDINATE2** arg0, SVECTOR* rot, s32 arg2, s32 arg3, u32 arg4, s_SysWork* sysWork) // 0x8003F4DC
+{
+    s32     temp;
+    s32     res;
+    SVECTOR vec;
+
+    if (arg3 != 2)
+    {
+        arg4 = 1;
+    }
+
+    res = arg2;
+    if (arg4 == 0)
+    {
+        res = 0;
+    }
+
+    switch (arg4)
+    {
+        default:
+        case 1:
+            *arg0 = sysWork->field_236C;
+            break;
+
+        case 0:
+        case 2:
+        case 3:
+        case 4:
+        case 5:
+            *arg0 = NULL;
+            break;
+    }
+
+    switch (arg4)
+    {
+        default:
+        case 1:
+            vec = sysWork->field_2370;
+            break;
+
+        case 0:
+            vec.vx = 0;
+            vec.vy = 0xfc00;
+            vec.vz = 0;
+            break;
+
+        case 2:
+            vec.vx = 0xff1d;
+            vec.vy = 0x8aa;
+            vec.vz = 0;
+            break;
+
+        case 3:
+            vec.vx = 0xff1d;
+            vec.vy = 0xfcab;
+            vec.vz = 0;
+            break;
+
+        case 4:
+            vec.vx = 0xff1d;
+            vec.vy = 0xaa;
+            vec.vz = 0;
+            break;
+
+        case 5:
+            vec.vx = 0xff1d;
+            vec.vy = 0x4aa;
+            vec.vz = 0;
+            break;
+    }
+
+    rot->vy = -shRsin(vec.vx);
+    temp    = shRcos(vec.vx);
+    rot->vz = FP_MULTIPLY(temp, shRcos(vec.vy), Q12_SHIFT);
+    rot->vx = FP_MULTIPLY(temp, shRsin(vec.vy), Q12_SHIFT);
+    return res;
+}
+#else
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003F4DC);
+#endif
 
 // TODO: RODATA migration.
 #ifdef NON_MATCHING
@@ -5655,11 +6004,11 @@ void func_8003FE04(s_func_8003FE04* arg0, s_func_8003FE04* arg1, s_func_8003FE04
 
 // TODO: Requires `D_800C4168` to be `const`, but `func_800553C4` writes to it so it can't be?
 #ifdef NON_MATCHING
-s32 func_8003FEC0(s_func_8003FEC0* arg0) // 0x8003FEC0
+s32 func_8003FEC0(s_sub_StructUnk3* arg0) // 0x8003FEC0
 {
     if (D_800C4168.field_1 != 0)
     {
-        return arg0->field_14;
+        return arg0->field_10;
     }
 
     if (D_800C4168.field_0 == 1)
@@ -5673,7 +6022,21 @@ s32 func_8003FEC0(s_func_8003FEC0* arg0) // 0x8003FEC0
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003FEC0);
 #endif
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003FF2C);
+void func_8003FF2C(s_StructUnk3* arg0) // 0x8003FF2C
+{
+    s32 temp_a0;
+    s32 temp_v1;
+    s32 var_t0;
+
+    temp_v1 = FP_MULTIPLY(arg0->field_2E, ((g_GameWork.config_0.optBrightness_22 * 8) + 4), Q12_SHIFT);
+    var_t0  = CLAMP(temp_v1, 0, 0xFF);
+
+    func_80055330(arg0->field_0.field_0.s_field_0.field_2, arg0->field_0.field_6, arg0->field_0.field_0.s_field_0.field_1, arg0->field_0.field_8, arg0->field_0.field_A, arg0->field_0.field_C, var_t0);
+    func_800553C4(arg0->field_0.field_E != 0, arg0->field_0.field_14, arg0->field_0.field_15, arg0->field_0.field_16);
+    temp_a0 = arg0->field_0.field_10;
+    func_80055840(temp_a0, temp_a0 + 0x1000);
+    func_800553E0(arg0->field_0.field_18, arg0->field_0.field_19, arg0->field_0.field_1A, arg0->field_0.field_1B, arg0->field_0.field_1D, arg0->field_0.field_1E, arg0->field_0.field_1F);
+}
 
 void func_80040004(s_800BCE18* arg0) // 0x80040004
 {

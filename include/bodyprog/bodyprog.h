@@ -321,11 +321,6 @@ STATIC_ASSERT_SIZEOF(s_800AA894, 12);
 
 typedef struct
 {
-    s8 field_0[44];
-} s_800A93CC;
-
-typedef struct
-{
     u8  field_0;
     u8  unk_1;
     u16 field_2;
@@ -426,7 +421,13 @@ STATIC_ASSERT_SIZEOF(s_800BCDA8, 4);
 
 typedef struct
 {
-    s32* field_0;
+    s32 unk_0[2];
+    s32 field_8;
+} s_sub_800BCE18_0;
+
+typedef struct
+{
+    s_sub_800BCE18_0* field_0;
     s8   field_4;
     u8   unk_5[3];
     s32  field_8;
@@ -609,16 +610,16 @@ typedef struct
 typedef struct
 {
     s8      field_0;
-    s8      field_1;
+    u8      field_1;
     s8      field_2;
     s8      field_3;
     s32     field_4;
     s32     field_8;
     s8      unk_C[12];
     s32     field_18;
-    s8      field_1C;
-    s8      field_1D;
-    s8      field_1E;
+    u8      field_1C;
+    u8      field_1D;
+    u8      field_1E;
     s32     field_20;
     s8      field_24;
     s8      field_25;
@@ -1091,7 +1092,9 @@ extern s_FsImageDesc D_800A909C; // Passed to `func_800917C0` for loading `TIM/F
 /** Array containg file IDs used for each `e_ShCharacterId`, used in `Fs_QueueStartReadAnm`. */
 extern s_CharaFileInfo g_Chara_FileInfo[45]; // 0x800A90FC
 
-extern s_800A93CC D_800A93CC[];
+extern s_sub_StructUnk3 D_800A93CC[];
+
+extern s_StructUnk3 D_800A952C;
 
 extern u16 D_800A9774[];
 
@@ -1177,6 +1180,8 @@ extern s32 D_800A9A88;
 extern RECT D_800A9A6C; // `RECT<320, 256, 160, 240>`, only used in `SysState_Fmv_Update`?
 
 extern s_FsImageDesc D_800A9EB4;
+
+extern u32 D_800A9FB0;
 
 extern s32 D_800A9FB4[];
 
@@ -1345,6 +1350,8 @@ extern u8 D_800BCDD4;
 
 extern s8* D_800BCDE0; // Type assumed.
 
+extern s16 D_800BCDE8[];
+
 extern u16 D_800BCE14;
 
 extern s_800BCE18 D_800BCE18;
@@ -1512,7 +1519,11 @@ extern u8 D_800C3E40;
 
 extern GsCOORDINATE2 D_800C3E48[];
 
+extern u8 D_800C416A;
+
 extern s_D_800C4168 D_800C4168;
+
+extern s32 D_800C4180;
 
 extern s32 D_800C454C;
 
@@ -1774,13 +1785,21 @@ void func_8003D6E0(s32 arg0, s32 arg1, s32 arg2, void* arg3);
 /** Param types assumed. */
 void func_8003DD80(s32, s32); // Called by some chara init funcs.
 
+void func_8003E740();
+
 void func_8003ED74(s32 arg0, s32 arg1);
 
 void func_8003EDA8();
 
 void func_8003EF10(s32 idx0, s32 idx1, s32 arg4, s32 arg5, s32 arg6, s32 arg7);
 
+s32 func_8003F4DC(GsCOORDINATE2** arg0, SVECTOR* rot, s32 arg2, s32 arg3, u32 arg4, s_SysWork* sysWork);
+
 u32 func_8003F654(s_func_8003F654* arg0);
+
+s32 func_8003F6F0(s32 arg0, s32 arg1, s32 arg2);
+
+s32 func_8003F838(s_StructUnk3* arg0, s_StructUnk3* arg1, s_StructUnk3* arg2, s32 arg3);
 
 /** Computes the weighted average of `a` and `b`. */
 s32 Math_GetWeightedAverage(s32 a, s32 b, s32 weight);
@@ -1791,7 +1810,9 @@ void func_8003FD38(s_func_8003FE04* arg0, s_func_8003FE04* arg1, s_func_8003FE04
 
 void func_8003FE04(s_func_8003FE04* arg0, s_func_8003FE04* arg1, s_func_8003FE04* arg2, s32 alphaTo);
 
-s32 func_8003FEC0(s_func_8003FEC0* arg0);
+s32 func_8003FEC0(s_sub_StructUnk3* arg0);
+
+void func_8003FF2C(s_StructUnk3* arg0);
 
 void func_80040014();
 
@@ -2036,7 +2057,7 @@ void func_80054720(void*, s32, s32);
 
 void func_8005487C(s32);
 
-void func_800553C4(s8 arg0, s8 arg1, s8 arg2, s8 arg3);
+void func_800553C4(u8 arg0, u8 arg1, u8 arg2, u8 arg3);
 
 /** `arg0` type assumed. */
 void func_80055434(VECTOR3* vec);

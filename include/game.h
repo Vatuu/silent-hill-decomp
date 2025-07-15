@@ -910,17 +910,81 @@ STATIC_ASSERT_SIZEOF(s_PlayerCombat, 20);
 
 typedef struct
 {
-    s32 field_0;
-    s32 field_4;
-    s32 field_8;
-} s_StructUnk0;
-
-typedef struct
-{
     s16 field_0;
     s16 field_2;
     s16 field_4;
 } s_StructUnk1;
+
+typedef union
+{
+    s32 field_0;
+    struct
+    {
+        u8 field_0;
+        u8 field_1;
+        u8 field_2;
+        u8 unk_3;
+    } s_field_0;
+} u_Unk0;
+
+typedef struct
+{
+    u_Unk0 field_0;
+    s16 field_4;
+    s16    field_6;
+    s16    field_8;
+    s16    field_A;
+    s16    field_C;
+    u8     field_E;
+    s8     unk_F;
+    s32    field_10;
+    u8     field_14;
+    u8     field_15;
+    u8     field_16;
+    s8     unk_17;
+    u8     field_18;
+    u8     field_19;
+    u8     field_1A;
+    u8     field_1B;
+    s8     unk_1C;
+    u8     field_1D;
+    u8     field_1E;
+    u8     field_1F;
+    s32    unk_20;
+    s32    unk_24;
+    s16    unk_28;
+    s16    unk_2A;
+} s_sub_StructUnk3;
+STATIC_ASSERT_SIZEOF(s_sub_StructUnk3, 44);
+
+typedef struct
+{
+    s_sub_StructUnk3 field_0;
+    s16              field_2C;
+    s16              field_2E;
+    s32              field_30;
+} s_StructUnk3;
+STATIC_ASSERT_SIZEOF(s_StructUnk3, 52);
+
+typedef struct
+{
+    s32          field_0;
+    s8*          field_4;
+    s32          field_8;
+    s32          field_C;
+    s32          field_10;
+    u8           field_14;
+    u8           field_15;
+    u8           field_16;
+    s8           unk_17;
+    s16          field_18;
+    u16          field_1A;
+    s_StructUnk3 field_1C[2];
+    s_StructUnk3 field_84[2];
+    s_StructUnk3 field_EC[2];
+    s_StructUnk3 field_154;
+} s_SysWork_2288;
+STATIC_ASSERT_SIZEOF(s_SysWork_2288, 392);
 
 typedef struct
 {
@@ -1000,7 +1064,7 @@ typedef struct _SysWork
     u8              field_235A; // Assumed type.
     s8              unk_235B[1];
     GsCOORDINATE2*  field_235C;
-    s_StructUnk0    field_2360;
+    VECTOR3         field_2360;
     GsCOORDINATE2*  field_236C;
     s_StructUnk1    field_2370;
     s16             unk_2376;
@@ -1010,17 +1074,7 @@ typedef struct _SysWork
     s16             field_237E;
     s32             cameraRadiusXz_2380;
     s32             cameraY_2384;
-    s8              unk_2388[20];
-    s8              field_239C;
-    u8              field_239D; // Index?
-    u8              field_239E;
-    s8              unk_239F[5];
-    u8              field_23A4; // Flags.
-    s8              unk_23A5[51];
-    u8              field_23D8; // Flags.
-    s8              unk_23D9[259];
-    s32             field_24DC; // Flags.
-    s8              unk_24E0[48];
+    s_SysWork_2288  field_2388;
     s32             field_2510;
     s_SysWork_2514  field_2514;
     u8              unk_254C[508];
