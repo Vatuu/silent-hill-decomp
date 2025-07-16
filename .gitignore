@@ -9,8 +9,11 @@ __pycache__/
 permuter/
 expected/
 .venv/
+.cache/
 
 objdiff.json
 null.d
 !*/place-the-bin-and-cue-here
 ctx.c
+compile.log
+compile_commands.json

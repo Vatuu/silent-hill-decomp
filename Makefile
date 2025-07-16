@@ -275,9 +275,13 @@ clean-progress: clean
 $(foreach target,$(TARGET_IN),$(eval $(call make_elf_target,$(target),$(call get_target_out,$(target)))))
 
 # Generate objects.
+# (Running make with MAKE_COMPILE_LOG=1 will create a compile.log that can be passed to tools/create_compile_commands.py)
 $(BUILD_DIR)/%.i: %.c
 	@mkdir -p $(dir $@)
 	$(call FlagsSwitch, $@)
+ifeq ($(MAKE_COMPILE_LOG),1)
+	@echo "$(CPP) -P -MMD -MP -MT $@ -MF $@.d $(CPP_FLAGS) $(OVL_FLAGS) -o $@ $<" >> compile.log
+endif
 	$(CPP) -P -MMD -MP -MT $@ -MF $@.d $(CPP_FLAGS) $(OVL_FLAGS) -o $@ $<
 
 $(BUILD_DIR)/%.sjis.i: $(BUILD_DIR)/%.i

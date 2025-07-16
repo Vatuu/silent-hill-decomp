@@ -946,7 +946,7 @@ s32 Savegame_CardState_FileReadWrite() // 0x80031260
             D_800B5488.stateStep_8   = 1;
 
         case 1:
-            if (lseek(D_800B5488.fileHandle_74, D_800B5488.seekOffset_64, 0) == -1)
+            if (lseek(D_800B5488.fileHandle_74, D_800B5488.seekOffset_64, SEEK_SET) == -1)
             {
                 if (D_800B5488.retryCount_78++ >= 15)
                 {
