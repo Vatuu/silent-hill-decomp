@@ -2725,7 +2725,7 @@ void func_80035ED0() // 0x80035ED0
 
     if (!func_80045BC8())
     {
-        g_SysWork.field_2748[0] = 0x1000;
+        g_SysWork.field_2748[0] = FP_FLOAT_TO(1.0f, Q12_SHIFT);
     }
 
     g_SysWork.field_2748[8] = 0;
@@ -2797,11 +2797,11 @@ void func_80035F4C(s32 arg0, s32 arg1, u8* arg2) // 0x80035F4C
             var_t0 = FP_MULTIPLY_FLOAT((s64)g_DeltaTime1, 0.25f, Q12_SHIFT);
             if (g_SysWork.field_22A0 & (1 << 1)) 
             {
-                var_a0 = 0x1000;
+                var_a0 = FP_FLOAT_TO(1.0f, Q12_SHIFT);
             } 
             else if (g_SysWork.field_22A0 & (1 << 2)) 
             {
-                var_a0 = 0xC00;
+                var_a0 = FP_FLOAT_TO(0.75f, Q12_SHIFT);
             } 
             else 
             {
@@ -2813,12 +2813,12 @@ void func_80035F4C(s32 arg0, s32 arg1, u8* arg2) // 0x80035F4C
             if ((var_s1 >> i) & (1 << 0)) 
             {
                 var_t0 = FP_MULTIPLY(g_DeltaTime1, arg1, Q12_SHIFT - 1); // Should be multiplied by 2 but doesn't match.
-                var_a0 = 0x1000;
+                var_a0 = FP_FLOAT_TO(1.0f, Q12_SHIFT);
             } 
             else 
             {
                 var_t0 = FP_MULTIPLY(g_DeltaTime1, arg1, Q12_SHIFT);
-                var_a0 = 0;
+                var_a0 = FP_FLOAT_TO(0.0f, Q12_SHIFT);
             }
         }
 
@@ -2844,7 +2844,7 @@ void func_80035F4C(s32 arg0, s32 arg1, u8* arg2) // 0x80035F4C
     }
 
     var_s3  = 0;
-    temp_v0 = 0x1000 - ptr[8];
+    temp_v0 = FP_FLOAT_TO(1.0f, Q12_SHIFT) - ptr[8];
 
     for (i = 0; i < 8; i++)
     {
@@ -2871,7 +2871,7 @@ void func_80035F4C(s32 arg0, s32 arg1, u8* arg2) // 0x80035F4C
         D_800BCD50[i] = var_v1;
     }
 
-    var_s4 = 0;
+    var_s4  = 0;
     temp_s2 = func_80045BC8();
 
     var_v0_2 = temp_s2;
@@ -2952,7 +2952,7 @@ void func_80035F4C(s32 arg0, s32 arg1, u8* arg2) // 0x80035F4C
 
 void func_800363D0() // 0x800363D0
 {
-    D_800A9A1C = 0;
+    D_800A9A1C            = 0;
     g_SysWork.field_22A0 |= 1 << 3;
     func_80035DB4(0);
 }
@@ -5279,7 +5279,7 @@ void func_8003CBA4(s_800BCE18_2BEC* arg0) // 0x8003CBA4
 {
     GsCOORDINATE2 coord;
     SVECTOR       vec;
-    MATRIX        mtx[2];
+    MATRIX        mats[2];
 
     coord.flg   = 0;
     coord.super = 0;
@@ -5288,14 +5288,14 @@ void func_8003CBA4(s_800BCE18_2BEC* arg0) // 0x8003CBA4
     coord.coord.t[1] = arg0->gsCoordinate1_4;
     coord.coord.t[2] = arg0->gsCoordinate2_8;
 
-    // Unpack vx/vy/vz bitfield (TODO: was this used anywhere else?)
+    // Unpack XYZ bitfield (TODO: Was this used anywhere else?)
     vec.vx = arg0->vx_C << 2;
     vec.vy = arg0->vy_C;
     vec.vz = arg0->vz_C << 2;
 
     func_80096C94(&vec, &coord.coord);
-    func_80049B6C(&coord, &mtx[1], &mtx[0]);
-    func_8003CC7C(arg0->field_0, &mtx[0], &mtx[1]);
+    func_80049B6C(&coord, &mats[1], &mats[0]);
+    func_8003CC7C(arg0->field_0, &mats[0], &mats[1]);
 }
 
 void func_8003CC7C(s_800BCE18_2BEC_0* arg0, MATRIX* arg1, MATRIX* arg2) // 0x8003CC7C
@@ -5305,7 +5305,6 @@ void func_8003CC7C(s_800BCE18_2BEC_0* arg0, MATRIX* arg1, MATRIX* arg2) // 0x800
     s_800BCE18_2BEC_0_10* temp_s2;
 
     temp_a0 = arg0->field_10[0].field_9;
-
     if (!temp_a0)
     {
         return;
@@ -5386,14 +5385,14 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003D550);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003D5B4);
 
-void func_8003D6A4(u8* arg0) // 0x8003D6A4
+void func_8003D6A4(u8* idx) // 0x8003D6A4
 {
-    u8 temp_v0;
+    u8 locIdx;
 
-    temp_v0 = *arg0;
-    if (temp_v0 != 0)
+    locIdx = *idx;
+    if (locIdx != 0)
     {
-        D_800BCE18.field_0[0].field_18[temp_v0] = 0;
+        D_800BCE18.field_0[0].field_18[locIdx] = 0;
         func_8003C1AC();
     }
 }
@@ -5475,7 +5474,7 @@ void func_8003E740() // 0x8003E740
     sp38.vy = -7;
     sp38.vz = 0x21;
     sp38.vx = FP_MULTIPLY(shAngleRegulate(D_800BCDE8[temp_s2++]), 5, Q12_SHIFT) + 1;
-    sp38.vz = FP_MULTIPLY(shAngleRegulate(D_800BCDE8[temp_s2++]), 5, Q12_SHIFT) + 0x21;
+    sp38.vz = FP_MULTIPLY(shAngleRegulate(D_800BCDE8[temp_s2++]), 5, Q12_SHIFT) + 33;
 
     poly = (POLY_FT4*)GsOUT_PACKET_P;
 
@@ -5485,9 +5484,9 @@ void func_8003E740() // 0x8003E740
 
     var_s5 = RotTransPers(&sp38, &sp10, &sp60, &sp60);
 
-    temp_s6 = var_s5 * 4;
+    temp_s6  = var_s5 * 4;
     var_s5 >>= 1;
-    var_s5 -= 2;
+    var_s5  -= 2;
 
     if (var_s5 < 0)
     {
@@ -5506,7 +5505,7 @@ void func_8003E740() // 0x8003E740
             D_800A9FB0 -= 0x10 + (temp_a0 & 0xF);
         }
 
-        if (D_800A9FB0 >= 0x21)
+        if (D_800A9FB0 >= 33)
         {
             D_800A9FB0 = 0;
         }
@@ -5575,7 +5574,7 @@ void func_8003E740() // 0x8003E740
  */
 void func_8003EB54() // 0x8003EB54
 {
-    g_SysWork.field_2378 = 0x1000;
+    g_SysWork.field_2378 = FP_FLOAT_TO(1.0f, Q12_SHIFT);
 
     g_SysWork.field_235C = &g_SysWork.playerBoneCoords_890[0];
     g_SysWork.field_236C = &g_SysWork.playerBoneCoords_890[0];
@@ -5587,7 +5586,7 @@ void func_8003EB54() // 0x8003EB54
 
 void func_8003EBA0() // 0x8003EBA0
 {
-    g_SysWork.field_2378 = 0x1000;
+    g_SysWork.field_2378 = FP_FLOAT_TO(1.0f, Q12_SHIFT);
 
     g_SysWork.field_235C = &g_SysWork.playerBoneCoords_890[1];
     g_SysWork.field_236C = &g_SysWork.playerBoneCoords_890[0];
@@ -5602,13 +5601,13 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003EBF4);
 void func_8003ECBC() // 0x8003ECBC
 {
     g_SysWork.field_2388.field_15 = 1;
-    g_SavegamePtr->flags_AC &= ~(1 << 1);
+    g_SavegamePtr->flags_AC      &= ~(1 << 1);
 }
 
 void func_8003ECE4() // 0x8003ECE4
 {
     g_SysWork.field_2388.field_15 = 0;
-    g_SavegamePtr->flags_AC |= 1 << 1;
+    g_SavegamePtr->flags_AC      |= 1 << 1;
 }
 
 void func_8003ED08() // 0x8003ED08
@@ -5685,18 +5684,18 @@ void func_8003F08C(s_StructUnk3* arg0, s_sub_StructUnk3* arg1) // 0x8003F08C
 {
     arg0->field_0 = *arg1;
 
-    if (arg1->field_0.s_field_0.field_0 & 4)
+    if (arg1->field_0.s_field_0.field_0 & (1 << 2))
     {
-        arg0->field_2E = 0x1000;
+        arg0->field_2E = FP_FLOAT_TO(1.0f, Q12_SHIFT);
     }
     else
     {
         arg0->field_2E = 0;
     }
 
-    if (arg1->field_0.s_field_0.field_0 & 0x10)
+    if (arg1->field_0.s_field_0.field_0 & (1 << 4))
     {
-        arg0->field_2C = 0x1000;
+        arg0->field_2C = FP_FLOAT_TO(1.0f, Q12_SHIFT);
     }
     else
     {
@@ -5737,19 +5736,19 @@ void func_8003F170() // 0x8003F170
 
     if (g_SysWork.field_2388.field_15 != 0)
     {
-        g_SysWork.field_2388.field_18 += FP_MULTIPLY((s64)g_DeltaTime0, 0x4000, Q12_SHIFT);
+        g_SysWork.field_2388.field_18 += FP_MULTIPLY((s64)g_DeltaTime0, FP_FLOAT_TO(4.0f, Q12_SHIFT), Q12_SHIFT);
     }
     else
     {
-        g_SysWork.field_2388.field_18 -= FP_MULTIPLY((s64)g_DeltaTime0, 0x4000, Q12_SHIFT);
+        g_SysWork.field_2388.field_18 -= FP_MULTIPLY((s64)g_DeltaTime0, FP_FLOAT_TO(4.0f, Q12_SHIFT), Q12_SHIFT);
     }
 
-    g_SysWork.field_2388.field_18 = CLAMP(g_SysWork.field_2388.field_18, 0, 0x1000);
+    g_SysWork.field_2388.field_18 = CLAMP(g_SysWork.field_2388.field_18, 0, FP_FLOAT_TO(1.0f, Q12_SHIFT));
 
     if (g_SysWork.field_2388.field_84[g_SysWork.field_2388.field_18 != 0].field_0.field_E == 3)
     {
         func_80049AF8(g_SysWork.field_235C, &sp28);
-        ApplyMatrixLV(&sp28, (VECTOR*)&g_SysWork.field_2360, &sp48); // Bug? g_SysWork.field_2360 is VECTOR3
+        ApplyMatrixLV(&sp28, (VECTOR*)&g_SysWork.field_2360, &sp48); // Bug? `g_SysWork.field_2360` is `VECTOR3`.
         ptr->field_84[g_SysWork.field_2388.field_18 != 0].field_30 = sp48.vz + (sp28.t[2] * 0x10);
     }
 
@@ -5765,7 +5764,7 @@ void func_8003F170() // 0x8003F170
         func_8003F838(&ptr->field_1C[0], &ptr->field_EC[0], &ptr->field_84[0], temp_v0);
         func_8003F838(&ptr->field_1C[1], &ptr->field_EC[1], &ptr->field_84[1], temp_v0);
 
-        if (temp_v0 >= 0x1000)
+        if (temp_v0 >= FP_FLOAT_TO(1.0f, Q12_SHIFT))
         {
             ptr->field_0 = 0;
         }
@@ -5798,7 +5797,7 @@ void func_8003F170() // 0x8003F170
     func_800554C4(temp, ptr2->field_2C, sp60, g_SysWork.field_235C, &sp58, g_SysWork.field_2360.vx, g_SysWork.field_2360.vy, g_SysWork.field_2360.vz, D_800BCE18.field_0[0].field_0->field_8);
     func_80055814(ptr2->field_30);
 
-    if (ptr->field_154.field_0.field_0.s_field_0.field_0 & 8)
+    if (ptr->field_154.field_0.field_0.s_field_0.field_0 & (1 << 3))
     {
         func_8003E740();
     }
@@ -5848,31 +5847,31 @@ s32 func_8003F4DC(GsCOORDINATE2** arg0, SVECTOR* rot, s32 arg2, s32 arg3, u32 ar
 
         case 0:
             vec.vx = 0;
-            vec.vy = 0xfc00;
+            vec.vy = 0xFC00;
             vec.vz = 0;
             break;
 
         case 2:
-            vec.vx = 0xff1d;
-            vec.vy = 0x8aa;
+            vec.vx = 0xFF1D;
+            vec.vy = 0x8AA;
             vec.vz = 0;
             break;
 
         case 3:
-            vec.vx = 0xff1d;
-            vec.vy = 0xfcab;
+            vec.vx = 0xFF1D;
+            vec.vy = 0xFCAB;
             vec.vz = 0;
             break;
 
         case 4:
-            vec.vx = 0xff1d;
-            vec.vy = 0xaa;
+            vec.vx = 0xFF1D;
+            vec.vy = 0xAA;
             vec.vz = 0;
             break;
 
         case 5:
-            vec.vx = 0xff1d;
-            vec.vy = 0x4aa;
+            vec.vx = 0xFF1D;
+            vec.vy = 0x4AA;
             vec.vz = 0;
             break;
     }
@@ -5933,7 +5932,7 @@ void func_8003FCB0(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x8003FCB0
 {
     s32 p0;
 
-    p0 = 0x1000 - arg3;
+    p0 = FP_FLOAT_TO(1.0f, Q12_SHIFT) - arg3;
     LoadAverageCol(arg1 + 0x21, arg2 + 0x21, p0, arg3, arg0 + 0x21);
     LoadAverageCol(arg1 + 0x25, arg2 + 0x25, p0, arg3, arg0 + 0x25);
 }
@@ -6006,7 +6005,7 @@ void func_8003FF2C(s_StructUnk3* arg0) // 0x8003FF2C
     func_80055330(arg0->field_0.field_0.s_field_0.field_2, arg0->field_0.field_6, arg0->field_0.field_0.s_field_0.field_1, arg0->field_0.field_8, arg0->field_0.field_A, arg0->field_0.field_C, var_t0);
     func_800553C4(arg0->field_0.field_E != 0, arg0->field_0.field_14, arg0->field_0.field_15, arg0->field_0.field_16);
     temp_a0 = arg0->field_0.field_10;
-    func_80055840(temp_a0, temp_a0 + 0x1000);
+    func_80055840(temp_a0, temp_a0 + FP_FLOAT_TO(1.0f, Q12_SHIFT));
     func_800553E0(arg0->field_0.field_18, arg0->field_0.field_19, arg0->field_0.field_1A, arg0->field_0.field_1B, arg0->field_0.field_1D, arg0->field_0.field_1E, arg0->field_0.field_1F);
 }
 

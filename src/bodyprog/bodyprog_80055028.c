@@ -28,9 +28,9 @@ void func_80055330(s8 arg0, s32 arg1, s8 arg2, s32 arg3, s32 arg4, s32 arg5, s32
     D_800C4168.field_3C = arg5;
     D_800C4168.field_3A = arg5;
     D_800C4168.field_38 = arg5;
-    D_800C4168.field_24 = (arg3 * arg1) >> 0x11;
-    D_800C4168.field_25 = (arg4 * arg1) >> 0x11;
-    D_800C4168.field_26 = (arg5 * arg1) >> 0x11;
+    D_800C4168.field_24 = (arg3 * arg1) >> 17;
+    D_800C4168.field_25 = (arg4 * arg1) >> 17;
+    D_800C4168.field_26 = (arg5 * arg1) >> 17;
 }
 
 void func_800553C4(u8 arg0, u8 arg1, u8 arg2, u8 arg3) // 0x800553C4
@@ -69,8 +69,9 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_800557DC); // 0x
 void func_80055814(s32 arg0) // 0x80055814
 {
     s32 temp;
+
     temp       = func_800559A8(arg0);
-    D_800C4180 = 0x1000 - temp;
+    D_800C4180 = FP_FLOAT_TO(1.0f, Q12_SHIFT) - temp;
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80055840); // 0x80055840
@@ -886,7 +887,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8007D970); // 0x
 // TODO: Can this work without needing inlined func?
 static inline Savegame_PlayerReset(s_ShSavegame* save)
 {
-    save->playerHealth_240      = FP_TO(100, Q12_SHIFT);
+    save->playerHealth_240      = FP_FLOAT_TO(100.0f, Q12_SHIFT);
     save->field_A0              = 0;
     save->equippedWeapon_AA     = 0;
     save->field_238             = 0;

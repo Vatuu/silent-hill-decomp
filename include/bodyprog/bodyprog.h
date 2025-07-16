@@ -386,7 +386,7 @@ typedef struct
     s32  field_C;
     s32  field_10;
     s8   unk_14[4];
-    s32  field_18[Chara_Count]; // Per-chara data? So far only seen accessed by `map4_s03::800D59EC` which calls `func_8003BE50(Chara_Twinfeeler)`.
+    s32  field_18[Chara_Count]; // Per-character data? So far only seen accessed by `map4_s03::800D59EC` which calls `func_8003BE50(Chara_Twinfeeler)`.
     u8   field_CC;
     u8   unk_CD[3];
     u8   unk_D0[412];
@@ -414,13 +414,13 @@ typedef struct
 typedef struct
 {
     s_800BCE18_2BEC_0* field_0;
-    s32                gsCoordinate0_4 : 18; // Used as `GsCOORDINATE2::coord.t[0]`
-    s32                gsCoordinate1_4 : 14; // Used as `GsCOORDINATE2::coord.t[1]`
-    s32                gsCoordinate2_8 : 18; // Used as `GsCOORDINATE2::coord.t[2]`
-    s32                unk_8_18 : 14;
-    s32                vx_C : 10;
-    s32                vy_C : 12;
-    s32                vz_C : 10;
+    s32                gsCoordinate0_4 : 18; // Used as `GsCOORDINATE2::coord.t[0].`
+    s32                gsCoordinate1_4 : 14; // Used as `GsCOORDINATE2::coord.t[1].`
+    s32                gsCoordinate2_8 : 18; // Used as `GsCOORDINATE2::coord.t[2].`
+    s32                unk_8_18        : 14;
+    s32                vx_C            : 10;
+    s32                vy_C            : 12;
+    s32                vz_C            : 10;
 } s_800BCE18_2BEC;
 STATIC_ASSERT_SIZEOF(s_800BCE18_2BEC, 16);
 
@@ -438,7 +438,7 @@ typedef struct
     VC_CAMERA_INTINFO vcCameraInternalInfo_1BDC; // Debug camera info.
     s_800BE9FC        field_1BE4;
     s32               field_2BE8;
-    s_800BCE18_2BEC   field_2BEC[1]; // Unknown size, valid count determined by field_2BE8?
+    s_800BCE18_2BEC   field_2BEC[1]; // Unknown size, valid count determined by `field_2BE8`?
 } s_800BCE18;
 STATIC_ASSERT_SIZEOF(s_800BCE18, 11260);
 
@@ -1711,7 +1711,7 @@ s32 func_8003D444(s32 idx);
 
 void func_8003D468(s32, s32); // Called by some chara init funcs, similar to `func_8003DD80`?
 
-void func_8003D6A4(u8* arg0);
+void func_8003D6A4(u8* idx);
 
 /** Return type assumed. */
 void func_8003D160();

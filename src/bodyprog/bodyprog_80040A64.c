@@ -58,7 +58,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80041074);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800410D8);
 
-void func_8004122C(s32* angle0, s32* angle1, VECTOR* arg2, VECTOR* arg3)
+void func_8004122C(s32* angle0, s32* angle1, VECTOR* arg2, VECTOR* arg3) // 0x8004122C
 {
     VECTOR  vec0;
     VECTOR  vec1;
@@ -83,37 +83,36 @@ void func_8004122C(s32* angle0, s32* angle1, VECTOR* arg2, VECTOR* arg3)
 
 void func_8004137C(VECTOR3* result, VECTOR* vec0, VECTOR* vec1, s32 screenDist)
 {
-    VECTOR sp10;
-    s32    ofsX;
-    s32    ofsY;
+    VECTOR vec;
+    s32    offsetX;
+    s32    offsetY;
     s32    screenDistHalf;
-    s32    var_a0;
+    s32    z;
 
     screenDistHalf = screenDist / 2;
 
     if (screenDistHalf < vec0->vz)
     {
-        sp10 = *vec0;
+        vec = *vec0;
     }
     else
     {
-        var_a0 = 1;
-
+        z = 1;
         if (vec1->vz != 0)
         {
-            var_a0 = vec1->vz;
+            z = vec1->vz;
         }
 
-        sp10.vz = screenDistHalf;
-        sp10.vx = (((screenDistHalf - vec0->vz) * vec1->vx) / var_a0) + vec0->vx;
-        sp10.vy = (((screenDistHalf - vec0->vz) * vec1->vy) / var_a0) + vec0->vy;
+        vec.vz = screenDistHalf;
+        vec.vx = (((screenDistHalf - vec0->vz) * vec1->vx) / z) + vec0->vx;
+        vec.vy = (((screenDistHalf - vec0->vz) * vec1->vy) / z) + vec0->vy;
     }
 
-    ReadGeomOffset(&ofsX, &ofsY);
+    ReadGeomOffset(&offsetX, &offsetY);
 
-    result->vz = sp10.vz;
-    result->vx = ((sp10.vx * screenDist) / sp10.vz) + ofsX;
-    result->vy = ((sp10.vy * screenDist) / sp10.vz) + ofsY;
+    result->vz = vec.vz;
+    result->vx = ((vec.vx * screenDist) / vec.vz) + offsetX;
+    result->vy = ((vec.vy * screenDist) / vec.vz) + offsetY;
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800414E0);

@@ -2891,7 +2891,7 @@ void Gfx_Items_RenderInit() // 0x80054558
     D_800AE180                          = 0;
     D_800AE187                          = 0;
     g_Inventory_StatusScanlineTimer     = 32;
-    g_Inventory_StatusDarkGradiantTimer = 0;
+    g_Inventory_StatusDarkGradientTimer = 0;
     D_800AE198                          = 0;
     D_800AE19A                          = -0x12C;
     D_800AE19C                          = 0;

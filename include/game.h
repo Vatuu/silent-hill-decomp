@@ -989,8 +989,8 @@ typedef struct
 
 typedef struct
 {
-    u32               unk_0 : 8;
-    u8                field_1 : 8;
+    u32               unk_0     : 8;
+    u8                field_1   : 8;
     u32               field_2_0 : 1;
     u32               field_2_1 : 1;
     u32               field_2_2 : 14;
@@ -1201,12 +1201,12 @@ static inline void Savegame_EventFlagSet(u32 flagId)
 /** @brief Checks if the given flag ID is set inside the array of 16-bit flag values. */
 static inline s32 Flags16b_IsSet(u16* array, s32 flagId)
 {
-    // BUG: `>> 5` divides flagId by 32 to get array index, but array is of 16-bit values.
+    // BUG: `>> 5` divides `flagId` by 32 to get array index, but array is of 16-bit values.
     // Maybe copy paste from `u32` version of func.
     return (array[flagId >> 5] >> (flagId & 0x1F)) & (1 << 0);
 }
 
-/** @brief Sets the given animation flag on both player character & player extra data. */
+/** @brief Sets the given animation flag on both player character and player extra data. */
 // TODO: Move to separate character/player header.
 static inline void Player_AnimFlag_Set(u32 flag)
 {

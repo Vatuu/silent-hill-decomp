@@ -57,19 +57,19 @@ extern s32 g_Inventory_SelectedItemIdx; // 0x800AE17C
 
 extern u8 g_Inventory_EquippedItem; // 0x800AE184
 
-/** @brief Timer used for displaying the description of items in the inventory */
+/** @brief Timer used for displaying item descriptions in the inventory. */
 extern s32 g_Inventory_DescriptonRollTimer; // 0x800AE1A0
 
-/** @brief Timer used for displaying the transition of selected items
-* when scrolling through the inventory
+/** @brief Timer used for the transition of selected items
+* when scrolling through the inventory.
 */
 extern s32 g_Inventory_ScrollTransitionTimer; // 0x800AE1A4
 
-/** Timer used for the black gradiant effect in the health status. */
+/** Timer used for the black scanline gradient health status effect. */
 extern s16 g_Inventory_StatusScanlineTimer; // 0x800AE194
 
-/** Timer used for the gradiant health effect in the health status. */
-extern s16 g_Inventory_StatusDarkGradiantTimer; // 0x800AE196
+/** Timer used for the colored gradient in the health status effect. */
+extern s16 g_Inventory_StatusDarkGradientTimer; // 0x800AE196
 
 extern s32 g_Inventory_IsUpClicked; // 0x800C3968
 
@@ -91,14 +91,13 @@ extern s32 g_Inventory_IsLeftHeld; // 0x800C3988
 
 extern s32 g_Inventory_IsRightHeld; // 0x800C398C
 
-/** This is used to organize the items displaying in the inventory.
-* It's size is 28/0x1C.
+/** Used to organize the items displaying in the inventory.
+* Size is `28/0x1C`.
 */
 extern s32 D_800C3E18[7]; // 0x800C3E18
 
-/** This value is based in the index (of the item available in the inventory)
-* of the item equipped.
-* If the player has nothing equipped the value is -1.
+/** This value is based on the index of the equipped item.
+* If the player has nothing equipped, the value is `NO_VALUE`.
 */
 extern s32 g_Inventory_EquippedItemIdx; // 0x800C3E34
 
@@ -109,18 +108,18 @@ extern s32 g_Inventory_EquippedItemIdx; // 0x800C3E34
 /** Renders items. */
 void func_8004BB4C(VbRVIEW* view, GsCOORDINATE2* coord, SVECTOR3* vec, s32 arg3);
 
-/** Aparently adjusts the position of items in the inventory. */
+/** Apparently adjusts the position of items in the inventory. */
 void func_8004BFE8();
 
 /** Used for item rotation and item scrolling in the inventory. */
 void Gfx_Results_ItemsRotate(SVECTOR* arg0, GsCOORDINATE2* arg1); // 0x8004BCDC
 
-/** Used for fixing bugs related to aiming animations when exiting the inventory screen.
- * This function fixes a bug that makes impossible to attack and generate buggy
- * animations. If the player enters the inventory in between the transition of
- * the aim animation and the idle animation enter to the, then changes the weapon
- * to another type of weapon (example: from short fire weapon to melee) causes
- * a bug where Harry keep the aiming animation until he does an interaction or run.
+/** Used to correct aim animations when exiting the inventory screen.
+ *
+ * If removed, when the user enters the inventory between the transition of the
+ * aim animation to the idle animation, then changes the weapon to another
+ * type (e.g. from a gun weapon to a melee weapon), Harry will continue
+ * aiming until he interacts with something or starts running.
  */
 void Inventory_ExitAnimEquippedItemUpdate(u8*); // 0x8004C088
 

@@ -168,9 +168,9 @@ void func_8002E8E4() // 0x8002E8E4
 
     D_800B5508[9].field_14 = NULL;
     D_800B5508[8].field_18 = 0;
-    
+
     ptr = &D_800B5508[8].field_18;
-    
+
     ptr->field_4  = 0;
     ptr->field_8  = 0;
     ptr->field_C  = 0;
@@ -332,7 +332,7 @@ void func_8002ECE0(s_800B55E8* arg0) // 0x8002ECE0
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/memcard", func_8002ED7C);
 
-s32 func_8002F278(s32 arg0, s_CardDirectory* arg1) // 0x8002F278
+s32 func_8002F278(s32 arg0, s_CardDirectory* dir) // 0x8002F278
 {
     s32 ret;
     s32 i;
@@ -340,7 +340,7 @@ s32 func_8002F278(s32 arg0, s_CardDirectory* arg1) // 0x8002F278
     ret = 15;
     for (i = 0; i < 15; i++)
     {
-        ret -= arg1->blockCounts_13B[i];
+        ret -= dir->blockCounts_13B[i];
     }
 
     return ret + func_8002EA28(arg0);
@@ -696,7 +696,7 @@ s32 Savegame_CardResult() // 0x800308D4
     return g_CardWork.stateResult_C;
 }
 
-s32 Savegame_CardRequest(e_CardIoMode mode, s32 deviceId, s_CardDirectory* outDirectory, char* fileName, s32 createBlockCount, s32 fileOffset, void* outBuffer, s32 bufferSize) // 0x800308E4
+s32 Savegame_CardRequest(e_CardIoMode mode, s32 deviceId, s_CardDirectory* outDir, char* filename, s32 createBlockCount, s32 fileOffset, void* outBuf, s32 bufSize) // 0x800308E4
 {
     if (!Savegame_CardIsIdle())
     {
@@ -723,19 +723,22 @@ s32 Savegame_CardRequest(e_CardIoMode mode, s32 deviceId, s_CardDirectory* outDi
             g_CardWork.state_4     = CardState_FileCreate;
             g_CardWork.stateStep_8 = 0;
             break;
+
+        default:
+            break;
     }
 
     g_CardWork.deviceId_3C      = deviceId;
-    g_CardWork.cardDirectory_40 = outDirectory;
+    g_CardWork.cardDirectory_40 = outDir;
 
     Savegame_DevicePathGenerate(deviceId, g_CardWork.filePath_44);
-    strcat(g_CardWork.filePath_44, fileName);
+    strcat(g_CardWork.filePath_44, filename);
 
     g_CardWork.createBlockCount_60 = createBlockCount;
-    g_CardWork.seekOffset_64 = fileOffset;
-    g_CardWork.dataBuffer_68 = outBuffer;
-    g_CardWork.dataSize_6C   = bufferSize;
-    g_CardWork.field_70      = 0;
+    g_CardWork.seekOffset_64       = fileOffset;
+    g_CardWork.dataBuffer_68       = outBuf;
+    g_CardWork.dataSize_6C         = bufSize;
+    g_CardWork.field_70            = 0;
     return 1;
 }
 
@@ -780,6 +783,9 @@ void Savegame_CardUpdate() // 0x80030A0C
         case CardState_FileReadWrite:
             g_CardWork.stateResult_C = Savegame_CardState_FileReadWrite();
             break;
+
+        default:
+            break;
     }
 }
 
@@ -789,7 +795,7 @@ s32 Savegame_CardState_Init() // 0x80030AD8
     s32 result;
 
     result  = 1;
-    channel = ((g_CardWork.deviceId_3C & (1 << 2)) << 2) + (g_CardWork.deviceId_3C & 3);
+    channel = ((g_CardWork.deviceId_3C & (1 << 2)) << 2) + (g_CardWork.deviceId_3C & ((1 << 0) | (1 << 1)));
 
     switch (g_CardWork.stateStep_8)
     {
@@ -800,6 +806,7 @@ s32 Savegame_CardState_Init() // 0x80030AD8
 
         case 1:
             Savegame_CardSwEventsReset();
+
             if (_card_info(channel) == 1)
             {
                 g_CardWork.stateStep_8++;
@@ -820,7 +827,7 @@ s32 Savegame_CardState_Init() // 0x80030AD8
                         g_CardWork.state_4     = CardState_Idle;
                         g_CardWork.stateStep_8 = 0;
                     }
-                    else if (!((g_CardWork.devicesPending_0 >> g_CardWork.deviceId_3C) & 1))
+                    else if (!((g_CardWork.devicesPending_0 >> g_CardWork.deviceId_3C) & (1 << 0)))
                     {
                         g_CardWork.state_4     = CardState_DirRead;
                         g_CardWork.stateStep_8 = 0;
@@ -869,7 +876,7 @@ s32 Savegame_CardState_Check() // 0x80030C88
     s32 result;
 
     result  = 1;
-    channel = ((g_CardWork.deviceId_3C & (1 << 2)) << 2) + (g_CardWork.deviceId_3C & 3);
+    channel = ((g_CardWork.deviceId_3C & (1 << 2)) << 2) + (g_CardWork.deviceId_3C & ((1 << 0) | (1 << 1)));
 
     switch (g_CardWork.stateStep_8)
     {
@@ -880,6 +887,7 @@ s32 Savegame_CardState_Check() // 0x80030C88
 
         case 1:
             Savegame_CardHwEventsReset();
+
             if (_card_clear(channel) == 1)
             {
                 g_CardWork.stateStep_8++;
@@ -917,7 +925,7 @@ s32 Savegame_CardState_Load() // 0x80030DC8
     s32 result;
 
     result  = 1;
-    channel = ((g_CardWork.deviceId_3C & (1 << 2)) << 2) + (g_CardWork.deviceId_3C & 3);
+    channel = ((g_CardWork.deviceId_3C & (1 << 2)) << 2) + (g_CardWork.deviceId_3C & ((1 << 0) | (1 << 1)));
 
     switch (g_CardWork.stateStep_8)
     {
@@ -928,10 +936,11 @@ s32 Savegame_CardState_Load() // 0x80030DC8
 
         case 1:
             Savegame_CardSwEventsReset();
+
             if (_card_load(channel) == 1)
             {
                 g_CardWork.stateStep_8++;
-                if (!(g_CardWork.deviceId_3C & 4))
+                if (!(g_CardWork.deviceId_3C & (1 << 2)))
                 {
                     g_CardWork.devicesPending_0 |= 0xF;
                 }
@@ -946,8 +955,8 @@ s32 Savegame_CardState_Load() // 0x80030DC8
             switch (Savegame_CardSwEventsTest())
             {
                 case EvSpIOE: // Read completed.
-                    g_CardWork.state_4     = CardState_DirRead;
-                    g_CardWork.stateStep_8 = 0;
+                    g_CardWork.state_4           = CardState_DirRead;
+                    g_CardWork.stateStep_8       = 0;
                     g_CardWork.devicesPending_0 &= ~(1 << g_CardWork.deviceId_3C);
                     break;
 
@@ -1038,9 +1047,10 @@ s32 Savegame_CardState_FileCreate() // 0x800310B4
             g_CardWork.retryCount_78 = 0;
             g_CardWork.field_7C      = 0;
             g_CardWork.stateStep_8   = 1;
+
         case 1:
             g_CardWork.fileHandle_74 = open(g_CardWork.filePath_44, (g_CardWork.createBlockCount_60 << 16) | O_CREAT);
-            if (g_CardWork.fileHandle_74 == -1)
+            if (g_CardWork.fileHandle_74 == NO_VALUE)
             {
                 if (g_CardWork.retryCount_78++ >= 15)
                 {
@@ -1058,6 +1068,7 @@ s32 Savegame_CardState_FileCreate() // 0x800310B4
             }
             break;
     }
+
     return result;
 }
 
@@ -1074,6 +1085,7 @@ s32 Savegame_CardState_FileOpen() // 0x80031184
             g_CardWork.retryCount_78 = 0;
             g_CardWork.field_7C      = 0;
             g_CardWork.stateStep_8   = 1;
+
         case 1:
             switch (g_CardWork.cardIoMode_38)
             {
@@ -1092,8 +1104,7 @@ s32 Savegame_CardState_FileOpen() // 0x80031184
             }
 
             g_CardWork.fileHandle_74 = open(g_CardWork.filePath_44, mode | O_NOWAIT);
-
-            if (g_CardWork.fileHandle_74 == -1)
+            if (g_CardWork.fileHandle_74 == NO_VALUE)
             {
                 if (g_CardWork.retryCount_78++ >= 15)
                 {
@@ -1110,6 +1121,7 @@ s32 Savegame_CardState_FileOpen() // 0x80031184
             }
             break;
     }
+
     return result;
 }
 
@@ -1128,7 +1140,7 @@ s32 Savegame_CardState_FileReadWrite() // 0x80031260
             g_CardWork.stateStep_8   = 1;
 
         case 1:
-            if (lseek(g_CardWork.fileHandle_74, g_CardWork.seekOffset_64, SEEK_SET) == -1)
+            if (lseek(g_CardWork.fileHandle_74, g_CardWork.seekOffset_64, SEEK_SET) == NO_VALUE)
             {
                 if (g_CardWork.retryCount_78++ >= 15)
                 {
@@ -1159,11 +1171,11 @@ s32 Savegame_CardState_FileReadWrite() // 0x80031260
                     break;
 
                 default:
-                    ioResult = -1;
+                    ioResult = NO_VALUE;
                     break;
             }
 
-            if (ioResult == -1)
+            if (ioResult == NO_VALUE)
             {
                 if (g_CardWork.retryCount_78++ >= 15)
                 {
@@ -1207,6 +1219,7 @@ s32 Savegame_CardState_FileReadWrite() // 0x80031260
                     break;
             }
     }
+
     return result;
 }
 
@@ -1214,7 +1227,7 @@ void Savegame_DevicePathGenerate(s32 deviceId, char* result) // 0x800314A4
 {
     strcpy(result, "buXX:");
 
-    // Convert sequential device ID to PSX channel number
+    // Convert sequential device ID to PSX channel number.
     result[2] = '0' + ((deviceId & (1 << 2)) >> 2);
-    result[3] = '0' + (deviceId & 3);
+    result[3] = '0' + (deviceId & ((1 << 0) | (1 << 1)));
 }

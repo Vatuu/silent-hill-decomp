@@ -96,7 +96,7 @@ s16 D_801E7574[MEMORY_CARD_SLOT_COUNT] = { 0, 0 };
 
 s16 g_Gfx_SelectedSaveOffsetsY[MEMORY_CARD_SLOT_COUNT] = { 0, 0 };
 
-s8 D_801E757C[8] = {}; // Unused data - Splat confuse it by merging it with the previous data (`g_Gfx_SelectedSaveOffsetsY`)
+s8 D_801E757C[8] = {}; // Unused data - Splat gets confused and merges it with the previous data (`g_Gfx_SelectedSaveOffsetsY`).
 
 /*
 s8 D_801E7584[SAVEGAME_COUNT_MAX * MEMORY_CARD_SLOT_COUNT] = { };
@@ -322,7 +322,7 @@ void Gfx_SaveScreenDraw(s_SavegameEntry* saveEntry, s32 saveIdx, s32 slotIdx) //
 
     if (saveIdx == 0)
     {
-        Gfx_SavedShineDraw();
+        Gfx_SavedFlashDraw();
 
         g_Gfx_SaveFlashTimer++;
         g_Gfx_SaveFlashTimer = CLAMP(g_Gfx_SaveFlashTimer, 0, SAVE_FLASH_TIMER_MAX);
@@ -703,7 +703,7 @@ void Gfx_WriteOptionSaveDraw(s32 arg0, s32 optionIdx) // 0x801E3C44
     }
 }
 
-void Gfx_SavedShineDraw() // 0x801E3E78
+void Gfx_SavedFlashDraw() // 0x801E3E78
 {
     GsOT*    ot;
     s32      slotIdx;

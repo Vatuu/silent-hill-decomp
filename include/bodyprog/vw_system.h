@@ -105,6 +105,7 @@ typedef struct _VC_LIMIT_AREA
 } VC_LIMIT_AREA;
 STATIC_ASSERT_SIZEOF(VC_LIMIT_AREA, 8);
 
+/** @brief Camera internal info. */
 typedef struct _VC_CAMERA_INTINFO
 {
     u32 mode;

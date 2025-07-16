@@ -468,7 +468,7 @@ void func_80091464() {} // 0x80091464
 u32 func_8009146C(s32 arg0) // 0x8009146C
 {
     s32 var_v0;
-    u32 result;
+    u32 res;
     u32 var_v1_2;
 
     if (arg0 == 0) 
@@ -482,13 +482,12 @@ u32 func_8009146C(s32 arg0) // 0x8009146C
         var_v0 = (g_SavegamePtr->meleeKillCountB_25E & 0xF0) * 16;
     }
     
-    result = var_v1_2 + var_v0;
-    
-    if (result >= 0xFA1U) 
+    res = var_v1_2 + var_v0;
+    if (res >= 0xFA1u) 
     {
-        result = 0xFA0;
+        res = 0xFA0;
     }
-    return result;
+    return res;
 }
 
 void func_800914C4(s32 arg0, u32 value) // 0x800914C4

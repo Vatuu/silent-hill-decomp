@@ -58,7 +58,7 @@ typedef struct
 
 typedef struct
 {
-    s32 devicesPending_0; /** Bitfield of device IDs, each set bit index is an ID that must be read/inited first. */
+    s32 devicesPending_0; /** Bitfield of device IDs, each set bit index is an ID that must be read/initialized first. */
     s32 state_4;          /** `e_CardState` */
     s32 stateStep_8;
     s32 stateResult_C;
@@ -168,13 +168,11 @@ extern s_CardWork g_CardWork; // 0x800B5488
 
 /** Declaration of the struct takes 224 bytes (0xE0 bytes in hex).
  * It is possible that the full size of the struct
- * is `0x1C/28` bytes, as `func_8002E94C` accesses 8 elements
- * and by multiplying 8 by 28 to gives 224.
- *
- *
+ * is `0x1C/28` bytes, as `func_8002E94C` accesses 8 elements,
+ * and multiplying 8 by 28 gives 224.
  *
  * Additionally, investigating the RAM affirms that every
- * `0x1C/28` bytes is the start address of a new element
+ * `0x1C/28` bytes is the start address of a new element,
  * which the decompiled code seems to point to.
  */
 extern s_800B5508 D_800B5508[8];
@@ -184,9 +182,9 @@ extern s_800B55E8 D_800B55E8[2];
 extern s32 D_800B55FC;
 
 /** @brief Basic information required to draw information of elements in save slots.
- * Address access is based on the slot: Slot 1 - 0x801E09E0, Slot 2 - 0x801E1440.
+ * Address access is based on the slot: slot 1 = 0x801E09E0, slot 2 = 0x801E1440.
  * 
- * @note Macros for it's references can be found in `saveload.h` as:
+ * @note Macros for its references are in `saveload.h`:
  * `SAVEGAME_ENTRY_BUFFER_0`
  * `SAVEGAME_ENTRY_BUFFER_1`
  */
@@ -235,7 +233,7 @@ void func_8002EB88(); // Return type assumed.
 
 void func_8002ECE0(s_800B55E8* arg0);
 
-s32 func_8002F278(s32 arg0, s_CardDirectory* arg1);
+s32 func_8002F278(s32 arg0, s_CardDirectory* dir);
 
 void func_8002FB64(s_func_8002FB64 *arg0);
 
@@ -307,7 +305,7 @@ void Savegame_CardHwEventSpUNKNOWN();
 
 s32 Savegame_CardResult();
 
-s32 Savegame_CardRequest(e_CardIoMode mode, s32 deviceId, s_CardDirectory* outDirectory, char* fileName, s32 createBlockCount, s32 fileOffset, void* outBuffer, s32 bufferSize);
+s32 Savegame_CardRequest(e_CardIoMode mode, s32 deviceId, s_CardDirectory* outDir, char* filename, s32 createBlockCount, s32 fileOffset, void* outBuf, s32 bufSize);
 
 s32 Savegame_CardIsIdle();
 
@@ -327,6 +325,6 @@ s32 Savegame_CardState_FileOpen();
 
 s32 Savegame_CardState_FileReadWrite();
 
-void Savegame_DevicePathGenerate(s32 deviceId, char* result);
+void Savegame_DevicePathGenerate(s32 deviceId, char* res);
 
 #endif
