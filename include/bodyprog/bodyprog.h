@@ -88,26 +88,6 @@ typedef struct
     s32 field_4[4];
 } s_800382B0;
 
-typedef union
-{
-    s32 field_0;
-    u8  vec_0[4];
-} s_Color;
-
-typedef struct
-{
-    s8      unk_0[6];
-    s16     field_6;
-    s8      unk_8[8];
-    s32     field_10;
-    s_Color field_14;
-    s_Color field_18;
-    s_Color field_1C;
-    s8      unk_20[14];
-    s16     field_2E;
-    s32     field_30;
-} s_func_8003FE04;
-
 typedef struct
 {
     s8  unk_0[4];
@@ -885,10 +865,16 @@ typedef struct s_UnkStruct_MapOverlay
     u8 field_0[34]; /** `e_InventoryItemId` */
 } s_UnkStruct_MO;
 
+typedef struct
+{
+    u8 unk_0[6];
+    u8 field_6;
+} s_UnkStruct2_MO;
+
 /** TODO: `g_MapOverlayHeader` is part of the overlay BIN files. Maybe should be moved to `maps/shared.h` or `dynamic/dynamic.h`. */
 typedef struct _MapOverlayHeader
 {
-    s8                unk_0[4];
+    s_UnkStruct2_MO* field_0;
     s8                (*getMapRoomIdxFunc_4)(s32 x, s32 y); // Called by `func_80036420`.
     s8                field_8;
     s8                unk_9[3];
@@ -949,6 +935,12 @@ typedef struct
     s8 field_0;
     s8 field_1;
 } s_800BCD78;
+
+typedef struct
+{
+    u8 field_0;
+    u8 field_1;
+} s_800A9F80;
 
 extern s_FsImageDesc g_MainImg0; // 0x80022C74 - TODO: part of main exe, move to main/ headers?
 
@@ -1132,6 +1124,100 @@ extern s32 D_800A9A88;
 extern RECT D_800A9A6C; // `RECT<320, 256, 160, 240>`, only used in `SysState_Fmv_Update`?
 
 extern s_FsImageDesc D_800A9EB4;
+
+extern s32 D_800A9ECC;
+
+extern s32 D_800A9ED0;
+
+extern s32 D_800A9ED4;
+
+extern s32 D_800A9ED8;
+
+extern s32 D_800A9EDC;
+
+extern s32 D_800A9EE0;
+
+extern s32 D_800A9EE4;
+
+extern s32 D_800A9EE8;
+
+extern s32 D_800A9EEC;
+
+extern s32 D_800A9EF0;
+
+extern s32 D_800A9EF4;
+
+extern s32 D_800A9EF8;
+
+extern s32 D_800A9EFC;
+
+extern s32 D_800A9F00;
+
+extern s32 D_800A9F04;
+
+extern s32 D_800A9F08;
+
+extern s32 D_800A9F0C;
+
+extern s32 D_800A9F10;
+
+extern s32 D_800A9F14;
+
+extern s32 D_800A9F18;
+
+extern s32 D_800A9F1C;
+
+extern s32 D_800A9F20;
+
+extern s32 D_800A9F28;
+
+extern s32 D_800A9F2C;
+
+extern s32 D_800A9F30;
+
+extern s32 D_800A9F34;
+
+extern s32 D_800A9F38;
+
+extern s32 D_800A9F3C;
+
+extern s32 D_800A9F40;
+
+extern s32 D_800A9F44;
+
+extern s32 D_800A9F48;
+
+extern s32 D_800A9F4C;
+
+extern s32 D_800A9F50;
+
+extern s32 D_800A9F54;
+
+extern s32 D_800A9F58;
+
+extern s32 D_800A9F60;
+
+extern s32 D_800A9F64;
+
+extern s32 D_800A9F68;
+
+extern s32 D_800A9F6C;
+
+extern s32 D_800A9F74;
+
+extern s32 D_800A9F78;
+
+extern s32 D_800A9F7C;
+
+extern s_800A9F80 D_800A9F80;
+
+extern s_800A9F80 D_800A9F84;
+
+extern s_800A9F80 D_800A9F88;
+
+extern s_800A9F80 D_800A9F8C;
+
+extern s_800A9F80 D_800A9F98;
 
 extern u32 D_800A9FB0;
 
@@ -1737,16 +1823,16 @@ u32 func_8003F654(s_func_8003F654* arg0);
 
 s32 func_8003F6F0(s32 arg0, s32 arg1, s32 arg2);
 
-s32 func_8003F838(s_StructUnk3* arg0, s_StructUnk3* arg1, s_StructUnk3* arg2, s32 arg3);
+void func_8003F838(s_StructUnk3* arg0, s_StructUnk3* arg1, s_StructUnk3* arg2, s32 arg3);
 
 /** Computes the weighted average of `a` and `b`. */
 s32 Math_GetWeightedAverage(s32 a, s32 b, s32 weight);
 
-void func_8003FCB0(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
+void func_8003FCB0(s_sub_StructUnk3* arg0, s_sub_StructUnk3* arg1, s_sub_StructUnk3* arg2, s32 arg3);
 
-void func_8003FD38(s_func_8003FE04* arg0, s_func_8003FE04* arg1, s_func_8003FE04* arg2, s32 weight0, s32 weight1, s32 alphaTo);
+void func_8003FD38(s_StructUnk3* arg0, s_StructUnk3* arg1, s_StructUnk3* arg2, s32 weight0, s32 weight1, s32 alphaTo);
 
-void func_8003FE04(s_func_8003FE04* arg0, s_func_8003FE04* arg1, s_func_8003FE04* arg2, s32 alphaTo);
+void func_8003FE04(s_sub_StructUnk3* arg0, s_sub_StructUnk3* arg1, s_sub_StructUnk3* arg2, s32 alphaTo);
 
 s32 func_8003FEC0(s_sub_StructUnk3* arg0);
 
@@ -2540,6 +2626,26 @@ void func_8003CC7C(s_800BCE18_2BEC_0* arg0, MATRIX* arg1, MATRIX* arg2);
 void func_8003D938();
 
 void func_8003DA9C(s32 arg0, GsCOORDINATE2* coord, s32 arg2, s16 arg3, s32 arg4);
+
+void func_8003DD80(s32 arg0, s32 arg1);
+
+void func_8003DE60(s_Skeleton* arg0, s32 arg1);
+
+void func_8003DF84(s_Skeleton* arg0, s32 arg1);
+
+void func_8003E08C(s_Skeleton* arg0, s32 arg1);
+
+void func_8003E194(s_Skeleton* arg0, s32 arg1);
+
+void func_8003E238(s_Skeleton* arg0, s32 arg1);
+
+void func_8003E388(s_Skeleton* arg0, s32 arg1);
+
+void func_8003E414(s_Skeleton* arg0, s32 arg1);
+
+void func_8003E4A0(s_Skeleton* arg0, s32 arg1);
+
+void func_8003E544(s_Skeleton* arg0, s32 arg1);
 
 /** Loads a flame graphic. */
 void GameFs_FlameGfxLoad();

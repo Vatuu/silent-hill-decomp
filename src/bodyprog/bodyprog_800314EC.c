@@ -4693,7 +4693,7 @@ void GameState_MapEvent_Update() // 0x8003AA4C
     Gfx_BackgroundSpriteDraw(&D_800A902C);
 }
 
-const pad = 0;
+const s32 pad = 0;
 
 // TODO: RODATA migration
 #ifdef NON_MATCHING
@@ -5417,25 +5417,399 @@ s32 func_8003DD74(s32 arg0, s32 arg1) // 0x8003DD74
     return (arg1 << 10) & 0xFC00;
 }
 
+// TODO: RODATA migration
+#ifdef NON_MATCHING
+void func_8003DD80(s32 arg0, s32 arg1) // 0x8003DD80
+{
+    s32 temp_a2;
+
+    temp_a2 = D_800BCE18.field_0[0].field_18[arg0];
+
+    switch (arg0)
+    {
+        case 1:
+            func_8003DE60(temp_a2 + 0x14, arg1);
+            break;
+
+        case 7:
+            func_8003E388(temp_a2 + 0x14, arg1);
+            break;
+
+        case 26:
+        case 27:
+            func_8003DF84(temp_a2 + 0x14, arg1);
+            break;
+
+        case 24:
+            func_8003E08C(temp_a2 + 0x14, arg1);
+            break;
+
+        case 30:
+        case 31:
+            func_8003E194(temp_a2 + 0x14, arg1);
+            break;
+
+        case 38:
+        case 39:
+            func_8003E238(temp_a2 + 0x14, arg1);
+            break;
+
+        case 14:
+            func_8003E414(temp_a2 + 0x14, arg1);
+            break;
+
+        case 16:
+            func_8003E4A0(temp_a2 + 0x14, arg1);
+            break;
+
+        case 18:
+            func_8003E544(temp_a2 + 0x14, arg1);
+            break;
+
+        default:
+            break;
+    }
+}
+#else
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003DD80);
+#endif
 
+// TODO: RODATA migration
+#ifdef NON_MATCHING
+void func_8003DE60(s_Skeleton* arg0, s32 arg1) // 0x8003DE60
+{
+    s32 temp_s0;
+
+    temp_s0 = arg1 & 0xF;
+
+    if (temp_s0 != 0)
+    {
+        func_80045468(arg0, &D_800A9ECC, 0);
+
+        switch (temp_s0)
+        {
+            case 1:
+                func_80045468(arg0, &D_800A9ED0, 1);
+                break;
+
+            case 2:
+                func_80045468(arg0, &D_800A9ED4, 1);
+                break;
+
+            case 3:
+                func_80045468(arg0, &D_800A9ED8, 1);
+                break;
+
+            case 4:
+                func_80045468(arg0, &D_800A9EDC, 1);
+                break;
+
+            case 5:
+                func_80045468(arg0, &D_800A9EE0, 1);
+                break;
+        }
+    }
+
+    temp_s0 = arg1 & 0xF0;
+
+    if (temp_s0 == 0)
+    {
+        return;
+    }
+
+    func_80045468(arg0, &D_800A9EE4, 0);
+
+    switch (temp_s0)
+    {
+        case 16:
+            func_80045468(arg0, &D_800A9EE8, 1);
+            break;
+
+        case 32:
+            func_80045468(arg0, &D_800A9EEC, 1);
+            break;
+    }
+}
+#else
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003DE60);
+#endif
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003DF84);
+void func_8003DF84(s_Skeleton* arg0, s32 arg1) // 0x8003DF84
+{
+    s32 temp_v1;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003E08C);
+    temp_v1 = arg1 & 0xF;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003E194);
+    if (temp_v1 != 0)
+    {
+        switch (temp_v1)
+        {
+            case 1:
+                func_80045468(arg0, &D_800A9EF4, 0);
+                func_80045468(arg0, &D_800A9EF0, 1);
+                break;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003E238);
+            case 2:
+                func_80045468(arg0, &D_800A9EF0, 0);
+                func_80045468(arg0, &D_800A9EF4, 1);
+                break;
+        }
+    }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003E388);
+    temp_v1 = arg1 & 0xF0;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003E414);
+    if (temp_v1 == 0)
+    {
+        return;
+    }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003E4A0);
+    switch (temp_v1)
+    {
+        case 16:
+            func_80045468(arg0, &D_800A9EFC, 0);
+            func_80045468(arg0, &D_800A9EF8, 1);
+            break;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003E544);
+        case 32:
+            func_80045468(arg0, &D_800A9EF8, 0);
+            func_80045468(arg0, &D_800A9EFC, 1);
+            break;
+    }
+}
+
+void func_8003E08C(s_Skeleton* arg0, s32 arg1) // 0x8003E08C
+{
+    s32 temp_v1;
+
+    temp_v1 = arg1 & 0xF;
+
+    if (temp_v1 != 0)
+    {
+        switch (temp_v1)
+        {
+            case 1:
+                func_80045468(arg0, &D_800A9F04, 0);
+                func_80045468(arg0, &D_800A9F00, 1);
+                break;
+
+            case 2:
+                func_80045468(arg0, &D_800A9F00, 0);
+                func_80045468(arg0, &D_800A9F04, 1);
+                break;
+        }
+    }
+
+    temp_v1 = arg1 & 0xF0;
+
+    if (temp_v1 == 0)
+    {
+        return;
+    }
+
+    switch (temp_v1)
+    {
+        case 16:
+            func_80045468(arg0, &D_800A9F0C, 0);
+            func_80045468(arg0, &D_800A9F08, 1);
+            break;
+
+        case 32:
+            func_80045468(arg0, &D_800A9F08, 0);
+            func_80045468(arg0, &D_800A9F0C, 1);
+            break;
+    }
+}
+
+void func_8003E194(s_Skeleton* arg0, s32 arg1) // 0x8003E194
+{
+    s32 temp_s0;
+
+    temp_s0 = arg1 & 0xF;
+    if (temp_s0 == 0)
+    {
+        return;
+    }
+
+    func_80045468(arg0, &D_800A9F10, 0);
+
+    switch (temp_s0)
+    {
+        case 1:
+            func_80045468(arg0, &D_800A9F14, 1);
+            break;
+
+        case 2:
+            func_80045468(arg0, &D_800A9F18, 1);
+            break;
+
+        case 3:
+            func_80045468(arg0, &D_800A9F1C, 1);
+            break;
+    }
+}
+
+void func_8003E238(s_Skeleton* arg0, s32 arg1) // 0x8003E238
+{
+    s32 var_s0;
+
+    var_s0 = arg1 & 0xF;
+
+    if (var_s0 != 0)
+    {
+        func_80045468(arg0, &D_800A9F20, 0);
+
+        switch (var_s0)
+        {
+            case 1:
+                func_80045468(arg0, &D_800A9F28, 1);
+                break;
+
+            case 2:
+                func_80045468(arg0, &D_800A9F2C, 1);
+                break;
+
+            case 3:
+                func_80045468(arg0, &D_800A9F30, 1);
+                break;
+
+            case 4:
+                func_80045468(arg0, &D_800A9F34, 1);
+                break;
+        }
+    }
+
+    var_s0 = arg1 & 0xF0;
+
+    if (var_s0 == 0)
+    {
+        return;
+    }
+
+    func_80045468(arg0, &D_800A9F38, 0);
+
+    switch (var_s0)
+    {
+        case 16:
+            func_80045468(arg0, &D_800A9F3C, 1);
+            break;
+
+        case 32:
+            func_80045468(arg0, &D_800A9F40, 1);
+            break;
+
+        case 48:
+            func_80045468(arg0, &D_800A9F44, 1);
+            break;
+    }
+}
+
+void func_8003E388(s_Skeleton* arg0, s32 arg1) // 0x8003E388
+{
+    s32 temp_a1;
+
+    temp_a1 = arg1 & 0xF;
+
+    if (temp_a1 == 0)
+    {
+        return;
+    }
+
+    switch (temp_a1)
+    {
+        case 1:
+            func_80045468(arg0, &D_800A9F4C, 0);
+            func_80045468(arg0, &D_800A9F48, 1);
+            break;
+
+        case 2:
+            func_80045468(arg0, &D_800A9F48, 0);
+            func_80045468(arg0, &D_800A9F4C, 1);
+            break;
+    }
+}
+
+void func_8003E414(s_Skeleton* arg0, s32 arg1) // 0x8003E414
+{
+    s32 temp_a1;
+
+    temp_a1 = arg1 & 3;
+
+    if (temp_a1 == 0)
+    {
+        return;
+    }
+
+    switch (temp_a1)
+    {
+        case 1:
+            func_80045468(arg0, &D_800A9F50, 0);
+            func_80045468(arg0, &D_800A9F54, 1);
+            break;
+
+        case 2:
+            func_80045468(arg0, &D_800A9F54, 0);
+            func_80045468(arg0, &D_800A9F50, 1);
+            break;
+    }
+}
+
+void func_8003E4A0(s_Skeleton* arg0, s32 arg1) // 0x8003E4A0
+{
+    s32 temp_s0;
+
+    temp_s0 = arg1 & 0xF;
+
+    if (temp_s0 == 0)
+    {
+        return;
+    }
+
+    func_80045468(arg0, &D_800A9F58, 0);
+
+    switch (temp_s0)
+    {
+        case 1:
+            func_80045468(arg0, &D_800A9F60, 1);
+            break;
+
+        case 2:
+            func_80045468(arg0, &D_800A9F64, 1);
+            break;
+
+        case 3:
+            func_80045468(arg0, &D_800A9F68, 1);
+            break;
+    }
+}
+
+void func_8003E544(s_Skeleton* arg0, s32 arg1) // 0x8003E544
+{
+    s32 temp_s0;
+
+    temp_s0 = arg1 & 0xF;
+
+    if (temp_s0 == 0)
+    {
+        return;
+    }
+
+    func_80045468(arg0, &D_800A9F6C, 0);
+
+    switch (temp_s0)
+    {
+        case 1:
+            func_80045468(arg0, &D_800A9F74, 1);
+            break;
+
+        case 2:
+            func_80045468(arg0, &D_800A9F78, 1);
+            break;
+
+        case 3:
+            func_80045468(arg0, &D_800A9F7C, 1);
+            break;
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003E5E8);
 
@@ -5580,7 +5954,6 @@ void func_8003EB54() // 0x8003EB54
     g_SysWork.field_236C = &g_SysWork.playerBoneCoords_890[0];
 
     Math_Vector3Set(&g_SysWork.field_2360, 0, -0x333, -0x2000);
-
     Math_SVectorSet(&g_SysWork.field_2370, 0x71, 0, 0);
 }
 
@@ -5592,11 +5965,60 @@ void func_8003EBA0() // 0x8003EBA0
     g_SysWork.field_236C = &g_SysWork.playerBoneCoords_890[0];
 
     Math_Vector3Set(&g_SysWork.field_2360, -0x147, -0x47A, 0x1EB);
-
     Math_SVectorSet(&g_SysWork.field_2370, -0xAA, 0, 0);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003EBF4);
+void func_8003EBF4(s_MapOverlayHeader* arg0) // 0x8003EBF4
+{
+    s_800A9F80* ptr;
+    s32         var_v1;
+    s8          temp_a0;
+    u8          temp_a1;
+
+    temp_a1 = arg0->field_0->field_6;
+
+    var_v1 = 0;
+
+    if (temp_a1 & 4)
+    {
+        var_v1 = (temp_a1 & 3) > 0;
+    }
+
+    switch (arg0->field_16)
+    {
+        case 1:
+            if (var_v1 != 0)
+            {
+                ptr = &D_800A9F84;
+            }
+            else
+            {
+                ptr = &D_800A9F80;
+            }
+            break;
+
+        case 2:
+            if (var_v1 != 0)
+            {
+                ptr = &D_800A9F8C;
+            }
+            else
+            {
+                ptr = &D_800A9F88;
+            }
+            break;
+
+        case 3:
+            ptr = &D_800A9F98;
+            break;
+
+        default:
+            ptr = &D_800A9F80;
+            break;
+    }
+
+    func_8003ED74(ptr->field_0, ptr->field_1);
+}
 
 void func_8003ECBC() // 0x8003ECBC
 {
@@ -5612,18 +6034,16 @@ void func_8003ECE4() // 0x8003ECE4
 
 void func_8003ED08() // 0x8003ED08
 {
-    u8 var;
+    g_SysWork.field_2388.field_15 ^= 1;
 
-    var                           = g_SysWork.field_2388.field_15 ^ 1;
-    g_SysWork.field_2388.field_15 = var;
-
-    if (var == 1)
+    if (g_SysWork.field_2388.field_15 == 1)
     {
         g_SavegamePtr->flags_AC &= ~(1 << 1);
-        return;
     }
-
-    g_SavegamePtr->flags_AC |= 1 << 1;
+    else
+    {
+        g_SavegamePtr->flags_AC |= 1 << 1;
+    }
 }
 
 u8 func_8003ED64() // 0x8003ED64
@@ -5642,9 +6062,25 @@ void func_8003EDA8() // 0x8003EDA8
     g_SysWork.field_2388.field_14 = 1;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003EDB8);
+void func_8003EDB8(s32* arg0, s32* arg1) // 0x8003EDB8
+{
+    s_SysWork_2288* ptr0;
+    s_SysWork_2288* ptr1;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003EE30);
+    memcpy(arg0, &(ptr0 = &g_SysWork.field_2388)->field_1C[g_SysWork.field_2388.field_15].field_0.field_20.vec_0[1], 4); // Is there a better solution?
+    memcpy(arg1, &(ptr1 = &g_SysWork.field_2388)->field_1C[g_SysWork.field_2388.field_15].field_0.field_24.vec_0[1], 4);
+}
+
+void func_8003EE30(s32 arg0, s8* arg1, s32 arg2, s32 arg3) // 0x8003EE30
+{
+    g_SysWork.field_2388.field_4 = arg1;
+    g_SysWork.field_2388.field_0 = 5;
+    g_SysWork.field_2388.field_8 = arg2;
+    g_SysWork.field_2388.field_C = arg3;
+
+    g_SysWork.field_2388.field_EC[0] = g_SysWork.field_2388.field_1C[0];
+    g_SysWork.field_2388.field_EC[1] = g_SysWork.field_2388.field_1C[1];
+}
 
 void func_8003EEDC(s32 arg0, s32 arg1) // 0x8003EEDC
 {
@@ -5925,19 +6361,172 @@ s32 Math_GetWeightedAverage(s32 a, s32 b, s32 weight) // 0x8003F7E4
     return Math_MulFixed(a, FP_TO(1, Q12_SHIFT) - weight, Q12_SHIFT) + Math_MulFixed(b, weight, Q12_SHIFT);
 }
 
-// Big
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003F838);
-
-void func_8003FCB0(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x8003FCB0
+void func_8003F838(s_StructUnk3* arg0, s_StructUnk3* arg1, s_StructUnk3* arg2, s32 arg3) // 0x8003F838
 {
-    s32 p0;
+    s32 temp_v1_2;
+    s32 var_a2_3;
+    s32 var_v1_2;
+    s32 var_v1;
+    u32 temp_v1;
 
-    p0 = FP_FLOAT_TO(1.0f, Q12_SHIFT) - arg3;
-    LoadAverageCol(arg1 + 0x21, arg2 + 0x21, p0, arg3, arg0 + 0x21);
-    LoadAverageCol(arg1 + 0x25, arg2 + 0x25, p0, arg3, arg0 + 0x25);
+    var_v1   = arg3 * 2;
+    var_v1   = CLAMP(var_v1, 0, 0x1000);
+    var_v1_2 = (arg3 - 0x800) * 2;
+    var_v1_2 = CLAMP(var_v1_2, 0, 0x1000);
+
+    if (arg3 < 0x800)
+    {
+        arg0->field_0.field_0.s_field_0.field_0 = arg1->field_0.field_0.s_field_0.field_0;
+    }
+    else
+    {
+        arg0->field_0.field_0.s_field_0.field_0 = arg2->field_0.field_0.s_field_0.field_0;
+    }
+
+    func_8003FCB0(&arg0->field_0, &arg1->field_0, &arg2->field_0, arg3);
+
+    if (arg1->field_2C == 0)
+    {
+        arg0->field_2C = Math_GetWeightedAverage(0, arg2->field_2C, var_v1_2);
+    }
+    else
+    {
+        arg0->field_2C = Math_GetWeightedAverage(arg1->field_2C, arg2->field_2C, var_v1);
+    }
+
+    if (arg1->field_0.field_0.s_field_0.field_0 & 1)
+    {
+        if (arg2->field_0.field_0.s_field_0.field_0 & 1)
+        {
+            arg0->field_0.field_0.s_field_0.field_1 = Math_GetWeightedAverage(arg1->field_0.field_0.s_field_0.field_1, arg2->field_0.field_0.s_field_0.field_1, arg3);
+        }
+        else
+        {
+            arg0->field_0.field_0.s_field_0.field_1 = Math_GetWeightedAverage(arg1->field_0.field_0.s_field_0.field_1, arg2->field_0.field_0.s_field_0.field_1, var_v1_2);
+        }
+    }
+    else
+    {
+        if (arg2->field_0.field_0.s_field_0.field_0 & 1)
+        {
+            arg0->field_0.field_0.s_field_0.field_1 = Math_GetWeightedAverage(arg1->field_0.field_0.s_field_0.field_1, arg2->field_0.field_0.s_field_0.field_1, var_v1);
+        }
+        else
+        {
+            arg0->field_0.field_0.s_field_0.field_1 = Math_GetWeightedAverage(arg1->field_0.field_0.s_field_0.field_1, arg2->field_0.field_0.s_field_0.field_1, arg3);
+        }
+    }
+
+    if (arg1->field_0.field_E == 0)
+    {
+        if (arg2->field_0.field_E != 0)
+        {
+            arg0->field_0.field_E = arg2->field_0.field_E;
+            func_8003FD38(arg0, arg1, arg2, arg3, var_v1, var_v1_2);
+        }
+        else
+        {
+            temp_v1               = arg2->field_0.field_E;
+            arg0->field_0.field_E = temp_v1;
+            func_8003FD38(arg0, arg1, arg2, arg3, arg3, arg3);
+        }
+    }
+    else if (arg2->field_0.field_E == 0)
+    {
+        if (var_v1_2 >= 0x1000)
+        {
+            arg0->field_0.field_E = arg2->field_0.field_E;
+        }
+        else
+        {
+            arg0->field_0.field_E = arg1->field_0.field_E;
+        }
+        func_8003FD38(arg0, arg1, arg2, arg3, var_v1_2, var_v1);
+    }
+    else
+    {
+        temp_v1               = arg2->field_0.field_E;
+        arg0->field_0.field_E = temp_v1;
+        func_8003FD38(arg0, arg1, arg2, arg3, arg3, arg3);
+    }
+
+    arg0->field_0.field_8 = Math_GetWeightedAverage(arg1->field_0.field_8, arg2->field_0.field_8, arg3);
+    arg0->field_0.field_A = Math_GetWeightedAverage(arg1->field_0.field_A, arg2->field_0.field_A, arg3);
+    arg0->field_0.field_C = Math_GetWeightedAverage(arg1->field_0.field_C, arg2->field_0.field_C, arg3);
+
+    if (arg1->field_0.field_0.s_field_0.field_2 == 1 && arg2->field_0.field_0.s_field_0.field_2 == 2)
+    {
+        if (arg3 < 0xD55)
+        {
+            temp_v1_2                               = (arg3 * 0x1333) >> 0xC;
+            var_a2_3                                = CLAMP(temp_v1_2, 0, 0x1000);
+            arg0->field_0.field_0.s_field_0.field_2 = arg1->field_0.field_0.s_field_0.field_2;
+            arg0->field_0.field_4                   = Math_GetWeightedAverage(arg1->field_0.field_4, 0, var_a2_3);
+        }
+        else
+        {
+            temp_v1_2                               = (arg3 - 0xD55) * 6;
+            var_a2_3                                = CLAMP(temp_v1_2, 0, 0x1000);
+            arg0->field_0.field_0.s_field_0.field_2 = arg2->field_0.field_0.s_field_0.field_2;
+            var_v1                                  = arg2->field_0.field_4;
+            arg0->field_0.field_4                   = Math_GetWeightedAverage(0, var_v1, var_a2_3);
+        }
+    }
+    else if (arg1->field_0.field_0.s_field_0.field_2 == 2 && arg2->field_0.field_0.s_field_0.field_2 == 1)
+    {
+        if (arg3 < 0x2AA)
+        {
+            temp_v1_2                               = arg3 * 6;
+            var_a2_3                                = CLAMP(temp_v1_2, 0, 0x1000);
+            arg0->field_0.field_0.s_field_0.field_2 = arg1->field_0.field_0.s_field_0.field_2;
+            arg0->field_0.field_4                   = Math_GetWeightedAverage(arg1->field_0.field_4, 0, var_a2_3);
+        }
+        else
+        {
+            temp_v1_2                               = ((arg3 - 0x2AA) * 0x1333) >> 0xC;
+            var_a2_3                                = CLAMP(temp_v1_2, 0, 0x1000);
+            arg0->field_0.field_0.s_field_0.field_2 = arg2->field_0.field_0.s_field_0.field_2;
+            arg0->field_0.field_4                   = Math_GetWeightedAverage(0, arg2->field_0.field_4, var_a2_3);
+        }
+    }
+    else
+    {
+        if (arg1->field_0.field_0.s_field_0.field_2 != 0 && arg2->field_0.field_0.s_field_0.field_2 == 0)
+        {
+            if (arg3 >= 0x1000)
+            {
+                arg0->field_0.field_0.s_field_0.field_2 = arg2->field_0.field_0.s_field_0.field_2;
+            }
+            else
+            {
+                arg0->field_0.field_0.s_field_0.field_2 = arg1->field_0.field_0.s_field_0.field_2;
+            }
+        }
+        else
+        {
+            arg0->field_0.field_0.s_field_0.field_2 = arg2->field_0.field_0.s_field_0.field_2;
+        }
+        arg0->field_0.field_4 = Math_GetWeightedAverage(arg1->field_0.field_4, arg2->field_0.field_4, arg3);
+    }
+
+    if (arg1->field_0.field_18.vec_0[0] == 0 && arg2->field_0.field_18.vec_0[0] != 0)
+    {
+        func_8003FE04(&arg0->field_0, &arg1->field_0, &arg2->field_0, var_v1_2);
+    }
+    else
+    {
+        func_8003FE04(&arg0->field_0, &arg1->field_0, &arg2->field_0, arg3);
+    }
 }
 
-void func_8003FD38(s_func_8003FE04* arg0, s_func_8003FE04* arg1, s_func_8003FE04* arg2, s32 weight0, s32 weight1, s32 alphaTo) // 0x8003FD38
+void func_8003FCB0(s_sub_StructUnk3* arg0, s_sub_StructUnk3* arg1, s_sub_StructUnk3* arg2, s32 arg3) // 0x8003FCB0
+{
+    s32 temp = 0x1000 - arg3;
+    LoadAverageCol(&arg1->field_20.vec_0[1], &arg2->field_20.vec_0[1], temp, arg3, &arg0->field_20.vec_0[1]);
+    LoadAverageCol(&arg1->field_24.vec_0[1], &arg2->field_24.vec_0[1], temp, arg3, &arg0->field_24.vec_0[1]);
+}
+
+void func_8003FD38(s_StructUnk3* arg0, s_StructUnk3* arg1, s_StructUnk3* arg2, s32 weight0, s32 weight1, s32 alphaTo) // 0x8003FD38
 {
     if (arg1->field_2E != arg2->field_2E)
     {
@@ -5949,13 +6538,13 @@ void func_8003FD38(s_func_8003FE04* arg0, s_func_8003FE04* arg1, s_func_8003FE04
     }
 
     arg0->field_30 = Math_GetWeightedAverage(arg1->field_30, arg2->field_30, weight0);
-    arg0->field_10 = Math_GetWeightedAverage(arg1->field_10, arg2->field_10, weight1);
-    arg0->field_6  = Math_GetWeightedAverage(arg1->field_6, arg2->field_6, weight0);
+    arg0->field_0.field_10 = Math_GetWeightedAverage(arg1->field_0.field_10, arg2->field_0.field_10, weight1);
+    arg0->field_0.field_6  = Math_GetWeightedAverage(arg1->field_0.field_6, arg2->field_0.field_6, weight0);
 
-    LoadAverageCol(arg1->field_14.vec_0, arg2->field_14.vec_0, FP_ALPHA(1.0f) - alphaTo, alphaTo, arg0->field_14.vec_0);
+    LoadAverageCol(arg1->field_0.field_14.vec_0, arg2->field_0.field_14.vec_0, FP_ALPHA(1.0f) - alphaTo, alphaTo, arg0->field_0.field_14.vec_0);
 }
 
-void func_8003FE04(s_func_8003FE04* arg0, s_func_8003FE04* arg1, s_func_8003FE04* arg2, s32 alphaTo) // 0x8003FE04
+void func_8003FE04(s_sub_StructUnk3* arg0, s_sub_StructUnk3* arg1, s_sub_StructUnk3* arg2, s32 alphaTo) // 0x8003FE04
 {
     s32 alphaFrom;
 
@@ -6003,10 +6592,10 @@ void func_8003FF2C(s_StructUnk3* arg0) // 0x8003FF2C
     var_t0  = CLAMP(temp_v1, 0, 0xFF);
 
     func_80055330(arg0->field_0.field_0.s_field_0.field_2, arg0->field_0.field_6, arg0->field_0.field_0.s_field_0.field_1, arg0->field_0.field_8, arg0->field_0.field_A, arg0->field_0.field_C, var_t0);
-    func_800553C4(arg0->field_0.field_E != 0, arg0->field_0.field_14, arg0->field_0.field_15, arg0->field_0.field_16);
+    func_800553C4(arg0->field_0.field_E != 0, arg0->field_0.field_14.vec_0[0], arg0->field_0.field_14.vec_0[1], arg0->field_0.field_14.vec_0[2]);
     temp_a0 = arg0->field_0.field_10;
     func_80055840(temp_a0, temp_a0 + FP_FLOAT_TO(1.0f, Q12_SHIFT));
-    func_800553E0(arg0->field_0.field_18, arg0->field_0.field_19, arg0->field_0.field_1A, arg0->field_0.field_1B, arg0->field_0.field_1D, arg0->field_0.field_1E, arg0->field_0.field_1F);
+    func_800553E0(arg0->field_0.field_18.vec_0[0], arg0->field_0.field_18.vec_0[1], arg0->field_0.field_18.vec_0[2], arg0->field_0.field_18.vec_0[3], arg0->field_0.field_1C.vec_0[1], arg0->field_0.field_1C.vec_0[2], arg0->field_0.field_1C.vec_0[3]);
 }
 
 void func_80040004(s_800BCE18* arg0) // 0x80040004

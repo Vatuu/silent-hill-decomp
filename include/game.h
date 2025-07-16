@@ -920,33 +920,30 @@ typedef union
     } s_field_0;
 } u_Unk0;
 
+typedef union
+{
+    s32 field_0;
+    u8  vec_0[4];
+} u_Color;
+
 typedef struct
 {
-    u_Unk0 field_0;
-    s16 field_4;
-    s16    field_6;
-    s16    field_8;
-    s16    field_A;
-    s16    field_C;
-    u8     field_E;
-    s8     unk_F;
-    s32    field_10;
-    u8     field_14;
-    u8     field_15;
-    u8     field_16;
-    s8     unk_17;
-    u8     field_18;
-    u8     field_19;
-    u8     field_1A;
-    u8     field_1B;
-    s8     unk_1C;
-    u8     field_1D;
-    u8     field_1E;
-    u8     field_1F;
-    s32    unk_20;
-    s32    unk_24;
-    s16    unk_28;
-    s16    unk_2A;
+    u_Unk0  field_0;
+    s16     field_4;
+    s16     field_6;
+    s16     field_8;
+    s16     field_A;
+    s16     field_C;
+    u8      field_E;
+    s8      unk_F;
+    s32     field_10;
+    u_Color field_14;
+    u_Color field_18;
+    u_Color field_1C;
+    u_Color field_20;
+    u_Color field_24;
+    s16     unk_28;
+    s16     unk_2A;
 } s_sub_StructUnk3;
 STATIC_ASSERT_SIZEOF(s_sub_StructUnk3, 44);
 
