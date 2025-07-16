@@ -164,7 +164,7 @@ extern s_800B55E8 D_800B4580[];
 
 extern s32 D_800B5480;
 
-extern s_CardWork g_CardWork; // SaveWork?
+extern s_CardWork g_CardWork; // 0x800B5488
 
 /** Declaration of the struct takes 224 bytes (0xE0 bytes in hex).
  * It is possible that the full size of the struct

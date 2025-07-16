@@ -4596,7 +4596,7 @@ void SysState_GameOver_Update() // 0x8003A52C
 
         case 3:
             Gfx_StringSetPosition(SCREEN_POSITION_X(32.5f), SCREEN_POSITION_Y(43.5f));
-            Gfx_StringDraw("\aGAME_OVER", 0x63); // "\aGAME_OVER" TODO: Needs rodata migration.
+            Gfx_StringDraw("\aGAME_OVER", 0x63);
             g_SysWork.field_28++;
 
             if ((g_ControllerPtrConst->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 |
@@ -4609,7 +4609,7 @@ void SysState_GameOver_Update() // 0x8003A52C
 
         case 4:
             Gfx_StringSetPosition(SCREEN_POSITION_X(32.5f), SCREEN_POSITION_Y(43.5f));
-            Gfx_StringDraw("\aGAME_OVER", 0x63); // "\aGAME_OVER" TODO: Needs rodata migration.
+            Gfx_StringDraw("\aGAME_OVER", 0x63);
             func_8008616C(2, 1, 0, 0x2000, 0);
             break;
 
