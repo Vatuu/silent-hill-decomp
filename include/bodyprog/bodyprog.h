@@ -354,16 +354,6 @@ typedef struct
 
 typedef struct
 {
-    s32 field_0;
-    s32 field_4;
-    s32 field_8;
-    s32 field_C;
-    s32 field_10;
-    s32 field_14;
-} s_800B55E8;
-
-typedef struct
-{
     s32 field_0[16];
 } s_800B5C40;
 
@@ -1208,18 +1198,6 @@ extern s_DemoFrameData* g_Demo_PlayFileBufferPtr; // 0x800AFDC0
 extern s_800AFE08 D_800AFE08;
 
 extern s_800AFE24 D_800AFE24;
-
-extern s_800B55E8 D_800B2780[];
-
-extern s_800B55E8 D_800B3680[];
-
-extern s_800B55E8 D_800B4580[];
-
-extern s32 D_800B5480;
-
-extern s_800B55E8 D_800B55E8[2];
-
-extern s32 D_800B55FC;
 
 extern s32 D_800B5618;
 

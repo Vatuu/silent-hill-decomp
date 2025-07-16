@@ -31,17 +31,17 @@ typedef enum _MemCardState
 /** @brief Used by `s_SavegameEntry`. */
 typedef enum _SavegameEntryType
 {
-    SavegameEntryType_NoMemCard        = 0,
-    SavegameEntryType_Unk1             = 1,
-    SavegameEntryType_CorruptedMemCard = 2,
-    SavegameEntryType_LoadMemCard      = 3,
-    SavegameEntryType_Unk4             = 4,
-    SavegameEntryType_Unk5             = 5,
-    SavegameEntryType_Unk6             = 6,
-    SavegameEntryType_CorruptedSave    = 7,
-    SavegameEntryType_Save             = 8,
-    SavegameEntryType_NewSave          = 9,
-    SavegameEntryType_NewFile          = 10
+    SavegameEntryType_NoMemCard          = 0,
+    SavegameEntryType_UnformattedMemCard = 1,
+    SavegameEntryType_CorruptedMemCard   = 2,
+    SavegameEntryType_LoadMemCard        = 3,
+    SavegameEntryType_OutOfBlocks        = 4,
+    SavegameEntryType_NoDataInMemCard    = 5,
+    SavegameEntryType_Unk6               = 6,
+    SavegameEntryType_CorruptedSave      = 7,
+    SavegameEntryType_Save               = 8,
+    SavegameEntryType_NewSave            = 9,
+    SavegameEntryType_NewFile            = 10
 } e_SavegameEntryType;
 
 // ================
@@ -68,23 +68,27 @@ typedef struct _SavegameMetadata
  */
 typedef struct _SavegameEntry
 {
-    /** @brief `field_0` is a counter that increments by one each time
-     * the game is saved to a memory card. However,
-     * it seems to be buggy or works weirdly as it doesn't
-     * add saves based on which memory card the player
-     * used for the save. For example:
+    /** @brief `currentScreenSessionSaves_0` is a counter
+	 * that for each time the player has save during the
+	 * current session in the save screen.
+	 *
+	 *
+	 *
+	 * It seems to have little buggy behaviour as it
+	 * doesn't consider the circumstances where the
+	 * player remove a memory card. For example:
      * If the player saves to slot 1, the first save
      * the value will be 1. If the player saves
      * to slot 2, the value will be 2. If the
      * player saves to slot 1 again, the value will be 3.
      * Another reason to believe this may be a bug
-     * is that by reproducing this example,
+     * is that by reproducing the previous example,
      * after the player saves to slot 2, if instead of
      * saving in slot 1 the player removes the memory
      * card and then saves to slot 1, the value will
      * be 2 instead of 3.
      */
-    s16                 totalSavegameCount_0;
+    s16                 currentScreenSessionSaves_0;
     s16                 savegameCount_2;
     s8                  type_4;               /** `e_SavegameEntryType` */
     s8                  field_5;              // The value changes between 0 when the first save slot is selected and 4 when the second is selected.
@@ -106,13 +110,12 @@ extern char* g_SaveLocationNames[];
  * When this is 0, `D_801E7510` is 1
  * and vice-versa.
  *
- * It is related to saves and overwrites.
+ * It is related to saves specifically overwrites.
  *
- * If the player saves the game,
- * `D_801E7510` becomes 1, but if the player
- * is about to overwrite it, `D_801E750C`
- * is set to 1 and `D_801E7510` is set to 0. Once
- * the overwrite is confirmed, `D_801E750C`
+ * If the player saves the game, `D_801E7510`
+ * becomes 1, but if the player is about to overwrite
+ * it, `D_801E750C` is set to 1 and `D_801E7510` is set
+ * to 0. Once the overwrite is confirmed, `D_801E750C`
  * is set to 0 and `D_801E7510` is set to 1. If the
  * player cancels the overwrite, these variables
  * maintain their values (`D_801E750C` as 1 and `D_801E7510` as 0).
@@ -123,6 +126,19 @@ extern s32 D_801E750C;
 
 extern s32 D_801E7510;
 
+/** @brief Dead code?
+ * Some boolean statuses for each save slot.
+ *
+ * This seems to be related to the color of the
+ * borders of the file, but seems to be doing nothing
+ * as the code only uses it for define it as 1 or 0
+ * and the code seems buggy or arbitrary as it is
+ * constanly switching between 0 and 1. For example:
+ * in `Gfx_SaveScreenDraw` the code has a conditional
+ * that write it to change to 1, but a little later
+ * in the same function the global is written again
+ * to be 1 without any conditional.
+ */
 extern s16 D_801E7514[MEMORY_CARD_SLOT_COUNT];
 
 extern s16 g_LoadingMemCardTimer[MEMORY_CARD_SLOT_COUNT]; // Timer that triggers when loading a detected memory card.
@@ -139,7 +155,7 @@ extern s32 g_MemCardStateTextTimer;
 
 extern void (*g_GameState_SaveScreen_Funcs[])();
 
-extern s32 D_801E753C;
+extern s32 g_SaveWriteOption; // 0 - Overwrite, 1 - Format
 
 extern s32 g_IsSaveSelected; // 0 - User has `New save` selected, 1 - User has a save selected.
 
@@ -149,11 +165,29 @@ extern s32 D_801E7554;
 
 extern s32 D_801E7558;
 
-extern s32 g_OverwriteOptionSelected; // 0 - Nothing/No, 1 - Yes
+extern s32 g_SaveWriteOptionSelected; // 0 - No, 1 - Yes
 
+/** @brief Dead code?
+ * The only time when this is used is when booting the save screen where
+ * both values are defined as 0 and when the memory card is being loaded
+ * or the player has the last save selected in the slot where it ask if
+ * the value correspondent to the slot is 0 to then turn it into 1.
+ * 
+ * Used in: `Savegame_ScreenSubInit` and `Gfx_SaveScreenDraw`.
+ */
 extern s32 D_801E7564[MEMORY_CARD_SLOT_COUNT];
 
-/** @brief Detects what memory cards are inserted, but seems
+/** @brief Related to file count in a slot.
+ * Counts the amount of files inside a slot, however with some
+ * odd behaviour as it rest 1 to the count if the selected element
+ * isn't from the last save, if an element from the last file is
+ * selected then it will properly count all the files.
+ *
+ * `Gfx_SaveEntryBorder` is entirely on charge of it's logic.
+ *
+ *
+ *
+ * @note Detects what memory cards are inserted, but seems
  * buggy, as it doesn't properly update when a memory
  * card is removed while the player is on the save screen.
  */
@@ -162,17 +196,28 @@ extern s16 D_801E756C[MEMORY_CARD_SLOT_COUNT];
 /** @brief Count of elements that get hidden as the player scrolls
  * through displayed save elements in the slot.
  */
-extern s16 g_HiddenElementByDisplacement[MEMORY_CARD_SLOT_COUNT];
+extern s16 g_HiddenElementsByDisplacement[MEMORY_CARD_SLOT_COUNT];
 
 extern s16 D_801E7574[MEMORY_CARD_SLOT_COUNT];
 
-/** @brief Stores the selected save in each slot.
- * Only the first two values are used.
- * The next values are possibly an unused
- * variable which Splat detects incorrectly
- * and merges it.
+/** @brief Stores the index of the element selected in each
+ * slot based on what is visually available in the slot.
+ *
+ * For example: if the player have 9 saves in the file and want to
+ * do a new separate save the index of the `New Save` element will
+ * be 4 and not 9 (don't forget about the index starting to count 
+ * from 0) as it is the fifth element visually available in the slot.
+ *
+ * This array is specifically used for draw the shine of the
+ * selected save.
+ *
+ *
+ *
+ * @note Only the first two values are used.
+ * The next 8 bytes are unused, possibly from unused variables
+ * which Splat detects incorrectly and merges it.
  */
-extern s16 D_801E7578[MEMORY_CARD_SLOT_COUNT]; // `g_SelectedSaveOffsetsY`
+extern s16 g_Gfx_SelectedSaveOffsetsY[MEMORY_CARD_SLOT_COUNT];
 
 extern s8 D_801E7584[SAVEGAME_COUNT_MAX * MEMORY_CARD_SLOT_COUNT];
 
@@ -203,30 +248,35 @@ void Savegame_ScreenSubInit();
 void Gfx_SaveSelectedDisplacement(s32 slotIdx, s32 unusedSaveCount);
 
 /** Draws the "FILE X" string in the save/load screen. */
-void Gfx_SaveSlotDrawFileString(s32 saveIdx, s32 slotIdx, s32 fileId, s32 entryType);
+void Gfx_SaveSlotFileStringDraw(s32 saveIdx, s32 slotIdx, s32 fileId, s32 entryType);
 
 /** Draws the string of the location where the save was done. */
-void Gfx_SavegameEntryDrawLocationName(s_SavegameEntry* saveEntry, s32 saveIdx, s32 slotIdx);
+void Gfx_SavegameEntryLocationNameDraw(s_SavegameEntry* saveEntry, s32 saveIdx, s32 slotIdx);
 
 /** Sets the color of the string to be drawn based on some flag. */
-s32 Gfx_SavegameEntryStringSetColor(s_SavegameMetadata* saveEntry);
+s32 Gfx_SavegameEntryStringColorSet(s_SavegameMetadata* saveEntry);
 
-void func_801E326C(s_SavegameEntry* saveEntry, s_SavegameEntry* nextSaveEntry, s32 saveIdx, s32 slotIdx);
+void Gfx_SaveEntryBorder(s_SavegameEntry* saveEntry, s_SavegameEntry* nextSaveEntry, s32 saveIdx, s32 slotIdx);
 
 void Gfx_MemCardStateDraw(s32 memCardState, s32 arg1);
 
 /** Flashes savegame entry after saving sucessfully. */
 void Gfx_SavegameEntryDrawFlash();
 
-void func_801E43C8(s32 slotIdx);
+/** @brief Derivative of `Gfx_SaveSlotMemCardMsgBoxDraw`
+ * this draw a flash that is supposed to appear during a really
+ * strange state where the memory card is "not formatted" and
+ * `g_GameWork.gameState_594` is at `GameState_Unk10` state.
+ */
+void Gfx_SaveSlotMemCardMsgBoxShineDraw(s32 slotIdx);
 
 /** Draws transparent background and scroll bar. */
-void Gfx_SaveSlotDrawBox(s32 slotIdx, s32 saveCount, s32 selectedSaveIdx, s32 selectedSaveOffsetY);
+void Gfx_SaveSlotBoxDraw(s32 slotIdx, s32 saveCount, s32 selectedSaveIdx, s32 selectedSaveOffsetY);
 
 /** Draws message box that says "Now checking MEMEORY CARD" or "MEMORY CARD is not inserted". */
-void Gfx_SaveSlotDrawMemCardMsgBox(s32 slotIdx, s32 entryType);
+void Gfx_SaveSlotMemCardMsgBoxDraw(s32 slotIdx, s32 entryType);
 
-void Gfx_SaveSlotDrawMemCardMsgBoxSub(s_LineBorder* borderLines, s_QuadBorder* borderGlowQuads, s_ColoredLine2d* coloredLine, s32 slotIdx);
+void Gfx_SaveSlotMemCardMsgBoxSubDraw(s_LineBorder* borderLines, s_QuadBorder* borderGlowQuads, s_ColoredLine2d* coloredLine, s32 slotIdx);
 
 /** Updates the save screen. */
 void GameState_SaveScreen_Update();
@@ -237,14 +287,17 @@ void Savegame_LoadLogic();
 
 void Savegame_ContinueLogic();
 
-void Gfx_SavegameDrawBackground();
+void Gfx_SaveBackgroundDraw();
 
-/** Handles the text that shows when formatting, saving or loading a file.
- *  Used in `GameState_SaveScreen_Update` and `GameState_DeathLoadScreen_Update`.
+/** @brief Handles the text that shows when formatting, saving or loading a file.
+ *
+ *  Used in: `GameState_SaveScreen_Update` and `GameState_DeathLoadScreen_Update`.
  */
 void Gfx_MemCardState();
 
-void Gfx_OverwriteSave(s32 arg0, s32 optionIdx);
+void Gfx_WriteOptionSaveDraw(s32 arg0, s32 optionIdx); // 0x801E3C44
+
+void Gfx_WriteOptionSave(s32 arg0, s32 optionIdx);
 
 /** Updates the death load screen. */
 void GameState_DeathLoadScreen_Update();

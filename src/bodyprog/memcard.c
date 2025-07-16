@@ -2,14 +2,195 @@
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/save_system.h"
+#include "main/fsqueue.h"
 
 #include <libapi.h>
 #include <limits.h>
 #include <sys/file.h>
 
-/** It is possible that more functions from `bodyprog.c` are
- * actually functions from `save_system`.
- */
+void func_8002E630() // 0x8002E630
+{
+    s_800B5508* ptr;
+    s32         i;
+
+    Savegame_CardInit();
+
+    D_800B5480 = 0;
+
+    // Clear arrays.
+    bzero(D_800B5508, 1816);
+    bzero(D_800B2780, 768);
+
+    for (i = 0; i < 8; i++) 
+    {
+        D_800B5508[i].field_0 = 0;
+        
+        func_8002E730(i);
+
+        switch (i) 
+        {                          
+            case 0:
+                ptr = D_800B2780;
+                break;
+
+            case 4:
+                ptr = D_800B3680;
+                break;
+
+            default:
+                ptr = D_800B4580;
+                break;
+        }
+
+        D_800B5508[i].field_14 = ptr;
+
+        func_8002E6E4(i);
+    } 
+}
+
+void func_8002E6E4(s32 idx) // 0x8002E6E4
+{
+    D_800B5508[idx].field_0 = 0;
+    func_8002E730(idx);
+    bzero(D_800B5508[idx].field_14, 0xF00);
+    D_800B5508[idx].field_18 = 0;
+}
+
+void func_8002E730(s32 idx) // 0x8002E730
+{
+    s32 i;
+
+    for (i = 0; i < 15; i++) 
+    {
+        D_800B5508[idx].field_4[i] = 0;
+    }
+}
+
+s32 func_8002E76C(s32 idx) // 0x8002E76C
+{
+    s32 ret;
+    s32 i;
+
+    ret = 1;
+
+    for (i = 0; i < 15; i++)
+    {    
+        if (D_800B5508[idx].field_4[i] != 0) 
+        {
+            ret = 0; 
+            break;
+        }
+    }
+
+    return ret;
+}
+
+void func_8002E7BC() // 0x8002E7BC
+{
+    s_800B55E8* ptr;
+
+    if (D_800B5480 == 1)
+    {
+        return;
+    }
+
+    D_800B5480 = 1;
+    func_8002E8E4();
+    Savegame_CardEventsInit();
+
+    D_800B55E8[0].field_0  = 0;
+    D_800B55E8[0].field_4  = 0;
+    D_800B55E8[0].field_8  = 0;
+    D_800B55E8[0].field_C  = 0;
+    D_800B55E8[0].field_10 = 0;
+    D_800B55E8[0].field_14 = 0;
+    D_800B55E8[1].field_0  = 0;
+
+    ptr = &D_800B55E8[1];
+    ptr->field_4  = 0;
+    ptr->field_8  = 0;
+    ptr->field_C  = 0;
+    ptr->field_10 = 0;
+    ptr->field_14 = 0;
+}
+
+void func_8002E830() // 0x8002E830
+{
+    if (D_800B5480 != 0) 
+    {
+        D_800B5480 = 0;
+        Savegame_CardEventsClose();
+    }
+}
+
+void func_8002E85C() // 0x8002E85C
+{
+    D_800B5618 = 1;
+}
+
+void func_8002E86C() // 0x8002E86C
+{
+    s32* ptr;
+
+    D_800B5508[9].field_14 = 0;
+    D_800B5508[8].field_18 = 0;
+
+    ptr    = &D_800B5508[8].field_18;
+    ptr[1] = 0;
+    ptr[2] = 0;
+    ptr[3] = 0;
+    ptr[4] = 0;
+    ptr[5] = 0;
+}
+
+s32 func_8002E898() // 0x8002E898
+{
+    s32 ret;
+    s32 i;
+
+    ret = 0;
+    for (i = 0; i < 8; i++)
+    {
+        ret |= D_800B5508[i].field_0 << (i * 3);
+    }
+
+    return ret;
+}
+
+void func_8002E8D4() // 0x8002E8D4
+{
+    D_800B5618 = 1;
+}
+
+void func_8002E8E4() // 0x8002E8E4
+{
+    s_800B55E8* ptr;
+
+    D_800B5508[9].field_14 = NULL;
+    D_800B5508[8].field_18 = 0;
+    
+    ptr = &D_800B5508[8].field_18;
+    
+    ptr->field_4  = 0;
+    ptr->field_8  = 0;
+    ptr->field_C  = 0;
+    ptr->field_10 = 0;
+    ptr->field_14 = 1;
+}
+
+s32 func_8002E914() // 0x8002E914
+{
+    s32 ret;
+    s32 i;
+
+    ret = 0;
+    for (i = 0; i < 8; i++)
+    {
+        ret |= D_800B5508[i].field_0 << (i * 2);
+    }
+
+    return ret;
+}
 
 s32 func_8002E94C(s32 arg0, s32 arg1, s32 fileIdx, s32 saveIdx) // 0x8002E94C
 {
@@ -39,7 +220,9 @@ s32 func_8002E94C(s32 arg0, s32 arg1, s32 fileIdx, s32 saveIdx) // 0x8002E94C
     return 1;
 }
 
-// Used in `SAVELOAD.BIN`
+/** @brief Related to formatting logic.
+ * Used in: `SAVELOAD.BIN`
+ */
 s32 func_8002E990() // 0x8002E990
 {
     return D_800B55FC;
@@ -128,7 +311,7 @@ s32 func_8002EABC(s32* arg0, s32* arg1, s32* arg2) // 0x8002EABC
     return ret != 0;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/save", func_8002EB88);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/memcard", func_8002EB88);
 
 void func_8002ECE0(s_800B55E8* arg0) // 0x8002ECE0
 {
@@ -147,7 +330,7 @@ void func_8002ECE0(s_800B55E8* arg0) // 0x8002ECE0
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/save", func_8002ED7C);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/memcard", func_8002ED7C);
 
 s32 func_8002F278(s32 arg0, s_CardDirectory* arg1) // 0x8002F278
 {
@@ -164,9 +347,9 @@ s32 func_8002F278(s32 arg0, s_CardDirectory* arg1) // 0x8002F278
 }
 
 // Related to saves. Seems to constantly write to `D_800B55FC`.
-INCLUDE_ASM("asm/bodyprog/nonmatchings/save", func_8002F2C4);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/memcard", func_8002F2C4);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/save", func_8002F61C);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/memcard", func_8002F61C);
 
 void func_8002FB64(s_func_8002FB64* arg0) // 0x8002FB64
 {
@@ -189,7 +372,7 @@ void Savegame_UserConfigCopyWithChecksum(s_ShSaveUserConfigContainer* dest, s_Sh
     Savegame_ChecksumUpdate(&dest->footer_7C, &dest->config_0, sizeof(s_ShSaveUserConfigContainer));
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/save", func_8002FC3C);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/memcard", func_8002FC3C);
 
 void Savegame_CopyWithChecksum(s_ShSavegameContainer* dest, s_ShSavegame* src) // 0x8002FCCC
 {
@@ -209,9 +392,9 @@ void func_8002FD5C(s32 arg0, s32 arg1, s32 arg2) // 0x8002FD5C
     Savegame_ChecksumUpdate(&ptr->field_FC, ptr, sizeof(s_func_8002FB64));
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/save", func_8002FDB0);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/memcard", func_8002FDB0);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/save", func_8002FE70);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/memcard", func_8002FE70);
 
 void Savegame_ChecksumUpdate(s_ShSavegameFooter* saveFooter, s8* saveData, s32 saveDataLength) // 0x8002FF30
 {

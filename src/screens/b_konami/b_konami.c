@@ -129,8 +129,8 @@ s32 func_800C9874() // 0x800C9874
         return 2;
     }
 
-    if ((saveEntryType0 == SavegameEntryType_Unk4 && (saveEntryType1 == SavegameEntryType_Unk4 || saveEntryType1 == SavegameEntryType_NoMemCard)) ||
-        (saveEntryType0 == SavegameEntryType_NoMemCard && saveEntryType1 == SavegameEntryType_Unk4)) 
+    if ((saveEntryType0 == SavegameEntryType_OutOfBlocks && (saveEntryType1 == SavegameEntryType_OutOfBlocks || saveEntryType1 == SavegameEntryType_NoMemCard)) ||
+        (saveEntryType0 == SavegameEntryType_NoMemCard && saveEntryType1 == SavegameEntryType_OutOfBlocks)) 
     {
         return 3;
     }

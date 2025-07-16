@@ -49,6 +49,7 @@ typedef struct
 // ========
 // STRUCTS
 // ========
+
 typedef struct
 {
     char fileNames_0[15][21];
@@ -101,11 +102,21 @@ typedef struct
 typedef struct
 {
     //s_800B5508_sub*    field_0; // TODO: Use this instead.
-    s32                field_0; // Pointer.
+    s32                field_0; // Sometimes it's a pointer to a struct, sometimes is just a simple number.
     s8                 field_4[16]; 
     struct s_800B5508* field_14;
     s32                field_18; 
 } s_800B5508;
+
+typedef struct
+{
+    s32 field_0;
+    s32 field_4;
+    s32 field_8;
+    s32 field_C;
+    s32 field_10;
+    s32 field_14; // Pointer to a `s_800B55E8` static struct.
+} s_800B55E8;
 
 // https://github.com/Sparagas/Silent-Hill/blob/1f24eb097a4b99129bc7c9793d23c82244848a27/010%20Editor%20-%20Binary%20Templates/ps1_memory_card.bt#L122C8-L122C17
 typedef struct
@@ -145,24 +156,43 @@ extern s8 D_800A97E0;
 
 extern u32 D_800A97E4[];
 
+extern s_800B55E8 D_800B2780[];
+
+extern s_800B55E8 D_800B3680[];
+
+extern s_800B55E8 D_800B4580[];
+
+extern s32 D_800B5480;
+
 extern s_800B5488 D_800B5488; // SaveWork?
 
 /** Declaration of the struct takes 224 bytes (0xE0 bytes in hex).
-* It is possible that the full size of the struct
-* is `0x1C/28` bytes, as `func_8002E94C`
-* accesses element 8 and multiplies it by 28 to give 224.
-* Additionally, investigating the RAM affirms
-* that every `0x1C/28` bytes is the start address of a new element
-* which the decompiled code seems to point to.
-*/
-extern s_800B5508 D_800B5508[];
+ * It is possible that the full size of the struct
+ * is `0x1C/28` bytes, as `func_8002E94C` accesses 8 elements
+ * and by multiplying 8 by 28 to gives 224.
+ *
+ *
+ *
+ * Additionally, investigating the RAM affirms that every
+ * `0x1C/28` bytes is the start address of a new element
+ * which the decompiled code seems to point to.
+ */
+extern s_800B5508 D_800B5508[8];
+
+extern s_800B55E8 D_800B55E8[2];
+
+extern s32 D_800B55FC;
 
 /** @brief Basic information required to draw information of elements in save slots.
-* Address access is based on the slot: Slot 1 - 0x801E09E0, Slot 2 - 0x801E1440.
-*/
-extern s_SavegameEntry* g_ActiveSavegameEntry;
+ * Address access is based on the slot: Slot 1 - 0x801E09E0, Slot 2 - 0x801E1440.
+ * 
+ * @note Macros for it's references can be found in `saveload.h` as:
+ * `SAVEGAME_ENTRY_BUFFER_0`
+ * `SAVEGAME_ENTRY_BUFFER_1`
+ */
+extern s_SavegameEntry* g_ActiveSavegameEntry; // 0x800BCD2C
 
-extern u8 g_MemCardElementCount[MEMORY_CARD_SLOT_COUNT];
+extern u8 g_MemCardElementCount[MEMORY_CARD_SLOT_COUNT]; // 0x800BCD30
 
 extern s32 D_800BCD18[];
 
@@ -170,7 +200,7 @@ extern s32 D_800BCD20[];
 
 extern u32 D_800BCD34;
 
-extern s8 D_800BCD38;
+extern s8 g_SaveScreenPlayerState; // 2 - Saving, 3 - Loading.
 
 extern s8 D_800BCD39;
 
@@ -178,7 +208,7 @@ extern s16 g_MemCardsTotalElementCount; // Counts all elements of all inserted m
 
 extern s8 D_800BCD40;
 
-extern u8 g_SlotElementCounts[MEMORY_CARD_SLOT_COUNT];
+extern u8 g_SlotElementCount[MEMORY_CARD_SLOT_COUNT];
 
 extern u8 g_SelectedSaveIdx;
 

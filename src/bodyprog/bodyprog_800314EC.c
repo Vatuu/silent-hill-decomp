@@ -1073,6 +1073,7 @@ void nullsub_800334C8() {}
 
 void func_800334D0() {}
 
+// Possibly related to save functionallity
 s32 func_800334D8(s32 idx) // 0x800334D8
 {
     s32 i;
@@ -1135,11 +1136,11 @@ s32 func_80033548() // 0x80033548
 
     if (g_GameWork.gameState_594 == GameState_Unk10 || g_GameWork.gameState_594 == GameState_KcetLogo)
     {
-        D_800BCD38 = 2;
+        g_SaveScreenPlayerState = 2;
     }
     else
     {
-        D_800BCD38 = 3;
+        g_SaveScreenPlayerState = 3;
     }
 
     sp38                        = D_800BCD34;
@@ -1154,15 +1155,15 @@ s32 func_80033548() // 0x80033548
         temp_t0 = (sp38 >> (i * 3)) & 0x7;
         var_a0  = WrapIdx(i);
 
-        g_ActiveSavegameEntry                       = GetActiveSavegameEntry(var_a0 >> 2);
-        g_SlotElementCounts[var_a0 >> 2]            = 0;
-        g_MemCardElementCount[var_a0 >> 2]          = 0;
-        sp18[i]                                     = 0;
-        g_ActiveSavegameEntry->totalSavegameCount_0 = NO_VALUE;
-        g_ActiveSavegameEntry->field_5              = i;
-        g_ActiveSavegameEntry->fileIdx_6            = 0;
-        g_ActiveSavegameEntry->elementIdx_7         = 0;
-        g_ActiveSavegameEntry->field_C              = NULL;
+        g_ActiveSavegameEntry                              = GetActiveSavegameEntry(var_a0 >> 2);
+        g_SlotElementCount[var_a0 >> 2]                    = 0;
+        g_MemCardElementCount[var_a0 >> 2]                 = 0;
+        sp18[i]                                            = 0;
+        g_ActiveSavegameEntry->currentScreenSessionSaves_0 = NO_VALUE;
+        g_ActiveSavegameEntry->field_5                     = i;
+        g_ActiveSavegameEntry->fileIdx_6                   = 0;
+        g_ActiveSavegameEntry->elementIdx_7                = 0;
+        g_ActiveSavegameEntry->field_C                     = NULL;
 
         if (temp_t0 == 3)
         {
@@ -1176,7 +1177,7 @@ s32 func_80033548() // 0x80033548
             sp10[var_a0 >> 2] = 1;
         }
 
-        if (D_800BCD38 == 2)
+        if (g_SaveScreenPlayerState == 2)
         {
             if (temp_t0 == 4 && temp_a2 != temp_t0)
             {
@@ -1198,13 +1199,13 @@ s32 func_80033548() // 0x80033548
                     break;
 
                 case 4:
-                    if (D_800BCD38 == 2)
+                    if (g_SaveScreenPlayerState == 2)
                     {
-                        g_ActiveSavegameEntry->totalSavegameCount_0 = 31600;
-                        var_a0                                      = WrapIdx(i);
+                        g_ActiveSavegameEntry->currentScreenSessionSaves_0 = 31600;
+                        var_a0                                             = WrapIdx(i);
                         g_MemCardElementCount[var_a0 >> 2]++;
                     }
-                    g_ActiveSavegameEntry->type_4 = SavegameEntryType_Unk1;
+                    g_ActiveSavegameEntry->type_4 = SavegameEntryType_UnformattedMemCard;
                     break;
 
                 case 5:
@@ -1217,37 +1218,37 @@ s32 func_80033548() // 0x80033548
                     break;
             }
 
-            g_SlotElementCounts[WrapIdx(i) >> 2]++;
+            g_SlotElementCount[WrapIdx(i) >> 2]++;
             g_ActiveSavegameEntry++;
         }
         else if (func_8002EA28(i) == 0)
         {
-            if (D_800BCD38 == 3)
+            if (g_SaveScreenPlayerState == 3)
             {
-                g_ActiveSavegameEntry->type_4 = SavegameEntryType_Unk5;
+                g_ActiveSavegameEntry->type_4 = SavegameEntryType_NoDataInMemCard;
             }
             else if (func_8002EA78(i) == 0)
             {
-                g_ActiveSavegameEntry->type_4 = SavegameEntryType_Unk4;
+                g_ActiveSavegameEntry->type_4 = SavegameEntryType_OutOfBlocks;
             }
             else
             {
-                g_ActiveSavegameEntry->totalSavegameCount_0 = 31700;
-                g_ActiveSavegameEntry->type_4               = SavegameEntryType_NewFile;
+                g_ActiveSavegameEntry->currentScreenSessionSaves_0 = 31700;
+                g_ActiveSavegameEntry->type_4                      = SavegameEntryType_NewFile;
 
                 var_a0 = WrapIdx(i);
                 g_MemCardElementCount[var_a0 >> 2]++;
             }
 
-            g_SlotElementCounts[WrapIdx(i) >> 2]++;
+            g_SlotElementCount[WrapIdx(i) >> 2]++;
             g_ActiveSavegameEntry++;
         }
-        else if (D_800BCD38 == 3 && func_800334D8(i) != 0)
+        else if (g_SaveScreenPlayerState == 3 && func_800334D8(i) != 0)
         {
             g_ActiveSavegameEntry->type_4 = SavegameEntryType_CorruptedSave;
 
             var_a0 = WrapIdx(i);
-            g_SlotElementCounts[var_a0 >> 2]++;
+            g_SlotElementCount[var_a0 >> 2]++;
             g_ActiveSavegameEntry++;
         }
         else
@@ -1265,17 +1266,17 @@ s32 func_80033548() // 0x80033548
 
                 if (temp_v0_4 == 3)
                 {
-                    g_ActiveSavegameEntry->totalSavegameCount_0 = 0;
-                    g_ActiveSavegameEntry->field_5              = i;
-                    g_ActiveSavegameEntry->fileIdx_6            = j;
-                    g_ActiveSavegameEntry->elementIdx_7         = 0;
-                    g_ActiveSavegameEntry->type_4               = SavegameEntryType_CorruptedSave;
+                    g_ActiveSavegameEntry->currentScreenSessionSaves_0 = 0;
+                    g_ActiveSavegameEntry->field_5                     = i;
+                    g_ActiveSavegameEntry->fileIdx_6                   = j;
+                    g_ActiveSavegameEntry->elementIdx_7                = 0;
+                    g_ActiveSavegameEntry->type_4                      = SavegameEntryType_CorruptedSave;
 
                     var_a0 = WrapIdx(i);
 
                     g_MemCardElementCount[var_a0 >> 2]++;
                     D_800BCD28--;
-                    g_SlotElementCounts[var_a0 >> 2]++;
+                    g_SlotElementCount[var_a0 >> 2]++;
 
                     g_ActiveSavegameEntry++;
                 }
@@ -1285,13 +1286,13 @@ s32 func_80033548() // 0x80033548
                     {
                         savegameMetaPtr = func_8002E9EC(i, j, k);
 
-                        g_ActiveSavegameEntry->totalSavegameCount_0 = savegameMetaPtr->unk_0;
-                        g_ActiveSavegameEntry->field_5              = i;
-                        g_ActiveSavegameEntry->fileIdx_6            = j;
-                        g_ActiveSavegameEntry->elementIdx_7         = k;
-                        g_ActiveSavegameEntry->savegameCount_2      = savegameMetaPtr->savegameCount_8;
-                        g_ActiveSavegameEntry->locationId_8         = savegameMetaPtr->locationId_A;
-                        g_ActiveSavegameEntry->field_C              = savegameMetaPtr;
+                        g_ActiveSavegameEntry->currentScreenSessionSaves_0 = savegameMetaPtr->unk_0;
+                        g_ActiveSavegameEntry->field_5                     = i;
+                        g_ActiveSavegameEntry->fileIdx_6                   = j;
+                        g_ActiveSavegameEntry->elementIdx_7                = k;
+                        g_ActiveSavegameEntry->savegameCount_2             = savegameMetaPtr->savegameCount_8;
+                        g_ActiveSavegameEntry->locationId_8                = savegameMetaPtr->locationId_A;
+                        g_ActiveSavegameEntry->field_C                     = savegameMetaPtr;
 
                         if (savegameMetaPtr->unk_0 > 0)
                         {
@@ -1300,32 +1301,32 @@ s32 func_80033548() // 0x80033548
                             var_v1 = WrapIdx(i);
 
                             g_MemCardElementCount[var_v1 >> 2]++;
-                            g_SlotElementCounts[var_v1 >> 2]++;
+                            g_SlotElementCount[var_v1 >> 2]++;
                             g_ActiveSavegameEntry++;
                         }
-                        else if (D_800BCD38 == 2 && sp18[i] == 0)
+                        else if (g_SaveScreenPlayerState == 2 && sp18[i] == 0)
                         {
-                            sp18[i]                                     = 1;
-                            g_ActiveSavegameEntry->type_4               = SavegameEntryType_NewSave;
-                            g_ActiveSavegameEntry->totalSavegameCount_0 = 31900;
+                            sp18[i]                                            = 1;
+                            g_ActiveSavegameEntry->type_4                      = SavegameEntryType_NewSave;
+                            g_ActiveSavegameEntry->currentScreenSessionSaves_0 = 31900;
 
                             var_a1 = WrapIdx(i);
                             g_MemCardElementCount[var_a1 >> 2]++;
-                            g_SlotElementCounts[var_a1 >> 2]++;
+                            g_SlotElementCount[var_a1 >> 2]++;
                             g_ActiveSavegameEntry++;
                         }
                     }
                 }
             }
 
-            if (D_800BCD38 == 2 && sp18[i] == 0 && func_8002EA78(i) > 0)
+            if (g_SaveScreenPlayerState == 2 && sp18[i] == 0 && func_8002EA78(i) > 0)
             {
-                g_ActiveSavegameEntry->savegameCount_2      = 0;
-                g_ActiveSavegameEntry->field_C              = NULL;
-                sp18[i]                                     = 1;
-                g_ActiveSavegameEntry->totalSavegameCount_0 = 31800;
-                temp_v1_7                                   = D_800A97E4[i];
-                temp_v0_6                                   = temp_v1_7 & 0x3;
+                g_ActiveSavegameEntry->savegameCount_2             = 0;
+                g_ActiveSavegameEntry->field_C                     = NULL;
+                sp18[i]                                            = 1;
+                g_ActiveSavegameEntry->currentScreenSessionSaves_0 = 31800;
+                temp_v1_7                                          = D_800A97E4[i];
+                temp_v0_6                                          = temp_v1_7 & 0x3;
 
                 for (j = 0; temp_v0_6 == 3 || temp_v0_6 == 1; j++)
                 {
@@ -1346,7 +1347,7 @@ s32 func_80033548() // 0x80033548
 
                 temp_v0_4 = ((D_800A97E4[i]) >> (j * 2)) & 0x3; // Not needed here but fixes stack order.
 
-                g_SlotElementCounts[var_a0 >> 2]++;
+                g_SlotElementCount[var_a0 >> 2]++;
                 g_ActiveSavegameEntry++;
             }
         }
@@ -1368,9 +1369,9 @@ s32 func_80033548() // 0x80033548
             {
                 D_800A97DC = 24;
             }
-            else if (g_ActiveSavegameEntry->type_4 == SavegameEntryType_Unk1)
+            else if (g_ActiveSavegameEntry->type_4 == SavegameEntryType_UnformattedMemCard)
             {
-                if (D_800BCD38 == 2)
+                if (g_SaveScreenPlayerState == 2)
                 {
                     D_800A97DC = 22;
                 }
@@ -1399,25 +1400,25 @@ s32 func_80033548() // 0x80033548
     {
         g_ActiveSavegameEntry = GetActiveSavegameEntry(D_800A97E0 == 0);
 
-        g_ActiveSavegameEntry->totalSavegameCount_0 = NO_VALUE;
-        g_ActiveSavegameEntry->field_5              = 0;
-        g_ActiveSavegameEntry->fileIdx_6            = 0;
-        g_ActiveSavegameEntry->elementIdx_7         = 0;
-        g_ActiveSavegameEntry->type_4               = SavegameEntryType_LoadMemCard;
-        g_SlotElementCounts[D_800A97E0 == 0]        = 1;
-        g_ActiveSavegameEntry                       = GetActiveSavegameEntry(D_800A97E0);
+        g_ActiveSavegameEntry->currentScreenSessionSaves_0 = NO_VALUE;
+        g_ActiveSavegameEntry->field_5                     = 0;
+        g_ActiveSavegameEntry->fileIdx_6                   = 0;
+        g_ActiveSavegameEntry->elementIdx_7                = 0;
+        g_ActiveSavegameEntry->type_4                      = SavegameEntryType_LoadMemCard;
+        g_SlotElementCount[D_800A97E0 == 0]                = 1;
+        g_ActiveSavegameEntry                              = GetActiveSavegameEntry(D_800A97E0);
 
-        if ((g_ActiveSavegameEntry->type_4 == SavegameEntryType_Unk1 && D_800BCD38 == SavegameEntryType_CorruptedMemCard) ||
+        if ((g_ActiveSavegameEntry->type_4 == SavegameEntryType_UnformattedMemCard && g_SaveScreenPlayerState == SavegameEntryType_CorruptedMemCard) ||
             g_ActiveSavegameEntry->type_4 == SavegameEntryType_Save ||
             g_ActiveSavegameEntry->type_4 == SavegameEntryType_NewSave ||
             g_ActiveSavegameEntry->type_4 == SavegameEntryType_NewFile)
         {
-            g_ActiveSavegameEntry->totalSavegameCount_0 = NO_VALUE;
-            g_ActiveSavegameEntry->field_5              = 0;
-            g_ActiveSavegameEntry->fileIdx_6            = 0;
-            g_ActiveSavegameEntry->elementIdx_7         = 0;
-            g_ActiveSavegameEntry->type_4               = SavegameEntryType_LoadMemCard;
-            g_SlotElementCounts[D_800A97E0]             = 1;
+            g_ActiveSavegameEntry->currentScreenSessionSaves_0 = NO_VALUE;
+            g_ActiveSavegameEntry->field_5                     = 0;
+            g_ActiveSavegameEntry->fileIdx_6                   = 0;
+            g_ActiveSavegameEntry->elementIdx_7                = 0;
+            g_ActiveSavegameEntry->type_4                      = SavegameEntryType_LoadMemCard;
+            g_SlotElementCount[D_800A97E0]                     = 1;
         }
 
         sp3C = 0;
@@ -1431,11 +1432,11 @@ s32 func_80033548() // 0x80033548
             D_800BCD18[j]         = 0;
             D_800BCD20[j]         = 0;
 
-            for (i = 0; i < g_SlotElementCounts[j]; i++)
+            for (i = 0; i < g_SlotElementCount[j]; i++)
             {
-                if (D_800BCD18[j] < g_ActiveSavegameEntry->totalSavegameCount_0)
+                if (D_800BCD18[j] < g_ActiveSavegameEntry->currentScreenSessionSaves_0)
                 {
-                    D_800BCD18[j] = g_ActiveSavegameEntry->totalSavegameCount_0;
+                    D_800BCD18[j] = g_ActiveSavegameEntry->currentScreenSessionSaves_0;
                     D_800BCD20[j] = i;
                 }
 
@@ -4398,7 +4399,7 @@ void SysWork_SavegameReadPlayer() // 0x8003A1F4
     g_SysWork.player_4C.chara_0.health_B0      = g_SavegamePtr->playerHealth_240;
 }
 
-void SysState_SaveMenu_Update() // 0x0x8003A230
+void SysState_SaveMenu_Update() // 0x8003A230
 {
     s32 gameState;
 
