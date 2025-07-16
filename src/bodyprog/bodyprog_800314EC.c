@@ -5417,25 +5417,399 @@ s32 func_8003DD74(s32 arg0, s32 arg1) // 0x8003DD74
     return (arg1 << 10) & 0xFC00;
 }
 
+// TODO: RODATA migration
+#ifdef NON_MATCHING
+void func_8003DD80(s32 arg0, s32 arg1) // 0x8003DD80
+{
+    s32 temp_a2;
+
+    temp_a2 = D_800BCE18.field_0[0].field_18[arg0];
+
+    switch (arg0)
+    {
+        case 1:
+            func_8003DE60(temp_a2 + 0x14, arg1);
+            break;
+
+        case 7:
+            func_8003E388(temp_a2 + 0x14, arg1);
+            break;
+
+        case 26:
+        case 27:
+            func_8003DF84(temp_a2 + 0x14, arg1);
+            break;
+
+        case 24:
+            func_8003E08C(temp_a2 + 0x14, arg1);
+            break;
+
+        case 30:
+        case 31:
+            func_8003E194(temp_a2 + 0x14, arg1);
+            break;
+
+        case 38:
+        case 39:
+            func_8003E238(temp_a2 + 0x14, arg1);
+            break;
+
+        case 14:
+            func_8003E414(temp_a2 + 0x14, arg1);
+            break;
+
+        case 16:
+            func_8003E4A0(temp_a2 + 0x14, arg1);
+            break;
+
+        case 18:
+            func_8003E544(temp_a2 + 0x14, arg1);
+            break;
+
+        default:
+            break;
+    }
+}
+#else
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003DD80);
+#endif
 
+// TODO: RODATA migration
+#ifdef NON_MATCHING
+void func_8003DE60(s_Skeleton* arg0, s32 arg1) // 0x8003DE60
+{
+    s32 temp_s0;
+
+    temp_s0 = arg1 & 0xF;
+
+    if (temp_s0 != 0)
+    {
+        func_80045468(arg0, &D_800A9ECC, 0);
+
+        switch (temp_s0)
+        {
+            case 1:
+                func_80045468(arg0, &D_800A9ED0, 1);
+                break;
+
+            case 2:
+                func_80045468(arg0, &D_800A9ED4, 1);
+                break;
+
+            case 3:
+                func_80045468(arg0, &D_800A9ED8, 1);
+                break;
+
+            case 4:
+                func_80045468(arg0, &D_800A9EDC, 1);
+                break;
+
+            case 5:
+                func_80045468(arg0, &D_800A9EE0, 1);
+                break;
+        }
+    }
+
+    temp_s0 = arg1 & 0xF0;
+
+    if (temp_s0 == 0)
+    {
+        return;
+    }
+
+    func_80045468(arg0, &D_800A9EE4, 0);
+
+    switch (temp_s0)
+    {
+        case 16:
+            func_80045468(arg0, &D_800A9EE8, 1);
+            break;
+
+        case 32:
+            func_80045468(arg0, &D_800A9EEC, 1);
+            break;
+    }
+}
+#else
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003DE60);
+#endif
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003DF84);
+void func_8003DF84(s_Skeleton* arg0, s32 arg1) // 0x8003DF84
+{
+    s32 temp_v1;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003E08C);
+    temp_v1 = arg1 & 0xF;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003E194);
+    if (temp_v1 != 0)
+    {
+        switch (temp_v1)
+        {
+            case 1:
+                func_80045468(arg0, &D_800A9EF4, 0);
+                func_80045468(arg0, &D_800A9EF0, 1);
+                break;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003E238);
+            case 2:
+                func_80045468(arg0, &D_800A9EF0, 0);
+                func_80045468(arg0, &D_800A9EF4, 1);
+                break;
+        }
+    }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003E388);
+    temp_v1 = arg1 & 0xF0;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003E414);
+    if (temp_v1 == 0)
+    {
+        return;
+    }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003E4A0);
+    switch (temp_v1)
+    {
+        case 16:
+            func_80045468(arg0, &D_800A9EFC, 0);
+            func_80045468(arg0, &D_800A9EF8, 1);
+            break;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003E544);
+        case 32:
+            func_80045468(arg0, &D_800A9EF8, 0);
+            func_80045468(arg0, &D_800A9EFC, 1);
+            break;
+    }
+}
+
+void func_8003E08C(s_Skeleton* arg0, s32 arg1) // 0x8003E08C
+{
+    s32 temp_v1;
+
+    temp_v1 = arg1 & 0xF;
+
+    if (temp_v1 != 0)
+    {
+        switch (temp_v1)
+        {
+            case 1:
+                func_80045468(arg0, &D_800A9F04, 0);
+                func_80045468(arg0, &D_800A9F00, 1);
+                break;
+
+            case 2:
+                func_80045468(arg0, &D_800A9F00, 0);
+                func_80045468(arg0, &D_800A9F04, 1);
+                break;
+        }
+    }
+
+    temp_v1 = arg1 & 0xF0;
+
+    if (temp_v1 == 0)
+    {
+        return;
+    }
+
+    switch (temp_v1)
+    {
+        case 16:
+            func_80045468(arg0, &D_800A9F0C, 0);
+            func_80045468(arg0, &D_800A9F08, 1);
+            break;
+
+        case 32:
+            func_80045468(arg0, &D_800A9F08, 0);
+            func_80045468(arg0, &D_800A9F0C, 1);
+            break;
+    }
+}
+
+void func_8003E194(s_Skeleton* arg0, s32 arg1) // 0x8003E194
+{
+    s32 temp_s0;
+
+    temp_s0 = arg1 & 0xF;
+    if (temp_s0 == 0)
+    {
+        return;
+    }
+
+    func_80045468(arg0, &D_800A9F10, 0);
+
+    switch (temp_s0)
+    {
+        case 1:
+            func_80045468(arg0, &D_800A9F14, 1);
+            break;
+
+        case 2:
+            func_80045468(arg0, &D_800A9F18, 1);
+            break;
+
+        case 3:
+            func_80045468(arg0, &D_800A9F1C, 1);
+            break;
+    }
+}
+
+void func_8003E238(s_Skeleton* arg0, s32 arg1) // 0x8003E238
+{
+    s32 var_s0;
+
+    var_s0 = arg1 & 0xF;
+
+    if (var_s0 != 0)
+    {
+        func_80045468(arg0, &D_800A9F20, 0);
+
+        switch (var_s0)
+        {
+            case 1:
+                func_80045468(arg0, &D_800A9F28, 1);
+                break;
+
+            case 2:
+                func_80045468(arg0, &D_800A9F2C, 1);
+                break;
+
+            case 3:
+                func_80045468(arg0, &D_800A9F30, 1);
+                break;
+
+            case 4:
+                func_80045468(arg0, &D_800A9F34, 1);
+                break;
+        }
+    }
+
+    var_s0 = arg1 & 0xF0;
+
+    if (var_s0 == 0)
+    {
+        return;
+    }
+
+    func_80045468(arg0, &D_800A9F38, 0);
+
+    switch (var_s0)
+    {
+        case 16:
+            func_80045468(arg0, &D_800A9F3C, 1);
+            break;
+
+        case 32:
+            func_80045468(arg0, &D_800A9F40, 1);
+            break;
+
+        case 48:
+            func_80045468(arg0, &D_800A9F44, 1);
+            break;
+    }
+}
+
+void func_8003E388(s_Skeleton* arg0, s32 arg1) // 0x8003E388
+{
+    s32 temp_a1;
+
+    temp_a1 = arg1 & 0xF;
+
+    if (temp_a1 == 0)
+    {
+        return;
+    }
+
+    switch (temp_a1)
+    {
+        case 1:
+            func_80045468(arg0, &D_800A9F4C, 0);
+            func_80045468(arg0, &D_800A9F48, 1);
+            break;
+
+        case 2:
+            func_80045468(arg0, &D_800A9F48, 0);
+            func_80045468(arg0, &D_800A9F4C, 1);
+            break;
+    }
+}
+
+void func_8003E414(s_Skeleton* arg0, s32 arg1) // 0x8003E414
+{
+    s32 temp_a1;
+
+    temp_a1 = arg1 & 3;
+
+    if (temp_a1 == 0)
+    {
+        return;
+    }
+
+    switch (temp_a1)
+    {
+        case 1:
+            func_80045468(arg0, &D_800A9F50, 0);
+            func_80045468(arg0, &D_800A9F54, 1);
+            break;
+
+        case 2:
+            func_80045468(arg0, &D_800A9F54, 0);
+            func_80045468(arg0, &D_800A9F50, 1);
+            break;
+    }
+}
+
+void func_8003E4A0(s_Skeleton* arg0, s32 arg1) // 0x8003E4A0
+{
+    s32 temp_s0;
+
+    temp_s0 = arg1 & 0xF;
+
+    if (temp_s0 == 0)
+    {
+        return;
+    }
+
+    func_80045468(arg0, &D_800A9F58, 0);
+
+    switch (temp_s0)
+    {
+        case 1:
+            func_80045468(arg0, &D_800A9F60, 1);
+            break;
+
+        case 2:
+            func_80045468(arg0, &D_800A9F64, 1);
+            break;
+
+        case 3:
+            func_80045468(arg0, &D_800A9F68, 1);
+            break;
+    }
+}
+
+void func_8003E544(s_Skeleton* arg0, s32 arg1) // 0x8003E544
+{
+    s32 temp_s0;
+
+    temp_s0 = arg1 & 0xF;
+
+    if (temp_s0 == 0)
+    {
+        return;
+    }
+
+    func_80045468(arg0, &D_800A9F6C, 0);
+
+    switch (temp_s0)
+    {
+        case 1:
+            func_80045468(arg0, &D_800A9F74, 1);
+            break;
+
+        case 2:
+            func_80045468(arg0, &D_800A9F78, 1);
+            break;
+
+        case 3:
+            func_80045468(arg0, &D_800A9F7C, 1);
+            break;
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003E5E8);
 
