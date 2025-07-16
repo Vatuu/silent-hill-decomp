@@ -86,8 +86,8 @@ typedef struct
     s32   fileHandle_74;
     s32   retryCount_78;
     s32   field_7C;
-} s_800B5488;
-STATIC_ASSERT_SIZEOF(s_800B5488, 128);
+} s_CardWork;
+STATIC_ASSERT_SIZEOF(s_CardWork, 128);
 
 typedef struct
 {
@@ -164,7 +164,7 @@ extern s_800B55E8 D_800B4580[];
 
 extern s32 D_800B5480;
 
-extern s_800B5488 D_800B5488; // SaveWork?
+extern s_CardWork g_CardWork; // SaveWork?
 
 /** Declaration of the struct takes 224 bytes (0xE0 bytes in hex).
  * It is possible that the full size of the struct
@@ -307,25 +307,25 @@ void Savegame_CardHwEventSpUNKNOWN();
 
 s32 Savegame_CardResult();
 
-s32 Savegame_CardRequest(e_CardIoMode mode, s32 deviceId, s_CardDirectory* outDirectory, char* fileName, s32 createBlockCount, s32 fileOffset, s32 outBuffer, s32 outSize);
+s32 Savegame_CardRequest(e_CardIoMode mode, s32 deviceId, s_CardDirectory* outDirectory, char* fileName, s32 createBlockCount, s32 fileOffset, void* outBuffer, s32 bufferSize);
 
 s32 Savegame_CardIsIdle();
 
 void Savegame_CardUpdate();
 
-s32 Savegame_CardState_1();
+s32 Savegame_CardState_Init();
 
-s32 Savegame_CardState_2();
+s32 Savegame_CardState_Check();
 
-s32 Savegame_CardState_3();
+s32 Savegame_CardState_Load();
 
-s32 Savegame_CardState_4();
+s32 Savegame_CardState_DirRead();
 
-s32 Savegame_CardState_5();
+s32 Savegame_CardState_FileCreate();
 
-s32 Savegame_CardState_6();
+s32 Savegame_CardState_FileOpen();
 
-s32 Savegame_CardState_7();
+s32 Savegame_CardState_FileReadWrite();
 
 void Savegame_DevicePathGenerate(s32 deviceId, char* result);
 

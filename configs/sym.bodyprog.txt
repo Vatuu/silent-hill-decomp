@@ -17,7 +17,7 @@ nextGameStates = 0x80025480;
 // Most names from SH2, functions seem to match pretty close between it and SH1 besides a few missing/extra funcs.
 hack_vcSetWatchTgtXzPos_fix = 0x8002B2B4; // type:s32 - Some 0x80083500 value which coincidentally points to code inside vcSetWatchTgtXzPos, probably unrelated flags or something. A jtbl is right before this which spimdisasm tries to include, breaking vcSetWatchTgtXzPos build.
 
-D_800B5488 = 0x800B5488; // size:0x80 - Assumed size, struct used by save system.
+g_CardWork = 0x800B5488; // size:0x80
 
 Savegame_UserConfigCopyWithChecksum = 0x8002FBB4; // type:func
 Savegame_CopyWithChecksum = 0x8002FCCC; // type:func

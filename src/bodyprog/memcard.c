@@ -436,8 +436,7 @@ void Savegame_FilenameGenerate(char* dest, s32 saveIdx) // 0x80030000
 {
     char buf[3];
 
-    memcpy(dest, "BA", 3);
-
+    strcpy(dest, "BA");
     strcat(dest, "SLUS-00707");
     strcat(dest, "SILENT");
 
@@ -489,7 +488,7 @@ s32 Savegame_CardDeviceTest(s32 deviceId) // 0x80030288
     _new_card();
     _card_write(((deviceId & (1 << 2)) << 2) | (deviceId & 0x3), 0, cardBuf);
 
-    D_800B5488.devicesPending_0 |= 1 << D_800B5488.deviceId_3C;
+    g_CardWork.devicesPending_0 |= 1 << g_CardWork.deviceId_3C;
 
     return Savegame_CardHwEventsTest() != 0;
 }
@@ -538,7 +537,7 @@ void Savegame_CardInit() // 0x800303E4
 {
     InitCARD(0);
     StartCARD();
-    D_800B5488.devicesPending_0 = UINT_MAX; // All bits set.
+    g_CardWork.devicesPending_0 = UINT_MAX; // All bits set.
 }
 
 void Savegame_CardEventsInit() // 0x80030414
@@ -550,24 +549,24 @@ void Savegame_CardEventsInit() // 0x80030414
 
 void Savegame_CardStateInit() // 0x80030444
 {
-    D_800B5488.state_4       = CardState_Idle;
-    D_800B5488.stateStep_8   = 0;
-    D_800B5488.stateResult_C = 0;
+    g_CardWork.state_4       = CardState_Idle;
+    g_CardWork.stateStep_8   = 0;
+    g_CardWork.stateResult_C = 0;
 }
 
 void Savegame_CardSwEventsInit() // 0x8003045C
 {
     EnterCriticalSection();
-    D_800B5488.eventSwSpIOE_10    = OpenEvent(SwCARD, EvSpIOE, EvMdNOINTR, NULL);
-    D_800B5488.eventSwSpERROR_14  = OpenEvent(SwCARD, EvSpERROR, EvMdNOINTR, NULL);
-    D_800B5488.eventSwSpTIMOUT_18 = OpenEvent(SwCARD, EvSpTIMOUT, EvMdNOINTR, NULL);
-    D_800B5488.eventSwSpNEW_1C    = OpenEvent(SwCARD, EvSpNEW, EvMdNOINTR, NULL);
+    g_CardWork.eventSwSpIOE_10    = OpenEvent(SwCARD, EvSpIOE, EvMdNOINTR, NULL);
+    g_CardWork.eventSwSpERROR_14  = OpenEvent(SwCARD, EvSpERROR, EvMdNOINTR, NULL);
+    g_CardWork.eventSwSpTIMOUT_18 = OpenEvent(SwCARD, EvSpTIMOUT, EvMdNOINTR, NULL);
+    g_CardWork.eventSwSpNEW_1C    = OpenEvent(SwCARD, EvSpNEW, EvMdNOINTR, NULL);
     ExitCriticalSection();
 
-    EnableEvent(D_800B5488.eventSwSpIOE_10);
-    EnableEvent(D_800B5488.eventSwSpERROR_14);
-    EnableEvent(D_800B5488.eventSwSpTIMOUT_18);
-    EnableEvent(D_800B5488.eventSwSpNEW_1C);
+    EnableEvent(g_CardWork.eventSwSpIOE_10);
+    EnableEvent(g_CardWork.eventSwSpERROR_14);
+    EnableEvent(g_CardWork.eventSwSpTIMOUT_18);
+    EnableEvent(g_CardWork.eventSwSpNEW_1C);
 
     Savegame_CardSwEventsReset();
 }
@@ -575,18 +574,18 @@ void Savegame_CardSwEventsInit() // 0x8003045C
 void Savegame_CardHwEventsInit() // 0x80030530
 {
     EnterCriticalSection();
-    D_800B5488.eventHwSpIOE_20     = OpenEvent(HwCARD, EvSpIOE, EvMdINTR, Savegame_CardHwEventSpIOE);
-    D_800B5488.eventHwSpERROR_24   = OpenEvent(HwCARD, EvSpERROR, EvMdINTR, Savegame_CardHwEventSpERROR);
-    D_800B5488.eventHwSpTIMOUT_28  = OpenEvent(HwCARD, EvSpTIMOUT, EvMdINTR, Savegame_CardHwEventSpTIMOUT);
-    D_800B5488.eventHwSpNEW_2C     = OpenEvent(HwCARD, EvSpNEW, EvMdINTR, Savegame_CardHwEventSpNEW);
-    D_800B5488.eventHwSpUNKNOWN_30 = OpenEvent(HwCARD, EvSpUNKNOWN, EvMdINTR, Savegame_CardHwEventSpUNKNOWN);
+    g_CardWork.eventHwSpIOE_20     = OpenEvent(HwCARD, EvSpIOE, EvMdINTR, Savegame_CardHwEventSpIOE);
+    g_CardWork.eventHwSpERROR_24   = OpenEvent(HwCARD, EvSpERROR, EvMdINTR, Savegame_CardHwEventSpERROR);
+    g_CardWork.eventHwSpTIMOUT_28  = OpenEvent(HwCARD, EvSpTIMOUT, EvMdINTR, Savegame_CardHwEventSpTIMOUT);
+    g_CardWork.eventHwSpNEW_2C     = OpenEvent(HwCARD, EvSpNEW, EvMdINTR, Savegame_CardHwEventSpNEW);
+    g_CardWork.eventHwSpUNKNOWN_30 = OpenEvent(HwCARD, EvSpUNKNOWN, EvMdINTR, Savegame_CardHwEventSpUNKNOWN);
     ExitCriticalSection();
 
-    EnableEvent(D_800B5488.eventHwSpIOE_20);
-    EnableEvent(D_800B5488.eventHwSpERROR_24);
-    EnableEvent(D_800B5488.eventHwSpTIMOUT_28);
-    EnableEvent(D_800B5488.eventHwSpNEW_2C);
-    EnableEvent(D_800B5488.eventHwSpUNKNOWN_30);
+    EnableEvent(g_CardWork.eventHwSpIOE_20);
+    EnableEvent(g_CardWork.eventHwSpERROR_24);
+    EnableEvent(g_CardWork.eventHwSpTIMOUT_28);
+    EnableEvent(g_CardWork.eventHwSpNEW_2C);
+    EnableEvent(g_CardWork.eventHwSpUNKNOWN_30);
 
     Savegame_CardHwEventsReset();
 }
@@ -600,42 +599,42 @@ void Savegame_CardEventsClose() // 0x80030640
 void Savegame_CardSwEventsClose() // 0x80030668
 {
     EnterCriticalSection();
-    CloseEvent(D_800B5488.eventSwSpIOE_10);
-    CloseEvent(D_800B5488.eventSwSpERROR_14);
-    CloseEvent(D_800B5488.eventSwSpTIMOUT_18);
-    CloseEvent(D_800B5488.eventSwSpNEW_1C);
+    CloseEvent(g_CardWork.eventSwSpIOE_10);
+    CloseEvent(g_CardWork.eventSwSpERROR_14);
+    CloseEvent(g_CardWork.eventSwSpTIMOUT_18);
+    CloseEvent(g_CardWork.eventSwSpNEW_1C);
     ExitCriticalSection();
 }
 
 void Savegame_CardHwEventsClose() // 0x800306C8
 {
     EnterCriticalSection();
-    CloseEvent(D_800B5488.eventHwSpIOE_20);
-    CloseEvent(D_800B5488.eventHwSpERROR_24);
-    CloseEvent(D_800B5488.eventHwSpTIMOUT_28);
-    CloseEvent(D_800B5488.eventHwSpNEW_2C);
-    CloseEvent(D_800B5488.eventHwSpUNKNOWN_30);
+    CloseEvent(g_CardWork.eventHwSpIOE_20);
+    CloseEvent(g_CardWork.eventHwSpERROR_24);
+    CloseEvent(g_CardWork.eventHwSpTIMOUT_28);
+    CloseEvent(g_CardWork.eventHwSpNEW_2C);
+    CloseEvent(g_CardWork.eventHwSpUNKNOWN_30);
     ExitCriticalSection();
 }
 
 s32 Savegame_CardSwEventsTest() // 0x80030734
 {
-    if (TestEvent(D_800B5488.eventSwSpERROR_14) == 1)
+    if (TestEvent(g_CardWork.eventSwSpERROR_14) == 1)
     {
         return EvSpERROR;
     }
 
-    if (TestEvent(D_800B5488.eventSwSpTIMOUT_18) == 1)
+    if (TestEvent(g_CardWork.eventSwSpTIMOUT_18) == 1)
     {
         return EvSpTIMOUT;
     }
 
-    if (TestEvent(D_800B5488.eventSwSpNEW_1C) == 1)
+    if (TestEvent(g_CardWork.eventSwSpNEW_1C) == 1)
     {
         return EvSpNEW;
     }
 
-    if (TestEvent(D_800B5488.eventSwSpIOE_10) == 1)
+    if (TestEvent(g_CardWork.eventSwSpIOE_10) == 1)
     {
         return EvSpIOE;
     }
@@ -645,141 +644,141 @@ s32 Savegame_CardSwEventsTest() // 0x80030734
 
 void Savegame_CardSwEventsReset() // 0x800307BC
 {
-    TestEvent(D_800B5488.eventSwSpERROR_14);
-    TestEvent(D_800B5488.eventSwSpTIMOUT_18);
-    TestEvent(D_800B5488.eventSwSpNEW_1C);
-    TestEvent(D_800B5488.eventSwSpIOE_10);
+    TestEvent(g_CardWork.eventSwSpERROR_14);
+    TestEvent(g_CardWork.eventSwSpTIMOUT_18);
+    TestEvent(g_CardWork.eventSwSpNEW_1C);
+    TestEvent(g_CardWork.eventSwSpIOE_10);
 }
 
 s32 Savegame_CardHwEventsTest() // 0x80030810
 {
-    return D_800B5488.lastEventHw_34;
+    return g_CardWork.lastEventHw_34;
 }
 
 void Savegame_CardHwEventsReset() // 0x80030820
 {
-    TestEvent(D_800B5488.eventHwSpERROR_24);
-    TestEvent(D_800B5488.eventHwSpTIMOUT_28);
-    TestEvent(D_800B5488.eventHwSpNEW_2C);
-    TestEvent(D_800B5488.eventHwSpIOE_20);
-    TestEvent(D_800B5488.eventHwSpUNKNOWN_30);
+    TestEvent(g_CardWork.eventHwSpERROR_24);
+    TestEvent(g_CardWork.eventHwSpTIMOUT_28);
+    TestEvent(g_CardWork.eventHwSpNEW_2C);
+    TestEvent(g_CardWork.eventHwSpIOE_20);
+    TestEvent(g_CardWork.eventHwSpUNKNOWN_30);
 
-    D_800B5488.lastEventHw_34 = 0;
+    g_CardWork.lastEventHw_34 = 0;
 }
 
 void Savegame_CardHwEventSpIOE() // 0x80030884
 {
-    D_800B5488.lastEventHw_34 = EvSpIOE;
+    g_CardWork.lastEventHw_34 = EvSpIOE;
 }
 
 void Savegame_CardHwEventSpERROR() // 0x80030894
 {
-    D_800B5488.lastEventHw_34 = EvSpERROR;
+    g_CardWork.lastEventHw_34 = EvSpERROR;
 }
 
 void Savegame_CardHwEventSpNEW() // 0x800308A4
 {
-    D_800B5488.lastEventHw_34 = EvSpNEW;
+    g_CardWork.lastEventHw_34 = EvSpNEW;
 }
 
 void Savegame_CardHwEventSpTIMOUT() // 0x800308B4
 {
-    D_800B5488.lastEventHw_34 = EvSpTIMOUT;
+    g_CardWork.lastEventHw_34 = EvSpTIMOUT;
 }
 
 void Savegame_CardHwEventSpUNKNOWN() // 0x800308C4
 {
-    D_800B5488.lastEventHw_34 = EvSpUNKNOWN;
+    g_CardWork.lastEventHw_34 = EvSpUNKNOWN;
 }
 
 s32 Savegame_CardResult() // 0x800308D4
 {
-    return D_800B5488.stateResult_C;
+    return g_CardWork.stateResult_C;
 }
 
-s32 Savegame_CardRequest(e_CardIoMode mode, s32 deviceId, s_CardDirectory* outDirectory, char* fileName, s32 createBlockCount, s32 fileOffset, s32 outBuffer, s32 outSize) // 0x800308E4
+s32 Savegame_CardRequest(e_CardIoMode mode, s32 deviceId, s_CardDirectory* outDirectory, char* fileName, s32 createBlockCount, s32 fileOffset, void* outBuffer, s32 bufferSize) // 0x800308E4
 {
     if (!Savegame_CardIsIdle())
     {
         return 0;
     }
 
-    D_800B5488.cardIoMode_38 = mode;
+    g_CardWork.cardIoMode_38 = mode;
 
     switch (mode)
     {
         case CardIoMode_Init:
         case CardIoMode_DirRead:
-            D_800B5488.state_4     = CardState_Init;
-            D_800B5488.stateStep_8 = 0;
+            g_CardWork.state_4     = CardState_Init;
+            g_CardWork.stateStep_8 = 0;
             break;
 
         case CardIoMode_Read:
         case CardIoMode_Write:
-            D_800B5488.state_4     = CardState_FileOpen;
-            D_800B5488.stateStep_8 = 0;
+            g_CardWork.state_4     = CardState_FileOpen;
+            g_CardWork.stateStep_8 = 0;
             break;
 
         case CardIoMode_Create:
-            D_800B5488.state_4     = CardState_FileCreate;
-            D_800B5488.stateStep_8 = 0;
+            g_CardWork.state_4     = CardState_FileCreate;
+            g_CardWork.stateStep_8 = 0;
             break;
     }
 
-    D_800B5488.deviceId_3C      = deviceId;
-    D_800B5488.cardDirectory_40 = outDirectory;
+    g_CardWork.deviceId_3C      = deviceId;
+    g_CardWork.cardDirectory_40 = outDirectory;
 
-    Savegame_DevicePathGenerate(deviceId, &D_800B5488.filePath_44);
-    strcat(&D_800B5488.filePath_44, fileName);
+    Savegame_DevicePathGenerate(deviceId, g_CardWork.filePath_44);
+    strcat(g_CardWork.filePath_44, fileName);
 
-    D_800B5488.createBlockCount_60 = createBlockCount;
-    D_800B5488.seekOffset_64 = fileOffset;
-    D_800B5488.dataBuffer_68 = outBuffer;
-    D_800B5488.dataSize_6C   = outSize;
-    D_800B5488.field_70      = 0;
+    g_CardWork.createBlockCount_60 = createBlockCount;
+    g_CardWork.seekOffset_64 = fileOffset;
+    g_CardWork.dataBuffer_68 = outBuffer;
+    g_CardWork.dataSize_6C   = bufferSize;
+    g_CardWork.field_70      = 0;
     return 1;
 }
 
 s32 Savegame_CardIsIdle() // 0x800309FC
 {
-    return D_800B5488.state_4 == CardState_Idle;
+    return g_CardWork.state_4 == CardState_Idle;
 }
 
 void Savegame_CardUpdate() // 0x80030A0C
 {
-    switch (D_800B5488.state_4)
+    switch (g_CardWork.state_4)
     {
         case CardState_Idle:
             // HACK: Probably some optimized out code here.
-            D_800B5488.stateResult_C += 0;
+            g_CardWork.stateResult_C += 0;
             break;
 
         case CardState_Init:
-            D_800B5488.stateResult_C = Savegame_CardState_Init();
+            g_CardWork.stateResult_C = Savegame_CardState_Init();
             break;
 
         case CardState_Check:
-            D_800B5488.stateResult_C = Savegame_CardState_Check();
+            g_CardWork.stateResult_C = Savegame_CardState_Check();
             break;
 
         case CardState_Load:
-            D_800B5488.stateResult_C = Savegame_CardState_Load();
+            g_CardWork.stateResult_C = Savegame_CardState_Load();
             break;
 
         case CardState_DirRead:
-            D_800B5488.stateResult_C = Savegame_CardState_DirRead();
+            g_CardWork.stateResult_C = Savegame_CardState_DirRead();
             break;
 
         case CardState_FileCreate:
-            D_800B5488.stateResult_C = Savegame_CardState_FileCreate();
+            g_CardWork.stateResult_C = Savegame_CardState_FileCreate();
             break;
 
         case CardState_FileOpen:
-            D_800B5488.stateResult_C = Savegame_CardState_FileOpen();
+            g_CardWork.stateResult_C = Savegame_CardState_FileOpen();
             break;
 
         case CardState_FileReadWrite:
-            D_800B5488.stateResult_C = Savegame_CardState_FileReadWrite();
+            g_CardWork.stateResult_C = Savegame_CardState_FileReadWrite();
             break;
     }
 }
@@ -790,24 +789,24 @@ s32 Savegame_CardState_Init() // 0x80030AD8
     s32 result;
 
     result  = 1;
-    channel = ((D_800B5488.deviceId_3C & (1 << 2)) << 2) + (D_800B5488.deviceId_3C & 3);
+    channel = ((g_CardWork.deviceId_3C & (1 << 2)) << 2) + (g_CardWork.deviceId_3C & 3);
 
-    switch (D_800B5488.stateStep_8)
+    switch (g_CardWork.stateStep_8)
     {
         case 0:
-            D_800B5488.retryCount_78 = 0;
-            D_800B5488.field_7C      = 0;
-            D_800B5488.stateStep_8   = 1;
+            g_CardWork.retryCount_78 = 0;
+            g_CardWork.field_7C      = 0;
+            g_CardWork.stateStep_8   = 1;
 
         case 1:
             Savegame_CardSwEventsReset();
             if (_card_info(channel) == 1)
             {
-                D_800B5488.stateStep_8++;
+                g_CardWork.stateStep_8++;
             }
             else
             {
-                D_800B5488.retryCount_78++;
+                g_CardWork.retryCount_78++;
             }
             break;
 
@@ -815,47 +814,47 @@ s32 Savegame_CardState_Init() // 0x80030AD8
             switch (Savegame_CardSwEventsTest())
             {
                 case EvSpIOE: // Connected.
-                    if (D_800B5488.cardIoMode_38 == CardIoMode_Init)
+                    if (g_CardWork.cardIoMode_38 == CardIoMode_Init)
                     {
                         result                 = 3;
-                        D_800B5488.state_4     = CardState_Idle;
-                        D_800B5488.stateStep_8 = 0;
+                        g_CardWork.state_4     = CardState_Idle;
+                        g_CardWork.stateStep_8 = 0;
                     }
-                    else if (!((D_800B5488.devicesPending_0 >> D_800B5488.deviceId_3C) & 1))
+                    else if (!((g_CardWork.devicesPending_0 >> g_CardWork.deviceId_3C) & 1))
                     {
-                        D_800B5488.state_4     = CardState_DirRead;
-                        D_800B5488.stateStep_8 = 0;
+                        g_CardWork.state_4     = CardState_DirRead;
+                        g_CardWork.stateStep_8 = 0;
                     }
                     else
                     {
-                        D_800B5488.state_4     = CardState_Check;
-                        D_800B5488.stateStep_8 = 0;
+                        g_CardWork.state_4     = CardState_Check;
+                        g_CardWork.stateStep_8 = 0;
                     }
                     break;
 
                 case EvSpNEW: // "No writing after connection"
-                    D_800B5488.field_70 = 1;
-                    if (D_800B5488.cardIoMode_38 == CardIoMode_Init)
+                    g_CardWork.field_70 = 1;
+                    if (g_CardWork.cardIoMode_38 == CardIoMode_Init)
                     {
                         result                 = 2;
-                        D_800B5488.state_4     = CardState_Idle;
-                        D_800B5488.stateStep_8 = 0;
+                        g_CardWork.state_4     = CardState_Idle;
+                        g_CardWork.stateStep_8 = 0;
                     }
                     else
                     {
-                        D_800B5488.state_4     = CardState_Check;
-                        D_800B5488.stateStep_8 = 0;
+                        g_CardWork.state_4     = CardState_Check;
+                        g_CardWork.stateStep_8 = 0;
                     }
                     break;
 
                 case EvSpTIMOUT: // Not connected.
                     result                 = 0;
-                    D_800B5488.state_4     = CardState_Idle;
-                    D_800B5488.stateStep_8 = 0;
+                    g_CardWork.state_4     = CardState_Idle;
+                    g_CardWork.stateStep_8 = 0;
                     break;
 
                 case EvSpERROR: // Error.
-                    D_800B5488.stateStep_8 = 1;
+                    g_CardWork.stateStep_8 = 1;
                     break;
             }
             break;
@@ -870,20 +869,20 @@ s32 Savegame_CardState_Check() // 0x80030C88
     s32 result;
 
     result  = 1;
-    channel = ((D_800B5488.deviceId_3C & (1 << 2)) << 2) + (D_800B5488.deviceId_3C & 3);
+    channel = ((g_CardWork.deviceId_3C & (1 << 2)) << 2) + (g_CardWork.deviceId_3C & 3);
 
-    switch (D_800B5488.stateStep_8)
+    switch (g_CardWork.stateStep_8)
     {
         case 0:
-            D_800B5488.retryCount_78 = 0;
-            D_800B5488.field_7C      = 0;
-            D_800B5488.stateStep_8   = 1;
+            g_CardWork.retryCount_78 = 0;
+            g_CardWork.field_7C      = 0;
+            g_CardWork.stateStep_8   = 1;
 
         case 1:
             Savegame_CardHwEventsReset();
             if (_card_clear(channel) == 1)
             {
-                D_800B5488.stateStep_8++;
+                g_CardWork.stateStep_8++;
             }
             break;
 
@@ -891,19 +890,19 @@ s32 Savegame_CardState_Check() // 0x80030C88
             switch (Savegame_CardHwEventsTest())
             {
                 case EvSpIOE: // Completed.
-                    D_800B5488.state_4     = CardState_Load;
-                    D_800B5488.stateStep_8 = 0;
+                    g_CardWork.state_4     = CardState_Load;
+                    g_CardWork.stateStep_8 = 0;
                     break;
 
                 case EvSpTIMOUT: // Card not connected.
                     result                 = 0;
-                    D_800B5488.state_4     = CardState_Idle;
-                    D_800B5488.stateStep_8 = 0;
+                    g_CardWork.state_4     = CardState_Idle;
+                    g_CardWork.stateStep_8 = 0;
                     break;
 
                 case EvSpNEW:   // New card detected.
                 case EvSpERROR: // Error.
-                    D_800B5488.stateStep_8 = 1;
+                    g_CardWork.stateStep_8 = 1;
                     break;
             }
             break;
@@ -918,27 +917,27 @@ s32 Savegame_CardState_Load() // 0x80030DC8
     s32 result;
 
     result  = 1;
-    channel = ((D_800B5488.deviceId_3C & (1 << 2)) << 2) + (D_800B5488.deviceId_3C & 3);
+    channel = ((g_CardWork.deviceId_3C & (1 << 2)) << 2) + (g_CardWork.deviceId_3C & 3);
 
-    switch (D_800B5488.stateStep_8)
+    switch (g_CardWork.stateStep_8)
     {
         case 0:
-            D_800B5488.retryCount_78 = 0;
-            D_800B5488.field_7C      = 0;
-            D_800B5488.stateStep_8   = 1;
+            g_CardWork.retryCount_78 = 0;
+            g_CardWork.field_7C      = 0;
+            g_CardWork.stateStep_8   = 1;
 
         case 1:
             Savegame_CardSwEventsReset();
             if (_card_load(channel) == 1)
             {
-                D_800B5488.stateStep_8++;
-                if (!(D_800B5488.deviceId_3C & 4))
+                g_CardWork.stateStep_8++;
+                if (!(g_CardWork.deviceId_3C & 4))
                 {
-                    D_800B5488.devicesPending_0 |= 0xF;
+                    g_CardWork.devicesPending_0 |= 0xF;
                 }
                 else
                 {
-                    D_800B5488.devicesPending_0 |= 0xF0;
+                    g_CardWork.devicesPending_0 |= 0xF0;
                 }
             }
             break;
@@ -947,34 +946,34 @@ s32 Savegame_CardState_Load() // 0x80030DC8
             switch (Savegame_CardSwEventsTest())
             {
                 case EvSpIOE: // Read completed.
-                    D_800B5488.state_4     = CardState_DirRead;
-                    D_800B5488.stateStep_8 = 0;
-                    D_800B5488.devicesPending_0 &= ~(1 << D_800B5488.deviceId_3C);
+                    g_CardWork.state_4     = CardState_DirRead;
+                    g_CardWork.stateStep_8 = 0;
+                    g_CardWork.devicesPending_0 &= ~(1 << g_CardWork.deviceId_3C);
                     break;
 
                 case EvSpNEW: // Uninitialized card.
-                    D_800B5488.devicesPending_0 |= 1 << D_800B5488.deviceId_3C;
-                    if (D_800B5488.retryCount_78 < 3)
+                    g_CardWork.devicesPending_0 |= 1 << g_CardWork.deviceId_3C;
+                    if (g_CardWork.retryCount_78 < 3)
                     {
-                        D_800B5488.retryCount_78++;
-                        D_800B5488.stateStep_8 = 1;
+                        g_CardWork.retryCount_78++;
+                        g_CardWork.stateStep_8 = 1;
                     }
                     else
                     {
                         result                 = 4;
-                        D_800B5488.state_4     = CardState_Idle;
-                        D_800B5488.stateStep_8 = 0;
+                        g_CardWork.state_4     = CardState_Idle;
+                        g_CardWork.stateStep_8 = 0;
                     }
                     break;
 
                 case EvSpTIMOUT: // Not connected.
                     result                 = 0;
-                    D_800B5488.state_4     = CardState_Idle;
-                    D_800B5488.stateStep_8 = 0;
+                    g_CardWork.state_4     = CardState_Idle;
+                    g_CardWork.stateStep_8 = 0;
                     break;
 
                 case EvSpERROR: // Error.
-                    D_800B5488.stateStep_8 = 1;
+                    g_CardWork.stateStep_8 = 1;
                     break;
             }
             break;
@@ -988,20 +987,20 @@ s32 Savegame_CardState_DirRead() // 0x80030F7C
     struct DIRENTRY  fileInfo;
     struct DIRENTRY* curFile;
     char             filePath[16];
-    s32              retval;
+    s32              result;
     s32              i;
 
     for (i = 0; i < 15; i++)
     {
-        *D_800B5488.cardDirectory_40->fileNames_0[i]    = D_80024B64; // `00` byte near start of bodyprog rodata, far from `save.c` rodata section?
-        D_800B5488.cardDirectory_40->blockCounts_13B[i] = 0;
+        *g_CardWork.cardDirectory_40->fileNames_0[i]    = D_80024B64; // `00` byte near start of bodyprog rodata, far from `save.c` rodata section?
+        g_CardWork.cardDirectory_40->blockCounts_13B[i] = 0;
     }
 
     for (i = 0; i < 15; i++)
     {
         if (i == 0)
         {
-            Savegame_DevicePathGenerate(D_800B5488.deviceId_3C, filePath);
+            Savegame_DevicePathGenerate(g_CardWork.deviceId_3C, filePath);
             strcat(filePath, "*");
             curFile = firstfile(filePath, &fileInfo);
         }
@@ -1015,16 +1014,16 @@ s32 Savegame_CardState_DirRead() // 0x80030F7C
             break;
         }
 
-        strcpy(&D_800B5488.cardDirectory_40->fileNames_0[i], fileInfo.name);
-        D_800B5488.cardDirectory_40->blockCounts_13B[i] = (fileInfo.size + (8192 - 1)) / 8192;
+        strcpy(g_CardWork.cardDirectory_40->fileNames_0[i], fileInfo.name);
+        g_CardWork.cardDirectory_40->blockCounts_13B[i] = (fileInfo.size + (8192 - 1)) / 8192;
     }
 
-    retval = (D_800B5488.field_70 == 1) ? 5 : 6;
+    result = (g_CardWork.field_70 == 1) ? 5 : 6;
 
-    D_800B5488.state_4     = CardState_Idle;
-    D_800B5488.stateStep_8 = 0;
+    g_CardWork.state_4     = CardState_Idle;
+    g_CardWork.stateStep_8 = 0;
 
-    return retval;
+    return result;
 }
 
 s32 Savegame_CardState_FileCreate() // 0x800310B4
@@ -1033,29 +1032,29 @@ s32 Savegame_CardState_FileCreate() // 0x800310B4
 
     result = 1;
 
-    switch (D_800B5488.stateStep_8)
+    switch (g_CardWork.stateStep_8)
     {
         case 0:
-            D_800B5488.retryCount_78 = 0;
-            D_800B5488.field_7C      = 0;
-            D_800B5488.stateStep_8   = 1;
+            g_CardWork.retryCount_78 = 0;
+            g_CardWork.field_7C      = 0;
+            g_CardWork.stateStep_8   = 1;
         case 1:
-            D_800B5488.fileHandle_74 = open(D_800B5488.filePath_44, (D_800B5488.createBlockCount_60 << 16) | O_CREAT);
-            if (D_800B5488.fileHandle_74 == -1)
+            g_CardWork.fileHandle_74 = open(g_CardWork.filePath_44, (g_CardWork.createBlockCount_60 << 16) | O_CREAT);
+            if (g_CardWork.fileHandle_74 == -1)
             {
-                if (D_800B5488.retryCount_78++ >= 15)
+                if (g_CardWork.retryCount_78++ >= 15)
                 {
                     result                 = 7;
-                    D_800B5488.state_4     = CardState_Idle;
-                    D_800B5488.stateStep_8 = 0;
+                    g_CardWork.state_4     = CardState_Idle;
+                    g_CardWork.stateStep_8 = 0;
                     break;
                 }
             }
             else
             {
-                close(D_800B5488.fileHandle_74);
-                D_800B5488.state_4     = CardState_FileOpen;
-                D_800B5488.stateStep_8 = 0;
+                close(g_CardWork.fileHandle_74);
+                g_CardWork.state_4     = CardState_FileOpen;
+                g_CardWork.stateStep_8 = 0;
             }
             break;
     }
@@ -1069,14 +1068,14 @@ s32 Savegame_CardState_FileOpen() // 0x80031184
 
     result = 1;
 
-    switch (D_800B5488.stateStep_8)
+    switch (g_CardWork.stateStep_8)
     {
         case 0:
-            D_800B5488.retryCount_78 = 0;
-            D_800B5488.field_7C      = 0;
-            D_800B5488.stateStep_8   = 1;
+            g_CardWork.retryCount_78 = 0;
+            g_CardWork.field_7C      = 0;
+            g_CardWork.stateStep_8   = 1;
         case 1:
-            switch (D_800B5488.cardIoMode_38)
+            switch (g_CardWork.cardIoMode_38)
             {
                 case CardIoMode_Read:
                     mode = O_RDONLY;
@@ -1092,22 +1091,22 @@ s32 Savegame_CardState_FileOpen() // 0x80031184
                     break;
             }
 
-            D_800B5488.fileHandle_74 = open(D_800B5488.filePath_44, mode | O_NOWAIT);
+            g_CardWork.fileHandle_74 = open(g_CardWork.filePath_44, mode | O_NOWAIT);
 
-            if (D_800B5488.fileHandle_74 == -1)
+            if (g_CardWork.fileHandle_74 == -1)
             {
-                if (D_800B5488.retryCount_78++ >= 15)
+                if (g_CardWork.retryCount_78++ >= 15)
                 {
                     result                 = 8;
-                    D_800B5488.state_4     = CardState_Idle;
-                    D_800B5488.stateStep_8 = 0;
+                    g_CardWork.state_4     = CardState_Idle;
+                    g_CardWork.stateStep_8 = 0;
                     break;
                 }
             }
             else
             {
-                D_800B5488.state_4     = CardState_FileReadWrite;
-                D_800B5488.stateStep_8 = 0;
+                g_CardWork.state_4     = CardState_FileReadWrite;
+                g_CardWork.stateStep_8 = 0;
             }
             break;
     }
@@ -1121,42 +1120,42 @@ s32 Savegame_CardState_FileReadWrite() // 0x80031260
 
     result = 1;
 
-    switch (D_800B5488.stateStep_8)
+    switch (g_CardWork.stateStep_8)
     {
         case 0:
-            D_800B5488.retryCount_78 = 0;
-            D_800B5488.field_7C      = 0;
-            D_800B5488.stateStep_8   = 1;
+            g_CardWork.retryCount_78 = 0;
+            g_CardWork.field_7C      = 0;
+            g_CardWork.stateStep_8   = 1;
 
         case 1:
-            if (lseek(D_800B5488.fileHandle_74, D_800B5488.seekOffset_64, SEEK_SET) == -1)
+            if (lseek(g_CardWork.fileHandle_74, g_CardWork.seekOffset_64, SEEK_SET) == -1)
             {
-                if (D_800B5488.retryCount_78++ >= 15)
+                if (g_CardWork.retryCount_78++ >= 15)
                 {
                     result                 = 9;
-                    D_800B5488.state_4     = CardState_Idle;
-                    D_800B5488.stateStep_8 = 0;
+                    g_CardWork.state_4     = CardState_Idle;
+                    g_CardWork.stateStep_8 = 0;
                 }
             }
             else
             {
-                D_800B5488.retryCount_78 = 0;
-                D_800B5488.stateStep_8++;
+                g_CardWork.retryCount_78 = 0;
+                g_CardWork.stateStep_8++;
             }
             break;
 
         case 2:
             Savegame_CardSwEventsReset();
 
-            switch (D_800B5488.cardIoMode_38)
+            switch (g_CardWork.cardIoMode_38)
             {
                 case CardIoMode_Read:
-                    ioResult = read(D_800B5488.fileHandle_74, D_800B5488.dataBuffer_68, D_800B5488.dataSize_6C);
+                    ioResult = read(g_CardWork.fileHandle_74, g_CardWork.dataBuffer_68, g_CardWork.dataSize_6C);
                     break;
 
                 case CardIoMode_Write:
                 case CardIoMode_Create:
-                    ioResult = write(D_800B5488.fileHandle_74, D_800B5488.dataBuffer_68, D_800B5488.dataSize_6C);
+                    ioResult = write(g_CardWork.fileHandle_74, g_CardWork.dataBuffer_68, g_CardWork.dataSize_6C);
                     break;
 
                 default:
@@ -1166,17 +1165,17 @@ s32 Savegame_CardState_FileReadWrite() // 0x80031260
 
             if (ioResult == -1)
             {
-                if (D_800B5488.retryCount_78++ >= 15)
+                if (g_CardWork.retryCount_78++ >= 15)
                 {
                     result                 = 10;
-                    D_800B5488.state_4     = CardState_Idle;
-                    D_800B5488.stateStep_8 = 0;
-                    close(D_800B5488.fileHandle_74);
+                    g_CardWork.state_4     = CardState_Idle;
+                    g_CardWork.stateStep_8 = 0;
+                    close(g_CardWork.fileHandle_74);
                 }
             }
             else
             {
-                D_800B5488.stateStep_8++;
+                g_CardWork.stateStep_8++;
             }
             break;
 
@@ -1185,26 +1184,26 @@ s32 Savegame_CardState_FileReadWrite() // 0x80031260
             {
                 case EvSpIOE: // Completed.
                     result                 = 11;
-                    D_800B5488.state_4     = CardState_Idle;
-                    D_800B5488.stateStep_8 = 0;
-                    close(D_800B5488.fileHandle_74);
+                    g_CardWork.state_4     = CardState_Idle;
+                    g_CardWork.stateStep_8 = 0;
+                    close(g_CardWork.fileHandle_74);
                     break;
 
                 case EvSpTIMOUT: // Card not connected.
                     result                 = 0;
-                    D_800B5488.state_4     = CardState_Idle;
-                    D_800B5488.stateStep_8 = 0;
-                    close(D_800B5488.fileHandle_74);
+                    g_CardWork.state_4     = CardState_Idle;
+                    g_CardWork.stateStep_8 = 0;
+                    close(g_CardWork.fileHandle_74);
                     break;
 
                 case EvSpNEW: // New card detected.
                     result                 = 10;
-                    D_800B5488.state_4     = CardState_Idle;
-                    D_800B5488.stateStep_8 = 0;
-                    close(D_800B5488.fileHandle_74);
+                    g_CardWork.state_4     = CardState_Idle;
+                    g_CardWork.stateStep_8 = 0;
+                    close(g_CardWork.fileHandle_74);
 
                 case EvSpERROR: // Error.
-                    D_800B5488.stateStep_8 = 1;
+                    g_CardWork.stateStep_8 = 1;
                     break;
             }
     }
