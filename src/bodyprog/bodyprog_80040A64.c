@@ -41,7 +41,7 @@ s32 func_80040B74(s32 arg0) // 0x80040B74
 
     for (i = 0; i < 4; i++)
     {
-        if (D_800BCE18.field_0[i].field_CC == arg0)
+        if (D_800BCE18.field_0[i].field_CC.field_0 == arg0)
         {
             return 1;
         }

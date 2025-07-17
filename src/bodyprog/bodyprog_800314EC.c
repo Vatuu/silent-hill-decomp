@@ -5170,7 +5170,7 @@ void func_8003BE28() // 0x8003BE28
 
 s32 func_8003BE50(s32 idx) // 0x8003BE50
 {
-    return D_800BCE18.field_0[0].field_18[idx] + 32;
+    return &D_800BCE18.field_0[0].field_18[idx]->field_14.field_C;
 }
 
 void GameFs_BgEtcGfxLoad() // 0x8003BE6C
@@ -5332,7 +5332,7 @@ void func_8003CC7C(s_800BCE18_2BEC_0* arg0, MATRIX* arg1, MATRIX* arg2) // 0x800
 
 s32 func_8003CD5C() // 0x8003CD5C
 {
-    return D_800BCE18.field_1BAC;
+    return D_800BCE18.field_1BAC.field_0;
 }
 
 void func_8003CD6C(s_PlayerCombat* arg0) // 0x8003CD6C
@@ -5354,23 +5354,184 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003CDA0);
 
 void func_8003D01C() // 0x8003D01C
 {
-    D_800BCE18.field_1BC4 &= ~(1 << 31);
+    D_800BCE18.field_1BAC.field_18 &= ~(1 << 31);
 }
 
 void func_8003D03C() // 0x8003D03C
 {
-    D_800BCE18.field_1BC4 |= 1 << 31;
+    D_800BCE18.field_1BAC.field_18 |= 1 << 31;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003D058);
+void func_8003D058() // 0x8003D058
+{
+    MATRIX           mat0;
+    MATRIX           mat1;
+    GsCOORDINATE2*   coord;
+    s_800BCE18_1BAC* ptr;
+    s_800BE9FC*      ptr2;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003D160);
+    ptr = &D_800BCE18.field_1BAC;
+    
+    if (ptr->field_0 != -1) 
+    {
+        if (ptr->field_0 == 164)
+        {
+            coord = &g_SysWork.playerBoneCoords_890[6];
+        } 
+        else 
+        {
+            coord = &g_SysWork.playerBoneCoords_890[10];
+        }
+        
+        if (Fs_QueueIsEntryLoaded(ptr->field_4) != 0) 
+        {
+            ptr2 = ptr->field_14;
+            
+            if (ptr2->field_2 == 0)
+            {
+                func_800560FC(ptr2);
+                func_80056504(ptr2, ptr->field_8, &ptr->field_C, 1);
+                func_80056954(ptr2);
+                func_80056C8C(&ptr->field_18, ptr->field_14, 0);
+            }
+            
+            func_80049B6C(coord, &mat1, &mat0);
+            func_80057090(&ptr->field_18, &g_ObjectTable0[g_ObjectTableIdx], 1, &mat0, &mat1, 0);
+        }
+    }
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003D21C);
+void func_8003D160() // 0x8003D160
+{
+    s_FsImageDesc    img;
+    s32              queueIdx;
+    s_800BCE18*      ptr;
+    s_800BCE18_0_CC* ptr2;
+    void*            addr = (void*)0x800FE600;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003D354);
+    func_8003D3BC(&img, 1, 0);
+    
+    ptr                               = &D_800BCE18;
+    ptr2                              = &ptr->field_164C;
+    D_800BCE18.field_0[0].field_18[1] = ptr2;
+    
+    Fs_QueueStartRead(g_Chara_FileInfo[1].modelFileIdx, addr);
+    queueIdx = Fs_QueueStartReadTim(g_Chara_FileInfo[1].textureFileIdx, FS_BUFFER_1, &img);
+    
+    D_800BCE18.field_164C.field_0 = 1;
+    ptr2->field_1                 = 0;
+    ptr2->field_4                 = queueIdx;
+    ptr2->field_8                 = addr;
+    D_800BCE18.field_164C.field_C = img;
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003D3BC);
+s32 func_8003D21C(s_MapOverlayHeader* arg0) // 0x8003D21C
+{
+    s_FsImageDesc    img;
+    s32              j;
+    s32              var_s3;
+    s32              i;
+    s32              ret;
+    s32              ids;
+    s_800BCE18_0_CC* ptr;
+    
+    for (ret                           = 0,
+        i                              = 0,
+        D_800BCE18.field_0[0].field_14 = Fs_GetFileSize(0x58E) + 0x800FEE00, 
+        var_s3                         = 0;
+        i < 4; i++)
+    {
+        ids = arg0->charaGroupIds_248[i];
+        ptr = &D_800BCE18.field_0[i].field_CC;
+
+        if (ids != 0) 
+        {
+            if (var_s3 == 0) 
+            {
+                if (ids != ptr->field_0) 
+                {
+                    var_s3 = 1;
+                    for (j = i; j < 4; j++)
+                    {
+                        D_800BCE18.field_0[j].field_CC.field_0 = 0;
+                    }
+                }
+            } 
+            
+            if (var_s3 != 0) 
+            {
+                func_8003D3BC(&img, ids, i);
+                ret = func_8003D7D4(ids, i, D_800BCE18.field_0[0].field_14, &img);
+            }
+            func_8003D354(&D_800BCE18.field_0[0].field_14, ids);
+        }
+    }
+    
+    return ret;
+}
+
+void func_8003D354(s32* arg0, s32 arg1) // 0x8003D354
+{
+    s16 idx;
+    s32 fileSize;
+
+    idx      = g_Chara_FileInfo[arg1].modelFileIdx;
+    fileSize = Fs_GetFileSize(idx);
+    Fs_GetFileSectorAlignedSize(idx);
+    *arg0 += (fileSize + 3) & ~3;
+}
+
+void func_8003D3BC(s_FsImageDesc* arg0, s32 arg1, s32 arg2) // 0x8003D3BC
+{
+    s16 clutX;
+    s16 clutY;
+    s8  tPage;
+    s8  v;
+    s8  u;
+
+    v = arg1 < 2;
+    
+    if (arg1 >= 0 && v)
+    {
+        tPage = 0x1B;
+        v     = 0;
+        u     = 0;
+        clutX = 0x2E0;
+        clutY = 0x1E0;
+    }
+    else 
+    {
+        clutY = 0x1D0;
+        clutX = (arg2 * 0x10) + 0x2C0;
+
+        switch (arg2)
+        {
+            default:
+                arg2 = 0;
+            
+            case 0:
+            case 1:
+                tPage = 0x1C;
+                u     = 0;
+                v     = arg2 << 7;
+                break;
+            
+            case 2:
+            case 3:
+                tPage = 0x1D;
+                u     = 0;
+                v     = (arg2 - 2) << 7;
+                break;
+        }
+    }
+    
+    arg0->tPage[0] = 0;
+    arg0->tPage[1] = tPage;
+    arg0->u        = u;
+    arg0->v        = v;
+    arg0->clutX    = clutX;
+    arg0->clutY    = clutY;
+}
 
 s32 func_8003D444(s32 idx) // 0x8003D444
 {
@@ -5397,18 +5558,127 @@ void func_8003D6A4(u8* idx) // 0x8003D6A4
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003D6E0);
+void func_8003D6E0(s32 arg0, s32 arg1, void* arg2, s_FsImageDesc* arg3) // 0x8003D6E0
+{
+    s_FsImageDesc img;
+    void*         var_s0;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003D7D4);
+    if (arg2 != NULL) 
+    {
+        var_s0 = arg2;
+    } 
+    else if (D_800BCE18.field_0[arg1].field_CC.field_0 != 0) 
+    {
+        var_s0 = D_800BCE18.field_0[arg1].field_CC.field_8;
+    } 
+    else 
+    {
+        var_s0 = D_800BCE18.field_0[0].field_14;
+        func_8003D354(&D_800BCE18.field_0[0].field_14, arg0);
+    }
+    
+    if (arg3 != NULL) 
+    {
+        img = *arg3;
+    } 
+    else 
+    {
+        func_8003D3BC(&img, arg0, arg1);
+    }
+    
+    func_8003D7D4(arg0, arg1, var_s0, &img);
+}
+
+s32 func_8003D7D4(u32 arg0, s32 arg1, void* arg2, s_FsImageDesc* arg3) // 0x8003D7D4
+{
+    s32              queueIdx;
+    s32              idx;
+    s_800BCE18_0_CC* ptr;
+    s_FsImageDesc*   img;
+
+    ptr = &D_800BCE18.field_0[arg1].field_CC;
+    idx = ptr->field_0;
+    img = &ptr->field_C;
+    
+    if (arg0 == 0) 
+    {
+        D_800BCE18.field_0[0].field_18[idx] = NULL;
+        return 0;
+    }
+    
+    if (idx != 0) 
+    {
+        if (arg0 == idx) 
+        {
+            if (arg2 == ptr->field_8 && memcmp(arg3, img, sizeof(s_FsImageDesc)) == 0)
+            {
+                return 0;
+            }
+        }
+        D_800BCE18.field_0[0].field_18[idx] = NULL;
+    }
+
+    D_800BCE18.field_0[0].field_18[arg0] = ptr;
+    
+    queueIdx = Fs_QueueStartRead(g_Chara_FileInfo[arg0].modelFileIdx, arg2);
+    
+    if (g_Chara_FileInfo[arg0].textureFileIdx != -1) 
+    {
+        queueIdx = Fs_QueueStartReadTim(g_Chara_FileInfo[arg0].textureFileIdx, FS_BUFFER_1, arg3);
+    }
+    
+    ptr->field_0 = arg0;
+    ptr->field_1 = 0;
+    ptr->field_4 = queueIdx;
+    ptr->field_8 = arg2;
+    ptr->field_C = *arg3;
+    
+    return queueIdx;
+}
 
 void func_8003D938() // 0x8003D938
 {
     func_8003D9C8(&D_800BCE18.field_164C);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003D95C);
+void func_8003D95C() // 0x8003D95C
+{
+    s32 temp_a0;
+    s32 i;
+    
+    for (i = 0; i < 45; i++)
+    {
+        if (i != 1) 
+        {
+            temp_a0 = D_800BCE18.field_0[0].field_18[i];
+            if (temp_a0 != 0) 
+            {
+                func_8003D9C8(temp_a0);
+            }
+        }
+    }
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003D9C8);
+void func_8003D9C8(s_800BCE18_0_CC* arg0) // 0x8003D9C8
+{
+    s_Skeleton* ptr;
+
+    if (arg0->field_1 == 0 && arg0->field_0 != 0 && Fs_QueueIsEntryLoaded(arg0->field_4) != 0)
+    {
+        arg0->field_1 = 1;
+
+        func_800560FC(arg0->field_8);
+        func_80056464(arg0->field_8, g_Chara_FileInfo[arg0->field_0].textureFileIdx, &arg0->field_C, g_Chara_FileInfo[arg0->field_0].field_6_10 & 3);
+
+        ptr = &arg0->field_14;
+
+        func_80056954(arg0->field_8);
+        func_80044FE0(ptr, &arg0->field_14.field_C, 56); // TODO: can't fit s_Bone at field_C, check s_Skeleton size
+        func_8004506C(ptr, arg0->field_8);
+        func_800452EC(ptr);
+        func_800453E8(ptr, 1);
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003DA9C);
 
@@ -5428,42 +5698,42 @@ void func_8003DD80(s32 idx, s32 arg1) // 0x8003DD80
     switch (idx)
     {
         case 1:
-            func_8003DE60(temp_a2 + 20, arg1);
+            func_8003DE60(&temp_a2->field_14, arg1);
             break;
 
         case 7:
-            func_8003E388(temp_a2 + 20, arg1);
+            func_8003E388(&temp_a2->field_14, arg1);
             break;
 
         case 26:
         case 27:
-            func_8003DF84(temp_a2 + 20, arg1);
+            func_8003DF84(&temp_a2->field_14, arg1);
             break;
 
         case 24:
-            func_8003E08C(temp_a2 + 20, arg1);
+            func_8003E08C(&temp_a2->field_14, arg1);
             break;
 
         case 30:
         case 31:
-            func_8003E194(temp_a2 + 20, arg1);
+            func_8003E194(&temp_a2->field_14, arg1);
             break;
 
         case 38:
         case 39:
-            func_8003E238(temp_a2 + 20, arg1);
+            func_8003E238(&temp_a2->field_14, arg1);
             break;
 
         case 14:
-            func_8003E414(temp_a2 + 20, arg1);
+            func_8003E414(&temp_a2->field_14, arg1);
             break;
 
         case 16:
-            func_8003E4A0(temp_a2 + 20, arg1);
+            func_8003E4A0(&temp_a2->field_14, arg1);
             break;
 
         case 18:
-            func_8003E544(temp_a2 + 20, arg1);
+            func_8003E544(&temp_a2->field_14, arg1);
             break;
 
         default:
