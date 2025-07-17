@@ -831,7 +831,7 @@ void func_800453E8(s_Skeleton* skel, s32 cond) // 0x800453E8
 void func_80045468(s_Skeleton* skel, s32* arg1, s32 cond) // 0x80045468
 {
     s_Bone* bone;
-    s32 status;
+    s32     status;
 
     bone = skel->bones_8;
 
@@ -842,7 +842,7 @@ void func_80045468(s_Skeleton* skel, s32* arg1, s32 cond) // 0x80045468
         return;
     }
 
-    // Traverse bone hierarchy and set flags according to cond.
+    // Traverse bone hierarchy and set flags according to some condition.
     do
     {
         if (cond != 0)

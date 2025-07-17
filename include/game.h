@@ -929,7 +929,7 @@ typedef union
 typedef struct
 {
     u_Unk0  field_0;
-    s16     field_4;
+    s16     field_4; // FP alpha.
     s16     field_6;
     s16     field_8;
     s16     field_A;
@@ -950,8 +950,8 @@ STATIC_ASSERT_SIZEOF(s_sub_StructUnk3, 44);
 typedef struct
 {
     s_sub_StructUnk3 field_0;
-    s16              field_2C;
-    s16              field_2E;
+    s16              field_2C; // FP alpha.
+    s16              field_2E; // FP alpha.
     s32              field_30;
 } s_StructUnk3;
 STATIC_ASSERT_SIZEOF(s_StructUnk3, 52);
@@ -1004,10 +1004,10 @@ typedef struct _SysWork
 {
     s8              unk_0[8];
     s32             sysState_8;     /** e_SysState */
-    s32             sysStateStep_C; // Current step/state of sysState_8 game is in.
-    s32             field_10;       // Sometimes assigned to same thing as sysStateStep_C.
+    s32             sysStateStep_C; // Current step/state of `sysState_8` game is in.
+    s32             field_10;       // Sometimes assigned to same thing as `sysStateStep_C`.
     s32             field_14;
-    s32             field_18;
+    s32             field_18; // `s_Skeleton` array pointer?
     s32             timer_1C;
     s32             timer_20;
     s32             timer_24;
@@ -1019,7 +1019,7 @@ typedef struct _SysWork
     s_MainCharacter player_4C;
     s_SubCharacter  npcs_1A0[NPC_COUNT_MAX];
     GsCOORDINATE2   playerBoneCoords_890[PlayerBone_Count];
-    GsCOORDINATE2   unkCoords_E30[5];  // Might be part of previous array for 5 exra coords which go unused.
+    GsCOORDINATE2   unkCoords_E30[5];  // Might be part of previous array for 5 extra coords which go unused.
     GsCOORDINATE2   npcCoords_FC0[60]; // Dynamic coord buffer? 10 coords per NPC (given max of 6 NPCs).
     s8              field_2280;        // Maybe NPC AI data past this point.
     s8              field_2281;        // Set by `Chara_PositionUpdateFromParams`.
@@ -1035,11 +1035,11 @@ typedef struct _SysWork
     s32             field_22A0;
     s32             flags_22A4;
     s8              unk_22A8[160];
-    s8              field_2348                    : 8;
-    s8              field_2349                    : 8;
-    u8              field_234A                    : 8;
-    u8              field_234B_0                  : 4;
-    u8              field_234B_4                  : 4;
+    s8              field_2348   : 8;
+    s8              field_2349   : 8;
+    u8              field_234A   : 8;
+    u8              field_234B_0 : 4;
+    u8              field_234B_4 : 4;
     s32             field_234C;                   
     u8              field_2350_0                  : 4;
     u8              field_2350_4                  : 4;

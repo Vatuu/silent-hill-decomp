@@ -1807,7 +1807,7 @@ void func_8003D5B4(s8 arg0);
 void func_8003D6E0(s32 arg0, s32 arg1, s32 arg2, void* arg3);
 
 /** Param types assumed. */
-void func_8003DD80(s32, s32); // Called by some chara init funcs.
+void func_8003DD80(s32 idx, s32 arg1); // Called by some chara init funcs.
 
 void func_8003E740();
 
@@ -1823,7 +1823,7 @@ u32 func_8003F654(s_func_8003F654* arg0);
 
 s32 func_8003F6F0(s32 arg0, s32 arg1, s32 arg2);
 
-void func_8003F838(s_StructUnk3* arg0, s_StructUnk3* arg1, s_StructUnk3* arg2, s32 arg3);
+void func_8003F838(s_StructUnk3* arg0, s_StructUnk3* arg1, s_StructUnk3* arg2, s32 weight);
 
 /** Computes the weighted average of `a` and `b`. */
 s32 Math_GetWeightedAverage(s32 a, s32 b, s32 weight);
@@ -2629,23 +2629,23 @@ void func_8003DA9C(s32 arg0, GsCOORDINATE2* coord, s32 arg2, s16 arg3, s32 arg4)
 
 void func_8003DD80(s32 arg0, s32 arg1);
 
-void func_8003DE60(s_Skeleton* arg0, s32 arg1);
+void func_8003DE60(s_Skeleton* skel, s32 arg1);
 
-void func_8003DF84(s_Skeleton* arg0, s32 arg1);
+void func_8003DF84(s_Skeleton* skel, s32 arg1);
 
-void func_8003E08C(s_Skeleton* arg0, s32 arg1);
+void func_8003E08C(s_Skeleton* skel, s32 arg1);
 
-void func_8003E194(s_Skeleton* arg0, s32 arg1);
+void func_8003E194(s_Skeleton* skel, s32 arg1);
 
-void func_8003E238(s_Skeleton* arg0, s32 arg1);
+void func_8003E238(s_Skeleton* skel, s32 arg1);
 
-void func_8003E388(s_Skeleton* arg0, s32 arg1);
+void func_8003E388(s_Skeleton* skel, s32 arg1);
 
-void func_8003E414(s_Skeleton* arg0, s32 arg1);
+void func_8003E414(s_Skeleton* skel, s32 arg1);
 
-void func_8003E4A0(s_Skeleton* arg0, s32 arg1);
+void func_8003E4A0(s_Skeleton* skel, s32 arg1);
 
-void func_8003E544(s_Skeleton* arg0, s32 arg1);
+void func_8003E544(s_Skeleton* skel, s32 arg1);
 
 /** Loads a flame graphic. */
 void GameFs_FlameGfxLoad();
@@ -2663,6 +2663,10 @@ void func_8003ED08();
 u8 func_8003ED64();
 
 void func_8003EDA8();
+
+void func_8003EDB8(s32* arg0, s32* arg1);
+
+void func_8003EE30(s32 arg0, s8* arg1, s32 arg2, s32 arg3);
 
 void func_8003F170();
 
