@@ -388,7 +388,7 @@ typedef struct
     s32 field_8;
 } s_sub_800BCE18_0;
 
-// looks similar to s_Skeleton
+// Looks similar to s_Skeleton
 typedef struct
 {
     u8            field_0;
@@ -989,6 +989,8 @@ extern s32 D_80025528; // Type assumed.
 
 extern s32 D_80025530; // Type assumed.
 
+extern u8 D_8002551C[]; // `Gfx_MainMenu_DifficultyTextDraw` string X offsets. TODO: Local .rodata.
+
 extern u8 D_80025D6C[];
 
 extern u32 D_80025DC0[];
@@ -1143,6 +1145,10 @@ extern s32 g_MainMenu_NewGameSelectedDifficultyIdx;
 extern s32 D_800A9A88;
 
 extern RECT D_800A9A6C; // `RECT<320, 256, 160, 240>`, only used in `SysState_Fmv_Update`?
+
+extern char* D_800A9AA0[]; // `Gfx_MainMenu_DifficultyTextDraw` strings. TODO: Local .rodata.
+
+extern u32 D_800A9AAC[];
 
 extern s_FsImageDesc D_800A9EB4;
 

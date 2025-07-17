@@ -5094,7 +5094,34 @@ void Gfx_MainMenu_MainTextDraw() // 0x8003B568
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", Gfx_MainMenu_DifficultyTextDraw); // 0x8003B678
+void Gfx_MainMenu_DifficultyTextDraw(s32 arg0) // 0x8003B678
+{
+    s32 i;
+
+    for (i = 0; i < 3; i++)
+    {
+        Gfx_StringSetPosition(158 - D_8002551C[i], 204 + (20 * i));
+        Gfx_StringSetColor(ColorId_White);
+
+        if (i == arg0)
+        {
+            Gfx_StringDraw(&D_800254F4, 99);
+        }
+        else
+        {
+            Gfx_StringDraw(&D_800254F8, 99);
+        }
+
+        Gfx_StringDraw(D_800A9AA0[i], 99);
+
+        if (i == arg0)
+        {
+            Gfx_StringDraw(&D_800254FC, 99);
+        }
+
+        Gfx_StringDraw(&D_80025500, 99);
+    }
+}
 
 void Gfx_MainMenu_BgDraw() // 0x8003B758
 {
@@ -5122,9 +5149,65 @@ void func_8003B7BC()
     D_800BCDE0 = s0;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003B7FC); // 0x8003B7FC
+u32 func_8003B7FC(s32 arg0) // 0x8003B7FC
+{
+    u8  index = D_800BCDE0[arg0];
+    u32 value = D_800A9AAC[index];
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003B838); // 0x8003B838
+    if (arg0 < 0xD2)
+    {
+        return 0x3A000000;
+    }
+
+    return value;
+}
+
+PACKET* func_8003B838(GsOT* ot, PACKET* packet) // 0x8003B838
+{
+    s32      yOffset;
+    s32      i;
+    s32      j;
+    s32      color0;
+    s32      color2;
+    s32      color3;
+    s32      color1;
+    POLY_G4* poly;
+
+    for (i = 10; i < 21; i++)
+    {
+        color1 = func_8003B7FC(21 * (i - 1));
+        color3 = func_8003B7FC(21 * i);
+
+        for (j = 1; j < 21; j++)
+        {
+            color2 = color3;
+            color0 = color1;
+
+            color1 = func_8003B7FC(j + (21 * (i - 1)));
+            color3 = func_8003B7FC(j + (21 * i));
+
+            poly = packet;
+            setPolyG4(poly);
+
+            yOffset = (i - 1) * 24;
+
+            setXY4(poly,
+                   (-176 + 16 * j), yOffset - 208,
+                   (-160 + 16 * j), yOffset - 208,
+                   (-176 + 16 * j), yOffset - 184,
+                   (-160 + 16 * j), yOffset - 184);
+
+            *((u32*)&poly->r0) = color0;
+            *((u32*)&poly->r1) = color1;
+            *((u32*)&poly->r2) = color2;
+            *((u32*)&poly->r3) = color3;
+
+            addPrim(ot, poly);
+            packet += sizeof(POLY_G4);
+        }
+    }
+    return packet;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003BA08); // 0x8003BA08
 
