@@ -6467,7 +6467,7 @@ void func_8003F838(s_StructUnk3* arg0, s_StructUnk3* arg1, s_StructUnk3* arg2, s
     {
         if (weight < FP_ALPHA(5.0f / 6.0f))
         {
-            weight2                                 = FP_MULTIPLY(weight, FP_FLOAT_TO(1.2f, Q12_SHIFT), Q12_SHIFT);
+            weight2                                 = FP_MULTIPLY(weight, FP_ALPHA(1.2f), Q12_SHIFT);
             weight2                                 = CLAMP(weight2, FP_ALPHA(0.0f), FP_ALPHA(1.0f));
             arg0->field_0.field_0.s_field_0.field_2 = arg1->field_0.field_0.s_field_0.field_2;
             arg0->field_0.field_4                   = Math_GetWeightedAverage(arg1->field_0.field_4, 0, weight2);
@@ -6492,7 +6492,7 @@ void func_8003F838(s_StructUnk3* arg0, s_StructUnk3* arg1, s_StructUnk3* arg2, s
         }
         else
         {
-            weight2                                 = FP_MULTIPLY(weight - FP_ALPHA(1.0f / 6.0f), FP_FLOAT_TO(1.2f, Q12_SHIFT), Q12_SHIFT);
+            weight2                                 = FP_MULTIPLY(weight - FP_ALPHA(1.0f / 6.0f), FP_ALPHA(1.2f), Q12_SHIFT);
             weight2                                 = CLAMP(weight2, FP_ALPHA(0.0f), FP_ALPHA(1.0f));
             arg0->field_0.field_0.s_field_0.field_2 = arg2->field_0.field_0.s_field_0.field_2;
             arg0->field_0.field_4                   = Math_GetWeightedAverage(FP_ALPHA(0.0f), arg2->field_0.field_4, weight2);
