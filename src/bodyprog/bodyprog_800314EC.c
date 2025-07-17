@@ -5211,12 +5211,12 @@ PACKET* func_8003B838(GsOT* ot, PACKET* packet) // 0x8003B838
 
 void func_8003BA08() // 0x8003BA08
 {
-    PACKET* packet;
+    PACKET*   packet;
     GsOT_TAG* tag;
 
-    tag = g_ObjectTable1[g_ObjectTableIdx].org;
+    tag    = g_ObjectTable1[g_ObjectTableIdx].org;
     packet = func_8003B838(&tag[6], GsOUT_PACKET_P);
-    SetDrawMode((DR_MODE *)packet, 0, 1, 0x2A, NULL);
+    SetDrawMode((DR_MODE*)packet, 0, 1, 0x2A, NULL);
     addPrim(&tag[6], packet);
     GsOUT_PACKET_P = packet + sizeof(DR_MODE);
 }
