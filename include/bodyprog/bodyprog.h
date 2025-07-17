@@ -351,27 +351,69 @@ typedef struct
 } s_800BCDA8;
 STATIC_ASSERT_SIZEOF(s_800BCDA8, 4);
 
+// Maybe a collection of matrices.
+typedef struct
+{
+    s32 flags_0;
+    s8  unk_4[12];
+    s8  field_10;
+    s8  unk_11[7];
+} s_Bone;
+STATIC_ASSERT_SIZEOF(s_Bone, 24);
+
+// PROBABLY skeleton data.
+typedef struct
+{
+    u8      boneCount_0;
+    u8      boneIdx_1; // Current bone index? Used in traversal.
+    s8      field_2;
+    s8      field_3;
+    s32     field_4;
+    s_Bone* bones_8;
+
+    // Maybe incorrect.
+    s8 field_C[3]; // Maybe struct similar to s_Bone but smaller.
+    u8 field_10;   // Some count related to bone hierarchy.
+    s8 unk_11;
+    s8 field_12;
+    s8 field_13;
+    s8 field_14;
+    s8 unk_15[8];
+} s_Skeleton;
+STATIC_ASSERT_SIZEOF(s_Skeleton, 28);
+
 typedef struct
 {
     s32 unk_0[2];
     s32 field_8;
 } s_sub_800BCE18_0;
 
+// Looks similar to s_Skeleton
+typedef struct
+{
+    u8            field_0;
+    u8            field_1;
+    u8            unk_2[2];
+    s32           field_4;
+    void*         field_8;
+    s_FsImageDesc field_C;
+    s_Skeleton    field_14; // Could be different struct?
+} s_800BCE18_0_CC; // Unknown size
+
 typedef struct
 {
     s_sub_800BCE18_0* field_0;
-    s8   field_4;
-    u8   unk_5[3];
-    s32  field_8;
-    s32  field_C;
-    s32  field_10;
-    s8   unk_14[4];
-    s32  field_18[Chara_Count]; // Per-character data? So far only seen accessed by `map4_s03::800D59EC` which calls `func_8003BE50(Chara_Twinfeeler)`.
-    u8   field_CC;
-    u8   unk_CD[3];
-    u8   unk_D0[412];
-    s32  field_26C;
-    u8   unk_270[752];
+    s8                field_4;
+    u8                unk_5[3];
+    s32               field_8;
+    s32               field_C;
+    s32               field_10;
+    s32               field_14;
+    s_800BCE18_0_CC*  field_18[Chara_Count]; // Per-character data? So far only seen accessed by `map4_s03::800D59EC` which calls `func_8003BE50(Chara_Twinfeeler)`.
+    s_800BCE18_0_CC   field_CC;
+    u8                unk_D0[368];
+    s32               field_26C;
+    u8                unk_270[752];
 } s_800BCE18_0;
 STATIC_ASSERT_SIZEOF(s_800BCE18_0, 1376);
 
@@ -406,13 +448,22 @@ STATIC_ASSERT_SIZEOF(s_800BCE18_2BEC, 16);
 
 typedef struct
 {
+    s32         field_0;
+    s32         field_4;
+    s32         field_8;
+    s32*        field_C;
+    s32         unk10;
+    s_800BE9FC* field_14;
+    s32         field_18;
+} s_800BCE18_1BAC;
+
+typedef struct
+{
     s_800BCE18_0      field_0[4];
     u8                unk_1580[204];
-    s32               field_164C;
-    u8                unk_1650[1372];
-    s32               field_1BAC;
-    u8                unk_1BB0[20];
-    s32               field_1BC4;
+    s_800BCE18_0_CC   field_164C;
+    u8                unk_1650[1328];
+    s_800BCE18_1BAC   field_1BAC;
     u8                unk_1BC8[16];
     s32               field_1BD8;
     VC_CAMERA_INTINFO vcCameraInternalInfo_1BDC; // Debug camera info.
@@ -619,8 +670,9 @@ typedef struct
 {
     s16   animFileIdx;
     s16   modelFileIdx;
-    s16   textureFileIdx;
-    s16   field_6;
+    s16   textureFileIdx : 16;
+    s16   field_6 : 10;
+    u16   field_6_10 : 6;
     void* field_8;
     u16   field_C_0 : 2;
     s32   field_C_2 : 14;
@@ -636,37 +688,6 @@ typedef struct
     s16 field_C;
     s8  unk_10[2];
 } s_MaybeCharacterAnim;
-
-// Maybe a collection of matrices.
-typedef struct
-{
-    s32 flags_0;
-    s8  unk_4[12];
-    s8  field_10;
-    s8  unk_11[7];
-} s_Bone;
-STATIC_ASSERT_SIZEOF(s_Bone, 24);
-
-// PROBABLY skeleton data.
-typedef struct
-{
-    u8      boneCount_0;
-    u8      boneIdx_1; // Current bone index? Used in traversal.
-    s8      field_2;
-    s8      field_3;
-    s32     field_4;
-    s_Bone* bones_8;
-
-    // Maybe incorrect.
-    s8      unk_C[3];
-    u8      field_10; // Some count related to bone hierarchy.
-    s8      unk_11;
-    s8      field_12;
-    s8      field_13;
-    s8      field_14;
-    s8      unk_15[8];
-} s_Skeleton;
-STATIC_ASSERT_SIZEOF(s_Skeleton, 28);
 
 typedef struct
 {
@@ -916,7 +937,7 @@ typedef struct _MapOverlayHeader
     void              (*func_16C)(VECTOR3*, s16);
     s8                unk_170[36];
     void              (*charaUpdateFuncs_194[Chara_Count])(s_SubCharacter*, void*, s32); /** Guessed params. Funcptrs for each `e_ShCharacterId`, set to 0 for IDs not included in the map overlay. Called by `func_80038354`. */
-    u8                charaGroupIds_248[4];                                              /** `e_ShCharacterId` values where if `s_SpawnInfo.charaId_4` == 0, `charaGroupIds_248[0]` is used for `charaSpawnsA_24C` and `charaGroupIds_248[1]` for `charaSpawnsB_30C`. */
+    s8                charaGroupIds_248[4];                                              /** `e_ShCharacterId` values where if `s_SpawnInfo.charaId_4` == 0, `charaGroupIds_248[0]` is used for `charaSpawnsA_24C` and `charaGroupIds_248[1]` for `charaSpawnsB_30C`. */
     s_SpawnInfo       charaSpawnsA_24C[16];                                              /** Array of chara type/position/flags, flags_6 == 0 are unused slots? Read by `func_80037F24`. */
     s_SpawnInfo       charaSpawnsB_30C[16];                                              /** Array of chara type/position/flags, flags_6 == 0 are unused slots? Read by `func_80037F24`. */
     VC_ROAD_DATA      roadDataList_3CC[48];
@@ -967,6 +988,8 @@ extern s8 D_80025500; // `Gfx_MainMenu_MainTextDraw` string. TODO: Local .rodata
 extern s32 D_80025528; // Type assumed.
 
 extern s32 D_80025530; // Type assumed.
+
+extern u8 D_8002551C[]; // `Gfx_MainMenu_DifficultyTextDraw` string X offsets. TODO: Local .rodata.
 
 extern u8 D_80025D6C[];
 
@@ -1122,6 +1145,10 @@ extern s32 g_MainMenu_NewGameSelectedDifficultyIdx;
 extern s32 D_800A9A88;
 
 extern RECT D_800A9A6C; // `RECT<320, 256, 160, 240>`, only used in `SysState_Fmv_Update`?
+
+extern char* D_800A9AA0[]; // `Gfx_MainMenu_DifficultyTextDraw` strings. TODO: Local .rodata.
+
+extern u32 D_800A9AAC[];
 
 extern s_FsImageDesc D_800A9EB4;
 
@@ -1804,7 +1831,7 @@ void func_8003D160();
 
 void func_8003D5B4(s8 arg0);
 
-void func_8003D6E0(s32 arg0, s32 arg1, s32 arg2, void* arg3);
+void func_8003D6E0(s32 arg0, s32 arg1, void* arg2, s_FsImageDesc* arg3);
 
 /** Param types assumed. */
 void func_8003DD80(s32 idx, s32 arg1); // Called by some chara init funcs.
