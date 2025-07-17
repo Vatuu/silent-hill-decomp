@@ -5209,7 +5209,17 @@ PACKET* func_8003B838(GsOT* ot, PACKET* packet) // 0x8003B838
     return packet;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003BA08); // 0x8003BA08
+void func_8003BA08() // 0x8003BA08
+{
+    PACKET* packet;
+    GsOT_TAG* tag;
+
+    tag = g_ObjectTable1[g_ObjectTableIdx].org;
+    packet = func_8003B838(&tag[6], GsOUT_PACKET_P);
+    SetDrawMode((DR_MODE *)packet, 0, 1, 0x2A, NULL);
+    addPrim(&tag[6], packet);
+    GsOUT_PACKET_P = packet + sizeof(DR_MODE);
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003BAC4); // 0x8003BAC4
 
@@ -5774,7 +5784,7 @@ s32 func_8003DD74(s32 arg0, s32 arg1) // 0x8003DD74
 #ifdef NON_MATCHING
 void func_8003DD80(s32 idx, s32 arg1) // 0x8003DD80
 {
-    s32 temp_a2;
+    s_800BCE18_0_CC* temp_a2;
 
     temp_a2 = D_800BCE18.field_0[0].field_18[idx];
 
