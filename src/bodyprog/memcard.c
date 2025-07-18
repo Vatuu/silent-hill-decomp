@@ -129,8 +129,7 @@ void func_8002E85C() // 0x8002E85C
 
 void func_8002E86C() // 0x8002E86C
 {
-    D_800B5508.field_110           = 0;
-    D_800B5508.field_E0[1].field_0 = 0;
+    D_800B5508.field_110 = 0;
 
     s_800B55E8_Init(&D_800B5508.field_E0[1], 0, 0, 0, 0, 0, 0);
 }
@@ -156,8 +155,7 @@ void func_8002E8D4() // 0x8002E8D4
 
 void func_8002E8E4() // 0x8002E8E4
 {
-    D_800B5508.field_110           = 0;
-    D_800B5508.field_E0[1].field_0 = 0;
+    D_800B5508.field_110 = 0;
 
     s_800B55E8_Init(&D_800B5508.field_E0[1], 0, 0, 0, 0, 0, 1);
 }
@@ -179,7 +177,6 @@ s32 func_8002E914() // 0x8002E914
 s32 func_8002E94C(s32 arg0, s32 arg1, s32 fileIdx, s32 saveIdx) // 0x8002E94C
 {
     // s_800B5508_sub* ptr; // TODO: Use this instead.
-    s32* ptr;
 
     if (D_800B5508.field_E0[0].field_0 != 0)
     {
