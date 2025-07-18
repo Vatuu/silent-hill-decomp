@@ -1270,8 +1270,6 @@ extern s_800AFE08 D_800AFE08;
 
 extern s_800AFE24 D_800AFE24;
 
-extern s32 D_800B5618;
-
 extern DVECTOR g_Gfx_DebugStringPosition0;
 
 extern DVECTOR g_Gfx_DebugStringPosition1;

@@ -19,13 +19,13 @@ void func_8002E630() // 0x8002E630
     D_800B5480 = 0;
 
     // Clear arrays.
-    bzero(D_800B5508, 1816);
+    bzero(&D_800B5508, 1816);
     bzero(D_800B2780, 768);
 
     for (i = 0; i < 8; i++) 
     {
-        D_800B5508[i].field_0 = 0;
-        
+        D_800B5508.field_0[i].field_0 = 0;
+
         func_8002E730(i);
 
         switch (i) 
@@ -43,7 +43,7 @@ void func_8002E630() // 0x8002E630
                 break;
         }
 
-        D_800B5508[i].field_14 = ptr;
+        D_800B5508.field_0[i].field_14 = ptr;
 
         func_8002E6E4(i);
     } 
@@ -51,10 +51,10 @@ void func_8002E630() // 0x8002E630
 
 void func_8002E6E4(s32 idx) // 0x8002E6E4
 {
-    D_800B5508[idx].field_0 = 0;
+    D_800B5508.field_0[idx].field_0 = 0;
     func_8002E730(idx);
-    bzero(D_800B5508[idx].field_14, 0xF00);
-    D_800B5508[idx].field_18 = 0;
+    bzero(D_800B5508.field_0[idx].field_14, 0xF00);
+    D_800B5508.field_0[idx].field_18 = 0;
 }
 
 void func_8002E730(s32 idx) // 0x8002E730
@@ -63,7 +63,7 @@ void func_8002E730(s32 idx) // 0x8002E730
 
     for (i = 0; i < 15; i++) 
     {
-        D_800B5508[idx].field_4[i] = 0;
+        D_800B5508.field_0[idx].field_4[i] = 0;
     }
 }
 
@@ -75,8 +75,8 @@ s32 func_8002E76C(s32 idx) // 0x8002E76C
     ret = 1;
 
     for (i = 0; i < 15; i++)
-    {    
-        if (D_800B5508[idx].field_4[i] != 0) 
+    {
+        if (D_800B5508.field_0[idx].field_4[i] != 0)
         {
             ret = 0; 
             break;
@@ -84,6 +84,16 @@ s32 func_8002E76C(s32 idx) // 0x8002E76C
     }
 
     return ret;
+}
+
+static inline void s_800B55E8_Init(s_800B55E8* p, s32 field_0, s32 field_4, s32 field_8, s32 field_C, s32 field_10, s32 field_14)
+{
+    p->field_0  = field_0;
+    p->field_4  = field_4;
+    p->field_8  = field_8;
+    p->field_C  = field_C;
+    p->field_10 = field_10;
+    p->field_14 = field_14;
 }
 
 void func_8002E7BC() // 0x8002E7BC
@@ -99,20 +109,8 @@ void func_8002E7BC() // 0x8002E7BC
     func_8002E8E4();
     Savegame_CardEventsInit();
 
-    D_800B55E8[0].field_0  = 0;
-    D_800B55E8[0].field_4  = 0;
-    D_800B55E8[0].field_8  = 0;
-    D_800B55E8[0].field_C  = 0;
-    D_800B55E8[0].field_10 = 0;
-    D_800B55E8[0].field_14 = 0;
-    D_800B55E8[1].field_0  = 0;
-
-    ptr = &D_800B55E8[1];
-    ptr->field_4  = 0;
-    ptr->field_8  = 0;
-    ptr->field_C  = 0;
-    ptr->field_10 = 0;
-    ptr->field_14 = 0;
+    s_800B55E8_Init(&D_800B5508.field_E0[0], 0, 0, 0, 0, 0, 0);
+    s_800B55E8_Init(&D_800B5508.field_E0[1], 0, 0, 0, 0, 0, 0);
 }
 
 void func_8002E830() // 0x8002E830
@@ -126,22 +124,15 @@ void func_8002E830() // 0x8002E830
 
 void func_8002E85C() // 0x8002E85C
 {
-    D_800B5618 = 1;
+    D_800B5508.field_110 = 1;
 }
 
 void func_8002E86C() // 0x8002E86C
 {
-    s32* ptr;
+    D_800B5508.field_110           = 0;
+    D_800B5508.field_E0[1].field_0 = 0;
 
-    D_800B5508[9].field_14 = 0;
-    D_800B5508[8].field_18 = 0;
-
-    ptr    = &D_800B5508[8].field_18;
-    ptr[1] = 0;
-    ptr[2] = 0;
-    ptr[3] = 0;
-    ptr[4] = 0;
-    ptr[5] = 0;
+    s_800B55E8_Init(&D_800B5508.field_E0[1], 0, 0, 0, 0, 0, 0);
 }
 
 s32 func_8002E898() // 0x8002E898
@@ -152,7 +143,7 @@ s32 func_8002E898() // 0x8002E898
     ret = 0;
     for (i = 0; i < 8; i++)
     {
-        ret |= D_800B5508[i].field_0 << (i * 3);
+        ret |= D_800B5508.field_0[i].field_0 << (i * 3);
     }
 
     return ret;
@@ -160,23 +151,15 @@ s32 func_8002E898() // 0x8002E898
 
 void func_8002E8D4() // 0x8002E8D4
 {
-    D_800B5618 = 1;
+    D_800B5508.field_110 = 1;
 }
 
 void func_8002E8E4() // 0x8002E8E4
 {
-    s_800B55E8* ptr;
+    D_800B5508.field_110           = 0;
+    D_800B5508.field_E0[1].field_0 = 0;
 
-    D_800B5508[9].field_14 = NULL;
-    D_800B5508[8].field_18 = 0;
-
-    ptr = &D_800B5508[8].field_18;
-
-    ptr->field_4  = 0;
-    ptr->field_8  = 0;
-    ptr->field_C  = 0;
-    ptr->field_10 = 0;
-    ptr->field_14 = 1;
+    s_800B55E8_Init(&D_800B5508.field_E0[1], 0, 0, 0, 0, 0, 1);
 }
 
 s32 func_8002E914() // 0x8002E914
@@ -187,7 +170,7 @@ s32 func_8002E914() // 0x8002E914
     ret = 0;
     for (i = 0; i < 8; i++)
     {
-        ret |= D_800B5508[i].field_0 << (i * 2);
+        ret |= D_800B5508.field_0[i].field_0 << (i * 2);
     }
 
     return ret;
@@ -198,13 +181,12 @@ s32 func_8002E94C(s32 arg0, s32 arg1, s32 fileIdx, s32 saveIdx) // 0x8002E94C
     // s_800B5508_sub* ptr; // TODO: Use this instead.
     s32* ptr;
 
-    if (D_800B5508[8].field_0 != 0)
+    if (D_800B5508.field_E0[0].field_0 != 0)
     {
         return 0;
     }
 
-    D_800B5508[8].field_0 = arg0;
-    ptr                   = &D_800B5508[8].field_0;
+    s_800B55E8_Init(&D_800B5508.field_E0[0], arg0, arg1, fileIdx, saveIdx, 0, 1);
 
     // TODO: Use this instead.
     /*ptr->field_4   = arg1;
@@ -212,12 +194,6 @@ s32 func_8002E94C(s32 arg0, s32 arg1, s32 fileIdx, s32 saveIdx) // 0x8002E94C
     ptr->saveIdx_C = saveIdx;
     ptr->field_10  = 0;
     ptr->field_14  = 1;*/
-
-    ptr[1] = arg1;
-    ptr[2] = fileIdx;
-    ptr[3] = saveIdx;
-    ptr[4] = 0;
-    ptr[5] = 1;
     return 1;
 }
 
@@ -226,7 +202,7 @@ s32 func_8002E94C(s32 arg0, s32 arg1, s32 fileIdx, s32 saveIdx) // 0x8002E94C
  */
 s32 func_8002E990() // 0x8002E990
 {
-    return D_800B55FC;
+    return D_800B5508.field_E0[0].field_14;
 }
 
 s32 func_8002E9A0(s32 idx) // 0x8002E9A0
@@ -238,7 +214,7 @@ s32 func_8002E9A0(s32 idx) // 0x8002E9A0
 
     for (i = 0; i < 15; i++)
     {
-        ret |= D_800B5508[idx].field_4[i] << (i * 2);
+        ret |= D_800B5508.field_0[idx].field_4[i] << (i * 2);
     }
 
     return ret;
@@ -250,7 +226,7 @@ s32 func_8002E9EC(s32 arg0, s32 fileIdx, s32 saveIdx) // 0x8002E9EC
     s32 var1;
     s32 var2;
 
-    var0 = D_800B5508[arg0].field_14;
+    var0 = D_800B5508.field_0[arg0].field_14;
     var1 = fileIdx << 8;
     var2 = (saveIdx * 12) + 4;
     return var0 + var1 + var2;
@@ -265,7 +241,7 @@ s32 func_8002EA28(s32 idx) // 0x8002EA28
 
     for (i = 0; i < 15; i++)
     {
-        if (D_800B5508[idx].field_4[i] != 0)
+        if (D_800B5508.field_0[idx].field_4[i] != 0)
         {
             ret++;
         }
@@ -276,7 +252,7 @@ s32 func_8002EA28(s32 idx) // 0x8002EA28
 
 s32 func_8002EA78(s32 idx) // 0x8002EA78
 {
-    return D_800B5508[idx].field_18 - func_8002EA28(idx);
+    return D_800B5508.field_0[idx].field_18 - func_8002EA28(idx);
 }
 
 s32 func_8002EABC(s32* arg0, s32* arg1, s32* arg2) // 0x8002EABC
@@ -293,7 +269,7 @@ s32 func_8002EABC(s32* arg0, s32* arg1, s32* arg2) // 0x8002EABC
 
     for (i = 0; i < 8; i++)
     {
-        if (D_800B5508[i].field_0 == 3)
+        if (D_800B5508.field_0[i].field_0 == 3)
         {
             func_8002FE70(i, &vec);
 
@@ -312,18 +288,90 @@ s32 func_8002EABC(s32* arg0, s32* arg1, s32* arg2) // 0x8002EABC
     return ret != 0;
 }
 
+// TODO: Needs .rodata
+#ifdef NON_MATCHING
+void func_8002EB88()
+{
+    s_800B55E8* var_s0;
+
+    if (D_800B5480 == 0)
+    {
+        return;
+    }
+
+    Savegame_CardUpdate();
+
+    if (D_800B5508.field_E0[0].field_0)
+    {
+        if (D_800B5508.field_E0[1].field_0 == 0)
+        {
+            var_s0 = &D_800B5508.field_E0[0];
+        }
+        else
+        {
+            var_s0 = &D_800B5508.field_E0[1];
+        }
+    }
+    else
+    {
+        if (D_800B5508.field_110 == 1 && D_800B5508.field_E0[1].field_0 == 0)
+        {
+            s_800B55E8* p;
+            p           = &D_800B5508.field_E0[1];
+            p->field_0  = D_800B5508.field_110;
+            p->field_8  = 0;
+            p->field_C  = 0;
+            p->field_10 = 0;
+            p->field_14 = D_800B5508.field_110;
+            p->field_4  = D_800B5508.field_E0[1].field_4;
+        }
+        var_s0 = &D_800B5508.field_E0[1];
+    }
+
+    switch (var_s0->field_0)
+    {
+        case 1:
+            func_8002ED7C(var_s0);
+            break;
+        case 2:
+        case 4:
+            func_8002F2C4(var_s0);
+            break;
+        case 3:
+        case 5:
+            func_8002F61C(var_s0);
+            break;
+        case 6:
+            func_8002ECE0(var_s0);
+            break;
+        case 0:
+        default:
+            break;
+    }
+
+    if (var_s0->field_0 != 0 && var_s0->field_14 != 1)
+    {
+        var_s0->field_0 = 0;
+        if (var_s0 == &D_800B5508.field_E0[1])
+        {
+            D_800B5508.field_E0[1].field_4 = (D_800B5508.field_E0[1].field_4 + 1) & 7;
+        }
+    }
+}
+#else
 INCLUDE_ASM("asm/bodyprog/nonmatchings/memcard", func_8002EB88);
+#endif
 
 void func_8002ECE0(s_800B55E8* arg0) // 0x8002ECE0
 {
     if (Savegame_CardDeviceFormat(arg0->field_4) != 0)
     {
         arg0->field_14                    = 11;
-        D_800B5508[arg0->field_4].field_0 = 3;
+        D_800B5508.field_0[arg0->field_4].field_0 = 3;
 
         func_8002E730(arg0->field_4);
 
-        D_800B5508[arg0->field_4].field_18 = 15;
+        D_800B5508.field_0[arg0->field_4].field_18 = 15;
     }
     else
     {
@@ -347,7 +395,7 @@ s32 func_8002F278(s32 arg0, s_CardDirectory* dir) // 0x8002F278
     return ret + func_8002EA28(arg0);
 }
 
-// Related to saves. Seems to constantly write to `D_800B55FC`.
+// Related to saves. Seems to constantly write to `D_800B5508.field_E0[0].field_14`.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/memcard", func_8002F2C4);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/memcard", func_8002F61C);
@@ -386,7 +434,7 @@ void func_8002FD5C(s32 arg0, s32 arg1, s32 arg2) // 0x8002FD5C
 {
     s_func_8002FB64* ptr;
 
-    ptr = (s_func_8002FB64*)D_800B5508[arg0].field_14;
+    ptr = (s_func_8002FB64*)D_800B5508.field_0[arg0].field_14;
     ptr = &ptr[arg1];
 
     func_8002FDB0(arg0, arg1, arg2);

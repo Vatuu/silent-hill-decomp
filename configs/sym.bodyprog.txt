@@ -16,6 +16,7 @@ nextGameStates = 0x80025480;
 hack_vcSetWatchTgtXzPos_fix = 0x8002B2B4; // type:s32 - Some 0x80083500 value which coincidentally points to code inside vcSetWatchTgtXzPos, probably unrelated flags or something. A jtbl is right before this which spimdisasm tries to include, breaking vcSetWatchTgtXzPos build.
 
 g_CardWork = 0x800B5488; // size:0x80
+D_800B5508 = 0x800B5508; // size:0x718
 
 Savegame_UserConfigCopyWithChecksum = 0x8002FBB4; // type:func
 Savegame_CopyWithChecksum           = 0x8002FCCC; // type:func

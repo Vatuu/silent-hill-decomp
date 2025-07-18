@@ -105,8 +105,8 @@ typedef struct
     s32                field_0; // Sometimes it's a pointer to a struct, sometimes is just a simple number.
     s8                 field_4[16]; 
     struct s_800B5508* field_14;
-    s32                field_18; 
-} s_800B5508;
+    s32                field_18;
+} s_800B5508_0;
 
 typedef struct
 {
@@ -117,6 +117,13 @@ typedef struct
     s32 field_10;
     s32 field_14; // Pointer to a `s_800B55E8` static struct.
 } s_800B55E8;
+
+typedef struct
+{
+    s_800B5508_0 field_0[8];
+    s_800B55E8   field_E0[2];
+    s32          field_110; // D_800B5618 - could be another s_800B55E8.
+} s_800B5508; // 1816 bytes according to bzero call?
 
 // https://github.com/Sparagas/Silent-Hill/blob/1f24eb097a4b99129bc7c9793d23c82244848a27/010%20Editor%20-%20Binary%20Templates/ps1_memory_card.bt#L122C8-L122C17
 typedef struct
@@ -175,11 +182,7 @@ extern s_CardWork g_CardWork; // 0x800B5488
  * `0x1C/28` bytes is the start address of a new element,
  * which the decompiled code seems to point to.
  */
-extern s_800B5508 D_800B5508[8];
-
-extern s_800B55E8 D_800B55E8[2];
-
-extern s32 D_800B55FC;
+extern s_800B5508 D_800B5508;
 
 /** @brief Basic information required to draw information of elements in save slots.
  * Address access is based on the slot: slot 1 = 0x801E09E0, slot 2 = 0x801E1440.
