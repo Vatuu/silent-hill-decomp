@@ -40,7 +40,7 @@ void func_8004BB4C(VbRVIEW* view, GsCOORDINATE2* coord, SVECTOR3* vec, s32 arg3)
 
     coord->param = &D_800C3928;
 
-    Gfx_Results_ItemsRotate(vec, coord);
+    Gfx_Results_ItemsRotate((SVECTOR*)vec, coord);
     vbSetRefView(view);
 }
 
@@ -67,9 +67,9 @@ void func_8004BBF4(VbRVIEW* arg0, GsCOORDINATE2* arg1, SVECTOR* arg2) // 0x8004B
     vbSetRefView(arg0);
 }
 
-void func_8004BCBC(s32 buffer) // 0x8004BCBC
+void func_8004BCBC(s32* buffer) // 0x8004BCBC
 {
-    GsMapModelingData(buffer + 4);
+    GsMapModelingData((unsigned long*)&buffer[1]);
 }
 
 void Gfx_Results_ItemsRotate(SVECTOR* arg0, GsCOORDINATE2* arg1) // 0x8004BCDC
@@ -84,7 +84,7 @@ void Gfx_Results_ItemsRotate(SVECTOR* arg0, GsCOORDINATE2* arg1) // 0x8004BCDC
 
     arg1->coord = mat;
 
-    ScaleMatrix(&arg1->coord, arg1->param);
+    ScaleMatrix(&arg1->coord, &arg1->param->scale);
 
     arg1->flg = 0;
 }

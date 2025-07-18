@@ -14,7 +14,7 @@
 #define IMAGE_BUFFER_2 ((u_long*)0x801ABE00)
 #define FONT24_BUFFER ((u_long*)0x801F5600) // Loaded by `GameFs_StfRollBinLoad`.
 
-#define CD_ADDR_0 0x801E2600
+#define CD_ADDR_0 ((u_long*)0x801E2600)
 
 #define OPT_SOUND_VOLUME_MIN   0
 #define OPT_SOUND_VOLUME_MAX   128
@@ -1984,7 +1984,7 @@ u8 func_80048954(s32 com, u8* param, u8* res);
 
 void func_8004729C(u16);
 
-void func_8004BCBC(s32 arg0);
+void func_8004BCBC(s32* buffer);
 
 void func_8004C040();
 

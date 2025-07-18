@@ -179,7 +179,7 @@ void Gfx_Inventory_UnavailableMapText(s32 strIdx); // 0x8004F57C
 
 void Inventory_DirectionalInputSet(); // 0x8004F5DC
 
-void Gfx_ItemScreens_RenderInit(s32 arg0);
+void Gfx_ItemScreens_RenderInit(u32* arg0);
 
 /** Draws some rectangle. */
 void func_8004FB0C();

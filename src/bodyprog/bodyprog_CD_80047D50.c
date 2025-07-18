@@ -18,9 +18,9 @@
 
 void func_80047D50() // 0x80047D50
 {
-    CdlLOC* sp10;
+    CdlLOC sp10;
 
-    if (!func_80048954(CdlSetloc, CdIntToPos(D_800C37D4->field_8 + (D_800C37CC >> 11), &sp10), 0))
+    if (!func_80048954(CdlSetloc, (u8*)CdIntToPos(D_800C37D4->field_8 + (D_800C37CC >> 11), &sp10), 0))
     {
         D_800C1670.field_0 = 3;
     }
@@ -60,7 +60,7 @@ void func_80047F18() // 0x80047F18
 
     if (D_800C37D4->field_4 < 51200)
     {
-        var = SdVabTransBody(D_800C37D4->field_2 + CD_ADDR_0, D_800C37C8);
+        var = SdVabTransBody((u8*)CD_ADDR_0 + D_800C37D4->field_2, D_800C37C8);
         ptr = &D_800C37D4->field_4;
 
         D_800C37CC = *ptr;
@@ -68,7 +68,8 @@ void func_80047F18() // 0x80047F18
     }
     else
     {
-        var = SdVabTransBodyPartly(D_800C37D4->field_2 + CD_ADDR_0, 0xC800 - D_800C37D4->field_2, D_800C37C8);
+        var = SdVabTransBodyPartly((u8*)CD_ADDR_0 + D_800C37D4->field_2, 0xC800 - D_800C37D4->field_2, D_800C37C8);
+
         D_800C37CC = 0xC800;
         D_800C1670.field_0 = 6;
     }
@@ -83,7 +84,7 @@ void func_80047F18() // 0x80047F18
 void func_80048000() // 0x80048000
 {
     s32 i;
-    CdlLOC* cdLocArg;
+    CdlLOC  cdLocArg;
     CdlLOC* cdLocRes;
 
     if (SdVabTransCompleted(0) == 1)
@@ -91,7 +92,7 @@ void func_80048000() // 0x80048000
         i = D_800C37D4->field_8 + ((D_800C37CC + 0x7FF) >> 11);
         cdLocRes = CdIntToPos(i, &cdLocArg);
 
-        if (!func_80048954(CdlSetloc, cdLocRes, 0))
+        if (!func_80048954(CdlSetloc, (u8*)cdLocRes, 0))
         {
             D_800C1670.field_0 = 7;
         }
@@ -226,9 +227,9 @@ void Sd_StopSeq() // 0x8004839C
 
 void func_800483D4() // 0x800483D4
 {
-    CdlLOC* cdLoc;
+    CdlLOC cdLoc;
 
-    if (!func_80048954(CdlSetloc, CdIntToPos(D_800C37D8->field_8, &cdLoc), 0))
+    if (!func_80048954(CdlSetloc, (u8*)CdIntToPos(D_800C37D8->field_8, &cdLoc), 0))
     {
         D_800C1670.field_0 = 3;
     }
