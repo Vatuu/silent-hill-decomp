@@ -1270,6 +1270,16 @@ extern s_800AFE08 D_800AFE08;
 
 extern s_800AFE24 D_800AFE24;
 
+extern s32 D_800B2618;
+
+extern s32 D_800B261C;
+
+extern s32 D_800B2620;
+
+extern char D_800B2628[15][21]; // Type asumed.
+
+extern s32 D_800B5618;
+
 extern DVECTOR g_Gfx_DebugStringPosition0;
 
 extern DVECTOR g_Gfx_DebugStringPosition1;
@@ -1649,13 +1659,6 @@ extern u8 D_800AD480[24];
 extern s_800AD4C8 D_800AD4C8[];
 
 extern s_MapOverlayHeader g_MapOverlayHeader; // 0x800C957C
-
-/** Initializer for something before the game loop. */
-void func_8002E630();
-
-void func_8002E6E4(s32 idx);
-
-void func_8002E730(s32 idx);
 
 s32 func_8002E76C(s32 idx);
 

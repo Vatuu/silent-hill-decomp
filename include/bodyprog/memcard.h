@@ -5,7 +5,7 @@
 
 /** @brief This header is used to declare any variable, struct, or
  * function part of `BODYPROG.BIN` identified to be related
- * to the savegame system.
+ * to the savegame and memory card system (not from PSY-Q SDK).
  */
 
 // ========
@@ -46,9 +46,24 @@ typedef struct
     s_ShSavegameFooter field_FC;
 } s_func_8002FB64; // Likely `s_ShSaveUserConfigContainer`.
 
+typedef struct
+{
+    s32 unk0;
+    char unk4[0x8];
+} s_func_8002FDB0;
+
 // ========
 // STRUCTS
 // ========
+
+typedef struct
+{
+    s32                unk_0;
+    s_SavegameMetadata file_saveDataInfo_4[11];
+    s8                 unk_88[116];
+    s16                unk_FC;
+    s16                unk_FE;
+} s_MemCardInfo_BasicSaveInfo;
 
 typedef struct
 {
@@ -91,39 +106,21 @@ STATIC_ASSERT_SIZEOF(s_CardWork, 128);
 
 typedef struct
 {
+    s32                          memoryCardStatus_0;
+    s8                           isFileUsed_4[16]; 
+    s_MemCardInfo_BasicSaveInfo* basicSaveInfoPtr_14;
+    s32                          field_18; 
+} s_800B5508;
+
+typedef struct
+{
     s32 field_0;
     s32 field_4;
     s32 fileIdx_8;
     s32 saveIdx_C;
     s32 field_10;
     s32 field_14;
-} s_800B5508_sub;
-
-typedef struct
-{
-    //s_800B5508_sub*    field_0; // TODO: Use this instead.
-    s32                field_0; // Sometimes it's a pointer to a struct, sometimes is just a simple number.
-    s8                 field_4[16]; 
-    struct s_800B5508* field_14;
-    s32                field_18;
-} s_800B5508_0;
-
-typedef struct
-{
-    s32 field_0;
-    s32 field_4;
-    s32 field_8;
-    s32 field_C;
-    s32 field_10;
-    s32 field_14; // Pointer to a `s_800B55E8` static struct.
 } s_800B55E8;
-
-typedef struct
-{
-    s_800B5508_0 field_0[8];
-    s_800B55E8   field_E0[2];
-    s32          field_110; // D_800B5618 - could be another s_800B55E8.
-} s_800B5508; // 1816 bytes according to bzero call?
 
 // https://github.com/Sparagas/Silent-Hill/blob/1f24eb097a4b99129bc7c9793d23c82244848a27/010%20Editor%20-%20Binary%20Templates/ps1_memory_card.bt#L122C8-L122C17
 typedef struct
@@ -163,11 +160,11 @@ extern s8 D_800A97E0;
 
 extern u32 D_800A97E4[];
 
-extern s_800B55E8 D_800B2780[];
+extern s_MemCardInfo_BasicSaveInfo g_MemCard_1_BasicSaveInfo[15];
 
-extern s_800B55E8 D_800B3680[];
+extern s_MemCardInfo_BasicSaveInfo g_MemCard_2_BasicSaveInfo[15];
 
-extern s_800B55E8 D_800B4580[];
+extern s_MemCardInfo_BasicSaveInfo D_800B4580[15];
 
 extern s32 D_800B5480;
 
@@ -182,7 +179,13 @@ extern s_CardWork g_CardWork; // 0x800B5488
  * `0x1C/28` bytes is the start address of a new element,
  * which the decompiled code seems to point to.
  */
-extern s_800B5508 D_800B5508;
+extern s_800B5508 g_MemCardsBasicInfo[8];
+
+extern s_800B55E8 D_800B55E8[]; // This isn't an array struct.
+
+extern s_800B55E8 D_800B5600;
+
+extern s32 D_800B55FC;
 
 /** @brief Basic information required to draw information of elements in save slots.
  * Address access is based on the slot: slot 1 = 0x801E09E0, slot 2 = 0x801E1440.
@@ -219,6 +222,12 @@ extern s8 g_SelectedFileIdx;
 // FUNCTIONS
 // ==========
 
+void Savegame_CardCleanInit(); // 0x8002E630
+
+void Savegame_GameMemDataClear(s32 idx); // 0x8002E6E4
+
+void Savegame_CardFileUsageClear(s32 idx); // 0x8002E730
+
 s32 func_8002E94C(s32 arg0, s32 arg1, s32 fileIdx, s32 saveIdx);
 
 s32 func_8002E990();
@@ -254,7 +263,7 @@ void Savegame_ChecksumUpdate(s_ShSavegameFooter* saveFooter, s8* saveData, s32 s
 /** Generates a checksum of the given saveData and compares it against the checksum value in the footer.
  * Returns 1 if the checksums match, otherwise 0.
  */
-s32 Savegame_ChecksumValidate(s_ShSavegameFooter* saveFooter, s8* saveData, s32 saveDataLength);
+s32 Savegame_ChecksumValidate(s_ShSavegameFooter* saveFooter, s8* saveData, s32 saveDataLength); // 0x8002FF74
 
 /** Generates an 8-bit XOR checksum over the given data, only appears used with s_ShSavegame data. */
 u8 Savegame_ChecksumGenerate(s8* saveData, s32 saveDataLength);

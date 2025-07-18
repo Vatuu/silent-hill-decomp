@@ -9,7 +9,42 @@
 #include <strings.h>
 #include <sys/file.h>
 
-void func_8002E630() // 0x8002E630
+/** @note Strange data access.
+ * Many functions access by strange means to
+ * variables making an extreamly confusing
+ * and arbitrary process.
+ *
+ * For example: `func_8002E7BC` access to
+ * `D_800B55E8` which Splat indicates that
+ * holds 0x14/20 bytes and the initial part
+ * of the code indicate confirm it, however
+ * the code get weirder as it imply that
+ * `D_800B55E8` is an array of structs and it
+ * modify the next 0x14/20 bytes of data
+ * that follow `D_800B55E8` which lands in
+ * `D_800B55FC` (single 4 byte variable) and
+ * `D_800B5600` (another possible struct which
+ * has a size of 0x18/24 bytes).
+ *
+ * Another example: `func_8002E86C` access to
+ * `g_MemCardsBasicInfo` (0x800B5508) which is
+ * an array struct with the size of 0xE0/224,
+ * however the function access to an element of
+ * the array which lands in the position 0xF8/248
+ * and another that lands in a position of
+ * 0x110/272 of the array struct. In the first
+ * case its actually accessing to `D_800B5600`
+ * and the second case is accessing to `D_800B5618`.
+ *
+ *
+ *
+ * @note Could be that the size of `D_800B5600`
+ * is actually 0x14/20 and uses the same struct
+ * of `D_800B55E8` but the value at 0x800B5614
+ * is unused and Splat merge it.
+ */
+
+void Savegame_CardCleanInit() // 0x8002E630
 {
     s_800B5508* ptr;
     s32         i;
@@ -19,23 +54,23 @@ void func_8002E630() // 0x8002E630
     D_800B5480 = 0;
 
     // Clear arrays.
-    bzero(&D_800B5508, 1816);
-    bzero(D_800B2780, 768);
+    bzero(g_MemCardsBasicInfo, 1816);
+    bzero(g_MemCard_1_BasicSaveInfo, 768);
 
     for (i = 0; i < 8; i++) 
     {
-        D_800B5508.field_0[i].field_0 = 0;
-
-        func_8002E730(i);
+        g_MemCardsBasicInfo[i].memoryCardStatus_0 = 0;
+        
+        Savegame_CardFileUsageClear(i);
 
         switch (i) 
         {                          
             case 0:
-                ptr = D_800B2780;
+                ptr = g_MemCard_1_BasicSaveInfo;
                 break;
 
             case 4:
-                ptr = D_800B3680;
+                ptr = g_MemCard_2_BasicSaveInfo;
                 break;
 
             default:
@@ -43,27 +78,27 @@ void func_8002E630() // 0x8002E630
                 break;
         }
 
-        D_800B5508.field_0[i].field_14 = ptr;
+        g_MemCardsBasicInfo[i].basicSaveInfoPtr_14 = ptr;
 
-        func_8002E6E4(i);
+        Savegame_GameMemDataClear(i);
     } 
 }
 
-void func_8002E6E4(s32 idx) // 0x8002E6E4
+void Savegame_GameMemDataClear(s32 idx) // 0x8002E6E4
 {
-    D_800B5508.field_0[idx].field_0 = 0;
-    func_8002E730(idx);
-    bzero(D_800B5508.field_0[idx].field_14, 0xF00);
-    D_800B5508.field_0[idx].field_18 = 0;
+    g_MemCardsBasicInfo[idx].memoryCardStatus_0 = 0;
+    Savegame_CardFileUsageClear(idx);
+    bzero(g_MemCardsBasicInfo[idx].basicSaveInfoPtr_14, 0xF00);
+    g_MemCardsBasicInfo[idx].field_18 = 0;
 }
 
-void func_8002E730(s32 idx) // 0x8002E730
+void Savegame_CardFileUsageClear(s32 idx) // 0x8002E730
 {
     s32 i;
 
     for (i = 0; i < 15; i++) 
     {
-        D_800B5508.field_0[idx].field_4[i] = 0;
+        g_MemCardsBasicInfo[idx].isFileUsed_4[i] = 0;
     }
 }
 
@@ -75,8 +110,8 @@ s32 func_8002E76C(s32 idx) // 0x8002E76C
     ret = 1;
 
     for (i = 0; i < 15; i++)
-    {
-        if (D_800B5508.field_0[idx].field_4[i] != 0)
+    {    
+        if (g_MemCardsBasicInfo[idx].isFileUsed_4[i] != 0)
         {
             ret = 0; 
             break;
@@ -88,12 +123,12 @@ s32 func_8002E76C(s32 idx) // 0x8002E76C
 
 static inline void s_800B55E8_Init(s_800B55E8* p, s32 field_0, s32 field_4, s32 field_8, s32 field_C, s32 field_10, s32 field_14)
 {
-    p->field_0  = field_0;
-    p->field_4  = field_4;
-    p->field_8  = field_8;
-    p->field_C  = field_C;
-    p->field_10 = field_10;
-    p->field_14 = field_14;
+    p->field_0   = field_0;
+    p->field_4   = field_4;
+    p->fileIdx_8 = field_8;
+    p->saveIdx_C = field_C;
+    p->field_10  = field_10;
+    p->field_14  = field_14;
 }
 
 void func_8002E7BC() // 0x8002E7BC
@@ -109,8 +144,8 @@ void func_8002E7BC() // 0x8002E7BC
     func_8002E8E4();
     Savegame_CardEventsInit();
 
-    s_800B55E8_Init(&D_800B5508.field_E0[0], 0, 0, 0, 0, 0, 0);
-    s_800B55E8_Init(&D_800B5508.field_E0[1], 0, 0, 0, 0, 0, 0);
+    s_800B55E8_Init(&D_800B55E8[0], 0, 0, 0, 0, 0, 0);
+    s_800B55E8_Init(&D_800B55E8[1], 0, 0, 0, 0, 0, 0); // D_800B5600
 }
 
 void func_8002E830() // 0x8002E830
@@ -124,14 +159,14 @@ void func_8002E830() // 0x8002E830
 
 void func_8002E85C() // 0x8002E85C
 {
-    D_800B5508.field_110 = 1;
+    D_800B5618 = 1;
 }
 
 void func_8002E86C() // 0x8002E86C
 {
-    D_800B5508.field_110 = 0;
-
-    s_800B55E8_Init(&D_800B5508.field_E0[1], 0, 0, 0, 0, 0, 0);
+    g_MemCardsBasicInfo[9].basicSaveInfoPtr_14 = 0; // D_800B5618
+    g_MemCardsBasicInfo[8].field_18 = 0; // D_800B5600
+    s_800B55E8_Init(&g_MemCardsBasicInfo[8].field_18, 0, 0, 0, 0, 0, 0); // D_800B5600
 }
 
 s32 func_8002E898() // 0x8002E898
@@ -142,7 +177,7 @@ s32 func_8002E898() // 0x8002E898
     ret = 0;
     for (i = 0; i < 8; i++)
     {
-        ret |= D_800B5508.field_0[i].field_0 << (i * 3);
+        ret |= g_MemCardsBasicInfo[i].memoryCardStatus_0 << (i * 3);
     }
 
     return ret;
@@ -150,14 +185,14 @@ s32 func_8002E898() // 0x8002E898
 
 void func_8002E8D4() // 0x8002E8D4
 {
-    D_800B5508.field_110 = 1;
+    D_800B5618 = 1;
 }
 
 void func_8002E8E4() // 0x8002E8E4
 {
-    D_800B5508.field_110 = 0;
-
-    s_800B55E8_Init(&D_800B5508.field_E0[1], 0, 0, 0, 0, 0, 1);
+    g_MemCardsBasicInfo[9].basicSaveInfoPtr_14 = NULL; // D_800B5618.field_0
+    g_MemCardsBasicInfo[8].field_18 = 0; // D_800B5600.field_0
+    s_800B55E8_Init(&g_MemCardsBasicInfo[8].field_18, 0, 0, 0, 0, 0, 1); // D_800B5600
 }
 
 s32 func_8002E914() // 0x8002E914
@@ -168,7 +203,7 @@ s32 func_8002E914() // 0x8002E914
     ret = 0;
     for (i = 0; i < 8; i++)
     {
-        ret |= D_800B5508.field_0[i].field_0 << (i * 2);
+        ret |= g_MemCardsBasicInfo[i].memoryCardStatus_0 << (i * 2);
     }
 
     return ret;
@@ -176,21 +211,13 @@ s32 func_8002E914() // 0x8002E914
 
 s32 func_8002E94C(s32 arg0, s32 arg1, s32 fileIdx, s32 saveIdx) // 0x8002E94C
 {
-    // s_800B5508_sub* ptr; // TODO: Use this instead.
 
-    if (D_800B5508.field_E0[0].field_0 != 0)
+    if (g_MemCardsBasicInfo[8].memoryCardStatus_0 != 0)
     {
         return 0;
     }
 
-    s_800B55E8_Init(&D_800B5508.field_E0[0], arg0, arg1, fileIdx, saveIdx, 0, 1);
-
-    // TODO: Use this instead.
-    /*ptr->field_4   = arg1;
-    ptr->fileIdx_8 = fileIdx;
-    ptr->saveIdx_C = saveIdx;
-    ptr->field_10  = 0;
-    ptr->field_14  = 1;*/
+    s_800B55E8_Init(&g_MemCardsBasicInfo[8], arg0, arg1, fileIdx, saveIdx, 0, 1); // D_800B55E8
     return 1;
 }
 
@@ -199,7 +226,7 @@ s32 func_8002E94C(s32 arg0, s32 arg1, s32 fileIdx, s32 saveIdx) // 0x8002E94C
  */
 s32 func_8002E990() // 0x8002E990
 {
-    return D_800B5508.field_E0[0].field_14;
+    return D_800B55FC;
 }
 
 s32 func_8002E9A0(s32 idx) // 0x8002E9A0
@@ -211,7 +238,7 @@ s32 func_8002E9A0(s32 idx) // 0x8002E9A0
 
     for (i = 0; i < 15; i++)
     {
-        ret |= D_800B5508.field_0[idx].field_4[i] << (i * 2);
+        ret |= g_MemCardsBasicInfo[idx].isFileUsed_4[i] << (i * 2);
     }
 
     return ret;
@@ -223,7 +250,7 @@ s32 func_8002E9EC(s32 arg0, s32 fileIdx, s32 saveIdx) // 0x8002E9EC
     s32 var1;
     s32 var2;
 
-    var0 = D_800B5508.field_0[arg0].field_14;
+    var0 = g_MemCardsBasicInfo[arg0].basicSaveInfoPtr_14;
     var1 = fileIdx << 8;
     var2 = (saveIdx * 12) + 4;
     return var0 + var1 + var2;
@@ -238,7 +265,7 @@ s32 func_8002EA28(s32 idx) // 0x8002EA28
 
     for (i = 0; i < 15; i++)
     {
-        if (D_800B5508.field_0[idx].field_4[i] != 0)
+        if (g_MemCardsBasicInfo[idx].isFileUsed_4[i] != 0)
         {
             ret++;
         }
@@ -249,7 +276,7 @@ s32 func_8002EA28(s32 idx) // 0x8002EA28
 
 s32 func_8002EA78(s32 idx) // 0x8002EA78
 {
-    return D_800B5508.field_0[idx].field_18 - func_8002EA28(idx);
+    return g_MemCardsBasicInfo[idx].field_18 - func_8002EA28(idx);
 }
 
 s32 func_8002EABC(s32* arg0, s32* arg1, s32* arg2) // 0x8002EABC
@@ -266,7 +293,7 @@ s32 func_8002EABC(s32* arg0, s32* arg1, s32* arg2) // 0x8002EABC
 
     for (i = 0; i < 8; i++)
     {
-        if (D_800B5508.field_0[i].field_0 == 3)
+        if (g_MemCardsBasicInfo[i].memoryCardStatus_0 == 3)
         {
             func_8002FE70(i, &vec);
 
@@ -285,73 +312,74 @@ s32 func_8002EABC(s32* arg0, s32* arg1, s32* arg2) // 0x8002EABC
     return ret != 0;
 }
 
-// TODO: Needs .rodata
+// TODO: RODATA migration
 #ifdef NON_MATCHING
 void func_8002EB88()
 {
-    s_800B55E8* var_s0;
-
+    s_800B55E8 *piVar1;
+    
+	
     if (D_800B5480 == 0)
     {
         return;
     }
-
-    Savegame_CardUpdate();
-
-    if (D_800B5508.field_E0[0].field_0)
+    
+    func_80030A0C();
+    
+    if (g_MemCardsBasicInfo[8].memoryCardStatus_0) // D_800B55E8.field_0
     {
-        if (D_800B5508.field_E0[1].field_0 == 0)
+        if (g_MemCardsBasicInfo[8].field_18 == 0) // D_800B5600
         {
-            var_s0 = &D_800B5508.field_E0[0];
+            piVar1 = &g_MemCardsBasicInfo[8]; // D_800B55E8
         }
         else
         {
-            var_s0 = &D_800B5508.field_E0[1];
+            piVar1 = &g_MemCardsBasicInfo[8].field_18; // D_800B5600
         }
     }
     else
     {
-        if (D_800B5508.field_110 == 1 && D_800B5508.field_E0[1].field_0 == 0)
+        s_800B55E8 *ptr;
+        // D_800B5618.field_0 == 1 && D_800B5600.field_0 == 0
+        if (g_MemCardsBasicInfo[9].basicSaveInfoPtr_14 == 1 && g_MemCardsBasicInfo[8].field_18 == 0)
         {
-            s_800B55E8* p;
-            p           = &D_800B5508.field_E0[1];
-            p->field_0  = D_800B5508.field_110;
-            p->field_8  = 0;
-            p->field_C  = 0;
-            p->field_10 = 0;
-            p->field_14 = D_800B5508.field_110;
-            p->field_4  = D_800B5508.field_E0[1].field_4;
+            ptr            = (s_800B55E8*)&g_MemCardsBasicInfo[8].field_18; // ptr = &D_800B5600
+            ptr->field_0   = g_MemCardsBasicInfo[9].basicSaveInfoPtr_14; // D_800B5618.field_0
+            ptr->fileIdx_8 = 0;
+            ptr->saveIdx_C = 0;
+            ptr->field_10  = 0;
+            ptr->field_14  = g_MemCardsBasicInfo[9].basicSaveInfoPtr_14; // D_800B5618.field_0
+            ptr->field_4   = g_MemCardsBasicInfo[9].memoryCardStatus_0;  // D_800B5600.field_4
         }
-        var_s0 = &D_800B5508.field_E0[1];
+        piVar1 = (s_800B55E8*)&g_MemCardsBasicInfo[8].field_18; // D_800B5600
     }
-
-    switch (var_s0->field_0)
+    
+    switch(piVar1->field_0) // D_800B5600.field_0
     {
-        case 1:
-            func_8002ED7C(var_s0);
-            break;
+        case 0:
+            func_8002ED7C(piVar1);
+            break;  
         case 2:
         case 4:
-            func_8002F2C4(var_s0);
+            func_8002F2C4(piVar1);
             break;
         case 3:
         case 5:
-            func_8002F61C(var_s0);
+            func_8002F61C(piVar1);
             break;
         case 6:
-            func_8002ECE0(var_s0);
-            break;
-        case 0:
-        default:
+            func_8002ECE0(piVar1);
             break;
     }
-
-    if (var_s0->field_0 != 0 && var_s0->field_14 != 1)
+    
+    if (piVar1->field_0 != 0 && piVar1->field_14 != 1)
     {
-        var_s0->field_0 = 0;
-        if (var_s0 == &D_800B5508.field_E0[1])
+        piVar1->field_0 = 0;
+		 // piVar1 == D_800B5600
+        if (piVar1 == (s_800B5508 *)&g_MemCardsBasicInfo[8].field_18)
         {
-            D_800B5508.field_E0[1].field_4 = (D_800B5508.field_E0[1].field_4 + 1) & 7;
+			// D_800B5600.field_4 = (D_800B5600.field_4 + 1) & 7;
+            g_MemCardsBasicInfo[9].memoryCardStatus_0 = (g_MemCardsBasicInfo[9].memoryCardStatus_0 + 1) & 7;
         }
     }
 }
@@ -363,12 +391,12 @@ void func_8002ECE0(s_800B55E8* arg0) // 0x8002ECE0
 {
     if (Savegame_CardDeviceFormat(arg0->field_4) != 0)
     {
-        arg0->field_14                    = 11;
-        D_800B5508.field_0[arg0->field_4].field_0 = 3;
+        arg0->field_14                                        = 11;
+        g_MemCardsBasicInfo[arg0->field_4].memoryCardStatus_0 = 3;
 
-        func_8002E730(arg0->field_4);
-
-        D_800B5508.field_0[arg0->field_4].field_18 = 15;
+        Savegame_CardFileUsageClear(arg0->field_4);
+		
+        g_MemCardsBasicInfo[arg0->field_4].field_18 = 15;
     }
     else
     {
@@ -376,7 +404,189 @@ void func_8002ECE0(s_800B55E8* arg0) // 0x8002ECE0
     }
 }
 
+// TODO: RODATA migration
+#ifdef NON_MATCHING
+void func_8002ED7C(s_800B55E8* arg0)
+{
+    char sp20[21]; // Type assumed.
+    s32 memCardState;
+    s32 i;
+    s_func_8002FB64* temp_a1;
+    s_800B5508* ptr;
+
+
+    arg0->field_14 = 1;
+
+    ptr = &g_MemCardsBasicInfo[arg0->field_4];
+    
+    switch (arg0->field_10)
+    {
+        case 0:
+            D_800B261C = 0;
+            if (Savegame_CardRequest(0, arg0->field_4, NULL, NULL, 0, 0, NULL, 0) != 0)
+            {
+                arg0->field_10 = 1;
+            }
+            break;
+        
+        case 1:
+            memCardState = Savegame_CardResult();
+            switch (memCardState)
+            {
+                case 0:
+                    Savegame_GameMemDataClear(arg0->field_4);
+                    ptr->memoryCardStatus_0 = 1;
+                    arg0->field_14          = 0;
+                    break;
+                    
+                case 2:
+                    arg0->field_10          = 2;
+                    break;
+                    
+                case 3:
+                    switch(ptr->memoryCardStatus_0)
+                    {
+                        case 3: 
+                            arg0->field_14 = 11;
+                            break;
+                        case 4:
+                            arg0->field_14 = 4;
+                            break;
+                        case 5:
+                            arg0->field_14 = 10;
+                            break;
+                        default:
+                            arg0->field_10 = 2;
+                            break;
+                    }
+                    break;
+            }
+            break;
+        
+        case 2:
+            ptr->memoryCardStatus_0 = 2;
+            if (Savegame_CardRequest(1, arg0->field_4, &D_800B2628, NULL, 0, 0, NULL, 0) != 0)
+            {
+                arg0->field_10 = 3;
+            }
+            break;
+        
+        case 3:
+            memCardState = Savegame_CardResult();
+            switch (memCardState)
+            {
+                case 0:
+                    Savegame_GameMemDataClear(arg0->field_4);
+                    arg0->field_14          = 0;
+                    ptr->memoryCardStatus_0 = 1;
+                    break;
+                    
+                case 4:
+                    Savegame_GameMemDataClear(arg0->field_4);
+                    arg0->field_14          = 4;
+                    ptr->memoryCardStatus_0 = 4;
+                    break;
+                case 5:
+                case 6:
+                    arg0->field_10          = 4;
+                    return;
+            }
+            break;
+                
+        case 4:
+            D_800B2618 = NO_VALUE;
+            Savegame_CardFileUsageClear(arg0->field_4);
+            bzero((u8*)g_MemCardsBasicInfo[arg0->field_4].basicSaveInfoPtr_14, 0xF00);
+            arg0->field_10 = 5;
+    
+        case 5:
+            D_800B2618++;
+            for (D_800B2620 = 0; D_800B2618 < 15; D_800B2618++)
+            {
+                Savegame_FilenameGenerate(&sp20, D_800B2618);
+                
+                for (i = 0; i < 15; i++)
+                {
+                    if (!strcmp(D_800B2628[i], sp20)) 
+                    {
+                        arg0->field_10 = 6;
+                        return;
+                    }
+                }
+            }
+            
+            if (D_800B2618 == 15)
+            {
+                arg0->field_10 = 9;
+            }
+            break;
+            
+        case 6:
+            Savegame_FilenameGenerate(&sp20, D_800B2618);
+            if (Savegame_CardRequest(2, arg0->field_4, NULL, &sp20, 0, 0x200, &g_MemCardsBasicInfo[arg0->field_4].basicSaveInfoPtr_14[D_800B2618], sizeof(s_func_8002FB64)) != 0)
+            {
+                arg0->field_10 = 7;
+            }
+            break;
+            
+        case 7:
+            memCardState = Savegame_CardResult();
+            switch (memCardState)
+            {
+                case 0:
+                    Savegame_GameMemDataClear(arg0->field_4);
+                    arg0->field_14          = 0;
+                    ptr->memoryCardStatus_0 = 1;
+                    break;
+                case 8:
+                case 9:
+                case 10:
+                    arg0->field_10 = 0;
+                    if (D_800B261C >= 3)
+                    {
+                        Savegame_GameMemDataClear(arg0->field_4);
+                        arg0->field_14          = 10;
+                        ptr->memoryCardStatus_0 = 5;
+                        break;
+                    }
+                    D_800B261C++;
+                    arg0->field_10 = 2;
+                    break;
+                case 11:
+                    arg0->field_10 = 8;
+                    break;
+            }
+            break;
+            
+        case 8:
+            temp_a1 = &g_MemCardsBasicInfo[arg0->field_4].basicSaveInfoPtr_14[D_800B2618];
+            if (SaveGame_ChecksumValidate(&temp_a1->field_FC, (u8 *)temp_a1, sizeof(s_func_8002FB64)) != 0)
+            {
+                ptr->isFileUsed_4[D_800B2618] = 1;
+                arg0->field_10                = 5;
+                return;
+            }
+            
+            if (++D_800B2620 >= 3)
+            {
+                arg0->field_10                = 5;
+                ptr->isFileUsed_4[D_800B2618] = 3;
+                return;
+            }
+            
+            arg0->field_10 = 6;
+            break;
+            
+        case 9:
+            ptr->field_18           = func_8002F278(arg0->field_4, &D_800B2628);
+            arg0->field_14          = 11;
+            ptr->memoryCardStatus_0 = 3;
+            break;
+    }
+}
+#else
 INCLUDE_ASM("asm/bodyprog/nonmatchings/memcard", func_8002ED7C);
+#endif
 
 s32 func_8002F278(s32 arg0, s_CardDirectory* dir) // 0x8002F278
 {
@@ -431,14 +641,33 @@ void func_8002FD5C(s32 arg0, s32 arg1, s32 arg2) // 0x8002FD5C
 {
     s_func_8002FB64* ptr;
 
-    ptr = (s_func_8002FB64*)D_800B5508.field_0[arg0].field_14;
+    ptr = (s_func_8002FB64*)g_MemCardsBasicInfo[arg0].basicSaveInfoPtr_14;
     ptr = &ptr[arg1];
 
     func_8002FDB0(arg0, arg1, arg2);
     Savegame_ChecksumUpdate(&ptr->field_FC, ptr, sizeof(s_func_8002FB64));
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/memcard", func_8002FDB0);
+void func_8002FDB0(s32 arg0, s32 arg1, s32 arg2) 
+{
+    s32 i;
+    s32 s1;
+    s_func_8002FDB0 sp10;  
+
+    s1 = 0;
+
+    for (i = 0; i < 8; i++)
+    {
+        func_8002FE70(i, &sp10.unk0);
+        
+        if (s1 < sp10.unk0)
+        {
+            s1 = sp10.unk0;
+        }
+    }
+    
+    g_MemCardsBasicInfo[arg0].basicSaveInfoPtr_14[arg1].file_saveDataInfo_4[arg2].unk_0 = s1 + 1;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/memcard", func_8002FE70);
 
@@ -467,7 +696,7 @@ s32 Savegame_ChecksumValidate(s_ShSavegameFooter* saveFooter, s8* saveData, s32 
 u8 Savegame_ChecksumGenerate(s8* saveData, s32 saveDataLength) // 0x8002FFD0
 {
     u8  checksum = 0;
-    int i        = 0;
+    s32 i        = 0;
 
     for (i = 0; i < saveDataLength;)
     {

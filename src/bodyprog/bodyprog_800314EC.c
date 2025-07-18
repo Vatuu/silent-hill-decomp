@@ -886,7 +886,7 @@ void MainLoop() // 0x80032EE0
 
     // Initialize engine.
     GsInitVcount();
-    func_8002E630();
+    Savegame_CardCleanInit();
     func_8002E7BC();
     func_8002E85C();
     Joy_Init();
