@@ -514,7 +514,7 @@ typedef struct
     u16 field_2;
     u16 field_4;
     u16 field_6;
-    s16 field_8;
+    u16 field_8[1]; // unknown size
     s16 field_A;
     s16 field_C;
     u16 field_E;
@@ -573,7 +573,8 @@ typedef struct
 
 typedef struct
 {
-    s8  unk_0[2];
+    s8  field_0;
+    s8  unk_1[1];
     u16 field_2;
     u32 field_4;
     s32 field_8;
@@ -1026,6 +1027,8 @@ extern u16 D_800A9774[];
 
 extern u16 D_800A9858[];
 
+extern s_800C37D4 D_800A986C[];
+
 extern char* D_800A9A8C[]; // `Gfx_MainMenu_MainTextDraw` strings. TODO: Local .rodata.
 
 extern s8 D_800A98FC[];
@@ -1210,6 +1213,8 @@ extern u32 D_800A9FB0;
 extern s32 D_800A9FB4[];
 
 extern s_800C37D8 D_800AA274[];
+
+extern u8 D_800AA5E0[];
 
 extern u8 D_800AA604[][16];
 
@@ -1436,7 +1441,7 @@ extern u8 g_Sd_VolumeXa; // 0x800C1686
 
 extern u8 g_Sd_VolumeSe; // 0x800C1684
 
-extern s8 g_Sd_ReverbDepth; // 0x800C1687;
+extern u8 g_Sd_ReverbDepth; // 0x800C1687;
 
 extern u8 D_800C1673;
 
@@ -1973,9 +1978,15 @@ void Sd_SetReverbEnable(s32 mode);
 
 void func_80047B24(s32 arg0);
 
+void func_80047B80();
+
 void func_80047D1C();
 
 void func_80047D50();
+
+void func_80047DB0();
+
+void func_80047E3C();
 
 void func_80047F18();
 

@@ -247,7 +247,7 @@ void sd_work_init() // 0x80045E44
     }
 
     D_800C1658.field_6            = 0;
-    D_800C1658.field_8            = 0;
+    D_800C1658.field_8[0]         = 0;
     D_800C1658.field_A            = 0;
     D_800C1658.field_C            = 0;
     D_800C1658.field_4            = 0;
@@ -1099,7 +1099,74 @@ void func_80047B24(s32 arg0) // 0x80047B24
     D_800C1658.field_15 = 1;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/bodyprog_80045A7C", func_80047B80);
+void func_80047B80() // 0x80047B80
+{
+    u8 temp_a0;
+    u8 var_a1;
+
+    switch (D_800C1670.field_0)
+    {
+        case 0:
+            var_a1     = D_800C16A8[0];
+            D_800C37D4 = &D_800A986C[var_a1];
+            D_800C37C8 = D_800C37D4->field_0;
+
+            if (D_800C37C8)
+            {
+                if (D_800C1658.field_8[D_800C37C8 - 1] == var_a1)
+                {
+                    D_800C1670.field_0  = 0;
+                    D_800C1658.field_15 = 0;
+                    func_80047A70();
+                    break;
+                }
+
+                D_800C1658.field_8[D_800C37C8 - 1] = var_a1;
+            }
+
+            if (var_a1 >= 0xAA && var_a1 <= 0xCC)
+            {
+                temp_a0 = D_800AA5E0[var_a1 - 0xAA];
+                if (temp_a0 != g_Sd_ReverbDepth)
+                {
+                    Sd_SetReverbDepth(temp_a0);
+                }
+            }
+
+            D_800C1670.field_0 = 1;
+            break;
+
+        case 1:
+            func_80047D1C();
+            break;
+        case 2:
+            func_80047D50();
+            break;
+        case 3:
+            func_80047DB0();
+            break;
+        case 4:
+            func_80047E3C();
+            break;
+        case 5:
+            func_80047F18();
+            break;
+        case 6:
+            func_80048000();
+            break;
+        case 7:
+            func_8004807C();
+            break;
+        case 8:
+            func_800480FC();
+            break;
+        case 9:
+            func_800481F8();
+            break;
+        default:
+            break;
+    }
+}
 
 void func_80047D1C() // 0x80047D1C
 {

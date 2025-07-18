@@ -67,7 +67,6 @@ segments:
       - [0x920, rodata]
       - [0x109C, .rodata, libsd/bodyprog_80045A7C]  # Jumptable: `Sd_EngineCmd`
                                                     # Jumptable: `func_80045BD8`
-      - [0x1198, rodata]
       - [0x11C4, .rodata, bodyprog_CD_80047D50] # Jumptable: `func_800482D8`
       - [0x11D8, rodata]
       - [0x1334, .rodata, item_screens]
@@ -77,8 +76,8 @@ segments:
       #- [0x34C0, .rodata, item_screens]
       #- [0x39C4, rodata]
       - [0x5CF0, .rodata, view/vc_main] # Jumptable: `vcRetFarWatchRate`
-      - [0x5D08, .rodata, view/vc_main] # Jumptable: `vcSetFlagsByCamMvType`
-      - [0x5D20, .rodata, view/vc_main] # Jumptable: `vcMixSelfViewEffectToWatchTgtPos`
+                                        # Jumptable: `vcSetFlagsByCamMvType`
+                                        # Jumptable: `vcMixSelfViewEffectToWatchTgtPos`
       - [0x5F9C, .rodata, bodyprog_80085D78] # Jumptables
       - [0x6044, rodata]
       # - [0x604C, .rodata, bodyprog_80085D78] # Jumptable: `func_80087AF4`
