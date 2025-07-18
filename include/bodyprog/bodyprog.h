@@ -5,6 +5,7 @@
 #include "bodyprog/text_draw.h" // TODO: Add to .c files that make use of this instead of including here.
 #include "bodyprog/vw_system.h"
 #include "main/fsqueue.h"
+#include "types.h"
 
 #define TEMP_MEMORY_ADDR ((s8*)0x801A2600)
 
@@ -650,14 +651,6 @@ typedef struct
 
 typedef struct
 {
-    s8   unk_0[216];
-    void (*routine_D8)();
-    s8   unk_DC[8];
-    s32  (*routine_E4)(s_SubCharacter* chara0, s_SubCharacter* chara1);
-} s_D_800C957C;
-
-typedef struct
-{
     VECTOR3 field_0;
     VECTOR3 field_C;
     s8      unk_18[6];
@@ -851,7 +844,7 @@ typedef struct
 /** TODO: `g_MapOverlayHeader` is part of the map overlay BIN files. Maybe should be moved to `maps/shared.h`. */
 typedef struct _MapOverlayHeader
 {
-    s_UnkStruct2_MO* field_0;
+    s_UnkStruct2_MO*  field_0;
     s8                (*getMapRoomIdxFunc_4)(s32 x, s32 y); // Called by `func_80036420`.
     s8                field_8;
     s8                unk_9[3];
@@ -882,11 +875,22 @@ typedef struct _MapOverlayHeader
     void              (*func_C8)();
     void              (*func_CC)(s32);
     s32               (*func_D0)(s32, void*, s16, s32); // 0x800C964C
-    s8                unk_D4[24];
+    s32               (*func_D4)(s_SubCharacter*); // Assumed return type.
+    void              (*func_D8)(); // Assumed return type.
+    void              (*func_DC)(s_SubCharacter*); // Assumed return type.
+    s8                unk_E0[4];
+    s32               (*func_E4)(s_SubCharacter*, s_SubCharacter*); // Assumed return type.
+    s64               (*func_E8)(s_SubCharacter*); // Is it really `s64`???
     s32               (*func_EC)();
     s8                unk_F0[24];
     s32               (*func_108)(s32, s32);
-    s8                unk_10C[48];
+    s8                unk_10C[24];
+    void              (*func_124)(s_SubCharacter*); // Assumed return type.
+    s32               (*func_128)(s_SubCharacter*); // Assumed return type.
+    s32               (*func_12C)(s_SubCharacter*); // Assumed return type.
+    s8                unk_130[4];
+    s32               (*func_134)(s_SubCharacter*); // Assumed return type.
+    s32               (*func_138)(s_SubCharacter*); // Assumed return type.
     s32               (*func_13C)(s32, s32, void*, s16, s32); // 0x800C96B8
     s8                unk_140[40];
     void              (*func_168)(void*, void*, void*);
@@ -954,8 +958,6 @@ extern u32 D_80025DC0[];
 extern RECT D_80028A20;
 
 extern s_8002AAE0 D_8002AAE0;
-
-extern RECT D_8002AB10;
 
 extern RECT D_8002ABA4;
 
@@ -1611,26 +1613,6 @@ extern s_800C4818 D_800C4818;
 extern s32 D_800C489C;
 
 extern s32 D_800C48F0;
-
-extern s_D_800C957C D_800C957C;
-
-extern s32 (*D_800C9650)(s_SubCharacter*, s_SubCharacter*);
-
-extern void (*D_800C9658)(s_SubCharacter*, s_SubCharacter*);
-
-extern void (*D_800C9660)(s_SubCharacter*, s_SubCharacter*);
-
-extern s64 (*D_800C9664)(s_SubCharacter*, s_SubCharacter*); // Is it really `s64`???
-
-extern void (*D_800C96A0)(s_SubCharacter*, s_SubCharacter*);
-
-extern s32 (*D_800C96A4)(s_SubCharacter*, s_SubCharacter*);
-
-extern s32 (*D_800C96A8)(s_SubCharacter*, s_SubCharacter*);
-
-extern s32 (*D_800C96B0)(s_SubCharacter*, s_SubCharacter*);
-
-extern s32 (*D_800C96B4)(s_SubCharacter*, s_SubCharacter*); // or this???
 
 extern RECT D_801E557C[];
 
