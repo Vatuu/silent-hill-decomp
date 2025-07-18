@@ -162,6 +162,8 @@ void Inventory_Logic(); // 0x8004D518
  */
 void func_8004E6D4(s32 arg0);
 
+void Gfx_Inventory_CmdOptionsDraw(); // 0x8004E864
+
 void Gfx_Inventory_ScrollArrowsDraw(s32* invSelectionId); // 0x8004EC7C
 
 // Unused?
@@ -218,6 +220,8 @@ void Gfx_Items_RenderInit(); // 0x80054558
  * buggy animations.
  */
 void Inventory_ExitAnimFixes(); // 0x80054634
+
+void func_800548D8(s32 arg0); // 0x800548D8
 
 void Gfx_Items_SetAmbientLighting(); // 0x80054928
 

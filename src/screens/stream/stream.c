@@ -1,5 +1,6 @@
 #include "game.h"
 
+#include <libetc.h>
 #include <libds.h>
 #include <libpress.h>
 

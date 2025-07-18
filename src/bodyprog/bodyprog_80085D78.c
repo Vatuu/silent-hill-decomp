@@ -1,5 +1,8 @@
 #include "game.h"
 
+#include <libpad.h>
+#include <strings.h>
+
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math.h"
 #include "main/fsqueue.h"

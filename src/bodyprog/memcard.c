@@ -6,6 +6,7 @@
 
 #include <libapi.h>
 #include <limits.h>
+#include <strings.h>
 #include <sys/file.h>
 
 void func_8002E630() // 0x8002E630

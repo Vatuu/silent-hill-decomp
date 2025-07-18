@@ -267,10 +267,16 @@ void Gfx_SaveSlotMemCardMsgBoxShineDraw(s32 slotIdx);
 /** Draws transparent background and scroll bar. */
 void Gfx_SaveSlotBoxDraw(s32 slotIdx, s32 saveCount, s32 selectedSaveIdx, s32 selectedSaveOffsetY);
 
+void Gfx_SaveEntryBorderDraw(s_SavegameEntry* saveEntry, s_SavegameEntry* nextSaveEntry, s32 saveIdx, s32 slotIdx); // 0x801E4D90
+
 /** Draws message box that says "Now checking MEMEORY CARD" or "MEMORY CARD is not inserted". */
 void Gfx_SaveSlotMemCardMsgBoxDraw(s32 slotIdx, s32 entryType);
 
 void Gfx_SaveSlotMemCardMsgBoxSubDraw(s_LineBorder* borderLines, s_QuadBorder* borderGlowQuads, s_ColoredLine2d* coloredLine, s32 slotIdx);
+
+void Gfx_RectSaveInfoDraw(s_Line2d* line); // 0x801E5898
+
+void Gfx_SaveDataInfoDraw(s32 slotIdx, s32 selectedSaveIdx); // 0x801E5E18
 
 /** Updates the save screen. */
 void GameState_SaveScreen_Update();
@@ -283,6 +289,8 @@ void Savegame_ContinueLogic();
 
 void Gfx_SaveBackgroundDraw();
 
+void Gfx_SaveScreen(); // 0x801E70C8
+
 /** @brief Handles the text that shows when formatting, saving, or loading a file.
  *
  *  Used in: `GameState_SaveScreen_Update` and `GameState_DeathLoadScreen_Update`.
@@ -290,6 +298,10 @@ void Gfx_SaveBackgroundDraw();
 void Gfx_MemCardState();
 
 void Gfx_WriteOptionSaveDraw(s32 arg0, s32 optionIdx);
+
+void Gfx_SavedFlashDraw(); // 0x801E3E78
+
+void Gfx_SaveSlotBorderDraw(); // 0x801E4010
 
 void Gfx_WriteOptionSave(s32 arg0, s32 optionIdx);
 

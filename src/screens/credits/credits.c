@@ -1,6 +1,9 @@
 #include "game.h"
 
+#include <libetc.h>
+
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/credits.h"
 #include "bodyprog/math.h"
 #include "main/rng.h"
 #include "screens/credits/credits.h"

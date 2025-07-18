@@ -1697,8 +1697,6 @@ void func_80032D1C();
 /** Bodyprog entrypoint. Called by `main`. */
 void MainLoop();
 
-void func_80037188();
-
 void Chara_PositionUpdateFromParams(s_AreaLoadParams* params);
 
 void func_8003943C();
@@ -1771,6 +1769,8 @@ void func_8003FE04(s_sub_StructUnk3* arg0, s_sub_StructUnk3* arg1, s_sub_StructU
 s32 func_8003FEC0(s_sub_StructUnk3* arg0);
 
 void func_8003FF2C(s_StructUnk3* arg0);
+
+void func_80040004(s_800BCE18* arg0);
 
 void func_80040014();
 
@@ -1890,29 +1890,9 @@ void sd_work_init();
 
 u8 func_80046048(u16 cmd, s8 arg1, u8 vol); // SD Func. Last arg is a u8 value.
 
+void func_800468EC();
+
 void func_8004690C(u16 arg0);
-
-void func_80046B04();
-
-/** Sound func. */
-void func_80046B78();
-
-u8 func_80046BB4(u8 arg0);
-
-void func_80046C54(u8 arg0, u8 arg1);
-
-s32 func_80046DCC(s32 idx);
-
-void func_8004729C(u16 arg0);
-
-void func_800472BC(s32 arg0);
-
-void func_8004760C();
-
-void func_800478DC(u8 arg0);
-
-/** Args are volume levels. */
-void Sd_SetVolume(u8 arg0, s16 arg1, u8 arg2);
 
 void func_8004692C(u16);
 
@@ -1926,7 +1906,31 @@ void func_80046A70();
 
 void func_80046AD8();
 
+void func_80046B04();
+
+/** Sound func. */
+void func_80046B78();
+
+u8 func_80046BB4(u8 arg0);
+
+void func_80046C54(u8 arg0, u8 arg1);
+
 void func_80046D3C(u16);
+
+s32 func_80046DCC(s32 idx);
+
+void func_8004729C(u16 arg0);
+
+void func_800472BC(s32 arg0);
+
+void func_8004760C();
+
+/** Args are volume levels. */
+void Sd_SetVolume(u8 arg0, s16 arg1, u8 arg2);
+
+void func_800478DC(u8 arg0);
+
+void func_80047A70();
 
 void func_8004729C(u16);
 
@@ -2000,10 +2004,16 @@ void func_80054720(void*, s32, s32);
 
 void func_8005487C(s32);
 
+void func_80055330(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6);
+
 void func_800553C4(u8 arg0, u8 arg1, u8 arg2, u8 arg3);
+
+void func_800553E0(u32 arg0, u8 arg1, u8 arg2, u8 arg3, u8 arg4, u8 arg5, u8 arg6);
 
 /** `arg0` type assumed. */
 void func_80055434(VECTOR3* vec);
+
+void func_80055814(s32 arg0);
 
 void func_80054A04(u8 arg0);
 
@@ -2313,6 +2323,8 @@ void Settings_RestoreDefaults();
 
 void Settings_RestoreControlDefaults(s32 arg0);
 
+void nullsub_800334C8();
+
 s32 func_800334D8(s32 idx);
 
 s32 func_80033548();
@@ -2436,6 +2448,10 @@ void func_80037124();
 
 void func_80037154();
 
+void func_80037188();
+
+void func_80037334();
+
 void func_80037388();
 
 void func_800373CC(s32);
@@ -2526,7 +2542,17 @@ void func_8003CBA4(s_800BCE18_2BEC* arg0);
 
 void func_8003CC7C(s_800BCE18_2BEC_0* arg0, MATRIX* arg1, MATRIX* arg2);
 
+void func_8003D354(s32* arg0, s32 arg1);
+
+void func_8003D3BC(s_FsImageDesc* arg0, s32 arg1, s32 arg2);
+
+s32 func_8003D7D4(u32 arg0, s32 arg1, void* arg2, s_FsImageDesc* arg3);
+
 void func_8003D938();
+
+void func_8003D95C();
+
+void func_8003D9C8(s_800BCE18_0_CC* arg0);
 
 void func_8003DA9C(s32 arg0, GsCOORDINATE2* coord, s32 arg2, s16 arg3, s32 arg4);
 
@@ -2555,6 +2581,8 @@ void GameFs_FlameGfxLoad();
 
 void func_8003EB54();
 
+void func_8003EBF4(s_MapOverlayHeader* arg0);
+
 void func_8003EBA0();
 
 void func_8003ECBC();
@@ -2570,6 +2598,12 @@ void func_8003EDA8();
 void func_8003EDB8(s32* arg0, s32* arg1);
 
 void func_8003EE30(s32 arg0, s8* arg1, s32 arg2, s32 arg3);
+
+void func_8003EEDC(s32 arg0, s32 arg1);
+
+void func_8003EF74(s_sub_StructUnk3* arg0, s_sub_StructUnk3* arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
+
+void func_8003F08C(s_StructUnk3* arg0, s_sub_StructUnk3* arg1);
 
 void func_8003F170();
 
@@ -2647,6 +2681,8 @@ s32 func_800808AC();
 
 /** Returns a Q shift based on a magnitude. */
 s32 Math_GetMagnitudeShift(s32 mag);
+
+s32 func_80080A10();
 
 u8 func_8008A2E0(s32 arg0);
 

@@ -1,6 +1,7 @@
 
 #include "main/fsqueue.h"
 #include "main/fsmem.h"
+#include "bodyprog/bodyprog.h"
 
 #include <libapi.h>
 #include <libcd.h>

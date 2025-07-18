@@ -37,6 +37,8 @@
 #define HAS_MAP(mapIdx) \
     ((((u32*)&g_SavegamePtr->hasMapsFlags_164)[(mapIdx) / 32] >> ((mapIdx) % 32)) & (1 << 0))
 
+struct _SubCharacter; // Forward declaration.
+
 typedef enum _MapOverlayId
 {
     MapOverlayId_MAP0_S00 = 0,

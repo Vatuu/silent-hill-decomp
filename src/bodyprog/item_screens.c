@@ -3,6 +3,7 @@
 #include "gtemac.h"
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/credits.h"
 #include "bodyprog/item_screens.h"
 #include "bodyprog/math.h"
 

@@ -1,6 +1,9 @@
 #include "game.h"
 #include "inline_no_dmpsx.h"
 
+#include <libapi.h>
+#include <strings.h>
+
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math.h"
 #include "bodyprog/player_logic.h"
@@ -10,7 +13,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80055028); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_800550D0); // 0x800550D0
 
-void func_80055330(s8 arg0, s32 arg1, s8 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6) // 0x80055330
+void func_80055330(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6) // 0x80055330
 {
     D_800C4168.field_0  = arg0;
     D_800C4168.field_20 = arg1;

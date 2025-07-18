@@ -2,6 +2,7 @@
 
 #include <libspu.h>
 
+#include "bodyprog/bodyprog.h"
 #include "bodyprog/libsd.h"
 
 void tone_adsr_mem(s16 vab_id) // 0x8009EDA4

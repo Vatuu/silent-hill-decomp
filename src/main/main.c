@@ -5,6 +5,7 @@
 #include <libetc.h>
 #include <libcd.h>
 #include <libsnd.h>
+#include <libspu.h>
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math.h"

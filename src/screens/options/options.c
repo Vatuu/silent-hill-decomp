@@ -1,6 +1,9 @@
 #include "game.h"
 
+#include <libetc.h>
+
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/item_screens.h"
 #include "bodyprog/math.h"
 #include "screens/options/options.h"
 #include "screens/stream/stream.h"

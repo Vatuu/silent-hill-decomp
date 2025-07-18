@@ -1,6 +1,7 @@
 #include "game.h"
 
 #include <libcd.h>
+#include <libetc.h>
 #include <libspu.h>
 
 #include "bodyprog/bodyprog.h"

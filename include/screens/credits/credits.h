@@ -1,5 +1,5 @@
-#ifndef _CREDITS_H
-#define _CREDITS_H
+#ifndef _SCREENS_CREDITS_H
+#define _SCREENS_CREDITS_H
 
 #include "common.h"
 
