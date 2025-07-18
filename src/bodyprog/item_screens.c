@@ -1991,7 +1991,7 @@ static const DVECTOR D_800262FC[] =
 extern DVECTOR D_800262FC[];
 
 /** Some sort of handler for the inventory and result screen. */
-void Gfx_ItemScreens_RenderInit(s32 arg0) // 0x8004F764
+void Gfx_ItemScreens_RenderInit(u32* arg0) // 0x8004F764
 {
     GsDOBJ2* ptr;
     s32      i;
@@ -2069,7 +2069,7 @@ void Gfx_ItemScreens_RenderInit(s32 arg0) // 0x8004F764
     {
         Gfx_Results_ItemsPosition(g_SavegamePtr->clearGameCount_24A);
         Gfx_Results_ItemsDisplay(g_SavegamePtr->clearGameCount_24A);
-        Results_DisplayInfo(arg0);
+        Results_DisplayInfo(arg0); // TODO: Takes no args in credits.c?
     }
 
     func_8004FB0C();
