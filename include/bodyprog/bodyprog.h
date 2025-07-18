@@ -295,8 +295,11 @@ STATIC_ASSERT_SIZEOF(s_800A992C, 24);
 typedef struct
 {
     u8  field_0;
-    s8  unk_1[7];
-    s32 field_8;
+    u8  unk_1[3];
+    u32 field_4 : 24;
+    u8  field_4_24 : 8;
+    u32 field_8 : 24;
+    u8  field_8_24 : 8;
 } s_800AA894;
 STATIC_ASSERT_SIZEOF(s_800AA894, 12);
 
@@ -501,6 +504,12 @@ STATIC_ASSERT_SIZEOF(s_800C117C, 28);
 
 typedef struct
 {
+    u8 field_0;
+    u8 field_1;
+} s_800C15F0;
+
+typedef struct
+{
     u16 field_0;
     u16 field_2;
     u16 field_4;
@@ -544,7 +553,7 @@ typedef struct
 
 typedef struct
 {
-    s8  unk_0[4];
+    s32 field_0;
     s32 field_4;
     s32 field_8;
 } s_800C1688;
@@ -1375,19 +1384,29 @@ extern s16 D_800C15C6;
 
 extern s16 D_800C15C8;
 
+extern u16 D_800C15CA;
+
+extern u32 D_800C15CC;
+
+extern u16 D_800C15D0;
+
+extern u32 D_800C15D4;
+
 extern s32 D_800C15D8;
 
 extern s32 D_800C15DC; // Index.
 
 extern s32 D_800C15E0;
 
-extern u8 D_800C15F0;
+extern s_800C15F0 D_800C15F0;
 
 extern u16 D_800C15F8[];
 
 extern s16 D_800C1628[];
 
 extern s_800C1658 D_800C1658;
+
+extern u16 D_800C165A;
 
 extern u16 D_800C1666;
 
@@ -1398,6 +1417,10 @@ extern s8 D_800C166C;
 extern s8 D_800C166E;
 
 extern s8 D_800C166F;
+
+extern u8 D_800C1671;
+
+extern s16 D_800C167A;
 
 extern s16 D_800C167C;
 
@@ -1919,9 +1942,13 @@ void func_80046D3C(u16);
 
 s32 func_80046DCC(s32 idx);
 
+void func_80046E00();
+
 void func_8004729C(u16 arg0);
 
 void func_800472BC(s32 arg0);
+
+void func_80047308();
 
 void func_8004760C();
 

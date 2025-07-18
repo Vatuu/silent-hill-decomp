@@ -88,6 +88,8 @@ extern s_800C48E0 D_800C48E0;
 
 void func_800904F4();
 
+void Results_DisplayInfo(u32* arg0); // 0x80090664
+
 void func_80090664();
 
 u32 func_8009134C(u32 n);

@@ -9,6 +9,8 @@
 #include "bodyprog/math.h"
 #include "main/fsqueue.h"
 
+extern CdlLOC D_800C15E8;
+
 /** This file could possibly be `sdmgr.c` or
 * at least starting from `sd_init` function it
 * could be.
@@ -231,8 +233,8 @@ void sd_work_init() // 0x80045E44
     SdSetSerialAttr(0, 0, 0);
     Sd_SetVolXa(0, 0);
 
-    D_800C15F0 = CdlModeSpeed;
-    func_80048954(CdlSetmode, &D_800C15F0, NULL);
+    D_800C15F0.field_0 = CdlModeSpeed;
+    func_80048954(CdlSetmode, &D_800C15F0.field_0, NULL);
 
     for(D_800C15B8 = 0; D_800C15B8 < 31; D_800C15B8++)
     {
@@ -706,7 +708,130 @@ s32 func_80046DCC(s32 idx) // 0x80046DCC
     return (D_800AA894[idx & 0xFFF].field_8 & 0xFFFFFF) + 32;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/bodyprog_80045A7C", func_80046E00);
+void func_80046E00() // 0x80046E00
+{
+    u32* temp_a1;
+    u32* temp_v0;
+
+    D_800C1658.field_0++;
+
+    switch (D_800C1671)
+    {
+        case 0:
+            if (D_800C1658.field_14 == 0)
+            {
+                D_800C167E = 0x18;
+            }
+            D_800C15CA = D_800C1658.field_2;
+            switch (D_800C15CA)
+            {
+                case 0x35:
+                case 0x38:
+                case 0x254:
+                case 0x255:
+                case 0x256:
+                case 0x258:
+                case 0x25A:
+                case 0x264:
+                case 0x266:
+                case 0x26C:
+                case 0x291:
+                case 0x25E:
+                    D_800C167A = Sd_GetVolSe(0x54);
+                    break;
+
+                case 0x2D3:
+                case 0x2D5:
+                    D_800C167A = 0x32;
+                    break;
+
+                case 0x2D4:
+                    D_800C167A = 0x28;
+                    break;
+
+                default:
+                    D_800C167A = 0x54;
+                    break;
+            }
+
+            D_800C1678.volumeXa_0 = D_800C1678.field_2;
+            Sd_SetVolXa(D_800C1678.field_2, D_800C1678.field_2);
+            D_800C15F0.field_0 = CdlModeSF | CdlModeRT | CdlModeSpeed;
+            D_800C1671         = 1;
+            break;
+
+        case 1:
+            if (!func_80048954(CdlSetmode, &D_800C15F0.field_0, NULL))
+            {
+                D_800C1658.field_0 = 0;
+                D_800C1671         = 2;
+            }
+            break;
+
+        default:
+            break;
+
+        case 2:
+            D_800C15F0.field_0 = D_800AA894[D_800C15CA].field_8_24;
+            D_800C15F0.field_1 = D_800AA894[D_800C15CA].field_4_24;
+            D_800C1671         = 3;
+            break;
+
+        case 3:
+            if (!func_80048954(CdlSetfilter, &D_800C15F0.field_0, NULL))
+            {
+                D_800C1658.field_0 = 0;
+                D_800C1671         = 4;
+            }
+            break;
+
+        case 4:
+            // HACK: Needed for match, weird code.
+            temp_a1 = g_FileXaLoc;
+            temp_v0 = &temp_a1[D_800AA894[D_800C15CA].field_0];
+            D_800C15CC = *temp_v0;
+            D_800C15CC += 0x96 + D_800AA894[D_800C15CA].field_4;
+
+            D_800C1688.field_0 = D_800AA894[D_800C15CA].field_8 + 0x20;
+
+            D_800C1671        = 5;
+            D_800C15E8.sector = itob(D_800C15CC % 75);
+            D_800C15CC /= 75;
+            D_800C15E8.second = itob(D_800C15CC % 60);
+            D_800C15CC /= 60;
+            D_800C15E8.minute = itob(D_800C15CC);
+
+            break;
+
+        case 5:
+            if (!func_80048954(CdlSeekL, (u8*)&D_800C15E8, NULL))
+            {
+                D_800C1658.field_0 = 0;
+                D_800C1671         = 6;
+            }
+            break;
+
+        case 6:
+            if (!func_80048954(CdlReadN, NULL, NULL))
+            {
+                D_800C1658.field_0 = 0;
+                D_800C37DC         = 0;
+                D_800C1671         = 7;
+            }
+            break;
+
+        case 7:
+            D_800C1658.field_4 = D_800C15CA;
+            SdSetSerialAttr(0, 0, 1);
+            D_800C1688.field_8 = VSync(-1);
+            D_800C1688.field_4 = 0;
+            D_800C1671         = 0;
+            func_80047A70();
+            D_800C1658.field_0  = 0;
+            D_800C1658.field_16 = 0;
+            break;
+    }
+}
 
 void func_8004729C(u16 arg0) // 0x8004729C
 {
@@ -726,7 +851,75 @@ void func_800472BC(s32 arg0) // 0x800472BC
     func_800478DC(6);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/libsd/bodyprog_80045A7C", func_80047308);
+void func_80047308() // 0x80047308
+{
+    u32* temp_a1;
+    u32* temp_v0;
+
+    D_800C1658.field_0 += 1;
+
+    switch (D_800C1673)
+    {
+        case 0:
+            D_800C15D0 = D_800C165A;
+            Sd_SetVolXa(0, 0);
+            D_800C15F0.field_0 = CdlModeSF | CdlModeRT | CdlModeSpeed;
+            D_800C1673         = 1;
+            break;
+        case 1:
+            if (!func_80048954(CdlSetmode, &D_800C15F0.field_0, NULL))
+            {
+                D_800C1658.field_0 = 0;
+                D_800C1673         = 2;
+            }
+            break;
+        case 2:
+            D_800C15F0.field_0 = D_800AA894[D_800C15D0].field_8_24;
+            D_800C15F0.field_1 = D_800AA894[D_800C15D0].field_4_24;
+            D_800C1673         = 3;
+            return;
+        case 3:
+            if (!func_80048954(CdlSetfilter, &D_800C15F0.field_0, NULL))
+            {
+                D_800C1658.field_0 = 0;
+                D_800C1673         = 4;
+            }
+            break;
+        case 4:
+            // HACK: Needed for match, weird code.
+            temp_a1    = g_FileXaLoc;
+            temp_v0    = &temp_a1[D_800AA894[D_800C15D0].field_0];
+            D_800C15D4 = *temp_v0;
+            D_800C15D4 += 0x96 + D_800AA894[D_800C15D0].field_4;
+
+            D_800C1688.field_0 = D_800AA894[D_800C15D0].field_8 + 0x20;
+
+            D_800C1673        = 5;
+            D_800C15E8.sector = itob(D_800C15D4 % 75);
+            D_800C15D4 /= 75;
+            D_800C15E8.second = itob(D_800C15D4 % 60);
+            D_800C15D4 /= 60;
+            D_800C15E8.minute = itob(D_800C15D4);
+
+            break;
+        case 5:
+            if (!func_80048954(CdlSeekL, &D_800C15E8, NULL))
+            {
+                D_800C1658.field_0 = 0;
+                D_800C1673         = 6;
+            }
+            break;
+        case 6:
+            if (!func_80048954(CdlPause, NULL, NULL))
+            {
+                D_800C1673 = 0;
+                D_800C37DC = 0;
+                func_80047A70();
+                D_800C1658.field_0 = 0;
+            }
+            break;
+    }
+}
 
 void func_8004760C() // 0x8004760C
 {

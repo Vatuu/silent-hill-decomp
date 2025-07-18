@@ -67,7 +67,7 @@ segments:
       - [0x920, rodata]
       - [0x109C, .rodata, libsd/bodyprog_80045A7C]  # Jumptable: `Sd_EngineCmd`
                                                     # Jumptable: `func_80045BD8`
-      - [0x1158, rodata]
+      - [0x1198, rodata]
       - [0x11C4, .rodata, bodyprog_CD_80047D50] # Jumptable: `func_800482D8`
       - [0x11D8, rodata]
       - [0x1334, .rodata, item_screens]
