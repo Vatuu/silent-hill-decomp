@@ -45,6 +45,7 @@ INSERT_OVLS     := $(PYTHON) $(TOOLS_DIR)/silentassets/insertovl.py
 GET_YAML_TARGET := $(PYTHON) $(TOOLS_DIR)/get_yaml_target.py
 PREBUILD        := $(TOOLS_DIR)/prebuild.sh
 POSTBUILD       := $(TOOLS_DIR)/postbuild.sh
+COMPTEST        := $(TOOLS_DIR)/compilationTest.sh
 
 # Flags
 OPT_FLAGS           := -O2
@@ -267,6 +268,12 @@ clean-progress: clean
 	rm -rf $(LINKER_DIR)
 	$(MAKE) generate
 	$(MAKE) progress
+
+compilation-test:
+	$(COMPTEST)
+
+compilation-test-sm:
+	$(COMPTEST) --skip-maps
 
 # Recipes
 

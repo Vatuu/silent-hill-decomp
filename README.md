@@ -405,8 +405,11 @@ Additional Make commands:
 * `clean-build`: Clears the project configuration without deleting files.
 * `clean-check`: Clears the project configuration without deleting files. After compilation, it compares checksums with the original files.
 * `objdiff-config`: Generates project configuration for [Objdiff.](https://github.com/encounter/objdiff)
+* `compilation-test`: Run progress and matching build processes for avoiding compilation errors.
 
 NOTE: `clean-build/clean-check` are obligatory if the configuration in the `Makefile` has been modified when intending to work on different overlays.
 
 ## Contributing
-Contributions are welcome. Following our [code conventions](https://github.com/Vatuu/silent-hill-decomp/blob/master/docs/Coding%20Conventions.md), feel free to contribute via a pull request or issue and join us in the [PS1/PS2 Decompilation](https://discord.gg/VwCPdfbxgm) Discord server's `#silent-hill` channel.
+Contributions are welcome. Feel free to contribute via pull request, follow our [analysis guide](https://github.com/Vatuu/silent-hill-decomp/blob/master/docs/Analysis%20Guide.md) (for people unfamiliarized with the decompilation workflow) and for functionality recognition follow [code conventions](https://github.com/Vatuu/silent-hill-decomp/blob/master/docs/Coding%20Conventions.md).
+
+You can also discuss with us through issues or visiting the `#silent-hill` channel at [PS1/PS2 Decompilation](https://discord.gg/VwCPdfbxgm) Discord.
