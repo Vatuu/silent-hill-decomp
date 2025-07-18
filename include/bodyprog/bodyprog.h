@@ -905,12 +905,6 @@ typedef struct _MapOverlayHeader
 } s_MapOverlayHeader;
 STATIC_ASSERT_SIZEOF(s_MapOverlayHeader, 2124); // Size incomplete.
 
-typedef struct _s_8002AAE0
-{
-    s32 field_0[5];
-} s_8002AAE0;
-STATIC_ASSERT_SIZEOF(s_8002AAE0, 20);
-
 typedef struct
 {
     s8 field_0;
@@ -956,8 +950,6 @@ extern u8 D_80025D6C[];
 extern u32 D_80025DC0[];
 
 extern RECT D_80028A20;
-
-extern s_8002AAE0 D_8002AAE0;
 
 extern RECT D_8002ABA4;
 

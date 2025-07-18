@@ -2497,7 +2497,9 @@ void vcRenewalCamMatAng(VC_WORK* w_p, VC_WATCH_MV_PARAM* watch_mv_prm_p, VC_CAM_
 
 void vcMakeNewBaseCamAng(SVECTOR* new_base_ang, VC_CAM_MV_TYPE cam_mv_type, VC_WORK* w_p) // 0x80084EDC
 {
-    s_8002AAE0 sp18;
+    static const s32 D_8002AAE0[] = {0, 170, 682, 1251, 1251, 0, 0}; // Last 2 could be compiler-added padding, but is needed for match.
+
+    s32        sp18[5];
     s16        temp_a0_3;
     s16        temp_v0;
     s16        new_base_ang_x;
@@ -2574,8 +2576,8 @@ void vcMakeNewBaseCamAng(SVECTOR* new_base_ang, VC_CAM_MV_TYPE cam_mv_type, VC_W
             new_base_ang_x = -new_base_ang_x;
         }
 
-        sp18           = D_8002AAE0;
-        new_base_ang_x = vwOresenHokan(&sp18.field_0, 5, new_base_ang_x, 0, FP_METER(0.25f));
+        memcpy(sp18, D_8002AAE0, 5 * sizeof(s32));
+        new_base_ang_x = vwOresenHokan(sp18, 5, new_base_ang_x, 0, FP_METER(0.25f));
         new_base_ang_x = CLAMP(new_base_ang_x, 0, FP_ANGLE(90.0f));
 
         if (angle < 0)
