@@ -848,7 +848,7 @@ typedef struct
     u8 field_6;
 } s_UnkStruct2_MO;
 
-/** TODO: `g_MapOverlayHeader` is part of the overlay BIN files. Maybe should be moved to `maps/shared.h` or `dynamic/dynamic.h`. */
+/** TODO: `g_MapOverlayHeader` is part of the map overlay BIN files. Maybe should be moved to `maps/shared.h`. */
 typedef struct _MapOverlayHeader
 {
     s_UnkStruct2_MO* field_0;

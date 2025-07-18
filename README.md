@@ -410,6 +410,6 @@ Additional Make commands:
 NOTE: `clean-build/clean-check` are obligatory if the configuration in the `Makefile` has been modified when intending to work on different overlays.
 
 ## Contributing
-Contributions are welcome. Feel free to contribute via pull request, our [analysis guide](https://github.com/Vatuu/silent-hill-decomp/blob/master/docs/Analysis%20Guide.md) may help those people unfamiliarized with the decompilation workflow, for contributions to the repo please follow our [code conventions](https://github.com/Vatuu/silent-hill-decomp/blob/master/docs/Coding%20Conventions.md).
+Contributions are welcome! Feel free to open a pull request. To help familiarize yourself with the decompilation workflow, refer to our [Analysis Guide](https://github.com/Vatuu/silent-hill-decomp/blob/master/docs/Analysis%20Guide.md). For contributions to the repository, please follow our [Coding Conventions](https://github.com/Vatuu/silent-hill-decomp/blob/master/docs/Coding%20Conventions.md).
 
-You can also discuss with us through issues or visiting the `#silent-hill` channel at [PS1/PS2 Decompilation](https://discord.gg/VwCPdfbxgm) Discord.
+You can also reach out to us by opening an issue or joining the ``#silent-hill` channel on the [PS1/PS2 Decompilation](https://discord.gg/VwCPdfbxgm) Discord.

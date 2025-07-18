@@ -1,6 +1,15 @@
 #ifndef _DEMO_H
 #define _DEMO_H
 
+/** @brief This header is used to declare any variable, struct, or
+ * function part of `BODYPROG.BIN` identified to be related
+ * to the demo game system.
+ */
+
+// ========
+// STRUCTS
+// ========
+
 /** @brief Initial demo game state data, stored inside MISC/DEMOXXXX.DAT files. */
 typedef struct _DemoWork
 {
@@ -47,6 +56,10 @@ s_DemoFileInfo g_Demo_FileIds[DEMO_FILE_COUNT_MAX] = {
 
 #define DEMO_WORK()      ((s_DemoWork*)0x800FDE00)
 
+// ========
+// GLOBALS
+// ========
+
 // TODO: Make local. Used in `Demo_Update`.
 extern char D_8002B2D8[]; // "STEP ERROR:[H:"
 extern char D_8002B2E8[]; // "]/[M:"
@@ -78,11 +91,6 @@ extern s32 g_Demo_DemoStep; // 0x800C4894
 extern s32 g_Demo_VideoPresentInterval; // 0x800C4898
 
 extern u32 D_800FE5F8;
-
-/** @brief This header is used to declare any variable, struct, or
- * function part of `BODYPROG.BIN` identified to be related
- * to the demo game system.
- */
 
 // ==========
 // FUNCTIONS
