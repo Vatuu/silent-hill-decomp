@@ -179,6 +179,8 @@ void Gfx_SelectedOptionMain();
 /** @brief Draws the vignette for the main and extra options screens. */
 void Gfx_VignetteDraw();
 
+void Gfx_SettingsOptionsExtraDraw();
+
 /** @brief Draws the options for each setting used in the main options screen. */
 void Gfx_SettingsOptionsMainDraw();
 
