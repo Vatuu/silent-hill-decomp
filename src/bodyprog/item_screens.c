@@ -3,7 +3,7 @@
 #include "gtemac.h"
 
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/item_screens_system.h"
+#include "bodyprog/item_screens.h"
 #include "bodyprog/math.h"
 
 void func_8004BB4C(VbRVIEW* view, GsCOORDINATE2* coord, SVECTOR3* vec, s32 arg3) // 0x8004BB4C

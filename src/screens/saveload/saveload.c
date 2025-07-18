@@ -1,7 +1,7 @@
 #include "game.h"
 
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/save_system.h"
+#include "bodyprog/memcard.h"
 #include "bodyprog/math.h"
 
 #define SAVE_FLASH_TIMER_MAX 40

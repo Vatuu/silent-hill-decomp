@@ -1,0 +1,140 @@
+#ifndef _DEMO_H
+#define _DEMO_H
+
+/** @brief Initial demo game state data, stored inside MISC/DEMOXXXX.DAT files. */
+typedef struct _DemoWork
+{
+    s_ShSaveUserConfig config_0;
+    u8                 unk_38[200];
+    s_ShSavegame       savegame_100;
+    u8                 unk_37C[1148];
+    u32                frameCount_7F8;
+    u16                randSeed_7FC;
+} s_DemoWork;
+STATIC_ASSERT_SIZEOF(s_DemoWork, 2048);
+
+/** @brief Per-frame demo data, stored inside MISC/PLAYXXXX.DAT files. */
+typedef struct _DemoFrameData
+{
+    s_AnalogController analogController_0;
+    s8                 gameStateExpected_8; /** Expected value of `g_GameWork.gameState_594` before `analogController_0` is processed, if it doesn't match `Demo_Update` will display `STEP ERROR` and stop reading demo. */
+    u8                 videoPresentInterval_9;
+    s8                 unk_A[2];
+    u32                randSeed_C;
+} s_DemoFrameData;
+STATIC_ASSERT_SIZEOF(s_DemoFrameData, 16);
+
+/** @brief Associates a demo number/ID with PLAYXXXX.DAT/DEMOXXXX.DAT file IDs. */
+typedef struct _DemoFileInfo
+{
+    s16 demoFileId_0;       /** MISC/DEMOXXXX.DAT, initial gamestate for the demo and user config override. */
+    s16 playFileId_2;       /** MISC/PLAYXXXX.DAT, data of button presses/randseed for each frame. */
+    s32 (*canPlayDemo_4)(); /** Optional funcptr, returns whether this demo is eligible to be played (unused in retail demos). */
+} s_DemoFileInfo;
+STATIC_ASSERT_SIZEOF(s_DemoFileInfo, 8);
+
+#define DEMO_FILE_COUNT_MAX 5
+extern s_DemoFileInfo g_Demo_FileIds[DEMO_FILE_COUNT_MAX]; // 0x800AFDC4
+/* TODO: data migration
+s_DemoFileInfo g_Demo_FileIds[DEMO_FILE_COUNT_MAX] = {
+    { FILE_MISC_DEMO0009_DAT, FILE_MISC_PLAY0009_DAT, NULL },
+    { FILE_MISC_DEMO000A_DAT, FILE_MISC_PLAY000A_DAT, NULL },
+    { FILE_MISC_DEMO0003_DAT, FILE_MISC_PLAY0003_DAT, NULL },
+    { FILE_MISC_DEMO000B_DAT, FILE_MISC_PLAY000B_DAT, NULL },
+    { FILE_MISC_DEMO0005_DAT, FILE_MISC_PLAY0005_DAT, NULL },
+};
+*/
+
+#define DEMO_WORK()      ((s_DemoWork*)0x800FDE00)
+
+// TODO: Make local. Used in `Demo_Update`.
+extern char D_8002B2D8[]; // "STEP ERROR:[H:"
+extern char D_8002B2E8[]; // "]/[M:"
+extern char D_8002B2F0[]; // "]"
+
+extern s_DemoFrameData* g_Demo_PlayFileBufferPtr; // 0x800AFDC0
+
+extern s32 g_Demo_DemoId; // 0x800AFDB8
+
+extern u16 g_Demo_RandSeed; // 0x800AFDBC
+
+extern s32 D_800AFDF0;
+
+extern s32 g_Demo_DemoFileIdx; // 0x800C4840
+
+extern s32 g_Demo_PlayFileIdx; // 0x800C4844
+
+extern s_ShSaveUserConfig g_Demo_UserConfigBackup; // 0x800C4850
+
+extern u32 g_Demo_PrevRandSeed; // 0x800C4888
+
+extern u32 g_Demo_RandSeedBackup; // 0x800C488C
+
+// Current packet/frame in buffer.
+extern s_DemoFrameData* g_Demo_CurFrameData; // 0x800C4890
+
+extern s32 g_Demo_DemoStep; // 0x800C4894
+
+extern s32 g_Demo_VideoPresentInterval; // 0x800C4898
+
+extern u32 D_800FE5F8;
+
+/** @brief This header is used to declare any variable, struct, or
+ * function part of `BODYPROG.BIN` identified to be related
+ * to the demo game system.
+ */
+
+// ==========
+// FUNCTIONS
+// ==========
+
+s32 Demo_SequenceAdvance(s32 incrementAmt);
+
+void Demo_DemoDataRead();
+
+void Demo_PlayDataRead();
+
+s32 Demo_PlayFileBufferSetup();
+
+void Demo_DemoFileSavegameUpdate();
+
+void Demo_GameGlobalsUpdate();
+
+void Demo_GameGlobalsRestore();
+
+void Demo_GameRandSeedUpdate();
+
+void Demo_GameRandSeedRestore();
+
+void Demo_Start();
+
+void Demo_Stop();
+
+s32 func_8008F434(s32 arg0);
+
+s32 func_8008F470(s32 caseArg);
+
+void Demo_ExitDemo();
+
+void func_8008F518();
+
+s32 func_8008F520();
+
+/** Generates the backup random demo seed and stores it in `Demo_RandSeedBackup`. */
+void Demo_DemoRandSeedBackup();
+
+void Demo_DemoRandSeedRestore();
+
+void Demo_DemoRandSeedAdvance();
+
+s32 Demo_Update();
+
+s32 Demo_ControllerDataUpdate();
+
+s32 Demo_PresentIntervalUpdate();
+
+s32 Demo_GameRandSeedSet();
+
+s32 func_8008F914();
+
+#endif

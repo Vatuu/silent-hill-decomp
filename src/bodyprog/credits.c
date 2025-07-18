@@ -1,7 +1,7 @@
 #include "game.h"
 
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/credits_system.h"
+#include "bodyprog/credits.h"
 #include "bodyprog/math.h"
 #include "main/fsqueue.h"
 

@@ -2,11 +2,11 @@
 #define _BODYPROG_H
 
 #include "game.h"
+#include "bodyprog/text_draw.h" // TODO: Add to .c files that make use of this instead of including here.
 #include "bodyprog/vw_system.h"
 #include "main/fsqueue.h"
 
 #define TEMP_MEMORY_ADDR ((s8*)0x801A2600)
-#define DEMO_WORK()      ((s_DemoWork*)0x800FDE00) // TODO: Move closer to demo structs (or to separate header?)
 
 #define IMAGE_BUFFER_0 ((u_long*)0x801CFA00)
 #define IMAGE_BUFFER_1 ((u_long*)0x801C8200)
@@ -826,50 +826,6 @@ typedef struct _AreaLoadParams
     s32 char_z_8;
 } s_AreaLoadParams;
 
-/** @brief Initial demo game state data, stored inside MISC/DEMOXXXX.DAT files. */
-typedef struct _DemoWork
-{
-    s_ShSaveUserConfig config_0;
-    u8                 unk_38[200];
-    s_ShSavegame       savegame_100;
-    u8                 unk_37C[1148];
-    u32                frameCount_7F8;
-    u16                randSeed_7FC;
-} s_DemoWork;
-STATIC_ASSERT_SIZEOF(s_DemoWork, 2048);
-
-/** @brief Per-frame demo data, stored inside MISC/PLAYXXXX.DAT files. */
-typedef struct _DemoFrameData
-{
-    s_AnalogController analogController_0;
-    s8                 gameStateExpected_8; /** Expected value of `g_GameWork.gameState_594` before `analogController_0` is processed, if it doesn't match `Demo_Update` will display `STEP ERROR` and stop reading demo. */
-    u8                 videoPresentInterval_9;
-    s8                 unk_A[2];
-    u32                randSeed_C;
-} s_DemoFrameData;
-STATIC_ASSERT_SIZEOF(s_DemoFrameData, 16);
-
-/** @brief Associates a demo number/ID with PLAYXXXX.DAT/DEMOXXXX.DAT file IDs. */
-typedef struct _DemoFileInfo
-{
-    s16 demoFileId_0;       /** MISC/DEMOXXXX.DAT, initial gamestate for the demo and user config override. */
-    s16 playFileId_2;       /** MISC/PLAYXXXX.DAT, data of button presses/randseed for each frame. */
-    s32 (*canPlayDemo_4)(); /** Optional funcptr, returns whether this demo is eligible to be played (unused in retail demos). */
-} s_DemoFileInfo;
-STATIC_ASSERT_SIZEOF(s_DemoFileInfo, 8);
-
-#define DEMO_FILE_COUNT_MAX 5
-extern s_DemoFileInfo g_Demo_FileIds[DEMO_FILE_COUNT_MAX]; // 0x800AFDC4
-/* TODO: data migration
-s_DemoFileInfo g_Demo_FileIds[DEMO_FILE_COUNT_MAX] = {
-    { FILE_MISC_DEMO0009_DAT, FILE_MISC_PLAY0009_DAT, NULL },
-    { FILE_MISC_DEMO000A_DAT, FILE_MISC_PLAY000A_DAT, NULL },
-    { FILE_MISC_DEMO0003_DAT, FILE_MISC_PLAY0003_DAT, NULL },
-    { FILE_MISC_DEMO000B_DAT, FILE_MISC_PLAY000B_DAT, NULL },
-    { FILE_MISC_DEMO0005_DAT, FILE_MISC_PLAY0005_DAT, NULL },
-};
-*/
-
 typedef struct _SpawnInfo
 {
     q19_12 positionX_0;
@@ -1302,12 +1258,6 @@ extern s32 D_800AFD9C;
 
 extern s32 D_800AFDEC;
 
-extern s32 g_Demo_DemoId; // 0x800AFDB8
-
-extern u16 g_Demo_RandSeed; // 0x800AFDBC
-
-extern s_DemoFrameData* g_Demo_PlayFileBufferPtr; // 0x800AFDC0
-
 extern s_800AFE08 D_800AFE08;
 
 extern s_800AFE24 D_800AFE24;
@@ -1686,23 +1636,6 @@ extern RECT D_801E557C[];
 
 extern s32 g_MainLoop_FrameCount; // 0x800B9CCC
 
-extern s32 g_Demo_DemoFileIdx; // 0x800C4840
-
-extern s32 g_Demo_PlayFileIdx; // 0x800C4844
-
-extern s_ShSaveUserConfig g_Demo_UserConfigBackup; // 0x800C4850
-
-extern u32 g_Demo_PrevRandSeed; // 0x800C4888
-
-extern u32 g_Demo_RandSeedBackup; // 0x800C488C
-
-// Current packet/frame in buffer.
-extern s_DemoFrameData* g_Demo_CurFrameData; // 0x800C4890
-
-extern s32 g_Demo_DemoStep; // 0x800C4894
-
-extern s32 g_Demo_VideoPresentInterval; // 0x800C4898
-
 extern s16 D_800C6E26;
 
 extern s16 D_800C6E8E;
@@ -2073,21 +2006,6 @@ u8 func_80048954(s32 com, u8* param, u8* res);
 
 void func_8004729C(u16);
 
-void func_8004A8C0(s32 arg0);
-
-void func_8004A8CC();
-
-s32 func_8004AF18(char* arg0, s32 arg1);
-
-void func_8004B684();
-
-void func_8004B6D4(s16 arg0, s16 arg1);
-
-void func_8004B74C(s16 arg0);
-
-/** Draws string. */
-void func_8004B76C(char* str, s32 useFixedWidth);
-
 void func_8004BCBC(s32 arg0);
 
 void func_8004C040();
@@ -2408,22 +2326,6 @@ s32 func_80070360(s_SubCharacter*, s32, s32);
 void func_800705E4(GsCOORDINATE2*, s32, s32, s32, s32);
 
 void func_80074254(s32 arg0, s32 arg1); // `arg1` is pointer?
-
-/** Sets the position of the next string to be drawn by `Gfx_StringDraw`. */
-void Gfx_StringSetPosition(s32 x, s32 y);
-
-/** Sets the color of the next string drawn by `Gfx_StringDraw`. (TODO: add color list) */
-void Gfx_StringSetColor(s16 colorId);
-
-void func_8004B658();
-
-/** Draws a string in screen space. */
-bool Gfx_StringDraw(char* str, s32 size);
-
-/** Draws an integer string in screen space. */
-void Gfx_StringDrawInt(s32 widthMin, s32 val);
-
-void func_8004BB10();
 
 void func_8004BBF4(VbRVIEW* arg0, GsCOORDINATE2* arg1, SVECTOR* arg2);
 

@@ -1,5 +1,5 @@
-#ifndef _SAVE_SYSTEM_H
-#define _SAVE_SYSTEM_H
+#ifndef _MEMCARD_H
+#define _MEMCARD_H
 
 #include "screens/saveload/saveload.h"
 

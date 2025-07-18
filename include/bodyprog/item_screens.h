@@ -1,5 +1,5 @@
-#ifndef _INVENTORY_SYSTEM_MAIN_H
-#define _INVENTORY_SYSTEM_MAIN_H
+#ifndef _ITEM_SCREENS_H
+#define _ITEM_SCREENS_H
 
 /** @brief This header is used to declare any variable, struct, or
  * function part of `BODYPROG.BIN` identified to be related

@@ -1,9 +1,10 @@
 #include "game.h"
 
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/item_screens_system.h"
+#include "bodyprog/demo.h"
+#include "bodyprog/item_screens.h"
 #include "bodyprog/math.h"
-#include "bodyprog/save_system.h"
+#include "bodyprog/memcard.h"
 #include "main/fsqueue.h"
 
 void Gfx_BackgroundSpriteDraw(s_FsImageDesc* image) // 0x800314EC

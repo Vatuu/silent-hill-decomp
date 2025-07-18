@@ -1,7 +1,7 @@
 #include "game.h"
 
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/demo_system.h"
+#include "bodyprog/demo.h"
 #include "main/fsqueue.h"
 #include "main/rng.h"
 

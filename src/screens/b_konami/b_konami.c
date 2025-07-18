@@ -4,8 +4,8 @@
 #include <libetc.h>
 
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/demo_system.h"
-#include "bodyprog/save_system.h"
+#include "bodyprog/demo.h"
+#include "bodyprog/memcard.h"
 #include "main/fsqueue.h"
 #include "screens/b_konami/b_konami.h"
 #include "screens/stream/stream.h"
