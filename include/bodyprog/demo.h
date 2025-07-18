@@ -54,11 +54,11 @@ s_DemoFileInfo g_Demo_FileIds[DEMO_FILE_COUNT_MAX] = {
 };
 */
 
-#define DEMO_WORK()      ((s_DemoWork*)0x800FDE00)
-
 // ========
 // GLOBALS
 // ========
+
+#define DEMO_WORK()      ((s_DemoWork*)0x800FDE00)
 
 // TODO: Make local. Used in `Demo_Update`.
 extern char D_8002B2D8[]; // "STEP ERROR:[H:"
