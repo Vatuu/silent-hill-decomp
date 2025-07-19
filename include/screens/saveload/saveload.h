@@ -52,7 +52,7 @@ typedef enum _SavegameEntryType
 
 typedef struct _SavegameMetadata
 {
-    s32 unk_0;                     // Same behavior as `totalSavegameCount_0` in `s_SavegameEntry`.
+    s32 field_0;                   // Same behavior as `totalSavegameCount_0` in `s_SavegameEntry`.
     u32 gameplayTimer_4;
     u16 savegameCount_8;
     u8  locationId_A;

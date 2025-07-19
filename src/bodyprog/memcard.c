@@ -519,7 +519,7 @@ void func_8002ED7C(s_800B55E8* arg0) // 0x8002ED7C
         case 6:
             Savegame_FilenameGenerate(filePath, D_800B2618);
 
-            if (Savegame_CardRequest(2, arg0->field_4, NULL, filePath, 0, 0x200, &D_800B5508.basicInfo_0[arg0->field_4].basicSaveInfo_14[D_800B2618], sizeof(s_func_8002FB64)) != 0)
+            if (Savegame_CardRequest(2, arg0->field_4, NULL, filePath, 0, 0x200, &D_800B5508.basicInfo_0[arg0->field_4].basicSaveInfo_14[D_800B2618], sizeof(s_MemCardInfo_BasicSaveInfo)) != 0)
             {
                 arg0->field_10 = 7;
             }
@@ -566,7 +566,7 @@ void func_8002ED7C(s_800B55E8* arg0) // 0x8002ED7C
         case 8:
             temp_a1 = &D_800B5508.basicInfo_0[arg0->field_4].basicSaveInfo_14[D_800B2618];
 
-            if (Savegame_ChecksumValidate(&temp_a1->field_FC, (s8*)temp_a1, sizeof(s_func_8002FB64)) != 0)
+            if (Savegame_ChecksumValidate(&temp_a1->field_FC, (s8*)temp_a1, sizeof(s_MemCardInfo_BasicSaveInfo)) != 0)
             {
                 ptr->isFileUsed_4[D_800B2618] = 1;
                 arg0->field_10                = 5;
@@ -684,7 +684,7 @@ void func_8002F61C(s_800B55E8* arg0)
         case 1:
             // TODO: Weird extra params to Savegame_SaveBlockInit, do any other callers do the same?
             Savegame_SaveBlockInit(&D_800B5508.saveBlock_118, 1, D_800B2778, 0, 0, 0x70, 0x60, 0, 0);
-            func_8002FB64(&D_800B5508.field_318);
+            func_8002FB64(&D_800B5508.saveInfo_318);
             Savegame_FilenameGenerate(filePath, D_800B2778);
             if (Savegame_CardRequest(CardIoMode_Create, arg0->field_4, NULL, filePath, 1, 0, &D_800B5508.saveBlock_118, 0x300) != 0)
             {
@@ -825,18 +825,18 @@ void func_8002F61C(s_800B55E8* arg0)
     }
 }
 
-void func_8002FB64(s_func_8002FB64* arg0) // 0x8002FB64
+void func_8002FB64(s_MemCardInfo_BasicSaveInfo* arg0) // 0x8002FB64
 {
     s32 i;
 
-    bzero(arg0, sizeof(s_func_8002FB64));
+    bzero(arg0, sizeof(s_MemCardInfo_BasicSaveInfo));
 
     for (i = 0; i < 11; i++)
     {
-        arg0->field_0[i][1] = 0;
+        arg0->savegameMetadatas_4[i].field_0 = 0;
     }
 
-    Savegame_ChecksumUpdate(&arg0->field_FC, (s8*)arg0, sizeof(s_func_8002FB64));
+    Savegame_ChecksumUpdate(&arg0->field_FC, (s8*)arg0, sizeof(s_MemCardInfo_BasicSaveInfo));
 }
 
 void Savegame_UserConfigCopyWithChecksum(s_ShSaveUserConfigContainer* dest, s_ShSaveUserConfig* src) // 0x8002FBB4
@@ -857,13 +857,12 @@ void Savegame_CopyWithChecksum(s_ShSavegameContainer* dest, s_ShSavegame* src) /
 
 void func_8002FD5C(s32 arg0, s32 arg1, s32 arg2, s_ShSavegame* arg3) // 0x8002FD5C
 {
-    s_func_8002FB64* ptr;
+    s_MemCardInfo_BasicSaveInfo* ptr;
 
-    ptr = (s_func_8002FB64*)D_800B5508.basicInfo_0[arg0].basicSaveInfo_14;
-    ptr = &ptr[arg1];
+    ptr = &D_800B5508.basicInfo_0[arg0].basicSaveInfo_14[arg1];
 
     func_8002FDB0(arg0, arg1, arg2);
-    Savegame_ChecksumUpdate(&ptr->field_FC, ptr, sizeof(s_func_8002FB64));
+    Savegame_ChecksumUpdate(&ptr->field_FC, ptr, sizeof(s_MemCardInfo_BasicSaveInfo));
 }
 
 void func_8002FDB0(s32 arg0, s32 arg1, s32 arg2) 
@@ -883,7 +882,7 @@ void func_8002FDB0(s32 arg0, s32 arg1, s32 arg2)
         }
     }
 
-    D_800B5508.basicInfo_0[arg0].basicSaveInfo_14[arg1].savegameMetadatas_4[arg2].unk_0 = var + 1;
+    D_800B5508.basicInfo_0[arg0].basicSaveInfo_14[arg1].savegameMetadatas_4[arg2].field_0 = var + 1;
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/memcard", func_8002FE70);

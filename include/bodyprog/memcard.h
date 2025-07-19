@@ -39,13 +39,6 @@ typedef enum
 
 /* Struct called by functions that haven't been identified. */
 
-typedef struct 
-{
-    s32                field_0[10][3];
-    u8                 unk_78[132];
-    s_ShSavegameFooter field_FC;
-} s_func_8002FB64; // Likely `s_ShSaveUserConfigContainer`.
-
 typedef struct
 {
     s32 field_0;
@@ -58,7 +51,7 @@ typedef struct
 
 typedef struct
 {
-    s32                unk_0;
+    s32                field_0;
     s_SavegameMetadata savegameMetadatas_4[11];
     s8                 unk_88[116];
     s_ShSavegameFooter field_FC;
@@ -142,7 +135,7 @@ typedef struct
     s32                         field_110;
     u8                          unk_114[4];
     s_PsxSaveBlock              saveBlock_118;
-    s_func_8002FB64             field_318;
+    s_MemCardInfo_BasicSaveInfo saveInfo_318;
     s_ShSaveUserConfigContainer userConfig_418;
     s_ShSavegameContainer       saveGame_498;
 } s_800B5508;
@@ -254,7 +247,7 @@ void func_8002ECE0(s_800B55E8* arg0);
 
 s32 func_8002F278(s32 arg0, s_CardDirectory* dir);
 
-void func_8002FB64(s_func_8002FB64 *arg0);
+void func_8002FB64(s_MemCardInfo_BasicSaveInfo* arg0);
 
 /** Copies user config into an `s_ShSaveUserConfigContainer` and calculates footer checksum. */
 void Savegame_UserConfigCopyWithChecksum(s_ShSaveUserConfigContainer* dest, s_ShSaveUserConfig* src);
