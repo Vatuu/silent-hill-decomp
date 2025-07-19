@@ -1276,8 +1276,6 @@ extern s32 D_800B261C;
 
 extern s32 D_800B2620;
 
-extern char D_800B2628[15][21]; // Type assumed.
-
 extern DVECTOR g_Gfx_DebugStringPosition0;
 
 extern DVECTOR g_Gfx_DebugStringPosition1;

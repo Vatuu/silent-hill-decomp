@@ -19,7 +19,7 @@ g_MemCard_1_BasicSaveInfo = 0x800B2780;
 g_MemCard_2_BasicSaveInfo = 0x800B3680;
 g_CardWork                = 0x800B5488; // size:0x80
 //D_800B4580              = 0x800B4580;
-g_MemCardsBasicInfo       = 0x800B5508;
+D_800B5508                = 0x800B5508; // size:0x718
 
 Savegame_CardCleanInit      = 0x8002E630; // type:func
 Savegame_GameMemDataClear   = 0x8002E6E4; // type:func

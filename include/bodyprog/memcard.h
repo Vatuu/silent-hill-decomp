@@ -61,8 +61,7 @@ typedef struct
     s32                unk_0;
     s_SavegameMetadata savegameMetadatas_4[11];
     s8                 unk_88[116];
-    s16                unk_FC;
-    s16                unk_FE;
+    s_ShSavegameFooter field_FC;
 } s_MemCardInfo_BasicSaveInfo;
 
 typedef struct
@@ -109,8 +108,8 @@ typedef struct
     s32                          memoryCardStatus_0;
     s8                           isFileUsed_4[16]; 
     s_MemCardInfo_BasicSaveInfo* basicSaveInfo_14;
-    s32                          field_18; 
-} s_800B5508;
+    s32                          field_18;
+} s_MemCardBasicInfo;
 
 typedef struct
 {
@@ -119,7 +118,7 @@ typedef struct
     s32 fileIdx_8;
     s32 saveIdx_C;
     s32 field_10;
-    s32 field_14;
+    s32 lastCardResult_14;
 } s_800B55E8;
 
 // https://github.com/Sparagas/Silent-Hill/blob/1f24eb097a4b99129bc7c9793d23c82244848a27/010%20Editor%20-%20Binary%20Templates/ps1_memory_card.bt#L122C8-L122C17
@@ -136,11 +135,21 @@ typedef struct
 } s_PsxSaveBlock;
 STATIC_ASSERT_SIZEOF(s_PsxSaveBlock, 512);
 
+typedef struct
+{
+    s_MemCardBasicInfo          basicInfo_0[8];
+    s_800B55E8                  field_E0[2];
+    s32                         field_110;
+    u8                          unk_114[4];
+    s_PsxSaveBlock              saveBlock_118;
+    s_func_8002FB64             field_318;
+    s_ShSaveUserConfigContainer userConfig_418;
+    s_ShSavegameContainer       saveGame_498;
+} s_800B5508;
+
 // ========
 // GLOBALS
 // ========
-
-extern char D_80024B64;
 
 extern u8 g_SlotElementSelectedIdx[MEMORY_CARD_SLOT_COUNT]; // 0 - Slot 1, 1 - Slot 2.
 
@@ -164,6 +173,10 @@ extern s_MemCardInfo_BasicSaveInfo g_MemCard_1_BasicSaveInfo[15];
 
 extern s_MemCardInfo_BasicSaveInfo g_MemCard_2_BasicSaveInfo[15];
 
+extern s_CardDirectory D_800B2628;
+
+extern s32 D_800B2778;
+
 extern s_MemCardInfo_BasicSaveInfo D_800B4580[15];
 
 extern s32 D_800B5480;
@@ -179,15 +192,7 @@ extern s_CardWork g_CardWork; // 0x800B5488
  * `0x1C/28` bytes is the start address of a new element,
  * which the decompiled code seems to point to.
  */
-extern s_800B5508 g_MemCardsBasicInfo[8];
-
-extern s_800B55E8 D_800B55E8[]; // TODO: This isn't a struct array.
-
-extern s_800B55E8 D_800B5600;
-
-extern s32 D_800B5618;
-
-extern s32 D_800B55FC;
+extern s_800B5508 D_800B5508;
 
 /** @brief Basic information required to draw information of elements in save slots.
  * Address access is based on the slot: slot 1 = 0x801E09E0, slot 2 = 0x801E1440.
@@ -257,7 +262,7 @@ void Savegame_UserConfigCopyWithChecksum(s_ShSaveUserConfigContainer* dest, s_Sh
 /** Copies savegame into an s_ShSavegameContainer and calculates footer checksum. */
 void Savegame_CopyWithChecksum(s_ShSavegameContainer* dest, s_ShSavegame* src);
 
-void func_8002FD5C(s32 arg0, s32 arg1, s32 arg2);
+void func_8002FD5C(s32 arg0, s32 arg1, s32 arg2, s_ShSavegame* arg3);
 
 /** Updates the footer with the checksum of the given data. */
 void Savegame_ChecksumUpdate(s_ShSavegameFooter* saveFooter, s8* saveData, s32 saveDataLength);
@@ -273,7 +278,7 @@ u8 Savegame_ChecksumGenerate(s8* saveData, s32 saveDataLength);
 /** Generates a save filename for the given save index. */
 void Savegame_FilenameGenerate(char* dest, s32 saveIdx);
 
-void Savegame_SaveBlockInit(s_PsxSaveBlock* saveBlock, s8 blockCount, s32 saveIdx);
+void Savegame_SaveBlockInit(s_PsxSaveBlock* saveBlock, s8 blockCount, s32 saveIdx, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8);
 
 s32 Savegame_CardDeviceTest(s32 deviceId);
 
