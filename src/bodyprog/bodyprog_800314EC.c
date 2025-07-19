@@ -1297,7 +1297,7 @@ s32 func_80033548() // 0x80033548
                     {
                         savegameMetaPtr = func_8002E9EC(i, j, k);
 
-                        g_ActiveSavegameEntry->currentScreenSessionSaves_0 = savegameMetaPtr->unk_0;
+                        g_ActiveSavegameEntry->currentScreenSessionSaves_0 = savegameMetaPtr->field_0;
                         g_ActiveSavegameEntry->field_5                     = i;
                         g_ActiveSavegameEntry->fileIdx_6                   = j;
                         g_ActiveSavegameEntry->elementIdx_7                = k;
@@ -1305,7 +1305,7 @@ s32 func_80033548() // 0x80033548
                         g_ActiveSavegameEntry->locationId_8                = savegameMetaPtr->locationId_A;
                         g_ActiveSavegameEntry->field_C                     = savegameMetaPtr;
 
-                        if (savegameMetaPtr->unk_0 > 0)
+                        if (savegameMetaPtr->field_0 > 0)
                         {
                             g_ActiveSavegameEntry->type_4 = SavegameEntryType_Save;
 

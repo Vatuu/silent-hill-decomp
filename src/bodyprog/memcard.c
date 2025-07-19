@@ -408,7 +408,7 @@ void func_8002ED7C(s_800B55E8* arg0) // 0x8002ED7C
         case 0:
             D_800B261C = 0;
 
-            if (Savegame_CardRequest(0, arg0->field_4, NULL, NULL, 0, 0, NULL, 0) != 0)
+            if (Savegame_CardRequest(CardIoMode_Init, arg0->field_4, NULL, NULL, 0, 0, NULL, 0) != 0)
             {
                 arg0->field_10 = 1;
             }
@@ -453,7 +453,7 @@ void func_8002ED7C(s_800B55E8* arg0) // 0x8002ED7C
 
         case 2:
             ptr->memoryCardStatus_0 = 2;
-            if (Savegame_CardRequest(1, arg0->field_4, &D_800B2628, NULL, 0, 0, NULL, 0) != 0)
+            if (Savegame_CardRequest(CardIoMode_DirRead, arg0->field_4, &D_800B2628, NULL, 0, 0, NULL, 0) != 0)
             {
                 arg0->field_10 = 3;
             }
@@ -519,7 +519,7 @@ void func_8002ED7C(s_800B55E8* arg0) // 0x8002ED7C
         case 6:
             Savegame_FilenameGenerate(filePath, D_800B2618);
 
-            if (Savegame_CardRequest(2, arg0->field_4, NULL, filePath, 0, 0x200, &D_800B5508.basicInfo_0[arg0->field_4].basicSaveInfo_14[D_800B2618], sizeof(s_MemCardInfo_BasicSaveInfo)) != 0)
+            if (Savegame_CardRequest(CardIoMode_Read, arg0->field_4, NULL, filePath, 0, 0x200, &D_800B5508.basicInfo_0[arg0->field_4].basicSaveInfo_14[D_800B2618], sizeof(s_MemCardInfo_BasicSaveInfo)) != 0)
             {
                 arg0->field_10 = 7;
             }
