@@ -56,6 +56,7 @@ typedef struct
     s8                 unk_88[116];
     s_ShSavegameFooter field_FC;
 } s_MemCardInfo_BasicSaveInfo;
+STATIC_ASSERT_SIZEOF(s_MemCardInfo_BasicSaveInfo, 256);
 
 typedef struct
 {
@@ -103,6 +104,7 @@ typedef struct
     s_MemCardInfo_BasicSaveInfo* basicSaveInfo_14;
     s32                          field_18;
 } s_MemCardBasicInfo;
+STATIC_ASSERT_SIZEOF(s_MemCardBasicInfo, 28);
 
 typedef struct
 {
@@ -113,6 +115,7 @@ typedef struct
     s32 field_10;
     s32 lastCardResult_14;
 } s_800B55E8;
+STATIC_ASSERT_SIZEOF(s_800B55E8, 24);
 
 // https://github.com/Sparagas/Silent-Hill/blob/1f24eb097a4b99129bc7c9793d23c82244848a27/010%20Editor%20-%20Binary%20Templates/ps1_memory_card.bt#L122C8-L122C17
 typedef struct
@@ -139,6 +142,7 @@ typedef struct
     s_ShSaveUserConfigContainer userConfig_418;
     s_ShSavegameContainer       saveGame_498;
 } s_800B5508;
+STATIC_ASSERT_SIZEOF(s_800B5508, 1816);
 
 // ========
 // GLOBALS

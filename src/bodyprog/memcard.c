@@ -8,7 +8,11 @@
 #include <strings.h>
 #include <sys/file.h>
 
-const char g_EmptyFileName[] = ""; // 0x80024B64 .rodata
+static inline void CardWork_ClearDirectoryFile(s32 idx)
+{
+    strcpy(g_CardWork.cardDirectory_40->filenames_0[idx], ""); // 0x80024B64 .rodata
+    g_CardWork.cardDirectory_40->blockCounts_13B[idx] = 0;
+}
 
 /** @note Strange data access.
  * Many functions access by strange means to
@@ -790,7 +794,7 @@ void func_8002F61C(s_800B55E8* arg0)
             }
             break;
         case 7:
-            func_8002FD5C(arg0->field_4, D_800B2778, arg0->saveIdx_C, g_SavegamePtr); // needs extra arg added
+            func_8002FD5C(arg0->field_4, D_800B2778, arg0->saveIdx_C, g_SavegamePtr);
             arg0->field_10 = 8;
         case 8:
             Savegame_FilenameGenerate(filePath, D_800B2778);
@@ -1492,8 +1496,7 @@ s32 Savegame_CardState_DirRead() // 0x80030F7C
 
     for (i = 0; i < 15; i++)
     {
-        memcpy(g_CardWork.cardDirectory_40->filenames_0[i], g_EmptyFileName, 1); // TODO: Might be strcpy(xxx, ""), but compiler places the empty "" too late into rodata some reason.
-        g_CardWork.cardDirectory_40->blockCounts_13B[i] = 0;
+        CardWork_ClearDirectoryFile(i);
     }
 
     for (i = 0; i < 15; i++)
