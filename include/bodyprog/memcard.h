@@ -48,8 +48,8 @@ typedef struct
 
 typedef struct
 {
-    s32 unk0;
-    char unk4[0x8];
+    s32 field_0;
+    s8  unk_4[8];
 } s_func_8002FDB0;
 
 // ========
@@ -59,7 +59,7 @@ typedef struct
 typedef struct
 {
     s32                unk_0;
-    s_SavegameMetadata file_saveDataInfo_4[11];
+    s_SavegameMetadata savegameMetadatas_4[11];
     s8                 unk_88[116];
     s16                unk_FC;
     s16                unk_FE;
@@ -67,7 +67,7 @@ typedef struct
 
 typedef struct
 {
-    char fileNames_0[15][21];
+    char filenames_0[15][21];
     u8   blockCounts_13B[15]; // Size of each file in 8192 byte blocks.
 } s_CardDirectory;
 
@@ -108,7 +108,7 @@ typedef struct
 {
     s32                          memoryCardStatus_0;
     s8                           isFileUsed_4[16]; 
-    s_MemCardInfo_BasicSaveInfo* basicSaveInfoPtr_14;
+    s_MemCardInfo_BasicSaveInfo* basicSaveInfo_14;
     s32                          field_18; 
 } s_800B5508;
 
@@ -181,7 +181,7 @@ extern s_CardWork g_CardWork; // 0x800B5488
  */
 extern s_800B5508 g_MemCardsBasicInfo[8];
 
-extern s_800B55E8 D_800B55E8[]; // This isn't an array struct.
+extern s_800B55E8 D_800B55E8[]; // TODO: This isn't a struct array.
 
 extern s_800B55E8 D_800B5600;
 
@@ -224,11 +224,11 @@ extern s8 g_SelectedFileIdx;
 // FUNCTIONS
 // ==========
 
-void Savegame_CardCleanInit(); // 0x8002E630
+void Savegame_CardCleanInit();
 
-void Savegame_GameMemDataClear(s32 idx); // 0x8002E6E4
+void Savegame_GameMemDataClear(s32 idx);
 
-void Savegame_CardFileUsageClear(s32 idx); // 0x8002E730
+void Savegame_CardFileUsageClear(s32 idx);
 
 s32 func_8002E94C(s32 arg0, s32 arg1, s32 fileIdx, s32 saveIdx);
 

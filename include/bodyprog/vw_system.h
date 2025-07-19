@@ -80,7 +80,7 @@ typedef enum _VC_AREA_SIZE_TYPE
     VC_AREA_SMALL   = 1,
     VC_AREA_WIDE    = 2,
     VC_AREA_OUTDOOR = 3,
-//    VC_AREA_SUU     = 4 // Count, disabled to remove size warning since it's unused.
+//    VC_AREA_SUU     = 4 // Count. Disabled to remove size warning since it's unused.
 } VC_AREA_SIZE_TYPE;
 STATIC_ASSERT_SIZEOF(VC_AREA_SIZE_TYPE, 4);
 

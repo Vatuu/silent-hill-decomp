@@ -268,7 +268,7 @@ void func_8008616C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x800861
     }
 }
 
-const RECT D_8002AB10 = {320, 256, 192, 240}; // 0x8002AB10 .rodata
+const RECT D_8002AB10 = { 320, 256, 192, 240 }; // 0x8002AB10 .rodata
 
 void func_800862F8(s32 arg0, s32 arg1, s32 arg2) // 0x800862F8
 {

@@ -5151,7 +5151,7 @@ void Gfx_MainMenu_BgDraw() // 0x8003B758
     func_8003BC8C();
 }
 
-void func_8003B7BC()
+void func_8003B7BC() // 0x8003B7BC
 {
     // Can't be `s32*` since 462 doesn't divide by 4, so I'm guessing it's `s8`.
     s8* s0 = 0x801E2432;
@@ -5160,17 +5160,17 @@ void func_8003B7BC()
     D_800BCDE0 = s0;
 }
 
-u32 func_8003B7FC(s32 arg0) // 0x8003B7FC
+u32 func_8003B7FC(s32 idx) // 0x8003B7FC
 {
-    u8  index = D_800BCDE0[arg0];
-    u32 value = D_800A9AAC[index];
+    u8  idx0 = D_800BCDE0[idx];
+    u32 val = D_800A9AAC[idx0];
 
-    if (arg0 < 0xD2)
+    if (idx < 210)
     {
         return 0x3A000000;
     }
 
-    return value;
+    return val;
 }
 
 PACKET* func_8003B838(GsOT* ot, PACKET* packet) // 0x8003B838
@@ -5471,14 +5471,14 @@ void func_8003D058() // 0x8003D058
     MATRIX           mat0;
     MATRIX           mat1;
     GsCOORDINATE2*   coord;
-    s_800BCE18_1BAC* ptr;
-    s_800BE9FC*      ptr2;
+    s_800BCE18_1BAC* ptr0;
+    s_800BE9FC*      ptr1;
 
-    ptr = &D_800BCE18.field_1BAC;
-    
-    if (ptr->field_0 != -1) 
+    ptr0 = &D_800BCE18.field_1BAC;
+
+    if (ptr0->field_0 != NO_VALUE) 
     {
-        if (ptr->field_0 == 164)
+        if (ptr0->field_0 == 164)
         {
             coord = &g_SysWork.playerBoneCoords_890[6];
         } 
@@ -5486,21 +5486,21 @@ void func_8003D058() // 0x8003D058
         {
             coord = &g_SysWork.playerBoneCoords_890[10];
         }
-        
-        if (Fs_QueueIsEntryLoaded(ptr->field_4) != 0) 
+
+        if (Fs_QueueIsEntryLoaded(ptr0->field_4) != 0) 
         {
-            ptr2 = ptr->field_14;
-            
-            if (ptr2->field_2 == 0)
+            ptr1 = ptr0->field_14;
+
+            if (ptr1->field_2 == 0)
             {
-                func_800560FC(ptr2);
-                func_80056504(ptr2, ptr->field_8, &ptr->field_C, 1);
-                func_80056954(ptr2);
-                func_80056C8C(&ptr->field_18, ptr->field_14, 0);
+                func_800560FC(ptr1);
+                func_80056504(ptr1, ptr0->field_8, &ptr0->field_C, 1);
+                func_80056954(ptr1);
+                func_80056C8C(&ptr0->field_18, ptr0->field_14, 0);
             }
-            
+
             func_80049B6C(coord, &mat1, &mat0);
-            func_80057090(&ptr->field_18, &g_ObjectTable0[g_ObjectTableIdx], 1, &mat0, &mat1, 0);
+            func_80057090(&ptr0->field_18, &g_ObjectTable0[g_ObjectTableIdx], 1, &mat0, &mat1, 0);
         }
     }
 }
@@ -5514,14 +5514,14 @@ void func_8003D160() // 0x8003D160
     void*            addr = (void*)0x800FE600;
 
     func_8003D3BC(&img, 1, 0);
-    
+
     ptr                               = &D_800BCE18;
     ptr2                              = &ptr->field_164C;
     D_800BCE18.field_0[0].field_18[1] = ptr2;
-    
+
     Fs_QueueStartRead(g_Chara_FileInfo[1].modelFileIdx, addr);
     queueIdx = Fs_QueueStartReadTim(g_Chara_FileInfo[1].textureFileIdx, FS_BUFFER_1, &img);
-    
+
     D_800BCE18.field_164C.field_0 = 1;
     ptr2->field_1                 = 0;
     ptr2->field_4                 = queueIdx;
@@ -5538,7 +5538,7 @@ s32 func_8003D21C(s_MapOverlayHeader* arg0) // 0x8003D21C
     s32              ret;
     s32              ids;
     s_800BCE18_0_CC* ptr;
-    
+
     for (ret                           = 0,
         i                              = 0,
         D_800BCE18.field_0[0].field_14 = Fs_GetFileSize(0x58E) + 0x800FEE00, 
@@ -5561,16 +5561,17 @@ s32 func_8003D21C(s_MapOverlayHeader* arg0) // 0x8003D21C
                     }
                 }
             } 
-            
+
             if (var_s3 != 0) 
             {
                 func_8003D3BC(&img, ids, i);
                 ret = func_8003D7D4(ids, i, D_800BCE18.field_0[0].field_14, &img);
             }
+
             func_8003D354(&D_800BCE18.field_0[0].field_14, ids);
         }
     }
-    
+
     return ret;
 }
 
@@ -5585,7 +5586,7 @@ void func_8003D354(s32* arg0, s32 arg1) // 0x8003D354
     *arg0 += (fileSize + 3) & ~3;
 }
 
-void func_8003D3BC(s_FsImageDesc* arg0, s32 arg1, s32 arg2) // 0x8003D3BC
+void func_8003D3BC(s_FsImageDesc* img, s32 arg1, s32 arg2) // 0x8003D3BC
 {
     s16 clutX;
     s16 clutY;
@@ -5594,7 +5595,7 @@ void func_8003D3BC(s_FsImageDesc* arg0, s32 arg1, s32 arg2) // 0x8003D3BC
     s8  u;
 
     v = arg1 < 2;
-    
+
     if (arg1 >= 0 && v)
     {
         tPage = 0x1B;
@@ -5612,14 +5613,14 @@ void func_8003D3BC(s_FsImageDesc* arg0, s32 arg1, s32 arg2) // 0x8003D3BC
         {
             default:
                 arg2 = 0;
-            
+
             case 0:
             case 1:
                 tPage = 0x1C;
                 u     = 0;
                 v     = arg2 << 7;
                 break;
-            
+
             case 2:
             case 3:
                 tPage = 0x1D;
@@ -5628,13 +5629,13 @@ void func_8003D3BC(s_FsImageDesc* arg0, s32 arg1, s32 arg2) // 0x8003D3BC
                 break;
         }
     }
-    
-    arg0->tPage[0] = 0;
-    arg0->tPage[1] = tPage;
-    arg0->u        = u;
-    arg0->v        = v;
-    arg0->clutX    = clutX;
-    arg0->clutY    = clutY;
+
+    img->tPage[0] = 0;
+    img->tPage[1] = tPage;
+    img->u        = u;
+    img->v        = v;
+    img->clutX    = clutX;
+    img->clutY    = clutY;
 }
 
 s32 func_8003D444(s32 idx) // 0x8003D444
@@ -5680,7 +5681,7 @@ void func_8003D6E0(s32 arg0, s32 arg1, void* arg2, s_FsImageDesc* arg3) // 0x800
         var_s0 = D_800BCE18.field_0[0].field_14;
         func_8003D354(&D_800BCE18.field_0[0].field_14, arg0);
     }
-    
+
     if (arg3 != NULL) 
     {
         img = *arg3;
@@ -5689,7 +5690,7 @@ void func_8003D6E0(s32 arg0, s32 arg1, void* arg2, s_FsImageDesc* arg3) // 0x800
     {
         func_8003D3BC(&img, arg0, arg1);
     }
-    
+
     func_8003D7D4(arg0, arg1, var_s0, &img);
 }
 
@@ -5703,13 +5704,13 @@ s32 func_8003D7D4(u32 arg0, s32 arg1, void* arg2, s_FsImageDesc* arg3) // 0x8003
     ptr = &D_800BCE18.field_0[arg1].field_CC;
     idx = ptr->field_0;
     img = &ptr->field_C;
-    
+
     if (arg0 == 0) 
     {
         D_800BCE18.field_0[0].field_18[idx] = NULL;
         return 0;
     }
-    
+
     if (idx != 0) 
     {
         if (arg0 == idx) 
@@ -5719,24 +5720,25 @@ s32 func_8003D7D4(u32 arg0, s32 arg1, void* arg2, s_FsImageDesc* arg3) // 0x8003
                 return 0;
             }
         }
+
         D_800BCE18.field_0[0].field_18[idx] = NULL;
     }
 
     D_800BCE18.field_0[0].field_18[arg0] = ptr;
-    
+
     queueIdx = Fs_QueueStartRead(g_Chara_FileInfo[arg0].modelFileIdx, arg2);
-    
-    if (g_Chara_FileInfo[arg0].textureFileIdx != -1) 
+
+    if (g_Chara_FileInfo[arg0].textureFileIdx != NO_VALUE) 
     {
         queueIdx = Fs_QueueStartReadTim(g_Chara_FileInfo[arg0].textureFileIdx, FS_BUFFER_1, arg3);
     }
-    
+
     ptr->field_0 = arg0;
     ptr->field_1 = 0;
     ptr->field_4 = queueIdx;
     ptr->field_8 = arg2;
     ptr->field_C = *arg3;
-    
+
     return queueIdx;
 }
 
@@ -5749,7 +5751,7 @@ void func_8003D95C() // 0x8003D95C
 {
     s32 temp_a0;
     s32 i;
-    
+
     for (i = 0; i < 45; i++)
     {
         if (i != 1) 
@@ -5765,7 +5767,7 @@ void func_8003D95C() // 0x8003D95C
 
 void func_8003D9C8(s_800BCE18_0_CC* arg0) // 0x8003D9C8
 {
-    s_Skeleton* ptr;
+    s_Skeleton* skel;
 
     if (arg0->field_1 == 0 && arg0->field_0 != 0 && Fs_QueueIsEntryLoaded(arg0->field_4) != 0)
     {
@@ -5774,13 +5776,13 @@ void func_8003D9C8(s_800BCE18_0_CC* arg0) // 0x8003D9C8
         func_800560FC(arg0->field_8);
         func_80056464(arg0->field_8, g_Chara_FileInfo[arg0->field_0].textureFileIdx, &arg0->field_C, g_Chara_FileInfo[arg0->field_0].field_6_10 & 3);
 
-        ptr = &arg0->field_14;
+        skel = &arg0->field_14;
 
         func_80056954(arg0->field_8);
-        func_80044FE0(ptr, &arg0->field_14.field_C, 56); // TODO: can't fit s_Bone at field_C, check s_Skeleton size
-        func_8004506C(ptr, arg0->field_8);
-        func_800452EC(ptr);
-        func_800453E8(ptr, 1);
+        func_80044FE0(skel, &arg0->field_14.field_C, 56); // TODO: Can't fit `s_Bone` at `field_C`. Check `s_Skeleton` size.
+        func_8004506C(skel, arg0->field_8);
+        func_800452EC(skel);
+        func_800453E8(skel, 1);
     }
 }
 
@@ -6742,7 +6744,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003F6F0);
 
 s32 Math_GetWeightedAverage(s32 a, s32 b, s32 weight) // 0x8003F7E4
 {
-    return Math_MulFixed(a, FP_TO(1, Q12_SHIFT) - weight, Q12_SHIFT) + Math_MulFixed(b, weight, Q12_SHIFT);
+    return Math_MulFixed(a, FP_ALPHA(1.0f) - weight, Q12_SHIFT) + Math_MulFixed(b, weight, Q12_SHIFT);
 }
 
 void func_8003F838(s_StructUnk3* arg0, s_StructUnk3* arg1, s_StructUnk3* arg2, s32 weight) // 0x8003F838

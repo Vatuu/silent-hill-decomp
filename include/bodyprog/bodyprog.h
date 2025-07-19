@@ -296,9 +296,9 @@ typedef struct
 {
     u8  field_0;
     u8  unk_1[3];
-    u32 field_4 : 24;
+    u32 field_4    : 24;
     u8  field_4_24 : 8;
-    u32 field_8 : 24;
+    u32 field_8    : 24;
     u8  field_8_24 : 8;
 } s_800AA894;
 STATIC_ASSERT_SIZEOF(s_800AA894, 12);
@@ -376,7 +376,7 @@ typedef struct
     s_Bone* bones_8;
 
     // Maybe incorrect.
-    s8 field_C[3]; // Maybe struct similar to s_Bone but smaller.
+    s8 field_C[3]; // Maybe struct similar to `s_Bone` but smaller.
     u8 field_10;   // Some count related to bone hierarchy.
     s8 unk_11;
     s8 field_12;
@@ -392,7 +392,7 @@ typedef struct
     s32 field_8;
 } s_sub_800BCE18_0;
 
-// Looks similar to s_Skeleton
+// Looks similar to `s_Skeleton`
 typedef struct
 {
     u8            field_0;
@@ -402,7 +402,7 @@ typedef struct
     void*         field_8;
     s_FsImageDesc field_C;
     s_Skeleton    field_14; // Could be different struct?
-} s_800BCE18_0_CC; // Unknown size
+} s_800BCE18_0_CC; // Unknown size.
 
 typedef struct
 {
@@ -514,7 +514,7 @@ typedef struct
     u16 field_2;
     u16 field_4;
     u16 field_6;
-    u16 field_8[1]; // unknown size
+    u16 field_8[1]; // Unknown size.
     s16 field_A;
     s16 field_C;
     u16 field_E;
@@ -674,8 +674,8 @@ typedef struct
     s16   animFileIdx;
     s16   modelFileIdx;
     s16   textureFileIdx : 16;
-    s16   field_6 : 10;
-    u16   field_6_10 : 6;
+    s16   field_6        : 10;
+    u16   field_6_10     : 6;
     void* field_8;
     u16   field_C_0 : 2;
     s32   field_C_2 : 14;
@@ -1276,7 +1276,7 @@ extern s32 D_800B261C;
 
 extern s32 D_800B2620;
 
-extern char D_800B2628[15][21]; // Type asumed.
+extern char D_800B2628[15][21]; // Type assumed.
 
 extern DVECTOR g_Gfx_DebugStringPosition0;
 
@@ -2021,7 +2021,7 @@ u8 func_80048954(s32 com, u8* param, u8* res);
 
 void func_8004729C(u16);
 
-void func_8004BCBC(s32* buffer);
+void func_8004BCBC(s32* buf);
 
 void func_8004C040();
 
@@ -2581,7 +2581,7 @@ void func_8003CC7C(s_800BCE18_2BEC_0* arg0, MATRIX* arg1, MATRIX* arg2);
 
 void func_8003D354(s32* arg0, s32 arg1);
 
-void func_8003D3BC(s_FsImageDesc* arg0, s32 arg1, s32 arg2);
+void func_8003D3BC(s_FsImageDesc* img, s32 arg1, s32 arg2);
 
 s32 func_8003D7D4(u32 arg0, s32 arg1, void* arg2, s_FsImageDesc* arg3);
 

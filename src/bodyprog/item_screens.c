@@ -67,9 +67,9 @@ void func_8004BBF4(VbRVIEW* arg0, GsCOORDINATE2* arg1, SVECTOR* arg2) // 0x8004B
     vbSetRefView(arg0);
 }
 
-void func_8004BCBC(s32* buffer) // 0x8004BCBC
+void func_8004BCBC(s32* buf) // 0x8004BCBC
 {
-    GsMapModelingData((unsigned long*)&buffer[1]);
+    GsMapModelingData((unsigned long*)&buf[1]);
 }
 
 void Gfx_Results_ItemsRotate(SVECTOR* arg0, GsCOORDINATE2* arg1) // 0x8004BCDC
@@ -2069,7 +2069,7 @@ void Gfx_ItemScreens_RenderInit(u32* arg0) // 0x8004F764
     {
         Gfx_Results_ItemsPosition(g_SavegamePtr->clearGameCount_24A);
         Gfx_Results_ItemsDisplay(g_SavegamePtr->clearGameCount_24A);
-        Results_DisplayInfo(arg0); // TODO: Takes no args in credits.c?
+        Results_DisplayInfo(arg0); // TODO: Takes no args in `credits.c`?
     }
 
     func_8004FB0C();

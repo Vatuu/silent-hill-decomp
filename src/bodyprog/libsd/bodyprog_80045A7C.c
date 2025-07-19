@@ -720,8 +720,9 @@ void func_80046E00() // 0x80046E00
         case 0:
             if (D_800C1658.field_14 == 0)
             {
-                D_800C167E = 0x18;
+                D_800C167E = 24;
             }
+
             D_800C15CA = D_800C1658.field_2;
             switch (D_800C15CA)
             {
@@ -737,20 +738,20 @@ void func_80046E00() // 0x80046E00
                 case 0x26C:
                 case 0x291:
                 case 0x25E:
-                    D_800C167A = Sd_GetVolSe(0x54);
+                    D_800C167A = Sd_GetVolSe(84);
                     break;
 
                 case 0x2D3:
                 case 0x2D5:
-                    D_800C167A = 0x32;
+                    D_800C167A = 50;
                     break;
 
                 case 0x2D4:
-                    D_800C167A = 0x28;
+                    D_800C167A = 40;
                     break;
 
                 default:
-                    D_800C167A = 0x54;
+                    D_800C167A = 84;
                     break;
             }
 
@@ -787,20 +788,19 @@ void func_80046E00() // 0x80046E00
 
         case 4:
             // HACK: Needed for match, weird code.
-            temp_a1 = g_FileXaLoc;
-            temp_v0 = &temp_a1[D_800AA894[D_800C15CA].field_0];
-            D_800C15CC = *temp_v0;
+            temp_a1     = g_FileXaLoc;
+            temp_v0     = &temp_a1[D_800AA894[D_800C15CA].field_0];
+            D_800C15CC  = *temp_v0;
             D_800C15CC += 0x96 + D_800AA894[D_800C15CA].field_4;
 
-            D_800C1688.field_0 = D_800AA894[D_800C15CA].field_8 + 0x20;
+            D_800C1688.field_0 = D_800AA894[D_800C15CA].field_8 + 32;
 
             D_800C1671        = 5;
             D_800C15E8.sector = itob(D_800C15CC % 75);
-            D_800C15CC /= 75;
+            D_800C15CC       /= 75;
             D_800C15E8.second = itob(D_800C15CC % 60);
-            D_800C15CC /= 60;
+            D_800C15CC       /= 60;
             D_800C15E8.minute = itob(D_800C15CC);
-
             break;
 
         case 5:
@@ -822,10 +822,12 @@ void func_80046E00() // 0x80046E00
 
         case 7:
             D_800C1658.field_4 = D_800C15CA;
+
             SdSetSerialAttr(0, 0, 1);
             D_800C1688.field_8 = VSync(-1);
             D_800C1688.field_4 = 0;
             D_800C1671         = 0;
+
             func_80047A70();
             D_800C1658.field_0  = 0;
             D_800C1658.field_16 = 0;
@@ -856,7 +858,7 @@ void func_80047308() // 0x80047308
     u32* temp_a1;
     u32* temp_v0;
 
-    D_800C1658.field_0 += 1;
+    D_800C1658.field_0++;
 
     switch (D_800C1673)
     {
@@ -866,6 +868,7 @@ void func_80047308() // 0x80047308
             D_800C15F0.field_0 = CdlModeSF | CdlModeRT | CdlModeSpeed;
             D_800C1673         = 1;
             break;
+
         case 1:
             if (!func_80048954(CdlSetmode, &D_800C15F0.field_0, NULL))
             {
@@ -873,11 +876,13 @@ void func_80047308() // 0x80047308
                 D_800C1673         = 2;
             }
             break;
+
         case 2:
             D_800C15F0.field_0 = D_800AA894[D_800C15D0].field_8_24;
             D_800C15F0.field_1 = D_800AA894[D_800C15D0].field_4_24;
             D_800C1673         = 3;
             return;
+
         case 3:
             if (!func_80048954(CdlSetfilter, &D_800C15F0.field_0, NULL))
             {
@@ -885,23 +890,24 @@ void func_80047308() // 0x80047308
                 D_800C1673         = 4;
             }
             break;
+
         case 4:
             // HACK: Needed for match, weird code.
-            temp_a1    = g_FileXaLoc;
-            temp_v0    = &temp_a1[D_800AA894[D_800C15D0].field_0];
-            D_800C15D4 = *temp_v0;
+            temp_a1     = g_FileXaLoc;
+            temp_v0     = &temp_a1[D_800AA894[D_800C15D0].field_0];
+            D_800C15D4  = *temp_v0;
             D_800C15D4 += 0x96 + D_800AA894[D_800C15D0].field_4;
 
             D_800C1688.field_0 = D_800AA894[D_800C15D0].field_8 + 0x20;
 
             D_800C1673        = 5;
             D_800C15E8.sector = itob(D_800C15D4 % 75);
-            D_800C15D4 /= 75;
+            D_800C15D4       /= 75;
             D_800C15E8.second = itob(D_800C15D4 % 60);
-            D_800C15D4 /= 60;
+            D_800C15D4       /= 60;
             D_800C15E8.minute = itob(D_800C15D4);
-
             break;
+
         case 5:
             if (!func_80048954(CdlSeekL, &D_800C15E8, NULL))
             {
@@ -909,6 +915,7 @@ void func_80047308() // 0x80047308
                 D_800C1673         = 6;
             }
             break;
+
         case 6:
             if (!func_80048954(CdlPause, NULL, NULL))
             {
@@ -917,6 +924,9 @@ void func_80047308() // 0x80047308
                 func_80047A70();
                 D_800C1658.field_0 = 0;
             }
+            break;
+
+        default:
             break;
     }
 }
@@ -1124,9 +1134,9 @@ void func_80047B80() // 0x80047B80
                 D_800C1658.field_8[D_800C37C8 - 1] = var_a1;
             }
 
-            if (var_a1 >= 0xAA && var_a1 <= 0xCC)
+            if (var_a1 >= 170 && var_a1 <= 204)
             {
-                temp_a0 = D_800AA5E0[var_a1 - 0xAA];
+                temp_a0 = D_800AA5E0[var_a1 - 170];
                 if (temp_a0 != g_Sd_ReverbDepth)
                 {
                     Sd_SetReverbDepth(temp_a0);
@@ -1139,30 +1149,39 @@ void func_80047B80() // 0x80047B80
         case 1:
             func_80047D1C();
             break;
+
         case 2:
             func_80047D50();
             break;
+
         case 3:
             func_80047DB0();
             break;
+
         case 4:
             func_80047E3C();
             break;
+
         case 5:
             func_80047F18();
             break;
+
         case 6:
             func_80048000();
             break;
+
         case 7:
             func_8004807C();
             break;
+
         case 8:
             func_800480FC();
             break;
+
         case 9:
             func_800481F8();
             break;
+
         default:
             break;
     }

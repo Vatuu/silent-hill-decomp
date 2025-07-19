@@ -176,7 +176,7 @@ void func_80041D10(s_Skeleton* skels, s32 size) // 0x80041D10
     while (skels < end)
     {
         skels->field_4 = NO_VALUE;
-        skels = (s_Skeleton*)((u8*)skels + sizeof(s_Skeleton)); 
+        skels          = (s_Skeleton*)((u8*)skels + sizeof(s_Skeleton)); 
     }
 }
 

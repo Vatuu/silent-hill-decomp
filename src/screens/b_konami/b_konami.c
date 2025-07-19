@@ -446,8 +446,8 @@ const s32 RodataPad = 0;
 
 void func_800CA2C8(s32 arg0) // 0x800CA2C8
 {
-    static const s32 timeVar0 = 25;  // 0x19
-    static const s32 timeVar1 = 180; // 0xB4
+    static const s32 timeVar0 = 25;
+    static const s32 timeVar1 = 180;
 
     s32 temp_v0;
     s32 currentTime;
@@ -455,8 +455,8 @@ void func_800CA2C8(s32 arg0) // 0x800CA2C8
 
     s32 var_a1;
 
-    s32 var_s1; // D_800CA508
-    u32 var_s2; // D_800CA510
+    s32 var_s1; // `D_800CA508`
+    u32 var_s2; // `D_800CA510`
     s32 expectedTime;
     s32 var_v0;
 
@@ -464,11 +464,11 @@ void func_800CA2C8(s32 arg0) // 0x800CA2C8
     u32 temp_v0_3;
     u32 temp_v1;
     
-    u8* var_s0; // D_800CA500
-    u8* temp_s5; // D_800CA50C
+    u8* var_s0;  // `D_800CA500`
+    u8* temp_s5; // `D_800CA50C`
     u8* temp_a0;
     u8* temp_s0;
-    u8* var_s3; // D_800CA504
+    u8* var_s3; // `D_800CA504`
 
     if (D_800CA4FC != 1)
     {

@@ -9,7 +9,7 @@
  * operation with a mask that has the specified number of consecutive
  * bits set to 1.
  *
- * Bits | Mask   | Chance  
+ * Bits | Mask   | Chance
  * -----|--------|--------
  * 1    | 0x1    | 50%
  * 2    | 0x3    | 25%
