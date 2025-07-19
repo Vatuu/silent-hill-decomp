@@ -185,6 +185,8 @@ extern s_800B55E8 D_800B55E8[]; // This isn't an array struct.
 
 extern s_800B55E8 D_800B5600;
 
+extern s32 D_800B5618;
+
 extern s32 D_800B55FC;
 
 /** @brief Basic information required to draw information of elements in save slots.

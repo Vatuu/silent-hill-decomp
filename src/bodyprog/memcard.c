@@ -190,7 +190,7 @@ void func_8002E8D4() // 0x8002E8D4
 
 void func_8002E8E4() // 0x8002E8E4
 {
-    g_MemCardsBasicInfo[9].basicSaveInfoPtr_14 = NULL; // D_800B5618.field_0
+    g_MemCardsBasicInfo[9].basicSaveInfoPtr_14 = NULL; // D_800B5618
     g_MemCardsBasicInfo[8].field_18 = 0; // D_800B5600.field_0
     s_800B55E8_Init(&g_MemCardsBasicInfo[8].field_18, 0, 0, 0, 0, 0, 1); // D_800B5600
 }
@@ -340,15 +340,15 @@ void func_8002EB88()
     else
     {
         s_800B55E8 *ptr;
-        // D_800B5618.field_0 == 1 && D_800B5600.field_0 == 0
+        // D_800B5618 == 1 && D_800B5600.field_0 == 0
         if (g_MemCardsBasicInfo[9].basicSaveInfoPtr_14 == 1 && g_MemCardsBasicInfo[8].field_18 == 0)
         {
             ptr            = (s_800B55E8*)&g_MemCardsBasicInfo[8].field_18; // ptr = &D_800B5600
-            ptr->field_0   = g_MemCardsBasicInfo[9].basicSaveInfoPtr_14; // D_800B5618.field_0
+            ptr->field_0   = g_MemCardsBasicInfo[9].basicSaveInfoPtr_14; // D_800B5618
             ptr->fileIdx_8 = 0;
             ptr->saveIdx_C = 0;
             ptr->field_10  = 0;
-            ptr->field_14  = g_MemCardsBasicInfo[9].basicSaveInfoPtr_14; // D_800B5618.field_0
+            ptr->field_14  = g_MemCardsBasicInfo[9].basicSaveInfoPtr_14; // D_800B5618
             ptr->field_4   = g_MemCardsBasicInfo[9].memoryCardStatus_0;  // D_800B5600.field_4
         }
         piVar1 = (s_800B55E8*)&g_MemCardsBasicInfo[8].field_18; // D_800B5600
