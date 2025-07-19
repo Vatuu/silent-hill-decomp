@@ -508,7 +508,7 @@ int func_800325F8() // 0x800325F8
     return 4096 - D_800B5C28;
 }
 
-// TODO: RODATA migration
+// TODO: RODATA migration.
 #ifdef NON_MATCHING
 void func_8003260C() // 0x8003260C
 {
@@ -618,7 +618,7 @@ void func_8003260C() // 0x8003260C
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003260C);
 #endif
 
-// TODO: RODATA migration
+// TODO: RODATA migration.
 #ifdef NON_MATCHING
 void func_80032904()
 {
@@ -1112,7 +1112,7 @@ s32 func_800334D8(s32 idx) // 0x800334D8
     return res;
 }
 
-// TODO: RODATA migration
+// TODO: RODATA migration.
 #ifdef NON_MATCHING
 static inline s32 WrapIdx(s32 idx)
 {
@@ -2224,6 +2224,7 @@ void Game_SavegameInitialize(s8 overlayId, s32 difficulty) // 0x800350BC
     Game_SavegameResetPlayer();
 }
 
+/** Crucial for get in-game. */
 void func_80035178() // 0x80035178
 {
     func_8003C048();
@@ -3320,7 +3321,7 @@ s32 func_80036B5C(u8 arg0, s32* arg1)
                         Gfx_StringSetColor(ColorId_White);
                     }
 
-                    Gfx_StringSetPosition(32, (STRING_LINE_OFFSET * i) + 98);
+                    Gfx_StringSetPosition(32, (STRING_LINE_OFFSET * i) + 96);
                     Gfx_StringDraw(g_MapOverlayHeader.mapMessageStrings_30[(arg0 + i) + 1], 400);
                 }
             }
@@ -3597,7 +3598,76 @@ void func_80037388() // 0x80037388
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_800373CC); // 0x800373CC
 
+// `if (-deltaRotY < 0x156)` causes a minor missmatch.
+#ifdef NON_MATCHING
+s32 func_800378D4(s_AreaLoadParams* arg0) // 0x800378D4
+{
+    s16 rotY;
+    s32 temp_a0;
+    s32 temp_a1;
+    s32 var_v0_2;
+    s32 var_v0_3;
+    s32 deltaRotY;
+
+    if (g_MainLoop_FrameCount > D_800A9A20)
+    {
+        rotY = g_SysWork.player_4C.chara_0.rotation_24.vy;
+        D_800A9A24 = g_SysWork.player_4C.chara_0.position_18.vx - (shRsin(rotY) >> 3);
+        D_800A9A28 = g_SysWork.player_4C.chara_0.position_18.vz - (shRcos(rotY) >> 3);
+        D_800A9A20 = g_MainLoop_FrameCount;
+    }
+    
+    temp_a0 = arg0->char_x_0 - D_800A9A24;
+
+    // messing with this earlier gave me same result as our `ABS_DIFF` macro
+    // eg: ((a - b) < 0) ? (b - a) : (a - b)
+    // interesting but not sure what the cause of that was though
+    // it seems to match here now at least
+    // (also todo: psyq headers do include their own ABS and _ABS macro that might match our ones)
+    //var_v0_2 = abs(temp_a0);
+	
+    
+    if (abs(temp_a0) > FP_FLOAT_TO(0.8f, Q12_SHIFT))
+    {
+        return 0;
+    }
+    
+    temp_a1 = arg0->char_z_8 - D_800A9A28;
+    //var_v0_3 = abs(temp_a1);
+    
+    if (abs(temp_a1) > FP_FLOAT_TO(0.8f, Q12_SHIFT))
+    {
+        return 0;
+    }
+        
+    if ((SQUARE(temp_a0) + SQUARE(temp_a1)) <= SQUARE(FP_FLOAT_TO(0.8f, Q12_SHIFT)))
+    {
+        deltaRotY = g_SysWork.player_4C.chara_0.rotation_24.vy - ratan2(temp_a0, temp_a1);
+        if (deltaRotY >= FP_ANGLE(180.0f))
+        {
+            deltaRotY -= FP_ANGLE(360.0f);
+        }
+        
+        if (deltaRotY >= 0)
+        {
+            if (deltaRotY < 0x156)
+            {
+                return 1;
+            }
+        }
+        else
+        {
+            if (-deltaRotY < 0x156)
+            {
+                return 1;
+            }
+        }
+    }
+    return 0;
+}
+#else
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_800378D4); // 0x800378D4
+#endif
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_80037A4C); // 0x80037A4C
 
@@ -3636,7 +3706,7 @@ void func_80037E78(s_SubCharacter* chara) // 0x80037E78
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_80037F24);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_80037F24); // 0x80037F24
 
 s32 func_800382B0(s32 arg0) // 0x800382B0
 {
@@ -3657,13 +3727,13 @@ s32 func_800382B0(s32 arg0) // 0x800382B0
     return NO_VALUE;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_800382EC);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_800382EC); // 0x800382EC
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_80038354);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_80038354); // 0x80038354
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_80038A6C);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_80038A6C); // 0x80038A6C
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_80038B44);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_80038B44); // 0x80038B44
 
 void GameState_InGame_Update() // 0x80038BD4
 {
@@ -4706,7 +4776,7 @@ void GameState_MapEvent_Update() // 0x8003AA4C
 
 const s32 pad = 0;
 
-// TODO: RODATA migration
+// TODO: RODATA migration.
 #ifdef NON_MATCHING
 void GameState_MainMenu_Update() // 0x8003AB28
 {
@@ -5232,9 +5302,77 @@ void func_8003BA08() // 0x8003BA08
     GsOUT_PACKET_P = packet + sizeof(DR_MODE);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003BAC4); // 0x8003BAC4
+// Matched in decomp.me, but inserted has missmatch.
+#ifdef NON_MATCHING
+void func_8003BAC4() // 0x8003BAC4
+{
+    s32 idx;
+    s32 i;
+    s32 value;
+    s8* ptr;
+    u8* ptr1;
+    s8* ptr2;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003BBF4); // 0x8003BBF4
+    ptr = D_800BCDE0;
+    ptr1 = ptr + 441;
+    D_800A9EAC += 4 + (Rng_Rand16() & 7);
+    value = FP_MULTIPLY(shRsin(D_800A9EAC), 10, Q12_SHIFT) - 122;
+    ptr2 = ptr + 461;
+    
+    for (i = 20; i >= 0; i--)
+    {
+        *ptr2-- = value;
+    }
+    
+    for (i = 0; i < 16; i++)
+    {
+        idx = Rng_Rand16() % 21;
+        ptr1[idx] = -1;
+    }
+    
+    for (i = 0; i < 9; i++)
+    {
+        idx = Rng_Rand16() % 21;
+        ptr1[idx] = 0;
+    }
+}
+#else
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003BAC4); // 0x8003BAC4
+#endif
+
+void func_8003BBF4() // 0x8003BBF4
+{
+    s32 val;
+    s32 j;
+    s32 i;
+    u8* ptr;
+
+    func_8003BAC4();
+
+    for (i = 0; i < 21; i++)
+    {
+        ptr = &D_800BCDE0[i * 21];
+        
+        for (j = 0; j < 21; j++)
+        {
+            val   = ptr[j + 21];
+            val  += ptr[j - 1];
+            val  += ptr[j];
+            val  += ptr[j + 1];
+            val >>= 2;
+            val  -= 1;
+            
+            if (val <= 0) 
+            {
+                ptr[j] = 0;
+            } 
+            else 
+            {
+                ptr[j] = val;
+            }
+        }
+    }
+}
 
 void func_8003BC8C() // 0x8003BC8C
 {
@@ -5265,7 +5403,34 @@ s32 func_8003BD2C() // 0x8003BD2C
     return ((s32*)D_800BCE18.field_0[0].field_0 - &D_8002500C) >> 2;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003BD48);
+void func_8003BD48(s_SubCharacter* chara) // 0x8003BD48
+{
+    u16 var_s0;
+
+    D_800BCE14 = func_80069810();
+    var_s0 = D_800BCE14;
+
+    switch (func_8003BD2C())
+    {
+        case 0:
+            if (chara->position_18.vx >= FP_METER(191.6f) && chara->position_18.vx <= FP_METER(198.8f) && 
+                chara->position_18.vz >= FP_METER(-96.0f) && chara->position_18.vz <= FP_METER(-90.3f))
+            {
+                var_s0 = (var_s0 & ~0x2) | 0x4;
+            }
+            break;
+
+        case 3:
+        case 4:
+            if(chara->position_18.vx >= FP_METER(-100.0f) && chara->position_18.vx <= FP_METER(-94.5f) && 
+               chara->position_18.vz >= FP_METER(-70.3f) && chara->position_18.vz <= FP_METER(-62.0f)) 
+            {
+                var_s0 = (var_s0 & ~0x2) | 0x4;
+            }
+    }
+    
+    func_80069820(var_s0);
+}
 
 void func_8003BE28() // 0x8003BE28
 {
@@ -5302,13 +5467,91 @@ void func_8003BED0() // 0x8003BED0
     func_80056954(&D_800BCE18.field_1BE4);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003BF60); // 0x8003BF60
+s32 func_8003BF60(s32 arg0, s32 arg1) 
+{
+    s32 ret;
+    s_800BCE18_0_0_C* ptr;
+    s8 val;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003C048); // 0x8003C048
+    ret = 0;
+    
+    if (g_SavegamePtr->mapOverlayId_A4 == 0) 
+    {
+        return 1;
+    }
+    
+    if (D_800BCE18.field_0[0].field_0->field_C != NULL) 
+    {
+        ptr = D_800BCE18.field_0[0].field_0->field_C;
+        val = ptr->field_0;
+        
+        if (val != -1)
+        {
+            do 
+            {
+                if (arg0 >= (ptr->field_2 << 8) && (ptr->field_4 << 8) >= arg0 && 
+                    arg1 >= (ptr->field_6 << 8) && (ptr->field_8 << 8) >= arg1 && 
+                    ret < val)
+                {
+                    ret = val;
+                }
+                ptr++;
+                val = ptr->field_0;
+            } while (val != -1);
+        }
+    }
+    return ret;
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003C0C0); // 0x8003C0C0
+/** Important for map loading.
+ * Removing it causes the game to get in the loading screen infinitely.
+ */
+void func_8003C048() // 0x8003C048
+{
+    func_80055028();
+    D_800BCE18.field_0[0].field_4 = 0;
+    func_80041C24((s_80041CEC* )0x8016B600, 0x80175600, 0x2C000);
+    func_800697EC();
+    g_SysWork.field_2378 = 0x1000;
+    func_8003EBA0();
+    func_8005B55C(vwGetViewCoord());
+    func_8003CB3C(&D_800BCE18);
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003C110); // 0x8003C110
+void func_8003C0C0() // 0x8003C0C0
+{
+    s_800BCE18_1BAC* ptr = &D_800BCE18.field_1BAC;
+    ptr->field_0         = -1;
+    ptr->field_14        = (s_800BE9FC*)(Fs_GetFileSize(0x58E) + 0x800FE600); // field_14 is defined as a pointer?
+    ptr->field_18        = 0;
+    ptr->field_1C        = 0;
+    ptr->field_20        = 0;
+}
+
+void func_8003C110() // 0x8003C110
+{
+    s32 i;
+    s_800BCE18_0_CC* var_s0;
+    
+    for (i = 0; i < 45; i++) 
+    {
+        if (i != 1) 
+        {
+            D_800BCE18.field_0->field_18[i] = NULL;
+        }
+    } 
+    
+    D_800BCE18.field_0[0].field_14 = Fs_GetFileSize(0x58E) + 0x800FEE00;
+
+    // this part could be rewritten in a less confusing way
+    var_s0 = &D_800BCE18.field_0[0].field_CC;
+    
+    while ((u32)var_s0 < (u32)&D_800BCE18.field_164C) 
+    {
+        func_8003C1AC((u32)var_s0);
+        var_s0 = (int)var_s0 + sizeof(s_800BCE18_0); // matches but fake
+    } 
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003C1AC); // 0x8003C1AC
 
@@ -5321,7 +5564,11 @@ void func_8003C2EC()
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003C30C); // 0x8003C30C
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003C368); // 0x8003C368
+void func_8003C368() // 0x8003C368
+{
+    D_800BCE18.field_0[0].field_4 = 1;
+    D_800BCE18.field_0[0].field_8 = g_SysWork.player_4C.chara_0.position_18;
+}
 
 void func_8003C3A0() // 0x8003C3A0
 {
@@ -5360,7 +5607,7 @@ void func_8003C8F8(s_func_8003C8F8* arg0, s8* arg1) // 0x8003C8F8
     arg0->field_24 = 0;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003C92C);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003C92C); // 0x8003C92C
 
 void func_8003CB3C(s_800BCE18* arg0) // 0x8003CB3C
 {
@@ -5454,7 +5701,7 @@ void func_8003CD6C(s_PlayerCombat* arg0) // 0x8003CD6C
     func_8003CDA0(var_a0);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003CDA0);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003CDA0); // 0x8003CDA0
 
 void func_8003D01C() // 0x8003D01C
 {
@@ -5645,11 +5892,51 @@ s32 func_8003D444(s32 idx) // 0x8003D444
 
 void func_8003D460() {}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003D468);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003D468); // 0x8003D468
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003D550);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003D550); // 0x8003D550
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003D5B4);
+// This was matched in decomp.me, but `if (flags & (1 << i))` causes missmatch
+// when inserted.
+#ifdef NON_MATCHING
+void func_8003D5B4(s8 flags) // 0x8003D5B4
+{
+    u8 fileIdx;
+    s32 i;
+    u32 temp;
+    s_800BCE18_0_CC* ptr;
+
+    for (i = 0; i < 4; i++)
+    {
+        ptr = &D_800BCE18.field_0[i].field_CC;
+        if (flags & (1 << i))
+        {
+            func_8003D6A4((u8*)ptr);
+        }
+    }
+
+    i = 0; 
+    
+    D_800BCE18.field_0[0].field_14 = Fs_GetFileSize(FILE_CHARA_HERO_ILM) + 0x800FEE00;
+    
+    for (; i < 4; i++)
+    {
+        ptr = &D_800BCE18.field_0[i].field_CC;
+        
+        fileIdx = ptr->field_0;
+        if (fileIdx != 0)
+        {
+            temp = ptr->field_8 + Fs_GetFileSize(g_Chara_FileInfo[fileIdx].modelFileIdx);
+            if (D_800BCE18.field_0[0].field_14 < temp)
+            {
+                D_800BCE18.field_0[0].field_14 = temp;
+            }
+        }
+    }
+}
+#else
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003D5B4); // 0x8003D5B4
+#endif
 
 void func_8003D6A4(u8* idx) // 0x8003D6A4
 {
@@ -5659,7 +5946,7 @@ void func_8003D6A4(u8* idx) // 0x8003D6A4
     if (locIdx != 0)
     {
         D_800BCE18.field_0[0].field_18[locIdx] = 0;
-        func_8003C1AC();
+        func_8003C1AC((u32)idx);
     }
 }
 
@@ -5786,14 +6073,14 @@ void func_8003D9C8(s_800BCE18_0_CC* arg0) // 0x8003D9C8
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003DA9C);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003DA9C); // 0x8003DA9C
 
 s32 func_8003DD74(s32 arg0, s32 arg1) // 0x8003DD74
 {
     return (arg1 << 10) & 0xFC00;
 }
 
-// TODO: RODATA migration
+// TODO: RODATA migration.
 #ifdef NON_MATCHING
 void func_8003DD80(s32 idx, s32 arg1) // 0x8003DD80
 {
@@ -5850,7 +6137,7 @@ void func_8003DD80(s32 idx, s32 arg1) // 0x8003DD80
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003DD80);
 #endif
 
-// TODO: RODATA migration
+// TODO: RODATA migration.
 #ifdef NON_MATCHING
 void func_8003DE60(s_Skeleton* skel, s32 arg1) // 0x8003DE60
 {
@@ -6737,10 +7024,10 @@ u32 func_8003F654(s_func_8003F654* arg0)
     return 0;
 }
 #else
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003F654);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003F654); // 0x8003F654
 #endif
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003F6F0);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800314EC", func_8003F6F0); // 0x8003F6F0
 
 s32 Math_GetWeightedAverage(s32 a, s32 b, s32 weight) // 0x8003F7E4
 {

@@ -388,8 +388,19 @@ STATIC_ASSERT_SIZEOF(s_Skeleton, 28);
 
 typedef struct
 {
+    s8 field_0;
+    u8 unk_1;
+    s16 field_2;
+    s16 field_4;
+    s16 field_6;
+    s16 field_8;
+} s_800BCE18_0_0_C;
+
+typedef struct
+{
     s32 unk_0[2];
     s32 field_8;
+    s_800BCE18_0_0_C* field_C;
 } s_sub_800BCE18_0;
 
 // Looks similar to `s_Skeleton`
@@ -409,9 +420,7 @@ typedef struct
     s_sub_800BCE18_0* field_0;
     s8                field_4;
     u8                unk_5[3];
-    s32               field_8;
-    s32               field_C;
-    s32               field_10;
+    VECTOR3           field_8; // Vaguely assumed. Chane done for matching `func_8003C368`.
     s32               field_14;
     s_800BCE18_0_CC*  field_18[Chara_Count]; // Per-character data? So far only seen accessed by `map4_s03::800D59EC` which calls `func_8003BE50(Chara_Twinfeeler)`.
     s_800BCE18_0_CC   field_CC;
@@ -459,6 +468,8 @@ typedef struct
     s32         unk10;
     s_800BE9FC* field_14;
     s32         field_18;
+    s32         field_1C;
+    s32         field_20;
 } s_800BCE18_1BAC;
 
 typedef struct
@@ -468,7 +479,7 @@ typedef struct
     s_800BCE18_0_CC   field_164C;
     u8                unk_1650[1328];
     s_800BCE18_1BAC   field_1BAC;
-    u8                unk_1BC8[16];
+    u8                unk_1BD0[8];
     s32               field_1BD8;
     VC_CAMERA_INTINFO vcCameraInternalInfo_1BDC; // Debug camera info.
     s_800BE9FC        field_1BE4;
@@ -1029,9 +1040,17 @@ extern u16 D_800A9858[];
 
 extern s_800C37D4 D_800A986C[];
 
+extern s32 D_800A9A20;
+
+extern s32 D_800A9A24;
+
+extern s32 D_800A9A28;
+
 extern char* D_800A9A8C[]; // `Gfx_MainMenu_MainTextDraw` strings. TODO: Local .rodata.
 
 extern s8 D_800A98FC[];
+
+extern s32 D_800A9EAC;
 
 extern s32 D_800A9EB0;
 
@@ -1737,6 +1756,8 @@ void Gfx_MainMenu_MainTextDraw();
 
 s32 func_8003BD2C();
 
+void func_8003C1AC(u32);
+
 /** Unknown bodyprog func. Called by `Fs_QueueDoThingWhenEmpty`. */
 s32 func_8003C850();
 
@@ -2039,6 +2060,8 @@ void func_80054720(void*, s32, s32);
 
 void func_8005487C(s32);
 
+void func_80055028();
+
 void func_80055330(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6);
 
 void func_800553C4(u8 arg0, u8 arg1, u8 arg2, u8 arg3);
@@ -2061,6 +2084,8 @@ void func_8005660C(s_func_8005660C_0* arg0, s_func_8005660C_1* arg1, s32 arg2);
 void func_800566B4(s_func_800566B4* arg0, s_FsImageDesc* image, s8 unused, s32 startIdx, s32 arg4);
 
 void func_80056D64(s8* prevStr, s8* newStr);
+
+void func_8005B55C(GsCOORDINATE2*);
 
 s32 func_8005C7D0(s_SubCharacter*, s32);
 
@@ -2325,6 +2350,12 @@ void func_800622B8(s32, s_SubCharacter*, s32, s32);
 void func_80066E40();
 
 void func_80066E7C();
+
+void func_800697EC();
+
+u16 func_80069810();
+
+void func_80069820(u16);
 
 void func_800699F8(s_func_800699F8* arg0, s32 arg1, s32 arg2);
 

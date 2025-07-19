@@ -468,6 +468,8 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80044090);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80044420);
 
+// Could either this be used for load the player model or for execute animations
+// Removing the call from `func_80035178` causes Harry's model to not appear
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800445A4);
 
 // ========================================
