@@ -172,6 +172,8 @@ extern s_MemCardInfo_BasicSaveInfo g_MemCard_2_BasicSaveInfo[15];
 
 extern s_CardDirectory D_800B2628;
 
+extern s32 D_800B2774;
+
 extern s32 D_800B2778;
 
 extern s_MemCardInfo_BasicSaveInfo D_800B4580[15];
@@ -236,8 +238,7 @@ s32 func_8002E94C(s32 arg0, s32 arg1, s32 fileIdx, s32 saveIdx);
 
 s32 func_8002E990();
 
-/** Used to get the pointer of a struct which seems to be `s_SavegameMetadata`. */
-s32 func_8002E9EC(s32 arg0, s32 fileIdx, s32 saveIdx);
+s_SavegameMetadata* func_8002E9EC(s32 arg0, s32 fileIdx, s32 saveIdx);
 
 s32 func_8002EA28(s32 idx);
 
@@ -250,6 +251,10 @@ void func_8002EB88(); // Return type assumed.
 void func_8002ECE0(s_800B55E8* arg0);
 
 s32 func_8002F278(s32 arg0, s_CardDirectory* dir);
+
+void func_8002F2C4(s_800B55E8* arg0);
+
+void func_8002F61C(s_800B55E8* arg0);
 
 void func_8002FB64(s_MemCardInfo_BasicSaveInfo* arg0);
 
