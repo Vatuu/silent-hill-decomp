@@ -14,6 +14,16 @@ static inline void CardWork_ClearDirectoryFile(s32 idx)
     g_CardWork.cardDirectory_40->blockCounts_13B[idx] = 0;
 }
 
+static inline void s_800B55E8_Init(s_800B55E8* p, s32 field_0, s32 deviceId, s32 fileIdx, s32 saveIdx, s32 field_10, s32 lastCardResult)
+{
+    p->field_0           = field_0;
+    p->deviceId_4        = deviceId;
+    p->fileIdx_8         = fileIdx;
+    p->saveIdx_C         = saveIdx;
+    p->field_10          = field_10;
+    p->lastCardResult_14 = lastCardResult;
+}
+
 /** @note Strange data access.
  * Many functions access by strange means to
  * variables making an extreamly confusing
@@ -62,7 +72,7 @@ void Savegame_CardCleanInit() // 0x8002E630
 
     for (i = 0; i < 8; i++) 
     {
-        D_800B5508.basicInfo_0[i].memoryCardStatus_0 = 0;
+        D_800B5508.devices_0[i].memoryCardStatus_0 = 0;
 
         Savegame_CardFileUsageClear(i);
 
@@ -81,31 +91,31 @@ void Savegame_CardCleanInit() // 0x8002E630
                 break;
         }
 
-        D_800B5508.basicInfo_0[i].basicSaveInfo_14 = ptr;
+        D_800B5508.devices_0[i].basicSaveInfo_14 = ptr;
 
         Savegame_GameMemDataClear(i);
     } 
 }
 
-void Savegame_GameMemDataClear(s32 idx) // 0x8002E6E4
+void Savegame_GameMemDataClear(s32 deviceId) // 0x8002E6E4
 {
-    D_800B5508.basicInfo_0[idx].memoryCardStatus_0 = 0;
-    Savegame_CardFileUsageClear(idx);
-    bzero(D_800B5508.basicInfo_0[idx].basicSaveInfo_14, 0xF00);
-    D_800B5508.basicInfo_0[idx].field_18 = 0;
+    D_800B5508.devices_0[deviceId].memoryCardStatus_0 = 0;
+    Savegame_CardFileUsageClear(deviceId);
+    bzero(D_800B5508.devices_0[deviceId].basicSaveInfo_14, 0xF00);
+    D_800B5508.devices_0[deviceId].field_18 = 0;
 }
 
-void Savegame_CardFileUsageClear(s32 idx) // 0x8002E730
+void Savegame_CardFileUsageClear(s32 deviceId) // 0x8002E730
 {
     s32 i;
 
     for (i = 0; i < 15; i++) 
     {
-        D_800B5508.basicInfo_0[idx].isFileUsed_4[i] = 0;
+        D_800B5508.devices_0[deviceId].isFileUsed_4[i] = 0;
     }
 }
 
-s32 func_8002E76C(s32 idx) // 0x8002E76C
+s32 func_8002E76C(s32 deviceId) // 0x8002E76C
 {
     s32 ret;
     s32 i;
@@ -114,7 +124,7 @@ s32 func_8002E76C(s32 idx) // 0x8002E76C
 
     for (i = 0; i < 15; i++)
     {
-        if (D_800B5508.basicInfo_0[idx].isFileUsed_4[i] != 0)
+        if (D_800B5508.devices_0[deviceId].isFileUsed_4[i] != 0)
         {
             ret = 0; 
             break;
@@ -122,16 +132,6 @@ s32 func_8002E76C(s32 idx) // 0x8002E76C
     }
 
     return ret;
-}
-
-static inline void s_800B55E8_Init(s_800B55E8* p, s32 field_0, s32 field_4, s32 fileIdx, s32 saveIdx, s32 field_10, s32 field_14)
-{
-    p->field_0           = field_0;
-    p->field_4           = field_4;
-    p->fileIdx_8         = fileIdx;
-    p->saveIdx_C         = saveIdx;
-    p->field_10          = field_10;
-    p->lastCardResult_14 = field_14;
 }
 
 void func_8002E7BC() // 0x8002E7BC
@@ -180,7 +180,7 @@ s32 func_8002E898() // 0x8002E898
     ret = 0;
     for (i = 0; i < 8; i++)
     {
-        ret |= D_800B5508.basicInfo_0[i].memoryCardStatus_0 << (i * 3);
+        ret |= D_800B5508.devices_0[i].memoryCardStatus_0 << (i * 3);
     }
 
     return ret;
@@ -206,20 +206,20 @@ s32 func_8002E914() // 0x8002E914
     ret = 0;
     for (i = 0; i < 8; i++)
     {
-        ret |= D_800B5508.basicInfo_0[i].memoryCardStatus_0 << (i * 2);
+        ret |= D_800B5508.devices_0[i].memoryCardStatus_0 << (i * 2);
     }
 
     return ret;
 }
 
-s32 func_8002E94C(s32 arg0, s32 arg1, s32 fileIdx, s32 saveIdx) // 0x8002E94C
+s32 func_8002E94C(s32 arg0, s32 deviceId, s32 fileIdx, s32 saveIdx) // 0x8002E94C
 {
     if (D_800B5508.field_E0[0].field_0 != 0)
     {
         return 0;
     }
 
-    s_800B55E8_Init(&D_800B5508.field_E0[0], arg0, arg1, fileIdx, saveIdx, 0, 1);
+    s_800B55E8_Init(&D_800B5508.field_E0[0], arg0, deviceId, fileIdx, saveIdx, 0, 1);
     return 1;
 }
 
@@ -231,7 +231,7 @@ s32 func_8002E990() // 0x8002E990
     return D_800B5508.field_E0[0].lastCardResult_14;
 }
 
-s32 func_8002E9A0(s32 idx) // 0x8002E9A0
+s32 func_8002E9A0(s32 deviceId) // 0x8002E9A0
 {
     s32 ret;
     s32 i;
@@ -240,18 +240,18 @@ s32 func_8002E9A0(s32 idx) // 0x8002E9A0
 
     for (i = 0; i < 15; i++)
     {
-        ret |= D_800B5508.basicInfo_0[idx].isFileUsed_4[i] << (i * 2);
+        ret |= D_800B5508.devices_0[deviceId].isFileUsed_4[i] << (i * 2);
     }
 
     return ret;
 }
 
-s_SavegameMetadata* func_8002E9EC(s32 arg0, s32 fileIdx, s32 saveIdx) // 0x8002E9EC
+s_SavegameMetadata* func_8002E9EC(s32 deviceId, s32 fileIdx, s32 saveIdx) // 0x8002E9EC
 {
-    return &D_800B5508.basicInfo_0[arg0].basicSaveInfo_14[fileIdx].savegameMetadatas_4[saveIdx];
+    return &D_800B5508.devices_0[deviceId].basicSaveInfo_14[fileIdx].savegameMetadatas_4[saveIdx];
 }
 
-s32 func_8002EA28(s32 idx) // 0x8002EA28
+s32 func_8002EA28(s32 deviceId) // 0x8002EA28
 {
     s32 ret;
     s32 i;
@@ -260,7 +260,7 @@ s32 func_8002EA28(s32 idx) // 0x8002EA28
 
     for (i = 0; i < 15; i++)
     {
-        if (D_800B5508.basicInfo_0[idx].isFileUsed_4[i] != 0)
+        if (D_800B5508.devices_0[deviceId].isFileUsed_4[i] != 0)
         {
             ret++;
         }
@@ -269,9 +269,9 @@ s32 func_8002EA28(s32 idx) // 0x8002EA28
     return ret;
 }
 
-s32 func_8002EA78(s32 idx) // 0x8002EA78
+s32 func_8002EA78(s32 deviceId) // 0x8002EA78
 {
-    return D_800B5508.basicInfo_0[idx].field_18 - func_8002EA28(idx);
+    return D_800B5508.devices_0[deviceId].field_18 - func_8002EA28(deviceId);
 }
 
 s32 func_8002EABC(s32* arg0, s32* arg1, s32* arg2) // 0x8002EABC
@@ -288,7 +288,7 @@ s32 func_8002EABC(s32* arg0, s32* arg1, s32* arg2) // 0x8002EABC
 
     for (i = 0; i < 8; i++)
     {
-        if (D_800B5508.basicInfo_0[i].memoryCardStatus_0 == 3)
+        if (D_800B5508.devices_0[i].memoryCardStatus_0 == 3)
         {
             func_8002FE70(i, &vec);
 
@@ -333,7 +333,7 @@ void func_8002EB88()
     {
         if (D_800B5508.field_110 == 1 && D_800B5508.field_E0[1].field_0 == 0)
         {
-            s_800B55E8_Init(&D_800B5508.field_E0[1], D_800B5508.field_110, D_800B5508.field_E0[1].field_4, 0, 0, 0, D_800B5508.field_110);
+            s_800B55E8_Init(&D_800B5508.field_E0[1], D_800B5508.field_110, D_800B5508.field_E0[1].deviceId_4, 0, 0, 0, D_800B5508.field_110);
         }
         ptr = &D_800B5508.field_E0[1];
     }
@@ -364,22 +364,22 @@ void func_8002EB88()
         ptr->field_0 = 0;
         if (ptr == &D_800B5508.field_E0[1])
         {
-            D_800B5508.field_E0[1].field_4 = (D_800B5508.field_E0[1].field_4 + 1) & 7;
+            D_800B5508.field_E0[1].deviceId_4 = (D_800B5508.field_E0[1].deviceId_4 + 1) & 7;
         }
     }
 }
 
 void func_8002ECE0(s_800B55E8* arg0) // 0x8002ECE0
 {
-    if (Savegame_CardDeviceFormat(arg0->field_4) != 0)
+    if (Savegame_CardDeviceFormat(arg0->deviceId_4) != 0)
     {
         arg0->lastCardResult_14 = 11;
 
-        D_800B5508.basicInfo_0[arg0->field_4].memoryCardStatus_0 = 3;
+        D_800B5508.devices_0[arg0->deviceId_4].memoryCardStatus_0 = 3;
 
-        Savegame_CardFileUsageClear(arg0->field_4);
+        Savegame_CardFileUsageClear(arg0->deviceId_4);
 
-        D_800B5508.basicInfo_0[arg0->field_4].field_18 = 15;
+        D_800B5508.devices_0[arg0->deviceId_4].field_18 = 15;
     }
     else
     {
@@ -398,14 +398,14 @@ void func_8002ED7C(s_800B55E8* arg0) // 0x8002ED7C
 
     arg0->lastCardResult_14 = 1;
 
-    ptr = &D_800B5508.basicInfo_0[arg0->field_4];
+    ptr = &D_800B5508.devices_0[arg0->deviceId_4];
 
     switch (arg0->field_10)
     {
         case 0:
             D_800B261C = 0;
 
-            if (Savegame_CardRequest(CardIoMode_Init, arg0->field_4, NULL, NULL, 0, 0, NULL, 0) != 0)
+            if (Savegame_CardRequest(CardIoMode_Init, arg0->deviceId_4, NULL, NULL, 0, 0, NULL, 0) != 0)
             {
                 arg0->field_10 = 1;
             }
@@ -416,7 +416,7 @@ void func_8002ED7C(s_800B55E8* arg0) // 0x8002ED7C
             switch (cardResult)
             {
                 case 0:
-                    Savegame_GameMemDataClear(arg0->field_4);
+                    Savegame_GameMemDataClear(arg0->deviceId_4);
                     ptr->memoryCardStatus_0 = 1;
                     arg0->lastCardResult_14 = 0;
                     break;
@@ -450,7 +450,7 @@ void func_8002ED7C(s_800B55E8* arg0) // 0x8002ED7C
 
         case 2:
             ptr->memoryCardStatus_0 = 2;
-            if (Savegame_CardRequest(CardIoMode_DirRead, arg0->field_4, &D_800B2628, NULL, 0, 0, NULL, 0) != 0)
+            if (Savegame_CardRequest(CardIoMode_DirRead, arg0->deviceId_4, &D_800B2628, NULL, 0, 0, NULL, 0) != 0)
             {
                 arg0->field_10 = 3;
             }
@@ -461,13 +461,13 @@ void func_8002ED7C(s_800B55E8* arg0) // 0x8002ED7C
             switch (cardResult)
             {
                 case 0:
-                    Savegame_GameMemDataClear(arg0->field_4);
+                    Savegame_GameMemDataClear(arg0->deviceId_4);
                     arg0->lastCardResult_14 = cardResult;
                     ptr->memoryCardStatus_0 = 1;
                     break;
 
                 case 4:
-                    Savegame_GameMemDataClear(arg0->field_4);
+                    Savegame_GameMemDataClear(arg0->deviceId_4);
                     arg0->lastCardResult_14 = cardResult;
                     ptr->memoryCardStatus_0 = 4;
                     break;
@@ -485,8 +485,8 @@ void func_8002ED7C(s_800B55E8* arg0) // 0x8002ED7C
         case 4:
             D_800B2618 = NO_VALUE;
 
-            Savegame_CardFileUsageClear(arg0->field_4);
-            bzero(D_800B5508.basicInfo_0[arg0->field_4].basicSaveInfo_14, 0xF00);
+            Savegame_CardFileUsageClear(arg0->deviceId_4);
+            bzero(D_800B5508.devices_0[arg0->deviceId_4].basicSaveInfo_14, 0xF00);
 
             arg0->field_10 = 5;
 
@@ -516,7 +516,7 @@ void func_8002ED7C(s_800B55E8* arg0) // 0x8002ED7C
         case 6:
             Savegame_FilenameGenerate(filePath, D_800B2618);
 
-            if (Savegame_CardRequest(CardIoMode_Read, arg0->field_4, NULL, filePath, 0, 0x200, &D_800B5508.basicInfo_0[arg0->field_4].basicSaveInfo_14[D_800B2618], sizeof(s_MemCardInfo_BasicSaveInfo)) != 0)
+            if (Savegame_CardRequest(CardIoMode_Read, arg0->deviceId_4, NULL, filePath, 0, 0x200, &D_800B5508.devices_0[arg0->deviceId_4].basicSaveInfo_14[D_800B2618], sizeof(s_MemCardInfo_BasicSaveInfo)) != 0)
             {
                 arg0->field_10 = 7;
             }
@@ -527,7 +527,7 @@ void func_8002ED7C(s_800B55E8* arg0) // 0x8002ED7C
             switch (cardResult)
             {
                 case 0:
-                    Savegame_GameMemDataClear(arg0->field_4);
+                    Savegame_GameMemDataClear(arg0->deviceId_4);
 
                     arg0->lastCardResult_14 = cardResult;
                     ptr->memoryCardStatus_0 = 1;
@@ -540,7 +540,7 @@ void func_8002ED7C(s_800B55E8* arg0) // 0x8002ED7C
 
                     if (D_800B261C >= 3)
                     {
-                        Savegame_GameMemDataClear(arg0->field_4);
+                        Savegame_GameMemDataClear(arg0->deviceId_4);
 
                         arg0->lastCardResult_14 = 10;
                         ptr->memoryCardStatus_0 = 5;
@@ -561,7 +561,7 @@ void func_8002ED7C(s_800B55E8* arg0) // 0x8002ED7C
             break;
 
         case 8:
-            temp_a1 = &D_800B5508.basicInfo_0[arg0->field_4].basicSaveInfo_14[D_800B2618];
+            temp_a1 = &D_800B5508.devices_0[arg0->deviceId_4].basicSaveInfo_14[D_800B2618];
 
             if (Savegame_ChecksumValidate(&temp_a1->field_FC, (s8*)temp_a1, sizeof(s_MemCardInfo_BasicSaveInfo)) != 0)
             {
@@ -581,14 +581,14 @@ void func_8002ED7C(s_800B55E8* arg0) // 0x8002ED7C
             break;
 
         case 9:
-            ptr->field_18           = func_8002F278(arg0->field_4, &D_800B2628);
+            ptr->field_18           = func_8002F278(arg0->deviceId_4, &D_800B2628);
             arg0->lastCardResult_14 = 11;
             ptr->memoryCardStatus_0 = 3;
             break;
     }
 }
 
-s32 func_8002F278(s32 arg0, s_CardDirectory* dir) // 0x8002F278
+s32 func_8002F278(s32 deviceId, s_CardDirectory* dir) // 0x8002F278
 {
     s32 ret;
     s32 i;
@@ -599,7 +599,7 @@ s32 func_8002F278(s32 arg0, s_CardDirectory* dir) // 0x8002F278
         ret -= dir->blockCounts_13B[i];
     }
 
-    return ret + func_8002EA28(arg0);
+    return ret + func_8002EA28(deviceId);
 }
 
 void func_8002F2C4(s_800B55E8* arg0)
@@ -614,7 +614,7 @@ void func_8002F2C4(s_800B55E8* arg0)
     s32                 saveData1Size;
     s_ShSavegameFooter* saveData1Footer;
 
-    saveInfo = &D_800B5508.basicInfo_0[arg0->field_4];
+    saveInfo = &D_800B5508.devices_0[arg0->deviceId_4];
 
     arg0->lastCardResult_14 = 1;
 
@@ -623,9 +623,9 @@ void func_8002F2C4(s_800B55E8* arg0)
         case 0:
             if (arg0->field_0 == 2)
             {
-                if (func_8002E76C(arg0->field_4) != 1)
+                if (func_8002E76C(arg0->deviceId_4) != 1)
                 {
-                    D_800B2774 = func_8002FC3C(arg0->field_4);
+                    D_800B2774 = func_8002FC3C(arg0->deviceId_4);
                     if (D_800B2774 == -1)
                     {
                         arg0->lastCardResult_14 = 10;
@@ -646,7 +646,7 @@ void func_8002F2C4(s_800B55E8* arg0)
                 switch (saveInfo->isFileUsed_4[D_800B2774])
                 {
                     case 1:
-                        if (func_8002E9EC(arg0->field_4, D_800B2774, arg0->saveIdx_C)->field_0 != 0)
+                        if (func_8002E9EC(arg0->deviceId_4, D_800B2774, arg0->saveIdx_C)->field_0 != 0)
                         {
                             arg0->field_10 = 1;
                             break;
@@ -676,7 +676,7 @@ void func_8002F2C4(s_800B55E8* arg0)
 
             Savegame_FilenameGenerate(filePath, D_800B2774);
 
-            if (Savegame_CardRequest(CardIoMode_Read, arg0->field_4, NULL, filePath, 0, saveData0Offset, saveData0Buf, saveData0Size) == 1)
+            if (Savegame_CardRequest(CardIoMode_Read, arg0->deviceId_4, NULL, filePath, 0, saveData0Offset, saveData0Buf, saveData0Size) == 1)
             {
                 arg0->field_10 = 2;
             }
@@ -686,14 +686,14 @@ void func_8002F2C4(s_800B55E8* arg0)
             switch (cardResult)
             {
                 case 0:
-                    Savegame_GameMemDataClear(arg0->field_4);
+                    Savegame_GameMemDataClear(arg0->deviceId_4);
                     arg0->lastCardResult_14      = cardResult;
                     saveInfo->memoryCardStatus_0 = 1;
                     break;
                 case 8:
                 case 9:
                 case 10:
-                    Savegame_GameMemDataClear(arg0->field_4);
+                    Savegame_GameMemDataClear(arg0->deviceId_4);
                     arg0->lastCardResult_14      = 10;
                     saveInfo->memoryCardStatus_0 = 0;
                     break;
@@ -724,6 +724,7 @@ void func_8002F2C4(s_800B55E8* arg0)
             }
 
             arg0->lastCardResult_14 = 11;
+
             if (arg0->field_0 == 2)
             {
                 memcpy(&g_GameWorkConst->config_0, &D_800B5508.userConfig_418.config_0, sizeof(s_ShSaveUserConfig));
@@ -747,7 +748,7 @@ void func_8002F61C(s_800B55E8* arg0)
 
     arg0->lastCardResult_14 = 1;
 
-    ptr = &D_800B5508.basicInfo_0[arg0->field_4];
+    ptr = &D_800B5508.devices_0[arg0->deviceId_4];
 
     switch (arg0->field_10)
     {
@@ -774,14 +775,14 @@ void func_8002F61C(s_800B55E8* arg0)
                 }
                 else
                 {
-                    if (func_8002E76C(arg0->field_4) == 1)
+                    if (func_8002E76C(arg0->deviceId_4) == 1)
                     {
                         D_800B2778     = 0;
                         arg0->field_10 = 1;
                     }
                     else
                     {
-                        D_800B2778 = func_8002FC3C(arg0->field_4);
+                        D_800B2778 = func_8002FC3C(arg0->deviceId_4);
                         if (D_800B2778 != fileIdx)
                         {
                             arg0->field_10 = 3;
@@ -815,7 +816,7 @@ void func_8002F61C(s_800B55E8* arg0)
             Savegame_SaveBlockInit(&D_800B5508.saveBlock_118, 1, D_800B2778, 0, 0, 0x70, 0x60, 0, 0);
             func_8002FB64(&D_800B5508.saveInfo_318);
             Savegame_FilenameGenerate(filePath, D_800B2778);
-            if (Savegame_CardRequest(CardIoMode_Create, arg0->field_4, NULL, filePath, 1, 0, &D_800B5508.saveBlock_118, 0x300) != 0)
+            if (Savegame_CardRequest(CardIoMode_Create, arg0->deviceId_4, NULL, filePath, 1, 0, &D_800B5508.saveBlock_118, 0x300) != 0)
             {
                 arg0->field_10 = 2;
             }
@@ -825,23 +826,23 @@ void func_8002F61C(s_800B55E8* arg0)
             switch (cardResult)
             {
                 case 0:
-                    Savegame_GameMemDataClear(arg0->field_4);
+                    Savegame_GameMemDataClear(arg0->deviceId_4);
                     arg0->lastCardResult_14 = cardResult;
                     ptr->memoryCardStatus_0 = 1;
                     break;
                 case 7:
-                    Savegame_GameMemDataClear(arg0->field_4);
+                    Savegame_GameMemDataClear(arg0->deviceId_4);
                     arg0->lastCardResult_14 = cardResult;
                     ptr->memoryCardStatus_0 = 0;
                     break;
                 case 8:
                 case 9:
                 case 10:
-                    Savegame_GameMemDataClear(arg0->field_4);
+                    Savegame_GameMemDataClear(arg0->deviceId_4);
                     arg0->lastCardResult_14 = 10;
                     ptr->memoryCardStatus_0 = 0;
                     Savegame_FilenameGenerate(filePath, D_800B2778);
-                    Savegame_CardFileErase(arg0->field_4, filePath);
+                    Savegame_CardFileErase(arg0->deviceId_4, filePath);
                     break;
                 case 11:
                     ptr->isFileUsed_4[D_800B2778] = 1;
@@ -859,7 +860,7 @@ void func_8002F61C(s_800B55E8* arg0)
         case 3:
             Savegame_UserConfigCopyWithChecksum(&D_800B5508.userConfig_418, &g_GameWorkConst->config_0);
             Savegame_FilenameGenerate(filePath, D_800B2778);
-            if (Savegame_CardRequest(CardIoMode_Write, arg0->field_4, NULL, filePath, 0, 0x300, &D_800B5508.userConfig_418, 0x80) != 0)
+            if (Savegame_CardRequest(CardIoMode_Write, arg0->deviceId_4, NULL, filePath, 0, 0x300, &D_800B5508.userConfig_418, 0x80) != 0)
             {
                 arg0->field_10 = 4;
             }
@@ -869,7 +870,7 @@ void func_8002F61C(s_800B55E8* arg0)
             switch (cardResult)
             {
                 case 0:
-                    Savegame_GameMemDataClear(arg0->field_4);
+                    Savegame_GameMemDataClear(arg0->deviceId_4);
                     arg0->lastCardResult_14 = cardResult;
                     ptr->memoryCardStatus_0 = 1;
                     break;
@@ -877,7 +878,7 @@ void func_8002F61C(s_800B55E8* arg0)
                 case 8:
                 case 9:
                 case 10:
-                    Savegame_GameMemDataClear(arg0->field_4);
+                    Savegame_GameMemDataClear(arg0->deviceId_4);
                     arg0->lastCardResult_14 = 10;
                     ptr->memoryCardStatus_0 = 0;
                     break;
@@ -890,7 +891,7 @@ void func_8002F61C(s_800B55E8* arg0)
         case 5:
             Savegame_FilenameGenerate(filePath, D_800B2778);
             Savegame_CopyWithChecksum(&D_800B5508.saveGame_498, g_SavegamePtr);
-            if (Savegame_CardRequest(CardIoMode_Write, arg0->field_4, NULL, filePath, 0, (arg0->saveIdx_C * 0x280) + 0x380, &D_800B5508.saveGame_498, 0x280) != 0)
+            if (Savegame_CardRequest(CardIoMode_Write, arg0->deviceId_4, NULL, filePath, 0, (arg0->saveIdx_C * 0x280) + 0x380, &D_800B5508.saveGame_498, 0x280) != 0)
             {
                 arg0->field_10 = 6;
             }
@@ -900,7 +901,7 @@ void func_8002F61C(s_800B55E8* arg0)
             switch (cardResult)
             {
                 case 0:
-                    Savegame_GameMemDataClear(arg0->field_4);
+                    Savegame_GameMemDataClear(arg0->deviceId_4);
                     arg0->lastCardResult_14 = cardResult;
                     ptr->memoryCardStatus_0 = 1;
                     break;
@@ -908,7 +909,7 @@ void func_8002F61C(s_800B55E8* arg0)
                 case 8:
                 case 9:
                 case 10:
-                    Savegame_GameMemDataClear(arg0->field_4);
+                    Savegame_GameMemDataClear(arg0->deviceId_4);
                     arg0->lastCardResult_14 = 10;
                     ptr->memoryCardStatus_0 = 0;
                     break;
@@ -919,11 +920,11 @@ void func_8002F61C(s_800B55E8* arg0)
             }
             break;
         case 7:
-            func_8002FD5C(arg0->field_4, D_800B2778, arg0->saveIdx_C, g_SavegamePtr);
+            func_8002FD5C(arg0->deviceId_4, D_800B2778, arg0->saveIdx_C, g_SavegamePtr);
             arg0->field_10 = 8;
         case 8:
             Savegame_FilenameGenerate(filePath, D_800B2778);
-            if (Savegame_CardRequest(CardIoMode_Write, arg0->field_4, NULL, filePath, 0, 512, (u8*)D_800B5508.basicInfo_0[arg0->field_4].basicSaveInfo_14 + (D_800B2778 * 0x100), 0x100) != 0)
+            if (Savegame_CardRequest(CardIoMode_Write, arg0->deviceId_4, NULL, filePath, 0, 512, (u8*)D_800B5508.devices_0[arg0->deviceId_4].basicSaveInfo_14 + (D_800B2778 * 0x100), 0x100) != 0)
             {
                 arg0->field_10 = 9;
             }
@@ -933,7 +934,7 @@ void func_8002F61C(s_800B55E8* arg0)
             switch (cardResult)
             {
                 case 0:
-                    Savegame_GameMemDataClear(arg0->field_4);
+                    Savegame_GameMemDataClear(arg0->deviceId_4);
                     arg0->lastCardResult_14 = cardResult;
                     ptr->memoryCardStatus_0 = 1;
                     break;
@@ -941,7 +942,7 @@ void func_8002F61C(s_800B55E8* arg0)
                 case 8:
                 case 9:
                 case 10:
-                    Savegame_GameMemDataClear(arg0->field_4);
+                    Savegame_GameMemDataClear(arg0->deviceId_4);
                     arg0->lastCardResult_14 = 10;
                     ptr->memoryCardStatus_0 = 0;
                     break;
@@ -975,7 +976,37 @@ void Savegame_UserConfigCopyWithChecksum(s_ShSaveUserConfigContainer* dest, s_Sh
     Savegame_ChecksumUpdate(&dest->footer_7C, &dest->config_0, sizeof(s_ShSaveUserConfigContainer));
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/memcard", func_8002FC3C);
+s32 func_8002FC3C(s32 deviceId)
+{
+    s32 field0;
+    s32 saveIdx;
+    s32 fileIdx;
+    s32 largestField0;
+    s32 largestField0FileIdx;
+
+    largestField0FileIdx = -1;
+    largestField0        = -1;
+
+    for (fileIdx = 0; fileIdx < 15; fileIdx++)
+    {
+        if (D_800B5508.devices_0[deviceId].isFileUsed_4[fileIdx] != 1)
+        {
+            continue;
+        }
+
+        for (saveIdx = 0; saveIdx < 11; saveIdx++)
+        {
+            field0 = D_800B5508.devices_0[deviceId].basicSaveInfo_14[fileIdx].savegameMetadatas_4[saveIdx].field_0;
+            if (largestField0 < field0)
+            {
+                largestField0FileIdx = fileIdx;
+                largestField0        = field0;
+            }
+        }
+    }
+
+    return largestField0FileIdx;
+}
 
 void Savegame_CopyWithChecksum(s_ShSavegameContainer* dest, s_ShSavegame* src) // 0x8002FCCC
 {
@@ -984,26 +1015,26 @@ void Savegame_CopyWithChecksum(s_ShSavegameContainer* dest, s_ShSavegame* src) /
     Savegame_ChecksumUpdate(&dest->footer_27C, &dest->savegame_0, sizeof(s_ShSavegameContainer));
 }
 
-void func_8002FD5C(s32 arg0, s32 arg1, s32 arg2, s_ShSavegame* arg3) // 0x8002FD5C
+void func_8002FD5C(s32 deviceId, s32 fileIdx, s32 saveIdx, s_ShSavegame* arg3) // 0x8002FD5C
 {
     s_MemCardInfo_BasicSaveInfo* ptr;
 
-    ptr = &D_800B5508.basicInfo_0[arg0].basicSaveInfo_14[arg1];
+    ptr = &D_800B5508.devices_0[deviceId].basicSaveInfo_14[fileIdx];
 
-    func_8002FDB0(arg0, arg1, arg2);
+    func_8002FDB0(deviceId, fileIdx, saveIdx);
     Savegame_ChecksumUpdate(&ptr->field_FC, ptr, sizeof(s_MemCardInfo_BasicSaveInfo));
 }
 
-void func_8002FDB0(s32 arg0, s32 arg1, s32 arg2) 
+void func_8002FDB0(s32 deviceId, s32 fileIdx, s32 saveIdx)
 {
     s32             i;
     s32             var;
-    s_func_8002FDB0 sp10;  
+    s_func_8002FE70 sp10;
 
     var = 0;
     for (i = 0; i < 8; i++)
     {
-        func_8002FE70(i, &sp10.field_0);
+        func_8002FE70(i, &sp10);
 
         if (var < sp10.field_0)
         {
@@ -1011,10 +1042,44 @@ void func_8002FDB0(s32 arg0, s32 arg1, s32 arg2)
         }
     }
 
-    D_800B5508.basicInfo_0[arg0].basicSaveInfo_14[arg1].savegameMetadatas_4[arg2].field_0 = var + 1;
+    D_800B5508.devices_0[deviceId].basicSaveInfo_14[fileIdx].savegameMetadatas_4[saveIdx].field_0 = var + 1;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/memcard", func_8002FE70);
+void func_8002FE70(s32 deviceId, s_func_8002FE70* result)
+{
+    s32 field0;
+    s32 saveIdx;
+    s32 fileIdx;
+
+    result->fileIdx_4 = 0;
+    result->saveIdx_8 = 0;
+    result->field_0   = 0;
+
+    if (D_800B5508.devices_0[deviceId].memoryCardStatus_0 != 3)
+    {
+        return;
+    }
+
+    for (fileIdx = 0; fileIdx < 15; fileIdx++)
+    {
+        if (D_800B5508.devices_0[deviceId].isFileUsed_4[fileIdx] != 1)
+        {
+            continue;
+        }
+
+        for (saveIdx = 0; saveIdx < 11; saveIdx++)
+        {
+            field0 = D_800B5508.devices_0[deviceId].basicSaveInfo_14[fileIdx].savegameMetadatas_4[saveIdx].field_0;
+
+            if (result->field_0 < field0)
+            {
+                result->fileIdx_4 = fileIdx;
+                result->saveIdx_8 = saveIdx;
+                result->field_0   = field0;
+            }
+        }
+    }
+}
 
 void Savegame_ChecksumUpdate(s_ShSavegameFooter* saveFooter, s8* saveData, s32 saveDataLength) // 0x8002FF30
 {

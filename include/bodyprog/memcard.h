@@ -42,8 +42,9 @@ typedef enum
 typedef struct
 {
     s32 field_0;
-    s8  unk_4[8];
-} s_func_8002FDB0;
+    s32 fileIdx_4;
+    s32 saveIdx_8;
+} s_func_8002FE70;
 
 // ========
 // STRUCTS
@@ -109,7 +110,7 @@ STATIC_ASSERT_SIZEOF(s_MemCardBasicInfo, 28);
 typedef struct
 {
     s32 field_0;
-    s32 field_4;
+    s32 deviceId_4;
     s32 fileIdx_8;
     s32 saveIdx_C;
     s32 field_10;
@@ -133,7 +134,7 @@ STATIC_ASSERT_SIZEOF(s_PsxSaveBlock, 512);
 
 typedef struct
 {
-    s_MemCardBasicInfo          basicInfo_0[8];
+    s_MemCardBasicInfo          devices_0[8];
     s_800B55E8                  field_E0[2];
     s32                         field_110;
     u8                          unk_114[4];
@@ -230,19 +231,39 @@ extern s8 g_SelectedFileIdx;
 
 void Savegame_CardCleanInit();
 
-void Savegame_GameMemDataClear(s32 idx);
+void Savegame_GameMemDataClear(s32 deviceId);
 
-void Savegame_CardFileUsageClear(s32 idx);
+void Savegame_CardFileUsageClear(s32 deviceId);
 
-s32 func_8002E94C(s32 arg0, s32 arg1, s32 fileIdx, s32 saveIdx);
+s32 func_8002E76C(s32 deviceId);
+
+void func_8002E7BC();
+
+void func_8002E830();
+
+void func_8002E85C();
+
+void func_8002E86C();
+
+s32 func_8002E898();
+
+void func_8002E8D4();
+
+void func_8002E8E4();
+
+s32 func_8002E914();
+
+s32 func_8002E94C(s32 arg0, s32 deviceId, s32 fileIdx, s32 saveIdx);
 
 s32 func_8002E990();
 
-s_SavegameMetadata* func_8002E9EC(s32 arg0, s32 fileIdx, s32 saveIdx);
+s32 func_8002E9A0(s32 deviceId);
 
-s32 func_8002EA28(s32 idx);
+s_SavegameMetadata* func_8002E9EC(s32 deviceId, s32 fileIdx, s32 saveIdx);
 
-s32 func_8002EA78(s32 idx);
+s32 func_8002EA28(s32 deviceId);
+
+s32 func_8002EA78(s32 deviceId);
 
 s32 func_8002EABC(s32* arg0, s32* arg1, s32* arg2);
 
@@ -250,7 +271,9 @@ void func_8002EB88(); // Return type assumed.
 
 void func_8002ECE0(s_800B55E8* arg0);
 
-s32 func_8002F278(s32 arg0, s_CardDirectory* dir);
+void func_8002ED7C(s_800B55E8* arg0);
+
+s32 func_8002F278(s32 deviceId, s_CardDirectory* dir);
 
 void func_8002F2C4(s_800B55E8* arg0);
 
@@ -261,10 +284,16 @@ void func_8002FB64(s_MemCardInfo_BasicSaveInfo* arg0);
 /** Copies user config into an `s_ShSaveUserConfigContainer` and calculates footer checksum. */
 void Savegame_UserConfigCopyWithChecksum(s_ShSaveUserConfigContainer* dest, s_ShSaveUserConfig* src);
 
+s32 func_8002FC3C(s32 deviceId);
+
 /** Copies savegame into an s_ShSavegameContainer and calculates footer checksum. */
 void Savegame_CopyWithChecksum(s_ShSavegameContainer* dest, s_ShSavegame* src);
 
-void func_8002FD5C(s32 arg0, s32 arg1, s32 arg2, s_ShSavegame* arg3);
+void func_8002FD5C(s32 deviceId, s32 fileIdx, s32 saveIdx, s_ShSavegame* arg3);
+
+void func_8002FDB0(s32 deviceId, s32 fileIdx, s32 saveIdx);
+
+void func_8002FE70(s32 deviceId, s_func_8002FE70* result);
 
 /** Updates the footer with the checksum of the given data. */
 void Savegame_ChecksumUpdate(s_ShSavegameFooter* saveFooter, s8* saveData, s32 saveDataLength);
