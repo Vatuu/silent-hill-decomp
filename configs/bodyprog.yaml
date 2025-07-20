@@ -68,7 +68,7 @@ segments:
                                             # Jumptable: `func_8003943C`
                                             # Jumptable & Data: `SysState_GameOver_Update`
       - [0x91C, .rodata, bodyprog_8003AB28]
-      - [0x960, rodata]
+      - [0x1084, rodata] # Junk data?
       - [0x109C, .rodata, libsd/bodyprog_80045A7C]  # Jumptable: `Sd_EngineCmd`
                                                     # Jumptable: `func_80045BD8`
       - [0x11C4, .rodata, bodyprog_CD_80047D50] # Jumptable: `func_800482D8`

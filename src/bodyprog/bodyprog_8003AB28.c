@@ -372,8 +372,16 @@ void func_8003B550() // 0x8003B550
 
 void func_8003B560() {}
 
+const char D_800254C0[] = "EXTRA";
+const char D_800254C8[] = "OPTION";
+const char D_800254D0[] = "START";
+const char D_800254D8[] = "CONTINUE";
+const char D_800254E4[] = "LOAD";
+
 void Gfx_MainMenu_MainTextDraw() // 0x8003B568
 {
+    static const u8 D_800254EC[] = {0x1D, 0x32, 0x20, 0x27, 0x21};
+
     #define STR_POS_X_BASE 158
     #define STR_POS_Y_BASE 184
 
@@ -388,27 +396,33 @@ void Gfx_MainMenu_MainTextDraw() // 0x8003B568
 
             if (i == g_MainMenu_SelectedOptionIdx)
             {
-                Gfx_StringDraw(&D_800254F4, 99);
+                Gfx_StringDraw("[", 99);
             }
             else
             {
-                Gfx_StringDraw(&D_800254F8, 99);
+                Gfx_StringDraw("_", 99);
             }
 
-            Gfx_StringDraw(D_800A9A8C[i], 99);
+            Gfx_StringDraw(D_800A9A8C[i], 99); // TODO: `D_800A9A8C` points to `D_800254C0` etc strings above.
 
             if (i == g_MainMenu_SelectedOptionIdx)
             {
-                Gfx_StringDraw(&D_800254FC, 99);
+                Gfx_StringDraw("]", 99);
             }
 
-            Gfx_StringDraw(&D_80025500, 99);
+            Gfx_StringDraw("\n", 99);
         }
     }
 }
 
+const char D_80025504[] = "HARD";
+const char D_8002550C[] = "NORMAL";
+const char D_80025514[] = "EASY";
+
 void Gfx_MainMenu_DifficultyTextDraw(s32 arg0) // 0x8003B678
 {
+    static const u8 D_8002551C[] = {0x1C, 0x2B, 0x1E, 0x4C, 0x00, 0x95, 0xAB, 0x90, 0x00, 0x00, 0x00, 0x00}; // Only first 3 are used, what are others for?
+
     s32 i;
 
     for (i = 0; i < 3; i++)
@@ -418,21 +432,21 @@ void Gfx_MainMenu_DifficultyTextDraw(s32 arg0) // 0x8003B678
 
         if (i == arg0)
         {
-            Gfx_StringDraw(&D_800254F4, 99);
+            Gfx_StringDraw("[", 99);
         }
         else
         {
-            Gfx_StringDraw(&D_800254F8, 99);
+            Gfx_StringDraw("_", 99);
         }
 
-        Gfx_StringDraw(D_800A9AA0[i], 99);
+        Gfx_StringDraw(D_800A9AA0[i], 99); // TODO: `D_800A9AA0` points to `D_80025504` etc strings above.
 
         if (i == arg0)
         {
-            Gfx_StringDraw(&D_800254FC, 99);
+            Gfx_StringDraw("]", 99);
         }
 
-        Gfx_StringDraw(&D_80025500, 99);
+        Gfx_StringDraw("\n", 99);
     }
 }
 
@@ -694,8 +708,8 @@ void func_8003BED0() // 0x8003BED0
     }
 
     func_800560FC(&D_800BCE18.field_1BE4);
-    func_80056504(&D_800BCE18.field_1BE4, &D_80025528, &D_800A9EBC, 1);
-    func_80056504(&D_800BCE18.field_1BE4, &D_80025530, &D_800A9EC4, 1);
+    func_80056504(&D_800BCE18.field_1BE4, "TIM00", &D_800A9EBC, 1);
+    func_80056504(&D_800BCE18.field_1BE4, "BG_ETC", &D_800A9EC4, 1);
     func_80056954(&D_800BCE18.field_1BE4);
 }
 
@@ -933,7 +947,172 @@ void func_8003CD6C(s_PlayerCombat* arg0) // 0x8003CD6C
     func_8003CDA0(var_a0);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8003AB28", func_8003CDA0); // 0x8003CDA0
+s32 func_8003CDA0(s32 itemIdx)
+{
+    s32              fileIdx;
+    s_800BCE18_1BAC* s;
+
+    s = &D_800BCE18.field_1BAC;
+
+    if (s->field_0 == itemIdx)
+    {
+        return 0;
+    }
+
+    s->field_0 = itemIdx;
+
+    switch (itemIdx)
+    {
+        default:
+            fileIdx = NO_VALUE;
+            break;
+        case NO_VALUE:
+        case 128:
+        case 132:
+        case 135:
+        case 160:
+        case 161:
+        case 162:
+            fileIdx    = NO_VALUE;
+            s->field_8 = "HERO";
+            break;
+        case InventoryItemId_SteelPipe:
+            fileIdx    = FILE_ITEM_PIPE_TIM;
+            s->field_8 = "PIPE";
+            break;
+        case 164:
+            fileIdx    = FILE_ITEM_PHONE_TIM;
+            s->field_8 = "PHONE";
+            break;
+        case 165:
+            fileIdx    = FILE_ITEM_FLAUROS_TIM;
+            s->field_8 = "FLAUROS";
+            break;
+        case 166:
+            fileIdx    = FILE_ITEM_AGLA_TIM;
+            s->field_8 = "AGLA";
+            break;
+        case 167:
+            fileIdx    = FILE_ITEM_BOTL_TIM;
+            s->field_8 = "BOTL";
+            break;
+        case 168:
+            fileIdx    = FILE_ITEM_BABY_TIM;
+            s->field_8 = "BABY";
+            break;
+        case 169:
+            fileIdx    = FILE_ITEM_BLOOD_TIM;
+            s->field_8 = "BLOOD";
+            break;
+        case InventoryItemId_Chainsaw:
+            fileIdx    = FILE_ITEM_CSAW_TIM;
+            s->field_8 = "CSAW";
+            break;
+        case InventoryItemId_HyperBlaster:
+            fileIdx    = FILE_ITEM_HPRGUN_TIM;
+            s->field_8 = "HPRGUN";
+            break;
+        case InventoryItemId_RockDrill:
+            fileIdx    = FILE_ITEM_DRILL_TIM;
+            s->field_8 = "DRILL";
+            break;
+        case InventoryItemId_Katana:
+            fileIdx    = FILE_ITEM_KATANA_TIM;
+            s->field_8 = "KATANA";
+            break;
+    }
+
+    if (fileIdx == NO_VALUE)
+    {
+        s->field_C  = 0;
+        s->field_D  = 0x1B;
+        s->field_E  = 0;
+        s->field_F  = 0;
+        s->field_10 = 0x2E0;
+        s->field_12 = 0x1E0;
+    }
+    else
+    {
+        s->field_C  = 0;
+        s->field_D  = 0x1B;
+        s->field_E  = 0x30;
+        s->field_F  = 0xE0;
+        s->field_10 = 0x2E0;
+        s->field_12 = 0x1F2;
+    }
+
+    if (fileIdx != NO_VALUE)
+    {
+        s->field_4 = Fs_QueueStartReadTim(fileIdx, (void*)0x801EA600, (s_FsImageDesc*)&s->field_C);
+    }
+
+    switch (itemIdx)
+    {
+        case NO_VALUE:
+        default:
+            fileIdx = NO_VALUE;
+            break;
+        case InventoryItemId_KitchenKnife:
+            fileIdx = FILE_ITEM_KNIFE_PLM;
+            break;
+        case InventoryItemId_SteelPipe:
+            fileIdx = FILE_ITEM_PIPE_PLM;
+            break;
+        case InventoryItemId_Hammer:
+            fileIdx = FILE_ITEM_HAMMER_PLM;
+            break;
+        case InventoryItemId_Axe:
+            fileIdx = FILE_ITEM_AXE_PLM;
+            break;
+        case InventoryItemId_Handgun:
+            fileIdx = FILE_ITEM_HANDGUN_PLM;
+            break;
+        case InventoryItemId_HuntingRifle:
+            fileIdx = FILE_ITEM_RIFLE_PLM;
+            break;
+        case InventoryItemId_Shotgun:
+            fileIdx = FILE_ITEM_SHOTGUN_PLM;
+            break;
+        case 164:
+            fileIdx = FILE_ITEM_PHONE_PLM;
+            break;
+        case 165:
+            fileIdx = FILE_ITEM_FLAUROS_PLM;
+            break;
+        case 166:
+            fileIdx = FILE_ITEM_AGLA_PLM;
+            break;
+        case 167:
+            fileIdx = FILE_ITEM_BOTL_PLM;
+            break;
+        case 168:
+            fileIdx = FILE_ITEM_BABY_PLM;
+            break;
+        case 169:
+            fileIdx = FILE_ITEM_BLOOD_PLM;
+            break;
+        case InventoryItemId_Chainsaw:
+            fileIdx = FILE_ITEM_CSAW_PLM;
+            break;
+        case InventoryItemId_HyperBlaster:
+            fileIdx = FILE_ITEM_HPRGUN_PLM;
+            break;
+        case InventoryItemId_RockDrill:
+            fileIdx = FILE_ITEM_DRILL_PLM;
+            break;
+        case InventoryItemId_Katana:
+            fileIdx = FILE_ITEM_KATANA_PLM;
+            break;
+    }
+
+    if (fileIdx != NO_VALUE)
+    {
+        s->field_4 = Fs_QueueStartRead(fileIdx, s->field_14);
+        return s->field_4;
+    }
+
+    return 0;
+}
 
 void func_8003D01C() // 0x8003D01C
 {
@@ -1312,8 +1491,6 @@ s32 func_8003DD74(s32 arg0, s32 arg1) // 0x8003DD74
     return (arg1 << 10) & 0xFC00;
 }
 
-// TODO: RODATA migration.
-#ifdef NON_MATCHING
 void func_8003DD80(s32 idx, s32 arg1) // 0x8003DD80
 {
     s_800BCE18_0_CC* temp_a2;
@@ -1365,12 +1542,7 @@ void func_8003DD80(s32 idx, s32 arg1) // 0x8003DD80
             break;
     }
 }
-#else
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8003AB28", func_8003DD80);
-#endif
 
-// TODO: RODATA migration.
-#ifdef NON_MATCHING
 void func_8003DE60(s_Skeleton* skel, s32 arg1) // 0x8003DE60
 {
     s32 temp_s0;
@@ -1427,9 +1599,6 @@ void func_8003DE60(s_Skeleton* skel, s32 arg1) // 0x8003DE60
         }
     }
 }
-#else
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8003AB28", func_8003DE60);
-#endif
 
 void func_8003DF84(s_Skeleton* skel, s32 arg1) // 0x8003DF84
 {
@@ -2144,8 +2313,6 @@ void func_8003F170() // 0x8003F170
     }
 }
 
-// TODO: RODATA migration.
-#ifdef NON_MATCHING
 s32 func_8003F4DC(GsCOORDINATE2** arg0, SVECTOR* rot, s32 arg2, s32 arg3, u32 arg4, s_SysWork* sysWork) // 0x8003F4DC
 {
     s32     temp;
@@ -2223,12 +2390,7 @@ s32 func_8003F4DC(GsCOORDINATE2** arg0, SVECTOR* rot, s32 arg2, s32 arg3, u32 ar
     rot->vx = FP_MULTIPLY(temp, shRsin(vec.vy), Q12_SHIFT);
     return res;
 }
-#else
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8003AB28", func_8003F4DC);
-#endif
 
-// TODO: RODATA migration.
-#ifdef NON_MATCHING
 u32 func_8003F654(s_func_8003F654* arg0)
 {
     switch (arg0->field_0)
@@ -2255,9 +2417,6 @@ u32 func_8003F654(s_func_8003F654* arg0)
 
     return 0;
 }
-#else
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8003AB28", func_8003F654); // 0x8003F654
-#endif
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8003AB28", func_8003F6F0); // 0x8003F6F0
 

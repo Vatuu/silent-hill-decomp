@@ -463,9 +463,13 @@ typedef struct
 {
     s32         field_0;
     s32         field_4;
-    s32         field_8;
-    s32*        field_C;
-    s32         unk10;
+    char*       field_8;
+    u8          field_C;
+    u8          field_D;
+    u8          field_E;
+    u8          field_F;
+    u16         field_10;
+    u16         field_12;
     s_800BE9FC* field_14;
     s32         field_18;
     s32         field_1C;
@@ -949,22 +953,6 @@ extern s8* D_8002510C;
 extern s_ControllerConfig D_8002511C[];
 
 extern s_800252BC const D_800252BC[];
-
-extern u8 D_800254EC[]; // `Gfx_MainMenu_MainTextDraw` string X offsets. TODO: Local .rodata.
-
-extern s8 D_800254F4; // `Gfx_MainMenu_MainTextDraw` string. TODO: Local .rodata.
-
-extern s8 D_800254F8; // `Gfx_MainMenu_MainTextDraw` string. TODO: Local .rodata.
-
-extern s8 D_800254FC; // `Gfx_MainMenu_MainTextDraw` string. TODO: Local .rodata.
-
-extern s8 D_80025500; // `Gfx_MainMenu_MainTextDraw` string. TODO: Local .rodata.
-
-extern s32 D_80025528; // Type assumed.
-
-extern s32 D_80025530; // Type assumed.
-
-extern u8 D_8002551C[]; // `Gfx_MainMenu_DifficultyTextDraw` string X offsets. TODO: Local .rodata.
 
 extern u8 D_80025D6C[];
 
@@ -1766,6 +1754,8 @@ void func_8003C878(s32 arg0);
 void func_8003C8F8(s_func_8003C8F8* arg0, s8* arg1);
 
 void func_8003CD6C(s_PlayerCombat* arg0);
+
+s32 func_8003CDA0(s32 itemIdx);
 
 void func_8003D01C();
 
