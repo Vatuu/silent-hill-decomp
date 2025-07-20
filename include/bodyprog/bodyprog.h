@@ -1029,17 +1029,17 @@ extern s32 D_800A9A24;
 
 extern s32 D_800A9A28;
 
-extern char* D_800A9A8C[]; // `Gfx_MainMenu_MainTextDraw` strings. TODO: Local .rodata.
-
 extern s8 D_800A98FC[];
 
 extern s32 D_800A9EAC;
 
 extern s32 D_800A9EB0;
 
-extern s32 D_800A9EBC; // Type assumed.
+extern s_FsImageDesc D_800A9EB4;
 
-extern s32 D_800A9EC4; // Type assumed.
+extern s_FsImageDesc D_800A9EBC;
+
+extern s_FsImageDesc D_800A9EC4;
 
 extern s_FsImageDesc D_800A9FA8;
 
@@ -1110,11 +1110,7 @@ extern s32 D_800A9A88;
 
 extern RECT D_800A9A6C; // `RECT<320, 256, 160, 240>`, only used in `SysState_Fmv_Update`?
 
-extern char* D_800A9AA0[]; // `Gfx_MainMenu_DifficultyTextDraw` strings. TODO: Local .rodata.
-
 extern u32 D_800A9AAC[];
-
-extern s_FsImageDesc D_800A9EB4;
 
 extern s32 D_800A9ECC;
 

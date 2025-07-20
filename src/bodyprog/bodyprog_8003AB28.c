@@ -381,6 +381,7 @@ const char D_800254E4[] = "LOAD";
 void Gfx_MainMenu_MainTextDraw() // 0x8003B568
 {
     static const u8 D_800254EC[] = {0x1D, 0x32, 0x20, 0x27, 0x21};
+    extern char* D_800A9A8C[]; // TODO: points to `D_800254C0` etc strings above, needs .data?
 
     #define STR_POS_X_BASE 158
     #define STR_POS_Y_BASE 184
@@ -403,7 +404,7 @@ void Gfx_MainMenu_MainTextDraw() // 0x8003B568
                 Gfx_StringDraw("_", 99);
             }
 
-            Gfx_StringDraw(D_800A9A8C[i], 99); // TODO: `D_800A9A8C` points to `D_800254C0` etc strings above.
+            Gfx_StringDraw(D_800A9A8C[i], 99);
 
             if (i == g_MainMenu_SelectedOptionIdx)
             {
@@ -422,6 +423,7 @@ const char D_80025514[] = "EASY";
 void Gfx_MainMenu_DifficultyTextDraw(s32 arg0) // 0x8003B678
 {
     static const u8 D_8002551C[] = {0x1C, 0x2B, 0x1E, 0x4C, 0x00, 0x95, 0xAB, 0x90, 0x00, 0x00, 0x00, 0x00}; // Only first 3 are used, what are others for?
+    extern char* D_800A9AA0[]; // TODO: points to `D_80025504` etc strings above, needs .data?
 
     s32 i;
 
@@ -439,7 +441,7 @@ void Gfx_MainMenu_DifficultyTextDraw(s32 arg0) // 0x8003B678
             Gfx_StringDraw("_", 99);
         }
 
-        Gfx_StringDraw(D_800A9AA0[i], 99); // TODO: `D_800A9AA0` points to `D_80025504` etc strings above.
+        Gfx_StringDraw(D_800A9AA0[i], 99);
 
         if (i == arg0)
         {
@@ -548,8 +550,6 @@ void func_8003BA08() // 0x8003BA08
     GsOUT_PACKET_P = packet + sizeof(DR_MODE);
 }
 
-// Matched in decomp.me, but inserted has missmatch.
-#ifdef NON_MATCHING
 void func_8003BAC4() // 0x8003BAC4
 {
     s32 idx;
@@ -561,7 +561,7 @@ void func_8003BAC4() // 0x8003BAC4
 
     ptr = D_800BCDE0;
     ptr1 = ptr + 441;
-    D_800A9EAC += 4 + (Rng_Rand16() & 7);
+    D_800A9EAC += 4 + ((s32)Rng_Rand16() & 7);
     value = FP_MULTIPLY(shRsin(D_800A9EAC), 10, Q12_SHIFT) - 122;
     ptr2 = ptr + 461;
     
@@ -572,19 +572,16 @@ void func_8003BAC4() // 0x8003BAC4
     
     for (i = 0; i < 16; i++)
     {
-        idx = Rng_Rand16() % 21;
+        idx = (s32)Rng_Rand16() % 21;
         ptr1[idx] = -1;
     }
     
     for (i = 0; i < 9; i++)
     {
-        idx = Rng_Rand16() % 21;
+        idx = (s32)Rng_Rand16() % 21;
         ptr1[idx] = 0;
     }
 }
-#else
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8003AB28", func_8003BAC4); // 0x8003BAC4
-#endif
 
 void func_8003BBF4() // 0x8003BBF4
 {
