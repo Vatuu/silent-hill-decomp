@@ -461,19 +461,14 @@ STATIC_ASSERT_SIZEOF(s_800BCE18_2BEC, 16);
 
 typedef struct
 {
-    s32         field_0;
-    s32         field_4;
-    char*       field_8;
-    u8          field_C;
-    u8          field_D;
-    u8          field_E;
-    u8          field_F;
-    u16         field_10;
-    u16         field_12;
-    s_800BE9FC* field_14;
-    s32         field_18;
-    s32         field_1C;
-    s32         field_20;
+    s32           field_0;
+    s32           field_4;
+    char*         field_8;
+    s_FsImageDesc imageDesc_C;
+    s_800BE9FC*   field_14;
+    s32           field_18;
+    s32           field_1C;
+    s32           field_20;
 } s_800BCE18_1BAC;
 
 typedef struct

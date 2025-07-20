@@ -1024,26 +1024,26 @@ s32 func_8003CDA0(s32 itemIdx)
 
     if (fileIdx == NO_VALUE)
     {
-        s->field_C  = 0;
-        s->field_D  = 0x1B;
-        s->field_E  = 0;
-        s->field_F  = 0;
-        s->field_10 = 0x2E0;
-        s->field_12 = 0x1E0;
+        s->imageDesc_C.tPage[1] = 27;
+        s->imageDesc_C.tPage[0] = 0;
+        s->imageDesc_C.u        = 0;
+        s->imageDesc_C.v        = 0;
+        s->imageDesc_C.clutX    = 736;
+        s->imageDesc_C.clutY    = 480;
     }
     else
     {
-        s->field_C  = 0;
-        s->field_D  = 0x1B;
-        s->field_E  = 0x30;
-        s->field_F  = 0xE0;
-        s->field_10 = 0x2E0;
-        s->field_12 = 0x1F2;
+        s->imageDesc_C.tPage[1] = 27;
+        s->imageDesc_C.tPage[0] = 0;
+        s->imageDesc_C.u        = 48;
+        s->imageDesc_C.v        = 224;
+        s->imageDesc_C.clutX    = 736;
+        s->imageDesc_C.clutY    = 498;
     }
 
     if (fileIdx != NO_VALUE)
     {
-        s->field_4 = Fs_QueueStartReadTim(fileIdx, (void*)0x801EA600, (s_FsImageDesc*)&s->field_C);
+        s->field_4 = Fs_QueueStartReadTim(fileIdx, FS_BUFFER_10, &s->imageDesc_C);
     }
 
     switch (itemIdx)
@@ -1152,7 +1152,7 @@ void func_8003D058() // 0x8003D058
             if (ptr1->field_2 == 0)
             {
                 func_800560FC(ptr1);
-                func_80056504(ptr1, ptr0->field_8, &ptr0->field_C, 1);
+                func_80056504(ptr1, ptr0->field_8, &ptr0->imageDesc_C, 1);
                 func_80056954(ptr1);
                 func_80056C8C(&ptr0->field_18, ptr0->field_14, 0);
             }

@@ -16,6 +16,7 @@
 #define FS_BUFFER_1 (void*)0x801E2600
 #define FS_BUFFER_5 (void*)0x801E3600 // Used in `b_konami.c`.
 #define FS_BUFFER_6 (void*)0x801E4600 // Used in `b_konami.c`.
+#define FS_BUFFER_10 (void*)0x801EA600
 #define FS_BUFFER_9 (void*)0x801EC600
 
 #define IMAGE_BUFFER (u_long*)0x801AFA00
