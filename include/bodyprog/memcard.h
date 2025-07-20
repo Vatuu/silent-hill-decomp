@@ -8,6 +8,9 @@
  * to the savegame and memory card system (not from PSY-Q SDK).
  */
 
+#define CARD_DEVICE_COUNT      8
+#define CARD_DEVICE_FILE_COUNT 15
+
 // ========
 // ENUMS
 // ========
@@ -61,8 +64,8 @@ STATIC_ASSERT_SIZEOF(s_MemCardInfo_BasicSaveInfo, 256);
 
 typedef struct
 {
-    char filenames_0[15][21];
-    u8   blockCounts_13B[15]; // Size of each file in 8192 byte blocks.
+    char filenames_0[CARD_DEVICE_FILE_COUNT][21];
+    u8   blockCounts_13B[CARD_DEVICE_FILE_COUNT]; // Size of each file in 8192 byte blocks.
 } s_CardDirectory;
 
 typedef struct
@@ -134,7 +137,7 @@ STATIC_ASSERT_SIZEOF(s_PsxSaveBlock, 512);
 
 typedef struct
 {
-    s_MemCardBasicInfo          devices_0[8];
+    s_MemCardBasicInfo          devices_0[CARD_DEVICE_COUNT];
     s_800B55E8                  field_E0[2];
     s32                         field_110;
     u8                          unk_114[4];
@@ -167,9 +170,9 @@ extern s8 D_800A97E0;
 
 extern u32 D_800A97E4[];
 
-extern s_MemCardInfo_BasicSaveInfo g_MemCard_1_BasicSaveInfo[15];
+extern s_MemCardInfo_BasicSaveInfo g_MemCard_1_BasicSaveInfo[CARD_DEVICE_FILE_COUNT];
 
-extern s_MemCardInfo_BasicSaveInfo g_MemCard_2_BasicSaveInfo[15];
+extern s_MemCardInfo_BasicSaveInfo g_MemCard_2_BasicSaveInfo[CARD_DEVICE_FILE_COUNT];
 
 extern s_CardDirectory D_800B2628;
 
@@ -177,7 +180,7 @@ extern s32 D_800B2774;
 
 extern s32 D_800B2778;
 
-extern s_MemCardInfo_BasicSaveInfo D_800B4580[15];
+extern s_MemCardInfo_BasicSaveInfo D_800B4580[CARD_DEVICE_FILE_COUNT];
 
 extern s32 D_800B5480;
 
@@ -265,7 +268,7 @@ s32 func_8002EA28(s32 deviceId);
 
 s32 func_8002EA78(s32 deviceId);
 
-s32 func_8002EABC(s32* arg0, s32* arg1, s32* arg2);
+s32 func_8002EABC(s32* outDeviceId, s32* outFileIdx, s32* outSaveIdx);
 
 void func_8002EB88(); // Return type assumed.
 

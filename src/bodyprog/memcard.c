@@ -70,7 +70,7 @@ void Savegame_CardCleanInit() // 0x8002E630
     bzero(&D_800B5508, sizeof(s_800B5508));
     bzero(g_MemCard_1_BasicSaveInfo, 768);
 
-    for (i = 0; i < 8; i++) 
+    for (i = 0; i < CARD_DEVICE_COUNT; i++)
     {
         D_800B5508.devices_0[i].memoryCardStatus_0 = 0;
 
@@ -101,7 +101,7 @@ void Savegame_GameMemDataClear(s32 deviceId) // 0x8002E6E4
 {
     D_800B5508.devices_0[deviceId].memoryCardStatus_0 = 0;
     Savegame_CardFileUsageClear(deviceId);
-    bzero(D_800B5508.devices_0[deviceId].basicSaveInfo_14, 0xF00);
+    bzero(D_800B5508.devices_0[deviceId].basicSaveInfo_14, sizeof(s_MemCardInfo_BasicSaveInfo) * CARD_DEVICE_FILE_COUNT);
     D_800B5508.devices_0[deviceId].field_18 = 0;
 }
 
@@ -109,7 +109,7 @@ void Savegame_CardFileUsageClear(s32 deviceId) // 0x8002E730
 {
     s32 i;
 
-    for (i = 0; i < 15; i++) 
+    for (i = 0; i < CARD_DEVICE_FILE_COUNT; i++)
     {
         D_800B5508.devices_0[deviceId].isFileUsed_4[i] = 0;
     }
@@ -122,11 +122,11 @@ s32 func_8002E76C(s32 deviceId) // 0x8002E76C
 
     ret = 1;
 
-    for (i = 0; i < 15; i++)
+    for (i = 0; i < CARD_DEVICE_FILE_COUNT; i++)
     {
         if (D_800B5508.devices_0[deviceId].isFileUsed_4[i] != 0)
         {
-            ret = 0; 
+            ret = 0;
             break;
         }
     }
@@ -178,7 +178,7 @@ s32 func_8002E898() // 0x8002E898
     s32 i;
 
     ret = 0;
-    for (i = 0; i < 8; i++)
+    for (i = 0; i < CARD_DEVICE_COUNT; i++)
     {
         ret |= D_800B5508.devices_0[i].memoryCardStatus_0 << (i * 3);
     }
@@ -204,7 +204,7 @@ s32 func_8002E914() // 0x8002E914
     s32 i;
 
     ret = 0;
-    for (i = 0; i < 8; i++)
+    for (i = 0; i < CARD_DEVICE_COUNT; i++)
     {
         ret |= D_800B5508.devices_0[i].memoryCardStatus_0 << (i * 2);
     }
@@ -238,7 +238,7 @@ s32 func_8002E9A0(s32 deviceId) // 0x8002E9A0
 
     ret = 0;
 
-    for (i = 0; i < 15; i++)
+    for (i = 0; i < CARD_DEVICE_FILE_COUNT; i++)
     {
         ret |= D_800B5508.devices_0[deviceId].isFileUsed_4[i] << (i * 2);
     }
@@ -258,7 +258,7 @@ s32 func_8002EA28(s32 deviceId) // 0x8002EA28
 
     ret = 0;
 
-    for (i = 0; i < 15; i++)
+    for (i = 0; i < CARD_DEVICE_FILE_COUNT; i++)
     {
         if (D_800B5508.devices_0[deviceId].isFileUsed_4[i] != 0)
         {
@@ -274,32 +274,31 @@ s32 func_8002EA78(s32 deviceId) // 0x8002EA78
     return D_800B5508.devices_0[deviceId].field_18 - func_8002EA28(deviceId);
 }
 
-s32 func_8002EABC(s32* arg0, s32* arg1, s32* arg2) // 0x8002EABC
+s32 func_8002EABC(s32* outDeviceId, s32* outFileIdx, s32* outSaveIdx) // 0x8002EABC
 {
-    VECTOR vec; // Vaguely assumed to be a `VECTOR`.
+    s_func_8002FE70 sp10;
     s32    i;
     s32    ret;
 
     ret = 0;
 
-    *arg0 = 0;
-    *arg1 = 0;
-    *arg2 = 0;
+    *outDeviceId = 0;
+    *outFileIdx  = 0;
+    *outSaveIdx  = 0;
 
-    for (i = 0; i < 8; i++)
+    for (i = 0; i < CARD_DEVICE_COUNT; i++)
     {
         if (D_800B5508.devices_0[i].memoryCardStatus_0 == 3)
         {
-            func_8002FE70(i, &vec);
+            func_8002FE70(i, &sp10);
 
-            if (ret < vec.vx)
+            if (ret < sp10.field_0)
             {
-                *arg0 = i;
+                *outDeviceId = i;
+                *outFileIdx  = sp10.fileIdx_4;
+                *outSaveIdx  = sp10.saveIdx_8;
 
-                *arg1 = vec.vy;
-                *arg2 = vec.vz;
-
-                ret = vec.vx;
+                ret = sp10.field_0;
             }
         }
     }
@@ -379,7 +378,7 @@ void func_8002ECE0(s_800B55E8* arg0) // 0x8002ECE0
 
         Savegame_CardFileUsageClear(arg0->deviceId_4);
 
-        D_800B5508.devices_0[arg0->deviceId_4].field_18 = 15;
+        D_800B5508.devices_0[arg0->deviceId_4].field_18 = 15; // `CARD_DEVICE_FILE_COUNT`? Field does look related to file counts.
     }
     else
     {
@@ -493,11 +492,11 @@ void func_8002ED7C(s_800B55E8* arg0) // 0x8002ED7C
         case 5:
             D_800B2618++;
 
-            for (D_800B2620 = 0; D_800B2618 < 15; D_800B2618++)
+            for (D_800B2620 = 0; D_800B2618 < CARD_DEVICE_FILE_COUNT; D_800B2618++)
             {
                 Savegame_FilenameGenerate(filePath, D_800B2618);
 
-                for (i = 0; i < 15; i++)
+                for (i = 0; i < CARD_DEVICE_FILE_COUNT; i++)
                 {
                     if (!strcmp(D_800B2628.filenames_0[i], filePath))
                     {
@@ -507,7 +506,7 @@ void func_8002ED7C(s_800B55E8* arg0) // 0x8002ED7C
                 }
             }
 
-            if (D_800B2618 == 15)
+            if (D_800B2618 == CARD_DEVICE_FILE_COUNT)
             {
                 arg0->field_10 = 9;
             }
@@ -594,7 +593,8 @@ s32 func_8002F278(s32 deviceId, s_CardDirectory* dir) // 0x8002F278
     s32 i;
 
     ret = 15;
-    for (i = 0; i < 15; i++)
+
+    for (i = 0; i < CARD_DEVICE_FILE_COUNT; i++)
     {
         ret -= dir->blockCounts_13B[i];
     }
@@ -604,7 +604,7 @@ s32 func_8002F278(s32 deviceId, s_CardDirectory* dir) // 0x8002F278
 
 void func_8002F2C4(s_800B55E8* arg0)
 {
-    char                filePath[0x18];
+    char                filePath[24];
     s32                 cardResult;
     s32                 saveData0Offset;
     s8*                 saveData0Buf;
@@ -987,7 +987,7 @@ s32 func_8002FC3C(s32 deviceId)
     largestField0FileIdx = -1;
     largestField0        = -1;
 
-    for (fileIdx = 0; fileIdx < 15; fileIdx++)
+    for (fileIdx = 0; fileIdx < CARD_DEVICE_FILE_COUNT; fileIdx++)
     {
         if (D_800B5508.devices_0[deviceId].isFileUsed_4[fileIdx] != 1)
         {
@@ -1032,7 +1032,7 @@ void func_8002FDB0(s32 deviceId, s32 fileIdx, s32 saveIdx)
     s_func_8002FE70 sp10;
 
     var = 0;
-    for (i = 0; i < 8; i++)
+    for (i = 0; i < CARD_DEVICE_COUNT; i++)
     {
         func_8002FE70(i, &sp10);
 
@@ -1060,7 +1060,7 @@ void func_8002FE70(s32 deviceId, s_func_8002FE70* result)
         return;
     }
 
-    for (fileIdx = 0; fileIdx < 15; fileIdx++)
+    for (fileIdx = 0; fileIdx < CARD_DEVICE_FILE_COUNT; fileIdx++)
     {
         if (D_800B5508.devices_0[deviceId].isFileUsed_4[fileIdx] != 1)
         {
@@ -1684,12 +1684,12 @@ s32 Savegame_CardState_DirRead() // 0x80030F7C
     s32              result;
     s32              i;
 
-    for (i = 0; i < 15; i++)
+    for (i = 0; i < CARD_DEVICE_FILE_COUNT; i++)
     {
         CardWork_ClearDirectoryFile(i);
     }
 
-    for (i = 0; i < 15; i++)
+    for (i = 0; i < CARD_DEVICE_FILE_COUNT; i++)
     {
         if (i == 0)
         {
