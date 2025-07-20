@@ -307,6 +307,7 @@ void Settings_RestoreDefaults() // 0x8003342c
 
 void Settings_RestoreControlDefaults(s32 arg0) // 0x80033480
 {
+    // TODO: D_8002511C .rodata
     u32  i;
     u16* ptr;
 

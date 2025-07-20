@@ -947,16 +947,16 @@ void func_8003CD6C(s_PlayerCombat* arg0) // 0x8003CD6C
 s32 func_8003CDA0(s32 itemIdx)
 {
     s32              fileIdx;
-    s_800BCE18_1BAC* s;
+    s_800BCE18_1BAC* ptr;
 
-    s = &D_800BCE18.field_1BAC;
+    ptr = &D_800BCE18.field_1BAC;
 
-    if (s->field_0 == itemIdx)
+    if (ptr->field_0 == itemIdx)
     {
         return 0;
     }
 
-    s->field_0 = itemIdx;
+    ptr->field_0 = itemIdx;
 
     switch (itemIdx)
     {
@@ -970,77 +970,77 @@ s32 func_8003CDA0(s32 itemIdx)
         case 160:
         case 161:
         case 162:
-            fileIdx    = NO_VALUE;
-            s->field_8 = "HERO";
+            fileIdx      = NO_VALUE;
+            ptr->field_8 = "HERO";
             break;
         case InventoryItemId_SteelPipe:
-            fileIdx    = FILE_ITEM_PIPE_TIM;
-            s->field_8 = "PIPE";
+            fileIdx      = FILE_ITEM_PIPE_TIM;
+            ptr->field_8 = "PIPE";
             break;
         case 164:
-            fileIdx    = FILE_ITEM_PHONE_TIM;
-            s->field_8 = "PHONE";
+            fileIdx      = FILE_ITEM_PHONE_TIM;
+            ptr->field_8 = "PHONE";
             break;
         case 165:
-            fileIdx    = FILE_ITEM_FLAUROS_TIM;
-            s->field_8 = "FLAUROS";
+            fileIdx      = FILE_ITEM_FLAUROS_TIM;
+            ptr->field_8 = "FLAUROS";
             break;
         case 166:
-            fileIdx    = FILE_ITEM_AGLA_TIM;
-            s->field_8 = "AGLA";
+            fileIdx      = FILE_ITEM_AGLA_TIM;
+            ptr->field_8 = "AGLA";
             break;
         case 167:
-            fileIdx    = FILE_ITEM_BOTL_TIM;
-            s->field_8 = "BOTL";
+            fileIdx      = FILE_ITEM_BOTL_TIM;
+            ptr->field_8 = "BOTL";
             break;
         case 168:
-            fileIdx    = FILE_ITEM_BABY_TIM;
-            s->field_8 = "BABY";
+            fileIdx      = FILE_ITEM_BABY_TIM;
+            ptr->field_8 = "BABY";
             break;
         case 169:
-            fileIdx    = FILE_ITEM_BLOOD_TIM;
-            s->field_8 = "BLOOD";
+            fileIdx      = FILE_ITEM_BLOOD_TIM;
+            ptr->field_8 = "BLOOD";
             break;
         case InventoryItemId_Chainsaw:
-            fileIdx    = FILE_ITEM_CSAW_TIM;
-            s->field_8 = "CSAW";
+            fileIdx      = FILE_ITEM_CSAW_TIM;
+            ptr->field_8 = "CSAW";
             break;
         case InventoryItemId_HyperBlaster:
-            fileIdx    = FILE_ITEM_HPRGUN_TIM;
-            s->field_8 = "HPRGUN";
+            fileIdx      = FILE_ITEM_HPRGUN_TIM;
+            ptr->field_8 = "HPRGUN";
             break;
         case InventoryItemId_RockDrill:
-            fileIdx    = FILE_ITEM_DRILL_TIM;
-            s->field_8 = "DRILL";
+            fileIdx      = FILE_ITEM_DRILL_TIM;
+            ptr->field_8 = "DRILL";
             break;
         case InventoryItemId_Katana:
-            fileIdx    = FILE_ITEM_KATANA_TIM;
-            s->field_8 = "KATANA";
+            fileIdx      = FILE_ITEM_KATANA_TIM;
+            ptr->field_8 = "KATANA";
             break;
     }
 
     if (fileIdx == NO_VALUE)
     {
-        s->imageDesc_C.tPage[1] = 27;
-        s->imageDesc_C.tPage[0] = 0;
-        s->imageDesc_C.u        = 0;
-        s->imageDesc_C.v        = 0;
-        s->imageDesc_C.clutX    = 736;
-        s->imageDesc_C.clutY    = 480;
+        ptr->imageDesc_C.tPage[1] = 27;
+        ptr->imageDesc_C.tPage[0] = 0;
+        ptr->imageDesc_C.u        = 0;
+        ptr->imageDesc_C.v        = 0;
+        ptr->imageDesc_C.clutX    = 736;
+        ptr->imageDesc_C.clutY    = 480;
     }
     else
     {
-        s->imageDesc_C.tPage[1] = 27;
-        s->imageDesc_C.tPage[0] = 0;
-        s->imageDesc_C.u        = 48;
-        s->imageDesc_C.v        = 224;
-        s->imageDesc_C.clutX    = 736;
-        s->imageDesc_C.clutY    = 498;
+        ptr->imageDesc_C.tPage[1] = 27;
+        ptr->imageDesc_C.tPage[0] = 0;
+        ptr->imageDesc_C.u        = 48;
+        ptr->imageDesc_C.v        = 224;
+        ptr->imageDesc_C.clutX    = 736;
+        ptr->imageDesc_C.clutY    = 498;
     }
 
     if (fileIdx != NO_VALUE)
     {
-        s->field_4 = Fs_QueueStartReadTim(fileIdx, FS_BUFFER_10, &s->imageDesc_C);
+        ptr->field_4 = Fs_QueueStartReadTim(fileIdx, FS_BUFFER_10, &ptr->imageDesc_C);
     }
 
     switch (itemIdx)
@@ -1104,8 +1104,8 @@ s32 func_8003CDA0(s32 itemIdx)
 
     if (fileIdx != NO_VALUE)
     {
-        s->field_4 = Fs_QueueStartRead(fileIdx, s->field_14);
-        return s->field_4;
+        ptr->field_4 = Fs_QueueStartRead(fileIdx, ptr->field_14);
+        return ptr->field_4;
     }
 
     return 0;
