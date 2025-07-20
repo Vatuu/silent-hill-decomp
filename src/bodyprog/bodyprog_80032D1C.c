@@ -2,7 +2,6 @@
 
 #include <libetc.h>
 #include <libpad.h>
-#include <ctype.h>
 #include <strings.h>
 
 #include "bodyprog/bodyprog.h"

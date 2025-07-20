@@ -6,15 +6,8 @@
 #include <strings.h>
 
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/credits.h"
-#include "bodyprog/demo.h"
-#include "bodyprog/item_screens.h"
 #include "bodyprog/math.h"
-#include "bodyprog/memcard.h"
-#include "bodyprog/player_logic.h"
 #include "main/fsqueue.h"
-#include "main/mem.h"
-#include "main/rng.h"
 #include "screens/stream/stream.h"
 
 void Gfx_BackgroundSpriteDraw(s_FsImageDesc* image) // 0x800314EC
