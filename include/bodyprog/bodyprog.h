@@ -461,15 +461,14 @@ STATIC_ASSERT_SIZEOF(s_800BCE18_2BEC, 16);
 
 typedef struct
 {
-    s32         field_0;
-    s32         field_4;
-    s32         field_8;
-    s32*        field_C;
-    s32         unk10;
-    s_800BE9FC* field_14;
-    s32         field_18;
-    s32         field_1C;
-    s32         field_20;
+    s32           field_0;
+    s32           field_4;
+    char*         field_8;
+    s_FsImageDesc imageDesc_C;
+    s_800BE9FC*   field_14;
+    s32           field_18;
+    s32           field_1C;
+    s32           field_20;
 } s_800BCE18_1BAC;
 
 typedef struct
@@ -950,22 +949,6 @@ extern s_ControllerConfig D_8002511C[];
 
 extern s_800252BC const D_800252BC[];
 
-extern u8 D_800254EC[]; // `Gfx_MainMenu_MainTextDraw` string X offsets. TODO: Local .rodata.
-
-extern s8 D_800254F4; // `Gfx_MainMenu_MainTextDraw` string. TODO: Local .rodata.
-
-extern s8 D_800254F8; // `Gfx_MainMenu_MainTextDraw` string. TODO: Local .rodata.
-
-extern s8 D_800254FC; // `Gfx_MainMenu_MainTextDraw` string. TODO: Local .rodata.
-
-extern s8 D_80025500; // `Gfx_MainMenu_MainTextDraw` string. TODO: Local .rodata.
-
-extern s32 D_80025528; // Type assumed.
-
-extern s32 D_80025530; // Type assumed.
-
-extern u8 D_8002551C[]; // `Gfx_MainMenu_DifficultyTextDraw` string X offsets. TODO: Local .rodata.
-
 extern u8 D_80025D6C[];
 
 extern u32 D_80025DC0[];
@@ -1046,17 +1029,17 @@ extern s32 D_800A9A24;
 
 extern s32 D_800A9A28;
 
-extern char* D_800A9A8C[]; // `Gfx_MainMenu_MainTextDraw` strings. TODO: Local .rodata.
-
 extern s8 D_800A98FC[];
 
 extern s32 D_800A9EAC;
 
 extern s32 D_800A9EB0;
 
-extern s32 D_800A9EBC; // Type assumed.
+extern s_FsImageDesc D_800A9EB4;
 
-extern s32 D_800A9EC4; // Type assumed.
+extern s_FsImageDesc D_800A9EBC;
+
+extern s_FsImageDesc D_800A9EC4;
 
 extern s_FsImageDesc D_800A9FA8;
 
@@ -1127,11 +1110,7 @@ extern s32 D_800A9A88;
 
 extern RECT D_800A9A6C; // `RECT<320, 256, 160, 240>`, only used in `SysState_Fmv_Update`?
 
-extern char* D_800A9AA0[]; // `Gfx_MainMenu_DifficultyTextDraw` strings. TODO: Local .rodata.
-
 extern u32 D_800A9AAC[];
-
-extern s_FsImageDesc D_800A9EB4;
 
 extern s32 D_800A9ECC;
 
@@ -1766,6 +1745,8 @@ void func_8003C878(s32 arg0);
 void func_8003C8F8(s_func_8003C8F8* arg0, s8* arg1);
 
 void func_8003CD6C(s_PlayerCombat* arg0);
+
+s32 func_8003CDA0(s32 itemIdx);
 
 void func_8003D01C();
 

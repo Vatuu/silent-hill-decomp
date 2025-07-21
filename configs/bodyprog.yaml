@@ -61,10 +61,14 @@ segments:
       - [0x0, rodata]
       - [0x4, .rodata, memcard]
       - [0x138, rodata]
-      - [0x818, .rodata, bodyprog_800314EC] # Jumptable: `SysState_Gameplay_Update`
+      - [0x144, .rodata, bodyprog_800314EC]
+      - [0x1E4, .rodata, globals]
+      - [0x1F8, rodata] # Stage/map data?
+      - [0x618, .rodata, bodyprog_80032D1C] # Jumptable: `SysState_Gameplay_Update`
                                             # Jumptable: `func_8003943C`
                                             # Jumptable & Data: `SysState_GameOver_Update`
-      - [0x920, rodata]
+      - [0x91C, .rodata, bodyprog_8003AB28]
+      - [0x1084, rodata] # Junk data?
       - [0x109C, .rodata, libsd/bodyprog_80045A7C]  # Jumptable: `Sd_EngineCmd`
                                                     # Jumptable: `func_80045BD8`
       - [0x11C4, .rodata, bodyprog_CD_80047D50] # Jumptable: `func_800482D8`
@@ -107,6 +111,8 @@ segments:
 
       - [0x9ad0,    c, memcard]
       - [0xC98C,    c, bodyprog_800314EC]
+      - [0xE1BC,    c, bodyprog_80032D1C]
+      - [0x15FC8,   c, bodyprog_8003AB28]
       - [0x1b4ec,   c, view/vc_util]
       - [0x1bf04,   c, bodyprog_80040A64]
       - [0x20F1C,   c, libsd/bodyprog_80045A7C]

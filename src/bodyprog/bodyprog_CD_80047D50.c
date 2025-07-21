@@ -5,7 +5,6 @@
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/libsd.h"
-#include "bodyprog/math.h"
 #include "main/fsqueue.h"
 
 #define CD_ERROR_LIMIT 600 // Matches value used in beatmania `FSCD.C`.
