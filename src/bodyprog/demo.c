@@ -272,8 +272,8 @@ s32 Demo_Update() // 0x8008F5D8
     }
 
     demoStep = g_Demo_DemoStep;
-    do {} while (0); // HACK: Required for match.
-    if (D_800FE5F8 <= demoStep)
+
+    if (DEMO_WORK()->frameCount_7F8 <= demoStep)
     {
         func_8008F518();
         Demo_ExitDemo();

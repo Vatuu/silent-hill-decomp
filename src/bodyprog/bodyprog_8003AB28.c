@@ -765,7 +765,7 @@ void func_8003C0C0() // 0x8003C0C0
 {
     s_800BCE18_1BAC* ptr = &D_800BCE18.field_1BAC;
     ptr->field_0         = -1;
-    ptr->field_14        = (s_800BE9FC*)(Fs_GetFileSize(0x58E) + 0x800FE600); // field_14 is defined as a pointer?
+    ptr->field_14        = (s_800BE9FC*)(Fs_GetFileSize(FILE_CHARA_HERO_ILM) + 0x800FE600); // field_14 is defined as a pointer?
     ptr->field_18        = 0;
     ptr->field_1C        = 0;
     ptr->field_20        = 0;
@@ -782,9 +782,9 @@ void func_8003C110() // 0x8003C110
         {
             D_800BCE18.field_0->field_18[i] = NULL;
         }
-    } 
-    
-    D_800BCE18.field_0[0].field_14 = Fs_GetFileSize(0x58E) + 0x800FEE00;
+    }
+
+    D_800BCE18.field_0[0].field_14 = Fs_GetFileSize(FILE_CHARA_HERO_ILM) + 0x800FEE00;
 
     // this part could be rewritten in a less confusing way
     var_s0 = &D_800BCE18.field_0[0].field_CC;
@@ -804,7 +804,7 @@ void func_8003C1AC(s_800BCE18_0_CC* arg0) // 0x8003C1AC
     arg0->field_0 = 0;
     arg0->field_1 = 0;
     arg0->field_4 = 0;
-    arg0->field_8 = (s32) (Fs_GetFileSize(0x58E) + 0x800FEE00);
+    arg0->field_8 = (s32)(Fs_GetFileSize(FILE_CHARA_HERO_ILM) + 0x800FEE00);
     arg0->field_C = sp10;
 }
 
@@ -1402,9 +1402,9 @@ s32 func_8003D21C(s_MapOverlayHeader* arg0) // 0x8003D21C
 
     for (ret                           = 0,
         i                              = 0,
-        D_800BCE18.field_0[0].field_14 = Fs_GetFileSize(0x58E) + 0x800FEE00, 
+        D_800BCE18.field_0[0].field_14 = Fs_GetFileSize(FILE_CHARA_HERO_ILM) + 0x800FEE00,
         var_s3                         = 0;
-        i < 4; i++)
+         i < 4; i++)
     {
         ids = arg0->charaGroupIds_248[i];
         ptr = &D_800BCE18.field_0[i].field_CC;

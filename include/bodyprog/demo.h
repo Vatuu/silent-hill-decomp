@@ -90,8 +90,6 @@ extern s32 g_Demo_DemoStep; // 0x800C4894
 
 extern s32 g_Demo_VideoPresentInterval; // 0x800C4898
 
-extern u32 D_800FE5F8; // 0x800FE5F8
-
 // ==========
 // FUNCTIONS
 // ==========
