@@ -7,6 +7,16 @@
 #include "main/fsqueue.h"
 #include "types.h"
 
+/** @brief This header is used to declare any variable, struct, or
+ * function part of `BODYPROG.BIN` that has not been identified to
+ * be related a to currently recognized and separated section of
+ * the engine (like player logic, save game or item screens).
+ */
+
+// ========
+// DEFINES
+// ========
+
 #define TEMP_MEMORY_ADDR ((s8*)0x801A2600)
 
 #define IMAGE_BUFFER_0 ((u_long*)0x801CFA00)
@@ -26,6 +36,10 @@
 #define SFX_BACK    0x519
 #define SFX_CANCEL  0x51A
 #define SFX_CONFIRM 0x51B
+
+// ======
+// ENUMS
+// ======
 
 /** Used by `func_8003F654` to cast a specific field to the desired type. */
 typedef enum _MenuState
@@ -47,15 +61,16 @@ typedef enum _PrimitiveType
     PrimitiveType_S32  = 5
 } s_PrimitiveType;
 
-typedef struct
-{
-    u16 field_0;
-    u16 field_2; // Engine cmd.
-} s_800252BC;
+// ================
+// UNKNOWN STRUCTS
+// ================
 
+/* Structs called by functions that haven't been identified. */
+
+// Exception, as one of the unidentified structs uses this.
 typedef struct
 {
-    s8  unk_0[4];
+    s32 field_0;
     u8  field_4;
     u8  field_5;
     u16 field_6;
@@ -82,15 +97,6 @@ typedef struct
 
 typedef struct
 {
-    s8  field_0;
-    s8  field_1;
-    s8  field_2;
-    s8  field_3;
-    s32 field_4[4];
-} s_800382B0;
-
-typedef struct
-{
     s8  unk_0[4];
     s16 field_4;
     s8  unk_6[2];
@@ -98,6 +104,177 @@ typedef struct
     s8  unk_10[4];
     s32 field_14;
 } s_func_8003FEC0;
+
+typedef struct
+{
+    u8  field_0;
+    u8  field_1;
+    u8  field_2;
+    u8  field_3;
+    s16 field_4;
+    s16 field_6;
+} s_func_8005660C_1;
+
+typedef struct
+{
+    s8  unk_0[14];
+    s8  field_E;
+    s16 field_10;
+    s8  unk_12[2];
+    u8  field_14;
+    u8  field_15;
+} s_func_8005660C_0;
+
+typedef struct
+{
+  u8 unk_0[24];
+} s_func_800566B4_sub;
+STATIC_ASSERT_SIZEOF(s_func_800566B4_sub, 24);
+
+typedef struct
+{
+    s8                   unk_0[3];
+    u8                   field_3; // Size of `field_4` array.
+    s_func_800566B4_sub* field_4;
+} s_func_800566B4;
+
+typedef struct
+{
+    s8 unk_0[20];
+    s8 field_14;
+} s_func_8005B370;
+
+typedef struct
+{
+    char pad[12];
+} s_func_8005B424;
+
+typedef struct
+{
+    s32 field_0;
+    s32 field_4;
+    s16 field_8;
+    s8  unk_A;
+    s8  field_B;
+    s8  field_C;
+    s8  field_D;
+    s16 field_E;
+    s32 field_10;
+} s_func_800625F4;
+STATIC_ASSERT_SIZEOF(s_func_800625F4, 20);
+
+typedef struct
+{
+	s8 unk_0[0x30];
+	s8 field_30;
+} s_func_800699E4;
+
+/** @brief Returned by `func_800699F8`, collision related? */
+typedef struct _s_func_800699F8
+{
+    s32 chara_grnd_0;
+    s16 field_4;
+    s16 field_6;
+    s8  field_8;
+    u8  unk_9[3];
+} s_func_800699F8;
+STATIC_ASSERT_SIZEOF(s_func_800699F8, 12);
+
+typedef struct
+{
+    s32 field_0;
+    s32 field_4;
+    s32 field_8;
+    s32 field_C;
+    s16 field_10;
+    s16 field_12;
+    s8  field_14;
+    s8  unk_15[3];
+    s32 field_18;
+} s_func_8006A178;
+
+typedef struct
+{
+    s8  unk_0[48];
+    s16 field_30;
+    s8  unk_32[164];
+    s16 field_D6;
+    s8  unk_DA[8];
+    s32 field_E0;
+    s8  unk_E4[2];
+    u16 field_E6;
+    s8  unk_EA[2];
+    s32 field_EC;
+} s_func_8006BC34;
+
+typedef struct
+{
+    s8  field_0;
+    s8  unk_1;
+    s16 field_2;
+    s16 field_4;
+} s_func_8006BDDC;
+
+typedef struct
+{
+    s8  unk_0[124];
+    s32 field_7C;
+    s32 field_80;
+    s32 field_84;
+    s32 field_88;
+    s32 field_8C;
+    s8  unk_90[4];
+    s32 field_94;
+} s_func_8006CC44;
+
+typedef struct
+{
+    s8  unk_0[22];
+    s32 field_18;
+} s_func_80089840;
+
+typedef struct
+{
+    VECTOR3 field_0;
+    VECTOR3 field_C;
+    s8      unk_18[6];
+    u8      field_1E;
+    u8      field_1F;
+} s_func_800CFFF8;
+
+// Function from lib_unk
+typedef struct
+{
+    char unk_0[0xC];
+    s32 field_C;
+    s_8002AC04* field_10;
+    u32 field_14_0 : 16;
+    u32 field_14_16 : 8;
+    u32 field_14_24 : 7;
+    u32 field_14_31 : 1;
+    u32 field_18;
+    u16 field_1C;
+    u16 field_1E;
+} s_func_8009ECCC;
+
+// ========
+// STRUCTS
+// ========
+
+typedef struct
+{
+    u16 field_0;
+    u16 field_2; // Engine cmd.
+} s_800252BC;
+
+typedef struct
+{
+    s8  field_0;
+    s8  field_1;
+    s8  field_2;
+    s8  field_3;
+    s32 field_4[4];
+} s_800382B0;
 
 // Maybe same.
 typedef struct
@@ -186,79 +363,6 @@ typedef struct
 
 typedef struct
 {
-    s8  unk_0[14];
-    s8  field_E;
-    s16 field_10;
-    s8  unk_12[2];
-    u8  field_14;
-    u8  field_15;
-} s_func_8005660C_0;
-
-typedef struct
-{
-    u8  field_0;
-    u8  field_1;
-    u8  field_2;
-    u8  field_3;
-    s16 field_4;
-    s16 field_6;
-} s_func_8005660C_1;
-
-typedef struct
-{
-  u8 unk_0[24];
-} s_func_800566B4_sub;
-STATIC_ASSERT_SIZEOF(s_func_800566B4_sub, 24);
-
-typedef struct
-{
-    s8                   unk_0[3];
-    u8                   field_3; // Size of `field_4` array.
-    s_func_800566B4_sub* field_4;
-} s_func_800566B4;
-
-typedef struct
-{
-    s32 field_0;
-    s32 field_4;
-    s16 field_8;
-    s8  unk_A;
-    s8  field_B;
-    s8  field_C;
-    s8  field_D;
-    s16 field_E;
-    s32 field_10;
-} s_func_800625F4;
-STATIC_ASSERT_SIZEOF(s_func_800625F4, 20);
-
-typedef struct
-{
-    s8  field_0;
-    s8  unk_1;
-    s16 field_2;
-    s16 field_4;
-} s_func_8006BDDC;
-
-typedef struct
-{
-    s8  unk_0[124];
-    s32 field_7C;
-    s32 field_80;
-    s32 field_84;
-    s32 field_88;
-    s32 field_8C;
-    s8  unk_90[4];
-    s32 field_94;
-} s_func_8006CC44;
-
-typedef struct
-{
-    s8  unk_0[22];
-    s32 field_18;
-} s_func_80089840;
-
-typedef struct
-{
     s8 unk_0[14];
     u8 field_E;
     u8 field_F;
@@ -330,9 +434,18 @@ STATIC_ASSERT_SIZEOF(s_800AD4C8, 24);
 
 typedef struct
 {
-    s8  unk_0[2];
+    u8  field_0;
+    s8  unk1;
     u8  field_2;
-    s8  unk_6[4090];
+    u8  unk3;
+    u8* field_4;
+    u8  field_8;
+    u8  unk9;
+    u8  unkA;
+    u8  unkB;
+    u8* field_C;
+    u8* field_10;
+    s8  unk_11[4075];
     s32 queueIdx_1000;
 } s_800BE9FC;
 
@@ -645,7 +758,7 @@ typedef struct
     s32     field_50;
     s8      unk_54[24];
     VECTOR3 field_60; // Type assumed.
-} s_D_800C4168;
+} s_800C4168;
 
 typedef struct
 {
@@ -668,15 +781,6 @@ typedef struct
     s32     field_1C;
     s32     field_20;
 } s_800C4818;
-
-typedef struct
-{
-    VECTOR3 field_0;
-    VECTOR3 field_C;
-    s8      unk_18[6];
-    u8      field_1E;
-    u8      field_1F;
-} s_func_800CFFF8;
 
 /** Holds file IDs of anim/model/texture for each `e_ShCharacterId`, along with some data used in VC camera code. */
 typedef struct
@@ -752,30 +856,6 @@ typedef struct
     s_DmsEntry     camera_1C;
 } s_DmsHeader;
 STATIC_ASSERT_SIZEOF(s_DmsHeader, 44);
-
-/** @brief Returned by `func_800699F8`, collision related? */
-typedef struct _s_func_800699F8
-{
-    s32 chara_grnd_0;
-    s16 field_4;
-    s16 field_6;
-    s8  field_8;
-    u8  unk_9[3];
-} s_func_800699F8;
-STATIC_ASSERT_SIZEOF(s_func_800699F8, 12);
-
-typedef struct
-{
-    s32 field_0;
-    s32 field_4;
-    s32 field_8;
-    s32 field_C;
-    s16 field_10;
-    s16 field_12;
-    s8  field_14;
-    s8  unk_15[3];
-    s32 field_18;
-} s_func_8006A178;
 
 /** @brief Used for normal credits screen. */
 typedef struct
@@ -937,6 +1017,10 @@ typedef struct
     u8 field_1;
 } s_800A9F80;
 
+// ========
+// GLOBALS
+// ========
+
 extern s_FsImageDesc g_MainImg0; // 0x80022C74 - TODO: part of main exe, move to main/ headers?
 
 /** Some sort of struct inside RODATA, likely a constant. */
@@ -952,6 +1036,8 @@ extern s_800252BC const D_800252BC[];
 extern u8 D_80025D6C[];
 
 extern u32 D_80025DC0[];
+
+extern char D_80028544[0x10];
 
 extern RECT D_80028A20;
 
@@ -974,6 +1060,8 @@ extern DR_MODE D_800A8E98[];
 extern POLY_G4 D_800A8EB0[];
 
 extern s32 D_800A8F40;
+
+extern GsOT D_800A8F9C[];
 
 extern s_FsImageDesc D_800A8FF4;
 
@@ -1369,6 +1457,8 @@ extern s_800BCE18 D_800BCE18;
 
 extern s_800C1020 D_800C1020;
 
+extern s32 D_800C1450;
+
 extern s_800C117C D_800C117C[];
 
 extern s8* D_800C15B0;
@@ -1546,7 +1636,7 @@ extern GsCOORDINATE2 D_800C3E48[];
 
 extern u8 D_800C416A;
 
-extern s_D_800C4168 D_800C4168;
+extern s_800C4168 D_800C4168;
 
 extern s32 D_800C4180;
 
@@ -1653,6 +1743,10 @@ extern u8 D_800AD480[24];
 extern s_800AD4C8 D_800AD4C8[];
 
 extern s_MapOverlayHeader g_MapOverlayHeader; // 0x800C957C
+
+// ==========
+// FUNCTIONS
+// ==========
 
 s32 func_8002E76C(s32 idx);
 
@@ -2045,6 +2139,10 @@ void func_80055028();
 
 void func_80055330(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6);
 
+s32 func_80057208();
+
+s32 func_80057200();
+
 void func_800553C4(u8 arg0, u8 arg1, u8 arg2, u8 arg3);
 
 void func_800553E0(u32 arg0, u8 arg1, u8 arg2, u8 arg3, u8 arg4, u8 arg5, u8 arg6);
@@ -2249,6 +2347,8 @@ s32 func_8008973C(s_SysWork_2514* arg0, s32 arg1, s_8002AC04* ptr, u32* arg3);
 
 void func_80089840(s_func_80089840* arg0);
 
+void func_8008992C(s_SysWork_2514* arg0, u16 arg1, s32 (*arg2)(u16, s32));
+
 s32 func_8008A35C(s_8008A35C* arg0, s32 arg1);
 
 void func_8008A384(s_SubCharacter* chara);
@@ -2315,6 +2415,8 @@ void GameFs_Tim00TIMLoad();
 void func_8005B46C(s32* arg0);
 
 void func_8005B474(s32* arg0, u32 arg1, s32 idx);
+
+s32 func_8005B4BC(void*, void*);
 
 /** Sets the debug string position. */
 void func_8005BF0C(s16 unused, s16 x, s16 y);

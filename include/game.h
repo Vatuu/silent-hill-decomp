@@ -988,6 +988,13 @@ typedef struct
 
 typedef struct
 {
+    struct s_func_8008989C* field_0;
+    u8 unk_4[26];
+    u16 field_1E;
+} s_func_8008989C;
+
+typedef struct
+{
     u32               unk_0     : 8;
     u8                field_1   : 8;
     u32               field_2_0 : 1;
@@ -995,7 +1002,9 @@ typedef struct
     u32               field_2_2 : 14;
     u8                unk_4[8];
     s_SysWork_2514_C* field_C;
-    u8                unk_10[16];
+    u8                unk_10[8];
+    s_func_8008989C*  field_18;
+    s32               unk_1C;
     s32               field_20[2]; // `func_8009E310` takes pointer to this and writes to [0] / [1], maybe a substruct.
     u8                unk_28[8];
     s32               field_30[2]; // `func_8009EBB8` takes pointer to this and writes to [0] / [1], maybe a substruct.

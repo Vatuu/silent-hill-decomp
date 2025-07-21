@@ -52,13 +52,13 @@ s32 func_80040B74(s32 arg0) // 0x80040B74
     return 0;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80040BAC);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80040BAC); // 0x80040BAC
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80040E7C);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80040E7C); // 0x80040E7C
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80041074);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80041074); // 0x80041074
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800410D8);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800410D8); // 0x800410D8
 
 void func_8004122C(s32* angle0, s32* angle1, VECTOR* arg2, VECTOR* arg3) // 0x8004122C
 {
@@ -117,7 +117,7 @@ void func_8004137C(VECTOR3* result, VECTOR* vec0, VECTOR* vec1, s32 screenDist)
     result->vy = ((vec.vy * screenDist) / vec.vz) + offsetY;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800414E0);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800414E0); // 0x800414E0
 
 s32 func_80041ADC(s32 queueIdx) // 80041ADC
 {
@@ -130,9 +130,9 @@ s32 func_80041ADC(s32 queueIdx) // 80041ADC
     return 2;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80041B1C);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80041B1C); // 0x80041B1C
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80041BA0);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80041BA0); // 0x80041BA0
 
 void func_80041C24(s_80041CEC* arg0, s32 arg1, s32 arg2) // 0x80041C24
 {
@@ -180,7 +180,7 @@ void func_80041D10(s_Skeleton* skels, s32 size) // 0x80041D10
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80041D48);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80041D48); // 0x80041D48
 
 void func_80041E98() // 0x80041E98
 {
@@ -188,14 +188,15 @@ void func_80041E98() // 0x80041E98
     D_800C1020.field_1C = 512;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80041ED0);
+// Matched in Decomp.me, but context is incorrect.
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80041ED0); // 0x80041ED0
 
 void func_80041FF0() // 0x80041FF0
 {
     func_80042300(&D_800C1020, D_800C1020.field_158);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_8004201C);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_8004201C); // 0x8004201C
 
 void func_800420C0() // 0x800420C0
 {
@@ -204,30 +205,45 @@ void func_800420C0() // 0x800420C0
     func_80041D48();
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800420FC);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800420FC); // 0x800420FC
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80042178);
+s32 func_80042178(s32* arg0) // 0x80042178
+{
+    s32 ret = func_8005B4BC(arg0, &D_800C1450);
+    if (ret != 0)
+    {
+        return ret;
+    }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800421D8);
+    ret = func_8005B4BC(arg0, &D_800C1450 + 11);
+    if (ret != 0)
+    {
+        return ret;
+    }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80042300);
+    return 0;
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800423F4);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800421D8); // 0x800421D8
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_8004255C);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80042300); // 0x80042300
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800425D8);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800423F4); // 0x800423F4
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800426E4);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_8004255C); // 0x8004255C
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_8004287C);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800425D8); // 0x800425D8
+
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800426E4); // 0x800426E4
+
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_8004287C); // 0x8004287C
 
 s32 func_80042C04(s32 idx) // 0x80042C04
 {
     return (func_80041B1C(&D_800C117C[idx]) < 3) ^ 1;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80042C3C);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80042C3C); // 0x80042C3C
 
 s32 func_80042DE8(s32 posX, s32 posZ, s32 fileChunkCoordX, s32 fileChunkCoordZ, s32 clip) // 0x80042DE8
 {
@@ -248,11 +264,11 @@ s32 func_80042DE8(s32 posX, s32 posZ, s32 fileChunkCoordX, s32 fileChunkCoordZ, 
     return dist;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80042E2C);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80042E2C); // 0x80042E2C
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80042EBC);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80042EBC); // 0x80042EBC
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800431E4);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800431E4); // 0x800431E4
 
 void func_80043338(s_80043338* arg0, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1, s32 clip) // 0x80043338
 {
@@ -260,13 +276,13 @@ void func_80043338(s_80043338* arg0, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1,
     arg0->field_10 = func_80042DE8(posX1, posZ1, arg0->fileChunkCoordX_8, arg0->fileChunkCoordZ_A, clip);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800433B8);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800433B8); // 0x800433B8
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80043554);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80043554); // 0x80043554
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80043578);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80043578); // 0x80043578
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800435E4);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800435E4); // 0x800435E4
 
 s32 func_800436D8(s_80043338* arg0, s32 fileIdx, s16 fileChunkCoordX, s16 fileChunkCoordZ, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1, s32 clip) // 0x800436D8
 {
@@ -288,13 +304,13 @@ s32 func_800436D8(s_80043338* arg0, s32 fileIdx, s16 fileChunkCoordX, s16 fileCh
     return arg0->queueEntryIdx_4;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80043740);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80043740); // 0x80043740
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80043830);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80043830); // 0x80043830
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_8004393C);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_8004393C); // 0x8004393C
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80043A24);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80043A24); // 0x80043A24
 
 s32 func_80043B34(s_800C117C* arg0, s_800C1020* arg1)
 {
@@ -396,7 +412,7 @@ s32 func_80043D64(s32 arg0) // 0x80043D64
     return 0;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80043DA4);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80043DA4); // 0x80043DA4
 
 void func_80043E50(s_80043E50* arg0, s32* arg1, s32 arg2) // 0x80043E50
 {
@@ -448,7 +464,7 @@ s_80043F2C* func_80043F2C(s_80043F2C* arg0, s_80043F2C* arg1) // 0x80043F2C
     return NULL;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80043F88);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80043F88); // 0x80043F88
 
 void func_80044044(s_80044044* arg0, s32 arg1, s32 arg2) // 0x80044044
 {
@@ -464,26 +480,43 @@ void func_80044044(s_80044044* arg0, s32 arg1, s32 arg2) // 0x80044044
     arg0->field_58 = (arg0->field_58 + ((arg2 - var1) * 0x2800));
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80044090);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80044090); // 0x80044090
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80044420);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80044420); // 0x80044420
 
 // Could either this be used for load the player model or for execute animations
 // Removing the call from `func_80035178` causes Harry's model to not appear
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800445A4);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800445A4); // 0x800445A4
 
 // ========================================
 // ANIMATION
 // ========================================
 
 // Anim func.
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800446D8);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800446D8); // 0x800446D8
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80044918);
+s32 func_80044918(s_ModelAnim* arg0) // 0x80044918
+{
+    // according to 80044950 this func is returning a funcptr?
+    // field_C/field_10 usually points to data at 0x800AF228 which contains funcptrs and other stuff
+    
+    s32 animInfo_C = arg0->animInfo_C;
+    s32 field_10   = arg0->field_10;
+    u8  animIdx_0  = arg0->animIdx_0;
+    s32 field_1    = arg0->maybeSomeState_1;
+    
+    if (field_10 != 0 && animIdx_0 >= field_1)
+    {
+        animInfo_C  = field_10;
+        animInfo_C -= (field_1 * 0x10);
+    }
+    
+    return animInfo_C + animIdx_0 * 0x10;
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80044950);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80044950); // 0x80044950
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800449AC);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800449AC); // 0x800449AC
 
 static inline s32 Anim_GetTimeStep(s_Model* model, s_AnimInfo* targetAnim)
 {
@@ -787,22 +820,22 @@ void func_80045014(s_Skeleton* skel) // 0x80045014
 }
 
 // Anim func. Used in tandem with skeleton bone traversal.
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_8004506C);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_8004506C); // 0x8004506C
 
 // Anim func.
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80045108);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80045108); // 0x80045108
 
 // Anim func.
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800451B0);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800451B0); // 0x800451B0
 
 // Anim func.
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80045258);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80045258); // 0x80045258
 
 // Anim func.
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800452EC);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800452EC); // 0x800452EC
 
 // Anim func. Traverses skeleton bones for something.
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80045360);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80045360); // 0x80045360
 
 // `cond` may actually be another `s_Skeleton` pointer.
 void func_800453E8(s_Skeleton* skel, s32 cond) // 0x800453E8
@@ -864,4 +897,4 @@ void func_80045468(s_Skeleton* skel, s32* arg1, s32 cond) // 0x80045468
 }
 
 // Maybe larger anim func.
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80045534);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80045534); // 0x80045534

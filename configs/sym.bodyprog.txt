@@ -78,7 +78,7 @@ Gfx_ClearRectInterlaced = 0x80032358; // type:func
 Gfx_ScreenRefresh       = 0x800323C8; // type:func
 Gfx_Init                = 0x80032428; // type:func
 
-func_8003289C = 0x8003289C; // type:func
+func_8003289C.66 = 0x8003289C; // filename:func_8003289C type:func The generated result of the compilation for some reason adds .66 at the end of name
 
 Settings_ScreenXYSet  = 0x800324F4; // type:func
 Settings_DispEnvXYSet = 0x80032524; // type:func
@@ -1602,3 +1602,7 @@ SpuGetReverbVoice = 0x800a6cb8; // type:func
 
 // s_gav.o
 _SpuGetAnyVoice = 0x800a6ce8; // type:func
+
+
+
+scratchpad = 0x1F800000; // size:0x400 ignore:True

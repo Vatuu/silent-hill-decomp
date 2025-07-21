@@ -67,7 +67,13 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_800554C4); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80055648); // 0x80055648
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_800557DC); // 0x800557DC
+s32 func_800557DC() // 0x800557DC
+{
+    MATRIX mat;
+
+    func_80049C2C(&mat, D_800C4168.field_60.vx, D_800C4168.field_60.vy, D_800C4168.field_60.vz);
+    return mat.t[2] * 16;
+}
 
 void func_80055814(s32 arg0) // 0x80055814
 {
@@ -97,7 +103,27 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80055ECC); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80055F08); // 0x80055F08
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_800560FC); // 0x800560FC
+void func_800560FC(s_800BE9FC* arg0) // 0x800560FC
+{
+    s32 i;
+    
+    if (arg0->field_2 != 1) 
+    {
+        arg0->field_2 = 1;
+        
+        arg0->field_4 += (u32)arg0;
+        arg0->field_C += (u32)arg0;
+        arg0->field_10 += (u32)arg0;
+        
+        for (i = 0; i < arg0->field_8; i++)
+        {
+            if (arg0->field_0 == 0x30) 
+            {
+                func_800561A4(&arg0->field_C[i * 16], arg0);
+            }
+        }
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_800561A4); // 0x800561A4
 
@@ -109,7 +135,13 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_800563E8); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80056464); // 0x80056464
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80056504); // 0x80056504
+void func_80056504(s_800BE9FC* arg0, s8* arg1, s32* arg2, s32 arg3) // 0x80056504
+{
+    s8 sp10[8];
+
+    func_80056D64(&sp10, arg1);
+    func_80056558(arg0, &sp10, arg2, arg3);
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80056558); // 0x80056558
 
@@ -187,6 +219,28 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80056D8C); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80057090); // 0x80057090
 
+// TODO: RODATA migration and odd code.
+#ifdef NON_MATCHING
+s32 func_800571D0(u32 arg0)
+{
+    switch (arg0)
+    {
+        case 0:
+        default:
+            return 2;
+        case 1:
+            return 0;
+        case 2:
+            return 4;
+        case 3:
+            return 0x21;
+        case 4:
+            return 0x42;
+        case 5:
+            return 0x63;
+    }
+}
+#else
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_800571D0); // 0x800571D0
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80057200); // 0x80057200
@@ -198,6 +252,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80057210); // 0x
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80057218); // 0x80057218
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80057220); // 0x80057220
+#endif
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80057228); // 0x80057228
 
@@ -237,15 +292,46 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005B1A0); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005B1FC); // 0x8005B1FC
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005B370); // 0x8005B370
+void func_8005B370(s_func_8005B370* arg0) // 0x8005B370
+{
+    arg0->field_14 = 0;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005B378); // 0x8005B378
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005B3A4); // 0x8005B3A4
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005B3BC); // 0x8005B3BC
+void func_8005B3BC(char* filename, s_func_800566B4_sub* arg1)
+{
+    char sp10[12];
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005B424); // 0x8005B424
+    // some inline memcpy/bcopy/strncpy? those use lwl/lwr/swl/swr instead though
+    // E: casting filename/arg1 to u32* and using memcpy does generate lw/sw
+    // but not in same order as this, guess it's some custom inline/macro instead
+    *(u32*)&sp10[0] = *(u32*)&arg1->unk_0[0];
+    *(u32*)&sp10[4] = *(u32*)&arg1->unk_0[4];
+    *(u32*)&sp10[8] = 0;
+    
+    strcat(sp10, D_80028544); // copies .TIM to end of sp10 string
+
+    *(u32*)&filename[0] = *(u32*)&sp10[0];
+    *(u32*)&filename[4] = *(u32*)&sp10[4];
+    *(u32*)&filename[8] = *(u32*)&sp10[8];
+}
+
+void func_8005B424(VECTOR3* arg0, VECTOR3* arg1) // 0x8005B424
+{
+    arg0->vz = 0;
+    arg0->vy = 0;
+    arg0->vx = 0;
+    
+    if (arg1 == NULL)
+    {
+        return;
+    }
+
+    *((s_func_8005B424 *)arg0) = *((s_func_8005B424 *)arg1);
+}
 
 void func_8005B46C(s32* arg0) // 0x8005B46C
 {
@@ -335,7 +421,37 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005DC1C); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005DC3C); // 0x8005DC3C
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005DD44); // 0x8005DD44
+void func_8005DD44(s32 arg0, VECTOR3* arg1, s32 arg2, s8 arg3) // 0x8005DD44
+{
+    s32 var_a2;
+    s32 var_s1;
+
+    if (g_GameWork.config_0.optSoundType_1E != 0)
+    {
+        var_s1 = 0;
+    }
+    else
+    {
+        var_s1 = func_80040A64(arg1);
+    }
+    if (arg2 >= 0x100)
+    {
+        arg2 = 0xFF;
+    }
+    else if (arg2 < 0)
+    {
+        arg2 = 0;
+    }
+    
+    var_a2 = func_8005D9B8(arg1, arg2);
+    
+    if (var_a2 >= 0x100)
+    {
+        var_a2 = 0xFF;
+    }
+    
+    func_80046620(arg0 & 0xFFFF, var_s1, ~var_a2 & 0xFF, arg3);
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005DE0C); // 0x8005DE0C
 
@@ -353,7 +469,19 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005E89C); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005F55C); // 0x8005F55C
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005F680); // 0x8005F680
+s32 func_8005F680(s_func_800699F8* arg0) // 0x8005F680
+{
+    s32 var_a0;
+    s8 temp_v1;
+
+    temp_v1 = arg0->field_8;
+    var_a0 = 0;
+    if ((temp_v1 == 0) || (temp_v1 == 0xC) || (temp_v1 == 7))
+    {
+        var_a0 = 1;
+    }
+    return var_a0;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005F6B0); // 0x8005F6B0
 
@@ -445,7 +573,11 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006993C); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80069994); // 0x80069994
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_800699E4); // 0x800699E4
+
+void func_800699E4(s_func_800699E4* arg0) // 0x800699E4
+{
+    arg0->field_30++;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_800699F8); // 0x800699F8
 
@@ -527,7 +659,46 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006B9C8); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006BB50); // 0x8006BB50
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006BC34); // 0x8006BC34
+s32 func_8006BC34(s_func_8006BC34* arg0)
+{
+    s16 temp_a2;
+    s16 temp_a3;
+    s16 temp_v0;
+    s16 temp_v1;
+    u16 temp_a1;
+    u16 var_v0;
+
+    temp_v1 = arg0->field_EC;
+    if (temp_v1 < 0)
+    {
+        var_v0 = arg0->field_E0;
+    }
+    else
+    {
+        temp_a2 = arg0->field_D6;
+        if (temp_a2 < temp_v1)
+        {
+            var_v0 = arg0->field_E6;
+        }
+        else
+        {
+            temp_a3 = arg0->field_E0;
+            temp_v0 = arg0->field_E6;
+            temp_a1 = arg0->field_E0;
+            
+            if (temp_a3 == temp_v0)
+            {
+                var_v0 = temp_a1;
+            }
+            else
+            {
+                var_v0 = temp_a1 + ((s32)((temp_v0 - temp_a3) * temp_v1) / temp_a2);
+            }
+        }
+    }
+    
+    return arg0->field_30 - (s16)var_v0;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006BCC4); // 0x8006BCC4
 
@@ -649,7 +820,17 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80070184); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80070208); // 0x80070208
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8007029C); // 0x8007029C
+void func_8007029C(VECTOR3* arg0, s32 arg1, s16 angle) // 0x8007029C
+{
+    s8 vars[28];
+    VECTOR3 vec;
+
+    vec.vx = FP_MULTIPLY(arg1, shRsin(angle), Q12_SHIFT);
+    vec.vy = 0;
+    vec.vz = FP_MULTIPLY(arg1, shRcos(angle), Q12_SHIFT);
+    
+    func_8006DB3C(&vars, arg0 + 2, &vec, arg0);
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80070320); // 0x80070320
 

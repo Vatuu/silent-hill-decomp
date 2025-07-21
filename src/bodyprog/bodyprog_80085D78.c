@@ -1445,7 +1445,7 @@ void func_800881B8(s32 x0, s16 y0, s32 x1, s16 y1, s16 arg4, s16 arg5, s16 arg6,
     GsOUT_PACKET_P = (PACKET*)poly;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80088370);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80088370); // 0x80088370
 
 s32 Chara_Load(s32 arg0, s8 arg1, s32 arg2, s8 arg3, s32 arg4, s32 arg5) // 0x80088C7C
 {
@@ -1468,7 +1468,7 @@ void func_80088D34(s32 idx) // 0x80088D34
     func_800445A4(D_800A992C[idx].field_8, D_800A992C[idx].field_14);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", Chara_Spawn);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", Chara_Spawn); // 0x80088D78
 
 void func_80088F94(s_SubCharacter* chara) // 0x80088F94
 {
@@ -1490,9 +1490,9 @@ void func_80088F94(s_SubCharacter* chara) // 0x80088F94
     chara->model_0.charaId_0 = Chara_None;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80088FF4);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80088FF4); // 0x80088FF4
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80089034);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80089034); // 0x80089034
 
 void func_80089090(s32 arg0) // 0x80089090
 {
@@ -1674,7 +1674,7 @@ void func_80089500() // 0x80089500
     func_800892DC(9, 0xA0);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80089524);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80089524); // 0x80089524
 
 s32 func_800895E4(s_SysWork_2514* arg0, s_8002AC04* arg1, u8 arg2)
 {
@@ -1690,7 +1690,7 @@ s32 func_800895E4(s_SysWork_2514* arg0, s_8002AC04* arg1, u8 arg2)
     return D_800AFD08[arg1->field_4](arg0, 0, arg1, &sp10);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80089644);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80089644); // 0x80089644
 
 // TODO: Rodata migration.
 #ifdef NON_MATCHING
@@ -1772,32 +1772,83 @@ void func_80089840(s_func_80089840* arg0) // 0x80089840
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008989C);
+void func_8008989C(s_SysWork_2514* arg0, u16 arg1, s32 (*arg2)(u16, s32)) // 0x8008989C
+{
+    s_func_8008989C* temp_s1;
+    s_func_8008989C* temp_s2;
+    s_func_8008989C* var_s0;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008992C);
+    if (arg0 != NULL)
+    {
+        var_s0 = arg0->field_18;
+        temp_s2 = (s_func_8008989C*)&arg0->field_18;
+        while (var_s0 != temp_s2)
+        {
+            temp_s1 = var_s0->field_0;
+            if (arg2(var_s0->field_1E, arg1) != 0)
+            {
+                func_8009EC1C(arg0, var_s0);
+            }
+            var_s0 = temp_s1;
+        }
+    }
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800899BC);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008992C); // 0x8008992C
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80089A30);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800899BC); // 0x800899BC
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80089BB8);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80089A30); // 0x80089A30
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80089D0C);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80089BB8); // 0x80089BB8
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80089DF0);
+s32 func_80089D0C(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s_8002AC04* arg2, u8* arg3) // 0x80089D0C
+{
+    if (arg0 == NULL || arg2 == NULL)
+    {
+        return 0;
+    }
+    
+    if (arg2->field_4 == 4)
+    {
+        if (arg1 != NULL)
+        {
+            arg1->field_14_24 = arg2->field_5 & 0x7F;
+            arg1->field_1E    = arg2->field_6;
+            arg1->field_10    = arg2->field_0;
+            arg1->field_14_31 = 1;
+            arg1->field_18    = arg1->field_14_16 << 24;
+            return 0;
+        }
+        else
+        {
+            arg1 = func_8009ECCC(arg0, arg2->field_C);
+            if (arg1 != NULL)
+            {
+                arg1->field_10    = arg2;
+                arg1->field_14_16 = *arg3;
+                arg1->field_C     = arg2->field_8;
+                return 1;
+            }
+        }
+    }
+    return 0;
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008A058);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80089DF0); // 0x80089DF0
+
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008A058); // 0x8008A058
 
 s32 func_8008A0CC()
 {
     return 0;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008A0D4);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008A0D4); // 0x8008A0D4
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008A0E4);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008A0E4); // 0x8008A0E4
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008A270);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008A270); // 0x8008A270
 
 // TODO: RODATA migration
 #ifdef NON_MATCHING
@@ -1901,7 +1952,69 @@ void func_8008B438(s32 arg0, s32 arg1, s32 arg2) // 0x8008B438
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008B474); // 0x8008B474
 
+// TODO: RODATA migration.
+#ifdef NON_MATCHING
+void func_8008B664(s32 arg0, u32 caseVar)
+{
+    s32 var;
+
+    var = 0;
+    switch (caseVar)
+    {
+        case 0:
+        case 6:
+        case 10:
+        case 16:
+        case 20:
+        case 26:
+            var = 0x511;
+            break;
+        
+        case 1:
+        case 4:
+        case 7:
+        case 11:
+        case 14:
+        case 17:
+        case 21:
+        case 24:
+        case 27:
+            var = 0x510;
+            break;
+        
+        case 32:
+        case 33:
+        case 34:
+            var = 0x506;
+            break;
+        
+        case 2:
+        case 5:
+        case 15:
+        case 25:
+            if (g_SysWork.field_275C > 0x100000)
+            {
+                func_8008B3E4(0x80);
+                break;
+            }
+        
+        case 8:
+        case 9:
+            var = 0x524;
+            break;
+        case 35:
+        default:
+            break;
+    }
+    
+    if (var != 0)
+    {
+        func_8005DC1C(var, arg0, 0xC0, 0);
+    }
+}
+#else
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008B664); // 0x8008B664
+#endif
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008B714); // 0x8008B714
 
@@ -1938,7 +2051,7 @@ void DmsEntry_FixOffsets(s_DmsEntry* entry, s_DmsHeader* header) // 0x8008CA44
     entry->svectorPtr_8 = (u32)entry->svectorPtr_8 + (u32)header;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008CA60);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008CA60); // 0x8008CA60
 
 void Dms_CharacterGetPosRot(VECTOR3* pos, SVECTOR* rot, char* charName, s32 time, s_DmsHeader* header) // 0x8008CA74
 {
@@ -2052,7 +2165,7 @@ s32 Dms_CameraGetTargetPos(VECTOR3* posTarget, VECTOR3* lookAtTarget, u16* arg2,
     return camProjValue;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008CF54);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008CF54); // 0x8008CF54
 
 s32 Dms_CameraKeyframeInterpolate(s_DmsKeyframeCamera* result, s_DmsKeyframeCamera* frame0, s_DmsKeyframeCamera* frame1, s32 alpha) // 0x8008CFEC
 {
@@ -2133,7 +2246,7 @@ u32 func_8008D2C4(s32 time, s_DmsHeader* header)
     return 0;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008D330);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008D330); // 0x8008D330
 
 s32 Math_LerpFixed12(s16 from, s16 to, s32 alpha) // 0x8008D3D4
 {

@@ -90,7 +90,54 @@ void Gfx_Results_ItemsRotate(SVECTOR* arg0, GsCOORDINATE2* arg1) // 0x8004BCDC
 }
 
 /** Used for displaying model items. */
-INCLUDE_ASM("asm/bodyprog/nonmatchings/item_screens", func_8004BD74); // 0x8004BD74
+void func_8004BD74(s32 arg0, GsDOBJ2* arg1, s32 arg2)  // 0x8004BD74
+{
+    MATRIX sp10;
+    MATRIX sp30;
+    MATRIX sp50;
+    s32 j;
+    s32 i;
+
+    func_80049B6C(arg1->coord2, &sp50, &sp10);
+
+    sp30 = sp10;
+    
+    for (i = 0; i < 3; i++)
+    {
+        for (j = 0; j < 3; j++)
+        {
+            sp10.m[i][j] = FP_TO(sp10.m[i][j], Q12_SHIFT) / D_800C3BE8[arg0].field_0.vx;
+        }
+    }
+    
+    if (arg2 != 3) 
+    {
+        if (arg0 < 7) 
+        {
+            for (i = 0; i < 3; i++)
+            {
+                for (j = 0; j < 3; j++)
+                {
+                    sp10.m[i][j] -= FP_MULTIPLY(sp10.m[i][j], shRsin((D_800C3E48[arg0].coord.t[2] + 0x400) >> 2), Q12_SHIFT);
+                }
+            }
+        }
+    }
+    
+    GsSetLightMatrix(&sp10);
+    GsSetLsMatrix(&sp30);
+    
+    if (arg2 == 2) 
+    {
+        GsClearOt(0, 0, &D_800A8F9C[g_ObjectTableIdx]);
+        GsSortOt(&D_800A8F9C[g_ObjectTableIdx], &g_ObjectTable0[g_ObjectTableIdx]);
+        GsSortObject4J(arg1, &D_800A8F9C[g_ObjectTableIdx], 1, (u32*)PSX_SCRATCH);
+    } 
+    else 
+    {
+        GsSortObject4J(arg1, &g_ObjectTable0[g_ObjectTableIdx], 1, (u32*)PSX_SCRATCH);
+    }
+}
 
 void func_8004BFE8() // 0x8004BFE8
 {

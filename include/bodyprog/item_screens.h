@@ -26,7 +26,7 @@ typedef enum _InventorySelectionId
 
 // ========
 // STRUCTS
-// =========
+// ========
 
 typedef struct _ResultStringOffset
 {
