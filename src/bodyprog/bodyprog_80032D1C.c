@@ -18,12 +18,10 @@
 
 void GameState_Unk0_Update() // 0x80032D1C
 {
-    s32 gameStateStep0;
     s32 gameState;
     s32 unkGameStateVar;
 
-    gameStateStep0 = g_GameWork.gameStateStep_598[0];
-    switch (gameStateStep0)
+    switch (g_GameWork.gameStateStep_598[0])
     {
         case 0:
             g_GameWork.background2dColor_R_58C = 0;
@@ -60,7 +58,7 @@ void GameState_Unk0_Update() // 0x80032D1C
             Fs_QueueStartReadTim(FILE_1ST_FONT16_TIM, FS_BUFFER_1, &D_800A8FF4);
             Fs_QueueStartReadTim(FILE_1ST_KONAMI_TIM, FS_BUFFER_1, &D_800A8FFC);
 
-            g_Gfx_ScreenFade = gameStateStep0;
+            g_Gfx_ScreenFade = 2;
             g_GameWork.gameStateStep_598[0]++;
             break;
 
