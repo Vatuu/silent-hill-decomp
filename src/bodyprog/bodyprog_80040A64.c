@@ -134,6 +134,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80041B1C); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80041BA0); // 0x80041BA0
 
+// Crucial for loading maps.
 void func_80041C24(s_80041CEC* arg0, s32 arg1, s32 arg2) // 0x80041C24
 {
     bzero(&D_800C1020, 1420);
@@ -149,14 +150,14 @@ void func_80041C24(s_80041CEC* arg0, s32 arg1, s32 arg2) // 0x80041C24
     func_80041E98();
 }
 
-// TODO: Likey not `s_Skeleton` after all. Expected struct fields don't match.
-void func_80041CB4(s_Skeleton* skel, s_80041CEC* arg1) // 0x80041CB4
+// This function is related to map loading.
+void func_80041CB4(s_func_80041CB4* arg0, s_80041CEC* arg1) // 0x80041CB4
 {
-    *(s32*)&skel->boneCount_0 = (s32)arg1; // TODO: `boneCount` isn't a ptr.
+    arg0->field_0 = arg1;
     func_80041CEC(arg1);
 
-    skel->bones_8 = NULL;
-    skel->field_4 = NO_VALUE;
+    arg0->field_8 = NULL;
+    arg0->field_4 = NO_VALUE;
 }
 
 void func_80041CEC(s_80041CEC* arg0) // 0x80041CEC
@@ -180,6 +181,7 @@ void func_80041D10(s_Skeleton* skels, s32 size) // 0x80041D10
     }
 }
 
+// Crucial for map loading.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80041D48); // 0x80041D48
 
 void func_80041E98() // 0x80041E98

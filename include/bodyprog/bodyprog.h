@@ -79,6 +79,17 @@ typedef struct
 } s_8002AC04;
 STATIC_ASSERT_SIZEOF(s_8002AC04, 16);
 
+// Likely not skeleton since filed_8 must be `s8`.
+typedef struct
+{
+    s8 field_0;
+    s8 field_1;
+    s8 field_2;
+    s8 field_3;
+    s8 unk_4[4];
+    s8 field_8;
+} s_80041CEC;
+
 typedef struct 
 {
     s32  field_0;
@@ -104,6 +115,13 @@ typedef struct
     s8  unk_10[4];
     s32 field_14;
 } s_func_8003FEC0;
+
+typedef struct
+{
+    s_80041CEC* field_0;
+    s32         field_4;
+    s32         field_8;
+} s_func_80041CB4;
 
 typedef struct
 {
@@ -321,17 +339,6 @@ typedef struct
     s16 field_0; // Flags?
 } s_8008D850;
 
-// Likely not skeleton since filed_8 must be `s8`.
-typedef struct
-{
-    s8 field_0;
-    s8 field_1;
-    s8 field_2;
-    s8 field_3;
-    s8 unk_4[4];
-    s8 field_8;
-} s_80041CEC;
-
 // Maybe level stream data?
 typedef struct
 {
@@ -511,7 +518,11 @@ typedef struct
 
 typedef struct
 {
-    s32 unk_0[2];
+    s16 field_0;
+    s16 field_2;
+    s16 unk_4;
+    u8  field_6;
+    u8  unk_7;
     s32 field_8;
     s_800BCE18_0_0_C* field_C;
 } s_sub_800BCE18_0;
@@ -1634,6 +1645,8 @@ extern u8 D_800C3E40;
 
 extern GsCOORDINATE2 D_800C3E48[];
 
+extern u8 D_800C4169;
+
 extern u8 D_800C416A;
 
 extern s_800C4168 D_800C4168;
@@ -1829,7 +1842,7 @@ void Gfx_MainMenu_MainTextDraw();
 
 s32 func_8003BD2C();
 
-void func_8003C1AC(u32);
+void func_8003C1AC(s_800BCE18_0_CC* arg0); // 0x8003C1AC
 
 /** Unknown bodyprog func. Called by `Fs_QueueDoThingWhenEmpty`. */
 s32 func_8003C850();
@@ -1910,8 +1923,7 @@ s32 func_80041ADC(s32 queueIdx);
 
 void func_80041C24(s_80041CEC* arg0, s32 arg1, s32 arg2);
 
-/** `arg0` might be `s_Skeleton`, `arg1` might be `s_Bone`. */
-void func_80041CB4(s_Skeleton* skel, s_80041CEC* arg1);
+void func_80041CB4(s_func_80041CB4* arg0, s_80041CEC* arg1);
 
 void func_80041CEC(s_80041CEC*);
 
@@ -2155,8 +2167,6 @@ void func_80055814(s32 arg0);
 void func_80054A04(u8 arg0);
 
 s32 func_80054AD8(u8);
-
-void func_80054CAC(u8, u8);
 
 void func_8005660C(s_func_8005660C_0* arg0, s_func_8005660C_1* arg1, s32 arg2);
 

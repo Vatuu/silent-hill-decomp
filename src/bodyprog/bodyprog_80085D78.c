@@ -4,6 +4,7 @@
 #include <strings.h>
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/item_screens.h"
 #include "bodyprog/math.h"
 #include "main/fsqueue.h"
 
@@ -409,7 +410,7 @@ void func_80086470(u32 switchVar, s32 itemId, s32 itemCount, s32 arg3) // 0x8008
             
             if (switchVar == 3 || switchVar == 6)
             {
-                func_80054CAC(itemId, itemCount);
+                func_80054CAC(itemId, itemCount & 0xFF);
             }
             break;
 

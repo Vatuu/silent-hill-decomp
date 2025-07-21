@@ -580,7 +580,7 @@ typedef struct _ShSavegame
     s32               field_238;                // Another player health store?
     s16               pickedUpItemCount_23C;
     s8                field_23E;
-    s8                field_23F;
+    u8                field_23F;
     q19_12            playerHealth_240;         /** Default: 100 */
     q19_12            playerPositionX_244;
     q3_12             playerRotationY_248;      /** Range [0, 0.999755859375], positive Z: 0, clockwise rotation. It can be multiplied by 360 to get degrees. */

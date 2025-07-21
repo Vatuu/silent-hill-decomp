@@ -2933,7 +2933,13 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80032D1C", func_80037A4C); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80032D1C", func_80037C5C); // 0x80037C5C
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80032D1C", func_80037DC4); // 0x80037DC4
+void func_80037DC4(s_SubCharacter* chara) // 0x80037DC4
+{
+    if ((g_SavegamePtr->gameDifficulty_260 <= 0) || func_80080514() >= 1228)
+    {
+        g_SavegamePtr->field_B0[g_SavegamePtr->mapOverlayId_A4] &= ~(1 << chara->field_40);
+    }
+}
 
 void func_80037E40(s_SubCharacter* chara) // 0x80037E40
 {
@@ -2991,9 +2997,54 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80032D1C", func_800382EC); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80032D1C", func_80038354); // 0x80038354
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80032D1C", func_80038A6C); // 0x80038A6C
+s32 func_80038A6C(VECTOR3* arg0, VECTOR3* arg1, s32 radius) // 0x80038A6C
+{
+    s32 dx;
+    s32 dz;
+    s32 r2;
+    s32 sum;
+    
+    dx = arg0->vx - arg1->vx;
+    if (radius < dx) 
+    {
+        return 1;
+    }
+        
+    if (radius < -dx) 
+    {
+        return 1;
+    }
+    
+    dz = arg0->vz - arg1->vz;
+    if (radius < dz) 
+    {
+        return 1;
+    }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80032D1C", func_80038B44); // 0x80038B44
+    if (radius < -dz) 
+    {
+        return 1;
+    }
+
+    sum = FP_MULTIPLY((s64)dx, dx, Q12_SHIFT) + FP_MULTIPLY((s64)dz, dz, Q12_SHIFT);
+    r2  = FP_MULTIPLY((s64)radius, radius, Q12_SHIFT);
+
+    return sum > r2;
+}
+
+// Computes 2D distance on XZ plane between input position and camera position.
+s32 func_80038B44(VECTOR3* pos) // 0x80038B44
+{
+    VECTOR3 camPos;
+    s32 x;
+    s32 y;
+
+    vwGetViewPosition(&camPos);
+
+    x = (camPos.vx - pos->vx) >> 6;
+    y = (camPos.vz - pos->vz) >> 6;
+    return FP_MULTIPLY((s64)x, x, Q12_SHIFT) + FP_MULTIPLY((s64)y, y, Q12_SHIFT);
+}
 
 void GameState_InGame_Update() // 0x80038BD4
 {

@@ -509,7 +509,7 @@ void GameState_ItemScreens_Update() // 0x8004C9B0
 
             if (func_8004C45C() == 1)
             {
-                func_80054CAC(163, 1);
+                func_80054CAC(InventoryItemId_HyperBlaster, 1);
             }
 
             Gfx_ClearRectInterlaced(0, 0x20, 0x140, 0x1C0, 0u, 0u, 0u);
@@ -3098,6 +3098,95 @@ void func_80054A04(u8 itemId) // 0x80054A04
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/item_screens", func_80054AD8); // 0x80054AD8
 
+// TODO: RODATA migration.
+#ifdef NON_MATCHING
+void func_80054CAC(u8 itemId, s32 itemCount) // 0x80054CAC
+{
+    switch (itemId)
+    {
+        case InventoryItemId_RockDrill:
+        case InventoryItemId_Chainsaw:
+        case InventoryItemId_Katana:
+        case InventoryItemId_HyperBlaster:
+        case InventoryItemId_GasolineTank:
+            g_SavegamePtr->hyperBlasterFlags_25C_3++; // pickedUpSpecialItemCount ?
+            break;
+
+        case InventoryItemId_ChannelingStone:
+            if (!(g_SavegamePtr->field_23F & IntentoryItemFlag_ChannelingStone))
+            {
+                g_SavegamePtr->hyperBlasterFlags_25C_3++;
+                g_SavegamePtr->field_23F |= IntentoryItemFlag_ChannelingStone; // specialItemFlags?
+            }
+            break;
+
+        case InventoryItemId_PlateOfTurtle:
+            if (!(g_SavegamePtr->field_23F & IntentoryItemFlag_PlateOfTurtle))
+            {
+                g_SavegamePtr->pickedUpItemCount_23C++;
+                g_SavegamePtr->field_23F |= IntentoryItemFlag_PlateOfTurtle;
+            }
+            break;
+
+        case InventoryItemId_PlateOfHatter:
+            if (!(g_SavegamePtr->field_23F & IntentoryItemFlag_PlateOfHatter))
+            {
+                g_SavegamePtr->pickedUpItemCount_23C++;
+                g_SavegamePtr->field_23F |= IntentoryItemFlag_PlateOfHatter;
+            }
+            break;
+
+        case InventoryItemId_PlateOfCat:
+            if (!(g_SavegamePtr->field_23F & IntentoryItemFlag_PlateOfCat))
+            {
+                g_SavegamePtr->pickedUpItemCount_23C++;
+                g_SavegamePtr->field_23F |= IntentoryItemFlag_PlateOfCat;
+            }
+            break;
+
+        case InventoryItemId_PlateOfQueen:
+            if (!(g_SavegamePtr->field_23F & IntentoryItemFlag_PlateOfQueen))
+            {
+                g_SavegamePtr->pickedUpItemCount_23C++;
+                g_SavegamePtr->field_23F |= IntentoryItemFlag_PlateOfQueen;
+            }
+            break;
+
+        case InventoryItemId_Lighter:
+            if (!(g_SavegamePtr->field_23F & IntentoryItemFlag_Lighter))
+            {
+                g_SavegamePtr->pickedUpItemCount_23C++;
+                g_SavegamePtr->field_23F |= IntentoryItemFlag_Lighter;
+            }
+            break;
+
+        case InventoryItemId_VideoTape:
+            if (!(g_SavegamePtr->field_23F & IntentoryItemFlag_VideoTape))
+            {
+                g_SavegamePtr->pickedUpItemCount_23C++;
+                g_SavegamePtr->field_23F |= IntentoryItemFlag_VideoTape;
+            }
+            break;
+
+        case InventoryItemId_Camera:
+            if (!(g_SavegamePtr->field_23F & IntentoryItemFlag_Camera))
+            {
+                g_SavegamePtr->pickedUpItemCount_23C++;
+                g_SavegamePtr->field_23F |= IntentoryItemFlag_Camera;
+            }
+            break;
+
+        default:
+            g_SavegamePtr->pickedUpItemCount_23C++;
+            break;
+    }
+
+    g_SavegamePtr->items_0[g_SavegamePtr->inventoryItemSpaces_AB].id_0    = itemId;
+    g_SavegamePtr->items_0[g_SavegamePtr->inventoryItemSpaces_AB].count_1 = itemCount;
+    g_SavegamePtr->inventoryItemSpaces_AB                                 = func_8004F190(g_SavegamePtr);
+}
+#else
 INCLUDE_ASM("asm/bodyprog/nonmatchings/item_screens", func_80054CAC); // 0x80054CAC
+#endif
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/item_screens", func_80054FC0); // 0x80054FC0

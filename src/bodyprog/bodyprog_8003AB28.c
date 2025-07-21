@@ -747,7 +747,7 @@ s32 func_8003BF60(s32 arg0, s32 arg1)
 }
 
 /** Important for map loading.
- * Removing it causes the game to get in the loading screen infinitely.
+ * Removing it causes the game to get stuck at the loading screen.
  */
 void func_8003C048() // 0x8003C048
 {
@@ -796,7 +796,17 @@ void func_8003C110() // 0x8003C110
     } 
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8003AB28", func_8003C1AC); // 0x8003C1AC
+void func_8003C1AC(s_800BCE18_0_CC* arg0) // 0x8003C1AC
+{
+    s_FsImageDesc sp10 = {0};
+
+    //memset(&sp10, 0, 8);
+    arg0->field_0 = 0;
+    arg0->field_1 = 0;
+    arg0->field_4 = 0;
+    arg0->field_8 = (s32) (Fs_GetFileSize(0x58E) + 0x800FEE00);
+    arg0->field_C = sp10;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8003AB28", func_8003C220); // 0x8003C220
 
@@ -805,7 +815,20 @@ void func_8003C2EC()
     func_80041FF0();
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8003AB28", func_8003C30C); // 0x8003C30C
+void func_8003C30C() 
+{
+    u8 temp_v1;
+
+    temp_v1 = D_800BCE18.field_0[0].field_0->field_6;
+    
+    if ((temp_v1 & 4) && (temp_v1 & 3)) 
+    {
+        func_800420C0();
+        return;
+    }
+    func_80041FF0();
+    func_8004201C();
+}
 
 void func_8003C368() // 0x8003C368
 {
@@ -818,7 +841,120 @@ void func_8003C3A0() // 0x8003C3A0
     D_800BCE18.field_0[0].field_4 = 0;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8003AB28", func_8003C3AC); // 0x8003C3AC
+void func_8003C3AC() 
+{
+    VECTOR3 sp10;
+    VECTOR3 sp20;
+    SVECTOR sp30;
+    s32 temp_a1;
+    s32 temp_a2;
+    s32 temp_s0;
+    s32 temp_s0_2;
+    s32 temp_v0_3;
+    s32 temp_v1;
+    s32 temp_v1_4;
+    s32 var_a0;
+    s32 var_a1;
+    s32 var_s1;
+    u8 temp_v1_3;
+    u8 temp_v1_6;
+    s_SubCharacter* chara = &g_SysWork.player_4C.chara_0;
+
+    if ((u8)D_800BCE18.field_0[0].field_4 != 0) 
+    {
+        sp10 = D_800BCE18.field_0[0].field_8;
+    } 
+    else 
+    {
+        sp10 = chara->position_18;
+    }
+    
+    temp_s0 = (chara->moveSpeed_38 * 0x5800) / 16015;
+    temp_s0 = CLAMP(temp_s0, 0, 0x5800);
+    
+    sp10.vx += FP_MULTIPLY((s64)temp_s0, shRsin(chara->headingAngle_3C), Q12_SHIFT);
+    sp10.vz += FP_MULTIPLY((s64)temp_s0, shRcos(chara->headingAngle_3C), Q12_SHIFT);
+    
+    if (D_800BCE18.field_0[0].field_0 == &D_8002500C) 
+    {
+        if (chara->position_18.vx >= -0x28000)
+        {
+            if (chara->position_18.vx <= 0x28000)
+            {
+                if (chara->position_18.vz > 0xC7FFF) 
+                {
+                    if (chara->position_18.vz <= 0xF0000) 
+                    {
+                        sp10.vz = 0xC8000;
+                    }
+                }
+            }
+        }
+    }
+    
+    if (D_800C4169 != 0) 
+    {
+        vwGetViewPosition(&sp20);
+        vwGetViewAngle(&sp30);
+        
+        temp_v1_3 = D_800BCE18.field_0[0].field_0->field_6;
+        if (!(temp_v1_3 & 4) || !(temp_v1_3 & 3))
+        {
+            var_s1 = FP_MULTIPLY(shRcos(sp30.vx), 0x9000, Q12_SHIFT);
+        }
+        else
+        {
+            var_s1 = 0;
+        }
+        
+        temp_s0_2 = FP_MULTIPLY(var_s1, shRsin(sp30.vy), Q12_SHIFT);
+        temp_s0_2 = CLAMP(temp_s0_2, -0x6000, 0x6000);
+        
+        temp_v1_4 = FP_MULTIPLY(var_s1, shRcos(sp30.vy), Q12_SHIFT);
+        temp_v1_4 = CLAMP(temp_v1_4, -0x6000, 0x6000);
+
+        sp20.vx  += temp_s0_2;
+        sp20.vz  += temp_v1_4;
+        
+        if (Vc_VectorMagnitudeCalc(sp20.vx - chara->position_18.vx, 0, sp20.vz - chara->position_18.vz) > 0x10000)
+        {
+            var_s1  = 0xE000;
+            sp20.vx = chara->position_18.vx + FP_MULTIPLY(shRsin(sp30.vy), var_s1, Q12_SHIFT);
+            sp20.vz = chara->position_18.vz + FP_MULTIPLY(shRcos(sp30.vy), var_s1, Q12_SHIFT);
+        }
+    } 
+    else 
+    {
+        sp20     = chara->position_18;
+        sp20.vx += FP_FROM(FP_TO(shRsin(chara->rotation_24.vy), Q12_SHIFT), Q12_SHIFT);
+        sp20.vz += FP_FROM(FP_TO(shRcos(chara->rotation_24.vy), Q12_SHIFT), Q12_SHIFT);
+    }
+    
+    temp_v1_6 = D_800BCE18.field_0[0].field_0->field_6;
+    
+    if ((temp_v1_6 & 4) && (temp_v1_6 & 3)) 
+    {
+        var_a1 = chara->position_18.vx / 10240;
+        if (chara->position_18.vx < 0) 
+        {
+            var_a1 -= 1;
+        }
+        var_a0 = chara->position_18.vz / 10240;
+        temp_a1 = var_a1 * 0x2800;
+        if (chara->position_18.vz < 0) 
+        {
+            var_a0 -= 1;
+        }
+        temp_a2 = var_a0 * 0x2800;
+        
+        sp10.vx = CLAMP(sp10.vx, temp_a1 + 1, temp_a1 + 0x27FF);
+        sp10.vz = CLAMP(sp10.vz, temp_a2 + 1, temp_a2 + 0x27FF);
+        sp20.vx = CLAMP(sp20.vx, temp_a1 + 1, temp_a1 + 0x27FF);
+        sp20.vz = CLAMP(sp20.vz, temp_a2 + 1, temp_a2 + 0x27FF);
+
+    }
+    func_80042C3C(sp10.vx, sp10.vz, sp20.vx, sp20.vz);
+}
 
 s32 func_8003C850() // 0x8003C850
 {
@@ -850,7 +986,77 @@ void func_8003C8F8(s_func_8003C8F8* arg0, s8* arg1) // 0x8003C8F8
     arg0->field_24 = 0;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8003AB28", func_8003C92C); // 0x8003C92C
+void func_8003C92C(s_800BCE18_2BEC_0* arg0, VECTOR3* arg1, SVECTOR3* arg2) // 0x8003C92C
+{
+    s32 vy;
+    s32 coord1;
+    s32 vx;
+    s32 vz;
+    s32 coord0;
+    s32 coord2;
+    s32 i;
+    s32 ret;
+    s_800BCE18_2BEC* ptr;
+
+    if (D_800BCE18.field_2BE8 < 0x1D) 
+    {
+        if (arg0->field_10[0].field_9 == 0) 
+        {
+            func_8003BED0();
+            ret = func_8004287C(arg0, arg0->field_10, g_SysWork.player_4C.chara_0.position_18.vx, g_SysWork.player_4C.chara_0.position_18.vz);
+            if (ret == 0)
+            {
+                if (func_80056CB4(arg0, &D_800BCE18.field_1BE4, arg0->field_10) == 0)
+                {
+                    return;
+                }
+                else
+                {
+                    ret = 1;
+                }
+            }
+            arg0->field_10[0].field_9 = ret;
+        } 
+
+        coord0 = arg1->vx >> 4;
+        coord1 = arg1->vy >> 4;
+        coord2 = arg1->vz >> 4;
+        vx     = arg2->vx >> 2;
+        vz     = arg2->vz >> 2;
+        vy     = arg2->vy;
+
+        for (i = 0; i < D_800BCE18.field_2BE8; i++)
+        {
+            ptr = &D_800BCE18.field_2BEC[i];
+    
+            if (arg0 == ptr->field_0 && coord0 == ptr->gsCoordinate0_4 && 
+                coord2 == ptr->gsCoordinate2_8 && coord1 == ptr->gsCoordinate1_4 && 
+                vx == ptr->vx_C && vy == ptr->vy_C && vz == ptr->vz_C)
+            {
+                return;
+            }
+        }
+            
+        ptr = &D_800BCE18.field_2BEC[D_800BCE18.field_2BE8];
+                
+        ptr->vx_C = vx;
+        ptr->vy_C = vy;
+        
+        if (ptr->gsCoordinate2_8) 
+        {
+        }
+        
+        ptr->vz_C            = vz;
+		
+        ptr->field_0         = arg0;
+
+        ptr->gsCoordinate0_4 = coord0;
+        ptr->gsCoordinate1_4 = coord1;
+        ptr->gsCoordinate2_8 = coord2;
+                
+        D_800BCE18.field_2BE8++;
+    }
+}
 
 void func_8003CB3C(s_800BCE18* arg0) // 0x8003CB3C
 {
@@ -1302,7 +1508,14 @@ void func_8003D460() {}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8003AB28", func_8003D468); // 0x8003D468
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8003AB28", func_8003D550); // 0x8003D550
+void func_8003D550(s32 arg0, s32 arg1)  // 0x8003D550
+{
+    s_800BCE18_0_CC* ptr;
+
+    ptr = D_800BCE18.field_0[0].field_18[arg0];
+    func_80056464(ptr->field_8, g_Chara_FileInfo[arg0].textureFileIdx, &ptr->field_C, arg1);
+    func_80056954(ptr->field_8);
+}
 
 // This was matched in decomp.me, but `if (flags & (1 << i))` causes missmatch
 // when inserted.

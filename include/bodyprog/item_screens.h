@@ -11,6 +11,18 @@
 // ENUMS
 // ======
 
+typedef enum _IntentoryItemFlags
+{
+    IntentoryItemFlag_PlateOfTurtle   = 1 << 0,
+    IntentoryItemFlag_PlateOfHatter   = 1 << 1,
+    IntentoryItemFlag_PlateOfCat      = 1 << 2,
+    IntentoryItemFlag_PlateOfQueen    = 1 << 3,
+    IntentoryItemFlag_Lighter         = 1 << 4,
+    IntentoryItemFlag_Camera          = 1 << 5,
+    IntentoryItemFlag_VideoTape       = 1 << 6,
+    IntentoryItemFlag_ChannelingStone = 1 << 7
+} s_IntentoryItemFlags;
+
 typedef enum _InventorySelectionId
 {
     InventorySelectionId_Item            = 0,
@@ -224,5 +236,7 @@ void Inventory_ExitAnimFixes(); // 0x80054634
 void func_800548D8(s32 arg0); // 0x800548D8
 
 void Gfx_Items_SetAmbientLighting(); // 0x80054928
+
+void func_80054CAC(u8 itemId, s32 itemCount); // 0x80054CAC
 
 #endif
