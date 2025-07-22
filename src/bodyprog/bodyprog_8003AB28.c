@@ -813,7 +813,38 @@ void func_8003C1AC(s_800BCE18_0_CC* arg0) // 0x8003C1AC
     arg0->field_C = sp10;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8003AB28", func_8003C220); // 0x8003C220
+void func_8003C220(s_sub_800BCE18_0** arg0, s32 arg1, s32 arg2) 
+{
+    s32 var_a2;
+    s_sub_800BCE18_0* ptr;
+    u8 temp_v1;
+
+    D_800BCE18.field_0[0].field_0 = *arg0;
+    temp_v1 = (*arg0)->field_6;
+    
+    if (temp_v1 & 1) 
+    {
+        var_a2 = 1;
+    } 
+    else if (temp_v1 & 2) 
+    {
+        var_a2 = 2;
+    }
+    else
+    {
+        var_a2 = 4;
+    }
+    
+    ptr = *arg0;
+    func_800421D8(&ptr->field_2, ptr->field_0, var_a2, ((ptr->field_6 >> 2) ^ 1) & 1, 0, 0);
+
+    if (*arg0 == &D_8002500C) 
+    {
+        func_80041ED0(0x467, -1, 8);
+    }
+    
+    func_80042C3C(arg1, arg2, arg1, arg2);
+}
 
 void func_8003C2EC() // 0x8003C2EC
 {
