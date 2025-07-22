@@ -1877,7 +1877,7 @@ void func_8003D550(s32 arg0, s32 arg1);
 
 void func_8003D468(s32, s32); // Called by some chara init funcs, similar to `func_8003DD80`?
 
-void func_8003D6A4(u8* idx);
+void func_8003D6A4(s_800BCE18_0_CC* arg0);
 
 /** Return type assumed. */
 void func_8003D160();

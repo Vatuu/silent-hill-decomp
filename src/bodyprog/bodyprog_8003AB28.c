@@ -1538,7 +1538,43 @@ s32 func_8003D444(s32 idx) // 0x8003D444
 
 void func_8003D460() {}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8003AB28", func_8003D468); // 0x8003D468
+void func_8003D468(s32 arg0, s32 arg1) // 0x8003D468
+{
+    s16              data[256];
+    RECT             rect;
+    s32              x;
+    s32              i;
+    s32              y;
+    s_800BCE18_0_CC* temp_s0;
+
+    temp_s0 = D_800BCE18.field_0[0].field_18[arg0];
+    func_80056244(temp_s0->field_8);
+
+    rect.x = temp_s0->field_C.clutX;
+    rect.y = temp_s0->field_C.clutY;
+    rect.w = 16;
+    rect.h = 16;
+
+    DrawSync(0);
+    StoreImage(&rect, &data);
+
+    for (y = 0, i = 0; y < 16; y++)
+    {
+        for (x = 0; x < 16; x++, i++)
+        {
+            if (arg1 == 0)
+            {
+                data[i] &= 0x7fff;
+            }
+            else
+            {
+                data[i] |= 0x8000;
+            }
+        }
+    }
+
+    LoadImage(&rect, &data);
+}
 
 void func_8003D550(s32 arg0, s32 arg1) // 0x8003D550
 {
@@ -1549,9 +1585,6 @@ void func_8003D550(s32 arg0, s32 arg1) // 0x8003D550
     func_80056954(ptr->field_8);
 }
 
-// This was matched in decomp.me, but `if (flags & (1 << i))` causes missmatch
-// when inserted.
-#ifdef NON_MATCHING
 void func_8003D5B4(s8 flags) // 0x8003D5B4
 {
     u8 fileIdx;
@@ -1562,9 +1595,9 @@ void func_8003D5B4(s8 flags) // 0x8003D5B4
     for (i = 0; i < 4; i++)
     {
         ptr = &D_800BCE18.field_0[i].field_CC;
-        if (flags & (1 << i))
+        if ((flags >> i) & 1)
         {
-            func_8003D6A4((u8*)ptr);
+            func_8003D6A4(ptr);
         }
     }
 
@@ -1587,19 +1620,13 @@ void func_8003D5B4(s8 flags) // 0x8003D5B4
         }
     }
 }
-#else
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8003AB28", func_8003D5B4); // 0x8003D5B4
-#endif
 
-void func_8003D6A4(u8* idx) // 0x8003D6A4
+void func_8003D6A4(s_800BCE18_0_CC* arg0) // 0x8003D6A4
 {
-    u8 locIdx;
-
-    locIdx = *idx;
-    if (locIdx != 0)
+    if (arg0->field_0 != 0)
     {
-        D_800BCE18.field_0[0].field_18[locIdx] = 0;
-        func_8003C1AC((u32)idx);
+        D_800BCE18.field_0[0].field_18[arg0->field_0] = NULL;
+        func_8003C1AC(arg0);
     }
 }
 
@@ -2660,7 +2687,36 @@ u32 func_8003F654(s_func_8003F654* arg0)
     return 0;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8003AB28", func_8003F6F0); // 0x8003F6F0
+s32 func_8003F6F0(s32 arg0, s32 arg1, s32 arg2) // 0x8003F6F0
+{
+    s32 leading_zeros;
+    s32 shift;
+
+    if (arg1 < arg2)
+    {
+        arg0 = CLAMP(arg0, arg1, arg2);
+    }
+    else if (arg2 < arg1)
+    {
+        arg0 = CLAMP(arg0, arg2, arg1);
+    }
+    else
+    {
+        return FP_TO(1, Q12_SHIFT);
+    }
+
+    leading_zeros = 32 - Lzc(arg2 - arg1);
+    shift         = 0;
+
+    if ((leading_zeros + 12) >= 31)
+    {
+        shift = leading_zeros - 19;
+    }
+
+    shift = CLAMP(shift, 0, Q12_SHIFT);
+
+    return ((arg0 - arg1) << (Q12_SHIFT - shift)) / ((arg2 - arg1) >> shift);
+}
 
 s32 Math_GetWeightedAverage(s32 a, s32 b, s32 weight) // 0x8003F7E4
 {
