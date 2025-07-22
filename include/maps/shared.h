@@ -131,6 +131,8 @@ void sharedFunc_800D2EF4_0_s00();
 
 void sharedFunc_800D5098_0_s00(s_SubCharacter* chara);
 
+void sharedFunc_800D5B48_0_s00(s_SubCharacter* chara);
+
 void sharedFunc_800D63D0_0_s00(s_SubCharacter* chara, s32 arg1);
 
 void sharedFunc_800D6554_0_s00(s_SubCharacter* chara);
