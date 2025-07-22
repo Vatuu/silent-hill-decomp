@@ -106,18 +106,18 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80055F08); // 0x
 void func_800560FC(s_800BE9FC* arg0) // 0x800560FC
 {
     s32 i;
-    
-    if (arg0->field_2 != 1) 
+
+    if (arg0->field_2 != 1)
     {
         arg0->field_2 = 1;
-        
-        arg0->field_4 += (u32)arg0;
-        arg0->field_C += (u32)arg0;
+
+        arg0->field_4  += (u32)arg0;
+        arg0->field_C  += (u32)arg0;
         arg0->field_10 += (u32)arg0;
-        
+
         for (i = 0; i < arg0->field_8; i++)
         {
-            if (arg0->field_0 == 0x30) 
+            if (arg0->field_0 == 48)
             {
                 func_800561A4(&arg0->field_C[i * 16], arg0);
             }
@@ -221,21 +221,26 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80057090); // 0x
 
 // TODO: RODATA migration and odd code.
 #ifdef NON_MATCHING
-s32 func_800571D0(u32 arg0)
+s32 func_800571D0(u32 arg0) // 0x800571D0
 {
     switch (arg0)
     {
         case 0:
         default:
             return 2;
+
         case 1:
             return 0;
+
         case 2:
             return 4;
+
         case 3:
             return 0x21;
+
         case 4:
             return 0x42;
+
         case 5:
             return 0x63;
     }
@@ -301,18 +306,18 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005B378); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005B3A4); // 0x8005B3A4
 
-void func_8005B3BC(char* filename, s_func_800566B4_sub* arg1)
+void func_8005B3BC(char* filename, s_func_800566B4_sub* arg1) // 0x8005B3BC
 {
     char sp10[12];
 
-    // some inline memcpy/bcopy/strncpy? those use lwl/lwr/swl/swr instead though
-    // E: casting filename/arg1 to u32* and using memcpy does generate lw/sw
-    // but not in same order as this, guess it's some custom inline/macro instead
+    // Some inline `memcpy`/`bcopy`/`strncpy`? those use `lwl`/`lwr`/`swl`/`swr` instead though
+    // Example: casting `filename`/`arg1` to `u32*` and using `memcpy` does generate `lw`/`sw`,
+    // but not in same order as this, guess it's some custom inline/macro instead.
     *(u32*)&sp10[0] = *(u32*)&arg1->unk_0[0];
     *(u32*)&sp10[4] = *(u32*)&arg1->unk_0[4];
     *(u32*)&sp10[8] = 0;
-    
-    strcat(sp10, D_80028544); // copies .TIM to end of sp10 string
+
+    strcat(sp10, D_80028544); // Copies `TIM` to end of `sp10` string.
 
     *(u32*)&filename[0] = *(u32*)&sp10[0];
     *(u32*)&filename[4] = *(u32*)&sp10[4];
@@ -434,6 +439,7 @@ void func_8005DD44(s32 arg0, VECTOR3* arg1, s32 arg2, s8 arg3) // 0x8005DD44
     {
         var_s1 = func_80040A64(arg1);
     }
+
     if (arg2 >= 0x100)
     {
         arg2 = 0xFF;
@@ -442,14 +448,13 @@ void func_8005DD44(s32 arg0, VECTOR3* arg1, s32 arg2, s8 arg3) // 0x8005DD44
     {
         arg2 = 0;
     }
-    
+
     var_a2 = func_8005D9B8(arg1, arg2);
-    
     if (var_a2 >= 0x100)
     {
         var_a2 = 0xFF;
     }
-    
+
     func_80046620(arg0 & 0xFFFF, var_s1, ~var_a2 & 0xFF, arg3);
 }
 
@@ -828,7 +833,7 @@ void func_8007029C(VECTOR3* arg0, s32 arg1, s16 angle) // 0x8007029C
     vec.vx = FP_MULTIPLY(arg1, shRsin(angle), Q12_SHIFT);
     vec.vy = 0;
     vec.vz = FP_MULTIPLY(arg1, shRcos(angle), Q12_SHIFT);
-    
+
     func_8006DB3C(&vars, arg0 + 2, &vec, arg0);
 }
 

@@ -1783,13 +1783,16 @@ void func_8008989C(s_SysWork_2514* arg0, u16 arg1, s32 (*arg2)(u16, s32)) // 0x8
     {
         var_s0 = arg0->field_18;
         temp_s2 = (s_func_8008989C*)&arg0->field_18;
+
         while (var_s0 != temp_s2)
         {
             temp_s1 = var_s0->field_0;
+
             if (arg2(var_s0->field_1E, arg1) != 0)
             {
                 func_8009EC1C(arg0, var_s0);
             }
+
             var_s0 = temp_s1;
         }
     }
@@ -1809,7 +1812,7 @@ s32 func_80089D0C(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s_8002AC04* arg2,
     {
         return 0;
     }
-    
+
     if (arg2->field_4 == 4)
     {
         if (arg1 != NULL)
@@ -1833,6 +1836,7 @@ s32 func_80089D0C(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s_8002AC04* arg2,
             }
         }
     }
+
     return 0;
 }
 
@@ -1955,7 +1959,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008B474); // 0x
 
 // TODO: RODATA migration.
 #ifdef NON_MATCHING
-void func_8008B664(s32 arg0, u32 caseVar)
+void func_8008B664(s32 arg0, u32 caseVar) // 0x8008B664
 {
     s32 var;
 
@@ -1970,7 +1974,7 @@ void func_8008B664(s32 arg0, u32 caseVar)
         case 26:
             var = 0x511;
             break;
-        
+
         case 1:
         case 4:
         case 7:
@@ -1982,13 +1986,13 @@ void func_8008B664(s32 arg0, u32 caseVar)
         case 27:
             var = 0x510;
             break;
-        
+
         case 32:
         case 33:
         case 34:
             var = 0x506;
             break;
-        
+
         case 2:
         case 5:
         case 15:
@@ -1998,16 +2002,17 @@ void func_8008B664(s32 arg0, u32 caseVar)
                 func_8008B3E4(0x80);
                 break;
             }
-        
+
         case 8:
         case 9:
             var = 0x524;
             break;
+
         case 35:
         default:
             break;
     }
-    
+
     if (var != 0)
     {
         func_8005DC1C(var, arg0, 0xC0, 0);

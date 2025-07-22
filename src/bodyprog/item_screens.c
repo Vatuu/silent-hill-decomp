@@ -101,7 +101,7 @@ void func_8004BD74(s32 arg0, GsDOBJ2* arg1, s32 arg2)  // 0x8004BD74
     func_80049B6C(arg1->coord2, &sp50, &sp10);
 
     sp30 = sp10;
-    
+
     for (i = 0; i < 3; i++)
     {
         for (j = 0; j < 3; j++)
@@ -109,31 +109,28 @@ void func_8004BD74(s32 arg0, GsDOBJ2* arg1, s32 arg2)  // 0x8004BD74
             sp10.m[i][j] = FP_TO(sp10.m[i][j], Q12_SHIFT) / D_800C3BE8[arg0].field_0.vx;
         }
     }
-    
-    if (arg2 != 3) 
+
+    if (arg2 != 3 && arg0 < 7)
     {
-        if (arg0 < 7) 
+        for (i = 0; i < 3; i++)
         {
-            for (i = 0; i < 3; i++)
+            for (j = 0; j < 3; j++)
             {
-                for (j = 0; j < 3; j++)
-                {
-                    sp10.m[i][j] -= FP_MULTIPLY(sp10.m[i][j], shRsin((D_800C3E48[arg0].coord.t[2] + 0x400) >> 2), Q12_SHIFT);
-                }
+                sp10.m[i][j] -= FP_MULTIPLY(sp10.m[i][j], shRsin((D_800C3E48[arg0].coord.t[2] + 0x400) >> 2), Q12_SHIFT);
             }
         }
     }
-    
+
     GsSetLightMatrix(&sp10);
     GsSetLsMatrix(&sp30);
-    
-    if (arg2 == 2) 
+
+    if (arg2 == 2)
     {
         GsClearOt(0, 0, &D_800A8F9C[g_ObjectTableIdx]);
         GsSortOt(&D_800A8F9C[g_ObjectTableIdx], &g_ObjectTable0[g_ObjectTableIdx]);
         GsSortObject4J(arg1, &D_800A8F9C[g_ObjectTableIdx], 1, (u32*)PSX_SCRATCH);
-    } 
-    else 
+    }
+    else
     {
         GsSortObject4J(arg1, &g_ObjectTable0[g_ObjectTableIdx], 1, (u32*)PSX_SCRATCH);
     }
@@ -3109,14 +3106,14 @@ void func_80054CAC(u8 itemId, s32 itemCount) // 0x80054CAC
         case InventoryItemId_Katana:
         case InventoryItemId_HyperBlaster:
         case InventoryItemId_GasolineTank:
-            g_SavegamePtr->hyperBlasterFlags_25C_3++; // pickedUpSpecialItemCount ?
+            g_SavegamePtr->hyperBlasterFlags_25C_3++; // `pickedUpSpecialItemCount`?
             break;
 
         case InventoryItemId_ChannelingStone:
             if (!(g_SavegamePtr->field_23F & InventoryItemFlag_ChannelingStone))
             {
                 g_SavegamePtr->hyperBlasterFlags_25C_3++;
-                g_SavegamePtr->field_23F |= InventoryItemFlag_ChannelingStone; // specialItemFlags?
+                g_SavegamePtr->field_23F |= InventoryItemFlag_ChannelingStone; // `specialItemFlags`?
             }
             break;
 

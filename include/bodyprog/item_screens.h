@@ -126,6 +126,8 @@ void func_8004BFE8();
 /** Used for item rotation and item scrolling in the inventory. */
 void Gfx_Results_ItemsRotate(SVECTOR* arg0, GsCOORDINATE2* arg1); // 0x8004BCDC
 
+void func_8004BD74(s32 arg0, GsDOBJ2* arg1, s32 arg2);
+
 /** Used to correct aim animations when exiting the inventory screen.
  *
  * If removed, when the user enters the inventory between the transition of the

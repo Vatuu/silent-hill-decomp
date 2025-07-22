@@ -7,17 +7,17 @@
 #define FS_QUEUE_LENGTH 32
 
 // TODO: Rename in address order when all become known. Follows a pattern of 4096-byte buffers.
-#define FS_BUFFER_0 (void*)0x8010A600
-#define FS_BUFFER_4 (void*)0x80124384 // Used for player map anim.
-#define FS_BUFFER_3 (void*)0x801B2600
-#define FS_BUFFER_8 (void*)0x801B5E80 // Used for loading inventory item models.
-#define FS_BUFFER_7 (void*)0x801C2600 // Used in `b_konami.c`.
-#define FS_BUFFER_2 (void*)0x801CF600
-#define FS_BUFFER_1 (void*)0x801E2600
-#define FS_BUFFER_5 (void*)0x801E3600 // Used in `b_konami.c`.
-#define FS_BUFFER_6 (void*)0x801E4600 // Used in `b_konami.c`.
+#define FS_BUFFER_0  (void*)0x8010A600
+#define FS_BUFFER_4  (void*)0x80124384 // Used for player map anim.
+#define FS_BUFFER_3  (void*)0x801B2600
+#define FS_BUFFER_8  (void*)0x801B5E80 // Used for loading inventory item models.
+#define FS_BUFFER_7  (void*)0x801C2600 // Used in `b_konami.c`.
+#define FS_BUFFER_2  (void*)0x801CF600
+#define FS_BUFFER_1  (void*)0x801E2600
+#define FS_BUFFER_5  (void*)0x801E3600 // Used in `b_konami.c`.
+#define FS_BUFFER_6  (void*)0x801E4600 // Used in `b_konami.c`.
 #define FS_BUFFER_10 (void*)0x801EA600
-#define FS_BUFFER_9 (void*)0x801EC600
+#define FS_BUFFER_9  (void*)0x801EC600
 
 #define IMAGE_BUFFER (u_long*)0x801AFA00
 

@@ -79,7 +79,7 @@ typedef struct
 } s_8002AC04;
 STATIC_ASSERT_SIZEOF(s_8002AC04, 16);
 
-// Likely not skeleton since filed_8 must be `s8`.
+// Likely not `s_Skeleton` since `field_8` must be `s8`.
 typedef struct
 {
     s8 field_0;
@@ -1842,7 +1842,7 @@ void Gfx_MainMenu_MainTextDraw();
 
 s32 func_8003BD2C();
 
-void func_8003C1AC(s_800BCE18_0_CC* arg0); // 0x8003C1AC
+void func_8003C1AC(s_800BCE18_0_CC* arg0);
 
 /** Unknown bodyprog func. Called by `Fs_QueueDoThingWhenEmpty`. */
 s32 func_8003C850();
@@ -1850,6 +1850,8 @@ s32 func_8003C850();
 void func_8003C878(s32 arg0);
 
 void func_8003C8F8(s_func_8003C8F8* arg0, s8* arg1);
+
+void func_8003C92C(s_800BCE18_2BEC_0* arg0, VECTOR3* arg1, SVECTOR3* arg2);
 
 void func_8003CD6C(s_PlayerCombat* arg0);
 
@@ -1860,6 +1862,8 @@ void func_8003D01C();
 void func_8003D03C();
 
 s32 func_8003D444(s32 idx);
+
+void func_8003D550(s32 arg0, s32 arg1);
 
 void func_8003D468(s32, s32); // Called by some chara init funcs, similar to `func_8003DD80`?
 
@@ -1921,6 +1925,7 @@ void func_8004137C(VECTOR3* result, VECTOR* vec0, VECTOR* vec1, s32 screenDist);
 /** Some kind of queue entry load status getter. */
 s32 func_80041ADC(s32 queueIdx);
 
+/** Used for loading maps */
 void func_80041C24(s_80041CEC* arg0, s32 arg1, s32 arg2);
 
 void func_80041CB4(s_func_80041CB4* arg0, s_80041CEC* arg1);
@@ -1935,6 +1940,8 @@ void func_80041E98();
 void func_80041FF0();
 
 void func_800420C0();
+
+s32 func_80042178(s32* arg0);
 
 u32 func_80041B1C(void* arg0);
 
@@ -1970,6 +1977,8 @@ void func_80043E50(s_80043E50* arg0, s32* arg1, s32 arg2);
 s_80043F2C* func_80043F2C(s_80043F2C* arg0, s_80043F2C* arg1);
 
 void func_80044044(s_80044044* arg0, s32 arg1, s32 arg2);
+
+s32 func_80044918(s_ModelAnim* anim);
 
 void func_800446D8(s_Skeleton*, GsCOORDINATE2*, s32, s32, s32);
 
@@ -2162,7 +2171,19 @@ void func_800553E0(u32 arg0, u8 arg1, u8 arg2, u8 arg3, u8 arg4, u8 arg5, u8 arg
 /** `arg0` type assumed. */
 void func_80055434(VECTOR3* vec);
 
+s32 func_800557DC();
+
 void func_80055814(s32 arg0);
+
+void func_800560FC(s_800BE9FC* arg0);
+
+void func_8005B370(s_func_8005B370* arg0);
+
+void func_8005B3BC(char* filename, s_func_800566B4_sub* arg1);
+
+s32 func_800571D0(u32 arg0);
+
+void func_80056504(s_800BE9FC* arg0, s8* arg1, s32* arg2, s32 arg3);
 
 void func_80054A04(u8 arg0);
 
@@ -2183,6 +2204,8 @@ void func_8005C814(s16*, s_SubCharacter*);
 void func_8005DC1C(s32, VECTOR3*, s32, s32); // Types assumed.
 
 void func_8005DD44(s32, VECTOR3*, s32, s8); // Types assumed.
+
+s32 func_8005F680(s_func_800699F8* arg0);
 
 void func_8005DE0C(s32, VECTOR3*, s32, s32, s32); // Types assumed.
 
@@ -2357,6 +2380,10 @@ s32 func_8008973C(s_SysWork_2514* arg0, s32 arg1, s_8002AC04* ptr, u32* arg3);
 
 void func_80089840(s_func_80089840* arg0);
 
+void func_8008989C(s_SysWork_2514* arg0, u16 arg1, s32 (*arg2)(u16, s32));
+
+s32 func_80089D0C(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s_8002AC04* arg2, u8* arg3);
+
 void func_8008992C(s_SysWork_2514* arg0, u16 arg1, s32 (*arg2)(u16, s32));
 
 s32 func_8008A35C(s_8008A35C* arg0, s32 arg1);
@@ -2375,6 +2402,8 @@ void func_8008B40C(s32 arg0, s32 arg1);
 
 /** `arg0` is boolean. */
 void func_8008B438(s32 arg0, s32 arg1, s32 arg2);
+
+void func_8008B664(s32 arg0, u32 caseVar);
 
 s32 func_8008D850();
 
@@ -2450,6 +2479,8 @@ u16 func_80069810();
 
 void func_80069820(u16);
 
+void func_800699E4(s_func_800699E4* arg0);
+
 void func_800699F8(s_func_800699F8* arg0, s32 arg1, s32 arg2);
 
 s32 func_80069B24(s32 arg0, void* arg1, void* arg2);
@@ -2465,6 +2496,8 @@ s32 func_8006CC44(s32 arg0, s32 arg1, s_func_8006CC44* arg2);
 s32 func_8006FD90(s_SubCharacter*, s32, s32, s32);
 
 s32 func_80070360(s_SubCharacter*, s32, s32);
+
+void func_8007029C(VECTOR3* arg0, s32 arg1, s16 angle);
 
 void func_800705E4(GsCOORDINATE2*, s32, s32, s32, s32);
 
@@ -2613,6 +2646,10 @@ void func_80037334();
 
 void func_80037388();
 
+s32 func_800378D4(s_AreaLoadParams* areaLoadParams);
+
+void func_80037DC4(s_SubCharacter* chara);
+
 void func_800373CC(s32);
 
 void func_80037E40(s_SubCharacter* chara);
@@ -2620,6 +2657,11 @@ void func_80037E40(s_SubCharacter* chara);
 void func_80037E78(s_SubCharacter* chara);
 
 s32 func_800382B0(s32 arg0);
+
+s32 func_80038A6C(VECTOR3* pos0, VECTOR3* pos1, s32 radius);
+
+/** Computes 2D distance on XZ plane between input position and camera position. */
+s32 func_80038B44(VECTOR3* pos);
 
 void func_80037F24(s32);
 
@@ -2687,6 +2729,25 @@ void GameFs_BgItemLoad();
 
 void func_8003BED0();
 
+s32 func_8003BF60(s32 arg0, s32 arg1);
+
+/** Used in map loading.
+ * Removing it causes the game to get stuck at the loading screen.
+ */
+void func_8003C048();
+
+void func_8003C0C0();
+
+void func_8003C110();
+
+void func_8003C1AC(s_800BCE18_0_CC* arg0);
+
+void func_8003C2EC();
+
+void func_8003C30C();
+
+void func_8003C368();
+
 void func_8003C3A0();
 
 void func_8003C3AC();
@@ -2705,7 +2766,7 @@ void func_8003D354(s32* arg0, s32 arg1);
 
 void func_8003D3BC(s_FsImageDesc* img, s32 arg1, s32 arg2);
 
-s32 func_8003D7D4(u32 arg0, s32 arg1, void* arg2, s_FsImageDesc* arg3);
+s32 func_8003D7D4(u32 arg0, s32 arg1, void* arg2, s_FsImageDesc* img);
 
 void func_8003D938();
 

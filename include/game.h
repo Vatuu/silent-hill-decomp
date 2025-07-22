@@ -989,8 +989,8 @@ typedef struct
 typedef struct
 {
     struct s_func_8008989C* field_0;
-    u8 unk_4[26];
-    u16 field_1E;
+    u8                      unk_4[26];
+    u16                     field_1E;
 } s_func_8008989C;
 
 typedef struct

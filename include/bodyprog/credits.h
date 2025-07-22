@@ -106,7 +106,7 @@ void func_800914C4(s32 arg0, u32 value);
 
 void GameFs_StfRollBinLoad();
 
-void func_800917C0(void*, s32, s_FsImageDesc*);
+void func_800917C0(void* arg0, s32 arg1, s_FsImageDesc* img);
 
 void func_8009185C(s16 arg0, s16 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8, s32 arg9);
 

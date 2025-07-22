@@ -40,17 +40,17 @@ typedef enum
 {
     CardResult_NotConnected = 0, // "Card not connected"
     CardResult_Success      = 1, // Default code returned when no errors occur?
-    CardResult_InitError    = 2, // `Savegame_CardState_Init` `EvSpNEW` "No writing after connection"
-    CardResult_InitComplete = 3, // `Savegame_CardState_Init` `EvSpIOE` "Connected"
-    CardResult_LoadError    = 4, // `Savegame_CardState_Load` `EvSpNEW` "Uninitialized card"
-    CardResult_5            = 5, // `Savegame_CardState_DirRead` when (g_CardWork.field_70 == 1)
-    CardResult_6            = 6, // `Savegame_CardState_DirRead` when !(g_CardWork.field_70 == 1)
+    CardResult_InitError    = 2, // `Savegame_CardState_Init` `EvSpNEW` "No writing after connection".
+    CardResult_InitComplete = 3, // `Savegame_CardState_Init` `EvSpIOE` "Connected".
+    CardResult_LoadError    = 4, // `Savegame_CardState_Load` `EvSpNEW` "Uninitialized card".
+    CardResult_5            = 5, // `Savegame_CardState_DirRead` when `g_CardWork.field_70 == 1`.
+    CardResult_6            = 6, // `Savegame_CardState_DirRead` when `g_CardWork.field_70 != 1`.
 
-    CardResult_FileCreateError = 7,  // `Savegame_CardState_FileCreate` after 15 retries
-    CardResult_FileOpenError   = 8,  // `Savegame_CardState_FileOpen` after 15 retries
-    CardResult_FileSeekError   = 9,  // `Savegame_CardState_FileReadWrite` after 15 retries
-    CardResult_FileIoError     = 10, // `Savegame_CardState_FileReadWrite` after 15 retries
-    CardResult_FileIoComplete  = 11, // `Savegame_CardState_FileReadWrite` `EvSpIOE` "Completed"
+    CardResult_FileCreateError = 7,  // `Savegame_CardState_FileCreate` after 15 retries.
+    CardResult_FileOpenError   = 8,  // `Savegame_CardState_FileOpen` after 15 retries.
+    CardResult_FileSeekError   = 9,  // `Savegame_CardState_FileReadWrite` after 15 retries.
+    CardResult_FileIoError     = 10, // `Savegame_CardState_FileReadWrite` after 15 retries.
+    CardResult_FileIoComplete  = 11, // `Savegame_CardState_FileReadWrite` `EvSpIOE` "Completed".
 
     CardResult_100 = 100, // Used outside of main memcard code.
     CardResult_101 = 101, // Used outside of main memcard code.

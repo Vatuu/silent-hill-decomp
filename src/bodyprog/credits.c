@@ -630,24 +630,23 @@ void GameFs_StfRollBinLoad() // 0x80091778
     func_800917C0(FONT24_BUFFER, 1, &D_800A909C);
 }
 
-void func_800917C0(void* arg0, s32 arg1, s_FsImageDesc* arg2) // 0x800917C0
+void func_800917C0(void* arg0, s32 arg1, s_FsImageDesc* img) // 0x800917C0
 {
     u32 tPage;
-    
+
     if (arg1 != 0)
     {
         arg0 -= (Fs_GetFileSize(FILE_TIM_FONT24_TIM) + 0x7FF) & ~0x7FF;
     }
-    
-    Fs_QueueStartReadTim(FILE_TIM_FONT24_TIM, arg0, arg2);
-    
-    D_800AFE08.field_18 = ((u8*)&arg2->tPage)[1]; // Fs_QueuePostLoadTim seems to do something similar
-    tPage = ((u8*)&arg2->tPage)[1];
-    
-    D_800AFE08.field_14 = (tPage & 0x10);
-    D_800AFE08.field_14 |= (tPage & 0xF);
-    
-    D_800AFE08.field_16 = (arg2->clutY << 6) | ((arg2->clutX >> 4) & 0x3F);
+
+    Fs_QueueStartReadTim(FILE_TIM_FONT24_TIM, arg0, img);
+
+    D_800AFE08.field_18 = ((u8*)&img->tPage)[1]; // `Fs_QueuePostLoadTim` seems to do something similar.
+    tPage = ((u8*)&img->tPage)[1];
+
+    D_800AFE08.field_14  = tPage & 0x10;
+    D_800AFE08.field_14 |= tPage & 0xF;
+    D_800AFE08.field_16  = (img->clutY << 6) | ((img->clutX >> 4) & 0x3F);
 }
 
 void func_8009185C(s16 arg0, s16 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8, s32 arg9) // 0x8009185C

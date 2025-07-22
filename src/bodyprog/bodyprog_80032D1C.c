@@ -2860,7 +2860,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80032D1C", func_800373CC); // 0x
 
 // `if (-deltaRotY < 0x156)` causes a minor missmatch.
 #ifdef NON_MATCHING
-s32 func_800378D4(s_AreaLoadParams* arg0) // 0x800378D4
+s32 func_800378D4(s_AreaLoadParams* areaLoadParams) // 0x800378D4
 {
     s16 rotY;
     s32 temp_a0;
@@ -2877,29 +2877,28 @@ s32 func_800378D4(s_AreaLoadParams* arg0) // 0x800378D4
         D_800A9A20 = g_MainLoop_FrameCount;
     }
     
-    temp_a0 = arg0->char_x_0 - D_800A9A24;
+    temp_a0 = areaLoadParams->char_x_0 - D_800A9A24;
 
-    // messing with this earlier gave me same result as our `ABS_DIFF` macro
+    // Messing with this earlier gave me same result as our `ABS_DIFF` macro.
     // eg: ((a - b) < 0) ? (b - a) : (a - b)
     // interesting but not sure what the cause of that was though
     // it seems to match here now at least
-    // (also todo: psyq headers do include their own ABS and _ABS macro that might match our ones)
+    // TODO: PSY-Q headers do include their own `ABS` and `_ABS` macro that might match our one.
     //var_v0_2 = abs(temp_a0);
-	
     
     if (abs(temp_a0) > FP_FLOAT_TO(0.8f, Q12_SHIFT))
     {
         return 0;
     }
     
-    temp_a1 = arg0->char_z_8 - D_800A9A28;
+    temp_a1 = areaLoadParams->char_z_8 - D_800A9A28;
     //var_v0_3 = abs(temp_a1);
     
     if (abs(temp_a1) > FP_FLOAT_TO(0.8f, Q12_SHIFT))
     {
         return 0;
     }
-        
+
     if ((SQUARE(temp_a0) + SQUARE(temp_a1)) <= SQUARE(FP_FLOAT_TO(0.8f, Q12_SHIFT)))
     {
         deltaRotY = g_SysWork.player_4C.chara_0.rotation_24.vy - ratan2(temp_a0, temp_a1);
@@ -2907,22 +2906,23 @@ s32 func_800378D4(s_AreaLoadParams* arg0) // 0x800378D4
         {
             deltaRotY -= FP_ANGLE(360.0f);
         }
-        
+
         if (deltaRotY >= 0)
         {
-            if (deltaRotY < 0x156)
+            if (deltaRotY <= FP_ANGLE(30.0f))
             {
                 return 1;
             }
         }
         else
         {
-            if (-deltaRotY < 0x156)
+            if (-deltaRotY <= FP_ANGLE(30.0f))
             {
                 return 1;
             }
         }
     }
+
     return 0;
 }
 #else
@@ -2935,7 +2935,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80032D1C", func_80037C5C); // 0x
 
 void func_80037DC4(s_SubCharacter* chara) // 0x80037DC4
 {
-    if ((g_SavegamePtr->gameDifficulty_260 <= 0) || func_80080514() >= 1228)
+    if (g_SavegamePtr->gameDifficulty_260 <= GameDifficulty_Normal || func_80080514() >= 1228)
     {
         g_SavegamePtr->field_B0[g_SavegamePtr->mapOverlayId_A4] &= ~(1 << chara->field_40);
     }
@@ -2997,47 +2997,45 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80032D1C", func_800382EC); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80032D1C", func_80038354); // 0x80038354
 
-s32 func_80038A6C(VECTOR3* arg0, VECTOR3* arg1, s32 radius) // 0x80038A6C
+s32 func_80038A6C(VECTOR3* pos0, VECTOR3* pos1, s32 radius) // 0x80038A6C
 {
-    s32 dx;
-    s32 dz;
-    s32 r2;
+    s32 deltaX;
+    s32 deltaZ;
+    s32 radiusSqr;
     s32 sum;
-    
-    dx = arg0->vx - arg1->vx;
-    if (radius < dx) 
-    {
-        return 1;
-    }
-        
-    if (radius < -dx) 
-    {
-        return 1;
-    }
-    
-    dz = arg0->vz - arg1->vz;
-    if (radius < dz) 
+
+    deltaX = pos0->vx - pos1->vx;
+    if (radius < deltaX)
     {
         return 1;
     }
 
-    if (radius < -dz) 
+    if (radius < -deltaX)
     {
         return 1;
     }
 
-    sum = FP_MULTIPLY((s64)dx, dx, Q12_SHIFT) + FP_MULTIPLY((s64)dz, dz, Q12_SHIFT);
-    r2  = FP_MULTIPLY((s64)radius, radius, Q12_SHIFT);
+    deltaZ = pos0->vz - pos1->vz;
+    if (radius < deltaZ)
+    {
+        return 1;
+    }
 
-    return sum > r2;
+    if (radius < -deltaZ)
+    {
+        return 1;
+    }
+
+    sum       = FP_MULTIPLY((s64)deltaX, (s64)deltaX, Q12_SHIFT) + FP_MULTIPLY((s64)deltaZ, (s64)deltaZ, Q12_SHIFT);
+    radiusSqr = FP_MULTIPLY((s64)radius, (s64)radius, Q12_SHIFT);
+    return sum > radiusSqr;
 }
 
-// Computes 2D distance on XZ plane between input position and camera position.
 s32 func_80038B44(VECTOR3* pos) // 0x80038B44
 {
     VECTOR3 camPos;
-    s32 x;
-    s32 y;
+    s32     x;
+    s32     y;
 
     vwGetViewPosition(&camPos);
 

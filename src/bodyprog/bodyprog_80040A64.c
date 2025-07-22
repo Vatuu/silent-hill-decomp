@@ -134,7 +134,6 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80041B1C); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80041BA0); // 0x80041BA0
 
-// Crucial for loading maps.
 void func_80041C24(s_80041CEC* arg0, s32 arg1, s32 arg2) // 0x80041C24
 {
     bzero(&D_800C1020, 1420);
@@ -486,8 +485,8 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80044090); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80044420); // 0x80044420
 
-// Could either this be used for load the player model or for execute animations
-// Removing the call from `func_80035178` causes Harry's model to not appear
+// Could be used for load the player model or to execute animations.
+// Removing the call from `func_80035178` causes Harry's model to not appear.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800445A4); // 0x800445A4
 
 // ========================================
@@ -497,23 +496,28 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800445A4); // 0x
 // Anim func.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800446D8); // 0x800446D8
 
-s32 func_80044918(s_ModelAnim* arg0) // 0x80044918
+s32 func_80044918(s_ModelAnim* anim) // 0x80044918
 {
-    // according to 80044950 this func is returning a funcptr?
-    // field_C/field_10 usually points to data at 0x800AF228 which contains funcptrs and other stuff
-    
-    s32 animInfo_C = arg0->animInfo_C;
-    s32 field_10   = arg0->field_10;
-    u8  animIdx_0  = arg0->animIdx_0;
-    s32 field_1    = arg0->maybeSomeState_1;
-    
+    // According to `80044950`, this func is returning a funcptr?
+    // `field_C`/`field_10` usually points to data at `0x800AF228` which contains funcptrs and other stuff.
+
+    s32 animInfo_C;
+    s32 field_10;
+    u8  animIdx_0;
+    s32 field_1;
+
+    animInfo_C = anim->animInfo_C;
+    field_10   = anim->field_10;
+    animIdx_0  = anim->animIdx_0;
+    field_1    = anim->maybeSomeState_1;
+
     if (field_10 != 0 && animIdx_0 >= field_1)
     {
         animInfo_C  = field_10;
-        animInfo_C -= (field_1 * 0x10);
+        animInfo_C -= field_1 * 16;
     }
-    
-    return animInfo_C + animIdx_0 * 0x10;
+
+    return animInfo_C + (animIdx_0 * 16);
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80044950); // 0x80044950
