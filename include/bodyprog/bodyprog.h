@@ -1726,7 +1726,7 @@ extern s8 D_800C4562;
  next overlay and its value is 1 during the first
  cutscene and doesn't change until the player makes an input.
 */
-extern s8 D_800C457C;
+extern u8 D_800C457C;
 
 extern VECTOR3 D_800C45F8;
 

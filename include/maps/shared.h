@@ -88,6 +88,8 @@ extern s32 sharedData_800DFB68_0_s00;
 extern s32 sharedData_800DD58C_0_s00;
 extern s32 sharedData_800E32CC_0_s00;
 
+extern s32 sharedData_800D32A0_0_s02; // `sharedFunc_800CDAA8_0_s02`
+
 s32 sharedFunc_800CBBBC_0_s00();
 
 void sharedFunc_800CFFF8_0_s00(s32 arg0, s_func_800CFFF8* arg1);
@@ -181,6 +183,8 @@ s16 sharedFunc_800D921C_0_s00(s_SubCharacter* chara);
 void sharedFunc_800D923C_0_s00(s_SubCharacter* chara); // Humanoid init function?
 
 u8 sharedFunc_800D92AC_0_s00(s32 x, s32 y);
+
+void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra* extra, GsCOORDINATE2* coord);
 
 // MAP1_S00 LarvalStalker funcs
 void Ai_LarvalStalker_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords);

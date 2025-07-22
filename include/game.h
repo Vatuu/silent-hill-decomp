@@ -774,13 +774,14 @@ STATIC_ASSERT_SIZEOF(s_800D5710, 0x34);
 typedef struct _SubCharPropertiesPlayer
 {
     s32 properties_E4[CHARA_PROPERTY_COUNT_MAX]; // TODO: Integrate as `u_Property`.
-    s8  unk_10C;
+    u8  field_10C;
     u8  field_10D;
     s8  unk_10E[6];
     s32 field_114;
     s8  unk_118[4];
     s32 flags_11C;
-    s8  unk_120[6];
+    s8  unk_120[4];
+    u16 field_124;
     s16 field_126;
 } s_SubCharaPropertiesPlayer;
 STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesPlayer, 68);
