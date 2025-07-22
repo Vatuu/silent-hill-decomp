@@ -9,7 +9,7 @@ INCLUDE_ASM("asm/maps/map3_s02/nonmatchings/map3_s02", func_800CAB58);
 
 #include "maps/shared/sharedFunc_800D0A60_0_s00.h" // 0x800CAE40
 
-INCLUDE_ASM("asm/maps/map3_s02/nonmatchings/map3_s02", func_800CAEF8);
+#include "maps/shared/sharedFunc_800D0B18_0_s00.h" // 0x800CAEF8
 
 #include "maps/shared/sharedFunc_800D0E04_0_s00.h" // 0x800CB05C
 

@@ -34,10 +34,12 @@ s32 sharedFunc_800D0B18_0_s00(s32 arg0)
 
             case 2:
                 sharedData_800DFB70_0_s00 = 1;
-#if !defined(MAP0_S01) && !defined(MAP0_S02) && !defined(MAP1_S00) && \
-    !defined(MAP1_S06) && !defined(MAP2_S00) && !defined(MAP2_S02) && \
-    !defined(MAP3_S00) && !defined(MAP3_S01) && !defined(MAP3_S06) && \
-    !defined(MAP5_S01) && !defined(MAP5_S03) && !defined(MAP7_S03)
+
+// TODO: Do these maps have anything in common?
+#if defined(MAP0_S00) || defined(MAP1_S02) || defined(MAP1_S03) || \
+    defined(MAP4_S02) || defined(MAP4_S03) || defined(MAP4_S04) || \
+    defined(MAP4_S05) || defined(MAP5_S00) || defined(MAP6_S00) || \
+    defined(MAP6_S03)
                 sharedData_800E32D0_0_s00 = 0;
 #endif
                 break;
@@ -66,6 +68,15 @@ s32 sharedFunc_800D0B18_0_s00(s32 arg0)
             g_SysWork.field_234A = 0;
         }
 
+// TODO: Do these maps have anything in common?
+#if defined(MAP0_S00) || defined(MAP0_S01) || defined(MAP0_S02) || \
+    defined(MAP1_S00) || defined(MAP1_S02) || defined(MAP1_S03) || \
+    defined(MAP1_S06) || defined(MAP2_S00) || defined(MAP2_S02) || \
+    defined(MAP3_S00) || defined(MAP3_S01) || defined(MAP3_S06) || \
+    defined(MAP4_S02) || defined(MAP4_S03) || defined(MAP4_S04) || \
+    defined(MAP4_S05) || defined(MAP5_S00) || defined(MAP5_S01) || \
+    defined(MAP5_S03) || defined(MAP6_S00) || defined(MAP6_S03) || \
+    defined(MAP7_S03)
         if (sharedData_800E0CAC_0_s00 == 0 || sharedData_800E0CAC_0_s00 == 2)
         {
             sharedData_800E324C_0_s00.vy = 2;
@@ -74,6 +85,7 @@ s32 sharedFunc_800D0B18_0_s00(s32 arg0)
         {
             sharedData_800E324C_0_s00.vy = 0;
         }
+#endif
 
         sharedData_800E0CB8_0_s00 = (sharedData_800E0CB8_0_s00 & ~0xF) + (sharedData_800E0CB4_0_s00 >> Q12_SHIFT);
         return 1;
