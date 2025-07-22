@@ -213,6 +213,30 @@ typedef struct
 
 typedef struct
 {
+    VECTOR3  pos_0;
+    SVECTOR3 rot_C;
+    s8       field_12;
+} s_func_8006AB50;
+
+typedef struct
+{
+    s32     field_0;
+    s32     field_4;
+    s32     field_8;
+    SVECTOR field_C;
+    s16     dirX_14;
+    s16     dirZ_16;
+    s32     posX_18;
+    s32     posZ_1C;
+    s32     field_20;
+    s32     field_24;
+    s16     field_28;
+    s16     field_2A;
+    s16     field_2C;
+} s_func_8006ABC0;
+
+typedef struct
+{
     s8  unk_0[48];
     s16 field_30;
     s8  unk_32[164];
@@ -235,14 +259,32 @@ typedef struct
 
 typedef struct
 {
-    s8  unk_0[124];
-    s32 field_7C;
-    s32 field_80;
-    s32 field_84;
-    s32 field_88;
-    s32 field_8C;
-    s8  unk_90[4];
-    s32 field_94;
+    s8              field_0_0  : 8;
+    s8              field_0_8  : 1;
+    s8              field_0_9  : 1;
+    s8              field_0_10 : 1;
+    s8              field_0_11 : 5;
+    u16             field_2    : 16;
+    s_func_8006ABC0 field_4;
+    s32             field_34;
+    s8              unk_38[12];
+    s8              field_44;
+    s8              unk_45[5];
+    s16             field_4A;
+    s8              field_4C;
+    s8              unk_4D[3];
+    s8              unk_50[36];
+    s8              field_74;
+    s8              unk_75[5];
+    s16             field_7A;
+    s32             field_7C;
+    s32             field_80;
+    s32             field_84;
+    s32             field_88;
+    s32             field_8C;
+    s32             field_90;
+    s32             field_94;
+    // TODO: May be incomplete, `func_8006AEAC` accesses +0xC8.
 } s_func_8006CC44;
 
 typedef struct
@@ -1604,6 +1646,8 @@ extern s_800C38B0 D_800C38B0;
 
 extern s32 D_800C38B4;
 
+extern u16 D_800C4478; // Might be struct.
+
 extern s32 D_800C4710[];
 
 extern u8 D_800C37C8;
@@ -2495,13 +2539,17 @@ void func_80069820(u16);
 
 void func_800699E4(s_func_800699E4* arg0);
 
-void func_800699F8(s_func_800699F8* arg0, s32 arg1, s32 arg2);
+void func_800699F8(s_func_800699F8* result, s32 posX, s32 posZ);
 
 s32 func_80069B24(s32 arg0, void* arg1, void* arg2);
 
 void func_8006A178(s_func_8006A178* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 
 s32 func_8006A3B4(s32 arg0, s32 arg1, s32 arg2);
+
+void func_8006AB50(s_func_8006CC44* arg0, VECTOR3* vec, s_func_8006AB50* arg2, s32 arg3);
+
+void func_8006ABC0(s_func_8006ABC0* result, VECTOR3* vec, s_func_8006AB50* arg2);
 
 void func_8006BDDC(s_func_8006BDDC* arg0, s16 arg1, s16 arg2);
 

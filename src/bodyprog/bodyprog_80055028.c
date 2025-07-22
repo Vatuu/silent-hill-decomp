@@ -578,13 +578,61 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006993C); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80069994); // 0x80069994
 
-
 void func_800699E4(s_func_800699E4* arg0) // 0x800699E4
 {
     arg0->field_30++;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_800699F8); // 0x800699F8
+void func_800699F8(s_func_800699F8* result, s32 posX, s32 posZ) // 0x800699F8
+{
+    s_func_8006AB50 sp10;
+    VECTOR3         sp28;
+    s_func_8006CC44 sp38;
+    u8              spD0_unused[0x70]; // Might be part of `s_func_8006CC44`.
+
+    s32 temp_v0;
+
+    sp28.vx = 0;
+    sp28.vy = 0;
+    sp28.vz = 0;
+
+    temp_v0 = func_800426E4(posX, posZ);
+    if (!temp_v0)
+    {
+        result->chara_grnd_0 = FP_METER(8);
+        result->field_6      = 0;
+        result->field_4      = 0;
+        result->field_8      = 0;
+        return;
+    }
+
+    sp10.pos_0.vx = posX;
+    sp10.pos_0.vy = 0;
+    sp10.pos_0.vz = posZ;
+    sp10.rot_C.vx = 0;
+    sp10.rot_C.vy = 0;
+    sp10.rot_C.vz = 0;
+    func_8006AB50(&sp38, &sp28, &sp10, 0);
+
+    sp38.field_0_8  = 0;
+    sp38.field_0_9  = 0;
+    sp38.field_0_10 = 1;
+    func_8006AD44(&sp38, temp_v0);
+
+    if (sp38.field_90 == 1)
+    {
+        result->field_8      = 0;
+        result->chara_grnd_0 = FP_METER(8);
+    }
+    else
+    {
+        result->field_8      = sp38.field_94;
+        result->chara_grnd_0 = func_8006CC44(sp38.field_4.posX_18, sp38.field_4.posZ_1C, &sp38) * 16;
+    }
+
+    result->field_4 = sp38.field_88;
+    result->field_6 = sp38.field_8C;
+}
 
 s32 func_80069B24(s32 arg0, void* arg1, void* arg2) // 0x80069B24
 {
@@ -640,9 +688,60 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006A4A8); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006A940); // 0x8006A940
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006AB50); // 0x8006AB50
+void func_8006AB50(s_func_8006CC44* arg0, VECTOR3* vec, s_func_8006AB50* arg2, s32 arg3) // 0x8006AB50
+{
+    arg0->field_0_0       = 0;
+    arg0->field_4.field_4 = arg3;
+    arg0->field_2         = D_800C4478; // `D_800C4478` might be a struct.
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006ABC0); // 0x8006ABC0
+    func_8006ABC0(&arg0->field_4, vec, arg2);
+
+    arg0->field_7C = 0x1E00;
+    arg0->field_34 = 0;
+    arg0->field_44 = 0;
+    arg0->field_4A = 0;
+    arg0->field_4C = 0;
+    arg0->field_7A = 0;
+    arg0->field_74 = 0;
+    arg0->field_8C = 0;
+    arg0->field_88 = 0;
+    arg0->field_90 = 1;
+    arg0->field_94 = 0;
+}
+
+void func_8006ABC0(s_func_8006ABC0* result, VECTOR3* vec, s_func_8006AB50* arg2) // 0x8006ABC0
+{
+    s16 angleZX;
+
+    result->field_C.vx = vec->vx >> 4;
+    result->field_C.vy = vec->vy >> 4;
+    result->field_C.vz = vec->vz >> 4;
+
+    result->field_8 = SquareRoot0(SQUARE(result->field_C.vx) + SQUARE(result->field_C.vz));
+
+    if (result->field_8 != 0)
+    {
+        result->dirX_14 = FP_METER(result->field_C.vx) / result->field_8;
+        result->dirZ_16 = FP_METER(result->field_C.vz) / result->field_8;
+        angleZX         = ratan2(result->field_C.vz, result->field_C.vx);
+        result->dirX_14 = shRcos(angleZX);
+        result->dirZ_16 = shRsin(angleZX);
+    }
+    else
+    {
+        result->dirX_14 = FP_METER(1);
+        result->dirZ_16 = 0;
+    }
+
+    result->field_28 = arg2->rot_C.vz >> 4;
+    result->posX_18  = arg2->pos_0.vx >> 4;
+    result->posZ_1C  = arg2->pos_0.vz >> 4;
+    result->field_20 = result->posX_18 + result->field_C.vx;
+    result->field_24 = result->posZ_1C + result->field_C.vz;
+    result->field_2A = (arg2->rot_C.vy + arg2->pos_0.vy) >> 4;
+    result->field_2C = (arg2->rot_C.vx + arg2->pos_0.vy) >> 4;
+    result->field_0  = arg2->field_12;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006AD44); // 0x8006AD44
 
