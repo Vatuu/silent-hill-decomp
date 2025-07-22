@@ -183,8 +183,40 @@ STATIC_ASSERT_SIZEOF(s_func_800625F4, 20);
 
 typedef struct
 {
-	s8 unk_0[0x30];
-	s8 field_30;
+    s16 field_0;
+    s16 field_2;
+    s16 field_4;
+    u16 field_6;
+    s16 field_8;
+    s16 field_A;
+} s_func_800699E4_10;
+
+typedef struct
+{
+    u16 field_0;
+    u8  unk_2[2];
+    u8  unk_4[6];
+} s_func_800699E4_18;
+
+typedef struct
+{
+    s32                 field_0;
+    s32                 field_4;
+    u32                 field_8_0  : 8;
+    u32                 field_8_8  : 8;
+    u32                 field_8_16 : 8;
+    u32                 field_8_24 : 8;
+    u8                  unk_C[4];
+    s_func_800699E4_10* ptr_10;
+    u8                  unk_14[4];
+    s_func_800699E4_18* ptr_18;
+    u8                  unk_1C[2];
+    u8                  field_1E;
+    u8                  unk_1F[1];
+    s32*                field_20;
+    u8                  unk_24[12];
+    u8                  field_30;
+    s32                 field_34[64];
 } s_func_800699E4;
 
 /** @brief Returned by `func_800699F8`, collision related? */
@@ -259,32 +291,52 @@ typedef struct
 
 typedef struct
 {
-    s8              field_0_0  : 8;
-    s8              field_0_8  : 1;
-    s8              field_0_9  : 1;
-    s8              field_0_10 : 1;
-    s8              field_0_11 : 5;
-    u16             field_2    : 16;
-    s_func_8006ABC0 field_4;
-    s32             field_34;
-    s8              unk_38[12];
-    s8              field_44;
-    s8              unk_45[5];
-    s16             field_4A;
-    s8              field_4C;
-    s8              unk_4D[3];
-    s8              unk_50[36];
-    s8              field_74;
-    s8              unk_75[5];
-    s16             field_7A;
-    s32             field_7C;
-    s32             field_80;
-    s32             field_84;
-    s32             field_88;
-    s32             field_8C;
-    s32             field_90;
-    s32             field_94;
-    // TODO: May be incomplete, `func_8006AEAC` accesses +0xC8.
+    u8  unk_0[1];
+    u8  field_1;
+    u8  unk_2[2];
+    s32 field_4;
+} s_func_8006CC44_A8;
+
+typedef struct
+{
+    u8                 field_0_0  : 8;
+    s8                 field_0_8  : 1;
+    s8                 field_0_9  : 1;
+    s8                 field_0_10 : 1;
+    s8                 field_0_11 : 5;
+    u16                field_2    : 16;
+    s_func_8006ABC0    field_4;
+    s32                field_34;
+    s8                 unk_38[12];
+    s8                 field_44;
+    s8                 unk_45[5];
+    s16                field_4A;
+    s8                 field_4C;
+    s8                 unk_4D[3];
+    s8                 unk_50[36];
+    s8                 field_74;
+    s8                 unk_75[5];
+    s16                field_7A;
+    s32                field_7C;
+    s32                field_80;
+    s32                field_84;
+    s32                field_88;
+    s32                field_8C;
+    s32                field_90;
+    s32                field_94;
+    s16                field_98;
+    s16                field_9A;
+    u8                 unk_9C[4];
+    u8                 field_A0;
+    u8                 field_A1;
+    u8                 field_A2;
+    u8                 field_A3;
+    s32                field_A4;
+    s_func_8006CC44_A8 field_A8[4];
+    u8                 field_C8;
+    u8                 unk_C9[1];
+    s16                field_CA;
+    // TODO: May be incomplete.
 } s_func_8006CC44;
 
 typedef struct
@@ -308,7 +360,7 @@ typedef struct
     char unk_0[0xC];
     s32 field_C;
     s_8002AC04* field_10;
-    u32 field_14_0 : 16;
+    u32 field_14_0  : 16;
     u32 field_14_16 : 8;
     u32 field_14_24 : 7;
     u32 field_14_31 : 1;
@@ -2537,6 +2589,8 @@ u16 func_80069810();
 
 void func_80069820(u16);
 
+void func_80069994(s_func_800699E4* arg0);
+
 void func_800699E4(s_func_800699E4* arg0);
 
 void func_800699F8(s_func_800699F8* result, s32 posX, s32 posZ);
@@ -2551,7 +2605,11 @@ void func_8006AB50(s_func_8006CC44* arg0, VECTOR3* vec, s_func_8006AB50* arg2, s
 
 void func_8006ABC0(s_func_8006ABC0* result, VECTOR3* vec, s_func_8006AB50* arg2);
 
+void func_8006AD44(s_func_8006CC44* arg0, s_func_800699E4* arg1);
+
 void func_8006BDDC(s_func_8006BDDC* arg0, s16 arg1, s16 arg2);
+
+void func_8006C838(s_func_8006CC44* arg0, s_func_800699E4* arg1);
 
 s32 func_8006CC44(s32 arg0, s32 arg1, s_func_8006CC44* arg2);
 
