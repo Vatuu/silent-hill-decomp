@@ -1572,7 +1572,7 @@ extern s32 D_800C3920;
 
 extern GsCOORD2PARAM D_800C3928;
 
-extern u8 D_800C3950;
+extern s8 D_800C3950;
 
 extern s32 D_800C3954;
 

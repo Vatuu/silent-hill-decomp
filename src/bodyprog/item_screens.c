@@ -152,7 +152,110 @@ void func_8004C040() // 0x8004C040
     SetGeomOffset(D_800C3958, D_800C395C);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/item_screens", Inventory_ExitAnimEquippedItemUpdate); // 0x8004C088
+void Inventory_ExitAnimEquippedItemUpdate(u8* arg0) // 0x8004C088
+{
+    s8       temp_v0;
+    s32      temp;
+    s_Model* modelPtr3;
+    s_Model* extraModelPtr2;
+    s_Model* extraModelPtr0;
+    s_Model* extraModelPtr1;
+    s_Model* modelPtr0;
+    s_Model* modelPtr1;
+
+    func_8007F1CC();
+
+    temp = g_SysWork.player_4C.extra_128.field_1C;
+
+    if (g_SysWork.player_4C.extra_128.field_1C < 2 && temp >= 0)
+    {
+        if (D_800C3950 != g_SysWork.playerCombatInfo_38.field_F)
+        {
+            g_SysWork.playerCombatInfo_38.isAiming_13 = 0;
+        }
+
+        temp_v0 = D_800C3950 % 10;
+
+        if (temp_v0 == 5 && g_SysWork.playerCombatInfo_38.field_F != temp_v0)
+        {
+            goto Inventory_ExitAnimEquippedItemUpdate_block; // TODO: Remove goto if possible.
+        }
+
+        if (temp_v0 == 2 && g_SysWork.playerCombatInfo_38.field_F != temp_v0)
+        {
+        Inventory_ExitAnimEquippedItemUpdate_block:
+            g_SysWork.player_4C.chara_0.field_44                       = 0;
+            g_SysWork.player_4C.chara_0.properties_E4.player.field_114 = 0;
+        }
+
+        switch (g_SysWork.player_4C.extra_128.field_24)
+        {
+            case 9:
+            case 10:
+            case 11:
+            case 29:
+            case 30:
+                break;
+
+            default:
+
+                if ((g_SysWork.player_4C.extra_128.field_1C == 1) && ((s8)D_800C3950 != g_SysWork.playerCombatInfo_38.field_F))
+                {
+                    g_SysWork.player_4C.extra_128.field_1C                     = 0;
+                    g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C = 0;
+                }
+
+                if (g_SysWork.player_4C.extra_128.field_24 >= 0x14 && g_SysWork.playerCombatInfo_38.field_F != -1 && (s8)D_800C3950 == g_SysWork.playerCombatInfo_38.field_F)
+                {
+                    extraModelPtr0 = &g_SysWork.player_4C.extra_128.model_0;
+                    if (extraModelPtr0->anim_4.animIdx_0 >= 0x42U)
+                    {
+                        modelPtr0 = &g_SysWork.player_4C.chara_0.model_0;
+                        extraModelPtr0->anim_4.animIdx_0 -= 0xA;
+                        g_SysWork.player_4C.chara_0.model_0.state_2       = 0;
+                        g_SysWork.player_4C.chara_0.model_0.stateStep_3   = 0;
+                        g_SysWork.player_4C.extra_128.model_0.state_2     = 0;
+                        g_SysWork.player_4C.extra_128.model_0.stateStep_3 = 0;
+                        modelPtr0->anim_4.animIdx_0 -= 0xA;
+                    }
+                }
+                else
+                {
+                    modelPtr1      = &g_SysWork.player_4C.chara_0.model_0;
+                    extraModelPtr1 = &g_SysWork.player_4C.extra_128.model_0;
+
+                    modelPtr1->anim_4.animIdx_0                       = 3;
+                    modelPtr1->anim_4.keyframeIdx0_8                  = 0;
+                    extraModelPtr1->anim_4.animIdx_0                  = 3;
+                    extraModelPtr1->anim_4.keyframeIdx0_8             = 0;
+                    g_SysWork.player_4C.chara_0.model_0.state_2       = 0;
+                    g_SysWork.player_4C.chara_0.model_0.stateStep_3   = 0;
+                    g_SysWork.player_4C.extra_128.field_20            = 0;
+                    g_SysWork.player_4C.extra_128.field_24            = 0;
+                    g_SysWork.player_4C.extra_128.model_0.state_2     = 0;
+                    g_SysWork.player_4C.extra_128.model_0.stateStep_3 = 0;
+                }
+                g_SysWork.player_4C.chara_0.properties_E4.player.field_126        = 0;
+                g_SysWork.player_4C.chara_0.properties_E4.player.properties_E4[1] = 0;
+        }
+    }
+
+    modelPtr3      = &g_SysWork.player_4C.chara_0.model_0;
+    extraModelPtr2 = &g_SysWork.player_4C.extra_128.model_0;
+
+    modelPtr3->anim_4.keyframeIdx1_A       = 0x1000;
+    extraModelPtr2->anim_4.keyframeIdx1_A  = 0x1000;
+    g_SysWork.player_4C.extra_128.field_18 = 0x7FF;
+    modelPtr3->anim_4.time_4               = FP_TO(modelPtr3->anim_4.keyframeIdx0_8, Q12_SHIFT);
+    extraModelPtr2->anim_4.time_4          = FP_TO(extraModelPtr2->anim_4.keyframeIdx0_8, Q12_SHIFT);
+
+    func_800446D8((s_Skeleton*)FS_BUFFER_0, g_SysWork.playerBoneCoords_890, modelPtr3->anim_4.keyframeIdx0_8, modelPtr3->anim_4.keyframeIdx0_8, 0x1000);
+
+    g_SysWork.player_4C.extra_128.field_18 = 0x3F800;
+
+    func_800446D8((s_Skeleton*)FS_BUFFER_0, g_SysWork.playerBoneCoords_890, extraModelPtr2->anim_4.keyframeIdx0_8, extraModelPtr2->anim_4.keyframeIdx0_8, 0x1000);
+    func_8004C040();
+}
 
 s32 func_8004C328() // 0x8004C328
 {
