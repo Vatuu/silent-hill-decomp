@@ -5,6 +5,7 @@
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/libsd.h"
+#include "bodyprog/math.h"
 #include "main/fsqueue.h"
 
 #define CD_ERROR_LIMIT 600 // Matches value used in beatmania `FSCD.C`.
@@ -382,13 +383,22 @@ void func_800485D8() // 0x800485D8
     {
         D_800C1658.field_E = 0xFFFF;
 
-        // TODO: Move assignments out.
-        if (D_800C1678.volumeBgm_8 <= 0 || (temp_v0 = D_800C1678.volumeBgm_8 - D_800C1658.field_14, D_800C1678.volumeBgm_8 = temp_v0, ((temp_v0 << 16) <= 0)))
+        if (D_800C1678.volumeBgm_8 <= 0)
         {
             D_800C1678.volumeBgm_8 = 0;
             func_80046B78(&D_800C1678);
         }
-        
+        else
+        {
+            D_800C1678.volumeBgm_8 -= D_800C1658.field_14;
+
+            if ((D_800C1678.volumeBgm_8 << 16) <= 0)
+            {
+                D_800C1678.volumeBgm_8 = 0;
+                func_80046B78(&D_800C1678);
+            }
+        }
+
         D_800C1678.field_6 = D_800C1678.volumeBgm_8;
         
         Sd_SetVolBgm(D_800C1678.volumeBgm_8, D_800C1678.volumeBgm_8);
