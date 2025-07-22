@@ -11,17 +11,17 @@
 // ENUMS
 // ======
 
-typedef enum _IntentoryItemFlags
+typedef enum _InventoryItemFlags
 {
-    IntentoryItemFlag_PlateOfTurtle   = 1 << 0,
-    IntentoryItemFlag_PlateOfHatter   = 1 << 1,
-    IntentoryItemFlag_PlateOfCat      = 1 << 2,
-    IntentoryItemFlag_PlateOfQueen    = 1 << 3,
-    IntentoryItemFlag_Lighter         = 1 << 4,
-    IntentoryItemFlag_Camera          = 1 << 5,
-    IntentoryItemFlag_VideoTape       = 1 << 6,
-    IntentoryItemFlag_ChannelingStone = 1 << 7
-} s_IntentoryItemFlags;
+    InventoryItemFlag_PlateOfTurtle   = 1 << 0,
+    InventoryItemFlag_PlateOfHatter   = 1 << 1,
+    InventoryItemFlag_PlateOfCat      = 1 << 2,
+    InventoryItemFlag_PlateOfQueen    = 1 << 3,
+    InventoryItemFlag_Lighter         = 1 << 4,
+    InventoryItemFlag_Camera          = 1 << 5,
+    InventoryItemFlag_VideoTape       = 1 << 6,
+    InventoryItemFlag_ChannelingStone = 1 << 7
+} e_InventoryItemFlags;
 
 typedef enum _InventorySelectionId
 {
@@ -34,7 +34,7 @@ typedef enum _InventorySelectionId
     InventorySelectionId_EquippedItemCmd = 6,
     InventorySelectionId_Health          = 7, // Used for animation when user selects health item.
     InventorySelectionId_Examine         = 8
-} s_InventorySelectionId;
+} e_InventorySelectionId;
 
 // ========
 // STRUCTS

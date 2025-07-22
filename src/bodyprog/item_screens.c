@@ -3113,66 +3113,66 @@ void func_80054CAC(u8 itemId, s32 itemCount) // 0x80054CAC
             break;
 
         case InventoryItemId_ChannelingStone:
-            if (!(g_SavegamePtr->field_23F & IntentoryItemFlag_ChannelingStone))
+            if (!(g_SavegamePtr->field_23F & InventoryItemFlag_ChannelingStone))
             {
                 g_SavegamePtr->hyperBlasterFlags_25C_3++;
-                g_SavegamePtr->field_23F |= IntentoryItemFlag_ChannelingStone; // specialItemFlags?
+                g_SavegamePtr->field_23F |= InventoryItemFlag_ChannelingStone; // specialItemFlags?
             }
             break;
 
         case InventoryItemId_PlateOfTurtle:
-            if (!(g_SavegamePtr->field_23F & IntentoryItemFlag_PlateOfTurtle))
+            if (!(g_SavegamePtr->field_23F & InventoryItemFlag_PlateOfTurtle))
             {
                 g_SavegamePtr->pickedUpItemCount_23C++;
-                g_SavegamePtr->field_23F |= IntentoryItemFlag_PlateOfTurtle;
+                g_SavegamePtr->field_23F |= InventoryItemFlag_PlateOfTurtle;
             }
             break;
 
         case InventoryItemId_PlateOfHatter:
-            if (!(g_SavegamePtr->field_23F & IntentoryItemFlag_PlateOfHatter))
+            if (!(g_SavegamePtr->field_23F & InventoryItemFlag_PlateOfHatter))
             {
                 g_SavegamePtr->pickedUpItemCount_23C++;
-                g_SavegamePtr->field_23F |= IntentoryItemFlag_PlateOfHatter;
+                g_SavegamePtr->field_23F |= InventoryItemFlag_PlateOfHatter;
             }
             break;
 
         case InventoryItemId_PlateOfCat:
-            if (!(g_SavegamePtr->field_23F & IntentoryItemFlag_PlateOfCat))
+            if (!(g_SavegamePtr->field_23F & InventoryItemFlag_PlateOfCat))
             {
                 g_SavegamePtr->pickedUpItemCount_23C++;
-                g_SavegamePtr->field_23F |= IntentoryItemFlag_PlateOfCat;
+                g_SavegamePtr->field_23F |= InventoryItemFlag_PlateOfCat;
             }
             break;
 
         case InventoryItemId_PlateOfQueen:
-            if (!(g_SavegamePtr->field_23F & IntentoryItemFlag_PlateOfQueen))
+            if (!(g_SavegamePtr->field_23F & InventoryItemFlag_PlateOfQueen))
             {
                 g_SavegamePtr->pickedUpItemCount_23C++;
-                g_SavegamePtr->field_23F |= IntentoryItemFlag_PlateOfQueen;
+                g_SavegamePtr->field_23F |= InventoryItemFlag_PlateOfQueen;
             }
             break;
 
         case InventoryItemId_Lighter:
-            if (!(g_SavegamePtr->field_23F & IntentoryItemFlag_Lighter))
+            if (!(g_SavegamePtr->field_23F & InventoryItemFlag_Lighter))
             {
                 g_SavegamePtr->pickedUpItemCount_23C++;
-                g_SavegamePtr->field_23F |= IntentoryItemFlag_Lighter;
+                g_SavegamePtr->field_23F |= InventoryItemFlag_Lighter;
             }
             break;
 
         case InventoryItemId_VideoTape:
-            if (!(g_SavegamePtr->field_23F & IntentoryItemFlag_VideoTape))
+            if (!(g_SavegamePtr->field_23F & InventoryItemFlag_VideoTape))
             {
                 g_SavegamePtr->pickedUpItemCount_23C++;
-                g_SavegamePtr->field_23F |= IntentoryItemFlag_VideoTape;
+                g_SavegamePtr->field_23F |= InventoryItemFlag_VideoTape;
             }
             break;
 
         case InventoryItemId_Camera:
-            if (!(g_SavegamePtr->field_23F & IntentoryItemFlag_Camera))
+            if (!(g_SavegamePtr->field_23F & InventoryItemFlag_Camera))
             {
                 g_SavegamePtr->pickedUpItemCount_23C++;
-                g_SavegamePtr->field_23F |= IntentoryItemFlag_Camera;
+                g_SavegamePtr->field_23F |= InventoryItemFlag_Camera;
             }
             break;
 

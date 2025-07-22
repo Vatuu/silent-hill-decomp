@@ -36,6 +36,28 @@ typedef enum
     CardIoMode_Create  = 4,
 } e_CardIoMode;
 
+typedef enum
+{
+    CardResult_0 = 0,     // "Card not connected"
+    CardResult_1 = 1,     // Default result code before checks are made, success code?
+    CardResult_2 = 2,     // `Savegame_CardState_Init` `EvSpNEW` "No writing after connection"
+    CardResult_3 = 3,     // `Savegame_CardState_Init` `EvSpIOE` "Connected"
+    CardResult_4 = 4,     // `Savegame_CardState_Load` `EvSpNEW` "Uninitialized card"
+    CardResult_5 = 5,     // `Savegame_CardState_DirRead` when (g_CardWork.field_70 == 1)
+    CardResult_6 = 6,     // `Savegame_CardState_DirRead` when !(g_CardWork.field_70 == 1)
+    CardResult_7 = 7,     // `Savegame_CardState_FileCreate` after 15 retries
+
+    // 8, 9, 10 are usually treated as same result by savegame code?
+    CardResult_8 = 8,     // `Savegame_CardState_FileOpen` after 15 retries
+    CardResult_9 = 9,     // `Savegame_CardState_FileReadWrite` after 15 retries
+    CardResult_10 = 10,   // `Savegame_CardState_FileReadWrite` after 15 retries
+
+    CardResult_11 = 11,   // `Savegame_CardState_FileReadWrite` `EvSpIOE` "Completed"
+
+    CardResult_100 = 100, // Used outside of main memcard code.
+    CardResult_101 = 101, // Used outside of main memcard code.
+} e_CardResult;
+
 // ================
 // UNKNOWN STRUCTS
 // ================
@@ -73,7 +95,7 @@ typedef struct
     s32 devicesPending_0; /** Bitfield of device IDs, each set bit index is an ID that must be read/initialized first. */
     s32 state_4;          /** `e_CardState` */
     s32 stateStep_8;
-    s32 stateResult_C;
+    s32 stateResult_C;    /** `e_CardResult` */
     s32 eventSwSpIOE_10;
     s32 eventSwSpERROR_14;
     s32 eventSwSpTIMOUT_18;
@@ -117,7 +139,7 @@ typedef struct
     s32 fileIdx_8;
     s32 saveIdx_C;
     s32 field_10;
-    s32 lastCardResult_14;
+    s32 lastCardResult_14; /** `e_CardResult` */
 } s_800B55E8;
 STATIC_ASSERT_SIZEOF(s_800B55E8, 24);
 
@@ -139,7 +161,7 @@ typedef struct
 {
     s_MemCardBasicInfo          devices_0[CARD_DEVICE_COUNT];
     s_800B55E8                  field_E0[2];
-    s32                         field_110;
+    s32                         field_110; // Passed to `s_800B55E8_Init` as `lastCardResult`.
     u8                          unk_114[4];
     s_PsxSaveBlock              saveBlock_118;
     s_MemCardInfo_BasicSaveInfo saveInfo_318;
@@ -356,7 +378,7 @@ void Savegame_CardHwEventSpTIMOUT();
 
 void Savegame_CardHwEventSpUNKNOWN();
 
-s32 Savegame_CardResult();
+s32 Savegame_CardResult(); /** `e_CardResult` */
 
 s32 Savegame_CardRequest(e_CardIoMode mode, s32 deviceId, s_CardDirectory* outDir, char* filename, s32 createBlockCount, s32 fileOffset, void* outBuf, s32 bufSize);
 
