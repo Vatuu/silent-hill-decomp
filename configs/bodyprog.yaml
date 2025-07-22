@@ -72,7 +72,7 @@ segments:
       - [0x109C, .rodata, libsd/bodyprog_80045A7C]  # Jumptable: `Sd_EngineCmd`
                                                     # Jumptable: `func_80045BD8`
       - [0x11C4, .rodata, bodyprog_CD_80047D50] # Jumptable: `func_800482D8`
-      - [0x11D8, rodata]
+      - [0x1200, rodata]
       - [0x1334, .rodata, item_screens]
       - [0x179C, rodata]
       #- [0x1704, .rodata, item_screens] # Data: `Gfx_Inventory_ScrollArrowsDraw`

@@ -315,8 +315,8 @@ void func_800485C0(s32 idx) // 0x800485C0
     D_800C15F8[idx] = 0;
 }
 
-// TODO: .rodata migration.
-#ifdef NON_MATCHING
+const s32 g_rodataPad_80025D38 = 0;
+
 void func_800485D8() // 0x800485D8
 {
     s16 temp_v0;
@@ -332,7 +332,7 @@ void func_800485D8() // 0x800485D8
     s32 var_v0_2;
     u32 temp_v1;
 
-    D_800C37DD = D_800C16A8;
+    D_800C37DD = D_800C16A8[0];
     switch (D_800C37DD)
     {
         case 0:
@@ -481,9 +481,6 @@ void func_800485D8() // 0x800485D8
         D_800C1658.field_0 = 0;
     }
 }
-#else
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_CD_80047D50", func_800485D8);
-#endif
 
 u8 func_80048954(s32 com, u8* param, u8* res) // 0x80048954
 {

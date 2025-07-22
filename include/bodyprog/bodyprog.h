@@ -1572,9 +1572,9 @@ extern s8 D_800C166C;
 
 extern s8 D_800C166D;
 
-extern s8 D_800C166E;
+extern u8 D_800C166E;
 
-extern s8 D_800C166F;
+extern u8 D_800C166F;
 
 extern u8 D_800C1671;
 
