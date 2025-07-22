@@ -147,8 +147,8 @@ void func_8002E7BC() // 0x8002E7BC
     func_8002E8E4();
     Savegame_CardEventsInit();
 
-    s_800B55E8_Init(&D_800B5508.field_E0[0], 0, 0, 0, 0, 0, CardResult_0);
-    s_800B55E8_Init(&D_800B5508.field_E0[1], 0, 0, 0, 0, 0, CardResult_0); // `D_800B5600`
+    s_800B55E8_Init(&D_800B5508.field_E0[0], 0, 0, 0, 0, 0, CardResult_NotConnected);
+    s_800B55E8_Init(&D_800B5508.field_E0[1], 0, 0, 0, 0, 0, CardResult_NotConnected); // `D_800B5600`
 }
 
 void func_8002E830() // 0x8002E830
@@ -169,7 +169,7 @@ void func_8002E86C() // 0x8002E86C
 {
     D_800B5508.field_110 = 0;
 
-    s_800B55E8_Init(&D_800B5508.field_E0[1], 0, 0, 0, 0, 0, CardResult_0);
+    s_800B55E8_Init(&D_800B5508.field_E0[1], 0, 0, 0, 0, 0, CardResult_NotConnected);
 }
 
 s32 func_8002E898() // 0x8002E898
@@ -195,7 +195,7 @@ void func_8002E8E4() // 0x8002E8E4
 {
     D_800B5508.field_110 = 0;
 
-    s_800B55E8_Init(&D_800B5508.field_E0[1], 0, 0, 0, 0, 0, CardResult_1);
+    s_800B55E8_Init(&D_800B5508.field_E0[1], 0, 0, 0, 0, 0, CardResult_Success);
 }
 
 s32 func_8002E914() // 0x8002E914
@@ -219,7 +219,7 @@ s32 func_8002E94C(s32 arg0, s32 deviceId, s32 fileIdx, s32 saveIdx) // 0x8002E94
         return 0;
     }
 
-    s_800B55E8_Init(&D_800B5508.field_E0[0], arg0, deviceId, fileIdx, saveIdx, 0, CardResult_1);
+    s_800B55E8_Init(&D_800B5508.field_E0[0], arg0, deviceId, fileIdx, saveIdx, 0, CardResult_Success);
     return 1;
 }
 
@@ -358,7 +358,7 @@ void func_8002EB88()
             break;
     }
 
-    if (ptr->field_0 != 0 && ptr->lastCardResult_14 != CardResult_1)
+    if (ptr->field_0 != 0 && ptr->lastCardResult_14 != CardResult_Success)
     {
         ptr->field_0 = 0;
         if (ptr == &D_800B5508.field_E0[1])
@@ -372,7 +372,7 @@ void func_8002ECE0(s_800B55E8* arg0) // 0x8002ECE0
 {
     if (Savegame_CardDeviceFormat(arg0->deviceId_4) != 0)
     {
-        arg0->lastCardResult_14 = CardResult_11;
+        arg0->lastCardResult_14 = CardResult_FileIoComplete;
 
         D_800B5508.devices_0[arg0->deviceId_4].memoryCardStatus_0 = 3;
 
@@ -382,7 +382,7 @@ void func_8002ECE0(s_800B55E8* arg0) // 0x8002ECE0
     }
     else
     {
-        arg0->lastCardResult_14 = CardResult_10;
+        arg0->lastCardResult_14 = CardResult_FileIoError;
     }
 }
 
@@ -395,7 +395,7 @@ void func_8002ED7C(s_800B55E8* arg0) // 0x8002ED7C
     s_MemCardInfo_BasicSaveInfo* temp_a1;
     s_MemCardBasicInfo*          ptr;
 
-    arg0->lastCardResult_14 = CardResult_1;
+    arg0->lastCardResult_14 = CardResult_Success;
 
     ptr = &D_800B5508.devices_0[arg0->deviceId_4];
 
@@ -414,29 +414,29 @@ void func_8002ED7C(s_800B55E8* arg0) // 0x8002ED7C
             cardResult = Savegame_CardResult();
             switch (cardResult)
             {
-                case CardResult_0:
+                case CardResult_NotConnected:
                     Savegame_GameMemDataClear(arg0->deviceId_4);
                     ptr->memoryCardStatus_0 = 1;
-                    arg0->lastCardResult_14 = CardResult_0;
+                    arg0->lastCardResult_14 = cardResult;
                     break;
 
-                case CardResult_2:
+                case CardResult_InitError:
                     arg0->field_10 = 2;
                     break;
 
-                case CardResult_3:
+                case CardResult_InitComplete:
                     switch(ptr->memoryCardStatus_0)
                     {
                         case 3:
-                            arg0->lastCardResult_14 = CardResult_11;
+                            arg0->lastCardResult_14 = CardResult_FileIoComplete;
                             break;
 
                         case 4:
-                            arg0->lastCardResult_14 = CardResult_4;
+                            arg0->lastCardResult_14 = CardResult_LoadError;
                             break;
 
                         case 5:
-                            arg0->lastCardResult_14 = CardResult_10;
+                            arg0->lastCardResult_14 = CardResult_FileIoError;
                             break;
 
                         default:
@@ -459,13 +459,13 @@ void func_8002ED7C(s_800B55E8* arg0) // 0x8002ED7C
             cardResult = Savegame_CardResult();
             switch (cardResult)
             {
-                case CardResult_0:
+                case CardResult_NotConnected:
                     Savegame_GameMemDataClear(arg0->deviceId_4);
                     arg0->lastCardResult_14 = cardResult;
                     ptr->memoryCardStatus_0 = 1;
                     break;
 
-                case CardResult_4:
+                case CardResult_LoadError:
                     Savegame_GameMemDataClear(arg0->deviceId_4);
                     arg0->lastCardResult_14 = cardResult;
                     ptr->memoryCardStatus_0 = 4;
@@ -522,23 +522,23 @@ void func_8002ED7C(s_800B55E8* arg0) // 0x8002ED7C
             cardResult = Savegame_CardResult();
             switch (cardResult)
             {
-                case CardResult_0:
+                case CardResult_NotConnected:
                     Savegame_GameMemDataClear(arg0->deviceId_4);
 
                     arg0->lastCardResult_14 = cardResult;
                     ptr->memoryCardStatus_0 = 1;
                     break;
 
-                case CardResult_8:
-                case CardResult_9:
-                case CardResult_10:
+                case CardResult_FileOpenError:
+                case CardResult_FileSeekError:
+                case CardResult_FileIoError:
                     arg0->field_10 = 0;
 
                     if (D_800B261C >= 3)
                     {
                         Savegame_GameMemDataClear(arg0->deviceId_4);
 
-                        arg0->lastCardResult_14 = CardResult_10;
+                        arg0->lastCardResult_14 = CardResult_FileIoError;
                         ptr->memoryCardStatus_0 = 5;
                         break;
                     }
@@ -547,7 +547,7 @@ void func_8002ED7C(s_800B55E8* arg0) // 0x8002ED7C
                     arg0->field_10 = 2;
                     break;
 
-                case CardResult_11:
+                case CardResult_FileIoComplete:
                     arg0->field_10 = 8;
                     break;
             }
@@ -575,7 +575,7 @@ void func_8002ED7C(s_800B55E8* arg0) // 0x8002ED7C
 
         case 9:
             ptr->field_18           = func_8002F278(arg0->deviceId_4, &D_800B2628);
-            arg0->lastCardResult_14 = CardResult_11;
+            arg0->lastCardResult_14 = CardResult_FileIoComplete;
             ptr->memoryCardStatus_0 = 3;
             break;
     }
@@ -610,7 +610,7 @@ void func_8002F2C4(s_800B55E8* arg0)
 
     saveInfo = &D_800B5508.devices_0[arg0->deviceId_4];
 
-    arg0->lastCardResult_14 = CardResult_1;
+    arg0->lastCardResult_14 = CardResult_Success;
 
     switch (arg0->field_10)
     {
@@ -622,7 +622,7 @@ void func_8002F2C4(s_800B55E8* arg0)
                     D_800B2774 = func_8002FC3C(arg0->deviceId_4);
                     if (D_800B2774 == -1)
                     {
-                        arg0->lastCardResult_14 = CardResult_10;
+                        arg0->lastCardResult_14 = CardResult_FileIoError;
                     }
                     else
                     {
@@ -679,19 +679,19 @@ void func_8002F2C4(s_800B55E8* arg0)
             cardResult = Savegame_CardResult();
             switch (cardResult)
             {
-                case CardResult_0:
+                case CardResult_NotConnected:
                     Savegame_GameMemDataClear(arg0->deviceId_4);
                     arg0->lastCardResult_14      = cardResult;
                     saveInfo->memoryCardStatus_0 = 1;
                     break;
-                case CardResult_8:
-                case CardResult_9:
-                case CardResult_10:
+                case CardResult_FileOpenError:
+                case CardResult_FileSeekError:
+                case CardResult_FileIoError:
                     Savegame_GameMemDataClear(arg0->deviceId_4);
-                    arg0->lastCardResult_14      = CardResult_10;
+                    arg0->lastCardResult_14      = CardResult_FileIoError;
                     saveInfo->memoryCardStatus_0 = 0;
                     break;
-                case CardResult_11:
+                case CardResult_FileIoComplete:
                     arg0->field_10 = 3;
                     break;
             }
@@ -717,7 +717,7 @@ void func_8002F2C4(s_800B55E8* arg0)
                 return;
             }
 
-            arg0->lastCardResult_14 = CardResult_11;
+            arg0->lastCardResult_14 = CardResult_FileIoComplete;
 
             if (arg0->field_0 == 2)
             {
@@ -740,7 +740,7 @@ void func_8002F61C(s_800B55E8* arg0)
 
     s_MemCardBasicInfo* ptr;
 
-    arg0->lastCardResult_14 = CardResult_1;
+    arg0->lastCardResult_14 = CardResult_Success;
 
     ptr = &D_800B5508.devices_0[arg0->deviceId_4];
 
@@ -763,7 +763,7 @@ void func_8002F61C(s_800B55E8* arg0)
                             arg0->field_10 = 3;
                             break;
                         case 3:
-                            arg0->lastCardResult_14 = CardResult_10;
+                            arg0->lastCardResult_14 = CardResult_FileIoError;
                             break;
                     }
                 }
@@ -783,7 +783,7 @@ void func_8002F61C(s_800B55E8* arg0)
                         }
                         else
                         {
-                            arg0->lastCardResult_14 = CardResult_10;
+                            arg0->lastCardResult_14 = CardResult_FileIoError;
                         }
                     }
                 }
@@ -800,7 +800,7 @@ void func_8002F61C(s_800B55E8* arg0)
                         arg0->field_10 = 5;
                         return;
                     case 3:
-                        arg0->lastCardResult_14 = CardResult_10;
+                        arg0->lastCardResult_14 = CardResult_FileIoError;
                         break;
                 }
             }
@@ -819,26 +819,26 @@ void func_8002F61C(s_800B55E8* arg0)
             cardResult = Savegame_CardResult();
             switch (cardResult)
             {
-                case CardResult_0:
+                case CardResult_NotConnected:
                     Savegame_GameMemDataClear(arg0->deviceId_4);
                     arg0->lastCardResult_14 = cardResult;
                     ptr->memoryCardStatus_0 = 1;
                     break;
-                case CardResult_7:
+                case CardResult_FileCreateError:
                     Savegame_GameMemDataClear(arg0->deviceId_4);
                     arg0->lastCardResult_14 = cardResult;
                     ptr->memoryCardStatus_0 = 0;
                     break;
-                case CardResult_8:
-                case CardResult_9:
-                case CardResult_10:
+                case CardResult_FileOpenError:
+                case CardResult_FileSeekError:
+                case CardResult_FileIoError:
                     Savegame_GameMemDataClear(arg0->deviceId_4);
-                    arg0->lastCardResult_14 = CardResult_10;
+                    arg0->lastCardResult_14 = CardResult_FileIoError;
                     ptr->memoryCardStatus_0 = 0;
                     Savegame_FilenameGenerate(filePath, D_800B2778);
                     Savegame_CardFileErase(arg0->deviceId_4, filePath);
                     break;
-                case CardResult_11:
+                case CardResult_FileIoComplete:
                     ptr->isFileUsed_4[D_800B2778] = 1;
                     if (arg0->field_0 == 3)
                     {
@@ -863,21 +863,21 @@ void func_8002F61C(s_800B55E8* arg0)
             cardResult = Savegame_CardResult();
             switch (cardResult)
             {
-                case CardResult_0:
+                case CardResult_NotConnected:
                     Savegame_GameMemDataClear(arg0->deviceId_4);
                     arg0->lastCardResult_14 = cardResult;
                     ptr->memoryCardStatus_0 = 1;
                     break;
 
-                case CardResult_8:
-                case CardResult_9:
-                case CardResult_10:
+                case CardResult_FileOpenError:
+                case CardResult_FileSeekError:
+                case CardResult_FileIoError:
                     Savegame_GameMemDataClear(arg0->deviceId_4);
-                    arg0->lastCardResult_14 = CardResult_10;
+                    arg0->lastCardResult_14 = CardResult_FileIoError;
                     ptr->memoryCardStatus_0 = 0;
                     break;
 
-                case CardResult_11:
+                case CardResult_FileIoComplete:
                     arg0->lastCardResult_14 = cardResult;
                     break;
             }
@@ -894,21 +894,21 @@ void func_8002F61C(s_800B55E8* arg0)
             cardResult = Savegame_CardResult();
             switch (cardResult)
             {
-                case CardResult_0:
+                case CardResult_NotConnected:
                     Savegame_GameMemDataClear(arg0->deviceId_4);
                     arg0->lastCardResult_14 = cardResult;
                     ptr->memoryCardStatus_0 = 1;
                     break;
 
-                case CardResult_8:
-                case CardResult_9:
-                case CardResult_10:
+                case CardResult_FileOpenError:
+                case CardResult_FileSeekError:
+                case CardResult_FileIoError:
                     Savegame_GameMemDataClear(arg0->deviceId_4);
-                    arg0->lastCardResult_14 = CardResult_10;
+                    arg0->lastCardResult_14 = CardResult_FileIoError;
                     ptr->memoryCardStatus_0 = 0;
                     break;
 
-                case CardResult_11:
+                case CardResult_FileIoComplete:
                     arg0->field_10 = 7;
                     break;
             }
@@ -927,21 +927,21 @@ void func_8002F61C(s_800B55E8* arg0)
             cardResult = Savegame_CardResult();
             switch (cardResult)
             {
-                case CardResult_0:
+                case CardResult_NotConnected:
                     Savegame_GameMemDataClear(arg0->deviceId_4);
                     arg0->lastCardResult_14 = cardResult;
                     ptr->memoryCardStatus_0 = 1;
                     break;
 
-                case CardResult_8:
-                case CardResult_9:
-                case CardResult_10:
+                case CardResult_FileOpenError:
+                case CardResult_FileSeekError:
+                case CardResult_FileIoError:
                     Savegame_GameMemDataClear(arg0->deviceId_4);
-                    arg0->lastCardResult_14 = CardResult_10;
+                    arg0->lastCardResult_14 = CardResult_FileIoError;
                     ptr->memoryCardStatus_0 = 0;
                     break;
 
-                case CardResult_11:
+                case CardResult_FileIoComplete:
                     arg0->lastCardResult_14 = cardResult;
                     break;
             }
@@ -1473,7 +1473,7 @@ s32 Savegame_CardState_Init() // 0x80030AD8
     s32 channel;
     s32 result;
 
-    result  = CardResult_1;
+    result  = CardResult_Success;
     channel = ((g_CardWork.deviceId_3C & (1 << 2)) << 2) + (g_CardWork.deviceId_3C & ((1 << 0) | (1 << 1)));
 
     switch (g_CardWork.stateStep_8)
@@ -1502,7 +1502,7 @@ s32 Savegame_CardState_Init() // 0x80030AD8
                 case EvSpIOE: // Connected.
                     if (g_CardWork.cardIoMode_38 == CardIoMode_Init)
                     {
-                        result                 = CardResult_3;
+                        result                 = CardResult_InitComplete;
                         g_CardWork.state_4     = CardState_Idle;
                         g_CardWork.stateStep_8 = 0;
                     }
@@ -1522,7 +1522,7 @@ s32 Savegame_CardState_Init() // 0x80030AD8
                     g_CardWork.field_70 = 1;
                     if (g_CardWork.cardIoMode_38 == CardIoMode_Init)
                     {
-                        result                 = CardResult_2;
+                        result                 = CardResult_InitError;
                         g_CardWork.state_4     = CardState_Idle;
                         g_CardWork.stateStep_8 = 0;
                     }
@@ -1534,7 +1534,7 @@ s32 Savegame_CardState_Init() // 0x80030AD8
                     break;
 
                 case EvSpTIMOUT: // Not connected.
-                    result                 = CardResult_0;
+                    result                 = CardResult_NotConnected;
                     g_CardWork.state_4     = CardState_Idle;
                     g_CardWork.stateStep_8 = 0;
                     break;
@@ -1554,7 +1554,7 @@ s32 Savegame_CardState_Check() // 0x80030C88
     s32 channel;
     s32 result;
 
-    result  = CardResult_1;
+    result  = CardResult_Success;
     channel = ((g_CardWork.deviceId_3C & (1 << 2)) << 2) + (g_CardWork.deviceId_3C & ((1 << 0) | (1 << 1)));
 
     switch (g_CardWork.stateStep_8)
@@ -1582,7 +1582,7 @@ s32 Savegame_CardState_Check() // 0x80030C88
                     break;
 
                 case EvSpTIMOUT: // Card not connected.
-                    result                 = CardResult_0;
+                    result                 = CardResult_NotConnected;
                     g_CardWork.state_4     = CardState_Idle;
                     g_CardWork.stateStep_8 = 0;
                     break;
@@ -1603,7 +1603,7 @@ s32 Savegame_CardState_Load() // 0x80030DC8
     s32 channel;
     s32 result;
 
-    result  = CardResult_1;
+    result  = CardResult_Success;
     channel = ((g_CardWork.deviceId_3C & (1 << 2)) << 2) + (g_CardWork.deviceId_3C & ((1 << 0) | (1 << 1)));
 
     switch (g_CardWork.stateStep_8)
@@ -1648,14 +1648,14 @@ s32 Savegame_CardState_Load() // 0x80030DC8
                     }
                     else
                     {
-                        result                 = CardResult_4;
+                        result                 = CardResult_LoadError;
                         g_CardWork.state_4     = CardState_Idle;
                         g_CardWork.stateStep_8 = 0;
                     }
                     break;
 
                 case EvSpTIMOUT: // Not connected.
-                    result                 = CardResult_0;
+                    result                 = CardResult_NotConnected;
                     g_CardWork.state_4     = CardState_Idle;
                     g_CardWork.stateStep_8 = 0;
                     break;
@@ -1717,7 +1717,7 @@ s32 Savegame_CardState_FileCreate() // 0x800310B4
 {
     s32 result;
 
-    result = CardResult_1;
+    result = CardResult_Success;
 
     switch (g_CardWork.stateStep_8)
     {
@@ -1732,7 +1732,7 @@ s32 Savegame_CardState_FileCreate() // 0x800310B4
             {
                 if (g_CardWork.retryCount_78++ >= 15)
                 {
-                    result                 = CardResult_7;
+                    result                 = CardResult_FileCreateError;
                     g_CardWork.state_4     = CardState_Idle;
                     g_CardWork.stateStep_8 = 0;
                     break;
@@ -1755,7 +1755,7 @@ s32 Savegame_CardState_FileOpen() // 0x80031184
     s32 mode;
     s32 result;
 
-    result = CardResult_1;
+    result = CardResult_Success;
 
     switch (g_CardWork.stateStep_8)
     {
@@ -1786,7 +1786,7 @@ s32 Savegame_CardState_FileOpen() // 0x80031184
             {
                 if (g_CardWork.retryCount_78++ >= 15)
                 {
-                    result                 = CardResult_8;
+                    result                 = CardResult_FileOpenError;
                     g_CardWork.state_4     = CardState_Idle;
                     g_CardWork.stateStep_8 = 0;
                     break;
@@ -1808,7 +1808,7 @@ s32 Savegame_CardState_FileReadWrite() // 0x80031260
     s32 result;
     s32 ioResult;
 
-    result = CardResult_1;
+    result = CardResult_Success;
 
     switch (g_CardWork.stateStep_8)
     {
@@ -1822,7 +1822,7 @@ s32 Savegame_CardState_FileReadWrite() // 0x80031260
             {
                 if (g_CardWork.retryCount_78++ >= 15)
                 {
-                    result                 = CardResult_9;
+                    result                 = CardResult_FileSeekError;
                     g_CardWork.state_4     = CardState_Idle;
                     g_CardWork.stateStep_8 = 0;
                 }
@@ -1857,7 +1857,7 @@ s32 Savegame_CardState_FileReadWrite() // 0x80031260
             {
                 if (g_CardWork.retryCount_78++ >= 15)
                 {
-                    result                 = CardResult_10;
+                    result                 = CardResult_FileIoError;
                     g_CardWork.state_4     = CardState_Idle;
                     g_CardWork.stateStep_8 = 0;
                     close(g_CardWork.fileHandle_74);
@@ -1873,21 +1873,21 @@ s32 Savegame_CardState_FileReadWrite() // 0x80031260
             switch (Savegame_CardSwEventsTest())
             {
                 case EvSpIOE: // Completed.
-                    result                 = CardResult_11;
+                    result                 = CardResult_FileIoComplete;
                     g_CardWork.state_4     = CardState_Idle;
                     g_CardWork.stateStep_8 = 0;
                     close(g_CardWork.fileHandle_74);
                     break;
 
                 case EvSpTIMOUT: // Card not connected.
-                    result                 = CardResult_0;
+                    result                 = CardResult_NotConnected;
                     g_CardWork.state_4     = CardState_Idle;
                     g_CardWork.stateStep_8 = 0;
                     close(g_CardWork.fileHandle_74);
                     break;
 
                 case EvSpNEW: // New card detected.
-                    result                 = CardResult_10;
+                    result                 = CardResult_FileIoError;
                     g_CardWork.state_4     = CardState_Idle;
                     g_CardWork.stateStep_8 = 0;
                     close(g_CardWork.fileHandle_74);

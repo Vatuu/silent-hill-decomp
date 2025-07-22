@@ -38,21 +38,19 @@ typedef enum
 
 typedef enum
 {
-    CardResult_0 = 0,     // "Card not connected"
-    CardResult_1 = 1,     // Default result code before checks are made, success code?
-    CardResult_2 = 2,     // `Savegame_CardState_Init` `EvSpNEW` "No writing after connection"
-    CardResult_3 = 3,     // `Savegame_CardState_Init` `EvSpIOE` "Connected"
-    CardResult_4 = 4,     // `Savegame_CardState_Load` `EvSpNEW` "Uninitialized card"
-    CardResult_5 = 5,     // `Savegame_CardState_DirRead` when (g_CardWork.field_70 == 1)
-    CardResult_6 = 6,     // `Savegame_CardState_DirRead` when !(g_CardWork.field_70 == 1)
-    CardResult_7 = 7,     // `Savegame_CardState_FileCreate` after 15 retries
+    CardResult_NotConnected = 0, // "Card not connected"
+    CardResult_Success      = 1, // Default code returned when no errors occur?
+    CardResult_InitError    = 2, // `Savegame_CardState_Init` `EvSpNEW` "No writing after connection"
+    CardResult_InitComplete = 3, // `Savegame_CardState_Init` `EvSpIOE` "Connected"
+    CardResult_LoadError    = 4, // `Savegame_CardState_Load` `EvSpNEW` "Uninitialized card"
+    CardResult_5            = 5, // `Savegame_CardState_DirRead` when (g_CardWork.field_70 == 1)
+    CardResult_6            = 6, // `Savegame_CardState_DirRead` when !(g_CardWork.field_70 == 1)
 
-    // 8, 9, 10 are usually treated as same result by savegame code?
-    CardResult_8 = 8,     // `Savegame_CardState_FileOpen` after 15 retries
-    CardResult_9 = 9,     // `Savegame_CardState_FileReadWrite` after 15 retries
-    CardResult_10 = 10,   // `Savegame_CardState_FileReadWrite` after 15 retries
-
-    CardResult_11 = 11,   // `Savegame_CardState_FileReadWrite` `EvSpIOE` "Completed"
+    CardResult_FileCreateError = 7,  // `Savegame_CardState_FileCreate` after 15 retries
+    CardResult_FileOpenError   = 8,  // `Savegame_CardState_FileOpen` after 15 retries
+    CardResult_FileSeekError   = 9,  // `Savegame_CardState_FileReadWrite` after 15 retries
+    CardResult_FileIoError     = 10, // `Savegame_CardState_FileReadWrite` after 15 retries
+    CardResult_FileIoComplete  = 11, // `Savegame_CardState_FileReadWrite` `EvSpIOE` "Completed"
 
     CardResult_100 = 100, // Used outside of main memcard code.
     CardResult_101 = 101, // Used outside of main memcard code.
@@ -116,7 +114,7 @@ typedef struct
     s32   seekOffset_64;
     void* dataBuffer_68;
     s32   dataSize_6C;
-    s32   field_70;
+    s32   field_70; // Set by `Savegame_CardState_Init` `EvSpNEW` "No writing after connection"?
     s32   fileHandle_74;
     s32   retryCount_78;
     s32   field_7C;
