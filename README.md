@@ -380,18 +380,18 @@ git clone --recursive https://github.com/Vatuu/silent-hill-decomp.git && cd sile
 ```
 
 ### Place the ROM
-You will need to provide your own ROM dump of the NTSC-U 1.1 version of the game, if dumped correctly you should have a .BIN file with the SHA1 hash `34278D31D9B9B12B3B5DB5E45BCBE548991ECBC7` (616,494,480 Bytes / 587 MiB).
+You will need to provide your own ROM dump of the NTSC-U 1.1 version of the game. If dumped correctly, you will have a `.BIN` file with the SHA1 hash `34278D31D9B9B12B3B5DB5E45BCBE548991ECBC7` (616,494,480 Bytes / 587 MiB).
 
-After dumping, this BIN file must be placed as `rom/image/SLUS-00707.bin` in the repo.
+After dumping, the `.BIN` file must be placed as `rom/image/SLUS-00707.bin` in the repo.
 
 ### Setup Python virtual environment and requirements
-Modern Linux distros require a virtual environment to be setup before installing requirements with pip.
+Modern Linux distros require a virtual environment to be set up before installing requirements with pip.
 
-You can setup an environment in the repo folder with the following:
+You can set up an environment in the repo folder with the following:
 ```bash
-python3 -m venv .venv # creates a .venv folder with the environment
-source .venv/bin/activate # activates the environment (needs to be run in every new terminal session)
-python3 -m pip install -r requirements.txt # installs the project requirements from requirements.txt
+python3 -m venv .venv                      # Creates a `.venv` folder with the environment.
+source .venv/bin/activate                  # Activates the environment (needs to be run in every new terminal session).
+python3 -m pip install -r requirements.txt # Installs the project requirements from `requirements.txt`.
 ```
 
 ### Build the code

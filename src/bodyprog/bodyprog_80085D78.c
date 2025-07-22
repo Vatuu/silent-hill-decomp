@@ -1775,25 +1775,25 @@ void func_80089840(s_func_80089840* arg0) // 0x80089840
 
 void func_8008989C(s_SysWork_2514* arg0, u16 arg1, s32 (*arg2)(u16, s32)) // 0x8008989C
 {
-    s_func_8008989C* temp_s1;
-    s_func_8008989C* temp_s2;
-    s_func_8008989C* var_s0;
+    s_func_8008989C* ptr0;
+    s_func_8008989C* ptr1;
+    s_func_8008989C* ptr2;
 
     if (arg0 != NULL)
     {
-        var_s0 = arg0->field_18;
-        temp_s2 = (s_func_8008989C*)&arg0->field_18;
+        ptr2 = arg0->field_18;
+        ptr1 = (s_func_8008989C*)&arg0->field_18;
 
-        while (var_s0 != temp_s2)
+        while (ptr2 != ptr1)
         {
-            temp_s1 = var_s0->field_0;
+            ptr0 = ptr2->field_0;
 
-            if (arg2(var_s0->field_1E, arg1) != 0)
+            if (arg2(ptr2->field_1E, arg1) != 0)
             {
-                func_8009EC1C(arg0, var_s0);
+                func_8009EC1C(arg0, ptr2);
             }
 
-            var_s0 = temp_s1;
+            ptr2 = ptr0;
         }
     }
 }

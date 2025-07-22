@@ -1309,6 +1309,12 @@ extern u32 D_800A9FB0;
 
 extern s32 D_800A9FB4[];
 
+extern u8* D_800A9FC8[];
+
+extern s32* D_800A9FD8[];
+
+extern u8* D_800A9FDC[];
+
 extern s_800C37D8 D_800AA274[];
 
 extern u8 D_800AA5E0[];
@@ -1522,6 +1528,8 @@ extern u8 D_800C166A;
 
 extern s8 D_800C166C;
 
+extern s8 D_800C166D;
+
 extern s8 D_800C166E;
 
 extern s8 D_800C166F;
@@ -1537,6 +1545,8 @@ extern s16 D_800C167E;
 extern s_800C1670 D_800C1670;
 
 extern s_800C1678 D_800C1678;
+
+extern s16 D_800C1680;
 
 extern u8 g_Sd_VolumeBgm; // 0x800C1685
 
@@ -2124,6 +2134,8 @@ void func_800483D4();
 /** CD function. */
 void func_80048424();
 
+void func_80048498();
+
 /** Nullsub */
 void func_800485B0(s16 arg0, u8 arg1, u8 arg2, s16 arg3, s16 arg4);
 
@@ -2131,6 +2143,8 @@ void func_800485B0(s16 arg0, u8 arg1, u8 arg2, s16 arg3, s16 arg4);
 void func_800485B8(s32 arg0, u8 arg1, u32 arg2);
 
 void func_800485C0(s32 idx);
+
+void func_800485D8();
 
 u8 func_80048954(s32 com, u8* param, u8* res);
 
@@ -2493,6 +2507,8 @@ void func_8006BDDC(s_func_8006BDDC* arg0, s16 arg1, s16 arg2);
 
 s32 func_8006CC44(s32 arg0, s32 arg1, s_func_8006CC44* arg2);
 
+s8 func_8006DB3C(s8* arg0, VECTOR3* arg1, s32 arg2, SVECTOR3* arg3);
+
 s32 func_8006FD90(s_SubCharacter*, s32, s32, s32);
 
 s32 func_80070360(s_SubCharacter*, s32, s32);
@@ -2660,7 +2676,7 @@ s32 func_800382B0(s32 arg0);
 
 s32 func_80038A6C(VECTOR3* pos0, VECTOR3* pos1, s32 radius);
 
-/** Computes 2D distance on XZ plane between input position and camera position. */
+/** Computes the 2D distance on the XZ plane between the input position and the camera position. */
 s32 func_80038B44(VECTOR3* pos);
 
 void func_80037F24(s32);

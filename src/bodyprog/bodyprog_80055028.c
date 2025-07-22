@@ -775,7 +775,37 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006DA08); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006DAE4); // 0x8006DAE4
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006DB3C); // 0x8006DB3C
+static inline void func_8006DB3C_Inline(s8* arg0, VECTOR3* arg1, s32 arg2, u16* p)
+{
+    func_8006DAE4(arg0, arg1, arg2, (short)*p);
+}
+
+s8 func_8006DB3C(s8* arg0, VECTOR3* arg1, s32 arg2, SVECTOR3* arg3) // 0x8006DB3C
+{
+    s32 sp28;
+    s32 temp_s0;
+    s32 temp_v0;
+    s32 scratchAddr;
+
+    temp_v0 = func_8006A1A4(&sp28, arg3, 1);
+    *arg0 = 0;
+
+    if (func_8006DCE0((s32)PSX_SCRATCH, 1, 0, arg1, arg2, 0, 0, temp_v0, sp28) != 0)
+    {
+        temp_s0     = SetSp((s32)PSX_SCRATCH_ADDR(984));
+        scratchAddr = (s32)PSX_SCRATCH;
+        *arg0       = func_8006DEB0(arg0, scratchAddr);
+
+        SetSp(temp_s0);
+    }
+
+    if (*arg0 == 0)
+    {
+        func_8006DB3C_Inline(arg0, arg1, arg2, &((u8*)scratchAddr)[92]);
+    }
+
+    return *arg0;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006DC18); // 0x8006DC18
 

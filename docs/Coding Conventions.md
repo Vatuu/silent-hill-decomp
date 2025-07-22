@@ -78,7 +78,7 @@ typedef struct _MyStruct
 STATIC_ASSERT_SIZEOF(s_MyStruct, 806);
 ```
 
-Enum names should be prefixed with `e_` and named according to their purpose. Entries should be written in `PamelCase`, prefixed with the enum's name.
+Enum names should be prefixed with `e_` and named according to their purpose. Entries should be written in `PascalCase`, prefixed with the enum's name.
 
 Example:
 
