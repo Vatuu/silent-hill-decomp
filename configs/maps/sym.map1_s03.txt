@@ -26,6 +26,7 @@ Ai_Stalker_Init = 0x800D2F54; // type:func
 sharedFunc_800D3308_0_s00 = 0x800D31C0; // type:func
 sharedFunc_800D3B44_0_s00 = 0x800D39FC; // type:func
 sharedFunc_800D5098_0_s00 = 0x800D50F0; // type:func
+sharedFunc_800D5B48_0_s00 = 0x800D5BA0; // type:func
 sharedFunc_800D63D0_0_s00 = 0x800D6428; // type:func
 sharedFunc_800D6554_0_s00 = 0x800D65AC; // type:func
 sharedFunc_800D670C_0_s00 = 0x800D6764; // type:func
