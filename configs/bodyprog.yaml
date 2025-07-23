@@ -74,7 +74,7 @@ segments:
       - [0x11C4, .rodata, bodyprog_CD_80047D50] # Jumptable: `func_800482D8`
       - [0x1200, rodata]
       - [0x1334, .rodata, item_screens]
-      - [0x179C, rodata]
+      - [0x32F4, rodata]
       #- [0x1704, .rodata, item_screens] # Data: `Gfx_Inventory_ScrollArrowsDraw`
       #- [0x174C, rodata]
       #- [0x34C0, .rodata, item_screens]
@@ -121,7 +121,7 @@ segments:
       - [0x243c8,   c, view/vw_calc] # Contains part of SH2's `vb_main`?
       - [0x25d1c,   c, text_draw]
       - [0x26FEC,   c, item_screens]
-      - [0x304C8,   c, bodyprog_80055028]
+      - [0x30460,   c, bodyprog_80055028]
       - [0x5bde0,   c, view/vc_main]
       - [0x61218,   c, bodyprog_80085D78]
       - [0x6A3C0,   c, demo]

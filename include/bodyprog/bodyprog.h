@@ -409,6 +409,12 @@ typedef struct
     u16 field_1E;
 } s_func_8009ECCC;
 
+typedef struct
+{
+    DVECTOR field_0;
+    DVECTOR field_4;
+} s_constStructs_func_8004FBCC;
+
 // ========
 // STRUCTS
 // ========
@@ -1251,6 +1257,8 @@ extern s_FsImageDesc D_800A904C;
 
 extern s_FsImageDesc D_800A9054;
 
+extern s_FsImageDesc D_800A905C;
+
 extern s_FsImageDesc D_800A9064;
 
 extern s_FsImageDesc D_800A906C;
@@ -1489,6 +1497,10 @@ extern u8 D_800AE186;
 
 extern u8 D_800AE187;
 
+extern s16 D_800AE18C; // Maybe DVECTOR
+
+extern s16 D_800AE18E;
+
 extern s32 D_800AE190;
 
 extern s16 D_800AE198;
@@ -1530,6 +1542,12 @@ extern s32 D_800B2618;
 extern s32 D_800B261C;
 
 extern s32 D_800B2620;
+
+extern GsF_LIGHT D_800C3AC8[];
+
+extern GsDOBJ2 D_800C3E08;
+
+extern u8 D_800AD4A0[];
 
 extern DVECTOR g_Gfx_DebugStringPosition0;
 
@@ -1798,6 +1816,8 @@ extern GsCOORDINATE2 D_800C3AE8;
 extern SVECTOR3 D_800C3B38;
 
 extern VbRVIEW D_800C3B48;
+
+extern DVECTOR D_800C3B68[][4]; // Type assumed
 
 extern u8 D_800C3BB8[48];
 

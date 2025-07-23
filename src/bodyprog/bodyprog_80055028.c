@@ -9,6 +9,26 @@
 #include "bodyprog/player_logic.h"
 #include "main/rng.h"
 
+void func_80054FC0(s32* arg0, s32* arg1, u8 idx) // 0x80054FC0
+{
+    s32 var = D_800AD4A0[idx] - *arg0;
+    
+    if (var == 0)
+    {
+        return;
+    }
+    
+    if (*arg1 >= var)
+    {
+        *arg0 += var;
+        *arg1 -= var;
+        return;
+    }
+    
+    *arg0 += *arg1;
+    *arg1 = 0;
+}
+
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80055028); // 0x80055028
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_800550D0); // 0x800550D0
