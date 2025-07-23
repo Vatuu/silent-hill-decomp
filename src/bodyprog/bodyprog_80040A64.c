@@ -181,7 +181,37 @@ void func_80041D10(s_Skeleton* skels, s32 size) // 0x80041D10
 }
 
 // Crucial for map loading.
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80041D48); // 0x80041D48
+void func_80041D48() // 0x80041D48
+{
+    s32 i;
+	s32 y;
+    s16 j;
+	s16 x;
+
+    for (i = 0, y = 8, x = 0, j = 0; i < 8; i++, y++, x += 16)
+    {
+        if (y == 11)
+		{
+			y = 21;
+		}
+        func_8005B1A0(&D_800C1450.field_58[i], 0, 0, y, 0, 0, x, j);
+    }
+
+    func_8005B46C(&D_800C1450.field_0);
+    func_8005B474(&D_800C1450.field_0, D_800C1450.field_58, 8);
+
+    for (i = 0, y = 26, j = 0; i < 2; i++, x += 16)
+    {
+        func_8005B1A0(&D_800C1450.field_118[i], 0, 0, y, (i & 1) * 32, 0, x, j);
+        if (i & 1)
+		{
+			y++;
+		}
+    }
+
+    func_8005B46C(&D_800C1450.field_2C);
+    func_8005B474(&D_800C1450.field_2C, D_800C1450.field_118, 2);
+}
 
 void func_80041E98() // 0x80041E98
 {
@@ -189,7 +219,6 @@ void func_80041E98() // 0x80041E98
     D_800C1020.field_1C = 512;
 }
 
-// Matched in Decomp.me, but context is incorrect.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80041ED0); // 0x80041ED0
 
 void func_80041FF0() // 0x80041FF0
@@ -216,7 +245,7 @@ s32 func_80042178(s32* arg0) // 0x80042178
         return ret;
     }
 
-    ret = func_8005B4BC(arg0, &D_800C1450 + 11);
+    ret = func_8005B4BC(arg0, &D_800C1450.field_2C);
     if (ret != 0)
     {
         return ret;

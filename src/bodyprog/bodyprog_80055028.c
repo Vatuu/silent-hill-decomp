@@ -293,6 +293,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005AA08); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005AC50); // 0x8005AC50
 
+// Related to enviroments textures.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005B1A0); // 0x8005B1A0
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005B1FC); // 0x8005B1FC
@@ -343,6 +344,12 @@ void func_8005B46C(s32* arg0) // 0x8005B46C
     *arg0 = 0;
 }
 
+// Crucial for map loading.
+/** TODO: Reformulate the function.
+ * Thanks to the context provided by `func_80041D48` we know
+ * now that the accurate definition of the function is:
+ * void func_8005B474(s_800C1450_0* arg0, s_800C1450_58* arg1, s32 num);
+ */
 void func_8005B474(s32* arg0, u32 arg1, s32 idx) // 0x8005B474
 {
     u32* ptr;
@@ -352,21 +359,13 @@ void func_8005B474(s32* arg0, u32 arg1, s32 idx) // 0x8005B474
     var_a1  = arg1;
     temp_a2 = var_a1 + (idx * 24);
     ptr     = arg0 + 1;
-
-    if (var_a1 >= temp_a2)
+	
+    for (; var_a1 < temp_a2; ptr++)
     {
-        return;
-    }
-
-    do
-    {
-        *ptr   = var_a1;
+        *ptr = var_a1;
         var_a1 += 24;
-        *arg0  += 1;
-
-        ptr += 1;
+        *arg0 += 1;
     }
-    while (var_a1 < temp_a2);
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005B4BC); // 0x8005B4BC

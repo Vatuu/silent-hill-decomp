@@ -3111,7 +3111,57 @@ void func_800546A8(s32 arg0) // 0x800546A8
 INCLUDE_ASM("asm/bodyprog/nonmatchings/item_screens", func_800546A8); // 0x800546A8
 #endif
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/item_screens", func_80054720); // 0x80054720
+void func_80054720(s_TMDFile* arg0, s32 arg1, s32 arg2) 
+{
+    GsDOBJ2* ptr;
+    u8 var_v0;
+    struct TMD_STRUCT* objs = arg0->objects_C;
+
+    GsLinkObject4((u32)&objs[arg2], &D_800C3D78[arg1], 0);
+    
+    ptr = &D_800C3D78[arg1];
+    ptr->coord2 = &D_800C3E48[arg1];
+    
+    if (D_800AE187 != 0)
+    {
+        var_v0 = D_800AE187;
+    }
+    else
+    {
+        var_v0 = g_MapOverlayHeader.field_2C->field_0[arg2];
+    }
+
+    switch (var_v0) 
+    {
+        case 0x20: 
+        case 0x21: 
+        case 0x22:
+        case 0x80: 
+        case 0x81:
+        case 0x84: 
+        case 0x85:
+        case 0xA0: 
+        case 0xA1: 
+        case 0xA2:
+        case 0xC0: 
+        case 0xC1: 
+        case 0xC2:
+        case 0xE0: 
+        case 0xE1:
+        case 0x87:
+            ptr->attribute = 0;
+            break;
+    
+        default:
+            ptr->attribute = 0x40000000;
+            break;
+    }
+    
+    if (D_800AE180 < 10)
+    {
+        D_800AE180++;
+    }
+}
 
 void func_8005487C(s32 arg0) // 0x8005487C
 {

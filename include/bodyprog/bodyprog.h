@@ -79,6 +79,14 @@ typedef struct
 } s_8002AC04;
 STATIC_ASSERT_SIZEOF(s_8002AC04, 16);
 
+typedef struct
+{
+    s32 id_0;
+    s32 flags_4;
+    s32 objectCount_8;
+    struct TMD_STRUCT objects_C[1];
+} s_TMDFile;
+
 // Likely not `s_Skeleton` since `field_8` must be `s8`.
 typedef struct
 {
@@ -761,6 +769,24 @@ typedef struct
     u8  unk_C[16];
 } s_800C117C;
 STATIC_ASSERT_SIZEOF(s_800C117C, 28);
+
+typedef struct
+{
+    s8 unk0[0x2C];
+} s_800C1450_0;
+
+typedef struct
+{
+    s8 unk0[0x18];
+} s_800C1450_58;
+
+typedef struct
+{
+    s_800C1450_0  field_0;
+    s_800C1450_0  field_2C;
+    s_800C1450_58 field_58[8];
+    s_800C1450_58 field_118[2];
+} s_800C1450;
 
 typedef struct
 {
@@ -1461,7 +1487,7 @@ extern u8 D_800AE185;
 
 extern u8 D_800AE186;
 
-extern s8 D_800AE187;
+extern u8 D_800AE187;
 
 extern s32 D_800AE190;
 
@@ -1600,7 +1626,7 @@ extern s_800BCE18 D_800BCE18;
 
 extern s_800C1020 D_800C1020;
 
-extern s32 D_800C1450;
+extern s_800C1450 D_800C1450;
 
 extern s_800C117C D_800C117C[];
 
@@ -2294,7 +2320,7 @@ void GameFs_MapItemsTextureLoad(s32 mapId);
 
 void func_800546A8(s32 arg0);
 
-void func_80054720(void*, s32, s32);
+void func_80054720(s_TMDFile* arg0, s32 arg1, s32 arg2);
 
 void func_8005487C(s32);
 
@@ -2318,6 +2344,8 @@ s32 func_800557DC();
 void func_80055814(s32 arg0);
 
 void func_800560FC(s_800BE9FC* arg0);
+
+void func_8005B1A0(s_800C1450_58*, s32, s32, u8, s32, s32, s16, s16);
 
 void func_8005B370(s_func_8005B370* arg0);
 

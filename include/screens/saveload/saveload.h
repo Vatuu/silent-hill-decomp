@@ -79,10 +79,10 @@ typedef struct _SavegameEntry
      * value will be 1. If the user saves
      * to slot 2, the value will be 2. If the
      * user saves to slot 1 again, the value will be 3.
-     * Another reason to believe this may be buggy
+     * The reason to believe this may be buggy
      * is that by reproducing the previous example,
      * after the user saves to slot 2, if instead of
-     * saving in slot 1 they remove the memory
+     * saving in slot 1 the player removes the memory
      * card and save to slot 1, the value will
      * be 2 instead of 3.
      */
@@ -130,8 +130,8 @@ extern s32 D_801E7510;
  * This seems to be related to the color of the
  * borders of the file, but appears to do nothing
  * as the code only defines it as 1 or 0.
- * it might also be buggy as it is
- * constanly oscillates between 0 and 1. For example:
+ * It might also be buggy as it is constanly oscillating
+ * between 0 and 1. For example:
  * in `Gfx_SaveScreenDraw`, the code has a conditional
  * that writes 1, but a little later
  * in the same function, it writes 1 again
@@ -196,18 +196,17 @@ extern s16 g_HiddenElementsByDisplacement[MEMORY_CARD_SLOT_COUNT];
 
 extern s16 D_801E7574[MEMORY_CARD_SLOT_COUNT];
 
-/** @brief Stores the index of the element selected in each
+/** @brief This array is used to draw the flash of the selected save.
+ *
+ * Stores the index of the element selected in each
  * slot based on what is visually available in the slot.
  *
- * For example: if the user has 9 savegames in the file and wants to
- * create a new, separate savegame, the index of the `New Save` element will
- * be 4 and not 9 (index starting from 0) as it is the fifth element
- * visually available in the slot.
+ * For example: if the user has 9 savegames in the file and
+ * wants to create a new, separate savegame, the index of the
+ * `New Save` element will  be 4 and not 9 (index starting from 0)
+ * as it is the fifth element visually available in the slot.
  *
- * This array is used to draw the flash of the
- * selected save.
- *
- * @note Only the first two values are used.
+ * @note Only the first 4 bytes (as two s16 values) are used.
  * The next 8 bytes are unused, possibly from unused variables
  * which Splat detects incorrectly and merges it.
  */
