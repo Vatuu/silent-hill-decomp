@@ -586,7 +586,8 @@ void func_80069994(s_func_800699E4* arg0) // 0x80069994
     {
         arg0->field_30 = 0;
 
-        for (ptr = &arg0->field_34[0]; ptr < &arg0->field_34[64]; ptr++)
+        // TODO: Is this memset/bzero?
+        for (ptr = &arg0->field_34[0]; ptr < &arg0->field_34[256]; ptr++)
         {
             *ptr = 0;
         }
@@ -603,7 +604,7 @@ void func_800699F8(s_func_800699F8* result, s32 posX, s32 posZ) // 0x800699F8
     s_func_8006AB50 sp10;
     VECTOR3         sp28;
     s_func_8006CC44 sp38;
-    u8              spD0_unused[0x38]; // Might be part of `s_func_8006CC44`.
+    u8              spD0_unused[0x28]; // Might be part of `s_func_8006CC44`.
 
     s32 temp_v0;
 
@@ -808,7 +809,48 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006AEAC); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006B004); // 0x8006B004
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006B1C8); // 0x8006B1C8
+void func_8006B1C8(s_func_8006CC44* arg0, s_func_800699E4* arg1, s_func_8006B1C8* arg2) // 0x8006B1C8
+{
+    s32 var_v0;
+    s32 var_s1;
+    u8  temp_a2;
+
+    for (var_s1 = arg2->field_0; var_s1 < arg2->field_4; var_s1++)
+    {
+        temp_a2 = arg1->field_28[var_s1];
+        if (arg1->field_30 >= arg1->field_34[temp_a2])
+        {
+            arg1->field_34[temp_a2] = arg1->field_30 + 1;
+            var_v0                  = arg1->field_8_16;
+            if (temp_a2 < var_v0)
+            {
+                if (func_8006B318(arg0, arg1, temp_a2) != 0)
+                {
+                    if (arg0->field_0_10)
+                    {
+                        func_8006B6E8(arg0, arg2);
+                    }
+                    if (arg0->field_0_8 || arg0->field_0_9)
+                    {
+                        if (arg0->field_D9 == 0xFF)
+                        {
+                            func_8006B9C8(arg0);
+                        }
+                        if (arg0->field_D8 == 0xFF)
+                        {
+                            func_8006B8F8(arg0->unk_CC); // todo: unk_CC is struct? 0x38 bytes?
+                            func_8006B9C8(arg0);
+                        }
+                    }
+                }
+            }
+            else if (func_8006C3D4(arg0, arg1, temp_a2) != 0)
+            {
+                func_8006C45C(arg0);
+            }
+        }
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006B318); // 0x8006B318
 
@@ -917,8 +959,8 @@ void func_8006C838(s_func_8006CC44* arg0, s_func_800699E4* arg1) // 0x8006C838
             arg0->field_84 = arg0->field_9A + arg1->field_4;
             arg0->field_88 = 0;
             arg0->field_8C = 0;
-            arg0->field_90 = (temp_a0->field_0 >> 5) % 8; // & 7
-            arg0->field_94 = temp_a0->field_0 % 0x20;     // & 0x1F
+            arg0->field_90 = temp_a0->field_0_5;
+            arg0->field_94 = temp_a0->field_0_0;
         }
     }
 
@@ -947,14 +989,59 @@ void func_8006C838(s_func_8006CC44* arg0, s_func_800699E4* arg1) // 0x8006C838
                 arg0->field_84 = arg0->field_9A + arg1->field_4;
                 arg0->field_88 = temp_a1->field_8;
                 arg0->field_8C = temp_a1->field_A;
-                arg0->field_90 = (temp_a1->field_6 >> 5) % 8; // & 7
-                arg0->field_94 = temp_a1->field_6 % 0x20;     // & 0x1F
+                arg0->field_90 = temp_a1->field_6_5;
+                arg0->field_94 = temp_a1->field_6_0;
             }
         }
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006CA18); // 0x8006CA18
+void func_8006CA18(s_func_8006CC44* arg0, s_func_800699E4* arg1, s_func_8006CA18* arg2) // 0x8006CA18
+{
+    s32                 startIdx;
+    s32                 endIdx;
+    s32                 var_a2;
+    s_func_800699E4_10* ptr;
+    u8*                 var_t1;
+
+    startIdx = arg2->field_2;
+    endIdx   = arg2->field_6;
+
+    if (startIdx == endIdx)
+    {
+        return;
+    }
+
+    for (var_t1 = &arg1->field_2C[startIdx]; var_t1 < &arg1->field_2C[endIdx]; var_t1++)
+    {
+        ptr = &arg1->ptr_10[*var_t1];
+        if (((arg0->field_2 >> ptr->field_6_11) & 1) && ptr->field_6_5 != 1)
+        {
+            var_a2 = ptr->field_2;
+
+            if (ptr->field_8 != 0)
+            {
+                var_a2 += FP_FROM(ptr->field_8 * (arg0->field_98 - ptr->field_0), Q12_SHIFT);
+            }
+
+            if (ptr->field_A != 0)
+            {
+                var_a2 += FP_FROM(ptr->field_A * (arg0->field_9A - ptr->field_4), Q12_SHIFT);
+            }
+
+            if (var_a2 < arg0->field_7C)
+            {
+                arg0->field_7C = var_a2;
+                arg0->field_80 = arg0->field_98 + arg1->field_0;
+                arg0->field_84 = arg0->field_9A + arg1->field_4;
+                arg0->field_88 = ptr->field_8;
+                arg0->field_8C = ptr->field_A;
+                arg0->field_90 = ptr->field_6_5;
+                arg0->field_94 = ptr->field_6_0;
+            }
+        }
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006CB90); // 0x8006CB90
 

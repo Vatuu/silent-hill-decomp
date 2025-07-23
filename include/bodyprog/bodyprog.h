@@ -186,17 +186,27 @@ typedef struct
     s16 field_0;
     s16 field_2;
     s16 field_4;
-    u16 field_6;
+    u16 field_6_0  : 5; // TODO: Might be using `s_func_800699E4_18` substruct here? Won't fit though..
+    u16 field_6_5  : 3;
+    u16 field_6_8  : 3;
+    u16 field_6_11 : 4;
+    u16 field_6_15 : 1;
     s16 field_8;
     s16 field_A;
 } s_func_800699E4_10;
+STATIC_ASSERT_SIZEOF(s_func_800699E4_10, 12);
 
 typedef struct
 {
-    u16 field_0;
+    u16 field_0_0  : 5;
+    u16 field_0_5  : 3;
+    u16 field_0_8  : 3;
+    u16 field_0_11 : 4;
+    u16 field_0_15 : 1;
     u8  unk_2[2];
     u8  unk_4[6];
 } s_func_800699E4_18;
+STATIC_ASSERT_SIZEOF(s_func_800699E4_18, 10);
 
 typedef struct
 {
@@ -213,10 +223,13 @@ typedef struct
     u8                  unk_1C[2];
     u8                  field_1E;
     u8                  unk_1F[1];
-    s32*                field_20;
-    u8                  unk_24[12];
+    s32*                field_20; // Might point to `s_func_8006B1C8`?
+    u8                  unk_24[4];
+    s8*                 field_28;
+    s8*                 field_2C;
     u8                  field_30;
-    s32                 field_34[64];
+    u8                  unk_31[3];
+    u8                  field_34[256];
 } s_func_800699E4;
 
 /** @brief Returned by `func_800699F8`, collision related? */
@@ -269,6 +282,13 @@ typedef struct
 
 typedef struct
 {
+    s16 field_0;
+    u8  unk_2[2];
+    s16 field_4;
+} s_func_8006B1C8;
+
+typedef struct
+{
     s8  unk_0[48];
     s16 field_30;
     s8  unk_32[164];
@@ -288,6 +308,14 @@ typedef struct
     s16 field_2;
     s16 field_4;
 } s_func_8006BDDC;
+
+typedef struct
+{
+    u8  unk_0[2];
+    s16 field_2;
+    u8  unk_4[2];
+    s16 field_6;
+} s_func_8006CA18;
 
 typedef struct
 {
@@ -331,11 +359,15 @@ typedef struct
     u8                 field_A1;
     u8                 field_A2;
     u8                 field_A3;
-    s32                field_A4;
+    s_func_8006CA18*   field_A4;
     s_func_8006CC44_A8 field_A8[4];
     u8                 field_C8;
     u8                 unk_C9[1];
     s16                field_CA;
+    u8                 unk_CC[4];
+    u8                 unk_D0[8];
+    u8                 field_D8;
+    u8                 field_D9;
     // TODO: May be incomplete.
 } s_func_8006CC44;
 
@@ -2607,9 +2639,13 @@ void func_8006ABC0(s_func_8006ABC0* result, VECTOR3* vec, s_func_8006AB50* arg2)
 
 void func_8006AD44(s_func_8006CC44* arg0, s_func_800699E4* arg1);
 
+void func_8006B1C8(s_func_8006CC44* arg0, s_func_800699E4* arg1, s_func_8006B1C8* arg2);
+
 void func_8006BDDC(s_func_8006BDDC* arg0, s16 arg1, s16 arg2);
 
 void func_8006C838(s_func_8006CC44* arg0, s_func_800699E4* arg1);
+
+void func_8006CA18(s_func_8006CC44* arg0, s_func_800699E4* arg1, s_func_8006CA18* arg2);
 
 s32 func_8006CC44(s32 arg0, s32 arg1, s_func_8006CC44* arg2);
 
