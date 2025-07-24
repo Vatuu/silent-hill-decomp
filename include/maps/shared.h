@@ -1,6 +1,30 @@
 #ifndef _MAPS_SHARED_H
 #define _MAPS_SHARED_H
 
+typedef struct
+{
+    VECTOR3 field_0;
+    VECTOR3 field_C;
+    s16     field_18;
+    s16     field_1A;
+    s16     field_1C;
+    u8      field_1E;
+    s8      field_1F;
+    char    unk_20[16];
+} s_sharedFunc_800CEFD0_1_s02;
+
+typedef struct
+{
+    u8      unk_0[0xC];
+    VECTOR3 field_C;
+    u8      unk_18[0x18];
+} s_sharedData_800E3148_1_s02;
+
+extern u8                          sharedData_800DF158_1_s02;
+extern s_sharedData_800E3148_1_s02 sharedData_800E3148_1_s02;
+extern s_sharedData_800E3148_1_s02 sharedData_800E3178_1_s02;
+extern u16                         sharedData_800E5768_1_s02;
+
 extern s32 sharedData_800CAB70_0_s00; // Type assumed.
 
 extern s32 sharedData_800DFB6C_0_s00;
@@ -200,6 +224,8 @@ void Ai_LarvalStalker_Init(s_SubCharacter* chara);
 void sharedFunc_800D17BC_1_s00(s_SubCharacter*);
 
 void sharedFunc_800D1DBC_1_s00(s_SubCharacter*);
+
+void sharedFunc_800CEFD0_1_s02(s32 arg0, s_sharedFunc_800CEFD0_1_s02* arg1, u16* arg2, s32* deltaTimePtr);
 
 // MAP3_S03 puppet nurse/doctor funcs
 void sharedFunc_800CDA88_3_s03(s_SubCharacter*);
