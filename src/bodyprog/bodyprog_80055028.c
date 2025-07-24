@@ -11,22 +11,23 @@
 
 void func_80054FC0(s32* arg0, s32* arg1, u8 idx) // 0x80054FC0
 {
-    s32 var = D_800AD4A0[idx] - *arg0;
-    
+    s32 var;
+
+    var = D_800AD4A0[idx] - *arg0;
     if (var == 0)
     {
         return;
     }
-    
+
     if (*arg1 >= var)
     {
         *arg0 += var;
         *arg1 -= var;
         return;
     }
-    
+
     *arg0 += *arg1;
-    *arg1 = 0;
+    *arg1  = 0;
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80055028); // 0x80055028
@@ -313,7 +314,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005AA08); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005AC50); // 0x8005AC50
 
-// Related to enviroments textures.
+// Related to enviroment textures.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005B1A0); // 0x8005B1A0
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005B1FC); // 0x8005B1FC
@@ -364,27 +365,21 @@ void func_8005B46C(s32* arg0) // 0x8005B46C
     *arg0 = 0;
 }
 
-// Crucial for map loading.
-/** TODO: Reformulate the function.
- * Thanks to the context provided by `func_80041D48` we know
- * now that the accurate definition of the function is:
- * void func_8005B474(s_800C1450_0* arg0, s_800C1450_58* arg1, s32 num);
- */
 void func_8005B474(s32* arg0, u32 arg1, s32 idx) // 0x8005B474
 {
-    u32* ptr;
     u32  temp_a2;
     u32  var_a1;
+    u32* ptr;
 
     var_a1  = arg1;
     temp_a2 = var_a1 + (idx * 24);
     ptr     = arg0 + 1;
-	
+
     for (; var_a1 < temp_a2; ptr++)
     {
-        *ptr = var_a1;
+        *ptr    = var_a1;
         var_a1 += 24;
-        *arg0 += 1;
+        *arg0  += 1;
     }
 }
 
@@ -601,7 +596,7 @@ void func_80069994(s_func_800699E4* arg0) // 0x80069994
 
     arg0->field_30++;
 
-    if (arg0->field_30 > 0xFC)
+    if (arg0->field_30 > 252)
     {
         arg0->field_30 = 0;
 
@@ -837,10 +832,12 @@ void func_8006B1C8(s_func_8006CC44* arg0, s_func_800699E4* arg1, s_func_8006B1C8
     for (var_s1 = arg2->field_0; var_s1 < arg2->field_4; var_s1++)
     {
         temp_a2 = arg1->field_28[var_s1];
+
         if (arg1->field_30 >= arg1->field_34[temp_a2])
         {
             arg1->field_34[temp_a2] = arg1->field_30 + 1;
             var_v0                  = arg1->field_8_16;
+
             if (temp_a2 < var_v0)
             {
                 if (func_8006B318(arg0, arg1, temp_a2) != 0)
@@ -849,15 +846,17 @@ void func_8006B1C8(s_func_8006CC44* arg0, s_func_800699E4* arg1, s_func_8006B1C8
                     {
                         func_8006B6E8(arg0, arg2);
                     }
+
                     if (arg0->field_0_8 || arg0->field_0_9)
                     {
                         if (arg0->field_D9 == 0xFF)
                         {
                             func_8006B9C8(arg0);
                         }
+
                         if (arg0->field_D8 == 0xFF)
                         {
-                            func_8006B8F8(arg0->unk_CC); // todo: unk_CC is struct? 0x38 bytes?
+                            func_8006B8F8(arg0->unk_CC); // TODO: `unk_CC` is struct? 0x38 bytes?
                             func_8006B9C8(arg0);
                         }
                     }
@@ -1034,7 +1033,8 @@ void func_8006CA18(s_func_8006CC44* arg0, s_func_800699E4* arg1, s_func_8006CA18
     for (var_t1 = &arg1->field_2C[startIdx]; var_t1 < &arg1->field_2C[endIdx]; var_t1++)
     {
         ptr = &arg1->ptr_10[*var_t1];
-        if (((arg0->field_2 >> ptr->field_6_11) & 1) && ptr->field_6_5 != 1)
+
+        if (((arg0->field_2 >> ptr->field_6_11) & 0x1) && ptr->field_6_5 != 1)
         {
             var_a2 = ptr->field_2;
 

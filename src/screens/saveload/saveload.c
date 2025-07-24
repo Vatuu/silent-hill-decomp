@@ -1434,7 +1434,7 @@ void Gfx_RectSaveInfoDraw(s_Line2d* line) // 0x801E5898
         line_g2 = (LINE_G2*)GsOUT_PACKET_P;
         setLineG2(line_g2);
 
-        if (i & 1)
+        if (i & 0x1)
         {
             setRGB0(line_g2, 0xA0, 0x80, 0x40);
             setRGB1(line_g2, 0xB0, 0xB0, 0xB0);

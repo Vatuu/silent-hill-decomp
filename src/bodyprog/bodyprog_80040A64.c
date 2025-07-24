@@ -180,20 +180,20 @@ void func_80041D10(s_Skeleton* skels, s32 size) // 0x80041D10
     }
 }
 
-// Crucial for map loading.
 void func_80041D48() // 0x80041D48
 {
     s32 i;
-	s32 y;
     s16 j;
-	s16 x;
+    s16 x;
+    s32 y;
 
     for (i = 0, y = 8, x = 0, j = 0; i < 8; i++, y++, x += 16)
     {
         if (y == 11)
-		{
-			y = 21;
-		}
+        {
+            y = 21;
+        }
+
         func_8005B1A0(&D_800C1450.field_58[i], 0, 0, y, 0, 0, x, j);
     }
 
@@ -202,11 +202,11 @@ void func_80041D48() // 0x80041D48
 
     for (i = 0, y = 26, j = 0; i < 2; i++, x += 16)
     {
-        func_8005B1A0(&D_800C1450.field_118[i], 0, 0, y, (i & 1) * 32, 0, x, j);
-        if (i & 1)
-		{
-			y++;
-		}
+        func_8005B1A0(&D_800C1450.field_118[i], 0, 0, y, (i & 0x1) * 32, 0, x, j);
+        if (i & 0x1)
+        {
+            y++;
+        }
     }
 
     func_8005B46C(&D_800C1450.field_2C);

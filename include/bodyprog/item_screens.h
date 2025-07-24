@@ -216,7 +216,8 @@ void Gfx_Primitive2dTextureSet(s32 x, s32 y, s32 otIdx, s32 abr); // 0x80052088
  */
 void func_800539A4(s32 arg0, s32 arg1);
 
-void func_800540A4(s8);
+/** Related to file loading of inventory elements. Loads Harry's potrait for the status image. */
+void func_800540A4(s8 arg0);
 
 void Gfx_Items_RenderItems(); // 0x80054200
 

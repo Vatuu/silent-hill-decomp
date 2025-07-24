@@ -81,11 +81,11 @@ STATIC_ASSERT_SIZEOF(s_8002AC04, 16);
 
 typedef struct
 {
-    s32 id_0;
-    s32 flags_4;
-    s32 objectCount_8;
+    s32               id_0;
+    s32               flags_4;
+    s32               objectCount_8;
     struct TMD_STRUCT objects_C[1];
-} s_TMDFile;
+} s_TmdFile;
 
 // Likely not `s_Skeleton` since `field_8` must be `s8`.
 typedef struct
@@ -194,7 +194,7 @@ typedef struct
     s16 field_0;
     s16 field_2;
     s16 field_4;
-    u16 field_6_0  : 5; // TODO: Might be using `s_func_800699E4_18` substruct here? Won't fit though..
+    u16 field_6_0  : 5; // TODO: Might be using `s_func_800699E4_18` substruct here? Won't fit though.
     u16 field_6_5  : 3;
     u16 field_6_8  : 3;
     u16 field_6_11 : 4;
@@ -778,12 +778,12 @@ STATIC_ASSERT_SIZEOF(s_800C117C, 28);
 
 typedef struct
 {
-    s8 unk0[0x2C];
+    s8 unk0[44];
 } s_800C1450_0;
 
 typedef struct
 {
-    s8 unk0[0x18];
+    s8 unk0[24];
 } s_800C1450_58;
 
 typedef struct
@@ -2119,6 +2119,9 @@ void func_80041CEC(s_80041CEC*);
 /** Clears `field_4` in array of skeletons? Might not be skeletons, but the struct fits. */
 void func_80041D10(s_Skeleton* skels, s32 size);
 
+/** Crucial for map loading. */
+void func_80041D48();
+
 void func_80041E98();
 
 void func_80041FF0();
@@ -2340,9 +2343,11 @@ void GameFs_MapItemsTextureLoad(s32 mapId);
 
 void func_800546A8(s32 arg0);
 
-void func_80054720(s_TMDFile* arg0, s32 arg1, s32 arg2);
+void func_80054720(s_TmdFile* tmd, s32 arg1, s32 arg2);
 
 void func_8005487C(s32);
+
+void func_80054FC0(s32* arg0, s32* arg1, u8 idx);
 
 void func_80055028();
 
@@ -2377,7 +2382,7 @@ void func_80056504(s_800BE9FC* arg0, s8* arg1, s32* arg2, s32 arg3);
 
 void func_80054A04(u8 arg0);
 
-s32 func_80054AD8(u8);
+s32 func_80054AD8(u8 arg0);
 
 void func_8005660C(s_func_8005660C_0* arg0, s_func_8005660C_1* arg1, s32 arg2);
 
@@ -2638,11 +2643,17 @@ void GameFs_OptionBinLoad();
 /** Loads the save/load background graphic and overlay. */
 void GameFs_SaveLoadBinLoad();
 
-/** Loads "Tim00" graphic. */
+/** Loads `Tim00` graphic. */
 void GameFs_Tim00TIMLoad();
 
 void func_8005B46C(s32* arg0);
 
+/** Crucial for map loading.
+ *
+ * TODO: Reformulate the function.
+ * Context provided by `func_80041D48` suggests the following signature:
+ * `void func_8005B474(s_800C1450_0* arg0, s_800C1450_58* arg1, s32 num);`
+ */
 void func_8005B474(s32* arg0, u32 arg1, s32 idx);
 
 s32 func_8005B4BC(void*, void*);

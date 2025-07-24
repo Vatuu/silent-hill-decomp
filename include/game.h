@@ -759,7 +759,7 @@ typedef union
     s8  val8[4];
 } u_Property;
 
-// TODO: Unsure if this struct is puppet doctor specific or shared with all chars, pointer gets set at puppetDoc+0x124
+// TODO: Unsure if this struct is puppet doctor specific or shared with all characterss. Pointer gets set at puppetDoc+0x124.
 typedef struct
 {
     s32         health_0;

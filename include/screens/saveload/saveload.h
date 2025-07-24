@@ -82,7 +82,7 @@ typedef struct _SavegameEntry
      * The reason to believe this may be buggy
      * is that by reproducing the previous example,
      * after the user saves to slot 2, if instead of
-     * saving in slot 1 the player removes the memory
+     * saving in slot 1 the user removes the memory
      * card and save to slot 1, the value will
      * be 2 instead of 3.
      */
@@ -130,7 +130,7 @@ extern s32 D_801E7510;
  * This seems to be related to the color of the
  * borders of the file, but appears to do nothing
  * as the code only defines it as 1 or 0.
- * It might also be buggy as it is constanly oscillating
+ * It might also be buggy as it constantly oscillates
  * between 0 and 1. For example:
  * in `Gfx_SaveScreenDraw`, the code has a conditional
  * that writes 1, but a little later
@@ -206,7 +206,7 @@ extern s16 D_801E7574[MEMORY_CARD_SLOT_COUNT];
  * `New Save` element will  be 4 and not 9 (index starting from 0)
  * as it is the fifth element visually available in the slot.
  *
- * @note Only the first 4 bytes (as two s16 values) are used.
+ * @note Only the first 4 bytes (as two `s16`) are used.
  * The next 8 bytes are unused, possibly from unused variables
  * which Splat detects incorrectly and merges it.
  */

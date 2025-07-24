@@ -107,7 +107,7 @@ int main()
         }
 
         // Swap buffers.
-        fbNext               = (g_MainFbIdx == 0);
+        fbNext               = g_MainFbIdx == 0;
         offsetY              = 256 - (fbNext * 224);
         g_MainFbIdx          = fbNext;
         g_MainDrawEnv.ofs[1] = offsetY; // Draw Y offset.
