@@ -208,6 +208,8 @@ void sharedFunc_800D923C_0_s00(s_SubCharacter* chara); // Humanoid init function
 
 u8 sharedFunc_800D92AC_0_s00(s32 x, s32 y);
 
+void sharedFunc_800DA8E8_0_s01(s32* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
+
 void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra* extra, GsCOORDINATE2* coord);
 
 // MAP1_S00 LarvalStalker funcs

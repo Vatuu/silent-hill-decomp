@@ -24,6 +24,7 @@ sharedFunc_800D2EF4_0_s00 = 0x800D16E8; // type:func
 Ai_Floatstinger_Update = 0x800D16FC; // type:func
 Ai_Floatstinger_Init = 0x800D1790; // type:func
 sharedFunc_800D929C_0_s00 = 0x800D5AFC; // type:func
+sharedFunc_800DA8E8_0_s01 = 0x800D5FE4; // type:func
 sharedData_800DD58C_0_s00 = 0x800D77F4; // type:s32
 sharedData_800DF158_1_s02 = 0x800D77F8; // type:u8
 sharedData_800DD59C_0_s00 = 0x800D7800; // type:u8

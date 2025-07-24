@@ -135,7 +135,7 @@ void func_800CF0B0(void) {}
 
 INCLUDE_ASM("asm/maps/map6_s02/nonmatchings/map6_s02", func_800CF0B8);
 
-INCLUDE_ASM("asm/maps/map6_s02/nonmatchings/map6_s02", func_800CFB9C);
+#include "maps/shared/sharedFunc_800DA8E8_0_s01.h" // 0x800CFB9C
 
 INCLUDE_ASM("asm/maps/map6_s02/nonmatchings/map6_s02", func_800CFC34);
 

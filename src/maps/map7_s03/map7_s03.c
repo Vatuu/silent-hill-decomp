@@ -963,7 +963,7 @@ INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800E2968);
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800E2C28);
 
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800E2DF8);
+#include "maps/shared/sharedFunc_800DA8E8_0_s01.h" // 0x800E2DF8
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800E2E90);
 
