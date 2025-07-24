@@ -23,7 +23,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
     {
         if (g_SysWork.player_4C.chara_0.properties_E4.player.field_126 != 0)
         {
-            g_SysWork.player_4C.chara_0.properties_E4.player.field_126 -= ((g_DeltaTime0 * FP_FLOAT_TO(0.4f, Q12_SHIFT)) / FP_FLOAT_TO(0.0333f, Q12_SHIFT)) * 2;
+            g_SysWork.player_4C.chara_0.properties_E4.player.field_126 -= ((g_DeltaTime0 * FP_FLOAT_TO(0.4f, Q12_SHIFT)) / FP_FLOAT_TO(0.1f / 3.0f, Q12_SHIFT)) * 2;
             if (g_SysWork.player_4C.chara_0.properties_E4.player.field_126 < 0)
             {
                 g_SysWork.player_4C.chara_0.properties_E4.player.field_126 = 0;
@@ -99,7 +99,8 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
             if (playerChara->model_0.anim_4.animIdx_0 == g_SysWork.player_4C.extra_128.field_1C)
             {
                 func_8005DD44(sp20, &playerChara->position_18, 64, sp24);
-                playerChara->properties_E4.player.field_10C = sp24 + 16;
+
+                playerChara->properties_E4.player.field_10C                 = sp24 + 16;
                 g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~(1 << 15);
             }
         }
@@ -114,7 +115,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
     playerChara->rotation_24.vy  = (playerChara->rotation_24.vy + (sharedData_800E39D8_0_s00 >> 4) + FP_TO(1, Q12_SHIFT)) & 0xFFF;
     playerChara->headingAngle_3C = (playerChara->rotation_24.vy + unused) & 0xFFF;
     playerChara->moveSpeed_38    = newMoveSpeed;
-    playerChara->field_34 += g_DeltaTime2;
+    playerChara->field_34       += g_DeltaTime2;
 
     coord->flg = 0;
     func_80096E78(&playerChara->rotation_24, &coord->coord);

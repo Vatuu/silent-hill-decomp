@@ -618,7 +618,7 @@ void func_800699F8(s_func_800699F8* result, s32 posX, s32 posZ) // 0x800699F8
     s_func_8006AB50 sp10;
     VECTOR3         sp28;
     s_func_8006CC44 sp38;
-    u8              spD0_unused[0x28]; // Might be part of `s_func_8006CC44`.
+    u8              spD0_unused[40]; // Might be part of `s_func_8006CC44`.
 
     s32 temp_v0;
 
@@ -629,7 +629,7 @@ void func_800699F8(s_func_800699F8* result, s32 posX, s32 posZ) // 0x800699F8
     temp_v0 = func_800426E4(posX, posZ);
     if (!temp_v0)
     {
-        result->chara_grnd_0 = FP_METER(8);
+        result->chara_grnd_0 = FP_METER(8.0f);
         result->field_6      = 0;
         result->field_4      = 0;
         result->field_8      = 0;
@@ -652,7 +652,7 @@ void func_800699F8(s_func_800699F8* result, s32 posX, s32 posZ) // 0x800699F8
     if (sp38.field_90 == 1)
     {
         result->field_8      = 0;
-        result->chara_grnd_0 = FP_METER(8);
+        result->chara_grnd_0 = FP_METER(8.0f);
     }
     else
     {
@@ -741,11 +741,11 @@ void func_8006AB50(s_func_8006CC44* arg0, VECTOR3* vec, s_func_8006AB50* arg2, s
 
 void func_8006ABC0(s_func_8006ABC0* result, VECTOR3* vec, s_func_8006AB50* arg2) // 0x8006ABC0
 {
-    s16 angleZX;
+    s16 angleXz;
 
-    result->field_C.vx = vec->vx >> 4;
-    result->field_C.vy = vec->vy >> 4;
-    result->field_C.vz = vec->vz >> 4;
+    result->field_C.vx = FP_FROM(vec->vx, Q4_SHIFT);
+    result->field_C.vy = FP_FROM(vec->vy, Q4_SHIFT);
+    result->field_C.vz = FP_FROM(vec->vz, Q4_SHIFT);
 
     result->field_8 = SquareRoot0(SQUARE(result->field_C.vx) + SQUARE(result->field_C.vz));
 
@@ -753,19 +753,19 @@ void func_8006ABC0(s_func_8006ABC0* result, VECTOR3* vec, s_func_8006AB50* arg2)
     {
         result->dirX_14 = FP_METER(result->field_C.vx) / result->field_8;
         result->dirZ_16 = FP_METER(result->field_C.vz) / result->field_8;
-        angleZX         = ratan2(result->field_C.vz, result->field_C.vx);
-        result->dirX_14 = shRcos(angleZX);
-        result->dirZ_16 = shRsin(angleZX);
+        angleXz         = ratan2(result->field_C.vz, result->field_C.vx);
+        result->dirX_14 = shRcos(angleXz);
+        result->dirZ_16 = shRsin(angleXz);
     }
     else
     {
-        result->dirX_14 = FP_METER(1);
+        result->dirX_14 = FP_METER(1.0f);
         result->dirZ_16 = 0;
     }
 
     result->field_28 = arg2->rot_C.vz >> 4;
-    result->posX_18  = arg2->pos_0.vx >> 4;
-    result->posZ_1C  = arg2->pos_0.vz >> 4;
+    result->posX_18  = FP_FROM(arg2->pos_0.vx, Q4_SHIFT);
+    result->posZ_1C  = FP_FROM(arg2->pos_0.vz, Q4_SHIFT);
     result->field_20 = result->posX_18 + result->field_C.vx;
     result->field_24 = result->posZ_1C + result->field_C.vz;
     result->field_2A = (arg2->rot_C.vy + arg2->pos_0.vy) >> 4;
@@ -1204,7 +1204,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80070CF0); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80070DF0); // 0x80070DF0
 
-void func_800711C4(s32 arg1, s32 arg2) // 0x800711C4
+void func_800711C4(s32 arg0, s32 arg1) // 0x800711C4
 {
     if (g_SysWork.player_4C.extra_128.field_20 == 25 || D_800C4580 == 0 || D_800C4582 == 0)
     {
@@ -1213,15 +1213,15 @@ void func_800711C4(s32 arg1, s32 arg2) // 0x800711C4
 
     if (D_800C4584 != 0)
     {
-        g_SysWork.player_4C.extra_128.field_24 = arg2 + 10;
+        g_SysWork.player_4C.extra_128.field_24 = arg1 + 10;
     }
     else
     {
-        g_SysWork.player_4C.extra_128.field_24 = arg2 + 9;
+        g_SysWork.player_4C.extra_128.field_24 = arg1 + 9;
     }
 }
 
-void func_80071224(s32 arg1, s32 arg2) // 0x80071224
+void func_80071224(s32 arg0, s32 arg1) // 0x80071224
 {
     if (g_SysWork.player_4C.extra_128.field_20 == 25 || D_800C4580 == 0 || D_800C4582 == 0)
     {
@@ -1230,11 +1230,11 @@ void func_80071224(s32 arg1, s32 arg2) // 0x80071224
 
     if (D_800C4586 != 0)
     {
-        g_SysWork.player_4C.extra_128.field_24 = arg2 + 9;
+        g_SysWork.player_4C.extra_128.field_24 = arg1 + 9;
     }
     else
     {
-        g_SysWork.player_4C.extra_128.field_24 = arg2 + 10;
+        g_SysWork.player_4C.extra_128.field_24 = arg1 + 10;
     }
 }
 

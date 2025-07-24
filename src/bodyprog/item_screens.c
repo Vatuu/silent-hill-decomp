@@ -199,24 +199,25 @@ void Inventory_ExitAnimEquippedItemUpdate(u8* arg0) // 0x8004C088
 
             default:
 
-                if ((g_SysWork.player_4C.extra_128.field_1C == 1) && ((s8)D_800C3950 != g_SysWork.playerCombatInfo_38.field_F))
+                if (g_SysWork.player_4C.extra_128.field_1C == 1 && (s8)D_800C3950 != g_SysWork.playerCombatInfo_38.field_F)
                 {
                     g_SysWork.player_4C.extra_128.field_1C                     = 0;
                     g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C = 0;
                 }
 
-                if (g_SysWork.player_4C.extra_128.field_24 >= 0x14 && g_SysWork.playerCombatInfo_38.field_F != -1 && (s8)D_800C3950 == g_SysWork.playerCombatInfo_38.field_F)
+                if (g_SysWork.player_4C.extra_128.field_24 >= 20 && g_SysWork.playerCombatInfo_38.field_F != NO_VALUE &&
+                    (s8)D_800C3950 == g_SysWork.playerCombatInfo_38.field_F)
                 {
                     extraModelPtr0 = &g_SysWork.player_4C.extra_128.model_0;
-                    if (extraModelPtr0->anim_4.animIdx_0 >= 0x42U)
+                    if (extraModelPtr0->anim_4.animIdx_0 >= 66u)
                     {
-                        modelPtr0 = &g_SysWork.player_4C.chara_0.model_0;
-                        extraModelPtr0->anim_4.animIdx_0 -= 0xA;
+                        modelPtr0                                         = &g_SysWork.player_4C.chara_0.model_0;
+                        extraModelPtr0->anim_4.animIdx_0                 -= 10;
                         g_SysWork.player_4C.chara_0.model_0.state_2       = 0;
                         g_SysWork.player_4C.chara_0.model_0.stateStep_3   = 0;
                         g_SysWork.player_4C.extra_128.model_0.state_2     = 0;
                         g_SysWork.player_4C.extra_128.model_0.stateStep_3 = 0;
-                        modelPtr0->anim_4.animIdx_0 -= 0xA;
+                        modelPtr0->anim_4.animIdx_0                      -= 10;
                     }
                 }
                 else
@@ -235,6 +236,7 @@ void Inventory_ExitAnimEquippedItemUpdate(u8* arg0) // 0x8004C088
                     g_SysWork.player_4C.extra_128.model_0.state_2     = 0;
                     g_SysWork.player_4C.extra_128.model_0.stateStep_3 = 0;
                 }
+
                 g_SysWork.player_4C.chara_0.properties_E4.player.field_126        = 0;
                 g_SysWork.player_4C.chara_0.properties_E4.player.properties_E4[1] = 0;
         }
@@ -243,17 +245,17 @@ void Inventory_ExitAnimEquippedItemUpdate(u8* arg0) // 0x8004C088
     modelPtr3      = &g_SysWork.player_4C.chara_0.model_0;
     extraModelPtr2 = &g_SysWork.player_4C.extra_128.model_0;
 
-    modelPtr3->anim_4.keyframeIdx1_A       = 0x1000;
-    extraModelPtr2->anim_4.keyframeIdx1_A  = 0x1000;
+    modelPtr3->anim_4.keyframeIdx1_A       = FP_FLOAT_TO(1, Q12_SHIFT);
+    extraModelPtr2->anim_4.keyframeIdx1_A  = FP_FLOAT_TO(1, Q12_SHIFT);
     g_SysWork.player_4C.extra_128.field_18 = 0x7FF;
     modelPtr3->anim_4.time_4               = FP_TO(modelPtr3->anim_4.keyframeIdx0_8, Q12_SHIFT);
     extraModelPtr2->anim_4.time_4          = FP_TO(extraModelPtr2->anim_4.keyframeIdx0_8, Q12_SHIFT);
 
-    func_800446D8((s_Skeleton*)FS_BUFFER_0, g_SysWork.playerBoneCoords_890, modelPtr3->anim_4.keyframeIdx0_8, modelPtr3->anim_4.keyframeIdx0_8, 0x1000);
+    func_800446D8((s_Skeleton*)FS_BUFFER_0, g_SysWork.playerBoneCoords_890, modelPtr3->anim_4.keyframeIdx0_8, modelPtr3->anim_4.keyframeIdx0_8, FP_FLOAT_TO(1, Q12_SHIFT));
 
     g_SysWork.player_4C.extra_128.field_18 = 0x3F800;
 
-    func_800446D8((s_Skeleton*)FS_BUFFER_0, g_SysWork.playerBoneCoords_890, extraModelPtr2->anim_4.keyframeIdx0_8, extraModelPtr2->anim_4.keyframeIdx0_8, 0x1000);
+    func_800446D8((s_Skeleton*)FS_BUFFER_0, g_SysWork.playerBoneCoords_890, extraModelPtr2->anim_4.keyframeIdx0_8, extraModelPtr2->anim_4.keyframeIdx0_8, FP_FLOAT_TO(1, Q12_SHIFT));
     func_8004C040();
 }
 

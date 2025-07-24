@@ -1167,8 +1167,8 @@ typedef struct _MapOverlayHeader
     s8                unk_170[36];
     void              (*charaUpdateFuncs_194[Chara_Count])(s_SubCharacter*, void*, s32); /** Guessed params. Funcptrs for each `e_ShCharacterId`, set to 0 for IDs not included in the map overlay. Called by `func_80038354`. */
     s8                charaGroupIds_248[4];                                              /** `e_ShCharacterId` values where if `s_SpawnInfo.charaId_4` == 0, `charaGroupIds_248[0]` is used for `charaSpawnsA_24C` and `charaGroupIds_248[1]` for `charaSpawnsB_30C`. */
-    s_SpawnInfo       charaSpawnsA_24C[16];                                              /** Array of chara type/position/flags, flags_6 == 0 are unused slots? Read by `func_80037F24`. */
-    s_SpawnInfo       charaSpawnsB_30C[16];                                              /** Array of chara type/position/flags, flags_6 == 0 are unused slots? Read by `func_80037F24`. */
+    s_SpawnInfo       charaSpawnsA_24C[16];                                              /** Array of chara type/position/flags, `flags_6 == 0` are unused slots? Read by `func_80037F24`. */
+    s_SpawnInfo       charaSpawnsB_30C[16];                                              /** Array of chara type/position/flags, `flags_6 == 0` are unused slots? Read by `func_80037F24`. */
     VC_ROAD_DATA      roadDataList_3CC[48];
     // TODO: A lot more in here.
 } s_MapOverlayHeader;
@@ -2028,6 +2028,8 @@ s32 func_8003BD2C();
 
 void func_8003C1AC(s_800BCE18_0_CC* arg0);
 
+void func_8003C220(s_sub_800BCE18_0** arg0, s32 arg1, s32 arg2);
+
 /** Unknown bodyprog func. Called by `Fs_QueueDoThingWhenEmpty`. */
 s32 func_8003C850();
 
@@ -2049,7 +2051,8 @@ s32 func_8003D444(s32 idx);
 
 void func_8003D550(s32 arg0, s32 arg1);
 
-void func_8003D468(s32, s32); // Called by some chara init funcs, similar to `func_8003DD80`?
+/** Called by some chara init funcs, similar to `func_8003DD80`? */
+void func_8003D468(s32 arg0, s32 arg1);
 
 void func_8003D6A4(s_800BCE18_0_CC* arg0);
 
@@ -2946,7 +2949,7 @@ void GameFs_BgItemLoad();
 
 void func_8003BED0();
 
-s32 func_8003BF60(s32 arg0, s32 arg1);
+s32 func_8003BF60(s32 x, s32 z);
 
 /** Used in map loading.
  * Removing it causes the game to get stuck at the loading screen.
@@ -3052,9 +3055,10 @@ void Game_SavegameResetPlayer();
 /** Loads player animations for a given map. Maybe for cutscenes? */
 void GameFs_PlayerMapAnimLoad(s32 mapIdx);
 
-void func_800711C4(s32 arg1, s32 arg2);
+// `arg0` is `s_SubCharacter` pointer?
+void func_800711C4(s32 arg0, s32 arg1);
 
-void func_80071224(s32 arg1, s32 arg2);
+void func_80071224(s32 arg0, s32 arg1);
 
 void func_80071284(s32 arg0);
 

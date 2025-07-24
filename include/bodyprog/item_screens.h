@@ -135,7 +135,7 @@ void func_8004BD74(s32 arg0, GsDOBJ2* arg1, s32 arg2);
  * type (e.g. from a gun weapon to a melee weapon), Harry will continue
  * aiming until he interacts with something or starts running.
  */
-void Inventory_ExitAnimEquippedItemUpdate(u8*); // 0x8004C088
+void Inventory_ExitAnimEquippedItemUpdate(u8* arg0); // 0x8004C088
 
 // TODO: The name `Inventory_HyperBlasterCanAdd` may be suitable, though inventory
 // funcs seem to be bunched at a different address.

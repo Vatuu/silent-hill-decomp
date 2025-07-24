@@ -710,7 +710,7 @@ void func_8003BED0() // 0x8003BED0
     func_80056954(&D_800BCE18.field_1BE4);
 }
 
-s32 func_8003BF60(s32 arg0, s32 arg1) // 0x8003BF60
+s32 func_8003BF60(s32 x, s32 z) // 0x8003BF60
 {
     s32               ret;
     s8                val;
@@ -732,8 +732,8 @@ s32 func_8003BF60(s32 arg0, s32 arg1) // 0x8003BF60
         {
             do 
             {
-                if (arg0 >= (ptr->field_2 << 8) && (ptr->field_4 << 8) >= arg0 &&
-                    arg1 >= (ptr->field_6 << 8) && (ptr->field_8 << 8) >= arg1 &&
+                if (x >= (ptr->field_2 << 8) && (ptr->field_4 << 8) >= x &&
+                    z >= (ptr->field_6 << 8) && (ptr->field_8 << 8) >= z &&
                     ret < val)
                 {
                     ret = val;
@@ -813,20 +813,20 @@ void func_8003C1AC(s_800BCE18_0_CC* arg0) // 0x8003C1AC
     arg0->field_C = sp10;
 }
 
-void func_8003C220(s_sub_800BCE18_0** arg0, s32 arg1, s32 arg2) 
+void func_8003C220(s_sub_800BCE18_0** arg0, s32 arg1, s32 arg2) // 0x8003C220
 {
-    s32 var_a2;
+    s32               var_a2;
+    u8                temp_v1;
     s_sub_800BCE18_0* ptr;
-    u8 temp_v1;
 
     D_800BCE18.field_0[0].field_0 = *arg0;
     temp_v1 = (*arg0)->field_6;
-    
-    if (temp_v1 & 1) 
+
+    if (temp_v1 & (1 << 0)) 
     {
         var_a2 = 1;
     } 
-    else if (temp_v1 & 2) 
+    else if (temp_v1 & (1 << 1)) 
     {
         var_a2 = 2;
     }
@@ -834,9 +834,9 @@ void func_8003C220(s_sub_800BCE18_0** arg0, s32 arg1, s32 arg2)
     {
         var_a2 = 4;
     }
-    
+
     ptr = *arg0;
-    func_800421D8(&ptr->field_2, ptr->field_0, var_a2, ((ptr->field_6 >> 2) ^ 1) & 1, 0, 0);
+    func_800421D8(&ptr->field_2, ptr->field_0, var_a2, ((ptr->field_6 >> 2) ^ 1) & (1 << 0), 0, 0);
 
     if (*arg0 == &D_8002500C) 
     {
@@ -1564,11 +1564,11 @@ void func_8003D468(s32 arg0, s32 arg1) // 0x8003D468
         {
             if (arg1 == 0)
             {
-                data[i] &= 0x7fff;
+                data[i] &= 0x7FFF;
             }
             else
             {
-                data[i] |= 0x8000;
+                data[i] |= 1 << 15;
             }
         }
     }
@@ -1587,28 +1587,28 @@ void func_8003D550(s32 arg0, s32 arg1) // 0x8003D550
 
 void func_8003D5B4(s8 flags) // 0x8003D5B4
 {
-    u8 fileIdx;
-    s32 i;
-    u32 temp;
+    u8               fileIdx;
+    s32              i;
+    u32              temp;
     s_800BCE18_0_CC* ptr;
 
     for (i = 0; i < 4; i++)
     {
         ptr = &D_800BCE18.field_0[i].field_CC;
-        if ((flags >> i) & 1)
+        if ((flags >> i) & (1 << 0))
         {
             func_8003D6A4(ptr);
         }
     }
 
     i = 0; 
-    
+
     D_800BCE18.field_0[0].field_14 = Fs_GetFileSize(FILE_CHARA_HERO_ILM) + 0x800FEE00;
-    
+
     for (; i < 4; i++)
     {
         ptr = &D_800BCE18.field_0[i].field_CC;
-        
+
         fileIdx = ptr->field_0;
         if (fileIdx != 0)
         {
@@ -2689,7 +2689,7 @@ u32 func_8003F654(s_func_8003F654* arg0)
 
 s32 func_8003F6F0(s32 arg0, s32 arg1, s32 arg2) // 0x8003F6F0
 {
-    s32 leading_zeros;
+    s32 leadingZeros;
     s32 shift;
 
     if (arg1 < arg2)
@@ -2705,12 +2705,12 @@ s32 func_8003F6F0(s32 arg0, s32 arg1, s32 arg2) // 0x8003F6F0
         return FP_TO(1, Q12_SHIFT);
     }
 
-    leading_zeros = 32 - Lzc(arg2 - arg1);
-    shift         = 0;
+    leadingZeros = 32 - Lzc(arg2 - arg1);
+    shift        = 0;
 
-    if ((leading_zeros + 12) >= 31)
+    if ((leadingZeros + 12) >= 31)
     {
-        shift = leading_zeros - 19;
+        shift = leadingZeros - 19;
     }
 
     shift = CLAMP(shift, 0, Q12_SHIFT);
