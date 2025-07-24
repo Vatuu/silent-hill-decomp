@@ -239,7 +239,7 @@ void Settings_ExtraScreen() // 0x801E318C
     Gfx_SettingsOptionsExtraDraw();
     Gfx_SelectedOptionExtra();
     Gfx_VignetteDraw();
-    Gfx_BackgroundSpriteDraw(&D_800A902C);
+    Gfx_BackgroundSpriteDraw(&g_ItemInspectionImg);
 
     if (g_GameWork.gameStateStep_598[0] != 14)
     {
@@ -263,7 +263,7 @@ void Settings_ExtraScreen() // 0x801E318C
 			((g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0) == 0)) &&
             ((g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.option_1A) != 0))
         {
-            func_80046048(0x51A, 0, 64);
+            func_80046048(Sfx_Cancel, 0, 64);
 
             g_GameWork.gameStateStep_598[0] = 5;
             g_SysWork.timer_20              = 0;
@@ -275,14 +275,14 @@ void Settings_ExtraScreen() // 0x801E318C
         if (g_ControllerPtrConst->btnsPulsed_18 & ControllerFlag_LStickUp)
         {
             s32 var = 1;
-            func_80046048(0x519, 0, 64);
+            func_80046048(Sfx_Back, 0, 64);
             g_ExtraSelectedOptionIdx = ((g_ExtraSelectedOptionIdx - var) + g_OptExtra_ShowSettingsCount) % g_OptExtra_ShowSettingsCount;
             g_Gfx_MoveLineTimer      = 0;
         }
 
         if (g_ControllerPtrConst->btnsPulsed_18 & ControllerFlag_LStickDown)
         {
-            func_80046048(0x519, 0, 64);
+            func_80046048(Sfx_Back, 0, 64);
             g_ExtraSelectedOptionIdx++;
             g_ExtraSelectedOptionIdx = g_ExtraSelectedOptionIdx % g_OptExtra_ShowSettingsCount;
             g_Gfx_MoveLineTimer      = 0;
@@ -293,7 +293,7 @@ void Settings_ExtraScreen() // 0x801E318C
             case OptExtra_WeaponCtrl:
                 if (g_ControllerPtrConst->btnsClicked_10 & (ControllerFlag_LStickRight | ControllerFlag_LStickLeft))
                 {
-                    func_80046048(0x519, 0, 64);
+                    func_80046048(Sfx_Back, 0, 64);
                     g_GameWork.config_0.optExtraWeaponCtrl_23 = !g_GameWork.config_0.optExtraWeaponCtrl_23;
                 }
                 break;
@@ -301,12 +301,12 @@ void Settings_ExtraScreen() // 0x801E318C
             case OptExtra_Blood:
                 if (g_ControllerPtrConst->btnsClicked_10 & ControllerFlag_LStickRight)
                 {
-                    func_80046048(0x519, 0, 64);
+                    func_80046048(Sfx_Back, 0, 64);
                     g_OptExtra_BloodColorSelected++;
                 }
                 if (g_ControllerPtrConst->btnsClicked_10 & ControllerFlag_LStickLeft)
                 {
-                    func_80046048(0x519, 0, 64);
+                    func_80046048(Sfx_Back, 0, 64);
                     g_OptExtra_BloodColorSelected += 3;
                 }
 
@@ -335,7 +335,7 @@ void Settings_ExtraScreen() // 0x801E318C
             case OptExtra_ViewCtrl:
                 if (g_ControllerPtrConst->btnsClicked_10 & (ControllerFlag_LStickRight | ControllerFlag_LStickLeft))
                 {
-                    func_80046048(0x519, 0, 64);
+                    func_80046048(Sfx_Back, 0, 64);
                     g_GameWork.config_0.optExtraViewCtrl_28 = !g_GameWork.config_0.optExtraViewCtrl_28;
                 }
                 break;
@@ -343,7 +343,7 @@ void Settings_ExtraScreen() // 0x801E318C
             case OptExtra_RetreatTurn:
                 if (g_ControllerPtrConst->btnsClicked_10 & (ControllerFlag_LStickRight | ControllerFlag_LStickLeft))
                 {
-                    func_80046048(0x519, 0, 64);
+                    func_80046048(Sfx_Back, 0, 64);
                     g_GameWork.config_0.optExtraRetreatTurn_2A = (s8)g_GameWork.config_0.optExtraRetreatTurn_2A == 0;
                 }
                 break;
@@ -351,7 +351,7 @@ void Settings_ExtraScreen() // 0x801E318C
             case OptExtra_MovementCtrl:
                 if (g_ControllerPtrConst->btnsClicked_10 & (ControllerFlag_LStickRight | ControllerFlag_LStickLeft))
                 {
-                    func_80046048(0x519, 0, 64);
+                    func_80046048(Sfx_Back, 0, 64);
                     g_GameWork.config_0.optExtraWalkRunCtrl_2B = (s8)g_GameWork.config_0.optExtraWalkRunCtrl_2B == 0;
                 }
                 break;
@@ -359,7 +359,7 @@ void Settings_ExtraScreen() // 0x801E318C
             case OptExtra_AutoAiming:
                 if (g_ControllerPtrConst->btnsClicked_10 & (ControllerFlag_LStickRight | ControllerFlag_LStickLeft))
                 {
-                    func_80046048(0x519, 0, 64);
+                    func_80046048(Sfx_Back, 0, 64);
                     g_GameWork.config_0.optExtraAutoAiming_2C = (s8)g_GameWork.config_0.optExtraAutoAiming_2C == 0;
                 }
                 break;
@@ -367,7 +367,7 @@ void Settings_ExtraScreen() // 0x801E318C
             case OptExtra_ViewMode:
                 if (g_ControllerPtrConst->btnsClicked_10 & (ControllerFlag_LStickRight | ControllerFlag_LStickLeft))
                 {
-                    func_80046048(0x519, 0, 64);
+                    func_80046048(Sfx_Back, 0, 64);
                     g_GameWork.config_0.optExtraViewMode_29 = !g_GameWork.config_0.optExtraViewMode_29;
                 }
                 break;
@@ -375,12 +375,12 @@ void Settings_ExtraScreen() // 0x801E318C
             case OptExtra_BulletMult:
                 if (g_ControllerPtrConst->btnsClicked_10 & ControllerFlag_LStickRight)
                 {
-                    func_80046048(0x519, 0, 64);
+                    func_80046048(Sfx_Back, 0, 64);
                     g_GameWork.config_0.optExtraBulletAdjust_2D++;
                 }
                 if (g_ControllerPtrConst->btnsClicked_10 & ControllerFlag_LStickLeft)
                 {
-                    func_80046048(0x519, 0, 64);
+                    func_80046048(Sfx_Back, 0, 64);
                     g_GameWork.config_0.optExtraBulletAdjust_2D = g_GameWork.config_0.optExtraBulletAdjust_2D + (g_OptExtra_BulletMultLimit - 1);
                 }
 
@@ -395,11 +395,11 @@ void Settings_ExtraScreen() // 0x801E318C
     {
         if (g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)
         {
-            func_80046048(0x51A, 0, 64);
+            func_80046048(Sfx_Cancel, 0, 64);
         }
         else
         {
-            func_80046048(0x51B, 0, 64);
+            func_80046048(Sfx_Confirm, 0, 64);
         }
 
         g_Gfx_ScreenFade                = 2;
@@ -422,7 +422,7 @@ void Settings_MainScreen() // 0x801E3770
     Gfx_SettingsOptionsMainDraw();
     Gfx_SelectedOptionMain();
     Gfx_VignetteDraw();
-    Gfx_BackgroundSpriteDraw(&D_800A902C);
+    Gfx_BackgroundSpriteDraw(&g_ItemInspectionImg);
     Gfx_BgmBarDraw();
     Gfx_SfxBarDraw();
 
@@ -451,7 +451,7 @@ void Settings_MainScreen() // 0x801E3770
 		((g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0) == 0)) &&
         (g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.option_1A))
     {
-        func_80046048(0x51A, 0, 64);
+        func_80046048(Sfx_Cancel, 0, 64);
 
         g_GameWork.gameStateStep_598[0] = 5;
         g_SysWork.timer_20              = 0;
@@ -462,14 +462,14 @@ void Settings_MainScreen() // 0x801E3770
 
     if (g_ControllerPtrConst->btnsPulsed_18 & ControllerFlag_LStickUp)
     {
-        func_80046048(0x519, 0, 64);
+        func_80046048(Sfx_Back, 0, 64);
 
         g_Gfx_MoveLineTimer     = 0;
         g_MainSelectedOptionIdx = (g_MainSelectedOptionIdx + 8) % 9;
     }
     if (g_ControllerPtrConst->btnsPulsed_18 & ControllerFlag_LStickDown)
     {
-        func_80046048(0x519, 0, 64);
+        func_80046048(Sfx_Back, 0, 64);
 
         g_Gfx_MoveLineTimer     = 0;
         g_MainSelectedOptionIdx = (g_MainSelectedOptionIdx + 1) % 9;
@@ -481,7 +481,7 @@ void Settings_MainScreen() // 0x801E3770
             if (g_ControllerPtrConst->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 |
 				                                        g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
             {
-                func_80046048(0x51A, 0, 64);
+                func_80046048(Sfx_Cancel, 0, 64);
 
                 g_GameWork.gameStateStep_598[0] = 5;
                 g_SysWork.timer_20              = 0;
@@ -493,8 +493,8 @@ void Settings_MainScreen() // 0x801E3770
         case OptMain_Controller:
             if (g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
             {
-                func_80046048(0x51B, 0, 64);
-                Fs_QueueStartReadTim(FILE_TIM_OPTION2_TIM, IMAGE_BUFFER_3, &D_800A903C);
+                func_80046048(Sfx_Confirm, 0, 64);
+                Fs_QueueStartReadTim(FILE_TIM_OPTION2_TIM, IMAGE_BUFFER_3, &g_ControllerButtonAtlasImg);
 
                 g_Gfx_ScreenFade                = 2;
                 g_GameWork.gameStateStep_598[0] = 9;
@@ -507,7 +507,7 @@ void Settings_MainScreen() // 0x801E3770
         case OptMain_ScreenPos:
             if (g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
             {
-                func_80046048(0x51B, 0, 64);
+                func_80046048(Sfx_Confirm, 0, 64);
 
                 g_Gfx_ScreenFade                = 2;
                 g_GameWork.gameStateStep_598[0] = 7;
@@ -520,14 +520,14 @@ void Settings_MainScreen() // 0x801E3770
         case OptMain_Brightness:
             if (g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
             {
-                func_80046048(0x51B, 0, 64);
+                func_80046048(Sfx_Confirm, 0, 64);
                 if (g_GameWork.gameStatePrev_590 == GameState_MainMenu)
                 {
-                    Fs_QueueStartReadTim(FILE_TIM_OP_BRT_E_TIM, IMAGE_BUFFER_3, &D_800A9044);
+                    Fs_QueueStartReadTim(FILE_TIM_OP_BRT_E_TIM, IMAGE_BUFFER_3, &g_BrightnessScreenImg0);
                 }
                 else
                 {
-                    Fs_QueueStartReadTim(FILE_TIM_OP_BRT_E_TIM, IMAGE_BUFFER_3, &D_800A904C);
+                    Fs_QueueStartReadTim(FILE_TIM_OP_BRT_E_TIM, IMAGE_BUFFER_3, &g_BrightnessScreenImg1);
                 }
 
                 g_Gfx_ScreenFade                = 2;
@@ -541,7 +541,7 @@ void Settings_MainScreen() // 0x801E3770
         case OptMain_Vibration:
             if (g_ControllerPtrConst->btnsClicked_10 & (ControllerFlag_LStickRight | ControllerFlag_LStickLeft))
             {
-                func_80046048(0x519, 0, 64);
+                func_80046048(Sfx_Back, 0, 64);
                 g_GameWork.config_0.optVibrationEnabled_21 = !g_GameWork.config_0.optVibrationEnabled_21 << 7;
             }
             break;
@@ -549,7 +549,7 @@ void Settings_MainScreen() // 0x801E3770
         case OptMain_AutoLoad:
             if (g_ControllerPtrConst->btnsClicked_10 & (ControllerFlag_LStickRight | ControllerFlag_LStickLeft))
             {
-                func_80046048(0x519, 0, 64);
+                func_80046048(Sfx_Back, 0, 64);
                 g_GameWork.config_0.optAutoLoad_25 = (s8)g_GameWork.config_0.optAutoLoad_25 == 0;
             }
             break;
@@ -557,7 +557,7 @@ void Settings_MainScreen() // 0x801E3770
         case OptMain_Sound:
             if (g_ControllerPtrConst->btnsClicked_10 & (ControllerFlag_LStickRight | ControllerFlag_LStickLeft))
             {
-                func_80046048(0x519, 0, 64);
+                func_80046048(Sfx_Back, 0, 64);
 
                 sdCmd                               = 2;
                 g_GameWork.config_0.optSoundType_1E = !g_GameWork.config_0.optSoundType_1E;
@@ -636,7 +636,7 @@ void Settings_MainScreen() // 0x801E3770
             return;
         }
 
-        func_80046048(0x51B, 0, 64);
+        func_80046048(Sfx_Confirm, 0, 64);
         g_Gfx_ScreenFade                = 2;
         g_GameWork.gameStateStep_598[0] = 13;
         g_SysWork.timer_20              = 0;
@@ -648,7 +648,7 @@ void Settings_MainScreen() // 0x801E3770
          ((g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0) == 0)) &&
         (g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
     {
-        func_80046048(0x51A, 0, 64);
+        func_80046048(Sfx_Cancel, 0, 64);
         g_Gfx_MoveLineTimer     = 0;
         g_MainSelectedOptionIdx = 0;
     }
@@ -1325,7 +1325,7 @@ void Settings_PositionScreen() // 0x801E53A0
     PACKET* packet;
 
     posX = g_GameWorkConst->config_0.optScreenPosX_1C;
-    if ((posX != g_ScreenPos_PosX) || (g_GameWorkConst->config_0.optScreenPosY_1D != g_ScreenPos_PosY))
+    if (posX != g_ScreenPos_PosX || g_GameWorkConst->config_0.optScreenPosY_1D != g_ScreenPos_PosY)
     {
         Settings_ScreenXYSet(posX, g_GameWorkConst->config_0.optScreenPosY_1D);
     }
@@ -1337,13 +1337,13 @@ void Settings_PositionScreen() // 0x801E53A0
     {
         case 0:
             g_Gfx_ScreenFade                                = 6;
-            g_Gfx_ScreenPos_InvertColorBg_TransitionCounter = 0xFF;
+            g_Gfx_ScreenPos_InvertColorBg_TransitionCounter = 255;
             g_GameWork.gameStateStep_598[1]                 = 1;
             g_GameWork.gameStateStep_598[2]                 = 0;
 
         case 1:
             g_GameWork.gameStateStep_598[2] = 0;
-            g_GameWork.gameStateStep_598[1] += 1;
+            g_GameWork.gameStateStep_598[1]++;
             break;
 
         case 2:
@@ -1367,24 +1367,24 @@ void Settings_PositionScreen() // 0x801E53A0
             g_GameWorkConst->config_0.optScreenPosX_1C = CLAMP(g_GameWorkConst->config_0.optScreenPosX_1C, -11, 11);
             g_GameWorkConst->config_0.optScreenPosY_1D = CLAMP(g_GameWorkConst->config_0.optScreenPosY_1D, -8, 8);
 
-            if ((g_GameWorkConst->config_0.optScreenPosX_1C != g_ScreenPos_PosX) || (g_GameWorkConst->config_0.optScreenPosY_1D != g_ScreenPos_PosY))
+            if (g_GameWorkConst->config_0.optScreenPosX_1C != g_ScreenPos_PosX || g_GameWorkConst->config_0.optScreenPosY_1D != g_ScreenPos_PosY)
             {
-                func_80046048(0x519U, 0, 64);
+                func_80046048(Sfx_Back, 0, 64);
             }
             if (g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
             {
-                if (g_Gfx_ScreenPos_InvertColorBg_TransitionCounter == 0xFF)
+                if (g_Gfx_ScreenPos_InvertColorBg_TransitionCounter == 255)
                 {
                     g_Gfx_ScreenPos_InvertColorBg_TransitionCounter = 0;
-                    g_Gfx_ScreenPos_InvertColorBg = (g_Gfx_ScreenPos_InvertColorBg + 1) & 1;
+                    g_Gfx_ScreenPos_InvertColorBg                   = (g_Gfx_ScreenPos_InvertColorBg + 1) & (1 << 0);
                 }
             }
             if (g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)
             {
-                func_80046048(0x51AU, 0, 64);
-                g_Gfx_ScreenFade                 = 2;
-                g_GameWork.gameStateStep_598[2]  = 0;
-                g_GameWork.gameStateStep_598[1] += 1;
+                func_80046048(Sfx_Cancel, 0, 64);
+                g_Gfx_ScreenFade                = 2;
+                g_GameWork.gameStateStep_598[2] = 0;
+                g_GameWork.gameStateStep_598[1]++;
             }
             break;
 
@@ -1405,7 +1405,7 @@ void Settings_PositionScreen() // 0x801E53A0
     }
 
     g_Gfx_ScreenPos_InvertColorBg_TransitionCounter += 16;
-    g_Gfx_ScreenPos_InvertColorBg_TransitionCounter = CLAMP(g_Gfx_ScreenPos_InvertColorBg_TransitionCounter, 0, 0xFF);
+    g_Gfx_ScreenPos_InvertColorBg_TransitionCounter  = CLAMP(g_Gfx_ScreenPos_InvertColorBg_TransitionCounter, 0, 0xFF);
 
     switch (g_Gfx_ScreenPos_InvertColorBg)
     {
@@ -1633,7 +1633,7 @@ void Settings_BrightnessScreen() // 0x801E6018
                 if (g_GameWork.config_0.optBrightness_22 != 0)
                 {
                     g_GameWork.config_0.optBrightness_22--;
-                    func_80046048(0x519, 0, 64);
+                    func_80046048(Sfx_Back, 0, 64);
                 }
             }
 
@@ -1642,7 +1642,7 @@ void Settings_BrightnessScreen() // 0x801E6018
                 if (g_GameWork.config_0.optBrightness_22 < 7)
                 {
                     g_GameWork.config_0.optBrightness_22++;
-                    func_80046048(0x519, 0, 64);
+                    func_80046048(Sfx_Back, 0, 64);
                 }
             }
 
@@ -1651,11 +1651,11 @@ void Settings_BrightnessScreen() // 0x801E6018
             {
                 if (g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
                 {
-                    func_80046048(0x51B, 0, 64);
+                    func_80046048(Sfx_Confirm, 0, 64);
                 }
                 else
                 {
-                    func_80046048(0x51A, 0, 64);
+                    func_80046048(Sfx_Cancel, 0, 64);
                 }
 
                 g_Gfx_ScreenFade                = 2;
@@ -1684,11 +1684,11 @@ void Settings_BrightnessScreen() // 0x801E6018
 
     if (g_GameWork.gameStatePrev_590 == GameState_MainMenu)
     {
-        Gfx_BackgroundSpriteDraw(&D_800A9044);
+        Gfx_BackgroundSpriteDraw(&g_BrightnessScreenImg0);
     }
     else
     {
-        Gfx_BackgroundSpriteDraw(&D_800A904C);
+        Gfx_BackgroundSpriteDraw(&g_BrightnessScreenImg1);
     }
 
     func_8003E5E8(g_GameWork.config_0.optBrightness_22);
@@ -2383,7 +2383,7 @@ void Gfx_ControllerButtonsDraw(s32 arg0, s32 arg1, u16 arg2) // 0x801E716C
     DR_TPAGE*      tpage;
     int            v0;
     PACKET*        packet;
-    s_FsImageDesc* image = &D_800A903C;
+    s_FsImageDesc* image = &g_ControllerButtonAtlasImg;
 
     ot     = &D_800B5D04[g_ObjectTableIdx];
     packet = GsOUT_PACKET_P;

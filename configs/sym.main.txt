@@ -11,6 +11,22 @@ g_MainImg0 = 0x80022C74; // type:FsImageDesc size:8
 g_MainImg1 = 0x80022C7c; // type:FsImageDesc size:8
 g_MainFbIdx = 0x80022C84; // type:u32
 
+g_Font16AtlasImg             = 0x800A8FF4; // type:FsImageDesc size:8
+g_KonamiLogoImg              = 0x800A8FFC; // type:FsImageDesc size:8
+g_KcetLogoImg                = 0x800A9004; // type:FsImageDesc size:8
+g_TitleImg                   = 0x800A9014; // type:FsImageDesc size:8
+g_MapImg                     = 0x800A901C; // type:FsImageDesc size:8
+g_MapMarkerAtlasImg          = 0x800A9024; // type:FsImageDesc size:8
+g_ItemInspectionImg          = 0x800A902C; // type:FsImageDesc size:8
+g_ControllerButtonAtlasImg   = 0x800A903C; // type:FsImageDesc size:8
+g_BrightnessScreenImg0       = 0x800A9044; // type:FsImageDesc size:8
+g_BrightnessScreenImg1       = 0x800A904C; // type:FsImageDesc size:8
+g_DeathTipImg                = 0x800A9054; // type:FsImageDesc size:8
+g_HealthPortraitImg          = 0x800A905C; // type:FsImageDesc size:8
+g_InventoryKeyItemTextureImg = 0x800A9064; // type:FsImageDesc size:8
+g_FirstAidKitItemTextureImg  = 0x800A906C; // type:FsImageDesc size:8
+g_Font24AtlasImg             = 0x800A909C; // type:FsImageDesc size:8
+
 // fileinfo .text
 Fs_DecryptOverlay = 0x80010AD0; // type:func
 Fs_GetFileSize = 0x80010B24; // type:func

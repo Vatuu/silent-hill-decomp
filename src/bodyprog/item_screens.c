@@ -813,7 +813,7 @@ void GameState_ItemScreens_Update() // 0x8004C9B0
             if (g_ControllerPtrConst->btnsClicked_10 & (ControllerFlag_LStickRight | ControllerFlag_LStickLeft))
             {
                 g_Inventory_SelectionId = g_Inventory_SelectionId == 0;
-                func_80046048(0x519, 0, 0x40);
+                func_80046048(Sfx_Back, 0, 64);
             }
 
             if (g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
@@ -822,7 +822,7 @@ void GameState_ItemScreens_Update() // 0x8004C9B0
                 g_Gfx_ScreenFade = 2;
                 prevGameState    = g_GameWork.gameStateStep_598[2];
 
-                func_80046048(0x51B, 0, 0x40);
+                func_80046048(Sfx_Confirm, 0, 64);
 
                 if (g_Inventory_SelectionId == InventorySelectionId_Item)
                 {
@@ -1042,7 +1042,7 @@ void Inventory_Logic() // 0x8004D518
                 D_800AE178                 = 1;
                 D_800C3998                 = InventorySelectionId_Exit;
                 g_Inventory_CmdSelectedIdx = 0;
-                func_80046048(SFX_BACK, -64, 64);
+                func_80046048(Sfx_Back, -64, 64);
 
                 g_SysWork.inventoryItemSelectedIdx_2351 = ((g_SysWork.inventoryItemSelectedIdx_2351 + g_SavegamePtr->inventoryItemSpaces_AB) - 1) % g_SavegamePtr->inventoryItemSpaces_AB;
                 temp                                    = g_SavegamePtr->inventoryItemSpaces_AB - 3;
@@ -1059,7 +1059,7 @@ void Inventory_Logic() // 0x8004D518
                 D_800AE178                 = 1;
                 D_800C3998                 = InventorySelectionId_Exit;
                 g_Inventory_CmdSelectedIdx = 0;
-                func_80046048(SFX_BACK, 64, 64);
+                func_80046048(Sfx_Back, 64, 64);
 
                 g_SysWork.inventoryItemSelectedIdx_2351 = (g_SysWork.inventoryItemSelectedIdx_2351 + 1) % g_SavegamePtr->inventoryItemSpaces_AB;
                 func_800539A4(1, (g_SysWork.inventoryItemSelectedIdx_2351 + 3) % g_SavegamePtr->inventoryItemSpaces_AB);
@@ -1071,7 +1071,7 @@ void Inventory_Logic() // 0x8004D518
                 if (g_SysWork.playerCombatInfo_38.field_F >= 0)
                 {
                     g_Inventory_SelectionId = InventorySelectionId_EquippedItem;
-                    func_80046048(SFX_BACK, 0, 64);
+                    func_80046048(Sfx_Back, 0, 64);
                 }
             }
             else if ((g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2 || g_Inventory_IsDownClicked != 0) &&
@@ -1081,11 +1081,11 @@ void Inventory_Logic() // 0x8004D518
 
                 if (g_Inventory_IsDownClicked != 0)
                 {
-                    func_80046048(SFX_BACK, 0, 64);
+                    func_80046048(Sfx_Back, 0, 64);
                 }
                 else
                 {
-                    func_80046048(SFX_CANCEL, 0, 64);
+                    func_80046048(Sfx_Cancel, 0, 64);
                 }
 
                 g_Inventory_SelectionId = InventorySelectionId_Exit;
@@ -1096,13 +1096,13 @@ void Inventory_Logic() // 0x8004D518
                 if (g_SavegamePtr->items_0[g_SysWork.inventoryItemSelectedIdx_2351].id_0 == InventoryItemId_Flauros ||
                     (g_SysWork.field_2388.field_16 != 0 && g_SavegamePtr->items_0[g_SysWork.inventoryItemSelectedIdx_2351].id_0 == InventoryItemId_Flashlight))
                 {
-                    func_80046048(SFX_DENIED, 64, 64);
+                    func_80046048(Sfx_Denied, 64, 64);
                 }
                 else if (g_SavegamePtr->items_0[g_SysWork.inventoryItemSelectedIdx_2351].command_2 == InventoryCmdId_Unk10)
                 {
                     g_GameWork.gameStateStep_598[1] = 12;
                     g_GameWork.gameStateStep_598[2] = 0;
-                    func_80046048(SFX_DENIED, 64, 64);
+                    func_80046048(Sfx_Denied, 64, 64);
                 }
                 else
                 {
@@ -1112,7 +1112,7 @@ void Inventory_Logic() // 0x8004D518
                     if (g_SavegamePtr->items_0[g_SysWork.inventoryItemSelectedIdx_2351].command_2 != InventoryCmdId_Unk11)
                     {
                         g_Inventory_SelectionId = InventorySelectionId_ItemCmd;
-                        func_80046048(SFX_CONFIRM, 64, 64);
+                        func_80046048(Sfx_Confirm, 64, 64);
                     }
                 }
             }
@@ -1123,7 +1123,7 @@ void Inventory_Logic() // 0x8004D518
             else
             {
                 step = g_GameWork.gameStateStep_598[2];
-                func_80046048(SFX_CANCEL, 0, 64);
+                func_80046048(Sfx_Cancel, 0, 64);
 
                 g_Gfx_ScreenFade                = 2;
                 g_GameWork.gameStateStep_598[1] = 20;
@@ -1138,7 +1138,7 @@ void Inventory_Logic() // 0x8004D518
             if (g_Inventory_IsDownClicked != 0)
             {
                 D_800C3998 = InventorySelectionId_EquippedItem;
-                func_80046048(SFX_BACK, 0, 64);
+                func_80046048(Sfx_Back, 0, 64);
                 g_Inventory_SelectionId = InventorySelectionId_Item;
             }
             else if (g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
@@ -1149,19 +1149,19 @@ void Inventory_Logic() // 0x8004D518
                 if (g_SavegamePtr->items_0[g_SysWork.playerCombatInfo_38.field_12].command_2 != InventoryCmdId_Unk11)
                 {
                     g_Inventory_SelectionId = InventorySelectionId_EquippedItemCmd;
-                    func_80046048(SFX_CONFIRM, 0, 64);
+                    func_80046048(Sfx_Confirm, 0, 64);
                 }
             }
             else if (g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)
             {
                 D_800C3998 = InventorySelectionId_EquippedItem;
                 g_Inventory_SelectionId = InventorySelectionId_Exit;
-                func_80046048(SFX_CANCEL, 0, 64);
+                func_80046048(Sfx_Cancel, 0, 64);
             }
             else if (g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.item_16)
             {
                 step = g_GameWork.gameStateStep_598[2];
-                func_80046048(SFX_CANCEL, 0, 64);
+                func_80046048(Sfx_Cancel, 0, 64);
 
                 g_Gfx_ScreenFade                = 2;
                 g_GameWork.gameStateStep_598[1] = 20;
@@ -1176,19 +1176,19 @@ void Inventory_Logic() // 0x8004D518
             if (g_Inventory_IsUpClicked)
             {
                 D_800C3998 = InventorySelectionId_EquippedItem;
-                func_80046048(SFX_BACK, 0, 64);
+                func_80046048(Sfx_Back, 0, 64);
                 g_Inventory_SelectionId = InventorySelectionId_Item;
             }
             else if (g_Inventory_IsLeftClicked)
             {
                 D_800C3998 = InventorySelectionId_EquippedItem;
-                func_80046048(SFX_BACK, -64, 64);
+                func_80046048(Sfx_Back, -64, 64);
                 g_Inventory_SelectionId = InventorySelectionId_Settings;
             }
             else if (g_Inventory_IsRightClicked)
             {
                 D_800C3998 = InventorySelectionId_EquippedItem;
-                func_80046048(SFX_BACK, 64, 64);
+                func_80046048(Sfx_Back, 64, 64);
                 g_Inventory_SelectionId = InventorySelectionId_Map;
             }
             else if (g_ControllerPtrConst->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.item_16 |
@@ -1196,7 +1196,7 @@ void Inventory_Logic() // 0x8004D518
                                                               g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)))
             {
                 step = g_GameWork.gameStateStep_598[2];
-                func_80046048(SFX_CANCEL, 0, 64);
+                func_80046048(Sfx_Cancel, 0, 64);
 
                 g_Gfx_ScreenFade                = 2;
                 g_GameWork.gameStateStep_598[1] = 20;
@@ -1211,7 +1211,7 @@ void Inventory_Logic() // 0x8004D518
             if (g_Inventory_IsUpClicked)
             {
                 D_800C3998 = InventorySelectionId_EquippedItem;
-                func_80046048(SFX_BACK, 0, 64);
+                func_80046048(Sfx_Back, 0, 64);
                 g_Inventory_SelectionId = InventorySelectionId_Item;
             }
             else if (g_Inventory_IsRightClicked || (g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
@@ -1220,18 +1220,18 @@ void Inventory_Logic() // 0x8004D518
 
                 if (!g_Inventory_IsRightClicked || (g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
                 {
-                    func_80046048(SFX_CANCEL, 0, 64);
+                    func_80046048(Sfx_Cancel, 0, 64);
                     g_Inventory_SelectionId = InventorySelectionId_Exit;
                 }
                 else
                 {
-                    func_80046048(SFX_BACK, 0, 64);
+                    func_80046048(Sfx_Back, 0, 64);
                     g_Inventory_SelectionId = InventorySelectionId_Exit;
                 }
             }
             else if (g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
             {
-                func_80046048(SFX_CONFIRM, -64, 64);
+                func_80046048(Sfx_Confirm, -64, 64);
 
                 g_Gfx_ScreenFade                = 2;
                 g_GameWork.gameStateStep_598[1] = 18;
@@ -1242,7 +1242,7 @@ void Inventory_Logic() // 0x8004D518
             else if (g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.item_16)
             {
                 step = g_GameWork.gameStateStep_598[2];
-                func_80046048(SFX_CANCEL, 0, 64);
+                func_80046048(Sfx_Cancel, 0, 64);
 
                 g_Gfx_ScreenFade                = 2;
                 g_GameWork.gameStateStep_598[1] = 20;
@@ -1257,7 +1257,7 @@ void Inventory_Logic() // 0x8004D518
             if (g_Inventory_IsUpClicked)
             {
                 D_800C3998 = InventorySelectionId_EquippedItem;
-                func_80046048(SFX_BACK, 0, 64);
+                func_80046048(Sfx_Back, 0, 64);
                 g_Inventory_SelectionId = InventorySelectionId_Item;
             }
             else if (g_Inventory_IsLeftClicked || g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)
@@ -1266,11 +1266,11 @@ void Inventory_Logic() // 0x8004D518
 
                 if (!g_Inventory_IsLeftClicked || g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)
                 {
-                    func_80046048(SFX_CANCEL, 0, 64);
+                    func_80046048(Sfx_Cancel, 0, 64);
                 }
                 else
                 {
-                    func_80046048(SFX_BACK, 0, 64);
+                    func_80046048(Sfx_Back, 0, 64);
                 }
 
                 g_Inventory_SelectionId = InventorySelectionId_Exit;
@@ -1282,11 +1282,11 @@ void Inventory_Logic() // 0x8004D518
                       !(g_SysWork.field_2388.field_1C[1].field_0.field_0.s_field_0.field_0 & (1 << 0)))) &&
                     HAS_MAP(g_SavegamePtr->current2dMapIdx_A9))
                 {
-                    func_80046048(SFX_CONFIRM, 64, 64);
+                    func_80046048(Sfx_Confirm, 64, 64);
 
                     if (D_800A99CC[g_SavegamePtr->current2dMapIdx_A9] != NO_VALUE)
                     {
-                        Fs_QueueStartReadTim(FILE_TIM_MR_0TOWN_TIM + D_800A99CC[g_SavegamePtr->current2dMapIdx_A9], FS_BUFFER_1, &D_800A9024);
+                        Fs_QueueStartReadTim(FILE_TIM_MR_0TOWN_TIM + D_800A99CC[g_SavegamePtr->current2dMapIdx_A9], FS_BUFFER_1, &g_MapMarkerAtlasImg);
                     }
                     Fs_QueueStartSeek(FILE_TIM_MP_0TOWN_TIM + D_800A99B4[g_SavegamePtr->current2dMapIdx_A9]);
 
@@ -1296,13 +1296,13 @@ void Inventory_Logic() // 0x8004D518
                 }
                 else
                 {
-                    func_80046048(SFX_DENIED, 64, 64);
+                    func_80046048(Sfx_Denied, 64, 64);
                 }
             }
             else if (g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.item_16)
             {
                 step = g_GameWork.gameStateStep_598[2];
-                func_80046048(SFX_CANCEL, 0, 64);
+                func_80046048(Sfx_Cancel, 0, 64);
 
                 g_Gfx_ScreenFade                = 2;
                 g_GameWork.gameStateStep_598[1] = 20;
@@ -1364,7 +1364,7 @@ void Inventory_Logic() // 0x8004D518
                 {
                     D_800C3998 = InventorySelectionId_EquippedItem;
                     g_Inventory_CmdSelectedIdx++;
-                    func_80046048(SFX_BACK, 64, 64);
+                    func_80046048(Sfx_Back, 64, 64);
                 }
             }
             else if (g_Inventory_IsUpPulsed)
@@ -1373,7 +1373,7 @@ void Inventory_Logic() // 0x8004D518
                 {
                     D_800C3998 = InventorySelectionId_EquippedItem;
                     g_Inventory_CmdSelectedIdx--;
-                    func_80046048(SFX_BACK, 64, 64);
+                    func_80046048(Sfx_Back, 64, 64);
                 }
             }
             else if (g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
@@ -1432,43 +1432,43 @@ void Inventory_Logic() // 0x8004D518
                                 switch (g_SavegamePtr->items_0[curItemIdx].id_0)
                                 {
                                     case InventoryItemId_KeyOfLion:
-                                        Fs_QueueStartReadTim(FILE_TIM_LION_TIM, FS_BUFFER_1, &D_800A902C);
+                                        Fs_QueueStartReadTim(FILE_TIM_LION_TIM, FS_BUFFER_1, &g_ItemInspectionImg);
                                         break;
 
                                     case InventoryItemId_KeyOfWoodman:
-                                        Fs_QueueStartReadTim(FILE_TIM_KIKORI_TIM, FS_BUFFER_1, &D_800A902C);
+                                        Fs_QueueStartReadTim(FILE_TIM_KIKORI_TIM, FS_BUFFER_1, &g_ItemInspectionImg);
                                         break;
 
                                     case InventoryItemId_KeyOfScarecrow:
-                                        Fs_QueueStartReadTim(FILE_TIM_KAKASHI_TIM, FS_BUFFER_1, &D_800A902C);
+                                        Fs_QueueStartReadTim(FILE_TIM_KAKASHI_TIM, FS_BUFFER_1, &g_ItemInspectionImg);
                                         break;
 
                                     case InventoryItemId_KeyOfOphiel:
-                                        Fs_QueueStartReadTim(FILE_TIM_LAST_A_TIM, FS_BUFFER_1, &D_800A902C);
+                                        Fs_QueueStartReadTim(FILE_TIM_LAST_A_TIM, FS_BUFFER_1, &g_ItemInspectionImg);
                                         break;
 
                                     case InventoryItemId_KeyOfHagith:
-                                        Fs_QueueStartReadTim(FILE_TIM_LAST_B_TIM, FS_BUFFER_1, &D_800A902C);
+                                        Fs_QueueStartReadTim(FILE_TIM_LAST_B_TIM, FS_BUFFER_1, &g_ItemInspectionImg);
                                         break;
 
                                     case InventoryItemId_KeyOfPhaleg:
-                                        Fs_QueueStartReadTim(FILE_TIM_LAST_C_TIM, FS_BUFFER_1, &D_800A902C);
+                                        Fs_QueueStartReadTim(FILE_TIM_LAST_C_TIM, FS_BUFFER_1, &g_ItemInspectionImg);
                                         break;
 
                                     case InventoryItemId_KeyOfBethor:
-                                        Fs_QueueStartReadTim(FILE_TIM_LAST_D_TIM, FS_BUFFER_1, &D_800A902C);
+                                        Fs_QueueStartReadTim(FILE_TIM_LAST_D_TIM, FS_BUFFER_1, &g_ItemInspectionImg);
                                         break;
 
                                     case InventoryItemId_KeyOfAratron:
-                                        Fs_QueueStartReadTim(FILE_TIM_LAST_E_TIM, FS_BUFFER_1, &D_800A902C);
+                                        Fs_QueueStartReadTim(FILE_TIM_LAST_E_TIM, FS_BUFFER_1, &g_ItemInspectionImg);
                                         break;
 
                                     case InventoryItemId_KGordonKey:
-                                        Fs_QueueStartReadTim(FILE_TIM_K_GORDON_TIM, FS_BUFFER_1, &D_800A902C);
+                                        Fs_QueueStartReadTim(FILE_TIM_K_GORDON_TIM, FS_BUFFER_1, &g_ItemInspectionImg);
                                         break;
 
                                     case InventoryItemId_KaufmannKey:
-                                        Fs_QueueStartReadTim(FILE_TIM_MOTEL_TIM, FS_BUFFER_1, &D_800A902C);
+                                        Fs_QueueStartReadTim(FILE_TIM_MOTEL_TIM, FS_BUFFER_1, &g_ItemInspectionImg);
                                         break;
 
                                     case InventoryItemId_AntiqueShopKey:
@@ -1477,11 +1477,11 @@ void Inventory_Logic() // 0x8004D518
                                             g_SavegamePtr->mapMarkingFlags_1DC |= 1 << 16;
                                         }
 
-                                        Fs_QueueStartReadTim(FILE_TIM_ANTIQUE_TIM, FS_BUFFER_1, &D_800A902C);
+                                        Fs_QueueStartReadTim(FILE_TIM_ANTIQUE_TIM, FS_BUFFER_1, &g_ItemInspectionImg);
                                         break;
 
                                     case InventoryItemId_ClassroomKey:
-                                        Fs_QueueStartReadTim(FILE_TIM_KEY_OF_2_TIM, FS_BUFFER_1, &D_800A902C);
+                                        Fs_QueueStartReadTim(FILE_TIM_KEY_OF_2_TIM, FS_BUFFER_1, &g_ItemInspectionImg);
                                         break;
                                 }
                             }
@@ -1510,15 +1510,15 @@ void Inventory_Logic() // 0x8004D518
                             switch (g_SavegamePtr->items_0[curItemIdx].id_0)
                             {
                                 case InventoryItemId_NoteToSchool:
-                                    Fs_QueueStartReadTim(FILE_TIM_TOSCHOOL_TIM, FS_BUFFER_1, &D_800A902C);
+                                    Fs_QueueStartReadTim(FILE_TIM_TOSCHOOL_TIM, FS_BUFFER_1, &g_ItemInspectionImg);
                                     break;
 
                                 case InventoryItemId_NoteDoghouse:
-                                    Fs_QueueStartReadTim(FILE_TIM_STKENNEL_TIM, FS_BUFFER_1, &D_800A902C);
+                                    Fs_QueueStartReadTim(FILE_TIM_STKENNEL_TIM, FS_BUFFER_1, &g_ItemInspectionImg);
                                     break;
 
                                 case InventoryItemId_Receipt:
-                                    Fs_QueueStartReadTim(FILE_TIM_RECEIPT_TIM, FS_BUFFER_1, &D_800A902C);
+                                    Fs_QueueStartReadTim(FILE_TIM_RECEIPT_TIM, FS_BUFFER_1, &g_ItemInspectionImg);
                                     break;
                             }
                         }
@@ -1615,11 +1615,11 @@ void Inventory_Logic() // 0x8004D518
 
                 if (g_GameWork.gameStateStep_598[1] == 12)
                 {
-                    func_80046048(SFX_DENIED, 64, 64);
+                    func_80046048(Sfx_Denied, 64, 64);
                 }
                 else
                 {
-                    func_80046048(SFX_CONFIRM, 64, 64);
+                    func_80046048(Sfx_Confirm, 64, 64);
                 }
             }
             else if (g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)
@@ -1627,7 +1627,7 @@ void Inventory_Logic() // 0x8004D518
                 D_800C3998                 = InventorySelectionId_EquippedItem;
                 g_Inventory_CmdSelectedIdx = 0;
                 g_Inventory_SelectionId    = InventorySelectionId_Item;
-                func_80046048(SFX_CANCEL, 0, 64);
+                func_80046048(Sfx_Cancel, 0, 64);
             }
 
             do {} while (0); // HACK: Required for match.
@@ -3342,7 +3342,7 @@ void Gfx_Inventory_2dBackgroundDraw(s32* arg0) // 0x8004FBCC
             {
                 poly_ft4 = (POLY_FT4*)GsOUT_PACKET_P;
                 setPolyFT4(poly_ft4);
-                poly_ft4->clut = getClut(D_800A902C.clutX, D_800A902C.clutY);
+                poly_ft4->clut = getClut(g_ItemInspectionImg.clutX, g_ItemInspectionImg.clutY);
                 setRGB0(poly_ft4, 0x80, 0x80, 0x80);
 
                 if (i != 0) 
@@ -3921,7 +3921,7 @@ void GameFs_Tim00TIMLoad() // 0x80053dA0
         return;
     }
 
-    Fs_QueueStartReadTim(FILE_ITEM_TIM00_TIM, FS_BUFFER_1, &D_800A906C);
+    Fs_QueueStartReadTim(FILE_ITEM_TIM00_TIM, FS_BUFFER_1, &g_FirstAidKitItemTextureImg);
     g_SysWork.flags_2352 |= 1 << 0;
 }
 
@@ -3944,7 +3944,7 @@ void GameFs_MapItemsModelLoad(u32 mapId) // 0x80053DFC
         case MapOverlayId_MAP1_S05:
             if (!(g_SysWork.flags_2352 & (1 << 1)))
             {
-                Fs_QueueStartReadTim(FILE_ITEM_TIM01_TIM, FS_BUFFER_1, &D_800A9064);
+                Fs_QueueStartReadTim(FILE_ITEM_TIM01_TIM, FS_BUFFER_1, &g_InventoryKeyItemTextureImg);
                 g_SysWork.flags_2352 = (g_SysWork.flags_2352 & 0x81) | (1 << 1);
             }
             break;
@@ -3963,7 +3963,7 @@ void GameFs_MapItemsModelLoad(u32 mapId) // 0x80053DFC
         case MapOverlayId_MAP4_S05:
             if (!(g_SysWork.flags_2352 & (1 << 2)))
             {
-                Fs_QueueStartReadTim(FILE_ITEM_TIM02_TIM, FS_BUFFER_1, &D_800A9064);
+                Fs_QueueStartReadTim(FILE_ITEM_TIM02_TIM, FS_BUFFER_1, &g_InventoryKeyItemTextureImg);
                 g_SysWork.flags_2352 = (g_SysWork.flags_2352 & 0x81) | (1 << 2);
             }
             break;
@@ -3978,7 +3978,7 @@ void GameFs_MapItemsModelLoad(u32 mapId) // 0x80053DFC
         case MapOverlayId_MAP4_S04:
             if (!(g_SysWork.flags_2352 & (1 << 3)))
             {
-                Fs_QueueStartReadTim(FILE_ITEM_TIM03_TIM, FS_BUFFER_1, &D_800A9064);
+                Fs_QueueStartReadTim(FILE_ITEM_TIM03_TIM, FS_BUFFER_1, &g_InventoryKeyItemTextureImg);
                 g_SysWork.flags_2352 = (g_SysWork.flags_2352 & 0x81) | (1 << 3);
             }
             break;
@@ -3994,7 +3994,7 @@ void GameFs_MapItemsModelLoad(u32 mapId) // 0x80053DFC
         case MapOverlayId_MAP6_S04:
             if (!(g_SysWork.flags_2352 & (1 << 4)))
             {
-                Fs_QueueStartReadTim(FILE_ITEM_TIM04_TIM, FS_BUFFER_1, &D_800A9064);
+                Fs_QueueStartReadTim(FILE_ITEM_TIM04_TIM, FS_BUFFER_1, &g_InventoryKeyItemTextureImg);
                 g_SysWork.flags_2352 = (g_SysWork.flags_2352 & 0x81) | (1 << 4);
             }
             break;
@@ -4003,7 +4003,7 @@ void GameFs_MapItemsModelLoad(u32 mapId) // 0x80053DFC
         case MapOverlayId_MAP7_S01:
             if (!(g_SysWork.flags_2352 & (1 << 5)))
             {
-                Fs_QueueStartReadTim(FILE_ITEM_TIM05_TIM, FS_BUFFER_1, &D_800A9064);
+                Fs_QueueStartReadTim(FILE_ITEM_TIM05_TIM, FS_BUFFER_1, &g_InventoryKeyItemTextureImg);
                 g_SysWork.flags_2352 = (g_SysWork.flags_2352 & 0x81) | (1 << 5);
             }
             break;
@@ -4012,7 +4012,7 @@ void GameFs_MapItemsModelLoad(u32 mapId) // 0x80053DFC
         case MapOverlayId_MAP7_S03:
             if (!(g_SysWork.flags_2352 & (1 << 6)))
             {
-                Fs_QueueStartReadTim(FILE_ITEM_TIM06_TIM, FS_BUFFER_1, &D_800A9064);
+                Fs_QueueStartReadTim(FILE_ITEM_TIM06_TIM, FS_BUFFER_1, &g_InventoryKeyItemTextureImg);
                 g_SysWork.flags_2352 = (g_SysWork.flags_2352 & 0x81) | (1 << 6);
             }
             break;
@@ -4135,7 +4135,7 @@ void func_800540A4(s8 arg0) // 0x800540A4
     D_800AE18C = 0;
     D_800AE18E = 0;
 
-    Fs_QueueStartReadTim(FILE_ITEM_HEROPIC2_TIM, FS_BUFFER_1, &D_800A905C);
+    Fs_QueueStartReadTim(FILE_ITEM_HEROPIC2_TIM, FS_BUFFER_1, &g_HealthPortraitImg);
 }
 
 // TODO: RODATA migration.

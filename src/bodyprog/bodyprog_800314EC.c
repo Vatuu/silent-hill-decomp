@@ -730,7 +730,7 @@ void GameFs_TitleGfxSeek() // 0x80032bd0
 
 void GameFs_TitleGfxLoad() // 0x80032bf0
 {
-    Fs_QueueStartReadTim(FILE_TIM_TITLE_E_TIM, FS_BUFFER_3, &D_800A9014);
+    Fs_QueueStartReadTim(FILE_TIM_TITLE_E_TIM, FS_BUFFER_3, &g_TitleImg);
 }
 
 void GameFs_StreamBinSeek() // 0x80032C20
@@ -745,13 +745,13 @@ void GameFs_StreamBinLoad() // 0x80032C40
 
 void GameFs_OptionBinLoad() // 0x80032C68
 {
-    Fs_QueueStartReadTim(FILE_TIM_OPTION_TIM, FS_BUFFER_1, &D_800A902C);
+    Fs_QueueStartReadTim(FILE_TIM_OPTION_TIM, FS_BUFFER_1, &g_ItemInspectionImg);
     Fs_QueueStartRead(FILE_VIN_OPTION_BIN, FS_BUFFER_1);
 }
 
 void GameFs_SaveLoadBinLoad() // 0x80032CA8
 {
-    Fs_QueueStartReadTim(FILE_TIM_SAVELOAD_TIM, FS_BUFFER_1, &D_800A902C);
+    Fs_QueueStartReadTim(FILE_TIM_SAVELOAD_TIM, FS_BUFFER_1, &g_ItemInspectionImg);
     Fs_QueueStartRead(FILE_VIN_SAVELOAD_BIN, FS_BUFFER_1);
 }
 

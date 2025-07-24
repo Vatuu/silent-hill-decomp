@@ -466,7 +466,7 @@ void Gfx_MainMenu_BgDraw() // 0x8003B758
         func_8003BCF4();
     }
 
-    Gfx_BackgroundSpriteDraw(&D_800A9014);
+    Gfx_BackgroundSpriteDraw(&g_TitleImg);
     func_8003BC8C();
 }
 

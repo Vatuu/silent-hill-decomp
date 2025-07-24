@@ -622,12 +622,12 @@ void func_8009151C(u32 arg0, s32 arg1, s32 arg2)
 
 void GameFs_StfRollBinLoad() // 0x80091778
 {
-    if (D_800A909C.tPage != 0)
+    if (g_Font24AtlasImg.tPage != 0)
     {
     }
 
     Fs_QueueStartRead(FILE_VIN_STF_ROLL_BIN, FS_BUFFER_1);
-    func_800917C0(FONT24_BUFFER, 1, &D_800A909C);
+    func_800917C0(FONT24_BUFFER, 1, &g_Font24AtlasImg);
 }
 
 void func_800917C0(void* arg0, s32 arg1, s_FsImageDesc* img) // 0x800917C0

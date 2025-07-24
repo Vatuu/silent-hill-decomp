@@ -51,7 +51,7 @@ void GameState_KonamiLogo_Update() // 0x800C95AC
                 D_800B5C30       = 0x333;
 
                 // Load \1ST\KONAMI2.TIM (Konami logo).
-                Fs_QueueStartReadTim(FILE_1ST_KONAMI2_TIM, FS_BUFFER_1, &D_800A9004);
+                Fs_QueueStartReadTim(FILE_1ST_KONAMI2_TIM, FS_BUFFER_1, &g_KcetLogoImg);
                 
                 func_8003D160();
                 GameFs_BgItemLoad();
@@ -287,7 +287,7 @@ void GameState_KcetLogo_Update() // 0x800C99A4
                     switch (D_800CA4F0.field_0)
                     {
                         case 4:
-                            Fs_QueueStartReadTim(FILE_TIM_SAVELOAD_TIM, FS_BUFFER_7, &D_800A902C);
+                            Fs_QueueStartReadTim(FILE_TIM_SAVELOAD_TIM, FS_BUFFER_7, &g_ItemInspectionImg);
                             break;
 
                         case 3:
@@ -374,10 +374,10 @@ void Gfx_KonamiScreenDraw() // 0x800C9FB8
     s32* ptr;
 
     // Draw Konami logo.
-    Gfx_BootScreenImageSegmentDraw(&D_800A8FFC, 0xF, 0, 0, 256, 256, -192, -192);
-    Gfx_BootScreenImageSegmentDraw(&D_800A8FFC, 0xF, 256, 0, 128, 256, 64, -192);
-    Gfx_BootScreenImageSegmentDraw(&D_800A8FFC, 0xF, 0, 256, 256, 128, -192, 64);
-    Gfx_BootScreenImageSegmentDraw(&D_800A8FFC, 0xF, 256, 256, 128, 128, 64, 64);
+    Gfx_BootScreenImageSegmentDraw(&g_KonamiLogoImg, 0xF, 0, 0, 256, 256, -192, -192);
+    Gfx_BootScreenImageSegmentDraw(&g_KonamiLogoImg, 0xF, 256, 0, 128, 256, 64, -192);
+    Gfx_BootScreenImageSegmentDraw(&g_KonamiLogoImg, 0xF, 0, 256, 256, 128, -192, 64);
+    Gfx_BootScreenImageSegmentDraw(&g_KonamiLogoImg, 0xF, 256, 256, 128, 128, 64, 64);
 
     // Draw fading overlay tile.
     ptr = (g_ObjectTableIdx << 4) + &D_800B5C7C;
@@ -393,8 +393,8 @@ void Gfx_KcetScreenDraw() // 0x800CA120
     u32* ptr;
 
     // Draw KCET logo.
-    Gfx_BootScreenImageSegmentDraw(&D_800A9004, 0xF, 0, 0, 256, 160, -208, -80);
-    Gfx_BootScreenImageSegmentDraw(&D_800A9004, 0xF, 256, 0, 160, 160, 48, -80);
+    Gfx_BootScreenImageSegmentDraw(&g_KcetLogoImg, 0xF, 0, 0, 256, 160, -208, -80);
+    Gfx_BootScreenImageSegmentDraw(&g_KcetLogoImg, 0xF, 256, 0, 160, 160, 48, -80);
 
     // Draw fading overlay tile.
     ptr = (g_ObjectTableIdx << 4) + &D_800B5C7C;

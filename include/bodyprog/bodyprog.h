@@ -18,28 +18,30 @@
 // ========
 
 #define TEMP_MEMORY_ADDR ((s8*)0x801A2600)
+#define CD_ADDR_0        ((u_long*)0x801E2600)
 
 #define IMAGE_BUFFER_0 ((u_long*)0x801CFA00)
 #define IMAGE_BUFFER_1 ((u_long*)0x801C8200)
 #define IMAGE_BUFFER_2 ((u_long*)0x801ABE00)
-#define FONT24_BUFFER ((u_long*)0x801F5600) // Loaded by `GameFs_StfRollBinLoad`.
-
-#define CD_ADDR_0 ((u_long*)0x801E2600)
+#define FONT24_BUFFER  ((u_long*)0x801F5600) // Loaded by `GameFs_StfRollBinLoad`.
 
 #define OPT_SOUND_VOLUME_MIN   0
 #define OPT_SOUND_VOLUME_MAX   128
 #define OPT_VIBRATION_DISABLED 0
 #define OPT_VIBRATION_ENABLED  128
 
-// TODO: Could be part of a larger SFX enum with every sound effect? Maybe registered like filesystem assets.
-#define SFX_DENIED  0x518
-#define SFX_BACK    0x519
-#define SFX_CANCEL  0x51A
-#define SFX_CONFIRM 0x51B
-
 // ======
 // ENUMS
 // ======
+
+// TODO: Could maybe register these automatically just like assets in the `SILENT` archive.
+typedef enum _Sfx
+{
+    Sfx_Denied  = 1304,
+    Sfx_Back    = 1305,
+    Sfx_Cancel  = 1306,
+    Sfx_Confirm = 1307
+} e_Sfx;
 
 /** Used by `func_8003F654` to cast a specific field to the desired type. */
 typedef enum _MenuState
@@ -1190,7 +1192,7 @@ typedef struct
 // GLOBALS
 // ========
 
-extern s_FsImageDesc g_MainImg0; // 0x80022C74 - TODO: part of main exe, move to main/ headers?
+extern s_FsImageDesc g_MainImg0; // 0x80022C74 TODO: Part of main exe, move to `main/` headers?
 
 /** Some sort of struct inside RODATA, likely a constant. */
 extern s32 D_8002500C;
@@ -1232,49 +1234,35 @@ extern s32 D_800A8F40;
 
 extern GsOT D_800A8F9C[];
 
-/** 16x16 font image. */
-extern s_FsImageDesc D_800A8FF4;
+extern s_FsImageDesc g_Font16AtlasImg;
 
-/** Konami logo boot screen image. */
-extern s_FsImageDesc D_800A8FFC;
+extern s_FsImageDesc g_KonamiLogoImg;
 
-/** KCET logo boot screen image. */
-extern s_FsImageDesc D_800A9004;
+extern s_FsImageDesc g_KcetLogoImg;
 
-/** Title image. */
-extern s_FsImageDesc D_800A9014;
+extern s_FsImageDesc g_TitleImg;
 
-/** Map images. */
-extern s_FsImageDesc D_800A901C;
+extern s_FsImageDesc g_MapImg;
 
-/** Map marker images. */
-extern s_FsImageDesc D_800A9024;
+extern s_FsImageDesc g_MapMarkerAtlasImg;
 
-/** Save screen background image. */
-extern s_FsImageDesc D_800A902C;
+extern s_FsImageDesc g_ItemInspectionImg;
 
 extern s_FsImageDesc D_800A9034;
 
-/** Controller button icon atlas texture. */
-extern s_FsImageDesc D_800A903C;
+extern s_FsImageDesc g_ControllerButtonAtlasImg;
 
-/** Brightness options screen background image from main menu. */
-extern s_FsImageDesc D_800A9044;
+extern s_FsImageDesc g_BrightnessScreenImg0;
 
-/** Brightness options screen background image not from main menu.. */
-extern s_FsImageDesc D_800A904C;
+extern s_FsImageDesc g_BrightnessScreenImg1;
 
-/** Tip images. */
-extern s_FsImageDesc D_800A9054;
+extern s_FsImageDesc g_DeathTipImg;
 
-/** Harry portrait options screen background image. */
-extern s_FsImageDesc D_800A905C;
+extern s_FsImageDesc g_HealthPortraitImg;
 
-/** Inventory key item textures. */
-extern s_FsImageDesc D_800A9064;
+extern s_FsImageDesc g_InventoryKeyItemTextureImg;
 
-/** First aid kit item texture. */
-extern s_FsImageDesc D_800A906C;
+extern s_FsImageDesc g_FirstAidKitItemTextureImg;
 
 /** Some intentory item texture (`ITEM/TIM07.TIM`). */
 extern s_FsImageDesc D_800A9074;
@@ -1282,8 +1270,7 @@ extern s_FsImageDesc D_800A9074;
 /** `TEST/WARMTEST.TIM` texture loaded by `Ai_Twinfeeler_TextureLoad. Unused? */
 extern s_FsImageDesc D_800A9094;
 
-/** 24x24 font atlas texture. */
-extern s_FsImageDesc D_800A909C;
+extern s_FsImageDesc g_Font24AtlasImg;
 
 /** Array containg file IDs used for each `e_ShCharacterId`, used in `Fs_QueueStartReadAnm`. */
 extern s_CharaFileInfo g_Chara_FileInfo[45]; // 0x800A90FC
@@ -2236,7 +2223,8 @@ u8 func_80045B28();
 
 void sd_work_init();
 
-u8 func_80046048(u16 cmd, s8 arg1, u8 vol); // SD Func. Last arg is a u8 value.
+/** Plays SFX. */
+u8 func_80046048(u16 sfx, s8 arg1, u8 vol);
 
 void func_800468EC();
 

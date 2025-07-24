@@ -2091,7 +2091,7 @@ void Gfx_SaveBackgroundDraw() // 0x801E709C
     Gfx_SaveScreenBaseDraw();
 
     // Draws background image.
-    Gfx_BackgroundSpriteDraw(&D_800A902C);
+    Gfx_BackgroundSpriteDraw(&g_ItemInspectionImg);
 }
 
 void Gfx_SaveScreen() // 0x801E70C8

@@ -295,7 +295,7 @@ void func_800862F8(s32 arg0, s32 arg1, s32 arg2) // 0x800862F8
     switch (switchVar)
     {
         case 0:
-            Fs_QueueStartReadTim(arg1, FS_BUFFER_1, &D_800A902C);
+            Fs_QueueStartReadTim(arg1, FS_BUFFER_1, &g_ItemInspectionImg);
 
             if (arg0 != 0)
             {
@@ -316,7 +316,7 @@ void func_800862F8(s32 arg0, s32 arg1, s32 arg2) // 0x800862F8
             break;
 
         case 2:
-            func_80031AAC(&D_800A902C);
+            func_80031AAC(&g_ItemInspectionImg);
             break;
 
         case 3:
@@ -469,8 +469,8 @@ void func_800867B4(s32 caseParam, s32 idx) // 0x800867B4
             StoreImage(&D_8002AB10, IMAGE_BUFFER_2);
             DrawSync(0);
 
-            Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + D_800A99B4[idx], FS_BUFFER_2, &D_800A901C);
-            Fs_QueueStartReadTim(FILE_TIM_MR_0TOWN_TIM + D_800A99CC[idx], FS_BUFFER_1, &D_800A9024);
+            Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + D_800A99B4[idx], FS_BUFFER_2, &g_MapImg);
+            Fs_QueueStartReadTim(FILE_TIM_MR_0TOWN_TIM + D_800A99CC[idx], FS_BUFFER_1, &g_MapMarkerAtlasImg);
 
             Gfx_Init(SCREEN_WIDTH, 1);
             GsSwapDispBuff();
@@ -478,7 +478,7 @@ void func_800867B4(s32 caseParam, s32 idx) // 0x800867B4
             break;
 
         case 1:
-            Gfx_BackgroundSpriteDraw(&D_800A901C);
+            Gfx_BackgroundSpriteDraw(&g_MapImg);
             break;
 
         case 2:
@@ -1196,7 +1196,7 @@ void func_80087AF4(s32 mapFlagIdx, s32 eventFlagIdx, s32 arg2) // 0x80087AF4
             DrawSync(0);
             StoreImage(&D_8002ABA4, IMAGE_BUFFER);
             DrawSync(0);
-            Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + D_800A99B4[mapFlagIdx], FS_BUFFER_2, &D_800A901C);
+            Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + D_800A99B4[mapFlagIdx], FS_BUFFER_2, &g_MapImg);
             Gfx_Init(0x140, 1);
 
             g_IntervalVBlanks = 1;
@@ -1212,7 +1212,7 @@ void func_80087AF4(s32 mapFlagIdx, s32 eventFlagIdx, s32 arg2) // 0x80087AF4
         case 3:
             D_800A8E58 = 0x58;
 
-            func_800314EC(&D_800A901C);
+            func_800314EC(&g_MapImg);
             func_800860B0(1, arg2, 4, 5, 0, 1);
             break;
 
@@ -1258,7 +1258,7 @@ void func_80087AF4(s32 mapFlagIdx, s32 eventFlagIdx, s32 arg2) // 0x80087AF4
         case 5:
             D_800A8E58 = 0x58;
 
-            func_800314EC(&D_800A901C);
+            func_800314EC(&g_MapImg);
             func_8008616C(2, 1, 0, 0, 1);
             break;
 
