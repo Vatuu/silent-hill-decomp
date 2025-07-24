@@ -217,6 +217,8 @@ void Gfx_Inventory_ScrollArrowsDraw(s32* invSelectionId); // 0x8004EC7C
 // Unused?
 s32 func_8004EE94(u8 arg0, u8 arg1);
 
+s32 func_8004F190(s_ShSavegame* save);
+
 // Unused?
 void func_8004F10C(s32* arg0);
 

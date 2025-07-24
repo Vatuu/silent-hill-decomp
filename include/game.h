@@ -541,7 +541,7 @@ typedef struct _ShInventoryItem
     u8 id_0;      /** `InventoryItemId` */
     u8 count_1;
     u8 command_2; /** `InventoryCmdId` */
-    u8 unk_3;     // Some sort of index?
+    u8 field_3;   // Some sort of index?
 } s_ShInventoryItem;
 STATIC_ASSERT_SIZEOF(s_ShInventoryItem, 4);
 

@@ -1950,11 +1950,189 @@ void func_8004F10C(s32* arg0) // 0x8004F10C
     *arg0 = 0;
 }
 
-/** Used in:
- * `func_8004EE94`
- * `func_8004F10C`
- */
-INCLUDE_ASM("asm/bodyprog/nonmatchings/item_screens", func_8004F190); // 0x8004F190
+s32 func_8004F190(s_ShSavegame* save) // 0x8004F190
+{
+    s32                i;
+    s32                j;
+    s32                count;
+    u32                id;
+    s_ShInventoryItem  tempItem;
+    s_ShInventoryItem* item;
+    s_ShSavegame*      savePtr;
+
+    savePtr = save;
+
+    for (i = 0; i < INVENTORY_ITEM_COUNT_MAX; i++)
+    {
+        if (savePtr->items_0[i].count_1 == 0 && (savePtr->items_0[i].id_0 >> 5) != 5)
+        {
+            savePtr->items_0[i].id_0 = 0xFF;
+        }
+    }
+    
+    for (i = 0; i < (INVENTORY_ITEM_COUNT_MAX - 1); i++)
+    {
+        savePtr->items_0[i].field_3 = D_80025EB0[savePtr->items_0[i].id_0 - 32];
+    }
+
+    for (i = 0; i < (INVENTORY_ITEM_COUNT_MAX - 1); i++)
+    {
+        for (j = i + 1; j < INVENTORY_ITEM_COUNT_MAX; j++)
+        {
+            if (savePtr->items_0[i].field_3 > savePtr->items_0[j].field_3)
+            {
+                *(s32*)&tempItem                 = savePtr->items_0[i].id_0 +
+                                                   (savePtr->items_0[i].count_1 << 8) +
+                                                   (savePtr->items_0[i].command_2 << 16) +
+                                                   (savePtr->items_0[i].field_3 << 24);
+                *(s32*)&savePtr->items_0[i].id_0 = savePtr->items_0[j].id_0 +
+                                                   (savePtr->items_0[j].count_1 << 8) +
+                                                   (savePtr->items_0[j].command_2 << 16) +
+                                                   (savePtr->items_0[j].field_3 << 24);
+                *(s32*)&savePtr->items_0[j].id_0 = tempItem.id_0 +
+                                                   (tempItem.count_1 << 8) +
+                                                   (tempItem.command_2 << 16) +
+                                                   (tempItem.field_3 << 24);
+            }
+        }
+    }
+
+    for (i = 0; i < INVENTORY_ITEM_COUNT_MAX; i++)
+    {
+        item = &savePtr->items_0;
+
+        if (item[i].id_0 != 0xFF)
+        {
+            if (i != 0)
+            {
+                savePtr->items_0[0].id_0    = savePtr->items_0[i].id_0;
+                savePtr->items_0[0].count_1 = savePtr->items_0[i].count_1;
+                savePtr->items_0[i].id_0    = 0xFF;
+                savePtr->items_0[i].count_1 = 0;
+            }
+
+            i = 0xFF;
+        }
+    }
+
+    if (i < 0xFF)
+    {
+        return 8;
+    }
+
+    for (i = 1; i < INVENTORY_ITEM_COUNT_MAX; i++)
+    {
+        for (j = 0; j < i; j++)
+        {
+            if (savePtr->items_0[i].id_0 == 0xFF)
+            {
+                j = i;
+            }
+            else 
+            {
+                item = &savePtr->items_0;
+                id = item[j].id_0;
+                
+                if (savePtr->items_0[j].id_0 == savePtr->items_0[i].id_0)
+                {
+                    if ((id >> 5) == 6)
+                    {
+                        if ((savePtr->items_0[j].count_1 + savePtr->items_0[i].count_1) > 200)
+                        {
+                            savePtr->items_0[j].count_1 = 200;
+                        }
+                        else
+                        {
+                            savePtr->items_0[j].count_1 += savePtr->items_0[i].count_1;
+                        }
+                    }
+                    else if ((id >> 5) == 1)
+                    {
+                        if ((savePtr->items_0[j].count_1 + savePtr->items_0[i].count_1) <= 100)
+                        {
+                            savePtr->items_0[j].count_1 += savePtr->items_0[i].count_1;
+                        }
+                        else
+                        {
+                            savePtr->items_0[j].count_1 = 100;
+                        }
+                    }
+
+                    savePtr->items_0[i].id_0    = 0xFF;
+                    savePtr->items_0[i].count_1 = 0;
+                }
+                else if (id == 0xFF)
+                {
+                    savePtr->items_0[j].id_0    = savePtr->items_0[i].id_0;
+                    savePtr->items_0[j].count_1 = savePtr->items_0[i].count_1;
+                    savePtr->items_0[i].id_0    = id;
+                    savePtr->items_0[i].count_1 = 0;
+                }
+            }
+        }
+    }
+
+    if (g_SavegamePtr->equippedWeapon_AA != 0)
+    {
+        for (i = 0; i < INVENTORY_ITEM_COUNT_MAX; i++)
+        {
+            if (g_SavegamePtr->items_0[i].id_0 == g_SavegamePtr->equippedWeapon_AA)
+            {
+                g_SysWork.playerCombatInfo_38.field_12 = i;
+
+                if (g_SavegamePtr->equippedWeapon_AA >= InventoryItemId_Handgun)
+                {
+                    for (j = 0; j < INVENTORY_ITEM_COUNT_MAX; j++)
+                    {
+                        if (g_SavegamePtr->items_0[j].id_0 == (g_SavegamePtr->items_0[i].id_0 + 32))
+                        {
+                            g_SysWork.playerCombatInfo_38.totalWeaponAmmo_11 = g_SavegamePtr->items_0[j].count_1;
+                            j                                                = INVENTORY_ITEM_COUNT_MAX + 1;
+                        }
+                    }
+
+                    if (j == INVENTORY_ITEM_COUNT_MAX)
+                    {
+                        g_SysWork.playerCombatInfo_38.totalWeaponAmmo_11 = 0;
+                    }
+                }
+
+                i = INVENTORY_ITEM_COUNT_MAX;
+            }
+        }
+    }
+
+    for (j = 0, i = 0; i < INVENTORY_ITEM_COUNT_MAX; i++)
+    {
+        if (g_SavegamePtr->items_0[i].id_0 != 0xFF)
+        {
+            j++;
+        }
+    }
+
+    if (j < 8)
+    {
+        count = 8;
+    }
+    else if (j < (INVENTORY_ITEM_COUNT_MAX + 1))
+    {
+        count = j;
+    }
+    else
+    {
+        count = INVENTORY_ITEM_COUNT_MAX;
+    }
+
+    j = count;
+    count--;
+
+    if (count < g_SysWork.inventoryItemSelectedIdx_2351)
+    {
+        g_SysWork.inventoryItemSelectedIdx_2351 = count;
+    }
+
+    return j;
+}
 
 void Gfx_Inventory_UnavailableMapText(s32 strIdx) // 0x0x8004F57C
 {
