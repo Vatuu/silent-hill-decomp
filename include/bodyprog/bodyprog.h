@@ -411,12 +411,6 @@ typedef struct
     u16 field_1E;
 } s_func_8009ECCC;
 
-typedef struct
-{
-    DVECTOR field_0;
-    DVECTOR field_4;
-} s_constStructs_func_8004FBCC;
-
 // ========
 // STRUCTS
 // ========
@@ -887,13 +881,6 @@ typedef struct
     s8 field_0;
     s8 field_1;
 } s_800C38B0;
-
-typedef struct
-{
-    VECTOR  field_0;
-    SVECTOR field_10;
-    VECTOR  field_18;
-} s_800C3BE8;
 
 typedef struct
 {
@@ -1504,14 +1491,6 @@ extern s16 D_800AE18C; // Maybe DVECTOR
 
 extern s16 D_800AE18E;
 
-extern s32 D_800AE190;
-
-extern s16 D_800AE198;
-
-extern s16 D_800AE19A;
-
-extern s32 D_800AE19C;
-
 extern s32 D_800AE1AC;
 
 extern s32 D_800AE1B0;
@@ -1765,8 +1744,6 @@ extern s32 D_800C3990; // Boolean.
 
 extern s32 D_800C3994;
 
-extern s32 D_800C3998;
-
 extern s32 D_800C399C; /** `s_InventorySelectionId` */
 
 extern u8 D_800C37D0;
@@ -1810,8 +1787,6 @@ extern s16 D_800C391E;
 
 extern s8 D_800C39A0;
 
-extern GsF_LIGHT D_800C39A8[][2];
-
 extern GsF_LIGHT D_800C3A88[];
 
 extern GsCOORDINATE2 D_800C3AE8;
@@ -1820,17 +1795,11 @@ extern SVECTOR3 D_800C3B38;
 
 extern VbRVIEW D_800C3B48;
 
-extern DVECTOR D_800C3B68[][4]; // Type assumed
-
 extern u8 D_800C3BB8[48];
-
-extern s_800C3BE8 D_800C3BE8[10];
 
 extern GsDOBJ2 D_800C3D78[];
 
 extern u8 D_800C3E40;
-
-extern GsCOORDINATE2 D_800C3E48[];
 
 extern u8 D_800C4169;
 

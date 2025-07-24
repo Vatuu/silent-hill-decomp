@@ -1,6 +1,7 @@
 #include "game.h"
 #include "inline_no_dmpsx.h"
 #include "gtemac.h"
+#include "libgs.h"
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/credits.h"
@@ -106,7 +107,7 @@ void func_8004BD74(s32 arg0, GsDOBJ2* arg1, s32 arg2)  // 0x8004BD74
     {
         for (j = 0; j < 3; j++)
         {
-            sp10.m[i][j] = FP_TO(sp10.m[i][j], Q12_SHIFT) / D_800C3BE8[arg0].field_0.vx;
+            sp10.m[i][j] = FP_TO(sp10.m[i][j], Q12_SHIFT) / g_Items_Items3dData_1[arg0].scale_0.vx;
         }
     }
 
@@ -116,7 +117,7 @@ void func_8004BD74(s32 arg0, GsDOBJ2* arg1, s32 arg2)  // 0x8004BD74
         {
             for (j = 0; j < 3; j++)
             {
-                sp10.m[i][j] -= FP_MULTIPLY(sp10.m[i][j], shRsin((D_800C3E48[arg0].coord.t[2] + 0x400) >> 2), Q12_SHIFT);
+                sp10.m[i][j] -= FP_MULTIPLY(sp10.m[i][j], shRsin((g_Items_Items3dData_2[arg0].coord.t[2] + 0x400) >> 2), Q12_SHIFT);
             }
         }
     }
@@ -623,11 +624,11 @@ void GameState_ItemScreens_Update() // 0x8004C9B0
 
             func_80037188();
 
-            D_800C3990                  = 1;
-            D_800C3998                  = 0;
-            D_800AE178                  = 0;
-            g_Inventory_CmdSelectedIdx  = 0;
-            g_Inventory_SelectedItemIdx = g_SysWork.inventoryItemSelectedIdx_2351;
+            D_800C3990                          = 1;
+            g_Inventory_CornersOutlineSelection = 0;
+            D_800AE178                          = 0;
+            g_Inventory_CmdSelectedIdx          = 0;
+            g_Inventory_SelectedItemIdx         = g_SysWork.inventoryItemSelectedIdx_2351;
 
             switch (g_GameWork.gameStatePrev_590)
             {
@@ -1002,14 +1003,14 @@ void Inventory_Logic() // 0x8004D518
 
     Inventory_DirectionalInputSet();
 
-    D_800C3998++;
+    g_Inventory_CornersOutlineSelection++;
 
-    if (D_800C3998 >= InventorySelectionId_Examine)
+    if (g_Inventory_CornersOutlineSelection >= InventorySelectionId_Examine)
     {
         D_800C399C = g_Inventory_SelectionId;
     }
 
-    D_800C3998 = CLAMP(D_800C3998, InventorySelectionId_Item, InventorySelectionId_Examine);
+    g_Inventory_CornersOutlineSelection = CLAMP(g_Inventory_CornersOutlineSelection, InventorySelectionId_Item, InventorySelectionId_Examine);
 
     if (g_GameWork.gameStateStep_598[1] != 1)
     {
@@ -1018,12 +1019,12 @@ void Inventory_Logic() // 0x8004D518
 
     if (g_Inventory_SelectionId == InventorySelectionId_Item)
     {
-        if (D_800C3998 <= InventorySelectionId_Settings)
+        if (g_Inventory_CornersOutlineSelection <= InventorySelectionId_Settings)
         {
             return;
         }
     }
-    else if (D_800C3998 <= InventorySelectionId_Health)
+    else if (g_Inventory_CornersOutlineSelection <= InventorySelectionId_Health)
     {
         return;
     }
@@ -1031,42 +1032,42 @@ void Inventory_Logic() // 0x8004D518
     switch (g_Inventory_SelectionId)
     {
         case InventorySelectionId_Item:
-            if ((g_Inventory_IsLeftClicked && D_800C3998 == InventorySelectionId_Examine) ||
-                (g_Inventory_IsLeftHeld && (D_800C3990 != 0 || D_800C3998 == InventorySelectionId_Examine)))
+            if ((g_Inventory_IsLeftClicked && g_Inventory_CornersOutlineSelection == InventorySelectionId_Examine) ||
+                (g_Inventory_IsLeftHeld && (D_800C3990 != 0 || g_Inventory_CornersOutlineSelection == InventorySelectionId_Examine)))
             {
                 if (g_Inventory_IsLeftClicked || g_Inventory_IsLeftHeld)
                 {
                     D_800C3990 = 1;
                 }
-
-                D_800AE178                 = 1;
-                D_800C3998                 = InventorySelectionId_Exit;
-                g_Inventory_CmdSelectedIdx = 0;
+				
+                D_800AE178                          = 1;
+                g_Inventory_CornersOutlineSelection = InventorySelectionId_Exit;
+                g_Inventory_CmdSelectedIdx          = 0;
                 func_80046048(Sfx_Back, -64, 64);
 
                 g_SysWork.inventoryItemSelectedIdx_2351 = ((g_SysWork.inventoryItemSelectedIdx_2351 + g_SavegamePtr->inventoryItemSpaces_AB) - 1) % g_SavegamePtr->inventoryItemSpaces_AB;
                 temp                                    = g_SavegamePtr->inventoryItemSpaces_AB - 3;
                 func_800539A4(0, (g_SysWork.inventoryItemSelectedIdx_2351 + temp) % g_SavegamePtr->inventoryItemSpaces_AB);
             }
-            else if (((g_Inventory_IsRightClicked || g_Inventory_IsRightPulsed) && D_800C3998 == InventorySelectionId_Examine) ||
-                     (g_Inventory_IsRightHeld && (D_800C3990 != 0 || D_800C3998 == InventorySelectionId_Examine)))
+            else if (((g_Inventory_IsRightClicked || g_Inventory_IsRightPulsed) && g_Inventory_CornersOutlineSelection == InventorySelectionId_Examine) ||
+                     (g_Inventory_IsRightHeld && (D_800C3990 != 0 || g_Inventory_CornersOutlineSelection == InventorySelectionId_Examine)))
             {
                 if (g_Inventory_IsRightClicked || g_Inventory_IsRightHeld)
                 {
                     D_800C3990 = 1;
                 }
 
-                D_800AE178                 = 1;
-                D_800C3998                 = InventorySelectionId_Exit;
-                g_Inventory_CmdSelectedIdx = 0;
+                D_800AE178                          = 1;
+                g_Inventory_CornersOutlineSelection = InventorySelectionId_Exit;
+                g_Inventory_CmdSelectedIdx          = 0;
                 func_80046048(Sfx_Back, 64, 64);
 
                 g_SysWork.inventoryItemSelectedIdx_2351 = (g_SysWork.inventoryItemSelectedIdx_2351 + 1) % g_SavegamePtr->inventoryItemSpaces_AB;
                 func_800539A4(1, (g_SysWork.inventoryItemSelectedIdx_2351 + 3) % g_SavegamePtr->inventoryItemSpaces_AB);
             }
-            else if (g_Inventory_IsUpClicked != InventorySelectionId_Item && D_800C3998 == InventorySelectionId_Examine)
+            else if (g_Inventory_IsUpClicked != InventorySelectionId_Item && g_Inventory_CornersOutlineSelection == InventorySelectionId_Examine)
             {
-                D_800C3998 = InventorySelectionId_EquippedItem;
+                g_Inventory_CornersOutlineSelection = InventorySelectionId_EquippedItem;
 
                 if (g_SysWork.playerCombatInfo_38.field_F >= 0)
                 {
@@ -1075,9 +1076,9 @@ void Inventory_Logic() // 0x8004D518
                 }
             }
             else if ((g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2 || g_Inventory_IsDownClicked != 0) &&
-                     D_800C3998 == 8)
+                     g_Inventory_CornersOutlineSelection == 8)
             {
-                D_800C3998 = InventorySelectionId_EquippedItem;
+                g_Inventory_CornersOutlineSelection = InventorySelectionId_EquippedItem;
 
                 if (g_Inventory_IsDownClicked != 0)
                 {
@@ -1091,7 +1092,7 @@ void Inventory_Logic() // 0x8004D518
                 g_Inventory_SelectionId = InventorySelectionId_Exit;
             }
             else if (g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0 &&
-                     D_800C3998 >= InventorySelectionId_Examine)
+                     g_Inventory_CornersOutlineSelection >= InventorySelectionId_Examine)
             {
                 if (g_SavegamePtr->items_0[g_SysWork.inventoryItemSelectedIdx_2351].id_0 == InventoryItemId_Flauros ||
                     (g_SysWork.field_2388.field_16 != 0 && g_SavegamePtr->items_0[g_SysWork.inventoryItemSelectedIdx_2351].id_0 == InventoryItemId_Flashlight))
@@ -1106,8 +1107,8 @@ void Inventory_Logic() // 0x8004D518
                 }
                 else
                 {
-                    D_800C3998                 = InventorySelectionId_EquippedItem;
-                    g_Inventory_CmdSelectedIdx = 0;
+                    g_Inventory_CornersOutlineSelection = InventorySelectionId_EquippedItem;
+                    g_Inventory_CmdSelectedIdx          = 0;
 
                     if (g_SavegamePtr->items_0[g_SysWork.inventoryItemSelectedIdx_2351].command_2 != InventoryCmdId_Unk11)
                     {
@@ -1137,14 +1138,14 @@ void Inventory_Logic() // 0x8004D518
         case InventorySelectionId_EquippedItem:
             if (g_Inventory_IsDownClicked != 0)
             {
-                D_800C3998 = InventorySelectionId_EquippedItem;
+                g_Inventory_CornersOutlineSelection = InventorySelectionId_EquippedItem;
                 func_80046048(Sfx_Back, 0, 64);
                 g_Inventory_SelectionId = InventorySelectionId_Item;
             }
             else if (g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
             {
-                D_800C3998                 = InventorySelectionId_EquippedItem;
-                g_Inventory_CmdSelectedIdx = 0;
+                g_Inventory_CornersOutlineSelection = InventorySelectionId_EquippedItem;
+                g_Inventory_CmdSelectedIdx          = 0;
 
                 if (g_SavegamePtr->items_0[g_SysWork.playerCombatInfo_38.field_12].command_2 != InventoryCmdId_Unk11)
                 {
@@ -1154,8 +1155,8 @@ void Inventory_Logic() // 0x8004D518
             }
             else if (g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)
             {
-                D_800C3998 = InventorySelectionId_EquippedItem;
-                g_Inventory_SelectionId = InventorySelectionId_Exit;
+                g_Inventory_CornersOutlineSelection = InventorySelectionId_EquippedItem;
+                g_Inventory_SelectionId             = InventorySelectionId_Exit;
                 func_80046048(Sfx_Cancel, 0, 64);
             }
             else if (g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.item_16)
@@ -1175,19 +1176,19 @@ void Inventory_Logic() // 0x8004D518
         case InventorySelectionId_Exit:
             if (g_Inventory_IsUpClicked)
             {
-                D_800C3998 = InventorySelectionId_EquippedItem;
+                g_Inventory_CornersOutlineSelection = InventorySelectionId_EquippedItem;
                 func_80046048(Sfx_Back, 0, 64);
                 g_Inventory_SelectionId = InventorySelectionId_Item;
             }
             else if (g_Inventory_IsLeftClicked)
             {
-                D_800C3998 = InventorySelectionId_EquippedItem;
+                g_Inventory_CornersOutlineSelection = InventorySelectionId_EquippedItem;
                 func_80046048(Sfx_Back, -64, 64);
                 g_Inventory_SelectionId = InventorySelectionId_Settings;
             }
             else if (g_Inventory_IsRightClicked)
             {
-                D_800C3998 = InventorySelectionId_EquippedItem;
+                g_Inventory_CornersOutlineSelection = InventorySelectionId_EquippedItem;
                 func_80046048(Sfx_Back, 64, 64);
                 g_Inventory_SelectionId = InventorySelectionId_Map;
             }
@@ -1210,13 +1211,13 @@ void Inventory_Logic() // 0x8004D518
         case InventorySelectionId_Settings:
             if (g_Inventory_IsUpClicked)
             {
-                D_800C3998 = InventorySelectionId_EquippedItem;
+                g_Inventory_CornersOutlineSelection = InventorySelectionId_EquippedItem;
                 func_80046048(Sfx_Back, 0, 64);
                 g_Inventory_SelectionId = InventorySelectionId_Item;
             }
             else if (g_Inventory_IsRightClicked || (g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
             {
-                D_800C3998 = InventorySelectionId_EquippedItem;
+                g_Inventory_CornersOutlineSelection = InventorySelectionId_EquippedItem;
 
                 if (!g_Inventory_IsRightClicked || (g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
                 {
@@ -1256,13 +1257,13 @@ void Inventory_Logic() // 0x8004D518
         case InventorySelectionId_Map:
             if (g_Inventory_IsUpClicked)
             {
-                D_800C3998 = InventorySelectionId_EquippedItem;
+                g_Inventory_CornersOutlineSelection = InventorySelectionId_EquippedItem;
                 func_80046048(Sfx_Back, 0, 64);
                 g_Inventory_SelectionId = InventorySelectionId_Item;
             }
             else if (g_Inventory_IsLeftClicked || g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)
             {
-                D_800C3998 = InventorySelectionId_EquippedItem;
+                g_Inventory_CornersOutlineSelection = InventorySelectionId_EquippedItem;
 
                 if (!g_Inventory_IsLeftClicked || g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)
                 {
@@ -1362,7 +1363,7 @@ void Inventory_Logic() // 0x8004D518
             {
                 if (g_Inventory_CmdSelectedIdx < (cmdCountMax - 1))
                 {
-                    D_800C3998 = InventorySelectionId_EquippedItem;
+                    g_Inventory_CornersOutlineSelection = InventorySelectionId_EquippedItem;
                     g_Inventory_CmdSelectedIdx++;
                     func_80046048(Sfx_Back, 64, 64);
                 }
@@ -1371,20 +1372,20 @@ void Inventory_Logic() // 0x8004D518
             {
                 if (g_Inventory_CmdSelectedIdx > 0)
                 {
-                    D_800C3998 = InventorySelectionId_EquippedItem;
+                    g_Inventory_CornersOutlineSelection = InventorySelectionId_EquippedItem;
                     g_Inventory_CmdSelectedIdx--;
                     func_80046048(Sfx_Back, 64, 64);
                 }
             }
             else if (g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
             {
-                D_800C3998 = InventorySelectionId_EquippedItem;
+                g_Inventory_CornersOutlineSelection = InventorySelectionId_EquippedItem;
 
                 switch (g_SavegamePtr->items_0[curItemIdx].command_2)
                 {
                     case InventoryCmdId_OnOff:
-                        D_800C3998              = InventorySelectionId_EquippedItem;
-                        g_Inventory_SelectionId = InventorySelectionId_Item;
+                        g_Inventory_CornersOutlineSelection = InventorySelectionId_EquippedItem;
+                        g_Inventory_SelectionId             = InventorySelectionId_Item;
 
                         if (g_Inventory_CmdSelectedIdx == 0)
                         {
@@ -1424,10 +1425,10 @@ void Inventory_Logic() // 0x8004D518
                                 (!(g_SysWork.field_2388.field_1C[0].field_0.field_0.s_field_0.field_0 & (1 << 0)) &&
                                  !(g_SysWork.field_2388.field_1C[1].field_0.field_0.s_field_0.field_0 & (1 << 0))))
                             {
-                                D_800C3998                      = InventorySelectionId_EquippedItem;
-                                g_Inventory_SelectionId         = InventorySelectionId_Examine;
-                                g_GameWork.gameStateStep_598[1] = 13;
-                                g_GameWork.gameStateStep_598[2] = 0;
+                                g_Inventory_CornersOutlineSelection = InventorySelectionId_EquippedItem;
+                                g_Inventory_SelectionId             = InventorySelectionId_Examine;
+                                g_GameWork.gameStateStep_598[1]     = 13;
+                                g_GameWork.gameStateStep_598[2]     = 0;
 
                                 switch (g_SavegamePtr->items_0[curItemIdx].id_0)
                                 {
@@ -1502,10 +1503,10 @@ void Inventory_Logic() // 0x8004D518
                             (!(g_SysWork.field_2388.field_1C[0].field_0.field_0.s_field_0.field_0 & (1 << 0)) &&
                              !(g_SysWork.field_2388.field_1C[1].field_0.field_0.s_field_0.field_0 & (1 << 0))))
                         {
-                            D_800C3998                      = InventorySelectionId_EquippedItem;
-                            g_Inventory_SelectionId         = InventorySelectionId_Examine;
-                            g_GameWork.gameStateStep_598[1] = 13;
-                            g_GameWork.gameStateStep_598[2] = 0;
+                            g_Inventory_CornersOutlineSelection = InventorySelectionId_EquippedItem;
+                            g_Inventory_SelectionId             = InventorySelectionId_Examine;
+                            g_GameWork.gameStateStep_598[1]     = 13;
+                            g_GameWork.gameStateStep_598[2]     = 0;
 
                             switch (g_SavegamePtr->items_0[curItemIdx].id_0)
                             {
@@ -1531,10 +1532,10 @@ void Inventory_Logic() // 0x8004D518
                         break;
 
                     case InventoryCmdId_UseHealth:
-                        D_800C3998                      = InventorySelectionId_EquippedItem;
-                        g_Inventory_SelectionId         = InventorySelectionId_Health;
-                        g_GameWork.gameStateStep_598[1] = 9;
-                        g_GameWork.gameStateStep_598[2] = 0;
+                        g_Inventory_CornersOutlineSelection = InventorySelectionId_EquippedItem;
+                        g_Inventory_SelectionId             = InventorySelectionId_Health;
+                        g_GameWork.gameStateStep_598[1]     = 9;
+                        g_GameWork.gameStateStep_598[2]     = 0;
                         break;
 
                     case InventoryCmdId_Use:
@@ -1542,21 +1543,21 @@ void Inventory_Logic() // 0x8004D518
                         break;
 
                     case InventoryCmdId_Equip:
-                        D_800C3998                      = InventorySelectionId_EquippedItem;
-                        g_Inventory_SelectionId         = InventorySelectionId_EquippedItem;
-                        g_GameWork.gameStateStep_598[1] = 5;
-                        g_GameWork.gameStateStep_598[2] = 0;
+                        g_Inventory_CornersOutlineSelection = InventorySelectionId_EquippedItem;
+                        g_Inventory_SelectionId             = InventorySelectionId_EquippedItem;
+                        g_GameWork.gameStateStep_598[1]     = 5;
+                        g_GameWork.gameStateStep_598[2]     = 0;
                         break;
 
                     case InventoryCmdId_Unequip:
-                        D_800C3998                      = InventorySelectionId_EquippedItem;
-                        g_Inventory_SelectionId         = InventorySelectionId_EquippedItem;
-                        g_GameWork.gameStateStep_598[1] = 6;
-                        g_GameWork.gameStateStep_598[2] = 0;
+                        g_Inventory_CornersOutlineSelection = InventorySelectionId_EquippedItem;
+                        g_Inventory_SelectionId             = InventorySelectionId_EquippedItem;
+                        g_GameWork.gameStateStep_598[1]     = 6;
+                        g_GameWork.gameStateStep_598[2]     = 0;
                         break;
 
                     case InventoryCmdId_Reload:
-                        D_800C3998 = InventorySelectionId_EquippedItem;
+                        g_Inventory_CornersOutlineSelection = InventorySelectionId_EquippedItem;
 
                         if (curItemIdx != g_SysWork.playerCombatInfo_38.field_12)
                         {
@@ -1571,7 +1572,7 @@ void Inventory_Logic() // 0x8004D518
                         break;
 
                     case InventoryCmdId_EquipReload:
-                        D_800C3998 = InventorySelectionId_EquippedItem;
+                        g_Inventory_CornersOutlineSelection = InventorySelectionId_EquippedItem;
 
                         if (g_Inventory_CmdSelectedIdx == 0)
                         {
@@ -1592,7 +1593,7 @@ void Inventory_Logic() // 0x8004D518
                         break;
 
                     case InventoryCmdId_UnequipReload:
-                        D_800C3998 = InventorySelectionId_EquippedItem;
+                        g_Inventory_CornersOutlineSelection = InventorySelectionId_EquippedItem;
 
                         if (g_Inventory_CmdSelectedIdx == 0)
                         {
@@ -1624,9 +1625,9 @@ void Inventory_Logic() // 0x8004D518
             }
             else if (g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)
             {
-                D_800C3998                 = InventorySelectionId_EquippedItem;
-                g_Inventory_CmdSelectedIdx = 0;
-                g_Inventory_SelectionId    = InventorySelectionId_Item;
+                g_Inventory_CornersOutlineSelection = InventorySelectionId_EquippedItem;
+                g_Inventory_CmdSelectedIdx          = 0;
+                g_Inventory_SelectionId             = InventorySelectionId_Item;
                 func_80046048(Sfx_Cancel, 0, 64);
             }
 
@@ -1634,7 +1635,7 @@ void Inventory_Logic() // 0x8004D518
             break;
 
         case InventorySelectionId_Examine:
-            D_800C3998 = InventorySelectionId_EquippedItem;
+            g_Inventory_CornersOutlineSelection = InventorySelectionId_EquippedItem;
             break;
     }
 }
@@ -1653,10 +1654,10 @@ void func_8004E6D4(s32 arg0) // 0x8004E6D4
             g_SysWork.player_4C.extra_128.field_1C == 0 &&
             g_SavegamePtr->items_0[arg0].id_0 == InventoryItemId_UnknownLiquid)
         {
-            D_800C3998                      = InventorySelectionId_EquippedItem;
-            g_Inventory_SelectionId         = InventorySelectionId_Item;
-            g_GameWork.gameStateStep_598[1] = 11;
-            g_GameWork.gameStateStep_598[2] = 0;
+            g_Inventory_CornersOutlineSelection = InventorySelectionId_EquippedItem;
+            g_Inventory_SelectionId             = InventorySelectionId_Item;
+            g_GameWork.gameStateStep_598[1]     = 11;
+            g_GameWork.gameStateStep_598[2]     = 0;
 
             func_8003ECBC();
             g_SavegamePtr->eventFlags_1A0 |= 1 << 0;
@@ -1668,10 +1669,10 @@ void func_8004E6D4(s32 arg0) // 0x8004E6D4
         {
             if (D_800BCDC0[i] == g_SavegamePtr->items_0[arg0].id_0)
             {
-                D_800C3998                      = InventorySelectionId_EquippedItem;
-                g_Inventory_SelectionId         = InventorySelectionId_Item;
-                g_GameWork.gameStateStep_598[1] = 11;
-                g_GameWork.gameStateStep_598[2] = 0;
+                g_Inventory_CornersOutlineSelection = InventorySelectionId_EquippedItem;
+                g_Inventory_SelectionId             = InventorySelectionId_Item;
+                g_GameWork.gameStateStep_598[1]     = 11;
+                g_GameWork.gameStateStep_598[2]     = 0;
 
                 func_8003ECBC();
                 g_SysWork.player_4C.extra_128.field_28 = D_800BCDC0[i];
@@ -2929,13 +2930,13 @@ void Gfx_ItemScreens_RenderInit(u32* arg0) // 0x8004F764
             {
                 if (g_SavegamePtr->items_0[D_800C3E18[i]].id_0 != 0xFF)
                 {
-                    D_800C3BE8[i].field_10.vx = D_800262FC[g_SavegamePtr->items_0[D_800C3E18[i]].id_0 - 32].vx;
-                    D_800C3BE8[i].field_10.vz = D_800262FC[g_SavegamePtr->items_0[D_800C3E18[i]].id_0 - 32].vy;
+                    g_Items_Items3dData_1[i].rotation_10.vx = D_800262FC[g_SavegamePtr->items_0[D_800C3E18[i]].id_0 - 32].vx;
+                    g_Items_Items3dData_1[i].rotation_10.vz = D_800262FC[g_SavegamePtr->items_0[D_800C3E18[i]].id_0 - 32].vy;
 
-                    Gfx_Results_ItemsRotate(&D_800C3E48[i].param->rotate, &D_800C3E48[i]);
+                    Gfx_Results_ItemsRotate(&g_Items_Items3dData_2[i].param->rotate, &g_Items_Items3dData_2[i]);
                     func_800548D8(i);
-                    GsSetFlatLight(0, &D_800C39A8[i][0]);
-                    GsSetFlatLight(1, &D_800C39A8[i][1]);
+                    GsSetFlatLight(0, &g_Items_ItemsLightingData[i][0]);
+                    GsSetFlatLight(1, &g_Items_ItemsLightingData[i][1]);
                     func_8004BD74(i, ptr, 0);
                 }
             }
@@ -2943,10 +2944,10 @@ void Gfx_ItemScreens_RenderInit(u32* arg0) // 0x8004F764
 
         if (g_SavegamePtr->items_0[g_Inventory_EquippedItemIdx].id_0 != 0xFF && g_Inventory_EquippedItemIdx != NO_VALUE)
         {
-            D_800C3BE8[7].field_10.vx = D_800262FC[g_SavegamePtr->items_0[g_Inventory_EquippedItemIdx].id_0 - 32].vx;
-            D_800C3BE8[7].field_10.vz = D_800262FC[g_SavegamePtr->items_0[g_Inventory_EquippedItemIdx].id_0 - 32].vy;
+            g_Items_Items3dData_1[7].rotation_10.vx = D_800262FC[g_SavegamePtr->items_0[g_Inventory_EquippedItemIdx].id_0 - 32].vx;
+            g_Items_Items3dData_1[7].rotation_10.vz = D_800262FC[g_SavegamePtr->items_0[g_Inventory_EquippedItemIdx].id_0 - 32].vy;
 
-            Gfx_Results_ItemsRotate(&D_800C3E48[7].param->rotate, &D_800C3E48[7]);
+            Gfx_Results_ItemsRotate(&g_Items_Items3dData_2[7].param->rotate, &g_Items_Items3dData_2[7]);
             func_800548D8(7);
             GsSetFlatLight(0, &D_800C3A88[0]);
             GsSetFlatLight(1, &D_800C3A88[1]);
@@ -2987,11 +2988,11 @@ void func_8004FB0C() // 0x8004FB0C
 }
 
 // TODO: RODATA migration - Padding issue.
-// `D_80027E9C` has padding that can't be manually generated.
+// `SelectionOuline_ConerLines` has padding that can't be manually generated.
 // File may have to be split.
 //
 // Functions aren't fully matching.
-// `D_80027E54[D_800C399C].field_0.vx - new_var` is mismatched
+// `SelectionOuline_InnerLine[D_800C399C].field_0.vx - new_var` is mismatched
 // Scratch: https://decomp.me/scratch/pGIn2
 #ifdef NON_MATCHING
 /** Draws many 2D menu elements.
@@ -3022,7 +3023,7 @@ void Gfx_Inventory_2dBackgroundDraw(s32* arg0) // 0x8004FBCC
     POLY_FT4* poly_ft4;
     LINE_G2*  line_g2;
 
-    s_constStructs_func_8004FBCC D_80027E54[] =
+    s_Inventory_SelectionOutlineVector SelectionOuline_InnerLine[] =
     {
         { { 0xFFE0, 0xFFCC }, { 0x0040, 0x0080 } }, 
         { { 0xFFD0, 0xFF38 }, { 0x0060, 0x0090 } },
@@ -3035,7 +3036,7 @@ void Gfx_Inventory_2dBackgroundDraw(s32* arg0) // 0x8004FBCC
         { { 0xFFD0, 0xFF38 }, { 0x00C0, 0x0100 } }
     };
 
-    s_constStructs_func_8004FBCC D_80027E9C[] =
+    s_Inventory_SelectionOutlineVector SelectionOuline_ConerLines[] =
     {
         { { 0xFFDE, 0xFFC8 }, { 0x0022, 0x0050 } },
         { { 0xFFCE, 0xFF34 }, { 0x0032, 0xFFCC } },
@@ -3063,8 +3064,7 @@ void Gfx_Inventory_2dBackgroundDraw(s32* arg0) // 0x8004FBCC
     }
 
     Gfx_Inventory_HealthStatusDraw();
-
-    if (D_800C3998 == 8)
+    if (g_Inventory_CornersOutlineSelection == 8)
     {
         switch (*arg0)
         {
@@ -3110,8 +3110,8 @@ void Gfx_Inventory_2dBackgroundDraw(s32* arg0) // 0x8004FBCC
         var_t5 = -1;
         var_t6 = -1;
     }
-
-    if (g_GameWork.gameStateStep_598[1] != 0x14) 
+	
+    if (g_GameWork.gameStateStep_598[1] != 20) 
     {
         for (i = 0; i < 2; i++)
         {
@@ -3126,8 +3126,8 @@ void Gfx_Inventory_2dBackgroundDraw(s32* arg0) // 0x8004FBCC
                     {
                         switch (g_SavegamePtr->gameDifficulty_260)
                         {
-                            case -1:
-                                if (i == var_t6 && j == var_t5)
+                            case GameDifficulty_Easy:
+                                if ((i == var_t6) && (j == var_t5))
                                 {
                                     setRGB0(poly_g4, spA0 - 0x80, 0xC0, spA0 * 3);
                                     setRGB2(poly_g4, spA0 - 0x80, 0xC0, spA0 * 3);
@@ -3138,9 +3138,9 @@ void Gfx_Inventory_2dBackgroundDraw(s32* arg0) // 0x8004FBCC
                                     setRGB2(poly_g4, 0x80, 0xC0, 0);
                                 }
                                 break;
-
-                            case 0:
-                                if (i == var_t6 && j == var_t5)
+								
+                            case GameDifficulty_Normal:
+                                if ((i == var_t6) && (j == var_t5))
                                 {
                                     setRGB0(poly_g4, spA0 * 3, spA0 - 0x80, 0xC0);
                                     setRGB2(poly_g4, spA0 * 3, spA0 - 0x80, 0xC0);
@@ -3151,8 +3151,8 @@ void Gfx_Inventory_2dBackgroundDraw(s32* arg0) // 0x8004FBCC
                                     setRGB2(poly_g4, 0, 0x80, 0xC0);
                                 }
                                 break;
-
-                            case 1:
+								
+                            case GameDifficulty_Hard:
                                 if ((i == var_t6) && (j == var_t5))
                                 {
                                     setRGB0(poly_g4, spA0 - 0x80, spA0 * 3, 0xC0);
@@ -3173,8 +3173,9 @@ void Gfx_Inventory_2dBackgroundDraw(s32* arg0) // 0x8004FBCC
                     {
                         switch (g_SavegamePtr->gameDifficulty_260)
                         {
-                            case -1:
-                                if (i == var_t6 && j == var_t5)
+							
+                            case GameDifficulty_Easy:
+                                if ((i == var_t6) && (j == var_t5))
                                 {
                                     setRGB1(poly_g4, spA0 - 0x80, 0xC0, spA0 * 3);
                                     setRGB3(poly_g4, spA0 - 0x80, 0xC0, spA0 * 3);
@@ -3185,9 +3186,9 @@ void Gfx_Inventory_2dBackgroundDraw(s32* arg0) // 0x8004FBCC
                                     setRGB3(poly_g4, 0x80, 0xC0, 0);
                                 }
                                 break;
-
-                            case 0:
-                                if (i == var_t6 && j == var_t5)
+								
+                            case GameDifficulty_Normal:
+                                if ((i == var_t6) && (j == var_t5))
                                 {
                                     setRGB1(poly_g4, spA0 * 3, spA0 - 0x80, 0xC0);
                                     setRGB3(poly_g4, spA0 * 3, spA0 - 0x80, 0xC0);
@@ -3198,9 +3199,9 @@ void Gfx_Inventory_2dBackgroundDraw(s32* arg0) // 0x8004FBCC
                                     setRGB3(poly_g4, 0, 0x80, 0xC0);
                                 }
                                 break;
-
-                            case 1:
-                                if (i == var_t6 && j == var_t5)
+								
+                            case GameDifficulty_Hard:
+                                if ((i == var_t6) && (j == var_t5))
                                 {
                                     setRGB1(poly_g4, spA0 - 0x80, spA0 * 3, 0xC0);
                                     setRGB3(poly_g4, spA0 - 0x80, spA0 * 3, 0xC0);
@@ -3250,29 +3251,34 @@ void Gfx_Inventory_2dBackgroundDraw(s32* arg0) // 0x8004FBCC
             D_800C3B68[3 - i][j].vy = D_800C3B68[2 - i][j].vy;
         }
     }
+    
+    temp_t3   = (shRcos(g_Inventory_CornersOutlineSelection << 7) * shRcos(g_Inventory_CornersOutlineSelection << 7) * 0x10) >> 0x10;
 
-    temp_t3   = (shRcos(D_800C3998 << 7) * shRcos(D_800C3998 << 7) * 16) >> 16;
-    new_var   = D_80027E54[*arg0].field_0.vx;
-    new_var   = D_80027E54[D_800C399C].field_0.vx - new_var;
-    temp_a2_2 = D_80027E54[*arg0].field_0.vx + FP_FROM((new_var) * temp_t3, Q12_SHIFT);
 
+    new_var   = SelectionOuline_InnerLine[*arg0].field_0.vx;
+
+    new_var  -= SelectionOuline_InnerLine[D_800C399C].field_0.vx;
+    
+    temp_a2_2 = SelectionOuline_InnerLine[*arg0].field_0.vx + FP_FROM((new_var) * temp_t3, Q12_SHIFT);
+    
     D_800C3B68[0][0].vx = temp_a2_2;
-
-    temp_t2_3 = D_80027E54[*arg0].field_0.vy +
-                FP_FROM((D_80027E54[D_800C399C].field_0.vy - D_80027E54[*arg0].field_0.vy) * temp_t3, Q12_SHIFT);
+    
+    
+    temp_t2_3 = SelectionOuline_InnerLine[*arg0].field_0.vy + 
+        FP_FROM((SelectionOuline_InnerLine[D_800C399C].field_0.vy - SelectionOuline_InnerLine[*arg0].field_0.vy) * temp_t3, Q12_SHIFT);
 
     D_800C3B68[0][1].vx = temp_a2_2;
     D_800C3B68[0][0].vy = temp_t2_3;
-
-    temp_a2_2 = D_80027E54[*arg0].field_0.vy + D_80027E54[*arg0].field_4.vy + 
-                FP_FROM(((D_80027E54[D_800C399C].field_0.vy + D_80027E54[D_800C399C].field_4.vy) - 
-                (D_80027E54[*arg0].field_0.vy + D_80027E54[*arg0].field_4.vy)) * temp_t3, Q12_SHIFT);
-
+    
+    temp_a2_2 = SelectionOuline_InnerLine[*arg0].field_0.vy + SelectionOuline_InnerLine[*arg0].field_4.vy + 
+        FP_FROM(((SelectionOuline_InnerLine[D_800C399C].field_0.vy + SelectionOuline_InnerLine[D_800C399C].field_4.vy) - 
+        (SelectionOuline_InnerLine[*arg0].field_0.vy + SelectionOuline_InnerLine[*arg0].field_4.vy)) * temp_t3, Q12_SHIFT);
+    
     D_800C3B68[0][1].vy = temp_a2_2;
-
-    ot0_7 = D_80027E54[*arg0].field_0.vx + D_80027E54[*arg0].field_4.vx + 
-            FP_FROM(((D_80027E54[D_800C399C].field_0.vx + D_80027E54[D_800C399C].field_4.vx) - 
-            (D_80027E54[*arg0].field_0.vx + D_80027E54[*arg0].field_4.vx)) * temp_t3, Q12_SHIFT);
+    
+    ot0_7 = SelectionOuline_InnerLine[*arg0].field_0.vx + SelectionOuline_InnerLine[*arg0].field_4.vx + 
+        FP_FROM(((SelectionOuline_InnerLine[D_800C399C].field_0.vx + SelectionOuline_InnerLine[D_800C399C].field_4.vx) - 
+        (SelectionOuline_InnerLine[*arg0].field_0.vx + SelectionOuline_InnerLine[*arg0].field_4.vx)) * temp_t3, Q12_SHIFT);
 
     D_800C3B68[0][2].vy = temp_a2_2;
     D_800C3B68[0][3].vy = temp_t2_3;
@@ -3288,41 +3294,41 @@ void Gfx_Inventory_2dBackgroundDraw(s32* arg0) // 0x8004FBCC
         
         if (D_800AE190 < 0x21) 
         {
-            setRGB0(poly_g4, 
-                    (D_800AE190 >= 0x10) ? 0xFE : (D_800AE190 * 0x10),
-                    (D_800AE190 >= 0x10) ? 0xFE : (D_800AE190 * 0x10),
-                    (D_800AE190 >= 0x10) ? 0xFE : (D_800AE190 * 0x10));
+            setRGB0(poly_g4,
+                   (D_800AE190 >= 0x10) ? 0xFE : (D_800AE190 * 0x10),
+                   (D_800AE190 >= 0x10) ? 0xFE : (D_800AE190 * 0x10),
+                   (D_800AE190 >= 0x10) ? 0xFE : (D_800AE190 * 0x10));
             setRGB1(poly_g4, 
-                    (D_800AE190 >= 0x20) ? 0xFE : (D_800AE190 * 8),
-                    (D_800AE190 >= 0x20) ? 0xFE : (D_800AE190 * 8),
-                    (D_800AE190 >= 0x20) ? 0xFE : (D_800AE190 * 8));
+                   (D_800AE190 >= 0x20) ? 0xFE : (D_800AE190 * 8),
+                   (D_800AE190 >= 0x20) ? 0xFE : (D_800AE190 * 8),
+                   (D_800AE190 >= 0x20) ? 0xFE : (D_800AE190 * 8));
             setRGB2(poly_g4, 
-                    (D_800AE190 >= 8) ? 0xFE : (D_800AE190 * 32),
-                    (D_800AE190 >= 8) ? 0xFE : (D_800AE190 * 32),
-                    (D_800AE190 >= 8) ? 0xFE : (D_800AE190 * 32));
+                   (D_800AE190 >= 8) ? 0xFE : (D_800AE190 * 32),
+                   (D_800AE190 >= 8) ? 0xFE : (D_800AE190 * 32),
+                   (D_800AE190 >= 8) ? 0xFE : (D_800AE190 * 32));
             setRGB3(poly_g4, 
-                    (D_800AE190 >= 0x10) ? 0xFE : (D_800AE190 * 0x10),
-                    (D_800AE190 >= 0x10) ? 0xFE : (D_800AE190 * 0x10),
-                    (D_800AE190 >= 0x10) ? 0xFE : (D_800AE190 * 0x10));
+                   (D_800AE190 >= 0x10) ? 0xFE : (D_800AE190 * 0x10),
+                   (D_800AE190 >= 0x10) ? 0xFE : (D_800AE190 * 0x10),
+                   (D_800AE190 >= 0x10) ? 0xFE : (D_800AE190 * 0x10));
         } 
         else 
         {
-            setRGB0(poly_g4, 
-                    (D_800AE190 < 0x30) ? ((0x30 - D_800AE190) * 0x10) : 0,
-                    (D_800AE190 < 0x30) ? ((0x30 - D_800AE190) * 0x10) : 0,
-                    (D_800AE190 < 0x30) ? ((0x30 - D_800AE190) * 0x10) : 0);
+            setRGB0(poly_g4,
+                   (D_800AE190 < 0x30) ? ((0x30 - D_800AE190) * 0x10) : 0,
+                   (D_800AE190 < 0x30) ? ((0x30 - D_800AE190) * 0x10) : 0,
+                   (D_800AE190 < 0x30) ? ((0x30 - D_800AE190) * 0x10) : 0);
             setRGB1(poly_g4, 
-                    (D_800AE190 < 0x40) ? ((0x40 - D_800AE190) * 8) : 0,
-                    (D_800AE190 < 0x40) ? ((0x40 - D_800AE190) * 8) : 0,
-                    (D_800AE190 < 0x40) ? ((0x40 - D_800AE190) * 8) : 0);
+                   (D_800AE190 < 0x40) ? ((0x40 - D_800AE190) * 8) : 0,
+                   (D_800AE190 < 0x40) ? ((0x40 - D_800AE190) * 8) : 0,
+                   (D_800AE190 < 0x40) ? ((0x40 - D_800AE190) * 8) : 0);
             setRGB2(poly_g4, 
-                    (D_800AE190 < 0x28) ? ((0x28 - D_800AE190) * 32) : 0,
-                    (D_800AE190 < 0x28) ? ((0x28 - D_800AE190) * 32) : 0,
-                    (D_800AE190 < 0x28) ? ((0x28 - D_800AE190) * 32) : 0);
+                   (D_800AE190 < 0x28) ? ((0x28 - D_800AE190) * 32) : 0,
+                   (D_800AE190 < 0x28) ? ((0x28 - D_800AE190) * 32) : 0,
+                   (D_800AE190 < 0x28) ? ((0x28 - D_800AE190) * 32) : 0);
             setRGB3(poly_g4, 
-                    (D_800AE190 < 0x30) ? ((0x30 - D_800AE190) * 0x10) : 0,
-                    (D_800AE190 < 0x30) ? ((0x30 - D_800AE190) * 0x10) : 0,
-                    (D_800AE190 < 0x30) ? ((0x30 - D_800AE190) * 0x10) : 0);
+                   (D_800AE190 < 0x30) ? ((0x30 - D_800AE190) * 0x10) : 0,
+                   (D_800AE190 < 0x30) ? ((0x30 - D_800AE190) * 0x10) : 0,
+                   (D_800AE190 < 0x30) ? ((0x30 - D_800AE190) * 0x10) : 0);
         }
 
         setXY4(poly_g4,
@@ -3362,7 +3368,7 @@ void Gfx_Inventory_2dBackgroundDraw(s32* arg0) // 0x8004FBCC
                 else
                 {
                     poly_ft4->tpage = 0x85;
-                    setUV4(poly_ft4, 
+                    setUV4(poly_ft4,
                            0,    0x10,
                            0,    0xFF,
                            0xA0, 0x10,
@@ -3413,7 +3419,7 @@ void Gfx_Inventory_2dBackgroundDraw(s32* arg0) // 0x8004FBCC
         }
     }
       
-    if (D_800C3998 != 8)
+    if (g_Inventory_CornersOutlineSelection != 8)
     {
         return;
     }
@@ -3428,21 +3434,21 @@ void Gfx_Inventory_2dBackgroundDraw(s32* arg0) // 0x8004FBCC
 
         if (i / 3)
         {
-            setXY2(line_g2,
-                   D_80027E9C[*arg0].field_4.vx,
-                   (i == 4) ? D_80027E9C[*arg0].field_4.vy -  1 : D_80027E9C[*arg0].field_4.vy,
-                   (i != 5) ? D_80027E9C[*arg0].field_4.vx - (D_80027E54[*arg0].field_4.vx >> 1) : D_80027E9C[*arg0].field_4.vx,
-                   (i == 5) ? D_80027E9C[*arg0].field_4.vy - (D_80027E54[*arg0].field_4.vy >> 1) : 
-                   (i == 4) ? D_80027E9C[*arg0].field_4.vy - 1 : D_80027E9C[*arg0].field_4.vy);
-        }
-        else
+            setXY2(line_g2, SelectionOuline_ConerLines[*arg0].field_4.vx,
+                  (i == 4) ? SelectionOuline_ConerLines[*arg0].field_4.vy -  1 : SelectionOuline_ConerLines[*arg0].field_4.vy,
+                  (i != 5) ? SelectionOuline_ConerLines[*arg0].field_4.vx - (SelectionOuline_InnerLine[*arg0].field_4.vx >> 1) : SelectionOuline_ConerLines[*arg0].field_4.vx,
+                  (i == 5) ? SelectionOuline_ConerLines[*arg0].field_4.vy - (SelectionOuline_InnerLine[*arg0].field_4.vy >> 1) : 
+                  (i == 4) ? SelectionOuline_ConerLines[*arg0].field_4.vy - 1 : SelectionOuline_ConerLines[*arg0].field_4.vy
+            );
+        } 
+        else 
         {
-            setXY2(line_g2,
-                   D_80027E9C[*arg0].field_0.vx,
-                   (i == 1) ? (D_80027E9C[*arg0].field_0.vy - 1) : D_80027E9C[*arg0].field_0.vy,
-                   (i != 2) ? (D_80027E9C[*arg0].field_0.vx + (D_80027E54[*arg0].field_0.vx >> 1)) : D_80027E9C[*arg0].field_0.vx,
-                   (i == 2) ? (D_80027E9C[*arg0].field_0.vy + (D_80027E54[*arg0].field_0.vy >> 1)) : 
-                   (i == 1) ? (D_80027E9C[*arg0].field_0.vy - 1) : D_80027E9C[*arg0].field_0.vy);
+            setXY2(line_g2, SelectionOuline_ConerLines[*arg0].field_0.vx,
+                  (i == 1) ? SelectionOuline_ConerLines[*arg0].field_0.vy - 1 : SelectionOuline_ConerLines[*arg0].field_0.vy,
+                  (i != 2) ? SelectionOuline_ConerLines[*arg0].field_0.vx + (SelectionOuline_InnerLine[*arg0].field_0.vx >> 1) : SelectionOuline_ConerLines[*arg0].field_0.vx,
+                  (i == 2) ? SelectionOuline_ConerLines[*arg0].field_0.vy + (SelectionOuline_InnerLine[*arg0].field_0.vy >> 1) : 
+                  (i == 1) ? SelectionOuline_ConerLines[*arg0].field_0.vy - 1 : SelectionOuline_ConerLines[*arg0].field_0.vy
+            );
         }
 
         addPrim(&ot0->org[7], line_g2);
@@ -3490,10 +3496,10 @@ void Gfx_Results_ItemsDisplay() // 0x800521A8
     {
         if ((D_800C3E40 >> i) & (1 << 0))
         {
-            Gfx_Results_ItemsRotate(&D_800C3E48[i].param->rotate, &D_800C3E48[i]);
+            Gfx_Results_ItemsRotate(&g_Items_Items3dData_2[i].param->rotate, &g_Items_Items3dData_2[i]);
             func_800548D8(i);
-            GsSetFlatLight(0, &D_800C39A8[i][0]);
-            GsSetFlatLight(1, &D_800C39A8[i][1]);
+            GsSetFlatLight(0, &g_Items_ItemsLightingData[i][0]);
+            GsSetFlatLight(1, &g_Items_ItemsLightingData[i][1]);
             func_8004BD74(i, ptr, 3);
         }
     }
@@ -3524,15 +3530,15 @@ void Gfx_Results_ItemsPosition() // 0x8005227C
     {
         if ((D_800C3E40 >> i) & (1 << 0))
         {
-            D_800C3E48[i].coord.t[0]   = vecs[i].vx;
-            D_800C3E48[i].coord.t[1]   = vecs[i].vy;
-            D_800C3E48[i].coord.t[2]   = vecs[i].vz;
-            D_800C3BE8[i].field_10.vx  = 0x200;
-            D_800C3BE8[i].field_10.vz  = 0x200;
-            D_800C3BE8[i].field_0.vz   = 0x1000;
-            D_800C3BE8[i].field_0.vy   = 0x1000;
-            D_800C3BE8[i].field_0.vx   = 0x1000;
-            D_800C3BE8[i].field_10.vy += 8;
+            g_Items_Items3dData_2[i].coord.t[0]      = vecs[i].vx;
+            g_Items_Items3dData_2[i].coord.t[1]      = vecs[i].vy;
+            g_Items_Items3dData_2[i].coord.t[2]      = vecs[i].vz;
+            g_Items_Items3dData_1[i].rotation_10.vx  = 0x200;
+            g_Items_Items3dData_1[i].rotation_10.vz  = 0x200;
+            g_Items_Items3dData_1[i].scale_0.vz      = 0x1000;
+            g_Items_Items3dData_1[i].scale_0.vy      = 0x1000;
+            g_Items_Items3dData_1[i].scale_0.vx      = 0x1000;
+            g_Items_Items3dData_1[i].rotation_10.vy += 8;
         }
     }
 }
@@ -4163,15 +4169,15 @@ void Gfx_Items_RenderItems() // 0x80054200
     {
         D_800C3E18[i] = NO_VALUE;
 
-        D_800C3BE8[i].field_0.vz  = FP_METER(1.0f);
-        D_800C3BE8[i].field_0.vy  = FP_METER(1.0f);
-        D_800C3BE8[i].field_0.vx  = FP_METER(1.0f);
-        D_800C3BE8[i].field_10.vz = 0;
-        D_800C3BE8[i].field_10.vy = 0;
-        D_800C3BE8[i].field_10.vx = 0;
-        D_800C3BE8[i].field_18.vz = 0;
-        D_800C3BE8[i].field_18.vy = 0;
-        D_800C3BE8[i].field_18.vx = 0;
+        g_Items_Items3dData_1[i].scale_0.vz     = FP_METER(1.0f);
+        g_Items_Items3dData_1[i].scale_0.vy     = FP_METER(1.0f);
+        g_Items_Items3dData_1[i].scale_0.vx     = FP_METER(1.0f);
+        g_Items_Items3dData_1[i].rotation_10.vz = 0;
+        g_Items_Items3dData_1[i].rotation_10.vy = 0;
+        g_Items_Items3dData_1[i].rotation_10.vx = 0;
+        g_Items_Items3dData_1[i].field_18.vz    = 0;
+        g_Items_Items3dData_1[i].field_18.vy    = 0;
+        g_Items_Items3dData_1[i].field_18.vx    = 0;
     }
 
     func_8004BCBC(FS_BUFFER_8);
@@ -4227,9 +4233,9 @@ void Gfx_Items_RenderItems() // 0x80054200
             }
         }
 
-        D_800C3E48[7].coord.t[0] = 0;
-        D_800C3E48[7].coord.t[1] = FP_METER(-0.15625f);
-        D_800C3E48[7].coord.t[2] = 0;
+        g_Items_Items3dData_2[7].coord.t[0] = 0;
+        g_Items_Items3dData_2[7].coord.t[1] = FP_METER(-0.15625f);
+        g_Items_Items3dData_2[7].coord.t[2] = 0;
     }
     else
     {
@@ -4278,8 +4284,8 @@ void Gfx_Items_RenderInit() // 0x80054558
     g_Inventory_StatusScanlineTimer     = 32;
     g_Inventory_StatusDarkGradientTimer = 0;
     D_800AE198                          = 0;
-    D_800AE19A                          = -0x12C;
-    D_800AE19C                          = 0;
+    g_Inventory_StatusScanlinePosition  = -0x12C;
+    g_Inventory_ItemNameTimer           = 0;
     g_Inventory_DescriptonRollTimer     = 0;
     g_Inventory_ScrollTransitionTimer   = 0;
 
@@ -4315,12 +4321,14 @@ void Inventory_ExitAnimFixes() // 0x80054634
     Inventory_ExitAnimEquippedItemUpdate(&field_F);
 }
 
+
+// TODO: RODATA migration.
 #ifdef NON_MATCHING
 void func_800546A8(s32 arg0) // 0x800546A8
 {
     switch ((u8)arg0)
     {
-        case 0:
+        case InventoryItemId_Unequipped:
             func_8003DD80(1, 34);
             break;
 
@@ -4333,9 +4341,9 @@ void func_800546A8(s32 arg0) // 0x800546A8
             func_8003DD80(1, 34);
             break;
 
-        case 32:
-        case 33:
-        case 34:
+        case InventoryItemId_HealthDrink:
+        case InventoryItemId_FirstAidKit:
+        case InventoryItemId_Ampoule:
             func_8003DD80(1, 19);
             break;
 
@@ -4352,12 +4360,14 @@ void func_80054720(s_TmdFile* tmd, s32 arg1, s32 arg2)
 {
     u8                 var_v0;
     GsDOBJ2*           ptr;
-    struct TMD_STRUCT* objs = tmd->objects_C;
+    struct TMD_STRUCT* objs;
+	
+	objs = tmd->objects_C;
 
     GsLinkObject4((u32)&objs[arg2], &D_800C3D78[arg1], 0);
 
-    ptr = &D_800C3D78[arg1];
-    ptr->coord2 = &D_800C3E48[arg1];
+    ptr         = &D_800C3D78[arg1];
+    ptr->coord2 = &g_Items_Items3dData_2[arg1];
 
     if (D_800AE187 != 0)
     {
@@ -4370,22 +4380,22 @@ void func_80054720(s_TmdFile* tmd, s32 arg1, s32 arg2)
 
     switch (var_v0) 
     {
-        case 0x20: 
-        case 0x21: 
-        case 0x22:
-        case 0x80: 
-        case 0x81:
-        case 0x84: 
-        case 0x85:
-        case 0xA0: 
-        case 0xA1: 
-        case 0xA2:
-        case 0xC0: 
-        case 0xC1: 
-        case 0xC2:
-        case 0xE0: 
-        case 0xE1:
-        case 0x87:
+        case InventoryItemId_HealthDrink: 
+        case InventoryItemId_FirstAidKit: 
+        case InventoryItemId_Ampoule:
+        case InventoryItemId_KitchenKnife: 
+        case InventoryItemId_SteelPipe:
+        case InventoryItemId_Hammer: 
+        case InventoryItemId_Chainsaw:
+        case InventoryItemId_Handgun: 
+        case InventoryItemId_HuntingRifle: 
+        case InventoryItemId_Shotgun:
+        case InventoryItemId_HandgunBullets: 
+        case InventoryItemId_RifleShells: 
+        case InventoryItemId_ShotgunShells:
+        case InventoryItemId_Flashlight: 
+        case InventoryItemId_PocketRadio:
+        case InventoryItemId_Axe:
             ptr->attribute = 0;
             break;
 
@@ -4402,16 +4412,16 @@ void func_80054720(s_TmdFile* tmd, s32 arg1, s32 arg2)
 
 void func_8005487C(s32 arg0) // 0x8005487C
 {
-    GsInitCoordinate2(NULL, &D_800C3E48[arg0]);
-    D_800C3E48[arg0].param = (GsCOORD2PARAM*) &D_800C3BE8[arg0];
+    GsInitCoordinate2(NULL, &g_Items_Items3dData_2[arg0]);
+    g_Items_Items3dData_2[arg0].param = (GsCOORD2PARAM*) &g_Items_Items3dData_1[arg0];
 }
 
 /** Something related to items lighting. */
 void func_800548D8(s32 arg0) // 0x800548D8
 {
-    D_800C39A8[arg0][0].vx = D_800C3E48[arg0].coord.t[0];
-    D_800C39A8[arg0][0].vy = D_800C3E48[arg0].coord.t[1];
-    D_800C39A8[arg0][0].vz = D_800C3E48[arg0].coord.t[2] + 20000;
+    g_Items_ItemsLightingData[arg0][0].vx = g_Items_Items3dData_2[arg0].coord.t[0];
+    g_Items_ItemsLightingData[arg0][0].vy = g_Items_Items3dData_2[arg0].coord.t[1];
+    g_Items_ItemsLightingData[arg0][0].vz = g_Items_Items3dData_2[arg0].coord.t[2] + 20000;
 }
 
 void Gfx_Items_SetAmbientLighting() // 0x80054928
@@ -4420,34 +4430,35 @@ void Gfx_Items_SetAmbientLighting() // 0x80054928
 
     for (i = 0; i < 10; i++)
     {
-        D_800C39A8[i][0].r  = NO_VALUE;
-        D_800C39A8[i][0].g  = NO_VALUE;
-        D_800C39A8[i][0].b  = NO_VALUE;
-        D_800C39A8[i][1].vx = FP_TO(1, Q12_SHIFT);
-        D_800C39A8[i][1].vy = 0;
-        D_800C39A8[i][1].vz = 0;
-        D_800C39A8[i][1].r  = NO_VALUE;
-        D_800C39A8[i][1].g  = NO_VALUE;
-        D_800C39A8[i][1].b  = NO_VALUE;
+        g_Items_ItemsLightingData[i][0].r  = NO_VALUE;
+        g_Items_ItemsLightingData[i][0].g  = NO_VALUE;
+        g_Items_ItemsLightingData[i][0].b  = NO_VALUE;
+        g_Items_ItemsLightingData[i][1].vx = FP_TO(1, Q12_SHIFT);
+        g_Items_ItemsLightingData[i][1].vy = 0;
+        g_Items_ItemsLightingData[i][1].vz = 0;
+        g_Items_ItemsLightingData[i][1].r  = NO_VALUE;
+        g_Items_ItemsLightingData[i][1].g  = NO_VALUE;
+        g_Items_ItemsLightingData[i][1].b  = NO_VALUE;
     }
 
     GsSetAmbient(1024, 1024, 1024);
     GsSetLightMode(1);
 }
 
+// Similar to `Gfx_Items_SetAmbientLighting`.
 void func_800549A0() // 0x800549A0
 {
     #define IDX 9
 
-    D_800C39A8[IDX][0].r  = NO_VALUE;
-    D_800C39A8[IDX][1].vx = FP_TO(1, Q12_SHIFT);
-    D_800C39A8[IDX][0].g  = NO_VALUE;
-    D_800C39A8[IDX][0].b  = NO_VALUE;
-    D_800C39A8[IDX][1].r  = NO_VALUE;
-    D_800C39A8[IDX][1].g  = NO_VALUE;
-    D_800C39A8[IDX][1].b  = NO_VALUE;
-    D_800C39A8[IDX][1].vy = 0;
-    D_800C39A8[IDX][1].vz = 0;
+    g_Items_ItemsLightingData[IDX][0].r  = NO_VALUE;
+    g_Items_ItemsLightingData[IDX][1].vx = FP_TO(1, Q12_SHIFT);
+    g_Items_ItemsLightingData[IDX][0].g  = NO_VALUE;
+    g_Items_ItemsLightingData[IDX][0].b  = NO_VALUE;
+    g_Items_ItemsLightingData[IDX][1].r  = NO_VALUE;
+    g_Items_ItemsLightingData[IDX][1].g  = NO_VALUE;
+    g_Items_ItemsLightingData[IDX][1].b  = NO_VALUE;
+    g_Items_ItemsLightingData[IDX][1].vy = 0;
+    g_Items_ItemsLightingData[IDX][1].vz = 0;
 
     GsSetAmbient(2048, 2048, 2048);
     GsSetLightMode(1);
@@ -4460,13 +4471,13 @@ void func_80054A04(u8 itemId) // 0x80054A04
     D_800AE1AC = 0;
     D_800AE1B0 = 0;
 
-    D_800C3E18[9]             = NO_VALUE;
-    D_800C3BE8[9].field_10.vz = 0;
-    D_800C3BE8[9].field_10.vy = 0;
-    D_800C3BE8[9].field_10.vx = 0;
-    D_800C3BE8[9].field_18.vz = 0;
-    D_800C3BE8[9].field_18.vy = 0;
-    D_800C3BE8[9].field_18.vx = 0;
+    D_800C3E18[9]                           = NO_VALUE;
+    g_Items_Items3dData_1[9].rotation_10.vz = 0;
+    g_Items_Items3dData_1[9].rotation_10.vy = 0;
+    g_Items_Items3dData_1[9].rotation_10.vx = 0;
+    g_Items_Items3dData_1[9].field_18.vz    = 0;
+    g_Items_Items3dData_1[9].field_18.vy    = 0;
+    g_Items_Items3dData_1[9].field_18.vx    = 0;
 
     func_8004BCBC(FS_BUFFER_5);
 
@@ -4475,9 +4486,9 @@ void func_80054A04(u8 itemId) // 0x80054A04
     func_80054720(FS_BUFFER_5, 9, 0);
     func_8005487C(9);
 
-    D_800C3BE8[9].field_0.vz = 1 << 12;
-    D_800C3BE8[9].field_0.vy = 1 << 12;
-    D_800C3BE8[9].field_0.vx = 1 << 12;
+    g_Items_Items3dData_1[9].scale_0.vz = FP_TO(1, Q12_SHIFT);
+    g_Items_Items3dData_1[9].scale_0.vy = FP_TO(1, Q12_SHIFT);
+    g_Items_Items3dData_1[9].scale_0.vx = FP_TO(1, Q12_SHIFT);
 
     func_800549A0();
     func_8004BB4C(&D_800C3B48, &D_800C3AE8, &D_800C3B38, 0);
@@ -4485,15 +4496,14 @@ void func_80054A04(u8 itemId) // 0x80054A04
 
 s32 func_80054AD8(u8 arg0) // 0x80054AD8
 {
-    s16         x;
-    s16         y;
-    s32         temp_a1;
-    GsDOBJ2*    obj;
-    s_800C3BE8* ptr;
+    s32 temp_a1;
+    GsDOBJ2* obj;
+    s_Items3dData* ptr;
+    s16 x, y;
 
-    D_800C3E48[9].coord.t[1] = 0x40;
-    D_800C3E48[9].coord.t[0] = 0;
-    D_800C3E48[9].coord.t[2] = -0x20B0;
+    g_Items_Items3dData_2[9].coord.t[1] = 0x40;
+    g_Items_Items3dData_2[9].coord.t[0] = 0;
+    g_Items_Items3dData_2[9].coord.t[2] = -0x20B0;
 
     switch (D_800AE1AC) 
     {
@@ -4502,26 +4512,25 @@ s32 func_80054AD8(u8 arg0) // 0x80054AD8
             {
                 D_800AE1AC = 1;
             }
-
-            ptr     = &D_800C3BE8;
+            ptr     = &g_Items_Items3dData_1;
             temp_a1 = D_800AE1B0 << 12;
 
             x = D_800262FC[arg0 - 32].vx;
             y = D_800262FC[arg0 - 32].vy;
+        
+            ptr[9].scale_0.vz     = temp_a1 >> 11;
+            ptr[9].scale_0.vy     = temp_a1 >> 11;
+            ptr[9].scale_0.vx     = temp_a1 >> 11;
 
-            ptr[9].field_0.vz = temp_a1 >> 11;
-            ptr[9].field_0.vy = temp_a1 >> 11;
-            ptr[9].field_0.vx = temp_a1 >> 11;
-
-            ptr[9].field_10.vx = x;
-            ptr[9].field_10.vy = 0;
-            ptr[9].field_10.vz = y;
+            ptr[9].rotation_10.vx = x;
+            ptr[9].rotation_10.vy = 0;
+            ptr[9].rotation_10.vz = y;
             break;
 
         case 1:
-            D_800C3BE8[9].field_0.vz = FP_FLOAT_TO(1.0f, Q12_SHIFT);
-            D_800C3BE8[9].field_0.vy = FP_FLOAT_TO(1.0f, Q12_SHIFT);
-            D_800C3BE8[9].field_0.vx = FP_FLOAT_TO(1.0f, Q12_SHIFT);
+            g_Items_Items3dData_1[9].scale_0.vz = FP_FLOAT_TO(1.0f, Q12_SHIFT);
+            g_Items_Items3dData_1[9].scale_0.vy = FP_FLOAT_TO(1.0f, Q12_SHIFT);
+            g_Items_Items3dData_1[9].scale_0.vx = FP_FLOAT_TO(1.0f, Q12_SHIFT);
             D_800AE1AC = 2;
             break;
     }
@@ -4534,10 +4543,10 @@ s32 func_80054AD8(u8 arg0) // 0x80054AD8
 
     obj = &D_800C3E08;
 
-    Gfx_Results_ItemsRotate(&D_800C3E48[9].param->rotate, &D_800C3E48[9]);
+    Gfx_Results_ItemsRotate(&g_Items_Items3dData_2[9].param->rotate, &g_Items_Items3dData_2[9]);
 
-    D_800C3BE8[9].field_10.vy += g_DeltaTime1 >> 1;
-
+    g_Items_Items3dData_1[9].rotation_10.vy += g_DeltaTime1 >> 1;
+    
     func_800548D8(9);
     GsSetFlatLight(0, &D_800C3AC8[0]);
     GsSetFlatLight(1, &D_800C3AC8[1]);
