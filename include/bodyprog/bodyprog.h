@@ -37,10 +37,15 @@
 // TODO: Could maybe register these automatically just like assets in the `SILENT` archive.
 typedef enum _Sfx
 {
+    Sfx_Unk1280 = 1280,
+
     Sfx_Denied  = 1304,
     Sfx_Back    = 1305,
     Sfx_Cancel  = 1306,
-    Sfx_Confirm = 1307
+    Sfx_Confirm = 1307,
+
+    Sfx_Unk1321 = 1321,
+    Sfx_Unk1322 = 1322
 } e_Sfx;
 
 /** Used by `func_8003F654` to cast a specific field to the desired type. */
@@ -834,9 +839,9 @@ typedef struct
     s16 field_6;
     s16 volumeBgm_8; // Might be wrong, but it's used in a `Sd_SetVolBgm` call.
     s16 field_A;
-    s8  field_C;     // (?) volume?
-    s8  field_D;     // BGM volume?
-    s8  field_E;     // SE volume?
+    s8  field_C; // (?) volume?
+    s8  field_D; // BGM volume?
+    s8  field_E; // SE volume?
 } s_800C1678;
 
 typedef struct
@@ -846,6 +851,7 @@ typedef struct
     s32 field_8;
 } s_800C1688;
 
+// Sound struct.
 typedef struct
 {
     u8  field_0;
@@ -855,8 +861,8 @@ typedef struct
     s16 field_6;
     s16 field_8;
     s16 field_A;
-    s16 field_C;
-    s16 field_E;
+    s16 volumeLeft_C;
+    s16 volumeRight_E;
 } s_800C1698;
 
 typedef struct
@@ -2192,8 +2198,11 @@ u8 func_80045B28();
 
 void sd_work_init();
 
-/** Plays SFX. */
-u8 func_80046048(u16 sfx, s8 arg1, u8 vol);
+u8 Sd_PlaySfx(u16 sfx, s8 arg1, u8 vol);
+
+void func_800463C0(u16 sfx, s8 arg1, u8 vol, s8 arg3);
+
+void func_80046620(u16 sfx, s8 arg1, u8 vol, s8 arg3);
 
 void func_800468EC();
 

@@ -31,7 +31,7 @@ void Sd_EngineCmd(u32 cmd) // 0x80045A7C
 
         case 5:
         case 6:
-            func_80046048(cmd, 0, 0);
+            Sd_PlaySfx(cmd, 0, 0);
             return;
 
         case 7:
@@ -278,92 +278,93 @@ void sd_work_init() // 0x80045E44
 void func_80045FF8() // 0x80045FF8
 {
     s32 i;
-    
+
     SdSeqClose(0);
-    
+
     for (i = 4; i >= 0; i--)
     {
         SdVabClose(i);
     }
-    
+
     SdEnd();
     SdQuit();
 }
 
-static inline void writeVol(s16* left, s16* right, s16 vol)
+static inline void WriteVolume(s16* left, s16* right, s16 vol)
 {
     *left  = vol;
     *right = vol;
 }
 
-u8 func_80046048(u16 arg0, s8 arg1, u8 arg2) // 0x80046048
+u8 Sd_PlaySfx(u16 sfx, s8 arg1, u8 vol) // 0x80046048
 {
-    SpuVoiceAttr s_attr;
-    s16          temp_a0;
-    s16          temp_a0_2;
+    SpuVoiceAttr attr;
+    s16          convertedVol;
+    s16          volCpy;
     s32          i;
 
-    if (arg0 == 0x500)
+    if (sfx == Sfx_Unk1280)
     {
         return NO_VALUE;
     }
 
-    D_800C15BC = arg0 - 0x500;
-    temp_a0_2  = arg2;
+    D_800C15BC = sfx - Sfx_Unk1280;
+    volCpy     = vol;
 
     D_800C1698.field_2 = D_800ACAA8[D_800C15BC].field_2 >> 8;
     D_800C1698.field_4 = D_800ACAA8[D_800C15BC].field_2 & 0xFF;
     D_800C1698.field_8 = D_800ACAA8[D_800C15BC].field_4;
 
-    temp_a0 = D_800C167C + D_800ACAA8[D_800C15BC].field_5;
-    temp_a0 = temp_a0 - (temp_a0 * temp_a0_2) / 255;
+    convertedVol = D_800C167C + D_800ACAA8[D_800C15BC].field_5;
+    convertedVol = convertedVol - (convertedVol * volCpy) / 255;
 
-    writeVol(&D_800C1698.field_C, &D_800C1698.field_E, temp_a0);
+    WriteVolume(&D_800C1698.volumeLeft_C, &D_800C1698.volumeRight_E, convertedVol);
 
     if (D_800C166A == 1)
     {
         if (arg1 < 0)
         {
-            D_800C1698.field_E -= (D_800C1698.field_C * ABS(arg1)) >> 7;
+            D_800C1698.volumeRight_E -= (D_800C1698.volumeLeft_C * ABS(arg1)) >> 7;
         }
         else
         {
-            D_800C1698.field_C -= (D_800C1698.field_C * arg1) >> 7;
+            D_800C1698.volumeLeft_C -= (D_800C1698.volumeLeft_C * arg1) >> 7;
         }
     }
 
-    if (D_800C1698.field_C < 0)
+    if (D_800C1698.volumeLeft_C < 0)
     {
-        D_800C1698.field_C = 0;
+        D_800C1698.volumeLeft_C = 0;
     }
 
-    if (D_800C1698.field_E < 0)
+    if (D_800C1698.volumeRight_E < 0)
     {
-        D_800C1698.field_E = 0;
+        D_800C1698.volumeRight_E = 0;
     }
 
-    if (arg0 == 0x529)
+    if (sfx == Sfx_Unk1321)
     {
         D_800C1698.field_6 = D_800ACAA8[D_800C15BC].field_0;
-        SdUtKeyOnV(0x16, D_800C1698.field_2, D_800C1698.field_4, D_800C1698.field_6, D_800C1698.field_8, 0,
-                   Sd_GetVolSe(D_800C1698.field_C), Sd_GetVolSe(D_800C1698.field_E));
-        D_800C1698.field_0 = 0x16;
+        SdUtKeyOnV(22, D_800C1698.field_2, D_800C1698.field_4, D_800C1698.field_6, D_800C1698.field_8, 0,
+                   Sd_GetVolSe(D_800C1698.volumeLeft_C), Sd_GetVolSe(D_800C1698.volumeRight_E));
+        D_800C1698.field_0 = 22;
     }
-    else if (arg0 == 0x52A)
+    else if (sfx == Sfx_Unk1322)
     {
         D_800C1698.field_6 = D_800ACAA8[D_800C15BC].field_0;
-        SdUtKeyOnV(0x17, D_800C1698.field_2, D_800C1698.field_4, D_800C1698.field_6, D_800C1698.field_8, 0x78,
-                   Sd_GetVolSe(D_800C1698.field_C), Sd_GetVolSe(D_800C1698.field_E));
-        D_800C1698.field_0 = 0x17;
+        SdUtKeyOnV(23, D_800C1698.field_2, D_800C1698.field_4, D_800C1698.field_6, D_800C1698.field_8, 120,
+                   Sd_GetVolSe(D_800C1698.volumeLeft_C), Sd_GetVolSe(D_800C1698.volumeRight_E));
+        D_800C1698.field_0 = 23;
     }
     else
     {
-        D_800C1698.field_0 = SdVoKeyOn(D_800ACAA8[D_800C15BC].field_2, D_800C1698.field_8 * 256, Sd_GetVolSe(D_800C1698.field_C), Sd_GetVolSe(D_800C1698.field_E));
+        D_800C1698.field_0 = SdVoKeyOn(D_800ACAA8[D_800C15BC].field_2, D_800C1698.field_8 * 256,
+                                       Sd_GetVolSe(D_800C1698.volumeLeft_C), Sd_GetVolSe(D_800C1698.volumeRight_E));
     }
 
     for (i = 0; i < 24; i++)
     {
-        if (D_800C15F8[i] == arg0)
+        if (D_800C15F8[i] == sfx)
         {
             D_800C15F8[i] = 0;
         }
@@ -371,117 +372,119 @@ u8 func_80046048(u16 arg0, s8 arg1, u8 arg2) // 0x80046048
 
     if (D_800C1698.field_0 < 24)
     {
-        D_800C15F8[D_800C1698.field_0] = arg0;
-        s_attr.voice                   = 1 << D_800C1698.field_0;
-        SpuGetVoiceAttr(&s_attr);
-        D_800C1628[D_800C1698.field_0] = s_attr.pitch;
+        D_800C15F8[D_800C1698.field_0] = sfx;
+        attr.voice = 1 << D_800C1698.field_0;
+
+        SpuGetVoiceAttr(&attr);
+
+        D_800C1628[D_800C1698.field_0] = attr.pitch;
         return D_800C1698.field_0;
     }
 
     return NO_VALUE;
 }
 
-void func_800463C0(u16 arg0, s8 arg1, u8 arg2, s8 arg3) // 0x800463C0
+void func_800463C0(u16 sfx, s8 arg1, u8 vol, s8 arg3) // 0x800463C0
 {
-    SpuVoiceAttr sp10;
-    s16          temp_a0;
-    s32          var_t0;
+    SpuVoiceAttr attr;
+    s16          convertedVol;
+    s32          temp;
     s32          i;
 
-    if (arg0 == 0x500)
+    if (sfx == Sfx_Unk1280)
     {
         return;
     }
 
-    D_800C15BE = arg0 - 0x500;
+    D_800C15BE = sfx - Sfx_Unk1280;
     D_800C16A4 = D_800C167C + D_800ACAA8[D_800C15BE].field_5;
 
-    if (arg0 == 0x529)
+    if (sfx == Sfx_Unk1321)
     {
-        var_t0     = 0x16;
-        sp10.voice = 0x400000;
+        temp       = 22;
+        attr.voice = 0x400000;
     }
-    else if (arg0 == 0x52A)
+    else if (sfx == Sfx_Unk1322)
     {
-        var_t0     = 0x17;
-        sp10.voice = 0x800000;
+        temp       = 23;
+        attr.voice = 0x800000;
     }
     else
     {
-        var_t0 = -1;
+        temp = NO_VALUE;
 
         for (i = 0; i < 24; i++)
         {
-            if (D_800C15F8[i] == arg0)
+            if (D_800C15F8[i] == sfx)
             {
-                var_t0 = i;
+                temp = i;
             }
         }
 
-        if (var_t0 < 0)
+        if (temp < 0)
         {
             return;
         }
 
-        sp10.voice = 1 << var_t0;
+        attr.voice = 1 << temp;
     }
 
     D_800C1698.field_A = 0;
     D_800C1698.field_8 = D_800ACAA8[D_800C15BE].field_4;
-    D_800C15C0         = D_800C1628[var_t0] + arg3 * 2;
-    temp_a0            = arg2;
-    temp_a0            = D_800C1698.field_C - ((D_800C1698.field_C * (temp_a0)) / 255);
+    D_800C15C0         = D_800C1628[temp] + (arg3 * 2);
+    convertedVol       = vol;
+    convertedVol       = D_800C1698.volumeLeft_C - ((D_800C1698.volumeLeft_C * (convertedVol)) / 255);
 
-    writeVol(&D_800C1698.field_C, &D_800C1698.field_E, temp_a0);
+    WriteVolume(&D_800C1698.volumeLeft_C, &D_800C1698.volumeRight_E, convertedVol);
 
     if (D_800C166A == 1)
     {
         if (arg1 < 0)
         {
-            D_800C1698.field_E -= (temp_a0 * ABS(arg1)) >> 7;
+            D_800C1698.volumeRight_E -= (convertedVol * ABS(arg1)) >> 7;
         }
         else
         {
-            D_800C1698.field_C -= (temp_a0 * arg1) >> 7;
+            D_800C1698.volumeLeft_C -= (convertedVol * arg1) >> 7;
         }
     }
 
-    SpuGetVoiceAttr(&sp10);
+    SpuGetVoiceAttr(&attr);
 
-    sp10.mask          = 0x1F;
-    sp10.volmode.left  = 0;
-    sp10.volmode.right = 0;
-    sp10.volmode.left  = 0;
-    sp10.volmode.right = 0;
+    attr.mask          = 0x1F;
+    attr.volmode.left  = 0;
+    attr.volmode.right = 0;
+    attr.volmode.left  = 0;
+    attr.volmode.right = 0;
 
-    if (D_800C1698.field_C < 0)
+    if (D_800C1698.volumeLeft_C < 0)
     {
-        D_800C1698.field_C = 0;
+        D_800C1698.volumeLeft_C = 0;
     }
 
-    if (D_800C1698.field_E < 0)
+    if (D_800C1698.volumeRight_E < 0)
     {
-        D_800C1698.field_E = 0;
+        D_800C1698.volumeRight_E = 0;
     }
 
-    sp10.volume.right = Sd_GetVolSe(D_800C1698.field_E << 7);
-    sp10.volume.left  = Sd_GetVolSe(D_800C1698.field_C << 7);
-    sp10.pitch        = D_800C15C0;
+    attr.volume.right = Sd_GetVolSe(D_800C1698.volumeRight_E << 7);
+    attr.volume.left  = Sd_GetVolSe(D_800C1698.volumeLeft_C << 7);
+    attr.pitch        = D_800C15C0;
 
-    SpuSetVoiceAttr(&sp10);
+    SpuSetVoiceAttr(&attr);
 }
 
-void func_80046620(u16 arg0, s8 arg1, u8 arg2, s8 arg3) // 0x80046620
+void func_80046620(u16 sfx, s8 arg1, u8 vol, s8 arg3) // 0x80046620
 {
-    s16 temp_a0_2;
-    s16 temp_a0_3;
+    s16 temp;
+    s16 convertedVol;
 
-    if (arg0 == 0x500)
+    if (sfx == Sfx_Unk1280)
     {
         return;
     }
 
-    D_800C15C2         = arg0 - 0x500;
+    D_800C15C2         = sfx - Sfx_Unk1280;
     D_800C1698.field_2 = D_800ACAA8[D_800C15C2].field_2 >> 8;
     D_800C1698.field_4 = D_800ACAA8[D_800C15C2].field_2 & 0xFF;
     D_800C1698.field_6 = D_800ACAA8[D_800C15C2].field_0;
@@ -496,36 +499,36 @@ void func_80046620(u16 arg0, s8 arg1, u8 arg2, s8 arg3) // 0x80046620
         D_800C1698.field_A = 0x7F - ABS(arg3 * 5) % 127;
     }
 
-    temp_a0_2          = D_800C167C + D_800ACAA8[D_800C15C2].field_5;
-    temp_a0_3          = arg2;
-    D_800C1698.field_C = temp_a0_2 - (temp_a0_2 * temp_a0_3) / 255;
+    temp               = D_800C167C + D_800ACAA8[D_800C15C2].field_5;
+    convertedVol            = vol;
+    D_800C1698.volumeLeft_C = temp - (temp * convertedVol) / 255;
 
-    writeVol(&D_800C1698.field_C, &D_800C1698.field_E, D_800C1698.field_C);
+    WriteVolume(&D_800C1698.volumeLeft_C, &D_800C1698.volumeRight_E, D_800C1698.volumeLeft_C);
 
     if (D_800C166A == 1)
     {
         if (arg1 < 0)
         {
-            D_800C1698.field_E -= (D_800C1698.field_E * ABS(arg1)) >> 7;
+            D_800C1698.volumeRight_E -= (D_800C1698.volumeRight_E * ABS(arg1)) >> 7;
         }
         else
         {
-            D_800C1698.field_C -= (D_800C1698.field_C * arg1) >> 7;
+            D_800C1698.volumeLeft_C -= (D_800C1698.volumeLeft_C * arg1) >> 7;
         }
     }
 
-    if (D_800C1698.field_C < 0)
+    if (D_800C1698.volumeLeft_C < 0)
     {
-        D_800C1698.field_C = 0;
+        D_800C1698.volumeLeft_C = 0;
     }
 
-    if (D_800C1698.field_E < 0)
+    if (D_800C1698.volumeRight_E < 0)
     {
-        D_800C1698.field_E = 0;
+        D_800C1698.volumeRight_E = 0;
     }
 
     D_800C1698.field_0 = SdUtKeyOn(D_800C1698.field_2, D_800C1698.field_4, D_800C1698.field_6, D_800C1698.field_8, D_800C1698.field_A,
-                                   Sd_GetVolSe(D_800C1698.field_C), Sd_GetVolSe(D_800C1698.field_E));
+                                   Sd_GetVolSe(D_800C1698.volumeLeft_C), Sd_GetVolSe(D_800C1698.volumeRight_E));
 }
 
 void func_800468EC() // 0x800468EC

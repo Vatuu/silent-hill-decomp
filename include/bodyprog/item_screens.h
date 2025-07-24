@@ -85,20 +85,20 @@ extern u8 g_Inventory_EquippedItem; // 0x800AE184
 
 extern s32 D_800AE190;
 
-/** Timer used for the black scanline gradient health status effect. */
-extern s16 g_Inventory_StatusScanlineTimer; // 0x800AE194
+/** Timer used for the black scanline gradient in the health status effect. */
+extern s16 g_Inventory_HealthStatusScanlineTimer; // 0x800AE194
 
 /** Timer used for the colored gradient in the health status effect. */
-extern s16 g_Inventory_StatusDarkGradientTimer; // 0x800AE196
+extern s16 g_Inventory_HealthStatusColorGradientTimer; // 0x800AE196
 
 extern s16 D_800AE198; // 0x800AE198
 
-extern s16 g_Inventory_StatusScanlinePosition; // 0x800AE19A
+extern s16 g_Inventory_HealthStatusScanlinePosition; // 0x800AE19A
 
 extern s32 g_Inventory_ItemNameTimer; // 0x800AE19C
 
 /** @brief Timer used for displaying item descriptions in the inventory. */
-extern s32 g_Inventory_DescriptonRollTimer; // 0x800AE1A0
+extern s32 g_Inventory_DescriptionRollTimer; // 0x800AE1A0
 
 /** @brief Timer used for the transition of selected items
 * when scrolling through the inventory.
@@ -125,23 +125,22 @@ extern s32 g_Inventory_IsLeftHeld; // 0x800C3988
 
 extern s32 g_Inventory_IsRightHeld; // 0x800C398C
 
-/** @brief Timer used for displaying outline at the corners
- * of the selected option/item in the inventory. */
-extern s32 g_Inventory_CornersOutlineSelection; // 0x800C3998
+/** @brief `e_InventorySelectionId` used for the border around items and options in the inventory. */
+extern s32 g_Inventory_BorderSelectionId; // 0x800C3998
 
 extern GsF_LIGHT g_Items_ItemsLightingData[8][2]; // 0x800C39A8
 
-/** Used for holding the coords for display item/option selection box */
-extern DVECTOR D_800C3B68[4][4]; // Type assumed - 0x800C3BE8
+/** Holds the coords for displaying selection box around items and options. */
+extern DVECTOR D_800C3B68[4][4]; // 0x800C3BE8 - Type assumed.
 
-extern s_Items3dData g_Items_Items3dData_1[10]; // 0x800C3B68
+extern s_Items3dData g_Items_Items3dData0[10]; // 0x800C3B68
 
 /** Used to organize the items displaying in the inventory.
 * Size is `28/0x1C`.
 */
 extern s32 D_800C3E18[7]; // 0x800C3E18
 
-extern GsCOORDINATE2 g_Items_Items3dData_2[10]; // 0x800C3E48
+extern GsCOORDINATE2 g_Items_Items3dData1[10]; // 0x800C3E48
 
 /** This value is based on the index of the equipped item.
 * If the player has nothing equipped, the value is `NO_VALUE`.

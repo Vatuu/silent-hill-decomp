@@ -2381,7 +2381,7 @@ s32 func_800365B8(s32 arg0) // 0x800365B8
                         D_800BCD78.field_0 = temp;
                         D_800BCD78.field_1 = D_800BCD7B;
 
-                        func_80046048(Sfx_Cancel, 0, 64);
+                        Sd_PlaySfx(Sfx_Cancel, 0, 64);
 
                         if (g_SysWork.field_2350_4 != 0)
                         {
@@ -2396,11 +2396,11 @@ s32 func_800365B8(s32 arg0) // 0x800365B8
                         D_800BCD78.field_0 = temp;
                         if ((u8)D_800BCD78.field_1 == (s8)D_800BCD7B)
                         {
-                            func_80046048(Sfx_Cancel, 0, 64);
+                            Sd_PlaySfx(Sfx_Cancel, 0, 64);
                         }
                         else if (g_SysWork.field_2350_4 == 0)
                         {
-                            func_80046048(Sfx_Confirm, 0, 64);
+                            Sd_PlaySfx(Sfx_Confirm, 0, 64);
                         }
 
                         if (g_SysWork.field_2350_4 != 0)
@@ -2554,7 +2554,7 @@ s32 func_80036B5C(u8 arg0, s32* arg1)
                 D_800A99B0 = 0;
                 D_800BCD78.field_1--;
 
-                func_80046048(Sfx_Back, 0, 64);
+                Sd_PlaySfx(Sfx_Back, 0, 64);
             }
 
             if (g_ControllerPtrConst->btnsClicked_10 & ControllerFlag_LStickDown &&
@@ -2563,7 +2563,7 @@ s32 func_80036B5C(u8 arg0, s32* arg1)
                 D_800A99B0 = 0;
                 D_800BCD78.field_1++;
 
-                func_80046048(Sfx_Back, 0, 64);
+                Sd_PlaySfx(Sfx_Back, 0, 64);
             }
 
             res = NO_VALUE;

@@ -2958,7 +2958,9 @@ void func_8003FF2C(s_StructUnk3* arg0) // 0x8003FF2C
 
     func_80055330(arg0->field_0.field_0.s_field_0.field_2, arg0->field_0.field_6, arg0->field_0.field_0.s_field_0.field_1, arg0->field_0.field_8, arg0->field_0.field_A, arg0->field_0.field_C, var_t0);
     func_800553C4(arg0->field_0.field_E != 0, arg0->field_0.field_14.vec_0[0], arg0->field_0.field_14.vec_0[1], arg0->field_0.field_14.vec_0[2]);
+
     temp_a0 = arg0->field_0.field_10;
+
     func_80055840(temp_a0, temp_a0 + FP_FLOAT_TO(1.0f, Q12_SHIFT));
     func_800553E0(arg0->field_0.field_18.vec_0[0], arg0->field_0.field_18.vec_0[1], arg0->field_0.field_18.vec_0[2], arg0->field_0.field_18.vec_0[3], arg0->field_0.field_1C.vec_0[1], arg0->field_0.field_1C.vec_0[2], arg0->field_0.field_1C.vec_0[3]);
 }
