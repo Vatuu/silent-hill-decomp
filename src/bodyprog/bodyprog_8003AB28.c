@@ -465,6 +465,7 @@ void Gfx_MainMenu_BgDraw() // 0x8003B758
         g_SysWork.field_14       = 0;
         func_8003BCF4();
     }
+
     Gfx_BackgroundSpriteDraw(&D_800A9014);
     func_8003BC8C();
 }

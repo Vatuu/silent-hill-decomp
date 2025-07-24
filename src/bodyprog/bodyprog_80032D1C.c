@@ -1440,7 +1440,7 @@ void Game_SavegameInitialize(s8 overlayId, s32 difficulty) // 0x800350BC
     var = g_SavegamePtr->field_B0;
 
     g_SavegamePtr->gameDifficulty_260 = difficulty;
-    g_SavegamePtr->current2dMap_A9    = 1;
+    g_SavegamePtr->current2dMapIdx_A9 = 1;
 
     for (i = 0; i < 45; i++)
     {
@@ -2816,11 +2816,11 @@ void Chara_PositionUpdateFromParams(s_AreaLoadParams* params) // 0x800371E8
 
     if (params->mapIdx_4_0 == 24)
     {
-        g_SavegamePtr->current2dMap_A9 = 0;
+        g_SavegamePtr->current2dMapIdx_A9 = 0;
     }
     else if (params->mapIdx_4_0 != 0)
     {
-        g_SavegamePtr->current2dMap_A9 = params->mapIdx_4_0;
+        g_SavegamePtr->current2dMapIdx_A9 = params->mapIdx_4_0;
     }
 
     g_SysWork.cameraAngleY_237A = rot;
@@ -3486,7 +3486,7 @@ void SysState_Unk3_Update() // 0x800396D4
     s32           idx;
     s_ShSavegame* save;
 
-    if (!HAS_MAP(g_SavegamePtr->current2dMap_A9))
+    if (!HAS_MAP(g_SavegamePtr->current2dMapIdx_A9))
     {
         if (g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.map_18 ||
             func_800365B8(3) > 0)
@@ -3508,12 +3508,12 @@ void SysState_Unk3_Update() // 0x800396D4
     {
         if (g_SysWork.sysStateStep_C == 0)
         {
-            if (D_800A99CC[g_SavegamePtr->current2dMap_A9] != NO_VALUE)
+            if (D_800A99CC[g_SavegamePtr->current2dMapIdx_A9] != NO_VALUE)
             {
-                Fs_QueueStartReadTim(D_800A99CC[g_SavegamePtr->current2dMap_A9] + 0x776, FS_BUFFER_1, &D_800A9024);
+                Fs_QueueStartReadTim(FILE_TIM_MR_0TOWN_TIM + D_800A99CC[g_SavegamePtr->current2dMapIdx_A9], FS_BUFFER_1, &D_800A9024);
             }
 
-            Fs_QueueStartSeek(D_800A99B4[g_SavegamePtr->current2dMap_A9] + 0x768);
+            Fs_QueueStartSeek(FILE_TIM_MP_0TOWN_TIM + D_800A99B4[g_SavegamePtr->current2dMapIdx_A9]);
 
             g_Gfx_ScreenFade = 2;
             D_800B5C30       = 0;
@@ -3541,12 +3541,12 @@ void GameState_LoadMapScreen_Update() // 0x8003991C
 
         save = g_SavegamePtr;
 
-        if (D_800A99CC[save->current2dMap_A9] != NO_VALUE)
+        if (D_800A99CC[save->current2dMapIdx_A9] != NO_VALUE)
         {
-            Fs_QueueStartReadTim(FILE_TIM_MR_0TOWN_TIM + D_800A99CC[save->current2dMap_A9], FS_BUFFER_1, &D_800A9024);
+            Fs_QueueStartReadTim(FILE_TIM_MR_0TOWN_TIM + D_800A99CC[save->current2dMapIdx_A9], FS_BUFFER_1, &D_800A9024);
         }
 
-        Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + D_800A99B4[save->current2dMap_A9], FS_BUFFER_2, &D_800A901C);
+        Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + D_800A99B4[save->current2dMapIdx_A9], FS_BUFFER_2, &D_800A901C);
         g_GameWork.gameStateStep_598[0]++;
     }
 

@@ -33,7 +33,7 @@
 #define GET_PROPERTY_HIGH(prop) \
     ((u16*)&(prop) + 1)
 
-/** @brief Checks if the user has a specific map by index. */
+/** @brief Checks if a specified map has been collected. */
 #define HAS_MAP(mapIdx) \
     ((((u32*)&g_SavegamePtr->hasMapsFlags_164)[(mapIdx) / 32] >> ((mapIdx) % 32)) & (1 << 0))
 
@@ -115,7 +115,7 @@ typedef enum _SaveLocationId
     SaveLocationId_NextFear    = 24
 } e_SaveLocationId;
 
-typedef enum _Current2dMap
+typedef enum _Current2dMapIdx
 {
     Current2dMap_OtherPlaces    = 0,
     Current2dMap_OldTown        = 1,
@@ -141,7 +141,7 @@ typedef enum _Current2dMap
     Current2dMap_AltHospital1F  = 21,
     Current2dMap_AltHospital2F  = 22,
     Current2dMap_AltHospital3F  = 23
-} e_Current2dMap;
+} e_Current2dMapIdx;
 
 typedef enum _ControllerFlags
 {
@@ -557,11 +557,11 @@ typedef struct _ShSavegame
     s_ShInventoryItem items_0[INVENTORY_ITEM_COUNT_MAX];
     s8                field_A0;
     s8                field_A1[3];
-    s8                mapOverlayId_A4;          /** `e_MapOverlayId` Index to overlay `*.BIN` files. */
-    s8                mapRoomIdx_A5;            /** Index to local map geometry `*.IPD` files. */
+    s8                mapOverlayId_A4;          /** `e_MapOverlayId` Index to overlay `.BIN` files. */
+    s8                mapRoomIdx_A5;            /** Index to local map geometry `.IPD` files. */
     s16               savegameCount_A6;
     s8                locationId_A8;            /** `e_SaveLocationId` */
-    u8                current2dMap_A9;          /** `e_Current2dMap` Index to 2D map showned than opening the map screen. */
+    u8                current2dMapIdx_A9;       /** `e_Current2dMapIdx` Index to the 2D map shown when opening the map screen. */
     u8                equippedWeapon_AA;        /** `e_InventoryItemId` Default: 0. Effects only the visible player weapon model. */
     u8                inventoryItemSpaces_AB;   /** Item spaces. `INVENTORY_ITEM_COUNT_MAX` */
     u32               flags_AC;

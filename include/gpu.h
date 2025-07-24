@@ -59,7 +59,7 @@ typedef struct _ColoredLine2d
     u16      r_8;
     u16      g_A;
     u16      b_C;
-    u16      pad_E; // Maybe 4th component of RGB + A/code struct?
+    u16      pad_E; // Maybe 4th component of a RGB+code struct?
 } s_ColoredLine2d;
 STATIC_ASSERT_SIZEOF(s_ColoredLine2d, 16);
 
@@ -85,7 +85,7 @@ typedef struct
 
 /** @brief Same as `getTPage`, but `xn` and `yn` are indices instead of VRAM coordinates. */
 #define getTPageN(tp, abr, xn, yn) \
-    ((((tp) & 0x3) << 7)|(((abr) & 0x3) << 5)|((xn) & 0xF)|(((yn) & 1) << 4))
+    ((((tp) & 0x3) << 7)|(((abr) & 0x3) << 5)|((xn) & 0xF)|(((yn) & 0x1) << 4))
 
 /** @brief Same as `setRECT`, but uses 2x 32-bit stores instead of 4x 16-bit stores. */
 #define setRECTFast(r, x, y, w, h) \

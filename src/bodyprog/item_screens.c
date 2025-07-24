@@ -1280,15 +1280,15 @@ void Inventory_Logic() // 0x8004D518
                 if ((!(g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & (1 << 1)) || g_SysWork.field_2388.field_15 != 0 ||
                      (!(g_SysWork.field_2388.field_1C[0].field_0.field_0.s_field_0.field_0 & (1 << 0)) &&
                       !(g_SysWork.field_2388.field_1C[1].field_0.field_0.s_field_0.field_0 & (1 << 0)))) &&
-                    HAS_MAP(g_SavegamePtr->current2dMap_A9))
+                    HAS_MAP(g_SavegamePtr->current2dMapIdx_A9))
                 {
                     func_80046048(SFX_CONFIRM, 64, 64);
 
-                    if (D_800A99CC[g_SavegamePtr->current2dMap_A9] != -1)
+                    if (D_800A99CC[g_SavegamePtr->current2dMapIdx_A9] != NO_VALUE)
                     {
-                        Fs_QueueStartReadTim(D_800A99CC[g_SavegamePtr->current2dMap_A9] + 0x776, FS_BUFFER_1, &D_800A9024);
+                        Fs_QueueStartReadTim(FILE_TIM_MR_0TOWN_TIM + D_800A99CC[g_SavegamePtr->current2dMapIdx_A9], FS_BUFFER_1, &D_800A9024);
                     }
-                    Fs_QueueStartSeek(D_800A99B4[g_SavegamePtr->current2dMap_A9] + 0x768);
+                    Fs_QueueStartSeek(FILE_TIM_MP_0TOWN_TIM + D_800A99B4[g_SavegamePtr->current2dMapIdx_A9]);
 
                     g_Gfx_ScreenFade                = 2;
                     g_GameWork.gameStateStep_598[1] = 19;
@@ -1312,7 +1312,7 @@ void Inventory_Logic() // 0x8004D518
                 g_GameWork.gameStateStep_598[2] = step;
             }
 
-            if (!HAS_MAP(g_SavegamePtr->current2dMap_A9))
+            if (!HAS_MAP(g_SavegamePtr->current2dMapIdx_A9))
             {
                 Gfx_Inventory_UnavailableMapText(1);
             }

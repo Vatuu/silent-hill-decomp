@@ -1232,16 +1232,22 @@ extern s32 D_800A8F40;
 
 extern GsOT D_800A8F9C[];
 
+/** 16x16 font image. */
 extern s_FsImageDesc D_800A8FF4;
 
+/** Konami logo boot screen image. */
 extern s_FsImageDesc D_800A8FFC;
 
+/** KCET logo boot screen image. */
 extern s_FsImageDesc D_800A9004;
 
+/** Title image. */
 extern s_FsImageDesc D_800A9014;
 
+/** Map images. */
 extern s_FsImageDesc D_800A901C;
 
+/** Map marker images. */
 extern s_FsImageDesc D_800A9024;
 
 /** Save screen background image. */
@@ -1249,25 +1255,35 @@ extern s_FsImageDesc D_800A902C;
 
 extern s_FsImageDesc D_800A9034;
 
+/** Controller button icon atlas texture. */
 extern s_FsImageDesc D_800A903C;
 
+/** Brightness options screen background image from main menu. */
 extern s_FsImageDesc D_800A9044;
 
+/** Brightness options screen background image not from main menu.. */
 extern s_FsImageDesc D_800A904C;
 
+/** Tip images. */
 extern s_FsImageDesc D_800A9054;
 
+/** Harry portrait options screen background image. */
 extern s_FsImageDesc D_800A905C;
 
+/** Inventory key item textures. */
 extern s_FsImageDesc D_800A9064;
 
+/** First aid kit item texture. */
 extern s_FsImageDesc D_800A906C;
 
+/** Some intentory item texture (`ITEM/TIM07.TIM`). */
 extern s_FsImageDesc D_800A9074;
 
-extern s_FsImageDesc D_800A9094; // Used in `Ai_Twinfeeler_TextureLoad` to load `TEST/WARMTEST.TIM`.
+/** `TEST/WARMTEST.TIM` texture loaded by `Ai_Twinfeeler_TextureLoad. Unused? */
+extern s_FsImageDesc D_800A9094;
 
-extern s_FsImageDesc D_800A909C; // Passed to `func_800917C0` for loading `TIM/FONT24.TIM`.
+/** 24x24 font atlas texture. */
+extern s_FsImageDesc D_800A909C;
 
 /** Array containg file IDs used for each `e_ShCharacterId`, used in `Fs_QueueStartReadAnm`. */
 extern s_CharaFileInfo g_Chara_FileInfo[45]; // 0x800A90FC

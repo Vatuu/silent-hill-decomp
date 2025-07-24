@@ -188,8 +188,8 @@ void GameState_KcetLogo_Update() // 0x800C99A4
                 GameFs_StreamBinLoad();
                 D_800CA4F0.field_0 = 3;
 
-                g_GameWork.gameStateStep_598[0] = 6U;
-                g_SysWork.timer_20 = 0;
+                g_GameWork.gameStateStep_598[0] = 6u;
+                g_SysWork.timer_20              = 0;
                 g_GameWork.gameStateStep_598[1] = 0;
                 g_GameWork.gameStateStep_598[2] = 0;
                 break;
@@ -199,8 +199,8 @@ void GameState_KcetLogo_Update() // 0x800C99A4
                 GameFs_StreamBinLoad();
                 D_800CA4F0.field_0 = 3;
 
-                g_GameWork.gameStateStep_598[0] = 6U;
-                g_SysWork.timer_20 = 0;
+                g_GameWork.gameStateStep_598[0] = 6u;
+                g_SysWork.timer_20              = 0;
                 g_GameWork.gameStateStep_598[1] = 0;
                 g_GameWork.gameStateStep_598[2] = 0;
                 break;
@@ -210,8 +210,8 @@ void GameState_KcetLogo_Update() // 0x800C99A4
                 GameFs_TitleGfxSeek();
                 D_800CA4F0.field_0 = 6;
 
-                g_GameWork.gameStateStep_598[0] = 6U;
-                g_SysWork.timer_20 = 0;
+                g_GameWork.gameStateStep_598[0] = 6u;
+                g_SysWork.timer_20              = 0;
                 g_GameWork.gameStateStep_598[1] = 0;
                 g_GameWork.gameStateStep_598[2] = 0;
                 break;
@@ -263,8 +263,8 @@ void GameState_KcetLogo_Update() // 0x800C99A4
                     while ((s32)g_GameWork.gameStateStep_598[1] < 3);
                 }
 
-                g_GameWork.gameStateStep_598[0] = 6U;
-                g_SysWork.timer_20 = 0;
+                g_GameWork.gameStateStep_598[0] = 6u;
+                g_SysWork.timer_20              = 0;
                 g_GameWork.gameStateStep_598[1] = 0;
                 g_GameWork.gameStateStep_598[2] = 0;
                 break;
@@ -279,7 +279,7 @@ void GameState_KcetLogo_Update() // 0x800C99A4
                 break;
 
             case 7:
-                if ((g_Gfx_ScreenFade & 7) == 5)
+                if ((g_Gfx_ScreenFade & 0x7) == 5)
                 {
                     Settings_ScreenAndVolUpdate();
                     Gfx_Init(SCREEN_WIDTH, 0);
@@ -309,18 +309,18 @@ void GameState_KcetLogo_Update() // 0x800C99A4
                     g_GameWork.gameStateStep_598[1] = 0;
                     g_GameWork.gameStateStep_598[2] = 0;
 
-                    g_SysWork.sysState_8 = 0;
-                    g_SysWork.timer_24 = 0;
+                    g_SysWork.sysState_8     = 0;
+                    g_SysWork.timer_24       = 0;
                     g_SysWork.sysStateStep_C = 0;
-                    g_SysWork.field_28 = 0;
-                    g_SysWork.field_10 = 0;
-                    g_SysWork.timer_2C = 0;
-                    g_SysWork.field_14 = 0;
+                    g_SysWork.field_28       = 0;
+                    g_SysWork.field_10       = 0;
+                    g_SysWork.timer_2C       = 0;
+                    g_SysWork.field_14       = 0;
 
                     g_GameWork.gameStateStep_598[0] = g_GameWork.gameState_594;
-                    g_GameWork.gameState_594 = D_800CA4F0.field_0;
-                    g_GameWork.gameStatePrev_590 = g_GameWork.gameStateStep_598[0];
-                    g_GameWork.gameStateStep_598[0] = 0U;
+                    g_GameWork.gameState_594        = D_800CA4F0.field_0;
+                    g_GameWork.gameStatePrev_590    = g_GameWork.gameStateStep_598[0];
+                    g_GameWork.gameStateStep_598[0] = 0u;
                 }
                 break;
         }
@@ -336,14 +336,14 @@ void GameState_KcetLogo_Update() // 0x800C99A4
         GsDrawOt(&g_ObjectTable1[g_ObjectTableIdx]);
 
         g_ObjectTableIdx = GsGetActiveBuff();
-        GsOUT_PACKET_P = (g_ObjectTableIdx << 0xF) + (u32)TEMP_MEMORY_ADDR;
+        GsOUT_PACKET_P   = (g_ObjectTableIdx << 0xF) + (u32)TEMP_MEMORY_ADDR;
 
         GsClearOt(0, 0, &g_ObjectTable0[g_ObjectTableIdx]);
         GsClearOt(0, 0, &g_ObjectTable1[g_ObjectTableIdx]);
     }
 }
 
-void func_800C9E6C(s_FsImageDesc* image, s32 otz, s32 vramX, s32 vramY, s32 w, s32 h, s32 x, s32 y) // 0x800C9E6C
+void Gfx_BootScreenImageSegmentDraw(s_FsImageDesc* image, s32 otz, s32 vramX, s32 vramY, s32 w, s32 h, s32 x, s32 y) // 0x800C9E6C
 {
     DR_TPAGE* tPage;
     SPRT*     prim     = (SPRT*)GsOUT_PACKET_P;
@@ -373,18 +373,18 @@ void Gfx_KonamiScreenDraw() // 0x800C9FB8
 {
     s32* ptr;
 
-    func_800C9E6C(&D_800A8FFC, 0xF, 0, 0, 256, 256, -192, -192);
-    func_800C9E6C(&D_800A8FFC, 0xF, 256, 0, 128, 256, 64, -192);
-    func_800C9E6C(&D_800A8FFC, 0xF, 0, 256, 256, 128, -192, 64);
-    func_800C9E6C(&D_800A8FFC, 0xF, 256, 256, 128, 128, 64, 64);
+    // Draw Konami logo.
+    Gfx_BootScreenImageSegmentDraw(&D_800A8FFC, 0xF, 0, 0, 256, 256, -192, -192);
+    Gfx_BootScreenImageSegmentDraw(&D_800A8FFC, 0xF, 256, 0, 128, 256, 64, -192);
+    Gfx_BootScreenImageSegmentDraw(&D_800A8FFC, 0xF, 0, 256, 256, 128, -192, 64);
+    Gfx_BootScreenImageSegmentDraw(&D_800A8FFC, 0xF, 256, 256, 128, 128, 64, 64);
 
+    // Draw fading overlay tile.
     ptr = (g_ObjectTableIdx << 4) + &D_800B5C7C;
-
     addPrimFast(ptr, (TILE*)GsOUT_PACKET_P, 3);
     setCodeWord((TILE*)GsOUT_PACKET_P, PRIM_RECT, 0xFFFFFF);
     setXY0Fast((TILE*)GsOUT_PACKET_P, -SCREEN_WIDTH, -SCREEN_HEIGHT);
     setWH((TILE*)GsOUT_PACKET_P, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2);
-
     GsOUT_PACKET_P = (PACKET*)((u8*)GsOUT_PACKET_P + sizeof(TILE));
 }
 
@@ -392,16 +392,16 @@ void Gfx_KcetScreenDraw() // 0x800CA120
 {
     u32* ptr;
 
-    func_800C9E6C(&D_800A9004, 0xF, 0, 0, 256, 160, -208, -80);
-    func_800C9E6C(&D_800A9004, 0xF, 256, 0, 160, 160, 48, -80);
+    // Draw KCET logo.
+    Gfx_BootScreenImageSegmentDraw(&D_800A9004, 0xF, 0, 0, 256, 160, -208, -80);
+    Gfx_BootScreenImageSegmentDraw(&D_800A9004, 0xF, 256, 0, 160, 160, 48, -80);
 
+    // Draw fading overlay tile.
     ptr = (g_ObjectTableIdx << 4) + &D_800B5C7C;
-
     addPrimFast(ptr, (TILE*)GsOUT_PACKET_P, 3);
     setCodeWord((TILE*)GsOUT_PACKET_P, PRIM_RECT, 0xFFFFFF);
     setXY0Fast((TILE*)GsOUT_PACKET_P, -SCREEN_WIDTH, -SCREEN_HEIGHT);
     setWH((TILE*)GsOUT_PACKET_P, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2);
-
     GsOUT_PACKET_P = (PACKET*)((u8*)GsOUT_PACKET_P + sizeof(TILE));
 }
 

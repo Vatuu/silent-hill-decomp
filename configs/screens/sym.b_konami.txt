@@ -1,10 +1,11 @@
-GameState_KonamiLogo_Update = 0x800C95AC; // type:func
-GameState_KcetLogo_Update = 0x800C99A4; // type:func
-Gfx_KonamiScreenDraw = 0x800C9FB8; // type:func
-Gfx_KcetScreenDraw = 0x800CA120; // type:func
 
+// NOTES
+// Draws Konami splash screen: func_800C9FB8
+// Draws KTEC splash screen:   func_800CA120
+// Related to transitions:     func_8003260C
 
-
-// Draws Konami's Splash screen: func_800C9FB8
-// Draws KTEC Splash screen: func_800CA120
-// Related to transitions: func_8003260C
+GameState_KonamiLogo_Update    = 0x800C95AC; // type:func
+GameState_KcetLogo_Update      = 0x800C99A4; // type:func
+Gfx_BootScreenImageSegmentDraw = 0x800C9E6C; // type:func
+Gfx_KonamiScreenDraw           = 0x800C9FB8; // type:func
+Gfx_KcetScreenDraw             = 0x800CA120; // type:func

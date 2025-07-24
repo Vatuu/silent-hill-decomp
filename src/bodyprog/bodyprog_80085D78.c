@@ -1182,7 +1182,7 @@ void func_80087AF4(s32 mapFlagIdx, s32 eventFlagIdx, s32 arg2) // 0x80087AF4
     {
         case 0:
             g_MapOverlayHeader.func_C8();
-            Fs_QueueStartSeek(D_800A99B4[mapFlagIdx] + 0x768);
+            Fs_QueueStartSeek(FILE_TIM_MP_0TOWN_TIM + D_800A99B4[mapFlagIdx]);
 
             g_SysWork.timer_2C = 0;
             g_SysWork.field_14 = 0;
@@ -1196,7 +1196,7 @@ void func_80087AF4(s32 mapFlagIdx, s32 eventFlagIdx, s32 arg2) // 0x80087AF4
             DrawSync(0);
             StoreImage(&D_8002ABA4, IMAGE_BUFFER);
             DrawSync(0);
-            Fs_QueueStartReadTim(D_800A99B4[mapFlagIdx] + 0x768, FS_BUFFER_2, &D_800A901C);
+            Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + D_800A99B4[mapFlagIdx], FS_BUFFER_2, &D_800A901C);
             Gfx_Init(0x140, 1);
 
             g_IntervalVBlanks = 1;
