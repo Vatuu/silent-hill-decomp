@@ -1243,6 +1243,8 @@ extern s_FsImageDesc g_ItemInspectionImg;
 
 extern s_FsImageDesc D_800A9034;
 
+extern s_FsImageDesc D_800A905C;
+
 extern s_FsImageDesc g_ControllerButtonAtlasImg;
 
 extern s_FsImageDesc g_BrightnessScreenImg0;
@@ -1497,6 +1499,8 @@ extern s16 D_800AE18C; // Maybe DVECTOR
 
 extern s16 D_800AE18E;
 
+extern s16 D_800AE1A8;
+
 extern s32 D_800AE1AC;
 
 extern s32 D_800AE1B0;
@@ -1536,6 +1540,10 @@ extern GsF_LIGHT D_800C3AC8[];
 extern GsDOBJ2 D_800C3E08;
 
 extern u8 D_800AD4A0[];
+
+extern char* D_800ADB60[];
+
+extern char* D_800ADE6C[];
 
 extern DVECTOR g_Gfx_DebugStringPosition0;
 
@@ -3013,7 +3021,7 @@ void func_8003ECE4();
 
 void func_8003ED08();
 
-u8 func_8003ED64();
+u32 func_8003ED64();
 
 void func_8003EDA8();
 

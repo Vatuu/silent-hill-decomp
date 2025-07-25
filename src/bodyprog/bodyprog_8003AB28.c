@@ -2390,7 +2390,7 @@ void func_8003ED08() // 0x8003ED08
     }
 }
 
-u8 func_8003ED64() // 0x8003ED64
+u32 func_8003ED64() // 0x8003ED64
 {
     return g_SysWork.field_2388.field_15;
 }
