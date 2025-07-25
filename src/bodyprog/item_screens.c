@@ -3305,7 +3305,7 @@ void Gfx_Inventory_2dBackgroundDraw(s32* arg0) // 0x8004FBCC
                         switch (g_SavegamePtr->gameDifficulty_260)
                         {
                             case GameDifficulty_Easy:
-                                if ((i == var_t6) && (j == var_t5))
+                                if (i == var_t6 && j == var_t5)
                                 {
                                     setRGB0(poly_g4, spA0 - 0x80, 0xC0, spA0 * 3);
                                     setRGB2(poly_g4, spA0 - 0x80, 0xC0, spA0 * 3);
@@ -3318,7 +3318,7 @@ void Gfx_Inventory_2dBackgroundDraw(s32* arg0) // 0x8004FBCC
                                 break;
 
                             case GameDifficulty_Normal:
-                                if ((i == var_t6) && (j == var_t5))
+                                if (i == var_t6 && j == var_t5)
                                 {
                                     setRGB0(poly_g4, spA0 * 3, spA0 - 0x80, 0xC0);
                                     setRGB2(poly_g4, spA0 * 3, spA0 - 0x80, 0xC0);
@@ -3331,7 +3331,7 @@ void Gfx_Inventory_2dBackgroundDraw(s32* arg0) // 0x8004FBCC
                                 break;
 
                             case GameDifficulty_Hard:
-                                if ((i == var_t6) && (j == var_t5))
+                                if (i == var_t6 && j == var_t5)
                                 {
                                     setRGB0(poly_g4, spA0 - 0x80, spA0 * 3, 0xC0);
                                     setRGB2(poly_g4, spA0 - 0x80, spA0 * 3, 0xC0);
@@ -3353,7 +3353,7 @@ void Gfx_Inventory_2dBackgroundDraw(s32* arg0) // 0x8004FBCC
                         {
 							
                             case GameDifficulty_Easy:
-                                if ((i == var_t6) && (j == var_t5))
+                                if (i == var_t6 && j == var_t5)
                                 {
                                     setRGB1(poly_g4, spA0 - 0x80, 0xC0, spA0 * 3);
                                     setRGB3(poly_g4, spA0 - 0x80, 0xC0, spA0 * 3);
@@ -3366,7 +3366,7 @@ void Gfx_Inventory_2dBackgroundDraw(s32* arg0) // 0x8004FBCC
                                 break;
 
                             case GameDifficulty_Normal:
-                                if ((i == var_t6) && (j == var_t5))
+                                if (i == var_t6 && j == var_t5)
                                 {
                                     setRGB1(poly_g4, spA0 * 3, spA0 - 0x80, 0xC0);
                                     setRGB3(poly_g4, spA0 * 3, spA0 - 0x80, 0xC0);
@@ -3379,7 +3379,7 @@ void Gfx_Inventory_2dBackgroundDraw(s32* arg0) // 0x8004FBCC
                                 break;
 
                             case GameDifficulty_Hard:
-                                if ((i == var_t6) && (j == var_t5))
+                                if (i == var_t6 && j == var_t5)
                                 {
                                     setRGB1(poly_g4, spA0 - 0x80, spA0 * 3, 0xC0);
                                     setRGB3(poly_g4, spA0 - 0x80, spA0 * 3, 0xC0);
@@ -3583,8 +3583,8 @@ void Gfx_Inventory_2dBackgroundDraw(s32* arg0) // 0x8004FBCC
             setRGB0(line_g2, 0x60 - (0x20 * j), 0x60 - (0x20 * j), 0xFF);
             setRGB1(line_g2, 0x60 - (0x20 * j), 0x60 - (0x20 * j), 0xFF);
             setXY2(line_g2,
-                   D_800C3B68[j][i].vx,           D_800C3B68[j][i].vy + 1,
-                   D_800C3B68[j][(i + 1) & 3].vx, D_800C3B68[j][(i + 1) & 3].vy + 1);
+                   D_800C3B68[j][i].vx,             D_800C3B68[j][i].vy + 1,
+                   D_800C3B68[j][(i + 1) & 0x3].vx, D_800C3B68[j][(i + 1) & 0x3].vy + 1);
 
             addPrim(&ot1->org[7], line_g2);
             GsOUT_PACKET_P = (PACKET*)line_g2 + sizeof(LINE_G2);
@@ -3607,7 +3607,7 @@ void Gfx_Inventory_2dBackgroundDraw(s32* arg0) // 0x8004FBCC
         if (i / 3)
         {
             setXY2(line_g2, SelectionOuline_ConerLines[*arg0].field_4.vx,
-                   (i == 4) ? (SelectionOuline_ConerLines[*arg0].field_4.vy -  1) : SelectionOuline_ConerLines[*arg0].field_4.vy,
+                   (i == 4) ? (SelectionOuline_ConerLines[*arg0].field_4.vy - 1) : SelectionOuline_ConerLines[*arg0].field_4.vy,
                    (i != 5) ? (SelectionOuline_ConerLines[*arg0].field_4.vx - (SelectionOuline_InnerLine[*arg0].field_4.vx >> 1)) : SelectionOuline_ConerLines[*arg0].field_4.vx,
                    (i == 5) ? (SelectionOuline_ConerLines[*arg0].field_4.vy - (SelectionOuline_InnerLine[*arg0].field_4.vy >> 1)) : 
                    (i == 4) ? (SelectionOuline_ConerLines[*arg0].field_4.vy - 1) : SelectionOuline_ConerLines[*arg0].field_4.vy);
@@ -3631,7 +3631,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/item_screens", Gfx_Inventory_2dBackground
 
 // TODO: RODATA migration.
 #ifdef NON_MATCHING
-static inline s16 getUVOrRandom()
+static inline s16 GetUvOrRandom()
 {
     if (D_800AE198 == 1) 
     {
@@ -3646,57 +3646,57 @@ static inline s16 getUVOrRandom()
 
 void Gfx_Inventory_HealthStatusDraw() 
 {
-    GsOT* ot;
-    s32 tempOverlayY;
-    s16 overlayYPos;
-    s32 healthValue;
-    s32 healthSegment;
-    s16 healthStage;
-    s32 i;
-    u8 greenVal;
-    u8 redVal;
+    s32       tempOverlayY;
+    s16       overlayYPos;
+    s32       health;
+    s32       healthSegment;
+    s16       healthStage;
+    s32       i;
+    u8        greenVal;
+    u8        redVal;
+    GsOT*     ot;
     POLY_FT4* poly_ft4;
-    POLY_G4* poly_g4;
+    POLY_G4*  poly_g4;
     DR_TPAGE* tPage;
 
     u8 D_80027F04[] =
     { 
-        0xff, 0x00, 0x00, 0x00, 
-        0xff, 0xa0, 0x00, 0x00, 
-        0xa0, 0xff, 0x00, 0x00, 
-        0x00, 0xff, 0x00, 0x00 
+        0xFF, 0x00, 0x00, 0x00, 
+        0xFF, 0xA0, 0x00, 0x00, 
+        0xa0, 0xFF, 0x00, 0x00, 
+        0x00, 0xFF, 0x00, 0x00 
     };
-    
-    ot = &g_ObjectTable0[g_ObjectTableIdx];
-    healthValue = g_SysWork.player_4C.chara_0.health_B0;
-    
-    if (healthValue <= 0x9FFF) 
+
+    ot     = &g_ObjectTable0[g_ObjectTableIdx];
+    health = g_SysWork.player_4C.chara_0.health_B0;
+
+    if (health < FP_FLOAT_TO(10.0f, Q12_SHIFT))
     {
         healthStage = 3;
     } 
-    else if (healthValue <= 0x31FFF) 
+    else if (health < FP_FLOAT_TO(50.0f, Q12_SHIFT))
     {
         healthStage = 2;
     }
-    else 
+    else
     {
         healthStage = 1;
     }
 
-    healthStage += g_Inventory_HealthStatusScanlineTimer;
+    healthStage                          += g_Inventory_HealthStatusScanlineTimer;
     g_Inventory_HealthStatusScanlineTimer = healthStage % 164;
 
     for (i = 0; i < 3; i++)
     {
-        if (i != 1 || g_Inventory_HealthStatusScanlineTimer >= 0x1E)
+        if (i != 1 || g_Inventory_HealthStatusScanlineTimer >= 30)
         {
-            if (i == 2) 
+            if (i == 2)
             {
-                if (g_SysWork.player_4C.chara_0.health_B0 != 0x64000 && 
-                    ((Rng_Rand16() % ((g_SysWork.player_4C.chara_0.health_B0 >> 0xD) + 2) == 0) || D_800AE198 != 0))
+                if (g_SysWork.player_4C.chara_0.health_B0 != FP_FLOAT_TO(100.0f, Q12_SHIFT) &&
+                    ((Rng_Rand16() % ((g_SysWork.player_4C.chara_0.health_B0 >> 13) + 2) == 0) || D_800AE198 != 0))
                 {
                     D_800AE198++;
-                    
+
                     if (D_800AE198 == 4) 
                     {
                         D_800AE198 = 0;
@@ -3710,63 +3710,58 @@ void Gfx_Inventory_HealthStatusDraw()
 
             poly_ft4 = (POLY_FT4*)GsOUT_PACKET_P;
             setPolyFT4(poly_ft4);
-            poly_ft4->tpage = 0x9F;
-            poly_ft4->clut = getClut(g_HealthPortraitImg.clutX, g_HealthPortraitImg.clutY);
+            poly_ft4->tpage = 159;
+            poly_ft4->clut  = getClut(g_HealthPortraitImg.clutX, g_HealthPortraitImg.clutY);
             setRGB0(poly_ft4, 0x80, 0x80, 0x80);
-                
+
             switch (i) 
             {
                 case 0:
-                    setUV4(poly_ft4, 
-                        0x28, 0x67,
-                        0x28, 0xED,
-                        0x7C, 0x67,
-                        0x7C, 0xED
-                    );
+                    setUV4(poly_ft4,
+                           40, 103,
+                           40, 237,
+                           124, 103,
+                           124, 237);
                     setXY4(poly_ft4,
-                        -0x8A, -0xB8,
-                        -0x8A, -0x32,
-                        -0x36, -0xB8,
-                        -0x36, -0x32
-                    );
+                           -138, -184,
+                           -138, -50,
+                           -54, -184,
+                           -54, -50);
                     break;
-                    
+
                 case 1:
-                    setUV4(poly_ft4, 
-                        0x28, g_Inventory_HealthStatusScanlineTimer + 0x49,
-                        0x28, g_Inventory_HealthStatusScanlineTimer + 0x4B,
-                        0x7C, g_Inventory_HealthStatusScanlineTimer + 0x49,
-                        0x7C, g_Inventory_HealthStatusScanlineTimer + 0x4B
-                    );
+                    setUV4(poly_ft4,
+                           40,  g_Inventory_HealthStatusScanlineTimer + 73,
+                           40,  g_Inventory_HealthStatusScanlineTimer + 75,
+                           124, g_Inventory_HealthStatusScanlineTimer + 73,
+                           124, g_Inventory_HealthStatusScanlineTimer + 75);
                     setXY4(poly_ft4,
-                        -0x88, g_Inventory_HealthStatusScanlineTimer - 0xD6,
-                        -0x88, g_Inventory_HealthStatusScanlineTimer - 0xD4,
-                        -0x34, g_Inventory_HealthStatusScanlineTimer - 0xD6,
-                        -0x34, g_Inventory_HealthStatusScanlineTimer - 0xD4
-                    );
-                    if (g_Inventory_HealthStatusColorGradientTimer == 0) 
+                           -136, g_Inventory_HealthStatusScanlineTimer - 214,
+                           -136, g_Inventory_HealthStatusScanlineTimer - 212,
+                           -52,  g_Inventory_HealthStatusScanlineTimer - 214,
+                           -52,  g_Inventory_HealthStatusScanlineTimer - 212);
+
+                    if (g_Inventory_HealthStatusColorGradientTimer == 0)
                     {
                         g_Inventory_HealthStatusScanlinePosition = poly_ft4->y0;
                     }
                     break;
-                    
+
                 case 2:
-                    setUV4(poly_ft4, 
-                        0x28, getUVOrRandom() + 0x67,
-                        0x28, D_800AE1A8 + 0x69,
-                        0x7C, D_800AE1A8 + 0x67,
-                        0x7C, D_800AE1A8 + 0x69
-                    );
+                    setUV4(poly_ft4,
+                           40,  GetUvOrRandom() + 103,
+                           40,  D_800AE1A8 + 105,
+                           124, D_800AE1A8 + 103,
+                           124, D_800AE1A8 + 105);
                     setXY4(poly_ft4,
-                        -0x88, D_800AE1A8 - 0xB8,
-                        -0x88, D_800AE1A8 - 0xB6,
-                        -0x34, D_800AE1A8 - 0xB8,
-                        -0x34, D_800AE1A8 - 0xB6
-                    );
+                           -136, D_800AE1A8 - 184,
+                           -136, D_800AE1A8 - 182,
+                           -52,  D_800AE1A8 - 184,
+                           -52,  D_800AE1A8 - 182);
                     break;
             }
-            
-            addPrim((u8*)ot->org - (-0x1FDC + i * 4), poly_ft4);
+
+            addPrim((u8*)ot->org - (-8156 + (i * 4)), poly_ft4);
             GsOUT_PACKET_P = (PACKET*)poly_ft4 + sizeof(POLY_FT4);
         }
     }
@@ -3780,124 +3775,127 @@ void Gfx_Inventory_HealthStatusDraw()
     setRGB2(poly_g4, 0xFF, 0xFF, 0xFF);
     setRGB3(poly_g4, 0, 0, 0);
     setXY4(poly_g4,
-        -0x88, g_Inventory_HealthStatusScanlineTimer - 0xD4,
-        -0x88, g_Inventory_HealthStatusScanlineTimer - 0xB6,
-        -0x36, g_Inventory_HealthStatusScanlineTimer - 0xD4,
-        -0x36, g_Inventory_HealthStatusScanlineTimer - 0xB6
-    );
+           -136, g_Inventory_HealthStatusScanlineTimer - 212,
+           -136, g_Inventory_HealthStatusScanlineTimer - 182,
+           -54,  g_Inventory_HealthStatusScanlineTimer - 212,
+           -54,  g_Inventory_HealthStatusScanlineTimer - 182);
 
     tempOverlayY = poly_g4->y0 - 2;
-    
-    if (tempOverlayY >= -0xD6) 
+
+    if (tempOverlayY >= -214)
     {
-        if (tempOverlayY >= (g_Inventory_HealthStatusScanlinePosition - (g_Inventory_HealthStatusColorGradientTimer >> 1))) 
+        if (tempOverlayY >= (g_Inventory_HealthStatusScanlinePosition - (g_Inventory_HealthStatusColorGradientTimer >> 1)))
         {
             overlayYPos = tempOverlayY;
         }
         else
         {
-            overlayYPos = -0x34;
+            overlayYPos = -52;
         }
     } 
     else 
     {
-        overlayYPos = -0x34;
+        overlayYPos = -52;
     }
 
     addPrim(&ot->org[2036], poly_g4);
     GsOUT_PACKET_P = (PACKET*)poly_g4 + sizeof(POLY_G4);
 
     tPage = (DR_TPAGE*)GsOUT_PACKET_P;
-    setDrawTPage(tPage, 0, 1, 0x40);
+    setDrawTPage(tPage, 0, 1, 64);
     addPrim(&ot->org[2036], tPage);
     GsOUT_PACKET_P = (PACKET*)tPage + sizeof(DR_TPAGE);
-    
-    if (g_Inventory_HealthStatusScanlinePosition != -0x12C) 
-    {
-        healthSegment = g_SysWork.player_4C.chara_0.health_B0 >> 0xC;
 
-        if (healthSegment < 0x27) 
+    if (g_Inventory_HealthStatusScanlinePosition != -300)
+    {
+        healthSegment = FP_FROM(g_SysWork.player_4C.chara_0.health_B0, Q12_SHIFT);
+
+        if (healthSegment < 39)
         {
-            redVal = D_80027F04[0];
+            redVal   = D_80027F04[0];
             greenVal = D_80027F04[1];
-        } 
-        else if (healthSegment < 0x41) 
+        }
+        else if (healthSegment < 0x41)
         {
-            redVal = D_80027F04[4];
+            redVal   = D_80027F04[4];
             greenVal = D_80027F04[5];
-        } 
-        else if (healthSegment < 0x55) 
+        }
+        else if (healthSegment < 0x55)
         {
-            redVal = D_80027F04[8];
+            redVal   = D_80027F04[8];
             greenVal = D_80027F04[9];
-        } 
-        else 
+        }
+        else
         {
-            redVal = D_80027F04[12];
+            redVal   = D_80027F04[12];
             greenVal = D_80027F04[13];
         }
-        
+
         for (i = 0; i < 2; i++)
         {
             poly_g4 = (POLY_G4*)GsOUT_PACKET_P;
             
             setPolyG4(poly_g4);
-            setRGB0(poly_g4, 
-                redVal - ((redVal * g_Inventory_HealthStatusColorGradientTimer) >> 6),
-                greenVal - ((greenVal * g_Inventory_HealthStatusColorGradientTimer) >> 6),
-                0
-            );
+            setRGB0(poly_g4,
+                    redVal   - ((redVal   * g_Inventory_HealthStatusColorGradientTimer) >> 6),
+                    greenVal - ((greenVal * g_Inventory_HealthStatusColorGradientTimer) >> 6),
+                    0);
             setRGB1(poly_g4, 0, 0, 0);
-            setRGB2(poly_g4, 
-                redVal - ((redVal * g_Inventory_HealthStatusColorGradientTimer) >> 6),
-                greenVal - ((greenVal * g_Inventory_HealthStatusColorGradientTimer) >> 6),
-                0
-            );
+            setRGB2(poly_g4,
+                    redVal   - ((redVal   * g_Inventory_HealthStatusColorGradientTimer) >> 6),
+                    greenVal - ((greenVal * g_Inventory_HealthStatusColorGradientTimer) >> 6),
+                    0);
             setRGB3(poly_g4, 0, 0, 0);
-            
-            if (i != 0) 
+
+            if (i != 0)
             {
                 setXY4(poly_g4,
-                    -0x88, ((g_Inventory_HealthStatusScanlinePosition - (g_Inventory_HealthStatusColorGradientTimer >> 1)) < -0xB6) ? -0xB6 : g_Inventory_HealthStatusScanlinePosition - (g_Inventory_HealthStatusColorGradientTimer >> 1),
-                    -0x88, poly_g4->y0 - 0x10,
-                    -0x38, ((g_Inventory_HealthStatusScanlinePosition - (g_Inventory_HealthStatusColorGradientTimer >> 1)) < -0xB6) ? -0xB6 : g_Inventory_HealthStatusScanlinePosition - (g_Inventory_HealthStatusColorGradientTimer >> 1),
-                    -0x38, poly_g4->y0 - 0x10
-                );
+                    -136, ((g_Inventory_HealthStatusScanlinePosition - (g_Inventory_HealthStatusColorGradientTimer >> 1)) < -182) ?
+                          -182 :
+                          (g_Inventory_HealthStatusScanlinePosition - (g_Inventory_HealthStatusColorGradientTimer >> 1)),
+                    -136, poly_g4->y0 - 16,
+                    -56,  ((g_Inventory_HealthStatusScanlinePosition - (g_Inventory_HealthStatusColorGradientTimer >> 1)) < -182) ?
+                          -182 :
+                          (g_Inventory_HealthStatusScanlinePosition - (g_Inventory_HealthStatusColorGradientTimer >> 1)),
+                    -56,  poly_g4->y0 - 16);
             } 
-            else 
+            else
             {
                 setXY4(poly_g4,
-                    -0x88, ((g_Inventory_HealthStatusScanlinePosition - (g_Inventory_HealthStatusColorGradientTimer >> 1)) < -0xB6) ? -0xB6 : g_Inventory_HealthStatusScanlinePosition - (g_Inventory_HealthStatusColorGradientTimer >> 1),
-                    -0x88, overlayYPos,
-                    -0x38, ((g_Inventory_HealthStatusScanlinePosition - (g_Inventory_HealthStatusColorGradientTimer >> 1)) < -0xB6) ? -0xB6 : g_Inventory_HealthStatusScanlinePosition - (g_Inventory_HealthStatusColorGradientTimer >> 1),
-                    -0x38, overlayYPos
-                );
+                    -136, ((g_Inventory_HealthStatusScanlinePosition - (g_Inventory_HealthStatusColorGradientTimer >> 1)) < -182) ?
+                          -182 :
+                          (g_Inventory_HealthStatusScanlinePosition - (g_Inventory_HealthStatusColorGradientTimer >> 1)),
+                    -136, overlayYPos,
+                    -56,  ((g_Inventory_HealthStatusScanlinePosition - (g_Inventory_HealthStatusColorGradientTimer >> 1)) < -182) ?
+                          -182 :
+                          (g_Inventory_HealthStatusScanlinePosition - (g_Inventory_HealthStatusColorGradientTimer >> 1)),
+                    -56,  overlayYPos);
             }
 
             addPrim(&ot->org[2040], poly_g4);
             GsOUT_PACKET_P = (PACKET*)poly_g4 + sizeof(POLY_G4);
         }
     }
-    
-    if (g_SysWork.player_4C.chara_0.health_B0 <= 0x9FFF) 
+
+    if (g_SysWork.player_4C.chara_0.health_B0 < FP_FLOAT_TO(10.0f, Q12_SHIFT))
     {
         healthStage = 3;
-    } 
-    else if (g_SysWork.player_4C.chara_0.health_B0 <= 0x31FFF) 
+    }
+    else if (g_SysWork.player_4C.chara_0.health_B0 < FP_FLOAT_TO(50.0f, Q12_SHIFT))
     {
         healthStage = 2;
     }
-    else 
+    else
     {
         healthStage = 1;
     }
 
     g_Inventory_HealthStatusColorGradientTimer = healthStage + g_Inventory_HealthStatusColorGradientTimer;
     
-    if (g_Inventory_HealthStatusColorGradientTimer >= 0x40) 
+    if (g_Inventory_HealthStatusColorGradientTimer >= 64)
     {
         g_Inventory_HealthStatusColorGradientTimer = 0;
-        g_Inventory_HealthStatusScanlinePosition = -0x12C;
+        g_Inventory_HealthStatusScanlinePosition   = -300;
     }
 }
 #else
