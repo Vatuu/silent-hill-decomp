@@ -1905,7 +1905,7 @@ void Savegame_SaveLogic() // 0x801E6B18
     {
         case 0:
             g_MemCardState = MemCardState_Save;
-            saveEntry      = func_8002E9EC(D_800BCD40, g_SelectedFileIdx, g_SelectedSaveIdx);
+            saveEntry      = Savegame_MetadataGet(D_800BCD40, g_SelectedFileIdx, g_SelectedSaveIdx);
 
             if (g_SavegamePtr->locationId_A8 == SaveLocationId_NextFear)
             {

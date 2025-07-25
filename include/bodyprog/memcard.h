@@ -258,7 +258,7 @@ void Savegame_GameMemDataClear(s32 deviceId);
 
 void Savegame_CardFileUsageClear(s32 deviceId);
 
-s32 func_8002E76C(s32 deviceId);
+s32 Savegame_CardFilesAreAllUnused(s32 deviceId);
 
 void func_8002E7BC();
 
@@ -280,13 +280,13 @@ s32 func_8002E94C(s32 arg0, s32 deviceId, s32 fileIdx, s32 saveIdx);
 
 s32 func_8002E990();
 
-s32 func_8002E9A0(s32 deviceId);
+s32 Savegame_CardFilesGetUsageBits(s32 deviceId);
 
-s_SavegameMetadata* func_8002E9EC(s32 deviceId, s32 fileIdx, s32 saveIdx);
+s_SavegameMetadata* Savegame_MetadataGet(s32 deviceId, s32 fileIdx, s32 saveIdx);
 
-s32 func_8002EA28(s32 deviceId);
+s32 Savegame_CardFileUsageCount(s32 deviceId);
 
-s32 func_8002EA78(s32 deviceId);
+s32 Savegame_CardFileUsageFreeCount(s32 deviceId);
 
 s32 func_8002EABC(s32* outDeviceId, s32* outFileIdx, s32* outSaveIdx);
 

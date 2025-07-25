@@ -21,9 +21,14 @@ g_CardWork                = 0x800B5488; // size:0x80
 //D_800B4580              = 0x800B4580;
 D_800B5508                = 0x800B5508; // size:0x718
 
-Savegame_CardCleanInit      = 0x8002E630; // type:func
-Savegame_GameMemDataClear   = 0x8002E6E4; // type:func
-Savegame_CardFileUsageClear = 0x8002E730; // type:func
+Savegame_CardCleanInit          = 0x8002E630; // type:func
+Savegame_GameMemDataClear       = 0x8002E6E4; // type:func
+Savegame_CardFileUsageClear     = 0x8002E730; // type:func
+Savegame_CardFilesAreAllUnused  = 0x8002E76C; // type:func
+Savegame_CardFilesGetUsageBits  = 0x8002E9A0; // type:func
+Savegame_MetadataGet            = 0x8002E9EC; // type:func
+Savegame_CardFileUsageCount     = 0x8002EA28; // type:func
+Savegame_CardFileUsageFreeCount = 0x8002EA78; // type:func
 
 Savegame_UserConfigCopyWithChecksum = 0x8002FBB4; // type:func
 Savegame_CopyWithChecksum           = 0x8002FCCC; // type:func

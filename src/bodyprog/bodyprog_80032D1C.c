@@ -328,7 +328,7 @@ s32 func_800334D8(s32 idx) // 0x800334D8
     s32 var1;
 
     res  = 0;
-    var0 = func_8002E9A0(idx);
+    var0 = Savegame_CardFilesGetUsageBits(idx);
 
     for (i = 0; i < 15; i++)
     {
@@ -465,13 +465,13 @@ s32 func_80033548() // 0x80033548
             g_SlotElementCount[WrapIdx(i) >> 2]++;
             g_ActiveSavegameEntry++;
         }
-        else if (func_8002EA28(i) == 0)
+        else if (Savegame_CardFileUsageCount(i) == 0)
         {
             if (g_SaveScreenPlayerState == 3)
             {
                 g_ActiveSavegameEntry->type_4 = SavegameEntryType_NoDataInMemCard;
             }
-            else if (func_8002EA78(i) == 0)
+            else if (Savegame_CardFileUsageFreeCount(i) == 0)
             {
                 g_ActiveSavegameEntry->type_4 = SavegameEntryType_OutOfBlocks;
             }
@@ -497,7 +497,7 @@ s32 func_80033548() // 0x80033548
         }
         else
         {
-            D_800A97E4[i] = func_8002E9A0(i);
+            D_800A97E4[i] = Savegame_CardFilesGetUsageBits(i);
 
             for (j = 0; j < 15; j++)
             {
@@ -528,7 +528,7 @@ s32 func_80033548() // 0x80033548
                 {
                     for (k = 0; k < 11; k++)
                     {
-                        savegameMetaPtr = func_8002E9EC(i, j, k);
+                        savegameMetaPtr = Savegame_MetadataGet(i, j, k);
 
                         g_ActiveSavegameEntry->currentScreenSessionSaves_0 = savegameMetaPtr->field_0;
                         g_ActiveSavegameEntry->field_5                     = i;
@@ -563,7 +563,7 @@ s32 func_80033548() // 0x80033548
                 }
             }
 
-            if (g_SaveScreenPlayerState == 2 && sp18[i] == 0 && func_8002EA78(i) > 0)
+            if (g_SaveScreenPlayerState == 2 && sp18[i] == 0 && Savegame_CardFileUsageFreeCount(i) > 0)
             {
                 g_ActiveSavegameEntry->savegameCount_2             = 0;
                 g_ActiveSavegameEntry->field_C                     = NULL;

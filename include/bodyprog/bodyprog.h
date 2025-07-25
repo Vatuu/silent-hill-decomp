@@ -1931,27 +1931,6 @@ extern s_MapOverlayHeader g_MapOverlayHeader; // 0x800C957C
 // FUNCTIONS
 // ==========
 
-s32 func_8002E76C(s32 idx);
-
-/** Initializer for something before the game loop. */
-void func_8002E7BC();
-
-void func_8002E830();
-
-void func_8002E85C();
-
-void func_8002E86C();
-
-s32 func_8002E898();
-
-void func_8002E8D4();
-
-void func_8002E8E4();
-
-s32 func_8002E914();
-
-s32 func_8002E9A0(s32 idx);
-
 // `Gfx_DrawBackgroundImage`
 /** Draws a background image. */
 void Gfx_BackgroundSpriteDraw(s_FsImageDesc* image);
