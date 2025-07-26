@@ -1181,6 +1181,15 @@ typedef struct
     u8 field_1;
 } s_800A9F80;
 
+typedef struct
+{
+    s8 unk_0[8];
+    s32 field_8;
+    s32 field_C;
+    s32 field_10;
+    s8  field_14;
+} s_func_8005B3A4;
+
 // ========
 // GLOBALS
 // ========
@@ -2346,6 +2355,8 @@ void func_8005B1A0(s_800C1450_58*, s32, s32, u8, s32, s32, s16, s16);
 
 void func_8005B370(s_func_8005B370* arg0);
 
+void func_8005B3A4(s_func_8005B3A4* arg0);
+
 void func_8005B3BC(char* filename, s_func_800566B4_sub* arg1);
 
 s32 func_800571D0(u32 arg0);
@@ -2367,6 +2378,8 @@ void func_8005B55C(GsCOORDINATE2*);
 s32 func_8005C7D0(s_SubCharacter*, s32);
 
 void func_8005C814(s16*, s_SubCharacter*);
+
+s32 func_8005D974();
 
 void func_8005DC1C(s32, VECTOR3*, s32, s32); // Types assumed.
 

@@ -326,7 +326,13 @@ void func_8005B370(s_func_8005B370* arg0) // 0x8005B370
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005B378); // 0x8005B378
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005B3A4); // 0x8005B3A4
+void func_8005B3A4(s_func_8005B3A4* arg0) // 0x8005B3A4
+{ 
+    arg0->field_C = 0;
+    arg0->field_8 = 0;
+    arg0->field_14 = 0;
+    arg0->field_10 = -1;
+}
 
 void func_8005B3BC(char* filename, s_func_800566B4_sub* arg1) // 0x8005B3BC
 {
@@ -432,7 +438,18 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005D50C); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005D86C); // 0x8005D86C
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005D974); // 0x8005D974
+s32 func_8005D974() // 0x8005D974
+{
+    // Looks like a clamping function
+    s32 var_v1 = func_8005D86C();
+
+    if (var_v1 > 0x4000) {
+        var_v1 = 0x4000;
+    } else if (var_v1 < 0) {
+        var_v1 = 0;
+    }
+    return var_v1;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005D9B8); // 0x8005D9B8
 
