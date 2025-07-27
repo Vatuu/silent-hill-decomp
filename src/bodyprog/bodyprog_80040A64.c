@@ -226,7 +226,7 @@ void func_80041FF0() // 0x80041FF0
     func_80042300(&D_800C1020, D_800C1020.field_158);
 }
 
-void func_8004201C() // // 0x8004201C
+void func_8004201C() // 0x8004201C
 {
     s_func_8005B3A4* ptr;
 
