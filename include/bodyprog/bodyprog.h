@@ -630,7 +630,9 @@ STATIC_ASSERT_SIZEOF(s_800BCDA8, 4);
 typedef struct
 {
     s32 flags_0;
-    s8  unk_4[12];
+    s8  unk_4[4];
+    s32 field_8;
+    s32 field_C;
     s8  field_10;
     s8  unk_11[7];
 } s_Bone;
@@ -2147,7 +2149,7 @@ s32 func_80044918(s_ModelAnim* anim);
 
 void func_800446D8(s_Skeleton*, GsCOORDINATE2*, s32, s32, s32);
 
-s32 func_800449AC(s_Model*, s_AnimInfo*);
+s32 func_800449AC(s_Model* arg0, s_AnimInfo* arg1);
 
 /** Updates a character's animation, variant 0. First param might be `s_SubCharacter` instead. */
 void Anim_Update0(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_AnimInfo* targetAnim);
@@ -2372,11 +2374,13 @@ void func_8005660C(s_func_8005660C_0* arg0, s_func_8005660C_1* arg1, s32 arg2);
 
 void func_800566B4(s_func_800566B4* arg0, s_FsImageDesc* image, s8 unused, s32 startIdx, s32 arg4);
 
+void func_80056C8C(s_Bone* arg0, s_800BE9FC* arg1, s32 arg2);
+
 void func_80056D64(s8* prevStr, s8* newStr);
 
 void func_8005B55C(GsCOORDINATE2*);
 
-s32 func_8005C7D0(s_SubCharacter*, s32);
+s32 func_8005C7D0(s_SubCharacter* chara, s32 moveSpeed);
 
 void func_8005C814(s16*, s_SubCharacter*);
 
