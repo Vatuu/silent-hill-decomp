@@ -434,7 +434,29 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005C478); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005C7B0); // 0x8005C7B0
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005C7D0); // 0x8005C7D0
+s32 func_8005C7D0(s_SubCharacter* chara, s32 moveSpeed) // 0x8005C7D0
+{
+    s32             index = 0;
+    s_SubCharacter* npcs;
+    s_SubCharacter* player;
+
+    if (chara == &g_SysWork.player_4C)
+    {
+        return 6;
+    }
+
+    npcs   = &g_SysWork.npcs_1A0;
+    player = chara;
+
+    for (index = 0; index < 6; index++, npcs++)
+    {
+        if (player == npcs)
+        {
+            return index;
+        }
+    }
+    return -1;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005C814); // 0x8005C814
 

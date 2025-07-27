@@ -2380,7 +2380,7 @@ void func_80056D64(s8* prevStr, s8* newStr);
 
 void func_8005B55C(GsCOORDINATE2*);
 
-s32 func_8005C7D0(s_SubCharacter*, s32);
+s32 func_8005C7D0(s_SubCharacter* chara, s32 moveSpeed);
 
 void func_8005C814(s16*, s_SubCharacter*);
 
