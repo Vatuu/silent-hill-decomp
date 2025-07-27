@@ -2374,6 +2374,8 @@ void func_8005660C(s_func_8005660C_0* arg0, s_func_8005660C_1* arg1, s32 arg2);
 
 void func_800566B4(s_func_800566B4* arg0, s_FsImageDesc* image, s8 unused, s32 startIdx, s32 arg4);
 
+void func_80056C8C(s_Bone* arg0, s_800BE9FC* arg1, s32 arg2);
+
 void func_80056D64(s8* prevStr, s8* newStr);
 
 void func_8005B55C(GsCOORDINATE2*);
