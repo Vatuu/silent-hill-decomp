@@ -1867,7 +1867,6 @@ void Gfx_Options_BlueArrowDraw(s_Triangle2d* arrow, s32 isFlashing, s32 isColorR
         colorEnd = 0;
     }
 
-
     // Draw blue arrow.
     arrowPoly = (POLY_G3*)GsOUT_PACKET_P;
     setPolyG3(arrowPoly);

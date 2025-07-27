@@ -179,6 +179,15 @@ typedef struct
 
 typedef struct
 {
+    s8  unk_0[8];
+    s32 field_8;
+    s32 field_C;
+    s32 field_10;
+    s8  field_14;
+} s_func_8005B3A4;
+
+typedef struct
+{
     char pad[12];
 } s_func_8005B424;
 
@@ -1180,15 +1189,6 @@ typedef struct
     u8 field_0;
     u8 field_1;
 } s_800A9F80;
-
-typedef struct
-{
-    s8 unk_0[8];
-    s32 field_8;
-    s32 field_C;
-    s32 field_10;
-    s8  field_14;
-} s_func_8005B3A4;
 
 // ========
 // GLOBALS
@@ -2379,6 +2379,7 @@ s32 func_8005C7D0(s_SubCharacter*, s32);
 
 void func_8005C814(s16*, s_SubCharacter*);
 
+/** Looks like a clamping function. */
 s32 func_8005D974();
 
 void func_8005DC1C(s32, VECTOR3*, s32, s32); // Types assumed.
