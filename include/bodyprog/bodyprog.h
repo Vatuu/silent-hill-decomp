@@ -2149,7 +2149,7 @@ s32 func_80044918(s_ModelAnim* anim);
 
 void func_800446D8(s_Skeleton*, GsCOORDINATE2*, s32, s32, s32);
 
-s32 func_800449AC(s_Model*, s_AnimInfo*);
+s32 func_800449AC(s_Model *arg0,s_AnimInfo *arg1);
 
 /** Updates a character's animation, variant 0. First param might be `s_SubCharacter` instead. */
 void Anim_Update0(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_AnimInfo* targetAnim);

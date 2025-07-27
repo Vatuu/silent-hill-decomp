@@ -551,7 +551,17 @@ s32 func_80044918(s_ModelAnim* anim) // 0x80044918
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80044950); // 0x80044950
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800449AC); // 0x800449AC
+s32 func_800449AC(s_Model* arg0, s_AnimInfo* arg1) // 0x800449AC
+{
+    if (arg1->hasVariableTimeDelta_5 == 0)
+    {
+        return arg1->timeDelta_8.constTimeDelta;
+    }
+    else
+    {
+        return arg1->timeDelta_8.variableTimeDeltaFn();
+    }
+}
 
 static inline s32 Anim_GetTimeStep(s_Model* model, s_AnimInfo* targetAnim)
 {
