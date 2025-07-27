@@ -716,10 +716,11 @@ STATIC_ASSERT_SIZEOF(s_GameWork, 1496);
 typedef struct _AnimInfo
 {
     void (*funcPtr_0)(struct _SubCharacter*, s32, GsCOORDINATE2*, struct _AnimInfo*);
-    u8 field_4;
-    s8 hasVariableTimeDelta_5;
+    u8  field_4;
+    s8  hasVariableTimeDelta_5;
     u16 animIdx_6;
-    union {
+    union
+    {
         s32 constTimeDelta;
         s32 (*variableTimeDeltaFn)();
     } timeDelta_8;
