@@ -1844,7 +1844,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80089DF0); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008A058); // 0x8008A058
 
-s32 func_8008A0CC()
+s32 func_8008A0CC() // 0x8008A0CC
 {
     return 0;
 }
@@ -1853,9 +1853,35 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008A0D4); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008A0E4); // 0x8008A0E4
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008A270); // 0x8008A270
+// TODO: .rodata migration.
+#ifdef NON_MATCHING
+u8 func_8008A270(s32 idx) // 0x8008A270
+{
+    switch (idx)
+    {
+        case 2:
+        case 5:
+        case 12:
+        case 15:
+        case 22:
+        case 25:
+            if (g_SysWork.field_275C > 0x100000)
+            {
+                return 0;
+            }
+            break;
 
-// TODO: RODATA migration
+        default:
+            break;
+    }
+
+    return D_800AD4C8[idx].field_E;
+}
+#else
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008A270);
+#endif
+
+// TODO: .rodata migration.
 #ifdef NON_MATCHING
 u8 func_8008A2E0(s32 arg0)
 {

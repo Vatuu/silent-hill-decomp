@@ -581,7 +581,8 @@ typedef struct
     s8 unk_7;
     u8 field_8;
     u8 field_9;
-    s8 unk_A[5];
+    s8 unk_A[4];
+    s8 field_E;
     s8 field_F;
     u8 field_10;
     u8 field_11;
@@ -2566,6 +2567,10 @@ void func_8008989C(s_SysWork_2514* arg0, u16 arg1, s32 (*arg2)(u16, s32));
 s32 func_80089D0C(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s_8002AC04* arg2, u8* arg3);
 
 void func_8008992C(s_SysWork_2514* arg0, u16 arg1, s32 (*arg2)(u16, s32));
+
+s32 func_8008A0CC();
+
+u8 func_8008A270(s32 idx);
 
 s32 func_8008A35C(s_8008A35C* arg0, s32 arg1);
 
