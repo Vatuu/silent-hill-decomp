@@ -225,7 +225,17 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80056BF8); // 0x
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80056C80); // 0x80056C80
 
 // First arg is `s_Bone`.
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80056C8C); // 0x80056C8C
+void func_80056C8C(s_Bone* arg0, s_800BE9FC* arg1, s32 arg2)
+{
+    u8* field_C = arg1->field_C;
+
+    arg0->field_C = arg2;
+
+    if (arg1->field_0 == '0') // Maybe s_800BE9FC field_0 is char*? But its used as int32 somewhere
+    {
+        arg0->field_8 = (field_C + (arg2 * 0x10));
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80056CB4); // 0x80056CB4
 

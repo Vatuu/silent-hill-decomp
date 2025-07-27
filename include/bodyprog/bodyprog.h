@@ -630,7 +630,9 @@ STATIC_ASSERT_SIZEOF(s_800BCDA8, 4);
 typedef struct
 {
     s32 flags_0;
-    s8  unk_4[12];
+    s8  unk_4[4];
+    s32 field_8;
+    s32 field_C;
     s8  field_10;
     s8  unk_11[7];
 } s_Bone;
