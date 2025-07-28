@@ -1192,6 +1192,15 @@ STATIC_ASSERT_SIZEOF(s_MapOverlayHeader, 2124); // Size incomplete.
 
 typedef struct
 {
+    s32 field_0; // X
+    s8  unk_4[2];
+    u8  field_6;
+    u8  field_7;
+    s32 field_8; // Z
+} s_func_80037A4C;
+
+typedef struct
+{
     s8 field_0;
     s8 field_1;
 } s_800BCD78;

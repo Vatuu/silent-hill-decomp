@@ -2910,7 +2910,55 @@ s32 func_800378D4(s_AreaLoadParams* areaLoadParams) // 0x800378D4
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80032D1C", func_80037A4C); // 0x80037A4C
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80032D1C", func_80037C5C); // 0x80037C5C
+s32 func_80037C5C(s_func_80037A4C* arg0) // 0x80037C5C
+{
+    s32 sinAngle;
+    s32 cosAngle;
+    s32 angle;
+    s32 deltaZ;
+    s32 deltaX;
+    s32 shift8Field_7;
+    s32 temp_v0;
+    s32 scale;
+    u32 temp;
+
+    shift8Field_7 = arg0->field_7 << 8;
+    deltaX        = g_SysWork.player_4C.chara_0.position_18.vx - arg0->field_0;
+
+    if (arg0->field_7 << 9 < ABS(deltaX))
+    {
+        return 0;
+    }
+
+    deltaZ = g_SysWork.player_4C.chara_0.position_18.vz - arg0->field_8;
+    scale  = 2;
+
+    if (shift8Field_7 * scale < ABS(deltaZ))
+    {
+        return 0;
+    }
+
+    angle    = -(arg0->field_6 << 20) >> 16;
+    sinAngle = shRsin(angle);
+
+    temp = FP_FROM((-deltaX * sinAngle) + (deltaZ * shRcos(angle)), Q12_SHIFT);
+    if (temp > 0x4000)
+    {
+        return 0;
+    }
+
+    cosAngle = shRcos(angle);
+    temp_v0  = FP_FROM((deltaX * cosAngle) + (deltaZ * shRsin(angle)), Q12_SHIFT);
+
+    if (shift8Field_7 < ABS(temp_v0))
+    {
+        return 0;
+    }
+    else
+    {
+        return 1;
+    }
+}
 
 void func_80037DC4(s_SubCharacter* chara) // 0x80037DC4
 {
