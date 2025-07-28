@@ -864,8 +864,8 @@ void func_8008716C(s32 arg0, s32 arg1, s32 arg2) // 0x8008716C
         case 4:
             func_800862F8(2, 0, 0);
 
-            if (g_ControllerPtrConst->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 |
-                                                        g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
+            if (g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 |
+                                                 g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
             {
                 g_SysWork.timer_2C = 0;
                 g_SysWork.field_14 = 0;
@@ -988,8 +988,8 @@ void func_80087540(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x800875
                 break;
             }
 
-            if (g_ControllerPtrConst->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 |
-                                                        g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
+            if (g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 |
+                                                 g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
             {
                 g_SysWork.timer_2C = 0;
                 g_SysWork.field_14 = 0;

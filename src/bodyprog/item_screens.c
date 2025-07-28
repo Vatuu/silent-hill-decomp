@@ -620,7 +620,7 @@ void GameState_ItemScreens_Update() // 0x8004C9B0
 
             g_IntervalVBlanks = 1;
             g_Gfx_ScreenFade  = 6;
-            D_800B5C30        = 0x3000;
+            D_800B5C30        = FP_FLOAT_TO(3.0f, Q12_SHIFT);
 
             func_80037188();
 
@@ -778,7 +778,7 @@ void GameState_ItemScreens_Update() // 0x8004C9B0
 
             g_IntervalVBlanks                  = 1;
             g_Gfx_ScreenFade                   = 6;
-            D_800B5C30                         = 0x3000;
+            D_800B5C30                         = FP_FLOAT_TO(3.0f, Q12_SHIFT);
             g_GameWork.background2dColor_R_58C = 0;
             g_GameWork.background2dColor_G_58D = 0;
             g_GameWork.background2dColor_B_58E = 0;
@@ -802,8 +802,8 @@ void GameState_ItemScreens_Update() // 0x8004C9B0
             break;
 
         case 22:
-            if (g_ControllerPtrConst->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 |
-                                                        g_GameWorkPtr->config_0.controllerConfig_0.skip_4))
+            if (g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 |
+                                                 g_GameWorkPtr->config_0.controllerConfig_0.skip_4))
             {
                 g_GameWork.gameStateStep_598[1] = 23;
                 g_GameWork.gameStateStep_598[2] = 0;
@@ -811,13 +811,13 @@ void GameState_ItemScreens_Update() // 0x8004C9B0
             break;
 
         case 23:
-            if (g_ControllerPtrConst->btnsClicked_10 & (ControllerFlag_LStickRight | ControllerFlag_LStickLeft))
+            if (g_Controller0->btnsClicked_10 & (ControllerFlag_LStickRight | ControllerFlag_LStickLeft))
             {
                 g_Inventory_SelectionId = g_Inventory_SelectionId == 0;
                 Sd_PlaySfx(Sfx_Back, 0, 64);
             }
 
-            if (g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
+            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
             {
                 s32 prevGameState;
                 g_Gfx_ScreenFade = 2;
@@ -1075,7 +1075,7 @@ void Inventory_Logic() // 0x8004D518
                     Sd_PlaySfx(Sfx_Back, 0, 64);
                 }
             }
-            else if ((g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2 || g_Inventory_IsDownClicked != 0) &&
+            else if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2 || g_Inventory_IsDownClicked != 0) &&
                      g_Inventory_BorderSelectionId == InventorySelectionId_Examine)
             {
                 g_Inventory_BorderSelectionId = InventorySelectionId_EquippedItem;
@@ -1091,7 +1091,7 @@ void Inventory_Logic() // 0x8004D518
 
                 g_Inventory_SelectionId = InventorySelectionId_Exit;
             }
-            else if (g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0 &&
+            else if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0 &&
                      g_Inventory_BorderSelectionId >= InventorySelectionId_Examine)
             {
                 if (g_SavegamePtr->items_0[g_SysWork.inventoryItemSelectedIdx_2351].id_0 == InventoryItemId_Flauros ||
@@ -1117,7 +1117,7 @@ void Inventory_Logic() // 0x8004D518
                     }
                 }
             }
-            else if (!(g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.item_16))
+            else if (!(g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.item_16))
             {
                 D_800C3990 = 0;
             }
@@ -1142,7 +1142,7 @@ void Inventory_Logic() // 0x8004D518
                 Sd_PlaySfx(Sfx_Back, 0, 64);
                 g_Inventory_SelectionId = InventorySelectionId_Item;
             }
-            else if (g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
+            else if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
             {
                 g_Inventory_BorderSelectionId = InventorySelectionId_EquippedItem;
                 g_Inventory_CmdSelectedIdx    = 0;
@@ -1153,13 +1153,13 @@ void Inventory_Logic() // 0x8004D518
                     Sd_PlaySfx(Sfx_Confirm, 0, 64);
                 }
             }
-            else if (g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)
+            else if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)
             {
                 g_Inventory_BorderSelectionId = InventorySelectionId_EquippedItem;
                 g_Inventory_SelectionId       = InventorySelectionId_Exit;
                 Sd_PlaySfx(Sfx_Cancel, 0, 64);
             }
-            else if (g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.item_16)
+            else if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.item_16)
             {
                 step = g_GameWork.gameStateStep_598[2];
                 Sd_PlaySfx(Sfx_Cancel, 0, 64);
@@ -1192,9 +1192,9 @@ void Inventory_Logic() // 0x8004D518
                 Sd_PlaySfx(Sfx_Back, 64, 64);
                 g_Inventory_SelectionId = InventorySelectionId_Map;
             }
-            else if (g_ControllerPtrConst->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.item_16 |
-                                                             (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 |
-                                                              g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)))
+            else if (g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.item_16 |
+                                                      (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 |
+                                                       g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)))
             {
                 step = g_GameWork.gameStateStep_598[2];
                 Sd_PlaySfx(Sfx_Cancel, 0, 64);
@@ -1215,11 +1215,11 @@ void Inventory_Logic() // 0x8004D518
                 Sd_PlaySfx(Sfx_Back, 0, 64);
                 g_Inventory_SelectionId = InventorySelectionId_Item;
             }
-            else if (g_Inventory_IsRightClicked || (g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
+            else if (g_Inventory_IsRightClicked || (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
             {
                 g_Inventory_BorderSelectionId = InventorySelectionId_EquippedItem;
 
-                if (!g_Inventory_IsRightClicked || (g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
+                if (!g_Inventory_IsRightClicked || (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
                 {
                     Sd_PlaySfx(Sfx_Cancel, 0, 64);
                     g_Inventory_SelectionId = InventorySelectionId_Exit;
@@ -1230,7 +1230,7 @@ void Inventory_Logic() // 0x8004D518
                     g_Inventory_SelectionId = InventorySelectionId_Exit;
                 }
             }
-            else if (g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
+            else if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
             {
                 Sd_PlaySfx(Sfx_Confirm, -64, 64);
 
@@ -1240,7 +1240,7 @@ void Inventory_Logic() // 0x8004D518
 
                 GameFs_OptionBinLoad();
             }
-            else if (g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.item_16)
+            else if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.item_16)
             {
                 step = g_GameWork.gameStateStep_598[2];
                 Sd_PlaySfx(Sfx_Cancel, 0, 64);
@@ -1261,11 +1261,11 @@ void Inventory_Logic() // 0x8004D518
                 Sd_PlaySfx(Sfx_Back, 0, 64);
                 g_Inventory_SelectionId = InventorySelectionId_Item;
             }
-            else if (g_Inventory_IsLeftClicked || g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)
+            else if (g_Inventory_IsLeftClicked || g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)
             {
                 g_Inventory_BorderSelectionId = InventorySelectionId_EquippedItem;
 
-                if (!g_Inventory_IsLeftClicked || g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)
+                if (!g_Inventory_IsLeftClicked || g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)
                 {
                     Sd_PlaySfx(Sfx_Cancel, 0, 64);
                 }
@@ -1276,7 +1276,7 @@ void Inventory_Logic() // 0x8004D518
 
                 g_Inventory_SelectionId = InventorySelectionId_Exit;
             }
-            else if (g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
+            else if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
             {
                 if ((!(g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & (1 << 1)) || g_SysWork.field_2388.field_15 != 0 ||
                      (!(g_SysWork.field_2388.field_1C[0].field_0.field_0.s_field_0.field_0 & (1 << 0)) &&
@@ -1300,7 +1300,7 @@ void Inventory_Logic() // 0x8004D518
                     Sd_PlaySfx(Sfx_Denied, 64, 64);
                 }
             }
-            else if (g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.item_16)
+            else if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.item_16)
             {
                 step = g_GameWork.gameStateStep_598[2];
                 Sd_PlaySfx(Sfx_Cancel, 0, 64);
@@ -1377,7 +1377,7 @@ void Inventory_Logic() // 0x8004D518
                     Sd_PlaySfx(Sfx_Back, 64, 64);
                 }
             }
-            else if (g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
+            else if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
             {
                 g_Inventory_BorderSelectionId = InventorySelectionId_EquippedItem;
 
@@ -1623,7 +1623,7 @@ void Inventory_Logic() // 0x8004D518
                     Sd_PlaySfx(Sfx_Confirm, 64, 64);
                 }
             }
-            else if (g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)
+            else if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)
             {
                 g_Inventory_BorderSelectionId = InventorySelectionId_EquippedItem;
                 g_Inventory_CmdSelectedIdx    = 0;
@@ -2153,46 +2153,46 @@ static const s32 unk1 = 0;
 
 void Inventory_DirectionalInputSet() // 0x8004F5DC
 {
-    if (g_ControllerPtrConst->field_20.sticks_0.leftY < -64 || g_ControllerPtrConst->field_20.sticks_0.leftY >= 64 ||
-        g_ControllerPtrConst->field_20.sticks_0.leftX < -64 || g_ControllerPtrConst->field_20.sticks_0.leftX >= 64)
+    if (g_Controller0->field_20.sticks_0.leftY < -64 || g_Controller0->field_20.sticks_0.leftY >= 64 ||
+        g_Controller0->field_20.sticks_0.leftX < -64 || g_Controller0->field_20.sticks_0.leftX >= 64)
     {
         // Up.
-        g_Inventory_IsUpClicked = g_ControllerPtrConst->btnsClicked_10 & ControllerFlag_LStickUp2;
-        g_Inventory_IsUpPulsed  = g_ControllerPtrConst->btnsPulsed_18  & ControllerFlag_LStickUp2;
+        g_Inventory_IsUpClicked = g_Controller0->btnsClicked_10 & ControllerFlag_LStickUp2;
+        g_Inventory_IsUpPulsed  = g_Controller0->btnsPulsed_18  & ControllerFlag_LStickUp2;
 
         // Down.
-        g_Inventory_IsDownClicked = g_ControllerPtrConst->btnsClicked_10 & ControllerFlag_LStickDown2;
-        g_Inventory_IsDownPulsed  = g_ControllerPtrConst->btnsPulsed_18  & ControllerFlag_LStickDown2;
+        g_Inventory_IsDownClicked = g_Controller0->btnsClicked_10 & ControllerFlag_LStickDown2;
+        g_Inventory_IsDownPulsed  = g_Controller0->btnsPulsed_18  & ControllerFlag_LStickDown2;
 
         // Left.
-        g_Inventory_IsLeftClicked = g_ControllerPtrConst->btnsClicked_10 & ControllerFlag_LStickLeft2;
-        g_Inventory_IsLeftHeld    = g_ControllerPtrConst->btnsHeld_C     & ControllerFlag_LStickLeft2;
-        g_Inventory_IsLeftPulsed  = g_ControllerPtrConst->btnsPulsed_18  & ControllerFlag_LStickLeft2;
+        g_Inventory_IsLeftClicked = g_Controller0->btnsClicked_10 & ControllerFlag_LStickLeft2;
+        g_Inventory_IsLeftHeld    = g_Controller0->btnsHeld_C     & ControllerFlag_LStickLeft2;
+        g_Inventory_IsLeftPulsed  = g_Controller0->btnsPulsed_18  & ControllerFlag_LStickLeft2;
 
         // Right.
-        g_Inventory_IsRightClicked = g_ControllerPtrConst->btnsClicked_10 & ControllerFlag_LStickRight2;
-        g_Inventory_IsRightHeld    = g_ControllerPtrConst->btnsHeld_C     & ControllerFlag_LStickRight2;
-        g_Inventory_IsRightPulsed  = g_ControllerPtrConst->btnsPulsed_18  & ControllerFlag_LStickRight2;
+        g_Inventory_IsRightClicked = g_Controller0->btnsClicked_10 & ControllerFlag_LStickRight2;
+        g_Inventory_IsRightHeld    = g_Controller0->btnsHeld_C     & ControllerFlag_LStickRight2;
+        g_Inventory_IsRightPulsed  = g_Controller0->btnsPulsed_18  & ControllerFlag_LStickRight2;
     }
     else
     {
         // Up.
-        g_Inventory_IsUpClicked = g_ControllerPtrConst->btnsClicked_10 & ControllerFlag_LStickUp;
-        g_Inventory_IsUpPulsed  = g_ControllerPtrConst->btnsPulsed_18  & ControllerFlag_LStickUp;
+        g_Inventory_IsUpClicked = g_Controller0->btnsClicked_10 & ControllerFlag_LStickUp;
+        g_Inventory_IsUpPulsed  = g_Controller0->btnsPulsed_18  & ControllerFlag_LStickUp;
 
         // Down.
-        g_Inventory_IsDownClicked = g_ControllerPtrConst->btnsClicked_10 & ControllerFlag_LStickDown;
-        g_Inventory_IsDownPulsed  = g_ControllerPtrConst->btnsPulsed_18  & ControllerFlag_LStickDown;
+        g_Inventory_IsDownClicked = g_Controller0->btnsClicked_10 & ControllerFlag_LStickDown;
+        g_Inventory_IsDownPulsed  = g_Controller0->btnsPulsed_18  & ControllerFlag_LStickDown;
 
         // Left.
-        g_Inventory_IsLeftClicked = g_ControllerPtrConst->btnsClicked_10 & ControllerFlag_LStickLeft;
-        g_Inventory_IsLeftHeld    = g_ControllerPtrConst->btnsHeld_C     & ControllerFlag_LStickLeft;
-        g_Inventory_IsLeftPulsed  = g_ControllerPtrConst->btnsPulsed_18  & ControllerFlag_LStickLeft;
+        g_Inventory_IsLeftClicked = g_Controller0->btnsClicked_10 & ControllerFlag_LStickLeft;
+        g_Inventory_IsLeftHeld    = g_Controller0->btnsHeld_C     & ControllerFlag_LStickLeft;
+        g_Inventory_IsLeftPulsed  = g_Controller0->btnsPulsed_18  & ControllerFlag_LStickLeft;
 
         // Right.
-        g_Inventory_IsRightClicked = g_ControllerPtrConst->btnsClicked_10 & ControllerFlag_LStickRight;
-        g_Inventory_IsRightHeld    = g_ControllerPtrConst->btnsHeld_C     & ControllerFlag_LStickRight;
-        g_Inventory_IsRightPulsed  = g_ControllerPtrConst->btnsPulsed_18  & ControllerFlag_LStickRight;
+        g_Inventory_IsRightClicked = g_Controller0->btnsClicked_10 & ControllerFlag_LStickRight;
+        g_Inventory_IsRightHeld    = g_Controller0->btnsHeld_C     & ControllerFlag_LStickRight;
+        g_Inventory_IsRightPulsed  = g_Controller0->btnsPulsed_18  & ControllerFlag_LStickRight;
     }
 }
 

@@ -498,13 +498,13 @@ void func_800325A4(DR_MODE* arg0) // 0x800325A4
 
 int func_800325F8() // 0x800325F8
 {
-    return 4096 - D_800B5C28;
+    return FP_FLOAT_TO(1.0f, Q12_SHIFT) - D_800B5C28;
 }
 
 void func_8003260C() // 0x8003260C
 {
     s32      queueLength;
-    s32      temp;
+    s32      temp; // FP time value.
     GsOT*    ot;
     TILE*    tile;
     DR_MODE* drMode;
@@ -525,13 +525,13 @@ void func_8003260C() // 0x8003260C
             func_800325A4(drMode);
             queueLength = Fs_QueueGetLength();
 
-            if (D_800B5C30 > 0)
+            if (D_800B5C30 > FP_FLOAT_TO(0.0f, Q12_SHIFT))
             {
                 temp = D_800B5C30;
             }
             else
             {
-                temp = 0x3000 / (queueLength + 1);
+                temp = FP_FLOAT_TO(3.0f, Q12_SHIFT) / (queueLength + 1);
             }
 
             D_800A8E94 += FP_MULTIPLY((s64)temp, g_DeltaTime1, Q12_SHIFT);
@@ -549,7 +549,7 @@ void func_8003260C() // 0x8003260C
 
         case 4:
         case 12:
-            D_800B5C30 = 0;
+            D_800B5C30 = FP_FLOAT_TO(0.0f, Q12_SHIFT);
 
         case 6:
         case 14:
@@ -568,13 +568,13 @@ void func_8003260C() // 0x8003260C
         case 15:
             func_800325A4(drMode);
 
-            if (D_800B5C30 > 0)
+            if (D_800B5C30 > FP_FLOAT_TO(0.0f, Q12_SHIFT))
             {
                 temp = D_800B5C30;
             }
             else
             {
-                temp = 0x3000;
+                temp = FP_FLOAT_TO(3.0f, Q12_SHIFT);
             }
 
             D_800A8E94 -= FP_MULTIPLY((s64)temp, g_DeltaTime1, Q12_SHIFT);
@@ -592,7 +592,7 @@ void func_8003260C() // 0x8003260C
             break;
 
         case 0:
-            D_800B5C30       = 0;
+            D_800B5C30       = FP_FLOAT_TO(0.0f, Q12_SHIFT);
             D_800A8E94       = 0;
             g_Gfx_ScreenFade = 1;
             return;

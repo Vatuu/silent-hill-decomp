@@ -1154,12 +1154,12 @@ typedef struct _MapOverlayHeader
     void              (*func_C8)();
     void              (*func_CC)(s32);
     s32               (*func_D0)(s32, void*, s16, s32); // 0x800C964C
-    s32               (*func_D4)(s_SubCharacter*); // Assumed return type.
-    void              (*func_D8)(); // Assumed return type.
-    void              (*func_DC)(s_SubCharacter*); // Assumed return type.
+    s32               (*func_D4)(s_SubCharacter*);      // Assumed return type.
+    void              (*func_D8)();                     // Assumed return type.
+    void              (*func_DC)(s_SubCharacter*);      // Assumed return type.
     s8                unk_E0[4];
     s32               (*func_E4)(s_SubCharacter*, s_SubCharacter*); // Assumed return type.
-    s64               (*func_E8)(s_SubCharacter*); // Is it really `s64`???
+    s64               (*func_E8)(s_SubCharacter*);                  // Is it really `s64`???
     s32               (*func_EC)();
     s8                unk_F0[24];
     s32               (*func_108)(s32, s32);
@@ -1168,8 +1168,8 @@ typedef struct _MapOverlayHeader
     s32               (*func_128)(s_SubCharacter*); // Assumed return type.
     s32               (*func_12C)(s_SubCharacter*); // Assumed return type.
     s8                unk_130[4];
-    s32               (*func_134)(s_SubCharacter*); // Assumed return type.
-    s32               (*func_138)(s_SubCharacter*); // Assumed return type.
+    s32               (*func_134)(s_SubCharacter*);           // Assumed return type.
+    s32               (*func_138)(s_SubCharacter*);           // Assumed return type.
     s32               (*func_13C)(s32, s32, void*, s16, s32); // 0x800C96B8
     s8                unk_140[40];
     void              (*func_168)(void*, void*, void*);
@@ -1200,7 +1200,7 @@ typedef struct
 // GLOBALS
 // ========
 
-extern s_FsImageDesc g_MainImg0; // 0x80022C74 TODO: Part of main exe, move to `main/` headers?
+extern s_FsImageDesc g_MainImg0; // 0x80022C74 - TODO: Part of main exe, move to `main/` headers?
 
 /** Some sort of struct inside RODATA, likely a constant. */
 extern s32 D_8002500C;
@@ -1242,37 +1242,37 @@ extern s32 D_800A8F40;
 
 extern GsOT D_800A8F9C[];
 
-extern s_FsImageDesc g_Font16AtlasImg;
+extern s_FsImageDesc g_Font16AtlasImg; // 0x800A8FF4
 
-extern s_FsImageDesc g_KonamiLogoImg;
+extern s_FsImageDesc g_KonamiLogoImg; // 0x800A8FFC
 
-extern s_FsImageDesc g_KcetLogoImg;
+extern s_FsImageDesc g_KcetLogoImg; // 0x800A9004
 
-extern s_FsImageDesc g_TitleImg;
+extern s_FsImageDesc g_TitleImg; // 0x800A9014
 
-extern s_FsImageDesc g_MapImg;
+extern s_FsImageDesc g_MapImg; // 0x800A901C
 
-extern s_FsImageDesc g_MapMarkerAtlasImg;
+extern s_FsImageDesc g_MapMarkerAtlasImg; // 0x800A9024
 
-extern s_FsImageDesc g_ItemInspectionImg;
+extern s_FsImageDesc g_ItemInspectionImg; // 0x800A902C
 
 extern s_FsImageDesc D_800A9034;
 
 extern s_FsImageDesc D_800A905C;
 
-extern s_FsImageDesc g_ControllerButtonAtlasImg;
+extern s_FsImageDesc g_ControllerButtonAtlasImg; // 0x800A903C
 
-extern s_FsImageDesc g_BrightnessScreenImg0;
+extern s_FsImageDesc g_BrightnessScreenImg0; // 0x800A9044
 
-extern s_FsImageDesc g_BrightnessScreenImg1;
+extern s_FsImageDesc g_BrightnessScreenImg1; // 0x800A904C
 
-extern s_FsImageDesc g_DeathTipImg;
+extern s_FsImageDesc g_DeathTipImg; // 0x800A9054
 
-extern s_FsImageDesc g_HealthPortraitImg;
+extern s_FsImageDesc g_HealthPortraitImg; // 0x800A905C
 
-extern s_FsImageDesc g_InventoryKeyItemTextureImg;
+extern s_FsImageDesc g_InventoryKeyItemTextureImg; // 0x800A9064
 
-extern s_FsImageDesc g_FirstAidKitItemTextureImg;
+extern s_FsImageDesc g_FirstAidKitItemTextureImg; // 0x800A906C
 
 /** Some intentory item texture (`ITEM/TIM07.TIM`). */
 extern s_FsImageDesc D_800A9074;
@@ -1280,7 +1280,7 @@ extern s_FsImageDesc D_800A9074;
 /** `TEST/WARMTEST.TIM` texture loaded by `Ai_Twinfeeler_TextureLoad. Unused? */
 extern s_FsImageDesc D_800A9094;
 
-extern s_FsImageDesc g_Font24AtlasImg;
+extern s_FsImageDesc g_Font24AtlasImg; // 0x800A909C
 
 /** Array containg file IDs used for each `e_ShCharacterId`, used in `Fs_QueueStartReadAnm`. */
 extern s_CharaFileInfo g_Chara_FileInfo[45]; // 0x800A90FC
@@ -1566,6 +1566,7 @@ extern DVECTOR g_Gfx_DebugStringPosition1;
 
 extern s32 D_800B5C28;
 
+/** FP time value? */
 extern s32 D_800B5C30;
 
 extern s_800B5C40 D_800B5C40[];
@@ -2473,6 +2474,7 @@ void func_8008605C(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 /** `arg1` might be `u8*`. */
 void func_800860B0(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 sysStateStep, s32 arg5);
 
+/** `arg3` is some FP time value. */
 void func_8008616C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 
 void func_800862F8(s32 arg0, s32 arg1, s32 arg2);

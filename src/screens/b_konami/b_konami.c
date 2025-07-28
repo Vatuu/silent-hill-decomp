@@ -5,6 +5,7 @@
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/demo.h"
+#include "bodyprog/math.h"
 #include "bodyprog/memcard.h"
 #include "main/fsqueue.h"
 #include "screens/b_konami/b_konami.h"
@@ -48,16 +49,16 @@ void GameState_KonamiLogo_Update() // 0x800C95AC
                 Gfx_Init(0x280, 1);
 
                 g_Gfx_ScreenFade = 6;
-                D_800B5C30       = 0x333;
+                D_800B5C30       = FP_FLOAT_TO(0.2f, Q12_SHIFT);
 
-                // Load \1ST\KONAMI2.TIM (Konami logo).
+                // Load `1ST/KONAMI2.TIM` (Konami logo).
                 Fs_QueueStartReadTim(FILE_1ST_KONAMI2_TIM, FS_BUFFER_1, &g_KcetLogoImg);
                 
                 func_8003D160();
                 GameFs_BgItemLoad();
-                func_8005E0DC(-1);
+                func_8005E0DC(NO_VALUE);
 
-                // Start loading \ANIM\HB_BASE.ANM.
+                // Start loading `ANIM/HB_BASE.ANM` (base Harry animations).
                 Fs_QueueStartRead(FILE_ANIM_HB_BASE_ANM, FS_BUFFER_0);
 
                 g_GameWork.gameStateStep_598[0]++;
@@ -71,10 +72,10 @@ void GameState_KonamiLogo_Update() // 0x800C95AC
                 break;
 
             case 2:
-                if (g_ControllerPtrConst->btnsHeld_C != 0 || g_SysWork.timer_1C >= 181)
+                if (g_Controller0->btnsHeld_C != 0 || g_SysWork.timer_1C >= 181)
                 {
                     g_Gfx_ScreenFade                = 3;
-                    D_800B5C30                      = 0x333;
+                    D_800B5C30                      = FP_FLOAT_TO(0.2f, Q12_SHIFT);
                     g_GameWork.gameStateStep_598[0] = 3;
                 }
                 break;
@@ -162,7 +163,7 @@ void GameState_KcetLogo_Update() // 0x800C99A4
                 Settings_RestoreDefaults();
 
                 g_Gfx_ScreenFade = 6;
-                D_800B5C30       = 0x333;
+                D_800B5C30       = FP_FLOAT_TO(0.2f, Q12_SHIFT);
 
                 GameFs_BgEtcGfxLoad();
                 Fs_QueueStartRead(FILE_BG_HP_SAFE1_BIN, FS_BUFFER_5);
@@ -270,10 +271,10 @@ void GameState_KcetLogo_Update() // 0x800C99A4
                 break;
 
             case 6:
-                if (g_ControllerPtrConst->btnsHeld_C != 0 || g_SysWork.timer_1C > 180)
+                if (g_Controller0->btnsHeld_C != 0 || g_SysWork.timer_1C > 180)
                 {
                     g_Gfx_ScreenFade = 3;
-                    D_800B5C30       = 0x333;
+                    D_800B5C30       = FP_FLOAT_TO(0.2f, Q12_SHIFT);
                     g_GameWork.gameStateStep_598[0]++;
                 }
                 break;

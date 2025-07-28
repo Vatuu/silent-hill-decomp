@@ -38,7 +38,7 @@ void GameState_StartMovieIntro_Update() // 0x801E2654
             break;
 
         case 1:
-            if (g_ControllerPtrConst->btnsHeld_C != 0 || g_SysWork.timer_1C >= 301)
+            if (g_Controller0->btnsHeld_C != 0 || g_SysWork.timer_1C >= 301)
             {
                 g_Gfx_ScreenFade                = 3;
                 g_GameWork.gameStateStep_598[0] = 2;
@@ -69,7 +69,7 @@ void GameState_MovieIntro_Update() // 0x801E279C
     open_main(fileIdx, 0);
     Game_StateSetNext(GameState_MainMenu);
 
-    D_800B5C30 = 0x1000;
+    D_800B5C30 = FP_FLOAT_TO(1.0f, Q12_SHIFT);
 }
 
 void GameState_MovieOpening_Update() // 0x801E2838
@@ -91,7 +91,7 @@ void GameState_DebugMoviePlayer_Update() // 0x801E2908
     s_ControllerData* controller;
 
     gameWork = g_GameWorkPtr;
-    controller  = g_ControllerPtrConst;
+    controller  = g_Controller0;
 
     if (controller->btnsClicked_10 & gameWork->config_0.controllerConfig_0.cancel_2)
     {
@@ -127,7 +127,7 @@ void GameState_MovieIntroAlternate_Update() // 0x801E2A24
     open_main(FILE_XA_C1_20670, 2060); // Second param looks like file ID for `FILE_XA_M6_02112`, but is actually frame count?
     Game_StateSetNext(GameState_MainMenu);
 
-    D_800B5C30 = 0x1000;
+    D_800B5C30 = FP_FLOAT_TO(1.0f, Q12_SHIFT);
 }
 
 void open_main(s32 file_idx, s16 num_frames) // 0x801E2AA4
@@ -233,7 +233,7 @@ void movie_main(char* file_name, s32 f_size, s32 sector) // 0x801E2B9C
         strSync(&m->dec);
         VSync(0);
     }
-    while (!(g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) && MainLoop_ShouldWarmReset() <= 0);
+    while (!(g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) && MainLoop_ShouldWarmReset() <= 0);
 
     SsSetSerialVol(0, 0, 0);
 

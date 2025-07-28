@@ -329,7 +329,7 @@ s32 Demo_ControllerDataUpdate() // 0x8008F7CC
         return 0;
     }
 
-    btns = g_ControllerPtrConst->analogController_0.digitalButtons;
+    btns = g_Controller0->analogController_0.digitalButtons;
     if (btns != 0xFFFF)
     {
         Demo_ExitDemo();
@@ -340,13 +340,13 @@ s32 Demo_ControllerDataUpdate() // 0x8008F7CC
 
     if (g_Demo_CurFrameData != NULL)
     {
-        g_ControllerPtrConst->analogController_0 = g_Demo_CurFrameData->analogController_0;
+        g_Controller0->analogController_0 = g_Demo_CurFrameData->analogController_0;
         return 1;
     }
 
-    *(u16*)&g_ControllerPtrConst->analogController_0.status  = 0x7300;
-    g_ControllerPtrConst->analogController_0.digitalButtons  = btns;
-    *(u32*)&g_ControllerPtrConst->analogController_0.rightX = 0x80808080;
+    *(u16*)&g_Controller0->analogController_0.status  = 0x7300;
+    g_Controller0->analogController_0.digitalButtons  = btns;
+    *(u32*)&g_Controller0->analogController_0.rightX = 0x80808080;
     return 1;
 }
 

@@ -17,6 +17,7 @@
 #define INPUT_ACTION_COUNT       14
 #define SAVEGAME_FOOTER_MAGIC    0xDCDC
 #define MEMORY_CARD_SLOT_COUNT   2
+#define CONTROLLER_COUNT_MAX     2
 
 /** @brief Converts a floating-point X screen position in percent to a fixed-point X screen coodinate. */
 #define SCREEN_POSITION_X(percent) \
@@ -681,7 +682,7 @@ typedef struct _ShSaveUserConfigContainer
 typedef struct _GameWork
 {
     s_ShSaveUserConfig config_0;
-    s_ControllerData   controllers_38[2];
+    s_ControllerData   controllers_38[CONTROLLER_COUNT_MAX];
     s_ShSavegame       savegame_90; // Backup savegame?
     s_ShSavegame       savegame_30C;
     u16                gsScreenWidth_588;
@@ -1091,31 +1092,31 @@ typedef struct _SysWork
 } s_SysWork;
 STATIC_ASSERT_SIZEOF(s_SysWork, 10088);
 
-extern void* g_OvlBodyprog;
-extern void* g_OvlDynamic;
+extern void* g_OvlBodyprog; // 0x80010004
+extern void* g_OvlDynamic;  // 0x80010000
 
-extern s_SysWork               g_SysWork; // 0x800B9FC0
-extern s_GameWork              g_GameWork;
-extern s_GameWork* const       g_GameWorkConst;
-extern s_GameWork* const       g_GameWorkPtr;
-extern s_ShSavegame* const     g_SavegamePtr;
-extern s_ControllerData* const g_ControllerPtrConst;
-extern s_ControllerData* const g_ControllerPtr;
+extern s_SysWork               g_SysWork;       // 0x800B9FC0
+extern s_GameWork              g_GameWork;      // 0x800BC728
+extern s_GameWork* const       g_GameWorkConst; // 0x80024D44
+extern s_GameWork* const       g_GameWorkPtr;   // 0x80024D54
+extern s_ShSavegame* const     g_SavegamePtr;   // 0x80024D48
+extern s_ControllerData* const g_Controller0;   // 0x80024D4C
+extern s_ControllerData* const g_Controller1;   // 0x80024D50
 
-extern s32  g_ObjectTableIdx;
-extern GsOT g_ObjectTable0[];
-extern GsOT g_ObjectTable1[];
+extern s32  g_ObjectTableIdx; // 0x800B9FB8
+extern GsOT g_ObjectTable0[]; // 0x800A8F74
+extern GsOT g_ObjectTable1[]; // 0x800A8FC4
 
-extern s32 g_DeltaTime0;
-extern s32 g_DeltaTime1;
-extern s32 g_DeltaTime2;
-extern u32 g_MapEventIdx;
-extern s_ShEventParam* g_MapEventParam;
+extern q19_12          g_DeltaTime0;    // 0x800B5CC0
+extern q19_12          g_DeltaTime1;    // 0x800A8FEC
+extern q19_12          g_DeltaTime2;    // 0x800B9CC8
+extern u32             g_MapEventIdx;   // 0x800A9A14
+extern s_ShEventParam* g_MapEventParam; // 0x800BCDD8
 
-extern s32 g_IntervalVBlanks;
-extern s32 g_PrevVBlanks;
-extern s32 g_VBlanks;
-extern s32 g_UncappedVBlanks;
+extern s32 g_IntervalVBlanks; // 0x800A8FF0
+extern s32 g_PrevVBlanks;     // 0x800A9770
+extern s32 g_VBlanks;         // 0x800B5C34
+extern s32 g_UncappedVBlanks; // 0x800B5C38
 
 /** @brief Sets the SysState to be used in the next game update. */
 static inline void SysWork_StateSetNext(e_SysState sysState)

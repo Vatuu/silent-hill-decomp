@@ -133,7 +133,7 @@ s32 func_801E2FC0() // 0x801E2FC0
 
         default:
             g_Gfx_ScreenFade = 10;
-            D_800B5C30 = 1 << 12;
+            D_800B5C30       = FP_FLOAT_TO(1.0f, Q12_SHIFT);
             break;
     }
 
@@ -142,7 +142,7 @@ s32 func_801E2FC0() // 0x801E2FC0
 
 void GameState_Unk15_Update() // 0x801E3094
 {
-    s32* (*routines[3])() = {func_801E3124, func_801E342C, func_801E3304};
+    s32* (*routines[3])() = { func_801E3124, func_801E342C, func_801E3304 };
 
     D_800C48F0 += g_VBlanks;
     if (routines[g_GameWork.gameStateStep_598[0]]() != 0)
@@ -260,7 +260,7 @@ s32 func_801E342C() // 0x801E342C
     TILE* tile;
 
     if (((g_GameWork.config_0.optExtraOptionsEnabled_27 >> (D_801E5E8C - 1)) & (1 << 0)) &&
-        (g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4))
+        (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4))
     {
         D_800C48F0 = D_801E5558[D_801E5E8C].field_4 + (D_801E5E84 / 2);
         Sd_EngineCmd(19);
@@ -291,7 +291,7 @@ s32 func_801E342C() // 0x801E342C
                     break;
             }
 
-            D_800B5C30 = 1 << 12;
+            D_800B5C30 = FP_FLOAT_TO(1.0f, Q12_SHIFT);
             g_GameWork.gameStateStep_598[1]++;
             D_801E5E78 = 180;
             break;
@@ -655,7 +655,7 @@ bool func_801E3970() // 0x801E3970
         }
     }
     else if (((g_GameWork.config_0.optExtraOptionsEnabled_27 >> (D_801E5E8C - 1)) & (1 << 0)) &&
-             (g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4))
+             (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4))
     {
         skipTo    = D_801E5E84 + 168;
         skipToInt = FP_TO(skipTo, Q12_SHIFT);

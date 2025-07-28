@@ -64,7 +64,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
 
             g_IntervalVBlanks = 1;
             g_Gfx_ScreenFade  = 6;
-            D_800B5C30        = 0x2000;
+            D_800B5C30        = FP_FLOAT_TO(2.0f, Q12_SHIFT);
             g_MainMenuState++;
 
         case MenuState_Main:
@@ -109,7 +109,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
 
             D_800A9A7C |= D_800A9A7C << 5;
 
-            if (g_ControllerPtrConst->btnsPulsed_18 & (ControllerFlag_LStickUp | ControllerFlag_LStickDown))
+            if (g_Controller0->btnsPulsed_18 & (ControllerFlag_LStickUp | ControllerFlag_LStickDown))
             {
                 Sd_EngineCmd(0x519);
                 g_GameWork.gameState_594 = GameState_MainMenu;
@@ -121,7 +121,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
                 }
             }
 
-            if (g_ControllerPtrConst->btnsPulsed_18 & ControllerFlag_LStickUp)
+            if (g_Controller0->btnsPulsed_18 & ControllerFlag_LStickUp)
             {
                 g_MainMenu_SelectedOptionIdx += 5;
                 while(!(D_800A9A7C & (1 << --g_MainMenu_SelectedOptionIdx)))
@@ -129,7 +129,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
                 }
             }
 
-            if (g_ControllerPtrConst->btnsPulsed_18 & ControllerFlag_LStickDown)
+            if (g_Controller0->btnsPulsed_18 & ControllerFlag_LStickDown)
             {                
                 while(!(D_800A9A7C & (1 << ++g_MainMenu_SelectedOptionIdx)))
                 {
@@ -138,7 +138,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
 
             g_MainMenu_SelectedOptionIdx %= 5; // This is done for avoid overflow
 
-            if (g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
+            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
             {
                 g_GameWork.gameState_594 = GameState_MainMenu;
 
@@ -216,9 +216,9 @@ void GameState_MainMenu_Update() // 0x8003AB28
                 }
             }
 
-            if (g_ControllerPtrConst->btnsPulsed_18 & (ControllerFlag_LStickUp | ControllerFlag_LStickDown) ||
-                g_ControllerPtrConst->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 |
-                                                        g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
+            if (g_Controller0->btnsPulsed_18 & (ControllerFlag_LStickUp | ControllerFlag_LStickDown) ||
+                g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 |
+                                                 g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
             {
                 g_GameWork.gameState_594 = GameState_MainMenu;
                 
@@ -229,7 +229,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
                 }
             }
 
-            if (g_ControllerPtrConst->btnsPulsed_18 & ControllerFlag_LStickUp)
+            if (g_Controller0->btnsPulsed_18 & ControllerFlag_LStickUp)
             {
                 var_v0 = 2;
 
@@ -241,7 +241,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
                 g_MainMenu_NewGameSelectedDifficultyIdx = var_v0;
             }
 
-            if (g_ControllerPtrConst->btnsPulsed_18 & ControllerFlag_LStickDown)
+            if (g_Controller0->btnsPulsed_18 & ControllerFlag_LStickDown)
             {
                 var_2 = 0;
 
@@ -253,12 +253,12 @@ void GameState_MainMenu_Update() // 0x8003AB28
                 g_MainMenu_NewGameSelectedDifficultyIdx = var_2;
             }
 
-            if (g_ControllerPtrConst->btnsPulsed_18 & (ControllerFlag_LStickUp | ControllerFlag_LStickDown))
+            if (g_Controller0->btnsPulsed_18 & (ControllerFlag_LStickUp | ControllerFlag_LStickDown))
             {
                 Sd_EngineCmd(0x519u);
             }
 
-            if (g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
+            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
             {
                 Game_SavegameInitialize(0, g_MainMenu_NewGameSelectedDifficultyIdx - 1);
                 func_80035178();
@@ -272,7 +272,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
                 g_Gfx_ScreenFade = 2;
                 g_MainMenuState  = 4;
             }
-            else if (g_ControllerPtrConst->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)
+            else if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)
             {
                 Sd_EngineCmd(0x51A);
                 g_MainMenuState = 1;
@@ -312,7 +312,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
             break;
     }
 
-    if (g_ControllerPtrConst->btnsHeld_C != 0)
+    if (g_Controller0->btnsHeld_C != 0)
     {
         g_SysWork.timer_20 = 0;
     }
