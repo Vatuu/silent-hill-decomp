@@ -2860,15 +2860,11 @@ void func_80037388() // 0x80037388
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80032D1C", func_800373CC); // 0x800373CC
 
-// `if (-deltaRotY < 0x156)` causes a minor missmatch.
-#ifdef NON_MATCHING
 s32 func_800378D4(s_AreaLoadParams* areaLoadParams) // 0x800378D4
 {
     s16 rotY;
     s32 temp_a0;
     s32 temp_a1;
-    s32 var_v0_2;
-    s32 var_v0_3;
     s32 deltaRotY;
 
     if (g_MainLoop_FrameCount > D_800A9A20)
@@ -2878,62 +2874,93 @@ s32 func_800378D4(s_AreaLoadParams* areaLoadParams) // 0x800378D4
         D_800A9A28 = g_SysWork.player_4C.chara_0.position_18.vz - (shRcos(rotY) >> 3);
         D_800A9A20 = g_MainLoop_FrameCount;
     }
-    
+
     temp_a0 = areaLoadParams->char_x_0 - D_800A9A24;
 
-    // Messing with this earlier gave me same result as our `ABS_DIFF` macro.
-    // eg: ((a - b) < 0) ? (b - a) : (a - b)
-    // interesting but not sure what the cause of that was though
-    // it seems to match here now at least
-    // TODO: PSY-Q headers do include their own `ABS` and `_ABS` macro that might match our one.
-    //var_v0_2 = abs(temp_a0);
-    
-    if (abs(temp_a0) > FP_FLOAT_TO(0.8f, Q12_SHIFT))
+    if (ABS(temp_a0) > FP_FLOAT_TO(0.8f, Q12_SHIFT))
     {
         return 0;
     }
-    
+
     temp_a1 = areaLoadParams->char_z_8 - D_800A9A28;
-    //var_v0_3 = abs(temp_a1);
-    
-    if (abs(temp_a1) > FP_FLOAT_TO(0.8f, Q12_SHIFT))
+
+    if (ABS(temp_a1) > FP_FLOAT_TO(0.8f, Q12_SHIFT))
     {
         return 0;
     }
 
-    if ((SQUARE(temp_a0) + SQUARE(temp_a1)) <= SQUARE(FP_FLOAT_TO(0.8f, Q12_SHIFT)))
+    if ((SQUARE(temp_a0) + SQUARE(temp_a1)) > SQUARE(FP_FLOAT_TO(0.8f, Q12_SHIFT)))
     {
-        deltaRotY = g_SysWork.player_4C.chara_0.rotation_24.vy - ratan2(temp_a0, temp_a1);
-        if (deltaRotY >= FP_ANGLE(180.0f))
-        {
-            deltaRotY -= FP_ANGLE(360.0f);
-        }
-
-        if (deltaRotY >= 0)
-        {
-            if (deltaRotY <= FP_ANGLE(30.0f))
-            {
-                return 1;
-            }
-        }
-        else
-        {
-            if (-deltaRotY <= FP_ANGLE(30.0f))
-            {
-                return 1;
-            }
-        }
+        return 0;
     }
 
-    return 0;
+    deltaRotY = g_SysWork.player_4C.chara_0.rotation_24.vy - ratan2(temp_a0, temp_a1);
+    if (deltaRotY >= FP_ANGLE(180.0f))
+    {
+        deltaRotY -= FP_ANGLE(360.0f);
+    }
+
+    if (0x155 < ABS(deltaRotY))
+    {
+        return 0;
+    }
+    else
+    {
+        return 1;
+    }
 }
-#else
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80032D1C", func_800378D4); // 0x800378D4
-#endif
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80032D1C", func_80037A4C); // 0x80037A4C
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80032D1C", func_80037C5C); // 0x80037C5C
+s32 func_80037C5C(s_func_80037A4C* arg0) // 0x80037C5C
+{
+    s32 sinAngle;
+    s32 cosAngle;
+    s32 angle;
+    s32 deltaZ;
+    s32 deltaX;
+    s32 shift8Field_7;
+    s32 temp_v0;
+    s32 scale;
+    u32 temp;
+
+    shift8Field_7 = arg0->field_7 << 8;
+    deltaX        = g_SysWork.player_4C.chara_0.position_18.vx - arg0->field_0;
+
+    if (arg0->field_7 << 9 < ABS(deltaX))
+    {
+        return 0;
+    }
+
+    deltaZ = g_SysWork.player_4C.chara_0.position_18.vz - arg0->field_8;
+    scale  = 2;
+
+    if (shift8Field_7 * scale < ABS(deltaZ))
+    {
+        return 0;
+    }
+
+    angle    = -(arg0->field_6 << 20) >> 16;
+    sinAngle = shRsin(angle);
+
+    temp = FP_FROM((-deltaX * sinAngle) + (deltaZ * shRcos(angle)), Q12_SHIFT);
+    if (temp > 0x4000)
+    {
+        return 0;
+    }
+
+    cosAngle = shRcos(angle);
+    temp_v0  = FP_FROM((deltaX * cosAngle) + (deltaZ * shRsin(angle)), Q12_SHIFT);
+
+    if (shift8Field_7 < ABS(temp_v0))
+    {
+        return 0;
+    }
+    else
+    {
+        return 1;
+    }
+}
 
 void func_80037DC4(s_SubCharacter* chara) // 0x80037DC4
 {

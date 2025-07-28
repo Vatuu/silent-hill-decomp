@@ -9,6 +9,8 @@
 #include "bodyprog/player_logic.h"
 #include "main/rng.h"
 
+extern s_800C4168 D_800C4168;
+
 void func_80054FC0(s32* arg0, s32* arg1, u8 idx) // 0x80054FC0
 {
     s32 var;
@@ -34,18 +36,18 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80055028); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_800550D0); // 0x800550D0
 
-void func_80055330(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6) // 0x80055330
+void func_80055330(u8 arg0, s32 arg1, u8 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6) // 0x80055330
 {
     D_800C4168.field_0  = arg0;
     D_800C4168.field_20 = arg1;
     D_800C4168.field_3  = arg2;
-    D_800C4168.field_28 = arg3 >> 5;
+    D_800C4168.field_28.field_0 = arg3 >> 5;
     D_800C4168.field_30 = arg3;
     D_800C4168.field_2E = arg3;
     D_800C4168.field_2C = arg3;
-    D_800C4168.field_29 = arg4 >> 5;
+    D_800C4168.field_28.field_1 = arg4 >> 5;
     D_800C4168.field_8  = arg6;
-    D_800C4168.field_2A = arg5 >> 5;
+    D_800C4168.field_28.field_2 = arg5 >> 5;
     D_800C4168.field_36 = arg4;
     D_800C4168.field_34 = arg4;
     D_800C4168.field_32 = arg4;
