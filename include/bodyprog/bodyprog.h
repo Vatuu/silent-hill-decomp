@@ -2209,8 +2209,10 @@ void sd_work_init();
 
 u8 Sd_PlaySfx(u16 sfx, s8 arg1, u8 vol);
 
+/** SFX func. */
 void func_800463C0(u16 sfx, s8 arg1, u8 vol, s8 arg3);
 
+/** SFX func. */
 void func_80046620(u16 sfx, s8 arg1, u8 vol, s8 arg3);
 
 void func_800468EC();

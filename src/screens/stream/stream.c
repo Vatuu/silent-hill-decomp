@@ -10,9 +10,9 @@
 #include "main/fileinfo.h"
 #include "screens/stream/stream.h"
 
-s32 g_Debug_MoviePlayerIdx = 0;
-s32 max_frame              = 0;
-s32 frame_cnt              = 0;
+s32 g_Debug_MoviePlayerIdx = 0; // 0x801E3F3C
+s32 max_frame              = 0; // 0x801E3F40
+s32 frame_cnt              = 0; // 0x801E3F44
 
 DISPENV disp =
 {
@@ -22,7 +22,7 @@ DISPENV disp =
     1,                    // `isrgb24`
     0,                    // `pad0`
     0                     // `pad1`
-};
+}; // 0x801E3F48
 
 MOVIE_STR* m;
 
@@ -38,7 +38,7 @@ void GameState_StartMovieIntro_Update() // 0x801E2654
             break;
 
         case 1:
-            if (g_Controller0->btnsHeld_C != 0 || g_SysWork.timer_1C >= 301)
+            if (g_Controller0->btnsHeld_C != 0 || g_SysWork.timer_1C > 300)
             {
                 g_Gfx_ScreenFade                = 3;
                 g_GameWork.gameStateStep_598[0] = 2;
@@ -46,7 +46,7 @@ void GameState_StartMovieIntro_Update() // 0x801E2654
             break;
 
         case 2:
-            if ((g_Gfx_ScreenFade & 7) == 5)
+            if ((g_Gfx_ScreenFade & 0x7) == 5)
             {
                 Fs_QueueWaitForEmpty();
                 Game_StateSetNext(GameState_MovieIntro);
@@ -69,7 +69,7 @@ void GameState_MovieIntro_Update() // 0x801E279C
     open_main(fileIdx, 0);
     Game_StateSetNext(GameState_MainMenu);
 
-    D_800B5C30 = FP_FLOAT_TO(1.0f, Q12_SHIFT);
+    D_800B5C30 = FP_TIME(1.0f);
 }
 
 void GameState_MovieOpening_Update() // 0x801E2838
@@ -87,11 +87,11 @@ void GameState_DebugMoviePlayer_Update() // 0x801E2908
 {
     extern s32 g_Debug_MoviePlayerIdx; // Only used in this func, maybe static.
 
-    s_GameWork*    gameWork;
+    s_GameWork*       gameWork;
     s_ControllerData* controller;
 
-    gameWork = g_GameWorkPtr;
-    controller  = g_Controller0;
+    gameWork   = g_GameWorkPtr;
+    controller = g_Controller0;
 
     if (controller->btnsClicked_10 & gameWork->config_0.controllerConfig_0.cancel_2)
     {
@@ -111,7 +111,7 @@ void GameState_DebugMoviePlayer_Update() // 0x801E2908
     Gfx_DebugStringPosition(SCREEN_POSITION_X(12.5f), SCREEN_POSITION_Y(16.75f));
 
 #ifdef DEBUG
-    // Recreated code from pre-Jan17 builds which include calls to display these (though DebugStringDraw was nullsub in those builds).
+    // Recreated code from pre-Jan17 builds which include calls to display these (though `Gfx_DebugStringDraw` was nullsub in those builds).
     Gfx_DebugStringDraw("MOVIE NO=");
     Gfx_DebugStringDraw(Math_IntegerToString(2, g_Debug_MoviePlayerIdx));
 #endif
@@ -127,7 +127,7 @@ void GameState_MovieIntroAlternate_Update() // 0x801E2A24
     open_main(FILE_XA_C1_20670, 2060); // Second param looks like file ID for `FILE_XA_M6_02112`, but is actually frame count?
     Game_StateSetNext(GameState_MainMenu);
 
-    D_800B5C30 = FP_FLOAT_TO(1.0f, Q12_SHIFT);
+    D_800B5C30 = FP_TIME(1.0f);
 }
 
 void open_main(s32 file_idx, s16 num_frames) // 0x801E2AA4
@@ -147,6 +147,8 @@ void open_main(s32 file_idx, s16 num_frames) // 0x801E2AA4
 
 void movie_main(char* file_name, s32 f_size, s32 sector) // 0x801E2B9C
 {
+    #define SEARCH_COUNT_MAX 10000
+
     CdlFILE file;
     CdlLOC  loc;
     u8      param;
@@ -167,7 +169,7 @@ void movie_main(char* file_name, s32 f_size, s32 sector) // 0x801E2B9C
 
         while (CdSearchFile(&file, file_name) == NULL)
         {
-            if (search_times++ > 10000)
+            if (search_times++ > SEARCH_COUNT_MAX)
             {
                 return;
             }
@@ -202,9 +204,9 @@ void movie_main(char* file_name, s32 f_size, s32 sector) // 0x801E2B9C
     {
         disp.disp.y   = 256 - (m->dec.rectid * SCREEN_HEIGHT);
         disp.screen.x = g_GameWorkConst->config_0.optScreenPosX_1C;
-        disp.screen.y = (8 + ((224 - m->height) / 2)) + (g_GameWorkConst->config_0.optScreenPosY_1D);
-        disp.disp.y   = (disp.disp.y   < 16) ? 16 : ((disp.disp.y > 256)   ? 256 : disp.disp.y);
-        disp.screen.h = (disp.screen.h <= 0) ? 1  : ((disp.screen.h > 208) ? 208 : disp.screen.h);
+        disp.screen.y = (8 + ((224 - m->height) / 2)) + g_GameWorkConst->config_0.optScreenPosY_1D;
+        disp.disp.y   = (disp.disp.y   <  16) ? 16 : ((disp.disp.y > 256)   ? 256 : disp.disp.y);
+        disp.screen.h = (disp.screen.h <= 0)  ? 1  : ((disp.screen.h > 208) ? 208 : disp.screen.h);
 
         PutDispEnv(&disp);
         nullsub_800334C8();
@@ -315,7 +317,7 @@ void strKickCD(CdlLOC* loc) // 0x801E31CC
     s8 v2[8];
     u8 param;
 
-    while (!CdControlB(CdlNop, 0, v2) || (v2[0] & 2) == 0)
+    while (!CdControlB(CdlNop, 0, v2) || (v2[0] & (1 << 1)) == 0)
     {
         CdControlB(CdlStandby, 0, 0);
         VSync(0);
@@ -340,9 +342,11 @@ void strKickCD(CdlLOC* loc) // 0x801E31CC
 
 int strNextVlc(DECENV* dec) // 0x801E3298
 {
+    #define COUNT_MAX 2000
+
     u_long* next, *strNext();
 
-    u_long count = 2000;
+    u_long count = COUNT_MAX;
     while ((next = strNext(dec)) == 0)
     {
         count--;

@@ -101,7 +101,6 @@
 #define FP_METER(met) \
     FP_FLOAT_TO((met), Q12_SHIFT)
 
-// TODO: Integrate this for clearer abstraction of FP time usage.
 /** @brief Converts floating-point seconds to fixed-point seconds in Q12.19 format. */
 #define FP_TIME(sec) \
     FP_FLOAT_TO((sec), Q12_SHIFT)

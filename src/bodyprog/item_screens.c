@@ -620,7 +620,7 @@ void GameState_ItemScreens_Update() // 0x8004C9B0
 
             g_IntervalVBlanks = 1;
             g_Gfx_ScreenFade  = 6;
-            D_800B5C30        = FP_FLOAT_TO(3.0f, Q12_SHIFT);
+            D_800B5C30        = FP_TIME(3.0f);
 
             func_80037188();
 
@@ -773,12 +773,12 @@ void GameState_ItemScreens_Update() // 0x8004C9B0
 
         // Results screen triggers here.
         case 21:
-            Gfx_ClearRectInterlaced(0, 0x20, 0x140, 0x1C0, 0, 0, 0);
+            Gfx_ClearRectInterlaced(0, 32, SCREEN_WIDTH, FRAMEBUFFER_HEIGHT_INTERLACED, 0, 0, 0);
             Gfx_Init(0x140, 1);
 
             g_IntervalVBlanks                  = 1;
             g_Gfx_ScreenFade                   = 6;
-            D_800B5C30                         = FP_FLOAT_TO(3.0f, Q12_SHIFT);
+            D_800B5C30                         = FP_TIME(3.0f);
             g_GameWork.background2dColor_R_58C = 0;
             g_GameWork.background2dColor_G_58D = 0;
             g_GameWork.background2dColor_B_58E = 0;
@@ -2136,15 +2136,15 @@ s32 func_8004F190(s_ShSavegame* save) // 0x8004F190
 
 void Gfx_Inventory_UnavailableMapText(s32 strIdx) // 0x0x8004F57C
 {
-    char* D_800262AC[2] =
+    char* strs[2] = // 0x800262AC
     {
         "Too_dark_to_look_at\n\t\tthe_map_here.",
         "I_don't_have_the_map\n\t\tfor_this_place."
     };
 
     Gfx_StringSetPosition(30, 232);
-    Gfx_StringSetColor(7);
-    Gfx_StringDraw(D_800262AC[strIdx], 0x63);
+    Gfx_StringSetColor(ColorId_White);
+    Gfx_StringDraw(strs[strIdx], 99);
 }
 
 // Unknown RODATA values.

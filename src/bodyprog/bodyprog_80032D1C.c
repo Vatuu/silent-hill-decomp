@@ -860,7 +860,7 @@ void Game_WarmBoot() // 0x80034264
     g_GameWork.gameStatePrev_590    = prevState;
     g_GameWork.gameStateStep_598[0] = 0;
 
-    D_800B5C30 = FP_FLOAT_TO(0.0f, Q12_SHIFT);
+    D_800B5C30 = FP_TIME(0.0f);
 }
 
 void Joy_Init() // 0x8003441C
@@ -1353,7 +1353,7 @@ void func_80034E58() // 0x80034E58
     if (g_SysWork.field_2281 != 0 && g_GameWork.gameStateStep_598[0] < 10)
     {
         g_Gfx_ScreenFade = 7;
-        D_800B5C30       = FP_FLOAT_TO(0.8f, Q12_SHIFT);
+        D_800B5C30       = FP_TIME(0.8f);
         g_MapOverlayHeader.func_18[g_SysWork.field_2281]();
     }
 
@@ -3054,7 +3054,7 @@ void GameState_InGame_Update() // 0x80038BD4
     {
         case 0:
             g_Gfx_ScreenFade                = 6;
-            D_800B5C30                      = FP_FLOAT_TO(3.0f, Q12_SHIFT);
+            D_800B5C30                      = FP_TIME(3.0f);
             g_GameWork.gameStateStep_598[0] = 1;
 
         case 1:
@@ -3315,7 +3315,7 @@ void SysState_OptionsMenu_Update() // 0x80039344
     {
         case 0:
             g_Gfx_ScreenFade         = 2;
-            D_800B5C30               = FP_FLOAT_TO(0.0f, Q12_SHIFT);
+            D_800B5C30               = FP_TIME(0.0f);
             g_SysWork.sysStateStep_C = 1;
 
         case 1:
@@ -3522,7 +3522,7 @@ void SysState_Unk3_Update() // 0x800396D4
             Fs_QueueStartSeek(FILE_TIM_MP_0TOWN_TIM + D_800A99B4[g_SavegamePtr->current2dMapIdx_A9]);
 
             g_Gfx_ScreenFade = 2;
-            D_800B5C30       = FP_FLOAT_TO(0.0f, Q12_SHIFT);
+            D_800B5C30       = FP_TIME(0.0f);
             g_SysWork.sysStateStep_C++;
         }
 

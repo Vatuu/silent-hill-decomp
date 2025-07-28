@@ -133,7 +133,7 @@ s32 func_801E2FC0() // 0x801E2FC0
 
         default:
             g_Gfx_ScreenFade = 10;
-            D_800B5C30       = FP_FLOAT_TO(1.0f, Q12_SHIFT);
+            D_800B5C30       = FP_TIME(1.0f);
             break;
     }
 
@@ -291,7 +291,7 @@ s32 func_801E342C() // 0x801E342C
                     break;
             }
 
-            D_800B5C30 = FP_FLOAT_TO(1.0f, Q12_SHIFT);
+            D_800B5C30 = FP_TIME(1.0f);
             g_GameWork.gameStateStep_598[1]++;
             D_801E5E78 = 180;
             break;

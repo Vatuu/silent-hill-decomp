@@ -27,7 +27,8 @@
 #define SCREEN_POSITION_Y(percent) \
     (s32)((SCREEN_HEIGHT) * ((percent) / 100.0f))
 
-/** @brief Accessors for low & high parts of each character property, returns a pointer which can be read or written to. */
+// TODO: Not correct. Should use unions instead.
+/** @brief Accessors for low and high parts of each character property, returns a pointer which can be read or written to. */
 #define GET_PROPERTY_LOW(prop) \
     ((u16*)&(prop))
 
@@ -193,14 +194,14 @@ typedef enum _CharaFlags
 /** @brief Color IDs used by strings displayed on the screen. */
 typedef enum _ColorId
 {
-    ColorId_Gold      = 0,
-    ColorId_DarkGrey  = 1,
-    ColorId_Green     = 2,
-    ColorId_Nuclear   = 3,
-    ColorId_Red       = 4,
-    ColorId_GreenDup  = 5, // Gives same color as `ColorId_Green`. Unused?
-    ColorId_LightGrey = 6,
-    ColorId_White     = 7
+    ColorId_Gold           = 0,
+    ColorId_DarkGrey       = 1,
+    ColorId_Green          = 2,
+    ColorId_Nuclear        = 3,
+    ColorId_Red            = 4,
+    ColorId_GreenDuplicate = 5, // Gives same color as `ColorId_Green`. Unused?
+    ColorId_LightGrey      = 6,
+    ColorId_White          = 7
 } e_ColorId;
 
 typedef enum _AnimFlags
@@ -591,18 +592,18 @@ typedef struct _ShSavegame
     q20_12            gameplayTimer_250;
     q19_12            runDistance_254;
     q19_12            walkDistance_258;
-    u8                isNextFearMode_25C      : 1;  // Makes savegame entry text gold.
-    u8                add290Hours_25C_1       : 2;  // Adds 290 hours per 1 bit. So 290, 580, 870
-    u8                hyperBlasterFlags_25C_3 : 5;  // Red/None: 0?, Yellow: 8, Green: 16, Rainbow: 24 (unobtainable). Maybe it better to split to bit fields, because you can't have all colors at the same time, but only one.
+    u8                isNextFearMode_25C      : 1; // Makes savegame entry text gold.
+    u8                add290Hours_25C_1       : 2; // Adds 290 hours per 1 bit. So 290, 580, 870
+    u8                hyperBlasterFlags_25C_3 : 5; // Red/None: 0?, Yellow: 8, Green: 16, Rainbow: 24 (unobtainable). Maybe it better to split to bit fields, because you can't have all colors at the same time, but only one.
     u8                meleeKillCount_25D;
-    u8                meleeKillCountB_25E;          // Can't be packed if used as `u16`.
+    u8                meleeKillCountB_25E; // Can't be packed if used as `u16`.
     u8                rangedKillCount_25F;
     u32               field_260 : 28;
-    s32               gameDifficulty_260 : 4;   /** `e_GameDifficulty`. */
-    u16               firedShotCount_264;       /** Missed shot count = firedShotCount - (closeRangeShotCount + midRangeShotCount + longRangeShotCount). */
-    u16               closeRangeShotCount_266;  /** Only hits counted. */
-    u16               midRangeShotCount_268;    /** Only hits counted. */
-    u16               longRangeShotCount_26A;   /** Only hits counted. */
+    s32               gameDifficulty_260 : 4;  /** `e_GameDifficulty`. */
+    u16               firedShotCount_264;      /** Missed shot count = firedShotCount - (closeRangeShotCount + midRangeShotCount + longRangeShotCount). */
+    u16               closeRangeShotCount_266; /** Only hits counted. */
+    u16               midRangeShotCount_268;   /** Only hits counted. */
+    u16               longRangeShotCount_26A;  /** Only hits counted. */
     u16               field_26C;
     u16               field_26E; // Related to enemy kills.
     u16               field_270;
@@ -690,7 +691,7 @@ typedef struct _GameWork
     u8                 background2dColor_R_58C;
     u8                 background2dColor_G_58D;
     u8                 background2dColor_B_58E;
-    u8                 field_58F; // Command code? Maybe `s_PrimColor` fits here.
+    u8                 field_58F;            // Command code? Maybe `s_PrimColor` fits here.
     s32                gameStatePrev_590;    /** `e_GameState` */
     s32                gameState_594;        /** `e_GameState` */
     s32                gameStateStep_598[3]; /** Temp data used by current `gameState`. Can be another state ID or other data. 
@@ -706,7 +707,7 @@ typedef struct _GameWork
     s32                field_5AC;
     s8                 unk_5B0;
     s8                 mapAnimIdx_5B1;
-    s8                 soundCmd_5B2; // Sound command.
+    s8                 soundCmd_5B2;
     s8                 field_5B3;
     s_AnalogController rawController_5B4;
     s8                 unk_5BC[28];
@@ -722,8 +723,8 @@ typedef struct _AnimInfo
     u16 animIdx_6;
     union
     {
-        s32 constTimeDelta;
-        s32 (*variableTimeDeltaFunc)();
+        q19_12 constTimeDelta;
+        q19_12 (*variableTimeDeltaFunc)();
     } timeDelta_8;
     s16 keyframeIdx0_C;
     s16 keyframeIdx1_E;
@@ -738,7 +739,7 @@ typedef struct _ModelAnimData
     u8          animIdx_0;
     u8          maybeSomeState_1; // State says if `animTime_4` is anim time or a func ptr? That field could be a union.
     u16         flags_2;          /** `e_AnimFlags` */ // Bit 1: movement unlockled(?), bit 2: visible.
-    s32         time_4;           /** Time along keyframe timeline in Q19.12. */ 
+    q19_12      time_4;           /** Time along keyframe timeline. */ 
     s16         keyframeIdx0_8;
     s16         keyframeIdx1_A;
     s_AnimInfo* animInfo_C;
@@ -1161,7 +1162,7 @@ static inline void Game_StateSetNext_ClearStateSteps(e_GameState gameState)
 }
 
 /** @brief Sets the GameState to be used in the next game update.
- * Inlined into stream and b_konami.
+ * Inlined into `stream` and `b_konami`.
  */
 static inline void Game_StateSetNext(e_GameState gameState)
 {

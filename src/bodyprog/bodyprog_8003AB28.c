@@ -64,7 +64,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
 
             g_IntervalVBlanks = 1;
             g_Gfx_ScreenFade  = 6;
-            D_800B5C30        = FP_FLOAT_TO(2.0f, Q12_SHIFT);
+            D_800B5C30        = FP_TIME(2.0f);
             g_MainMenuState++;
 
         case MenuState_Main:
@@ -522,10 +522,10 @@ PACKET* func_8003B838(GsOT* ot, PACKET* packet) // 0x8003B838
             yOffset = (i - 1) * 24;
 
             setXY4(poly,
-                   (-176 + 16 * j), yOffset - 208,
-                   (-160 + 16 * j), yOffset - 208,
-                   (-176 + 16 * j), yOffset - 184,
-                   (-160 + 16 * j), yOffset - 184);
+                   (-176 + (16 * j)), yOffset - 208,
+                   (-160 + (16 * j)), yOffset - 208,
+                   (-176 + (16 * j)), yOffset - 184,
+                   (-160 + (16 * j)), yOffset - 184);
 
             *((u32*)&poly->r0) = color0;
             *((u32*)&poly->r1) = color1;

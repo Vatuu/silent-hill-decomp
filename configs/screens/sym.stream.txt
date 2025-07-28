@@ -23,8 +23,8 @@ g_Debug_MoviePlayerIdx = 0x801E3F3C; // type:s32
 // MOVIESYS globals
 max_frame = 0x801E3F40;
 frame_cnt = 0x801E3F44;
-disp = 0x801E3F48;
-m = 0x801F50E0;
+disp      = 0x801E3F48;
+m         = 0x801F50E0;
 
 // dscb.o
 DsSyncCallback = 0x801e34cc; // type:func
