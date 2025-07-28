@@ -415,7 +415,7 @@ void Settings_MainScreen() // 0x801E3770
     #define IMAGE_BUFFER_3 ((u_long*)0x801EB600)
     #define SOUND_VOL_STEP 8
 
-    s32 sdCmd;
+    s32 cmd;
     s32 vol;
 
     Gfx_OptionsStringsMainDraw();
@@ -559,27 +559,27 @@ void Settings_MainScreen() // 0x801E3770
             {
                 Sd_PlaySfx(Sfx_Back, 0, 64);
 
-                sdCmd                               = 2;
+                cmd                                 = 2;
                 g_GameWork.config_0.optSoundType_1E = !g_GameWork.config_0.optSoundType_1E;
                 if (g_GameWork.config_0.optSoundType_1E)
                 {
-                    sdCmd = 1;
+                    cmd = 1;
                 }
-                Sd_EngineCmd(sdCmd);
+                Sd_EngineCmd(cmd);
             }
             break;
 
         case OptMain_BGMVol:
             vol = g_GameWork.config_0.optVolumeBgm_1F;
             if ((vol < OPT_SOUND_VOLUME_MAX && (g_Controller0->btnsPulsed_18 & ControllerFlag_LStickRight)) ||
-                (vol > 0 && (g_Controller0->btnsPulsed_18 & ControllerFlag_LStickLeft)))
+                (vol > 0                    && (g_Controller0->btnsPulsed_18 & ControllerFlag_LStickLeft)))
             {
-                Sd_EngineCmd(0x519);
+                Sd_EngineCmd(Sfx_Back);
             }
             if ((vol == OPT_SOUND_VOLUME_MAX && (g_Controller0->btnsClicked_10 & ControllerFlag_LStickRight)) ||
-                (vol == 0 && (g_Controller0->btnsClicked_10 & ControllerFlag_LStickLeft)))
+                (vol == 0                    && (g_Controller0->btnsClicked_10 & ControllerFlag_LStickLeft)))
             {
-                Sd_EngineCmd(0x518);
+                Sd_EngineCmd(Sfx_Denied);
             }
             if (g_Controller0->btnsPulsed_18 & ControllerFlag_LStickRight)
             {
@@ -599,14 +599,14 @@ void Settings_MainScreen() // 0x801E3770
         case OptMain_SFXVol:
             vol = g_GameWork.config_0.optVolumeSe_20;
             if ((vol < OPT_SOUND_VOLUME_MAX && (g_Controller0->btnsPulsed_18 & ControllerFlag_LStickRight)) ||
-                (vol > 0 && (g_Controller0->btnsPulsed_18 & ControllerFlag_LStickLeft)))
+                (vol > 0                    && (g_Controller0->btnsPulsed_18 & ControllerFlag_LStickLeft)))
             {
-                Sd_EngineCmd(0x519);
+                Sd_EngineCmd(Sfx_Back);
             }
             if ((vol == OPT_SOUND_VOLUME_MAX && (g_Controller0->btnsClicked_10 & ControllerFlag_LStickRight)) ||
-                (vol == 0 && (g_Controller0->btnsClicked_10 & ControllerFlag_LStickLeft)))
+                (vol == 0                    && (g_Controller0->btnsClicked_10 & ControllerFlag_LStickLeft)))
             {
-                Sd_EngineCmd(0x518);
+                Sd_EngineCmd(Sfx_Denied);
             }
             if (g_Controller0->btnsPulsed_18 & ControllerFlag_LStickRight)
             {
@@ -1990,7 +1990,7 @@ void Settings_ControllerScreen() // 0x801E69BC
             if (g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 |
                                                  g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
             {
-                Sd_EngineCmd(0x51A);
+                Sd_EngineCmd(Sfx_Cancel);
                 g_Gfx_ScreenFade                = 3;
                 g_GameWork.gameStateStep_598[1] = -2;
                 g_GameWork.gameStateStep_598[2] = 0;
@@ -2019,12 +2019,12 @@ void Settings_ControllerScreen() // 0x801E69BC
             g_ScreenCtrl_SelectedElement.menuIdx_0 = g_GameWork.gameStateStep_598[1];
             if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
             {
-                Sd_EngineCmd(0x51B);
+                Sd_EngineCmd(Sfx_Confirm);
                 Settings_RestoreControlDefaults(g_GameWork.gameStateStep_598[1] - 1);
             }
             else if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)
             {
-                Sd_EngineCmd(0x51A);
+                Sd_EngineCmd(Sfx_Cancel);
                 g_GameWork.gameStateStep_598[1] = 0;
                 g_GameWork.gameStateStep_598[2] = 0;
             }
@@ -2109,7 +2109,7 @@ void Settings_ControllerScreen() // 0x801E69BC
 
     if (g_Controller0->btnsPulsedGui_1C & (ControllerFlag_LStickUp | ControllerFlag_LStickRight | ControllerFlag_LStickDown | ControllerFlag_LStickLeft))
     {
-        Sd_EngineCmd(0x519);
+        Sd_EngineCmd(Sfx_Back);
     }
 
     Gfx_ControllerScreenDraw(g_ScreenCtrl_IsOverActions, g_ScreenCtrl_SelectedElement.menuIdx_0, g_ScreenCtrl_SelectedElement.actionIdx_4, bindResult);
@@ -2151,12 +2151,12 @@ s32 Settings_ButtonChange(s32 actionIdx) // 0x801E6CF4
                 !(bindings[actionIdx] & ~btnFlag))
             {
                 res = actionIdx;
-                Sd_EngineCmd(0x518);
+                Sd_EngineCmd(Sfx_Denied);
             }
             else
             {
                 bindings[actionIdx] &= ~btnFlag;
-                Sd_EngineCmd(0x51B);
+                Sd_EngineCmd(Sfx_Confirm);
             }
         }
         else
@@ -2172,25 +2172,25 @@ s32 Settings_ButtonChange(s32 actionIdx) // 0x801E6CF4
                         if (!(bindings[curActionIdx] & ~btnFlag))
                         {
                             res = curActionIdx;
-                            Sd_EngineCmd(0x518);
+                            Sd_EngineCmd(Sfx_Denied);
                         }
                         else
                         {
                             bindings[curActionIdx] &= ~btnFlag;
                             bindings[actionIdx]    |= btnFlag;
-                            Sd_EngineCmd(0x51B);
+                            Sd_EngineCmd(Sfx_Confirm);
                         }
                     }
                     else
                     {
                         bindings[actionIdx] = boundBtnFlag | btnFlag;
-                        Sd_EngineCmd(0x51B);
+                        Sd_EngineCmd(Sfx_Confirm);
                     }
                     break;
 
                 case 2:
                     bindings[InputAction_Skip] |= btnFlag;
-                    Sd_EngineCmd(0x51B);
+                    Sd_EngineCmd(Sfx_Confirm);
                     break;
 
                 default:
@@ -2212,20 +2212,20 @@ s32 Settings_ButtonChange(s32 actionIdx) // 0x801E6CF4
                              curActionIdx == InputAction_Item) &&
                             !(bindings[curActionIdx] & ~btnFlag))
                         {
-                            Sd_EngineCmd(0x518);
+                            Sd_EngineCmd(Sfx_Denied);
                             res = curActionIdx;
                         }
                         else
                         {
                             bindings[curActionIdx] &= ~btnFlag;
                             bindings[actionIdx]    |= btnFlag;
-                            Sd_EngineCmd(0x51B);
+                            Sd_EngineCmd(Sfx_Confirm);
                         }
                     }
                     else
                     {
                         bindings[actionIdx] |= btnFlag;
-                        Sd_EngineCmd(0x51B);
+                        Sd_EngineCmd(Sfx_Confirm);
                     }
                     break;
             }

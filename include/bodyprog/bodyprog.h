@@ -34,10 +34,10 @@
 // ENUMS
 // ======
 
-// TODO: Could maybe register these automatically just like assets in the `SILENT` archive.
 typedef enum _Sfx
 {
-    Sfx_Unk1280 = 1280,
+    Sfx_Unk1280   = 1280, // Base SFX index, so not a valid sound?
+    Sfx_StartGame = 1281,
 
     Sfx_Denied  = 1304,
     Sfx_Back    = 1305,
@@ -45,7 +45,21 @@ typedef enum _Sfx
     Sfx_Confirm = 1307,
 
     Sfx_Unk1321 = 1321,
-    Sfx_Unk1322 = 1322
+    Sfx_Unk1322 = 1322,
+
+    Sfx_Unk1358 = 1358,
+    Sfx_Unk1359 = 1359,
+    Sfx_Unk1360 = 1360, // Used in `sharedFunc_800D0CB8_0_s00`, depends on the map. Also in `sharedFunc_800D0E04_0_s00`.
+    Sfx_Unk1361 = 1361,
+
+    Sfx_Unk1501 = 1501, // Used in `GameState_MainLoadScreen_Update`.
+    Sfx_Unk1502 = 1502, // Used in `GameState_MainLoadScreen_Update`.
+
+    Sfx_Unk1525 = 1525, // Used in `Ai_Bloodsucker_Update`.
+
+    Sfx_Unk1527 = 1527, // Used in `Ai_Bloodsucker_Update`.
+
+    Sfx_Unk1567 = 1567
 } e_Sfx;
 
 /** Used by `func_8003F654` to cast a specific field to the desired type. */
@@ -85,6 +99,39 @@ typedef struct
     s32 field_C;
 } s_8002AC04;
 STATIC_ASSERT_SIZEOF(s_8002AC04, 16);
+
+// Maybe a collection of matrices.
+typedef struct
+{
+    s32 flags_0;
+    s8  unk_4[4];
+    s32 field_8;
+    s32 field_C;
+    s8  field_10;
+    s8  unk_11[7];
+} s_Bone;
+STATIC_ASSERT_SIZEOF(s_Bone, 24);
+
+// PROBABLY skeleton data.
+typedef struct
+{
+    u8      boneCount_0;
+    u8      boneIdx_1; // Current bone index? Used in traversal.
+    s8      field_2;
+    s8      field_3;
+    s32     field_4;
+    s_Bone* bones_8;
+
+    // Maybe incorrect.
+    s8 field_C[3]; // Maybe struct similar to `s_Bone` but smaller.
+    u8 field_10;   // Some count related to bone hierarchy.
+    s8 unk_11;
+    s8 field_12;
+    s8 field_13;
+    s8 field_14;
+    s8 unk_15[8];
+} s_Skeleton;
+STATIC_ASSERT_SIZEOF(s_Skeleton, 28);
 
 typedef struct
 {
@@ -568,15 +615,6 @@ STATIC_ASSERT_SIZEOF(s_800AA894, 12);
 
 typedef struct
 {
-    u8  field_0;
-    u8  unk_1;
-    u16 field_2;
-    u8  field_4;
-    s8  field_5;
-} s_800ACAA8;
-
-typedef struct
-{
     s8 field_0;
     s8 unk_1[5];
     s8 field_6;
@@ -627,39 +665,6 @@ typedef struct
     s8 field_3;
 } s_800BCDA8;
 STATIC_ASSERT_SIZEOF(s_800BCDA8, 4);
-
-// Maybe a collection of matrices.
-typedef struct
-{
-    s32 flags_0;
-    s8  unk_4[4];
-    s32 field_8;
-    s32 field_C;
-    s8  field_10;
-    s8  unk_11[7];
-} s_Bone;
-STATIC_ASSERT_SIZEOF(s_Bone, 24);
-
-// PROBABLY skeleton data.
-typedef struct
-{
-    u8      boneCount_0;
-    u8      boneIdx_1; // Current bone index? Used in traversal.
-    s8      field_2;
-    s8      field_3;
-    s32     field_4;
-    s_Bone* bones_8;
-
-    // Maybe incorrect.
-    s8 field_C[3]; // Maybe struct similar to `s_Bone` but smaller.
-    u8 field_10;   // Some count related to bone hierarchy.
-    s8 unk_11;
-    s8 field_12;
-    s8 field_13;
-    s8 field_14;
-    s8 unk_15[8];
-} s_Skeleton;
-STATIC_ASSERT_SIZEOF(s_Skeleton, 28);
 
 typedef struct
 {
@@ -866,7 +871,7 @@ typedef struct
     s32 field_8;
 } s_800C1688;
 
-// Sound struct.
+/** Sound struct for currently used SFX? */
 typedef struct
 {
     u8  field_0;
@@ -1104,6 +1109,15 @@ typedef struct _AreaLoadParams
     s32 char_z_8;
 } s_AreaLoadParams;
 
+typedef struct
+{
+    u8  field_0;
+    u8  unk_1;
+    u16 field_2;
+    u8  field_4;
+    s8  field_5;
+} s_Sfx;
+
 typedef struct _SpawnInfo
 {
     q19_12 positionX_0;
@@ -1130,7 +1144,7 @@ typedef struct
 typedef struct _MapOverlayHeader
 {
     s_UnkStruct2_MO*  field_0;
-    s8                (*getMapRoomIdxFunc_4)(s32 x, s32 y); // Called by `func_80036420`.
+    s8                (*getMapRoomIdxFunc_4)(s32 x, s32 y); // Called by `Savegame_MapRoomIdxSet`.
     s8                field_8;
     s8                unk_9[3];
     s8                unk_C[4];
@@ -1387,6 +1401,7 @@ extern s32 g_MainMenuState;
 
 extern s32 g_MainMenu_SelectedOptionIdx;
 
+/** Flags for which main menu options to display. */
 extern u32 D_800A9A7C;
 
 /** Counts the amount of times that demos has been play in the current game session. */
@@ -1693,6 +1708,7 @@ extern s16 D_800C15BE;
 
 extern u16 D_800C15C0;
 
+/** Base-0 SFX index. */
 extern s16 D_800C15C2;
 
 extern s16 D_800C15C4;
@@ -1960,7 +1976,8 @@ extern s16 D_800C6E8E;
 
 extern u8 D_800C6E90;
 
-extern s_800ACAA8 D_800ACAA8[];
+/** SFX data array. */
+extern s_Sfx D_800ACAA8[];
 
 extern u8 D_800AD480[24];
 
@@ -2206,7 +2223,7 @@ void func_800453E8(s_Skeleton* skel, s32 cond);
 /** Does something with skeleton bones. `arg0` is a struct pointer. */
 void func_80045468(s_Skeleton* skel, s32* arg1, s32 cond);
 
-/** Passes a command to the sound driver. */
+/** Passes a command to the sound driver. Plays SFX among other things. */
 void Sd_EngineCmd(u32 cmd);
 
 /** Sound func? */
@@ -2214,7 +2231,8 @@ u8 func_80045B28();
 
 u16 func_80045BC8();
 
-void func_80045BD8(u16 caseArg);
+/** Sound func. */
+void func_80045BD8(u16 cmd);
 
 void func_80045D28(u8 caseArg);
 
@@ -2234,15 +2252,18 @@ void func_80046620(u16 sfx, s8 arg1, u8 vol, s8 arg3);
 
 void func_800468EC();
 
-void func_8004690C(u16 arg0);
+/** SFX func. */
+void func_8004690C(u16 sfx);
 
-void func_8004692C(u16);
+/** Sound command func. Unknown category. */
+void func_8004692C(u16 cmd);
 
 void func_800469AC();
 
 void func_800469E8();
 
-void func_80046A24(u16);
+/** Sound command func. Unknown category. */
+void func_80046A24(u16 cmd);
 
 void func_80046A70();
 
@@ -2250,14 +2271,15 @@ void func_80046AD8();
 
 void func_80046B04();
 
-/** Sound func. */
+/** Sound command func. Unknown category. */
 void func_80046B78();
 
 u8 func_80046BB4(u8 arg0);
 
 void func_80046C54(u8 arg0, u8 arg1);
 
-void func_80046D3C(u16);
+/** Sound command func. Unknown category. */
+void func_80046D3C(u16 cmd);
 
 s32 func_80046DCC(s32 idx);
 
@@ -2274,7 +2296,8 @@ void func_8004760C();
 /** Args are volume levels. */
 void Sd_SetVolume(u8 arg0, s16 arg1, u8 arg2);
 
-void func_800478DC(u8 arg0);
+/** Sound func. */
+void func_800478DC(u8 cmd);
 
 void func_80047A70();
 
@@ -2312,6 +2335,7 @@ void func_800480FC();
 
 void func_800481F8();
 
+/** Sound func. */
 void func_80048244(u16 cmd);
 
 void func_800482D8();
@@ -2422,7 +2446,8 @@ void func_8005DD44(s32, VECTOR3*, s32, s8); // Types assumed.
 
 s32 func_8005F680(s_func_800699F8* arg0);
 
-void func_8005DE0C(s32, VECTOR3*, s32, s32, s32); // Types assumed.
+/** Spatial SFX func? */
+void func_8005DE0C(s32 sfx, VECTOR3*, s32, s32, s32); // Types assumed.
 
 void func_8005E0DC(s32 mapIdx); // Types assumed.
 
@@ -2434,7 +2459,7 @@ void DmsHeader_FixOffsets(s_DmsHeader* header);
 
 void DmsEntry_FixOffsets(s_DmsEntry* entry, s_DmsHeader* header);
 
-void Dms_CharacterGetStartPosRot(VECTOR3* pos, SVECTOR* rot, char* charName, s32 arg3, s_DmsHeader* header);
+void Dms_CharacterGetStartPosRot(VECTOR3* pos, SVECTOR* rot, char* charaName, s32 time, s_DmsHeader* header);
 
 s32 Dms_CharacterFindIndexByName(char* name, s_DmsHeader* header);
 
@@ -2860,7 +2885,8 @@ void func_800363D0();
 
 void func_8003640C(s32 arg0);
 
-void func_80036420();
+/** `Savegame_MapRoomIdxSet` */
+void Savegame_MapRoomIdxSet();
 
 s32 func_8003647C();
 
@@ -2884,6 +2910,7 @@ void func_80037154();
 
 void func_80037188();
 
+/** Finds the ground hight and warps the player to it? */
 void func_80037334();
 
 void func_80037388();

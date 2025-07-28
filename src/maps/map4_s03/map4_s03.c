@@ -408,7 +408,7 @@ void Ai_Twinfeeler_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords
 
             if (chara->model_0.state_2 != 10)
             {
-                func_8004690C(0x61F);
+                func_8004690C(Sfx_Unk1567);
             }
         }
         else

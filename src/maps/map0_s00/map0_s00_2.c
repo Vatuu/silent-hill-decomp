@@ -184,9 +184,9 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00_2", func_800DB94C);
 
 void func_800DBE00() // 0x800DBE00
 {
-    func_8004690C(0x54F);
-    func_8004690C(0x551);
-    func_8004690C(0x550);
+    func_8004690C(Sfx_Unk1359);
+    func_8004690C(Sfx_Unk1361);
+    func_8004690C(Sfx_Unk1360);
 
     Sd_EngineCmd(22);
     func_800892A4(4);

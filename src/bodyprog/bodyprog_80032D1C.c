@@ -1142,8 +1142,8 @@ void GameState_MainLoadScreen_Update() // 0x800348E8
         {
             g_SysWork.flags_22A4 &= ~(1 << 10);
 
-            Sd_EngineCmd(1502);
-            Sd_EngineCmd(1501);
+            Sd_EngineCmd(Sfx_Unk1502);
+            Sd_EngineCmd(Sfx_Unk1501);
         }
     }
 }
@@ -1186,7 +1186,7 @@ void Demo_StartUp() // 0x80034964
                 g_GameWork.gameStateStep_598[0] = 3;
             }
 
-            Sd_EngineCmd(0x13u);
+            Sd_EngineCmd(19);
             break;
 
         case 1:
@@ -2162,7 +2162,7 @@ void func_80035F4C(s32 arg0, s32 arg1, u8* arg2) // 0x80035F4C
         if (D_800A99A0 != 3) 
         {
             D_800A99A0 = 3;
-            Sd_EngineCmd(0x12u);
+            Sd_EngineCmd(18);
         }
     } 
     else if (D_800A99A0 == 0) 
@@ -2204,7 +2204,7 @@ void func_8003640C(s32 arg0) // 0x8003640C
     }
 }
 
-void func_80036420() // 0x80036420
+void Savegame_MapRoomIdxSet() // 0x80036420
 {
     s32 x;
     s32 z;
@@ -2213,6 +2213,7 @@ void func_80036420() // 0x80036420
     x = g_SysWork.player_4C.chara_0.position_18.vx;
     z = g_SysWork.player_4C.chara_0.position_18.vz;
 
+    // Set map room index based on current player position.
     if (g_MapOverlayHeader.getMapRoomIdxFunc_4 == NULL)
     {
         newMapRoomIdx = 0;
@@ -2221,7 +2222,6 @@ void func_80036420() // 0x80036420
     {
         newMapRoomIdx = g_MapOverlayHeader.getMapRoomIdxFunc_4(x, z);
     }
-
     g_SavegamePtr->mapRoomIdx_A5 = newMapRoomIdx;
 }
 
@@ -2792,13 +2792,15 @@ void func_80037188() // 0x80037188
 
     for (i = 0; i < 2; i++)
     {
-        func_8004690C(0x529 + i);
+        func_8004690C(Sfx_Unk1321 + i);
     }
 }
 
 void Chara_PositionUpdateFromParams(s_AreaLoadParams* params) // 0x800371E8
 {
-    s32 rot = params->rotationY_4_16 * 16;
+    s32 rot;
+    
+    rot = params->rotationY_4_16 * 16;
 
     Math_SVectorSet(&g_SysWork.player_4C.chara_0.rotation_24, 0, rot, 0);
 
@@ -2826,7 +2828,7 @@ void Chara_PositionUpdateFromParams(s_AreaLoadParams* params) // 0x800371E8
     g_SysWork.cameraAngleY_237A = rot;
 
     func_8007E9C4();
-    func_80036420();
+    Savegame_MapRoomIdxSet();
 }
 
 void func_80037334() // 0x80037334
@@ -3087,7 +3089,7 @@ void GameState_InGame_Update() // 0x80038BD4
         case 1:
             DrawSync(0);
             func_80037154();
-            func_80036420();
+            Savegame_MapRoomIdxSet();
             func_800892A4(1);
 
             g_IntervalVBlanks     = 2;
@@ -3189,7 +3191,7 @@ void SysState_Gameplay_Update() // 0x80038BD4
     s_SubCharacter* playerChara = &g_SysWork.player_4C.chara_0;
 
     func_800373CC(~playerChara->field_41 != 0);
-    func_80036420();
+    Savegame_MapRoomIdxSet();
 
     switch (FP_ROUND_SCALED(playerChara->health_B0, 10, Q12_SHIFT))
     {
@@ -3442,12 +3444,12 @@ void func_8003943C()
             break;
 
         case MapOverlayId_MAP3_S03:
-            func_8004690C(0x5F5);
-            func_8004690C(0x5F7);
+            func_8004690C(Sfx_Unk1525);
+            func_8004690C(Sfx_Unk1527);
             break;
 
         case MapOverlayId_MAP0_S00:
-            func_8004690C(0x54E);
+            func_8004690C(Sfx_Unk1358);
             break;
 
         default:
@@ -3496,7 +3498,7 @@ void GameState_LoadStatusScreen_Update() // 0x800395C0
 
         if (func_80045B28())
         {
-            Sd_EngineCmd(0x13);
+            Sd_EngineCmd(19);
         }
 
         savegame = g_SavegamePtr;

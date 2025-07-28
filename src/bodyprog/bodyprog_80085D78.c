@@ -1397,11 +1397,11 @@ void func_800880F0(s32 arg0) // 0x800880F0
 
             if (arg0 == 0)
             {
-                Sd_EngineCmd(0x16);
+                Sd_EngineCmd(22);
             }
             else
             {
-                Sd_EngineCmd(0x17);
+                Sd_EngineCmd(23);
             }
 
             g_SysWork.timer_2C = 0;
