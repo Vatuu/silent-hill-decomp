@@ -226,7 +226,30 @@ void func_80041FF0() // 0x80041FF0
     func_80042300(&D_800C1020, D_800C1020.field_158);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_8004201C); // 0x8004201C
+void func_8004201C() // 0x8004201C
+{
+    s_func_8005B3A4* ptr;
+
+    ptr = &D_800C14A8[0];
+    while (ptr < (&D_800C14A8[8]))
+    {
+        if (ptr->field_14 == 0)
+        {
+            func_8005B3A4(ptr);
+        }
+        ptr++;
+    }
+
+    ptr = &D_800C1568[0];
+    while (ptr < (&D_800C1568[2]))
+    {
+        if (ptr->field_14 == 0)
+        {
+            func_8005B3A4(ptr);
+        }
+        ptr++;
+    }
+}
 
 void func_800420C0() // 0x800420C0
 {
@@ -559,7 +582,7 @@ s32 func_800449AC(s_Model* arg0, s_AnimInfo* arg1) // 0x800449AC
     }
     else
     {
-        return arg1->timeDelta_8.variableTimeDeltaFn();
+        return arg1->timeDelta_8.variableTimeDeltaFn(); // The arguments might be passed here.
     }
 }
 

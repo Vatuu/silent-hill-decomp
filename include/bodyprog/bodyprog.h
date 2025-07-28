@@ -184,7 +184,9 @@ typedef struct
     s32 field_C;
     s32 field_10;
     s8  field_14;
+    s8  unk_15[3];
 } s_func_8005B3A4;
+STATIC_ASSERT_SIZEOF(s_func_8005B3A4, 24);
 
 typedef struct
 {
@@ -1654,6 +1656,10 @@ extern s_800C1020 D_800C1020;
 
 extern s_800C1450 D_800C1450;
 
+extern s_func_8005B3A4 D_800C14A8[8];
+
+extern s_func_8005B3A4 D_800C1568[2];
+
 extern s_800C117C D_800C117C[];
 
 extern s8* D_800C15B0;
@@ -2105,6 +2111,8 @@ void func_80041D48();
 void func_80041E98();
 
 void func_80041FF0();
+
+void func_8004201C();
 
 void func_800420C0();
 
