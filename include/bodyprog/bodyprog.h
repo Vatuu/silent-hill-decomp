@@ -2783,7 +2783,7 @@ void func_8006CA18(s_func_8006CC44* arg0, s_func_800699E4* arg1, s_func_8006CA18
 
 s32 func_8006CC44(s32 arg0, s32 arg1, s_func_8006CC44* arg2);
 
-s32 func_8006DB3C(s_func_800700F8_2*, VECTOR3*, VECTOR3*, s_func_800700F8*);
+s32 func_8006DB3C(s_func_800700F8_2* arg0, VECTOR3* arg1, VECTOR3* arg2, s_func_800700F8* arg3);
 
 s32 func_8006FD90(s_SubCharacter*, s32, s32, s32);
 
