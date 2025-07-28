@@ -2154,6 +2154,9 @@ void func_800420C0();
 
 s32 func_80042178(s32* arg0);
 
+/** @brief Turn two hex char to its int hex value */
+s32 func_8004255C(s32* out, char firstHex, char secondHex);
+
 u32 func_80041B1C(void* arg0);
 
 s32 func_80042C04(s32 idx);

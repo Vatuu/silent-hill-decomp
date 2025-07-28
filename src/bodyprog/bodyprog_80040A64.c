@@ -285,7 +285,47 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80042300); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800423F4); // 0x800423F4
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_8004255C); // 0x8004255C
+s32 func_8004255C(s32* out, char firstHex, char secondHex) // 0x8004255C
+{
+    char low, high;
+    char letterIdx;
+    char hexVal;
+    bool isNumber;
+
+    high     = firstHex - '0';
+    isNumber = (high < 10);
+
+    hexVal = high;
+    hexVal <<= 4;
+    if (!isNumber)
+    {
+        letterIdx = (firstHex - 'A');
+        if (letterIdx > 5)
+        {
+            return 0;
+        }
+        hexVal = (firstHex + 0xC9) << 4;
+    }
+
+    low      = secondHex - '0';
+    isNumber = (low < 10);
+    if (isNumber)
+    {
+        hexVal |= low;
+    }
+    else
+    {
+        letterIdx = (secondHex - 'A');
+        if (letterIdx > 5)
+        {
+            return 0;
+        }
+        hexVal |= (secondHex + 0xC9);
+    }
+
+    *out = (hexVal << 24) >> 24; // Sign extend.
+    return 1;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800425D8); // 0x800425D8
 
