@@ -192,18 +192,18 @@ void func_80048244(u16 cmd) // 0x80048244
     {
         return;
     }
-    
+
     if (D_800C1658.field_4 != 0)
     {
         func_800478DC(2);
     }
-    
+
     func_80046AD8();
-    Sd_EngineCmd((u16)(cmd + 0xAD));
+    Sd_EngineCmd((u16)(cmd + 173)); // 173 must be some base value for a command category.
     func_800478DC(cmd);
 
-    D_800C37D0 = 0;
-    D_800C1658.field_6 = cmd;
+    D_800C37D0          = 0;
+    D_800C1658.field_6  = cmd;
     D_800C1658.field_15 = 1;
 }
 

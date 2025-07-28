@@ -18,7 +18,7 @@ extern CdlLOC D_800C15E8;
 
 void Sd_EngineCmd(u32 cmd) // 0x80045A7C
 {
-    switch ((cmd >> 8) & 0xFF)
+    switch ((cmd >> 8) & 0xFF) // Manipulate command to determine category.
     {
         case 0:
             func_80045BD8(cmd);
@@ -29,6 +29,7 @@ void Sd_EngineCmd(u32 cmd) // 0x80045A7C
             func_80046A24(cmd);
             return;
 
+        // Play SFX.
         case 5:
         case 6:
             Sd_PlaySfx(cmd, 0, 0);
@@ -101,9 +102,9 @@ u16 func_80045BC8() // 0x80045BC8
     return D_800C1666;
 }
 
-void func_80045BD8(u16 caseArg) // 0x80045BD8
+void func_80045BD8(u16 cmd) // 0x80045BD8
 {
-    switch (caseArg)
+    switch (cmd)
     {
         case 1:
             func_80045D28(0);
@@ -158,14 +159,14 @@ void func_80045BD8(u16 caseArg) // 0x80045BD8
             break;
     }
 
-    if (caseArg >= 160 && caseArg < 245)
+    if (cmd >= 160 && cmd < 245)
     {
-        func_80047B24(caseArg);
+        func_80047B24(cmd);
     }
 
-    if (caseArg >= 32 && caseArg < 72)
+    if (cmd >= 32 && cmd < 72)
     {
-        func_80048244(caseArg);
+        func_80048244(cmd);
     }
 }
 
@@ -311,6 +312,7 @@ u8 Sd_PlaySfx(u16 sfx, s8 arg1, u8 vol) // 0x80046048
     D_800C15BC = sfx - Sfx_Unk1280;
     volCpy     = vol;
 
+    // Copy key SFX data.
     D_800C1698.field_2 = D_800ACAA8[D_800C15BC].field_2 >> 8;
     D_800C1698.field_4 = D_800ACAA8[D_800C15BC].field_2 & 0xFF;
     D_800C1698.field_8 = D_800ACAA8[D_800C15BC].field_4;
@@ -536,19 +538,19 @@ void func_800468EC() // 0x800468EC
     SdUtKeyOffV(23);
 }
 
-void func_8004690C(u16 arg0) // 0x8004690C
+void func_8004690C(u16 sfx) // 0x8004690C
 {
-    func_8004692C(arg0);
+    func_8004692C(sfx);
 }
 
-void func_8004692C(u16 arg0) // 0x8004692C
+void func_8004692C(u16 cmd) // 0x8004692C
 {
-    if (arg0 == 0x500)
+    if (cmd == 0x500)
     {
         return;
     }
 
-    D_800C15C4 = arg0 - 0x500;
+    D_800C15C4 = cmd - 0x500;
     D_800C15C6 = D_800ACAA8[D_800C15C4].field_2;
     D_800C15C8 = D_800ACAA8[D_800C15C4].field_4 << 8;
     SdVoKeyOff(D_800C15C6, D_800C15C8);
@@ -574,11 +576,11 @@ void func_800469E8() // 0x800469E8
     }
 }
 
-void func_80046A24(u16 arg0) // 0x80046A24
+void func_80046A24(u16 cmd) // 0x80046A24
 {
-    if (D_800C1658.field_F.field_01 != arg0 && D_800C1658.field_E != arg0)
+    if (D_800C1658.field_F.field_01 != cmd && D_800C1658.field_E != cmd)
     {
-        D_800C1658.field_F.field_01 = arg0;
+        D_800C1658.field_F.field_01 = cmd;
         func_800478DC(7);
     }
 }
@@ -691,17 +693,20 @@ void func_80046C54(u8 arg0, u8 arg1) // 0x80046C54
     }
 }
 
-void func_80046D3C(u16 arg0) // 0x80046D3C
+void func_80046D3C(u16 cmd) // 0x80046D3C
 {
-    D_800C1658.field_2 = arg0 & 0xFFF;
+    D_800C1658.field_2 = cmd & 0xFFF;
 
     if (D_800AA894[D_800C1658.field_2].field_0 != 0)
     {
         D_800C37DC         = 1;
         D_800C1688.field_8 = VSync(-1);
         D_800C1688.field_4 = 0;
+
         func_800478DC(2);
+
         D_800C1658.field_4 = D_800C1658.field_2;
+
         func_800478DC(1);
     }
 }
@@ -1028,9 +1033,9 @@ s16 Sd_GetVolSe(s16 arg0) // 0x800478B8
     return (arg0 * g_Sd_VolumeSe) >> 7;
 }
 
-void func_800478DC(u8 arg0) // 0x800478DC
+void func_800478DC(u8 cmd) // 0x800478DC
 {
-    if (arg0 == 2)
+    if (cmd == 2)
     {
         for (D_800C15D8 = 1; D_800C15D8 < 30; D_800C15D8++)
         {
@@ -1049,7 +1054,7 @@ void func_800478DC(u8 arg0) // 0x800478DC
 
     for (D_800C15D8 = 1; D_800C15D8 < 30; D_800C15D8++)
     {
-        if (D_800C16A8[D_800C15D8] == arg0)
+        if (D_800C16A8[D_800C15D8] == cmd)
         {
             for (D_800C15DC = D_800C15D8; D_800C15DC < 30; D_800C15DC++)
             {
@@ -1064,7 +1069,7 @@ void func_800478DC(u8 arg0) // 0x800478DC
     {
         if (D_800C16A8[D_800C15D8] == 0)
         {
-            D_800C16A8[D_800C15D8] = arg0;
+            D_800C16A8[D_800C15D8] = cmd;
             break;
         }
     }

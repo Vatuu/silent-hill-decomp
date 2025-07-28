@@ -127,6 +127,8 @@ Game_SavegameInitialize = 0x800350BC; // type:func
 
 GameFs_MapLoad = 0x8003521C; // type:func
 
+Savegame_MapRoomIdxSet = 0x80036420; // type:func
+
 Chara_PositionUpdateFromParams = 0x800371E8; // type:func
 
 GameState_InGame_Update           = 0x80038BD4; // type:func

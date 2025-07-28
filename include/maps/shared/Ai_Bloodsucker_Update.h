@@ -42,11 +42,11 @@ void Ai_Bloodsucker_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coord
 
     if (!(chara->properties_E4.larvalStalker.properties_E8[13].val32 & (1 << 0)))
     {
-        Sd_EngineCmd(0x5F5);
+        Sd_EngineCmd(Sfx_Unk1525);
         chara->properties_E4.larvalStalker.properties_E8[13].val32 |= 1 << 0;
     }
 
-    func_8005DE0C(0x5F5, &chara->position_18, chara->properties_E4.larvalStalker.properties_E8[1].val32 >> 5, 0x10000, 0);
+    func_8005DE0C(Sfx_Unk1525, &chara->position_18, chara->properties_E4.larvalStalker.properties_E8[1].val32 >> 5, 0x10000, 0);
 
     if (chara->properties_E4.larvalStalker.properties_E8[1].val32 < chara->properties_E4.larvalStalker.properties_E8[2].val32)
     {
@@ -75,7 +75,7 @@ void Ai_Bloodsucker_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coord
         if (!(chara->properties_E4.larvalStalker.properties_E8[13].val32 & (1 << 1)))
         {
             chara->properties_E4.larvalStalker.properties_E8[13].val32 |= 1 << 1;
-            Sd_EngineCmd(0x5F7);
+            Sd_EngineCmd(Sfx_Unk1527);
         }
 
         chara->properties_E4.larvalStalker.properties_E8[3].val32 += FP_MULTIPLY_FLOAT((s64)g_DeltaTime0, 2.0f, Q12_SHIFT);
@@ -85,7 +85,7 @@ void Ai_Bloodsucker_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coord
             chara->properties_E4.larvalStalker.properties_E8[3].val32 = FP_FLOAT_TO(1.0f, Q12_SHIFT);
         }
 
-        func_8005DE0C(0x5F7, &chara->position_18, chara->properties_E4.larvalStalker.properties_E8[3].val32 >> 5, 0x10000, 0);
+        func_8005DE0C(Sfx_Unk1527, &chara->position_18, chara->properties_E4.larvalStalker.properties_E8[3].val32 >> 5, 0x10000, 0);
     }
     else if (chara->properties_E4.larvalStalker.properties_E8[13].val32 & (1 << 1))
     {
@@ -95,7 +95,7 @@ void Ai_Bloodsucker_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coord
         {
             chara->properties_E4.larvalStalker.properties_E8[3].val32 = 0;
             chara->properties_E4.larvalStalker.properties_E8[13].val32 &= ~(1 << 1);
-            func_8004690C(0x5F7);
+            func_8004690C(Sfx_Unk1527);
         }
     }
 }

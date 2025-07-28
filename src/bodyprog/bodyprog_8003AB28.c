@@ -11,6 +11,9 @@
 #include "main/rng.h"
 #include "screens/stream/stream.h"
 
+#define MAIN_MENU_OPTION_COUNT 5
+#define MAIN_MENU_FOG_COUNT    21
+
 const s32 g_rodataPad_8002547C = 0;
 
 void GameState_MainMenu_Update() // 0x8003AB28
@@ -24,10 +27,10 @@ void GameState_MainMenu_Update() // 0x8003AB28
         GameState_MovieIntro
     };
 
-    s32           playIntroFMV;
-    s32           var_v0;
-    s32           var_2;
-    s_ShSavegame* save0;
+    s32           playIntroFmv;
+    s32           prevGameDifficultyIdx;
+    s32           nextGameDifficultyIdx;
+    s_ShSavegame* save;
     e_GameState   prevState;
 
     func_80033548();
@@ -37,13 +40,13 @@ void GameState_MainMenu_Update() // 0x8003AB28
 	 * is a value divisible by 3, the intro FMV will play. Otherwise, it defaults to a gameplay
      * demo.
 	 */
-    playIntroFMV = ((g_Demo_ReproducedCount + 1) % 3) != 0;
+    playIntroFmv = ((g_Demo_ReproducedCount + 1) % 3) != 0;
 
     if (g_GameWork.gameStateStep_598[0] == 0)
     {
         g_MainMenuState = 0;
         
-        if (playIntroFMV != 0)
+        if (playIntroFmv != 0)
         {
             g_SysWork.flags_2298 = 1 << 5; // This flag disables player control.
         }
@@ -69,7 +72,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
             g_MainMenuState++;
 
         case MenuState_Main:
-            if (playIntroFMV != 0)
+            if (playIntroFmv != 0)
             {
                 Demo_StartUp();
 
@@ -84,11 +87,11 @@ void GameState_MainMenu_Update() // 0x8003AB28
                 }
             }
 
-            D_800A9A7C = 12;
+            D_800A9A7C = (1 << 2) | (1 << 3);
 
             if (g_GameWork.savegame_90.playerHealth_240 > 0)
             {
-                D_800A9A7C = 14;
+                D_800A9A7C = (1 << 1) | (1 << 2) | (1 << 3);
             }
 
             if (D_800BCD28 > 0)
@@ -108,11 +111,11 @@ void GameState_MainMenu_Update() // 0x8003AB28
                 }
             }
 
-            D_800A9A7C |= D_800A9A7C << 5;
+            D_800A9A7C |= D_800A9A7C << MAIN_MENU_OPTION_COUNT;
 
             if (g_Controller0->btnsPulsed_18 & (ControllerFlag_LStickUp | ControllerFlag_LStickDown))
             {
-                Sd_EngineCmd(0x519);
+                Sd_EngineCmd(Sfx_Back);
                 g_GameWork.gameState_594 = GameState_MainMenu;
 
                 if (g_GameWork.gameStateStep_598[0] != 1)
@@ -124,7 +127,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
 
             if (g_Controller0->btnsPulsed_18 & ControllerFlag_LStickUp)
             {
-                g_MainMenu_SelectedOptionIdx += 5;
+                g_MainMenu_SelectedOptionIdx += MAIN_MENU_OPTION_COUNT;
                 while(!(D_800A9A7C & (1 << --g_MainMenu_SelectedOptionIdx)))
                 {
                 }
@@ -137,7 +140,8 @@ void GameState_MainMenu_Update() // 0x8003AB28
                 }
             }
 
-            g_MainMenu_SelectedOptionIdx %= 5; // This is done for avoid overflow
+            // Wrap selection.
+            g_MainMenu_SelectedOptionIdx %= MAIN_MENU_OPTION_COUNT;
 
             if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
             {
@@ -154,16 +158,16 @@ void GameState_MainMenu_Update() // 0x8003AB28
 
                 if (g_MainMenu_SelectedOptionIdx < 2u)
                 {
-                    Sd_EngineCmd(0x501);
+                    Sd_EngineCmd(Sfx_StartGame);
                 }
                 else
                 {
-                    Sd_EngineCmd(0x51B);
+                    Sd_EngineCmd(Sfx_Confirm);
                 }
 
                 switch (g_MainMenu_SelectedOptionIdx)
                 {
-                    case 1: // Quick load
+                    case 1: // Quick load.
                         if (g_GameWork.savegame_90.playerHealth_240 > 0)
                         {
                             g_GameWork.savegame_30C = g_GameWork.savegame_90;
@@ -174,11 +178,11 @@ void GameState_MainMenu_Update() // 0x8003AB28
                         }
 
                         func_80035178();
-                        g_SysWork.flags_2298 = 0x10;
+                        g_SysWork.flags_2298 = 1 << 4;
                         GameFs_MapLoad(g_SavegamePtr->mapOverlayId_A4);
                         break;
 
-                    case 0: // Load save and load menu
+                    case 0: // Load save and load menu.
                         GameFs_SaveLoadBinLoad();
                         break;
 
@@ -187,7 +191,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
                         g_MainMenuState  = MenuState_DifficultySelector;
                         break;
 
-                    case 3: // Load options menu
+                    case 3: // Load options menu.
                         GameFs_OptionBinLoad();
                         break;
 
@@ -202,7 +206,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
             break;
 
         case MenuState_DifficultySelector:
-            if (playIntroFMV != 0)
+            if (playIntroFmv != 0)
             {
                 Demo_StartUp();
 
@@ -230,52 +234,51 @@ void GameState_MainMenu_Update() // 0x8003AB28
                 }
             }
 
+            // Scroll game difficulty options.
             if (g_Controller0->btnsPulsed_18 & ControllerFlag_LStickUp)
             {
-                var_v0 = 2;
-
+                prevGameDifficultyIdx = 2;
                 if (g_MainMenu_NewGameSelectedDifficultyIdx > 0)
                 {
-                    var_v0 = g_MainMenu_NewGameSelectedDifficultyIdx - 1;
+                    prevGameDifficultyIdx = g_MainMenu_NewGameSelectedDifficultyIdx - 1;
                 }
-
-                g_MainMenu_NewGameSelectedDifficultyIdx = var_v0;
+                g_MainMenu_NewGameSelectedDifficultyIdx = prevGameDifficultyIdx;
             }
-
             if (g_Controller0->btnsPulsed_18 & ControllerFlag_LStickDown)
             {
-                var_2 = 0;
-
+                nextGameDifficultyIdx = 0;
                 if (g_MainMenu_NewGameSelectedDifficultyIdx < 2)
                 {
-                    var_2 = g_MainMenu_NewGameSelectedDifficultyIdx + 1;
+                    nextGameDifficultyIdx = g_MainMenu_NewGameSelectedDifficultyIdx + 1;
                 }
-
-                g_MainMenu_NewGameSelectedDifficultyIdx = var_2;
+                g_MainMenu_NewGameSelectedDifficultyIdx = nextGameDifficultyIdx;
             }
 
+            // Play scroll sound.
             if (g_Controller0->btnsPulsed_18 & (ControllerFlag_LStickUp | ControllerFlag_LStickDown))
             {
-                Sd_EngineCmd(0x519u);
+                Sd_EngineCmd(Sfx_Back);
             }
 
+            // Select game difficulty.
             if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
             {
                 Game_SavegameInitialize(0, g_MainMenu_NewGameSelectedDifficultyIdx - 1);
                 func_80035178();
 
-                g_SysWork.flags_2298 = 4;
+                g_SysWork.flags_2298 = 1 << 2;
 
                 GameFs_MapLoad(0);
                 GameFs_StreamBinLoad();
-                Sd_EngineCmd(0x501);
+                Sd_EngineCmd(Sfx_StartGame);
 
                 g_Gfx_ScreenFade = 2;
                 g_MainMenuState  = 4;
             }
+            // Cancel
             else if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)
             {
-                Sd_EngineCmd(0x51A);
+                Sd_EngineCmd(Sfx_Cancel);
                 g_MainMenuState = 1;
             }
             break;
@@ -284,7 +287,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
         case MenuState_NewGameStart:
             if ((g_Gfx_ScreenFade & 0x7) == 5)
             {
-                Gfx_ScreenRefresh(320, 0); // Old idb `Sys_GFXReinit_800323C8(width, interlace_flag)`.
+                Gfx_ScreenRefresh(SCREEN_WIDTH, 0);
                 Fs_QueueWaitForEmpty();
 
                 if (g_GameWork.savegame_90.playerHealth_240 > 0)
@@ -308,6 +311,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
                 g_SysWork.timer_20              = 0;
                 g_GameWork.gameStateStep_598[1] = 0;
                 g_GameWork.gameStateStep_598[2] = 0;
+
                 SysWork_StateSetNext(SysState_Gameplay);
             }
             break;
@@ -318,7 +322,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
         g_SysWork.timer_20 = 0;
     }
 
-    if (playIntroFMV == 0)
+    if (playIntroFmv == 0)
     {
         switch (g_GameWork.gameStateStep_598[0])
         {
@@ -362,8 +366,8 @@ void GameState_MainMenu_Update() // 0x8003AB28
 
     *(s32*)0x1F800000 = 0x200000;
     *(s32*)0x1F800004 = 0x01C00140;
-    ClearImage2((RECT* )0x1F800000, 0u, 0u, 0u);
-    Gfx_Init(0x140u, 0);
+    ClearImage2((RECT*)0x1F800000, 0u, 0u, 0u);
+    Gfx_Init(SCREEN_WIDTH, 0);
 }
 
 void MainMenu_SelectedOptionIdxReset() // 0x8003B550
@@ -381,15 +385,16 @@ const char D_800254E4[] = "LOAD";
 
 void Gfx_MainMenu_MainTextDraw() // 0x8003B568
 {
-    static const u8 D_800254EC[] = {0x1D, 0x32, 0x20, 0x27, 0x21};
-    extern char* D_800A9A8C[]; // TODO: points to `D_800254C0` etc strings above, needs .data?
+    static const u8 D_800254EC[] = { 0x1D, 0x32, 0x20, 0x27, 0x21 };
+    extern char*    D_800A9A8C[]; // TODO: Points to `D_800254C0` etc. strings above, needs .data?
 
     #define STR_POS_X_BASE 158
     #define STR_POS_Y_BASE 184
 
     s32 i;
 
-    for (i = 0; i < 5; i++)
+    // Run through options.
+    for (i = 0; i < MAIN_MENU_OPTION_COUNT; i++)
     {
         if (D_800A9A7C & (1 << i))
         {
@@ -423,8 +428,8 @@ const char D_80025514[] = "EASY";
 
 void Gfx_MainMenu_DifficultyTextDraw(s32 arg0) // 0x8003B678
 {
-    static const u8 D_8002551C[] = {0x1C, 0x2B, 0x1E, 0x4C, 0x00, 0x95, 0xAB, 0x90, 0x00, 0x00, 0x00, 0x00}; // Only first 3 are used, what are others for?
-    extern char* D_800A9AA0[]; // TODO: points to `D_80025504` etc strings above, needs .data?
+    static const u8 D_8002551C[] = { 0x1C, 0x2B, 0x1E, 0x4C, 0x00, 0x95, 0xAB, 0x90, 0x00, 0x00, 0x00, 0x00 }; // Only first 3 are used, what are others for?
+    extern char*    D_800A9AA0[]; // TODO: points to `D_80025504` etc strings above, needs .data?
 
     s32 i;
 
@@ -504,18 +509,18 @@ PACKET* Gfx_MainMenu_FogPacketGet(GsOT* ot, PACKET* packet) // 0x8003B838
     s32      color1;
     POLY_G4* poly;
 
-    for (i = 10; i < 21; i++)
+    for (i = 10; i < MAIN_MENU_FOG_COUNT; i++)
     {
-        color1 = func_8003B7FC(21 * (i - 1));
-        color3 = func_8003B7FC(21 * i);
+        color1 = func_8003B7FC(MAIN_MENU_FOG_COUNT * (i - 1));
+        color3 = func_8003B7FC(MAIN_MENU_FOG_COUNT * i);
 
-        for (j = 1; j < 21; j++)
+        for (j = 1; j < MAIN_MENU_FOG_COUNT; j++)
         {
             color2 = color3;
             color0 = color1;
 
-            color1 = func_8003B7FC(j + (21 * (i - 1)));
-            color3 = func_8003B7FC(j + (21 * i));
+            color1 = func_8003B7FC(j + (MAIN_MENU_FOG_COUNT * (i - 1)));
+            color3 = func_8003B7FC(j + (MAIN_MENU_FOG_COUNT * i));
 
             poly = packet;
             setPolyG4(poly);
@@ -523,10 +528,10 @@ PACKET* Gfx_MainMenu_FogPacketGet(GsOT* ot, PACKET* packet) // 0x8003B838
             yOffset = (i - 1) * 24;
 
             setXY4(poly,
-                   (-176 + (16 * j)), yOffset - 208,
-                   (-160 + (16 * j)), yOffset - 208,
-                   (-176 + (16 * j)), yOffset - 184,
-                   (-160 + (16 * j)), yOffset - 184);
+                   -176 + (16 * j), yOffset - 208,
+                   -160 + (16 * j), yOffset - 208,
+                   -176 + (16 * j), yOffset - 184,
+                   -160 + (16 * j), yOffset - 184);
 
             *((u32*)&poly->r0) = color0;
             *((u32*)&poly->r1) = color1;
@@ -537,6 +542,7 @@ PACKET* Gfx_MainMenu_FogPacketGet(GsOT* ot, PACKET* packet) // 0x8003B838
             packet += sizeof(POLY_G4);
         }
     }
+
     return packet;
 }
 
@@ -574,21 +580,19 @@ void Gfx_MainMenu_FogRandomize() // 0x8003BAC4
 
     for (i = 0; i < 16; i++)
     {
-        idx       = (s32)Rng_Rand16() % 21;
+        idx       = (s32)Rng_Rand16() % MAIN_MENU_FOG_COUNT;
         ptr1[idx] = NO_VALUE;
     }
 
     for (i = 0; i < 9; i++)
     {
-        idx       = (s32)Rng_Rand16() % 21;
+        idx       = (s32)Rng_Rand16() % MAIN_MENU_FOG_COUNT;
         ptr1[idx] = 0;
     }
 }
 
 void Gfx_MainMenu_FogScatter() // 0x8003BBF4
 {
-    #define FOG_COUNT 21
-
     s32 i;
     s32 j;
     s32 val;
@@ -596,13 +600,13 @@ void Gfx_MainMenu_FogScatter() // 0x8003BBF4
 
     Gfx_MainMenu_FogRandomize();
 
-    for (i = 0; i < FOG_COUNT; i++)
+    for (i = 0; i < MAIN_MENU_FOG_COUNT; i++)
     {
-        ptr = &D_800BCDE0[i * FOG_COUNT];
+        ptr = &D_800BCDE0[i * MAIN_MENU_FOG_COUNT];
         
-        for (j = 0; j < FOG_COUNT; j++)
+        for (j = 0; j < MAIN_MENU_FOG_COUNT; j++)
         {
-            val   = ptr[j + FOG_COUNT];
+            val   = ptr[j + MAIN_MENU_FOG_COUNT];
             val  += ptr[j - 1];
             val  += ptr[j];
             val  += ptr[j + 1];
