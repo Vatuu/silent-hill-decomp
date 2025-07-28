@@ -150,12 +150,17 @@ SysState_EventSetFlag_Update      = 0x8003A460; // type:func
 SysState_EventPlaySound_Update    = 0x8003A4B4; // type:func
 SysState_GameOver_Update          = 0x8003A52C; // type:func
 GameState_MapEvent_Update         = 0x8003AA4C; // type:func
-GameState_MainMenu_Update         = 0x8003AB28; // type:func
 
-Gfx_MainMenu_MainTextDraw       = 0x8003B568;
-Gfx_MainMenu_DifficultyTextDraw = 0x8003B678;
-Gfx_MainMenu_BgDraw             = 0x8003B758;
-
+GameState_MainMenu_Update       = 0x8003AB28; // type:func
+Gfx_MainMenu_MainTextDraw       = 0x8003B568; // type:func
+MainMenu_SelectedOptionIdxReset = 0x8003B550; // type:func
+Gfx_MainMenu_DifficultyTextDraw = 0x8003B678; // type:func
+Gfx_MainMenu_BackgroundDraw     = 0x8003B758; // type:func
+Gfx_MainMenu_FogPacketGet       = 0x8003B838; // type:func
+Gfx_MainMenu_FogDraw            = 0x8003BA08; // type:func
+Gfx_MainMenu_FogRandomize       = 0x8003BAC4; // type:func
+Gfx_MainMenu_FogScatter         = 0x8003BBF4; // type:func
+Gfx_MainMenu_FogUpdate          = 0x8003BC8C; // type:func
 
 GameFs_BgEtcGfxLoad = 0x8003BE6c; // type:func
 GameFs_BgItemLoad   = 0x8003BE9c; // type:func

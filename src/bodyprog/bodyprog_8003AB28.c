@@ -31,10 +31,11 @@ void GameState_MainMenu_Update() // 0x8003AB28
     e_GameState   prevState;
 
     func_80033548();
-	/** Checks if after being idle for a while in the title screen it will reproduce
-	 * a demo gameplay or the intro FMV, if the next value from `g_Demo_ReproducedCount`
-	 * is a value that jumps in 3 (starting to count from 0) then it will reproduce the
-	 * intro FMV if not it will reproduce a demo gameplay
+
+	/** After staying idle in the title screen for some time, checks if the intro FMV or a
+	 * demo gameplay segment should be played. If the next value from `g_Demo_ReproducedCount`
+	 * is a value divisible by 3, the intro FMV will play. Otherwise, it defaults to a gameplay
+     * demo.
 	 */
     playIntroFMV = ((g_Demo_ReproducedCount + 1) % 3) != 0;
 
@@ -44,7 +45,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
         
         if (playIntroFMV != 0)
         {
-            g_SysWork.flags_2298 = 0x20; // This disables the player control
+            g_SysWork.flags_2298 = 1 << 5; // This flag disables player control.
         }
         else
         {
@@ -346,7 +347,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
 
     if (g_GameWork.gameState_594 == GameState_MainMenu)
     {
-        Gfx_MainMenu_BgDraw();
+        Gfx_MainMenu_BackgroundDraw();
         func_8003B560();
 
         if (g_MainMenuState < 3)
@@ -365,7 +366,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
     Gfx_Init(0x140u, 0);
 }
 
-void func_8003B550() // 0x8003B550
+void MainMenu_SelectedOptionIdxReset() // 0x8003B550
 {
     g_MainMenu_SelectedOptionIdx = 1;
 }
@@ -452,7 +453,7 @@ void Gfx_MainMenu_DifficultyTextDraw(s32 arg0) // 0x8003B678
     }
 }
 
-void Gfx_MainMenu_BgDraw() // 0x8003B758
+void Gfx_MainMenu_BackgroundDraw() // 0x8003B758
 {
     if (g_SysWork.sysState_8 == 0)
     {
@@ -467,7 +468,7 @@ void Gfx_MainMenu_BgDraw() // 0x8003B758
     }
 
     Gfx_BackgroundSpriteDraw(&g_TitleImg);
-    func_8003BC8C();
+    Gfx_MainMenu_FogUpdate();
 }
 
 void func_8003B7BC() // 0x8003B7BC
@@ -482,7 +483,7 @@ void func_8003B7BC() // 0x8003B7BC
 u32 func_8003B7FC(s32 idx) // 0x8003B7FC
 {
     u8  idx0 = D_800BCDE0[idx];
-    u32 val = D_800A9AAC[idx0];
+    u32 val  = D_800A9AAC[idx0];
 
     if (idx < 210)
     {
@@ -492,7 +493,7 @@ u32 func_8003B7FC(s32 idx) // 0x8003B7FC
     return val;
 }
 
-PACKET* func_8003B838(GsOT* ot, PACKET* packet) // 0x8003B838
+PACKET* Gfx_MainMenu_FogPacketGet(GsOT* ot, PACKET* packet) // 0x8003B838
 {
     s32      yOffset;
     s32      i;
@@ -539,36 +540,36 @@ PACKET* func_8003B838(GsOT* ot, PACKET* packet) // 0x8003B838
     return packet;
 }
 
-void func_8003BA08() // 0x8003BA08
+void Gfx_MainMenu_FogDraw() // 0x8003BA08
 {
     PACKET*   packet;
     GsOT_TAG* tag;
 
     tag    = g_ObjectTable1[g_ObjectTableIdx].org;
-    packet = func_8003B838(&tag[6], GsOUT_PACKET_P);
+    packet = Gfx_MainMenu_FogPacketGet(&tag[6], GsOUT_PACKET_P);
     SetDrawMode((DR_MODE*)packet, 0, 1, 0x2A, NULL);
     addPrim(&tag[6], packet);
     GsOUT_PACKET_P = packet + sizeof(DR_MODE);
 }
 
-void func_8003BAC4() // 0x8003BAC4
+void Gfx_MainMenu_FogRandomize() // 0x8003BAC4
 {
     s32 idx;
     s32 i;
-    s32 value;
+    s32 val;
     s8* ptr;
     u8* ptr1;
     s8* ptr2;
 
     ptr         = D_800BCDE0;
     ptr1        = ptr + 441;
-    D_800A9EAC += 4 + ((s32)Rng_Rand16() & 7);
-    value       = FP_MULTIPLY(shRsin(D_800A9EAC), 10, Q12_SHIFT) - 122;
+    D_800A9EAC += 4 + ((s32)Rng_Rand16() & 0x7);
+    val         = FP_MULTIPLY(shRsin(D_800A9EAC), 10, Q12_SHIFT) - 122;
     ptr2        = ptr + 461;
 
     for (i = 20; i >= 0; i--)
     {
-        *ptr2-- = value;
+        *ptr2-- = val;
     }
 
     for (i = 0; i < 16; i++)
@@ -584,27 +585,29 @@ void func_8003BAC4() // 0x8003BAC4
     }
 }
 
-void func_8003BBF4() // 0x8003BBF4
+void Gfx_MainMenu_FogScatter() // 0x8003BBF4
 {
-    s32 val;
-    s32 j;
+    #define FOG_COUNT 21
+
     s32 i;
+    s32 j;
+    s32 val;
     u8* ptr;
 
-    func_8003BAC4();
+    Gfx_MainMenu_FogRandomize();
 
-    for (i = 0; i < 21; i++)
+    for (i = 0; i < FOG_COUNT; i++)
     {
-        ptr = &D_800BCDE0[i * 21];
+        ptr = &D_800BCDE0[i * FOG_COUNT];
         
-        for (j = 0; j < 21; j++)
+        for (j = 0; j < FOG_COUNT; j++)
         {
-            val   = ptr[j + 21];
+            val   = ptr[j + FOG_COUNT];
             val  += ptr[j - 1];
             val  += ptr[j];
             val  += ptr[j + 1];
             val >>= 2;
-            val  -= 1;
+            val--;
             
             if (val <= 0) 
             {
@@ -618,15 +621,15 @@ void func_8003BBF4() // 0x8003BBF4
     }
 }
 
-void func_8003BC8C() // 0x8003BC8C
+void Gfx_MainMenu_FogUpdate() // 0x8003BC8C
 {
     if (D_800A9EB0 == ((D_800A9EB0 / 5) * 5))
     {
-        func_8003BBF4(D_800A9EB0);
+        Gfx_MainMenu_FogScatter(D_800A9EB0);
     }
 
     D_800A9EB0++;
-    func_8003BA08();
+    Gfx_MainMenu_FogDraw();
 }
 
 void func_8003BCF4() // 0x8003BCF4
@@ -637,7 +640,7 @@ void func_8003BCF4() // 0x8003BCF4
 
     for (i = 0; i < 30; i++)
     {
-        func_8003BBF4();
+        Gfx_MainMenu_FogScatter();
     }
 }
 

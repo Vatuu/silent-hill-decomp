@@ -1303,6 +1303,7 @@ extern s32 D_800A9A28;
 
 extern s8 D_800A98FC[];
 
+/** Related to main menu fog randomization. */
 extern s32 D_800A9EAC;
 
 extern s32 D_800A9EB0;
@@ -1646,6 +1647,7 @@ extern s32 D_800BCDC0[];
 
 extern u8 D_800BCDD4;
 
+/** Related to main menu fog randomization. */
 extern s8* D_800BCDE0; // Type assumed.
 
 extern s16 D_800BCDE8[];
@@ -2004,10 +2006,6 @@ void func_8003943C();
  * Movie to play is decided by `2072 - g_MapEventIdx`
  * After playback, savegame gets `D_800BCDD8->eventFlagNum_2` event flag set. */
 void SysState_Fmv_Update();
-
-void func_8003B550();
-
-void Gfx_MainMenu_MainTextDraw();
 
 s32 func_8003BD2C();
 
@@ -2940,11 +2938,41 @@ void SysState_GameOver_Update();
 
 void GameState_MapEvent_Update();
 
-void func_8003BC8C();
+// ====================
+// Main menu functions - TODO: Maybe a split around here?
+// ====================
 
+void GameState_MainMenu_Update();
+
+void MainMenu_SelectedOptionIdxReset();
+
+void Gfx_MainMenu_MainTextDraw();
+
+void Gfx_MainMenu_DifficultyTextDraw(s32 arg0);
+
+void Gfx_MainMenu_BackgroundDraw();
+
+void func_8003B7BC();
+
+u32 func_8003B7FC(s32 idx);
+
+PACKET* Gfx_MainMenu_FogPacketGet(GsOT* ot, PACKET* packet);
+
+void Gfx_MainMenu_FogDraw();
+
+void Gfx_MainMenu_FogRandomize();
+
+void Gfx_MainMenu_FogScatter();
+
+void Gfx_MainMenu_FogUpdate();
+
+/** Related to main menu fog. */
 void func_8003BCF4();
 
+/** Related to main menu fog. */
 void func_8003BE28();
+
+// ====================
 
 s32 func_8003BE50(s32 idx);
 

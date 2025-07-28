@@ -3919,7 +3919,7 @@ void SysState_GameOver_Update() // 0x8003A52C
                 g_GameWork.savegame_90.continueCount_27B++;
             }
 
-            func_8003B550();
+            MainMenu_SelectedOptionIdxReset();
 
             // If every game over tip has been seen, reset flag bits.
             if (g_GameWork.config_0.seenGameOverTips_2E[0] == 0x7FFF)
@@ -3955,7 +3955,7 @@ void SysState_GameOver_Update() // 0x8003A52C
                 if (!Flags16b_IsSet(seenTipIdxs, tipIdx))
                 {
                     if ((!(g_SysWork.field_2388.field_154.field_0.field_0.field_0 & 0x3) && (tipIdx - 13) >= 2u) ||
-                        ((g_SysWork.field_2388.field_154.field_0.field_0.field_0 & 0x3) && (tipIdx - 13) < 2u))
+                        ( (g_SysWork.field_2388.field_154.field_0.field_0.field_0 & 0x3) && (tipIdx - 13) <  2u))
                     {
                         if (randTipVal < 3)
                         {
@@ -3983,11 +3983,11 @@ void SysState_GameOver_Update() // 0x8003A52C
             SysWork_StateStepIncrement();
 
         case 1:
-            func_8008616C(2, 1, 0, 0x800, 0);
+            func_8008616C(2, 1, 0, FP_TIME(0.5f), 0);
             break;
 
         case 2:
-            func_8008616C(0, 0, 0, 0x800, 0);
+            func_8008616C(0, 0, 0, FP_TIME(0.5f), 0);
             SysWork_StateStepIncrement();
 
         case 3:
@@ -4006,7 +4006,7 @@ void SysState_GameOver_Update() // 0x8003A52C
         case 4:
             Gfx_StringSetPosition(SCREEN_POSITION_X(32.5f), SCREEN_POSITION_Y(43.5f));
             Gfx_StringDraw("\aGAME_OVER", 0x63);
-            func_8008616C(2, 1, 0, 0x2000, 0);
+            func_8008616C(2, 1, 0, FP_TIME(2.0f), 0);
             break;
 
         case 5:
@@ -4028,7 +4028,7 @@ void SysState_GameOver_Update() // 0x8003A52C
             }
 
         case 6:
-            func_8008616C(2, 0, 0, 0x2000, 0);
+            func_8008616C(2, 0, 0, FP_TIME(2.0f), 0);
             g_SysWork.field_28 = 0;
             Gfx_BackgroundSpriteDraw(&g_DeathTipImg);
             break;
@@ -4055,7 +4055,7 @@ void SysState_GameOver_Update() // 0x8003A52C
 
         case 8:
             Gfx_BackgroundSpriteDraw(&g_DeathTipImg);
-            func_8008616C(2, 1, 0, 0x2000, 0);
+            func_8008616C(2, 1, 0, FP_TIME(2.0f), 0);
             break;
 
         default:
@@ -4088,4 +4088,3 @@ void GameState_MapEvent_Update() // 0x8003AA4C
 
     Gfx_BackgroundSpriteDraw(&g_ItemInspectionImg);
 }
-

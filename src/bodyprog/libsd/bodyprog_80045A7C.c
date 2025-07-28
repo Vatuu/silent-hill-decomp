@@ -11,7 +11,7 @@
 
 extern CdlLOC D_800C15E8;
 
-/** This file could possibly be `sdmgr.c` or
+/** This file could possibly be `sdmgr.c`, or
 * at least starting from `sd_init` function it
 * could be.
 */
@@ -36,7 +36,7 @@ void Sd_EngineCmd(u32 cmd) // 0x80045A7C
 
         case 7:
         case 8:
-            func_8004692C((cmd - 0x200));
+            func_8004692C(cmd - 0x200);
             return;
 
         case 11:
