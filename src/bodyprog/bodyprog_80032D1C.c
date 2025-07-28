@@ -2858,15 +2858,11 @@ void func_80037388() // 0x80037388
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80032D1C", func_800373CC); // 0x800373CC
 
-// `if (-deltaRotY < 0x156)` causes a minor missmatch.
-#ifdef NON_MATCHING
 s32 func_800378D4(s_AreaLoadParams* areaLoadParams) // 0x800378D4
 {
     s16 rotY;
     s32 temp_a0;
     s32 temp_a1;
-    s32 var_v0_2;
-    s32 var_v0_3;
     s32 deltaRotY;
 
     if (g_MainLoop_FrameCount > D_800A9A20)
@@ -2876,58 +2872,41 @@ s32 func_800378D4(s_AreaLoadParams* areaLoadParams) // 0x800378D4
         D_800A9A28 = g_SysWork.player_4C.chara_0.position_18.vz - (shRcos(rotY) >> 3);
         D_800A9A20 = g_MainLoop_FrameCount;
     }
-    
+
     temp_a0 = areaLoadParams->char_x_0 - D_800A9A24;
 
-    // Messing with this earlier gave me same result as our `ABS_DIFF` macro.
-    // eg: ((a - b) < 0) ? (b - a) : (a - b)
-    // interesting but not sure what the cause of that was though
-    // it seems to match here now at least
-    // TODO: PSY-Q headers do include their own `ABS` and `_ABS` macro that might match our one.
-    //var_v0_2 = abs(temp_a0);
-    
-    if (abs(temp_a0) > FP_FLOAT_TO(0.8f, Q12_SHIFT))
+    if (ABS(temp_a0) > FP_FLOAT_TO(0.8f, Q12_SHIFT))
     {
         return 0;
     }
-    
+
     temp_a1 = areaLoadParams->char_z_8 - D_800A9A28;
-    //var_v0_3 = abs(temp_a1);
-    
-    if (abs(temp_a1) > FP_FLOAT_TO(0.8f, Q12_SHIFT))
+
+    if (ABS(temp_a1) > FP_FLOAT_TO(0.8f, Q12_SHIFT))
     {
         return 0;
     }
 
-    if ((SQUARE(temp_a0) + SQUARE(temp_a1)) <= SQUARE(FP_FLOAT_TO(0.8f, Q12_SHIFT)))
+    if ((SQUARE(temp_a0) + SQUARE(temp_a1)) > SQUARE(FP_FLOAT_TO(0.8f, Q12_SHIFT)))
     {
-        deltaRotY = g_SysWork.player_4C.chara_0.rotation_24.vy - ratan2(temp_a0, temp_a1);
-        if (deltaRotY >= FP_ANGLE(180.0f))
-        {
-            deltaRotY -= FP_ANGLE(360.0f);
-        }
-
-        if (deltaRotY >= 0)
-        {
-            if (deltaRotY <= FP_ANGLE(30.0f))
-            {
-                return 1;
-            }
-        }
-        else
-        {
-            if (-deltaRotY <= FP_ANGLE(30.0f))
-            {
-                return 1;
-            }
-        }
+        return 0;
     }
 
-    return 0;
+    deltaRotY = g_SysWork.player_4C.chara_0.rotation_24.vy - ratan2(temp_a0, temp_a1);
+    if (deltaRotY >= FP_ANGLE(180.0f))
+    {
+        deltaRotY -= FP_ANGLE(360.0f);
+    }
+
+    if (0x155 < ABS(deltaRotY))
+    {
+        return 0;
+    }
+    else
+    {
+        return 1;
+    }
 }
-#else
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80032D1C", func_800378D4); // 0x800378D4
-#endif
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80032D1C", func_80037A4C); // 0x80037A4C
 
