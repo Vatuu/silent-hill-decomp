@@ -1224,7 +1224,20 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80070030); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80070084); // 0x80070084
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_800700F8); // 0x800700F8
+s32 func_800700F8(s_func_800700F8* arg0, s_func_800700F8* arg1) // 0x800700F8
+{
+    s_func_800700F8_2 sp10;
+    VECTOR3           vec0;
+    VECTOR3           vec1;
+
+    vec0 = arg0->field_18;
+
+    vec1.vx = arg1->field_18.vx - arg0->field_18.vx;
+    vec1.vy = -0x199;
+    vec1.vz = arg1->field_18.vz - arg0->field_18.vz;
+
+    return (func_8006DB3C(&sp10, &vec0, &vec1, arg0) && (sp10.field_10 == 0));
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80070184); // 0x80070184
 
