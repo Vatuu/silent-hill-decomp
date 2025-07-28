@@ -11,6 +11,8 @@
 #include "main/rng.h"
 #include "screens/stream/stream.h"
 
+extern s_800C4168 const D_800C4168;
+
 const s32 g_rodataPad_8002547C = 0;
 
 void GameState_MainMenu_Update() // 0x8003AB28
@@ -1757,7 +1759,44 @@ void func_8003D9C8(s_800BCE18_0_CC* arg0) // 0x8003D9C8
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8003AB28", func_8003DA9C); // 0x8003DA9C
+void func_8003DA9C(s32 arg0, GsCOORDINATE2* coord, s32 arg2, s16 arg3, s32 arg4) // 0x8003DA9C
+{
+    s_800C4168_28 sp20 = {0};
+    u16           ret;
+
+    if (arg0 == 0)
+    {
+        return;
+    }
+
+    arg3 = CLAMP(arg3, 0, 0x1000);
+
+    if (arg0 == 1)
+    {
+        func_8003D058();
+    }
+
+    ret = func_8003DD74(arg0, arg4);
+
+    if (arg3 != 0)
+    {
+        sp20 = D_800C4168.field_28;
+
+        func_80055330(D_800C4168.field_0, D_800C4168.field_20,
+                      D_800C4168.field_3,
+                      FP_MULTIPLY(0x1000 - arg3, (s64)D_800C4168.field_28.field_0, Q12_SHIFT) << 5,
+                      FP_MULTIPLY(0x1000 - arg3, (s64)D_800C4168.field_28.field_1, Q12_SHIFT) << 5,
+                      FP_MULTIPLY(0x1000 - arg3, (s64)D_800C4168.field_28.field_2, Q12_SHIFT) << 5,
+                      D_800C4168.field_8);
+    }
+
+    func_80045534(&D_800BCE18.field_0[0].field_18[arg0]->field_14, &g_ObjectTable0[g_ObjectTableIdx], arg2, coord, g_Chara_FileInfo[arg0].field_6 * 16, ret, g_Chara_FileInfo[arg0].field_8);
+
+    if (arg3 != 0)
+    {
+        func_80055330(D_800C4168.field_0, D_800C4168.field_20, D_800C4168.field_3, sp20.field_0 << 5, sp20.field_1 << 5, sp20.field_2 << 5, D_800C4168.field_8);
+    }
+}
 
 s32 func_8003DD74(s32 arg0, s32 arg1) // 0x8003DD74
 {
@@ -2158,7 +2197,44 @@ void func_8003E544(s_Skeleton* skel, s32 arg1) // 0x8003E544
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8003AB28", func_8003E5E8);
+void func_8003E5E8(s32 arg0) // 0x8003E5E8
+{
+    GsOT_TAG* ot;
+    s32       i;
+    u8        color;
+    PACKET*   packet;
+    LINE_G2*  line;
+
+    packet = GsOUT_PACKET_P;
+    ot     = &g_ObjectTable0[g_ObjectTableIdx].org[1];
+
+    for (i = -10; i < 11; i++)
+    {
+        line = (LINE_G2*)packet;
+        setLineG2(line);
+
+        line->x1 = ((g_GameWork.gsScreenWidth_588 - 64) / 20) * i;
+        line->x0 = line->x1;
+
+        line->y0 = -16;
+        line->y1 = (g_GameWork.gsScreenHeight_58A / 2) - 45;
+
+        color = (arg0 * 8) + 4;
+
+        line->b1 = color;
+        line->g1 = color;
+        line->r1 = color;
+
+        line->b0 = color;
+        line->g0 = color;
+        line->r0 = color;
+
+        AddPrim(ot, line);
+        packet += sizeof(LINE_G2);
+    }
+
+    GsOUT_PACKET_P = packet;
+}
 
 void GameFs_FlameGfxLoad() // 0x8003E710
 {
@@ -2930,8 +3006,6 @@ void func_8003FE04(s_sub_StructUnk3* arg0, s_sub_StructUnk3* arg1, s_sub_StructU
     }
 }
 
-// TODO: Requires `D_800C4168` to be `const`, but `func_800553C4` writes to it so it can't be?
-#ifdef NON_MATCHING
 s32 func_8003FEC0(s_sub_StructUnk3* arg0) // 0x8003FEC0
 {
     if (D_800C4168.field_1 != 0)
@@ -2946,9 +3020,6 @@ s32 func_8003FEC0(s_sub_StructUnk3* arg0) // 0x8003FEC0
 
     return FP_FLOAT_TO(20.0f, Q12_SHIFT);
 }
-#else
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_8003AB28", func_8003FEC0);
-#endif
 
 void func_8003FF2C(s_StructUnk3* arg0) // 0x8003FF2C
 {

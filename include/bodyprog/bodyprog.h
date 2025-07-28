@@ -905,38 +905,44 @@ typedef struct
 
 typedef struct
 {
-    s8      field_0;
-    u8      field_1;
-    s8      field_2;
-    s8      field_3;
-    s32     field_4;
-    s32     field_8;
-    s8      unk_C[12];
-    s32     field_18;
-    u8      field_1C;
-    u8      field_1D;
-    u8      field_1E;
-    s32     field_20;
-    s8      field_24;
-    s8      field_25;
-    s8      field_26;
-    s8      unk_27;
-    s8      field_28;
-    s8      field_29;
-    s8      field_2A;
-    s16     field_2C;
-    s16     field_2E;
-    s16     field_30;
-    s16     field_32;
-    s16     field_34;
-    s16     field_36;
-    s16     field_38;
-    s16     field_3A;
-    s16     field_3C;
-    s32     field_4C;
-    s32     field_50;
-    s8      unk_54[24];
-    VECTOR3 field_60; // Type assumed.
+    u8 field_0;
+    u8 field_1;
+    u8 field_2;
+    u8 field_3;
+} s_800C4168_28;
+
+typedef struct
+{
+    u8            field_0;
+    u8            field_1;
+    s8            field_2;
+    s8            field_3;
+    s32           field_4;
+    s32           field_8;
+    s8            unk_C[12];
+    s32           field_18;
+    u8            field_1C;
+    u8            field_1D;
+    u8            field_1E;
+    s32           field_20;
+    s8            field_24;
+    s8            field_25;
+    s8            field_26;
+    s8            unk_27;
+    s_800C4168_28 field_28;
+    s16           field_2C;
+    s16           field_2E;
+    s16           field_30;
+    s16           field_32;
+    s16           field_34;
+    s16           field_36;
+    s16           field_38;
+    s16           field_3A;
+    s16           field_3C;
+    s32           field_4C;
+    s32           field_50;
+    s8            unk_54[24];
+    VECTOR3       field_60; // Type assumed.
 } s_800C4168;
 
 typedef struct
@@ -967,7 +973,7 @@ typedef struct
     s16   animFileIdx;
     s16   modelFileIdx;
     s16   textureFileIdx : 16;
-    s16   field_6        : 10;
+    u16   field_6 : 10;
     u16   field_6_10     : 6;
     void* field_8;
     u16   field_C_0 : 2;
@@ -1841,7 +1847,11 @@ extern u8 D_800C4169;
 
 extern u8 D_800C416A;
 
-extern s_800C4168 D_800C4168;
+/*
+Functions from `bodyprog_8003AB28` access `D_800C4168` as constant, but some functions from `bodyprog_80055028` write to it.
+It appears that D_800C4168 is intended to be defined inside `bodyprog_80055028` as writable and declared as read-only (`const`) outside of it.
+*/
+// extern s_800C4168 D_800C4168;
 
 extern s32 D_800C4180;
 
@@ -2345,7 +2355,7 @@ void func_80054FC0(s32* arg0, s32* arg1, u8 idx);
 
 void func_80055028();
 
-void func_80055330(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6);
+void func_80055330(u8 arg0, s32 arg1, u8 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6);
 
 s32 func_80057208();
 
