@@ -25,6 +25,7 @@ void func_800CF1B0();
 
 void func_800D0960(s32 arg0);
 
+/** @brief Sets a map overlay value based on a whether a game event flag is set. */
 void func_800D0994();
 
 void func_800D09D4();

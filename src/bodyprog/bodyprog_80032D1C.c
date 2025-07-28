@@ -290,7 +290,7 @@ void Settings_ScreenAndVolUpdate() // 0x0x800333CC
 void Settings_RestoreDefaults() // 0x8003342c
 {
     g_GameWork.config_0.optExtraWeaponCtrl_23 = 1;
-    g_GameWork.config_0.optBrightness_22 = 3;
+    g_GameWork.config_0.optBrightness_22      = 3;
 
     Settings_RestoreControlDefaults(0);
 

@@ -715,14 +715,14 @@ STATIC_ASSERT_SIZEOF(s_GameWork, 1496);
 /** @brief Const data passed over to `Anim_Update` funcs. Struct itself contains which `Anim_Update` func is to be called. */
 typedef struct _AnimInfo
 {
-    void (*funcPtr_0)(struct _SubCharacter*, s32, GsCOORDINATE2*, struct _AnimInfo*); // TODO: funcPtr signature doesn't currently match Anim_Update.
+    void (*funcPtr_0)(struct _SubCharacter*, s32, GsCOORDINATE2*, struct _AnimInfo*); // TODO: `funcPtr_0` signature doesn't currently match `Anim_Update`.
     u8  field_4;
     s8  hasVariableTimeDelta_5;
     u16 animIdx_6;
     union
     {
         s32 constTimeDelta;
-        s32 (*variableTimeDeltaFn)();
+        s32 (*variableTimeDeltaFunc)();
     } timeDelta_8;
     s16 keyframeIdx0_C;
     s16 keyframeIdx1_E;

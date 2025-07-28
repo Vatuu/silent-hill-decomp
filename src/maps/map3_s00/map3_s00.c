@@ -20,7 +20,7 @@ INCLUDE_ASM("asm/maps/map3_s00/nonmatchings/map3_s00", func_800CC994);
 
 #include "maps/shared/sharedFunc_800CFFF8_0_s00.h" // 0x800CCD5C
 
-void func_800CCE88(void) {}
+void func_800CCE88() {}
 
 #include "maps/shared/sharedFunc_800D01BC_0_s00.h" // 0x800CCE90
 
@@ -52,7 +52,7 @@ INCLUDE_ASM("asm/maps/map3_s00/nonmatchings/map3_s00", func_800CE7DC);
 
 #include "maps/shared/sharedFunc_800D2244_0_s00.h" // 0x800CEDB0
 
-s32 func_800CEF88()
+s32 func_800CEF88() // 0x800CEF88
 {
     return 0;
 }
@@ -73,22 +73,22 @@ s32 func_800CEF88()
 
 #include "maps/shared/sharedFunc_800D2E60_0_s00.h" // 0x800CF174
 
-void func_800CF180(void) {}
+void func_800CF180() {}
 
-void func_800CF188(void) {}
+void func_800CF188() {}
 
-void func_800CF190(void) {}
+void func_800CF190() {}
 
-void func_800CF198(void) {}
+void func_800CF198() {}
 
-void func_800CF1A0(void) {}
+void func_800CF1A0() {}
 
-s32 func_800CF1A8()
+s32 func_800CF1A8() // 0x800CF1A8
 {
     return 0;
 }
 
-void func_800CF1B0(void) {}
+void func_800CF1B0() {}
 
 #include "maps/shared/sharedFunc_800D2EA4_0_s00.h" // 0x800CF1B8
 
@@ -140,96 +140,124 @@ INCLUDE_ASM("asm/maps/map3_s00/nonmatchings/map3_s00", func_800CFFD8);
 
 INCLUDE_ASM("asm/maps/map3_s00/nonmatchings/map3_s00", func_800D08B8);
 
-void func_800D0960(s32 arg0) {
-    if (arg0 != 0) {
-        // This method sets a map overlay value based on a save event flag
+void func_800D0960(s32 arg0) // 0x800D0960
+{
+    if (arg0 != 0)
+    {
         func_800D0994();
         return;
     }
+
     func_800D09D4();
 }
 
-/** @brief Sets a map overlay value based on whether a game event flag is set */
-void func_800D0994(void) {
-    s32 TEST_FLAG = (1 << 7);
-    s32 OVERLAY_VALUE_ON = 0x10;
-    s32 OVERLAY_VALUE_OFF = 0x19;
+void func_800D0994() // 0x800D0994
+{
+    #define TEST_FLAG       (1 << 7)
+    #define OVERLAY_VAL_ON  0x10
+    #define OVERLAY_VAL_OFF 0x19
 
-    // Select the map overlay value based on the event flag
-    s32 mapOverlayValue = (g_SavegamePtr->eventFlags_18C & TEST_FLAG) == 0 ? OVERLAY_VALUE_OFF : OVERLAY_VALUE_ON;
-    // Set the map overlay value
-    func_8003640C(mapOverlayValue);
+    s32 mapOverlayVal;
+
+    mapOverlayVal = ((g_SavegamePtr->eventFlags_18C & TEST_FLAG) == 0) ? OVERLAY_VAL_OFF : OVERLAY_VAL_ON;
+    func_8003640C(mapOverlayVal);
 }
 
-void func_800D09D4(void) {
-    s_ShSavegame* save = g_SavegamePtr;
-    s32 mapRoomIdx = save->mapRoomIdx_A5;
-    
-    s32 var_a0;
-    s32 var_a1 = 0x266;
+void func_800D09D4() // 0x800D09D4
+{
+    s32           flags;
+    s32           var;
+    s32           mapRoomIdx;
+    s_ShSavegame* save;
 
-    switch (g_GameWork.soundCmd_5B2) {
-        case 0x10:
-            var_a0 = (&D_800D21E8)[mapRoomIdx];
-            // Check a few specific room indices
-            switch (mapRoomIdx) {
-                case 1: // 0x1
-                    if (!(save->eventFlags_180[0] & 0x20)) {
-                        // Testing player Z against a specific value
-                        if (g_SysWork.player_4C.chara_0.position_18.vz > FP_FLOAT_TO(143.2f, Q12_SHIFT)) {
-                            var_a0 = 6;
-                        } else {
-                            var_a0 = 0xE;
+    save       = g_SavegamePtr;
+    mapRoomIdx = save->mapRoomIdx_A5;
+    var        = 0x266;
+
+    switch (g_GameWork.soundCmd_5B2)
+    {
+        case 16:
+            flags = (&D_800D21E8)[mapRoomIdx];
+
+            // Check a few specific room indices.
+            switch (mapRoomIdx)
+            {
+                case 1:
+                    if (!(save->eventFlags_180[0] & (1 << 5)))
+                     {
+                        // Test player Z position against specific value.
+                        if (g_SysWork.player_4C.chara_0.position_18.vz > FP_METER(143.2f))
+                        {
+                            flags = 0x6;
+                        }
+                        else
+                        {
+                            flags = 0xE;
                         }
                     }
                     break;
-                case 17: // 0x11
-                case 20: // 0x14
-                    if (g_SavegamePtr->eventFlags_180[0] & 0x80000) {
-                        var_a0 |= 0x40;
+
+                case 17:
+                case 20:
+                    if (g_SavegamePtr->eventFlags_180[0] & (1 << 19))
+                    {
+                        flags |= 0x40;
                     }
                     break;
             }
-            if ((g_SavegamePtr->mapMarkingFlags_1E0[0x12] & 0x410000) == 0x410000) {
-                var_a0 |= 0x11E;
+
+            if ((g_SavegamePtr->mapMarkingFlags_1E0[18] & ((1 << 16) | (1 << 22))) == ((1 << 16) | (1 << 22)))
+            {
+                flags |= 0x11E;
             }
             break;
-        case 0x22:
-            if (!(save->mapMarkingFlags_1E0[0xE] & 0x80000)) {
-                var_a1 = 0xF0000;
-                var_a0 = 0x201;
-            } else if (save->eventFlags_180[0] & 0x20) {
-                var_a1 = 0x333;
-                var_a0 = 0x201;
-            } else {
-                var_a1 = 0xF0000;
-                var_a0 = 0x1FE;
+
+        case 34:
+            if (!(save->mapMarkingFlags_1E0[14] & (1 << 19)))
+            {
+                var   = 0xF0000;
+                flags = 0x201;
+            }
+            else if (save->eventFlags_180[0] & (1 << 5))
+            {
+                var   = 0x333;
+                flags = 0x201;
+            }
+            else
+            {
+                var   = 0xF0000;
+                flags = 0x1FE;
             }
             break;
-        case 0x19:
-            if ((save->eventFlags_18C & 0x80) == 0) {
-                var_a1 = 0xF0000;
-                var_a0 = 0x1FE;
-            } else {
-                var_a1 = 0x333;
-                var_a0 = 0x301;
+
+        case 25:
+            if ((save->eventFlags_18C & 0x80) == 0)
+            {
+                var   = 0xF0000;
+                flags = 0x1FE;
+            }
+            else
+            {
+                var   = 0x333;
+                flags = 0x301;
             }
             break;
+
         default:
-            var_a0 = 1;
+            flags = 1;
             break;
     }
- 
-    func_80035F4C(var_a0, var_a1, NULL);
+
+    func_80035F4C(flags, var, NULL);
 }
 
-void func_800D0B74(void) {}
+void func_800D0B74() {}
 
 INCLUDE_ASM("asm/maps/map3_s00/nonmatchings/map3_s00", func_800D0B7C);
 
 INCLUDE_ASM("asm/maps/map3_s00/nonmatchings/map3_s00", func_800D0C10);
 
-void func_800D0CA4(void) {}
+void func_800D0CA4() {}
 
 INCLUDE_ASM("asm/maps/map3_s00/nonmatchings/map3_s00", func_800D0CAC);
 

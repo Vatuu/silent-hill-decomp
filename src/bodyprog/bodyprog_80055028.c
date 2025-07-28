@@ -224,16 +224,16 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80056BF8); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80056C80); // 0x80056C80
 
-// First arg is `s_Bone`.
-void func_80056C8C(s_Bone* arg0, s_800BE9FC* arg1, s32 arg2)
+void func_80056C8C(s_Bone* bone, s_800BE9FC* arg1, s32 arg2)
 {
-    u8* field_C = arg1->field_C;
+    u8* field_C;
+    
+    field_C       = arg1->field_C;
+    bone->field_C = arg2;
 
-    arg0->field_C = arg2;
-
-    if (arg1->field_0 == '0') // Maybe s_800BE9FC field_0 is char*? But its used as int32 somewhere
+    if (arg1->field_0 == '0') // Maybe `s_800BE9FC`'s `field_0` is `char*`? But its used as `s32` somewhere.
     {
-        arg0->field_8 = (field_C + (arg2 * 0x10));
+        bone->field_8 = field_C + (arg2 * 16);
     }
 }
 
@@ -250,7 +250,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80056D8C); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80057090); // 0x80057090
 
-// TODO: RODATA migration and odd code.
+// TODO: .rodata migration and odd code.
 #ifdef NON_MATCHING
 s32 func_800571D0(u32 arg0) // 0x800571D0
 {
@@ -267,13 +267,13 @@ s32 func_800571D0(u32 arg0) // 0x800571D0
             return 4;
 
         case 3:
-            return 0x21;
+            return 33;
 
         case 4:
-            return 0x42;
+            return 66;
 
         case 5:
-            return 0x63;
+            return 99;
     }
 }
 #else
@@ -373,7 +373,7 @@ void func_8005B424(VECTOR3* arg0, VECTOR3* arg1) // 0x8005B424
         return;
     }
 
-    *((s_func_8005B424 *)arg0) = *((s_func_8005B424 *)arg1);
+    *((s_func_8005B424*)arg0) = *((s_func_8005B424*)arg1);
 }
 
 void func_8005B46C(s32* arg0) // 0x8005B46C
@@ -418,7 +418,7 @@ s16 func_8005BF38(s16 arg0) // 0x8005BF38
     temp = arg0 & 0xFFF;
     res  = temp;
 
-    if (temp >= 0x801)
+    if (temp > 0x800)
     {
         res = temp | 0xF000;
     }
@@ -436,26 +436,26 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005C7B0); // 0x
 
 s32 func_8005C7D0(s_SubCharacter* chara, s32 moveSpeed) // 0x8005C7D0
 {
-    s32             index = 0;
-    s_SubCharacter* npcs;
+    s32             i = 0;
+    s_SubCharacter* npc;
     s_SubCharacter* player;
 
     if (chara == &g_SysWork.player_4C)
     {
-        return 6;
+        return NPC_COUNT_MAX;
     }
 
-    npcs   = &g_SysWork.npcs_1A0;
+    npc    = &g_SysWork.npcs_1A0;
     player = chara;
-
-    for (index = 0; index < 6; index++, npcs++)
+    for (i = 0; i < NPC_COUNT_MAX; i++, npc++)
     {
-        if (player == npcs)
+        if (player == npc)
         {
-            return index;
+            return i;
         }
     }
-    return -1;
+
+    return NO_VALUE;
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005C814); // 0x8005C814

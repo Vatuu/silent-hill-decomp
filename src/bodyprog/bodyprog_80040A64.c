@@ -237,6 +237,7 @@ void func_8004201C() // 0x8004201C
         {
             func_8005B3A4(ptr);
         }
+
         ptr++;
     }
 
@@ -247,6 +248,7 @@ void func_8004201C() // 0x8004201C
         {
             func_8005B3A4(ptr);
         }
+
         ptr++;
     }
 }
@@ -574,16 +576,14 @@ s32 func_80044918(s_ModelAnim* anim) // 0x80044918
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80044950); // 0x80044950
 
-s32 func_800449AC(s_Model* arg0, s_AnimInfo* arg1) // 0x800449AC
+s32 func_800449AC(s_Model* model, s_AnimInfo* anim) // 0x800449AC
 {
-    if (arg1->hasVariableTimeDelta_5 == 0)
+    if (anim->hasVariableTimeDelta_5 == 0)
     {
-        return arg1->timeDelta_8.constTimeDelta;
+        return anim->timeDelta_8.constTimeDelta;
     }
-    else
-    {
-        return arg1->timeDelta_8.variableTimeDeltaFn(); // The arguments might be passed here.
-    }
+
+    return anim->timeDelta_8.variableTimeDeltaFunc(); // The arguments might be passed here.
 }
 
 static inline s32 Anim_GetTimeStep(s_Model* model, s_AnimInfo* targetAnim)
