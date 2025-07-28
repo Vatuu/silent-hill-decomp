@@ -100,6 +100,39 @@ typedef struct
 } s_8002AC04;
 STATIC_ASSERT_SIZEOF(s_8002AC04, 16);
 
+// Maybe a collection of matrices.
+typedef struct
+{
+    s32 flags_0;
+    s8  unk_4[4];
+    s32 field_8;
+    s32 field_C;
+    s8  field_10;
+    s8  unk_11[7];
+} s_Bone;
+STATIC_ASSERT_SIZEOF(s_Bone, 24);
+
+// PROBABLY skeleton data.
+typedef struct
+{
+    u8      boneCount_0;
+    u8      boneIdx_1; // Current bone index? Used in traversal.
+    s8      field_2;
+    s8      field_3;
+    s32     field_4;
+    s_Bone* bones_8;
+
+    // Maybe incorrect.
+    s8 field_C[3]; // Maybe struct similar to `s_Bone` but smaller.
+    u8 field_10;   // Some count related to bone hierarchy.
+    s8 unk_11;
+    s8 field_12;
+    s8 field_13;
+    s8 field_14;
+    s8 unk_15[8];
+} s_Skeleton;
+STATIC_ASSERT_SIZEOF(s_Skeleton, 28);
+
 typedef struct
 {
     s32               id_0;
@@ -1090,39 +1123,6 @@ typedef struct
     u8  field_4;
     s8  field_5;
 } s_Sfx;
-
-// Maybe a collection of matrices.
-typedef struct
-{
-    s32 flags_0;
-    s8  unk_4[4];
-    s32 field_8;
-    s32 field_C;
-    s8  field_10;
-    s8  unk_11[7];
-} s_Bone;
-STATIC_ASSERT_SIZEOF(s_Bone, 24);
-
-// PROBABLY skeleton data.
-typedef struct
-{
-    u8      boneCount_0;
-    u8      boneIdx_1; // Current bone index? Used in traversal.
-    s8      field_2;
-    s8      field_3;
-    s32     field_4;
-    s_Bone* bones_8;
-
-    // Maybe incorrect.
-    s8 field_C[3]; // Maybe struct similar to `s_Bone` but smaller.
-    u8 field_10;   // Some count related to bone hierarchy.
-    s8 unk_11;
-    s8 field_12;
-    s8 field_13;
-    s8 field_14;
-    s8 unk_15[8];
-} s_Skeleton;
-STATIC_ASSERT_SIZEOF(s_Skeleton, 28);
 
 typedef struct _SpawnInfo
 {
