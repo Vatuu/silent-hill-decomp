@@ -978,7 +978,7 @@ typedef struct
     s16   animFileIdx;
     s16   modelFileIdx;
     s16   textureFileIdx : 16;
-    u16   field_6 : 10;
+    u16   field_6        : 10;
     u16   field_6_10     : 6;
     void* field_8;
     u16   field_C_0 : 2;
@@ -1129,7 +1129,7 @@ typedef struct _SpawnInfo
 } s_SpawnInfo;
 STATIC_ASSERT_SIZEOF(s_SpawnInfo, 12);
 
-// This struct is used to retrict the items that can be loaded in the overlay.
+// Used to retrict the items that can be loaded in the overlay.
 typedef struct s_UnkStruct_MapOverlay
 {
     u8 field_0[34]; /** `e_InventoryItemId` */
@@ -1139,12 +1139,12 @@ typedef struct
 {
     u8 unk_0[6];
     u8 field_6;
-} s_UnkStruct2_MO;
+} s_UnkStruct2_Mo;
 
 /** TODO: `g_MapOverlayHeader` is part of the map overlay BIN files. Maybe should be moved to `maps/shared.h`. */
 typedef struct _MapOverlayHeader
 {
-    s_UnkStruct2_MO*  field_0;
+    s_UnkStruct2_Mo*  field_0;
     s8                (*getMapRoomIdxFunc_4)(s32 x, s32 y); // Called by `Savegame_MapRoomIdxSet`.
     s8                field_8;
     s8                unk_9[3];
@@ -1347,8 +1347,10 @@ extern s_800C37D4 D_800A986C[];
 
 extern s32 D_800A9A20;
 
+/** X. */
 extern s32 D_800A9A24;
 
+/** Z. */
 extern s32 D_800A9A28;
 
 extern s8 D_800A98FC[];
@@ -1403,8 +1405,7 @@ extern s16 D_800A99B0;
 extern s8 D_800A99B4[];
 
 /** Array of indices?
- * This is related to marks in the map as it is used to indicate which file to load based
- * on the current overlay.
+ * Related to map markings. Used to indicate which file to load based on the current overlay.
  */
 extern s8 D_800A99CC[];
 
@@ -1631,7 +1632,7 @@ extern s_800B5D04 D_800B5D04[];
 
 extern u8 D_800B7CC4[][8192];
 
-extern s_func_800700F8 D_800BA00C; // Often passed to func_800700F8
+extern s_func_800700F8 D_800BA00C; // Often passed to `func_800700F8`.
 
 extern u8 D_800BC74F;
 
@@ -1691,7 +1692,7 @@ extern s_800BCDA8 D_800BCDA8[2];
 
 extern s_AreaLoadParams D_800BCDB0;
 
-/** Related to item special interactions. */
+/** Related to special item interactions. */
 extern s32 D_800BCDC0[5];
 
 extern u8 D_800BCDD4;
@@ -1875,10 +1876,9 @@ extern u8 D_800C4169;
 
 extern u8 D_800C416A;
 
-/*
-Functions from `bodyprog_8003AB28` access `D_800C4168` as constant, but some functions from `bodyprog_80055028` write to it.
-It appears that D_800C4168 is intended to be defined inside `bodyprog_80055028` as writable and declared as read-only (`const`) outside of it.
-*/
+/** Functions from `bodyprog_8003AB28` access `D_800C4168` as constant, but some functions from `bodyprog_80055028` write to it.
+ * It appears that D_800C4168 is intended to be defined inside `bodyprog_80055028` as writable and declared as read-only (`const`) outside of it.
+ */
 // extern s_800C4168 D_800C4168;
 
 extern s32 D_800C4180;
@@ -1895,9 +1895,9 @@ extern u16 D_800C4580;
 
 extern u16 D_800C4582;
 
-extern u16 D_800C4584; // Is Player moving left (in-game)?
+extern u16 D_800C4584; // Is player moving left (in-game)?
 
-extern u16 D_800C4586; // Is Player moving right (in-game)?
+extern u16 D_800C4586; // Is player moving right (in-game)?
 
 extern s8 D_800C4588;
 
@@ -2063,7 +2063,7 @@ void func_8003C92C(s_800BCE18_2BEC_0* arg0, VECTOR3* arg1, SVECTOR3* arg2);
 
 void func_8003CD6C(s_PlayerCombat* arg0);
 
-s32 func_8003CDA0(s32 inventorySpaceIdx);
+s32 func_8003CDA0(s32 invSlotIdx);
 
 void func_8003D01C();
 
@@ -2125,6 +2125,8 @@ s8 func_80040A64(VECTOR3* pos);
 
 s32 func_80040B74(s32 arg0);
 
+void func_80041074(s32 arg0, void* arg1, void* arg2, s32 arg3);
+
 void func_800410D8(VECTOR3*, s32*, s32*, SVECTOR*, VECTOR3*);
 
 void func_8004122C(s32* angle0, s32* angle1, VECTOR* arg2, VECTOR* arg3);
@@ -2157,7 +2159,7 @@ void func_800420C0();
 
 s32 func_80042178(s32* arg0);
 
-/** @brief Turn two hex char to its int hex value */
+/** @brief Turns two hex `char`s to their `int` hex value. */
 s32 func_8004255C(s32* out, char firstHex, char secondHex);
 
 u32 func_80041B1C(void* arg0);
@@ -2760,6 +2762,8 @@ s32 func_8006CC44(s32 arg0, s32 arg1, s_func_8006CC44* arg2);
 
 s32 func_8006DB3C(s_func_800700F8_2* arg0, VECTOR3* arg1, VECTOR3* arg2, s_func_800700F8* arg3);
 
+void func_80070030(s_SubCharacter* chara, s32 x, s32 y, s32 z);
+
 s32 func_8006FD90(s_SubCharacter*, s32, s32, s32);
 
 s32 func_800700F8(s_func_800700F8* arg0, s_func_800700F8* arg1);
@@ -2918,6 +2922,8 @@ void func_80037334();
 void func_80037388();
 
 s32 func_800378D4(s_AreaLoadParams* areaLoadParams);
+
+s32 func_80037C5C(s_func_80037A4C* arg0);
 
 void func_80037DC4(s_SubCharacter* chara);
 
@@ -3097,6 +3103,8 @@ void func_8003E414(s_Skeleton* skel, s32 arg1);
 void func_8003E4A0(s_Skeleton* skel, s32 arg1);
 
 void func_8003E544(s_Skeleton* skel, s32 arg1);
+
+void func_8003E5E8(s32 arg0);
 
 /** Loads a flame graphic. */
 void GameFs_FlameGfxLoad();

@@ -111,7 +111,7 @@ void GameState_ItemScreens_Update() // 0x8004C9B0
 
             func_80037188();
 
-            g_Inventory_IsPlayerScrolling        = 1;
+            g_Inventory_IsScrolling              = 1;
             g_Gfx_Inventory_SelectionBordersDraw = 0;
             D_800AE178                           = 0;
             g_Inventory_CmdSelectedIdx           = 0;
@@ -520,11 +520,11 @@ void Inventory_Logic() // 0x8004D518
     {
         case InventorySelectionId_Item:
             if ((g_Inventory_IsLeftClicked && g_Gfx_Inventory_SelectionBordersDraw == 8) ||
-                (g_Inventory_IsLeftHeld && (g_Inventory_IsPlayerScrolling != 0 || g_Gfx_Inventory_SelectionBordersDraw == 8)))
+                (g_Inventory_IsLeftHeld && (g_Inventory_IsScrolling != 0 || g_Gfx_Inventory_SelectionBordersDraw == 8)))
             {
                 if (g_Inventory_IsLeftClicked || g_Inventory_IsLeftHeld)
                 {
-                    g_Inventory_IsPlayerScrolling = 1;
+                    g_Inventory_IsScrolling = 1;
                 }
 
                 D_800AE178                           = 1;
@@ -537,11 +537,11 @@ void Inventory_Logic() // 0x8004D518
                 func_800539A4(0, (g_SysWork.inventoryItemSelectedIdx_2351 + temp) % g_SavegamePtr->inventoryItemSpaces_AB);
             }
             else if (((g_Inventory_IsRightClicked || g_Inventory_IsRightPulsed) && g_Gfx_Inventory_SelectionBordersDraw == 8) ||
-                     (g_Inventory_IsRightHeld && (g_Inventory_IsPlayerScrolling != 0 || g_Gfx_Inventory_SelectionBordersDraw == 8)))
+                     (g_Inventory_IsRightHeld && (g_Inventory_IsScrolling != 0 || g_Gfx_Inventory_SelectionBordersDraw == 8)))
             {
                 if (g_Inventory_IsRightClicked || g_Inventory_IsRightHeld)
                 {
-                    g_Inventory_IsPlayerScrolling = 1;
+                    g_Inventory_IsScrolling = 1;
                 }
 
                 D_800AE178                           = 1;
@@ -606,7 +606,7 @@ void Inventory_Logic() // 0x8004D518
             }
             else if (!(g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.item_16))
             {
-                g_Inventory_IsPlayerScrolling = 0;
+                g_Inventory_IsScrolling = 0;
             }
             else
             {
@@ -981,7 +981,7 @@ void Inventory_Logic() // 0x8004D518
                         }
                         else
                         {
-                            Inventory_ItemInteraction(curItemIdx);
+                            Inventory_ItemUse(curItemIdx);
                         }
                         break;
 
@@ -1026,7 +1026,7 @@ void Inventory_Logic() // 0x8004D518
                         break;
 
                     case InventoryCmdId_Use:
-                        Inventory_ItemInteraction(curItemIdx);
+                        Inventory_ItemUse(curItemIdx);
                         break;
 
                     case InventoryCmdId_Equip:
@@ -1127,7 +1127,7 @@ void Inventory_Logic() // 0x8004D518
     }
 }
 
-void Inventory_ItemInteraction(s32 inventoryItemIdx) // 0x8004E6D4
+void Inventory_ItemUse(s32 inventoryItemIdx) // 0x8004E6D4
 {
     s32 i;
 

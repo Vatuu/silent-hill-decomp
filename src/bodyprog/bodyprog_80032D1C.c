@@ -2863,44 +2863,42 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80032D1C", func_800373CC); // 0x
 s32 func_800378D4(s_AreaLoadParams* areaLoadParams) // 0x800378D4
 {
     s16 rotY;
-    s32 temp_a0;
-    s32 temp_a1;
+    s32 x;
+    s32 z;
     s32 deltaRotY;
 
     if (g_MainLoop_FrameCount > D_800A9A20)
     {
-        rotY = g_SysWork.player_4C.chara_0.rotation_24.vy;
+        rotY       = g_SysWork.player_4C.chara_0.rotation_24.vy;
         D_800A9A24 = g_SysWork.player_4C.chara_0.position_18.vx - (shRsin(rotY) >> 3);
         D_800A9A28 = g_SysWork.player_4C.chara_0.position_18.vz - (shRcos(rotY) >> 3);
         D_800A9A20 = g_MainLoop_FrameCount;
     }
 
-    temp_a0 = areaLoadParams->char_x_0 - D_800A9A24;
-
-    if (ABS(temp_a0) > FP_FLOAT_TO(0.8f, Q12_SHIFT))
+    x = areaLoadParams->char_x_0 - D_800A9A24;
+    if (ABS(x) > FP_METER(0.8f))
     {
         return 0;
     }
 
-    temp_a1 = areaLoadParams->char_z_8 - D_800A9A28;
-
-    if (ABS(temp_a1) > FP_FLOAT_TO(0.8f, Q12_SHIFT))
+    z = areaLoadParams->char_z_8 - D_800A9A28;
+    if (ABS(z) > FP_METER(0.8f))
     {
         return 0;
     }
 
-    if ((SQUARE(temp_a0) + SQUARE(temp_a1)) > SQUARE(FP_FLOAT_TO(0.8f, Q12_SHIFT)))
+    if ((SQUARE(x) + SQUARE(z)) > SQUARE(FP_METER(0.8f)))
     {
         return 0;
     }
 
-    deltaRotY = g_SysWork.player_4C.chara_0.rotation_24.vy - ratan2(temp_a0, temp_a1);
+    deltaRotY = g_SysWork.player_4C.chara_0.rotation_24.vy - ratan2(x, z);
     if (deltaRotY >= FP_ANGLE(180.0f))
     {
         deltaRotY -= FP_ANGLE(360.0f);
     }
 
-    if (0x155 < ABS(deltaRotY))
+    if (FP_ANGLE(30.0f) < ABS(deltaRotY))
     {
         return 0;
     }
@@ -2935,7 +2933,7 @@ s32 func_80037C5C(s_func_80037A4C* arg0) // 0x80037C5C
     deltaZ = g_SysWork.player_4C.chara_0.position_18.vz - arg0->field_8;
     scale  = 2;
 
-    if (shift8Field_7 * scale < ABS(deltaZ))
+    if ((shift8Field_7 * scale) < ABS(deltaZ))
     {
         return 0;
     }

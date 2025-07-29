@@ -973,7 +973,7 @@ typedef struct
     s32          field_C;
     s32          field_10;
     u8           field_14;
-    u8           flashlightState_15; // 0 - Off, 1 - On
+    u8           flashlightState_15; /** 0: Off, 1: On */
     u8           field_16;
     s8           unk_17;
     s16          flashlightIntensity_18;

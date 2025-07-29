@@ -1765,7 +1765,7 @@ void func_8003D9C8(s_800BCE18_0_CC* arg0) // 0x8003D9C8
 
 void func_8003DA9C(s32 arg0, GsCOORDINATE2* coord, s32 arg2, s16 arg3, s32 arg4) // 0x8003DA9C
 {
-    s_800C4168_28 sp20 = {0};
+    s_800C4168_28 sp20 = { 0 };
     u16           ret;
 
     if (arg0 == 0)
@@ -1773,7 +1773,7 @@ void func_8003DA9C(s32 arg0, GsCOORDINATE2* coord, s32 arg2, s16 arg3, s32 arg4)
         return;
     }
 
-    arg3 = CLAMP(arg3, 0, 0x1000);
+    arg3 = CLAMP(arg3, FP_FLOAT_TO(0.0f, Q12_SHIFT), FP_FLOAT_TO(1.0f, Q12_SHIFT));
 
     if (arg0 == 1)
     {
@@ -1788,13 +1788,14 @@ void func_8003DA9C(s32 arg0, GsCOORDINATE2* coord, s32 arg2, s16 arg3, s32 arg4)
 
         func_80055330(D_800C4168.field_0, D_800C4168.field_20,
                       D_800C4168.field_3,
-                      FP_MULTIPLY(0x1000 - arg3, (s64)D_800C4168.field_28.field_0, Q12_SHIFT) << 5,
-                      FP_MULTIPLY(0x1000 - arg3, (s64)D_800C4168.field_28.field_1, Q12_SHIFT) << 5,
-                      FP_MULTIPLY(0x1000 - arg3, (s64)D_800C4168.field_28.field_2, Q12_SHIFT) << 5,
+                      FP_MULTIPLY(FP_FLOAT_TO(1.0f, Q12_SHIFT) - arg3, (s64)D_800C4168.field_28.field_0, Q12_SHIFT) << 5,
+                      FP_MULTIPLY(FP_FLOAT_TO(1.0f, Q12_SHIFT) - arg3, (s64)D_800C4168.field_28.field_1, Q12_SHIFT) << 5,
+                      FP_MULTIPLY(FP_FLOAT_TO(1.0f, Q12_SHIFT) - arg3, (s64)D_800C4168.field_28.field_2, Q12_SHIFT) << 5,
                       D_800C4168.field_8);
     }
 
-    func_80045534(&D_800BCE18.field_0[0].field_18[arg0]->field_14, &g_ObjectTable0[g_ObjectTableIdx], arg2, coord, g_Chara_FileInfo[arg0].field_6 * 16, ret, g_Chara_FileInfo[arg0].field_8);
+    func_80045534(&D_800BCE18.field_0[0].field_18[arg0]->field_14, &g_ObjectTable0[g_ObjectTableIdx], arg2,
+                  coord, g_Chara_FileInfo[arg0].field_6 * 16, ret, g_Chara_FileInfo[arg0].field_8);
 
     if (arg3 != 0)
     {
@@ -2177,27 +2178,29 @@ void func_8003E544(s_Skeleton* skel, s32 arg1) // 0x8003E544
     s32 temp_s0;
 
     temp_s0 = arg1 & 0xF;
-    if (temp_s0 != 0)
+    if (temp_s0 == 0)
     {
-        func_80045468(skel, &D_800A9F6C, 0);
+        return;
+    }
 
-        switch (temp_s0)
-        {
-            case 1:
-                func_80045468(skel, &D_800A9F74, 1);
-                break;
+    func_80045468(skel, &D_800A9F6C, 0);
 
-            case 2:
-                func_80045468(skel, &D_800A9F78, 1);
-                break;
+    switch (temp_s0)
+    {
+        case 1:
+            func_80045468(skel, &D_800A9F74, 1);
+            break;
 
-            case 3:
-                func_80045468(skel, &D_800A9F7C, 1);
-                break;
+        case 2:
+            func_80045468(skel, &D_800A9F78, 1);
+            break;
 
-            default:
-                break;
-        }
+        case 3:
+            func_80045468(skel, &D_800A9F7C, 1);
+            break;
+
+        default:
+            break;
     }
 }
 

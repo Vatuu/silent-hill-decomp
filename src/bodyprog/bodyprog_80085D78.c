@@ -2048,8 +2048,8 @@ void func_8008B664(s32 arg0, u32 caseVar) // 0x8008B664
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008B664); // 0x8008B664
 #endif
 
-/** This does something related to the color of the beam of the Hyper Blaster as it calls
- * `Game_HyperBlasterBeamColor` which returns the color the player is currently using.
+/** This does something the color of the Hyper Blaster beam. Calls
+ * `Game_HyperBlasterBeamColorGet`, which returns the color the player is currently using.
  */
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008B714); // 0x8008B714
 

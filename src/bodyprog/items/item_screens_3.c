@@ -95,7 +95,7 @@ void Gfx_ItemScreens_RenderInit(u32* selectedItemId) // 0x8004F764
         Inventory_PlayerItemScroll(selectedItemId);
 
 		// Player Items
-        for (i = 0, ptr = &g_Items_ItemsMdlData; i < 7; i++, ptr++)
+        for (i = 0, ptr = &g_Items_ItemsModelData; i < 7; i++, ptr++)
         {
             if (D_800C3E18[i] != NO_VALUE)
             {
@@ -104,7 +104,7 @@ void Gfx_ItemScreens_RenderInit(u32* selectedItemId) // 0x8004F764
                     g_Items_Items3dData0[i].rotation_10.vx = D_800262FC[g_SavegamePtr->items_0[D_800C3E18[i]].id_0 - 32].vx;
                     g_Items_Items3dData0[i].rotation_10.vz = D_800262FC[g_SavegamePtr->items_0[D_800C3E18[i]].id_0 - 32].vy;
 
-                    Gfx_Items_ItemRotation(&g_Items_Items3dData1[i].param->rotate, &g_Items_Items3dData1[i]);
+                    Gfx_Items_ItemRotate(&g_Items_Items3dData1[i].param->rotate, &g_Items_Items3dData1[i]);
                     func_800548D8(i);
                     GsSetFlatLight(0, &g_Items_ItemsLightingData[i][0]);
                     GsSetFlatLight(1, &g_Items_ItemsLightingData[i][1]);
@@ -119,7 +119,7 @@ void Gfx_ItemScreens_RenderInit(u32* selectedItemId) // 0x8004F764
             g_Items_Items3dData0[7].rotation_10.vx = D_800262FC[g_SavegamePtr->items_0[g_Inventory_EquippedItemIdx].id_0 - 32].vx;
             g_Items_Items3dData0[7].rotation_10.vz = D_800262FC[g_SavegamePtr->items_0[g_Inventory_EquippedItemIdx].id_0 - 32].vy;
 
-            Gfx_Items_ItemRotation(&g_Items_Items3dData1[7].param->rotate, &g_Items_Items3dData1[7]);
+            Gfx_Items_ItemRotate(&g_Items_Items3dData1[7].param->rotate, &g_Items_Items3dData1[7]);
             func_800548D8(7);
             GsSetFlatLight(0, &D_800C3A88[0]);
             GsSetFlatLight(1, &D_800C3A88[1]);
@@ -1177,11 +1177,11 @@ void Gfx_Results_ItemsDisplay() // 0x800521A8
     GsDOBJ2* ptr;
     s32      i;
 
-    for (i = 0, ptr = g_Items_ItemsMdlData; i < 6; i++, ptr++)
+    for (i = 0, ptr = g_Items_ItemsModelData; i < 6; i++, ptr++)
     {
         if ((D_800C3E40 >> i) & (1 << 0))
         {
-            Gfx_Items_ItemRotation(&g_Items_Items3dData1[i].param->rotate, &g_Items_Items3dData1[i]);
+            Gfx_Items_ItemRotate(&g_Items_Items3dData1[i].param->rotate, &g_Items_Items3dData1[i]);
             func_800548D8(i);
             GsSetFlatLight(0, &g_Items_ItemsLightingData[i][0]);
             GsSetFlatLight(1, &g_Items_ItemsLightingData[i][1]);
@@ -1848,7 +1848,7 @@ void Gfx_Items_Render() // 0x80054200
 
     D_800AE190 = 0;
 
-    Gfx_ItemScreens_SetCamera(&D_800C3B48, &D_800C3AE8, &D_800C3B38, 0);
+    Gfx_ItemScreens_CameraSet(&D_800C3B48, &D_800C3AE8, &D_800C3B38, 0);
 
 	/** This loops define the position, rotation and scale of the item that
 	* the player has initially equipped in the inventory.
@@ -2051,9 +2051,9 @@ void Gfx_Items_Display(s_TmdFile* tmd, s32 arg1, s32 arg2)
 	
 	objs = tmd->objects_C;
 
-    GsLinkObject4((u32)&objs[arg2], &g_Items_ItemsMdlData[arg1], 0);
+    GsLinkObject4((u32)&objs[arg2], &g_Items_ItemsModelData[arg1], 0);
 
-    ptr         = &g_Items_ItemsMdlData[arg1];
+    ptr         = &g_Items_ItemsModelData[arg1];
     ptr->coord2 = &g_Items_Items3dData1[arg1];
 
     if (D_800AE187 != 0)
@@ -2178,7 +2178,7 @@ void func_80054A04(u8 itemId) // 0x80054A04
     g_Items_Items3dData0[9].scale_0.vx = FP_FLOAT_TO(1.0f, Q12_SHIFT);
 
     func_800549A0();
-    Gfx_ItemScreens_SetCamera(&D_800C3B48, &D_800C3AE8, &D_800C3B38, 0);
+    Gfx_ItemScreens_CameraSet(&D_800C3B48, &D_800C3AE8, &D_800C3B38, 0);
 }
 
 s32 func_80054AD8(u8 arg0) // 0x80054AD8
@@ -2231,7 +2231,7 @@ s32 func_80054AD8(u8 arg0) // 0x80054AD8
 
     obj = &D_800C3E08;
 
-    Gfx_Items_ItemRotation(&g_Items_Items3dData1[9].param->rotate, &g_Items_Items3dData1[9]);
+    Gfx_Items_ItemRotate(&g_Items_Items3dData1[9].param->rotate, &g_Items_Items3dData1[9]);
 
     g_Items_Items3dData0[9].rotation_10.vy += g_DeltaTime1 >> 1;
 

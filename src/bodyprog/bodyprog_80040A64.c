@@ -59,8 +59,8 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80040E7C); // 0x
 void func_80041074(s32 arg0, void* arg1, void* arg2, s32 arg3) // 0x80041074
 {
     VECTOR3 sp18;
-    s32 sp28;
-    s32 sp2C;
+    s32     sp28;
+    s32     sp2C;
 
     func_800410D8(&sp18, &sp28, &sp2C, arg2, arg3);
     func_800414E0(arg0, &sp18, arg1, sp28, sp2C);
@@ -295,40 +295,43 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800423F4); // 0x
 
 s32 func_8004255C(s32* out, char firstHex, char secondHex) // 0x8004255C
 {
-    char low, high;
+    char low;
+    char high;
     char letterIdx;
     char hexVal;
     bool isNumber;
 
     high     = firstHex - '0';
-    isNumber = (high < 10);
+    isNumber = high < 10;
 
-    hexVal = high;
+    hexVal   = high;
     hexVal <<= 4;
     if (!isNumber)
     {
-        letterIdx = (firstHex - 'A');
+        letterIdx = firstHex - 'A';
         if (letterIdx > 5)
         {
             return 0;
         }
-        hexVal = (firstHex + 0xC9) << 4;
+
+        hexVal = (firstHex + 201) << 4;
     }
 
     low      = secondHex - '0';
-    isNumber = (low < 10);
+    isNumber = low < 10;
     if (isNumber)
     {
         hexVal |= low;
     }
     else
     {
-        letterIdx = (secondHex - 'A');
+        letterIdx = secondHex - 'A';
         if (letterIdx > 5)
         {
             return 0;
         }
-        hexVal |= (secondHex + 0xC9);
+
+        hexVal |= secondHex + 201;
     }
 
     *out = (hexVal << 24) >> 24; // Sign extend.

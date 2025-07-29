@@ -38,25 +38,25 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_800550D0); // 0x
 
 void func_80055330(u8 arg0, s32 arg1, u8 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6) // 0x80055330
 {
-    D_800C4168.field_0  = arg0;
-    D_800C4168.field_20 = arg1;
-    D_800C4168.field_3  = arg2;
+    D_800C4168.field_0          = arg0;
+    D_800C4168.field_20         = arg1;
+    D_800C4168.field_3          = arg2;
     D_800C4168.field_28.field_0 = arg3 >> 5;
-    D_800C4168.field_30 = arg3;
-    D_800C4168.field_2E = arg3;
-    D_800C4168.field_2C = arg3;
+    D_800C4168.field_30         = arg3;
+    D_800C4168.field_2E         = arg3;
+    D_800C4168.field_2C         = arg3;
     D_800C4168.field_28.field_1 = arg4 >> 5;
-    D_800C4168.field_8  = arg6;
+    D_800C4168.field_8          = arg6;
     D_800C4168.field_28.field_2 = arg5 >> 5;
-    D_800C4168.field_36 = arg4;
-    D_800C4168.field_34 = arg4;
-    D_800C4168.field_32 = arg4;
-    D_800C4168.field_3C = arg5;
-    D_800C4168.field_3A = arg5;
-    D_800C4168.field_38 = arg5;
-    D_800C4168.field_24 = (arg3 * arg1) >> 17;
-    D_800C4168.field_25 = (arg4 * arg1) >> 17;
-    D_800C4168.field_26 = (arg5 * arg1) >> 17;
+    D_800C4168.field_36         = arg4;
+    D_800C4168.field_34         = arg4;
+    D_800C4168.field_32         = arg4;
+    D_800C4168.field_3C         = arg5;
+    D_800C4168.field_3A         = arg5;
+    D_800C4168.field_38         = arg5;
+    D_800C4168.field_24         = (arg3 * arg1) >> 17;
+    D_800C4168.field_25         = (arg4 * arg1) >> 17;
+    D_800C4168.field_26         = (arg5 * arg1) >> 17;
 }
 
 void func_800553C4(u8 arg0, u8 arg1, u8 arg2, u8 arg3) // 0x800553C4
@@ -1163,13 +1163,13 @@ s32 func_8006DB3C(s_func_800700F8_2* arg0, VECTOR3* arg1, VECTOR3* arg2, s_func_
     s32 temp_v0;
     s32 scratchAddr;
 
-    temp_v0 = func_8006A1A4(&sp28, arg3, 1);
+    temp_v0       = func_8006A1A4(&sp28, arg3, 1);
     arg0->field_0 = 0;
 
     if (func_8006DCE0((s32)PSX_SCRATCH, 1, 0, arg1, arg2, 0, 0, temp_v0, sp28) != 0)
     {
-        temp_s0     = SetSp((s32)PSX_SCRATCH_ADDR(984));
-        scratchAddr = (s32)PSX_SCRATCH;
+        temp_s0       = SetSp((s32)PSX_SCRATCH_ADDR(984));
+        scratchAddr   = (s32)PSX_SCRATCH;
         arg0->field_0 = func_8006DEB0(arg0, scratchAddr);
 
         SetSp(temp_s0);
@@ -1221,16 +1221,15 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006FAFC); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006FD90); // 0x8006FD90
 
+void func_80070030(s_SubCharacter* chara, s32 x, s32 y, s32 z)
+{
+    s_func_800700F8_2 temp;
+    VECTOR3           posDelta;
 
-void func_80070030(s_SubCharacter *chr, s32 x, s32 y, s32 z) {
-    s_func_800700F8_2 tmp;
-
-    VECTOR3 d;
-    d.vx = x - chr->position_18.vx;
-    d.vy = y - chr->position_18.vy;
-    d.vz = z - chr->position_18.vz;
-
-    func_8006DB3C(&tmp, &chr->position_18, &d, chr);
+    posDelta.vx = x - chara->position_18.vx;
+    posDelta.vy = y - chara->position_18.vy;
+    posDelta.vz = z - chara->position_18.vz;
+    func_8006DB3C(&temp, &chara->position_18, &posDelta, chara);
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80070084); // 0x80070084
@@ -1244,10 +1243,10 @@ s32 func_800700F8(s_func_800700F8* arg0, s_func_800700F8* arg1) // 0x800700F8
     vec0 = arg0->field_18;
 
     vec1.vx = arg1->field_18.vx - arg0->field_18.vx;
-    vec1.vy = -0x199;
+    vec1.vy = -FP_METER(0.1f);
     vec1.vz = arg1->field_18.vz - arg0->field_18.vz;
 
-    return (func_8006DB3C(&sp10, &vec0, &vec1, arg0) && (sp10.field_10 == 0));
+    return func_8006DB3C(&sp10, &vec0, &vec1, arg0) && sp10.field_10 == 0;
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80070184); // 0x80070184

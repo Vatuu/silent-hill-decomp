@@ -55,7 +55,7 @@ typedef struct
     DVECTOR field_4;
 } s_Inventory_SelectionOutlineVector;
 
-// Couldn't this be actually GsCOORD2PARAM?
+// Could be `GsCOORD2PARAM`.
 typedef struct
 {
     VECTOR  scale_0;
@@ -80,24 +80,20 @@ extern s32 g_Inventory_CmdSelectedIdx; // 0x800ADB58
  */
 extern u32 g_Inventory_SelectionId; /** `e_InventorySelectionId` */ // 0x800ADB5C
 
-/** @brief Dead code? - Player start scroll?
- * Only used when the player started to scroll through the inventory, but as soon
- * as it get asigned to 1 it turns into 0 again as `Gfx_Inventory_ItemDescriptionDraw`
- * turns it into 0.
- *
- * It serves no purpose on the code beyond the previously explained.
+/** @brief Has user started scrolling. Dead code?
+ * Only used when the user starts to scrolling through the inventory, but as soon
+ * as it's assigned to 1, `Gfx_Inventory_ItemDescriptionDraw` makes it 0 again.
+ * Serves no purpose beyond this.
  */
 extern s32 D_800AE178;
 
 extern s32 g_Inventory_SelectedItemIdx; // 0x800AE17C
 
-/** @brief Dead code? - Items loaded count?
- * At first glance it may look it counts the amount of scrolls the player does
- * in the inventory, however in reality it seems to be tied to the function
- * that asignates models each time it get up to 10 it stop counting. If the player
- * access to any item screen (Inventory/Results) the counter restart.
- *
- * Beyond that this is not used anywhere else and doesn't comply any purpose.
+/** @brief Loaded item count. Dead code?
+ * Appears to count the number of times the user has scrolled in the inventory.
+ * Tied to the function which assigns models. Caps at 10.
+ * If the user opens any item screen (i.e. inventory or results), the counter restarts.
+ * Serves no purpose beyond this.
  */
 extern s32 D_800AE180; // 0x800AE180
 
@@ -105,9 +101,9 @@ extern s32 D_800AE180; // 0x800AE180
 extern u8 g_Inventory_EquippedItem; // 0x800AE184
 
 /** @brief Dead code?
- * It serves no purpose on the code, only a two intances were it get turn into 0.
+ * No clear purpose. There are two intances were they are set to 0.
  */
-extern s16 D_800AE18C; // Maybe DVECTOR
+extern s16 D_800AE18C; // Maybe `DVECTOR`.
 extern s16 D_800AE18E;
 
 extern s32 D_800AE190;
@@ -154,28 +150,24 @@ extern s32 g_Inventory_IsLeftHeld; // 0x800C3988
 
 extern s32 g_Inventory_IsRightHeld; // 0x800C398C
 
-/** @note Specially used for smoothing the scrolling through the inventory
- * in case of the holding the directional pad/stick.
+/** @note Used for smooth inventory scrolling
+ * if a left/right input is held.
  */
-extern s32 g_Inventory_IsPlayerScrolling; // 0x800C3990
+extern s32 g_Inventory_IsScrolling; // 0x800C3990
 
-/** @brief Timer used for the borders at the corners of the selection
- * box in the inventory.
+/** @brief Timer used for the corner borders of the selection box in the inventory.
  *
- * If 8 then it will show the borders, if not 8 then it will start summing
- * up until it reaches 8.
+ * If set to 8, borders will be drawn. If not, it increments until it reaches 8.
  */
 extern s32 g_Gfx_Inventory_SelectionBordersDraw; // 0x800C3998
 
-/** @brief Used for drawing the transition of the box position when changing
- * the selected option in the inventory.
+/** @brief Used for drawing the transition of the corner borders' position when changing
+ * the selected option in the inventory. Indicates where the box is moving to.
  *
  * `e_InventorySelectionId`
  *
- * Specifically this indicate from where the box is moving.
- *
- * It's almost impossible to notice, but this shares the same value as
- * `g_Inventory_SelectionId` with the difference that it has a minor delay.
+ * Difficult to notice, but this shares the same value as
+ * `g_Inventory_SelectionId`, with the difference of a minor delay.
  */
 extern s32 g_Inventory_PrevSelectionId; // 0x800C399C
 
@@ -184,7 +176,7 @@ extern GsF_LIGHT g_Items_ItemsLightingData[8][2]; // 0x800C39A8
 extern GsCOORDINATE2 D_800C3AE8; // 0x800C3AE8
 
 /** Used for displaying the item models.
- * It could either indicate values for the camera.
+ * Could also be camera values.
  */
 extern SVECTOR3 D_800C3B38; // 0x800C3B38
 
@@ -197,34 +189,35 @@ extern s_Items3dData g_Items_Items3dData0[10]; // 0x800C3BE8
 
 extern u8 g_Item_MapLoadableItems[48]; // 0x800C3BB8
 
-/** Used to organize the items displaying in the inventory. */
+/** Used to organize the items displaying in the inventory.
+ * 7 is the max number of visible items?
+ */
 extern s32 D_800C3E18[7]; // 0x800C3E18
 
 extern GsCOORDINATE2 g_Items_Items3dData1[10]; // 0x800C3E48
 
 /** This value is based on the index of the equipped item.
- * If the player has nothing equipped, the value is `NO_VALUE`.
+ * If the player has nothing equipped, set to `NO_VALUE`.
  */
 extern s32 g_Inventory_EquippedItemIdx; // 0x800C3E34
 
-/** Holds information of model data from items. */
-extern GsDOBJ2 g_Items_ItemsMdlData[9]; // 0x800C3D78
+/** Stores item model data. */
+extern GsDOBJ2 g_Items_ItemsModelData[9]; // 0x800C3D78
 
 // ==========
 // FUNCTIONS
 // ==========
 
-/** This seems to set the camera for items. */
-void Gfx_ItemScreens_SetCamera(VbRVIEW* view, GsCOORDINATE2* coord, SVECTOR3* vec, s32 arg3); // 0x8004BB4C
+/** Appears to set the camera for items. */
+void Gfx_ItemScreens_CameraSet(VbRVIEW* view, GsCOORDINATE2* coord, SVECTOR3* vec, s32 arg3); // 0x8004BB4C
 
 void GameFs_TmdDataAlloc(s32* buf); // 0x8004BCBC
 
-/** @brief Used for item rotation and item scrolling in the inventory.
+/** @brief Used for item rotation and scrolling in the inventory.
  *
- * Likely this name is not accurrated as it seems to be used for
- * some intances related to the camera.
+ * Name might be inaccurate as it also appears to be used for the camera.
  */
-void Gfx_Items_ItemRotation(SVECTOR* arg0, GsCOORDINATE2* arg1); // 0x8004BCDC
+void Gfx_Items_ItemRotate(SVECTOR* arg0, GsCOORDINATE2* arg1); // 0x8004BCDC
 
 void func_8004BD74(s32 arg0, GsDOBJ2* arg1, s32 arg2); // 0x8004BD74
 
@@ -257,8 +250,8 @@ s32 Inventory_HyperBlasterUnlockTest(); // 0x8004C45C
  */
 s32 Inventory_HyperBlasterFunctionalTest(); // 0x8004C4F8
 
-/** @note Name could be inacurrate. */
-u32 Game_HyperBlasterBeamColor(); // 0x8004C54C
+/** @note Rough name. */
+u32 Game_HyperBlasterBeamColorGet(); // 0x8004C54C
 
 /** `arg0` is probably a bit flag. */
 void func_8004C564(u8 arg0, s32 arg1); // 0x8004C564
@@ -272,15 +265,13 @@ void Gfx_Results_Save(); // 0x8004D1A0
 /** Function mainly responsible for handling the inventory screen. */
 void Inventory_Logic(); // 0x8004D518
 
-/** @brief Used in circumstances involving the interaction of items that can
- * be used in the enviroment like keys or objects for puzzles or events like
- * the Cybil boss fight.
+/** @brief Used for environmental item interactions such as keys, puzzle objects, or
+ * events like the Cybil boss fight.
  *
- * @note Likely this function is where the Cybil boss fight skip bug relies
- * because this function has code specifically for the overlay where the battle
- * ocurrs.
+ * @note This could be where the Cybil boss fight skip bug occurs because
+ * there is code for its the overlay.
  */
-void Inventory_ItemInteraction(s32 arg0); // 0x8004E6D4
+void Inventory_ItemUse(s32 arg0); // 0x8004E6D4
 
 void Gfx_Inventory_CmdOptionsDraw(); // 0x8004E864
 
@@ -308,37 +299,30 @@ void Gfx_Results_ItemsDisplay(); //  0x800521A8
 
 void Gfx_Primitive2dTextureSet(s32 x, s32 y, s32 otIdx, s32 abr); // 0x80052088
 
-/** @brief Toggle visibility of object while the inventory scrolling rotates.
+/** @brief Toggles the visibility of object while the inventory scrolls.
  *
  * Used in: `Inventory_Logic`
- *
- * Removing it causes the items to not disappear nor displaying items that
- * weren't appearing.
  */
 void func_800539A4(s32 arg0, s32 arg1);
 
-/** Related to file loading of inventory elements. Loads Harry's potrait
- * for the status image.
+/** Related to file loading of inventory elements.
+ * Loads Harry's potrait for the health status image.
  */
 void func_800540A4(s8 arg0);
 
 void Gfx_Items_Render(); // 0x80054200
 
-/** Lightly inacurrate name, part of the code reset values related specifically
- * to visual elements of the inventory.
- */
+/** Rough name. Part of this function resets values related to visual elements of the inventory. */
 void Gfx_Items_RenderInit(); // 0x80054558
 
-/** Used for fixing bugs related to aiming animations when exiting the inventory screen.
+/** Used for correct reset of aiming animations when exiting the inventory screen.
  *
  * Used in: `GameState_ItemScreens_Update`
  *
- * This function calls two other functions that serves to fix bugs also related
- * to the animations when exiting the inventory screen and also have specific
- * code for a specific bug which causes the player to softlock if before entering
- * the inventory the player was aiming a weapon, then unequip that weapon and
- * leaves the inventory causing Harry to being unable to move or causing
- * buggy animations.
+ * This calls two other functions which reset Harry's animations when exiting the inventory screen.
+ * If removed, the player softlocks in the following scenario: Harry aims a weapon,
+ * the user enters the inventory, unequips the weapon, and exits the inventory.
+ * This results in Harry being unable to move and use wrong animations.
  */
 void Inventory_ExitAnimFixes(); // 0x80054634
 

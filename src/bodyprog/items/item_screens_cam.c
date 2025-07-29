@@ -6,7 +6,7 @@
 #include "bodyprog/item_screens.h"
 #include "bodyprog/math.h"
 
-void Gfx_ItemScreens_SetCamera(VbRVIEW* view, GsCOORDINATE2* coord, SVECTOR3* vec, s32 arg3) // 0x8004BB4C
+void Gfx_ItemScreens_CameraSet(VbRVIEW* view, GsCOORDINATE2* coord, SVECTOR3* vec, s32 arg3) // 0x8004BB4C
 {
     view->vr.vz = 10;
     view->vp.vx = 0;
@@ -39,7 +39,7 @@ void Gfx_ItemScreens_SetCamera(VbRVIEW* view, GsCOORDINATE2* coord, SVECTOR3* ve
 
     coord->param = &D_800C3928;
 
-    Gfx_Items_ItemRotation((SVECTOR*)vec, coord);
+    Gfx_Items_ItemRotate((SVECTOR*)vec, coord);
     vbSetRefView(view);
 }
 
@@ -52,11 +52,11 @@ void func_8004BBF4(VbRVIEW* arg0, GsCOORDINATE2* arg1, SVECTOR* arg2) // 0x8004B
     vx  = arg2->vx;
     arg2->vx = 0;
 
-    Gfx_Items_ItemRotation(arg2, arg1);
+    Gfx_Items_ItemRotate(arg2, arg1);
 
     arg2->vx = vx;
 
-    Gfx_Items_ItemRotation(arg2, arg1);
+    Gfx_Items_ItemRotate(arg2, arg1);
 
     sVec.vx = 0;
     sVec.vy = 0;
@@ -71,7 +71,7 @@ void GameFs_TmdDataAlloc(s32* buf) // 0x8004BCBC
     GsMapModelingData((unsigned long*)&buf[1]);
 }
 
-void Gfx_Items_ItemRotation(SVECTOR* arg0, GsCOORDINATE2* arg1) // 0x8004BCDC
+void Gfx_Items_ItemRotate(SVECTOR* arg0, GsCOORDINATE2* arg1) // 0x8004BCDC
 {
     MATRIX mat;
 
@@ -134,36 +134,43 @@ void func_8004BD74(s32 arg0, GsDOBJ2* arg1, s32 arg2)  // 0x8004BD74
     }
 }
 
-/** Notes from official PSY-Q docs.
- * Removing this causes the models of items to appear farther from the camera.
+/** Removing this causes the models of items to appear farther from the camera.
  * `Gfx_Items_ViewPointAdjustment`?
  */
 void func_8004BFE8() // 0x8004BFE8
 {
-    PushMatrix(); // Save a constant rotation matrix in a stack.
-    D_800C3954 = ReadGeomScreen(); // Reads the distance h from the viewpoint (eye) to the screen.
-    ReadGeomOffset(&D_800C3958, &D_800C395C); // Reads the GTE offset value.
-    GsSetProjection(1000); // Sets the distance between the projection plane and the viewpoint.  This results in a change in field of view.
+    // Save constant rotation matrix in stack.
+    PushMatrix();
+
+    // Read distance h from viewpoint to screen.
+    D_800C3954 = ReadGeomScreen();
+
+    // Read GTE offset value.
+    ReadGeomOffset(&D_800C3958, &D_800C395C);
+
+    // Set distance between projection plane and viewpoint. Results in FOV change.
+    GsSetProjection(1000);
+
     D_800C3950 = g_SysWork.playerCombatInfo_38.field_F;
 }
 
-/** Possibly bug prevention/failsafe?
- * Used when exiting the inventory screen or going into the option and map menu
+/** Possible failsafe?
+ * Used when exiting the inventory screen or going into options and map menus
  * through the inventory.
  *
- * Removing it doesn't produce any effect in the game.
+ * Removing it doesn't affect the game.
  *
- * Note from official PSY-Q docs.
- *
- * @note from a member of the PS Decomp Discord:
- * "(the function) essentially just tries to restore projection/offset settings
+ * @note From a member of the PS Decomp Discord:
+ * "[The function] essentially just tries to restore projection/offset settings
  * and the transform matrix to what they were in the main game, but I'm guessing
  * the game sets them at the start of every frame anyway, so it doesn't really
- * achieve anything"
+ * achieve anything."
  */
 void func_8004C040() // 0x8004C040
 {
-    PopMatrix(); // Resets a constant rotation matrix from a stack.
+    // Reset constant rotation matrix from stack.
+    PopMatrix();
+
     GsSetProjection(D_800C3954);
     SetGeomOffset(D_800C3958, D_800C395C);
 }
