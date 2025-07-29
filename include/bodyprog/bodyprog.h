@@ -788,11 +788,11 @@ typedef struct
 
 typedef struct
 {
-    s32 field_0;
-    u8  unk_4[4];
+    s_80043B70* field_0;
+    s32         queueIdx_4;
     s16 field_8;
     s16 field_A;
-    u8  unk_C[16];
+    u8          unk_C[16];
 } s_800C117C;
 STATIC_ASSERT_SIZEOF(s_800C117C, 28);
 
@@ -2162,7 +2162,7 @@ s32 func_80042178(s32* arg0);
 /** @brief Turns two hex `char`s to their `int` hex value. */
 s32 func_8004255C(s32* out, char firstHex, char secondHex);
 
-u32 func_80041B1C(void* arg0);
+u32 func_80041B1C(s_800C117C* arg0);
 
 s32 func_80042C04(s32 idx);
 
