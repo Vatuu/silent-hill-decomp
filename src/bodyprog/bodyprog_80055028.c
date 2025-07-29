@@ -1155,7 +1155,7 @@ static inline void func_8006DB3C_Inline(s8* arg0, VECTOR3* arg1, s32 arg2, u16* 
     func_8006DAE4(arg0, arg1, arg2, (short)*p);
 }
 
-s8 func_8006DB3C(s8* arg0, VECTOR3* arg1, s32 arg2, SVECTOR3* arg3) // 0x8006DB3C
+s32 func_8006DB3C(s_func_800700F8_2* arg0, VECTOR3* arg1, VECTOR3* arg2, s_func_800700F8* arg3) // 0x8006DB3C
 {
     s32 sp28;
     s32 temp_s0;
@@ -1163,23 +1163,23 @@ s8 func_8006DB3C(s8* arg0, VECTOR3* arg1, s32 arg2, SVECTOR3* arg3) // 0x8006DB3
     s32 scratchAddr;
 
     temp_v0 = func_8006A1A4(&sp28, arg3, 1);
-    *arg0 = 0;
+    arg0->field_0 = 0;
 
     if (func_8006DCE0((s32)PSX_SCRATCH, 1, 0, arg1, arg2, 0, 0, temp_v0, sp28) != 0)
     {
         temp_s0     = SetSp((s32)PSX_SCRATCH_ADDR(984));
         scratchAddr = (s32)PSX_SCRATCH;
-        *arg0       = func_8006DEB0(arg0, scratchAddr);
+        arg0->field_0 = func_8006DEB0(arg0, scratchAddr);
 
         SetSp(temp_s0);
     }
 
-    if (*arg0 == 0)
+    if (arg0->field_0 == 0)
     {
         func_8006DB3C_Inline(arg0, arg1, arg2, &((u8*)scratchAddr)[92]);
     }
 
-    return *arg0;
+    return arg0->field_0;
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006DC18); // 0x8006DC18
@@ -1224,7 +1224,20 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80070030); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80070084); // 0x80070084
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_800700F8); // 0x800700F8
+s32 func_800700F8(s_func_800700F8* arg0, s_func_800700F8* arg1) // 0x800700F8
+{
+    s_func_800700F8_2 sp10;
+    VECTOR3           vec0;
+    VECTOR3           vec1;
+
+    vec0 = arg0->field_18;
+
+    vec1.vx = arg1->field_18.vx - arg0->field_18.vx;
+    vec1.vy = -0x199;
+    vec1.vz = arg1->field_18.vz - arg0->field_18.vz;
+
+    return (func_8006DB3C(&sp10, &vec0, &vec1, arg0) && (sp10.field_10 == 0));
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80070184); // 0x80070184
 

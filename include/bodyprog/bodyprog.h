@@ -1225,6 +1225,26 @@ typedef struct
     u8 field_1;
 } s_800A9F80;
 
+typedef struct
+{
+    s8      unk_0[24];
+    VECTOR3 field_18;
+} s_func_800700F8;
+
+typedef struct
+{
+    s8   field_0; // Maybe bool?
+    s8   field_1;
+    s8   unk_2[2];
+    s32* field_4;
+    s32* field_8;
+    s32  field_C;
+    s32  field_10;
+    s32  field_14;
+    s32  field_18;
+    s16  field_1C;
+} s_func_800700F8_2;
+
 // ========
 // GLOBALS
 // ========
@@ -1614,6 +1634,8 @@ extern s32 D_800B5C7C;
 extern s_800B5D04 D_800B5D04[];
 
 extern u8 D_800B7CC4[][8192];
+
+extern s_func_800700F8 D_800BA00C; // Often passed to func_800700F8
 
 extern u8 D_800BC74F;
 
@@ -2153,6 +2175,9 @@ void func_8004201C();
 void func_800420C0();
 
 s32 func_80042178(s32* arg0);
+
+/** @brief Turn two hex char to its int hex value */
+s32 func_8004255C(s32* out, char firstHex, char secondHex);
 
 u32 func_80041B1C(void* arg0);
 
@@ -2758,9 +2783,11 @@ void func_8006CA18(s_func_8006CC44* arg0, s_func_800699E4* arg1, s_func_8006CA18
 
 s32 func_8006CC44(s32 arg0, s32 arg1, s_func_8006CC44* arg2);
 
-s8 func_8006DB3C(s8* arg0, VECTOR3* arg1, s32 arg2, SVECTOR3* arg3);
+s32 func_8006DB3C(s_func_800700F8_2* arg0, VECTOR3* arg1, VECTOR3* arg2, s_func_800700F8* arg3);
 
 s32 func_8006FD90(s_SubCharacter*, s32, s32, s32);
+
+s32 func_800700F8(s_func_800700F8* arg0, s_func_800700F8* arg1);
 
 s32 func_80070360(s_SubCharacter*, s32, s32);
 
