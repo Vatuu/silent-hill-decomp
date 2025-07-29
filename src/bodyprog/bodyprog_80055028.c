@@ -1213,7 +1213,46 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006EEB8); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006F250); // 0x8006F250
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006F338); // 0x8006F338
+void func_8006F338(s_func_8006F338* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x8006F338
+{
+    s32 temp_a1;
+    s32 field_4;
+
+    temp_a1 = arg1 + arg3;
+
+    arg0->field_0  = arg1;
+    arg0->field_4  = arg2;
+    arg0->field_10 = arg3;
+    arg0->field_8  = arg1 + arg3;
+    arg0->field_28 = 0x1000;
+    arg0->field_2C = 0xFFFF0000;
+    arg0->field_14 = arg4;
+
+    arg0->field_C = arg2 + arg4;
+    if (temp_a1 >= arg0->field_0)
+    {
+        arg0->field_18 = arg0->field_0;
+        arg0->field_1C = arg0->field_8;
+    }
+    else
+    {
+        arg0->field_18 = arg1 + arg3;
+        arg0->field_1C = arg0->field_0;
+    }
+
+    field_4 = arg0->field_4;
+    if (arg0->field_C >= arg0->field_4)
+    {
+        arg0->field_20 = field_4;
+        arg0->field_24 = arg0->field_C;
+        return;
+    }
+    else
+    {
+        arg0->field_20 = arg0->field_C;
+        arg0->field_24 = arg0->field_4;
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006F3C4); // 0x8006F3C4
 

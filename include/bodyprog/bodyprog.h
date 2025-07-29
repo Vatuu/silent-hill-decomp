@@ -474,6 +474,22 @@ typedef struct
     u16 field_1E;
 } s_func_8009ECCC;
 
+typedef struct
+{
+    s32 field_0;
+    s32 field_4;
+    s32 field_8;
+    s32 field_C;
+    s32 field_10;
+    s32 field_14;
+    s32 field_18;
+    s32 field_1C;
+    s32 field_20;
+    s32 field_24;
+    s32 field_28;
+    s32 field_2C;
+} s_func_8006F338;
+
 // ========
 // STRUCTS
 // ========
@@ -2771,6 +2787,8 @@ s32 func_8006DB3C(s_func_800700F8_2* arg0, VECTOR3* arg1, VECTOR3* arg2, s_func_
 void func_80070030(s_SubCharacter* chara, s32 x, s32 y, s32 z);
 
 s32 func_80070084(s_SubCharacter*, s32, s32, s32);
+
+void func_8006F338(s_func_8006F338* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 
 s32 func_8006FD90(s_SubCharacter*, s32, s32, s32);
 
