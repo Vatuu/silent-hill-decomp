@@ -336,6 +336,7 @@ void func_8005B370(s_func_8005B370* arg0) // 0x8005B370
     arg0->field_14 = 0;
 }
 
+// https://decomp.me/scratch/ptoP0
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005B378); // 0x8005B378
 
 void func_8005B3A4(s_func_8005B3A4* arg0) // 0x8005B3A4
@@ -1220,7 +1221,17 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006FAFC); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006FD90); // 0x8006FD90
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80070030); // 0x80070030
+
+void func_80070030(s_SubCharacter *chr, s32 x, s32 y, s32 z) {
+    s_func_800700F8_2 tmp;
+
+    VECTOR3 d;
+    d.vx = x - chr->position_18.vx;
+    d.vy = y - chr->position_18.vy;
+    d.vz = z - chr->position_18.vz;
+
+    func_8006DB3C(&tmp, &chr->position_18, &d, chr);
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80070084); // 0x80070084
 
@@ -1545,6 +1556,7 @@ void GameFs_PlayerMapAnimLoad(s32 mapIdx) // 0x8007EB64
     }
 }
 
+// Used when exiting the inventory screen.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8007EBBC); // 0x8007EBBC
 
 // Requires jump table.

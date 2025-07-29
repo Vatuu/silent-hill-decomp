@@ -16,7 +16,7 @@
 
 extern s_800C4168 const D_800C4168;
 
-const s32 g_rodataPad_8002547C = 0;
+const s32 rodataPad_8002547C = 0;
 
 void GameState_MainMenu_Update() // 0x8003AB28
 {
@@ -2447,23 +2447,23 @@ void func_8003EBF4(s_MapOverlayHeader* arg0) // 0x8003EBF4
     func_8003ED74(ptr->field_0, ptr->field_1);
 }
 
-void func_8003ECBC() // 0x8003ECBC
+void Game_TurnFlashlightOn() // 0x8003ECBC
 {
-    g_SysWork.field_2388.field_15 = 1;
-    g_SavegamePtr->flags_AC      &= ~(1 << 1);
+    g_SysWork.field_2388.flashlightState_15 = 1;
+    g_SavegamePtr->flags_AC                &= ~(1 << 1);
 }
 
-void func_8003ECE4() // 0x8003ECE4
+void Game_TurnFlashlightOff() // 0x8003ECE4
 {
-    g_SysWork.field_2388.field_15 = 0;
-    g_SavegamePtr->flags_AC      |= 1 << 1;
+    g_SysWork.field_2388.flashlightState_15 = 0;
+    g_SavegamePtr->flags_AC                |= 1 << 1;
 }
 
 void func_8003ED08() // 0x8003ED08
 {
-    g_SysWork.field_2388.field_15 ^= 1;
+    g_SysWork.field_2388.flashlightState_15 ^= 1;
 
-    if (g_SysWork.field_2388.field_15 == 1)
+    if (g_SysWork.field_2388.flashlightState_15 == 1)
     {
         g_SavegamePtr->flags_AC &= ~(1 << 1);
     }
@@ -2475,7 +2475,7 @@ void func_8003ED08() // 0x8003ED08
 
 u32 func_8003ED64() // 0x8003ED64
 {
-    return g_SysWork.field_2388.field_15;
+    return g_SysWork.field_2388.flashlightState_15;
 }
 
 void func_8003ED74(s32 arg0, s32 arg1) // 0x8003ED74
@@ -2494,8 +2494,8 @@ void func_8003EDB8(s32* arg0, s32* arg1) // 0x8003EDB8
     s_SysWork_2288* ptr0;
     s_SysWork_2288* ptr1;
 
-    memcpy(arg0, &(ptr0 = &g_SysWork.field_2388)->field_1C[g_SysWork.field_2388.field_15].field_0.field_20.vec_0[1], 4); // Is there a better solution?
-    memcpy(arg1, &(ptr1 = &g_SysWork.field_2388)->field_1C[g_SysWork.field_2388.field_15].field_0.field_24.vec_0[1], 4);
+    memcpy(arg0, &(ptr0 = &g_SysWork.field_2388)->field_1C[g_SysWork.field_2388.flashlightState_15].field_0.field_20.vec_0[1], 4); // Is there a better solution?
+    memcpy(arg1, &(ptr1 = &g_SysWork.field_2388)->field_1C[g_SysWork.field_2388.flashlightState_15].field_0.field_24.vec_0[1], 4);
 }
 
 void func_8003EE30(s32 arg0, s8* arg1, s32 arg2, s32 arg3) // 0x8003EE30
@@ -2597,22 +2597,22 @@ void func_8003F170() // 0x8003F170
     s_StructUnk3*   ptr2;
     s_SysWork_2288* ptr = &g_SysWork.field_2388;
 
-    if (g_SysWork.field_2388.field_15 != 0)
+    if (g_SysWork.field_2388.flashlightState_15 != 0)
     {
-        g_SysWork.field_2388.field_18 += FP_MULTIPLY((s64)g_DeltaTime0, FP_FLOAT_TO(4.0f, Q12_SHIFT), Q12_SHIFT);
+        g_SysWork.field_2388.flashlightIntensity_18 += FP_MULTIPLY((s64)g_DeltaTime0, FP_FLOAT_TO(4.0f, Q12_SHIFT), Q12_SHIFT);
     }
     else
     {
-        g_SysWork.field_2388.field_18 -= FP_MULTIPLY((s64)g_DeltaTime0, FP_FLOAT_TO(4.0f, Q12_SHIFT), Q12_SHIFT);
+        g_SysWork.field_2388.flashlightIntensity_18 -= FP_MULTIPLY((s64)g_DeltaTime0, FP_FLOAT_TO(4.0f, Q12_SHIFT), Q12_SHIFT);
     }
 
-    g_SysWork.field_2388.field_18 = CLAMP(g_SysWork.field_2388.field_18, 0, FP_FLOAT_TO(1.0f, Q12_SHIFT));
+    g_SysWork.field_2388.flashlightIntensity_18 = CLAMP(g_SysWork.field_2388.flashlightIntensity_18, 0, FP_FLOAT_TO(1.0f, Q12_SHIFT));
 
-    if (g_SysWork.field_2388.field_84[g_SysWork.field_2388.field_18 != 0].field_0.field_E == 3)
+    if (g_SysWork.field_2388.field_84[g_SysWork.field_2388.flashlightIntensity_18 != 0].field_0.field_E == 3)
     {
         func_80049AF8(g_SysWork.field_235C, &sp28);
         ApplyMatrixLV(&sp28, (VECTOR*)&g_SysWork.field_2360, &sp48); // Bug? `g_SysWork.field_2360` is `VECTOR3`.
-        ptr->field_84[g_SysWork.field_2388.field_18 != 0].field_30 = sp48.vz + (sp28.t[2] * 0x10);
+        ptr->field_84[g_SysWork.field_2388.flashlightIntensity_18 != 0].field_30 = sp48.vz + (sp28.t[2] * 0x10);
     }
 
     if (ptr->field_0 == 0)
@@ -2633,7 +2633,7 @@ void func_8003F170() // 0x8003F170
         }
     }
 
-    func_8003F838(&ptr->field_154, &ptr->field_1C[0], &ptr->field_1C[1], ptr->field_18);
+    func_8003F838(&ptr->field_154, &ptr->field_1C[0], &ptr->field_1C[1], ptr->flashlightIntensity_18);
 
     ptr2 = &ptr->field_154;
 

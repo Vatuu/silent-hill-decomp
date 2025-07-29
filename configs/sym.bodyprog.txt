@@ -168,6 +168,9 @@ GameFs_BgEtcGfxLoad = 0x8003BE6c; // type:func
 GameFs_BgItemLoad   = 0x8003BE9c; // type:func
 GameFs_FlameGfxLoad = 0x8003E710; // type:func
 
+Game_TurnFlashlightOn  = 0x8003ECBC; // type:func
+Game_TurnFlashlightOff = 0x8003ECE4; // type:func
+
 vcInitCamera                  = 0x8004004C; // type:func
 vcSetCameraUseWarp            = 0x800400D4; // type:func
 vcRetCamMvSmoothF             = 0x80040190; // type:func
@@ -228,11 +231,18 @@ Gfx_StringDraw = 0x8004A8E8; // type:func
 
 Gfx_StringDrawInt = 0x8004B9F8; // type:func
 
-Gfx_Results_ItemsRotate              = 0x8004BCDC; // type:func
+Gfx_ItemScreens_SetCamera            = 0x8004BB4C; // type:func
+Gfx_Items_ItemRotation               = 0x8004BCDC; // type:func
+GameFs_TmdDataAlloc                  = 0x8004BCBC; // type:func
 Inventory_ExitAnimEquippedItemUpdate = 0x8004C088; // type:func
+Inventory_HyperBlasterUnlockTest     = 0x8004C45C; // type:func
+Inventory_HyperBlasterFunctionalTest = 0x8004C4F8; // type:func
+Game_HyperBlasterBeamColor           = 0x8004C54C; // type:func
+Game_TimerUpdate                     = 0x8004C8DC; // type:func
 GameState_ItemScreens_Update         = 0x8004C9B0; // type:func
 Gfx_Results_Save                     = 0x8004D1A0; // type:func
 Inventory_Logic                      = 0x8004D518; // type:func
+Inventory_ItemInteraction            = 0x8004E6D4; // type:func
 Gfx_Inventory_CmdOptionsDraw         = 0x8004E864; // type:func
 Gfx_Inventory_ScrollArrowsDraw       = 0x8004EC7C; // type:func
 Gfx_ItemScreens_RenderInit           = 0x8004F764; // type:func
@@ -249,9 +259,11 @@ GameFs_UniqueItemModelLoad           = 0x80053B08; // type:func
 GameFs_Tim00TIMLoad                  = 0x80053DA0; // type:func
 GameFs_MapItemsModelLoad             = 0x80053DFC; // type:func
 GameFs_MapItemsTextureLoad           = 0x80054024; // type:func
-Gfx_Items_RenderItems                = 0x80054200; // type:func
+Gfx_Items_Render                     = 0x80054200; // type:func
 Gfx_Items_RenderInit                 = 0x80054558; // type:func
 Inventory_ExitAnimFixes              = 0x80054634; // type:func
+Gfx_Items_Display                    = 0x80054720; // type:func
+Inventory_AddSpecialItem             = 0x80054CAC; // type:func
 
 GameState_MapScreen_Update = 0x80066EB0; // type:func
 
@@ -459,20 +471,25 @@ D_800C16A8                = 0x800C16A8; // type:u8 size:0x20
 
 g_Chara_FileInfo = 0x800A90FC; // type:CharaFileInfo size:0x2D0
 
-g_Inventory_IsUpClicked       = 0x800C3968; // type:s32
-g_Inventory_IsDownClicked     = 0x800C396C; // type:s32
-g_Inventory_IsLeftClicked     = 0x800C3970; // type:s32
-g_Inventory_IsRightClicked    = 0x800C3974; // type:s32
-g_Inventory_IsUpPulsed        = 0x800C3978; // type:s32
-g_Inventory_IsDownPulsed      = 0x800C397C; // type:s32
-g_Inventory_IsLeftPulsed      = 0x800C3980; // type:s32
-g_Inventory_IsRightPulsed     = 0x800C3984; // type:s32
-g_Inventory_IsLeftHeld        = 0x800C3988; // type:s32
-g_Inventory_IsRightHeld       = 0x800C398C; // type:s32
-g_Inventory_BorderSelectionId = 0x800C3998;
-g_Items_ItemsLightingData     = 0x800C39A8;
-g_Items_Items3dData0          = 0x800C3BE8;
-g_Items_Items3dData1          = 0x800C3E48;
+D_800C3928                           = 0x800C3928;
+g_Inventory_IsUpClicked              = 0x800C3968; // type:s32
+g_Inventory_IsDownClicked            = 0x800C396C; // type:s32
+g_Inventory_IsLeftClicked            = 0x800C3970; // type:s32
+g_Inventory_IsRightClicked           = 0x800C3974; // type:s32
+g_Inventory_IsUpPulsed               = 0x800C3978; // type:s32
+g_Inventory_IsDownPulsed             = 0x800C397C; // type:s32
+g_Inventory_IsLeftPulsed             = 0x800C3980; // type:s32
+g_Inventory_IsRightPulsed            = 0x800C3984; // type:s32
+g_Inventory_IsLeftHeld               = 0x800C3988; // type:s32
+g_Inventory_IsRightHeld              = 0x800C398C; // type:s32
+g_Inventory_IsPlayerScrolling        = 0x800C3990;
+g_Gfx_Inventory_SelectionBordersDraw = 0x800C3998;
+g_Inventory_PrevSelectionId          = 0x800C399C;
+g_Items_ItemsLightingData            = 0x800C39A8;
+g_Item_MapLoadableItems              = 0x800C3BB8;
+g_Items_Items3dData0                 = 0x800C3BE8;
+g_Items_Items3dData1                 = 0x800C3E48;
+g_Items_ItemsMdlData                 = 0x800C3D78;
 
 g_Demo_DemoFileIdx          = 0x800C4840; // type:s32
 g_Demo_PlayFileIdx          = 0x800C4844; // type:s32

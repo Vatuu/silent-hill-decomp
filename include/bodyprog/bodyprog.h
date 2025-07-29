@@ -1129,6 +1129,7 @@ typedef struct _SpawnInfo
 } s_SpawnInfo;
 STATIC_ASSERT_SIZEOF(s_SpawnInfo, 12);
 
+// This struct is used to retrict the items that can be loaded in the overlay.
 typedef struct s_UnkStruct_MapOverlay
 {
     u8 field_0[34]; /** `e_InventoryItemId` */
@@ -1401,7 +1402,10 @@ extern s16 D_800A99B0;
 /** Array of indices? */
 extern s8 D_800A99B4[];
 
-/** Array of indices? */
+/** Array of indices?
+ * This is related to marks in the map as it is used to indicate which file to load based
+ * on the current overlay.
+ */
 extern s8 D_800A99CC[];
 
 extern s_FsImageDesc D_800A9A04;
@@ -1551,19 +1555,11 @@ extern s16 g_StringColorId; // 0x800AD498
 
 extern s32 D_800AD49C;
 
-extern s32 D_800AE178;
-
-extern s32 D_800AE180;
-
 extern u8 D_800AE185;
 
 extern u8 D_800AE186;
 
 extern u8 D_800AE187;
-
-extern s16 D_800AE18C; // Maybe DVECTOR
-
-extern s16 D_800AE18E;
 
 extern s16 D_800AE1A8;
 
@@ -1655,7 +1651,7 @@ extern u16 D_800BCCB2;
  *
  * @note Other values causes flickers, likely a bug.
  */
-extern s32 g_Gfx_ScreenFade;
+extern s32 g_Gfx_ScreenFade; // 0x800BCD0C
 
 extern s16 D_800BCD28;
 
@@ -1695,7 +1691,8 @@ extern s_800BCDA8 D_800BCDA8[2];
 
 extern s_AreaLoadParams D_800BCDB0;
 
-extern s32 D_800BCDC0[];
+/** Related to item special interactions. */
+extern s32 D_800BCDC0[5];
 
 extern u8 D_800BCDD4;
 
@@ -1811,8 +1808,6 @@ extern s32 D_800C16C8; // Type assumed.
 
 extern s32 D_800C3920;
 
-extern GsCOORD2PARAM D_800C3928;
-
 extern s8 D_800C3950;
 
 extern s32 D_800C3954;
@@ -1829,11 +1824,7 @@ extern s8 D_800C3962;
 
 extern u8 D_800C3963;
 
-extern s32 D_800C3990; // Boolean.
-
 extern s32 D_800C3994;
-
-extern s32 D_800C399C; /** `s_InventorySelectionId` */
 
 extern u8 D_800C37D0;
 
@@ -1878,16 +1869,6 @@ extern s8 D_800C39A0;
 
 extern GsF_LIGHT D_800C3A88[];
 
-extern GsCOORDINATE2 D_800C3AE8;
-
-extern SVECTOR3 D_800C3B38;
-
-extern VbRVIEW D_800C3B48;
-
-extern u8 D_800C3BB8[48];
-
-extern GsDOBJ2 D_800C3D78[];
-
 extern u8 D_800C3E40;
 
 extern u8 D_800C4169;
@@ -1914,9 +1895,9 @@ extern u16 D_800C4580;
 
 extern u16 D_800C4582;
 
-extern u16 D_800C4584;
+extern u16 D_800C4584; // Is Player moving left (in-game)?
 
-extern u16 D_800C4586;
+extern u16 D_800C4586; // Is Player moving right (in-game)?
 
 extern s8 D_800C4588;
 
@@ -2082,7 +2063,7 @@ void func_8003C92C(s_800BCE18_2BEC_0* arg0, VECTOR3* arg1, SVECTOR3* arg2);
 
 void func_8003CD6C(s_PlayerCombat* arg0);
 
-s32 func_8003CDA0(s32 itemIdx);
+s32 func_8003CDA0(s32 inventorySpaceIdx);
 
 void func_8003D01C();
 
@@ -2389,10 +2370,6 @@ u8 func_80048954(s32 com, u8* param, u8* res);
 
 void func_8004729C(u16);
 
-void func_8004BCBC(s32* buf);
-
-void func_8004C040();
-
 /** Returns `true` if player has usable ammo in inventory (i.e. ammo + gun needed for it, or gun with ammo loaded). */
 s32 func_8004C328();
 
@@ -2404,8 +2381,6 @@ void GameFs_UniqueItemModelLoad(u8 itemId);
 void GameFs_MapItemsTextureLoad(s32 mapId);
 
 void func_800546A8(s32 arg0);
-
-void func_80054720(s_TmdFile* tmd, s32 arg1, s32 arg2);
 
 void func_8005487C(s32);
 
@@ -2954,6 +2929,7 @@ void func_80037E78(s_SubCharacter* chara);
 
 s32 func_800382B0(s32 arg0);
 
+/** Possibly used to check distances between objects or characters. */
 s32 func_80038A6C(VECTOR3* pos0, VECTOR3* pos1, s32 radius);
 
 /** Computes the 2D distance on the XZ plane between the input position and the camera position. */

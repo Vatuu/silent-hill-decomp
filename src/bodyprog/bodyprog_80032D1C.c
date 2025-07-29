@@ -1158,7 +1158,7 @@ static inline void Game_StateStepIncrement()
     g_GameWork.gameStateStep_598[0] = gameStateStep0 + 1;
 }
 
-const char g_rodataPad_800251F4[] = { 0x00, 0x1C, 0x97, 0x50, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }; // Could this indicate file split nearby?
+const char rodataPad_800251F4[] = { 0x00, 0x1C, 0x97, 0x50, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }; // Could this indicate file split nearby?
 
 void Demo_StartUp() // 0x80034964
 {
@@ -1464,11 +1464,11 @@ void func_80035178() // 0x80035178
 
     if ((g_SavegamePtr->flags_AC >> 1) & (1 << 0))
     {
-        func_8003ECE4();
+        Game_TurnFlashlightOff();
     }
     else
     {
-        func_8003ECBC();
+        Game_TurnFlashlightOn();
     }
 
     D_800A992C->field_10 = 0x2E630;
@@ -2248,7 +2248,7 @@ u32 func_800364BC() // 0x800364BC
     return FP_FROM(var0 + var1, Q12_SHIFT);
 }
 
-const char g_rodataPad_80025234[] = { 0x00, 0xB1, 0x3A, 0xCC, 0x00, 0x00, 0x00, 0x00 }; // Could this indicate file split nearby?
+const char rodataPad_80025234[] = { 0x00, 0xB1, 0x3A, 0xCC, 0x00, 0x00, 0x00, 0x00 }; // Could this indicate file split nearby?
 
 void func_8003652C() // 0x8003652C
 {
@@ -2356,7 +2356,7 @@ s32 func_800365B8(s32 arg0) // 0x800365B8
             {
                 if (D_800BCD7A == 0)
                 {
-                    func_8004C8DC();
+                    Game_TimerUpdate();
                 }
 
                 temp = D_800BCD64;
@@ -2577,7 +2577,7 @@ s32 func_80036B5C(u8 arg0, s32* arg1)
     return res;
 }
 
-const s32 g_rodataPad_800252B8 = 0;
+const s32 rodataPad_800252B8 = 0;
 
 s_800252BC const D_800252BC[25] =
 {
@@ -3302,7 +3302,7 @@ void SysState_GamePaused_Update() // 0x800391E8
     }
 
     func_80091380();
-    func_8004C8DC();
+    Game_TimerUpdate();
 
     if (g_SysWork.sysStateStep_C == 0)
     {
@@ -3529,7 +3529,7 @@ void SysState_Unk3_Update() // 0x800396D4
             SysWork_StateSetNext(GameState_Unk0);
         }
     }
-    else if ((g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & (1 << 1)) && g_SysWork.field_2388.field_15 == 0 &&
+    else if ((g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & (1 << 1)) && g_SysWork.field_2388.flashlightState_15 == 0 &&
              ((g_SysWork.field_2388.field_1C[0].field_0.field_0.s_field_0.field_0 & (1 << 0)) ||
               (g_SysWork.field_2388.field_1C[1].field_0.field_0.s_field_0.field_0 & (1 << 0))))
     {

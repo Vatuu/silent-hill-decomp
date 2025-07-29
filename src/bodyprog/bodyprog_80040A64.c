@@ -56,7 +56,15 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80040BAC); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80040E7C); // 0x80040E7C
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80041074); // 0x80041074
+void func_80041074(s32 arg0, void* arg1, void* arg2, s32 arg3) // 0x80041074
+{
+    VECTOR3 sp18;
+    s32 sp28;
+    s32 sp2C;
+
+    func_800410D8(&sp18, &sp28, &sp2C, arg2, arg3);
+    func_800414E0(arg0, &sp18, arg1, sp28, sp2C);
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800410D8); // 0x800410D8
 

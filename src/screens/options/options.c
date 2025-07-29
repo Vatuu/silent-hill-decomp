@@ -36,7 +36,7 @@ void GameState_OptionScreen_Update() // 0x801E2D44
 
     if (g_GameWork.gameStatePrev_590 != GameState_MainMenu)
     {
-        func_8004C8DC();
+        Game_TimerUpdate();
     }
 
     switch (g_GameWork.gameStateStep_598[0])

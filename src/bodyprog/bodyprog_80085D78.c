@@ -410,7 +410,7 @@ void func_80086470(u32 switchVar, s32 itemId, s32 itemCount, s32 arg3) // 0x8008
             
             if (switchVar == 3 || switchVar == 6)
             {
-                func_80054CAC(itemId, itemCount & 0xFF);
+                Inventory_AddSpecialItem(itemId, itemCount & 0xFF);
             }
             break;
 
@@ -2048,6 +2048,9 @@ void func_8008B664(s32 arg0, u32 caseVar) // 0x8008B664
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008B664); // 0x8008B664
 #endif
 
+/** This does something related to the color of the beam of the Hyper Blaster as it calls
+ * `Game_HyperBlasterBeamColor` which returns the color the player is currently using.
+ */
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008B714); // 0x8008B714
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008BF84); // 0x8008BF84
