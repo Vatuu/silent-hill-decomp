@@ -2732,6 +2732,8 @@ u16 func_80069810();
 
 void func_80069820(u16);
 
+void func_8006982C(u16 arg0);
+
 void func_80069994(s_func_800699E4* arg0);
 
 void func_800699E4(s_func_800699E4* arg0);
@@ -2767,6 +2769,8 @@ void func_80070030(s_SubCharacter* chara, s32 x, s32 y, s32 z);
 s32 func_8006FD90(s_SubCharacter*, s32, s32, s32);
 
 s32 func_800700F8(s_func_800700F8* arg0, s_func_800700F8* arg1);
+
+s32 func_80070320();
 
 s32 func_80070360(s_SubCharacter*, s32, s32);
 

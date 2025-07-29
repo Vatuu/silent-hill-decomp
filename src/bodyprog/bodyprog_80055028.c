@@ -637,7 +637,10 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80069810); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80069820); // 0x80069820
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006982C); // 0x8006982C
+void func_8006982C(u16 arg0) // 0x8006982C
+{
+    D_800C4478 |= arg0;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80069844); // 0x80069844
 
@@ -1265,7 +1268,17 @@ void func_8007029C(VECTOR3* arg0, s32 arg1, s16 angle) // 0x8007029C
     func_8006DB3C(&vars, arg0 + 2, &vec, arg0);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80070320); // 0x80070320
+s32 func_80070320() // 0x80070320
+{
+    s32 i = 0;
+
+    for (; i < 4; i++)
+    {
+        if ((&g_SysWork)->field_2354[i] != NO_VALUE)
+            return 1;
+    }
+    return 0;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80070360); // 0x80070360
 
