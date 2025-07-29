@@ -2766,9 +2766,13 @@ s32 func_8006DB3C(s_func_800700F8_2* arg0, VECTOR3* arg1, VECTOR3* arg2, s_func_
 
 void func_80070030(s_SubCharacter* chara, s32 x, s32 y, s32 z);
 
+s32 func_80070084(s_SubCharacter*, s32, s32, s32);
+
 s32 func_8006FD90(s_SubCharacter*, s32, s32, s32);
 
 s32 func_800700F8(s_func_800700F8* arg0, s_func_800700F8* arg1);
+
+s32 func_80070184(s_SubCharacter* chara, s32 arg1, s16 rotationY);
 
 s32 func_80070320();
 

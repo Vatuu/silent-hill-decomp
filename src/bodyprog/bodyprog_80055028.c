@@ -1252,7 +1252,18 @@ s32 func_800700F8(s_func_800700F8* arg0, s_func_800700F8* arg1) // 0x800700F8
     return func_8006DB3C(&sp10, &vec0, &vec1, arg0) && sp10.field_10 == 0;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80070184); // 0x80070184
+s32 func_80070184(s_SubCharacter* chara, s32 arg1, s16 rotationY) // 0x80070184
+{
+    s32 iVar1 = shRsin(rotationY);
+    s32 varX  = chara->position_18.vx + FP_MULTIPLY(arg1, iVar1, Q12_SHIFT);
+    s32 iVar2 = shRcos(rotationY);
+
+    s32 varY = chara->position_18.vy;
+    s32 varZ = chara->position_18.vz + FP_MULTIPLY(arg1, iVar2, Q12_SHIFT);
+
+    return func_80070084(chara, varX, varY, varZ); // The calls to this often have a return so i
+                                                   // assumed it just passes the return of `func_80070084`
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80070208); // 0x80070208
 
