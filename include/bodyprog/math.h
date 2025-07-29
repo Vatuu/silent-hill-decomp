@@ -105,10 +105,6 @@
 #define FP_TIME(sec) \
     FP_FLOAT_TO((sec), Q12_SHIFT)
 
-/** Convert floating-point tile units to fixed-point world units. */
-#define FP_TILE(val) \
-    (s32)((val) * (1 << (Q8_SHIFT)))
-
 static inline s16 shAngleRegulate(s32 angle)
 {
     return (angle << 20) >> 20;
