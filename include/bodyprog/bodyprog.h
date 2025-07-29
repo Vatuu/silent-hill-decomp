@@ -2732,6 +2732,8 @@ u16 func_80069810();
 
 void func_80069820(u16);
 
+void func_80069844(s32 arg0);
+
 void func_80069994(s_func_800699E4* arg0);
 
 void func_800699E4(s_func_800699E4* arg0);

@@ -190,7 +190,7 @@ extern s_Items3dData g_Items_Items3dData0[10]; // 0x800C3BE8
 extern u8 g_Item_MapLoadableItems[48]; // 0x800C3BB8
 
 /** Used to organize the items displaying in the inventory.
- * 7 is the max number of visible items?
+ * 7 is the max number of visible items.
  */
 extern s32 D_800C3E18[7]; // 0x800C3E18
 
