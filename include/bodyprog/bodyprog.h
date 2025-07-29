@@ -146,7 +146,7 @@ typedef struct
 {
     s8 field_0;
     s8 field_1;
-    s8 field_2;
+    u8 field_2;
     s8 field_3;
     s8 unk_4[4];
     s8 field_8;
@@ -182,7 +182,7 @@ typedef struct
 {
     s_80041CEC* field_0;
     s32         field_4;
-    s32         field_8;
+    s32         queueIdx_8; // Passed to `func_80041ADC`, thus the name
 } s_func_80041CB4;
 
 typedef struct
@@ -2161,6 +2161,8 @@ s32 func_80042178(s32* arg0);
 
 /** @brief Turns two hex `char`s to their `int` hex value. */
 s32 func_8004255C(s32* out, char firstHex, char secondHex);
+
+s32 func_80041BA0(s_func_80041CB4* arg0);
 
 u32 func_80041B1C(s_800C117C* arg0);
 
