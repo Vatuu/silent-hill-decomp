@@ -146,7 +146,7 @@ typedef struct
 {
     s8 field_0;
     s8 field_1;
-    s8 field_2;
+    u8 field_2;
     s8 field_3;
     s8 unk_4[4];
     s8 field_8;
@@ -182,7 +182,7 @@ typedef struct
 {
     s_80041CEC* field_0;
     s32         field_4;
-    s32         field_8;
+    s32         queueIdx_8; // Passed to `func_80041ADC`, thus the name
 } s_func_80041CB4;
 
 typedef struct
@@ -473,6 +473,22 @@ typedef struct
     u16 field_1C;
     u16 field_1E;
 } s_func_8009ECCC;
+
+typedef struct
+{
+    s32 field_0;
+    s32 field_4;
+    s32 field_8;
+    s32 field_C;
+    s32 field_10;
+    s32 field_14;
+    s32 field_18;
+    s32 field_1C;
+    s32 field_20;
+    s32 field_24;
+    s32 field_28;
+    s32 field_2C;
+} s_func_8006F338;
 
 // ========
 // STRUCTS
@@ -2162,6 +2178,8 @@ s32 func_80042178(s32* arg0);
 /** @brief Turns two hex `char`s to their `int` hex value. */
 s32 func_8004255C(s32* out, char firstHex, char secondHex);
 
+s32 func_80041BA0(s_func_80041CB4* arg0);
+
 u32 func_80041B1C(s_800C117C* arg0);
 
 s32 func_80042C04(s32 idx);
@@ -2769,6 +2787,8 @@ s32 func_8006DB3C(s_func_800700F8_2* arg0, VECTOR3* arg1, VECTOR3* arg2, s_func_
 void func_80070030(s_SubCharacter* chara, s32 x, s32 y, s32 z);
 
 s32 func_80070084(s_SubCharacter*, s32, s32, s32);
+
+void func_8006F338(s_func_8006F338* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 
 s32 func_8006FD90(s_SubCharacter*, s32, s32, s32);
 
