@@ -642,7 +642,10 @@ void func_8006982C(u16 arg0) // 0x8006982C
     D_800C4478 |= arg0;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80069844); // 0x80069844
+void func_80069844(s32 arg0) // 0x80069844
+{
+    D_800C4478 = (D_800C4478 & ~arg0) | (1 << 0);
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80069860); // 0x80069860
 

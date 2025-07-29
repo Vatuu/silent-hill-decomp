@@ -48,37 +48,37 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D0394);
 
 s32 func_800D0600() // 0x800D0600
 {
-    #define FIXED_DIST FP_FLOAT_TO(40.0, Q12_SHIFT)
+    #define FIXED_DIST FP_METER(40.0f)
     
     s32 distX;
     s32 distZ;
 
-    // Check against the first position
-    distX = ABS(g_SysWork.player_4C.chara_0.position_18.vx - D_800E32DC.pos1_0.vx);
-    distZ = g_SysWork.player_4C.chara_0.position_18.vz - D_800E32DC.pos1_0.vz;
-    if (distZ >= 0 && distX + distZ < FIXED_DIST)
+    // Check against first position.
+    distX = ABS(g_SysWork.player_4C.chara_0.position_18.vx - D_800E32DC.position0_0.vx);
+    distZ = g_SysWork.player_4C.chara_0.position_18.vz - D_800E32DC.position0_0.vz;
+    if (distZ >= 0 && (distX + distZ) < FIXED_DIST)
     {
         goto ret1;
     }
-    else if (distZ < 0 && distX + (D_800E32DC.pos1_0.vz - g_SysWork.player_4C.chara_0.position_18.vz) < FIXED_DIST)
+    else if (distZ < 0 && (distX + (D_800E32DC.position0_0.vz - g_SysWork.player_4C.chara_0.position_18.vz)) < FIXED_DIST)
     {
         goto ret1;
     }
 
-    // And then against the second
-    distX = ABS(g_SysWork.player_4C.chara_0.position_18.vx - D_800E32DC.pos2_C.vx);
-    distZ = g_SysWork.player_4C.chara_0.position_18.vz - D_800E32DC.pos2_C.vz;
-    if (distZ >= 0 && distX + distZ < FIXED_DIST)
+    // Check against against second position.
+    distX = ABS(g_SysWork.player_4C.chara_0.position_18.vx - D_800E32DC.position1_C.vx);
+    distZ = g_SysWork.player_4C.chara_0.position_18.vz - D_800E32DC.position1_C.vz;
+    if (distZ >= 0 && (distX + distZ) < FIXED_DIST)
     {
         goto ret1;
     }
-    else if (distZ < 0 && distX + (D_800E32DC.pos2_C.vz - g_SysWork.player_4C.chara_0.position_18.vz) < FIXED_DIST)
+    else if (distZ < 0 && (distX + (D_800E32DC.position1_C.vz - g_SysWork.player_4C.chara_0.position_18.vz)) < FIXED_DIST)
     {
         goto ret1;
     }
     else
     {
-        // Ideally we'd return 0 here, but code matching requires we jump to the end
+        // Ideally would return 0 here, but code matching requires jump to end.
         goto ret0;
     }
     
