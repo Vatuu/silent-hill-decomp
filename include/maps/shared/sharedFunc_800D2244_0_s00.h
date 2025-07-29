@@ -41,8 +41,8 @@ void sharedFunc_800D2244_0_s00(s32 arg0)
 
     player->field_41     = NO_VALUE;
     player->field_40     = NO_VALUE;
-    g_SysWork.field_2355 = NO_VALUE;
-    g_SysWork.field_2354 = NO_VALUE;
+    g_SysWork.field_2354[1] = NO_VALUE;
+    g_SysWork.field_2354[0] = NO_VALUE;
 
 #if !defined(MAP0_S00) && !defined(MAP0_S01)
     func_8003D01C();

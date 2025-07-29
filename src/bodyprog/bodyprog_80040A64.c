@@ -138,7 +138,31 @@ s32 func_80041ADC(s32 queueIdx) // 80041ADC
     return 2;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80041B1C); // 0x80041B1C
+u32 func_80041B1C(s_800C117C* arg0) // 0x80041B1C
+{
+    s32 temp_v0;
+    s32 new_var;
+
+    temp_v0 = func_80041ADC(arg0->queueIdx_4);
+    new_var = temp_v0;
+
+    if (new_var == 1)
+    {
+        return 1;
+    }
+
+    if ((new_var == 0) || (temp_v0 != 2))
+    {
+        return 0;
+    }
+
+    if ((arg0->field_0->field_1 != 0) &&
+        (func_80043B70(arg0->field_0) != 0))
+    {
+        return 3;
+    }
+    return 2;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80041BA0); // 0x80041BA0
 

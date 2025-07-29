@@ -788,11 +788,11 @@ typedef struct
 
 typedef struct
 {
-    s32 field_0;
-    u8  unk_4[4];
+    s_80043B70* field_0;
+    s32         queueIdx_4;
     s16 field_8;
     s16 field_A;
-    u8  unk_C[16];
+    u8          unk_C[16];
 } s_800C117C;
 STATIC_ASSERT_SIZEOF(s_800C117C, 28);
 
@@ -2162,7 +2162,7 @@ s32 func_80042178(s32* arg0);
 /** @brief Turns two hex `char`s to their `int` hex value. */
 s32 func_8004255C(s32* out, char firstHex, char secondHex);
 
-u32 func_80041B1C(void* arg0);
+u32 func_80041B1C(s_800C117C* arg0);
 
 s32 func_80042C04(s32 idx);
 
@@ -2732,6 +2732,8 @@ u16 func_80069810();
 
 void func_80069820(u16);
 
+void func_8006982C(u16 arg0);
+
 void func_80069844(s32 arg0);
 
 void func_80069994(s_func_800699E4* arg0);
@@ -2766,9 +2768,15 @@ s32 func_8006DB3C(s_func_800700F8_2* arg0, VECTOR3* arg1, VECTOR3* arg2, s_func_
 
 void func_80070030(s_SubCharacter* chara, s32 x, s32 y, s32 z);
 
+s32 func_80070084(s_SubCharacter*, s32, s32, s32);
+
 s32 func_8006FD90(s_SubCharacter*, s32, s32, s32);
 
 s32 func_800700F8(s_func_800700F8* arg0, s_func_800700F8* arg1);
+
+s32 func_80070184(s_SubCharacter* chara, s32 arg1, s16 rotationY);
+
+s32 func_80070320();
 
 s32 func_80070360(s_SubCharacter*, s32, s32);
 

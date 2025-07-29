@@ -1064,9 +1064,7 @@ typedef struct _SysWork
     u32             inventoryItemSelectedIdx_2351 : 8;
     u32             flags_2352                    : 8;
     s32             field_2353                    : 8; // Some index into `npcs_1A0`.
-    s8              field_2354; // Used by `sharedFunc_800D2244_0_s00`.
-    s8              field_2355; // Used by `sharedFunc_800D2244_0_s00`.
-    s8              unk_2356[2];
+    s8              field_2354[4];                     // Size dervied from `func_80070320`
     u8              field_2358;
     s8              unk_2359[1];
     u8              field_235A; // Assumed type.
