@@ -114,6 +114,8 @@ extern s32 sharedData_800E32CC_0_s00;
 
 extern s32 sharedData_800D32A0_0_s02; // `sharedFunc_800CDAA8_0_s02`
 
+extern u16 sharedData_800D21E8_3_s00[];
+
 s32 sharedFunc_800CBBBC_0_s00();
 
 void sharedFunc_800CFFF8_0_s00(s32 arg0, s_func_800CFFF8* arg1);
@@ -228,6 +230,11 @@ void sharedFunc_800D17BC_1_s00(s_SubCharacter*);
 void sharedFunc_800D1DBC_1_s00(s_SubCharacter*);
 
 void sharedFunc_800CEFD0_1_s02(s32 arg0, s_sharedFunc_800CEFD0_1_s02* arg1, u16* arg2, s32* deltaTime);
+
+/** @brief Sets a map overlay value based on a whether a game event flag is set. */
+void sharedFunc_800D0994_3_s00();
+
+void sharedFunc_800D09D4_3_s00();
 
 // MAP3_S03 puppet nurse/doctor funcs
 void sharedFunc_800CDA88_3_s03(s_SubCharacter*);

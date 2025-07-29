@@ -97,7 +97,7 @@ void func_800CF08C(void) {}
 
 #include "maps/shared/Ai_Dahlia_Update.h" // 0x800CF0F8
 
-INCLUDE_ASM("asm/maps/map3_s06/nonmatchings/map3_s06", sharedFunc_800CD280_2_s01); // 0x800CF16C
+INCLUDE_ASM("asm/maps/map3_s06/nonmatchings/map3_s06", sharedFunc_800CD280_2_s01);
 
 INCLUDE_ASM("asm/maps/map3_s06/nonmatchings/map3_s06", sharedFunc_800CD2C8_2_s01); // 0x800CF1B4
 
@@ -141,9 +141,9 @@ INCLUDE_ASM("asm/maps/map3_s06/nonmatchings/map3_s06", func_800D06F8);
 
 INCLUDE_ASM("asm/maps/map3_s06/nonmatchings/map3_s06", func_800D07A0);
 
-INCLUDE_ASM("asm/maps/map3_s06/nonmatchings/map3_s06", func_800D07D4);
+#include "maps/shared/sharedFunc_800D0994_3_s00.h" // 0x800D07D4
 
-INCLUDE_ASM("asm/maps/map3_s06/nonmatchings/map3_s06", func_800D0814);
+#include "maps/shared/sharedFunc_800D09D4_3_s00.h" // 0x800D0814
 
 void func_800D09B4(void) {}
 
