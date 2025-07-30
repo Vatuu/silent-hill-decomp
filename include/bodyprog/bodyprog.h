@@ -446,6 +446,36 @@ typedef struct
 
 typedef struct
 {
+    s32      field_0;
+    s16      field_4;
+    s16      field_6;
+    s16      field_8;
+    s8       unk_A[2];
+    s8       unk_C[20];
+    s32      field_20;
+    s8       unk_24[8];
+    VECTOR3  field_2C;
+    s8       unk_38[4];
+    s32      field_3C;
+    s32      field_40;
+    s32      field_44;
+    s8       unk_48[4];
+    s16      field_4C;
+    s16      field_4E;
+    SVECTOR3 field_50;
+    s8       unk_56[2];
+    s16      field_58;
+    s16      field_5A;
+    s16      field_5C;
+    s16      field_5E;
+    s16      field_60;
+    s8       unk_62[2];
+    s32      field_64;
+    s32      field_68;
+} s_func_8006DCE0;
+
+typedef struct
+{
     s8  unk_0[22];
     s32 field_18;
 } s_func_80089840;
@@ -965,6 +995,11 @@ typedef struct
     s8            unk_54[24];
     VECTOR3       field_60; // Type assumed.
 } s_800C4168;
+
+typedef struct
+{
+    u16 field_0;
+} s_800C4478;
 
 typedef struct
 {
@@ -1851,8 +1886,6 @@ extern s_800C38B0 D_800C38B0;
 
 extern s32 D_800C38B4;
 
-extern u16 D_800C4478; // Might be struct.
-
 extern s32 D_800C4710[];
 
 extern u8 D_800C37C8;
@@ -1898,6 +1931,10 @@ extern u8 D_800C416A;
 // extern s_800C4168 D_800C4168;
 
 extern s32 D_800C4180;
+
+// emoose: Also works: `extern u16 D_800C4478[];`, `arg0->field_4 = D_800C4478[0];`.
+// Didn't see any array accesses in Ghidra though, struct might be more likely.
+extern s_800C4478 D_800C4478;
 
 extern s32 D_800C454C;
 
@@ -2784,6 +2821,8 @@ void func_8006CA18(s_func_8006CC44* arg0, s_func_800699E4* arg1, s_func_8006CA18
 s32 func_8006CC44(s32 arg0, s32 arg1, s_func_8006CC44* arg2);
 
 s32 func_8006DB3C(s_func_800700F8_2* arg0, VECTOR3* arg1, VECTOR3* arg2, s_func_800700F8* arg3);
+
+s32 func_8006DCE0(s_func_8006DCE0* arg0, s32 arg1, s16 arg2, VECTOR3* pos0, VECTOR3* pos1, s32 arg5, s32 arg6, s32 arg7, s32 arg8);
 
 void func_80070030(s_SubCharacter* chara, s32 x, s32 y, s32 z);
 

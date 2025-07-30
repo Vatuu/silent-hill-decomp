@@ -639,12 +639,12 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80069820); // 0x
 
 void func_8006982C(u16 arg0) // 0x8006982C
 {
-    D_800C4478 |= arg0;
+    D_800C4478.field_0 |= arg0;
 }
 
 void func_80069844(s32 arg0) // 0x80069844
 {
-    D_800C4478 = (D_800C4478 & ~arg0) | (1 << 0);
+    D_800C4478.field_0 = (D_800C4478.field_0 & ~arg0) | (1 << 0);
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80069860); // 0x80069860
@@ -782,8 +782,8 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006A940); // 0x
 void func_8006AB50(s_func_8006CC44* arg0, VECTOR3* vec, s_func_8006AB50* arg2, s32 arg3) // 0x8006AB50
 {
     arg0->field_0_0       = 0;
+    arg0->field_2         = D_800C4478.field_0;
     arg0->field_4.field_4 = arg3;
-    arg0->field_2         = D_800C4478; // `D_800C4478` might be a struct.
 
     func_8006ABC0(&arg0->field_4, vec, arg2);
 
@@ -1191,7 +1191,60 @@ s32 func_8006DB3C(s_func_800700F8_2* arg0, VECTOR3* arg1, VECTOR3* arg2, s_func_
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006DC18); // 0x8006DC18
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006DCE0); // 0x8006DCE0
+s32 func_8006DCE0(s_func_8006DCE0* arg0, s32 arg1, s16 arg2, VECTOR3* pos0, VECTOR3* pos1, s32 arg5, s32 arg6, s32 arg7, s32 arg8)
+{
+    if (pos1->vx == 0 && pos1->vz == 0)
+    {
+        return 0;
+    }
+
+    arg0->field_0  = arg1;
+    arg0->field_4  = D_800C4478.field_0; // Struct could begin some point earlier.
+    arg0->field_6  = arg2;
+    arg0->field_8  = 0x7FFF;
+    arg0->field_20 = 0;
+
+    arg0->field_2C.vx = FP_FROM(pos0->vx, Q4_SHIFT);
+    arg0->field_2C.vy = FP_FROM(pos0->vy, Q4_SHIFT);
+    arg0->field_2C.vz = FP_FROM(pos0->vz, Q4_SHIFT);
+
+    arg0->field_50.vx = FP_FROM(pos1->vx, Q4_SHIFT);
+    arg0->field_50.vy = FP_FROM(pos1->vy, Q4_SHIFT);
+    arg0->field_50.vz = FP_FROM(pos1->vz, Q4_SHIFT);
+
+    arg0->field_3C = arg0->field_2C.vx + arg0->field_50.vx;
+
+    arg0->field_4C = FP_FROM(arg5, Q4_SHIFT);
+    arg0->field_4E = FP_FROM(arg6, Q4_SHIFT);
+
+    arg0->field_40 = arg0->field_2C.vy + arg0->field_50.vy;
+    arg0->field_44 = arg0->field_2C.vz + arg0->field_50.vz;
+
+    arg0->field_5C = SquareRoot0(SQUARE(arg0->field_50.vx) + SQUARE(arg0->field_50.vz));
+    if (arg0->field_5C == 0)
+    {
+        return 0;
+    }
+
+    arg0->field_58 = (arg0->field_50.vx << Q12_SHIFT) / arg0->field_5C;
+    arg0->field_5A = (arg0->field_50.vz << Q12_SHIFT) / arg0->field_5C;
+
+    if (arg0->field_50.vy < 0)
+    {
+        arg0->field_5E = arg0->field_2C.vy + arg0->field_4E;
+        arg0->field_60 = arg0->field_40 + arg0->field_4E;
+    }
+    else
+    {
+        arg0->field_60 = arg0->field_2C.vy + arg0->field_4E;
+        arg0->field_5E = arg0->field_40 + arg0->field_4E;
+    }
+
+    arg0->field_64 = arg7;
+    arg0->field_68 = arg8;
+
+    return 1;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006DEB0); // 0x8006DEB0
 

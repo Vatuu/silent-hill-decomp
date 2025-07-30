@@ -507,7 +507,7 @@ void func_80046620(u16 sfx, s8 arg1, u8 vol, s8 arg3) // 0x80046620
         D_800C1698.field_A = 0x7F - ABS(arg3 * 5) % 127;
     }
 
-    temp               = D_800C167C + D_800ACAA8[D_800C15C2].field_5;
+    temp                    = D_800C167C + D_800ACAA8[D_800C15C2].field_5;
     convertedVol            = vol;
     D_800C1698.volumeLeft_C = temp - (temp * convertedVol) / 255;
 
