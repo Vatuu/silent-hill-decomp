@@ -476,12 +476,6 @@ typedef struct
 
 typedef struct
 {
-    s8  unk_0[22];
-    s32 field_18;
-} s_func_80089840;
-
-typedef struct
-{
     VECTOR3 field_0;
     VECTOR3 field_C;
     s8      unk_18[6];
