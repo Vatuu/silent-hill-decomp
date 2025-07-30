@@ -80,7 +80,7 @@ typedef enum _PrimitiveType
     PrimitiveType_S16  = 3,
     PrimitiveType_U16  = 4,
     PrimitiveType_S32  = 5
-} s_PrimitiveType;
+} e_PrimitiveType;
 
 // ================
 // UNKNOWN STRUCTS

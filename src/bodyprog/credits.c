@@ -11,12 +11,12 @@ void func_800904F4() // 0x800904F4
 {
     u8 extraOptions;
 
-    g_SavegamePtr->locationId_A8      = D_800C48B3;
-    g_SavegamePtr->clearGameCount_24A = D_800C48B0;
-    g_SavegamePtr->field_24B          = D_800C48B1;
-    g_SavegamePtr->field_27A          = ((D_800C48B2 & 0x10) * 8) + 64;
-    g_SavegamePtr->isNextFearMode_25C = 1;
-    g_SavegamePtr->mapOverlayId_A4    = MapOverlayId_MAP0_S01;
+    g_SavegamePtr->locationId_A8        = D_800C48B3;
+    g_SavegamePtr->clearGameCount_24A   = D_800C48B0;
+    g_SavegamePtr->clearGameEndings_24B = D_800C48B1;
+    g_SavegamePtr->field_27A            = ((D_800C48B2 & 0x10) * 8) + 64;
+    g_SavegamePtr->isNextFearMode_25C   = 1;
+    g_SavegamePtr->mapOverlayId_A4      = MapOverlayId_MAP0_S01;
 
     if (D_800C48B6 != 0)
     {
@@ -44,11 +44,11 @@ void func_800904F4() // 0x800904F4
 
     if (D_800C48B5 >= 80)
     {
-        g_SavegamePtr->hyperBlasterFlags_25C_3 = 1 << 3;
+        g_SavegamePtr->pickedUpSpecialItemCount_25C_3 = 1 << 3;
         if (D_800C48B5 == 100)
         {
             g_SavegamePtr->field_27A |= 1 << 5;
-            g_SavegamePtr->hyperBlasterFlags_25C_3 = 1 << 4;
+            g_SavegamePtr->pickedUpSpecialItemCount_25C_3 = 1 << 4;
         }
     }
 }

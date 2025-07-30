@@ -587,14 +587,30 @@ typedef struct _ShSavegame
     q19_12            playerPositionX_244;
     q3_12             playerRotationY_248;      /** Range [0, 0.999755859375], positive Z: 0, clockwise rotation. It can be multiplied by 360 to get degrees. */
     u8                clearGameCount_24A;       /** Range [0, 99] */
-    u8                field_24B;
+    u8                clearGameEndings_24B;     /** `e_AchievedEndingId` */
     q19_12            playerPositionZ_24C;
     q20_12            gameplayTimer_250;
     q19_12            runDistance_254;
     q19_12            walkDistance_258;
-    u8                isNextFearMode_25C      : 1; // Makes savegame entry text gold.
-    u8                add290Hours_25C_1       : 2; // Adds 290 hours per 1 bit. So 290, 580, 870
-    u8                hyperBlasterFlags_25C_3 : 5; // Red/None: 0?, Yellow: 8, Green: 16, Rainbow: 24 (unobtainable). Maybe it better to split to bit fields, because you can't have all colors at the same time, but only one.
+    u8                isNextFearMode_25C             : 1; // Makes savegame entry text gold.
+    u8                add290Hours_25C_1              : 2; // Adds 290 hours per 1 bit. So 290, 580, 870
+    u8                pickedUpSpecialItemCount_25C_3 : 5; // Red/None: 0?, Yellow: 8, Green: 16, Rainbow: 24 (unobtainable).
+													      /** Sparagas' investigations indicates that this variable should be
+												           * two different variables, however, trying to split it causes minor
+														   * mismatches in some functions.
+													       *
+													       * The first 3 bits indicates the amount of unlocked special items the
+													       * player has picked up and the last 2 bits indicate the color of the Hyper
+													       * Blaster beam.
+													       *
+													       * Belek666 indicate that some functions access specifically to this
+													       * variable as a 5 bits.
+													       *
+													       * The strange way the code access to this variable is the reason why the
+														   * bug where the results screen counting more unlocked special items than
+														   * what can be unlocked normally ocurrs as it also reads 1 of the 2 bits
+														   * from the Hyper Blaster beam color.
+													       */
     u8                meleeKillCount_25D;
     u8                meleeKillCountB_25E; // Can't be packed if used as `u16`.
     u8                rangedKillCount_25F;

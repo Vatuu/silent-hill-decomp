@@ -2255,13 +2255,13 @@ void Inventory_AddSpecialItem(u8 itemId, s32 itemCount) // 0x80054CAC
         case InventoryItemId_Katana:
         case InventoryItemId_HyperBlaster:
         case InventoryItemId_GasolineTank:
-            g_SavegamePtr->hyperBlasterFlags_25C_3++; // `pickedUpSpecialItemCount`?
+            g_SavegamePtr->pickedUpSpecialItemCount_25C_3++;
             break;
 
         case InventoryItemId_ChannelingStone:
             if (!(g_SavegamePtr->field_23F & InventoryItemFlag_ChannelingStone))
             {
-                g_SavegamePtr->hyperBlasterFlags_25C_3++;
+                g_SavegamePtr->pickedUpSpecialItemCount_25C_3++;
                 g_SavegamePtr->field_23F |= InventoryItemFlag_ChannelingStone; // `specialItemFlags`?
             }
             break;

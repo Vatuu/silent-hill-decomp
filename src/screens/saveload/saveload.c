@@ -1506,7 +1506,7 @@ void Gfx_SaveDataInfoDraw(s32 slotIdx, s32 selectedSaveIdx) // 0x801E5E18
         offset = ptr->add290Hours_B_1;
         hours  = (timeInSec / 3600) + offset * 290;
 
-        flags = ptr->hyperBlasterFlags_B_3;
+        flags = ptr->pickedUpSpecialItemCount_B_3;
 
         mins = (timeInSec / 60) % 60;
         sec  = timeInSec % 60;
@@ -1922,9 +1922,9 @@ void Savegame_SaveLogic() // 0x801E6B18
 
             g_IsNextFearMode = saveEntry->isNextFearMode_B;
 
-            saveEntry->isNextFearMode_B      = g_SavegamePtr->isNextFearMode_25C;
-            saveEntry->add290Hours_B_1       = g_SavegamePtr->add290Hours_25C_1;
-            saveEntry->hyperBlasterFlags_B_3 = g_SavegamePtr->hyperBlasterFlags_25C_3;
+            saveEntry->isNextFearMode_B             = g_SavegamePtr->isNextFearMode_25C;
+            saveEntry->add290Hours_B_1              = g_SavegamePtr->add290Hours_25C_1;
+            saveEntry->pickedUpSpecialItemCount_B_3 = g_SavegamePtr->pickedUpSpecialItemCount_25C_3;
 
             func_8002E94C(5, D_800BCD40, g_SelectedFileIdx, g_SelectedSaveIdx);
             g_GameWork.gameStateStep_598[1]++;
