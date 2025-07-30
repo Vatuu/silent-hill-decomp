@@ -215,7 +215,7 @@ s32 Inventory_HyperBlasterUnlockTest() // 0x8004C45C
         }
 
         // Game completed with some condition met?
-        if (g_SavegamePtr->clearGameCount_24A != 0 && (g_SavegamePtr->clearGameEndings_24B & GameEnding_Ufo) != 0)
+        if (g_SavegamePtr->clearGameCount_24A != 0 && (g_SavegamePtr->clearGameEndings_24B & GameEndingFlag_Ufo) != 0)
         {
             return 1;
         }
@@ -228,7 +228,7 @@ s32 Inventory_HyperBlasterFunctionalTest() // 0x8004C4F8
 {
     if (g_SavegamePtr->mapOverlayId_A4 > MapOverlayId_MAP0_S00)
     {
-        if ((g_SavegamePtr->clearGameEndings_24B & GameEnding_Ufo) != 0)
+        if ((g_SavegamePtr->clearGameEndings_24B & GameEndingFlag_Ufo) != 0)
         {
             // Game completed with some condition met?
             return 2;

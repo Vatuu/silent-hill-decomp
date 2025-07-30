@@ -32,7 +32,7 @@ void func_800904F4() // 0x800904F4
 
     extraOptions = g_GameWork.config_0.optExtraOptionsEnabled_27;
 
-    if ((extraOptions & 3) && (extraOptions & 0xC))
+    if ((extraOptions & 0x3) && (extraOptions & 0xC))
     {
         g_SavegamePtr->eventFlags_168[1] |= 1 << 25;
     }
@@ -47,7 +47,7 @@ void func_800904F4() // 0x800904F4
         g_SavegamePtr->pickedUpSpecialItemCount_25C_3 = 1 << 3;
         if (D_800C48B5 == 100)
         {
-            g_SavegamePtr->field_27A |= 1 << 5;
+            g_SavegamePtr->field_27A                     |= 1 << 5;
             g_SavegamePtr->pickedUpSpecialItemCount_25C_3 = 1 << 4;
         }
     }

@@ -18,33 +18,39 @@ extern CdlLOC D_800C15E8;
 
 void Sd_EngineCmd(u32 cmd) // 0x80045A7C
 {
-    switch ((cmd >> 8) & 0xFF) // Manipulate command to determine category.
+    // Execute sound command based on category.
+    switch ((cmd >> 8) & 0xFF)
     {
+        // Unknown. Range [0, 255].
         case 0:
             func_80045BD8(cmd);
             return;
 
+        // Unknown. Range [300, 1279].
         case 3:
         case 4:
             func_80046A24(cmd);
             return;
 
-        // Play SFX.
+        // Play SFX. Range [1280, 1791].
         case 5:
         case 6:
             Sd_PlaySfx(cmd, 0, 0);
             return;
 
+        // Unknown. Range [1792, 2303].
         case 7:
         case 8:
             func_8004692C(cmd - 0x200);
             return;
 
+        // Unknown. Range [2816, 3327].
         case 11:
         case 12:
             func_800468EC();
             return;
 
+        // Unknown. Range [4096, 5887].
         case 16:
         case 17:
         case 18:
@@ -304,12 +310,12 @@ u8 Sd_PlaySfx(u16 sfx, s8 arg1, u8 vol) // 0x80046048
     s16          volCpy;
     s32          i;
 
-    if (sfx == Sfx_Unk1280)
+    if (sfx == Sfx_BaseIdx)
     {
         return NO_VALUE;
     }
 
-    D_800C15BC = sfx - Sfx_Unk1280;
+    D_800C15BC = sfx - Sfx_BaseIdx;
     volCpy     = vol;
 
     // Copy key SFX data.
@@ -393,12 +399,12 @@ void func_800463C0(u16 sfx, s8 arg1, u8 vol, s8 arg3) // 0x800463C0
     s32          temp;
     s32          i;
 
-    if (sfx == Sfx_Unk1280)
+    if (sfx == Sfx_BaseIdx)
     {
         return;
     }
 
-    D_800C15BE = sfx - Sfx_Unk1280;
+    D_800C15BE = sfx - Sfx_BaseIdx;
     D_800C16A4 = D_800C167C + D_800ACAA8[D_800C15BE].field_5;
 
     if (sfx == Sfx_Unk1321)
@@ -481,12 +487,12 @@ void func_80046620(u16 sfx, s8 arg1, u8 vol, s8 arg3) // 0x80046620
     s16 temp;
     s16 convertedVol;
 
-    if (sfx == Sfx_Unk1280)
+    if (sfx == Sfx_BaseIdx)
     {
         return;
     }
 
-    D_800C15C2         = sfx - Sfx_Unk1280;
+    D_800C15C2         = sfx - Sfx_BaseIdx;
     D_800C1698.field_2 = D_800ACAA8[D_800C15C2].field_2 >> 8;
     D_800C1698.field_4 = D_800ACAA8[D_800C15C2].field_2 & 0xFF;
     D_800C1698.field_6 = D_800ACAA8[D_800C15C2].field_0;

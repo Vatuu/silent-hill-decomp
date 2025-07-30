@@ -58,7 +58,7 @@ typedef struct _SavegameMetadata
     u8  locationId_A;
     u8  isNextFearMode_B             : 1;
     u8  add290Hours_B_1              : 2;
-    u8  pickedUpSpecialItemCount_B_3 : 5; /** See `pickedUpSpecialItemCount_25C_3` comment from `s_ShSavegame` for further details. */
+    u8  pickedUpSpecialItemCount_B_3 : 5; /** See `pickedUpSpecialItemCount_25C_3` comment in `s_ShSavegame`. */
 } s_SavegameMetadata; // Possible size is 12 bytes.
 
 /** @note A new instance is written to memory each time a

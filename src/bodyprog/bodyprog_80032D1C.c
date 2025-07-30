@@ -277,13 +277,8 @@ void MainLoop() // 0x80032EE0
 
 void Settings_ScreenAndVolUpdate() // 0x0x800333CC
 {
-    s32 soundCmd;
-
     Settings_ScreenXYSet(g_GameWork.config_0.optScreenPosX_1C, g_GameWork.config_0.optScreenPosY_1D);
-
-    soundCmd = (g_GameWork.config_0.optSoundType_1E != 0) ? 1 : 2;
-    Sd_EngineCmd(soundCmd);
-
+    Sd_EngineCmd((g_GameWork.config_0.optSoundType_1E != 0) ? 1 : 2);
     Sd_SetVolume(OPT_SOUND_VOLUME_MAX, g_GameWork.config_0.optVolumeBgm_1F, g_GameWork.config_0.optVolumeSe_20);
 }
 

@@ -11,14 +11,14 @@
 // ENUMS
 // ======
 
-typedef enum _AchievedEndingId
+typedef enum _GameEndingFlags
 {
-    GameEnding_GoodPlus = 1 << 0,
-    GameEnding_Good     = 1 << 1,
-    GameEnding_BadPlus  = 1 << 2,
-    GameEnding_Bad      = 1 << 3,
-    GameEnding_Ufo      = 1 << 4
-} e_AchievedEndingId;
+    GameEndingFlag_GoodPlus = 1 << 0,
+    GameEndingFlag_Good     = 1 << 1,
+    GameEndingFlag_BadPlus  = 1 << 2,
+    GameEndingFlag_Bad      = 1 << 3,
+    GameEndingFlag_Ufo      = 1 << 4
+} e_GameEndingFlags;
 
 typedef enum _InventoryItemFlags
 {
@@ -277,11 +277,11 @@ void Inventory_Logic(); // 0x8004D518
 /** @brief Used for environmental item interactions such as keys, puzzle objects, or
  * events like the Cybil boss fight.
  *
- * @note This is where the Cybil boss fight skip bug occurs. The code is on
+ * @note This is where the Cybil boss fight skip bug occurs. The function is in
  * charge of triggering the event of Harry throwing the unknown liquid over
  * Cybil, however, the code doesn't check if the NPC that is being interacted
- * with is Cybil allowing the player to trigger the bug if they interacts with
- * the first NPC loaded at `g_SysWork`.
+ * with is Cybil, allowing the player to trigger the bug by interacting with
+ * the first NPC loaded in `g_SysWork`.
  */
 void Inventory_ItemUse(s32 arg0); // 0x8004E6D4
 

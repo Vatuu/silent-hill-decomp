@@ -39,8 +39,8 @@ void sharedFunc_800D2244_0_s00(s32 arg0)
         g_SysWork.player_4C.extra_128.field_24 = 0;
     }
 
-    player->field_41     = NO_VALUE;
-    player->field_40     = NO_VALUE;
+    player->field_41        = NO_VALUE;
+    player->field_40        = NO_VALUE;
     g_SysWork.field_2354[1] = NO_VALUE;
     g_SysWork.field_2354[0] = NO_VALUE;
 

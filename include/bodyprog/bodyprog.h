@@ -36,7 +36,7 @@
 
 typedef enum _Sfx
 {
-    Sfx_Unk1280   = 1280, // Base SFX index, so not a valid sound?
+    Sfx_BaseIdx   = 1280, // Base SFX index, but not a valid sound itself.
     Sfx_StartGame = 1281,
 
     Sfx_Denied  = 1304,
@@ -182,7 +182,7 @@ typedef struct
 {
     s_80041CEC* field_0;
     s32         field_4;
-    s32         queueIdx_8; // Passed to `func_80041ADC`, thus the name
+    s32         queueIdx_8; // Passed to `func_80041ADC`, thus the name.
 } s_func_80041CB4;
 
 typedef struct
@@ -806,8 +806,8 @@ typedef struct
 {
     s_80043B70* field_0;
     s32         queueIdx_4;
-    s16 field_8;
-    s16 field_A;
+    s16         field_8;
+    s16         field_A;
     u8          unk_C[16];
 } s_800C117C;
 STATIC_ASSERT_SIZEOF(s_800C117C, 28);
@@ -2276,6 +2276,7 @@ void func_800463C0(u16 sfx, s8 arg1, u8 vol, s8 arg3);
 /** SFX func. */
 void func_80046620(u16 sfx, s8 arg1, u8 vol, s8 arg3);
 
+/** Sound command func. Unknown category. */
 void func_800468EC();
 
 /** SFX func. */
@@ -2794,7 +2795,7 @@ s32 func_8006FD90(s_SubCharacter*, s32, s32, s32);
 
 s32 func_800700F8(s_func_800700F8* arg0, s_func_800700F8* arg1);
 
-s32 func_80070184(s_SubCharacter* chara, s32 arg1, s16 rotationY);
+s32 func_80070184(s_SubCharacter* chara, s32 arg1, s16 rotY);
 
 s32 func_80070320();
 
