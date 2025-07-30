@@ -1748,28 +1748,28 @@ s32 func_8008973C(s_SysWork_2514* arg0, s32 arg1, s_8002AC04* ptr, u32* arg3)
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008973C);
 #endif
 
-void func_80089840(s_func_80089840* arg0) // 0x80089840
+void func_80089840(s_SysWork_2514* arg0) // 0x80089840
 {
-    s32* temp_s0;
-    s32* var_a1;
-    s32* temp_s1;
+    // Im assuming this is a linked list based on the pattern, but i might be wrong
+    s_func_8008989C* next;
+    s_func_8008989C* curr;
+    s_func_8008989C* head;
 
     if (arg0 == NULL)
     {
         return;
     }
 
-    var_a1  =  arg0->field_18;
-    temp_s1 = &arg0->field_18;
-    if (var_a1 != temp_s1)
+    curr = arg0->field_18;
+    head = (s_func_8008989C*)&arg0->field_18;
+    if (curr != head)
     {
-        do
+        while (curr != head)
         {
-            temp_s0 = *var_a1;
-            func_8009EC1C(arg0, var_a1);
-            var_a1 = temp_s0;
+            next = curr->field_0;
+            func_8009EC1C(arg0, curr);
+            curr = next;
         }
-        while (var_a1 != temp_s1);
     }
 }
 
