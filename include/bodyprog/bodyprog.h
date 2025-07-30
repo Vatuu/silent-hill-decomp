@@ -476,12 +476,6 @@ typedef struct
 
 typedef struct
 {
-    s8  unk_0[22];
-    s32 field_18;
-} s_func_80089840;
-
-typedef struct
-{
     VECTOR3 field_0;
     VECTOR3 field_C;
     s8      unk_18[6];
@@ -2677,7 +2671,7 @@ s32 func_800895E4(s_SysWork_2514* arg0, s_8002AC04* arg1, u8 arg2);
 
 s32 func_8008973C(s_SysWork_2514* arg0, s32 arg1, s_8002AC04* ptr, u32* arg3);
 
-void func_80089840(s_func_80089840* arg0);
+void func_80089840(s_SysWork_2514* arg0);
 
 void func_8008989C(s_SysWork_2514* arg0, u16 arg1, s32 (*arg2)(u16, s32));
 
