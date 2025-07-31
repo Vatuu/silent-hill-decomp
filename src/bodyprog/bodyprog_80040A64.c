@@ -987,6 +987,7 @@ void func_80045014(s_Skeleton* skel) // 0x80045014
     }
 }
 
+// Anim func. Used in tandem with skeleton bone traversal.
 void func_8004506C(s_Skeleton* skel, void* arg1) // 0x8004506C
 {
     u8  sp10[3]; // Size unsure, this could be larger.
