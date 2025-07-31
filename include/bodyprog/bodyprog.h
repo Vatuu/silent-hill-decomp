@@ -2281,6 +2281,8 @@ void func_80044FE0(s_Skeleton* skel, s_Bone* bones, u8 boneCount);
 /** Clears skeleton bone flags/mask. Called by `func_80044FE0`. */
 void func_80045014(s_Skeleton* skel);
 
+void func_8004506C(s_Skeleton* skel, void* arg1);
+
 /** Anim func. Traverses skeleton bones to set flags/mask. */
 void func_800453E8(s_Skeleton* skel, s32 cond);
 
@@ -2475,6 +2477,8 @@ void func_8005B3A4(s_func_8005B3A4* arg0);
 void func_8005B3BC(char* filename, s_func_800566B4_sub* arg1);
 
 s32 func_800571D0(u32 arg0);
+
+void func_80056464(s_800BE9FC* arg0, s32 fileIdx, s32* arg2, s32 arg3);
 
 void func_80056504(s_800BE9FC* arg0, s8* arg1, s32* arg2, s32 arg3);
 
@@ -2839,7 +2843,7 @@ s32 func_80070184(s_SubCharacter* chara, s32 arg1, s16 rotY);
 
 s32 func_80070320();
 
-s32 func_80070360(s_SubCharacter*, s32, s32);
+s32 func_80070360(s_SubCharacter* chara, s32 someDist, s16 arg2);
 
 void func_8007029C(VECTOR3* arg0, s32 arg1, s16 angle);
 
