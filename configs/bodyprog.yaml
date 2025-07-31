@@ -304,9 +304,9 @@ segments:
       - [0x821b8,   c, libsd/smf_main]
       - [0x82458,   c, libsd/smf_mid]
 
-      - [0x84238, data, bodyprog_1]
+      - [0x84238, data, bodyprog_800A8D98]
       - [0x89000, .data, items/item_screens_3]
-      - [0x89618, data, bodyprog_2]
+      - [0x89618, data, bodyprog_800AE178]
 
       - [0x8B31C, lib, libcard, init, .data]
       - [0x8B32C, lib, libapi, pad, .data]
