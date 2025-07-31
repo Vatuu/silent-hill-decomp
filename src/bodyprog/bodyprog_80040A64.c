@@ -987,8 +987,34 @@ void func_80045014(s_Skeleton* skel) // 0x80045014
     }
 }
 
-// Anim func. Used in tandem with skeleton bone traversal.
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_8004506C); // 0x8004506C
+void func_8004506C(s_Skeleton* skel, void* arg1) // 0x8004506C
+{
+    u8  sp10[3]; // Size unsure, this could be larger.
+    s32 switchVar;
+
+    switchVar = func_80056C80(arg1);
+    sp10[0]   = 0;
+
+    switch (switchVar)
+    {
+        case 0:
+            sp10[0] = 0xfe;
+            break;
+
+        case 1:
+            sp10[0] = 0;
+            sp10[1] = 254;
+            break;
+
+        default:
+            sp10[1] = 253;
+            sp10[2] = func_80056C80(arg1) - 1;
+            sp10[3] = 254;
+            break;
+    }
+
+    func_80045108(skel, arg1, sp10, 0);
+}
 
 // Anim func.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80045108); // 0x80045108

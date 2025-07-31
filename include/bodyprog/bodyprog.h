@@ -2281,6 +2281,8 @@ void func_80044FE0(s_Skeleton* skel, s_Bone* bones, u8 boneCount);
 /** Clears skeleton bone flags/mask. Called by `func_80044FE0`. */
 void func_80045014(s_Skeleton* skel);
 
+void func_8004506C(s_Skeleton* skel, void* arg1);
+
 /** Anim func. Traverses skeleton bones to set flags/mask. */
 void func_800453E8(s_Skeleton* skel, s32 cond);
 
