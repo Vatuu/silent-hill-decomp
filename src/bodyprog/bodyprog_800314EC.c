@@ -173,7 +173,7 @@ void func_80031AAC(s_FsImageDesc* image) // 0x80031AAC
     D_800A8E58 = 0x80;
 }
 
-s32 func_80031CCC(s32 arg0) // 0x80031CCC
+s32 Gfx_2dBackgroundMotionBlur(s32 arg0) // 0x80031CCC
 {
     s32       sp10;
     s32       i;

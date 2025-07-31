@@ -1125,10 +1125,10 @@ void func_800348C0() // 0x800348C0
     bzero(&D_800A9944, 0x48);
 }
 
-void GameState_MainLoadScreen_Update() // 0x800348E8
+void GameState_LoadScreen_Update() // 0x800348E8
 {
-    func_80034E58();
-    Demo_StartUp();
+    Gfx_LoadingScreen_Animation();
+    Game_GameStartUp();
 
     if (g_SysWork.flags_22A4 & (1 << 10))
     {
@@ -1155,7 +1155,7 @@ static inline void Game_StateStepIncrement()
 
 const char rodataPad_800251F4[] = { 0x00, 0x1C, 0x97, 0x50, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }; // Could this indicate file split nearby?
 
-void Demo_StartUp() // 0x80034964
+void Game_GameStartUp() // 0x80034964
 {
     switch (g_GameWork.gameStateStep_598[0])
     {
@@ -1170,7 +1170,7 @@ void Demo_StartUp() // 0x80034964
                 AreaLoad_UpdatePlayerPosition();
                 g_GameWork.gameStateStep_598[0] = 7;
             }
-            else if (g_SysWork.flags_2298 == 0x20)
+            else if (g_SysWork.flags_2298 == 0x20) // This indicate that the game has to boot a demo
             {
                 D_800BCD48                      = 0;
                 g_GameWork.gameStateStep_598[0] = 1;
@@ -1188,7 +1188,7 @@ void Demo_StartUp() // 0x80034964
             if (g_SysWork.timer_20 > 1200 && Fs_QueueGetLength() == 0 && !func_80045B28())
             {
                 Demo_DemoFileSavegameUpdate();
-                func_80035178();
+                Game_InGameInitialize();
 
                 if (Demo_PlayFileBufferSetup() != 0)
                 {
@@ -1343,7 +1343,7 @@ void Demo_StartUp() // 0x80034964
     }
 }
 
-void func_80034E58() // 0x80034E58
+void Gfx_LoadingScreen_Animation() // 0x80034E58
 {
     if (g_SysWork.field_2281 != 0 && g_GameWork.gameStateStep_598[0] < 10)
     {
@@ -1352,7 +1352,7 @@ void func_80034E58() // 0x80034E58
         g_MapOverlayHeader.func_18[g_SysWork.field_2281]();
     }
 
-    func_80031CCC(2);
+    Gfx_2dBackgroundMotionBlur(2);
 }
 
 void func_80034EC8() // 0x80034EC8
@@ -1446,14 +1446,13 @@ void Game_SavegameInitialize(s8 overlayId, s32 difficulty) // 0x800350BC
     Game_SavegameResetPlayer();
 }
 
-/** Crucial for get in-game. */
-void func_80035178() // 0x80035178
+void Game_InGameInitialize() // 0x80035178
 {
     func_8003C048();
-    func_8003C110();
-    func_8003C0C0();
+    func_8003C110(); // Something related to the load of Harry's animation.
+    func_8003C0C0(); // Something related to the load of Harry's animation.
     func_800445A4(FS_BUFFER_0, g_SysWork.playerBoneCoords_890);
-    func_8003D938();
+    func_8003D938(); // Something related animations.
 
     g_SysWork.field_229C = NO_VALUE;
 
@@ -2001,7 +2000,7 @@ void func_80035F4C(s32 arg0, s32 arg1, u8* arg2) // 0x80035F4C
     
     if ((var_s1 & (1 << 8)) == 0)
     {
-        if (D_800A9A1C > 0 && (g_SavegamePtr->flags_AC & (1 << 0)))
+        if (D_800A9A1C > 0 && g_SavegamePtr->flags_AC & (1 << 0))
         {
             g_SysWork.field_22A0 |= 1 << 2;
         }
@@ -3501,7 +3500,7 @@ void GameState_LoadStatusScreen_Update() // 0x800395C0
         g_GameWork.gameStateStep_598[0]++;
     }
 
-    func_80031CCC(2);
+    Gfx_2dBackgroundMotionBlur(2);
 
     if (Fs_QueueDoThingWhenEmpty() != 0)
     {
@@ -3578,7 +3577,7 @@ void GameState_LoadMapScreen_Update() // 0x8003991C
         g_GameWork.gameStateStep_598[0]++;
     }
 
-    func_80031CCC(2);
+    Gfx_2dBackgroundMotionBlur(2);
 
     if (Fs_QueueDoThingWhenEmpty() != 0)
     {
@@ -3706,7 +3705,7 @@ void SysState_LoadArea_Update() // 0x80039C40
 
     g_SysWork.field_22A0 |= 1 << 0;
     Game_StateSetNext(GameState_MainLoadScreen);
-    func_80031CCC(1);
+    Gfx_2dBackgroundMotionBlur(1);
 }
 
 void AreaLoad_UpdatePlayerPosition() // 0x80039F30

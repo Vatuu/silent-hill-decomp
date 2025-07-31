@@ -11,10 +11,18 @@
 #include "main/rng.h"
 #include "screens/stream/stream.h"
 
+/** Known contents:
+ * - Main Menu Funcs
+ * - General Game Funcs
+ * - Boot Loading Files Funcs
+ */
+
+// ========================================
+// MAIN MENU
+// ========================================
+
 #define MAIN_MENU_OPTION_COUNT 5
 #define MAIN_MENU_FOG_COUNT    21
-
-extern s_800C4168 const D_800C4168;
 
 const s32 rodataPad_8002547C = 0;
 
@@ -76,7 +84,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
         case MenuState_Main:
             if (playIntroFmv != 0)
             {
-                Demo_StartUp();
+                Game_GameStartUp();
 
                 if (g_GameWork.gameStateStep_598[0] == 1 && g_SysWork.timer_20 == 0)
                 {
@@ -179,7 +187,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
                             GameFs_SaveLoadBinLoad();
                         }
 
-                        func_80035178();
+                        Game_InGameInitialize();
                         g_SysWork.flags_2298 = 1 << 4;
                         GameFs_MapLoad(g_SavegamePtr->mapOverlayId_A4);
                         break;
@@ -210,7 +218,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
         case MenuState_DifficultySelector:
             if (playIntroFmv != 0)
             {
-                Demo_StartUp();
+                Game_GameStartUp();
 
                 if (g_GameWork.gameStateStep_598[0] == 1 && g_SysWork.timer_20 == 0)
                 {
@@ -266,11 +274,11 @@ void GameState_MainMenu_Update() // 0x8003AB28
             if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
             {
                 Game_SavegameInitialize(0, g_MainMenu_NewGameSelectedDifficultyIdx - 1);
-                func_80035178();
+                Game_InGameInitialize();
 
                 g_SysWork.flags_2298 = 1 << 2;
 
-                GameFs_MapLoad(0);
+                GameFs_MapLoad(MapOverlayId_MAP0_S00);
                 GameFs_StreamBinLoad();
                 Sd_EngineCmd(Sfx_StartGame);
 
@@ -650,6 +658,10 @@ void func_8003BCF4() // 0x8003BCF4
     }
 }
 
+// ========================================
+// UNKNOWN
+// ========================================
+
 // TODO: Remake this whenever we have further context of `D_8002500C`.
 s32 func_8003BD2C() // 0x8003BD2C
 {
@@ -695,6 +707,10 @@ s32 func_8003BE50(s32 idx) // 0x8003BE50
     return &D_800BCE18.field_0[0].field_18[idx]->field_14.field_C;
 }
 
+// ========================================
+// BOOT LOADING FILES
+// ========================================
+
 void GameFs_BgEtcGfxLoad() // 0x8003BE6C
 {
     Fs_QueueStartReadTim(FILE_TIM_BG_ETC_TIM, FS_BUFFER_1, &D_800A9EB4);
@@ -719,6 +735,12 @@ void func_8003BED0() // 0x8003BED0
     func_80056504(&D_800BCE18.field_1BE4, "BG_ETC", &D_800A9EC4, 1);
     func_80056954(&D_800BCE18.field_1BE4);
 }
+
+// ========================================
+// UNKNOWN
+// ========================================
+
+extern s_800C4168 const D_800C4168;
 
 s32 func_8003BF60(s32 x, s32 z) // 0x8003BF60
 {

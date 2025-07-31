@@ -52,8 +52,8 @@ typedef enum _Sfx
     Sfx_Unk1360 = 1360, // Used in `sharedFunc_800D0CB8_0_s00`, depends on the map. Also in `sharedFunc_800D0E04_0_s00`.
     Sfx_Unk1361 = 1361,
 
-    Sfx_Unk1501 = 1501, // Used in `GameState_MainLoadScreen_Update`.
-    Sfx_Unk1502 = 1502, // Used in `GameState_MainLoadScreen_Update`.
+    Sfx_Unk1501 = 1501, // Used in `GameState_LoadScreen_Update`.
+    Sfx_Unk1502 = 1502, // Used in `GameState_LoadScreen_Update`.
 
     Sfx_Unk1525 = 1525, // Used in `Ai_Bloodsucker_Update`.
 
@@ -2047,7 +2047,14 @@ void func_800317CC(s_FsImageDesc* image0, s_FsImageDesc* image1, s16 arg2);
 
 void func_80031AAC(s_FsImageDesc* image);
 
-s32 func_80031CCC(s32 arg0);
+/** @brief Display motion blur over the 2D background of the game.
+ *
+ * This is used only in the loading screen.
+ *
+ * Works similar to the effect that some sixth gen games when a map has no
+ * skybox like Source Engine games.
+ */
+s32 Gfx_2dBackgroundMotionBlur(s32 arg0); // 0x80031CCC
 
 void Gfx_DebugStringPosition(s16 x, s16 y);
 
@@ -2780,7 +2787,7 @@ void func_800697EC();
 
 u16 func_80069810();
 
-void func_80069820(u16);
+void func_80069820(u16 arg0);
 
 void func_8006982C(u16 arg0);
 
@@ -2880,22 +2887,23 @@ void ControllerData_AnalogToDigital(s_ControllerData* arg0, s32 arg1);
 
 void func_800348C0();
 
-void GameState_MainLoadScreen_Update();
+void GameState_LoadScreen_Update();
 
 /** Handles `g_GameWork.gameStateStep_598[0]`. */
-void Demo_StartUp();
+void Game_GameStartUp(); // 0x80034964
 
-void func_80034E58();
+/** This display the loading animation. */
+void Gfx_LoadingScreen_Animation(); // 0x80034E58
 
-void func_80034EC8();
+void func_80034EC8(); // 0x80034EC8
 
-void func_80034F18();
+void func_80034F18(); // 0x80034F18
 
-void func_80034FB8();
+void func_80034FB8(); // 0x80034FB8
 
 void Game_SavegameInitialize(s8 overlayId, s32 difficulty);
 
-void func_80035178();
+void Game_InGameInitialize(); // 0x80035178
 
 /** Loads a map file into `g_OvlDynamic`. */
 void GameFs_MapLoad(s32 mapIdx);

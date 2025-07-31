@@ -6,8 +6,10 @@
 #include "bodyprog/math.h"
 #include "main/fsqueue.h"
 
-// Known contents:
-// - Animation funcs
+/** Known contents:
+ * - Map loading funcs
+ * - Animation funcs
+ */
 
 s8 func_80040A64(VECTOR3* pos) // 0x80040A64
 {
@@ -637,13 +639,13 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80044090); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80044420); // 0x80044420
 
-// Could be used for load the player model or to execute animations.
-// Removing the call from `func_80035178` causes Harry's model to not appear.
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800445A4); // 0x800445A4
+// ========================================
+// ANIMATIONS
+// ========================================
 
-// ========================================
-// ANIMATION
-// ========================================
+// Could be used for load the player model or to execute animations.
+// Removing the call from `Game_InGameInitialize` causes Harry's model to not appear.
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800445A4); // 0x800445A4
 
 // Anim func.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800446D8); // 0x800446D8

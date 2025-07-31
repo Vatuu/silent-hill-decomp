@@ -633,9 +633,15 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_800692A4); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_800697EC); // 0x800697EC
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80069810); // 0x80069810
+u16 func_80069810(void) // 0x80069810
+{
+    return D_800C4478.field_0;
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80069820); // 0x80069820
+void func_80069820(u16 arg0) // 0x80069820
+{
+    D_800C4478.field_0 = arg0;
+}
 
 void func_8006982C(u16 arg0) // 0x8006982C
 {

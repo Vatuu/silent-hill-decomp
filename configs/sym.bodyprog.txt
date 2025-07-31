@@ -73,9 +73,10 @@ Savegame_CardState_FileReadWrite = 0x80031260; // type:func
 
 Savegame_DevicePathGenerate = 0x800314A4; // type:func
 
-Gfx_BackgroundSpriteDraw = 0x800314EC; // type:func
-Gfx_DebugStringPosition  = 0x80031EFC; // type:func
-Gfx_DebugStringDraw      = 0x80031F40; // type:func
+Gfx_BackgroundSpriteDraw   = 0x800314EC; // type:func
+Gfx_2dBackgroundMotionBlur = 0x80031CCC; // type:func
+Gfx_DebugStringPosition    = 0x80031EFC; // type:func
+Gfx_DebugStringDraw        = 0x80031F40; // type:func
 
 Math_IntegerToString = 0x80032154; // type:func
 
@@ -108,7 +109,7 @@ Settings_RestoreControlDefaults = 0x80033480; // type:func
 nullsub_800334C8 = 0x800334C8; // type:func
 
 SysWork_Clear = 0x800340E0; // type:func
-Demo_StartUp  = 0x80034964; // type:func
+Game_GameStartUp  = 0x80034964; // type:func
 
 MainLoop_ShouldWarmReset = 0x80034108; // type:func
 
@@ -121,9 +122,12 @@ Joy_ControllerDataUpdate = 0x80034494; // type:func
 
 ControllerData_AnalogToDigital = 0x80034670; // type:func
 
-GameState_MainLoadScreen_Update = 0x800348E8; // type:func
+GameState_LoadScreen_Update = 0x800348E8; // type:func
+
+Gfx_LoadingScreen_Animation = 0x80034E58; // type:func
 
 Game_SavegameInitialize = 0x800350BC; // type:func
+Game_InGameInitialize = 0x80035178; // type:func
 
 GameFs_MapLoad = 0x8003521C; // type:func
 

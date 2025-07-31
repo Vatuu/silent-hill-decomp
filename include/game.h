@@ -412,7 +412,7 @@ typedef enum _PlayerProperty
 } s_PlayerProperty;
 
 /** @brief Names for each character index used in the game, `g_Chara_FileInfo` array associates each character ID with anim/model/texture files. */
-enum e_ShCharacterId
+typedef enum e_ShCharacterId
 {
     Chara_None             = 0,
     Chara_Hero             = 1,
@@ -566,7 +566,7 @@ typedef struct _ShSavegame
     u8                current2dMapIdx_A9;       /** `e_Current2dMapIdx` Index to the 2D map shown when opening the map screen. */
     u8                equippedWeapon_AA;        /** `e_InventoryItemId` Default: 0. Effects only the visible player weapon model. */
     u8                inventoryItemSpaces_AB;   /** Item spaces. `INVENTORY_ITEM_COUNT_MAX` */
-    u32               flags_AC;
+    u32               flags_AC;                 /** Flashlight state? On: 3, Off: 1*/
     s32               field_B0[45];
     s32               hasMapsFlags_164;         // See Sparagas' `HasMapsFlags` struct for details of every bit.
     s32               eventFlags_168[6];        //----------------------------------------
