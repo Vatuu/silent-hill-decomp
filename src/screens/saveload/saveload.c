@@ -2057,7 +2057,7 @@ void Savegame_ContinueLogic() // 0x801E6F38
             // Backup current savegame? Does anything ever restore from this?
             g_GameWork.savegame_90 = g_GameWork.savegame_30C;
 
-            func_80035178();
+            Game_InGameInitialize();
             
             g_SysWork.flags_2298 = 8;
 
