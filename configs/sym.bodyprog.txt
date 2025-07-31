@@ -11,6 +11,10 @@ g_GameWorkPtr   = 0x80024D54; // type:u32
 
 nextGameStates = 0x80025480;
 
+g_ItemVectors = 0x800262FC; // type:DVECTOR size:0x380
+g_ItemNames = 0x800ADB60; // type:u32 size:0x30C
+g_ItemDescriptions = 0x800ADE6C; // type:u32 size:0x30C
+
 // sh "view" / "vw" / "vc" / "vb" code
 // Most names from SH2, functions seem to match pretty close between it and SH1 besides a few missing/extra funcs.
 hack_vcSetWatchTgtXzPos_fix = 0x8002B2B4; // type:s32 - Some 0x80083500 value which coincidentally points to code inside vcSetWatchTgtXzPos, probably unrelated flags or something. A jtbl is right before this which spimdisasm tries to include, breaking vcSetWatchTgtXzPos build.
