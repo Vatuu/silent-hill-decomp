@@ -1649,9 +1649,9 @@ extern GsDOBJ2 D_800C3E08;
 
 extern u8 D_800AD4A0[];
 
-extern char* D_800ADB60[];
+extern const char* g_ItemNames[];
 
-extern char* D_800ADE6C[];
+extern const char* g_ItemDescriptions[];
 
 extern DVECTOR g_Gfx_DebugStringPosition0;
 
