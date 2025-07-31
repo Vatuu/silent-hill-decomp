@@ -156,7 +156,28 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80056348); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_800563E8); // 0x800563E8
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80056464); // 0x80056464
+void func_80056464(s_800BE9FC* arg0, s32 fileIdx, s32* arg2, s32 arg3) // 0x80056464
+{
+    char  sp_10[8];
+    char  sp_18[16];
+    char* sp_10_pointer;
+    char* sp_18_pointer;
+
+    // Probably memset
+    *(int*)(sp_10 + 0) = *(int*)(sp_10 + 4) = 0;
+
+    Fs_GetFileName(sp_18, fileIdx);
+
+    sp_10_pointer = sp_10;
+    sp_18_pointer = sp_18;
+
+    while ((sp_10_pointer < sp_18) && (*sp_18_pointer != '.'))
+    {
+        *sp_10_pointer++ = *sp_18_pointer++;
+    }
+
+    func_80056558(arg0, sp_10, arg2, arg3);
+}
 
 void func_80056504(s_800BE9FC* arg0, s8* arg1, s32* arg2, s32 arg3) // 0x80056504
 {

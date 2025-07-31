@@ -2476,6 +2476,8 @@ void func_8005B3BC(char* filename, s_func_800566B4_sub* arg1);
 
 s32 func_800571D0(u32 arg0);
 
+void func_80056464(s_800BE9FC* arg0, s32 fileIdx, s32* arg2, s32 arg3);
+
 void func_80056504(s_800BE9FC* arg0, s8* arg1, s32* arg2, s32 arg3);
 
 void func_80054A04(u8 arg0);
