@@ -2841,7 +2841,7 @@ s32 func_80070184(s_SubCharacter* chara, s32 arg1, s16 rotY);
 
 s32 func_80070320();
 
-s32 func_80070360(s_SubCharacter*, s32, s32);
+s32 func_80070360(s_SubCharacter* chara, s32 someDist, s16 arg2);
 
 void func_8007029C(VECTOR3* arg0, s32 arg1, s16 angle);
 

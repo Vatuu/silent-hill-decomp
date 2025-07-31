@@ -1422,7 +1422,34 @@ s32 func_80070320() // 0x80070320
     return 0;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80070360); // 0x80070360
+s32 func_80070360(s_SubCharacter* chara, s32 someDist, s16 arg2) // 0x80070360
+{
+    s32 vx;
+    s32 vz;
+    s32 var_a1;
+    s32 result;
+
+    var_a1 = someDist;
+    if (var_a1 == 0)
+    {
+        vx = g_SysWork.player_4C.chara_0.position_18.vx - chara->position_18.vx;
+        vx = FP_FROM(vx, 6);
+
+        vz = g_SysWork.player_4C.chara_0.position_18.vz - chara->position_18.vz;
+        vz = FP_FROM(vz, 6);
+
+        var_a1 = SquareRoot0(SQUARE(vx) + SQUARE(vz));
+        var_a1 = FP_TO(var_a1, 6);
+    }
+
+    result = FP_MULTIPLY(arg2, g_SysWork.player_4C.chara_0.properties_E4.player.field_10C, Q12_SHIFT) - FP_FROM(var_a1, Q8_SHIFT);
+
+    if (result < 0)
+    {
+        result = 0;
+    }
+    return result;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80070400); // 0x80070400
 
