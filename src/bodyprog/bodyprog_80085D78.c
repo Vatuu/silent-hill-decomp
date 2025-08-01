@@ -1948,7 +1948,25 @@ void func_8008A3AC(s_SubCharacter* chara) // 0x8008A3AC
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008A3E0); // 0x8008A3E0
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008B15C); // 0x8008B15C
+void func_8008B15C(s_SubCharacter* arg0) // 0x8008B15C
+{
+    s32 temp_s2;
+    s32 temp_s3;
+    s32 i;
+
+    temp_s3 = arg0->field_50;
+    temp_s2 = arg0->field_52;
+    
+    arg0->field_54 = temp_s3; 
+    arg0->field_56 = temp_s2;
+    
+    for (i = 1; i > 0; i--) 
+    {
+        func_8008B1DC(arg0, temp_s3, temp_s2); 
+        
+        arg0->field_80 = arg0->field_5C;
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008B1DC); // 0x8008B1DC
 
