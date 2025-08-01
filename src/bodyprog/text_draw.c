@@ -244,8 +244,8 @@ void func_8004ACF4(s32 mapMsgIdx) // 0x8004ACF4
     u8*  temp_v2;
     u8*  mapMsg;
 
-    D_800C38B4.field_0 = 1;
-    D_800BCD7A         = 0;
+    D_800C38B4.lineCount_0 = 1;
+    D_800BCD7A             = 0;
 
     // Reset something.
     for (i = LINE_COUNT_MAX; i >= 0; i--)
@@ -271,7 +271,7 @@ void func_8004ACF4(s32 mapMsgIdx) // 0x8004ACF4
             // Space.
             case '_':
                 mapMsg++;
-                D_800C38C8[D_800C38B4.field_0 - 1] += SPACE_SIZE;
+                D_800C38C8[D_800C38B4.lineCount_0 - 1] += SPACE_SIZE;
                 break;
 
             // Dialog code.
@@ -289,7 +289,7 @@ void func_8004ACF4(s32 mapMsgIdx) // 0x8004ACF4
 
                     case DIALOG_CODE_NEWLINE:
                         j++;
-                        D_800C38B4.field_0++;
+                        D_800C38B4.lineCount_0++;
                         break;
 
                     case DIALOG_CODE_WAIT_FOR_INPUT:
@@ -297,7 +297,7 @@ void func_8004ACF4(s32 mapMsgIdx) // 0x8004ACF4
                         break;
 
                     case DIALOG_CODE_POSITION:
-                        D_800C38B0.field_1 = argCount;
+                        D_800C38B0.positionIdx_1 = argCount;
                         break;
 
                     case DIALOG_CODE_CUTSCENE:
@@ -338,7 +338,7 @@ void func_8004ACF4(s32 mapMsgIdx) // 0x8004ACF4
                     charCode = '^';
                 }
 
-                D_800C38C8[D_800C38B4.field_0 - 1] += D_80025D6C[charCode - '\''];
+                D_800C38C8[D_800C38B4.lineCount_0 - 1] += D_80025D6C[charCode - '\''];
                 mapMsg++;
                 break;
         }
@@ -360,12 +360,12 @@ void func_8004B658() // 0x8004B658
 
 void func_8004B684() // 0x8004B684
 {
-    D_800C38B4.field_0     = 1;
-    D_800C38B0.field_0     = 0;
-    D_800C38B0.field_1     = 1;
-    g_StringPositionX1     = SCREEN_POSITION_X(-37.5f);
-    g_StringColorId        = ColorId_White;
-    g_SysWork.field_2350_0 = 0;
+    D_800C38B4.lineCount_0   = 1;
+    D_800C38B0.field_0       = 0;
+    D_800C38B0.positionIdx_1 = 1;
+    g_StringPositionX1       = SCREEN_POSITION_X(-37.5f);
+    g_StringColorId          = ColorId_White;
+    g_SysWork.field_2350_0   = 0;
 }
 
 void func_8004B6D4(s16 arg0, s16 arg1) // 0x8004B6D4

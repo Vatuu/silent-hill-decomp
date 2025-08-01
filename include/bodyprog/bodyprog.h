@@ -152,9 +152,10 @@ typedef struct
     s8 field_8;
 } s_80041CEC;
 
+// Used in string parsing.
 typedef struct
 {
-    s32 field_0;
+    s32 lineCount_0;
     s8  unk_1;
     s8  unk_38B4;
 } s_800C38B4;
@@ -949,10 +950,11 @@ typedef struct
     s32 field_8;
 } s_800C37D8;
 
+// Used in string parsing.
 typedef struct
 {
     s8 field_0;
-    s8 field_1;
+    s8 positionIdx_1;
 } s_800C38B0;
 
 typedef struct
