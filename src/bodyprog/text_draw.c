@@ -215,7 +215,129 @@ bool Gfx_StringDraw(char* str, s32 size) // 0x8004A8E8
 INCLUDE_ASM("asm/bodyprog/nonmatchings/text_draw", Gfx_StringDraw); // 0x8004A8E8
 #endif
 
+// TODO: .rodata migration.
+#ifdef NON_MATCHING
+void func_8004ACF4(s32 mapMsgIdx) // 0x8004ACF4
+{
+    // TODO: Other parsers may require these, so they should become global.
+    #define LINE_COUNT_MAX             8
+    #define STR_SIZE_MAX               9
+    #define DIALOG_CODE_NEWLINE        'N'
+    #define DIALOG_CODE_WAIT_FOR_INPUT 'E'
+    #define DIALOG_CODE_POSITION       'L'
+    #define DIALOG_CODE_CUTSCENE       'J'
+    #define DIALOG_CODE_SHOW_MAP       'H'
+
+    s32  i;
+    s32  j;
+    s8   tagCode;
+    s8   tagArg;
+    s32  charCode;
+    u8   dialogCode;
+    s32  v1;
+    s32* var_a1;
+    s32* temp_v0;
+    s32* temp_v1;
+    u8*  temp_v2;
+    u8*  mapMsg;
+
+    D_800C38B4.field_0 = 1;
+    D_800BCD7A         = 0;
+
+    for (i = LINE_COUNT_MAX; i >= 0; i--)
+    {
+        D_800C38C8[i] = 0;
+    }
+
+    // Parse string.
+    mapMsg = g_MapOverlayHeader.mapMessageStrings_30[mapMsgIdx];
+    for (j = 0; j < STR_SIZE_MAX;)
+    {
+        charCode = *mapMsg;
+
+        switch (charCode)
+        {
+            case 9:
+            case 10:
+            case ' ':
+                mapMsg++;
+                break;
+
+            // Space.
+            case '_':
+                mapMsg++;
+                D_800C38C8[D_800C38B4.field_0 - 1] += 6;
+                break;
+
+            // Dialog code.
+            case '~':
+                dialogCode = *++mapMsg;
+                v1         = *++mapMsg - '0'; // Argument count.
+
+                switch (dialogCode) 
+                {
+                    case 'C':
+                    case 'S':
+                    case 'T':
+                        break;
+
+                    case DIALOG_CODE_NEWLINE:
+                        j++;
+                        D_800C38B4.field_0++;
+                        break;
+
+                    case DIALOG_CODE_WAIT_FOR_INPUT:
+                        j = 9;
+                        break;
+
+                    case DIALOG_CODE_POSITION:
+                        D_800C38B0.field_1 = v1;
+                        break;
+
+                    case DIALOG_CODE_CUTSCENE:
+                        if (v1 == 2) 
+                        {
+                            D_800BCD7A = 3;
+                        }
+
+                        while (v1 != ' ' && v1 != '\t')
+                        {
+                            v1 = *++mapMsg;
+                        }
+
+                        break;
+
+                    case DIALOG_CODE_SHOW_MAP:
+                        g_SysWork.field_2350_0 = 1;
+                        break;
+                }
+
+                mapMsg++;
+                break;
+
+            case 0:
+                j = 9;
+                break;
+
+            default:
+                if (charCode == '!')
+                {
+                    charCode = '\\';
+                }
+                else if (charCode == '&')
+                {
+                    charCode = '^';
+                }
+
+                D_800C38C8[D_800C38B4.field_0 - 1] += D_80025D6C[charCode - '\''];
+                mapMsg++;
+                break;
+        }
+    }
+}
+#else
 INCLUDE_ASM("asm/bodyprog/nonmatchings/text_draw", func_8004ACF4); // 0x8004ACF4
+#endif
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/text_draw", func_8004AF18); // 0x8004AF18
 
@@ -229,7 +351,7 @@ void func_8004B658() // 0x8004B658
 
 void func_8004B684() // 0x8004B684
 {
-    D_800C38B4             = 1;
+    D_800C38B4.field_0     = 1;
     D_800C38B0.field_0     = 0;
     D_800C38B0.field_1     = 1;
     g_StringPositionX1     = SCREEN_POSITION_X(-37.5f);

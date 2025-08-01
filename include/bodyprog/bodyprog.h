@@ -152,6 +152,13 @@ typedef struct
     s8 field_8;
 } s_80041CEC;
 
+typedef struct
+{
+    s32 field_0;
+    s8  unk_1;
+    s8  unk_38B4;
+} s_800C38B4;
+
 typedef struct 
 {
     s32  field_0;
@@ -1321,6 +1328,8 @@ extern s_8002AC04 D_8002AC04[];
 
 extern s_800BE9FC D_8002B2CC;
 
+extern s32 D_800C38C8[];
+
 extern u8 D_800A8E58;
 
 extern DR_MODE D_800A8E5C[];
@@ -1878,7 +1887,7 @@ extern s_800C37D8* D_800C37D8;
 
 extern s_800C38B0 D_800C38B0;
 
-extern s32 D_800C38B4;
+extern s_800C38B4 D_800C38B4;
 
 extern s32 D_800C4710[];
 
