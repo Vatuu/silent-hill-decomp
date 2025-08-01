@@ -12,10 +12,15 @@ void func_8004A8C0(s32 arg0);
 
 void func_8004A8CC();
 
-/** Sets the color of the next string drawn by `Gfx_StringDraw`. (TODO: add color list) */
+/** Sets the color of the next string drawn by `Gfx_StringDraw`. Uses `e_ColorId`. */
 void Gfx_StringSetColor(s16 colorId);
 
-/** Draws a string in screen space. */
+/** Draws a string in screen space using 12x16 glyphs.
+ *
+ * @note References glyphs in `FONT16.TIM`. Although this texture atlas contains a single row with 84 glyphs,
+ * the function implies 21 glyphs per row. Maybe the engine slices the texture into a stack in VRAM?
+ * Notably, the atlas happens to have a 4-pixel space every 21st glyph.
+ */
 bool Gfx_StringDraw(char* str, s32 size);
 
 s32 func_8004AF18(char*, s32);

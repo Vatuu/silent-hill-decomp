@@ -37,7 +37,183 @@ void Gfx_StringSetColor(s16 colorId) // 0x8004A8DC
     g_StringColorId = colorId;
 }
 
+// TODO: Requires `s_SysWork::field_2350_0` to be `s32`, causing mismatch elsewhere.
+#ifdef NON_MATCHING
+bool Gfx_StringDraw(char* str, s32 size) // 0x8004A8E8
+{
+    #define GLYPH_SIZE_X       12
+    #define GLYPH_SIZE_Y       16
+    #define SPACE_SIZE         6
+    #define WIDE_SPACE_SIZE    10
+    #define ATLAS_BASE_Y       240
+    #define ATLAS_COLUMN_COUNT 21
+
+    // TODO: This only works for one case. There may originally have been some other generic macro.
+    #define SET_SPRT_U_V_CLUT(glyphSprt, idx, clut)                                                                       \
+    *((u32*)&(glyphSprt)->u0) = (((idx) % ATLAS_COLUMN_COUNT) * GLYPH_SIZE_X) + /* `u0`:   Column in atlas. */            \
+                                (ATLAS_BASE_Y << 8)                           + /* `v0`:   Row 0 in atlas with offset. */ \
+                                ((clut) << 16)                                  /* `clut`: Packed magic value. */
+
+    s32  posX;
+    s32  posY;
+    s32  u0;
+    s32  sizeCpy;
+    s32  glyphIdx;
+    u32  glyphColor;
+    u32  charCode;
+    u8*  strCpy;
+    bool result;
+    s32  glyphWidth;
+    s32  posXCpy;
+
+    GsOT*     ot;
+    POLY_FT4* glyphPoly;
+    SPRT*     glyphSprt;
+    DR_TPAGE* tPage;
+    PACKET*   packet;
+
+    // Create local argument copies.
+    strCpy  = str;
+    sizeCpy = size;
+
+    packet = NULL;
+    result = false;
+
+    // Set base screen position.
+    posX = g_StringPosition.vx;
+    posY = g_StringPosition.vy;
+
+    glyphColor = D_80025DC0[g_StringColorId];
+    ot         = &D_800B5C40[g_ObjectTableIdx].field_0[D_800AD49C];
+
+    if (!(g_SysWork.field_2350_0 & 0xF)) 
+    {
+        packet = GsOUT_PACKET_P;
+    }
+
+    // Run through `char`s in string.
+    while (sizeCpy > 0) 
+    {
+        charCode = *strCpy;
+
+        // Convert literal `!` and `&` into `char`s mappable to representative atlas glyphs.
+        if (charCode == '!') 
+        {
+            charCode = '\\';
+        }
+        else if (charCode == '&')
+        {
+            charCode = '^';
+        }
+
+        // Space.
+        if (charCode == '_')
+        {
+            posX += SPACE_SIZE;
+        }
+        // Wide space.
+        else if (charCode == '\v')
+        {
+            posX += WIDE_SPACE_SIZE;
+        }
+        // TODO: Unknown.
+        else if (charCode == '\x01')
+        {
+            posX--;
+        }
+        // Regular character.
+        else if (charCode >= '\'' && charCode <= 'z')
+        {
+            sizeCpy--;
+
+            if (g_SysWork.field_2350_0 & 0xF)
+            {
+                glyphPoly = (POLY_FT4*)GsOUT_PACKET_P;
+
+                glyphIdx   = charCode - '\'';
+                glyphWidth = D_80025D6C[glyphIdx];
+
+                setPolyFT4(glyphPoly);
+                setRGB0(glyphPoly, glyphColor, glyphColor >> 8, glyphColor >> 16);
+                setXY4(glyphPoly,
+                       posX,                posY * 2,
+                       posX,                (posY * 2) + 30,
+                       posX + GLYPH_SIZE_X, posY * 2,
+                       posX + GLYPH_SIZE_X, (posY * 2) + 30);
+
+                posX += glyphWidth;
+
+                u0 = (glyphIdx % ATLAS_COLUMN_COUNT) * GLYPH_SIZE_X;
+
+                *((u32*)&glyphPoly->u0) = u0 + (0xF000 + (0x7FD3 << 16));                                         // `u0`, `v0`, `clut`.
+                *((u32*)&glyphPoly->u1) = u0 + (((((glyphIdx / ATLAS_COLUMN_COUNT) & 0xF) | 16) << 16) | 0xFF00); // `u1`, `v1`, `page`.
+                *((u16*)&glyphPoly->u2) = u0 - 0xFF4;                                                             // `u2`, `v2`.
+                *((u16*)&glyphPoly->u3) = u0 - 0xF4;                                                              // `u3`, `v3`.
+
+                addPrim(ot, glyphPoly);
+                GsOUT_PACKET_P = (u8*)glyphPoly + sizeof(POLY_FT4);
+            }
+            else
+            {
+                posXCpy = (u16)posX;
+
+                glyphSprt              = (SPRT*)packet;
+                *((u32*)&glyphSprt->w) = 0x10000C;
+                
+                glyphIdx = charCode - '\'';
+                posX    += D_80025D6C[glyphIdx];
+
+                addPrimFast(ot, glyphSprt, 4);
+                *((u32*)&glyphSprt->r0)   = glyphColor;
+                *((u32*)(&glyphSprt->x0)) = posXCpy + (posY << 16);
+
+                SET_SPRT_U_V_CLUT(glyphSprt, glyphIdx, 0x7FD3); // TODO: Demagic CLUT arg.
+                //*((u32*)&glyphSprt->u0) = ((glyphIdx % ATLAS_COLUMN_COUNT) * GLYPH_SIZE_X) + 0xF000 + (0x7FD3 << 16); // `u0`, `v0`, `clut`.
+
+                packet += sizeof(SPRT);
+
+                tPage = (DR_TPAGE*)packet;
+                setDrawTPage(tPage, 0, 1, ((glyphIdx / ATLAS_COLUMN_COUNT) & 0xF) | 16);
+                addPrim(ot, tPage);
+
+                packet += sizeof(DR_TPAGE);
+            }
+        }
+        // Newline.
+        else if (charCode == '\n')
+        {
+            posX  = g_StringPositionX1;
+            posY += GLYPH_SIZE_Y;
+        }
+        // New color.
+        else if (charCode >= '\x01' && charCode < '\b')
+        {
+            glyphColor      = D_80025DC0[charCode];
+            g_StringColorId = charCode;
+        }
+        // Terminate.
+        else if (charCode == 0)
+        {
+            result = true;
+            break;
+        }
+
+        strCpy++;
+    }
+
+    if (!(g_SysWork.field_2350_0 & 0xF))
+    {
+        GsOUT_PACKET_P = packet;
+    }
+
+    // Reset base string position?
+    *((u32*)&g_StringPosition) = (posX & 0xFFFF) + (posY << 16);
+
+    return result;
+}
+#else
 INCLUDE_ASM("asm/bodyprog/nonmatchings/text_draw", Gfx_StringDraw); // 0x8004A8E8
+#endif
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/text_draw", func_8004ACF4); // 0x8004ACF4
 
