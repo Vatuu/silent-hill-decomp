@@ -91,10 +91,12 @@ bool Gfx_StringDraw(char* str, s32 size) // 0x8004A8E8
         packet = GsOUT_PACKET_P;
     }
 
-    // Run through `char`s in string.
+    // Parse string.
     while (sizeCpy > 0) 
     {
         charCode = *strCpy;
+
+        // TODO: Try refactoring into switch.
 
         // Convert literal `!` and `&` into `char`s mappable to representative atlas glyphs.
         if (charCode == '!') 
@@ -116,7 +118,7 @@ bool Gfx_StringDraw(char* str, s32 size) // 0x8004A8E8
         {
             posX += WIDE_SPACE_SIZE;
         }
-        // TODO: Unknown.
+        // Start of header.
         else if (charCode == '\x01')
         {
             posX--;
@@ -126,6 +128,7 @@ bool Gfx_StringDraw(char* str, s32 size) // 0x8004A8E8
         {
             sizeCpy--;
 
+            // Draw glyph sprite.
             if (g_SysWork.field_2350_0 & 0xF)
             {
                 glyphPoly = (POLY_FT4*)GsOUT_PACKET_P;
@@ -191,8 +194,8 @@ bool Gfx_StringDraw(char* str, s32 size) // 0x8004A8E8
             glyphColor      = D_80025DC0[charCode];
             g_StringColorId = charCode;
         }
-        // Terminate.
-        else if (charCode == 0)
+        // Terminator.
+        else if (charCode == '\0')
         {
             result = true;
             break;
@@ -219,9 +222,9 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/text_draw", Gfx_StringDraw); // 0x8004A8E
 #ifdef NON_MATCHING
 void func_8004ACF4(s32 mapMsgIdx) // 0x8004ACF4
 {
-    // TODO: Other parsers may require these, so they should become global.
-    #define LINE_COUNT_MAX             8
+    #define SPACE_SIZE                 6
     #define STR_SIZE_MAX               9
+    #define LINE_COUNT_MAX             8
     #define DIALOG_CODE_NEWLINE        'N'
     #define DIALOG_CODE_WAIT_FOR_INPUT 'E'
     #define DIALOG_CODE_POSITION       'L'
@@ -234,7 +237,7 @@ void func_8004ACF4(s32 mapMsgIdx) // 0x8004ACF4
     s8   tagArg;
     s32  charCode;
     u8   dialogCode;
-    s32  v1;
+    s32  argCount;
     s32* var_a1;
     s32* temp_v0;
     s32* temp_v1;
@@ -244,6 +247,7 @@ void func_8004ACF4(s32 mapMsgIdx) // 0x8004ACF4
     D_800C38B4.field_0 = 1;
     D_800BCD7A         = 0;
 
+    // Reset something.
     for (i = LINE_COUNT_MAX; i >= 0; i--)
     {
         D_800C38C8[i] = 0;
@@ -257,8 +261,9 @@ void func_8004ACF4(s32 mapMsgIdx) // 0x8004ACF4
 
         switch (charCode)
         {
-            case 9:
-            case 10:
+            // Newline.
+            case '\t':
+            case '\n':
             case ' ':
                 mapMsg++;
                 break;
@@ -266,16 +271,17 @@ void func_8004ACF4(s32 mapMsgIdx) // 0x8004ACF4
             // Space.
             case '_':
                 mapMsg++;
-                D_800C38C8[D_800C38B4.field_0 - 1] += 6;
+                D_800C38C8[D_800C38B4.field_0 - 1] += SPACE_SIZE;
                 break;
 
             // Dialog code.
             case '~':
                 dialogCode = *++mapMsg;
-                v1         = *++mapMsg - '0'; // Argument count.
+                argCount   = *++mapMsg - '0';
 
                 switch (dialogCode) 
                 {
+                    // Unused dialog codes?
                     case 'C':
                     case 'S':
                     case 'T':
@@ -291,18 +297,18 @@ void func_8004ACF4(s32 mapMsgIdx) // 0x8004ACF4
                         break;
 
                     case DIALOG_CODE_POSITION:
-                        D_800C38B0.field_1 = v1;
+                        D_800C38B0.field_1 = argCount;
                         break;
 
                     case DIALOG_CODE_CUTSCENE:
-                        if (v1 == 2) 
+                        if (argCount == 2) 
                         {
                             D_800BCD7A = 3;
                         }
 
-                        while (v1 != ' ' && v1 != '\t')
+                        while (argCount != ' ' && argCount != '\t')
                         {
-                            v1 = *++mapMsg;
+                            argCount = *++mapMsg;
                         }
 
                         break;
@@ -315,11 +321,14 @@ void func_8004ACF4(s32 mapMsgIdx) // 0x8004ACF4
                 mapMsg++;
                 break;
 
-            case 0:
+            // Terminator.
+            case '\0':
                 j = 9;
                 break;
 
+            // ???
             default:
+                // Convert literal `!` and `&` into `char`s mappable to representative atlas glyphs.
                 if (charCode == '!')
                 {
                     charCode = '\\';
@@ -386,74 +395,86 @@ void func_8004B74C(s16 arg0) // 0x8004B74C
 
 void func_8004B76C(char* str, s32 useFixedWidth) // 0x8004B76C
 {
-    #define GLYPH_OFFSET 12
-    #define ROW_OFFSET   16
+    #define GLYPH_SIZE_X       11
+    #define GLYPH_SIZE_Y       12
+    #define SPACE_SIZE         12
+    #define LINE_SPACE_SIZE    16
+    #define ATLAS_COLUMN_COUNT 21
 
-    GsOT*     ot;
-    GsSPRITE* glyphSprite;
     s32       tileRow;
     s32       glyphIdx;
+    GsOT*     ot;
+    GsSPRITE* glyphSprt;
 
-    glyphSprite  = (GsSPRITE*)PSX_SCRATCH_ADDR(0x30);
-    *glyphSprite = D_800C38F8;
-    ot           = &g_ObjectTable1[g_ObjectTableIdx];
-    
-    while (*str != 0)
+    glyphSprt  = (GsSPRITE*)PSX_SCRATCH_ADDR(0x30);
+    *glyphSprt = D_800C38F8;
+    ot         = &g_ObjectTable1[g_ObjectTableIdx];
+
+    // Parse string.
+    while (*str != '\0')
     {
         switch (*str) 
         {
+            // Draw glyph sprite.
             default:
-                glyphIdx       = *str - 39;
-                tileRow        = glyphIdx / 21;
-                glyphSprite->u = (glyphIdx % 21) * 12;
+                glyphIdx     = *str - '\'';
+                tileRow      = glyphIdx / ATLAS_COLUMN_COUNT;
+                glyphSprt->u = (glyphIdx % ATLAS_COLUMN_COUNT) * GLYPH_SIZE_Y;
 
                 if (useFixedWidth)
                 {
-                    glyphSprite->w = 11;
+                    glyphSprt->w = GLYPH_SIZE_X;
                 } 
                 else 
                 {
-                    glyphSprite->w = D_80025D6C[glyphIdx];
+                    glyphSprt->w = D_80025D6C[glyphIdx];
                 }
 
-                glyphSprite->tpage = (tileRow & 0xF) | 0x10;
-                glyphSprite->cx    = 0x130;
-                glyphSprite->cy    = D_800C391E + 0x1FA;
+                glyphSprt->tpage = (tileRow & 0xF) | 0x10;
+                glyphSprt->cx    = 304;
+                glyphSprt->cy    = D_800C391E + 506;
 
-                GsSortFastSprite(glyphSprite, ot, 4);
+                GsSortFastSprite(glyphSprt, ot, 4);
 
-                glyphSprite->x = glyphSprite->x + glyphSprite->w;
+                glyphSprt->x += glyphSprt->w;
                 break;
 
-            case 32:
-            case 9:
-                glyphSprite->x += GLYPH_OFFSET;
+            // Space.
+            case ' ':
+            case '\t':
+                glyphSprt->x += SPACE_SIZE;
                 break;
 
-            case 126:
-            case 8:
-                glyphSprite->x -= GLYPH_OFFSET;
+            // Backspace.
+            case '~':
+            case '\b':
+                glyphSprt->x -= SPACE_SIZE;
                 break;
             
-            case 10:
-                glyphSprite->x  = D_800C391C;
-                glyphSprite->y += ROW_OFFSET;
+            // Newline.
+            case '\n':
+                glyphSprt->x  = D_800C391C;
+                glyphSprt->y += LINE_SPACE_SIZE;
                 break;
 
-            case 13:
-                glyphSprite->x  = D_800C391C;
-                glyphSprite->y -= ROW_OFFSET;
+            // Carriage return.
+            case '\r':
+                glyphSprt->x  = D_800C391C;
+                glyphSprt->y -= LINE_SPACE_SIZE;
                 break;
         }
 
         str++; 
     }
 
-    D_800C38F8 = *glyphSprite;
+    D_800C38F8 = *glyphSprt;
 }
 
 void Gfx_StringDrawInt(s32 widthMin, s32 val) // 0x8004B9F8
 {
+    #define GLYPH_SIZE_X       11
+    #define ATLAS_COLUMN_COUNT 10
+
     s32   quotient;
     s32   isNegative;
     s32   i;
@@ -463,7 +484,7 @@ void Gfx_StringDrawInt(s32 widthMin, s32 val) // 0x8004B9F8
     {
         for (i = 0; i < (widthMin - 1); i++) 
         {
-            D_800C38F8.x += 11;
+            D_800C38F8.x += GLYPH_SIZE_X;
         }
     }
 
@@ -480,15 +501,16 @@ void Gfx_StringDrawInt(s32 widthMin, s32 val) // 0x8004B9F8
         isNegative = false;
     }
 
-    while (val >= 10)
+    // Wrap atlas row?
+    while (val >= ATLAS_COLUMN_COUNT)
     {
         str--;
-        quotient = (val / 10) >> 32;
-        *str     = (val - (quotient * 10)) + '0';
+        quotient = (val / ATLAS_COLUMN_COUNT) >> 32;
+        *str     = (val - (quotient * ATLAS_COLUMN_COUNT)) + '0';
             
         if (widthMin > 0) 
         {
-            D_800C38F8.x -= 11;
+            D_800C38F8.x -= GLYPH_SIZE_X;
         }
         
         val = quotient;
@@ -501,9 +523,10 @@ void Gfx_StringDrawInt(s32 widthMin, s32 val) // 0x8004B9F8
     {
         str--;
         *str          = '-';
-        D_800C38F8.x -= 11;
+        D_800C38F8.x -= GLYPH_SIZE_X;
     }
 
+    // Draw numeric string.
     Gfx_StringDraw(str, 5);
     return;
 }
