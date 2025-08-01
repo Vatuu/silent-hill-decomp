@@ -2290,6 +2290,9 @@ void func_80045014(s_Skeleton* skel);
 /** Anim func. Used in tandem with skeleton bone traversal. */
 void func_8004506C(s_Skeleton* skel, void* arg1);
 
+/** Anim func. */
+void func_800451B0(s_Skeleton* skel, s_800BE9FC* arg1, s32* arg2);
+
 /** Anim func. Traverses skeleton bones to set flags/mask. */
 void func_800453E8(s_Skeleton* skel, s32 cond);
 

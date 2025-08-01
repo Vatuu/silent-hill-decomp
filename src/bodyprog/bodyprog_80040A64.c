@@ -1019,8 +1019,20 @@ void func_8004506C(s_Skeleton* skel, void* arg1) // 0x8004506C
 // Anim func.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80045108); // 0x80045108
 
-// Anim func.
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800451B0); // 0x800451B0
+void func_800451B0(s_Skeleton* skel, s_800BE9FC* arg1, s32* arg2) // 0x800451B0
+{
+    s32 var;
+    
+    var = func_80044F6C(arg2, 1);
+
+    while (var != -2)
+    {
+        func_80056C8C(&skel->bones_8[skel->boneIdx_1], arg1, var);
+
+        skel->boneIdx_1++;
+        var = func_80044F6C(arg2, 0);
+    }
+}
 
 // Anim func.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80045258); // 0x80045258
