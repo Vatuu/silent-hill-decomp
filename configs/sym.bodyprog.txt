@@ -11,8 +11,8 @@ g_GameWorkPtr   = 0x80024D54; // type:u32
 
 nextGameStates = 0x80025480;
 
-g_ItemVectors = 0x800262FC; // type:DVECTOR size:0x380
-g_ItemNames = 0x800ADB60; // type:u32 size:0x30C
+g_ItemVectors      = 0x800262FC; // type:DVECTOR size:0x380
+g_ItemNames        = 0x800ADB60; // type:u32 size:0x30C
 g_ItemDescriptions = 0x800ADE6C; // type:u32 size:0x30C
 
 // sh "view" / "vw" / "vc" / "vb" code
@@ -77,10 +77,10 @@ Savegame_CardState_FileReadWrite = 0x80031260; // type:func
 
 Savegame_DevicePathGenerate = 0x800314A4; // type:func
 
-Gfx_BackgroundSpriteDraw   = 0x800314EC; // type:func
-Gfx_2dBackgroundMotionBlur = 0x80031CCC; // type:func
-Gfx_DebugStringPosition    = 0x80031EFC; // type:func
-Gfx_DebugStringDraw        = 0x80031F40; // type:func
+Gfx_BackgroundSpriteDraw = 0x800314EC; // type:func
+Gfx_MotionBlur 			 = 0x80031CCC; // type:func
+Gfx_DebugStringPosition  = 0x80031EFC; // type:func
+Gfx_DebugStringDraw      = 0x80031F40; // type:func
 
 Math_IntegerToString = 0x80032154; // type:func
 
@@ -128,7 +128,7 @@ ControllerData_AnalogToDigital = 0x80034670; // type:func
 
 GameState_LoadScreen_Update = 0x800348E8; // type:func
 
-Gfx_LoadingScreen_Animation = 0x80034E58; // type:func
+Gfx_LoadingScreenDraw = 0x80034E58; // type:func
 
 Game_SavegameInitialize = 0x800350BC; // type:func
 Game_InGameInitialize = 0x80035178; // type:func

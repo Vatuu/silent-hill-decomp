@@ -640,10 +640,10 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80044090); // 0x
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80044420); // 0x80044420
 
 // ========================================
-// ANIMATIONS
+// ANIMATION
 // ========================================
 
-// Could be used for load the player model or to execute animations.
+// Could be used to load the player model or to execute animations.
 // Removing the call from `Game_InGameInitialize` causes Harry's model to not appear.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800445A4); // 0x800445A4
 
@@ -652,7 +652,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800446D8); // 0x
 
 s32 func_80044918(s_ModelAnim* anim) // 0x80044918
 {
-    // According to `80044950`, this func is returning a funcptr?
+    // According to `80044950`, this func returns a funcptr?
     // `field_C`/`field_10` usually points to data at `0x800AF228` which contains funcptrs and other stuff.
 
     s32 animInfo_C;
@@ -987,7 +987,6 @@ void func_80045014(s_Skeleton* skel) // 0x80045014
     }
 }
 
-// Anim func. Used in tandem with skeleton bone traversal.
 void func_8004506C(s_Skeleton* skel, void* arg1) // 0x8004506C
 {
     u8  sp10[3]; // Size unsure, this could be larger.
@@ -999,7 +998,7 @@ void func_8004506C(s_Skeleton* skel, void* arg1) // 0x8004506C
     switch (switchVar)
     {
         case 0:
-            sp10[0] = 0xfe;
+            sp10[0] = 0xFE;
             break;
 
         case 1:

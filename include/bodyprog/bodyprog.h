@@ -331,8 +331,8 @@ typedef struct
 
 typedef struct
 {
-    VECTOR3  pos_0;
-    SVECTOR3 rot_C;
+    VECTOR3  position_0;
+    SVECTOR3 rotation_C;
     s8       field_12;
 } s_func_8006AB50;
 
@@ -342,10 +342,10 @@ typedef struct
     s32     field_4;
     s32     field_8;
     SVECTOR field_C;
-    s16     dirX_14;
-    s16     dirZ_16;
-    s32     posX_18;
-    s32     posZ_1C;
+    s16     directionX_14;
+    s16     directionZ_16;
+    s32     positionX_18;
+    s32     positionZ_1C;
     s32     field_20;
     s32     field_24;
     s16     field_28;
@@ -2047,14 +2047,11 @@ void func_800317CC(s_FsImageDesc* image0, s_FsImageDesc* image1, s16 arg2);
 
 void func_80031AAC(s_FsImageDesc* image);
 
-/** @brief Display motion blur over the 2D background of the game.
+/** @brief Apply motion blur to scene.
  *
  * This is used only in the loading screen.
- *
- * Works similar to the effect that some sixth gen games when a map has no
- * skybox like Source Engine games.
  */
-s32 Gfx_2dBackgroundMotionBlur(s32 arg0); // 0x80031CCC
+s32 Gfx_MotionBlur(s32 arg0); // 0x80031CCC
 
 void Gfx_DebugStringPosition(s16 x, s16 y);
 
@@ -2281,6 +2278,7 @@ void func_80044FE0(s_Skeleton* skel, s_Bone* bones, u8 boneCount);
 /** Clears skeleton bone flags/mask. Called by `func_80044FE0`. */
 void func_80045014(s_Skeleton* skel);
 
+/** Anim func. Used in tandem with skeleton bone traversal. */
 void func_8004506C(s_Skeleton* skel, void* arg1);
 
 /** Anim func. Traverses skeleton bones to set flags/mask. */
@@ -2896,8 +2894,8 @@ void GameState_LoadScreen_Update();
 /** Handles `g_GameWork.gameStateStep_598[0]`. */
 void Game_GameStartUp(); // 0x80034964
 
-/** This display the loading animation. */
-void Gfx_LoadingScreen_Animation(); // 0x80034E58
+/** Draws the loading screen with Harry running. */
+void Gfx_LoadingScreenDraw(); // 0x80034E58
 
 void func_80034EC8(); // 0x80034EC8
 

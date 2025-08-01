@@ -104,8 +104,8 @@ Use `/** */`-style comments for formal documentaion and `//`-style comments for 
 /** @brief Stores my data. */
 typedef struct _MyStruct
 {
-    VECTOR3 pos_0;   /** Q27.4 */
-    s32     field_C; // Maybe index?
+    VECTOR3 position_0; /** Q27.4 */
+    s32     field_C;    // Maybe index?
 } s_MyStruct;
 
 /** @brief Do something.

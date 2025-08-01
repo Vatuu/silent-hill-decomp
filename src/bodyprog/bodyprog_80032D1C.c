@@ -1127,7 +1127,7 @@ void func_800348C0() // 0x800348C0
 
 void GameState_LoadScreen_Update() // 0x800348E8
 {
-    Gfx_LoadingScreen_Animation();
+    Gfx_LoadingScreenDraw();
     Game_GameStartUp();
 
     if (g_SysWork.flags_22A4 & (1 << 10))
@@ -1170,7 +1170,8 @@ void Game_GameStartUp() // 0x80034964
                 AreaLoad_UpdatePlayerPosition();
                 g_GameWork.gameStateStep_598[0] = 7;
             }
-            else if (g_SysWork.flags_2298 == 0x20) // This indicate that the game has to boot a demo
+            // Indicates the game must boot a demo.
+            else if (g_SysWork.flags_2298 == 0x20)
             {
                 D_800BCD48                      = 0;
                 g_GameWork.gameStateStep_598[0] = 1;
@@ -1343,7 +1344,7 @@ void Game_GameStartUp() // 0x80034964
     }
 }
 
-void Gfx_LoadingScreen_Animation() // 0x80034E58
+void Gfx_LoadingScreenDraw() // 0x80034E58
 {
     if (g_SysWork.field_2281 != 0 && g_GameWork.gameStateStep_598[0] < 10)
     {
@@ -1352,7 +1353,7 @@ void Gfx_LoadingScreen_Animation() // 0x80034E58
         g_MapOverlayHeader.func_18[g_SysWork.field_2281]();
     }
 
-    Gfx_2dBackgroundMotionBlur(2);
+    Gfx_MotionBlur(2);
 }
 
 void func_80034EC8() // 0x80034EC8
@@ -1449,10 +1450,10 @@ void Game_SavegameInitialize(s8 overlayId, s32 difficulty) // 0x800350BC
 void Game_InGameInitialize() // 0x80035178
 {
     func_8003C048();
-    func_8003C110(); // Something related to the load of Harry's animation.
-    func_8003C0C0(); // Something related to the load of Harry's animation.
+    func_8003C110(); // Something related to loading of Harry's animation.
+    func_8003C0C0(); // Something related to loading of Harry's animation.
     func_800445A4(FS_BUFFER_0, g_SysWork.playerBoneCoords_890);
-    func_8003D938(); // Something related animations.
+    func_8003D938(); // Something related to animations.
 
     g_SysWork.field_229C = NO_VALUE;
 
@@ -3500,7 +3501,7 @@ void GameState_LoadStatusScreen_Update() // 0x800395C0
         g_GameWork.gameStateStep_598[0]++;
     }
 
-    Gfx_2dBackgroundMotionBlur(2);
+    Gfx_MotionBlur(2);
 
     if (Fs_QueueDoThingWhenEmpty() != 0)
     {
@@ -3577,7 +3578,7 @@ void GameState_LoadMapScreen_Update() // 0x8003991C
         g_GameWork.gameStateStep_598[0]++;
     }
 
-    Gfx_2dBackgroundMotionBlur(2);
+    Gfx_MotionBlur(2);
 
     if (Fs_QueueDoThingWhenEmpty() != 0)
     {
@@ -3705,7 +3706,7 @@ void SysState_LoadArea_Update() // 0x80039C40
 
     g_SysWork.field_22A0 |= 1 << 0;
     Game_StateSetNext(GameState_MainLoadScreen);
-    Gfx_2dBackgroundMotionBlur(1);
+    Gfx_MotionBlur(1);
 }
 
 void AreaLoad_UpdatePlayerPosition() // 0x80039F30

@@ -8,11 +8,12 @@ const s32 rodataPad_800262F8 = 0;
 
 #include "D_800262FC_Rodata.h"
 
-const char *g_ItemNames[] = {
+const char* g_ItemNames[] =
+{
     "Health_drink(s)",
     "First_aid_kit(s)",
     "Ampoule(s)",
-    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     "Lobby_key",
     "House_key",
     "Key_of_[Lion]",
@@ -38,7 +39,7 @@ const char *g_ItemNames[] = {
     " ",
     "Sewer_exit_key",
     "Channeling_stone",
-    0,0,0,0,0,0,0,
+    0, 0, 0, 0, 0, 0, 0,
     "Chemical",
     "Gold_medallion",
     "Silver_medallion",
@@ -79,27 +80,28 @@ const char *g_ItemNames[] = {
     "Chainsaw",
     "Katana",
     "Axe",
-    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     "Handgun",
     "Hunting_rifle",
     "Shotgun",
     "Hyper_Blaster",
-    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     "Handgun_bullets",
     "Rifle_shells",
     "Shotgun_shells",
-    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     "Flashlight",
     "Pocket_radio",
-    "Gasoline_tank",
+    "Gasoline_tank"
 };
 
-const char *g_ItemDescriptions[] = {
+const char* g_ItemDescriptions[] =
+{
     "Supplies_nutrition_to\n\t\t\t\t\trecover_a_small_amount_of\n\t\t\t\t\tstamina.",
     "Heals_injury_to_provide\n\t\t\t\t\tmoderate_stamina_recovery.",
     "Relieve_pain_to_recover\n\t\t\t\t\tstamina_to_high.\n\t\t\t\t\tEffect_lasts_for_a_while.",
-    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-    "The_key_to_open\n\t\t\t\t\tthe_door_to_the_lobby.\n\t\t\t\t\tI_found_it_in_the_locker_room.",
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    "The_key_to_open\n\t\t\t\t\tthe_door_to_the_lobby.\n\t\t\t\t\tI_found_it_in_the_locker_room.", 
     "The_house_key\n\t\t\t\t\thidden_in_the_dog_house.",
     "The_key_to_the_garden_of\n\t\t\t\t\tthe_house._Found_in_patrol\n\t\t\t\t\tcar's_trunk.",
     "The_key_to_the_garden_of\n\t\t\t\t\tthe_house._Found_in_the\n\t\t\t\t\tbasketball_court.",
@@ -124,7 +126,7 @@ const char *g_ItemDescriptions[] = {
     " ",
     "Key_to_exit_from_the_sewer\n\t\t\t\t\tto_the_resort_area,_which_was\n\t\t\t\t\tdropped_in_the_water.",
     "A_mystical_stone_possessing\n\t\t\t\t\tpower._If_used_somewhere,\n\t\t\t\t\tthe_result_will_be...?",
-    0,0,0,0,0,0,0,
+    0, 0, 0, 0, 0, 0, 0,
     "The_label_reads,_[Concentrated\n\t\t\t\t\thydrochloric_acid.]_Found_in\n\t\t\t\t\tthe_lab_equipment_room.",
     "A_picture_of_a_clock_tower\n\t\t\t\t\tis_engraved_on_the_surface.\n\t\t\t\t\tFound_in_the_chemistry_lab.",
     "A_picture_of_a_clock_tower\n\t\t\t\t\tis_engraved_on_the_surface.\n\t\t\t\t\tFound_in_the_music_room.",
@@ -165,19 +167,19 @@ const char *g_ItemDescriptions[] = {
     "Power_tool_used_for_cutting\n\t\t\t\t\tdown_trees,_etc.,_highly_deadly.",
     "Traditional_single_edged\n\t\t\t\t\tJapanese_blade.",
     "Small_one_hand_axe.\n\t\t\t\t\tModerately_effective\n\t\t\t\t\tas_a_weapon.",
-    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     "Handgun_received_from_Cybil.\n\t\t\t\t\tHolds_up_to_15_rounds.",
     "Holds_up_to_6_rounds.",
     "Fires_in_a_wide_radius.\n\t\t\t\t\tHolds_up_to_6_rounds.",
     "High-powered_handgun\n\t\t\t\t\twith_infrared_scope\n\t\t\t\t\tand_unlimited_bullets.",
-    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     "Ammo_for_the_handgun.",
     "Ammo_for_the_hunting_rifle.",
     "Ammo_for_the_shotgun.",
-    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     "One_touch_on/off_switch.\n\t\t\t\t\tIn_the_chest_pocket.",
     "Portable_radio_that\n\t\t\t\t\temits_static\n\t\t\t\t\twhen_monsters_are_near.",
-    "Fuel_for_chainsaws_and\n\t\t\t\t\trock_drills.",
+    "Fuel_for_chainsaws_and\n\t\t\t\t\trock_drills."
 };
 
 void Inventory_DirectionalInputSet() // 0x8004F5DC
@@ -1076,7 +1078,7 @@ void Gfx_Inventory_ItemDescriptionDraw(s32* selectedItemId) // 0x8005192C
 
     DVECTOR stringPos = { 208, 200 };
 
-    char* D_80027F14[] = 
+    char* D_80027F14[] =
     {
         "Can't_use_it_here.",
         "Too_dark_to_look_at\n\t\tthe_item_here."
@@ -1107,7 +1109,7 @@ void Gfx_Inventory_ItemDescriptionDraw(s32* selectedItemId) // 0x8005192C
             break;
     }
     
-    if (D_800AE185 != ((g_SavegamePtr->items_0[idx].id_0 >> 5) - 1) || 
+    if (D_800AE185 != ((g_SavegamePtr->items_0[idx].id_0 >> 5) - 1) ||
         D_800AE186 != (g_SavegamePtr->items_0[idx].id_0 & 0x1F))
     {
         g_SysWork.field_10               = 0;
@@ -1120,9 +1122,9 @@ void Gfx_Inventory_ItemDescriptionDraw(s32* selectedItemId) // 0x8005192C
         D_800AE178                       = 0;
     }
     
-    if (idx != -1 && *selectedItemId != 2 && *selectedItemId != 3 && *selectedItemId != 4)
+    if (idx != NO_VALUE && *selectedItemId != 2 && *selectedItemId != 3 && *selectedItemId != 4)
     {
-        for (i = 0; i < g_SavegamePtr->inventoryItemSpaces_AB; i++) 
+        for (i = 0; i < g_SavegamePtr->inventoryItemSpaces_AB; i++)
         {
             if (i == idx)
             {    
@@ -1134,13 +1136,13 @@ void Gfx_Inventory_ItemDescriptionDraw(s32* selectedItemId) // 0x8005192C
                 {
                     Gfx_StringSetPosition(55, 184);
                 }
-                
+
                 Gfx_StringDrawInt(2, i + 1);
                 i = g_SavegamePtr->inventoryItemSpaces_AB;
             }
         }
     }
-    
+
     if ((g_Inventory_EquippedItem >> 5) == 5 && g_Inventory_EquippedItem != InventoryItemId_HyperBlaster)
     {
         Gfx_StringSetPosition(122, 30);
@@ -1162,15 +1164,15 @@ void Gfx_Inventory_ItemDescriptionDraw(s32* selectedItemId) // 0x8005192C
             }
         }
     }
-    
+
     temp = *selectedItemId;
-    
+
     if (temp < 0 || (temp >= 2 && (*selectedItemId >= 9 || temp < 5)) ||
         g_SavegamePtr->items_0[idx].id_0 == 0xFF)
     {
         return;
     }
-    
+
     switch (g_SavegamePtr->items_0[idx].id_0) 
     {
         case InventoryItemId_Flashlight:
@@ -1184,33 +1186,32 @@ void Gfx_Inventory_ItemDescriptionDraw(s32* selectedItemId) // 0x8005192C
                 Gfx_StringDraw(D_80027F94[1], 10);
             }
             break;
-            
+
         case InventoryItemId_PocketRadio:
             Gfx_StringSetPosition(stringPos.vx, stringPos.vy);
-            if (g_SavegamePtr->flags_AC & 1) 
+            if (g_SavegamePtr->flags_AC & 1)
             {
                 Gfx_StringDraw(D_80027F94[1], 10);
-            } 
-            else 
+            }
+            else
             {
                 Gfx_StringDraw(D_80027F94[2], 10);
             }
             break;
-            
+
         case InventoryItemId_HyperBlaster:
             Gfx_StringSetPosition(stringPos.vx - 16, stringPos.vy);
-
-            switch (Inventory_HyperBlasterFunctionalTest()) 
+            switch (Inventory_HyperBlasterFunctionalTest())
             {
-                case 2: // If HyperBlaster connected (Port 1).
+                case 2: // If Hyper Blaster connected (Port 1).
                     Gfx_StringDraw(D_80027F94[3], 10);
                     break;
-                
-                case 1: // If HyperBlaster connected (Port 2).
+
+                case 1: // If Hyper Blaster connected (Port 2).
                     Gfx_StringDraw(D_80027F94[4], 10);
                     break;
-                
-                case 0: // If HyperBlaster unlocked by finishing the game.
+
+                case 0: // If Hyper Blaster unlocked by finishing the game.
                     Gfx_StringDraw(D_80027F94[5], 10);
                     break;
             }
@@ -1227,14 +1228,13 @@ void Gfx_Inventory_ItemDescriptionDraw(s32* selectedItemId) // 0x8005192C
         case InventoryItemId_ShotgunShells:
             Gfx_StringSetPosition(stringPos.vx, stringPos.vy);
             Gfx_StringDraw(D_80027F94[0], 10);
-            
             if (g_SavegamePtr->items_0[idx].id_0 != 0xFF) 
             {
-                if (g_SavegamePtr->items_0[idx].count_1 >= 100) 
+                if (g_SavegamePtr->items_0[idx].count_1 >= 100)
                 {
                     Gfx_StringSetPosition(260, 200);
-                } 
-                else if (g_SavegamePtr->items_0[idx].count_1 >= 10) 
+                }
+                else if (g_SavegamePtr->items_0[idx].count_1 >= 10)
                 {
                     Gfx_StringSetPosition(270, 200);
                 }
@@ -1246,44 +1246,44 @@ void Gfx_Inventory_ItemDescriptionDraw(s32* selectedItemId) // 0x8005192C
             }
             break;
     }
-        
+
     Gfx_StringSetColor(ColorId_White);
 
     D_800AE185 = (g_SavegamePtr->items_0[idx].id_0 >> 5) - 1;
     D_800AE186 = g_SavegamePtr->items_0[idx].id_0 & 0x1F;
-        
+
     switch (g_SysWork.field_10) 
     {
         case 0:
-            g_Inventory_ItemNameTimer += 1;
+            g_Inventory_ItemNameTimer++;
             Gfx_StringSetPosition(68, 200);
-            if (Gfx_StringDraw(g_ItemNames[g_SavegamePtr->items_0[idx].id_0 - 32], g_Inventory_ItemNameTimer) == true) 
+            if (Gfx_StringDraw(g_ItemNames[g_SavegamePtr->items_0[idx].id_0 - 32], g_Inventory_ItemNameTimer) == true)
             {
                 g_Inventory_ItemNameTimer = 100;
-                g_SysWork.timer_2C = 0;
-                g_SysWork.field_14 = 0;
-                g_SysWork.field_10 += 1;
+                g_SysWork.timer_2C        = 0;
+                g_SysWork.field_14        = 0;
+                g_SysWork.field_10++;
             }
             break;
-            
+
         case 1:
             g_Inventory_DescriptionRollTimer += 2;
             Gfx_StringSetPosition(68, 200);
             Gfx_StringDraw(g_ItemNames[g_SavegamePtr->items_0[idx].id_0 - 32], 100);
-            
-            if (idx == g_Inventory_SelectedItemIdx) 
+
+            if (idx == g_Inventory_SelectedItemIdx)
             {
                 g_Inventory_ItemNameTimer = 0;
             }
-            
+
             Gfx_StringSetPosition(30, 232);
-            
+
             if (Gfx_StringDraw(g_ItemDescriptions[g_SavegamePtr->items_0[idx].id_0 - 32], g_Inventory_DescriptionRollTimer) == true)
             {
                 g_Inventory_DescriptionRollTimer = 100;
-                g_SysWork.timer_2C = 0;
-                g_SysWork.field_14 = 0;
-                g_SysWork.field_10 += 1;
+                g_SysWork.timer_2C               = 0;
+                g_SysWork.field_14               = 0;
+                g_SysWork.field_10++;
             }
             break;
 
@@ -1309,7 +1309,7 @@ void Gfx_Inventory_ItemDescriptionDraw(s32* selectedItemId) // 0x8005192C
                     break;
             }
             
-            if (idx == g_Inventory_SelectedItemIdx) 
+            if (idx == g_Inventory_SelectedItemIdx)
             {
                 g_Inventory_ItemNameTimer = 0;
             }

@@ -680,19 +680,19 @@ void vcSetFlagsByCamMvType(VC_CAM_MV_TYPE cam_mv_type, s32 far_watch_rate, s32 a
     {
         Vc_FlagSet(VC_WARP_CAM_F | VC_WARP_CAM_TGT_F);
 
-        vcPrsFViewFlag = (vcWork.flags_8 >> 9); /** `VC_PRS_F_VIEW_F` */
+        vcPrsFViewFlag = vcWork.flags_8 >> 9; /** `VC_PRS_F_VIEW_F` */
         vcPrsFViewFlag = vcPrsFViewFlag & 1;
 
-        // optExtraViewCtrl != 0 && vcPrsFViewFlag == 0 OR
-        // optExtraViewCtrl == 0 && vcPrsFViewFlag == 1
+        // `optExtraViewCtrl != 0 && vcPrsFViewFlag == 0` ||
+        // `optExtraViewCtrl == 0 && vcPrsFViewFlag == 1`
         if ((g_GameWorkConst->config_0.optExtraViewCtrl_28 != 0 && (vcPrsFViewFlag ^ 1) != 0) ||
             (g_GameWorkConst->config_0.optExtraViewCtrl_28 == 0 && vcPrsFViewFlag != 0))
         {
             vcOldPrsFViewFlag = (vcWork.flags_8 >> 10); /** `VC_OLD_PRS_F_VIEW_F` */
             vcOldPrsFViewFlag = vcOldPrsFViewFlag & (1 << 0);
 
-            // (optExtraViewCtrl != 0 && vcOldPrsFViewFlag == 0) == false AND
-            // (optExtraViewCtrl == 0 && vcOldPrsFViewFlag == 1) == false
+            // `(optExtraViewCtrl != 0 && vcOldPrsFViewFlag == 0) == false` A&&
+            // `(optExtraViewCtrl == 0 && vcOldPrsFViewFlag == 1) == false`
             if (!(g_GameWorkConst->config_0.optExtraViewCtrl_28 != 0 && (vcOldPrsFViewFlag ^ 1) != 0) &&
                 !(g_GameWorkConst->config_0.optExtraViewCtrl_28 == 0 && vcOldPrsFViewFlag != 0))
             {
@@ -738,7 +738,7 @@ void vcPreSetDataInVC_WORK(VC_WORK* w_p, VC_ROAD_DATA* vc_road_ary_list) // 0x80
         }
     }
 
-    vcWork.scr_half_ang_wx_2E = (s16)(ratan2(g_GameWork.gsScreenWidth_588, vcWork.geom_screen_dist_30) >> 1);
+    vcWork.scr_half_ang_wx_2E = (s16)(ratan2(g_GameWork.gsScreenWidth_588,  vcWork.geom_screen_dist_30) >> 1);
     vcWork.scr_half_ang_wy_2C = (s16)(ratan2(g_GameWork.gsScreenHeight_58A, vcWork.geom_screen_dist_30) >> 1);
 
     if (vcWork.through_door_activate_init_f_C != 0)
@@ -854,12 +854,12 @@ void vcSetNearestEnemyDataInVC_WORK(VC_WORK* w_p) // 0x80081D90
 
     if (active_min_sc_p)
     {
-        w_p->nearest_enemy_2DC       = active_min_sc_p;
+        w_p->nearest_enemy_2DC         = active_min_sc_p;
         w_p->nearest_enemy_xz_dist_2E0 = active_min_dist;
     }
     else
     {
-        w_p->nearest_enemy_2DC       = all_min_sc_p;
+        w_p->nearest_enemy_2DC         = all_min_sc_p;
         w_p->nearest_enemy_xz_dist_2E0 = all_min_dist;
     }
 }
@@ -1687,10 +1687,10 @@ void vcSetWatchTgtXzPos(VECTOR3* watch_pos, VECTOR3* center_pos, VECTOR3* cam_po
 
     cam2chr_ang = ratan2(center_pos->vx - cam_pos->vx, center_pos->vz - cam_pos->vz);
 
-    chr2watch_x = Math_MulFixed(tgt_chara2watch_cir_dist, shRsin(cam2chr_ang), Q12_SHIFT) +
-                  Math_MulFixed(tgt_watch_cir_r, shRsin(watch_cir_ang_y), Q12_SHIFT);
-    chr2watch_z = Math_MulFixed(tgt_chara2watch_cir_dist, shRcos(cam2chr_ang), Q12_SHIFT) +
-                  Math_MulFixed(tgt_watch_cir_r, shRcos(watch_cir_ang_y), Q12_SHIFT);
+    chr2watch_x = Math_MulFixed(tgt_chara2watch_cir_dist, shRsin(cam2chr_ang),     Q12_SHIFT) +
+                  Math_MulFixed(tgt_watch_cir_r,          shRsin(watch_cir_ang_y), Q12_SHIFT);
+    chr2watch_z = Math_MulFixed(tgt_chara2watch_cir_dist, shRcos(cam2chr_ang),     Q12_SHIFT) +
+                  Math_MulFixed(tgt_watch_cir_r,          shRcos(watch_cir_ang_y), Q12_SHIFT);
 
     watch_pos->vx = center_pos->vx + chr2watch_x;
     watch_pos->vz = center_pos->vz + chr2watch_z;
@@ -2027,7 +2027,7 @@ void vcMakeIdealCamPosUseVC_ROAD_DATA(VECTOR3* ideal_pos, VC_WORK* w_p, enum _VC
     near_road_data = &w_p->cur_near_road_2B8;
 
     ideal_pos->vx = w_p->chara_pos_114.vx + FP_MULTIPLY(default_cam_dist, shRsin(w_p->cam_chara2ideal_ang_y_FE), Q12_SHIFT);
-    ideal_pos->vy = w_p->chara_top_y_124 - FP_METER(0.4f);
+    ideal_pos->vy = w_p->chara_top_y_124  - FP_METER(0.4f);
     ideal_pos->vz = w_p->chara_pos_114.vz + FP_MULTIPLY(default_cam_dist, shRcos(w_p->cam_chara2ideal_ang_y_FE), Q12_SHIFT);
 
     cam_pos_y   = w_p->cam_pos_50.vy;
@@ -2137,7 +2137,7 @@ void vcMakeBasicCamTgtMvVec(VECTOR3* tgt_mv_vec, VECTOR3* ideal_pos, VC_WORK* w_
 {
     s32 now2ideal_tgt_dist;
     s16 now2ideal_tgt_ang_y;
-    s32 temp_s0;             // SH2: `float xz_vec[4];`
+    s32 temp_s0; // SH2: `float xz_vec[4];`
     s32 temp_s1;
 
     temp_s1 = ideal_pos->vx - w_p->cam_tgt_pos_44.vx;
@@ -2207,16 +2207,16 @@ void vcAdjTgtMvVecYByCurNearRoad(VECTOR3* tgt_mv_vec, VC_WORK* w_p) // 0x800843F
         case 1:
             min_tgt_y = Math_MulFixed(FP_TO(cur_rd_p->lim_rd_max_hy_12, Q8_SHIFT),
                                       FP_METER(1.0f) - near_ratio, Q12_SHIFT) + Math_MulFixed(FP_TO(cur_rd_p->lim_rd_min_hy_13, Q8_SHIFT),
-                                                                                                   near_ratio,
-                                                                                                   Q12_SHIFT);
+                                                                                              near_ratio,
+                                                                                              Q12_SHIFT);
             max_tgt_y = min_tgt_y;
             break;
 
         case 2:
             min_tgt_y = Math_MulFixed(FP_TO(cur_rd_p->lim_rd_min_hy_13, Q8_SHIFT),
                                       FP_METER(1.0f) - near_ratio, Q12_SHIFT) + Math_MulFixed(FP_TO(cur_rd_p->lim_rd_max_hy_12, Q8_SHIFT),
-                                                                                                   near_ratio,
-                                                                                                   Q12_SHIFT);
+                                                                                              near_ratio,
+                                                                                              Q12_SHIFT);
             max_tgt_y = min_tgt_y;
             break;
 
@@ -2438,7 +2438,7 @@ void vcRenewalCamData(VC_WORK* w_p, VC_CAM_MV_PARAM* cam_mv_prm_p) // 0x80084BD8
 
     // SH2 removes this multiply and uses `accel_y` directly. Maybe 0.4f/1.0f were tunable defines and compiler removed it.
     dec_spd_per_dist_xz = FP_MULTIPLY_PRECISE(cam_mv_prm_p->accel_xz, 0.4f, Q12_SHIFT);
-    dec_spd_per_dist_y  = FP_MULTIPLY_PRECISE(cam_mv_prm_p->accel_y, 1.0f, Q12_SHIFT);
+    dec_spd_per_dist_y  = FP_MULTIPLY_PRECISE(cam_mv_prm_p->accel_y,  1.0f, Q12_SHIFT);
 
     vwRenewalXZVelocityToTargetPos(&w_p->cam_velo_60.vx, &w_p->cam_velo_60.vz, &w_p->cam_pos_50,
                                    &w_p->cam_tgt_pos_44, FP_METER(0.1f), cam_mv_prm_p->accel_xz,
@@ -2631,14 +2631,14 @@ void vcMakeOfsCam2CharaBottomAndTopAngByBaseMatT(SVECTOR* ofs_cam2chara_btm_ang,
 {
     SVECTOR vec;
 
-    vec.vx = FP_FROM(chara_pos->vx - cam_pos->vx, Q4_SHIFT);
+    vec.vx = FP_FROM(chara_pos->vx  - cam_pos->vx, Q4_SHIFT);
     vec.vy = FP_FROM(chara_bottom_y - cam_pos->vy, Q4_SHIFT);
-    vec.vz = FP_FROM(chara_pos->vz - cam_pos->vz, Q4_SHIFT);
+    vec.vz = FP_FROM(chara_pos->vz  - cam_pos->vz, Q4_SHIFT);
     ApplyMatrixSV(base_matT, &vec, &vec);
     vwVectorToAngle(ofs_cam2chara_btm_ang, &vec);
 
     vec.vx = FP_FROM(chara_pos->vx - cam_pos->vx, Q4_SHIFT);
-    vec.vy = FP_FROM(chara_top_y - cam_pos->vy, Q4_SHIFT);
+    vec.vy = FP_FROM(chara_top_y   - cam_pos->vy, Q4_SHIFT);
     vec.vz = FP_FROM(chara_pos->vz - cam_pos->vz, Q4_SHIFT);
     ApplyMatrixSV(base_matT, &vec, &vec);
     vwVectorToAngle(ofs_cam2chara_top_ang, &vec);
@@ -2646,9 +2646,9 @@ void vcMakeOfsCam2CharaBottomAndTopAngByBaseMatT(SVECTOR* ofs_cam2chara_btm_ang,
 
 void vcAdjCamOfsAngByCharaInScreen(SVECTOR* cam_ang, SVECTOR* ofs_cam2chara_btm_ang, SVECTOR* ofs_cam2chara_top_ang, VC_WORK* w_p) // 0x80085460
 {
-    // sh2 dwarf names.
+    // SH2 dwarf names.
     s16 adj_cam_ang_x;
-    s16 var_a1; // Probably temp for adj_cam_ang_x/
+    s16 var_a1; // Probably temp for `adj_cam_ang_x`.
     s16 watch2chr_ofs_ang_y;
     s16 watch2chr_bottom_ofs_ang_x;
     s16 watch2chr_top_ofs_ang_x;
@@ -2753,16 +2753,16 @@ void vcSetDataToVwSystem(VC_WORK* w_p, VC_CAM_MV_TYPE cam_mv_type) // 0x80085884
     {
         vcSelfViewTimer += g_DeltaTime0;
 
-        noise_ang.vx = vcCamMatNoise(4, FP_RADIAN((PI / 18.0f) * 5.0f), FP_RADIAN((PI / 9.0f) * 4.0f),  vcSelfViewTimer); // Noise: 0.0034906585f
-        noise_ang.vy = vcCamMatNoise(2, FP_RADIAN((PI / 9.0f) * 2.0f),  FP_RADIAN((PI / 9.0f) * -8.0f), vcSelfViewTimer); // Noise: 0.0021816615f
+        noise_ang.vx = vcCamMatNoise(4, FP_RADIAN((PI / 18.0f) * 5.0f), FP_RADIAN((PI / 9.0f) *  4.0f), vcSelfViewTimer); // Noise: 0.0034906585f
+        noise_ang.vy = vcCamMatNoise(2, FP_RADIAN((PI / 9.0f)  * 2.0f), FP_RADIAN((PI / 9.0f) * -8.0f), vcSelfViewTimer); // Noise: 0.0021816615f
         noise_ang.vz = 0;
         func_80096C94(&noise_ang, &noise_mat);
 
         noise_mat.m[0][0] += vcCamMatNoise(12, FP_RADIAN((PI / 18.0f) * 7.0f),  FP_RADIAN(PI),                    vcSelfViewTimer); // Noise: 0.004f
-        noise_mat.m[0][1] += vcCamMatNoise(12, FP_RADIAN(PI / 3.0f),            FP_RADIAN((PI / 9.0f) * -8.0f),   vcSelfViewTimer); // Noise: 0.004f
-        noise_mat.m[0][2] += vcCamMatNoise(12, FP_RADIAN(PI / 3.0f),            FP_RADIAN((PI / 9.0f) * 4.0f),    vcSelfViewTimer); // Noise: 0.004f
-        noise_mat.m[1][0] += vcCamMatNoise(12, FP_RADIAN((PI / 18.0f) * 5.0f),  FP_RADIAN((PI / 18.0f) * 5.0f),   vcSelfViewTimer); // Noise: 0.004f
-        noise_mat.m[1][1] += vcCamMatNoise(12, FP_RADIAN(PI),                   FP_RADIAN((PI / 9.0f) * 2.0f),    vcSelfViewTimer); // Noise: 0.004f
+        noise_mat.m[0][1] += vcCamMatNoise(12, FP_RADIAN(PI / 3.0f),            FP_RADIAN((PI / 9.0f)  * -8.0f),  vcSelfViewTimer); // Noise: 0.004f
+        noise_mat.m[0][2] += vcCamMatNoise(12, FP_RADIAN(PI / 3.0f),            FP_RADIAN((PI / 9.0f)  *  4.0f),  vcSelfViewTimer); // Noise: 0.004f
+        noise_mat.m[1][0] += vcCamMatNoise(12, FP_RADIAN((PI / 18.0f) * 5.0f),  FP_RADIAN((PI / 18.0f) *  5.0f),  vcSelfViewTimer); // Noise: 0.004f
+        noise_mat.m[1][1] += vcCamMatNoise(12, FP_RADIAN(PI),                   FP_RADIAN((PI / 9.0f)  *  2.0f),  vcSelfViewTimer); // Noise: 0.004f
         noise_mat.m[1][2] += vcCamMatNoise(12, FP_RADIAN((PI / 36.0f) * 13.0f), FP_RADIAN((PI / 18.0f) * -17.0f), vcSelfViewTimer); // Noise: 0.004f
         MulMatrix0(&w_p->cam_mat_98, &noise_mat, &noise_cam_mat);
 
@@ -2875,7 +2875,9 @@ s32 vcGetXZSumDistFromLimArea(s32* out_vec_x_p, s32* out_vec_z_p, s32 chk_wld_x,
     }
 
     if (can_ret_minus_dist_f == 0 && ret_dist < 0)
+    {
         ret_dist = 0;
+    }
 
     return ret_dist;
 }

@@ -215,7 +215,7 @@ s32 Inventory_HyperBlasterUnlockTest() // 0x8004C45C
         }
 
         // Game completed with some condition met?
-        if (g_SavegamePtr->clearGameCount_24A != 0 && (g_SavegamePtr->clearGameEndings_24B & GameEndingFlag_Ufo) != 0)
+        if (g_SavegamePtr->clearGameCount_24A != 0 && (g_SavegamePtr->clearGameEndings_24B & GameEndingFlag_Ufo))
         {
             return 1;
         }

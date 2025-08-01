@@ -1750,7 +1750,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008973C);
 
 void func_80089840(s_SysWork_2514* arg0) // 0x80089840
 {
-    // Im assuming this is a linked list based on the pattern, but i might be wrong
+    // Maybe linked list.
     s_func_8008989C* next;
     s_func_8008989C* curr;
     s_func_8008989C* head;
