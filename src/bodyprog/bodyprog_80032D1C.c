@@ -2298,8 +2298,8 @@ s32 func_800365B8(s32 arg0) // 0x800365B8
     {
         case 0:
             g_SysWork.field_234C = NO_VALUE;
-            D_800BCD78.field_0   = NO_VALUE;
-            D_800BCD78.field_1   = 0;
+            D_800BCD78.mapMsgSelectMax_0 = NO_VALUE;
+            D_800BCD78.mapMsgSelectIdx_1 = 0;
             D_800BCD7A           = 0;
             D_800A99AC           = arg0;
             D_800BCD60           = 0;
@@ -2357,7 +2357,7 @@ s32 func_800365B8(s32 arg0) // 0x800365B8
                 temp = D_800BCD64;
                 if (temp == temp_s1)
                 {
-                    if (D_800BCD78.field_0 == temp)
+                    if (D_800BCD78.mapMsgSelectMax_0 == temp)
                     {
                         if (!((D_800BCD7A & (1 << 0)) || var_s3 == 0) || 
                             (D_800BCD7A != 0 && g_SysWork.field_234C == 0))
@@ -2373,8 +2373,8 @@ s32 func_800365B8(s32 arg0) // 0x800365B8
                     } 
                     else if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)
                     {
-                        D_800BCD78.field_0 = temp;
-                        D_800BCD78.field_1 = D_800BCD7B;
+                        D_800BCD78.mapMsgSelectMax_0 = temp;
+                        D_800BCD78.mapMsgSelectIdx_1 = D_800BCD7B;
 
                         Sd_PlaySfx(Sfx_Cancel, 0, 64);
 
@@ -2388,8 +2388,8 @@ s32 func_800365B8(s32 arg0) // 0x800365B8
                     }
                     else if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
                     {
-                        D_800BCD78.field_0 = temp;
-                        if ((u8)D_800BCD78.field_1 == (s8)D_800BCD7B)
+                        D_800BCD78.mapMsgSelectMax_0 = temp;
+                        if ((u8)D_800BCD78.mapMsgSelectIdx_1 == (s8)D_800BCD7B)
                         {
                             Sd_PlaySfx(Sfx_Cancel, 0, 64);
                         }
@@ -2398,6 +2398,7 @@ s32 func_800365B8(s32 arg0) // 0x800365B8
                             Sd_PlaySfx(Sfx_Confirm, 0, 64);
                         }
 
+                        // Exit 480i mode (map screen)
                         if (g_SysWork.field_2350_4 != 0)
                         {
                             g_SysWork.field_2350_4 = 0;
@@ -2407,18 +2408,18 @@ s32 func_800365B8(s32 arg0) // 0x800365B8
                         break;
                     }
                 }
-                else if ((!(D_800BCD7A & (1 << 0)) && var_s3 != 0 && D_800BCD78.field_0 != 0) ||
+                else if ((!(D_800BCD7A & (1 << 0)) && var_s3 != 0 && D_800BCD78.mapMsgSelectMax_0 != 0) ||
                         (D_800BCD7A != 0 && g_SysWork.field_234C == 0))
                 {
-                    if (D_800BCD78.field_0 != NO_VALUE)
+                    if (D_800BCD78.mapMsgSelectMax_0 != NO_VALUE)
                     {
-                        D_800BCD78.field_0 = NO_VALUE;
+                        D_800BCD78.mapMsgSelectMax_0 = NO_VALUE;
                         D_800BCD64         = 0xFF;
                         break;
                     }
 
                     D_800A99AC++;
-                    g_SysWork.field_234C = D_800BCD78.field_0;
+                    g_SysWork.field_234C = D_800BCD78.mapMsgSelectMax_0;
 
                     func_8004ACF4(D_800A99AC);
 
@@ -2474,6 +2475,16 @@ s32 func_800365B8(s32 arg0) // 0x800365B8
     return D_800BCD79 + 1;
 }
 
+typedef enum _RenderMapMessageRetCode
+{
+    RenderMapMessageRetCode_NO_VALUE = 0,
+    e_RenderMapMessageRetCode_SELECT2 = 2,
+    e_RenderMapMessageRetCode_SELECT3 = 3,
+    e_RenderMapMessageRetCode_SELECT4 = 4,
+    e_RenderMapMessageRetCode_DISPLAY_ALL = 20,
+} e_RenderMapMessageRetCode;
+
+#define MAX_LEN_DISPLAY_ALL (400)
 s32 func_80036B5C(u8 arg0, s32* arg1)
 {
     #define STRING_LINE_OFFSET 16
@@ -2484,7 +2495,8 @@ s32 func_80036B5C(u8 arg0, s32* arg1)
     s16 temp;
     s8* str;
 
-    res = func_8004AF18(g_MapOverlayHeader.mapMessageStrings_30[arg0], *arg1);
+#define renderMapMessage func_8004AF18
+    res = renderMapMessage(g_MapOverlayHeader.mapMessageStrings_30[arg0], *arg1);
 
     D_800A99B0 += g_DeltaTime1;
     if (D_800A99B0 >= 0x800)
@@ -2495,23 +2507,26 @@ s32 func_80036B5C(u8 arg0, s32* arg1)
     switch (res)
     {
         case NO_VALUE:
-        case 0:
+        case RenderMapMessageRetCode_NO_VALUE:
             D_800A99B0 = 0;
             break;
 
-        case 2:
-        case 3:
-        case 4:
-            D_800BCD78.field_0 = 1;
-
+        case e_RenderMapMessageRetCode_SELECT2:
+        case e_RenderMapMessageRetCode_SELECT3:
+        case e_RenderMapMessageRetCode_SELECT4:
+            D_800BCD78.mapMsgSelectMax_0 = 1;
             D_800BCD7B = (res == 3) ? 2 : 1;
 
-            if (res == 4)
+            // In game only SELECT4 is ever used.
+            if (res == e_RenderMapMessageRetCode_SELECT4)
             {
+                // SELECT4 gives us a selection between map message 0 and 1.
+                // All maps have "Yes" and "No" as their 0th and 1th message respectively.
                 for (i = 0; i < 2; i++)
                 {
-                    if ((u8)D_800BCD78.field_1 == i)
+                    if ((u8)D_800BCD78.mapMsgSelectIdx_1 == i)
                     {
+                        // make selected option flash red and white
                         Gfx_StringSetColor(((D_800A99B0 >> 10) * 3) + 4);
                     }
                     else
@@ -2520,17 +2535,25 @@ s32 func_80036B5C(u8 arg0, s32* arg1)
                     }
 
                     Gfx_StringSetPosition(32, (STRING_LINE_OFFSET * i) + 98);
-                    Gfx_StringDraw(g_MapOverlayHeader.mapMessageStrings_30[i], 400);
+                    Gfx_StringDraw(g_MapOverlayHeader.mapMessageStrings_30[i], MAX_LEN_DISPLAY_ALL);
                 }
 
                 res = 2;
             }
             else
             {
+                // This will give us a selection between 2 or 3 messages that are of
+                // current index + 1/2/3. The game doesn't ever use it. but it would require
+                // having the question and answers in the order. Example:
+                // [arg0  ]: 'Make a selection ~S3'
+                // [arg0+1]: 'Option 1'
+                // [arg0+2]: 'Option 2'
+                // [arg0+3]: 'Option 3'
                 for (i = 0; i < res; i++)
                 {
-                    if ((u8)D_800BCD78.field_1 == i)
+                    if ((u8)D_800BCD78.mapMsgSelectIdx_1 == i)
                     {
+                        // make selected option flash red and white
                         Gfx_StringSetColor(((D_800A99B0 >> 10) * 3) + 4);
                     }
                     else
@@ -2539,24 +2562,24 @@ s32 func_80036B5C(u8 arg0, s32* arg1)
                     }
 
                     Gfx_StringSetPosition(32, (STRING_LINE_OFFSET * i) + 96);
-                    Gfx_StringDraw(g_MapOverlayHeader.mapMessageStrings_30[(arg0 + i) + 1], 400);
+                    Gfx_StringDraw(g_MapOverlayHeader.mapMessageStrings_30[(arg0 + i) + 1], MAX_LEN_DISPLAY_ALL);
                 }
             }
 
             if (g_Controller0->btnsClicked_10 & ControllerFlag_LStickUp &&
-                (u8)D_800BCD78.field_1 != 0)
+                (u8)D_800BCD78.mapMsgSelectIdx_1 != 0)
             {
                 D_800A99B0 = 0;
-                D_800BCD78.field_1--;
+                D_800BCD78.mapMsgSelectIdx_1--;
 
                 Sd_PlaySfx(Sfx_Back, 0, 64);
             }
 
             if (g_Controller0->btnsClicked_10 & ControllerFlag_LStickDown &&
-                (u8)D_800BCD78.field_1 != (res - 1))
+                (u8)D_800BCD78.mapMsgSelectIdx_1 != (res - 1))
             {
                 D_800A99B0 = 0;
-                D_800BCD78.field_1++;
+                D_800BCD78.mapMsgSelectIdx_1++;
 
                 Sd_PlaySfx(Sfx_Back, 0, 64);
             }
@@ -2565,7 +2588,7 @@ s32 func_80036B5C(u8 arg0, s32* arg1)
             break;
 
         case 20:
-            *arg1 = 0x190;
+            *arg1 = MAX_LEN_DISPLAY_ALL;
             break;
     }
 
@@ -2756,7 +2779,7 @@ void func_8003708C(s16* ptr0, u16* ptr1) // 0x8003708C
 
 void func_80037124() // 0x80037124
 {
-    D_800BCD78.field_0 = NO_VALUE;
+    D_800BCD78.mapMsgSelectMax_0 = NO_VALUE;
     func_8003652C();
     DrawSync(0);
 }
