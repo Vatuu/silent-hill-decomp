@@ -1280,8 +1280,8 @@ typedef struct
 
 typedef struct
 {
-    s8 field_0;
-    s8 field_1;
+    s8 mapMsgSelectMax_0;
+    s8 mapMsgSelectIdx_1;
 } s_800BCD78;
 
 typedef struct
