@@ -2715,9 +2715,9 @@ void func_8008A398(s_SubCharacter* chara);
 
 void func_8008A3AC(s_SubCharacter* chara);
 
-void func_8008B15C(s_SubCharacter* arg0);
+void func_8008B15C(s_SubCharacter* chara);
 
-void func_8008B1DC(s_SubCharacter *, s32, s32);
+void func_8008B1DC(s_SubCharacter*, s32, s32);
 
 void func_8008B398();
 

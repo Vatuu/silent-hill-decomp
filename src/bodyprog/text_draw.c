@@ -3,6 +3,17 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math.h"
 
+#define DIALOG_CODE_NEWLINE        'N'
+#define DIALOG_CODE_CUTSCENE       'J'
+#define DIALOG_CODE_LINE           'L'
+#define DIALOG_CODE_UNK_M          'M'
+#define DIALOG_CODE_UNK_T          'T'
+#define DIALOG_CODE_UNK_C          'C'
+#define DIALOG_CODE_UNK_D          'D'
+#define DIALOG_CODE_WAIT_FOR_INPUT 'E'
+#define DIALOG_CODE_UNK_S          'S'
+#define DIALOG_CODE_SHOW_MAP       'H'
+
 void Gfx_StringSetPosition(s32 x, s32 y) // 0x8004A87C
 {
     #define OFFSET_X SCREEN_POSITION_X(50.0f)
@@ -19,7 +30,7 @@ void Gfx_StringSetPosition(s32 x, s32 y) // 0x8004A87C
         g_StringPosition.vy = y - OFFSET_Y;
     }
 
-    D_800AD49C = 6; // Maybe `ColorId_LightGrey`.
+    D_800AD49C = 6;
 }
 
 void func_8004A8C0(s32 arg0) // 0x8004A8C0
@@ -29,7 +40,7 @@ void func_8004A8C0(s32 arg0) // 0x8004A8C0
 
 void func_8004A8CC() // 0x8004A8CC
 {
-    D_800AD49C = 6; // Maybe `ColorId_LightGrey`.
+    D_800AD49C = 6;
 }
 
 void Gfx_StringSetColor(s16 colorId) // 0x8004A8DC
@@ -49,7 +60,7 @@ bool Gfx_StringDraw(char* str, s32 size) // 0x8004A8E8
     #define ATLAS_COLUMN_COUNT 21
 
     // TODO: This only works for one case. There may originally have been some other generic macro.
-    #define SET_SPRT_U_V_CLUT(glyphSprt, idx, clut)                                                                       \
+    #define setSprtUvClut(glyphSprt, idx, clut)                                                                           \
     *((u32*)&(glyphSprt)->u0) = (((idx) % ATLAS_COLUMN_COUNT) * GLYPH_SIZE_X) + /* `u0`:   Column in atlas. */            \
                                 (ATLAS_BASE_Y << 8)                           + /* `v0`:   Row 0 in atlas with offset. */ \
                                 ((clut) << 16)                                  /* `clut`: Packed magic value. */
@@ -67,10 +78,10 @@ bool Gfx_StringDraw(char* str, s32 size) // 0x8004A8E8
     s32  posXCpy;
 
     GsOT*     ot;
+    PACKET*   packet;
+    DR_TPAGE* tPage;
     POLY_FT4* glyphPoly;
     SPRT*     glyphSprt;
-    DR_TPAGE* tPage;
-    PACKET*   packet;
 
     // Create local argument copies.
     strCpy  = str;
@@ -86,7 +97,7 @@ bool Gfx_StringDraw(char* str, s32 size) // 0x8004A8E8
     glyphColor = D_80025DC0[g_StringColorId];
     ot         = &D_800B5C40[g_ObjectTableIdx].field_0[D_800AD49C];
 
-    if (!(g_SysWork.field_2350_0 & 0xF)) 
+    if (!(g_SysWork.field_2350_0 & 0xF))
     {
         packet = GsOUT_PACKET_P;
     }
@@ -170,7 +181,7 @@ bool Gfx_StringDraw(char* str, s32 size) // 0x8004A8E8
                 *((u32*)&glyphSprt->r0)   = glyphColor;
                 *((u32*)(&glyphSprt->x0)) = posXCpy + (posY << 16);
 
-                SET_SPRT_U_V_CLUT(glyphSprt, glyphIdx, 0x7FD3); // TODO: Demagic CLUT arg.
+                setSprtUvClut(glyphSprt, glyphIdx, 0x7FD3); // TODO: Demagic CLUT arg.
                 //*((u32*)&glyphSprt->u0) = ((glyphIdx % ATLAS_COLUMN_COUNT) * GLYPH_SIZE_X) + 0xF000 + (0x7FD3 << 16); // `u0`, `v0`, `clut`.
 
                 packet += sizeof(SPRT);
@@ -225,11 +236,6 @@ void func_8004ACF4(s32 mapMsgIdx) // 0x8004ACF4
     #define SPACE_SIZE                 6
     #define STR_SIZE_MAX               9
     #define LINE_COUNT_MAX             8
-    #define DIALOG_CODE_NEWLINE        'N'
-    #define DIALOG_CODE_WAIT_FOR_INPUT 'E'
-    #define DIALOG_CODE_POSITION       'L'
-    #define DIALOG_CODE_CUTSCENE       'J'
-    #define DIALOG_CODE_SHOW_MAP       'H'
 
     s32  i;
     s32  j;
@@ -257,8 +263,8 @@ void func_8004ACF4(s32 mapMsgIdx) // 0x8004ACF4
     mapMsg = g_MapOverlayHeader.mapMessageStrings_30[mapMsgIdx];
     for (j = 0; j < STR_SIZE_MAX;)
     {
+        // Process `char`.
         charCode = *mapMsg;
-
         switch (charCode)
         {
             // Newline.
@@ -296,7 +302,7 @@ void func_8004ACF4(s32 mapMsgIdx) // 0x8004ACF4
                         j = 9;
                         break;
 
-                    case DIALOG_CODE_POSITION:
+                    case DIALOG_CODE_LINE:
                         D_800C38B0.positionIdx_1 = argCount;
                         break;
 

@@ -853,9 +853,9 @@ typedef struct _SubCharacter
     s16     field_44;
     s8      unk_46[2];
     s8      unk_48[4];
-    s32     field_4C; // }
-    s16     field_50; // }
-    s16     field_52; // } Fields used by `func_8008A3E0`. Types guessed for now.
+    s32     field_4C; // } Fields used by `func_8008A3E0`. Types guessed for now.
+    s16     field_50; // } Angle?
+    s16     field_52; // } Angle?
     s16     field_54; // }
     s16     field_56; // }
     s32     field_58; // }
