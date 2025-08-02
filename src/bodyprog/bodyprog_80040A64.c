@@ -1017,7 +1017,31 @@ void func_8004506C(s_Skeleton* skel, void* arg1) // 0x8004506C
 }
 
 // Anim func.
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80045108); // 0x80045108
+void func_80045108(s_Skeleton* arg0, void* arg1, u8* arg2, s32 arg3) // 0x80045108
+{
+    s_Skeleton* temp_v0; // guessed the type. They both access `field_14` so maybe its also `s_Skeleton`
+    s_Skeleton** field_4;
+    s32         boneIdx;
+
+    if (arg3 == 0)
+    {
+        arg0->boneIdx_1 = 0;
+        arg0->field_4   = 0;
+    }
+
+    boneIdx = arg0->boneIdx_1;
+    func_800451B0(arg0, arg1, arg2);
+
+    field_4 = &arg0->field_4;
+    while (*field_4 != 0)
+    {
+        temp_v0 = *field_4;
+        field_4 = &temp_v0->field_14;
+    }
+
+    func_80045258(field_4, &arg0->bones_8[boneIdx], arg0->boneIdx_1 - boneIdx, arg1); // Very wierd third argument
+    func_800453E8(arg0, 0);
+}
 
 void func_800451B0(s_Skeleton* skel, s_800BE9FC* arg1, s32* arg2) // 0x800451B0
 {

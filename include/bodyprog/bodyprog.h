@@ -123,13 +123,14 @@ typedef struct
     s_Bone* bones_8;
 
     // Maybe incorrect.
-    s8 field_C[3]; // Maybe struct similar to `s_Bone` but smaller.
+    s8 field_C[4]; // Maybe struct similar to `s_Bone` but smaller.
     u8 field_10;   // Some count related to bone hierarchy.
-    s8 unk_11;
+    // s8 unk_11;
+    s8  field_11;
     s8 field_12;
     s8 field_13;
-    s8 field_14;
-    s8 unk_15[8];
+    struct s_Skeleton* field_14;
+    s8  unk_18[4]
 } s_Skeleton;
 STATIC_ASSERT_SIZEOF(s_Skeleton, 28);
 
@@ -846,7 +847,16 @@ STATIC_ASSERT_SIZEOF(s_800C117C, 28);
 
 typedef struct
 {
-    s8 unk0[44];
+    s8  unk_0[8];
+    s32 field_8;
+    s32 field_C;
+    s32 field_10;
+} s_800C1450_0_4;
+
+typedef struct
+{
+    s32             count_0;
+    s_800C1450_0_4* entries_4[10];
 } s_800C1450_0;
 
 // Maybe `VECTOR3` array?
@@ -2294,6 +2304,9 @@ void func_80045014(s_Skeleton* skel);
 void func_8004506C(s_Skeleton* skel, void* arg1);
 
 /** Anim func. */
+void func_80045108(s_Skeleton* arg0, void* arg1, u8* arg2, s32 arg3);
+
+/** Anim func. */
 void func_800451B0(s_Skeleton* skel, s_800BE9FC* arg1, s32* arg2);
 
 /** Anim func. Traverses skeleton bones to set flags/mask. */
@@ -2786,7 +2799,7 @@ void func_8005B46C(s32* arg0);
  */
 void func_8005B474(s32* arg0, u32 arg1, s32 idx);
 
-s32 func_8005B4BC(void*, void*);
+s_800C1450_0_4* func_8005B4BC(char* arg0, s_800C1450* arg1);
 
 /** Sets the debug string position. */
 void func_8005BF0C(s16 unused, s16 x, s16 y);
