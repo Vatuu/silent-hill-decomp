@@ -846,7 +846,16 @@ STATIC_ASSERT_SIZEOF(s_800C117C, 28);
 
 typedef struct
 {
-    s8 unk0[44];
+    s8  unk_0[8];
+    s32 field_8;
+    s32 field_C;
+    s32 field_10;
+} s_800C1450_0_4;
+
+typedef struct
+{
+    s32             count_0;
+    s_800C1450_0_4* entries_4[10];
 } s_800C1450_0;
 
 // Maybe `VECTOR3` array?
@@ -2786,7 +2795,7 @@ void func_8005B46C(s32* arg0);
  */
 void func_8005B474(s32* arg0, u32 arg1, s32 idx);
 
-s32 func_8005B4BC(void*, void*);
+s_800C1450_0_4* func_8005B4BC(char* arg0, s_800C1450* arg1);
 
 /** Sets the debug string position. */
 void func_8005BF0C(s16 unused, s16 x, s16 y);
