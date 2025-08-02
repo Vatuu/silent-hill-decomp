@@ -767,7 +767,7 @@ void Gfx_OptionsStringsExtraDraw() // 0x801E416C
     Gfx_StringSetColor(ColorId_White);
     Gfx_StringSetPosition(textPos.vx, textPos.vy);
     func_8004A8C0(8);
-    Gfx_StringDraw(EXTRA_OPTION_str, 0x63);
+    Gfx_StringDraw(EXTRA_OPTION_str, 99);
 
     for (i = 0; i < g_OptExtra_ShowSettingsCount; i++)
     {
@@ -779,17 +779,18 @@ void Gfx_OptionsStringsExtraDraw() // 0x801E416C
 
 void Gfx_OptionsStringsMainDraw() // 0x801E42EC
 {
+    #define SETTINGS_STR_COUNT 9
+
     s32 i;
 
-    DVECTOR textPos =
+    DVECTOR strPos =
     {
-        .vx = 0x79,
-        .vy = 0x14,
+        .vx = 121,
+        .vy = 20
     };
 
-    char* OPTION_str = "OPTION_\x01\x01\x01\x01\x01S";
-
-    char* Settings_str[] =
+    char* optionsStr     = "OPTION_\x01\x01\x01\x01\x01S";
+    char* settingsStrs[] =
     {
         "Exit",
         "Brightness_Level",
@@ -807,20 +808,22 @@ void Gfx_OptionsStringsMainDraw() // 0x801E42EC
         D_801E73BC.vx = 48;
         D_801E73C0.vx = 64;
         D_801E73BC.vy = ((u16)g_PrevMainSelectedOptionIdx * 16) + 56;
-        D_801E73C0.vy = ((u16)g_MainSelectedOptionIdx * 16) + 56;
+        D_801E73C0.vy = ((u16)g_MainSelectedOptionIdx     * 16) + 56;
     }
 
+    // Draw "OPTIONS" heading string.
     shRsin(g_Gfx_MoveLineTimer << 7);
     Gfx_StringSetColor(ColorId_White);
-    Gfx_StringSetPosition(textPos.vx, textPos.vy);
+    Gfx_StringSetPosition(strPos.vx, strPos.vy);
     func_8004A8C0(8);
-    Gfx_StringDraw(OPTION_str, 99);
+    Gfx_StringDraw(optionsStr, 99);
 
-    for (i = 0; i < 9; i++)
+    // Draw settings menu strings.
+    for (i = 0; i < SETTINGS_STR_COUNT; i++)
     {
         Gfx_StringSetPosition(64, 56 + (i * 16));
         func_8004A8C0(8);
-        Gfx_StringDraw(Settings_str[i], 99);
+        Gfx_StringDraw(settingsStrs[i], 99);
     }
 
     func_8004A8CC();
@@ -835,12 +838,12 @@ void Gfx_SelectedOptionExtra() // 0x801E4450
     s_Line2d line;
     s_Quad2d quads[2];
 
-    u8 D_801E2830[] =
+    u8 D_801E2830[] = // 0x801E2830
     {
-        0x9D, 0x7E, 0x87, 0x87, 0x9D, 0x82, 0x70, 0x86
+        157, 126, 135, 135, 157, 130, 112, 134
     };
 
-    DVECTOR D_801E2838[] =
+    DVECTOR D_801E2838[] = // 0x801E2838
     {
         {
             .vx = 0xFF88,
@@ -860,7 +863,7 @@ void Gfx_SelectedOptionExtra() // 0x801E4450
         }
     };
 
-    DVECTOR D_801E2848[] =
+    DVECTOR D_801E2848[] = // 0x801E2848
     {
         {
             .vx = 0xFF87,
@@ -934,7 +937,7 @@ void Gfx_SelectedOptionMain() // 0x801E472C
 
     u8 D_801E2858[] =
     {
-        0x3B, 0xA9, 0xAE, 0x9C, 0x68, 0x70, 0x4B, 0x81, 0x70
+        59, 169, 174, 156, 104, 112, 75, 129, 112
     };
 
     DVECTOR D_801E2864[] =

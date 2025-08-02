@@ -3,16 +3,16 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math.h"
 
-#define DIALOG_CODE_NEWLINE        'N'
-#define DIALOG_CODE_CUTSCENE       'J'
-#define DIALOG_CODE_LINE           'L'
-#define DIALOG_CODE_UNK_M          'M'
-#define DIALOG_CODE_UNK_T          'T'
-#define DIALOG_CODE_UNK_C          'C'
-#define DIALOG_CODE_UNK_D          'D'
-#define DIALOG_CODE_WAIT_FOR_INPUT 'E'
-#define DIALOG_CODE_UNK_S          'S'
-#define DIALOG_CODE_SHOW_MAP       'H'
+#define DIALOG_CODE_NEWLINE         'N'
+#define DIALOG_CODE_JUMP_DELAY      'J'
+#define DIALOG_CODE_LINE_POSITION   'L'
+#define DIALOG_CODE_MIDDLE_ALIGN    'M'
+#define DIALOG_CODE_TAB             'T' // Unused.
+#define DIALOG_CODE_COLOR           'C'
+#define DIALOG_CODE_DISPLAY_ALL     'D'
+#define DIALOG_CODE_END             'E'
+#define DIALOG_CODE_SELECT          'S'
+#define DIALOG_CODE_HIGH_RESOLUTION 'H'
 
 void Gfx_StringSetPosition(s32 x, s32 y) // 0x8004A87C
 {
@@ -65,18 +65,17 @@ bool Gfx_StringDraw(char* str, s32 size) // 0x8004A8E8
                                 (ATLAS_BASE_Y << 8)                           + /* `v0`:   Row 0 in atlas with offset. */ \
                                 ((clut) << 16)                                  /* `clut`: Packed magic value. */
 
-    s32  posX;
-    s32  posY;
-    s32  u0;
-    s32  sizeCpy;
-    s32  glyphIdx;
-    u32  glyphColor;
-    u32  charCode;
-    u8*  strCpy;
-    bool result;
-    s32  glyphWidth;
-    s32  posXCpy;
-
+    s32       posX;
+    s32       posY;
+    s32       u0;
+    s32       sizeCpy;
+    s32       glyphIdx;
+    u32       glyphColor;
+    u32       charCode;
+    u8*       strCpy;
+    bool      result;
+    s32       glyphWidth;
+    s32       posXCpy;
     GsOT*     ot;
     PACKET*   packet;
     DR_TPAGE* tPage;
@@ -298,15 +297,15 @@ void func_8004ACF4(s32 mapMsgIdx) // 0x8004ACF4
                         D_800C38B4.lineCount_0++;
                         break;
 
-                    case DIALOG_CODE_WAIT_FOR_INPUT:
+                    case DIALOG_CODE_END:
                         j = 9;
                         break;
 
-                    case DIALOG_CODE_LINE:
+                    case DIALOG_CODE_LINE_POSITION:
                         D_800C38B0.positionIdx_1 = argCount;
                         break;
 
-                    case DIALOG_CODE_CUTSCENE:
+                    case DIALOG_CODE_JUMP_DELAY:
                         if (argCount == 2) 
                         {
                             D_800BCD7A = 3;
@@ -319,7 +318,7 @@ void func_8004ACF4(s32 mapMsgIdx) // 0x8004ACF4
 
                         break;
 
-                    case DIALOG_CODE_SHOW_MAP:
+                    case DIALOG_CODE_HIGH_RESOLUTION:
                         g_SysWork.field_2350_0 = 1;
                         break;
                 }
