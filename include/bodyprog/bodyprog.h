@@ -129,7 +129,7 @@ typedef struct
     s8  field_11;
     s8 field_12;
     s8 field_13;
-    s32 field_14;
+    struct s_Skeleton* field_14;
     s8  unk_18[4]
 } s_Skeleton;
 STATIC_ASSERT_SIZEOF(s_Skeleton, 28);

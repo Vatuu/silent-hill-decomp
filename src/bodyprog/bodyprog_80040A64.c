@@ -1020,7 +1020,7 @@ void func_8004506C(s_Skeleton* skel, void* arg1) // 0x8004506C
 void func_80045108(s_Skeleton* arg0, void* arg1, u8* arg2, s32 arg3) // 0x80045108
 {
     s_Skeleton* temp_v0; // guessed the type. They both access `field_14` so maybe its also `s_Skeleton`
-    s32*        field_4;
+    s_Skeleton** field_4;
     s32         boneIdx;
 
     if (arg3 == 0)
