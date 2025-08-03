@@ -23,7 +23,6 @@ void Gfx_StringSetColor(s16 colorId);
  */
 bool Gfx_StringDraw(char* str, s32 size);
 
-// TODO: Add symbol!!!
 void MapMsg_CalculateWidthTable(s32 mapMsgIdx);
 
 /** `Gfx_MapMessageDraw`. Returns map message index. */
