@@ -220,6 +220,14 @@ typedef struct
     s8  unk_38B4;
 } s_800C38B4;
 
+typedef struct
+{
+    u8  unk_0;
+    u8  field_1;
+    u8  unk_2[18];
+    s32 field_14;
+} s_D_800C45C8;
+
 typedef struct 
 {
     s32  field_0;
@@ -1089,6 +1097,13 @@ typedef struct
     s32     field_20;
 } s_800C4818;
 
+typedef struct
+{
+    u8  unk_0[4];
+    s16 field_4;
+    s16 field_6;
+} s_D_800C44F0;
+
 /** Holds file IDs of anim/model/texture for each `e_ShCharacterId`, along with some data used in VC camera code. */
 typedef struct
 {
@@ -1112,6 +1127,17 @@ typedef struct
     s16 field_C;
     s8  unk_10[2];
 } s_MaybeCharacterAnim;
+///
+/*typedef struct
+{
+    s8  unk_0[6];
+    s8  field_6;
+    s8  unk_7[5];
+    s16 field_C;
+    s16 field_E;
+    s8  unk_10[2];
+} s_MaybeCharacterAnim;
+*/
 
 typedef struct
 {
@@ -1694,6 +1720,10 @@ extern s16 D_800AF210;
 
 extern s16 D_800AF212;
 
+extern s8 D_800AF217;
+
+extern u8 D_800AF220;
+
 extern s_MaybeCharacterAnim g_MaybePlayerAnims[];
 
 extern s32 D_800AFC7C;
@@ -2008,11 +2038,25 @@ extern s32 D_800C4180;
 // Didn't see any array accesses in Ghidra though, struct might be more likely.
 extern s_800C4478 D_800C4478;
 
+/** Table of player keyframe indices. Purpose unknown. */
+extern s_D_800C44F0 D_800C44F0[];
+
+extern s16 D_800C44F6;
+
+/** FP time. */
 extern s32 D_800C454C;
+
+extern s32 D_800C4550;
 
 extern s32 D_800C4558;
 
 extern s32 D_800C455C;
+
+extern u8 D_800C4576;
+
+extern u8 D_800C4577;
+
+extern u8 D_800C4578;
 
 extern u16 D_800C457E;
 
@@ -2039,6 +2083,9 @@ extern u16 D_800C45BE;
 extern u16 D_800C45C0;
 
 extern u8 D_800C45C9;
+
+/** SFX? */
+extern s32 D_800C45DC;
 
 extern u16 D_800C45E8;
 
@@ -2076,6 +2123,8 @@ extern u8 D_800C457C;
 extern VECTOR3 D_800C45F8;
 
 extern u8 D_800C4606;
+
+extern s32 D_800C4608;
 
 extern s_800C4620 D_800C4620;
 
@@ -2936,6 +2985,9 @@ void func_8007029C(VECTOR3* arg0, s32 arg1, s16 angle);
 void func_800705E4(GsCOORDINATE2*, s32, s32, s32, s32);
 
 void func_80074254(s32 arg0, s32 arg1); // `arg1` is pointer?
+
+/** Player controller? */
+void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* arg1);
 
 void func_8004BBF4(VbRVIEW* arg0, GsCOORDINATE2* arg1, SVECTOR* arg2);
 
