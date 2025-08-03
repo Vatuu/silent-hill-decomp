@@ -2536,7 +2536,7 @@ s32 func_80036B5C(u8 mapMsgIdx, s32* arg1)
             }
             else
             {
-                // Unused. Shows selection prompt with 2 or 3 map messages from current index + 1/2/3.
+                // Shows selection prompt with 2 or 3 map messages from current index + 1/2/3.
                 // Requires prompt options to be arranged sequentially in the map message array, e.g.
                 // `[idx]`:     "Select one of 3 options. ~S3"
                 // `[idx + 1]`: "Option 1"
