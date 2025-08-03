@@ -1,0 +1,17 @@
+// All maps have these messages at the beginning.
+    "Yes",
+    "No",
+    "Someday,_someone_may_experience ~N\t\t\t\t\t\t\t\t\t\t\tthese_bizarre_events._Hopefully, ~N\t\t\t\t\t\t\t\t\t\t\tthey_will_find_my_notes_useful. ~E ",
+    "~D I_don't_have_the_map ~N\t\t\t\t\t\t\t\t\t\t\t\t\t\tfor_this_place.~E ",
+    "~D Too_dark_to_look ~N at_the_map_here. ~E ",
+    "There_is_a_ ~C2 First_aid_kit ~C7 . ~N Take_it? ~S4 ",
+    "There_is_a_ ~C2 Health_drink ~C7 . ~N Take_it? ~S4 ",
+    "There_is_an_ ~C2 Ampoule ~C7 . ~N Take_it? ~S4 ",
+    "There_are_some_ ~C2 Handgun_bullets ~C7 . ~N Take_it? ~S4 ",
+    "There_are_some_ ~C2 Rifle_shells ~C7 . ~N Take_it? ~S4 ",
+    "There_are_some_ ~C2 Shotgun_shells ~C7 . ~N Take_it? ~S4 ",
+    "The_lock_is_jammed. ~N This_door_can't_be_opened. ~E ",
+    "It's_locked.~E ",
+    "It's_unlocked.~E ",
+    "~C6Now_Making!~C7~E",
+
