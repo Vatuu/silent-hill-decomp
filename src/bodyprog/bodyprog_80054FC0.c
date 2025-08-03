@@ -319,7 +319,33 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80057344); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_800574D4); // 0x800574D4
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8005759C); // 0x8005759C
+void func_8005759C(s_func_8005759C* arg0, s_func_8005759C_2* arg1, s32 arg2, s32 arg3) // 0x8005759C
+{
+    s16* field_C_pointer;
+    s16* field_18C_pointer;
+    s32* field_8_pointer;
+    s32* field_0_pointer;
+    u8*  field_2B8_pointer;
+    u8*  field_14_pointer;
+
+    // Maybe could be turned to for loop? I tried but no luck.
+    field_0_pointer   = &arg1->field_0[arg2];
+    field_18C_pointer = &arg1->field_18C[arg2];
+    field_8_pointer   = arg0->field_8;
+    field_C_pointer   = arg0->field_C;
+    while (field_8_pointer < &arg0->field_8[arg0->field_1])
+    {
+        *field_0_pointer++   = *field_8_pointer++;
+        *field_18C_pointer++ = *field_C_pointer++;
+    }
+
+    field_14_pointer  = arg0->field_14;
+    field_2B8_pointer = &arg1->field_2B8[arg3];
+    while (field_14_pointer < &arg0->field_14[arg0->field_3])
+    {
+        *field_2B8_pointer++ = *field_14_pointer++;
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80057658); // 0x80057658
 

@@ -598,6 +598,26 @@ typedef struct
     s_func_8006E490_20 field_20[2];
 } s_func_8006E490;
 
+typedef struct
+{
+    s8   unk_0;
+    u8   field_1;
+    s8   unk_2;
+    u8   field_3;
+    s8   unk_4[4];
+    s32* field_8;
+    s16* field_C;
+    s8   unk_10[4];
+    u8*  field_14;
+} s_func_8005759C;
+
+typedef struct
+{
+    s32 field_0[99];
+    s16 field_18C[150];
+    s8  field_2B8[20]; // Size guessed, could be larger or smaller
+} s_func_8005759C_2;
+
 // ========
 // STRUCTS
 // ========
@@ -2554,6 +2574,8 @@ void func_80055330(u8 arg0, s32 arg1, u8 arg2, s32 arg3, s32 arg4, s32 arg5, s32
 s32 func_80057208();
 
 s32 func_80057200();
+
+void func_8005759C(s_func_8005759C* arg0, s_func_8005759C_2* arg1, s32 arg2, s32 arg3);
 
 void func_800553C4(u8 arg0, u8 arg1, u8 arg2, u8 arg3);
 
