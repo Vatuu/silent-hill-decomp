@@ -1320,7 +1320,36 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8006E0AC); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8006E150); // 0x8006E150
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8006E490); // 0x8006E490
+void func_8006E490(s_func_8006E490* arg0, u32 arg1, s32 arg2, s32 arg3) // 0x8006E490
+{
+    s32 var_a2;
+
+    if (arg1 & 4)
+    {
+        var_a2 = arg2;
+        arg2   = arg3;
+        arg3   = var_a2;
+    }
+
+    if (arg1 & 2)
+    {
+        arg3 = -arg3;
+    }
+
+    if (arg1 & 1)
+    {
+        arg2 = -arg2;
+    }
+
+    arg2 = FP_FROM(arg2, Q12_SHIFT);
+    arg3 = FP_FROM(arg3, Q12_SHIFT);
+    if ((arg2 >= 0) && (arg2 < arg0->field_10) && (arg3 >= 0) && (arg3 < arg0->field_14))
+    {
+        arg0->field_20[arg0->field_1C].field_0 = arg2;
+        arg0->field_20[arg0->field_1C].field_2 = arg3;
+        arg0->field_1C++;
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8006E53C); // 0x8006E53C
 
