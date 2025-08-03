@@ -2315,7 +2315,7 @@ s32 func_800365B8(s32 mapMsgIdx) // 0x800365B8
             g_MapMsgDisplayInc           = 2;
 
             func_8004B684();
-            func_8004ACF4(D_800A99AC);
+            MapMsgCalculateWidthTable(D_800A99AC);
 
             D_800BCD74 = 1;
             g_SysWork.field_18++;
@@ -2428,7 +2428,7 @@ s32 func_800365B8(s32 mapMsgIdx) // 0x800365B8
                     D_800A99AC++;
                     g_SysWork.field_234C = g_MapMsgSelect.maxIdx_0;
 
-                    func_8004ACF4(D_800A99AC);
+                    MapMsgCalculateWidthTable(D_800A99AC);
 
                     g_MapMsgDisplayLen = 0;
                     D_800BCD60 = 0;

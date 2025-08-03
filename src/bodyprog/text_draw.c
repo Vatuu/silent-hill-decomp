@@ -228,7 +228,7 @@ bool Gfx_StringDraw(char* str, s32 size) // 0x8004A8E8
 INCLUDE_ASM("asm/bodyprog/nonmatchings/text_draw", Gfx_StringDraw); // 0x8004A8E8
 #endif
 
-void func_8004ACF4(s32 mapMsgIdx)
+void MapMsgCalculateWidthTable(s32 mapMsgIdx)
 {
     s32 i;
     s32 j;
