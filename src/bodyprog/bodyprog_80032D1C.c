@@ -748,7 +748,7 @@ s32 MainLoop_ShouldWarmReset() // 0x80034108
 
     if (g_SysWork.flags_22A4 & (1 << 1))
     {
-        if (D_800A9768 >= 1801)
+        if (D_800A9768 > 1800)
         {
             return 2;
         }
@@ -981,7 +981,7 @@ void Joy_ControllerDataUpdate() // 0x80034494
     }
 }
 
-void ControllerData_AnalogToDigital(s_ControllerData* arg0, s32 arg1) // 0x80034670
+void ControllerData_AnalogToDigital(s_ControllerData* cont, s32 arg1) // 0x80034670
 {
     s32 val;
     s32 axisIdx;
@@ -993,11 +993,11 @@ void ControllerData_AnalogToDigital(s_ControllerData* arg0, s32 arg1) // 0x80034
     s32 negativeDirBitIdx;
     s32 positiveDirBitIdx;
 
-    btnsHeld = arg0->btnsHeld_C;
+    btnsHeld = cont->btnsHeld_C;
 
     if (arg1 != 0)
     {
-        signedRawAnalog     = *(u32*)&arg0->analogController_0.rightX ^ 0x80808080;
+        signedRawAnalog     = *(u32*)&cont->analogController_0.rightX ^ 0x80808080;
         xorShiftedRawAnalog = signedRawAnalog;
 
         for (normalizedAnalogData = 0, axisIdx = 3; axisIdx >= 0; axisIdx--)
@@ -1020,7 +1020,7 @@ void ControllerData_AnalogToDigital(s_ControllerData* arg0, s32 arg1) // 0x80034
             }
         }
 
-        arg0->btnsHeld_C = btnsHeld;
+        cont->btnsHeld_C = btnsHeld;
     }
     else
     {
@@ -1029,9 +1029,9 @@ void ControllerData_AnalogToDigital(s_ControllerData* arg0, s32 arg1) // 0x80034
     }
 
     processedInputFlags      = normalizedAnalogData;
-    arg0->field_20.rawData_0 = signedRawAnalog;
+    cont->field_20.rawData_0 = signedRawAnalog;
 
-    if (arg0 == g_Controller0)
+    if (cont == g_Controller0)
     {
         if (!(processedInputFlags & 0xFF000000))
         {
@@ -1090,8 +1090,8 @@ void ControllerData_AnalogToDigital(s_ControllerData* arg0, s32 arg1) // 0x80034
         }
     }
 
-    arg0->field_24 = normalizedAnalogData;
-    arg0->field_28 = processedInputFlags;
+    cont->field_24 = normalizedAnalogData;
+    cont->field_28 = processedInputFlags;
 }
 
 s32 func_8003483C(u16* arg0) // 0x8003483C
@@ -1804,10 +1804,10 @@ s32 func_80035AB0(s32 arg0) // 0x80035AB0
     return g_GameWork.field_5B3 != arg0;
 }
 
-void func_80035AC8(s32 arg0) // 0x80035AC8
+void func_80035AC8(s32 idx) // 0x80035AC8
 {
-    g_GameWork.field_5B3 = arg0;
-    Sd_EngineCmd(D_800A98AC[arg0]);
+    g_GameWork.field_5B3 = idx;
+    Sd_EngineCmd(D_800A98AC[idx]);
 }
 
 void func_80035B04(VECTOR3* pos, SVECTOR* rot, GsCOORDINATE2* coord) // 0x80035B04
@@ -2263,7 +2263,7 @@ void func_8003652C() // 0x8003652C
     LoadImage(&rect, vals);
 }
 
-s32 func_800365B8(s32 arg0) // 0x800365B8
+s32 func_800365B8(s32 mapMsgIdx) // 0x800365B8
 {
     s32  temp_s1;
     s32  temp_v0;
@@ -2289,7 +2289,7 @@ s32 func_800365B8(s32 arg0) // 0x800365B8
     g_SysWork.player_4C.chara_0.properties_E4.player.field_114 = 0;
     func_8004C564(g_SysWork.playerCombatInfo_38.field_F, 2);
 
-    if (D_800BCD6C != arg0)
+    if (D_800BCD6C != mapMsgIdx)
     {
         g_SysWork.field_18 = 0;
     }
@@ -2297,16 +2297,16 @@ s32 func_800365B8(s32 arg0) // 0x800365B8
     switch (g_SysWork.field_18)
     {
         case 0:
-            g_SysWork.field_234C = NO_VALUE;
+            g_SysWork.field_234C         = NO_VALUE;
             D_800BCD78.mapMsgSelectMax_0 = NO_VALUE;
             D_800BCD78.mapMsgSelectIdx_1 = 0;
-            D_800BCD7A           = 0;
-            D_800A99AC           = arg0;
-            D_800BCD60           = 0;
-            D_800BCD64           = 0;
-            D_800BCD6C           = arg0;
-            D_800BCD68           = 0;
-            D_800BCD70           = 2;
+            D_800BCD7A                   = 0;
+            D_800A99AC                   = mapMsgIdx;
+            D_800BCD60                   = 0;
+            D_800BCD64                   = 0;
+            D_800BCD6C                   = mapMsgIdx;
+            D_800BCD68                   = 0;
+            D_800BCD70                   = 2;
 
             func_8004B684();
             func_8004ACF4(D_800A99AC);
@@ -2338,7 +2338,7 @@ s32 func_800365B8(s32 arg0) // 0x800365B8
             Gfx_StringSetPosition(40, 160);
 
             D_800BCD68 += D_800BCD70;
-            D_800BCD68  = CLAMP(D_800BCD68, 0, 0x190);
+            D_800BCD68  = CLAMP(D_800BCD68, 0, 400);
 
             if (D_800BCD7A != 0 && g_SysWork.field_234C > 0)
             {
@@ -2389,7 +2389,7 @@ s32 func_800365B8(s32 arg0) // 0x800365B8
                     else if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
                     {
                         D_800BCD78.mapMsgSelectMax_0 = temp;
-                        if ((u8)D_800BCD78.mapMsgSelectIdx_1 == (s8)D_800BCD7B)
+                        if (D_800BCD78.mapMsgSelectIdx_1 == (s8)D_800BCD7B)
                         {
                             Sd_PlaySfx(Sfx_Cancel, 0, 64);
                         }
@@ -2409,7 +2409,7 @@ s32 func_800365B8(s32 arg0) // 0x800365B8
                     }
                 }
                 else if ((!(D_800BCD7A & (1 << 0)) && var_s3 != 0 && D_800BCD78.mapMsgSelectMax_0 != 0) ||
-                        (D_800BCD7A != 0 && g_SysWork.field_234C == 0))
+                         (D_800BCD7A != 0 && g_SysWork.field_234C == 0))
                 {
                     if (D_800BCD78.mapMsgSelectMax_0 != NO_VALUE)
                     {
@@ -2431,7 +2431,7 @@ s32 func_800365B8(s32 arg0) // 0x800365B8
                         D_800BCD74 = 0;
                         return 0;
                     }
-                        
+
                     if (g_SysWork.field_22A0 & (1 << 5))
                     {
                         Sd_EngineCmd(19);
@@ -2445,7 +2445,7 @@ s32 func_800365B8(s32 arg0) // 0x800365B8
             {
                 if (var_s3 != 0)
                 {
-                    D_800BCD68 = 0x190;
+                    D_800BCD68 = 400;
                 }
             }
 
@@ -2475,58 +2475,47 @@ s32 func_800365B8(s32 arg0) // 0x800365B8
     return D_800BCD79 + 1;
 }
 
-typedef enum _RenderMapMessageRetCode
+s32 func_80036B5C(u8 mapMsgIdx, s32* arg1)
 {
-    RenderMapMessageRetCode_NO_VALUE = 0,
-    e_RenderMapMessageRetCode_SELECT2 = 2,
-    e_RenderMapMessageRetCode_SELECT3 = 3,
-    e_RenderMapMessageRetCode_SELECT4 = 4,
-    e_RenderMapMessageRetCode_DISPLAY_ALL = 20,
-} e_RenderMapMessageRetCode;
-
-#define MAX_LEN_DISPLAY_ALL (400)
-s32 func_80036B5C(u8 arg0, s32* arg1)
-{
-    #define STRING_LINE_OFFSET 16
+    #define STRING_LINE_OFFSET     16
+    #define DISPLAY_ALL_LENGTH_MAX 400
 
     s32 i;
     s32 posY;
-    s32 res;
+    s32 mapMsgCode;
     s16 temp;
     s8* str;
 
-#define renderMapMessage func_8004AF18
-    res = renderMapMessage(g_MapOverlayHeader.mapMessageStrings_30[arg0], *arg1);
+    mapMsgCode = func_8004AF18(g_MapOverlayHeader.mapMessageStrings_30[mapMsgIdx], *arg1);
 
     D_800A99B0 += g_DeltaTime1;
-    if (D_800A99B0 >= 0x800)
+    if (D_800A99B0 >= FP_TIME(0.5f))
     {
-        D_800A99B0 -= 0x800;
+        D_800A99B0 -= FP_TIME(0.5f);
     }
 
-    switch (res)
+    switch (mapMsgCode)
     {
         case NO_VALUE:
-        case RenderMapMessageRetCode_NO_VALUE:
+        case MapMsgCode_None:
             D_800A99B0 = 0;
             break;
 
-        case e_RenderMapMessageRetCode_SELECT2:
-        case e_RenderMapMessageRetCode_SELECT3:
-        case e_RenderMapMessageRetCode_SELECT4:
+        case MapMsgCode_Select2:
+        case MapMsgCode_Select3:
+        case MapMsgCode_Select4:
             D_800BCD78.mapMsgSelectMax_0 = 1;
-            D_800BCD7B = (res == 3) ? 2 : 1;
+            D_800BCD7B                   = (mapMsgCode == MapMsgCode_Select3) ? 2 : 1;
 
-            // In game only SELECT4 is ever used.
-            if (res == e_RenderMapMessageRetCode_SELECT4)
+            if (mapMsgCode == MapMsgCode_Select4)
             {
-                // SELECT4 gives us a selection between map message 0 and 1.
-                // All maps have "Yes" and "No" as their 0th and 1th message respectively.
+                // `MapMsgRetCode_Select4` shows selection prompt with map messages at indices 0 and 1.
+                // All maps have "Yes" and "No" as messages 0 and 1, respectively.
                 for (i = 0; i < 2; i++)
                 {
-                    if ((u8)D_800BCD78.mapMsgSelectIdx_1 == i)
+                    // Flash selected option red and white.
+                    if (D_800BCD78.mapMsgSelectIdx_1 == i)
                     {
-                        // make selected option flash red and white
                         Gfx_StringSetColor(((D_800A99B0 >> 10) * 3) + 4);
                     }
                     else
@@ -2535,25 +2524,24 @@ s32 func_80036B5C(u8 arg0, s32* arg1)
                     }
 
                     Gfx_StringSetPosition(32, (STRING_LINE_OFFSET * i) + 98);
-                    Gfx_StringDraw(g_MapOverlayHeader.mapMessageStrings_30[i], MAX_LEN_DISPLAY_ALL);
+                    Gfx_StringDraw(g_MapOverlayHeader.mapMessageStrings_30[i], DISPLAY_ALL_LENGTH_MAX);
                 }
 
-                res = 2;
+                mapMsgCode = 2;
             }
             else
             {
-                // This will give us a selection between 2 or 3 messages that are of
-                // current index + 1/2/3. The game doesn't ever use it. but it would require
-                // having the question and answers in the order. Example:
-                // [arg0  ]: 'Make a selection ~S3'
-                // [arg0+1]: 'Option 1'
-                // [arg0+2]: 'Option 2'
-                // [arg0+3]: 'Option 3'
-                for (i = 0; i < res; i++)
+                // Unused. Shows selection prompt with 2 or 3 map messages from current index + 1/2/3.
+                // Requires prompt options to be arranged sequentially in the map message array, e.g.
+                // `[idx]`:     "Select one of 3 options. ~S3"
+                // `[idx + 1]`: "Option 1"
+                // `[idx + 2]`: "Option 2"
+                // `[idx + 3]`: "Option 3"
+                for (i = 0; i < mapMsgCode; i++)
                 {
-                    if ((u8)D_800BCD78.mapMsgSelectIdx_1 == i)
+                    // Flash selected option red and white.
+                    if (D_800BCD78.mapMsgSelectIdx_1 == i)
                     {
-                        // make selected option flash red and white
                         Gfx_StringSetColor(((D_800A99B0 >> 10) * 3) + 4);
                     }
                     else
@@ -2562,12 +2550,12 @@ s32 func_80036B5C(u8 arg0, s32* arg1)
                     }
 
                     Gfx_StringSetPosition(32, (STRING_LINE_OFFSET * i) + 96);
-                    Gfx_StringDraw(g_MapOverlayHeader.mapMessageStrings_30[(arg0 + i) + 1], MAX_LEN_DISPLAY_ALL);
+                    Gfx_StringDraw(g_MapOverlayHeader.mapMessageStrings_30[(mapMsgIdx + i) + 1], DISPLAY_ALL_LENGTH_MAX);
                 }
             }
 
             if (g_Controller0->btnsClicked_10 & ControllerFlag_LStickUp &&
-                (u8)D_800BCD78.mapMsgSelectIdx_1 != 0)
+                D_800BCD78.mapMsgSelectIdx_1 != 0)
             {
                 D_800A99B0 = 0;
                 D_800BCD78.mapMsgSelectIdx_1--;
@@ -2576,7 +2564,7 @@ s32 func_80036B5C(u8 arg0, s32* arg1)
             }
 
             if (g_Controller0->btnsClicked_10 & ControllerFlag_LStickDown &&
-                (u8)D_800BCD78.mapMsgSelectIdx_1 != (res - 1))
+                D_800BCD78.mapMsgSelectIdx_1 != (mapMsgCode - 1))
             {
                 D_800A99B0 = 0;
                 D_800BCD78.mapMsgSelectIdx_1++;
@@ -2584,46 +2572,46 @@ s32 func_80036B5C(u8 arg0, s32* arg1)
                 Sd_PlaySfx(Sfx_Back, 0, 64);
             }
 
-            res = NO_VALUE;
+            mapMsgCode = NO_VALUE;
             break;
 
-        case 20:
-            *arg1 = MAX_LEN_DISPLAY_ALL;
+        case MapMsgCode_DisplayAll:
+            *arg1 = DISPLAY_ALL_LENGTH_MAX;
             break;
     }
 
-    return res;
+    return mapMsgCode;
 }
 
 const s32 rodataPad_800252B8 = 0;
 
 s_800252BC const D_800252BC[25] =
 {
-    {0x500, 0x500},
-    {0x51D, 0x51E},
-    {0x52B, 0x52C},
-    {0x58A, 0x500},
-    {0x54A, 0x500},
-    {0x56B, 0x500},
-    {0x56F, 0x500},
-    {0x5F1, 0x500},
-    {0x5B2, 0x5B3},
-    {0x644, 0x645},
-    {0x649, 0x64A},
-    {0x574, 0x575},
-    {0x538, 0x539},
-    {0x53A, 0x53B},
-    {0x53C, 0x53D},
-    {0x641, 0x642},
-    {0x5D2, 0x5D3},
-    {0x597, 0x598},
-    {0x576, 0x577},
-    {0x5E0, 0x5E1},
-    {0x51D, 0x500},
-    {0x52B, 0x500},
-    {0x500, 0x52C},
-    {0x547, 0x548},
-    {0x5CF, 0x500}
+    { 0x500, 0x500 },
+    { 0x51D, 0x51E },
+    { 0x52B, 0x52C },
+    { 0x58A, 0x500 },
+    { 0x54A, 0x500 },
+    { 0x56B, 0x500 },
+    { 0x56F, 0x500 },
+    { 0x5F1, 0x500 },
+    { 0x5B2, 0x5B3 },
+    { 0x644, 0x645 },
+    { 0x649, 0x64A },
+    { 0x574, 0x575 },
+    { 0x538, 0x539 },
+    { 0x53A, 0x53B },
+    { 0x53C, 0x53D },
+    { 0x641, 0x642 },
+    { 0x5D2, 0x5D3 },
+    { 0x597, 0x598 },
+    { 0x576, 0x577 },
+    { 0x5E0, 0x5E1 },
+    { 0x51D, 0x500 },
+    { 0x52B, 0x500 },
+    { 0x500, 0x52C },
+    { 0x547, 0x548 },
+    { 0x5CF, 0x500 }
 };
 
 // These get ref'd by pointers at 800A99E8, which are then used by func_800D3EAC

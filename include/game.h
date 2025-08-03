@@ -44,7 +44,6 @@ struct _SubCharacter; // Forward declaration.
 typedef enum _MapMsgCode
 {
     MapMsgCode_None       = 0,
-    MapMsgCode_Select1    = 1,
     MapMsgCode_Select2    = 2,
     MapMsgCode_Select3    = 3,
     MapMsgCode_Select4    = 4,

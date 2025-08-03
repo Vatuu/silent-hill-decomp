@@ -2918,7 +2918,7 @@ void Joy_Update();
 
 void Joy_ControllerDataUpdate();
 
-void ControllerData_AnalogToDigital(s_ControllerData* arg0, s32 arg1);
+void ControllerData_AnalogToDigital(s_ControllerData* cont, s32 arg1);
 
 void func_800348C0();
 
@@ -2970,7 +2970,7 @@ s32 func_8003599C();
 
 s32 func_80035AB0(s32 arg0);
 
-void func_80035AC8(s32 arg0);
+void func_80035AC8(s32 idx);
 
 void func_80035B04(VECTOR3* pos, SVECTOR* rot, GsCOORDINATE2* coord);
 
