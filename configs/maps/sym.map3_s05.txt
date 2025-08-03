@@ -1,3 +1,41 @@
+
+
+
+//================================================
+//=== .rodata section
+//================================================
+
+
+//------------------------------------------------------
+//--- PA: 0x000000   VA: 0x800C9578   subsegment: rodata
+//------------------------------------------------------
+
+//-----------------------------------------------------------------
+//--- PA: 0x001050   VA: 0x800CA5C8   subsegment: .rodata, map3_s05
+//-----------------------------------------------------------------
+
+//------------------------------------------------------
+//--- PA: 0x0010A0   VA: 0x800CA618   subsegment: rodata
+//------------------------------------------------------
+
+//-------------------------------------------------------------------
+//--- PA: 0x001570   VA: 0x800CAAE8   subsegment: .rodata, map3_s05_2
+//-------------------------------------------------------------------
+
+//------------------------------------------------------
+//--- PA: 0x0015A4   VA: 0x800CAB1C   subsegment: rodata
+//------------------------------------------------------
+
+
+
+//================================================
+//=== .text section
+//================================================
+
+
+//-----------------------------------------------------------
+//--- PA: 0x00207C   VA: 0x800CB5F4   subsegment: c, map3_s05
+//-----------------------------------------------------------
 sharedFunc_800D08B8_0_s00 = 0x800CCB08; // type:func
 sharedFunc_800D0A60_0_s00 = 0x800CCC88; // type:func
 sharedFunc_800D0B18_0_s00 = 0x800CCD40; // type:func
@@ -17,18 +55,22 @@ sharedFunc_800D2E60_0_s00 = 0x800CFE04; // type:func
 sharedFunc_800D2EA4_0_s00 = 0x800CFE48; // type:func
 sharedFunc_800D2EB4_0_s00 = 0x800CFE58; // type:func
 sharedFunc_800D2EF4_0_s00 = 0x800CFE98; // type:func
-Ai_Creaper_Update = 0x800CFEAC; // type:func
-Ai_Creaper_Init = 0x800CFF3C; // type:func
+Ai_Creaper_Update         = 0x800CFEAC; // type:func
+Ai_Creaper_Init           = 0x800CFF3C; // type:func
 sharedFunc_800D7EE8_1_s02 = 0x800D01FC; // type:func
 sharedFunc_800D8244_1_s02 = 0x800D0558; // type:func
 sharedFunc_800D983C_1_s02 = 0x800D1B50; // type:func
 sharedFunc_800D9960_1_s02 = 0x800D1C74; // type:func
 sharedFunc_800D99D0_1_s02 = 0x800D1CE4; // type:func
+
+//-------------------------------------------------------------
+//--- PA: 0x008BA8   VA: 0x800D2120   subsegment: c, map3_s05_2
+//-------------------------------------------------------------
 sharedFunc_800CDA88_3_s03 = 0x800D24F8; // type:func
 Ai_PuppetNurse_UpdateMain = 0x800D2528; // type:func
-Ai_PuppetNurse_Init = 0x800D25CC; // type:func
-Ai_PuppetNurse_Update = 0x800D27A0; // type:func
-Ai_PuppetDoctor_Update = 0x800D27FC; // type:func
+Ai_PuppetNurse_Init       = 0x800D25CC; // type:func
+Ai_PuppetNurse_Update     = 0x800D27A0; // type:func
+Ai_PuppetDoctor_Update    = 0x800D27FC; // type:func
 sharedFunc_800CDF24_3_s03 = 0x800D2994; // type:func
 sharedFunc_800CE3CC_3_s03 = 0x800D2E3C; // type:func
 sharedFunc_800CE500_3_s03 = 0x800D2F70; // type:func
@@ -41,13 +83,24 @@ sharedFunc_800CF9F8_3_s03 = 0x800D4468; // type:func
 sharedFunc_800CFD18_3_s03 = 0x800D4788; // type:func
 sharedFunc_800CFDD4_3_s03 = 0x800D4844; // type:func
 sharedFunc_800D0110_3_s03 = 0x800D4B80; // type:func
-Ai_PuppetNurse_Control = 0x800D4C40; // type:func
+Ai_PuppetNurse_Control    = 0x800D4C40; // type:func
 sharedFunc_800D02E4_3_s03 = 0x800D4D54; // type:func
 sharedFunc_800D03E4_3_s03 = 0x800D4E54; // type:func
 sharedFunc_800D06AC_3_s03 = 0x800D511C; // type:func
 sharedFunc_800D0828_3_s03 = 0x800D5298; // type:func
 sharedFunc_800D0968_3_s03 = 0x800D53D8; // type:func
 sharedFunc_800D929C_0_s00 = 0x800D5434; // type:func
+
+
+
+//================================================
+//=== .data section
+//================================================
+
+
+//--------------------------------------------------------------
+//--- PA: 0x00FA68   VA: 0x800D8FE0   subsegment: data, map3_s05
+//--------------------------------------------------------------
 sharedData_800DD59C_0_s00 = 0x800D931C; // type:u8
 sharedData_800E0D38_1_s02 = 0x800D9328; // type:s32 unknown type
 sharedData_800D5710_3_s03 = 0x800D9D80; // size:0xD0 - s_800D5710
