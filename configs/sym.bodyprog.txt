@@ -233,11 +233,11 @@ Vw_AabbVisibleInFrustumCheck = 0x80049F38; // type:func
 vwVectorToAngle              = 0x8004A714; // type:func
 vwOresenHokan                = 0x8004A7C8; // type:func
 
-Gfx_StringSetPosition = 0x8004A87C; // type:func
-Gfx_StringSetColor = 0x8004A8DC; // type:func
-Gfx_StringDraw = 0x8004A8E8; // type:func
-
-Gfx_StringDrawInt = 0x8004B9F8; // type:func
+Gfx_StringSetPosition      = 0x8004A87C; // type:func
+Gfx_StringSetColor         = 0x8004A8DC; // type:func
+Gfx_StringDraw             = 0x8004A8E8; // type:func
+MapMsg_CalculateWidthTable = 0x8004ACF4; // type:func
+Gfx_StringDrawInt          = 0x8004B9F8; // type:func
 
 Gfx_ItemScreens_CameraSet            = 0x8004BB4C; // type:func
 Gfx_Items_ItemRotate                 = 0x8004BCDC; // type:func
@@ -1662,5 +1662,3 @@ g_mapMsgSelect_CancelIdx_3 = 0x800BCD7B; // type:s8
 g_MapMsgWidthTable = 0x800C38C8; // type:s32
 
 g_SysStateFuncTable = 0x800A9A2C; // type:u32 size:0x3C
-
-

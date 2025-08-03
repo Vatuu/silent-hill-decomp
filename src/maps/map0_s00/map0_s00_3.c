@@ -1,5 +1,6 @@
 
-const char* g_MapMessages[] = {
+const char* g_MapMessages[] =
+{
     #include "maps/shared/mapMsg_common.h"
     "~J0(2.5)\tCheryl.__Where_could_you_be? ~E ",
     "~J0(1.5)\tIt's_strange... ",
