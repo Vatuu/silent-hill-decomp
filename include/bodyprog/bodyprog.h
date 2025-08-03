@@ -1519,7 +1519,7 @@ extern s32 D_800A99A0;
 extern u8 D_800A99A4[];
 
 /** Map message index. */
-extern s32 D_800A99AC;
+extern s32 g_MapMsgCurrentIdx;
 
 /** FP time value for map message. */
 extern s16 g_MapMsgSelectBlinkTimer;

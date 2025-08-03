@@ -2317,7 +2317,7 @@ s32 func_800365B8(s32 mapMsgIdx) // 0x800365B8
             g_MapMsgDisplayInc           = 2;
 
             func_8004B684();
-            MapMsgCalculateWidthTable(D_800A99AC);
+            MapMsgCalculateWidthTable(g_MapMsgCurrentIdx);
 
             D_800BCD74 = 1;
             g_SysWork.field_18++;
@@ -2430,7 +2430,7 @@ s32 func_800365B8(s32 mapMsgIdx) // 0x800365B8
                     g_MapMsgCurrentIdx++;
                     g_SysWork.mapMsgTimer = g_MapMsgSelect.maxIdx_0;
 
-                    MapMsgCalculateWidthTable(D_800A99AC);
+                    MapMsgCalculateWidthTable(g_MapMsgCurrentIdx);
 
                     g_MapMsgDisplayLen = 0;
                     D_800BCD60 = 0;
@@ -2459,7 +2459,7 @@ s32 func_800365B8(s32 mapMsgIdx) // 0x800365B8
             }
 
             D_800BCD60 = 0;
-            D_800BCD64 = func_80036B5C(D_800A99AC, &g_MapMsgDisplayLen);
+            D_800BCD64 = func_80036B5C(g_MapMsgCurrentIdx, &g_MapMsgDisplayLen);
 
             if (D_800BCD64 != 0 && D_800BCD64 < MapMsgCode_Select4)
             {
