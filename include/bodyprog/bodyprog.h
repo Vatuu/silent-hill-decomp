@@ -1577,7 +1577,7 @@ extern s32 D_800A9A10;
 
 extern s32 D_800A9A1C;
 
-extern void (*D_800A9A2C[])(); // SysState func table.
+extern void (*g_SysStateFuncTable[])();
 
 extern s32 D_800A9A68;
 
@@ -1823,9 +1823,9 @@ extern u32 D_800BCD58;
 
 extern s32 D_800BCD5C;
 
-extern s32 D_800BCD60;
+extern s32 g_MapMsgStateMachineIdx1;
 
-extern s32 D_800BCD64;
+extern s32 g_MapMsgStateMachineIdx2;
 
 extern s32 g_MapMsg_DisplayLength;
 
@@ -3110,9 +3110,9 @@ u32 func_800364BC();
 
 void func_8003652C();
 
-s32 func_800365B8(s32 mapMsgIdx);
+s32 MapMsgDisplay(s32 mapMsgIdx);
 
-s32 func_80036B5C(u8 mapMsgIdx, s32* arg1);
+s32 MapMsgRenderAndHandleSelection(u8 mapMsgIdx, s32* arg1);
 
 void func_80036E48(u16* arg0, s16* arg1);
 

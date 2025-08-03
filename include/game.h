@@ -51,6 +51,29 @@
 #define HAS_MAP(mapIdx) \
     ((((u32*)&g_SavegamePtr->hasMapsFlags_164)[(mapIdx) / 32] >> ((mapIdx) % 32)) & (1 << 0))
 
+struct _SubCharacter; // Forward declaration.
+
+// Each map has it's own messages but the first 15
+// are all the same and hardcoded
+typedef enum _MapMsgIndex
+{
+    MapMsgIndex_Yes               = 0,
+    MapMsgIndex_No                = 1,
+    MapMsgIndex_SaveGame          = 2, //Someday, someone may experience...
+    MapMsgIndex_NoMap             = 3,
+    MapMsgIndex_TooDarkForMap     = 4,
+    MapMsgIndex_FirstAidSelect    = 5,
+    MapMsgIndex_HealthDrinkSelect = 6,
+    MapMsgIndex_AmpouleSelect     = 7,
+    MapMsgIndex_HandgunAmmoSelect = 8,
+    MapMsgIndex_RifleAmmoSelect   = 9,
+    MapMsgIndex_ShotgunAmmoSelect = 10,
+    MapMsgIndex_DoorJammer        = 11,
+    MapMsgIndex_DoorLocked        = 12,
+    MapMsgIndex_DoorUnlocked      = 13,
+    MapMsgIndex_NowMaking         = 14, // unused ?
+} e_MapMsgIndex;
+
 typedef enum _MapMsgCode
 {
     MapMsgCode_None       = 0,
@@ -581,6 +604,7 @@ typedef enum _GameDifficulty
     GameDifficulty_Hard   = 1
 } e_GameDifficulty;
 
+#define EVENT_FLAG5_FIRST_TIME_SAVE_GAME (1 << 26)
 typedef struct _ShSavegame
 {
     s_ShInventoryItem items_0[INVENTORY_ITEM_COUNT_MAX];
@@ -1099,9 +1123,9 @@ typedef struct _SysWork
     u8              field_234A   : 8;
     u8              field_234B_0 : 4;
     u8              field_234B_4 : 4;
-    s32             mapMsgTimer_234C;                   
-    u8              enableHighResString_2350_0    : 4;
-    u8              field_2350_4                  : 4; // `s32`?
+    s32             mapMsgTimer_234C;
+    u8              HighResolutionTextRender_2350_0 : 4; // Related to string drawing.
+    u8              silentYesSelection_4            : 4; // `s32`?
     u32             inventoryItemSelectedIdx_2351 : 8;
     u32             flags_2352                    : 8;
     s32             field_2353                    : 8; // Some index into `npcs_1A0`.
