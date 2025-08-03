@@ -2624,6 +2624,8 @@ void func_8008D1D0(s32* keyframePrev, s32* keyframeNext, s32* alpha, s32 time, s
 
 u32 func_8008D2C4(s32 time, s_DmsHeader* header);
 
+s32 func_8008D330(s32 arg0, s_DmsEntry* camEntry);
+
 s32 Math_LerpFixed12(s16 from, s16 to, s32 alpha);
 
 void func_8008D41C();

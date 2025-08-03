@@ -2294,7 +2294,48 @@ u32 func_8008D2C4(s32 time, s_DmsHeader* header)
     return 0;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008D330); // 0x8008D330
+s32 func_8008D330(s32 arg0, s_DmsEntry* camEntry) // 0x8008D330
+{
+    SVECTOR3* a2_0;
+    s32       t0;
+    s32       retval;
+
+    t0   = arg0;
+    a2_0 = camEntry->svectorPtr_8;
+
+    for (; a2_0 < &camEntry->svectorPtr_8[camEntry->svectorCount_2]; a2_0++)
+    {
+
+        if (arg0 < a2_0->vx)
+            break;
+
+        if (arg0 <= a2_0->vy)
+        {
+            t0 = a2_0->vz;
+            break;
+        }
+
+        t0 -= a2_0->vy - a2_0->vx;
+    }
+
+    if (t0 >= 0)
+    {
+        if (camEntry->keyframeCount_0 - 1 >= t0)
+        {
+            retval = t0;
+        }
+        else
+        {
+            retval = camEntry->keyframeCount_0 - 1;
+        }
+    }
+    else
+    {
+        retval = 0;
+    }
+
+    return retval;
+}
 
 s32 Math_LerpFixed12(s16 from, s16 to, s32 alpha) // 0x8008D3D4
 {
