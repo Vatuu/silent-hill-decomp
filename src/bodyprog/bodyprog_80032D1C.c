@@ -2276,19 +2276,21 @@ s32 func_800365B8(s32 mapMsgIdx) // 0x800365B8
     s32  temp_v1_2;
     s32  var_a0;
     s32  var_a1;
-    s32  var_s3;
+    s32  buttonPressed;
     s32  res;
     s32  var_v1;
     u16  var_a0_2;
     u32* new_var;
     s32  temp;
 
-    var_s3 = 0;
+    #define FINISH_CUTSCENE (0xff)
+
+    buttonPressed = 0;
     if ((g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 |
                                           g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)) ||
         (g_Controller0->btnsHeld_C & g_GameWorkPtr->config_0.controllerConfig_0.skip_4))
     {
-        var_s3 = 1;
+        buttonPressed = 1;
     }
 
     g_SysWork.player_4C.chara_0.properties_E4.player.field_114 = 0;
@@ -2302,11 +2304,11 @@ s32 func_800365B8(s32 mapMsgIdx) // 0x800365B8
     switch (g_SysWork.field_18)
     {
         case 0:
-            g_SysWork.field_234C         = NO_VALUE;
+            g_SysWork.mapMsgTimer        = NO_VALUE;
             g_MapMsgSelect.maxIdx_0      = NO_VALUE;
             g_MapMsgSelect.selectedIdx_1 = 0;
-            D_800BCD7A                   = 0;
-            D_800A99AC                   = mapMsgIdx;
+            g_MapMsgAudioLoadBlock       = 0;
+            g_MapMsgCurrentIdx           = mapMsgIdx;
             D_800BCD60                   = 0;
             D_800BCD64                   = 0;
             g_MapMsgCurrentIdx           = mapMsgIdx;
@@ -2346,16 +2348,16 @@ s32 func_800365B8(s32 mapMsgIdx) // 0x800365B8
             g_MapMsgDisplayLen += g_MapMsgDisplayInc;
             g_MapMsgDisplayLen  = CLAMP(g_MapMsgDisplayLen, 0, MAP_MESSAGE_DISPLAY_ALL_LEN);
 
-            if (D_800BCD7A != 0 && g_SysWork.field_234C > 0)
+            if (g_MapMsgAudioLoadBlock != 0 && g_SysWork.mapMsgTimer > 0)
             {
-                g_SysWork.field_234C -= g_DeltaTime1;
-                g_SysWork.field_234C  = CLAMP(g_SysWork.field_234C, 0, 0x7FFFFFFF);
+                g_SysWork.mapMsgTimer -= g_DeltaTime1;
+                g_SysWork.mapMsgTimer  = CLAMP(g_SysWork.mapMsgTimer, 0, 0x7FFFFFFF);
             }
 
             temp_s1 = D_800BCD60;
             if (temp_s1 == NO_VALUE)
             {
-                if (D_800BCD7A == 0)
+                if (g_MapMsgAudioLoadBlock == 0)
                 {
                     Game_TimerUpdate();
                 }
@@ -2365,10 +2367,10 @@ s32 func_800365B8(s32 mapMsgIdx) // 0x800365B8
                 {
                     if (g_MapMsgSelect.maxIdx_0 == temp)
                     {
-                        if (!((D_800BCD7A & (1 << 0)) || var_s3 == 0) || 
-                            (D_800BCD7A != 0 && g_SysWork.field_234C == 0))
+                        if (!((g_MapMsgAudioLoadBlock & (1 << 0)) || buttonPressed == 0) || 
+                            (g_MapMsgAudioLoadBlock != 0 && g_SysWork.mapMsgTimer == 0))
                         {
-                            D_800BCD64 = 0xFF;
+                            D_800BCD64 = FINISH_CUTSCENE;
 
                             if (g_SysWork.field_22A0 & (1 << 5))
                             {
@@ -2390,7 +2392,7 @@ s32 func_800365B8(s32 mapMsgIdx) // 0x800365B8
                             g_SysWork.field_2350_4 = 0;
                         }
 
-                        D_800BCD64 = 0xFF;
+                        D_800BCD64 = FINISH_CUTSCENE;
                         break;
                     }
                     else if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
@@ -2411,29 +2413,29 @@ s32 func_800365B8(s32 mapMsgIdx) // 0x800365B8
                             g_SysWork.field_2350_4 = 0;
                         }
 
-                        D_800BCD64 = 0xFF;
+                        D_800BCD64 = FINISH_CUTSCENE;
                         break;
                     }
                 }
-                else if ((!(D_800BCD7A & (1 << 0)) && var_s3 != 0 && g_MapMsgSelect.maxIdx_0 != 0) ||
-                        (D_800BCD7A != 0 && g_SysWork.field_234C == 0))
+                else if ((!(g_MapMsgAudioLoadBlock & (1 << 0)) && buttonPressed != 0 && g_MapMsgSelect.maxIdx_0 != 0) ||
+                        (g_MapMsgAudioLoadBlock != 0 && g_SysWork.mapMsgTimer == 0))
                 {
                     if (g_MapMsgSelect.maxIdx_0 != NO_VALUE)
                     {
                         g_MapMsgSelect.maxIdx_0 = NO_VALUE;
-                        D_800BCD64         = 0xFF;
+                        D_800BCD64         = FINISH_CUTSCENE;
                         break;
                     }
 
-                    D_800A99AC++;
-                    g_SysWork.field_234C = g_MapMsgSelect.maxIdx_0;
+                    g_MapMsgCurrentIdx++;
+                    g_SysWork.mapMsgTimer = g_MapMsgSelect.maxIdx_0;
 
                     MapMsgCalculateWidthTable(D_800A99AC);
 
                     g_MapMsgDisplayLen = 0;
                     D_800BCD60 = 0;
 
-                    if (D_800BCD7A == 3) // J2(x.x) map message sets this to 3
+                    if (g_MapMsgAudioLoadBlock == MapMsgAudioLoadBlock_J2)
                     {
                         D_800BCD74 = 0;
                         return 0;
@@ -2450,7 +2452,7 @@ s32 func_800365B8(s32 mapMsgIdx) // 0x800365B8
             }
             else
             {
-                if (var_s3 != 0)
+                if (buttonPressed != 0)
                 {
                     g_MapMsgDisplayLen = MAP_MESSAGE_DISPLAY_ALL_LEN;
                 }
@@ -2465,7 +2467,7 @@ s32 func_800365B8(s32 mapMsgIdx) // 0x800365B8
             }
     }
 
-    if (D_800BCD64 != 0xFF)
+    if (D_800BCD64 != FINISH_CUTSCENE)
     {
         return 0;
     }

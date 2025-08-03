@@ -1803,7 +1803,7 @@ extern s32 D_800BCD74;
 extern s_MapMsgSelect g_MapMsgSelect;
 // The bellow two fields are part of the g_MapMsgSelect but extracted here
 // because using struct fields instead of direct address produces a mismatch.
-extern u8 D_800BCD7A;
+extern u8 g_MapMsgAudioLoadBlock;
 extern s8 g_mapMsgSelect_CancelIdx_3;
 
 extern s32 D_800BCD84;

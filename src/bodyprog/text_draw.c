@@ -242,7 +242,7 @@ void MapMsgCalculateWidthTable(s32 mapMsgIdx) // 0x8004ACF4
     s32 msgArg;
 
     D_800C38B4.lineCount_0 = 1;
-    D_800BCD7A             = 0;
+    g_MapMsgAudioLoadBlock       = 0;
     
     for (i = LINE_MAX_COUNT-1; i >= 0; i--)
     {
@@ -295,7 +295,7 @@ void MapMsgCalculateWidthTable(s32 mapMsgIdx) // 0x8004ACF4
                     case MAP_MSG_CODE_JUMP:
                         if (msgArg == 2)
                         {
-                            D_800BCD7A = 3;
+                            g_MapMsgAudioLoadBlock = 3;
                         }
 
                         while (msgArg != ' ' && msgArg != '\t')
