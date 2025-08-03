@@ -8,6 +8,273 @@ scratchpad                                  = 0x1F800000; // size:0x400 ignore:T
 //=== .rodata section
 //================================================
 
+// sh "view" / "vw" / "vc" / "vb" code
+// Most names from SH2, functions seem to match pretty close between it and SH1 besides a few missing/extra funcs.
+hack_vcSetWatchTgtXzPos_fix = 0x8002B2B4; // type:s32 - Some 0x80083500 value which coincidentally points to code inside vcSetWatchTgtXzPos, probably unrelated flags or something. A jtbl is right before this which spimdisasm tries to include, breaking vcSetWatchTgtXzPos build.
+
+g_MemCard_1_BasicSaveInfo = 0x800B2780;
+g_MemCard_2_BasicSaveInfo = 0x800B3680;
+g_CardWork                = 0x800B5488; // size:0x80
+//D_800B4580              = 0x800B4580;
+D_800B5508                = 0x800B5508; // size:0x718
+
+Savegame_CardCleanInit          = 0x8002E630; // type:func
+Savegame_GameMemDataClear       = 0x8002E6E4; // type:func
+Savegame_CardFileUsageClear     = 0x8002E730; // type:func
+Savegame_CardFilesAreAllUnused  = 0x8002E76C; // type:func
+Savegame_CardFilesGetUsageBits  = 0x8002E9A0; // type:func
+Savegame_MetadataGet            = 0x8002E9EC; // type:func
+Savegame_CardFileUsageCount     = 0x8002EA28; // type:func
+Savegame_CardFileUsageFreeCount = 0x8002EA78; // type:func
+
+Savegame_UserConfigCopyWithChecksum = 0x8002FBB4; // type:func
+Savegame_CopyWithChecksum           = 0x8002FCCC; // type:func
+Savegame_ChecksumUpdate             = 0x8002FF30; // type:func
+Savegame_ChecksumValidate           = 0x8002FF74; // type:func
+Savegame_ChecksumGenerate           = 0x8002FFD0; // type:func
+
+Savegame_FilenameGenerate        = 0x80030000; // type:func
+Savegame_SaveBlockInit           = 0x800300B4; // type:func
+Savegame_CardDeviceTest          = 0x80030288; // type:func
+Savegame_CardDeviceFormat        = 0x8003030C; // type:func
+Savegame_CardFileErase           = 0x80030334; // type:func
+Savegame_CardFileRename          = 0x80030370; // type:func
+Savegame_CardInit                = 0x800303E4; // type:func
+Savegame_CardEventsInit          = 0x80030414; // type:func
+Savegame_CardStateInit           = 0x80030444; // type:func
+Savegame_CardSwEventsInit        = 0x8003045C; // type:func
+Savegame_CardHwEventsInit        = 0x80030530; // type:func
+Savegame_CardEventsClose         = 0x80030640; // type:func
+Savegame_CardSwEventsClose       = 0x80030668; // type:func
+Savegame_CardHwEventsClose       = 0x800306C8; // type:func
+Savegame_CardSwEventsTest        = 0x80030734; // type:func
+Savegame_CardSwEventsReset       = 0x800307BC; // type:func
+Savegame_CardHwEventsTest        = 0x80030810; // type:func
+Savegame_CardHwEventsReset       = 0x80030820; // type:func
+Savegame_CardHwEventSpIOE        = 0x80030884; // type:func
+Savegame_CardHwEventSpERROR      = 0x80030894; // type:func
+Savegame_CardHwEventSpNEW        = 0x800308A4; // type:func
+Savegame_CardHwEventSpTIMOUT     = 0x800308B4; // type:func
+Savegame_CardHwEventSpUNKNOWN    = 0x800308C4; // type:func
+Savegame_CardResult              = 0x800308D4; // type:func
+Savegame_CardRequest             = 0x800308E4; // type:func
+Savegame_CardIsIdle              = 0x800309FC; // type:func
+Savegame_CardUpdate              = 0x80030A0C; // type:func
+Savegame_CardState_Init          = 0x80030AD8; // type:func
+Savegame_CardState_Check         = 0x80030C88; // type:func
+Savegame_CardState_Load          = 0x80030DC8; // type:func
+Savegame_CardState_DirRead       = 0x80030F7C; // type:func
+Savegame_CardState_FileCreate    = 0x800310B4; // type:func
+Savegame_CardState_FileOpen      = 0x80031184; // type:func
+Savegame_CardState_FileReadWrite = 0x80031260; // type:func
+
+Savegame_DevicePathGenerate = 0x800314A4; // type:func
+
+Gfx_BackgroundSpriteDraw = 0x800314EC; // type:func
+Gfx_MotionBlur 			 = 0x80031CCC; // type:func
+Gfx_DebugStringPosition  = 0x80031EFC; // type:func
+Gfx_DebugStringDraw      = 0x80031F40; // type:func
+
+Math_IntegerToString = 0x80032154; // type:func
+
+Gfx_ClearRectInterlaced = 0x80032358; // type:func
+Gfx_ScreenRefresh       = 0x800323C8; // type:func
+Gfx_Init                = 0x80032428; // type:func
+
+func_8003289C.66 = 0x8003289C; // filename:func_8003289C type:func The generated result of the compilation for some reason adds .66 at name end.
+
+Settings_ScreenXYSet  = 0x800324F4; // type:func
+Settings_DispEnvXYSet = 0x80032524; // type:func
+
+Gfx_VSyncCallback = 0x80032b80; // type:func
+
+GameFs_TitleGfxSeek    = 0x80032BD0; // type:func
+GameFs_TitleGfxLoad    = 0x80032BF0; // type:func
+GameFs_StreamBinSeek   = 0x80032C20; // type:func
+GameFs_StreamBinLoad   = 0x80032C40; // type:func
+GameFs_OptionBinLoad   = 0x80032C68; // type:func
+GameFs_SaveLoadBinLoad = 0x80032CA8; // type:func
+
+GameState_Unk0_Update = 0x80032D1C; // type:func
+
+MainLoop = 0x80032EE0; // type:func
+
+Settings_ScreenAndVolUpdate     = 0x800333CC; // type:func
+Settings_RestoreDefaults        = 0x8003342C; // type:func
+Settings_RestoreControlDefaults = 0x80033480; // type:func
+
+nullsub_800334C8 = 0x800334C8; // type:func
+
+SysWork_Clear = 0x800340E0; // type:func
+Game_GameStartUp  = 0x80034964; // type:func
+
+MainLoop_ShouldWarmReset = 0x80034108; // type:func
+
+Game_WarmBoot = 0x80034264; // type:func
+
+Joy_Init                 = 0x8003441C; // type:func
+Joy_ReadP1               = 0x80034450; // type:func
+Joy_Update               = 0x8003446C; // type:func
+Joy_ControllerDataUpdate = 0x80034494; // type:func
+
+ControllerData_AnalogToDigital = 0x80034670; // type:func
+
+GameState_LoadScreen_Update = 0x800348E8; // type:func
+
+Gfx_LoadingScreenDraw = 0x80034E58; // type:func
+
+Game_SavegameInitialize = 0x800350BC; // type:func
+Game_InGameInitialize = 0x80035178; // type:func
+
+GameFs_MapLoad = 0x8003521C; // type:func
+
+Savegame_MapRoomIdxSet = 0x80036420; // type:func
+
+Chara_PositionUpdateFromParams = 0x800371E8; // type:func
+
+GameState_InGame_Update           = 0x80038BD4; // type:func
+SysState_Gameplay_Update          = 0x80038F6C; // type:func
+SysState_GamePaused_Update        = 0x800391E8; // type:func
+SysState_OptionsMenu_Update       = 0x80039344; // type:func
+SysState_StatusMenu_Update        = 0x80039568; // type:func
+GameState_LoadStatusScreen_Update = 0x800395C0; // type:func
+SysState_Unk3_Update              = 0x800396D4; // type:func
+GameState_LoadMapScreen_Update    = 0x8003991C; // type:func
+SysState_Fmv_Update               = 0x80039A58; // type:func
+SysState_LoadArea_Update          = 0x80039C40; // type:func
+AreaLoad_UpdatePlayerPosition     = 0x80039F30; // type:func
+SysState_ReadMessage_Update       = 0x80039FB8; // type:func
+Math_GetWeightedAverage           = 0x8003F7E4; // type:func
+SysWork_SavegameUpdatePlayer      = 0x8003A120; // type:func
+SysWork_SavegameReadPlayer        = 0x8003A1F4; // type:func
+SysState_SaveMenu_Update          = 0x8003A230; // type:func
+SysState_EventCallFunc_Update     = 0x8003A3C8; // type:func
+SysState_EventSetFlag_Update      = 0x8003A460; // type:func
+SysState_EventPlaySound_Update    = 0x8003A4B4; // type:func
+SysState_GameOver_Update          = 0x8003A52C; // type:func
+GameState_MapEvent_Update         = 0x8003AA4C; // type:func
+
+GameState_MainMenu_Update       = 0x8003AB28; // type:func
+Gfx_MainMenu_MainTextDraw       = 0x8003B568; // type:func
+MainMenu_SelectedOptionIdxReset = 0x8003B550; // type:func
+Gfx_MainMenu_DifficultyTextDraw = 0x8003B678; // type:func
+Gfx_MainMenu_BackgroundDraw     = 0x8003B758; // type:func
+Gfx_MainMenu_FogPacketGet       = 0x8003B838; // type:func
+Gfx_MainMenu_FogDraw            = 0x8003BA08; // type:func
+Gfx_MainMenu_FogRandomize       = 0x8003BAC4; // type:func
+Gfx_MainMenu_FogScatter         = 0x8003BBF4; // type:func
+Gfx_MainMenu_FogUpdate          = 0x8003BC8C; // type:func
+
+GameFs_BgEtcGfxLoad = 0x8003BE6c; // type:func
+GameFs_BgItemLoad   = 0x8003BE9c; // type:func
+GameFs_FlameGfxLoad = 0x8003E710; // type:func
+
+Game_TurnFlashlightOn  = 0x8003ECBC; // type:func
+Game_TurnFlashlightOff = 0x8003ECE4; // type:func
+
+vcInitCamera                  = 0x8004004C; // type:func
+vcSetCameraUseWarp            = 0x800400D4; // type:func
+vcRetCamMvSmoothF             = 0x80040190; // type:func
+vcSetEvCamRate                = 0x800401C0; // type:func Guessed name.
+vcMoveAndSetCamera            = 0x800401EC; // type:func
+vcMakeHeroHeadPos             = 0x8004047C; // type:func
+vcAddOfsToPos                 = 0x80040518; // type:func
+vcSetRefPosAndSysRef2CamParam = 0x800405C4; // type:func
+vcSetRefPosAndCamPosAngByPad  = 0x800406D4; // type:func
+
+Anim_Update0 = 0x800449F0; // type:func
+Anim_Update1 = 0x80044B38; // type:func
+Anim_Update2 = 0x80044CA4; // type:func
+Anim_Update3 = 0x80044DF0; // type:func
+
+Sd_EngineCmd       = 0x80045A7C; // type:func
+sd_init            = 0x80045DD4; // type:func
+sd_work_init       = 0x80045E44; // type:func
+Sd_PlaySfx         = 0x80046048; // type:func
+Sd_SetVolume       = 0x80047798; // type:func
+Sd_SetVolBgm       = 0x80047808; // type:func
+Sd_SetVolXa        = 0x80047860; // type:func
+Sd_GetVolSe        = 0x800478B8; // type:func
+Sd_SetReverbDepth  = 0x80047AD0; // type:func
+Sd_SetReverbEnable = 0x80047AFC; // type:func
+Sd_StopSeq         = 0x8004839C; // type:func
+
+vwInitViewInfo                 = 0x80048A38; // type:func
+vwGetViewCoord                 = 0x80048A90; // type:func guessed name
+vwGetViewPosition              = 0x80048A9C; // type:func
+vwGetViewAngle                 = 0x80048AC4; // type:func
+Vw_SetLookAtMatrix             = 0x80048AF4; // type:func
+vwSetCoordRefAndEntou          = 0x80048BE0; // type:func
+vwSetViewInfoDirectMatrix      = 0x80048CF0; // type:func
+vwSetViewInfo                  = 0x80048D48; // type:func
+Vw_ClampAngleRange             = 0x80048DA8; // type:func
+vwRenewalXZVelocityToTargetPos = 0x80048F28; // type:func
+vwLimitOverLimVector           = 0x8004914C; // type:func
+vwDecreaseSideOfVector         = 0x80049228; // type:func
+vwRetNewVelocityToTargetVal    = 0x80049388; // type:func
+vwRetNewAngSpdToTargetAng      = 0x80049464; // type:func
+vwMatrixToAngleYXZ             = 0x800495D4; // type:func
+Vw_MultiplyAndTransformMatrix  = 0x800496AC; // type:func
+
+vbSetWorldScreenMatrix         = 0x800497E4; // type:func
+vbSetRefView                   = 0x800498D8; // type:func
+Vw_CoordHierarchyMatrixCompute = 0x80049984; // type:func
+
+vwAngleToVector              = 0x8004A66C; // type:func
+Vw_AabbVisibleInScreenCheck  = 0x80049D04; // type:func
+Vw_AabbVisibleInFrustumCheck = 0x80049F38; // type:func
+vwVectorToAngle              = 0x8004A714; // type:func
+vwOresenHokan                = 0x8004A7C8; // type:func
+
+Gfx_StringSetPosition      = 0x8004A87C; // type:func
+Gfx_StringSetColor         = 0x8004A8DC; // type:func
+Gfx_StringDraw             = 0x8004A8E8; // type:func
+MapMsg_CalculateWidthTable = 0x8004ACF4; // type:func
+Gfx_StringDrawInt          = 0x8004B9F8; // type:func
+
+Gfx_ItemScreens_CameraSet            = 0x8004BB4C; // type:func
+Gfx_Items_ItemRotate                 = 0x8004BCDC; // type:func
+GameFs_TmdDataAlloc                  = 0x8004BCBC; // type:func
+Inventory_ExitAnimEquippedItemUpdate = 0x8004C088; // type:func
+Inventory_HyperBlasterUnlockTest     = 0x8004C45C; // type:func
+Inventory_HyperBlasterFunctionalTest = 0x8004C4F8; // type:func
+Game_HyperBlasterBeamColorGet        = 0x8004C54C; // type:func
+Game_TimerUpdate                     = 0x8004C8DC; // type:func
+GameState_ItemScreens_Update         = 0x8004C9B0; // type:func
+Gfx_Results_Save                     = 0x8004D1A0; // type:func
+Inventory_Logic                      = 0x8004D518; // type:func
+Inventory_ItemUse            		 = 0x8004E6D4; // type:func
+Gfx_Inventory_CmdOptionsDraw         = 0x8004E864; // type:func
+Gfx_Inventory_ScrollArrowsDraw       = 0x8004EC7C; // type:func
+Gfx_ItemScreens_RenderInit           = 0x8004F764; // type:func
+Gfx_Inventory_UnavailableMapText     = 0x8004F57C; // type:func
+Inventory_DirectionalInputSet        = 0x8004F5DC; // type:func
+Gfx_Inventory_2dBackgroundDraw       = 0x8004FBCC; // type:func
+Gfx_Inventory_HealthStatusDraw       = 0x80051020; // type:func
+Gfx_Inventory_ItemDescriptionDraw    = 0x8005192C; // type:func
+Gfx_Primitive2dTextureSet            = 0x80052088; // type:func
+Gfx_Results_ItemsDisplay             = 0x800521A8; // type:func
+Gfx_Results_ItemsPosition            = 0x8005227C; // type:func
+Inventory_PlayerItemScroll           = 0x800523D8; // type:func
+GameFs_UniqueItemModelLoad           = 0x80053B08; // type:func
+GameFs_Tim00TIMLoad                  = 0x80053DA0; // type:func
+GameFs_MapItemsModelLoad             = 0x80053DFC; // type:func
+GameFs_MapItemsTextureLoad           = 0x80054024; // type:func
+Gfx_Items_Render                     = 0x80054200; // type:func
+Gfx_Items_RenderInit                 = 0x80054558; // type:func
+Inventory_ExitAnimFixes              = 0x80054634; // type:func
+Gfx_Items_Display                    = 0x80054720; // type:func
+Inventory_AddSpecialItem             = 0x80054CAC; // type:func
+
+GameState_MapScreen_Update = 0x80066EB0; // type:func
+
+Gfx_Items_SetAmbientLighting = 0x80054928; // type:func
+
+Player_Logic_Update = 0x800717D0; // type:func
+
+Game_SavegameResetPlayer = 0x8007E530; // type:func
+GameFs_PlayerMapAnimLoad = 0x8007EB64; // type:func
+Player_AnimGetSomething = 0x8007F308; // type:func
 
 //------------------------------------------------------
 //--- PA: 0x000000   VA: 0x80024B60   subsegment: rodata
@@ -2443,3 +2710,20 @@ smf_song                                    = 0x800C8B00;
 g_MapOverlayHeader                          = 0x800C957C; // type:MapOverlayHeader size:0x84C - size incomplete
 D_800FE5F8                                  = 0x800FE5F8; // ignore:True - Fixes fake missmatch in `Demo_Update`.
 hack_D_800FE5FC_fix                         = 0x800FE5FC; // ignore:true - Part of temp memory block at 800FDE00, has to be unsymbolized for C to match.
+
+
+
+
+g_MapMsgCurrentIdx = 0x800A99AC; // type:s32
+g_MapMsgSelectBlinkTimer = 0x800A99B0; // type:s16
+g_MapMsgStateMachineIdx1 = 0x800BCD60; // type:s32
+g_MapMsgStateMachineIdx2 = 0x800BCD64; // type:s32
+g_MapMsgDisplayLen = 0x800BCD68; // type:s32
+g_MapMsgMainIdx = 0x800BCD6C; // type:s32
+g_MapMsgDisplayInc = 0x800BCD70; // type:s32
+g_MapMsgSelect = 0x800BCD78; // type:MapMsgSelect
+g_MapMsgAudioLoadBlock = 0x800BCD7A; // type:u8
+g_mapMsgSelect_CancelIdx_3 = 0x800BCD7B; // type:s8
+g_MapMsgWidthTable = 0x800C38C8; // type:s32
+
+g_SysStateFuncTable = 0x800A9A2C; // type:u32 size:0x3C

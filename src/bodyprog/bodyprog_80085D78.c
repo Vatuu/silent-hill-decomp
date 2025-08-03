@@ -158,7 +158,7 @@ void func_800860B0(s32 arg0, s32 mapMsgIdx, s32 arg2, s32 arg3, s32 sysStateStep
 {
     s32 ret;
 
-    ret = func_800365B8(mapMsgIdx);
+    ret = MapMsgDisplay(mapMsgIdx);
     if (ret <= 0)
     {
         return;
@@ -518,7 +518,7 @@ void func_800869E4(u8* mapMsgIdx, u8* arg1, u16* arg2) // 0x800869E4
 
     g_SysWork.field_22A0 |= 1 << 5;
 
-    ret = func_800365B8(mapMsgIdx);
+    ret = MapMsgDisplay(mapMsgIdx);
     if (ret == 1)
     {
         g_SysWork.field_28 = 0;
@@ -2296,31 +2296,33 @@ u32 func_8008D2C4(s32 time, s_DmsHeader* header)
 
 s32 func_8008D330(s32 arg0, s_DmsEntry* camEntry) // 0x8008D330
 {
-    SVECTOR3* a2_0;
+    SVECTOR3* vec;
     s32       t0;
     s32       retval;
 
-    t0   = arg0;
-    a2_0 = camEntry->svectorPtr_8;
+    t0  = arg0;
+    vec = camEntry->svectorPtr_8;
 
-    for (; a2_0 < &camEntry->svectorPtr_8[camEntry->svectorCount_2]; a2_0++)
+    for (; vec < &camEntry->svectorPtr_8[camEntry->svectorCount_2]; vec++)
     {
 
-        if (arg0 < a2_0->vx)
-            break;
-
-        if (arg0 <= a2_0->vy)
+        if (arg0 < vec->vx)
         {
-            t0 = a2_0->vz;
             break;
         }
 
-        t0 -= a2_0->vy - a2_0->vx;
+        if (arg0 <= vec->vy)
+        {
+            t0 = vec->vz;
+            break;
+        }
+
+        t0 -= vec->vy - vec->vx;
     }
 
     if (t0 >= 0)
     {
-        if (camEntry->keyframeCount_0 - 1 >= t0)
+        if ((camEntry->keyframeCount_0 - 1) >= t0)
         {
             retval = t0;
         }
