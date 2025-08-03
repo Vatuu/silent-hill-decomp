@@ -2296,7 +2296,7 @@ s32 func_800365B8(s32 mapMsgIdx) // 0x800365B8
     g_SysWork.player_4C.chara_0.properties_E4.player.field_114 = 0;
     func_8004C564(g_SysWork.playerCombatInfo_38.field_F, 2);
 
-    if (g_MapMsgCurrentIdx != mapMsgIdx)
+    if (g_MapMsgMainIdx != mapMsgIdx)
     {
         g_SysWork.field_18 = 0;
     }
@@ -2311,7 +2311,7 @@ s32 func_800365B8(s32 mapMsgIdx) // 0x800365B8
             g_MapMsgCurrentIdx           = mapMsgIdx;
             D_800BCD60                   = 0;
             D_800BCD64                   = 0;
-            g_MapMsgCurrentIdx           = mapMsgIdx;
+            g_MapMsgMainIdx              = mapMsgIdx;
             g_MapMsgDisplayLen           = 0;
             // By how much to advance the display len. 2 characters at a time
             g_MapMsgDisplayInc           = 2;

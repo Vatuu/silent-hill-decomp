@@ -1794,7 +1794,7 @@ extern s32 D_800BCD64;
 extern s32 g_MapMsgDisplayLen;
 
 /** Map message index. */
-extern s32 g_MapMsgCurrentIdx;
+extern s32 g_MapMsgMainIdx;
 
 extern s32 g_MapMsgDisplayInc;
 
