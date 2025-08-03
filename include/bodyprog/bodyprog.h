@@ -1787,9 +1787,9 @@ extern u32 D_800BCD58;
 
 extern s32 D_800BCD5C;
 
-extern s32 D_800BCD60;
+extern s32 g_MapMsgStateMachineIdx1;
 
-extern s32 D_800BCD64;
+extern s32 g_MapMsgStateMachineIdx2;
 
 extern s32 g_MapMsgDisplayLen;
 

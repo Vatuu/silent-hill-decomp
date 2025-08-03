@@ -1651,6 +1651,8 @@ D_800FE5F8 = 0x800FE5F8; // ignore:True - Fixes fake missmatch in `Demo_Update`.
 
 g_MapMsgCurrentIdx = 0x800A99AC; // type:s32
 g_MapMsgSelectBlinkTimer = 0x800A99B0; // type:s16
+g_MapMsgStateMachineIdx1 = 0x800BCD60; // type:s32
+g_MapMsgStateMachineIdx2 = 0x800BCD64; // type:s32
 g_MapMsgDisplayLen = 0x800BCD68; // type:s32
 g_MapMsgMainIdx = 0x800BCD6C; // type:s32
 g_MapMsgDisplayInc = 0x800BCD70; // type:s32
