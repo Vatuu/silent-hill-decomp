@@ -3128,12 +3128,12 @@ void GameState_InGame_Update() // 0x80038BD4
     if (g_SysWork.sysState_8 == SysState_Gameplay)
     {
         g_SysWork.field_18 = 0;
-        D_800A9A2C[SysState_Gameplay]();
+        g_SysStateFuncTable[SysState_Gameplay]();
     }
     else
     {
         g_DeltaTime0 = 0;
-        D_800A9A2C[g_SysWork.sysState_8]();
+        g_SysStateFuncTable[g_SysWork.sysState_8]();
 
         if (g_SysWork.sysState_8 == 0)
         {

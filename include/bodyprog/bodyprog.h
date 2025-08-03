@@ -1541,7 +1541,7 @@ extern s32 D_800A9A10;
 
 extern s32 D_800A9A1C;
 
-extern void (*D_800A9A2C[])(); // SysState func table.
+extern void (*g_SysStateFuncTable[])();
 
 extern s32 D_800A9A68;
 

@@ -1660,3 +1660,7 @@ g_MapMsgSelect = 0x800BCD78; // type:MapMsgSelect
 g_MapMsgAudioLoadBlock = 0x800BCD7A; // type:u8
 g_mapMsgSelect_CancelIdx_3 = 0x800BCD7B; // type:s8
 g_MapMsgWidthTable = 0x800C38C8; // type:s32
+
+g_SysStateFuncTable = 0x800A9A2C; // type:u32 size:0x3C
+
+
