@@ -23,7 +23,7 @@ void Gfx_StringSetColor(s16 colorId);
  */
 bool Gfx_StringDraw(char* str, s32 size);
 
-void func_8004ACF4(s32 mapMsgIdx);
+void MapMsgCalculateWidthTable(s32 mapMsgIdx);
 
 /** `Gfx_MapMessageDraw`. Returns map message index. */
 s32 func_8004AF18(char*, s32);

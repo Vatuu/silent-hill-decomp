@@ -1333,9 +1333,11 @@ typedef struct
 
 typedef struct
 {
-    s8 mapMsgSelectMax_0;
-    u8 mapMsgSelectIdx_1;
-} s_800BCD78;
+    s8 maxIdx_0;
+    u8 selectedIdx_1;
+    u8 unk_2;
+    u8 cancelIdx_3;
+} s_MapMsgSelect;
 
 typedef struct
 {
@@ -1393,8 +1395,7 @@ extern s_8002AC04 D_8002AC04[];
 
 extern s_800BE9FC D_8002B2CC;
 
-/** Spacings for strings parsed by `func_8004ACF4`? */
-extern s32 D_800C38C8[];
+extern s32 g_MapMsgWidthTable[];
 
 extern u8 D_800A8E58;
 
@@ -1518,10 +1519,10 @@ extern s32 D_800A99A0;
 extern u8 D_800A99A4[];
 
 /** Map message index. */
-extern s32 D_800A99AC;
+extern s32 g_MapMsgCurrentIdx;
 
 /** FP time value for map message. */
-extern s16 D_800A99B0;
+extern s16 g_MapMsgSelectBlinkTimer;
 
 /** Array of indices? */
 extern s8 D_800A99B4[];
@@ -1790,22 +1791,20 @@ extern s32 D_800BCD60;
 
 extern s32 D_800BCD64;
 
-extern s32 D_800BCD68;
+extern s32 g_MapMsgDisplayLen;
 
 /** Map message index. */
-extern s32 D_800BCD6C;
+extern s32 g_MapMsgMainIdx;
 
-extern s32 D_800BCD70;
+extern s32 g_MapMsgDisplayInc;
 
 extern s32 D_800BCD74;
 
-extern s_800BCD78 D_800BCD78; // `s_800BCD78` might also encompass vars below.
-
-extern u8 D_800BCD79;
-
-extern u8 D_800BCD7A;
-
-extern s8 D_800BCD7B;
+extern s_MapMsgSelect g_MapMsgSelect;
+// The bellow two fields are part of the g_MapMsgSelect but extracted here
+// because using struct fields instead of direct address produces a mismatch.
+extern u8 g_MapMsgAudioLoadBlock;
+extern s8 g_mapMsgSelect_CancelIdx_3;
 
 extern s32 D_800BCD84;
 

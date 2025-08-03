@@ -50,6 +50,28 @@ typedef enum _MapMsgCode
     MapMsgCode_DisplayAll = 20
 } e_MapMsgCode;
 
+typedef enum _MapMsgAudioLoadBlock
+{
+    MapMsgAudioLoadBlock_None   = 0,
+// A bunch of code checks for bit 0 only, so it should mean something
+    MapMsgAudioLoadBlock_unk1   = 1,
+// J2 map messages set this. This makes the voice not load. J2 cutscenes use a single
+// audio file for all lines (video tape cutscene).
+    MapMsgAudioLoadBlock_J2     = 3,
+} e_MapMsgAudioLoadBlock;
+
+#define MAP_MSG_CODE_MARKER         '~'
+#define MAP_MSG_CODE_NEWLINE        'N'
+#define MAP_MSG_CODE_END            'E'
+#define MAP_MSG_CODE_LINE_POSITION  'L'
+#define MAP_MSG_CODE_JUMP           'J'
+#define MAP_MSG_CODE_HIGH_RES       'H'
+#define MAP_MSG_CODE_MIDDLE         'M'
+#define MAP_MSG_CODE_TAB            'T'
+#define MAP_MSG_CODE_COLOR          'C'
+#define MAP_MSG_CODE_DISPLAY_ALL    'D'
+#define MAP_MSG_CODE_SELECT         'S'
+
 typedef enum _MapOverlayId
 {
     MapOverlayId_MAP0_S00 = 0,
@@ -1081,8 +1103,8 @@ typedef struct _SysWork
     u8              field_234A   : 8;
     u8              field_234B_0 : 4;
     u8              field_234B_4 : 4;
-    s32             field_234C;                   
-    u8              field_2350_0                  : 4; // Related to string drawing.
+    s32             mapMsgTimer;                   
+    u8              HighResolutionTextRender                  : 4; // Related to string drawing.
     u8              field_2350_4                  : 4; // `s32`?
     u32             inventoryItemSelectedIdx_2351 : 8;
     u32             flags_2352                    : 8;
