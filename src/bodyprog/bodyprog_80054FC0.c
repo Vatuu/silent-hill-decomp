@@ -319,7 +319,33 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80057344); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_800574D4); // 0x800574D4
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8005759C); // 0x8005759C
+void func_8005759C(s_func_8005759C* arg0, s_func_8005759C_2* arg1, s32 arg2, s32 arg3) // 0x8005759C
+{
+    s16* field_C_pointer;
+    s16* field_18C_pointer;
+    s32* field_8_pointer;
+    s32* field_0_pointer;
+    u8*  field_2B8_pointer;
+    u8*  field_14_pointer;
+
+    // Maybe could be turned to for loop? I tried but no luck.
+    field_0_pointer   = &arg1->field_0[arg2];
+    field_18C_pointer = &arg1->field_18C[arg2];
+    field_8_pointer   = arg0->field_8;
+    field_C_pointer   = arg0->field_C;
+    while (field_8_pointer < &arg0->field_8[arg0->field_1])
+    {
+        *field_0_pointer++   = *field_8_pointer++;
+        *field_18C_pointer++ = *field_C_pointer++;
+    }
+
+    field_14_pointer  = arg0->field_14;
+    field_2B8_pointer = &arg1->field_2B8[arg3];
+    while (field_14_pointer < &arg0->field_14[arg0->field_3])
+    {
+        *field_2B8_pointer++ = *field_14_pointer++;
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80057658); // 0x80057658
 
@@ -1320,7 +1346,36 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8006E0AC); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8006E150); // 0x8006E150
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8006E490); // 0x8006E490
+void func_8006E490(s_func_8006E490* arg0, u32 arg1, s32 arg2, s32 arg3) // 0x8006E490
+{
+    s32 var_a2;
+
+    if (arg1 & 4)
+    {
+        var_a2 = arg2;
+        arg2   = arg3;
+        arg3   = var_a2;
+    }
+
+    if (arg1 & 2)
+    {
+        arg3 = -arg3;
+    }
+
+    if (arg1 & 1)
+    {
+        arg2 = -arg2;
+    }
+
+    arg2 = FP_FROM(arg2, Q12_SHIFT);
+    arg3 = FP_FROM(arg3, Q12_SHIFT);
+    if ((arg2 >= 0) && (arg2 < arg0->field_10) && (arg3 >= 0) && (arg3 < arg0->field_14))
+    {
+        arg0->field_20[arg0->field_1C].field_0 = arg2;
+        arg0->field_20[arg0->field_1C].field_2 = arg3;
+        arg0->field_1C++;
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8006E53C); // 0x8006E53C
 
