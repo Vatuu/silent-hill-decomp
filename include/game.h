@@ -810,6 +810,7 @@ typedef struct _SubCharPropertiesPlayer
     s8  unk_118[4];
     s32 flags_11C;
     s16 field_120;
+    s8  unk_122[2];
     u16 field_124;
     s16 field_126;
 } s_SubCharaPropertiesPlayer;
