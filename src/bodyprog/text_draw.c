@@ -48,7 +48,7 @@ void Gfx_StringSetColor(s16 colorId) // 0x8004A8DC
     g_StringColorId = colorId;
 }
 
-// TODO: Requires `s_SysWork::field_2350_0` to be `s32`, causing mismatch elsewhere.
+// TODO: Requires `s_SysWork::HighResolutionTextRender` to be `s32`, causing mismatch elsewhere.
 #ifdef NON_MATCHING
 bool Gfx_StringDraw(char* str, s32 size) // 0x8004A8E8
 {
@@ -96,7 +96,7 @@ bool Gfx_StringDraw(char* str, s32 size) // 0x8004A8E8
     glyphColor = D_80025DC0[g_StringColorId];
     ot         = &D_800B5C40[g_ObjectTableIdx].field_0[D_800AD49C];
 
-    if (!(g_SysWork.field_2350_0 & 0xF))
+    if (!(g_SysWork.HighResolutionTextRender & 0xF))
     {
         packet = GsOUT_PACKET_P;
     }
@@ -139,7 +139,7 @@ bool Gfx_StringDraw(char* str, s32 size) // 0x8004A8E8
             sizeCpy--;
 
             // Draw glyph sprite.
-            if (g_SysWork.field_2350_0 & 0xF)
+            if (g_SysWork.HighResolutionTextRender & 0xF)
             {
                 glyphPoly = (POLY_FT4*)GsOUT_PACKET_P;
 
@@ -214,7 +214,7 @@ bool Gfx_StringDraw(char* str, s32 size) // 0x8004A8E8
         strCpy++;
     }
 
-    if (!(g_SysWork.field_2350_0 & 0xF))
+    if (!(g_SysWork.HighResolutionTextRender & 0xF))
     {
         GsOUT_PACKET_P = packet;
     }
@@ -306,7 +306,7 @@ void MapMsgCalculateWidthTable(s32 mapMsgIdx) // 0x8004ACF4
                         break;
 
                     case MAP_MSG_CODE_HIGH_RES:
-                        g_SysWork.field_2350_0 = 1;
+                        g_SysWork.HighResolutionTextRender = 1;
                         break;
                 }
                 
@@ -351,7 +351,7 @@ void func_8004B684() // 0x8004B684
     D_800C38B0.positionIdx_1 = 1;
     g_StringPositionX1       = SCREEN_POSITION_X(-37.5f);
     g_StringColorId          = ColorId_White;
-    g_SysWork.field_2350_0   = 0;
+    g_SysWork.HighResolutionTextRender   = 0;
 }
 
 void func_8004B6D4(s16 arg0, s16 arg1) // 0x8004B6D4

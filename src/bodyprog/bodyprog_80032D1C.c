@@ -2471,7 +2471,7 @@ s32 func_800365B8(s32 mapMsgIdx) // 0x800365B8
     }
 
     g_SysWork.field_18     = 0;
-    g_SysWork.field_2350_0 = 0;
+    g_SysWork.HighResolutionTextRender = 0;
     g_MapMsgDisplayLen     = 0;
 
     if (g_SysWork.field_22A0 & (1 << 5))
