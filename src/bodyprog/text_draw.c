@@ -228,130 +228,105 @@ bool Gfx_StringDraw(char* str, s32 size) // 0x8004A8E8
 INCLUDE_ASM("asm/bodyprog/nonmatchings/text_draw", Gfx_StringDraw); // 0x8004A8E8
 #endif
 
-// TODO: .rodata migration.
-#ifdef NON_MATCHING
-void func_8004ACF4(s32 mapMsgIdx) // 0x8004ACF4
+void func_8004ACF4(s32 mapMsgIdx)
 {
-    #define SPACE_SIZE                 6
-    #define STR_SIZE_MAX               9
-    #define LINE_COUNT_MAX             8
-
-    s32  i;
-    s32  j;
-    s8   tagCode;
-    s8   tagArg;
-    s32  charCode;
-    u8   dialogCode;
-    s32  argCount;
-    s32* var_a1;
+    s32 i;
+    s32 j;
     s32* temp_v0;
     s32* temp_v1;
-    u8*  temp_v2;
-    u8*  mapMsg;
+    s32* var_a1;
+    s8 tagCode;
+    s8 tagArg;
+    u8* mapMsg;
+    u8* temp_v2;
+    s32 charCode;
+    u8 v0;
+    s32 v1;
 
     D_800C38B4.lineCount_0 = 1;
     D_800BCD7A             = 0;
-
-    // Reset something.
-    for (i = LINE_COUNT_MAX; i >= 0; i--)
+    
+    for (i = 8; i >= 0; i--)
     {
         D_800C38C8[i] = 0;
     }
 
-    // Parse string.
     mapMsg = g_MapOverlayHeader.mapMessageStrings_30[mapMsgIdx];
-    for (j = 0; j < STR_SIZE_MAX;)
+    
+    for (j = 0; j < 9; )
     {
-        // Process `char`.
         charCode = *mapMsg;
+        
         switch (charCode)
         {
-            // Newline.
             case '\t':
             case '\n':
             case ' ':
-                mapMsg++;
-                break;
-
-            // Space.
+            mapMsg++;
+            break;
+            
             case '_':
-                mapMsg++;
-                D_800C38C8[D_800C38B4.lineCount_0 - 1] += SPACE_SIZE;
+                ++mapMsg;
+                D_800C38C8[D_800C38B4.lineCount_0 - 1] += 6;
                 break;
-
-            // Dialog code.
+                
             case '~':
-                dialogCode = *++mapMsg;
-                argCount   = *++mapMsg - '0';
-
-                switch (dialogCode) 
+                v0 = *++mapMsg; //code
+                v1 = *++mapMsg - '0'; //num argument
+                
+                switch (v0) 
                 {
-                    // Unused dialog codes?
                     case 'C':
                     case 'S':
                     case 'T':
-                        break;
-
-                    case DIALOG_CODE_NEWLINE:
-                        j++;
+                    break;
+                    case 'N': //new line
+                        j = j + 1;
                         D_800C38B4.lineCount_0++;
                         break;
 
-                    case DIALOG_CODE_END:
+                    case 'E': //wait for button press
                         j = 9;
                         break;
 
-                    case DIALOG_CODE_LINE_POSITION:
-                        D_800C38B0.positionIdx_1 = argCount;
+                    case 'L': //position
+                        D_800C38B0.positionIdx_1 = v1;
                         break;
 
-                    case DIALOG_CODE_JUMP_DELAY:
-                        if (argCount == 2) 
-                        {
+                    case 'J': //cutscene
+                        if (v1 == 2) 
                             D_800BCD7A = 3;
-                        }
 
-                        while (argCount != ' ' && argCount != '\t')
-                        {
-                            argCount = *++mapMsg;
-                        }
+                        while (v1 != ' ' && v1 != '\t')
+                            v1 = *++mapMsg;
 
                         break;
 
-                    case DIALOG_CODE_HIGH_RESOLUTION:
+                    case 'H': //show map
                         g_SysWork.field_2350_0 = 1;
                         break;
                 }
-
+                
                 mapMsg++;
-                break;
-
-            // Terminator.
-            case '\0':
+            break;
+            
+            case 0:
                 j = 9;
-                break;
-
-            // ???
+            break;
+            
             default:
-                // Convert literal `!` and `&` into `char`s mappable to representative atlas glyphs.
-                if (charCode == '!')
-                {
+                if (charCode == '!') {
                     charCode = '\\';
-                }
-                else if (charCode == '&')
-                {
+                } else if (charCode == '&') {
                     charCode = '^';
                 }
-
+                
                 D_800C38C8[D_800C38B4.lineCount_0 - 1] += D_80025D6C[charCode - '\''];
                 mapMsg++;
-                break;
+            break;
         }
     }
 }
-#else
-INCLUDE_ASM("asm/bodyprog/nonmatchings/text_draw", func_8004ACF4); // 0x8004ACF4
-#endif
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/text_draw", func_8004AF18); // 0x8004AF18
 

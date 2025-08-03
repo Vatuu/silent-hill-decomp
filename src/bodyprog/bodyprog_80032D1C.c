@@ -2459,7 +2459,7 @@ s32 func_800365B8(s32 mapMsgIdx) // 0x800365B8
             D_800BCD60 = 0;
             D_800BCD64 = func_80036B5C(D_800A99AC, &g_MapMsgDisplayLen);
 
-            if (D_800BCD64 != 0 && D_800BCD64 < 4)
+            if (D_800BCD64 != 0 && D_800BCD64 < MapMsgCode_Select4)
             {
                 D_800BCD60 = NO_VALUE;
             }
