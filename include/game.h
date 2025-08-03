@@ -1105,7 +1105,7 @@ typedef struct _SysWork
     u8              field_234B_4 : 4;
     s32             mapMsgTimer;                   
     u8              HighResolutionTextRender                  : 4; // Related to string drawing.
-    u8              field_2350_4                  : 4; // `s32`?
+    u8              silentYesSelection_4                  : 4; // `s32`?
     u32             inventoryItemSelectedIdx_2351 : 8;
     u32             flags_2352                    : 8;
     s32             field_2353                    : 8; // Some index into `npcs_1A0`.

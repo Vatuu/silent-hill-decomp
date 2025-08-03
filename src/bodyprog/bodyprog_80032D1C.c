@@ -2386,10 +2386,9 @@ s32 func_800365B8(s32 mapMsgIdx) // 0x800365B8
 
                         Sd_PlaySfx(Sfx_Cancel, 0, 64);
 
-                        // Exit 480i mode (map screen)
-                        if (g_SysWork.field_2350_4 != 0)
+                        if (g_SysWork.silentYesSelection_4 != 0)
                         {
-                            g_SysWork.field_2350_4 = 0;
+                            g_SysWork.silentYesSelection_4 = 0;
                         }
 
                         D_800BCD64 = FINISH_CUTSCENE;
@@ -2402,15 +2401,14 @@ s32 func_800365B8(s32 mapMsgIdx) // 0x800365B8
                         {
                             Sd_PlaySfx(Sfx_Cancel, 0, 64);
                         }
-                        else if (g_SysWork.field_2350_4 == 0)
+                        else if (g_SysWork.silentYesSelection_4 == 0)
                         {
                             Sd_PlaySfx(Sfx_Confirm, 0, 64);
                         }
 
-                        // Exit 480i mode (map screen)
-                        if (g_SysWork.field_2350_4 != 0)
+                        if (g_SysWork.silentYesSelection_4 != 0)
                         {
-                            g_SysWork.field_2350_4 = 0;
+                            g_SysWork.silentYesSelection_4 = 0;
                         }
 
                         D_800BCD64 = FINISH_CUTSCENE;
