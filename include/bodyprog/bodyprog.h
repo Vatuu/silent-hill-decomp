@@ -1123,21 +1123,13 @@ STATIC_ASSERT_SIZEOF(s_CharaFileInfo, 16);
 // larger arrays containing actual data.
 typedef struct
 {
-    s8  unk_0[12];
-    s16 field_C;
-    s8  unk_10[2];
-} s_MaybeCharacterAnim;
-///
-/*typedef struct
-{
     s8  unk_0[6];
     s8  field_6;
     s8  unk_7[5];
     s16 field_C;
     s16 field_E;
-    s8  unk_10[2];
+    //s8  unk_10[2];
 } s_MaybeCharacterAnim;
-*/
 
 typedef struct
 {
