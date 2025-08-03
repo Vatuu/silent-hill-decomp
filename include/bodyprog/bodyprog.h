@@ -1395,7 +1395,7 @@ extern s_8002AC04 D_8002AC04[];
 
 extern s_800BE9FC D_8002B2CC;
 
-extern s32 g_MapMsgWidthTable[];
+extern s32 g_MapMsg_WidthTable[];
 
 extern u8 D_800A8E58;
 
@@ -1519,10 +1519,10 @@ extern s32 D_800A99A0;
 extern u8 D_800A99A4[];
 
 /** Map message index. */
-extern s32 g_MapMsgCurrentIdx;
+extern s32 g_MapMsg_CurrentIdx;
 
 /** FP time value for map message. */
-extern s16 g_MapMsgSelectBlinkTimer;
+extern s16 g_MapMsg_SelectFlashTimer;
 
 /** Array of indices? */
 extern s8 D_800A99B4[];
@@ -1791,20 +1791,23 @@ extern s32 D_800BCD60;
 
 extern s32 D_800BCD64;
 
-extern s32 g_MapMsgDisplayLen;
+extern s32 g_MapMsg_DisplayLength;
 
 /** Map message index. */
-extern s32 g_MapMsgMainIdx;
+extern s32 g_MapMsg_MainIdx;
 
-extern s32 g_MapMsgDisplayInc;
+/** How many glyphs at a time to advance the message roll. */
+extern s32 g_MapMsg_DisplayInc;
 
 extern s32 D_800BCD74;
 
-extern s_MapMsgSelect g_MapMsgSelect;
-// The bellow two fields are part of the g_MapMsgSelect but extracted here
-// because using struct fields instead of direct address produces a mismatch.
-extern u8 g_MapMsgAudioLoadBlock;
-extern s8 g_mapMsgSelect_CancelIdx_3;
+extern s_MapMsgSelect g_MapMsg_Select;
+
+/** TODO: These variables are part of `s_MapMsgSelect`, but must remain separate
+ * because using struct fields instead of the direct addresses produces a mismatch.
+ */
+extern u8 g_MapMsg_AudioLoadBlock;
+extern s8 g_MapMsg_SelectCancelIdx3;
 
 extern s32 D_800BCD84;
 

@@ -48,7 +48,7 @@ void Gfx_StringSetColor(s16 colorId) // 0x8004A8DC
     g_StringColorId = colorId;
 }
 
-// TODO: Requires `s_SysWork::HighResolutionTextRender` to be `s32`, causing mismatch elsewhere.
+// TODO: Requires `s_SysWork::enableHighResString_2350_0` to be `s32`, causing mismatch elsewhere.
 #ifdef NON_MATCHING
 bool Gfx_StringDraw(char* str, s32 size) // 0x8004A8E8
 {
@@ -96,7 +96,7 @@ bool Gfx_StringDraw(char* str, s32 size) // 0x8004A8E8
     glyphColor = D_80025DC0[g_StringColorId];
     ot         = &D_800B5C40[g_ObjectTableIdx].field_0[D_800AD49C];
 
-    if (!(g_SysWork.HighResolutionTextRender & 0xF))
+    if (!(g_SysWork.enableHighResString_2350_0 & 0xF))
     {
         packet = GsOUT_PACKET_P;
     }
@@ -139,7 +139,7 @@ bool Gfx_StringDraw(char* str, s32 size) // 0x8004A8E8
             sizeCpy--;
 
             // Draw glyph sprite.
-            if (g_SysWork.HighResolutionTextRender & 0xF)
+            if (g_SysWork.enableHighResString_2350_0 & 0xF)
             {
                 glyphPoly = (POLY_FT4*)GsOUT_PACKET_P;
 
@@ -214,7 +214,7 @@ bool Gfx_StringDraw(char* str, s32 size) // 0x8004A8E8
         strCpy++;
     }
 
-    if (!(g_SysWork.HighResolutionTextRender & 0xF))
+    if (!(g_SysWork.enableHighResString_2350_0 & 0xF))
     {
         GsOUT_PACKET_P = packet;
     }
@@ -228,30 +228,31 @@ bool Gfx_StringDraw(char* str, s32 size) // 0x8004A8E8
 INCLUDE_ASM("asm/bodyprog/nonmatchings/text_draw", Gfx_StringDraw); // 0x8004A8E8
 #endif
 
-void MapMsgCalculateWidthTable(s32 mapMsgIdx) // 0x8004ACF4
+void MapMsg_CalculateWidthTable(s32 mapMsgIdx) // 0x8004ACF4
 {
-    #define GLYPH_SPACE_SIZE 6
-    #define LINE_MAX_COUNT 9
+    #define SPACE_SIZE     6
+    #define LINE_COUNT_MAX 9
+
     s32 i;
     s32 j;
-    s8 tagCode;
-    s8 tagArg;
+    s8  tagCode;
+    s8  tagArg;
     u8* mapMsg;
     s32 charCode;
-    u8 msgCode;
+    u8  msgCode;
     s32 msgArg;
 
-    D_800C38B4.lineCount_0 = 1;
-    g_MapMsgAudioLoadBlock       = 0;
+    D_800C38B4.lineCount_0  = 1;
+    g_MapMsg_AudioLoadBlock = 0;
     
-    for (i = LINE_MAX_COUNT-1; i >= 0; i--)
+    for (i = LINE_COUNT_MAX - 1; i >= 0; i--)
     {
-        g_MapMsgWidthTable[i] = 0;
+        g_MapMsg_WidthTable[i] = 0;
     }
 
     mapMsg = g_MapOverlayHeader.mapMessageStrings_30[mapMsgIdx];
-    
-    for (j = 0; j < LINE_MAX_COUNT; )
+
+    for (j = 0; j < LINE_COUNT_MAX; )
     {
         charCode = *mapMsg;
         
@@ -265,12 +266,12 @@ void MapMsgCalculateWidthTable(s32 mapMsgIdx) // 0x8004ACF4
             
             case '_':
                 ++mapMsg;
-                g_MapMsgWidthTable[D_800C38B4.lineCount_0 - 1] += GLYPH_SPACE_SIZE;
+                g_MapMsg_WidthTable[D_800C38B4.lineCount_0 - 1] += SPACE_SIZE;
                 break;
                 
             case MAP_MSG_CODE_MARKER:
                 msgCode = *++mapMsg;
-                msgArg = *++mapMsg - '0';
+                msgArg  = *++mapMsg - '0';
                 
                 switch (msgCode) 
                 {
@@ -285,7 +286,7 @@ void MapMsgCalculateWidthTable(s32 mapMsgIdx) // 0x8004ACF4
                         break;
 
                     case MAP_MSG_CODE_END:
-                        j = LINE_MAX_COUNT;
+                        j = LINE_COUNT_MAX;
                         break;
 
                     case MAP_MSG_CODE_LINE_POSITION:
@@ -295,7 +296,7 @@ void MapMsgCalculateWidthTable(s32 mapMsgIdx) // 0x8004ACF4
                     case MAP_MSG_CODE_JUMP:
                         if (msgArg == 2)
                         {
-                            g_MapMsgAudioLoadBlock = 3;
+                            g_MapMsg_AudioLoadBlock = 3;
                         }
 
                         while (msgArg != ' ' && msgArg != '\t')
@@ -306,18 +307,19 @@ void MapMsgCalculateWidthTable(s32 mapMsgIdx) // 0x8004ACF4
                         break;
 
                     case MAP_MSG_CODE_HIGH_RES:
-                        g_SysWork.HighResolutionTextRender = 1;
+                        g_SysWork.enableHighResString_2350_0 = 1;
                         break;
                 }
-                
+
                 mapMsg++;
                 break;
             
             case 0:
-                j = LINE_MAX_COUNT;
+                j = LINE_COUNT_MAX;
                 break;
             
             default:
+                // Convert literal `!` and `&` into `char`s mappable to representative atlas glyphs.
                 if (charCode == '!')
                 {
                     charCode = '\\';
@@ -326,10 +328,10 @@ void MapMsgCalculateWidthTable(s32 mapMsgIdx) // 0x8004ACF4
                 {
                     charCode = '^';
                 }
-                
-                g_MapMsgWidthTable[D_800C38B4.lineCount_0 - 1] += D_80025D6C[charCode - '\''];
+
+                g_MapMsg_WidthTable[D_800C38B4.lineCount_0 - 1] += D_80025D6C[charCode - '\''];
                 mapMsg++;
-            break;
+                break;
         }
     }
 }
@@ -346,12 +348,12 @@ void func_8004B658() // 0x8004B658
 
 void func_8004B684() // 0x8004B684
 {
-    D_800C38B4.lineCount_0   = 1;
-    D_800C38B0.field_0       = 0;
-    D_800C38B0.positionIdx_1 = 1;
-    g_StringPositionX1       = SCREEN_POSITION_X(-37.5f);
-    g_StringColorId          = ColorId_White;
-    g_SysWork.HighResolutionTextRender   = 0;
+    D_800C38B4.lineCount_0               = 1;
+    D_800C38B0.field_0                   = 0;
+    D_800C38B0.positionIdx_1             = 1;
+    g_StringPositionX1                   = SCREEN_POSITION_X(-37.5f);
+    g_StringColorId                      = ColorId_White;
+    g_SysWork.enableHighResString_2350_0 = 0;
 }
 
 void func_8004B6D4(s16 arg0, s16 arg1) // 0x8004B6D4

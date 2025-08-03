@@ -1178,14 +1178,19 @@ s16 func_8006CB90(s_func_8006CC44* arg0) // 0x8006CB90
     s32 temp_v0;
 
     if (arg0->field_7C == 0x1E00)
-        return 0x1000;
+    {
+        return FP_FLOAT_TO(1.0f, Q12_SHIFT);
+    }
 
     temp_v0 = func_8006CC44(arg0->field_4.field_20, arg0->field_4.field_24, arg0);
-    if ((arg0->field_4.field_2C + arg0->field_4.field_C.vy) < temp_v0 || temp_v0 == arg0->field_7C)
-        return 0x1000;
+    if ((arg0->field_4.field_2C + arg0->field_4.field_C.vy) < temp_v0 ||
+        temp_v0 == arg0->field_7C)
+    {
+        return FP_FLOAT_TO(1.0f, Q12_SHIFT);
+    }
 
-    return FP_TO(arg0->field_4.field_8, Q12_SHIFT) /
-           SquareRoot0(SQUARE(arg0->field_4.field_8) + SQUARE(temp_v0 - arg0->field_4.field_2C));
+    return FP_TO(arg0->field_4.field_8, Q12_SHIFT) / SquareRoot0(SQUARE(arg0->field_4.field_8) +
+                                                                 SQUARE(temp_v0 - arg0->field_4.field_2C));
 }
 
 s32 func_8006CC44(s32 arg0, s32 arg1, s_func_8006CC44* arg2) // 0x8006CC44
