@@ -2457,7 +2457,7 @@ s32 MapMsgDisplay(s32 mapMsgIdx) // 0x800365B8
             }
 
             D_800BCD60 = 0;
-            D_800BCD64 = func_80036B5C(g_MapMsgCurrentIdx, &g_MapMsgDisplayLen);
+            D_800BCD64 = MapMsgRenderAndHandleSelection(g_MapMsgCurrentIdx, &g_MapMsgDisplayLen);
 
             if (D_800BCD64 != 0 && D_800BCD64 < MapMsgCode_Select4)
             {
@@ -2482,7 +2482,7 @@ s32 MapMsgDisplay(s32 mapMsgIdx) // 0x800365B8
     return g_MapMsgSelect.selectedIdx_1 + 1;
 }
 
-s32 func_80036B5C(u8 mapMsgIdx, s32* arg1)
+s32 MapMsgRenderAndHandleSelection(u8 mapMsgIdx, s32* arg1) // 0x80036B5C
 {
     #define STRING_LINE_OFFSET 16
 
@@ -2492,6 +2492,7 @@ s32 func_80036B5C(u8 mapMsgIdx, s32* arg1)
     s16 temp;
     s8* str;
 
+    // This will actually render the string on screen. It also gives a return code for different ~S codes.
     mapMsgCode = func_8004AF18(g_MapOverlayHeader.mapMessageStrings_30[mapMsgIdx], *arg1);
 
     g_MapMsgSelectBlinkTimer += g_DeltaTime1;

@@ -3069,7 +3069,7 @@ void func_8003652C();
 
 s32 MapMsgDisplay(s32 mapMsgIdx);
 
-s32 func_80036B5C(u8 mapMsgIdx, s32* arg1);
+s32 MapMsgRenderAndHandleSelection(u8 mapMsgIdx, s32* arg1);
 
 void func_80036E48(u16* arg0, s16* arg1);
 
