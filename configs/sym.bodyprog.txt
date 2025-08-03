@@ -1,19 +1,12 @@
-g_MainLoop_FrameCount = 0x800B9CCC;
-g_ObjectTableIdx      = 0x800B9FB8;
-g_SysWork             = 0x800B9FC0; // type:SysWork size:0x2768 - should use s_SysWork here, but splat only supports custom structs with capital letter at beginning.
-g_GameWork            = 0x800BC728; // type:GameWork size:0x5D8
+// sh "view" / "vw" / "vc" / "vb" code
+// Most names from SH2, functions seem to match pretty close between it and SH1 besides a few missing/extra funcs.
+scratchpad                                  = 0x1F800000; // size:0x400 ignore:True
 
-g_GameWorkConst = 0x80024D44; // type:u32
-g_SavegamePtr   = 0x80024D48; // type:u32
-g_Controller0   = 0x80024D4C; // type:u32
-g_Controller1   = 0x80024D50; // type:u32
-g_GameWorkPtr   = 0x80024D54; // type:u32
 
-nextGameStates = 0x80025480;
 
-g_ItemVectors      = 0x800262FC; // type:DVECTOR size:0x380
-g_ItemNames        = 0x800ADB60; // type:u32 size:0x30C
-g_ItemDescriptions = 0x800ADE6C; // type:u32 size:0x30C
+//================================================
+//=== .rodata section
+//================================================
 
 // sh "view" / "vw" / "vc" / "vb" code
 // Most names from SH2, functions seem to match pretty close between it and SH1 besides a few missing/extra funcs.
@@ -283,18 +276,462 @@ Game_SavegameResetPlayer = 0x8007E530; // type:func
 GameFs_PlayerMapAnimLoad = 0x8007EB64; // type:func
 Player_AnimGetSomething = 0x8007F308; // type:func
 
-// sh "view" / "vw" / "vc" / "vb" code
-// Most names from SH2, functions seem to match pretty close between it and SH1 besides a few missing/extra funcs.
+//------------------------------------------------------
+//--- PA: 0x000000   VA: 0x80024B60   subsegment: rodata
+//------------------------------------------------------
 
-PreservedSignSubtract = 0x80080594; //type:func
+//----------------------------------------------------------------
+//--- PA: 0x000004   VA: 0x80024B64   subsegment: .rodata, memcard
+//----------------------------------------------------------------
 
-Math_MulFixed          = 0x800808D4; // type:func
-Math_GetMagnitudeShift = 0x800808F8; // type:func
+//------------------------------------------------------
+//--- PA: 0x000138   VA: 0x80024C98   subsegment: rodata
+//------------------------------------------------------
 
+//--------------------------------------------------------------------------
+//--- PA: 0x000144   VA: 0x80024CA4   subsegment: .rodata, bodyprog_800314EC
+//--------------------------------------------------------------------------
+
+//----------------------------------------------------------------
+//--- PA: 0x0001E4   VA: 0x80024D44   subsegment: .rodata, globals
+//----------------------------------------------------------------
+g_GameWorkConst                             = 0x80024D44; // type:u32
+g_SavegamePtr                               = 0x80024D48; // type:u32
+g_Controller0                               = 0x80024D4C; // type:u32
+g_Controller1                               = 0x80024D50; // type:u32
+g_GameWorkPtr                               = 0x80024D54; // type:u32
+
+//------------------------------------------------------
+//--- PA: 0x0001F8   VA: 0x80024D58   subsegment: rodata
+//------------------------------------------------------
+
+//--------------------------------------------------------------------------
+//--- PA: 0x000618   VA: 0x80025178   subsegment: .rodata, bodyprog_80032D1C
+//--------------------------------------------------------------------------
+
+//--------------------------------------------------------------------------
+//--- PA: 0x00091C   VA: 0x8002547C   subsegment: .rodata, bodyprog_8003AB28
+//--------------------------------------------------------------------------
+nextGameStates                              = 0x80025480;
+
+//------------------------------------------------------
+//--- PA: 0x001084   VA: 0x80025BE4   subsegment: rodata
+//------------------------------------------------------
+
+//--------------------------------------------------------------------------------
+//--- PA: 0x00109C   VA: 0x80025BFC   subsegment: .rodata, libsd/bodyprog_80045A7C
+//--------------------------------------------------------------------------------
+
+//-----------------------------------------------------------------------------------
+//--- PA: 0x0011C4   VA: 0x80025D24   subsegment: .rodata, libsd/bodyprog_CD_80047D50
+//-----------------------------------------------------------------------------------
+
+//------------------------------------------------------
+//--- PA: 0x001200   VA: 0x80025D60   subsegment: rodata
+//------------------------------------------------------
+
+//------------------------------------------------------------------
+//--- PA: 0x001280   VA: 0x80025DE0   subsegment: .rodata, text_draw
+//------------------------------------------------------------------
+
+//------------------------------------------------------
+//--- PA: 0x0012C8   VA: 0x80025E28   subsegment: rodata
+//------------------------------------------------------
+
+//-----------------------------------------------------------------------------
+//--- PA: 0x001334   VA: 0x80025E94   subsegment: .rodata, items/item_screens_1
+//-----------------------------------------------------------------------------
+
+//-----------------------------------------------------------------------------
+//--- PA: 0x001350   VA: 0x80025EB0   subsegment: .rodata, items/item_screens_2
+//-----------------------------------------------------------------------------
+
+//-----------------------------------------------------------------------------
+//--- PA: 0x001770   VA: 0x800262D0   subsegment: .rodata, items/item_screens_3
+//-----------------------------------------------------------------------------
+g_ItemVectors                               = 0x800262FC; // type:DVECTOR size:0x380
+
+//------------------------------------------------------
+//--- PA: 0x0032F4   VA: 0x80027E54   subsegment: rodata
+//------------------------------------------------------
+
+//---------------------------------------------------------------------
+//--- PA: 0x005CF0   VA: 0x8002A850   subsegment: .rodata, view/vc_main
+//---------------------------------------------------------------------
+
+//--------------------------------------------------------------------------
+//--- PA: 0x005F9C   VA: 0x8002AAFC   subsegment: .rodata, bodyprog_80085D78
+//--------------------------------------------------------------------------
+
+//------------------------------------------------------
+//--- PA: 0x006044   VA: 0x8002ABA4   subsegment: rodata
+//------------------------------------------------------
+hack_vcSetWatchTgtXzPos_fix                 = 0x8002B2B4; // type:s32 - Some 0x80083500 value which coincidentally points to code inside vcSetWatchTgtXzPos, probably unrelated flags or something. A jtbl is right before this which spimdisasm tries to include, breaking vcSetWatchTgtXzPos build.
+
+//----------------------------------------------------------------
+//--- PA: 0x0067DC   VA: 0x8002B33C   subsegment: .rodata, credits
+//----------------------------------------------------------------
+
+//------------------------------------------------------
+//--- PA: 0x006A6C   VA: 0x8002B5CC   subsegment: rodata
+//------------------------------------------------------
+
+//---------------------------------------------------------------------------
+//--- PA: 0x006A74   VA: 0x8002B5D4   subsegment: lib, libcd, iso9660, .rdata
+//---------------------------------------------------------------------------
+
+//-------------------------------------------------------------------------
+//--- PA: 0x006C64   VA: 0x8002B7C4   subsegment: lib, libcd, c_011, .rdata
+//-------------------------------------------------------------------------
+
+//--------------------------------------------------------------------------
+//--- PA: 0x006C84   VA: 0x8002B7E4   subsegment: lib, libgs, matrix, .rdata
+//--------------------------------------------------------------------------
+
+//--------------------------------------------------------------------------
+//--- PA: 0x006CB4   VA: 0x8002B814   subsegment: lib, libgs, gs_108, .rdata
+//--------------------------------------------------------------------------
+
+//--------------------------------------------------------------------------
+//--- PA: 0x006CD4   VA: 0x8002B834   subsegment: lib, libgs, gs_123, .rdata
+//--------------------------------------------------------------------------
+
+//------------------------------------------------------------------------
+//--- PA: 0x006D64   VA: 0x8002B8C4   subsegment: lib, libgs, objt, .rdata
+//------------------------------------------------------------------------
+
+//-------------------------------------------------------------------------
+//--- PA: 0x006E04   VA: 0x8002B964   subsegment: lib, libgs, objt3, .rdata
+//-------------------------------------------------------------------------
+
+//----------------------------------------------------------------------------
+//--- PA: 0x006EA4   VA: 0x8002BA04   subsegment: rodata, lib_unk/lib_8009687C
+//----------------------------------------------------------------------------
+
+//-----------------------------------------------------------------------------
+//--- PA: 0x0096A4   VA: 0x8002E204   subsegment: lib, libpad, padentry, .rdata
+//-----------------------------------------------------------------------------
+
+//--------------------------------------------------------------------------
+//--- PA: 0x0096C4   VA: 0x8002E224   subsegment: lib, libspu, s_sva, .rdata
+//--------------------------------------------------------------------------
+
+//--------------------------------------------------------------------------
+//--- PA: 0x009704   VA: 0x8002E264   subsegment: lib, libspu, s_sca, .rdata
+//--------------------------------------------------------------------------
+
+//---------------------------------------------------------------------
+//--- PA: 0x009744   VA: 0x8002E2A4   subsegment: .rodata, libsd/smf_io
+//---------------------------------------------------------------------
+
+//---------------------------------------------------------------------
+//--- PA: 0x0097DC   VA: 0x8002E33C   subsegment: .rodata, libsd/smf_io
+//---------------------------------------------------------------------
+
+//------------------------------------------------------
+//--- PA: 0x0099D8   VA: 0x8002E538   subsegment: rodata
+//------------------------------------------------------
+
+//----------------------------------------------------------------------
+//--- PA: 0x0099E8   VA: 0x8002E548   subsegment: .rodata, libsd/smf_mid
+//----------------------------------------------------------------------
+
+
+
+//================================================
+//=== .text section
+//================================================
+
+
+//----------------------------------------------------------
+//--- PA: 0x009AD0   VA: 0x8002E630   subsegment: c, memcard
+//----------------------------------------------------------
+Savegame_CardCleanInit                      = 0x8002E630; // type:func
+Savegame_GameMemDataClear                   = 0x8002E6E4; // type:func
+Savegame_CardFileUsageClear                 = 0x8002E730; // type:func
+Savegame_CardFilesAreAllUnused              = 0x8002E76C; // type:func
+Savegame_CardFilesGetUsageBits              = 0x8002E9A0; // type:func
+Savegame_MetadataGet                        = 0x8002E9EC; // type:func
+Savegame_CardFileUsageCount                 = 0x8002EA28; // type:func
+Savegame_CardFileUsageFreeCount             = 0x8002EA78; // type:func
+Savegame_UserConfigCopyWithChecksum         = 0x8002FBB4; // type:func
+Savegame_CopyWithChecksum                   = 0x8002FCCC; // type:func
+Savegame_ChecksumUpdate                     = 0x8002FF30; // type:func
+Savegame_ChecksumValidate                   = 0x8002FF74; // type:func
+Savegame_ChecksumGenerate                   = 0x8002FFD0; // type:func
+Savegame_FilenameGenerate                   = 0x80030000; // type:func
+Savegame_SaveBlockInit                      = 0x800300B4; // type:func
+Savegame_CardDeviceTest                     = 0x80030288; // type:func
+Savegame_CardDeviceFormat                   = 0x8003030C; // type:func
+Savegame_CardFileErase                      = 0x80030334; // type:func
+Savegame_CardFileRename                     = 0x80030370; // type:func
+Savegame_CardInit                           = 0x800303E4; // type:func
+Savegame_CardEventsInit                     = 0x80030414; // type:func
+Savegame_CardStateInit                      = 0x80030444; // type:func
+Savegame_CardSwEventsInit                   = 0x8003045C; // type:func
+Savegame_CardHwEventsInit                   = 0x80030530; // type:func
+Savegame_CardEventsClose                    = 0x80030640; // type:func
+Savegame_CardSwEventsClose                  = 0x80030668; // type:func
+Savegame_CardHwEventsClose                  = 0x800306C8; // type:func
+Savegame_CardSwEventsTest                   = 0x80030734; // type:func
+Savegame_CardSwEventsReset                  = 0x800307BC; // type:func
+Savegame_CardHwEventsTest                   = 0x80030810; // type:func
+Savegame_CardHwEventsReset                  = 0x80030820; // type:func
+Savegame_CardHwEventSpIOE                   = 0x80030884; // type:func
+Savegame_CardHwEventSpERROR                 = 0x80030894; // type:func
+Savegame_CardHwEventSpNEW                   = 0x800308A4; // type:func
+Savegame_CardHwEventSpTIMOUT                = 0x800308B4; // type:func
+Savegame_CardHwEventSpUNKNOWN               = 0x800308C4; // type:func
+Savegame_CardResult                         = 0x800308D4; // type:func
+Savegame_CardRequest                        = 0x800308E4; // type:func
+Savegame_CardIsIdle                         = 0x800309FC; // type:func
+Savegame_CardUpdate                         = 0x80030A0C; // type:func
+Savegame_CardState_Init                     = 0x80030AD8; // type:func
+Savegame_CardState_Check                    = 0x80030C88; // type:func
+Savegame_CardState_Load                     = 0x80030DC8; // type:func
+Savegame_CardState_DirRead                  = 0x80030F7C; // type:func
+Savegame_CardState_FileCreate               = 0x800310B4; // type:func
+Savegame_CardState_FileOpen                 = 0x80031184; // type:func
+Savegame_CardState_FileReadWrite            = 0x80031260; // type:func
+Savegame_DevicePathGenerate                 = 0x800314A4; // type:func
+
+//--------------------------------------------------------------------
+//--- PA: 0x00C98C   VA: 0x800314EC   subsegment: c, bodyprog_800314EC
+//--------------------------------------------------------------------
+Gfx_BackgroundSpriteDraw                    = 0x800314EC; // type:func
+Gfx_MotionBlur                              = 0x80031CCC; // type:func
+Gfx_DebugStringPosition                     = 0x80031EFC; // type:func
+Gfx_DebugStringDraw                         = 0x80031F40; // type:func
+Math_IntegerToString                        = 0x80032154; // type:func
+Gfx_ClearRectInterlaced                     = 0x80032358; // type:func
+Gfx_ScreenRefresh                           = 0x800323C8; // type:func
+Gfx_Init                                    = 0x80032428; // type:func
+Settings_ScreenXYSet                        = 0x800324F4; // type:func
+Settings_DispEnvXYSet                       = 0x80032524; // type:func
+func_8003289C.66                            = 0x8003289C; // filename:func_8003289C type:func The generated result of the compilation for some reason adds .66 at name end.
+Gfx_VSyncCallback                           = 0x80032B80; // type:func
+GameFs_TitleGfxSeek                         = 0x80032BD0; // type:func
+GameFs_TitleGfxLoad                         = 0x80032BF0; // type:func
+GameFs_StreamBinSeek                        = 0x80032C20; // type:func
+GameFs_StreamBinLoad                        = 0x80032C40; // type:func
+GameFs_OptionBinLoad                        = 0x80032C68; // type:func
+GameFs_SaveLoadBinLoad                      = 0x80032CA8; // type:func
+
+//--------------------------------------------------------------------
+//--- PA: 0x00E1BC   VA: 0x80032D1C   subsegment: c, bodyprog_80032D1C
+//--------------------------------------------------------------------
+GameState_Unk0_Update                       = 0x80032D1C; // type:func
+MainLoop                                    = 0x80032EE0; // type:func
+Settings_ScreenAndVolUpdate                 = 0x800333CC; // type:func
+Settings_RestoreDefaults                    = 0x8003342C; // type:func
+Settings_RestoreControlDefaults             = 0x80033480; // type:func
+nullsub_800334C8                            = 0x800334C8; // type:func
+SysWork_Clear                               = 0x800340E0; // type:func
+MainLoop_ShouldWarmReset                    = 0x80034108; // type:func
+Game_WarmBoot                               = 0x80034264; // type:func
+Joy_Init                                    = 0x8003441C; // type:func
+Joy_ReadP1                                  = 0x80034450; // type:func
+Joy_Update                                  = 0x8003446C; // type:func
+Joy_ControllerDataUpdate                    = 0x80034494; // type:func
+ControllerData_AnalogToDigital              = 0x80034670; // type:func
+GameState_LoadScreen_Update                 = 0x800348E8; // type:func
+Game_GameStartUp                            = 0x80034964; // type:func
+Gfx_LoadingScreenDraw                       = 0x80034E58; // type:func
+Game_SavegameInitialize                     = 0x800350BC; // type:func
+Game_InGameInitialize                       = 0x80035178; // type:func
+GameFs_MapLoad                              = 0x8003521C; // type:func
+Savegame_MapRoomIdxSet                      = 0x80036420; // type:func
+Chara_PositionUpdateFromParams              = 0x800371E8; // type:func
+GameState_InGame_Update                     = 0x80038BD4; // type:func
+SysState_Gameplay_Update                    = 0x80038F6C; // type:func
+SysState_GamePaused_Update                  = 0x800391E8; // type:func
+SysState_OptionsMenu_Update                 = 0x80039344; // type:func
+SysState_StatusMenu_Update                  = 0x80039568; // type:func
+GameState_LoadStatusScreen_Update           = 0x800395C0; // type:func
+SysState_Unk3_Update                        = 0x800396D4; // type:func
+GameState_LoadMapScreen_Update              = 0x8003991C; // type:func
+SysState_Fmv_Update                         = 0x80039A58; // type:func
+SysState_LoadArea_Update                    = 0x80039C40; // type:func
+AreaLoad_UpdatePlayerPosition               = 0x80039F30; // type:func
+SysState_ReadMessage_Update                 = 0x80039FB8; // type:func
+SysWork_SavegameUpdatePlayer                = 0x8003A120; // type:func
+SysWork_SavegameReadPlayer                  = 0x8003A1F4; // type:func
+SysState_SaveMenu_Update                    = 0x8003A230; // type:func
+SysState_EventCallFunc_Update               = 0x8003A3C8; // type:func
+SysState_EventSetFlag_Update                = 0x8003A460; // type:func
+SysState_EventPlaySound_Update              = 0x8003A4B4; // type:func
+SysState_GameOver_Update                    = 0x8003A52C; // type:func
+GameState_MapEvent_Update                   = 0x8003AA4C; // type:func
+
+//--------------------------------------------------------------------
+//--- PA: 0x015FC8   VA: 0x8003AB28   subsegment: c, bodyprog_8003AB28
+//--------------------------------------------------------------------
+GameState_MainMenu_Update                   = 0x8003AB28; // type:func
+MainMenu_SelectedOptionIdxReset             = 0x8003B550; // type:func
+Gfx_MainMenu_MainTextDraw                   = 0x8003B568; // type:func
+Gfx_MainMenu_DifficultyTextDraw             = 0x8003B678; // type:func
+Gfx_MainMenu_BackgroundDraw                 = 0x8003B758; // type:func
+Gfx_MainMenu_FogPacketGet                   = 0x8003B838; // type:func
+Gfx_MainMenu_FogDraw                        = 0x8003BA08; // type:func
+Gfx_MainMenu_FogRandomize                   = 0x8003BAC4; // type:func
+Gfx_MainMenu_FogScatter                     = 0x8003BBF4; // type:func
+Gfx_MainMenu_FogUpdate                      = 0x8003BC8C; // type:func
+GameFs_BgEtcGfxLoad                         = 0x8003BE6C; // type:func
+GameFs_BgItemLoad                           = 0x8003BE9C; // type:func
+GameFs_FlameGfxLoad                         = 0x8003E710; // type:func
+Game_TurnFlashlightOn                       = 0x8003ECBC; // type:func
+Game_TurnFlashlightOff                      = 0x8003ECE4; // type:func
+Math_GetWeightedAverage                     = 0x8003F7E4; // type:func
+
+//---------------------------------------------------------------
+//--- PA: 0x01B4EC   VA: 0x8004004C   subsegment: c, view/vc_util
+//---------------------------------------------------------------
+vcInitCamera                                = 0x8004004C; // type:func
+vcSetCameraUseWarp                          = 0x800400D4; // type:func
+vcRetCamMvSmoothF                           = 0x80040190; // type:func
+vcSetEvCamRate                              = 0x800401C0; // type:func Guessed name.
+vcMoveAndSetCamera                          = 0x800401EC; // type:func
+vcMakeHeroHeadPos                           = 0x8004047C; // type:func
+vcAddOfsToPos                               = 0x80040518; // type:func
+vcSetRefPosAndSysRef2CamParam               = 0x800405C4; // type:func
+vcSetRefPosAndCamPosAngByPad                = 0x800406D4; // type:func
+
+//--------------------------------------------------------------------
+//--- PA: 0x01BF04   VA: 0x80040A64   subsegment: c, bodyprog_80040A64
+//--------------------------------------------------------------------
+Anim_Update0                                = 0x800449F0; // type:func
+Anim_Update1                                = 0x80044B38; // type:func
+Anim_Update2                                = 0x80044CA4; // type:func
+Anim_Update3                                = 0x80044DF0; // type:func
+
+//--------------------------------------------------------------------------
+//--- PA: 0x020F1C   VA: 0x80045A7C   subsegment: c, libsd/bodyprog_80045A7C
+//--------------------------------------------------------------------------
+Sd_EngineCmd                                = 0x80045A7C; // type:func
+sd_init                                     = 0x80045DD4; // type:func
+sd_work_init                                = 0x80045E44; // type:func
+Sd_PlaySfx                                  = 0x80046048; // type:func
+Sd_SetVolume                                = 0x80047798; // type:func
+Sd_SetVolBgm                                = 0x80047808; // type:func
+Sd_SetVolXa                                 = 0x80047860; // type:func
+Sd_GetVolSe                                 = 0x800478B8; // type:func
+Sd_SetReverbDepth                           = 0x80047AD0; // type:func
+Sd_SetReverbEnable                          = 0x80047AFC; // type:func
+
+//-----------------------------------------------------------------------------
+//--- PA: 0x0231F0   VA: 0x80047D50   subsegment: c, libsd/bodyprog_CD_80047D50
+//-----------------------------------------------------------------------------
+Sd_StopSeq                                  = 0x8004839C; // type:func
+
+//---------------------------------------------------------------
+//--- PA: 0x023ED8   VA: 0x80048A38   subsegment: c, view/vw_main
+//---------------------------------------------------------------
+vwInitViewInfo                              = 0x80048A38; // type:func
+vwGetViewCoord                              = 0x80048A90; // type:func guessed name
+vwGetViewPosition                           = 0x80048A9C; // type:func
+vwGetViewAngle                              = 0x80048AC4; // type:func
+Vw_SetLookAtMatrix                          = 0x80048AF4; // type:func
+vwSetCoordRefAndEntou                       = 0x80048BE0; // type:func
+vwSetViewInfoDirectMatrix                   = 0x80048CF0; // type:func
+vwSetViewInfo                               = 0x80048D48; // type:func
+Vw_ClampAngleRange                          = 0x80048DA8; // type:func
+
+//---------------------------------------------------------------
+//--- PA: 0x0243C8   VA: 0x80048F28   subsegment: c, view/vw_calc
+//---------------------------------------------------------------
+vwRenewalXZVelocityToTargetPos              = 0x80048F28; // type:func
+vwLimitOverLimVector                        = 0x8004914C; // type:func
+vwDecreaseSideOfVector                      = 0x80049228; // type:func
+vwRetNewVelocityToTargetVal                 = 0x80049388; // type:func
+vwRetNewAngSpdToTargetAng                   = 0x80049464; // type:func
+vwMatrixToAngleYXZ                          = 0x800495D4; // type:func
+Vw_MultiplyAndTransformMatrix               = 0x800496AC; // type:func
+vbSetWorldScreenMatrix                      = 0x800497E4; // type:func
+vbSetRefView                                = 0x800498D8; // type:func
+Vw_CoordHierarchyMatrixCompute              = 0x80049984; // type:func
+Vw_AabbVisibleInScreenCheck                 = 0x80049D04; // type:func
+Vw_AabbVisibleInFrustumCheck                = 0x80049F38; // type:func
+vwAngleToVector                             = 0x8004A66C; // type:func
+vwVectorToAngle                             = 0x8004A714; // type:func
+vwOresenHokan                               = 0x8004A7C8; // type:func
+
+//------------------------------------------------------------
+//--- PA: 0x025D1C   VA: 0x8004A87C   subsegment: c, text_draw
+//------------------------------------------------------------
+Gfx_StringSetPosition                       = 0x8004A87C; // type:func
+Gfx_StringSetColor                          = 0x8004A8DC; // type:func
+Gfx_StringDraw                              = 0x8004A8E8; // type:func
+Gfx_StringDrawInt                           = 0x8004B9F8; // type:func
+
+//-------------------------------------------------------------------------
+//--- PA: 0x026FEC   VA: 0x8004BB4C   subsegment: c, items/item_screens_cam
+//-------------------------------------------------------------------------
+Gfx_ItemScreens_CameraSet                   = 0x8004BB4C; // type:func
+GameFs_TmdDataAlloc                         = 0x8004BCBC; // type:func
+Gfx_Items_ItemRotate                        = 0x8004BCDC; // type:func
+
+//-----------------------------------------------------------------------
+//--- PA: 0x027528   VA: 0x8004C088   subsegment: c, items/item_screens_1
+//-----------------------------------------------------------------------
+Inventory_ExitAnimEquippedItemUpdate        = 0x8004C088; // type:func
+Inventory_HyperBlasterUnlockTest            = 0x8004C45C; // type:func
+Inventory_HyperBlasterFunctionalTest        = 0x8004C4F8; // type:func
+Game_HyperBlasterBeamColorGet               = 0x8004C54C; // type:func
+
+//-----------------------------------------------------------------------
+//--- PA: 0x027D7C   VA: 0x8004C8DC   subsegment: c, items/item_screens_2
+//-----------------------------------------------------------------------
+Game_TimerUpdate                            = 0x8004C8DC; // type:func
+GameState_ItemScreens_Update                = 0x8004C9B0; // type:func
+Gfx_Results_Save                            = 0x8004D1A0; // type:func
+Inventory_Logic                             = 0x8004D518; // type:func
+Inventory_ItemUse                           = 0x8004E6D4; // type:func
+Gfx_Inventory_CmdOptionsDraw                = 0x8004E864; // type:func
+Gfx_Inventory_ScrollArrowsDraw              = 0x8004EC7C; // type:func
+Gfx_Inventory_UnavailableMapText            = 0x8004F57C; // type:func
+
+//-----------------------------------------------------------------------
+//--- PA: 0x02AA7C   VA: 0x8004F5DC   subsegment: c, items/item_screens_3
+//-----------------------------------------------------------------------
+Inventory_DirectionalInputSet               = 0x8004F5DC; // type:func
+Gfx_ItemScreens_RenderInit                  = 0x8004F764; // type:func
+Gfx_Inventory_2dBackgroundDraw              = 0x8004FBCC; // type:func
+Gfx_Inventory_HealthStatusDraw              = 0x80051020; // type:func
+Gfx_Inventory_ItemDescriptionDraw           = 0x8005192C; // type:func
+Gfx_Primitive2dTextureSet                   = 0x80052088; // type:func
+Gfx_Results_ItemsDisplay                    = 0x800521A8; // type:func
+Gfx_Results_ItemsPosition                   = 0x8005227C; // type:func
+Inventory_PlayerItemScroll                  = 0x800523D8; // type:func
+GameFs_UniqueItemModelLoad                  = 0x80053B08; // type:func
+GameFs_Tim00TIMLoad                         = 0x80053DA0; // type:func
+GameFs_MapItemsModelLoad                    = 0x80053DFC; // type:func
+GameFs_MapItemsTextureLoad                  = 0x80054024; // type:func
+Gfx_Items_Render                            = 0x80054200; // type:func
+Gfx_Items_RenderInit                        = 0x80054558; // type:func
+Inventory_ExitAnimFixes                     = 0x80054634; // type:func
+Gfx_Items_Display                           = 0x80054720; // type:func
+Gfx_Items_SetAmbientLighting                = 0x80054928; // type:func
+Inventory_AddSpecialItem                    = 0x80054CAC; // type:func
+
+//--------------------------------------------------------------------
+//--- PA: 0x030460   VA: 0x80054FC0   subsegment: c, bodyprog_80054FC0
+//--------------------------------------------------------------------
+GameState_MapScreen_Update                  = 0x80066EB0; // type:func
+Player_Logic_Update                         = 0x800717D0; // type:func
+Game_SavegameResetPlayer                    = 0x8007E530; // type:func
+GameFs_PlayerMapAnimLoad                    = 0x8007EB64; // type:func
+Player_AnimGetSomething                     = 0x8007F308; // type:func
+PreservedSignSubtract                       = 0x80080594; //type:func
+Math_MulFixed                               = 0x800808D4; // type:func
+Math_GetMagnitudeShift                      = 0x800808F8; // type:func
+
+//---------------------------------------------------------------
+//--- PA: 0x05BDE0   VA: 0x80080940   subsegment: c, view/vc_main
+//---------------------------------------------------------------
 vcInitVCSystem                              = 0x80080940; // type:func
 vcStartCameraSystem                         = 0x800809DC; // type:func
 vcEndCameraSystem                           = 0x80080A04; // type:func Guessed name.
-vcSetFirstCamWork                           = 0x80080A4c; // type:func
+vcSetFirstCamWork                           = 0x80080A4C; // type:func
 vcWorkSetFlags                              = 0x80080BF8; // type:func Guessed name.
 Vc_LookAtAngleYMaxSet                       = 0x80080C18; // type:func An accurate guess might be `vcSetWatchTgtMaxY`.
 vcUserWatchTarget                           = 0x80080C2C; // type:func
@@ -354,1300 +791,1928 @@ vcCamMatNoise                               = 0x80085A7C; // type:func
 Vc_VectorMagnitudeCalc                      = 0x80085B1C; // type:func Originally could've be something like `vcGetXZSumDist`.
 vcGetXZSumDistFromLimArea                   = 0x80085C80; // type:func
 
-Camera_TranslationSet = 0x80086A94; // type:func
-Camera_RotationSet    = 0x80086B70; // type:func
+//--------------------------------------------------------------------
+//--- PA: 0x061218   VA: 0x80085D78   subsegment: c, bodyprog_80085D78
+//--------------------------------------------------------------------
+Camera_TranslationSet                       = 0x80086A94; // type:func
+Camera_RotationSet                          = 0x80086B70; // type:func
+Chara_Load                                  = 0x80088C7C; // type:func
+Chara_Spawn                                 = 0x80088D78; // type:func
+DmsHeader_FixOffsets                        = 0x8008C9A0; // type:func
+DmsEntry_FixOffsets                         = 0x8008CA44; // type:func
+Dms_CharacterGetPosRot                      = 0x8008CA74; // type:func
+Dms_CharacterFindIndexByName                = 0x8008CB10; // type:func
+Dms_CharacterGetPosRotByIndex               = 0x8008CB90; // type:func
+Dms_CharacterKeyframeInterpolate            = 0x8008CC98; // type:func
+Dms_CameraGetTargetPos                      = 0x8008CE1C; // type:func
+Dms_CameraKeyframeInterpolate               = 0x8008CFEC; // type:func
+Math_LerpFixed12                            = 0x8008D3D4; // type:func
 
-Chara_Load = 0x80088C7C; // type:func
-Chara_Spawn = 0x80088D78; // type:func
+//-------------------------------------------------------
+//--- PA: 0x06A3C0   VA: 0x8008EF20   subsegment: c, demo
+//-------------------------------------------------------
+Demo_SequenceAdvance                        = 0x8008EF20; // type:func
+Demo_DemoDataRead                           = 0x8008F048; // type:func
+Demo_PlayDataRead                           = 0x8008F07C; // type:func
+Demo_PlayFileBufferSetup                    = 0x8008F0BC; // type:func
+Demo_DemoFileSavegameUpdate                 = 0x8008F13C; // type:func
+Demo_GameGlobalsUpdate                      = 0x8008F1A0; // type:func
+Demo_GameGlobalsRestore                     = 0x8008F2BC; // type:func
+Demo_GameRandSeedUpdate                     = 0x8008F33C; // type:func
+Demo_GameRandSeedRestore                    = 0x8008F370; // type:func
+Demo_Start                                  = 0x8008F398; // type:func
+Demo_Stop                                   = 0x8008F3F0; // type:func
+Demo_ExitDemo                               = 0x8008F4E4; // type:func
+Demo_DemoRandSeedBackup                     = 0x8008F528; // type:func
+Demo_DemoRandSeedRestore                    = 0x8008F560; // type:func
+Demo_DemoRandSeedAdvance                    = 0x8008F598; // type:func
+Demo_Update                                 = 0x8008F5D8; // type:func
+Demo_ControllerDataUpdate                   = 0x8008F7CC; // type:func
+Demo_PresentIntervalUpdate                  = 0x8008F87C; // type:func
+Demo_GameRandSeedSet                        = 0x8008F8A8; // type:func
 
-DmsHeader_FixOffsets = 0x8008C9A0; // type:func
-DmsEntry_FixOffsets = 0x8008CA44; // type:func
-Dms_CharacterGetPosRot = 0x8008CA74; // type:func
-Dms_CharacterFindIndexByName = 0x8008CB10; // type:func
-Dms_CharacterGetPosRotByIndex = 0x8008CB90; // type:func
-Dms_CharacterKeyframeInterpolate = 0x8008CC98; // type:func
-Dms_CameraGetTargetPos = 0x8008CE1C; // type:func
-Dms_CameraKeyframeInterpolate = 0x8008CFEC; // type:func
+//----------------------------------------------------------
+//--- PA: 0x06ADEC   VA: 0x8008F94C   subsegment: c, credits
+//----------------------------------------------------------
+Results_DisplayInfo                         = 0x80090664; // type:func
+GameFs_StfRollBinLoad                       = 0x80091778; // type:func
 
-Math_LerpFixed12 = 0x8008D3D4; // type:func
+//----------------------------------------------------------------
+//--- PA: 0x06CF9C   VA: 0x80091AFC   subsegment: lib, libapi, a09
+//----------------------------------------------------------------
+CloseEvent                                  = 0x80091AFC; // type:func
 
-Demo_SequenceAdvance = 0x8008EF20; // type:func
-Demo_DemoDataRead = 0x8008F048; // type:func
-Demo_PlayDataRead = 0x8008F07C; // type:func
-Demo_PlayFileBufferSetup = 0x8008F0BC; // type:func
-Demo_DemoFileSavegameUpdate = 0x8008F13C; // type:func
-Demo_GameGlobalsUpdate = 0x8008F1A0; // type:func
-Demo_GameGlobalsRestore = 0x8008F2BC; // type:func
-Demo_GameRandSeedUpdate = 0x8008F33C; // type:func
-Demo_GameRandSeedRestore = 0x8008F370; // type:func
-Demo_Start = 0x8008F398; // type:func
-Demo_Stop = 0x8008F3F0; // type:func
-Demo_ExitDemo = 0x8008F4E4; // type:func
-Demo_DemoRandSeedBackup = 0x8008F528; // type:func
-Demo_DemoRandSeedRestore = 0x8008F560; // type:func
-Demo_DemoRandSeedAdvance = 0x8008F598; // type:func
-Demo_Update = 0x8008F5D8; // type:func
-Demo_ControllerDataUpdate = 0x8008F7CC; // type:func
-Demo_PresentIntervalUpdate = 0x8008F87C; // type:func
-Demo_GameRandSeedSet = 0x8008F8A8; // type:func
+//----------------------------------------------------------------
+//--- PA: 0x06CFAC   VA: 0x80091B0C   subsegment: lib, libapi, a11
+//----------------------------------------------------------------
+TestEvent                                   = 0x80091B0C; // type:func
 
-Results_DisplayInfo = 0x80090664; // type:func
+//----------------------------------------------------------------
+//--- PA: 0x06CFBC   VA: 0x80091B1C   subsegment: lib, libapi, a39
+//----------------------------------------------------------------
+SetSp                                       = 0x80091B1C; // type:func
 
-g_ObjectTable0 = 0x800A8F74; // type:s8
-g_ObjectTable1 = 0x800A8FC4; // type:s8
+//----------------------------------------------------------------
+//--- PA: 0x06CFCC   VA: 0x80091B2C   subsegment: lib, libapi, a51
+//----------------------------------------------------------------
+lseek                                       = 0x80091B2C; // type:func
 
-g_Inventory_CmdSelectedIdx                 = 0x800ADB58; // type:s32
-g_Inventory_SelectionId                    = 0x800ADB5C; // type:u32
-g_Inventory_SelectedItemIdx                = 0x800AE17C;
-g_Inventory_EquippedItem                   = 0x800AE184;
-g_Inventory_HealthStatusScanlineTimer      = 0x800AE194;
-g_Inventory_HealthStatusColorGradientTimer = 0x800AE196;
-g_Inventory_HealthStatusScanlinePosition   = 0x800AE19A;
-g_Inventory_ItemNameTimer                  = 0x800AE19C;
-g_Inventory_DescriptionRollTimer           = 0x800AE1A0;
-g_Inventory_ScrollTransitionTimer          = 0x800AE1A4;
+//----------------------------------------------------------------
+//--- PA: 0x06CFDC   VA: 0x80091B3C   subsegment: lib, libapi, a53
+//----------------------------------------------------------------
+write                                       = 0x80091B3C; // type:func
 
-g_DeltaTime0                            = 0x800B5CC0; // type:s32 - Q19.12 fixed point, usually 0x44 (0.0166..) or 0x88 (0.033..).
-g_DeltaTime1                            = 0x800A8FEC; // type:s32
-g_DeltaTime2                            = 0x800B9CC8; // type:s32
-g_MapEventIdx                           = 0x800A9A14; // type:u32
-g_MainMenuState                         = 0x800A9A74;
-g_MainMenu_SelectedOptionIdx            = 0x800A9A78;
-g_Demo_ReproducedCount                  = 0x800A9A80;
-g_MainMenu_NewGameSelectedDifficultyIdx = 0x800A9A84;
-g_SysState_GameOver_TipIdx              = 0x800BCD80; // type:u8
-g_MapEventParam                         = 0x800BCDD8; // type:u32 - pointer to s_ShEventParam
+//----------------------------------------------------------------
+//--- PA: 0x06CFEC   VA: 0x80091B4C   subsegment: lib, libapi, a65
+//----------------------------------------------------------------
+format                                      = 0x80091B4C; // type:func
 
-g_SaveScreenPlayerState     = 0x800BCD38;
-g_SlotElementCount          = 0x800BCD3C;
-g_SlotElementSelectedIdx    = 0x800A97D4;
-g_SelectedSaveSlotIdx       = 0x800A97D6;
-g_SelectedFileIdx           = 0x800BCD3F;
-g_SelectedSaveIdx           = 0x800BCD3E;
-g_ActiveSavegameEntry       = 0x800BCD2C;
-g_MemCardElementCount       = 0x800BCD30;
-g_MemCardsTotalElementCount = 0x800BCD3A;
+//----------------------------------------------------------------
+//--- PA: 0x06CFFC   VA: 0x80091B5C   subsegment: lib, libapi, a67
+//----------------------------------------------------------------
+nextfile                                    = 0x80091B5C; // type:func
 
-g_IntervalVBlanks = 0x800A8FF0; // type:s32
-g_PrevVBlanks     = 0x800A9770; // type:s32
-g_VBlanks         = 0x800B5C34; // type:s32
-g_UncappedVBlanks = 0x800B5C38; // type:s32
+//----------------------------------------------------------------
+//--- PA: 0x06D00C   VA: 0x80091B6C   subsegment: lib, libapi, a68
+//----------------------------------------------------------------
+rename                                      = 0x80091B6C; // type:func
 
-g_Player_Walk2RunTransition = 0x800AF214;
-g_Player_EnableControl      = 0x800AF215;
+//----------------------------------------------------------------
+//--- PA: 0x06D01C   VA: 0x80091B7C   subsegment: lib, libapi, a69
+//----------------------------------------------------------------
+erase                                       = 0x80091B7C; // type:func
 
-g_MaybePlayerAnims = 0x800AF228; // type:MaybeCharacterAnim
-g_Gfx_ScreenFade   = 0x800BCD0C;
+//----------------------------------------------------------------
+//--- PA: 0x06D02C   VA: 0x80091B8C   subsegment: lib, libapi, a81
+//----------------------------------------------------------------
+Krom2RawAdd                                 = 0x80091B8C; // type:func
 
-g_Gfx_DebugStringPosition0 = 0x800B5C20; // type:DVECTOR size:4
-g_Gfx_DebugStringPosition1 = 0x800B5C24; // type:DVECTOR size:4
+//------------------------------------------------------------------
+//--- PA: 0x06D03C   VA: 0x80091B9C   subsegment: lib, libapi, first
+//------------------------------------------------------------------
+firstfile                                   = 0x80091B9C; // type:func
+_firstfile                                  = 0x80091D38; // type:func
 
-// TODO: `g_MapOverlayHeader` is part of the overlay bin file, maybe should be moved to `sym.maps_shared.txt` or similar.
-// Including here for now since all map configs include this sym file, and bodyprog also reads from this header.
-g_MapOverlayHeader = 0x800C957C; // type:MapOverlayHeader size:0x84C - size incomplete
+//----------------------------------------------------------------
+//--- PA: 0x06D2DC   VA: 0x80091E3C   subsegment: lib, libapi, a66
+//----------------------------------------------------------------
+firstfile2                                  = 0x80091E3C; // type:func
 
-g_StringColorId    = 0x800AD498; // type:s16
-g_StringPosition   = 0x800C38A8; // type:DVECTOR
-g_StringPositionX1 = 0x800C38AC; // type:s32
+//--------------------------------------------------------------
+//--- PA: 0x06D2EC   VA: 0x80091E4C   subsegment: lib, libc, a56
+//--------------------------------------------------------------
+exit                                        = 0x80091E4C; // type:func
 
-g_Inventory_EquippedItemIdx = 0x800C3E34;
+//--------------------------------------------------------------
+//--- PA: 0x06D2FC   VA: 0x80091E5C   subsegment: lib, libc, c24
+//--------------------------------------------------------------
+strncmp                                     = 0x80091E5C; // type:func
 
-hack_D_800FE5FC_fix = 0x800FE5FC; // ignore:true - Part of temp memory block at 800FDE00, has to be unsymbolized for C to match.
+//--------------------------------------------------------------
+//--- PA: 0x06D30C   VA: 0x80091E6C   subsegment: lib, libc, c25
+//--------------------------------------------------------------
+strcpy                                      = 0x80091E6C; // type:func
 
-// vw globals from SH2
-vcNullRoadArray        = 0x800A8F44; // _VC_ROAD_DATA[2]
-vcNullNearRoad         = 0x800AFC94; // type:VC_NEAR_ROAD_DATA size:0x24
-deflt_watch_mv_prm     = 0x800AFCB8; // type:VC_WATCH_MV_PARAM size:0xC
-self_view_watch_mv_prm = 0x800AFCC4; // type:VC_WATCH_MV_PARAM size:0xC
-cam_mv_prm_user        = 0x800AFCD0; // type:VC_CAM_MV_PARAM size:0x10
-excl_r_ary             = 0x800AFCE0; // int[9]
-vcWork                 = 0x800B9CD0; // type:VC_WORK size:0x2E8
-vcRefPosSt             = 0x800BCDF8; // type:VECTOR3 size:0xC
-vwViewPointInfo        = 0x800C37E0; // type:VW_VIEW_WORK size:0x84
-VbWvsMatrix            = 0x800C3888; // type:MATRIX size:0x20
-vcWatchMvPrmSt         = 0x800C4630; // type:VC_WATCH_MV_PARAM size:0xC
-vcSelfViewTimer        = 0x800C463C; // type:s32
+//--------------------------------------------------------------
+//--- PA: 0x06D31C   VA: 0x80091E7C   subsegment: lib, libc, c26
+//--------------------------------------------------------------
+strncpy                                     = 0x80091E7C; // type:func
 
-D_800BCE18 = 0x800BCE18; // type:u8 size:0x2BEC - size incomplete, contains vcCameraInternalInfo and others
+//--------------------------------------------------------------
+//--- PA: 0x06D32C   VA: 0x80091E8C   subsegment: lib, libc, c27
+//--------------------------------------------------------------
+strlen                                      = 0x80091E8C; // type:func
 
-g_Sd_VolumeSe             = 0x800C1684;
-g_Sd_VolumeBgm            = 0x800C1685;
-g_Sd_VolumeXa             = 0x800C1686;
-g_Sd_ReverbDepth          = 0x800C1687;
-g_Game_VSyncTimeSinceBoot = 0x800C1690;
-D_800C16A8                = 0x800C16A8; // type:u8 size:0x20
+//--------------------------------------------------------------
+//--- PA: 0x06D33C   VA: 0x80091E9C   subsegment: lib, libc, c37
+//--------------------------------------------------------------
+toupper                                     = 0x80091E9C; // type:func
 
-g_Chara_FileInfo = 0x800A90FC; // type:CharaFileInfo size:0x2D0
+//-----------------------------------------------------------------
+//--- PA: 0x06D34C   VA: 0x80091EAC   subsegment: lib, libc, memcmp
+//-----------------------------------------------------------------
+memcmp                                      = 0x80091EAC; // type:func
 
-D_800C3928                           = 0x800C3928;
-g_Inventory_IsUpClicked              = 0x800C3968; // type:s32
-g_Inventory_IsDownClicked            = 0x800C396C; // type:s32
-g_Inventory_IsLeftClicked            = 0x800C3970; // type:s32
-g_Inventory_IsRightClicked           = 0x800C3974; // type:s32
-g_Inventory_IsUpPulsed               = 0x800C3978; // type:s32
-g_Inventory_IsDownPulsed             = 0x800C397C; // type:s32
-g_Inventory_IsLeftPulsed             = 0x800C3980; // type:s32
-g_Inventory_IsRightPulsed            = 0x800C3984; // type:s32
-g_Inventory_IsLeftHeld               = 0x800C3988; // type:s32
-g_Inventory_IsRightHeld              = 0x800C398C; // type:s32
-g_Inventory_IsScrolling       		 = 0x800C3990;
-g_Gfx_Inventory_SelectionBordersDraw = 0x800C3998;
-g_Inventory_PrevSelectionId          = 0x800C399C;
-g_Items_ItemsLightingData            = 0x800C39A8;
-g_Item_MapLoadableItems              = 0x800C3BB8;
-g_Items_Items3dData0                 = 0x800C3BE8;
-g_Items_Items3dData1                 = 0x800C3E48;
-g_Items_ItemsModelData               = 0x800C3D78;
+//------------------------------------------------------------------
+//--- PA: 0x06D39C   VA: 0x80091EFC   subsegment: lib, libcard, c171
+//------------------------------------------------------------------
+_card_info                                  = 0x80091EFC; // type:func
 
-g_Demo_DemoFileIdx          = 0x800C4840; // type:s32
-g_Demo_PlayFileIdx          = 0x800C4844; // type:s32
-g_Demo_UserConfigBackup     = 0x800C4850; // type:ShSaveUserConfig size:0x38
-g_Demo_PrevRandSeed         = 0x800C4888;
-g_Demo_RandSeedBackup       = 0x800C488C;
-g_Demo_CurFrameData         = 0x800C4890;
-g_Demo_DemoStep             = 0x800C4894;
-g_Demo_VideoPresentInterval = 0x800C4898;
+//------------------------------------------------------------------
+//--- PA: 0x06D3AC   VA: 0x80091F0C   subsegment: lib, libcard, c172
+//------------------------------------------------------------------
+_card_load                                  = 0x80091F0C; // type:func
 
-g_Demo_DemoId            = 0x800AFDB8; // type:s32
-g_Demo_RandSeed          = 0x800AFDBC; // type:u16
-g_Demo_PlayFileBufferPtr = 0x800AFDC0; // type:s32
-g_Demo_FileIds           = 0x800AFDC4; // type:DemoFileInfo size:0x28
+//-----------------------------------------------------------------
+//--- PA: 0x06D3BC   VA: 0x80091F1C   subsegment: lib, libcard, a78
+//-----------------------------------------------------------------
+_card_write                                 = 0x80091F1C; // type:func
 
-// TODO: Naming this function results in an undefined reference.
-//SaveLoad_FileStringDraw = 0x801E2FCC; // type:func
+//-----------------------------------------------------------------
+//--- PA: 0x06D3CC   VA: 0x80091F2C   subsegment: lib, libcard, a80
+//-----------------------------------------------------------------
+_new_card                                   = 0x80091F2C; // type:func
 
-GameFs_StfRollBinLoad = 0x80091778; // type:func
+//------------------------------------------------------------------
+//--- PA: 0x06D3DC   VA: 0x80091F3C   subsegment: lib, libcard, card
+//------------------------------------------------------------------
+_card_clear                                 = 0x80091F3C; // type:func
 
-// Custom Konami rotation matrix library?
-// TODO: identify the other RotMatrix funcs here
-shRsin       = 0x8009687C; // type:func
-shRcos       = 0x8009689C; // type:func
-shRotMatrixZ = 0x800968BC; // type:func
+//------------------------------------------------------------------
+//--- PA: 0x06D41C   VA: 0x80091F7C   subsegment: lib, libcard, init
+//------------------------------------------------------------------
+InitCARD                                    = 0x80091F7C; // type:func
+StartCARD                                   = 0x80091FE8; // type:func
+StopCARD                                    = 0x80092020; // type:func
 
-// Konami libsd sound library (customised libsnd?)
-// smf_snd.c
-tone_adsr_mem = 0x8009eda4; // type:func
-tone_adsr_back = 0x8009ee30; // type:func
-sd_alloc_sort = 0x8009eebc; // type:func
-SdSpuMalloc = 0x8009efa0; // type:func
-SdSpuMallocWithStartAddr = 0x8009f120; // type:func
-SdSpuFree = 0x8009f364; // type:func
-SdWorkInit = 0x8009f400; // type:func
-SdInit = 0x8009f490; // type:func
-SdStart = 0x8009f4d0; // type:func
-SdStart2 = 0x8009f510; // type:func
-SdSetTickMode = 0x8009f530; // type:func
-SdSeqCalledTbyT = 0x8009f53c; // type:func
-SdSetStereo = 0x8009f568; // type:func
-SdSetMono = 0x8009f574; // type:func
-SdSetReservedVoice = 0x8009f584; // type:func
-SdSetTableSize = 0x8009f5b8; // type:func
-SdEnd = 0x8009f5c0; // type:func
-SdQuit = 0x8009f64c; // type:func
-SdSetSerialAttr = 0x8009f67c; // type:func
-SdSetSerialVol = 0x8009f700; // type:func
-SdSetMVol = 0x8009f75c; // type:func
-SdVabOpenHead = 0x8009f79c; // type:func
-SdVabOpenHeadSticky = 0x8009f91c; // type:func
-SdVabFakeHead = 0x8009fac0; // type:func
-SdVbOpenOne = 0x8009fba8; // type:func
-SdVabTransBody = 0x8009fd38; // type:func
-SdVabTransBodyPartly = 0x8009fddc; // type:func
-SdVabTransCompleted = 0x8009fec4; // type:func
-SdVabClose = 0x8009ff00; // type:func
-SdSetAutoKeyOffMode = 0x8009ff64; // type:func
-SdAutoKeyOffCheck = 0x8009ff70; // type:func
-SdSeqOpen = 0x800a00a4; // type:func
-SdSeqOpenWithAccNum = 0x800a0154; // type:func
-SdSeqPlay = 0x800a0210; // type:func
-SdSeqStop = 0x800a02d8; // type:func
-SdSeqClose = 0x800a037c; // type:func
-SdSeqPause = 0x800a0418; // type:func
-SdSeqReplay = 0x800a0534; // type:func
-SdSeqSetVol = 0x800a06f0; // type:func
-SdSeqGetVol = 0x800a074c; // type:func
-SdUtFlush = 0x800a0794; // type:func
-SdUtReverbOn = 0x800a07b4; // type:func
-SdUtReverbOff = 0x800a07dc; // type:func
-SdUtSetReverbType = 0x800a080c; // type:func
-SdUtSetReverbDepth = 0x800a085c; // type:func
-SdSetRVol = 0x800a089c; // type:func
-SdUtSEAllKeyOff = 0x800a08dc; // type:func
-SdUtAllKeyOff = 0x800a09e8; // type:func
-SdUtGetVabHdr = 0x800a0a40; // type:func
-SdVoKeyOn = 0x800a0aa0; // type:func
-SdVoKeyOff = 0x800a0cfc; // type:func
-SdVoKeyOffWithRROff = 0x800a0e40; // type:func
-SdUtKeyOnV = 0x800a0f80; // type:func
-SdUtKeyOn = 0x800a1534; // type:func
-SdVbKeyOn = 0x800a16c0; // type:func
-SdUtKeyOffV = 0x800a18f4; // type:func
-SdUtKeyOffVWithRROff = 0x800a1a18; // type:func
-SdGetSeqStatus = 0x800a1b14; // type:func
-SdUtSetDetVVol = 0x800a1bd0; // type:func
-SdUtSetVVol = 0x800a1c1c; // type:func
-SdUtGetDetVVol = 0x800a1c78; // type:func
-SdUtGetVVol = 0x800a1ce8; // type:func
-SdGetTempo = 0x800a1d68; // type:func
-SdSetTempo = 0x800a1da4; // type:func
-SdSetSeqWide = 0x800a1e18; // type:func
-SdGetMidiVol = 0x800a1e50; // type:func
-SdSetMidiVol = 0x800a1e90; // type:func
-SdSetMidiExpress = 0x800a1ec4; // type:func
-SdGetMidiExpress = 0x800a1ef8; // type:func
-SdGetMidiPan = 0x800a1f38; // type:func
-SdSetMidiPan = 0x800a1f78; // type:func
-SdGetMidiPitchBendFine = 0x800a1fac; // type:func
-SdSetMidiPitchBendFine = 0x800a1fec; // type:func
-SdGetTrackTranspause = 0x800a2030; // type:func
-SdSetTrackTranspause = 0x800a2038; // type:func
-SdGetTrackMute = 0x800a2040; // type:func
-SdSetTrackMute = 0x800a2090; // type:func
-SdGetSeqControlStatus = 0x800a20ec; // type:func
-SdGetSeqPlayStatus = 0x800a2134; // type:func
-SdGetSeqBeat = 0x800a21e0; // type:func
-SdGetSeqBeat2 = 0x800a224c; // type:func
+//----------------------------------------------------------------
+//--- PA: 0x06D4EC   VA: 0x8009204C   subsegment: lib, libapi, pad
+//----------------------------------------------------------------
+SetInitPadFlag                              = 0x8009204C; // type:func
+ReadInitPadFlag                             = 0x80092058; // type:func
+PAD_init                                    = 0x80092068; // type:func
+InitPAD                                     = 0x800920F8; // type:func
+StartPAD                                    = 0x80092188; // type:func
+StopPAD                                     = 0x800921B8; // type:func
+SetPatchPad                                 = 0x800921F0; // type:func
+RemovePatchPad                              = 0x80092268; // type:func
+_Pad1                                       = 0x800922A0; // type:func
+_IsVSync                                    = 0x80092308; // type:func
 
-// Custom Konami versions of these libsnd funcs. Just redirects to SD versions, maybe to aid with ports.
-SsSetMVol = 0x800a2294; // type:func
-SsEnd = 0x800a22c0; // type:func
-SsSetSerialAttr = 0x800a22e0; // type:func
-SsSetSerialVol = 0x800a2308; // type:func
-SsUtAllKeyOff = 0x800a2338; // type:func
+//----------------------------------------------------------------
+//--- PA: 0x06D7EC   VA: 0x8009234C   subsegment: lib, libapi, a18
+//----------------------------------------------------------------
+InitPAD2                                    = 0x8009234C; // type:func
 
-// smf_io.c
-set_note_on = 0x800a397c; // type:func
-set_midi_info = 0x800a39b8; // type:func
-Note2Pitch = 0x800a39d8; // type:func
-tre_calc = 0x800a3b20; // type:func
-vib_calc = 0x800a3d30; // type:func
-random_calc = 0x800a3e70; // type:func
-volume_calc = 0x800a3f14; // type:func
-smf_vol_set = 0x800a4150; // type:func
-master_vol_set = 0x800a4260; // type:func
-seq_master_vol_set = 0x800a4314; // type:func
-toremoro_set = 0x800a439c; // type:func
-pitch_bend_calc = 0x800a441c; // type:func
-pitch_calc = 0x800a4494; // type:func
-midi_mod = 0x800a4608; // type:func
-midi_porta = 0x800a46b8; // type:func
-replay_reverb_set = 0x800a4748; // type:func
-midi_vsync = 0x800a4838; // type:func
-sound_seq_off = 0x800a4a34; // type:func
-sound_off = 0x800a4d20; // type:func
-vol_calc = 0x800a4e90; // type:func
-adsr_set = 0x800a4e98; // type:func
-rr_off = 0x800a4f08; // type:func
-voice_check = 0x800a4f64; // type:func
-key_on = 0x800a5158; // type:func
-key_off = 0x800a5c7c; // type:func
-key_press = 0x800a5dcc; // type:func
-get_vab_tone = 0x800a5dd4; // type:func
-smf_data_entry = 0x800a5e84; // type:func
-control_change = 0x800a6268; // type:func
-program_change = 0x800a6c2c; // type:func
-chan_press = 0x800a6c58; // type:func
-pitch_bend = 0x800a6c60; // type:func
-control_code_set = 0x800a6cb0; // type:func
+//----------------------------------------------------------------
+//--- PA: 0x06D7FC   VA: 0x8009235C   subsegment: lib, libapi, a19
+//----------------------------------------------------------------
+StartPAD2                                   = 0x8009235C; // type:func
 
-// smf_main.c
-smf_timer = 0x800a6d18; // type:func
-smf_timer_set = 0x800a6dc0; // type:func
-smf_timer_end = 0x800a6e58; // type:func
-smf_timer_stop = 0x800a6ec8; // type:func
-smf_vsync = 0x800a6f14; // type:func
+//----------------------------------------------------------------
+//--- PA: 0x06D80C   VA: 0x8009236C   subsegment: lib, libapi, a20
+//----------------------------------------------------------------
+StopPAD2                                    = 0x8009236C; // type:func
 
-// smf_mid.c
-MemCmp = 0x800a6fb8; // type:func
-readMThd = 0x800a6ffc; // type:func
-readMTrk = 0x800a70bc; // type:func
-readEOF = 0x800a717c; // type:func
-egetc = 0x800a723c; // type:func
-readvarinum = 0x800a72b4; // type:func
-to32bit = 0x800a733c; // type:func
-to16bit = 0x800a7368; // type:func
-read32bit = 0x800a737c; // type:func
-read16bit = 0x800a73e8; // type:func
-readheader = 0x800a7428; // type:func
-len_add = 0x800a7814; // type:func
-metaevent = 0x800a7828; // type:func
-sysex = 0x800a7aec; // type:func
-chanmessage = 0x800a7b54; // type:func
-readtrack = 0x800a80c4; // type:func
-readtrack2 = 0x800a81f4; // type:func
-track_head_read = 0x800a8448; // type:func
-delta_time_conv = 0x800a84b0; // type:func
-midi_file_out = 0x800a8674; // type:func
-midi_smf_main = 0x800a8950; // type:func
-midi_smf_stop = 0x800a8c74; // type:func
-midi_smf_stat = 0x800a8d00; // type:func
+//----------------------------------------------------------------
+//--- PA: 0x06D81C   VA: 0x8009237C   subsegment: lib, libapi, a21
+//----------------------------------------------------------------
+PAD_init2                                   = 0x8009237C; // type:func
 
-// konami libsd globals (smf_def.c?)
-sd_interrupt_start_flag = 0x800B143C;
-sd_keyoff_mode = 0x800B1440;
-sd_mono_st_flag = 0x800B1444;
-sd_reverb_mode = 0x800B1448;
-body_partly_size = 0x800B144C; // type:u32
-sd_reverb_area_size = 0x800B1450;
-PitchTbl = 0x800B1728;
-random_tbl = 0x800B2328;
-sd_reserved_voice = 0x800B2528;
-spu_reverb_sw = 0x800B252C;
-spu_ch_tbl = 0x800B2530;
-sd_int_flag = 0x800B2590;
-sd_int_flag2 = 0x800B2594;
-smf_start_flag = 0x800B2598;
-sd_timer_sync = 0x800B259C;
-timer_count = 0x800B25A0;
-sd_timer_flag = 0x800B25B4; // type:s32 guessed name
-time_flag = 0x800B25B8;
-smf_file_no = 0x800B25BC;
-print_start = 0x800B25C0;
-eof_char = 0x800B25C4; // type:s8 size:3 static?
-chantype = 0x800B25C8; // type:s32 static for readtrack?
+//----------------------------------------------------------------
+//--- PA: 0x06D82C   VA: 0x8009238C   subsegment: lib, libapi, l02
+//----------------------------------------------------------------
+SysEnqIntRP                                 = 0x8009238C; // type:func
 
-vab_h = 0x800C7418;
-sd_vb_malloc_rec = 0x800C75D8;
-sd_seq_loop_mode = 0x800C7660;
-sd_tick_mode = 0x800C7664;
-sd_spu_alloc = 0x800C7668; // size:0x80
-s_attr = 0x800C76F0; // size:0x40
-smf_midi = 0x800C7738;
-smf_midi_sound_off = 0x800C82B8; // guessed name
-smf_port = 0x800C8318;
-sd_timer_event = 0x800C8AF8;
-smf_song = 0x800C8B00;
+//----------------------------------------------------------------
+//--- PA: 0x06D83C   VA: 0x8009239C   subsegment: lib, libapi, l03
+//----------------------------------------------------------------
+SysDeqIntRP                                 = 0x8009239C; // type:func
 
-// sdk library funcs
+//------------------------------------------------------------------
+//--- PA: 0x06D84C   VA: 0x800923AC   subsegment: lib, libapi, patch
+//------------------------------------------------------------------
+EnablePAD                                   = 0x800923AC; // type:func
+DisablePAD                                  = 0x800923C0; // type:func
+_patch_pad                                  = 0x800923D4; // type:func
 
-// a09.o
-CloseEvent = 0x80091afc; // type:func
-// a11.o
-TestEvent = 0x80091b0c; // type:func
-// a39.o
-SetSp = 0x80091b1c; // type:func
-// a51.o
-lseek = 0x80091b2c; // type:func
-// a53.o
-write = 0x80091b3c; // type:func
-// a65.o
-format = 0x80091b4c; // type:func
-// a67.o
-nextfile = 0x80091b5c; // type:func
-// a68.o
-rename = 0x80091b6c; // type:func
-// a69.o
-erase = 0x80091b7c; // type:func
-// a81.o
-Krom2RawAdd = 0x80091b8c; // type:func
+//----------------------------------------------------------------
+//--- PA: 0x06D8EC   VA: 0x8009244C   subsegment: lib, libapi, c68
+//----------------------------------------------------------------
+FlushCache                                  = 0x8009244C; // type:func
 
-// first.o
-firstfile = 0x80091B9C; // type:func
-_firstfile = 0x80091D38; // type:func
-// first.o globals
-sfunc = 0x800C48F8;
-dev = 0x800C4900;
+//---------------------------------------------------------------------
+//--- PA: 0x06D8FC   VA: 0x8009245C   subsegment: lib, libapi, chclrpad
+//---------------------------------------------------------------------
+_remove_ChgclrPAD                           = 0x8009245C; // type:func
 
-// a66.o
-firstfile2 = 0x80091e3c; // type:func
-// a56.o
-exit = 0x80091e4c; // type:func
-// c24.o
-strncmp = 0x80091e5c; // type:func
-// c25.o
-strcpy = 0x80091e6c; // type:func
-// c26.o
-strncpy = 0x80091e7c; // type:func
-// c27.o
-strlen = 0x80091e8c; // type:func
-// c37.o
-toupper = 0x80091e9c; // type:func
-// libc/memcmp.o
-memcmp = 0x80091eac; // type:func
-// c171.o
-_card_info = 0x80091efc; // type:func
-// c172.o
-_card_load = 0x80091f0c; // type:func
-// a78.o
-_card_write = 0x80091f1c; // type:func
-// a80.o
-_new_card = 0x80091f2c; // type:func
-// card.o
-_card_clear = 0x80091f3c; // type:func
+//-----------------------------------------------------------------
+//--- PA: 0x06D96C   VA: 0x800924CC   subsegment: lib, libcard, a74
+//-----------------------------------------------------------------
+InitCARD2                                   = 0x800924CC; // type:func
 
-// libcard/init.o
-InitCARD = 0x80091f7c; // type:func
-StartCARD = 0x80091fe8; // type:func
-StopCARD = 0x80092020; // type:func
-// libcard/init.o globals
-__ps_libinfo__libcard__ = 0x800AFE7C;
+//-----------------------------------------------------------------
+//--- PA: 0x06D97C   VA: 0x800924DC   subsegment: lib, libcard, a75
+//-----------------------------------------------------------------
+StartCARD2                                  = 0x800924DC; // type:func
 
-// pad.o
-SetInitPadFlag = 0x8009204C; // type:func
-ReadInitPadFlag = 0x80092058; // type:func
-PAD_init = 0x80092068; // type:func
-InitPAD = 0x800920F8; // type:func
-StartPAD = 0x80092188; // type:func
-StopPAD = 0x800921B8; // type:func
-SetPatchPad = 0x800921F0; // type:func
-RemovePatchPad = 0x80092268; // type:func
-_Pad1 = 0x800922A0; // type:func
-_IsVSync = 0x80092308; // type:func
-// pad.o globals
-init_pad_flag = 0x800AFE8C;
-sio = 0x800AFE90;
-intc = 0x800AFE94;
-patch0 = 0x800C4928;
+//-----------------------------------------------------------------
+//--- PA: 0x06D98C   VA: 0x800924EC   subsegment: lib, libcard, a76
+//-----------------------------------------------------------------
+StopCARD2                                   = 0x800924EC; // type:func
 
-// a18.o
-InitPAD2 = 0x8009234C; // type:func
-// a19.o
-StartPAD2 = 0x8009235C; // type:func
-// a20.o
-StopPAD2 = 0x8009236C; // type:func
-// a21.o
-PAD_init2 = 0x8009237C; // type:func
-// l02.o
-SysEnqIntRP = 0x8009238C; // type:func
-// l03.o
-SysDeqIntRP = 0x8009239C; // type:func
+//-------------------------------------------------------------------
+//--- PA: 0x06D99C   VA: 0x800924FC   subsegment: lib, libcard, patch
+//-------------------------------------------------------------------
+_patch_wait_start                           = 0x800924FC; // type:func
+_check_dsr                                  = 0x80092528; // type:func
+_dsr_start                                  = 0x8009256C; // type:func // Alt name is _check_dsr_end?
+_dsr_end                                    = 0x80092580; // type:func // Alt name is _wait_start?
+_patch_card                                 = 0x80092594; // type:func
+_patch_card2                                = 0x80092628; // type:func
+_copy_memcard_patch                         = 0x80092698; // type:func
 
-// patch.o
-EnablePAD = 0x800923AC; // type:func
-DisablePAD = 0x800923C0; // type:func
-_patch_pad = 0x800923D4; // type:func
-// patch.o globals
-store = 0x800C4938; // Maybe should be ret_adr instead?
-ret_adr = 0x800C493C; // Symbols point to this as "ret_adr", but store is used to hold return addr?
-_start_pad = 0x800C4940;
-_stop_pad = 0x800C4944;
+//-----------------------------------------------------------------
+//--- PA: 0x06DB6C   VA: 0x800926CC   subsegment: lib, libcard, end
+//-----------------------------------------------------------------
+_ExitCard                                   = 0x800926CC; // type:func
+_clr_vector                                 = 0x8009273C; // type:func
+_c_vend                                     = 0x80092748; // type:label
 
-// c68.o
-FlushCache = 0x8009244C; // type:func
-
-// chclrpad.o
-_remove_ChgclrPAD = 0x8009245C; // type:func
-// chclrpad.o globals
-store_0 = 0x800C4948;
-
-// a74.o
-InitCARD2 = 0x800924CC; // type:func
-// a75.o
-StartCARD2 = 0x800924DC; // type:func
-// a76.o
-StopCARD2 = 0x800924EC; // type:func
-
-// LIBCARD/patch.o
-_patch_wait_start = 0x800924FC; // type:func
-_check_dsr = 0x80092528; // type:func
-_dsr_start = 0x8009256C; // type:func // Alt name is _check_dsr_end?
-_dsr_end = 0x80092580; // type:func // Alt name is _wait_start?
-_patch_card = 0x80092594; // type:func
-_patch_card2 = 0x80092628; // type:func
-_copy_memcard_patch = 0x80092698; // type:func
-// LIBCARD/patch.o globals
-store_1 = 0x800C4958;
-
-// LIBCARD/end.o
-_ExitCard = 0x800926CC; // type:func
-_clr_vector = 0x8009273C; // type:func
-_c_vend = 0x80092748; // type:label
-// LIBCARD/end.o globals
-store_2 = 0x800C4968;
-
-// cdrom.o
+//-----------------------------------------------------------------
+//--- PA: 0x06DBEC   VA: 0x8009274C   subsegment: lib, libcd, cdrom
+//-----------------------------------------------------------------
 // TODO: Check in other SDKs for the global this uses.
-StSetRing = 0x8009274C; // type:func
-// cdrom.o globals
-HADR0 = 0x800AFE9C; // All unused?
-HADR1 = 0x800AFEA0;
-HADR2 = 0x800AFEA4;
-HADR3 = 0x800AFEA8;
+StSetRing                                   = 0x8009274C; // type:func
 
-// cdrom.o bss (different order to actual cdrom.o, reordered by linker?)
-Stframe_no = 0x800C4978;
-Stsector_offset = 0x800C497C;
-StRgb24 = 0x800C4980;
-StCdIntrFlag = 0x800C4984;
-StCHANNEL = 0x800C4988;
-StStartFrame = 0x800C498C;
-CChannel = 0x800C4990;
-StFinalSector = 0x800C4994;
-StEmu_Idx = 0x800C4998;
-StRingIdx1 = 0x800C499C;
-StRingIdx2 = 0x800C49A0;
-StRingIdx3 = 0x800C49A4;
-StEmu_Addr = 0x800C49A8;
-StEndFrame = 0x800C49AC;
-StSTART_FLAG = 0x800C49B0;
-StRingBase = 0x800C49B4;
-StRingAddr = 0x800C49B8;
-StRingSize = 0x800C49BC;
+//-------------------------------------------------------------------
+//--- PA: 0x06DC1C   VA: 0x8009277C   subsegment: lib, libcd, iso9660
+//-------------------------------------------------------------------
+CdSearchFile                                = 0x8009277C; // type:func
+_cmp                                        = 0x80092A54; // type:func
+CD_newmedia                                 = 0x80092A74; // type:func
+CD_searchdir                                = 0x80092D38; // type:func
+CD_cachefile                                = 0x80092DDC; // type:func
+cd_read                                     = 0x80093078; // type:func
 
-// iso9660.o
-CdSearchFile = 0x8009277C; // type:func
-_cmp = 0x80092A54; // type:func
-CD_newmedia = 0x80092A74; // type:func
-CD_searchdir = 0x80092D38; // type:func
-CD_cachefile = 0x80092DDC; // type:func
-cd_read = 0x80093078; // type:func
-// iso9660.o globals
-current = 0x800AFEAC;
-pre_nopen.2 = 0x800AFEB0;
-file = 0x800C49C0;
-dire = 0x800C4FC0;
-load_buf = 0x800C65C0;
+//-------------------------------------------------------------------
+//--- PA: 0x06E58C   VA: 0x800930EC   subsegment: lib, libcd, cdread2
+//-------------------------------------------------------------------
+CdRead2                                     = 0x800930EC; // type:func
+StCdInterrupt2                              = 0x80093170; // type:func
 
-// cdread2.o
-CdRead2 = 0x800930EC; // type:func
-StCdInterrupt2 = 0x80093170; // type:func
-
-// c_002.o
+//-----------------------------------------------------------------
+//--- PA: 0x06E63C   VA: 0x8009319C   subsegment: lib, libcd, c_002
+//-----------------------------------------------------------------
 // TODO: Same as cdrom.o, need to check older SDKs.
-StClearRing = 0x8009319C; // type:func
-// c_002.o globals
-HADR0_0 = 0x800AFEBC; // all unused?
-HADR1_0 = 0x800AFEC0;
-HADR2_0 = 0x800AFEC4;
-HADR3_0 = 0x800AFEC8;
+StClearRing                                 = 0x8009319C; // type:func
 
-// c_003.o
+//-----------------------------------------------------------------
+//--- PA: 0x06E69C   VA: 0x800931FC   subsegment: lib, libcd, c_003
+//-----------------------------------------------------------------
 // TODO: Same as c_002, check older SDKs.
-StUnSetRing = 0x800931FC; // type:func
-// c_003.o globals
-HADR0_1 = 0x800AFECC;
-HADR1_1 = 0x800AFED0;
-HADR2_1 = 0x800AFED4;
-HADR3_1 = 0x800AFED8;
+StUnSetRing                                 = 0x800931FC; // type:func
 
-// c_004.o
+//-----------------------------------------------------------------
+//--- PA: 0x06E71C   VA: 0x8009327C   subsegment: lib, libcd, c_004
+//-----------------------------------------------------------------
 // TODO: Same as c_002, check older SDKs.
-data_ready_callback = 0x8009327C; // type:func
-StGetBackloc = 0x80093308; // type:func
-// c_004.o globals
-previous_frame_location = 0x800C6DC0;
-next_frameid = 0x800C6DC4;
-HADR0_2 = 0x800AFEDC;
-HADR1_2 = 0x800AFEE0;
-HADR2_2 = 0x800AFEE4;
-HADR3_2 = 0x800AFEE8;
+data_ready_callback                         = 0x8009327C; // type:func
+StGetBackloc                                = 0x80093308; // type:func
 
-// c_005.o
+//-----------------------------------------------------------------
+//--- PA: 0x06E80C   VA: 0x8009336C   subsegment: lib, libcd, c_005
+//-----------------------------------------------------------------
 // TODO: Same as c_002.
-StSetStream = 0x8009336C; // type:func
-// c_005.o globals
-HADR0_3 = 0x800AFEEC;
-HADR1_3 = 0x800AFEF0;
-HADR2_3 = 0x800AFEF4;
-HADR3_3 = 0x800AFEF8;
-// c_005.o bss
-StFunc1 = 0x800C6DD0;
-StFunc2 = 0x800C6DD4;
+StSetStream                                 = 0x8009336C; // type:func
 
-// c_007.o
+//-----------------------------------------------------------------
+//--- PA: 0x06E89C   VA: 0x800933FC   subsegment: lib, libcd, c_007
+//-----------------------------------------------------------------
 // TODO: Same as c_002.
-StFreeRing = 0x800933FC; // type:func
-// c_007.o globals
-HADR0_4 = 0x800AFEFC;
-HADR1_4 = 0x800AFF00;
-HADR2_4 = 0x800AFF04;
-HADR3_4 = 0x800AFF08;
+StFreeRing                                  = 0x800933FC; // type:func
 
-// c_008.o
+//-----------------------------------------------------------------
+//--- PA: 0x06E94C   VA: 0x800934AC   subsegment: lib, libcd, c_008
+//-----------------------------------------------------------------
 // TODO: Same as c_002.
-init_ring_status = 0x800934AC; // type:func
-// c_008.o globals
-HADR0_5 = 0x800AFE0C;
-HADR1_5 = 0x800AFF10;
-HADR2_5 = 0x800AFF14;
-HADR3_5 = 0x800AFF18;
+init_ring_status                            = 0x800934AC; // type:func
 
-// c_009.o
+//-----------------------------------------------------------------
+//--- PA: 0x06E98C   VA: 0x800934EC   subsegment: lib, libcd, c_009
+//-----------------------------------------------------------------
 // TODO: Same as c_002.
-StGetNext = 0x800934EC; // type:func
-// c_009.o globals
-HADR0_6 = 0x800AFE1C;
-HADR1_6 = 0x800AFF20;
-HADR2_6 = 0x800AFF24;
-HADR3_6 = 0x800AFF28;
+StGetNext                                   = 0x800934EC; // type:func
 
-// c_010.o
+//-----------------------------------------------------------------
+//--- PA: 0x06EA4C   VA: 0x800935AC   subsegment: lib, libcd, c_010
+//-----------------------------------------------------------------
 // TODO: Same as c_002.
-StSetMask = 0x800935AC; // type:func
-// c_010.o globals
-HADR0_7 = 0x800AFE2C;
-HADR1_7 = 0x800AFF30;
-HADR2_7 = 0x800AFF34;
-HADR3_7 = 0x800AFF38;
+StSetMask                                   = 0x800935AC; // type:func
 
-// c_011.o
+//-----------------------------------------------------------------
+//--- PA: 0x06EA6C   VA: 0x800935CC   subsegment: lib, libcd, c_011
+//-----------------------------------------------------------------
 // TODO: Same as c_002.
-StCdInterrupt = 0x800935CC; // type:func
-mem2mem = 0x80093EE8; // type:func
-dma_execute = 0x80093F14; // type:func
-// c_011.o globals
-HADR0_8 = 0x800AFF3C;
-HADR1_8 = 0x800AFF40;
-HADR2_8 = 0x800AFF44;
-HADR3_8 = 0x800AFF48;
-DEV5_DELAY = 0x800AFF4C;
-COMMON_DELAY = 0x800AFF50;
-Dma_PCR = 0x800AFF54;
-Dma_ICR = 0x800AFF58;
-Dma_CHCR1 = 0x800AFF5C;
-Dma_MADR1 = 0x800AFF60;
-Dma_CHCR2 = 0x800AFF64;
-Dma_MADR2 = 0x800AFF68;
-Dma_CHCR3 = 0x800AFF6C;
-Dma_MADR3 = 0x800AFF70;
-Dma_CHCR5 = 0x800AFF74;
-Dma_MADR5 = 0x800AFF78;
-i_reg_0 = 0x800AFF7C; // i_reg
-i_mask_0 = 0x800AFF80; // i_mask
-debug_cause = 0x800AFF84;
-count.3 = 0x800AFF88;
-HeaderArea.2 = 0x800C6DD8;
+StCdInterrupt                               = 0x800935CC; // type:func
+mem2mem                                     = 0x80093EE8; // type:func
+dma_execute                                 = 0x80093F14; // type:func
 
-// e00.o
-LoadTPage = 0x800940BC; // type:func
-// e01.o
-LoadClut = 0x800941A4; // type:func
-// e02.o
-LoadClut2 = 0x80094208; // type:func
-// e03.o
-SetDefDrawEnv = 0x8009426C; // type:func
-// e04.o
-SetDefDispEnv = 0x80094320; // type:func
-// p00.o
-GetTPage = 0x8009435C; // type:func
-// p01.o
-GetClut = 0x8009439C; // type:func
-// p06.o
-AddPrim = 0x800943BC; // type:func
-// p09.o
-TermPrim = 0x800943FC; // type:func
-// p14.o
-SetPolyG3 = 0x8009441C; // type:func
-// p16.o
-SetPolyF4 = 0x8009443C; // type:func
-// p17.o
-SetPolyFT4 = 0x8009445C; // type:func
-// p18.o
-SetPolyG4 = 0x8009447C; // type:func
-// p26.o
-SetTile = 0x8009449C; // type:func
-// p33.o
-SetDrawTPage = 0x800944BC; // type:func
-// p34.o
-SetDrawMove = 0x800944EC; // type:func
+//----------------------------------------------------------------
+//--- PA: 0x06F55C   VA: 0x800940BC   subsegment: lib, libgpu, ext
+//----------------------------------------------------------------
+LoadTPage                                   = 0x800940BC; // type:func
+LoadClut                                    = 0x800941A4; // type:func
+LoadClut2                                   = 0x80094208; // type:func
+SetDefDrawEnv                               = 0x8009426C; // type:func
+SetDefDispEnv                               = 0x80094320; // type:func
 
-// 2d_sp1.o
-GsSortFastSprite = 0x8009454C; // type:func
+//----------------------------------------------------------------
+//--- PA: 0x06F7FC   VA: 0x8009435C   subsegment: lib, libgpu, p00
+//----------------------------------------------------------------
+GetTPage                                    = 0x8009435C; // type:func
 
-// gs_001.o
+//----------------------------------------------------------------
+//--- PA: 0x06F83C   VA: 0x8009439C   subsegment: lib, libgpu, p01
+//----------------------------------------------------------------
+GetClut                                     = 0x8009439C; // type:func
+
+//----------------------------------------------------------------
+//--- PA: 0x06F85C   VA: 0x800943BC   subsegment: lib, libgpu, p06
+//----------------------------------------------------------------
+AddPrim                                     = 0x800943BC; // type:func
+
+//----------------------------------------------------------------
+//--- PA: 0x06F89C   VA: 0x800943FC   subsegment: lib, libgpu, p09
+//----------------------------------------------------------------
+TermPrim                                    = 0x800943FC; // type:func
+
+//----------------------------------------------------------------
+//--- PA: 0x06F8BC   VA: 0x8009441C   subsegment: lib, libgpu, p14
+//----------------------------------------------------------------
+SetPolyG3                                   = 0x8009441C; // type:func
+
+//----------------------------------------------------------------
+//--- PA: 0x06F8DC   VA: 0x8009443C   subsegment: lib, libgpu, p16
+//----------------------------------------------------------------
+SetPolyF4                                   = 0x8009443C; // type:func
+
+//----------------------------------------------------------------
+//--- PA: 0x06F8FC   VA: 0x8009445C   subsegment: lib, libgpu, p17
+//----------------------------------------------------------------
+SetPolyFT4                                  = 0x8009445C; // type:func
+
+//----------------------------------------------------------------
+//--- PA: 0x06F91C   VA: 0x8009447C   subsegment: lib, libgpu, p18
+//----------------------------------------------------------------
+SetPolyG4                                   = 0x8009447C; // type:func
+
+//----------------------------------------------------------------
+//--- PA: 0x06F93C   VA: 0x8009449C   subsegment: lib, libgpu, p26
+//----------------------------------------------------------------
+SetTile                                     = 0x8009449C; // type:func
+
+//----------------------------------------------------------------
+//--- PA: 0x06F95C   VA: 0x800944BC   subsegment: lib, libgpu, p33
+//----------------------------------------------------------------
+SetDrawTPage                                = 0x800944BC; // type:func
+
+//----------------------------------------------------------------
+//--- PA: 0x06F98C   VA: 0x800944EC   subsegment: lib, libgpu, p34
+//----------------------------------------------------------------
+SetDrawMove                                 = 0x800944EC; // type:func
+
+//------------------------------------------------------------------
+//--- PA: 0x06F9EC   VA: 0x8009454C   subsegment: lib, libgs, 2d_sp1
+//------------------------------------------------------------------
+GsSortFastSprite                            = 0x8009454C; // type:func
+
+//------------------------------------------------------------------
+//--- PA: 0x06FB6C   VA: 0x800946CC   subsegment: lib, libgs, gs_001
+//------------------------------------------------------------------
 // TODO: Same as c_002
-GsInitGraph = 0x800946CC; // type:func
-gpu_init = 0x80094740; // type:func
-GsInitGraph2 = 0x8009485C; // type:func
-valiable_init = 0x800948C4; // type:func
-GsSortClear = 0x80094AE4; // type:func
-// gs_001.o globals
-__ps_libinfo__libgs__ = 0x800AFF8C;
-Clear = 0x800C6DE8;
-// Unsure about these globals, some reason order in SH1 doesn't match SDK 4.3 or 4.4.
-PSDIDX = 0x800C6EA4;
-PSDOFSX = 0x800C6E08;
-PSDOFSY = 0x800C6E0C;
-HWD0 = 0x800C6F28;
-VWD0 = 0x800C6F2C;
-GsLIGHTWSMATRIX = 0x800C6F40;
-_LC = 0x800C6F60;
-PSDBASEX = 0x800C6E10;
-PSDBASEY = 0x800C6E14;
-POSITION = 0x800C6E18;
-CLIP2 = 0x800C6E98;
-PSDCNT = 0x800C6EA0;
-GsDISPENV = 0x800C6E80;
-PSDGPU = 0x800C6EA6;
-GsDRAWENV = 0x800C6E20;
-GsORGOFSX = 0x800C6E94;
-GsORGOFSY = 0x800C6E96;
+GsInitGraph                                 = 0x800946CC; // type:func
+gpu_init                                    = 0x80094740; // type:func
+GsInitGraph2                                = 0x8009485C; // type:func
+valiable_init                               = 0x800948C4; // type:func
+GsSortClear                                 = 0x80094AE4; // type:func
 
-// gs_002.o
-GsGetActiveBuff = 0x80094C1C; // type:func
-GsSetDrawBuffOffset = 0x80094C2C; // type:func
+//------------------------------------------------------------------
+//--- PA: 0x0700BC   VA: 0x80094C1C   subsegment: lib, libgs, gs_002
+//------------------------------------------------------------------
+GsGetActiveBuff                             = 0x80094C1C; // type:func
+GsSetDrawBuffOffset                         = 0x80094C2C; // type:func
 
-// gs_003.o
-GsSetDrawBuffClip = 0x80094D3C; // type:func
+//------------------------------------------------------------------
+//--- PA: 0x0701DC   VA: 0x80094D3C   subsegment: lib, libgs, gs_003
+//------------------------------------------------------------------
+GsSetDrawBuffClip                           = 0x80094D3C; // type:func
 
-// gs_007.o
-GsInitVcount = 0x80094DBC; // type:func
+//------------------------------------------------------------------
+//--- PA: 0x07025C   VA: 0x80094DBC   subsegment: lib, libgs, gs_007
+//------------------------------------------------------------------
+GsInitVcount                                = 0x80094DBC; // type:func
 
-// counter.o
-SetRCnt = 0x80094DFC; // type:func
-GetRCnt = 0x80094E98; // type:func
-StartRCnt = 0x80094ED0; // type:func
-StopRCnt = 0x80094F00; // type:func
-ResetRCnt = 0x80094F34; // type:func
-// counter.o globals
-intc_0 = 0x800AFF9C; // intc
-timer = 0x800AFFA0;
-rcntmask = 0x800AFFA4;
+//--------------------------------------------------------------------
+//--- PA: 0x07029C   VA: 0x80094DFC   subsegment: lib, libapi, counter
+//--------------------------------------------------------------------
+SetRCnt                                     = 0x80094DFC; // type:func
+GetRCnt                                     = 0x80094E98; // type:func
+StartRCnt                                   = 0x80094ED0; // type:func
+StopRCnt                                    = 0x80094F00; // type:func
+ResetRCnt                                   = 0x80094F34; // type:func
 
-// gs_008.o
-GsGetVcount = 0x80094f6c; // type:func
-// gs_009.o
-GsClearVcount = 0x80094f9c; // type:func
-// gs_010.o
-GsSwapDispBuff = 0x80094fcc; // type:func
+//------------------------------------------------------------------
+//--- PA: 0x07040C   VA: 0x80094F6C   subsegment: lib, libgs, gs_008
+//------------------------------------------------------------------
+GsGetVcount                                 = 0x80094F6C; // type:func
 
-// matrix.o
-GsInitCoordinate2 = 0x8009507c; // type:func
-GsInitCoord2param = 0x800950ec; // type:func
-GsSetLsMatrix = 0x80095118; // type:func
-GsSetLightMatrix = 0x80095144; // type:func
-GsSetLightMatrix2 = 0x800951d8; // type:func
-GsMulCoord0 = 0x80095208; // type:func
-GsMulCoord2 = 0x80095298; // type:func
-GsMulCoord3 = 0x80095318; // type:func
-print_matrix = 0x80095398; // type:func
-print_vector = 0x80095408; // type:func
+//------------------------------------------------------------------
+//--- PA: 0x07043C   VA: 0x80094F9C   subsegment: lib, libgs, gs_009
+//------------------------------------------------------------------
+GsClearVcount                               = 0x80094F9C; // type:func
+
+//------------------------------------------------------------------
+//--- PA: 0x07046C   VA: 0x80094FCC   subsegment: lib, libgs, gs_010
+//------------------------------------------------------------------
+GsSwapDispBuff                              = 0x80094FCC; // type:func
+
+//------------------------------------------------------------------
+//--- PA: 0x07051C   VA: 0x8009507C   subsegment: lib, libgs, matrix
+//------------------------------------------------------------------
+GsInitCoordinate2                           = 0x8009507C; // type:func
+GsInitCoord2param                           = 0x800950EC; // type:func
+GsSetLsMatrix                               = 0x80095118; // type:func
+GsSetLightMatrix                            = 0x80095144; // type:func
+GsSetLightMatrix2                           = 0x800951D8; // type:func
+GsMulCoord0                                 = 0x80095208; // type:func
+GsMulCoord2                                 = 0x80095298; // type:func
+GsMulCoord3                                 = 0x80095318; // type:func
+print_matrix                                = 0x80095398; // type:func
+print_vector                                = 0x80095408; // type:func
+
+//------------------------------------------------------------------
+//--- PA: 0x0708DC   VA: 0x8009543C   subsegment: lib, libgs, gs_104
+//------------------------------------------------------------------
 // matrix.o globals
 // TODO: DSTACK?
+GsInit3D                                    = 0x8009543C; // type:func
 
-// gs_104.o
-GsInit3D = 0x8009543c; // type:func
-// gs_104.o globals
-GsLIGHT_MODE = 0x800C6F34;
-// gs_104.o externs
-GsCLIP3near = 0x800C6F38;
-GsCLIP3far = 0x800C6F30;
+//------------------------------------------------------------------
+//--- PA: 0x07095C   VA: 0x800954BC   subsegment: lib, libgs, gs_105
+//------------------------------------------------------------------
+GsMapModelingData                           = 0x800954BC; // type:func
 
-// gs_105.o
-GsMapModelingData = 0x800954bc; // type:func
-// gs_106.o
-GsSetProjection = 0x8009552c; // type:func
-// gs_107.o
-GsSetFlatLight = 0x8009554c; // type:func
-gte_set_lc = 0x80095A04; // type:func
-gte_read_lc = 0x80095A68; // type:func
-// gs_108.o
-GsSetLightMode = 0x80095abc; // type:func
-// gs_110.o
-GsSetAmbient = 0x80095b3c; // type:func
-// gs_111.o
-GsDrawOt = 0x80095b6c; // type:func
-// gs_113.o
-GsClearOt = 0x80095b9c; // type:func
-// gs_114.o
-GsSortOt = 0x80095bfc; // type:func
-// gs_121.o
-gte_init = 0x80095CBC; // type:func
+//------------------------------------------------------------------
+//--- PA: 0x0709CC   VA: 0x8009552C   subsegment: lib, libgs, gs_106
+//------------------------------------------------------------------
+GsSetProjection                             = 0x8009552C; // type:func
 
-// gs_123.o
-Gssub_make_matrix = 0x80095d0c; // type:func
-// gs_123.o globals
-GsIDMATRIX = 0x800C6FA0; // type:MATRIX size:0x20
-GsWSMATRIX = 0x800C6FC0; // type:MATRIX size:0x20
-// GsWSMATRIX_ORG missing?
-GsIDMATRIX2 = 0x800C6FE0; // type:MATRIX size:0x20
+//------------------------------------------------------------------
+//--- PA: 0x0709EC   VA: 0x8009554C   subsegment: lib, libgs, gs_107
+//------------------------------------------------------------------
+GsSetFlatLight                              = 0x8009554C; // type:func
+gte_set_lc                                  = 0x80095A04; // type:func
+gte_read_lc                                 = 0x80095A68; // type:func
 
-// gs_127.o
-GsDefDispBuff2 = 0x80095ddc; // type:func
+//------------------------------------------------------------------
+//--- PA: 0x070F5C   VA: 0x80095ABC   subsegment: lib, libgs, gs_108
+//------------------------------------------------------------------
+GsSetLightMode                              = 0x80095ABC; // type:func
 
-// objt.o
-GsLinkObject4 = 0x80095e5c; // type:func
+//------------------------------------------------------------------
+//--- PA: 0x070FDC   VA: 0x80095B3C   subsegment: lib, libgs, gs_110
+//------------------------------------------------------------------
+GsSetAmbient                                = 0x80095B3C; // type:func
 
-// objt3.o
-GsSortObject4J = 0x80095fec; // type:func
+//------------------------------------------------------------------
+//--- PA: 0x07100C   VA: 0x80095B6C   subsegment: lib, libgs, gs_111
+//------------------------------------------------------------------
+GsDrawOt                                    = 0x80095B6C; // type:func
 
-// global.o .data
-GsADIVZ = 0x800AFFBC;
-GsADIVW = 0x800AFFC0;
-GsADIVH = 0x800AFFC2;
-// global.o .bss
-GsLIOFF = 0x800C7004;
-GsLMODE = 0x800C7008;
-GsLIGNR = 0x800C700C;
-GsOUT_PACKET_P = 0x800C7018;
-GsMATE_C = 0x800C701C;
-GsTON = 0x800C7024;
-GsNDIV = 0x800C7028;
-GsFCALL4 = 0x800C7030;
+//------------------------------------------------------------------
+//--- PA: 0x07103C   VA: 0x80095B9C   subsegment: lib, libgs, gs_113
+//------------------------------------------------------------------
+GsClearOt                                   = 0x80095B9C; // type:func
 
-// msc00.o
-__ps_libinfo__libgte__ = 0x80096EC8;
-InitGeom = 0x80096ED0; // type:func
-// msc00.o globals
-SAVERA = 0x800B014C;
+//------------------------------------------------------------------
+//--- PA: 0x07109C   VA: 0x80095BFC   subsegment: lib, libgs, gs_114
+//------------------------------------------------------------------
+GsSortOt                                    = 0x80095BFC; // type:func
 
-// msc01.o
-SquareRoot0 = 0x80096F58; // type:func
-Rshift = 0x80096FA0; // type:label
-CNTSQ = 0x80096FAC; // type:label
-RTNSQRT = 0x80096FD4; // type:label
+//------------------------------------------------------------------
+//--- PA: 0x07115C   VA: 0x80095CBC   subsegment: lib, libgs, gs_121
+//------------------------------------------------------------------
+gte_init                                    = 0x80095CBC; // type:func
 
-// msc02.o
-InvSquareRoot = 0x80096fe8; // type:func
-VectorNormalS = 0x80097074; // type:func
-VectorNormal = 0x80097088; // type:func
-VectorNormalSS = 0x800970b8; // type:func
-VectorNormalS_entry = 0x800970C4; // type:label
-VectorNormal_entry = 0x800970E8; // type:func
-RshiftI_VN = 0x80097148; // type:label
-CNTISQ_VN = 0x80097154; // type:label
-MatrixNormal = 0x800971a8; // type:func
-// msc02.o globals
-SAVERA_0 = 0x800B015C; // SAVERA
-SAVERA2 = 0x800B0160;
-SAVERA3 = 0x800B0164;
-FRAC = 0x800B0168;
-EXPO = 0x800B016C;
-ISQRT = 0x800B0170;
+//------------------------------------------------------------------
+//--- PA: 0x0711AC   VA: 0x80095D0C   subsegment: lib, libgs, gs_123
+//------------------------------------------------------------------
+Gssub_make_matrix                           = 0x80095D0C; // type:func
 
-// msc06.o
-LoadAverage12 = 0x80097298; // type:func
-LoadAverage0 = 0x800972e8; // type:func
-LoadAverageShort12 = 0x80097338; // type:func
-LoadAverageShort0 = 0x800973c0; // type:func
-LoadAverageByte = 0x80097448; // type:func
-LoadAverageCol = 0x800974a8; // type:func
+//------------------------------------------------------------------
+//--- PA: 0x07127C   VA: 0x80095DDC   subsegment: lib, libgs, gs_127
+//------------------------------------------------------------------
+GsDefDispBuff2                              = 0x80095DDC; // type:func
 
-// msc09.o
-SquareRoot12 = 0x80097528; // type:func
-Rshift12 = 0x80097570; // type:label
-CNTSQ12 = 0x8009757C; // type:label
-Rshift13 = 0x800975A8; // type:label
-RTNSQRT12 = 0x800975B4; // type:label
-// msc09.o externs
-SQRT = 0x800AFFCC;
+//----------------------------------------------------------------
+//--- PA: 0x0712FC   VA: 0x80095E5C   subsegment: lib, libgs, objt
+//----------------------------------------------------------------
+GsLinkObject4                               = 0x80095E5C; // type:func
 
-// mtx_000.o
-MulMatrix0 = 0x800975c8; // type:func
+//-----------------------------------------------------------------
+//--- PA: 0x07148C   VA: 0x80095FEC   subsegment: lib, libgs, objt3
+//-----------------------------------------------------------------
+GsSortObject4J                              = 0x80095FEC; // type:func
 
-// mtx_001.o
-MulRotMatrix = 0x800976d8; // type:func
+//-------------------------------------------------------------------------
+//--- PA: 0x071D1C   VA: 0x8009687C   subsegment: asm, lib_unk/lib_8009687C
+//-------------------------------------------------------------------------
+// Custom Konami rotation matrix library?
+// TODO: identify the other RotMatrix funcs here
+shRsin                                      = 0x8009687C; // type:func
+shRcos                                      = 0x8009689C; // type:func
+shRotMatrixZ                                = 0x800968BC; // type:func
 
-// mtx_003.o
-CompMatrix = 0x800977c8; // type:func
+//------------------------------------------------------------------
+//--- PA: 0x072368   VA: 0x80096EC8   subsegment: lib, libgte, msc00
+//------------------------------------------------------------------
+__ps_libinfo__libgte__                      = 0x80096EC8;
+InitGeom                                    = 0x80096ED0; // type:func
 
-// mtx_004.o
-ApplyMatrixLV = 0x80097928; // type:func
-APPMTX_01__mtx_004_ = 0x8009797C; // type:label
-APPMTX_02__mtx_004_ = 0x80097984; // type:label
-APPMTX_03__mtx_004_ = 0x800979A4; // type:label
-APPMTX_04__mtx_004_ = 0x800979AC; // type:label
-APPMTX_05__mtx_004_ = 0x800979CC; // type:label
-APPMTX_06__mtx_004_ = 0x800979D4; // type:label
-APPMTX_13__mtx_004_ = 0x80097A20; // type:label
-APPMTX_14__mtx_004_ = 0x80097A24; // type:label
-APPMTX_15__mtx_004_ = 0x80097A3C; // type:label
-APPMTX_16__mtx_004_ = 0x80097A40; // type:label
-APPMTX_17__mtx_004_ = 0x80097A58; // type:label
-APPMTX_18__mtx_004_ = 0x80097A5C; // type:label
+//------------------------------------------------------------------
+//--- PA: 0x0723F8   VA: 0x80096F58   subsegment: lib, libgte, msc01
+//------------------------------------------------------------------
+SquareRoot0                                 = 0x80096F58; // type:func
+Rshift                                      = 0x80096FA0; // type:label
+CNTSQ                                       = 0x80096FAC; // type:label
+RTNSQRT                                     = 0x80096FD4; // type:label
 
-// mtx_005.o
-ApplyRotMatrix = 0x80097a88; // type:func
+//------------------------------------------------------------------
+//--- PA: 0x072488   VA: 0x80096FE8   subsegment: lib, libgte, msc02
+//------------------------------------------------------------------
+InvSquareRoot                               = 0x80096FE8; // type:func
+VectorNormalS                               = 0x80097074; // type:func
+VectorNormal                                = 0x80097088; // type:func
+VectorNormalSS                              = 0x800970B8; // type:func
+VectorNormalS_entry                         = 0x800970C4; // type:label
+VectorNormal_entry                          = 0x800970E8; // type:func
+RshiftI_VN                                  = 0x80097148; // type:label
+CNTISQ_VN                                   = 0x80097154; // type:label
+MatrixNormal                                = 0x800971A8; // type:func
 
-// mtx_006.o
-PushMatrix = 0x80097ab8; // type:func
-CONTpush = 0x80097AF8; // type:label
-PopMatrix = 0x80097b5c; // type:func
-CONTpop = 0x80097B98; // type:label
-// mtx_006.o globals (TODO: Check psx.)
-SAVERA__mtx_006_ = 0x800B02FC;
-FRAC__mtx_006_ = 0x800B0300;
-EXPO__mtx_006_ = 0x800B0304;
-MSP = 0x800B0308;
-MSTACK = 0x800B030C;
-STACKFUL = 0x800B058C;
-STACKEMP = 0x800B05BD;
-NOTIMP = 0x800B05E6;
+//------------------------------------------------------------------
+//--- PA: 0x072738   VA: 0x80097298   subsegment: lib, libgte, msc06
+//------------------------------------------------------------------
+LoadAverage12                               = 0x80097298; // type:func
+LoadAverage0                                = 0x800972E8; // type:func
+LoadAverageShort12                          = 0x80097338; // type:func
+LoadAverageShort0                           = 0x800973C0; // type:func
+LoadAverageByte                             = 0x80097448; // type:func
+LoadAverageCol                              = 0x800974A8; // type:func
 
-// mtx_007.o
-ReadLightMatrix = 0x80097c08; // type:func
-// mtx_01.o
-ApplyRotMatrixLV = 0x80097c58; // type:func
-APPMTX_01 = 0x80097C84; // type:label
-APPMTX_02 = 0x80097C8C; // type:label
-APPMTX_03 = 0x80097CAC; // type:label
-APPMTX_04 = 0x80097CB4; // type:label
-APPMTX_05 = 0x80097CD4; // type:label
-APPMTX_06 = 0x80097CDC; // type:label
-APPMTX_13 = 0x80097D28; // type:label
-APPMTX_14 = 0x80097D2C; // type:label
-APPMTX_15 = 0x80097D44; // type:label
-APPMTX_16 = 0x80097D48; // type:label
-APPMTX_17 = 0x80097D60; // type:label
-APPMTX_18 = 0x80097D64; // type:label
-// mtx_02.o
-SetMulRotMatrix = 0x80097d98; // type:func
-// mtx_03.o
-MulMatrix = 0x80097e88; // type:func
-// mtx_04.o
-MulMatrix2 = 0x80097f98; // type:func
-// mtx_05.o
-ApplyMatrix = 0x800980a8; // type:func
-// mtx_06.o
-ApplyMatrixSV = 0x800980f8; // type:func
-// mtx_07.o
-TransMatrix = 0x80098158; // type:func
-// mtx_08.o
-ScaleMatrix = 0x80098188; // type:func
-// mtx_09.o
-SetRotMatrix = 0x800982c8; // type:func
-// mtx_10.o
-SetLightMatrix = 0x800982f8; // type:func
-// mtx_11.o
-SetColorMatrix = 0x80098328; // type:func
-// mtx_12.o
-SetTransMatrix = 0x80098358; // type:func
-// reg08.o
-ReadGeomOffset = 0x80098378; // type:func
-// reg09.o
-ReadGeomScreen = 0x80098398; // type:func
-// reg10.o
-SetBackColor = 0x800983a8; // type:func
-// reg11.o
-SetFarColor = 0x800983c8; // type:func
-// reg12.o
-SetGeomOffset = 0x800983e8; // type:func
-// reg13.o
-SetGeomScreen = 0x80098408; // type:func
+//------------------------------------------------------------------
+//--- PA: 0x0729C8   VA: 0x80097528   subsegment: lib, libgte, msc09
+//------------------------------------------------------------------
+SquareRoot12                                = 0x80097528; // type:func
+Rshift12                                    = 0x80097570; // type:label
+CNTSQ12                                     = 0x8009757C; // type:label
+Rshift13                                    = 0x800975A8; // type:label
+RTNSQRT12                                   = 0x800975B4; // type:label
 
-// smp.o
-LocalLight = 0x80098418; // type:func
-DpqColor = 0x8009843c; // type:func
-NormalColor = 0x80098458; // type:func
-NormalColor3 = 0x80098474; // type:func
-NormalColorDpq = 0x800984b0; // type:func
-NormalColorDpq3 = 0x800984d4; // type:func
-NormalColorCol = 0x8009851c; // type:func
-NormalColorCol3 = 0x8009853c; // type:func
-ColorDpq = 0x80098580; // type:func
-ColorCol = 0x800985a8; // type:func
-AverageSZ3 = 0x800985cc; // type:func
-AverageSZ4 = 0x800985dc; // type:func
+//--------------------------------------------------------------------
+//--- PA: 0x072A68   VA: 0x800975C8   subsegment: lib, libgte, mtx_000
+//--------------------------------------------------------------------
+MulMatrix0                                  = 0x800975C8; // type:func
 
-// smp_00.o
-LightColor = 0x800985f8; // type:func
-DpqColorLight = 0x80098620; // type:func
-DpqColor3 = 0x80098648; // type:func
-Intpl = 0x80098684; // type:func
-Square12 = 0x800986a8; // type:func
-SQREL12 = 0x800986B8; // type:label
-Square12_cont = 0x800986BC; // type:label
-Square0 = 0x800986d0; // type:func
-SQREL0 = 0x800986E0; // type:label
-Square0_cont = 0x800986E4; // type:label
-AverageZ3 = 0x800986f8; // type:func
-AverageZ4 = 0x80098718; // type:func
-OuterProduct12 = 0x8009873c; // type:func
-OuterProduct0 = 0x80098794; // type:func
-Lzc = 0x800987ec; // type:func
+//--------------------------------------------------------------------
+//--- PA: 0x072B78   VA: 0x800976D8   subsegment: lib, libgte, mtx_001
+//--------------------------------------------------------------------
+MulRotMatrix                                = 0x800976D8; // type:func
 
-// smp_02.o
-RotTransPers = 0x80098808; // type:func
-// smp_03.o
-RotTransPers3 = 0x80098838; // type:func
-// smp_04.o
-RotTrans = 0x80098898; // type:func
-// cmb_00.o
-RotTransPers4 = 0x800988c8; // type:func
-// fgo_00.o
-TransposeMatrix = 0x80098948; // type:func
+//--------------------------------------------------------------------
+//--- PA: 0x072C68   VA: 0x800977C8   subsegment: lib, libgte, mtx_003
+//--------------------------------------------------------------------
+CompMatrix                                  = 0x800977C8; // type:func
 
-// g3.o
-GsTMDfastNG3 = 0x80098988; // type:func
-NG3_1 = 0x800989C4; // type:label
-NG3_2 = 0x80098AB8; // type:label
-NG3_3 = 0x80098AC4; // type:label
-GsTMDfastG3NL = 0x80098ad0; // type:func
-G3NL_1 = 0x80098B0C; // type:label
-G3NL_2 = 0x80098BF8; // type:label
-G3NL_3 = 0x80098C04; // type:label
-GsTMDfastG3L = 0x80098c10; // type:func
-G3L_1 = 0x80098C28; // type:label
-G3L_1L = 0x80098C34; // type:label
-G3L_2 = 0x80098D84; // type:label
-G3L_3 = 0x80098D94; // type:label
-GsTMDfastG3LFG = 0x80098da0; // type:func
-G3LFG_1 = 0x80098DB8; // type:label
-G3LFG_1L = 0x80098DC4; // type:label
-G3LFG_2 = 0x80098F14; // type:label
-G3LFG_3 = 0x80098F24; // type:label
+//--------------------------------------------------------------------
+//--- PA: 0x072DC8   VA: 0x80097928   subsegment: lib, libgte, mtx_004
+//--------------------------------------------------------------------
+ApplyMatrixLV                               = 0x80097928; // type:func
+APPMTX_01__mtx_004_                         = 0x8009797C; // type:label
+APPMTX_02__mtx_004_                         = 0x80097984; // type:label
+APPMTX_03__mtx_004_                         = 0x800979A4; // type:label
+APPMTX_04__mtx_004_                         = 0x800979AC; // type:label
+APPMTX_05__mtx_004_                         = 0x800979CC; // type:label
+APPMTX_06__mtx_004_                         = 0x800979D4; // type:label
+APPMTX_13__mtx_004_                         = 0x80097A20; // type:label
+APPMTX_14__mtx_004_                         = 0x80097A24; // type:label
+APPMTX_15__mtx_004_                         = 0x80097A3C; // type:label
+APPMTX_16__mtx_004_                         = 0x80097A40; // type:label
+APPMTX_17__mtx_004_                         = 0x80097A58; // type:label
+APPMTX_18__mtx_004_                         = 0x80097A5C; // type:label
 
-// g4.o
-GsTMDfastNG4 = 0x80098f38; // type:func
-NG4_1 = 0x80098F74; // type:label
-NG4_2 = 0x800990A0; // type:label
-NG4_3 = 0x800990AC; // type:label
-GsTMDfastG4NL = 0x800990b8; // type:func
-G4NL_1 = 0x800990F4; // type:label
-G4NL_2 = 0x80099214; // type:label
-G4NL_3 = 0x80099220; // type:label
-GsTMDfastG4L = 0x8009922c; // type:func
-G4L_1 = 0x80099244; // type:label
-G4L_1L = 0x80099250; // type:label
-G4L_2L = 0x800993DC; // type:label
-G4L_2 = 0x800993F0; // type:label
-G4L_3 = 0x80099400; // type:label
-GsTMDfastG4LFG = 0x8009940c; // type:func
-G4LFG_1 = 0x80099424; // type:label
-G4LFG_1L = 0x80099430; // type:label
-G4LFG_2 = 0x800995D0; // type:label
-G4LFG_3 = 0x800995E0; // type:label
+//--------------------------------------------------------------------
+//--- PA: 0x072F28   VA: 0x80097A88   subsegment: lib, libgte, mtx_005
+//--------------------------------------------------------------------
+ApplyRotMatrix                              = 0x80097A88; // type:func
 
-// gt3.o
-GsTMDfastTNG3 = 0x800995f8; // type:func
-TNG3_1 = 0x80099634; // type:label
-TNG3_2 = 0x80099758; // type:label
-TNG3_3 = 0x80099764; // type:label
-GsTMDfastTG3NL = 0x80099770; // type:func
-TG3NL_1 = 0x800997AC; // type:label
-TG3NL_2 = 0x800998B4; // type:label
-TG3NL_3 = 0x800998C0; // type:label
-GsTMDfastTG3L = 0x800998cc; // type:func
-TG3L_1 = 0x800998E4; // type:label
-TG3L_1L = 0x800998F0; // type:label
-TG3L_2 = 0x80099A64; // type:label
-TG3L_3 = 0x80099A74; // type:label
-GsTMDfastTG3LFG = 0x80099a80; // type:func
-TG3LFG_1 = 0x80099A98; // type:label
-TG3LFG_1L = 0x80099AA4; // type:label
-TG3LFG_2 = 0x80099C18; // type:label
-TG3LFG_3 = 0x80099C28; // type:label
+//--------------------------------------------------------------------
+//--- PA: 0x072F58   VA: 0x80097AB8   subsegment: lib, libgte, mtx_006
+//--------------------------------------------------------------------
+PushMatrix                                  = 0x80097AB8; // type:func
+CONTpush                                    = 0x80097AF8; // type:label
+PopMatrix                                   = 0x80097B5C; // type:func
+CONTpop                                     = 0x80097B98; // type:label
 
-// gt4.o
-GsTMDfastTNG4 = 0x80099c38; // type:func
-TNG4_1 = 0x80099C74; // type:label
-TNG4_2 = 0x80099DDC; // type:label
-TNG4_3 = 0x80099DE8; // type:label
-GsTMDfastTG4NL = 0x80099df4; // type:func
-TG4NL_1 = 0x80099E30; // type:label
-TG4NL_2 = 0x80099F74; // type:label
-TG4NL_3 = 0x80099F80; // type:label
-GsTMDfastTG4L = 0x80099f8c; // type:func
-TG4L_1 = 0x80099FA4; // type:label
-TG4L_1L = 0x80099FB0; // type:label
-TG4L_2L = 0x8009A164; // type:label
-TG4L_2 = 0x8009A17C; // type:label
-TG4L_3 = 0x8009A18C; // type:label
-GsTMDfastTG4LFG = 0x8009a198; // type:func
-TG4LFG_1 = 0x8009A1B0; // type:label
-TG4LFG_1L = 0x8009A1BC; // type:label
-TG4LFG_2 = 0x8009A388; // type:label
-TG4LFG_3 = 0x8009A398; // type:label
+//--------------------------------------------------------------------
+//--- PA: 0x0730A8   VA: 0x80097C08   subsegment: lib, libgte, mtx_007
+//--------------------------------------------------------------------
+ReadLightMatrix                             = 0x80097C08; // type:func
 
-// ratan.o
-ratan2 = 0x8009a3a8; // type:func
-// ratan.o globals
-ratan_tbl = 0x800B060C;
+//-------------------------------------------------------------------
+//--- PA: 0x0730F8   VA: 0x80097C58   subsegment: lib, libgte, mtx_01
+//-------------------------------------------------------------------
+ApplyRotMatrixLV                            = 0x80097C58; // type:func
+APPMTX_01                                   = 0x80097C84; // type:label
+APPMTX_02                                   = 0x80097C8C; // type:label
+APPMTX_03                                   = 0x80097CAC; // type:label
+APPMTX_04                                   = 0x80097CB4; // type:label
+APPMTX_05                                   = 0x80097CD4; // type:label
+APPMTX_06                                   = 0x80097CDC; // type:label
+APPMTX_13                                   = 0x80097D28; // type:label
+APPMTX_14                                   = 0x80097D2C; // type:label
+APPMTX_15                                   = 0x80097D44; // type:label
+APPMTX_16                                   = 0x80097D48; // type:label
+APPMTX_17                                   = 0x80097D60; // type:label
+APPMTX_18                                   = 0x80097D64; // type:label
 
-// patchgte.o
-_patch_gte = 0x8009A528; // type:func
-oldbug = 0x8009A5D4; // type:func
-newnonbug = 0x8009A5EC; // type:label
-newnonbug_end = 0x8009A604; // type:label
-// patchgte.o globals
-store__patchgte_o_ = 0x800C7160;
+//-------------------------------------------------------------------
+//--- PA: 0x073238   VA: 0x80097D98   subsegment: lib, libgte, mtx_02
+//-------------------------------------------------------------------
+SetMulRotMatrix                             = 0x80097D98; // type:func
 
-// padentry.o
-PadChkVsync = 0x8009a608; // type:func
-PadStartCom = 0x8009a628; // type:func
-PadStopCom = 0x8009a648; // type:func
-PadChkMtap = 0x8009a668; // type:func
-PadGetState = 0x8009a6b4; // type:func
-PadInfoMode = 0x8009a774; // type:func
-PadInfoAct = 0x8009a86c; // type:func
-PadInfoComb = 0x8009a940; // type:func
-PadSetActAlign = 0x8009a9e8; // type:func
-PadSetMainMode = 0x8009aa20; // type:func
-PadSetAct = 0x8009aa68; // type:func
+//-------------------------------------------------------------------
+//--- PA: 0x073328   VA: 0x80097E88   subsegment: lib, libgte, mtx_03
+//-------------------------------------------------------------------
+MulMatrix                                   = 0x80097E88; // type:func
 
-// padmain.o
-PadEnableCom = 0x8009aab8; // type:func
-_padSetVsyncParam = 0x8009abd0; // type:func
-isVsync = 0x8009ABFC; // type:func
-intPad = 0x8009AC64; // type:func
-_padChkVsync = 0x8009add0; // type:func
-_padStartCom = 0x8009ade4; // type:func
-_padStopCom = 0x8009aeb0; // type:func
-_padInitSioMode = 0x8009aef4; // type:func
-execIntState = 0x8009B228; // type:func
-_padSioRW = 0x8009b2f0; // type:func
-_padSioRW2 = 0x8009b4c8; // type:func
-_padClrIntSio0 = 0x8009b700; // type:func
-_padWaitRXready = 0x8009b790; // type:func
-// padmain.o globals
-__ps_libinfo__libpad__ = 0x800B0E1C;
-_padFuncNextPort = 0x800b0e24;
-_padFuncClrInfo = 0x800b0e28;
-_padFuncGetTxd = 0x800b0e2c;
-_padFuncCurrLimit = 0x800b0e30;
-_padFuncPtr2Port = 0x800b0e34;
-_padFuncPort2Info = 0x800b0e38;
-_padFuncSendAuto = 0x800b0e3c;
-_padFuncChkEng = 0x800b0e40;
-_padFuncRecvAuto = 0x800b0e44;
-_padFuncClrCmdNo = 0x800b0e48;
-_padFuncIntGun = 0x800b0e4c;
-_padFuncSetGunPort = 0x800b0e50;
-_padFuncGetGunPos = 0x800b0e54;
-_padInfoDir = 0x800b0e58;
-_padIntExec = 0x800b0e5c;
-_padGunExec = 0x800b0e60;
-_padSioChan = 0x800b0e64;
-_padSioState = 0x800b0e68;
-_padTotalCurr = 0x800b0e6c;
-_padModeMtap = 0x800b0e70;
-_padChanStart = 0x800b0e74;
-_padChanStop = 0x800b0e78;
-_padFixResult = 0x800b0e7c;
-intc__padmain_o_ = 0x800b0e84; // intc
-sio__padmain_o_ = 0x800b0e88; // sio
-vsyncParam = 0x800C7170;
-padRestPeriod = 0x800C7180;
+//-------------------------------------------------------------------
+//--- PA: 0x073438   VA: 0x80097F98   subsegment: lib, libgte, mtx_04
+//-------------------------------------------------------------------
+MulMatrix2                                  = 0x80097F98; // type:func
 
-// padcmd.o
-_padSetAct = 0x8009b7b8; // type:func
-_padSetCmd = 0x8009b7c4; // type:func
-_padSendAtLoadInfo = 0x8009b7d4; // type:func
-_padRecvAtLoadInfo = 0x8009b858; // type:func
-_padGetActSize = 0x8009b9a4; // type:func
-_padLoadActInfo = 0x8009b9dc; // type:func
-sendAtLoadAct = 0x8009bab0; // type:func
-recvAtLoadAct = 0x8009bb58; // type:func
-_padSetActAlign = 0x8009bdcc; // type:func
-sendAtActAlign = 0x8009be34; // type:func
-recvAtActAlign = 0x8009be50; // type:func
-_padSetMainMode = 0x8009bf18; // type:func
-sendAtMainMode = 0x8009bfb0; // type:func
-recvAtMainMode = 0x8009c004; // type:func
-_padCmdParaMode = 0x8009c064; // type:func
-cmdPadInfo = 0x8009c084; // type:func
-cmdGetType = 0x8009c098; // type:func
-cmdActInfo = 0x8009c0b8; // type:func
-cmdCombList = 0x8009c0d8; // type:func
-cmdNext = 0x8009C0F8; // type:func
-// padcmd.o globals
-dst.16 = 0x800C7190; // Not totally sure.
+//-------------------------------------------------------------------
+//--- PA: 0x073548   VA: 0x800980A8   subsegment: lib, libgte, mtx_05
+//-------------------------------------------------------------------
+ApplyMatrix                                 = 0x800980A8; // type:func
 
-// padif.o
-intFuncReqa = 0x8009C118; // type:func
-intFuncCmd = 0x8009C160; // type:func
-intFuncSize = 0x8009C238; // type:func
-intFuncAck = 0x8009C2F8; // type:func
-intFuncData = 0x8009C384; // type:func
-// padif.o globals
-sioReadSize = 0x800B0E9C;
-sio__padif_o_ = 0x800B0EA0;
-sendAuto = 0x800B0EA4;
-// mtapTime = missing, game isn't using 4.4 sdk?
-padIntFunc = 0x800B0EA8;
+//-------------------------------------------------------------------
+//--- PA: 0x073598   VA: 0x800980F8   subsegment: lib, libgte, mtx_06
+//-------------------------------------------------------------------
+ApplyMatrixSV                               = 0x800980F8; // type:func
 
-// padportd.o
-PadInitDirect = 0x8009c708; // type:func
-clrInfo = 0x8009c868; // type:func
-nextPort = 0x8009c8d0; // type:func
-dirClrCmdNo = 0x8009c9c4; // type:func
-getTxByte = 0x8009c9d4; // type:func
-chkCurrLimit = 0x8009ca90; // type:func
-ptr2Port = 0x8009cd0c; // type:func
-port2PadInfo = 0x8009CD44; // type:func
-// padportd.o globals
-sio__padportd_o_ = 0x800B0EBC;
-rxrawdata.4 = 0x800C71A0;
-txrawdata.5 = 0x800C71E8;
-infoDir = 0x800C7230;
+//-------------------------------------------------------------------
+//--- PA: 0x0735F8   VA: 0x80098158   subsegment: lib, libgte, mtx_07
+//-------------------------------------------------------------------
+TransMatrix                                 = 0x80098158; // type:func
 
-// padseqd.o
-_padInitDirSeq = 0x8009CD68; // type:func
-dirSendAuto = 0x8009CD9C; // type:func
-dirRecvAuto = 0x8009CE9C; // type:func
-_dirFailAuto = 0x8009D0EC; // type:func
-dirChkEngCmd = 0x8009D1C8; // type:func
+//-------------------------------------------------------------------
+//--- PA: 0x073628   VA: 0x80098188   subsegment: lib, libgte, mtx_08
+//-------------------------------------------------------------------
+ScaleMatrix                                 = 0x80098188; // type:func
 
-// waitrc2.o
-setRC2wait = 0x8009D1F8; // type:func
-chkRC2wait = 0x8009D218; // type:func
-// waitrc2.o globals
-_startTime = 0x800C7410;
-_waitTime = 0x800C7414;
+//-------------------------------------------------------------------
+//--- PA: 0x073768   VA: 0x800982C8   subsegment: lib, libgte, mtx_09
+//-------------------------------------------------------------------
+SetRotMatrix                                = 0x800982C8; // type:func
 
-// s_crwa.o
-SpuClearReverbWorkArea = 0x8009d2b8; // type:func
-// s_crwa.o externs
-_spu_zerobuf = 0x800B0ECC;
+//-------------------------------------------------------------------
+//--- PA: 0x073798   VA: 0x800982F8   subsegment: lib, libgte, mtx_10
+//-------------------------------------------------------------------
+SetLightMatrix                              = 0x800982F8; // type:func
 
-// LIBAPI/a10.o
-WaitEvent = 0x8009d458; // type:func
+//-------------------------------------------------------------------
+//--- PA: 0x0737C8   VA: 0x80098328   subsegment: lib, libgte, mtx_11
+//-------------------------------------------------------------------
+SetColorMatrix                              = 0x80098328; // type:func
 
-// s_m_util.o
-_SpuIsInAllocateArea = 0x8009d468; // type:func
-_SpuIsInAllocateArea_ = 0x8009d4e8; // type:func
+//-------------------------------------------------------------------
+//--- PA: 0x0737F8   VA: 0x80098358   subsegment: lib, libgte, mtx_12
+//-------------------------------------------------------------------
+SetTransMatrix                              = 0x80098358; // type:func
 
-// s_stm.o
-SpuSetTransferMode = 0x8009d578; // type:func
-// s_sva.o
-SpuSetVoiceAttr = 0x8009d5a8; // type:func
+//------------------------------------------------------------------
+//--- PA: 0x073818   VA: 0x80098378   subsegment: lib, libgte, reg08
+//------------------------------------------------------------------
+ReadGeomOffset                              = 0x80098378; // type:func
 
-// s_n2p.o
-_spu_note2pitch = 0x8009dba8; // type:func
-_spu_pitch2note = 0x8009dc78; // type:func
-// s_n2p.o globals
-_spu_NTable = 0x800B12CC;
-_spu_FTable = 0x800B12E4;
+//------------------------------------------------------------------
+//--- PA: 0x073838   VA: 0x80098398   subsegment: lib, libgte, reg09
+//------------------------------------------------------------------
+ReadGeomScreen                              = 0x80098398; // type:func
 
-// s_gva.o
-SpuGetVoiceAttr = 0x8009dda8; // type:func
-// s_q.o
-SpuQuit = 0x800a235c; // type:func
-// LIBAPI/a13.o
-DisableEvent = 0x800a23dc; // type:func
-// s_m_init.o
-SpuInitMalloc = 0x800a23ec; // type:func
-// s_sr.o
-SpuSetReverb = 0x800a244c; // type:func
+//------------------------------------------------------------------
+//--- PA: 0x073848   VA: 0x800983A8   subsegment: lib, libgte, reg10
+//------------------------------------------------------------------
+SetBackColor                                = 0x800983A8; // type:func
 
-// s_srmp.o
-SpuSetReverbModeParam = 0x800a251c; // type:func
-// s_srmp.o externs
-_spu_rev_param = 0x800B1478;
+//------------------------------------------------------------------
+//--- PA: 0x073868   VA: 0x800983C8   subsegment: lib, libgte, reg11
+//------------------------------------------------------------------
+SetFarColor                                 = 0x800983C8; // type:func
 
-// s_sra.o
-_spu_setReverbAttr = 0x800a29fc; // type:func
-// s_rrwa.o
-SpuReserveReverbWorkArea = 0x800a2ecc; // type:func
-// s_srv.o
-SpuSetReverbVoice = 0x800a2f1c; // type:func
-// s_sav.o
-_SpuSetAnyVoice = 0x800a2f4c; // type:func
-// s_sk.o
-SpuSetKey = 0x800a320c; // type:func
-// s_gks.o
-SpuGetKeyStatus = 0x800a33cc; // type:func
-// s_skowa.o
-SpuSetKeyOnWithAttr = 0x800a345c; // type:func
-// s_w.o
-SpuWrite = 0x800a348c; // type:func
-// s_stsa.o
-SpuSetTransferStartAddr = 0x800a34ec; // type:func
-// s_itc.o
-SpuIsTransferCompleted = 0x800a354c; // type:func
+//------------------------------------------------------------------
+//--- PA: 0x073888   VA: 0x800983E8   subsegment: lib, libgte, reg12
+//------------------------------------------------------------------
+SetGeomOffset                               = 0x800983E8; // type:func
 
-// s_sca.o
-SpuSetCommonAttr = 0x800a35fc; // type:func
+//------------------------------------------------------------------
+//--- PA: 0x0738A8   VA: 0x80098408   subsegment: lib, libgte, reg13
+//------------------------------------------------------------------
+SetGeomScreen                               = 0x80098408; // type:func
+
+//----------------------------------------------------------------
+//--- PA: 0x0738B8   VA: 0x80098418   subsegment: lib, libgte, smp
+//----------------------------------------------------------------
+LocalLight                                  = 0x80098418; // type:func
+DpqColor                                    = 0x8009843C; // type:func
+NormalColor                                 = 0x80098458; // type:func
+NormalColor3                                = 0x80098474; // type:func
+NormalColorDpq                              = 0x800984B0; // type:func
+NormalColorDpq3                             = 0x800984D4; // type:func
+NormalColorCol                              = 0x8009851C; // type:func
+NormalColorCol3                             = 0x8009853C; // type:func
+ColorDpq                                    = 0x80098580; // type:func
+ColorCol                                    = 0x800985A8; // type:func
+AverageSZ3                                  = 0x800985CC; // type:func
+AverageSZ4                                  = 0x800985DC; // type:func
+
+//-------------------------------------------------------------------
+//--- PA: 0x073A98   VA: 0x800985F8   subsegment: lib, libgte, smp_00
+//-------------------------------------------------------------------
+LightColor                                  = 0x800985F8; // type:func
+DpqColorLight                               = 0x80098620; // type:func
+DpqColor3                                   = 0x80098648; // type:func
+Intpl                                       = 0x80098684; // type:func
+Square12                                    = 0x800986A8; // type:func
+SQREL12                                     = 0x800986B8; // type:label
+Square12_cont                               = 0x800986BC; // type:label
+Square0                                     = 0x800986D0; // type:func
+SQREL0                                      = 0x800986E0; // type:label
+Square0_cont                                = 0x800986E4; // type:label
+AverageZ3                                   = 0x800986F8; // type:func
+AverageZ4                                   = 0x80098718; // type:func
+OuterProduct12                              = 0x8009873C; // type:func
+OuterProduct0                               = 0x80098794; // type:func
+Lzc                                         = 0x800987EC; // type:func
+
+//-------------------------------------------------------------------
+//--- PA: 0x073CA8   VA: 0x80098808   subsegment: lib, libgte, smp_02
+//-------------------------------------------------------------------
+RotTransPers                                = 0x80098808; // type:func
+
+//-------------------------------------------------------------------
+//--- PA: 0x073CD8   VA: 0x80098838   subsegment: lib, libgte, smp_03
+//-------------------------------------------------------------------
+RotTransPers3                               = 0x80098838; // type:func
+
+//-------------------------------------------------------------------
+//--- PA: 0x073D38   VA: 0x80098898   subsegment: lib, libgte, smp_04
+//-------------------------------------------------------------------
+RotTrans                                    = 0x80098898; // type:func
+
+//-------------------------------------------------------------------
+//--- PA: 0x073D68   VA: 0x800988C8   subsegment: lib, libgte, cmb_00
+//-------------------------------------------------------------------
+RotTransPers4                               = 0x800988C8; // type:func
+
+//-------------------------------------------------------------------
+//--- PA: 0x073DE8   VA: 0x80098948   subsegment: lib, libgte, fgo_00
+//-------------------------------------------------------------------
+TransposeMatrix                             = 0x80098948; // type:func
+
+//---------------------------------------------------------------
+//--- PA: 0x073E28   VA: 0x80098988   subsegment: lib, libgte, g3
+//---------------------------------------------------------------
+GsTMDfastNG3                                = 0x80098988; // type:func
+NG3_1                                       = 0x800989C4; // type:label
+NG3_2                                       = 0x80098AB8; // type:label
+NG3_3                                       = 0x80098AC4; // type:label
+GsTMDfastG3NL                               = 0x80098AD0; // type:func
+G3NL_1                                      = 0x80098B0C; // type:label
+G3NL_2                                      = 0x80098BF8; // type:label
+G3NL_3                                      = 0x80098C04; // type:label
+GsTMDfastG3L                                = 0x80098C10; // type:func
+G3L_1                                       = 0x80098C28; // type:label
+G3L_1L                                      = 0x80098C34; // type:label
+G3L_2                                       = 0x80098D84; // type:label
+G3L_3                                       = 0x80098D94; // type:label
+GsTMDfastG3LFG                              = 0x80098DA0; // type:func
+G3LFG_1                                     = 0x80098DB8; // type:label
+G3LFG_1L                                    = 0x80098DC4; // type:label
+G3LFG_2                                     = 0x80098F14; // type:label
+G3LFG_3                                     = 0x80098F24; // type:label
+
+//---------------------------------------------------------------
+//--- PA: 0x0743D8   VA: 0x80098F38   subsegment: lib, libgte, g4
+//---------------------------------------------------------------
+GsTMDfastNG4                                = 0x80098F38; // type:func
+NG4_1                                       = 0x80098F74; // type:label
+NG4_2                                       = 0x800990A0; // type:label
+NG4_3                                       = 0x800990AC; // type:label
+GsTMDfastG4NL                               = 0x800990B8; // type:func
+G4NL_1                                      = 0x800990F4; // type:label
+G4NL_2                                      = 0x80099214; // type:label
+G4NL_3                                      = 0x80099220; // type:label
+GsTMDfastG4L                                = 0x8009922C; // type:func
+G4L_1                                       = 0x80099244; // type:label
+G4L_1L                                      = 0x80099250; // type:label
+G4L_2L                                      = 0x800993DC; // type:label
+G4L_2                                       = 0x800993F0; // type:label
+G4L_3                                       = 0x80099400; // type:label
+GsTMDfastG4LFG                              = 0x8009940C; // type:func
+G4LFG_1                                     = 0x80099424; // type:label
+G4LFG_1L                                    = 0x80099430; // type:label
+G4LFG_2                                     = 0x800995D0; // type:label
+G4LFG_3                                     = 0x800995E0; // type:label
+
+//----------------------------------------------------------------
+//--- PA: 0x074A98   VA: 0x800995F8   subsegment: lib, libgte, gt3
+//----------------------------------------------------------------
+GsTMDfastTNG3                               = 0x800995F8; // type:func
+TNG3_1                                      = 0x80099634; // type:label
+TNG3_2                                      = 0x80099758; // type:label
+TNG3_3                                      = 0x80099764; // type:label
+GsTMDfastTG3NL                              = 0x80099770; // type:func
+TG3NL_1                                     = 0x800997AC; // type:label
+TG3NL_2                                     = 0x800998B4; // type:label
+TG3NL_3                                     = 0x800998C0; // type:label
+GsTMDfastTG3L                               = 0x800998CC; // type:func
+TG3L_1                                      = 0x800998E4; // type:label
+TG3L_1L                                     = 0x800998F0; // type:label
+TG3L_2                                      = 0x80099A64; // type:label
+TG3L_3                                      = 0x80099A74; // type:label
+GsTMDfastTG3LFG                             = 0x80099A80; // type:func
+TG3LFG_1                                    = 0x80099A98; // type:label
+TG3LFG_1L                                   = 0x80099AA4; // type:label
+TG3LFG_2                                    = 0x80099C18; // type:label
+TG3LFG_3                                    = 0x80099C28; // type:label
+
+//----------------------------------------------------------------
+//--- PA: 0x0750D8   VA: 0x80099C38   subsegment: lib, libgte, gt4
+//----------------------------------------------------------------
+GsTMDfastTNG4                               = 0x80099C38; // type:func
+TNG4_1                                      = 0x80099C74; // type:label
+TNG4_2                                      = 0x80099DDC; // type:label
+TNG4_3                                      = 0x80099DE8; // type:label
+GsTMDfastTG4NL                              = 0x80099DF4; // type:func
+TG4NL_1                                     = 0x80099E30; // type:label
+TG4NL_2                                     = 0x80099F74; // type:label
+TG4NL_3                                     = 0x80099F80; // type:label
+GsTMDfastTG4L                               = 0x80099F8C; // type:func
+TG4L_1                                      = 0x80099FA4; // type:label
+TG4L_1L                                     = 0x80099FB0; // type:label
+TG4L_2L                                     = 0x8009A164; // type:label
+TG4L_2                                      = 0x8009A17C; // type:label
+TG4L_3                                      = 0x8009A18C; // type:label
+GsTMDfastTG4LFG                             = 0x8009A198; // type:func
+TG4LFG_1                                    = 0x8009A1B0; // type:label
+TG4LFG_1L                                   = 0x8009A1BC; // type:label
+TG4LFG_2                                    = 0x8009A388; // type:label
+TG4LFG_3                                    = 0x8009A398; // type:label
+
+//------------------------------------------------------------------
+//--- PA: 0x075848   VA: 0x8009A3A8   subsegment: lib, libgte, ratan
+//------------------------------------------------------------------
+ratan2                                      = 0x8009A3A8; // type:func
+
+//---------------------------------------------------------------------
+//--- PA: 0x0759C8   VA: 0x8009A528   subsegment: lib, libgte, patchgte
+//---------------------------------------------------------------------
+_patch_gte                                  = 0x8009A528; // type:func
+oldbug                                      = 0x8009A5D4; // type:func
+newnonbug                                   = 0x8009A5EC; // type:label
+newnonbug_end                               = 0x8009A604; // type:label
+
+//---------------------------------------------------------------------
+//--- PA: 0x075AA8   VA: 0x8009A608   subsegment: lib, libpad, padentry
+//---------------------------------------------------------------------
+PadChkVsync                                 = 0x8009A608; // type:func
+PadStartCom                                 = 0x8009A628; // type:func
+PadStopCom                                  = 0x8009A648; // type:func
+PadChkMtap                                  = 0x8009A668; // type:func
+PadGetState                                 = 0x8009A6B4; // type:func
+PadInfoMode                                 = 0x8009A774; // type:func
+PadInfoAct                                  = 0x8009A86C; // type:func
+PadInfoComb                                 = 0x8009A940; // type:func
+PadSetActAlign                              = 0x8009A9E8; // type:func
+PadSetMainMode                              = 0x8009AA20; // type:func
+PadSetAct                                   = 0x8009AA68; // type:func
+
+//--------------------------------------------------------------------
+//--- PA: 0x075F58   VA: 0x8009AAB8   subsegment: lib, libpad, padmain
+//--------------------------------------------------------------------
+PadEnableCom                                = 0x8009AAB8; // type:func
+_padSetVsyncParam                           = 0x8009ABD0; // type:func
+isVsync                                     = 0x8009ABFC; // type:func
+intPad                                      = 0x8009AC64; // type:func
+_padChkVsync                                = 0x8009ADD0; // type:func
+_padStartCom                                = 0x8009ADE4; // type:func
+_padStopCom                                 = 0x8009AEB0; // type:func
+_padInitSioMode                             = 0x8009AEF4; // type:func
+execIntState                                = 0x8009B228; // type:func
+_padSioRW                                   = 0x8009B2F0; // type:func
+_padSioRW2                                  = 0x8009B4C8; // type:func
+_padClrIntSio0                              = 0x8009B700; // type:func
+_padWaitRXready                             = 0x8009B790; // type:func
+
+//-------------------------------------------------------------------
+//--- PA: 0x076C58   VA: 0x8009B7B8   subsegment: lib, libpad, padcmd
+//-------------------------------------------------------------------
+_padSetAct                                  = 0x8009B7B8; // type:func
+_padSetCmd                                  = 0x8009B7C4; // type:func
+_padSendAtLoadInfo                          = 0x8009B7D4; // type:func
+_padRecvAtLoadInfo                          = 0x8009B858; // type:func
+_padGetActSize                              = 0x8009B9A4; // type:func
+_padLoadActInfo                             = 0x8009B9DC; // type:func
+sendAtLoadAct                               = 0x8009BAB0; // type:func
+recvAtLoadAct                               = 0x8009BB58; // type:func
+_padSetActAlign                             = 0x8009BDCC; // type:func
+sendAtActAlign                              = 0x8009BE34; // type:func
+recvAtActAlign                              = 0x8009BE50; // type:func
+_padSetMainMode                             = 0x8009BF18; // type:func
+sendAtMainMode                              = 0x8009BFB0; // type:func
+recvAtMainMode                              = 0x8009C004; // type:func
+_padCmdParaMode                             = 0x8009C064; // type:func
+cmdPadInfo                                  = 0x8009C084; // type:func
+cmdGetType                                  = 0x8009C098; // type:func
+cmdActInfo                                  = 0x8009C0B8; // type:func
+cmdCombList                                 = 0x8009C0D8; // type:func
+cmdNext                                     = 0x8009C0F8; // type:func
+
+//------------------------------------------------------------------
+//--- PA: 0x0775B8   VA: 0x8009C118   subsegment: lib, libpad, padif
+//------------------------------------------------------------------
+intFuncReqa                                 = 0x8009C118; // type:func
+intFuncCmd                                  = 0x8009C160; // type:func
+intFuncSize                                 = 0x8009C238; // type:func
+intFuncAck                                  = 0x8009C2F8; // type:func
+intFuncData                                 = 0x8009C384; // type:func
+
+//---------------------------------------------------------------------
+//--- PA: 0x077BA8   VA: 0x8009C708   subsegment: lib, libpad, padportd
+//---------------------------------------------------------------------
+PadInitDirect                               = 0x8009C708; // type:func
+clrInfo                                     = 0x8009C868; // type:func
+nextPort                                    = 0x8009C8D0; // type:func
+dirClrCmdNo                                 = 0x8009C9C4; // type:func
+getTxByte                                   = 0x8009C9D4; // type:func
+chkCurrLimit                                = 0x8009CA90; // type:func
+ptr2Port                                    = 0x8009CD0C; // type:func
+port2PadInfo                                = 0x8009CD44; // type:func
+
+//--------------------------------------------------------------------
+//--- PA: 0x078208   VA: 0x8009CD68   subsegment: lib, libpad, padseqd
+//--------------------------------------------------------------------
+_padInitDirSeq                              = 0x8009CD68; // type:func
+dirSendAuto                                 = 0x8009CD9C; // type:func
+dirRecvAuto                                 = 0x8009CE9C; // type:func
+_dirFailAuto                                = 0x8009D0EC; // type:func
+dirChkEngCmd                                = 0x8009D1C8; // type:func
+
+//--------------------------------------------------------------------
+//--- PA: 0x078698   VA: 0x8009D1F8   subsegment: lib, libpad, waitrc2
+//--------------------------------------------------------------------
+setRC2wait                                  = 0x8009D1F8; // type:func
+chkRC2wait                                  = 0x8009D218; // type:func
+
+//-------------------------------------------------------------------
+//--- PA: 0x078758   VA: 0x8009D2B8   subsegment: lib, libspu, s_crwa
+//-------------------------------------------------------------------
+SpuClearReverbWorkArea                      = 0x8009D2B8; // type:func
+
+//----------------------------------------------------------------
+//--- PA: 0x0788F8   VA: 0x8009D458   subsegment: lib, libapi, a10
+//----------------------------------------------------------------
+WaitEvent                                   = 0x8009D458; // type:func
+
+//---------------------------------------------------------------------
+//--- PA: 0x078908   VA: 0x8009D468   subsegment: lib, libspu, s_m_util
+//---------------------------------------------------------------------
+_SpuIsInAllocateArea                        = 0x8009D468; // type:func
+_SpuIsInAllocateArea_                       = 0x8009D4E8; // type:func
+
+//------------------------------------------------------------------
+//--- PA: 0x078A18   VA: 0x8009D578   subsegment: lib, libspu, s_stm
+//------------------------------------------------------------------
+SpuSetTransferMode                          = 0x8009D578; // type:func
+
+//------------------------------------------------------------------
+//--- PA: 0x078A48   VA: 0x8009D5A8   subsegment: lib, libspu, s_sva
+//------------------------------------------------------------------
+SpuSetVoiceAttr                             = 0x8009D5A8; // type:func
+
+//------------------------------------------------------------------
+//--- PA: 0x079048   VA: 0x8009DBA8   subsegment: lib, libspu, s_n2p
+//------------------------------------------------------------------
+_spu_note2pitch                             = 0x8009DBA8; // type:func
+_spu_pitch2note                             = 0x8009DC78; // type:func
+
+//------------------------------------------------------------------
+//--- PA: 0x079248   VA: 0x8009DDA8   subsegment: lib, libspu, s_gva
+//------------------------------------------------------------------
+SpuGetVoiceAttr                             = 0x8009DDA8; // type:func
+
+//-------------------------------------------------------------------------
+//--- PA: 0x079638   VA: 0x8009E198   subsegment: asm, lib_unk/lib_8009E198
+//-------------------------------------------------------------------------
+
+//----------------------------------------------------------------
+//--- PA: 0x07A244   VA: 0x8009EDA4   subsegment: c, libsd/smf_snd
+//----------------------------------------------------------------
+// Konami libsd sound library (customised libsnd?)
+tone_adsr_mem                               = 0x8009EDA4; // type:func
+tone_adsr_back                              = 0x8009EE30; // type:func
+sd_alloc_sort                               = 0x8009EEBC; // type:func
+SdSpuMalloc                                 = 0x8009EFA0; // type:func
+SdSpuMallocWithStartAddr                    = 0x8009F120; // type:func
+SdSpuFree                                   = 0x8009F364; // type:func
+SdWorkInit                                  = 0x8009F400; // type:func
+SdInit                                      = 0x8009F490; // type:func
+SdStart                                     = 0x8009F4D0; // type:func
+SdStart2                                    = 0x8009F510; // type:func
+SdSetTickMode                               = 0x8009F530; // type:func
+SdSeqCalledTbyT                             = 0x8009F53C; // type:func
+SdSetStereo                                 = 0x8009F568; // type:func
+SdSetMono                                   = 0x8009F574; // type:func
+SdSetReservedVoice                          = 0x8009F584; // type:func
+SdSetTableSize                              = 0x8009F5B8; // type:func
+SdEnd                                       = 0x8009F5C0; // type:func
+SdQuit                                      = 0x8009F64C; // type:func
+SdSetSerialAttr                             = 0x8009F67C; // type:func
+SdSetSerialVol                              = 0x8009F700; // type:func
+SdSetMVol                                   = 0x8009F75C; // type:func
+SdVabOpenHead                               = 0x8009F79C; // type:func
+SdVabOpenHeadSticky                         = 0x8009F91C; // type:func
+SdVabFakeHead                               = 0x8009FAC0; // type:func
+SdVbOpenOne                                 = 0x8009FBA8; // type:func
+SdVabTransBody                              = 0x8009FD38; // type:func
+SdVabTransBodyPartly                        = 0x8009FDDC; // type:func
+SdVabTransCompleted                         = 0x8009FEC4; // type:func
+SdVabClose                                  = 0x8009FF00; // type:func
+SdSetAutoKeyOffMode                         = 0x8009FF64; // type:func
+SdAutoKeyOffCheck                           = 0x8009FF70; // type:func
+SdSeqOpen                                   = 0x800A00A4; // type:func
+SdSeqOpenWithAccNum                         = 0x800A0154; // type:func
+SdSeqPlay                                   = 0x800A0210; // type:func
+SdSeqStop                                   = 0x800A02D8; // type:func
+SdSeqClose                                  = 0x800A037C; // type:func
+SdSeqPause                                  = 0x800A0418; // type:func
+SdSeqReplay                                 = 0x800A0534; // type:func
+SdSeqSetVol                                 = 0x800A06F0; // type:func
+SdSeqGetVol                                 = 0x800A074C; // type:func
+SdUtFlush                                   = 0x800A0794; // type:func
+SdUtReverbOn                                = 0x800A07B4; // type:func
+SdUtReverbOff                               = 0x800A07DC; // type:func
+SdUtSetReverbType                           = 0x800A080C; // type:func
+SdUtSetReverbDepth                          = 0x800A085C; // type:func
+SdSetRVol                                   = 0x800A089C; // type:func
+SdUtSEAllKeyOff                             = 0x800A08DC; // type:func
+SdUtAllKeyOff                               = 0x800A09E8; // type:func
+SdUtGetVabHdr                               = 0x800A0A40; // type:func
+SdVoKeyOn                                   = 0x800A0AA0; // type:func
+SdVoKeyOff                                  = 0x800A0CFC; // type:func
+SdVoKeyOffWithRROff                         = 0x800A0E40; // type:func
+SdUtKeyOnV                                  = 0x800A0F80; // type:func
+SdUtKeyOn                                   = 0x800A1534; // type:func
+SdVbKeyOn                                   = 0x800A16C0; // type:func
+SdUtKeyOffV                                 = 0x800A18F4; // type:func
+SdUtKeyOffVWithRROff                        = 0x800A1A18; // type:func
+SdGetSeqStatus                              = 0x800A1B14; // type:func
+SdUtSetDetVVol                              = 0x800A1BD0; // type:func
+SdUtSetVVol                                 = 0x800A1C1C; // type:func
+SdUtGetDetVVol                              = 0x800A1C78; // type:func
+SdUtGetVVol                                 = 0x800A1CE8; // type:func
+SdGetTempo                                  = 0x800A1D68; // type:func
+SdSetTempo                                  = 0x800A1DA4; // type:func
+SdSetSeqWide                                = 0x800A1E18; // type:func
+SdGetMidiVol                                = 0x800A1E50; // type:func
+SdSetMidiVol                                = 0x800A1E90; // type:func
+SdSetMidiExpress                            = 0x800A1EC4; // type:func
+SdGetMidiExpress                            = 0x800A1EF8; // type:func
+SdGetMidiPan                                = 0x800A1F38; // type:func
+SdSetMidiPan                                = 0x800A1F78; // type:func
+SdGetMidiPitchBendFine                      = 0x800A1FAC; // type:func
+SdSetMidiPitchBendFine                      = 0x800A1FEC; // type:func
+SdGetTrackTranspause                        = 0x800A2030; // type:func
+SdSetTrackTranspause                        = 0x800A2038; // type:func
+SdGetTrackMute                              = 0x800A2040; // type:func
+SdSetTrackMute                              = 0x800A2090; // type:func
+SdGetSeqControlStatus                       = 0x800A20EC; // type:func
+SdGetSeqPlayStatus                          = 0x800A2134; // type:func
+SdGetSeqBeat                                = 0x800A21E0; // type:func
+SdGetSeqBeat2                               = 0x800A224C; // type:func
+// Custom Konami versions of these libsnd funcs. Just redirects to SD versions, maybe to aid with ports.
+SsSetMVol                                   = 0x800A2294; // type:func
+SsEnd                                       = 0x800A22C0; // type:func
+SsSetSerialAttr                             = 0x800A22E0; // type:func
+SsSetSerialVol                              = 0x800A2308; // type:func
+SsUtAllKeyOff                               = 0x800A2338; // type:func
+
+//----------------------------------------------------------------
+//--- PA: 0x07D7FC   VA: 0x800A235C   subsegment: lib, libspu, s_q
+//----------------------------------------------------------------
+SpuQuit                                     = 0x800A235C; // type:func
+
+//----------------------------------------------------------------
+//--- PA: 0x07D87C   VA: 0x800A23DC   subsegment: lib, libapi, a13
+//----------------------------------------------------------------
+DisableEvent                                = 0x800A23DC; // type:func
+
+//---------------------------------------------------------------------
+//--- PA: 0x07D88C   VA: 0x800A23EC   subsegment: lib, libspu, s_m_init
+//---------------------------------------------------------------------
+SpuInitMalloc                               = 0x800A23EC; // type:func
+
+//-----------------------------------------------------------------
+//--- PA: 0x07D8EC   VA: 0x800A244C   subsegment: lib, libspu, s_sr
+//-----------------------------------------------------------------
+SpuSetReverb                                = 0x800A244C; // type:func
+
+//-------------------------------------------------------------------
+//--- PA: 0x07D9BC   VA: 0x800A251C   subsegment: lib, libspu, s_srmp
+//-------------------------------------------------------------------
+SpuSetReverbModeParam                       = 0x800A251C; // type:func
+
+//------------------------------------------------------------------
+//--- PA: 0x07DE9C   VA: 0x800A29FC   subsegment: lib, libspu, s_sra
+//------------------------------------------------------------------
+_spu_setReverbAttr                          = 0x800A29FC; // type:func
+
+//-------------------------------------------------------------------
+//--- PA: 0x07E36C   VA: 0x800A2ECC   subsegment: lib, libspu, s_rrwa
+//-------------------------------------------------------------------
+SpuReserveReverbWorkArea                    = 0x800A2ECC; // type:func
+
+//------------------------------------------------------------------
+//--- PA: 0x07E3BC   VA: 0x800A2F1C   subsegment: lib, libspu, s_srv
+//------------------------------------------------------------------
+SpuSetReverbVoice                           = 0x800A2F1C; // type:func
+
+//------------------------------------------------------------------
+//--- PA: 0x07E3EC   VA: 0x800A2F4C   subsegment: lib, libspu, s_sav
+//------------------------------------------------------------------
+_SpuSetAnyVoice                             = 0x800A2F4C; // type:func
+
+//-----------------------------------------------------------------
+//--- PA: 0x07E6AC   VA: 0x800A320C   subsegment: lib, libspu, s_sk
+//-----------------------------------------------------------------
+SpuSetKey                                   = 0x800A320C; // type:func
+
+//------------------------------------------------------------------
+//--- PA: 0x07E86C   VA: 0x800A33CC   subsegment: lib, libspu, s_gks
+//------------------------------------------------------------------
+SpuGetKeyStatus                             = 0x800A33CC; // type:func
+
+//--------------------------------------------------------------------
+//--- PA: 0x07E8FC   VA: 0x800A345C   subsegment: lib, libspu, s_skowa
+//--------------------------------------------------------------------
+SpuSetKeyOnWithAttr                         = 0x800A345C; // type:func
+
+//----------------------------------------------------------------
+//--- PA: 0x07E92C   VA: 0x800A348C   subsegment: lib, libspu, s_w
+//----------------------------------------------------------------
+SpuWrite                                    = 0x800A348C; // type:func
+
+//-------------------------------------------------------------------
+//--- PA: 0x07E98C   VA: 0x800A34EC   subsegment: lib, libspu, s_stsa
+//-------------------------------------------------------------------
+SpuSetTransferStartAddr                     = 0x800A34EC; // type:func
+
+//------------------------------------------------------------------
+//--- PA: 0x07E9EC   VA: 0x800A354C   subsegment: lib, libspu, s_itc
+//------------------------------------------------------------------
+SpuIsTransferCompleted                      = 0x800A354C; // type:func
+
+//------------------------------------------------------------------
+//--- PA: 0x07EA9C   VA: 0x800A35FC   subsegment: lib, libspu, s_sca
+//------------------------------------------------------------------
+SpuSetCommonAttr                            = 0x800A35FC; // type:func
+
+//---------------------------------------------------------------
+//--- PA: 0x07EE1C   VA: 0x800A397C   subsegment: c, libsd/smf_io
+//---------------------------------------------------------------
+set_note_on                                 = 0x800A397C; // type:func
+set_midi_info                               = 0x800A39B8; // type:func
+Note2Pitch                                  = 0x800A39D8; // type:func
+tre_calc                                    = 0x800A3B20; // type:func
+vib_calc                                    = 0x800A3D30; // type:func
+random_calc                                 = 0x800A3E70; // type:func
+volume_calc                                 = 0x800A3F14; // type:func
+smf_vol_set                                 = 0x800A4150; // type:func
+master_vol_set                              = 0x800A4260; // type:func
+seq_master_vol_set                          = 0x800A4314; // type:func
+toremoro_set                                = 0x800A439C; // type:func
+pitch_bend_calc                             = 0x800A441C; // type:func
+pitch_calc                                  = 0x800A4494; // type:func
+midi_mod                                    = 0x800A4608; // type:func
+midi_porta                                  = 0x800A46B8; // type:func
+replay_reverb_set                           = 0x800A4748; // type:func
+midi_vsync                                  = 0x800A4838; // type:func
+sound_seq_off                               = 0x800A4A34; // type:func
+sound_off                                   = 0x800A4D20; // type:func
+vol_calc                                    = 0x800A4E90; // type:func
+adsr_set                                    = 0x800A4E98; // type:func
+rr_off                                      = 0x800A4F08; // type:func
+voice_check                                 = 0x800A4F64; // type:func
+key_on                                      = 0x800A5158; // type:func
+key_off                                     = 0x800A5C7C; // type:func
+key_press                                   = 0x800A5DCC; // type:func
+get_vab_tone                                = 0x800A5DD4; // type:func
+smf_data_entry                              = 0x800A5E84; // type:func
+control_change                              = 0x800A6268; // type:func
+program_change                              = 0x800A6C2C; // type:func
+chan_press                                  = 0x800A6C58; // type:func
+pitch_bend                                  = 0x800A6C60; // type:func
+control_code_set                            = 0x800A6CB0; // type:func
+
+//------------------------------------------------------------------
+//--- PA: 0x082158   VA: 0x800A6CB8   subsegment: lib, libspu, s_grv
+//------------------------------------------------------------------
 // unknown: SpuCommonError
+SpuGetReverbVoice                           = 0x800A6CB8; // type:func
 
-// s_grv.o
-SpuGetReverbVoice = 0x800a6cb8; // type:func
+//------------------------------------------------------------------
+//--- PA: 0x082188   VA: 0x800A6CE8   subsegment: lib, libspu, s_gav
+//------------------------------------------------------------------
+_SpuGetAnyVoice                             = 0x800A6CE8; // type:func
 
-// s_gav.o
-_SpuGetAnyVoice = 0x800a6ce8; // type:func
+//-----------------------------------------------------------------
+//--- PA: 0x0821B8   VA: 0x800A6D18   subsegment: c, libsd/smf_main
+//-----------------------------------------------------------------
+smf_timer                                   = 0x800A6D18; // type:func
+smf_timer_set                               = 0x800A6DC0; // type:func
+smf_timer_end                               = 0x800A6E58; // type:func
+smf_timer_stop                              = 0x800A6EC8; // type:func
+smf_vsync                                   = 0x800A6F14; // type:func
 
-scratchpad = 0x1F800000; // size:0x400 ignore:True
-D_800FE5F8 = 0x800FE5F8; // ignore:True - Fixes fake missmatch in `Demo_Update`.
+//----------------------------------------------------------------
+//--- PA: 0x082458   VA: 0x800A6FB8   subsegment: c, libsd/smf_mid
+//----------------------------------------------------------------
+MemCmp                                      = 0x800A6FB8; // type:func
+readMThd                                    = 0x800A6FFC; // type:func
+readMTrk                                    = 0x800A70BC; // type:func
+readEOF                                     = 0x800A717C; // type:func
+egetc                                       = 0x800A723C; // type:func
+readvarinum                                 = 0x800A72B4; // type:func
+to32bit                                     = 0x800A733C; // type:func
+to16bit                                     = 0x800A7368; // type:func
+read32bit                                   = 0x800A737C; // type:func
+read16bit                                   = 0x800A73E8; // type:func
+readheader                                  = 0x800A7428; // type:func
+len_add                                     = 0x800A7814; // type:func
+metaevent                                   = 0x800A7828; // type:func
+sysex                                       = 0x800A7AEC; // type:func
+chanmessage                                 = 0x800A7B54; // type:func
+readtrack                                   = 0x800A80C4; // type:func
+readtrack2                                  = 0x800A81F4; // type:func
+track_head_read                             = 0x800A8448; // type:func
+delta_time_conv                             = 0x800A84B0; // type:func
+midi_file_out                               = 0x800A8674; // type:func
+midi_smf_main                               = 0x800A8950; // type:func
+midi_smf_stop                               = 0x800A8C74; // type:func
+midi_smf_stat                               = 0x800A8D00; // type:func
+
+
+
+//================================================
+//=== .data section
+//================================================
+
+
+//-----------------------------------------------------------------------
+//--- PA: 0x084238   VA: 0x800A8D98   subsegment: data, bodyprog_800A8D98
+//-----------------------------------------------------------------------
+// vw globals from SH2
+vcNullRoadArray                             = 0x800A8F44; // _VC_ROAD_DATA[2]
+g_ObjectTable0                              = 0x800A8F74; // type:s8
+g_ObjectTable1                              = 0x800A8FC4; // type:s8
+g_DeltaTime1                                = 0x800A8FEC; // type:s32
+g_IntervalVBlanks                           = 0x800A8FF0; // type:s32
+g_Chara_FileInfo                            = 0x800A90FC; // type:CharaFileInfo size:0x2D0
+g_PrevVBlanks                               = 0x800A9770; // type:s32
+g_SlotElementSelectedIdx                    = 0x800A97D4;
+g_SelectedSaveSlotIdx                       = 0x800A97D6;
+g_MapMsgCurrentIdx                          = 0x800A99AC; // type:s32
+g_MapMsgSelectBlinkTimer                    = 0x800A99B0; // type:s16
+g_MapEventIdx                               = 0x800A9A14; // type:u32
+g_MainMenuState                             = 0x800A9A74;
+g_MainMenu_SelectedOptionIdx                = 0x800A9A78;
+g_Demo_ReproducedCount                      = 0x800A9A80;
+g_MainMenu_NewGameSelectedDifficultyIdx     = 0x800A9A84;
+g_StringColorId                             = 0x800AD498; // type:s16
+g_Inventory_CmdSelectedIdx                  = 0x800ADB58; // type:s32
+g_Inventory_SelectionId                     = 0x800ADB5C; // type:u32
+
+//---------------------------------------------------------------------------
+//--- PA: 0x089000   VA: 0x800ADB60   subsegment: .data, items/item_screens_3
+//---------------------------------------------------------------------------
+g_ItemNames                                 = 0x800ADB60; // type:u32 size:0x30C
+g_ItemDescriptions                          = 0x800ADE6C; // type:u32 size:0x30C
+
+//-----------------------------------------------------------------------
+//--- PA: 0x089618   VA: 0x800AE178   subsegment: data, bodyprog_800AE178
+//-----------------------------------------------------------------------
+g_Inventory_SelectedItemIdx                 = 0x800AE17C;
+g_Inventory_EquippedItem                    = 0x800AE184;
+g_Inventory_HealthStatusScanlineTimer       = 0x800AE194;
+g_Inventory_HealthStatusColorGradientTimer  = 0x800AE196;
+g_Inventory_HealthStatusScanlinePosition    = 0x800AE19A;
+g_Inventory_ItemNameTimer                   = 0x800AE19C;
+g_Inventory_DescriptionRollTimer            = 0x800AE1A0;
+g_Inventory_ScrollTransitionTimer           = 0x800AE1A4;
+g_Player_Walk2RunTransition                 = 0x800AF214;
+g_Player_EnableControl                      = 0x800AF215;
+g_MaybePlayerAnims                          = 0x800AF228; // type:MaybeCharacterAnim
+vcNullNearRoad                              = 0x800AFC94; // type:VC_NEAR_ROAD_DATA size:0x24
+deflt_watch_mv_prm                          = 0x800AFCB8; // type:VC_WATCH_MV_PARAM size:0xC
+self_view_watch_mv_prm                      = 0x800AFCC4; // type:VC_WATCH_MV_PARAM size:0xC
+cam_mv_prm_user                             = 0x800AFCD0; // type:VC_CAM_MV_PARAM size:0x10
+excl_r_ary                                  = 0x800AFCE0; // int[9]
+g_Demo_DemoId                               = 0x800AFDB8; // type:s32
+g_Demo_RandSeed                             = 0x800AFDBC; // type:u16
+g_Demo_PlayFileBufferPtr                    = 0x800AFDC0; // type:s32
+g_Demo_FileIds                              = 0x800AFDC4; // type:DemoFileInfo size:0x28
+// c_008.o globals
+HADR0_5                                     = 0x800AFE0C;
+// c_009.o globals
+HADR0_6                                     = 0x800AFE1C;
+// c_010.o globals
+HADR0_7                                     = 0x800AFE2C;
+
+//-------------------------------------------------------------------------
+//--- PA: 0x08B31C   VA: 0x800AFE7C   subsegment: lib, libcard, init, .data
+//-------------------------------------------------------------------------
+// libcard/init.o globals
+__ps_libinfo__libcard__                     = 0x800AFE7C;
+
+//-----------------------------------------------------------------------
+//--- PA: 0x08B32C   VA: 0x800AFE8C   subsegment: lib, libapi, pad, .data
+//-----------------------------------------------------------------------
+init_pad_flag                               = 0x800AFE8C;
+sio                                         = 0x800AFE90;
+intc                                        = 0x800AFE94;
+
+//------------------------------------------------------------------------
+//--- PA: 0x08B33C   VA: 0x800AFE9C   subsegment: lib, libcd, cdrom, .data
+//------------------------------------------------------------------------
+HADR0                                       = 0x800AFE9C; // All unused?
+HADR1                                       = 0x800AFEA0;
+HADR2                                       = 0x800AFEA4;
+HADR3                                       = 0x800AFEA8;
+
+//--------------------------------------------------------------------------
+//--- PA: 0x08B34C   VA: 0x800AFEAC   subsegment: lib, libcd, iso9660, .data
+//--------------------------------------------------------------------------
+current                                     = 0x800AFEAC;
+pre_nopen.2                                 = 0x800AFEB0;
+
+//------------------------------------------------------------------------
+//--- PA: 0x08B35C   VA: 0x800AFEBC   subsegment: lib, libcd, c_002, .data
+//------------------------------------------------------------------------
+HADR0_0                                     = 0x800AFEBC; // all unused?
+HADR1_0                                     = 0x800AFEC0;
+HADR2_0                                     = 0x800AFEC4;
+HADR3_0                                     = 0x800AFEC8;
+
+//------------------------------------------------------------------------
+//--- PA: 0x08B36C   VA: 0x800AFECC   subsegment: lib, libcd, c_003, .data
+//------------------------------------------------------------------------
+HADR0_1                                     = 0x800AFECC;
+HADR1_1                                     = 0x800AFED0;
+HADR2_1                                     = 0x800AFED4;
+HADR3_1                                     = 0x800AFED8;
+
+//------------------------------------------------------------------------
+//--- PA: 0x08B37C   VA: 0x800AFEDC   subsegment: lib, libcd, c_004, .data
+//------------------------------------------------------------------------
+HADR0_2                                     = 0x800AFEDC;
+HADR1_2                                     = 0x800AFEE0;
+HADR2_2                                     = 0x800AFEE4;
+HADR3_2                                     = 0x800AFEE8;
+
+//------------------------------------------------------------------------
+//--- PA: 0x08B38C   VA: 0x800AFEEC   subsegment: lib, libcd, c_005, .data
+//------------------------------------------------------------------------
+HADR0_3                                     = 0x800AFEEC;
+HADR1_3                                     = 0x800AFEF0;
+HADR2_3                                     = 0x800AFEF4;
+HADR3_3                                     = 0x800AFEF8;
+
+//------------------------------------------------------------------------
+//--- PA: 0x08B39C   VA: 0x800AFEFC   subsegment: lib, libcd, c_007, .data
+//------------------------------------------------------------------------
+HADR0_4                                     = 0x800AFEFC;
+HADR1_4                                     = 0x800AFF00;
+HADR2_4                                     = 0x800AFF04;
+HADR3_4                                     = 0x800AFF08;
+
+//------------------------------------------------------------------------
+//--- PA: 0x08B3AC   VA: 0x800AFF0C   subsegment: lib, libcd, c_008, .data
+//------------------------------------------------------------------------
+HADR1_5                                     = 0x800AFF10;
+HADR2_5                                     = 0x800AFF14;
+HADR3_5                                     = 0x800AFF18;
+
+//------------------------------------------------------------------------
+//--- PA: 0x08B3BC   VA: 0x800AFF1C   subsegment: lib, libcd, c_009, .data
+//------------------------------------------------------------------------
+HADR1_6                                     = 0x800AFF20;
+HADR2_6                                     = 0x800AFF24;
+HADR3_6                                     = 0x800AFF28;
+
+//------------------------------------------------------------------------
+//--- PA: 0x08B3CC   VA: 0x800AFF2C   subsegment: lib, libcd, c_010, .data
+//------------------------------------------------------------------------
+HADR1_7                                     = 0x800AFF30;
+HADR2_7                                     = 0x800AFF34;
+HADR3_7                                     = 0x800AFF38;
+
+//------------------------------------------------------------------------
+//--- PA: 0x08B3DC   VA: 0x800AFF3C   subsegment: lib, libcd, c_011, .data
+//------------------------------------------------------------------------
+HADR0_8                                     = 0x800AFF3C;
+HADR1_8                                     = 0x800AFF40;
+HADR2_8                                     = 0x800AFF44;
+HADR3_8                                     = 0x800AFF48;
+DEV5_DELAY                                  = 0x800AFF4C;
+COMMON_DELAY                                = 0x800AFF50;
+Dma_PCR                                     = 0x800AFF54;
+Dma_ICR                                     = 0x800AFF58;
+Dma_CHCR1                                   = 0x800AFF5C;
+Dma_MADR1                                   = 0x800AFF60;
+Dma_CHCR2                                   = 0x800AFF64;
+Dma_MADR2                                   = 0x800AFF68;
+Dma_CHCR3                                   = 0x800AFF6C;
+Dma_MADR3                                   = 0x800AFF70;
+Dma_CHCR5                                   = 0x800AFF74;
+Dma_MADR5                                   = 0x800AFF78;
+i_reg_0                                     = 0x800AFF7C; // i_reg
+i_mask_0                                    = 0x800AFF80; // i_mask
+debug_cause                                 = 0x800AFF84;
+count.3                                     = 0x800AFF88;
+
+//-------------------------------------------------------------------------
+//--- PA: 0x08B42C   VA: 0x800AFF8C   subsegment: lib, libgs, gs_001, .data
+//-------------------------------------------------------------------------
+__ps_libinfo__libgs__                       = 0x800AFF8C;
+
+//---------------------------------------------------------------------------
+//--- PA: 0x08B43C   VA: 0x800AFF9C   subsegment: lib, libapi, counter, .data
+//---------------------------------------------------------------------------
+intc_0                                      = 0x800AFF9C; // intc
+timer                                       = 0x800AFFA0;
+rcntmask                                    = 0x800AFFA4;
+
+//-------------------------------------------------------------------------
+//--- PA: 0x08B45C   VA: 0x800AFFBC   subsegment: lib, libgs, global, .data
+//-------------------------------------------------------------------------
+GsADIVZ                                     = 0x800AFFBC;
+GsADIVW                                     = 0x800AFFC0;
+GsADIVH                                     = 0x800AFFC2;
+
+//--------------------------------------------------------------------------
+//--- PA: 0x08B46C   VA: 0x800AFFCC   subsegment: lib, libgte, sqrtbl, .data
+//--------------------------------------------------------------------------
+// msc09.o externs
+SQRT                                        = 0x800AFFCC;
+
+//-------------------------------------------------------------------------
+//--- PA: 0x08B5EC   VA: 0x800B014C   subsegment: lib, libgte, msc00, .data
+//-------------------------------------------------------------------------
+SAVERA                                      = 0x800B014C;
+
+//-------------------------------------------------------------------------
+//--- PA: 0x08B5FC   VA: 0x800B015C   subsegment: lib, libgte, msc02, .data
+//-------------------------------------------------------------------------
+SAVERA_0                                    = 0x800B015C; // SAVERA
+SAVERA2                                     = 0x800B0160;
+SAVERA3                                     = 0x800B0164;
+FRAC                                        = 0x800B0168;
+EXPO                                        = 0x800B016C;
+ISQRT                                       = 0x800B0170;
+
+//---------------------------------------------------------------------------
+//--- PA: 0x08B79C   VA: 0x800B02FC   subsegment: lib, libgte, mtx_006, .data
+//---------------------------------------------------------------------------
+// TODO: Check psx.
+SAVERA__mtx_006_                            = 0x800B02FC;
+FRAC__mtx_006_                              = 0x800B0300;
+EXPO__mtx_006_                              = 0x800B0304;
+MSP                                         = 0x800B0308;
+MSTACK                                      = 0x800B030C;
+STACKFUL                                    = 0x800B058C;
+STACKEMP                                    = 0x800B05BD;
+NOTIMP                                      = 0x800B05E6;
+
+//-------------------------------------------------------------------------
+//--- PA: 0x08BAAC   VA: 0x800B060C   subsegment: lib, libgte, ratan, .data
+//-------------------------------------------------------------------------
+ratan_tbl                                   = 0x800B060C;
+
+//---------------------------------------------------------------------------
+//--- PA: 0x08C2BC   VA: 0x800B0E1C   subsegment: lib, libpad, padmain, .data
+//---------------------------------------------------------------------------
+__ps_libinfo__libpad__                      = 0x800B0E1C;
+_padFuncNextPort                            = 0x800B0E24;
+_padFuncClrInfo                             = 0x800B0E28;
+_padFuncGetTxd                              = 0x800B0E2C;
+_padFuncCurrLimit                           = 0x800B0E30;
+_padFuncPtr2Port                            = 0x800B0E34;
+_padFuncPort2Info                           = 0x800B0E38;
+_padFuncSendAuto                            = 0x800B0E3C;
+_padFuncChkEng                              = 0x800B0E40;
+_padFuncRecvAuto                            = 0x800B0E44;
+_padFuncClrCmdNo                            = 0x800B0E48;
+_padFuncIntGun                              = 0x800B0E4C;
+_padFuncSetGunPort                          = 0x800B0E50;
+_padFuncGetGunPos                           = 0x800B0E54;
+_padInfoDir                                 = 0x800B0E58;
+_padIntExec                                 = 0x800B0E5C;
+_padGunExec                                 = 0x800B0E60;
+_padSioChan                                 = 0x800B0E64;
+_padSioState                                = 0x800B0E68;
+_padTotalCurr                               = 0x800B0E6C;
+_padModeMtap                                = 0x800B0E70;
+_padChanStart                               = 0x800B0E74;
+_padChanStop                                = 0x800B0E78;
+_padFixResult                               = 0x800B0E7C;
+intc__padmain_o_                            = 0x800B0E84; // intc
+sio__padmain_o_                             = 0x800B0E88; // sio
+
+//-------------------------------------------------------------------------
+//--- PA: 0x08C33C   VA: 0x800B0E9C   subsegment: lib, libpad, padif, .data
+//-------------------------------------------------------------------------
+sioReadSize                                 = 0x800B0E9C;
+sio__padif_o_                               = 0x800B0EA0;
+sendAuto                                    = 0x800B0EA4;
+// mtapTime = missing, game isn't using 4.4 sdk?
+padIntFunc                                  = 0x800B0EA8;
+
+//----------------------------------------------------------------------------
+//--- PA: 0x08C35C   VA: 0x800B0EBC   subsegment: lib, libpad, padportd, .data
+//----------------------------------------------------------------------------
+sio__padportd_o_                            = 0x800B0EBC;
+
+//---------------------------------------------------------------------------
+//--- PA: 0x08C36C   VA: 0x800B0ECC   subsegment: lib, libspu, zerobuf, .data
+//---------------------------------------------------------------------------
+// s_crwa.o externs
+_spu_zerobuf                                = 0x800B0ECC;
+
+//-------------------------------------------------------------------------
+//--- PA: 0x08C76C   VA: 0x800B12CC   subsegment: lib, libspu, s_n2p, .data
+//-------------------------------------------------------------------------
+_spu_NTable                                 = 0x800B12CC;
+_spu_FTable                                 = 0x800B12E4;
+
+//-----------------------------------------------------------------------
+//--- PA: 0x08C88C   VA: 0x800B13EC   subsegment: data, bodyprog_800B13EC
+//-----------------------------------------------------------------------
+// konami libsd globals (smf_def.c?)
+sd_interrupt_start_flag                     = 0x800B143C;
+sd_keyoff_mode                              = 0x800B1440;
+sd_mono_st_flag                             = 0x800B1444;
+sd_reverb_mode                              = 0x800B1448;
+body_partly_size                            = 0x800B144C; // type:u32
+sd_reverb_area_size                         = 0x800B1450;
+// s_srmp.o externs
+_spu_rev_param                              = 0x800B1478;
+PitchTbl                                    = 0x800B1728;
+random_tbl                                  = 0x800B2328;
+sd_reserved_voice                           = 0x800B2528;
+spu_reverb_sw                               = 0x800B252C;
+spu_ch_tbl                                  = 0x800B2530;
+sd_int_flag                                 = 0x800B2590;
+sd_int_flag2                                = 0x800B2594;
+smf_start_flag                              = 0x800B2598;
+sd_timer_sync                               = 0x800B259C;
+timer_count                                 = 0x800B25A0;
+sd_timer_flag                               = 0x800B25B4; // type:s32 guessed name
+time_flag                                   = 0x800B25B8;
+smf_file_no                                 = 0x800B25BC;
+print_start                                 = 0x800B25C0;
+eof_char                                    = 0x800B25C4; // type:s8 size:3 static?
+chantype                                    = 0x800B25C8; // type:s32 static for readtrack?
+g_MemCard_1_BasicSaveInfo                   = 0x800B2780;
+g_MemCard_2_BasicSaveInfo                   = 0x800B3680;
+// D_800B4580                                  = 0x800B4580;
+g_CardWork                                  = 0x800B5488; // size:0x80
+D_800B5508                                  = 0x800B5508; // size:0x718
+g_Gfx_DebugStringPosition0                  = 0x800B5C20; // type:DVECTOR size:4
+g_Gfx_DebugStringPosition1                  = 0x800B5C24; // type:DVECTOR size:4
+g_VBlanks                                   = 0x800B5C34; // type:s32
+g_UncappedVBlanks                           = 0x800B5C38; // type:s32
+g_DeltaTime0                                = 0x800B5CC0; // type:s32 - Q19.12 fixed point, usually 0x44 (0.0166..) or 0x88 (0.033..).
+g_DeltaTime2                                = 0x800B9CC8; // type:s32
+g_MainLoop_FrameCount                       = 0x800B9CCC;
+vcWork                                      = 0x800B9CD0; // type:VC_WORK size:0x2E8
+g_ObjectTableIdx                            = 0x800B9FB8;
+g_SysWork                                   = 0x800B9FC0; // type:SysWork size:0x2768 - should use s_SysWork here, but splat only supports custom structs with capital letter at beginning.
+g_GameWork                                  = 0x800BC728; // type:GameWork size:0x5D8
+g_Gfx_ScreenFade                            = 0x800BCD0C;
+g_ActiveSavegameEntry                       = 0x800BCD2C;
+g_MemCardElementCount                       = 0x800BCD30;
+g_SaveScreenPlayerState                     = 0x800BCD38;
+g_MemCardsTotalElementCount                 = 0x800BCD3A;
+g_SlotElementCount                          = 0x800BCD3C;
+g_SelectedSaveIdx                           = 0x800BCD3E;
+g_SelectedFileIdx                           = 0x800BCD3F;
+g_MapMsgDisplayLen                          = 0x800BCD68; // type:s32
+g_MapMsgMainIdx                             = 0x800BCD6C; // type:s32
+g_MapMsgDisplayInc                          = 0x800BCD70; // type:s32
+g_MapMsgSelect                              = 0x800BCD78; // type:MapMsgSelect
+g_MapMsgAudioLoadBlock                      = 0x800BCD7A; // type:u8
+g_mapMsgSelect_CancelIdx_3                  = 0x800BCD7B; // type:s8
+g_SysState_GameOver_TipIdx                  = 0x800BCD80; // type:u8
+g_MapEventParam                             = 0x800BCDD8; // type:u32 - pointer to s_ShEventParam
+vcRefPosSt                                  = 0x800BCDF8; // type:VECTOR3 size:0xC
+D_800BCE18                                  = 0x800BCE18; // type:u8 size:0x2BEC - size incomplete, contains vcCameraInternalInfo and others
+g_Sd_VolumeSe                               = 0x800C1684;
+g_Sd_VolumeBgm                              = 0x800C1685;
+g_Sd_VolumeXa                               = 0x800C1686;
+g_Sd_ReverbDepth                            = 0x800C1687;
+g_Game_VSyncTimeSinceBoot                   = 0x800C1690;
+D_800C16A8                                  = 0x800C16A8; // type:u8 size:0x20
+vwViewPointInfo                             = 0x800C37E0; // type:VW_VIEW_WORK size:0x84
+VbWvsMatrix                                 = 0x800C3888; // type:MATRIX size:0x20
+g_StringPosition                            = 0x800C38A8; // type:DVECTOR
+g_StringPositionX1                          = 0x800C38AC; // type:s32
+g_MapMsgWidthTable                          = 0x800C38C8; // type:s32
+D_800C3928                                  = 0x800C3928;
+g_Inventory_IsUpClicked                     = 0x800C3968; // type:s32
+g_Inventory_IsDownClicked                   = 0x800C396C; // type:s32
+g_Inventory_IsLeftClicked                   = 0x800C3970; // type:s32
+g_Inventory_IsRightClicked                  = 0x800C3974; // type:s32
+g_Inventory_IsUpPulsed                      = 0x800C3978; // type:s32
+g_Inventory_IsDownPulsed                    = 0x800C397C; // type:s32
+g_Inventory_IsLeftPulsed                    = 0x800C3980; // type:s32
+g_Inventory_IsRightPulsed                   = 0x800C3984; // type:s32
+g_Inventory_IsLeftHeld                      = 0x800C3988; // type:s32
+g_Inventory_IsRightHeld                     = 0x800C398C; // type:s32
+g_Inventory_IsScrolling                     = 0x800C3990;
+g_Gfx_Inventory_SelectionBordersDraw        = 0x800C3998;
+g_Inventory_PrevSelectionId                 = 0x800C399C;
+g_Items_ItemsLightingData                   = 0x800C39A8;
+g_Item_MapLoadableItems                     = 0x800C3BB8;
+g_Items_Items3dData0                        = 0x800C3BE8;
+g_Items_ItemsModelData                      = 0x800C3D78;
+g_Inventory_EquippedItemIdx                 = 0x800C3E34;
+g_Items_Items3dData1                        = 0x800C3E48;
+vcWatchMvPrmSt                              = 0x800C4630; // type:VC_WATCH_MV_PARAM size:0xC
+vcSelfViewTimer                             = 0x800C463C; // type:s32
+g_Demo_DemoFileIdx                          = 0x800C4840; // type:s32
+g_Demo_PlayFileIdx                          = 0x800C4844; // type:s32
+g_Demo_UserConfigBackup                     = 0x800C4850; // type:ShSaveUserConfig size:0x38
+g_Demo_PrevRandSeed                         = 0x800C4888;
+g_Demo_RandSeedBackup                       = 0x800C488C;
+g_Demo_CurFrameData                         = 0x800C4890;
+g_Demo_DemoStep                             = 0x800C4894;
+g_Demo_VideoPresentInterval                 = 0x800C4898;
+
+
+
+//================================================
+//=== .bss section
+//================================================
+
+
+//------------------------------------------------------------------------
+//--- PA: 0x09FD98   VA: 0x800C48F8   subsegment: lib, libapi, first, .bss
+//------------------------------------------------------------------------
+sfunc                                       = 0x800C48F8;
+dev                                         = 0x800C4900;
+
+//----------------------------------------------------------------------
+//--- PA: 0x09FDC8   VA: 0x800C4928   subsegment: lib, libapi, pad, .bss
+//----------------------------------------------------------------------
+patch0                                      = 0x800C4928;
+
+//------------------------------------------------------------------------
+//--- PA: 0x09FDD8   VA: 0x800C4938   subsegment: lib, libapi, patch, .bss
+//------------------------------------------------------------------------
+store                                       = 0x800C4938; // Maybe should be ret_adr instead?
+ret_adr                                     = 0x800C493C; // Symbols point to this as "ret_adr", but store is used to hold return addr?
+_start_pad                                  = 0x800C4940;
+_stop_pad                                   = 0x800C4944;
+
+//---------------------------------------------------------------------------
+//--- PA: 0x09FDE8   VA: 0x800C4948   subsegment: lib, libapi, chclrpad, .bss
+//---------------------------------------------------------------------------
+store_0                                     = 0x800C4948;
+
+//-------------------------------------------------------------------------
+//--- PA: 0x09FDF8   VA: 0x800C4958   subsegment: lib, libcard, patch, .bss
+//-------------------------------------------------------------------------
+store_1                                     = 0x800C4958;
+
+//-----------------------------------------------------------------------
+//--- PA: 0x09FE08   VA: 0x800C4968   subsegment: lib, libcard, end, .bss
+//-----------------------------------------------------------------------
+store_2                                     = 0x800C4968;
+
+//-----------------------------------------------------------------------
+//--- PA: 0x09FE18   VA: 0x800C4978   subsegment: lib, libcd, cdrom, .bss
+//-----------------------------------------------------------------------
+// different order to actual cdrom.o, reordered by linker?
+Stframe_no                                  = 0x800C4978;
+Stsector_offset                             = 0x800C497C;
+StRgb24                                     = 0x800C4980;
+StCdIntrFlag                                = 0x800C4984;
+StCHANNEL                                   = 0x800C4988;
+StStartFrame                                = 0x800C498C;
+CChannel                                    = 0x800C4990;
+StFinalSector                               = 0x800C4994;
+StEmu_Idx                                   = 0x800C4998;
+StRingIdx1                                  = 0x800C499C;
+StRingIdx2                                  = 0x800C49A0;
+StRingIdx3                                  = 0x800C49A4;
+StEmu_Addr                                  = 0x800C49A8;
+StEndFrame                                  = 0x800C49AC;
+StSTART_FLAG                                = 0x800C49B0;
+StRingBase                                  = 0x800C49B4;
+StRingAddr                                  = 0x800C49B8;
+StRingSize                                  = 0x800C49BC;
+
+//-------------------------------------------------------------------------
+//--- PA: 0x09FE60   VA: 0x800C49C0   subsegment: lib, libcd, iso9660, .bss
+//-------------------------------------------------------------------------
+file                                        = 0x800C49C0;
+dire                                        = 0x800C4FC0;
+load_buf                                    = 0x800C65C0;
+
+//-----------------------------------------------------------------------
+//--- PA: 0x0A2260   VA: 0x800C6DC0   subsegment: lib, libcd, c_004, .bss
+//-----------------------------------------------------------------------
+// c_004.o globals
+previous_frame_location                     = 0x800C6DC0;
+next_frameid                                = 0x800C6DC4;
+
+//-----------------------------------------------------------------------
+//--- PA: 0x0A2270   VA: 0x800C6DD0   subsegment: lib, libcd, c_005, .bss
+//-----------------------------------------------------------------------
+// c_005.o bss
+StFunc1                                     = 0x800C6DD0;
+StFunc2                                     = 0x800C6DD4;
+
+//-----------------------------------------------------------------------
+//--- PA: 0x0A2278   VA: 0x800C6DD8   subsegment: lib, libcd, c_011, .bss
+//-----------------------------------------------------------------------
+HeaderArea.2                                = 0x800C6DD8;
+
+//------------------------------------------------------------------------
+//--- PA: 0x0A2288   VA: 0x800C6DE8   subsegment: lib, libgs, gs_001, .bss
+//------------------------------------------------------------------------
+Clear                                       = 0x800C6DE8;
+PSDOFSX                                     = 0x800C6E08;
+PSDOFSY                                     = 0x800C6E0C;
+PSDBASEX                                    = 0x800C6E10;
+PSDBASEY                                    = 0x800C6E14;
+POSITION                                    = 0x800C6E18;
+GsDRAWENV                                   = 0x800C6E20;
+GsDISPENV                                   = 0x800C6E80;
+GsORGOFSX                                   = 0x800C6E94;
+GsORGOFSY                                   = 0x800C6E96;
+CLIP2                                       = 0x800C6E98;
+PSDCNT                                      = 0x800C6EA0;
+// Unsure about these globals, some reason order in SH1 doesn't match SDK 4.3 or 4.4.
+PSDIDX                                      = 0x800C6EA4;
+PSDGPU                                      = 0x800C6EA6;
+
+//------------------------------------------------------------------------
+//--- PA: 0x0A2348   VA: 0x800C6EA8   subsegment: lib, libgs, matrix, .bss
+//------------------------------------------------------------------------
+
+//------------------------------------------------------------------------
+//--- PA: 0x0A23C0   VA: 0x800C6F20   subsegment: lib, libgs, gs_104, .bss
+//------------------------------------------------------------------------
+HWD0                                        = 0x800C6F28;
+VWD0                                        = 0x800C6F2C;
+GsCLIP3far                                  = 0x800C6F30;
+// gs_104.o globals
+GsLIGHT_MODE                                = 0x800C6F34;
+// gs_104.o externs
+GsCLIP3near                                 = 0x800C6F38;
+
+//----------------------------------------------------------------------
+//--- PA: 0x0A23DC   VA: 0x800C6F3C   subsegment: bss, bodyprog_800C6F3C
+//----------------------------------------------------------------------
+
+//------------------------------------------------------------------------
+//--- PA: 0x0A23E0   VA: 0x800C6F40   subsegment: lib, libgs, gs_107, .bss
+//------------------------------------------------------------------------
+GsLIGHTWSMATRIX                             = 0x800C6F40;
+_LC                                         = 0x800C6F60;
+
+//------------------------------------------------------------------------
+//--- PA: 0x0A2420   VA: 0x800C6F80   subsegment: lib, libgs, gs_123, .bss
+//------------------------------------------------------------------------
+GsIDMATRIX                                  = 0x800C6FA0; // type:MATRIX size:0x20
+GsWSMATRIX                                  = 0x800C6FC0; // type:MATRIX size:0x20
+// GsWSMATRIX_ORG missing?
+GsIDMATRIX2                                 = 0x800C6FE0; // type:MATRIX size:0x20
+
+//------------------------------------------------------------------------
+//--- PA: 0x0A24A0   VA: 0x800C7000   subsegment: lib, libgs, global, .bss
+//------------------------------------------------------------------------
+GsLIOFF                                     = 0x800C7004;
+GsLMODE                                     = 0x800C7008;
+GsLIGNR                                     = 0x800C700C;
+GsOUT_PACKET_P                              = 0x800C7018;
+GsMATE_C                                    = 0x800C701C;
+GsTON                                       = 0x800C7024;
+GsNDIV                                      = 0x800C7028;
+
+//----------------------------------------------------------------------
+//--- PA: 0x0A24CC   VA: 0x800C702C   subsegment: bss, bodyprog_800C702C
+//----------------------------------------------------------------------
+
+//-----------------------------------------------------------------------
+//--- PA: 0x0A24D0   VA: 0x800C7030   subsegment: lib, libgs, objt3, .bss
+//-----------------------------------------------------------------------
+GsFCALL4                                    = 0x800C7030;
+
+//---------------------------------------------------------------------------
+//--- PA: 0x0A2600   VA: 0x800C7160   subsegment: lib, libgte, patchgte, .bss
+//---------------------------------------------------------------------------
+// patchgte.o globals
+store__patchgte_o_                          = 0x800C7160;
+
+//--------------------------------------------------------------------------
+//--- PA: 0x0A2610   VA: 0x800C7170   subsegment: lib, libpad, padmain, .bss
+//--------------------------------------------------------------------------
+vsyncParam                                  = 0x800C7170;
+padRestPeriod                               = 0x800C7180;
+
+//-------------------------------------------------------------------------
+//--- PA: 0x0A2630   VA: 0x800C7190   subsegment: lib, libpad, padcmd, .bss
+//-------------------------------------------------------------------------
+// padcmd.o globals
+dst.16                                      = 0x800C7190; // Not totally sure.
+
+//---------------------------------------------------------------------------
+//--- PA: 0x0A2640   VA: 0x800C71A0   subsegment: lib, libpad, padportd, .bss
+//---------------------------------------------------------------------------
+rxrawdata.4                                 = 0x800C71A0;
+txrawdata.5                                 = 0x800C71E8;
+infoDir                                     = 0x800C7230;
+
+//----------------------------------------------------------------------
+//--- PA: 0x0A28B0   VA: 0x800C7410   subsegment: bss, bodyprog_800C7410
+//----------------------------------------------------------------------
+// waitrc2.o globals
+_startTime                                  = 0x800C7410;
+_waitTime                                   = 0x800C7414;
+vab_h                                       = 0x800C7418;
+sd_vb_malloc_rec                            = 0x800C75D8;
+sd_seq_loop_mode                            = 0x800C7660;
+sd_tick_mode                                = 0x800C7664;
+sd_spu_alloc                                = 0x800C7668; // size:0x80
+s_attr                                      = 0x800C76F0; // size:0x40
+smf_midi                                    = 0x800C7738;
+smf_midi_sound_off                          = 0x800C82B8; // guessed name
+smf_port                                    = 0x800C8318;
+sd_timer_event                              = 0x800C8AF8;
+smf_song                                    = 0x800C8B00;
+// TODO: `g_MapOverlayHeader` is part of the overlay bin file, maybe should be moved to `sym.maps_shared.txt` or similar.
+// Including here for now since all map configs include this sym file, and bodyprog also reads from this header.
+g_MapOverlayHeader                          = 0x800C957C; // type:MapOverlayHeader size:0x84C - size incomplete
+D_800FE5F8                                  = 0x800FE5F8; // ignore:True - Fixes fake missmatch in `Demo_Update`.
+hack_D_800FE5FC_fix                         = 0x800FE5FC; // ignore:true - Part of temp memory block at 800FDE00, has to be unsymbolized for C to match.
+
+
+
 
 g_MapMsgCurrentIdx = 0x800A99AC; // type:s32
 g_MapMsgSelectBlinkTimer = 0x800A99B0; // type:s16

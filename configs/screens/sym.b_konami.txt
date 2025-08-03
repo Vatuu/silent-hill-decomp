@@ -1,9 +1,27 @@
 
-// NOTES
-// Draws Konami splash screen: func_800C9FB8
-// Draws KTEC splash screen:   func_800CA120
-// Related to transitions:     func_8003260C
 
+
+//================================================
+//=== .rodata section
+//================================================
+
+
+//-----------------------------------------------------------------
+//--- PA: 0x000008   VA: 0x800C9580   subsegment: .rodata, b_konami
+//-----------------------------------------------------------------
+
+
+
+//================================================
+//=== .text section
+//================================================
+
+
+//-----------------------------------------------------------
+//--- PA: 0x000034   VA: 0x800C95AC   subsegment: c, b_konami
+//-----------------------------------------------------------
+// NOTES
+// Related to transitions:     func_8003260C
 GameState_KonamiLogo_Update    = 0x800C95AC; // type:func
 GameState_KcetLogo_Update      = 0x800C99A4; // type:func
 Gfx_BootScreenImageSegmentDraw = 0x800C9E6C; // type:func
