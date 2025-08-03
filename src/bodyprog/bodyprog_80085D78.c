@@ -979,7 +979,7 @@ void func_80087540(s32 arg0, s32 arg1, s32 arg2, s32 mapMsgIdx0, s32 mapMsgIdx1)
         case 4:
             func_800862F8(2, 0, 0);
             
-            if (mapMsgIdx0 != MapMsgRetCode_None)
+            if (mapMsgIdx0 != MapMsgCode_None)
             {
                 func_800860B0(0, mapMsgIdx0, 0, 0, 0, 1);
                 break;
