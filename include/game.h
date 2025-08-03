@@ -19,6 +19,18 @@
 #define MEMORY_CARD_SLOT_COUNT   2
 #define CONTROLLER_COUNT_MAX     2
 
+#define MAP_MSG_CODE_MARKER         '~'
+#define MAP_MSG_CODE_NEWLINE        'N' // Newline.
+#define MAP_MSG_CODE_END            'E' // End message.
+#define MAP_MSG_CODE_LINE_POSITION  'L' // Set next line position.
+#define MAP_MSG_CODE_JUMP           'J' // Jump timer.
+#define MAP_MSG_CODE_HIGH_RES       'H' // High-resolution glyph drawing.
+#define MAP_MSG_CODE_MIDDLE         'M' // Align center.
+#define MAP_MSG_CODE_TAB            'T' // Inset line.
+#define MAP_MSG_CODE_COLOR          'C' // Set color.
+#define MAP_MSG_CODE_DISPLAY_ALL    'D' // Display message instantly without roll.
+#define MAP_MSG_CODE_SELECT         'S' // Display dialog prompt.
+
 /** @brief Converts a floating-point X screen position in percent to a fixed-point X screen coodinate. */
 #define SCREEN_POSITION_X(percent) \
     (s32)((SCREEN_WIDTH) * ((percent) / 100.0f))
@@ -39,8 +51,6 @@
 #define HAS_MAP(mapIdx) \
     ((((u32*)&g_SavegamePtr->hasMapsFlags_164)[(mapIdx) / 32] >> ((mapIdx) % 32)) & (1 << 0))
 
-struct _SubCharacter; // Forward declaration.
-
 typedef enum _MapMsgCode
 {
     MapMsgCode_None       = 0,
@@ -49,6 +59,14 @@ typedef enum _MapMsgCode
     MapMsgCode_Select4    = 4,
     MapMsgCode_DisplayAll = 20
 } e_MapMsgCode;
+
+typedef enum _MapMsgAudioLoadBlock
+{
+    MapMsgAudioLoadBlock_None = 0, // TODO: Some code checks only for bit 0, so it should mean something.
+    MapMsgAudioLoadBlock_Unk1 = 1,
+    MapMsgAudioLoadBlock_J2   = 3  // `J2` map messages set this, causing voice audio to not load.
+                                   // `J2` cutscenes use single audio file for all lines (e.g. video tape cutscene).
+} e_MapMsgAudioLoadBlock;
 
 typedef enum _MapOverlayId
 {
@@ -1082,8 +1100,8 @@ typedef struct _SysWork
     u8              field_234A   : 8;
     u8              field_234B_0 : 4;
     u8              field_234B_4 : 4;
-    s32             field_234C;                   
-    u8              field_2350_0                  : 4; // Related to string drawing.
+    s32             mapMsgTimer_234C;                   
+    u8              enableHighResString_2350_0    : 4;
     u8              field_2350_4                  : 4; // `s32`?
     u32             inventoryItemSelectedIdx_2351 : 8;
     u32             flags_2352                    : 8;

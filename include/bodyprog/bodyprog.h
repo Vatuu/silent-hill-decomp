@@ -1350,9 +1350,11 @@ typedef struct
 
 typedef struct
 {
-    s8 mapMsgSelectMax_0;
-    u8 mapMsgSelectIdx_1;
-} s_800BCD78;
+    s8 maxIdx_0;
+    u8 selectedIdx_1;
+    u8 unk_2;
+    u8 cancelIdx_3;
+} s_MapMsgSelect;
 
 typedef struct
 {
@@ -1410,8 +1412,7 @@ extern s_8002AC04 D_8002AC04[];
 
 extern s_800BE9FC D_8002B2CC;
 
-/** Spacings for strings parsed by `func_8004ACF4`? */
-extern s32 D_800C38C8[];
+extern s32 g_MapMsg_WidthTable[];
 
 extern u8 D_800A8E58;
 
@@ -1535,10 +1536,10 @@ extern s32 D_800A99A0;
 extern u8 D_800A99A4[];
 
 /** Map message index. */
-extern s32 D_800A99AC;
+extern s32 g_MapMsg_CurrentIdx;
 
 /** FP time value for map message. */
-extern s16 D_800A99B0;
+extern s16 g_MapMsg_SelectFlashTimer;
 
 /** Array of indices? */
 extern s8 D_800A99B4[];
@@ -1811,22 +1812,23 @@ extern s32 D_800BCD60;
 
 extern s32 D_800BCD64;
 
-extern s32 D_800BCD68;
+extern s32 g_MapMsg_DisplayLength;
 
 /** Map message index. */
-extern s32 D_800BCD6C;
+extern s32 g_MapMsg_MainIdx;
 
-extern s32 D_800BCD70;
+/** How many glyphs at a time to advance the message roll. */
+extern s32 g_MapMsg_DisplayInc;
 
 extern s32 D_800BCD74;
 
-extern s_800BCD78 D_800BCD78; // `s_800BCD78` might also encompass vars below.
+extern s_MapMsgSelect g_MapMsg_Select;
 
-extern u8 D_800BCD79;
-
-extern u8 D_800BCD7A;
-
-extern s8 D_800BCD7B;
+/** TODO: These variables are part of `s_MapMsgSelect`, but must remain separate
+ * because using struct fields instead of the direct addresses produces a mismatch.
+ */
+extern u8 g_MapMsg_AudioLoadBlock;
+extern s8 g_MapMsg_SelectCancelIdx3;
 
 extern s32 D_800BCD84;
 
@@ -2666,6 +2668,8 @@ void func_8008D1D0(s32* keyframePrev, s32* keyframeNext, s32* alpha, s32 time, s
 
 u32 func_8008D2C4(s32 time, s_DmsHeader* header);
 
+s32 func_8008D330(s32 arg0, s_DmsEntry* camEntry);
+
 s32 Math_LerpFixed12(s16 from, s16 to, s32 alpha);
 
 void func_8008D41C();
@@ -2950,6 +2954,8 @@ void func_8006BDDC(s_func_8006BDDC* arg0, s16 arg1, s16 arg2);
 void func_8006C838(s_func_8006CC44* arg0, s_func_800699E4* arg1);
 
 void func_8006CA18(s_func_8006CC44* arg0, s_func_800699E4* arg1, s_func_8006CA18* arg2);
+
+s16 func_8006CB90(s_func_8006CC44* arg0);
 
 s32 func_8006CC44(s32 arg0, s32 arg1, s_func_8006CC44* arg2);
 

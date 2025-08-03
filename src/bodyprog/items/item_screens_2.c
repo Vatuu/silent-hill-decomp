@@ -450,7 +450,7 @@ void Gfx_Results_Save() // 0x8004D1A0
         GsOUT_PACKET_P = (PACKET*)line + sizeof(LINE_F2);
     }
 
-    g_SysWork.field_2350_0 = 1;
+    g_SysWork.enableHighResString_2350_0 = 1;
 
     Gfx_StringSetPosition(90, 92);
     Gfx_StringDraw("\x07Is_it_OK_to_save?", 99);
@@ -458,7 +458,7 @@ void Gfx_Results_Save() // 0x8004D1A0
     Gfx_StringSetPosition(94, 122);
     Gfx_StringDraw("\x07Yes_____________No", 99);
 
-    g_SysWork.field_2350_0 = 0;
+    g_SysWork.enableHighResString_2350_0 = 0;
 
     Gfx_StringSetPosition(82, 200);
     Gfx_StringDraw("NEXT_GAME_MODE", 15);

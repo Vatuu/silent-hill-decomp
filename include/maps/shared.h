@@ -116,6 +116,8 @@ extern s32 sharedData_800D32A0_0_s02; // `sharedFunc_800CDAA8_0_s02`
 
 extern u16 sharedData_800D21E8_3_s00[];
 
+extern const char* g_MapMessages[]; // 0x800DF6B8
+
 s32 sharedFunc_800CBBBC_0_s00();
 
 void sharedFunc_800CFFF8_0_s00(s32 arg0, s_func_800CFFF8* arg1);

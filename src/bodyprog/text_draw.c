@@ -48,7 +48,7 @@ void Gfx_StringSetColor(s16 colorId) // 0x8004A8DC
     g_StringColorId = colorId;
 }
 
-// TODO: Requires `s_SysWork::field_2350_0` to be `s32`, causing mismatch elsewhere.
+// TODO: Requires `s_SysWork::enableHighResString_2350_0` to be `s32`, causing mismatch elsewhere.
 #ifdef NON_MATCHING
 bool Gfx_StringDraw(char* str, s32 size) // 0x8004A8E8
 {
@@ -96,7 +96,7 @@ bool Gfx_StringDraw(char* str, s32 size) // 0x8004A8E8
     glyphColor = D_80025DC0[g_StringColorId];
     ot         = &D_800B5C40[g_ObjectTableIdx].field_0[D_800AD49C];
 
-    if (!(g_SysWork.field_2350_0 & 0xF))
+    if (!(g_SysWork.enableHighResString_2350_0 & 0xF))
     {
         packet = GsOUT_PACKET_P;
     }
@@ -139,7 +139,7 @@ bool Gfx_StringDraw(char* str, s32 size) // 0x8004A8E8
             sizeCpy--;
 
             // Draw glyph sprite.
-            if (g_SysWork.field_2350_0 & 0xF)
+            if (g_SysWork.enableHighResString_2350_0 & 0xF)
             {
                 glyphPoly = (POLY_FT4*)GsOUT_PACKET_P;
 
@@ -214,7 +214,7 @@ bool Gfx_StringDraw(char* str, s32 size) // 0x8004A8E8
         strCpy++;
     }
 
-    if (!(g_SysWork.field_2350_0 & 0xF))
+    if (!(g_SysWork.enableHighResString_2350_0 & 0xF))
     {
         GsOUT_PACKET_P = packet;
     }
@@ -228,130 +228,113 @@ bool Gfx_StringDraw(char* str, s32 size) // 0x8004A8E8
 INCLUDE_ASM("asm/bodyprog/nonmatchings/text_draw", Gfx_StringDraw); // 0x8004A8E8
 #endif
 
-// TODO: .rodata migration.
-#ifdef NON_MATCHING
-void func_8004ACF4(s32 mapMsgIdx) // 0x8004ACF4
+void MapMsg_CalculateWidthTable(s32 mapMsgIdx) // 0x8004ACF4
 {
-    #define SPACE_SIZE                 6
-    #define STR_SIZE_MAX               9
-    #define LINE_COUNT_MAX             8
+    #define SPACE_SIZE     6
+    #define LINE_COUNT_MAX 9
 
-    s32  i;
-    s32  j;
-    s8   tagCode;
-    s8   tagArg;
-    s32  charCode;
-    u8   dialogCode;
-    s32  argCount;
-    s32* var_a1;
-    s32* temp_v0;
-    s32* temp_v1;
-    u8*  temp_v2;
-    u8*  mapMsg;
+    s32 i;
+    s32 j;
+    s8  tagCode;
+    s8  tagArg;
+    u8* mapMsg;
+    s32 charCode;
+    u8  msgCode;
+    s32 msgArg;
 
-    D_800C38B4.lineCount_0 = 1;
-    D_800BCD7A             = 0;
-
-    // Reset something.
-    for (i = LINE_COUNT_MAX; i >= 0; i--)
+    D_800C38B4.lineCount_0  = 1;
+    g_MapMsg_AudioLoadBlock = 0;
+    
+    for (i = LINE_COUNT_MAX - 1; i >= 0; i--)
     {
-        D_800C38C8[i] = 0;
+        g_MapMsg_WidthTable[i] = 0;
     }
 
-    // Parse string.
     mapMsg = g_MapOverlayHeader.mapMessageStrings_30[mapMsgIdx];
-    for (j = 0; j < STR_SIZE_MAX;)
+
+    for (j = 0; j < LINE_COUNT_MAX; )
     {
-        // Process `char`.
         charCode = *mapMsg;
+        
         switch (charCode)
         {
-            // Newline.
             case '\t':
             case '\n':
             case ' ':
                 mapMsg++;
                 break;
-
-            // Space.
+            
             case '_':
-                mapMsg++;
-                D_800C38C8[D_800C38B4.lineCount_0 - 1] += SPACE_SIZE;
+                ++mapMsg;
+                g_MapMsg_WidthTable[D_800C38B4.lineCount_0 - 1] += SPACE_SIZE;
                 break;
-
-            // Dialog code.
-            case '~':
-                dialogCode = *++mapMsg;
-                argCount   = *++mapMsg - '0';
-
-                switch (dialogCode) 
+                
+            case MAP_MSG_CODE_MARKER:
+                msgCode = *++mapMsg;
+                msgArg  = *++mapMsg - '0';
+                
+                switch (msgCode) 
                 {
-                    // Unused dialog codes?
-                    case 'C':
-                    case 'S':
-                    case 'T':
+                    case MAP_MSG_CODE_COLOR:
+                    case MAP_MSG_CODE_SELECT:
+                    case MAP_MSG_CODE_TAB:
                         break;
 
-                    case DIALOG_CODE_NEWLINE:
-                        j++;
+                    case MAP_MSG_CODE_NEWLINE:
+                        j = j + 1;
                         D_800C38B4.lineCount_0++;
                         break;
 
-                    case DIALOG_CODE_END:
-                        j = 9;
+                    case MAP_MSG_CODE_END:
+                        j = LINE_COUNT_MAX;
                         break;
 
-                    case DIALOG_CODE_LINE_POSITION:
-                        D_800C38B0.positionIdx_1 = argCount;
+                    case MAP_MSG_CODE_LINE_POSITION:
+                        D_800C38B0.positionIdx_1 = msgArg;
                         break;
 
-                    case DIALOG_CODE_JUMP_DELAY:
-                        if (argCount == 2) 
+                    case MAP_MSG_CODE_JUMP:
+                        if (msgArg == 2)
                         {
-                            D_800BCD7A = 3;
+                            g_MapMsg_AudioLoadBlock = 3;
                         }
 
-                        while (argCount != ' ' && argCount != '\t')
+                        while (msgArg != ' ' && msgArg != '\t')
                         {
-                            argCount = *++mapMsg;
+                            msgArg = *++mapMsg;
                         }
 
                         break;
 
-                    case DIALOG_CODE_HIGH_RESOLUTION:
-                        g_SysWork.field_2350_0 = 1;
+                    case MAP_MSG_CODE_HIGH_RES:
+                        g_SysWork.enableHighResString_2350_0 = 1;
                         break;
                 }
 
                 mapMsg++;
                 break;
-
-            // Terminator.
-            case '\0':
-                j = 9;
+            
+            case 0:
+                j = LINE_COUNT_MAX;
                 break;
-
-            // ???
+            
             default:
                 // Convert literal `!` and `&` into `char`s mappable to representative atlas glyphs.
                 if (charCode == '!')
                 {
                     charCode = '\\';
-                }
+                } 
                 else if (charCode == '&')
                 {
                     charCode = '^';
                 }
 
-                D_800C38C8[D_800C38B4.lineCount_0 - 1] += D_80025D6C[charCode - '\''];
+                g_MapMsg_WidthTable[D_800C38B4.lineCount_0 - 1] += D_80025D6C[charCode - '\''];
                 mapMsg++;
                 break;
         }
     }
 }
-#else
-INCLUDE_ASM("asm/bodyprog/nonmatchings/text_draw", func_8004ACF4); // 0x8004ACF4
-#endif
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/text_draw", func_8004AF18); // 0x8004AF18
 
@@ -365,12 +348,12 @@ void func_8004B658() // 0x8004B658
 
 void func_8004B684() // 0x8004B684
 {
-    D_800C38B4.lineCount_0   = 1;
-    D_800C38B0.field_0       = 0;
-    D_800C38B0.positionIdx_1 = 1;
-    g_StringPositionX1       = SCREEN_POSITION_X(-37.5f);
-    g_StringColorId          = ColorId_White;
-    g_SysWork.field_2350_0   = 0;
+    D_800C38B4.lineCount_0               = 1;
+    D_800C38B0.field_0                   = 0;
+    D_800C38B0.positionIdx_1             = 1;
+    g_StringPositionX1                   = SCREEN_POSITION_X(-37.5f);
+    g_StringColorId                      = ColorId_White;
+    g_SysWork.enableHighResString_2350_0 = 0;
 }
 
 void func_8004B6D4(s16 arg0, s16 arg1) // 0x8004B6D4
