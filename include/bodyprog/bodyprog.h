@@ -2014,7 +2014,7 @@ extern s32 D_800C4558;
 
 extern s32 D_800C455C;
 
-extern s16 D_800C457E;
+extern u16 D_800C457E;
 
 extern u16 D_800C4580;
 
@@ -2026,25 +2026,25 @@ extern u16 D_800C4586; // Is player moving right (in-game)?
 
 extern s8 D_800C4588;
 
-extern s16 D_800C45AC;
+extern u16 D_800C45AC;
 
-extern s16 D_800C45AE;
+extern u16 D_800C45AE;
 
 extern VECTOR3 D_800C45B0; // Assumed type
 
 extern s16 D_800C45BC;
 
-extern s16 D_800C45BE;
+extern u16 D_800C45BE;
 
-extern s16 D_800C45C0;
+extern u16 D_800C45C0;
 
 extern u8 D_800C45C9;
 
-extern s16 D_800C45E8;
+extern u16 D_800C45E8;
 
-extern s16 D_800C45F0;
+extern u16 D_800C45F0;
 
-extern s16 D_800C4604;
+extern u16 D_800C4604;
 
 extern u8 D_800C4561;
 
