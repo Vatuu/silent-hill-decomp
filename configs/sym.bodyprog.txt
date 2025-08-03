@@ -1655,3 +1655,4 @@ g_MapMsgCurrentIdx = 0x800BCD6C; // type:s32
 g_MapMsgDisplayInc = 0x800BCD70; // type:s32
 g_MapMsgSelect = 0x800BCD78; //type:MapMsgSelect
 g_mapMsgSelect_CancelIdx_3 = 0x800BCD7B; // type:s8
+g_MapMsgWidthTable = 0x800C38C8; // type:s32

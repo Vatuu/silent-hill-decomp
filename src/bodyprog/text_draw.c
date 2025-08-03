@@ -240,15 +240,15 @@ void func_8004ACF4(s32 mapMsgIdx)
     u8* mapMsg;
     u8* temp_v2;
     s32 charCode;
-    u8 v0;
-    s32 v1;
+    u8 msgCode;
+    s32 msgArg;
 
     D_800C38B4.lineCount_0 = 1;
     D_800BCD7A             = 0;
     
     for (i = 8; i >= 0; i--)
     {
-        D_800C38C8[i] = 0;
+        g_MapMsgWidthTable[i] = 0;
     }
 
     mapMsg = g_MapOverlayHeader.mapMessageStrings_30[mapMsgIdx];
@@ -267,42 +267,42 @@ void func_8004ACF4(s32 mapMsgIdx)
             
             case '_':
                 ++mapMsg;
-                D_800C38C8[D_800C38B4.lineCount_0 - 1] += 6;
+                g_MapMsgWidthTable[D_800C38B4.lineCount_0 - 1] += 6;
                 break;
                 
-            case '~':
-                v0 = *++mapMsg; //code
-                v1 = *++mapMsg - '0'; //num argument
+            case MAP_MSG_CODE_MARKER:
+                msgCode = *++mapMsg;
+                msgArg = *++mapMsg - '0';
                 
-                switch (v0) 
+                switch (msgCode) 
                 {
-                    case 'C':
-                    case 'S':
-                    case 'T':
+                    case MAP_MSG_CODE_COLOR:
+                    case MAP_MSG_CODE_SELECT:
+                    case MAP_MSG_CODE_TAB:
                     break;
-                    case 'N': //new line
+                    case MAP_MSG_CODE_NEWLINE:
                         j = j + 1;
                         D_800C38B4.lineCount_0++;
                         break;
 
-                    case 'E': //wait for button press
+                    case MAP_MSG_CODE_END:
                         j = 9;
                         break;
 
-                    case 'L': //position
-                        D_800C38B0.positionIdx_1 = v1;
+                    case MAP_MSG_CODE_LINE_POSITION:
+                        D_800C38B0.positionIdx_1 = msgArg;
                         break;
 
-                    case 'J': //cutscene
-                        if (v1 == 2) 
+                    case MAP_MSG_CODE_JUMP:
+                        if (msgArg == 2) 
                             D_800BCD7A = 3;
 
-                        while (v1 != ' ' && v1 != '\t')
-                            v1 = *++mapMsg;
+                        while (msgArg != ' ' && msgArg != '\t')
+                            msgArg = *++mapMsg;
 
                         break;
 
-                    case 'H': //show map
+                    case MAP_MSG_CODE_HIGH_RES:
                         g_SysWork.field_2350_0 = 1;
                         break;
                 }
@@ -321,7 +321,7 @@ void func_8004ACF4(s32 mapMsgIdx)
                     charCode = '^';
                 }
                 
-                D_800C38C8[D_800C38B4.lineCount_0 - 1] += D_80025D6C[charCode - '\''];
+                g_MapMsgWidthTable[D_800C38B4.lineCount_0 - 1] += D_80025D6C[charCode - '\''];
                 mapMsg++;
             break;
         }

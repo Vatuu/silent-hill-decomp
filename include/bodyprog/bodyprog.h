@@ -1396,7 +1396,7 @@ extern s_8002AC04 D_8002AC04[];
 extern s_800BE9FC D_8002B2CC;
 
 /** Spacings for strings parsed by `func_8004ACF4`? */
-extern s32 D_800C38C8[];
+extern s32 g_MapMsgWidthTable[];
 
 extern u8 D_800A8E58;
 

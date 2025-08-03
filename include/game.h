@@ -50,6 +50,18 @@ typedef enum _MapMsgCode
     MapMsgCode_DisplayAll = 20
 } e_MapMsgCode;
 
+#define MAP_MSG_CODE_MARKER         '~'
+#define MAP_MSG_CODE_NEWLINE        'N'
+#define MAP_MSG_CODE_END            'E'
+#define MAP_MSG_CODE_LINE_POSITION  'L'
+#define MAP_MSG_CODE_JUMP           'J'
+#define MAP_MSG_CODE_HIGH_RES       'H'
+#define MAP_MSG_CODE_MIDDLE         'M'
+#define MAP_MSG_CODE_TAB            'T'
+#define MAP_MSG_CODE_COLOR          'C'
+#define MAP_MSG_CODE_DISPLAY_ALL    'D'
+#define MAP_MSG_CODE_SELECT         'S'
+
 typedef enum _MapOverlayId
 {
     MapOverlayId_MAP0_S00 = 0,
