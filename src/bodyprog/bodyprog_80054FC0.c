@@ -1689,9 +1689,11 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_800771BC); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80077BB8); // 0x80077BB8
 
-#ifdef NON_MATCHING
-void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* arg1)
+void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* arg1) // 0x80077D00
 {
+    #define TRAVEL_DIST_MAX FP_METER(1000000.0f)
+    #define TRAVEL_DIST_MIN 1
+
     s32 var_a2;
     s32 moveDistStep;
     s32 temp_s1;
@@ -1709,6 +1711,7 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* arg1)
         var_s2 = 20;
     }
 
+    // Compute move distance step.
     temp_s3      = func_8007D6F0(chara, &D_800C45C8);
     temp_s1      = func_8003BF60(chara->position_18.vx, chara->position_18.vz);
     var_a2       = SQUARE(chara->position_18.vx - D_800C45F8.vx);
@@ -1731,12 +1734,12 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* arg1)
         case 25:
         case 26:
             g_SavegamePtr->walkDistance_258 += moveDistStep;
-            g_SavegamePtr->walkDistance_258  = CLAMP(g_SavegamePtr->walkDistance_258, 1, 0xF4240000);
+            g_SavegamePtr->walkDistance_258  = CLAMP(g_SavegamePtr->walkDistance_258, TRAVEL_DIST_MIN, TRAVEL_DIST_MAX);
             break;
 
         default:
             g_SavegamePtr->runDistance_254 += moveDistStep;
-            g_SavegamePtr->runDistance_254  = CLAMP(g_SavegamePtr->runDistance_254, 1, 0xF4240000);
+            g_SavegamePtr->runDistance_254  = CLAMP(g_SavegamePtr->runDistance_254, TRAVEL_DIST_MIN, TRAVEL_DIST_MAX);
             break;
     }
 
@@ -1763,7 +1766,7 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* arg1)
             else if (g_SysWork.player_4C.chara_0.properties_E4.player.field_126 != 0)
             {
                 g_SysWork.player_4C.chara_0.properties_E4.player.field_126 -= ((g_DeltaTime0 * FP_FLOAT_TO(0.4f, Q12_SHIFT)) / 136) * 2;
-                if ((g_SysWork.player_4C.chara_0.properties_E4.player.field_126 >> 16) (1 << 0))
+                if ((g_SysWork.player_4C.chara_0.properties_E4.player.field_126 >> 16) & (1 << 0))
                 {
                     g_SysWork.player_4C.chara_0.properties_E4.player.field_126 = 0;
                 }
@@ -3582,9 +3585,6 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* arg1)
 
     func_8007B924(chara, arg1);
 }
-#else
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80077D00); // 0x80077D00
-#endif
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8007B924); // 0x8007B924
 

@@ -1128,7 +1128,6 @@ typedef struct
     s8  unk_7[5];
     s16 field_C;
     s16 field_E;
-    //s8  unk_10[2];
 } s_MaybeCharacterAnim;
 
 typedef struct
@@ -2073,6 +2072,8 @@ extern s16 D_800C45BC;
 extern u16 D_800C45BE;
 
 extern u16 D_800C45C0;
+
+extern s_D_800C45C8 D_800C45C8;
 
 extern u8 D_800C45C9;
 
