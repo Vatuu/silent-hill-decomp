@@ -228,17 +228,15 @@ bool Gfx_StringDraw(char* str, s32 size) // 0x8004A8E8
 INCLUDE_ASM("asm/bodyprog/nonmatchings/text_draw", Gfx_StringDraw); // 0x8004A8E8
 #endif
 
-void MapMsgCalculateWidthTable(s32 mapMsgIdx)
+void MapMsgCalculateWidthTable(s32 mapMsgIdx) // 0x8004ACF4
 {
+    #define GLYPH_SPACE_SIZE 6
+    #define LINE_MAX_COUNT 9
     s32 i;
     s32 j;
-    s32* temp_v0;
-    s32* temp_v1;
-    s32* var_a1;
     s8 tagCode;
     s8 tagArg;
     u8* mapMsg;
-    u8* temp_v2;
     s32 charCode;
     u8 msgCode;
     s32 msgArg;
@@ -246,14 +244,14 @@ void MapMsgCalculateWidthTable(s32 mapMsgIdx)
     D_800C38B4.lineCount_0 = 1;
     D_800BCD7A             = 0;
     
-    for (i = 8; i >= 0; i--)
+    for (i = LINE_MAX_COUNT-1; i >= 0; i--)
     {
         g_MapMsgWidthTable[i] = 0;
     }
 
     mapMsg = g_MapOverlayHeader.mapMessageStrings_30[mapMsgIdx];
     
-    for (j = 0; j < 9; )
+    for (j = 0; j < LINE_MAX_COUNT; )
     {
         charCode = *mapMsg;
         
@@ -262,12 +260,12 @@ void MapMsgCalculateWidthTable(s32 mapMsgIdx)
             case '\t':
             case '\n':
             case ' ':
-            mapMsg++;
-            break;
+                mapMsg++;
+                break;
             
             case '_':
                 ++mapMsg;
-                g_MapMsgWidthTable[D_800C38B4.lineCount_0 - 1] += 6;
+                g_MapMsgWidthTable[D_800C38B4.lineCount_0 - 1] += GLYPH_SPACE_SIZE;
                 break;
                 
             case MAP_MSG_CODE_MARKER:
@@ -279,14 +277,15 @@ void MapMsgCalculateWidthTable(s32 mapMsgIdx)
                     case MAP_MSG_CODE_COLOR:
                     case MAP_MSG_CODE_SELECT:
                     case MAP_MSG_CODE_TAB:
-                    break;
+                        break;
+
                     case MAP_MSG_CODE_NEWLINE:
                         j = j + 1;
                         D_800C38B4.lineCount_0++;
                         break;
 
                     case MAP_MSG_CODE_END:
-                        j = 9;
+                        j = LINE_MAX_COUNT;
                         break;
 
                     case MAP_MSG_CODE_LINE_POSITION:
@@ -294,11 +293,15 @@ void MapMsgCalculateWidthTable(s32 mapMsgIdx)
                         break;
 
                     case MAP_MSG_CODE_JUMP:
-                        if (msgArg == 2) 
+                        if (msgArg == 2)
+                        {
                             D_800BCD7A = 3;
+                        }
 
                         while (msgArg != ' ' && msgArg != '\t')
+                        {
                             msgArg = *++mapMsg;
+                        }
 
                         break;
 
@@ -308,16 +311,19 @@ void MapMsgCalculateWidthTable(s32 mapMsgIdx)
                 }
                 
                 mapMsg++;
-            break;
+                break;
             
             case 0:
-                j = 9;
-            break;
+                j = LINE_MAX_COUNT;
+                break;
             
             default:
-                if (charCode == '!') {
+                if (charCode == '!')
+                {
                     charCode = '\\';
-                } else if (charCode == '&') {
+                } 
+                else if (charCode == '&')
+                {
                     charCode = '^';
                 }
                 

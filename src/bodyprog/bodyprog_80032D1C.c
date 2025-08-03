@@ -2309,7 +2309,7 @@ s32 func_800365B8(s32 mapMsgIdx) // 0x800365B8
             D_800A99AC                   = mapMsgIdx;
             D_800BCD60                   = 0;
             D_800BCD64                   = 0;
-            g_MapMsgCurrentIdx                   = mapMsgIdx;
+            g_MapMsgCurrentIdx           = mapMsgIdx;
             g_MapMsgDisplayLen           = 0;
             // By how much to advance the display len. 2 characters at a time
             g_MapMsgDisplayInc           = 2;
@@ -2579,7 +2579,7 @@ s32 func_80036B5C(u8 mapMsgIdx, s32* arg1)
             mapMsgCode = NO_VALUE;
             break;
 
-        case 20:
+        case MapMsgCode_DisplayAll:
             *arg1 = MAP_MESSAGE_DISPLAY_ALL_LEN;
             break;
     }
