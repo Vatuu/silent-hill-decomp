@@ -3067,7 +3067,7 @@ u32 func_800364BC();
 
 void func_8003652C();
 
-s32 func_800365B8(s32 mapMsgIdx);
+s32 MapMsgDisplay(s32 mapMsgIdx);
 
 s32 func_80036B5C(u8 mapMsgIdx, s32* arg1);
 

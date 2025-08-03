@@ -2268,7 +2268,7 @@ void func_8003652C() // 0x8003652C
     LoadImage(&rect, vals);
 }
 
-s32 func_800365B8(s32 mapMsgIdx) // 0x800365B8
+s32 MapMsgDisplay(s32 mapMsgIdx) // 0x800365B8
 {
     s32  temp_s1;
     s32  temp_v0;
@@ -3536,7 +3536,7 @@ void SysState_Unk3_Update() // 0x800396D4
     if (!HAS_MAP(g_SavegamePtr->current2dMapIdx_A9))
     {
         if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.map_18 ||
-            func_800365B8(3) > 0)
+            MapMsgDisplay(MapMsgIndex_NoMap) > 0)
         {
             SysWork_StateSetNext(GameState_Unk0);
         }
@@ -3546,7 +3546,7 @@ void SysState_Unk3_Update() // 0x800396D4
               (g_SysWork.field_2388.field_1C[1].field_0.field_0.s_field_0.field_0 & (1 << 0))))
     {
         if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.map_18 ||
-            func_800365B8(4) > 0)
+            MapMsgDisplay(MapMsgIndex_TooDarkForMap) > 0)
         {
             SysWork_StateSetNext(GameState_Unk0);
         }
@@ -3782,7 +3782,7 @@ void SysState_ReadMessage_Update(s32 arg0) // 0x80039FB8
         g_MapOverlayHeader.func_C8(i);
     }
 
-    switch (func_800365B8(g_MapEventIdx)) 
+    switch (MapMsgDisplay(g_MapEventIdx)) 
     {
         case -1:
             break;
@@ -3847,7 +3847,7 @@ void SysState_SaveMenu_Update() // 0x8003A230
         case 0:
             SysWork_SavegameUpdatePlayer();
 
-            if ((g_SavegamePtr->eventFlags_168[5] & (1 << 26)) || g_SavegamePtr->locationId_A8 == 24 || g_MapEventIdx == 0)
+            if ((g_SavegamePtr->eventFlags_168[5] & (EVENT_FLAG5_FIRST_TIME_SAVE_GAME)) || g_SavegamePtr->locationId_A8 == 24 || g_MapEventIdx == 0)
             {
                 GameFs_SaveLoadBinLoad();
 
@@ -3859,9 +3859,9 @@ void SysState_SaveMenu_Update() // 0x8003A230
                 g_SysWork.sysStateStep_C++;
             }
 
-            else if (func_800365B8(2) == 1)
+            else if (MapMsgDisplay(MapMsgIndex_SaveGame) == 1)
             {
-                g_SavegamePtr->eventFlags_168[5] |= 1 << 26;
+                g_SavegamePtr->eventFlags_168[5] |= EVENT_FLAG5_FIRST_TIME_SAVE_GAME;
 
                 GameFs_SaveLoadBinLoad();
 

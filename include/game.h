@@ -41,6 +41,27 @@
 
 struct _SubCharacter; // Forward declaration.
 
+// Each map has it's own messages but the first 15
+// are all the same and hardcoded
+typedef enum _MapMsgIndex
+{
+    MapMsgIndex_Yes               = 0,
+    MapMsgIndex_No                = 1,
+    MapMsgIndex_SaveGame          = 2, //Someday, someone may experience...
+    MapMsgIndex_NoMap             = 3,
+    MapMsgIndex_TooDarkForMap     = 4,
+    MapMsgIndex_FirstAidSelect    = 5,
+    MapMsgIndex_HealthDrinkSelect = 6,
+    MapMsgIndex_AmpouleSelect     = 7,
+    MapMsgIndex_HandgunAmmoSelect = 8,
+    MapMsgIndex_RifleAmmoSelect   = 9,
+    MapMsgIndex_ShotgunAmmoSelect = 10,
+    MapMsgIndex_DoorJammer        = 11,
+    MapMsgIndex_DoorLocked        = 12,
+    MapMsgIndex_DoorUnlocked      = 13,
+    MapMsgIndex_NowMaking         = 14, // unused ?
+} e_MapMsgIndex;
+
 typedef enum _MapMsgCode
 {
     MapMsgCode_None       = 0,
@@ -585,6 +606,7 @@ typedef enum _GameDifficulty
     GameDifficulty_Hard   = 1
 } e_GameDifficulty;
 
+#define EVENT_FLAG5_FIRST_TIME_SAVE_GAME (1 << 26)
 typedef struct _ShSavegame
 {
     s_ShInventoryItem items_0[INVENTORY_ITEM_COUNT_MAX];
