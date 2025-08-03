@@ -36,30 +36,83 @@
 
 typedef enum _Sfx
 {
-    Sfx_BaseIdx   = 1280, // Base SFX index, but not a valid sound itself.
+    Sfx_None      = 1280,
     Sfx_StartGame = 1281,
 
-    Sfx_Denied  = 1304,
-    Sfx_Back    = 1305,
-    Sfx_Cancel  = 1306,
-    Sfx_Confirm = 1307,
+    Sfx_Denied    = 1304,
+    Sfx_Back      = 1305,
+    Sfx_Cancel    = 1306,
+    Sfx_Confirm   = 1307,
 
-    Sfx_Unk1321 = 1321,
-    Sfx_Unk1322 = 1322,
+    Sfx_Unk1309   = 1309,
+    Sfx_Unk1310   = 1310,
 
-    Sfx_Unk1358 = 1358,
-    Sfx_Unk1359 = 1359,
-    Sfx_Unk1360 = 1360, // Used in `sharedFunc_800D0CB8_0_s00`, depends on the map. Also in `sharedFunc_800D0E04_0_s00`.
-    Sfx_Unk1361 = 1361,
+    Sfx_Unk1321   = 1321,
+    Sfx_Unk1322   = 1322,
+    Sfx_Unk1323   = 1323,
+    Sfx_Unk1324   = 1324,
 
-    Sfx_Unk1501 = 1501, // Used in `GameState_LoadScreen_Update`.
-    Sfx_Unk1502 = 1502, // Used in `GameState_LoadScreen_Update`.
+    Sfx_Unk1336   = 1336,
+    Sfx_Unk1337   = 1337,
+    Sfx_Unk1338   = 1338,
+    Sfx_Unk1339   = 1339,
+    Sfx_Unk1340   = 1340,
+    Sfx_Unk1341   = 1341,
 
-    Sfx_Unk1525 = 1525, // Used in `Ai_Bloodsucker_Update`.
+    Sfx_Unk1351   = 1351,
+    Sfx_Unk1352   = 1352,
 
-    Sfx_Unk1527 = 1527, // Used in `Ai_Bloodsucker_Update`.
+    Sfx_Unk1354   = 1354,
 
-    Sfx_Unk1567 = 1567
+    Sfx_Unk1358   = 1358,
+    Sfx_Unk1359   = 1359,
+    Sfx_Unk1360   = 1360,
+    Sfx_Unk1361   = 1361,
+
+    Sfx_Unk1387   = 1387,
+
+    Sfx_Unk1391   = 1391,
+
+    Sfx_Unk1396   = 1396,
+    Sfx_Unk1397   = 1397,
+    Sfx_Unk1398   = 1398,
+    Sfx_Unk1399   = 1399,
+
+    Sfx_Unk1418   = 1418,
+
+    Sfx_Unk1431   = 1431,
+    Sfx_Unk1432   = 1432,
+
+    Sfx_Unk1458   = 1458,
+    Sfx_Unk1459   = 1459,
+
+    Sfx_Unk1487   = 1487,
+
+    Sfx_Unk1490   = 1490,
+    Sfx_Unk1491   = 1491,
+
+    Sfx_Unk1501   = 1501,
+    Sfx_Unk1502   = 1502,
+
+    Sfx_Unk1504   = 1504,
+    Sfx_Unk1505   = 1505,
+
+    Sfx_Unk1521   = 1521,
+
+    Sfx_Unk1525   = 1525,
+
+    Sfx_Unk1527   = 1527,
+
+    Sfx_Unk1567   = 1567,
+
+    Sfx_Unk1601   = 1601,
+    Sfx_Unk1602   = 1602,
+
+    Sfx_Unk1604   = 1604,
+    Sfx_Unk1605   = 1605,
+
+    Sfx_Unk1609   = 1609,
+    Sfx_Unk1610   = 1610,
 } e_Sfx;
 
 /** Used by `func_8003F654` to cast a specific field to the desired type. */
@@ -87,6 +140,13 @@ typedef enum _PrimitiveType
 // ================
 
 /* Structs called by functions that haven't been identified. */
+
+/** SFX pair used for area loading (e.g. door opening and closing). */
+typedef struct
+{
+    u16 sfx_0;
+    u16 sfx_2;
+} s_AreaLoadSfx;
 
 // Exception, as one of the unidentified structs uses this.
 typedef struct
@@ -525,12 +585,6 @@ typedef struct
 // ========
 // STRUCTS
 // ========
-
-typedef struct
-{
-    u16 field_0;
-    u16 field_2; // Engine cmd.
-} s_800252BC;
 
 typedef struct
 {
@@ -1323,7 +1377,7 @@ extern s8* D_8002510C;
 /** Default key bindings. Multiple configs probably? */
 extern s_ControllerConfig D_8002511C[];
 
-extern s_800252BC const D_800252BC[];
+extern s_AreaLoadSfx const D_800252BC[];
 
 extern u8 D_80025D6C[];
 
@@ -1466,6 +1520,7 @@ extern u8 D_800A99A4[];
 /** Map message index. */
 extern s32 D_800A99AC;
 
+/** FP time value for map message. */
 extern s16 D_800A99B0;
 
 /** Array of indices? */

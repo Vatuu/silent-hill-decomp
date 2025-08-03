@@ -310,12 +310,12 @@ u8 Sd_PlaySfx(u16 sfx, s8 arg1, u8 vol) // 0x80046048
     s16          volCpy;
     s32          i;
 
-    if (sfx == Sfx_BaseIdx)
+    if (sfx == Sfx_None)
     {
         return NO_VALUE;
     }
 
-    D_800C15BC = sfx - Sfx_BaseIdx;
+    D_800C15BC = sfx - Sfx_None;
     volCpy     = vol;
 
     // Copy key SFX data.
@@ -399,12 +399,12 @@ void func_800463C0(u16 sfx, s8 arg1, u8 vol, s8 arg3) // 0x800463C0
     s32          temp;
     s32          i;
 
-    if (sfx == Sfx_BaseIdx)
+    if (sfx == Sfx_None)
     {
         return;
     }
 
-    D_800C15BE = sfx - Sfx_BaseIdx;
+    D_800C15BE = sfx - Sfx_None;
     D_800C16A4 = D_800C167C + D_800ACAA8[D_800C15BE].field_5;
 
     if (sfx == Sfx_Unk1321)
@@ -487,12 +487,12 @@ void func_80046620(u16 sfx, s8 arg1, u8 vol, s8 arg3) // 0x80046620
     s16 temp;
     s16 convertedVol;
 
-    if (sfx == Sfx_BaseIdx)
+    if (sfx == Sfx_None)
     {
         return;
     }
 
-    D_800C15C2         = sfx - Sfx_BaseIdx;
+    D_800C15C2         = sfx - Sfx_None;
     D_800C1698.field_2 = D_800ACAA8[D_800C15C2].field_2 >> 8;
     D_800C1698.field_4 = D_800ACAA8[D_800C15C2].field_2 & 0xFF;
     D_800C1698.field_6 = D_800ACAA8[D_800C15C2].field_0;

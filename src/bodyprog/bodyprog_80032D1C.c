@@ -2498,7 +2498,7 @@ s32 func_80036B5C(u8 mapMsgIdx, s32* arg1)
     {
         case NO_VALUE:
         case MapMsgCode_None:
-            D_800A99B0 = 0;
+            D_800A99B0 = FP_TIME(0.0f);
             break;
 
         case MapMsgCode_Select2:
@@ -2509,7 +2509,7 @@ s32 func_80036B5C(u8 mapMsgIdx, s32* arg1)
 
             if (mapMsgCode == MapMsgCode_Select4)
             {
-                // `MapMsgRetCode_Select4` shows selection prompt with map messages at indices 0 and 1.
+                // Shows selection prompt with map messages at indices 0 and 1.
                 // All maps have "Yes" and "No" as messages 0 and 1, respectively.
                 for (i = 0; i < 2; i++)
                 {
@@ -2557,7 +2557,7 @@ s32 func_80036B5C(u8 mapMsgIdx, s32* arg1)
             if (g_Controller0->btnsClicked_10 & ControllerFlag_LStickUp &&
                 D_800BCD78.mapMsgSelectIdx_1 != 0)
             {
-                D_800A99B0 = 0;
+                D_800A99B0 = FP_TIME(0.0f);
                 D_800BCD78.mapMsgSelectIdx_1--;
 
                 Sd_PlaySfx(Sfx_Back, 0, 64);
@@ -2583,39 +2583,43 @@ s32 func_80036B5C(u8 mapMsgIdx, s32* arg1)
     return mapMsgCode;
 }
 
-const s32 rodataPad_800252B8 = 0;
+const s32 RodataPad_800252B8 = 0;
 
-s_800252BC const D_800252BC[25] =
+/** @brief SFX pair table.
+ * 
+ * @note Used when loading areas. Maybe facilitates things like the
+ * opening and closing door SFX when the player moves between rooms. */
+s_AreaLoadSfx const D_800252BC[25] = // 0x800252BC
 {
-    { 0x500, 0x500 },
-    { 0x51D, 0x51E },
-    { 0x52B, 0x52C },
-    { 0x58A, 0x500 },
-    { 0x54A, 0x500 },
-    { 0x56B, 0x500 },
-    { 0x56F, 0x500 },
-    { 0x5F1, 0x500 },
-    { 0x5B2, 0x5B3 },
-    { 0x644, 0x645 },
-    { 0x649, 0x64A },
-    { 0x574, 0x575 },
-    { 0x538, 0x539 },
-    { 0x53A, 0x53B },
-    { 0x53C, 0x53D },
-    { 0x641, 0x642 },
-    { 0x5D2, 0x5D3 },
-    { 0x597, 0x598 },
-    { 0x576, 0x577 },
-    { 0x5E0, 0x5E1 },
-    { 0x51D, 0x500 },
-    { 0x52B, 0x500 },
-    { 0x500, 0x52C },
-    { 0x547, 0x548 },
-    { 0x5CF, 0x500 }
+    { Sfx_None,    Sfx_None },
+    { Sfx_Unk1309, Sfx_Unk1310 },
+    { Sfx_Unk1323, Sfx_Unk1324 },
+    { Sfx_Unk1418, Sfx_None },
+    { Sfx_Unk1354, Sfx_None },
+    { Sfx_Unk1387, Sfx_None },
+    { Sfx_Unk1391, Sfx_None },
+    { Sfx_Unk1521, Sfx_None },
+    { Sfx_Unk1458, Sfx_Unk1459 },
+    { Sfx_Unk1604, Sfx_Unk1605 },
+    { Sfx_Unk1609, Sfx_Unk1610 },
+    { Sfx_Unk1396, Sfx_Unk1397 },
+    { Sfx_Unk1336, Sfx_Unk1337 },
+    { Sfx_Unk1338, Sfx_Unk1339 },
+    { Sfx_Unk1340, Sfx_Unk1341 },
+    { Sfx_Unk1601, Sfx_Unk1602 },
+    { Sfx_Unk1490, Sfx_Unk1491 },
+    { Sfx_Unk1431, Sfx_Unk1432 },
+    { Sfx_Unk1398, Sfx_Unk1399 },
+    { Sfx_Unk1504, Sfx_Unk1505 },
+    { Sfx_Unk1309, Sfx_None },
+    { Sfx_Unk1323, Sfx_None },
+    { Sfx_None,    Sfx_Unk1324 },
+    { Sfx_Unk1351, Sfx_Unk1352 },
+    { Sfx_Unk1487, Sfx_None }
 };
 
-// These get ref'd by pointers at 800A99E8, which are then used by func_800D3EAC
-// Maybe meant to be separate .c file with .h externs
+// These get referenced by pointers at `0x800A99E8`, which are then used by `func_800D3EAC`.
+// Maybe meant to be separate .c file with .h externs.
 const char g_80025320[] = "SHOT_NEA";
 const char g_8002532C[] = "SHELL_NE";
 const char g_80025338[] = "BULLET_N";
@@ -2648,7 +2652,7 @@ void func_80036E48(u16* arg0, s16* arg1) // 0x80036E48
     {
         temp_v0 = *var_t7;
 
-        for (var_a2 = 0; var_a2 < 0xF; var_a2++)
+        for (var_a2 = 0; var_a2 < 15; var_a2++)
         {
             if ((((temp_v0 >> 8) | ((temp_v0 & 0xFF) << 8)) >> (0xF - var_a2)) & 1)
             {
@@ -2678,7 +2682,7 @@ void func_80036E48(u16* arg0, s16* arg1) // 0x80036E48
         for (var_a3 = 0, var_a2 = 0; var_a2 < 12; var_a2++)
         {
             var_v0  = 2;
-            temp_a0 = (var_a2 & 3) * 4;
+            temp_a0 = (var_a2 & 0x3) * 4;
 
             if (sp28[var_a2] != 0)
             {
@@ -2853,8 +2857,8 @@ void func_80037334() // 0x80037334
 void func_80037388() // 0x80037388
 {
     volatile s32 v1;
-    s32 v2;
-    s32 i;
+    s32          v2;
+    s32          i;
 
     v1 = v2;
     for (i = 0; i < 5; i++)
@@ -3668,7 +3672,7 @@ void SysState_LoadArea_Update() // 0x80039C40
     g_SysWork.field_2283 = (g_MapEventParam->flags_8 >> 19) & 0x1F;
     g_SysWork.field_2282 = (g_MapEventParam->flags_8 >> 13) & 0x3F;
 
-    Sd_EngineCmd(D_800252BC[g_SysWork.field_2283].field_0);
+    Sd_EngineCmd(D_800252BC[g_SysWork.field_2283].sfx_0);
 
     if (g_SysWork.field_2283 == 7)
     {
@@ -3727,7 +3731,7 @@ void AreaLoad_UpdatePlayerPosition() // 0x80039F30
 
 void func_80039F54() // 0x80039F54
 {
-    Sd_EngineCmd(D_800252BC[g_SysWork.field_2283].field_2);
+    Sd_EngineCmd(D_800252BC[g_SysWork.field_2283].sfx_2);
 }
 
 s8 func_80039F90() // 0x80039F90
