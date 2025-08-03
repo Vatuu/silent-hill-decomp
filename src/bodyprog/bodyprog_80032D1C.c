@@ -2267,7 +2267,7 @@ void func_8003652C() // 0x8003652C
     LoadImage(&rect, vals);
 }
 
-s32 MapMsgDisplay(s32 mapMsgIdx) // 0x800365B8
+s32 Gfx_MapMsgDisplay(s32 mapMsgIdx) // 0x800365B8
 {
     #define MSG_TIMER_MAX   (FP_TIME(524288.0f) - 1)
     #define FINISH_CUTSCENE 0xFF
@@ -2287,7 +2287,7 @@ s32 MapMsgDisplay(s32 mapMsgIdx) // 0x800365B8
 
     #define FINISH_MAP_MSG (0xff)
 
-    buttonPressed = 0;
+    hasInput = 0;
     if ((g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 |
                                           g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)) ||
         (g_Controller0->btnsHeld_C & g_GameWorkPtr->config_0.controllerConfig_0.skip_4))
@@ -2306,20 +2306,20 @@ s32 MapMsgDisplay(s32 mapMsgIdx) // 0x800365B8
     switch (g_SysWork.field_18)
     {
         case 0:
-            g_SysWork.mapMsgTimer        = NO_VALUE;
-            g_MapMsgSelect.maxIdx_0      = NO_VALUE;
-            g_MapMsgSelect.selectedIdx_1 = 0;
-            g_MapMsgAudioLoadBlock       = 0;
-            g_MapMsgCurrentIdx           = mapMsgIdx;
-            g_MapMsgStateMachineIdx1     = 0;
-            g_MapMsgStateMachineIdx2     = 0;
-            g_MapMsgMainIdx              = mapMsgIdx;
-            g_MapMsgDisplayLen           = 0;
+            g_SysWork.mapMsgTimer_234C    = NO_VALUE;
+            g_MapMsg_Select.maxIdx_0      = NO_VALUE;
+            g_MapMsg_Select.selectedIdx_1 = 0;
+            g_MapMsg_AudioLoadBlock       = 0;
+            g_MapMsg_CurrentIdx           = mapMsgIdx;
+            g_MapMsg_StateMachineIdx1     = 0;
+            g_MapMsg_StateMachineIdx2     = 0;
+            g_MapMsg_MainIdx              = mapMsgIdx;
+            g_MapMsg_DisplayLength        = 0;
             // By how much to advance the display len. 2 characters at a time
-            g_MapMsgDisplayInc           = 2;
+            g_MapMsg_DisplayInc           = 2;
 
             func_8004B684();
-            MapMsg_CalculateWidthTable(g_MapMsg_CurrentIdx);
+            Gfx_MapMsg_CalculateWidthTable(g_MapMsg_CurrentIdx);
 
             D_800BCD74 = 1;
             g_SysWork.field_18++;
@@ -2356,7 +2356,7 @@ s32 MapMsgDisplay(s32 mapMsgIdx) // 0x800365B8
                 g_SysWork.mapMsgTimer_234C  = CLAMP(g_SysWork.mapMsgTimer_234C, FP_TIME(0.0f), MSG_TIMER_MAX);
             }
 
-            temp_s1 = g_MapMsgStateMachineIdx1;
+            temp_s1 = g_MapMsg_StateMachineIdx1;
             if (temp_s1 == NO_VALUE)
             {
                 if (g_MapMsg_AudioLoadBlock == 0)
@@ -2364,7 +2364,7 @@ s32 MapMsgDisplay(s32 mapMsgIdx) // 0x800365B8
                     Game_TimerUpdate();
                 }
 
-                temp = g_MapMsgStateMachineIdx2;
+                temp = g_MapMsg_StateMachineIdx2;
                 if (temp == temp_s1)
                 {
                     if (g_MapMsg_Select.maxIdx_0 == temp)
@@ -2372,7 +2372,7 @@ s32 MapMsgDisplay(s32 mapMsgIdx) // 0x800365B8
                         if (!((g_MapMsg_AudioLoadBlock & (1 << 0)) || hasInput == 0) || 
                             (g_MapMsg_AudioLoadBlock != 0 && g_SysWork.mapMsgTimer_234C == 0))
                         {
-                            g_MapMsgStateMachineIdx2 = FINISH_MAP_MSG;
+                            g_MapMsg_StateMachineIdx2 = FINISH_MAP_MSG;
 
                             if (g_SysWork.field_22A0 & (1 << 5))
                             {
@@ -2394,7 +2394,7 @@ s32 MapMsgDisplay(s32 mapMsgIdx) // 0x800365B8
                             g_SysWork.silentYesSelection_4 = 0;
                         }
 
-                        g_MapMsgStateMachineIdx2 = FINISH_MAP_MSG;
+                        g_MapMsg_StateMachineIdx2 = FINISH_MAP_MSG;
                         break;
                     }
                     else if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
@@ -2416,7 +2416,7 @@ s32 MapMsgDisplay(s32 mapMsgIdx) // 0x800365B8
                             g_SysWork.silentYesSelection_4 = 0;
                         }
 
-                        g_MapMsgStateMachineIdx2 = FINISH_MAP_MSG;
+                        g_MapMsg_StateMachineIdx2 = FINISH_MAP_MSG;
                         break;
                     }
                 }
@@ -2425,18 +2425,18 @@ s32 MapMsgDisplay(s32 mapMsgIdx) // 0x800365B8
                 {
                     if (g_MapMsg_Select.maxIdx_0 != NO_VALUE)
                     {
-                        g_MapMsgSelect.maxIdx_0  = NO_VALUE;
-                        g_MapMsgStateMachineIdx2 = FINISH_MAP_MSG;
+                        g_MapMsg_Select.maxIdx_0  = NO_VALUE;
+                        g_MapMsg_StateMachineIdx2 = FINISH_MAP_MSG;
                         break;
                     }
 
                     g_MapMsg_CurrentIdx++;
                     g_SysWork.mapMsgTimer_234C = g_MapMsg_Select.maxIdx_0;
 
-                    MapMsg_CalculateWidthTable(g_MapMsg_CurrentIdx);
+                    Gfx_MapMsg_CalculateWidthTable(g_MapMsg_CurrentIdx);
 
-                    g_MapMsgDisplayLen       = 0;
-                    g_MapMsgStateMachineIdx1 = 0;
+                    g_MapMsg_DisplayLength    = 0;
+                    g_MapMsg_StateMachineIdx1 = 0;
 
                     if (g_MapMsg_AudioLoadBlock == MapMsgAudioLoadBlock_J2)
                     {
@@ -2461,22 +2461,22 @@ s32 MapMsgDisplay(s32 mapMsgIdx) // 0x800365B8
                 }
             }
 
-            g_MapMsgStateMachineIdx1 = 0;
-            g_MapMsgStateMachineIdx2 = MapMsgRenderAndHandleSelection(g_MapMsgCurrentIdx, &g_MapMsgDisplayLen);
+            g_MapMsg_StateMachineIdx1 = 0;
+            g_MapMsg_StateMachineIdx2 = Gfx_MapMsgRenderAndHandleSelection(g_MapMsg_CurrentIdx, &g_MapMsg_DisplayLength);
 
-            if (g_MapMsgStateMachineIdx2 != 0 && g_MapMsgStateMachineIdx2 < MapMsgCode_Select4)
+            if (g_MapMsg_StateMachineIdx2 != 0 && g_MapMsg_StateMachineIdx2 < MapMsgCode_Select4)
             {
-                g_MapMsgStateMachineIdx1 = NO_VALUE;
+                g_MapMsg_StateMachineIdx1 = NO_VALUE;
             }
     }
 
-    if (g_MapMsgStateMachineIdx2 != FINISH_MAP_MSG)
+    if (g_MapMsg_StateMachineIdx2 != FINISH_MAP_MSG)
     {
         return 0;
     }
 
     g_SysWork.field_18                   = 0;
-    g_SysWork.enableHighResString_2350_0 = 0;
+    g_SysWork.highResolutionTextRender_2350_0 = 0;
     g_MapMsg_DisplayLength               = 0;
 
     if (g_SysWork.field_22A0 & (1 << 5))
@@ -2487,7 +2487,7 @@ s32 MapMsgDisplay(s32 mapMsgIdx) // 0x800365B8
     return g_MapMsg_Select.selectedIdx_1 + 1;
 }
 
-s32 MapMsgRenderAndHandleSelection(u8 mapMsgIdx, s32* arg1) // 0x80036B5C
+s32 Gfx_MapMsgRenderAndHandleSelection(u8 mapMsgIdx, s32* arg1) // 0x80036B5C
 {
     #define STRING_LINE_OFFSET 16
 
@@ -3542,7 +3542,7 @@ void SysState_Unk3_Update() // 0x800396D4
     if (!HAS_MAP(g_SavegamePtr->current2dMapIdx_A9))
     {
         if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.map_18 ||
-            MapMsgDisplay(MapMsgIndex_NoMap) > 0)
+            Gfx_MapMsgDisplay(MapMsgIndex_NoMap) > 0)
         {
             SysWork_StateSetNext(GameState_Unk0);
         }
@@ -3552,7 +3552,7 @@ void SysState_Unk3_Update() // 0x800396D4
               (g_SysWork.field_2388.field_1C[1].field_0.field_0.s_field_0.field_0 & (1 << 0))))
     {
         if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.map_18 ||
-            MapMsgDisplay(MapMsgIndex_TooDarkForMap) > 0)
+            Gfx_MapMsgDisplay(MapMsgIndex_TooDarkForMap) > 0)
         {
             SysWork_StateSetNext(GameState_Unk0);
         }
@@ -3788,7 +3788,7 @@ void SysState_ReadMessage_Update(s32 arg0) // 0x80039FB8
         g_MapOverlayHeader.func_C8(i);
     }
 
-    switch (MapMsgDisplay(g_MapEventIdx)) 
+    switch (Gfx_MapMsgDisplay(g_MapEventIdx)) 
     {
         case -1:
             break;
@@ -3865,7 +3865,7 @@ void SysState_SaveMenu_Update() // 0x8003A230
                 g_SysWork.sysStateStep_C++;
             }
 
-            else if (MapMsgDisplay(MapMsgIndex_SaveGame) == 1)
+            else if (Gfx_MapMsgDisplay(MapMsgIndex_SaveGame) == 1)
             {
                 g_SavegamePtr->eventFlags_168[5] |= EVENT_FLAG5_FIRST_TIME_SAVE_GAME;
 

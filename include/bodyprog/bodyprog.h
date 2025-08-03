@@ -1823,9 +1823,9 @@ extern u32 D_800BCD58;
 
 extern s32 D_800BCD5C;
 
-extern s32 g_MapMsgStateMachineIdx1;
+extern s32 g_MapMsg_StateMachineIdx1;
 
-extern s32 g_MapMsgStateMachineIdx2;
+extern s32 g_MapMsg_StateMachineIdx2;
 
 extern s32 g_MapMsg_DisplayLength;
 
@@ -3110,9 +3110,9 @@ u32 func_800364BC();
 
 void func_8003652C();
 
-s32 MapMsgDisplay(s32 mapMsgIdx);
+s32 Gfx_MapMsgDisplay(s32 mapMsgIdx);
 
-s32 MapMsgRenderAndHandleSelection(u8 mapMsgIdx, s32* arg1);
+s32 Gfx_MapMsgRenderAndHandleSelection(u8 mapMsgIdx, s32* arg1);
 
 void func_80036E48(u16* arg0, s16* arg1);
 
