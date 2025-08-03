@@ -425,22 +425,23 @@ void func_8005B474(s32* arg0, u32 arg1, s32 idx) // 0x8005B474
 
 // INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8005B4BC); // 0x8005B4BC
 
-s_800C1450_0_4* func_8005B4BC(char* arg0, s_800C1450* arg1) // 0x8005B4BC
+s_800C1450_0_4* func_8005B4BC(char* str, s_800C1450* arg1) // 0x8005B4BC
 {
-    s_800C1450_0_4* v1;
-    char            sp_10[8];
+    s_800C1450_0_4* ptr;
+    char            prevStr[8];
     s32             i;
 
-    func_80056D64(sp_10, arg0);
+    func_80056D64(prevStr, str);
 
     for (i = 0; i < arg1->field_0.count_0; ++i)
     {
-        v1 = arg1->field_0.entries_4[i];
-        // "gotta go fast" style string comparison
-        // this means s_800C1450_0_4::field_8 is also likely a char[8]
-        if (v1->field_10 != -1 && *(u32*)&sp_10[0] == v1->field_8 && *(u32*)&sp_10[4] == v1->field_C)
+        ptr = arg1->field_0.entries_4[i];
+
+        // Fast string comparison. `s_800C1450_0_4::field_8` is also likely a `char[8]`.
+        if (ptr->field_10 != NO_VALUE &&
+            *(u32*)&prevStr[0] == ptr->field_8 && *(u32*)&prevStr[4] == ptr->field_C)
         {
-            return v1;
+            return ptr;
         }
     }
 

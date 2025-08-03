@@ -123,14 +123,13 @@ typedef struct
     s_Bone* bones_8;
 
     // Maybe incorrect.
-    s8 field_C[4]; // Maybe struct similar to `s_Bone` but smaller.
-    u8 field_10;   // Some count related to bone hierarchy.
-    // s8 unk_11;
-    s8  field_11;
-    s8 field_12;
-    s8 field_13;
-    struct s_Skeleton* field_14;
-    s8  unk_18[4]
+    s8                 field_C[4]; // Maybe struct similar to `s_Bone` but smaller.
+    u8                 field_10;   // Some count related to bone hierarchy.
+    s8                 field_11;
+    s8                 field_12;
+    s8                 field_13;
+    struct s_Skeleton* skeleton_14;
+    s8                 unk_18[4]
 } s_Skeleton;
 STATIC_ASSERT_SIZEOF(s_Skeleton, 28);
 
@@ -1224,7 +1223,7 @@ typedef struct _MapOverlayHeader
     s8                unk_24[4];
     GsCOORDINATE2*    field_28;
     s_UnkStruct_MO*   field_2C;
-    char**            mapMessageStrings_30; /** Points to array of `char*` for each displayed message in the map. */
+    char**            mapMessageStrings_30; /** Points to array of `char*`s for each map message. */
     s_AnimInfo*       animInfo_34;
     s8                unk_38[8];
     void              (*func_40)();
@@ -1281,7 +1280,7 @@ typedef struct
 typedef struct
 {
     s8 mapMsgSelectMax_0;
-    s8 mapMsgSelectIdx_1;
+    u8 mapMsgSelectIdx_1;
 } s_800BCD78;
 
 typedef struct
@@ -1464,6 +1463,7 @@ extern s32 D_800A99A0;
 
 extern u8 D_800A99A4[];
 
+/** Map message index. */
 extern s32 D_800A99AC;
 
 extern s16 D_800A99B0;
@@ -1737,6 +1737,7 @@ extern s32 D_800BCD64;
 
 extern s32 D_800BCD68;
 
+/** Map message index. */
 extern s32 D_800BCD6C;
 
 extern s32 D_800BCD70;
@@ -2605,7 +2606,7 @@ void func_80085EB8(u32 arg0, s_SubCharacter* chara0, s_SubCharacter* chara1, s32
 void func_8008605C(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 
 /** `arg1` might be `u8*`. */
-void func_800860B0(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 sysStateStep, s32 arg5);
+void func_800860B0(s32 arg0, s32 mapMsgIdx, s32 arg2, s32 arg3, s32 sysStateStep, s32 arg5);
 
 /** `arg3` is some FP time value. */
 void func_8008616C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
@@ -2626,7 +2627,7 @@ void func_800867B4(s32 caseParam, s32 idx);
 
 void func_800868DC(s32 idx);
 
-void func_800869E4(u8* arg0, u8* arg1, u16* arg2);
+void func_800869E4(u8* mapMsgIdx, u8* arg1, u16* arg2);
 
 void Camera_TranslationSet(VECTOR3* pos, s32 xPosOffset, s32 yPosOffset, s32 zPosOffset,
                            s32 xzAccel, s32 yAccel, s32 xzSpeedMax, s32 ySpeedMax, s32 warpCamFlag);
@@ -2642,19 +2643,19 @@ void func_80086DA8(s32 arg0, s32 arg1);
 
 void func_80086F44(s32 arg0, s32 arg1);
 
-void func_80086FE8(s32 arg0, s32 arg1, s32 arg2);
+void func_80086FE8(s32 mapMsgIdx, s32 arg1, s32 arg2);
 
 void func_8008716C(s32 arg0, s32 arg1, s32 arg2);
 
-void func_80087360(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
+void func_80087360(s32 arg0, s32 arg1, s32 arg2, s32 mapMsgIdx);
 
-void func_80087540(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
+void func_80087540(s32 arg0, s32 arg1, s32 arg2, s32 mapMsgIdx0, s32 mapMsgIdx1);
 
 /** Something to do with bullet adjust setting. */
 void func_800879FC(u32 arg0, s32 arg1);
 
 /** Inventory drawing? */
-void func_80087AF4(s32 mapFlagIdx, s32 eventFlagIdx, s32 arg2);
+void func_80087AF4(s32 mapFlagIdx, s32 eventFlagIdx, s32 mapMsgIdx);
 
 void func_80087EA8(s32 cmd);
 
@@ -2799,7 +2800,7 @@ void func_8005B46C(s32* arg0);
  */
 void func_8005B474(s32* arg0, u32 arg1, s32 idx);
 
-s_800C1450_0_4* func_8005B4BC(char* arg0, s_800C1450* arg1);
+s_800C1450_0_4* func_8005B4BC(char* str, s_800C1450* arg1);
 
 /** Sets the debug string position. */
 void func_8005BF0C(s16 unused, s16 x, s16 y);
@@ -3008,9 +3009,9 @@ u32 func_800364BC();
 
 void func_8003652C();
 
-s32 func_800365B8(s32 arg0);
+s32 func_800365B8(s32 mapMsgIdx);
 
-s32 func_80036B5C(u8 arg0, s32* arg1);
+s32 func_80036B5C(u8 mapMsgIdx, s32* arg1);
 
 void func_80036E48(u16* arg0, s16* arg1);
 

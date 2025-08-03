@@ -154,11 +154,11 @@ void func_8008605C(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x8008605C
     }
 }
 
-void func_800860B0(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 sysStateStep, s32 arg5) // 0x800860B0
+void func_800860B0(s32 arg0, s32 mapMsgIdx, s32 arg2, s32 arg3, s32 sysStateStep, s32 arg5) // 0x800860B0
 {
     s32 ret;
 
-    ret = func_800365B8(arg1);
+    ret = func_800365B8(mapMsgIdx);
     if (ret <= 0)
     {
         return;
@@ -512,13 +512,13 @@ s32 func_8008694C(s32 arg0, s16 arg1, s16 arg2, s32 arg3, s32 idx)
     return (arg0 * shRsin(arg1 + ((arg2 * D_800C4710[idx]) / arg3))) >> 12;
 }
 
-void func_800869E4(u8* arg0, u8* arg1, u16* arg2) // 0x800869E4
+void func_800869E4(u8* mapMsgIdx, u8* arg1, u16* arg2) // 0x800869E4
 {
     s32 ret;
 
     g_SysWork.field_22A0 |= 1 << 5;
 
-    ret = func_800365B8(arg0);
+    ret = func_800365B8(mapMsgIdx);
     if (ret == 1)
     {
         g_SysWork.field_28 = 0;
@@ -776,7 +776,7 @@ void func_80086F44(s32 arg0, s32 arg1) // 0x80086F44
     g_SysWork.sysStateStep_C++;
 }
 
-void func_80086FE8(s32 arg0, s32 arg1, s32 arg2) // 0x80086FE8
+void func_80086FE8(s32 mapMsgIdx, s32 arg1, s32 arg2) // 0x80086FE8
 {
     s32 i;
     
@@ -816,19 +816,19 @@ void func_80086FE8(s32 arg0, s32 arg1, s32 arg2) // 0x80086FE8
             break;
         
         case 2:
-            func_800860B0(0, arg0, 0, 0, 0, 1);
+            func_800860B0(0, mapMsgIdx, 0, 0, 0, 1);
             break;
 
         default:
             g_MapOverlayHeader.func_CC(0);
 
-            g_SysWork.sysState_8 = 0;
-            g_SysWork.timer_24 = 0;
+            g_SysWork.sysState_8     = 0;
+            g_SysWork.timer_24       = 0;
             g_SysWork.sysStateStep_C = 0;
-            g_SysWork.field_28 = 0;
-            g_SysWork.field_10 = 0;
-            g_SysWork.timer_2C = 0;
-            g_SysWork.field_14 = 0;
+            g_SysWork.field_28       = 0;
+            g_SysWork.field_10       = 0;
+            g_SysWork.timer_2C       = 0;
+            g_SysWork.field_14       = 0;
             break;
     }
 }
@@ -895,7 +895,7 @@ void func_8008716C(s32 arg0, s32 arg1, s32 arg2) // 0x8008716C
     }
 }
 
-void func_80087360(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x80087360
+void func_80087360(s32 arg0, s32 arg1, s32 arg2, s32 mapMsgIdx) // 0x80087360
 {
     s32 var;
 
@@ -926,7 +926,7 @@ void func_80087360(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x80087360
 
         case 4:
             func_800862F8(2, 0, 0);
-            func_800860B0(0, arg3, 0, 0, 0, 1);
+            func_800860B0(0, mapMsgIdx, 0, 0, 0, 1);
             break;
         
         case 5:
@@ -951,10 +951,8 @@ void func_80087360(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x80087360
     }
 }
 
-void func_80087540(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x80087540
+void func_80087540(s32 arg0, s32 arg1, s32 arg2, s32 mapMsgIdx0, s32 mapMsgIdx1) // 0x80087540
 {
-    s32 var;
-
     switch (g_SysWork.field_10)
     {
         case 0:
@@ -981,10 +979,9 @@ void func_80087540(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x800875
         case 4:
             func_800862F8(2, 0, 0);
             
-            if (arg3 != 0)
+            if (mapMsgIdx0 != MapMsgRetCode_None)
             {
-                var = arg3;
-                func_800860B0(0, var, 0, 0, 0, 1);
+                func_800860B0(0, mapMsgIdx0, 0, 0, 0, 1);
                 break;
             }
 
@@ -1001,8 +998,7 @@ void func_80087540(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x800875
             D_800A8E58 = 0x30;
             func_800862F8(2, 0, 0);
 
-            var = arg4;
-            func_800860B0(0, var, 0, 0, 0, 1);
+            func_800860B0(0, mapMsgIdx1, 0, 0, 0, 1);
             break;
 
         case 6:
@@ -1171,7 +1167,7 @@ void func_800879FC(u32 arg0, s32 arg1) // 0x800879FC
 
 // TODO: RODATA migration.
 #ifdef NON_MATCHING
-void func_80087AF4(s32 mapFlagIdx, s32 eventFlagIdx, s32 arg2) // 0x80087AF4
+void func_80087AF4(s32 mapFlagIdx, s32 eventFlagIdx, s32 mapMsgIdx) // 0x80087AF4
 {
     s32 mapFlagIdxCpy;
 
@@ -1213,7 +1209,7 @@ void func_80087AF4(s32 mapFlagIdx, s32 eventFlagIdx, s32 arg2) // 0x80087AF4
             D_800A8E58 = 0x58;
 
             func_800314EC(&g_MapImg);
-            func_800860B0(1, arg2, 4, 5, 0, 1);
+            func_800860B0(1, mapMsgIdx, 4, 5, 0, 1);
             break;
 
         case 4:
