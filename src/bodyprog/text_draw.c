@@ -134,7 +134,7 @@ bool Gfx_StringDraw(char* str, s32 size) // 0x8004A8E8
             posX--;
         }
         // Regular character.
-        else if (charCode >= '\'' && charCode <= 'z')
+        else if (charCode >= GLYPH_TABLE_ASCII_OFFSET && charCode <= 'z')
         {
             sizeCpy--;
 
@@ -143,7 +143,7 @@ bool Gfx_StringDraw(char* str, s32 size) // 0x8004A8E8
             {
                 glyphPoly = (POLY_FT4*)GsOUT_PACKET_P;
 
-                glyphIdx   = charCode - '\'';
+                glyphIdx   = charCode - GLYPH_TABLE_ASCII_OFFSET;
                 glyphWidth = D_80025D6C[glyphIdx];
 
                 setPolyFT4(glyphPoly);
@@ -173,7 +173,7 @@ bool Gfx_StringDraw(char* str, s32 size) // 0x8004A8E8
                 glyphSprt              = (SPRT*)packet;
                 *((u32*)&glyphSprt->w) = 0x10000C;
                 
-                glyphIdx = charCode - '\'';
+                glyphIdx = charCode - GLYPH_TABLE_ASCII_OFFSET;
                 posX    += D_80025D6C[glyphIdx];
 
                 addPrimFast(ot, glyphSprt, 4);
@@ -329,7 +329,7 @@ void Gfx_MapMsg_CalculateWidthTable(s32 mapMsgIdx) // 0x8004ACF4
                     charCode = '^';
                 }
 
-                g_MapMsg_WidthTable[D_800C38B4.lineCount_0 - 1] += D_80025D6C[charCode - '\''];
+                g_MapMsg_WidthTable[D_800C38B4.lineCount_0 - 1] += D_80025D6C[charCode - GLYPH_TABLE_ASCII_OFFSET];
                 mapMsg++;
                 break;
         }
@@ -725,7 +725,7 @@ void func_8004B76C(char* str, s32 useFixedWidth) // 0x8004B76C
         {
             // Draw glyph sprite.
             default:
-                glyphIdx     = *str - '\'';
+                glyphIdx     = *str - GLYPH_TABLE_ASCII_OFFSET;
                 tileRow      = glyphIdx / ATLAS_COLUMN_COUNT;
                 glyphSprt->u = (glyphIdx % ATLAS_COLUMN_COUNT) * GLYPH_SIZE_Y;
 
