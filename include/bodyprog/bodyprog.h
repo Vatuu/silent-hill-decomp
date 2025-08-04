@@ -160,6 +160,22 @@ typedef struct
 } s_8002AC04;
 STATIC_ASSERT_SIZEOF(s_8002AC04, 16);
 
+typedef struct
+{
+    s8  pad0[0xf];
+    s32 unk10;
+    s32 unk14;
+    s32 unk18;
+    s8  pad1[2];
+    u16 unk1E;
+} s_func_80089644_0;
+
+typedef struct
+{
+    s32 unk0;
+    s32 unk4;
+} s_func_80089644_1;
+
 // Maybe a collection of matrices.
 typedef struct
 {
