@@ -851,8 +851,9 @@ typedef struct _SubCharPropertiesPlayer
     s32 field_114;
     s8  unk_118[4];
     s32 flags_11C;
-    s8  unk_120[4];
-    u16 field_124;
+    s16 field_120;
+    s8  unk_122[2];
+    s16 field_124;
     s16 field_126;
 } s_SubCharaPropertiesPlayer;
 STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesPlayer, 68);

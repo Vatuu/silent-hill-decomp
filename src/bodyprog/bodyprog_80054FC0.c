@@ -655,7 +655,7 @@ void func_800625F4(VECTOR3* arg0, s16 arg1, s32 arg2, s32 arg3) // 0x800625F4
     g_MapOverlayHeader.field_4C[idx].field_D  = var;
     g_MapOverlayHeader.field_4C[idx].field_B  = TEST_RNG(2);
     g_MapOverlayHeader.field_4C[idx].field_C  = 6;
-    g_MapOverlayHeader.field_4C[idx].field_10 = arg3 * 0x5000;
+    g_MapOverlayHeader.field_4C[idx].field_10 = arg3 * FP_FLOAT_TO(5.0f, Q12_SHIFT);
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80062708); // 0x80062708
@@ -1762,7 +1762,1902 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_800771BC); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80077BB8); // 0x80077BB8
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80077D00); // 0x80077D00
+void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* arg1) // 0x80077D00
+{
+    #define TRAVEL_DIST_MAX FP_METER(1000000.0f)
+    #define TRAVEL_DIST_MIN 1
+
+    s32 var_a2;
+    s32 moveDistStep;
+    s32 temp_s1;
+    s32 temp_s3;
+    s32 var_a3;
+    s32 var_s2;
+    s32 temp;
+
+    if (g_SysWork.player_4C.extra_128.field_24 < 20)
+    {
+        var_s2 = 0;
+    }
+    else
+    {
+        var_s2 = 20;
+    }
+
+    // Compute move distance step.
+    temp_s3      = func_8007D6F0(chara, &D_800C45C8);
+    temp_s1      = func_8003BF60(chara->position_18.vx, chara->position_18.vz);
+    var_a2       = SQUARE(chara->position_18.vx - D_800C45F8.vx);
+    temp         = SQUARE(chara->position_18.vz - D_800C45F8.vz);
+    moveDistStep = SquareRoot0(var_a2 + temp);
+
+    switch (g_SysWork.player_4C.extra_128.field_24)
+    {
+        case 0:
+        case 20:
+        case 34:
+            break;
+
+        case 1:
+        case 4:
+        case 5:
+        case 6:
+        case 21:
+        case 24:
+        case 25:
+        case 26:
+            g_SavegamePtr->walkDistance_258 += moveDistStep;
+            g_SavegamePtr->walkDistance_258  = CLAMP((u32)g_SavegamePtr->walkDistance_258, TRAVEL_DIST_MIN, (u32)TRAVEL_DIST_MAX);
+            break;
+
+        default:
+            g_SavegamePtr->runDistance_254 += moveDistStep;
+            g_SavegamePtr->runDistance_254  = CLAMP((u32)g_SavegamePtr->runDistance_254, TRAVEL_DIST_MIN, (u32)TRAVEL_DIST_MAX);
+            break;
+    }
+
+    switch (g_SysWork.player_4C.extra_128.field_24)
+    {
+        case 0:
+        case 20:
+            if (chara->model_0.anim_4.animIdx_0 == 5)
+            {
+                chara->model_0.stateStep_3 = 0;
+            }
+
+            if (var_s2 != 0)
+            {
+                if (g_SysWork.player_4C.chara_0.properties_E4.player.field_126 != 0)
+                {
+                    g_SysWork.player_4C.chara_0.properties_E4.player.field_126 -= (g_DeltaTime0 * FP_FLOAT_TO(0.4f, Q12_SHIFT)) / 136;
+                    if ((g_SysWork.player_4C.chara_0.properties_E4.player.field_126 >> 16) & (1 << 0))
+                    {
+                        g_SysWork.player_4C.chara_0.properties_E4.player.field_126 = 0;
+                    }
+                }
+            }
+            else if (g_SysWork.player_4C.chara_0.properties_E4.player.field_126 != 0)
+            {
+                g_SysWork.player_4C.chara_0.properties_E4.player.field_126 -= ((g_DeltaTime0 * FP_FLOAT_TO(0.4f, Q12_SHIFT)) / 136) * 2;
+                if ((g_SysWork.player_4C.chara_0.properties_E4.player.field_126 >> 16) & (1 << 0))
+                {
+                    g_SysWork.player_4C.chara_0.properties_E4.player.field_126 = 0;
+                }
+            }
+
+            if (g_SysWork.player_4C.extra_128.field_24 == 0)
+            {
+                if (g_SysWork.player_4C.extra_128.field_20 == 24)
+                {
+                    if (g_SysWork.playerCombatInfo_38.isAiming_13 == 0 && chara->model_0.stateStep_3 == 0)
+                    {
+                        chara->model_0.anim_4.animIdx_0 = D_800C4576;
+                        chara->model_0.stateStep_3++;
+                    }
+                }
+                else if (chara->properties_E4.player.properties_E4[6] < FP_FLOAT_TO(10.0f, Q12_SHIFT) && chara->health_B0 >= FP_FLOAT_TO(30.0f, Q12_SHIFT))
+                {
+                    if (chara->model_0.stateStep_3 == 0)
+                    {
+                        chara->model_0.anim_4.animIdx_0 = 52;
+                        chara->model_0.stateStep_3++;
+                    }
+                }
+                else if (chara->model_0.stateStep_3 == 0)
+                {
+                    chara->model_0.anim_4.animIdx_0 = 54;
+                    chara->model_0.stateStep_3++;
+                }
+            }
+            else
+            {
+                if (g_SysWork.player_4C.extra_128.field_20 == 24)
+                {
+                    if (g_SysWork.playerCombatInfo_38.isAiming_13 == 0 && chara->model_0.stateStep_3 == 0)
+                    {
+                        chara->model_0.anim_4.animIdx_0 = D_800C4576;
+                        chara->model_0.stateStep_3++;
+                    }
+                }
+                else if (g_SysWork.playerCombatInfo_38.field_F < 32)
+                {
+                    if ((g_SysWork.playerCombatInfo_38.field_F == 5 || g_SysWork.playerCombatInfo_38.field_F == 2) &&
+                        g_SysWork.player_4C.chara_0.properties_E4.player.field_114 != 0)
+                    {
+                        if (chara->model_0.stateStep_3 == 0)
+                        {
+                            chara->model_0.anim_4.animIdx_0 = 66;
+                            chara->model_0.stateStep_3++;
+                        }
+                    }
+                    else
+                    {
+                        if (chara->model_0.stateStep_3 == 0)
+                        {
+                            chara->model_0.anim_4.animIdx_0 = 56;
+                            chara->model_0.stateStep_3++;
+                        }
+                    }
+                }
+                else if (g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & (1 << 6))
+                {
+                    if (chara->model_0.stateStep_3 == 0)
+                    {
+                        chara->model_0.anim_4.animIdx_0 = 68;
+                        chara->model_0.stateStep_3++;
+                    }
+                }
+                else if (g_SysWork.player_4C.extra_128.field_20 == 22)
+                {
+                    if (chara->model_0.stateStep_3 == 0)
+                    {
+                        chara->model_0.anim_4.animIdx_0 = 64;
+                        chara->model_0.stateStep_3++;
+                    }
+                }
+                else if (g_SysWork.playerCombatInfo_38.field_F == 33)
+                {
+                    if (chara->model_0.stateStep_3 == 0)
+                    {
+                        chara->model_0.anim_4.animIdx_0 = 58;
+                        chara->model_0.stateStep_3++;
+                    }
+                }
+                else
+                {
+                    if (chara->model_0.stateStep_3 == 0)
+                    {
+                        chara->model_0.anim_4.animIdx_0 = 56;
+                        chara->model_0.stateStep_3++;
+                    }
+                }
+
+                g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~(1 << 6);
+            }
+
+            if (g_SysWork.player_4C.extra_128.field_1C == 1)
+            {
+                if (chara->model_0.anim_4.animIdx_0 & (1 << 0) && arg1->model_0.anim_4.animIdx_0 & (1 << 0))
+                {
+                    if (chara->model_0.anim_4.animIdx_0 >= 58 || chara->model_0.anim_4.keyframeIdx0_8 == D_800C44F0[0].field_6 || 
+                        chara->model_0.anim_4.keyframeIdx0_8 == D_800C44F0[5].field_6)
+                    {
+                        if (D_800C45E8 != 0)
+                        {
+                            g_SysWork.player_4C.extra_128.field_24 = 21;
+                        }
+                        else if (D_800C45F0 != 0)
+                        {
+                            g_SysWork.player_4C.extra_128.field_24 = 24;
+                        }
+                    }
+                }
+
+                func_800713B4(chara, var_s2);
+            }
+            else
+            {
+                if (chara->model_0.anim_4.animIdx_0 & (1 << 0) && arg1->model_0.anim_4.animIdx_0 & (1 << 0))
+                {
+                    if ((var_s2 == 0 && g_SysWork.player_4C.chara_0.properties_E4.player.field_126 == 0) ||
+                        chara->model_0.anim_4.animIdx_0 >= 58 || chara->model_0.anim_4.keyframeIdx0_8 == D_800C44F6)
+                    {
+                        if (D_800C45E8 != 0)
+                        {
+                            if ((D_800C4604 != 0 && temp_s3 == 0) &&
+                                (var_s2 == 0 ||
+                                 ((g_GameWork.config_0.optExtraWeaponCtrl_23 != 0 && D_800C457E == 0) ||
+                                  (g_GameWork.config_0.optExtraWeaponCtrl_23 == 0 && D_800C457E != 0)) && 
+                                 (g_SysWork.playerCombatInfo_38.field_F % 10) == 1))
+                            {
+                                g_SysWork.player_4C.extra_128.field_24 = 2;
+                            }
+                            else
+                            {
+                                g_SysWork.player_4C.extra_128.field_24 = var_s2 + 1;
+                            }
+                        }
+                        else if (D_800C45F0 != 0)
+                        {
+                            g_SysWork.player_4C.extra_128.field_24 = var_s2 + 4;
+                        }
+                        else if (D_800C45AE != 0)
+                        {
+                            chara->headingAngle_3C = chara->headingAngle_3C + FP_ANGLE(90.0f);
+                            temp_s3                = func_8007D6F0(chara, &D_800C45C8);
+
+                            if (D_800C4604 != 0 && var_s2 == 0 && temp_s3 == 0)
+                            {
+                                g_SysWork.player_4C.extra_128.field_24 = 7;
+                            }
+                            else
+                            {
+                                g_SysWork.player_4C.extra_128.field_24 = var_s2 + 5;
+                            }
+                        }
+                        else if (D_800C45AC != 0)
+                        {
+                            chara->headingAngle_3C -= FP_ANGLE(90.0f);
+                            temp_s3                 = func_8007D6F0(chara, &D_800C45C8);
+
+                            if (D_800C4604 != 0 && var_s2 == 0 && temp_s3 == 0)
+                            {
+                                g_SysWork.player_4C.extra_128.field_24 = 8;
+                            }
+                            else
+                            {
+                                g_SysWork.player_4C.extra_128.field_24 = var_s2 + 6;
+                            }
+                        }
+
+                        if (var_s2 == 0 && g_SysWork.playerCombatInfo_38.isAiming_13 == 0)
+                        {
+                            if ((g_GameWork.config_0.optExtraWalkRunCtrl_2B != 0 && D_800C4604 == 0) ||
+                                (g_GameWork.config_0.optExtraWalkRunCtrl_2B == 0 && D_800C4604 != 0))
+                            {
+                                if (D_800C45F0 != 0)
+                                {
+                                    g_SysWork.player_4C.extra_128.field_24 = 11;
+                                    g_SysWork.player_4C.extra_128.field_20 = 13;
+                                    arg1->model_0.stateStep_3 = 0;
+                                    arg1->model_0.state_2 = 0;
+                                }
+                            }
+                        }
+
+                        if (g_SysWork.player_4C.extra_128.field_24 == var_s2 && g_Player_Walk2RunTransition == 0)
+                        {
+                            func_800711C4(chara, var_s2);
+                        }
+                    }
+                }
+
+                func_800713B4(chara, var_s2);
+
+                if (D_800C4604 != 0)
+                {
+                    func_80071284(10);
+                }
+                else
+                {
+                    func_80071284(7);
+                }
+
+                if (var_s2 != 0 && g_SysWork.player_4C.extra_128.field_20 == 19)
+                {
+                    if (D_800C454C != FP_TIME(0.0f))
+                    {
+                        switch (g_SysWork.playerCombatInfo_38.field_F)
+                        {
+                            case 0:
+                                g_SysWork.player_4C.chara_0.properties_E4.player.field_126 = (u32)(D_800C454C * 0x465) >> 9;
+                                break;
+
+                            case 5:
+                            case 6:
+                            case 7:
+                                g_SysWork.player_4C.chara_0.properties_E4.player.field_126 = (u32)(D_800C454C * 0x15F9) >> 11;
+                                break;
+
+                            case 1:
+                            case 4:
+                                g_SysWork.player_4C.chara_0.properties_E4.player.field_126 = ((u32)(D_800C454C * 0xD2F) >> 10);
+                                break;
+
+                            case 2:
+                            case 32:
+                            case 33:
+                            case 34:
+                            case 35:
+                                g_SysWork.player_4C.chara_0.properties_E4.player.field_126 = (-(D_800C454C * 0x87F0) >> 14);
+                                break;
+                        }
+
+                        if (g_DeltaTime0 != FP_TIME(0.0f))
+                        {
+                            g_SysWork.player_4C.chara_0.properties_E4.player.field_126 = ((g_SysWork.player_4C.chara_0.properties_E4.player.field_126 * 0x88) / g_DeltaTime0);
+                        }
+
+                        if (D_800C454C != FP_TIME(0.0f))
+                        {
+                            chara->properties_E4.player.properties_E4[1] = 0;
+                        }
+                    }
+                }
+                else if (D_800C454C != FP_TIME(0.0f))
+                {
+                    chara->properties_E4.player.properties_E4[1] = 0;
+                }
+
+                if (D_800C4584 != 0 && chara->model_0.stateStep_3 == 1 &&
+                         (chara->model_0.anim_4.animIdx_0 == 53 || chara->model_0.anim_4.animIdx_0 == 55))
+                {
+                    chara->model_0.stateStep_3      = 2;
+                    chara->model_0.anim_4.animIdx_0 = 24;
+                }
+                else if (D_800C4586 != 0 && chara->model_0.stateStep_3 == 1 && 
+                         (chara->model_0.anim_4.animIdx_0 == 53 || chara->model_0.anim_4.animIdx_0 == 55))
+                {
+                    chara->model_0.stateStep_3      = 2;
+                    chara->model_0.anim_4.animIdx_0 = 26;
+                }
+
+                if (D_800C4584 == 0 && D_800C4586 == 0 && chara->model_0.stateStep_3 == 2 &&
+                    (chara->model_0.anim_4.animIdx_0 == 27 || chara->model_0.anim_4.animIdx_0 == 25))
+                {
+                    chara->model_0.anim_4.animIdx_0 = 52;
+                    chara->model_0.stateStep_3      = 0;
+                }
+            }
+
+            if (g_SysWork.player_4C.chara_0.properties_E4.player.field_126 == 0 ||
+                D_800C4584 != 0 || D_800C4586 != 0)
+            {
+                g_SysWork.player_4C.chara_0.properties_E4.player.field_124 = 0;
+                D_800C4608                                                 = FP_FLOAT_TO(0.0f, Q12_SHIFT);
+            }
+            break;
+
+        case 1:
+        case 21:
+            if (D_800C45E8 == 0)
+            {
+                g_SysWork.field_235A |= 1 << 0;
+            }
+
+            if (g_SysWork.field_235A & (1 << 0) && g_SysWork.player_4C.extra_128.field_24 < 20 && 
+                g_SysWork.player_4C.extra_128.field_20 != 24)
+            {
+                if (g_SysWork.player_4C.chara_0.properties_E4.player.field_126 != 0)
+                {
+                    g_SysWork.player_4C.chara_0.properties_E4.player.field_126 -= (((g_DeltaTime0 * FP_FLOAT_TO(0.4f, Q12_SHIFT)) / 136) * 2);
+
+                    if ((g_SysWork.player_4C.chara_0.properties_E4.player.field_126 >> 16) & (1 << 0))
+                    {
+                        g_SysWork.player_4C.chara_0.properties_E4.player.field_126 = 0;
+                    }
+                }
+            }
+            else
+            {
+                if (g_Controller0->field_20.sticks_0.leftY < -0x3F)
+                {
+                    D_800AF216 = ABS(g_Controller0->field_20.sticks_0.leftY);
+                    func_80070B84(chara, FP_FLOAT_TO(0.75f, Q12_SHIFT), FP_FLOAT_TO(1.4f, Q12_SHIFT), 2);
+                }
+                else
+                {
+                    if (D_800AF216 != 0)
+                    {
+                        func_80070B84(chara, FP_FLOAT_TO(0.75f, Q12_SHIFT), FP_FLOAT_TO(1.4f, Q12_SHIFT), 2);
+                    }
+                    else if (g_SysWork.player_4C.chara_0.properties_E4.player.field_126 > FP_FLOAT_TO(1.4f, Q12_SHIFT))
+                    {
+                        g_SysWork.player_4C.chara_0.properties_E4.player.field_126 -= (((g_DeltaTime0 * FP_FLOAT_TO(0.4f, Q12_SHIFT)) / 136) * 2);
+                        if (g_SysWork.player_4C.chara_0.properties_E4.player.field_126 < FP_FLOAT_TO(1.4f, Q12_SHIFT))
+                        {
+                            g_SysWork.player_4C.chara_0.properties_E4.player.field_126 = FP_FLOAT_TO(1.4f, Q12_SHIFT);
+                        }
+                    }
+                    else if (g_SysWork.player_4C.chara_0.properties_E4.player.field_126 < FP_FLOAT_TO(1.4f, Q12_SHIFT))
+                    {
+                        if (chara->model_0.anim_4.keyframeIdx0_8 >= 2)
+                        {
+                            g_SysWork.player_4C.chara_0.properties_E4.player.field_126 += ((g_DeltaTime0 * FP_FLOAT_TO(0.4f, Q12_SHIFT)) / 136);
+                        }
+                        
+                        g_SysWork.player_4C.chara_0.properties_E4.player.field_126 = CLAMP(g_SysWork.player_4C.chara_0.properties_E4.player.field_126, 0, FP_FLOAT_TO(1.4f, Q12_SHIFT));
+                    }
+
+                    if (g_Controller0->btnsHeld_C & ControllerFlag_LStickUp)
+                    {
+                        D_800AF216 = 0;
+                    }
+                }
+            }
+
+            if (chara->model_0.stateStep_3 == 0)
+            {
+                chara->model_0.anim_4.animIdx_0 = 4;
+                chara->model_0.stateStep_3++;
+            }
+
+            if (g_SysWork.player_4C.extra_128.field_1C == 1)
+            {
+                if (g_SysWork.field_235A & (1 << 0))
+                {
+                    if ((g_SysWork.player_4C.extra_128.field_24 < 20 && g_SysWork.player_4C.extra_128.field_20 != 24) ||
+                         (chara->model_0.anim_4.keyframeIdx0_8 >= 10 &&
+                          chara->model_0.anim_4.keyframeIdx0_8 <= 11) || 
+                         chara->model_0.anim_4.keyframeIdx0_8 == 22 || chara->model_0.anim_4.keyframeIdx0_8 == 21)
+                    {
+                        g_SysWork.player_4C.extra_128.field_24 = 20;
+                    }
+                }
+
+                func_800713B4(chara, var_s2 | (1 << 0));
+
+                if (g_SysWork.playerCombatInfo_38.field_F != 35)
+                {
+                    func_80071284(5);
+                }
+            }
+            else
+            {
+                if (!(g_SysWork.field_235A & (1 << 0)))
+                {
+                    if (D_800C4604 != 0)
+                    {
+                        if (var_s2 == 0 && temp_s3 == 0 &&
+                            (g_SysWork.player_4C.extra_128.field_20 == 1 || g_SysWork.player_4C.extra_128.field_20 == 24))
+                        {
+                            if (chara->model_0.anim_4.keyframeIdx0_8 >= 10 &&
+                                chara->model_0.anim_4.keyframeIdx0_8 <= 11)
+                            {
+                                g_SysWork.player_4C.extra_128.field_24                      = 2;
+                                g_MaybePlayerAnims->field_E                                 = 36;
+                                g_MaybePlayerAnims->field_6                                 = 7;
+                                g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= 1 << 5;
+                            }
+                            else if (chara->model_0.anim_4.keyframeIdx0_8 >= 21 &&
+                                     chara->model_0.anim_4.keyframeIdx0_8 <= 22)
+                            {
+                                g_SysWork.player_4C.extra_128.field_24 = 2;
+                                g_MaybePlayerAnims->field_E            = 26;
+                                g_MaybePlayerAnims->field_6            = 7;
+                            }
+                        }
+                    }
+                }
+                else if ((g_SysWork.player_4C.extra_128.field_24 < 20 && g_SysWork.player_4C.extra_128.field_20 != 24) ||
+                         (chara->model_0.anim_4.keyframeIdx0_8 >= 10 &&
+                          chara->model_0.anim_4.keyframeIdx0_8 <= 11) || 
+                         chara->model_0.anim_4.keyframeIdx0_8 == 22 || chara->model_0.anim_4.keyframeIdx0_8 == 21)
+                {
+                    if (g_SysWork.playerCombatInfo_38.field_F < 0x20 && var_s2 != 0)
+                    {
+                        if (((arg1->model_0.anim_4.animIdx_0 == 59 || arg1->model_0.anim_4.animIdx_0 == 61) && 
+                            (g_SysWork.playerCombatInfo_38.field_F != 5 &&
+                             g_SysWork.playerCombatInfo_38.field_F != 2)) || 
+                            arg1->model_0.anim_4.animIdx_0 == 63)
+                        {
+                            g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= 1 << 10;
+                            chara->model_0.stateStep_3                                  = 0;
+                            chara->model_0.state_2                                      = 0;
+                            g_SysWork.player_4C.extra_128.field_24                      = 34;
+                        }
+                        else
+                        {
+                            g_SysWork.player_4C.extra_128.field_24                      = var_s2;
+                            g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~(1 << 10);
+                        }
+                    }
+                    else
+                    {
+                        g_SysWork.player_4C.extra_128.field_24                      = var_s2;
+                        g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~(1 << 10);
+                    }
+                }
+
+                if (g_SysWork.player_4C.extra_128.field_24 == (var_s2 + 1) && g_Player_Walk2RunTransition == 0)
+                {
+                    func_800711C4(chara, var_s2);
+                }
+
+                func_800713B4(chara, var_s2 | (1 << 0));
+                func_80071284(5);
+            }
+
+            g_SysWork.player_4C.chara_0.properties_E4.player.field_124 = 0;
+            D_800C4608                                                 = FP_FLOAT_TO(0.0f, Q12_SHIFT);
+
+            if (g_SysWork.player_4C.extra_128.field_24 == 2)
+            {
+                chara->model_0.anim_4.animIdx_0 = 0;
+                chara->model_0.stateStep_3++;
+                g_Player_Walk2RunTransition = 1;
+            }
+            break;
+
+        case 2:
+            chara->properties_E4.player.properties_E4[6] += g_DeltaTime0;
+
+            if (g_Controller0->field_20.sticks_0.leftY < -0x3F)
+            {
+                D_800AF216 = ABS(g_Controller0->field_20.sticks_0.leftY);
+
+                var_a2 = GET_MAX(temp_s1);
+
+                if (g_SysWork.player_4C.chara_0.properties_E4.player.field_126 < FP_FLOAT_TO(3.5f, Q12_SHIFT)) 
+                {
+                    var_a3 = (g_DeltaTime0 * FP_FLOAT_TO(0.75f, Q12_SHIFT)) / 136;
+                } 
+                else 
+                {
+                    temp   = g_DeltaTime0;
+                    temp  += (temp < 0) ? 3 : 0;
+                    var_a3 = temp >> 2;
+                }
+
+                func_80070CF0(chara, FP_FLOAT_TO(2.0f, Q12_SHIFT), var_a2, var_a3, (g_DeltaTime0 * FP_FLOAT_TO(0.4f, Q12_SHIFT)) / 136);
+            }
+            else
+            {
+                if (D_800AF216 != 0)
+                {
+                    var_a2 = GET_MAX(temp_s1);
+
+                    if (g_SysWork.player_4C.chara_0.properties_E4.player.field_126 < FP_FLOAT_TO(3.5f, Q12_SHIFT)) 
+                    {
+                        var_a3 = (g_DeltaTime0 * FP_FLOAT_TO(0.75f, Q12_SHIFT)) / 136;
+                    } 
+                    else 
+                    {
+                        temp   = g_DeltaTime0;
+                        temp  += (temp < 0) ? 3 : 0;
+                        var_a3 = temp >> 2;
+                    }
+
+                    func_80070CF0(chara, FP_FLOAT_TO(2.0f, Q12_SHIFT), var_a2, var_a3, (g_DeltaTime0 * FP_FLOAT_TO(0.4f, Q12_SHIFT)) / 136);
+                }
+                else if (g_SysWork.player_4C.chara_0.properties_E4.player.field_126 > GET_MAX(temp_s1))
+                {
+                    g_SysWork.player_4C.chara_0.properties_E4.player.field_126 -= (g_DeltaTime0 * FP_FLOAT_TO(0.4f, Q12_SHIFT)) / 136;
+
+                    if (g_SysWork.player_4C.chara_0.properties_E4.player.field_126 < GET_MAX(temp_s1))
+                    {
+                        g_SysWork.player_4C.chara_0.properties_E4.player.field_126 = GET_MAX(temp_s1);
+                    }
+                }
+                else
+                {
+                    if (g_SysWork.player_4C.chara_0.properties_E4.player.field_126 < GET_MAX(temp_s1))
+                    {
+                        g_SysWork.player_4C.chara_0.properties_E4.player.field_126 += GET_VAL(g_SysWork.player_4C.chara_0.properties_E4.player.field_126, g_DeltaTime0);
+                        g_SysWork.player_4C.chara_0.properties_E4.player.field_126  = CLAMP(g_SysWork.player_4C.chara_0.properties_E4.player.field_126, 0, GET_MAX(temp_s1));
+                    }
+                }
+
+                if (g_Controller0->btnsHeld_C & ControllerFlag_LStickUp)
+                {
+                    D_800AF216 = 0;
+                }
+            }
+
+            if (chara->model_0.stateStep_3 == 0)
+            {
+                chara->model_0.anim_4.animIdx_0 = 6;
+                chara->model_0.stateStep_3++;
+            }
+
+            if ((chara->model_0.anim_4.keyframeIdx0_8 == 43 || chara->model_0.anim_4.keyframeIdx0_8 == 33) && 
+                chara->position_18.vy == chara->properties_E4.player.properties_E4[2])
+            {
+                chara->field_34 = FP_FLOAT_TO(-1.25f, Q12_SHIFT);
+            }
+
+            if (g_SysWork.player_4C.extra_128.field_20 != 22 && chara->model_0.anim_4.animIdx_0 == 7)
+            {
+                switch (temp_s3)
+                {
+                    case 1:
+                        if (chara->properties_E4.player.properties_E4[9] >= 0xA000u)
+                        {
+                            g_SysWork.player_4C.extra_128.field_24 = 12;
+                        }
+                        else if (chara->model_0.anim_4.keyframeIdx0_8 >= 30 &&
+                                 chara->model_0.anim_4.keyframeIdx0_8 <= 31)
+                        {
+                            g_SysWork.player_4C.extra_128.field_24 = temp_s3;
+                            g_MaybePlayerAnims->field_E            = 8;
+                            g_MaybePlayerAnims->field_6            = 5;
+                        }
+                        else if (chara->model_0.anim_4.keyframeIdx0_8 >= 41 &&
+                                 chara->model_0.anim_4.keyframeIdx0_8 <= 42)
+                        {
+                            g_SysWork.player_4C.extra_128.field_24 = temp_s3;
+                            g_MaybePlayerAnims->field_E            = 20;
+                            g_MaybePlayerAnims->field_6            = 5;
+                        }
+                        break;
+
+                    case 2:
+                        if (chara->properties_E4.player.properties_E4[9] >= 0xA000u)
+                        {
+                            g_SysWork.player_4C.extra_128.field_24 = 3;
+                        }
+                        else if (chara->model_0.anim_4.keyframeIdx0_8 >= 30 &&
+                                 chara->model_0.anim_4.keyframeIdx0_8 <= 31)
+                        {
+                            g_SysWork.player_4C.extra_128.field_24 = 1;
+                            g_MaybePlayerAnims->field_E            = 8;
+                            g_MaybePlayerAnims->field_6            = 5;
+                        }
+                        else if (chara->model_0.anim_4.keyframeIdx0_8 >= 41 &&
+                                 chara->model_0.anim_4.keyframeIdx0_8 <= 42)
+                        {
+                            g_SysWork.player_4C.extra_128.field_24 = 1;
+                            g_MaybePlayerAnims->field_E            = 20;
+                            g_MaybePlayerAnims->field_6            = 5;
+                        }
+                        break;
+
+                    default:
+                        if (D_800C4604 == 0 || D_800C45E8 == 0)
+                        {
+                            if (D_800C45E8 != 0)
+                            {
+                                if (chara->model_0.anim_4.keyframeIdx0_8 >= 30 &&
+                                    chara->model_0.anim_4.keyframeIdx0_8 <= 31)
+                                {
+                                    g_SysWork.player_4C.extra_128.field_24 = 1;
+                                    g_MaybePlayerAnims->field_E            = 8;
+                                    g_MaybePlayerAnims->field_6            = 5;
+                                }
+                                else if (chara->model_0.anim_4.keyframeIdx0_8 >= 41 &&
+                                         chara->model_0.anim_4.keyframeIdx0_8 <= 42)
+                                {
+                                    g_SysWork.player_4C.extra_128.field_24 = 1;
+                                    g_MaybePlayerAnims->field_E            = 20;
+                                    g_MaybePlayerAnims->field_6            = 5;
+                                }
+                            }
+                            else if (chara->properties_E4.player.properties_E4[5] >= 5 &&
+                                     g_SysWork.player_4C.chara_0.properties_E4.player.field_126 >= FP_FLOAT_TO(3.125f, Q12_SHIFT))
+                            {
+                                if (chara->model_0.anim_4.keyframeIdx0_8 >= 33 &&
+                                    chara->model_0.anim_4.keyframeIdx0_8 <= 34)
+                                {
+                                    g_SysWork.player_4C.extra_128.field_24                      = 3;
+                                    g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~8;
+                                }
+                                else if (chara->model_0.anim_4.keyframeIdx0_8 >= 43 &&
+                                         chara->model_0.anim_4.keyframeIdx0_8 <= 44)
+                                {
+                                    g_SysWork.player_4C.extra_128.field_24                      = 3;
+                                    g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= 8;
+                                }
+                            }
+                            else
+                            {
+                                if (chara->model_0.anim_4.keyframeIdx0_8 >= 30 &&
+                                    chara->model_0.anim_4.keyframeIdx0_8 <= 31)
+                                {
+                                    g_SysWork.player_4C.extra_128.field_24 = 1;
+                                    g_MaybePlayerAnims->field_E            = 8;
+                                    g_MaybePlayerAnims->field_6            = 5;
+                                }
+                                else if (chara->model_0.anim_4.keyframeIdx0_8 >= 41 &&
+                                         chara->model_0.anim_4.keyframeIdx0_8 <= 42)
+                                {
+                                    g_SysWork.player_4C.extra_128.field_24 = 1;
+                                    g_MaybePlayerAnims->field_E            = 20;
+                                    g_MaybePlayerAnims->field_6            = 5;
+                                }
+                            }
+                        }
+                        break;
+                }
+            }
+
+            if (g_SysWork.player_4C.extra_128.field_24 != 2)
+            {
+                func_800713B4(chara, 2);
+            }
+
+            func_80071284(4);
+
+            D_800C4608                                                 = FP_FLOAT_TO(0.0f, Q12_SHIFT);
+            g_SysWork.player_4C.chara_0.properties_E4.player.field_124 = 0;
+
+            if (g_SysWork.player_4C.extra_128.field_24 == 1)
+            {
+                chara->model_0.anim_4.animIdx_0 = 0;
+                chara->model_0.stateStep_3++;
+                g_Player_Walk2RunTransition = 1;
+            }
+            break;
+
+        case 3:
+            if (g_SysWork.player_4C.chara_0.properties_E4.player.field_126 != 0)
+            {
+                g_SysWork.player_4C.chara_0.properties_E4.player.field_126 -= ((g_DeltaTime0 * FP_FLOAT_TO(0.4f, Q12_SHIFT)) / 136) >> 1;
+                if ((g_SysWork.player_4C.chara_0.properties_E4.player.field_126 >> 16) & (1 << 0))
+                {
+                    g_SysWork.player_4C.chara_0.properties_E4.player.field_126 = 0;
+                }
+            }
+
+            if (g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & (1 << 3))
+            {
+                if (chara->model_0.stateStep_3 == 0)
+                {
+                    chara->model_0.anim_4.animIdx_0 = 18;
+                    chara->model_0.stateStep_3++;
+                }
+            }
+            else if (chara->model_0.stateStep_3 == 0)
+            {
+                chara->model_0.anim_4.animIdx_0 = 20;
+                chara->model_0.stateStep_3++;
+            }
+
+            if (g_SysWork.player_4C.extra_128.field_20 != 0x16)
+            {
+                if (chara->model_0.anim_4.animIdx_0 == 21 && chara->model_0.anim_4.keyframeIdx0_8 >= 168 ||
+                    chara->model_0.anim_4.animIdx_0 == 19 && chara->model_0.anim_4.keyframeIdx0_8 >= 158)
+                {
+                    g_SysWork.player_4C.extra_128.field_24 = 0;
+                    func_800713B4(chara, 3);
+                }
+
+                func_80071284(4);
+            }
+            break;
+
+        case 4:
+        case 24:
+            if (D_800C45F0 == 0)
+            {
+                g_SysWork.field_235A |= 1 << 1;
+            }
+
+            if (g_SysWork.field_235A & (1 << 1) &&
+                g_SysWork.player_4C.extra_128.field_24 < 20 && g_SysWork.player_4C.extra_128.field_20 != 24)
+            {
+                if (g_SysWork.player_4C.chara_0.properties_E4.player.field_126 != 0)
+                {
+                    g_SysWork.player_4C.chara_0.properties_E4.player.field_126 -= (((g_DeltaTime0 * FP_FLOAT_TO(0.4f, Q12_SHIFT)) / 136) * 2);
+                    if ((g_SysWork.player_4C.chara_0.properties_E4.player.field_126 >> 16) & (1 << 0))
+                    {
+                        g_SysWork.player_4C.chara_0.properties_E4.player.field_126 = 0;
+                    }
+                }
+            }
+            else if (g_Controller0->field_20.sticks_0.leftY >= (1 << 6))
+            {
+                D_800AF216 = ABS(g_Controller0->field_20.sticks_0.leftY);
+                func_80070B84(chara, FP_FLOAT_TO(0.75f, Q12_SHIFT), FP_FLOAT_TO(1.15f, Q12_SHIFT), 2);
+            }
+            else
+            {
+                if (D_800AF216 != 0)
+                {
+                    func_80070B84(chara, FP_FLOAT_TO(0.75f, Q12_SHIFT), FP_FLOAT_TO(1.15f, Q12_SHIFT), 2);
+                }
+                else if (g_SysWork.player_4C.chara_0.properties_E4.player.field_126 > FP_FLOAT_TO(1.15f, Q12_SHIFT))
+                {
+                    g_SysWork.player_4C.chara_0.properties_E4.player.field_126 -= (((g_DeltaTime0 * FP_FLOAT_TO(0.4f, Q12_SHIFT)) / 136) * 2);
+                    if (g_SysWork.player_4C.chara_0.properties_E4.player.field_126 < FP_FLOAT_TO(1.15f, Q12_SHIFT))
+                    {
+                        g_SysWork.player_4C.chara_0.properties_E4.player.field_126 = FP_FLOAT_TO(1.15f, Q12_SHIFT);
+                    }
+                }
+                else if (g_SysWork.player_4C.chara_0.properties_E4.player.field_126 < FP_FLOAT_TO(1.15f, Q12_SHIFT))
+                {
+                    if (chara->model_0.anim_4.keyframeIdx0_8 >= 2)
+                    {
+                        g_SysWork.player_4C.chara_0.properties_E4.player.field_126 += ((g_DeltaTime0 * FP_FLOAT_TO(0.4f, Q12_SHIFT)) / 136);
+                    }
+                        
+                    g_SysWork.player_4C.chara_0.properties_E4.player.field_126 = CLAMP(g_SysWork.player_4C.chara_0.properties_E4.player.field_126,
+                                                                                       FP_FLOAT_TO(0.0f, Q12_SHIFT),
+                                                                                       FP_FLOAT_TO(1.15f, Q12_SHIFT));
+                }
+
+                if (g_Controller0->btnsHeld_C & ControllerFlag_LStickDown)
+                {
+                    D_800AF216 = 0;
+                }
+            }
+
+            if (chara->model_0.stateStep_3 == 0)
+            {
+                chara->model_0.anim_4.animIdx_0 = 8;
+                chara->model_0.stateStep_3++;
+            }
+
+            if (g_SysWork.player_4C.extra_128.field_1C == 1)
+            {
+                if (g_SysWork.field_235A & (1 << 1))
+                {
+                    if ((g_SysWork.player_4C.extra_128.field_24 < 20 && g_SysWork.player_4C.extra_128.field_20 != 24) ||
+                         (chara->model_0.anim_4.keyframeIdx0_8 >= 56 &&
+                          chara->model_0.anim_4.keyframeIdx0_8 <= 57) ||
+                         chara->model_0.anim_4.keyframeIdx0_8 == 67 ||
+                         chara->model_0.anim_4.keyframeIdx0_8 == 66)
+                    {
+                        g_SysWork.player_4C.extra_128.field_24 = 20;
+                    }
+                }
+
+                func_800713B4(chara, var_s2 + 4);
+
+                if (g_SysWork.playerCombatInfo_38.field_F != 35)
+                {
+                    func_80071284(5);
+                }
+            }
+            else
+            {
+                if (!(g_SysWork.field_235A & 2))
+                {
+                    if (((chara->model_0.anim_4.keyframeIdx0_8 >= 66 &&
+                          chara->model_0.anim_4.keyframeIdx0_8 <= 67) ||
+                         chara->model_0.anim_4.keyframeIdx0_8 == 46 ||
+                         chara->model_0.anim_4.keyframeIdx0_8 == 47) && 
+                        var_s2 == 0 && g_SysWork.player_4C.extra_128.field_20 != 24)
+                    {
+                        if ((g_GameWork.config_0.optExtraWalkRunCtrl_2B != 0 && D_800C4604 == 0) ||
+                            (g_GameWork.config_0.optExtraWalkRunCtrl_2B == 0 && D_800C4604 != 0))
+                        {
+                            if (D_800C45F0 != 0)
+                            {
+                                g_SysWork.player_4C.extra_128.field_24 = 11;
+                                g_SysWork.player_4C.extra_128.field_20 = 13;
+                                arg1->model_0.stateStep_3              = 0;
+                                arg1->model_0.state_2                  = 0;
+                            }
+                        }
+                    }
+                }
+                else if ((g_SysWork.player_4C.extra_128.field_24 < 20 && g_SysWork.player_4C.extra_128.field_20 != 24) ||
+                         (chara->model_0.anim_4.keyframeIdx0_8 >= 56 &&
+                          chara->model_0.anim_4.keyframeIdx0_8 <= 57) ||
+                         chara->model_0.anim_4.keyframeIdx0_8 == 67 ||
+                         chara->model_0.anim_4.keyframeIdx0_8 == 66)
+                {
+                    if (g_SysWork.playerCombatInfo_38.field_F < 32 && var_s2 != 0)
+                    {
+                        if (((arg1->model_0.anim_4.animIdx_0 == 59 ||
+                              arg1->model_0.anim_4.animIdx_0 == 61) &&
+                             (g_SysWork.playerCombatInfo_38.field_F != 5 &&
+                              g_SysWork.playerCombatInfo_38.field_F != 2)) ||
+                            arg1->model_0.anim_4.animIdx_0 == 63)
+                        {
+                            g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= 1 << 10;
+                            chara->model_0.stateStep_3                                  = 0;
+                            chara->model_0.state_2                                      = 0;
+                            g_SysWork.player_4C.extra_128.field_24                      = 34;
+                        }
+                        else
+                        {
+                            g_SysWork.player_4C.extra_128.field_24                      = var_s2;
+                            g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~(1 << 10);
+                        }
+                    }
+                    else
+                    {
+                        g_SysWork.player_4C.extra_128.field_24                      = var_s2;
+                        g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~(1 << 10);
+                    }
+                }
+
+                if (g_SysWork.player_4C.extra_128.field_24 == (var_s2 + 4) && g_Player_Walk2RunTransition == 0)
+                {
+                    func_800711C4(chara, var_s2);
+                }
+
+                func_800713B4(chara, var_s2 + 4);
+                func_80071284(4);
+            }
+
+            g_SysWork.player_4C.chara_0.properties_E4.player.field_124 = FP_FLOAT_TO(0.5f, Q12_SHIFT);
+            D_800C4608                                                 = FP_FLOAT_TO(0.5f, Q12_SHIFT);
+            break;
+
+        case 5:
+        case 25:
+            if (g_SysWork.player_4C.chara_0.properties_E4.player.field_126 > FP_FLOAT_TO(1.25f, Q12_SHIFT))
+            {
+                g_SysWork.player_4C.chara_0.properties_E4.player.field_126 -= ((g_DeltaTime0 * FP_FLOAT_TO(0.4f, Q12_SHIFT)) / 136);
+                if (g_SysWork.player_4C.chara_0.properties_E4.player.field_126 < FP_FLOAT_TO(1.25f, Q12_SHIFT))
+                {
+                    g_SysWork.player_4C.chara_0.properties_E4.player.field_126 = FP_FLOAT_TO(1.25f, Q12_SHIFT);
+                }
+            }
+            else
+            {
+                if (chara->model_0.anim_4.keyframeIdx0_8 >= 100 &&
+                    chara->model_0.anim_4.keyframeIdx0_8 <= 111)
+                {
+                    g_SysWork.player_4C.chara_0.properties_E4.player.field_126 += ((g_DeltaTime0 * FP_FLOAT_TO(0.4f, Q12_SHIFT)) / 136);
+                }
+                else if (chara->model_0.anim_4.keyframeIdx0_8 >= 112)
+                {
+                    g_SysWork.player_4C.chara_0.properties_E4.player.field_126 -= ((g_DeltaTime0 * FP_FLOAT_TO(0.4f, Q12_SHIFT)) / 136);
+                }
+
+                g_SysWork.player_4C.chara_0.properties_E4.player.field_126 = CLAMP(g_SysWork.player_4C.chara_0.properties_E4.player.field_126,
+                                                                                   FP_FLOAT_TO(0.0f, Q12_SHIFT),   
+                                                                                   FP_FLOAT_TO(1.25f, Q12_SHIFT));
+            }
+
+            if (chara->model_0.stateStep_3 == 0)
+            {
+                chara->model_0.anim_4.animIdx_0 = 12;
+                chara->model_0.stateStep_3++;
+            }
+
+            if (chara->model_0.anim_4.animIdx_0 == 13 &&
+                chara->model_0.anim_4.keyframeIdx0_8 >= 117)
+            {
+                if (D_800C45AE == 0)
+                {
+                    if (g_SysWork.playerCombatInfo_38.field_F < 32 && var_s2 != 0)
+                    {
+                        if (((arg1->model_0.anim_4.animIdx_0 == 59 ||
+                              arg1->model_0.anim_4.animIdx_0 == 61) &&
+                             (g_SysWork.playerCombatInfo_38.field_F != 5 &&
+                              g_SysWork.playerCombatInfo_38.field_F != 2)) ||
+                            arg1->model_0.anim_4.animIdx_0 == 63)
+                        {
+                            g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= 1 << 10;
+                            chara->model_0.stateStep_3                                  = 0;
+                            chara->model_0.state_2                                      = 0;
+                            g_SysWork.player_4C.extra_128.field_24                      = 34;
+                        }
+                        else
+                        {
+                            g_SysWork.player_4C.extra_128.field_24 = var_s2;
+                        }
+                    }
+                    else
+                    {
+                        g_SysWork.player_4C.extra_128.field_24 = var_s2;
+                    }
+                }
+                else if (D_800C4604 != 0 && var_s2 == 0 && temp_s3 == 0)
+                {
+                    if (g_SysWork.player_4C.extra_128.field_20 != 24)
+                    {
+                        g_SysWork.player_4C.extra_128.field_24 = 7;
+                    }
+                }
+            }
+
+            func_800711C4(chara, var_s2);
+            func_800713B4(chara, var_s2 + 5);
+            func_80071284(3);
+
+            g_SysWork.player_4C.chara_0.properties_E4.player.field_124 = FP_FLOAT_TO(0.25f, Q12_SHIFT);
+            D_800C4608                                                 = FP_FLOAT_TO(0.25f, Q12_SHIFT);
+            break;
+
+        case 6:
+        case 26:
+            if (g_SysWork.player_4C.chara_0.properties_E4.player.field_126 > FP_FLOAT_TO(1.25f, Q12_SHIFT))
+            {
+                g_SysWork.player_4C.chara_0.properties_E4.player.field_126 -= ((g_DeltaTime0 * FP_FLOAT_TO(0.4f, Q12_SHIFT)) / 136);
+                if (g_SysWork.player_4C.chara_0.properties_E4.player.field_126 < FP_FLOAT_TO(1.25f, Q12_SHIFT))
+                {
+                    g_SysWork.player_4C.chara_0.properties_E4.player.field_126 = FP_FLOAT_TO(1.25f, Q12_SHIFT);
+                }
+            }
+            else
+            {
+                if (chara->model_0.anim_4.keyframeIdx0_8 >= 75 &&
+                    chara->model_0.anim_4.keyframeIdx0_8 <= 86)
+                {
+                    g_SysWork.player_4C.chara_0.properties_E4.player.field_126 += ((g_DeltaTime0 * FP_FLOAT_TO(0.4f, Q12_SHIFT)) / 136);
+                }
+                else if (chara->model_0.anim_4.keyframeIdx0_8 >= 87)
+                {
+                    g_SysWork.player_4C.chara_0.properties_E4.player.field_126 -= ((g_DeltaTime0 * FP_FLOAT_TO(0.4f, Q12_SHIFT)) / 136);
+                }
+
+                g_SysWork.player_4C.chara_0.properties_E4.player.field_126 = CLAMP(g_SysWork.player_4C.chara_0.properties_E4.player.field_126,
+                                                                                   FP_FLOAT_TO(0.0f, Q12_SHIFT),
+                                                                                   FP_FLOAT_TO(1.25f, Q12_SHIFT));
+            }
+
+            if (chara->model_0.stateStep_3 == 0)
+            {
+                chara->model_0.anim_4.animIdx_0 = 10;
+                chara->model_0.stateStep_3++;
+            }
+
+            if (chara->model_0.anim_4.animIdx_0 == 11 && chara->model_0.anim_4.keyframeIdx0_8 >= 92)
+            {
+                if (D_800C45AC == 0)
+                {
+                    if (g_SysWork.playerCombatInfo_38.field_F < 32 && var_s2 != 0)
+                    {
+                        if (((arg1->model_0.anim_4.animIdx_0 == 59 ||
+                              arg1->model_0.anim_4.animIdx_0 == 61) &&
+                             (g_SysWork.playerCombatInfo_38.field_F != 5 && g_SysWork.playerCombatInfo_38.field_F != 2)) ||
+                             arg1->model_0.anim_4.animIdx_0 == 63)
+                        {
+                            g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= 1 << 10;
+                            chara->model_0.stateStep_3                                  = 0;
+                            chara->model_0.state_2                                      = 0;
+                            g_SysWork.player_4C.extra_128.field_24                      = 34;
+                        }
+                        else
+                        {
+                            g_SysWork.player_4C.extra_128.field_24 = var_s2;
+                        }
+                    }
+                    else
+                    {
+                        g_SysWork.player_4C.extra_128.field_24 = var_s2;
+                    }
+                }
+                else if (D_800C4604 != 0 && var_s2 == 0 && temp_s3 == 0)
+                {
+                    if (g_SysWork.player_4C.extra_128.field_20 != 24)
+                    {
+                        g_SysWork.player_4C.extra_128.field_24 = 8;
+                    }
+                }
+            }
+
+            func_80071224(chara, var_s2);
+            func_800713B4(chara, var_s2 + 6);
+            func_80071284(3);
+
+            g_SysWork.player_4C.chara_0.properties_E4.player.field_124 = FP_FLOAT_TO(-0.25f, Q12_SHIFT);
+            D_800C4608                                                 = FP_FLOAT_TO(-0.25f, Q12_SHIFT);
+            break;
+
+        case 7:
+            chara->properties_E4.player.properties_E4[6] += g_DeltaTime0;
+            if (g_SysWork.player_4C.chara_0.properties_E4.player.field_126 > 0x32C8)
+            {
+                g_SysWork.player_4C.chara_0.properties_E4.player.field_126 -= ((g_DeltaTime0 * FP_FLOAT_TO(0.4f, Q12_SHIFT)) / 136);
+                if (g_SysWork.player_4C.chara_0.properties_E4.player.field_126 < 0x32C8)
+                {
+                    g_SysWork.player_4C.chara_0.properties_E4.player.field_126 = 0x32C8;
+                }
+            }
+            else if (g_SysWork.player_4C.chara_0.properties_E4.player.field_126 < 0x32C8)
+            {
+                g_SysWork.player_4C.chara_0.properties_E4.player.field_126 += ((g_DeltaTime0 * FP_FLOAT_TO(0.75f, Q12_SHIFT)) / 136);
+                g_SysWork.player_4C.chara_0.properties_E4.player.field_126  = CLAMP(g_SysWork.player_4C.chara_0.properties_E4.player.field_126, 0, 0x32C8);
+            }
+
+            if (chara->model_0.stateStep_3 == 0)
+            {
+                chara->model_0.anim_4.animIdx_0 = 16;
+                chara->model_0.stateStep_3++;
+            }
+
+            if ((chara->model_0.anim_4.keyframeIdx0_8 == 139 ||
+                 chara->model_0.anim_4.keyframeIdx0_8 == 145) &&
+                chara->position_18.vy == chara->properties_E4.player.properties_E4[2])
+            {
+                chara->field_34 = FP_FLOAT_TO(-1.0f, Q12_SHIFT);
+            }
+
+            if (g_SysWork.player_4C.extra_128.field_20 != 22)
+            {
+                switch (temp_s3)
+                {
+                    case 1:
+                        if (chara->properties_E4.player.properties_E4[9] >= 0xA000u)
+                        {
+                            g_SysWork.player_4C.extra_128.field_24 = 16;
+                        }
+                        else
+                        {
+                            if (chara->model_0.anim_4.animIdx_0 == 17 && chara->model_0.anim_4.keyframeIdx0_8 >= 147)
+                            {
+                                g_SysWork.player_4C.extra_128.field_24 = 0;
+                            }
+                        }
+                        break;
+
+                    case 2:
+                        if (chara->properties_E4.player.properties_E4[9] >= 0xA000u)
+                        {
+                            g_SysWork.player_4C.extra_128.field_24 = 14;
+                        }
+                        else
+                        {
+                            if (chara->model_0.anim_4.animIdx_0 == 17 && chara->model_0.anim_4.keyframeIdx0_8 >= 147)
+                            {
+                                g_SysWork.player_4C.extra_128.field_24 = 0;
+                            }
+                        }
+                        break;
+
+                    default:
+                        if (chara->properties_E4.player.properties_E4[5] >= 5 &&
+                            g_SysWork.player_4C.chara_0.properties_E4.player.field_126 >= FP_FLOAT_TO(3.125f, Q12_SHIFT))
+                        {
+                            if (chara->model_0.anim_4.keyframeIdx0_8 >= 144 && (D_800C4604 == 0 || D_800C45AE == 0))
+                            {
+                                g_SysWork.player_4C.extra_128.field_24 = 14;
+                            }
+                        }
+                        else if (chara->model_0.anim_4.animIdx_0 == 17 && chara->model_0.anim_4.keyframeIdx0_8 >= 147 &&
+                                 (D_800C4604 == 0 || D_800C45AE == 0))
+                        {
+                            g_SysWork.player_4C.extra_128.field_24 = 0;
+                        }
+                        break;
+                }
+            }
+
+            func_800713B4(chara, 7);
+            func_80071284(4);
+
+            g_SysWork.player_4C.chara_0.properties_E4.player.field_124 = FP_FLOAT_TO(0.25f, Q12_SHIFT);
+            D_800C4608                                                 = FP_FLOAT_TO(0.25f, Q12_SHIFT);
+            break;
+
+        case 8:
+            chara->properties_E4.player.properties_E4[6] += g_DeltaTime0;
+            if (g_SysWork.player_4C.chara_0.properties_E4.player.field_126 >= 0x32C9)
+            {
+                g_SysWork.player_4C.chara_0.properties_E4.player.field_126 -= ((g_DeltaTime0 * FP_FLOAT_TO(0.4f, Q12_SHIFT)) / 136);
+                if (g_SysWork.player_4C.chara_0.properties_E4.player.field_126 < 0x32C8)
+                {
+                    g_SysWork.player_4C.chara_0.properties_E4.player.field_126 = 0x32C8;
+                }
+            }
+            else if (g_SysWork.player_4C.chara_0.properties_E4.player.field_126 < 0x32C8)
+            {
+                g_SysWork.player_4C.chara_0.properties_E4.player.field_126 += ((g_DeltaTime0 * FP_FLOAT_TO(0.75f, Q12_SHIFT)) / 136);
+                g_SysWork.player_4C.chara_0.properties_E4.player.field_126  = CLAMP(g_SysWork.player_4C.chara_0.properties_E4.player.field_126, 0, 0x32C8);
+            }
+
+            if (chara->model_0.stateStep_3 == 0)
+            {
+                chara->model_0.anim_4.animIdx_0 = 14;
+                chara->model_0.stateStep_3++;
+            }
+
+            if ((chara->model_0.anim_4.keyframeIdx0_8 == 125 ||
+                 chara->model_0.anim_4.keyframeIdx0_8 == 132) &&
+                chara->position_18.vy == chara->properties_E4.player.properties_E4[2])
+            {
+                chara->field_34 = FP_FLOAT_TO(-1.0f, Q12_SHIFT);
+            }
+
+            if (g_SysWork.player_4C.extra_128.field_20 != 22)
+            {
+                switch (temp_s3)
+                {
+                    case 1:
+                        if (chara->properties_E4.player.properties_E4[9] >= 0xA000u)
+                        {
+                            g_SysWork.player_4C.extra_128.field_24 = 15;
+                        }
+                        else
+                        {
+                            if (chara->model_0.anim_4.animIdx_0 == 15 &&
+                                chara->model_0.anim_4.keyframeIdx0_8 >= 0x84)
+                            {
+                                g_SysWork.player_4C.extra_128.field_24 = 0;
+                            }
+                        }
+                        break;
+
+                    case 2:
+                        if (chara->properties_E4.player.properties_E4[9] >= 0xA000u)
+                        {
+                            g_SysWork.player_4C.extra_128.field_24 = 13;
+                        }
+                        else
+                        {
+                            if (chara->model_0.anim_4.animIdx_0 == 15 && chara->model_0.anim_4.keyframeIdx0_8 >= 132)
+                            {
+                                g_SysWork.player_4C.extra_128.field_24 = 0;
+                            }
+                        }
+                        break;
+
+                    default:
+                        if (chara->properties_E4.player.properties_E4[5] >= 5 &&
+                            g_SysWork.player_4C.chara_0.properties_E4.player.field_126 >= FP_FLOAT_TO(3.125f, Q12_SHIFT))
+                        {
+                            if (chara->model_0.anim_4.keyframeIdx0_8 > 128 && (D_800C4604 == 0 || D_800C45AC == 0))
+                            {
+                                g_SysWork.player_4C.extra_128.field_24 = 13;
+                            }
+                        }
+                        else if (chara->model_0.anim_4.animIdx_0 == 15 && chara->model_0.anim_4.keyframeIdx0_8 >= 132 &&
+                                 (D_800C4604 == 0 || D_800C45AC == 0))
+                        {
+                            g_SysWork.player_4C.extra_128.field_24 = 0;
+                        }
+                        break;
+                }
+            }
+
+            func_800713B4(chara, 8);
+            func_80071284(4);
+
+            g_SysWork.player_4C.chara_0.properties_E4.player.field_124 = FP_FLOAT_TO(-0.25f, Q12_SHIFT);
+            D_800C4608                                                 = FP_FLOAT_TO(-0.25f, Q12_SHIFT);
+            break;
+
+        case 9:
+        case 29:
+            D_800C4608 = FP_FLOAT_TO(0.0f, Q12_SHIFT);
+
+            if (g_SysWork.player_4C.chara_0.properties_E4.player.field_126 != 0)
+            {
+                g_SysWork.player_4C.chara_0.properties_E4.player.field_126 -= ((g_DeltaTime0 << 11) / 136);
+                if ((g_SysWork.player_4C.chara_0.properties_E4.player.field_126 >> 16) & (1 << 0))
+                {
+                    g_SysWork.player_4C.chara_0.properties_E4.player.field_126 = 0;
+                }
+            }
+
+            if (chara->model_0.state_2 == 0)
+            {
+                g_SysWork.player_4C.chara_0.properties_E4.player.field_120 = chara->rotation_24.vy;
+            }
+
+            if (chara->model_0.stateStep_3 == 0)
+            {
+                chara->model_0.anim_4.animIdx_0 = 28;
+                chara->model_0.stateStep_3++;
+            }
+
+            if (chara->model_0.state_2 == 0)
+            {
+                chara->model_0.state_2++;
+            }
+
+            if (chara->model_0.anim_4.animIdx_0 == 29 && chara->model_0.anim_4.keyframeIdx0_8 >= 206)
+            {
+                D_800C454C = g_DeltaTime0 * 24;
+            }
+            else
+            {
+                D_800C454C = FP_TIME(0.0f);
+            }
+
+            if (ANGLE_DIFF(g_SysWork.player_4C.chara_0.properties_E4.player.field_120, chara->rotation_24.vy) > (FP_ANGLE(180.0f) - ((s32)(g_DeltaTime0 * 24) >> 4)))
+            {
+                if (ANGLE_DIFF(g_SysWork.player_4C.chara_0.properties_E4.player.field_120, chara->rotation_24.vy) < (((g_DeltaTime0 * 24) >> 4) + FP_ANGLE(180.0f)))
+                {
+                    chara->rotation_24.vy                                      = g_SysWork.player_4C.chara_0.properties_E4.npc.field_120 + FP_ANGLE(180.0f);
+                    g_SysWork.player_4C.chara_0.properties_E4.player.field_126 = FP_FLOAT_TO(1.4f, Q12_SHIFT);
+                    D_800C454C                                                 = FP_TIME(0.0f);
+
+                    if (chara->model_0.anim_4.keyframeIdx0_8 >= 213)
+                    {
+                        if (D_800C45E8 != 0)
+                        {
+                            if (D_800C4604 != 0 && var_s2 == 0)
+                            {
+                                g_SysWork.player_4C.extra_128.field_24 = 2;
+                            }
+                            else
+                            {
+                                g_SysWork.player_4C.extra_128.field_24 = var_s2 + 1;
+                            }
+
+                            chara->model_0.stateStep_3 = 0;
+                            chara->model_0.state_2     = 0;
+                        }
+                        else if (D_800C45F0 != 0)
+                        {
+                            if (D_800C4604 != 0 && var_s2 == 0)
+                            {
+                                g_SysWork.player_4C.extra_128.field_24 = 11;
+                            }
+                            else
+                            {
+                                g_SysWork.player_4C.extra_128.field_24 = var_s2 + 4;
+                            }
+
+                            chara->model_0.stateStep_3 = 0;
+                            chara->model_0.state_2     = 0;
+                        }
+                        else if (D_800C45AE != 0)
+                        {
+                            chara->headingAngle_3C += FP_ANGLE(90.0f);
+
+                            if (D_800C4604 != 0 && var_s2 == 0)
+                            {
+                                g_SysWork.player_4C.extra_128.field_24 = 7;
+                            }
+                            else
+                            {
+                                g_SysWork.player_4C.extra_128.field_24 = var_s2 + 5;
+                            }
+
+                            chara->model_0.stateStep_3 = 0;
+                            chara->model_0.state_2     = 0;
+                        }
+                        else if (D_800C45AC != 0)
+                        {
+                            chara->headingAngle_3C -= FP_ANGLE(90.0f);
+
+                            if (D_800C4604 != 0 && var_s2 == 0)
+                            {
+                                g_SysWork.player_4C.extra_128.field_24 = 8;
+                            }
+                            else
+                            {
+                                g_SysWork.player_4C.extra_128.field_24 = var_s2 + 6;
+                            }
+
+                            chara->model_0.stateStep_3 = 0;
+                            chara->model_0.state_2     = 0;
+                        }
+                        else if (chara->model_0.anim_4.keyframeIdx0_8 >= 216)
+                        {
+                            g_SysWork.player_4C.extra_128.field_24 = var_s2;
+                            chara->model_0.stateStep_3             = 0;
+                            chara->model_0.state_2                 = 0;
+                        }
+                    }
+                }
+            }
+
+            g_SysWork.player_4C.chara_0.properties_E4.player.field_124 = 0;
+            D_800C4608                                                 = FP_FLOAT_TO(0.0f, Q12_SHIFT);
+            break;
+
+        case 10:
+        case 30:
+            D_800C4608 = FP_FLOAT_TO(0.0f, Q12_SHIFT);
+
+            if (g_SysWork.player_4C.chara_0.properties_E4.player.field_126 != 0)
+            {
+                g_SysWork.player_4C.chara_0.properties_E4.player.field_126 -= (g_DeltaTime0 << 11) / 136;
+                if ((g_SysWork.player_4C.chara_0.properties_E4.player.field_126 >> 16) & (1 << 0))
+                {
+                    g_SysWork.player_4C.chara_0.properties_E4.player.field_126 = 0;
+                }
+            }
+
+            if (chara->model_0.state_2 == 0)
+            {
+                g_SysWork.player_4C.chara_0.properties_E4.player.field_120 = chara->rotation_24.vy;
+            }
+
+            if (chara->model_0.stateStep_3 == 0)
+            {
+                chara->model_0.anim_4.animIdx_0 = 30;
+                chara->model_0.stateStep_3++;
+            }
+
+            if (chara->model_0.state_2 == 0)
+            {
+                chara->model_0.state_2++;
+            }
+
+            if (chara->model_0.anim_4.animIdx_0 == 31 && chara->model_0.anim_4.keyframeIdx0_8 >= 219)
+            {
+                D_800C454C = -(g_DeltaTime0 * 24);
+            }
+            else
+            {
+                D_800C454C = FP_TIME(0.0f);
+            }
+
+            if (ANGLE_DIFF(g_SysWork.player_4C.chara_0.properties_E4.player.field_120, chara->rotation_24.vy) > (FP_ANGLE(180.0f) - ((g_DeltaTime0 * 24) >> 4)))
+            {
+                if (ANGLE_DIFF(g_SysWork.player_4C.chara_0.properties_E4.player.field_120, chara->rotation_24.vy) < (((g_DeltaTime0 * 24) >> 4) + FP_ANGLE(180.0f)))
+                {
+                    chara->rotation_24.vy                                      = g_SysWork.player_4C.chara_0.properties_E4.npc.field_120 + FP_ANGLE(180.0f);
+                    g_SysWork.player_4C.chara_0.properties_E4.player.field_126 = FP_FLOAT_TO(1.4f, Q12_SHIFT);
+                    D_800C454C                                                 = FP_TIME(0.0f);
+
+                    if (chara->model_0.anim_4.keyframeIdx0_8 >= 226)
+                    {
+                        if (D_800C45E8 != 0)
+                        {
+                            if (D_800C4604 != 0 && var_s2 == 0)
+                            {
+                                g_SysWork.player_4C.extra_128.field_24 = 2;
+                            }
+                            else
+                            {
+                                g_SysWork.player_4C.extra_128.field_24 = var_s2 + 1;
+                            }
+
+                            chara->model_0.stateStep_3 = 0;
+                            chara->model_0.state_2     = 0;
+                        }
+                        else if (D_800C45F0 != 0)
+                        {
+                            if (D_800C4604 != 0 && var_s2 == 0)
+                            {
+                                g_SysWork.player_4C.extra_128.field_24 = 11;
+                            }
+                            else
+                            {
+                                g_SysWork.player_4C.extra_128.field_24 = var_s2 + 4;
+                            }
+
+                            chara->model_0.stateStep_3 = 0;
+                            chara->model_0.state_2     = 0;
+                        }
+                        else if (D_800C45AE != 0)
+                        {
+                            chara->headingAngle_3C += FP_ANGLE(90.0f);
+
+                            if (D_800C4604 != 0 && var_s2 == 0)
+                            {
+                                g_SysWork.player_4C.extra_128.field_24 = 7;
+                            }
+                            else
+                            {
+                                g_SysWork.player_4C.extra_128.field_24 = var_s2 + 5;
+                            }
+
+                            chara->model_0.stateStep_3 = 0;
+                            chara->model_0.state_2     = 0;
+                        }
+                        else if (D_800C45AC != 0)
+                        {
+                            chara->headingAngle_3C -= FP_ANGLE(90.0f);
+
+                            if (D_800C4604 != 0 && var_s2 == 0)
+                            {
+                                g_SysWork.player_4C.extra_128.field_24 = 8;
+                            }
+                            else
+                            {
+                                g_SysWork.player_4C.extra_128.field_24 = var_s2 + 6;
+                            }
+
+                            chara->model_0.stateStep_3 = 0;
+                            chara->model_0.state_2     = 0;
+                        }
+                        else if (chara->model_0.anim_4.keyframeIdx0_8 >= 229)
+                        {
+                            g_SysWork.player_4C.extra_128.field_24 = var_s2;
+                            chara->model_0.stateStep_3             = 0;
+                            chara->model_0.state_2                 = 0;
+                        }
+                    }
+                }
+            }
+
+            g_SysWork.player_4C.chara_0.properties_E4.player.field_124 = 0;
+            D_800C4608                                                 = FP_FLOAT_TO(0.0f, Q12_SHIFT);
+            break;
+            
+        case 11:
+            if (chara->model_0.stateStep_3 == 0)
+            {
+                chara->model_0.anim_4.animIdx_0 = 32;
+                chara->model_0.stateStep_3++;
+            }
+            
+            if ((chara->model_0.anim_4.animIdx_0 >= 32 &&
+                 chara->model_0.anim_4.animIdx_0 <= 33) &&
+                chara->model_0.anim_4.keyframeIdx0_8 < 245)
+            {
+                if (chara->model_0.state_2 == 0)
+                {
+                    chara->field_34 = FP_FLOAT_TO(-2.0f, Q12_SHIFT);
+                }
+
+                chara->model_0.state_2++;
+                g_SysWork.player_4C.chara_0.properties_E4.player.field_126 = FP_FLOAT_TO(2.25f, Q12_SHIFT);
+                D_800C4550                                                 = FP_FLOAT_TO(2.25f, Q12_SHIFT);
+            }
+            else
+            {
+                if (g_SysWork.player_4C.chara_0.properties_E4.player.field_126 != 0)
+                {
+                    g_SysWork.player_4C.chara_0.properties_E4.player.field_126 -= (((g_DeltaTime0 * FP_FLOAT_TO(0.4f, Q12_SHIFT)) / 136) * 2);
+                    if ((g_SysWork.player_4C.chara_0.properties_E4.player.field_126 >> 16) & (1 << 0))
+                    {
+                        g_SysWork.player_4C.chara_0.properties_E4.player.field_126 = 0;
+                    }
+                }
+
+                D_800C4550 = g_SysWork.player_4C.chara_0.properties_E4.player.field_126;
+            }
+
+            if (chara->model_0.anim_4.animIdx_0 == 33 &&
+                chara->model_0.anim_4.keyframeIdx0_8 == 246)
+            {
+                if (chara->position_18.vy < chara->properties_E4.player.properties_E4[2])
+                {
+                    g_SysWork.player_4C.extra_128.field_1C = 4;
+
+                    chara->model_0.stateStep_3 = 0;
+                    chara->model_0.state_2     = 0;
+                    arg1->model_0.stateStep_3  = 0;
+                    arg1->model_0.state_2      = 0;
+
+                    g_SysWork.player_4C.extra_128.field_20                     = 0;
+                    g_SysWork.player_4C.extra_128.field_24                     = 0;
+                    g_SysWork.player_4C.chara_0.properties_E4.player.field_126 = FP_FLOAT_TO(1.25f, Q12_SHIFT);
+                }
+                else 
+                {
+                    g_SysWork.player_4C.extra_128.field_24 = var_s2;
+                    chara->model_0.stateStep_3 = 0;
+                    chara->model_0.state_2 = 0;
+                    chara->field_34 = 0;
+                }
+            }
+
+            g_SysWork.player_4C.chara_0.properties_E4.player.field_124 = FP_FLOAT_TO(0.5f, Q12_SHIFT);
+            D_800C4608                                                 = FP_FLOAT_TO(0.5f, Q12_SHIFT);
+            break;
+
+        case 12:
+            if (g_SysWork.player_4C.chara_0.properties_E4.player.field_126 != 0)
+            {
+                g_SysWork.player_4C.chara_0.properties_E4.player.field_126 -= ((((g_DeltaTime0 * FP_FLOAT_TO(0.4f, Q12_SHIFT)) / 136) * 2) / 3);
+                if ((g_SysWork.player_4C.chara_0.properties_E4.player.field_126 >> 16) & (1 << 0))
+                {
+                    g_SysWork.player_4C.chara_0.properties_E4.player.field_126 = 0;
+                }
+            }
+
+            if (D_800C45DC <= FP_FLOAT_TO(0.5f, Q12_SHIFT) && g_SysWork.player_4C.chara_0.properties_E4.player.field_126 != 0)
+            {
+                g_SysWork.player_4C.chara_0.properties_E4.player.field_126 -= (((g_DeltaTime0 * FP_FLOAT_TO(0.4f, Q12_SHIFT)) / 136) * 4);
+                if ((g_SysWork.player_4C.chara_0.properties_E4.player.field_126 >> 16) & (1 << 0))
+                {
+                    g_SysWork.player_4C.chara_0.properties_E4.player.field_126 = 0;
+                }
+            }
+
+            if (chara->model_0.stateStep_3 == 0)
+            {
+                chara->model_0.anim_4.animIdx_0 = 22;
+                chara->model_0.stateStep_3++;
+            }
+
+            if (chara->model_0.anim_4.animIdx_0 == 23 && chara->model_0.anim_4.keyframeIdx0_8 == 179)
+            {
+                g_SysWork.player_4C.extra_128.field_24 = 0;
+                func_800713B4(chara, 12);
+            }
+            break;
+
+        case 13:
+            func_80077BB8(chara, 36, 37, 335, 13, FP_FLOAT_TO(-0.25f, Q12_SHIFT), var_s2);
+            break;
+
+        case 14:
+            func_80077BB8(chara, 40, 41, 364, 14, FP_FLOAT_TO(0.25f, Q12_SHIFT), var_s2);
+            break;
+
+        case 15:
+            if (g_SysWork.player_4C.chara_0.properties_E4.player.field_126 != 0)
+            {
+                g_SysWork.player_4C.chara_0.properties_E4.player.field_126 -= ((g_DeltaTime0 * FP_FLOAT_TO(0.4f, Q12_SHIFT)) / 136) >> 2;
+                if ((g_SysWork.player_4C.chara_0.properties_E4.player.field_126 >> 16) & (1 << 0))
+                {
+                    g_SysWork.player_4C.chara_0.properties_E4.player.field_126 = 0;
+                }
+            }
+
+            // SFX?
+            if (D_800C45DC < 1393)
+            {
+                g_SysWork.player_4C.chara_0.properties_E4.player.field_126 = 0;
+            }
+
+            if (chara->model_0.stateStep_3 == 0)
+            {
+                chara->model_0.anim_4.animIdx_0 = 38;
+                chara->model_0.stateStep_3++;
+            }
+
+            if (chara->model_0.anim_4.animIdx_0 == 39 &&
+                chara->model_0.anim_4.keyframeIdx0_8 == 349)
+            {
+                g_SysWork.player_4C.extra_128.field_24 = 0;
+                func_800713B4(chara, 0xF);
+            }
+
+            if (g_SysWork.player_4C.extra_128.field_24 != 0)
+            {
+                g_SysWork.player_4C.chara_0.properties_E4.player.field_124 = FP_FLOAT_TO(-0.25f, Q12_SHIFT);
+                D_800C4608                                                 = FP_FLOAT_TO(-0.25f, Q12_SHIFT);
+                break;
+            }
+
+            g_SysWork.player_4C.chara_0.properties_E4.player.field_124 = 0;
+            D_800C4608                                                 = FP_FLOAT_TO(0.0f, Q12_SHIFT);
+            break;
+
+        case 16:
+            if (g_SysWork.player_4C.chara_0.properties_E4.player.field_126 != 0)
+            {
+                g_SysWork.player_4C.chara_0.properties_E4.player.field_126 -= ((g_DeltaTime0 * FP_FLOAT_TO(0.4f, Q12_SHIFT)) / 136) >> 2;
+                if ((g_SysWork.player_4C.chara_0.properties_E4.player.field_126 >> 16) & (1 << 0))
+                {
+                    g_SysWork.player_4C.chara_0.properties_E4.player.field_126 = 0;
+                }
+            }
+
+            // SFX?
+            if (D_800C45DC <= 1392)
+            {
+                g_SysWork.player_4C.chara_0.properties_E4.player.field_126 = 0;
+            }
+
+            if (chara->model_0.stateStep_3 == 0)
+            {
+                chara->model_0.anim_4.animIdx_0 = 42;
+                chara->model_0.stateStep_3++;
+            }
+
+            if (chara->model_0.anim_4.animIdx_0 == 43 &&
+                chara->model_0.anim_4.keyframeIdx0_8 == 378)
+            {
+                g_SysWork.player_4C.extra_128.field_24 = 0;
+                func_800713B4(chara, 16);
+            }
+
+            if (g_SysWork.player_4C.extra_128.field_24 == 0)
+            {
+                g_SysWork.player_4C.chara_0.properties_E4.player.field_124 = 0;
+                D_800C4608                                                 = FP_FLOAT_TO(0.0f, Q12_SHIFT);
+                break;
+            }
+
+            g_SysWork.player_4C.chara_0.properties_E4.player.field_124 = FP_FLOAT_TO(0.25f, Q12_SHIFT);
+            D_800C4608                                                 = FP_FLOAT_TO(0.25f, Q12_SHIFT);
+            break;
+
+        case 34:
+            if (g_SysWork.playerCombatInfo_38.field_F < 32 && (g_SysWork.playerCombatInfo_38.field_F % 10) == 6)
+            {
+                if (g_SysWork.playerCombatInfo_38.field_F == 16)
+                {
+                    if (g_SysWork.player_4C.chara_0.properties_E4.player.field_126 == 0 && 
+                        (arg1->model_0.anim_4.keyframeIdx0_8 >= D_800C44F0[D_800AF220].field_4 + 7))
+                    {
+                        g_SysWork.player_4C.chara_0.properties_E4.player.field_126 = FP_FLOAT_TO(5.0f, Q12_SHIFT);
+                        D_800C4608                                                 = FP_FLOAT_TO(0.0f, Q12_SHIFT);
+                    }
+                }
+                else if (chara->model_0.stateStep_3 == 0 && D_800C45BE == 0)
+                {
+                    g_SysWork.player_4C.chara_0.properties_E4.player.field_126 = FP_FLOAT_TO(5.0f, Q12_SHIFT);
+                    D_800C4608                                                 = FP_FLOAT_TO(0.0f, Q12_SHIFT);
+                }
+            }
+
+            if (g_SysWork.playerCombatInfo_38.field_F < 32 && (g_SysWork.playerCombatInfo_38.field_F % 10) == 6)
+            {
+                if (g_SysWork.player_4C.chara_0.properties_E4.player.field_126 != 0)
+                {
+                    g_SysWork.player_4C.chara_0.properties_E4.player.field_126 -= ((g_DeltaTime0 * 0x444) / 136);
+                    if ((g_SysWork.player_4C.chara_0.properties_E4.player.field_126 >> 16) & (1 << 0))
+                    {
+                        g_SysWork.player_4C.chara_0.properties_E4.player.field_126 = 0;
+                    }
+                }
+            }
+            else
+            {
+                if (g_SysWork.player_4C.chara_0.properties_E4.player.field_126 != 0)
+                {
+                    g_SysWork.player_4C.chara_0.properties_E4.player.field_126 -= ((g_DeltaTime0 * FP_FLOAT_TO(0.4f, Q12_SHIFT)) / 136);
+                    if ((g_SysWork.player_4C.chara_0.properties_E4.player.field_126 >> 16) & (1 << 0))
+                    {
+                        g_SysWork.player_4C.chara_0.properties_E4.player.field_126 = 0;
+                    }
+                }
+            }
+
+            if (g_SysWork.field_2353 == NO_VALUE || g_SysWork.playerCombatInfo_38.field_F < 32)
+            {
+                if (g_SysWork.playerCombatInfo_38.field_F >= 32)
+                {
+                    if (g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & (1 << 11))
+                    {
+                        if (chara->model_0.stateStep_3 == 0)
+                        {
+                            chara->model_0.anim_4.animIdx_0 = D_800C4577 - 12;
+                            chara->model_0.stateStep_3++;
+                        }
+                    }
+                    else
+                    {
+                        if (chara->model_0.stateStep_3 == 0)
+                        {
+                            chara->model_0.anim_4.animIdx_0 = D_800C4577;
+                            chara->model_0.stateStep_3++;
+                        }
+                    }
+                }
+                else if (g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & (1 << 10))
+                {
+                    if (g_SysWork.playerCombatInfo_38.field_F == 5 || g_SysWork.playerCombatInfo_38.field_F == 2)
+                    {
+                        if (chara->model_0.stateStep_3 == 0)
+                        {
+                            chara->model_0.anim_4.animIdx_0 = D_800C4577;
+                            chara->model_0.stateStep_3++;
+                        }
+                    }
+                    else if (chara->model_0.stateStep_3 == 0)
+                    {
+                        chara->model_0.anim_4.animIdx_0 = 56;
+                        chara->model_0.stateStep_3++;
+                    }
+
+                    if (chara->model_0.anim_4.keyframeIdx0_8 == D_800C44F0[0].field_6 || 
+                        chara->model_0.anim_4.keyframeIdx0_8 == D_800C44F0[5].field_6)
+                    {
+                        chara->model_0.anim_4.animIdx_0      = arg1->model_0.anim_4.animIdx_0;
+                        chara->model_0.anim_4.keyframeIdx0_8 = arg1->model_0.anim_4.keyframeIdx0_8;
+                        chara->model_0.anim_4.time_4         = arg1->model_0.anim_4.time_4;
+                        chara->model_0.stateStep_3++;
+                    }
+                }
+                else if (g_SysWork.playerCombatInfo_38.field_F == 2)
+                {
+                    if (D_800AF217 == 1)
+                    {
+                        if (chara->model_0.stateStep_3 == 0)
+                        {
+                            chara->model_0.anim_4.animIdx_0 = D_800C4577 + 2;
+                            chara->model_0.stateStep_3++;
+                        }
+                    }
+                    else if (D_800AF217 == NO_VALUE)
+                    {
+                        if (chara->model_0.stateStep_3 == 0)
+                        {
+                            chara->model_0.anim_4.animIdx_0 = D_800C4577 + 4;
+                            chara->model_0.stateStep_3++;
+                        }
+                    }
+                    else
+                    {
+                        if (chara->model_0.stateStep_3 == 0)
+                        {
+                            chara->model_0.anim_4.animIdx_0 = D_800C4577;
+                            chara->model_0.stateStep_3++;
+                        }
+                    }
+                }
+                else
+                {
+                    if (arg1->model_0.anim_4.animIdx_0 == 61)
+                    {
+                        chara->model_0.anim_4.animIdx_0      = arg1->model_0.anim_4.animIdx_0;
+                        chara->model_0.anim_4.keyframeIdx0_8 = arg1->model_0.anim_4.keyframeIdx0_8;
+                        chara->model_0.anim_4.time_4         = arg1->model_0.anim_4.time_4;
+                        chara->model_0.stateStep_3++;
+                    }
+                    else if (D_800C45BE != 0 || arg1->model_0.anim_4.animIdx_0 == 59)
+                    {
+                        if (chara->model_0.stateStep_3 == 0)
+                        {
+                            chara->model_0.anim_4.animIdx_0 = D_800C4577 - 4;
+                            chara->model_0.stateStep_3++;
+                        }
+                    }
+                    else if (D_800C45C0 != 0 || arg1->model_0.anim_4.animIdx_0 == 63)
+                    {
+                        if (chara->model_0.stateStep_3 == 0)
+                        {
+                            chara->model_0.anim_4.animIdx_0 = D_800C4577;
+                            chara->model_0.stateStep_3++;
+                        }
+                    }
+                }
+            }
+            else if (chara->model_0.stateStep_3 == 0)
+            {
+                chara->model_0.anim_4.animIdx_0 = D_800C4578 - 1;
+                chara->model_0.stateStep_3++;
+            }
+
+            if (g_SysWork.playerCombatInfo_38.field_F >= 32 ||
+                ((g_SysWork.playerCombatInfo_38.field_F % 10) != 1 &&
+                 (g_SysWork.playerCombatInfo_38.field_F % 10) != 4 &&
+                 (g_SysWork.playerCombatInfo_38.field_F % 10) != 2 &&
+                 (g_SysWork.playerCombatInfo_38.field_F % 10) != 6))
+            {
+                if (chara->model_0.anim_4.animIdx_0 & (1 << 0) && arg1->model_0.anim_4.animIdx_0 & (1 << 0) &&
+                    (chara->model_0.anim_4.animIdx_0 >= 58 || chara->model_0.anim_4.keyframeIdx0_8 == D_800C44F6))
+                {
+                    if (D_800C45E8 == 0)
+                    {
+                        if (D_800C45F0 != 0)
+                        {
+                            if (g_SysWork.player_4C.chara_0.properties_E4.player.field_126 == 0)
+                            {
+                                g_SysWork.player_4C.extra_128.field_24 = 24;
+                            }
+                        }
+                        else if (g_SysWork.player_4C.extra_128.field_1C != 1)
+                        {
+                            if (D_800C45AE == 0)
+                            {
+                                if (D_800C45AC != 0)
+                                {
+                                    g_SysWork.player_4C.extra_128.field_24 = 26;
+                                }
+                            }
+                            else
+                            {
+                                g_SysWork.player_4C.extra_128.field_24 = 25;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        g_SysWork.player_4C.extra_128.field_24 = 21;
+                    }
+                    
+                    if (g_SysWork.player_4C.extra_128.field_24 != 34)
+                    {
+                        func_800713B4(chara, 0x14);
+                        break;
+                    }
+                }
+            }
+            break;
+
+        case 35:
+            if (chara->model_0.stateStep_3 == 0)
+            {
+                chara->model_0.anim_4.animIdx_0 = 62;
+                chara->model_0.stateStep_3++;
+            }
+
+            if ((chara->model_0.anim_4.animIdx_0 & (1 << 0)) && (arg1->model_0.anim_4.animIdx_0 & (1 << 0)) && 
+                (chara->model_0.anim_4.animIdx_0 >= 58 || chara->model_0.anim_4.keyframeIdx0_8 == D_800C44F6))
+            {
+                if (D_800C45E8 != 0)
+                {
+                    g_SysWork.player_4C.extra_128.field_24 = 21;
+                }
+                else if (D_800C45F0 != 0)
+                {
+                    if (g_SysWork.player_4C.chara_0.properties_E4.player.field_126 == 0)
+                    {
+                        g_SysWork.player_4C.extra_128.field_24 = 24;
+                    }
+                }
+                else if (g_SysWork.player_4C.extra_128.field_1C != 1)
+                {
+                    if (D_800C45AE != 0)
+                    {
+                        g_SysWork.player_4C.extra_128.field_24 = 25;
+                    }
+                    else if (D_800C45AC != 0)
+                    {
+                        g_SysWork.player_4C.extra_128.field_24 = 26;
+                    }
+                }
+
+                if (g_SysWork.player_4C.extra_128.field_24 != 35)
+                {
+                    func_800713B4(chara, 20);
+                }
+            }
+            break;
+    }
+
+    func_8007B924(chara, arg1);
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8007B924); // 0x8007B924
 

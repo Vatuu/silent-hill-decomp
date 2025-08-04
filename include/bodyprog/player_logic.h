@@ -18,7 +18,7 @@ extern u8 g_Player_Walk2RunTransition; // 0x800AF214
  */
 extern u8 g_Player_EnableControl; // 0x800AF215
 
-extern s8 D_800AF216; // 0x800AF216
+extern u8 D_800AF216; // 0x800AF216
 
 // ==========
 // FUNCTIONS

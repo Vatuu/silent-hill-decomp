@@ -63,14 +63,14 @@ segments:
       - [0x138, rodata]
       - [0x144, .rodata, bodyprog_800314EC]
       - [0x1E4, .rodata, globals]
-      - [0x1F8, rodata] # Stage/map data?
+      - [0x1F8, rodata]                     # Stage/map data?
       - [0x618, .rodata, bodyprog_80032D1C] # Jumptable: `SysState_Gameplay_Update`
                                             # Jumptable: `func_8003943C`
-                                            # Jumptable & Data: `SysState_GameOver_Update`
+                                            # Jumptable and data: `SysState_GameOver_Update`
       - [0x91C, .rodata, bodyprog_8003AB28]
-      - [0x1084, rodata] # Junk data?
-      - [0x109C, .rodata, libsd/bodyprog_80045A7C] # Jumptable: `Sd_EngineCmd`
-                                                   # Jumptable: `func_80045BD8`
+      - [0x1084, rodata]                              # Junk data?
+      - [0x109C, .rodata, libsd/bodyprog_80045A7C]    # Jumptable: `Sd_EngineCmd`
+                                                      # Jumptable: `func_80045BD8`
       - [0x11C4, .rodata, libsd/bodyprog_CD_80047D50] # Jumptable: `func_800482D8`
       - [0x1200, rodata]
       - [0x1280, .rodata, text_draw] # Jumptable: `MapMsg_CalculateWidthTable`
@@ -79,9 +79,13 @@ segments:
       - [0x1350, .rodata, items/item_screens_2]
       - [0x1770, .rodata, items/item_screens_3]
       - [0x32F4, rodata]
-      - [0x5CF0, .rodata, view/vc_main] # Jumptable: `vcRetFarWatchRate`
-                                        # Jumptable: `vcSetFlagsByCamMvType`
-                                        # Jumptable: `vcMixSelfViewEffectToWatchTgtPos`
+      
+      - [0x5638, .rodata, bodyprog_80054FC0] # Jumptable: `func_80077D00`
+      - [0x56C8, .rodata, bodyprog_80054FC0] # Jumptable: `func_80077D00`
+      - [0x5758, .rodata, bodyprog_80054FC0] # Jumptable: `func_80077D00`
+      - [0x5CF0, .rodata, view/vc_main]      # Jumptable: `vcRetFarWatchRate`
+                                             # Jumptable: `vcSetFlagsByCamMvType`
+                                             # Jumptable: `vcMixSelfViewEffectToWatchTgtPos`
       - [0x5F9C, .rodata, bodyprog_80085D78] # Jumptables
       - [0x6044, rodata]
       # - [0x604C, .rodata, bodyprog_80085D78] # Jumptable: `func_80087AF4`
