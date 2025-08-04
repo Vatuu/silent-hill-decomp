@@ -1434,9 +1434,9 @@ extern s_ControllerConfig D_8002511C[];
 
 extern s_AreaLoadSfx const D_800252BC[];
 
-extern u8 D_80025D6C[];
+extern u8 const g_MainFontWidthTable[];
 
-extern u32 D_80025DC0[];
+extern u32 g_MapMsg_ColorTable[];
 
 extern char D_80028544[0x10];
 

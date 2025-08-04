@@ -55,6 +55,11 @@
 
 struct _SubCharacter; // Forward declaration.
 
+// This causes an entire message to display instantly by using a long string length.
+#define MAP_MESSAGE_DISPLAY_ALL_LENGTH 400
+// This value is subtracted from ASCII bytes to get the index to some string related table
+#define GLYPH_TABLE_ASCII_OFFSET 0x27
+
 /** Each map has its own messages, with the first 15 hardcoded to be the same. */
 typedef enum _MapMsgIdx
 {
@@ -81,7 +86,9 @@ typedef enum _MapMsgCode
     MapMsgCode_Select2    = 2,
     MapMsgCode_Select3    = 3,
     MapMsgCode_Select4    = 4,
-    MapMsgCode_DisplayAll = 20
+    MapMsgCode_DisplayAll = 20,
+    MapMsgCode_SetByT     = 88,
+    MapMsgCode_AlignCenter= 99
 } e_MapMsgCode;
 
 typedef enum _MapMsgAudioLoadBlock
@@ -1125,8 +1132,8 @@ typedef struct _SysWork
     u8              field_234B_0 : 4;
     u8              field_234B_4 : 4;
     s32             mapMsgTimer_234C;
-    u8              highResolutionTextRender_2350_0 : 4;
-    u8              silentYesSelection_4            : 4; // `s32`?
+    s32             highResolutionTextRender_2350_0 : 4;
+    u8              silentYesSelection_2350_4       : 4;
     u32             inventoryItemSelectedIdx_2351   : 8;
     u32             flags_2352                      : 8;
     s32             field_2353                      : 8; // Some index into `npcs_1A0`.

@@ -62,13 +62,15 @@ nextGameStates                              = 0x80025480;
 //------------------------------------------------------
 //--- PA: 0x001200   VA: 0x80025D60   subsegment: rodata
 //------------------------------------------------------
+g_MainFontWidthTable                        = 0x80025D6C
+g_MapMsg_ColorTable                         = 0x80025DC0;
 
 //------------------------------------------------------------------
 //--- PA: 0x001280   VA: 0x80025DE0   subsegment: .rodata, text_draw
 //------------------------------------------------------------------
 
 //------------------------------------------------------
-//--- PA: 0x0012C8   VA: 0x80025E28   subsegment: rodata
+//--- PA: 0x001328   VA: 0x80025E88   subsegment: rodata
 //------------------------------------------------------
 
 //-----------------------------------------------------------------------------
@@ -409,6 +411,7 @@ Gfx_StringSetPosition                       = 0x8004A87C; // type:func
 Gfx_StringSetColor                          = 0x8004A8DC; // type:func
 Gfx_StringDraw                              = 0x8004A8E8; // type:func
 Gfx_MapMsg_CalculateWidthTable              = 0x8004ACF4; // type:func
+MapMsg_ParseAndRender                       = 0x8004AF18; // type:func
 Gfx_StringDrawInt                           = 0x8004B9F8; // type:func
 
 //-------------------------------------------------------------------------

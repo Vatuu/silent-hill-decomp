@@ -73,8 +73,8 @@ segments:
                                                       # Jumptable: `func_80045BD8`
       - [0x11C4, .rodata, libsd/bodyprog_CD_80047D50] # Jumptable: `func_800482D8`
       - [0x1200, rodata]
-      - [0x1280, .rodata, text_draw] # Jumptable: `MapMsg_CalculateWidthTable`
-      - [0x12C8, rodata]
+      - [0x1280, .rodata, text_draw] # Jumptable: `MapMsg_CalculateWidthTable` & `MapMsg_ParseAndRender`
+      - [0x1328, rodata]
       - [0x1334, .rodata, items/item_screens_1] # Jumptable: `func_8004C564`
       - [0x1350, .rodata, items/item_screens_2]
       - [0x1770, .rodata, items/item_screens_3]
