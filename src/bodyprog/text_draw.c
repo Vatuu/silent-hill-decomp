@@ -345,11 +345,6 @@ s32 MapMsg_ParseAndRender(char* mapMsg, s32 strLen) // 0x8004AF18
     #define __ATLAS_COLUMN_COUNT 21
     #define CHARCODE_OFFSET      0x27
 
-    // I think this is what it means, not sure
-    #define retcode_AlignLeft (0x63)
-    #define retcode_AlignCenter (0x52)
-    #define retcode_setByT (0x58) // set by ~T but no string contains that code
-
     s32 glyphPosX;
     s32 glyphPosY;
     
@@ -428,7 +423,7 @@ s32 MapMsg_ParseAndRender(char* mapMsg, s32 strLen) // 0x8004AF18
     glyphPosY = g_StringPosition.vy;
 
     // Parse string.
-    for (lineIdx = 0; lineIdx < 9;)
+    for (lineIdx = 0; lineIdx < LINE_COUNT_MAX;)
     {
         // Convert literal `!` and `&` into `char`s mappable to representative atlas glyphs.
         charCode = *mapMsg;
@@ -469,11 +464,11 @@ s32 MapMsg_ParseAndRender(char* mapMsg, s32 strLen) // 0x8004AF18
                         
                         switch (result)
                         {
-                            case retcode_AlignLeft:
+                            case MapMsgCode_AlignCenter:
                                 glyphPosX = -(g_MapMsg_WidthTable[lineIdx] >> 1);
                                 break;
                             
-                            case retcode_setByT:
+                            case MapMsgCode_SetByT:
                                 glyphPosX = g_StringPositionX1;
                                 break;
 
@@ -539,12 +534,12 @@ s32 MapMsg_ParseAndRender(char* mapMsg, s32 strLen) // 0x8004AF18
                         break;
                         
                     case MAP_MSG_CODE_MIDDLE:
-                        result = retcode_AlignLeft;
+                        result = MapMsgCode_AlignCenter;
                         glyphPosX = -(g_MapMsg_WidthTable[lineIdx] >> 1);
                         break;
                         
                     case MAP_MSG_CODE_TAB:
-                        result = retcode_setByT;
+                        result = MapMsgCode_SetByT;
                         g_StringPositionX1 = -120;
                         glyphPosX = -120;
                         break;
@@ -578,7 +573,7 @@ s32 MapMsg_ParseAndRender(char* mapMsg, s32 strLen) // 0x8004AF18
         // Terminator.
         case '\0':
             result = 1;
-            lineIdx = 9;
+            lineIdx = LINE_COUNT_MAX;
             break;
 
         // Draw glyph sprite.
