@@ -2115,6 +2115,10 @@ extern u16 D_800C4586; // Is player moving right (in-game)?
 
 extern s8 D_800C4588;
 
+extern s32 D_800C459C;
+
+extern s8 D_800C45A4;
+
 extern u16 D_800C45AC;
 
 extern u16 D_800C45AE;
@@ -3047,6 +3051,8 @@ void func_80074254(s32 arg0, s32 arg1); // `arg1` is pointer?
 
 /** Player controller? */
 void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* arg1);
+
+void func_8007B924(s_SubCharacter* arg0, s_MainCharacterExtra* arg1);
 
 s32 func_8007D6F0(s_SubCharacter* arg0, s_D_800C45C8* arg1);
 
