@@ -615,7 +615,7 @@ typedef struct
 {
     s32 field_0[99];
     s16 field_18C[150];
-    s8  field_2B8[20]; // Size guessed, could be larger or smaller
+    s8  field_2B8[20]; // Size guessed, could be larger or smaller.
 } s_func_8005759C_2;
 
 // ========
@@ -1577,7 +1577,7 @@ extern s32 D_800A9A10;
 
 extern s32 D_800A9A1C;
 
-extern void (*g_SysStateFuncTable[])();
+extern void (*g_SysStateFuncs[])();
 
 extern s32 D_800A9A68;
 
@@ -3110,9 +3110,9 @@ u32 func_800364BC();
 
 void func_8003652C();
 
-s32 Gfx_MapMsgDisplay(s32 mapMsgIdx);
+s32 Gfx_MapMsg_Display(s32 mapMsgIdx);
 
-s32 Gfx_MapMsgRenderAndHandleSelection(u8 mapMsgIdx, s32* arg1);
+s32 Gfx_MapMsg_SelectionUpdate(u8 mapMsgIdx, s32* arg1);
 
 void func_80036E48(u16* arg0, s16* arg1);
 

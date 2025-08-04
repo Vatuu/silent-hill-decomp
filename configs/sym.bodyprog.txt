@@ -274,8 +274,8 @@ Game_SavegameInitialize                     = 0x800350BC; // type:func
 Game_InGameInitialize                       = 0x80035178; // type:func
 GameFs_MapLoad                              = 0x8003521C; // type:func
 Savegame_MapRoomIdxSet                      = 0x80036420; // type:func
-Gfx_MapMsgDisplay                           = 0x800365B8; // type:func
-Gfx_MapMsgRenderAndHandleSelection          = 0x80036B5C; // type:func
+Gfx_MapMsg_Display                          = 0x800365B8; // type:func
+Gfx_MapMsg_SelectionUpdate         		    = 0x80036B5C; // type:func
 Chara_PositionUpdateFromParams              = 0x800371E8; // type:func
 GameState_InGame_Update                     = 0x80038BD4; // type:func
 SysState_Gameplay_Update                    = 0x80038F6C; // type:func
@@ -1867,7 +1867,7 @@ g_MapEventIdx                               = 0x800A9A14; // type:u32
 //------------------------------------------------------------------------
 //--- PA: 0x084ECC   VA: 0x800A9A2C   subsegment: .data, syswork_functable
 //------------------------------------------------------------------------
-g_SysStateFuncTable                         = 0x800A9A2C; // type:u32 size:0x3C
+g_SysStateFuncs                             = 0x800A9A2C; // type:u32 size:0x3C
 
 //-----------------------------------------------------------------------
 //--- PA: 0x084F08   VA: 0x800A9A68   subsegment: data, bodyprog_800A9A68

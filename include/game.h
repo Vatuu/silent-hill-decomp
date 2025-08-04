@@ -19,6 +19,8 @@
 #define MEMORY_CARD_SLOT_COUNT   2
 #define CONTROLLER_COUNT_MAX     2
 
+#define EVENT_FLAG5_FIRST_TIME_SAVE_GAME (1 << 26)
+
 #define MAP_MSG_CODE_MARKER         '~'
 #define MAP_MSG_CODE_NEWLINE        'N' // Newline.
 #define MAP_MSG_CODE_END            'E' // End message.
@@ -53,26 +55,25 @@
 
 struct _SubCharacter; // Forward declaration.
 
-// Each map has it's own messages but the first 15
-// are all the same and hardcoded
-typedef enum _MapMsgIndex
+/** Each map has its own messages, with the first 15 hardcoded to be the same. */
+typedef enum _MapMsgIdx
 {
-    MapMsgIndex_Yes               = 0,
-    MapMsgIndex_No                = 1,
-    MapMsgIndex_SaveGame          = 2, //Someday, someone may experience...
-    MapMsgIndex_NoMap             = 3,
-    MapMsgIndex_TooDarkForMap     = 4,
-    MapMsgIndex_FirstAidSelect    = 5,
-    MapMsgIndex_HealthDrinkSelect = 6,
-    MapMsgIndex_AmpouleSelect     = 7,
-    MapMsgIndex_HandgunAmmoSelect = 8,
-    MapMsgIndex_RifleAmmoSelect   = 9,
-    MapMsgIndex_ShotgunAmmoSelect = 10,
-    MapMsgIndex_DoorJammer        = 11,
-    MapMsgIndex_DoorLocked        = 12,
-    MapMsgIndex_DoorUnlocked      = 13,
-    MapMsgIndex_NowMaking         = 14, // unused ?
-} e_MapMsgIndex;
+    MapMsgIdx_Yes               = 0,
+    MapMsgIdx_No                = 1,
+    MapMsgIdx_SaveGame          = 2, // "Someday, someone may experience..."
+    MapMsgIdx_NoMap             = 3,
+    MapMsgIdx_TooDarkForMap     = 4,
+    MapMsgIdx_FirstAidSelect    = 5,
+    MapMsgIdx_HealthDrinkSelect = 6,
+    MapMsgIdx_AmpouleSelect     = 7,
+    MapMsgIdx_HandgunAmmoSelect = 8,
+    MapMsgIdx_RifleAmmoSelect   = 9,
+    MapMsgIdx_ShotgunAmmoSelect = 10,
+    MapMsgIdx_DoorJammer        = 11,
+    MapMsgIdx_DoorLocked        = 12,
+    MapMsgIdx_DoorUnlocked      = 13,
+    MapMsgIdx_NowMaking         = 14  // Unused?
+} e_MapMsgIdx;
 
 typedef enum _MapMsgCode
 {
@@ -526,6 +527,13 @@ typedef enum _PadTerminalType
     PadTerminalType_MultitapAdapter     = 8
 } e_PadTerminalType;
 
+typedef enum _GameDifficulty
+{
+    GameDifficulty_Easy   = -1,
+    GameDifficulty_Normal = 0,
+    GameDifficulty_Hard   = 1
+} e_GameDifficulty;
+
 typedef union
 {
     u32 rawData_0;
@@ -597,14 +605,6 @@ typedef struct _ShInventoryItem
 } s_ShInventoryItem;
 STATIC_ASSERT_SIZEOF(s_ShInventoryItem, 4);
 
-typedef enum _GameDifficulty
-{
-    GameDifficulty_Easy   = -1,
-    GameDifficulty_Normal = 0,
-    GameDifficulty_Hard   = 1
-} e_GameDifficulty;
-
-#define EVENT_FLAG5_FIRST_TIME_SAVE_GAME (1 << 26)
 typedef struct _ShSavegame
 {
     s_ShInventoryItem items_0[INVENTORY_ITEM_COUNT_MAX];
@@ -1124,7 +1124,7 @@ typedef struct _SysWork
     u8              field_234B_0 : 4;
     u8              field_234B_4 : 4;
     s32             mapMsgTimer_234C;
-    u8              highResolutionTextRender_2350_0 : 4; // Related to string drawing.
+    u8              highResolutionTextRender_2350_0 : 4;
     u8              silentYesSelection_4            : 4; // `s32`?
     u32             inventoryItemSelectedIdx_2351   : 8;
     u32             flags_2352                      : 8;

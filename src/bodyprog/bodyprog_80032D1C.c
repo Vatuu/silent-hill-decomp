@@ -2267,7 +2267,7 @@ void func_8003652C() // 0x8003652C
     LoadImage(&rect, vals);
 }
 
-s32 Gfx_MapMsgDisplay(s32 mapMsgIdx) // 0x800365B8
+s32 Gfx_MapMsg_Display(s32 mapMsgIdx) // 0x800365B8
 {
     #define MSG_TIMER_MAX   (FP_TIME(524288.0f) - 1)
     #define FINISH_CUTSCENE 0xFF
@@ -2315,8 +2315,7 @@ s32 Gfx_MapMsgDisplay(s32 mapMsgIdx) // 0x800365B8
             g_MapMsg_StateMachineIdx2     = 0;
             g_MapMsg_MainIdx              = mapMsgIdx;
             g_MapMsg_DisplayLength        = 0;
-            // By how much to advance the display len. 2 characters at a time
-            g_MapMsg_DisplayInc           = 2;
+            g_MapMsg_DisplayInc           = 2; // Advance 2 glyphs at a time.
 
             func_8004B684();
             Gfx_MapMsg_CalculateWidthTable(g_MapMsg_CurrentIdx);
@@ -2462,7 +2461,7 @@ s32 Gfx_MapMsgDisplay(s32 mapMsgIdx) // 0x800365B8
             }
 
             g_MapMsg_StateMachineIdx1 = 0;
-            g_MapMsg_StateMachineIdx2 = Gfx_MapMsgRenderAndHandleSelection(g_MapMsg_CurrentIdx, &g_MapMsg_DisplayLength);
+            g_MapMsg_StateMachineIdx2 = Gfx_MapMsg_SelectionUpdate(g_MapMsg_CurrentIdx, &g_MapMsg_DisplayLength);
 
             if (g_MapMsg_StateMachineIdx2 != 0 && g_MapMsg_StateMachineIdx2 < MapMsgCode_Select4)
             {
@@ -2475,9 +2474,9 @@ s32 Gfx_MapMsgDisplay(s32 mapMsgIdx) // 0x800365B8
         return 0;
     }
 
-    g_SysWork.field_18                   = 0;
+    g_SysWork.field_18                        = 0;
     g_SysWork.highResolutionTextRender_2350_0 = 0;
-    g_MapMsg_DisplayLength               = 0;
+    g_MapMsg_DisplayLength                    = 0;
 
     if (g_SysWork.field_22A0 & (1 << 5))
     {
@@ -2487,7 +2486,7 @@ s32 Gfx_MapMsgDisplay(s32 mapMsgIdx) // 0x800365B8
     return g_MapMsg_Select.selectedIdx_1 + 1;
 }
 
-s32 Gfx_MapMsgRenderAndHandleSelection(u8 mapMsgIdx, s32* arg1) // 0x80036B5C
+s32 Gfx_MapMsg_SelectionUpdate(u8 mapMsgIdx, s32* arg1) // 0x80036B5C
 {
     #define STRING_LINE_OFFSET 16
 
@@ -2497,7 +2496,7 @@ s32 Gfx_MapMsgRenderAndHandleSelection(u8 mapMsgIdx, s32* arg1) // 0x80036B5C
     s16 temp;
     s8* str;
 
-    // This will actually render the string on screen. It also gives a return code for different ~S codes.
+    // Draws string on screen and gives return code for various ~S codes.
     mapMsgCode = func_8004AF18(g_MapOverlayHeader.mapMessageStrings_30[mapMsgIdx], *arg1);
 
     g_MapMsg_SelectFlashTimer += g_DeltaTime1;
@@ -3133,12 +3132,12 @@ void GameState_InGame_Update() // 0x80038BD4
     if (g_SysWork.sysState_8 == SysState_Gameplay)
     {
         g_SysWork.field_18 = 0;
-        g_SysStateFuncTable[SysState_Gameplay]();
+        g_SysStateFuncs[SysState_Gameplay]();
     }
     else
     {
         g_DeltaTime0 = 0;
-        g_SysStateFuncTable[g_SysWork.sysState_8]();
+        g_SysStateFuncs[g_SysWork.sysState_8]();
 
         if (g_SysWork.sysState_8 == 0)
         {
@@ -3542,7 +3541,7 @@ void SysState_Unk3_Update() // 0x800396D4
     if (!HAS_MAP(g_SavegamePtr->current2dMapIdx_A9))
     {
         if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.map_18 ||
-            Gfx_MapMsgDisplay(MapMsgIndex_NoMap) > 0)
+            Gfx_MapMsg_Display(MapMsgIdx_NoMap) > 0)
         {
             SysWork_StateSetNext(GameState_Unk0);
         }
@@ -3552,7 +3551,7 @@ void SysState_Unk3_Update() // 0x800396D4
               (g_SysWork.field_2388.field_1C[1].field_0.field_0.s_field_0.field_0 & (1 << 0))))
     {
         if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.map_18 ||
-            Gfx_MapMsgDisplay(MapMsgIndex_TooDarkForMap) > 0)
+            Gfx_MapMsg_Display(MapMsgIdx_TooDarkForMap) > 0)
         {
             SysWork_StateSetNext(GameState_Unk0);
         }
@@ -3788,7 +3787,7 @@ void SysState_ReadMessage_Update(s32 arg0) // 0x80039FB8
         g_MapOverlayHeader.func_C8(i);
     }
 
-    switch (Gfx_MapMsgDisplay(g_MapEventIdx)) 
+    switch (Gfx_MapMsg_Display(g_MapEventIdx)) 
     {
         case -1:
             break;
@@ -3853,7 +3852,7 @@ void SysState_SaveMenu_Update() // 0x8003A230
         case 0:
             SysWork_SavegameUpdatePlayer();
 
-            if ((g_SavegamePtr->eventFlags_168[5] & (EVENT_FLAG5_FIRST_TIME_SAVE_GAME)) || g_SavegamePtr->locationId_A8 == 24 || g_MapEventIdx == 0)
+            if ((g_SavegamePtr->eventFlags_168[5] & EVENT_FLAG5_FIRST_TIME_SAVE_GAME) || g_SavegamePtr->locationId_A8 == 24 || g_MapEventIdx == 0)
             {
                 GameFs_SaveLoadBinLoad();
 
@@ -3865,7 +3864,7 @@ void SysState_SaveMenu_Update() // 0x8003A230
                 g_SysWork.sysStateStep_C++;
             }
 
-            else if (Gfx_MapMsgDisplay(MapMsgIndex_SaveGame) == 1)
+            else if (Gfx_MapMsg_Display(MapMsgIdx_SaveGame) == 1)
             {
                 g_SavegamePtr->eventFlags_168[5] |= EVENT_FLAG5_FIRST_TIME_SAVE_GAME;
 

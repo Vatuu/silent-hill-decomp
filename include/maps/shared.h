@@ -13,25 +13,21 @@ typedef struct
     char    unk_20[16];
 } s_sharedFunc_800CEFD0_1_s02;
 
-typedef struct {
-    // Snow: position, Rain streak lower position
-    VECTOR3     position1_0;
-    // Snow: unused, Rain: streak upper position
-    VECTOR3     position2_C;
-    // Snow: random accumulation, Rain: Y accumulation (seems to affect streak length)
-    SVECTOR3    movement_18;
-    // 0 = blank, 1 = falling, 2+ = resting on ground (snow flake, or rain splash)
-    // NOTE: some setups skip resting, i.e. outside windows, when the ground can't be seen)
-    u8          counter_1E;
-    // 0 = snow, 2 = rain, 1 = Y is not updated, meaning the particle never resets - XZ offsets still apply
-    s8          type_1F;
-} s_particle;
+typedef struct
+{
+    VECTOR3     position1_0; // Snow: position, Rain: streak lower position.
+    VECTOR3     position2_C; // Snow: unused, Rain: streak upper position
+    SVECTOR3    movement_18; // Snow: random accumulation, Rain: Y accumulation (seems to affect streak length).
+    u8          counter_1E;  // Blank: 0, Fall: 1, Rest on ground (snowflake or rain splash): 2+.
+                             // NOTE: Some setups skip resting, i.e. outside windows when ground can't be seen.
+    s8          type_1F;     // Snow: 0, Rain: 2, Y not updated, meaning particle never resets but XZ offsets still apply: 1.
+} s_Particle;
 
 typedef struct
 {
-    u8      unk_0[0xC];
+    u8      unk_0[12];
     VECTOR3 field_C;
-    u8      unk_18[0x18];
+    u8      unk_18[24];
 } s_sharedData_800E3148_1_s02;
 
 extern u8                          sharedData_800DF158_1_s02;
@@ -223,13 +219,16 @@ void sharedFunc_800D9078_0_s00(s_SubCharacter* chara);
 
 s16 sharedFunc_800D921C_0_s00(s_SubCharacter* chara);
 
-void sharedFunc_800D923C_0_s00(s_SubCharacter* chara); // Humanoid init function?
+/** Humanoid init function? */
+void sharedFunc_800D923C_0_s00(s_SubCharacter* chara);
 
 u8 sharedFunc_800D92AC_0_s00(s32 x, s32 y);
 
-void sharedFunc_800CF2A4_0_s01(s32 arg0, s_particle* particle, u16* rand, s32* deltaTime); // Snow particle update
+/** Snow particle update. */
+void sharedFunc_800CF2A4_0_s01(s32 arg0, s_Particle* part, u16* rand, s32* deltaTime);
 
-void sharedFunc_800CF9A8_0_s01(s32 arg0, s_particle* particle, u16* rand); // Snow particle init
+/** Snow particle init. */
+void sharedFunc_800CF9A8_0_s01(s32 arg0, s_Particle* part, u16* rand);
 
 void sharedFunc_800DA8E8_0_s01(s32* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
 

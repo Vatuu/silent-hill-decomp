@@ -1,7 +1,8 @@
 #include "game.h"
 #include "bodyprog/bodyprog.h"
 
-void (*g_SysStateFuncTable[])() = {
+void (*g_SysStateFuncs[])() =
+{
     SysState_Gameplay_Update,
     SysState_OptionsMenu_Update,
     SysState_StatusMenu_Update,
@@ -16,6 +17,5 @@ void (*g_SysStateFuncTable[])() = {
     SysState_EventSetFlag_Update,
     SysState_EventPlaySound_Update,
     SysState_GameOver_Update,
-    SysState_GamePaused_Update,
+    SysState_GamePaused_Update
 };
-

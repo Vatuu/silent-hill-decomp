@@ -158,7 +158,7 @@ void func_800860B0(s32 arg0, s32 mapMsgIdx, s32 arg2, s32 arg3, s32 sysStateStep
 {
     s32 ret;
 
-    ret = Gfx_MapMsgDisplay(mapMsgIdx);
+    ret = Gfx_MapMsg_Display(mapMsgIdx);
     if (ret <= 0)
     {
         return;
@@ -518,7 +518,7 @@ void func_800869E4(u8* mapMsgIdx, u8* arg1, u16* arg2) // 0x800869E4
 
     g_SysWork.field_22A0 |= 1 << 5;
 
-    ret = Gfx_MapMsgDisplay(mapMsgIdx);
+    ret = Gfx_MapMsg_Display(mapMsgIdx);
     if (ret == 1)
     {
         g_SysWork.field_28 = 0;

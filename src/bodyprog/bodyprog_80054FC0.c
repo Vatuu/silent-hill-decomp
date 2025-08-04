@@ -321,29 +321,29 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_800574D4); // 0x
 
 void func_8005759C(s_func_8005759C* arg0, s_func_8005759C_2* arg1, s32 arg2, s32 arg3) // 0x8005759C
 {
-    s16* field_C_pointer;
-    s16* field_18C_pointer;
-    s32* field_8_pointer;
-    s32* field_0_pointer;
-    u8*  field_2B8_pointer;
-    u8*  field_14_pointer;
+    s16* field_CPtr;
+    s16* field_18CPtr;
+    s32* field_8Ptr;
+    s32* field_0Ptr;
+    u8*  field_2B8Ptr;
+    u8*  field_14Ptr;
 
-    // Maybe could be turned to for loop? I tried but no luck.
-    field_0_pointer   = &arg1->field_0[arg2];
-    field_18C_pointer = &arg1->field_18C[arg2];
-    field_8_pointer   = arg0->field_8;
-    field_C_pointer   = arg0->field_C;
-    while (field_8_pointer < &arg0->field_8[arg0->field_1])
+    // Should be loop? Tried but no luck.
+    field_0Ptr   = &arg1->field_0[arg2];
+    field_18CPtr = &arg1->field_18C[arg2];
+    field_8Ptr   = arg0->field_8;
+    field_CPtr   = arg0->field_C;
+    while (field_8Ptr < &arg0->field_8[arg0->field_1])
     {
-        *field_0_pointer++   = *field_8_pointer++;
-        *field_18C_pointer++ = *field_C_pointer++;
+        *field_0Ptr++   = *field_8Ptr++;
+        *field_18CPtr++ = *field_CPtr++;
     }
 
-    field_14_pointer  = arg0->field_14;
-    field_2B8_pointer = &arg1->field_2B8[arg3];
-    while (field_14_pointer < &arg0->field_14[arg0->field_3])
+    field_14Ptr  = arg0->field_14;
+    field_2B8Ptr = &arg1->field_2B8[arg3];
+    while (field_14Ptr < &arg0->field_14[arg0->field_3])
     {
-        *field_2B8_pointer++ = *field_14_pointer++;
+        *field_2B8Ptr++ = *field_14Ptr++;
     }
 }
 
@@ -1350,26 +1350,26 @@ void func_8006E490(s_func_8006E490* arg0, u32 arg1, s32 arg2, s32 arg3) // 0x800
 {
     s32 var_a2;
 
-    if (arg1 & 4)
+    if (arg1 & (1 << 2))
     {
         var_a2 = arg2;
         arg2   = arg3;
         arg3   = var_a2;
     }
 
-    if (arg1 & 2)
+    if (arg1 & (1 << 1))
     {
         arg3 = -arg3;
     }
 
-    if (arg1 & 1)
+    if (arg1 & (1 << 0))
     {
         arg2 = -arg2;
     }
 
     arg2 = FP_FROM(arg2, Q12_SHIFT);
     arg3 = FP_FROM(arg3, Q12_SHIFT);
-    if ((arg2 >= 0) && (arg2 < arg0->field_10) && (arg3 >= 0) && (arg3 < arg0->field_14))
+    if (arg2 >= 0 && arg2 < arg0->field_10 && arg3 >= 0 && arg3 < arg0->field_14)
     {
         arg0->field_20[arg0->field_1C].field_0 = arg2;
         arg0->field_20[arg0->field_1C].field_2 = arg3;
