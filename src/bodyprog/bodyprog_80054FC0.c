@@ -1752,12 +1752,12 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* arg1) // 0x80077
         case 25:
         case 26:
             g_SavegamePtr->walkDistance_258 += moveDistStep;
-            g_SavegamePtr->walkDistance_258  = CLAMP(g_SavegamePtr->walkDistance_258, TRAVEL_DIST_MIN, TRAVEL_DIST_MAX);
+            g_SavegamePtr->walkDistance_258  = CLAMP((u32)g_SavegamePtr->walkDistance_258, TRAVEL_DIST_MIN, (u32)TRAVEL_DIST_MAX);
             break;
 
         default:
             g_SavegamePtr->runDistance_254 += moveDistStep;
-            g_SavegamePtr->runDistance_254  = CLAMP(g_SavegamePtr->runDistance_254, TRAVEL_DIST_MIN, TRAVEL_DIST_MAX);
+            g_SavegamePtr->runDistance_254  = CLAMP((u32)g_SavegamePtr->runDistance_254, TRAVEL_DIST_MIN, (u32)TRAVEL_DIST_MAX);
             break;
     }
 
