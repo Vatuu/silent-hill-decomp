@@ -336,7 +336,349 @@ void Gfx_MapMsg_CalculateWidthTable(s32 mapMsgIdx) // 0x8004ACF4
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/text_draw", func_8004AF18); // 0x8004AF18
+//#ifdef NON_MATCHING
+s32 func_8004AF18(char* mapMsg, s32 strLen)
+{
+    #define __GLYPH_SIZE_X       12
+    #define __GLYPH_SIZE_Y       16
+    #define __SPACE_SIZE         6
+    #define __LINE_SPACE_SIZE    32
+    #define __ATLAS_COLUMN_COUNT 21
+
+    // I think this is what it means, not sure
+    #define retcode_AlignLeft (0x63)
+    #define retcode_AlignCenter (0x52)
+    #define retcode_setByT (0x58) // set by ~T but no string contains that code
+
+    s32 glyphPosX;
+    s32 glyphPosY;
+    
+    u32 temp_a0;
+    s32 temp_a0_2;
+    s32 digit;
+    s32 i;
+    s32 fractionDigits;
+    s32 longestLineWidth;
+    bool isFraction;
+    s32 lineIdx;
+
+    u32 color;
+    u8 codeTag;
+    s32 codeArg;
+    s32 result;
+    u8 resultCpy;
+    s32 charCode;
+    
+    s32 idx;
+    s32 charWidth;
+    
+    GsOT*     ot;
+    PACKET*   packet;
+    DR_TPAGE* tPage;
+    POLY_FT4* glyphPoly;
+    SPRT*     glyphSprt;
+
+    packet = NULL;
+    result = 0;
+
+#define g_ColorTable D_80025DC0
+    
+    ot = (GsOT*)&D_800B5C58[g_ObjectTableIdx];
+    color = g_ColorTable[g_StringColorId];
+    g_StringPosition.vx = -(g_MapMsg_WidthTable[0] >> 1);
+    
+
+    if (!(g_SysWork.highResolutionTextRender_2350_0 & 0xF))
+    {
+        packet = GsOUT_PACKET_P;
+    }
+    
+    switch ((u8)D_800C38B0.positionIdx_1)
+    {
+        case 0:
+            //D_800C38AA = -92;
+            g_StringPosition.vy = -92;
+            break;
+        
+        case 1:
+            g_StringPosition.vy = 76 - ((D_800C38B4.lineCount_0 - 1) * __GLYPH_SIZE_Y);
+            break;
+        
+        case 2:
+            g_StringPosition.vy = -60;
+            break;
+        
+        case 3:
+            g_StringPosition.vy = 44 - ((D_800C38B4.lineCount_0 - 1) * __GLYPH_SIZE_Y);
+            break;
+        
+        case 4:
+            g_StringPosition.vy = ((9 - D_800C38B4.lineCount_0) * 8) - 76;
+            break;
+    }
+
+    // Find biggest width.
+    longestLineWidth = g_MapMsg_WidthTable[0];
+    
+    for (i = 0; i < D_800C38B4.lineCount_0; i++)
+    {
+        if (longestLineWidth < g_MapMsg_WidthTable[i])
+        {
+            longestLineWidth = g_MapMsg_WidthTable[i];
+        }
+    }
+      
+    g_StringPosition.vx = -(longestLineWidth >> 1);
+    
+    g_StringPositionX1 = g_StringPosition.vx;
+    glyphPosX = g_StringPositionX1;
+    glyphPosY = g_StringPosition.vy;
+
+    // Parse string.
+    for (lineIdx = 0; lineIdx < 9;)
+    {
+        // Convert literal `!` and `&` into `char`s mappable to representative atlas glyphs.
+        charCode = *mapMsg;
+        if (charCode == '!')
+        {
+            charCode = '\\';
+        }
+        else if (charCode == '&')
+        {
+            charCode = '^';
+        }
+        
+        switch (charCode)
+        {
+            // Space.
+            case '_':
+                glyphPosX += __SPACE_SIZE;
+                mapMsg++;
+                break;
+            
+            // Ignore spaces and tabs.
+            case ' ':
+            case '\t':
+                mapMsg++;
+                break;
+            
+            case MAP_MSG_CODE_MARKER:
+                codeTag = *++mapMsg;
+                codeArg  = *++mapMsg - '0';
+    
+                switch (codeTag)
+                {
+                    default:
+                        break;
+                    
+                    case MAP_MSG_CODE_NEWLINE:
+                        lineIdx++;
+                        
+                        switch (result)
+                        {
+                            case retcode_AlignLeft:
+                                glyphPosX = -(g_MapMsg_WidthTable[lineIdx] >> 1);
+                                break;
+                            
+                            case retcode_setByT:
+                                glyphPosX = g_StringPositionX1;
+                                break;
+
+                            default:
+                                glyphPosX = -(longestLineWidth >> 1);
+                                break;
+                        }
+                        
+                        glyphPosY += __GLYPH_SIZE_Y;
+                        break;
+                    
+                    case MAP_MSG_CODE_JUMP:
+                        fractionDigits = 0;
+                        isFraction = 0;
+                        digit = 0;
+                        
+                        if (g_SysWork.mapMsgTimer_234C == NO_VALUE)
+                        {
+                            int c;
+                            mapMsg = mapMsg + 2;
+                            c = *mapMsg;
+                            g_MapMsg_AudioLoadBlock = codeArg + 1;
+                            
+                            while (c != ')')
+                            {
+                                if (c == '.')
+                                {
+                                    isFraction = 1;
+                                }
+                                else
+                                {
+                                    if (isFraction != 0)
+                                    {
+                                        fractionDigits++;
+                                    }
+
+                                    digit *= 10;
+                                    digit -= '0' - c;
+                                }
+                                mapMsg++;
+                                c = *mapMsg;
+                            }
+                            
+                            
+                            digit = digit << 12;
+
+                            for (i = 0; i < fractionDigits; i++)
+                            {
+                                digit = digit / 10;
+                            }
+
+                            g_SysWork.mapMsgTimer_234C = digit;
+                            
+                            mapMsg = mapMsg + 1;
+                        }
+                        else
+                        {
+                            while (codeArg != ' ' && codeArg != '\t')
+                            {
+                                codeArg = *++mapMsg;
+                            }
+                        }
+                        break;
+                        
+                    case MAP_MSG_CODE_MIDDLE:
+                        result = retcode_AlignLeft;
+                        glyphPosX = -(g_MapMsg_WidthTable[lineIdx] >> 1);
+                        break;
+                        
+                    case MAP_MSG_CODE_TAB:
+                        result = retcode_setByT;
+                        g_StringPositionX1 = -120;
+                        glyphPosX = -120;
+                        break;
+                        
+                    case MAP_MSG_CODE_COLOR:
+                        color = g_ColorTable[codeArg];
+                        g_StringColorId = codeArg;
+                        break;
+                        
+                    case MAP_MSG_CODE_DISPLAY_ALL:
+                        strLen = MAP_MESSAGE_DISPLAY_ALL_LENGTH;
+                        break;
+                        
+                    case MAP_MSG_CODE_END:
+                        result = NO_VALUE;
+                        lineIdx = 9;
+                        break;
+                        
+                    case MAP_MSG_CODE_SELECT:
+                        result = codeArg;
+                        lineIdx = 9;
+                        break;
+                        
+                    case MAP_MSG_CODE_HIGH_RES:
+                        g_SysWork.highResolutionTextRender_2350_0 = 1;
+                        break;
+            }
+            mapMsg++;
+            break;
+            
+        // Terminator.
+        case '\0':
+            result = 1;
+            lineIdx = 9;
+            break;
+
+        // Draw glyph sprite.
+        default:
+            strLen--;
+
+            // TODO: Might be identical to what's seen in `Gfx_StringDraw`.
+            // Check from line 130 in that file.
+            if (g_SysWork.highResolutionTextRender_2350_0 & 0xF)
+            {
+                glyphPoly = (POLY_FT4*)GsOUT_PACKET_P;
+                
+                idx = charCode - 0x27;
+                //temp_v1 = textX + 0xC;
+                //temp_a0_2 = textX;
+                charWidth = D_80025D6C[charCode - 0x27];
+                
+                setPolyFT4(glyphPoly);
+                setRGB0(glyphPoly, (s8)color, (s8)(color >> 8), (s8)(color >> 0x10));
+                setXY4(glyphPoly,
+                    glyphPosX, glyphPosY * 2,
+                    glyphPosX, (glyphPosY * 2) + 30,
+                    glyphPosX + __GLYPH_SIZE_X, glyphPosY * 2,
+                    glyphPosX + __GLYPH_SIZE_X, (glyphPosY * 2) + 30
+                );
+
+                glyphPosX += charWidth;
+
+                temp_a0 = ((idx) % 21) * __GLYPH_SIZE_X;
+                
+                *((u32*)&glyphPoly->u0) = temp_a0 + 0xF000 + (0x7FD3 << 16); //u0, v0, clut
+                *((u32*)&glyphPoly->u1) = temp_a0 + (((((idx / 21) & 0xF) | 0x10) << 0x10) | 0xFF00);  //u1, v1, page
+                *((u16*)&glyphPoly->u2) = temp_a0 - 0xFF4;
+                *((u16*)&glyphPoly->u3) = temp_a0 - 0xF4;
+                
+                addPrim(ot, glyphPoly);
+                GsOUT_PACKET_P = (PACKET*)glyphPoly + sizeof(POLY_FT4);
+            }
+            else
+            {
+                temp_a0_2 = (u16)glyphPosX;
+                
+                glyphSprt = (SPRT*)packet;
+                *((u32*)&glyphSprt->w) = 0x10000C;
+                
+                idx = charCode - 0x27;
+                glyphPosX += D_80025D6C[idx];
+                //charWidth = D_80025D6C[idx];
+                
+                addPrimFast(ot, glyphSprt, 4);
+                *((u32*)&glyphSprt->r0) = color;
+                //setXY0Fast(glyphSprt, temp_a0_2, glyphPosY);
+                *((u32 *)(&glyphSprt->x0)) = temp_a0_2 + ((glyphPosY) << 16);
+                
+                //textX += charWidth;
+
+                *((u32*)&glyphSprt->u0) = (s32) ((((idx) % 21) * __GLYPH_SIZE_X) + 0xF000 + (0x7FD3 << 16)); //u0, v0, clut
+                
+                packet += sizeof(SPRT);
+
+                tPage = (DR_TPAGE*)packet;
+                setDrawTPage(tPage, 0, 1, ((idx / 21) & 0xF) | 0x10);
+                //tPage->code[0] = (s32) ((((charCode - 0x27) / 21) & 0xF) | 0xE1000210);
+                addPrim(ot, tPage);
+                
+                packet += sizeof(DR_TPAGE);
+            }
+            
+            mapMsg++;
+            if (strLen <= 0)
+            {
+                if (!(g_SysWork.highResolutionTextRender_2350_0 & 0xF))
+                {
+                    GsOUT_PACKET_P = packet;
+                }
+                return result;
+            }
+        }
+    }
+        
+    if (!(g_SysWork.highResolutionTextRender_2350_0 & 0xF))
+    {
+        GsOUT_PACKET_P = packet;
+    }
+            
+    //g_StringPosition = (DVECTOR){ glyphPosX, glyphPosY };
+    *((u32*)&g_StringPosition) = (glyphPosX & 0xFFFF) + (glyphPosY << 16);
+
+    return result;
+}
+//#else
+//INCLUDE_ASM("asm/bodyprog/nonmatchings/text_draw", func_8004AF18); // 0x8004AF18
+//#endif
 
 void func_8004B658() // 0x8004B658
 {

@@ -16,10 +16,6 @@
 #include "main/rng.h"
 #include "screens/stream/stream.h"
 
-// TODO: Make a map message constants header.
-// This causes an entire message to display instantly by using a long string length.
-#define MAP_MESSAGE_DISPLAY_ALL_LENGTH 400
-
 void GameState_Unk0_Update() // 0x80032D1C
 {
     s32 gameState;
@@ -2388,9 +2384,9 @@ s32 Gfx_MapMsg_Display(s32 mapMsgIdx) // 0x800365B8
                         Sd_PlaySfx(Sfx_Cancel, 0, 64);
 
                         // Exit 480i mode (used by map screen).
-                        if (g_SysWork.silentYesSelection_4 != 0)
+                        if (g_SysWork.silentYesSelection_2350_4 != 0)
                         {
-                            g_SysWork.silentYesSelection_4 = 0;
+                            g_SysWork.silentYesSelection_2350_4 = 0;
                         }
 
                         g_MapMsg_StateMachineIdx2 = FINISH_MAP_MSG;
@@ -2404,15 +2400,15 @@ s32 Gfx_MapMsg_Display(s32 mapMsgIdx) // 0x800365B8
                         {
                             Sd_PlaySfx(Sfx_Cancel, 0, 64);
                         }
-                        else if (g_SysWork.silentYesSelection_4 == 0)
+                        else if (g_SysWork.silentYesSelection_2350_4 == 0)
                         {
                             Sd_PlaySfx(Sfx_Confirm, 0, 64);
                         }
 
                         // Exit 480i mode (used by map screen).
-                        if (g_SysWork.silentYesSelection_4 != 0)
+                        if (g_SysWork.silentYesSelection_2350_4 != 0)
                         {
-                            g_SysWork.silentYesSelection_4 = 0;
+                            g_SysWork.silentYesSelection_2350_4 = 0;
                         }
 
                         g_MapMsg_StateMachineIdx2 = FINISH_MAP_MSG;

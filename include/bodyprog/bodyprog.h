@@ -1434,7 +1434,7 @@ extern s_ControllerConfig D_8002511C[];
 
 extern s_AreaLoadSfx const D_800252BC[];
 
-extern u8 D_80025D6C[];
+extern u8 const D_80025D6C[];
 
 extern u32 D_80025DC0[];
 

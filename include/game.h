@@ -55,6 +55,9 @@
 
 struct _SubCharacter; // Forward declaration.
 
+// This causes an entire message to display instantly by using a long string length.
+#define MAP_MESSAGE_DISPLAY_ALL_LENGTH 400
+
 /** Each map has its own messages, with the first 15 hardcoded to be the same. */
 typedef enum _MapMsgIdx
 {
@@ -1125,8 +1128,8 @@ typedef struct _SysWork
     u8              field_234B_0 : 4;
     u8              field_234B_4 : 4;
     s32             mapMsgTimer_234C;
-    u8              highResolutionTextRender_2350_0 : 4;
-    u8              silentYesSelection_4            : 4; // `s32`?
+    s32             highResolutionTextRender_2350_0 : 4;
+    u8              silentYesSelection_2350_4       : 4;
     u32             inventoryItemSelectedIdx_2351   : 8;
     u32             flags_2352                      : 8;
     s32             field_2353                      : 8; // Some index into `npcs_1A0`.
