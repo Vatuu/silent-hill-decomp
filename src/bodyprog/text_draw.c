@@ -93,7 +93,7 @@ bool Gfx_StringDraw(char* str, s32 size) // 0x8004A8E8
     posX = g_StringPosition.vx;
     posY = g_StringPosition.vy;
 
-    glyphColor = D_80025DC0[g_StringColorId];
+    glyphColor = g_MapMsg_ColorTable[g_StringColorId];
     ot         = &D_800B5C40[g_ObjectTableIdx].field_0[D_800AD49C];
 
     if (!(g_SysWork.highResolutionTextRender_2350_0 & 0xF))
@@ -201,7 +201,7 @@ bool Gfx_StringDraw(char* str, s32 size) // 0x8004A8E8
         // New color.
         else if (charCode >= '\x01' && charCode < '\b')
         {
-            glyphColor      = D_80025DC0[charCode];
+            glyphColor      = g_MapMsg_ColorTable[charCode];
             g_StringColorId = charCode;
         }
         // Terminator.
@@ -366,7 +366,6 @@ s32 func_8004AF18(char* mapMsg, s32 strLen) // 0x8004AF18
     u8 codeTag;
     s32 codeArg;
     s32 result;
-    u8 resultCpy;
     s32 charCode;
     
     s32 idx;
@@ -381,10 +380,8 @@ s32 func_8004AF18(char* mapMsg, s32 strLen) // 0x8004AF18
     packet = NULL;
     result = 0;
 
-#define g_ColorTable D_80025DC0
-    
     ot = (GsOT*)&D_800B5C58[g_ObjectTableIdx];
-    color = g_ColorTable[g_StringColorId];
+    color = g_MapMsg_ColorTable[g_StringColorId];
     g_StringPosition.vx = -(g_MapMsg_WidthTable[0] >> 1);
     
 
@@ -396,7 +393,6 @@ s32 func_8004AF18(char* mapMsg, s32 strLen) // 0x8004AF18
     switch ((u8)D_800C38B0.positionIdx_1)
     {
         case 0:
-            //D_800C38AA = -92;
             g_StringPosition.vy = -92;
             break;
         
@@ -554,7 +550,7 @@ s32 func_8004AF18(char* mapMsg, s32 strLen) // 0x8004AF18
                         break;
                         
                     case MAP_MSG_CODE_COLOR:
-                        color = g_ColorTable[codeArg];
+                        color = g_MapMsg_ColorTable[codeArg];
                         g_StringColorId = codeArg;
                         break;
                         

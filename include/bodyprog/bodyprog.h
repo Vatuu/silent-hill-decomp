@@ -1436,7 +1436,7 @@ extern s_AreaLoadSfx const D_800252BC[];
 
 extern u8 const D_80025D6C[];
 
-extern u32 D_80025DC0[];
+extern u32 g_MapMsg_ColorTable[];
 
 extern char D_80028544[0x10];
 

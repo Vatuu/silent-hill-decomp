@@ -62,13 +62,14 @@ nextGameStates                              = 0x80025480;
 //------------------------------------------------------
 //--- PA: 0x001200   VA: 0x80025D60   subsegment: rodata
 //------------------------------------------------------
+g_MapMsg_ColorTable                         = 0x80025DC0;
 
 //------------------------------------------------------------------
 //--- PA: 0x001280   VA: 0x80025DE0   subsegment: .rodata, text_draw
 //------------------------------------------------------------------
 
 //------------------------------------------------------
-//--- PA: 0x0012C8   VA: 0x80025E28   subsegment: rodata
+//--- PA: 0x001328   VA: 0x80025E88   subsegment: rodata
 //------------------------------------------------------
 
 //-----------------------------------------------------------------------------
@@ -87,6 +88,18 @@ g_ItemVectors                               = 0x800262FC; // type:DVECTOR size:0
 //------------------------------------------------------
 //--- PA: 0x0032F4   VA: 0x80027E54   subsegment: rodata
 //------------------------------------------------------
+
+//--------------------------------------------------------------------------
+//--- PA: 0x005638   VA: 0x8002A198   subsegment: .rodata, bodyprog_80054FC0
+//--------------------------------------------------------------------------
+
+//--------------------------------------------------------------------------
+//--- PA: 0x0056C8   VA: 0x8002A228   subsegment: .rodata, bodyprog_80054FC0
+//--------------------------------------------------------------------------
+
+//--------------------------------------------------------------------------
+//--- PA: 0x005758   VA: 0x8002A2B8   subsegment: .rodata, bodyprog_80054FC0
+//--------------------------------------------------------------------------
 
 //---------------------------------------------------------------------
 //--- PA: 0x005CF0   VA: 0x8002A850   subsegment: .rodata, view/vc_main
@@ -275,7 +288,7 @@ Game_InGameInitialize                       = 0x80035178; // type:func
 GameFs_MapLoad                              = 0x8003521C; // type:func
 Savegame_MapRoomIdxSet                      = 0x80036420; // type:func
 Gfx_MapMsg_Display                          = 0x800365B8; // type:func
-Gfx_MapMsg_SelectionUpdate         		    = 0x80036B5C; // type:func
+Gfx_MapMsg_SelectionUpdate                  = 0x80036B5C; // type:func
 Chara_PositionUpdateFromParams              = 0x800371E8; // type:func
 GameState_InGame_Update                     = 0x80038BD4; // type:func
 SysState_Gameplay_Update                    = 0x80038F6C; // type:func
@@ -397,7 +410,7 @@ Gfx_StringSetPosition                       = 0x8004A87C; // type:func
 Gfx_StringSetColor                          = 0x8004A8DC; // type:func
 Gfx_StringDraw                              = 0x8004A8E8; // type:func
 Gfx_MapMsg_CalculateWidthTable              = 0x8004ACF4; // type:func
-func_8004AF18              = 0x8004AF18; // type:func
+func_8004AF18                               = 0x8004AF18; // type:func
 Gfx_StringDrawInt                           = 0x8004B9F8; // type:func
 
 //-------------------------------------------------------------------------
