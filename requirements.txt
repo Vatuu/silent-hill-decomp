@@ -4,3 +4,4 @@ toml
 splat64[mips]>=0.33.2,<1.0.0
 clang-format
 clang-tidy
+pycparser
