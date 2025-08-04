@@ -1687,7 +1687,37 @@ s32 func_800895E4(s_SysWork_2514* arg0, s_8002AC04* arg1, u8 arg2)
     return D_800AFD08[arg1->field_4](arg0, 0, arg1, &sp10);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80089644); // 0x80089644
+s32 func_80089644(s_SysWork_2514* arg0, s_func_80089644_0* arg1, s32 arg2, u32 arg3)
+{
+    s32                temp_v1;
+    s_func_80089644_1* temp_v1_2;
+    s_8002AC04*        temp_a2;
+    u32                temp_a0;
+
+    arg3 *= 5;
+    arg1->unk18 = 0U;
+    arg1->unk14 = (s32)(arg1->unk14 & 0x7FFFFFFF);
+    while (true)
+    {
+        temp_a2 = arg1->unk10;
+        if (!temp_a2)
+            break;
+        if (D_800AFD08[temp_a2->field_4](arg0, (s32)arg1, temp_a2, &arg3) == 0)
+            break;
+    }
+
+    temp_v1 = arg1->unk14;
+    if ((temp_v1 < 0) && (arg2 & arg1->unk1E))
+    {
+        temp_a0   = arg1->unk18;
+        temp_v1_2 = &arg0->field_C->unk_0[((u32)temp_v1 >> 0x15) & 0x3F8];
+        if ((u32)temp_v1_2->unk4 < temp_a0)
+        {
+            temp_v1_2->unk4 = temp_a0;
+        }
+    }
+    return arg1->unk10 != NULL;
+}
 
 // TODO: Rodata migration.
 #ifdef NON_MATCHING
