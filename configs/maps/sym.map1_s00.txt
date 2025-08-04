@@ -1,6 +1,46 @@
+
+
+
+//================================================
+//=== .rodata section
+//================================================
+
+
+//------------------------------------------------------
+//--- PA: 0x000000   VA: 0x800C9578   subsegment: rodata
+//------------------------------------------------------
+
+//-----------------------------------------------------------------
+//--- PA: 0x001228   VA: 0x800CA7A0   subsegment: .rodata, map1_s00
+//-----------------------------------------------------------------
+
+//------------------------------------------------------
+//--- PA: 0x001278   VA: 0x800CA7F0   subsegment: rodata
+//------------------------------------------------------
+
+//-------------------------------------------------------------------
+//--- PA: 0x0014A0   VA: 0x800CAA18   subsegment: .rodata, map1_s00_2
+//-------------------------------------------------------------------
+
+//------------------------------------------------------
+//--- PA: 0x0014DC   VA: 0x800CAA54   subsegment: rodata
+//------------------------------------------------------
 sharedData_800CAB70_0_s00 = 0x800CAAA8; // type:s32
+
+
+
+//================================================
+//=== .text section
+//================================================
+
+
+//-----------------------------------------------------------
+//--- PA: 0x002230   VA: 0x800CB7A8   subsegment: c, map1_s00
+//-----------------------------------------------------------
 sharedFunc_800CBBBC_0_s00 = 0x800CBC34; // type:func
+sharedFunc_800CF2A4_0_s01 = 0x800CC914; // type:func
 sharedFunc_800D01BC_0_s00 = 0x800CCF48; // type:func
+sharedFunc_800CF9A8_0_s01 = 0x800CD000; // type:func
 sharedFunc_800D08B8_0_s00 = 0x800CD088; // type:func
 sharedFunc_800D0A60_0_s00 = 0x800CD208; // type:func
 sharedFunc_800D0B18_0_s00 = 0x800CD2C0; // type:func
@@ -20,15 +60,19 @@ sharedFunc_800D2E60_0_s00 = 0x800CEFA8; // type:func
 sharedFunc_800D2EA4_0_s00 = 0x800CEFEC; // type:func
 sharedFunc_800D2EB4_0_s00 = 0x800CEFFC; // type:func
 sharedFunc_800D2EF4_0_s00 = 0x800CF03C; // type:func
-Ai_LarvalStalker_Update = 0x800CF050; // type:func
+Ai_LarvalStalker_Update   = 0x800CF050; // type:func
 sharedFunc_800CF168_1_s00 = 0x800CF168; // type:func
 sharedFunc_800D140C_1_s00 = 0x800D140C; // type:func
 sharedFunc_800D1524_1_s00 = 0x800D1524; // type:func
-Ai_LarvalStalker_Init = 0x800D16FC; // type:func
+Ai_LarvalStalker_Init     = 0x800D16FC; // type:func
 sharedFunc_800D17BC_1_s00 = 0x800D17BC; // type:func
 sharedFunc_800D1DBC_1_s00 = 0x800D1DBC; // type:func
-Ai_Stalker_Update = 0x800D24F8; // type:func
-Ai_Stalker_Init = 0x800D268C; // type:func
+
+//-------------------------------------------------------------
+//--- PA: 0x008F80   VA: 0x800D24F8   subsegment: c, map1_s00_2
+//-------------------------------------------------------------
+Ai_Stalker_Update         = 0x800D24F8; // type:func
+Ai_Stalker_Init           = 0x800D268C; // type:func
 sharedFunc_800D3308_0_s00 = 0x800D28F8; // type:func
 sharedFunc_800D3B44_0_s00 = 0x800D3134; // type:func
 sharedFunc_800D5098_0_s00 = 0x800D4828; // type:func
@@ -42,6 +86,18 @@ sharedFunc_800D7BE8_0_s00 = 0x800D7378; // type:func
 sharedFunc_800D7E04_0_s00 = 0x800D7594; // type:func
 sharedFunc_800D929C_0_s00 = 0x800D7748; // type:func
 sharedFunc_800D7758_1_s00 = 0x800D7758; // type:func
+
+
+
+//================================================
+//=== .data section
+//================================================
+
+
+//--------------------------------------------------------------
+//--- PA: 0x010ED4   VA: 0x800DA44C   subsegment: data, map1_s00
+//--------------------------------------------------------------
+sharedData_800DD796_0_s01 = 0x800DA6BD; // type:u8
 sharedData_800DD59C_0_s00 = 0x800DA6C4; // type:u8
 sharedData_800DA6C8_0_s00 = 0x800DA6C8;
 sharedData_800DD5A8_0_s00 = 0x800DB048; // type:s32 unknown type

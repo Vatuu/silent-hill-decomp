@@ -19,6 +19,8 @@
 #define MEMORY_CARD_SLOT_COUNT   2
 #define CONTROLLER_COUNT_MAX     2
 
+#define EVENT_FLAG5_FIRST_TIME_SAVE_GAME (1 << 26)
+
 #define MAP_MSG_CODE_MARKER         '~'
 #define MAP_MSG_CODE_NEWLINE        'N' // Newline.
 #define MAP_MSG_CODE_END            'E' // End message.
@@ -50,6 +52,28 @@
 /** @brief Checks if a specified map has been collected. */
 #define HAS_MAP(mapIdx) \
     ((((u32*)&g_SavegamePtr->hasMapsFlags_164)[(mapIdx) / 32] >> ((mapIdx) % 32)) & (1 << 0))
+
+struct _SubCharacter; // Forward declaration.
+
+/** Each map has its own messages, with the first 15 hardcoded to be the same. */
+typedef enum _MapMsgIdx
+{
+    MapMsgIdx_Yes               = 0,
+    MapMsgIdx_No                = 1,
+    MapMsgIdx_SaveGame          = 2, // "Someday, someone may experience..."
+    MapMsgIdx_NoMap             = 3,
+    MapMsgIdx_TooDarkForMap     = 4,
+    MapMsgIdx_FirstAidSelect    = 5,
+    MapMsgIdx_HealthDrinkSelect = 6,
+    MapMsgIdx_AmpouleSelect     = 7,
+    MapMsgIdx_HandgunAmmoSelect = 8,
+    MapMsgIdx_RifleAmmoSelect   = 9,
+    MapMsgIdx_ShotgunAmmoSelect = 10,
+    MapMsgIdx_DoorJammer        = 11,
+    MapMsgIdx_DoorLocked        = 12,
+    MapMsgIdx_DoorUnlocked      = 13,
+    MapMsgIdx_NowMaking         = 14  // Unused?
+} e_MapMsgIdx;
 
 typedef enum _MapMsgCode
 {
@@ -503,6 +527,13 @@ typedef enum _PadTerminalType
     PadTerminalType_MultitapAdapter     = 8
 } e_PadTerminalType;
 
+typedef enum _GameDifficulty
+{
+    GameDifficulty_Easy   = -1,
+    GameDifficulty_Normal = 0,
+    GameDifficulty_Hard   = 1
+} e_GameDifficulty;
+
 typedef union
 {
     u32 rawData_0;
@@ -573,13 +604,6 @@ typedef struct _ShInventoryItem
     u8 field_3;   // Some sort of index?
 } s_ShInventoryItem;
 STATIC_ASSERT_SIZEOF(s_ShInventoryItem, 4);
-
-typedef enum _GameDifficulty
-{
-    GameDifficulty_Easy   = -1,
-    GameDifficulty_Normal = 0,
-    GameDifficulty_Hard   = 1
-} e_GameDifficulty;
 
 typedef struct _ShSavegame
 {
@@ -1100,12 +1124,12 @@ typedef struct _SysWork
     u8              field_234A   : 8;
     u8              field_234B_0 : 4;
     u8              field_234B_4 : 4;
-    s32             mapMsgTimer_234C;                   
-    u8              enableHighResString_2350_0    : 4;
-    u8              field_2350_4                  : 4; // `s32`?
-    u32             inventoryItemSelectedIdx_2351 : 8;
-    u32             flags_2352                    : 8;
-    s32             field_2353                    : 8; // Some index into `npcs_1A0`.
+    s32             mapMsgTimer_234C;
+    u8              highResolutionTextRender_2350_0 : 4;
+    u8              silentYesSelection_4            : 4; // `s32`?
+    u32             inventoryItemSelectedIdx_2351   : 8;
+    u32             flags_2352                      : 8;
+    s32             field_2353                      : 8; // Some index into `npcs_1A0`.
     s8              field_2354[4];                     // Size dervied from `func_80070320`.
     u8              field_2358;
     s8              unk_2359[1];

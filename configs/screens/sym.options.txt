@@ -1,10 +1,68 @@
-// Data
-OPTION_str               = 0x801E2784; // type:asciz
-Settings_str             = 0x801E280C;
-EXTRA_OPTION_str         = 0x801E26CC;
-SettingsExtra_str        = 0x801E2764;
-SettingsExtraOptions_str = 0x801E2A6C;
 
+
+
+//================================================
+//=== .rodata section
+//================================================
+
+
+//----------------------------------------------------------------
+//--- PA: 0x000008   VA: 0x801E2608   subsegment: .rodata, options
+//----------------------------------------------------------------
+EXTRA_OPTION_str                                = 0x801E26CC;
+SettingsExtra_str                               = 0x801E2764;
+// Data
+OPTION_str                                      = 0x801E2784; // type:asciz
+Settings_str                                    = 0x801E280C;
+SettingsExtraOptions_str                        = 0x801E2A6C;
+
+
+
+//================================================
+//=== .text section
+//================================================
+
+
+//----------------------------------------------------------
+//--- PA: 0x000744   VA: 0x801E2D44   subsegment: c, options
+//----------------------------------------------------------
+GameState_OptionScreen_Update                   = 0x801E2D44; // type:func
+Settings_ExtraScreen                            = 0x801E318C; // type:func
+Settings_MainScreen                             = 0x801E3770; // type:func
+Gfx_BgmBarDraw                                  = 0x801E3F68; // type:func
+Gfx_SfxBarDraw                                  = 0x801E3F90; // type:func
+Gfx_BarDraw                                     = 0x801E3FB8; // type:func
+Gfx_OptionsStringsExtraDraw                     = 0x801E416C; // type:func
+Gfx_OptionsStringsMainDraw                      = 0x801E42EC; // type:func
+Gfx_SelectedOptionExtra                         = 0x801E4450; // type:func
+Gfx_SelectedOptionMain                          = 0x801E472C; // type:func
+Gfx_VignetteDraw                                = 0x801E49F0; // type:func
+Gfx_SettingsOptionsExtraDraw                    = 0x801E4B2C; // type:func
+Gfx_SettingsOptionsMainDraw                     = 0x801E4FFC; // type:func
+Settings_PositionScreen                         = 0x801E53A0; // type:func
+Gfx_PositionArrowsDraw                          = 0x801E5A08; // type:func
+Gfx_PositionIndicatorDraw                       = 0x801E5CBC; // type:func
+Settings_BrightnessScreen                       = 0x801E6018; // type:func
+Gfx_BrightnessLevelTextDraw                     = 0x801E6238; // type:func
+Gfx_BrightnessLevelArrowsDraw                   = 0x801E628C; // type:func
+Gfx_LineDraw                                    = 0x801E641C; // type:func
+Gfx_Options_BlueArrowDraw                       = 0x801E662C; // type:func
+Gfx_ButtonDraw                                  = 0x801E67B0; // type:func
+Settings_ControllerScreen                       = 0x801E69BC; // type:func
+Settings_ButtonChange                           = 0x801E6CF4; // type:func
+Gfx_ControllerScreenDraw                        = 0x801E6F60; // type:func
+Gfx_ControllerButtonsDraw                       = 0x801E716C; // type:func
+
+
+
+//================================================
+//=== .data section
+//================================================
+
+
+//--------------------------------------------------------------
+//--- PA: 0x004CF4   VA: 0x801E72F4   subsegment: .data, options
+//--------------------------------------------------------------
 g_MainSelectedOptionIdx                         = 0x801E72F4;
 g_ExtraSelectedOptionIdx                        = 0x801E72F8;
 g_PrevMainSelectedOptionIdx                     = 0x801E72FC; // allow_duplicated:True
@@ -21,36 +79,3 @@ g_Gfx_MoveLineTimer                             = 0x801E73E4;
 g_OptExtra_ShowSettingsCount                    = 0x801E73E8;
 g_OptExtra_BloodColorSelected                   = 0x801E73EC;
 g_OptExtra_BulletMultLimit                      = 0x801E73F0;
-
-
-// Funcs
-GameState_OptionScreen_Update = 0x801E2D44; // type:func
-Settings_ExtraScreen          = 0x801E318C; // type:func
-Settings_MainScreen           = 0x801E3770; // type:func
-Gfx_BgmBarDraw                = 0x801E3F68; // type:func
-Gfx_SfxBarDraw                = 0x801E3F90; // type:func
-Gfx_BarDraw                   = 0x801E3FB8; // type:func
-Gfx_OptionsStringsExtraDraw   = 0x801E416C; // type:func
-Gfx_OptionsStringsMainDraw    = 0x801E42EC; // type:func
-Gfx_SelectedOptionExtra       = 0x801E4450; // type:func
-Gfx_SelectedOptionMain        = 0x801E472C; // type:func
-Gfx_VignetteDraw              = 0x801E49F0; // type:func
-Gfx_SettingsOptionsExtraDraw  = 0x801E4B2C; // type:func
-Gfx_SettingsOptionsMainDraw   = 0x801E4FFC; // type:func
-
-Settings_PositionScreen   = 0x801E53A0; // type:func
-Gfx_PositionArrowsDraw    = 0x801E5A08; // type:func
-Gfx_PositionIndicatorDraw = 0x801E5CBC; // type:func
-
-Settings_BrightnessScreen     = 0x801E6018; // type:func
-Gfx_BrightnessLevelTextDraw   = 0x801E6238; // type:func
-Gfx_BrightnessLevelArrowsDraw = 0x801E628C; // type:func
-
-Gfx_LineDraw   = 0x801E641C; // type:func
-Gfx_Options_BlueArrowDraw  = 0x801E662C; // type:func
-Gfx_ButtonDraw = 0x801E67B0; // type:func
-
-Settings_ControllerScreen = 0x801E69BC; // type:func
-Settings_ButtonChange     = 0x801E6CF4; // type:func
-Gfx_ControllerScreenDraw  = 0x801E6F60; // type:func
-Gfx_ControllerButtonsDraw = 0x801E716C; // type:func

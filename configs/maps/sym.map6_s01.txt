@@ -1,60 +1,101 @@
-sharedFunc_800D08B8_0_s00 = 0x800CC444; // type:func
-sharedFunc_800D0A60_0_s00 = 0x800CC5C4; // type:func
-sharedFunc_800D0B18_0_s00 = 0x800CC67C; // type:func
-sharedFunc_800D0E04_0_s00 = 0x800CC7E0; // type:func
-sharedFunc_800D209C_0_s00 = 0x800CDEE8; // type:func
-sharedFunc_800D20D8_0_s00 = 0x800CDF24; // type:func
-sharedFunc_800D20E4_0_s00 = 0x800CDF30; // type:func
-sharedFunc_800D2244_0_s00 = 0x800CE090; // type:func
-sharedFunc_800D2C7C_0_s00 = 0x800CE270; // type:func
-sharedFunc_800D2D2C_0_s00 = 0x800CE320; // type:func
-sharedFunc_800D2D44_0_s00 = 0x800CE338; // type:func
-sharedFunc_800D2D6C_0_s00 = 0x800CE360; // type:func
-sharedFunc_800D2D84_0_s00 = 0x800CE378; // type:func
-sharedFunc_800D2DAC_0_s00 = 0x800CE3A0; // type:func
-sharedFunc_800D2E50_0_s00 = 0x800CE444; // type:func
-sharedFunc_800D2E60_0_s00 = 0x800CE454; // type:func
-sharedFunc_800D2EA4_0_s00 = 0x800CE498; // type:func
-sharedFunc_800D2EB4_0_s00 = 0x800CE4A8; // type:func
-sharedFunc_800D2EF4_0_s00 = 0x800CE4E8; // type:func
-Ai_Cybil_Update = 0x800CE4FC; // type:func
-sharedFunc_800D8888_0_s01 = 0x800CE570; // type:func
-sharedFunc_800D88D0_0_s01 = 0x800CE5B8; // type:func
+
+
+
+//================================================
+//=== .rodata section
+//================================================
+
+
+//------------------------------------------------------
+//--- PA: 0x000000   VA: 0x800C9578   subsegment: rodata
+//------------------------------------------------------
+
+//-----------------------------------------------------------------
+//--- PA: 0x001050   VA: 0x800CA5C8   subsegment: .rodata, map6_s01
+//-----------------------------------------------------------------
+
+//------------------------------------------------------
+//--- PA: 0x0010A0   VA: 0x800CA618   subsegment: rodata
+//------------------------------------------------------
+
+
+
+//================================================
+//=== .text section
+//================================================
+
+
+//-----------------------------------------------------------
+//--- PA: 0x0025E8   VA: 0x800CBB60   subsegment: c, map6_s01
+//-----------------------------------------------------------
+sharedFunc_800D08B8_0_s00   = 0x800CC444; // type:func
+sharedFunc_800D0A60_0_s00   = 0x800CC5C4; // type:func
+sharedFunc_800D0B18_0_s00   = 0x800CC67C; // type:func
+sharedFunc_800D0E04_0_s00   = 0x800CC7E0; // type:func
+sharedFunc_800D209C_0_s00   = 0x800CDEE8; // type:func
+sharedFunc_800D20D8_0_s00   = 0x800CDF24; // type:func
+sharedFunc_800D20E4_0_s00   = 0x800CDF30; // type:func
+sharedFunc_800D2244_0_s00   = 0x800CE090; // type:func
+sharedFunc_800D2C7C_0_s00   = 0x800CE270; // type:func
+sharedFunc_800D2D2C_0_s00   = 0x800CE320; // type:func
+sharedFunc_800D2D44_0_s00   = 0x800CE338; // type:func
+sharedFunc_800D2D6C_0_s00   = 0x800CE360; // type:func
+sharedFunc_800D2D84_0_s00   = 0x800CE378; // type:func
+sharedFunc_800D2DAC_0_s00   = 0x800CE3A0; // type:func
+sharedFunc_800D2E50_0_s00   = 0x800CE444; // type:func
+sharedFunc_800D2E60_0_s00   = 0x800CE454; // type:func
+sharedFunc_800D2EA4_0_s00   = 0x800CE498; // type:func
+sharedFunc_800D2EB4_0_s00   = 0x800CE4A8; // type:func
+sharedFunc_800D2EF4_0_s00   = 0x800CE4E8; // type:func
+Ai_Cybil_Update             = 0x800CE4FC; // type:func
+sharedFunc_800D8888_0_s01   = 0x800CE570; // type:func
+sharedFunc_800D88D0_0_s01   = 0x800CE5B8; // type:func
 sharedSymbol_800D8A68_0_s01 = 0x800CE750; // type:func
-Ai_Cybil_Init = 0x800CF794; // type:func
-Ai_Dahlia_Update = 0x800CF7D0; // type:func
-sharedFunc_800CD280_2_s01 = 0x800CF844; // type:func
-sharedFunc_800CD2C8_2_s01 = 0x800CF88C; // type:func
+Ai_Cybil_Init               = 0x800CF794; // type:func
+Ai_Dahlia_Update            = 0x800CF7D0; // type:func
+sharedFunc_800CD280_2_s01   = 0x800CF844; // type:func
+sharedFunc_800CD2C8_2_s01   = 0x800CF88C; // type:func
 sharedSymbol_800CD4A0_2_s01 = 0x800CFA64; // type:func
-Ai_Dahlia_Init = 0x800D031C; // type:func
-sharedFunc_800D88AC_0_s00 = 0x800D0358; // type:func
-sharedFunc_800D88C0_0_s00 = 0x800D036C; // type:func
-sharedFunc_800D8904_0_s00 = 0x800D03B0; // type:func
-sharedFunc_800D891C_0_s00 = 0x800D03C8; // type:func
-sharedFunc_800D8928_0_s00 = 0x800D03D4; // type:func
-sharedFunc_800D893C_0_s00 = 0x800D03E8; // type:func
-sharedFunc_800D8950_0_s00 = 0x800D03FC; // type:func
-sharedFunc_800D8964_0_s00 = 0x800D0410; // type:func
-sharedFunc_800D9064_0_s00 = 0x800D0B2C; // type:func
-sharedFunc_800D9078_0_s00 = 0x800D0B40; // type:func
-sharedFunc_800D908C_0_s00 = 0x800D0B54; // type:func
-sharedFunc_800D9188_0_s00 = 0x800D0C50; // type:func
-sharedFunc_800D921C_0_s00 = 0x800D0D34; // type:func
-sharedFunc_800D923C_0_s00 = 0x800D0D70; // type:func
-sharedFunc_800D929C_0_s00 = 0x800D0DD0; // type:func
-sharedFunc_800DA8E8_0_s01 = 0x800D1340; // type:func
-sharedData_800DD59C_0_s00 = 0x800D359C; // type:u8
-sharedData_800DFB6C_0_s00 = 0x800D41C0; // type:s32
-sharedData_800DFB70_0_s00 = 0x800D41C4; // type:s32
-sharedData_800E0CA8_0_s00 = 0x800D5300; // type:s32
-sharedData_800E0CAC_0_s00 = 0x800D5304; // type:s32
-sharedData_800E0CB0_0_s00 = 0x800D5308; // type:u32
-sharedData_800E0CB4_0_s00 = 0x800D530C; // type:u16
-sharedData_800E0CB6_0_s00 = 0x800D530E; // type:u16
-sharedData_800E0CB8_0_s00 = 0x800D5310; // type:u16
-sharedData_800E0CBA_0_s00 = 0x800D5312; // type:s8
-sharedData_800E39D8_0_s00 = 0x800D5330; // type:s32
-sharedData_800E2378_0_s01 = 0x800D5338; // type:s32
-sharedData_800E237C_0_s01 = 0x800D533C; // type:s32
-sharedData_800D16E0_2_s01 = 0x800D5340; // type:s32
-sharedData_800D16E4_2_s01 = 0x800D5344; // type:s8
+Ai_Dahlia_Init              = 0x800D031C; // type:func
+sharedFunc_800D88AC_0_s00   = 0x800D0358; // type:func
+sharedFunc_800D88C0_0_s00   = 0x800D036C; // type:func
+sharedFunc_800D8904_0_s00   = 0x800D03B0; // type:func
+sharedFunc_800D891C_0_s00   = 0x800D03C8; // type:func
+sharedFunc_800D8928_0_s00   = 0x800D03D4; // type:func
+sharedFunc_800D893C_0_s00   = 0x800D03E8; // type:func
+sharedFunc_800D8950_0_s00   = 0x800D03FC; // type:func
+sharedFunc_800D8964_0_s00   = 0x800D0410; // type:func
+sharedFunc_800D9064_0_s00   = 0x800D0B2C; // type:func
+sharedFunc_800D9078_0_s00   = 0x800D0B40; // type:func
+sharedFunc_800D908C_0_s00   = 0x800D0B54; // type:func
+sharedFunc_800D9188_0_s00   = 0x800D0C50; // type:func
+sharedFunc_800D921C_0_s00   = 0x800D0D34; // type:func
+sharedFunc_800D923C_0_s00   = 0x800D0D70; // type:func
+sharedFunc_800D929C_0_s00   = 0x800D0DD0; // type:func
+sharedFunc_800DA8E8_0_s01   = 0x800D1340; // type:func
+
+
+
+//================================================
+//=== .data section
+//================================================
+
+
+//--------------------------------------------------------------
+//--- PA: 0x009EF4   VA: 0x800D346C   subsegment: data, map6_s01
+//--------------------------------------------------------------
+sharedData_800DD59C_0_s00   = 0x800D359C; // type:u8
+sharedData_800DFB6C_0_s00   = 0x800D41C0; // type:s32
+sharedData_800DFB70_0_s00   = 0x800D41C4; // type:s32
+sharedData_800E0CA8_0_s00   = 0x800D5300; // type:s32
+sharedData_800E0CAC_0_s00   = 0x800D5304; // type:s32
+sharedData_800E0CB0_0_s00   = 0x800D5308; // type:u32
+sharedData_800E0CB4_0_s00   = 0x800D530C; // type:u16
+sharedData_800E0CB6_0_s00   = 0x800D530E; // type:u16
+sharedData_800E0CB8_0_s00   = 0x800D5310; // type:u16
+sharedData_800E0CBA_0_s00   = 0x800D5312; // type:s8
+sharedData_800E39D8_0_s00   = 0x800D5330; // type:s32
+sharedData_800E2378_0_s01   = 0x800D5338; // type:s32
+sharedData_800E237C_0_s01   = 0x800D533C; // type:s32
+sharedData_800D16E0_2_s01   = 0x800D5340; // type:s32
+sharedData_800D16E4_2_s01   = 0x800D5344; // type:s8

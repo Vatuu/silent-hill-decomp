@@ -311,6 +311,8 @@ segments:
       - [0x82458,   c, libsd/smf_mid]
 
       - [0x84238, data, bodyprog_800A8D98]
+      - [0x84ECC, .data, syswork_functable]
+      - [0x84F08, data, bodyprog_800A9A68]
       - [0x89000, .data, items/item_screens_3]
       - [0x89618, data, bodyprog_800AE178]
 

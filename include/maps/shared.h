@@ -15,9 +15,19 @@ typedef struct
 
 typedef struct
 {
-    u8      unk_0[0xC];
+    VECTOR3     position1_0; // Snow: position, Rain: streak lower position.
+    VECTOR3     position2_C; // Snow: unused, Rain: streak upper position
+    SVECTOR3    movement_18; // Snow: random accumulation, Rain: Y accumulation (seems to affect streak length).
+    u8          counter_1E;  // Blank: 0, Fall: 1, Rest on ground (snowflake or rain splash): 2+.
+                             // NOTE: Some setups skip resting, i.e. outside windows when ground can't be seen.
+    s8          type_1F;     // Snow: 0, Rain: 2, Y not updated, meaning particle never resets but XZ offsets still apply: 1.
+} s_Particle;
+
+typedef struct
+{
+    u8      unk_0[12];
     VECTOR3 field_C;
-    u8      unk_18[0x18];
+    u8      unk_18[24];
 } s_sharedData_800E3148_1_s02;
 
 extern u8                          sharedData_800DF158_1_s02;
@@ -101,6 +111,7 @@ extern s32 sharedData_800D5CF4_3_s00; // Used by `Ai_Kaufmann_Init`.
 extern s_AnimInfo sharedData_800D5ABC_3_s03[]; // Used by `Ai_Bloodsucker_Init`.
 
 extern u8 sharedData_800DD591_0_s00;
+extern u8 sharedData_800DD796_0_s01;
 
 extern s_AnimInfo sharedData_800DF174_0_s00[]; // Used by `sharedFunc_800D921C_0_s00`, `Ai_Kaufmann` related?
 
@@ -208,9 +219,16 @@ void sharedFunc_800D9078_0_s00(s_SubCharacter* chara);
 
 s16 sharedFunc_800D921C_0_s00(s_SubCharacter* chara);
 
-void sharedFunc_800D923C_0_s00(s_SubCharacter* chara); // Humanoid init function?
+/** Humanoid init function? */
+void sharedFunc_800D923C_0_s00(s_SubCharacter* chara);
 
 u8 sharedFunc_800D92AC_0_s00(s32 x, s32 y);
+
+/** Snow particle update. */
+void sharedFunc_800CF2A4_0_s01(s32 arg0, s_Particle* part, u16* rand, s32* deltaTime);
+
+/** Snow particle init. */
+void sharedFunc_800CF9A8_0_s01(s32 arg0, s_Particle* part, u16* rand);
 
 void sharedFunc_800DA8E8_0_s01(s32* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
 

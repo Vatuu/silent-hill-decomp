@@ -1,58 +1,132 @@
-// Handlers for movie-related GameStates
-GameState_StartMovieIntro_Update = 0x801E2654; // type:func
-GameState_MovieIntro_Update = 0x801E279C; // type:func
-GameState_MovieOpening_Update = 0x801E2838; // type:func
-GameState_ExitMovie_Update = 0x801E28B0; // type:func
-GameState_DebugMoviePlayer_Update = 0x801E2908; // type:func
-GameState_MovieIntroAlternate_Update = 0x801E2A24; // type:func
 
+
+
+//================================================
+//=== .rodata section
+//================================================
+
+
+//------------------------------------------------------
+//--- PA: 0x000000   VA: 0x801E2600   subsegment: rodata
+//------------------------------------------------------
+
+//-------------------------------------------------------------------------------
+//--- PA: 0x000004   VA: 0x801E2604   subsegment: lib, libpress, libpress, .rdata
+//-------------------------------------------------------------------------------
+
+
+
+//================================================
+//=== .text section
+//================================================
+
+
+//---------------------------------------------------------
+//--- PA: 0x000054   VA: 0x801E2654   subsegment: c, stream
+//---------------------------------------------------------
+// Handlers for movie-related GameStates
+GameState_StartMovieIntro_Update     = 0x801E2654; // type:func
+GameState_MovieIntro_Update          = 0x801E279C; // type:func
+GameState_MovieOpening_Update        = 0x801E2838; // type:func
+GameState_ExitMovie_Update           = 0x801E28B0; // type:func
+GameState_DebugMoviePlayer_Update    = 0x801E2908; // type:func
+GameState_MovieIntroAlternate_Update = 0x801E2A24; // type:func
 // beatmania MOVIESYS names, which seems based on PSX SDK sample code
 // (SH1 seems closer to MOVIESYS than the SDK code)
-open_main = 0x801e2aa4; // type:func
-movie_main = 0x801e2b9c; // type:func
-strSetDefDecEnv = 0x801e2f8c; // type:func
-strInit = 0x801e300c; // type:func
-strCallback = 0x801e307c; // type:func
-strKickCD = 0x801e31cc; // type:func
-strNextVlc = 0x801e3298; // type:func
-strNext = 0x801e331c; // type:func
-strSync = 0x801e3438; // type:func
+open_main                            = 0x801E2AA4; // type:func
+movie_main                           = 0x801E2B9C; // type:func
+strSetDefDecEnv                      = 0x801E2F8C; // type:func
+strInit                              = 0x801E300C; // type:func
+strCallback                          = 0x801E307C; // type:func
+strKickCD                            = 0x801E31CC; // type:func
+strNextVlc                           = 0x801E3298; // type:func
+strNext                              = 0x801E331C; // type:func
+strSync                              = 0x801E3438; // type:func
 
-g_Debug_MoviePlayerIdx = 0x801E3F3C; // type:s32
+//----------------------------------------------------------------
+//--- PA: 0x000ECC   VA: 0x801E34CC   subsegment: lib, libds, dscb
+//----------------------------------------------------------------
+DsSyncCallback                       = 0x801E34CC; // type:func
+DsReadyCallback                      = 0x801E34E0; // type:func
+DsStartCallback                      = 0x801E34F4; // type:func
+DsDataCallback                       = 0x801E3508; // type:func
 
+//-----------------------------------------------------------------------
+//--- PA: 0x000F2C   VA: 0x801E352C   subsegment: lib, libpress, libpress
+//-----------------------------------------------------------------------
+DecDCTReset                          = 0x801E352C; // type:func
+DecDCTGetEnv                         = 0x801E3560; // type:func
+DecDCTPutEnv                         = 0x801E35EC; // type:func
+DecDCTBufSize                        = 0x801E3684; // type:func
+DecDCTin                             = 0x801E3690; // type:func
+DecDCTout                            = 0x801E370C; // type:func
+DecDCTinSync                         = 0x801E372C; // type:func
+DecDCToutSync                        = 0x801E3768; // type:func
+DecDCTinCallback                     = 0x801E37A4; // type:func
+DecDCToutCallback                    = 0x801E37C8; // type:func
+MDEC_reset                           = 0x801E37EC; // type:func
+MDEC_in                              = 0x801E38DC; // type:func
+MDEC_out                             = 0x801E396C; // type:func
+MDEC_in_sync                         = 0x801E39F8; // type:func
+MDEC_out_sync                        = 0x801E3A8C; // type:func
+MDEC_status                          = 0x801E3B20; // type:func
+timeout                              = 0x801E3B38; // type:func
+
+//------------------------------------------------------------------
+//--- PA: 0x0015BC   VA: 0x801E3BBC   subsegment: lib, libpress, vlc
+//------------------------------------------------------------------
+DecDCTvlcSize                        = 0x801E3BBC; // type:func
+DecDCTvlc                            = 0x801E3BEC; // type:func
+
+
+
+//================================================
+//=== .data section
+//================================================
+
+
+//-------------------------------------------------------------
+//--- PA: 0x00193C   VA: 0x801E3F3C   subsegment: .data, stream
+//-------------------------------------------------------------
+g_Debug_MoviePlayerIdx               = 0x801E3F3C; // type:s32
 // MOVIESYS globals
-max_frame = 0x801E3F40;
-frame_cnt = 0x801E3F44;
-disp      = 0x801E3F48;
-m         = 0x801F50E0;
+max_frame                            = 0x801E3F40;
+frame_cnt                            = 0x801E3F44;
+disp                                 = 0x801E3F48;
 
-// dscb.o
-DsSyncCallback = 0x801e34cc; // type:func
-DsReadyCallback = 0x801e34e0; // type:func
-DsStartCallback = 0x801e34f4; // type:func
-DsDataCallback = 0x801e3508; // type:func
-// dscb.o globals
-GlobalCallback = 0x801F50E8;
+//------------------------------------------------------------------------------
+//--- PA: 0x00195C   VA: 0x801E3F5C   subsegment: lib, libpress, libpress, .data
+//------------------------------------------------------------------------------
 
-// libpress.o
-DecDCTReset = 0x801e352c; // type:func
-DecDCTGetEnv = 0x801e3560; // type:func
-DecDCTPutEnv = 0x801e35ec; // type:func
-DecDCTBufSize = 0x801e3684; // type:func
-DecDCTin = 0x801e3690; // type:func
-DecDCTout = 0x801e370c; // type:func
-DecDCTinSync = 0x801e372c; // type:func
-DecDCToutSync = 0x801e3768; // type:func
-DecDCTinCallback = 0x801e37a4; // type:func
-DecDCToutCallback = 0x801e37c8; // type:func
-MDEC_reset = 0x801e37ec; // type:func
-MDEC_in = 0x801e38dc; // type:func
-MDEC_out = 0x801e396c; // type:func
-MDEC_in_sync = 0x801e39f8; // type:func
-MDEC_out_sync = 0x801e3a8c; // type:func
-MDEC_status = 0x801e3b20; // type:func
-timeout = 0x801e3b38; // type:func
+//-------------------------------------------------------------------------
+//--- PA: 0x001AAC   VA: 0x801E40AC   subsegment: lib, libpress, vlc, .data
+//-------------------------------------------------------------------------
 
-// vlc.o
-DecDCTvlcSize = 0x801e3bbc; // type:func
-DecDCTvlc = 0x801e3bec; // type:func
+//---------------------------------------------------------------------------
+//--- PA: 0x001ADC   VA: 0x801E40DC   subsegment: lib, libpress, table, .data
+//---------------------------------------------------------------------------
+
+//---------------------------------------------------------------------
+//--- PA: 0x012ADC   VA: 0x801F50DC   subsegment: data, stream_801F50DC
+//---------------------------------------------------------------------
+
+
+
+//================================================
+//=== .bss section
+//================================================
+
+
+//------------------------------------------------------------
+//--- PA: 0x012AE0   VA: 0x801F50E0   subsegment: .bss, stream
+//------------------------------------------------------------
+m                                    = 0x801F50E0;
+
+//--------------------------------------------------------------------
+//--- PA: 0x012AE4   VA: 0x801F50E4   subsegment: bss, stream_801F50E4
+//--------------------------------------------------------------------
+
+//----------------------------------------------------------------------
+//--- PA: 0x012AE8   VA: 0x801F50E8   subsegment: lib, libds, dscb, .bss
+//----------------------------------------------------------------------
+GlobalCallback                       = 0x801F50E8;
