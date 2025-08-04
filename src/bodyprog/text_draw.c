@@ -48,8 +48,6 @@ void Gfx_StringSetColor(s16 colorId) // 0x8004A8DC
     g_StringColorId = colorId;
 }
 
-// TODO: Requires `s_SysWork::highResolutionTextRender_2350_0` to be `s32`, causing mismatch elsewhere.
-#ifdef NON_MATCHING
 bool Gfx_StringDraw(char* str, s32 size) // 0x8004A8E8
 {
     #define GLYPH_SIZE_X       12
@@ -224,9 +222,6 @@ bool Gfx_StringDraw(char* str, s32 size) // 0x8004A8E8
 
     return result;
 }
-#else
-INCLUDE_ASM("asm/bodyprog/nonmatchings/text_draw", Gfx_StringDraw); // 0x8004A8E8
-#endif
 
 void Gfx_MapMsg_CalculateWidthTable(s32 mapMsgIdx) // 0x8004ACF4
 {
