@@ -336,14 +336,14 @@ void Gfx_MapMsg_CalculateWidthTable(s32 mapMsgIdx) // 0x8004ACF4
     }
 }
 
-//#ifdef NON_MATCHING
-s32 func_8004AF18(char* mapMsg, s32 strLen)
+s32 func_8004AF18(char* mapMsg, s32 strLen) // 0x8004AF18
 {
     #define __GLYPH_SIZE_X       12
     #define __GLYPH_SIZE_Y       16
     #define __SPACE_SIZE         6
     #define __LINE_SPACE_SIZE    32
     #define __ATLAS_COLUMN_COUNT 21
+    #define CHARCODE_OFFSET      0x27
 
     // I think this is what it means, not sure
     #define retcode_AlignLeft (0x63)
@@ -417,9 +417,7 @@ s32 func_8004AF18(char* mapMsg, s32 strLen)
             break;
     }
 
-    // Find biggest width.
     longestLineWidth = g_MapMsg_WidthTable[0];
-    
     for (i = 0; i < D_800C38B4.lineCount_0; i++)
     {
         if (longestLineWidth < g_MapMsg_WidthTable[i])
@@ -429,7 +427,6 @@ s32 func_8004AF18(char* mapMsg, s32 strLen)
     }
       
     g_StringPosition.vx = -(longestLineWidth >> 1);
-    
     g_StringPositionX1 = g_StringPosition.vx;
     glyphPosX = g_StringPositionX1;
     glyphPosY = g_StringPosition.vy;
@@ -598,10 +595,8 @@ s32 func_8004AF18(char* mapMsg, s32 strLen)
             {
                 glyphPoly = (POLY_FT4*)GsOUT_PACKET_P;
                 
-                idx = charCode - 0x27;
-                //temp_v1 = textX + 0xC;
-                //temp_a0_2 = textX;
-                charWidth = D_80025D6C[charCode - 0x27];
+                idx = charCode - CHARCODE_OFFSET;
+                charWidth = D_80025D6C[charCode - CHARCODE_OFFSET];
                 
                 setPolyFT4(glyphPoly);
                 setRGB0(glyphPoly, (s8)color, (s8)(color >> 8), (s8)(color >> 0x10));
@@ -617,7 +612,7 @@ s32 func_8004AF18(char* mapMsg, s32 strLen)
                 temp_a0 = ((idx) % 21) * __GLYPH_SIZE_X;
                 
                 *((u32*)&glyphPoly->u0) = temp_a0 + 0xF000 + (0x7FD3 << 16); //u0, v0, clut
-                *((u32*)&glyphPoly->u1) = temp_a0 + (((((idx / 21) & 0xF) | 0x10) << 0x10) | 0xFF00);  //u1, v1, page
+                *((u32*)&glyphPoly->u1) = temp_a0 + (((((idx / __ATLAS_COLUMN_COUNT) & 0xF) | 0x10) << 0x10) | 0xFF00);  //u1, v1, page
                 *((u16*)&glyphPoly->u2) = temp_a0 - 0xFF4;
                 *((u16*)&glyphPoly->u3) = temp_a0 - 0xF4;
                 
@@ -631,24 +626,19 @@ s32 func_8004AF18(char* mapMsg, s32 strLen)
                 glyphSprt = (SPRT*)packet;
                 *((u32*)&glyphSprt->w) = 0x10000C;
                 
-                idx = charCode - 0x27;
+                idx = charCode - CHARCODE_OFFSET;
                 glyphPosX += D_80025D6C[idx];
-                //charWidth = D_80025D6C[idx];
                 
                 addPrimFast(ot, glyphSprt, 4);
                 *((u32*)&glyphSprt->r0) = color;
                 //setXY0Fast(glyphSprt, temp_a0_2, glyphPosY);
                 *((u32 *)(&glyphSprt->x0)) = temp_a0_2 + ((glyphPosY) << 16);
-                
-                //textX += charWidth;
-
-                *((u32*)&glyphSprt->u0) = (s32) ((((idx) % 21) * __GLYPH_SIZE_X) + 0xF000 + (0x7FD3 << 16)); //u0, v0, clut
+                *((u32*)&glyphSprt->u0) = (s32) ((((idx) % __ATLAS_COLUMN_COUNT) * __GLYPH_SIZE_X) + 0xF000 + (0x7FD3 << 16)); //u0, v0, clut
                 
                 packet += sizeof(SPRT);
 
                 tPage = (DR_TPAGE*)packet;
-                setDrawTPage(tPage, 0, 1, ((idx / 21) & 0xF) | 0x10);
-                //tPage->code[0] = (s32) ((((charCode - 0x27) / 21) & 0xF) | 0xE1000210);
+                setDrawTPage(tPage, 0, 1, ((idx / __ATLAS_COLUMN_COUNT) & 0xF) | 0x10);
                 addPrim(ot, tPage);
                 
                 packet += sizeof(DR_TPAGE);
@@ -676,9 +666,6 @@ s32 func_8004AF18(char* mapMsg, s32 strLen)
 
     return result;
 }
-//#else
-//INCLUDE_ASM("asm/bodyprog/nonmatchings/text_draw", func_8004AF18); // 0x8004AF18
-//#endif
 
 void func_8004B658() // 0x8004B658
 {
