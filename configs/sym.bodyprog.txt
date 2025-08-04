@@ -410,7 +410,7 @@ Gfx_StringSetPosition                       = 0x8004A87C; // type:func
 Gfx_StringSetColor                          = 0x8004A8DC; // type:func
 Gfx_StringDraw                              = 0x8004A8E8; // type:func
 Gfx_MapMsg_CalculateWidthTable              = 0x8004ACF4; // type:func
-func_8004AF18                               = 0x8004AF18; // type:func
+MapMsg_ParseAndRender                       = 0x8004AF18; // type:func
 Gfx_StringDrawInt                           = 0x8004B9F8; // type:func
 
 //-------------------------------------------------------------------------

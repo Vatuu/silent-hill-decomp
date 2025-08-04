@@ -2493,7 +2493,7 @@ s32 Gfx_MapMsg_SelectionUpdate(u8 mapMsgIdx, s32* arg1) // 0x80036B5C
     s8* str;
 
     // Draws string on screen and gives return code for various ~S codes.
-    mapMsgCode = func_8004AF18(g_MapOverlayHeader.mapMessageStrings_30[mapMsgIdx], *arg1);
+    mapMsgCode = MapMsg_ParseAndRender(g_MapOverlayHeader.mapMessageStrings_30[mapMsgIdx], *arg1);
 
     g_MapMsg_SelectFlashTimer += g_DeltaTime1;
     if (g_MapMsg_SelectFlashTimer >= FP_TIME(0.5f))

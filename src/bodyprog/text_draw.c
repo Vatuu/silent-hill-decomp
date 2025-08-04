@@ -336,7 +336,7 @@ void Gfx_MapMsg_CalculateWidthTable(s32 mapMsgIdx) // 0x8004ACF4
     }
 }
 
-s32 func_8004AF18(char* mapMsg, s32 strLen) // 0x8004AF18
+s32 MapMsg_ParseAndRender(char* mapMsg, s32 strLen) // 0x8004AF18
 {
     #define __GLYPH_SIZE_X       12
     #define __GLYPH_SIZE_Y       16
