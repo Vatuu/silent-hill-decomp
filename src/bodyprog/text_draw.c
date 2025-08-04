@@ -142,7 +142,7 @@ bool Gfx_StringDraw(char* str, s32 size) // 0x8004A8E8
                 glyphPoly = (POLY_FT4*)GsOUT_PACKET_P;
 
                 glyphIdx   = charCode - GLYPH_TABLE_ASCII_OFFSET;
-                glyphWidth = D_80025D6C[glyphIdx];
+                glyphWidth = g_MainFontWidthTable[glyphIdx];
 
                 setPolyFT4(glyphPoly);
                 setRGB0(glyphPoly, glyphColor, glyphColor >> 8, glyphColor >> 16);
@@ -172,7 +172,7 @@ bool Gfx_StringDraw(char* str, s32 size) // 0x8004A8E8
                 *((u32*)&glyphSprt->w) = 0x10000C;
                 
                 glyphIdx = charCode - GLYPH_TABLE_ASCII_OFFSET;
-                posX    += D_80025D6C[glyphIdx];
+                posX    += g_MainFontWidthTable[glyphIdx];
 
                 addPrimFast(ot, glyphSprt, 4);
                 *((u32*)&glyphSprt->r0)   = glyphColor;
@@ -324,7 +324,7 @@ void Gfx_MapMsg_CalculateWidthTable(s32 mapMsgIdx) // 0x8004ACF4
                     charCode = '^';
                 }
 
-                g_MapMsg_WidthTable[D_800C38B4.lineCount_0 - 1] += D_80025D6C[charCode - GLYPH_TABLE_ASCII_OFFSET];
+                g_MapMsg_WidthTable[D_800C38B4.lineCount_0 - 1] += g_MainFontWidthTable[charCode - GLYPH_TABLE_ASCII_OFFSET];
                 mapMsg++;
                 break;
         }
@@ -582,7 +582,7 @@ s32 MapMsg_ParseAndRender(char* mapMsg, s32 strLen) // 0x8004AF18
                 glyphPoly = (POLY_FT4*)GsOUT_PACKET_P;
                 
                 idx = charCode - CHARCODE_OFFSET;
-                charWidth = D_80025D6C[charCode - CHARCODE_OFFSET];
+                charWidth = g_MainFontWidthTable[charCode - CHARCODE_OFFSET];
                 
                 setPolyFT4(glyphPoly);
                 setRGB0(glyphPoly, (s8)color, (s8)(color >> 8), (s8)(color >> 0x10));
@@ -613,7 +613,7 @@ s32 MapMsg_ParseAndRender(char* mapMsg, s32 strLen) // 0x8004AF18
                 *((u32*)&glyphSprt->w) = 0x10000C;
                 
                 idx = charCode - CHARCODE_OFFSET;
-                glyphPosX += D_80025D6C[idx];
+                glyphPosX += g_MainFontWidthTable[idx];
                 
                 addPrimFast(ot, glyphSprt, 4);
                 *((u32*)&glyphSprt->r0) = color;
@@ -730,7 +730,7 @@ void func_8004B76C(char* str, s32 useFixedWidth) // 0x8004B76C
                 } 
                 else 
                 {
-                    glyphSprt->w = D_80025D6C[glyphIdx];
+                    glyphSprt->w = g_MainFontWidthTable[glyphIdx];
                 }
 
                 glyphSprt->tpage = (tileRow & 0xF) | 0x10;
