@@ -648,8 +648,8 @@ typedef struct _ShSavegame
     u8                clearGameEndings_24B;     /** `e_GameEndingFlags` */
     q19_12            playerPositionZ_24C;
     q20_12            gameplayTimer_250;
-    q19_12            runDistance_254;
-    q19_12            walkDistance_258;
+    q20_12            runDistance_254;
+    q20_12            walkDistance_258;
     u8                isNextFearMode_25C             : 1; // Makes savegame entry text gold.
     u8                add290Hours_25C_1              : 2; // Adds 290 hours per 1 bit, i.e. 290, 580, 870.
     u8                pickedUpSpecialItemCount_25C_3 : 5; // Red/None: 0?, Yellow: 8, Green: 16, Rainbow: 24 (unobtainable).

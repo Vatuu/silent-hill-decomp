@@ -449,8 +449,6 @@ void func_8005B474(s32* arg0, u32 arg1, s32 idx) // 0x8005B474
     }
 }
 
-// INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8005B4BC); // 0x8005B4BC
-
 s_800C1450_0_4* func_8005B4BC(char* str, s_800C1450* arg1) // 0x8005B4BC
 {
     s_800C1450_0_4* ptr;
@@ -1807,12 +1805,12 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* arg1) // 0x80077
         case 25:
         case 26:
             g_SavegamePtr->walkDistance_258 += moveDistStep;
-            g_SavegamePtr->walkDistance_258  = CLAMP((u32)g_SavegamePtr->walkDistance_258, TRAVEL_DIST_MIN, (u32)TRAVEL_DIST_MAX);
+            g_SavegamePtr->walkDistance_258 = CLAMP(g_SavegamePtr->walkDistance_258, TRAVEL_DIST_MIN, TRAVEL_DIST_MAX);
             break;
 
         default:
             g_SavegamePtr->runDistance_254 += moveDistStep;
-            g_SavegamePtr->runDistance_254  = CLAMP((u32)g_SavegamePtr->runDistance_254, TRAVEL_DIST_MIN, (u32)TRAVEL_DIST_MAX);
+            g_SavegamePtr->runDistance_254 = CLAMP(g_SavegamePtr->runDistance_254, TRAVEL_DIST_MIN, TRAVEL_DIST_MAX);
             break;
     }
 
@@ -3669,39 +3667,104 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8007D090); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8007D6E0); // 0x8007D6E0
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8007D6F0); // 0x8007D6F0
+s32 func_8007D6F0(s_SubCharacter* arg0, s_D_800C45C8* arg1) // 0x8007D6F0
+{
+    s_func_800700F8_2 sp10[2];
+    VECTOR3           sp50[4];
+    s32               ret[2];
+    s32               temp_lo;
+    s32               temp_s0;
+    s32               temp_s1;
+    s32               temp_s3;
+    s32               temp_s4;
+    s32               temp_s5;
+    s32               temp_v0_4;
+    u16               var_v0_2;
+
+    temp_s0 = g_SysWork.player_4C.chara_0.properties_E4.player.field_126 >> 3;
+    temp_s0 += 0xC00;
+    temp_s1 = -0x999;
+    temp_s1 -= (g_SysWork.player_4C.chara_0.properties_E4.player.field_126 >> 4);
+
+    temp_s4 = FP_MULTIPLY(shRcos(arg0->headingAngle_3C), 0x333, Q12_SHIFT);
+    temp_s3 = FP_MULTIPLY(shRsin(arg0->headingAngle_3C), 0x333, Q12_SHIFT);
+    temp_s5 = FP_MULTIPLY(temp_s0, shRsin(arg0->headingAngle_3C), Q12_SHIFT);
+    temp_lo = FP_MULTIPLY(temp_s0, shRcos(arg0->headingAngle_3C), Q12_SHIFT);
+    temp_s1 -= 0x666;
+    sp50[0].vy = arg0->position_18.vy + temp_s1;
+    sp50[0].vx = arg0->position_18.vx + temp_s4 + temp_s5;
+
+    sp50[0].vz = (arg0->position_18.vz - temp_s3) + temp_lo;
+    sp50[2].vy = arg0->position_18.vy - 0x666;
+    sp50[2].vx = arg0->position_18.vx + temp_s4;
+    sp50[2].vz = arg0->position_18.vz - temp_s3;
+
+    ret[0] = func_8006D90C(&sp10[0], &sp50[2], &sp50[0]);
+
+    if (ret[0] != 0)
+    {
+        sp50[1].vy = sp50[0].vy;
+        sp50[1].vx = (arg0->position_18.vx - temp_s4) + temp_s5;
+        sp50[1].vz = arg0->position_18.vz + temp_s3 + temp_lo;
+        sp50[3].vy = sp50[2].vy;
+        sp50[3].vx = arg0->position_18.vx - temp_s4;
+        sp50[3].vz = arg0->position_18.vz + temp_s3;
+
+        ret[1] = func_8006D90C(&sp10[1], &sp50[3], &sp50[1]);
+
+        if (ret[1] != 0)
+        {
+            arg1->field_14 = (sp10[0].field_14 + sp10[1].field_14) >> 1;
+            arg1->field_1  = sp10[0].field_1;
+
+            temp_v0_4 = (((sp10[0].field_1C + sp10[1].field_1C) >> 1) + 0x1000) & 0xFFF;
+
+            var_v0_2 = ABS_DIFF(temp_v0_4, arg0->headingAngle_3C);
+
+            if (var_v0_2 >= 0x71D && var_v0_2 <= 0x8E2)
+            {
+                if ((arg0->position_18.vy - 0x14CC) < sp10[0].field_18 || sp10[0].field_1 == 0 || sp10[0].field_1 == 0xC)
+                {
+                    if ((arg0->position_18.vy - 0x4CC) >= sp10[0].field_18)
+                    {
+                        return 2;
+                    }
+                }
+                else
+                {
+                    return 1;
+                }
+            }
+        }
+    }
+
+    return 0;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8007D970); // 0x8007D970
 
-// TODO: Can this work without needing inlined func?
-static inline Savegame_PlayerReset(s_ShSavegame* save)
-{
-    save->playerHealth_240      = FP_FLOAT_TO(100.0f, Q12_SHIFT);
-    save->field_A0              = 0;
-    save->equippedWeapon_AA     = 0;
-    save->field_238             = 0;
-    save->gameplayTimer_250     = 0;
-    save->runDistance_254       = 0;
-    save->walkDistance_258      = 0;
-    save->pickedUpItemCount_23C = 0;
-    save->clearGameCount_24A    = 0;
-    save->add290Hours_25C_1     = 0;
-}
-
 void Game_SavegameResetPlayer() // 0x8007E530
 {
-    s_ShSavegame* save = g_SavegamePtr;
-    s32           i;
+    s32 i;
 
     g_SavegamePtr->inventoryItemSpaces_AB = 8;
 
     for (i = 0; i < INVENTORY_ITEM_COUNT_MAX; i++)
     {
-        save->items_0[i].id_0    = 0xFF;
-        save->items_0[i].count_1 = 0;
+        g_SavegamePtr->items_0[i].id_0    = 0xFF;
+        g_SavegamePtr->items_0[i].count_1 = 0;
     }
 
-    Savegame_PlayerReset(g_SavegamePtr);
+    g_SavegamePtr->playerHealth_240      = FP_FLOAT_TO(100.0f, Q12_SHIFT);
+    g_SavegamePtr->field_A0              = 0;
+    g_SavegamePtr->equippedWeapon_AA     = 0;
+    g_SavegamePtr->field_238             = 0;
+    g_SavegamePtr->gameplayTimer_250     = 0;
+    g_SavegamePtr->runDistance_254       = 0;
+    g_SavegamePtr->walkDistance_258      = 0;
+    g_SavegamePtr->pickedUpItemCount_23C = 0;
+    g_SavegamePtr->clearGameCount_24A    = 0;
+    g_SavegamePtr->add290Hours_25C_1     = 0;
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8007E5AC); // 0x8007E5AC
