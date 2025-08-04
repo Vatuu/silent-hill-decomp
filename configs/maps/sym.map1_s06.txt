@@ -29,6 +29,7 @@
 //--- PA: 0x001A4C   VA: 0x800CAFC4   subsegment: c, map1_s06
 //-----------------------------------------------------------
 sharedFunc_800CBBBC_0_s00 = 0x800CCCE4; // type:func
+sharedFunc_800CF2A4_0_s01 = 0x800CDAFC; // type:func
 sharedFunc_800D01BC_0_s00 = 0x800CE11C; // type:func
 sharedFunc_800D0700_0_s00 = 0x800CE25C; // type:func
 sharedFunc_800D08B8_0_s00 = 0x800CE414; // type:func
