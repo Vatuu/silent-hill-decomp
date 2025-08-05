@@ -42,6 +42,10 @@
 #define ABS_DIFF(a, b) \
     ABS((a) - (b))
 
+/** @brief Checks if two values have different signs. */
+#define DIFF_SIGN(a, b) \
+    (((a) >= 0 && (b) < 0) || ((a) < 0 && (b) >= 0))
+
 /** @brief Converts an integer to a fixed-point Q format. */
 #define FP_TO(x, shift) \
     ((x) << (shift))
