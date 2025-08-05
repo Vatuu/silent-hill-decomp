@@ -1383,9 +1383,9 @@ typedef struct _MapOverlayHeader
     s32               (*func_134)(s_SubCharacter*);           // Assumed return type.
     s32               (*func_138)(s_SubCharacter*);           // Assumed return type.
     s32               (*func_13C)(s32, s32, void*, s16, s32); // 0x800C96B8
-    s8 unk_140[24];
-    void (*func_158)(s32, s32);
-    s8 unk_15C[12];
+    s8                unk_140[24];
+    void              (*func_158)(s32, s32);
+    s8                unk_15C[12];
     void              (*func_168)(void*, void*, void*);
     void              (*func_16C)(VECTOR3*, s16);
     s8                unk_170[36];
