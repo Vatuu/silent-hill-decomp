@@ -1383,7 +1383,9 @@ typedef struct _MapOverlayHeader
     s32               (*func_134)(s_SubCharacter*);           // Assumed return type.
     s32               (*func_138)(s_SubCharacter*);           // Assumed return type.
     s32               (*func_13C)(s32, s32, void*, s16, s32); // 0x800C96B8
-    s8                unk_140[40];
+    s8 unk_140[24];
+    void (*func_158)(s32, s32);
+    s8 unk_15C[12];
     void              (*func_168)(void*, void*, void*);
     void              (*func_16C)(VECTOR3*, s16);
     s8                unk_170[36];
@@ -1438,6 +1440,14 @@ typedef struct
     s32  field_18;
     s16  field_1C;
 } s_func_800700F8_2;
+
+typedef struct
+{
+    VECTOR3 field_0;
+    s32     field_C;
+    s8      unk10[4];
+    s8      field_14;
+} s_800C4590;
 
 // ========
 // GLOBALS
@@ -2118,9 +2128,7 @@ extern u16 D_800C4586; // Is player moving right (in-game)?
 
 extern s8 D_800C4588;
 
-extern s32 D_800C459C;
-
-extern s8 D_800C45A4;
+extern s_800C4590 D_800C4590;
 
 extern u16 D_800C45AC;
 
@@ -2136,8 +2144,6 @@ extern u16 D_800C45C0;
 
 extern s_D_800C45C8 D_800C45C8;
 
-extern u8 D_800C45C9;
-
 /** SFX? */
 extern s32 D_800C45DC;
 
@@ -2147,9 +2153,11 @@ extern u16 D_800C45F0;
 
 extern u16 D_800C4604;
 
+extern s8 D_800C4560;
+
 extern u8 D_800C4561;
 
-extern s8 D_800C4562;
+extern u8 D_800C4562;
 
 /** D_800C457C could be related to animations that play during cutscenes.
 
@@ -3472,6 +3480,8 @@ s32 func_8007F2AC();
 
 /** Gets something from the player's current animation? */
 s16 Player_AnimGetSomething();
+
+void func_8007FB34(s16, s16, s16*);
 
 /** Gets property 8 from player. */
 s32 func_8007FD2C();
