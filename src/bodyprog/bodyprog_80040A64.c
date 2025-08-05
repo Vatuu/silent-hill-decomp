@@ -129,7 +129,7 @@ void func_8004137C(VECTOR3* result, VECTOR* vec0, VECTOR* vec1, s32 screenDist)
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800414E0); // 0x800414E0
 
-s32 func_80041ADC(s32 queueIdx) // 80041ADC
+u32 func_80041ADC(s32 queueIdx) // 80041ADC
 {
     if (queueIdx == NO_VALUE)
     {
@@ -336,7 +336,32 @@ s32 func_80042178(s32* arg0) // 0x80042178
     return 0;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800421D8); // 0x800421D8
+void func_800421D8(char* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) // 0x800421D8
+{
+    D_800C1020.field_588 = arg3;
+    D_800C1020.field_134 = arg5;
+    if (arg1 != NO_VALUE)
+    {
+        if (arg1 != D_800C1020.field_13C)
+        {
+            if ((func_80041ADC(D_800C1020.field_140) >= 2) && (D_800C1020.field_138->field_2))
+            {
+                func_80056BF8(D_800C1020.field_138);
+            }
+            D_800C1020.field_13C = arg1;
+            D_800C1020.field_140 = NO_VALUE;
+        }
+    }
+    if ((D_800C1020.field_158 != arg2) || (strcmp(arg0, D_800C1020.field_144) != 0))
+    {
+        func_80042300(&D_800C1020, arg2);
+        D_800C1020.field_158 = arg2;
+        D_800C1020.field_14C = arg4;
+        strcpy(D_800C1020.field_144, arg0);
+        D_800C1020.field_148 = strlen(arg0);
+        func_800423F4(&D_800C1020, arg0, arg4);
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80042300); // 0x80042300
 

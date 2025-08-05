@@ -935,16 +935,29 @@ STATIC_ASSERT_SIZEOF(s_800BCE18, 11260);
 
 typedef struct
 {
-    s8  unk_0[28];
-    s16 field_1C;
-    s8  unk_1E[304];
-    s32 field_150;
-    s32 field_154;
-    s32 field_158;
-    s8  unk_15A[1060];
-    s32 field_580;
-    s32 field_584;
-    s32 field_588;
+    s8 unk_0[2];
+    u8 field_2;
+} s_800C1020_138;
+
+typedef struct
+{
+    s8              unk_0[28];
+    s16             field_1C;
+    s8              unk_1E[278];
+    s32             field_134;
+    s_800C1020_138* field_138;
+    s32             field_13C;
+    s32             field_140;
+    char            field_144[4];
+    s32             field_148;
+    s32             field_14C;
+    s32             field_150;
+    s32             field_154;
+    s32             field_158;
+    s8              unk_15C[1060];
+    s32             field_580;
+    s32             field_584;
+    s32             field_588;
     // More may follow.
 } s_800C1020;
 
@@ -2361,7 +2374,7 @@ void func_8004122C(s32* angle0, s32* angle1, VECTOR* arg2, VECTOR* arg3);
 void func_8004137C(VECTOR3* result, VECTOR* vec0, VECTOR* vec1, s32 screenDist);
 
 /** Some kind of queue entry load status getter. */
-s32 func_80041ADC(s32 queueIdx);
+u32 func_80041ADC(s32 queueIdx);
 
 /** Used for loading maps */
 void func_80041C24(s_80041CEC* arg0, s32 arg1, s32 arg2);
@@ -2385,6 +2398,8 @@ void func_8004201C();
 void func_800420C0();
 
 s32 func_80042178(s32* arg0);
+
+void func_800421D8(char* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
 
 /** @brief Turns two hex `char`s to their `int` hex value. */
 s32 func_8004255C(s32* out, char firstHex, char secondHex);
