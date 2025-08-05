@@ -142,9 +142,9 @@ typedef struct _VC_ROAD_DATA
 {
     VC_LIMIT_AREA     lim_sw_0;
     VC_LIMIT_AREA     lim_rd_8;
-    VC_ROAD_FLAGS     flags_10          : 8;
+    VC_ROAD_FLAGS     flags_10          : 8; /** Path flags. */
     VC_AREA_SIZE_TYPE area_size_type_11 : 2;
-    VC_ROAD_TYPE      rd_type_11        : 3;
+    VC_ROAD_TYPE      rd_type_11        : 3; /** Path type. */
     u32               mv_y_type_11      : 3;
     s32               lim_rd_max_hy_12  : 8; // SH2 accesses these at `unk_8`?
     s32               lim_rd_min_hy_13  : 8;
@@ -216,7 +216,7 @@ typedef struct _VC_WORK
     SVECTOR                   ofs_cam_ang_spd_C0;             /** Offset rotational speed. */
     SVECTOR                   base_cam_ang_C8;                /** Base rotation. */
     s8                        unk_D0[8];
-    u8                        field_D8;                       /** Boolean for something. */
+    u8                        field_D8;                       /** Unknown boolean. */
     s8                        unk_D9[3];
     MATRIX                    field_DC;
     u8                        field_FC;
@@ -226,21 +226,21 @@ typedef struct _VC_WORK
     s16                       cam_tgt_mv_ang_y_10C;           /** Target Y angles. */
     s8                        unk_10E[2];
     s32                       cam_tgt_spd_110;                /** Target speed. */
-    VECTOR3                   chara_pos_114;                  /** Locked-on character's position. */
-    s32                       chara_bottom_y_120;             /** Locked-on character's bottom height. */
-    s32                       chara_top_y_124;                /** Locked-on character's top height. */
-    s32                       chara_center_y_128;             /** Locked-on character's center height. */
-    s32                       chara_grnd_y_12C;               /** Locked-on character's height from the ground? */
-    VECTOR3                   chara_head_pos_130;             /** Locked-on character's head position. */
-    s32                       chara_mv_spd_13C;               /** Locked-on character's movement speed. */
-    s16                       chara_mv_ang_y_140;             /** Locked-on character's heading angle. */
-    s16                       chara_ang_spd_y_142;            /** Locked-on character's heading angle angular speed. */
-    s16                       chara_eye_ang_y_144;            /** Locked-on character's look heading angle? */
-    s16                       chara_eye_ang_wy_146;
-    s32                       chara_watch_xz_r_148;           /** Locked-on character's radius on the XZ plane. */
-    VC_NEAR_ROAD_DATA         near_road_ary_14C[10];
-    s32                       near_road_suu_2B4;
-    VC_NEAR_ROAD_DATA         cur_near_road_2B8;
+    VECTOR3                   chara_pos_114;                  /** Locked-on character position. */
+    s32                       chara_bottom_y_120;             /** Locked-on character bottom height. */
+    s32                       chara_top_y_124;                /** Locked-on character top height. */
+    s32                       chara_center_y_128;             /** Locked-on character center height. */
+    s32                       chara_grnd_y_12C;               /** Locked-on character height from the ground? */
+    VECTOR3                   chara_head_pos_130;             /** Locked-on character head position. */
+    s32                       chara_mv_spd_13C;               /** Locked-on character movement speed. */
+    s16                       chara_mv_ang_y_140;             /** Locked-on character heading angle. */
+    s16                       chara_ang_spd_y_142;            /** Locked-on character heading angle angular speed. */
+    s16                       chara_eye_ang_y_144;            /** Locked-on character look heading angle? */
+    s16                       chara_eye_ang_wy_146;           /** Locked-on character unknown Y angle */
+    s32                       chara_watch_xz_r_148;           /** Locked-on character radius on the XZ plane. */
+    VC_NEAR_ROAD_DATA         near_road_ary_14C[10];          /** Unknown path array. */
+    s32                       near_road_suu_2B4;              /** Path count? */
+    VC_NEAR_ROAD_DATA         cur_near_road_2B8;              /** Active path? */
     struct _SubCharacter*     nearest_enemy_2DC;              /** Closest enemy. */
     q19_12                    nearest_enemy_xz_dist_2E0;      /** Distance to the closest enemy on the XZ plane. */
     s32                       field_2E4;

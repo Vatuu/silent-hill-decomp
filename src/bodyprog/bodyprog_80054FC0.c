@@ -3952,23 +3952,23 @@ s32 func_8007D6F0(s_SubCharacter* arg0, s_D_800C45C8* arg1) // 0x8007D6F0
     s32               temp_s3;
     s32               temp_s4;
     s32               temp_s5;
-    s32               angle;
+    s16               angle;
     u16               angleDelta;
 
     temp_s0  = g_SysWork.player_4C.chara_0.properties_E4.player.field_126 >> 3;
-    temp_s0 += 0xC00;
+    temp_s0 += FP_METER(0.75f); // Maybe meters?
     temp_s1  = FP_METER(-0.6f);
     temp_s1 -= g_SysWork.player_4C.chara_0.properties_E4.player.field_126 >> 4;
 
-    temp_s4 = FP_MULTIPLY(shRcos(arg0->headingAngle_3C), 0x333, Q12_SHIFT);
-    temp_s3 = FP_MULTIPLY(shRsin(arg0->headingAngle_3C), 0x333, Q12_SHIFT);
+    temp_s4 = FP_MULTIPLY(shRcos(arg0->headingAngle_3C), FP_METER(0.2f), Q12_SHIFT); // Maybe meters?
+    temp_s3 = FP_MULTIPLY(shRsin(arg0->headingAngle_3C), FP_METER(0.2f), Q12_SHIFT); // Maybe meters?
     temp_s5 = FP_MULTIPLY(temp_s0, shRsin(arg0->headingAngle_3C), Q12_SHIFT);
     temp_lo = FP_MULTIPLY(temp_s0, shRcos(arg0->headingAngle_3C), Q12_SHIFT);
 
     temp_s1 -= FP_METER(0.4f);
 
     vecs[0].vy = arg0->position_18.vy + temp_s1;
-    vecs[0].vx = arg0->position_18.vx + temp_s4 + temp_s5;
+    vecs[0].vx = (arg0->position_18.vx + temp_s4) + temp_s5;
 
     vecs[0].vz = (arg0->position_18.vz - temp_s3) + temp_lo;
     vecs[2].vy = arg0->position_18.vy - FP_METER(0.4f);
@@ -3981,7 +3981,7 @@ s32 func_8007D6F0(s_SubCharacter* arg0, s_D_800C45C8* arg1) // 0x8007D6F0
     {
         vecs[1].vy = vecs[0].vy;
         vecs[1].vx = (arg0->position_18.vx - temp_s4) + temp_s5;
-        vecs[1].vz = arg0->position_18.vz + temp_s3 + temp_lo;
+        vecs[1].vz = (arg0->position_18.vz + temp_s3) + temp_lo;
         vecs[3].vy = vecs[2].vy;
         vecs[3].vx = arg0->position_18.vx - temp_s4;
         vecs[3].vz = arg0->position_18.vz + temp_s3;
@@ -3993,10 +3993,10 @@ s32 func_8007D6F0(s_SubCharacter* arg0, s_D_800C45C8* arg1) // 0x8007D6F0
             arg1->field_14 = (sp10[0].field_14 + sp10[1].field_14) >> 1;
             arg1->field_1  = sp10[0].field_1;
 
-            angle      = (((sp10[0].field_1C + sp10[1].field_1C) >> 1) + 0x1000) & 0xFFF;
+            angle      = (((sp10[0].field_1C + sp10[1].field_1C) >> 1) + FP_ANGLE(360.0f)) & 0xFFF;
             angleDelta = ABS_DIFF(angle, arg0->headingAngle_3C);
 
-            if (angleDelta >= 0x71D && angleDelta <= 0x8E2)
+            if (angleDelta > FP_ANGLE(160.0f) && angleDelta < FP_ANGLE(200.0f))
             {
                 if ((arg0->position_18.vy - FP_METER(1.3f)) < sp10[0].field_18 || sp10[0].field_1 == 0 || sp10[0].field_1 == 12)
                 {
