@@ -25,8 +25,8 @@ bool Gfx_StringDraw(char* str, s32 size);
 
 void MapMsg_CalculateWidthTable(s32 mapMsgIdx);
 
-/** `Gfx_MapMessageDraw`. Returns map message index. */
-s32 MapMsg_ParseAndRender(char*, s32);
+/** Draws string and returns map message index. */
+s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 strLength);
 
 void func_8004B658();
 

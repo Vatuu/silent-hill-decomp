@@ -162,18 +162,18 @@ STATIC_ASSERT_SIZEOF(s_8002AC04, 16);
 
 typedef struct
 {
-    s8  pad0[0xf];
-    s32 unk10;
-    s32 unk14;
-    s32 unk18;
-    s8  pad1[2];
-    u16 unk1E;
+    s8  unk_0[15];
+    s32 field_10;
+    s32 field_14;
+    s32 field_18;
+    s8  unk_1[2];
+    u16 field_1E;
 } s_func_80089644_0;
 
 typedef struct
 {
-    s32 unk0;
-    s32 unk4;
+    s32 field_0;
+    s32 field_4;
 } s_func_80089644_1;
 
 // Maybe a collection of matrices.
@@ -1450,9 +1450,9 @@ extern s_ControllerConfig D_8002511C[];
 
 extern s_AreaLoadSfx const D_800252BC[];
 
-extern u8 const g_MainFontWidthTable[];
+extern u8 const g_12x16FontWidths[];
 
-extern u32 g_MapMsg_ColorTable[];
+extern u32 g_MapMsg_Colors[];
 
 extern char D_80028544[0x10];
 
@@ -2660,7 +2660,7 @@ void func_8005B3A4(s_func_8005B3A4* arg0);
 
 void func_8005B3BC(char* filename, s_func_800566B4_sub* arg1);
 
-void func_8005B424(VECTOR3* arg0, VECTOR3* arg1);
+void func_8005B424(VECTOR3* vec0, VECTOR3* vec1);
 
 s32 func_800571D0(u32 arg0);
 
@@ -2868,6 +2868,8 @@ void func_80089500();
 
 s32 func_800895E4(s_SysWork_2514* arg0, s_8002AC04* arg1, u8 arg2);
 
+s32 func_80089644(s_SysWork_2514* arg0, s_func_80089644_0* arg1, s32 arg2, u32 arg3);
+
 s32 func_8008973C(s_SysWork_2514* arg0, s32 arg1, s_8002AC04* ptr, u32* arg3);
 
 void func_80089840(s_SysWork_2514* arg0);
@@ -3050,11 +3052,12 @@ void func_800705E4(GsCOORDINATE2*, s32, s32, s32, s32);
 void func_80074254(s32 arg0, s32 arg1); // `arg1` is pointer?
 
 /** Player controller? */
-void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* arg1);
+void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra);
 
-void func_8007B924(s_SubCharacter* arg0, s_MainCharacterExtra* arg1);
+/** Player function. */
+void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra);
 
-s32 func_8007D6F0(s_SubCharacter* arg0, s_D_800C45C8* arg1);
+s32 func_8007D6F0(s_SubCharacter* chara, s_D_800C45C8* arg1);
 
 void func_8004BBF4(VbRVIEW* arg0, GsCOORDINATE2* arg1, SVECTOR* arg2);
 
@@ -3483,7 +3486,7 @@ s32 func_80080514();
 /** Computes (abs(value) - subtractor) * copysign(value). */
 s32 PreservedSignSubtract(s32 value, s32 subtractor);
 
-void func_800805BC(VECTOR3* arg0, SVECTOR* arg1, GsCOORDINATE2* arg2, s32 arg3);
+void func_800805BC(VECTOR3* pos, SVECTOR* rot, GsCOORDINATE2* rootCoord, s32 arg3);
 
 u32 func_800806AC(s32 arg0, s32 arg1, s32 arg2, s32 arg3); // arg3 type assumed.
 

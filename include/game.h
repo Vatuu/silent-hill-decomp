@@ -33,6 +33,9 @@
 #define MAP_MSG_CODE_DISPLAY_ALL    'D' // Display message instantly without roll.
 #define MAP_MSG_CODE_SELECT         'S' // Display dialog prompt.
 
+#define MAP_MESSAGE_DISPLAY_ALL_LENGTH 400  // Causes an entire message to display instantly by using a long string length.
+#define GLYPH_TABLE_ASCII_OFFSET       '\'' // Subtracted from ASCII bytes to get index to some string-related table.
+
 /** @brief Converts a floating-point X screen position in percent to a fixed-point X screen coodinate. */
 #define SCREEN_POSITION_X(percent) \
     (s32)((SCREEN_WIDTH) * ((percent) / 100.0f))
@@ -52,13 +55,6 @@
 /** @brief Checks if a specified map has been collected. */
 #define HAS_MAP(mapIdx) \
     ((((u32*)&g_SavegamePtr->hasMapsFlags_164)[(mapIdx) / 32] >> ((mapIdx) % 32)) & (1 << 0))
-
-struct _SubCharacter; // Forward declaration.
-
-// This causes an entire message to display instantly by using a long string length.
-#define MAP_MESSAGE_DISPLAY_ALL_LENGTH 400
-// This value is subtracted from ASCII bytes to get the index to some string related table
-#define GLYPH_TABLE_ASCII_OFFSET 0x27
 
 /** Each map has its own messages, with the first 15 hardcoded to be the same. */
 typedef enum _MapMsgIdx
@@ -82,13 +78,13 @@ typedef enum _MapMsgIdx
 
 typedef enum _MapMsgCode
 {
-    MapMsgCode_None       = 0,
-    MapMsgCode_Select2    = 2,
-    MapMsgCode_Select3    = 3,
-    MapMsgCode_Select4    = 4,
-    MapMsgCode_DisplayAll = 20,
-    MapMsgCode_SetByT     = 88,
-    MapMsgCode_AlignCenter= 99
+    MapMsgCode_None        = 0,
+    MapMsgCode_Select2     = 2,
+    MapMsgCode_Select3     = 3,
+    MapMsgCode_Select4     = 4,
+    MapMsgCode_DisplayAll  = 20,
+    MapMsgCode_SetByT      = 88,
+    MapMsgCode_AlignCenter = 99
 } e_MapMsgCode;
 
 typedef enum _MapMsgAudioLoadBlock
@@ -1060,7 +1056,7 @@ STATIC_ASSERT_SIZEOF(s_SysWork_2288, 392);
 
 typedef struct
 {
-    s8  unk_0[4];
+    s8  field_0[4];
     s32 field_4;
     s8  unk_8[4];
     s32 field_C;

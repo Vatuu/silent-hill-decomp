@@ -2314,7 +2314,7 @@ s32 Gfx_MapMsg_Display(s32 mapMsgIdx) // 0x800365B8
             g_MapMsg_DisplayInc           = 2; // Advance 2 glyphs at a time.
 
             func_8004B684();
-            Gfx_MapMsg_CalculateWidthTable(g_MapMsg_CurrentIdx);
+            Gfx_MapMsg_CalculateWidths(g_MapMsg_CurrentIdx);
 
             D_800BCD74 = 1;
             g_SysWork.field_18++;
@@ -2428,7 +2428,7 @@ s32 Gfx_MapMsg_Display(s32 mapMsgIdx) // 0x800365B8
                     g_MapMsg_CurrentIdx++;
                     g_SysWork.mapMsgTimer_234C = g_MapMsg_Select.maxIdx_0;
 
-                    Gfx_MapMsg_CalculateWidthTable(g_MapMsg_CurrentIdx);
+                    Gfx_MapMsg_CalculateWidths(g_MapMsg_CurrentIdx);
 
                     g_MapMsg_DisplayLength    = 0;
                     g_MapMsg_StateMachineIdx1 = 0;
@@ -2492,8 +2492,7 @@ s32 Gfx_MapMsg_SelectionUpdate(u8 mapMsgIdx, s32* arg1) // 0x80036B5C
     s16 temp;
     s8* str;
 
-    // Draws string on screen and gives return code for various ~S codes.
-    mapMsgCode = MapMsg_ParseAndRender(g_MapOverlayHeader.mapMessageStrings_30[mapMsgIdx], *arg1);
+    mapMsgCode = Gfx_MapMsg_StringDraw(g_MapOverlayHeader.mapMessageStrings_30[mapMsgIdx], *arg1);
 
     g_MapMsg_SelectFlashTimer += g_DeltaTime1;
     if (g_MapMsg_SelectFlashTimer >= FP_TIME(0.5f))

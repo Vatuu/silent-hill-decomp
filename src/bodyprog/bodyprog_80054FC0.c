@@ -412,18 +412,18 @@ void func_8005B3BC(char* filename, s_func_800566B4_sub* arg1) // 0x8005B3BC
     *(u32*)&filename[8] = *(u32*)&sp10[8];
 }
 
-void func_8005B424(VECTOR3* arg0, VECTOR3* arg1) // 0x8005B424
+void func_8005B424(VECTOR3* vec0, VECTOR3* vec1) // 0x8005B424
 {
-    arg0->vz = 0;
-    arg0->vy = 0;
-    arg0->vx = 0;
-    
-    if (arg1 == NULL)
+    vec0->vz = 0;
+    vec0->vy = 0;
+    vec0->vx = 0;
+
+    if (vec1 == NULL)
     {
         return;
     }
 
-    *((s_func_8005B424*)arg0) = *((s_func_8005B424*)arg1);
+    *((s_func_8005B424*)vec0) = *((s_func_8005B424*)vec1);
 }
 
 void func_8005B46C(s32* arg0) // 0x8005B46C
@@ -1760,7 +1760,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_800771BC); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80077BB8); // 0x80077BB8
 
-void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* arg1) // 0x80077D00
+void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x80077D00
 {
     #define TRAVEL_DIST_MAX FP_METER(1000000.0f)
     #define TRAVEL_DIST_MIN 1
@@ -1805,12 +1805,12 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* arg1) // 0x80077
         case 25:
         case 26:
             g_SavegamePtr->walkDistance_258 += moveDistStep;
-            g_SavegamePtr->walkDistance_258 = CLAMP(g_SavegamePtr->walkDistance_258, TRAVEL_DIST_MIN, TRAVEL_DIST_MAX);
+            g_SavegamePtr->walkDistance_258  = CLAMP(g_SavegamePtr->walkDistance_258, TRAVEL_DIST_MIN, TRAVEL_DIST_MAX);
             break;
 
         default:
             g_SavegamePtr->runDistance_254 += moveDistStep;
-            g_SavegamePtr->runDistance_254 = CLAMP(g_SavegamePtr->runDistance_254, TRAVEL_DIST_MIN, TRAVEL_DIST_MAX);
+            g_SavegamePtr->runDistance_254  = CLAMP(g_SavegamePtr->runDistance_254, TRAVEL_DIST_MIN, TRAVEL_DIST_MAX);
             break;
     }
 
@@ -1935,7 +1935,7 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* arg1) // 0x80077
 
             if (g_SysWork.player_4C.extra_128.field_1C == 1)
             {
-                if (chara->model_0.anim_4.animIdx_0 & (1 << 0) && arg1->model_0.anim_4.animIdx_0 & (1 << 0))
+                if (chara->model_0.anim_4.animIdx_0 & (1 << 0) && extra->model_0.anim_4.animIdx_0 & (1 << 0))
                 {
                     if (chara->model_0.anim_4.animIdx_0 >= 58 || chara->model_0.anim_4.keyframeIdx0_8 == D_800C44F0[0].field_6 || 
                         chara->model_0.anim_4.keyframeIdx0_8 == D_800C44F0[5].field_6)
@@ -1955,7 +1955,7 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* arg1) // 0x80077
             }
             else
             {
-                if (chara->model_0.anim_4.animIdx_0 & (1 << 0) && arg1->model_0.anim_4.animIdx_0 & (1 << 0))
+                if (chara->model_0.anim_4.animIdx_0 & (1 << 0) && extra->model_0.anim_4.animIdx_0 & (1 << 0))
                 {
                     if ((var_s2 == 0 && g_SysWork.player_4C.chara_0.properties_E4.player.field_126 == 0) ||
                         chara->model_0.anim_4.animIdx_0 >= 58 || chara->model_0.anim_4.keyframeIdx0_8 == D_800C44F6)
@@ -2017,8 +2017,8 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* arg1) // 0x80077
                                 {
                                     g_SysWork.player_4C.extra_128.field_24 = 11;
                                     g_SysWork.player_4C.extra_128.field_20 = 13;
-                                    arg1->model_0.stateStep_3 = 0;
-                                    arg1->model_0.state_2 = 0;
+                                    extra->model_0.stateStep_3             = 0;
+                                    extra->model_0.state_2                 = 0;
                                 }
                             }
                         }
@@ -2234,10 +2234,10 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* arg1) // 0x80077
                 {
                     if (g_SysWork.playerCombatInfo_38.field_F < 0x20 && var_s2 != 0)
                     {
-                        if (((arg1->model_0.anim_4.animIdx_0 == 59 || arg1->model_0.anim_4.animIdx_0 == 61) && 
+                        if (((extra->model_0.anim_4.animIdx_0 == 59 || extra->model_0.anim_4.animIdx_0 == 61) && 
                             (g_SysWork.playerCombatInfo_38.field_F != 5 &&
                              g_SysWork.playerCombatInfo_38.field_F != 2)) || 
-                            arg1->model_0.anim_4.animIdx_0 == 63)
+                            extra->model_0.anim_4.animIdx_0 == 63)
                         {
                             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= 1 << 10;
                             chara->model_0.stateStep_3                                  = 0;
@@ -2613,8 +2613,8 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* arg1) // 0x80077
                             {
                                 g_SysWork.player_4C.extra_128.field_24 = 11;
                                 g_SysWork.player_4C.extra_128.field_20 = 13;
-                                arg1->model_0.stateStep_3              = 0;
-                                arg1->model_0.state_2                  = 0;
+                                extra->model_0.stateStep_3             = 0;
+                                extra->model_0.state_2                 = 0;
                             }
                         }
                     }
@@ -2627,11 +2627,11 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* arg1) // 0x80077
                 {
                     if (g_SysWork.playerCombatInfo_38.field_F < 32 && var_s2 != 0)
                     {
-                        if (((arg1->model_0.anim_4.animIdx_0 == 59 ||
-                              arg1->model_0.anim_4.animIdx_0 == 61) &&
+                        if (((extra->model_0.anim_4.animIdx_0 == 59 ||
+                              extra->model_0.anim_4.animIdx_0 == 61) &&
                              (g_SysWork.playerCombatInfo_38.field_F != 5 &&
                               g_SysWork.playerCombatInfo_38.field_F != 2)) ||
-                            arg1->model_0.anim_4.animIdx_0 == 63)
+                            extra->model_0.anim_4.animIdx_0 == 63)
                         {
                             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= 1 << 10;
                             chara->model_0.stateStep_3                                  = 0;
@@ -2704,11 +2704,11 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* arg1) // 0x80077
                 {
                     if (g_SysWork.playerCombatInfo_38.field_F < 32 && var_s2 != 0)
                     {
-                        if (((arg1->model_0.anim_4.animIdx_0 == 59 ||
-                              arg1->model_0.anim_4.animIdx_0 == 61) &&
+                        if (((extra->model_0.anim_4.animIdx_0 == 59 ||
+                              extra->model_0.anim_4.animIdx_0 == 61) &&
                              (g_SysWork.playerCombatInfo_38.field_F != 5 &&
                               g_SysWork.playerCombatInfo_38.field_F != 2)) ||
-                            arg1->model_0.anim_4.animIdx_0 == 63)
+                            extra->model_0.anim_4.animIdx_0 == 63)
                         {
                             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= 1 << 10;
                             chara->model_0.stateStep_3                                  = 0;
@@ -2781,10 +2781,10 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* arg1) // 0x80077
                 {
                     if (g_SysWork.playerCombatInfo_38.field_F < 32 && var_s2 != 0)
                     {
-                        if (((arg1->model_0.anim_4.animIdx_0 == 59 ||
-                              arg1->model_0.anim_4.animIdx_0 == 61) &&
+                        if (((extra->model_0.anim_4.animIdx_0 == 59 ||
+                              extra->model_0.anim_4.animIdx_0 == 61) &&
                              (g_SysWork.playerCombatInfo_38.field_F != 5 && g_SysWork.playerCombatInfo_38.field_F != 2)) ||
-                             arg1->model_0.anim_4.animIdx_0 == 63)
+                             extra->model_0.anim_4.animIdx_0 == 63)
                         {
                             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= 1 << 10;
                             chara->model_0.stateStep_3                                  = 0;
@@ -3278,8 +3278,8 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* arg1) // 0x80077
 
                     chara->model_0.stateStep_3 = 0;
                     chara->model_0.state_2     = 0;
-                    arg1->model_0.stateStep_3  = 0;
-                    arg1->model_0.state_2      = 0;
+                    extra->model_0.stateStep_3 = 0;
+                    extra->model_0.state_2     = 0;
 
                     g_SysWork.player_4C.extra_128.field_20                     = 0;
                     g_SysWork.player_4C.extra_128.field_24                     = 0;
@@ -3364,7 +3364,7 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* arg1) // 0x80077
                 chara->model_0.anim_4.keyframeIdx0_8 == 349)
             {
                 g_SysWork.player_4C.extra_128.field_24 = 0;
-                func_800713B4(chara, 0xF);
+                func_800713B4(chara, 15);
             }
 
             if (g_SysWork.player_4C.extra_128.field_24 != 0)
@@ -3424,7 +3424,7 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* arg1) // 0x80077
                 if (g_SysWork.playerCombatInfo_38.field_F == 16)
                 {
                     if (g_SysWork.player_4C.chara_0.properties_E4.player.field_126 == 0 && 
-                        (arg1->model_0.anim_4.keyframeIdx0_8 >= D_800C44F0[D_800AF220].field_4 + 7))
+                        (extra->model_0.anim_4.keyframeIdx0_8 >= D_800C44F0[D_800AF220].field_4 + 7))
                     {
                         g_SysWork.player_4C.chara_0.properties_E4.player.field_126 = FP_FLOAT_TO(5.0f, Q12_SHIFT);
                         D_800C4608                                                 = FP_FLOAT_TO(0.0f, Q12_SHIFT);
@@ -3441,7 +3441,7 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* arg1) // 0x80077
             {
                 if (g_SysWork.player_4C.chara_0.properties_E4.player.field_126 != 0)
                 {
-                    g_SysWork.player_4C.chara_0.properties_E4.player.field_126 -= ((g_DeltaTime0 * 0x444) / 136);
+                    g_SysWork.player_4C.chara_0.properties_E4.player.field_126 -= (g_DeltaTime0 * 0x444) / 136;
                     if ((g_SysWork.player_4C.chara_0.properties_E4.player.field_126 >> 16) & (1 << 0))
                     {
                         g_SysWork.player_4C.chara_0.properties_E4.player.field_126 = 0;
@@ -3452,7 +3452,7 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* arg1) // 0x80077
             {
                 if (g_SysWork.player_4C.chara_0.properties_E4.player.field_126 != 0)
                 {
-                    g_SysWork.player_4C.chara_0.properties_E4.player.field_126 -= ((g_DeltaTime0 * FP_FLOAT_TO(0.4f, Q12_SHIFT)) / 136);
+                    g_SysWork.player_4C.chara_0.properties_E4.player.field_126 -= (g_DeltaTime0 * FP_FLOAT_TO(0.4f, Q12_SHIFT)) / 136;
                     if ((g_SysWork.player_4C.chara_0.properties_E4.player.field_126 >> 16) & (1 << 0))
                     {
                         g_SysWork.player_4C.chara_0.properties_E4.player.field_126 = 0;
@@ -3500,9 +3500,9 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* arg1) // 0x80077
                     if (chara->model_0.anim_4.keyframeIdx0_8 == D_800C44F0[0].field_6 || 
                         chara->model_0.anim_4.keyframeIdx0_8 == D_800C44F0[5].field_6)
                     {
-                        chara->model_0.anim_4.animIdx_0      = arg1->model_0.anim_4.animIdx_0;
-                        chara->model_0.anim_4.keyframeIdx0_8 = arg1->model_0.anim_4.keyframeIdx0_8;
-                        chara->model_0.anim_4.time_4         = arg1->model_0.anim_4.time_4;
+                        chara->model_0.anim_4.animIdx_0      = extra->model_0.anim_4.animIdx_0;
+                        chara->model_0.anim_4.keyframeIdx0_8 = extra->model_0.anim_4.keyframeIdx0_8;
+                        chara->model_0.anim_4.time_4         = extra->model_0.anim_4.time_4;
                         chara->model_0.stateStep_3++;
                     }
                 }
@@ -3535,14 +3535,14 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* arg1) // 0x80077
                 }
                 else
                 {
-                    if (arg1->model_0.anim_4.animIdx_0 == 61)
+                    if (extra->model_0.anim_4.animIdx_0 == 61)
                     {
-                        chara->model_0.anim_4.animIdx_0      = arg1->model_0.anim_4.animIdx_0;
-                        chara->model_0.anim_4.keyframeIdx0_8 = arg1->model_0.anim_4.keyframeIdx0_8;
-                        chara->model_0.anim_4.time_4         = arg1->model_0.anim_4.time_4;
+                        chara->model_0.anim_4.animIdx_0      = extra->model_0.anim_4.animIdx_0;
+                        chara->model_0.anim_4.keyframeIdx0_8 = extra->model_0.anim_4.keyframeIdx0_8;
+                        chara->model_0.anim_4.time_4         = extra->model_0.anim_4.time_4;
                         chara->model_0.stateStep_3++;
                     }
-                    else if (D_800C45BE != 0 || arg1->model_0.anim_4.animIdx_0 == 59)
+                    else if (D_800C45BE != 0 || extra->model_0.anim_4.animIdx_0 == 59)
                     {
                         if (chara->model_0.stateStep_3 == 0)
                         {
@@ -3550,7 +3550,7 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* arg1) // 0x80077
                             chara->model_0.stateStep_3++;
                         }
                     }
-                    else if (D_800C45C0 != 0 || arg1->model_0.anim_4.animIdx_0 == 63)
+                    else if (D_800C45C0 != 0 || extra->model_0.anim_4.animIdx_0 == 63)
                     {
                         if (chara->model_0.stateStep_3 == 0)
                         {
@@ -3572,7 +3572,7 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* arg1) // 0x80077
                  (g_SysWork.playerCombatInfo_38.field_F % 10) != 2 &&
                  (g_SysWork.playerCombatInfo_38.field_F % 10) != 6))
             {
-                if (chara->model_0.anim_4.animIdx_0 & (1 << 0) && arg1->model_0.anim_4.animIdx_0 & (1 << 0) &&
+                if (chara->model_0.anim_4.animIdx_0 & (1 << 0) && extra->model_0.anim_4.animIdx_0 & (1 << 0) &&
                     (chara->model_0.anim_4.animIdx_0 >= 58 || chara->model_0.anim_4.keyframeIdx0_8 == D_800C44F6))
                 {
                     if (D_800C45E8 == 0)
@@ -3620,7 +3620,7 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* arg1) // 0x80077
                 chara->model_0.stateStep_3++;
             }
 
-            if ((chara->model_0.anim_4.animIdx_0 & (1 << 0)) && (arg1->model_0.anim_4.animIdx_0 & (1 << 0)) && 
+            if ((chara->model_0.anim_4.animIdx_0 & (1 << 0)) && (extra->model_0.anim_4.animIdx_0 & (1 << 0)) && 
                 (chara->model_0.anim_4.animIdx_0 >= 58 || chara->model_0.anim_4.keyframeIdx0_8 == D_800C44F6))
             {
                 if (D_800C45E8 != 0)
@@ -3654,10 +3654,10 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* arg1) // 0x80077
             break;
     }
 
-    func_8007B924(chara, arg1);
+    func_8007B924(chara, extra);
 }
 
-void func_8007B924(s_SubCharacter* arg0, s_MainCharacterExtra* arg1) // 0x8007B924
+void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007B924
 {
     s32 sp18;
     s8  sp1C;
@@ -3665,7 +3665,7 @@ void func_8007B924(s_SubCharacter* arg0, s_MainCharacterExtra* arg1) // 0x8007B9
 
     func_8007FDE0(D_800C45A4, &sp18, &sp1C, &sp1D);
 
-    if (g_SysWork.player_4C.extra_128.field_24 != 0xB && g_SysWork.player_4C.extra_128.field_24 != 0x23)
+    if (g_SysWork.player_4C.extra_128.field_24 != 11 && g_SysWork.player_4C.extra_128.field_24 != 35)
     {
         D_800C4550 = g_SysWork.player_4C.chara_0.properties_E4.player.field_126;
     }
@@ -3675,9 +3675,9 @@ void func_8007B924(s_SubCharacter* arg0, s_MainCharacterExtra* arg1) // 0x8007B9
         case 2:
         case 7:
         case 8:
-            if ((arg0->model_0.anim_4.animIdx_0 & 1) && arg0->model_0.anim_4.animIdx_0 >= 7)
+            if ((chara->model_0.anim_4.animIdx_0 & (1 << 0)) && chara->model_0.anim_4.animIdx_0 >= 7)
             {
-                arg0->properties_E4.player.properties_E4[6] += g_DeltaTime0;
+                chara->properties_E4.player.properties_E4[6] += g_DeltaTime0;
             }
             break;
 
@@ -3687,24 +3687,25 @@ void func_8007B924(s_SubCharacter* arg0, s_MainCharacterExtra* arg1) // 0x8007B9
         case 15:
         case 16:
         case 20:
-            arg0->properties_E4.player.properties_E4[6] -= g_DeltaTime0 * 2;
+            chara->properties_E4.player.properties_E4[6] -= g_DeltaTime0 * 2;
             break;
 
         default:
-            arg0->properties_E4.player.properties_E4[6] -= g_DeltaTime0;
+            chara->properties_E4.player.properties_E4[6] -= g_DeltaTime0;
             break;
     }
 
-    arg0->properties_E4.player.properties_E4[6] = CLAMP(arg0->properties_E4.player.properties_E4[6], 0, 0x23000);
+    chara->properties_E4.player.properties_E4[6] = CLAMP(chara->properties_E4.player.properties_E4[6], FP_FLOAT_TO(0.0f, Q12_SHIFT), FP_FLOAT_TO(35.0f, Q12_SHIFT));
 
-    if (arg0->model_0.anim_4.animIdx_0 == 0x37)
+    if (chara->model_0.anim_4.animIdx_0 == 55)
     {
-        if (arg0->properties_E4.player.properties_E4[6] <= 0x9FFF && arg0->health_B0 > 0x1DFFF)
+        if (chara->properties_E4.player.properties_E4[6] < FP_FLOAT_TO(10.0f, Q12_SHIFT) &&
+            chara->health_B0 >= FP_FLOAT_TO(30.0f, Q12_SHIFT))
         {
-            arg0->model_0.stateStep_3 = 0;
-            arg0->model_0.state_2     = 0;
-            arg1->model_0.stateStep_3 = 0;
-            arg1->model_0.state_2     = 0;
+            chara->model_0.stateStep_3 = 0;
+            chara->model_0.state_2     = 0;
+            extra->model_0.stateStep_3 = 0;
+            extra->model_0.state_2     = 0;
         }
     }
 
@@ -3712,27 +3713,32 @@ void func_8007B924(s_SubCharacter* arg0, s_MainCharacterExtra* arg1) // 0x8007B9
     {
         case 0:
         case 20:
-            if (g_SysWork.player_4C.extra_128.field_20 == 0xB)
+            if (g_SysWork.player_4C.extra_128.field_20 == 11)
             {
-                func_800713E8(0x1B, arg0, 0xCC, 0xC8, sp18, sp1C);
+                func_800713E8(27, chara, 204, 200, sp18, sp1C);
             }
-            else if (g_SysWork.player_4C.extra_128.field_20 == 0xC)
+            else if (g_SysWork.player_4C.extra_128.field_20 == 12)
             {
-                func_800713E8(0x19, arg0, 0xBB, 0xBF, sp18, sp1C);
+                func_800713E8(25, chara, 187, 191, sp18, sp1C);
             }
-            if ((g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & 0x8000) &&
-                ((arg0->model_0.anim_4.animIdx_0 >= 0x35 && arg0->model_0.anim_4.animIdx_0 <= 0x36) ||
-                 arg0->model_0.anim_4.animIdx_0 == 0x39))
+
+            if ((g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & (1 << 15)) &&
+                ((chara->model_0.anim_4.animIdx_0 >= 53 &&
+                  chara->model_0.anim_4.animIdx_0 <= 54) ||
+                 chara->model_0.anim_4.animIdx_0 == 57))
             {
-                func_8005DD44(sp18, &arg0->position_18, 0x18, sp1C);
-                arg0->properties_E4.player.field_10C = sp1C + 0x10;
-                g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= 0xFFFF7FFF;
+                func_8005DD44(sp18, &chara->position_18, 24, sp1C);
+
+                chara->properties_E4.player.field_10C                        = sp1C + 16;
+                g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~(1 << 15);
             }
-            if (arg0->model_0.anim_4.keyframeIdx0_8 == 0xF6 && !(g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & 0x20))
+
+            if (chara->model_0.anim_4.keyframeIdx0_8 == 246 && !(g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & (1 << 5)))
             {
-                func_8005DD44(sp18, &arg0->position_18, 0x80, sp1D);
-                arg0->properties_E4.player.field_10C = sp1D + 0x20;
-                g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= 0x20;
+                func_8005DD44(sp18, &chara->position_18, 128, sp1D);
+
+                chara->properties_E4.player.field_10C                        = sp1D + 32;
+                g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= 1 << 5;
             }
             break;
 
@@ -3741,168 +3747,178 @@ void func_8007B924(s_SubCharacter* arg0, s_MainCharacterExtra* arg1) // 0x8007B9
 
         case 4:
         case 24:
-            func_800713E8(9, arg0, 0x34, 0x3F, sp18, sp1C);
-            g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= 0x8000;
+            func_800713E8(9, chara, 52, 63, sp18, sp1C);
+            g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= 1 << 15;
             break;
 
         case 1:
         case 21:
-            func_800713E8(5, arg0, 0x12, 6, sp18, sp1C);
-            g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= 0x8000;
+            func_800713E8(5, chara, 18, 6, sp18, sp1C);
+            g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= 1 << 15;
             break;
 
         case 2:
-            if (func_800713E8(7, arg0, 0x1F, 0x29, sp18, sp1D) != 0)
+            if (func_800713E8(7, chara, 31, 41, sp18, sp1D) != 0)
             {
-                arg0->properties_E4.player.properties_E4[5]++;
+                chara->properties_E4.player.properties_E4[5]++;
             }
-            g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= 0x8000;
+
+            g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= 1 << 15;
             break;
 
         case 5:
-            func_800713E8(0xD, arg0, 0x76, 0x6C, sp18, sp1C);
-            g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= 0x8000;
+            func_800713E8(13, chara, 118, 108, sp18, sp1C);
+            g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= 1 << 15;
             break;
 
         case 6:
-            func_800713E8(0xB, arg0, 0x5D, 0x53, sp18, sp1C);
-            g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= 0x8000;
+            func_800713E8(11, chara, 93, 83, sp18, sp1C);
+            g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= 1 << 15;
             break;
 
         case 7:
-            if (func_800713E8(0x11, arg0, 0x91, 0x8B, sp18, sp1D) != 0)
+            if (func_800713E8(17, chara, 145, 139, sp18, sp1D) != 0)
             {
-                arg0->properties_E4.player.properties_E4[5]++;
+                chara->properties_E4.player.properties_E4[5]++;
             }
-            g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= 0x8000;
+
+            g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= 1 << 15;
             break;
 
         case 8:
-            if (func_800713E8(0xF, arg0, 0x83, 0x7D, sp18, sp1D) != 0)
+            if (func_800713E8(15, chara, 131, 125, sp18, sp1D) != 0)
             {
-                arg0->properties_E4.player.properties_E4[5]++;
+                chara->properties_E4.player.properties_E4[5]++;
             }
-            g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= 0x8000;
+
+            g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= 1 << 15;
             break;
 
         case 3:
-            if (g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & 8)
+            if (g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & (1 << 3))
             {
-                if (arg0->model_0.anim_4.keyframeIdx0_8 < 0x98)
+                if (chara->model_0.anim_4.keyframeIdx0_8 < 152)
                 {
-                    func_800713E8(0x13, arg0, 0x97, 0x9A, sp18, sp1D);
+                    func_800713E8(19, chara, 151, 154, sp18, sp1D);
                 }
                 else
                 {
-                    func_800713E8(0x13, arg0, 0x9C, 0x9A, sp18, sp1D);
+                    func_800713E8(19, chara, 156, 154, sp18, sp1D);
                 }
             }
             else
             {
-                if (arg0->model_0.anim_4.keyframeIdx0_8 < 0xA2)
+                if (chara->model_0.anim_4.keyframeIdx0_8 < 162)
                 {
-                    func_800713E8(0x15, arg0, 0xA4, 0xA1, sp18, sp1D);
+                    func_800713E8(21, chara, 164, 161, sp18, sp1D);
                 }
                 else
                 {
-                    func_800713E8(0x15, arg0, 0xA4, 0xA6, sp18, sp1D);
+                    func_800713E8(21, chara, 164, 166, sp18, sp1D);
                 }
             }
-            g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= 0xFFFF7FFF;
+
+            g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~(1 << 15);
             break;
 
         case 13:
-            if (arg0->model_0.anim_4.keyframeIdx0_8 < 0x143)
+            if (chara->model_0.anim_4.keyframeIdx0_8 < 323)
             {
-                func_800713E8(0x25, arg0, 0x142, 0x144, sp18, sp1D);
+                func_800713E8(37, chara, 322, 324, sp18, sp1D);
             }
             else
             {
-                func_800713E8(0x25, arg0, 0x147, 0x144, sp18, sp1D);
+                func_800713E8(37, chara, 327, 324, sp18, sp1D);
             }
-            g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= 0xFFFF7FFF;
+
+            g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~(1 << 15);
             break;
 
         case 14:
-            if (arg0->model_0.anim_4.keyframeIdx0_8 < 0x160)
+            if (chara->model_0.anim_4.keyframeIdx0_8 < 352)
             {
-                func_800713E8(0x29, arg0, 0x161, 0x15F, sp18, sp1D);
+                func_800713E8(41, chara, 353, 351, sp18, sp1D);
             }
             else
             {
-                func_800713E8(0x29, arg0, 0x161, 0x164, sp18, sp1D);
+                func_800713E8(41, chara, 353, 356, sp18, sp1D);
             }
-            g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= 0xFFFF7FFF;
+
+            g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~(1 << 15);
             break;
 
         case 12:
-            if (arg0->model_0.anim_4.keyframeIdx0_8 < 0xAC)
+            if (chara->model_0.anim_4.keyframeIdx0_8 < 172)
             {
-                func_800713E8(0x17, arg0, 0xAB, 0xAE, sp18, sp1D);
+                func_800713E8(23, chara, 171, 174, sp18, sp1D);
             }
             else
             {
-                func_800713E8(0x17, arg0, 0xB0, 0xAE, sp18, sp1D);
+                func_800713E8(23, chara, 176, 174, sp18, sp1D);
             }
 
-            g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= 0xFFFF7FFF;
+            g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~(1 << 15);
             break;
 
         case 15:
-            if (arg0->model_0.anim_4.keyframeIdx0_8 < 0x152)
+            if (chara->model_0.anim_4.keyframeIdx0_8 < 338)
             {
-                func_800713E8(0x27, arg0, 0x151, 0x155, sp18, sp1C);
+                func_800713E8(39, chara, 337, 341, sp18, sp1C);
             }
-            else if (arg0->model_0.anim_4.keyframeIdx0_8 < 0x158)
+            else if (chara->model_0.anim_4.keyframeIdx0_8 < 344)
             {
-                func_800713E8(0x27, arg0, 0x157, 0x155, sp18, sp1C);
+                func_800713E8(39, chara, 343, 341, sp18, sp1C);
             }
             else
             {
-                func_800713E8(0x27, arg0, 0x164, 0x15A, sp18, sp1D);
+                func_800713E8(39, chara, 356, 346, sp18, sp1D);
             }
-            g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= 0xFFFF7FFF;
+
+            g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~(1 << 15);
             break;
 
         case 16:
-            if (arg0->model_0.anim_4.keyframeIdx0_8 < 0x16F)
+            if (chara->model_0.anim_4.keyframeIdx0_8 < 367)
             {
-                func_800713E8(0x2B, arg0, 0x16E, 0x172, sp18, sp1C);
+                func_800713E8(43, chara, 366, 370, sp18, sp1C);
             }
-            else if (arg0->model_0.anim_4.keyframeIdx0_8 < 0x175)
+            else if (chara->model_0.anim_4.keyframeIdx0_8 < 373)
             {
-                func_800713E8(0x2B, arg0, 0x174, 0x172, sp18, sp1C);
+                func_800713E8(43, chara, 372, 370, sp18, sp1C);
             }
             else
             {
-                func_800713E8(0x2B, arg0, 0x181, 0x177, sp18, sp1D);
+                func_800713E8(43, chara, 385, 375, sp18, sp1D);
             }
-            g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= 0xFFFF7FFF;
+
+            g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~(1 << 15);
             break;
 
         case 10:
         case 30:
-            func_800713E8(0x1F, arg0, 0xDE, 0xE0, sp18, sp1C);
-            g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= 0xFFFF7FFF;
+            func_800713E8(31, chara, 222, 224, sp18, sp1C);
+            g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~(1 << 15);
             break;
 
         case 9:
         case 29:
-            func_800713E8(0x1D, arg0, 0xD1, 0xD3, sp18, sp1C);
-            g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= 0xFFFF7FFF;
+            func_800713E8(29, chara, 209, 211, sp18, sp1C);
+            g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~(1 << 15);
             break;
 
         case 11:
         case 31:
-            if (arg0->model_0.anim_4.keyframeIdx0_8 < 0xF3)
+            if (chara->model_0.anim_4.keyframeIdx0_8 < 243)
             {
-                g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~0x20;
+                g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~(1 << 5);
             }
-            if (arg0->position_18.vy == D_800C459C)
+
+            if (chara->position_18.vy == D_800C459C)
             {
-                func_800713E8(0x21, arg0, 0xF3, 0xF5, sp18, sp1D);
+                func_800713E8(33, chara, 243, 245, sp18, sp1D);
             }
-            g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= 0xFFFF7FFF;
+
+            g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~(1 << 15);
             break;
     }
 }
@@ -3918,7 +3934,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8007D6E0); // 0x
 s32 func_8007D6F0(s_SubCharacter* arg0, s_D_800C45C8* arg1) // 0x8007D6F0
 {
     s_func_800700F8_2 sp10[2];
-    VECTOR3           sp50[4];
+    VECTOR3           vecs[4];
     s32               ret[2];
     s32               temp_lo;
     s32               temp_s0;
@@ -3926,54 +3942,55 @@ s32 func_8007D6F0(s_SubCharacter* arg0, s_D_800C45C8* arg1) // 0x8007D6F0
     s32               temp_s3;
     s32               temp_s4;
     s32               temp_s5;
-    s32               temp_v0_4;
-    u16               var_v0_2;
+    s32               angle;
+    u16               angleDelta;
 
-    temp_s0 = g_SysWork.player_4C.chara_0.properties_E4.player.field_126 >> 3;
+    temp_s0  = g_SysWork.player_4C.chara_0.properties_E4.player.field_126 >> 3;
     temp_s0 += 0xC00;
-    temp_s1 = -0x999;
-    temp_s1 -= (g_SysWork.player_4C.chara_0.properties_E4.player.field_126 >> 4);
+    temp_s1  = FP_METER(-0.6f);
+    temp_s1 -= g_SysWork.player_4C.chara_0.properties_E4.player.field_126 >> 4;
 
     temp_s4 = FP_MULTIPLY(shRcos(arg0->headingAngle_3C), 0x333, Q12_SHIFT);
     temp_s3 = FP_MULTIPLY(shRsin(arg0->headingAngle_3C), 0x333, Q12_SHIFT);
     temp_s5 = FP_MULTIPLY(temp_s0, shRsin(arg0->headingAngle_3C), Q12_SHIFT);
     temp_lo = FP_MULTIPLY(temp_s0, shRcos(arg0->headingAngle_3C), Q12_SHIFT);
-    temp_s1 -= 0x666;
-    sp50[0].vy = arg0->position_18.vy + temp_s1;
-    sp50[0].vx = arg0->position_18.vx + temp_s4 + temp_s5;
 
-    sp50[0].vz = (arg0->position_18.vz - temp_s3) + temp_lo;
-    sp50[2].vy = arg0->position_18.vy - 0x666;
-    sp50[2].vx = arg0->position_18.vx + temp_s4;
-    sp50[2].vz = arg0->position_18.vz - temp_s3;
+    temp_s1 -= FP_METER(0.4f);
 
-    ret[0] = func_8006D90C(&sp10[0], &sp50[2], &sp50[0]);
+    vecs[0].vy = arg0->position_18.vy + temp_s1;
+    vecs[0].vx = arg0->position_18.vx + temp_s4 + temp_s5;
+
+    vecs[0].vz = (arg0->position_18.vz - temp_s3) + temp_lo;
+    vecs[2].vy = arg0->position_18.vy - FP_METER(0.4f);
+    vecs[2].vx = arg0->position_18.vx + temp_s4;
+    vecs[2].vz = arg0->position_18.vz - temp_s3;
+
+    ret[0] = func_8006D90C(&sp10[0], &vecs[2], &vecs[0]);
 
     if (ret[0] != 0)
     {
-        sp50[1].vy = sp50[0].vy;
-        sp50[1].vx = (arg0->position_18.vx - temp_s4) + temp_s5;
-        sp50[1].vz = arg0->position_18.vz + temp_s3 + temp_lo;
-        sp50[3].vy = sp50[2].vy;
-        sp50[3].vx = arg0->position_18.vx - temp_s4;
-        sp50[3].vz = arg0->position_18.vz + temp_s3;
+        vecs[1].vy = vecs[0].vy;
+        vecs[1].vx = (arg0->position_18.vx - temp_s4) + temp_s5;
+        vecs[1].vz = arg0->position_18.vz + temp_s3 + temp_lo;
+        vecs[3].vy = vecs[2].vy;
+        vecs[3].vx = arg0->position_18.vx - temp_s4;
+        vecs[3].vz = arg0->position_18.vz + temp_s3;
 
-        ret[1] = func_8006D90C(&sp10[1], &sp50[3], &sp50[1]);
+        ret[1] = func_8006D90C(&sp10[1], &vecs[3], &vecs[1]);
 
         if (ret[1] != 0)
         {
             arg1->field_14 = (sp10[0].field_14 + sp10[1].field_14) >> 1;
             arg1->field_1  = sp10[0].field_1;
 
-            temp_v0_4 = (((sp10[0].field_1C + sp10[1].field_1C) >> 1) + 0x1000) & 0xFFF;
+            angle      = (((sp10[0].field_1C + sp10[1].field_1C) >> 1) + 0x1000) & 0xFFF;
+            angleDelta = ABS_DIFF(angle, arg0->headingAngle_3C);
 
-            var_v0_2 = ABS_DIFF(temp_v0_4, arg0->headingAngle_3C);
-
-            if (var_v0_2 >= 0x71D && var_v0_2 <= 0x8E2)
+            if (angleDelta >= 0x71D && angleDelta <= 0x8E2)
             {
-                if ((arg0->position_18.vy - 0x14CC) < sp10[0].field_18 || sp10[0].field_1 == 0 || sp10[0].field_1 == 0xC)
+                if ((arg0->position_18.vy - FP_METER(1.3f)) < sp10[0].field_18 || sp10[0].field_1 == 0 || sp10[0].field_1 == 12)
                 {
-                    if ((arg0->position_18.vy - 0x4CC) >= sp10[0].field_18)
+                    if ((arg0->position_18.vy - FP_METER(0.3f)) >= sp10[0].field_18)
                     {
                         return 2;
                     }
@@ -4189,28 +4206,28 @@ s32 PreservedSignSubtract(s32 value, s32 subtractor) // 0x80080594
     return ((absDiff & ~(absDiff >> 31)) ^ signBit) - signBit; 
 }
 
-void func_800805BC(VECTOR3* arg0, SVECTOR* arg1, GsCOORDINATE2* arg2, s32 arg3) // 0x800805BC
+void func_800805BC(VECTOR3* pos, SVECTOR* rot, GsCOORDINATE2* rootCoord, s32 arg3) // 0x800805BC
 {
     MATRIX mat;
     VECTOR vec;
 
-    Vw_CoordHierarchyMatrixCompute(arg2, &mat);
+    Vw_CoordHierarchyMatrixCompute(rootCoord, &mat);
     gte_SetRotMatrix(&mat);
     gte_SetTransMatrix(&mat);
 
     while (arg3 > 0)
     {
-        gte_ldv0(arg1);
+        gte_ldv0(rot);
         gte_rt();
         gte_stlvnl(&vec);
 
-        arg0->vx = vec.vx * 16;
-        arg0->vy = vec.vy * 16;
-        arg0->vz = vec.vz * 16;
+        pos->vx = vec.vx * 16;
+        pos->vy = vec.vy * 16;
+        pos->vz = vec.vz * 16;
 
         arg3--;
-        arg1++;
-        arg0++;
+        rot++;
+        pos++;
     }
 }
 
