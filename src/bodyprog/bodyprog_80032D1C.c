@@ -2470,9 +2470,9 @@ s32 Gfx_MapMsg_Display(s32 mapMsgIdx) // 0x800365B8
         return 0;
     }
 
-    g_SysWork.field_18                        = 0;
+    g_SysWork.field_18                   = 0;
     g_SysWork.enableHighResGlyphs_2350_0 = 0;
-    g_MapMsg_DisplayLength                    = 0;
+    g_MapMsg_DisplayLength               = 0;
 
     if (g_SysWork.field_22A0 & (1 << 5))
     {

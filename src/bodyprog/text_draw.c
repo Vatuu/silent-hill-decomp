@@ -94,7 +94,7 @@ bool Gfx_StringDraw(char* str, s32 size) // 0x8004A8E8
     glyphColor = g_MapMsg_Colors[g_StringColorId];
     ot         = &D_800B5C40[g_ObjectTableIdx].field_0[D_800AD49C];
 
-    if (!(g_SysWork.enableHighResGlyphs_2350_0 & 0xF))
+    if (!g_SysWork.enableHighResGlyphs_2350_0)
     {
         packet = GsOUT_PACKET_P;
     }
@@ -137,7 +137,7 @@ bool Gfx_StringDraw(char* str, s32 size) // 0x8004A8E8
             sizeCpy--;
 
             // Draw glyph sprite.
-            if (g_SysWork.enableHighResGlyphs_2350_0 & 0xF)
+            if (g_SysWork.enableHighResGlyphs_2350_0)
             {
                 glyphPoly = (POLY_FT4*)GsOUT_PACKET_P;
 
@@ -212,7 +212,7 @@ bool Gfx_StringDraw(char* str, s32 size) // 0x8004A8E8
         strCpy++;
     }
 
-    if (!(g_SysWork.enableHighResGlyphs_2350_0 & 0xF))
+    if (!g_SysWork.enableHighResGlyphs_2350_0)
     {
         GsOUT_PACKET_P = packet;
     }
@@ -371,7 +371,7 @@ s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 strLength) // 0x8004AF18
     color               = g_MapMsg_Colors[g_StringColorId];
     g_StringPosition.vx = -(g_MapMsg_WidthTable[0] >> 1);
 
-    if (!(g_SysWork.enableHighResGlyphs_2350_0 & 0xF))
+    if (!g_SysWork.enableHighResGlyphs_2350_0)
     {
         packet = GsOUT_PACKET_P;
     }
@@ -573,7 +573,7 @@ s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 strLength) // 0x8004AF18
         default:
             strLength--;
 
-            if (g_SysWork.enableHighResGlyphs_2350_0 & 0xF)
+            if (g_SysWork.enableHighResGlyphs_2350_0)
             {
                 glyphPoly = (POLY_FT4*)GsOUT_PACKET_P;
 
@@ -628,7 +628,7 @@ s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 strLength) // 0x8004AF18
 
             if (strLength <= 0)
             {
-                if (!(g_SysWork.enableHighResGlyphs_2350_0 & 0xF))
+                if (!g_SysWork.enableHighResGlyphs_2350_0)
                 {
                     GsOUT_PACKET_P = packet;
                 }
@@ -638,7 +638,7 @@ s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 strLength) // 0x8004AF18
         }
     }
 
-    if (!(g_SysWork.enableHighResGlyphs_2350_0 & 0xF))
+    if (!g_SysWork.enableHighResGlyphs_2350_0)
     {
         GsOUT_PACKET_P = packet;
     }

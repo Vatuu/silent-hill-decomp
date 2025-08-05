@@ -1128,7 +1128,7 @@ typedef struct _SysWork
     u8              field_234B_0 : 4;
     u8              field_234B_4 : 4;
     s32             mapMsgTimer_234C;
-    s32             enableHighResGlyphs_2350_0      : 4;
+    u8              enableHighResGlyphs_2350_0      : 4;
     u8              silentYesSelection_2350_4       : 4;
     u32             inventoryItemSelectedIdx_2351   : 8;
     u32             flags_2352                      : 8;
