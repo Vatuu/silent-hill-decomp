@@ -2132,17 +2132,17 @@ void DmsHeader_FixOffsets(s_DmsHeader* header) // 0x8008C9A0
 void DmsEntry_FixOffsets(s_DmsEntry* entry, s_DmsHeader* header) // 0x8008CA44
 {
     entry->keyframes_C.character = (u32)entry->keyframes_C.character + (u32)header;
-    entry->svectorPtr_8 = (u32)entry->svectorPtr_8 + (u32)header;
+    entry->svectorPtr_8          = (u32)entry->svectorPtr_8 + (u32)header;
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008CA60); // 0x8008CA60
 
-void Dms_CharacterGetPosRot(VECTOR3* pos, SVECTOR* rot, char* charName, s32 time, s_DmsHeader* header) // 0x8008CA74
+void Dms_CharacterGetPosRot(VECTOR3* pos, SVECTOR* rot, char* charaName, s32 time, s_DmsHeader* header) // 0x8008CA74
 {
-    s32 charIdx;
+    s32 charaIdx;
 
-    charIdx = Dms_CharacterFindIndexByName(charName, header);
-    if (charIdx == NO_VALUE)
+    charaIdx = Dms_CharacterFindIdxByName(charaName, header);
+    if (charaIdx == NO_VALUE)
     {
         // Character not found in DMS.
         Math_Vector3Zero(pos);
@@ -2158,11 +2158,11 @@ void Dms_CharacterGetPosRot(VECTOR3* pos, SVECTOR* rot, char* charName, s32 time
     }
     else
     {
-        Dms_CharacterGetPosRotByIndex(pos, rot, charIdx, time, header);
+        Dms_CharacterGetPosRotByIdx(pos, rot, charaIdx, time, header);
     }
 }
 
-s32 Dms_CharacterFindIndexByName(char* name, s_DmsHeader* header) // 0x8008CB10
+s32 Dms_CharacterFindIdxByName(char* name, s_DmsHeader* header) // 0x8008CB10
 {
     s32 i;
 
@@ -2177,7 +2177,7 @@ s32 Dms_CharacterFindIndexByName(char* name, s_DmsHeader* header) // 0x8008CB10
     return NO_VALUE;
 }
 
-void Dms_CharacterGetPosRotByIndex(VECTOR3* pos, SVECTOR3* rot, s32 charaIdx, s32 time, s_DmsHeader* header) // 0x8008CB90
+void Dms_CharacterGetPosRotByIdx(VECTOR3* pos, SVECTOR3* rot, s32 charaIdx, s32 time, s_DmsHeader* header) // 0x8008CB90
 {
     s_DmsEntry*             charaEntry;
     s32                     keyframePrev;

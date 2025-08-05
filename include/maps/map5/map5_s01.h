@@ -13,4 +13,6 @@ void func_800DF548();
 
 void func_800DF568();
 
+void func_800E2154(s_SubCharacter* chara);
+
 #endif

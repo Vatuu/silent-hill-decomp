@@ -2698,11 +2698,13 @@ void DmsHeader_FixOffsets(s_DmsHeader* header);
 
 void DmsEntry_FixOffsets(s_DmsEntry* entry, s_DmsHeader* header);
 
+void Dms_CharacterGetPosRot(VECTOR3* pos, SVECTOR* rot, char* charaName, s32 time, s_DmsHeader* header);
+
 void Dms_CharacterGetStartPosRot(VECTOR3* pos, SVECTOR* rot, char* charaName, s32 time, s_DmsHeader* header);
 
-s32 Dms_CharacterFindIndexByName(char* name, s_DmsHeader* header);
+s32 Dms_CharacterFindIdxByName(char* name, s_DmsHeader* header);
 
-void Dms_CharacterGetPosRotByIndex(VECTOR3* pos, SVECTOR3* rot, s32 charaIdx, s32 time, s_DmsHeader* header);
+void Dms_CharacterGetPosRotByIdx(VECTOR3* pos, SVECTOR3* rot, s32 charaIdx, s32 time, s_DmsHeader* header);
 
 void Dms_CharacterKeyframeInterpolate(s_DmsKeyframeCharacter* result, s_DmsKeyframeCharacter* frame0, s_DmsKeyframeCharacter* frame1, s32 alpha);
 

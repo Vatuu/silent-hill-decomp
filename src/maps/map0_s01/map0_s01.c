@@ -408,13 +408,183 @@ INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800DC34C);
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800DC394);
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800DC3C8);
+#ifdef NON_MATCHING
+void func_800DC3C8() // 0x800DC3C8
+{
+    switch (g_SysWork.sysStateStep_C)
+    {
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+            Fs_QueueStartSeek(FILE_TIM_MP_0TOWN_TIM + D_800A99B5);
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800DC830);
+            g_SysWork.field_28 = 0;
+            g_SysWork.field_10 = 0;
+            g_SysWork.timer_2C = 0;
+            g_SysWork.field_14 = 0;
+            g_SysWork.sysStateStep_C++;
+
+        case 1:
+            func_8008616C(2, 1, 0, 0, 0);
+            break;
+
+        case 2:
+            DrawSync(0);
+            StoreImage(&D_800CCAC8, IMAGE_BUFFER);
+            DrawSync(0);
+            Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + D_800A99B5, FS_BUFFER_2, &g_MapImg);
+            Gfx_Init(SCREEN_WIDTH, 1);
+
+            g_IntervalVBlanks = 1;
+
+            GsSwapDispBuff();
+            func_8008616C(0, 0, 0, 0, 0);
+            Fs_QueueWaitForEmpty();
+
+            g_SysWork.field_28 = 0;
+            g_SysWork.field_10 = 0;
+            g_SysWork.timer_2C = 0;
+            g_SysWork.field_14 = 0;
+            g_SysWork.sysStateStep_C++;
+
+        case 3:
+            D_800A8E58 = 88;
+
+            Gfx_BackgroundSpriteDraw(&g_MapImg);
+            func_800860B0(1, 59, 6, 4, 0, 0);
+            break;
+
+        case 5:
+            LoadImage(&D_800CCAC8, IMAGE_BUFFER);
+            DrawSync(0);
+            Gfx_Init(SCREEN_WIDTH, 0);
+            func_8008616C(0, 0, 0, 0, 0);
+
+            g_SysWork.sysStateStep_C = NO_VALUE;
+            g_SysWork.field_28       = 0;
+            g_SysWork.field_10       = 0;
+            g_SysWork.timer_2C       = 0;
+            g_SysWork.field_14       = 0;
+            break;
+
+        case 6:
+            g_SavegamePtr->hasMapsFlags_164 |= 1 << 1;
+
+            Fs_QueueStartRead(FILE_ANIM_CAFE2_DMS, FS_BUFFER_11);
+
+            g_SysWork.field_28 = 0;
+            g_SysWork.field_10 = 0;
+            g_SysWork.timer_2C = 0;
+            g_SysWork.field_14 = 0;
+            g_SysWork.sysStateStep_C++;
+
+        case 4:
+        case 7:
+            D_800A8E58 = 88;
+
+            Gfx_BackgroundSpriteDraw(&g_MapImg);
+            func_8008616C(2, 1, 0, 0, 0);
+            break;
+
+        case 8:
+            LoadImage(&D_800CCAC8, IMAGE_BUFFER);
+            DrawSync(0);
+            Gfx_Init(SCREEN_WIDTH, 0);
+            func_8008616C(0, 0, 0, 0, 0);
+
+            g_SysWork.field_28 = 0;
+            g_SysWork.field_10 = 0;
+            g_SysWork.timer_2C = 0;
+            g_SysWork.field_14 = 0;
+            g_SysWork.sysStateStep_C++;
+
+        case 9:
+            func_80088D0C();
+
+            g_SysWork.field_28 = 0;
+            g_SysWork.field_10 = 0;
+            g_SysWork.timer_2C = 0;
+            g_SysWork.field_14 = 0;
+            g_SysWork.sysStateStep_C++;
+
+        case 10:
+            // Set cutscene character?
+            Chara_Spawn(Chara_AirScreamer, 0, 0, 0, 0, 12); // Maybe air screamer.
+            DmsHeader_FixOffsets(FS_BUFFER_11);
+            Dms_CharacterGetPosRot(&g_SysWork.npcs_1A0[0].position_18, &g_SysWork.npcs_1A0[0].rotation_24, &D_800CCA64, 0, FS_BUFFER_11);
+
+            // Set camera.
+            vcChangeProjectionValue(Dms_CameraGetTargetPos(&D_800E2380, &D_800E2390, NULL, 0, FS_BUFFER_11));
+            vcUserCamTarget(&D_800E2380, NULL, 1);
+            vcUserWatchTarget(&D_800E2390, NULL, 1);
+
+            // Warp player.
+            g_SysWork.player_4C.chara_0.position_18.vx = 18784;
+            g_SysWork.player_4C.chara_0.position_18.vz = 1094800;
+            g_SysWork.player_4C.chara_0.rotation_24.vy = FP_ANGLE(90.0f);
+
+            // Set flags.
+            g_SysWork.field_2290             |= 1 << 0;
+            g_SysWork.field_228C             |= 1 << 0;
+            g_SavegamePtr->eventFlags_168[1] |= 1 << 6;
+
+            // Set ???
+            g_SysWork.field_28 = 0;
+            g_SysWork.field_10 = 0;
+            g_SysWork.timer_2C = 0;
+            g_SysWork.field_14 = 0;
+            g_SysWork.sysStateStep_C++;
+
+        case 11:
+            func_8008616C(1, 0, 0, 0, 0);
+            break;
+
+        default:
+            sharedFunc_800D2244_0_s00(0);
+
+            g_SysWork.sysState_8     = 0;
+            g_SysWork.timer_24       = 0;
+            g_SysWork.sysStateStep_C = 0;
+            g_SysWork.field_28       = 0;
+            g_SysWork.field_10       = 0;
+            g_SysWork.timer_2C       = 0;
+            g_SysWork.field_14       = 0;
+            break;
+    }
+}
+#else
+INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800DC3C8);
+#endif
+
+void func_800DC830() // 0x800DC830
+{
+    func_800877B8(128, 1, 35, 60);
+}
 
 void func_800DC85C() {}
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800DC864);
+void func_800DC864() // 0x800DC864
+{
+    s32 var_a1;
+    u32 var_a0;
+
+    var_a0 = 0;
+    var_a1 = 0;
+
+    switch (g_MapEventParam->field_5)
+    {
+        case 13:
+            var_a0 = 1;
+            var_a1 = 596;
+            break;
+
+        case 14:
+            var_a0 = 1;
+            var_a1 = 597;
+            break;
+    }
+
+    func_800879FC(var_a0, var_a1);
+}
 
 void func_800DC8C8() // 0x800DC8C8
 {
@@ -498,7 +668,9 @@ void func_800DC9C8() // 0x800DC9C8
     if ((g_SavegamePtr->eventFlags_168[1] & ((1 << 8) | (1 << 15))) == (1 << 8))
     {
         g_SysWork.flags_22A4 |= (1 << 5) | (1 << 9);
+
         Chara_Load(0, 2, &g_SysWork.npcCoords_FC0, NO_VALUE, 0, 0);
+
         if (g_SavegamePtr->eventFlags_168[1] & (1 << 6))
         {
             func_80088D0C();

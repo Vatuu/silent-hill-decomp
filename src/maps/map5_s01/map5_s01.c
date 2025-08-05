@@ -443,21 +443,23 @@ INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800E1EF4);
 
 INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", sharedFunc_800D7560_0_s01); // 0x800E2014
 
-void func_800E2154(s_SubCharacter* arg0) {
-    u8 temp_v1;
-
-    temp_v1 = arg0->model_0.anim_4.animIdx_0;
-    if (temp_v1 == 0x2F || temp_v1 == 0x1B || temp_v1 == 0x1D)
+void func_800E2154(s_SubCharacter* chara) // 0x800E2154
+{
+    if (chara->model_0.anim_4.animIdx_0 == 47 ||
+        chara->model_0.anim_4.animIdx_0 == 27 ||
+        chara->model_0.anim_4.animIdx_0 == 29)
     {
-        if (func_800E2284(arg0) != 0) {
-            arg0->model_0.anim_4.animIdx_0 = 0x32U;
+        if (func_800E2284(chara) != 0)
+        {
+            chara->model_0.anim_4.animIdx_0 = 50;
             return;
         }
     }
-    else if (temp_v1 == 0x33) 
+    else if (chara->model_0.anim_4.animIdx_0 == 51) 
     {
-        if (func_800E2284(arg0) == 0) {
-            arg0->model_0.anim_4.animIdx_0 = 0x2EU;
+        if (func_800E2284(chara) == 0)
+        {
+            chara->model_0.anim_4.animIdx_0 = 46;
         }
     }
 }

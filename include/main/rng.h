@@ -33,7 +33,7 @@
 
 /** @brief Generates an integer in the range `[low, high]` from a random input. */    
 #define GENERATE_INT(rand, low, high) \
-    ((s32)((rand) % ((high) - (low) + 1)) + (low))
+    (((rand) % ((high) - (low) + 1)) + (low))
 
 /** @brief Global variable storing the current random seed for the `Rng_Rand32`
  * function. The value is updated with each call to the RNG functions.

@@ -22,9 +22,16 @@ typedef struct
     s32 field_1C;
 } s_800A99E4;
 
+/** Relative file offset for map texture? */
+extern s8 D_800A99B5;
+
 extern s_800A99E4 D_800A99E4;
 
-extern u8 D_800E23A1;
+/** Character name. */
+extern char* D_800CCA64;
+
+/** *Map `RECT`? */
+extern RECT D_800CCAC8;
 
 extern s8 D_800CCB00;
 
@@ -56,6 +63,14 @@ extern s32 D_800E239C;
 
 extern u8 D_800E23A0;
 
+extern u8 D_800E23A1;
+
+/** Target camera position for cutscene. */
+extern VECTOR3 D_800E2380;
+
+/** Target camera look-at for cutscene. */
+extern VECTOR3 D_800E2390;
+
 extern s_800BCE18_2BEC_0 D_800E23B0[];
 
 extern s_800BCE18_2BEC_0 D_800E23D0[];
@@ -77,6 +92,12 @@ extern s_800E2490 D_800E254C;
 extern s16 D_800E2560;
 
 extern s_800BCE18_2BEC_0 D_800E2570[];
+
+void func_800DC3C8();
+
+void func_800DC830();
+
+void func_800DC864();
 
 void func_800DC8C8();
 
