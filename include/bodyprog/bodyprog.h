@@ -1423,7 +1423,7 @@ typedef struct
 typedef struct
 {
     s8   field_0; // Maybe bool?
-    s8   field_1;
+    u8   field_1;
     s8   unk_2[2];
     s32* field_4;
     s32* field_8;
@@ -2115,6 +2115,10 @@ extern u16 D_800C4586; // Is player moving right (in-game)?
 
 extern s8 D_800C4588;
 
+extern s32 D_800C459C;
+
+extern s8 D_800C45A4;
+
 extern u16 D_800C45AC;
 
 extern u16 D_800C45AE;
@@ -2656,6 +2660,8 @@ void func_8005B3A4(s_func_8005B3A4* arg0);
 
 void func_8005B3BC(char* filename, s_func_800566B4_sub* arg1);
 
+void func_8005B424(VECTOR3* arg0, VECTOR3* arg1);
+
 s32 func_800571D0(u32 arg0);
 
 void func_80056464(s_800BE9FC* arg0, s32 fileIdx, s32* arg2, s32 arg3);
@@ -3003,6 +3009,8 @@ void func_8006AD44(s_func_8006CC44* arg0, s_func_800699E4* arg1);
 
 void func_8006B1C8(s_func_8006CC44* arg0, s_func_800699E4* arg1, s_func_8006B1C8* arg2);
 
+s32 func_8006BC34(s_func_8006BC34* arg0);
+
 void func_8006BDDC(s_func_8006BDDC* arg0, s16 arg1, s16 arg2);
 
 void func_8006C838(s_func_8006CC44* arg0, s_func_800699E4* arg1);
@@ -3043,6 +3051,10 @@ void func_80074254(s32 arg0, s32 arg1); // `arg1` is pointer?
 
 /** Player controller? */
 void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* arg1);
+
+void func_8007B924(s_SubCharacter* arg0, s_MainCharacterExtra* arg1);
+
+s32 func_8007D6F0(s_SubCharacter* arg0, s_D_800C45C8* arg1);
 
 void func_8004BBF4(VbRVIEW* arg0, GsCOORDINATE2* arg1, SVECTOR* arg2);
 
@@ -3470,6 +3482,8 @@ s32 func_80080514();
 
 /** Computes (abs(value) - subtractor) * copysign(value). */
 s32 PreservedSignSubtract(s32 value, s32 subtractor);
+
+void func_800805BC(VECTOR3* arg0, SVECTOR* arg1, GsCOORDINATE2* arg2, s32 arg3);
 
 u32 func_800806AC(s32 arg0, s32 arg1, s32 arg2, s32 arg3); // arg3 type assumed.
 
