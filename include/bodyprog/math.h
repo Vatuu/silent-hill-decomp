@@ -40,7 +40,7 @@
 
 /** @brief Computes the absolute difference between two values. */
 #define ABS_DIFF(a, b) \
-    ((((a) - (b)) < 0) ? ((b) - (a)) : ((a) - (b)))
+    ABS((a) - (b))
 
 /** @brief Converts an integer to a fixed-point Q format. */
 #define FP_TO(x, shift) \
@@ -91,10 +91,6 @@
 /** @brief Converts floating-point degrees to fixed-point degrees in Q3.12 format. */
 #define FP_ANGLE(deg) \
     (s16)((deg) * ((FP_TO(1, Q12_SHIFT)) / 360.0f))
-
-/** @brief Computes the absolute difference between two fixed-point degree values. */
-#define ANGLE_DIFF(a, b) \
-    ABS((a) - (b))
 
 /** @brief Converts floating-point radians in the range `[-PI, PI]` to fixed-point radians in the range `[0, 0x5000]`. */
 #define FP_RADIAN(rad)                                                                \

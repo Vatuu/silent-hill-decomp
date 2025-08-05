@@ -3029,9 +3029,9 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                 D_800C454C = FP_TIME(0.0f);
             }
 
-            if (ANGLE_DIFF(g_SysWork.player_4C.chara_0.properties_E4.player.field_120, chara->rotation_24.vy) > (FP_ANGLE(180.0f) - ((s32)(g_DeltaTime0 * 24) >> 4)))
+            if (ABS_DIFF(g_SysWork.player_4C.chara_0.properties_E4.player.field_120, chara->rotation_24.vy) > (FP_ANGLE(180.0f) - ((s32)(g_DeltaTime0 * 24) >> 4)))
             {
-                if (ANGLE_DIFF(g_SysWork.player_4C.chara_0.properties_E4.player.field_120, chara->rotation_24.vy) < (((g_DeltaTime0 * 24) >> 4) + FP_ANGLE(180.0f)))
+                if (ABS_DIFF(g_SysWork.player_4C.chara_0.properties_E4.player.field_120, chara->rotation_24.vy) < (((g_DeltaTime0 * 24) >> 4) + FP_ANGLE(180.0f)))
                 {
                     chara->rotation_24.vy                                      = g_SysWork.player_4C.chara_0.properties_E4.npc.field_120 + FP_ANGLE(180.0f);
                     g_SysWork.player_4C.chara_0.properties_E4.player.field_126 = FP_FLOAT_TO(1.4f, Q12_SHIFT);
@@ -3151,9 +3151,9 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                 D_800C454C = FP_TIME(0.0f);
             }
 
-            if (ANGLE_DIFF(g_SysWork.player_4C.chara_0.properties_E4.player.field_120, chara->rotation_24.vy) > (FP_ANGLE(180.0f) - ((g_DeltaTime0 * 24) >> 4)))
+            if (ABS_DIFF(g_SysWork.player_4C.chara_0.properties_E4.player.field_120, chara->rotation_24.vy) > (FP_ANGLE(180.0f) - ((g_DeltaTime0 * 24) >> 4)))
             {
-                if (ANGLE_DIFF(g_SysWork.player_4C.chara_0.properties_E4.player.field_120, chara->rotation_24.vy) < (((g_DeltaTime0 * 24) >> 4) + FP_ANGLE(180.0f)))
+                if (ABS_DIFF(g_SysWork.player_4C.chara_0.properties_E4.player.field_120, chara->rotation_24.vy) < (((g_DeltaTime0 * 24) >> 4) + FP_ANGLE(180.0f)))
                 {
                     chara->rotation_24.vy                                      = g_SysWork.player_4C.chara_0.properties_E4.npc.field_120 + FP_ANGLE(180.0f);
                     g_SysWork.player_4C.chara_0.properties_E4.player.field_126 = FP_FLOAT_TO(1.4f, Q12_SHIFT);
