@@ -125,7 +125,7 @@ typedef struct _VC_WATCH_MV_PARAM
 } VC_WATCH_MV_PARAM;
 STATIC_ASSERT_SIZEOF(VC_WATCH_MV_PARAM, 12);
 
-/** @brief Camera translation paremeters. */
+/** @brief Camera translation parameters. */
 typedef struct _VC_CAM_MV_PARAM
 {
     s32 accel_xz;   /** Speed acceleration on XZ plane. */
@@ -135,8 +135,9 @@ typedef struct _VC_CAM_MV_PARAM
 } VC_CAM_MV_PARAM;
 STATIC_ASSERT_SIZEOF(VC_CAM_MV_PARAM, 16);
 
-// TODO: SH shifts cam_mv_type_14 around to access other data inside.
-// Likely that mv_type is only a char and other fields are inside it too.
+/** @brief Camera path data. */
+// TODO: Engine shifts `cam_mv_type_14` around to access other data inside.
+// `mv_type` is likely only a `char` and other fields are inside it too.
 typedef struct _VC_ROAD_DATA
 {
     VC_LIMIT_AREA     lim_sw_0;
@@ -161,33 +162,34 @@ typedef struct _VC_THROUGH_DOOR_CAM_PARAM
     u8      active_f_0;
     s8      unk_1[3];
     s32     timer_4;
-    s16     rail_ang_y_8;              /** Rail's Y angle. */
+    s16     rail_ang_y_8;              /** Rail Y angle. */
     s8      unk_A[2];
-    VECTOR3 rail_sta_pos_C;            /** Rail's start position. */
-    s32     rail_sta_to_chara_dist_18; /** Distance from the rail's start position to a locked-on character's position. */
+    VECTOR3 rail_sta_pos_C;            /** Rail start position. */
+    s32     rail_sta_to_chara_dist_18; /** Distance from rail start position to a locked-on character position. */
 } VC_THROUGH_DOOR_CAM_PARAM;
 STATIC_ASSERT_SIZEOF(VC_THROUGH_DOOR_CAM_PARAM, 28);
 
+/** @brief Nested camera path data? */
 // TODO: Check if this struct is correct, some SH code seems to act like struct
 // is only 16 bytes when iterating through it?
 typedef struct _VC_NEAR_ROAD_DATA
 {
-    VC_ROAD_DATA* road_p_0;
-    u8            rd_dir_type_4_mb; // Unsure.
+    VC_ROAD_DATA* road_p_0;              /** Path. */
+    u8            rd_dir_type_4_mb;      // Unsure.
     u8            use_priority_5;
     u8            unk_6[2];
-    s32           chara2road_sum_dist_8;
-    s32           chara2road_vec_x_C;
-    s32           chara2road_vec_z_10;
-    VC_LIMIT_AREA rd_14;
-    VC_LIMIT_AREA sw_1C;
+    s32           chara2road_sum_dist_8; /** Character to path distance squared? */
+    s32           chara2road_vec_x_C;    /** Character to path distance squared on X axis? */
+    s32           chara2road_vec_z_10;   /** Character to path distance squared on Z axis? */
+    VC_LIMIT_AREA rd_14;                 /** Path constraint on XZ plane. */
+    VC_LIMIT_AREA sw_1C;                 /** Switch(?) path constraint on XZ plane. */
 } VC_NEAR_ROAD_DATA;
 STATIC_ASSERT_SIZEOF(VC_NEAR_ROAD_DATA, 36);
 
 typedef struct _VC_WORK
 {
     u8                        view_cam_active_f_0;
-    VC_ROAD_DATA*             vc_road_ary_list_4;
+    VC_ROAD_DATA*             vc_road_ary_list_4;             /** Path array. */
     u32                       flags_8;                        /** `VC_FLAGS` */
     u8                        through_door_activate_init_f_C;
     s8                        unk_D[3];
@@ -413,7 +415,7 @@ void vcSetDataToVwSystem(VC_WORK* w_p, VC_CAM_MV_TYPE cam_mv_type);
 s32  vcCamMatNoise(s32 noise_w, s32 ang_spd1, s32 ang_spd2, s32 vcSelfViewTimer);
 s32  Vc_VectorMagnitudeCalc(s32 x, s32 y, s32 z);
 s32  vcGetXZSumDistFromLimArea(s32* out_vec_x_p, s32* out_vec_z_p, s32 chk_wld_x, s32 chk_wld_z,
-                              s32 lim_min_x, s32 lim_max_x, s32 lim_min_z, s32 lim_max_z, s32 can_ret_minus_dist_f);
+                               s32 lim_min_x, s32 lim_max_x, s32 lim_min_z, s32 lim_max_z, s32 can_ret_minus_dist_f);
 
 static inline void Vc_CurNearRoadSet(VC_WORK* work, VC_NEAR_ROAD_DATA* road)
 {

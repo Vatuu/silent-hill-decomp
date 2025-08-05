@@ -1765,8 +1765,18 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
     #define TRAVEL_DIST_MAX FP_METER(1000000.0f)
     #define TRAVEL_DIST_MIN 1
 
+    // Used for `player.field_126`.
+    #define GET_MAX(x)         \
+        (((x) == 2) ? 0x5000 : (((x) == 0) ? 0x3800 : 0x4000))
+
+    // Used for `player.field_126`.
+    #define GET_VAL(val, delta)     \
+        (((val) < 0x3800) ?         \
+        (((delta) * 0xC00) / 136) : \
+        (((delta) + (((delta) < 0) ? 3 : 0)) >> 2))
+
     s32 var_a2;
-    s32 moveDistStep;
+    s32 travelDistStep;
     s32 temp_s1;
     s32 temp_s3;
     s32 var_a3;
@@ -1783,11 +1793,11 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
     }
 
     // Compute move distance step.
-    temp_s3      = func_8007D6F0(chara, &D_800C45C8);
-    temp_s1      = func_8003BF60(chara->position_18.vx, chara->position_18.vz);
-    var_a2       = SQUARE(chara->position_18.vx - D_800C45F8.vx);
-    temp         = SQUARE(chara->position_18.vz - D_800C45F8.vz);
-    moveDistStep = SquareRoot0(var_a2 + temp);
+    temp_s3        = func_8007D6F0(chara, &D_800C45C8);
+    temp_s1        = func_8003BF60(chara->position_18.vx, chara->position_18.vz);
+    var_a2         = SQUARE(chara->position_18.vx - D_800C45F8.vx);
+    temp           = SQUARE(chara->position_18.vz - D_800C45F8.vz);
+    travelDistStep = SquareRoot0(var_a2 + temp);
 
     switch (g_SysWork.player_4C.extra_128.field_24)
     {
@@ -1804,12 +1814,12 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
         case 24:
         case 25:
         case 26:
-            g_SavegamePtr->walkDistance_258 += moveDistStep;
+            g_SavegamePtr->walkDistance_258 += travelDistStep;
             g_SavegamePtr->walkDistance_258  = CLAMP(g_SavegamePtr->walkDistance_258, TRAVEL_DIST_MIN, TRAVEL_DIST_MAX);
             break;
 
         default:
-            g_SavegamePtr->runDistance_254 += moveDistStep;
+            g_SavegamePtr->runDistance_254 += travelDistStep;
             g_SavegamePtr->runDistance_254  = CLAMP(g_SavegamePtr->runDistance_254, TRAVEL_DIST_MIN, TRAVEL_DIST_MAX);
             break;
     }

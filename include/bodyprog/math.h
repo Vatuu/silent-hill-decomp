@@ -105,14 +105,6 @@
 #define FP_TIME(sec) \
     FP_FLOAT_TO((sec), Q12_SHIFT)
 
-#define GET_MAX(x)         \
-    (((x) == 2) ? 0x5000 : (((x) == 0) ? 0x3800 : 0x4000))
-
-#define GET_VAL(val, delta)     \
-    (((val) < 0x3800) ?         \
-    (((delta) * 0xC00) / 136) : \
-    (((delta) + (((delta) < 0) ? 3 : 0)) >> 2))
-
 static inline s16 shAngleRegulate(s32 angle)
 {
     return (angle << 20) >> 20;
