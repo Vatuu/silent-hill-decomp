@@ -4116,7 +4116,8 @@ s32 func_8007F2AC() // 0x8007F2AC
         g_SysWork.playerCombatInfo_38.isAiming_13 != 0 ||
         g_SysWork.player_4C.extra_128.field_1C    == 5 ||
         g_SysWork.player_4C.extra_128.field_1C    == 6 ||
-        (g_SysWork.player_4C.extra_128.field_1C - 7) < 44u)
+        (g_SysWork.player_4C.extra_128.field_1C >= 7 &&
+         g_SysWork.player_4C.extra_128.field_1C <= 50))
     {
         return 1;
     }

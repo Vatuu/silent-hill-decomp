@@ -8,7 +8,7 @@ typedef struct
     s32 field_8;
     s32 field_C;
     s16 field_10;
-    s8  field_12[8];
+    s8  unk_12[8];
 } s_800E2490;
 
 typedef struct
@@ -48,19 +48,21 @@ extern s8 D_800CCB6C;
 
 extern s8 D_800CCB78;
 
+extern SVECTOR3 D_800CCB84;
+
 extern u16 D_800DE128;
 
 extern s32 D_800E239C;
 
 extern u8 D_800E23A0;
 
-extern s_func_8003C8F8 D_800E23B0[];
+extern s_800BCE18_2BEC_0 D_800E23B0[];
 
-extern s_func_8003C8F8 D_800E23D0[];
+extern s_800BCE18_2BEC_0 D_800E23D0[];
 
-extern s_func_8003C8F8 D_800E23F0[];
+extern s_800BCE18_2BEC_0 D_800E23F0[];
 
-extern s_func_8003C8F8 D_800E2450[];
+extern s_800BCE18_2BEC_0 D_800E2450[];
 
 extern s_800E2490 D_800E2490;
 
@@ -74,10 +76,12 @@ extern s_800E2490 D_800E254C;
 
 extern s16 D_800E2560;
 
-extern s_func_8003C8F8 D_800E2570[];
+extern s_800BCE18_2BEC_0 D_800E2570[];
 
 void func_800DC8C8();
 
 void func_800DC9C8();
+
+void func_800DD2EC(s32 arg0);
 
 #endif

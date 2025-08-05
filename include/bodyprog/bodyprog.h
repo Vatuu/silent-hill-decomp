@@ -244,16 +244,6 @@ typedef struct
     s32 field_14;
 } s_D_800C45C8;
 
-typedef struct 
-{
-    s32  field_0;
-    u8   unk_4[12];
-    s8*  field_16;
-    u8   unk_20[4];
-    s8   field_24;
-    s8   field_25;
-} s_func_8003C8F8;
-
 typedef struct
 {
     s32 field_0;
@@ -878,19 +868,21 @@ STATIC_ASSERT_SIZEOF(s_800BCE18_0, 1376);
 
 typedef struct
 {
-    s32 field_0;
+    s32 field_0; // String pointer?
     s32 field_4;
-    u8  unk_8;
+    s8  field_8;
     s8  field_9;
 } s_800BCE18_2BEC_0_10;
 
 typedef struct
 {
-    s8                    unk_0[8];
+    s32                   field_0;
+    s8                    unk_0[4];
     s_800BCE18_2BEC_0_10* field_8;
     s8                    unk_C[4];
-    s_800BCE18_2BEC_0_10  field_10[1]; // Unknown length.
+    s_800BCE18_2BEC_0_10  field_10;
 } s_800BCE18_2BEC_0;
+STATIC_ASSERT_SIZEOF(s_800BCE18_2BEC_0, 28);
 
 typedef struct
 {
@@ -2284,9 +2276,9 @@ s32 func_8003C850();
 
 void func_8003C878(s32 arg0);
 
-void func_8003C8F8(s_func_8003C8F8* arg0, s8* arg1);
+void func_8003C8F8(s_800BCE18_2BEC_0* arg0, s8* newStr);
 
-void func_8003C92C(s_800BCE18_2BEC_0* arg0, VECTOR3* arg1, SVECTOR3* arg2);
+void func_8003C92C(s_800BCE18_2BEC_0* arg0, VECTOR3* pos, SVECTOR3* rot);
 
 void func_8003CD6C(s_PlayerCombat* arg0);
 

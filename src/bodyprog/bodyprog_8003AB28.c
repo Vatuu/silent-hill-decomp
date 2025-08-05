@@ -1039,17 +1039,17 @@ void func_8003C878(s32 arg0) // 0x8003C878
     func_800550D0();
 }
 
-void func_8003C8F8(s_func_8003C8F8* arg0, s8* arg1) // 0x8003C8F8
+void func_8003C8F8(s_800BCE18_2BEC_0* arg0, s8* newStr) // 0x8003C8F8
 {
-    arg0->field_25 = 0;
-    arg0->field_0  = 0;
+    arg0->field_10.field_9 = 0;
+    arg0->field_0          = 0;
 
-    func_80056D64((s8*)&arg0->field_16, arg1);
+    func_80056D64(&arg0->field_10.field_0, newStr);
 
-    arg0->field_24 = 0;
+    arg0->field_10.field_8 = 0;
 }
 
-void func_8003C92C(s_800BCE18_2BEC_0* arg0, VECTOR3* arg1, SVECTOR3* arg2) // 0x8003C92C
+void func_8003C92C(s_800BCE18_2BEC_0* arg0, VECTOR3* pos, SVECTOR3* rot) // 0x8003C92C
 {
     s32              vy;
     s32              coord1;
@@ -1063,14 +1063,14 @@ void func_8003C92C(s_800BCE18_2BEC_0* arg0, VECTOR3* arg1, SVECTOR3* arg2) // 0x
 
     if (D_800BCE18.field_2BE8 < 29)
     {
-        if (arg0->field_10[0].field_9 == 0)
+        if (arg0->field_10.field_9 == 0)
         {
             func_8003BED0();
-            ret = func_8004287C(arg0, arg0->field_10, g_SysWork.player_4C.chara_0.position_18.vx, g_SysWork.player_4C.chara_0.position_18.vz);
+            ret = func_8004287C(arg0, &arg0->field_10, g_SysWork.player_4C.chara_0.position_18.vx, g_SysWork.player_4C.chara_0.position_18.vz);
 
             if (ret == 0)
             {
-                if (func_80056CB4(arg0, &D_800BCE18.field_1BE4, arg0->field_10) == 0)
+                if (func_80056CB4(arg0, &D_800BCE18.field_1BE4, &arg0->field_10) == 0)
                 {
                     return;
                 }
@@ -1080,23 +1080,27 @@ void func_8003C92C(s_800BCE18_2BEC_0* arg0, VECTOR3* arg1, SVECTOR3* arg2) // 0x
                 }
             }
 
-            arg0->field_10[0].field_9 = ret;
+            arg0->field_10.field_9 = ret;
         } 
 
-        coord0 = FP_FROM(arg1->vx, Q4_SHIFT);
-        coord1 = FP_FROM(arg1->vy, Q4_SHIFT);
-        coord2 = FP_FROM(arg1->vz, Q4_SHIFT);
-        vx     = arg2->vx >> 2;
-        vz     = arg2->vz >> 2;
-        vy     = arg2->vy;
+        coord0 = FP_FROM(pos->vx, Q4_SHIFT);
+        coord1 = FP_FROM(pos->vy, Q4_SHIFT);
+        coord2 = FP_FROM(pos->vz, Q4_SHIFT);
+        vx     = rot->vx >> 2;
+        vz     = rot->vz >> 2;
+        vy     = rot->vy;
 
         for (i = 0; i < D_800BCE18.field_2BE8; i++)
         {
             ptr = &D_800BCE18.field_2BEC[i];
     
-            if (arg0 == ptr->field_0 && coord0 == ptr->gsCoordinate0_4 &&
-                coord2 == ptr->gsCoordinate2_8 && coord1 == ptr->gsCoordinate1_4 &&
-                vx == ptr->vx_C && vy == ptr->vy_C && vz == ptr->vz_C)
+            if (arg0 == ptr->field_0 &&
+                coord0 == ptr->gsCoordinate0_4 &&
+                coord2 == ptr->gsCoordinate2_8 &&
+                coord1 == ptr->gsCoordinate1_4 &&
+                vx == ptr->vx_C &&
+                vy == ptr->vy_C &&
+                vz == ptr->vz_C)
             {
                 return;
             }
@@ -1107,9 +1111,8 @@ void func_8003C92C(s_800BCE18_2BEC_0* arg0, VECTOR3* arg1, SVECTOR3* arg2) // 0x
         ptr->vx_C = vx;
         ptr->vy_C = vy;
 
-        if (ptr->gsCoordinate2_8) 
-        {
-        }
+        // Required for match.
+        if (ptr->gsCoordinate2_8) {}
 
         ptr->vz_C            = vz;
         ptr->field_0         = arg0;
@@ -1166,26 +1169,26 @@ void func_8003CC7C(s_800BCE18_2BEC_0* arg0, MATRIX* arg1, MATRIX* arg2) // 0x800
     s_800BCE18_2BEC_0_10* temp_s1;
     s_800BCE18_2BEC_0_10* temp_s2;
 
-    temp_a0 = arg0->field_10[0].field_9;
+    temp_a0 = arg0->field_10.field_9;
     if (!temp_a0)
     {
         return;
     }
 
     temp_s2 = arg0->field_8;
-    temp_s1 = arg0->field_10;
+    temp_s1 = &arg0->field_10;
 
     if (temp_a0 >= 3 && temp_a0 < 7)
     {
         if (!func_80042C04(temp_a0 - 3))
         {
-            arg0->field_10[0].field_9 = 0;
+            arg0->field_10.field_9 = 0;
         }
     }
 
     if (temp_s1->field_0 != temp_s2->field_0 || temp_s1->field_4 != temp_s2->field_4)
     {
-        arg0->field_10[0].field_9 = 0;
+        arg0->field_10.field_9 = 0;
         return;
     }
 
