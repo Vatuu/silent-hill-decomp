@@ -443,7 +443,24 @@ INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800E1EF4);
 
 INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", sharedFunc_800D7560_0_s01); // 0x800E2014
 
-INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800E2154);
+void func_800E2154(s_SubCharacter* arg0) {
+    u8 temp_v1;
+
+    temp_v1 = arg0->model_0.anim_4.animIdx_0;
+    if (temp_v1 == 0x2F || temp_v1 == 0x1B || temp_v1 == 0x1D)
+    {
+        if (func_800E2284(arg0) != 0) {
+            arg0->model_0.anim_4.animIdx_0 = 0x32U;
+            return;
+        }
+    }
+    else if (temp_v1 == 0x33) 
+    {
+        if (func_800E2284(arg0) == 0) {
+            arg0->model_0.anim_4.animIdx_0 = 0x2EU;
+        }
+    }
+}
 
 INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800E21C8);
 
