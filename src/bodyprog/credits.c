@@ -358,7 +358,7 @@ void Results_DisplayInfo(u32* arg0) // 0x80090664
 
             for (i = 0; i < temp_v1; i++) 
             {
-                Gfx_StringDraw(D_8002B4C0[26], 0x14);
+                Gfx_StringDraw(D_8002B4C0[26], 20);
             }
 
             g_SysWork.enableHighResGlyphs_2350_0 = 0;
@@ -405,11 +405,10 @@ void Results_DisplayInfo(u32* arg0) // 0x80090664
             }
 
             setXY4(poly,
-                -0x40, i * 6 - 0xC4,
-                -0x40, (i + 1) * 6 - 0xC4,
-                0x42, i * 6 - 0xC4,
-                0x42, (i + 1) * 6 - 0xC4
-            );
+                   -0x40, (i * 6) - 0xC4,
+                   -0x40, ((i + 1) * 6) - 0xC4,
+                    0x42, (i * 6) - 0xC4,
+                    0x42, ((i + 1) * 6) - 0xC4);
 
             addPrim((u8*)ot->org + 0x1C, poly);
             GsOUT_PACKET_P = (u8*)poly + 0x24;
@@ -453,9 +452,9 @@ void func_80091388(s32 arg0, s32 arg1, s32 arg2) // 0x80091388
         Gfx_DebugStringDraw(".");
         do 
         {
-            var_v0 = arg2 < 0 ? (arg2 + 0xFFF) : arg2;
-            arg2 -= FP_TO(FP_FROM(var_v0, Q12_SHIFT), Q12_SHIFT);
-            arg2 *= 10;
+            var_v0 = (arg2 < 0) ? (arg2 + 0xFFF) : arg2;
+            arg2  -= FP_TO(FP_FROM(var_v0, Q12_SHIFT), Q12_SHIFT);
+            arg2  *= 10;
             var_a0 = arg2 % 40960;
             Gfx_DebugStringDraw(Math_IntegerToString(1, FP_FROM(var_a0, Q12_SHIFT)));
         } 
@@ -474,7 +473,7 @@ u32 func_8009146C(s32 arg0) // 0x8009146C
     if (arg0 == 0) 
     {
         var_v1_2 = g_SavegamePtr->meleeKillCount_25D;
-        var_v0 = (g_SavegamePtr->meleeKillCountB_25E & 0xF) << 8;
+        var_v0   = (g_SavegamePtr->meleeKillCountB_25E & 0xF) << 8;
     } 
     else 
     {
@@ -483,18 +482,18 @@ u32 func_8009146C(s32 arg0) // 0x8009146C
     }
     
     res = var_v1_2 + var_v0;
-    if (res >= 0xFA1u) 
+    if (res > 4000) 
     {
-        res = 0xFA0;
+        res = 4000;
     }
     return res;
 }
 
 void func_800914C4(s32 arg0, u32 value) // 0x800914C4
 {
-    if (value >= 0xFA1) 
+    if (value > 4000) 
     {
-        value = 0xFA0;
+        value = 4000;
     }
 
     if (arg0 == 0) 
@@ -533,7 +532,7 @@ void func_8009151C(u32 arg0, s32 arg1, s32 arg2)
                     {
                         arg2 = 0x8000;
                     }
-                    g_SavegamePtr->field_260 += (arg2 >> 4);
+                    g_SavegamePtr->field_260 += arg2 >> 4;
                 }
 
                 switch (arg0)
@@ -590,6 +589,7 @@ void func_8009151C(u32 arg0, s32 arg1, s32 arg2)
                             }
                         }
                         break;
+
                     case 4:
                     case 5:
                         break;
@@ -622,9 +622,8 @@ void func_8009151C(u32 arg0, s32 arg1, s32 arg2)
 
 void GameFs_StfRollBinLoad() // 0x80091778
 {
-    if (g_Font24AtlasImg.tPage != 0)
-    {
-    }
+    // Required for match.
+    if (g_Font24AtlasImg.tPage != 0) {}
 
     Fs_QueueStartRead(FILE_VIN_STF_ROLL_BIN, FS_BUFFER_1);
     func_800917C0(FONT24_BUFFER, 1, &g_Font24AtlasImg);
@@ -641,8 +640,8 @@ void func_800917C0(void* arg0, s32 arg1, s_FsImageDesc* img) // 0x800917C0
 
     Fs_QueueStartReadTim(FILE_TIM_FONT24_TIM, arg0, img);
 
-    D_800AFE08.field_18 = ((u8*)&img->tPage)[1]; // `Fs_QueuePostLoadTim` seems to do something similar.
-    tPage = ((u8*)&img->tPage)[1];
+    D_800AFE08.field_18 = ((u8*)&img->tPage)[1]; // `Fs_QueuePostLoadTim` does something similar.
+    tPage               = ((u8*)&img->tPage)[1];
 
     D_800AFE08.field_14  = tPage & 0x10;
     D_800AFE08.field_14 |= tPage & 0xF;

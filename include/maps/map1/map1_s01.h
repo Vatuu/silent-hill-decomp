@@ -1,5 +1,5 @@
-#ifndef _MAP4_S03_H
-#define _MAP4_S03_H
+#ifndef _MAP1_S01_H
+#define _MAP1_S01_H
 
 extern s_AnimInfo g_Ai_Cat_AnimInfo[]; // 0x800DC924
 

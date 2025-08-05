@@ -9,6 +9,7 @@
 // TODO: Rename in address order when all become known. Follows a pattern of 4096-byte buffers.
 #define FS_BUFFER_0  (void*)0x8010A600
 #define FS_BUFFER_4  (void*)0x80124384 // Used for player map anim.
+#define FS_BUFFER_11 (void*)0x80169600
 #define FS_BUFFER_3  (void*)0x801B2600
 #define FS_BUFFER_8  (void*)0x801B5E80 // Used for loading inventory item models.
 #define FS_BUFFER_7  (void*)0x801C2600 // Used in `b_konami.c`.

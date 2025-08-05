@@ -1448,8 +1448,6 @@ extern s8* D_8002510C;
 /** Default key bindings. Multiple configs probably? */
 extern s_ControllerConfig D_8002511C[];
 
-extern s_AreaLoadSfx const D_800252BC[];
-
 extern u8 const g_12x16FontWidths[];
 
 extern u32 g_MapMsg_Colors[];

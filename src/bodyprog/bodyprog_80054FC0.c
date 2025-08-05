@@ -3996,7 +3996,8 @@ s32 func_8007D6F0(s_SubCharacter* arg0, s_D_800C45C8* arg1) // 0x8007D6F0
             angle      = (((sp10[0].field_1C + sp10[1].field_1C) >> 1) + FP_ANGLE(360.0f)) & 0xFFF;
             angleDelta = ABS_DIFF(angle, arg0->headingAngle_3C);
 
-            if (angleDelta > FP_ANGLE(160.0f) && angleDelta < FP_ANGLE(200.0f))
+            if (angleDelta > FP_ANGLE(160.0f) &&
+                angleDelta < FP_ANGLE(200.0f))
             {
                 if ((arg0->position_18.vy - FP_METER(1.3f)) < sp10[0].field_18 || sp10[0].field_1 == 0 || sp10[0].field_1 == 12)
                 {
@@ -4073,27 +4074,27 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8007F14C); // 0x
 
 void func_8007F1CC() // 0x8007F1CC
 {
-    D_800C455C = 0;
-    D_800C4558 = 0;
-    D_800C45C0 = 0;
-    D_800C45BE = 0;
-    D_800C45BC = 0;
-    D_800C457E = 0;
-    D_800C4604 = 0;
-    D_800C45F0 = 0;
-    D_800C45E8 = 0;
-    D_800C4582 = 0;
-    D_800C45AE = 0;
-    D_800C4586 = 0;
-    D_800C4580 = 0;
-    D_800C45AC = 0;
-    D_800C4584 = 0;
+    D_800C455C                  = 0;
+    D_800C4558                  = 0;
+    D_800C45C0                  = 0;
+    D_800C45BE                  = 0;
+    D_800C45BC                  = 0;
+    D_800C457E                  = 0;
+    D_800C4604                  = 0;
+    D_800C45F0                  = 0;
+    D_800C45E8                  = 0;
+    D_800C4582                  = 0;
+    D_800C45AE                  = 0;
+    D_800C4586                  = 0;
+    D_800C4580                  = 0;
+    D_800C45AC                  = 0;
+    D_800C4584                  = 0;
     g_Player_Walk2RunTransition = 0;
 }
 
 void func_8007F250(u8* ptr, s8 arg1) // 0x8007F250
 {
-    *ptr = D_800C4561;
+    *ptr       = D_800C4561;
     D_800C4562 = arg1;
 }
 
@@ -4115,7 +4116,7 @@ s32 func_8007F2AC() // 0x8007F2AC
         g_SysWork.playerCombatInfo_38.isAiming_13 != 0 ||
         g_SysWork.player_4C.extra_128.field_1C    == 5 ||
         g_SysWork.player_4C.extra_128.field_1C    == 6 ||
-        (g_SysWork.player_4C.extra_128.field_1C - 7) < 44u) // TODO: Probably not how OG condition looked.
+        (g_SysWork.player_4C.extra_128.field_1C - 7) < 44u)
     {
         return 1;
     }
@@ -4187,8 +4188,8 @@ s32 func_80080478(VECTOR3* pos0, VECTOR3* pos1) // 0x80080478
     z0 = pos0->vz;
     z1 = pos1->vz;
 
-    xDelta = x1 - x0;
-    zDelta = z1 - z0;
+    xDelta     = x1 - x0;
+    zDelta     = z1 - z0;
     atan2Delta = ratan2(xDelta, zDelta);
 
     unk = func_8008A058(func_80080540(xDelta, 0, zDelta));
@@ -4321,7 +4322,7 @@ s32 Math_GetMagnitudeShift(s32 mag) // 0x800808F8
     #define THRESHOLD_1 ((1 << 18) - 1)
     #define THRESHOLD_2 ((1 << 22) - 1)
 
-    s32 qShift;
+    s32 shift;
 
     if (mag < THRESHOLD_0)
     {
@@ -4335,10 +4336,10 @@ s32 Math_GetMagnitudeShift(s32 mag) // 0x800808F8
             return Q12_SHIFT;
         }
 
-        qShift = Q8_SHIFT;
-        return qShift;
+        shift = Q8_SHIFT;
+        return shift;
     }
 
-    qShift = Q4_SHIFT;
-    return qShift;
+    shift = Q4_SHIFT;
+    return shift;
 }

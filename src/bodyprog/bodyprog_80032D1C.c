@@ -2589,11 +2589,11 @@ s32 Gfx_MapMsg_SelectionUpdate(u8 mapMsgIdx, s32* arg1) // 0x80036B5C
 
 const s32 RodataPad_800252B8 = 0;
 
-/** @brief SFX pair table.
+/** @brief SFX pairs.
  * 
  * @note Used when loading areas. Maybe facilitates things like the
  * opening and closing door SFX when the player moves between rooms. */
-s_AreaLoadSfx const D_800252BC[25] = // 0x800252BC
+s_AreaLoadSfx const SfxPairs[25] = // 0x800252BC
 {
     { Sfx_None,    Sfx_None },
     { Sfx_Unk1309, Sfx_Unk1310 },
@@ -2622,7 +2622,7 @@ s_AreaLoadSfx const D_800252BC[25] = // 0x800252BC
     { Sfx_Unk1487, Sfx_None }
 };
 
-// These get referenced by pointers at `0x800A99E8`, which are then used by `func_800D3EAC`.
+// These are referenced by pointers at `0x800A99E8`, which are then used by `func_800D3EAC`.
 // Maybe meant to be separate .c file with .h externs.
 const char g_80025320[] = "SHOT_NEA";
 const char g_8002532C[] = "SHELL_NE";
@@ -3676,7 +3676,7 @@ void SysState_LoadArea_Update() // 0x80039C40
     g_SysWork.field_2283 = (g_MapEventParam->flags_8 >> 19) & 0x1F;
     g_SysWork.field_2282 = (g_MapEventParam->flags_8 >> 13) & 0x3F;
 
-    Sd_EngineCmd(D_800252BC[g_SysWork.field_2283].sfx_0);
+    Sd_EngineCmd(SfxPairs[g_SysWork.field_2283].sfx_0);
 
     if (g_SysWork.field_2283 == 7)
     {
@@ -3735,7 +3735,7 @@ void AreaLoad_UpdatePlayerPosition() // 0x80039F30
 
 void func_80039F54() // 0x80039F54
 {
-    Sd_EngineCmd(D_800252BC[g_SysWork.field_2283].sfx_2);
+    Sd_EngineCmd(SfxPairs[g_SysWork.field_2283].sfx_2);
 }
 
 s8 func_80039F90() // 0x80039F90

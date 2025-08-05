@@ -1,5 +1,5 @@
-#ifndef _MAP4_S05_H
-#define _MAP4_S05_H
+#ifndef _MAP5_S01_H
+#define _MAP5_S01_H
 
 void func_800D2450(s32 arg0);
 
