@@ -1042,7 +1042,7 @@ void func_8003C878(s32 arg0) // 0x8003C878
 void func_8003C8F8(s_func_8003C8F8* arg0, s8* arg1) // 0x8003C8F8
 {
     arg0->field_25 = 0;
-    arg0->field_0 = 0;
+    arg0->field_0  = 0;
 
     func_80056D64((s8*)&arg0->field_16, arg1);
 

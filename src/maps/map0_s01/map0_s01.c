@@ -452,7 +452,81 @@ void func_800DC8C8() // 0x800DC8C8
     }
 }
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800DC9C8);
+void func_800DC9C8() // 0x800DC9C8
+{
+    D_800E23A1         = 0xE0;
+    D_800E2490.field_0 = 0;
+    D_800E2490.field_4 = 0;
+    D_800E2490.field_8 = 0x118000;
+
+    func_8003C8F8(&D_800E23B0[0], &D_800CCB00);
+    func_8003C8F8(&D_800E23D0[0], &D_800CCB0C);
+    func_8003C8F8(&D_800E23F0[0], &D_800CCB18);
+    func_8003C8F8(&D_800E23F0[1], &D_800CCB24);
+    func_8003C8F8(&D_800E23F0[2], &D_800CCB30);
+    func_8003C8F8(&D_800E2450[0], &D_800CCB3C);
+    func_8003C8F8(&D_800E2450[1], &D_800CCB48);
+
+    D_800E24BC.field_0  = 0x5170;
+    D_800E24BC.field_4  = -0x1028;
+    D_800E24BC.field_8  = 0x1121EB;
+    D_800E24BC.field_C  = 0x016C0000;
+    D_800E24BC.field_10 = 0;
+    func_8003C8F8(&D_800E24BC - 1, &D_800CCB54);
+
+    D_800E24EC.field_0  = 0x52E1;
+    D_800E24EC.field_4  = -0x1000;
+    D_800E24EC.field_8  = 0x10B47A;
+    D_800E24EC.field_C  = 0x04EEFFDE;
+    D_800E24EC.field_10 = 0;
+    func_8003C8F8(&D_800E24EC - 1, &D_800CCB60);
+
+    D_800E251C.field_0  = 0x53D7;
+    D_800E251C.field_4  = -0x1000;
+    D_800E251C.field_8  = 0x10B35C;
+    D_800E251C.field_C  = 0x02880000;
+    D_800E251C.field_10 = 0;
+    func_8003C8F8(&D_800E251C - 1, &D_800CCB6C);
+
+    D_800E254C.field_0  = 0x24F5;
+    D_800E254C.field_4  = -0x999;
+    D_800E254C.field_8  = 0x111F33;
+    D_800E254C.field_C  = 0x06880000;
+    D_800E254C.field_10 = 0;
+    func_8003C8F8(&D_800E254C - 1, &D_800CCB78);
+
+    if ((g_SavegamePtr->eventFlags_168[1] & ((1 << 8) | (1 << 15))) == (1 << 8))
+    {
+        g_SysWork.flags_22A4 |= (1 << 5) | (1 << 9);
+        Chara_Load(0, 2, &g_SysWork.npcCoords_FC0, NO_VALUE, 0, 0);
+        if (g_SavegamePtr->eventFlags_168[1] & (1 << 6))
+        {
+            func_80088D0C();
+            Chara_Spawn(2, 0, 0xFFFF6000, 0x118000, 0, 12);
+            func_800D3A3C(&g_SysWork.npcs_1A0[0]);
+
+            Fs_QueueStartRead(FILE_ANIM_CAFE2_DMS, FS_BUFFER_11);
+            Fs_QueueWaitForEmpty();
+            DmsHeader_FixOffsets((s_DmsHeader*)FS_BUFFER_11);
+        }
+    }
+
+    if ((g_SavegamePtr->eventFlags_168[4] & ((1 << 6) | (1 << 31))) == (1 << 31))
+    {
+        func_8003ED74(6, 3);
+    }
+
+    D_800E239C = 0;
+    D_800E2560 = 0;
+
+    // There are 6 NPCs max. Maybe related?
+    func_8003C8F8(&D_800E2570[0], D_800A99E4.field_8);
+    func_8003C8F8(&D_800E2570[1], D_800A99E4.field_C);
+    func_8003C8F8(&D_800E2570[2], D_800A99E4.field_10);
+    func_8003C8F8(&D_800E2570[3], D_800A99E4.field_14);
+    func_8003C8F8(&D_800E2570[4], D_800A99E4.field_18);
+    func_8003C8F8(&D_800E2570[5], D_800A99E4.field_1C);
+}
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800DCCF4);
 
