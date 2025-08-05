@@ -94,7 +94,7 @@ bool Gfx_StringDraw(char* str, s32 size) // 0x8004A8E8
     glyphColor = g_MapMsg_Colors[g_StringColorId];
     ot         = &D_800B5C40[g_ObjectTableIdx].field_0[D_800AD49C];
 
-    if (!(g_SysWork.highResolutionTextRender_2350_0 & 0xF))
+    if (!(g_SysWork.enableHighResGlyphs_2350_0 & 0xF))
     {
         packet = GsOUT_PACKET_P;
     }
@@ -137,7 +137,7 @@ bool Gfx_StringDraw(char* str, s32 size) // 0x8004A8E8
             sizeCpy--;
 
             // Draw glyph sprite.
-            if (g_SysWork.highResolutionTextRender_2350_0 & 0xF)
+            if (g_SysWork.enableHighResGlyphs_2350_0 & 0xF)
             {
                 glyphPoly = (POLY_FT4*)GsOUT_PACKET_P;
 
@@ -212,7 +212,7 @@ bool Gfx_StringDraw(char* str, s32 size) // 0x8004A8E8
         strCpy++;
     }
 
-    if (!(g_SysWork.highResolutionTextRender_2350_0 & 0xF))
+    if (!(g_SysWork.enableHighResGlyphs_2350_0 & 0xF))
     {
         GsOUT_PACKET_P = packet;
     }
@@ -302,7 +302,7 @@ void Gfx_MapMsg_CalculateWidths(s32 mapMsgIdx) // 0x8004ACF4
                         break;
 
                     case MAP_MSG_CODE_HIGH_RES:
-                        g_SysWork.highResolutionTextRender_2350_0 = 1;
+                        g_SysWork.enableHighResGlyphs_2350_0 = 1;
                         break;
                 }
 
@@ -371,7 +371,7 @@ s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 strLength) // 0x8004AF18
     color               = g_MapMsg_Colors[g_StringColorId];
     g_StringPosition.vx = -(g_MapMsg_WidthTable[0] >> 1);
 
-    if (!(g_SysWork.highResolutionTextRender_2350_0 & 0xF))
+    if (!(g_SysWork.enableHighResGlyphs_2350_0 & 0xF))
     {
         packet = GsOUT_PACKET_P;
     }
@@ -556,7 +556,7 @@ s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 strLength) // 0x8004AF18
                         break;
 
                     case MAP_MSG_CODE_HIGH_RES:
-                        g_SysWork.highResolutionTextRender_2350_0 = 1;
+                        g_SysWork.enableHighResGlyphs_2350_0 = 1;
                         break;
             }
 
@@ -573,7 +573,7 @@ s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 strLength) // 0x8004AF18
         default:
             strLength--;
 
-            if (g_SysWork.highResolutionTextRender_2350_0 & 0xF)
+            if (g_SysWork.enableHighResGlyphs_2350_0 & 0xF)
             {
                 glyphPoly = (POLY_FT4*)GsOUT_PACKET_P;
 
@@ -628,7 +628,7 @@ s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 strLength) // 0x8004AF18
 
             if (strLength <= 0)
             {
-                if (!(g_SysWork.highResolutionTextRender_2350_0 & 0xF))
+                if (!(g_SysWork.enableHighResGlyphs_2350_0 & 0xF))
                 {
                     GsOUT_PACKET_P = packet;
                 }
@@ -638,7 +638,7 @@ s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 strLength) // 0x8004AF18
         }
     }
 
-    if (!(g_SysWork.highResolutionTextRender_2350_0 & 0xF))
+    if (!(g_SysWork.enableHighResGlyphs_2350_0 & 0xF))
     {
         GsOUT_PACKET_P = packet;
     }
@@ -662,7 +662,7 @@ void func_8004B684() // 0x8004B684
     D_800C38B0.positionIdx_1             = 1;
     g_StringPositionX1                   = SCREEN_POSITION_X(-37.5f);
     g_StringColorId                      = ColorId_White;
-    g_SysWork.highResolutionTextRender_2350_0 = 0;
+    g_SysWork.enableHighResGlyphs_2350_0 = 0;
 }
 
 void func_8004B6D4(s16 arg0, s16 arg1) // 0x8004B6D4

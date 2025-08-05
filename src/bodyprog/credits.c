@@ -331,20 +331,20 @@ void Results_DisplayInfo(u32* arg0) // 0x80090664
         {
             Gfx_StringSetPosition(0xA0, 0xC6);
 
-            g_SysWork.highResolutionTextRender_2350_0 = 1;
+            g_SysWork.enableHighResGlyphs_2350_0 = 1;
 
             for (i = 0; i < temp_v1; i++)
             {
                 Gfx_StringDraw(D_8002B4C0[26], 1);
             }
 
-            g_SysWork.highResolutionTextRender_2350_0 = 0;
+            g_SysWork.enableHighResGlyphs_2350_0 = 0;
         }
         else if (temp_v1 == 0 && temp_a0 != 0)
         {
             Gfx_StringSetPosition(0xA0, 0x124);
 
-            g_SysWork.highResolutionTextRender_2350_0 = 0;
+            g_SysWork.enableHighResGlyphs_2350_0 = 0;
 
             for (i = 0; i < temp_a0; i++) 
             {
@@ -353,20 +353,20 @@ void Results_DisplayInfo(u32* arg0) // 0x80090664
         }
         else
         {
-            g_SysWork.highResolutionTextRender_2350_0 = 1;
-            Gfx_StringSetPosition(0xA0, 0xC2);
+            g_SysWork.enableHighResGlyphs_2350_0 = 1;
+            Gfx_StringSetPosition(160, 194);
 
             for (i = 0; i < temp_v1; i++) 
             {
                 Gfx_StringDraw(D_8002B4C0[26], 0x14);
             }
 
-            g_SysWork.highResolutionTextRender_2350_0 = 0;
-            Gfx_StringSetPosition(0xA0, 0x12C);
+            g_SysWork.enableHighResGlyphs_2350_0 = 0;
+            Gfx_StringSetPosition(160, 300);
 
             for (i = 0; i < temp_a0; i++) 
             {
-                Gfx_StringDraw(D_8002B4C0[26], 0x14);
+                Gfx_StringDraw(D_8002B4C0[26], 20);
             }
         }
 
