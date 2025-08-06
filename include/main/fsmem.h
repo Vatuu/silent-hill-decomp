@@ -32,8 +32,8 @@ typedef struct
 /** FS memory heap. */
 extern s_FsMemState g_FsMemory;
 
-void nullsub_800120b0(void);
-void nullsub_80011cfc(void);
+void nullsub_800120b0();
+void nullsub_80011cfc();
 
 /** @brief Initialize FS memory heap.
  * @param start Heap base.

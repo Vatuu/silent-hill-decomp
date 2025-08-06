@@ -308,6 +308,9 @@ def sort_and_format_with_yaml_comments(input_text, section_map, subsegment_map):
         else:
             output_lines.append(line)
 
+    # Add newline to file end
+    output_lines.append('')
+
     return '\n'.join(output_lines)
 
 
