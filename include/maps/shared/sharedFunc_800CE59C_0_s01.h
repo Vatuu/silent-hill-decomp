@@ -1,45 +1,40 @@
 
-// How many snow particle inits are needed
-#define PARTICLE_INIT_MAX 150
-// A particle init sometimes can spawn either 1 or 3 particles - seems to be some sort of multiplier
-// The actual size of the particle array is therefore double the init count
-// Technically this won't accommodate all the particles requested, which is probably performance related
-#define PARTICLES_ARRAY_MAX 300
-// How long the snow particle rests on the ground during init logic
-// NOTE: This is duration doubled in runtime logic
-#define SNOW_RESTING_TICKS_INIT 16
+typedef enum
+{
+    ParticleState_Spawn  = 0,
+    ParticleState_Active = 1,
+    ParticleState_Rest   = 2  
+} e_ParticleState;
 
 typedef enum
 {
-    snowType_Light        = 0,    // 00 = Light snow
-    snowType_Heavy        = 1,    // 01 = Heavy snow
-    snowType_Light_Windy  = 2,    // 10 = Light snow, with wind
-    snowType_Heavy_Windy  = 3,    // 11 = Heavy snow, with wind
-} e_snowType;
+    SnowType_Light      = 0,
+    SnowType_Heavy      = 1,
+    SnowType_LightWindy = 2,
+    SnowType_HeavyWindy = 3
+} e_SnowType;
 
-// Tracks how many particles have been added per-entry
-// Not sure why this isn't a local variable
-#define D_ParticleInitCount sharedData_800E2156_0_s01
-// Track how many total particles have been added
-#define D_ParticleAddedCount sharedData_800DD78C_0_s01
-
-/**
- * @brief Initialises snow particles. Called once when the map overlay is loaded.
+// TODO: Refine comments and names, it's still kind of unclear.
+/** @brief Spawns snow particles. Called once when the map overlay is loaded.
  *
- * This function not only spawns particles but also runs logic on them so they are in a good ready state
- * This avoids having all the snow particles starting in the sky at the same time
+ * This function spawns and updates snow particles.
+ * This avoids having all the snow particles starting in the sky at the same time.
  *
- * The spawn loop roughly works like this (simplfied pseudocode):
+ * The spawn loop works as follows (pseudocode):
+ *
  * particlesAdded = 0;
- * toAddPerTick = 1 or 3;
- * while (particlesAdded < PARTICLE_INIT_MAX) // Perform an init tick
+ * toAddPerTick   = 1 or 3;
+ * 
+ * // Perform spawn tick.
+ * while (particlesAdded < SNOW_SPAWN_COUNT_MAX)
  * {
- *     // Start at 0 to update all previously added particles by one step
+ *     // Start at 0 to update all previously added particles by one step.
  *     for (i = 0; i < particlesAdded; i++)
  *     {
- *        updateParticle(i); // These particles will re-add below if they expire
+ *        updateParticle(i); // These particles will re-add below if they expire.
  *     }
- *     // Then add the new particle(s)
+ 
+ *     // Add new particles.
  *     for (i = 0; i < toAddPerTick; i++)
  *     {
  *         addParticle();
@@ -47,144 +42,127 @@ typedef enum
  *     }
  * }
  */
-void sharedFunc_800CE59C_0_s01(s_Particle* particles) {
-    s32 i, j;
-    s16 rand;
+void sharedFunc_800CE59C_0_s01(s_Particle* parts)
+{
+    #define SNOW_COUNT_MAX       300
+    #define SNOW_SPAWN_COUNT_MAX 150
+    #define SNOW_REST_TICKS_MAX  16
 
-    s32 particleInitPerTick;
-    s32 particlesAddedPerTick;
+    s32         i;
+    s32         j;
+    s16         rand;
+    s32         density;
+    s32         spawnMult;
+    u16         settingsState; // TODO: Rename.
+    u16         snowType;
+    s32         deltaTime;
+    s_Particle* part;
 
-    // Pointer to the current particle
-    s_Particle* particlePtr;
+    deltaTime = FP_TIME(0.1f / 3.0f);
 
-    u16 settingsState;
-    u16 settingsSnowType;
+    GsInitCoordinate2(NULL, (GsCOORDINATE2*)g_SysWork.unk_22A8);
 
-    s32 deltaTime = 0x88;
-
-    GsInitCoordinate2(NULL, (GsCOORDINATE2* ) g_SysWork.unk_22A8);
-
-    // Reset all particles to the init state
-    for (particlePtr = particles, i = 0; i < PARTICLES_ARRAY_MAX; i++, particlePtr++)
+    // Reset states.
+    for (i = 0, part = parts; i < SNOW_COUNT_MAX; i++, part++)
     {
-        particlePtr->counter_1E = 0;
+        part->stateStep_1E = 0;
     }
-    
-    // Reset the particle count tracking variables
-    // NOTE: Only one of them gets used
-    D_ParticleAddedCount[1] = 0;
-    D_ParticleAddedCount[0] = 0;
 
-    // A single settings byte holds a general state and the snow type
-    // Can be 0-2, needs to be 1 to enable snow
+    // Reset counts. NOTE: One is unused.
+    sharedData_800DD78C_0_s01[1] = 0;
+    sharedData_800DD78C_0_s01[0] = 0;
+
+    // Settings byte holds state and snow type. Can be 0-2. 1 enables snow. TODO: Move doc.
     settingsState = (sharedData_800E0CB8_0_s00 & 0xC) >> 2;
-    
     if (((sharedData_800E0CB8_0_s00 & 0xC) >> 2) == 1)
     {
-        for (particlePtr = particles, i = 0; i < PARTICLES_ARRAY_MAX; i++, particlePtr++)
+        for (i = 0, part = parts; i < SNOW_COUNT_MAX; i++, part++)
         {
-            // Sets the type to snow
-            particlePtr->type_1F = 0;
+            part->type_1F = SnowType_Light;
         }
-        // Helps control how heavy the snow is
-        // A heavy snow type will need to process more particles per tick to maintain visual density
-        particleInitPerTick = g_SysWork.unk_0[0x2349] == 1 ? 1 : 3;
+
+        density = (g_SysWork.field_2349 == 1) ? 1 : 3;
     }
     else
     {
-        for (particlePtr = particles, i = 0; i < PARTICLES_ARRAY_MAX; i++, particlePtr++)
+        for (i = 0, part = parts; i < SNOW_COUNT_MAX; i++, part++)
         {
-            // Not sure what this is doing yet
-            particlePtr->type_1F = (u8)settingsState;
+            part->type_1F = settingsState;
         }
-        // This is probably to init a lot of particles to a default state every tick, so it's completed sooner
-        particleInitPerTick = 0xA;
+
+        density = 10;
     }
 
     if (settingsState)
     {
-        // Get lower two bits of the settings byte
-        settingsSnowType = sharedData_800E0CB8_0_s00 & 0x3;
-        // The state also acts as an index into an array of particle limits
-        settingsState = settingsState - 1;
+        snowType = sharedData_800E0CB8_0_s00 & 0x3;
+        settingsState--;
 
-        // Set XZ wind speed
-        // NOTE: The init update doesn't apply any XZ movement, so this has no impact until after init is completed
-        if (settingsSnowType >= snowType_Light_Windy)
+        // Set wind speed on XZ plane.
+        if (snowType >= SnowType_LightWindy)
         {
-            sharedData_800DFB68_0_s00 = 600;
-            sharedData_800DFB64_0_s00 = 600;
+            sharedData_800DFB68_0_s00 = SNOW_COUNT_MAX * 2;
+            sharedData_800DFB64_0_s00 = SNOW_COUNT_MAX * 2;
         }
         else
         {
             sharedData_800DFB68_0_s00 = 0;
             sharedData_800DFB64_0_s00 = 0;
         }
-        // Set the particle spawn ceiling height
-        sharedData_800E323C_0_s00.vy = -0x6000;
 
-        // The particle type indicates how many new particles can be added per tick
-        // This is separate from particleInitPerTick, which throttles how many per tick can be initialised, including expired particles
-        particlesAddedPerTick = (settingsSnowType == snowType_Light || settingsSnowType == snowType_Light_Windy) ? 1 : 2;
+        // Set start position.
+        sharedData_800E323C_0_s00.vy = FP_METER(-6.0f);
 
-        // Run the init for 150 ticks
-        for (j = 0; j < PARTICLE_INIT_MAX; j++)
+        // Particle type determines particle multiplier for spawn loop.
+        spawnMult = (snowType == SnowType_Light || snowType == SnowType_LightWindy) ? 1 : 2;
+
+        // Spawn and update.
+        for (j = 0; j < SNOW_SPAWN_COUNT_MAX; j++)
         {
-            // Reset how many particles we've inititialised this tick
-            D_ParticleInitCount = 0;
-            // Generate a random value for offsets
-            // Seems to be kept here, and passed by pointer, so there's just one local variable needed to store it
-            rand = Rng_Rand16();
+            // Reset how many particles to spawn this iteration.
+            sharedData_800E2156_0_s01 = 0;
 
-            // The previously added count is the current limit - grow it by now many new particles we can add
-            D_ParticleAddedCount[settingsState] += particlesAddedPerTick;
+            rand                                      = Rng_Rand16();
+            sharedData_800DD78C_0_s01[settingsState] += spawnMult;
 
-            // Then cap the limit
-            if ((settingsSnowType == snowType_Light || settingsSnowType == snowType_Light_Windy))
+            // Clamp spawn count.
+            if (snowType == SnowType_Light || snowType == SnowType_LightWindy)
             {
-                // Light snow - 150 particles max
-                // NB: limitRange() is the standard psyq clamp macro
-                limitRange(D_ParticleAddedCount[settingsState], 0, PARTICLE_INIT_MAX);
+                limitRange(sharedData_800DD78C_0_s01[settingsState], 0, SNOW_SPAWN_COUNT_MAX);
             }
             else
             {
-                limitRange(D_ParticleAddedCount[settingsState], 0, PARTICLES_ARRAY_MAX);
+                limitRange(sharedData_800DD78C_0_s01[settingsState], 0, SNOW_COUNT_MAX);
             }
 
-            // And finally interate over all existing particles to update them, and add new ones
-            for (i = 0, particlePtr = particles; i < D_ParticleAddedCount[settingsState]; ++i, ++particlePtr)
+            for (i = 0, part = parts; i < sharedData_800DD78C_0_s01[settingsState]; i++, part++)
             {
-                switch (particlePtr->counter_1E)
+                switch (part->stateStep_1E)
                 {
-                    // Init state
-                    case 0:
-                        // Throttle how many particles we init every tick
-                        if (D_ParticleInitCount < particleInitPerTick)
+                    case ParticleState_Spawn:
+                        // Throttle spawning.
+                        if (sharedData_800E2156_0_s01 < density)
                         {
-                            D_ParticleInitCount++;
-                            // Init the particle
-                            sharedFunc_800CF9A8_0_s01(settingsState, particlePtr, &rand);
+                            sharedData_800E2156_0_s01++;
+                            sharedFunc_800CF9A8_0_s01(settingsState, part, &rand);
                         }
                         break;
-                    // Active state
-                    case 1:
-                        // Randomise the movement offset a little more and travel along Y (ignores XZ and wind)
-                        sharedFunc_800CF2A4_0_s01(settingsState, particlePtr, &rand, &deltaTime);
-                        // Switch to the resting state when the particle Y position hits 0
-                        // A messy way of doing: if (particlePtr->position1_0.vy == 0)
-                        if (particlePtr->position1_0.vy == 0)
+
+                    case ParticleState_Active:
+                        sharedFunc_800CF2A4_0_s01(settingsState, part, &rand, &deltaTime);
+                        
+                        // Step to rest state when Y position reaches 0.
+                        if (part->position0_0.vy == 0)
                         {
-                            particlePtr->counter_1E++;
+                            part->stateStep_1E++;
                         }
                         break;
-                    // Rest state - sits on the ground for a while
-                    default:
-                        // Increment the counter
-                        particlePtr->counter_1E++;
-                        // Reset the counter when the rest duration ends
-                        if (particlePtr->counter_1E >= SNOW_RESTING_TICKS_INIT)
+
+                    default: // `ParticleState_Rest`
+                        part->stateStep_1E++;
+                        if (part->stateStep_1E >= SNOW_REST_TICKS_MAX)
                         {
-                            particlePtr->counter_1E = 0;
+                            part->stateStep_1E = 0;
                         }
                         break;
                 }

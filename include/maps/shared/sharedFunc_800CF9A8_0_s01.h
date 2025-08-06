@@ -6,7 +6,7 @@ void sharedFunc_800CF9A8_0_s01(s32 arg0, s_Particle* part, u16* rand)
 
     VECTOR3* pos;
 
-    pos = &part->position1_0;
+    pos = &part->position0_0;
 
     if (arg0 == 0)
     {
@@ -19,8 +19,8 @@ void sharedFunc_800CF9A8_0_s01(s32 arg0, s_Particle* part, u16* rand)
             part->type_1F = 1;
         }
 
-        // Set Y start position.
-        part->position1_0.vy = sharedData_800E323C_0_s00.vy;
+        // Set start position.
+        part->position0_0.vy = sharedData_800E323C_0_s00.vy;
 
         // Set downward movement.
         part->movement_18.vz = 0;
@@ -31,11 +31,11 @@ void sharedFunc_800CF9A8_0_s01(s32 arg0, s_Particle* part, u16* rand)
         sharedFunc_800D01BC_0_s00(rand, pos, SNOW_XZ_SPAWN_RANGE);
 
         // 2nd position unused for snow.
-        part->position2_C.vz = 0;
-        part->position2_C.vy = 0;
-        part->position2_C.vx = 0;
+        part->position1_C.vz = 0;
+        part->position1_C.vy = 0;
+        part->position1_C.vx = 0;
     }
 
-    // Move particle into active state.
-    part->counter_1E++;
+    // Step to active state.
+    part->stateStep_1E++;
 }

@@ -1120,9 +1120,9 @@ typedef struct _SysWork
     s32             field_229C;
     s32             field_22A0;
     s32             flags_22A4;
-    s8              unk_22A8[160];
+    s8              unk_22A8[160]; // TODO: Confirmed `GsCOORDINATE2` at start.
     s8              field_2348   : 8;
-    s8              field_2349   : 8;
+    s8              field_2349   : 8; // Particle spawn multiplier?
     u8              field_234A   : 8;
     u8              field_234B_0 : 4;
     u8              field_234B_4 : 4;

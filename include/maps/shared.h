@@ -15,12 +15,11 @@ typedef struct
 
 typedef struct
 {
-    VECTOR3     position1_0; // Snow: position, Rain: streak lower position.
-    VECTOR3     position2_C; // Snow: unused, Rain: streak upper position.
-    SVECTOR3    movement_18; // Snow: random accumulation, Rain: Y accumulation (seems to affect streak length).
-    u8          counter_1E;  // Blank: 0, Fall: 1, Rest on ground (snowflake or rain splash): 2+.
-                             // NOTE: particle logic can skip resting, i.e. outside windows, when the ground can't be seen)
-    s8          type_1F;     // Snow: 0, Rain: 2
+    VECTOR3     position0_0;  // Snow: position, Rain: streak start (bottom)
+    VECTOR3     position1_C;  // Snow: unused, Rain: streak end (top)
+    SVECTOR3    movement_18;  // Snow: random accumulation, Rain: Y accumulation (affects streak length)
+    u8          stateStep_1E; // Blank: 0, Fall: 1, Rest on ground (snowflake or rain splash): 2+
+    s8          type_1F;      // Snow: 0, Rain: 2
 } s_Particle;
 
 typedef struct
@@ -126,7 +125,10 @@ extern s_AnimInfo sharedData_800D5ABC_3_s03[]; // Used by `Ai_Bloodsucker_Init`.
 extern u8 sharedData_800DD591_0_s00;
 extern u8 sharedData_800DD796_0_s01;
 
+/** `g_ParticlesAddedCounts`. Tracks how many total particles have been added. */
 extern s32 sharedData_800DD78C_0_s01[2];
+
+/** `g_ParticleSpawnCount`. Tracks how many particles have been added per call. */
 extern u8 sharedData_800E2156_0_s01;
 
 extern s_AnimInfo sharedData_800DF174_0_s00[]; // Used by `sharedFunc_800D921C_0_s00`, `Ai_Kaufmann` related?
@@ -240,7 +242,7 @@ void sharedFunc_800D923C_0_s00(s_SubCharacter* chara);
 
 u8 sharedFunc_800D92AC_0_s00(s32 x, s32 y);
 
-/** Snow effect init */
+/** Snow effect init. */
 void sharedFunc_800CE59C_0_s01(s_Particle* particles);
 
 /** Snow particle update. */

@@ -51,7 +51,12 @@ INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02_2", sharedFunc_800D7BE8_0_s
 
 INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02_2", sharedFunc_800D7EE8_1_s02); // 0x800D7EE8
 
+// TODO: .rodata migration and share.
+#ifdef NON_MATCHING
+#include "maps/shared/sharedFunc_800D8244_1_s02.h" // 0x800D8244
+#else
 INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02_2", sharedFunc_800D8244_1_s02); // 0x800D8244
+#endif
 
 INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02_2", func_800D82F0);
 

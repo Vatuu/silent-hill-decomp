@@ -4,7 +4,7 @@ void sharedFunc_800CF2A4_0_s01(s32 arg0, s_Particle* part, u16* rand, s32* delta
     u16      localRand;
     VECTOR3* pos;
     
-    pos= &part->position1_0;
+    pos= &part->position0_0;
 
     if (arg0 == 0)
     {
@@ -23,7 +23,7 @@ void sharedFunc_800CF2A4_0_s01(s32 arg0, s_Particle* part, u16* rand, s32* delta
         part->movement_18.vy += GENERATE_INT(*rand, -1, 3);
 
         // Apply movement to position over time.
-        part->position1_0.vy += ((((part->movement_18.vy >> 1) << 2) * *deltaTime) / 136);
+        part->position0_0.vy += ((((part->movement_18.vy >> 1) << 2) * *deltaTime) / 136);
     }
 
     // Clamp Y position at 0 and rest.
