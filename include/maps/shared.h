@@ -86,6 +86,7 @@ extern s_AnimInfo sharedData_800DD5A8_0_s00[]; // Used by `Ai_Stalker_Init`.
 extern s_AnimInfo sharedData_800E0D38_1_s02[];
 extern s8  sharedData_800E57CC_1_s02;
 
+// Pointer.
 extern s32 sharedData_800E21D0_0_s01;
 
 extern s_AnimInfo sharedData_800CAA98_0_s01[]; // Used by `Ai_AirScreamer_Init` / `sharedFunc_800D2BF4_0_s01`

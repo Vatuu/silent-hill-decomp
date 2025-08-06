@@ -799,13 +799,13 @@ void func_800699F8(s_func_800699F8* result, s32 posX, s32 posZ) // 0x800699F8
     result->field_6 = sp38.field_8C;
 }
 
-s32 func_80069B24(s32 arg0, void* arg1, void* arg2) // 0x80069B24
+s32 func_80069B24(VECTOR3* vec0, VECTOR3* vec1, s_SubCharacter* chara) // 0x80069B24
 {
     s32 var0; 
     s32 var1;
 
     var0 = SetSp(0x1F8003D8);
-    var1 = func_80069BA8(arg0, arg1, arg2, func_80069FFC(arg0, arg1, arg2));
+    var1 = func_80069BA8(vec0, vec1, chara, func_80069FFC(vec0, vec1, chara));
     SetSp(var0);
     return var1; 
 }
@@ -3936,9 +3936,9 @@ void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
 void func_8007C0D8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coord) // 0x8007C0D8
 {
     s_func_800699F8 sp10;
-    VECTOR          sp20;
-    VECTOR          sp30;
-    VECTOR          sp40;
+    VECTOR3         sp20;
+    VECTOR3         sp30;
+    VECTOR3         sp40;
     s16             temp_v0;
     s16             temp_a1;
     s16             temp_s0;
