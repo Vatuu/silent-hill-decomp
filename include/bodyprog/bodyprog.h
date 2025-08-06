@@ -522,10 +522,23 @@ typedef struct
     u8                 unk_C9[1];
     s16                field_CA;
     u8                 unk_CC[4];
-    u8                 unk_D0[8];
+    u8                 unk_D0[6];
+    s16                field_D6;
     u8                 field_D8;
     u8                 field_D9;
-    // TODO: May be incomplete.
+    u8                 unk_DA[6];
+    s16                field_E0;
+    u8                 unk_E2[4];
+    s16                field_E6;
+    u8                 unk_E8[4];
+    s16                field_EC;
+    s16                field_EE;
+    s16                field_F0;
+    s16                field_F2;
+    u8                 unk_F4[4];
+    s32                field_F8;
+    s8                 unk_FC[8];
+    // TODO: May be incomplete. Maybe not, added the final padding based on `func_800699F8`
 } s_func_8006CC44;
 
 typedef struct
@@ -3028,6 +3041,8 @@ void func_8006ABC0(s_func_8006ABC0* result, VECTOR3* vec, s_func_8006AB50* arg2)
 void func_8006AD44(s_func_8006CC44* arg0, s_func_800699E4* arg1);
 
 void func_8006B1C8(s_func_8006CC44* arg0, s_func_800699E4* arg1, s_func_8006B1C8* arg2);
+
+void func_8006B9C8(s_func_8006CC44* arg0);
 
 s32 func_8006BC34(s_func_8006BC34* arg0);
 

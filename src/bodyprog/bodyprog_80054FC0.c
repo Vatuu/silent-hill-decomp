@@ -753,7 +753,6 @@ void func_800699F8(s_func_800699F8* result, s32 posX, s32 posZ) // 0x800699F8
     s_func_8006AB50 sp10;
     VECTOR3         sp28;
     s_func_8006CC44 sp38;
-    u8              spD0_unused[40]; // Might be part of `s_func_8006CC44`.
 
     s32 temp_v0;
 
@@ -1013,7 +1012,32 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8006B7E0); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8006B8F8); // 0x8006B8F8
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8006B9C8); // 0x8006B9C8
+void func_8006B9C8(s_func_8006CC44* arg0) // 0x8006B9C8
+{
+    s32 field_4;
+
+    if ((arg0->field_D9 == 0xFF) && (arg0->field_EE < 0) &&
+        (!(arg0->field_4.field_2C < arg0->field_E0) || (arg0->field_4.field_2C >= arg0->field_E6)))
+    {
+        if ((arg0->field_0_9) && (arg0->field_F8 < arg0->field_4.field_28))
+        {
+            func_8006BB50(arg0, 0);
+            return;
+        }
+        field_4 = arg0->field_4.field_28;
+        if ((arg0->field_0_9) && (arg0->field_F8 < field_4 + 8))
+        {
+            func_8006BB50(arg0, 1);
+        }
+        if (arg0->field_0_8)
+        {
+            if ((!arg0->field_44) && ((-field_4 < arg0->field_EE) || (-field_4 < arg0->field_F2)) && ((-field_4 < arg0->field_EC) || (-field_4 < arg0->field_F0)) && ((arg0->field_EC < field_4 + arg0->field_D6) || (arg0->field_F0 < field_4 + arg0->field_D6)))
+            {
+                func_8006BE40(arg0);
+            }
+        }
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8006BB50); // 0x8006BB50
 
