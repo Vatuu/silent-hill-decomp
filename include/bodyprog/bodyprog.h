@@ -105,6 +105,8 @@ typedef enum _Sfx
 
     Sfx_Unk1567   = 1567,
 
+    Sfx_Unk1590   = 1590,
+
     Sfx_Unk1601   = 1601,
     Sfx_Unk1602   = 1602,
 
@@ -2702,6 +2704,7 @@ void func_8005C814(s16*, s_SubCharacter*);
 /** Looks like a clamping function. */
 s32 func_8005D974();
 
+/** Spatial SFX func? */
 void func_8005DC1C(s32, VECTOR3*, s32, s32); // Types assumed.
 
 void func_8005DD44(s32, VECTOR3*, s32, s8); // Types assumed.

@@ -108,7 +108,10 @@ INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800D2200_0_s01
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800D2274_0_s01); // 0x800D2274
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D2364);
+void func_800D2364(s32 arg0) // 0x800D2364
+{
+    func_8005DC1C(Sfx_Unk1590, arg0 + 24, 128, 0);
+}
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800D2390_0_s01); // 0x800D2390
 
@@ -314,7 +317,7 @@ INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D72E8);
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D7440);
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800D7560_0_s01); // 0x800D7560
+#include "maps/shared/sharedFunc_800D7560_0_s01.h" // 0x800D7560
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D76A0);
 
@@ -388,11 +391,79 @@ INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D9C60);
 
 #include "maps/shared/sharedFunc_800D92AC_0_s00.h" // 0x800DA52C
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800DA778);
+void func_800DA778(s32 arg0) // 0x800DA778
+{
+    (arg0 != 0) ? func_800DA7AC() : func_800DA7FC();
+}
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800DA7AC);
+void func_800DA7AC() // 0x800DA7AC
+{
+    s32 var;
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800DA7FC);
+    if (!(g_SavegamePtr->eventFlags_168[1] & (1 << 16)))
+    {
+        if (!(g_SavegamePtr->eventFlags_168[1] & (1 << 17)))
+        {
+            var = 9;
+        }
+        else
+        {
+            var = 30;
+        }
+    }
+    else
+    {
+        var = 6;
+    }
+
+    func_8003640C(var);
+}
+
+void func_800DA7FC() // 0x800DA7FC
+{
+    s32 var0;
+    s32 var1;
+
+    var1 = 0x553;
+    if (!(g_SavegamePtr->eventFlags_168[4] & (1 << 18)))
+    {
+        if (!(g_SavegamePtr->eventFlags_168[1] & ((1 << 16) | (1 << 17))))
+        {
+            var1 = 0xF0000;
+            if ((g_SavegamePtr->eventFlags_168[1] & (1 << 7)) && g_GameWork.soundCmd_5B2 == 9)
+            {
+                var0 = 2;
+            }
+            else
+            {
+                var0 = 0x201;
+            }
+        }
+        else if (g_SavegamePtr->eventFlags_168[1] & (1 << 15))
+        {
+            if (!(g_SavegamePtr->eventFlags_168[1] & (1 << 16)))
+            {
+                var1 = 0xF0000;
+                var0 = 0x100;
+            }
+            else
+            {
+                var1 = 0x200;
+                var0 = 0x201;
+            }
+        }
+        else
+        {
+            var0 = 1;
+        }
+    }
+    else
+    {
+        var0 = 1;
+    }
+
+    func_80035F4C(var0, var1, NULL);
+}
 
 void func_800DA8A4() // 0x800DA8A4
 {

@@ -95,6 +95,15 @@ extern s16 D_800E2560;
 
 extern s_800BCE18_2BEC_0 D_800E2570[];
 
+/** `arg0` is a struct pointer, might be `s_SubCharacter`. */
+void func_800D2364(s32 arg0);
+
+void func_800DA778(s32 arg0);
+
+void func_800DA7AC();
+
+void func_800DA7FC();
+
 void func_800DA8A4();
 
 void func_800DC34C();

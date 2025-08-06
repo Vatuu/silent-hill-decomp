@@ -4629,7 +4629,10 @@ void func_8007C800(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8007D090); // 0x8007D090
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8007D6E0); // 0x8007D6E0
+void func_8007D6E0() // 0x8007D6E0
+{
+    D_800AF210 = 1;
+}
 
 s32 func_8007D6F0(s_SubCharacter* arg0, s_D_800C45C8* arg1) // 0x8007D6F0
 {

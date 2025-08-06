@@ -30,6 +30,15 @@ typedef struct
     u8      unk_18[24];
 } s_sharedData_800E3148_1_s02;
 
+/** Scale. */
+extern VECTOR D_800DD870;
+
+/** Scale. */
+extern VECTOR D_800DD880;
+
+/** `MATRIX` array? Needs to be `s32` to match, weird. */
+extern s32* D_800E21D8;
+
 extern u8                          sharedData_800DF158_1_s02;
 extern s_sharedData_800E3148_1_s02 sharedData_800E3148_1_s02;
 extern s_sharedData_800E3148_1_s02 sharedData_800E3178_1_s02;
@@ -437,7 +446,7 @@ s32  sharedFunc_800D4A80_0_s01(s_SubCharacter*);
 void sharedFunc_800D633C_0_s01(s_SubCharacter*);
 void sharedFunc_800D63A4_0_s01(s_SubCharacter*);
 void sharedFunc_800D6600_0_s01(s_SubCharacter*);
-void sharedFunc_800D7560_0_s01(s_SubCharacter*);
+void sharedFunc_800D7560_0_s01(s_SubCharacter* chara);
 
 void sharedFunc_800D7AB0_0_s01(s_SubCharacter*);
 
