@@ -441,7 +441,7 @@ INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800E1D9C);
 
 INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800E1EF4);
 
-INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", sharedFunc_800D7560_0_s01); // 0x800E2014
+#include "maps/shared/sharedFunc_800D7560_0_s01.h" // 0x800E2014
 
 void func_800E2154(s_SubCharacter* chara) // 0x800E2154
 {

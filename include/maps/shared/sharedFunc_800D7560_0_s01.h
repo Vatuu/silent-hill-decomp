@@ -9,19 +9,19 @@ void sharedFunc_800D7560_0_s01(s_SubCharacter* chara)
     SVECTOR* rot;
     VECTOR*  scale;
 
-    mat 		= D_800E21D8 + 1;
-    *D_800E21D8 = 0;
-    rot 		= &chara->rotation_24;
+    mat 					   = sharedData_800E21D8_0_s01 + 1;
+    *sharedData_800E21D8_0_s01 = 0;
+    rot 					   = &chara->rotation_24;
     func_80096E78(rot, mat);
 
     if ((chara->properties_E4.player.properties_E4[1] & 0xF) == 3)
     {
-        scale = &D_800DD870;
+        scale = &sharedData_800DD870_0_s01;
         ScaleMatrix(mat, scale);
     }
     else if (chara->properties_E4.player.flags_11C & (1 << 12))
     {
-        scale = &D_800DD880;
+        scale = &sharedData_800DD880_0_s01;
         ScaleMatrix(mat, scale);
     }
 

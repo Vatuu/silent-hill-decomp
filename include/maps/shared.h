@@ -31,18 +31,21 @@ typedef struct
 } s_sharedData_800E3148_1_s02;
 
 /** Scale. */
-extern VECTOR D_800DD870;
+extern VECTOR sharedData_800DD870_0_s01;
 
 /** Scale. */
-extern VECTOR D_800DD880;
+extern VECTOR sharedData_800DD880_0_s01;
+
+extern u8 sharedData_800DF158_1_s02;
 
 /** `MATRIX` array? Needs to be `s32` to match, weird. */
-extern s32* D_800E21D8;
+extern s32* sharedData_800E21D8_0_s01;
 
-extern u8                          sharedData_800DF158_1_s02;
 extern s_sharedData_800E3148_1_s02 sharedData_800E3148_1_s02;
+
 extern s_sharedData_800E3148_1_s02 sharedData_800E3178_1_s02;
-extern u16                         sharedData_800E5768_1_s02;
+
+extern u16 sharedData_800E5768_1_s02;
 
 extern s32 sharedData_800CAB70_0_s00; // Type assumed.
 
