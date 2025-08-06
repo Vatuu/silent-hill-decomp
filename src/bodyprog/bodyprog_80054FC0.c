@@ -1014,24 +1014,29 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8006B8F8); // 0x
 
 void func_8006B9C8(s_func_8006CC44* arg0) // 0x8006B9C8
 {
-    s32 field_4;
+    s32 field_28;
 
-    if ((arg0->field_D9 == 0xFF) && (arg0->field_EE < 0) &&
-        (!(arg0->field_4.field_2C < arg0->field_E0) || (arg0->field_4.field_2C >= arg0->field_E6)))
+    if (arg0->field_D9 == 0xFF && arg0->field_EE < 0 &&
+        (arg0->field_4.field_2C >= arg0->field_E0 || arg0->field_4.field_2C >= arg0->field_E6))
     {
-        if ((arg0->field_0_9) && (arg0->field_F8 < arg0->field_4.field_28))
+        if (arg0->field_0_9 && arg0->field_F8 < arg0->field_4.field_28)
         {
             func_8006BB50(arg0, 0);
             return;
         }
-        field_4 = arg0->field_4.field_28;
-        if ((arg0->field_0_9) && (arg0->field_F8 < field_4 + 8))
+
+        field_28 = arg0->field_4.field_28;
+        if (arg0->field_0_9 && arg0->field_F8 < (field_28 + 8))
         {
             func_8006BB50(arg0, 1);
         }
+
         if (arg0->field_0_8)
         {
-            if ((!arg0->field_44) && ((-field_4 < arg0->field_EE) || (-field_4 < arg0->field_F2)) && ((-field_4 < arg0->field_EC) || (-field_4 < arg0->field_F0)) && ((arg0->field_EC < field_4 + arg0->field_D6) || (arg0->field_F0 < field_4 + arg0->field_D6)))
+            if (!arg0->field_44 &&
+                (-field_28 < arg0->field_EE || -field_28 < arg0->field_F2) &&
+                (-field_28 < arg0->field_EC || -field_28 < arg0->field_F0) &&
+                (arg0->field_EC < (field_28 + arg0->field_D6) || arg0->field_F0 < (field_28 + arg0->field_D6)))
             {
                 func_8006BE40(arg0);
             }

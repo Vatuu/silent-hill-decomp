@@ -319,7 +319,25 @@ INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D7440);
 
 #include "maps/shared/sharedFunc_800D7560_0_s01.h" // 0x800D7560
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D76A0);
+void func_800D76A0(s_SubCharacter* chara) // 0x800D76A0
+{
+    if (chara->model_0.anim_4.animIdx_0 == 47 ||
+        chara->model_0.anim_4.animIdx_0 == 27 ||
+        chara->model_0.anim_4.animIdx_0 == 29)
+    {
+        if (func_800D77D0(chara) != 0)
+        {
+            chara->model_0.anim_4.animIdx_0 = 50;
+        }
+    }
+    else if(chara->model_0.anim_4.animIdx_0 == 51)
+    {
+        if (func_800D77D0(chara) == 0)
+        {
+            chara->model_0.anim_4.animIdx_0 = 46;
+        }
+    }
+}
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D7714);
 
