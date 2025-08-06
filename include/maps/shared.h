@@ -464,7 +464,7 @@ void sharedFunc_800D7AB0_0_s01(s_SubCharacter*);
 
 void sharedFunc_800D7EBC_0_s01(s_SubCharacter*);
 
-void sharedFunc_800D81B0_0_s01(s_SubCharacter*);
+s32 sharedFunc_800D81B0_0_s01(s_SubCharacter* chara);
 
 // `Ai_Lisa` related
 void Ai_Lisa_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords);

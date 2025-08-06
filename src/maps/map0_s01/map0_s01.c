@@ -336,7 +336,7 @@ void func_800D7E88(s_Model* model) // 0x800D7E88
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800D7EBC_0_s01); // 0x800D7EBC
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800D81B0_0_s01); // 0x800D81B0
+#include "maps/shared/sharedFunc_800D81B0_0_s01.h" // 0x800D81B0
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D81D0);
 
