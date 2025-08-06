@@ -1325,8 +1325,8 @@ void vcMakeNormalWatchTgtPos(VECTOR3* watch_tgt_pos, s16* watch_tgt_ang_z_p, VC_
 
     if (cam_mv_type == VC_MV_FIX_ANG)
     {
-        ang.vx = shAngleRegulate(FP_TO((u8)w_p->cur_near_road_2B8.road_p_0->field_16, Q4_SHIFT));
-        ang.vy = shAngleRegulate(FP_TO((u8)w_p->cur_near_road_2B8.road_p_0->field_17, Q4_SHIFT));
+        ang.vx = shAngleRegulate(FP_TO((u8)w_p->cur_near_road_2B8.road_p_0->fix_ang_x_16, Q4_SHIFT));
+        ang.vy = shAngleRegulate(FP_TO((u8)w_p->cur_near_road_2B8.road_p_0->fix_ang_y_17, Q4_SHIFT));
         ang.vz = 0;
 
         vwAngleToVector(&vec, &ang, FP_METER(0.25f));
@@ -1377,7 +1377,7 @@ void vcMakeNormalWatchTgtPos(VECTOR3* watch_tgt_pos, s16* watch_tgt_ang_z_p, VC_
                 break;
         }
 
-        watch_y = FP_TO(vcWork.cur_near_road_2B8.road_p_0->field_14, Q8_SHIFT) + w_p->chara_bottom_y_120;
+        watch_y = FP_TO(vcWork.cur_near_road_2B8.road_p_0->ofs_watch_hy_14, Q8_SHIFT) + w_p->chara_bottom_y_120;
         vcSetWatchTgtXzPos(watch_tgt_pos, &w_p->chara_pos_114, &w_p->cam_pos_50, tgt_chara2watch_cir_dist, tgt_watch_cir_r, w_p->chara_eye_ang_y_144);
         vcSetWatchTgtYParam(watch_tgt_pos, w_p, cam_mv_type, watch_y);
     }
@@ -1846,8 +1846,8 @@ void vcMakeIdealCamPosForFixAngCam(VECTOR3* ideal_pos, VC_WORK* w_p) // 0x80083A
     s32            abs_dist_z_to_lim_area;
     s32            abs_dist_x_to_lim_area;
 
-    cam_angle_vec.vx = FP_TO((s8)w_p->cur_near_road_2B8.road_p_0->field_16, Q4_SHIFT);
-    cam_angle_vec.vy = FP_TO((s8)w_p->cur_near_road_2B8.road_p_0->field_17, Q4_SHIFT);
+    cam_angle_vec.vx = FP_TO(w_p->cur_near_road_2B8.road_p_0->fix_ang_x_16, Q4_SHIFT);
+    cam_angle_vec.vy = FP_TO(w_p->cur_near_road_2B8.road_p_0->fix_ang_y_17, Q4_SHIFT);
     cam_angle_vec.vz = 0;
 
     limit_area = &w_p->cur_near_road_2B8.road_p_0->lim_rd_8;
@@ -2536,8 +2536,8 @@ void vcMakeNewBaseCamAng(SVECTOR* new_base_ang, VC_CAM_MV_TYPE cam_mv_type, VC_W
         angle   = ratan2(-yDelta, Vc_VectorMagnitudeCalc(xDelta, 0, zDelta));
         temp_v0 = ratan2(xDelta, zDelta);
 
-        temp_v1   = FP_TO(w_p->cur_near_road_2B8.road_p_0->field_16, Q4_SHIFT);
-        temp_a0_2 = FP_TO(w_p->cur_near_road_2B8.road_p_0->field_17, Q4_SHIFT);
+        temp_v1   = FP_TO(w_p->cur_near_road_2B8.road_p_0->fix_ang_x_16, Q4_SHIFT);
+        temp_a0_2 = FP_TO(w_p->cur_near_road_2B8.road_p_0->fix_ang_y_17, Q4_SHIFT);
 
         temp_v1_2 = ((temp_v0 - temp_v1)   << 20) >> 20;
         temp_v0_2 = ((temp_v0 - temp_a0_2) << 20) >> 20;

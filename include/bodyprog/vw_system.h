@@ -135,9 +135,10 @@ typedef struct _VC_CAM_MV_PARAM
 } VC_CAM_MV_PARAM;
 STATIC_ASSERT_SIZEOF(VC_CAM_MV_PARAM, 16);
 
-/** @brief Camera path data. */
-// TODO: Engine shifts `cam_mv_type_14` around to access other data inside.
-// `mv_type` is likely only a `char` and other fields are inside it too.
+/** @brief Camera path data.
+ * 
+ * In SH2 the `.cam` files contain this struct, while in SH1 this is part of `s_MapOverlayHeader`.
+ */
 typedef struct _VC_ROAD_DATA
 {
     VC_LIMIT_AREA     lim_sw_0;
@@ -146,13 +147,13 @@ typedef struct _VC_ROAD_DATA
     VC_AREA_SIZE_TYPE area_size_type_11 : 2;
     VC_ROAD_TYPE      rd_type_11        : 3; /** Path type. */
     u32               mv_y_type_11      : 3;
-    s32               lim_rd_max_hy_12  : 8; // SH2 accesses these at `unk_8`?
+    s32               lim_rd_max_hy_12  : 8; // Copies of `lim_rd_8` values? In SH2 the funcs that read these access lim_rd instead?
     s32               lim_rd_min_hy_13  : 8;
-    s32               field_14          : 8; /** May contain `mv_y_type`/`rd_dir_type`. */
+    s32               ofs_watch_hy_14   : 8;
     u32               field_15          : 4;
     s16               cam_mv_type_14    : 4; /** `VC_CAM_MV_TYPE` */
-    s8                field_16;
-    s8                field_17;
+    s8                fix_ang_x_16;          /** Note: part of union in SH2 `VC_ROAD_DATA`. */
+    s8                fix_ang_y_17;
 } VC_ROAD_DATA;
 STATIC_ASSERT_SIZEOF(VC_ROAD_DATA, 24);
 
