@@ -340,24 +340,29 @@ void func_800421D8(char* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5)
 {
     D_800C1020.field_588 = arg3;
     D_800C1020.field_134 = arg5;
+
     if (arg1 != NO_VALUE)
     {
         if (arg1 != D_800C1020.field_13C)
         {
-            if ((func_80041ADC(D_800C1020.field_140) >= 2) && (D_800C1020.field_138->field_2))
+            if (func_80041ADC(D_800C1020.field_140) >= 2 && D_800C1020.field_138->field_2)
             {
                 func_80056BF8(D_800C1020.field_138);
             }
+
             D_800C1020.field_13C = arg1;
             D_800C1020.field_140 = NO_VALUE;
         }
     }
-    if ((D_800C1020.field_158 != arg2) || (strcmp(arg0, D_800C1020.field_144) != 0))
+
+    if (D_800C1020.field_158 != arg2 || strcmp(arg0, D_800C1020.field_144) != 0)
     {
         func_80042300(&D_800C1020, arg2);
+
         D_800C1020.field_158 = arg2;
         D_800C1020.field_14C = arg4;
         strcpy(D_800C1020.field_144, arg0);
+
         D_800C1020.field_148 = strlen(arg0);
         func_800423F4(&D_800C1020, arg0, arg4);
     }

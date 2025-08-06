@@ -27,6 +27,8 @@ extern s8 D_800A99B5;
 
 extern s_800A99E4 D_800A99E4;
 
+extern s8 D_800CBAD4;
+
 /** Character name. */
 extern char* D_800CCA64;
 
@@ -92,6 +94,12 @@ extern s_800E2490 D_800E254C;
 extern s16 D_800E2560;
 
 extern s_800BCE18_2BEC_0 D_800E2570[];
+
+void func_800DA8A4();
+
+void func_800DC34C();
+
+void func_800DC394();
 
 void func_800DC3C8();
 

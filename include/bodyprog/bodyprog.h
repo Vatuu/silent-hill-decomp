@@ -940,8 +940,8 @@ typedef struct
     s_800C1020_138* field_138;
     s32             field_13C;
     s32             field_140;
-    char            field_144[4];
-    s32             field_148;
+    char            field_144[4]; // String.
+    s32             field_148;    // String length.
     s32             field_14C;
     s32             field_150;
     s32             field_154;
@@ -3072,6 +3072,8 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra);
 /** Player function. */
 void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra);
 
+void func_8007D6E0();
+
 s32 func_8007D6F0(s_SubCharacter* chara, s_D_800C45C8* arg1);
 
 void func_8004BBF4(VbRVIEW* arg0, GsCOORDINATE2* arg1, SVECTOR* arg2);
@@ -3457,9 +3459,9 @@ void func_80071968(s_SubCharacter*, s_MainCharacterExtra*, void*, GsCOORDINATE2*
 
 void func_80071CE8(s_SubCharacter*, s_MainCharacterExtra*, GsCOORDINATE2*);
 
-void func_8007C0D8(s_SubCharacter*, s_MainCharacterExtra*, GsCOORDINATE2*);
+void func_8007C0D8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coord);
 
-void func_8007C800(s_SubCharacter*, s_MainCharacterExtra*);
+void func_8007C800(s_SubCharacter* chara, s_MainCharacterExtra* extra);
 
 void func_8007D090(s_SubCharacter*, s_MainCharacterExtra*, GsCOORDINATE2*);
 

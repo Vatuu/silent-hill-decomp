@@ -394,7 +394,14 @@ INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800DA7AC);
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800DA7FC);
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800DA8A4);
+void func_800DA8A4() // 0x800DA8A4
+{
+    g_Gfx_ScreenFade = 7;
+
+    Gfx_DebugStringPosition(100, 100);
+    Gfx_DebugStringDraw(&D_800CBAD4);
+    func_80035BBC();
+}
 
 #include "maps/shared/sharedFunc_800DA8E8_0_s01.h" // 0x800DA8E8
 
@@ -404,10 +411,19 @@ INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800DB790);
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800DBAA0);
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800DC34C);
+void func_800DC34C() // 0x800DC34C
+{
+    func_800877B8(225, 1, 37, 64);
+    g_SavegamePtr->flags_AC |= 1 << 0;
+}
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800DC394);
+void func_800DC394() // 0x800DC394
+{
+    func_800877B8(224, 1, 36, 61);
+    Game_TurnFlashlightOff();
+}
 
+// TODO: .rodata migration.
 #ifdef NON_MATCHING
 void func_800DC3C8() // 0x800DC3C8
 {

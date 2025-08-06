@@ -3933,7 +3933,7 @@ void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
     }
 }
 
-void func_8007C0D8(s_SubCharacter* arg0, s_MainCharacterExtra* arg1, GsCOORDINATE2* arg2) // 0x8007C0D8
+void func_8007C0D8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coord) // 0x8007C0D8
 {
     s_func_800699F8 sp10;
     VECTOR          sp20;
@@ -3949,15 +3949,15 @@ void func_8007C0D8(s_SubCharacter* arg0, s_MainCharacterExtra* arg1, GsCOORDINAT
     s32             temp_s3_2;
     s32             temp_v0_3;
     s16             temp_v1;
-    s32             var_a0_2;
+    s32             posY;
     u32             temp;
 
-    D_800C45F8 = arg0->position_18;
+    D_800C45F8 = chara->position_18;
 
-    func_800699F8(&sp10, arg0->position_18.vx, arg0->position_18.vz);
+    func_800699F8(&sp10, chara->position_18.vx, chara->position_18.vz);
 
-    temp_s3 = FP_MULTIPLY(arg0->moveSpeed_38, shRsin(arg0->headingAngle_3C), Q12_SHIFT);
-    temp_s2 = FP_MULTIPLY(arg0->moveSpeed_38, shRcos(arg0->headingAngle_3C), Q12_SHIFT);
+    temp_s3 = FP_MULTIPLY(chara->moveSpeed_38, shRsin(chara->headingAngle_3C), Q12_SHIFT);
+    temp_s2 = FP_MULTIPLY(chara->moveSpeed_38, shRcos(chara->headingAngle_3C), Q12_SHIFT);
 
     temp_s0 = shRcos(ABS(sp10.field_4) >> 3);
 
@@ -3966,18 +3966,18 @@ void func_8007C0D8(s_SubCharacter* arg0, s_MainCharacterExtra* arg1, GsCOORDINAT
     temp_v1 = FP_MULTIPLY(FP_MULTIPLY(temp_s3, temp_s0, Q12_SHIFT), temp_s0, Q12_SHIFT);
     temp_a1 = FP_MULTIPLY(FP_MULTIPLY(temp_s2, temp_v0, Q12_SHIFT), temp_v0, Q12_SHIFT);
 
-    if (arg0->moveSpeed_38 >= 0)
+    if (chara->moveSpeed_38 >= 0)
     {
-        arg0->moveSpeed_38 = SquareRoot0(SQUARE(temp_v1) + SQUARE(temp_a1));
+        chara->moveSpeed_38 = SquareRoot0(SQUARE(temp_v1) + SQUARE(temp_a1));
     }
     else
     {
-        arg0->moveSpeed_38 = -SquareRoot0(SQUARE(temp_v1) + SQUARE(temp_a1));
+        chara->moveSpeed_38 = -SquareRoot0(SQUARE(temp_v1) + SQUARE(temp_a1));
     }
 
-    temp_s0_2 = FP_MULTIPLY((s64)arg0->moveSpeed_38, g_DeltaTime0, Q12_SHIFT);
+    temp_s0_2 = FP_MULTIPLY((s64)chara->moveSpeed_38, g_DeltaTime0, Q12_SHIFT);
 
-    temp_v0_3 = arg0->headingAngle_3C;
+    temp_v0_3 = chara->headingAngle_3C;
     temp      = temp_s0_2 + 0x7FFF;
     temp_s2_2 = (temp > 0xFFFE) * 4;
     temp_s3_2 = temp_s2_2 >> 1;
@@ -3988,7 +3988,7 @@ void func_8007C0D8(s_SubCharacter* arg0, s_MainCharacterExtra* arg1, GsCOORDINAT
     sp20.vz = FP_MULTIPLY((s64)(temp_s0_2 >> temp_s3_2), shRcos(temp_v0_3) >> temp_s3_2, Q12_SHIFT);
     sp20.vz <<= temp_s2_2;
 
-    sp20.vy = FP_MULTIPLY((s64)arg0->field_34, g_DeltaTime0, Q12_SHIFT);
+    sp20.vy = FP_MULTIPLY((s64)chara->field_34, g_DeltaTime0, Q12_SHIFT);
 
     if (g_SavegamePtr->mapOverlayId_A4 == 8)
     {
@@ -3998,7 +3998,7 @@ void func_8007C0D8(s_SubCharacter* arg0, s_MainCharacterExtra* arg1, GsCOORDINAT
         sp30.vz = sp20.vz;
     }
 
-    func_80069B24(&D_800C4590, &sp20, arg0);
+    func_80069B24(&D_800C4590, &sp20, chara);
 
     if (g_SavegamePtr->mapOverlayId_A4 == 8)
     {
@@ -4023,55 +4023,58 @@ void func_8007C0D8(s_SubCharacter* arg0, s_MainCharacterExtra* arg1, GsCOORDINAT
         g_MapOverlayHeader.func_158(-sp40.vx, -sp40.vz);
     }
 
-    arg0->position_18.vx += D_800C4590.field_0.vx;
-    arg0->position_18.vy += D_800C4590.field_0.vy;
-    arg0->position_18.vz += D_800C4590.field_0.vz;
+    chara->position_18.vx += D_800C4590.field_0.vx;
+    chara->position_18.vy += D_800C4590.field_0.vy;
+    chara->position_18.vz += D_800C4590.field_0.vz;
 
-    if ((g_SysWork.player_4C.extra_128.field_20 == 2) || (g_SysWork.player_4C.extra_128.field_20 == 6) || (g_SysWork.player_4C.extra_128.field_20 == 7))
+    if (g_SysWork.player_4C.extra_128.field_20 == 2 ||
+        g_SysWork.player_4C.extra_128.field_20 == 6 ||
+        g_SysWork.player_4C.extra_128.field_20 == 7)
     {
-        arg0->properties_E4.player.properties_E4[9] += SquareRoot0(SQUARE(D_800C4590.field_0.vx) + SQUARE(D_800C4590.field_0.vy) + SQUARE(D_800C4590.field_0.vz));
+        chara->properties_E4.player.properties_E4[9] += SquareRoot0(SQUARE(D_800C4590.field_0.vx) +
+                                                                    SQUARE(D_800C4590.field_0.vy) +
+                                                                    SQUARE(D_800C4590.field_0.vz));
     }
     else
     {
-        arg0->properties_E4.player.properties_E4[9] = 0;
+        chara->properties_E4.player.properties_E4[9] = 0;
     }
 
-    if (*(u16*)&g_SavegamePtr->mapOverlayId_A4 == 0xD03)
+    if (*(u16*)&g_SavegamePtr->mapOverlayId_A4 == 3331)
     {
         D_800C4590.field_C = 0;
     }
 
     if (D_800C4590.field_14 == 0)
     {
-        D_800C4590.field_C = arg0->properties_E4.player.properties_E4[2];
+        D_800C4590.field_C = chara->properties_E4.player.properties_E4[2];
     }
 
-    if (arg0->position_18.vy > D_800C4590.field_C)
+    if (chara->position_18.vy > D_800C4590.field_C)
     {
-        arg0->position_18.vy = D_800C4590.field_C;
-        arg0->field_34       = 0;
+        chara->position_18.vy = D_800C4590.field_C;
+        chara->field_34       = 0;
     }
 
-    temp_a1 = (ratan2(arg0->position_18.vx - D_800C45F8.vx, arg0->position_18.vz - D_800C45F8.vz) + 0x1000) & 0xFFF;
+    temp_a1 = (ratan2(chara->position_18.vx - D_800C45F8.vx, chara->position_18.vz - D_800C45F8.vz) + 0x1000) & 0xFFF;
 
     if (((u32)g_SysWork.player_4C.extra_128.field_1C - 3) >= 2)
     {
         if ((g_Player_Walk2RunTransition == 0))
         {
-            var_a0_2 = arg0->position_18.vy;
-
-            if (D_800C4590.field_C - var_a0_2 >= 0xA66)
+            posY = chara->position_18.vy;
+            if ((D_800C4590.field_C - posY) >= FP_METER(0.65f))
             {
-                if (ABS_DIFF(arg0->rotation_24.vy, temp_a1) >= 0x400 &&
-                    ABS_DIFF(arg0->rotation_24.vy, temp_a1) < 0xC00)
+                if (ABS_DIFF(chara->rotation_24.vy, temp_a1) >= FP_ANGLE(90.0f) &&
+                    ABS_DIFF(chara->rotation_24.vy, temp_a1) < FP_ANGLE(270.0f))
                 {
-                    if (g_SysWork.player_4C.extra_128.field_24 != 0xB)
+                    if (g_SysWork.player_4C.extra_128.field_24 != 11)
                     {
                         g_SysWork.player_4C.extra_128.field_1C = 4;
-                        arg0->model_0.stateStep_3              = 0;
-                        arg0->model_0.state_2                  = 0;
-                        arg1->model_0.stateStep_3              = 0;
-                        arg1->model_0.state_2                  = 0;
+                        chara->model_0.stateStep_3             = 0;
+                        chara->model_0.state_2                 = 0;
+                        extra->model_0.stateStep_3             = 0;
+                        extra->model_0.state_2                 = 0;
                         g_SysWork.player_4C.extra_128.field_20 = 0;
                         g_SysWork.player_4C.extra_128.field_24 = 0;
                     }
@@ -4079,10 +4082,10 @@ void func_8007C0D8(s_SubCharacter* arg0, s_MainCharacterExtra* arg1, GsCOORDINAT
                 else
                 {
                     g_SysWork.player_4C.extra_128.field_1C = 3;
-                    arg0->model_0.stateStep_3              = 0;
-                    arg0->model_0.state_2                  = 0;
-                    arg1->model_0.stateStep_3              = 0;
-                    arg1->model_0.state_2                  = 0;
+                    chara->model_0.stateStep_3             = 0;
+                    chara->model_0.state_2                 = 0;
+                    extra->model_0.stateStep_3             = 0;
+                    extra->model_0.state_2                 = 0;
                     g_SysWork.player_4C.extra_128.field_20 = 0;
                     g_SysWork.player_4C.extra_128.field_24 = 0;
                 }
@@ -4091,13 +4094,14 @@ void func_8007C0D8(s_SubCharacter* arg0, s_MainCharacterExtra* arg1, GsCOORDINAT
             }
         }
     }
-    arg0->properties_E4.player.properties_E4[2] = D_800C4590.field_C;
-    arg2->coord.t[0]                            = arg0->position_18.vx >> 4;
-    arg2->coord.t[1]                            = arg0->position_18.vy >> 4;
-    arg2->coord.t[2]                            = arg0->position_18.vz >> 4;
+
+    chara->properties_E4.player.properties_E4[2] = D_800C4590.field_C;
+    coord->coord.t[0]                            = FP_FROM(chara->position_18.vx, Q4_SHIFT);
+    coord->coord.t[1]                            = FP_FROM(chara->position_18.vy, Q4_SHIFT);
+    coord->coord.t[2]                            = FP_FROM(chara->position_18.vz, Q4_SHIFT);
 }
 
-void func_8007C800(s_SubCharacter* arg0, s_MainCharacterExtra* arg1) // 0x8007C800
+void func_8007C800(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007C800
 {
     s16 sp10;
     u16 temp_s0;
@@ -4108,9 +4112,9 @@ void func_8007C800(s_SubCharacter* arg0, s_MainCharacterExtra* arg1) // 0x8007C8
 
     var_s4 = 0x52E;
 
-    if (arg0->field_41 != -1)
+    if (chara->field_41 != -1)
     {
-        switch (D_800AD4C8[arg0->field_41].field_11)
+        switch (D_800AD4C8[chara->field_41].field_11)
         {
             case 2:
                 var_s4 = 0x52F;
@@ -4131,7 +4135,7 @@ void func_8007C800(s_SubCharacter* arg0, s_MainCharacterExtra* arg1) // 0x8007C8
 
     if (g_Player_EnableControl != 0 || D_800C4562 != 0)
     {
-        arg0->field_C0 = 0;
+        chara->field_C0 = 0;
         return;
     }
 
@@ -4161,16 +4165,16 @@ void func_8007C800(s_SubCharacter* arg0, s_MainCharacterExtra* arg1) // 0x8007C8
         case 40:
         case 47:
         case 48:
-            if (arg0->field_C0 != 0 && !(g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & 0x4000))
+            if (chara->field_C0 != 0 && !(g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & (1 << 14)))
             {
-                g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= 0x4000;
-                func_8005DC1C(var_s4, &arg0->position_18, 0x20, 0);
-                arg0->properties_E4.player.field_10C = 0x40;
+                g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= 1 << 14;
+                func_8005DC1C(var_s4, &chara->position_18, 0x20, 0);
+                chara->properties_E4.player.field_10C = 0x40;
             }
 
-            if (arg0->field_C0 == 0)
+            if (chara->field_C0 == 0)
             {
-                g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~0x4000;
+                g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~(1 << 14);
             }
 
             func_80089494();
@@ -4193,57 +4197,59 @@ void func_8007C800(s_SubCharacter* arg0, s_MainCharacterExtra* arg1) // 0x8007C8
         case 35:
         case 37:
         case 38:
-            arg0->field_BC = 0;
-            arg0->field_B8 = 0;
-            arg0->field_B4 = 0;
+            chara->field_BC = 0;
+            chara->field_B8 = 0;
+            chara->field_B4 = 0;
 
-            if (arg0->field_41 == 0x2F)
+            if (chara->field_41 == 0x2F)
             {
                 g_SysWork.player_4C.chara_0.field_D6 = 0;
 
                 g_SysWork.player_4C.extra_128.field_1C = 9;
-                arg0->model_0.stateStep_3              = 0;
-                arg0->model_0.state_2                  = 0;
-                arg1->model_0.stateStep_3              = 0;
-                arg1->model_0.state_2                  = 0;
+                chara->model_0.stateStep_3             = 0;
+                chara->model_0.state_2                 = 0;
+                extra->model_0.stateStep_3             = 0;
+                extra->model_0.state_2                 = 0;
                 g_SysWork.player_4C.extra_128.field_20 = 0;
                 g_SysWork.player_4C.extra_128.field_24 = 0;
                 return;
             }
-            if (arg0->field_41 >= 0x44 && arg0->field_41 < 0x46)
+
+            if (chara->field_41 >= 0x44 &&
+                chara->field_41 <  0x46)
             {
-                arg0->field_C0 = 0;
+                chara->field_C0 = 0;
             }
             break;
 
         default:
             if (g_Player_Walk2RunTransition != 0)
             {
-                D_800C4560 = arg0->field_41;
+                D_800C4560 = chara->field_41;
                 return;
             }
 
-            if (D_800C4560 != -1)
+            if (D_800C4560 != NO_VALUE)
             {
-                arg0->field_41 = D_800C4560;
-                D_800C4560     = -1;
+                chara->field_41 = D_800C4560;
+                D_800C4560      = NO_VALUE;
             }
 
-            if (arg0->field_41 <= 0)
+            if (chara->field_41 <= 0)
             {
                 break;
             }
 
-            g_SysWork.field_2353 = -1;
-
-            g_SysWork.playerCombatInfo_38.field_F = (g_SavegamePtr->equippedWeapon_AA == 0) ? -1 : (g_SavegamePtr->equippedWeapon_AA - 0x80);
+            g_SysWork.field_2353                  = NO_VALUE;
+            g_SysWork.playerCombatInfo_38.field_F = (g_SavegamePtr->equippedWeapon_AA == 0) ? NO_VALUE : (g_SavegamePtr->equippedWeapon_AA - 0x80);
 
             if (g_SysWork.playerCombatInfo_38.field_F == 2)
             {
                 func_8004C564(2, 3);
             }
 
-            if (g_SysWork.player_4C.extra_128.field_1C >= 3 && g_SysWork.player_4C.extra_128.field_1C < 7)
+            if (g_SysWork.player_4C.extra_128.field_1C >= 3 &&
+                g_SysWork.player_4C.extra_128.field_1C <  7)
             {
                 g_SysWork.player_4C.chara_0.field_C8 = -0x1999;
                 g_SysWork.player_4C.chara_0.field_CA = 0;
@@ -4254,57 +4260,58 @@ void func_8007C800(s_SubCharacter* arg0, s_MainCharacterExtra* arg1) // 0x8007C8
                 g_SysWork.player_4C.chara_0.field_D8 = 0;
             }
 
-            temp_s0 = g_SysWork.npcs_1A0[arg0->field_40].rotation_24.vy;
-
-            if (arg0->field_41 >= 0x40 && arg0->field_41 < 0x42)
+            temp_s0 = g_SysWork.npcs_1A0[chara->field_40].rotation_24.vy;
+            if (chara->field_41 >= 0x40 &&
+                chara->field_41 <  0x42)
             {
                 temp_s0 -= 0x400;
             }
-            else if (arg0->field_41 == 0x45)
+            else if (chara->field_41 == 0x45)
             {
                 temp_s0 = 0x400;
             }
-            else if (arg0->field_41 == 0x44)
+            else if (chara->field_41 == 0x44)
             {
-                temp_s0 = arg0->field_B8;
+                temp_s0 = chara->field_B8;
             }
 
-            temp_s0   = ((temp_s0 - arg0->rotation_24.vy) + 0x1000) & 0xFFF;
-            temp_v0_3 = arg0->field_41 - 0x28;
+            temp_s0   = ((temp_s0 - chara->rotation_24.vy) + 0x1000) & 0xFFF;
+            temp_v0_3 = chara->field_41 - 0x28;
             switch (temp_v0_3)
             {
                 case 27:
                     g_SysWork.player_4C.extra_128.field_1C = 7;
-                    arg0->model_0.stateStep_3              = 0;
-                    arg0->model_0.state_2                  = 0;
-                    arg1->model_0.stateStep_3              = 0;
-                    arg1->model_0.state_2                  = 0;
+                    chara->model_0.stateStep_3             = 0;
+                    chara->model_0.state_2                 = 0;
+                    extra->model_0.stateStep_3             = 0;
+                    extra->model_0.state_2                 = 0;
                     g_SysWork.player_4C.extra_128.field_20 = 0;
                     g_SysWork.player_4C.extra_128.field_24 = 0;
                     break;
 
                 case 23:
                     g_SysWork.player_4C.chara_0.properties_E4.player.field_126 = 0x1800;
-                    func_8007FB34(arg0->rotation_24.vy, g_SysWork.npcs_1A0[0].rotation_24.vy, &sp10);
+                    func_8007FB34(chara->rotation_24.vy, g_SysWork.npcs_1A0[0].rotation_24.vy, &sp10);
                     D_800C4608 = sp10;
 
-                    if (temp_s0 >= 0x400 && temp_s0 < 0xC00)
+                    if (temp_s0 >= 0x400 &&
+                        temp_s0 <  0xC00)
                     {
                         g_SysWork.player_4C.extra_128.field_1C = 0x2D;
-                        arg0->model_0.stateStep_3              = 0;
-                        arg0->model_0.state_2                  = 0;
-                        arg1->model_0.stateStep_3              = 0;
-                        arg1->model_0.state_2                  = 0;
+                        chara->model_0.stateStep_3             = 0;
+                        chara->model_0.state_2                 = 0;
+                        extra->model_0.stateStep_3             = 0;
+                        extra->model_0.state_2                 = 0;
                         g_SysWork.player_4C.extra_128.field_20 = 0;
                         g_SysWork.player_4C.extra_128.field_24 = 0;
                     }
                     else
                     {
                         g_SysWork.player_4C.extra_128.field_1C = 0x2E;
-                        arg0->model_0.stateStep_3              = 0;
-                        arg0->model_0.state_2                  = 0;
-                        arg1->model_0.stateStep_3              = 0;
-                        arg1->model_0.state_2                  = 0;
+                        chara->model_0.stateStep_3             = 0;
+                        chara->model_0.state_2                 = 0;
+                        extra->model_0.stateStep_3             = 0;
+                        extra->model_0.state_2                 = 0;
                         g_SysWork.player_4C.extra_128.field_20 = 0;
                         g_SysWork.player_4C.extra_128.field_24 = 0;
                     }
@@ -4312,12 +4319,12 @@ void func_8007C800(s_SubCharacter* arg0, s_MainCharacterExtra* arg1) // 0x8007C8
 
                 case 20:
                 case 22:
-                    arg0->field_C0                         = 0xA000;
+                    chara->field_C0                        = 0xA000;
                     g_SysWork.player_4C.extra_128.field_1C = 0x13;
-                    arg0->model_0.stateStep_3              = 0;
-                    arg0->model_0.state_2                  = 0;
-                    arg1->model_0.stateStep_3              = 0;
-                    arg1->model_0.state_2                  = 0;
+                    chara->model_0.stateStep_3             = 0;
+                    chara->model_0.state_2                 = 0;
+                    extra->model_0.stateStep_3             = 0;
+                    extra->model_0.state_2                 = 0;
                     g_SysWork.player_4C.extra_128.field_20 = 0;
                     g_SysWork.player_4C.extra_128.field_24 = 0;
                     break;
@@ -4325,10 +4332,10 @@ void func_8007C800(s_SubCharacter* arg0, s_MainCharacterExtra* arg1) // 0x8007C8
                 case 1:
                 case 2:
                     g_SysWork.player_4C.extra_128.field_1C = 0x13;
-                    arg0->model_0.stateStep_3              = 0;
-                    arg0->model_0.state_2                  = 0;
-                    arg1->model_0.stateStep_3              = 0;
-                    arg1->model_0.state_2                  = 0;
+                    chara->model_0.stateStep_3             = 0;
+                    chara->model_0.state_2                 = 0;
+                    extra->model_0.stateStep_3             = 0;
+                    extra->model_0.state_2                 = 0;
                     g_SysWork.player_4C.extra_128.field_20 = 0;
                     g_SysWork.player_4C.extra_128.field_24 = 0;
                     break;
@@ -4337,18 +4344,20 @@ void func_8007C800(s_SubCharacter* arg0, s_MainCharacterExtra* arg1) // 0x8007C8
                 case 14:
                 case 16:
                 case 26:
-                    if (temp_s0 >= 0x400 && temp_s0 < 0xC00)
+                    if (temp_s0 >= 0x400 &&
+                        temp_s0 <  0xC00)
                     {
-                        g_SysWork.field_2354[0] = arg0->field_40;
-                        temp_v0_3               = arg0->field_41 - 0x2D;
+                        g_SysWork.field_2354[0] = chara->field_40;
+
+                        temp_v0_3 = chara->field_41 - 0x2D;
                         switch (temp_v0_3)
                         {
                             case 9:
                                 g_SysWork.player_4C.extra_128.field_1C = 0x25;
-                                arg0->model_0.stateStep_3              = 0;
-                                arg0->model_0.state_2                  = 0;
-                                arg1->model_0.stateStep_3              = 0;
-                                arg1->model_0.state_2                  = 0;
+                                chara->model_0.stateStep_3             = 0;
+                                chara->model_0.state_2                 = 0;
+                                extra->model_0.stateStep_3             = 0;
+                                extra->model_0.state_2                 = 0;
                                 g_SysWork.player_4C.extra_128.field_20 = 0;
                                 g_SysWork.player_4C.extra_128.field_24 = 0;
                                 break;
@@ -4356,30 +4365,30 @@ void func_8007C800(s_SubCharacter* arg0, s_MainCharacterExtra* arg1) // 0x8007C8
                             case 0:
                             case 11:
                                 g_SysWork.player_4C.extra_128.field_1C = 0xA;
-                                arg0->model_0.stateStep_3              = 0;
-                                arg0->model_0.state_2                  = 0;
-                                arg1->model_0.stateStep_3              = 0;
-                                arg1->model_0.state_2                  = 0;
+                                chara->model_0.stateStep_3             = 0;
+                                chara->model_0.state_2                 = 0;
+                                extra->model_0.stateStep_3             = 0;
+                                extra->model_0.state_2                 = 0;
                                 g_SysWork.player_4C.extra_128.field_20 = 0;
                                 g_SysWork.player_4C.extra_128.field_24 = 0;
                                 break;
 
                             case 4:
                                 g_SysWork.player_4C.extra_128.field_1C = 0xE;
-                                arg0->model_0.stateStep_3              = 0;
-                                arg0->model_0.state_2                  = 0;
-                                arg1->model_0.stateStep_3              = 0;
-                                arg1->model_0.state_2                  = 0;
+                                chara->model_0.stateStep_3             = 0;
+                                chara->model_0.state_2                 = 0;
+                                extra->model_0.stateStep_3             = 0;
+                                extra->model_0.state_2                 = 0;
                                 g_SysWork.player_4C.extra_128.field_20 = 0;
                                 g_SysWork.player_4C.extra_128.field_24 = 0;
                                 break;
 
                             case 21:
                                 g_SysWork.player_4C.extra_128.field_1C = 0x20;
-                                arg0->model_0.stateStep_3              = 0;
-                                arg0->model_0.state_2                  = 0;
-                                arg1->model_0.stateStep_3              = 0;
-                                arg1->model_0.state_2                  = 0;
+                                chara->model_0.stateStep_3             = 0;
+                                chara->model_0.state_2                 = 0;
+                                extra->model_0.stateStep_3             = 0;
+                                extra->model_0.state_2                 = 0;
                                 g_SysWork.player_4C.extra_128.field_20 = 0;
                                 g_SysWork.player_4C.extra_128.field_24 = 0;
                                 break;
@@ -4387,16 +4396,17 @@ void func_8007C800(s_SubCharacter* arg0, s_MainCharacterExtra* arg1) // 0x8007C8
                     }
                     else
                     {
-                        g_SysWork.field_2354[1] = arg0->field_40;
-                        temp_v0_3               = arg0->field_41 - 0x2D;
+                        g_SysWork.field_2354[1] = chara->field_40;
+
+                        temp_v0_3 = chara->field_41 - 0x2D;
                         switch (temp_v0_3)
                         {
                             case 9:
                                 g_SysWork.player_4C.extra_128.field_1C = 0x26;
-                                arg0->model_0.stateStep_3              = 0;
-                                arg0->model_0.state_2                  = 0;
-                                arg1->model_0.stateStep_3              = 0;
-                                arg1->model_0.state_2                  = 0;
+                                chara->model_0.stateStep_3             = 0;
+                                chara->model_0.state_2                 = 0;
+                                extra->model_0.stateStep_3             = 0;
+                                extra->model_0.state_2                 = 0;
                                 g_SysWork.player_4C.extra_128.field_20 = 0;
                                 g_SysWork.player_4C.extra_128.field_24 = 0;
                                 break;
@@ -4404,30 +4414,30 @@ void func_8007C800(s_SubCharacter* arg0, s_MainCharacterExtra* arg1) // 0x8007C8
                             case 0:
                             case 11:
                                 g_SysWork.player_4C.extra_128.field_1C = 0xD;
-                                arg0->model_0.stateStep_3              = 0;
-                                arg0->model_0.state_2                  = 0;
-                                arg1->model_0.stateStep_3              = 0;
-                                arg1->model_0.state_2                  = 0;
+                                chara->model_0.stateStep_3             = 0;
+                                chara->model_0.state_2                 = 0;
+                                extra->model_0.stateStep_3             = 0;
+                                extra->model_0.state_2                 = 0;
                                 g_SysWork.player_4C.extra_128.field_20 = 0;
                                 g_SysWork.player_4C.extra_128.field_24 = 0;
                                 break;
 
                             case 4:
                                 g_SysWork.player_4C.extra_128.field_1C = 0xF;
-                                arg0->model_0.stateStep_3              = 0;
-                                arg0->model_0.state_2                  = 0;
-                                arg1->model_0.stateStep_3              = 0;
-                                arg1->model_0.state_2                  = 0;
+                                chara->model_0.stateStep_3             = 0;
+                                chara->model_0.state_2                 = 0;
+                                extra->model_0.stateStep_3             = 0;
+                                extra->model_0.state_2                 = 0;
                                 g_SysWork.player_4C.extra_128.field_20 = 0;
                                 g_SysWork.player_4C.extra_128.field_24 = 0;
                                 break;
 
                             case 21:
                                 g_SysWork.player_4C.extra_128.field_1C = 0x21;
-                                arg0->model_0.stateStep_3              = 0;
-                                arg0->model_0.state_2                  = 0;
-                                arg1->model_0.stateStep_3              = 0;
-                                arg1->model_0.state_2                  = 0;
+                                chara->model_0.stateStep_3             = 0;
+                                chara->model_0.state_2                 = 0;
+                                extra->model_0.stateStep_3             = 0;
+                                extra->model_0.state_2                 = 0;
                                 g_SysWork.player_4C.extra_128.field_20 = 0;
                                 g_SysWork.player_4C.extra_128.field_24 = 0;
                                 break;
@@ -4436,30 +4446,30 @@ void func_8007C800(s_SubCharacter* arg0, s_MainCharacterExtra* arg1) // 0x8007C8
                     break;
 
                 case 7:
-                    arg0->health_B0                        = -1;
-                    arg0->field_D6                         = 0;
+                    chara->health_B0                       = NO_VALUE;
+                    chara->field_D6                        = 0;
                     g_SysWork.player_4C.extra_128.field_1C = 9;
-                    arg0->model_0.stateStep_3              = 0;
-                    arg0->model_0.state_2                  = 0;
-                    arg1->model_0.stateStep_3              = 0;
-                    arg1->model_0.state_2                  = 0;
+                    chara->model_0.stateStep_3             = 0;
+                    chara->model_0.state_2                 = 0;
+                    extra->model_0.stateStep_3             = 0;
+                    extra->model_0.state_2                 = 0;
                     g_SysWork.player_4C.extra_128.field_20 = 0;
                     g_SysWork.player_4C.extra_128.field_24 = 0;
                     return;
 
                 case 29:
                     g_SysWork.player_4C.chara_0.properties_E4.player.field_126 = 0x1999;
-                    func_8007FB34(arg0->rotation_24.vy, 0x400, &sp10);
+                    func_8007FB34(chara->rotation_24.vy, 0x400, &sp10);
                     D_800C4608 = sp10;
-                    /* fallthrough */
+
                 case 28:
-                    if (arg0->field_41 != 0x45)
+                    if (chara->field_41 != 0x45)
                     {
                         g_SysWork.player_4C.chara_0.properties_E4.player.field_126 = 0x4000;
-                        func_8007FB34(arg0->rotation_24.vy, (s16)arg0->field_B8, &sp10);
+                        func_8007FB34(chara->rotation_24.vy, (s16)chara->field_B8, &sp10);
                         D_800C4608 = sp10;
                     }
-                    /* fallthrough */
+
                 case 0:
                 case 3:
                 case 4:
@@ -4474,7 +4484,6 @@ void func_8007C800(s_SubCharacter* arg0, s_MainCharacterExtra* arg1) // 0x8007C8
                 case 21:
                 case 24:
                 case 25:
-
                     if (temp_s0 >= 0x200 && temp_s0 < 0x600)
                     {
                         var_v1_2 = 0x1A;
@@ -4493,10 +4502,10 @@ void func_8007C800(s_SubCharacter* arg0, s_MainCharacterExtra* arg1) // 0x8007C8
                     }
 
                     g_SysWork.player_4C.extra_128.field_1C = var_v1_2;
-                    arg0->model_0.stateStep_3              = 0;
-                    arg0->model_0.state_2                  = 0;
-                    arg1->model_0.stateStep_3              = 0;
-                    arg1->model_0.state_2                  = 0;
+                    chara->model_0.stateStep_3             = 0;
+                    chara->model_0.state_2                 = 0;
+                    extra->model_0.stateStep_3             = 0;
+                    extra->model_0.state_2                 = 0;
                     g_SysWork.player_4C.extra_128.field_20 = 0;
                     g_SysWork.player_4C.extra_128.field_24 = 0;
                     break;
@@ -4512,10 +4521,10 @@ void func_8007C800(s_SubCharacter* arg0, s_MainCharacterExtra* arg1) // 0x8007C8
                     }
 
                     g_SysWork.player_4C.extra_128.field_1C = var_v1_2;
-                    arg0->model_0.stateStep_3              = 0;
-                    arg0->model_0.state_2                  = 0;
-                    arg1->model_0.stateStep_3              = 0;
-                    arg1->model_0.state_2                  = 0;
+                    chara->model_0.stateStep_3             = 0;
+                    chara->model_0.state_2                 = 0;
+                    extra->model_0.stateStep_3             = 0;
+                    extra->model_0.state_2                 = 0;
                     g_SysWork.player_4C.extra_128.field_20 = 0;
                     g_SysWork.player_4C.extra_128.field_24 = 0;
                     break;
@@ -4523,94 +4532,95 @@ void func_8007C800(s_SubCharacter* arg0, s_MainCharacterExtra* arg1) // 0x8007C8
 
             if ((u32)g_SysWork.player_4C.extra_128.field_1C >= 3)
             {
-                arg0->properties_E4.player.properties_E4[1] = 0;
-                arg0->properties_E4.player.properties_E4[4] = 0;
-                g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~0x1000;
-                g_SysWork.playerCombatInfo_38.isAiming_13 = 0;
-                g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~0x200;
-                arg0->field_44 = -1;
+                chara->properties_E4.player.properties_E4[1]                = 0;
+                chara->properties_E4.player.properties_E4[4]                = 0;
+                g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~(1 << 12);
+                g_SysWork.playerCombatInfo_38.isAiming_13                   = 0;
+                g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~(1 << 9);
+                chara->field_44                                             = NO_VALUE;
             }
             break;
     }
 
     if (g_SysWork.player_4C.extra_128.field_1C == 8)
     {
-        arg0->field_C0 = 0;
-        arg0->field_BC = 0;
-        arg0->field_B8 = 0;
-        arg0->field_B4 = 0;
+        chara->field_C0 = 0;
+        chara->field_BC = 0;
+        chara->field_B8 = 0;
+        chara->field_B4 = 0;
         return;
     }
 
-    if (arg0->field_C0 != 0)
+    if (chara->field_C0 != 0)
     {
-        g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~4;
-        if (!(g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & 0x4000))
+        g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~(1 << 2);
+        if (!(g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & (1 << 14)))
         {
-            func_8005DC1C(var_s4, &arg0->position_18, 0x20, 0);
-            g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= 0x4000;
-            arg0->properties_E4.player.field_10C = 0x40;
+            func_8005DC1C(var_s4, &chara->position_18, 0x20, 0);
+            g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= 1 << 14;
+            chara->properties_E4.player.field_10C = 0x40;
         }
 
         if (g_SavegamePtr->mapOverlayId_A4 == 0)
         {
-            arg0->health_B0 -= arg0->field_C0 * 2;
+            chara->health_B0 -= chara->field_C0 * 2;
         }
         else
         {
             switch (g_SavegamePtr->gameDifficulty_260)
             {
                 case GameDifficulty_Easy:
-                    arg0->field_C0 = (arg0->field_C0 * 3) >> 2;
+                    chara->field_C0 = (chara->field_C0 * 3) >> 2;
                     break;
 
                 case GameDifficulty_Hard:
-                    arg0->field_C0 = (arg0->field_C0 * 6) >> 2;
+                    chara->field_C0 = (chara->field_C0 * 6) >> 2;
                     break;
             }
-            arg0->health_B0 -= arg0->field_C0;
+
+            chara->health_B0 -= chara->field_C0;
         }
 
-        if (arg0->health_B0 < 0)
+        if (chara->health_B0 < 0)
         {
-            arg0->health_B0 = -1;
-            D_800C4561      = 1;
+            chara->health_B0 = NO_VALUE;
+            D_800C4561       = 1;
         }
-        func_800893D0(arg0->field_C0);
 
-        arg0->field_C0 = 0;
+        func_800893D0(chara->field_C0);
+        chara->field_C0 = 0;
     }
 
-    if (arg0->health_B0 <= 0 && g_SysWork.player_4C.extra_128.field_1C != 8 &&
+    if (chara->health_B0 <= FP_FLOAT_TO(0.0f, Q12_SHIFT) && g_SysWork.player_4C.extra_128.field_1C != 8 &&
         g_SysWork.player_4C.extra_128.field_1C != 0x24 && g_SysWork.player_4C.extra_128.field_1C != 0x27 &&
         g_SysWork.player_4C.extra_128.field_1C != 0x28 && g_SysWork.player_4C.extra_128.field_1C != 0x2F &&
         g_SysWork.player_4C.extra_128.field_1C != 0x30 && g_Player_Walk2RunTransition == 0)
     {
-        arg0->field_40           = -1;
+        chara->field_40           = NO_VALUE;
         g_SavegamePtr->field_238 = 0;
 
         for (i = 0; i < 4; i++)
         {
-            g_SysWork.field_2354[i] = -1;
+            g_SysWork.field_2354[i] = NO_VALUE;
         }
 
-        if (arg0->field_41 == 0x42)
+        if (chara->field_41 == 0x42)
         {
             g_SysWork.player_4C.extra_128.field_1C = 0x24;
-            arg0->model_0.stateStep_3              = 0;
-            arg0->model_0.state_2                  = 0;
-            arg1->model_0.stateStep_3              = 0;
-            arg1->model_0.state_2                  = 0;
+            chara->model_0.stateStep_3             = 0;
+            chara->model_0.state_2                 = 0;
+            extra->model_0.stateStep_3             = 0;
+            extra->model_0.state_2                 = 0;
             g_SysWork.player_4C.extra_128.field_20 = 0;
             g_SysWork.player_4C.extra_128.field_24 = 0;
         }
         else
         {
             g_SysWork.player_4C.extra_128.field_1C = 8;
-            arg0->model_0.stateStep_3              = 0;
-            arg0->model_0.state_2                  = 0;
-            arg1->model_0.stateStep_3              = 0;
-            arg1->model_0.state_2                  = 0;
+            chara->model_0.stateStep_3             = 0;
+            chara->model_0.state_2                 = 0;
+            extra->model_0.stateStep_3             = 0;
+            extra->model_0.state_2                 = 0;
             g_SysWork.player_4C.extra_128.field_20 = 0;
             g_SysWork.player_4C.extra_128.field_24 = 0;
         }
