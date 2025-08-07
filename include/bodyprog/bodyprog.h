@@ -2509,7 +2509,7 @@ void Anim_Update2(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Anim
 /** Updates a character's animation, variant 3. */
 void Anim_Update3(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_AnimInfo* targetAnim);
 
-void func_80044F14(s32 mat, s16 z, s16 x, s16 y);
+void func_80044F14(GsCOORDINATE2* coord, s16 z, s16 x, s16 y);
 
 s8 func_80044F6C(s8* ptr, s32 arg1);
 
