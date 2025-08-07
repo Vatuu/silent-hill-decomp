@@ -7,6 +7,7 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math.h"
 #include "bodyprog/player_logic.h"
+#include "bodyprog/item_screens.h"
 #include "main/rng.h"
 
 extern s_800C4168 D_800C4168;
@@ -5305,7 +5306,101 @@ void Game_SavegameResetPlayer() // 0x8007E530
     g_SavegamePtr->add290Hours_25C_1     = 0;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8007E5AC); // 0x8007E5AC
+void func_8007E5AC() // 0x8007E5AC
+{
+    s32      i;
+    u32      temp_t0;
+    s_Model* model;
+    s_Model* extraModel;
+
+    SysWork_SavegameReadPlayer();
+
+    g_SysWork.player_4C.chara_0.model_0.charaId_0   = 1;
+    g_SysWork.player_4C.extra_128.model_0.charaId_0 = 1;
+    g_SysWork.player_4C.chara_0.field_D4            = 0x4CC;
+    g_SysWork.player_4C.chara_0.field_D6            = 0x3AE;
+
+    extraModel = &g_SysWork.player_4C.chara_0.model_0;
+    model      = &g_SysWork.player_4C.extra_128.model_0;
+
+    g_SysWork.field_2358 = 0;
+
+    extraModel->anim_4.flags_2 |= 3;
+    model->anim_4.flags_2 |= 3;
+
+    g_SysWork.player_4C.chara_0.field_E0_8 = 3;
+    g_Inventory_EquippedItem               = g_SavegamePtr->equippedWeapon_AA;
+
+    temp_t0 = g_SavegamePtr->equippedWeapon_AA >> 5;
+
+    if (temp_t0 >= 4 && temp_t0 < 6)
+    {
+        for (i = 0; g_SavegamePtr->items_0[i].id_0 != g_SavegamePtr->equippedWeapon_AA &&
+                    i < INVENTORY_ITEM_COUNT_MAX;
+             i++)
+            ;
+
+        g_SysWork.playerCombatInfo_38.field_F              = g_SavegamePtr->equippedWeapon_AA + 0x80;
+        g_SysWork.playerCombatInfo_38.currentWeaponAmmo_10 = g_SavegamePtr->items_0[i].count_1;
+        g_SysWork.playerCombatInfo_38.field_12             = i;
+
+        if (temp_t0 == 4)
+        {
+            g_SysWork.playerCombatInfo_38.totalWeaponAmmo_11 = 0;
+        }
+        else
+        {
+
+            for (i = 0; g_SavegamePtr->items_0[i].id_0 != g_SavegamePtr->equippedWeapon_AA + 0x20 &&
+                        i < INVENTORY_ITEM_COUNT_MAX;
+                 i++)
+                ;
+
+            if (i == INVENTORY_ITEM_COUNT_MAX)
+            {
+                g_SysWork.playerCombatInfo_38.totalWeaponAmmo_11 = 0;
+            }
+            else
+            {
+                g_SysWork.playerCombatInfo_38.totalWeaponAmmo_11 = (s8)g_SavegamePtr->items_0[i].count_1;
+            }
+        }
+    }
+    else
+    {
+        g_SysWork.playerCombatInfo_38.field_F              = -1;
+        g_SysWork.playerCombatInfo_38.currentWeaponAmmo_10 = 0;
+        g_SysWork.playerCombatInfo_38.totalWeaponAmmo_11   = 0;
+        g_SysWork.playerCombatInfo_38.field_12             = -1;
+    }
+
+    g_SysWork.playerCombatInfo_38.isAiming_13 = 0;
+    D_800AF20C                                = 0;
+    D_800C4588                                = 0;
+    D_800C457C                                = 0;
+    g_Player_EnableControl                    = 0;
+
+    switch (g_SavegamePtr->gameDifficulty_260)
+    {
+        case GameDifficulty_Easy:
+            D_800C45EC = 0x5000;
+            break;
+
+        case GameDifficulty_Normal:
+            D_800C45EC = 0x2800;
+            break;
+
+        case GameDifficulty_Hard:
+            D_800C45EC = 0x1CCC;
+            break;
+    }
+
+    D_800AF224                = -1;
+    g_GameWork.mapAnimIdx_5B1 = -1;
+
+    g_SavegamePtr->inventoryItemSpaces_AB = CLAMP(g_SavegamePtr->inventoryItemSpaces_AB, 8, 0x28);
+    g_SysWork.player_4C.chara_0.health_B0 = CLAMP(g_SysWork.player_4C.chara_0.health_B0, 1, 0x64000);
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8007E860); // 0x8007E860
 
