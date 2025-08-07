@@ -266,6 +266,6 @@ s32 Fs_QueuePostLoadTim(s_FsQueueEntry* entry)
 
 s32 Fs_QueuePostLoadAnm(s_FsQueueEntry* entry)
 {
-    func_80035560(entry->extra.anm.field_0, entry->extra.anm.field_4, entry->externalData, entry->extra.anm.field_8);
+    func_80035560(entry->extra.anm.field_0, entry->extra.anm.charaId_4, entry->externalData, entry->extra.anm.field_8);
     return true;
 }

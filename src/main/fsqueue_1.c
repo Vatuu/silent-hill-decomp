@@ -87,16 +87,16 @@ s32 Fs_QueueStartReadTim(s32 fileIdx, void* dest, s_FsImageDesc* image)
     return Fs_QueueEnqueue(fileIdx, FS_OP_READ, FS_POST_LOAD_TIM, false, dest, 0, &extra);
 }
 
-s32 Fs_QueueStartReadAnm(s32 arg0, s32 arg1, void* arg2, s32 arg3)
+s32 Fs_QueueStartReadAnm(s32 idx, s32 charaId, void* dest, s32 arg3)
 {
     s32            fileIdx;
     s_FsQueueExtra extra;
 
-    fileIdx           = g_Chara_FileInfo[arg1].animFileIdx;
-    extra.anm.field_4 = arg1;
-    extra.anm.field_0 = arg0;
-    extra.anm.field_8 = arg3;
-    return Fs_QueueEnqueue(fileIdx, FS_OP_READ, FS_POST_LOAD_ANM, false, arg2, 0, &extra);
+    fileIdx             = g_Chara_FileInfo[charaId].animFileIdx;
+    extra.anm.charaId_4 = charaId;
+    extra.anm.field_0   = idx;
+    extra.anm.field_8   = arg3;
+    return Fs_QueueEnqueue(fileIdx, FS_OP_READ, FS_POST_LOAD_ANM, false, dest, 0, &extra);
 }
 
 s32 Fs_QueueEnqueue(s32 fileIdx, u8 op, u8 postLoad, u8 alloc, void* data, u32 unused0, s_FsQueueExtra* extra)

@@ -1251,9 +1251,9 @@ void GameFs_MapStartup() // 0x80034964
             break;
         
         case 5:
-            func_80035338(1, g_MapOverlayHeader.charaGroupIds_248[0], 0, 0);
-            func_80035338(2, g_MapOverlayHeader.charaGroupIds_248[1], 0, 0);
-            func_80035338(3, g_MapOverlayHeader.charaGroupIds_248[2], 0, 0);
+            func_80035338(1, g_MapOverlayHeader.charaGroupIds_248[0], NULL, 0);
+            func_80035338(2, g_MapOverlayHeader.charaGroupIds_248[1], NULL, 0);
+            func_80035338(3, g_MapOverlayHeader.charaGroupIds_248[2], NULL, 0);
             func_8003D21C(&g_MapOverlayHeader);
 
             g_GameWork.gameStateStep_598[0]++;
@@ -1533,50 +1533,49 @@ s32 func_800352F8(s32 charaId) // 0x800352F8
     return 0;
 }
 
-void func_80035338(s32 idx, e_ShCharacterId charaId, u32 arg2, s32 arg3) // 0x80035338
+void func_80035338(s32 idx, e_ShCharacterId charaId, s_AnimFile* animFile, s32 arg3) // 0x80035338
 {
     s32         i;
-    u32         anim;
+    s_AnimFile* animFileCpy;
     s_800A992C* ptr;
     s_800A992C* playerAnim;
 
-    anim = arg2;
-    ptr  = &D_800A992C[idx];
+    animFileCpy = animFile;
+    ptr         = &D_800A992C[idx];
 
     if (charaId == 0)
     {
         return;
     }
 
-    for (playerAnim = ptr - 1; anim == 0; playerAnim--)
+    for (playerAnim = &ptr[-1]; animFileCpy == NULL; playerAnim--)
     {
-        anim = playerAnim->animFile0_4 + playerAnim->animFileSize1_C;
+        animFileCpy = playerAnim->animFile0_4 + playerAnim->animFileSize1_C;
     }
     
     if (ptr->charaId1_1 == charaId)
     {
-        if (idx == 1 || anim == ptr->animFile1_8)
+        if (idx == 1 || animFileCpy == ptr->animFile1_8)
         {
             func_80035560(idx, charaId, ptr->animFile1_8, arg3);
             return;
         }
-
-        if (anim < ptr->animFile1_8)
+        else if (animFileCpy < ptr->animFile1_8)
         {
-            ptr->animFile0_4 = anim;
+            ptr->animFile0_4 = animFileCpy;
 
-            Mem_Move32(anim, D_800A992C[idx].animFile1_8, D_800A992C[idx].animFileSize2_10);
-            func_80035560(idx, charaId, anim, arg3);
+            Mem_Move32(animFileCpy, D_800A992C[idx].animFile1_8, D_800A992C[idx].animFileSize2_10);
+            func_80035560(idx, charaId, animFileCpy, arg3);
             return;
         }
     }
 
     ptr->npcCoords_14     = &g_SysWork.npcCoords_FC0[0];
-    ptr->charaId1_1       = 0;
-    ptr->animFile1_8      = 0;
+    ptr->charaId1_1       = Chara_None;
+    ptr->animFile1_8      = NULL;
     ptr->animFileSize2_10 = 0;
     ptr->charaId0_0       = charaId;
-    ptr->animFile0_4      = anim;
+    ptr->animFile0_4      = animFileCpy;
     ptr->animFileSize1_C  = Fs_GetFileSectorAlignedSize(g_Chara_FileInfo[charaId].animFileIdx);
 
     i = func_800352F8(charaId);
@@ -1588,7 +1587,7 @@ void func_80035338(s32 idx, e_ShCharacterId charaId, u32 arg2, s32 arg3) // 0x80
     }
     else
     {
-        Fs_QueueStartReadAnm(idx, charaId, anim, arg3);
+        Fs_QueueStartReadAnm(idx, charaId, animFileCpy, arg3);
     }
 
     for (i = 1; i < 4; i++)
@@ -1600,7 +1599,7 @@ void func_80035338(s32 idx, e_ShCharacterId charaId, u32 arg2, s32 arg3) // 0x80
     }
 }
 
-void func_80035560(s32 idx0, e_ShCharacterId charaId, s_800A992C_sub* animFile, GsCOORDINATE2* coord) // 0x80035560
+void func_80035560(s32 idx0, e_ShCharacterId charaId, s_AnimFile* animFile, GsCOORDINATE2* coord) // 0x80035560
 {
     s32            idx2;
     GsCOORDINATE2* coordCpy;
@@ -1641,9 +1640,9 @@ void func_80035560(s32 idx0, e_ShCharacterId charaId, s_800A992C_sub* animFile, 
 
 void func_8003569C() // 0x8003569C
 {
-    s32             i;
-    GsCOORDINATE2*  coord;
-    s_800A992C_sub* animFile;
+    s32            i;
+    GsCOORDINATE2* coord;
+    s_AnimFile*    animFile;
 
     for (i = 1; i < 3; i++)
     {

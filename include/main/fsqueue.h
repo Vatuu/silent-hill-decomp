@@ -113,8 +113,8 @@ STATIC_ASSERT_SIZEOF(s_FsImageDesc, 8);
  */
 typedef struct _FsAnmDesc
 {
-    u32 field_0;
-    u32 field_4;
+    u32 field_0; // Unknown index.
+    u32 charaId_4;
     u32 field_8;
 } s_FsAnmDesc;
 STATIC_ASSERT_SIZEOF(s_FsAnmDesc, 12);
@@ -242,13 +242,13 @@ s32 Fs_QueueStartReadTim(s32 fileIdx, void* dest, s_FsImageDesc* image);
  * @note Does not actually take a file number, but instead takes one from an array of structs at 0x800a90fc in bodyprog,
  * using `arg1` as an index. Does not seem to take a `s_FsAnmDesc` pointer either. Maybe by value?
  * 
- * @param arg0
- * @param arg1 Index of something in an array in bodyprog.
- * @param arg2 Destination buffer?
+ * @param arg0 Unknown index.
+ * @param charaId Character ID.
+ * @param dest Destination buffer.
  * @param arg3
  * @return Index of the new queue entry.
  */
-s32 Fs_QueueStartReadAnm(s32 arg0, s32 arg1, void* arg2, s32 arg3);
+s32 Fs_QueueStartReadAnm(s32 idx, s32 charaId, void* dest, s32 arg3);
 
 /** @brief Add new operation to the queue.
  *

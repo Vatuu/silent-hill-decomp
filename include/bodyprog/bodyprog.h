@@ -756,18 +756,18 @@ typedef struct
 {
     u8 unk_0[6];
     u8 field_6;
-} s_800A992C_sub; // Size: 80?
+} s_AnimFile; // Size: 80?
 
 typedef struct
 {
-    s8              charaId0_0; /** `e_ShCharacterId`. */
-    s8              charaId1_1; /** `e_ShCharacterId`. */
-    s8              unk_2[2];
-    u32             animFile0_4; // `s_800A992C_sub*`?
-    s_800A992C_sub* animFile1_8;
-    s32             animFileSize1_C;
-    s32             animFileSize2_10;
-    GsCOORDINATE2*  npcCoords_14;
+    s8             charaId0_0; /** `e_ShCharacterId`. */
+    s8             charaId1_1; /** `e_ShCharacterId`. */
+    s8             unk_2[2];
+    s32            animFile0_4;//s_AnimFile*    animFile0_4; // TODO: Needs to be a pointer.
+    s_AnimFile*    animFile1_8;
+    s32            animFileSize1_C;
+    s32            animFileSize2_10;
+    GsCOORDINATE2* npcCoords_14;
 } s_800A992C;
 STATIC_ASSERT_SIZEOF(s_800A992C, 24);
 
@@ -2512,7 +2512,7 @@ s_80043F2C* func_80043F2C(s_80043F2C* arg0, s_80043F2C* arg1);
 void func_80044044(s_80044044* arg0, s32 arg1, s32 arg2);
 
 /** Loads anim file? */
-func_800445A4(s_800A992C_sub*, GsCOORDINATE2*);
+func_800445A4(s_AnimFile*, GsCOORDINATE2*);
 
 s32 func_80044918(s_ModelAnim* anim);
 
@@ -3231,10 +3231,10 @@ s32 func_8003528C(s32 idx0, s32 idx1);
 s32 func_800352F8(s32 arg0);
 
 /** Either allocates or determines where to allocate animation data. */
-void func_80035338(s32 arg0, e_ShCharacterId charaId, u32 arg2, s32 arg3);
+void func_80035338(s32 idx, e_ShCharacterId charaId, s_AnimFile* animFile, s32 arg3);
 
 /** Called by `Fs_QueuePostLoadAnm`. */
-void func_80035560(s32 idx0, e_ShCharacterId charaId, s_800A992C_sub* animFile, GsCOORDINATE2* coord); // 0x80035560
+void func_80035560(s32 idx0, e_ShCharacterId charaId, s_AnimFile* animFile, GsCOORDINATE2* coord); // 0x80035560
 
 void func_8003569C();
 
