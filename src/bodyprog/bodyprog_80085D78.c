@@ -1135,7 +1135,6 @@ void func_800879FC(u32 arg0, s32 arg1) // 0x800879FC
             var0 = InventoryItemId_Ampoule;
             var1 = 1;
             var2 = 7;
-
             func_800877B8(var0, var1, arg1, var2);
             break;
 
@@ -1462,7 +1461,7 @@ s32 func_80088D0C() // 0x80088D0C
 void func_80088D34(s32 idx) // 0x80088D34
 {
     idx++;
-    func_800445A4(D_800A992C[idx].field_8, D_800A992C[idx].field_14);
+    func_800445A4(D_800A992C[idx].animFilePtr2_8, D_800A992C[idx].NPCCords_14);
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", Chara_Spawn); // 0x80088D78

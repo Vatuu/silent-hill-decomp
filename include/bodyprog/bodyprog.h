@@ -269,7 +269,7 @@ typedef struct
     s_80041CEC* field_0;
     s32         field_4;
     s32         queueIdx_8; // Passed to `func_80041ADC`, thus the name.
-} s_func_80041CB4;
+} s_func_80041CB4; // Likely the struct of `D_800C1158`.
 
 typedef struct
 {
@@ -760,14 +760,14 @@ typedef struct
 
 typedef struct
 {
-    s8              field_0;
-    s8              field_1; // Index.
+    s8              charaId1_0; // `e_ShCharacterId`.
+    s8              charaId2_1; // `e_ShCharacterId`.
     s8              unk_2[2];
-    u32             field_4; // Size of `field_8` array?
-    s_800A992C_sub* field_8;
-    s32             field_C;
-    s32             field_10;
-    s32             field_14;
+    u32             animFilePtr1_4; // Pointer to animation data.
+    s_800A992C_sub* animFilePtr2_8; // Pointer to animation data.
+    s32             animFileSize1_C;
+    s32             animFileSize2_10;
+    GsCOORDINATE2*  NPCCords_14;
 } s_800A992C;
 STATIC_ASSERT_SIZEOF(s_800A992C, 24);
 
@@ -998,7 +998,7 @@ typedef struct
 typedef struct
 {
     s8 unk0[24];
-} s_800C1450_58;
+} s_800C1450_58; // This seems to hold texture names.
 
 typedef struct
 {
@@ -1006,7 +1006,7 @@ typedef struct
     s_800C1450_0  field_2C;
     s_800C1450_58 field_58[8];
     s_800C1450_58 field_118[2];
-} s_800C1450;
+} s_800C1450; // Related to textures.
 
 typedef struct
 {
@@ -1138,9 +1138,12 @@ typedef struct
     s16           field_38;
     s16           field_3A;
     s16           field_3C;
+    s32           field_40;
+    s32           field_44;
+    s32           field_48;
     s32           field_4C;
-    s32           field_50;
-    s8            unk_54[24];
+    s16           field_50;
+    s8            unk_54[12];
     VECTOR3       field_60; // Type assumed.
 } s_800C4168;
 
@@ -1362,7 +1365,7 @@ typedef struct _MapOverlayHeader
     u8                field_15;
     s8                field_16;
     s8                field_17;
-    void              (**func_18)();
+    void              (**loadingScreenFuncs_18)(); // 0 = Nothing, 1 = Harry running, 2 = Background image (Not possible to see as the image is not load), 3 = Background image + Stage number (Debug leftover? Not all overlays has the string supposed to be shown).
     s_AreaLoadParams* mapAreaLoadParams_1C;
     void              (**mapEventFuncs_20)(); /** Points to array of event functions. */
     s8                unk_24[4];
@@ -1573,7 +1576,8 @@ extern s32 D_800A9A24;
 /** Z. */
 extern s32 D_800A9A28;
 
-extern s8 D_800A98FC[];
+/** Related to character animation allocation handling. */
+extern s8 D_800A98FC[48]; // Size can also be 45/0x2D as last 3 bytes are empty.
 
 /** Related to main menu fog randomization. */
 extern s32 D_800A9EAC;
@@ -1600,6 +1604,12 @@ extern u16 D_800A9804[];
 
 extern u16 D_800A98AC[];
 
+/** `D_800A992C` and `D_800A9944` are likely the same variable or they are inside a struct.
+ * `D_800A992C` has declared values that seems related to the player while `D_800A9944`
+ * dynamically allocate data for other entities.
+ *
+ * `D_800A992C` has declared in the variable `field_4` and `field_8` the value of `FS_BUFFER_0`.
+ */
 extern s_800A992C D_800A992C[];
 
 extern u8 D_800A9944;
@@ -1882,7 +1892,19 @@ extern s32 g_Gfx_ScreenFade; // 0x800BCD0C
 
 extern s16 D_800BCD28;
 
-extern s32 D_800BCD48;
+/** @brief Test if Demo load should be reinitialized.
+ * This is used exclusively in `GameFs_MapStartUp` with
+ * the purpose of testing if demo load should be reinitialized
+ * as file loading may have failed.
+ *
+ * It makes 5 attemps and if the load fails then it restarts
+ * the entire process by restarting the timer used to check if a demo
+ * should be triggered.
+ *
+ * @note It's a rather strange decision to make this a global when it's
+ * only ever used on that function.
+ */
+extern s32 g_DemoLoadAttemps;
 
 extern s8 D_800BCD50[8];
 
@@ -2031,7 +2053,7 @@ extern s_800C1698 D_800C1698;
 
 extern s16 D_800C16A4;
 
-extern u8 D_800C16A8[];
+extern u8 D_800C16A8[32];
 
 extern s32 D_800C16C8; // Type assumed.
 
@@ -3138,8 +3160,10 @@ void func_800348C0();
 
 void GameState_LoadScreen_Update();
 
-/** Handles `g_GameWork.gameStateStep_598[0]`. */
-void Game_GameStartUp(); // 0x80034964
+/** Handles `g_GameWork.gameStateStep_598[0]`.
+ * Used to handle map loading and room change.
+ */
+void GameFs_MapStartUp(); // 0x80034964
 
 /** Draws the loading screen with Harry running. */
 void Gfx_LoadingScreenDraw(); // 0x80034E58
@@ -3148,11 +3172,11 @@ void func_80034EC8(); // 0x80034EC8
 
 void func_80034F18(); // 0x80034F18
 
-void func_80034FB8(); // 0x80034FB8
+void Game_InGameInit(); // 0x80034FB8
 
 void Game_SavegameInitialize(s8 overlayId, s32 difficulty);
 
-void Game_InGameInitialize(); // 0x80035178
+void Game_PlayerHeroInit(); // 0x80035178
 
 /** Loads a map file into `g_OvlDynamic`. */
 void GameFs_MapLoad(s32 mapIdx);
@@ -3161,10 +3185,10 @@ s32 func_8003528C(s32 idx0, s32 idx1);
 
 s32 func_800352F8(s32 arg0);
 
-void func_80035338(s32 arg0, s32 arg1, u32 arg2, s32 arg3);
+void func_80035338(s32 arg0, e_ShCharacterId arg1, u32 arg2, s32 arg3);
 
 /** Called by `Fs_QueuePostLoadAnm`. */
-void func_80035560(s32 idx0, s32 idx1, s_800A992C_sub* ptr, GsCOORDINATE2* coord);
+void func_80035560(s32 idx0, e_ShCharacterId charaId, s_800A992C_sub* animFilePtr, GsCOORDINATE2* coord); // 0x80035560
 
 void func_8003569C();
 
@@ -3195,7 +3219,7 @@ void func_80035B98();
 void func_80035BBC();
 
 /** Player camera func. */
-void func_80035BE0();
+void Gfx_LoadingScreen_HarryRun();
 
 void func_80035DB4(s32);
 

@@ -528,6 +528,7 @@ void func_800DA7FC() // 0x800DA7FC
     func_80035F4C(var0, var1, NULL);
 }
 
+// Gfx_LoadingScreen_Debug_Stage
 void func_800DA8A4() // 0x800DA8A4
 {
     g_Gfx_ScreenFade = 7;

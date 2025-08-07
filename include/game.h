@@ -463,10 +463,10 @@ typedef enum _PlayerProperty
     PlayerProperty_Unk7          = 7,
     PlayerProperty_Unk8          = 8, // Returned by `func_8007FD2C`.
     PlayerProperty_RunTimer1     = 9  // Increments every tick indefinitely.
-} s_PlayerProperty;
+} e_PlayerProperty;
 
 /** @brief Names for each character index used in the game, `g_Chara_FileInfo` array associates each character ID with anim/model/texture files. */
-typedef enum e_ShCharacterId
+typedef enum _ShCharacterId
 {
     Chara_None             = 0,
     Chara_Hero             = 1,
@@ -515,7 +515,7 @@ typedef enum e_ShCharacterId
     Chara_Padlock          = 44,
 
     Chara_Count
-};
+} e_ShCharacterId;
 
 /** Based on LIBOVR.PDF `Buffer Data Format` section. */
 typedef enum _PadTerminalType
@@ -1116,7 +1116,7 @@ typedef struct _SysWork
     s32             field_228C;
     s32             field_2290;
     s8              unk_2294[4];
-    s32             flags_2298; // Something related to map loading.
+    s32             flags_2298; // Something related to map loading and the player state. 0 = Nothing, 1 = Transition between rooms, 2 = Transition between overlays, 4 = New game, 8 = Load Save, 16 = Continue, 32 = Demo Boot.
     s32             field_229C;
     s32             field_22A0;
     s32             flags_22A4;
@@ -1132,7 +1132,7 @@ typedef struct _SysWork
     u32             inventoryItemSelectedIdx_2351   : 8;
     u32             flags_2352                      : 8;
     s32             field_2353                      : 8; // Some index into `npcs_1A0`.
-    s8              field_2354[4];                     // Size dervied from `func_80070320`.
+    s8              field_2354[4];                       // Size dervied from `func_80070320`.
     u8              field_2358;
     s8              unk_2359[1];
     u8              field_235A; // Assumed type.

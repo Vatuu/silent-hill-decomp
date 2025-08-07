@@ -1094,6 +1094,7 @@ void ControllerData_AnalogToDigital(s_ControllerData* cont, s32 arg1) // 0x80034
     cont->field_28 = processedInputFlags;
 }
 
+// Unused.
 s32 func_8003483C(u16* arg0) // 0x8003483C
 {
     if (g_Controller0->btnsClicked_10 & *(*arg0 + arg0))
@@ -1128,12 +1129,12 @@ void func_800348C0() // 0x800348C0
 void GameState_LoadScreen_Update() // 0x800348E8
 {
     Gfx_LoadingScreenDraw();
-    Game_GameStartUp();
+    GameFs_MapStartUp();
 
     if (g_SysWork.flags_22A4 & (1 << 10))
     {
         D_800BCDD4++;
-        if ((D_800BCDD4 & 0xFF) >= 21)
+        if ((D_800BCDD4 & 0xFF) >= 21) // This doesn't trigger an audio.
         {
             g_SysWork.flags_22A4 &= ~(1 << 10);
 
@@ -1155,7 +1156,7 @@ static inline void Game_StateStepIncrement()
 
 const char rodataPad_800251F4[] = { 0x00, 0x1C, 0x97, 0x50, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }; // Could this indicate file split nearby?
 
-void Game_GameStartUp() // 0x80034964
+void GameFs_MapStartUp() // 0x80034964
 {
     switch (g_GameWork.gameStateStep_598[0])
     {
@@ -1165,15 +1166,14 @@ void Game_GameStartUp() // 0x80034964
             g_GameWork.background2dColor_G_58D = 0;
             g_GameWork.background2dColor_B_58E = 0;
 
-            if (g_SysWork.flags_2298 == (1 << 0))
+            if (g_SysWork.flags_2298 == (1 << 0)) // Used when transitioning between rooms.
             {
                 AreaLoad_UpdatePlayerPosition();
                 g_GameWork.gameStateStep_598[0] = 7;
             }
-            // Indicates the game must boot a demo.
-            else if (g_SysWork.flags_2298 == 0x20)
+            else if (g_SysWork.flags_2298 == (1 << 5)) // Indicates the game must boot a demo.
             {
-                D_800BCD48                      = 0;
+                g_DemoLoadAttemps               = 0;
                 g_GameWork.gameStateStep_598[0] = 1;
                 g_SysWork.timer_20              = 1;
             }
@@ -1189,7 +1189,7 @@ void Game_GameStartUp() // 0x80034964
             if (g_SysWork.timer_20 > 1200 && Fs_QueueGetLength() == 0 && !func_80045B28())
             {
                 Demo_DemoFileSavegameUpdate();
-                Game_InGameInitialize();
+                Game_PlayerHeroInit();
 
                 if (Demo_PlayFileBufferSetup() != 0)
                 {
@@ -1205,10 +1205,10 @@ void Game_GameStartUp() // 0x80034964
                 Demo_SequenceAdvance(1);
                 Demo_DemoDataRead();
 
-                D_800BCD48++;
-                if (D_800BCD48 >= 5)
+                g_DemoLoadAttemps++;
+                if (g_DemoLoadAttemps >= 5)
                 {
-                    D_800BCD48         = 0;
+                    g_DemoLoadAttemps  = 0;
                     g_SysWork.timer_20 = 0;
                     break;
                 }
@@ -1263,13 +1263,13 @@ void Game_GameStartUp() // 0x80034964
             break;
 
         case 7:
-            if (func_80039F90() & (1 << 0))
+            if (func_80039F90() & (1 << 0)) // Change between rooms.
             {
-                func_8003C30C();
+                func_8003C30C(); // Maybe some sort of data handling. The function calls a function related to texture handling.
             }
 
             func_8003C220(&g_MapOverlayHeader, g_SysWork.player_4C.chara_0.position_18.vx, g_SysWork.player_4C.chara_0.position_18.vz);
-            if (g_SysWork.flags_2298 == (1 << 1))
+            if (g_SysWork.flags_2298 == (1 << 1)) // Change between a room that changes overlays.
             {
                 func_80037188();
             }
@@ -1292,7 +1292,7 @@ void Game_GameStartUp() // 0x80034964
             break;
 
         case 10:
-            if (g_SysWork.flags_2298 == 0x20 && !(g_SysWork.flags_22A4 & (1 << 1)))
+            if (g_SysWork.flags_2298 == (1 << 5) && !(g_SysWork.flags_22A4 & (1 << 1)))
             {
                 Demo_Start();
                 g_SysWork.flags_22A4 |= 1 << 1;
@@ -1305,18 +1305,18 @@ void Game_GameStartUp() // 0x80034964
             break;
 
         case 11:
-            if (g_SysWork.timer_1C >= 0x3C)
+            if (g_SysWork.timer_1C >= 60)
             {
-                if (g_SysWork.flags_2298 == (1 << 0))
+                if (g_SysWork.flags_2298 == (1 << 0)) // Change between rooms.
                 {
                     func_80034F18();
                 }
                 else
                 {
-                    func_80034FB8();
+                    Game_InGameInit();
                 }
 
-                if (g_SysWork.flags_2298 < 3u)
+                if (g_SysWork.flags_2298 <= (u32)(1 << 1))
                 {
                     func_80039F54();
                 }
@@ -1350,7 +1350,7 @@ void Gfx_LoadingScreenDraw() // 0x80034E58
     {
         g_Gfx_ScreenFade = 7;
         D_800B5C30       = FP_TIME(0.8f);
-        g_MapOverlayHeader.func_18[g_SysWork.field_2281]();
+        g_MapOverlayHeader.loadingScreenFuncs_18[g_SysWork.field_2281]();
     }
 
     Gfx_MotionBlur(2);
@@ -1387,7 +1387,13 @@ void func_80034F18() // 0x80034F18
     func_80037334();
 }
 
-void func_80034FB8() // 0x80034FB8
+/** Crucial for getting in-game.
+ * Removing it brakes the camera, inventory's 3D elements and effects
+ * (lighting, fog, lens flare, etc) get broken, NPCs doesn't spawn and
+ * doing any action (not related to movement like pointing or interacting
+ * with enviroment elements) crashes the game.
+ */
+void Game_InGameInit() // 0x80034FB8
 {
     s32        mapOverlayId;
     s_SysWork* sysWork;
@@ -1447,11 +1453,11 @@ void Game_SavegameInitialize(s8 overlayId, s32 difficulty) // 0x800350BC
     Game_SavegameResetPlayer();
 }
 
-void Game_InGameInitialize() // 0x80035178
+void Game_PlayerHeroInit() // 0x80035178
 {
-    func_8003C048();
-    func_8003C110(); // Something related to loading of Harry's animation.
-    func_8003C0C0(); // Something related to loading of Harry's animation.
+    func_8003C048(); // Something related to the screen.
+    func_8003C110(); // Allocates Harry's model?
+    func_8003C0C0(); // Something related load of Harry's model.
     func_800445A4(FS_BUFFER_0, g_SysWork.playerBoneCoords_890);
     func_8003D938(); // Something related to animations.
 
@@ -1466,8 +1472,8 @@ void Game_InGameInitialize() // 0x80035178
         Game_TurnFlashlightOn();
     }
 
-    D_800A992C->field_10 = 0x2E630;
-    D_800A992C->field_C  = 0x2E630;
+    D_800A992C->animFileSize2_10 = 0x2E630;
+    D_800A992C->animFileSize1_C  = 0x2E630;
     func_8007E5AC();
 }
 
@@ -1488,6 +1494,10 @@ void GameFs_MapLoad(s32 mapIdx) // 0x8003521C
     func_800546A8((u8)g_SysWork.playerCombatInfo_38.field_F);
 }
 
+// ========================================
+// ANIMATION MEMORY ALLOC?
+// ========================================
+
 s32 func_8003528C(s32 idx0, s32 idx1) // 0x8003528C
 {
     u32         tempField_8;
@@ -1497,11 +1507,11 @@ s32 func_8003528C(s32 idx0, s32 idx1) // 0x8003528C
 
     ptr0        = &D_800A992C[idx0];
     ptr1        = &D_800A992C[idx1];
-    tempField_4 = ptr0->field_4;
-    tempField_8 = ptr1->field_8;
+    tempField_4 = ptr0->animFilePtr1_4;
+    tempField_8 = ptr1->animFilePtr2_8;
 
-    if (tempField_4 >= (tempField_8 + ptr1->field_10) ||
-        tempField_8 >= (tempField_4 + ptr0->field_C))
+    if (tempField_4 >= (tempField_8 + ptr1->animFileSize2_10) ||
+        tempField_8 >= (tempField_4 + ptr0->animFileSize1_C))
     {
         return 0;
     }
@@ -1509,14 +1519,15 @@ s32 func_8003528C(s32 idx0, s32 idx1) // 0x8003528C
     return 1;
 }
 
-s32 func_800352F8(s32 arg0) // 0x800352F8
+/** Searches for the index of the character animation data in `D_800A992C` */
+s32 func_800352F8(s32 charaId) // 0x800352F8
 {
     s32         i;
     s_800A992C* ptr;
 
     for (i = 1; i < 4; i++)
     {
-        if (D_800A992C[i].field_1 == arg0)
+        if (D_800A992C[i].charaId2_1 == charaId)
         {
             return i;
         }
@@ -1525,82 +1536,82 @@ s32 func_800352F8(s32 arg0) // 0x800352F8
     return 0;
 }
 
-void func_80035338(s32 arg0, s32 arg1, u32 arg2, s32 arg3) // 0x80035338
+/** Seems to be use for either allocate or determine where to allocate animation data. */
+void func_80035338(s32 idx, e_ShCharacterId charaId, u32 arg2, s32 arg3) // 0x80035338
 {
     s32         i;
-    u32         var;
-    s_800A992C* ptr0;
-    s_800A992C* ptr1;
+    u32         animPtr;
+    s_800A992C* ptr;
+    s_800A992C* playerAnimData;
 
-    var  = arg2;
-    ptr0 = &D_800A992C[arg0];
+    animPtr = arg2;
+    ptr     = &D_800A992C[idx];
 
-    if (arg1 == 0)
+    if (charaId == 0)
     {
         return;
     }
 
-    for (ptr1 = ptr0 - 1; var == 0; ptr1--)
+    for (playerAnimData = ptr - 1; animPtr == 0; playerAnimData--)
     {
-        var = ptr1->field_4 + ptr1->field_C;
+        animPtr = playerAnimData->animFilePtr1_4 + playerAnimData->animFileSize1_C;
     }
     
-    if (ptr0->field_1 == arg1)
+    if (ptr->charaId2_1 == charaId)
     {
-        if (arg0 == 1 || var == ptr0->field_8)
+        if (idx == 1 || animPtr == ptr->animFilePtr2_8)
         {
-            func_80035560(arg0, arg1, ptr0->field_8, arg3);
+            func_80035560(idx, charaId, ptr->animFilePtr2_8, arg3);
             return;
         }
 
-        if (var < ptr0->field_8)
+        if (animPtr < ptr->animFilePtr2_8)
         {
-            ptr0->field_4 = var;
+            ptr->animFilePtr1_4 = animPtr;
 
-            Mem_Move32(var, D_800A992C[arg0].field_8, D_800A992C[arg0].field_10);
-            func_80035560(arg0, arg1, var, arg3);
+            Mem_Move32(animPtr, D_800A992C[idx].animFilePtr2_8, D_800A992C[idx].animFileSize2_10);
+            func_80035560(idx, charaId, animPtr, arg3);
             return;
         }
     }
 
-    ptr0->field_14 = g_SysWork.npcCoords_FC0;
-    ptr0->field_1  = 0;
-    ptr0->field_8  = 0;
-    ptr0->field_10 = 0;
-    ptr0->field_0  = arg1;
-    ptr0->field_4  = var;
-    ptr0->field_C  = Fs_GetFileSectorAlignedSize(g_Chara_FileInfo[arg1].animFileIdx);
+    ptr->NPCCords_14      = &g_SysWork.npcCoords_FC0[0];
+    ptr->charaId2_1       = 0;
+    ptr->animFilePtr2_8   = 0;
+    ptr->animFileSize2_10 = 0;
+    ptr->charaId1_0       = charaId;
+    ptr->animFilePtr1_4   = animPtr;
+    ptr->animFileSize1_C  = Fs_GetFileSectorAlignedSize(g_Chara_FileInfo[charaId].animFileIdx);
 
-    i = func_800352F8(arg1);
+    i = func_800352F8(charaId);
 
     if (i > 0)
     {
-        Mem_Move32(D_800A992C[arg0].field_4, D_800A992C[i].field_8, D_800A992C[i].field_10);
-        func_80035560(arg0, arg1, ptr0->field_4, arg3);
+        Mem_Move32(D_800A992C[idx].animFilePtr1_4, D_800A992C[i].animFilePtr2_8, D_800A992C[i].animFileSize2_10);
+        func_80035560(idx, charaId, ptr->animFilePtr1_4, arg3);
     }
     else
     {
-        Fs_QueueStartReadAnm(arg0, arg1, var, arg3);
+        Fs_QueueStartReadAnm(idx, charaId, animPtr, arg3);
     }
 
     for (i = 1; i < 4; i++)
     {
-        if (i != arg0 && D_800A992C[i].field_1 != 0 && func_8003528C(arg0, i) != 0)
+        if (i != idx && D_800A992C[i].charaId2_1 != 0 && func_8003528C(idx, i) != 0)
         {
             bzero(&D_800A992C[i], sizeof(s_800A992C));
         }
     }
 }
 
-void func_80035560(s32 idx0, s32 idx1, s_800A992C_sub* ptr, GsCOORDINATE2* coord) // 0x80035560
+void func_80035560(s32 idx0, e_ShCharacterId charaId, s_800A992C_sub* animFilePtr, GsCOORDINATE2* coord) // 0x80035560
 {
     s32            idx2;
     GsCOORDINATE2* coordCpy;
-    s_800A992C*    tempPtr0;
-    s_800A992C*    tempPtr1;
+    s_800A992C*    ptr;
 
     coordCpy = coord;
-    tempPtr0 = &D_800A992C[idx0];
+    ptr      = &D_800A992C[idx0];
 
     if (coordCpy == 0)
     {
@@ -1610,26 +1621,26 @@ void func_80035560(s32 idx0, s32 idx1, s_800A992C_sub* ptr, GsCOORDINATE2* coord
         }
         else if (idx0 >= 2)
         {
-            idx2      = D_800A992C[idx0 - 1].field_8->field_6;
-            coordCpy  = D_800A992C[idx0 - 1].field_14;
+            idx2      = D_800A992C[idx0 - 1].animFilePtr2_8->field_6;
+            coordCpy  = D_800A992C[idx0 - 1].NPCCords_14;
             coordCpy += idx2 + 1;
 
             // Check for end of `g_SysWork.npcCoords_FC0` array.
-            if ((&coordCpy[ptr->field_6] + 1) >= (u32)&g_SysWork.field_2280)
+            if ((&coordCpy[animFilePtr->field_6] + 1) >= (u32)&g_SysWork.field_2280)
             {
                 coordCpy = g_MapOverlayHeader.field_28;
             }
         }
     }
 
-    tempPtr0->field_1  = idx1;
-    tempPtr0->field_8  = ptr;
-    tempPtr0->field_10 = Fs_GetFileSectorAlignedSize(g_Chara_FileInfo[idx1].animFileIdx);
-    tempPtr0->field_14 = coordCpy;
+    ptr->charaId2_1       = charaId;
+    ptr->animFilePtr2_8   = animFilePtr;
+    ptr->animFileSize2_10 = Fs_GetFileSectorAlignedSize(g_Chara_FileInfo[charaId].animFileIdx);
+    ptr->NPCCords_14      = coordCpy;
 
-    func_800445A4(ptr, coordCpy);
+    func_800445A4(animFilePtr, coordCpy);
 
-    D_800A98FC[idx1] = idx0;
+    D_800A98FC[charaId] = idx0;
 }
 
 void func_8003569C() // 0x8003569C
@@ -1642,9 +1653,9 @@ void func_8003569C() // 0x8003569C
     {
         if ((s8)g_MapOverlayHeader.charaGroupIds_248[i] != 0)
         {
-            coord  = D_800A992C[i].field_14;
-            ptr    = D_800A992C[i + 1].field_8;
-            coord += D_800A992C[i].field_8->field_6 + 1;
+            coord  = D_800A992C[i].NPCCords_14;
+            ptr    = D_800A992C[i + 1].animFilePtr2_8;
+            coord += D_800A992C[i].animFilePtr2_8->field_6 + 1;
 
             // Check for end of `g_SysWork.npcCoords_FC0` array.
             if ((&coord[ptr->field_6] + 1) >= &g_SysWork.field_2280)
@@ -1652,11 +1663,15 @@ void func_8003569C() // 0x8003569C
                 coord = g_MapOverlayHeader.field_28;
             }
 
-            D_800A992C[i + 1].field_14 = coord;
+            D_800A992C[i + 1].NPCCords_14 = coord;
             func_800445A4(ptr, coord);
         }
     }
 }
+
+// ========================================
+// AUDIO HANDLING?
+// ========================================
 
 s32 func_80035780() // 0x80035780
 {
@@ -1767,7 +1782,7 @@ s32 func_8003599C() // 0x8003599C
     switch (g_GameWork.gameStateStep_598[1])
     {
         case 0:
-            if (g_SavegamePtr->mapOverlayId_A4 == 10)
+            if (g_SavegamePtr->mapOverlayId_A4 == MapOverlayId_MAP2_S00)
             {
                 if ((g_SavegamePtr->eventFlags_168[4] & (1 << 5)) || (g_SavegamePtr->eventFlags_168[5] & (1 << 21)))
                 {
@@ -1810,6 +1825,11 @@ void func_80035AC8(s32 idx) // 0x80035AC8
     Sd_EngineCmd(D_800A98AC[idx]);
 }
 
+// ========================================
+// LOADING SCREEN RELATED?
+// ========================================
+
+// NPCs + Player movement related?
 void func_80035B04(VECTOR3* pos, SVECTOR* rot, GsCOORDINATE2* coord) // 0x80035B04
 {
     coord->flg = 0;
@@ -1832,12 +1852,15 @@ void func_80035B98() // 0x80035B98
     Gfx_BackgroundSpriteDraw(&g_ItemInspectionImg);
 }
 
+/** Unused and broken.
+ * Intended to draw a background image when a loading screen with a text saying "STAGE X-X" appears.
+ */
 void func_80035BBC() // 0x80035BBC
 {
     Gfx_BackgroundSpriteDraw(&D_800A9034);
 }
 
-void func_80035BE0() // 0x80035BE0
+void Gfx_LoadingScreen_HarryRun() // 0x80035BE0
 {
     GsCOORDINATE2* boneCoords;
     VECTOR3        camLookAt;
@@ -1889,6 +1912,10 @@ void func_80035BE0() // 0x80035BE0
     func_8003F170();
     func_8003DA9C(1, boneCoords, 1, g_SysWork.player_4C.chara_0.timer_C6, 0);
 }
+
+// ========================================
+// UNKNOWN
+// ========================================
 
 void func_80035DB4(s32 arg0) // 0x80035DB4
 {
@@ -3013,6 +3040,7 @@ void func_80037E78(s_SubCharacter* chara) // 0x80037E78
     }
 }
 
+/** Seems to be responsible for loading NPCs in the map */
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80032D1C", func_80037F24); // 0x80037F24
 
 s32 func_800382B0(s32 arg0) // 0x800382B0

@@ -32,7 +32,33 @@ void func_80054FC0(s32* arg0, s32* arg1, u8 idx) // 0x80054FC0
     *arg1  = 0;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80055028); // 0x80055028
+void func_80055028() // 0x80055028
+{
+    func_80040BAC();
+    func_8008D41C();
+
+    // this whole struct might or might not be a GPU packet or some other graphics/GTE-related psyq thing
+    D_800C4168.field_0 = 0;
+    D_800C4168.field_20 = 0x1000;
+    // these 3 fields are likely a color triplet
+    D_800C4168.field_28.field_0 = 0x80;
+    D_800C4168.field_28.field_1 = 0x80;
+    D_800C4168.field_28.field_2 = 0x80;
+    D_800C4168.field_1 = 0;
+    D_800C4168.field_2 = 0;
+    // these 3 fields are likely a color triplet
+    D_800C4168.field_1C = 0xFF;
+    D_800C4168.field_1D = 0xFF;
+    D_800C4168.field_1E = 0xFF;
+    D_800C4168.field_4C = 0;
+    D_800C4168.field_50 = 0;
+    D_800C4168.field_4 = 0;
+    D_800C4168.field_18 = 0;
+
+    gte_SetFarColor(0, 0, 0);
+
+    func_80055840(0x20000, 0x22000);
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_800550D0); // 0x800550D0
 

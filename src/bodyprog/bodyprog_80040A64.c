@@ -54,6 +54,7 @@ s32 func_80040B74(s32 arg0) // 0x80040B74
     return 0;
 }
 
+// Related to the screen.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80040BAC); // 0x80040BAC
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80040E7C); // 0x80040E7C
@@ -674,7 +675,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80044420); // 0x
 // ========================================
 
 // Could be used to load the player model or to execute animations.
-// Removing the call from `Game_InGameInitialize` causes Harry's model to not appear.
+// Removing the call from `Game_PlayerHeroInit` causes Harry's model to not appear.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800445A4); // 0x800445A4
 
 // Anim func.
