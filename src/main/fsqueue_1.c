@@ -1,11 +1,10 @@
+#include "gpu.h"
+#include "bodyprog/bodyprog.h"
 #include "main/fsqueue.h"
 #include "main/fsmem.h"
-#include "bodyprog/bodyprog.h"
 
 #include <memory.h>
 #include <libetc.h>
-#include <libgte.h>
-#include <libgpu.h>
 #include <libcd.h>
 
 s_FsQueue g_FsQueue;
@@ -87,7 +86,7 @@ s32 Fs_QueueStartReadTim(s32 fileIdx, void* dest, s_FsImageDesc* image)
     return Fs_QueueEnqueue(fileIdx, FS_OP_READ, FS_POST_LOAD_TIM, false, dest, 0, &extra);
 }
 
-s32 Fs_QueueStartReadAnm(s32 idx, s32 charaId, void* dest, s32 arg3)
+s32 Fs_QueueStartReadAnm(s32 idx, s32 charaId, void* dest, GsCOORDINATE2* coords)
 {
     s32            fileIdx;
     s_FsQueueExtra extra;
@@ -95,7 +94,7 @@ s32 Fs_QueueStartReadAnm(s32 idx, s32 charaId, void* dest, s32 arg3)
     fileIdx             = g_Chara_FileInfo[charaId].animFileIdx;
     extra.anm.charaId_4 = charaId;
     extra.anm.field_0   = idx;
-    extra.anm.field_8   = arg3;
+    extra.anm.coords_8  = coords;
     return Fs_QueueEnqueue(fileIdx, FS_OP_READ, FS_POST_LOAD_ANM, false, dest, 0, &extra);
 }
 

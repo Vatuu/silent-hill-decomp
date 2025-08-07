@@ -2208,9 +2208,9 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
             }
             else
             {
-                if (g_Controller0->field_20.sticks_0.leftY < -0x3F)
+                if (g_Controller0->sticks_20.sticks_0.leftY < -0x3F)
                 {
-                    D_800AF216 = ABS(g_Controller0->field_20.sticks_0.leftY);
+                    D_800AF216 = ABS(g_Controller0->sticks_20.sticks_0.leftY);
                     func_80070B84(chara, FP_FLOAT_TO(0.75f, Q12_SHIFT), FP_FLOAT_TO(1.4f, Q12_SHIFT), 2);
                 }
                 else
@@ -2350,9 +2350,9 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
         case 2:
             chara->properties_E4.player.properties_E4[6] += g_DeltaTime0;
 
-            if (g_Controller0->field_20.sticks_0.leftY < -0x3F)
+            if (g_Controller0->sticks_20.sticks_0.leftY < -0x3F)
             {
-                D_800AF216 = ABS(g_Controller0->field_20.sticks_0.leftY);
+                D_800AF216 = ABS(g_Controller0->sticks_20.sticks_0.leftY);
 
                 var_a2 = GET_MAX(temp_s1);
 
@@ -2602,9 +2602,9 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                     }
                 }
             }
-            else if (g_Controller0->field_20.sticks_0.leftY >= (1 << 6))
+            else if (g_Controller0->sticks_20.sticks_0.leftY >= (1 << 6))
             {
-                D_800AF216 = ABS(g_Controller0->field_20.sticks_0.leftY);
+                D_800AF216 = ABS(g_Controller0->sticks_20.sticks_0.leftY);
                 func_80070B84(chara, FP_FLOAT_TO(0.75f, Q12_SHIFT), FP_FLOAT_TO(1.15f, Q12_SHIFT), 2);
             }
             else
@@ -4653,9 +4653,9 @@ void func_8007C800(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
     }
 
     if (chara->health_B0 <= FP_FLOAT_TO(0.0f, Q12_SHIFT) && g_SysWork.player_4C.extra_128.field_1C != 8 &&
-        g_SysWork.player_4C.extra_128.field_1C != 0x24 && g_SysWork.player_4C.extra_128.field_1C != 0x27 &&
-        g_SysWork.player_4C.extra_128.field_1C != 0x28 && g_SysWork.player_4C.extra_128.field_1C != 0x2F &&
-        g_SysWork.player_4C.extra_128.field_1C != 0x30 && g_Player_Walk2RunTransition == 0)
+        g_SysWork.player_4C.extra_128.field_1C != 36 && g_SysWork.player_4C.extra_128.field_1C != 39 &&
+        g_SysWork.player_4C.extra_128.field_1C != 40 && g_SysWork.player_4C.extra_128.field_1C != 47 &&
+        g_SysWork.player_4C.extra_128.field_1C != 48 && g_Player_Walk2RunTransition == 0)
     {
         chara->field_40           = NO_VALUE;
         g_SavegamePtr->field_238 = 0;
@@ -4665,9 +4665,9 @@ void func_8007C800(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
             g_SysWork.field_2354[i] = NO_VALUE;
         }
 
-        if (chara->field_41 == 0x42)
+        if (chara->field_41 == 66)
         {
-            g_SysWork.player_4C.extra_128.field_1C = 0x24;
+            g_SysWork.player_4C.extra_128.field_1C = 36;
             chara->model_0.stateStep_3             = 0;
             chara->model_0.state_2                 = 0;
             extra->model_0.stateStep_3             = 0;
@@ -5343,8 +5343,7 @@ void func_8007E5AC() // 0x8007E5AC
     {
         // Required for match.
         for (i = 0;
-             g_SavegamePtr->items_0[i].id_0 != g_SavegamePtr->equippedWeapon_AA &&
-                                               i < INVENTORY_ITEM_COUNT_MAX;
+             g_SavegamePtr->items_0[i].id_0 != g_SavegamePtr->equippedWeapon_AA && i < INVENTORY_ITEM_COUNT_MAX;
              i++);
 
         g_SysWork.playerCombatInfo_38.field_F              = g_SavegamePtr->equippedWeapon_AA + InventoryItemId_KitchenKnife;
@@ -5390,22 +5389,22 @@ void func_8007E5AC() // 0x8007E5AC
     switch (g_SavegamePtr->gameDifficulty_260)
     {
         case GameDifficulty_Easy:
-            D_800C45EC = 0x5000;
+            D_800C45EC = FP_FLOAT_TO(5.0f, Q12_SHIFT);
             break;
 
         case GameDifficulty_Normal:
-            D_800C45EC = 0x2800;
+            D_800C45EC = FP_FLOAT_TO(2.5f, Q12_SHIFT);
             break;
 
         case GameDifficulty_Hard:
-            D_800C45EC = 0x1CCC;
+            D_800C45EC = FP_FLOAT_TO(1.8f, Q12_SHIFT);
             break;
     }
 
     D_800AF224                = NO_VALUE;
     g_GameWork.mapAnimIdx_5B1 = NO_VALUE;
 
-    g_SavegamePtr->inventoryItemSpaces_AB = CLAMP(g_SavegamePtr->inventoryItemSpaces_AB, 8, INVENTORY_ITEM_COUNT_MAX);
+    g_SavegamePtr->inventoryItemSpaces_AB = CLAMP(g_SavegamePtr->inventoryItemSpaces_AB, INVENTORY_ITEM_COUNT_MAX / 5, INVENTORY_ITEM_COUNT_MAX);
     g_SysWork.player_4C.chara_0.health_B0 = CLAMP(g_SysWork.player_4C.chara_0.health_B0, 1, FP_FLOAT_TO(100.0f, Q12_SHIFT));
 }
 

@@ -184,8 +184,8 @@ const char* g_ItemDescriptions[] =
 
 void Inventory_DirectionalInputSet() // 0x8004F5DC
 {
-    if (g_Controller0->field_20.sticks_0.leftY < -64 || g_Controller0->field_20.sticks_0.leftY >= 64 ||
-        g_Controller0->field_20.sticks_0.leftX < -64 || g_Controller0->field_20.sticks_0.leftX >= 64)
+    if (g_Controller0->sticks_20.sticks_0.leftY < -64 || g_Controller0->sticks_20.sticks_0.leftY >= 64 ||
+        g_Controller0->sticks_20.sticks_0.leftX < -64 || g_Controller0->sticks_20.sticks_0.leftX >= 64)
     {
         // Up.
         g_Inventory_IsUpClicked = g_Controller0->btnsClicked_10 & ControllerFlag_LStickUp2;

@@ -1,6 +1,7 @@
 #ifndef _FSQUEUE_H
 #define _FSQUEUE_H
 
+#include "gpu.h"
 #include "main/fileinfo.h"
 
  /** FS queue size. */
@@ -115,7 +116,7 @@ typedef struct _FsAnmDesc
 {
     u32 field_0; // Unknown index.
     u32 charaId_4;
-    u32 field_8;
+    u32 coords_8; /** `GsCOORDINATE2` pointer. */
 } s_FsAnmDesc;
 STATIC_ASSERT_SIZEOF(s_FsAnmDesc, 12);
 
@@ -242,13 +243,13 @@ s32 Fs_QueueStartReadTim(s32 fileIdx, void* dest, s_FsImageDesc* image);
  * @note Does not actually take a file number, but instead takes one from an array of structs at 0x800a90fc in bodyprog,
  * using `arg1` as an index. Does not seem to take a `s_FsAnmDesc` pointer either. Maybe by value?
  * 
- * @param arg0 Unknown index.
+ * @param idx Unknown index.
  * @param charaId Character ID.
  * @param dest Destination buffer.
- * @param arg3
+ * @param coords Character coords.
  * @return Index of the new queue entry.
  */
-s32 Fs_QueueStartReadAnm(s32 idx, s32 charaId, void* dest, s32 arg3);
+s32 Fs_QueueStartReadAnm(s32 idx, s32 charaId, void* dest, GsCOORDINATE2* coords);
 
 /** @brief Add new operation to the queue.
  *

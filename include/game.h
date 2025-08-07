@@ -603,7 +603,7 @@ typedef struct _ControllerData
     s32                btnsReleased_14;  /** `e_ControllerFlags` */
     s32                btnsPulsed_18;    /** `e_ControllerFlags` */
     s32                btnsPulsedGui_1C; /** `e_ControllerFlags` */
-    s_AnalogSticks     field_20;
+    s_AnalogSticks     sticks_20;
     s32                field_24;
     s32                field_28;
 } s_ControllerData;
@@ -1150,7 +1150,7 @@ typedef struct _SysWork
     s8              unk_2294[4];
     s32             flags_2298; /** `e_SysWorkProcessFlags` */
     s32             field_229C;
-    s32             field_22A0;
+    s32             field_22A0; // Flags.
     s32             flags_22A4;
     s8              unk_22A8[160]; // TODO: Confirmed `GsCOORDINATE2` at start.
     s8              field_2348   : 8;

@@ -2212,6 +2212,7 @@ extern s32 D_800C45DC;
 
 extern u16 D_800C45E8;
 
+/** Related to game difficulty. Maybe multiplier? */
 extern s32 D_800C45EC;
 
 extern u16 D_800C45F0;
@@ -2512,7 +2513,7 @@ s_80043F2C* func_80043F2C(s_80043F2C* arg0, s_80043F2C* arg1);
 void func_80044044(s_80044044* arg0, s32 arg1, s32 arg2);
 
 /** Loads anim file? */
-func_800445A4(s_AnimFile*, GsCOORDINATE2*);
+void func_800445A4(s_AnimFile*, GsCOORDINATE2*);
 
 s32 func_80044918(s_ModelAnim* anim);
 
@@ -3228,13 +3229,13 @@ void GameFs_MapLoad(s32 mapIdx);
 s32 func_8003528C(s32 idx0, s32 idx1);
 
 /** Searches for the index of the character animation data in `D_800A992C`. */
-s32 func_800352F8(s32 arg0);
+s32 func_800352F8(s32 charaId);
 
 /** Either allocates or determines where to allocate animation data. */
-void func_80035338(s32 idx, e_ShCharacterId charaId, s_AnimFile* animFile, s32 arg3);
+void func_80035338(s32 idx, e_ShCharacterId charaId, s_AnimFile* animFile, GsCOORDINATE2* coords);
 
 /** Called by `Fs_QueuePostLoadAnm`. */
-void func_80035560(s32 idx0, e_ShCharacterId charaId, s_AnimFile* animFile, GsCOORDINATE2* coord); // 0x80035560
+void func_80035560(s32 idx, e_ShCharacterId charaId, s_AnimFile* animFile, GsCOORDINATE2* coord);
 
 void func_8003569C();
 

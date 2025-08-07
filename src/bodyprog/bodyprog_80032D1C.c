@@ -1029,7 +1029,7 @@ void ControllerData_AnalogToDigital(s_ControllerData* cont, s32 arg1) // 0x80034
     }
 
     processedInputFlags      = normalizedAnalogData;
-    cont->field_20.rawData_0 = signedRawAnalog;
+    cont->sticks_20.rawData_0 = signedRawAnalog;
 
     if (cont == g_Controller0)
     {
@@ -1533,7 +1533,7 @@ s32 func_800352F8(s32 charaId) // 0x800352F8
     return 0;
 }
 
-void func_80035338(s32 idx, e_ShCharacterId charaId, s_AnimFile* animFile, s32 arg3) // 0x80035338
+void func_80035338(s32 idx, e_ShCharacterId charaId, s_AnimFile* animFile, GsCOORDINATE2* coord) // 0x80035338
 {
     s32         i;
     s_AnimFile* animFileCpy;
@@ -1543,7 +1543,7 @@ void func_80035338(s32 idx, e_ShCharacterId charaId, s_AnimFile* animFile, s32 a
     animFileCpy = animFile;
     ptr         = &D_800A992C[idx];
 
-    if (charaId == 0)
+    if (charaId == Chara_None)
     {
         return;
     }
@@ -1552,12 +1552,12 @@ void func_80035338(s32 idx, e_ShCharacterId charaId, s_AnimFile* animFile, s32 a
     {
         animFileCpy = playerAnim->animFile0_4 + playerAnim->animFileSize1_C;
     }
-    
+
     if (ptr->charaId1_1 == charaId)
     {
         if (idx == 1 || animFileCpy == ptr->animFile1_8)
         {
-            func_80035560(idx, charaId, ptr->animFile1_8, arg3);
+            func_80035560(idx, charaId, ptr->animFile1_8, coord);
             return;
         }
         else if (animFileCpy < ptr->animFile1_8)
@@ -1565,7 +1565,7 @@ void func_80035338(s32 idx, e_ShCharacterId charaId, s_AnimFile* animFile, s32 a
             ptr->animFile0_4 = animFileCpy;
 
             Mem_Move32(animFileCpy, D_800A992C[idx].animFile1_8, D_800A992C[idx].animFileSize2_10);
-            func_80035560(idx, charaId, animFileCpy, arg3);
+            func_80035560(idx, charaId, animFileCpy, coord);
             return;
         }
     }
@@ -1583,42 +1583,42 @@ void func_80035338(s32 idx, e_ShCharacterId charaId, s_AnimFile* animFile, s32 a
     if (i > 0)
     {
         Mem_Move32(D_800A992C[idx].animFile0_4, D_800A992C[i].animFile1_8, D_800A992C[i].animFileSize2_10);
-        func_80035560(idx, charaId, ptr->animFile0_4, arg3);
+        func_80035560(idx, charaId, ptr->animFile0_4, coord);
     }
     else
     {
-        Fs_QueueStartReadAnm(idx, charaId, animFileCpy, arg3);
+        Fs_QueueStartReadAnm(idx, charaId, animFileCpy, coord);
     }
 
     for (i = 1; i < 4; i++)
     {
-        if (i != idx && D_800A992C[i].charaId1_1 != 0 && func_8003528C(idx, i) != 0)
+        if (i != idx && D_800A992C[i].charaId1_1 != Chara_None && func_8003528C(idx, i) != 0)
         {
             bzero(&D_800A992C[i], sizeof(s_800A992C));
         }
     }
 }
 
-void func_80035560(s32 idx0, e_ShCharacterId charaId, s_AnimFile* animFile, GsCOORDINATE2* coord) // 0x80035560
+void func_80035560(s32 idx, e_ShCharacterId charaId, s_AnimFile* animFile, GsCOORDINATE2* coord) // 0x80035560
 {
-    s32            idx2;
+    s32            idx0;
     GsCOORDINATE2* coordCpy;
     s_800A992C*    ptr;
 
     coordCpy = coord;
-    ptr      = &D_800A992C[idx0];
+    ptr      = &D_800A992C[idx];
 
     if (coordCpy == 0)
     {
-        if (idx0 == 1)
+        if (idx == 1)
         {
             coordCpy = &g_SysWork.npcCoords_FC0[0];
         }
-        else if (idx0 >= 2)
+        else if (idx >= 2)
         {
-            idx2      = D_800A992C[idx0 - 1].animFile1_8->field_6;
-            coordCpy  = D_800A992C[idx0 - 1].npcCoords_14;
-            coordCpy += idx2 + 1;
+            idx0      = D_800A992C[idx - 1].animFile1_8->field_6;
+            coordCpy  = D_800A992C[idx - 1].npcCoords_14;
+            coordCpy += idx0 + 1;
 
             // Check for end of `g_SysWork.npcCoords_FC0` array.
             if ((&coordCpy[animFile->field_6] + 1) >= (u32)&g_SysWork.field_2280)
@@ -1635,7 +1635,7 @@ void func_80035560(s32 idx0, e_ShCharacterId charaId, s_AnimFile* animFile, GsCO
 
     func_800445A4(animFile, coordCpy);
 
-    D_800A98FC[charaId] = idx0;
+    D_800A98FC[charaId] = idx;
 }
 
 void func_8003569C() // 0x8003569C
@@ -2528,7 +2528,7 @@ s32 Gfx_MapMsg_SelectionUpdate(u8 mapMsgIdx, s32* arg1) // 0x80036B5C
         case MapMsgCode_Select2:
         case MapMsgCode_Select3:
         case MapMsgCode_Select4:
-            g_MapMsg_Select.maxIdx_0 = 1;
+            g_MapMsg_Select.maxIdx_0  = 1;
             g_MapMsg_SelectCancelIdx3 = (mapMsgCode == 3) ? 2 : 1;
 
             if (mapMsgCode == MapMsgCode_Select4)
@@ -3164,9 +3164,9 @@ void GameState_InGame_Update() // 0x80038BD4
     }
     Demo_DemoRandSeedRestore();
 
-    D_800A9A0C = ((g_Gfx_ScreenFade & 7) == 5) && Fs_QueueDoThingWhenEmpty() != 0;
+    D_800A9A0C = ((g_Gfx_ScreenFade & 0x7) == 5) && Fs_QueueDoThingWhenEmpty() != 0;
 
-    if ((g_SysWork.field_22A0 & 1) == 0 && g_MapOverlayHeader.func_40 != NULL)
+    if (!(g_SysWork.field_22A0 & (1 << 0)) && g_MapOverlayHeader.func_40 != NULL)
     {
         g_MapOverlayHeader.func_40();
     }
@@ -3176,7 +3176,7 @@ void GameState_InGame_Update() // 0x80038BD4
     Demo_DemoRandSeedRestore();
     Demo_DemoRandSeedRestore();
 
-    if ((g_SysWork.field_22A0 & 1) == 0)
+    if (!(g_SysWork.field_22A0 & (1 << 0)))
     {
         func_80040014();
         vcMoveAndSetCamera(0, 0, 0, 0, 0, 0, 0, 0);
