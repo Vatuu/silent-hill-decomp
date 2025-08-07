@@ -150,4 +150,6 @@ s32 Math_MulFixed(s32 val0, s32 val1, s32 shift);
 s32 shRsin(s32 angle);
 s32 shRcos(s32 angle);
 
+MATRIX* shRotMatrixZ(s32, MATRIX*);
+
 #endif

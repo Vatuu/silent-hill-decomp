@@ -963,14 +963,14 @@ void Anim_Update3(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Anim
     model->anim_4.keyframeIdx0_8 = FP_FROM(newTime, Q12_SHIFT);
 }
 
-void func_80044F14(s32 mat, s16 z, s16 x, s16 y) // 0x80044F14
+void func_80044F14(GsCOORDINATE2* coord, s16 z, s16 x, s16 y) // 0x80044F14
 {
     *(s16*)0x1F800004 = z;
     *(s16*)0x1F800002 = y;
     *(s16*)0x1F800000 = x;
     
     func_80096E78((SVECTOR*)0x1F800000, (MATRIX*)0x1F800008);
-    MulMatrix(mat + 4, (MATRIX*)0x1F800008);
+    MulMatrix(&coord->coord, (MATRIX*)0x1F800008);
 }
 
 s8 func_80044F6C(s8* ptr, s32 arg1) // 0x80044F6C

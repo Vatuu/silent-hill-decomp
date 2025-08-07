@@ -887,7 +887,7 @@ typedef struct _SubCharPropertiesPlayer
     s8  unk_118[4];
     s32 flags_11C; /** `e_PlayerFlags` */
     s16 field_120;
-    s8  unk_122[2];
+    s16 field_122;
     s16 field_124;
     s16 field_126;
 } s_SubCharaPropertiesPlayer;
@@ -1007,8 +1007,8 @@ STATIC_ASSERT_SIZEOF(s_MainCharacter, 340);
 
 typedef struct _PlayerCombat
 {
-    s32 field_0;
-    s8  unk_4[11];
+    VECTOR3 field_0;
+    s8      unk_C[3];
     s8  field_F; // Current weapon selected, doesn't seem to be related to `e_InventoryItemId`.
     u8  currentWeaponAmmo_10;
     s8  totalWeaponAmmo_11;
