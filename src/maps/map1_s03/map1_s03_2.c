@@ -82,17 +82,17 @@ void Ai_LockerDeadBody_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* co
         chara->model_0.anim_4.time_4         = 0;
         chara->model_0.anim_4.keyframeIdx0_8 = 0;
         chara->model_0.state_2++;
-        chara->position_18.vy = 0;
+        chara->position_18.vy = FP_METER(0.0f);
     }
 
     if (!(g_SavegamePtr->eventFlags_168[3] & (1 << 9)))
     {
-        chara->model_0.anim_4.flags_2 &= ~2;
-        chara->field_E0_8 = 0;
+        chara->model_0.anim_4.flags_2 &= ~AnimFlag_Visible;
+        chara->field_E0_8              = 0;
         return;
     }
 
-    chara->model_0.anim_4.flags_2 |= 1 << 1;
+    chara->model_0.anim_4.flags_2 |= AnimFlag_Visible;
 
     if (!(g_SavegamePtr->eventFlags_168[3] & (1 << 10)))
     {
@@ -106,7 +106,7 @@ void Ai_LockerDeadBody_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* co
     else
     {
         chara->model_0.anim_4.animIdx_0      = 7;
-        chara->model_0.anim_4.time_4         = FP_TO(16, Q12_SHIFT);
+        chara->model_0.anim_4.time_4         = FP_TIME(16.0f);
         chara->model_0.anim_4.keyframeIdx0_8 = 16;
         chara->field_E0_8                    = 3;
     }

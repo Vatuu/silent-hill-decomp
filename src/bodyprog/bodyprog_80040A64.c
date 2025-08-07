@@ -772,7 +772,7 @@ void Anim_Update0(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Anim
 
     // Update skeleton.
     alpha = newTime & 0xFFF;
-    if ((model->anim_4.flags_2 & AnimFlag_Unk1) || (model->anim_4.flags_2 & AnimFlag_Unk2))
+    if ((model->anim_4.flags_2 & AnimFlag_Unk1) || (model->anim_4.flags_2 & AnimFlag_Visible))
     {
         func_800446D8(skel, coord, newKeyframeIdx0, newKeyframeIdx0 + 1, alpha);
     }
@@ -837,7 +837,7 @@ void Anim_Update1(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Anim
 
     // Update skeleton.
     alpha = newTime & 0xFFF;
-    if ((model->anim_4.flags_2 & AnimFlag_Unk1) || (model->anim_4.flags_2 & AnimFlag_Unk2))
+    if ((model->anim_4.flags_2 & AnimFlag_Unk1) || (model->anim_4.flags_2 & AnimFlag_Visible))
     {
         func_800446D8(skel, coord, newKeyframeIdx0, newKeyframeIdx1, alpha);
     }
@@ -892,7 +892,7 @@ void Anim_Update2(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Anim
     }
 
     // Update skeleton.
-    if ((model->anim_4.flags_2 & AnimFlag_Unk1) || (model->anim_4.flags_2 & AnimFlag_Unk2))
+    if ((model->anim_4.flags_2 & AnimFlag_Unk1) || (model->anim_4.flags_2 & AnimFlag_Visible))
     {
         func_800446D8(skel, coord, newKeyframeIdx0, newKeyframeIdx1, alpha);
     }
@@ -954,7 +954,7 @@ void Anim_Update3(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Anim
     model->anim_4.time_4 = newTime;
 
     // Update skeleton.
-    if ((model->anim_4.flags_2 & AnimFlag_Unk1) || (model->anim_4.flags_2 & AnimFlag_Unk2))
+    if ((model->anim_4.flags_2 & AnimFlag_Unk1) || (model->anim_4.flags_2 & AnimFlag_Visible))
     {
         func_800446D8(skel, coord, keyframeIdx0, keyframeIdx1, alpha);
     }

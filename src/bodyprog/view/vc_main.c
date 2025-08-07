@@ -286,25 +286,25 @@ s32 vcExecCamera() // 0x80080FBC
     vcSetDataToVwSystem(&vcWork, cur_cam_mv_type);
 
     vcWork.through_door_activate_init_f_C = 0;
-    vcWork.flags_8 &= ~(VC_WARP_CAM_F | VC_WARP_WATCH_F | VC_WARP_CAM_TGT_F);
+    vcWork.flags_8                       &= ~(VC_WARP_CAM_F | VC_WARP_WATCH_F | VC_WARP_CAM_TGT_F);
 
     return vcRetSmoothCamMvF(&sv_old_cam_pos, &vcWork.cam_pos_50, &sv_old_cam_mat_ang, &vcWork.cam_mat_ang_8E);
 }
 
 void vcSetAllNpcDeadTimer() // 0x8008123C
 {
-    #define DEAD_TIMER_MAX 10
+    #define DEAD_TIME_MAX 10.0f
 
     s_SubCharacter* chara;
 
     for (chara = &g_SysWork.npcs_1A0[0]; chara < &g_SysWork.npcs_1A0[NPC_COUNT_MAX]; chara++)
     {
-        if (chara->model_0.charaId_0 == 0)
+        if (chara->model_0.charaId_0 == Chara_None)
         {
             continue;
         }
 
-        if (chara->health_B0 <= 0)
+        if (chara->health_B0 <= FP_FLOAT_TO(0.0f, Q12_SHIFT))
         {
             chara->dead_timer_C4 += g_DeltaTime0;
         }
@@ -313,9 +313,9 @@ void vcSetAllNpcDeadTimer() // 0x8008123C
             chara->dead_timer_C4 = 0;
         }
 
-        if (chara->dead_timer_C4 > FP_TO(DEAD_TIMER_MAX, Q12_SHIFT))
+        if (chara->dead_timer_C4 > FP_TIME(DEAD_TIME_MAX))
         {
-            chara->dead_timer_C4 = FP_TO(DEAD_TIMER_MAX, Q12_SHIFT);
+            chara->dead_timer_C4 = FP_TIME(DEAD_TIME_MAX);
         }
     }
 }

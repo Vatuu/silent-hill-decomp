@@ -272,9 +272,9 @@ typedef enum _ColorId
 
 typedef enum _AnimFlags
 {
-    AnimFlag_None = 0,
-    AnimFlag_Unk1 = 1 << 0,
-    AnimFlag_Unk2 = 1 << 1
+    AnimFlag_None    = 0,
+    AnimFlag_Unk1    = 1 << 0, // Movement unlocked?
+    AnimFlag_Visible = 1 << 1
 } e_AnimFlags;
 
 /** @brief State IDs used by the main game loop. The values are used as indices into the 0x800A977C function array. */
@@ -838,7 +838,7 @@ typedef struct _ModelAnimData
 
     u8          animIdx_0;
     u8          maybeSomeState_1; // State says if `animTime_4` is anim time or a func ptr? That field could be a union.
-    u16         flags_2;          /** `e_AnimFlags` */ // Bit 1: movement unlockled(?), bit 2: visible.
+    u16         flags_2;          /** `e_AnimFlags` */
     q19_12      time_4;           /** Time along keyframe timeline. */ 
     s16         keyframeIdx0_8;
     s16         keyframeIdx1_A;
@@ -1009,11 +1009,11 @@ typedef struct _PlayerCombat
 {
     VECTOR3 field_0;
     s8      unk_C[3];
-    s8  field_F; // Current weapon selected, doesn't seem to be related to `e_InventoryItemId`.
-    u8  currentWeaponAmmo_10;
-    s8  totalWeaponAmmo_11;
-    s8  field_12;
-    u8  isAiming_13;
+    s8      field_F; // Current weapon selected, doesn't seem to be related to `e_InventoryItemId`.
+    u8      currentWeaponAmmo_10;
+    s8      totalWeaponAmmo_11;
+    s8      field_12;
+    u8      isAiming_13;
 } s_PlayerCombat;
 STATIC_ASSERT_SIZEOF(s_PlayerCombat, 20);
 

@@ -34,7 +34,6 @@
 // ENUMS
 // ======
 
-// 503 samples exist. Mix of instruments and SFX?
 typedef enum _Sfx
 {
     Sfx_Base      = 1280,
@@ -768,7 +767,7 @@ typedef struct
     s_800A992C_sub* animFile1_8;
     s32             animFileSize1_C;
     s32             animFileSize2_10;
-    GsCOORDINATE2*  npcCords_14;
+    GsCOORDINATE2*  npcCoords_14;
 } s_800A992C;
 STATIC_ASSERT_SIZEOF(s_800A992C, 24);
 
@@ -2512,6 +2511,9 @@ s_80043F2C* func_80043F2C(s_80043F2C* arg0, s_80043F2C* arg1);
 
 void func_80044044(s_80044044* arg0, s32 arg1, s32 arg2);
 
+/** Loads anim file? */
+func_800445A4(s_800A992C_sub*, GsCOORDINATE2*);
+
 s32 func_80044918(s_ModelAnim* anim);
 
 void func_800446D8(s_Skeleton*, GsCOORDINATE2*, s32, s32, s32);
@@ -3062,7 +3064,7 @@ s16 func_8005BF38(s16 arg0);
 /** `arg0` type assumed. */
 void func_800625F4(VECTOR3* arg0, s16 arg1, s32 arg2, s32 arg3);
 
-void func_8006342C(s32, s16, s16, GsCOORDINATE2*);
+void func_8006342C(s32 invItemId, s16, s16, GsCOORDINATE2*);
 
 void func_8005CB20(s_SubCharacter*, void*, s16, s16);
 
@@ -3538,6 +3540,8 @@ void func_80043740();
 /** Resets player info in the savegame buffer (inventory, health, playtime). */
 void Game_SavegameResetPlayer();
 
+void func_8007E5AC();
+
 /** Loads player animations for a given map. Maybe for cutscenes? */
 void GameFs_PlayerMapAnimLoad(s32 mapIdx);
 
@@ -3558,7 +3562,7 @@ void func_8007C0D8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
 
 void func_8007C800(s_SubCharacter* chara, s_MainCharacterExtra* extra);
 
-void func_8007D090(s_SubCharacter*, s_MainCharacterExtra*, GsCOORDINATE2*);
+void func_8007D090(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coord);
 
 void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord);
 

@@ -686,7 +686,7 @@ void func_800DEFE8(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x800DEFE8
 {
     s32 yPos;
 
-    if (chara->model_0.anim_4.flags_2 & AnimFlag_Unk2)
+    if (chara->model_0.anim_4.flags_2 & AnimFlag_Visible)
     {
         func_800DEF50();
         return;

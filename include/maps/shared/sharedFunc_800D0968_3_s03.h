@@ -2,7 +2,7 @@ void sharedFunc_800D0968_3_s03(s_SubCharacter* chara, GsCOORDINATE2* coords)
 {
     s32 posY;
 
-    if (chara->model_0.anim_4.flags_2 & 2)
+    if (chara->model_0.anim_4.flags_2 & AnimFlag_Visible)
     {
         sharedFunc_800D0828_3_s03(chara, coords);
         return;

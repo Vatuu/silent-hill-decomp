@@ -1456,7 +1456,7 @@ void Game_PlayerInit() // 0x80035178
     func_8003C048();
     func_8003C110();
     func_8003C0C0();
-    func_800445A4(FS_BUFFER_0, g_SysWork.playerBoneCoords_890);
+    func_800445A4(FS_BUFFER_0, g_SysWork.playerBoneCoords_890); // Load player anim file?
     func_8003D938();
 
     g_SysWork.field_229C = NO_VALUE;
@@ -1571,7 +1571,7 @@ void func_80035338(s32 idx, e_ShCharacterId charaId, u32 arg2, s32 arg3) // 0x80
         }
     }
 
-    ptr->npcCords_14      = &g_SysWork.npcCoords_FC0[0];
+    ptr->npcCoords_14     = &g_SysWork.npcCoords_FC0[0];
     ptr->charaId1_1       = 0;
     ptr->animFile1_8      = 0;
     ptr->animFileSize2_10 = 0;
@@ -1618,7 +1618,7 @@ void func_80035560(s32 idx0, e_ShCharacterId charaId, s_800A992C_sub* animFile, 
         else if (idx0 >= 2)
         {
             idx2      = D_800A992C[idx0 - 1].animFile1_8->field_6;
-            coordCpy  = D_800A992C[idx0 - 1].npcCords_14;
+            coordCpy  = D_800A992C[idx0 - 1].npcCoords_14;
             coordCpy += idx2 + 1;
 
             // Check for end of `g_SysWork.npcCoords_FC0` array.
@@ -1630,9 +1630,9 @@ void func_80035560(s32 idx0, e_ShCharacterId charaId, s_800A992C_sub* animFile, 
     }
 
     ptr->charaId1_1       = charaId;
-    ptr->animFile1_8   = animFile;
+    ptr->animFile1_8      = animFile;
     ptr->animFileSize2_10 = Fs_GetFileSectorAlignedSize(g_Chara_FileInfo[charaId].animFileIdx);
-    ptr->npcCords_14      = coordCpy;
+    ptr->npcCoords_14     = coordCpy;
 
     func_800445A4(animFile, coordCpy);
 
@@ -1643,24 +1643,24 @@ void func_8003569C() // 0x8003569C
 {
     s32             i;
     GsCOORDINATE2*  coord;
-    s_800A992C_sub* ptr;
+    s_800A992C_sub* animFile;
 
     for (i = 1; i < 3; i++)
     {
         if ((s8)g_MapOverlayHeader.charaGroupIds_248[i] != 0)
         {
-            coord  = D_800A992C[i].npcCords_14;
-            ptr    = D_800A992C[i + 1].animFile1_8;
-            coord += D_800A992C[i].animFile1_8->field_6 + 1;
+            coord    = D_800A992C[i].npcCoords_14;
+            animFile = D_800A992C[i + 1].animFile1_8;
+            coord   += D_800A992C[i].animFile1_8->field_6 + 1;
 
             // Check for end of `g_SysWork.npcCoords_FC0` array.
-            if ((&coord[ptr->field_6] + 1) >= &g_SysWork.field_2280)
+            if ((&coord[animFile->field_6] + 1) >= &g_SysWork.field_2280)
             {
                 coord = g_MapOverlayHeader.field_28;
             }
 
-            D_800A992C[i + 1].npcCords_14 = coord;
-            func_800445A4(ptr, coord);
+            D_800A992C[i + 1].npcCoords_14 = coord;
+            func_800445A4(animFile, coord);
         }
     }
 }
@@ -1887,10 +1887,10 @@ void Gfx_LoadingScreen_PlayerRun() // 0x80035BE0
         func_8003EB54();
         func_8003EEDC(0, 0);
 
-        model->anim_4.flags_2                     |= AnimFlag_Unk2;
+        model->anim_4.flags_2                     |= AnimFlag_Visible;
         g_SysWork.player_4C.extra_128.field_18     = 0;
-        model->anim_4.flags_2                     |= AnimFlag_Unk1 | AnimFlag_Unk2;
-        model->anim_4.time_4                       = FP_FLOAT_TO(26.0f, Q12_SHIFT);
+        model->anim_4.flags_2                     |= AnimFlag_Unk1 | AnimFlag_Visible;
+        model->anim_4.time_4                       = FP_TIME(26.0f);
         g_SysWork.player_4C.chara_0.position_18.vy = FP_METER(0.2f);
 
         D_800A9990 = model->anim_4.animIdx_0;
@@ -3199,7 +3199,7 @@ void GameState_InGame_Update() // 0x80038BD4
         }
 
         Demo_DemoRandSeedRestore();
-        if (player->model_0.anim_4.flags_2 & (1 << 1))
+        if (player->model_0.anim_4.flags_2 & AnimFlag_Visible)
         {
             func_8003DA9C(1, g_SysWork.playerBoneCoords_890, 1, g_SysWork.player_4C.chara_0.timer_C6, 0);
             func_8008A384(&g_SysWork.player_4C.chara_0);
