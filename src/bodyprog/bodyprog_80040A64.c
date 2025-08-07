@@ -675,7 +675,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80044420); // 0x
 // ========================================
 
 // Could be used to load the player model or to execute animations.
-// Removing the call from `Game_PlayerHeroInit` causes Harry's model to not appear.
+// Removing the call from `Game_PlayerInit` causes the player model to not appear.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800445A4); // 0x800445A4
 
 // Anim func.

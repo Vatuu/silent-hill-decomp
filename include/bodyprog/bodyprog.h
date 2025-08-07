@@ -37,14 +37,14 @@
 // 503 samples exist. Mix of instruments and SFX?
 typedef enum _Sfx
 {
-    Sfx_None      = 1280,
+    Sfx_Base      = 1280,
 
-    Sfx_StartGame = 1281, // `FIRST.VAB`
+    Sfx_StartGame = Sfx_Base + 1, // `FIRST.VAB`
 
-    Sfx_Denied    = 1304,
-    Sfx_Back      = 1305,
-    Sfx_Cancel    = 1306,
-    Sfx_Confirm   = 1307,
+    Sfx_Denied    = Sfx_Base + 24,
+    Sfx_Back      = Sfx_Base + 25,
+    Sfx_Cancel    = Sfx_Base + 26,
+    Sfx_Confirm   = Sfx_Base + 27, // TODO: Continue this pattern.
 
     Sfx_Unk1309   = 1309,
     Sfx_Unk1310   = 1310,
@@ -264,12 +264,13 @@ typedef struct
     s32 field_14;
 } s_func_8003FEC0;
 
+// Likely `D_800C1158`'s struct.
 typedef struct
 {
     s_80041CEC* field_0;
     s32         field_4;
     s32         queueIdx_8; // Passed to `func_80041ADC`, thus the name.
-} s_func_80041CB4; // Likely the struct of `D_800C1158`.
+} s_func_80041CB4;
 
 typedef struct
 {
@@ -760,11 +761,11 @@ typedef struct
 
 typedef struct
 {
-    s8              charaId1_0; // `e_ShCharacterId`.
-    s8              charaId2_1; // `e_ShCharacterId`.
+    s8              charaId0_0; /** `e_ShCharacterId`. */
+    s8              charaId1_1; /** `e_ShCharacterId`. */
     s8              unk_2[2];
-    u32             animFilePtr1_4; // Pointer to animation data.
-    s_800A992C_sub* animFilePtr2_8; // Pointer to animation data.
+    u32             animFile0_4; // `s_800A992C_sub*`?
+    s_800A992C_sub* animFile1_8;
     s32             animFileSize1_C;
     s32             animFileSize2_10;
     GsCOORDINATE2*  NPCCords_14;
@@ -994,19 +995,20 @@ typedef struct
     s_800C1450_0_4* entries_4[10];
 } s_800C1450_0;
 
-// Maybe `VECTOR3` array?
+// Maybe `VECTOR3` array? This seems to hold texture names.
 typedef struct
 {
     s8 unk0[24];
-} s_800C1450_58; // This seems to hold texture names.
+} s_800C1450_58;
 
+// Related to textures.
 typedef struct
 {
     s_800C1450_0  field_0;
     s_800C1450_0  field_2C;
     s_800C1450_58 field_58[8];
     s_800C1450_58 field_118[2];
-} s_800C1450; // Related to textures.
+} s_800C1450;
 
 typedef struct
 {
@@ -1365,7 +1367,9 @@ typedef struct _MapOverlayHeader
     u8                field_15;
     s8                field_16;
     s8                field_17;
-    void              (**loadingScreenFuncs_18)(); // 0 = Nothing, 1 = Harry running, 2 = Background image (Not possible to see as the image is not load), 3 = Background image + Stage number (Debug leftover? Not all overlays has the string supposed to be shown).
+    void              (**loadingScreenFuncs_18)(); // Player run: 1.
+                                                   // Background image: 2 (impossible to see as image is unloaded).
+                                                   // Background image + stage number: 3. Debug leftover? Not all overlays have the required string.
     s_AreaLoadParams* mapAreaLoadParams_1C;
     void              (**mapEventFuncs_20)(); /** Points to array of event functions. */
     s8                unk_24[4];
@@ -1576,8 +1580,10 @@ extern s32 D_800A9A24;
 /** Z. */
 extern s32 D_800A9A28;
 
-/** Related to character animation allocation handling. */
-extern s8 D_800A98FC[48]; // Size can also be 45/0x2D as last 3 bytes are empty.
+/** Related to character animation allocation handling.
+ * Size could also be 45/0x2D as last 3 bytes are empty.
+ */
+extern s8 D_800A98FC[48];
 
 /** Related to main menu fog randomization. */
 extern s32 D_800A9EAC;
@@ -1605,10 +1611,10 @@ extern u16 D_800A9804[];
 extern u16 D_800A98AC[];
 
 /** `D_800A992C` and `D_800A9944` are likely the same variable or they are inside a struct.
- * `D_800A992C` has declared values that seems related to the player while `D_800A9944`
- * dynamically allocate data for other entities.
+ * `D_800A992C` has values that seem related to the player, while `D_800A9944`
+ * dynamically allocates data for other characters.
  *
- * `D_800A992C` has declared in the variable `field_4` and `field_8` the value of `FS_BUFFER_0`.
+ * `D_800A992C`'s `field_4` and `field_8` are set to `FS_BUFFER_0`.
  */
 extern s_800A992C D_800A992C[];
 
@@ -1892,19 +1898,19 @@ extern s32 g_Gfx_ScreenFade; // 0x800BCD0C
 
 extern s16 D_800BCD28;
 
-/** @brief Test if Demo load should be reinitialized.
- * This is used exclusively in `GameFs_MapStartUp` with
- * the purpose of testing if demo load should be reinitialized
- * as file loading may have failed.
+/** @brief Test if demo loading should be reinitialized.
+ * This is used exclusively in `GameFs_MapStartup` with
+ * the purpose of testing if demo loading should be reinitialized
+ * if file load has failed.
  *
- * It makes 5 attemps and if the load fails then it restarts
+ * It makes up to 5 attemps. If the load fails, it restarts
  * the entire process by restarting the timer used to check if a demo
  * should be triggered.
  *
- * @note It's a rather strange decision to make this a global when it's
- * only ever used on that function.
+ * @note Strange decision to make this a global when it's
+ * only ever used in that function.
  */
-extern s32 g_DemoLoadAttemps;
+extern s32 g_DemoLoadAttempCount;
 
 extern s8 D_800BCD50[8];
 
@@ -2329,6 +2335,11 @@ s32 func_8003BD2C();
 
 void func_8003C1AC(s_800BCE18_0_CC* arg0);
 
+/** TODO: Redo function with new context.
+ * Used in `GameFs_MapStartup`, where the args
+ * passed are pointers to `g_MapOverlayHeader` (`arg0`), the player's
+ * aX position (`arg1`), and the player's Z position (`arg2`).
+ */
 void func_8003C220(s_sub_800BCE18_0** arg0, s32 arg1, s32 arg2);
 
 /** Unknown bodyprog func. Called by `Fs_QueueDoThingWhenEmpty`. */
@@ -3161,9 +3172,9 @@ void func_800348C0();
 void GameState_LoadScreen_Update();
 
 /** Handles `g_GameWork.gameStateStep_598[0]`.
- * Used to handle map loading and room change.
+ * Used to handle map loading and room changes.
  */
-void GameFs_MapStartUp(); // 0x80034964
+void GameFs_MapStartup(); // 0x80034964
 
 /** Draws the loading screen with Harry running. */
 void Gfx_LoadingScreenDraw(); // 0x80034E58
@@ -3172,23 +3183,31 @@ void func_80034EC8(); // 0x80034EC8
 
 void func_80034F18(); // 0x80034F18
 
+/** Crucial for getting in-game.
+ * Removing it breaks the camera, inventory's 3D elements, effects
+ * (lighting, fog, lens flare, etc.), NPCs don't spawn, and
+ * doing any action unrelated to aiming a weapon or interacting
+ * with the environment crashes the game.
+ */
 void Game_InGameInit(); // 0x80034FB8
 
 void Game_SavegameInitialize(s8 overlayId, s32 difficulty);
 
-void Game_PlayerHeroInit(); // 0x80035178
+void Game_PlayerInit(); // 0x80035178
 
 /** Loads a map file into `g_OvlDynamic`. */
 void GameFs_MapLoad(s32 mapIdx);
 
 s32 func_8003528C(s32 idx0, s32 idx1);
 
+/** Searches for the index of the character animation data in `D_800A992C`. */
 s32 func_800352F8(s32 arg0);
 
-void func_80035338(s32 arg0, e_ShCharacterId arg1, u32 arg2, s32 arg3);
+/** Either allocates or determines where to allocate animation data. */
+void func_80035338(s32 arg0, e_ShCharacterId charaId, u32 arg2, s32 arg3);
 
 /** Called by `Fs_QueuePostLoadAnm`. */
-void func_80035560(s32 idx0, e_ShCharacterId charaId, s_800A992C_sub* animFilePtr, GsCOORDINATE2* coord); // 0x80035560
+void func_80035560(s32 idx0, e_ShCharacterId charaId, s_800A992C_sub* animFile, GsCOORDINATE2* coord); // 0x80035560
 
 void func_8003569C();
 
@@ -3210,16 +3229,19 @@ s32 func_80035AB0(s32 arg0);
 
 void func_80035AC8(s32 idx);
 
+/** Related to NPC and player movement? */
 void func_80035B04(VECTOR3* pos, SVECTOR* rot, GsCOORDINATE2* coord);
 
 void func_80035B58(s32 arg0);
 
 void func_80035B98();
 
+/** Unused and broken.
+ * Intended to draw a background image when a loading screen with the string "STAGE X-X" appears.
+ */
 void func_80035BBC();
 
-/** Player camera func. */
-void Gfx_LoadingScreen_HarryRun();
+void Gfx_LoadingScreen_PlayerRun();
 
 void func_80035DB4(s32);
 
@@ -3384,13 +3406,15 @@ void func_8003BED0();
 
 s32 func_8003BF60(s32 x, s32 z);
 
-/** Used in map loading.
+/** Used in map loading. Something related to screen.
  * Removing it causes the game to get stuck at the loading screen.
  */
 void func_8003C048();
 
+/** Something related to player model loading. */
 void func_8003C0C0();
 
+/** Allocates player model? */
 void func_8003C110();
 
 void func_8003C1AC(s_800BCE18_0_CC* arg0);
@@ -3417,10 +3441,12 @@ void func_8003CC7C(s_800BCE18_2BEC_0* arg0, MATRIX* arg1, MATRIX* arg2);
 
 void func_8003D354(s32* arg0, s32 arg1);
 
+/** Texture UV setup for NPCs. */
 void func_8003D3BC(s_FsImageDesc* img, s32 arg1, s32 arg2);
 
 s32 func_8003D7D4(u32 arg0, s32 arg1, void* arg2, s_FsImageDesc* img);
 
+/** Something related to animations. */
 void func_8003D938();
 
 void func_8003D95C();

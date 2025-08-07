@@ -58,7 +58,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
         
         if (playIntroFmv != 0)
         {
-            g_SysWork.flags_2298 = 1 << 5; // This flag disables player control.
+            g_SysWork.flags_2298 = SysWorkProcessFlag_BootDemo;
         }
         else
         {
@@ -84,7 +84,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
         case MenuState_Main:
             if (playIntroFmv != 0)
             {
-                GameFs_MapStartUp();
+                GameFs_MapStartup();
 
                 if (g_GameWork.gameStateStep_598[0] == 1 && g_SysWork.timer_20 == 0)
                 {
@@ -187,8 +187,8 @@ void GameState_MainMenu_Update() // 0x8003AB28
                             GameFs_SaveLoadBinLoad();
                         }
 
-                        Game_PlayerHeroInit();
-                        g_SysWork.flags_2298 = 1 << 4;
+                        Game_PlayerInit();
+                        g_SysWork.flags_2298 = SysWorkProcessFlag_Continue;
                         GameFs_MapLoad(g_SavegamePtr->mapOverlayId_A4);
                         break;
 
@@ -218,7 +218,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
         case MenuState_DifficultySelector:
             if (playIntroFmv != 0)
             {
-                GameFs_MapStartUp();
+                GameFs_MapStartup();
 
                 if (g_GameWork.gameStateStep_598[0] == 1 && g_SysWork.timer_20 == 0)
                 {
@@ -274,9 +274,9 @@ void GameState_MainMenu_Update() // 0x8003AB28
             if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
             {
                 Game_SavegameInitialize(0, g_MainMenu_NewGameSelectedDifficultyIdx - 1);
-                Game_PlayerHeroInit();
+                Game_PlayerInit();
 
-                g_SysWork.flags_2298 = 1 << 2;
+                g_SysWork.flags_2298 = SysWorkProcessFlag_NewGame;
 
                 GameFs_MapLoad(MapOverlayId_MAP0_S00);
                 GameFs_StreamBinLoad();
@@ -845,11 +845,6 @@ void func_8003C1AC(s_800BCE18_0_CC* arg0) // 0x8003C1AC
     arg0->field_C = sp10;
 }
 
-/** TODO: Remake the function with new context.
- * This function is used in `GameFs_MapStartUp`, there the values
- * passed are the pointer to `g_MapOverlayHeader` (arg0), the position
- * at X of the player (arg1) and the position at Y of the player (arg2).
- */
 void func_8003C220(s_sub_800BCE18_0** arg0, s32 arg1, s32 arg2) // 0x8003C220
 {
     s32               var_a2;
@@ -1519,7 +1514,6 @@ void func_8003D354(s32* arg0, s32 arg1) // 0x8003D354
     *arg0 += (fileSize + 3) & ~0x3;
 }
 
-/** Fixes texture UV for NPCs. */
 void func_8003D3BC(s_FsImageDesc* img, s32 arg1, s32 arg2) // 0x8003D3BC
 {
     s16 clutX;

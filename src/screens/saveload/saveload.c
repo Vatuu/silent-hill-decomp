@@ -2057,9 +2057,9 @@ void Savegame_ContinueLogic() // 0x801E6F38
             // Backup current savegame? Does anything ever restore from this?
             g_GameWork.savegame_90 = g_GameWork.savegame_30C;
 
-            Game_PlayerHeroInit();
+            Game_PlayerInit();
             
-            g_SysWork.flags_2298 = 8;
+            g_SysWork.flags_2298 = SysWorkProcessFlag_LoadSave;
 
             GameFs_MapLoad(g_SavegamePtr->mapOverlayId_A4);
 

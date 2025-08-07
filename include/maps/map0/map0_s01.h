@@ -98,7 +98,7 @@ extern s_800BCE18_2BEC_0 D_800E2570[];
 /** `arg0` is a struct pointer, might be `s_SubCharacter`. */
 void func_800D2364(s32 arg0);
 
-s32 func_800D7440(VECTOR* vc0, VECTOR* vec1, s_SubCharacter* chara);
+s32 func_800D7440(VECTOR* vec0, VECTOR* vec1, s_SubCharacter* chara);
 
 void func_800D76A0(s_SubCharacter* chara);
 

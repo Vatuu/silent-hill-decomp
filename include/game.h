@@ -199,6 +199,18 @@ typedef enum _Current2dMapIdx
     Current2dMap_AltHospital3F  = 23
 } e_Current2dMapIdx;
 
+// TODO: Pick better name.
+typedef enum _SysWorkProcessFlags
+{
+    SysWorkProcessFlag_None              = 0,
+    SysWorkProcessFlag_RoomTransition    = 1 << 0,
+    SysWorkProcessFlag_OverlayTransition = 1 << 1,
+    SysWorkProcessFlag_NewGame           = 1 << 2,
+    SysWorkProcessFlag_LoadSave          = 1 << 3,
+    SysWorkProcessFlag_Continue          = 1 << 4,
+    SysWorkProcessFlag_BootDemo          = 1 << 5
+} e_SysWorkProcessFlags;
+
 typedef enum _ControllerFlags
 {
     ControllerFlag_Select       = 1 << 0,
@@ -1116,7 +1128,7 @@ typedef struct _SysWork
     s32             field_228C;
     s32             field_2290;
     s8              unk_2294[4];
-    s32             flags_2298; // Something related to map loading and the player state. 0 = Nothing, 1 = Transition between rooms, 2 = Transition between overlays, 4 = New game, 8 = Load Save, 16 = Continue, 32 = Demo Boot.
+    s32             flags_2298; /** `e_SysWorkProcessFlags` */
     s32             field_229C;
     s32             field_22A0;
     s32             flags_22A4;
