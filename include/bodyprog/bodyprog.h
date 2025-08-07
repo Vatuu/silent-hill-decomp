@@ -34,10 +34,12 @@
 // ENUMS
 // ======
 
+// 503 samples exist. Mix of instruments and SFX?
 typedef enum _Sfx
 {
     Sfx_None      = 1280,
-    Sfx_StartGame = 1281,
+
+    Sfx_StartGame = 1281, // `FIRST.VAB`
 
     Sfx_Denied    = 1304,
     Sfx_Back      = 1305,

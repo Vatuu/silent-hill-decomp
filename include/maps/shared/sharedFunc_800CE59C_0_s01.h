@@ -1,19 +1,4 @@
 
-typedef enum
-{
-    ParticleState_Spawn  = 0,
-    ParticleState_Active = 1,
-    ParticleState_Rest   = 2  
-} e_ParticleState;
-
-typedef enum
-{
-    SnowType_Light      = 0,
-    SnowType_Heavy      = 1,
-    SnowType_LightWindy = 2,
-    SnowType_HeavyWindy = 3
-} e_SnowType;
-
 // TODO: Refine comments and names, it's still kind of unclear.
 /** @brief Spawns snow particles. Called once when the map overlay is loaded.
  *

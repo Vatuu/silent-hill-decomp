@@ -1,6 +1,36 @@
 #ifndef _MAPS_SHARED_H
 #define _MAPS_SHARED_H
 
+typedef enum
+{
+    ParticleState_Spawn  = 0,
+    ParticleState_Active = 1,
+    ParticleState_Rest   = 2  
+} e_ParticleState;
+
+typedef enum
+{
+    ParticleType_Snow = 0,
+    ParticleType_Rain = 2
+} e_ParticleType;
+
+typedef enum
+{
+    SnowType_Light      = 0,
+    SnowType_Heavy      = 1,
+    SnowType_LightWindy = 2,
+    SnowType_HeavyWindy = 3
+} e_SnowType;
+
+typedef struct
+{
+    VECTOR3     position0_0;  // Snow: position, Rain: streak start (bottom)
+    VECTOR3     position1_C;  // Snow: unused, Rain: streak end (top)
+    SVECTOR3    movement_18;  // Snow: random accumulation, Rain: Y accumulation (affects streak length).
+    u8          stateStep_1E; /** `e_ParticleState` */
+    s8          type_1F;      /** `e_ParticleType` */
+} s_Particle;
+
 typedef struct
 {
     VECTOR3 field_0;
@@ -12,15 +42,6 @@ typedef struct
     s8      field_1F;
     char    unk_20[16];
 } s_sharedFunc_800CEFD0_1_s02;
-
-typedef struct
-{
-    VECTOR3     position0_0;  // Snow: position, Rain: streak start (bottom)
-    VECTOR3     position1_C;  // Snow: unused, Rain: streak end (top)
-    SVECTOR3    movement_18;  // Snow: random accumulation, Rain: Y accumulation (affects streak length)
-    u8          stateStep_1E; // Blank: 0, Fall: 1, Rest on ground (snowflake or rain splash): 2+
-    s8          type_1F;      // Snow: 0, Rain: 2
-} s_Particle;
 
 typedef struct
 {

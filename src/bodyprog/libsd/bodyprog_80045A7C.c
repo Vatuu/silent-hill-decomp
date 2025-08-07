@@ -32,7 +32,7 @@ void Sd_EngineCmd(u32 cmd) // 0x80045A7C
             func_80046A24(cmd);
             return;
 
-        // Play SFX. Range [1280, 1791].
+        // Play SFX. Range [1280, 1791]. 511 possible samples, 503 exist.
         case 5:
         case 6:
             Sd_PlaySfx(cmd, 0, 0);

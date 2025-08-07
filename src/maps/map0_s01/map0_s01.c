@@ -315,7 +315,49 @@ INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D71F0);
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D72E8);
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D7440);
+s32 func_800D7440(VECTOR* vec0, VECTOR* vec1, s_SubCharacter* chara) // 0x800D7440
+{
+    s32     temp_s2;
+    s32     posY;
+    s32     result;
+    s32     cond;
+    VECTOR* vecCpy;
+
+    vecCpy = vec0;
+
+    func_800D81D0(chara);
+    func_800D8714(chara, chara->moveSpeed_38, chara->headingAngle_3C);
+    func_800D87FC(chara);
+
+    result = func_80069B24(vecCpy, vec1, chara);
+
+    posY    = chara->position_18.vy;
+    temp_s2 = func_80080884(chara->position_18.vx + vecCpy->vx,
+                            chara->position_18.vz + vecCpy->vz);
+
+    if (sharedFunc_800D4A80_0_s01(chara) != 4)
+    {
+        if (vec1->vy > 0 && temp_s2 < (posY - FP_METER(0.5f)))
+        {
+            vecCpy->vx = 0;
+            vecCpy->vz = 0;
+        }
+    }
+    else if (temp_s2 < posY)
+    {
+        vecCpy->vx = 0;
+        vecCpy->vz = 0;
+    }
+
+    if ((FP_FROM(vec1->vx, Q4_SHIFT) != FP_FROM(vecCpy->vx, Q4_SHIFT)) ||
+        (FP_FROM(vec1->vz, Q4_SHIFT) != FP_FROM(vecCpy->vz, Q4_SHIFT)))
+    {
+        result = 1;
+    }
+
+    func_800D8244(chara);
+    return result;
+}
 
 #include "maps/shared/sharedFunc_800D7560_0_s01.h" // 0x800D7560
 
