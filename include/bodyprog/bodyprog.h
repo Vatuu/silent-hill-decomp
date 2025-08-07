@@ -1834,6 +1834,12 @@ extern u8 D_800AFD05;
 
 extern s32 (*D_800AFD08[])(s_SysWork_2514* arg0, s32 arg1, s_8002AC04* ptr, u32* arg3); // Function pointer array.
 
+extern s32 D_800AFD3C;
+
+extern s32 D_800AFD44;
+
+extern s32 D_800AFD60;
+
 extern s32 D_800AFD9C;
 
 extern s32 D_800AFDEC;
@@ -2836,7 +2842,7 @@ void func_8008D470(s16 arg0, SVECTOR* rot, VECTOR3* pos, s32 arg3);
 
 void func_8008D5A0(VECTOR3*, s16);
 
-s32 func_8008D8C0(s16, s32, s32);
+s32 func_8008D8C0(s16 x0, s32 x1, s32 x2);
 
 void func_8008D990(s32, s32, VECTOR3*, s32, s32);
 

@@ -2510,7 +2510,20 @@ s32 func_8008D850() // 0x8008D850
     return (unk.field_0 & 0x7FFF) == 0x7FFF;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008D8C0); // 0x8008D8C0
+s32 func_8008D8C0(s16 x0, s32 x1, s32 x2) // 0x8008D8C0
+{
+    s32 temp0;
+    s32 temp1;
+    s32 res;
+
+    temp0 = vwOresenHokan(&D_800AFD3C, 2, x0, 0, FP_FLOAT_TO(16.0f, Q8_SHIFT));
+    temp1 = vwOresenHokan(&D_800AFD44, 7, x1, FP_FLOAT_TO(0.8f, Q8_SHIFT), FP_FLOAT_TO(13.0f, Q8_SHIFT));
+    res   = FP_MULTIPLY(vwOresenHokan(&D_800AFD60, 7, x2, FP_FLOAT_TO(3.335f, Q8_SHIFT), FP_FLOAT_TO(7.425f, Q8_SHIFT)), // Yucky floats, maybe these aren't distances?
+                        FP_MULTIPLY(temp0, temp1, Q12_SHIFT),
+                        Q12_SHIFT);
+
+    return (res > FP_FLOAT_TO(24.0f, Q8_SHIFT)) ? FP_FLOAT_TO(24.0f, Q8_SHIFT) : res;
+}
 
 // Large function.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008D990); // 0x8008D990
