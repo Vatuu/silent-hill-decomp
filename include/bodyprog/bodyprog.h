@@ -785,8 +785,8 @@ STATIC_ASSERT_SIZEOF(s_800AA894, 12);
 
 typedef struct
 {
-    s8 field_0;
-    s8 unk_1[5];
+    u16 field_0;
+    s8  unk_1[4];
     s8 field_6;
     s8 unk_7;
     u8 field_8;
@@ -1412,7 +1412,10 @@ typedef struct _MapOverlayHeader
     s8                unk_15C[12];
     void              (*func_168)(void*, void*, void*);
     void              (*func_16C)(VECTOR3*, s16);
-    s8                unk_170[36];
+    s8                unk_170[8];
+    void              (*func_178)(void*, void*, void*);
+    void              (*func_17C)(void*, void*);
+    s8                unk_180[20];
     void              (*charaUpdateFuncs_194[Chara_Count])(s_SubCharacter*, void*, s32); /** Guessed params. Funcptrs for each `e_ShCharacterId`, set to 0 for IDs not included in the map overlay. Called by `func_80038354`. */
     s8                charaGroupIds_248[4];                                              /** `e_ShCharacterId` values where if `s_SpawnInfo.charaId_4` == 0, `charaGroupIds_248[0]` is used for `charaSpawnsA_24C` and `charaGroupIds_248[1]` for `charaSpawnsB_30C`. */
     s_SpawnInfo       charaSpawnsA_24C[16];                                              /** Array of chara type/position/flags, `flags_6 == 0` are unused slots? Read by `func_80037F24`. */
@@ -1812,6 +1815,8 @@ extern s16 D_800AF212;
 
 extern s8 D_800AF217;
 
+extern s32 D_800AF21C;
+
 extern u8 D_800AF220;
 
 extern s_MaybeCharacterAnim g_MaybePlayerAnims[];
@@ -2137,6 +2142,10 @@ extern u8 D_800C416A;
 
 extern s32 D_800C4180;
 
+extern u16 D_800C42D0;
+
+extern u16 D_800C42D2;
+
 // emoose: Also works: `extern u16 D_800C4478[];`, `arg0->field_4 = D_800C4478[0];`.
 // Didn't see any array accesses in Ghidra though, struct might be more likely.
 extern s_800C4478 D_800C4478;
@@ -2146,10 +2155,16 @@ extern s_D_800C44F0 D_800C44F0[];
 
 extern s16 D_800C44F6;
 
+extern s_PlayerCombat D_800C44E0;
+
 /** FP time. */
 extern s32 D_800C454C;
 
 extern s32 D_800C4550;
+
+extern s16 D_800C4554;
+
+extern s16 D_800C4556;
 
 extern s32 D_800C4558;
 
@@ -2948,6 +2963,8 @@ void func_8008992C(s_SysWork_2514* arg0, u16 arg1, s32 (*arg2)(u16, s32));
 
 s32 func_8008A0CC();
 
+void func_8008A0E4(s16, s8, s_SubCharacter*, s_PlayerCombat*, s32, s16, s16);
+
 u8 func_8008A270(s32 idx);
 
 s32 func_8008A35C(s_8008A35C* arg0, s32 arg1);
@@ -3038,6 +3055,8 @@ s16 func_8005BF38(s16 arg0);
 
 /** `arg0` type assumed. */
 void func_800625F4(VECTOR3* arg0, s16 arg1, s32 arg2, s32 arg3);
+
+void func_8006342C(s32, s16, s16, GsCOORDINATE2*);
 
 void func_8005CB20(s_SubCharacter*, void*, s16, s16);
 
