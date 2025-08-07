@@ -928,16 +928,16 @@ void vcSetNearRoadAryByCharaPos(VC_WORK* w_p, VC_ROAD_DATA* road_ary_list, s32 h
                                                                        w_p->chara_pos_114.vz, sw_min_hx, sw_max_hx, sw_min_hz, sw_max_hz,
                                                                        ptr->road_p_0->flags_10 & VC_RD_MARGE_ROAD_F);
 
-                ptr->rd_dir_type_4_mb = dir_type;
-                ptr->use_priority_5   = vcRetRoadUsePriority(road_data_ptr->rd_type_11, var);
-                ptr->rd_14.min_hx     = FP_FROM(rd_min_hx, Q8_SHIFT);
-                ptr->rd_14.max_hx     = FP_FROM(rd_max_hx, Q8_SHIFT);
-                ptr->rd_14.min_hz     = FP_FROM(rd_min_hz, Q8_SHIFT);
-                ptr->rd_14.max_hz     = FP_FROM(rd_max_hz, Q8_SHIFT);
-                ptr->sw_1C.min_hx     = FP_FROM(sw_min_hx, Q8_SHIFT);
-                ptr->sw_1C.max_hx     = FP_FROM(sw_max_hx, Q8_SHIFT);
-                ptr->sw_1C.min_hz     = FP_FROM(sw_min_hz, Q8_SHIFT);
-                ptr->sw_1C.max_hz     = FP_FROM(sw_max_hz, Q8_SHIFT);
+                ptr->rd_dir_type_4  = dir_type;
+                ptr->use_priority_5 = vcRetRoadUsePriority(road_data_ptr->rd_type_11, var);
+                ptr->rd_14.min_hx   = FP_FROM(rd_min_hx, Q8_SHIFT);
+                ptr->rd_14.max_hx   = FP_FROM(rd_max_hx, Q8_SHIFT);
+                ptr->rd_14.min_hz   = FP_FROM(rd_min_hz, Q8_SHIFT);
+                ptr->rd_14.max_hz   = FP_FROM(rd_max_hz, Q8_SHIFT);
+                ptr->sw_1C.min_hx   = FP_FROM(sw_min_hx, Q8_SHIFT);
+                ptr->sw_1C.max_hx   = FP_FROM(sw_max_hx, Q8_SHIFT);
+                ptr->sw_1C.min_hz   = FP_FROM(sw_min_hz, Q8_SHIFT);
+                ptr->sw_1C.max_hz   = FP_FROM(sw_max_hz, Q8_SHIFT);
                 w_p->near_road_suu_2B4++;
             }
         }
@@ -1031,7 +1031,7 @@ s32 vcSetCurNearRoadInVC_WORK(VC_WORK* w_p) // 0x800822B8
 
         old_cur_sum_dist = old_cur_p->chara2road_sum_dist_8;
 
-        switch (old_cur_p->rd_dir_type_4_mb)
+        switch (old_cur_p->rd_dir_type_4)
         {
             case 0:
                 old_cur_rd_ang_y = 0;

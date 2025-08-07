@@ -7,8 +7,7 @@
 
 // TODO:
 // - Split into 4 separate headers.
-// - Add doc comments above func delcarations.
-// - Code that accesses `VC_ROAD_DATA` and `VC_NEAR_ROAD_DATA` is odd, might need extra work.
+// - Add doc comments above func declarations.
 // - Flags below are from SH2, most seem to match with SH but there might be some differences.
 
 struct _MapOverlayHeader; // `bodyprog.h` forward declaration.
@@ -147,7 +146,7 @@ typedef struct _VC_ROAD_DATA
     VC_AREA_SIZE_TYPE area_size_type_11 : 2;
     VC_ROAD_TYPE      rd_type_11        : 3; /** Path type. */
     u32               mv_y_type_11      : 3;
-    s32               lim_rd_max_hy_12  : 8; // Copies of `lim_rd_8` values? In SH2 the funcs that read these access lim_rd instead?
+    s32               lim_rd_max_hy_12  : 8; // In SH2 `max_hy/min_hy` are part of `VC_LIMIT_AREA`, in SH1 these are separate for some reason.
     s32               lim_rd_min_hy_13  : 8;
     s32               ofs_watch_hy_14   : 8;
     u32               field_15          : 4;
@@ -171,12 +170,10 @@ typedef struct _VC_THROUGH_DOOR_CAM_PARAM
 STATIC_ASSERT_SIZEOF(VC_THROUGH_DOOR_CAM_PARAM, 28);
 
 /** @brief Nested camera path data? */
-// TODO: Check if this struct is correct, some SH code seems to act like struct
-// is only 16 bytes when iterating through it?
 typedef struct _VC_NEAR_ROAD_DATA
 {
     VC_ROAD_DATA* road_p_0;              /** Path. */
-    u8            rd_dir_type_4_mb;      // Unsure.
+    u8            rd_dir_type_4;
     u8            use_priority_5;
     u8            unk_6[2];
     s32           chara2road_sum_dist_8; /** Character to path distance squared? */
