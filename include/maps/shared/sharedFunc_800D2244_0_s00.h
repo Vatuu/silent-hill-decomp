@@ -73,7 +73,10 @@ void sharedFunc_800D2244_0_s00(s32 arg0)
     g_SysWork.player_4C.chara_0.field_DC                        = 0;
     g_SysWork.player_4C.chara_0.field_DA                        = 0;
     g_SysWork.player_4C.chara_0.field_D8                        = 0;
-    g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~((1 << 2) | (1 << 13) | (1 << 14) | (1 << 15));
+    g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~(PlayerFlag_Unk2 |
+                                                                    PlayerFlag_Unk13 |
+                                                                    PlayerFlag_Unk14 |
+                                                                    PlayerFlag_Unk15);
 
     player->flags_3E &= ~CharaFlag_Unk4;
     player->field_E0_8 = 3;

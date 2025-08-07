@@ -94,20 +94,20 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
 
     if (g_SysWork.player_4C.extra_128.field_1C == 52)
     {
-        if (g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & (1 << 15))
+        if (g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & PlayerFlag_Unk15)
         {
             if (playerChara->model_0.anim_4.animIdx_0 == g_SysWork.player_4C.extra_128.field_1C)
             {
                 func_8005DD44(sp20, &playerChara->position_18, 64, sp24);
 
                 playerChara->properties_E4.player.field_10C                 = sp24 + 16;
-                g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~(1 << 15);
+                g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk15;
             }
         }
     }
     else
     {
-        g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~(1 << 15);
+        g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk15;
     }
 
     newMoveSpeed = sharedData_800D32A0_0_s02;

@@ -19,7 +19,7 @@ void sharedFunc_800D7560_0_s01(s_SubCharacter* chara)
         scale = &sharedData_800DD870_0_s01;
         ScaleMatrix(mat, scale);
     }
-    else if (chara->properties_E4.player.flags_11C & (1 << 12))
+    else if (chara->properties_E4.player.flags_11C & PlayerFlag_Unk12)
     {
         scale = &sharedData_800DD880_0_s01;
         ScaleMatrix(mat, scale);

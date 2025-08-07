@@ -10,10 +10,10 @@ void sharedFunc_800D20E4_0_s00()
 
     sharedData_800DD59C_0_s00 = NO_VALUE;
 
-    D_800C457C            = 0;
-    D_800C4588            = 0;
-    g_Player_EnableControl = true;
-    g_Player_Walk2RunTransition            = 0;
+    D_800C457C                  = 0;
+    D_800C4588                  = 0;
+    g_Player_EnableControl      = true;
+    g_Player_Walk2RunTransition = 0;
 
     extra   = &g_SysWork.player_4C.extra_128;
     chara   = &g_SysWork.player_4C.chara_0;
@@ -50,10 +50,10 @@ void sharedFunc_800D20E4_0_s00()
 
     sharedData_800E39D8_0_s00 = 0;
 
-    chara->field_D6 = 0;
-    sysWork->player_4C.chara_0.properties_E4.player.flags_11C |= ((1 << 4) | (1 << 5));
-    chara->flags_3E |= CharaFlag_Unk4;
-    chara->field_E0_8 = 4;
+    chara->field_D6                                            = 0;
+    sysWork->player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Unk4 | PlayerFlag_Unk5;
+    chara->flags_3E                                           |= CharaFlag_Unk4;
+    chara->field_E0_8                                          = 4;
 
     if (sysWork->playerCombatInfo_38.field_F < 32)
     {

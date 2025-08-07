@@ -1461,7 +1461,7 @@ s32 func_80088D0C() // 0x80088D0C
 void func_80088D34(s32 idx) // 0x80088D34
 {
     idx++;
-    func_800445A4(D_800A992C[idx].animFile1_8, D_800A992C[idx].NPCCords_14);
+    func_800445A4(D_800A992C[idx].animFile1_8, D_800A992C[idx].npcCords_14);
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", Chara_Spawn); // 0x80088D78

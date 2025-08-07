@@ -5,7 +5,7 @@ s32 sharedFunc_800D9188_0_s00(s32 arg0, s_SubCharacter* arg1, s32 arg2, s32 arg3
     {
         if (arg1->model_0.anim_4.keyframeIdx0_8 >= arg2)
         {
-            if (!(arg1->properties_E4.player.flags_11C & (1 << 13)))
+            if (!(arg1->properties_E4.player.flags_11C & PlayerFlag_Unk13))
             {
                 switch (arg3)
                 {
@@ -85,13 +85,13 @@ s32 sharedFunc_800D9188_0_s00(s32 arg0, s_SubCharacter* arg1, s32 arg2, s32 arg3
                         break;
                 }
 
-                arg1->properties_E4.player.flags_11C |= 1 << 13;
+                arg1->properties_E4.player.flags_11C |= PlayerFlag_Unk13;
                 return 1;
             }
         }
         else
         {
-            arg1->properties_E4.player.flags_11C &= ~(1 << 13);
+            arg1->properties_E4.player.flags_11C &= ~PlayerFlag_Unk13;
         }
     }
 

@@ -768,7 +768,7 @@ typedef struct
     s_800A992C_sub* animFile1_8;
     s32             animFileSize1_C;
     s32             animFileSize2_10;
-    GsCOORDINATE2*  NPCCords_14;
+    GsCOORDINATE2*  npcCords_14;
 } s_800A992C;
 STATIC_ASSERT_SIZEOF(s_800A992C, 24);
 

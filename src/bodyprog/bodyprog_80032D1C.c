@@ -1571,7 +1571,7 @@ void func_80035338(s32 idx, e_ShCharacterId charaId, u32 arg2, s32 arg3) // 0x80
         }
     }
 
-    ptr->NPCCords_14      = &g_SysWork.npcCoords_FC0[0];
+    ptr->npcCords_14      = &g_SysWork.npcCoords_FC0[0];
     ptr->charaId1_1       = 0;
     ptr->animFile1_8      = 0;
     ptr->animFileSize2_10 = 0;
@@ -1618,7 +1618,7 @@ void func_80035560(s32 idx0, e_ShCharacterId charaId, s_800A992C_sub* animFile, 
         else if (idx0 >= 2)
         {
             idx2      = D_800A992C[idx0 - 1].animFile1_8->field_6;
-            coordCpy  = D_800A992C[idx0 - 1].NPCCords_14;
+            coordCpy  = D_800A992C[idx0 - 1].npcCords_14;
             coordCpy += idx2 + 1;
 
             // Check for end of `g_SysWork.npcCoords_FC0` array.
@@ -1632,7 +1632,7 @@ void func_80035560(s32 idx0, e_ShCharacterId charaId, s_800A992C_sub* animFile, 
     ptr->charaId1_1       = charaId;
     ptr->animFile1_8   = animFile;
     ptr->animFileSize2_10 = Fs_GetFileSectorAlignedSize(g_Chara_FileInfo[charaId].animFileIdx);
-    ptr->NPCCords_14      = coordCpy;
+    ptr->npcCords_14      = coordCpy;
 
     func_800445A4(animFile, coordCpy);
 
@@ -1649,7 +1649,7 @@ void func_8003569C() // 0x8003569C
     {
         if ((s8)g_MapOverlayHeader.charaGroupIds_248[i] != 0)
         {
-            coord  = D_800A992C[i].NPCCords_14;
+            coord  = D_800A992C[i].npcCords_14;
             ptr    = D_800A992C[i + 1].animFile1_8;
             coord += D_800A992C[i].animFile1_8->field_6 + 1;
 
@@ -1659,7 +1659,7 @@ void func_8003569C() // 0x8003569C
                 coord = g_MapOverlayHeader.field_28;
             }
 
-            D_800A992C[i + 1].NPCCords_14 = coord;
+            D_800A992C[i + 1].npcCords_14 = coord;
             func_800445A4(ptr, coord);
         }
     }

@@ -462,6 +462,26 @@ typedef enum _PlayerBone
     PlayerBone_Count         = 18
 } s_PlayerBone;
 
+typedef enum _PlayerFlags
+{
+    PlayerFlag_None  = 0,
+    PlayerFlag_Unk0  = 1 << 0, // Not used anywhere yet.
+    PlayerFlag_Unk1  = 1 << 1, // Not used anywhere yet.
+    PlayerFlag_Unk2  = 1 << 2,
+    PlayerFlag_Unk3  = 1 << 3,
+    PlayerFlag_Unk4  = 1 << 4,
+    PlayerFlag_Unk5  = 1 << 5,
+    PlayerFlag_Unk6  = 1 << 6,
+    PlayerFlag_Unk7  = 1 << 7, // Not used anywhere yet.
+    PlayerFlag_Unk9  = 1 << 9,
+    PlayerFlag_Unk10 = 1 << 10,
+    PlayerFlag_Unk11 = 1 << 11,
+    PlayerFlag_Unk12 = 1 << 12,
+    PlayerFlag_Unk13 = 1 << 13,
+    PlayerFlag_Unk14 = 1 << 14,
+    PlayerFlag_Unk15 = 1 << 15
+} e_PlayerFlags;
+
 /** @brief Player property indices. */
 typedef enum _PlayerProperty
 {
@@ -865,7 +885,7 @@ typedef struct _SubCharPropertiesPlayer
     s8  unk_10E[6];
     s32 field_114;
     s8  unk_118[4];
-    s32 flags_11C;
+    s32 flags_11C; /** `e_PlayerFlags` */
     s16 field_120;
     s8  unk_122[2];
     s16 field_124;
