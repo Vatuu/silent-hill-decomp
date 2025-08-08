@@ -2778,7 +2778,7 @@ void func_8005B55C(GsCOORDINATE2*);
 
 s32 func_8005C7D0(s_SubCharacter* chara, s32 moveSpeed);
 
-void func_8005C814(s16*, s_SubCharacter*);
+void func_8005C814(s_SubCharacter_D8* arg0, s_SubCharacter* chara);
 
 /** Looks like a clamping function. */
 s32 func_8005D974();

@@ -925,6 +925,15 @@ typedef struct _SubCharPropertiesLarvalStalker
 } s_SubCharaPropertiesLarvalStalker;
 STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesLarvalStalker, 68);
 
+typedef struct
+{
+    s16 field_0;
+    s16 field_2;
+    s16 field_4;
+    s16 field_6;
+} s_SubCharacter_D8;
+STATIC_ASSERT_SIZEOF(s_SubCharacter_D8, 8);
+
 typedef struct _SubCharacter
 {
     s_Model model_0;
@@ -971,10 +980,7 @@ typedef struct _SubCharacter
     s8  unk_D2[2];
     s16 field_D4;
     s16 field_D6;
-    s16 field_D8;
-    s16 field_DA;
-    s16 field_DC;
-    s16 field_DE;
+    s_SubCharacter_D8 field_D8;
 
     s32 unk_E0     : 8;
     s32 field_E0_8 : 4;

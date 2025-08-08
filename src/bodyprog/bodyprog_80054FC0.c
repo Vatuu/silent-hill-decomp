@@ -560,7 +560,28 @@ s32 func_8005C7D0(s_SubCharacter* chara, s32 moveSpeed) // 0x8005C7D0
     return NO_VALUE;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8005C814); // 0x8005C814
+void func_8005C814(s_SubCharacter_D8* arg0, s_SubCharacter* chara) // 0x8005C814
+{
+    s16 temp_v0;
+    s16 temp_s0;
+    s16 temp_s1;
+    s16 temp_s2;
+    s16 temp_s3;
+    s16 temp_s4;
+
+    temp_s0 = arg0->field_0;
+    temp_s3 = arg0->field_2;
+    temp_s2 = arg0->field_4;
+    temp_s4 = arg0->field_6;
+
+    temp_s1 = shRcos(chara->rotation_24.vy);
+    temp_v0 = shRsin(chara->rotation_24.vy);
+
+    chara->field_D8.field_0 = FP_FROM(((temp_s0 * temp_s1) + (temp_s3 * temp_v0)), Q12_SHIFT);
+    chara->field_D8.field_2 = FP_FROM(((-temp_s0 * temp_v0) + (temp_s3 * temp_s1)), Q12_SHIFT);
+    chara->field_D8.field_4 = FP_FROM(((temp_s2 * temp_s1) + (temp_s4 * temp_v0)), Q12_SHIFT);
+    chara->field_D8.field_6 = FP_FROM(((-temp_s2 * temp_v0) + (temp_s4 * temp_s1)), Q12_SHIFT);
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8005C944); // 0x8005C944
 
@@ -4360,10 +4381,10 @@ void func_8007C800(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                 g_SysWork.player_4C.chara_0.field_C8 = -0x1999;
                 g_SysWork.player_4C.chara_0.field_CA = 0;
                 g_SysWork.player_4C.chara_0.field_CE = -0x1199;
-                g_SysWork.player_4C.chara_0.field_DE = 0;
-                g_SysWork.player_4C.chara_0.field_DC = 0;
-                g_SysWork.player_4C.chara_0.field_DA = 0;
-                g_SysWork.player_4C.chara_0.field_D8 = 0;
+                g_SysWork.player_4C.chara_0.field_D8.field_6 = 0;
+                g_SysWork.player_4C.chara_0.field_D8.field_4 = 0;
+                g_SysWork.player_4C.chara_0.field_D8.field_2 = 0;
+                g_SysWork.player_4C.chara_0.field_D8.field_0 = 0;
             }
 
             temp_s0 = g_SysWork.npcs_1A0[chara->field_40].rotation_24.vy;
@@ -5115,8 +5136,8 @@ void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D970
         {
             if (g_SysWork.player_4C.extra_128.field_1C == 1 && D_800AF21C != NO_VALUE)
             {
-                sp98.vx = ratan2((g_SysWork.npcs_1A0[D_800AF21C].position_18.vx + g_SysWork.npcs_1A0[D_800AF21C].field_D8) - g_SysWork.playerCombatInfo_38.field_0.vx,
-                                 (g_SysWork.npcs_1A0[D_800AF21C].position_18.vz + g_SysWork.npcs_1A0[D_800AF21C].field_DA) - g_SysWork.playerCombatInfo_38.field_0.vz);
+                sp98.vx = ratan2((g_SysWork.npcs_1A0[D_800AF21C].position_18.vx + g_SysWork.npcs_1A0[D_800AF21C].field_D8.field_0) - g_SysWork.playerCombatInfo_38.field_0.vx,
+                                 (g_SysWork.npcs_1A0[D_800AF21C].position_18.vz + g_SysWork.npcs_1A0[D_800AF21C].field_D8.field_2) - g_SysWork.playerCombatInfo_38.field_0.vz);
             }
             else
             {
@@ -5854,9 +5875,9 @@ s32 func_8007F95C() // 0x8007F95C
                     var_a2 = 0x1333;
                 }
 
-                sp20.vx = ptr1->position_18.vx + ptr1->field_D8;
+                sp20.vx = ptr1->position_18.vx + ptr1->field_D8.field_0;
                 sp20.vy = ptr1->position_18.vy;
-                sp20.vz = ptr1->position_18.vz + ptr1->field_DA;
+                sp20.vz = ptr1->position_18.vz + ptr1->field_D8.field_2;
 
                 if (func_80038A6C(&sp10, &sp20, var_a2) == 0 && ABS(sp20.vy - sp10.vy) < 0x4CC && ptr1->health_B0 > 0 && (ptr1->flags_3E & 2))
                 {

@@ -117,13 +117,13 @@ void Ai_LockerDeadBody_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* co
     structPtr->funcPtr_0(chara, arg1, coords, structPtr);
 
     chara->field_C8 = -0x4CC;
-    chara->field_DC = 0xF5;
-    chara->field_DE = 0xEE1;
+    chara->field_D8.field_4 = 0xF5;
+    chara->field_D8.field_6 = 0xEE1;
     chara->field_CA = 0;
     chara->field_CC = 0;
     chara->field_CE = 0;
-    chara->field_D8 = 0;
-    chara->field_DA = 0;
+    chara->field_D8.field_0 = 0;
+    chara->field_D8.field_2 = 0;
     chara->field_D6 = 0;
     chara->field_D4 = 0x547;
 
