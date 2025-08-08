@@ -1470,7 +1470,7 @@ typedef struct
 typedef struct
 {
     VECTOR3 field_0;
-    s32     field_C;
+    s32     field_C; // Y height?
     s8      unk10[4];
     s8      field_14;
 } s_800C4590;
@@ -3575,6 +3575,8 @@ void func_8007D090(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
 void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord);
 
 void func_8007E9C4();
+
+void func_8007F14C(u8 arg0);
 
 /** Resets several global variables to 0. */
 void func_8007F1CC();

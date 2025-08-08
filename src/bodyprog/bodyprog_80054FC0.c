@@ -5432,8 +5432,48 @@ void GameFs_PlayerMapAnimLoad(s32 mapIdx) // 0x8007EB64
 // Used when exiting the inventory screen.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8007EBBC); // 0x8007EBBC
 
-// Requires jump table.
+// TODO: .rodata migration.
+#ifdef NON_MATCHING
+void func_8007F14C(u8 arg0) // 0x8007F14C
+{
+    switch (arg0)
+    {
+        case 0:
+        case 1:
+        case 4:
+        case 6:
+        case 7:
+            Sd_EngineCmd(164);
+            break;
+
+        case 5:
+            Sd_EngineCmd(169);
+            break;
+
+        case 2:
+            Sd_EngineCmd(163);
+            break;
+
+        case 32:
+            Sd_EngineCmd(166);
+            break;
+
+        case 33:
+            Sd_EngineCmd(167);
+            break;
+
+        case 34:
+            Sd_EngineCmd(168);
+            break;
+
+        case 35:
+            Sd_EngineCmd(165);
+            break;
+    }
+}
+#else
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8007F14C); // 0x8007F14C
+#endif
 
 void func_8007F1CC() // 0x8007F1CC
 {
