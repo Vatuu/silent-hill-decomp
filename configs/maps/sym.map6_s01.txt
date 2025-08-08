@@ -85,6 +85,7 @@ sharedFunc_800DA8E8_0_s01   = 0x800D1340; // type:func
 //--- PA: 0x009EF4   VA: 0x800D346C   subsegment: data, map6_s01
 //--------------------------------------------------------------
 sharedData_800DD59C_0_s00   = 0x800D359C; // type:u8
+g_MapMessages               = 0x800D3E38; // type:u32 size:0x16C
 sharedData_800DFB6C_0_s00   = 0x800D41C0; // type:s32
 sharedData_800DFB70_0_s00   = 0x800D41C4; // type:s32
 sharedData_800E0CA8_0_s00   = 0x800D5300; // type:s32

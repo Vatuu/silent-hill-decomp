@@ -109,6 +109,7 @@ sharedData_800DD880_0_s01   = 0x800EEB04; // type:VECTOR size:0xC
 sharedData_800EEB14_2_s00   = 0x800EEB14; // type:s32 unknown type
 sharedData_800DF1FC_0_s00   = 0x800F05D8; // type:s32 unknown type
 sharedData_800DF2DC_0_s00   = 0x800F06B8; // type:s32 unknown type
+g_MapMessages               = 0x800F0F68; // type:u32 size:0x13C
 sharedData_800DFB64_0_s00   = 0x800F22B0; // type:s32
 sharedData_800DFB68_0_s00   = 0x800F22B4; // type:s32
 sharedData_800DFB6C_0_s00   = 0x800F22B8; // type:s32

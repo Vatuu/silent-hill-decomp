@@ -128,6 +128,7 @@ sharedData_800DD5A8_0_s00    = 0x800E8B4C; // type:s32 unknown type
 sharedData_800D1B6C_3_s02    = 0x800EA9D8; // type:AnimInfo
 g_Ai_Flauros_AnimInfo        = 0x800EAE80; // type:AnimInfo
 g_Ai_Parasite_AnimInfo       = 0x800EAEC0; // type:AnimInfo
+g_MapMessages                = 0x800EB81C; // type:u32 size:0x130
 sharedData_800DFB6C_0_s00    = 0x800EBB88; // type:s32
 sharedData_800DFB70_0_s00    = 0x800EBB8C; // type:s32
 sharedData_800E0CA8_0_s00    = 0x800ED4AC; // type:s32

@@ -118,6 +118,7 @@ sharedData_800DFFD8_7_s01   = 0x800EAF60; // type:AnimInfo
 g_Ai_LittleIncubus_AnimInfo = 0x800EAFA8; // type:AnimInfo
 g_Ai_Incubus_AnimInfo       = 0x800EC808; // type:AnimInfo
 g_Ai_Unknown23_AnimInfo     = 0x800ECE50; // type:AnimInfo
+g_MapMessages               = 0x800ECFEC; // type:u32 size:0x190
 sharedData_800DFB6C_0_s00   = 0x800EDA18; // type:s32
 sharedData_800DFB70_0_s00   = 0x800EDA1C; // type:s32
 sharedData_800E0C6E_0_s00   = 0x800EEB1A; // type:s16

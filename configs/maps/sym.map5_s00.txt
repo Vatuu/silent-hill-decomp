@@ -93,6 +93,7 @@ sharedData_800DD58C_0_s00 = 0x800D9190; // type:s32
 sharedData_800DD59C_0_s00 = 0x800D919C; // type:u8
 sharedData_800D91A0_5_s00 = 0x800D91A0; // type:s32 unknown type
 sharedData_800E0D38_1_s02 = 0x800D9CBC; // type:s32 unknown type
+g_MapMessages             = 0x800DA80C; // type:u32 size:0x54
 sharedData_800DFB6C_0_s00 = 0x800DAB88; // type:s32
 sharedData_800DFB70_0_s00 = 0x800DAB8C; // type:s32
 sharedData_800E0C6E_0_s00 = 0x800DBC82; // type:s16
