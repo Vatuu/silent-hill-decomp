@@ -592,39 +592,52 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8005D9B8); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8005DC1C); // 0x8005DC1C
 
-void func_8005DC3C(s32 sfx, VECTOR3* pos, s32 arg2, s32 arg3, s32 arg4) {
+void func_8005DC3C(s32 sfx, VECTOR3* pos, s32 arg2, s32 arg3, s32 arg4)
+{
     s32 var_a2;
     s32 var_s1;
 
-    if ((arg3 & 1) || (g_GameWork.config_0.optSoundType_1E)) {
+    if ((arg3 & 1) || (g_GameWork.config_0.optSoundType_1E))
+    {
         var_s1 = 0;
-    } else {
+    }
+    else
+    {
         var_s1 = func_80040A64(pos);
     }
-    
-    if (arg2 >= 0x100) {
+
+    if (arg2 >= 0x100)
+    {
         arg2 = 0xFF;
-    }else if (arg2 < 0) {
+    }
+    else if (arg2 < 0)
+    {
         arg2 = 0;
-    }    
-    
-    if (!(arg3 & 2)) {
+    }
+
+    if (!(arg3 & 2))
+    {
         var_a2 = func_8005D9B8(pos, arg2);
-    } else {
+    }
+    else
+    {
         var_a2 = arg2;
     }
-    
-    if (var_a2 >= 0x100) {
+
+    if (var_a2 >= 0x100)
+    {
         var_a2 = 0xFF;
     }
-    
-    if (arg3 & 4) {
-        func_800463C0(sfx, var_s1, ~var_a2,arg4);
-    }else{
+
+    if (arg3 & 4)
+    {
+        func_800463C0(sfx, var_s1, ~var_a2, arg4);
+    }
+    else
+    {
         Sd_PlaySfx(sfx, var_s1, ~var_a2);
     }
 }
-
 
 void func_8005DD44(s32 arg0, VECTOR3* arg1, s32 arg2, s8 arg3) // 0x8005DD44
 {
