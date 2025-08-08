@@ -613,7 +613,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8005D9B8); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8005DC1C); // 0x8005DC1C
 
-void func_8005DC3C(s32 sfx, VECTOR3* pos, s32 arg2, s32 arg3, s32 arg4)
+void func_8005DC3C(s32 sfx, VECTOR3* pos, s32 arg2, s32 arg3, s32 arg4) // 0x8005DC3C
 {
     s32 var_a2;
     s32 var_s1;
