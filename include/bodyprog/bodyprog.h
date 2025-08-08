@@ -2786,6 +2786,8 @@ s32 func_8005D974();
 /** Spatial SFX func? */
 void func_8005DC1C(s32, VECTOR3*, s32, s32); // Types assumed.
 
+void func_8005DC3C(s32 sfx, VECTOR3* pos, s32 arg2, s32 arg3, s32 arg4);
+
 void func_8005DD44(s32, VECTOR3*, s32, s8); // Types assumed.
 
 s32 func_8005F680(s_func_800699F8* arg0);
