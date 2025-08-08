@@ -1919,7 +1919,7 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                 {
                     if (g_SysWork.playerCombatInfo_38.isAiming_13 == 0 && chara->model_0.stateStep_3 == 0)
                     {
-                        chara->model_0.anim_4.animIdx_0 = D_800C4576;
+                        chara->model_0.anim_4.animIdx_0 = D_800C4570.field_6;
                         chara->model_0.stateStep_3++;
                     }
                 }
@@ -1943,7 +1943,7 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                 {
                     if (g_SysWork.playerCombatInfo_38.isAiming_13 == 0 && chara->model_0.stateStep_3 == 0)
                     {
-                        chara->model_0.anim_4.animIdx_0 = D_800C4576;
+                        chara->model_0.anim_4.animIdx_0 = D_800C4570.field_6;
                         chara->model_0.stateStep_3++;
                     }
                 }
@@ -2283,16 +2283,16 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                                 chara->model_0.anim_4.keyframeIdx0_8 <= 11)
                             {
                                 g_SysWork.player_4C.extra_128.field_24                      = 2;
-                                g_MaybePlayerAnims->field_E                                 = 36;
-                                g_MaybePlayerAnims->field_6                                 = 7;
+                                g_MaybePlayerAnims[0].keyframeIdx1_E                        = 36;
+                                g_MaybePlayerAnims[0].animIdx_6                             = 7;
                                 g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Unk5;
                             }
                             else if (chara->model_0.anim_4.keyframeIdx0_8 >= 21 &&
                                      chara->model_0.anim_4.keyframeIdx0_8 <= 22)
                             {
                                 g_SysWork.player_4C.extra_128.field_24 = 2;
-                                g_MaybePlayerAnims->field_E            = 26;
-                                g_MaybePlayerAnims->field_6            = 7;
+                                g_MaybePlayerAnims[0].keyframeIdx1_E   = 26;
+                                g_MaybePlayerAnims[0].animIdx_6        = 7;
                             }
                         }
                     }
@@ -2437,15 +2437,15 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                                  chara->model_0.anim_4.keyframeIdx0_8 <= 31)
                         {
                             g_SysWork.player_4C.extra_128.field_24 = temp_s3;
-                            g_MaybePlayerAnims->field_E            = 8;
-                            g_MaybePlayerAnims->field_6            = 5;
+                            g_MaybePlayerAnims[0].keyframeIdx1_E   = 8;
+                            g_MaybePlayerAnims[0].animIdx_6        = 5;
                         }
                         else if (chara->model_0.anim_4.keyframeIdx0_8 >= 41 &&
                                  chara->model_0.anim_4.keyframeIdx0_8 <= 42)
                         {
                             g_SysWork.player_4C.extra_128.field_24 = temp_s3;
-                            g_MaybePlayerAnims->field_E            = 20;
-                            g_MaybePlayerAnims->field_6            = 5;
+                            g_MaybePlayerAnims[0].keyframeIdx1_E   = 20;
+                            g_MaybePlayerAnims[0].animIdx_6        = 5;
                         }
                         break;
 
@@ -2458,15 +2458,15 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                                  chara->model_0.anim_4.keyframeIdx0_8 <= 31)
                         {
                             g_SysWork.player_4C.extra_128.field_24 = 1;
-                            g_MaybePlayerAnims->field_E            = 8;
-                            g_MaybePlayerAnims->field_6            = 5;
+                            g_MaybePlayerAnims[0].keyframeIdx1_E   = 8;
+                            g_MaybePlayerAnims[0].animIdx_6        = 5;
                         }
                         else if (chara->model_0.anim_4.keyframeIdx0_8 >= 41 &&
                                  chara->model_0.anim_4.keyframeIdx0_8 <= 42)
                         {
                             g_SysWork.player_4C.extra_128.field_24 = 1;
-                            g_MaybePlayerAnims->field_E            = 20;
-                            g_MaybePlayerAnims->field_6            = 5;
+                            g_MaybePlayerAnims[0].keyframeIdx1_E   = 20;
+                            g_MaybePlayerAnims[0].animIdx_6        = 5;
                         }
                         break;
 
@@ -2479,15 +2479,15 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                                     chara->model_0.anim_4.keyframeIdx0_8 <= 31)
                                 {
                                     g_SysWork.player_4C.extra_128.field_24 = 1;
-                                    g_MaybePlayerAnims->field_E            = 8;
-                                    g_MaybePlayerAnims->field_6            = 5;
+                                    g_MaybePlayerAnims[0].keyframeIdx1_E   = 8;
+                                    g_MaybePlayerAnims[0].animIdx_6        = 5;
                                 }
                                 else if (chara->model_0.anim_4.keyframeIdx0_8 >= 41 &&
                                          chara->model_0.anim_4.keyframeIdx0_8 <= 42)
                                 {
                                     g_SysWork.player_4C.extra_128.field_24 = 1;
-                                    g_MaybePlayerAnims->field_E            = 20;
-                                    g_MaybePlayerAnims->field_6            = 5;
+                                    g_MaybePlayerAnims[0].keyframeIdx1_E   = 20;
+                                    g_MaybePlayerAnims[0].animIdx_6        = 5;
                                 }
                             }
                             else if (chara->properties_E4.player.properties_E4[5] >= 5 &&
@@ -2512,15 +2512,15 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                                     chara->model_0.anim_4.keyframeIdx0_8 <= 31)
                                 {
                                     g_SysWork.player_4C.extra_128.field_24 = 1;
-                                    g_MaybePlayerAnims->field_E            = 8;
-                                    g_MaybePlayerAnims->field_6            = 5;
+                                    g_MaybePlayerAnims[0].keyframeIdx1_E   = 8;
+                                    g_MaybePlayerAnims[0].animIdx_6        = 5;
                                 }
                                 else if (chara->model_0.anim_4.keyframeIdx0_8 >= 41 &&
                                          chara->model_0.anim_4.keyframeIdx0_8 <= 42)
                                 {
                                     g_SysWork.player_4C.extra_128.field_24 = 1;
-                                    g_MaybePlayerAnims->field_E            = 20;
-                                    g_MaybePlayerAnims->field_6            = 5;
+                                    g_MaybePlayerAnims[0].keyframeIdx1_E   = 20;
+                                    g_MaybePlayerAnims[0].animIdx_6        = 5;
                                 }
                             }
                         }
@@ -3538,7 +3538,7 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                     {
                         if (chara->model_0.stateStep_3 == 0)
                         {
-                            chara->model_0.anim_4.animIdx_0 = D_800C4577 - 12;
+                            chara->model_0.anim_4.animIdx_0 = D_800C4570.field_7 - 12;
                             chara->model_0.stateStep_3++;
                         }
                     }
@@ -3546,7 +3546,7 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                     {
                         if (chara->model_0.stateStep_3 == 0)
                         {
-                            chara->model_0.anim_4.animIdx_0 = D_800C4577;
+                            chara->model_0.anim_4.animIdx_0 = D_800C4570.field_7;
                             chara->model_0.stateStep_3++;
                         }
                     }
@@ -3557,7 +3557,7 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                     {
                         if (chara->model_0.stateStep_3 == 0)
                         {
-                            chara->model_0.anim_4.animIdx_0 = D_800C4577;
+                            chara->model_0.anim_4.animIdx_0 = D_800C4570.field_7;
                             chara->model_0.stateStep_3++;
                         }
                     }
@@ -3582,7 +3582,7 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                     {
                         if (chara->model_0.stateStep_3 == 0)
                         {
-                            chara->model_0.anim_4.animIdx_0 = D_800C4577 + 2;
+                            chara->model_0.anim_4.animIdx_0 = D_800C4570.field_7 + 2;
                             chara->model_0.stateStep_3++;
                         }
                     }
@@ -3590,7 +3590,7 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                     {
                         if (chara->model_0.stateStep_3 == 0)
                         {
-                            chara->model_0.anim_4.animIdx_0 = D_800C4577 + 4;
+                            chara->model_0.anim_4.animIdx_0 = D_800C4570.field_7 + 4;
                             chara->model_0.stateStep_3++;
                         }
                     }
@@ -3598,7 +3598,7 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                     {
                         if (chara->model_0.stateStep_3 == 0)
                         {
-                            chara->model_0.anim_4.animIdx_0 = D_800C4577;
+                            chara->model_0.anim_4.animIdx_0 = D_800C4570.field_7;
                             chara->model_0.stateStep_3++;
                         }
                     }
@@ -3616,7 +3616,7 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                     {
                         if (chara->model_0.stateStep_3 == 0)
                         {
-                            chara->model_0.anim_4.animIdx_0 = D_800C4577 - 4;
+                            chara->model_0.anim_4.animIdx_0 = D_800C4570.field_7 - 4;
                             chara->model_0.stateStep_3++;
                         }
                     }
@@ -3624,7 +3624,7 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                     {
                         if (chara->model_0.stateStep_3 == 0)
                         {
-                            chara->model_0.anim_4.animIdx_0 = D_800C4577;
+                            chara->model_0.anim_4.animIdx_0 = D_800C4570.field_7;
                             chara->model_0.stateStep_3++;
                         }
                     }
@@ -3632,7 +3632,7 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
             }
             else if (chara->model_0.stateStep_3 == 0)
             {
-                chara->model_0.anim_4.animIdx_0 = D_800C4578 - 1;
+                chara->model_0.anim_4.animIdx_0 = D_800C4570.field_8 - 1;
                 chara->model_0.stateStep_3++;
             }
 
@@ -5075,12 +5075,7 @@ void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D970
             }
             else
             {
-                do
-                {
-                    chara->rotation_24.pad = chara->rotation_24.vy;
-                }
-                while (0); // HACK: Required for match.
-
+                do { chara->rotation_24.pad = chara->rotation_24.vy; } while (0); // HACK: Required for match.
                 sp98.vx = chara->rotation_24.pad;
             }
 
@@ -5341,10 +5336,7 @@ void func_8007E5AC() // 0x8007E5AC
 
     if (temp_t0 >= 4 && temp_t0 < 6)
     {
-        // Required for match.
-        for (i = 0;
-             g_SavegamePtr->items_0[i].id_0 != g_SavegamePtr->equippedWeapon_AA && i < INVENTORY_ITEM_COUNT_MAX;
-             i++);
+        for (i = 0; g_SavegamePtr->items_0[i].id_0 != g_SavegamePtr->equippedWeapon_AA && i < INVENTORY_ITEM_COUNT_MAX; i++);
 
         g_SysWork.playerCombatInfo_38.field_F              = g_SavegamePtr->equippedWeapon_AA + InventoryItemId_KitchenKnife;
         g_SysWork.playerCombatInfo_38.currentWeaponAmmo_10 = g_SavegamePtr->items_0[i].count_1;
@@ -5356,11 +5348,7 @@ void func_8007E5AC() // 0x8007E5AC
         }
         else
         {
-            // Required for match.
-            for (i = 0;
-                 g_SavegamePtr->items_0[i].id_0 != (g_SavegamePtr->equippedWeapon_AA + InventoryItemId_HealthDrink) &&
-                                                   i < INVENTORY_ITEM_COUNT_MAX;
-                 i++);
+            for (i = 0; g_SavegamePtr->items_0[i].id_0 != (g_SavegamePtr->equippedWeapon_AA + InventoryItemId_HealthDrink) && i < INVENTORY_ITEM_COUNT_MAX; i++);
 
             if (i == INVENTORY_ITEM_COUNT_MAX)
             {
@@ -5408,12 +5396,91 @@ void func_8007E5AC() // 0x8007E5AC
     g_SysWork.player_4C.chara_0.health_B0 = CLAMP(g_SysWork.player_4C.chara_0.health_B0, 1, FP_FLOAT_TO(100.0f, Q12_SHIFT));
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8007E860); // 0x8007E860
+void func_8007E860() // 0x8007E860
+{
+    s32 i;
+    s32 startIdx;
+
+    for (i = 0; i < 8; i++)
+    {
+        startIdx                         = 92;
+        g_MaybePlayerAnims[startIdx + i] = g_MapOverlayHeader.animInfo_34[i + 16];
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8007E8C0); // 0x8007E8C0
 
 // Player func.
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8007E9C4); // 0x8007E9C4
+void func_8007E9C4() // 0x8007E9C4
+{
+    s_SubCharacter* sub;
+
+    sub = &g_SysWork.player_4C.chara_0;
+
+    g_Player_Walk2RunTransition                       = 0;
+    g_SysWork.player_4C.extra_128.field_1C            = 0;
+    g_SysWork.player_4C.extra_128.field_20            = 0;
+    g_SysWork.player_4C.extra_128.field_24            = 0;
+    g_SysWork.player_4C.extra_128.model_0.stateStep_3 = 0;
+    g_SysWork.player_4C.extra_128.model_0.state_2     = 0;
+
+    sub->model_0.stateStep_3                  = 0;
+    sub->model_0.state_2                      = 0;
+    g_SysWork.field_235A                      = 0;
+    D_800AF210                                = 0;
+    D_800AF212                                = 0;
+    D_800C4560                                = -1;
+    g_SysWork.playerCombatInfo_38.isAiming_13 = 0;
+
+    func_8004C564(0, -1);
+
+    sub->rotation_24.pad = 0x400;
+    D_800C4561           = 0;
+    D_800C4562           = 0;
+    D_800C455C           = 0;
+    D_800C4558           = 0;
+    D_800C45C0           = 0;
+    D_800C45BE           = 0;
+
+    sub->properties_E4.player.properties_E4[1]               = 0;
+    sub->properties_E4.player.properties_E4[4]               = 0;
+    sub->properties_E4.player.properties_E4[5]               = 0;
+    sub->properties_E4.player.properties_E4[7]               = 0;
+    sub->properties_E4.player.properties_E4[8]               = 0;
+    sub->properties_E4.player.properties_E4[9]               = 0;
+    sub->properties_E4.larvalStalker.properties_E8[10].val32 = 0;
+    sub->properties_E4.player.flags_11C                      = 0;
+    sub->properties_E4.player.field_126                      = 0;
+
+    sub->field_C0 = 0;
+    sub->field_BC = 0;
+    sub->field_B8 = 0;
+    sub->field_B4 = 0;
+
+    D_800C45BC = 0;
+    sub->flags_3E &= 0xFFF7;
+    D_800C45F8           = sub->position_18;
+    g_SysWork.field_2353 = -1;
+    sub->field_40        = -1;
+    sub->field_41        = -1;
+
+    g_SysWork.field_2354[3] = -1;
+    g_SysWork.field_2354[2] = -1;
+    g_SysWork.field_2354[1] = -1;
+    g_SysWork.field_2354[0] = -1;
+    sub->field_D6           = 0x3AE;
+
+    D_800C457E = 0;
+    D_800C4604 = 0;
+    D_800C45F0 = 0;
+    D_800C45E8 = 0;
+    D_800C4582 = 0;
+    D_800C45AE = 0;
+    D_800C4586 = 0;
+    D_800C4580 = 0;
+    D_800C45AC = 0;
+    D_800C4584 = 0;
+}
 
 void GameFs_PlayerMapAnimLoad(s32 mapIdx) // 0x8007EB64
 {
@@ -5430,7 +5497,170 @@ void GameFs_PlayerMapAnimLoad(s32 mapIdx) // 0x8007EB64
 }
 
 // Used when exiting the inventory screen.
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8007EBBC); // 0x8007EBBC
+void func_8007EBBC() // 0x8007EBBC
+{
+    s32 var_a1;
+    s32 var_a2;
+    s32 i;
+    s8  temp_v1;
+
+    var_a1 = 0;
+    var_a2 = 0;
+
+    g_SysWork.field_2353 = -1;
+    temp_v1              = g_SysWork.playerCombatInfo_38.field_F + 1;
+
+    switch (temp_v1)
+    {
+        case 0:
+            D_800C4570 = D_800AFBF4[0];
+            return;
+
+        case 1:
+            var_a1                               = 0x1E;
+            var_a2                               = 0xF;
+            D_800C4570                           = D_800AFBF4[1];
+            g_SysWork.player_4C.chara_0.field_D0 = -0x1030;
+            break;
+
+        default:
+            return;
+
+        case 8:
+            var_a1                               = 0;
+            var_a2                               = 0;
+            D_800C4570                           = D_800AFBF4[3];
+            g_SysWork.player_4C.chara_0.field_D0 = -0xFD0;
+            break;
+
+        case 2:
+        case 5:
+            D_800C4570 = D_800AFBF4[2];
+            switch (g_SysWork.playerCombatInfo_38.field_F)
+            {
+                case 4:
+                    var_a1 = 0xA;
+                    var_a2 = 5;
+                    break;
+
+                case 1:
+                    var_a1 = 0x14;
+                    var_a2 = 0xA;
+                    break;
+            }
+            g_SysWork.player_4C.chara_0.field_D0 = -0xEC0;
+            break;
+
+        case 6:
+            var_a1                               = 0x32;
+            var_a2                               = 0x19;
+            D_800C4570                           = D_800AFBF4[4];
+            g_SysWork.player_4C.chara_0.field_D0 = -0xE90;
+            break;
+
+        case 3:
+            var_a1                               = 0x40;
+            var_a2                               = 0x20;
+            D_800C4570                           = D_800AFBF4[5];
+            g_SysWork.player_4C.chara_0.field_D0 = -0x12E0;
+            break;
+
+        case 7:
+            var_a1                               = 0x28;
+            var_a2                               = 0x14;
+            D_800C4570                           = D_800AFBF4[10];
+            g_SysWork.player_4C.chara_0.field_D0 = -0xF20;
+            break;
+
+        case 33:
+            var_a1                               = 0x4E;
+            var_a2                               = 0x27;
+            D_800C4570                           = D_800AFBF4[6];
+            g_SysWork.player_4C.chara_0.field_D0 = -0x1600;
+            break;
+
+        case 34:
+            var_a1                               = 0x60;
+            var_a2                               = 0x30;
+            D_800C4570                           = D_800AFBF4[7];
+            g_SysWork.player_4C.chara_0.field_D0 = -0x1180;
+            break;
+
+        case 35:
+            var_a1                               = 0x72;
+            var_a2                               = 0x39;
+            D_800C4570                           = D_800AFBF4[8];
+            g_SysWork.player_4C.chara_0.field_D0 = -0x1600;
+            break;
+
+        case 36:
+            var_a1                               = 0x84;
+            var_a2                               = 0x42;
+            D_800C4570                           = D_800AFBF4[9];
+            g_SysWork.player_4C.chara_0.field_D0 = -0x1610;
+            break;
+    }
+
+    for (i = 0x38; i < 0x4C; i++)
+    {
+        g_MaybePlayerAnims[i] = D_80028B94[i - 0x38 + var_a1];
+    }
+
+    for (i = 0; i < 10; i++)
+    {
+        D_800C44F0[i] = D_800294F4[i + var_a2];
+    }
+
+    if (g_SysWork.playerCombatInfo_38.field_F != -1 && D_800AF224 != g_SysWork.playerCombatInfo_38.field_F)
+    {
+        D_800AF224 = g_SysWork.playerCombatInfo_38.field_F;
+        func_8007F14C(g_SysWork.playerCombatInfo_38.field_F);
+
+        switch (g_SysWork.playerCombatInfo_38.field_F)
+        {
+            case 0:
+                Fs_QueueStartRead(FILE_ANIM_HB_WEP3_ANM, FS_BUFFER_12);
+                break;
+
+            case 7:
+                Fs_QueueStartRead(FILE_ANIM_HB_WEP1_ANM, FS_BUFFER_12);
+                break;
+
+            case 1:
+            case 4:
+                Fs_QueueStartRead(FILE_ANIM_HB_WEP2_ANM, FS_BUFFER_12);
+                break;
+
+            case 5:
+                Fs_QueueStartRead(FILE_ANIM_HB_WEP6_ANM, FS_BUFFER_12);
+                break;
+
+            case 2:
+                Fs_QueueStartRead(FILE_ANIM_HB_WEP8_ANM, FS_BUFFER_12);
+                break;
+
+            case 6:
+                Fs_QueueStartRead(FILE_ANIM_HB_WEP9_ANM, FS_BUFFER_12);
+                break;
+
+            case 32:
+                Fs_QueueStartRead(FILE_ANIM_HB_WEP4_ANM, FS_BUFFER_12);
+                break;
+
+            case 33:
+                Fs_QueueStartRead(FILE_ANIM_HB_WEP51_ANM, FS_BUFFER_12);
+                break;
+
+            case 34:
+                Fs_QueueStartRead(FILE_ANIM_HB_WEP52_ANM, FS_BUFFER_12);
+                break;
+
+            case 35:
+                Fs_QueueStartRead(FILE_ANIM_HB_WEP53_ANM, FS_BUFFER_12);
+                break;
+        }
+    }
+}
 
 // TODO: .rodata migration.
 #ifdef NON_MATCHING
@@ -5530,14 +5760,76 @@ s32 func_8007F2AC() // 0x8007F2AC
 
 s16 Player_AnimGetSomething() // 0x8007F308
 {
-    return g_MaybePlayerAnims[g_SysWork.player_4C.chara_0.model_0.anim_4.animIdx_0].field_C;
+    return g_MaybePlayerAnims[g_SysWork.player_4C.chara_0.model_0.anim_4.animIdx_0].keyframeIdx0_C;
 }
 
 // Large function. Something to do with player control.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8007F32C); // 0x8007F32C
 
 // Medium function. Player-related.
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8007F95C); // 0x8007F95C
+s32 func_8007F95C() // 0x8007F95C
+{
+    VECTOR3         sp10;
+    VECTOR3         sp20;
+    u16             sp30;
+    s32             i;
+    s_SubCharacter* ptr0;
+    s_SubCharacter* ptr1;
+    u16             temp;
+    s32             var_a2;
+
+    if (g_Player_Walk2RunTransition != 0)
+    {
+        return 0;
+    }
+
+    sp10.vx = g_SysWork.player_4C.chara_0.position_18.vx;
+    sp10.vy = g_SysWork.player_4C.chara_0.position_18.vy;
+    sp10.vz = g_SysWork.player_4C.chara_0.position_18.vz;
+
+    if (g_SysWork.playerCombatInfo_38.isAiming_13 == 0 || g_SysWork.playerCombatInfo_38.field_F < 0x20)
+    {
+        for (i = 0, ptr1 = g_SysWork.npcs_1A0, ptr0 = g_SysWork.npcs_1A0; i < 6; i++, ptr1++, ptr0++)
+        {
+            if (ptr0->model_0.charaId_0 != 0)
+            {
+                if ((u8)(ptr0->model_0.charaId_0 - 2) >= 2)
+                {
+                    if (ptr0->model_0.charaId_0 == 0xB)
+                    {
+                        var_a2 = 0xA66;
+                    }
+                    else
+                    {
+                        var_a2 = 0xD99;
+                    }
+                }
+                else
+                {
+                    var_a2 = 0x1333;
+                }
+
+                sp20.vx = ptr1->position_18.vx + ptr1->field_D8;
+                sp20.vy = ptr1->position_18.vy;
+                sp20.vz = ptr1->position_18.vz + ptr1->field_DA;
+
+                if (func_80038A6C(&sp10, &sp20, var_a2) == 0 && ABS(sp20.vy - sp10.vy) < 0x4CC && ptr1->health_B0 > 0 && (ptr1->flags_3E & 2))
+                {
+                    func_8007FB34(g_SysWork.player_4C.chara_0.rotation_24.vy, (ratan2(sp20.vx - sp10.vx, sp20.vz - sp10.vz) + 0x1000) & 0xFFF, &sp30);
+                    temp = sp30 + 0x3FF;
+                    if (temp < 0x8FF)
+                    {
+                        g_SysWork.field_2353 = i;
+                        return 1;
+                    }
+                }
+            }
+        }
+    }
+
+    g_SysWork.field_2353 = -1;
+    return 0;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8007FB34); // 0x8007FB34
 

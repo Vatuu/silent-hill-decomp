@@ -1197,17 +1197,6 @@ typedef struct
 } s_CharaFileInfo;
 STATIC_ASSERT_SIZEOF(s_CharaFileInfo, 16);
 
-// Contains animation data? Size is rather small, so if it does, it would be indices to
-// larger arrays containing actual data.
-typedef struct
-{
-    s8  unk_0[6];
-    s8  field_6;
-    s8  unk_7[5];
-    s16 field_C;
-    s16 field_E;
-} s_MaybeCharacterAnim;
-
 typedef struct
 {
     SVECTOR3 posTarget_0;
@@ -1475,6 +1464,16 @@ typedef struct
     s8      field_14;
 } s_800C4590;
 
+typedef struct _s_800AFBF4
+{
+    u8 unk_0[6];
+    u8 field_6;
+    u8 field_7;
+    u8 field_8;
+    u8 unk_9[3];
+} s_800AFBF4;
+STATIC_ASSERT_SIZEOF(s_800AFBF4, 12);
+
 // ========
 // GLOBALS
 // ========
@@ -1496,6 +1495,10 @@ extern u32 g_MapMsg_Colors[];
 extern char D_80028544[0x10];
 
 extern RECT D_80028A20;
+
+extern s_AnimInfo D_80028B94[];
+
+extern s_D_800C44F0 D_800294F4[];
 
 extern RECT D_8002ABA4;
 
@@ -1822,7 +1825,9 @@ extern u8 D_800AF220;
 
 extern s32 D_800AF224;
 
-extern s_MaybeCharacterAnim g_MaybePlayerAnims[];
+extern s_AnimInfo g_MaybePlayerAnims[]; // Maybe part of bigger struct.
+
+extern s_800AFBF4 D_800AFBF4[];
 
 extern s32 D_800AFC7C;
 
@@ -2179,11 +2184,7 @@ extern s32 D_800C4558;
 
 extern s32 D_800C455C;
 
-extern u8 D_800C4576;
-
-extern u8 D_800C4577;
-
-extern u8 D_800C4578;
+extern s_800AFBF4 D_800C4570;
 
 extern u16 D_800C457E;
 
@@ -3550,8 +3551,14 @@ void Game_SavegameResetPlayer();
 
 void func_8007E5AC();
 
+void func_8007E860();
+
+void func_8007E9C4();
+
 /** Loads player animations for a given map. Maybe for cutscenes? */
 void GameFs_PlayerMapAnimLoad(s32 mapIdx);
+
+void func_8007EBBC();
 
 // `arg0` is `s_SubCharacter` pointer?
 void func_800711C4(s32 arg0, s32 arg1);
@@ -3591,6 +3598,8 @@ s32 func_8007F2AC();
 
 /** Gets something from the player's current animation? */
 s16 Player_AnimGetSomething();
+
+s32 func_8007F95C();
 
 void func_8007FB34(s16, s16, s16*);
 
