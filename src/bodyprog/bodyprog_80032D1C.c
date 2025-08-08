@@ -3057,35 +3057,36 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80032D1C", func_800382EC); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80032D1C", func_80038354); // 0x80038354
 
-s32 func_80038A6C(VECTOR3* pos0, VECTOR3* pos1, s32 radius) // 0x80038A6C
+bool Math_Distance2dCheck(VECTOR3* pos0, VECTOR3* pos1, s32 radius) // 0x80038A6C
 {
     s32 deltaX;
     s32 deltaZ;
     s32 radiusSqr;
     s32 sum;
 
+    // Check rough radius intersection on X axis.
     deltaX = pos0->vx - pos1->vx;
     if (radius < deltaX)
     {
-        return 1;
+        return true;
     }
-
     if (radius < -deltaX)
     {
-        return 1;
+        return true;
     }
 
+    // Check rough radius intersection on Z axis.
     deltaZ = pos0->vz - pos1->vz;
     if (radius < deltaZ)
     {
-        return 1;
+        return true;
     }
-
     if (radius < -deltaZ)
     {
-        return 1;
+        return true;
     }
 
+    // Check distance.
     sum       = FP_MULTIPLY((s64)deltaX, (s64)deltaX, Q12_SHIFT) + FP_MULTIPLY((s64)deltaZ, (s64)deltaZ, Q12_SHIFT);
     radiusSqr = FP_MULTIPLY((s64)radius, (s64)radius, Q12_SHIFT);
     return sum > radiusSqr;
@@ -3134,7 +3135,7 @@ void GameState_InGame_Update() // 0x80038BD4
         SysWork_StateSetNext(SysState_Gameplay);
     }
 
-    if (g_DeltaTime0 != 0)
+    if (g_DeltaTime0 != FP_TIME(0.0f))
     {
         D_800BCD84 = g_DeltaTime0;
     }
@@ -3164,7 +3165,7 @@ void GameState_InGame_Update() // 0x80038BD4
     }
     Demo_DemoRandSeedRestore();
 
-    D_800A9A0C = ((g_Gfx_ScreenFade & 0x7) == 5) && Fs_QueueDoThingWhenEmpty() != 0;
+    D_800A9A0C = (g_Gfx_ScreenFade & 0x7) == 5 && Fs_QueueDoThingWhenEmpty() != 0;
 
     if (!(g_SysWork.field_22A0 & (1 << 0)) && g_MapOverlayHeader.func_40 != NULL)
     {

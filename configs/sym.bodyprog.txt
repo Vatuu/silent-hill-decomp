@@ -293,6 +293,7 @@ Savegame_MapRoomIdxSet                      = 0x80036420; // type:func
 Gfx_MapMsg_Display                          = 0x800365B8; // type:func
 Gfx_MapMsg_SelectionUpdate                  = 0x80036B5C; // type:func
 Chara_PositionUpdateFromParams              = 0x800371E8; // type:func
+Math_Distance2dCheck                        = 0x80038A6C; // type:func
 GameState_InGame_Update                     = 0x80038BD4; // type:func
 SysState_Gameplay_Update                    = 0x80038F6C; // type:func
 SysState_GamePaused_Update                  = 0x800391E8; // type:func

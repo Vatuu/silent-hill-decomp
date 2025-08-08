@@ -3338,8 +3338,8 @@ void func_80037E78(s_SubCharacter* chara);
 
 s32 func_800382B0(s32 arg0);
 
-/** Possibly used to check distances between objects or characters. */
-s32 func_80038A6C(VECTOR3* pos0, VECTOR3* pos1, s32 radius);
+/** @brief Performs a distance on the XZ plane between two positions. */
+bool Math_Distance2dCheck(VECTOR3* pos0, VECTOR3* pos1, s32 radius);
 
 /** Computes the 2D distance on the XZ plane between the input position and the camera position. */
 s32 func_80038B44(VECTOR3* pos);
@@ -3558,6 +3558,7 @@ void func_8007E9C4();
 /** Loads player animations for a given map. Maybe for cutscenes? */
 void GameFs_PlayerMapAnimLoad(s32 mapIdx);
 
+/** Used when exiting the inventory screen. */
 void func_8007EBBC();
 
 // `arg0` is `s_SubCharacter` pointer?
@@ -3581,6 +3582,7 @@ void func_8007D090(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
 
 void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord);
 
+/** Player func. */
 void func_8007E9C4();
 
 void func_8007F14C(u8 arg0);
@@ -3599,6 +3601,7 @@ s32 func_8007F2AC();
 /** Gets something from the player's current animation? */
 s16 Player_AnimGetSomething();
 
+/** Player func. */
 s32 func_8007F95C();
 
 void func_8007FB34(s16, s16, s16*);
