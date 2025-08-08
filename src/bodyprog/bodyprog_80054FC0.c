@@ -1778,11 +1778,11 @@ void Player_Logic_Update(s_SubCharacter* chara, void* arg1, GsCOORDINATE2* coord
 
     s_MainCharacterExtra* extra = &g_SysWork.player_4C.extra_128;
 
-    if (g_DeltaTime0 != 0)
+    if (g_DeltaTime0 != FP_TIME(0.0f))
     {
         func_8007C800(chara, extra);
 
-        if (g_Player_Walk2RunTransition != 0)
+        if (g_Player_WalkToRunTransition)
         {
             D_800C455C = 0;
             D_800C4558 = 0;
@@ -1983,13 +1983,14 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
             {
                 if (g_SysWork.player_4C.extra_128.field_20 == 24)
                 {
-                    if (g_SysWork.playerCombatInfo_38.isAiming_13 == 0 && chara->model_0.stateStep_3 == 0)
+                    if (!g_SysWork.playerCombatInfo_38.isAiming_13 && chara->model_0.stateStep_3 == 0)
                     {
                         chara->model_0.anim_4.animIdx_0 = D_800C4570.field_6;
                         chara->model_0.stateStep_3++;
                     }
                 }
-                else if (chara->properties_E4.player.properties_E4[6] < FP_FLOAT_TO(10.0f, Q12_SHIFT) && chara->health_B0 >= FP_FLOAT_TO(30.0f, Q12_SHIFT))
+                else if (chara->properties_E4.player.properties_E4[6] < FP_FLOAT_TO(10.0f, Q12_SHIFT) &&
+                         chara->health_B0 >= FP_FLOAT_TO(30.0f, Q12_SHIFT))
                 {
                     if (chara->model_0.stateStep_3 == 0)
                     {
@@ -2007,7 +2008,7 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
             {
                 if (g_SysWork.player_4C.extra_128.field_20 == 24)
                 {
-                    if (g_SysWork.playerCombatInfo_38.isAiming_13 == 0 && chara->model_0.stateStep_3 == 0)
+                    if (!g_SysWork.playerCombatInfo_38.isAiming_13 && chara->model_0.stateStep_3 == 0)
                     {
                         chara->model_0.anim_4.animIdx_0 = D_800C4570.field_6;
                         chara->model_0.stateStep_3++;
@@ -2144,7 +2145,7 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                             }
                         }
 
-                        if (var_s2 == 0 && g_SysWork.playerCombatInfo_38.isAiming_13 == 0)
+                        if (var_s2 == 0 && g_SysWork.playerCombatInfo_38.isAiming_13 == false)
                         {
                             if ((g_GameWork.config_0.optExtraWalkRunCtrl_2B != 0 && D_800C4604 == 0) ||
                                 (g_GameWork.config_0.optExtraWalkRunCtrl_2B == 0 && D_800C4604 != 0))
@@ -2159,7 +2160,7 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                             }
                         }
 
-                        if (g_SysWork.player_4C.extra_128.field_24 == var_s2 && g_Player_Walk2RunTransition == 0)
+                        if (g_SysWork.player_4C.extra_128.field_24 == var_s2 && !g_Player_WalkToRunTransition)
                         {
                             func_800711C4(chara, var_s2);
                         }
@@ -2393,7 +2394,7 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                     }
                 }
 
-                if (g_SysWork.player_4C.extra_128.field_24 == (var_s2 + 1) && g_Player_Walk2RunTransition == 0)
+                if (g_SysWork.player_4C.extra_128.field_24 == (var_s2 + 1) && g_Player_WalkToRunTransition == 0)
                 {
                     func_800711C4(chara, var_s2);
                 }
@@ -2409,7 +2410,7 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
             {
                 chara->model_0.anim_4.animIdx_0 = 0;
                 chara->model_0.stateStep_3++;
-                g_Player_Walk2RunTransition = 1;
+                g_Player_WalkToRunTransition = true;
             }
             break;
 
@@ -2608,7 +2609,7 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
             {
                 chara->model_0.anim_4.animIdx_0 = 0;
                 chara->model_0.stateStep_3++;
-                g_Player_Walk2RunTransition = 1;
+                g_Player_WalkToRunTransition = true;
             }
             break;
 
@@ -2787,7 +2788,7 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                     }
                 }
 
-                if (g_SysWork.player_4C.extra_128.field_24 == (var_s2 + 4) && g_Player_Walk2RunTransition == 0)
+                if (g_SysWork.player_4C.extra_128.field_24 == (var_s2 + 4) && !g_Player_WalkToRunTransition)
                 {
                     func_800711C4(chara, var_s2);
                 }
@@ -4187,7 +4188,7 @@ void func_8007C0D8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
 
     if (((u32)g_SysWork.player_4C.extra_128.field_1C - 3) >= 2)
     {
-        if ((g_Player_Walk2RunTransition == 0))
+        if (!g_Player_WalkToRunTransition)
         {
             posY = chara->position_18.vy;
             if ((D_800C4590.field_C - posY) >= FP_METER(0.65f))
@@ -4217,7 +4218,7 @@ void func_8007C0D8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
                     g_SysWork.player_4C.extra_128.field_24 = 0;
                 }
 
-                g_SysWork.playerCombatInfo_38.isAiming_13 = 0;
+                g_SysWork.playerCombatInfo_38.isAiming_13 = false;
             }
         }
     }
@@ -4350,7 +4351,7 @@ void func_8007C800(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
             break;
 
         default:
-            if (g_Player_Walk2RunTransition != 0)
+            if (g_Player_WalkToRunTransition)
             {
                 D_800C4560 = chara->field_41;
                 return;
@@ -4662,7 +4663,7 @@ void func_8007C800(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                 chara->properties_E4.player.properties_E4[1]                = 0;
                 chara->properties_E4.player.properties_E4[4]                = 0;
                 g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk12;
-                g_SysWork.playerCombatInfo_38.isAiming_13                   = 0;
+                g_SysWork.playerCombatInfo_38.isAiming_13                   = false;
                 g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk9;
                 chara->field_44                                             = NO_VALUE;
             }
@@ -4721,7 +4722,7 @@ void func_8007C800(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
     if (chara->health_B0 <= FP_FLOAT_TO(0.0f, Q12_SHIFT) && g_SysWork.player_4C.extra_128.field_1C != 8 &&
         g_SysWork.player_4C.extra_128.field_1C != 36 && g_SysWork.player_4C.extra_128.field_1C != 39 &&
         g_SysWork.player_4C.extra_128.field_1C != 40 && g_SysWork.player_4C.extra_128.field_1C != 47 &&
-        g_SysWork.player_4C.extra_128.field_1C != 48 && g_Player_Walk2RunTransition == 0)
+        g_SysWork.player_4C.extra_128.field_1C != 48 && !g_Player_WalkToRunTransition)
     {
         chara->field_40           = NO_VALUE;
         g_SavegamePtr->field_238 = 0;
@@ -5141,7 +5142,9 @@ void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D970
             }
             else
             {
-                do { chara->rotation_24.pad = chara->rotation_24.vy; } while (0); // HACK: Required for match.
+                // HACK: Required for match.
+                do { chara->rotation_24.pad = chara->rotation_24.vy; } while (0);
+
                 sp98.vx = chara->rotation_24.pad;
             }
 
@@ -5250,7 +5253,7 @@ void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D970
         }
 
         if (g_SysWork.playerCombatInfo_38.field_F == 0x23 &&
-            g_SysWork.playerCombatInfo_38.isAiming_13 != 0 &&
+            g_SysWork.playerCombatInfo_38.isAiming_13 &&
             model->anim_4.animIdx_0 >= 57 &&
             model->anim_4.keyframeIdx0_8 >= 574)
         {
@@ -5402,6 +5405,7 @@ void func_8007E5AC() // 0x8007E5AC
 
     if (temp_t0 >= 4 && temp_t0 < 6)
     {
+        // HACK: Required for match.
         for (i = 0; g_SavegamePtr->items_0[i].id_0 != g_SavegamePtr->equippedWeapon_AA && i < INVENTORY_ITEM_COUNT_MAX; i++);
 
         g_SysWork.playerCombatInfo_38.field_F              = g_SavegamePtr->equippedWeapon_AA + InventoryItemId_KitchenKnife;
@@ -5414,6 +5418,7 @@ void func_8007E5AC() // 0x8007E5AC
         }
         else
         {
+        // HACK: Required for match.
             for (i = 0; g_SavegamePtr->items_0[i].id_0 != (g_SavegamePtr->equippedWeapon_AA + InventoryItemId_HealthDrink) && i < INVENTORY_ITEM_COUNT_MAX; i++);
 
             if (i == INVENTORY_ITEM_COUNT_MAX)
@@ -5434,7 +5439,7 @@ void func_8007E5AC() // 0x8007E5AC
         g_SysWork.playerCombatInfo_38.field_12             = NO_VALUE;
     }
 
-    g_SysWork.playerCombatInfo_38.isAiming_13 = 0;
+    g_SysWork.playerCombatInfo_38.isAiming_13 = false;
     D_800AF20C                                = 0;
     D_800C4588                                = 0;
     D_800C457C                                = 0;
@@ -5476,65 +5481,64 @@ void func_8007E860() // 0x8007E860
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8007E8C0); // 0x8007E8C0
 
-// Player func.
 void func_8007E9C4() // 0x8007E9C4
 {
-    s_SubCharacter* sub;
+    s_SubCharacter* chara;
 
-    sub = &g_SysWork.player_4C.chara_0;
+    chara = &g_SysWork.player_4C.chara_0;
 
-    g_Player_Walk2RunTransition                       = 0;
+    g_Player_WalkToRunTransition                      = false;
     g_SysWork.player_4C.extra_128.field_1C            = 0;
     g_SysWork.player_4C.extra_128.field_20            = 0;
     g_SysWork.player_4C.extra_128.field_24            = 0;
     g_SysWork.player_4C.extra_128.model_0.stateStep_3 = 0;
     g_SysWork.player_4C.extra_128.model_0.state_2     = 0;
 
-    sub->model_0.stateStep_3                  = 0;
-    sub->model_0.state_2                      = 0;
+    chara->model_0.stateStep_3                = 0;
+    chara->model_0.state_2                    = 0;
     g_SysWork.field_235A                      = 0;
     D_800AF210                                = 0;
     D_800AF212                                = 0;
-    D_800C4560                                = -1;
-    g_SysWork.playerCombatInfo_38.isAiming_13 = 0;
+    D_800C4560                                = NO_VALUE;
+    g_SysWork.playerCombatInfo_38.isAiming_13 = false;
 
-    func_8004C564(0, -1);
+    func_8004C564(0, NO_VALUE);
 
-    sub->rotation_24.pad = 0x400;
-    D_800C4561           = 0;
-    D_800C4562           = 0;
-    D_800C455C           = 0;
-    D_800C4558           = 0;
-    D_800C45C0           = 0;
-    D_800C45BE           = 0;
+    chara->rotation_24.pad = FP_ANGLE(90.0f);
+    D_800C4561             = 0;
+    D_800C4562             = 0;
+    D_800C455C             = 0;
+    D_800C4558             = 0;
+    D_800C45C0             = 0;
+    D_800C45BE             = 0;
 
-    sub->properties_E4.player.properties_E4[1]               = 0;
-    sub->properties_E4.player.properties_E4[4]               = 0;
-    sub->properties_E4.player.properties_E4[5]               = 0;
-    sub->properties_E4.player.properties_E4[7]               = 0;
-    sub->properties_E4.player.properties_E4[8]               = 0;
-    sub->properties_E4.player.properties_E4[9]               = 0;
-    sub->properties_E4.larvalStalker.properties_E8[10].val32 = 0;
-    sub->properties_E4.player.flags_11C                      = 0;
-    sub->properties_E4.player.field_126                      = 0;
+    chara->properties_E4.player.properties_E4[1]               = 0;
+    chara->properties_E4.player.properties_E4[4]               = 0;
+    chara->properties_E4.player.properties_E4[5]               = 0;
+    chara->properties_E4.player.properties_E4[7]               = 0;
+    chara->properties_E4.player.properties_E4[8]               = 0;
+    chara->properties_E4.player.properties_E4[9]               = 0;
+    chara->properties_E4.larvalStalker.properties_E8[10].val32 = 0;
+    chara->properties_E4.player.flags_11C                      = 0;
+    chara->properties_E4.player.field_126                      = 0;
 
-    sub->field_C0 = 0;
-    sub->field_BC = 0;
-    sub->field_B8 = 0;
-    sub->field_B4 = 0;
+    chara->field_C0 = 0;
+    chara->field_BC = 0;
+    chara->field_B8 = 0;
+    chara->field_B4 = 0;
 
-    D_800C45BC = 0;
-    sub->flags_3E &= 0xFFF7;
-    D_800C45F8           = sub->position_18;
-    g_SysWork.field_2353 = -1;
-    sub->field_40        = -1;
-    sub->field_41        = -1;
+    D_800C45BC           = 0;
+    chara->flags_3E     &= ~(1 << 3);
+    D_800C45F8           = chara->position_18;
+    g_SysWork.field_2353 = NO_VALUE;
+    chara->field_40      = NO_VALUE;
+    chara->field_41      = NO_VALUE;
 
-    g_SysWork.field_2354[3] = -1;
-    g_SysWork.field_2354[2] = -1;
-    g_SysWork.field_2354[1] = -1;
-    g_SysWork.field_2354[0] = -1;
-    sub->field_D6           = 0x3AE;
+    g_SysWork.field_2354[3] = NO_VALUE;
+    g_SysWork.field_2354[2] = NO_VALUE;
+    g_SysWork.field_2354[1] = NO_VALUE;
+    g_SysWork.field_2354[0] = NO_VALUE;
+    chara->field_D6         = 0x3AE;
 
     D_800C457E = 0;
     D_800C4604 = 0;
@@ -5562,7 +5566,6 @@ void GameFs_PlayerMapAnimLoad(s32 mapIdx) // 0x8007EB64
     }
 }
 
-// Used when exiting the inventory screen.
 void func_8007EBBC() // 0x8007EBBC
 {
     s32 var_a1;
@@ -5573,7 +5576,7 @@ void func_8007EBBC() // 0x8007EBBC
     var_a1 = 0;
     var_a2 = 0;
 
-    g_SysWork.field_2353 = -1;
+    g_SysWork.field_2353 = NO_VALUE;
     temp_v1              = g_SysWork.playerCombatInfo_38.field_F + 1;
 
     switch (temp_v1)
@@ -5583,8 +5586,8 @@ void func_8007EBBC() // 0x8007EBBC
             return;
 
         case 1:
-            var_a1                               = 0x1E;
-            var_a2                               = 0xF;
+            var_a1                               = 30;
+            var_a2                               = 15;
             D_800C4570                           = D_800AFBF4[1];
             g_SysWork.player_4C.chara_0.field_D0 = -0x1030;
             break;
@@ -5605,71 +5608,72 @@ void func_8007EBBC() // 0x8007EBBC
             switch (g_SysWork.playerCombatInfo_38.field_F)
             {
                 case 4:
-                    var_a1 = 0xA;
+                    var_a1 = 10;
                     var_a2 = 5;
                     break;
 
                 case 1:
-                    var_a1 = 0x14;
-                    var_a2 = 0xA;
+                    var_a1 = 20;
+                    var_a2 = 10;
                     break;
             }
+
             g_SysWork.player_4C.chara_0.field_D0 = -0xEC0;
             break;
 
         case 6:
-            var_a1                               = 0x32;
-            var_a2                               = 0x19;
+            var_a1                               = 50;
+            var_a2                               = 25;
             D_800C4570                           = D_800AFBF4[4];
             g_SysWork.player_4C.chara_0.field_D0 = -0xE90;
             break;
 
         case 3:
-            var_a1                               = 0x40;
-            var_a2                               = 0x20;
+            var_a1                               = 64;
+            var_a2                               = 32;
             D_800C4570                           = D_800AFBF4[5];
             g_SysWork.player_4C.chara_0.field_D0 = -0x12E0;
             break;
 
         case 7:
-            var_a1                               = 0x28;
-            var_a2                               = 0x14;
+            var_a1                               = 40;
+            var_a2                               = 20;
             D_800C4570                           = D_800AFBF4[10];
             g_SysWork.player_4C.chara_0.field_D0 = -0xF20;
             break;
 
         case 33:
-            var_a1                               = 0x4E;
-            var_a2                               = 0x27;
+            var_a1                               = 78;
+            var_a2                               = 39;
             D_800C4570                           = D_800AFBF4[6];
             g_SysWork.player_4C.chara_0.field_D0 = -0x1600;
             break;
 
         case 34:
-            var_a1                               = 0x60;
-            var_a2                               = 0x30;
+            var_a1                               = 96;
+            var_a2                               = 48;
             D_800C4570                           = D_800AFBF4[7];
             g_SysWork.player_4C.chara_0.field_D0 = -0x1180;
             break;
 
         case 35:
-            var_a1                               = 0x72;
-            var_a2                               = 0x39;
+            var_a1                               = 114;
+            var_a2                               = 57;
             D_800C4570                           = D_800AFBF4[8];
             g_SysWork.player_4C.chara_0.field_D0 = -0x1600;
             break;
 
         case 36:
-            var_a1                               = 0x84;
-            var_a2                               = 0x42;
+            var_a1                               = 132;
+            var_a2                               = 66;
             D_800C4570                           = D_800AFBF4[9];
             g_SysWork.player_4C.chara_0.field_D0 = -0x1610;
             break;
     }
 
-    for (i = 0x38; i < 0x4C; i++)
+    for (i = 56; i < 76; i++)
     {
-        g_MaybePlayerAnims[i] = D_80028B94[i - 0x38 + var_a1];
+        g_MaybePlayerAnims[i] = D_80028B94[(i - 56) + var_a1];
     }
 
     for (i = 0; i < 10; i++)
@@ -5677,7 +5681,7 @@ void func_8007EBBC() // 0x8007EBBC
         D_800C44F0[i] = D_800294F4[i + var_a2];
     }
 
-    if (g_SysWork.playerCombatInfo_38.field_F != -1 && D_800AF224 != g_SysWork.playerCombatInfo_38.field_F)
+    if (g_SysWork.playerCombatInfo_38.field_F != NO_VALUE && D_800AF224 != g_SysWork.playerCombatInfo_38.field_F)
     {
         D_800AF224 = g_SysWork.playerCombatInfo_38.field_F;
         func_8007F14C(g_SysWork.playerCombatInfo_38.field_F);
@@ -5773,22 +5777,22 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8007F14C); // 0x
 
 void func_8007F1CC() // 0x8007F1CC
 {
-    D_800C455C                  = 0;
-    D_800C4558                  = 0;
-    D_800C45C0                  = 0;
-    D_800C45BE                  = 0;
-    D_800C45BC                  = 0;
-    D_800C457E                  = 0;
-    D_800C4604                  = 0;
-    D_800C45F0                  = 0;
-    D_800C45E8                  = 0;
-    D_800C4582                  = 0;
-    D_800C45AE                  = 0;
-    D_800C4586                  = 0;
-    D_800C4580                  = 0;
-    D_800C45AC                  = 0;
-    D_800C4584                  = 0;
-    g_Player_Walk2RunTransition = 0;
+    D_800C455C                   = 0;
+    D_800C4558                   = 0;
+    D_800C45C0                   = 0;
+    D_800C45BE                   = 0;
+    D_800C45BC                   = 0;
+    D_800C457E                   = 0;
+    D_800C4604                   = 0;
+    D_800C45F0                   = 0;
+    D_800C45E8                   = 0;
+    D_800C4582                   = 0;
+    D_800C45AE                   = 0;
+    D_800C4586                   = 0;
+    D_800C4580                   = 0;
+    D_800C45AC                   = 0;
+    D_800C4584                   = 0;
+    g_Player_WalkToRunTransition = false;
 }
 
 void func_8007F250(u8* ptr, s8 arg1) // 0x8007F250
@@ -5811,10 +5815,10 @@ s32 func_8007F26C() // 0x8007F26C
 
 s32 func_8007F2AC() // 0x8007F2AC
 {
-    if (g_SysWork.player_4C.chara_0.health_B0     <= 0 ||
-        g_SysWork.playerCombatInfo_38.isAiming_13 != 0 ||
-        g_SysWork.player_4C.extra_128.field_1C    == 5 ||
-        g_SysWork.player_4C.extra_128.field_1C    == 6 ||
+    if (g_SysWork.player_4C.chara_0.health_B0 <= 0 ||
+        g_SysWork.playerCombatInfo_38.isAiming_13 ||
+        g_SysWork.player_4C.extra_128.field_1C == 5 ||
+        g_SysWork.player_4C.extra_128.field_1C == 6 ||
         (g_SysWork.player_4C.extra_128.field_1C >= 7 &&
          g_SysWork.player_4C.extra_128.field_1C <= 50))
     {
@@ -5832,56 +5836,58 @@ s16 Player_AnimGetSomething() // 0x8007F308
 // Large function. Something to do with player control.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8007F32C); // 0x8007F32C
 
-// Medium function. Player-related.
 s32 func_8007F95C() // 0x8007F95C
 {
-    VECTOR3         sp10;
-    VECTOR3         sp20;
+    VECTOR3         pos0;
+    VECTOR3         pos1;
     u16             sp30;
     s32             i;
     s_SubCharacter* ptr0;
     s_SubCharacter* ptr1;
     u16             temp;
-    s32             var_a2;
+    s32             radius;
 
-    if (g_Player_Walk2RunTransition != 0)
+    if (g_Player_WalkToRunTransition)
     {
         return 0;
     }
 
-    sp10.vx = g_SysWork.player_4C.chara_0.position_18.vx;
-    sp10.vy = g_SysWork.player_4C.chara_0.position_18.vy;
-    sp10.vz = g_SysWork.player_4C.chara_0.position_18.vz;
+    pos0.vx = g_SysWork.player_4C.chara_0.position_18.vx;
+    pos0.vy = g_SysWork.player_4C.chara_0.position_18.vy;
+    pos0.vz = g_SysWork.player_4C.chara_0.position_18.vz;
 
-    if (g_SysWork.playerCombatInfo_38.isAiming_13 == 0 || g_SysWork.playerCombatInfo_38.field_F < 0x20)
+    if (!g_SysWork.playerCombatInfo_38.isAiming_13 || g_SysWork.playerCombatInfo_38.field_F < 32)
     {
         for (i = 0, ptr1 = g_SysWork.npcs_1A0, ptr0 = g_SysWork.npcs_1A0; i < 6; i++, ptr1++, ptr0++)
         {
-            if (ptr0->model_0.charaId_0 != 0)
+            if (ptr0->model_0.charaId_0 != Chara_None)
             {
-                if ((u8)(ptr0->model_0.charaId_0 - 2) >= 2)
+                if (ptr0->model_0.charaId_0 != Chara_AirScreamer &&
+                    ptr0->model_0.charaId_0 != Chara_NightFlutter)
                 {
-                    if (ptr0->model_0.charaId_0 == 0xB)
+                    if (ptr0->model_0.charaId_0 == Chara_Creaper)
                     {
-                        var_a2 = 0xA66;
+                        radius = FP_METER(0.65f);
                     }
                     else
                     {
-                        var_a2 = 0xD99;
+                        radius = FP_METER(0.85f);
                     }
                 }
                 else
                 {
-                    var_a2 = 0x1333;
+                    radius = FP_METER(1.2f);
                 }
 
-                sp20.vx = ptr1->position_18.vx + ptr1->field_D8.field_0;
-                sp20.vy = ptr1->position_18.vy;
-                sp20.vz = ptr1->position_18.vz + ptr1->field_D8.field_2;
+                pos1.vx = ptr1->position_18.vx + ptr1->field_D8.field_0;
+                pos1.vy = ptr1->position_18.vy;
+                pos1.vz = ptr1->position_18.vz + ptr1->field_D8.field_2;
 
-                if (func_80038A6C(&sp10, &sp20, var_a2) == 0 && ABS(sp20.vy - sp10.vy) < 0x4CC && ptr1->health_B0 > 0 && (ptr1->flags_3E & 2))
+                if (!Math_Distance2dCheck(&pos0, &pos1, radius) && ABS(pos1.vy - pos0.vy) < FP_METER(0.3f) &&
+                    ptr1->health_B0 > FP_FLOAT_TO(0.0f, Q12_SHIFT) && (ptr1->flags_3E & (1 << 1)))
                 {
-                    func_8007FB34(g_SysWork.player_4C.chara_0.rotation_24.vy, (ratan2(sp20.vx - sp10.vx, sp20.vz - sp10.vz) + 0x1000) & 0xFFF, &sp30);
+                    func_8007FB34(g_SysWork.player_4C.chara_0.rotation_24.vy, (ratan2(pos1.vx - pos0.vx, pos1.vz - pos0.vz) + FP_ANGLE(360.0f)) & 0xFFF, &sp30);
+
                     temp = sp30 + 0x3FF;
                     if (temp < 0x8FF)
                     {
@@ -5893,7 +5899,7 @@ s32 func_8007F95C() // 0x8007F95C
         }
     }
 
-    g_SysWork.field_2353 = -1;
+    g_SysWork.field_2353 = NO_VALUE;
     return 0;
 }
 

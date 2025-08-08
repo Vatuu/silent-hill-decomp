@@ -62,7 +62,7 @@ void sharedFunc_800D2244_0_s00(s32 arg0)
     D_800C45AC = 0;
     D_800C4584 = 0;
 
-    g_SysWork.playerCombatInfo_38.isAiming_13 = 0;
+    g_SysWork.playerCombatInfo_38.isAiming_13 = false;
 
     player->field_D6 = 942;
 

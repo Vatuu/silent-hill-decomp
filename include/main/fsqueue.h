@@ -7,107 +7,118 @@
  /** FS queue size. */
 #define FS_QUEUE_LENGTH 32
 
-// TODO: Rename in address order when all become known. Follows a pattern of 4096-byte buffers.
+/** TODO: Rename in address order when all become known. Follows a pattern of 4096-byte buffers.
+ * Could also make something like this later to address magic:
+ *
+ * typedef enum _BufferIdx
+ * {
+ *     BufferIdx_WeaponAnim = 0,
+ *     BufferIdx_PlayerAnim = 1
+ * } e_BufferIdx;
+ *
+ * #define FS_BUFFER(idx) \
+ *     (void*)(0x80100000 + ((idx) * 0x1000))
+ */
 #define FS_BUFFER_0  (void*)0x8010A600
 #define FS_BUFFER_12 (void*)0x801201B4 // Used for weapon anim.
-#define FS_BUFFER_4 (void*)0x80124384  // Used for player map anim.
+#define FS_BUFFER_4  (void*)0x80124384 // Used for player map anim.
 #define FS_BUFFER_11 (void*)0x80169600
-#define FS_BUFFER_3 (void*)0x801B2600
-#define FS_BUFFER_8 (void*)0x801B5E80 // Used for loading inventory item models.
-#define FS_BUFFER_7 (void*)0x801C2600 // Used in `b_konami.c`.
-#define FS_BUFFER_2 (void*)0x801CF600
-#define FS_BUFFER_1 (void*)0x801E2600
-#define FS_BUFFER_5 (void*)0x801E3600 // Used in `b_konami.c`.
-#define FS_BUFFER_6 (void*)0x801E4600 // Used in `b_konami.c`.
+#define FS_BUFFER_3  (void*)0x801B2600
+#define FS_BUFFER_8  (void*)0x801B5E80 // Used for loading inventory item models.
+#define FS_BUFFER_7  (void*)0x801C2600 // Used in `b_konami.c`.
+#define FS_BUFFER_2  (void*)0x801CF600
+#define FS_BUFFER_1  (void*)0x801E2600
+#define FS_BUFFER_5  (void*)0x801E3600 // Used in `b_konami.c`.
+#define FS_BUFFER_6  (void*)0x801E4600 // Used in `b_konami.c`.
 #define FS_BUFFER_10 (void*)0x801EA600
-#define FS_BUFFER_9 (void*)0x801EC600
+#define FS_BUFFER_9  (void*)0x801EC600
 
 #define IMAGE_BUFFER (u_long*)0x801AFA00
 
- /** @brief `FsQueue::state` values when processing a read operation (`Fs_QueueUpdateRead`).
-  *
-  * When `Fs_QueueUpdate` is called and the current op is a read, it will perform the corresponding action below.
-  * Unless otherwise specified, success of that action will advance to the next state.
-  *
-  * `FSQS_READ_RESET` and `FSQS_READ_CHECK` perform one check/tick iteration every time `Fs_QueueUpdate` is called
-  * and only advance to the next state when they're done.
-  */
- enum FsQueueReadState
- {
-     FSQS_READ_ALLOCATE = 0, /** Allocate memory for the current read operation (`fsQueueAllocData`), if needed. */
-     FSQS_READ_CHECK    = 1, /** Check if the current read operation can proceed (`Fs_QueueCanRead`). Goto next state if it can. */
-     FSQS_READ_SETLOC   = 2, /** Set start sector from `info` (`Fs_QueueTickSetLoc`). If failure, goto `FSQS_READ_RESET`. */
-     FSQS_READ_READ     = 3, /** Read from CD (`Fs_QueueTickRead`). If failure, goto `FSQS_READ_RESET`. */
-     FSQS_READ_SYNC     = 4, /** Wait for read to complete. If failure, goto `FSQS_READ_RESET`. */
-     FSQS_READ_RESET    = 5  /** Tick the reset timers (`Fs_QueueResetTick`). When done, reset CD driver and goto `FSQS_READ_SETLOC`. */
- };
+/** @brief `FsQueue::state` values when processing a read operation (`Fs_QueueUpdateRead`).
+ *
+ * When `Fs_QueueUpdate` is called and the current op is a read, it will perform the corresponding action below.
+ * Unless otherwise specified, success of that action will advance to the next state.
+ *
+ * `FSQS_READ_RESET` and `FSQS_READ_CHECK` perform one check/tick iteration every time `Fs_QueueUpdate` is called
+ * and only advance to the next state when they're done.
+ */
+enum FsQueueReadState
+{
+    FSQS_READ_ALLOCATE = 0, /** Allocate memory for the current read operation (`fsQueueAllocData`), if needed. */
+    FSQS_READ_CHECK    = 1, /** Check if the current read operation can proceed (`Fs_QueueCanRead`). Goto next state if it can. */
+    FSQS_READ_SETLOC   = 2, /** Set start sector from `info` (`Fs_QueueTickSetLoc`). If failure, goto `FSQS_READ_RESET`. */
+    FSQS_READ_READ     = 3, /** Read from CD (`Fs_QueueTickRead`). If failure, goto `FSQS_READ_RESET`. */
+    FSQS_READ_SYNC     = 4, /** Wait for read to complete. If failure, goto `FSQS_READ_RESET`. */
+    FSQS_READ_RESET    = 5  /** Tick the reset timers (`Fs_QueueResetTick`). When done, reset CD driver and goto `FSQS_READ_SETLOC`. */
+};
 
- /** @brief `FsQueue::state` values when processing a seek operation (`Fs_QueueUpdateSeek`).
-  *
-  * When `Fs_QueueUpdate` is called and the current op is a seek, it will perform the corresponding action below.
-  * Unless otherwise specified, success of that action will advance to the next state.
-  */
- enum FsQueueSeekState
- {
-     FSQS_SEEK_SET_LOC = 0, /** Set seek sector from `info` (`Fs_QueueTickSetLoc`). */
-     FSQS_SEEK_SEEKL   = 1, /** Start seeking to above location (via `CdControl(CdlSeekL, ...)`). */
-     FSQS_SEEK_SYNC    = 2, /** Wait for seek to complete (`CdSync()`). If `CdlDiskError`, goto `FSQS_SEEK_RESET`. */
-     FSQS_SEEK_RESET   = 3  /** See `FSQS_READ_RESET`. When done, reset CD driver and go to `FSQS_SEEK_SET_LOC`. */
- };
+/** @brief `FsQueue::state` values when processing a seek operation (`Fs_QueueUpdateSeek`).
+ *
+ * When `Fs_QueueUpdate` is called and the current op is a seek, it will perform the corresponding action below.
+ * Unless otherwise specified, success of that action will advance to the next state.
+ */
+enum FsQueueSeekState
+{
+    FSQS_SEEK_SET_LOC = 0, /** Set seek sector from `info` (`Fs_QueueTickSetLoc`). */
+    FSQS_SEEK_SEEKL   = 1, /** Start seeking to above location (via `CdControl(CdlSeekL, ...)`). */
+    FSQS_SEEK_SYNC    = 2, /** Wait for seek to complete (`CdSync()`). If `CdlDiskError`, goto `FSQS_SEEK_RESET`. */
+    FSQS_SEEK_RESET   = 3  /** See `FSQS_READ_RESET`. When done, reset CD driver and go to `FSQS_SEEK_SET_LOC`. */
+};
 
- /** @brief Post-load state.
-  *
-  * When `Fs_QueueUpdate` is called it will perform an action on the current post load entry, if any,
-  * according to `g_FsQueue.postLoadState`, which can have one of these values.
-  *
-  * See `FsQueue::postLoadState`.
-  */
- enum FsQueuePostLoadState
- {
-     FSQS_POST_LOAD_INIT = 0, /** Check for allocated memory and proceed to `SKIP` or `EXEC`. */
-     FSQS_POST_LOAD_SKIP = 1, /** Skip post loading because this entry owns allocated memory. */
-     FSQS_POST_LOAD_EXEC = 2  /** Execute post load operation. */
- };
+/** @brief Post-load state.
+ *
+ * When `Fs_QueueUpdate` is called it will perform an action on the current post load entry, if any,
+ * according to `g_FsQueue.postLoadState`, which can have one of these values.
+ *
+ * See `FsQueue::postLoadState`.
+ */
+enum FsQueuePostLoadState
+{
+    FSQS_POST_LOAD_INIT = 0, /** Check for allocated memory and proceed to `SKIP` or `EXEC`. */
+    FSQS_POST_LOAD_SKIP = 1, /** Skip post loading because this entry owns allocated memory. */
+    FSQS_POST_LOAD_EXEC = 2  /** Execute post load operation. */
+};
 
- /** @brief Post-load types.
-  *
-  * What to do with a queue entry after its `operation` is done. Might be better described as "file format", but
-  * it only applies to two filetypes.
-  *
-  * See `FsQueueEntry::postLoad`.
-  */
- enum FsQueuePostLoadType
- {
-     FS_POST_LOAD_NONE = 0, /** Do nothing. */
-     FS_POST_LOAD_TIM  = 1, /** Parse TIM file (`Fs_QueuePostLoadTim`). Can use `extra.image`. */
-     FS_POST_LOAD_ANM  = 2  /** Parse ANM file maybe (`Fs_QueuePostLoadAnm`). Always uses `extra.anm`. */
- };
+/** @brief Post-load types.
+ *
+ * What to do with a queue entry after its `operation` is done. Might be better described as "file format", but
+ * it only applies to two filetypes.
+ *
+ * See `FsQueueEntry::postLoad`.
+ */
+enum FsQueuePostLoadType
+{
+    FS_POST_LOAD_NONE = 0, /** Do nothing. */
+    FS_POST_LOAD_TIM  = 1, /** Parse TIM file (`Fs_QueuePostLoadTim`). Can use `extra.image`. */
+    FS_POST_LOAD_ANM  = 2  /** Parse ANM file maybe (`Fs_QueuePostLoadAnm`). Always uses `extra.anm`. */
+};
 
- /** @brief FS queue operation type.
-  *
-  * What to do for a queue entry.
-  * See `s_FsQueueEntry::operation`.
-  */
- enum FsQueueOperation
- {
-     FS_OP_NONE = 0, /** Uninitialized. */
-     FS_OP_SEEK = 1, /** Seek to file location on CD (`Fs_QueueUpdateSeek`). */
-     FS_OP_READ = 2  /** Read from CD (`Fs_QueueUpdateRead`). */
- };
+/** @brief FS queue operation type.
+ *
+ * What to do for a queue entry.
+ * See `s_FsQueueEntry::operation`.
+ */
+enum FsQueueOperation
+{
+    FS_OP_NONE = 0, /** Uninitialized. */
+    FS_OP_SEEK = 1, /** Seek to file location on CD (`Fs_QueueUpdateSeek`). */
+    FS_OP_READ = 2  /** Read from CD (`Fs_QueueUpdateRead`). */
+};
 
- /** @brief Extra queue entry data describing where to upload a TIM after reading.
-  * See `FsQueueExtra`.
-  *
-  * @note `tPage` seems to be byte-swapped.
-  */
- typedef struct _FsImageDesc
- {
-     u8  tPage[2];
-     u8  u;
-     u8  v;
-     s16 clutX;
-     s16 clutY;
- } s_FsImageDesc;
+/** @brief Extra queue entry data describing where to upload a TIM after reading.
+ * See `FsQueueExtra`.
+ *
+ * @note `tPage` seems to be byte-swapped.
+ */
+typedef struct _FsImageDesc
+{
+    u8  tPage[2];
+    u8  u;
+    u8  v;
+    s16 clutX;
+    s16 clutY;
+} s_FsImageDesc;
 STATIC_ASSERT_SIZEOF(s_FsImageDesc, 8);
 
 /** @brief Extra queue entry data describing something related to loading some ANM files.

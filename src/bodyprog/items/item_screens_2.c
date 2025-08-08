@@ -450,7 +450,7 @@ void Gfx_Results_Save() // 0x8004D1A0
         GsOUT_PACKET_P = (PACKET*)line + sizeof(LINE_F2);
     }
 
-    g_SysWork.enableHighResGlyphs_2350_0 = 1;
+    g_SysWork.enableHighResGlyphs_2350_0 = true;
 
     Gfx_StringSetPosition(90, 92);
     Gfx_StringDraw("\x07Is_it_OK_to_save?", 99);
@@ -458,7 +458,7 @@ void Gfx_Results_Save() // 0x8004D1A0
     Gfx_StringSetPosition(94, 122);
     Gfx_StringDraw("\x07Yes_____________No", 99);
 
-    g_SysWork.enableHighResGlyphs_2350_0 = 0;
+    g_SysWork.enableHighResGlyphs_2350_0 = false;
 
     Gfx_StringSetPosition(82, 200);
     Gfx_StringDraw("NEXT_GAME_MODE", 15);
@@ -1136,7 +1136,7 @@ void Inventory_ItemUse(s32 inventoryItemIdx) // 0x8004E6D4
 
     if (g_SavegamePtr->mapOverlayId_A4 == MapOverlayId_MAP6_S04)
     {
-        if (func_80038A6C(&g_SysWork.player_4C.chara_0.position_18, &g_SysWork.npcs_1A0[0].position_18, FP_METER(0.7f)) == 0 &&
+        if (Math_Distance2dCheck(&g_SysWork.player_4C.chara_0.position_18, &g_SysWork.npcs_1A0[0].position_18, FP_METER(0.7f)) == 0 &&
             ABS(g_SysWork.player_4C.chara_0.position_18.vy - g_SysWork.npcs_1A0[0].position_18.vy) < FP_METER(0.3f) &&
             g_SysWork.player_4C.extra_128.field_1C == 0 &&
             g_SavegamePtr->items_0[inventoryItemIdx].id_0 == InventoryItemId_UnknownLiquid)

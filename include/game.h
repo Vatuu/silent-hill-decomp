@@ -1021,7 +1021,7 @@ typedef struct _PlayerCombat
     u8      currentWeaponAmmo_10;
     s8      totalWeaponAmmo_11;
     s8      field_12;
-    u8      isAiming_13;
+    u8      isAiming_13; /** Boolean. */
 } s_PlayerCombat;
 STATIC_ASSERT_SIZEOF(s_PlayerCombat, 20);
 
@@ -1167,7 +1167,7 @@ typedef struct _SysWork
     u8              field_234B_0 : 4;
     u8              field_234B_4 : 4;
     s32             mapMsgTimer_234C;
-    u8              enableHighResGlyphs_2350_0      : 4;
+    u8              enableHighResGlyphs_2350_0      : 4; /** Boolean. */
     u8              silentYesSelection_2350_4       : 4;
     u32             inventoryItemSelectedIdx_2351   : 8;
     u32             flags_2352                      : 8;
