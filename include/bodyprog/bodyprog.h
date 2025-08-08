@@ -3338,7 +3338,7 @@ void func_80037E78(s_SubCharacter* chara);
 
 s32 func_800382B0(s32 arg0);
 
-/** @brief Performs a distance on the XZ plane between two positions. */
+/** @brief Performs a distance check on the XZ plane between two positions. */
 bool Math_Distance2dCheck(VECTOR3* pos0, VECTOR3* pos1, s32 radius);
 
 /** Computes the 2D distance on the XZ plane between the input position and the camera position. */

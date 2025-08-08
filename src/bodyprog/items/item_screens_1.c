@@ -23,7 +23,7 @@ void Inventory_ExitAnimEquippedItemUpdate(u8* arg0) // 0x8004C088
     {
         if (D_800C3950 != g_SysWork.playerCombatInfo_38.field_F)
         {
-            g_SysWork.playerCombatInfo_38.isAiming_13 = 0;
+            g_SysWork.playerCombatInfo_38.isAiming_13 = false;
         }
 
         temp_v0 = D_800C3950 % 10;

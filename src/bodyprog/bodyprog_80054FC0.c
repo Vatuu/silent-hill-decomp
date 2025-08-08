@@ -1712,11 +1712,11 @@ void Player_Logic_Update(s_SubCharacter* chara, void* arg1, GsCOORDINATE2* coord
 
     s_MainCharacterExtra* extra = &g_SysWork.player_4C.extra_128;
 
-    if (g_DeltaTime0 != 0)
+    if (g_DeltaTime0 != FP_TIME(0.0f))
     {
         func_8007C800(chara, extra);
 
-        if (g_Player_Walk2RunTransition != 0)
+        if (g_Player_WalkToRunTransition)
         {
             D_800C455C = 0;
             D_800C4558 = 0;
@@ -1917,13 +1917,14 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
             {
                 if (g_SysWork.player_4C.extra_128.field_20 == 24)
                 {
-                    if (g_SysWork.playerCombatInfo_38.isAiming_13 == 0 && chara->model_0.stateStep_3 == 0)
+                    if (!g_SysWork.playerCombatInfo_38.isAiming_13 && chara->model_0.stateStep_3 == 0)
                     {
                         chara->model_0.anim_4.animIdx_0 = D_800C4570.field_6;
                         chara->model_0.stateStep_3++;
                     }
                 }
-                else if (chara->properties_E4.player.properties_E4[6] < FP_FLOAT_TO(10.0f, Q12_SHIFT) && chara->health_B0 >= FP_FLOAT_TO(30.0f, Q12_SHIFT))
+                else if (chara->properties_E4.player.properties_E4[6] < FP_FLOAT_TO(10.0f, Q12_SHIFT) &&
+                         chara->health_B0 >= FP_FLOAT_TO(30.0f, Q12_SHIFT))
                 {
                     if (chara->model_0.stateStep_3 == 0)
                     {
@@ -1941,7 +1942,7 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
             {
                 if (g_SysWork.player_4C.extra_128.field_20 == 24)
                 {
-                    if (g_SysWork.playerCombatInfo_38.isAiming_13 == 0 && chara->model_0.stateStep_3 == 0)
+                    if (!g_SysWork.playerCombatInfo_38.isAiming_13 && chara->model_0.stateStep_3 == 0)
                     {
                         chara->model_0.anim_4.animIdx_0 = D_800C4570.field_6;
                         chara->model_0.stateStep_3++;
@@ -2078,7 +2079,7 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                             }
                         }
 
-                        if (var_s2 == 0 && g_SysWork.playerCombatInfo_38.isAiming_13 == 0)
+                        if (var_s2 == 0 && g_SysWork.playerCombatInfo_38.isAiming_13 == false)
                         {
                             if ((g_GameWork.config_0.optExtraWalkRunCtrl_2B != 0 && D_800C4604 == 0) ||
                                 (g_GameWork.config_0.optExtraWalkRunCtrl_2B == 0 && D_800C4604 != 0))
@@ -2093,7 +2094,7 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                             }
                         }
 
-                        if (g_SysWork.player_4C.extra_128.field_24 == var_s2 && g_Player_Walk2RunTransition == 0)
+                        if (g_SysWork.player_4C.extra_128.field_24 == var_s2 && !g_Player_WalkToRunTransition)
                         {
                             func_800711C4(chara, var_s2);
                         }
@@ -2327,7 +2328,7 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                     }
                 }
 
-                if (g_SysWork.player_4C.extra_128.field_24 == (var_s2 + 1) && g_Player_Walk2RunTransition == 0)
+                if (g_SysWork.player_4C.extra_128.field_24 == (var_s2 + 1) && g_Player_WalkToRunTransition == 0)
                 {
                     func_800711C4(chara, var_s2);
                 }
@@ -2343,7 +2344,7 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
             {
                 chara->model_0.anim_4.animIdx_0 = 0;
                 chara->model_0.stateStep_3++;
-                g_Player_Walk2RunTransition = 1;
+                g_Player_WalkToRunTransition = true;
             }
             break;
 
@@ -2542,7 +2543,7 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
             {
                 chara->model_0.anim_4.animIdx_0 = 0;
                 chara->model_0.stateStep_3++;
-                g_Player_Walk2RunTransition = 1;
+                g_Player_WalkToRunTransition = true;
             }
             break;
 
@@ -2721,7 +2722,7 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                     }
                 }
 
-                if (g_SysWork.player_4C.extra_128.field_24 == (var_s2 + 4) && g_Player_Walk2RunTransition == 0)
+                if (g_SysWork.player_4C.extra_128.field_24 == (var_s2 + 4) && !g_Player_WalkToRunTransition)
                 {
                     func_800711C4(chara, var_s2);
                 }
@@ -4121,7 +4122,7 @@ void func_8007C0D8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
 
     if (((u32)g_SysWork.player_4C.extra_128.field_1C - 3) >= 2)
     {
-        if ((g_Player_Walk2RunTransition == 0))
+        if (!g_Player_WalkToRunTransition)
         {
             posY = chara->position_18.vy;
             if ((D_800C4590.field_C - posY) >= FP_METER(0.65f))
@@ -4151,7 +4152,7 @@ void func_8007C0D8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
                     g_SysWork.player_4C.extra_128.field_24 = 0;
                 }
 
-                g_SysWork.playerCombatInfo_38.isAiming_13 = 0;
+                g_SysWork.playerCombatInfo_38.isAiming_13 = false;
             }
         }
     }
@@ -4284,7 +4285,7 @@ void func_8007C800(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
             break;
 
         default:
-            if (g_Player_Walk2RunTransition != 0)
+            if (g_Player_WalkToRunTransition)
             {
                 D_800C4560 = chara->field_41;
                 return;
@@ -4596,7 +4597,7 @@ void func_8007C800(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                 chara->properties_E4.player.properties_E4[1]                = 0;
                 chara->properties_E4.player.properties_E4[4]                = 0;
                 g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk12;
-                g_SysWork.playerCombatInfo_38.isAiming_13                   = 0;
+                g_SysWork.playerCombatInfo_38.isAiming_13                   = false;
                 g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk9;
                 chara->field_44                                             = NO_VALUE;
             }
@@ -4655,7 +4656,7 @@ void func_8007C800(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
     if (chara->health_B0 <= FP_FLOAT_TO(0.0f, Q12_SHIFT) && g_SysWork.player_4C.extra_128.field_1C != 8 &&
         g_SysWork.player_4C.extra_128.field_1C != 36 && g_SysWork.player_4C.extra_128.field_1C != 39 &&
         g_SysWork.player_4C.extra_128.field_1C != 40 && g_SysWork.player_4C.extra_128.field_1C != 47 &&
-        g_SysWork.player_4C.extra_128.field_1C != 48 && g_Player_Walk2RunTransition == 0)
+        g_SysWork.player_4C.extra_128.field_1C != 48 && !g_Player_WalkToRunTransition)
     {
         chara->field_40           = NO_VALUE;
         g_SavegamePtr->field_238 = 0;
@@ -5186,7 +5187,7 @@ void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D970
         }
 
         if (g_SysWork.playerCombatInfo_38.field_F == 0x23 &&
-            g_SysWork.playerCombatInfo_38.isAiming_13 != 0 &&
+            g_SysWork.playerCombatInfo_38.isAiming_13 &&
             model->anim_4.animIdx_0 >= 57 &&
             model->anim_4.keyframeIdx0_8 >= 574)
         {
@@ -5372,7 +5373,7 @@ void func_8007E5AC() // 0x8007E5AC
         g_SysWork.playerCombatInfo_38.field_12             = NO_VALUE;
     }
 
-    g_SysWork.playerCombatInfo_38.isAiming_13 = 0;
+    g_SysWork.playerCombatInfo_38.isAiming_13 = false;
     D_800AF20C                                = 0;
     D_800C4588                                = 0;
     D_800C457C                                = 0;
@@ -5420,7 +5421,7 @@ void func_8007E9C4() // 0x8007E9C4
 
     chara = &g_SysWork.player_4C.chara_0;
 
-    g_Player_Walk2RunTransition                       = 0;
+    g_Player_WalkToRunTransition                      = false;
     g_SysWork.player_4C.extra_128.field_1C            = 0;
     g_SysWork.player_4C.extra_128.field_20            = 0;
     g_SysWork.player_4C.extra_128.field_24            = 0;
@@ -5433,7 +5434,7 @@ void func_8007E9C4() // 0x8007E9C4
     D_800AF210                                = 0;
     D_800AF212                                = 0;
     D_800C4560                                = NO_VALUE;
-    g_SysWork.playerCombatInfo_38.isAiming_13 = 0;
+    g_SysWork.playerCombatInfo_38.isAiming_13 = false;
 
     func_8004C564(0, NO_VALUE);
 
@@ -5710,22 +5711,22 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8007F14C); // 0x
 
 void func_8007F1CC() // 0x8007F1CC
 {
-    D_800C455C                  = 0;
-    D_800C4558                  = 0;
-    D_800C45C0                  = 0;
-    D_800C45BE                  = 0;
-    D_800C45BC                  = 0;
-    D_800C457E                  = 0;
-    D_800C4604                  = 0;
-    D_800C45F0                  = 0;
-    D_800C45E8                  = 0;
-    D_800C4582                  = 0;
-    D_800C45AE                  = 0;
-    D_800C4586                  = 0;
-    D_800C4580                  = 0;
-    D_800C45AC                  = 0;
-    D_800C4584                  = 0;
-    g_Player_Walk2RunTransition = 0;
+    D_800C455C                   = 0;
+    D_800C4558                   = 0;
+    D_800C45C0                   = 0;
+    D_800C45BE                   = 0;
+    D_800C45BC                   = 0;
+    D_800C457E                   = 0;
+    D_800C4604                   = 0;
+    D_800C45F0                   = 0;
+    D_800C45E8                   = 0;
+    D_800C4582                   = 0;
+    D_800C45AE                   = 0;
+    D_800C4586                   = 0;
+    D_800C4580                   = 0;
+    D_800C45AC                   = 0;
+    D_800C4584                   = 0;
+    g_Player_WalkToRunTransition = false;
 }
 
 void func_8007F250(u8* ptr, s8 arg1) // 0x8007F250
@@ -5748,10 +5749,10 @@ s32 func_8007F26C() // 0x8007F26C
 
 s32 func_8007F2AC() // 0x8007F2AC
 {
-    if (g_SysWork.player_4C.chara_0.health_B0     <= 0 ||
-        g_SysWork.playerCombatInfo_38.isAiming_13 != 0 ||
-        g_SysWork.player_4C.extra_128.field_1C    == 5 ||
-        g_SysWork.player_4C.extra_128.field_1C    == 6 ||
+    if (g_SysWork.player_4C.chara_0.health_B0 <= 0 ||
+        g_SysWork.playerCombatInfo_38.isAiming_13 ||
+        g_SysWork.player_4C.extra_128.field_1C == 5 ||
+        g_SysWork.player_4C.extra_128.field_1C == 6 ||
         (g_SysWork.player_4C.extra_128.field_1C >= 7 &&
          g_SysWork.player_4C.extra_128.field_1C <= 50))
     {
@@ -5780,7 +5781,7 @@ s32 func_8007F95C() // 0x8007F95C
     u16             temp;
     s32             radius;
 
-    if (g_Player_Walk2RunTransition != 0)
+    if (g_Player_WalkToRunTransition)
     {
         return 0;
     }

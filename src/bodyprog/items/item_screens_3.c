@@ -2174,7 +2174,7 @@ void Inventory_ExitAnimFixes() // 0x80054634
     else
     {
         g_SysWork.playerCombatInfo_38.field_F     = NO_VALUE;
-        g_SysWork.playerCombatInfo_38.isAiming_13 = 0;
+        g_SysWork.playerCombatInfo_38.isAiming_13 = false;
     }
 
     func_800546A8((u8)g_SysWork.playerCombatInfo_38.field_F);

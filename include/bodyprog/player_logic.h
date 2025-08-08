@@ -10,8 +10,8 @@
 // GLOBALS
 // ========
 
-/** @brief Used to define if player is transitioning from walking to run and vice-versa */
-extern u8 g_Player_Walk2RunTransition; // 0x800AF214
+/** @brief Boolean. Used to define if the player is transitioning from walking to running and vice-versa. */
+extern u8 g_Player_WalkToRunTransition; // 0x800AF214
 
 /**
  * 0 = Player has control, 1 = Player do not have control

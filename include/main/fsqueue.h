@@ -14,7 +14,7 @@
  * {
  *     BufferIdx_WeaponAnim = 0,
  *     BufferIdx_PlayerAnim = 1
- * }
+ * } e_BufferIdx;
  *
  * #define FS_BUFFER(idx) \
  *     (void*)(0x80100000 + ((idx) * 0x1000))

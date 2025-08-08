@@ -10,10 +10,10 @@ void sharedFunc_800D20E4_0_s00()
 
     sharedData_800DD59C_0_s00 = NO_VALUE;
 
-    D_800C457C                  = 0;
-    D_800C4588                  = 0;
-    g_Player_EnableControl      = true;
-    g_Player_Walk2RunTransition = 0;
+    D_800C457C                   = 0;
+    D_800C4588                   = 0;
+    g_Player_EnableControl       = true;
+    g_Player_WalkToRunTransition = false;
 
     extra   = &g_SysWork.player_4C.extra_128;
     chara   = &g_SysWork.player_4C.chara_0;
