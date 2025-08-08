@@ -2778,13 +2778,15 @@ void func_8005B55C(GsCOORDINATE2*);
 
 s32 func_8005C7D0(s_SubCharacter* chara, s32 moveSpeed);
 
-void func_8005C814(s16*, s_SubCharacter*);
+void func_8005C814(s_SubCharacter_D8* arg0, s_SubCharacter* chara);
 
 /** Looks like a clamping function. */
 s32 func_8005D974();
 
 /** Spatial SFX func? */
 void func_8005DC1C(s32, VECTOR3*, s32, s32); // Types assumed.
+
+void func_8005DC3C(s32 sfx, VECTOR3* pos, s32 arg2, s32 arg3, s32 arg4);
 
 void func_8005DD44(s32, VECTOR3*, s32, s8); // Types assumed.
 

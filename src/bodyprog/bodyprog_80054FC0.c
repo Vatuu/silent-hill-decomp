@@ -560,7 +560,28 @@ s32 func_8005C7D0(s_SubCharacter* chara, s32 moveSpeed) // 0x8005C7D0
     return NO_VALUE;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8005C814); // 0x8005C814
+void func_8005C814(s_SubCharacter_D8* arg0, s_SubCharacter* chara) // 0x8005C814
+{
+    s16 temp_v0;
+    s16 temp_s0;
+    s16 temp_s1;
+    s16 temp_s2;
+    s16 temp_s3;
+    s16 temp_s4;
+
+    temp_s0 = arg0->field_0;
+    temp_s3 = arg0->field_2;
+    temp_s2 = arg0->field_4;
+    temp_s4 = arg0->field_6;
+
+    temp_s1 = shRcos(chara->rotation_24.vy);
+    temp_v0 = shRsin(chara->rotation_24.vy);
+
+    chara->field_D8.field_0 = FP_FROM(((temp_s0 * temp_s1) + (temp_s3 * temp_v0)), Q12_SHIFT);
+    chara->field_D8.field_2 = FP_FROM(((-temp_s0 * temp_v0) + (temp_s3 * temp_s1)), Q12_SHIFT);
+    chara->field_D8.field_4 = FP_FROM(((temp_s2 * temp_s1) + (temp_s4 * temp_v0)), Q12_SHIFT);
+    chara->field_D8.field_6 = FP_FROM(((-temp_s2 * temp_v0) + (temp_s4 * temp_s1)), Q12_SHIFT);
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8005C944); // 0x8005C944
 
@@ -592,7 +613,52 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8005D9B8); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8005DC1C); // 0x8005DC1C
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8005DC3C); // 0x8005DC3C
+void func_8005DC3C(s32 sfx, VECTOR3* pos, s32 arg2, s32 arg3, s32 arg4) // 0x8005DC3C
+{
+    s32 var_a2;
+    s32 var_s1;
+
+    if ((arg3 & 1) || (g_GameWork.config_0.optSoundType_1E))
+    {
+        var_s1 = 0;
+    }
+    else
+    {
+        var_s1 = func_80040A64(pos);
+    }
+
+    if (arg2 >= 0x100)
+    {
+        arg2 = 0xFF;
+    }
+    else if (arg2 < 0)
+    {
+        arg2 = 0;
+    }
+
+    if (!(arg3 & 2))
+    {
+        var_a2 = func_8005D9B8(pos, arg2);
+    }
+    else
+    {
+        var_a2 = arg2;
+    }
+
+    if (var_a2 >= 0x100)
+    {
+        var_a2 = 0xFF;
+    }
+
+    if (arg3 & 4)
+    {
+        func_800463C0(sfx, var_s1, ~var_a2, arg4);
+    }
+    else
+    {
+        Sd_PlaySfx(sfx, var_s1, ~var_a2);
+    }
+}
 
 void func_8005DD44(s32 arg0, VECTOR3* arg1, s32 arg2, s8 arg3) // 0x8005DD44
 {
@@ -4316,10 +4382,10 @@ void func_8007C800(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                 g_SysWork.player_4C.chara_0.field_C8 = -0x1999;
                 g_SysWork.player_4C.chara_0.field_CA = 0;
                 g_SysWork.player_4C.chara_0.field_CE = -0x1199;
-                g_SysWork.player_4C.chara_0.field_DE = 0;
-                g_SysWork.player_4C.chara_0.field_DC = 0;
-                g_SysWork.player_4C.chara_0.field_DA = 0;
-                g_SysWork.player_4C.chara_0.field_D8 = 0;
+                g_SysWork.player_4C.chara_0.field_D8.field_6 = 0;
+                g_SysWork.player_4C.chara_0.field_D8.field_4 = 0;
+                g_SysWork.player_4C.chara_0.field_D8.field_2 = 0;
+                g_SysWork.player_4C.chara_0.field_D8.field_0 = 0;
             }
 
             temp_s0 = g_SysWork.npcs_1A0[chara->field_40].rotation_24.vy;
@@ -5071,8 +5137,8 @@ void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D970
         {
             if (g_SysWork.player_4C.extra_128.field_1C == 1 && D_800AF21C != NO_VALUE)
             {
-                sp98.vx = ratan2((g_SysWork.npcs_1A0[D_800AF21C].position_18.vx + g_SysWork.npcs_1A0[D_800AF21C].field_D8) - g_SysWork.playerCombatInfo_38.field_0.vx,
-                                 (g_SysWork.npcs_1A0[D_800AF21C].position_18.vz + g_SysWork.npcs_1A0[D_800AF21C].field_DA) - g_SysWork.playerCombatInfo_38.field_0.vz);
+                sp98.vx = ratan2((g_SysWork.npcs_1A0[D_800AF21C].position_18.vx + g_SysWork.npcs_1A0[D_800AF21C].field_D8.field_0) - g_SysWork.playerCombatInfo_38.field_0.vx,
+                                 (g_SysWork.npcs_1A0[D_800AF21C].position_18.vz + g_SysWork.npcs_1A0[D_800AF21C].field_D8.field_2) - g_SysWork.playerCombatInfo_38.field_0.vz);
             }
             else
             {
@@ -5813,9 +5879,9 @@ s32 func_8007F95C() // 0x8007F95C
                     radius = FP_METER(1.2f);
                 }
 
-                pos1.vx = ptr1->position_18.vx + ptr1->field_D8;
+                pos1.vx = ptr1->position_18.vx + ptr1->field_D8.field_0;
                 pos1.vy = ptr1->position_18.vy;
-                pos1.vz = ptr1->position_18.vz + ptr1->field_DA;
+                pos1.vz = ptr1->position_18.vz + ptr1->field_D8.field_2;
 
                 if (!Math_Distance2dCheck(&pos0, &pos1, radius) && ABS(pos1.vy - pos0.vy) < FP_METER(0.3f) &&
                     ptr1->health_B0 > FP_FLOAT_TO(0.0f, Q12_SHIFT) && (ptr1->flags_3E & (1 << 1)))

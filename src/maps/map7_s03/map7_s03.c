@@ -593,8 +593,8 @@ s32 Ai_Incubus_Init(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DDA1C
     chara->headingAngle_3C = chara->rotation_24.vy;
     chara->field_D4        = FP_FLOAT_TO(0.3f, Q12_SHIFT);
     chara->field_E0_8      = 4;
-    chara->field_DC        = 0;
-    chara->field_DE        = 0;
+    chara->field_D8.field_4 = 0;
+    chara->field_D8.field_6 = 0;
     chara->flags_3E       |= CharaFlag_Unk3;
 
     chara2->properties_E4.larvalStalker.properties_E8[2].val32 = 0;
@@ -779,8 +779,8 @@ s32 Ai_Unknown23_Init(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DFB9
 
     chara->moveSpeed_38    = 0;
     chara->field_D4        = FP_FLOAT_TO(0.3f, Q12_SHIFT);
-    chara->field_DC        = 0;
-    chara->field_DE        = 0;
+    chara->field_D8.field_4 = 0;
+    chara->field_D8.field_6 = 0;
     chara->field_E0_8      = 4;
     chara->headingAngle_3C = chara->rotation_24.vy;
     chara->flags_3E       |= CharaFlag_Unk3;

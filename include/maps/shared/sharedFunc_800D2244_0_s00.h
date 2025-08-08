@@ -69,10 +69,10 @@ void sharedFunc_800D2244_0_s00(s32 arg0)
     g_SysWork.player_4C.chara_0.field_C8                        = FP_FLOAT_TO(-1.6f, Q12_SHIFT);
     g_SysWork.player_4C.chara_0.field_CE                        = FP_FLOAT_TO(-1.1f, Q12_SHIFT);
     g_SysWork.player_4C.chara_0.field_CA                        = 0;
-    g_SysWork.player_4C.chara_0.field_DE                        = 0;
-    g_SysWork.player_4C.chara_0.field_DC                        = 0;
-    g_SysWork.player_4C.chara_0.field_DA                        = 0;
-    g_SysWork.player_4C.chara_0.field_D8                        = 0;
+    g_SysWork.player_4C.chara_0.field_D8.field_6                = 0;
+    g_SysWork.player_4C.chara_0.field_D8.field_4                = 0;
+    g_SysWork.player_4C.chara_0.field_D8.field_2                = 0;
+    g_SysWork.player_4C.chara_0.field_D8.field_0                = 0;
     g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~(PlayerFlag_Unk2 |
                                                                     PlayerFlag_Unk13 |
                                                                     PlayerFlag_Unk14 |
