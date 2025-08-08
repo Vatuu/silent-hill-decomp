@@ -779,7 +779,7 @@ void func_800699E4(s_func_800699E4* arg0) // 0x800699E4
     arg0->field_30++;
 }
 
-void func_800699F8(s_func_800699F8* result, s32 posX, s32 posZ) // 0x800699F8
+void func_800699F8(s_func_800699F8* coll, s32 posX, s32 posZ) // 0x800699F8
 {
     s_func_8006AB50 sp10;
     VECTOR3         sp28;
@@ -794,10 +794,10 @@ void func_800699F8(s_func_800699F8* result, s32 posX, s32 posZ) // 0x800699F8
     temp_v0 = func_800426E4(posX, posZ);
     if (!temp_v0)
     {
-        result->chara_grnd_0 = FP_METER(8.0f);
-        result->field_6      = 0;
-        result->field_4      = 0;
-        result->field_8      = 0;
+        coll->chara_grnd_0 = FP_METER(8.0f);
+        coll->field_6      = 0;
+        coll->field_4      = 0;
+        coll->field_8      = 0;
         return;
     }
 
@@ -816,17 +816,17 @@ void func_800699F8(s_func_800699F8* result, s32 posX, s32 posZ) // 0x800699F8
 
     if (sp38.field_90 == 1)
     {
-        result->field_8      = 0;
-        result->chara_grnd_0 = FP_METER(8.0f);
+        coll->field_8      = 0;
+        coll->chara_grnd_0 = FP_METER(8.0f);
     }
     else
     {
-        result->field_8      = sp38.field_94;
-        result->chara_grnd_0 = func_8006CC44(sp38.field_4.positionX_18, sp38.field_4.positionZ_1C, &sp38) * 16;
+        coll->field_8      = sp38.field_94;
+        coll->chara_grnd_0 = func_8006CC44(sp38.field_4.positionX_18, sp38.field_4.positionZ_1C, &sp38) * 16;
     }
 
-    result->field_4 = sp38.field_88;
-    result->field_6 = sp38.field_8C;
+    coll->field_4 = sp38.field_88;
+    coll->field_6 = sp38.field_8C;
 }
 
 s32 func_80069B24(VECTOR3* vec0, VECTOR3* vec1, s_SubCharacter* chara) // 0x80069B24

@@ -29,7 +29,7 @@ INCLUDE_ASM("asm/maps/map2_s03/nonmatchings/map2_s03", func_800CBD80);
 
 #include "maps/shared/sharedFunc_800D2244_0_s00.h" // 0x800CC354
 
-s32 func_800CC52C()
+s32 func_800CC52C() // 0x800CC52C
 {
     return 0;
 }
@@ -50,22 +50,22 @@ s32 func_800CC52C()
 
 #include "maps/shared/sharedFunc_800D2E60_0_s00.h" // 0x800CC718
 
-void func_800CC724(void) {}
+void func_800CC724() {}
 
-void func_800CC72C(void) {}
+void func_800CC72C() {}
 
-void func_800CC734(void) {}
+void func_800CC734() {}
 
-void func_800CC73C(void) {}
+void func_800CC73C() {}
 
-void func_800CC744(void) {}
+void func_800CC744() {}
 
-s32 func_800CC74C()
+s32 func_800CC74C() // 0x800CC74C
 {
     return 0;
 }
 
-void func_800CC754(void) {}
+void func_800CC754() {}
 
 #include "maps/shared/sharedFunc_800D2EA4_0_s00.h" // 0x800CC75C
 
@@ -79,8 +79,8 @@ void func_800CC754(void) {}
 
 INCLUDE_ASM("asm/maps/map2_s03/nonmatchings/map2_s03", func_800CCA1C);
 
-void func_800CCB24(void) {}
+void func_800CCB24() {}
 
-void func_800CCB2C(void) {}
+void func_800CCB2C() {}
 
-void func_800CCB34(void) {}
+void func_800CCB34() {}

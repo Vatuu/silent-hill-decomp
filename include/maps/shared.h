@@ -28,7 +28,7 @@ typedef struct
     VECTOR3     position1_C;  // Snow: unused, Rain: streak end (top)
     SVECTOR3    movement_18;  // Snow: random accumulation, Rain: Y accumulation (affects streak length).
     u8          stateStep_1E; /** `e_ParticleState` */
-    s8          type_1F;      /** `e_ParticleType` */
+    u8          type_1F;      /** `e_ParticleType` */
 } s_Particle;
 
 typedef struct

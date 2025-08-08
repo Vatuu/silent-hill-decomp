@@ -391,14 +391,14 @@ typedef struct
     u8                  field_34[256];
 } s_func_800699E4;
 
-/** @brief Returned by `func_800699F8`, collision related? */
+/** Returned by `func_800699F8`. Probably contains 2D point collision. */
 typedef struct _s_func_800699F8
 {
-    s32 chara_grnd_0;
-    s16 field_4;
-    s16 field_6;
-    s8  field_8;
-    u8  unk_9[3];
+    q19_12 chara_grnd_0;
+    s16    field_4;
+    s16    field_6;
+    s8     field_8;
+    u8     unk_9[3];
 } s_func_800699F8;
 STATIC_ASSERT_SIZEOF(s_func_800699F8, 12);
 
@@ -3095,7 +3095,8 @@ void func_80069994(s_func_800699E4* arg0);
 
 void func_800699E4(s_func_800699E4* arg0);
 
-void func_800699F8(s_func_800699F8* result, s32 posX, s32 posZ);
+/** Getter for 2D point collision? */
+void func_800699F8(s_func_800699F8* coll, s32 posX, s32 posZ);
 
 s32 func_80069B24(VECTOR3* vec0, VECTOR3* vec1, s_SubCharacter* chara);
 
