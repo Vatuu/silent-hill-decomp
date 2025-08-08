@@ -820,7 +820,8 @@ typedef struct _AnimInfo
     void (*funcPtr_0)(struct _SubCharacter*, s32, GsCOORDINATE2*, struct _AnimInfo*); // TODO: `funcPtr_0` signature doesn't currently match `Anim_Update`.
     u8  field_4;
     s8  hasVariableTimeDelta_5;
-    u16 animIdx_6;
+    u8  animIdx_6;
+    u8  unk_7;
     union
     {
         q19_12 constTimeDelta;
@@ -966,7 +967,8 @@ typedef struct _SubCharacter
     s16 field_CA;
     s16 field_CC;
     s16 field_CE;
-    s8  unk_D0[4];
+    s16 field_D0;
+    s8  unk_D2[2];
     s16 field_D4;
     s16 field_D6;
     s16 field_D8;
