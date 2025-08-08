@@ -1,0 +1,30 @@
+
+const char* g_MapMessages[] =
+{
+    #include "maps/shared/mapMsg_common.h"
+    "\tThere_is_a_ ~C2 Video_tape ~C7 . ~N\n\tTake_it? ~S4 ",
+    "~C3\tAlessa ~E ",
+    "\tAlessa...? ~E ",
+    "~J0(1.2)\tWhat's_this? ~E ",
+    "~J0(2.6)\tLooks_like_someone's_been_here... ~E ",
+    "\t~J0(0.4) ~E ",
+    "\tThere_is_an_ ~C2 Examination_room_key ~C7 . ~N\n\tTake_it? ~S4 ",
+    "\tLooks_like_a_hallway ~N\n\tunder_the_grate. ",
+    "\tCan't_move_it_since_the_vines ~N\n\thave_grown_around_it. ~E ",
+    "\tNo. ~N\n\tThe_fire_goes_out_right_away ~N\n\twhen_I_light_the_vines. ~E ",
+    "\tPoured_ ~C2 Disinfecting_alcohol ~C7  ~N\n\ton_the_vines. ~E ",
+    "\tThe_vines_absorbed_the_alcohol. ~E ",
+    "\tUsed_the_ ~C2 Basement_storeroom_key ~C7 . ~E ",
+    "\tDo_you_want_to_push ~N\n\tthe_cabinet? ~S4 ",
+    "\tThe_generator_is_on. ~E ",
+    "\tThere_are_skid_marks_from ~N\n\tthe_cabinet_being_moved. ~E ",
+    "\tThere_is_a_ ~C2 Hammer ~C7 . ~N\n\tTake_it? ~S4 ",
+    "\tA_bed?_What's_it_doing_here? ~N\n\tWho_would... ~E ",
+    "\tA_body_is_laid_out_on_the_bed. ~N\n\tDon't_feel_like_checking_this_out. ~E ",
+    "\tNothing_helpful. ~E ",
+    "\tNothing_useful_in_the_boxes. ~E ",
+    "\tThere's_a_bottle_filled ~N\n\twith_some_kind_of_drug. ~N\n\tBetter_leave_it. ~E ",
+    "\tThere_are_some_empty_bottles. ~E ",
+    "\tNothing_special_in_the_box. ~N\n\tNothing_to_worry_about. ~E ",
+    "\tNothing_inside. ~E ",
+};

@@ -139,6 +139,7 @@ sharedData_800DD5A8_0_s00   = 0x800E5B3C; // type:s32 unknown type
 sharedData_800DFFD8_7_s01   = 0x800E7948; // type:AnimInfo
 sharedData_800D5ABC_3_s03   = 0x800E7988; // type:AnimInfo
 sharedData_800DF174_0_s00   = 0x800E7FC8; // type:AnimInfo
+g_MapMessages               = 0x800E8EA4; // type:u32 size:0x27C
 sharedData_800DFB6C_0_s00   = 0x800EA4BC; // type:s32
 sharedData_800DFB70_0_s00   = 0x800EA4C0; // type:s32
 sharedData_800E0CA8_0_s00   = 0x800EB5F0; // type:s32

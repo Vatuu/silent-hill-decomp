@@ -81,6 +81,7 @@ sharedFunc_800DA8E8_0_s01 = 0x800CFB9C; // type:func
 //--------------------------------------------------------------
 sharedData_800DD59C_0_s00 = 0x800D37A4; // type:u8
 sharedData_800D1B6C_3_s02 = 0x800D37A8; // type:AnimInfo
+g_MapMessages             = 0x800D3A4C; // type:u32 size:0x64
 sharedData_800DFB6C_0_s00 = 0x800D3CAC; // type:s32
 sharedData_800DFB70_0_s00 = 0x800D3CB0; // type:s32
 sharedData_800E0CA8_0_s00 = 0x800D4DE8; // type:s32
