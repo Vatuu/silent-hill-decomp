@@ -1717,15 +1717,15 @@ void Savegame_ScreenLogic() // 0x801E649C
                     {
                         g_SaveWriteOption = 1;
                     }
-					
-					// This is the code that defines if the selected element is the `New Save` option or a save game.
+
+                    // This is the code that defines if the selected element is the `New Save` option or a save game.
                     if ((u16)(saveEntry->currentScreenSessionSaves_0 - 1) < 31099)
                     {
                         g_IsSaveSelected = 1;
                     }
                 }
-				
-				// Overwrite or format savegame entry.
+
+                // Overwrite or format savegame entry.
                 if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0) 
                 {
                     if ((g_SaveWriteOption | g_IsSaveSelected) != 0) 
@@ -1741,11 +1741,12 @@ void Savegame_ScreenLogic() // 0x801E649C
                         g_GameWork.gameStateStep_598[2]  = 0;
                         g_GameWork.gameStateStep_598[0] += g_SaveScreenPlayerState;
                     }
+
                     Sd_EngineCmd(Sfx_Confirm);
                 }
             }
-			
-			// Exit save screen.
+
+            // Exit save screen.
             if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2) 
             {
                 g_Gfx_ScreenFade                = 3;
@@ -1801,8 +1802,8 @@ void Savegame_ScreenLogic() // 0x801E649C
                 }
                 Sd_EngineCmd(Sfx_Confirm);
             }
-			
-			// Cancel overwrite.
+
+            // Cancel overwrite.
             if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2) 
             {
                 g_GameWork.gameStateStep_598[1] = 0;
@@ -1812,7 +1813,7 @@ void Savegame_ScreenLogic() // 0x801E649C
 
             Gfx_WriteOptionSave(g_SaveWriteOption, g_SaveWriteOptionSelected);
             break;
-        
+
         case 2:
             if ((g_Gfx_ScreenFade & 0x7) == 5)
             {

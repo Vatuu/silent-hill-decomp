@@ -1432,7 +1432,7 @@ void Game_SavegameInitialize(s8 overlayId, s32 difficulty) // 0x800350BC
     s32  i;
     s32* var;
 
-    bzero(g_SavegamePtr, sizeof(s_ShSavegame));
+    bzero(g_SavegamePtr, sizeof(s_Savegame));
 
     g_SavegamePtr->mapOverlayId_A4 = overlayId;
 
@@ -1534,7 +1534,7 @@ s32 func_800352F8(s32 charaId) // 0x800352F8
     return 0;
 }
 
-void func_80035338(s32 idx, e_ShCharacterId charaId, s_AnimFile* animFile, GsCOORDINATE2* coord) // 0x80035338
+void func_80035338(s32 idx, e_CharacterId charaId, s_AnimFile* animFile, GsCOORDINATE2* coord) // 0x80035338
 {
     s32         i;
     s_AnimFile* animFileCpy;
@@ -1600,7 +1600,7 @@ void func_80035338(s32 idx, e_ShCharacterId charaId, s_AnimFile* animFile, GsCOO
     }
 }
 
-void func_80035560(s32 idx, e_ShCharacterId charaId, s_AnimFile* animFile, GsCOORDINATE2* coord) // 0x80035560
+void func_80035560(s32 idx, e_CharacterId charaId, s_AnimFile* animFile, GsCOORDINATE2* coord) // 0x80035560
 {
     s32            idx0;
     GsCOORDINATE2* coordCpy;
@@ -3519,7 +3519,7 @@ void SysState_StatusMenu_Update() // 0x80039568
 
 void GameState_LoadStatusScreen_Update() // 0x800395C0
 {
-    s_ShSavegame* savegame;
+    s_Savegame* savegame;
 
     if (g_GameWork.gameStateStep_598[0] == 0)
     {
@@ -3551,8 +3551,8 @@ void GameState_LoadStatusScreen_Update() // 0x800395C0
 
 void SysState_Unk3_Update() // 0x800396D4
 {
-    s32           idx;
-    s_ShSavegame* save;
+    s32         idx;
+    s_Savegame* save;
 
     if (!HAS_MAP(g_SavegamePtr->current2dMapIdx_A9))
     {
@@ -3597,7 +3597,7 @@ void SysState_Unk3_Update() // 0x800396D4
 
 void GameState_LoadMapScreen_Update() // 0x8003991C
 {
-    s_ShSavegame* save;
+    s_Savegame* save;
 
     if (g_GameWork.gameStateStep_598[0] == 0)
     {
@@ -3828,7 +3828,7 @@ void SysState_ReadMessage_Update(s32 arg0) // 0x80039FB8
 
 void SysWork_SavegameUpdatePlayer() // 0x8003A120
 {
-    s_ShSavegame* save = g_SavegamePtr;
+    s_Savegame* save = g_SavegamePtr;
 
     save->locationId_A8       = g_MapEventIdx;
     save->playerPositionX_244 = g_SysWork.player_4C.chara_0.position_18.vx;

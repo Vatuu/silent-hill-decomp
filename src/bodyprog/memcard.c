@@ -611,7 +611,7 @@ void func_8002F2C4(s_800B55E8* arg0)
     s_MemCardBasicInfo* saveInfo;
     s8*                 saveData1Buf;
     s32                 saveData1Size;
-    s_ShSavegameFooter* saveData1Footer;
+    s_SavegameFooter* saveData1Footer;
 
     saveInfo = &D_800B5508.devices_0[arg0->deviceId_4];
 
@@ -667,13 +667,13 @@ void func_8002F2C4(s_800B55E8* arg0)
             {
                 saveData0Offset = 0x300;
                 saveData0Buf    = (s8*)&D_800B5508.userConfig_418;
-                saveData0Size   = sizeof(s_ShSaveUserConfigContainer);
+                saveData0Size   = sizeof(s_SaveUserConfigContainer);
             }
             else
             {
-                saveData0Offset = 0x300 + sizeof(s_ShSaveUserConfigContainer) + (arg0->saveIdx_C * sizeof(s_ShSavegameContainer));
+                saveData0Offset = 0x300 + sizeof(s_SaveUserConfigContainer) + (arg0->saveIdx_C * sizeof(s_SavegameContainer));
                 saveData0Buf    = (s8*)&D_800B5508.saveGame_498;
-                saveData0Size   = sizeof(s_ShSavegameContainer);
+                saveData0Size   = sizeof(s_SavegameContainer);
             }
 
             Savegame_FilenameGenerate(filePath, D_800B2774);
@@ -712,14 +712,14 @@ void func_8002F2C4(s_800B55E8* arg0)
 
             if (arg0->field_0 == 2)
             {
-                saveData1Size   = sizeof(s_ShSaveUserConfigContainer);
+                saveData1Size   = sizeof(s_SaveUserConfigContainer);
                 saveData1Buf    = (s8*)&D_800B5508.userConfig_418;
                 saveData1Footer = &D_800B5508.userConfig_418.footer_7C;
             }
             else
             {
                 saveData1Buf    = (s8*)&D_800B5508.saveGame_498;
-                saveData1Size   = sizeof(s_ShSavegameContainer);
+                saveData1Size   = sizeof(s_SavegameContainer);
                 saveData1Footer = &D_800B5508.saveGame_498.footer_27C;
             }
 
@@ -733,11 +733,11 @@ void func_8002F2C4(s_800B55E8* arg0)
 
             if (arg0->field_0 == 2)
             {
-                memcpy(&g_GameWorkConst->config_0, &D_800B5508.userConfig_418.config_0, sizeof(s_ShSaveUserConfig));
+                memcpy(&g_GameWorkConst->config_0, &D_800B5508.userConfig_418.config_0, sizeof(s_SaveUserConfig));
             }
             else
             {
-                memcpy(g_SavegamePtr, &D_800B5508.saveGame_498.savegame_0, sizeof(s_ShSavegame));
+                memcpy(g_SavegamePtr, &D_800B5508.saveGame_498.savegame_0, sizeof(s_Savegame));
             }
             break;
     }
@@ -1014,11 +1014,11 @@ void func_8002FB64(s_MemCardInfo_BasicSaveInfo* arg0) // 0x8002FB64
     Savegame_ChecksumUpdate(&arg0->field_FC, (s8*)arg0, sizeof(s_MemCardInfo_BasicSaveInfo));
 }
 
-void Savegame_UserConfigCopyWithChecksum(s_ShSaveUserConfigContainer* dest, s_ShSaveUserConfig* src) // 0x8002FBB4
+void Savegame_UserConfigCopyWithChecksum(s_SaveUserConfigContainer* dest, s_SaveUserConfig* src) // 0x8002FBB4
 {
-    bzero(dest, sizeof(s_ShSaveUserConfigContainer));
+    bzero(dest, sizeof(s_SaveUserConfigContainer));
     dest->config_0 = *src;
-    Savegame_ChecksumUpdate(&dest->footer_7C, &dest->config_0, sizeof(s_ShSaveUserConfigContainer));
+    Savegame_ChecksumUpdate(&dest->footer_7C, &dest->config_0, sizeof(s_SaveUserConfigContainer));
 }
 
 s32 func_8002FC3C(s32 deviceId) // 0x8002FC3C
@@ -1053,14 +1053,14 @@ s32 func_8002FC3C(s32 deviceId) // 0x8002FC3C
     return largestField0FileIdx;
 }
 
-void Savegame_CopyWithChecksum(s_ShSavegameContainer* dest, s_ShSavegame* src) // 0x8002FCCC
+void Savegame_CopyWithChecksum(s_SavegameContainer* dest, s_Savegame* src) // 0x8002FCCC
 {
-    bzero(dest, sizeof(s_ShSavegameContainer));
-    memcpy(&dest->savegame_0, src, sizeof(s_ShSavegame));
-    Savegame_ChecksumUpdate(&dest->footer_27C, &dest->savegame_0, sizeof(s_ShSavegameContainer));
+    bzero(dest, sizeof(s_SavegameContainer));
+    memcpy(&dest->savegame_0, src, sizeof(s_Savegame));
+    Savegame_ChecksumUpdate(&dest->footer_27C, &dest->savegame_0, sizeof(s_SavegameContainer));
 }
 
-void func_8002FD5C(s32 deviceId, s32 fileIdx, s32 saveIdx, s_ShSavegame* arg3) // 0x8002FD5C
+void func_8002FD5C(s32 deviceId, s32 fileIdx, s32 saveIdx, s_Savegame* arg3) // 0x8002FD5C
 {
     s_MemCardInfo_BasicSaveInfo* ptr;
 
@@ -1126,7 +1126,7 @@ void func_8002FE70(s32 deviceId, s_func_8002FE70* result)
     }
 }
 
-void Savegame_ChecksumUpdate(s_ShSavegameFooter* saveFooter, s8* saveData, s32 saveDataLength) // 0x8002FF30
+void Savegame_ChecksumUpdate(s_SavegameFooter* saveFooter, s8* saveData, s32 saveDataLength) // 0x8002FF30
 {
     u8 checksum;
 
@@ -1136,7 +1136,7 @@ void Savegame_ChecksumUpdate(s_ShSavegameFooter* saveFooter, s8* saveData, s32 s
     saveFooter->checksum_0[0] = saveFooter->checksum_0[1] = checksum;
 }
 
-s32 Savegame_ChecksumValidate(s_ShSavegameFooter* saveFooter, s8* saveData, s32 saveDataLength) // 0x8002FF74
+s32 Savegame_ChecksumValidate(s_SavegameFooter* saveFooter, s8* saveData, s32 saveDataLength) // 0x8002FF74
 {
     s32 isValid = 0;
 

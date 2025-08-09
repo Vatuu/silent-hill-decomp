@@ -13,12 +13,12 @@
 /** @brief Initial demo game state data, stored inside `MISC/DEMOXXXX.DAT` files. */
 typedef struct _DemoWork
 {
-    s_ShSaveUserConfig config_0;
-    u8                 unk_38[200];
-    s_ShSavegame       savegame_100;
-    u8                 unk_37C[1148];
-    u32                frameCount_7F8;
-    u16                randSeed_7FC;
+    s_SaveUserConfig config_0;
+    u8               unk_38[200];
+    s_Savegame       savegame_100;
+    u8               unk_37C[1148];
+    u32              frameCount_7F8;
+    u16              randSeed_7FC;
 } s_DemoWork;
 STATIC_ASSERT_SIZEOF(s_DemoWork, 2048);
 
@@ -77,7 +77,7 @@ extern s32 g_Demo_DemoFileIdx; // 0x800C4840
 
 extern s32 g_Demo_PlayFileIdx; // 0x800C4844
 
-extern s_ShSaveUserConfig g_Demo_UserConfigBackup; // 0x800C4850
+extern s_SaveUserConfig g_Demo_UserConfigBackup; // 0x800C4850
 
 extern u32 g_Demo_PrevRandSeed; // 0x800C4888
 

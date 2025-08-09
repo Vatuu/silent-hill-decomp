@@ -58,7 +58,7 @@ typedef struct _SavegameMetadata
     u8  locationId_A;
     u8  isNextFearMode_B             : 1;
     u8  add290Hours_B_1              : 2;
-    u8  pickedUpSpecialItemCount_B_3 : 5; /** See `pickedUpSpecialItemCount_25C_3` comment in `s_ShSavegame`. */
+    u8  pickedUpSpecialItemCount_B_3 : 5; /** See `pickedUpSpecialItemCount_25C_3` comment in `s_Savegame`. */
 } s_SavegameMetadata; // Possible size is 12 bytes.
 
 /** @note A new instance is written to memory each time a
@@ -71,10 +71,10 @@ typedef struct _SavegameEntry
     /** @brief `currentScreenSessionSaves_0` is a counter
      * incremented each time the user saves during the
      * current save screen session.
-	 *
-	 * Behaviour seems to be buggy, as it
-	 * doesn't consider circumstances where the
-	 * user removes a memory card. For example:
+     *
+     * Behaviour seems to be buggy, as it
+     * doesn't consider circumstances where the
+     * user removes a memory card. For example:
      * If the user saves to slot 1, the first save's
      * value will be 1. If the user saves
      * to slot 2, the value will be 2. If the

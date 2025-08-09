@@ -239,8 +239,8 @@ void GameState_ItemScreens_Update() // 0x8004C9B0
                 return;
             }
             break;
-			
-		// Exiting inventory screen.
+
+        // Exiting inventory screen.
         case 20:
             if ((g_Gfx_ScreenFade & 0x7) == 5)
             {
@@ -1436,15 +1436,15 @@ void func_8004F10C(s32* arg0) // 0x8004F10C
     *arg0 = 0;
 }
 
-s32 func_8004F190(s_ShSavegame* save) // 0x8004F190
+s32 func_8004F190(s_Savegame* save) // 0x8004F190
 {
-    s32                i;
-    s32                j;
-    s32                count;
-    u32                id;
-    s_ShInventoryItem  tempItem;
-    s_ShInventoryItem* item;
-    s_ShSavegame*      savePtr;
+    s32              i;
+    s32              j;
+    s32              count;
+    u32              id;
+    s_InventoryItem  tempItem;
+    s_InventoryItem* item;
+    s_Savegame*      savePtr;
 
     savePtr = save;
 

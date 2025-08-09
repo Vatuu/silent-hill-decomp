@@ -191,9 +191,9 @@ s32 func_80049530(VECTOR* arg0, VECTOR* arg1) // 0x80049530
     ApplyRotMatrixLV(arg0, &sp10);
 
     __asm__ volatile(
-        "cfc2	    $12, $5;"
+        "cfc2        $12, $5;"
         "lw         $t5, 0x0(%0);"
-        "mtc2	    $12, $2;"
+        "mtc2        $12, $2;"
         "addu       $t5, $t5, $t4;"
         "ctc2       $t5, $5;"
         "cfc2       $t4, $6;"
@@ -213,15 +213,15 @@ s32 func_80049530(VECTOR* arg0, VECTOR* arg1) // 0x80049530
     gte_stsxy(arg1);
 
     __asm__ volatile(
-        "mfc2	$12, $2;"
-        "mfc2	$13, $3;"
-        "mfc2	$14, $4;"
-        "ctc2	$12, $5;"
-        "ctc2	$13, $6;"
-        "ctc2	$14, $7;"
-        "mfc2	$v0, $19;"
+        "mfc2    $12, $2;"
+        "mfc2    $13, $3;"
+        "mfc2    $14, $4;"
+        "ctc2    $12, $5;"
+        "ctc2    $13, $6;"
+        "ctc2    $14, $7;"
+        "mfc2    $v0, $19;"
         "nop;"
-        "sra	$v0, $v0, 2;" ::: "$12", "$13", "$14");
+        "sra    $v0, $v0, 2;" ::: "$12", "$13", "$14");
 }
 
 void vwMatrixToAngleYXZ(SVECTOR* ang, MATRIX* mat) // 0x800495D4

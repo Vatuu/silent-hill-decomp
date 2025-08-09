@@ -498,7 +498,7 @@ typedef enum _PlayerProperty
 } e_PlayerProperty;
 
 /** @brief Names for each character index used in the game, `g_Chara_FileInfo` array associates each character ID with anim/model/texture files. */
-typedef enum _ShCharacterId
+typedef enum _CharacterId
 {
     Chara_None             = 0,
     Chara_Hero             = 1,
@@ -547,7 +547,7 @@ typedef enum _ShCharacterId
     Chara_Padlock          = 44,
 
     Chara_Count
-} e_ShCharacterId;
+} e_CharacterId;
 
 /** Based on LIBOVR.PDF `Buffer Data Format` section. */
 typedef enum _PadTerminalType
@@ -631,92 +631,92 @@ typedef struct _ControllerConfig
 } s_ControllerConfig;
 STATIC_ASSERT_SIZEOF(s_ControllerConfig, 28);
 
-typedef struct _ShInventoryItem
+typedef struct _InventoryItem
 {
     u8 id_0;      /** `InventoryItemId` */
     u8 count_1;
     u8 command_2; /** `InventoryCmdId` */
     u8 field_3;   // Some sort of index?
-} s_ShInventoryItem;
-STATIC_ASSERT_SIZEOF(s_ShInventoryItem, 4);
+} s_InventoryItem;
+STATIC_ASSERT_SIZEOF(s_InventoryItem, 4);
 
-typedef struct _ShSavegame
+typedef struct _Savegame
 {
-    s_ShInventoryItem items_0[INVENTORY_ITEM_COUNT_MAX];
-    s8                field_A0;
-    s8                field_A1[3];
-    s8                mapOverlayId_A4;          /** `e_MapOverlayId` Index to overlay `.BIN` files. */
-    s8                mapRoomIdx_A5;            /** Index to local map geometry `.IPD` files. */
-    s16               savegameCount_A6;
-    s8                locationId_A8;            /** `e_SaveLocationId` */
-    u8                current2dMapIdx_A9;       /** `e_Current2dMapIdx` Index to the 2D map shown when opening the map screen. */
-    u8                equippedWeapon_AA;        /** `e_InventoryItemId` Default: 0. Effects only the visible player weapon model. */
-    u8                inventoryItemSpaces_AB;   /** Item spaces. `INVENTORY_ITEM_COUNT_MAX` */
-    u32               flags_AC;                 /** Flashlight state? On: 3, Off: 1*/
-    s32               field_B0[45];
-    s32               hasMapsFlags_164;         // See Sparagas' `HasMapsFlags` struct for details of every bit.
-    s32               eventFlags_168[6];        //----------------------------------------
-    s32               eventFlags_180[2];        //
-    s32               eventFlags_188;           //
-    s32               eventFlags_18C;           // Only tested a few, but it seems all are related to events and pick-up flags, grouped by location and not item types.
-    s32               eventFlags_190[4];        //
-    s32               eventFlags_1A0;           //
-    s32               eventFlags_1A4[12];       //----------------------------------------
-    s32               mapMarkingFlags_1D4[2];   //----------------------------------------
-    s32               mapMarkingFlags_1DC;      // These 3 are one `u32 mapMarkingFlags[25];` (or maybe `u8 mapMarkingFlags[100];`?) See Sparagas' `MapMarkingsFlags` struct for details of every bit.
-    s32               mapMarkingFlags_1E0[22];  //----------------------------------------
-    s32               field_238;                // Another player health store?
-    s16               pickedUpItemCount_23C;
-    s8                field_23E;
-    u8                field_23F;
-    q19_12            playerHealth_240;         /** Default: 100 */
-    q19_12            playerPositionX_244;
-    q3_12             playerRotationY_248;      /** Range [0, 0.999755859375], positive Z: 0, clockwise rotation. It can be multiplied by 360 to get degrees. */
-    u8                clearGameCount_24A;       /** Range [0, 99] */
-    u8                clearGameEndings_24B;     /** `e_GameEndingFlags` */
-    q19_12            playerPositionZ_24C;
-    q20_12            gameplayTimer_250;
-    q20_12            runDistance_254;
-    q20_12            walkDistance_258;
-    u8                isNextFearMode_25C             : 1; // Makes savegame entry text gold.
-    u8                add290Hours_25C_1              : 2; // Adds 290 hours per 1 bit, i.e. 290, 580, 870.
-    u8                pickedUpSpecialItemCount_25C_3 : 5; // Red/None: 0?, Yellow: 8, Green: 16, Rainbow: 24 (unobtainable).
-													      /** Sparagas' investigations indicate this variable should be
-												           * two different variables. However, splitting it causes minor
-														   * mismatches in some functions.
-													       *
-													       * The first 3 bits indicate the number of special items the
-													       * player has picked up, and the last 2 bits indicate the color of the Hyper
-													       * Blaster beam.
-													       *
-													       * Belek666 suggests that some functions specifically access this field as 5 bits.
-													       *
-													       * The the odd access results in a bug where the results screen will count more collected
-                                                           * special items than normal by additionally reading one of the two bits
-														   * for the Hyper Blaster beam color.
-													       */
-    u8                meleeKillCount_25D;
-    u8                meleeKillCountB_25E; // Can't be packed if used as `u16`.
-    u8                rangedKillCount_25F;
-    u32               field_260 : 28;
-    s32               gameDifficulty_260 : 4;  /** `e_GameDifficulty`. */
-    u16               firedShotCount_264;      /** Missed shot count = firedShotCount - (closeRangeShotCount + midRangeShotCount + longRangeShotCount). */
-    u16               closeRangeShotCount_266; /** Only hits counted. */
-    u16               midRangeShotCount_268;   /** Only hits counted. */
-    u16               longRangeShotCount_26A;  /** Only hits counted. */
-    u16               field_26C;
-    u16               field_26E; // Related to enemy kills.
-    u16               field_270;
-    u16               field_272;
-    u16               field_274;
-    u16               field_276;
-    u16               field_278;
-    s8                field_27A; // Flags.
-    u8                continueCount_27B;
-} s_ShSavegame;
-STATIC_ASSERT_SIZEOF(s_ShSavegame, 636);
+    s_InventoryItem items_0[INVENTORY_ITEM_COUNT_MAX];
+    s8              field_A0;
+    s8              field_A1[3];
+    s8              mapOverlayId_A4;          /** `e_MapOverlayId` Index to overlay `.BIN` files. */
+    s8              mapRoomIdx_A5;            /** Index to local map geometry `.IPD` files. */
+    s16             savegameCount_A6;
+    s8              locationId_A8;            /** `e_SaveLocationId` */
+    u8              current2dMapIdx_A9;       /** `e_Current2dMapIdx` Index to the 2D map shown when opening the map screen. */
+    u8              equippedWeapon_AA;        /** `e_InventoryItemId` Default: 0. Effects only the visible player weapon model. */
+    u8              inventoryItemSpaces_AB;   /** Item spaces. `INVENTORY_ITEM_COUNT_MAX` */
+    u32             flags_AC;                 /** Flashlight state? On: 3, Off: 1*/
+    s32             field_B0[45];
+    s32             hasMapsFlags_164;         // See Sparagas' `HasMapsFlags` struct for details of every bit.
+    s32             eventFlags_168[6];        //----------------------------------------
+    s32             eventFlags_180[2];        //
+    s32             eventFlags_188;           //
+    s32             eventFlags_18C;           // Only tested a few, but it seems all are related to events and pick-up flags, grouped by location and not item types.
+    s32             eventFlags_190[4];        //
+    s32             eventFlags_1A0;           //
+    s32             eventFlags_1A4[12];       //----------------------------------------
+    s32             mapMarkingFlags_1D4[2];   //----------------------------------------
+    s32             mapMarkingFlags_1DC;      // These 3 are one `u32 mapMarkingFlags[25];` (or maybe `u8 mapMarkingFlags[100];`?) See Sparagas' `MapMarkingsFlags` struct for details of every bit.
+    s32             mapMarkingFlags_1E0[22];  //----------------------------------------
+    s32             field_238;                // Another player health store?
+    s16             pickedUpItemCount_23C;
+    s8              field_23E;
+    u8              field_23F;
+    q19_12          playerHealth_240;         /** Default: 100 */
+    q19_12          playerPositionX_244;
+    q3_12           playerRotationY_248;      /** Range [0, 0.999755859375], positive Z: 0, clockwise rotation. It can be multiplied by 360 to get degrees. */
+    u8              clearGameCount_24A;       /** Range [0, 99] */
+    u8              clearGameEndings_24B;     /** `e_GameEndingFlags` */
+    q19_12          playerPositionZ_24C;
+    q20_12          gameplayTimer_250;
+    q20_12          runDistance_254;
+    q20_12          walkDistance_258;
+    u8              isNextFearMode_25C             : 1; // Makes savegame entry text gold.
+    u8              add290Hours_25C_1              : 2; // Adds 290 hours per 1 bit, i.e. 290, 580, 870.
+    u8              pickedUpSpecialItemCount_25C_3 : 5; // Red/None: 0?, Yellow: 8, Green: 16, Rainbow: 24 (unobtainable).
+                                                        /** Sparagas' investigations indicate this variable should be
+                                                         * two different variables. However, splitting it causes minor
+                                                         * mismatches in some functions.
+                                                         *
+                                                         * The first 3 bits indicate the number of special items the
+                                                         * player has picked up, and the last 2 bits indicate the color of the Hyper
+                                                         * Blaster beam.
+                                                         *
+                                                         * Belek666 suggests that some functions specifically access this field as 5 bits.
+                                                         *
+                                                         * The the odd access results in a bug where the results screen will count more collected
+                                                         * special items than normal by additionally reading one of the two bits
+                                                         * for the Hyper Blaster beam color.
+                                                         */
+    u8              meleeKillCount_25D;
+    u8              meleeKillCountB_25E; // Can't be packed if used as `u16`.
+    u8              rangedKillCount_25F;
+    u32             field_260 : 28;
+    s32             gameDifficulty_260 : 4;  /** `e_GameDifficulty`. */
+    u16             firedShotCount_264;      /** Missed shot count = firedShotCount - (closeRangeShotCount + midRangeShotCount + longRangeShotCount). */
+    u16             closeRangeShotCount_266; /** Only hits counted. */
+    u16             midRangeShotCount_268;   /** Only hits counted. */
+    u16             longRangeShotCount_26A;  /** Only hits counted. */
+    u16             field_26C;
+    u16             field_26E; // Related to enemy kills.
+    u16             field_270;
+    u16             field_272;
+    u16             field_274;
+    u16             field_276;
+    u16             field_278;
+    s8              field_27A; // Flags.
+    u8              continueCount_27B;
+} s_Savegame;
+STATIC_ASSERT_SIZEOF(s_Savegame, 636);
 
-typedef struct _ShEventParam
+typedef struct _EventParam
 {
     u8  unk_0[2];
     s16 eventFlagId_2;
@@ -724,10 +724,10 @@ typedef struct _ShEventParam
     u8  field_5;
     u8  unk_6[2];
     u32 flags_8;
-} s_ShEventParam;
-STATIC_ASSERT_SIZEOF(s_ShEventParam, 12);
+} s_EventParam;
+STATIC_ASSERT_SIZEOF(s_EventParam, 12);
 
-typedef struct _ShSaveUserConfig
+typedef struct _SaveUserConfig
 {
     s_ControllerConfig controllerConfig_0;
     s8                 optScreenPosX_1C;          /** Range: [-11, 11], default: 0. */
@@ -751,41 +751,41 @@ typedef struct _ShSaveUserConfig
     u16                seenGameOverTips_2E[1];    /** Bitfield tracking seen game-over tips. Each bit corresponds to a tip index (0–14), set bits indicate seen tips. Resets after picking all 15. */
     s8                 unk_30[4];
     u32                palLanguageId_34;
-} s_ShSaveUserConfig;
-STATIC_ASSERT_SIZEOF(s_ShSaveUserConfig, 56);
+} s_SaveUserConfig;
+STATIC_ASSERT_SIZEOF(s_SaveUserConfig, 56);
 
 /** @brief Appended to `ShSavegame` and `ShSaveUserConfig` during game save. Contains 8-bit XOR checksum + magic.
  * Checksum generated via `Savegame_ChecksumGenerate`.
  */
-typedef struct _ShSavegameFooter
+typedef struct _SavegameFooter
 {
     u8  checksum_0[2];
     u16 magic_2;
-} s_ShSavegameFooter;
-STATIC_ASSERT_SIZEOF(s_ShSavegameFooter, 4);
+} s_SavegameFooter;
+STATIC_ASSERT_SIZEOF(s_SavegameFooter, 4);
 
-/** @brief Contains `s_ShSavegame` data with the footer appended to the end containing the checksum + magic. */
-typedef struct _ShSavegameContainer
+/** @brief Contains `s_Savegame` data with the footer appended to the end containing the checksum + magic. */
+typedef struct _SavegameContainer
 {
-    s_ShSavegame       savegame_0;
-    s_ShSavegameFooter footer_27C;
-} s_ShSavegameContainer;
-STATIC_ASSERT_SIZEOF(s_ShSavegameContainer, 640);
+    s_Savegame       savegame_0;
+    s_SavegameFooter footer_27C;
+} s_SavegameContainer;
+STATIC_ASSERT_SIZEOF(s_SavegameContainer, 640);
 
-/** @brief Contains `s_ShSaveUserConfig` data padded to 128 bytes, with footer at the end containing checksum + magic. */
-typedef struct _ShSaveUserConfigContainer
+/** @brief Contains `s_SaveUserConfig` data padded to 128 bytes, with footer at the end containing checksum + magic. */
+typedef struct _SaveUserConfigContainer
 {
-    s_ShSaveUserConfig config_0;
-    u8                 pad_38[68];
-    s_ShSavegameFooter footer_7C;
-} s_ShSaveUserConfigContainer;
+    s_SaveUserConfig config_0;
+    u8               pad_38[68];
+    s_SavegameFooter footer_7C;
+} s_SaveUserConfigContainer;
 
 typedef struct _GameWork
 {
-    s_ShSaveUserConfig config_0;
+    s_SaveUserConfig   config_0;
     s_ControllerData   controllers_38[CONTROLLER_COUNT_MAX];
-    s_ShSavegame       savegame_90; // Backup savegame?
-    s_ShSavegame       savegame_30C;
+    s_Savegame         savegame_90; // Backup savegame?
+    s_Savegame         savegame_30C;
     u16                gsScreenWidth_588;
     u16                gsScreenHeight_58A;
     u8                 background2dColor_R_58C;
@@ -796,11 +796,11 @@ typedef struct _GameWork
     s32                gameState_594;        /** `e_GameState` */
     s32                gameStateStep_598[3]; /** Temp data used by current `gameState`. Can be another state ID or other data. 
                                               * This states could be sub-states for specific events of individual screens
-											  * because of the way it's normally used in menus. For example: in the settings
-											  * screen, [0] is used to define what option the player has selected, and [1] is used
-											  * during specific settings screens, such as the position screen or the brightness screen.
-											  *
-											  * [2] is likely rarely used or maybe only used during maps.
+                                              * because of the way it's normally used in menus. For example: in the settings
+                                              * screen, [0] is used to define what option the player has selected, and [1] is used
+                                              * during specific settings screens, such as the position screen or the brightness screen.
+                                              *
+                                              * [2] is likely rarely used or maybe only used during maps.
                                               */
     s8                 unk_5A4[4];
     s32                field_5A8;
@@ -850,7 +850,7 @@ STATIC_ASSERT_SIZEOF(s_ModelAnim, 20);
 
 typedef struct _Model
 {
-    s8 charaId_0;      /** `e_ShCharacterId` */
+    s8 charaId_0;      /** `e_CharacterId` */
     u8 paletteIdx_1;   /** Changes the texture palette index for this model. */
     u8 state_2;        /** Current state for this model/character. 0 usually means it still has to be initialize. */
     u8 stateStep_3;    // Step number or temp data for the current `state_2`? In `s_MainCharacterExtra` always 1, set to 0 for 1 tick when anim state appears to change.
@@ -1206,7 +1206,7 @@ extern s_SysWork               g_SysWork;       // 0x800B9FC0
 extern s_GameWork              g_GameWork;      // 0x800BC728
 extern s_GameWork* const       g_GameWorkConst; // 0x80024D44
 extern s_GameWork* const       g_GameWorkPtr;   // 0x80024D54
-extern s_ShSavegame* const     g_SavegamePtr;   // 0x80024D48
+extern s_Savegame* const       g_SavegamePtr;   // 0x80024D48
 extern s_ControllerData* const g_Controller0;   // 0x80024D4C
 extern s_ControllerData* const g_Controller1;   // 0x80024D50
 
@@ -1214,11 +1214,11 @@ extern s32  g_ObjectTableIdx; // 0x800B9FB8
 extern GsOT g_ObjectTable0[]; // 0x800A8F74
 extern GsOT g_ObjectTable1[]; // 0x800A8FC4
 
-extern q19_12          g_DeltaTime0;    // 0x800B5CC0
-extern q19_12          g_DeltaTime1;    // 0x800A8FEC
-extern q19_12          g_DeltaTime2;    // 0x800B9CC8
-extern u32             g_MapEventIdx;   // 0x800A9A14
-extern s_ShEventParam* g_MapEventParam; // 0x800BCDD8
+extern q19_12        g_DeltaTime0;    // 0x800B5CC0
+extern q19_12        g_DeltaTime1;    // 0x800A8FEC
+extern q19_12        g_DeltaTime2;    // 0x800B9CC8
+extern u32           g_MapEventIdx;   // 0x800A9A14
+extern s_EventParam* g_MapEventParam; // 0x800BCDD8
 
 extern s32 g_IntervalVBlanks; // 0x800A8FF0
 extern s32 g_PrevVBlanks;     // 0x800A9770

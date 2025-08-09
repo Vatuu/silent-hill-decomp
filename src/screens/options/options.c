@@ -260,7 +260,7 @@ void Settings_ExtraScreen() // 0x801E318C
         g_PrevExtraSelectedOptionIdx = g_ExtraSelectedOptionIdx;
 
         if (((g_GameWork.gameStatePrev_590 == GameState_InGame) && 
-			((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0) == 0)) &&
+            ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0) == 0)) &&
             ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.option_1A) != 0))
         {
             Sd_PlaySfx(Sfx_Cancel, 0, 64);
@@ -448,7 +448,7 @@ void Settings_MainScreen() // 0x801E3770
     g_PrevMainSelectedOptionIdx = g_MainSelectedOptionIdx;
 
     if (((g_GameWork.gameStatePrev_590 == GameState_InGame) && 
-		((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0) == 0)) &&
+        ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0) == 0)) &&
         (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.option_1A))
     {
         Sd_PlaySfx(Sfx_Cancel, 0, 64);
@@ -479,7 +479,7 @@ void Settings_MainScreen() // 0x801E3770
     {
         case OptMain_Exit:
             if (g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 |
-				                                 g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
+                                                 g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
             {
                 Sd_PlaySfx(Sfx_Cancel, 0, 64);
 

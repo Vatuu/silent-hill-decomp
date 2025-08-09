@@ -78,7 +78,7 @@ typedef struct
     s32                field_0;
     s_SavegameMetadata savegameMetadatas_4[11];
     s8                 unk_88[116];
-    s_ShSavegameFooter field_FC;
+    s_SavegameFooter   field_FC;
 } s_MemCardInfo_BasicSaveInfo;
 STATIC_ASSERT_SIZEOF(s_MemCardInfo_BasicSaveInfo, 256);
 
@@ -163,8 +163,8 @@ typedef struct
     u8                          unk_114[4];
     s_PsxSaveBlock              saveBlock_118;
     s_MemCardInfo_BasicSaveInfo saveInfo_318;
-    s_ShSaveUserConfigContainer userConfig_418;
-    s_ShSavegameContainer       saveGame_498;
+    s_SaveUserConfigContainer   userConfig_418;
+    s_SavegameContainer         saveGame_498;
 } s_800B5508;
 STATIC_ASSERT_SIZEOF(s_800B5508, 1816);
 
@@ -304,29 +304,29 @@ void func_8002F61C(s_800B55E8* arg0);
 
 void func_8002FB64(s_MemCardInfo_BasicSaveInfo* arg0);
 
-/** Copies user config into an `s_ShSaveUserConfigContainer` and calculates footer checksum. */
-void Savegame_UserConfigCopyWithChecksum(s_ShSaveUserConfigContainer* dest, s_ShSaveUserConfig* src);
+/** Copies user config into an `s_SaveUserConfigContainer` and calculates footer checksum. */
+void Savegame_UserConfigCopyWithChecksum(s_SaveUserConfigContainer* dest, s_SaveUserConfig* src);
 
 s32 func_8002FC3C(s32 deviceId);
 
-/** Copies savegame into an s_ShSavegameContainer and calculates footer checksum. */
-void Savegame_CopyWithChecksum(s_ShSavegameContainer* dest, s_ShSavegame* src);
+/** Copies savegame into an s_SavegameContainer and calculates footer checksum. */
+void Savegame_CopyWithChecksum(s_SavegameContainer* dest, s_Savegame* src);
 
-void func_8002FD5C(s32 deviceId, s32 fileIdx, s32 saveIdx, s_ShSavegame* arg3);
+void func_8002FD5C(s32 deviceId, s32 fileIdx, s32 saveIdx, s_Savegame* arg3);
 
 void func_8002FDB0(s32 deviceId, s32 fileIdx, s32 saveIdx);
 
 void func_8002FE70(s32 deviceId, s_func_8002FE70* result);
 
 /** Updates the footer with the checksum of the given data. */
-void Savegame_ChecksumUpdate(s_ShSavegameFooter* saveFooter, s8* saveData, s32 saveDataLength);
+void Savegame_ChecksumUpdate(s_SavegameFooter* saveFooter, s8* saveData, s32 saveDataLength);
 
 /** Generates a checksum of the given saveData and compares it against the checksum value in the footer.
  * Returns 1 if the checksums match, otherwise 0.
  */
-s32 Savegame_ChecksumValidate(s_ShSavegameFooter* saveFooter, s8* saveData, s32 saveDataLength); // 0x8002FF74
+s32 Savegame_ChecksumValidate(s_SavegameFooter* saveFooter, s8* saveData, s32 saveDataLength); // 0x8002FF74
 
-/** Generates an 8-bit XOR checksum over the given data, only appears used with s_ShSavegame data. */
+/** Generates an 8-bit XOR checksum over the given data, only appears used with s_Savegame data. */
 u8 Savegame_ChecksumGenerate(s8* saveData, s32 saveDataLength);
 
 /** Generates a save filename for the given save index. */

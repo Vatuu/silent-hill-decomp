@@ -1,9 +1,9 @@
 void sharedFunc_800D09D4_3_s00()
 {
-    s32           flags;
-    s32           var;
-    s32           mapRoomIdx;
-    s_ShSavegame* save;
+    s32         flags;
+    s32         var;
+    s32         mapRoomIdx;
+    s_Savegame* save;
 
     save       = g_SavegamePtr;
     mapRoomIdx = save->mapRoomIdx_A5;

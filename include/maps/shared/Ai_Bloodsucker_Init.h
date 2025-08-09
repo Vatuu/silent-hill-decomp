@@ -1,7 +1,7 @@
 static inline void Ai_Bloodsucker_AnimUpdateFromStep(s_SubCharacter* chara)
 {
-    u32           temp_v0;
-    s_ShSavegame* save;
+    u32         temp_v0;
+    s_Savegame* save;
 
     switch (chara->model_0.stateStep_3)
     {

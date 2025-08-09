@@ -268,7 +268,7 @@ void Gfx_ItemScreens_RenderInit(u32* selectedItemId) // 0x8004F764
 
         Inventory_PlayerItemScroll(selectedItemId);
 
-		// Player Items
+        // Player Items
         for (i = 0, ptr = &g_Items_ItemsModelData; i < 7; i++, ptr++)
         {
             if (D_800C3E18[i] != NO_VALUE)
@@ -287,7 +287,7 @@ void Gfx_ItemScreens_RenderInit(u32* selectedItemId) // 0x8004F764
             }
         }
 
-		// Equipped Item
+        // Equipped Item
         if (g_SavegamePtr->items_0[g_Inventory_EquippedItemIdx].id_0 != 0xFF && g_Inventory_EquippedItemIdx != NO_VALUE)
         {
             g_Items_Items3dData0[7].rotation_10.vx = g_ItemVectors[g_SavegamePtr->items_0[g_Inventory_EquippedItemIdx].id_0 - 32].vx;
@@ -517,7 +517,6 @@ void Gfx_Inventory_2dBackgroundDraw(s32* arg0) // 0x8004FBCC
                     {
                         switch (g_SavegamePtr->gameDifficulty_260)
                         {
-							
                             case GameDifficulty_Easy:
                                 if (i == var_t6 && j == var_t5)
                                 {
@@ -1417,9 +1416,9 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/items/item_screens_3", Inventory_PlayerIt
 
 void func_800539A4(s32 scrollDirection, s32 arg1) // 0x800539A4
 {
-	#define RIGHT_SCROLL 7
-	#define LEFT_SCROLL -7
-	
+    #define RIGHT_SCROLL 7
+    #define LEFT_SCROLL -7
+
     s32 sp10[10];
     s32 i;
     s32 var_a3_2;
@@ -2022,9 +2021,9 @@ void Gfx_Items_Render() // 0x80054200
 
     Gfx_ItemScreens_CameraSet(&D_800C3B48, &D_800C3AE8, &D_800C3B38, 0);
 
-	/** This loops define the position, rotation and scale of the item that
-	* the player has initially equipped in the inventory.
-	*/
+    /** This loops define the position, rotation and scale of the item that
+    * the player has initially equipped in the inventory.
+    */
     for (i = 0; i < 10; i++)
     {
         D_800C3E18[i] = NO_VALUE;
@@ -2220,8 +2219,8 @@ void Gfx_Items_Display(s_TmdFile* tmd, s32 arg1, s32 arg2)
     u8                 var_v0;
     GsDOBJ2*           ptr;
     struct TMD_STRUCT* objs;
-	
-	objs = tmd->objects_C;
+
+    objs = tmd->objects_C;
 
     GsLinkObject4((u32)&objs[arg2], &g_Items_ItemsModelData[arg1], 0);
 

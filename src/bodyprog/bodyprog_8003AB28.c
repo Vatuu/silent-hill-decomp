@@ -37,19 +37,19 @@ void GameState_MainMenu_Update() // 0x8003AB28
         GameState_MovieIntro
     };
 
-    s32           playIntroFmv;
-    s32           prevGameDifficultyIdx;
-    s32           nextGameDifficultyIdx;
-    s_ShSavegame* save;
-    e_GameState   prevState;
+    s32         playIntroFmv;
+    s32         prevGameDifficultyIdx;
+    s32         nextGameDifficultyIdx;
+    s_Savegame* save;
+    e_GameState prevState;
 
     func_80033548();
 
-	/** After staying idle in the title screen for some time, checks if the intro FMV or a
-	 * demo gameplay segment should be played. If the next value from `g_Demo_ReproducedCount`
-	 * is a value divisible by 3, the intro FMV will play. Otherwise, it defaults to a gameplay
+    /** After staying idle in the title screen for some time, checks if the intro FMV or a
+     * demo gameplay segment should be played. If the next value from `g_Demo_ReproducedCount`
+     * is a value divisible by 3, the intro FMV will play. Otherwise, it defaults to a gameplay
      * demo.
-	 */
+     */
     playIntroFmv = ((g_Demo_ReproducedCount + 1) % 3) != 0;
 
     if (g_GameWork.gameStateStep_598[0] == 0)

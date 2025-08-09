@@ -760,8 +760,8 @@ typedef struct
 
 typedef struct
 {
-    s8             charaId0_0; /** `e_ShCharacterId`. */
-    s8             charaId1_1; /** `e_ShCharacterId`. */
+    s8             charaId0_0; /** `e_CharacterId`. */
+    s8             charaId1_1; /** `e_CharacterId`. */
     s8             unk_2[2];
     s32            animFile0_4;//s_AnimFile*    animFile0_4; // TODO: Needs to be a pointer.
     s_AnimFile*    animFile1_8;
@@ -1182,7 +1182,7 @@ typedef struct
     s16 field_6;
 } s_D_800C44F0;
 
-/** Holds file IDs of anim/model/texture for each `e_ShCharacterId`, along with some data used in VC camera code. */
+/** Holds file IDs of anim/model/texture for each `e_CharacterId`, along with some data used in VC camera code. */
 typedef struct
 {
     s16   animFileIdx;
@@ -1322,7 +1322,7 @@ typedef struct
 typedef struct _SpawnInfo
 {
     q19_12 positionX_0;
-    s8     charaId_4;   /** `e_ShCharacterId` */
+    s8     charaId_4;   /** `e_CharacterId` */
     u8     rotationY_5; /** Multiplied by 16 to get `s_SubCharacter.rotation_24.vy` value. */
     s8     flags_6;     /** Copied to `stateStep_3` in `s_Model`, with `state_2 = 0`. */
     s8     unk_7;
@@ -1404,8 +1404,8 @@ typedef struct _MapOverlayHeader
     void              (*func_178)(void*, void*, void*);
     void              (*func_17C)(void*, void*);
     s8                unk_180[20];
-    void              (*charaUpdateFuncs_194[Chara_Count])(s_SubCharacter*, void*, s32); /** Guessed params. Funcptrs for each `e_ShCharacterId`, set to 0 for IDs not included in the map overlay. Called by `func_80038354`. */
-    s8                charaGroupIds_248[4];                                              /** `e_ShCharacterId` values where if `s_SpawnInfo.charaId_4` == 0, `charaGroupIds_248[0]` is used for `charaSpawnsA_24C` and `charaGroupIds_248[1]` for `charaSpawnsB_30C`. */
+    void              (*charaUpdateFuncs_194[Chara_Count])(s_SubCharacter*, void*, s32); /** Guessed params. Funcptrs for each `e_CharacterId`, set to 0 for IDs not included in the map overlay. Called by `func_80038354`. */
+    s8                charaGroupIds_248[4];                                              /** `e_CharacterId` values where if `s_SpawnInfo.charaId_4` == 0, `charaGroupIds_248[0]` is used for `charaSpawnsA_24C` and `charaGroupIds_248[1]` for `charaSpawnsB_30C`. */
     s_SpawnInfo       charaSpawnsA_24C[16];                                              /** Array of chara type/position/flags, `flags_6 == 0` are unused slots? Read by `func_80037F24`. */
     s_SpawnInfo       charaSpawnsB_30C[16];                                              /** Array of chara type/position/flags, `flags_6 == 0` are unused slots? Read by `func_80037F24`. */
     VC_ROAD_DATA      roadDataList_3CC[48];
@@ -1564,7 +1564,7 @@ extern s_FsImageDesc D_800A9094;
 
 extern s_FsImageDesc g_Font24AtlasImg; // 0x800A909C
 
-/** Array containg file IDs used for each `e_ShCharacterId`, used in `Fs_QueueStartReadAnm`. */
+/** Array containg file IDs used for each `e_CharacterId`, used in `Fs_QueueStartReadAnm`. */
 extern s_CharaFileInfo g_Chara_FileInfo[45]; // 0x800A90FC
 
 extern s_sub_StructUnk3 D_800A93CC[];
@@ -3242,10 +3242,10 @@ bool func_8003528C(s32 idx0, s32 idx1);
 s32 func_800352F8(s32 charaId);
 
 /** Either allocates or determines where to allocate animation data. */
-void func_80035338(s32 idx, e_ShCharacterId charaId, s_AnimFile* animFile, GsCOORDINATE2* coords);
+void func_80035338(s32 idx, e_CharacterId charaId, s_AnimFile* animFile, GsCOORDINATE2* coords);
 
 /** Called by `Fs_QueuePostLoadAnm`. */
-void func_80035560(s32 idx, e_ShCharacterId charaId, s_AnimFile* animFile, GsCOORDINATE2* coord);
+void func_80035560(s32 idx, e_CharacterId charaId, s_AnimFile* animFile, GsCOORDINATE2* coord);
 
 void func_8003569C();
 
