@@ -1839,12 +1839,6 @@ extern s_800AFBF4 D_800AFBF4[];
 
 extern s_800AFC78 D_800AFC78; // Maybe different struct.
 
-extern s32 D_800AFC7C;
-
-extern s_func_800699F8 D_800AFC84[]; // Maybe array.
-
-extern s32 D_800AFC90;
-
 extern u8 D_800AFD04;
 
 extern u8 D_800AFD05;

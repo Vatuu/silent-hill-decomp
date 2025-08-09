@@ -6141,13 +6141,13 @@ void func_8008076C(s32 posX, s32 posZ) // 0x8008076C
 s32 func_80080884(s32 posX, s32 posZ) // 0x80080884
 {
     func_8008076C(posX, posZ);
-    return D_800AFC7C;
+    return D_800AFC78.pos_0.vy;
 }
 
 s32 func_800808AC(s32 posX, s32 posZ) // 0x800808AC
 {
     func_8008076C(posX, posZ);
-    return D_800AFC90;
+    return D_800AFC78.field_18;
 }
 
 s32 Math_MulFixed(s32 val0, s32 val1, s32 shift) // 0x800808D4

@@ -1918,6 +1918,7 @@ g_Inventory_ScrollTransitionTimer           = 0x800AE1A4;
 g_Player_IsInWalkToRunTransition            = 0x800AF214;
 g_Player_DisableControl                     = 0x800AF215;
 g_MaybePlayerAnims                          = 0x800AF228; // type:MaybeCharacterAnim
+D_800AFC78                                  = 0x800AFC78; // type:u8 size:0x1C - s_800AFC78 struct, size likely incomplete
 vcNullNearRoad                              = 0x800AFC94; // type:VC_NEAR_ROAD_DATA size:0x24
 deflt_watch_mv_prm                          = 0x800AFCB8; // type:VC_WATCH_MV_PARAM size:0xC
 self_view_watch_mv_prm                      = 0x800AFCC4; // type:VC_WATCH_MV_PARAM size:0xC
