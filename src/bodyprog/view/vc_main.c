@@ -1657,7 +1657,7 @@ void vcMakeFarWatchTgtPos(VECTOR3* watch_tgt_pos, VC_WORK* w_p, VC_AREA_SIZE_TYP
                 }
                 else
                 {
-                    watch_y = sp10.chara_grnd_0 + ofs_y;
+                    watch_y = sp10.groundHeight_0 + ofs_y;
                 }
                 break;
 

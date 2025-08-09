@@ -972,14 +972,14 @@ typedef struct _SubCharacter
 
     // Fields seen used inside maps (eg. `map0_s00` `func_800D923C`)
 
-    s16 field_C8;
-    s16 field_CA;
-    s16 field_CC;
-    s16 field_CE;
-    s16 field_D0;
-    s16 field_D2;
-    s16 field_D4;
-    s16 field_D6;
+    s16               field_C8;
+    s16               field_CA;
+    s16               field_CC;
+    s16               field_CE;
+    s16               field_D0;
+    s16               field_D2;
+    s16               field_D4;
+    s16               field_D6;
     s_SubCharacter_D8 field_D8;
 
     s32 unk_E0     : 8;

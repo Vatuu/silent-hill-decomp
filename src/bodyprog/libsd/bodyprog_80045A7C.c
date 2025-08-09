@@ -185,8 +185,14 @@ void func_80045D28(u8 caseArg) // 0x80045D28
         case 0:
             SdSetMono();
 
-            vol.val0 = vol.val2 = 0x4F; // spu (L)
-            vol.val1 = vol.val3 = 0x4F; // spu (R)
+            // SPU (L).
+            vol.val0 =
+            vol.val2 = 0x4F;
+
+            // SPU (R).
+            vol.val1 =
+            vol.val3 = 0x4F;
+
             CdMix(&vol);
 
             D_800C167C = 0x7F;
@@ -196,8 +202,13 @@ void func_80045D28(u8 caseArg) // 0x80045D28
         case 1:
             SdSetStereo();
 
-            vol.val0 = vol.val2 = 0x7F; // spu (L)
-            vol.val1 = vol.val3 = 0;    // spu (R)
+            // SPU (L).
+            vol.val0 =
+            vol.val2 = 0x7F;
+
+            // SPU (R).
+            vol.val1 =
+            vol.val3 = 0;
             CdMix(&vol);
 
             D_800C167C = 0x7F;

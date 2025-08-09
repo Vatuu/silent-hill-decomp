@@ -860,10 +860,10 @@ void func_800699F8(s_func_800699F8* coll, s32 posX, s32 posZ) // 0x800699F8
     temp_v0 = func_800426E4(posX, posZ);
     if (!temp_v0)
     {
-        coll->chara_grnd_0 = FP_METER(8.0f);
-        coll->field_6      = 0;
-        coll->field_4      = 0;
-        coll->field_8      = 0;
+        coll->groundHeight_0 = FP_METER(8.0f);
+        coll->field_6        = 0;
+        coll->field_4        = 0;
+        coll->field_8        = 0;
         return;
     }
 
@@ -882,13 +882,13 @@ void func_800699F8(s_func_800699F8* coll, s32 posX, s32 posZ) // 0x800699F8
 
     if (sp38.field_90 == 1)
     {
-        coll->field_8      = 0;
-        coll->chara_grnd_0 = FP_METER(8.0f);
+        coll->field_8        = 0;
+        coll->groundHeight_0 = FP_METER(8.0f);
     }
     else
     {
-        coll->field_8      = sp38.field_94;
-        coll->chara_grnd_0 = func_8006CC44(sp38.field_4.positionX_18, sp38.field_4.positionZ_1C, &sp38) * 16;
+        coll->field_8        = sp38.field_94;
+        coll->groundHeight_0 = func_8006CC44(sp38.field_4.positionX_18, sp38.field_4.positionZ_1C, &sp38) * 16;
     }
 
     coll->field_4 = sp38.field_88;
@@ -6074,17 +6074,79 @@ void func_8008074C(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x8008074C
     func_800806AC(arg0, arg1, 1 << 31, arg3);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8008076C); // 0x8008076C
-
-s32 func_80080884() // 0x80080884
+void func_8008076C(s32 posX, s32 posZ) // 0x8008076C
 {
-    func_8008076C();
+    s32              groundHeight;
+    s32              caseVar;
+    s32              x;
+    s32              z;
+    s_func_800699F8* coll;
+
+    coll = &D_800AFC78.field_C;
+
+    x = D_800AFC78.pos_0.vx;
+    z = D_800AFC78.pos_0.vz;
+
+    if (D_800AFC78.field_18 != NO_VALUE && x == posX && z == posZ)
+    {
+        return;
+    }
+
+    func_800699F8(coll, posX, posZ);
+    D_800AFC78.pos_0.vx = posX;
+    D_800AFC78.pos_0.vz = posZ;
+
+    caseVar = coll->field_8;
+    switch (coll->field_8)
+    {
+        case 0:
+            groundHeight = FP_METER(8.0f);
+            switch (g_SavegamePtr->mapOverlayId_A4)
+            {
+                case MapOverlayId_MAP5_S01:
+                    if (posZ <= 0)
+                    {
+                        groundHeight = FP_METER(4.0f);
+                        caseVar      = 7;
+                    }
+                    break;
+
+                case MapOverlayId_MAP6_S00:
+                    groundHeight = FP_METER(4.0f);
+                    caseVar      = 7;
+                    break;
+            }
+            break;
+
+        case 12:
+            groundHeight = FP_METER(8.0f);
+            switch (g_SavegamePtr->mapOverlayId_A4)
+            {
+                case MapOverlayId_MAP6_S00:
+                    groundHeight = FP_METER(4.0f);
+                    caseVar      = 7;
+                    break;
+            }
+            break;
+
+        default:
+            groundHeight = coll->groundHeight_0;
+            break;
+    }
+    
+    D_800AFC78.pos_0.vy = groundHeight;
+    D_800AFC78.field_18 = caseVar;
+}
+
+s32 func_80080884(s32 posX, s32 posZ) // 0x80080884
+{
+    func_8008076C(posX, posZ);
     return D_800AFC7C;
 }
 
-s32 func_800808AC() // 0x800808AC
+s32 func_800808AC(s32 posX, s32 posZ) // 0x800808AC
 {
-    func_8008076C();
+    func_8008076C(posX, posZ);
     return D_800AFC90;
 }
 

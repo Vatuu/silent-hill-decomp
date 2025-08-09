@@ -2874,7 +2874,7 @@ void func_80037334() // 0x80037334
     }
 
     func_800699F8(&sp10, g_SysWork.player_4C.chara_0.position_18.vx, g_SysWork.player_4C.chara_0.position_18.vz);
-    g_SysWork.player_4C.chara_0.position_18.vy = sp10.chara_grnd_0;
+    g_SysWork.player_4C.chara_0.position_18.vy = sp10.groundHeight_0;
 }
 
 void func_80037388() // 0x80037388

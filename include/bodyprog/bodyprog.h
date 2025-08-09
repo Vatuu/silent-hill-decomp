@@ -394,7 +394,7 @@ typedef struct
 /** Returned by `func_800699F8`. Probably contains 2D point collision. */
 typedef struct _s_func_800699F8
 {
-    q19_12 chara_grnd_0;
+    q19_12 groundHeight_0;
     s16    field_4;
     s16    field_6;
     s8     field_8;
@@ -798,6 +798,13 @@ typedef struct
     s8 field_12[6];
 } s_800AD4C8;
 STATIC_ASSERT_SIZEOF(s_800AD4C8, 24);
+
+typedef struct
+{
+    VECTOR3         pos_0;
+    s_func_800699F8 field_C; // Collision data?
+    s32             field_18;
+} s_800AFC78;
 
 typedef struct
 {
@@ -1830,7 +1837,11 @@ extern s_AnimInfo g_MaybePlayerAnims[]; // Maybe part of bigger struct.
 
 extern s_800AFBF4 D_800AFBF4[];
 
+extern s_800AFC78 D_800AFC78; // Maybe different struct.
+
 extern s32 D_800AFC7C;
+
+extern s_func_800699F8 D_800AFC84[]; // Maybe array.
 
 extern s32 D_800AFC90;
 
@@ -3635,9 +3646,12 @@ u32 func_800806AC(s32 arg0, s32 arg1, s32 arg2, s32 arg3); // arg3 type assumed.
 
 void func_8008074C(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 
-s32 func_80080884();
+/** Collision func? */
+void func_8008076C(s32 posX, s32 posZ);
 
-s32 func_800808AC();
+s32 func_80080884(s32 posX, s32 posZ);
+
+s32 func_800808AC(s32 posX, s32 posZ);
 
 /** Returns a Q shift based on a magnitude. */
 s32 Math_GetMagnitudeShift(s32 mag);

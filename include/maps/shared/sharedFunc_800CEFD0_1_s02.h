@@ -66,7 +66,7 @@ void sharedFunc_800CEFD0_1_s02(s32 arg0, s_sharedFunc_800CEFD0_1_s02* arg1, u16*
             func_800699F8(&sp10, var_s0->field_0.vx + sharedData_800E323C_0_s00.vx, var_s0->field_0.vz + sharedData_800E323C_0_s00.vz);
             PopMatrix();
 
-            var_s0->field_0.vy = sp10.chara_grnd_0;
+            var_s0->field_0.vy = sp10.groundHeight_0;
             var_s0->field_18   = sp10.field_8;
 
             if (sp10.field_8 == 11)

@@ -106,7 +106,7 @@ void vcMoveAndSetCamera(s32 in_connect_f, s32 change_debug_mode, s32 for_f, s32 
             else
             {
                 func_800699F8(&sp50, hr_p->position_18.vx, hr_p->position_18.vz);
-                grnd_y = sp50.chara_grnd_0;
+                grnd_y = sp50.groundHeight_0;
 
                 vcMakeHeroHeadPos(&hr_head_pos);
             }
