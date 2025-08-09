@@ -3613,6 +3613,8 @@ s32 func_8007FD2C();
 /** Gets something from player. */
 s32 func_8007FD3C();
 
+void func_8007FD4C(s32 arg0);
+
 /** Returns data in last 3 pointer args. */
 void func_8007FDE0(s8, s32*, s8*, s8*);
 

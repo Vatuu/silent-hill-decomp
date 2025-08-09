@@ -481,7 +481,7 @@ s32 func_800436D8(s_80043338* arg0, s32 fileIdx, s16 fileChunkCoordX, s16 fileCh
     // Store file chunk coords and read file.
     arg0->fileChunkCoordX_8 = fileChunkCoordX;
     arg0->fileChunkCoordZ_A = fileChunkCoordZ;
-    arg0->queueEntryIdx_4 = Fs_QueueStartRead(fileIdx, arg0->field_0);
+    arg0->queueEntryIdx_4   = Fs_QueueStartRead(fileIdx, arg0->field_0);
 
     // Compute and store distance to file chunk edge in `arg0`.
     func_80043338(arg0, posX0, posZ0, posX1, posZ1, clip);

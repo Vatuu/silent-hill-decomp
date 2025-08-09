@@ -5918,7 +5918,36 @@ s32 func_8007FD3C() // 0x8007FD3C
     return g_SysWork.player_4C.chara_0.properties_E4.player.field_114;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8007FD4C); // 0x8007FD4C
+void func_8007FD4C(s32 arg0) // 0x8007FD4C
+{
+    s32             i;
+    s_SubCharacter* chara;
+
+    chara = &g_SysWork.player_4C.chara_0;
+
+    D_800AF20C      = 0;
+    chara->field_40 = NO_VALUE;
+
+    g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk14;
+
+    for (i = 0; i < 4; i++)
+    {
+        g_SysWork.field_2354[i] = NO_VALUE;
+    }
+
+    if (arg0 != 0) 
+    {
+        g_SysWork.player_4C.chara_0.field_D4         = 0x4CC;
+        g_SysWork.player_4C.chara_0.field_D6         = 0x3AE;
+        g_SysWork.player_4C.chara_0.field_C8         = FP_FLOAT_TO(-1.6f, Q12_SHIFT);
+        g_SysWork.player_4C.chara_0.field_D8.field_6 = 0;
+        g_SysWork.player_4C.chara_0.field_D8.field_4 = 0;
+        g_SysWork.player_4C.chara_0.field_D8.field_2 = 0;
+        g_SysWork.player_4C.chara_0.field_D8.field_0 = 0;
+        g_SysWork.player_4C.chara_0.field_CA         = 0;
+        g_SysWork.player_4C.chara_0.field_CE         = FP_FLOAT_TO(-1.1f, Q12_SHIFT);
+    }
+}
 
 // Large function.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8007FDE0); // 0x8007FDE0
