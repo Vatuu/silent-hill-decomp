@@ -142,11 +142,11 @@ s32 Fs_ClampMemBlock(u8* start, u8* end)
     return clampedEnd - clampedStart;
 }
 
-s32 Fs_FreeMem(u8* ptr)
+bool Fs_FreeMem(u8* ptr)
 {
     s_FsMemBlock* iter;
     s_FsMemBlock* prev   = &g_FsMemory.allocList;
-    s32           result = false;
+    bool          result = false;
 
     if (prev->next != NULL)
     {

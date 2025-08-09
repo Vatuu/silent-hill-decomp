@@ -9,9 +9,9 @@
 #include <libgpu.h>
 #include <string.h>
 
-s32 Fs_QueueAllocEntryData(s_FsQueueEntry* entry)
+bool Fs_QueueAllocEntryData(s_FsQueueEntry* entry)
 {
-    s32 result = 0;
+    bool result = false;
 
     if (entry->allocate)
     {
@@ -24,13 +24,13 @@ s32 Fs_QueueAllocEntryData(s_FsQueueEntry* entry)
 
     if (entry->data != 0)
     {
-        result = 1;
+        result = true;
     }
 
     return result;
 }
 
-s32 Fs_QueueCanRead(s_FsQueueEntry* entry)
+bool Fs_QueueCanRead(s_FsQueueEntry* entry)
 {
     s_FsQueueEntry* other;
     s32             queueLength;
@@ -67,26 +67,26 @@ s32 Fs_QueueCanRead(s_FsQueueEntry* entry)
     return true;
 }
 
-s32 Fs_QueueDoBuffersOverlap(u8* data0, u32 size0, u8* data1, u32 size1)
+bool Fs_QueueDoBuffersOverlap(u8* data0, u32 size0, u8* data1, u32 size1)
 {
     u32 data0Low = (u32)data0 & 0xFFFFFF;
     u32 data1Low = (u32)data1 & 0xFFFFFF;
     if ((data1Low >= data0Low + size0) || (data0Low >= data1Low + size1))
     {
-        return 0;
+        return false;
     }
 
-    return 1;
+    return true;
 }
 
-s32 Fs_QueueTickSetLoc(s_FsQueueEntry* entry)
+bool Fs_QueueTickSetLoc(s_FsQueueEntry* entry)
 {
     CdlLOC cdloc;
     CdIntToPos(entry->info->startSector, &cdloc);
     return CdControl(CdlSetloc, (u_char*)&cdloc, NULL);
 }
 
-s32 Fs_QueueTickRead(s_FsQueueEntry* entry)
+bool Fs_QueueTickRead(s_FsQueueEntry* entry)
 {
     // Round up to sector boundary. Masking not needed because of `>> 11` below.
     s32 sectorCount = ((entry->info->blockCount * FS_BLOCK_SIZE) + FS_SECTOR_SIZE) - 1;
@@ -100,9 +100,9 @@ s32 Fs_QueueTickRead(s_FsQueueEntry* entry)
     return CdRead(sectorCount >> FS_SECTOR_SHIFT, (u64*)entry->data, CdlModeSpeed);
 }
 
-s32 Fs_QueueResetTick(s_FsQueueEntry* entry)
+bool Fs_QueueResetTick(s_FsQueueEntry* entry)
 {
-    s32 result = false;
+    bool result = false;
 
     g_FsQueue.resetTimer0++;
 
@@ -128,26 +128,26 @@ s32 Fs_QueueResetTick(s_FsQueueEntry* entry)
     return result;
 }
 
-s32 Fs_QueueTickReadPcDvr(s_FsQueueEntry* entry)
+bool Fs_QueueTickReadPcDvr(s_FsQueueEntry* entry)
 {
     s32         handle;
     s32         temp;
     s32         retry;
-    s32         result;
+    bool        result;
     s_FileInfo* file = entry->info;
-    char        pathBuffer[64];
-    char        nameBuffer[32];
+    char        pathBuf[64];
+    char        nameBuf[32];
 
-    result = 0;
+    result = false;
 
-    strcpy(pathBuffer, "sim:.\\DATA");
-    strcat(pathBuffer, g_FilePaths[file->pathIdx]);
-    Fs_GetFileInfoName(nameBuffer, file);
-    strcat(pathBuffer, nameBuffer);
+    strcpy(pathBuf, "sim:.\\DATA");
+    strcat(pathBuf, g_FilePaths[file->pathIdx]);
+    Fs_GetFileInfoName(nameBuf, file);
+    strcat(pathBuf, nameBuf);
 
     for (retry = 0; retry <= 2; retry++)
     {
-        handle = open(pathBuffer, 0x4001);
+        handle = open(pathBuf, 0x4001);
         if (handle == NO_VALUE)
         {
             continue;
@@ -165,20 +165,20 @@ s32 Fs_QueueTickReadPcDvr(s_FsQueueEntry* entry)
         }
         while (temp == NO_VALUE);
 
-        result = 1;
+        result = true;
         break;
     }
 
     return result;
 }
 
-s32 Fs_QueueUpdatePostLoad(s_FsQueueEntry* entry)
+bool Fs_QueueUpdatePostLoad(s_FsQueueEntry* entry)
 {
-    s32 result;
-    s32 state;
-    u8  postLoad;
+    bool result;
+    s32  state;
+    u8   postLoad;
 
-    result = 0;
+    result = false;
     state  = g_FsQueue.postLoadState;
 
     switch (state)
@@ -204,7 +204,7 @@ s32 Fs_QueueUpdatePostLoad(s_FsQueueEntry* entry)
             switch (postLoad)
             {
                 case FS_POST_LOAD_NONE:
-                    result = 1;
+                    result = true;
                     break;
 
                 case FS_POST_LOAD_TIM:
@@ -227,7 +227,7 @@ s32 Fs_QueueUpdatePostLoad(s_FsQueueEntry* entry)
     return result;
 }
 
-s32 Fs_QueuePostLoadTim(s_FsQueueEntry* entry)
+bool Fs_QueuePostLoadTim(s_FsQueueEntry* entry)
 {
     TIM_IMAGE tim;
     RECT      tempRect;
@@ -240,10 +240,10 @@ s32 Fs_QueuePostLoadTim(s_FsQueueEntry* entry)
     {
         // This contraption simply extracts XY from tPage value.
         // For some reason it seems to be byte swapped, or maybe tPage is stored as u8[2]?
-        // Same as tempRect.x = (entry->extra.image.tPage & 0x0F) * 64 for normal tPage.
+        // Same as `tempRect.x = (entry->extra.image.tPage & 0x0F) * 64` for normal tPage.
         tempRect.x = entry->extra.image.u + ((entry->extra.image.tPage[1] & 0xF) << 6);
 
-        // Same as rempRect.y = (entry->extra.image.tPage & 0x10) * 16 for normal tPage.
+        // Same as `tempRect.y = (entry->extra.image.tPage & 0x10) * 16` for normal tPage.
         tempRect.y = entry->extra.image.v + ((entry->extra.image.tPage[1] << 4) & 0x100);
     }
 
@@ -264,7 +264,7 @@ s32 Fs_QueuePostLoadTim(s_FsQueueEntry* entry)
     return true;
 }
 
-s32 Fs_QueuePostLoadAnm(s_FsQueueEntry* entry)
+bool Fs_QueuePostLoadAnm(s_FsQueueEntry* entry)
 {
     func_80035560(entry->extra.anm.field_0, entry->extra.anm.charaId_4, entry->externalData, entry->extra.anm.coords_8);
     return true;

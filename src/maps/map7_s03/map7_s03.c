@@ -572,13 +572,13 @@ INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800DD9D4);
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800DD9F8);
 
-s32 Ai_Incubus_Init(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DDA1C
+bool Ai_Incubus_Init(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DDA1C
 {
     u8              curStateStep;
-    s_SubCharacter* chara2; // TODO: Not sure why this is needed here, could be an inline in this func.
+    s_SubCharacter* localChara; // TODO: Not sure why this is needed here, could be an inline in this func.
 
     chara->model_0.anim_4.keyframeIdx1_A = 0;
-    chara2                               = chara;
+    localChara                           = chara;
 
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
     {
@@ -589,24 +589,24 @@ s32 Ai_Incubus_Init(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DDA1C
         chara->health_B0 = FP_TO(40000, Q12_SHIFT);
     }
 
-    chara->moveSpeed_38    = 0;
-    chara->headingAngle_3C = chara->rotation_24.vy;
-    chara->field_D4        = FP_FLOAT_TO(0.3f, Q12_SHIFT);
-    chara->field_E0_8      = 4;
+    chara->moveSpeed_38     = 0;
+    chara->headingAngle_3C  = chara->rotation_24.vy;
+    chara->field_D4         = FP_FLOAT_TO(0.3f, Q12_SHIFT);
+    chara->field_E0_8       = 4;
     chara->field_D8.field_4 = 0;
     chara->field_D8.field_6 = 0;
-    chara->flags_3E       |= CharaFlag_Unk3;
+    chara->flags_3E        |= CharaFlag_Unk3;
 
-    chara2->properties_E4.larvalStalker.properties_E8[2].val32 = 0;
-    chara2->properties_E4.larvalStalker.properties_E8[1].val32 = 0;
+    localChara->properties_E4.larvalStalker.properties_E8[2].val32 = 0;
+    localChara->properties_E4.larvalStalker.properties_E8[1].val32 = 0;
 
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
     {
-        chara2->properties_E4.larvalStalker.properties_E8[3].val32 = FP_TO(300, Q12_SHIFT);
+        localChara->properties_E4.larvalStalker.properties_E8[3].val32 = FP_TO(300, Q12_SHIFT);
     }
     else
     {
-        chara2->properties_E4.larvalStalker.properties_E8[3].val32 = FP_TO(30, Q12_SHIFT);
+        localChara->properties_E4.larvalStalker.properties_E8[3].val32 = FP_TO(30, Q12_SHIFT);
     }
 
     curStateStep = chara->model_0.stateStep_3;
@@ -635,7 +635,7 @@ s32 Ai_Incubus_Init(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DDA1C
 
     chara->flags_3E |= CharaFlag_Unk9;
 
-    return 1;
+    return true;
 }
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800DDB3C);
@@ -760,11 +760,11 @@ INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800DFB50);
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800DFB74);
 
-s32 Ai_Unknown23_Init(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DFB98
+bool Ai_Unknown23_Init(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DFB98
 {
-    s_SubCharacter* chara2; // TODO: Not sure why this is needed here, might be an inline in this func.
+    s_SubCharacter* localChara; // TODO: Not sure why this is needed here, might be an inline in this func.
 
-    chara2 = chara;
+    localChara = chara;
 
     chara->model_0.anim_4.keyframeIdx1_A = 0;
 
@@ -777,15 +777,15 @@ s32 Ai_Unknown23_Init(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DFB9
         chara->health_B0 = FP_FLOAT_TO(30000.f, Q12_SHIFT);
     }
 
-    chara->moveSpeed_38    = 0;
-    chara->field_D4        = FP_FLOAT_TO(0.3f, Q12_SHIFT);
+    chara->moveSpeed_38     = 0;
+    chara->field_D4         = FP_FLOAT_TO(0.3f, Q12_SHIFT);
     chara->field_D8.field_4 = 0;
     chara->field_D8.field_6 = 0;
-    chara->field_E0_8      = 4;
-    chara->headingAngle_3C = chara->rotation_24.vy;
-    chara->flags_3E       |= CharaFlag_Unk3;
+    chara->field_E0_8       = 4;
+    chara->headingAngle_3C  = chara->rotation_24.vy;
+    chara->flags_3E        |= CharaFlag_Unk3;
 
-    chara2->properties_E4.player.properties_E4[3] = 0;
+    localChara->properties_E4.player.properties_E4[3] = 0;
 
     if (chara->model_0.stateStep_3 == 0)
     {
@@ -811,18 +811,18 @@ s32 Ai_Unknown23_Init(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DFB9
 
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
     {
-        chara2->properties_E4.player.properties_E4[4] = FP_TO(300, Q12_SHIFT);
+        localChara->properties_E4.player.properties_E4[4] = FP_TO(300, Q12_SHIFT);
     }
     else
     {
-        chara2->properties_E4.player.properties_E4[4] = FP_TO(30, Q12_SHIFT);
+        localChara->properties_E4.player.properties_E4[4] = FP_TO(30, Q12_SHIFT);
     }
 
     func_800DD67C(&chara->position_18, chara, coords);
     func_800DFA14();
 
     chara->flags_3E |= CharaFlag_Unk9;
-    return 1;
+    return true;
 }
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800DFCE4);

@@ -93,6 +93,7 @@ extern s_800E2490 D_800E254C;
 
 extern s16 D_800E2560;
 
+/** Size might be 6. Possibly related to NPCs. */
 extern s_800BCE18_2BEC_0 D_800E2570[];
 
 /** `arg0` is a struct pointer, might be `s_SubCharacter`. */
@@ -103,6 +104,8 @@ s32 func_800D7440(VECTOR* vec0, VECTOR* vec1, s_SubCharacter* chara);
 void func_800D76A0(s_SubCharacter* chara);
 
 void func_800D7E88(s_Model* model);
+
+void func_800D8714(s_SubCharacter*, s32, s32);
 
 void func_800DA778(s32 arg0);
 

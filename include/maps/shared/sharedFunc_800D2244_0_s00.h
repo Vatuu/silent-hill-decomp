@@ -5,7 +5,7 @@ void sharedFunc_800D2244_0_s00(s32 arg0)
     s_MainCharacterExtra* extra;
     s_SubCharacter*       player;
 
-    g_Player_EnableControl = false;
+    g_Player_DisableControl = false;
 
     extra  = &g_SysWork.player_4C.extra_128;
     player = &g_SysWork.player_4C.chara_0;

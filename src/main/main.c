@@ -135,7 +135,7 @@ int main()
         setlen((TILE*)prim, 3);
         setcode((TILE*)prim, PRIM_RECT | RECT_BLEND); // `setTile(); setSemiTrans();`
         setRGB0((TILE*)prim, fade, fade, fade);
-        setWHFast((TILE*)prim, 640, 240);
+        setWHFast((TILE*)prim, SCREEN_WIDTH * 2, SCREEN_HEIGHT);
         setXY0Fast((TILE*)prim, 0, 0);
         DrawPrim((TILE*)prim);
 

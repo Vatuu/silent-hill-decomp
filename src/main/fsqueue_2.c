@@ -2,10 +2,9 @@
 
 #include <libcd.h>
 
-s32 Fs_QueueUpdateRead(s_FsQueueEntry* entry)
+bool Fs_QueueUpdateRead(s_FsQueueEntry* entry)
 {
-    s32 status;
-    s32 result;
+    bool result;
 
     result = false;
     switch (g_FsQueue.state)

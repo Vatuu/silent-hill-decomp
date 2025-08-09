@@ -33,6 +33,13 @@ typedef struct
 
 typedef struct
 {
+    char unk_0[3420];
+    u16  field_D5C;
+    s16  field_D5E;
+} s_func_800D8714;
+
+typedef struct
+{
     VECTOR3 field_0;
     VECTOR3 field_C;
     s16     field_18;
@@ -453,7 +460,7 @@ void sharedFunc_800D2274_0_s01(s_SubCharacter*);
 
 void sharedFunc_800D2390_0_s01(s_SubCharacter*);
 
-s32 Ai_AirScreamer_Init(s_SubCharacter*);
+bool Ai_AirScreamer_Init(s_SubCharacter* chara);
 
 void sharedFunc_800D2B00_0_s01(s_SubCharacter*);
 
@@ -475,7 +482,9 @@ void sharedSymbol_800D3B0C_0_s01(s_SubCharacter*);
 
 s32 sharedFunc_800D62D8_0_s01(s_SubCharacter* chara);
 
-s32  sharedFunc_800D4A80_0_s01(s_SubCharacter*);
+/** Returns anim-related index. */
+s32 sharedFunc_800D4A80_0_s01(s_SubCharacter*);
+
 void sharedFunc_800D633C_0_s01(s_SubCharacter*);
 void sharedFunc_800D63A4_0_s01(s_SubCharacter*);
 void sharedFunc_800D6600_0_s01(s_SubCharacter*);

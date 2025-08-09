@@ -56,9 +56,9 @@ s32 Fs_ClampMemBlock(u8* start, u8* end);
 
 /** @brief Free FS memory block.
  * @param ptr Address of memory block to free.
- * @return 1 if block was freed, 0 if it wasn't found.
+ * @return `true` if block was freed, `false` if it wasn't found.
  */
-s32 Fs_FreeMem(u8* ptr);
+bool Fs_FreeMem(u8* ptr);
 
 /** @brief Unlink an FS memblock from one list and link it to another.
  *

@@ -116,16 +116,16 @@ void Ai_LockerDeadBody_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* co
     structPtr = &D_800E1410[chara->model_0.anim_4.animIdx_0];
     structPtr->funcPtr_0(chara, arg1, coords, structPtr);
 
-    chara->field_C8 = -0x4CC;
+    chara->field_C8         = -0x4CC;
     chara->field_D8.field_4 = 0xF5;
     chara->field_D8.field_6 = 0xEE1;
-    chara->field_CA = 0;
-    chara->field_CC = 0;
-    chara->field_CE = 0;
+    chara->field_CA         = 0;
+    chara->field_CC         = 0;
+    chara->field_CE         = 0;
     chara->field_D8.field_0 = 0;
     chara->field_D8.field_2 = 0;
-    chara->field_D6 = 0;
-    chara->field_D4 = 0x547;
+    chara->field_D6         = 0;
+    chara->field_D4         = 0x547;
 
     func_8005C814(&chara->field_D8, chara);
 }

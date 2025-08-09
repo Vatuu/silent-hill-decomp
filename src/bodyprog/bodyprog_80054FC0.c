@@ -577,10 +577,10 @@ void func_8005C814(s_SubCharacter_D8* arg0, s_SubCharacter* chara) // 0x8005C814
     temp_s1 = shRcos(chara->rotation_24.vy);
     temp_v0 = shRsin(chara->rotation_24.vy);
 
-    chara->field_D8.field_0 = FP_FROM(((temp_s0 * temp_s1) + (temp_s3 * temp_v0)), Q12_SHIFT);
-    chara->field_D8.field_2 = FP_FROM(((-temp_s0 * temp_v0) + (temp_s3 * temp_s1)), Q12_SHIFT);
-    chara->field_D8.field_4 = FP_FROM(((temp_s2 * temp_s1) + (temp_s4 * temp_v0)), Q12_SHIFT);
-    chara->field_D8.field_6 = FP_FROM(((-temp_s2 * temp_v0) + (temp_s4 * temp_s1)), Q12_SHIFT);
+    chara->field_D8.field_0 = FP_FROM((temp_s0 * temp_s1) + (temp_s3 * temp_v0), Q12_SHIFT);
+    chara->field_D8.field_2 = FP_FROM((-temp_s0 * temp_v0) + (temp_s3 * temp_s1), Q12_SHIFT);
+    chara->field_D8.field_4 = FP_FROM((temp_s2 * temp_s1) + (temp_s4 * temp_v0), Q12_SHIFT);
+    chara->field_D8.field_6 = FP_FROM((-temp_s2 * temp_v0) + (temp_s4 * temp_s1), Q12_SHIFT);
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8005C944); // 0x8005C944
@@ -618,7 +618,7 @@ void func_8005DC3C(s32 sfx, VECTOR3* pos, s32 arg2, s32 arg3, s32 arg4) // 0x800
     s32 var_a2;
     s32 var_s1;
 
-    if ((arg3 & 1) || (g_GameWork.config_0.optSoundType_1E))
+    if ((arg3 & (1 << 0)) || (g_GameWork.config_0.optSoundType_1E))
     {
         var_s1 = 0;
     }
@@ -1782,7 +1782,7 @@ void Player_Logic_Update(s_SubCharacter* chara, void* arg1, GsCOORDINATE2* coord
     {
         func_8007C800(chara, extra);
 
-        if (g_Player_WalkToRunTransition)
+        if (g_Player_IsInWalkToRunTransition)
         {
             D_800C455C = 0;
             D_800C4558 = 0;
@@ -1801,7 +1801,7 @@ void Player_Logic_Update(s_SubCharacter* chara, void* arg1, GsCOORDINATE2* coord
             D_800C4584 = 0;
         }
 
-        if (!g_Player_EnableControl)
+        if (!g_Player_DisableControl)
         {
             func_80071CE8(chara, extra, coord);
         }
@@ -1810,7 +1810,7 @@ void Player_Logic_Update(s_SubCharacter* chara, void* arg1, GsCOORDINATE2* coord
             g_MapOverlayHeader.func_B8(chara, extra, coord);
         }
 
-        if (!g_Player_EnableControl)
+        if (!g_Player_DisableControl)
         {
             func_8007C0D8(chara, extra, coord);
         }
@@ -2160,7 +2160,7 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                             }
                         }
 
-                        if (g_SysWork.player_4C.extra_128.field_24 == var_s2 && !g_Player_WalkToRunTransition)
+                        if (g_SysWork.player_4C.extra_128.field_24 == var_s2 && !g_Player_IsInWalkToRunTransition)
                         {
                             func_800711C4(chara, var_s2);
                         }
@@ -2394,7 +2394,7 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                     }
                 }
 
-                if (g_SysWork.player_4C.extra_128.field_24 == (var_s2 + 1) && g_Player_WalkToRunTransition == 0)
+                if (g_SysWork.player_4C.extra_128.field_24 == (var_s2 + 1) && !g_Player_IsInWalkToRunTransition)
                 {
                     func_800711C4(chara, var_s2);
                 }
@@ -2410,7 +2410,7 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
             {
                 chara->model_0.anim_4.animIdx_0 = 0;
                 chara->model_0.stateStep_3++;
-                g_Player_WalkToRunTransition = true;
+                g_Player_IsInWalkToRunTransition = true;
             }
             break;
 
@@ -2609,7 +2609,7 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
             {
                 chara->model_0.anim_4.animIdx_0 = 0;
                 chara->model_0.stateStep_3++;
-                g_Player_WalkToRunTransition = true;
+                g_Player_IsInWalkToRunTransition = true;
             }
             break;
 
@@ -2788,7 +2788,7 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                     }
                 }
 
-                if (g_SysWork.player_4C.extra_128.field_24 == (var_s2 + 4) && !g_Player_WalkToRunTransition)
+                if (g_SysWork.player_4C.extra_128.field_24 == (var_s2 + 4) && !g_Player_IsInWalkToRunTransition)
                 {
                     func_800711C4(chara, var_s2);
                 }
@@ -4188,7 +4188,7 @@ void func_8007C0D8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
 
     if (((u32)g_SysWork.player_4C.extra_128.field_1C - 3) >= 2)
     {
-        if (!g_Player_WalkToRunTransition)
+        if (!g_Player_IsInWalkToRunTransition)
         {
             posY = chara->position_18.vy;
             if ((D_800C4590.field_C - posY) >= FP_METER(0.65f))
@@ -4261,7 +4261,7 @@ void func_8007C800(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
         }
     }
 
-    if (g_Player_EnableControl != 0 || D_800C4562 != 0)
+    if (g_Player_DisableControl || D_800C4562 != 0)
     {
         chara->field_C0 = 0;
         return;
@@ -4351,7 +4351,7 @@ void func_8007C800(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
             break;
 
         default:
-            if (g_Player_WalkToRunTransition)
+            if (g_Player_IsInWalkToRunTransition)
             {
                 D_800C4560 = chara->field_41;
                 return;
@@ -4379,9 +4379,9 @@ void func_8007C800(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
             if (g_SysWork.player_4C.extra_128.field_1C >= 3 &&
                 g_SysWork.player_4C.extra_128.field_1C <  7)
             {
-                g_SysWork.player_4C.chara_0.field_C8 = -0x1999;
-                g_SysWork.player_4C.chara_0.field_CA = 0;
-                g_SysWork.player_4C.chara_0.field_CE = -0x1199;
+                g_SysWork.player_4C.chara_0.field_C8         = -0x1999;
+                g_SysWork.player_4C.chara_0.field_CA         = 0;
+                g_SysWork.player_4C.chara_0.field_CE         = -0x1199;
                 g_SysWork.player_4C.chara_0.field_D8.field_6 = 0;
                 g_SysWork.player_4C.chara_0.field_D8.field_4 = 0;
                 g_SysWork.player_4C.chara_0.field_D8.field_2 = 0;
@@ -4722,7 +4722,7 @@ void func_8007C800(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
     if (chara->health_B0 <= FP_FLOAT_TO(0.0f, Q12_SHIFT) && g_SysWork.player_4C.extra_128.field_1C != 8 &&
         g_SysWork.player_4C.extra_128.field_1C != 36 && g_SysWork.player_4C.extra_128.field_1C != 39 &&
         g_SysWork.player_4C.extra_128.field_1C != 40 && g_SysWork.player_4C.extra_128.field_1C != 47 &&
-        g_SysWork.player_4C.extra_128.field_1C != 48 && !g_Player_WalkToRunTransition)
+        g_SysWork.player_4C.extra_128.field_1C != 48 && !g_Player_IsInWalkToRunTransition)
     {
         chara->field_40           = NO_VALUE;
         g_SavegamePtr->field_238 = 0;
@@ -5405,7 +5405,6 @@ void func_8007E5AC() // 0x8007E5AC
 
     if (temp_t0 >= 4 && temp_t0 < 6)
     {
-        // HACK: Required for match.
         for (i = 0; g_SavegamePtr->items_0[i].id_0 != g_SavegamePtr->equippedWeapon_AA && i < INVENTORY_ITEM_COUNT_MAX; i++);
 
         g_SysWork.playerCombatInfo_38.field_F              = g_SavegamePtr->equippedWeapon_AA + InventoryItemId_KitchenKnife;
@@ -5418,7 +5417,6 @@ void func_8007E5AC() // 0x8007E5AC
         }
         else
         {
-        // HACK: Required for match.
             for (i = 0; g_SavegamePtr->items_0[i].id_0 != (g_SavegamePtr->equippedWeapon_AA + InventoryItemId_HealthDrink) && i < INVENTORY_ITEM_COUNT_MAX; i++);
 
             if (i == INVENTORY_ITEM_COUNT_MAX)
@@ -5443,7 +5441,7 @@ void func_8007E5AC() // 0x8007E5AC
     D_800AF20C                                = 0;
     D_800C4588                                = 0;
     D_800C457C                                = 0;
-    g_Player_EnableControl                    = 0;
+    g_Player_DisableControl                   = false;
 
     switch (g_SavegamePtr->gameDifficulty_260)
     {
@@ -5487,7 +5485,7 @@ void func_8007E9C4() // 0x8007E9C4
 
     chara = &g_SysWork.player_4C.chara_0;
 
-    g_Player_WalkToRunTransition                      = false;
+    g_Player_IsInWalkToRunTransition                  = false;
     g_SysWork.player_4C.extra_128.field_1C            = 0;
     g_SysWork.player_4C.extra_128.field_20            = 0;
     g_SysWork.player_4C.extra_128.field_24            = 0;
@@ -5777,22 +5775,22 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8007F14C); // 0x
 
 void func_8007F1CC() // 0x8007F1CC
 {
-    D_800C455C                   = 0;
-    D_800C4558                   = 0;
-    D_800C45C0                   = 0;
-    D_800C45BE                   = 0;
-    D_800C45BC                   = 0;
-    D_800C457E                   = 0;
-    D_800C4604                   = 0;
-    D_800C45F0                   = 0;
-    D_800C45E8                   = 0;
-    D_800C4582                   = 0;
-    D_800C45AE                   = 0;
-    D_800C4586                   = 0;
-    D_800C4580                   = 0;
-    D_800C45AC                   = 0;
-    D_800C4584                   = 0;
-    g_Player_WalkToRunTransition = false;
+    D_800C455C                       = 0;
+    D_800C4558                       = 0;
+    D_800C45C0                       = 0;
+    D_800C45BE                       = 0;
+    D_800C45BC                       = 0;
+    D_800C457E                       = 0;
+    D_800C4604                       = 0;
+    D_800C45F0                       = 0;
+    D_800C45E8                       = 0;
+    D_800C4582                       = 0;
+    D_800C45AE                       = 0;
+    D_800C4586                       = 0;
+    D_800C4580                       = 0;
+    D_800C45AC                       = 0;
+    D_800C4584                       = 0;
+    g_Player_IsInWalkToRunTransition = false;
 }
 
 void func_8007F250(u8* ptr, s8 arg1) // 0x8007F250
@@ -5847,7 +5845,7 @@ s32 func_8007F95C() // 0x8007F95C
     u16             temp;
     s32             radius;
 
-    if (g_Player_WalkToRunTransition)
+    if (g_Player_IsInWalkToRunTransition)
     {
         return 0;
     }
@@ -5975,13 +5973,13 @@ s32 func_80080514() // 0x80080514
 // TODO: Try decomping by hand. -- Sezz
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80080540); // 0x80080540
 
-s32 PreservedSignSubtract(s32 value, s32 subtractor) // 0x80080594
+s32 Math_PreservedSignSubtract(s32 val, s32 subtractor) // 0x80080594
 {
     s32 signBit;
     s32 absDiff;
 
-    signBit = value >> 31;  
-    absDiff = ((value ^ signBit) - signBit) - subtractor;  
+    signBit = val >> 31;  
+    absDiff = ((val ^ signBit) - signBit) - subtractor;  
     return ((absDiff & ~(absDiff >> 31)) ^ signBit) - signBit; 
 }
 

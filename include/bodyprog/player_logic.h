@@ -11,12 +11,10 @@
 // ========
 
 /** @brief Boolean. Used to define if the player is transitioning from walking to running and vice-versa. */
-extern u8 g_Player_WalkToRunTransition; // 0x800AF214
+extern u8 g_Player_IsInWalkToRunTransition; // 0x800AF214
 
-/**
- * 0 = Player has control, 1 = Player do not have control
- */
-extern u8 g_Player_EnableControl; // 0x800AF215
+/** Boolean. */
+extern u8 g_Player_DisableControl; // 0x800AF215
 
 extern u8 D_800AF216; // 0x800AF216
 

@@ -659,7 +659,7 @@ void func_800DC3C8() // 0x800DC3C8
 
         case 10:
             // Set cutscene character?
-            Chara_Spawn(Chara_AirScreamer, 0, 0, 0, 0, 12); // Maybe air screamer.
+            Chara_Spawn(Chara_AirScreamer, 0, 0, 0, 0, 12);
             DmsHeader_FixOffsets(FS_BUFFER_11);
             Dms_CharacterGetPosRot(&g_SysWork.npcs_1A0[0].position_18, &g_SysWork.npcs_1A0[0].rotation_24, &D_800CCA64, 0, FS_BUFFER_11);
 

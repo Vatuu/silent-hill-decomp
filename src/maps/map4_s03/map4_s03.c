@@ -264,7 +264,7 @@ s32 Ai_Twinfeeler_Init(s_SubCharacter* chara) // 0x800D3CD4
 
     chara->field_D8.field_4 = 0;
     chara->field_D8.field_6 = 0;
-    chara->flags_3E |= CharaFlag_Unk3;
+    chara->flags_3E        |= CharaFlag_Unk3;
 
     if (chara->model_0.stateStep_3 != 0)
     {

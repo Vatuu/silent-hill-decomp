@@ -3183,7 +3183,7 @@ void nullsub_800334C8();
 
 s32 func_800334D8(s32 idx);
 
-s32 func_80033548();
+bool func_80033548();
 
 /** Updates the savegame buffer with the current player SysWork info (position, rotation, health, event index). */
 void SysWork_SavegameUpdatePlayer();
@@ -3626,7 +3626,7 @@ s32 func_80080478(VECTOR3* pos0, VECTOR3* pos1);
 s32 func_80080514();
 
 /** Computes (abs(value) - subtractor) * copysign(value). */
-s32 PreservedSignSubtract(s32 value, s32 subtractor);
+s32 Math_PreservedSignSubtract(s32 val, s32 subtractor);
 
 void func_800805BC(VECTOR3* pos, SVECTOR* rot, GsCOORDINATE2* rootCoord, s32 arg3);
 

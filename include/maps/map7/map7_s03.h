@@ -22,7 +22,7 @@ void Ai_Incubator_Init(s_SubCharacter* chara);
 void func_800DB608();
 void func_800DD67C(VECTOR3*, s_SubCharacter*, GsCOORDINATE2*);
 void func_800DD98C(s32);
-s32  Ai_Incubus_Init(s_SubCharacter* chara, GsCOORDINATE2* coords);
+bool Ai_Incubus_Init(s_SubCharacter* chara, GsCOORDINATE2* coords);
 void func_800DDBBC(s_SubCharacter*);
 void func_800DEC74(s_SubCharacter*, GsCOORDINATE2*);
 void func_800DED68(s_SubCharacter*, GsCOORDINATE2*);
@@ -35,7 +35,7 @@ void Ai_Incubus_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords);
 
 void func_800DFA14();
 void func_800DFB2C(s32);
-s32  Ai_Unknown23_Init(s_SubCharacter* chara, GsCOORDINATE2* coords);
+bool Ai_Unknown23_Init(s_SubCharacter* chara, GsCOORDINATE2* coords);
 void func_800DFCE4(s_SubCharacter*);
 void func_800E05DC(s_SubCharacter*, GsCOORDINATE2*);
 void func_800E0670(s_SubCharacter* chara, GsCOORDINATE2* coord);

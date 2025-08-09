@@ -9,7 +9,7 @@
 
 s_FsQueue g_FsQueue;
 
-s32 Fs_QueueIsEntryLoaded(s32 queueIdx)
+bool Fs_QueueIsEntryLoaded(s32 queueIdx)
 {
     return queueIdx < g_FsQueue.postLoad.idx;
 }
@@ -19,9 +19,9 @@ s32 Fs_QueueGetLength()
     return (g_FsQueue.last.idx + 1) - g_FsQueue.postLoad.idx;
 }
 
-s32 Fs_QueueDoThingWhenEmpty()
+bool Fs_QueueDoThingWhenEmpty()
 {
-    s32 result;
+    bool result;
 
     D_800C489C = 1;
 
@@ -76,10 +76,9 @@ s32 Fs_QueueStartReadTim(s32 fileIdx, void* dest, s_FsImageDesc* image)
     }
     else
     {
-        // u == 0xFF (NO_VALUE) is a special case for "image descriptor not set".
-        extra.image.u     = 0xFF;
+        extra.image.u     = NO_VALUE;
         extra.image.clutX = NO_VALUE;
-        extra.image.v     = 0xFF;
+        extra.image.v     = NO_VALUE;
         extra.image.clutY = NO_VALUE;
     }
 
@@ -224,79 +223,78 @@ void Fs_QueueUpdate()
     }
 }
 
-s32 Fs_QueueUpdateSeek(s_FsQueueEntry* entry)
+bool Fs_QueueUpdateSeek(s_FsQueueEntry* entry)
 {
-    s32 result = false;
-    s32 state  = g_FsQueue.state;
+    bool result = false;
+    s32  state  = g_FsQueue.state;
 
     switch (state)
     {
         case FSQS_SEEK_SET_LOC:
-        switch (Fs_QueueTickSetLoc(entry))
-        {
-            // CdlSetloc failed, reset and retry.
-            case 0:
-                g_FsQueue.state = FSQS_SEEK_RESET;
-                break;
+            switch (Fs_QueueTickSetLoc(entry))
+            {
+                // CdlSetloc failed, reset and retry.
+                case 0:
+                    g_FsQueue.state = FSQS_SEEK_RESET;
+                    break;
 
-            case 1:
-                g_FsQueue.state = FSQS_SEEK_SEEKL;
-                break;
-        }
-        break;
+                case 1:
+                    g_FsQueue.state = FSQS_SEEK_SEEKL;
+                    break;
+            }
+            break;
 
         case FSQS_SEEK_SEEKL:
-        switch (CdControl(CdlSeekL, NULL, NULL))
-        {
-            // `CdlSeekL` failed, reset and retry.
-            case 0:
-                g_FsQueue.state = FSQS_SEEK_RESET;
-                break;
+            switch (CdControl(CdlSeekL, NULL, NULL))
+            {
+                // `CdlSeekL` failed, reset and retry.
+                case 0:
+                    g_FsQueue.state = FSQS_SEEK_RESET;
+                    break;
 
-            case 1:
-                g_FsQueue.state = FSQS_SEEK_SYNC;
-                break;
-        }
-        break;
+                case 1:
+                    g_FsQueue.state = FSQS_SEEK_SYNC;
+                    break;
+            }
+            break;
 
         case FSQS_SEEK_SYNC:
-        switch (CdSync(1, NULL))
-        {
-            // Keep waiting, operation in progress.
-            case CdlNoIntr:
-                break;
+            switch (CdSync(1, NULL))
+            {
+                // Keep waiting, operation in progress.
+                case CdlNoIntr:
+                    break;
 
-            // Done seeking.
-            case CdlComplete:
-                result = true;
-                break;
+                // Done seeking.
+                case CdlComplete:
+                    result = true;
+                    break;
 
-            // Disk error; reset and retry.
-            case CdlDiskError:
-                g_FsQueue.state = FSQS_SEEK_RESET;
-                break;
+                // Disk error; reset and retry.
+                case CdlDiskError:
+                    g_FsQueue.state = FSQS_SEEK_RESET;
+                    break;
 
-            // Inknown error, reset and retry.
-            default:
-                g_FsQueue.state = FSQS_SEEK_RESET;
-                break;
-        }
-        break;
+                // Inknown error, reset and retry.
+                default:
+                    g_FsQueue.state = FSQS_SEEK_RESET;
+                    break;
+            }
+            break;
 
         case FSQS_SEEK_RESET:
-        switch (Fs_QueueResetTick(entry))
-        {
-            // Still resetting.
-            case 0:
-                break;
+            switch (Fs_QueueResetTick(entry))
+            {
+                // Still resetting.
+                case 0:
+                    break;
 
-            // Reset done, retry from beginning.
-            case 1:
-                g_FsQueue.state = FSQS_SEEK_SET_LOC;
-                break;
-        }
-
-        break;
+                // Reset done, retry from beginning.
+                case 1:
+                    g_FsQueue.state = FSQS_SEEK_SET_LOC;
+                    break;
+            }
+            break;
     }
 
     return result;

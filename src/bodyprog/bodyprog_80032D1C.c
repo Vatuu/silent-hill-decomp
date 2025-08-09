@@ -347,7 +347,7 @@ static inline s32 WrapIdx(s32 idx)
     return (idx < 0) ? (idx + 3) : idx;
 }
 
-s32 func_80033548() // 0x80033548
+bool func_80033548() // 0x80033548
 {
     u32                 sp10[2];
     s32                 sp18[8];
@@ -444,6 +444,7 @@ s32 func_80033548() // 0x80033548
                         var_a0                                             = WrapIdx(i);
                         g_MemCardElementCount[var_a0 >> 2]++;
                     }
+
                     g_ActiveSavegameEntry->type_4 = SavegameEntryType_UnformattedMemCard;
                     break;
 
@@ -713,10 +714,10 @@ s32 func_80033548() // 0x80033548
         case 16:
         case 20:
         case 25:
-            return 1;
+            return true;
 
         default:
-            return 0;
+            return false;
     }
 }
 

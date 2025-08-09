@@ -837,7 +837,7 @@ typedef struct _ModelAnimData
     // Following 4 bytes might be packed into an s32 called `animStatus`,
     // implied by an original param name in `vcMixSelfViewEffectToWatchTgtPos`.
 
-    u8          animIdx_0;
+    u8          animIdx_0;        // Sometimes checked like a bit field.
     u8          maybeSomeState_1; // State says if `animTime_4` is anim time or a func ptr? That field could be a union.
     u16         flags_2;          /** `e_AnimFlags` */
     q19_12      time_4;           /** Time along keyframe timeline. */ 
@@ -977,7 +977,7 @@ typedef struct _SubCharacter
     s16 field_CC;
     s16 field_CE;
     s16 field_D0;
-    s8  unk_D2[2];
+    s16 field_D2;
     s16 field_D4;
     s16 field_D6;
     s_SubCharacter_D8 field_D8;

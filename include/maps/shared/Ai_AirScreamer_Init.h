@@ -1,4 +1,4 @@
-s32 Ai_AirScreamer_Init(s_SubCharacter* chara)
+bool Ai_AirScreamer_Init(s_SubCharacter* chara)
 {
     #define AIR_SCREAMER_BASE_HEALTH 380
     #define AIR_SCREAMER_RAND_MAX    100
@@ -9,7 +9,7 @@ s32 Ai_AirScreamer_Init(s_SubCharacter* chara)
 
     if (chara->model_0.state_2 != 0)
     {
-        return 0;
+        return false;
     }
 
     if (chara->model_0.charaId_0 == Chara_NightFlutter)
@@ -49,5 +49,5 @@ s32 Ai_AirScreamer_Init(s_SubCharacter* chara)
     sharedFunc_800D2BB0_0_s01(chara);
     sharedFunc_800D2BE4_0_s01(chara);
 
-    return 1;
+    return true;
 }
