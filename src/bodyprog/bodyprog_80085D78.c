@@ -1443,19 +1443,19 @@ void func_800881B8(s32 x0, s16 y0, s32 x1, s16 y1, s16 arg4, s16 arg5, s16 arg6,
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80088370); // 0x80088370
 
-s32 Chara_Load(s32 arg0, s8 arg1, s32 arg2, s8 arg3, s32 arg4, s32 arg5) // 0x80088C7C
+bool Chara_Load(s32 arg0, s8 arg1, s32 arg2, s8 arg3, s32 arg4, s32 arg5) // 0x80088C7C
 {
     func_80035338(arg0 + 1, arg1, NULL, arg2);
     func_8003D5B4(arg3);
     func_8003D6E0(arg1, arg0, arg4, arg5);
-    return 1;
+    return true;
 }
 
-s32 func_80088D0C() // 0x80088D0C
+bool func_80088D0C() // 0x80088D0C
 {
     Fs_QueueWaitForEmpty();
     func_8003D95C();
-    return 1;
+    return true;
 }
 
 void func_80088D34(s32 idx) // 0x80088D34
@@ -1726,16 +1726,16 @@ s32 func_80089644(s_SysWork_2514* arg0, s_func_80089644_0* arg1, s32 arg2, u32 a
 
 // TODO: Rodata migration.
 #ifdef NON_MATCHING
-s32 func_8008973C(s_SysWork_2514* arg0, s32 arg1, s_8002AC04* ptr, u32* arg3)
+bool func_8008973C(s_SysWork_2514* arg0, s32 arg1, s_8002AC04* ptr, u32* arg3)
 {
     if (!arg0 || arg1)
     {
-        return 0;
+        return false;
     }
 
     if (ptr == NULL || ptr->field_4 != 3)
     {
-        return 0;
+        return false;
     }
 
     switch (ptr->field_5)
@@ -1773,7 +1773,7 @@ s32 func_8008973C(s_SysWork_2514* arg0, s32 arg1, s_8002AC04* ptr, u32* arg3)
             break;
     }
 
-    return 1;
+    return true;
 }
 #else
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008973C);
@@ -1837,11 +1837,11 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80089A30); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80089BB8); // 0x80089BB8
 
-s32 func_80089D0C(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s_8002AC04* arg2, u8* arg3) // 0x80089D0C
+bool func_80089D0C(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s_8002AC04* arg2, u8* arg3) // 0x80089D0C
 {
     if (arg0 == NULL || arg2 == NULL)
     {
-        return 0;
+        return false;
     }
 
     if (arg2->field_4 == 4)
@@ -1853,7 +1853,7 @@ s32 func_80089D0C(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s_8002AC04* arg2,
             arg1->field_10    = arg2->field_0;
             arg1->field_14_31 = 1;
             arg1->field_18    = arg1->field_14_16 << 24;
-            return 0;
+            return false;
         }
         else
         {
@@ -1863,12 +1863,12 @@ s32 func_80089D0C(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s_8002AC04* arg2,
                 arg1->field_10    = arg2;
                 arg1->field_14_16 = *arg3;
                 arg1->field_C     = arg2->field_8;
-                return 1;
+                return true;
             }
         }
     }
 
-    return 0;
+    return false;
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80089DF0); // 0x80089DF0
@@ -1922,7 +1922,7 @@ u8 func_8008A2E0(s32 arg0)
         {
             case 5:
             case 25:
-                return 0x12;
+                return 18;
 
             case 15:
                 return 15;

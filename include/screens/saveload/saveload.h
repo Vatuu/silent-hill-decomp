@@ -247,7 +247,7 @@ void Gfx_SaveSlotFileStringDraw(s32 saveIdx, s32 slotIdx, s32 fileId, s32 entryT
 void Gfx_SavegameEntryLocationNameDraw(s_SavegameEntry* saveEntry, s32 saveIdx, s32 slotIdx);
 
 /** Sets the color of the string to be drawn based on some flag. */
-s32 Gfx_SavegameEntryStringColorSet(s_SavegameMetadata* saveEntry);
+bool Gfx_SavegameEntryStringColorSet(s_SavegameMetadata* saveEntry);
 
 void Gfx_SaveEntryBorder(s_SavegameEntry* saveEntry, s_SavegameEntry* nextSaveEntry, s32 saveIdx, s32 slotIdx);
 

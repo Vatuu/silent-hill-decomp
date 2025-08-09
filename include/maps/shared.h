@@ -175,7 +175,7 @@ extern u16 sharedData_800D21E8_3_s00[];
 
 extern const char* g_MapMessages[]; // 0x800DF6B8
 
-s32 sharedFunc_800CBBBC_0_s00();
+bool sharedFunc_800CBBBC_0_s00();
 
 void sharedFunc_800CFFF8_0_s00(s32 arg0, s_func_800CFFF8* arg1);
 
@@ -183,7 +183,7 @@ void sharedFunc_800D01BC_0_s00(u16* arg0, VECTOR3* arg1, s32 arg2);
 
 void sharedFunc_800D0A60_0_s00(s32 caseArg);
 
-s32 sharedFunc_800D0B18_0_s00(s32 arg0);
+bool sharedFunc_800D0B18_0_s00(s32 arg0);
 
 void sharedFunc_800D0E04_0_s00();
 
@@ -480,7 +480,7 @@ void sharedFunc_800D3928_0_s01(s_SubCharacter*);
 
 void sharedSymbol_800D3B0C_0_s01(s_SubCharacter*);
 
-s32 sharedFunc_800D62D8_0_s01(s_SubCharacter* chara);
+bool sharedFunc_800D62D8_0_s01(s_SubCharacter* chara);
 
 /** Returns anim-related index. */
 s32 sharedFunc_800D4A80_0_s01(s_SubCharacter*);
@@ -494,7 +494,7 @@ void sharedFunc_800D7AB0_0_s01(s_SubCharacter*);
 
 void sharedFunc_800D7EBC_0_s01(s_SubCharacter*);
 
-s32 sharedFunc_800D81B0_0_s01(s_SubCharacter* chara);
+bool sharedFunc_800D81B0_0_s01(s_SubCharacter* chara);
 
 // `Ai_Lisa` related
 void Ai_Lisa_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords);
@@ -508,7 +508,7 @@ void Ai_BloodyLisa_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords
 void sharedFunc_800D595C_7_s01(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coord);
 void sharedFunc_800D59A4_7_s01(s_SubCharacter* chara, GsCOORDINATE2* coords);
 void sharedFunc_800D5B3C_7_s01(s_SubCharacter* chara, GsCOORDINATE2* coords);
-s32  sharedFunc_800D908C_0_s00(s32 arg0, s_SubCharacter* chara, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
+bool sharedFunc_800D908C_0_s00(s32 arg0, s_SubCharacter* chara, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
 void Ai_BloodyLisa_Init(s_SubCharacter* chara);
 
 // `Ai_Kaufmann` related

@@ -39,7 +39,7 @@ s8 func_80040A64(VECTOR3* pos) // 0x80040A64
 
 void func_80040B6C() {}
 
-s32 func_80040B74(s32 arg0) // 0x80040B74
+bool func_80040B74(s32 arg0) // 0x80040B74
 {
     s32 i;
 
@@ -47,11 +47,11 @@ s32 func_80040B74(s32 arg0) // 0x80040B74
     {
         if (D_800BCE18.field_0[i].field_CC.field_0 == arg0)
         {
-            return 1;
+            return true;
         }
     }
 
-    return 0;
+    return false;
 }
 
 // Related to the screen.
@@ -373,7 +373,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80042300); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800423F4); // 0x800423F4
 
-s32 func_8004255C(s32* out, char firstHex, char secondHex) // 0x8004255C
+bool func_8004255C(s32* out, char firstHex, char secondHex) // 0x8004255C
 {
     char low;
     char high;
@@ -391,7 +391,7 @@ s32 func_8004255C(s32* out, char firstHex, char secondHex) // 0x8004255C
         letterIdx = firstHex - 'A';
         if (letterIdx > 5)
         {
-            return 0;
+            return false;
         }
 
         hexVal = (firstHex + 201) << 4;
@@ -408,14 +408,14 @@ s32 func_8004255C(s32* out, char firstHex, char secondHex) // 0x8004255C
         letterIdx = secondHex - 'A';
         if (letterIdx > 5)
         {
-            return 0;
+            return false;
         }
 
         hexVal |= secondHex + 201;
     }
 
     *out = (hexVal << 24) >> 24; // Sign extend.
-    return 1;
+    return true;
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800425D8); // 0x800425D8

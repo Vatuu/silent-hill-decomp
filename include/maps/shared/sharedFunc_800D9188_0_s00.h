@@ -1,4 +1,4 @@
-s32 sharedFunc_800D9188_0_s00(s32 arg0, s_SubCharacter* arg1, s32 arg2, s32 arg3)
+bool sharedFunc_800D9188_0_s00(s32 arg0, s_SubCharacter* arg1, s32 arg2, s32 arg3)
 {
     // TODO: Should probably be using properties_E4.npc struct instead.
     if (arg1->model_0.anim_4.animIdx_0 == arg0)
@@ -86,7 +86,7 @@ s32 sharedFunc_800D9188_0_s00(s32 arg0, s_SubCharacter* arg1, s32 arg2, s32 arg3
                 }
 
                 arg1->properties_E4.player.flags_11C |= PlayerFlag_Unk13;
-                return 1;
+                return true;
             }
         }
         else
@@ -95,5 +95,5 @@ s32 sharedFunc_800D9188_0_s00(s32 arg0, s_SubCharacter* arg1, s32 arg2, s32 arg3
         }
     }
 
-    return 0;
+    return false;
 }

@@ -276,7 +276,7 @@ void func_8002E8E4();
 
 s32 func_8002E914();
 
-s32 func_8002E94C(s32 arg0, s32 deviceId, s32 fileIdx, s32 saveIdx);
+bool func_8002E94C(s32 arg0, s32 deviceId, s32 fileIdx, s32 saveIdx);
 
 s32 func_8002E990();
 
@@ -378,7 +378,7 @@ void Savegame_CardHwEventSpUNKNOWN();
 
 s32 Savegame_CardResult(); /** `e_CardResult` */
 
-s32 Savegame_CardRequest(e_CardIoMode mode, s32 deviceId, s_CardDirectory* outDir, char* filename, s32 createBlockCount, s32 fileOffset, void* outBuf, s32 bufSize);
+bool Savegame_CardRequest(e_CardIoMode mode, s32 deviceId, s_CardDirectory* outDir, char* filename, s32 createBlockCount, s32 fileOffset, void* outBuf, s32 bufSize);
 
 s32 Savegame_CardIsIdle();
 

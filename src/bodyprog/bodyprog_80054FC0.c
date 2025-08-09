@@ -1409,11 +1409,11 @@ s32 func_8006DB3C(s_func_800700F8_2* arg0, VECTOR3* arg1, VECTOR3* arg2, s_func_
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8006DC18); // 0x8006DC18
 
-s32 func_8006DCE0(s_func_8006DCE0* arg0, s32 arg1, s16 arg2, VECTOR3* pos0, VECTOR3* pos1, s32 arg5, s32 arg6, s32 arg7, s32 arg8)
+bool func_8006DCE0(s_func_8006DCE0* arg0, s32 arg1, s16 arg2, VECTOR3* pos0, VECTOR3* pos1, s32 arg5, s32 arg6, s32 arg7, s32 arg8)
 {
     if (pos1->vx == 0 && pos1->vz == 0)
     {
-        return 0;
+        return false;
     }
 
     arg0->field_0  = arg1;
@@ -1441,7 +1441,7 @@ s32 func_8006DCE0(s_func_8006DCE0* arg0, s32 arg1, s16 arg2, VECTOR3* pos0, VECT
     arg0->field_5C = SquareRoot0(SQUARE(arg0->field_50.vx) + SQUARE(arg0->field_50.vz));
     if (arg0->field_5C == 0)
     {
-        return 0;
+        return false;
     }
 
     arg0->field_58 = (arg0->field_50.vx << Q12_SHIFT) / arg0->field_5C;
@@ -1461,7 +1461,7 @@ s32 func_8006DCE0(s_func_8006DCE0* arg0, s32 arg1, s16 arg2, VECTOR3* pos0, VECT
     arg0->field_64 = arg7;
     arg0->field_68 = arg8;
 
-    return 1;
+    return true;
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8006DEB0); // 0x8006DEB0
@@ -1627,7 +1627,7 @@ void func_8007029C(VECTOR3* arg0, s32 arg1, s16 angle) // 0x8007029C
     func_8006DB3C(&vars, arg0 + 2, &vec, arg0);
 }
 
-s32 func_80070320() // 0x80070320
+bool func_80070320() // 0x80070320
 {
     s32 i;
 
@@ -1635,11 +1635,11 @@ s32 func_80070320() // 0x80070320
     {
         if (g_SysWork.field_2354[i] != NO_VALUE)
         {
-            return 1;
+            return true;
         }
     }
 
-    return 0;
+    return false;
 }
 
 s32 func_80070360(s_SubCharacter* chara, s32 someDist, s16 arg2) // 0x80070360
@@ -5799,19 +5799,19 @@ void func_8007F250(u8* ptr, s8 arg1) // 0x8007F250
     D_800C4562 = arg1;
 }
 
-s32 func_8007F26C() // 0x8007F26C
+bool func_8007F26C() // 0x8007F26C
 {
     if (g_SysWork.player_4C.extra_128.field_20 == 25 ||
         g_SysWork.player_4C.extra_128.field_1C == 5 ||
         g_SysWork.player_4C.extra_128.field_1C == 6)
     {
-        return 1;
+        return true;
     }
 
-    return 0;
+    return false;
 }
 
-s32 func_8007F2AC() // 0x8007F2AC
+bool func_8007F2AC() // 0x8007F2AC
 {
     if (g_SysWork.player_4C.chara_0.health_B0 <= 0 ||
         g_SysWork.playerCombatInfo_38.isAiming_13 ||
@@ -5820,10 +5820,10 @@ s32 func_8007F2AC() // 0x8007F2AC
         (g_SysWork.player_4C.extra_128.field_1C >= 7 &&
          g_SysWork.player_4C.extra_128.field_1C <= 50))
     {
-        return 1;
+        return true;
     }
 
-    return 0;
+    return false;
 }
 
 s16 Player_AnimGetSomething() // 0x8007F308
@@ -5834,7 +5834,7 @@ s16 Player_AnimGetSomething() // 0x8007F308
 // Large function. Something to do with player control.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8007F32C); // 0x8007F32C
 
-s32 func_8007F95C() // 0x8007F95C
+bool func_8007F95C() // 0x8007F95C
 {
     VECTOR3         pos0;
     VECTOR3         pos1;
@@ -5847,7 +5847,7 @@ s32 func_8007F95C() // 0x8007F95C
 
     if (g_Player_IsInWalkToRunTransition)
     {
-        return 0;
+        return false;
     }
 
     pos0.vx = g_SysWork.player_4C.chara_0.position_18.vx;
@@ -5890,7 +5890,7 @@ s32 func_8007F95C() // 0x8007F95C
                     if (temp < 0x8FF)
                     {
                         g_SysWork.field_2353 = i;
-                        return 1;
+                        return true;
                     }
                 }
             }
@@ -5898,7 +5898,7 @@ s32 func_8007F95C() // 0x8007F95C
     }
 
     g_SysWork.field_2353 = NO_VALUE;
-    return 0;
+    return false;
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8007FB34); // 0x8007FB34

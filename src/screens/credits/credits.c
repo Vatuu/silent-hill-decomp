@@ -76,7 +76,7 @@ void func_801E2E28(s32 idx) // 0x801E2E28
     D_801E5E80 = 0x10000 / var0;
 }
 
-s32 func_801E2ED8() // 0x801E2ED8
+bool func_801E2ED8() // 0x801E2ED8
 {
     switch (D_801E5E88)
     {
@@ -92,11 +92,11 @@ s32 func_801E2ED8() // 0x801E2ED8
             switch (func_80045B28())
             {
                 case 0:
-                    return 0;
+                    return false;
 
                 case 1:
                     D_800C48F0 = D_801E5558[D_801E5E8C].field_2;
-                    return 1;
+                    return true;
 
                 default:
                     break;
@@ -106,10 +106,10 @@ s32 func_801E2ED8() // 0x801E2ED8
             break;
     }
 
-    return 0;
+    return false;
 }
 
-s32 func_801E2FC0() // 0x801E2FC0
+bool func_801E2FC0() // 0x801E2FC0
 {
     switch (g_Gfx_ScreenFade)
     {
@@ -123,7 +123,7 @@ s32 func_801E2FC0() // 0x801E2FC0
             }
 
             Game_StateSetNext(GameState_Unk15);
-            return 1;
+            return true;
 
         case 2:
         case 3:
@@ -137,7 +137,7 @@ s32 func_801E2FC0() // 0x801E2FC0
             break;
     }
 
-    return 0;
+    return false;
 }
 
 void GameState_Unk15_Update() // 0x801E3094
@@ -154,7 +154,7 @@ void GameState_Unk15_Update() // 0x801E3094
     }
 }
 
-s32 func_801E3124() // 0x801E3124
+bool func_801E3124() // 0x801E3124
 {
     switch (g_GameWork.gameStateStep_598[1])
     {
@@ -213,13 +213,13 @@ s32 func_801E3124() // 0x801E3124
                 g_GameWork.background2dColor_R_58C = 0;
                 g_GameWork.background2dColor_G_58D = 0;
                 g_GameWork.background2dColor_B_58E = 0;
-                return 1;
+                return true;
             }
 
             break;
     }
 
-    return 0;
+    return false;
 }
 
 s32 func_801E3304() // 0x801E3304
@@ -253,7 +253,7 @@ s32 func_801E3304() // 0x801E3304
     return 0;
 }
 
-s32 func_801E342C() // 0x801E342C
+bool func_801E342C() // 0x801E342C
 {
     s32   temp;
     GsOT* ot;
@@ -322,7 +322,7 @@ s32 func_801E342C() // 0x801E342C
             if (g_Gfx_ScreenFade == 5)
             {
                 g_GameWork.gameStateStep_598[1] = 4;
-                return 1;
+                return true;
             }
             break;
 
@@ -330,7 +330,7 @@ s32 func_801E342C() // 0x801E342C
             break;
     }
 
-    return 0;
+    return false;
 }
 
 #include "stringtable.h"

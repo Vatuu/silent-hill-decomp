@@ -94,7 +94,7 @@ extern s32 g_Demo_VideoPresentInterval; // 0x800C4898
 // FUNCTIONS
 // ==========
 
-s32 Demo_SequenceAdvance(s32 incrementAmt);
+bool Demo_SequenceAdvance(s32 incrementAmt);
 
 void Demo_DemoDataRead();
 
@@ -116,7 +116,7 @@ void Demo_Start();
 
 void Demo_Stop();
 
-s32 func_8008F434(s32 arg0);
+bool func_8008F434(s32 arg0);
 
 s32 func_8008F470(s32 caseArg);
 
@@ -133,13 +133,13 @@ void Demo_DemoRandSeedRestore();
 
 void Demo_DemoRandSeedAdvance();
 
-s32 Demo_Update();
+bool Demo_Update();
 
-s32 Demo_ControllerDataUpdate();
+bool Demo_ControllerDataUpdate();
 
-s32 Demo_PresentIntervalUpdate();
+bool Demo_PresentIntervalUpdate();
 
-s32 Demo_GameRandSeedSet();
+bool Demo_GameRandSeedSet();
 
 s32 func_8008F914();
 

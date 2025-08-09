@@ -5,7 +5,7 @@
 #include "main/fsqueue.h"
 #include "main/rng.h"
 
-s32 Demo_SequenceAdvance(s32 incrementAmt) // 0x8008EF20
+bool Demo_SequenceAdvance(s32 incrementAmt) // 0x8008EF20
 {
     g_Demo_DemoId += incrementAmt;
 
@@ -44,7 +44,7 @@ s32 Demo_SequenceAdvance(s32 incrementAmt) // 0x8008EF20
 
     g_Demo_DemoFileIdx = g_Demo_FileIds[g_Demo_DemoId].demoFileId_0;
     g_Demo_PlayFileIdx = g_Demo_FileIds[g_Demo_DemoId].playFileId_2;
-    return 1;
+    return true;
 }
 
 void Demo_DemoDataRead() // 0x8008F048
@@ -151,9 +151,9 @@ void Demo_Stop() // 0x8008f3f0
     Demo_GameRandSeedRestore();
 }
 
-s32 func_8008F434(s32 arg0)
+bool func_8008F434(s32 arg0)
 {
-    s32 caseVar = arg0 & ~1;
+    s32 caseVar = arg0 & ~(1 << 0);
 
     switch (caseVar)
     {
@@ -165,13 +165,13 @@ s32 func_8008F434(s32 arg0)
         case 11:
         case 12:
         case 13:
-            return 0;
+            return false;
 
         default:
             break;
     }
 
-    return 1;
+    return true;
 }
 
 s32 func_8008F470(s32 caseArg)
@@ -181,11 +181,11 @@ s32 func_8008F470(s32 caseArg)
         case 11:
             if (g_SysWork.sysState_8 == SysState_GameOver)
             {
-                return -1;
+                return NO_VALUE;
             }
             else if (g_GameWork.gameStatePrev_590 == GameState_Unk10)
             {
-                return -1;
+                return NO_VALUE;
             }
 
         case 12:
@@ -206,9 +206,9 @@ s32 func_8008F470(s32 caseArg)
 
 void Demo_ExitDemo() // 0x8008F4E4
 {
-    D_800A9768 = 0xEA24;
-    g_Demo_CurFrameData = NULL;
-    g_Demo_DemoStep = 0;
+    D_800A9768            = 0xEA24;
+    g_Demo_CurFrameData   = NULL;
+    g_Demo_DemoStep       = 0;
     g_SysWork.flags_22A4 |= 1 << 8;
 }
 
@@ -245,7 +245,7 @@ void Demo_DemoRandSeedAdvance() // 0x8008F598
     }
 }
 
-s32 Demo_Update() // 0x8008F5D8
+bool Demo_Update() // 0x8008F5D8
 {
     s32               var0;
     s32               var1;
@@ -262,13 +262,13 @@ s32 Demo_Update() // 0x8008F5D8
     {
         g_Demo_CurFrameData = NULL;
         g_Demo_DemoStep     = 0;
-        return 1;
+        return true;
     }
 
     if (g_Demo_PlayFileBufferPtr == NULL)
     {
         g_Demo_CurFrameData = NULL;
-        return 0;
+        return false;
     }
 
     demoStep = g_Demo_DemoStep;
@@ -277,13 +277,13 @@ s32 Demo_Update() // 0x8008F5D8
     {
         func_8008F518();
         Demo_ExitDemo();
-        return 0;
+        return false;
     }
 
     if (func_8008F434(var0) == 0 || func_8008F434(g_Gfx_ScreenFade) == 0 || var1 != 0)
     {
         g_Demo_CurFrameData = NULL;
-        return 1;
+        return true;
     }
 
     work = &g_GameWork;
@@ -305,79 +305,79 @@ s32 Demo_Update() // 0x8008F5D8
 
             g_Demo_DemoStep++;
             func_8008F518();
-            return 1;
+            return true;
 
         case -1:
             func_8008F518();
             Demo_ExitDemo();
-            return 0;
+            return false;
 
         case 0:
             break;
     }
 
     g_Demo_CurFrameData = NULL;
-    return 1;
+    return true;
 }
 
-s32 Demo_ControllerDataUpdate() // 0x8008F7CC
+bool Demo_ControllerDataUpdate() // 0x8008F7CC
 {
     u32 btns;
 
     if (!(g_SysWork.flags_22A4 & (1 << 1)))
     {
-        return 0;
+        return false;
     }
 
     btns = g_Controller0->analogController_0.digitalButtons;
     if (btns != 0xFFFF)
     {
         Demo_ExitDemo();
-        return 1;
+        return true;
     }
 
-    D_800A9768 = 0; // `Demo_FrameCnt`
+    D_800A9768 = 0;
 
     if (g_Demo_CurFrameData != NULL)
     {
         g_Controller0->analogController_0 = g_Demo_CurFrameData->analogController_0;
-        return 1;
+        return true;
     }
 
-    *(u16*)&g_Controller0->analogController_0.status  = 0x7300;
-    g_Controller0->analogController_0.digitalButtons  = btns;
+    *(u16*)&g_Controller0->analogController_0.status = 0x7300;
+    g_Controller0->analogController_0.digitalButtons = btns;
     *(u32*)&g_Controller0->analogController_0.rightX = 0x80808080;
-    return 1;
+    return true;
 }
 
-s32 Demo_PresentIntervalUpdate() // 0x8008F87C
+bool Demo_PresentIntervalUpdate() // 0x8008F87C
 {
     g_Demo_VideoPresentInterval = 1;
 
     if (g_Demo_CurFrameData == NULL)
     {
-        return 0;
+        return false;
     }
 
     g_Demo_VideoPresentInterval = g_Demo_CurFrameData->videoPresentInterval_9;
-    return 1;
+    return true;
 }
 
-s32 Demo_GameRandSeedSet() // 0x8008F8A8
+bool Demo_GameRandSeedSet() // 0x8008F8A8
 {
     if (!(g_SysWork.flags_22A4 & (1 << 1)))
     {
-        return 1;
+        return true;
     }
     else if (g_Demo_CurFrameData == NULL)
     {
         Rng_SetSeed(g_Demo_RandSeed);
-        return 0;
+        return false;
     }
     else
     {
         Rng_SetSeed(g_Demo_CurFrameData->randSeed_C);
-        return 1;
+        return true;
     }
 }
 

@@ -212,16 +212,16 @@ void Gfx_SaveSlotFileStringDraw(s32 saveIdx, s32 slotIdx, s32 fileId, s32 entryT
     }
 }
 
-s32 Gfx_SavegameEntryStringColorSet(s_SavegameMetadata* saveEntry) // 0x801E3078
+bool Gfx_SavegameEntryStringColorSet(s_SavegameMetadata* saveEntry) // 0x801E3078
 {
     if (saveEntry != NULL && saveEntry->isNextFearMode_B)
     {
         Gfx_StringSetColor(ColorId_Gold);
-        return 1;
+        return true;
     }
 
     Gfx_StringSetColor(ColorId_White);
-    return 0;
+    return false;
 }
 
 void Gfx_SavegameEntryLocationNameDraw(s_SavegameEntry* saveEntry, s32 saveIdx, s32 slotIdx) // 0x801E30C4

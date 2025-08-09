@@ -1603,6 +1603,7 @@ extern s_FsImageDesc D_800A9EC4;
 
 extern s_FsImageDesc D_800A9FA8;
 
+/** `Demo_FrameCount` */
 extern s32 D_800A9768;
 
 extern s32 D_800A976C;
@@ -2441,7 +2442,7 @@ void func_80040014();
 
 s8 func_80040A64(VECTOR3* pos);
 
-s32 func_80040B74(s32 arg0);
+bool func_80040B74(s32 arg0);
 
 void func_80041074(s32 arg0, void* arg1, void* arg2, s32 arg3);
 
@@ -2480,7 +2481,7 @@ s32 func_80042178(s32* arg0);
 void func_800421D8(char* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
 
 /** @brief Turns two hex `char`s to their `int` hex value. */
-s32 func_8004255C(s32* out, char firstHex, char secondHex);
+bool func_8004255C(s32* out, char firstHex, char secondHex);
 
 s32 func_80041BA0(s_func_80041CB4* arg0);
 
@@ -2703,6 +2704,7 @@ void func_800485C0(s32 idx);
 
 void func_800485D8();
 
+/** Boolean. */
 u8 func_80048954(s32 com, u8* param, u8* res);
 
 void func_8004729C(u16);
@@ -2929,15 +2931,20 @@ void func_800880F0(s32 arg0);
 
 void func_800881B8(s32 x0, s16 y0, s32 x1, s16 y1, s16 arg4, s16 arg5, s16 arg6, s32 arg7, s32 arg8, u32 arg9, s16 argA, s32 argB);
 
-s32 Chara_Load(s32 arg0, s8 arg1, s32 arg2, s8 arg3, s32 arg4, s32 arg5);
+/**
+Could `arg5` be a struct pointer?
+`func_8003D6E0` uses this function and in the last argument
+it input `arg5` and `arg5` is an undetermined function pointer
+*/
+bool Chara_Load(s32 arg0, s8 arg1, s32 arg2, s8 arg3, s32 arg4, s32 arg5);
 
-s32 func_80088D0C();
+bool func_80088D0C();
 
 void func_80088D34(s32 idx);
 
 void func_80088F94(s_SubCharacter* chara);
 
-s32 func_8008F434(s32 arg0);
+bool func_8008F434(s32 arg0);
 
 void func_80089090(s32 arg0);
 
@@ -2969,13 +2976,13 @@ s32 func_800895E4(s_SysWork_2514* arg0, s_8002AC04* arg1, u8 arg2);
 
 s32 func_80089644(s_SysWork_2514* arg0, s_func_80089644_0* arg1, s32 arg2, u32 arg3);
 
-s32 func_8008973C(s_SysWork_2514* arg0, s32 arg1, s_8002AC04* ptr, u32* arg3);
+bool func_8008973C(s_SysWork_2514* arg0, s32 arg1, s_8002AC04* ptr, u32* arg3);
 
 void func_80089840(s_SysWork_2514* arg0);
 
 void func_8008989C(s_SysWork_2514* arg0, u16 arg1, s32 (*arg2)(u16, s32));
 
-s32 func_80089D0C(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s_8002AC04* arg2, u8* arg3);
+bool func_80089D0C(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s_8002AC04* arg2, u8* arg3);
 
 void func_8008992C(s_SysWork_2514* arg0, u16 arg1, s32 (*arg2)(u16, s32));
 
@@ -3025,13 +3032,6 @@ void func_80091380();
 
 // TODO: Arrange these in address order for better insight into the original interface. -- Sezz
 // ------------------------------------------------------------------
-
-/**
-Could `arg5` be a struct pointer?
-`func_8003D6E0` uses this function and in the last argument
-it input `arg5` and `arg5` is an undetermined function pointer
-*/
-s32 Chara_Load(s32 arg0, s8 arg1, s32 arg2, s8 arg3, s32 arg4, s32 arg5); // arg2 type assumed.
 
 /** Seeks for the English title screen background graphic. */
 void GameFs_TitleGfxSeek();
@@ -3131,7 +3131,7 @@ s32 func_8006CC44(s32 arg0, s32 arg1, s_func_8006CC44* arg2);
 
 s32 func_8006DB3C(s_func_800700F8_2* arg0, VECTOR3* arg1, VECTOR3* arg2, s_func_800700F8* arg3);
 
-s32 func_8006DCE0(s_func_8006DCE0* arg0, s32 arg1, s16 arg2, VECTOR3* pos0, VECTOR3* pos1, s32 arg5, s32 arg6, s32 arg7, s32 arg8);
+bool func_8006DCE0(s_func_8006DCE0* arg0, s32 arg1, s16 arg2, VECTOR3* pos0, VECTOR3* pos1, s32 arg5, s32 arg6, s32 arg7, s32 arg8);
 
 void func_8006E490(s_func_8006E490* arg0, u32 arg1, s32 arg2, s32 arg3);
 
@@ -3147,7 +3147,7 @@ s32 func_800700F8(s_func_800700F8* arg0, s_func_800700F8* arg1);
 
 s32 func_80070184(s_SubCharacter* chara, s32 arg1, s16 rotY);
 
-s32 func_80070320();
+bool func_80070320();
 
 s32 func_80070360(s_SubCharacter* chara, s32 someDist, s16 arg2);
 
@@ -3236,7 +3236,7 @@ void Game_PlayerInit(); // 0x80035178
 /** Loads a map file into `g_OvlDynamic`. */
 void GameFs_MapLoad(s32 mapIdx);
 
-s32 func_8003528C(s32 idx0, s32 idx1);
+bool func_8003528C(s32 idx0, s32 idx1);
 
 /** Searches for the index of the character animation data in `D_800A992C`. */
 s32 func_800352F8(s32 charaId);
@@ -3252,7 +3252,7 @@ void func_8003569C();
 s32 func_80035780();
 
 /** Sets sound command. */
-s32 func_800358A8(s32 cmd);
+bool func_800358A8(s32 cmd);
 
 void func_800358DC(s32 cmd);
 
@@ -3285,8 +3285,7 @@ void func_80035DB4(s32);
 
 void func_80035E1C();
 
-/** Returns boolean status. */
-s32 func_80035E44();
+bool func_80035E44();
 
 void func_80035ED0();
 
@@ -3326,9 +3325,9 @@ void func_80037334();
 
 void func_80037388();
 
-s32 func_800378D4(s_AreaLoadParams* areaLoadParams);
+bool func_800378D4(s_AreaLoadParams* areaLoadParams);
 
-s32 func_80037C5C(s_func_80037A4C* arg0);
+bool func_80037C5C(s_func_80037A4C* arg0);
 
 void func_80037DC4(s_SubCharacter* chara);
 
@@ -3595,16 +3594,16 @@ void func_8007F1CC();
 void func_8007F250(u8* ptr, s8 arg1);
 
 /** Some kind of player anim state check. */
-s32 func_8007F26C();
+bool func_8007F26C();
 
 /** Some kind of player anim state check. */
-s32 func_8007F2AC();
+bool func_8007F2AC();
 
 /** Gets something from the player's current animation? */
 s16 Player_AnimGetSomething();
 
 /** Player func. */
-s32 func_8007F95C();
+bool func_8007F95C();
 
 void func_8007FB34(s16, s16, s16*);
 

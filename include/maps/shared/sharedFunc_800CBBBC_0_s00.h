@@ -1,4 +1,4 @@
-s32 sharedFunc_800CBBBC_0_s00()
+bool sharedFunc_800CBBBC_0_s00()
 {
     s32 dist;
     s32 var_v1;
@@ -10,8 +10,8 @@ s32 sharedFunc_800CBBBC_0_s00()
 
     if (dist > 10000 || var_v1 > 512)
     {
-        return 1;
+        return true;
     }
 
-    return 0;
+    return false;
 }

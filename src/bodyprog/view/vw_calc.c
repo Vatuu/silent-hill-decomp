@@ -429,7 +429,7 @@ void func_80049C2C(MATRIX* outMat, s32 x, s32 y, s32 z) // 0x80049C2C
     outMat->t[2] = out.vz + GsWSMATRIX.t[2];
 }
 
-s32 Vw_AabbVisibleInScreenCheck(s32 xMin, s32 xMax, s32 yMin, s32 yMax, s32 zMin, s32 zMax) // 0x80049D04
+bool Vw_AabbVisibleInScreenCheck(s32 xMin, s32 xMax, s32 yMin, s32 yMax, s32 zMin, s32 zMax) // 0x80049D04
 {
     s32     i;
     MATRIX  worldMat;
@@ -496,7 +496,7 @@ s32 Vw_AabbVisibleInScreenCheck(s32 xMin, s32 xMax, s32 yMin, s32 yMax, s32 zMin
 
     if (screenMaxX == 0x7FFFFFFF)
     {
-        return 0;
+        return false;
     }
 
     screenCenterX = (g_GameWork.gsScreenWidth_588  / 2) + 2;
@@ -505,15 +505,15 @@ s32 Vw_AabbVisibleInScreenCheck(s32 xMin, s32 xMax, s32 yMin, s32 yMax, s32 zMin
     if (screenMaxX < -screenCenterX || screenCenterX < screenMinX ||
         screenMaxY < -screenCenterY || screenCenterY < screenMinY)
     {
-        return 0;
+        return false;
     }
     else
     {
-        return 1;
+        return true;
     }
 }
 
-s32 Vw_AabbVisibleInFrustumCheck(MATRIX* modelMat, s16 minX, s16 minY, s16 minZ, s32 maxX, s32 maxY, s32 maxZ, u16 nearPlane, u16 farPlane) // 0x80049F38
+bool Vw_AabbVisibleInFrustumCheck(MATRIX* modelMat, s16 minX, s16 minY, s16 minZ, s32 maxX, s32 maxY, s32 maxZ, u16 nearPlane, u16 farPlane) // 0x80049F38
 {
     u8                              flags0[3];
     u8                              flags1[3];
@@ -646,17 +646,17 @@ s32 Vw_AabbVisibleInFrustumCheck(MATRIX* modelMat, s16 minX, s16 minY, s16 minZ,
 
     if (pointsOutsideFarClipCount == 8)
     {
-        return 0;
+        return false;
     }
 
     if (pointsOutsideNearPlaneCount == 8)
     {
-        return 0;
+        return false;
     }
 
     if (sp20.field_0[1][1] != 0)
     {
-        return 1;
+        return true;
     }
 
     if (func_8004A54C(&sp20) != 1)
@@ -746,30 +746,30 @@ s32 Vw_AabbVisibleInFrustumCheck(MATRIX* modelMat, s16 minX, s16 minY, s16 minZ,
 
         if (flags0[0] == 0 && flags0[1] == 0)
         {
-            return 0;
+            return false;
         }
         else if (flags0[2] == 0 && flags0[1] == 0)
         {
-            return 0;
+            return false;
         }
         else if (flags1[0] == 0 && flags1[1] == 0)
         {
-            return 0;
+            return false;
         }
         else if (flags1[2] != 0)
         {
-            return 1;
+            return true;
         }
         else if (flags1[1] == 0)
         {
-            return 0;
+            return false;
         }
     }
 
-    return 1;
+    return true;
 }
 
-s32 func_8004A54C(s_func_8004A54C* arg0) // 0x8004A54C
+bool func_8004A54C(s_func_8004A54C* arg0) // 0x8004A54C
 {
     s32 var_v1 = 0;
     s32 var_a1 = 0;
@@ -778,7 +778,7 @@ s32 func_8004A54C(s_func_8004A54C* arg0) // 0x8004A54C
 
     if (arg0->field_0[1][1] != 0)
     {
-        return 1;
+        return true;
     }
 
     if (arg0->field_0[1][0] || (arg0->field_0[0][0] && arg0->field_0[2][0]))
@@ -791,7 +791,7 @@ s32 func_8004A54C(s_func_8004A54C* arg0) // 0x8004A54C
     }
     if (var_v1 && var_a1)
     {
-        return 1;
+        return true;
     }
 
     if (arg0->field_0[0][1] || (arg0->field_0[0][0] && arg0->field_0[0][2]))
@@ -804,10 +804,10 @@ s32 func_8004A54C(s_func_8004A54C* arg0) // 0x8004A54C
     }
     if (var_a2 && var_a3)
     {
-        return 1;
+        return true;
     }
 
-    return 0;
+    return false;
 }
 
 void vwAngleToVector(SVECTOR* vec, SVECTOR* ang, s32 r) // 0x8004A66C

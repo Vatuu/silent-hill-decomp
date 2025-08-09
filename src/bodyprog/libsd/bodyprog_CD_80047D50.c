@@ -492,7 +492,7 @@ u8 func_80048954(s32 com, u8* param, u8* res) // 0x80048954
     if (CdSync(1, &syncRes) == CdlComplete && CdControl(comCopy, param, res) != 0)
     {
         D_800C1658.field_0 = 0;
-        return 0;
+        return false;
     }
 
     D_800C1658.field_0++;
@@ -514,5 +514,5 @@ u8 func_80048954(s32 com, u8* param, u8* res) // 0x80048954
         D_800C1658.field_0 = 0;
     }
 
-    return 1;
+    return true;
 }

@@ -395,45 +395,45 @@ VC_CAM_MV_TYPE vcRetCurCamMvType(VC_WORK* w_p) // 0x80081428
     return w_p->cur_near_road_2B8.road_p_0->cam_mv_type_14;
 }
 
-s32 func_8008150C(s32 posX, s32 posZ)
+bool func_8008150C(s32 posX, s32 posZ)
 {
     switch (func_8003BD2C())
     {
         case 0:
             if ((posX - FP_METER(201.8f)) > (u32)FP_METER(28.2002f))
             {
-                return 0;
+                return false;
             }
             else if (posZ < FP_METER(-92.0f))
             {
-                return 0;
+                return false;
             }
             else if (posZ <= FP_METER(-68.0f))
             {
-                return 1;
+                return true;
             }
             break;
 
         case 3:
             if ((posX + FP_METER(230.0f)) > (u32)FP_METER(29.0f))
             {
-                return 0;
+                return false;
             }
             else if (posZ < FP_METER(-12.0f))
             {
-                return 0;
+                return false;
             }
             else if (posZ <= FP_METER(12.0f))
             {
-                return 1;
+                return true;
             }
             break;
     }
 
-    return 0;
+    return false;
 }
 
-s32 vcRetThroughDoorCamEndF(VC_WORK* w_p) // 0x800815F0
+bool vcRetThroughDoorCamEndF(VC_WORK* w_p) // 0x800815F0
 {
     VC_THROUGH_DOOR_CAM_PARAM* prm_p;
     s32                        rail2chara_dist;
@@ -444,18 +444,18 @@ s32 vcRetThroughDoorCamEndF(VC_WORK* w_p) // 0x800815F0
 
     if (!w_p->through_door_10.active_f_0)
     {
-        return 1;
+        return true;
     }
 
     // TODO: Timer field treated as distance here? Maybe misnamed, need to check usages in SH2 against SH.
     if (prm_p->timer_4 > FP_METER(1.2f) && w_p->nearest_enemy_xz_dist_2E0 < FP_METER(1.2f))
     {
-        return 1;
+        return true;
     }
 
     if (rail2chara_dist > FP_METER(2.3f))
     {
-        return 1;
+        return true;
     }
 
     if (rail2chara_dist > FP_METER(0.5f))
@@ -470,11 +470,11 @@ s32 vcRetThroughDoorCamEndF(VC_WORK* w_p) // 0x800815F0
 
         if (abs_ofs_ang_y > FP_ANGLE(70.0f))
         {
-            return 1;
+            return true;
         }
     }
 
-    return 0;
+    return false;
 }
 
 s32 vcRetFarWatchRate(s32 far_watch_button_prs_f, VC_CAM_MV_TYPE cur_cam_mv_type, VC_WORK* w_p) // 0x800816B0

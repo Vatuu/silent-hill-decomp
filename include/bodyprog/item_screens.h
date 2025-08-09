@@ -289,7 +289,7 @@ void Gfx_Inventory_CmdOptionsDraw(); // 0x8004E864
 
 void Gfx_Inventory_ScrollArrowsDraw(s32* invSelectionId); // 0x8004EC7C
 
-s32 func_8004EE94(u8 arg0, u8 arg1);
+bool func_8004EE94(u8 arg0, u8 arg1);
 
 s32 func_8004F190(s_ShSavegame* save);
 

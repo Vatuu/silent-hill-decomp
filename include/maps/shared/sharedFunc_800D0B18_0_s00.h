@@ -1,4 +1,4 @@
-s32 sharedFunc_800D0B18_0_s00(s32 arg0)
+bool sharedFunc_800D0B18_0_s00(s32 arg0)
 {
     s32 temp_a0_2;
     u16 temp;
@@ -23,7 +23,7 @@ s32 sharedFunc_800D0B18_0_s00(s32 arg0)
 
         if (sharedData_800E0CA8_0_s00 != 0)
         {
-            sharedData_800E0CAC_0_s00 = (arg0 - 1) % 4U;
+            sharedData_800E0CAC_0_s00 = (arg0 - 1) % 4u;
         }
 
         switch (sharedData_800E0CA8_0_s00)
@@ -88,8 +88,8 @@ s32 sharedFunc_800D0B18_0_s00(s32 arg0)
 #endif
 
         sharedData_800E0CB8_0_s00 = (sharedData_800E0CB8_0_s00 & ~0xF) + (sharedData_800E0CB4_0_s00 >> Q12_SHIFT);
-        return 1;
+        return true;
     }
 
-    return 0;
+    return false;
 }

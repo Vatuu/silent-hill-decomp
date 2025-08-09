@@ -48,9 +48,9 @@ extern s32 D_801E600C; // Random 16-bit number.
 
 void func_801E2E28(s32 idx);
 
-s32 func_801E2ED8();
+bool func_801E2ED8();
 
-s32 func_801E2FC0();
+bool func_801E2FC0();
 
 void func_801E386C();
 
@@ -59,9 +59,9 @@ bool func_801E3970();
 void func_801E3DD0();
 
 /** Draw some image on the screen. */
-s32 func_801E3124();
+bool func_801E3124();
 
-s32 func_801E342C();
+bool func_801E342C();
 
 s32 func_801E3304();
 

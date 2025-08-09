@@ -212,15 +212,15 @@ s32 func_8002E914() // 0x8002E914
     return ret;
 }
 
-s32 func_8002E94C(s32 arg0, s32 deviceId, s32 fileIdx, s32 saveIdx) // 0x8002E94C
+bool func_8002E94C(s32 arg0, s32 deviceId, s32 fileIdx, s32 saveIdx) // 0x8002E94C
 {
     if (D_800B5508.field_E0[0].field_0 != 0)
     {
-        return 0;
+        return false;
     }
 
     s_800B55E8_Init(&D_800B5508.field_E0[0], arg0, deviceId, fileIdx, saveIdx, 0, CardResult_Success);
-    return 1;
+    return true;
 }
 
 /** @brief Related to formatting logic.
@@ -1426,11 +1426,11 @@ s32 Savegame_CardResult() // 0x800308D4
     return g_CardWork.stateResult_C;
 }
 
-s32 Savegame_CardRequest(e_CardIoMode mode, s32 deviceId, s_CardDirectory* outDir, char* filename, s32 createBlockCount, s32 fileOffset, void* outBuf, s32 bufSize) // 0x800308E4
+bool Savegame_CardRequest(e_CardIoMode mode, s32 deviceId, s_CardDirectory* outDir, char* filename, s32 createBlockCount, s32 fileOffset, void* outBuf, s32 bufSize) // 0x800308E4
 {
     if (!Savegame_CardIsIdle())
     {
-        return 0;
+        return false;
     }
 
     g_CardWork.cardIoMode_38 = mode;
@@ -1469,7 +1469,7 @@ s32 Savegame_CardRequest(e_CardIoMode mode, s32 deviceId, s_CardDirectory* outDi
     g_CardWork.dataBuffer_68       = outBuf;
     g_CardWork.dataSize_6C         = bufSize;
     g_CardWork.field_70            = 0;
-    return 1;
+    return true;
 }
 
 s32 Savegame_CardIsIdle() // 0x800309FC

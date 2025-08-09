@@ -1096,7 +1096,7 @@ void ControllerData_AnalogToDigital(s_ControllerData* cont, s32 arg1) // 0x80034
 }
 
 // Unused.
-s32 func_8003483C(u16* arg0) // 0x8003483C
+bool func_8003483C(u16* arg0) // 0x8003483C
 {
     if (g_Controller0->btnsClicked_10 & *(*arg0 + arg0))
     {
@@ -1114,11 +1114,11 @@ s32 func_8003483C(u16* arg0) // 0x8003483C
     if (*(*arg0 + arg0) == 0xFFFF)
     {
         *arg0 = 1;
-        return 1;
+        return true;
     }
     else
     {
-        return 0;
+        return false;
     }
 }
 
@@ -1497,7 +1497,7 @@ void GameFs_MapLoad(s32 mapIdx) // 0x8003521C
 // ANIMATION MEMORY ALLOC?
 // ========================================
 
-s32 func_8003528C(s32 idx0, s32 idx1) // 0x8003528C
+bool func_8003528C(s32 idx0, s32 idx1) // 0x8003528C
 {
     u32         tempField_8;
     u32         tempField_4;
@@ -1512,10 +1512,10 @@ s32 func_8003528C(s32 idx0, s32 idx1) // 0x8003528C
     if (tempField_4 >= (tempField_8 + ptr1->animFileSize2_10) ||
         tempField_8 >= (tempField_4 + ptr0->animFileSize1_C))
     {
-        return 0;
+        return false;
     }
 
-    return 1;
+    return true;
 }
 
 s32 func_800352F8(s32 charaId) // 0x800352F8
@@ -1716,16 +1716,16 @@ s32 func_80035780() // 0x80035780
     return 1;
 }
 
-s32 func_800358A8(s32 cmd) // 0x800358A8
+bool func_800358A8(s32 cmd) // 0x800358A8
 {
     if (cmd == 0)
     {
-        return 0;
+        return false;
     }
 
     if (cmd == 1)
     {
-        return 0;
+        return false;
     }
 
     return g_GameWork.soundCmd_5B2 != cmd;
@@ -1933,7 +1933,7 @@ void func_80035E1C() // 0x80035E1C
     }
 }
 
-s32 func_80035E44()
+bool func_80035E44()
 {
     s32 i;
     u16 val;
@@ -1942,29 +1942,29 @@ s32 func_80035E44()
     {
         if (g_SysWork.field_2748[i] != 0) 
         {
-            return 0;
+            return false;
         }
     }
 
     val = func_80045BC8();
     if (val == 0) 
     {
-        return 1;
+        return true;
     }
     else if (val == 0xFFFF) 
     {
-        return 0;
+        return false;
     }
 
     for (i = 1; i < 8; i++) 
     {
         if (func_80046BB4(i))
         {
-            return 0;
+            return false;
         }
     }
 
-    return 1;
+    return true;
 }
 
 void func_80035ED0() // 0x80035ED0
@@ -2893,7 +2893,7 @@ void func_80037388() // 0x80037388
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80032D1C", func_800373CC); // 0x800373CC
 
-s32 func_800378D4(s_AreaLoadParams* areaLoadParams) // 0x800378D4
+bool func_800378D4(s_AreaLoadParams* areaLoadParams) // 0x800378D4
 {
     s16 rotY;
     s32 x;
@@ -2911,18 +2911,18 @@ s32 func_800378D4(s_AreaLoadParams* areaLoadParams) // 0x800378D4
     x = areaLoadParams->char_x_0 - D_800A9A24;
     if (ABS(x) > FP_METER(0.8f))
     {
-        return 0;
+        return false;
     }
 
     z = areaLoadParams->char_z_8 - D_800A9A28;
     if (ABS(z) > FP_METER(0.8f))
     {
-        return 0;
+        return false;
     }
 
     if ((SQUARE(x) + SQUARE(z)) > SQUARE(FP_METER(0.8f)))
     {
-        return 0;
+        return false;
     }
 
     deltaRotY = g_SysWork.player_4C.chara_0.rotation_24.vy - ratan2(x, z);
@@ -2933,17 +2933,17 @@ s32 func_800378D4(s_AreaLoadParams* areaLoadParams) // 0x800378D4
 
     if (FP_ANGLE(30.0f) < ABS(deltaRotY))
     {
-        return 0;
+        return false;
     }
     else
     {
-        return 1;
+        return true;
     }
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80032D1C", func_80037A4C); // 0x80037A4C
 
-s32 func_80037C5C(s_func_80037A4C* arg0) // 0x80037C5C
+bool func_80037C5C(s_func_80037A4C* arg0) // 0x80037C5C
 {
     s32 sinAngle;
     s32 cosAngle;
@@ -2960,7 +2960,7 @@ s32 func_80037C5C(s_func_80037A4C* arg0) // 0x80037C5C
 
     if (arg0->field_7 << 9 < ABS(deltaX))
     {
-        return 0;
+        return false;
     }
 
     deltaZ = g_SysWork.player_4C.chara_0.position_18.vz - arg0->field_8;
@@ -2968,7 +2968,7 @@ s32 func_80037C5C(s_func_80037A4C* arg0) // 0x80037C5C
 
     if ((shift8Field_7 * scale) < ABS(deltaZ))
     {
-        return 0;
+        return false;
     }
 
     angle    = -(arg0->field_6 << 20) >> 16;
@@ -2977,7 +2977,7 @@ s32 func_80037C5C(s_func_80037A4C* arg0) // 0x80037C5C
     temp = FP_FROM((-deltaX * sinAngle) + (deltaZ * shRcos(angle)), Q12_SHIFT);
     if (temp > 0x4000)
     {
-        return 0;
+        return false;
     }
 
     cosAngle = shRcos(angle);
@@ -2985,11 +2985,11 @@ s32 func_80037C5C(s_func_80037A4C* arg0) // 0x80037C5C
 
     if (shift8Field_7 < ABS(temp_v0))
     {
-        return 0;
+        return false;
     }
     else
     {
-        return 1;
+        return true;
     }
 }
 

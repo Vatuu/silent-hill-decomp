@@ -46,7 +46,7 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D0274);
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D0394);
 
-s32 func_800D0600() // 0x800D0600
+bool func_800D0600() // 0x800D0600
 {
     #define FIXED_DIST FP_METER(40.0f)
     
@@ -78,14 +78,14 @@ s32 func_800D0600() // 0x800D0600
     }
     else
     {
-        // Ideally would return 0 here, but code matching requires jump to end.
+        // Ideally would return `false` here, but code matching requires jump to end.
         goto ret0;
     }
     
 ret1:
-    return 1;
+    return true;
 ret0:
-    return 0;
+    return false;
 }
 
 #include "maps/shared/sharedFunc_800D0700_0_s00.h" // 0x800D0700

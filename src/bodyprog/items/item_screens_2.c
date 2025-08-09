@@ -1383,7 +1383,7 @@ void Gfx_Inventory_ScrollArrowsDraw(s32* invSelectionId) // 0x8004EC7C
     Gfx_Primitive2dTextureSet(0, 0, 7, 1);
 }
 
-s32 func_8004EE94(u8 arg0, u8 arg1) // 0x8004EE94
+bool func_8004EE94(u8 arg0, u8 arg1) // 0x8004EE94
 {
     s32 i;
 
@@ -1404,11 +1404,11 @@ s32 func_8004EE94(u8 arg0, u8 arg1) // 0x8004EE94
                 }
             }
 
-            return 1;
+            return true;
         }
     }
 
-    return 0;
+    return false;
 }
 
 /** Used for equipping or interacting items in the inventory.

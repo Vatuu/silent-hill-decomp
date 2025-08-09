@@ -1,5 +1,5 @@
 // Returns index. Called in `Ai_AirScreamer_Update`.
-s32 sharedFunc_800D62D8_0_s01(s_SubCharacter* chara)
+bool sharedFunc_800D62D8_0_s01(s_SubCharacter* chara)
 {
     if (sharedFunc_800D4A80_0_s01(chara) != 0 && !(sharedData_800E21D0_0_s01 & (1 << 29)))
     {
@@ -9,5 +9,5 @@ s32 sharedFunc_800D62D8_0_s01(s_SubCharacter* chara)
     }
 
     sharedFunc_800D7560_0_s01(chara);
-    return 1;
+    return true;
 }

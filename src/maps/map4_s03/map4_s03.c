@@ -223,7 +223,7 @@ INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D3B98);
 
 INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D3CBC);
 
-s32 Ai_Twinfeeler_Init(s_SubCharacter* chara) // 0x800D3CD4
+bool Ai_Twinfeeler_Init(s_SubCharacter* chara) // 0x800D3CD4
 {
     s32             charaPosX;
     s32             charaPosZ;
@@ -233,7 +233,7 @@ s32 Ai_Twinfeeler_Init(s_SubCharacter* chara) // 0x800D3CD4
 
     if (!Fs_QueueDoThingWhenEmpty())
     {
-        return 0;
+        return false;
     }
 
     charaPosX = chara->position_18.vx;
@@ -294,7 +294,7 @@ s32 Ai_Twinfeeler_Init(s_SubCharacter* chara) // 0x800D3CD4
 
     func_800D354C(&chara->position_18);
     chara->flags_3E |= CharaFlag_Unk9;
-    return 1;
+    return true;
 }
 
 INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D3E18);

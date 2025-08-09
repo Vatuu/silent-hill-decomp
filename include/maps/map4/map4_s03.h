@@ -8,7 +8,7 @@ void func_800D354C(VECTOR3*);
 void func_800D3B44(s32);
 void func_800D3B74(s_SubCharacter*);
 void func_800D3CBC(s_SubCharacter*, s32, s32);
-s32  Ai_Twinfeeler_Init(s_SubCharacter*);
+bool Ai_Twinfeeler_Init(s_SubCharacter* chara);
 void func_800D3E58(s_SubCharacter*);
 void func_800D53B0(s_SubCharacter*, GsCOORDINATE2*);
 void func_800D54B4(s_SubCharacter*, GsCOORDINATE2*);

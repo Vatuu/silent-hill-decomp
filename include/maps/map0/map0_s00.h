@@ -25,10 +25,10 @@ void func_800D0124();
  * instead of: `(SQUARE(x1 - x2) + SQUARE(z1 - z2)) < SQUARE(d)`
  * it does:    `(ABS(x1 - x2) + ABS(z1 - z2)) < d`.
  *
- * @return `1` if the player distance from either position is `< FP_METER(40.0f)`,
- *          otherwise `0`.
+ * @return `true` if the player distance from either position is `< FP_METER(40.0f)`,
+ *          otherwise `false`.
  */
-s32 func_800D0600();
+bool func_800D0600();
 
 void func_800D0E24();
 

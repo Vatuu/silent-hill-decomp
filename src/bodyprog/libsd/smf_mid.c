@@ -187,7 +187,7 @@ u8 readheader(s32 file_no) // 0x800A7428
     switch (smf_song[smf_file_no].smf_seq_flag_52C)
     {
         case SMF_MODE:
-            loc = readMThd(0U);
+            loc = readMThd(0u);
             if (loc == -1)
             {
                 return 0;
