@@ -1050,7 +1050,7 @@ typedef struct _PlayerCombat
     s8      unk_C[3];
     s8      equippedWeapon_F; // `e_EquippedWeaponId`.
     u8      currentWeaponAmmo_10;
-    s8      totalWeaponAmmo_11;
+    u8      totalWeaponAmmo_11;
     s8      field_12;
     u8      isAiming_13; /** Boolean. */
 } s_PlayerCombat;
