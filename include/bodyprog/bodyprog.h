@@ -1397,9 +1397,8 @@ typedef struct _MapOverlayHeader
     void              (*func_17C)(void*, void*);
     s8                unk_180[20];
     void              (*charaUpdateFuncs_194[Chara_Count])(s_SubCharacter*, void*, s32); /** Guessed params. Funcptrs for each `e_CharacterId`, set to 0 for IDs not included in the map overlay. Called by `func_80038354`. */
-    s8                charaGroupIds_248[4];                                              /** `e_CharacterId` values where if `s_SpawnInfo.charaId_4` == 0, `charaGroupIds_248[0]` is used for `charaSpawnsA_24C` and `charaGroupIds_248[1]` for `charaSpawnsB_30C`. */
-    s_SpawnInfo       charaSpawnsA_24C[16];                                              /** Array of chara type/position/flags, `flags_6 == 0` are unused slots? Read by `func_80037F24`. */
-    s_SpawnInfo       charaSpawnsB_30C[16];                                              /** Array of chara type/position/flags, `flags_6 == 0` are unused slots? Read by `func_80037F24`. */
+    s8                charaGroupIds_248[4];                                              /** `e_CharacterId` values where if `s_SpawnInfo.charaId_4` == 0, `charaGroupIds_248[0]` is used for `charaSpawns_24C[0]` and `charaGroupIds_248[1]` for `charaSpawns_24C[1]`. */
+    s_SpawnInfo       charaSpawns_24C[2][16];                                            /** Array of chara type/position/flags, `flags_6 == 0` are unused slots? Read by `func_80037F24`. */
     VC_ROAD_DATA      roadDataList_3CC[48];
     // TODO: A lot more in here.
 } s_MapOverlayHeader;
@@ -2910,6 +2909,8 @@ bool func_80088D0C();
 void func_80088D34(s32 idx);
 
 void func_80088F94(s_SubCharacter* chara);
+
+void func_80088FF4(s32 groupIdx, s32 spawnIdx, s32 spawnFlags);
 
 bool func_8008F434(s32 arg0);
 

@@ -1486,7 +1486,13 @@ void func_80088F94(s_SubCharacter* chara) // 0x80088F94
     chara->model_0.charaId_0 = Chara_None;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80088FF4); // 0x80088FF4
+void func_80088FF4(s32 groupIdx, s32 spawnIdx, s32 spawnFlags)
+{
+    s_SpawnInfo* spawn;
+
+    spawn          = &g_MapOverlayHeader.charaSpawns_24C[D_800A98FC[groupIdx] - 1][spawnIdx];
+    spawn->flags_6 = spawnFlags;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80089034); // 0x80089034
 
