@@ -977,7 +977,8 @@ typedef struct _SubCharacter
                       // In NPCs: The ID (from `e_EquippedWeaponId`) of the weapon which is getting attacked.
     s8      unk_42[2];
     s16     field_44;
-    s8      unk_46[2];
+    s8      field_46;
+    s8      field_47;
     s8      unk_48[4];
     s32     field_4C; // } Fields used by `func_8008A3E0`. Types guessed for now.
     s16     field_50; // } Angle?

@@ -1492,6 +1492,8 @@ extern s_AnimInfo D_80028B94[];
 
 extern s_D_800C44F0 D_800294F4[];
 
+extern s_AnimInfo* D_800297B8;
+
 extern RECT D_8002ABA4;
 
 extern s_8002AC04 D_8002AC04[10];
@@ -2953,7 +2955,7 @@ void func_8008992C(s_SysWork_2514* arg0, u16 arg1, s32 (*arg2)(u16, s32));
 
 s32 func_8008A0CC();
 
-void func_8008A0E4(s16, s8, s_SubCharacter*, s_PlayerCombat*, s32, s16, s16);
+s32 func_8008A0E4(s32 arg0, s16 arg1, s_SubCharacter* arg2, s_PlayerCombat* arg3, s32 arg4, s16 arg5, s16 arg6);
 
 u8 func_8008A270(s32 idx);
 

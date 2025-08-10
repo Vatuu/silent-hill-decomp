@@ -1882,7 +1882,105 @@ s32 func_8008A0CC() // 0x8008A0CC
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008A0D4); // 0x8008A0D4
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008A0E4); // 0x8008A0E4
+s32 func_8008A0E4(s32 arg0, s16 arg1, s_SubCharacter* arg2, s_PlayerCombat* arg3, s32 arg4, s16 arg5, s16 arg6) // 0x8008A0E4
+{
+    s32          var_t1;
+    s32          temp_a1;
+    s32          var_a0;
+    s32          retval;
+    s32          var_v0_2;
+    s32          count;
+    s_AnimInfo*  temp_v1;
+    s_AnimInfo*  temp_2;
+    s_ModelAnim* var_a2;
+
+    var_t1 = arg2->field_44;
+    var_a2 = &arg2->model_0.anim_4;
+    if ((g_DeltaTime0 == 0) || (g_SysWork.sysState_8 != 0))
+    {
+        return -1;
+    }
+
+    if (arg2 == &g_SysWork.player_4C)
+    {
+        temp_2                   = D_800297B8;
+        temp_v1                  = g_MapOverlayHeader.animInfo_34;
+        var_a2->animInfo_C       = temp_2;
+        var_a2->maybeSomeState_1 = 0x4C;
+        var_a2->field_10         = temp_v1;
+        var_a2                   = &g_SysWork.player_4C.extra_128.model_0.anim_4;
+        var_a2->animInfo_C       = temp_2;
+        var_a2->field_10         = temp_v1;
+        var_a2->maybeSomeState_1 = 0x4C;
+    }
+
+    if (arg0 <= 0)
+    {
+        var_t1         = 0;
+        arg2->field_44 = 0;
+    }
+
+    arg2->field_46 = arg1;
+    if (!(var_a2->animIdx_0 & 1))
+    {
+        arg2->field_44 = 0;
+        arg2->field_4C = 0;
+    }
+    else if (!(var_t1) && (arg0 > 0))
+    {
+        arg2->field_44 = 1;
+        arg2->field_4C = 0;
+    }
+
+    arg2->field_47 = 0x64;
+    arg2->field_50 = arg5;
+    arg2->field_52 = arg6;
+    arg2->field_5C = arg3->field_0;
+    temp_a1        = func_8008A3E0(arg2);
+    retval         = -1;
+
+    if (arg2 == &g_SysWork.player_4C)
+    {
+        count    = 6;
+        var_v0_2 = 1;
+    }
+    else
+    {
+        count    = 1;
+        var_v0_2 = -1;
+    }
+
+    if (temp_a1 != 0)
+    {
+        var_a0 = var_v0_2;
+        if (count > 0)
+        {
+            while ((count > 0))
+            {
+                if ((temp_a1 & var_a0))
+                {
+                    retval = count;
+                    break;
+                }
+                var_a0 *= 2; // Or var_a0 <<= 1;
+                count--;
+            }
+        }
+    }
+    if (arg2->model_0.charaId_0 != 1)
+    {
+        if (g_SysWork.player_4C.chara_0.field_41 != -1)
+        {
+            retval = 0;
+        }
+        else
+        {
+            retval = -1;
+        }
+    }
+
+    return retval;
+}
 
 // TODO: .rodata migration.
 #ifdef NON_MATCHING
