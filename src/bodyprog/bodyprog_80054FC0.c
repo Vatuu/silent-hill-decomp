@@ -1858,11 +1858,11 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80071CE8); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80073FC0); // 0x80073FC0
 
-void func_80074254(s32 arg0, s32 arg1) // 0x80074254
+void func_80074254(s_SubCharacter* arg0, s_MainCharacterExtra* arg1) // 0x80074254
 {
     s32 var0;
 
-    if (func_80075504() != 0)
+    if (func_80075504(arg0, arg1) != 0)
     {
         return;
     }
@@ -1903,13 +1903,1764 @@ void func_80074254(s32 arg0, s32 arg1) // 0x80074254
     func_800771BC(arg0, arg1);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80074350); // 0x80074350
+s32 func_80075504(s_SubCharacter* arg0, s_MainCharacterExtra* arg1) // 0x80075504
+{
+    s32 sp1C;
+    s16 sp20;
+    s16 sp22;
+    s32 sp24;
+    s32 sp28;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80075504); // 0x80075504
+    s32 temp_s1_2;
+    s16 temp_v0_3;
+    s16 temp_v1_3;
+    s32 i;
+    s16 var_s0;
+    s32 var_t0;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_800771BC); // 0x800771BC
+    s32 func_80074350() // 0x80074350
+    {
+        s16 ssp20;
+        s16 temp_a1;
+        s32 var_s2;
+        s32 var_s3;
+        u8  temp_s4;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80077BB8); // 0x80077BB8
+        temp_s4 = g_SysWork.playerCombatInfo_38.equippedWeapon_F;
+
+        switch (g_SysWork.playerCombatInfo_38.equippedWeapon_F)
+        {
+            case 0:
+                var_s2 = 0x26B;
+                var_s3 = 0x265;
+                break;
+
+            case 5:
+                var_s2 = 0x276;
+                var_s3 = 0x270;
+                break;
+
+            case 2:
+                var_s2 = 0x238;
+                var_s3 = 0x238;
+                break;
+
+            case 7:
+                var_s2 = 0x271;
+                var_s3 = 0x26A;
+                break;
+
+            case 1:
+            case 4:
+                var_s2 = 0x288;
+                var_s3 = 0x282;
+                break;
+
+            case 6:
+                var_s2 = 0x26B;
+                var_s3 = 0x264;
+                break;
+
+            default:
+                var_s3 = 0;
+                var_s2 = 0;
+                break;
+        }
+
+        if (g_SysWork.player_4C.extra_128.field_1C == 1)
+        {
+            g_SysWork.player_4C.chara_0.properties_E4.player.properties_E4[8] += g_DeltaTime0;
+
+            if (g_GameWork.config_0.optExtraWeaponCtrl_23 == 0)
+            {
+                D_800C455C = 0;
+                D_800C4558 = 0;
+                D_800C45C0 = 0;
+                D_800C45BE = 0;
+                D_800C45BC = 0;
+                D_800C457E = 0;
+                D_800C4604 = 0;
+                D_800C45F0 = 0;
+                D_800C45E8 = 0;
+                D_800C4582 = 0;
+                D_800C45AE = 0;
+                D_800C4586 = 0;
+                D_800C4580 = 0;
+                D_800C45AC = 0;
+                D_800C4584 = 0;
+            }
+        }
+
+        if (arg1->model_0.state_2 == 0)
+        {
+            D_800AFBEC = 0;
+            D_800AFBF0 = 0;
+
+            g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~2;
+            g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~0x40;
+
+            if (g_SysWork.playerCombatInfo_38.equippedWeapon_F >= 0x20)
+            {
+                D_800AFBEC = 0;
+                D_800AFBE8 = D_800C4570.field_8;
+                D_800AF220 = D_800C4570.field_A >> 4;
+            }
+            else if (D_800C45BE != 0 && g_SysWork.playerCombatInfo_38.equippedWeapon_F != 2)
+            {
+                D_800AFBEC = 1;
+                D_800AFBE8 = D_800C4570.field_8 - 4;
+                D_800AF220 = (D_800C4570.field_A >> 4) - 2;
+            }
+            else
+            {
+                D_800AFBEC = 0;
+
+                if (g_SysWork.playerCombatInfo_38.equippedWeapon_F != 2 || D_800AF217 == 0)
+                {
+                    D_800AFBE8 = D_800C4570.field_8;
+                    D_800AF220 = D_800C4570.field_A >> 4;
+                }
+                else if (D_800AF217 == -1)
+                {
+                    D_800AFBE8 = D_800C4570.field_8 + 4;
+                    D_800AF220 = (D_800C4570.field_A >> 4) + 2;
+                }
+                else
+                {
+                    D_800AFBE8 = D_800C4570.field_8 + 2;
+                    D_800AF220 = (D_800C4570.field_A >> 4) + 1;
+                }
+            }
+
+            arg1->model_0.state_2++;
+
+            if (g_SysWork.playerCombatInfo_38.equippedWeapon_F < 0x20)
+            {
+                g_SysWork.playerCombatInfo_38.equippedWeapon_F %= 0xA;
+            }
+
+            g_SysWork.playerCombatInfo_38.equippedWeapon_F += (D_800AFBEC * 0xA);
+
+            D_800C44D0 = g_MaybePlayerAnims[D_800AFBE8].keyframeIdx0_C + D_800AD4C8[g_SysWork.playerCombatInfo_38.equippedWeapon_F].field_E;
+            D_800C44D4 = g_MaybePlayerAnims[D_800AFBE8].keyframeIdx0_C + D_800AD4C8[g_SysWork.playerCombatInfo_38.equippedWeapon_F].field_E +
+                         D_800AD4C8[g_SysWork.playerCombatInfo_38.equippedWeapon_F].field_F;
+        }
+
+        if (g_SysWork.field_2353 != -1 && g_SysWork.playerCombatInfo_38.equippedWeapon_F >= 0x20)
+        {
+            if (g_GameWork.config_0.optExtraAutoAiming_2C == 0)
+            {
+                if (!(g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & 1))
+                {
+                    func_8005CD38(&sp1C, &g_SysWork.player_4C.chara_0.properties_E4.player.field_122, &g_SysWork.playerCombatInfo_38, 0x238, 0xA000, 0);
+                    func_8005D50C(&D_800AF21C, &D_800C4554, &D_800C4556, &g_SysWork.playerCombatInfo_38, sp1C, 0xE3);
+                }
+                else
+                {
+                    func_8005CD38(&sp1C, &g_SysWork.player_4C.chara_0.properties_E4.player.field_122, &g_SysWork.playerCombatInfo_38, 0x238, 0x3000, 0);
+                    func_8005D50C(&D_800AF21C, &D_800C4554, &D_800C4556, &g_SysWork.playerCombatInfo_38, sp1C, 0xE3);
+                }
+            }
+            else
+            {
+                sp1C = g_SysWork.field_2353;
+            }
+
+            if (sp1C == -1 && sp1C == D_800AF21C)
+            {
+                D_800C4556 = -1;
+                D_800C4554 = -1;
+            }
+
+            if (sp1C == g_SysWork.field_2353)
+            {
+                arg0->rotation_24.pad = (ratan2((g_SysWork.npcs_1A0[sp1C].position_18.vx + g_SysWork.npcs_1A0[sp1C].field_D8.field_0) - g_SysWork.player_4C.chara_0.position_18.vx,
+                                                (g_SysWork.npcs_1A0[sp1C].position_18.vz + g_SysWork.npcs_1A0[sp1C].field_D8.field_2) - g_SysWork.player_4C.chara_0.position_18.vz) +
+                                         0x1000) &
+                                        0xFFF;
+            }
+            else
+            {
+                arg0->rotation_24.pad = arg0->rotation_24.vy;
+            }
+
+            if (arg1->model_0.stateStep_3 == 0)
+            {
+                arg1->model_0.anim_4.animIdx_0 = 0x3C;
+                arg1->model_0.stateStep_3++;
+            }
+        }
+        else
+        {
+            if (g_SysWork.field_2353 != -1 && g_GameWork.config_0.optExtraAutoAiming_2C == 0)
+            {
+                if (!(g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & 1))
+                {
+                    func_8005CD38(&sp1C, &g_SysWork.player_4C.chara_0.properties_E4.player.field_122, &g_SysWork.playerCombatInfo_38, 0x3000, 0x3000, 5);
+                }
+                else
+                {
+                    func_8005CD38(&sp1C, &g_SysWork.player_4C.chara_0.properties_E4.player.field_122, &g_SysWork.playerCombatInfo_38, 0x1000, 0x1000, 5);
+                }
+
+                if (sp1C == g_SysWork.field_2353)
+                {
+                    temp_a1 = (ratan2((g_SysWork.npcs_1A0[sp1C].position_18.vx + g_SysWork.npcs_1A0[sp1C].field_D8.field_0) - g_SysWork.player_4C.chara_0.position_18.vx,
+                                      (g_SysWork.npcs_1A0[sp1C].position_18.vz + g_SysWork.npcs_1A0[sp1C].field_D8.field_2) - g_SysWork.player_4C.chara_0.position_18.vz) +
+                               0x1000) &
+                              0xFFF;
+
+                    func_8007FB34(arg0->rotation_24.vy, temp_a1, &ssp20);
+                    D_800C454C = g_DeltaTime0 * 0xF;
+
+                    if (ABS(ssp20) >= 0x80)
+                    {
+                        if (ssp20 < 0)
+                        {
+                            D_800C454C = -D_800C454C;
+                        }
+                    }
+                    else
+                    {
+                        arg0->rotation_24.pad = arg0->rotation_24.vy = temp_a1;
+                        D_800C454C                                   = 0;
+                    }
+                }
+            }
+            else
+            {
+                sp1C                                                       = -1;
+                g_SysWork.player_4C.chara_0.properties_E4.player.field_122 = 0x400;
+                arg0->rotation_24.pad                                      = arg0->rotation_24.vy;
+            }
+
+            if (g_SysWork.playerCombatInfo_38.equippedWeapon_F >= 0x20)
+            {
+                if (g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & 0x800)
+                {
+                    if (arg1->model_0.stateStep_3 == 0)
+                    {
+                        arg1->model_0.anim_4.animIdx_0 = D_800C4577 - 0xC;
+                        arg1->model_0.stateStep_3++;
+                    }
+                }
+                else
+                {
+                    if (arg1->model_0.stateStep_3 == 0)
+                    {
+                        arg1->model_0.anim_4.animIdx_0 = D_800C4577;
+                        arg1->model_0.stateStep_3++;
+                    }
+                }
+            }
+            else if (D_800C45BE != 0 && g_SysWork.playerCombatInfo_38.equippedWeapon_F != 2)
+            {
+                if (arg1->model_0.stateStep_3 == 0)
+                {
+                    arg1->model_0.anim_4.animIdx_0 = D_800C4577 - 4;
+                    arg1->model_0.stateStep_3++;
+                }
+            }
+            else if (g_SysWork.playerCombatInfo_38.equippedWeapon_F != 2 || D_800AF217 == 0)
+            {
+                if (arg1->model_0.stateStep_3 == 0)
+                {
+                    arg1->model_0.anim_4.animIdx_0 = D_800C4577;
+                    arg1->model_0.stateStep_3++;
+                }
+            }
+            else if (D_800AF217 == -1)
+            {
+                if (arg1->model_0.stateStep_3 == 0)
+                {
+                    arg1->model_0.anim_4.animIdx_0 = D_800C4577 + 4;
+                    arg1->model_0.stateStep_3++;
+                }
+            }
+            else
+            {
+                if (arg1->model_0.stateStep_3 == 0)
+                {
+                    arg1->model_0.anim_4.animIdx_0 = D_800C4577 + 2;
+                    arg1->model_0.stateStep_3++;
+                }
+            }
+        }
+
+        if (g_SysWork.playerCombatInfo_38.equippedWeapon_F < 0x20)
+        {
+            if ((g_SysWork.playerCombatInfo_38.equippedWeapon_F % 10 != 5) && (g_SysWork.playerCombatInfo_38.equippedWeapon_F % 10 != 2))
+            {
+                if (arg1->model_0.anim_4.keyframeIdx0_8 >= D_800C44D0 && D_800C44D4 >= arg1->model_0.anim_4.keyframeIdx0_8)
+                {
+                    if (!(g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & 4))
+                    {
+                        arg0->field_44 = 1;
+                        func_8005DC1C(D_800C4570.field_0, &arg0->position_18, 0x80, 0);
+                        arg0->properties_E4.player.field_10C = 0x40;
+                        g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= 4;
+                    }
+                }
+                else if (D_800C44D4 < arg1->model_0.anim_4.keyframeIdx0_8)
+                {
+                    g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~4;
+                }
+            }
+            else if (g_SysWork.player_4C.chara_0.properties_E4.player.field_114 == 0)
+            {
+                if ((arg1->model_0.anim_4.keyframeIdx0_8 >= D_800C44D0) && (D_800C44D4 >= arg1->model_0.anim_4.keyframeIdx0_8) &&
+                    !(g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & 4))
+                {
+                    arg0->field_44 = 1;
+                    g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= 4;
+                }
+            }
+            else
+            {
+                if (arg0->field_44 <= 0)
+                {
+                    arg0->field_44 = 1;
+                }
+                arg0->properties_E4.player.field_10C = 0x40;
+            }
+        }
+        else
+        {
+            if ((arg1->model_0.anim_4.keyframeIdx0_8 >= D_800C44D0) && (D_800C44D4 >= arg1->model_0.anim_4.keyframeIdx0_8) &&
+                !(g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & 2))
+            {
+                g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= 2;
+
+                if (g_SysWork.playerCombatInfo_38.currentWeaponAmmo_10 != 0)
+                {
+                    arg0->field_44 = 1;
+
+                    if (g_SysWork.playerCombatInfo_38.equippedWeapon_F != 0x23)
+                    {
+                        g_SysWork.playerCombatInfo_38.currentWeaponAmmo_10 -= 1;
+                        g_SavegamePtr->items_0[g_SysWork.playerCombatInfo_38.field_12].count_1 -= 1;
+
+                        func_8005DC1C(D_800C4570.field_0, &arg0->position_18, 0x80, 0);
+                    }
+                    else
+                    {
+                        func_8005DC1C(D_800C4570.field_0, &arg0->position_18, 0x30, 0);
+                    }
+
+                    arg0->properties_E4.player.field_10C = 0xC8;
+                }
+                else
+                {
+                    func_8005DC1C(D_800C4574, &arg0->position_18, 0x80, 0);
+
+                    arg0->properties_E4.player.field_10C = 0x20;
+
+                    arg1->model_0.anim_4.keyframeIdx0_8 = (D_800C44F0[D_800AF220].field_6 - 3);
+                    arg1->model_0.anim_4.time_4         = (D_800C44F0[D_800AF220].field_6 - 3) << 0xC;
+
+                    if (g_SysWork.player_4C.extra_128.field_24 == 0x14)
+                    {
+                        arg0->model_0.anim_4.keyframeIdx0_8 = (D_800C44F0[D_800AF220].field_6 - 3);
+                        arg0->model_0.anim_4.time_4         = (D_800C44F0[D_800AF220].field_6 - 3) << 0xC;
+                    }
+                }
+            }
+        }
+
+        if (g_SysWork.playerCombatInfo_38.equippedWeapon_F < 0x20)
+        {
+            if ((arg1->model_0.anim_4.animIdx_0 == 0x3B) || (arg1->model_0.anim_4.animIdx_0 == 0x3D) || (arg1->model_0.anim_4.animIdx_0 == 0x3F) ||
+                (arg1->model_0.anim_4.animIdx_0 == 0x3B) || (arg1->model_0.anim_4.animIdx_0 == 0x3D) || (arg1->model_0.anim_4.animIdx_0 == 0x3F) ||
+                (arg1->model_0.anim_4.animIdx_0 == 0x3B) || (arg1->model_0.anim_4.animIdx_0 == 0x3D) || (arg1->model_0.anim_4.animIdx_0 == 0x3F))
+            {
+                if (arg1->model_0.anim_4.keyframeIdx0_8 == D_800C44F0[D_800AF220].field_6)
+                {
+                    arg1->model_0.anim_4.animIdx_0      = 0x39;
+                    arg1->model_0.anim_4.keyframeIdx0_8 = D_800C44F0[0].field_6;
+                    arg1->model_0.anim_4.time_4         = (arg1->model_0.anim_4.keyframeIdx0_8 << 0xC);
+
+                    if (g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & 1)
+                    {
+                        g_SysWork.player_4C.extra_128.field_1C = 1;
+                        g_SysWork.player_4C.extra_128.field_20 = 0x14;
+
+                        if (g_SysWork.player_4C.extra_128.field_24 == 0x22)
+                        {
+                            g_SysWork.player_4C.extra_128.field_24 = 0x14;
+                        }
+                    }
+                    else
+                    {
+                        g_SysWork.player_4C.extra_128.field_1C = 0;
+                        g_SysWork.player_4C.extra_128.field_20 = 0x13;
+                        arg1->model_0.state_2 = arg1->model_0.stateStep_3 = 0;
+
+                        if (g_SysWork.player_4C.extra_128.field_24 == 0x22)
+                        {
+                            g_SysWork.player_4C.extra_128.field_24 = 0x14;
+                            g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~0x400;
+                        }
+                    }
+                    g_SysWork.player_4C.chara_0.properties_E4.player.properties_E4[8] = 0;
+                    g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~4;
+                    g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~2;
+                    g_SysWork.playerCombatInfo_38.equippedWeapon_F %= 0xA;
+                    return 1;
+                }
+            }
+        }
+        else if ((arg1->model_0.anim_4.animIdx_0 == 0x3D || arg1->model_0.anim_4.animIdx_0 == 0x49) &&
+                 arg1->model_0.anim_4.keyframeIdx0_8 == D_800C44F0[D_800AF220].field_6)
+        {
+            if (g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & 1)
+            {
+                g_SysWork.player_4C.extra_128.field_1C = 1;
+                g_SysWork.player_4C.extra_128.field_20 = 0x14;
+
+                if (g_SysWork.player_4C.extra_128.field_24 == 0x22)
+                {
+                    g_SysWork.player_4C.extra_128.field_24 = 0x14;
+                }
+            }
+            else
+            {
+                g_SysWork.player_4C.extra_128.field_1C = 0;
+                g_SysWork.player_4C.extra_128.field_20 = 0x13;
+                arg1->model_0.state_2 = arg1->model_0.stateStep_3 = 0;
+
+                if (g_SysWork.player_4C.extra_128.field_24 == 0x22)
+                {
+                    g_SysWork.player_4C.extra_128.field_24 = 0x14;
+                    g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~0x400;
+                    arg0->model_0.state_2 = arg0->model_0.stateStep_3 = 0;
+                }
+            }
+            D_800C4556                                                        = -1;
+            D_800C4554                                                        = -1;
+            g_SysWork.player_4C.chara_0.properties_E4.player.properties_E4[8] = 0;
+            g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~2;
+            return 1;
+        }
+
+        g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= 0x40;
+
+        if (g_SysWork.playerCombatInfo_38.equippedWeapon_F < 0x20)
+        {
+            if ((D_800AFBEC == 0) && (g_SysWork.playerCombatInfo_38.equippedWeapon_F != 2))
+            {
+                if ((arg1->model_0.anim_4.keyframeIdx0_8 >= var_s3) && (arg1->model_0.anim_4.keyframeIdx0_8 < var_s2) &&
+                    (arg1->model_0.anim_4.animIdx_0 == 0x3F) && ((D_800C45BE != 0) || (D_800C45C0 != 0)))
+                {
+                    D_800AFBF0 = 1;
+                }
+            }
+        }
+
+        if (D_800AFBF0 != 0)
+        {
+            if (arg1->model_0.anim_4.animIdx_0 == 0x3F && arg1->model_0.anim_4.keyframeIdx0_8 >= var_s2)
+            {
+                arg1->model_0.stateStep_3 = 0;
+
+                if (g_SysWork.player_4C.extra_128.field_24 == 0x22)
+                {
+                    arg0->model_0.stateStep_3 = 0;
+                }
+
+                D_800AFBE8                                     = D_800C4570.field_8 - 2;
+                D_800AF220                                     = (D_800C4570.field_A >> 4) - 1;
+                D_800AFBEC                                     = 2;
+                g_SysWork.playerCombatInfo_38.equippedWeapon_F = (temp_s4 % 10) + 0x14;
+
+                if (arg1->model_0.stateStep_3 == 0)
+                {
+                    arg1->model_0.anim_4.animIdx_0 = D_800C4570.field_7 - 2;
+                    arg1->model_0.stateStep_3++;
+                }
+
+                D_800C44D0 = g_MaybePlayerAnims[D_800AFBE8].keyframeIdx0_C + D_800AD4C8[g_SysWork.playerCombatInfo_38.equippedWeapon_F].field_E;
+                D_800C44D4 = g_MaybePlayerAnims[D_800AFBE8].keyframeIdx0_C + D_800AD4C8[g_SysWork.playerCombatInfo_38.equippedWeapon_F].field_E +
+                             D_800AD4C8[g_SysWork.playerCombatInfo_38.equippedWeapon_F].field_F;
+                D_800AFBF0 = 0;
+                g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~4;
+            }
+        }
+
+        return 0;
+    }
+
+    sp1C = -1;
+
+    if (g_SysWork.player_4C.extra_128.field_20 != 0x14 && g_SysWork.player_4C.extra_128.field_20 != 0x19)
+    {
+        g_SysWork.player_4C.chara_0.properties_E4.player.properties_E4[8] = 0;
+    }
+
+    switch (g_SysWork.player_4C.extra_128.field_20)
+    {
+        case 0:
+            if ((arg1->model_0.anim_4.animIdx_0 == 5 || arg1->model_0.anim_4.animIdx_0 == 7) && arg1->model_0.stateStep_3 != 0)
+            {
+                arg1->model_0.stateStep_3 = 0;
+            }
+
+            if (arg0->properties_E4.player.properties_E4[6] <= 0x9FFF && arg0->health_B0 > 0x1DFFF)
+            {
+                if (arg1->model_0.stateStep_3 == 0)
+                {
+                    arg1->model_0.anim_4.animIdx_0 = 0x34;
+                    arg1->model_0.stateStep_3++;
+                }
+
+                func_80073FC0(arg1, 0, 0x35, 1);
+            }
+            else
+            {
+
+                arg0->properties_E4.player.properties_E4[1] = 0;
+                if (arg1->model_0.anim_4.animIdx_0 != 0x35)
+                {
+                    if (arg1->model_0.stateStep_3 == 0)
+                    {
+                        arg1->model_0.anim_4.animIdx_0 = 0x34;
+                        arg1->model_0.stateStep_3++;
+                    }
+                    func_80073FC0(arg1, 0, 0x37, 1);
+                }
+                else
+                {
+                    arg1->model_0.stateStep_3 = 0;
+                    if (arg1->model_0.stateStep_3 == 0)
+                    {
+                        arg1->model_0.anim_4.animIdx_0 = 0x36;
+                        arg1->model_0.stateStep_3++;
+                    }
+                }
+            }
+
+            if (g_SysWork.player_4C.extra_128.field_20 != 0)
+            {
+                arg0->properties_E4.player.properties_E4[1] = 0;
+            }
+
+            arg0->rotation_24.pad = arg0->rotation_24.vy;
+
+            if (g_SysWork.player_4C.extra_128.field_20 == 0)
+            {
+                arg0->properties_E4.player.properties_E4[1]++;
+
+                if (arg0->properties_E4.player.properties_E4[1] >= 0x12C)
+                {
+                    if (arg0->health_B0 > 0x3BFFF)
+                    {
+                        arg0->properties_E4.player.properties_E4[1] = 0;
+                        g_SysWork.player_4C.extra_128.field_1C      = 2;
+                        arg0->model_0.state_2 = arg0->model_0.stateStep_3 = 0;
+                        arg1->model_0.state_2 = arg1->model_0.stateStep_3 = 0;
+                        g_SysWork.player_4C.extra_128.field_20            = 0;
+                        g_SysWork.player_4C.extra_128.field_24            = 0;
+                        return 1;
+                    }
+                }
+            }
+            break;
+
+        default:
+            break;
+
+        case 1:
+            if (arg1->model_0.stateStep_3 == 0)
+            {
+                arg1->model_0.anim_4.animIdx_0 = 4;
+                arg1->model_0.stateStep_3++;
+            }
+
+            if (arg1->model_0.anim_4.animIdx_0 == 5)
+            {
+                arg1->model_0.anim_4.time_4 = arg0->model_0.anim_4.time_4;
+            }
+
+            func_80073FC0(arg1, 1, 5, 0);
+            arg0->rotation_24.pad = arg0->rotation_24.vy;
+            break;
+
+        case 2:
+            if (arg1->model_0.stateStep_3 == 0)
+            {
+                arg1->model_0.anim_4.animIdx_0 = 6;
+                arg1->model_0.stateStep_3++;
+            }
+
+            if (arg1->model_0.anim_4.animIdx_0 == 7)
+            {
+                arg1->model_0.anim_4.time_4 = arg0->model_0.anim_4.time_4;
+            }
+
+            func_80073FC0(arg1, 2, 7, 2);
+            arg0->rotation_24.pad = arg0->rotation_24.vy;
+            break;
+
+        case 3:
+            if (g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & 8)
+            {
+                if (arg1->model_0.stateStep_3 == 0)
+                {
+                    arg1->model_0.anim_4.animIdx_0 = 0x12;
+                    arg1->model_0.stateStep_3++;
+                }
+            }
+            else if (arg1->model_0.stateStep_3 == 0)
+            {
+                arg1->model_0.anim_4.animIdx_0 = 0x14;
+                arg1->model_0.stateStep_3++;
+            }
+
+            func_80073FC0(arg1, 3, 0x13, 0);
+            func_80073FC0(arg1, 3, 0x15, 0);
+            arg0->rotation_24.pad = arg0->rotation_24.vy;
+            break;
+
+        case 4:
+            if (arg1->model_0.stateStep_3 == 0)
+            {
+                arg1->model_0.anim_4.animIdx_0 = 0xC;
+                arg1->model_0.stateStep_3++;
+            }
+            func_80073FC0(arg1, 4, 0xD, 0);
+            arg0->rotation_24.pad = arg0->rotation_24.vy;
+            break;
+
+        case 5:
+            if (arg1->model_0.stateStep_3 == 0)
+            {
+                arg1->model_0.anim_4.animIdx_0 = 0xA;
+                arg1->model_0.stateStep_3++;
+            }
+            func_80073FC0(arg1, 5, 0xB, 0);
+            arg0->rotation_24.pad = arg0->rotation_24.vy;
+            break;
+
+        case 6:
+            if (arg1->model_0.stateStep_3 == 0)
+            {
+                arg1->model_0.anim_4.animIdx_0 = 0x10;
+                arg1->model_0.stateStep_3++;
+            }
+            func_80073FC0(arg1, 6, 0x11, 0);
+            arg0->rotation_24.pad = arg0->rotation_24.vy;
+            if (arg1->model_0.anim_4.animIdx_0 == 0x11)
+            {
+                arg1->model_0.anim_4.time_4 = arg0->model_0.anim_4.time_4;
+            }
+            break;
+
+        case 7:
+            if (arg1->model_0.stateStep_3 == 0)
+            {
+                arg1->model_0.anim_4.animIdx_0 = 0xE;
+                arg1->model_0.stateStep_3++;
+            }
+            func_80073FC0(arg1, 7, 0xF, 0);
+            arg0->rotation_24.pad = arg0->rotation_24.vy;
+            if (arg1->model_0.anim_4.animIdx_0 == 0xF)
+            {
+                arg1->model_0.anim_4.time_4 = arg0->model_0.anim_4.time_4;
+            }
+            break;
+
+        case 8:
+            if (arg1->model_0.stateStep_3 == 0)
+            {
+                arg1->model_0.anim_4.animIdx_0 = 8;
+                arg1->model_0.stateStep_3++;
+            }
+            func_80073FC0(arg1, 8, 9, 0);
+            arg0->rotation_24.pad = arg0->rotation_24.vy;
+            break;
+
+        case 9:
+            if (arg1->model_0.stateStep_3 == 0)
+            {
+                arg1->model_0.anim_4.animIdx_0 = 0x1C;
+                arg1->model_0.stateStep_3++;
+            }
+            func_80073FC0(arg1, 9, 0x1D, 0);
+            if (arg1->model_0.anim_4.animIdx_0 == 0x1D)
+            {
+                arg1->model_0.anim_4.time_4 = arg0->model_0.anim_4.time_4;
+            }
+            arg0->rotation_24.pad = arg0->rotation_24.vy;
+            break;
+
+        case 10:
+            if (arg1->model_0.stateStep_3 == 0)
+            {
+                arg1->model_0.anim_4.animIdx_0 = 0x1E;
+                arg1->model_0.stateStep_3++;
+            }
+            func_80073FC0(arg1, 0xA, 0x1F, 0);
+            if (arg1->model_0.anim_4.animIdx_0 == 0x1F)
+            {
+                arg1->model_0.anim_4.time_4 = arg0->model_0.anim_4.time_4;
+            }
+            arg0->rotation_24.pad = arg0->rotation_24.vy;
+            break;
+
+        case 11:
+            if (arg1->model_0.stateStep_3 == 0)
+            {
+                arg1->model_0.anim_4.animIdx_0 = 0x1A;
+                arg1->model_0.stateStep_3++;
+            }
+            func_80073FC0(arg1, 0xB, 0x1B, 3);
+            arg0->rotation_24.pad = arg0->rotation_24.vy;
+            break;
+
+        case 12:
+            if (arg1->model_0.stateStep_3 == 0)
+            {
+                arg1->model_0.anim_4.animIdx_0 = 0x18;
+                arg1->model_0.stateStep_3++;
+            }
+            func_80073FC0(arg1, 0xC, 0x19, 4);
+            arg0->rotation_24.pad = arg0->rotation_24.vy;
+            break;
+
+        case 13:
+            if (arg1->model_0.stateStep_3 == 0)
+            {
+                arg1->model_0.anim_4.animIdx_0 = 0x20;
+                arg1->model_0.stateStep_3++;
+            }
+            if (arg1->model_0.anim_4.animIdx_0 == 0x21)
+            {
+                arg1->model_0.anim_4.time_4 = arg0->model_0.anim_4.time_4;
+            }
+            func_80073FC0(arg1, 0xD, 0x21, 0);
+            arg0->rotation_24.pad = arg0->rotation_24.vy;
+            break;
+
+        case 14:
+            if (arg1->model_0.stateStep_3 == 0)
+            {
+                arg1->model_0.anim_4.animIdx_0 = 0x16;
+                arg1->model_0.stateStep_3++;
+            }
+            if (arg1->model_0.anim_4.animIdx_0 == 0x17)
+            {
+                arg1->model_0.anim_4.time_4 = arg0->model_0.anim_4.time_4;
+            }
+            func_80073FC0(arg1, 0xE, 0x17, 0);
+            arg0->rotation_24.pad = arg0->rotation_24.vy;
+            break;
+
+        case 15:
+            if (arg1->model_0.stateStep_3 == 0)
+            {
+                arg1->model_0.anim_4.animIdx_0 = 0x24;
+                arg1->model_0.stateStep_3++;
+            }
+            func_80073FC0(arg1, 0xF, 0x25, 0);
+            arg0->rotation_24.pad = arg0->rotation_24.vy;
+            break;
+
+        case 16:
+            if (arg1->model_0.stateStep_3 == 0)
+            {
+                arg1->model_0.anim_4.animIdx_0 = 0x28;
+                arg1->model_0.stateStep_3++;
+            }
+            func_80073FC0(arg1, 0x10, 0x29, 0);
+            arg0->rotation_24.pad = arg0->rotation_24.vy;
+            break;
+
+        case 17:
+            if (arg1->model_0.stateStep_3 == 0)
+            {
+                arg1->model_0.anim_4.animIdx_0 = 0x26;
+                arg1->model_0.stateStep_3++;
+            }
+            if (arg1->model_0.anim_4.animIdx_0 == 0x27)
+            {
+                arg1->model_0.anim_4.time_4 = arg0->model_0.anim_4.time_4;
+            }
+            func_80073FC0(arg1, 0x11, 0x27, 0);
+            arg0->rotation_24.pad = arg0->rotation_24.vy;
+            break;
+
+        case 18:
+            if (arg1->model_0.stateStep_3 == 0)
+            {
+                arg1->model_0.anim_4.animIdx_0 = 0x2A;
+                arg1->model_0.stateStep_3++;
+            }
+            if (arg1->model_0.anim_4.animIdx_0 == 0x2B)
+            {
+                arg1->model_0.anim_4.time_4 = arg0->model_0.anim_4.time_4;
+            }
+            func_80073FC0(arg1, 0x12, 0x2B, 0);
+            arg0->rotation_24.pad = arg0->rotation_24.vy;
+            break;
+
+        case 19:
+            g_SysWork.field_2353 = -1;
+            if (g_SysWork.playerCombatInfo_38.equippedWeapon_F == 5 || g_SysWork.playerCombatInfo_38.equippedWeapon_F == 2)
+            {
+                if (g_SysWork.player_4C.chara_0.properties_E4.player.field_114 != 0)
+                {
+                    if (arg0->field_44 <= 0)
+                    {
+                        arg0->field_44 = 1;
+                    }
+                    if (arg1->model_0.stateStep_3 == 0)
+                    {
+                        arg1->model_0.anim_4.animIdx_0 = 0x44;
+                        arg1->model_0.stateStep_3++;
+                    }
+                }
+                else
+                {
+                    arg1->model_0.anim_4.animIdx_0      = 0x39;
+                    arg1->model_0.anim_4.keyframeIdx0_8 = D_800AF5C6;
+                    arg1->model_0.anim_4.time_4         = D_800AF5C6 << 12;
+                }
+            }
+
+            g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~0x40;
+            arg0->rotation_24.pad = arg0->rotation_24.vy;
+
+            if (g_SysWork.playerCombatInfo_38.equippedWeapon_F >= 0x20)
+            {
+                if (arg1->model_0.anim_4.animIdx_0 != 0x39 && arg1->model_0.anim_4.animIdx_0 != 0x45)
+                {
+                    if (D_800C45BE != 0 || D_800C45C0 != 0)
+                    {
+                        g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= 0x800;
+                    }
+                    else
+                    {
+                        g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~0x800;
+
+                        if (arg1->model_0.stateStep_3 == 0)
+                        {
+                            arg1->model_0.anim_4.animIdx_0 = 0x44;
+                            arg1->model_0.stateStep_3++;
+                        }
+                    }
+                }
+                else
+                {
+                    g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~0x800;
+                }
+            }
+            break;
+
+        case 20:
+            g_SysWork.player_4C.chara_0.properties_E4.player.properties_E4[8] += g_DeltaTime0;
+            g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~0x40;
+
+            if (D_800C4586 != 0)
+            {
+                var_t0 = 1;
+            }
+            else
+            {
+                var_t0 = (D_800C4584 != 0) * 2;
+            }
+
+            if ((arg1->model_0.anim_4.animIdx_0 != 0x3B || arg1->model_0.anim_4.keyframeIdx0_8 != D_800C44F0[1].field_6) &&
+                (arg1->model_0.anim_4.animIdx_0 != 0x3D || arg1->model_0.anim_4.keyframeIdx0_8 != D_800C44F0[2].field_6) &&
+                (arg1->model_0.anim_4.animIdx_0 != 0x41 || arg1->model_0.anim_4.keyframeIdx0_8 != D_800C44F0[4].field_6))
+            {
+                var_t0 = 0;
+                arg0->properties_E4.player.properties_E4[7]++;
+            }
+            else
+            {
+                arg0->properties_E4.player.properties_E4[7] = 0;
+            }
+
+            if (var_t0 != 0)
+            {
+                g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~0x200;
+                arg0->properties_E4.player.properties_E4[4] = D_800AF212;
+
+                if (!(g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & 1))
+                {
+                    func_8005CD38(&D_800AF21C, &g_SysWork.player_4C.chara_0.properties_E4.player.field_122, &g_SysWork.playerCombatInfo_38, 0xAAA, 0xA000, var_t0);
+                }
+                else
+                {
+                    func_8005CD38(&D_800AF21C, &g_SysWork.player_4C.chara_0.properties_E4.player.field_122, &g_SysWork.playerCombatInfo_38, 0x555, 0x3000, var_t0);
+                }
+
+                if (D_800AF21C == -1)
+                {
+                    g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~0x1000;
+                    arg0->model_0.stateStep_3                                  = 0;
+                    g_SysWork.player_4C.chara_0.properties_E4.player.field_122 = 0x400;
+                    g_SysWork.player_4C.extra_128.field_20                     = 0x13;
+                    D_800C45C0                                                 = 0;
+                    g_SysWork.player_4C.extra_128.field_1C                     = 0;
+                    D_800C45BE                                                 = 0;
+
+                    arg1->model_0.state_2 = arg1->model_0.stateStep_3 = 0;
+
+                    if (g_SysWork.player_4C.extra_128.field_24 == 0x22)
+                    {
+                        g_SysWork.player_4C.extra_128.field_24 = 0x14;
+                        arg0->model_0.state_2 = arg0->model_0.stateStep_3 = 0;
+                    }
+                }
+                else
+                {
+                    g_SysWork.player_4C.extra_128.field_20 = 0x17;
+                    g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= 0x1000;
+                    arg1->model_0.state_2 = arg1->model_0.stateStep_3 = 0;
+                }
+                g_SysWork.field_2353 = D_800AF21C;
+            }
+            else
+            {
+                if (arg1->model_0.state_2 != 0)
+                {
+                    if (D_800C4540.vx != g_SysWork.npcs_1A0[g_SysWork.field_2353].position_18.vx || D_800C4540.vy != g_SysWork.npcs_1A0[g_SysWork.field_2353].position_18.vy ||
+                        D_800C4540.vz != g_SysWork.npcs_1A0[g_SysWork.field_2353].position_18.vz || D_800C45F8.vx != g_SysWork.player_4C.chara_0.position_18.vx ||
+                        D_800C45F8.vy != g_SysWork.player_4C.chara_0.position_18.vy || D_800C45F8.vz != g_SysWork.player_4C.chara_0.position_18.vz)
+                    {
+                        if (!(g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & 1))
+                        {
+                            func_8005CD38(&sp1C, &g_SysWork.player_4C.chara_0.properties_E4.player.field_122, &g_SysWork.playerCombatInfo_38, 0x238, 0xA000, 0);
+                        }
+                        else
+                        {
+                            func_8005CD38(&sp1C, &g_SysWork.player_4C.chara_0.properties_E4.player.field_122, &g_SysWork.playerCombatInfo_38, 0x11C, 0x3000, 0);
+                        }
+
+                        D_800C4540 = g_SysWork.npcs_1A0[g_SysWork.field_2353].position_18;
+                    }
+                    else
+                    {
+                        sp1C = g_SysWork.field_2353;
+                    }
+                }
+                else
+                {
+                    sp1C       = g_SysWork.field_2353;
+                    D_800C4540 = g_SysWork.npcs_1A0[g_SysWork.field_2353].position_18;
+                }
+
+                if (sp1C == g_SysWork.field_2353 && sp1C != -1)
+                {
+                    arg0->rotation_24.pad = (ratan2((g_SysWork.npcs_1A0[sp1C].position_18.vx + g_SysWork.npcs_1A0[sp1C].field_D8.field_0) - g_SysWork.player_4C.chara_0.position_18.vx,
+                                                    (g_SysWork.npcs_1A0[sp1C].position_18.vz + g_SysWork.npcs_1A0[sp1C].field_D8.field_2) - g_SysWork.player_4C.chara_0.position_18.vz) +
+                                             0x1000) &
+                                            0xFFF;
+                }
+                else
+                {
+                    g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~0x1000;
+                    arg0->model_0.stateStep_3                                  = 0;
+                    g_SysWork.player_4C.chara_0.properties_E4.player.field_122 = 0x400;
+                    g_SysWork.field_2353                                       = -1;
+                    g_SysWork.player_4C.extra_128.field_1C                     = 0;
+                    g_SysWork.player_4C.extra_128.field_20                     = 0x13;
+                    arg1->model_0.state_2 = arg1->model_0.stateStep_3 = 0;
+                }
+            }
+            if (arg1->model_0.state_2 == 0)
+            {
+                arg1->model_0.state_2++;
+            }
+            break;
+
+        case 21:
+            arg0->rotation_24.pad = arg0->rotation_24.vy;
+
+            if (g_SysWork.playerCombatInfo_38.equippedWeapon_F == 5 || g_SysWork.playerCombatInfo_38.equippedWeapon_F == 2)
+            {
+                if (g_SysWork.player_4C.chara_0.properties_E4.player.field_114 != 0)
+                {
+                    if (arg1->model_0.stateStep_3 == 0)
+                    {
+                        arg1->model_0.anim_4.animIdx_0 = 0x42;
+                        arg1->model_0.stateStep_3++;
+                    }
+                }
+                else if (arg1->model_0.stateStep_3 == 0)
+                {
+                    arg1->model_0.anim_4.animIdx_0 = 0x38;
+                    arg1->model_0.stateStep_3++;
+                }
+
+                if (((g_SysWork.playerCombatInfo_38.equippedWeapon_F == 5 && arg1->model_0.anim_4.animIdx_0 == 0x39 && arg1->model_0.anim_4.keyframeIdx0_8 >= D_800C44F0[0].field_4 + 5) ||
+                     (g_SysWork.playerCombatInfo_38.equippedWeapon_F == 2 && arg1->model_0.anim_4.animIdx_0 == 0x39 && arg1->model_0.anim_4.keyframeIdx0_8 >= D_800C44F0[0].field_4 + 9)) &&
+                    !(g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & 4))
+                {
+                    g_SysWork.player_4C.chara_0.properties_E4.player.field_114 = 0x3C000;
+                    func_8004C564(g_SysWork.playerCombatInfo_38.equippedWeapon_F, 0);
+                    arg0->properties_E4.player.field_10C = 0x40;
+                    g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= 4;
+                }
+            }
+            else if (g_SysWork.playerCombatInfo_38.equippedWeapon_F == 33)
+            {
+                if (arg1->model_0.stateStep_3 == 0)
+                {
+                    arg1->model_0.anim_4.animIdx_0 = 0x3A;
+                    arg1->model_0.stateStep_3++;
+                }
+            }
+            else
+            {
+                if (arg1->model_0.stateStep_3 == 0)
+                {
+                    arg1->model_0.anim_4.animIdx_0 = 0x38;
+                    arg1->model_0.stateStep_3++;
+                }
+            }
+
+            if (g_SysWork.playerCombatInfo_38.equippedWeapon_F == 5 || g_SysWork.playerCombatInfo_38.equippedWeapon_F == 2)
+            {
+                if (arg1->model_0.anim_4.keyframeIdx0_8 == D_800C44F0[0].field_6 || arg1->model_0.anim_4.keyframeIdx0_8 == D_800C44F0[5].field_6)
+                {
+                    if (arg1->model_0.anim_4.keyframeIdx0_8 == D_800C44F0[0].field_6)
+                    {
+                        func_8004C564(g_SysWork.playerCombatInfo_38.equippedWeapon_F, 1);
+                    }
+
+                    g_SysWork.player_4C.extra_128.field_20 = 0x13;
+                    arg1->model_0.state_2 = arg1->model_0.stateStep_3 = 0;
+                    g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~4;
+
+                    if (g_SysWork.player_4C.chara_0.properties_E4.player.field_114 != 0)
+                    {
+                        arg0->field_44 = 1;
+                    }
+                }
+            }
+            else
+            {
+                if (arg1->model_0.anim_4.keyframeIdx0_8 == D_800C44F0[0].field_6 || arg1->model_0.anim_4.keyframeIdx0_8 == D_800C44F0[1].field_6)
+                {
+                    g_SysWork.player_4C.extra_128.field_20 = 0x13;
+                }
+            }
+            break;
+
+        case 22:
+        case 23:
+            sp22 = 0;
+
+            if (g_SysWork.player_4C.extra_128.field_20 == 0x16)
+            {
+                if (g_GameWork.config_0.optExtraAutoAiming_2C != 0)
+                {
+                    if (!(g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & 1))
+                    {
+                        func_8005CD38(&D_800AF21C, &g_SysWork.player_4C.chara_0.properties_E4.player.field_122, &g_SysWork.playerCombatInfo_38, 0x238, 0xa000, 0);
+                    }
+                    else
+                    {
+                        func_8005CD38(&D_800AF21C, &g_SysWork.player_4C.chara_0.properties_E4.player.field_122, &g_SysWork.playerCombatInfo_38, 0x238, 0x3000, 0);
+                    }
+                }
+                else if (!(g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & 1))
+                {
+                    func_8005CD38(&D_800AF21C, &g_SysWork.player_4C.chara_0.properties_E4.player.field_122, &g_SysWork.playerCombatInfo_38, 0x3000, 0x7000, 4);
+                }
+                else
+                {
+                    func_8005CD38(&D_800AF21C, &g_SysWork.player_4C.chara_0.properties_E4.player.field_122, &g_SysWork.playerCombatInfo_38, 0xE66, 0x2199, 4);
+                }
+
+                g_SysWork.field_2353 = D_800AF21C;
+            }
+
+            D_800AF220 = 1;
+            arg0->properties_E4.player.properties_E4[7]++;
+
+            if (g_GameWork.config_0.optExtraWeaponCtrl_23 == 0)
+            {
+                D_800C455C = 0;
+                D_800C4558 = 0;
+                D_800C45C0 = 0;
+                D_800C45BE = 0;
+                D_800C45BC = 0;
+                D_800C457E = 0;
+                D_800C4604 = 0;
+                D_800C45F0 = 0;
+                D_800C45E8 = 0;
+                D_800C4582 = 0;
+                D_800C45AE = 0;
+                D_800C4586 = 0;
+                D_800C4580 = 0;
+                D_800C45AC = 0;
+                D_800C4584 = 0;
+            }
+
+            arg1->model_0.state_2++;
+
+            if (g_SysWork.player_4C.extra_128.field_20 == 0x16)
+            {
+                if (arg1->model_0.stateStep_3 == 0)
+                {
+                    arg1->model_0.anim_4.animIdx_0 = 0x40;
+                    arg1->model_0.stateStep_3++;
+                }
+            }
+            else if (arg1->model_0.stateStep_3 == 0)
+            {
+                arg1->model_0.anim_4.animIdx_0 = 0x3A;
+                arg1->model_0.stateStep_3++;
+            }
+
+            if (g_SysWork.field_2353 == -1)
+            {
+                g_SysWork.player_4C.chara_0.properties_E4.player.field_122 = 0x400;
+                g_SysWork.player_4C.extra_128.field_20                     = 0x13;
+                g_SysWork.player_4C.extra_128.field_1C                     = 0;
+                g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~0x1000;
+                arg1->model_0.state_2 = arg1->model_0.stateStep_3 = 0;
+                break;
+            }
+
+            if (g_GameWork.config_0.optExtraAutoAiming_2C == 0)
+            {
+                temp_v0_3 = ratan2((g_SysWork.npcs_1A0[g_SysWork.field_2353].position_18.vx + g_SysWork.npcs_1A0[g_SysWork.field_2353].field_D8.field_0) - g_SysWork.player_4C.chara_0.position_18.vx,
+                                   (g_SysWork.npcs_1A0[g_SysWork.field_2353].position_18.vz + g_SysWork.npcs_1A0[g_SysWork.field_2353].field_D8.field_2) - g_SysWork.player_4C.chara_0.position_18.vz);
+
+                temp_s1_2 = (temp_v0_3 + 0x1000) & 0xFFF;
+
+                switch (arg1->model_0.anim_4.animIdx_0)
+                {
+                    case 0x3B:
+                    case 0x41:
+                        if (arg1->model_0.anim_4.keyframeIdx0_8 == D_800C44F0[D_800AF220].field_6)
+                        {
+                            arg0->rotation_24.vy = temp_s1_2;
+                        }
+                        break;
+                }
+
+                func_8007FB34(arg0->rotation_24.vy, temp_s1_2, &sp20);
+
+                D_800C454C = ((arg1->model_0.state_2 * 3) + 0xC) * g_DeltaTime0;
+
+                D_800C454C = CLAMP(D_800C454C, 0, 0xFFF);
+
+                if (ABS(sp20) >= 0x80)
+                {
+                    if (sp20 < 0)
+                    {
+                        D_800C454C = -D_800C454C;
+                    }
+                }
+                else
+                {
+                    arg0->rotation_24.vy  = temp_s1_2;
+                    D_800C454C            = 0;
+                    arg0->rotation_24.pad = temp_s1_2;
+
+                    if (g_SysWork.player_4C.extra_128.field_20 == 0x16)
+                    {
+                        g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~0x100;
+                    }
+                    else
+                    {
+                        g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= 0x100;
+                    }
+
+                    if (g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & 0x200)
+                    {
+                        if (arg1->model_0.anim_4.keyframeIdx0_8 == D_800C44F0[4].field_6)
+                        {
+                            g_SysWork.player_4C.extra_128.field_20 = 0x19;
+
+                            if (g_SysWork.player_4C.extra_128.field_24 == 0x14)
+                            {
+                                g_SysWork.player_4C.extra_128.field_24 = 0x22;
+                                arg0->model_0.state_2 = arg0->model_0.stateStep_3 = 0;
+                            }
+
+                            g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~0x200;
+                            arg1->model_0.state_2 = arg1->model_0.stateStep_3 = 0;
+                        }
+                    }
+                    else if (arg1->model_0.anim_4.keyframeIdx0_8 == D_800C44F0[4].field_6)
+                    {
+                        g_SysWork.player_4C.extra_128.field_20 = 0x14;
+                        arg1->model_0.state_2 = arg1->model_0.stateStep_3 = 0;
+                    }
+                }
+                arg0->rotation_24.pad = arg0->rotation_24.vy;
+                break;
+            }
+
+            temp_v0_3 = ratan2(
+                (g_SysWork.npcs_1A0[g_SysWork.field_2353].position_18.vx + g_SysWork.npcs_1A0[g_SysWork.field_2353].field_D8.field_0) - g_SysWork.player_4C.chara_0.position_18.vx,
+                (g_SysWork.npcs_1A0[g_SysWork.field_2353].position_18.vz + g_SysWork.npcs_1A0[g_SysWork.field_2353].field_D8.field_2) - g_SysWork.player_4C.chara_0.position_18.vz);
+
+            temp_s1_2 = (temp_v0_3 + 0x1000) & 0xFFF;
+
+            func_8007FB34(arg0->rotation_24.vy, temp_s1_2, &sp20);
+
+            sp20 = CLAMP(sp20, -0x180, 0x180);
+
+            temp_v1_3 = g_DeltaTime0 * 0xF;
+            temp_v1_3 = CLAMP(temp_v1_3, 0, 0xFFF);
+            var_s0    = temp_v1_3;
+
+            func_8007FB34(arg0->rotation_24.pad, temp_s1_2, &sp22);
+
+            if (ABS(sp22) > 0x80)
+            {
+                if (sp22 < 0)
+                {
+                    var_s0 = -var_s0;
+                }
+                arg0->rotation_24.pad = (arg0->rotation_24.pad + (var_s0 >> 4) + 0x1000) & 0xFFF;
+            }
+            else
+            {
+                arg0->rotation_24.pad = arg0->rotation_24.vy + sp20;
+
+                if (g_SysWork.player_4C.extra_128.field_20 == 0x16)
+                {
+                    g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~0x100;
+                }
+                else
+                {
+                    g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= 0x100;
+                }
+
+                if (g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & 0x200)
+                {
+                    if (arg1->model_0.anim_4.keyframeIdx0_8 == D_800C44F0[4].field_6)
+                    {
+                        g_SysWork.player_4C.extra_128.field_20 = 0x19;
+
+                        if (g_SysWork.player_4C.extra_128.field_24 == 0x14)
+                        {
+                            g_SysWork.player_4C.extra_128.field_24 = 0x22;
+                            arg0->model_0.state_2 = arg0->model_0.stateStep_3 = 0;
+                        }
+
+                        g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~0x200;
+                        arg1->model_0.state_2 = arg1->model_0.stateStep_3 = 0;
+                    }
+                }
+                else if (arg1->model_0.anim_4.keyframeIdx0_8 == D_800C44F0[4].field_6)
+                {
+                    g_SysWork.player_4C.extra_128.field_20 = 0x14;
+                    arg1->model_0.state_2 = arg1->model_0.stateStep_3 = 0;
+                }
+            }
+            break;
+
+        case 24:
+            D_800AF220 = D_800C4570.field_A & 0xF;
+
+            if (arg1->model_0.stateStep_3 == 0)
+            {
+                arg1->model_0.anim_4.animIdx_0 = D_800C4570.field_6;
+                arg1->model_0.stateStep_3++;
+            }
+
+            if (arg1->model_0.anim_4.keyframeIdx0_8 == D_800C44F0[D_800AF220].field_4 ||
+                ((g_SysWork.player_4C.extra_128.field_24 == 2 || g_SysWork.player_4C.extra_128.field_24 == 7 ||
+                  g_SysWork.player_4C.extra_128.field_24 == 8) &&
+                 (arg1->model_0.anim_4.keyframeIdx0_8 <= D_800C44F0[D_800AF220].field_6)))
+            {
+                switch (g_SysWork.player_4C.extra_128.field_24)
+                {
+                    case 2:
+                        g_SysWork.player_4C.extra_128.field_20 = 2;
+                        break;
+
+                    case 7:
+                        g_SysWork.player_4C.extra_128.field_20 = 6;
+                        break;
+
+                    case 28:
+                        g_SysWork.player_4C.extra_128.field_20 = 7;
+                        break;
+
+                    default:
+                        g_SysWork.player_4C.extra_128.field_20 = 0;
+                        break;
+                }
+
+                arg1->model_0.state_2 = arg1->model_0.stateStep_3 = 0;
+
+                if (g_SysWork.player_4C.extra_128.field_24 == 0)
+                {
+                    arg0->model_0.state_2 = arg0->model_0.stateStep_3 = 0;
+                }
+
+                g_SysWork.field_2353 = -1;
+            }
+            arg0->rotation_24.pad = arg0->rotation_24.vy;
+            break;
+
+        case 25:
+            if (func_80074350() != 0)
+            {
+                return 1;
+            }
+            break;
+
+        case 26:
+            if (arg1->model_0.stateStep_3 == 0)
+            {
+                arg1->model_0.anim_4.animIdx_0 = 0x3E;
+                arg1->model_0.stateStep_3++;
+            }
+
+            if ((D_800AF624 + D_800C4570.field_9) <= arg1->model_0.anim_4.keyframeIdx0_8 &&
+                !(g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & 4))
+            {
+                func_8005DC1C(D_800C4570.field_2, &arg0->position_18, 0x80, 0);
+                arg0->properties_E4.player.field_10C = 0x20;
+                g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= 4;
+            }
+
+            if (arg1->model_0.anim_4.keyframeIdx0_8 == D_800AF626)
+            {
+                D_800AF21C                             = -1;
+                g_SysWork.player_4C.extra_128.field_20 = 0x13;
+                g_SysWork.field_2353                   = -1;
+                g_SysWork.player_4C.extra_128.field_1C = 0;
+                g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~4;
+                arg1->model_0.anim_4.animIdx_0      = 0x39;
+                arg1->model_0.anim_4.keyframeIdx0_8 = 0x24C;
+                arg1->model_0.anim_4.time_4         = 0x24C000;
+
+                if (g_SysWork.player_4C.extra_128.field_24 == 0x23)
+                {
+                    g_SysWork.player_4C.extra_128.field_24 = 0x14;
+                }
+
+                if (g_SysWork.playerCombatInfo_38.totalWeaponAmmo_11 != 0)
+                {
+                    sp24 = g_SysWork.playerCombatInfo_38.currentWeaponAmmo_10;
+                    sp28 = g_SysWork.playerCombatInfo_38.totalWeaponAmmo_11;
+
+                    func_80054FC0(&sp24, &sp28, g_SysWork.playerCombatInfo_38.equippedWeapon_F);
+
+                    g_SysWork.playerCombatInfo_38.currentWeaponAmmo_10 = sp24;
+                    g_SysWork.playerCombatInfo_38.totalWeaponAmmo_11   = sp28;
+
+                    for (i = 0; i < 0x28; i++)
+                    {
+                        if (g_SavegamePtr->items_0[i].id_0 == (g_SysWork.playerCombatInfo_38.equippedWeapon_F + 0x80))
+                        {
+                            g_SavegamePtr->items_0[i].count_1 = g_SysWork.playerCombatInfo_38.currentWeaponAmmo_10;
+                        }
+                        if (g_SavegamePtr->items_0[i].id_0 == (g_SysWork.playerCombatInfo_38.equippedWeapon_F + 0xA0))
+                        {
+                            g_SavegamePtr->items_0[i].count_1 = g_SysWork.playerCombatInfo_38.totalWeaponAmmo_11;
+                        }
+                    }
+                }
+            }
+            break;
+    }
+    return 0;
+}
+
+void func_800771BC(s_SubCharacter* arg0, s_MainCharacterExtra* arg1) // 0x800771BC
+{
+    s32 sp18;
+    s32 sp1C;
+    s32 i;
+
+    switch (g_SysWork.player_4C.extra_128.field_20)
+    {
+        case 0:
+        case 1:
+        case 4:
+        case 5:
+        case 8:
+        case 11:
+        case 12:
+            if (g_Player_IsInWalkToRunTransition == 0)
+            {
+                if ((D_800C457E != 0 && g_SysWork.playerCombatInfo_38.equippedWeapon_F >= 0) || g_SysWork.playerCombatInfo_38.isAiming_13 != 0)
+                {
+                    g_SysWork.playerCombatInfo_38.isAiming_13 = 1;
+
+                    if (g_SysWork.playerCombatInfo_38.equippedWeapon_F < 0x20)
+                    {
+                        D_800AF21C = -1;
+                    }
+                    else
+                    {
+                        if (g_GameWork.config_0.optExtraAutoAiming_2C != 0)
+                        {
+                            if (!(g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & 1))
+                            {
+                                func_8005CD38(&D_800AF21C, &g_SysWork.player_4C.chara_0.properties_E4.player.field_122, &g_SysWork.playerCombatInfo_38, 0x238, 0xA000, 0);
+                            }
+                            else
+                            {
+                                func_8005CD38(&D_800AF21C, &g_SysWork.player_4C.chara_0.properties_E4.player.field_122, &g_SysWork.playerCombatInfo_38, 0x238, 0x3000, 0);
+                            }
+                        }
+                        else if (!(g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & 1))
+                        {
+                            func_8005CD38(&D_800AF21C, &g_SysWork.player_4C.chara_0.properties_E4.player.field_122, &g_SysWork.playerCombatInfo_38, 0x3000, 0x7000, 4);
+                        }
+                        else
+                        {
+                            func_8005CD38(&D_800AF21C, &g_SysWork.player_4C.chara_0.properties_E4.player.field_122, &g_SysWork.playerCombatInfo_38, 0xE66, 0x2199, 4);
+                        }
+                    }
+
+                    g_SysWork.field_2353 = D_800AF21C;
+
+                    if (g_SysWork.field_2353 == -1)
+                    {
+                        g_SysWork.player_4C.extra_128.field_20                     = 0x15;
+                        g_SysWork.player_4C.chara_0.properties_E4.player.field_122 = 0x400;
+                    }
+                    else
+                    {
+                        g_SysWork.player_4C.extra_128.field_1C = 1;
+                        g_SysWork.player_4C.extra_128.field_20 = 0x16;
+                    }
+
+                    if (g_SysWork.player_4C.extra_128.field_24 == 0)
+                    {
+                        g_SysWork.player_4C.extra_128.field_24 = 0x14;
+                        arg0->model_0.stateStep_3              = 0;
+                        arg0->model_0.state_2                  = 0;
+                    }
+                    else if (g_SysWork.player_4C.extra_128.field_24 < 0x14)
+                    {
+                        g_SysWork.player_4C.extra_128.field_24 += 0x14;
+                    }
+
+                    arg1->model_0.stateStep_3                   = 0;
+                    arg1->model_0.state_2                       = 0;
+                    arg0->properties_E4.player.properties_E4[7] = 0;
+
+                    if (g_SysWork.playerCombatInfo_38.totalWeaponAmmo_11 != 0)
+                    {
+                        if (g_SysWork.playerCombatInfo_38.equippedWeapon_F >= 0x20)
+                        {
+                            sp18 = g_SysWork.playerCombatInfo_38.currentWeaponAmmo_10;
+                            sp1C = g_SysWork.playerCombatInfo_38.totalWeaponAmmo_11;
+
+                            func_80054FC0(&sp18, &sp1C, g_SysWork.playerCombatInfo_38.equippedWeapon_F);
+
+                            g_SysWork.playerCombatInfo_38.currentWeaponAmmo_10 = sp18;
+                            g_SysWork.playerCombatInfo_38.totalWeaponAmmo_11   = sp1C;
+                        }
+                    }
+
+                    if (g_SysWork.playerCombatInfo_38.equippedWeapon_F >= 0x20)
+                    {
+                        for (i = 0; i < 0x28; i++)
+                        {
+                            if (g_SavegamePtr->items_0[i].id_0 == (g_SysWork.playerCombatInfo_38.equippedWeapon_F + 0x80))
+                            {
+                                g_SavegamePtr->items_0[i].count_1 = g_SysWork.playerCombatInfo_38.currentWeaponAmmo_10;
+                            }
+                            if (g_SavegamePtr->items_0[i].id_0 == (g_SysWork.playerCombatInfo_38.equippedWeapon_F + 0xA0))
+                            {
+                                g_SavegamePtr->items_0[i].count_1 = g_SysWork.playerCombatInfo_38.totalWeaponAmmo_11;
+                            }
+                        }
+                    }
+                }
+            }
+            break;
+
+        default:
+            break;
+    }
+
+    switch (g_SysWork.player_4C.extra_128.field_20)
+    {
+        case 0:
+        case 1:
+        case 4:
+        case 5:
+        case 8:
+        case 11:
+        case 12:
+        case 19:
+            if (func_8007F95C() != false)
+            {
+                if (D_800C45BE != 0)
+                {
+                    g_SysWork.player_4C.extra_128.field_1C = 6;
+                    arg0->model_0.stateStep_3              = 0;
+                    arg0->model_0.state_2                  = 0;
+                    arg1->model_0.stateStep_3              = 0;
+                    arg1->model_0.state_2                  = 0;
+                    g_SysWork.player_4C.extra_128.field_20 = 0;
+                    g_SysWork.player_4C.extra_128.field_24 = 0;
+                    return;
+                }
+
+                if (D_800C45C0 != 0)
+                {
+                    g_SysWork.player_4C.extra_128.field_1C = 5;
+                    arg0->model_0.stateStep_3              = 0;
+                    arg0->model_0.state_2                  = 0;
+                    arg1->model_0.stateStep_3              = 0;
+                    arg1->model_0.state_2                  = 0;
+                    g_SysWork.player_4C.extra_128.field_20 = 0;
+                    g_SysWork.player_4C.extra_128.field_24 = 0;
+                    return;
+                }
+            }
+            break;
+
+        default:
+            break;
+    }
+
+    switch (g_SysWork.player_4C.extra_128.field_20)
+    {
+        case 0x13:
+        case 0x14:
+            if ((g_GameWork.config_0.optExtraWeaponCtrl_23 != 0 && D_800C457E == 0) ||
+                (g_GameWork.config_0.optExtraWeaponCtrl_23 == 0 && D_800C457E != 0))
+            {
+                arg0->properties_E4.player.properties_E4[4] = 0;
+                g_SysWork.player_4C.extra_128.field_20      = 0x18;
+                g_SysWork.field_2353                        = -1;
+                g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~1;
+                g_SysWork.player_4C.extra_128.field_1C    = 0;
+                g_SysWork.playerCombatInfo_38.isAiming_13 = 0;
+                g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~0x200;
+
+                if (g_SysWork.player_4C.extra_128.field_24 == 0x14 || g_SysWork.player_4C.extra_128.field_24 == 0x22)
+                {
+                    g_SysWork.player_4C.extra_128.field_24 = 0;
+                    arg0->model_0.stateStep_3              = 0;
+                    arg0->model_0.state_2                  = 0;
+
+                    arg1->model_0.stateStep_3 = 0;
+                    arg1->model_0.state_2     = 0;
+                    break;
+                }
+
+                if (g_SysWork.player_4C.extra_128.field_24 >= 0x15)
+                {
+                    g_SysWork.player_4C.extra_128.field_24 -= 0x14;
+                }
+
+                arg1->model_0.stateStep_3 = 0;
+                arg1->model_0.state_2     = 0;
+                break;
+            }
+
+            if ((D_800C45BE != 0 || D_800C45C0 != 0) && g_SysWork.player_4C.extra_128.field_24 != 0x1D && g_SysWork.player_4C.extra_128.field_24 != 0x1E)
+            {
+                if (g_SysWork.playerCombatInfo_38.equippedWeapon_F < 0x20)
+                {
+                    if ((g_SysWork.playerCombatInfo_38.equippedWeapon_F == 5) || (g_SysWork.playerCombatInfo_38.equippedWeapon_F == 2))
+                    {
+                        if ((arg1->model_0.anim_4.animIdx_0 != 0x39 || arg1->model_0.anim_4.keyframeIdx0_8 != D_800C44F0[0].field_6) &&
+                            (arg1->model_0.anim_4.animIdx_0 != 0x3B || arg1->model_0.anim_4.keyframeIdx0_8 != D_800C44F0[1].field_6) &&
+                            (arg1->model_0.anim_4.animIdx_0 != 0x45 || (arg1->model_0.anim_4.keyframeIdx0_8 < D_800C44F0[6].field_4) || (D_800C44F0[6].field_6 < arg1->model_0.anim_4.keyframeIdx0_8)) &&
+                            (arg1->model_0.anim_4.animIdx_0 != 0x3D || arg1->model_0.anim_4.keyframeIdx0_8 != D_800C44F0[2].field_6) &&
+                            (arg1->model_0.anim_4.animIdx_0 != 0x3F || arg1->model_0.anim_4.keyframeIdx0_8 != D_800C44F0[3].field_6) &&
+                            (arg1->model_0.anim_4.animIdx_0 != 0x43 || arg1->model_0.anim_4.keyframeIdx0_8 != D_800C44F0[5].field_6))
+                        {
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        if ((arg1->model_0.anim_4.animIdx_0 != 0x39 || arg1->model_0.anim_4.keyframeIdx0_8 != D_800C44F0[0].field_6) &&
+                            (arg1->model_0.anim_4.animIdx_0 != 0x3B || arg1->model_0.anim_4.keyframeIdx0_8 != D_800C44F0[1].field_6) &&
+                            (arg1->model_0.anim_4.animIdx_0 != 0x3D || arg1->model_0.anim_4.keyframeIdx0_8 != D_800C44F0[2].field_6) &&
+                            (arg1->model_0.anim_4.animIdx_0 != 0x3F || arg1->model_0.anim_4.keyframeIdx0_8 != D_800C44F0[3].field_6))
+                        {
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    if ((arg1->model_0.anim_4.animIdx_0 != 0x39 || arg1->model_0.anim_4.keyframeIdx0_8 != D_800C44F0[0].field_6) &&
+                        (arg1->model_0.anim_4.animIdx_0 != 0x3B || arg1->model_0.anim_4.keyframeIdx0_8 != D_800C44F0[1].field_6) &&
+                        (arg1->model_0.anim_4.animIdx_0 != 0x3D || arg1->model_0.anim_4.keyframeIdx0_8 != D_800C44F0[2].field_6) &&
+                        (arg1->model_0.anim_4.animIdx_0 != 0x3F || arg1->model_0.anim_4.keyframeIdx0_8 != D_800C44F0[3].field_6) &&
+                        (arg1->model_0.anim_4.animIdx_0 != 0x41 || arg1->model_0.anim_4.keyframeIdx0_8 != D_800C44F0[4].field_6) &&
+                        (arg1->model_0.anim_4.animIdx_0 != 0x49 || arg1->model_0.anim_4.keyframeIdx0_8 != D_800C44F0[8].field_6) &&
+                        (arg1->model_0.anim_4.animIdx_0 != 0x45 || arg1->model_0.anim_4.keyframeIdx0_8 != D_800C44F0[6].field_4))
+                    {
+                        break;
+                    }
+                }
+
+                g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~1;
+
+                if (g_SysWork.playerCombatInfo_38.equippedWeapon_F < 0x20)
+                {
+                    if (!(g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & 1))
+                    {
+                        func_8005CD38(&D_800AF21C, &g_SysWork.player_4C.chara_0.properties_E4.player.field_122, &g_SysWork.playerCombatInfo_38, 0x3000, 0x3000, 5);
+                    }
+                    else
+                    {
+                        func_8005CD38(&D_800AF21C, &g_SysWork.player_4C.chara_0.properties_E4.player.field_122, &g_SysWork.playerCombatInfo_38, 0x1000, 0x1000, 5);
+                    }
+
+                    g_SysWork.field_2353 = D_800AF21C;
+                }
+                else
+                {
+                    if (!(g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & 1))
+                    {
+                        func_8005CD38(&D_800AF21C, &g_SysWork.player_4C.chara_0.properties_E4.player.field_122, &g_SysWork.playerCombatInfo_38, 0x7000, 0x7000, 5);
+                    }
+                    else
+                    {
+                        func_8005CD38(&D_800AF21C, &g_SysWork.player_4C.chara_0.properties_E4.player.field_122, &g_SysWork.playerCombatInfo_38, 0x2199, 0x2199, 5);
+                    }
+                }
+
+                switch (D_800AF21C)
+                {
+                    default:
+                        if (g_SysWork.playerCombatInfo_38.equippedWeapon_F >= 0x20)
+                        {
+                            g_SysWork.player_4C.extra_128.field_1C = 1;
+                            g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= 0x201;
+
+                            if (g_SysWork.field_2353 != D_800AF21C)
+                            {
+                                g_SysWork.player_4C.extra_128.field_20 = 0x17;
+                            }
+                            else
+                            {
+                                g_SysWork.player_4C.extra_128.field_20 = 0x19;
+
+                                if (g_SysWork.player_4C.extra_128.field_24 == 0x14)
+                                {
+                                    g_SysWork.player_4C.extra_128.field_24 = 0x22;
+                                    arg0->model_0.stateStep_3              = 0;
+                                    arg0->model_0.state_2                  = 0;
+                                }
+                            }
+                            g_SysWork.field_2353 = D_800AF21C;
+                            break;
+                        }
+
+                        g_SysWork.player_4C.extra_128.field_20 = 0x19;
+
+                        if (g_SysWork.player_4C.extra_128.field_24 == 0x14)
+                        {
+                            g_SysWork.player_4C.extra_128.field_24 = 0x22;
+                            arg0->model_0.stateStep_3              = 0;
+                            arg0->model_0.state_2                  = 0;
+                        }
+
+                    case -1:
+                        g_SysWork.player_4C.chara_0.properties_E4.player.field_122 = 0x400;
+                        g_SysWork.player_4C.extra_128.field_20                     = 0x19;
+                        g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~0x200;
+
+                        if (g_SysWork.player_4C.extra_128.field_24 == 0x14)
+                        {
+                            g_SysWork.player_4C.extra_128.field_24 = 0x22;
+                            arg0->model_0.stateStep_3              = 0;
+                            arg0->model_0.state_2                  = 0;
+                        }
+                        break;
+                }
+
+                if (g_SysWork.playerCombatInfo_38.equippedWeapon_F >= 0x20)
+                {
+                    if (g_SysWork.playerCombatInfo_38.currentWeaponAmmo_10 == 0 && (g_SavegamePtr->equippedWeapon_AA >> 5) == 5 && g_SysWork.playerCombatInfo_38.totalWeaponAmmo_11 != 0)
+                    {
+                        g_SysWork.player_4C.extra_128.field_20 = 0x1A;
+                        g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~0x200;
+
+                        if (g_SysWork.player_4C.extra_128.field_24 == 0x14 || g_SysWork.player_4C.extra_128.field_24 == 0x22)
+                        {
+                            g_SysWork.player_4C.extra_128.field_24 = 0x23;
+                            arg0->model_0.stateStep_3              = 0;
+                            arg0->model_0.state_2                  = 0;
+                        }
+                    }
+                }
+                else
+                {
+                    g_SysWork.player_4C.extra_128.field_20 = 0x19;
+                    if (g_SysWork.player_4C.extra_128.field_24 == 0x14 || g_SysWork.playerCombatInfo_38.equippedWeapon_F % 10 == 1 ||
+                        g_SysWork.playerCombatInfo_38.equippedWeapon_F % 10 == 4 || g_SysWork.playerCombatInfo_38.equippedWeapon_F % 10 == 2 ||
+                        g_SysWork.playerCombatInfo_38.equippedWeapon_F % 10 == 6)
+                    {
+                        g_SysWork.player_4C.extra_128.field_24 = 0x22;
+                        arg0->model_0.stateStep_3              = 0;
+                        arg0->model_0.state_2                  = 0;
+                    }
+                }
+                arg1->model_0.stateStep_3 = 0;
+                arg1->model_0.state_2     = 0;
+            }
+            else
+            {
+                g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~0x200;
+            }
+            break;
+
+        default:
+            break;
+    }
+}
+
+void func_80077BB8(s_SubCharacter* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6) // 0x80077BB8
+{
+    s16 temp;
+
+    if (g_SysWork.player_4C.chara_0.properties_E4.player.field_126 != 0)
+    {
+        g_SysWork.player_4C.chara_0.properties_E4.player.field_126 -= ((g_DeltaTime0 * 0x666) / 136) >> 1;
+
+        if ((g_SysWork.player_4C.chara_0.properties_E4.player.field_126 >> 16) & 1)
+        {
+            g_SysWork.player_4C.chara_0.properties_E4.player.field_126 = 0;
+        }
+    }
+
+    if (arg0->model_0.stateStep_3 == 0)
+    {
+        arg0->model_0.anim_4.animIdx_0 = arg1;
+        arg0->model_0.stateStep_3++;
+    }
+
+    if (g_SysWork.player_4C.extra_128.field_20 != 0x16)
+    {
+        if (arg0->model_0.anim_4.animIdx_0 == arg2 && arg0->model_0.anim_4.keyframeIdx0_8 >= arg3)
+        {
+            g_SysWork.player_4C.extra_128.field_24 = arg6;
+            func_800713B4(arg0, arg4);
+        }
+
+        func_80071284(2);
+    }
+
+    if (g_SysWork.player_4C.extra_128.field_24 == 0)
+    {
+        g_SysWork.player_4C.chara_0.properties_E4.player.field_124 = 0;
+        D_800C4608                                                 = 0;
+    }
+    else
+    {
+        temp                                                       = arg5;
+        g_SysWork.player_4C.chara_0.properties_E4.player.field_124 = temp;
+        D_800C4608                                                 = temp;
+    }
+}
 
 void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x80077D00
 {
@@ -2121,7 +3872,7 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                 if (chara->model_0.anim_4.animIdx_0 & (1 << 0) && extra->model_0.anim_4.animIdx_0 & (1 << 0))
                 {
                     if ((var_s2 == 0 && g_SysWork.player_4C.chara_0.properties_E4.player.field_126 == 0) ||
-                        chara->model_0.anim_4.animIdx_0 >= 58 || chara->model_0.anim_4.keyframeIdx0_8 == D_800C44F6)
+                        chara->model_0.anim_4.animIdx_0 >= 58 || chara->model_0.anim_4.keyframeIdx0_8 == D_800C44F0[0].field_6)
                     {
                         if (D_800C45E8 != 0)
                         {
@@ -3739,7 +5490,7 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                  (g_SysWork.playerCombatInfo_38.equippedWeapon_F % 10) != 6))
             {
                 if (chara->model_0.anim_4.animIdx_0 & (1 << 0) && extra->model_0.anim_4.animIdx_0 & (1 << 0) &&
-                    (chara->model_0.anim_4.animIdx_0 >= 58 || chara->model_0.anim_4.keyframeIdx0_8 == D_800C44F6))
+                    (chara->model_0.anim_4.animIdx_0 >= 58 || chara->model_0.anim_4.keyframeIdx0_8 == D_800C44F0[0].field_6))
                 {
                     if (D_800C45E8 == 0)
                     {
@@ -3786,8 +5537,8 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                 chara->model_0.stateStep_3++;
             }
 
-            if ((chara->model_0.anim_4.animIdx_0 & (1 << 0)) && (extra->model_0.anim_4.animIdx_0 & (1 << 0)) && 
-                (chara->model_0.anim_4.animIdx_0 >= 58 || chara->model_0.anim_4.keyframeIdx0_8 == D_800C44F6))
+            if ((chara->model_0.anim_4.animIdx_0 & (1 << 0)) && (extra->model_0.anim_4.animIdx_0 & (1 << 0)) &&
+                (chara->model_0.anim_4.animIdx_0 >= 58 || chara->model_0.anim_4.keyframeIdx0_8 == D_800C44F0[0].field_6))
             {
                 if (D_800C45E8 != 0)
                 {

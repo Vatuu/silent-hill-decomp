@@ -81,6 +81,7 @@ segments:
       - [0x1770, .rodata, items/item_screens_3]
       - [0x32F4, rodata]
       
+      - [0x5520, .rodata, bodyprog_80054FC0]
       - [0x5638, .rodata, bodyprog_80054FC0] # Jumptable: `func_80077D00`
       - [0x56C8, .rodata, bodyprog_80054FC0] # Jumptable: `func_80077D00`
       - [0x5758, .rodata, bodyprog_80054FC0] # Jumptable: `func_80077D00`

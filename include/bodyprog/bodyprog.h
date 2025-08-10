@@ -1457,11 +1457,15 @@ typedef struct
 
 typedef struct _s_800AFBF4
 {
-    u8 unk_0[6];
+    s16 field_0;
+    s16 field_2;
+    u8  unk_4[2];
     u8 field_6;
     u8 field_7;
     u8 field_8;
-    u8 unk_9[3];
+    u8  field_9;
+    u8  field_A;
+    u8  unk_B;
 } s_800AFBF4;
 STATIC_ASSERT_SIZEOF(s_800AFBF4, 12);
 
@@ -1821,6 +1825,18 @@ extern s32 D_800AF224;
 
 extern s_AnimInfo g_MaybePlayerAnims[]; // Maybe part of bigger struct.
 
+extern s16 D_800AF5C6;
+
+extern s16 D_800AF624;
+
+extern s16 D_800AF626;
+
+extern s32 D_800AFBE8;
+
+extern s32 D_800AFBEC;
+
+extern s32 D_800AFBF0;
+
 extern s_800AFBF4 D_800AFBF4[];
 
 extern s_800AFC78 D_800AFC78; // Maybe different struct.
@@ -2158,12 +2174,16 @@ extern s_800C4478 D_800C4478;
 
 extern s8 D_800C447A;
 
-/** Table of player keyframe indices. Purpose unknown. */
-extern s_D_800C44F0 D_800C44F0[];
+extern s32 D_800C44D0;
 
-extern s16 D_800C44F6;
+extern s32 D_800C44D4;
 
 extern s_PlayerCombat D_800C44E0;
+
+/** Table of player keyframe indices. Purpose unknown. */
+extern s_D_800C44F0 D_800C44F0[10];
+
+extern VECTOR3 D_800C4540;
 
 /** FP time. */
 extern s32 D_800C454C;
@@ -2179,6 +2199,10 @@ extern s32 D_800C4558;
 extern s32 D_800C455C;
 
 extern s_800AFBF4 D_800C4570;
+
+extern s16 D_800C4574;
+
+extern u8 D_800C4577;
 
 extern u16 D_800C457E;
 
@@ -3125,7 +3149,7 @@ s32 func_8007029C(VECTOR3* arg0, s32 arg1, s16 angle);
 
 void func_800705E4(GsCOORDINATE2*, s32, s32, s32, s32);
 
-void func_80074254(s32 arg0, s32 arg1); // `arg1` is pointer?
+void func_80074254(s_SubCharacter* arg0, s_MainCharacterExtra* arg1);
 
 void func_8007D6E0();
 
