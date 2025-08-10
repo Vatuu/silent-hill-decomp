@@ -53,12 +53,17 @@ segments:
     align: 4
     subalign: 4
     subsegments:
+      # .rodata section
       - [0x0, rodata]
       - [0x1228, .rodata, map6_s00]
       - [0x12DC, rodata]
       - [0x306C, .rodata, map6_s00_msg]
       - [0x3528, rodata]
+
+      # .text section
       - [0x35B8, c, map6_s00]
+
+      # .data section
       - [0x23D54, data, map6_s00]
       - [0x26934, .data, map6_s00_msg]
       - [0x269A0, data]
