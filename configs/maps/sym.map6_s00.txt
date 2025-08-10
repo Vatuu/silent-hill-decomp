@@ -19,6 +19,14 @@
 //------------------------------------------------------
 sharedData_800CAA98_0_s01   = 0x800CA8FC; // type:s32 - unknown type
 
+//---------------------------------------------------------------------
+//--- PA: 0x00306C   VA: 0x800CC5E4   subsegment: .rodata, map6_s00_msg
+//---------------------------------------------------------------------
+
+//------------------------------------------------------
+//--- PA: 0x003528   VA: 0x800CCAA0   subsegment: rodata
+//------------------------------------------------------
+
 
 
 //================================================
@@ -75,6 +83,7 @@ sharedFunc_800D7560_0_s01   = 0x800E16B4; // type:func
 sharedFunc_800D7AB0_0_s01   = 0x800E1C04; // type:func
 sharedFunc_800D7EBC_0_s01   = 0x800E1FDC; // type:func
 sharedFunc_800D81B0_0_s01   = 0x800E22D0; // type:func
+sharedFunc_800D82B8_0_s01   = 0x800E23D8; // type:func
 Ai_Groaner_Update           = 0x800E2934; // type:func
 Ai_Groaner_Init             = 0x800E2A30; // type:func
 sharedFunc_800E33DC_2_s00   = 0x800E2C30; // type:func
@@ -110,7 +119,15 @@ sharedData_800DD870_0_s01   = 0x800ED764; // type:VECTOR size:0xC
 sharedData_800DD880_0_s01   = 0x800ED774; // type:VECTOR size:0xC
 sharedData_800EEB14_2_s00   = 0x800ED784; // type:s32 unknown type
 sharedData_800EC954_2_s02   = 0x800EF24C; // type:s32 unknown type
+
+//-------------------------------------------------------------------
+//--- PA: 0x026934   VA: 0x800EFEAC   subsegment: .data, map6_s00_msg
+//-------------------------------------------------------------------
 g_MapMessages               = 0x800EFEAC; // type:u32 size:0x6C
+
+//----------------------------------------------------
+//--- PA: 0x0269A0   VA: 0x800EFF18   subsegment: data
+//----------------------------------------------------
 sharedData_800DFB64_0_s00   = 0x800F0688; // type:s32
 sharedData_800DFB68_0_s00   = 0x800F068C; // type:s32
 sharedData_800DFB6C_0_s00   = 0x800F0690; // type:s32

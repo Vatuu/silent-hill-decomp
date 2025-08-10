@@ -19,6 +19,14 @@
 //------------------------------------------------------
 sharedData_800CAA98_0_s01   = 0x800CA908; // type:s32 - unknown type
 
+//---------------------------------------------------------------------
+//--- PA: 0x002F08   VA: 0x800CC480   subsegment: .rodata, map2_s00_msg
+//---------------------------------------------------------------------
+
+//------------------------------------------------------
+//--- PA: 0x003BE4   VA: 0x800CD15C   subsegment: rodata
+//------------------------------------------------------
+
 
 
 //================================================
@@ -79,6 +87,7 @@ sharedFunc_800D7560_0_s01   = 0x800E1CF8; // type:func
 sharedFunc_800D7AB0_0_s01   = 0x800E2248; // type:func
 sharedFunc_800D7EBC_0_s01   = 0x800E2620; // type:func
 sharedFunc_800D81B0_0_s01   = 0x800E2914; // type:func
+sharedFunc_800D82B8_0_s01   = 0x800E2A1C; // type:func
 Ai_Groaner_Update           = 0x800E2F78; // type:func
 Ai_Groaner_Init             = 0x800E3074; // type:func - `map2_s00` includes extra block at end of function compared to other maps.
 sharedFunc_800E33DC_2_s00   = 0x800E33DC; // type:func
@@ -109,7 +118,15 @@ sharedData_800DD880_0_s01   = 0x800EEB04; // type:VECTOR size:0xC
 sharedData_800EEB14_2_s00   = 0x800EEB14; // type:s32 unknown type
 sharedData_800DF1FC_0_s00   = 0x800F05D8; // type:s32 unknown type
 sharedData_800DF2DC_0_s00   = 0x800F06B8; // type:s32 unknown type
+
+//-------------------------------------------------------------------
+//--- PA: 0x0279F0   VA: 0x800F0F68   subsegment: .data, map2_s00_msg
+//-------------------------------------------------------------------
 g_MapMessages               = 0x800F0F68; // type:u32 size:0x13C
+
+//----------------------------------------------------
+//--- PA: 0x027B2C   VA: 0x800F10A4   subsegment: data
+//----------------------------------------------------
 sharedData_800DFB64_0_s00   = 0x800F22B0; // type:s32
 sharedData_800DFB68_0_s00   = 0x800F22B4; // type:s32
 sharedData_800DFB6C_0_s00   = 0x800F22B8; // type:s32
