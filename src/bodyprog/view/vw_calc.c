@@ -166,7 +166,7 @@ s32 vwRetNewVelocityToTargetVal(s32 now_spd, s32 mv_pos, s32 tgt_pos, s32 accel,
 
 s32 vwRetNewAngSpdToTargetAng(s32 now_ang_spd, s16 now_ang, s16 tgt_ang, s32 accel_spd, s32 total_max_ang_spd, s32 dec_val_lim_spd) // 0x80049464
 {
-    return vwRetNewVelocityToTargetVal(now_ang_spd, 0, ((tgt_ang - now_ang) << 20) >> 20, accel_spd, total_max_ang_spd, dec_val_lim_spd);
+    return vwRetNewVelocityToTargetVal(now_ang_spd, 0, FP_ANGLE_TRUNCATE(tgt_ang - now_ang), accel_spd, total_max_ang_spd, dec_val_lim_spd);
 }
 
 s32 func_800494B0(s32 arg0, s32 arg1, s32 arg2)

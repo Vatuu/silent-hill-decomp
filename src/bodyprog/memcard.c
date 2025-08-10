@@ -59,8 +59,8 @@ static inline void s_800B55E8_Init(s_800B55E8* p, s32 field_0, s32 deviceId, s32
 
 void Savegame_CardCleanInit() // 0x8002E630
 {
+    s32                          i;
     s_MemCardInfo_BasicSaveInfo* ptr;
-    s32         i;
 
     Savegame_CardInit();
 
@@ -100,8 +100,10 @@ void Savegame_CardCleanInit() // 0x8002E630
 void Savegame_GameMemDataClear(s32 deviceId) // 0x8002E6E4
 {
     D_800B5508.devices_0[deviceId].memoryCardStatus_0 = 0;
+
     Savegame_CardFileUsageClear(deviceId);
     bzero(D_800B5508.devices_0[deviceId].basicSaveInfo_14, sizeof(s_MemCardInfo_BasicSaveInfo) * CARD_DEVICE_FILE_COUNT);
+
     D_800B5508.devices_0[deviceId].field_18 = 0;
 }
 
@@ -223,9 +225,6 @@ bool func_8002E94C(s32 arg0, s32 deviceId, s32 fileIdx, s32 saveIdx) // 0x8002E9
     return true;
 }
 
-/** @brief Related to formatting logic.
- * Used in: `SAVELOAD.BIN`
- */
 s32 func_8002E990() // 0x8002E990
 {
     return D_800B5508.field_E0[0].lastCardResult_14;
@@ -277,8 +276,8 @@ s32 Savegame_CardFileUsageFreeCount(s32 deviceId) // 0x8002EA78
 s32 func_8002EABC(s32* outDeviceId, s32* outFileIdx, s32* outSaveIdx) // 0x8002EABC
 {
     s_func_8002FE70 sp10;
-    s32    i;
-    s32    ret;
+    s32             i;
+    s32             ret;
 
     ret = 0;
 
@@ -393,10 +392,9 @@ void func_8002ECE0(s_800B55E8* arg0) // 0x8002ECE0
 
 void func_8002ED7C(s_800B55E8* arg0) // 0x8002ED7C
 {
-    char filePath[24];
-    s32  cardResult;
-    s32  i;
-
+    char                         filePath[24];
+    s32                          cardResult;
+    s32                          i;
     s_MemCardInfo_BasicSaveInfo* temp_a1;
     s_MemCardBasicInfo*          ptr;
 
@@ -611,7 +609,7 @@ void func_8002F2C4(s_800B55E8* arg0)
     s_MemCardBasicInfo* saveInfo;
     s8*                 saveData1Buf;
     s32                 saveData1Size;
-    s_SavegameFooter* saveData1Footer;
+    s_SavegameFooter*   saveData1Footer;
 
     saveInfo = &D_800B5508.devices_0[arg0->deviceId_4];
 
@@ -745,10 +743,9 @@ void func_8002F2C4(s_800B55E8* arg0)
 
 void func_8002F61C(s_800B55E8* arg0)
 {
-    char filePath[24];
-    s32  fileIdx;
-    s32  cardResult;
-
+    char                filePath[24];
+    s32                 fileIdx;
+    s32                 cardResult;
     s_MemCardBasicInfo* ptr;
 
     arg0->lastCardResult_14 = CardResult_Success;
@@ -1209,7 +1206,6 @@ void Savegame_SaveBlockInit(s_PsxSaveBlock* saveBlock, s8 blockCount, s32 saveId
 
 s32 Savegame_CardDeviceTest(s32 deviceId) // 0x80030288
 {
-    // Unused function? Appears to write 0xFF to first 128 bytes of card and check if event is triggered.
     u8 cardBuf[128];
 
     memset(cardBuf, 0xFF, 128);

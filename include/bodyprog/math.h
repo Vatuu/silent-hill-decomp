@@ -102,6 +102,10 @@
 #define FP_ANGLE(deg) \
     (s16)((deg) * ((FP_TO(1, Q12_SHIFT)) / 360.0f))
 
+/** @brief Truncates fixed-point degrees to remove excess precision. */
+#define FP_ANGLE_TRUNCATE(angle) \
+    (((angle) << 20) >> 20)
+
 /** @brief Converts floating-point radians in the range `[-PI, PI]` to fixed-point radians in the range `[0, 0x5000]`. */
 #define FP_RADIAN(rad)                                                                \
     (s32)(((((rad) < 0.0f) ? (PI + (PI - ABS(rad))) : (rad)) * ((float)FP_PI / PI)) * \
@@ -115,9 +119,10 @@
 #define FP_TIME(sec) \
     FP_FLOAT_TO((sec), Q12_SHIFT)
 
+// `Math_AngleTruncate`
 static inline s16 shAngleRegulate(s32 angle)
 {
-    return (angle << 20) >> 20;
+    return FP_ANGLE_TRUNCATE(angle);
 }
 
 static inline void Math_SVectorZero(SVECTOR* vec)
@@ -153,6 +158,7 @@ void func_80096E78(SVECTOR* rot, MATRIX* mat); // Another custom `vwRotMatrix[..
 
 s32 Math_MulFixed(s32 val0, s32 val1, s32 shift);
 
+// Matched as `Math_Sin` and `Math_Cos` on decomp.me.
 s32 shRsin(s32 angle);
 s32 shRcos(s32 angle);
 

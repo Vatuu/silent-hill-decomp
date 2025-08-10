@@ -17,7 +17,7 @@
  * } e_BufferIdx;
  *
  * #define FS_BUFFER(idx) \
- *     (void*)(0x80100000 + ((idx) * 0x1000))
+ *     (void*)(0x80100600 + ((idx) * 0x1000))
  */
 #define FS_BUFFER_0  (void*)0x8010A600
 #define FS_BUFFER_12 (void*)0x801201B4 // Used for weapon anim.     } Sub-buffers within the 4096-byte buffers?
@@ -33,7 +33,15 @@
 #define FS_BUFFER_10 (void*)0x801EA600
 #define FS_BUFFER_9  (void*)0x801EC600
 
-#define IMAGE_BUFFER (u_long*)0x801AFA00
+#define IMAGE_BUFFER   (u_long*)0x801AFA00
+#define IMAGE_BUFFER_0 (u_long*)0x801CFA00
+#define IMAGE_BUFFER_1 (u_long*)0x801C8200
+#define IMAGE_BUFFER_2 (u_long*)0x801ABE00
+
+#define TEMP_MEMORY_ADDR (s8*)0x801A2600
+#define CD_ADDR_0        (u_long*)0x801E2600
+
+#define FONT24_BUFFER (u_long*)0x801F5600 // Loaded by `GameFs_StfRollBinLoad`.
 
 /** @brief `FsQueue::state` values when processing a read operation (`Fs_QueueUpdateRead`).
  *

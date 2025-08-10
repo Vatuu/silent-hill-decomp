@@ -2376,8 +2376,7 @@ s32 func_8008D330(s32 arg0, s_DmsEntry* camEntry) // 0x8008D330
 
 s32 Math_LerpFixed12(s16 from, s16 to, s32 alpha) // 0x8008D3D4
 {
-    // TODO: Shifts are similar to `shAngleRegulate`, but that doesn't seem to work here.
-    return ((s32)(FP_MULTIPLY((((to - from) << 20) >> 20), (s64)alpha, 12) + from) << 20) >> 20;
+    return FP_ANGLE_TRUNCATE((s32)(FP_MULTIPLY_PRECISE(FP_ANGLE_TRUNCATE(to - from), alpha, Q12_SHIFT)) + from);
 }
 
 void func_8008D41C() // 0x8008D41C

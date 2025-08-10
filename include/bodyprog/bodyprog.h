@@ -17,14 +17,6 @@
 // DEFINES
 // ========
 
-#define TEMP_MEMORY_ADDR ((s8*)0x801A2600)
-#define CD_ADDR_0        ((u_long*)0x801E2600)
-
-#define IMAGE_BUFFER_0 ((u_long*)0x801CFA00)
-#define IMAGE_BUFFER_1 ((u_long*)0x801C8200)
-#define IMAGE_BUFFER_2 ((u_long*)0x801ABE00)
-#define FONT24_BUFFER  ((u_long*)0x801F5600) // Loaded by `GameFs_StfRollBinLoad`.
-
 #define OPT_SOUND_VOLUME_MIN   0
 #define OPT_SOUND_VOLUME_MAX   128
 #define OPT_VIBRATION_DISABLED 0

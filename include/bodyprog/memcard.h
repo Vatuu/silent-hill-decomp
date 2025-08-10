@@ -278,6 +278,9 @@ s32 func_8002E914();
 
 bool func_8002E94C(s32 arg0, s32 deviceId, s32 fileIdx, s32 saveIdx);
 
+/** @brief Related to formatting logic.
+ * Used in: `SAVELOAD.BIN`
+ */
 s32 func_8002E990();
 
 s32 Savegame_CardFilesGetUsageBits(s32 deviceId);
@@ -334,6 +337,7 @@ void Savegame_FilenameGenerate(char* dest, s32 saveIdx);
 
 void Savegame_SaveBlockInit(s_PsxSaveBlock* saveBlock, s8 blockCount, s32 saveIdx, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8);
 
+/** Unused function? Appears to write `0xFF` to first 128 bytes of card and check if event is triggered. */
 s32 Savegame_CardDeviceTest(s32 deviceId);
 
 s32 Savegame_CardDeviceFormat(s32 deviceId);
