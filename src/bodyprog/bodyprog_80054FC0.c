@@ -1376,7 +1376,31 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8006D774); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8006D7EC); // 0x8006D7EC
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8006D90C); // 0x8006D90C
+bool func_8006D90C(s_func_800700F8_2* arg0, VECTOR3* vec1, VECTOR3* vec2) // 0x8006D90C
+{
+    s32 scratchPrev;
+    s32 scratchAddr;
+
+    VECTOR3 vecDelta;
+    vecDelta.vx = vec2->vx - vec1->vx;
+    vecDelta.vy = vec2->vy - vec1->vy;
+    vecDelta.vz = vec2->vz - vec1->vz;
+
+    arg0->field_0 = false;
+    
+    if (func_8006DCE0((s32)PSX_SCRATCH, 0, 0, vec1, &vecDelta, 0, 0, 0, 0) != 0)
+    {
+        scratchPrev = SetSp((s32)PSX_SCRATCH_ADDR(984));
+        scratchAddr = (s32)PSX_SCRATCH;
+        arg0->field_0 = func_8006DEB0(arg0, PSX_SCRATCH_ADDR(0));
+        SetSp(scratchPrev);
+    }
+    if (!arg0->field_0)
+    {
+        func_8006DAE4(arg0, vec1, &vecDelta, (s16)*(u16*)(&((u8*)scratchAddr)[92]));
+    }
+    return arg0->field_0;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8006DA08); // 0x8006DA08
 
