@@ -738,13 +738,6 @@ typedef struct
 
 typedef struct
 {
-    s8 unk_0[14];
-    u8 field_E;
-    u8 field_F;
-} s_8008A35C;
-
-typedef struct
-{
     u8  field_0;
     s8  unk_1;
     s16 field_2;
@@ -786,16 +779,16 @@ typedef struct
 {
     u16 field_0;
     s8  unk_1[4];
-    s8 field_6;
-    s8 unk_7;
-    u8 field_8;
-    u8 field_9;
-    s8 unk_A[4];
-    s8 field_E;
-    s8 field_F;
-    u8 field_10;
-    u8 field_11;
-    s8 field_12[6];
+    s8  field_6;
+    s8  unk_7;
+    u8  field_8;
+    u8  field_9;
+    s8  unk_A[4];
+    u8  field_E;
+    u8  field_F;
+    u8  field_10;
+    u8  field_11;
+    s8  field_12[6];
 } s_800AD4C8;
 STATIC_ASSERT_SIZEOF(s_800AD4C8, 24);
 
@@ -1363,7 +1356,7 @@ typedef struct _MapOverlayHeader
     s8                field_16;
     s8                field_17;
     void              (**loadingScreenFuncs_18)(); // Player run: 1.
-                                                   // Background image: 2 (impossible to see as image is unloaded).
+                                                   // Background image: 2 (impossible to see as image is never loaded).
                                                    // Background image + stage number: 3. Debug leftover? Not all overlays have the required string.
     s_AreaLoadParams* mapAreaLoadParams_1C;
     void              (**mapEventFuncs_20)(); /** Points to array of event functions. */
@@ -1509,7 +1502,7 @@ extern s_D_800C44F0 D_800294F4[];
 
 extern RECT D_8002ABA4;
 
-extern s_8002AC04 D_8002AC04[];
+extern s_8002AC04 D_8002AC04[10];
 
 extern s_800BE9FC D_8002B2CC;
 
@@ -2170,6 +2163,8 @@ extern u16 D_800C42D2;
 // Didn't see any array accesses in Ghidra though, struct might be more likely.
 extern s_800C4478 D_800C4478;
 
+extern s8 D_800C447A;
+
 /** Table of player keyframe indices. Purpose unknown. */
 extern s_D_800C44F0 D_800C44F0[];
 
@@ -2236,33 +2231,6 @@ extern s8 D_800C4560;
 
 extern u8 D_800C4561;
 
-extern u8 D_800C4562;
-
-/** D_800C457C could be related to animations that play during cutscenes.
-
- * Called by:
- * - 'func_800D2C7C' in map0_s00.c
- * - 'func_800D2D2C' in map0_s00.c
- 
- Its value changes during cutscenes when Harry does any of the following
- actions:
- 
- * 0 - Nothing
- * 1 - Walking
- * 3 - Moves to the right?
- * 4 - Moves to the left
- 
- However this behaviour is irregular. After the first in-game dialogue
- with Harry, the value is kept as 1 (even when he is not walking or in
- a cutscene) until the next dialogue triggers (when Harry look sees
- Cheryl and the second FMV plays). Something similar happens on the
- next overlay and its value is 1 during the first
- cutscene and doesn't change until the player makes an input.
-*/
-extern u8 D_800C457C;
-
-extern VECTOR3 D_800C45F8;
-
 extern u8 D_800C4606;
 
 extern s32 D_800C4608;
@@ -2299,7 +2267,7 @@ extern s_Sfx D_800ACAA8[];
 
 extern u8 D_800AD480[24];
 
-extern s_800AD4C8 D_800AD4C8[];
+extern s_800AD4C8 D_800AD4C8[70];
 
 extern s_MapOverlayHeader g_MapOverlayHeader; // 0x800C957C
 
@@ -2963,7 +2931,7 @@ void func_800892DC(s32 idx, u8 arg1);
 
 void func_80089314(s32 arg0);
 
-void func_800893D0(s32 arg0);
+void func_800893D0(q19_12 arg0);
 
 void func_8008944C();
 
@@ -2997,7 +2965,7 @@ void func_8008A0E4(s16, s8, s_SubCharacter*, s_PlayerCombat*, s32, s16, s16);
 
 u8 func_8008A270(s32 idx);
 
-s32 func_8008A35C(s_8008A35C* arg0, s32 arg1);
+s32 func_8008A35C(s_800AD4C8* arg0, s32 arg1);
 
 void func_8008A384(s_SubCharacter* chara);
 
@@ -3161,12 +3129,6 @@ void func_8007029C(VECTOR3* arg0, s32 arg1, s16 angle);
 void func_800705E4(GsCOORDINATE2*, s32, s32, s32, s32);
 
 void func_80074254(s32 arg0, s32 arg1); // `arg1` is pointer?
-
-/** Player controller? */
-void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra);
-
-/** Player function. */
-void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra);
 
 void func_8007D6E0();
 
@@ -3585,8 +3547,6 @@ void func_80071968(s_SubCharacter*, s_MainCharacterExtra*, void*, GsCOORDINATE2*
 void func_80071CE8(s_SubCharacter*, s_MainCharacterExtra*, GsCOORDINATE2*);
 
 void func_8007C0D8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coord);
-
-void func_8007C800(s_SubCharacter* chara, s_MainCharacterExtra* extra);
 
 void func_8007D090(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coord);
 

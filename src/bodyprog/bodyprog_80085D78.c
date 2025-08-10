@@ -1620,7 +1620,7 @@ void func_80089314(s32 arg0) // 0x80089314
     func_800892DC(0x15, D_800AFD04 + 32);
 }
 
-void func_800893D0(s32 arg0) // 0x800893D0
+void func_800893D0(q19_12 arg0) // 0x800893D0
 {
     u32 var;
 
@@ -1943,7 +1943,7 @@ u8 func_8008A2E0(s32 arg0)
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008A2E0); // 0x8008A2E0
 #endif
 
-s32 func_8008A35C(s_8008A35C* arg0, s32 arg1) // 0x8008A35C
+s32 func_8008A35C(s_800AD4C8* arg0, s32 arg1) // 0x8008A35C
 {
     s32 var;
     s32 res;

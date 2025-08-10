@@ -66,8 +66,8 @@ void Ai_Bloodsucker_Init(s_SubCharacter* chara)
 
     ModelAnim_AnimInfoSet(&chara->model_0.anim_4, sharedData_800D5ABC_3_s03);
 
-    chara->field_C0 = 0;
-    chara->field_BC = 0;
-    chara->field_B8 = 0;
-    chara->field_B4 = 0;
+    chara->damageReceived_C0 = 0;
+    chara->field_BC          = 0;
+    chara->field_B8          = 0;
+    chara->field_B4          = 0;
 }

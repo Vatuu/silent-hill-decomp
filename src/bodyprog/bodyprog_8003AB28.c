@@ -659,7 +659,7 @@ void func_8003BCF4() // 0x8003BCF4
 }
 
 // ========================================
-// UNKNOWN
+// UNKNOWN - IN-GAME LOOP RELATED
 // ========================================
 
 // TODO: Remake this whenever we have further context of `D_8002500C`.
@@ -1200,17 +1200,17 @@ s32 func_8003CD5C() // 0x8003CD5C
 
 void func_8003CD6C(s_PlayerCombat* arg0) // 0x8003CD6C
 {
-    s32 var_a0;
-    s8  temp_v0;
+    s32 itemId;
+    s8  equippedWeaponId;
 
-    temp_v0 = arg0->field_F;
-    var_a0  = NO_VALUE;
-    if (temp_v0 != NO_VALUE)
+    equippedWeaponId = arg0->equippedWeapon_F;
+    itemId           = NO_VALUE;
+    if (equippedWeaponId != NO_VALUE)
     {
-        var_a0 = temp_v0 + 0x80;
+        itemId = equippedWeaponId + 0x80;
     }
 
-    func_8003CDA0(var_a0);
+    func_8003CDA0(itemId);
 }
 
 s32 func_8003CDA0(s32 itemIdx)

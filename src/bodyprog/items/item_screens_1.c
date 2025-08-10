@@ -21,19 +21,19 @@ void Inventory_ExitAnimEquippedItemUpdate(u8* arg0) // 0x8004C088
 
     if (g_SysWork.player_4C.extra_128.field_1C < 2 && temp >= 0)
     {
-        if (D_800C3950 != g_SysWork.playerCombatInfo_38.field_F)
+        if (D_800C3950 != g_SysWork.playerCombatInfo_38.equippedWeapon_F)
         {
             g_SysWork.playerCombatInfo_38.isAiming_13 = false;
         }
 
         temp_v0 = D_800C3950 % 10;
 
-        if (temp_v0 == 5 && g_SysWork.playerCombatInfo_38.field_F != temp_v0)
+        if (temp_v0 == 5 && g_SysWork.playerCombatInfo_38.equippedWeapon_F != temp_v0)
         {
             goto Inventory_ExitAnimEquippedItemUpdate_block; // TODO: Remove goto if possible.
         }
 
-        if (temp_v0 == 2 && g_SysWork.playerCombatInfo_38.field_F != temp_v0)
+        if (temp_v0 == 2 && g_SysWork.playerCombatInfo_38.equippedWeapon_F != temp_v0)
         {
         Inventory_ExitAnimEquippedItemUpdate_block:
             g_SysWork.player_4C.chara_0.field_44                       = 0;
@@ -51,14 +51,14 @@ void Inventory_ExitAnimEquippedItemUpdate(u8* arg0) // 0x8004C088
 
             default:
 
-                if (g_SysWork.player_4C.extra_128.field_1C == 1 && (s8)D_800C3950 != g_SysWork.playerCombatInfo_38.field_F)
+                if (g_SysWork.player_4C.extra_128.field_1C == 1 && (s8)D_800C3950 != g_SysWork.playerCombatInfo_38.equippedWeapon_F)
                 {
                     g_SysWork.player_4C.extra_128.field_1C                     = 0;
                     g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C = PlayerFlag_None;
                 }
 
-                if (g_SysWork.player_4C.extra_128.field_24 >= 20 && g_SysWork.playerCombatInfo_38.field_F != NO_VALUE &&
-                    (s8)D_800C3950 == g_SysWork.playerCombatInfo_38.field_F)
+                if (g_SysWork.player_4C.extra_128.field_24 >= 20 && g_SysWork.playerCombatInfo_38.equippedWeapon_F != NO_VALUE &&
+                    (s8)D_800C3950 == g_SysWork.playerCombatInfo_38.equippedWeapon_F)
                 {
                     extraModelPtr0 = &g_SysWork.player_4C.extra_128.model_0;
                     if (extraModelPtr0->anim_4.animIdx_0 >= 66u)

@@ -2163,20 +2163,20 @@ void Inventory_ExitAnimFixes() // 0x80054634
 {
     u8 field_F;
 
-    field_F                          = (u8)g_SysWork.playerCombatInfo_38.field_F;
+    field_F                          = (u8)g_SysWork.playerCombatInfo_38.equippedWeapon_F;
     g_SavegamePtr->equippedWeapon_AA = g_Inventory_EquippedItem;
 
     if (g_SavegamePtr->equippedWeapon_AA)
     {
-        g_SysWork.playerCombatInfo_38.field_F = g_SavegamePtr->equippedWeapon_AA + 0x80;
+        g_SysWork.playerCombatInfo_38.equippedWeapon_F = g_SavegamePtr->equippedWeapon_AA + 0x80;
     }
     else
     {
-        g_SysWork.playerCombatInfo_38.field_F     = NO_VALUE;
-        g_SysWork.playerCombatInfo_38.isAiming_13 = false;
+        g_SysWork.playerCombatInfo_38.equippedWeapon_F = NO_VALUE;
+        g_SysWork.playerCombatInfo_38.isAiming_13      = false;
     }
 
-    func_800546A8((u8)g_SysWork.playerCombatInfo_38.field_F);
+    func_800546A8((u8)g_SysWork.playerCombatInfo_38.equippedWeapon_F);
     Inventory_ExitAnimEquippedItemUpdate(&field_F);
 }
 

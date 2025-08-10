@@ -46,10 +46,10 @@ void Ai_Groaner_Init(s_SubCharacter* chara)
 
     ModelAnim_AnimInfoSet(&chara->model_0.anim_4, sharedData_800EEB14_2_s00);
 
-    chara->field_C0 = 0;
-    chara->field_BC = 0;
-    chara->field_B8 = 0;
-    chara->field_B4 = 0;
+    chara->damageReceived_C0 = 0;
+    chara->field_BC          = 0;
+    chara->field_B8          = 0;
+    chara->field_B4          = 0;
 
     if (chara->model_0.stateStep_3 == 3)
     {

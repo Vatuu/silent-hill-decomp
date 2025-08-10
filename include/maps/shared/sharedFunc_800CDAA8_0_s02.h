@@ -1,3 +1,5 @@
+#include "bodyprog/player_logic.h"
+
 void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra* extra, GsCOORDINATE2* coord)
 {
     s_func_800699F8 sp10;

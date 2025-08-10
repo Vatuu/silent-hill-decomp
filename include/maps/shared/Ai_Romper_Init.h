@@ -57,10 +57,10 @@ void Ai_Romper_Init(s_SubCharacter* chara)
 
     ModelAnim_AnimInfoSet(&chara->model_0.anim_4, sharedData_800EC954_2_s02);
 
-    chara->field_C0 = 0;
-    chara->field_BC = 0;
-    chara->field_B8 = 0;
-    chara->field_B4 = 0;
+    chara->damageReceived_C0 = 0;
+    chara->field_BC          = 0;
+    chara->field_B8          = 0;
+    chara->field_B4          = 0;
 
     chara->properties_E4.larvalStalker.properties_E8[5].val32 = chara->properties_E4.larvalStalker.properties_E8[10].val32 = chara->position_18.vx;
     chara->properties_E4.larvalStalker.properties_E8[6].val32 = chara->properties_E4.larvalStalker.properties_E8[8].val32 = chara->position_18.vz;

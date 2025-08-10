@@ -414,6 +414,7 @@ typedef enum _InventoryItemId
     InventoryItemId_Ankh                 = 125,
     InventoryItemId_DaggerOfMelchior     = 126,
     InventoryItemId_DiskOfOuroboros      = 127,
+	
     InventoryItemId_KitchenKnife         = 128,
     InventoryItemId_SteelPipe            = 129,
     InventoryItemId_RockDrill            = 130,
@@ -436,6 +437,33 @@ typedef enum _InventoryItemId
     InventoryItemId_PocketRadio          = 225,
     InventoryItemId_GasolineTank         = 226
 } e_InventoryItemId;
+
+/** @brief Equipped weapon IDs. Derivative from `e_InventoryItemId`. */
+typedef enum _EquippedWeaponsId
+{
+	
+    EquippedWeaponId_KitchenKnife         = 0,
+    EquippedWeaponId_SteelPipe            = 1,
+    EquippedWeaponId_RockDrill            = 2,
+
+    EquippedWeaponId_Hammer               = 4,
+    EquippedWeaponId_Chainsaw             = 5,
+    EquippedWeaponId_Katana               = 6,
+    EquippedWeaponId_Axe                  = 7,
+
+    EquippedWeaponId_Handgun              = 32,
+    EquippedWeaponId_HuntingRifle         = 33,
+    EquippedWeaponId_Shotgun              = 34,
+    EquippedWeaponId_HyperBlaster         = 35,
+
+    EquippedWeaponId_HandgunBullets       = 64,
+    EquippedWeaponId_RifleShells          = 65,
+    EquippedWeaponId_ShotgunShells        = 66,
+
+    EquippedWeaponId_Flashlight           = 96,
+    EquippedWeaponId_PocketRadio          = 97,
+    EquippedWeaponId_GasolineTank         = 98
+} e_EquippedWeaponsId;
 
 /** @brief Player model bone indices. */
 typedef enum _PlayerBone
@@ -944,8 +972,10 @@ typedef struct _SubCharacter
     s32     moveSpeed_38;
     s16     headingAngle_3C;
     s16     flags_3E;
-    s8      field_40; // Used by `sharedFunc_800D2244_0_s00`.
-    s8      field_41; // Used by `sharedFunc_800D2244_0_s00`.
+    s8      field_40; // In player: Index of the NPC attacking the player.
+                      // In NPCs: Possibly the index of the NPC.
+    s8      field_41; // In player: Indicates what animation to reproduce when getting damage.
+                      // In NPCs: The ID (from `e_EquippedWeaponsId`) of the weapon which is getting attacked.
     s8      unk_42[2];
     s16     field_44;
     s8      unk_46[2];
@@ -957,18 +987,19 @@ typedef struct _SubCharacter
     s16     field_56; // }
     s32     field_58; // }
     VECTOR3 field_5C;
-    s8      unk_68[24]; // Probably `VECTOR3`s too. Indicates array?
+    VECTOR3 field_68;
+    VECTOR3 field_74;
     VECTOR3 field_80;
     VECTOR3 field_8C;
     VECTOR3 field_98;
-    s8      unk_A4[12]; // Probably `VECTOR3`s too. Indicates array?
+    VECTOR3 field_A4;
     q19_12  health_B0;
-    s32     field_B4;      // X?
-    s32     field_B8;      // Y?
-    s32     field_BC;      // Z?
-    s32     field_C0;      // Related to health.
-    u16     dead_timer_C4; // Part of `shBattleInfo` struct in SH2, may use something similar here.
-    s16     timer_C6;      // Some sort of timer, value written by `Ai_LarvalStalker_Update`.
+    s32     field_B4;          // X?
+    s32     field_B8;          // Y?
+    s32     field_BC;          // Z?
+    q19_12  damageReceived_C0;
+    u16     dead_timer_C4;     // Part of `shBattleInfo` struct in SH2, may use something similar here.
+    s16     timer_C6;          // Some sort of timer, value written by `Ai_LarvalStalker_Update`.
 
     // Fields seen used inside maps (eg. `map0_s00` `func_800D923C`)
 
@@ -982,7 +1013,7 @@ typedef struct _SubCharacter
     s16               field_D6;
     s_SubCharacter_D8 field_D8;
 
-    s32 unk_E0     : 8;
+    s32 unk_E0     : 8; // Something related to colisions. In enemies if the player is coliding with the only enemy in memory and the enemy is knocked then this value will turn 1.
     s32 field_E0_8 : 4;
     s32 unk_E0_12  : 20;
 
@@ -999,7 +1030,7 @@ typedef struct _MainCharacterExtra
 {
     s_Model model_0; // For player, this is a copy of model_0 in its corresponding s_SubCharacter.
     s32     field_18;
-    s32     field_1C; // Some kind of state. 0: nothing, 1: unknown bent over pose, 2: AFK, 8: dying, 5: forcefully turned around.
+    s32     field_1C; // Some kind of state related to harm animation, but it could also be related to animations were the player doesn't have control as it also related to the idle animation.
     s32     field_20; // Some kind of anim state related to current action (running, walking, sidestepping, etc.).
     s32     field_24; // Some kind of anim state related to current action (running, walking, sidestepping, etc.). Sometimes same as above, but not always.
     s32     field_28; // Forcefully setting to 1 opens options menu.
@@ -1017,7 +1048,7 @@ typedef struct _PlayerCombat
 {
     VECTOR3 field_0;
     s8      unk_C[3];
-    s8      field_F; // Current weapon selected, doesn't seem to be related to `e_InventoryItemId`.
+    s8      equippedWeapon_F; // `e_EquippedWeaponsId`.
     u8      currentWeaponAmmo_10;
     s8      totalWeaponAmmo_11;
     s8      field_12;

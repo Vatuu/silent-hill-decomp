@@ -28,10 +28,10 @@ void Ai_HangedScratcher_Init(s_SubCharacter* chara)
 
     ModelAnim_AnimInfoSet(&chara->model_0.anim_4, sharedData_800D91A0_5_s00);
 
-    chara->field_C0 = 0;
-    chara->field_BC = 0;
-    chara->field_B8 = 0;
-    chara->field_B4 = 0;
+    chara->damageReceived_C0 = 0;
+    chara->field_BC          = 0;
+    chara->field_B8          = 0;
+    chara->field_B4          = 0;
 
     switch (chara->model_0.stateStep_3)
     {

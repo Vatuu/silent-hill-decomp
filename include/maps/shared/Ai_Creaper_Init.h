@@ -85,10 +85,10 @@ void Ai_Creaper_Init(s_SubCharacter* chara)
 
     ModelAnim_AnimInfoSet(&chara->model_0.anim_4, sharedData_800E0D38_1_s02);
 
-    chara->field_C0 = 0;
-    chara->field_BC = 0;
-    chara->field_B8 = 0;
-    chara->field_B4 = 0;
+    chara->damageReceived_C0 = 0;
+    chara->field_BC          = 0;
+    chara->field_B8          = 0;
+    chara->field_B4          = 0;
 
     chara->properties_E4.larvalStalker.properties_E8[3].val32 = chara->position_18.vx;
     chara->properties_E4.larvalStalker.properties_E8[4].val32 = chara->position_18.vz;

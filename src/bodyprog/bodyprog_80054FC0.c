@@ -611,7 +611,10 @@ s32 func_8005D974() // 0x8005D974
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8005D9B8); // 0x8005D9B8
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8005DC1C); // 0x8005DC1C
+void func_8005DC1C(s32 arg0, VECTOR3* arg1, s32 arg2, s32 arg3)
+{
+	func_8005DC3C(arg0, arg1, arg2, arg3, 0);
+}
 
 void func_8005DC3C(s32 sfx, VECTOR3* pos, s32 arg2, s32 arg3, s32 arg4) // 0x8005DC3C
 {
@@ -796,7 +799,11 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80068E0C); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_800692A4); // 0x800692A4
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_800697EC); // 0x800697EC
+void func_800697EC()
+{
+    func_80069820(1);
+    D_800C447A = 0;
+}
 
 u16 func_80069810() // 0x80069810
 {
@@ -1780,7 +1787,7 @@ void Player_Logic_Update(s_SubCharacter* chara, void* arg1, GsCOORDINATE2* coord
 
     if (g_DeltaTime0 != FP_TIME(0.0f))
     {
-        func_8007C800(chara, extra);
+        Player_DamageHandle(chara, extra);
 
         if (g_Player_IsInWalkToRunTransition)
         {
@@ -2014,9 +2021,9 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                         chara->model_0.stateStep_3++;
                     }
                 }
-                else if (g_SysWork.playerCombatInfo_38.field_F < 32)
+                else if (g_SysWork.playerCombatInfo_38.equippedWeapon_F < 32)
                 {
-                    if ((g_SysWork.playerCombatInfo_38.field_F == 5 || g_SysWork.playerCombatInfo_38.field_F == 2) &&
+                    if ((g_SysWork.playerCombatInfo_38.equippedWeapon_F == EquippedWeaponId_Chainsaw || g_SysWork.playerCombatInfo_38.equippedWeapon_F == EquippedWeaponId_RockDrill) &&
                         g_SysWork.player_4C.chara_0.properties_E4.player.field_114 != 0)
                     {
                         if (chara->model_0.stateStep_3 == 0)
@@ -2050,7 +2057,7 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                         chara->model_0.stateStep_3++;
                     }
                 }
-                else if (g_SysWork.playerCombatInfo_38.field_F == 33)
+                else if (g_SysWork.playerCombatInfo_38.equippedWeapon_F == EquippedWeaponId_HuntingRifle)
                 {
                     if (chara->model_0.stateStep_3 == 0)
                     {
@@ -2103,7 +2110,7 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                                 (var_s2 == 0 ||
                                  ((g_GameWork.config_0.optExtraWeaponCtrl_23 != 0 && D_800C457E == 0) ||
                                   (g_GameWork.config_0.optExtraWeaponCtrl_23 == 0 && D_800C457E != 0)) && 
-                                 (g_SysWork.playerCombatInfo_38.field_F % 10) == 1))
+                                 (g_SysWork.playerCombatInfo_38.equippedWeapon_F % 10) == 1))
                             {
                                 g_SysWork.player_4C.extra_128.field_24 = 2;
                             }
@@ -2182,28 +2189,28 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                 {
                     if (D_800C454C != FP_TIME(0.0f))
                     {
-                        switch (g_SysWork.playerCombatInfo_38.field_F)
+                        switch (g_SysWork.playerCombatInfo_38.equippedWeapon_F)
                         {
-                            case 0:
+                            case EquippedWeaponId_KitchenKnife:
                                 g_SysWork.player_4C.chara_0.properties_E4.player.field_126 = (u32)(D_800C454C * 0x465) >> 9;
                                 break;
 
-                            case 5:
-                            case 6:
-                            case 7:
+                            case EquippedWeaponId_Chainsaw:
+                            case EquippedWeaponId_Katana:
+                            case EquippedWeaponId_Axe:
                                 g_SysWork.player_4C.chara_0.properties_E4.player.field_126 = (u32)(D_800C454C * 0x15F9) >> 11;
                                 break;
 
-                            case 1:
-                            case 4:
+                            case EquippedWeaponId_SteelPipe:
+                            case EquippedWeaponId_Hammer:
                                 g_SysWork.player_4C.chara_0.properties_E4.player.field_126 = ((u32)(D_800C454C * 0xD2F) >> 10);
                                 break;
 
-                            case 2:
-                            case 32:
-                            case 33:
-                            case 34:
-                            case 35:
+                            case EquippedWeaponId_RockDrill:
+                            case EquippedWeaponId_Handgun:
+                            case EquippedWeaponId_HuntingRifle:
+                            case EquippedWeaponId_Shotgun:
+                            case EquippedWeaponId_HyperBlaster:
                                 g_SysWork.player_4C.chara_0.properties_E4.player.field_126 = (-(D_800C454C * 0x87F0) >> 14);
                                 break;
                         }
@@ -2332,7 +2339,7 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
 
                 func_800713B4(chara, var_s2 | (1 << 0));
 
-                if (g_SysWork.playerCombatInfo_38.field_F != 35)
+                if (g_SysWork.playerCombatInfo_38.equippedWeapon_F != EquippedWeaponId_HyperBlaster)
                 {
                     func_80071284(5);
                 }
@@ -2369,11 +2376,11 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                           chara->model_0.anim_4.keyframeIdx0_8 <= 11) || 
                          chara->model_0.anim_4.keyframeIdx0_8 == 22 || chara->model_0.anim_4.keyframeIdx0_8 == 21)
                 {
-                    if (g_SysWork.playerCombatInfo_38.field_F < 0x20 && var_s2 != 0)
+                    if (g_SysWork.playerCombatInfo_38.equippedWeapon_F < 0x20 && var_s2 != 0)
                     {
                         if (((extra->model_0.anim_4.animIdx_0 == 59 || extra->model_0.anim_4.animIdx_0 == 61) && 
-                            (g_SysWork.playerCombatInfo_38.field_F != 5 &&
-                             g_SysWork.playerCombatInfo_38.field_F != 2)) || 
+                            (g_SysWork.playerCombatInfo_38.equippedWeapon_F != EquippedWeaponId_Chainsaw &&
+                             g_SysWork.playerCombatInfo_38.equippedWeapon_F != EquippedWeaponId_RockDrill)) || 
                             extra->model_0.anim_4.animIdx_0 == 63)
                         {
                             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Unk10;
@@ -2728,7 +2735,7 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
 
                 func_800713B4(chara, var_s2 + 4);
 
-                if (g_SysWork.playerCombatInfo_38.field_F != 35)
+                if (g_SysWork.playerCombatInfo_38.equippedWeapon_F != EquippedWeaponId_HyperBlaster)
                 {
                     func_80071284(5);
                 }
@@ -2762,12 +2769,12 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                          chara->model_0.anim_4.keyframeIdx0_8 == 67 ||
                          chara->model_0.anim_4.keyframeIdx0_8 == 66)
                 {
-                    if (g_SysWork.playerCombatInfo_38.field_F < 32 && var_s2 != 0)
+                    if (g_SysWork.playerCombatInfo_38.equippedWeapon_F < 32 && var_s2 != 0)
                     {
                         if (((extra->model_0.anim_4.animIdx_0 == 59 ||
                               extra->model_0.anim_4.animIdx_0 == 61) &&
-                             (g_SysWork.playerCombatInfo_38.field_F != 5 &&
-                              g_SysWork.playerCombatInfo_38.field_F != 2)) ||
+                             (g_SysWork.playerCombatInfo_38.equippedWeapon_F != EquippedWeaponId_Chainsaw &&
+                              g_SysWork.playerCombatInfo_38.equippedWeapon_F != EquippedWeaponId_RockDrill)) || 
                             extra->model_0.anim_4.animIdx_0 == 63)
                         {
                             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Unk10;
@@ -2839,12 +2846,12 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
             {
                 if (D_800C45AE == 0)
                 {
-                    if (g_SysWork.playerCombatInfo_38.field_F < 32 && var_s2 != 0)
+                    if (g_SysWork.playerCombatInfo_38.equippedWeapon_F < 32 && var_s2 != 0)
                     {
                         if (((extra->model_0.anim_4.animIdx_0 == 59 ||
                               extra->model_0.anim_4.animIdx_0 == 61) &&
-                             (g_SysWork.playerCombatInfo_38.field_F != 5 &&
-                              g_SysWork.playerCombatInfo_38.field_F != 2)) ||
+                             (g_SysWork.playerCombatInfo_38.equippedWeapon_F != EquippedWeaponId_Chainsaw &&
+                              g_SysWork.playerCombatInfo_38.equippedWeapon_F != EquippedWeaponId_RockDrill)) || 
                             extra->model_0.anim_4.animIdx_0 == 63)
                         {
                             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Unk10;
@@ -2916,11 +2923,12 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
             {
                 if (D_800C45AC == 0)
                 {
-                    if (g_SysWork.playerCombatInfo_38.field_F < 32 && var_s2 != 0)
+                    if (g_SysWork.playerCombatInfo_38.equippedWeapon_F < 32 && var_s2 != 0)
                     {
                         if (((extra->model_0.anim_4.animIdx_0 == 59 ||
                               extra->model_0.anim_4.animIdx_0 == 61) &&
-                             (g_SysWork.playerCombatInfo_38.field_F != 5 && g_SysWork.playerCombatInfo_38.field_F != 2)) ||
+                             (g_SysWork.playerCombatInfo_38.equippedWeapon_F != EquippedWeaponId_Chainsaw &&
+                              g_SysWork.playerCombatInfo_38.equippedWeapon_F != EquippedWeaponId_RockDrill)) || 
                              extra->model_0.anim_4.animIdx_0 == 63)
                         {
                             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Unk10;
@@ -3556,9 +3564,9 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
             break;
 
         case 34:
-            if (g_SysWork.playerCombatInfo_38.field_F < 32 && (g_SysWork.playerCombatInfo_38.field_F % 10) == 6)
+            if (g_SysWork.playerCombatInfo_38.equippedWeapon_F < 32 && (g_SysWork.playerCombatInfo_38.equippedWeapon_F % 10) == 6)
             {
-                if (g_SysWork.playerCombatInfo_38.field_F == 16)
+                if (g_SysWork.playerCombatInfo_38.equippedWeapon_F == 16)
                 {
                     if (g_SysWork.player_4C.chara_0.properties_E4.player.field_126 == 0 && 
                         (extra->model_0.anim_4.keyframeIdx0_8 >= D_800C44F0[D_800AF220].field_4 + 7))
@@ -3574,7 +3582,7 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                 }
             }
 
-            if (g_SysWork.playerCombatInfo_38.field_F < 32 && (g_SysWork.playerCombatInfo_38.field_F % 10) == 6)
+            if (g_SysWork.playerCombatInfo_38.equippedWeapon_F < 32 && (g_SysWork.playerCombatInfo_38.equippedWeapon_F % 10) == 6)
             {
                 if (g_SysWork.player_4C.chara_0.properties_E4.player.field_126 != 0)
                 {
@@ -3597,9 +3605,9 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                 }
             }
 
-            if (g_SysWork.field_2353 == NO_VALUE || g_SysWork.playerCombatInfo_38.field_F < 32)
+            if (g_SysWork.field_2353 == NO_VALUE || g_SysWork.playerCombatInfo_38.equippedWeapon_F < 32)
             {
-                if (g_SysWork.playerCombatInfo_38.field_F >= 32)
+                if (g_SysWork.playerCombatInfo_38.equippedWeapon_F >= 32)
                 {
                     if (g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & PlayerFlag_Unk11)
                     {
@@ -3620,7 +3628,7 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                 }
                 else if (g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & PlayerFlag_Unk10)
                 {
-                    if (g_SysWork.playerCombatInfo_38.field_F == 5 || g_SysWork.playerCombatInfo_38.field_F == 2)
+                    if (g_SysWork.playerCombatInfo_38.equippedWeapon_F == EquippedWeaponId_Chainsaw || g_SysWork.playerCombatInfo_38.equippedWeapon_F == EquippedWeaponId_RockDrill)
                     {
                         if (chara->model_0.stateStep_3 == 0)
                         {
@@ -3643,7 +3651,7 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                         chara->model_0.stateStep_3++;
                     }
                 }
-                else if (g_SysWork.playerCombatInfo_38.field_F == 2)
+                else if (g_SysWork.playerCombatInfo_38.equippedWeapon_F == EquippedWeaponId_RockDrill)
                 {
                     if (D_800AF217 == 1)
                     {
@@ -3703,11 +3711,11 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                 chara->model_0.stateStep_3++;
             }
 
-            if (g_SysWork.playerCombatInfo_38.field_F >= 32 ||
-                ((g_SysWork.playerCombatInfo_38.field_F % 10) != 1 &&
-                 (g_SysWork.playerCombatInfo_38.field_F % 10) != 4 &&
-                 (g_SysWork.playerCombatInfo_38.field_F % 10) != 2 &&
-                 (g_SysWork.playerCombatInfo_38.field_F % 10) != 6))
+            if (g_SysWork.playerCombatInfo_38.equippedWeapon_F >= 32 ||
+                ((g_SysWork.playerCombatInfo_38.equippedWeapon_F % 10) != 1 &&
+                 (g_SysWork.playerCombatInfo_38.equippedWeapon_F % 10) != 4 &&
+                 (g_SysWork.playerCombatInfo_38.equippedWeapon_F % 10) != 2 &&
+                 (g_SysWork.playerCombatInfo_38.equippedWeapon_F % 10) != 6))
             {
                 if (chara->model_0.anim_4.animIdx_0 & (1 << 0) && extra->model_0.anim_4.animIdx_0 & (1 << 0) &&
                     (chara->model_0.anim_4.animIdx_0 >= 58 || chara->model_0.anim_4.keyframeIdx0_8 == D_800C44F6))
@@ -4118,7 +4126,7 @@ void func_8007C0D8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
 
     sp20.vy = FP_MULTIPLY_PRECISE(chara->field_34, g_DeltaTime0, Q12_SHIFT);
 
-    if (g_SavegamePtr->mapOverlayId_A4 == 8)
+    if (g_SavegamePtr->mapOverlayId_A4 == MapOverlayId_MAP1_S05)
     {
         sp20.vx = sp20.vx + D_800C45B0.vx;
         sp30.vx = sp20.vx;
@@ -4128,7 +4136,7 @@ void func_8007C0D8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
 
     func_80069B24(&D_800C4590, &sp20, chara);
 
-    if (g_SavegamePtr->mapOverlayId_A4 == 8)
+    if (g_SavegamePtr->mapOverlayId_A4 == MapOverlayId_MAP1_S05)
     {
         if (D_800C45B0.vx != 0 && (DIFF_SIGN(sp30.vx, D_800C4590.field_0.vx) || abs(sp30.vx) >= ABS(D_800C4590.field_0.vx)))
         {
@@ -4229,7 +4237,7 @@ void func_8007C0D8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
     coord->coord.t[2]                            = FP_FROM(chara->position_18.vz, Q4_SHIFT);
 }
 
-void func_8007C800(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007C800
+void Player_DamageHandle(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007C800
 {
     s16 sp10;
     u16 temp_s0;
@@ -4261,9 +4269,9 @@ void func_8007C800(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
         }
     }
 
-    if (g_Player_DisableControl || D_800C4562 != 0)
+    if (g_Player_DisableControl || g_Player_DisableDamage)
     {
-        chara->field_C0 = 0;
+        chara->damageReceived_C0 = 0;
         return;
     }
 
@@ -4293,14 +4301,15 @@ void func_8007C800(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
         case 40:
         case 47:
         case 48:
-            if (chara->field_C0 != 0 && !(g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & PlayerFlag_Unk14))
+		// Code related when enemies grab Harry.
+            if (chara->damageReceived_C0 != 0 && !(g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & PlayerFlag_Unk14))
             {
                 g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Unk14;
                 func_8005DC1C(var_s4, &chara->position_18, 0x20, 0);
                 chara->properties_E4.player.field_10C = 0x40;
             }
 
-            if (chara->field_C0 == 0)
+            if (chara->damageReceived_C0 == 0)
             {
                 g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk14;
             }
@@ -4331,8 +4340,7 @@ void func_8007C800(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
 
             if (chara->field_41 == 0x2F)
             {
-                g_SysWork.player_4C.chara_0.field_D6 = 0;
-
+                g_SysWork.player_4C.chara_0.field_D6   = 0;
                 g_SysWork.player_4C.extra_128.field_1C = 9;
                 chara->model_0.stateStep_3             = 0;
                 chara->model_0.state_2                 = 0;
@@ -4346,7 +4354,7 @@ void func_8007C800(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
             if (chara->field_41 >= 0x44 &&
                 chara->field_41 <  0x46)
             {
-                chara->field_C0 = 0;
+                chara->damageReceived_C0 = 0;
             }
             break;
 
@@ -4368,10 +4376,10 @@ void func_8007C800(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                 break;
             }
 
-            g_SysWork.field_2353                  = NO_VALUE;
-            g_SysWork.playerCombatInfo_38.field_F = (g_SavegamePtr->equippedWeapon_AA == 0) ? NO_VALUE : (g_SavegamePtr->equippedWeapon_AA - 0x80);
+            g_SysWork.field_2353                           = NO_VALUE;
+            g_SysWork.playerCombatInfo_38.equippedWeapon_F = (g_SavegamePtr->equippedWeapon_AA == 0) ? NO_VALUE : (g_SavegamePtr->equippedWeapon_AA - 0x80);
 
-            if (g_SysWork.playerCombatInfo_38.field_F == 2)
+            if (g_SysWork.playerCombatInfo_38.equippedWeapon_F == EquippedWeaponId_RockDrill)
             {
                 func_8004C564(2, 3);
             }
@@ -4404,7 +4412,7 @@ void func_8007C800(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
             }
 
             temp_s0   = ((temp_s0 - chara->rotation_24.vy) + 0x1000) & 0xFFF;
-            temp_v0_3 = chara->field_41 - 0x28;
+            temp_v0_3 = chara->field_41 - 40;
             switch (temp_v0_3)
             {
                 case 27:
@@ -4447,7 +4455,7 @@ void func_8007C800(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
 
                 case 20:
                 case 22:
-                    chara->field_C0                        = 0xA000;
+                    chara->damageReceived_C0               = 0xA000;
                     g_SysWork.player_4C.extra_128.field_1C = 0x13;
                     chara->model_0.stateStep_3             = 0;
                     chara->model_0.state_2                 = 0;
@@ -4672,14 +4680,14 @@ void func_8007C800(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
 
     if (g_SysWork.player_4C.extra_128.field_1C == 8)
     {
-        chara->field_C0 = 0;
-        chara->field_BC = 0;
-        chara->field_B8 = 0;
-        chara->field_B4 = 0;
+        chara->damageReceived_C0 = 0;
+        chara->field_BC          = 0;
+        chara->field_B8          = 0;
+        chara->field_B4          = 0;
         return;
     }
 
-    if (chara->field_C0 != 0)
+    if (chara->damageReceived_C0 != 0)
     {
         g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk2;
         if (!(g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & PlayerFlag_Unk14))
@@ -4689,24 +4697,24 @@ void func_8007C800(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
             chara->properties_E4.player.field_10C = 0x40;
         }
 
-        if (g_SavegamePtr->mapOverlayId_A4 == 0)
+        if (g_SavegamePtr->mapOverlayId_A4 == MapOverlayId_MAP0_S00)
         {
-            chara->health_B0 -= chara->field_C0 * 2;
+            chara->health_B0 -= chara->damageReceived_C0 * 2;
         }
         else
         {
             switch (g_SavegamePtr->gameDifficulty_260)
             {
                 case GameDifficulty_Easy:
-                    chara->field_C0 = (chara->field_C0 * 3) >> 2;
+                    chara->damageReceived_C0 = (chara->damageReceived_C0 * 3) >> 2;
                     break;
 
                 case GameDifficulty_Hard:
-                    chara->field_C0 = (chara->field_C0 * 6) >> 2;
+                    chara->damageReceived_C0 = (chara->damageReceived_C0 * 6) >> 2;
                     break;
             }
 
-            chara->health_B0 -= chara->field_C0;
+            chara->health_B0 -= chara->damageReceived_C0;
         }
 
         if (chara->health_B0 < 0)
@@ -4715,8 +4723,8 @@ void func_8007C800(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
             D_800C4561       = 1;
         }
 
-        func_800893D0(chara->field_C0);
-        chara->field_C0 = 0;
+        func_800893D0(chara->damageReceived_C0);
+        chara->damageReceived_C0 = 0;
     }
 
     if (chara->health_B0 <= FP_FLOAT_TO(0.0f, Q12_SHIFT) && g_SysWork.player_4C.extra_128.field_1C != 8 &&
@@ -4724,7 +4732,7 @@ void func_8007C800(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
         g_SysWork.player_4C.extra_128.field_1C != 40 && g_SysWork.player_4C.extra_128.field_1C != 47 &&
         g_SysWork.player_4C.extra_128.field_1C != 48 && !g_Player_IsInWalkToRunTransition)
     {
-        chara->field_40           = NO_VALUE;
+        chara->field_40          = NO_VALUE;
         g_SavegamePtr->field_238 = 0;
 
         for (i = 0; i < 4; i++)
@@ -4767,24 +4775,24 @@ void func_8007D090(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
     switch (g_SysWork.player_4C.extra_128.field_1C)
     {
         case 1:
-            switch (g_SysWork.playerCombatInfo_38.field_F)
+            switch (g_SysWork.playerCombatInfo_38.equippedWeapon_F)
             {
-                case 32:
+                case EquippedWeaponId_Handgun:
                     var_a2 = 20;
                     var_a3 = 2;
                     break;
 
-                case 33:
+                case EquippedWeaponId_HuntingRifle:
                     var_a2 = 18;
                     var_a3 = 6;
                     break;
 
-                case 34:
+                case EquippedWeaponId_Shotgun:
                     var_a2 = 26;
                     var_a3 = 3;
                     break;
 
-                case 35:
+                case EquippedWeaponId_HyperBlaster:
                     var_a2 = 30;
                     var_a3 = 0;
                     break;
@@ -4795,7 +4803,7 @@ void func_8007D090(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
                     break;
             }
 
-            if (g_SysWork.player_4C.extra_128.field_20 == 26 || g_SysWork.playerCombatInfo_38.field_F < 32)
+            if (g_SysWork.player_4C.extra_128.field_20 == 26 || g_SysWork.playerCombatInfo_38.equippedWeapon_F < 32)
             {
                 D_800AF212 = 0;
                 D_800AF210 = 0;
@@ -5100,7 +5108,7 @@ void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D970
     }
     else
     {
-        switch (g_SysWork.playerCombatInfo_38.field_F)
+        switch (g_SysWork.playerCombatInfo_38.equippedWeapon_F)
         {
             case NO_VALUE:
             case 8:
@@ -5133,7 +5141,7 @@ void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D970
     if (((u32)g_SysWork.player_4C.extra_128.field_1C - 7) >= 44 &&
         ((u32)g_SysWork.player_4C.extra_128.field_1C < 2 || g_SysWork.player_4C.extra_128.field_1C == 5 || g_SysWork.player_4C.extra_128.field_1C == 6))
     {
-        if (g_SysWork.playerCombatInfo_38.field_F >= 32 && g_SysWork.player_4C.extra_128.field_24 >= 20)
+        if (g_SysWork.playerCombatInfo_38.equippedWeapon_F >= 32 && g_SysWork.player_4C.extra_128.field_24 >= 20)
         {
             if (g_SysWork.player_4C.extra_128.field_1C == 1 && D_800AF21C != NO_VALUE)
             {
@@ -5165,12 +5173,12 @@ void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D970
 
             if (chara->field_44 > 0)
             {
-                func_8006342C(g_SysWork.playerCombatInfo_38.field_F, var_a1, sp98.vx, coord);
+                func_8006342C(g_SysWork.playerCombatInfo_38.equippedWeapon_F, var_a1, sp98.vx, coord);
             }
         }
         else
         {
-            switch (g_SysWork.playerCombatInfo_38.field_F)
+            switch (g_SysWork.playerCombatInfo_38.equippedWeapon_F)
             {
                 case NO_VALUE:
                 case 8:
@@ -5189,46 +5197,46 @@ void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D970
                     }
                     else
                     {
-                        switch (g_SysWork.playerCombatInfo_38.field_F % 10)
+                        switch (g_SysWork.playerCombatInfo_38.equippedWeapon_F % 10)
                         {
                             case 0:
-                                *(u32*)&sp90 = (FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.field_F].field_0, 0xF, Q12_SHIFT) & 0xFFFF) +
-                                               (-(FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.field_F].field_0, 0x4B, Q12_SHIFT - 1)) << 16);
-                                sp90.vz      = FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.field_F].field_0, 0x4B, Q12_SHIFT) >> 1;
+                                *(u32*)&sp90 = (FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.equippedWeapon_F].field_0, 0xF, Q12_SHIFT) & 0xFFFF) +
+                                               (-(FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.equippedWeapon_F].field_0, 0x4B, Q12_SHIFT - 1)) << 16);
+                                sp90.vz      = FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.equippedWeapon_F].field_0, 0x4B, Q12_SHIFT) >> 1;
                                 break;
 
                             case 1:
-                                *(u32*)&sp90 = (FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.field_F].field_0, 0xF, Q12_SHIFT) & 0xFFFF) +
-                                               (-(FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.field_F].field_0, 0xE1, Q12_SHIFT) >> 1) << 16);
-                                sp90.vz      = FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.field_F].field_0, 0x2D, Q12_SHIFT - 2);
+                                *(u32*)&sp90 = (FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.equippedWeapon_F].field_0, 0xF, Q12_SHIFT) & 0xFFFF) +
+                                               (-(FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.equippedWeapon_F].field_0, 0xE1, Q12_SHIFT) >> 1) << 16);
+                                sp90.vz      = FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.equippedWeapon_F].field_0, 0x2D, Q12_SHIFT - 2);
                                 break;
 
                             case 5:
-                                *(u32*)&sp90 = ((FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.field_F].field_0, 0xF, Q12_SHIFT) >> 1) & 0xFFFF) +
-                                               (-(FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.field_F].field_0, 0x87, Q12_SHIFT) >> 1) << 16);
-                                sp90.vz      = FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.field_F].field_0, 0x1EF, Q12_SHIFT) >> 1;
+                                *(u32*)&sp90 = ((FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.equippedWeapon_F].field_0, 0xF, Q12_SHIFT) >> 1) & 0xFFFF) +
+                                               (-(FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.equippedWeapon_F].field_0, 0x87, Q12_SHIFT) >> 1) << 16);
+                                sp90.vz      = FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.equippedWeapon_F].field_0, 0x1EF, Q12_SHIFT) >> 1;
                                 break;
 
                             case 2:
-                                *(u32*)&sp90 = (-(FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.field_F].field_0, 0x2D, Q12_SHIFT)) << 16);
-                                sp90.vz          = FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.field_F].field_0, 0x2D, Q12_SHIFT - 2);
+                                *(u32*)&sp90 = (-(FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.equippedWeapon_F].field_0, 0x2D, Q12_SHIFT)) << 16);
+                                sp90.vz          = FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.equippedWeapon_F].field_0, 0x2D, Q12_SHIFT - 2);
                                 break;
 
                             case 7:
-                                *(u32*)&sp90 = (-(FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.field_F].field_0, 0x2C1, Q12_SHIFT) >> 1) << 16);
-                                sp90.vz      = FP_MULTIPLY((u32)D_800AD4C8[g_SysWork.playerCombatInfo_38.field_F].field_0, 0xC3, Q12_SHIFT);
+                                *(u32*)&sp90 = (-(FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.equippedWeapon_F].field_0, 0x2C1, Q12_SHIFT) >> 1) << 16);
+                                sp90.vz      = FP_MULTIPLY((u32)D_800AD4C8[g_SysWork.playerCombatInfo_38.equippedWeapon_F].field_0, 0xC3, Q12_SHIFT);
                                 break;
 
                             case 4:
-                                *(u32*)&sp90 = ((FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.field_F].field_0, 0xF, Q12_SHIFT) >> 1) & 0xFFFF) +
-                                               (-(FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.field_F].field_0, 0x69, Q12_SHIFT)) << 16);
-                                sp90.vz      = FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.field_F].field_0, 0x13B, Q12_SHIFT) >> 1;
+                                *(u32*)&sp90 = ((FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.equippedWeapon_F].field_0, 0xF, Q12_SHIFT) >> 1) & 0xFFFF) +
+                                               (-(FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.equippedWeapon_F].field_0, 0x69, Q12_SHIFT)) << 16);
+                                sp90.vz      = FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.equippedWeapon_F].field_0, 0x13B, Q12_SHIFT) >> 1;
                                 break;
 
                             case 6:
-                                *(u32*)&sp90 = ((FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.field_F].field_0, 0xF, Q12_SHIFT) >> 1) & 0xFFFF) +
-                                               (-(FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.field_F].field_0, 0x13B, Q12_SHIFT) >> 1) << 16);
-                                sp90.vz      = FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.field_F].field_0, 0xF, Q12_SHIFT);
+                                *(u32*)&sp90 = ((FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.equippedWeapon_F].field_0, 0xF, Q12_SHIFT) >> 1) & 0xFFFF) +
+                                               (-(FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.equippedWeapon_F].field_0, 0x13B, Q12_SHIFT) >> 1) << 16);
+                                sp90.vz      = FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.equippedWeapon_F].field_0, 0xF, Q12_SHIFT);
                                 break;
                         }
 
@@ -5252,7 +5260,7 @@ void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D970
             sp98.vy = ratan2(temp_s0, sp70.vy - FP_FROM(g_SysWork.playerCombatInfo_38.field_0.vy, Q4_SHIFT));
         }
 
-        if (g_SysWork.playerCombatInfo_38.field_F == 0x23 &&
+        if (g_SysWork.playerCombatInfo_38.equippedWeapon_F == EquippedWeaponId_HyperBlaster &&
             g_SysWork.playerCombatInfo_38.isAiming_13 &&
             model->anim_4.animIdx_0 >= 57 &&
             model->anim_4.keyframeIdx0_8 >= 574)
@@ -5289,10 +5297,10 @@ void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D970
 
         if (g_SysWork.player_4C.extra_128.field_1C < 2)
         {
-            if ((g_SysWork.playerCombatInfo_38.field_F == 5 &&
+            if ((g_SysWork.playerCombatInfo_38.equippedWeapon_F == EquippedWeaponId_Chainsaw &&
                  model->anim_4.keyframeIdx0_8 >= 572 &&
                  model->anim_4.keyframeIdx0_8 < 584) ||
-                (g_SysWork.playerCombatInfo_38.field_F == 2 &&
+                (g_SysWork.playerCombatInfo_38.equippedWeapon_F == EquippedWeaponId_RockDrill &&
                  chara->model_0.anim_4.keyframeIdx0_8 >= 577 &&
                  model->anim_4.keyframeIdx0_8 < 583))
             {
@@ -5328,20 +5336,20 @@ void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D970
 
         if (g_SysWork.player_4C.extra_128.field_20 != 24)
         {
-            if (g_SysWork.playerCombatInfo_38.field_F >= 32)
+            if (g_SysWork.playerCombatInfo_38.equippedWeapon_F >= 32)
             {
                 if (D_800C4554 != NO_VALUE || D_800C4556 != D_800C4554)
                 {
-                    func_8008A0E4(chara->field_44, g_SysWork.playerCombatInfo_38.field_F, chara, &D_800C44E0, g_SysWork.npcs_1A0, D_800C4556, D_800C4554);
+                    func_8008A0E4(chara->field_44, g_SysWork.playerCombatInfo_38.equippedWeapon_F, chara, &D_800C44E0, g_SysWork.npcs_1A0, D_800C4556, D_800C4554);
                 }
                 else
                 {
-                    func_8008A0E4(chara->field_44, g_SysWork.playerCombatInfo_38.field_F, chara, &D_800C44E0, g_SysWork.npcs_1A0, sp98.vx, sp98.vy);
+                    func_8008A0E4(chara->field_44, g_SysWork.playerCombatInfo_38.equippedWeapon_F, chara, &D_800C44E0, g_SysWork.npcs_1A0, sp98.vx, sp98.vy);
                 }
             }
             else
             {
-                func_8008A0E4(chara->field_44, g_SysWork.playerCombatInfo_38.field_F, chara, &g_SysWork.playerCombatInfo_38, g_SysWork.npcs_1A0, sp98.vx, sp98.vy);
+                func_8008A0E4(chara->field_44, g_SysWork.playerCombatInfo_38.equippedWeapon_F, chara, &g_SysWork.playerCombatInfo_38, g_SysWork.npcs_1A0, sp98.vx, sp98.vy);
             }
 
             D_800C42D2 = sp98.vx;
@@ -5407,7 +5415,7 @@ void func_8007E5AC() // 0x8007E5AC
     {
         for (i = 0; g_SavegamePtr->items_0[i].id_0 != g_SavegamePtr->equippedWeapon_AA && i < INVENTORY_ITEM_COUNT_MAX; i++);
 
-        g_SysWork.playerCombatInfo_38.field_F              = g_SavegamePtr->equippedWeapon_AA + InventoryItemId_KitchenKnife;
+        g_SysWork.playerCombatInfo_38.equippedWeapon_F     = g_SavegamePtr->equippedWeapon_AA + InventoryItemId_KitchenKnife;
         g_SysWork.playerCombatInfo_38.currentWeaponAmmo_10 = g_SavegamePtr->items_0[i].count_1;
         g_SysWork.playerCombatInfo_38.field_12             = i;
 
@@ -5431,7 +5439,7 @@ void func_8007E5AC() // 0x8007E5AC
     }
     else
     {
-        g_SysWork.playerCombatInfo_38.field_F              = NO_VALUE;
+        g_SysWork.playerCombatInfo_38.equippedWeapon_F     = NO_VALUE;
         g_SysWork.playerCombatInfo_38.currentWeaponAmmo_10 = 0;
         g_SysWork.playerCombatInfo_38.totalWeaponAmmo_11   = 0;
         g_SysWork.playerCombatInfo_38.field_12             = NO_VALUE;
@@ -5504,7 +5512,7 @@ void func_8007E9C4() // 0x8007E9C4
 
     chara->rotation_24.pad = FP_ANGLE(90.0f);
     D_800C4561             = 0;
-    D_800C4562             = 0;
+    g_Player_DisableDamage = 0;
     D_800C455C             = 0;
     D_800C4558             = 0;
     D_800C45C0             = 0;
@@ -5520,10 +5528,10 @@ void func_8007E9C4() // 0x8007E9C4
     chara->properties_E4.player.flags_11C                      = 0;
     chara->properties_E4.player.field_126                      = 0;
 
-    chara->field_C0 = 0;
-    chara->field_BC = 0;
-    chara->field_B8 = 0;
-    chara->field_B4 = 0;
+    chara->damageReceived_C0 = 0;
+    chara->field_BC          = 0;
+    chara->field_B8          = 0;
+    chara->field_B4          = 0;
 
     D_800C45BC           = 0;
     chara->flags_3E     &= ~(1 << 3);
@@ -5575,7 +5583,7 @@ void func_8007EBBC() // 0x8007EBBC
     var_a2 = 0;
 
     g_SysWork.field_2353 = NO_VALUE;
-    temp_v1              = g_SysWork.playerCombatInfo_38.field_F + 1;
+    temp_v1              = g_SysWork.playerCombatInfo_38.equippedWeapon_F + 1;
 
     switch (temp_v1)
     {
@@ -5603,14 +5611,14 @@ void func_8007EBBC() // 0x8007EBBC
         case 2:
         case 5:
             D_800C4570 = D_800AFBF4[2];
-            switch (g_SysWork.playerCombatInfo_38.field_F)
+            switch (g_SysWork.playerCombatInfo_38.equippedWeapon_F)
             {
-                case 4:
+                case EquippedWeaponId_Hammer:
                     var_a1 = 10;
                     var_a2 = 5;
                     break;
 
-                case 1:
+                case EquippedWeaponId_SteelPipe:
                     var_a1 = 20;
                     var_a2 = 10;
                     break;
@@ -5679,12 +5687,12 @@ void func_8007EBBC() // 0x8007EBBC
         D_800C44F0[i] = D_800294F4[i + var_a2];
     }
 
-    if (g_SysWork.playerCombatInfo_38.field_F != NO_VALUE && D_800AF224 != g_SysWork.playerCombatInfo_38.field_F)
+    if (g_SysWork.playerCombatInfo_38.equippedWeapon_F != NO_VALUE && D_800AF224 != g_SysWork.playerCombatInfo_38.equippedWeapon_F)
     {
-        D_800AF224 = g_SysWork.playerCombatInfo_38.field_F;
-        func_8007F14C(g_SysWork.playerCombatInfo_38.field_F);
+        D_800AF224 = g_SysWork.playerCombatInfo_38.equippedWeapon_F;
+        func_8007F14C(g_SysWork.playerCombatInfo_38.equippedWeapon_F);
 
-        switch (g_SysWork.playerCombatInfo_38.field_F)
+        switch (g_SysWork.playerCombatInfo_38.equippedWeapon_F)
         {
             case 0:
                 Fs_QueueStartRead(FILE_ANIM_HB_WEP3_ANM, FS_BUFFER_12);
@@ -5795,8 +5803,8 @@ void func_8007F1CC() // 0x8007F1CC
 
 void func_8007F250(u8* ptr, s8 arg1) // 0x8007F250
 {
-    *ptr       = D_800C4561;
-    D_800C4562 = arg1;
+    *ptr                   = D_800C4561;
+    g_Player_DisableDamage = arg1;
 }
 
 bool func_8007F26C() // 0x8007F26C
@@ -5854,7 +5862,7 @@ bool func_8007F95C() // 0x8007F95C
     pos0.vy = g_SysWork.player_4C.chara_0.position_18.vy;
     pos0.vz = g_SysWork.player_4C.chara_0.position_18.vz;
 
-    if (!g_SysWork.playerCombatInfo_38.isAiming_13 || g_SysWork.playerCombatInfo_38.field_F < 32)
+    if (!g_SysWork.playerCombatInfo_38.isAiming_13 || g_SysWork.playerCombatInfo_38.equippedWeapon_F < 32)
     {
         for (i = 0, ptr1 = g_SysWork.npcs_1A0, ptr0 = g_SysWork.npcs_1A0; i < 6; i++, ptr1++, ptr0++)
         {

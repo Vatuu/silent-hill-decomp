@@ -1490,7 +1490,7 @@ void GameFs_MapLoad(s32 mapIdx) // 0x8003521C
         func_8003CD6C(&g_SysWork.playerCombatInfo_38);
     }
 
-    func_800546A8((u8)g_SysWork.playerCombatInfo_38.field_F);
+    func_800546A8((u8)g_SysWork.playerCombatInfo_38.equippedWeapon_F);
 }
 
 // ========================================
@@ -2311,7 +2311,7 @@ s32 Gfx_MapMsg_Display(s32 mapMsgIdx) // 0x800365B8
     }
 
     g_SysWork.player_4C.chara_0.properties_E4.player.field_114 = 0;
-    func_8004C564(g_SysWork.playerCombatInfo_38.field_F, 2);
+    func_8004C564(g_SysWork.playerCombatInfo_38.equippedWeapon_F, EquippedWeaponId_RockDrill);
 
     if (g_MapMsg_MainIdx != mapMsgIdx)
     {
@@ -3003,7 +3003,7 @@ void func_80037DC4(s_SubCharacter* chara) // 0x80037DC4
 
 void func_80037E40(s_SubCharacter* chara) // 0x80037E40
 {
-    if (chara->field_C0 > 0)
+    if (chara->damageReceived_C0 > 0)
     {
         chara->flags_3E |= CharaFlag_Unk6;
     }
@@ -3413,9 +3413,9 @@ void func_8003943C()
     {
         val0        = g_SysWork.field_275C - FP_TO(256, Q12_SHIFT);
         roundedVal0 = FP_ROUND_TO_ZERO(val0, Q12_SHIFT);
-        func_8008B438(g_SysWork.playerCombatInfo_38.field_F != 2, roundedVal0, 0);
+        func_8008B438(g_SysWork.playerCombatInfo_38.equippedWeapon_F != EquippedWeaponId_RockDrill, roundedVal0, 0);
 
-        if (g_SysWork.playerCombatInfo_38.field_F == 2)
+        if (g_SysWork.playerCombatInfo_38.equippedWeapon_F == EquippedWeaponId_RockDrill)
         {
             val1        = g_SysWork.field_2764 - FP_TO(256, Q12_SHIFT);
             roundedVal1 = FP_ROUND_TO_ZERO(val1, Q12_SHIFT);
@@ -3424,9 +3424,9 @@ void func_8003943C()
     }
     else
     {
-        func_8008B438(g_SysWork.playerCombatInfo_38.field_F != 2, 0, 0);
+        func_8008B438(g_SysWork.playerCombatInfo_38.equippedWeapon_F != EquippedWeaponId_RockDrill, 0, 0);
 
-        if (g_SysWork.playerCombatInfo_38.field_F == 2)
+        if (g_SysWork.playerCombatInfo_38.equippedWeapon_F == EquippedWeaponId_RockDrill)
         {
             func_8008B40C(0, 0);
         }
