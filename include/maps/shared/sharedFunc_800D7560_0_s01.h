@@ -34,10 +34,10 @@ void sharedFunc_800D7560_0_s01(s_SubCharacter* chara)
     else
     {
         sinHeadingAngle = shRsin(headingAngle);
-        offsetX         = FP_MULTIPLY((s64)sinHeadingAngle, -0x2B8, Q12_SHIFT);
+        offsetX         = FP_MULTIPLY_PRECISE(sinHeadingAngle, -0x2B8, Q12_SHIFT);
 
         cosHeadingAngle = shRcos(headingAngle);
-        offsetZ         = FP_MULTIPLY((s64)cosHeadingAngle, -0x2B8, Q12_SHIFT);
+        offsetZ         = FP_MULTIPLY_PRECISE(cosHeadingAngle, -0x2B8, Q12_SHIFT);
     }
 
     mat->t[0] = FP_FROM(chara->position_18.vx + offsetX, Q4_SHIFT);

@@ -724,7 +724,7 @@ static inline s32 Anim_GetTimeStep(s_Model* model, s_AnimInfo* targetAnim)
     if (model->anim_4.flags_2 & AnimFlag_Unk1)
     {
         timeDelta = func_800449AC(model, targetAnim);
-        return FP_MULTIPLY((s64)timeDelta, (s64)g_DeltaTime0, Q12_SHIFT);
+        return FP_MULTIPLY_PRECISE(timeDelta, (s64)g_DeltaTime0, Q12_SHIFT);
     }
 
     return 0;
@@ -925,7 +925,7 @@ void Anim_Update3(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Anim
     if (model->anim_4.flags_2 & AnimFlag_Unk1)
     {
         timeDelta = func_800449AC(model, targetAnim);
-        timeStep  = FP_MULTIPLY((s64)timeDelta, (s64)g_DeltaTime0, Q12_SHIFT);
+        timeStep  = FP_MULTIPLY_PRECISE(timeDelta, (s64)g_DeltaTime0, Q12_SHIFT);
     }
     else
     {

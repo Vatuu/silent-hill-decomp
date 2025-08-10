@@ -4103,20 +4103,20 @@ void func_8007C0D8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
         chara->moveSpeed_38 = -SquareRoot0(SQUARE(temp_v1) + SQUARE(temp_a1));
     }
 
-    temp_s0_2 = FP_MULTIPLY((s64)chara->moveSpeed_38, g_DeltaTime0, Q12_SHIFT);
+    temp_s0_2 = FP_MULTIPLY_PRECISE(chara->moveSpeed_38, g_DeltaTime0, Q12_SHIFT);
 
     temp_v0_3 = chara->headingAngle_3C;
     temp      = temp_s0_2 + 0x7FFF;
     temp_s2_2 = (temp > 0xFFFE) * 4;
     temp_s3_2 = temp_s2_2 >> 1;
 
-    sp20.vx = FP_MULTIPLY((s64)(temp_s0_2 >> temp_s3_2), shRsin(temp_v0_3) >> temp_s3_2, Q12_SHIFT);
+    sp20.vx = FP_MULTIPLY_PRECISE((temp_s0_2 >> temp_s3_2), shRsin(temp_v0_3) >> temp_s3_2, Q12_SHIFT);
     sp20.vx <<= temp_s2_2;
 
-    sp20.vz = FP_MULTIPLY((s64)(temp_s0_2 >> temp_s3_2), shRcos(temp_v0_3) >> temp_s3_2, Q12_SHIFT);
+    sp20.vz = FP_MULTIPLY_PRECISE((temp_s0_2 >> temp_s3_2), shRcos(temp_v0_3) >> temp_s3_2, Q12_SHIFT);
     sp20.vz <<= temp_s2_2;
 
-    sp20.vy = FP_MULTIPLY((s64)chara->field_34, g_DeltaTime0, Q12_SHIFT);
+    sp20.vy = FP_MULTIPLY_PRECISE(chara->field_34, g_DeltaTime0, Q12_SHIFT);
 
     if (g_SavegamePtr->mapOverlayId_A4 == 8)
     {
@@ -5958,7 +5958,7 @@ s32 Math_Distance2d(VECTOR3* pos0, VECTOR3* pos1) // 0x8008037C
 {
     s32 xDelta = pos1->vx - pos0->vx;
     s32 zDelta = pos1->vz - pos0->vz;
-    return SquareRoot12(FP_MULTIPLY((s64)xDelta, (s64)xDelta, 12) + FP_MULTIPLY((s64)zDelta, (s64)zDelta, 12));
+    return SquareRoot12(FP_MULTIPLY_PRECISE(xDelta, xDelta, Q12_SHIFT) + FP_MULTIPLY_PRECISE(zDelta, zDelta, Q12_SHIFT));
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_800803FC); // 0x800803FC
@@ -6089,17 +6089,16 @@ void func_8008076C(s32 posX, s32 posZ) // 0x8008076C
 
     coll = &D_800AFC78.field_C;
 
-    x = D_800AFC78.pos_0.vx;
-    z = D_800AFC78.pos_0.vz;
-
+    x = D_800AFC78.position_0.vx;
+    z = D_800AFC78.position_0.vz;
     if (D_800AFC78.field_18 != NO_VALUE && x == posX && z == posZ)
     {
         return;
     }
 
     func_800699F8(coll, posX, posZ);
-    D_800AFC78.pos_0.vx = posX;
-    D_800AFC78.pos_0.vz = posZ;
+    D_800AFC78.position_0.vx = posX;
+    D_800AFC78.position_0.vz = posZ;
 
     caseVar = coll->field_8;
     switch (coll->field_8)
@@ -6139,14 +6138,14 @@ void func_8008076C(s32 posX, s32 posZ) // 0x8008076C
             break;
     }
     
-    D_800AFC78.pos_0.vy = groundHeight;
-    D_800AFC78.field_18 = caseVar;
+    D_800AFC78.position_0.vy = groundHeight;
+    D_800AFC78.field_18      = caseVar;
 }
 
 s32 func_80080884(s32 posX, s32 posZ) // 0x80080884
 {
     func_8008076C(posX, posZ);
-    return D_800AFC78.pos_0.vy;
+    return D_800AFC78.position_0.vy;
 }
 
 s32 func_800808AC(s32 posX, s32 posZ) // 0x800808AC

@@ -70,12 +70,18 @@
 #define FP_MULTIPLY(a, b, shift) \
     (((a) * (b)) >> (shift))
 
+/** @brief Multiplies two integers in a fixed-point Q format, using 64-bit intermediates for higher precision,
+ * and converts the result from the fixed-point Q format.
+ */
+#define FP_MULTIPLY_PRECISE(a, b, shift) \
+    (((s64)(a) * (s64)(b)) >> (shift))
+
 /** @brief Multiplies an integer by a float converted to fixed-point Q format and converts the result from the fixed-point Q format. */
 #define FP_MULTIPLY_FLOAT(aInt, bFlt, shift) \
     FP_MULTIPLY((aInt), FP_FLOAT_TO((bFlt), (shift)), (shift))
 
-/** @brief Multiplies an integer by a float converted to fixed-point Q format, using 64-bit intermediate via `Math_MulFixed` for higher precision. */
-#define FP_MULTIPLY_PRECISE(a, b, shift) \
+/** @brief Multiplies an integer by a float converted to fixed-point Q format, using 64-bit intermediates via `Math_MulFixed` for higher precision. */
+#define FP_MULTIPLY_FLOAT_PRECISE(a, b, shift) \
     Math_MulFixed((a), FP_FLOAT_TO((b), (shift)), (shift))
 
 /** @brief Computes the dot product of the first column of a matrix with a vector in Q17.15 format. */

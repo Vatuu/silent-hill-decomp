@@ -171,7 +171,7 @@ s32 vwRetNewAngSpdToTargetAng(s32 now_ang_spd, s16 now_ang, s16 tgt_ang, s32 acc
 
 s32 func_800494B0(s32 arg0, s32 arg1, s32 arg2)
 {
-    s32 range  = FP_MULTIPLY((s64)arg2, (s64)g_DeltaTime0, Q12_SHIFT);
+    s32 range  = FP_MULTIPLY_PRECISE(arg2, g_DeltaTime0, Q12_SHIFT);
     s32 arange = arg1 - arg0;
     arange     = CLAMP(arange, -range, range);
 

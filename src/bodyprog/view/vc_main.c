@@ -2187,7 +2187,7 @@ void vcAdjTgtMvVecYByCurNearRoad(VECTOR3* tgt_mv_vec, VC_WORK* w_p) // 0x800843F
     dist = CLAMP(to_chara_dist, FP_METER(1.2f), FP_METER(7.0f));
 
     // TODO: Weird multiplier?
-    near_ratio = FP_MULTIPLY_PRECISE(FP_METER(7.0f) - dist, 0.1724f, Q12_SHIFT);
+    near_ratio = FP_MULTIPLY_FLOAT_PRECISE(FP_METER(7.0f) - dist, 0.1724f, Q12_SHIFT);
     near_ratio = CLAMP(near_ratio, 0, FP_METER(1.0f));
 
     switch (w_p->cur_near_road_2B8.road_p_0->mv_y_type_11)
@@ -2360,7 +2360,7 @@ s32 vcFlipFromCamExclusionArea(s16* flip_ang_y_p, s32* old_cam_excl_area_r_p, VE
     if (*old_cam_excl_area_r_p != NO_VALUE)
     {
         delta_radius = desired_radius - *old_cam_excl_area_r_p;
-        min_step     = FP_MULTIPLY((s64)g_DeltaTime0, (s64)FP_ANGLE(-180.0f), Q12_SHIFT);
+        min_step     = FP_MULTIPLY_PRECISE(g_DeltaTime0, (s64)FP_ANGLE(-180.0f), Q12_SHIFT);
 
         if (delta_radius < min_step)
         {
@@ -2437,8 +2437,8 @@ void vcRenewalCamData(VC_WORK* w_p, VC_CAM_MV_PARAM* cam_mv_prm_p) // 0x80084BD8
     }
 
     // SH2 removes this multiply and uses `accel_y` directly. Maybe 0.4f/1.0f were tunable defines and compiler removed it.
-    dec_spd_per_dist_xz = FP_MULTIPLY_PRECISE(cam_mv_prm_p->accel_xz, 0.4f, Q12_SHIFT);
-    dec_spd_per_dist_y  = FP_MULTIPLY_PRECISE(cam_mv_prm_p->accel_y,  1.0f, Q12_SHIFT);
+    dec_spd_per_dist_xz = FP_MULTIPLY_FLOAT_PRECISE(cam_mv_prm_p->accel_xz, 0.4f, Q12_SHIFT);
+    dec_spd_per_dist_y  = FP_MULTIPLY_FLOAT_PRECISE(cam_mv_prm_p->accel_y,  1.0f, Q12_SHIFT);
 
     vwRenewalXZVelocityToTargetPos(&w_p->cam_velo_60.vx, &w_p->cam_velo_60.vz, &w_p->cam_pos_50,
                                    &w_p->cam_tgt_pos_44, FP_METER(0.1f), cam_mv_prm_p->accel_xz,
@@ -2560,7 +2560,7 @@ void vcMakeNewBaseCamAng(SVECTOR* new_base_ang, VC_CAM_MV_TYPE cam_mv_type, VC_W
             if (w_p->chara_mv_spd_13C != 0 && angle < FP_ANGLE(75.0f) && angle >= FP_ANGLE(-74.9f))
             {
                 temp_t0        = ((new_base_ang_y - w_p->base_cam_ang_C8.vy) << 20) >> 20;
-                temp_a0_3      = FP_MULTIPLY((s64)g_DeltaTime0, FP_ANGLE(120.0f), Q12_SHIFT);
+                temp_a0_3      = FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(120.0f), Q12_SHIFT);
                 var_v1_2       = CLAMP(temp_t0, -temp_a0_3, temp_a0_3);
                 new_base_ang_y = w_p->base_cam_ang_C8.vy + var_v1_2;
             }
@@ -2703,9 +2703,9 @@ void vcAdjCamOfsAngByOfsAngSpd(SVECTOR* ofs_ang, SVECTOR* ofs_ang_spd, SVECTOR* 
     unused.vy = shAngleRegulate(ofs_tgt_ang->vy - ofs_ang->vy);
     unused.vz = shAngleRegulate(ofs_tgt_ang->vz - ofs_ang->vz);
 
-    max_spd_dec_per_dist.vx = FP_MULTIPLY_PRECISE(prm_p->ang_accel_x, 8.0f, Q12_SHIFT);
-    max_spd_dec_per_dist.vy = FP_MULTIPLY_PRECISE(prm_p->ang_accel_y, 3.0f, Q12_SHIFT);
-    max_spd_dec_per_dist.vz = FP_MULTIPLY_PRECISE(prm_p->ang_accel_y, 3.3f, Q12_SHIFT);
+    max_spd_dec_per_dist.vx = FP_MULTIPLY_FLOAT_PRECISE(prm_p->ang_accel_x, 8.0f, Q12_SHIFT);
+    max_spd_dec_per_dist.vy = FP_MULTIPLY_FLOAT_PRECISE(prm_p->ang_accel_y, 3.0f, Q12_SHIFT);
+    max_spd_dec_per_dist.vz = FP_MULTIPLY_FLOAT_PRECISE(prm_p->ang_accel_y, 3.3f, Q12_SHIFT);
 
     ofs_ang_spd->vx = vwRetNewAngSpdToTargetAng(ofs_ang_spd->vx, ofs_ang->vx, ofs_tgt_ang->vx, prm_p->ang_accel_x, prm_p->max_ang_spd_x, max_spd_dec_per_dist.vx);
     ofs_ang_spd->vy = vwRetNewAngSpdToTargetAng(ofs_ang_spd->vy, ofs_ang->vy, ofs_tgt_ang->vy, prm_p->ang_accel_y, prm_p->max_ang_spd_y, max_spd_dec_per_dist.vy);
@@ -2794,9 +2794,9 @@ s32 Vc_VectorMagnitudeCalc(s32 x, s32 y, s32 z) // 0x80085B1C
 
     mag   = MAX(MAX(ABS(x), ABS(y)), ABS(z));
     shift = Math_GetMagnitudeShift(mag);
-    x >>= shift;
-    y >>= shift;
-    z >>= shift;
+    x   >>= shift;
+    y   >>= shift;
+    z   >>= shift;
     return SquareRoot0(SQUARE(x) + SQUARE(y) + SQUARE(z)) << shift;
 }
 

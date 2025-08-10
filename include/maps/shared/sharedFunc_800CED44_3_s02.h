@@ -11,16 +11,16 @@ void sharedFunc_800CED44_3_s02(s_SubCharacter* chara, GsCOORDINATE2* coord)
     unused       = chara->position_18;
     moveSpeed    = chara->moveSpeed_38;
     headingAngle = chara->headingAngle_3C;
-    moveAmt      = FP_MULTIPLY((s64)moveSpeed, (s64)g_DeltaTime0, Q12_SHIFT);
+    moveAmt      = FP_MULTIPLY_PRECISE(moveSpeed, g_DeltaTime0, Q12_SHIFT);
 
     // Overflow guard, scale large `moveAmt` before trigonometric multiplication.
     // "Range-based scaling mechanism common in fixed-point DSP or low-level game engine math." - chatgpt
     scaleRestoreShift = ((u32)(moveAmt + SHRT_MAX) >= USHRT_MAX) ? 4 : 0;
     scaleReduceShift  = scaleRestoreShift >> 1;
 
-    vec.vx = (u32)(FP_MULTIPLY((s64)(moveAmt >> scaleReduceShift), (s64)(shRsin(headingAngle) >> scaleReduceShift), Q12_SHIFT)) << scaleRestoreShift;
-    vec.vz = (u32)(FP_MULTIPLY((s64)(moveAmt >> scaleReduceShift), (s64)(shRcos(headingAngle) >> scaleReduceShift), Q12_SHIFT)) << scaleRestoreShift;
-    vec.vy = FP_MULTIPLY((s64)chara->field_34, (s64)g_DeltaTime0, Q12_SHIFT);
+    vec.vx = (u32)FP_MULTIPLY_PRECISE(moveAmt >> scaleReduceShift, shRsin(headingAngle) >> scaleReduceShift, Q12_SHIFT) << scaleRestoreShift;
+    vec.vz = (u32)FP_MULTIPLY_PRECISE(moveAmt >> scaleReduceShift, shRcos(headingAngle) >> scaleReduceShift, Q12_SHIFT) << scaleRestoreShift;
+    vec.vy = FP_MULTIPLY_PRECISE(chara->field_34, g_DeltaTime0, Q12_SHIFT);
 
     chara->position_18.vx += vec.vx;
     chara->position_18.vy = 0;

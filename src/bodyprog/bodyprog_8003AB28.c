@@ -911,12 +911,12 @@ void func_8003C3A0() // 0x8003C3A0
 
 void func_8003C3AC() // 0x8003C3AC
 {
-    VECTOR3         sp10;
-    VECTOR3         sp20;
-    SVECTOR         sp30;
+    VECTOR3         pos0;
+    VECTOR3         pos1;
+    SVECTOR         pos2;
     s32             temp_a1;
     s32             temp_a2;
-    s32             temp_s0;
+    s32             moveDist;
     s32             temp_s0_2;
     s32             temp_v0_3;
     s32             temp_v1;
@@ -924,99 +924,97 @@ void func_8003C3AC() // 0x8003C3AC
     s32             var_a0;
     s32             var_a1;
     s32             var_s1;
-    u8              temp_v1_3;
-    u8              temp_v1_6;
+    u8              flags1;
+    u8              flags0;
     s_SubCharacter* chara = &g_SysWork.player_4C.chara_0;
 
     if ((u8)D_800BCE18.field_0[0].field_4 != 0)
     {
-        sp10 = D_800BCE18.field_0[0].field_8;
+        pos0 = D_800BCE18.field_0[0].field_8;
     }
     else
     {
-        sp10 = chara->position_18;
+        pos0 = chara->position_18;
     }
 
-    temp_s0 = (chara->moveSpeed_38 * 0x5800) / 16015;
-    temp_s0 = CLAMP(temp_s0, 0, 0x5800);
+    moveDist = (chara->moveSpeed_38 * FP_METER(5.5f)) / 16015; // TODO: `FP_METER(3.91f)`? What's this doing?
+    moveDist = CLAMP(moveDist, FP_METER(0.0f), FP_METER(5.5f));
 
-    sp10.vx += FP_MULTIPLY((s64)temp_s0, shRsin(chara->headingAngle_3C), Q12_SHIFT);
-    sp10.vz += FP_MULTIPLY((s64)temp_s0, shRcos(chara->headingAngle_3C), Q12_SHIFT);
+    pos0.vx += FP_MULTIPLY_PRECISE(moveDist, shRsin(chara->headingAngle_3C), Q12_SHIFT);
+    pos0.vz += FP_MULTIPLY_PRECISE(moveDist, shRcos(chara->headingAngle_3C), Q12_SHIFT);
 
     if (D_800BCE18.field_0[0].field_0 == &D_8002500C &&
         chara->position_18.vx >= FP_METER(-40.0f) && chara->position_18.vx <= FP_METER(40.0f) &&
         chara->position_18.vz >= FP_METER(200.0f) && chara->position_18.vz <= FP_METER(240.0f))
     {
 
-        sp10.vz = FP_METER(200.0f);
+        pos0.vz = FP_METER(200.0f);
     }
 
     if (D_800C4169 != 0)
     {
-        vwGetViewPosition(&sp20);
-        vwGetViewAngle(&sp30);
+        vwGetViewPosition(&pos1);
+        vwGetViewAngle(&pos2);
 
-        temp_v1_3 = D_800BCE18.field_0[0].field_0->field_6;
-        if (!(temp_v1_3 & 0x4) || !(temp_v1_3 & 0x3))
+        flags1 = D_800BCE18.field_0[0].field_0->field_6;
+        if (!(flags1 & 0x4) || !(flags1 & 0x3))
         {
-            var_s1 = FP_MULTIPLY(shRcos(sp30.vx), 0x9000, Q12_SHIFT);
+            var_s1 = FP_MULTIPLY(shRcos(pos2.vx), FP_METER(9.0f), Q12_SHIFT);
         }
         else
         {
-            var_s1 = 0;
+            var_s1 = FP_METER(0.0f);
         }
         
-        temp_s0_2 = FP_MULTIPLY(var_s1, shRsin(sp30.vy), Q12_SHIFT);
-        temp_s0_2 = CLAMP(temp_s0_2, -0x6000, 0x6000);
+        temp_s0_2 = FP_MULTIPLY(var_s1, shRsin(pos2.vy), Q12_SHIFT);
+        temp_s0_2 = CLAMP(temp_s0_2, FP_METER(-6.0f), FP_METER(6.0f));
 
-        temp_v1_4 = FP_MULTIPLY(var_s1, shRcos(sp30.vy), Q12_SHIFT);
-        temp_v1_4 = CLAMP(temp_v1_4, -0x6000, 0x6000);
+        temp_v1_4 = FP_MULTIPLY(var_s1, shRcos(pos2.vy), Q12_SHIFT);
+        temp_v1_4 = CLAMP(temp_v1_4, FP_METER(-6.0f), FP_METER(6.0f));
 
-        sp20.vx += temp_s0_2;
-        sp20.vz += temp_v1_4;
+        pos1.vx += temp_s0_2;
+        pos1.vz += temp_v1_4;
 
-        if (Vc_VectorMagnitudeCalc(sp20.vx - chara->position_18.vx, 0, sp20.vz - chara->position_18.vz) > 0x10000)
+        if (Vc_VectorMagnitudeCalc(pos1.vx - chara->position_18.vx, 0, pos1.vz - chara->position_18.vz) > 0x10000)
         {
-            var_s1  = 0xE000;
-            sp20.vx = chara->position_18.vx + FP_MULTIPLY(shRsin(sp30.vy), var_s1, Q12_SHIFT);
-            sp20.vz = chara->position_18.vz + FP_MULTIPLY(shRcos(sp30.vy), var_s1, Q12_SHIFT);
+            var_s1  = FP_METER(14.0f);
+            pos1.vx = chara->position_18.vx + FP_MULTIPLY(shRsin(pos2.vy), var_s1, Q12_SHIFT);
+            pos1.vz = chara->position_18.vz + FP_MULTIPLY(shRcos(pos2.vy), var_s1, Q12_SHIFT);
         }
     } 
     else
     {
-        sp20     = chara->position_18;
-        sp20.vx += FP_FROM(FP_TO(shRsin(chara->rotation_24.vy), Q12_SHIFT), Q12_SHIFT);
-        sp20.vz += FP_FROM(FP_TO(shRcos(chara->rotation_24.vy), Q12_SHIFT), Q12_SHIFT);
+        pos1     = chara->position_18;
+        pos1.vx += FP_FROM(FP_TO(shRsin(chara->rotation_24.vy), Q12_SHIFT), Q12_SHIFT);
+        pos1.vz += FP_FROM(FP_TO(shRcos(chara->rotation_24.vy), Q12_SHIFT), Q12_SHIFT);
     }
 
-    temp_v1_6 = D_800BCE18.field_0[0].field_0->field_6;
-
-    if ((temp_v1_6 & 0x4) && (temp_v1_6 & 0x3))
+    flags0 = D_800BCE18.field_0[0].field_0->field_6;
+    if ((flags0 & 0x4) && (flags0 & 0x3))
     {
-        var_a1 = chara->position_18.vx / 10240;
-        if (chara->position_18.vx < 0)
+        var_a1 = chara->position_18.vx / FP_METER(2.5f);
+        if (chara->position_18.vx < FP_METER(0.0f))
         {
-            var_a1 -= 1;
+            var_a1--;
         }
 
-        var_a0  = chara->position_18.vz / 10240;
-        temp_a1 = var_a1 * 0x2800;
+        var_a0  = chara->position_18.vz / FP_METER(2.5f);
+        temp_a1 = var_a1 * FP_METER(2.5f);
 
-        if (chara->position_18.vz < 0)
+        if (chara->position_18.vz < FP_METER(0.0f))
         {
-            var_a0 -= 1;
+            var_a0--;
         }
 
-        temp_a2 = var_a0 * 0x2800;
+        temp_a2 = var_a0 * FP_METER(2.5f);
 
-        sp10.vx = CLAMP(sp10.vx, temp_a1 + 1, temp_a1 + 0x27FF);
-        sp10.vz = CLAMP(sp10.vz, temp_a2 + 1, temp_a2 + 0x27FF);
-        sp20.vx = CLAMP(sp20.vx, temp_a1 + 1, temp_a1 + 0x27FF);
-        sp20.vz = CLAMP(sp20.vz, temp_a2 + 1, temp_a2 + 0x27FF);
-
+        pos0.vx = CLAMP(pos0.vx, temp_a1 + 1, temp_a1 + (FP_METER(2.5f) - 1));
+        pos0.vz = CLAMP(pos0.vz, temp_a2 + 1, temp_a2 + (FP_METER(2.5f) - 1));
+        pos1.vx = CLAMP(pos1.vx, temp_a1 + 1, temp_a1 + (FP_METER(2.5f) - 1));
+        pos1.vz = CLAMP(pos1.vz, temp_a2 + 1, temp_a2 + (FP_METER(2.5f) - 1));
     }
 
-    func_80042C3C(sp10.vx, sp10.vz, sp20.vx, sp20.vz);
+    func_80042C3C(pos0.vx, pos0.vz, pos1.vx, pos1.vz);
 }
 
 s32 func_8003C850() // 0x8003C850
@@ -2478,13 +2476,13 @@ void func_8003EBF4(s_MapOverlayHeader* arg0) // 0x8003EBF4
 void Game_TurnFlashlightOn() // 0x8003ECBC
 {
     g_SysWork.field_2388.flashlightState_15 = 1;
-    g_SavegamePtr->flags_AC                &= ~(1 << 1);
+    g_SavegamePtr->flags_AC                   &= ~(1 << 1);
 }
 
 void Game_TurnFlashlightOff() // 0x8003ECE4
 {
     g_SysWork.field_2388.flashlightState_15 = 0;
-    g_SavegamePtr->flags_AC                |= 1 << 1;
+    g_SavegamePtr->flags_AC                   |= 1 << 1;
 }
 
 void func_8003ED08() // 0x8003ED08
@@ -2627,11 +2625,11 @@ void func_8003F170() // 0x8003F170
 
     if (g_SysWork.field_2388.flashlightState_15 != 0)
     {
-        g_SysWork.field_2388.flashlightIntensity_18 += FP_MULTIPLY((s64)g_DeltaTime0, FP_FLOAT_TO(4.0f, Q12_SHIFT), Q12_SHIFT);
+        g_SysWork.field_2388.flashlightIntensity_18 += FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_FLOAT_TO(4.0f, Q12_SHIFT), Q12_SHIFT);
     }
     else
     {
-        g_SysWork.field_2388.flashlightIntensity_18 -= FP_MULTIPLY((s64)g_DeltaTime0, FP_FLOAT_TO(4.0f, Q12_SHIFT), Q12_SHIFT);
+        g_SysWork.field_2388.flashlightIntensity_18 -= FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_FLOAT_TO(4.0f, Q12_SHIFT), Q12_SHIFT);
     }
 
     g_SysWork.field_2388.flashlightIntensity_18 = CLAMP(g_SysWork.field_2388.flashlightIntensity_18, 0, FP_FLOAT_TO(1.0f, Q12_SHIFT));

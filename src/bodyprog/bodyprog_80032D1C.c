@@ -2106,10 +2106,10 @@ void func_80035F4C(s32 arg0, s32 arg1, u8* arg2) // 0x80035F4C
 
         if (i == 0) 
         {
-            var_v1 = FP_MULTIPLY((s64)var_v1, temp_v0, Q12_SHIFT);
+            var_v1 = FP_MULTIPLY_PRECISE(var_v1, temp_v0, Q12_SHIFT);
         }
 
-        var_v1 = FP_MULTIPLY((s64)var_v1, 0x7F, Q12_SHIFT);
+        var_v1 = FP_MULTIPLY_PRECISE(var_v1, 0x7F, Q12_SHIFT);
         if (var_v1 >= 0x80) 
         {
             var_v1 = 0x7F;
@@ -3088,8 +3088,8 @@ bool Math_Distance2dCheck(VECTOR3* pos0, VECTOR3* pos1, s32 radius) // 0x80038A6
     }
 
     // Check distance.
-    sum       = FP_MULTIPLY((s64)deltaX, (s64)deltaX, Q12_SHIFT) + FP_MULTIPLY((s64)deltaZ, (s64)deltaZ, Q12_SHIFT);
-    radiusSqr = FP_MULTIPLY((s64)radius, (s64)radius, Q12_SHIFT);
+    sum       = FP_MULTIPLY_PRECISE(deltaX, deltaX, Q12_SHIFT) + FP_MULTIPLY_PRECISE(deltaZ, deltaZ, Q12_SHIFT);
+    radiusSqr = FP_MULTIPLY_PRECISE(radius, radius, Q12_SHIFT);
     return sum > radiusSqr;
 }
 
@@ -3103,7 +3103,7 @@ s32 func_80038B44(VECTOR3* pos) // 0x80038B44
 
     x = (camPos.vx - pos->vx) >> 6;
     y = (camPos.vz - pos->vz) >> 6;
-    return FP_MULTIPLY((s64)x, x, Q12_SHIFT) + FP_MULTIPLY((s64)y, y, Q12_SHIFT);
+    return FP_MULTIPLY_PRECISE(x, x, Q12_SHIFT) + FP_MULTIPLY_PRECISE(y, y, Q12_SHIFT);
 }
 
 void GameState_InGame_Update() // 0x80038BD4

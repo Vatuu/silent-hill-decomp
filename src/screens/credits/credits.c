@@ -554,7 +554,7 @@ bool func_801E3970() // 0x801E3970
     animateKcet = false;
     isFinished  = false;
 
-    vBlank = FP_MULTIPLY((s64)D_800C48F0, 0x1000, Q12_SHIFT);
+    vBlank = FP_MULTIPLY_PRECISE(D_800C48F0, 0x1000, Q12_SHIFT);
 
     temp_a2    = D_801E5E84;
     lineHeight = D_801E5E7C;
@@ -620,10 +620,10 @@ bool func_801E3970() // 0x801E3970
         temp_a1 = var_s5;
 
         // Rotate.
-        if (var_s5 < 0x78)
+        if (var_s5 < 120)
         {
-            temp_a1 = (var_s5 * 0x1000) / 0x78;
-            temp_a1 = FP_MULTIPLY((s64)(0x1000 - temp_a1), 0x36F, Q12_SHIFT);
+            temp_a1 = (var_s5 * 0x1000) / 120;
+            temp_a1 = FP_MULTIPLY_PRECISE((0x1000 - temp_a1), 0x36F, Q12_SHIFT);
             sin     = -shRsin(temp_a1);
             cos     = shRcos(temp_a1);
             func_8009185C(0, 0, 0xF0, 0x1000, 0, 0x22000, 0xF0000, 0xB33, cos, sin);
@@ -631,9 +631,9 @@ bool func_801E3970() // 0x801E3970
         // Zoom in.
         else if (var_s5 < 0xB4)
         {
-            temp_a1   = var_s5 - 0x78;
+            temp_a1   = var_s5 - 120;
             temp_a1   = (temp_a1 * 0x1000) / 0x3C;
-            temp_v0_4 = FP_MULTIPLY((s64)(0x1000 - temp_a1), 0x1E000, Q12_SHIFT) + 0xD2000;
+            temp_v0_4 = FP_MULTIPLY_PRECISE((0x1000 - temp_a1), 0x1E000, Q12_SHIFT) + 0xD2000;
             func_8009185C(0, 0, 0xF0, 0x1000, 0, 0x22000, temp_v0_4, 0xB33, 0x1000, 0);
         }
         else if (var_s5 >= 0x168)
@@ -643,7 +643,7 @@ bool func_801E3970() // 0x801E3970
             {
                 temp_a1   = var_s5 - 0x168;
                 temp_a1   = (temp_a1 * 0x1000) / 0x78;
-                temp_v0_4 = FP_MULTIPLY((s64)(0x1000 - temp_a1), -0xE2E000, Q12_SHIFT) + 0xF00000;
+                temp_v0_4 = FP_MULTIPLY_PRECISE((0x1000 - temp_a1), -0xE2E000, Q12_SHIFT) + 0xF00000;
                 func_8009185C(0, 0, 0xF0, 0x1000, 0, 0x22000, temp_v0_4, 0xB33, 0x1000, 0);
             }
             // Hide and finish.
@@ -1149,33 +1149,33 @@ void func_801E47E0(s32 arg0, s32 arg1) // 0x801E47E0
     {
         temp_lo   = arg1 * D_800AFE24.field_3C;
         temp_t1   = D_800AFE24.field_24 << 0x16;
-        temp_lo_3 = (D_800AFE24.field_30 + (s32)FP_MULTIPLY((s64)D_800AFE24.field_1C, temp_lo, Q12_SHIFT)) >> 2;
+        temp_lo_3 = (D_800AFE24.field_30 + (s32)FP_MULTIPLY_PRECISE(D_800AFE24.field_1C, temp_lo, Q12_SHIFT)) >> 2;
         temp_lo_3 = temp_t1 / temp_lo_3;
 
         temp_t2   = arg1 + 0x18;
         temp_lo_4 = temp_t2 * D_800AFE24.field_3C;
-        temp_lo_6 = (D_800AFE24.field_30 + (s32)FP_MULTIPLY((s64)D_800AFE24.field_1C, temp_lo_4, Q12_SHIFT)) >> 2;
+        temp_lo_6 = (D_800AFE24.field_30 + (s32)FP_MULTIPLY_PRECISE(D_800AFE24.field_1C, temp_lo_4, Q12_SHIFT)) >> 2;
         temp_lo_6 = temp_t1 / temp_lo_6;
 
         temp_lo_7 = arg0 * D_800AFE24.field_34;
-        temp_v0   = D_800AFE24.field_28 + FP_MULTIPLY((s64)D_800AFE24.field_1C, temp_lo_7, Q12_SHIFT);
-        temp_t0   = FP_MULTIPLY((s64)temp_lo_3, temp_v0, Q12_SHIFT);
-        temp_v0_2 = D_800AFE24.field_28 + FP_MULTIPLY((s64)D_800AFE24.field_1C, D_800AFE24.field_34, Q12_SHIFT);
+        temp_v0   = D_800AFE24.field_28 + FP_MULTIPLY_PRECISE(D_800AFE24.field_1C, temp_lo_7, Q12_SHIFT);
+        temp_t0   = FP_MULTIPLY_PRECISE(temp_lo_3, temp_v0, Q12_SHIFT);
+        temp_v0_2 = D_800AFE24.field_28 + FP_MULTIPLY_PRECISE(D_800AFE24.field_1C, D_800AFE24.field_34, Q12_SHIFT);
 
         D_800AFE24.field_0  = arg0;
         D_800AFE24.field_2  = arg1;
         D_800AFE24.field_4  = arg0;
         D_800AFE24.field_40 = temp_t0;
-        D_800AFE24.field_44 = FP_MULTIPLY((s64)temp_lo_6, temp_v0, Q12_SHIFT);
-        D_800AFE24.field_48 = FP_MULTIPLY((s64)temp_lo_3, temp_v0_2, Q12_SHIFT) - FP_MULTIPLY((s64)temp_lo_3, D_800AFE24.field_28, Q12_SHIFT);
-        D_800AFE24.field_4C = FP_MULTIPLY((s64)temp_lo_6, temp_v0_2, Q12_SHIFT) - FP_MULTIPLY((s64)temp_lo_6, D_800AFE24.field_28, Q12_SHIFT);
+        D_800AFE24.field_44 = FP_MULTIPLY_PRECISE(temp_lo_6, temp_v0, Q12_SHIFT);
+        D_800AFE24.field_48 = FP_MULTIPLY_PRECISE(temp_lo_3, temp_v0_2, Q12_SHIFT) - FP_MULTIPLY_PRECISE(temp_lo_3, D_800AFE24.field_28, Q12_SHIFT);
+        D_800AFE24.field_4C = FP_MULTIPLY_PRECISE(temp_lo_6, temp_v0_2, Q12_SHIFT) - FP_MULTIPLY_PRECISE(temp_lo_6, D_800AFE24.field_28, Q12_SHIFT);
         temp_lo_11          = arg1 * D_800AFE24.field_38;
-        temp_v0_3           = D_800AFE24.field_2C + FP_MULTIPLY((s64)D_800AFE24.field_1C, temp_lo_11, Q12_SHIFT);
-        D_800AFE24.field_50 = FP_MULTIPLY((s64)temp_lo_3, temp_v0_3, Q12_SHIFT);
+        temp_v0_3           = D_800AFE24.field_2C + FP_MULTIPLY_PRECISE(D_800AFE24.field_1C, temp_lo_11, Q12_SHIFT);
+        D_800AFE24.field_50 = FP_MULTIPLY_PRECISE(temp_lo_3, temp_v0_3, Q12_SHIFT);
 
         temp_lo_12          = temp_t2 * D_800AFE24.field_38;
-        temp_t0             = D_800AFE24.field_2C + FP_MULTIPLY((s64)D_800AFE24.field_1C, temp_lo_12, Q12_SHIFT);
-        D_800AFE24.field_54 = FP_MULTIPLY((s64)temp_lo_6, temp_t0, Q12_SHIFT);
+        temp_t0             = D_800AFE24.field_2C + FP_MULTIPLY_PRECISE(D_800AFE24.field_1C, temp_lo_12, Q12_SHIFT);
+        D_800AFE24.field_54 = FP_MULTIPLY_PRECISE(temp_lo_6, temp_t0, Q12_SHIFT);
     }
     else if (check)
     {
@@ -1428,27 +1428,27 @@ void func_801E4C1C(u8* str) // 0x801E4C1C
         {
             temp_a1_2 = D_800AFE24.field_24 << 0x16;
 
-            temp_lo_3 = (D_800AFE24.field_30 + (s32)FP_MULTIPLY((s64)D_800AFE24.field_1C, textY * D_800AFE24.field_3C, Q12_SHIFT)) >> 2;
+            temp_lo_3 = (D_800AFE24.field_30 + (s32)FP_MULTIPLY_PRECISE(D_800AFE24.field_1C, textY * D_800AFE24.field_3C, Q12_SHIFT)) >> 2;
             temp_lo_3 = temp_a1_2 / temp_lo_3;
 
-            temp_lo_6 = (D_800AFE24.field_30 + (s32)FP_MULTIPLY((s64)D_800AFE24.field_1C, (textY + 0x18) * D_800AFE24.field_3C, Q12_SHIFT)) >> 2;
+            temp_lo_6 = (D_800AFE24.field_30 + (s32)FP_MULTIPLY_PRECISE(D_800AFE24.field_1C, (textY + 0x18) * D_800AFE24.field_3C, Q12_SHIFT)) >> 2;
             temp_lo_6 = temp_a1_2 / temp_lo_6;
 
-            temp_v0_5 = D_800AFE24.field_28 + FP_MULTIPLY((s64)D_800AFE24.field_1C, textX * D_800AFE24.field_34, Q12_SHIFT);
+            temp_v0_5 = D_800AFE24.field_28 + FP_MULTIPLY_PRECISE(D_800AFE24.field_1C, textX * D_800AFE24.field_34, Q12_SHIFT);
 
-            var_a3 = FP_MULTIPLY((s64)temp_lo_3, temp_v0_5, Q12_SHIFT);
-            var_t3 = FP_MULTIPLY((s64)temp_lo_6, temp_v0_5, Q12_SHIFT);
+            var_a3 = FP_MULTIPLY_PRECISE(temp_lo_3, temp_v0_5, Q12_SHIFT);
+            var_t3 = FP_MULTIPLY_PRECISE(temp_lo_6, temp_v0_5, Q12_SHIFT);
 
-            temp_v0_5 = D_800AFE24.field_28 + FP_MULTIPLY((s64)D_800AFE24.field_1C, D_800AFE24.field_34, Q12_SHIFT);
+            temp_v0_5 = D_800AFE24.field_28 + FP_MULTIPLY_PRECISE(D_800AFE24.field_1C, D_800AFE24.field_34, Q12_SHIFT);
 
-            var_t7 = FP_MULTIPLY((s64)temp_lo_3, temp_v0_5, Q12_SHIFT) - FP_MULTIPLY((s64)temp_lo_3, D_800AFE24.field_28, Q12_SHIFT);
-            var_t6 = FP_MULTIPLY((s64)temp_lo_6, temp_v0_5, Q12_SHIFT) - FP_MULTIPLY((s64)temp_lo_6, D_800AFE24.field_28, Q12_SHIFT);
+            var_t7 = FP_MULTIPLY_PRECISE(temp_lo_3, temp_v0_5, Q12_SHIFT) - FP_MULTIPLY_PRECISE(temp_lo_3, D_800AFE24.field_28, Q12_SHIFT);
+            var_t6 = FP_MULTIPLY_PRECISE(temp_lo_6, temp_v0_5, Q12_SHIFT) - FP_MULTIPLY_PRECISE(temp_lo_6, D_800AFE24.field_28, Q12_SHIFT);
 
-            temp_v0_7 = D_800AFE24.field_2C + FP_MULTIPLY((s64)D_800AFE24.field_1C, textY * D_800AFE24.field_38, Q12_SHIFT);
-            var_t4    = FP_MULTIPLY((s64)temp_lo_3, temp_v0_7, Q12_SHIFT);
+            temp_v0_7 = D_800AFE24.field_2C + FP_MULTIPLY_PRECISE(D_800AFE24.field_1C, textY * D_800AFE24.field_38, Q12_SHIFT);
+            var_t4    = FP_MULTIPLY_PRECISE(temp_lo_3, temp_v0_7, Q12_SHIFT);
 
-            temp_a0_4 = D_800AFE24.field_2C + FP_MULTIPLY((s64)D_800AFE24.field_1C, (textY + 0x18) * D_800AFE24.field_38, Q12_SHIFT);
-            var_t5    = FP_MULTIPLY((s64)temp_lo_6, temp_a0_4, Q12_SHIFT);
+            temp_a0_4 = D_800AFE24.field_2C + FP_MULTIPLY_PRECISE(D_800AFE24.field_1C, (textY + 0x18) * D_800AFE24.field_38, Q12_SHIFT);
+            var_t5    = FP_MULTIPLY_PRECISE(temp_lo_6, temp_a0_4, Q12_SHIFT);
         }
         else if (textXChanged)
         {

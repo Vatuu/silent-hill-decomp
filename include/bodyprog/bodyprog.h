@@ -801,7 +801,7 @@ STATIC_ASSERT_SIZEOF(s_800AD4C8, 24);
 
 typedef struct
 {
-    VECTOR3         pos_0;
+    VECTOR3         position_0;
     s_func_800699F8 field_C; // Collision data?
     s32             field_18;
 } s_800AFC78;
@@ -880,7 +880,7 @@ typedef struct
     s_sub_800BCE18_0* field_0;
     s8                field_4;
     u8                unk_5[3];
-    VECTOR3           field_8; // Vaguely assumed. Chane done for matching `func_8003C368`.
+    VECTOR3           field_8; // Position.
     s32               field_14;
     s_800BCE18_0_CC*  field_18[Chara_Count]; // Per-character data? So far only seen accessed by `map4_s03::800D59EC` which calls `func_8003BE50(Chara_Twinfeeler)`.
     s_800BCE18_0_CC   field_CC;
@@ -3472,6 +3472,7 @@ void func_8003C368();
 
 void func_8003C3A0();
 
+/** Handles player movement. */
 void func_8003C3AC();
 
 void func_8003C878(s32);

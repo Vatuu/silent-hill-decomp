@@ -90,7 +90,7 @@ void func_800317CC(s_FsImageDesc* image0, s_FsImageDesc* image1, s16 arg2) // 0x
     for (i = 0; i < 3; i++)
     {
         image = (i > 0) ? image0 : image1;
-        color = (i < 2) ? FP_MULTIPLY((s64)arg2, 128, Q12_SHIFT) : 0x80;
+        color = (i < 2) ? FP_MULTIPLY_PRECISE(arg2, 128, Q12_SHIFT) : 0x80;
 
         for (j = 0; j < 3; j++)
         {
@@ -534,7 +534,7 @@ void func_8003260C() // 0x8003260C
                 timeStep = FP_TIME(3.0f) / (queueLength + 1);
             }
 
-            D_800A8E94 += FP_MULTIPLY((s64)timeStep, g_DeltaTime1, Q12_SHIFT);
+            D_800A8E94 += FP_MULTIPLY_PRECISE(timeStep, g_DeltaTime1, Q12_SHIFT);
 
             if (D_800A8E94 >= 0xFFF)
             {
@@ -577,7 +577,7 @@ void func_8003260C() // 0x8003260C
                 timeStep = FP_TIME(3.0f);
             }
 
-            D_800A8E94 -= FP_MULTIPLY((s64)timeStep, g_DeltaTime1, Q12_SHIFT);
+            D_800A8E94 -= FP_MULTIPLY_PRECISE(timeStep, g_DeltaTime1, Q12_SHIFT);
 
             if (D_800A8E94 <= 0)
             {
