@@ -2773,6 +2773,9 @@ void DmsHeader_FixOffsets(s_DmsHeader* header);
 
 void DmsEntry_FixOffsets(s_DmsEntry* entry, s_DmsHeader* header);
 
+/** Unused func? `volatile` needed for match. */
+s_DmsInterval* func_8008CA60(volatile s32 unused, s32 idx, s_DmsHeader* header);
+
 void Dms_CharacterGetPosRot(VECTOR3* pos, SVECTOR* rot, char* charaName, s32 time, s_DmsHeader* header);
 
 void Dms_CharacterGetStartPosRot(VECTOR3* pos, SVECTOR* rot, char* charaName, s32 time, s_DmsHeader* header);
@@ -2949,6 +2952,10 @@ bool func_8008973C(s_SysWork_2514* arg0, s32 arg1, s_8002AC04* ptr, u32* arg3);
 void func_80089840(s_SysWork_2514* arg0);
 
 void func_8008989C(s_SysWork_2514* arg0, u16 arg1, s32 (*arg2)(u16, s32));
+
+void func_8008992C(s_SysWork_2514* arg0, u16 arg1, s32 (*arg2)(u16, s32));
+
+void func_800899BC(s_SysWork_2514* arg0, s32 arg1);
 
 bool func_80089D0C(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s_8002AC04* arg2, u8* arg3);
 

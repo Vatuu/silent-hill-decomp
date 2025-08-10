@@ -1132,12 +1132,18 @@ typedef struct
     s32 field_C;
 } s_SysWork_2514_C;
 
-typedef struct
+typedef struct _s_SysWork_2514_18
 {
-    struct s_func_8008989C* field_0;
-    u8                      unk_4[26];
-    u16                     field_1E;
-} s_func_8008989C;
+    struct _s_SysWork_2514_18* next_0;
+
+    u8  unk_4[4]; // prev?
+    u8  unk_8[4];
+    s32 field_C;
+    u8  unk_10[8];
+    u8  unk_18[4];
+    u16 field_1C;
+    u16 field_1E;
+} s_SysWork_2514_18;
 
 typedef struct
 {
@@ -1149,11 +1155,7 @@ typedef struct
     u8                unk_4[8];
     s_SysWork_2514_C* field_C;
     u8                unk_10[8];
-    s_func_8008989C*  field_18;
-    s32               unk_1C;
-    s32               field_20[2]; // `func_8009E310` takes pointer to this and writes to [0] / [1], maybe a substruct.
-    u8                unk_28[8];
-    s32               field_30[2]; // `func_8009EBB8` takes pointer to this and writes to [0] / [1], maybe a substruct.
+    s_SysWork_2514_18 head_18;
 } s_SysWork_2514;
 STATIC_ASSERT_SIZEOF(s_SysWork_2514, 56);
 

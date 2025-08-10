@@ -1504,8 +1504,8 @@ void func_80089090(s32 arg0) // 0x80089090
 void func_800890B8() // 0x800890B8
 {
     func_8009E198(&g_SysWork.field_2514, 0);
-    func_8009E310(&g_SysWork.field_2514, g_SysWork.field_2514.field_20, 2);
-    func_8009EBB8(&g_SysWork.field_2514, g_SysWork.field_2514.field_30, 16);
+    func_8009E310(&g_SysWork.field_2514, g_SysWork.field_2514.head_18.unk_8, 2);
+    func_8009EBB8(&g_SysWork.field_2514, g_SysWork.field_2514.head_18.unk_18, 16);
 
     g_SysWork.field_2510 = func_8009E4F8();
 
@@ -1788,56 +1788,106 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008973C);
 void func_80089840(s_SysWork_2514* arg0) // 0x80089840
 {
     // Maybe linked list.
-    s_func_8008989C* next;
-    s_func_8008989C* curr;
-    s_func_8008989C* head;
+    s_SysWork_2514_18* next;
+    s_SysWork_2514_18* curr;
+    s_SysWork_2514_18* head;
 
     if (arg0 == NULL)
     {
         return;
     }
 
-    curr = arg0->field_18;
-    head = (s_func_8008989C*)&arg0->field_18;
-    if (curr != head)
+    curr = arg0->head_18.next_0;
+    head = &arg0->head_18;
+
+    while (curr != head)
     {
-        while (curr != head)
-        {
-            next = curr->field_0;
-            func_8009EC1C(arg0, curr);
-            curr = next;
-        }
+        next = curr->next_0;
+        func_8009EC1C(arg0, curr);
+        curr = next;
     }
 }
 
 void func_8008989C(s_SysWork_2514* arg0, u16 arg1, s32 (*arg2)(u16, s32)) // 0x8008989C
 {
-    s_func_8008989C* ptr0;
-    s_func_8008989C* ptr1;
-    s_func_8008989C* ptr2;
+    s_SysWork_2514_18* next;
+    s_SysWork_2514_18* head;
+    s_SysWork_2514_18* curr;
 
-    if (arg0 != NULL)
+    if (arg0 == NULL)
     {
-        ptr2 = arg0->field_18;
-        ptr1 = (s_func_8008989C*)&arg0->field_18;
+        return;
+    }
 
-        while (ptr2 != ptr1)
+    curr = arg0->head_18.next_0;
+    head = &arg0->head_18;
+
+    while (curr != head)
+    {
+        next = curr->next_0;
+
+        if (arg2(curr->field_1E, arg1) != 0)
         {
-            ptr0 = ptr2->field_0;
-
-            if (arg2(ptr2->field_1E, arg1) != 0)
-            {
-                func_8009EC1C(arg0, ptr2);
-            }
-
-            ptr2 = ptr0;
+            func_8009EC1C(arg0, curr);
         }
+
+        curr = next;
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008992C); // 0x8008992C
+void func_8008992C(s_SysWork_2514* arg0, u16 arg1, s32 (*arg2)(u16, s32)) // 0x8008992C
+{
+    s_SysWork_2514_18* next;
+    s_SysWork_2514_18* head;
+    s_SysWork_2514_18* curr;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_800899BC); // 0x800899BC
+    if (arg0 == NULL)
+    {
+        return;
+    }
+
+    curr = arg0->head_18.next_0;
+    head = &arg0->head_18;
+
+    while (curr != head)
+    {
+        next = curr->next_0;
+
+        if (arg2(curr->field_1C, arg1) != 0)
+        {
+            func_8009EC1C(arg0, curr);
+        }
+
+        curr = next;
+    }
+}
+
+void func_800899BC(s_SysWork_2514* arg0, s32 arg1) // 0x800899BC
+{
+    s_SysWork_2514_18* next;
+    s_SysWork_2514_18* head;
+    s_SysWork_2514_18* curr;
+
+    if (arg0 == NULL)
+    {
+        return;
+    }
+
+    curr = arg0->head_18.next_0;
+    head = &arg0->head_18;
+
+    while (curr != head)
+    {
+        next = curr->next_0;
+
+        if (curr->field_C == arg1)
+        {
+            func_8009EC1C(arg0, curr);
+        }
+
+        curr = next;
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80089A30); // 0x80089A30
 
@@ -2238,7 +2288,10 @@ void DmsEntry_FixOffsets(s_DmsEntry* entry, s_DmsHeader* header) // 0x8008CA44
     entry->svectorPtr_8          = (u32)entry->svectorPtr_8 + (u32)header;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008CA60); // 0x8008CA60
+s_DmsInterval* func_8008CA60(volatile s32 unused, s32 idx, s_DmsHeader* header) // 0x8008CA60
+{
+    return &header->intervalPtr_8[idx];
+}
 
 void Dms_CharacterGetPosRot(VECTOR3* pos, SVECTOR* rot, char* charaName, s32 time, s_DmsHeader* header) // 0x8008CA74
 {
