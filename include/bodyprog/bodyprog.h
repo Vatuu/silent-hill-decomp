@@ -3094,29 +3094,31 @@ s16 func_8006CB90(s_func_8006CC44* arg0);
 
 s32 func_8006CC44(s32 arg0, s32 arg1, s_func_8006CC44* arg2);
 
+s32 func_8006DA08(VECTOR3*, VECTOR3*, VECTOR3*, s_SubCharacter*);
+
 s32 func_8006DB3C(s_func_800700F8_2* arg0, VECTOR3* arg1, VECTOR3* arg2, s_func_800700F8* arg3);
 
 bool func_8006DCE0(s_func_8006DCE0* arg0, s32 arg1, s16 arg2, VECTOR3* pos0, VECTOR3* pos1, s32 arg5, s32 arg6, s32 arg7, s32 arg8);
 
 void func_8006E490(s_func_8006E490* arg0, u32 arg1, s32 arg2, s32 arg3);
 
-void func_80070030(s_SubCharacter* chara, s32 x, s32 y, s32 z);
+bool func_80070030(s_SubCharacter* chara, s32 x, s32 y, s32 z);
 
-s32 func_80070084(s_SubCharacter*, s32, s32, s32);
+bool func_80070084(s_SubCharacter* chara, s32 x, s32 y, s32 z);
 
 void func_8006F338(s_func_8006F338* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 
-s32 func_8006FD90(s_SubCharacter*, s32, s32, s32);
+bool func_8006FD90(s_SubCharacter*, s32, s32, s32);
 
 s32 func_800700F8(s_func_800700F8* arg0, s_func_800700F8* arg1);
 
-s32 func_80070184(s_SubCharacter* chara, s32 arg1, s16 rotY);
+bool func_80070184(s_SubCharacter* chara, s32 arg1, s16 rotY);
 
 bool func_80070320();
 
 s32 func_80070360(s_SubCharacter* chara, s32 someDist, s16 arg2);
 
-void func_8007029C(VECTOR3* arg0, s32 arg1, s16 angle);
+s32 func_8007029C(VECTOR3* arg0, s32 arg1, s16 angle);
 
 void func_800705E4(GsCOORDINATE2*, s32, s32, s32, s32);
 

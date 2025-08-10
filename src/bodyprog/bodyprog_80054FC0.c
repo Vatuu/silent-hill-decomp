@@ -1573,18 +1573,36 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8006FAFC); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8006FD90); // 0x8006FD90
 
-void func_80070030(s_SubCharacter* chara, s32 x, s32 y, s32 z)
+bool func_80070030(s_SubCharacter* chara, s32 x, s32 y, s32 z)
 {
     s_func_800700F8_2 temp;
-    VECTOR3           posDelta;
+    VECTOR3           deltaPos;
 
-    posDelta.vx = x - chara->position_18.vx;
-    posDelta.vy = y - chara->position_18.vy;
-    posDelta.vz = z - chara->position_18.vz;
-    func_8006DB3C(&temp, &chara->position_18, &posDelta, chara);
+    deltaPos.vx = x - chara->position_18.vx;
+    deltaPos.vy = y - chara->position_18.vy;
+    deltaPos.vz = z - chara->position_18.vz;
+
+    func_8006DB3C(&temp, &chara->position_18, &deltaPos, chara);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80070084); // 0x80070084
+bool func_80070084(s_SubCharacter* chara, s32 x, s32 y, s32 z) // 0x80070084
+{
+    s_func_800700F8_2 var;
+    VECTOR3           deltaPos;
+    bool              result;
+
+    deltaPos.vx = x - chara->position_18.vx;
+    deltaPos.vy = y - chara->position_18.vy;
+    deltaPos.vz = z - chara->position_18.vz;
+
+    result = false;
+    if (func_8006DB3C(&var, &chara->position_18, &deltaPos, (s_func_800700F8*)chara) != 0)
+    {
+        result = var.field_10 == 0;
+    }
+
+    return result;
+}
 
 s32 func_800700F8(s_func_800700F8* arg0, s_func_800700F8* arg1) // 0x800700F8
 {
@@ -1595,13 +1613,13 @@ s32 func_800700F8(s_func_800700F8* arg0, s_func_800700F8* arg1) // 0x800700F8
     vec0 = arg0->field_18;
 
     vec1.vx = arg1->field_18.vx - arg0->field_18.vx;
-    vec1.vy = -FP_METER(0.1f);
+    vec1.vy = FP_METER(-0.1f);
     vec1.vz = arg1->field_18.vz - arg0->field_18.vz;
 
     return func_8006DB3C(&sp10, &vec0, &vec1, arg0) && sp10.field_10 == 0;
 }
 
-s32 func_80070184(s_SubCharacter* chara, s32 arg1, s16 rotY) // 0x80070184
+bool func_80070184(s_SubCharacter* chara, s32 arg1, s16 rotY) // 0x80070184
 {
     s32 iVar0;
     s32 varX;
@@ -1622,16 +1640,16 @@ s32 func_80070184(s_SubCharacter* chara, s32 arg1, s16 rotY) // 0x80070184
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80070208); // 0x80070208
 
-void func_8007029C(VECTOR3* arg0, s32 arg1, s16 angle) // 0x8007029C
+s32 func_8007029C(VECTOR3* arg0, s32 arg1, s16 angle) // 0x8007029C
 {
-    s8 vars[28];
+    s8      vars[28];
     VECTOR3 vec;
 
     vec.vx = FP_MULTIPLY(arg1, shRsin(angle), Q12_SHIFT);
     vec.vy = 0;
     vec.vz = FP_MULTIPLY(arg1, shRcos(angle), Q12_SHIFT);
 
-    func_8006DB3C(&vars, arg0 + 2, &vec, arg0);
+    return func_8006DB3C(&vars, &arg0[2], &vec, arg0);
 }
 
 bool func_80070320() // 0x80070320

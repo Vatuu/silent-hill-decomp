@@ -2409,8 +2409,8 @@ void func_8008D464() // 0x8008D464
 
 void func_8008D470(s16 arg0, SVECTOR* rot, VECTOR3* pos, s32 arg3) // 0x8008D470
 {
+    s32         var;
     s_8008E51C* ptr;
-    s32 var;
 
     if (D_800C4818.field_0 == 0)
     {
@@ -2479,7 +2479,7 @@ void func_8008D78C()
     if (vcRetCamMvSmoothF() == 0)
     {
         D_800C4818.field_A = 0;
-        var1 = 0;
+        var1               = 0;
     }
 
     func_8008D990(var1, D_800C4818.field_A, &D_800C4818.field_C, D_800C4818.field_1C, D_800C4818.field_20);
