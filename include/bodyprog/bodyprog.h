@@ -3344,6 +3344,9 @@ void func_80037E78(s_SubCharacter* chara);
 
 s32 func_800382B0(s32 arg0);
 
+/** @brief Returns the distance on the XZ plane between two positions. */
+s32 Math_Distance2d(VECTOR3* pos0, VECTOR3* pos1);
+
 /** @brief Performs a distance check on the XZ plane between two positions. */
 bool Math_Distance2dCheck(VECTOR3* pos0, VECTOR3* pos1, s32 radius);
 

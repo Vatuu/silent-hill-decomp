@@ -5954,7 +5954,12 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8007FDE0); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_800802CC); // 0x800802CC
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8008037C); // 0x8008037C
+s32 Math_Distance2d(VECTOR3* pos0, VECTOR3* pos1) // 0x8008037C
+{
+    s32 xDelta = pos1->vx - pos0->vx;
+    s32 zDelta = pos1->vz - pos0->vz;
+    return SquareRoot12(FP_MULTIPLY((s64)xDelta, (s64)xDelta, 12) + FP_MULTIPLY((s64)zDelta, (s64)zDelta, 12));
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_800803FC); // 0x800803FC
 
