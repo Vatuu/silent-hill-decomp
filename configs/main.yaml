@@ -59,11 +59,11 @@ segments:
     subalign: 4
     bss_size: 0x1EC8
     subsegments:
+      # .rodata section
       - [0x800, .rodata, main]
       - [0x808, .rodata, fsqueue_3]
       - [0x814, pad, fsqueue_3] # Extra padding for some reason.
       - [0x818, .rodata, fsqueue_2] # jtbl
-
       - [0x830, lib, libspu, spu, .rdata]
       - [0x880, lib, libetc, vsync, .rdata]
       - [0x890, lib, libetc, intr, .rdata]
@@ -75,6 +75,7 @@ segments:
       - [0xC10, lib, libgpu, tmd, .rdata]
       - [0xD50, lib, libgpu, sys, .rdata]
 
+      # .text section
       - [0xF70, c, main] # Main function.
       - [0x12D0, c, fileinfo] # File entry functions.
       - [0x1658, c, fsqueue_1] # fs queue functions part 1.
@@ -84,7 +85,6 @@ segments:
       - [0x2778, c, memcpy] # Custom memcpy implementation.
       - [0x28B8, c, rng] # RNG functions.
       - [0x293C, c, memmove32] # memmove32
-
       - [0x29BC, lib, libapi, a36] #EnterCriticalSection
       - [0x29CC, lib, libapi, a37] #ExitCriticalSection
       - [0x29DC, lib, libapi, a50] #open
@@ -125,6 +125,7 @@ segments:
       - [0x88FC, lib, libgpu, sys]
       - [0xB90C, lib, libapi, c73] # GPU_cw
 
+      # .data section
       - [0xB91C, .data, fileinfo]
       - [0x11ADC, .data, main]
       - [0x11B4C, lib, libspu, s_ini, .data]
@@ -143,6 +144,7 @@ segments:
       - [0x131D0, lib, libcd, cdread, .data]
       - [0x131D0, lib, libgpu, sys, .data]
 
+      # .sdata section
       - [0x133B0, .sdata, fileinfo]
       - [0x13468, pad, fileinfo]
       - [0x1346C, sdata, start]
@@ -150,8 +152,10 @@ segments:
       - [0x13488, pad, main]
       - [0x13490, .sdata, rng]
 
+      # .sbss section
       - [0x13494, sbss, psyq/libsn/snmain]
 
+      # .bss section
       - [0x13498, .bss, fsqueue_1]
       - [0x138C0, .bss, fsmem]
       - [0x139A0, lib, libspu, spu, .bss]
