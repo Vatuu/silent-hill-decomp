@@ -55,8 +55,8 @@ void sharedFunc_800D20E4_0_s00()
     chara->flags_3E                                           |= CharaFlag_Unk4;
     chara->field_E0_8                                          = 4;
 
-    if (sysWork->playerCombatInfo_38.equippedWeapon_F < 32)
+    if (sysWork->playerCombatInfo_38.equippedWeapon_F < EquippedWeaponId_Handgun)
     {
-        sysWork->playerCombatInfo_38.equippedWeapon_F = sysWork->playerCombatInfo_38.equippedWeapon_F % 10;
+        sysWork->playerCombatInfo_38.equippedWeapon_F %= 10;
     }
 }

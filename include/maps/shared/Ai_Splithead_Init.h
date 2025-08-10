@@ -24,7 +24,7 @@ void Ai_Splithead_Init(s_SubCharacter* chara)
     sharedData_800D8614_1_s05 = 0;
     sharedData_800D8616_1_s05 = 0;
 
-    chara->damageReceived_C0 = 0;
+    chara->damageReceived_C0 = FP_FLOAT_TO(0.0f, Q12_SHIFT);
     chara->field_BC          = 0;
     chara->field_B8          = 0;
     chara->field_B4          = 0;

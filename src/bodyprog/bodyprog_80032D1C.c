@@ -3003,7 +3003,7 @@ void func_80037DC4(s_SubCharacter* chara) // 0x80037DC4
 
 void func_80037E40(s_SubCharacter* chara) // 0x80037E40
 {
-    if (chara->damageReceived_C0 > 0)
+    if (chara->damageReceived_C0 > FP_FLOAT_TO(0.0f, Q12_SHIFT))
     {
         chara->flags_3E |= CharaFlag_Unk6;
     }

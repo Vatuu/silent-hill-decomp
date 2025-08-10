@@ -556,7 +556,7 @@ void Inventory_Logic() // 0x8004D518
             {
                 g_Gfx_Inventory_SelectionBordersDraw = 1;
 
-                if (g_SysWork.playerCombatInfo_38.equippedWeapon_F >= 0)
+                if (g_SysWork.playerCombatInfo_38.equippedWeapon_F >= EquippedWeaponId_KitchenKnife)
                 {
                     g_Inventory_SelectionId = InventorySelectionId_EquippedItem;
                     Sd_PlaySfx(Sfx_Back, 0, 64);
@@ -1558,7 +1558,7 @@ s32 func_8004F190(s_Savegame* save) // 0x8004F190
         }
     }
 
-    if (g_SavegamePtr->equippedWeapon_AA != 0)
+    if (g_SavegamePtr->equippedWeapon_AA != InventoryItemId_Unequipped)
     {
         for (i = 0; i < INVENTORY_ITEM_COUNT_MAX; i++)
         {

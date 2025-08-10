@@ -46,7 +46,7 @@ void Ai_Groaner_Init(s_SubCharacter* chara)
 
     ModelAnim_AnimInfoSet(&chara->model_0.anim_4, sharedData_800EEB14_2_s00);
 
-    chara->damageReceived_C0 = 0;
+    chara->damageReceived_C0 = FP_FLOAT_TO(0.0f, Q12_SHIFT);
     chara->field_BC          = 0;
     chara->field_B8          = 0;
     chara->field_B4          = 0;

@@ -15,10 +15,10 @@ void Ai_LarvalStalker_Init(s_SubCharacter* arg0)
 
     ModelAnim_AnimInfoSet(&arg0->model_0.anim_4, sharedData_800DA6C8_0_s00);
 
-    arg0->health_B0         = FP_TO(300, Q12_SHIFT);
+    arg0->health_B0         = FP_FLOAT_TO(300.0f, Q12_SHIFT);
     arg0->field_34          = 0;
     arg0->moveSpeed_38      = 0;
-    arg0->damageReceived_C0 = 0;
+    arg0->damageReceived_C0 = FP_FLOAT_TO(0.0f, Q12_SHIFT);
     arg0->field_BC          = 0;
     arg0->field_B8          = 0;
     arg0->field_B4          = 0;

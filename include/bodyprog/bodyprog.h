@@ -3560,7 +3560,7 @@ void func_8007F14C(u8 arg0);
 /** Resets several global variables to 0. */
 void func_8007F1CC();
 
-void func_8007F250(u8* ptr, s8 arg1);
+void func_8007F250(u8* ptr, s8 disableDamage);
 
 /** Some kind of player anim state check. */
 bool func_8007F26C();

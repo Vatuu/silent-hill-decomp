@@ -287,7 +287,7 @@ bool Ai_Twinfeeler_Init(s_SubCharacter* chara) // 0x800D3CD4
 
     ModelAnim_AnimInfoSet(&chara->model_0.anim_4, g_Ai_Twinfeeler_AnimInfo);
 
-    chara->damageReceived_C0 = 0;
+    chara->damageReceived_C0 = FP_FLOAT_TO(0.0f, Q12_SHIFT);
     chara->field_BC          = 0;
     chara->field_B8          = 0;
     chara->field_B4          = 0;

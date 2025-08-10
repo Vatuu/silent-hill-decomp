@@ -61,7 +61,7 @@ void Inventory_ExitAnimEquippedItemUpdate(u8* arg0) // 0x8004C088
                     (s8)D_800C3950 == g_SysWork.playerCombatInfo_38.equippedWeapon_F)
                 {
                     extraModelPtr0 = &g_SysWork.player_4C.extra_128.model_0;
-                    if (extraModelPtr0->anim_4.animIdx_0 >= 66u)
+                    if (extraModelPtr0->anim_4.animIdx_0 >= 66)
                     {
                         modelPtr0                                         = &g_SysWork.player_4C.chara_0.model_0;
                         extraModelPtr0->anim_4.animIdx_0                 -= 10;

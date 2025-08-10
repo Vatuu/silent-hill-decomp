@@ -87,6 +87,7 @@ extern u16 sharedData_800E0CB8_0_s00;
 extern s8  sharedData_800E0CBA_0_s00;
 extern s32 sharedData_800E32D0_0_s00;
 
+/** `e_EquippedWeaponId` */
 extern s8 sharedData_800DD59C_0_s00;
 
 extern s16 sharedData_800E0C6E_0_s00;

@@ -293,7 +293,7 @@ s32 vcExecCamera() // 0x80080FBC
 
 void vcSetAllNpcDeadTimer() // 0x8008123C
 {
-    #define DEAD_TIME_MAX 10.0f
+    #define DEATH_TIME_MAX 10.0f
 
     s_SubCharacter* chara;
 
@@ -306,16 +306,16 @@ void vcSetAllNpcDeadTimer() // 0x8008123C
 
         if (chara->health_B0 <= FP_FLOAT_TO(0.0f, Q12_SHIFT))
         {
-            chara->dead_timer_C4 += g_DeltaTime0;
+            chara->deathTimer_C4 += g_DeltaTime0;
         }
         else
         {
-            chara->dead_timer_C4 = 0;
+            chara->deathTimer_C4 = FP_TIME(0.0f);
         }
 
-        if (chara->dead_timer_C4 > FP_TIME(DEAD_TIME_MAX))
+        if (chara->deathTimer_C4 > FP_TIME(DEATH_TIME_MAX))
         {
-            chara->dead_timer_C4 = FP_TIME(DEAD_TIME_MAX);
+            chara->deathTimer_C4 = FP_TIME(DEATH_TIME_MAX);
         }
     }
 }
@@ -786,8 +786,8 @@ void vcSetTHROUGH_DOOR_CAM_PARAM_in_VC_WORK(VC_WORK* w_p, enum _THROUGH_DOOR_SET
 
 void vcSetNearestEnemyDataInVC_WORK(VC_WORK* w_p) // 0x80081D90
 {
-    #define ENEMY_DEAD_TIMER_MAX 1.5f
-    #define ENEMY_METERS_MAX     15.0f
+    #define ENEMY_DEATH_TIME_MAX 1.5f
+    #define ENEMY_DIST_MAX       FP_METER(15.0f)
 
     s32             set_active_data_f;
     s32             xz_dist;
@@ -796,26 +796,29 @@ void vcSetNearestEnemyDataInVC_WORK(VC_WORK* w_p) // 0x80081D90
     s_SubCharacter* sc_p            = NULL;
     s_SubCharacter* all_min_sc_p    = NULL;
     s_SubCharacter* active_min_sc_p = NULL;
-    s32             all_min_dist    = FP_METER(ENEMY_METERS_MAX);
-    s32             active_min_dist = FP_METER(ENEMY_METERS_MAX);
+    s32             all_min_dist    = ENEMY_DIST_MAX;
+    s32             active_min_dist = ENEMY_DIST_MAX;
 
     if (g_SysWork.flags_22A4 & (1 << 5)) // `sh2jms->player.battle(ShBattleInfo).status & 0x10` in SH2.
     {
         w_p->nearest_enemy_2DC         = NULL;
-        w_p->nearest_enemy_xz_dist_2E0 = FP_METER(ENEMY_METERS_MAX);
+        w_p->nearest_enemy_xz_dist_2E0 = ENEMY_DIST_MAX;
         return;
     }
 
     for (sc_p = &g_SysWork.npcs_1A0[0]; sc_p < &g_SysWork.npcs_1A0[NPC_COUNT_MAX]; sc_p++)
     {
-        if ((((u8)sc_p->model_0.charaId_0 - 2) < 23u) &&                                                     // `Chara_Unknown23`
-            (sc_p->dead_timer_C4 <= FP_FLOAT_TO(ENEMY_DEAD_TIMER_MAX, Q12_SHIFT) || sc_p->health_B0 >= 0) &&
-            !(sc_p->flags_3E & (1 << 4)))                                                                    // `sc_p->battle(ShBattleInfo).status & 0x20` in SH2.
+        if (sc_p->model_0.charaId_0 >= Chara_AirScreamer &&
+            sc_p->model_0.charaId_0 <= Chara_MonsterCybil &&
+            (sc_p->deathTimer_C4 <= FP_TIME(ENEMY_DEATH_TIME_MAX) ||
+             sc_p->health_B0 >= FP_FLOAT_TO(0.0f, Q12_SHIFT)) &&
+            !(sc_p->flags_3E & (1 << 4)))                            // `sc_p->battle(ShBattleInfo).status & (1 << 5)` in SH2.
         {
             ofs_x = sc_p->position_18.vx - w_p->chara_pos_114.vx;
             ofs_z = sc_p->position_18.vz - w_p->chara_pos_114.vz;
 
-            if (abs(ofs_x) >= FP_METER(ENEMY_METERS_MAX) || abs(ofs_z) >= FP_METER(ENEMY_METERS_MAX))
+            if (abs(ofs_x) >= ENEMY_DIST_MAX ||
+                abs(ofs_z) >= ENEMY_DIST_MAX)
             {
                 continue;
             }

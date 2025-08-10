@@ -472,7 +472,7 @@ Inventory_AddSpecialItem                    = 0x80054CAC; // type:func
 //--------------------------------------------------------------------
 GameState_MapScreen_Update                  = 0x80066EB0; // type:func
 Player_Logic_Update                         = 0x800717D0; // type:func
-Player_DamageHandle                         = 0x8007C800; // type:func
+Player_ReceiveDamage                        = 0x8007C800; // type:func
 Game_SavegameResetPlayer                    = 0x8007E530; // type:func
 GameFs_PlayerMapAnimLoad                    = 0x8007EB64; // type:func
 Player_AnimGetSomething                     = 0x8007F308; // type:func

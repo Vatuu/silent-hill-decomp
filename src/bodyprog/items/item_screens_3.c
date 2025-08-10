@@ -2168,7 +2168,7 @@ void Inventory_ExitAnimFixes() // 0x80054634
 
     if (g_SavegamePtr->equippedWeapon_AA)
     {
-        g_SysWork.playerCombatInfo_38.equippedWeapon_F = g_SavegamePtr->equippedWeapon_AA + 0x80;
+        g_SysWork.playerCombatInfo_38.equippedWeapon_F = g_SavegamePtr->equippedWeapon_AA + InventoryItemId_KitchenKnife;
     }
     else
     {

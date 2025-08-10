@@ -1207,7 +1207,7 @@ void func_8003CD6C(s_PlayerCombat* arg0) // 0x8003CD6C
     itemId           = NO_VALUE;
     if (equippedWeaponId != NO_VALUE)
     {
-        itemId = equippedWeaponId + 0x80;
+        itemId = equippedWeaponId + InventoryItemId_KitchenKnife;
     }
 
     func_8003CDA0(itemId);
