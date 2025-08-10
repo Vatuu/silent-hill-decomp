@@ -129,13 +129,13 @@ INCLUDE_ASM("asm/maps/map4_s02/nonmatchings/map4_s02", sharedFunc_800D2BE4_0_s01
 
 INCLUDE_ASM("asm/maps/map4_s02/nonmatchings/map4_s02", func_800D15C0);
 
-INCLUDE_ASM("asm/maps/map4_s02/nonmatchings/map4_s02", func_800D17C4);
+#include "maps/shared/sharedFunc_800D2E04_0_s01.h" // 0x800D17C4
 
 INCLUDE_ASM("asm/maps/map4_s02/nonmatchings/map4_s02", func_800D1974);
 
 INCLUDE_ASM("asm/maps/map4_s02/nonmatchings/map4_s02", func_800D1B90);
 
-INCLUDE_ASM("asm/maps/map4_s02/nonmatchings/map4_s02", func_800D1DF0);
+#include "maps/shared/sharedFunc_800D3430_0_s01.h" // 0x800D1DF0
 
 INCLUDE_ASM("asm/maps/map4_s02/nonmatchings/map4_s02", func_800D1EC8);
 

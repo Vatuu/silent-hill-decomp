@@ -102,9 +102,13 @@
 #define FP_ANGLE(deg) \
     (s16)((deg) * ((FP_TO(1, Q12_SHIFT)) / 360.0f))
 
-/** @brief Truncates fixed-point degrees to remove excess precision. */
+/** @brief Wraps an angle to 360 degress. */
 #define FP_ANGLE_TRUNCATE(angle) \
     (((angle) << 20) >> 20)
+
+/** @brief Wraps an angle to 360 degress and performs an optimal ABS() too. */
+#define FP_ANGLE_TRUNCATE_ABS(angle) \
+    (((angle << 20) >> 20) ^ (angle >> 31)) - (angle >> 31)
 
 /** @brief Converts floating-point radians in the range `[-PI, PI]` to fixed-point radians in the range `[0, 0x5000]`. */
 #define FP_RADIAN(rad)                                                                \

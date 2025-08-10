@@ -5051,7 +5051,7 @@ s32 func_8007D6F0(s_SubCharacter* arg0, s_D_800C45C8* arg1) // 0x8007D6F0
 {
     s_func_800700F8_2 sp10[2];
     VECTOR3           vecs[4];
-    s32               ret[2];
+    bool              ret[2];
     s32               temp_lo;
     s32               temp_s0;
     s32               temp_s1;
@@ -5083,7 +5083,7 @@ s32 func_8007D6F0(s_SubCharacter* arg0, s_D_800C45C8* arg1) // 0x8007D6F0
 
     ret[0] = func_8006D90C(&sp10[0], &vecs[2], &vecs[0]);
 
-    if (ret[0] != 0)
+    if (ret[0])
     {
         vecs[1].vy = vecs[0].vy;
         vecs[1].vx = (arg0->position_18.vx - temp_s4) + temp_s5;
@@ -5094,7 +5094,7 @@ s32 func_8007D6F0(s_SubCharacter* arg0, s_D_800C45C8* arg1) // 0x8007D6F0
 
         ret[1] = func_8006D90C(&sp10[1], &vecs[3], &vecs[1]);
 
-        if (ret[1] != 0)
+        if (ret[1])
         {
             arg1->field_14 = (sp10[0].field_14 + sp10[1].field_14) >> 1;
             arg1->field_1  = sp10[0].field_1;
