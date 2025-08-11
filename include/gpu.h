@@ -140,13 +140,13 @@ void GsTMDfastTG3LFG(void* op, VERT* vp, VERT* np, PACKET* pk, int n, int shift,
 void GsTMDfastG4LFG(void* op, VERT* vp, VERT* np, PACKET* pk, int n, int shift, GsOT* ot, u_long* scratch);
 void GsTMDfastTG4LFG(void* op, VERT* vp, VERT* np, PACKET* pk, int n, int shift, GsOT* ot, u_long* scratch);
 
-/** @brief Sets the DQA register in the GTE. Not part of Psy-Q for some reason. */
+/** @brief Sets the `DQA` register in the GTE. Not part of Psy-Q for some reason. */
 #define gte_lddqa(r0) __asm__ volatile( \
     "ctc2  %0, $27"                     \
     :                                   \
     : "r"(r0))
 
-/** @brief Zeroes the DQB register in the GTE. */
+/** @brief Zeroes the `DQB` register in the GTE. */
 #define gte_lddqb_0() __asm__ volatile( \
     "ctc2  $zero, $28")
 
@@ -177,5 +177,13 @@ void GsTMDfastTG4LFG(void* op, VERT* vp, VERT* np, PACKET* pk, int n, int shift,
     :                                    \
     : "r"(val)                           \
     : "memory");
+
+/** @brief Returns value of GTE `IR1` register. */
+#define gte_stIR1()                                        \
+    ({                                                     \
+        u32 __r;                                           \
+        __asm__ volatile("mfc2 %0, $9; nop;" : "=r"(__r)); \
+        __r;                                               \
+    })
 
 #endif

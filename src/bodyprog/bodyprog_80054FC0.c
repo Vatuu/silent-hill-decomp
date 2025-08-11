@@ -489,7 +489,50 @@ void func_8005759C(s_func_8005759C* arg0, s_func_8005759C_2* arg1, s32 arg2, s32
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80057658); // 0x80057658
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80057A3C); // 0x80057A3C
+void func_80057A3C(s_func_8005759C* arg0, s32 offset, s_func_8005759C_2* arg2, SVECTOR3* lightVec) // 0x80057A3C
+{
+    s32   var_v1;
+    u8*   var_a3;
+    void* endPtr;
+    s32   temp_t2;
+
+    s_func_8005759C_10* var_t0;
+
+    arg2->field_380.m[0][0] = lightVec->vx;
+    arg2->field_380.m[0][1] = lightVec->vy;
+    arg2->field_380.m[0][2] = lightVec->vz;
+    gte_SetLightMatrix(&arg2->field_380);
+
+    var_a3  = &arg2->field_2B8[offset];
+    temp_t2 = D_800C4188;
+
+    for (var_t0 = arg0->field_10; var_t0 < &arg0->field_10[arg0->field_2]; var_t0++)
+    {
+        *(u32*)&arg2->field_3A0 = *(u32*)var_t0;
+
+        arg2->field_3AC.vx = arg2->field_3A0.vx << 5;
+        arg2->field_3AC.vy = arg2->field_3A0.vy << 5;
+        arg2->field_3AC.vz = arg2->field_3A0.vz << 5;
+
+        gte_ldv0(&arg2->field_3AC);
+        gte_ll();
+
+        var_v1 = gte_stIR1();
+        var_v1 += temp_t2;
+        var_v1 >>= 5;
+
+        if (var_v1 > 0xFF)
+        {
+            var_v1 = 0xFF;
+        }
+
+        endPtr = &var_a3[arg2->field_3A0.count];
+        for (; var_a3 < endPtr; var_a3++)
+        {
+            *var_a3 = var_v1;
+        }
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80057B7C); // 0x80057B7C
 

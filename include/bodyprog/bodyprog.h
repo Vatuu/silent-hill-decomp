@@ -623,24 +623,41 @@ typedef struct
     s_func_8006E490_20 field_20[2];
 } s_func_8006E490;
 
+// TODO: is this some SDK struct? `CVECTOR` is close but uses u8 instead of s8.
 typedef struct
 {
-    s8   unk_0;
+    s8 vx;
+    s8 vy;
+    s8 vz;
+    u8 count;
+} s_func_8005759C_10;
+
+typedef struct
+{
+    s8   unk_0[1];
     u8   field_1;
-    s8   unk_2;
+    u8   field_2;
     u8   field_3;
     s8   unk_4[4];
     s32* field_8;
     s16* field_C;
-    s8   unk_10[4];
+
+    s_func_8005759C_10* field_10;
+
     u8*  field_14;
 } s_func_8005759C;
 
 typedef struct
 {
-    s32 field_0[99];
-    s16 field_18C[150];
-    s8  field_2B8[20]; // Size guessed, could be larger or smaller.
+    s32    field_0[99];
+    s16    field_18C[150];
+    u8     field_2B8[200]; // Size likely incorrect
+    MATRIX field_380;
+
+    s_func_8005759C_10 field_3A0;
+
+    u8       unk_3A4[8];
+    SVECTOR3 field_3AC;
 } s_func_8005759C_2;
 
 // ========
@@ -2808,6 +2825,8 @@ s32 func_800571D0(u32 arg0);
 void func_80057228(void*, s32, s8*, VECTOR3*);
 
 void func_8005759C(s_func_8005759C* arg0, s_func_8005759C_2* arg1, s32 arg2, s32 arg3);
+
+void func_80057A3C(s_func_8005759C* arg0, s32 offset, s_func_8005759C_2* arg2, SVECTOR3* lightVec);
 
 void func_8005B55C(GsCOORDINATE2*);
 
