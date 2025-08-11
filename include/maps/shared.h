@@ -74,6 +74,7 @@ extern VECTOR sharedData_800DD880_0_s01;
 /** Could be a padded VECTOR, but the ASM for the function vec=vec assignments copies only the first 3 fields */
 extern VECTOR3 sharedData_800DE170_0_s01;
 extern VECTOR3 sharedData_800DE180_0_s01;
+extern VECTOR3 sharedData_800DE190_0_s01;
 
 extern s_func_800700F8_2 sharedData_800E2330_0_s01;
 
@@ -399,6 +400,12 @@ void sharedFunc_800D2C18_5_s00(s_SubCharacter*);
 
 void sharedFunc_800D3300_5_s00(s_SubCharacter*);
 
+s32 sharedFunc_800D3508_0_s01(s_SubCharacter* chara, s32* arg1);
+
+s32 sharedFunc_800D3630_0_s01(s_SubCharacter* chara, s32* arg1);
+
+s32 sharedFunc_800D3758_0_s01(s_SubCharacter* chara, s32* outDistance, s32* outAngle, s32 arg3, s32 arg4);
+
 void Ai_Romper_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords);
 
 void Ai_Romper_Init(s_SubCharacter* chara);
@@ -494,6 +501,10 @@ void sharedFunc_800D2BF4_0_s01(s_SubCharacter* chara);
 bool sharedFunc_800D2E04_0_s01(s_SubCharacter* chara, VECTOR3* vecIn, s32* outDistance, s32* outAngle);
 
 s32 sharedFunc_800D3430_0_s01(s_SubCharacter* chara, s32* arg1, s32* arg2);
+
+s32 sharedFunc_800D3814_0_s01(s_SubCharacter* chara);
+
+s32 sharedFunc_800D31D0_0_s01(s_SubCharacter* chara, VECTOR3* arg1, s32 arg2);
 
 void sharedFunc_800D3928_0_s01(s_SubCharacter*);
 
