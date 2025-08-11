@@ -179,7 +179,44 @@ void func_80055B74(CVECTOR* result, CVECTOR* color, s32 arg2) // 0x80055B74
     gte_SetFarColor(0, 0, 0);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80055C3C); // 0x80055C3C
+void func_80055C3C(CVECTOR* result, CVECTOR* color, void* arg2, void* arg3, s32 arg4, s32 arg5) // 0x80055C3C
+{
+    s32 temp_a1;
+    s32 var_v0;
+    s32 var_s0;
+
+    var_s0  = arg5 >> 4;
+    temp_a1 = func_80055D78(arg2, arg3, arg4);
+
+    if (D_800C4168.field_1 != 0)
+    {
+        if (var_s0 < (1 << D_800C4168.field_14))
+        {
+            var_v0 = D_800C4168.field_CC[(var_s0 << 7) >> D_800C4168.field_14];
+        }
+        else
+        {
+            var_v0 = 255;
+        }
+
+        gte_lddp(var_v0 << 4);
+        gte_ldrgb(color);
+        gte_SetFarColor(D_800C4168.field_1C, D_800C4168.field_1D, D_800C4168.field_1E);
+        gte_ldsv_(temp_a1 << 5);
+
+        gte_dpcl();
+        gte_strgb(result);
+
+        gte_SetFarColor(0, 0, 0);
+    }
+    else
+    {
+        gte_lddp(4096 - (temp_a1 << 5));
+        gte_ldrgb(color);
+        gte_dpcs();
+        gte_strgb(result);
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80055D78); // 0x80055D78
 
@@ -455,7 +492,50 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_800571D0); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80057228); // 0x80057228
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80057344); // 0x80057344
+void func_80057344(s_func_80057344* arg0, void* arg1, void* arg2, s32 arg3) // 0x80057344
+{
+    u32                var_s1;
+    u32                var_s4;
+    s_func_8005759C*   var_s0;
+    s_func_80057344_8* var_s2;
+    s_func_8005759C_2* var_s3;
+
+    var_s3 = PSX_SCRATCH_ADDR(0);
+
+    var_s2 = arg0->field_8;
+    var_s4 = var_s2->field_9;
+    var_s1 = var_s2->field_A;
+
+    gte_lddqa(D_800C4168.field_4C);
+    gte_lddqb_0();
+
+    for (var_s0 = var_s2->field_C; var_s0 < &var_s2->field_C[var_s2->field_8]; var_s0++)
+    {
+        if (var_s4 != 0 || var_s1 != 0)
+        {
+            func_8005759C(var_s0, var_s3, var_s4, var_s1);
+        }
+        else
+        {
+            func_800574D4(var_s0, var_s3);
+        }
+
+        switch (D_800C4168.field_0)
+        {
+            case 0:
+                break;
+            case 1:
+                func_80057658(var_s0, var_s1, var_s3, &D_800C4168.field_74, &D_800C4168.field_7C);
+                break;
+            case 2:
+                func_80057A3C(var_s0, var_s1, var_s3, &D_800C4168.field_74);
+                break;
+        }
+
+        func_80057B7C(var_s0, var_s4, var_s3, arg3);
+        func_8005801C(var_s0, var_s3, arg1, arg2);
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_800574D4); // 0x800574D4
 
@@ -546,7 +626,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8005A21C); // 0x
 
 s32 func_8005A42C(u8* arg0, s32 arg1) // 0x8005A42C
 {
-    // arg0 is always 0x1f800000 / PSX_SCRATCH?
+    // arg0 is always 0x1f800000 / PSX_SCRATCH? Possibly `s_func_8005759C_2` struct.
     s32 alpha = 4096 - (FP_FROM(arg1 * D_800C4188, Q12_SHIFT));
 
     gte_lddp(alpha);

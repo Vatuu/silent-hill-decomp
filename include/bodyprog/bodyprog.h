@@ -646,6 +646,7 @@ typedef struct
 
     u8*  field_14;
 } s_func_8005759C;
+STATIC_ASSERT_SIZEOF(s_func_8005759C, 24);
 
 typedef struct
 {
@@ -659,6 +660,23 @@ typedef struct
     u8       unk_3A4[8];
     SVECTOR3 field_3AC;
 } s_func_8005759C_2;
+
+typedef struct
+{
+    u8               unk_0[8];
+    u8               field_8;
+    u8               field_9;
+    u8               field_A;
+    u8               unk_B[1];
+    s_func_8005759C* field_C;
+} s_func_80057344_8;
+
+typedef struct
+{
+    u8                 unk_0[8];
+    s_func_80057344_8* field_8;
+    // Likely incomplete.
+} s_func_80057344;
 
 // ========
 // STRUCTS
@@ -2782,6 +2800,10 @@ void func_80055814(s32 arg0);
  * with lighting strength from `D_800C4168.field_20` applied equally on all axes. */
 void func_80055B74(CVECTOR* result, CVECTOR* color, s32 arg2);
 
+void func_80055C3C(CVECTOR* result, CVECTOR* color, void* arg2, void* arg3, s32 arg4, s32 arg5);
+
+u8 func_80055D78(void*, void*, s32);
+
 void func_80055E90(CVECTOR* color, u8 fadeAmount);
 
 u8 func_80055F08(SVECTOR3* arg0, SVECTOR3* arg1, void* arg2);
@@ -2823,6 +2845,9 @@ void func_80056D64(s8* prevStr, s8* newStr);
 s32 func_800571D0(u32 arg0);
 
 void func_80057228(void*, s32, s8*, VECTOR3*);
+
+/** TODO: Unknown `arg1`/`arg2` types. */
+void func_80057344(s_func_80057344* arg0, void* arg1, void* arg2, s32 arg3);
 
 void func_8005759C(s_func_8005759C* arg0, s_func_8005759C_2* arg1, s32 arg2, s32 arg3);
 
