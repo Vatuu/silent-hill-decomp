@@ -458,7 +458,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800431E4); // 0x
 
 void func_80043338(s_80043338* arg0, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1, s32 clip) // 0x80043338
 {
-    arg0->field_C = func_80042DE8(posX0, posZ0, arg0->fileChunkCoordX_8, arg0->fileChunkCoordZ_A, clip);
+    arg0->field_C  = func_80042DE8(posX0, posZ0, arg0->fileChunkCoordX_8, arg0->fileChunkCoordZ_A, clip);
     arg0->field_10 = func_80042DE8(posX1, posZ1, arg0->fileChunkCoordX_8, arg0->fileChunkCoordZ_A, clip);
 }
 
@@ -687,18 +687,18 @@ s32 func_80044918(s_ModelAnim* anim) // 0x80044918
     // `field_C`/`field_10` usually points to data at `0x800AF228` which contains funcptrs and other stuff.
 
     s32 animInfo_C;
-    s32 field_10;
+    s32 animInfo_10;
     u8  animIdx_0;
     s32 field_1;
 
-    animInfo_C = anim->animInfo_C;
-    field_10   = anim->field_10;
-    animIdx_0  = anim->animIdx_0;
-    field_1    = anim->maybeSomeState_1;
+    animInfo_C  = anim->animInfo_C;
+    animInfo_10 = anim->animInfo_10;
+    animIdx_0   = anim->animIdx_0;
+    field_1     = anim->maybeSomeState_1;
 
-    if (field_10 != 0 && animIdx_0 >= field_1)
+    if (animInfo_10 != 0 && animIdx_0 >= field_1)
     {
-        animInfo_C  = field_10;
+        animInfo_C  = animInfo_10;
         animInfo_C -= field_1 * 16;
     }
 

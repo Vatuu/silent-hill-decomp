@@ -57,12 +57,12 @@ typedef struct
     u8      unk_18[24];
 } s_sharedData_800E3148_1_s02;
 
-/** Likely maps onto another struct somewhere. Starts with an animinfo, has some indexing properties deeper in it */
+/** Likely maps onto another struct somewhere. Starts with an `s_AnimInfo`, has some index properties deeper in it. */
 typedef struct
 {
-    s_AnimInfo animInfo_0; // This might be a pointer instead - not enough clues available yet to tell
-    s8         unk0[0xD02];
-    u_Property properties_D14[4]; // Read as 4 pairs of u16s
+    s_AnimInfo animInfo_0; // This might be a pointer instead - not enough clues available yet to tell.
+    s8         unk0[3330];
+    u_Property properties_D14[4]; // Read as 4 pairs of `u16`s.
 } s_func_800D2E04;
 
 /** Scale. */
@@ -71,7 +71,7 @@ extern VECTOR sharedData_800DD870_0_s01;
 /** Scale. */
 extern VECTOR sharedData_800DD880_0_s01;
 
-/** Could be a padded VECTOR, but the ASM for the function vec=vec assignments copies only the first 3 fields */
+/** Could be a padded `VECTOR`, but the ASM for the function `vec = vec` assignments copies only the first 3 fields. */
 extern VECTOR3 sharedData_800DE170_0_s01;
 extern VECTOR3 sharedData_800DE180_0_s01;
 extern VECTOR3 sharedData_800DE190_0_s01;
@@ -498,7 +498,7 @@ void sharedFunc_800D2BE4_0_s01(s_SubCharacter*);
 
 void sharedFunc_800D2BF4_0_s01(s_SubCharacter* chara);
 
-bool sharedFunc_800D2E04_0_s01(s_SubCharacter* chara, VECTOR3* vecIn, s32* outDistance, s32* outAngle);
+bool sharedFunc_800D2E04_0_s01(s_SubCharacter* chara, VECTOR3* inVec, s32* outDist, s32* outAngle);
 
 s32 sharedFunc_800D3430_0_s01(s_SubCharacter* chara, s32* arg1, s32* arg2);
 
@@ -582,8 +582,8 @@ void sharedFunc_800D0F28_3_s03(s_SubCharacter*, s32, GsCOORDINATE2*);
 
 static inline void ModelAnim_AnimInfoSet(s_ModelAnim* anim, s_AnimInfo* animInfo)
 {
-    anim->animInfo_C = animInfo;
-    anim->field_10   = 0;
+    anim->animInfo_C  = animInfo;
+    anim->animInfo_10 = NULL;
 }
 
 #endif

@@ -1486,7 +1486,7 @@ void func_80088F94(s_SubCharacter* chara) // 0x80088F94
     chara->model_0.charaId_0 = Chara_None;
 }
 
-void func_80088FF4(s32 groupIdx, s32 spawnIdx, s32 spawnFlags)
+void func_80088FF4(s32 groupIdx, s32 spawnIdx, s32 spawnFlags) // 0x80088FF4
 {
     s_SpawnInfo* spawn;
 
@@ -1787,7 +1787,6 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008973C);
 
 void func_80089840(s_SysWork_2514* arg0) // 0x80089840
 {
-    // Maybe linked list.
     s_SysWork_2514_18* next;
     s_SysWork_2514_18* curr;
     s_SysWork_2514_18* head;
@@ -1860,7 +1859,7 @@ void func_8008992C(s_SysWork_2514* arg0, u16 arg1, s32 (*arg2)(u16, s32)) // 0x8
 
         curr = next;
     }
-}
+}   
 
 void func_800899BC(s_SysWork_2514* arg0, s32 arg1) // 0x800899BC
 {
@@ -1938,64 +1937,65 @@ s32 func_8008A0CC() // 0x8008A0CC
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008A0D4); // 0x8008A0D4
 
-s32 func_8008A0E4(s32 arg0, s16 arg1, s_SubCharacter* arg2, s_PlayerCombat* arg3, s32 arg4, s16 arg5, s16 arg6) // 0x8008A0E4
+s32 func_8008A0E4(s32 arg0, s16 arg1, s_SubCharacter* chara, s_PlayerCombat* combat, s32 arg4, s16 arg5, s16 arg6) // 0x8008A0E4
 {
     s32          var_t1;
     s32          temp_a1;
     s32          var_a0;
-    s32          retval;
+    s32          ret;
     s32          var_v0_2;
     s32          count;
-    s_AnimInfo*  temp_v1;
-    s_AnimInfo*  temp_2;
-    s_ModelAnim* var_a2;
+    s_AnimInfo*  anim0;
+    s_AnimInfo*  anim1;
+    s_ModelAnim* modelAnim;
 
-    var_t1 = arg2->field_44;
-    var_a2 = &arg2->model_0.anim_4;
-    if ((g_DeltaTime0 == 0) || (g_SysWork.sysState_8 != 0))
+    var_t1    = chara->field_44;
+    modelAnim = &chara->model_0.anim_4;
+
+    if (g_DeltaTime0 == 0 || g_SysWork.sysState_8 != 0)
     {
-        return -1;
+        return NO_VALUE;
     }
 
-    if (arg2 == &g_SysWork.player_4C)
+    if (chara == &g_SysWork.player_4C)
     {
-        temp_2                   = D_800297B8;
-        temp_v1                  = g_MapOverlayHeader.animInfo_34;
-        var_a2->animInfo_C       = temp_2;
-        var_a2->maybeSomeState_1 = 0x4C;
-        var_a2->field_10         = temp_v1;
-        var_a2                   = &g_SysWork.player_4C.extra_128.model_0.anim_4;
-        var_a2->animInfo_C       = temp_2;
-        var_a2->field_10         = temp_v1;
-        var_a2->maybeSomeState_1 = 0x4C;
+        anim1                       = D_800297B8;
+        anim0                       = g_MapOverlayHeader.animInfo_34;
+        modelAnim->animInfo_C       = anim1;
+        modelAnim->maybeSomeState_1 = 76;
+        modelAnim->animInfo_10      = anim0;
+        modelAnim                   = &g_SysWork.player_4C.extra_128.model_0.anim_4;
+        modelAnim->animInfo_C       = anim1;
+        modelAnim->animInfo_10      = anim0;
+        modelAnim->maybeSomeState_1 = 76;
     }
 
     if (arg0 <= 0)
     {
-        var_t1         = 0;
-        arg2->field_44 = 0;
+        var_t1          = 0;
+        chara->field_44 = 0;
     }
 
-    arg2->field_46 = arg1;
-    if (!(var_a2->animIdx_0 & 1))
+    chara->field_46 = arg1;
+    if (!(modelAnim->animIdx_0 & (1 << 0)))
     {
-        arg2->field_44 = 0;
-        arg2->field_4C = 0;
+        chara->field_44 = 0;
+        chara->field_4C = 0;
     }
-    else if (!(var_t1) && (arg0 > 0))
+    else if (!var_t1 && arg0 > 0)
     {
-        arg2->field_44 = 1;
-        arg2->field_4C = 0;
+        chara->field_44 = 1;
+        chara->field_4C = 0;
     }
 
-    arg2->field_47 = 0x64;
-    arg2->field_50 = arg5;
-    arg2->field_52 = arg6;
-    arg2->field_5C = arg3->field_0;
-    temp_a1        = func_8008A3E0(arg2);
-    retval         = -1;
+    chara->field_47 = 100;
+    chara->field_50 = arg5;
+    chara->field_52 = arg6;
+    chara->field_5C = combat->field_0;
+    temp_a1         = func_8008A3E0(chara);
+    ret             = NO_VALUE;
 
-    if (arg2 == &g_SysWork.player_4C)
+    if (chara == &g_SysWork.player_4C)
     {
         count    = 6;
         var_v0_2 = 1;
@@ -2003,7 +2003,7 @@ s32 func_8008A0E4(s32 arg0, s16 arg1, s_SubCharacter* arg2, s_PlayerCombat* arg3
     else
     {
         count    = 1;
-        var_v0_2 = -1;
+        var_v0_2 = NO_VALUE;
     }
 
     if (temp_a1 != 0)
@@ -2011,31 +2011,33 @@ s32 func_8008A0E4(s32 arg0, s16 arg1, s_SubCharacter* arg2, s_PlayerCombat* arg3
         var_a0 = var_v0_2;
         if (count > 0)
         {
-            while ((count > 0))
+            while (count > 0)
             {
-                if ((temp_a1 & var_a0))
+                if (temp_a1 & var_a0)
                 {
-                    retval = count;
+                    ret = count;
                     break;
                 }
-                var_a0 *= 2; // Or var_a0 <<= 1;
+
+                var_a0 *= 2; // Or `<<= 1`.
                 count--;
             }
         }
     }
-    if (arg2->model_0.charaId_0 != 1)
+
+    if (chara->model_0.charaId_0 != Chara_Hero)
     {
-        if (g_SysWork.player_4C.chara_0.field_41 != -1)
+        if (g_SysWork.player_4C.chara_0.field_41 != NO_VALUE)
         {
-            retval = 0;
+            ret = 0;
         }
         else
         {
-            retval = -1;
+            ret = NO_VALUE;
         }
     }
 
-    return retval;
+    return ret;
 }
 
 // TODO: .rodata migration.

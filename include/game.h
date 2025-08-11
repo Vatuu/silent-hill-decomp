@@ -500,6 +500,7 @@ typedef enum _PlayerFlags
     PlayerFlag_Unk5  = 1 << 5,
     PlayerFlag_Unk6  = 1 << 6,
     PlayerFlag_Unk7  = 1 << 7, // Not used anywhere yet.
+    PlayerFlag_Unk8  = 1 << 8,
     PlayerFlag_Unk9  = 1 << 9,
     PlayerFlag_Unk10 = 1 << 10,
     PlayerFlag_Unk11 = 1 << 11,
@@ -871,7 +872,7 @@ typedef struct _ModelAnimData
     s16         keyframeIdx0_8;
     s16         keyframeIdx1_A;
     s_AnimInfo* animInfo_C;
-    s32         field_10;
+    s_AnimInfo* animInfo_10;
 } s_ModelAnim;
 STATIC_ASSERT_SIZEOF(s_ModelAnim, 20);
 
@@ -1136,7 +1137,7 @@ typedef struct _s_SysWork_2514_18
 {
     struct _s_SysWork_2514_18* next_0;
 
-    u8  unk_4[4]; // prev?
+    u8  unk_4[4]; // Prev?
     u8  unk_8[4];
     s32 field_C;
     u8  unk_10[8];

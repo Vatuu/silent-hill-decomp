@@ -299,7 +299,7 @@ typedef struct
 typedef struct
 {
     u8  unk_0[8];
-    s8  field_8[8]; // Could be char[] string instead.
+    s8  field_8[8]; // Could be `char[]` string instead.
     s32 field_10;
     s8  field_14;
 } s_func_8005B370;
@@ -1406,7 +1406,7 @@ typedef struct _MapOverlayHeader
     s8                unk_180[20];
     void              (*charaUpdateFuncs_194[Chara_Count])(s_SubCharacter*, void*, s32); /** Guessed params. Funcptrs for each `e_CharacterId`, set to 0 for IDs not included in the map overlay. Called by `func_80038354`. */
     s8                charaGroupIds_248[4];                                              /** `e_CharacterId` values where if `s_SpawnInfo.charaId_4` == 0, `charaGroupIds_248[0]` is used for `charaSpawns_24C[0]` and `charaGroupIds_248[1]` for `charaSpawns_24C[1]`. */
-    s_SpawnInfo       charaSpawns_24C[2][16];                                            /** Array of chara type/position/flags, `flags_6 == 0` are unused slots? Read by `func_80037F24`. */
+    s_SpawnInfo       charaSpawns_24C[2][16];                                            /** Array of character type/position/flags. `flags_6 == 0` are unused slots? Read by `func_80037F24`. */
     VC_ROAD_DATA      roadDataList_3CC[48];
     // TODO: A lot more in here.
 } s_MapOverlayHeader;
@@ -1837,6 +1837,7 @@ extern s16 D_800AF5C6;
 
 extern s16 D_800AF624;
 
+/** Keyframe index. */
 extern s16 D_800AF626;
 
 extern s32 D_800AFBE8;
@@ -2214,6 +2215,7 @@ extern s_800AFBF4 D_800C4570;
 
 extern s16 D_800C4574;
 
+/** Anim index. */
 extern u8 D_800C4577;
 
 extern u16 D_800C457E;
@@ -3003,7 +3005,7 @@ void func_8008992C(s_SysWork_2514* arg0, u16 arg1, s32 (*arg2)(u16, s32));
 
 s32 func_8008A0CC();
 
-s32 func_8008A0E4(s32 arg0, s16 arg1, s_SubCharacter* arg2, s_PlayerCombat* arg3, s32 arg4, s16 arg5, s16 arg6);
+s32 func_8008A0E4(s32 arg0, s16 arg1, s_SubCharacter* chara, s_PlayerCombat* combat, s32 arg4, s16 arg5, s16 arg6);
 
 u8 func_8008A270(s32 idx);
 
@@ -3174,7 +3176,7 @@ s32 func_8007029C(VECTOR3* arg0, s32 arg1, s16 angle);
 
 void func_800705E4(GsCOORDINATE2*, s32, s32, s32, s32);
 
-void func_80074254(s_SubCharacter* arg0, s_MainCharacterExtra* arg1);
+void func_80074254(s_SubCharacter* chara, s_MainCharacterExtra* extra);
 
 void func_8007D6E0();
 
