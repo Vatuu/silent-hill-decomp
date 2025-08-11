@@ -178,7 +178,33 @@ INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", func_800D97FC);
 
 INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", func_800D9830);
 
-INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", func_800D9864);
+void func_800D9864() // 0x800D9864
+{
+    s32 var;
+
+    if (g_SavegamePtr->mapRoomIdx_A5 == 3)
+    {
+        var = 15;
+    }
+    else if (g_SavegamePtr->eventFlags_1A4[0] & (1 << 1))
+    {
+        if (!(g_SavegamePtr->eventFlags_1A4[2] & (1 << 30)))
+        {
+            g_SavegamePtr->eventFlags_1A4[2] |= 1 << 30;
+            var                               = 1;
+        }
+        else
+        {
+            var = 22;
+        }
+    }
+    else
+    {
+        var = 14;
+    }
+
+    func_8003640C(var);
+}
 
 INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", func_800D98E4);
 

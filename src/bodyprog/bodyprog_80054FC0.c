@@ -2541,9 +2541,6 @@ void func_80073FC0(s_MainCharacterExtra* extra, s32 arg1, s32 arg2, s32 arg3) //
             extra->model_0.anim_4.time_4         = model->anim_4.time_4;
             extra->model_0.stateStep_3++;
             break;
-
-        default:
-            break;
     }
 }
 
