@@ -51,6 +51,8 @@ extern VECTOR3 D_800C45F8;
 
 void Player_Logic_Update(s_SubCharacter* chara, void* arg1, GsCOORDINATE2* coord);
 
+void func_80071968(s_SubCharacter* chara, s_MainCharacterExtra* extra, void* arg2, GsCOORDINATE2* coord);
+
 void func_80073FC0(s_MainCharacterExtra* extra, s32 arg1, s32 arg2, s32 arg3);
 
 bool func_80075504(s_SubCharacter* chara, s_MainCharacterExtra* extra);
