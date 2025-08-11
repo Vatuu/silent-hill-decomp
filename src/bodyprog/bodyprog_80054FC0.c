@@ -1808,7 +1808,23 @@ bool func_80070184(s_SubCharacter* chara, s32 arg1, s16 rotY) // 0x80070184
     return func_80070084(chara, varX, varY, varZ);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80070208); // 0x80070208
+bool func_80070208(s_func_800700F8* arg0, s32 arg1) // 0x80070208
+{
+    s_func_800700F8_2 var;
+    VECTOR3           vec;
+    s32               result;
+
+    vec.vx = FP_MULTIPLY(arg1, shRsin(arg0->rotation_26.vy), Q12_SHIFT);
+    vec.vy = 0;
+    vec.vz = FP_MULTIPLY(arg1, shRcos(arg0->rotation_26.vy), Q12_SHIFT);
+
+    result = false;
+    if (func_8006DB3C(&var, &arg0->field_18, &vec, arg0) != 0)
+    {
+        result = var.field_10 > 0;
+    }
+    return result;
+}
 
 s32 func_8007029C(VECTOR3* arg0, s32 arg1, s16 angle) // 0x8007029C
 {

@@ -1439,6 +1439,7 @@ typedef struct
 {
     s8      unk_0[24];
     VECTOR3 field_18;
+    SVECTOR rotation_26; // Implied type.
 } s_func_800700F8;
 
 typedef struct
@@ -1449,7 +1450,7 @@ typedef struct
     s32* field_4;
     s32* field_8;
     s32  field_C;
-    s32  field_10;
+    u32  field_10;
     s32  field_14;
     s32  field_18;
     s16  field_1C;
@@ -3171,6 +3172,8 @@ bool func_80070184(s_SubCharacter* chara, s32 arg1, s16 rotY);
 bool func_80070320();
 
 s32 func_80070360(s_SubCharacter* chara, s32 someDist, s16 arg2);
+
+bool func_80070208(s_func_800700F8* arg0, s32 arg1);
 
 s32 func_8007029C(VECTOR3* arg0, s32 arg1, s16 angle);
 
