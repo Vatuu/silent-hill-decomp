@@ -145,7 +145,39 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80055A50); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80055A90); // 0x80055A90
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80055B74); // 0x80055B74
+void func_80055B74(CVECTOR* result, CVECTOR* color, s32 arg2) // 0x80055B74
+{
+    s32 var_v0;
+    s32 var_t0;
+
+    arg2 >>= 4;
+
+    var_t0 = D_800C4168.field_20 >> 5;
+
+    if (arg2 < (1 << D_800C4168.field_14))
+    {
+        var_v0 = D_800C4168.field_CC[(arg2 << 7) >> D_800C4168.field_14];
+    }
+    else
+    {
+        var_v0 = 255;
+    }
+
+    var_v0 <<= 4;
+
+    gte_lddp(var_v0);
+    gte_ldrgb(color);
+
+    gte_SetFarColor(D_800C4168.field_1C, D_800C4168.field_1D, D_800C4168.field_1E);
+
+    gte_ldsv_(var_t0 << 5);
+
+    gte_dpcl();
+
+    gte_strgb(result);
+
+    gte_SetFarColor(0, 0, 0);
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80055C3C); // 0x80055C3C
 
@@ -469,11 +501,34 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80059E34); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8005A21C); // 0x8005A21C
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8005A42C); // 0x8005A42C
+s32 func_8005A42C(u8* arg0, s32 arg1) // 0x8005A42C
+{
+    // arg0 is always 0x1f800000 / PSX_SCRATCH?
+    s32 alpha = 4096 - (FP_FROM(arg1 * D_800C4188, Q12_SHIFT));
+
+    gte_lddp(alpha);
+    gte_ldrgb(&D_800C4190);
+    gte_dpcs();
+    gte_strgb(arg0 + 0x3D8);
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8005A478); // 0x8005A478
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8005A838); // 0x8005A838
+void func_8005A838(s32 arg0, s32 scale) // 0x8005A838
+{
+    SVECTOR3 vec;
+
+    vec.vx = FP_FROM(D_800C4168.field_74.vx * scale, Q12_SHIFT) >> 1;
+    vec.vy = FP_FROM(D_800C4168.field_74.vy * scale, Q12_SHIFT) >> 1;
+    vec.vz = FP_FROM(D_800C4168.field_74.vz * scale, Q12_SHIFT) >> 1;
+
+    gte_SetLightSVector(&vec);
+
+    SetBackColor(
+        FP_FROM(D_800C4168.field_24 * scale, Q12_SHIFT),
+        FP_FROM(D_800C4168.field_25 * scale, Q12_SHIFT),
+        FP_FROM(D_800C4168.field_26 * scale, Q12_SHIFT));
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8005A900); // 0x8005A900
 

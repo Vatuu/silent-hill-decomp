@@ -146,7 +146,7 @@ void GsTMDfastTG4LFG(void* op, VERT* vp, VERT* np, PACKET* pk, int n, int shift,
     :                                   \
     : "r"(r0))
 
-/** @brief Sets the DQB register in the GTE to zero. */
+/** @brief Zeroes the DQB register in the GTE. */
 #define gte_lddqb_0() __asm__ volatile( \
     "ctc2  $zero, $28")
 
@@ -155,5 +155,27 @@ void GsTMDfastTG4LFG(void* op, VERT* vp, VERT* np, PACKET* pk, int n, int shift,
     "ctc2  $zero, $5;"                 \
     "ctc2  $zero, $6;"                 \
     "ctc2  $zero, $7")
+
+/** @brief Loads SVECTOR into light matrix, similar to `gte_SetLightMatrix`. */
+#define gte_SetLightSVector(p) __asm__ volatile( \
+    "lw    $12, 0(%0)\n\t"                       \
+    "lhu   $13, 4(%0)\n\t"                       \
+    "ctc2  $12, $8\n\t"                          \
+    "ctc2  $13, $9\n\t"                          \
+    "ctc2  $zero, $10\n\t"                       \
+    "ctc2  $zero, $11\n\t"                       \
+    "ctc2  $zero, $12\n\t"                       \
+    :                                            \
+    : "r"(p)                                     \
+    : "$12", "$13", "memory");
+
+/** @brief Broadcasts a single value into the GTE universal vector, similar to `gte_ldsv` */
+#define gte_ldsv_(val) __asm__ volatile( \
+    "mtc2  %0, $9\n\t"                   \
+    "mtc2  %0, $10\n\t"                  \
+    "mtc2  %0, $11\n\t"                  \
+    :                                    \
+    : "r"(val)                           \
+    : "memory");
 
 #endif

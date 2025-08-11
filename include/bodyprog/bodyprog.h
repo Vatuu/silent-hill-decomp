@@ -1113,15 +1113,16 @@ typedef struct
     s8            field_3;
     s32           field_4;
     s32           field_8;
-    s8            unk_C[12];
+    s8            unk_C[8];
+    s32           field_14;
     s32           field_18;
     u8            field_1C;
     u8            field_1D;
     u8            field_1E;
     s32           field_20;
-    s8            field_24;
-    s8            field_25;
-    s8            field_26;
+    u8            field_24;
+    u8            field_25;
+    u8            field_26;
     s8            unk_27;
     s_800C4168_28 field_28;
     s16           field_2C;
@@ -1146,6 +1147,9 @@ typedef struct
     SVECTOR3      field_74;
     u8            unk_7A[2];
     SVECTOR3      field_7C;
+    u8            unk_82[2];
+    u8            unk_84[72];
+    u8            field_CC[1]; // Unknown size.
 } s_800C4168;
 
 typedef struct
@@ -2167,6 +2171,8 @@ extern u8 D_800C4169;
 
 extern u8 D_800C416A;
 
+extern s32 D_800C4188;
+
 extern CVECTOR D_800C4190;
 
 extern CVECTOR D_800C41B4;
@@ -2749,6 +2755,11 @@ s32 func_800557DC();
 
 void func_80055814(s32 arg0);
 
+/** @brief Applies uniform lighting and fog shading to `color`, outputting to `result`.
+ * The fog factor is derived from `arg2` via `D_800C4168.field_CC` and blends the lit color toward the far/fog color in `D_800C4168.field_1C/field_1D/field_1E`,
+ * with lighting strength from `D_800C4168.field_20` applied equally on all axes. */
+void func_80055B74(CVECTOR* result, CVECTOR* color, s32 arg2);
+
 void func_80055E90(CVECTOR* color, u8 fadeAmount);
 
 u8 func_80055F08(SVECTOR3* arg0, SVECTOR3* arg1, void* arg2);
@@ -2756,6 +2767,14 @@ u8 func_80055F08(SVECTOR3* arg0, SVECTOR3* arg1, void* arg2);
 void func_800560FC(s_800BE9FC* arg0);
 
 void func_8005B1A0(s_800C1450_58*, s32, s32, u8, s32, s32, s16, s16);
+
+/** @brief Computes a fog-shaded version of `D_800C4190` color using `arg1` as the distance factor?
+ *  Stores the result at 0x3D8 into `arg0`.
+ *  TODO: Unsure what struct is used for `arg0`, seems `PSX_SCRATCH` pointer is always passed. */
+s32 func_8005A42C(u8* arg0, s32 arg1);
+
+/** `arg0` is unused? */
+void func_8005A838(s32 arg0, s32 scale);
 
 void func_8005B370(s_func_8005B370* arg0);
 
