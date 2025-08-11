@@ -91,6 +91,10 @@ g_ItemVectors                               = 0x800262FC; // type:DVECTOR size:0
 //------------------------------------------------------
 
 //--------------------------------------------------------------------------
+//--- PA: 0x005520   VA: 0x8002A080   subsegment: .rodata, bodyprog_80054FC0
+//--------------------------------------------------------------------------
+
+//--------------------------------------------------------------------------
 //--- PA: 0x005638   VA: 0x8002A198   subsegment: .rodata, bodyprog_80054FC0
 //--------------------------------------------------------------------------
 
@@ -470,6 +474,7 @@ Inventory_AddSpecialItem                    = 0x80054CAC; // type:func
 //--------------------------------------------------------------------
 //--- PA: 0x030460   VA: 0x80054FC0   subsegment: c, bodyprog_80054FC0
 //--------------------------------------------------------------------
+func_800571D0                               = 0x800571D0; // type:func size:0x58 - fix for truncated function
 GameState_MapScreen_Update                  = 0x80066EB0; // type:func
 Player_Logic_Update                         = 0x800717D0; // type:func
 func_80074350.184                           = 0x80074350; // filename:func_80074350 type:func The generated result of the compilation for some reason adds .184 at name end.

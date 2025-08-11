@@ -140,4 +140,20 @@ void GsTMDfastTG3LFG(void* op, VERT* vp, VERT* np, PACKET* pk, int n, int shift,
 void GsTMDfastG4LFG(void* op, VERT* vp, VERT* np, PACKET* pk, int n, int shift, GsOT* ot, u_long* scratch);
 void GsTMDfastTG4LFG(void* op, VERT* vp, VERT* np, PACKET* pk, int n, int shift, GsOT* ot, u_long* scratch);
 
+/** @brief Sets the DQA register in the GTE, not part of Psy-Q for some reason. */
+#define gte_lddqa(r0) __asm__ volatile( \
+    "ctc2  %0, $27"                     \
+    :                                   \
+    : "r"(r0))
+
+/** @brief Sets the DQB register in the GTE to zero. */
+#define gte_lddqb_0() __asm__ volatile( \
+    "ctc2  $zero, $28")
+
+/** @brief Zeroes transfer vector in GTE. */
+#define gte_ldtr_0() __asm__ volatile( \
+    "ctc2  $zero, $5;"                 \
+    "ctc2  $zero, $6;"                 \
+    "ctc2  $zero, $7")
+
 #endif

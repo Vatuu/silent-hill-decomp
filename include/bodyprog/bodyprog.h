@@ -298,8 +298,10 @@ typedef struct
 
 typedef struct
 {
-    s8 unk_0[20];
-    s8 field_14;
+    u8  unk_0[8];
+    s8  field_8[8]; // Could be char[] string instead.
+    s32 field_10;
+    s8  field_14;
 } s_func_8005B370;
 
 typedef struct
@@ -1136,8 +1138,14 @@ typedef struct
     s32           field_48;
     s32           field_4C;
     s16           field_50;
-    s8            unk_54[12];
+    s32           field_54;
+    s8            unk_58[8];
     VECTOR3       field_60; // Type assumed.
+    u8            unk_6C[4];
+    u8            unk_70[4];
+    SVECTOR3      field_74;
+    u8            unk_7A[2];
+    SVECTOR3      field_7C;
 } s_800C4168;
 
 typedef struct
@@ -2157,6 +2165,10 @@ extern u8 D_800C4169;
 
 extern u8 D_800C416A;
 
+extern CVECTOR D_800C4190;
+
+extern CVECTOR D_800C41B4;
+
 /** Functions from `bodyprog_8003AB28` access `D_800C4168` as constant, but some functions from `bodyprog_80055028` write to it.
  * It appears that D_800C4168 is intended to be defined inside `bodyprog_80055028` as writable and declared as read-only (`const`) outside of it.
  */
@@ -2713,17 +2725,15 @@ void func_800546A8(s32 arg0);
 
 void func_8005487C(s32);
 
+void func_80054A04(u8 arg0);
+
+s32 func_80054AD8(u8 arg0);
+
 void func_80054FC0(s32* arg0, s32* arg1, u8 idx);
 
 void func_80055028();
 
 void func_80055330(u8 arg0, s32 arg1, u8 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6);
-
-s32 func_80057208();
-
-s32 func_80057200();
-
-void func_8005759C(s_func_8005759C* arg0, s_func_8005759C_2* arg1, s32 arg2, s32 arg3);
 
 void func_800553C4(u8 arg0, u8 arg1, u8 arg2, u8 arg3);
 
@@ -2736,11 +2746,17 @@ s32 func_800557DC();
 
 void func_80055814(s32 arg0);
 
+void func_80055E90(CVECTOR* color, u8 fadeAmount);
+
+u8 func_80055F08(SVECTOR3* arg0, SVECTOR3* arg1, void* arg2);
+
 void func_800560FC(s_800BE9FC* arg0);
 
 void func_8005B1A0(s_800C1450_58*, s32, s32, u8, s32, s32, s16, s16);
 
 void func_8005B370(s_func_8005B370* arg0);
+
+void func_8005B378(s_func_8005B370* arg0, s8* arg1);
 
 void func_8005B3A4(s_func_8005B3A4* arg0);
 
@@ -2748,15 +2764,9 @@ void func_8005B3BC(char* filename, s_func_800566B4_sub* arg1);
 
 void func_8005B424(VECTOR3* vec0, VECTOR3* vec1);
 
-s32 func_800571D0(u32 arg0);
-
 void func_80056464(s_800BE9FC* arg0, s32 fileIdx, s32* arg2, s32 arg3);
 
 void func_80056504(s_800BE9FC* arg0, s8* arg1, s32* arg2, s32 arg3);
-
-void func_80054A04(u8 arg0);
-
-s32 func_80054AD8(u8 arg0);
 
 void func_8005660C(s_func_8005660C_0* arg0, s_func_8005660C_1* arg1, s32 arg2);
 
@@ -2765,6 +2775,12 @@ void func_800566B4(s_func_800566B4* arg0, s_FsImageDesc* image, s8 unused, s32 s
 void func_80056C8C(s_Bone* bone, s_800BE9FC* arg1, s32 arg2);
 
 void func_80056D64(s8* prevStr, s8* newStr);
+
+s32 func_800571D0(u32 arg0);
+
+void func_80057228(void*, s32, s8*, VECTOR3*);
+
+void func_8005759C(s_func_8005759C* arg0, s_func_8005759C_2* arg1, s32 arg2, s32 arg3);
 
 void func_8005B55C(GsCOORDINATE2*);
 
