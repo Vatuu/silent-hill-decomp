@@ -1964,7 +1964,169 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80071968); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80071CE8); // 0x80071CE8
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80073FC0); // 0x80073FC0
+void func_80073FC0(s_MainCharacterExtra* arg0, s32 arg1, s32 arg2, s32 arg3) // 0x80073FC0
+{
+    s32      temp  = g_SysWork.player_4C.extra_128.field_20;
+    s_Model* model = &g_SysWork.player_4C.chara_0.model_0;
+
+    switch (g_SysWork.player_4C.extra_128.field_24)
+    {
+        case 1:
+            g_SysWork.player_4C.extra_128.field_20 = 1;
+
+        default:
+            break;
+
+        case 2:
+            g_SysWork.player_4C.extra_128.field_20 = 2;
+            break;
+
+        case 4:
+            g_SysWork.player_4C.extra_128.field_20 = 8;
+            break;
+
+        case 5:
+            g_SysWork.player_4C.extra_128.field_20 = 4;
+            break;
+
+        case 6:
+            g_SysWork.player_4C.extra_128.field_20 = 5;
+            break;
+
+        case 7:
+            g_SysWork.player_4C.extra_128.field_20 = 6;
+            break;
+
+        case 8:
+            g_SysWork.player_4C.extra_128.field_20 = 7;
+            break;
+
+        case 9:
+            g_SysWork.player_4C.extra_128.field_20 = 9;
+            break;
+
+        case 10:
+            g_SysWork.player_4C.extra_128.field_20 = 10;
+            break;
+
+        case 11:
+            g_SysWork.player_4C.extra_128.field_20 = 13;
+            break;
+
+        case 3:
+            g_SysWork.player_4C.extra_128.field_20 = 3;
+            break;
+
+        case 12:
+            g_SysWork.player_4C.extra_128.field_20 = 14;
+            break;
+
+        case 13:
+            g_SysWork.player_4C.extra_128.field_20 = 15;
+            break;
+
+        case 14:
+            g_SysWork.player_4C.extra_128.field_20 = 16;
+            break;
+
+        case 15:
+            g_SysWork.player_4C.extra_128.field_20 = 17;
+            break;
+
+        case 16:
+            g_SysWork.player_4C.extra_128.field_20 = 18;
+            break;
+
+        case 0:
+            switch (arg3)
+            {
+                case 0:
+                case 2:
+                    g_SysWork.player_4C.extra_128.field_20 = 0;
+                    break;
+
+                case 1:
+                    if (D_800C4586 == 0)
+                    {
+                        if (D_800C4584 != 0)
+                        {
+                            g_SysWork.player_4C.extra_128.field_20 = 12;
+                        }
+                    }
+                    else
+                    {
+                        g_SysWork.player_4C.extra_128.field_20 = 11;
+                    }
+                    break;
+
+                case 3:
+                    if (D_800C4584 != 0)
+                    {
+                        g_SysWork.player_4C.extra_128.field_20 = 12;
+                        break;
+                    }
+
+                    if (D_800C4586 == 0)
+                    {
+                        g_SysWork.player_4C.extra_128.field_20 = 0;
+                    }
+                    break;
+
+                case 4:
+                    if (D_800C4586 != 0)
+                    {
+                        g_SysWork.player_4C.extra_128.field_20 = 11;
+                        break;
+                    }
+
+                    if (D_800C4584 == 0)
+                    {
+                        g_SysWork.player_4C.extra_128.field_20 = 0;
+                    }
+                    break;
+
+                default:
+                    break;
+            }
+            break;
+    }
+
+    if (g_SysWork.player_4C.extra_128.field_20 != arg1)
+    {
+        arg0->model_0.stateStep_3 = 0;
+        arg0->model_0.state_2     = 0;
+    }
+
+    switch (temp)
+    {
+        case 1:
+            if (g_SysWork.player_4C.extra_128.field_20 != 2)
+            {
+                break;
+            }
+
+            arg0->model_0.anim_4.animIdx_0      = model->anim_4.animIdx_0;
+            arg0->model_0.anim_4.keyframeIdx0_8 = model->anim_4.keyframeIdx0_8;
+            arg0->model_0.anim_4.time_4         = model->anim_4.time_4;
+            arg0->model_0.stateStep_3++;
+            break;
+
+        case 2:
+            if (g_SysWork.player_4C.extra_128.field_20 != 1)
+            {
+                break;
+            }
+
+            arg0->model_0.anim_4.animIdx_0      = model->anim_4.animIdx_0;
+            arg0->model_0.anim_4.keyframeIdx0_8 = model->anim_4.keyframeIdx0_8;
+            arg0->model_0.anim_4.time_4         = model->anim_4.time_4;
+            arg0->model_0.stateStep_3++;
+            break;
+
+        default:
+            break;
+    }
+}
 
 void func_80074254(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x80074254
 {
