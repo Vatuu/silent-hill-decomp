@@ -75,6 +75,13 @@ sharedFunc_800D2B4C_0_s01   = 0x800D1500; // type:func
 sharedFunc_800D2BB0_0_s01   = 0x800D1564; // type:func
 sharedFunc_800D2BE4_0_s01   = 0x800D1598; // type:func
 sharedFunc_800D2BF4_0_s01   = 0x800D15A8; // type:func
+sharedFunc_800D2E04_0_s01   = 0x800D17C4; // type:func
+sharedFunc_800D31D0_0_s01   = 0x800D1B90; // type:func
+sharedFunc_800D3430_0_s01   = 0x800D1DF0; // type:func
+sharedFunc_800D3508_0_s01   = 0x800D1EC8; // type:func
+sharedFunc_800D3630_0_s01   = 0x800D1FF0; // type:func
+sharedFunc_800D3758_0_s01   = 0x800D2118; // type:func
+sharedFunc_800D3814_0_s01   = 0x800D21D4; // type:func
 sharedFunc_800D3928_0_s01   = 0x800D22E8; // type:func
 sharedSymbol_800D3B0C_0_s01 = 0x800D23B4; // type:func
 sharedFunc_800D4A80_0_s01   = 0x800DAB00; // type:func
@@ -118,8 +125,8 @@ sharedFunc_800D929C_0_s00   = 0x800E9D28; // type:func
 sharedData_800DD58C_0_s00   = 0x800EAD38; // type:s32
 sharedData_800DF158_1_s02   = 0x800EAD3C; // type:u8
 sharedData_800DD59C_0_s00   = 0x800EAD44; // type:u8
-sharedData_800DD870_0_s01   = 0x800EAE48; // type:VECTOR size:0xC
-sharedData_800DD880_0_s01   = 0x800EAE58; // type:VECTOR size:0xC
+sharedData_800DD870_0_s01   = 0x800EAE48; // type:VECTOR3 size:0xC
+sharedData_800DD880_0_s01   = 0x800EAE58; // type:VECTOR3 size:0xC
 sharedData_800EEB14_2_s00   = 0x800EAE68; // type:s32 unknown type
 sharedData_800EC954_2_s02   = 0x800EC930; // type:s32 unknown type
 
@@ -131,6 +138,9 @@ g_MapMessages               = 0x800ED6C8; // type:u32 size:0x44
 //----------------------------------------------------
 //--- PA: 0x024194   VA: 0x800ED70C   subsegment: data
 //----------------------------------------------------
+sharedData_800DE170_0_s01   = 0x800ED8E0; // type:VECTOR3 size:0xC
+sharedData_800DE180_0_s01   = 0x800ED8F0; // type:VECTOR3 size:0xC
+sharedData_800DE190_0_s01   = 0x800ED900; // type:VECTOR3 size:0xC
 sharedData_800DFB64_0_s00   = 0x800EDA30; // type:s32
 sharedData_800DFB68_0_s00   = 0x800EDA34; // type:s32
 sharedData_800DFB6C_0_s00   = 0x800EDA38; // type:s32
@@ -155,3 +165,4 @@ sharedData_800E39D8_0_s00   = 0x800F119C; // type:s32
 sharedData_800D32A0_0_s02   = 0x800F11A0; // type:s32
 sharedData_800E21D0_0_s01   = 0x800F11B0; // type:s32
 sharedData_800E21D8_0_s01   = 0x800F11B8; // type:s32
+sharedData_800E2330_0_s01   = 0x800F1310; // type:s32 - unknown type

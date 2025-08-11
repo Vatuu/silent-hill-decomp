@@ -57,11 +57,26 @@ typedef struct
     u8      unk_18[24];
 } s_sharedData_800E3148_1_s02;
 
+/** Likely maps onto another struct somewhere. Starts with an animinfo, has some indexing properties deeper in it */
+typedef struct
+{
+    s_AnimInfo animInfo_0; // This might be a pointer instead - not enough clues available yet to tell
+    s8         unk0[0xD02];
+    u_Property properties_D14[4]; // Read as 4 pairs of u16s
+} s_func_800D2E04;
+
 /** Scale. */
 extern VECTOR sharedData_800DD870_0_s01;
 
 /** Scale. */
 extern VECTOR sharedData_800DD880_0_s01;
+
+/** Could be a padded VECTOR, but the ASM for the function vec=vec assignments copies only the first 3 fields */
+extern VECTOR3 sharedData_800DE170_0_s01;
+extern VECTOR3 sharedData_800DE180_0_s01;
+extern VECTOR3 sharedData_800DE190_0_s01;
+
+extern s_func_800700F8_2 sharedData_800E2330_0_s01;
 
 extern u8 sharedData_800DF158_1_s02;
 
@@ -117,7 +132,7 @@ extern s8  sharedData_800E57CC_1_s02;
 // Pointer?
 extern s32 sharedData_800E21D0_0_s01;
 
-extern s_AnimInfo sharedData_800CAA98_0_s01[]; // Used by `Ai_AirScreamer_Init` / `sharedFunc_800D2BF4_0_s01`
+extern s_func_800D2E04 sharedData_800CAA98_0_s01; // Used by `Ai_AirScreamer_Init` / `sharedFunc_800D2BF4_0_s01`
 
 extern s_AnimInfo sharedData_800EC954_2_s02[]; // Used by `Ai_Romper_Init`.
 
@@ -385,6 +400,12 @@ void sharedFunc_800D2C18_5_s00(s_SubCharacter*);
 
 void sharedFunc_800D3300_5_s00(s_SubCharacter*);
 
+s32 sharedFunc_800D3508_0_s01(s_SubCharacter* chara, s32* arg1);
+
+s32 sharedFunc_800D3630_0_s01(s_SubCharacter* chara, s32* arg1);
+
+s32 sharedFunc_800D3758_0_s01(s_SubCharacter* chara, s32* outDistance, s32* outAngle, s32 arg3, s32 arg4);
+
 void Ai_Romper_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords);
 
 void Ai_Romper_Init(s_SubCharacter* chara);
@@ -476,6 +497,14 @@ void sharedFunc_800D2BB0_0_s01(s_SubCharacter*);
 void sharedFunc_800D2BE4_0_s01(s_SubCharacter*);
 
 void sharedFunc_800D2BF4_0_s01(s_SubCharacter* chara);
+
+bool sharedFunc_800D2E04_0_s01(s_SubCharacter* chara, VECTOR3* vecIn, s32* outDistance, s32* outAngle);
+
+s32 sharedFunc_800D3430_0_s01(s_SubCharacter* chara, s32* arg1, s32* arg2);
+
+s32 sharedFunc_800D3814_0_s01(s_SubCharacter* chara);
+
+s32 sharedFunc_800D31D0_0_s01(s_SubCharacter* chara, VECTOR3* arg1, s32 arg2);
 
 void sharedFunc_800D3928_0_s01(s_SubCharacter*);
 

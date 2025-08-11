@@ -3128,6 +3128,8 @@ s16 func_8006CB90(s_func_8006CC44* arg0);
 
 s32 func_8006CC44(s32 arg0, s32 arg1, s_func_8006CC44* arg2);
 
+bool func_8006D90C(s_func_800700F8_2* arg0, VECTOR3* vec1, VECTOR3* vec2);
+
 s32 func_8006DA08(VECTOR3*, VECTOR3*, VECTOR3*, s_SubCharacter*);
 
 s32 func_8006DB3C(s_func_800700F8_2* arg0, VECTOR3* arg1, VECTOR3* arg2, s_func_800700F8* arg3);

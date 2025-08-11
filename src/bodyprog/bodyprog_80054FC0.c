@@ -1376,7 +1376,31 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8006D774); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8006D7EC); // 0x8006D7EC
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8006D90C); // 0x8006D90C
+bool func_8006D90C(s_func_800700F8_2* arg0, VECTOR3* vec1, VECTOR3* vec2) // 0x8006D90C
+{
+    s32 scratchPrev;
+    s32 scratchAddr;
+
+    VECTOR3 vecDelta;
+    vecDelta.vx = vec2->vx - vec1->vx;
+    vecDelta.vy = vec2->vy - vec1->vy;
+    vecDelta.vz = vec2->vz - vec1->vz;
+
+    arg0->field_0 = false;
+    
+    if (func_8006DCE0((s32)PSX_SCRATCH, 0, 0, vec1, &vecDelta, 0, 0, 0, 0) != 0)
+    {
+        scratchPrev = SetSp((s32)PSX_SCRATCH_ADDR(984));
+        scratchAddr = (s32)PSX_SCRATCH;
+        arg0->field_0 = func_8006DEB0(arg0, PSX_SCRATCH_ADDR(0));
+        SetSp(scratchPrev);
+    }
+    if (!arg0->field_0)
+    {
+        func_8006DAE4(arg0, vec1, &vecDelta, (s16)*(u16*)(&((u8*)scratchAddr)[92]));
+    }
+    return arg0->field_0;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8006DA08); // 0x8006DA08
 
@@ -6778,7 +6802,7 @@ s32 func_8007D6F0(s_SubCharacter* arg0, s_D_800C45C8* arg1) // 0x8007D6F0
 {
     s_func_800700F8_2 sp10[2];
     VECTOR3           vecs[4];
-    s32               ret[2];
+    bool              ret[2];
     s32               temp_lo;
     s32               temp_s0;
     s32               temp_s1;
@@ -6810,7 +6834,7 @@ s32 func_8007D6F0(s_SubCharacter* arg0, s_D_800C45C8* arg1) // 0x8007D6F0
 
     ret[0] = func_8006D90C(&sp10[0], &vecs[2], &vecs[0]);
 
-    if (ret[0] != 0)
+    if (ret[0])
     {
         vecs[1].vy = vecs[0].vy;
         vecs[1].vx = (arg0->position_18.vx - temp_s4) + temp_s5;
@@ -6821,7 +6845,7 @@ s32 func_8007D6F0(s_SubCharacter* arg0, s_D_800C45C8* arg1) // 0x8007D6F0
 
         ret[1] = func_8006D90C(&sp10[1], &vecs[3], &vecs[1]);
 
-        if (ret[1] != 0)
+        if (ret[1])
         {
             arg1->field_14 = (sp10[0].field_14 + sp10[1].field_14) >> 1;
             arg1->field_1  = sp10[0].field_1;
