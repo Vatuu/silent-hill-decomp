@@ -938,6 +938,16 @@ STATIC_ASSERT_SIZEOF(s_800BCE18, 11260);
 
 typedef struct
 {
+    s_80043B70* field_0;
+    s32         queueIdx_4;
+    s16         field_8;
+    s16         field_A;
+    u8          unk_C[16];
+} s_800C117C;
+STATIC_ASSERT_SIZEOF(s_800C117C, 28);
+
+typedef struct
+{
     s8 unk_0[2];
     u8 field_2;
 } s_800C1020_138;
@@ -956,23 +966,16 @@ typedef struct
     s32             field_14C;
     s32             field_150;
     s32             field_154;
-    s32             field_158;
-    s8              unk_15C[1060];
+    s32             field_158;     // Array length
+    s_800C117C      field_15C[20]; // Length guessed, could be less or more
+    s8              unk_38C[492];
+    s32             field_578;
+    s32             field_57C;
     s32             field_580;
     s32             field_584;
     s32             field_588;
     // More may follow.
 } s_800C1020;
-
-typedef struct
-{
-    s_80043B70* field_0;
-    s32         queueIdx_4;
-    s16         field_8;
-    s16         field_A;
-    u8          unk_C[16];
-} s_800C117C;
-STATIC_ASSERT_SIZEOF(s_800C117C, 28);
 
 typedef struct
 {
@@ -2501,6 +2504,8 @@ void func_80043338(s_80043338* arg0, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1,
 
 /** Maybe facilitates file chunk streaming as the player moves around the map. */
 s32 func_800436D8(s_80043338* arg0, s32 fileIdx, s16 fileChunkCoordX, s16 fileChunkCoordZ, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1, s32 clip);
+
+void func_80043A24(GsOT* arg0, s32 arg1);
 
 s32 func_80043B34(s_800C117C* arg0, s_800C1020* arg1);
 
