@@ -1679,7 +1679,69 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8006F99C); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8006FAFC); // 0x8006FAFC
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8006FD90); // 0x8006FD90
+bool func_8006FD90(s_SubCharacter* chara, s32 arg1, s32 arg2, s32 arg3) // 0x8006FD90
+{
+    VECTOR3 sp10;
+    VECTOR3 sp20;
+    VECTOR3 sp30;
+    VECTOR3 sp40;
+    s32     var1;
+    s32     deltaX;
+    s32     deltaZ;
+    s32     dist;
+    s32     var0;
+    s32     temp;
+
+    if (func_8005BF38(ratan2(g_SysWork.player_4C.chara_0.position_18.vx - chara->position_18.vx,
+                             g_SysWork.player_4C.chara_0.position_18.vz - chara->position_18.vz) -
+                      chara->rotation_24.vy) < 0)
+    {
+        var0 = (func_8005BF38(ratan2(g_SysWork.player_4C.chara_0.position_18.vx - chara->position_18.vx,
+                                     g_SysWork.player_4C.chara_0.position_18.vz - chara->position_18.vz) -
+                              chara->rotation_24.vy) * 2) + FP_ANGLE(360.0f);
+    }
+    else
+    {
+        var0 = (FP_ANGLE(180.0f) - func_8005BF38((ratan2(g_SysWork.player_4C.chara_0.position_18.vx - chara->position_18.vx,
+                                                         g_SysWork.player_4C.chara_0.position_18.vz - chara->position_18.vz) -
+                                                  chara->rotation_24.vy))) * 2;
+    }
+
+    for (var1 = var0; arg1 > 0; arg1--)
+    {
+        var0 = FP_MULTIPLY((s64)var0, var1, Q12_SHIFT);
+    }
+
+    deltaX = (g_SysWork.player_4C.chara_0.position_18.vx - chara->position_18.vx) >> 6;
+    deltaZ = (g_SysWork.player_4C.chara_0.position_18.vz - chara->position_18.vz) >> 6;
+    dist   = SquareRoot0(SQUARE(deltaX) + SQUARE(deltaZ)) << 6;
+
+    temp = arg2 + FP_MULTIPLY((s64)arg3, var0, Q12_SHIFT);
+    if (temp < dist)
+    {
+        return false;
+    }
+
+    sp30.vx = chara->position_18.vx;
+    sp30.vz = chara->position_18.vz;
+
+    sp40.vx = g_SysWork.player_4C.chara_0.position_18.vx - chara->position_18.vx;
+    sp40.vz = g_SysWork.player_4C.chara_0.position_18.vz - chara->position_18.vz;
+
+    if ((g_SysWork.field_2388.field_154.field_0.field_0.field_0 & 0x3) == 2)
+    {
+        sp40.vy = 0;
+        sp30.vy = g_SysWork.player_4C.chara_0.position_18.vy + g_SysWork.player_4C.chara_0.field_C8;
+    }
+    else
+    {
+        sp30.vy = chara->position_18.vy + chara->field_CE;
+        sp40.vy = (g_SysWork.player_4C.chara_0.position_18.vy + g_SysWork.player_4C.chara_0.field_CE) -
+                  (chara->position_18.vy - chara->field_CE);
+    }
+
+    return func_8006DA08(&sp10, &sp30, &sp40, chara) == 0 || sp20.vx != 0;
+}
 
 bool func_80070030(s_SubCharacter* chara, s32 x, s32 y, s32 z)
 {
@@ -1964,10 +2026,13 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80071968); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80071CE8); // 0x80071CE8
 
-void func_80073FC0(s_MainCharacterExtra* arg0, s32 arg1, s32 arg2, s32 arg3) // 0x80073FC0
+void func_80073FC0(s_MainCharacterExtra* extra, s32 arg1, s32 arg2, s32 arg3) // 0x80073FC0
 {
-    s32      temp  = g_SysWork.player_4C.extra_128.field_20;
-    s_Model* model = &g_SysWork.player_4C.chara_0.model_0;
+    s32      temp;
+    s_Model* model;
+
+    temp  = g_SysWork.player_4C.extra_128.field_20;
+    model = &g_SysWork.player_4C.chara_0.model_0;
 
     switch (g_SysWork.player_4C.extra_128.field_24)
     {
@@ -2084,17 +2149,14 @@ void func_80073FC0(s_MainCharacterExtra* arg0, s32 arg1, s32 arg2, s32 arg3) // 
                         g_SysWork.player_4C.extra_128.field_20 = 0;
                     }
                     break;
-
-                default:
-                    break;
             }
             break;
     }
 
     if (g_SysWork.player_4C.extra_128.field_20 != arg1)
     {
-        arg0->model_0.stateStep_3 = 0;
-        arg0->model_0.state_2     = 0;
+        extra->model_0.stateStep_3 = 0;
+        extra->model_0.state_2     = 0;
     }
 
     switch (temp)
@@ -2105,10 +2167,10 @@ void func_80073FC0(s_MainCharacterExtra* arg0, s32 arg1, s32 arg2, s32 arg3) // 
                 break;
             }
 
-            arg0->model_0.anim_4.animIdx_0      = model->anim_4.animIdx_0;
-            arg0->model_0.anim_4.keyframeIdx0_8 = model->anim_4.keyframeIdx0_8;
-            arg0->model_0.anim_4.time_4         = model->anim_4.time_4;
-            arg0->model_0.stateStep_3++;
+            extra->model_0.anim_4.animIdx_0      = model->anim_4.animIdx_0;
+            extra->model_0.anim_4.keyframeIdx0_8 = model->anim_4.keyframeIdx0_8;
+            extra->model_0.anim_4.time_4         = model->anim_4.time_4;
+            extra->model_0.stateStep_3++;
             break;
 
         case 2:
@@ -2117,10 +2179,10 @@ void func_80073FC0(s_MainCharacterExtra* arg0, s32 arg1, s32 arg2, s32 arg3) // 
                 break;
             }
 
-            arg0->model_0.anim_4.animIdx_0      = model->anim_4.animIdx_0;
-            arg0->model_0.anim_4.keyframeIdx0_8 = model->anim_4.keyframeIdx0_8;
-            arg0->model_0.anim_4.time_4         = model->anim_4.time_4;
-            arg0->model_0.stateStep_3++;
+            extra->model_0.anim_4.animIdx_0      = model->anim_4.animIdx_0;
+            extra->model_0.anim_4.keyframeIdx0_8 = model->anim_4.keyframeIdx0_8;
+            extra->model_0.anim_4.time_4         = model->anim_4.time_4;
+            extra->model_0.stateStep_3++;
             break;
 
         default:

@@ -3156,13 +3156,13 @@ bool func_8006DCE0(s_func_8006DCE0* arg0, s32 arg1, s16 arg2, VECTOR3* pos0, VEC
 
 void func_8006E490(s_func_8006E490* arg0, u32 arg1, s32 arg2, s32 arg3);
 
+void func_8006F338(s_func_8006F338* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
+
+bool func_8006FD90(s_SubCharacter* chara, s32 arg1, s32 arg2, s32 arg3);
+
 bool func_80070030(s_SubCharacter* chara, s32 x, s32 y, s32 z);
 
 bool func_80070084(s_SubCharacter* chara, s32 x, s32 y, s32 z);
-
-void func_8006F338(s_func_8006F338* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
-
-bool func_8006FD90(s_SubCharacter*, s32, s32, s32);
 
 s32 func_800700F8(s_func_800700F8* arg0, s_func_800700F8* arg1);
 

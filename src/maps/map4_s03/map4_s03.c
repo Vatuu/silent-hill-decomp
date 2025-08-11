@@ -439,9 +439,10 @@ INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D6554);
                                  SQUARE(FP_FROM(g_SysWork.player_4C.chara_0.position_18.vz - chara->position_18.vz, 6))), 6);
 
     someRotY = func_8005BF38((s16)(ratan2(g_SysWork.player_4C.chara_0.position_18.vx - chara->position_18.vx,
-                                         g_SysWork.player_4C.chara_0.position_18.vz - chara->position_18.vz) - chara->rotation_24.vy));
+                                          g_SysWork.player_4C.chara_0.position_18.vz - chara->position_18.vz) -
+                                   chara->rotation_24.vy));
 
-    if ((g_SysWork.field_2388.field_154.field_0.field_0.field_0 & 0x3) == 0)
+    if (!(g_SysWork.field_2388.field_154.field_0.field_0.field_0 & 0x3))
     {
         var = func_8006FD90(chara, 0, 0x7800, 0x7800);
     }

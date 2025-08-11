@@ -492,8 +492,8 @@ typedef enum _PlayerBone
 typedef enum _PlayerFlags
 {
     PlayerFlag_None  = 0,
-    PlayerFlag_Unk0  = 1 << 0, // Not used anywhere yet.
-    PlayerFlag_Unk1  = 1 << 1, // Not used anywhere yet.
+    PlayerFlag_Unk0  = 1 << 0,
+    PlayerFlag_Unk1  = 1 << 1,
     PlayerFlag_Unk2  = 1 << 2,
     PlayerFlag_Unk3  = 1 << 3,
     PlayerFlag_Unk4  = 1 << 4,

@@ -60,7 +60,7 @@
 
 /** @brief Converts an integer from a scaled fixed-point Q format rounded to the nearest value. */
 #define FP_ROUND_SCALED(x, scale, shift) \
-    (((x) + ((FP_TO(1, shift) * scale) - 1)) / (FP_TO(1, shift) * scale))
+    (((x) + ((FP_TO(1, (shift)) * (scale)) - 1)) / (FP_TO(1, (shift)) * (scale)))
 
 /** @brief Converts an integer from a fixed-point Q format rounded toward 0. */
 #define FP_ROUND_TO_ZERO(x, shift) \
@@ -102,13 +102,13 @@
 #define FP_ANGLE(deg) \
     (s16)((deg) * ((FP_TO(1, Q12_SHIFT)) / 360.0f))
 
-/** @brief Wraps fixed-point degrees to 360. */
+/** @brief Wraps fixed-point degrees in Q3.12 format to the range of a single turn. */
 #define FP_ANGLE_TRUNCATE(angle) \
     (((angle) << 20) >> 20)
 
-/** @brief Wraps fixed-point degrees to 360 and performs an optimal ABS(). */
+/** @brief Wraps fixed-point degrees in Q3.12 format to the range of a single turn and computes the absolute value. */
 #define FP_ANGLE_TRUNCATE_ABS(angle) \
-    ((((angle << 20) >> 20) ^ (angle >> 31)) - (angle >> 31))
+    ((FP_ANGLE_TRUNCATE(angle) ^ ((angle) >> 31)) - ((angle) >> 31))
 
 /** @brief Converts floating-point radians in the range `[-PI, PI]` to fixed-point radians in the range `[0, 0x5000]`. */
 #define FP_RADIAN(rad)                                                                \
