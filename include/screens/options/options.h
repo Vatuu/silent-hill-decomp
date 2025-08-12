@@ -14,22 +14,22 @@
  */
 typedef enum _OptionMenuState
 {
-    OptMenuState_0               = 0,
+    OptMenuState_EnterMain       = 0,  /** Entering main menu. */
     OptMenuState_Main            = 1,  /** In main menu. */
     OptMenuState_ScreenPos       = 2,  /** In screen position submenu. */
     OptMenuState_Brightness      = 3,  /** In brightness menu. */
     OptMenuState_Controller      = 4,  /** In controller binding submenu. */
-    OptMenuState_5               = 5,  // EnterReturnToGame?
-    OptMenuState_6               = 6,  // ReturnToGame?
+    OptMenuState_LeaveMenu       = 5,  /** Leaving menu back to gameplay. */
+    OptMenuState_LeaveMain       = 6,  /** Leaving main menu. */
     OptMenuState_EnterScreenPos  = 7,  /** Entering screen position submenu. */
     OptMenuState_EnterBrightness = 8,  /** Entering brightness submenu. */
-    OptMenuState_EnterCont       = 9,  /** Entering controller binding submenu. */
+    OptMenuState_EnterController = 9,  /** Entering controller binding submenu. */
     OptMenuState_LeaveScreenPos  = 10, /** Leaving screen position submenu. */
     OptMenuState_LeaveBrightness = 11, /** Leaving brightness submenu. */
     OptMenuState_LeaveCont       = 12, /** Leaving controller binding submenu. */
-    OptMenuState_13              = 13,
+    OptMenuState_EnterExtra      = 13, /** Entering extra menu. */
     OptMenuState_Extra           = 14, /** In extra menu. */
-    OptMenuState_15              = 15
+    OptMenuState_LeaveExtra      = 15  /** Leaving extra menu. */
 } e_OptionMenuState;
 
 /** @brief Screen position options submenu state.
@@ -173,15 +173,17 @@ extern char* g_ControllerSubmenu_OptionStrings[];
 
 extern char* g_ControllerSubmenu_ActionStrings[];
 
-// `s_Quad2d`?
+// TODO: `s_Line2d` doesn't match for these.
+
 extern DVECTOR D_801E73B4;
 extern DVECTOR D_801E73B8;
+
 extern DVECTOR D_801E73BC;
 extern DVECTOR D_801E73C0;
 
-// `s_Quad2d`?
 extern DVECTOR D_801E73C4;
 extern DVECTOR D_801E73C8;
+
 extern DVECTOR D_801E73CC;
 extern DVECTOR D_801E73D0;
 
