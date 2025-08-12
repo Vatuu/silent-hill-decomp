@@ -85,6 +85,7 @@ sharedFunc_800D3814_0_s01   = 0x800D21D4; // type:func
 sharedFunc_800D3928_0_s01   = 0x800D22E8; // type:func
 sharedSymbol_800D3B0C_0_s01 = 0x800D23B4; // type:func
 sharedFunc_800D4A80_0_s01   = 0x800DAB00; // type:func
+sharedFunc_800D5274_0_s01   = 0x800DBCF8; // type:func
 sharedFunc_800D62D8_0_s01   = 0x800DF654; // type:func
 sharedFunc_800D633C_0_s01   = 0x800DF6B8; // type:func
 sharedFunc_800D63A4_0_s01   = 0x800DF720; // type:func
@@ -111,6 +112,7 @@ sharedFunc_800E8730_2_s02   = 0x800E8B2C; // type:func
 sharedFunc_800E8A40_2_s02   = 0x800E8E3C; // type:func
 sharedFunc_800E8DFC_2_s02   = 0x800E91F8; // type:func
 sharedFunc_800D929C_0_s00   = 0x800E9D28; // type:func
+
 
 
 
