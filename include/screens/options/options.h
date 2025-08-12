@@ -3,23 +3,114 @@
 
 #include "common.h"
 
-/** @brief This header is used to declare any variable, struct, or
- * function part of `OPTIONS.BIN`.
- */
- 
-// ============
-// ENUMERATORS
-// ============
+/** @brief Header for `OPTIONS.BIN` declarations. */
 
-typedef enum _BindingMenu
+// TODO: "Screen" is used synonymously with "menu", but this can mix up some of the terminology
+// as "screen" isn't specific enough. Maybe should stick to "menu"
+ 
+// ======
+// ENUMS
+// ======
+
+/** @brief Master options menu state.
+ * Stored in `gameStateStep[0]`.
+ */
+typedef enum _OptionMenuState
 {
-    BindingMenu_Leave   = -2,
-    BindingMenu_Actions = -1,
-    BindingMenu_Exit    = 0,
-    BindingMenu_Type_1  = 1,
-    BindingMenu_Type_2  = 2,
-    BindingMenu_Type_3  = 3
-} e_BindingMenu;
+    OptMenuState_0               = 0,
+    OptMenuState_Main            = 1,  /** In main options menu. */
+    OptMenuState_ScreenPos       = 2,  /** In screen position options submenu. */
+    OptMenuState_Brightness      = 3,  /** In brightness options menu. */
+    OptMenuState_Controller      = 4,  /** In controller binding options submenu. */
+    OptMenuState_5               = 5,  // EnterReturnToGame?
+    OptMenuState_6               = 6,  // ReturnToGame?
+    OptMenuState_EnterScreenPos  = 7,  /** Entering screen position options submenu. */
+    OptMenuState_EnterBrightness = 8,  /** Entering brightness options submenu. */
+    OptMenuState_EnterCont       = 9,  /** Entering controller binding options submenu. */
+    OptMenuState_LeaveScreenPos  = 10, /** Leaving screen position options submenu. */
+    OptMenuState_LeaveBrightness = 11, /** Leaving brightness options submenu. */
+    OptMenuState_LeaveCont       = 12, /** Leaving controller binding options submenu. */
+    OptMenuState_13              = 13,
+    OptMenuState_Extra           = 14, /** In extra options menu. */
+    OptMenuState_15              = 15
+} e_OptionMenuState;
+
+/** @brief Screen position options submenu state.
+ * Stored in `gameStateStep[1]`.
+ */
+typedef enum _ScreenPosMenuState
+{
+    ScreenPosMenuState_0     = 0,
+    ScreenPosMenuState_1     = 1,
+    ScreenPosMenuState_2     = 2,
+    ScreenPosMenuState_Leave = 3
+} e_ScreenPosMenuState;
+
+/** @brief Brightness options submenu state.
+ * Stored in `gameStateStep[1]`.
+ */
+typedef enum _BrightnessMenuState
+{
+    BrightnessMenuState_0     = 0,
+    BrightnessMenuState_1     = 1,
+    BrightnessMenuState_2     = 2,
+    BrightnessMenuState_Leave = 3
+} e_BrightnessMenuState;
+
+/** @brief Controller binding options submenu state.
+ * Stored in `gameStateStep[1]`.
+ */
+typedef enum _ContMenuState
+{
+    ContMenuState_Leave   = -2,
+    ContMenuState_Actions = -1,
+    ContMenuState_Exit    = 0,
+    ContMenuState_Type_1  = 1,
+    ContMenuState_Type_2  = 2,
+    ContMenuState_Type_3  = 3
+} e_ContMenuState;
+
+/** @brief Main options menu selection. */
+typedef enum _OptionMain
+{
+    OptMain_Exit           = 0,
+    OptMain_Brightness     = 1,
+    OptMain_Controller     = 2,
+    OptMain_ScreenPosition = 3,
+    OptMain_Vibration      = 4,
+    OptMain_AutoLoad       = 5,
+    OptMain_Sound          = 6,
+    OptMain_BgmVolume      = 7,
+    OptMain_SfxVolume      = 8,
+
+    OptMain_Count          = 9
+} e_OptionMain;
+
+/** @brief Extra options menu selection. */
+typedef enum _OptionExtra
+{
+    OptExtra_WeaponCtrl   = 0,
+    OptExtra_Blood        = 1,
+    OptExtra_ViewCtrl     = 2,
+    OptExtra_RetreatTurn  = 3,
+    OptExtra_MovementCtrl = 4,
+    OptExtra_AutoAiming   = 5,
+    OptExtra_ViewMode     = 6,
+    OptExtra_BulletMult   = 7,
+
+    OptExtra_Count        = 8
+} e_OptionExtra;
+
+/** @brief Blood color options menu selection. */
+typedef enum _OptionBloodColor
+{
+    OptBloodColor_Normal = 0,
+    OptBloodColor_Green  = 1,
+    OptBloodColor_Violet = 2,
+    OptBloodColor_Black  = 3,
+
+    OptBloodColor_Count  = 4
+} e_OptionBloodColor;
 
 typedef enum _InputAction
 {
@@ -40,30 +131,13 @@ typedef enum _InputAction
     InputAction_Count  = 14
 } e_InputAction;
 
-typedef enum _OptionsMain
+typedef enum _BloodColor
 {
-    OptMain_Exit       = 0,
-    OptMain_Brightness = 1,
-    OptMain_Controller = 2,
-    OptMain_ScreenPos  = 3,
-    OptMain_Vibration  = 4,
-    OptMain_AutoLoad   = 5,
-    OptMain_Sound      = 6,
-    OptMain_BGMVol     = 7,
-    OptMain_SFXVol     = 8
-} e_OptionsMain;
-
-typedef enum _OptionsExtra
-{
-    OptExtra_WeaponCtrl   = 0,
-    OptExtra_Blood        = 1,
-    OptExtra_ViewCtrl     = 2,
-    OptExtra_RetreatTurn  = 3,
-    OptExtra_MovementCtrl = 4,
-    OptExtra_AutoAiming   = 5,
-    OptExtra_ViewMode     = 6,
-    OptExtra_BulletMult   = 7
-} e_OptionsExtra;
+    BloodColor_Normal = 0,
+    BloodColor_Green  = 2,
+    BloodColor_Violet = 5,
+    BloodColor_Black  = 11
+} e_BloodColor;
 
 // ========
 // STRUCTS
@@ -71,8 +145,8 @@ typedef enum _OptionsExtra
 
 typedef struct _ScreenCtrl_SelectedElement
 {
-    e_BindingMenu menuIdx_0;
-    e_InputAction actionIdx_4;
+    e_ContMenuState menuIdx_0;
+    e_InputAction   actionIdx_4;
 } s_ScreenCtrl_SelectedElement;
 
 // ========
@@ -83,13 +157,6 @@ extern s32 g_MainSelectedOptionIdx;
 
 extern s32 g_ExtraSelectedOptionIdx;
 
-/** @brief Both `g_PrevMainSelectedOptionIdx` and
- * `g_PrevExtraSelectedOptionIdx` are being constantly
- * updated so it may not appear at first glance that
- * they hold the previous selected option, but looking
- * at the way they are used and the fact that it updates
- * onces `Gfx_LineDraw` finish confirm this.
- */
 extern s32 g_PrevMainSelectedOptionIdx;
 
 extern s32 g_PrevExtraSelectedOptionIdx;
@@ -130,7 +197,8 @@ extern s_ScreenCtrl_SelectedElement g_ScreenCtrl_SelectedElement;
 
 extern s16 g_ScreenPos_PosY;
 
-extern s32 g_Gfx_MoveLineTimer;
+/** @brief Tracks movement time of the cursor highlight. */
+extern s32 g_Options_LineCursorTimer;
 
 /** @brief Defines the number of options to
  * show in the extra options screen.
@@ -161,9 +229,11 @@ void Gfx_SfxBarDraw();
 void Gfx_BarDraw(s32 arg0, u8 arg1);
 
 /** @brief Draws the option strings in the extra options screen. */
+// Gfx_Options_ExtraScreenStringsDraw
 void Gfx_OptionsStringsExtraDraw();
 
 /** @brief Draws the option strings in the main options screen. */
+// Gfx_Options_MainScreenStringsDraw
 void Gfx_OptionsStringsMainDraw();
 
 /** @brief Draws the buttons next to options and lines indicating the

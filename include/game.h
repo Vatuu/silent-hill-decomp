@@ -769,7 +769,7 @@ typedef struct _SaveUserConfig
     u8                 optExtraBloodColor_24;     /** Normal: 0, Green: 2, Violet: 5, Black: 13, default: Normal */
     s8                 optAutoLoad_25;            /** Off: 0, On: 1, default: Off. */
     u8                 unk_26;
-    u8                 optExtraOptionsEnabled_27;
+    u8                 optExtraOptionsEnabled_27; /** Holds unlocked option flags. */
     s8                 optExtraViewCtrl_28;       /** Normal: 0, Reverse: 1, default: Normal. */
     s8                 optExtraViewMode_29;       /** Normal: 0, Self View: 1, default: Normal. */
     s8                 optExtraRetreatTurn_2A;    /** Normal: 0, Reverse: 1, default: Normal. */
