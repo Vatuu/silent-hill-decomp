@@ -42,6 +42,10 @@
 #define ABS_DIFF(a, b) \
     ABS((a) - (b))
 
+/** @brief Computes the absolute value of a 32bit value by shifting. */
+#define ABS_32(x) \
+    ((x ^ (x >> 31)) - (x >> 31))
+
 /** @brief Checks if two values have different signs. */
 #define DIFF_SIGN(a, b) \
     (((a) >= 0 && (b) < 0) || ((a) < 0 && (b) >= 0))
@@ -105,10 +109,6 @@
 /** @brief Wraps fixed-point degrees in Q3.12 format to the range of a single turn. */
 #define FP_ANGLE_TRUNCATE(angle) \
     (((angle) << 20) >> 20)
-
-/** @brief Wraps fixed-point degrees in Q3.12 format to the range of a single turn and computes the absolute value. */
-#define FP_ANGLE_TRUNCATE_ABS(angle) \
-    ((FP_ANGLE_TRUNCATE(angle) ^ ((angle) >> 31)) - ((angle) >> 31))
 
 /** @brief Converts floating-point radians in the range `[-PI, PI]` to fixed-point radians in the range `[0, 0x5000]`. */
 #define FP_RADIAN(rad)                                                                \
