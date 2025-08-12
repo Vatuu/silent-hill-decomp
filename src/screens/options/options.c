@@ -105,7 +105,7 @@ void GameState_OptionScreen_Update() // 0x801E2D44
 
         case OptMenuState_LeaveScreenPos:
         case OptMenuState_LeaveBrightness:
-        case OptMenuState_LeaveCont:
+        case OptMenuState_LeaveController:
             g_GameWork.gameStateStep_598[0] = OptMenuState_Main;
             g_SysWork.timer_20              = 0;
             g_GameWork.gameStateStep_598[1] = 0;
@@ -504,7 +504,7 @@ void Settings_MainScreen() // 0x801E3770
         g_MainMenu_SelectedIdx        = (g_MainMenu_SelectedIdx + 1) % OptMain_Count;
     }
 
-    // Handle menu selection.
+    // Handle config change.
     switch (g_MainMenu_SelectedIdx)
     {
         case OptMain_Exit:
@@ -692,7 +692,7 @@ void Settings_MainScreen() // 0x801E3770
         Sd_PlaySfx(Sfx_Cancel, 0, 64);
 
         g_Options_SelectionCursorTimer = 0;
-        g_MainMenu_SelectedIdx        = OptMain_Exit;
+        g_MainMenu_SelectedIdx         = OptMain_Exit;
     }
 }
 
@@ -834,8 +834,8 @@ void Gfx_OptionsStringsMainDraw() // 0x801E42EC
 
     DVECTOR strPos = { 121, 20 };
 
-    char* optionsStr     = "OPTION_\x01\x01\x01\x01\x01S";
-    char* settingsStrs[] =
+    char* headingStr      = "OPTION_\x01\x01\x01\x01\x01S";
+    char* selectionStrs[] =
     {
         "Exit",
         "Brightness_Level",
@@ -856,19 +856,19 @@ void Gfx_OptionsStringsMainDraw() // 0x801E42EC
         D_801E73C0.vy = ((u16)g_MainMenu_SelectedIdx     * LINE_OFFSET_Y) + LINE_BASE_Y;
     }
 
-    // Draw "OPTIONS" heading string.
+    // Draw heading string.
     shRsin(g_Options_SelectionCursorTimer << 7);
     Gfx_StringSetColor(ColorId_White);
     Gfx_StringSetPosition(strPos.vx, strPos.vy);
     func_8004A8C0(8);
-    Gfx_StringDraw(optionsStr, 99);
+    Gfx_StringDraw(headingStr, 99);
 
-    // Draw main menu strings.
+    // Draw selection strings.
     for (i = 0; i < OptMain_Count; i++)
     {
         Gfx_StringSetPosition(LINE_BASE_X, LINE_BASE_Y + (i * LINE_OFFSET_Y));
         func_8004A8C0(8);
-        Gfx_StringDraw(settingsStrs[i], 99);
+        Gfx_StringDraw(selectionStrs[i], 99);
     }
 
     func_8004A8CC();
@@ -886,7 +886,7 @@ void Gfx_SelectedOptionExtra() // 0x801E4450
     s32      j;
     s32      i;
     s_Line2d line;
-    s_Quad2d quads[2];
+    s_Quad2d bulletQuads[2];
 
     u8 D_801E2830[] = // 0x801E2830
     {
@@ -917,18 +917,18 @@ void Gfx_SelectedOptionExtra() // 0x801E4450
         D_801E73C8.vy = ((u16)g_ExtraMenu_SelectedIdx * LINE_OFFSET_Y)     - 50;
     }
 
-    sin = shRsin(g_Options_SelectionCursorTimer << 7);
-
+    // Draw highlighted selection line and gradient.
+    sin               = shRsin(g_Options_SelectionCursorTimer << 7);
     line.vertex0_0.vx = -121;
     line.vertex1_4.vx = D_801E73C4.vx + FP_MULTIPLY(D_801E73C8.vx - D_801E73C4.vx, sin, Q12_SHIFT);
     line.vertex1_4.vy = D_801E73C4.vy + FP_MULTIPLY(D_801E73C8.vy - D_801E73C4.vy, sin, Q12_SHIFT) + LINE_OFFSET_Y;
     line.vertex0_0.vy = line.vertex1_4.vy;
+    Gfx_LineDraw(&line, true, false);
 
-    Gfx_LineDraw(&line, 1, 0);
-
+    // Draw selection bullet points.
     for (i = 0; i < g_OptExtra_ShowSettingsCount; i++)
     {
-        vecPtrOut = (DVECTOR*)&quads;
+        vecPtrOut = (DVECTOR*)&bulletQuads;
 
         for (j = 0; j < 4; j++)
         {
@@ -940,13 +940,13 @@ void Gfx_SelectedOptionExtra() // 0x801E4450
 
         if (i == g_ExtraMenu_SelectedIdx)
         {
-            Gfx_ButtonDraw(&quads[0], 0, 0);
-            Gfx_ButtonDraw(&quads[1], 1, 0);
+            Gfx_ButtonDraw(&bulletQuads[0], false, false);
+            Gfx_ButtonDraw(&bulletQuads[1], true,  false);
         }
         else
         {
-            Gfx_ButtonDraw(&quads[0], 0, 1);
-            Gfx_ButtonDraw(&quads[1], 1, 1);
+            Gfx_ButtonDraw(&bulletQuads[0], false, true);
+            Gfx_ButtonDraw(&bulletQuads[1], true,  true);
         }
     }
 }
@@ -955,12 +955,12 @@ void Gfx_SelectedOptionMain() // 0x801E472C
 {
     #define LINE_OFFSET_Y 16
 
-    DVECTOR* vecPtrOut;
+    DVECTOR* quadVerts;
     s16      sin;
     s32      j;
     s32      i;
     s_Line2d line;
-    s_Quad2d quads[2];
+    s_Quad2d bulletQuads[2];
 
     u8 D_801E2858[] =
     {
@@ -991,36 +991,38 @@ void Gfx_SelectedOptionMain() // 0x801E472C
         D_801E73D0.vy = ((u16)g_MainMenu_SelectedIdx * LINE_OFFSET_Y)     - 58;
     }
 
-    sin = shRsin(g_Options_SelectionCursorTimer << 7);
-
+    // Draw highlighted selection line and gradient.
+    sin               = shRsin(g_Options_SelectionCursorTimer << 7);
     line.vertex0_0.vx = -121;
     line.vertex1_4.vx = D_801E73CC.vx + FP_FROM((D_801E73D0.vx - D_801E73CC.vx) * sin, Q12_SHIFT);
     line.vertex1_4.vy = D_801E73CC.vy + FP_FROM((D_801E73D0.vy - D_801E73CC.vy) * sin, Q12_SHIFT) + LINE_OFFSET_Y;
     line.vertex0_0.vy = line.vertex1_4.vy;
+    Gfx_LineDraw(&line, true, false);
 
-    Gfx_LineDraw(&line, 1, 0);
-
+    // Draw selection bullet points.
     for (i = 0; i < OptMain_Count; i++)
     {
-        vecPtrOut = (DVECTOR*)&quads;
+        quadVerts = (DVECTOR*)&bulletQuads;
 
-        for (j = 0; j < 4; j++)
+        for (j = 0; j < RECT_VERT_COUNT; j++)
         {
-            vecPtrOut[j].vx     = D_801E2864[j].vx;
-            vecPtrOut[j].vy     = D_801E2864[j].vy + (i * LINE_OFFSET_Y);
-            vecPtrOut[j + 4].vx = D_801E2874[j].vx;
-            vecPtrOut[j + 4].vy = D_801E2874[j].vy + (i * LINE_OFFSET_Y);
+            quadVerts[j].vx                   = D_801E2864[j].vx;
+            quadVerts[j].vy                   = D_801E2864[j].vy + (i * LINE_OFFSET_Y);
+            quadVerts[j + sizeof(DVECTOR)].vx = D_801E2874[j].vx;
+            quadVerts[j + sizeof(DVECTOR)].vy = D_801E2874[j].vy + (i * LINE_OFFSET_Y);
         }
 
+        // Lighter bullet point.
         if (i == g_MainMenu_SelectedIdx)
         {
-            Gfx_ButtonDraw(&quads[0], 0, 0);
-            Gfx_ButtonDraw(&quads[1], 1, 0);
+            Gfx_ButtonDraw(&bulletQuads[0], false, false);
+            Gfx_ButtonDraw(&bulletQuads[1], true,  false);
         }
+        // Darker bullet point.
         else
         {
-            Gfx_ButtonDraw(&quads[0], 0, 1);
-            Gfx_ButtonDraw(&quads[1], 1, 1);
+            Gfx_ButtonDraw(&bulletQuads[0], false, true);
+            Gfx_ButtonDraw(&bulletQuads[1], true,  true);
         }
     }
 }
@@ -1158,7 +1160,7 @@ void Gfx_SettingsOptionsExtraDraw() // 0x801E4B2C
         }
     }
 
-    // Draw extra menu strings.
+    // Draw selection strings.
     for (j = 0; j < g_OptExtra_ShowSettingsCount; j++)
     {
         switch (j)
@@ -1301,6 +1303,7 @@ void Gfx_SettingsOptionsMainDraw() // 0x801E4FFC
             case 0:
                 strPosX = (g_GameWork.config_0.optVibrationEnabled_21 == 0) ? 214 : 216;
                 Gfx_StringSetPosition(strPosX, 120);
+
                 strIdx = g_GameWork.config_0.optVibrationEnabled_21 == 0;
                 Gfx_StringDraw(D_801E2BDC[strIdx], 10);
                 break;
@@ -1308,6 +1311,7 @@ void Gfx_SettingsOptionsMainDraw() // 0x801E4FFC
             case 1:
                 strPosX = (g_GameWork.config_0.optAutoLoad_25 == 0) ? 214 : 216;
                 Gfx_StringSetPosition(strPosX, 136);
+
                 strIdx = g_GameWork.config_0.optAutoLoad_25 == 0;
                 Gfx_StringDraw(D_801E2BDC[strIdx], 10);
                 break;
@@ -1315,6 +1319,7 @@ void Gfx_SettingsOptionsMainDraw() // 0x801E4FFC
             case 2:
                 strPosX = (g_GameWork.config_0.optSoundType_1E != 0) ? 194 : 206;
                 Gfx_StringSetPosition(strPosX, 152);
+
                 strIdx = g_GameWork.config_0.optSoundType_1E + 2;
                 Gfx_StringDraw(D_801E2BDC[strIdx], 10);
                 break;
@@ -1783,19 +1788,25 @@ void Gfx_BrightnessLevelArrowsDraw() // 0x801E628C
 // DRAW OPTIONS FEATURES SCREEN
 // ========================================
 
-void Gfx_LineDraw(s_Line2d* line, s32 arg1, s32 arg2) // 0x801E641C
+void Gfx_LineDraw(s_Line2d* line, bool hasShadow, bool isRegular) // 0x801E641C
 {
-    GsOT*     ot = &g_ObjectTable1[g_ObjectTableIdx];
+    #define STR_OFFSET_Y 16
+
+    s_Line2d* localLine;
     LINE_G2*  linePrim;
-    s_Line2d* linePtr;
+    POLY_G4*  poly;
+    GsOT*     ot;
 
-    linePrim = (LINE_G2*)GsOUT_PACKET_P;
-    linePtr  = line;
+    ot        = &g_ObjectTable1[g_ObjectTableIdx];
+    linePrim  = (LINE_G2*)GsOUT_PACKET_P;
+    localLine = line;
 
+    // Draw underline.
     setLineG2(linePrim);
 
-    // @bug: Same color regardless of `arg2`.
-    if (arg2)
+    // @unused: Non-functioning coloring feature. Line color gradient is same regardless of `isRegular`,
+    // which itself is always passed as `false` in every call.
+    if (isRegular)
     {
         setRGBC0(linePrim, 0xB0, 0xB0, 0xB0, 0x50);
         setRGBC1(linePrim, 0xA0, 0x80, 0x40, 0x50);
@@ -1806,27 +1817,24 @@ void Gfx_LineDraw(s_Line2d* line, s32 arg1, s32 arg2) // 0x801E641C
         setRGBC1(linePrim, 0xA0, 0x80, 0x40, 0x50);
     }
 
-    setXY0Fast(linePrim, linePtr->vertex0_0.vx, linePtr->vertex0_0.vy);
-    setXY1Fast(linePrim, linePtr->vertex1_4.vx, linePtr->vertex1_4.vy);
-
-    addPrim((u8*)ot->org + (arg1 ? 36 : 24), linePrim);
+    setXY0Fast(linePrim, localLine->vertex0_0.vx, localLine->vertex0_0.vy);
+    setXY1Fast(linePrim, localLine->vertex1_4.vx, localLine->vertex1_4.vy);
+    addPrim((u8*)ot->org + (hasShadow ? 36 : 24), linePrim);
     GsOUT_PACKET_P = (u8*)linePrim + sizeof(LINE_G2);
 
-    if (arg1 != 0)
+    // Draw upward shadow gradient.
+    if (hasShadow)
     {
-        POLY_G4* poly = (POLY_G4*)GsOUT_PACKET_P;
+        poly = (POLY_G4*)GsOUT_PACKET_P;
         setPolyG4(poly);
         setSemiTrans(poly, 1);
-
         setRGB0(poly, 0, 0, 0);
         setRGB1(poly, 0x60, 0x60, 0x60);
         setRGB2(poly, 0, 0, 0);
         setRGB3(poly, 0x60, 0x60, 0x60);
-
         setXY4(poly,
-               linePtr->vertex0_0.vx, linePtr->vertex0_0.vy - 16, linePtr->vertex0_0.vx, linePtr->vertex0_0.vy,
-               linePtr->vertex1_4.vx, linePtr->vertex1_4.vy - 16, linePtr->vertex1_4.vx, linePtr->vertex1_4.vy);
-
+               localLine->vertex0_0.vx, localLine->vertex0_0.vy - STR_OFFSET_Y, localLine->vertex0_0.vx, localLine->vertex0_0.vy,
+               localLine->vertex1_4.vx, localLine->vertex1_4.vy - STR_OFFSET_Y, localLine->vertex1_4.vx, localLine->vertex1_4.vy);
         addPrim((u8*)ot->org + 36, poly);
         GsOUT_PACKET_P = (u8*)poly + sizeof(POLY_G4);
 
@@ -1836,11 +1844,13 @@ void Gfx_LineDraw(s_Line2d* line, s32 arg1, s32 arg2) // 0x801E641C
 
 void Gfx_Options_BlueArrowDraw(s_Triangle2d* arrow, s32 isFlashing, s32 isColorReset) // 0x801E662C
 {
-    GsOT*    ot = &g_ObjectTable1[g_ObjectTableIdx];
-    POLY_G3* arrowPoly;
     s32      colorFade;
     s32      colorStart;
     s32      colorEnd;
+    POLY_G3* arrowPoly;
+    GsOT*    ot;
+    
+    ot = &g_ObjectTable1[g_ObjectTableIdx];
 
     // Leftover or oversight? `isColorReset` doesn't serve any meaningful purpose.
     if (isColorReset)
@@ -1917,39 +1927,44 @@ void Gfx_Options_BlueArrowDraw(s_Triangle2d* arrow, s32 isFlashing, s32 isColorR
     setXY0Fast(arrowPoly, arrow->vertex0_0.vx, arrow->vertex0_0.vy);
     setXY1Fast(arrowPoly, arrow->vertex1_4.vx, arrow->vertex1_4.vy);
     setXY2Fast(arrowPoly, arrow->vertex2_8.vx, arrow->vertex2_8.vy);
-
     addPrim((u8*)ot->org + 40, arrowPoly);
     GsOUT_PACKET_P = (u8*)arrowPoly + sizeof(POLY_G3);
 }
 
-void Gfx_ButtonDraw(s_Quad2d* quad, s32 arg1, s32 arg2) // 0x801E67B0
+void Gfx_ButtonDraw(s_Quad2d* quad, bool isCenter, bool isRegular) // 0x801E67B0
 {
+    #define QUAD_COUNT 2
+
     GsOT*    ot = &g_ObjectTable1[g_ObjectTableIdx];
     s32      i;
     POLY_G3* poly;
 
-    for (i = 0; i < 2; i++)
+    // Draw quads as triangles with diagonal gradient.
+    for (i = 0; i < QUAD_COUNT; i++)
     {
         poly = (POLY_G3*)GsOUT_PACKET_P;
         setPolyG3(poly);
 
-        if (arg1 != 0)
+        // Center quad.
+        if (isCenter)
         {
-            switch (arg2)
+            // Set color.
+            switch (isRegular)
             {
-                case 0:
+                case false:
                     setRGBC0(poly, 0xFF, 0xFF, 0xFF, 0x30);
                     setRGBC1(poly, 0xA0, 0x80, 0x40, 0x30);
                     setRGBC2(poly, 0x40, 0x40, 0x40, 0x30);
                     break;
 
-                case 1:
+                case true:
                     setRGBC0(poly, 0x80, 0x80, 0x80, 0x30);
                     setRGBC1(poly, 0x28, 0x20, 0x10, 0x30);
                     setRGBC2(poly, 0x10, 0x10, 0x10, 0x30);
                     break;
             }
 
+            // Draw triangle.
             if (i != 0)
             {
                 setXY0Fast(poly, quad->vertex0_0.vx, quad->vertex0_0.vy);
@@ -1963,23 +1978,26 @@ void Gfx_ButtonDraw(s_Quad2d* quad, s32 arg1, s32 arg2) // 0x801E67B0
                 setXY2Fast(poly, quad->vertex3_C.vx, quad->vertex3_C.vy);
             }
         }
+        // Backing quad.
         else
         {
-            switch (arg2)
+            // Set color.
+            switch (isRegular)
             {
-                case 0:
+                case false:
                     setRGBC0(poly, 0xA0, 0x80, 0x40, 0x30);
                     setRGBC1(poly, 0xFF, 0xFF, 0xFF, 0x30);
                     setRGBC2(poly, 0xFF, 0xFF, 0xFF, 0x30);
                     break;
 
-                case 1:
+                case true:
                     setRGBC0(poly, 0x50, 0x40, 0x20, 0x30);
                     setRGBC1(poly, 0xA0, 0xA0, 0xA0, 0x30);
                     setRGBC2(poly, 0xA0, 0xA0, 0xA0, 0x30);
                     break;
             }
 
+            // Draw triangle.
             if (i != 0)
             {
                 setXY0Fast(poly, quad->vertex3_C.vx, quad->vertex3_C.vy);
@@ -1994,7 +2012,7 @@ void Gfx_ButtonDraw(s_Quad2d* quad, s32 arg1, s32 arg2) // 0x801E67B0
             }
         }
 
-        addPrim((u8*)ot->org + 0x18, poly);
+        addPrim((u8*)ot->org + 24, poly);
         GsOUT_PACKET_P = (u8*)poly + sizeof(POLY_G3);
     }
 }
@@ -2012,8 +2030,8 @@ void Settings_ControllerScreen() // 0x801E69BC
     switch (g_GameWork.gameStateStep_598[1])
     {
         case ContMenuState_Exit:
-            g_Gfx_ScreenFade                       = 7;
-            g_ScreenCtrl_SelectedElement.menuIdx_0 = ContMenuState_Exit;
+            g_Gfx_ScreenFade                         = 7;
+            g_ScreenCtrl_SelectedElement.optionIdx_0 = ContMenuState_Exit;
 
             // Leave submenu.
             if (g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 |
@@ -2030,12 +2048,12 @@ void Settings_ControllerScreen() // 0x801E69BC
             // Move selection cursor up/down.
             if (g_Controller0->btnsPulsedGui_1C & ControllerFlag_LStickUp)
             {
-                g_GameWork.gameStateStep_598[1] = ContMenuState_Type_3;
+                g_GameWork.gameStateStep_598[1] = ContMenuState_Type3;
                 g_GameWork.gameStateStep_598[2] = 0;
             }
             else if (g_Controller0->btnsPulsedGui_1C & ControllerFlag_LStickDown)
             {
-                g_GameWork.gameStateStep_598[1] = ContMenuState_Type_1;
+                g_GameWork.gameStateStep_598[1] = ContMenuState_Type1;
                 g_GameWork.gameStateStep_598[2] = 0;
             }
             // Move selection cursor left/right.
@@ -2046,10 +2064,10 @@ void Settings_ControllerScreen() // 0x801E69BC
             }
             break;
 
-        case ContMenuState_Type_1:
-        case ContMenuState_Type_2:
-        case ContMenuState_Type_3:
-            g_ScreenCtrl_SelectedElement.menuIdx_0 = g_GameWork.gameStateStep_598[1];
+        case ContMenuState_Type1:
+        case ContMenuState_Type2:
+        case ContMenuState_Type3:
+            g_ScreenCtrl_SelectedElement.optionIdx_0 = g_GameWork.gameStateStep_598[1];
 
             // Set binding preset.
             if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
@@ -2117,9 +2135,9 @@ void Settings_ControllerScreen() // 0x801E69BC
             else if (g_Controller0->btnsPulsedGui_1C & (ControllerFlag_LStickLeft | ControllerFlag_LStickRight))
             {
                 g_GameWork.gameStateStep_598[2] = 0;
-                g_GameWork.gameStateStep_598[1] = g_ScreenCtrl_SelectedElement.menuIdx_0;
+                g_GameWork.gameStateStep_598[1] = g_ScreenCtrl_SelectedElement.optionIdx_0;
             }
-            // Bind button to action.
+            // Bind button to input action.
             else
             {
                 boundActionIdx = Settings_ButtonChange(actionIdx);
@@ -2131,7 +2149,7 @@ void Settings_ControllerScreen() // 0x801E69BC
             if ((g_Gfx_ScreenFade & 0x7) == 5)
             {
                 g_Gfx_ScreenFade                = 6;
-                g_GameWork.gameStateStep_598[0] = OptMenuState_LeaveCont;
+                g_GameWork.gameStateStep_598[0] = OptMenuState_LeaveController;
                 g_SysWork.timer_20              = 0;
                 g_GameWork.gameStateStep_598[1] = 0;
                 g_GameWork.gameStateStep_598[2] = 0;
@@ -2155,7 +2173,7 @@ void Settings_ControllerScreen() // 0x801E69BC
     }
 
     // Draw submenu graphics.
-    Gfx_ControllerScreenDraw(g_ControllerSubmenu_IsOnActionColumn, g_ScreenCtrl_SelectedElement.menuIdx_0, g_ScreenCtrl_SelectedElement.actionIdx_4, boundActionIdx);
+    Gfx_ControllerScreenDraw(g_ControllerSubmenu_IsOnActionColumn, g_ScreenCtrl_SelectedElement.optionIdx_0, g_ScreenCtrl_SelectedElement.actionIdx_4, boundActionIdx);
 }
 
 s32 Settings_ButtonChange(s32 actionIdx) // 0x801E6CF4
@@ -2171,7 +2189,7 @@ s32 Settings_ButtonChange(s32 actionIdx) // 0x801E6CF4
     boundActionIdx = NO_VALUE;
     bindings       = (u16*)&g_GameWorkPtr->config_0.controllerConfig_0;
 
-    // Loop through all controller flags, excluding stick axes.
+    // Run through all controller flags, excluding stick axes.
     for (i = 0; i < 16; i++)
     {
         btnFlag = 1 << i;
@@ -2278,8 +2296,6 @@ s32 Settings_ButtonChange(s32 actionIdx) // 0x801E6CF4
     return boundActionIdx;
 }
 
-// TODO: Split here?
-
 DR_MODE D_801E730C[2] =
 {
     {
@@ -2381,25 +2397,28 @@ s32 g_OptExtra_BloodColorSelected = 0;
 
 s32 g_OptExtra_BulletMultLimit = 0;
 
-void Gfx_ControllerScreenDraw(bool isOnActionColumn, s32 arg1, s32 arg2, s32 boundActionIdx) // 0x801E6F60
+void Gfx_ControllerScreenDraw(bool isOnActionColumn, s32 optionIdx, s32 actionIdx, s32 boundActionIdx) // 0x801E6F60
 {
-    #define STR_BASE_Y   22
-    #define STR_OFFSET_Y 20
+    #define STR_BASE_Y    22
+    #define STR_OFFSET_Y  20
+    #define ICON_SIZE_Y   12
+    #define ICON_OFFSET_X -12
 
     s16      y0;
     s16      y1;
-    u16*     contConfig;
-    POLY_G4* poly;
-    GsOT*    ot;
-    DR_MODE* drMode;
     s32      strYPos;
     s32      i;
+    u16*     contConfig;
+    DR_MODE* drMode;
+    POLY_G4* poly;
+    GsOT*    ot;
 
     ot     = (GsOT*)((g_ObjectTableIdx << 6) + (u8*)&D_800B5C7C);
     poly   = &D_801E7324[g_ObjectTableIdx];
     drMode = &D_801E730C[g_ObjectTableIdx];
 
-    for (i = 0; i < ContMenuState_OptionCount; i++)
+    // Draw selection strings.
+    for (i = 0; i < ContMenuState_Count; i++)
     {
         Gfx_StringSetPosition(24, STR_BASE_Y + (i * STR_OFFSET_Y));
         Gfx_StringDraw(g_ControllerSubmenu_OptionStrings[i], 20);
@@ -2407,7 +2426,7 @@ void Gfx_ControllerScreenDraw(bool isOnActionColumn, s32 arg1, s32 arg2, s32 bou
 
     if (!isOnActionColumn)
     {
-        y1 = arg1 * 20;
+        y1 = optionIdx * STR_OFFSET_Y;
         y0 = y1 - 91;
         setXY4(poly,
                -137, y0,
@@ -2429,15 +2448,15 @@ void Gfx_ControllerScreenDraw(bool isOnActionColumn, s32 arg1, s32 arg2, s32 bou
         // Draw button icon.
         if (i != boundActionIdx)
         {
-            Gfx_ControllerButtonsDraw(-12, strYPos - 114, *contConfig);
+            Gfx_ControllerButtonsDraw(ICON_OFFSET_X, strYPos - 114, *contConfig);
         }
 
-        if (i == arg2)
+        if (i == actionIdx)
         {
             y0 = strYPos - 113;
         }
 
-        strYPos = (strYPos + 12) + ((i == 2) ? 12 : 0);
+        strYPos = (strYPos + ICON_SIZE_Y) + ((i == 2) ? ICON_SIZE_Y : 0);
     }
 
     if (isOnActionColumn == true)
@@ -2474,7 +2493,7 @@ void Gfx_ControllerButtonsDraw(s32 baseX, s32 baseY, u16 contConfig) // 0x801E71
     ot     = &D_800B5D04[g_ObjectTableIdx];
     packet = GsOUT_PACKET_P;
 
-    // Draw icons.
+    // Draw button sprites.
     for (posX = baseX, i = ICON_SIZE_X; i < 28; i++)
     {
         temp = i & 0xF;

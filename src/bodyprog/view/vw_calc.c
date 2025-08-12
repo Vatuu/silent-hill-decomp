@@ -454,7 +454,7 @@ bool Vw_AabbVisibleInScreenCheck(s32 xMin, s32 xMax, s32 yMin, s32 yMax, s32 zMi
     screenMinY = 0x7FFFFFFF;
     screenMinX = 0x7FFFFFFF;
 
-    for (i = 0; i < BOX_CORNER_COUNT; i++)
+    for (i = 0; i < BOX_VERT_COUNT; i++)
     {
         vertOffset.vx = (i & (1 << 0)) ? FP_FROM(xMax - xMin, Q4_SHIFT) : 0;
         vertOffset.vy = (i & (1 << 1)) ? FP_FROM(yMax - yMin, Q4_SHIFT) : 0;

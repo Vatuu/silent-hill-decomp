@@ -44,7 +44,7 @@
 
 #define FONT24_BUFFER (u_long*)0x801F5600 // Loaded by `GameFs_StfRollBinLoad`.
 
-/** @brief `FsQueue::state` values when processing a read operation (`Fs_QueueUpdateRead`).
+/** @brief `FsQueue::state`s when processing a read operation (`Fs_QueueUpdateRead`).
  *
  * When `Fs_QueueUpdate` is called and the current op is a read, it will perform the corresponding action below.
  * Unless otherwise specified, success of that action will advance to the next state.
@@ -62,9 +62,9 @@ enum FsQueueReadState
     FSQS_READ_RESET    = 5  /** Tick the reset timers (`Fs_QueueResetTick`). When done, reset CD driver and goto `FSQS_READ_SETLOC`. */
 };
 
-/** @brief `FsQueue::state` values when processing a seek operation (`Fs_QueueUpdateSeek`).
+/** @brief `FsQueue::state`s when processing a seek operation (`Fs_QueueUpdateSeek`).
  *
- * When `Fs_QueueUpdate` is called and the current op is a seek, it will perform the corresponding action below.
+ * When `Fs_QueueUpdate` is called and the current operation is a seek, it will perform the corresponding action below.
  * Unless otherwise specified, success of that action will advance to the next state.
  */
 enum FsQueueSeekState
@@ -75,7 +75,7 @@ enum FsQueueSeekState
     FSQS_SEEK_RESET   = 3  /** See `FSQS_READ_RESET`. When done, reset CD driver and go to `FSQS_SEEK_SET_LOC`. */
 };
 
-/** @brief Post-load state.
+/** @brief Post-load states.
  *
  * When `Fs_QueueUpdate` is called it will perform an action on the current post load entry, if any,
  * according to `g_FsQueue.postLoadState`, which can have one of these values.
@@ -103,7 +103,7 @@ enum FsQueuePostLoadType
     FS_POST_LOAD_ANM  = 2  /** Parse ANM file maybe (`Fs_QueuePostLoadAnm`). Always uses `extra.anm`. */
 };
 
-/** @brief FS queue operation type.
+/** @brief FS queue operation types.
  *
  * What to do for a queue entry.
  * See `s_FsQueueEntry::operation`.

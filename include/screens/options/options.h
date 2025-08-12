@@ -9,42 +9,48 @@
 // ENUMS
 // ======
 
-/** @brief Master options menu state.
- * Stored in `gameStateStep[0]`.
+/** @brief Master options menu states.
+ *
+ * When the user navigates an options menu, this facilitates menu switching
+ * via `s_GameWork::gameStateStep[0]`.
  */
-typedef enum _OptionMenuState
+typedef enum _OptMenuState
 {
-    OptMenuState_EnterMain       = 0,  /** Entering main menu. */
-    OptMenuState_Main            = 1,  /** In main menu. */
+    OptMenuState_EnterMain       = 0,  /** Entering main options menu. */
+    OptMenuState_Main            = 1,  /** In main options menu. */
     OptMenuState_ScreenPos       = 2,  /** In screen position submenu. */
-    OptMenuState_Brightness      = 3,  /** In brightness menu. */
+    OptMenuState_Brightness      = 3,  /** In brightness submenu. */
     OptMenuState_Controller      = 4,  /** In controller binding submenu. */
     OptMenuState_LeaveMenu       = 5,  /** Leaving menu back to gameplay. */
-    OptMenuState_LeaveMain       = 6,  /** Leaving main menu. */
+    OptMenuState_LeaveMain       = 6,  /** Leaving main options menu. */
     OptMenuState_EnterScreenPos  = 7,  /** Entering screen position submenu. */
     OptMenuState_EnterBrightness = 8,  /** Entering brightness submenu. */
     OptMenuState_EnterController = 9,  /** Entering controller binding submenu. */
     OptMenuState_LeaveScreenPos  = 10, /** Leaving screen position submenu. */
     OptMenuState_LeaveBrightness = 11, /** Leaving brightness submenu. */
-    OptMenuState_LeaveCont       = 12, /** Leaving controller binding submenu. */
-    OptMenuState_EnterExtra      = 13, /** Entering extra menu. */
-    OptMenuState_Extra           = 14, /** In extra menu. */
-    OptMenuState_LeaveExtra      = 15  /** Leaving extra menu. */
-} e_OptionMenuState;
+    OptMenuState_LeaveController = 12, /** Leaving controller binding submenu. */
+    OptMenuState_EnterExtra      = 13, /** Entering extra options menu. */
+    OptMenuState_Extra           = 14, /** In extra options menu. */
+    OptMenuState_LeaveExtra      = 15  /** Leaving extra options menu. */
+} e_OptMenuState;
 
-/** @brief Screen position options submenu state.
- * Stored in `gameStateStep[1]`.
+/** @brief Screen position options submenu states.
+ *
+ * When the user navigates the screen position options submenu, this facilitates menu switching
+ * via `s_GameWork::gameStateStep[1]`.
  */
-typedef enum _ScreenPosMenuState
+typedef enum _OptMenuScreenPosState
 {
     ScreenPosMenuState_0     = 0,
     ScreenPosMenuState_1     = 1,
     ScreenPosMenuState_2     = 2,
     ScreenPosMenuState_Leave = 3
-} e_ScreenPosMenuState;
+} e_OptMenuScreenPosState;
 
-/** @brief Brightness options submenu state.
- * Stored in `gameStateStep[1]`.
+/** @brief Brightness options submenu states.
+ *
+ * When the user navigates the brightness options submenu, this facilitates menu switching
+ * via `s_GameWork::gameStateStep[1]`.
  */
 typedef enum _BrightnessMenuState
 {
@@ -54,22 +60,24 @@ typedef enum _BrightnessMenuState
     BrightnessMenuState_Leave = 3
 } e_BrightnessMenuState;
 
-/** @brief Controller binding options submenu state.
- * Stored in `gameStateStep[1]`.
+/** @brief Controller binding options submenu states.
+ *
+ * When the user navigates the controller binding options submenu, this facilitates menu switching
+ * via `s_GameWork::gameStateStep[1]`. It is also used for submenu selections (left column).
  */
 typedef enum _ContMenuState
 {
-    ContMenuState_Leave       = -2,
-    ContMenuState_Actions     = -1,
-    ContMenuState_Exit        = 0,
-    ContMenuState_Type_1      = 1,
-    ContMenuState_Type_2      = 2,
-    ContMenuState_Type_3      = 3,
+    ContMenuState_Leave   = -2,
+    ContMenuState_Actions = -1,
+    ContMenuState_Exit    = 0,
+    ContMenuState_Type1   = 1,
+    ContMenuState_Type2   = 2,
+    ContMenuState_Type3   = 3,
 
-    ContMenuState_OptionCount = 4
+    ContMenuState_Count   = 4
 } e_ContMenuState;
 
-/** @brief Main options menu selection. */
+/** @brief Main options menu selections. */
 typedef enum _OptionMain
 {
     OptMain_Exit           = 0,
@@ -85,7 +93,7 @@ typedef enum _OptionMain
     OptMain_Count          = 9
 } e_OptionMain;
 
-/** @brief Extra options menu selection. */
+/** @brief Extra options menu selections. */
 typedef enum _OptionExtra
 {
     OptExtra_WeaponCtrl   = 0,
@@ -100,7 +108,7 @@ typedef enum _OptionExtra
     OptExtra_Count        = 8
 } e_OptionExtra;
 
-/** @brief Blood color options menu selection. */
+/** @brief Blood color options submenu selections. */
 typedef enum _OptionBloodColor
 {
     OptBloodColor_Normal = 0,
@@ -111,6 +119,7 @@ typedef enum _OptionBloodColor
     OptBloodColor_Count  = 4
 } e_OptionBloodColor;
 
+/** @brief Controller binding options submenu selections (right column). */
 typedef enum _InputAction
 {
     InputAction_Enter  = 0,
@@ -145,7 +154,7 @@ typedef enum _BloodColor
 
 typedef struct _ScreenCtrl_SelectedElement
 {
-    e_ContMenuState menuIdx_0;
+    e_ContMenuState optionIdx_0;
     e_InputAction   actionIdx_4;
 } s_ScreenCtrl_SelectedElement;
 
@@ -213,76 +222,122 @@ extern s32 g_OptExtra_BulletMultLimit;
 // FUNCTIONS
 // ==========
 
+// ============
+// `options.c`
+// ============
+
+// `GameState_Options_Update`
 void GameState_OptionScreen_Update();
 
+// `Options_ExtraConfigUpdate`
 void Settings_ExtraScreen();
 
+// `Options_MainConfigUpdate`
 void Settings_MainScreen();
 
+// ==================
+// `menu_graphics.c`
+// ==================
+
+// `Options_BgmVolumeBarDraw`
 void Gfx_BgmBarDraw();
 
+// `Options_SfxVolumeBarDraw`
 void Gfx_SfxBarDraw();
 
-/** @brief Generates and draws the bars used for SFX and BGM audio options. */
+/** @brief Draws the bars used for SFX and BGM audio options. */
+// `Options_VolumeBarDraw`
 void Gfx_BarDraw(s32 arg0, u8 arg1);
 
 /** @brief Draws the option strings in the extra options screen. */
-// Gfx_Options_ExtraScreenStringsDraw
+// `Options_ExtraSelectionStringsDraw`
 void Gfx_OptionsStringsExtraDraw();
 
 /** @brief Draws the option strings in the main options screen. */
-// Gfx_Options_MainScreenStringsDraw
+// `Options_MainSelectionStringsDraw`
 void Gfx_OptionsStringsMainDraw();
 
-/** @brief Draws the buttons next to options and lines indicating the
+/** @brief Draws the bullets next to options and highlight indicating the
  * selected option in the extra options screen.
  */
+// `Options_ExtraGraphicsDraw`
 void Gfx_SelectedOptionExtra();
 
-/** @brief Draws the buttons next to options and lines indicating the
+/** @brief Draws the bullets next to options and highlight indicating the
  * selected option in the main options screen.
  */
+// `Options_MainGraphicsDraw`
 void Gfx_SelectedOptionMain();
 
 /** @brief Draws the vignette for the main and extra options screens. */
+// `Options_VignetteDraw`
 void Gfx_VignetteDraw();
 
+// `Options_ExtraSettingsDraw`
 void Gfx_SettingsOptionsExtraDraw();
 
 /** @brief Draws the options for each setting used in the main options screen. */
+// `Options_MainSettingsDraw`
 void Gfx_SettingsOptionsMainDraw();
 
+// ====================
+// `screen_position.c`
+// ====================
+
+// `Options_ScreenPosition_Control`
 void Settings_PositionScreen();
 
+// `Options_ScreenPosition_ArrowsDraw`
 void Gfx_PositionArrowsDraw();
 
-/** @brief Draws the box that indicates the screen position in the
- * position screen configuration.
- */
+/** @brief Draws the box that indicates the screen position in the position screen configuration. */
+// `Options_ScreenPoisition_IndicatorDraw`
 void Gfx_PositionIndicatorDraw();
 
+// ===============
+// `brightness.c`
+// ===============
+
+// `Options_Brightness_Control`
 void Settings_BrightnessScreen();
 
+// `Options_Brightness_LevelStringDraw`
 void Gfx_BrightnessLevelTextDraw();
 
+// `Options_Brightness_ArrowsDraw`
 void Gfx_BrightnessLevelArrowsDraw();
 
-/** @brief Draws the line on the selected option in options screens. */
-void Gfx_LineDraw(s_Line2d* line, s32 arg1, s32 arg2);
+// =======================
+// `selection_graphics.c`
+// =======================
+
+/** @brief Draws the line and shadow on the selected option in options screens. */
+// `Options_Selection_HighlightDraw`
+void Gfx_LineDraw(s_Line2d* line, bool hasShadow, bool isRegular);
 
 /** @brief Draws the arrows used in options screens. */
+// `Options_Selection_ArrowDraw`
 void Gfx_Options_BlueArrowDraw(s_Triangle2d* arrow, s32 isFlashing, s32 isColorReset);
 
 /** @brief Draws the button next to options in the main and extra option screens. */
-void Gfx_ButtonDraw(s_Quad2d* quad, s32 arg1, s32 arg2);
+// `Options_Selection_BulletPointDraw`
+void Gfx_ButtonDraw(s_Quad2d* quad, bool isCenter, bool isRegular);
 
+// ===============
+// `controller.c'
+// ===============
+
+// `Options_Controller_Control`
 void Settings_ControllerScreen();
 
 /** @brief Changes the button mapping based on the input. */
+// `Options_Controller_BindingSet`
 s32 Settings_ButtonChange(s32 actionIdx);
 
-void Gfx_ControllerScreenDraw(bool isOnActionColumn, s32 arg1, s32 arg2, s32 boundActionIdx);
+// `Options_Controller_SelectionTextDraw`
+void Gfx_ControllerScreenDraw(bool isOnActionColumn, s32 optionIdx, s32 actionIdx, s32 boundActionIdx);
 
+// `Options_Controller_ButtonIconsDraw`
 void Gfx_ControllerButtonsDraw(s32 baseX, s32 baseY, u16 contConfig);
 
 #endif

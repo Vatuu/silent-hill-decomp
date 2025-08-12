@@ -1841,6 +1841,7 @@ extern s_800AA894 D_800AA894[];
 
 extern s16 g_StringColorId; // 0x800AD498
 
+/** Index. */
 extern s32 D_800AD49C;
 
 extern u8 D_800AE185;

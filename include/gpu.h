@@ -7,10 +7,11 @@
 #include <libgpu.h>
 #include <libgs.h>
 
-#define RECT_EDGE_COUNT  4
-#define BOX_CORNER_COUNT 8
+#define LINE_VERT_COUNT 2
+#define RECT_VERT_COUNT 4
+#define BOX_VERT_COUNT  8
 
-/** Primitive types */
+/** Primitive types. */
 enum PrimType
 {
     PRIM_POLY = 0x20, /** Polygon (`POLY`). */
@@ -18,7 +19,7 @@ enum PrimType
     PRIM_RECT = 0x60  /** Rectangle (`TILE` or `SPRT`). */
 };
 
-/** Rectangle flags */
+/** Primitive rectangle flags. */
 enum PrimRectFlags
 {
     RECT_SIZE_16  = (1 << 3) | (1 << 4), /** Rectangle is 16x16 (`TILE_16` or `SPRT_16`). */
@@ -65,13 +66,13 @@ STATIC_ASSERT_SIZEOF(s_ColoredLine2d, 16);
 
 typedef struct _LineBorder
 {
-    s_Line2d lines_0[RECT_EDGE_COUNT];
+    s_Line2d lines_0[RECT_VERT_COUNT];
 } s_LineBorder;
 STATIC_ASSERT_SIZEOF(s_LineBorder, 32);
 
 typedef struct _QuadBorder
 {
-    s_Quad2d quads_0[RECT_EDGE_COUNT];
+    s_Quad2d quads_0[RECT_VERT_COUNT];
 } s_QuadBorder;
 STATIC_ASSERT_SIZEOF(s_QuadBorder, 64);
 
