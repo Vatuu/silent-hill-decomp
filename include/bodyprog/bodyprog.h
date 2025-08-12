@@ -671,6 +671,42 @@ typedef struct
     s32 field_1C;
 } s_func_8005A21C;
 
+typedef struct
+{
+    s8  unk_0[4];
+    u8  field_4;
+    s8  unk_5[3];
+    s32 field_8;
+    s8  unk_C[2];
+    s16 field_E;
+    s8  unk_F0[184];
+    s16 field_C8;
+    s16 field_CA;
+    s16 field_CC;
+    s16 field_CE;
+    s8  unk_D0[4];
+    s16 field_D4;
+    s16 field_D6;
+    s16 field_D8;
+    s16 field_DA;
+    s16 field_DC;
+    s16 field_DE;
+} s_func_80070400_0;
+
+typedef struct
+{
+    s16 field_0;
+    s16 field_2;
+    s16 field_4;
+    s16 field_6;
+    s16 field_8;
+    s16 field_A;
+    s16 field_C;
+    s16 field_E;
+    s16 field_10;
+    s16 field_12;
+} s_func_80070400_1;
+
 // ========
 // STRUCTS
 // ========
@@ -3226,6 +3262,8 @@ bool func_80070184(s_SubCharacter* chara, s32 arg1, s16 rotY);
 bool func_80070320();
 
 s32 func_80070360(s_SubCharacter* chara, s32 someDist, s16 arg2);
+
+void func_80070400(s_func_80070400_0* arg0, s_func_80070400_1* arg1, s_func_80070400_1* arg2);
 
 bool func_80070208(s_func_800700F8* arg0, s32 arg1);
 

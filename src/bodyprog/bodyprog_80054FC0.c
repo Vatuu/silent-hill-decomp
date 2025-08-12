@@ -2113,7 +2113,35 @@ s32 func_80070360(s_SubCharacter* chara, s32 someDist, s16 arg2) // 0x80070360
     return result;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80070400); // 0x80070400
+void func_80070400(s_func_80070400_0* arg0, s_func_80070400_1* arg1, s_func_80070400_1* arg2) // 0x80070400
+{
+    s32 alpha;
+    s32 invAlpha;
+
+    // Compute alpha.
+    if (arg0->field_4 & (1 << 0))
+    {
+        alpha = arg0->field_8 & 0xFFF;
+    }
+    else
+    {
+        alpha = arg0->field_E;
+    }
+
+    // Compute inverse alpha.
+    invAlpha = FP_ALPHA(1.0f) - alpha;
+
+    arg0->field_C8 = FP_FROM((arg1->field_0 * invAlpha) + (arg2->field_0 * alpha), Q12_SHIFT);
+    arg0->field_CA = FP_FROM((arg1->field_2 * invAlpha) + (arg2->field_2 * alpha), Q12_SHIFT);
+    arg0->field_CC = FP_FROM((arg1->field_4 * invAlpha) + (arg2->field_4 * alpha), Q12_SHIFT);
+    arg0->field_CE = FP_FROM((arg1->field_6 * invAlpha) + (arg2->field_6 * alpha), Q12_SHIFT);
+    arg0->field_DC = FP_FROM((arg1->field_10 * invAlpha) + (arg2->field_10 * alpha), Q12_SHIFT);
+    arg0->field_DE = FP_FROM((arg1->field_12 * invAlpha) + (arg2->field_12 * alpha), Q12_SHIFT);
+    arg0->field_D4 = FP_FROM((arg1->field_8 * invAlpha) + (arg2->field_8 * alpha), Q12_SHIFT);
+    arg0->field_D8 = FP_FROM((arg1->field_C * invAlpha) + (arg2->field_C * alpha), Q12_SHIFT);
+    arg0->field_DA = FP_FROM((arg1->field_E * invAlpha) + (arg2->field_E * alpha), Q12_SHIFT);
+    arg0->field_D6 = FP_FROM((arg1->field_A * invAlpha) + (arg2->field_A * alpha), Q12_SHIFT);
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_800705E4); // 0x800705E4
 
