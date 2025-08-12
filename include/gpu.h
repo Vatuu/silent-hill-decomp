@@ -156,7 +156,7 @@ void GsTMDfastTG4LFG(void* op, VERT* vp, VERT* np, PACKET* pk, int n, int shift,
     "ctc2  $zero, $6;"                 \
     "ctc2  $zero, $7")
 
-/** @brief Loads SVECTOR into light matrix, similar to `gte_SetLightMatrix`. */
+/** @brief Loads `SVECTOR` into light matrix, similar to `gte_SetLightMatrix`. */
 #define gte_SetLightSVector(p) __asm__ volatile( \
     "lw    $12, 0(%0)\n\t"                       \
     "lhu   $13, 4(%0)\n\t"                       \
@@ -169,7 +169,7 @@ void GsTMDfastTG4LFG(void* op, VERT* vp, VERT* np, PACKET* pk, int n, int shift,
     : "r"(p)                                     \
     : "$12", "$13", "memory");
 
-/** @brief Broadcasts a single value into the GTE universal vector, similar to `gte_ldsv` */
+/** @brief Broadcasts a single value into the GTE universal vector, similar to `gte_ldsv`. */
 #define gte_ldsv_(val) __asm__ volatile( \
     "mtc2  %0, $9\n\t"                   \
     "mtc2  %0, $10\n\t"                  \

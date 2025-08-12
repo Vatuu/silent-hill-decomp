@@ -623,7 +623,7 @@ typedef struct
     s_func_8006E490_20 field_20[2];
 } s_func_8006E490;
 
-// TODO: is this some SDK struct? `CVECTOR` is close but uses u8 instead of s8.
+// TODO: Is this some SDK struct? `CVECTOR` is close but uses `u8` instead of `s8`.
 typedef struct
 {
     s8 vx;
@@ -675,12 +675,12 @@ typedef struct
 // STRUCTS
 // ========
 
-/** @brief Struct used by many functions involved with GTE, kept at PSX_SCRATCH_ADDR (possibly only temporarily). */
+/** @brief Struct used by many functions involved with GTE. Kept at `PSX_SCRATCH_ADDR` (possibly only temporarily). */
 typedef struct
 {
     s32    field_0[99];
     s16    field_18C[150];
-    u8     field_2B8[200]; // Size likely incorrect
+    u8     field_2B8[200]; // Size likely incorrect.
     MATRIX field_380;
 
     s_func_8005759C_10 field_3A0;
@@ -689,7 +689,7 @@ typedef struct
     SVECTOR3 field_3AC;
     u8       unk_3B2[2];
     u8       unk_3B4[36];
-    CVECTOR  field_3D8; // Written by `func_8005A42C`
+    CVECTOR  field_3D8; // Written by `func_8005A42C`.
     u16      field_3DC;
     u16      field_3DE;
     s32      field_3E0;
@@ -1015,8 +1015,8 @@ typedef struct
     s32             field_14C;
     s32             field_150;
     s32             field_154;
-    s32             field_158;     // Array length
-    s_800C117C      field_15C[20]; // Length guessed, could be less or more
+    s32             field_158;     // Array length.
+    s_800C117C      field_15C[20]; // Length guessed, could be less or more.
     s8              unk_38C[492];
     s32             field_578;
     s32             field_57C;
@@ -2529,9 +2529,9 @@ void func_80043338(s_80043338* arg0, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1,
 /** Maybe facilitates file chunk streaming as the player moves around the map. */
 s32 func_800436D8(s_80043338* arg0, s32 fileIdx, s16 fileChunkCoordX, s16 fileChunkCoordZ, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1, s32 clip);
 
-void func_80043A24(GsOT* arg0, s32 arg1);
+void func_80043A24(GsOT* ot, s32 arg1);
 
-s32 func_80043B34(s_800C117C* arg0, s_800C1020* arg1);
+bool func_80043B34(s_800C117C* arg0, s_800C1020* arg1);
 
 s32 func_80043B70(s_80043B70* arg0);
 
@@ -2543,9 +2543,10 @@ void func_80043C7C(s_80043B70* arg0, s32 arg1, s32* arg2, s32 arg3);
 
 s32 func_80043D00(s_80043B70* arg0);
 
-s32 func_80043D44(s32 arg0);
+/** Returns inverse result of `func_80043D64`. */
+bool func_80043D44(s32 arg0);
 
-s32 func_80043D64(s32 arg0); // Types assumed.
+bool func_80043D64(s32 arg0); // Types assumed.
 
 void func_80043E50(s_80043E50* arg0, s32* arg1, s32 arg2);
 
@@ -2780,7 +2781,8 @@ void func_80055814(s32 arg0);
 
 /** @brief Applies uniform lighting and fog shading to `color`, outputting to `result`.
  * The fog factor is derived from `arg2` via `D_800C4168.field_CC` and blends the lit color toward the far/fog color in `D_800C4168.field_1C/field_1D/field_1E`,
- * with lighting strength from `D_800C4168.field_20` applied equally on all axes. */
+ * with lighting strength from `D_800C4168.field_20` applied equally on all axes.
+ */
 void func_80055B74(CVECTOR* result, CVECTOR* color, s32 arg2);
 
 void func_80055C3C(CVECTOR* result, CVECTOR* color, void* arg2, void* arg3, s32 arg4, s32 arg5);
@@ -2796,7 +2798,8 @@ void func_800560FC(s_800BE9FC* arg0);
 void func_8005B1A0(s_800C1450_58*, s32, s32, u8, s32, s32, s16, s16);
 
 /** @brief Computes a fog-shaded version of `D_800C4190` color using `arg1` as the distance factor?
- *  Stores the result at 0x3D8 into `arg0`. */
+ *  Stores the result at 0x3D8 into `arg0`.
+ */
 s32 func_8005A42C(s_GteScratchData* scratchData, s32 arg1);
 
 /** `arg0` is unused? */

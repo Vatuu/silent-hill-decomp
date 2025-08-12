@@ -496,34 +496,34 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80043830); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_8004393C); // 0x8004393C
 
-void func_80043A24(GsOT* arg0, s32 arg1) // 0x80043A24
+void func_80043A24(GsOT* ot, s32 arg1) // 0x80043A24
 {
-    s_800C117C* current;
-    s32         retval;
+    s_800C117C* ptr;
+    s32         ret;
 
-    retval = func_80041ADC(D_800C1020.field_140);
+    ret = func_80041ADC(D_800C1020.field_140);
 
-    if (retval == 1)
+    if (ret == 1)
     {
         return;
     }
 
-    if (!((retval == 0) || ((retval == 2) && (D_800C1020.field_138->field_2))))
+    if (!(ret == 0 || (ret == 2 && D_800C1020.field_138->field_2)))
     {
         return;
     }
 
-    current = &D_800C1020.field_15C[0];
-    for (; current < &D_800C1020.field_15C[D_800C1020.field_158]; current++)
+    ptr = &D_800C1020.field_15C[0];
+    for (; ptr < &D_800C1020.field_15C[D_800C1020.field_158]; ptr++)
     {
-        if ((func_80041B1C(current) >= 3) && (func_80043B34(current, &D_800C1020)))
+        if (func_80041B1C(ptr) >= 3 && func_80043B34(ptr, &D_800C1020))
         {
-            func_80044090(current->field_0, D_800C1020.field_578, D_800C1020.field_57C, arg0, arg1);
+            func_80044090(ptr->field_0, D_800C1020.field_578, D_800C1020.field_57C, ot, arg1);
         }
     }
 }
 
-s32 func_80043B34(s_800C117C* arg0, s_800C1020* arg1)
+bool func_80043B34(s_800C117C* arg0, s_800C1020* arg1)
 {
     if (arg1->field_580 == arg0->field_8 && arg1->field_584 == arg0->field_A)
     {
@@ -600,12 +600,12 @@ s32 func_80043D00(s_80043B70* arg0) // 0x80043D00
     return func_80056348(&func_80043D64, arg0->field_4);
 }
 
-s32 func_80043D44(s32 arg0) // 0x80043D44
+bool func_80043D44(s32 arg0) // 0x80043D44
 {
-    return func_80043D64(arg0) == 0;
+    return !func_80043D64(arg0);
 }
 
-s32 func_80043D64(s32 arg0) // 0x80043D64
+bool func_80043D64(s32 arg0) // 0x80043D64
 {
     u32 i;
     u8 var;
@@ -620,7 +620,7 @@ s32 func_80043D64(s32 arg0) // 0x80043D64
         }
     }
 
-    return 0;
+    return false;
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80043DA4); // 0x80043DA4
@@ -654,9 +654,9 @@ void func_80043E50(s_80043E50* arg0, s32* arg1, s32 arg2) // 0x80043E50
 
 s_80043F2C* func_80043F2C(s_80043F2C* arg0, s_80043F2C* arg1) // 0x80043F2C
 {
-    u8 size;
+    u8          size;
     s_80043F2C* var;
-    s32 i;
+    s32         i;
 
     size = arg1->field_8;
     var = arg1->field_C;

@@ -164,15 +164,10 @@ void func_80055B74(CVECTOR* result, CVECTOR* color, s32 arg2) // 0x80055B74
 
     gte_lddp(var_v0);
     gte_ldrgb(color);
-
     gte_SetFarColor(D_800C4168.field_1C, D_800C4168.field_1D, D_800C4168.field_1E);
-
     gte_ldsv_(var_t0 << 5);
-
     gte_dpcl();
-
     gte_strgb(result);
-
     gte_SetFarColor(0, 0, 0);
 }
 
@@ -594,8 +589,8 @@ void func_80057A3C(s_func_8005759C* arg0, s32 offset, s_GteScratchData* scratchD
         gte_ldv0(&scratchData->field_3AC);
         gte_ll();
 
-        var_v1 = gte_stIR1();
-        var_v1 += temp_t2;
+        var_v1   = gte_stIR1();
+        var_v1  += temp_t2;
         var_v1 >>= 5;
 
         if (var_v1 > 0xFF)
@@ -651,12 +646,14 @@ void func_8005A21C(s_func_80057344* arg0, void* arg1, void* arg2, s_func_8005A21
         case 0:
             func_8005A42C(scratchData, var_v1);
             break;
+
         case 1:
             func_8005A478(scratchData, var_v1);
             SetColorMatrix(&D_800C4168.field_2C);
             gte_lddqa(D_800C4168.field_4C);
             gte_lddqb_0();
             break;
+
         case 2:
             func_8005A838(scratchData, var_v1);
             SetColorMatrix(&D_800C4168.field_2C);
@@ -685,7 +682,7 @@ void func_8005A21C(s_func_80057344* arg0, void* arg1, void* arg2, s_func_8005A21
 
 s32 func_8005A42C(s_GteScratchData* scratchData, s32 arg1) // 0x8005A42C
 {
-    s32 alpha = 4096 - (FP_FROM(arg1 * D_800C4168.field_20, Q12_SHIFT));
+    s32 alpha = FP_ALPHA(1.0f) - (FP_FROM(arg1 * D_800C4168.field_20, Q12_SHIFT));
 
     gte_lddp(alpha);
     gte_ldrgb(&D_800C4168.field_28);
@@ -705,10 +702,9 @@ void func_8005A838(s32 arg0, s32 scale) // 0x8005A838
 
     gte_SetLightSVector(&vec);
 
-    SetBackColor(
-        FP_FROM(D_800C4168.field_24 * scale, Q12_SHIFT),
-        FP_FROM(D_800C4168.field_25 * scale, Q12_SHIFT),
-        FP_FROM(D_800C4168.field_26 * scale, Q12_SHIFT));
+    SetBackColor(FP_FROM(D_800C4168.field_24 * scale, Q12_SHIFT),
+                 FP_FROM(D_800C4168.field_25 * scale, Q12_SHIFT),
+                 FP_FROM(D_800C4168.field_26 * scale, Q12_SHIFT));
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8005A900); // 0x8005A900
