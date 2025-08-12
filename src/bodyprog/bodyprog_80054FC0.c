@@ -73,18 +73,18 @@ void func_80055330(u8 arg0, s32 arg1, u8 arg2, s32 arg3, s32 arg4, s32 arg5, s32
     D_800C4168.field_20         = arg1;
     D_800C4168.field_3          = arg2;
     D_800C4168.field_28.field_0 = arg3 >> 5;
-    D_800C4168.field_30         = arg3;
-    D_800C4168.field_2E         = arg3;
-    D_800C4168.field_2C         = arg3;
+    D_800C4168.field_2C.m[0][2] = arg3;
+    D_800C4168.field_2C.m[0][1] = arg3;
+    D_800C4168.field_2C.m[0][0] = arg3;
     D_800C4168.field_28.field_1 = arg4 >> 5;
     D_800C4168.field_8          = arg6;
     D_800C4168.field_28.field_2 = arg5 >> 5;
-    D_800C4168.field_36         = arg4;
-    D_800C4168.field_34         = arg4;
-    D_800C4168.field_32         = arg4;
-    D_800C4168.field_3C         = arg5;
-    D_800C4168.field_3A         = arg5;
-    D_800C4168.field_38         = arg5;
+    D_800C4168.field_2C.m[1][2] = (s16)arg4;
+    D_800C4168.field_2C.m[1][1] = (s16)arg4;
+    D_800C4168.field_2C.m[1][0] = (s16)arg4;
+    D_800C4168.field_2C.m[2][2] = (s16)arg5;
+    D_800C4168.field_2C.m[2][1] = (s16)arg5;
+    D_800C4168.field_2C.m[2][0] = (s16)arg5;
     D_800C4168.field_24         = (arg3 * arg1) >> 17;
     D_800C4168.field_25         = (arg4 * arg1) >> 17;
     D_800C4168.field_26         = (arg5 * arg1) >> 17;
@@ -498,9 +498,9 @@ void func_80057344(s_func_80057344* arg0, void* arg1, void* arg2, s32 arg3) // 0
     u32                var_s4;
     s_func_8005759C*   var_s0;
     s_func_80057344_8* var_s2;
-    s_func_8005759C_2* var_s3;
+    s_GteScratchData*  scratchData;
 
-    var_s3 = PSX_SCRATCH_ADDR(0);
+    scratchData = PSX_SCRATCH_ADDR(0);
 
     var_s2 = arg0->field_8;
     var_s4 = var_s2->field_9;
@@ -513,11 +513,11 @@ void func_80057344(s_func_80057344* arg0, void* arg1, void* arg2, s32 arg3) // 0
     {
         if (var_s4 != 0 || var_s1 != 0)
         {
-            func_8005759C(var_s0, var_s3, var_s4, var_s1);
+            func_8005759C(var_s0, scratchData, var_s4, var_s1);
         }
         else
         {
-            func_800574D4(var_s0, var_s3);
+            func_800574D4(var_s0, scratchData);
         }
 
         switch (D_800C4168.field_0)
@@ -525,21 +525,21 @@ void func_80057344(s_func_80057344* arg0, void* arg1, void* arg2, s32 arg3) // 0
             case 0:
                 break;
             case 1:
-                func_80057658(var_s0, var_s1, var_s3, &D_800C4168.field_74, &D_800C4168.field_7C);
+                func_80057658(var_s0, var_s1, scratchData, &D_800C4168.field_74, &D_800C4168.field_7C);
                 break;
             case 2:
-                func_80057A3C(var_s0, var_s1, var_s3, &D_800C4168.field_74);
+                func_80057A3C(var_s0, var_s1, scratchData, &D_800C4168.field_74);
                 break;
         }
 
-        func_80057B7C(var_s0, var_s4, var_s3, arg3);
-        func_8005801C(var_s0, var_s3, arg1, arg2);
+        func_80057B7C(var_s0, var_s4, scratchData, arg3);
+        func_8005801C(var_s0, scratchData, arg1, arg2);
     }
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_800574D4); // 0x800574D4
 
-void func_8005759C(s_func_8005759C* arg0, s_func_8005759C_2* arg1, s32 arg2, s32 arg3) // 0x8005759C
+void func_8005759C(s_func_8005759C* arg0, s_GteScratchData* scratchData, s32 arg2, s32 arg3) // 0x8005759C
 {
     s16* field_CPtr;
     s16* field_18CPtr;
@@ -549,8 +549,8 @@ void func_8005759C(s_func_8005759C* arg0, s_func_8005759C_2* arg1, s32 arg2, s32
     u8*  field_14Ptr;
 
     // Should be loop? Tried but no luck.
-    field_0Ptr   = &arg1->field_0[arg2];
-    field_18CPtr = &arg1->field_18C[arg2];
+    field_0Ptr   = &scratchData->field_0[arg2];
+    field_18CPtr = &scratchData->field_18C[arg2];
     field_8Ptr   = arg0->field_8;
     field_CPtr   = arg0->field_C;
     while (field_8Ptr < &arg0->field_8[arg0->field_1])
@@ -560,7 +560,7 @@ void func_8005759C(s_func_8005759C* arg0, s_func_8005759C_2* arg1, s32 arg2, s32
     }
 
     field_14Ptr  = arg0->field_14;
-    field_2B8Ptr = &arg1->field_2B8[arg3];
+    field_2B8Ptr = &scratchData->field_2B8[arg3];
     while (field_14Ptr < &arg0->field_14[arg0->field_3])
     {
         *field_2B8Ptr++ = *field_14Ptr++;
@@ -569,7 +569,7 @@ void func_8005759C(s_func_8005759C* arg0, s_func_8005759C_2* arg1, s32 arg2, s32
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80057658); // 0x80057658
 
-void func_80057A3C(s_func_8005759C* arg0, s32 offset, s_func_8005759C_2* arg2, SVECTOR3* lightVec) // 0x80057A3C
+void func_80057A3C(s_func_8005759C* arg0, s32 offset, s_GteScratchData* scratchData, SVECTOR3* lightVec) // 0x80057A3C
 {
     s32   var_v1;
     u8*   var_a3;
@@ -578,23 +578,23 @@ void func_80057A3C(s_func_8005759C* arg0, s32 offset, s_func_8005759C_2* arg2, S
 
     s_func_8005759C_10* var_t0;
 
-    arg2->field_380.m[0][0] = lightVec->vx;
-    arg2->field_380.m[0][1] = lightVec->vy;
-    arg2->field_380.m[0][2] = lightVec->vz;
-    gte_SetLightMatrix(&arg2->field_380);
+    scratchData->field_380.m[0][0] = lightVec->vx;
+    scratchData->field_380.m[0][1] = lightVec->vy;
+    scratchData->field_380.m[0][2] = lightVec->vz;
+    gte_SetLightMatrix(&scratchData->field_380);
 
-    var_a3  = &arg2->field_2B8[offset];
+    var_a3  = &scratchData->field_2B8[offset];
     temp_t2 = D_800C4188;
 
     for (var_t0 = arg0->field_10; var_t0 < &arg0->field_10[arg0->field_2]; var_t0++)
     {
-        *(u32*)&arg2->field_3A0 = *(u32*)var_t0;
+        *(u32*)&scratchData->field_3A0 = *(u32*)var_t0;
 
-        arg2->field_3AC.vx = arg2->field_3A0.vx << 5;
-        arg2->field_3AC.vy = arg2->field_3A0.vy << 5;
-        arg2->field_3AC.vz = arg2->field_3A0.vz << 5;
+        scratchData->field_3AC.vx = scratchData->field_3A0.vx << 5;
+        scratchData->field_3AC.vy = scratchData->field_3A0.vy << 5;
+        scratchData->field_3AC.vz = scratchData->field_3A0.vz << 5;
 
-        gte_ldv0(&arg2->field_3AC);
+        gte_ldv0(&scratchData->field_3AC);
         gte_ll();
 
         var_v1 = gte_stIR1();
@@ -606,7 +606,7 @@ void func_80057A3C(s_func_8005759C* arg0, s32 offset, s_func_8005759C_2* arg2, S
             var_v1 = 0xFF;
         }
 
-        endPtr = &var_a3[arg2->field_3A0.count];
+        endPtr = &var_a3[scratchData->field_3A0.count];
         for (; var_a3 < endPtr; var_a3++)
         {
             *var_a3 = var_v1;
@@ -622,17 +622,78 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80059D50); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80059E34); // 0x80059E34
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8005A21C); // 0x8005A21C
-
-s32 func_8005A42C(u8* arg0, s32 arg1) // 0x8005A42C
+void func_8005A21C(s_func_80057344* arg0, void* arg1, void* arg2, s_func_8005A21C* arg3) // 0x8005A21C
 {
-    // arg0 is always 0x1f800000 / PSX_SCRATCH? Possibly `s_func_8005759C_2` struct.
+    s16                var_v1;
+    u32                temp_s3;
+    u32                temp_s4;
+    s_func_80057344_8* temp_s1;
+    s_func_8005759C*   var_s0;
+    s_GteScratchData*  scratchData;
+
+    scratchData = PSX_SCRATCH_ADDR(0);
+
+    if (D_800C4168.field_1 != 0)
+    {
+        if (arg3->field_1C < (1 << D_800C4168.field_14))
+        {
+            var_v1 = 4096 - (D_800C4168.field_CC[(s32)(arg3->field_1C << 7) >> D_800C4168.field_14] << 4);
+        }
+        else
+        {
+            var_v1 = 1 << 4;
+        }
+    }
+    else
+    {
+        var_v1 = 256 << 4;
+    }
+
+    switch (D_800C4168.field_0)
+    {
+        case 0:
+            func_8005A42C(scratchData, var_v1);
+            break;
+        case 1:
+            func_8005A478(scratchData, var_v1);
+            SetColorMatrix(&D_800C4168.field_2C);
+            gte_lddqa(D_800C4168.field_4C);
+            gte_lddqb_0();
+            break;
+        case 2:
+            func_8005A838(scratchData, var_v1);
+            SetColorMatrix(&D_800C4168.field_2C);
+            gte_lddqa(D_800C4168.field_4C);
+            gte_lddqb_0();
+            break;
+    }
+
+    temp_s1 = arg0->field_8;
+    var_s0  = temp_s1->field_C;
+    temp_s4 = temp_s1->field_9;
+    temp_s3 = temp_s1->field_A;
+
+    for (var_s0 = temp_s1->field_C; var_s0 < &temp_s1->field_C[temp_s1->field_8]; var_s0++)
+    {
+        func_8005A900(var_s0, temp_s4, scratchData, arg3);
+
+        if (D_800C4168.field_0 != 0)
+        {
+            func_8005AA08(var_s0, temp_s3, scratchData);
+        }
+
+        func_8005AC50(var_s0, scratchData, arg1, arg2);
+    }
+}
+
+s32 func_8005A42C(s_GteScratchData* scratchData, s32 arg1) // 0x8005A42C
+{
     s32 alpha = 4096 - (FP_FROM(arg1 * D_800C4188, Q12_SHIFT));
 
     gte_lddp(alpha);
     gte_ldrgb(&D_800C4190);
     gte_dpcs();
-    gte_strgb(arg0 + 0x3D8);
+    gte_strgb(&scratchData->field_3D8);
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8005A478); // 0x8005A478

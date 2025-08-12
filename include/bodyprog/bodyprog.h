@@ -650,19 +650,6 @@ STATIC_ASSERT_SIZEOF(s_func_8005759C, 24);
 
 typedef struct
 {
-    s32    field_0[99];
-    s16    field_18C[150];
-    u8     field_2B8[200]; // Size likely incorrect
-    MATRIX field_380;
-
-    s_func_8005759C_10 field_3A0;
-
-    u8       unk_3A4[8];
-    SVECTOR3 field_3AC;
-} s_func_8005759C_2;
-
-typedef struct
-{
     u8               unk_0[8];
     u8               field_8;
     u8               field_9;
@@ -678,9 +665,36 @@ typedef struct
     // Likely incomplete.
 } s_func_80057344;
 
+typedef struct
+{
+    u8  unk_0[0x1C];
+    s32 field_1C;
+} s_func_8005A21C;
+
 // ========
 // STRUCTS
 // ========
+
+/** @brief Struct used by many functions involved with GTE, kept at PSX_SCRATCH_ADDR (possibly only temporarily). */
+typedef struct
+{
+    s32    field_0[99];
+    s16    field_18C[150];
+    u8     field_2B8[200]; // Size likely incorrect
+    MATRIX field_380;
+
+    s_func_8005759C_10 field_3A0;
+
+    u8       unk_3A4[8];
+    SVECTOR3 field_3AC;
+    u8       unk_3B2[2];
+    u8       unk_3B4[36];
+    CVECTOR  field_3D8; // Written by `func_8005A42C`
+    u16      field_3DC;
+    u16      field_3DE;
+    s32      field_3E0;
+    MATRIX   field_3E4;
+} s_GteScratchData;
 
 typedef struct
 {
@@ -1163,18 +1177,7 @@ typedef struct
     u8            field_26;
     s8            unk_27;
     s_800C4168_28 field_28;
-    s16           field_2C;
-    s16           field_2E;
-    s16           field_30;
-    s16           field_32;
-    s16           field_34;
-    s16           field_36;
-    s16           field_38;
-    s16           field_3A;
-    s16           field_3C;
-    s32           field_40;
-    s32           field_44;
-    s32           field_48;
+    MATRIX        field_2C;
     s32           field_4C;
     s16           field_50;
     s32           field_54;
@@ -2813,9 +2816,8 @@ void func_800560FC(s_800BE9FC* arg0);
 void func_8005B1A0(s_800C1450_58*, s32, s32, u8, s32, s32, s16, s16);
 
 /** @brief Computes a fog-shaded version of `D_800C4190` color using `arg1` as the distance factor?
- *  Stores the result at 0x3D8 into `arg0`.
- *  TODO: Unsure what struct is used for `arg0`, seems `PSX_SCRATCH` pointer is always passed. */
-s32 func_8005A42C(u8* arg0, s32 arg1);
+ *  Stores the result at 0x3D8 into `arg0`. */
+s32 func_8005A42C(s_GteScratchData* scratchData, s32 arg1);
 
 /** `arg0` is unused? */
 void func_8005A838(s32 arg0, s32 scale);
@@ -2849,9 +2851,9 @@ void func_80057228(void*, s32, s8*, VECTOR3*);
 /** TODO: Unknown `arg1`/`arg2` types. */
 void func_80057344(s_func_80057344* arg0, void* arg1, void* arg2, s32 arg3);
 
-void func_8005759C(s_func_8005759C* arg0, s_func_8005759C_2* arg1, s32 arg2, s32 arg3);
+void func_8005759C(s_func_8005759C* arg0, s_GteScratchData* scratchData, s32 arg2, s32 arg3);
 
-void func_80057A3C(s_func_8005759C* arg0, s32 offset, s_func_8005759C_2* arg2, SVECTOR3* lightVec);
+void func_80057A3C(s_func_8005759C* arg0, s32 offset, s_GteScratchData* scratchData, SVECTOR3* lightVec);
 
 void func_8005B55C(GsCOORDINATE2*);
 
