@@ -63,19 +63,19 @@ Gfx_ControllerButtonsDraw                       = 0x801E716C; // type:func
 //--------------------------------------------------------------
 //--- PA: 0x004CF4   VA: 0x801E72F4   subsegment: .data, options
 //--------------------------------------------------------------
-g_MainSelectedOptionIdx                         = 0x801E72F4;
-g_ExtraSelectedOptionIdx                        = 0x801E72F8;
-g_PrevMainSelectedOptionIdx                     = 0x801E72FC; // allow_duplicated:True
-g_PrevExtraSelectedOptionIdx                    = 0x801E7300;
+g_MainMenu_SelectedIdx                          = 0x801E72F4;
+g_ExtraMenu_SelectedIdx                         = 0x801E72F8;
+g_MainMenu_PrevSelectedIdx                      = 0x801E72FC; // allow_duplicated:True
+g_ExtraMenu_PrevSelectedIdx                     = 0x801E7300;
 g_Gfx_ScreenPos_InvertColorBg                   = 0x801E7304;
-g_ScreenCtrl_IsOverActions                      = 0x801E7308;
-g_ScreenCtrl_Options                            = 0x801E736C;
-g_ScreenCtrl_Actions                            = 0x801E737C;
+g_ControllerSubmenu_IsOnActionColumn            = 0x801E7308;
+g_ControllerSubmenu_OptionStrings               = 0x801E736C;
+g_ControllerSubmenu_ActionStrings               = 0x801E737C;
 g_Gfx_ScreenPos_InvertColorBg_TransitionCounter = 0x801E73D4;
 g_ScreenPos_PosX                                = 0x801E73D8;
 g_ScreenPos_PosY                                = 0x801E73DA;
 g_ScreenCtrl_SelectedElement                    = 0x801E73DC;
-g_Options_LineCursorTimer                       = 0x801E73E4;
+g_Options_SelectionCursorTimer                  = 0x801E73E4;
 g_OptExtra_ShowSettingsCount                    = 0x801E73E8;
 g_OptExtra_BloodColorSelected                   = 0x801E73EC;
 g_OptExtra_BulletMultLimit                      = 0x801E73F0;

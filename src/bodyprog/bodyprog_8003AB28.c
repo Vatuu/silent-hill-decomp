@@ -108,16 +108,16 @@ void GameState_MainMenu_Update() // 0x8003AB28
             {
                 D_800A9A7C |= (1 << 0) | (1 << 1);
                 
-                if (D_800A9A88 < D_800BCD28 && g_MainMenu_SelectedOptionIdx != 0)
+                if (D_800A9A88 < D_800BCD28 && g_MainMenu_SelectedIdx != 0)
                 {
-                    g_MainMenu_SelectedOptionIdx = 1;
+                    g_MainMenu_SelectedIdx = 1;
                 }
             }
             else if (D_800A9A88 > 0)
             {
-                while(!(D_800A9A7C & (1 << g_MainMenu_SelectedOptionIdx)))
+                while(!(D_800A9A7C & (1 << g_MainMenu_SelectedIdx)))
                 {
-                    g_MainMenu_SelectedOptionIdx++;
+                    g_MainMenu_SelectedIdx++;
                 }
             }
 
@@ -137,21 +137,21 @@ void GameState_MainMenu_Update() // 0x8003AB28
 
             if (g_Controller0->btnsPulsed_18 & ControllerFlag_LStickUp)
             {
-                g_MainMenu_SelectedOptionIdx += MAIN_MENU_OPTION_COUNT;
-                while(!(D_800A9A7C & (1 << --g_MainMenu_SelectedOptionIdx)))
+                g_MainMenu_SelectedIdx += MAIN_MENU_OPTION_COUNT;
+                while(!(D_800A9A7C & (1 << --g_MainMenu_SelectedIdx)))
                 {
                 }
             }
 
             if (g_Controller0->btnsPulsed_18 & ControllerFlag_LStickDown)
             {                
-                while(!(D_800A9A7C & (1 << ++g_MainMenu_SelectedOptionIdx)))
+                while(!(D_800A9A7C & (1 << ++g_MainMenu_SelectedIdx)))
                 {
                 }
             }
 
             // Wrap selection.
-            g_MainMenu_SelectedOptionIdx %= MAIN_MENU_OPTION_COUNT;
+            g_MainMenu_SelectedIdx %= MAIN_MENU_OPTION_COUNT;
 
             if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
             {
@@ -166,7 +166,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
                 g_Gfx_ScreenFade = 2;
                 g_MainMenuState++;
 
-                if (g_MainMenu_SelectedOptionIdx < 2u)
+                if (g_MainMenu_SelectedIdx < 2u)
                 {
                     Sd_EngineCmd(Sfx_StartGame);
                 }
@@ -175,7 +175,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
                     Sd_EngineCmd(Sfx_Confirm);
                 }
 
-                switch (g_MainMenu_SelectedOptionIdx)
+                switch (g_MainMenu_SelectedIdx)
                 {
                     case 1: // Quick load.
                         if (g_GameWork.savegame_90.playerHealth_240 > 0)
@@ -305,7 +305,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
                     nextGameStates[1] = 10;
                 }
 
-                if (g_MainMenu_SelectedOptionIdx == 2)
+                if (g_MainMenu_SelectedIdx == 2)
                 {
                     Chara_PositionUpdateFromParams(g_MapOverlayHeader.mapAreaLoadParams_1C);
                 }
@@ -314,7 +314,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
 
                 prevState                       = g_GameWork.gameState_594;
                 g_GameWork.gameStateStep_598[0] = prevState;
-                g_GameWork.gameState_594        = nextGameStates[g_MainMenu_SelectedOptionIdx];
+                g_GameWork.gameState_594        = nextGameStates[g_MainMenu_SelectedIdx];
                 g_SysWork.timer_1C              = 0;
                 g_GameWork.gameStatePrev_590    = prevState;
                 g_GameWork.gameStateStep_598[0] = 0;
@@ -382,7 +382,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
 
 void MainMenu_SelectedOptionIdxReset() // 0x8003B550
 {
-    g_MainMenu_SelectedOptionIdx = 1;
+    g_MainMenu_SelectedIdx = 1;
 }
 
 void func_8003B560() {}
@@ -411,7 +411,7 @@ void Gfx_MainMenu_MainTextDraw() // 0x8003B568
             Gfx_StringSetPosition(STR_POS_X_BASE - D_800254EC[i], STR_POS_Y_BASE + (i * 20));
             Gfx_StringSetColor(ColorId_White);
 
-            if (i == g_MainMenu_SelectedOptionIdx)
+            if (i == g_MainMenu_SelectedIdx)
             {
                 Gfx_StringDraw("[", 99);
             }
@@ -422,7 +422,7 @@ void Gfx_MainMenu_MainTextDraw() // 0x8003B568
 
             Gfx_StringDraw(D_800A9A8C[i], 99);
 
-            if (i == g_MainMenu_SelectedOptionIdx)
+            if (i == g_MainMenu_SelectedIdx)
             {
                 Gfx_StringDraw("]", 99);
             }
@@ -1788,8 +1788,8 @@ void func_8003D9C8(s_800BCE18_0_CC* arg0) // 0x8003D9C8
 
 void func_8003DA9C(s32 arg0, GsCOORDINATE2* coord, s32 arg2, s16 arg3, s32 arg4) // 0x8003DA9C
 {
-    CVECTOR       sp20 = {0};
-    u16           ret;
+    CVECTOR sp20 = { 0 };
+    u16     ret;
 
     if (arg0 == 0)
     {

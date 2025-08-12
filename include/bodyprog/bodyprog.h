@@ -1711,7 +1711,7 @@ extern s32 D_800A9A68;
 
 extern s32 g_MainMenuState;
 
-extern s32 g_MainMenu_SelectedOptionIdx;
+extern s32 g_MainMenu_SelectedIdx;
 
 /** Flags for which main menu options to display. */
 extern u32 D_800A9A7C;

@@ -5,9 +5,6 @@
 
 /** @brief Header for `OPTIONS.BIN` declarations. */
 
-// TODO: "Screen" is used synonymously with "menu", but this can mix up some of the terminology
-// as "screen" isn't specific enough. Maybe should stick to "menu"
- 
 // ======
 // ENUMS
 // ======
@@ -18,20 +15,20 @@
 typedef enum _OptionMenuState
 {
     OptMenuState_0               = 0,
-    OptMenuState_Main            = 1,  /** In main options menu. */
-    OptMenuState_ScreenPos       = 2,  /** In screen position options submenu. */
-    OptMenuState_Brightness      = 3,  /** In brightness options menu. */
-    OptMenuState_Controller      = 4,  /** In controller binding options submenu. */
+    OptMenuState_Main            = 1,  /** In main menu. */
+    OptMenuState_ScreenPos       = 2,  /** In screen position submenu. */
+    OptMenuState_Brightness      = 3,  /** In brightness menu. */
+    OptMenuState_Controller      = 4,  /** In controller binding submenu. */
     OptMenuState_5               = 5,  // EnterReturnToGame?
     OptMenuState_6               = 6,  // ReturnToGame?
-    OptMenuState_EnterScreenPos  = 7,  /** Entering screen position options submenu. */
-    OptMenuState_EnterBrightness = 8,  /** Entering brightness options submenu. */
-    OptMenuState_EnterCont       = 9,  /** Entering controller binding options submenu. */
-    OptMenuState_LeaveScreenPos  = 10, /** Leaving screen position options submenu. */
-    OptMenuState_LeaveBrightness = 11, /** Leaving brightness options submenu. */
-    OptMenuState_LeaveCont       = 12, /** Leaving controller binding options submenu. */
+    OptMenuState_EnterScreenPos  = 7,  /** Entering screen position submenu. */
+    OptMenuState_EnterBrightness = 8,  /** Entering brightness submenu. */
+    OptMenuState_EnterCont       = 9,  /** Entering controller binding submenu. */
+    OptMenuState_LeaveScreenPos  = 10, /** Leaving screen position submenu. */
+    OptMenuState_LeaveBrightness = 11, /** Leaving brightness submenu. */
+    OptMenuState_LeaveCont       = 12, /** Leaving controller binding submenu. */
     OptMenuState_13              = 13,
-    OptMenuState_Extra           = 14, /** In extra options menu. */
+    OptMenuState_Extra           = 14, /** In extra menu. */
     OptMenuState_15              = 15
 } e_OptionMenuState;
 
@@ -62,12 +59,14 @@ typedef enum _BrightnessMenuState
  */
 typedef enum _ContMenuState
 {
-    ContMenuState_Leave   = -2,
-    ContMenuState_Actions = -1,
-    ContMenuState_Exit    = 0,
-    ContMenuState_Type_1  = 1,
-    ContMenuState_Type_2  = 2,
-    ContMenuState_Type_3  = 3
+    ContMenuState_Leave       = -2,
+    ContMenuState_Actions     = -1,
+    ContMenuState_Exit        = 0,
+    ContMenuState_Type_1      = 1,
+    ContMenuState_Type_2      = 2,
+    ContMenuState_Type_3      = 3,
+
+    ContMenuState_OptionCount = 4
 } e_ContMenuState;
 
 /** @brief Main options menu selection. */
@@ -128,6 +127,7 @@ typedef enum _InputAction
     InputAction_Item   = 11,
     InputAction_Map    = 12,
     InputAction_Option = 13,
+
     InputAction_Count  = 14
 } e_InputAction;
 
@@ -153,40 +153,36 @@ typedef struct _ScreenCtrl_SelectedElement
 // GLOBALS
 // ========
 
-extern s32 g_MainSelectedOptionIdx;
+extern s32 g_MainMenu_SelectedIdx;
 
-extern s32 g_ExtraSelectedOptionIdx;
+extern s32 g_ExtraMenu_SelectedIdx;
 
-extern s32 g_PrevMainSelectedOptionIdx;
+extern s32 g_MainMenu_PrevSelectedIdx;
 
-extern s32 g_PrevExtraSelectedOptionIdx;
+extern s32 g_ExtraMenu_PrevSelectedIdx;
 
 extern s32 g_Gfx_ScreenPos_InvertColorBg;
 
-extern s32 g_ScreenCtrl_IsOverActions;
+extern bool g_ControllerSubmenu_IsOnActionColumn;
 
 extern DR_MODE D_801E730C[MEMORY_CARD_SLOT_COUNT];
 
 extern POLY_G4 D_801E7324[MEMORY_CARD_SLOT_COUNT];
 
-extern char* g_ScreenCtrl_Options[];
+extern char* g_ControllerSubmenu_OptionStrings[];
 
-extern char* g_ScreenCtrl_Actions[];
+extern char* g_ControllerSubmenu_ActionStrings[];
 
+// `s_Quad2d`?
 extern DVECTOR D_801E73B4;
-
 extern DVECTOR D_801E73B8;
-
 extern DVECTOR D_801E73BC;
-
 extern DVECTOR D_801E73C0;
 
+// `s_Quad2d`?
 extern DVECTOR D_801E73C4;
-
 extern DVECTOR D_801E73C8;
-
 extern DVECTOR D_801E73CC;
-
 extern DVECTOR D_801E73D0;
 
 extern s32 g_Gfx_ScreenPos_InvertColorBg_TransitionCounter;
@@ -198,7 +194,7 @@ extern s_ScreenCtrl_SelectedElement g_ScreenCtrl_SelectedElement;
 extern s16 g_ScreenPos_PosY;
 
 /** @brief Tracks movement time of the cursor highlight. */
-extern s32 g_Options_LineCursorTimer;
+extern s32 g_Options_SelectionCursorTimer;
 
 /** @brief Defines the number of options to
  * show in the extra options screen.
@@ -283,8 +279,8 @@ void Settings_ControllerScreen();
 /** @brief Changes the button mapping based on the input. */
 s32 Settings_ButtonChange(s32 actionIdx);
 
-void Gfx_ControllerScreenDraw(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
+void Gfx_ControllerScreenDraw(bool isOnActionColumn, s32 arg1, s32 arg2, s32 boundActionIdx);
 
-void Gfx_ControllerButtonsDraw(s32 arg0, s32 arg1, u16 arg2);
+void Gfx_ControllerButtonsDraw(s32 baseX, s32 baseY, u16 contConfig);
 
 #endif

@@ -68,10 +68,11 @@ void Game_TimerUpdate() // 0x8004C8DC
 
 void GameState_ItemScreens_Update() // 0x8004C9B0
 {
-    Gfx_StringSetColor(7);
+    Gfx_StringSetColor(ColorId_White);
     func_800363D0();
 
-    if (g_GameWork.gameStateStep_598[1] < 21) // If current screen is inventory
+    // Update timer ff current screen is inventory.
+    if (g_GameWork.gameStateStep_598[1] < 21)
     {
         Game_TimerUpdate();
     }
@@ -90,6 +91,7 @@ void GameState_ItemScreens_Update() // 0x8004C9B0
                 g_GameWork.gameStatePrev_590 == GameState_Unk10)
             {
                 g_Demo_ReproducedCount = 0;
+
                 Game_WarmBoot();
                 GameFs_StreamBinLoad();
                 Fs_QueueWaitForEmpty();
@@ -111,7 +113,7 @@ void GameState_ItemScreens_Update() // 0x8004C9B0
 
             func_80037188();
 
-            g_Inventory_IsScrolling              = 1;
+            g_Inventory_IsScrolling              = true;
             g_Gfx_Inventory_SelectionBordersDraw = 0;
             D_800AE178                           = 0;
             g_Inventory_CmdSelectedIdx           = 0;
@@ -520,11 +522,11 @@ void Inventory_Logic() // 0x8004D518
     {
         case InventorySelectionId_Item:
             if ((g_Inventory_IsLeftClicked && g_Gfx_Inventory_SelectionBordersDraw == 8) ||
-                (g_Inventory_IsLeftHeld && (g_Inventory_IsScrolling != 0 || g_Gfx_Inventory_SelectionBordersDraw == 8)))
+                (g_Inventory_IsLeftHeld && (g_Inventory_IsScrolling || g_Gfx_Inventory_SelectionBordersDraw == 8)))
             {
                 if (g_Inventory_IsLeftClicked || g_Inventory_IsLeftHeld)
                 {
-                    g_Inventory_IsScrolling = 1;
+                    g_Inventory_IsScrolling = true;
                 }
 
                 D_800AE178                           = 1;
@@ -537,11 +539,11 @@ void Inventory_Logic() // 0x8004D518
                 func_800539A4(0, (g_SysWork.inventoryItemSelectedIdx_2351 + temp) % g_SavegamePtr->inventoryItemSpaces_AB);
             }
             else if (((g_Inventory_IsRightClicked || g_Inventory_IsRightPulsed) && g_Gfx_Inventory_SelectionBordersDraw == 8) ||
-                     (g_Inventory_IsRightHeld && (g_Inventory_IsScrolling != 0 || g_Gfx_Inventory_SelectionBordersDraw == 8)))
+                     (g_Inventory_IsRightHeld && (g_Inventory_IsScrolling || g_Gfx_Inventory_SelectionBordersDraw == 8)))
             {
                 if (g_Inventory_IsRightClicked || g_Inventory_IsRightHeld)
                 {
-                    g_Inventory_IsScrolling = 1;
+                    g_Inventory_IsScrolling = true;
                 }
 
                 D_800AE178                           = 1;
@@ -606,7 +608,7 @@ void Inventory_Logic() // 0x8004D518
             }
             else if (!(g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.item_16))
             {
-                g_Inventory_IsScrolling = 0;
+                g_Inventory_IsScrolling = false;
             }
             else
             {

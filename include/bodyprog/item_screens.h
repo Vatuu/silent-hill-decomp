@@ -159,10 +159,8 @@ extern s32 g_Inventory_IsLeftHeld; // 0x800C3988
 
 extern s32 g_Inventory_IsRightHeld; // 0x800C398C
 
-/** @note Used for smooth inventory scrolling
- * if a left/right input is held.
- */
-extern s32 g_Inventory_IsScrolling; // 0x800C3990
+/** @brief Used for smooth inventory scrolling if a left/right input is held. */
+extern bool g_Inventory_IsScrolling; // 0x800C3990
 
 /** @brief Timer used for the corner borders of the selection box in the inventory.
  *

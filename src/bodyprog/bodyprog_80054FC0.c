@@ -682,7 +682,7 @@ void func_8005A21C(s_func_80057344* arg0, void* arg1, void* arg2, s_func_8005A21
 
 s32 func_8005A42C(s_GteScratchData* scratchData, s32 arg1) // 0x8005A42C
 {
-    s32 alpha = FP_ALPHA(1.0f) - (FP_FROM(arg1 * D_800C4168.field_20, Q12_SHIFT));
+    s32 alpha = FP_ALPHA(1.0f) - FP_MULTIPLY(arg1, D_800C4168.field_20, Q12_SHIFT);
 
     gte_lddp(alpha);
     gte_ldrgb(&D_800C4168.field_28);
@@ -696,15 +696,15 @@ void func_8005A838(s32 arg0, s32 scale) // 0x8005A838
 {
     SVECTOR3 vec;
 
-    vec.vx = FP_FROM(D_800C4168.field_74.vx * scale, Q12_SHIFT) >> 1;
-    vec.vy = FP_FROM(D_800C4168.field_74.vy * scale, Q12_SHIFT) >> 1;
-    vec.vz = FP_FROM(D_800C4168.field_74.vz * scale, Q12_SHIFT) >> 1;
+    vec.vx = FP_MULTIPLY(D_800C4168.field_74.vx, scale, Q12_SHIFT) >> 1;
+    vec.vy = FP_MULTIPLY(D_800C4168.field_74.vy, scale, Q12_SHIFT) >> 1;
+    vec.vz = FP_MULTIPLY(D_800C4168.field_74.vz, scale, Q12_SHIFT) >> 1;
 
     gte_SetLightSVector(&vec);
 
-    SetBackColor(FP_FROM(D_800C4168.field_24 * scale, Q12_SHIFT),
-                 FP_FROM(D_800C4168.field_25 * scale, Q12_SHIFT),
-                 FP_FROM(D_800C4168.field_26 * scale, Q12_SHIFT));
+    SetBackColor(FP_MULTIPLY(D_800C4168.field_24, scale, Q12_SHIFT),
+                 FP_MULTIPLY(D_800C4168.field_25, scale, Q12_SHIFT),
+                 FP_MULTIPLY(D_800C4168.field_26, scale, Q12_SHIFT));
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8005A900); // 0x8005A900

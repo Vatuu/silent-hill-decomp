@@ -178,7 +178,7 @@ void GsTMDfastTG4LFG(void* op, VERT* vp, VERT* np, PACKET* pk, int n, int shift,
     : "r"(val)                           \
     : "memory");
 
-/** @brief Returns value of GTE `IR1` register. */
+/** @brief Returns the value of the GTE `IR1` register. */
 #define gte_stIR1()                                        \
     ({                                                     \
         u32 __r;                                           \
