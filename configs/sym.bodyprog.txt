@@ -91,7 +91,7 @@ g_ItemVectors                               = 0x800262FC; // type:DVECTOR size:0
 //------------------------------------------------------
 
 //--------------------------------------------------------------------------
-//--- PA: 0x005520   VA: 0x8002A080   subsegment: .rodata, bodyprog_80054FC0
+//--- PA: 0x0054C0   VA: 0x8002A020   subsegment: .rodata, bodyprog_80054FC0
 //--------------------------------------------------------------------------
 
 //--------------------------------------------------------------------------
@@ -2265,6 +2265,7 @@ g_Items_Items3dData0                        = 0x800C3BE8;
 g_Items_ItemsModelData                      = 0x800C3D78;
 g_Inventory_EquippedItemIdx                 = 0x800C3E34;
 g_Items_Items3dData1                        = 0x800C3E48;
+D_800C4168                                  = 0x800C4168; // type:u8 size:0xCD - size likely incomplete
 g_Player_DisableDamage                      = 0x800C4562;
 vcWatchMvPrmSt                              = 0x800C4630; // type:VC_WATCH_MV_PARAM size:0xC
 vcSelfViewTimer                             = 0x800C463C; // type:s32

@@ -951,7 +951,7 @@ void func_8003C3AC() // 0x8003C3AC
         pos0.vz = FP_METER(200.0f);
     }
 
-    if (D_800C4169 != 0)
+    if (D_800C4168.field_1 != 0)
     {
         vwGetViewPosition(&pos1);
         vwGetViewAngle(&pos2);
@@ -1788,7 +1788,7 @@ void func_8003D9C8(s_800BCE18_0_CC* arg0) // 0x8003D9C8
 
 void func_8003DA9C(s32 arg0, GsCOORDINATE2* coord, s32 arg2, s16 arg3, s32 arg4) // 0x8003DA9C
 {
-    s_800C4168_28 sp20 = { 0 };
+    CVECTOR       sp20 = {0};
     u16           ret;
 
     if (arg0 == 0)
@@ -1811,9 +1811,9 @@ void func_8003DA9C(s32 arg0, GsCOORDINATE2* coord, s32 arg2, s16 arg3, s32 arg4)
 
         func_80055330(D_800C4168.field_0, D_800C4168.field_20,
                       D_800C4168.field_3,
-                      FP_MULTIPLY(FP_FLOAT_TO(1.0f, Q12_SHIFT) - arg3, (s64)D_800C4168.field_28.field_0, Q12_SHIFT) << 5,
-                      FP_MULTIPLY(FP_FLOAT_TO(1.0f, Q12_SHIFT) - arg3, (s64)D_800C4168.field_28.field_1, Q12_SHIFT) << 5,
-                      FP_MULTIPLY(FP_FLOAT_TO(1.0f, Q12_SHIFT) - arg3, (s64)D_800C4168.field_28.field_2, Q12_SHIFT) << 5,
+                      FP_MULTIPLY(FP_FLOAT_TO(1.0f, Q12_SHIFT) - arg3, (s64)D_800C4168.field_28.r, Q12_SHIFT) << 5,
+                      FP_MULTIPLY(FP_FLOAT_TO(1.0f, Q12_SHIFT) - arg3, (s64)D_800C4168.field_28.g, Q12_SHIFT) << 5,
+                      FP_MULTIPLY(FP_FLOAT_TO(1.0f, Q12_SHIFT) - arg3, (s64)D_800C4168.field_28.b, Q12_SHIFT) << 5,
                       D_800C4168.field_8);
     }
 
@@ -1822,7 +1822,7 @@ void func_8003DA9C(s32 arg0, GsCOORDINATE2* coord, s32 arg2, s16 arg3, s32 arg4)
 
     if (arg3 != 0)
     {
-        func_80055330(D_800C4168.field_0, D_800C4168.field_20, D_800C4168.field_3, sp20.field_0 << 5, sp20.field_1 << 5, sp20.field_2 << 5, D_800C4168.field_8);
+        func_80055330(D_800C4168.field_0, D_800C4168.field_20, D_800C4168.field_3, sp20.r << 5, sp20.g << 5, sp20.b << 5, D_800C4168.field_8);
     }
 }
 

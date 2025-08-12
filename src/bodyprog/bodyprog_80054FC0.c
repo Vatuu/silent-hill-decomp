@@ -43,9 +43,9 @@ void func_80055028() // 0x80055028
     D_800C4168.field_20 = 0x1000;
 
     // Likely a color triplet.
-    D_800C4168.field_28.field_0 = 0x80;
-    D_800C4168.field_28.field_1 = 0x80;
-    D_800C4168.field_28.field_2 = 0x80;
+    D_800C4168.field_28.r = 0x80;
+    D_800C4168.field_28.g = 0x80;
+    D_800C4168.field_28.b = 0x80;
 
     D_800C4168.field_1 = 0;
     D_800C4168.field_2 = 0;
@@ -72,13 +72,13 @@ void func_80055330(u8 arg0, s32 arg1, u8 arg2, s32 arg3, s32 arg4, s32 arg5, s32
     D_800C4168.field_0          = arg0;
     D_800C4168.field_20         = arg1;
     D_800C4168.field_3          = arg2;
-    D_800C4168.field_28.field_0 = arg3 >> 5;
+    D_800C4168.field_28.r       = arg3 >> 5;
     D_800C4168.field_2C.m[0][2] = arg3;
     D_800C4168.field_2C.m[0][1] = arg3;
     D_800C4168.field_2C.m[0][0] = arg3;
-    D_800C4168.field_28.field_1 = arg4 >> 5;
+    D_800C4168.field_28.g       = arg4 >> 5;
     D_800C4168.field_8          = arg6;
-    D_800C4168.field_28.field_2 = arg5 >> 5;
+    D_800C4168.field_28.b       = arg5 >> 5;
     D_800C4168.field_2C.m[1][2] = (s16)arg4;
     D_800C4168.field_2C.m[1][1] = (s16)arg4;
     D_800C4168.field_2C.m[1][0] = (s16)arg4;
@@ -100,7 +100,7 @@ void func_800553C4(u8 arg0, u8 arg1, u8 arg2, u8 arg3) // 0x800553C4
 
 void func_800553E0(u32 arg0, u8 arg1, u8 arg2, u8 arg3, u8 arg4, u8 arg5, u8 arg6) // 0x800553E0
 {
-    D_800C416A = arg0;
+    D_800C4168.field_2 = arg0;
 
     if (arg0 != 0)
     {
@@ -131,10 +131,7 @@ s32 func_800557DC() // 0x800557DC
 
 void func_80055814(s32 arg0) // 0x80055814
 {
-    s32 temp;
-
-    temp       = func_800559A8(arg0);
-    D_800C4180 = FP_FLOAT_TO(1.0f, Q12_SHIFT) - temp;
+    D_800C4168.field_18 = FP_FLOAT_TO(1.0f, Q12_SHIFT) - func_800559A8(arg0);
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80055840); // 0x80055840
@@ -230,7 +227,7 @@ void func_80055E90(CVECTOR* color, u8 fadeAmount) // 0x80055E90
     // Works similar to `gte_DpqColor` macro, but `gte_lddp`/`gte_ldrgb` are in wrong order?
 
     gte_lddp(alpha);
-    gte_ldrgb(&D_800C4190);
+    gte_ldrgb(&D_800C4168.field_28);
     gte_dpcs();
 
     prev_cd = color->cd;
@@ -584,7 +581,7 @@ void func_80057A3C(s_func_8005759C* arg0, s32 offset, s_GteScratchData* scratchD
     gte_SetLightMatrix(&scratchData->field_380);
 
     var_a3  = &scratchData->field_2B8[offset];
-    temp_t2 = D_800C4188;
+    temp_t2 = D_800C4168.field_20;
 
     for (var_t0 = arg0->field_10; var_t0 < &arg0->field_10[arg0->field_2]; var_t0++)
     {
@@ -688,10 +685,10 @@ void func_8005A21C(s_func_80057344* arg0, void* arg1, void* arg2, s_func_8005A21
 
 s32 func_8005A42C(s_GteScratchData* scratchData, s32 arg1) // 0x8005A42C
 {
-    s32 alpha = 4096 - (FP_FROM(arg1 * D_800C4188, Q12_SHIFT));
+    s32 alpha = 4096 - (FP_FROM(arg1 * D_800C4168.field_20, Q12_SHIFT));
 
     gte_lddp(alpha);
-    gte_ldrgb(&D_800C4190);
+    gte_ldrgb(&D_800C4168.field_28);
     gte_dpcs();
     gte_strgb(&scratchData->field_3D8);
 }

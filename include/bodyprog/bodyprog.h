@@ -1151,14 +1151,6 @@ typedef struct
 
 typedef struct
 {
-    u8 field_0;
-    u8 field_1;
-    u8 field_2;
-    u8 field_3;
-} s_800C4168_28;
-
-typedef struct
-{
     u8            field_0;
     u8            field_1;
     s8            field_2;
@@ -1176,7 +1168,7 @@ typedef struct
     u8            field_25;
     u8            field_26;
     s8            unk_27;
-    s_800C4168_28 field_28;
+    CVECTOR       field_28;
     MATRIX        field_2C;
     s32           field_4C;
     s16           field_50;
@@ -2208,22 +2200,10 @@ extern GsF_LIGHT D_800C3A88[];
 
 extern u8 D_800C3E40;
 
-extern u8 D_800C4169;
-
-extern u8 D_800C416A;
-
-extern s32 D_800C4188;
-
-extern CVECTOR D_800C4190;
-
-extern CVECTOR D_800C41B4;
-
 /** Functions from `bodyprog_8003AB28` access `D_800C4168` as constant, but some functions from `bodyprog_80055028` write to it.
  * It appears that D_800C4168 is intended to be defined inside `bodyprog_80055028` as writable and declared as read-only (`const`) outside of it.
  */
 // extern s_800C4168 D_800C4168;
-
-extern s32 D_800C4180;
 
 extern u16 D_800C42D0;
 
