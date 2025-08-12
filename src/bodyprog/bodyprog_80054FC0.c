@@ -1423,7 +1423,67 @@ void func_8006B1C8(s_func_8006CC44* arg0, s_func_800699E4* arg1, s_func_8006B1C8
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8006B318); // 0x8006B318
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8006B6E8); // 0x8006B6E8
+void func_8006B6E8(s_func_8006CC44* arg0, s_func_8006B1C8* arg1) // 0x8006B6E8
+{
+    // arg1 unused but `func_8006B1C8` passes second arg to this.
+    s32                 index;
+    s32                 temp_s1;
+    s32                 temp_s2;
+    s32                 temp_s3;
+    s32                 temp_s4;
+    s_func_8006CC44_A8* temp_s0;
+
+    temp_s1 = arg0->field_D8;
+    temp_s2 = arg0->field_D9;
+    temp_s3 = arg0->field_DC;
+    temp_s4 = arg0->field_DD;
+
+    if (temp_s1 == 0xFF)
+    {
+        if (temp_s2 == 0xFF)
+        {
+            return;
+        }
+        index = arg0->field_DB;
+    }
+    else
+    {
+        index = arg0->field_DA;
+    }
+
+    temp_s0 = &arg0->field_A8[index];
+    if (!func_8006B7E0(temp_s0, &arg0->field_EC))
+    {
+        return;
+    }
+
+    temp_s0->field_0 = arg0->field_F4;
+    temp_s0->field_4 = arg0->field_F8;
+    temp_s0->field_2 = arg0->field_FC;
+
+    if (arg0->field_EE >= 0)
+    {
+        if (temp_s3 == 1)
+        {
+            temp_s0->field_1 = NO_VALUE;
+        }
+        else
+        {
+            temp_s0->field_1 = temp_s1;
+        }
+    }
+    else
+    {
+        if (temp_s4 == 1)
+        {
+            temp_s0->field_1 = NO_VALUE;
+        }
+        else
+        {
+            temp_s0->field_1 = temp_s2;
+        }
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8006B7E0); // 0x8006B7E0
 
