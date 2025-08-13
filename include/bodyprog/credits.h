@@ -30,11 +30,19 @@ typedef struct
     u8 unk_F;
 } s_800C48E0;
 
+typedef struct
+{
+    char field_0[5];
+    char field_5[5];
+    char field_A[5];
+    char field_F[5];
+} s_800AFDF4;
+
 // ========
 // GLOBALS
 // ========
 
-extern s8 D_800AFDF4;
+extern s_800AFDF4 D_800AFDF4;
 
 extern s16 D_800C48A0;
 
@@ -75,6 +83,14 @@ extern u16 D_800C48B8;
 extern u16 D_800C48BA;
 
 extern s32 D_800C48BC;
+
+extern u32 D_800C48C0;
+
+extern u32 D_800C48C4;
+
+extern u32 D_800C48C8;
+
+extern u32 D_800C48CC;
 
 extern s8 D_800C48D0;
 
