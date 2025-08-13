@@ -34,6 +34,10 @@
 #define ABS(x) \
     (((x) < 0) ? -(x) : (x))
 
+/** @brief Computes the absolute value of an `s32` by shifting. */
+#define ABS_32(x) \
+    (((x) ^ ((x) >> 31)) - ((x) >> 31))
+
 /** @brief Computes the absolute sum of two values. */
 #define ABS_ADD(a, b) \
     (((a) >= 0) ? ((b) + (a)) : ((b) - (a)))
@@ -41,10 +45,6 @@
 /** @brief Computes the absolute difference between two values. */
 #define ABS_DIFF(a, b) \
     ABS((a) - (b))
-
-/** @brief Computes the absolute value of a 32bit value by shifting. */
-#define ABS_32(x) \
-    ((x ^ (x >> 31)) - (x >> 31))
 
 /** @brief Checks if two values have different signs. */
 #define DIFF_SIGN(a, b) \

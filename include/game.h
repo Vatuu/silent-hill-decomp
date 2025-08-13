@@ -521,7 +521,7 @@ typedef enum _PlayerProperty
     PlayerProperty_RunTimer0     = 5, // Increments indefinitely, but more slowly than `PlayerProperty_RunTimer1`.
     PlayerProperty_ExertionTimer = 6, // Counts ~20 seconds worth of ticks while running and caps at 0x23000.
     PlayerProperty_Unk7          = 7,
-    PlayerProperty_Unk8          = 8, // Returned by `func_8007FD2C`.
+    PlayerProperty_Unk8          = 8, // Distance?
     PlayerProperty_RunTimer1     = 9  // Increments every tick indefinitely.
 } e_PlayerProperty;
 

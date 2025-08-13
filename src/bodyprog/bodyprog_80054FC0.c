@@ -516,9 +516,11 @@ void func_80057344(s_func_80057344* arg0, void* arg1, void* arg2, s32 arg3) // 0
         {
             case 0:
                 break;
+
             case 1:
                 func_80057658(var_s0, var_s1, scratchData, &D_800C4168.field_74, &D_800C4168.field_7C);
                 break;
+
             case 2:
                 func_80057A3C(var_s0, var_s1, scratchData, &D_800C4168.field_74);
                 break;
@@ -578,7 +580,7 @@ void func_80057658(s_func_8005759C* arg0, s32 offset, s_GteScratchData* scratchD
 
     s_func_8005759C_10* var_t3;
 
-    scratchData->field_3AC = *arg4; // 3AC changed to SVECTOR
+    scratchData->field_3AC = *arg4; // 3AC changed to `SVECTOR`.
 
     scratchData->field_380.m[0][0] = arg3->vx;
     scratchData->field_380.m[0][1] = arg3->vy;
@@ -636,9 +638,9 @@ void func_80057658(s_func_8005759C* arg0, s32 offset, s_GteScratchData* scratchD
             scratchData->screenPos_3A4.vx += 1024;
             scratchData->screenPos_3A4.vy += 1024;
 
-            var_a1 = (scratchData->screenPos_3A4.vx * scratchData->screenPos_3A4.vy) + (scratchData->screenPos_3A4.vy * (scratchData->depthP_3A8 >> 4));
+            var_a1   = (scratchData->screenPos_3A4.vx * scratchData->screenPos_3A4.vy) + (scratchData->screenPos_3A4.vy * (scratchData->depthP_3A8 >> 4));
             var_a1 >>= 5;
-            var_a1 -= 16;
+            var_a1  -= 16;
             if (var_a1 < 0)
             {
                 var_a1 = 0;
@@ -666,15 +668,15 @@ void func_80057658(s_func_8005759C* arg0, s32 offset, s_GteScratchData* scratchD
         scratchData->screenPos_3A4.vx += 1024;
         scratchData->screenPos_3A4.vy += 1024;
 
-        var_a1 = (scratchData->screenPos_3A4.vx * scratchData->screenPos_3A4.vy) + (scratchData->screenPos_3A4.vy * (scratchData->depthP_3A8 >> 4));
+        var_a1   = (scratchData->screenPos_3A4.vx * scratchData->screenPos_3A4.vy) + (scratchData->screenPos_3A4.vy * (scratchData->depthP_3A8 >> 4));
         var_a1 >>= 5;
-        var_a1 -= 16;
+        var_a1  -= 16;
         if (var_a1 < 0)
         {
             var_a1 = 0;
         }
 
-        var_v1 = (scratchData->screenPos_3A4.vx >> 1) + (scratchData->depthP_3A8 >> 2);
+        var_v1  = (scratchData->screenPos_3A4.vx >> 1) + (scratchData->depthP_3A8 >> 2);
         var_a1 += temp_t9;
         if (var_v1 > 48)
         {
@@ -883,9 +885,9 @@ void func_8005A478(s_GteScratchData* scratchData, s32 alpha) // 0x8005A478
     scratchData->screenPos_3DC.vx += 1024;
     scratchData->screenPos_3DC.vy += 1024;
 
-    var_s0 = (scratchData->screenPos_3DC.vx * scratchData->screenPos_3DC.vy) + (scratchData->screenPos_3DC.vy * (scratchData->depthP_3E0 >> 4));
+    var_s0  = (scratchData->screenPos_3DC.vx * scratchData->screenPos_3DC.vy) + (scratchData->screenPos_3DC.vy * (scratchData->depthP_3E0 >> 4));
     var_s0 >>= 5;
-    var_s0 -= 16;
+    var_s0  -= 16;
     if (var_s0 < 0)
     {
         var_s0 = 0;
@@ -897,7 +899,7 @@ void func_8005A478(s_GteScratchData* scratchData, s32 alpha) // 0x8005A478
         var_v1 = 48;
     }
 
-    var_s0 += var_v1;
+    var_s0  += var_v1;
     var_s0 >>= 1;
     if (D_800C4168.field_3 < var_s0)
     {
@@ -948,9 +950,9 @@ void func_8005A478(s_GteScratchData* scratchData, s32 alpha) // 0x8005A478
         var_a1 = 64;
     }
 
-    SetBackColor(FP_FROM((D_800C4168.field_24 + ((D_800C4168.field_28.r * var_a1) >> 7)) * alpha, Q12_SHIFT),
-                 FP_FROM((D_800C4168.field_25 + ((D_800C4168.field_28.g * var_a1) >> 7)) * alpha, Q12_SHIFT),
-                 FP_FROM((D_800C4168.field_26 + ((D_800C4168.field_28.b * var_a1) >> 7)) * alpha, Q12_SHIFT));
+    SetBackColor(FP_MULTIPLY(D_800C4168.field_24 + ((D_800C4168.field_28.r * var_a1) >> 7), alpha, Q12_SHIFT),
+                 FP_MULTIPLY(D_800C4168.field_25 + ((D_800C4168.field_28.g * var_a1) >> 7), alpha, Q12_SHIFT),
+                 FP_MULTIPLY(D_800C4168.field_26 + ((D_800C4168.field_28.b * var_a1) >> 7), alpha, Q12_SHIFT));
 }
 
 void func_8005A838(s32 arg0, s32 scale) // 0x8005A838
@@ -1686,8 +1688,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8006B318); // 0x
 
 void func_8006B6E8(s_func_8006CC44* arg0, s_func_8006B1C8* arg1) // 0x8006B6E8
 {
-    // arg1 unused but `func_8006B1C8` passes second arg to this.
-    s32                 index;
+    s32                 idx;
     s32                 temp_s1;
     s32                 temp_s2;
     s32                 temp_s3;
@@ -1705,14 +1706,15 @@ void func_8006B6E8(s_func_8006CC44* arg0, s_func_8006B1C8* arg1) // 0x8006B6E8
         {
             return;
         }
-        index = arg0->field_DB;
+
+        idx = arg0->field_DB;
     }
     else
     {
-        index = arg0->field_DA;
+        idx = arg0->field_DA;
     }
 
-    temp_s0 = &arg0->field_A8[index];
+    temp_s0 = &arg0->field_A8[idx];
     if (!func_8006B7E0(temp_s0, &arg0->field_EC))
     {
         return;

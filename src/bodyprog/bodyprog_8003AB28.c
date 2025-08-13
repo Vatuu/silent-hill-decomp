@@ -1811,9 +1811,9 @@ void func_8003DA9C(s32 arg0, GsCOORDINATE2* coord, s32 arg2, s16 arg3, s32 arg4)
 
         func_80055330(D_800C4168.field_0, D_800C4168.field_20,
                       D_800C4168.field_3,
-                      FP_MULTIPLY(FP_FLOAT_TO(1.0f, Q12_SHIFT) - arg3, (s64)D_800C4168.field_28.r, Q12_SHIFT) << 5,
-                      FP_MULTIPLY(FP_FLOAT_TO(1.0f, Q12_SHIFT) - arg3, (s64)D_800C4168.field_28.g, Q12_SHIFT) << 5,
-                      FP_MULTIPLY(FP_FLOAT_TO(1.0f, Q12_SHIFT) - arg3, (s64)D_800C4168.field_28.b, Q12_SHIFT) << 5,
+                      FP_MULTIPLY_PRECISE(FP_FLOAT_TO(1.0f, Q12_SHIFT) - arg3, D_800C4168.field_28.r, Q12_SHIFT) << 5,
+                      FP_MULTIPLY_PRECISE(FP_FLOAT_TO(1.0f, Q12_SHIFT) - arg3, D_800C4168.field_28.g, Q12_SHIFT) << 5,
+                      FP_MULTIPLY_PRECISE(FP_FLOAT_TO(1.0f, Q12_SHIFT) - arg3, D_800C4168.field_28.b, Q12_SHIFT) << 5,
                       D_800C4168.field_8);
     }
 

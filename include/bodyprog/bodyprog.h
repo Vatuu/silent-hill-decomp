@@ -3231,6 +3231,7 @@ void func_8006AD44(s_func_8006CC44* arg0, s_func_800699E4* arg1);
 
 void func_8006B1C8(s_func_8006CC44* arg0, s_func_800699E4* arg1, s_func_8006B1C8* arg2);
 
+/** `arg1` is unused, but `func_8006B1C8` passes second arg to this. */
 void func_8006B6E8(s_func_8006CC44* arg0, s_func_8006B1C8* arg1);
 
 void func_8006B9C8(s_func_8006CC44* arg0);
