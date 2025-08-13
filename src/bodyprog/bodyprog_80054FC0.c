@@ -535,22 +535,22 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_800574D4); // 0x
 
 void func_8005759C(s_func_8005759C* arg0, s_GteScratchData* scratchData, s32 arg2, s32 arg3) // 0x8005759C
 {
-    s16* field_CPtr;
+    s16* vertexZPtr;
     s16* field_18CPtr;
-    s32* field_8Ptr;
-    s32* field_0Ptr;
+    s32* vertexXyPtr;
+    s32* screenXyPtr;
     u8*  field_2B8Ptr;
     u8*  field_14Ptr;
 
     // Should be loop? Tried but no luck.
-    field_0Ptr   = &scratchData->field_0[arg2];
+    screenXyPtr  = &scratchData->screenXy_0[arg2];
     field_18CPtr = &scratchData->field_18C[arg2];
-    field_8Ptr   = arg0->field_8;
-    field_CPtr   = arg0->field_C;
-    while (field_8Ptr < &arg0->field_8[arg0->field_1])
+    vertexXyPtr  = arg0->vertexXy_8;
+    vertexZPtr   = arg0->vertexZ_C;
+    while (vertexXyPtr < &arg0->vertexXy_8[arg0->vertexCount_1])
     {
-        *field_0Ptr++   = *field_8Ptr++;
-        *field_18CPtr++ = *field_CPtr++;
+        *screenXyPtr++  = *vertexXyPtr++;
+        *field_18CPtr++ = *vertexZPtr++;
     }
 
     field_14Ptr  = arg0->field_14;
@@ -615,8 +615,8 @@ void func_80057658(s_func_8005759C* arg0, s32 offset, s_GteScratchData* scratchD
 
         end = &var_t0[scratchData->field_3A0.count];
 
-        mat->m[2][0] = scratchData->field_0[*var_t0].vx - scratchData->field_3AC.vx;
-        mat->m[2][1] = scratchData->field_0[*var_t0].vy - scratchData->field_3AC.vy;
+        mat->m[2][0] = scratchData->screenXy_0[*var_t0].vx - scratchData->field_3AC.vx;
+        mat->m[2][1] = scratchData->screenXy_0[*var_t0].vy - scratchData->field_3AC.vy;
         mat->m[2][2] = scratchData->field_18C[*var_t0] - scratchData->field_3AC.vz;
         gte_SetRotMatrix_Row2(mat->m);
 
@@ -627,8 +627,8 @@ void func_80057658(s_func_8005759C* arg0, s32 offset, s_GteScratchData* scratchD
 
         while (++var_t0 < end)
         {
-            mat->m[2][0] = scratchData->field_0[*var_t0].vx - scratchData->field_3AC.vx;
-            mat->m[2][1] = scratchData->field_0[*var_t0].vy - scratchData->field_3AC.vy;
+            mat->m[2][0] = scratchData->screenXy_0[*var_t0].vx - scratchData->field_3AC.vx;
+            mat->m[2][1] = scratchData->screenXy_0[*var_t0].vy - scratchData->field_3AC.vy;
             mat->m[2][2] = scratchData->field_18C[*var_t0] - scratchData->field_3AC.vz;
 
             gte_SetRotMatrix_Row2(mat->m);
@@ -955,7 +955,7 @@ void func_8005A478(s_GteScratchData* scratchData, s32 alpha) // 0x8005A478
                  FP_MULTIPLY(D_800C4168.field_26 + ((D_800C4168.field_28.b * var_a1) >> 7), alpha, Q12_SHIFT));
 }
 
-void func_8005A838(s32 arg0, s32 scale) // 0x8005A838
+void func_8005A838(s_GteScratchData* scratchData, s32 scale) // 0x8005A838
 {
     SVECTOR3 vec;
 
@@ -970,7 +970,40 @@ void func_8005A838(s32 arg0, s32 scale) // 0x8005A838
                  FP_MULTIPLY(D_800C4168.field_26, scale, Q12_SHIFT));
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8005A900); // 0x8005A900
+void func_8005A900(s_func_8005759C* arg0, s32 startVertex, s_GteScratchData* scratchData, MATRIX* mat) // 0x8005A900
+{
+    DVECTOR* inXy;  // Model-space XY input
+    u16*     inZ;   // Model-space Z input
+    DVECTOR* outXy; // Projected XY output buffer
+    u16*     outZ;  // Projected Z output buffer
+
+    if (arg0->vertexCount_1 == 0)
+    {
+        return;
+    }
+
+    SetRotMatrix(mat);
+    SetTransMatrix(mat);
+
+    outXy = &scratchData->screenXy_0[startVertex];
+    outZ  = &scratchData->screenZ_168[startVertex];
+
+    inXy = arg0->vertexXy_8;
+    inZ  = arg0->vertexZ_C;
+
+    while (outXy < &scratchData->screenXy_0[arg0->vertexCount_1 + startVertex])
+    {
+        // Nearly same as `gte_RotTransPers3`, processes 3 vertices per iteration.
+        gte_LoadVector0_1_2_XYZ(inXy, inZ);
+        gte_rtpt();
+        gte_FetchScreen0_1_2_XYZ(outXy, outZ);
+
+        outXy += 3;
+        outZ  += 3;
+        inXy  += 3;
+        inZ   += 3;
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8005AA08); // 0x8005AA08
 

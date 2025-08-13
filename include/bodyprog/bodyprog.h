@@ -669,15 +669,16 @@ typedef struct
     u8 count;
 } s_func_8005759C_10;
 
+/** Note: might be same as `ObjHeader`: https://github.com/Sparagas/Silent-Hill/blob/1945970dbd27c081592bf5699d05beddbaa2ff18/010%20Editor%20-%20Binary%20Templates/sh1_models_draft.bt#L96 */
 typedef struct
 {
-    s8   unk_0[1];
-    u8   field_1;
-    u8   field_2;
-    u8   field_3;
-    s8   unk_4[4];
-    s32* field_8;
-    s16* field_C;
+    s8       unk_0[1];
+    u8       vertexCount_1;
+    u8       field_2;
+    u8       field_3;
+    s8       unk_4[4];
+    DVECTOR* vertexXy_8;
+    s16*     vertexZ_C;
 
     s_func_8005759C_10* field_10;
 
@@ -751,7 +752,8 @@ typedef struct
 /** @brief Struct used by many functions involved with GTE. Kept at `PSX_SCRATCH_ADDR` (possibly only temporarily). */
 typedef struct
 {
-    DVECTOR field_0[99];
+    DVECTOR screenXy_0[0x5A];
+    u16     screenZ_168[0x12];
     s16     field_18C[150];
     u8      field_2B8[200]; // Size likely incorrect.
     MATRIX  field_380;
@@ -2885,8 +2887,10 @@ void func_8005A42C(s_GteScratchData* scratchData, s32 arg1);
 
 void func_8005A478(s_GteScratchData* scratchData, s32 alpha);
 
-/** `arg0` is unused? */
-void func_8005A838(s32 arg0, s32 scale);
+/** `scratchData` is unused? */
+void func_8005A838(s_GteScratchData* scratchData, s32 scale);
+
+void func_8005A900(s_func_8005759C* arg0, s32 startVertex, s_GteScratchData* scratchData, MATRIX* mat);
 
 void func_8005B370(s_func_8005B370* arg0);
 

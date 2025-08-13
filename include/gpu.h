@@ -238,4 +238,38 @@ void GsTMDfastTG4LFG(void* op, VERT* vp, VERT* np, PACKET* pk, int n, int shift,
     : "r"(r0)                                       \
     : "$12", "$13")
 
+#define gte_LoadVector0_1_2_XYZ(xy, z) __asm__ volatile( \
+    /* Load vector 0 */ \
+    "lhu   $12, 0(%1);" /* CPU $12 = Z0 (unsigned 16-bit from z[0]) */ \
+    "lwc2  $0, 0(%0);"  /* COP2 VXY0 = X0,Y0 (packed 2x16-bit from xy[0]) */ \
+    "mtc2  $12, $1;"    /* COP2 VZ0  = Z0 (low 16 bits used) */ \
+    /* Load vector 1 */ \
+    "lhu   $12, 2(%1);" /* CPU $12 = Z1 */ \
+    "lwc2  $2, 4(%0);"  /* COP2 VXY1 = X1,Y1 */ \
+    "mtc2  $12, $3;"    /* COP2 VZ1  = Z1 */ \
+    /* Load vector 2 */ \
+    "lhu   $12, 4(%1);" /* CPU $12 = Z2 */ \
+    "lwc2  $4, 8(%0);"  /* COP2 VXY2 = X2,Y2 */ \
+    "mtc2  $12, $5;"    /* COP2 VZ2  = Z2 */ \
+    : \
+    : "r"(xy), "r"(z) \
+    : "$12", "memory")
+
+#define gte_FetchScreen0_1_2_XYZ(xy, z) __asm__ volatile( \
+    /* Vertex 0 */ \
+    "mfc2  $12, $17;"   /* CPU $12 = SZ1 (depth for vertex 0) */ \
+    "swc2  $12, 0(%0);" /* COP2 SXY0 (reg 12) -> xy[0] (packed X0,Y0) */ \
+    "sh    $12, 0(%1);" /* CPU $12 (SZ1) -> z[0] */ \
+    /* Vertex 1 */ \
+    "mfc2  $12, $18;"   /* CPU $12 = SZ2 */ \
+    "swc2  $13, 4(%0);" /* COP2 SXY1 (reg 13) -> xy[1] */ \
+    "sh    $12, 2(%1);" /* CPU $12 (SZ2) -> z[1] */ \
+    /* Vertex 2 */ \
+    "mfc2  $12, $19;"   /* CPU $12 = SZ3 */ \
+    "swc2  $14, 8(%0);" /* COP2 SXY2 (reg 14) -> xy[2] */ \
+    "sh    $12, 4(%1);" /* CPU $12 (SZ3) -> z[2] */ \
+    : \
+    : "r"(xy), "r"(z) \
+    : "$12", "memory")
+
 #endif
