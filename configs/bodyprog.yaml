@@ -95,7 +95,7 @@ segments:
       # - [0x6444, rodata]
       # - [0x64A4, .rodata, bodyprog_80085D78] # Jumptable: `func_8008A2E0`
       # - [0x6504, rodata]
-      - [0x67DC, .rodata, credits]
+      - [0x679C, .rodata, credits]
       - [0x6A6C, rodata]
       - [0x6A74, lib, libcd, iso9660, .rdata]
       - [0x6C64, lib, libcd, c_011, .rdata]

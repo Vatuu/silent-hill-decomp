@@ -5,7 +5,330 @@
 #include "bodyprog/math.h"
 #include "main/fsqueue.h"
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/credits", func_8008F94C); // 0x8008F94C
+void func_8008F94C() // 0x8008F94C
+{
+    s16 temp_s1;
+    s32 var_a0;
+    s32 var_a0_3;
+    s32 var_v1;
+    u16 temp_t1;
+    u16 var_v0_5;
+    u8  temp_a0_2;
+    u8  temp;
+    s8* temp3;
+
+    D_800C48B5 = 0;
+    D_800C48D0 = g_SavegamePtr->gameDifficulty_260;
+    D_800C48A0 = g_SavegamePtr->savegameCount_A6;
+    D_800C48A0 = CLAMP(D_800C48A0, 0, 999);
+    D_800C48D1 = g_SavegamePtr->continueCount_27B;
+    D_800C48A2 = g_SavegamePtr->add290Hours_25C_1 * 24 + FP_FROM(g_SavegamePtr->gameplayTimer_250, Q12_SHIFT) / 3600;
+    D_800C48A4 = FP_FROM(g_SavegamePtr->walkDistance_258, Q12_SHIFT) / 1000;
+    D_800C48A6 = FP_FROM(g_SavegamePtr->walkDistance_258, Q12_SHIFT) - (FP_FROM(g_SavegamePtr->walkDistance_258, Q12_SHIFT) / 1000) * 1000;
+    D_800C48A8 = FP_FROM(g_SavegamePtr->runDistance_254, Q12_SHIFT) / 1000;
+    D_800C48AA = FP_FROM(g_SavegamePtr->runDistance_254, Q12_SHIFT) - (FP_FROM(g_SavegamePtr->runDistance_254, Q12_SHIFT) / 1000) * 1000;
+    D_800C48AC = g_SavegamePtr->pickedUpItemCount_23C;
+    D_800C48AE = (FP_FROM(g_SavegamePtr->gameplayTimer_250, Q12_SHIFT) / 60) % 60;
+    D_800C48AF = FP_FROM(g_SavegamePtr->gameplayTimer_250, Q12_SHIFT) - (FP_FROM(g_SavegamePtr->gameplayTimer_250, Q12_SHIFT) / 60) * 60;
+    D_800C48B0 = g_SavegamePtr->clearGameCount_24A;
+    D_800C48B1 = g_SavegamePtr->clearGameEndings_24B;
+    D_800C48B2 = g_SavegamePtr->field_27A;
+    D_800C48B6 = (g_SavegamePtr->eventFlags_168[1] >> 29) & 1;
+    D_800C48B4 = 0;
+    D_800C48B7 = (g_SavegamePtr->eventFlags_168[5] >> 23) & 1;
+    D_800C48B8 = func_8009146C(1);
+    D_800C48BA = func_8009146C(0);
+
+    temp_t1 = g_SavegamePtr->firedShotCount_264;
+
+    D_800C48BC = temp_t1 != 0;
+
+    if (D_800C48BC != 0)
+    {
+        D_800C48C0 = g_SavegamePtr->closeRangeShotCount_266;
+        D_800C48C4 = g_SavegamePtr->midRangeShotCount_268;
+        D_800C48C8 = g_SavegamePtr->longRangeShotCount_26A;
+        D_800C48C4 = D_800C48C4 + g_SavegamePtr->field_26C;
+        D_800C48C0 = D_800C48C0 * 100 / temp_t1;
+        D_800C48C4 = D_800C48C4 * 100 / temp_t1;
+        D_800C48C8 = D_800C48C8 * 100 / temp_t1;
+        D_800C48CC = ((100 - D_800C48C0) - D_800C48C4) - D_800C48C8;
+
+        D_800AFDF4.field_0[0] = (((D_800C48C0) / 100) % 10) + '0';
+        D_800AFDF4.field_0[2] = (((D_800C48C0) / 10) - (((D_800C48C0) / 100) * 10)) + '0';
+        D_800AFDF4.field_0[3] = ((D_800C48C0) % 10) + '0';
+
+        D_800AFDF4.field_5[0] = (((D_800C48C4) / 100) % 10) + '0';
+        D_800AFDF4.field_5[2] = (((D_800C48C4) / 10) - (((D_800C48C4) / 100) * 10)) + '0';
+        D_800AFDF4.field_5[3] = ((D_800C48C4) % 10) + '0';
+
+        D_800AFDF4.field_A[0] = (((D_800C48C8) / 100) % 10) + '0';
+        D_800AFDF4.field_A[2] = (((D_800C48C8) / 10) - (((D_800C48C8) / 100) * 10)) + '0';
+        D_800AFDF4.field_A[3] = ((D_800C48C8) % 10) + '0';
+
+        D_800AFDF4.field_F[0] = (((D_800C48CC) / 100) % 10) + '0';
+        D_800AFDF4.field_F[2] = (((D_800C48CC) / 10) - (((D_800C48CC) / 100) * 10)) + '0';
+        D_800AFDF4.field_F[3] = ((D_800C48CC) % 10) + '0';
+    }
+
+    temp_s1    = D_800C48AE + (D_800C48A2 * 60);
+    D_800C48B4 = g_SavegamePtr->pickedUpSpecialItemCount_25C_3 & 0xF;
+
+    D_800C48B3 = g_SavegamePtr->locationId_A8;
+    D_800C3E40 = 7;
+    temp_a0_2  = g_GameWork.config_0.optExtraOptionsEnabled_27;
+
+    if ((temp_a0_2 & 3) && (temp_a0_2 & 0xC))
+    {
+        D_800C3E40 = 0xF;
+    }
+
+    if (g_GameWork.config_0.optExtraOptionsEnabled_27 & 1)
+    {
+        D_800C3E40 |= 0x10;
+    }
+
+    if (Inventory_HyperBlasterUnlockTest() == NO_VALUE || (D_800C48B2 & 0x10))
+    {
+        D_800C3E40 |= 0x20;
+    }
+
+    D_800C48E0.field_0 = 7;
+
+    switch (D_800C48B2)
+    {
+        case 3:
+        case 5:
+        case 6:
+        case 7:
+        case 9:
+        case 10:
+        case 11:
+        case 12:
+        case 13:
+        case 14:
+        case 15:
+            break;
+
+        case 1:
+            D_800C48E0.field_0 = 0;
+            D_800C48B5 += 10;
+            break;
+
+        case 2:
+            D_800C48B5 += 5;
+            break;
+
+        case 4:
+            D_800C48B5 += 3;
+            break;
+
+        case 8:
+            D_800C48B5 += 1;
+            break;
+
+        case 16:
+            D_800C48B5 += 0;
+            break;
+    }
+
+    D_800C48E0.field_5 = 7;
+
+    if ((D_800C48AC / 15) < 0 || (D_800C48AC / 15) >= 10)
+    {
+        D_800C48E0.field_5 = 0;
+        D_800C48B5 += 10;
+    }
+    else
+    {
+        D_800C48B5 += D_800C48AC / 15;
+    }
+
+    D_800C48E0.field_2 = 7;
+
+    if (D_800C48A0 < 3)
+    {
+        D_800C48E0.field_2 = 0;
+        D_800C48B5 += 5;
+    }
+    else if (D_800C48A0 < 6)
+    {
+        D_800C48B5 += 4;
+    }
+    else if (D_800C48A0 < 11)
+    {
+        D_800C48B5 += 3;
+    }
+    else if (D_800C48A0 < 21)
+    {
+        D_800C48B5 += 2;
+    }
+    else if (D_800C48A0 < 31)
+    {
+        D_800C48B5 += 1;
+    }
+
+    D_800C48E0.field_3 = 7;
+
+    if (D_800C48D1 < 2)
+    {
+        D_800C48E0.field_3 = 0;
+        D_800C48B5 += 5;
+    }
+    else if (D_800C48D1 < 4)
+    {
+        D_800C48B5 += 4;
+    }
+    else if (D_800C48D1 < 6)
+    {
+        D_800C48B5 += 3;
+    }
+    else if (D_800C48D1 < 8)
+    {
+        D_800C48B5 += 2;
+    }
+    else if (D_800C48D1 < 10)
+    {
+        D_800C48B5 += 1;
+    }
+
+    D_800C48E0.field_4 = 7;
+
+    if (temp_s1 < 90)
+    {
+        D_800C48E0.field_4 = 0;
+        D_800C48B5 += 10;
+    }
+    else if (temp_s1 < 180)
+    {
+        D_800C48B5 += 5;
+    }
+    else if (temp_s1 < 240)
+    {
+        D_800C48B5 += 3;
+    }
+    else if (temp_s1 < 360)
+    {
+        D_800C48B5 += 2;
+    }
+    else if (temp_s1 < 720)
+    {
+        D_800C48B5 += 1;
+    }
+
+    D_800C48E0.field_1 = 7;
+
+    temp = D_800C48B0;
+
+    if (temp >= 5)
+    {
+        D_800C48E0.field_1 = 0;
+        D_800C48B5 += 10;
+    }
+    else
+    {
+        D_800C48B5 += temp * 2;
+    }
+
+    D_800C48E0.field_6 = 7;
+    temp               = D_800C48B4;
+
+    if (temp >= 5)
+    {
+        D_800C48E0.field_6 = 0;
+        D_800C48B5 += 10;
+    }
+    else
+    {
+        D_800C48B5 += temp * 2;
+    }
+
+    D_800C48E0.field_8 = 7;
+
+    if (D_800C48BC != 0)
+    {
+        var_a0 = ((D_800C48C0 + D_800C48C4 * 2) + (D_800C48C8 * 3)) - (D_800C48CC * 4);
+        var_a0 = var_a0 / 10;
+
+        if (var_a0 < 0)
+        {
+            var_a0 = 0;
+        }
+        else if (var_a0 > 10)
+        {
+            var_a0 = 10;
+        }
+
+        D_800C48B5 += var_a0;
+
+        if (var_a0 == 10)
+        {
+            D_800C48E0.field_8 = 0;
+        }
+    }
+    else
+    {
+        D_800C48E0.field_8 = 0;
+        D_800C48B5 += 10;
+    }
+
+    D_800C48E0.field_7 = 7;
+    var_a0_3           = g_SavegamePtr->field_278;
+    var_a0_3           = var_a0_3 - 15;
+    var_a0_3           = var_a0_3 - (D_800C48B0 * 5);
+
+    if (var_a0_3 < 0)
+    {
+        var_a0_3 = 0;
+    }
+
+    var_a0_3 += 5;
+
+    var_v0_5 = D_800C48BC ? D_800C48B8 : 100;
+
+    var_v1   = var_v0_5 / var_a0_3;
+    var_a0_3 = D_800C48BA / var_a0_3;
+
+    if (var_a0_3 < var_v1)
+    {
+        var_v1 /= 2;
+    }
+    else
+    {
+        var_a0_3 /= 2;
+    }
+
+    var_v1 = var_v1 + var_a0_3;
+
+    if (var_v1 >= 31)
+    {
+        var_v1 = 30;
+    }
+    else if (var_v1 < 0)
+    {
+        var_v1 = 0;
+    }
+
+    temp3 = &D_800C48B5;
+    D_800C48B5 += var_v1;
+
+    if (temp3 == NULL)
+    {
+        D_800C48B5 += 0;
+    }
+
+    if (var_v1 == 30)
+    {
+        D_800C48E0.field_7 = 0;
+    }
+
+    if (D_800C48D0 == -1)
+    {
+        D_800C48B5 += -5;
+    }
+
+    D_800C48B5 = CLAMP(D_800C48B5, 0, 100);
+}
 
 void func_800904F4() // 0x800904F4
 {
@@ -290,25 +613,25 @@ void Results_DisplayInfo(u32* arg0) // 0x80090664
             Gfx_StringDraw(D_8002B4C0[30], 0x20);
             Gfx_StringSetPosition(0x106, 0xC4);
             Gfx_StringSetColor(D_800C48E0.field_8);
-            Gfx_StringDraw(&D_800AFDF4, 5);
+            Gfx_StringDraw(&D_800AFDF4.field_0, 5);
             Gfx_StringSetColor(ColorId_White);
             Gfx_StringSetPosition(0x48, 0xD9);
             Gfx_StringDraw(D_8002B4C0[31], 0x20);
             Gfx_StringSetPosition(0x106, 0xD9);
             Gfx_StringSetColor(D_800C48E0.field_8);
-            Gfx_StringDraw(&D_800AFDF4 + 5, 5);
+            Gfx_StringDraw(&D_800AFDF4.field_5, 5);
             Gfx_StringSetColor(ColorId_White);
             Gfx_StringSetPosition(0x48, 0xEE);
             Gfx_StringDraw(D_8002B4C0[32], 0x20);
             Gfx_StringSetPosition(0x106, 0xEE);
             Gfx_StringSetColor(D_800C48E0.field_8);
-            Gfx_StringDraw(&D_800AFDF4 + 0xA, 5);
+            Gfx_StringDraw(&D_800AFDF4.field_A, 5);
             Gfx_StringSetColor(ColorId_White);
             Gfx_StringSetPosition(0x48, 0x103);
             Gfx_StringDraw(D_8002B4C0[33], 0x20);
             Gfx_StringSetPosition(0x106, 0x103);
             Gfx_StringSetColor(D_800C48E0.field_8);
-            Gfx_StringDraw(&D_800AFDF4 + 0xF, 5);
+            Gfx_StringDraw(&D_800AFDF4.field_F, 5);
         }
 
         Gfx_StringSetColor(ColorId_White);

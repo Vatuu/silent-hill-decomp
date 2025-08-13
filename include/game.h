@@ -683,7 +683,7 @@ typedef struct _Savegame
     u32             flags_AC;                 /** Flashlight state? On: 3, Off: 1*/
     s32             field_B0[45];
     s32             hasMapsFlags_164;         // See Sparagas' `HasMapsFlags` struct for details of every bit.
-    s32             eventFlags_168[6];        //----------------------------------------
+    u32             eventFlags_168[6];        //----------------------------------------
     s32             eventFlags_180[2];        //
     s32             eventFlags_188;           //
     s32             eventFlags_18C;           // Only tested a few, but it seems all are related to events and pick-up flags, grouped by location and not item types.
