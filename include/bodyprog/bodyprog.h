@@ -555,6 +555,27 @@ typedef struct
 
 typedef struct
 {
+    s8       unk_0[8];
+    s32      field_8;
+    SVECTOR3 field_C;
+    s8       unk_12[2];
+    s16      field_14;
+    s16      field_16;
+    s32      field_18;
+    s32      field_1C;
+    s32      field_20;
+    s32      field_24;
+} s_func_8006D7EC_0;
+
+// Maybe `SVECTOR`.
+typedef struct
+{
+    s16 field_0;
+    s16 field_2;
+} s_func_8006D7EC_1;
+
+typedef struct
+{
     s32      field_0;
     s16      field_4;
     s16      field_6;
@@ -3259,6 +3280,8 @@ void func_8006CA18(s_func_8006CC44* arg0, s_func_800699E4* arg1, s_func_8006CA18
 s16 func_8006CB90(s_func_8006CC44* arg0);
 
 s32 func_8006CC44(s32 arg0, s32 arg1, s_func_8006CC44* arg2);
+
+void func_8006D7EC(s_func_8006D7EC_0* arg0, s_func_8006D7EC_1* arg1, s_func_8006D7EC_1* arg2);
 
 bool func_8006D90C(s_func_800700F8_2* arg0, VECTOR3* vec1, VECTOR3* vec2);
 

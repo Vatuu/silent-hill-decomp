@@ -2054,7 +2054,40 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8006D600); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8006D774); // 0x8006D774
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8006D7EC); // 0x8006D7EC
+void func_8006D7EC(s_func_8006D7EC_0* arg0, s_func_8006D7EC_1* arg1, s_func_8006D7EC_1* arg2) // 0x8006D7EC
+{
+    s16 angle;
+    s32 dist;
+    s16 z;
+
+    arg0->field_C.vx = arg2->field_0;
+
+    z                = arg2->field_2;
+    arg0->field_C.vz = arg2->field_2;
+    dist             = SquareRoot0(SQUARE(arg0->field_C.vx) + SQUARE(z));
+
+    arg0->field_8 = dist;
+
+    if (dist != 0)
+    {
+        arg0->field_14 = FP_TO(arg0->field_C.vx, Q12_SHIFT) / dist;
+        arg0->field_16 = FP_TO(arg0->field_C.vz, Q12_SHIFT) / arg0->field_8;
+        
+        angle          = ratan2(arg0->field_C.vz, arg0->field_C.vx);
+        arg0->field_14 = shRcos(angle);
+        arg0->field_16 = shRsin(angle);
+    }
+    else
+    {
+        arg0->field_14 = 0x1000;
+        arg0->field_16 = 0;
+    }
+
+    arg0->field_18 = arg0->field_18 + arg1->field_0;
+    arg0->field_1C = arg0->field_1C + arg1->field_2;
+    arg0->field_20 = arg0->field_18 + arg0->field_C.vx;
+    arg0->field_24 = arg0->field_1C + arg0->field_C.vz;
+}
 
 bool func_8006D90C(s_func_800700F8_2* arg0, VECTOR3* vec1, VECTOR3* vec2) // 0x8006D90C
 {
