@@ -1112,10 +1112,19 @@ typedef struct
     s_800C1450_0_4* entries_4[10];
 } s_800C1450_0;
 
-// Maybe `VECTOR3` array? This seems to hold texture names.
 typedef struct
 {
-    s8 unk0[24];
+    s8  field_0;
+    s8  field_1;
+    s8  field_2;
+    s8  field_3;
+    s16 field_4;
+    s16 field_6;
+    s8  field_8;
+    s8  unk_9[4];
+    s32 field_10;
+    s8  field_14;
+    s8  unk_15[3];
 } s_800C1450_58;
 
 // Related to textures.
@@ -2867,7 +2876,7 @@ u8 func_80055F08(SVECTOR3* arg0, SVECTOR3* arg1, void* arg2);
 
 void func_800560FC(s_800BE9FC* arg0);
 
-void func_8005B1A0(s_800C1450_58*, s32, s32, u8, s32, s32, s16, s16);
+void func_8005B1A0(s_800C1450_58* arg0, s32 arg1, s32 arg2, u8 arg3, s32 arg4, s32 arg5, s16 arg6, s16 arg7);
 
 /** @brief Computes a fog-shaded version of `D_800C4190` color using `arg1` as the distance factor?
  *  Stores the result at 0x3D8 into `arg0`.
