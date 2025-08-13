@@ -977,7 +977,18 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8005AA08); // 0x
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8005AC50); // 0x8005AC50
 
 // Related to enviroment textures.
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8005B1A0); // 0x8005B1A0
+void func_8005B1A0(s_800C1450_58* arg0, s32 arg1, s32 arg2, u8 arg3, s32 arg4, s32 arg5, s16 arg6, s16 arg7) // 0x8005B1A0
+{
+    arg0->field_0 = arg2;
+    arg0->field_1 = arg3;
+    arg0->field_2 = arg4;
+    arg0->field_3 = arg5;
+    arg0->field_4 = arg6;
+    arg0->field_6 = arg7;
+    func_80056D64(&arg0->field_8, arg1);
+    arg0->field_14 = 0;
+    arg0->field_10 = -1;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8005B1FC); // 0x8005B1FC
 
