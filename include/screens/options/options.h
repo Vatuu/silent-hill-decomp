@@ -182,19 +182,16 @@ extern char* g_ControllerSubmenu_OptionStrings[];
 
 extern char* g_ControllerSubmenu_ActionStrings[];
 
-// TODO: `s_Line2d` doesn't match for these.
+extern DVECTOR g_Options_Extra_SelectionHighlightFrom_Unused;
+extern DVECTOR g_Options_Extra_SelectionHighlightTo_Unused;
+extern DVECTOR g_Options_Main_SelectionHighlightFrom_Unused;
+extern DVECTOR g_Options_Main_SelectionHighlightTo_Unused;
 
-extern DVECTOR D_801E73B4;
-extern DVECTOR D_801E73B8;
+extern DVECTOR g_Options_Extra_SelectionHighlightFrom;
+extern DVECTOR g_Options_Extra_SelectionHighlightTo;
 
-extern DVECTOR D_801E73BC;
-extern DVECTOR D_801E73C0;
-
-extern DVECTOR D_801E73C4;
-extern DVECTOR D_801E73C8;
-
-extern DVECTOR D_801E73CC;
-extern DVECTOR D_801E73D0;
+extern DVECTOR g_Options_Main_SelectionHighlightFrom;
+extern DVECTOR g_Options_Main_SelectionHighlightTo;
 
 extern s32 g_Gfx_ScreenPos_InvertColorBg_TransitionCounter;
 
@@ -247,7 +244,7 @@ void Gfx_SfxBarDraw();
 
 /** @brief Draws the bars used for SFX and BGM audio options. */
 // `Options_VolumeBarDraw`
-void Gfx_BarDraw(s32 arg0, u8 arg1);
+void Gfx_BarDraw(bool isSfx, u8 vol);
 
 /** @brief Draws the option strings in the extra options screen. */
 // `Options_ExtraSelectionStringsDraw`
@@ -291,7 +288,7 @@ void Settings_PositionScreen();
 void Gfx_PositionArrowsDraw();
 
 /** @brief Draws the box that indicates the screen position in the position screen configuration. */
-// `Options_ScreenPoisition_IndicatorDraw`
+// `Options_ScreenPosition_IndicatorDraw`
 void Gfx_PositionIndicatorDraw();
 
 // ===============
@@ -313,15 +310,15 @@ void Gfx_BrightnessLevelArrowsDraw();
 
 /** @brief Draws the line and shadow on the selected option in options screens. */
 // `Options_Selection_HighlightDraw`
-void Gfx_LineDraw(s_Line2d* line, bool hasShadow, bool isRegular);
+void Gfx_LineDraw(s_Line2d* line, bool hasShadow, bool invertGradient);
 
 /** @brief Draws the arrows used in options screens. */
 // `Options_Selection_ArrowDraw`
-void Gfx_Options_BlueArrowDraw(s_Triangle2d* arrow, s32 isFlashing, s32 isColorReset);
+void Gfx_Options_BlueArrowDraw(s_Triangle2d* arrow, bool isFlashing, bool resetColor);
 
 /** @brief Draws the button next to options in the main and extra option screens. */
 // `Options_Selection_BulletPointDraw`
-void Gfx_ButtonDraw(s_Quad2d* quad, bool isCenter, bool isRegular);
+void Gfx_ButtonDraw(s_Quad2d* quad, bool isCenter, bool invertGradient);
 
 // ===============
 // `controller.c'
@@ -334,7 +331,7 @@ void Settings_ControllerScreen();
 // `Options_Controller_BindingSet`
 s32 Settings_ButtonChange(s32 actionIdx);
 
-// `Options_Controller_SelectionTextDraw`
+// `Options_Controller_SelectionStringDraw`
 void Gfx_ControllerScreenDraw(bool isOnActionColumn, s32 optionIdx, s32 actionIdx, s32 boundActionIdx);
 
 // `Options_Controller_ButtonIconsDraw`

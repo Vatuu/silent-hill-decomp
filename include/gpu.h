@@ -11,7 +11,7 @@
 #define RECT_VERT_COUNT 4
 #define BOX_VERT_COUNT  8
 
-/** Primitive types. */
+/** @brief Primitive types. */
 enum PrimType
 {
     PRIM_POLY = 0x20, /** Polygon (`POLY`). */
@@ -19,13 +19,13 @@ enum PrimType
     PRIM_RECT = 0x60  /** Rectangle (`TILE` or `SPRT`). */
 };
 
-/** Primitive rectangle flags. */
+/** @brief Primitive rectangle flags. */
 enum PrimRectFlags
 {
     RECT_SIZE_16  = (1 << 3) | (1 << 4), /** Rectangle is 16x16 (`TILE_16` or `SPRT_16`). */
     RECT_SIZE_8   = 1 << 4,              /** Rectangle is 8x8 (`TILE_8` or `SPRT_8`). */
     RECT_SIZE_1   = 1 << 3,              /** Rectangle is 1x1 (`TILE_1`). */
-    RECT_TEXTURE  = 1 << 2,              /** Rectangle is textured (is a `SPRT`). */
+    RECT_TEXTURE  = 1 << 2,              /** Rectangle is textured (`SPRT`). */
     RECT_BLEND    = 1 << 1,              /** Semi-transparency flag. */
     RECT_MODULATE = 1 << 0               /** Use primitive color to modulate texture. */
 };

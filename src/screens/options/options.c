@@ -501,7 +501,7 @@ void Settings_MainScreen() // 0x801E3770
         Sd_PlaySfx(Sfx_Back, 0, 64);
 
         g_Options_SelectionCursorTimer = 0;
-        g_MainMenu_SelectedIdx        = (g_MainMenu_SelectedIdx + 1) % OptMain_Count;
+        g_MainMenu_SelectedIdx         = (g_MainMenu_SelectedIdx + 1) % OptMain_Count;
     }
 
     // Handle config change.
@@ -698,21 +698,25 @@ void Settings_MainScreen() // 0x801E3770
 
 void Gfx_BgmBarDraw() // 0x801E3F68
 {
-    Gfx_BarDraw(0, g_GameWork.config_0.optVolumeBgm_1F);
+    Gfx_BarDraw(false, g_GameWork.config_0.optVolumeBgm_1F);
 }
 
 void Gfx_SfxBarDraw() // 0x801E3F90
 {
-    Gfx_BarDraw(1, g_GameWork.config_0.optVolumeSe_20);
+    Gfx_BarDraw(true, g_GameWork.config_0.optVolumeSe_20);
 }
 
-void Gfx_BarDraw(s32 arg0, u8 arg1) // 0x801E3FB8
+void Gfx_BarDraw(bool isSfx, u8 vol) // 0x801E3FB8
 {
+    #define STR_OFFSET_Y 16
+    #define NOTCH_SIZE_X 5
+    #define NOTCH_COUNT  16
+
     s32      x0Offset;
     s32      x0;
     s32      offset;
     s32      yOffset;
-    s32      value;
+    s32      localVol;
     s32      i;
     s32      j;
     u32      colorComp;
@@ -723,12 +727,13 @@ void Gfx_BarDraw(s32 arg0, u8 arg1) // 0x801E3FB8
     GsOT*    ot;
     POLY_F4* poly;
 
-    ot    = &g_ObjectTable1[g_ObjectTableIdx];
-    value = arg1;
+    ot       = &g_ObjectTable1[g_ObjectTableIdx];
+    localVol = vol;
 
-    for (i = 0; i < 16; i++)
+    // Draw bar notches.
+    for (i = 0; i < NOTCH_COUNT; i++)
     {
-        colorComp = value & 7;
+        colorComp = localVol & 0x7;
         colorComp = (colorComp * 12) + 64;
 
         for (j = 1; j >= 0; j--)
@@ -736,12 +741,12 @@ void Gfx_BarDraw(s32 arg0, u8 arg1) // 0x801E3FB8
             poly = (POLY_F4*)GsOUT_PACKET_P;
             setPolyF4(poly);
 
-            if (i < (arg1 / 8))
+            if (i < (vol / 8))
             {
                 color0 = 0xA0 + (0x40 * j);
                 setRGBC0(poly, color0, color0, color0, 0x28);
             }
-            else if (i > (arg1 / 8))
+            else if (i > (vol / 8))
             {
                 color1 = 0x40 + (0x40 * j);
                 setRGBC0(poly, color1, color1, color1, 0x28);
@@ -752,20 +757,18 @@ void Gfx_BarDraw(s32 arg0, u8 arg1) // 0x801E3FB8
                 setRGBC0(poly, color2, color2, color2, 0x28);
             }
 
-            xOffset = 24 + i * 6;
+            xOffset = 24 + (i * 6);
             offset  = -69;
 
-            x0Offset = (j + 24);
+            x0Offset = j + 24;
             x0       = (x0Offset + (i * 6)) & 0xFFFF;
-            yOffset  = (j + 56);
+            yOffset  = j + 56;
 
-            setXY0Fast(poly, x0, (arg0 * 16) + yOffset);
-            setXY1Fast(poly, x0, (arg0 * 16) - (j + offset));
-            setXY2Fast(poly, (xOffset - j) + 5, (arg0 * 16) + yOffset);
-            setXY3Fast(poly, (xOffset - j) + 5, (arg0 * 16) - (j + offset));
-
-            addPrim((u8*)ot->org + 0x18, poly);
-
+            setXY0Fast(poly, x0,                           (isSfx * STR_OFFSET_Y) + yOffset);
+            setXY1Fast(poly, x0,                           (isSfx * STR_OFFSET_Y) - (j + offset));
+            setXY2Fast(poly, (xOffset - j) + NOTCH_SIZE_X, (isSfx * STR_OFFSET_Y) + yOffset);
+            setXY3Fast(poly, (xOffset - j) + NOTCH_SIZE_X, (isSfx * STR_OFFSET_Y) - (j + offset));
+            addPrim((u8*)ot->org + 24, poly);
             GsOUT_PACKET_P = (u8*)poly + sizeof(POLY_F4);
         }
     }
@@ -799,22 +802,23 @@ void Gfx_OptionsStringsExtraDraw() // 0x801E416C
         "Bullet_Adjust"
     };
 
-    // Reset line highlight dimensions.
+    // @unused: Likely older implementation for active highlight selection position reference setup found in `Options_ExtraGraphicsDraw`.
     if (g_Options_SelectionCursorTimer == 0)
     {
-        D_801E73B4.vx = LINE_BASE_X - LINE_OFFSET_X;
-        D_801E73B8.vx = LINE_BASE_X;
-        D_801E73B4.vy = ((u16)g_MainMenu_PrevSelectedIdx * LINE_OFFSET_Y) + LINE_BASE_Y;
-        D_801E73B8.vy = ((u16)g_MainMenu_SelectedIdx     * LINE_OFFSET_Y) + LINE_BASE_Y;
+        g_Options_Extra_SelectionHighlightFrom_Unused.vx = LINE_BASE_X - LINE_OFFSET_X;
+        g_Options_Extra_SelectionHighlightTo_Unused.vx   = LINE_BASE_X;
+        g_Options_Extra_SelectionHighlightFrom_Unused.vy = ((u16)g_MainMenu_PrevSelectedIdx * LINE_OFFSET_Y) + LINE_BASE_Y;
+        g_Options_Extra_SelectionHighlightTo_Unused.vy   = ((u16)g_MainMenu_SelectedIdx     * LINE_OFFSET_Y) + LINE_BASE_Y;
     }
-
     shRsin(g_Options_SelectionCursorTimer << 7);
 
+    // Draw heading string.
     Gfx_StringSetColor(ColorId_White);
     Gfx_StringSetPosition(strPos.vx, strPos.vy);
     func_8004A8C0(8);
     Gfx_StringDraw(EXTRA_OPTION_str, 99);
 
+    // Draw selection strings.
     for (i = 0; i < g_OptExtra_ShowSettingsCount; i++)
     {
         Gfx_StringSetPosition(LINE_BASE_X, LINE_BASE_Y + (i * LINE_OFFSET_Y));
@@ -848,16 +852,17 @@ void Gfx_OptionsStringsMainDraw() // 0x801E42EC
         "SE_Volume"
     };
 
+    // @unused: Likely older implementation for active highlight selection position reference setup found in `Options_MainGraphicsDraw`.
     if (g_Options_SelectionCursorTimer == 0)
     {
-        D_801E73BC.vx = LINE_BASE_X - LINE_OFFSET_X;
-        D_801E73C0.vx = LINE_BASE_X;
-        D_801E73BC.vy = ((u16)g_MainMenu_PrevSelectedIdx * LINE_OFFSET_Y) + LINE_BASE_Y;
-        D_801E73C0.vy = ((u16)g_MainMenu_SelectedIdx     * LINE_OFFSET_Y) + LINE_BASE_Y;
+        g_Options_Main_SelectionHighlightFrom_Unused.vx = LINE_BASE_X - LINE_OFFSET_X;
+        g_Options_Main_SelectionHighlightTo_Unused.vx   = LINE_BASE_X;
+        g_Options_Main_SelectionHighlightFrom_Unused.vy = ((u16)g_MainMenu_PrevSelectedIdx * LINE_OFFSET_Y) + LINE_BASE_Y;
+        g_Options_Main_SelectionHighlightTo_Unused.vy   = ((u16)g_MainMenu_SelectedIdx     * LINE_OFFSET_Y) + LINE_BASE_Y;
     }
+    shRsin(g_Options_SelectionCursorTimer << 7);
 
     // Draw heading string.
-    shRsin(g_Options_SelectionCursorTimer << 7);
     Gfx_StringSetColor(ColorId_White);
     Gfx_StringSetPosition(strPos.vx, strPos.vy);
     func_8004A8C0(8);
@@ -876,24 +881,27 @@ void Gfx_OptionsStringsMainDraw() // 0x801E42EC
 
 void Gfx_SelectedOptionExtra() // 0x801E4450
 {
-    #define LINE_BASE_X   64
-    #define LINE_BASE_Y   56
-    #define LINE_OFFSET_X 16
-    #define LINE_OFFSET_Y 16
+    #define LINE_BASE_X        64
+    #define LINE_BASE_Y        56
+    #define LINE_OFFSET_X      16
+    #define LINE_OFFSET_Y      16
+    #define HIGHLIGHT_OFFSET_X -121
+    #define HIGHLIGHT_OFFSET_Y 50
 
-    DVECTOR* vecPtrOut;
-    s16      sin;
-    s32      j;
     s32      i;
-    s_Line2d line;
+    s32      j;
+    s16      interpAlpha;
+    s_Line2d highlightLine;
     s_Quad2d bulletQuads[2];
+    DVECTOR* quadVerts;
 
-    u8 D_801E2830[] = // 0x801E2830
+    u8 selectionHighlightWidths[] = // 0x801E2830
     {
         157, 126, 135, 135, 157, 130, 112, 134
     };
 
-    DVECTOR D_801E2838[] = // 0x801E2838
+    // 12x12 quad.
+    DVECTOR bulletQuadVertsFront[] = // 0x801E2838
     {
         { -120, -47 },
         { -120, -35 },
@@ -901,7 +909,8 @@ void Gfx_SelectedOptionExtra() // 0x801E4450
         { -108, -35 }
     };
 
-    DVECTOR D_801E2848[] = // 0x801E2848
+    // 14x14 quad.
+    DVECTOR bulletQuadVertsBack[] = // 0x801E2848
     {
         { -121, -48 },
         { -121, -34 },
@@ -909,40 +918,48 @@ void Gfx_SelectedOptionExtra() // 0x801E4450
         { -107, -34 }
     };
 
+    // Set active selection highlight position references.
     if (g_Options_SelectionCursorTimer == 0)
     {
-        D_801E73C4.vx = D_801E2830[g_ExtraMenu_PrevSelectedIdx]            + 0xFF87;
-        D_801E73C4.vy = ((u16)g_ExtraMenu_PrevSelectedIdx * LINE_OFFSET_Y) - 50;
-        D_801E73C8.vx = D_801E2830[g_ExtraMenu_SelectedIdx]                + 0xFF87;
-        D_801E73C8.vy = ((u16)g_ExtraMenu_SelectedIdx * LINE_OFFSET_Y)     - 50;
+        g_Options_Extra_SelectionHighlightFrom.vx = selectionHighlightWidths[g_ExtraMenu_PrevSelectedIdx] + (65536 + HIGHLIGHT_OFFSET_X); // TODO
+        g_Options_Extra_SelectionHighlightFrom.vy = ((u16)g_ExtraMenu_PrevSelectedIdx * LINE_OFFSET_Y)    - HIGHLIGHT_OFFSET_Y;
+        g_Options_Extra_SelectionHighlightTo.vx   = selectionHighlightWidths[g_ExtraMenu_SelectedIdx]     + (65536 + HIGHLIGHT_OFFSET_X); // TODO
+        g_Options_Extra_SelectionHighlightTo.vy   = ((u16)g_ExtraMenu_SelectedIdx * LINE_OFFSET_Y)        - HIGHLIGHT_OFFSET_Y;
     }
 
-    // Draw highlighted selection line and gradient.
-    sin               = shRsin(g_Options_SelectionCursorTimer << 7);
-    line.vertex0_0.vx = -121;
-    line.vertex1_4.vx = D_801E73C4.vx + FP_MULTIPLY(D_801E73C8.vx - D_801E73C4.vx, sin, Q12_SHIFT);
-    line.vertex1_4.vy = D_801E73C4.vy + FP_MULTIPLY(D_801E73C8.vy - D_801E73C4.vy, sin, Q12_SHIFT) + LINE_OFFSET_Y;
-    line.vertex0_0.vy = line.vertex1_4.vy;
-    Gfx_LineDraw(&line, true, false);
+    // Compute sine-based interpolation alpha.
+    interpAlpha = shRsin(g_Options_SelectionCursorTimer << 7);
+
+    // Draw active selection highlight.
+    highlightLine.vertex0_0.vx = HIGHLIGHT_OFFSET_X;
+    highlightLine.vertex1_4.vx = g_Options_Extra_SelectionHighlightFrom.vx +
+                                 FP_MULTIPLY(g_Options_Extra_SelectionHighlightTo.vx - g_Options_Extra_SelectionHighlightFrom.vx, interpAlpha, Q12_SHIFT);
+    highlightLine.vertex1_4.vy = g_Options_Extra_SelectionHighlightFrom.vy +
+                                 FP_MULTIPLY(g_Options_Extra_SelectionHighlightTo.vy - g_Options_Extra_SelectionHighlightFrom.vy, interpAlpha, Q12_SHIFT) +
+                                 LINE_OFFSET_Y;
+    highlightLine.vertex0_0.vy = highlightLine.vertex1_4.vy;
+    Gfx_LineDraw(&highlightLine, true, false);
 
     // Draw selection bullet points.
     for (i = 0; i < g_OptExtra_ShowSettingsCount; i++)
     {
-        vecPtrOut = (DVECTOR*)&bulletQuads;
-
-        for (j = 0; j < 4; j++)
+        // Set bullet quads.
+        quadVerts = (DVECTOR*)&bulletQuads;
+        for (j = 0; j < RECT_VERT_COUNT; j++)
         {
-            vecPtrOut[j].vx     = D_801E2838[j].vx;
-            vecPtrOut[j].vy     = D_801E2838[j].vy + (i * LINE_OFFSET_Y);
-            vecPtrOut[j + 4].vx = D_801E2848[j].vx;
-            vecPtrOut[j + 4].vy = D_801E2848[j].vy + (i * LINE_OFFSET_Y);
+            quadVerts[j].vx                   = bulletQuadVertsFront[j].vx;
+            quadVerts[j].vy                   = bulletQuadVertsFront[j].vy + (i * LINE_OFFSET_Y);
+            quadVerts[j + sizeof(DVECTOR)].vx = bulletQuadVertsBack[j].vx;
+            quadVerts[j + sizeof(DVECTOR)].vy = bulletQuadVertsBack[j].vy + (i * LINE_OFFSET_Y);
         }
 
+        // Active selection bullet point.
         if (i == g_ExtraMenu_SelectedIdx)
         {
             Gfx_ButtonDraw(&bulletQuads[0], false, false);
             Gfx_ButtonDraw(&bulletQuads[1], true,  false);
         }
+        // Inactive selection bullet point.
         else
         {
             Gfx_ButtonDraw(&bulletQuads[0], false, true);
@@ -953,21 +970,24 @@ void Gfx_SelectedOptionExtra() // 0x801E4450
 
 void Gfx_SelectedOptionMain() // 0x801E472C
 {
-    #define LINE_OFFSET_Y 16
+    #define LINE_OFFSET_Y      16
+    #define HIGHLIGHT_OFFSET_X -121
+    #define HIGHLIGHT_OFFSET_Y 58
 
-    DVECTOR* quadVerts;
-    s16      sin;
-    s32      j;
     s32      i;
-    s_Line2d line;
+    s32      j;
+    s16      interpAlpha;
+    s_Line2d highlightLine;
     s_Quad2d bulletQuads[2];
+    DVECTOR* quadVerts;
 
-    u8 D_801E2858[] =
+    u8 selectionHighlightWidths[] = // 0x801E2858
     {
         59, 169, 174, 156, 104, 112, 75, 129, 112
     };
 
-    DVECTOR D_801E2864[] =
+    // 12x12 quad.
+    DVECTOR bulletQuadVertsFront[] = // 0x801E2864
     {
         { -120, -55 },
         { -120, -43 },
@@ -975,7 +995,8 @@ void Gfx_SelectedOptionMain() // 0x801E472C
         { -108, -43 }
     };
 
-    DVECTOR D_801E2874[] =
+    // 14x14 quad.
+    DVECTOR bulletQuadVertsBack[] = // 801E2874
     {
         { -121, -56 },
         { -121, -42 },
@@ -983,42 +1004,48 @@ void Gfx_SelectedOptionMain() // 0x801E472C
         { -107, -42 }
     };
 
+    // Set active selection highlight position references.
     if (g_Options_SelectionCursorTimer == 0)
     {
-        D_801E73CC.vx = D_801E2858[g_MainMenu_PrevSelectedIdx]            + 0xFF87; // TODO: -108
-        D_801E73CC.vy = ((u16)g_MainMenu_PrevSelectedIdx * LINE_OFFSET_Y) - 58;
-        D_801E73D0.vx = D_801E2858[g_MainMenu_SelectedIdx]                + 0xFF87; // TODO: -108
-        D_801E73D0.vy = ((u16)g_MainMenu_SelectedIdx * LINE_OFFSET_Y)     - 58;
+        g_Options_Main_SelectionHighlightFrom.vx = selectionHighlightWidths[g_MainMenu_PrevSelectedIdx] + (65536 + HIGHLIGHT_OFFSET_X); // TODO
+        g_Options_Main_SelectionHighlightFrom.vy = ((u16)g_MainMenu_PrevSelectedIdx * LINE_OFFSET_Y)    - HIGHLIGHT_OFFSET_Y;
+        g_Options_Main_SelectionHighlightTo.vx   = selectionHighlightWidths[g_MainMenu_SelectedIdx]     + (65536 + HIGHLIGHT_OFFSET_X); // TODO
+        g_Options_Main_SelectionHighlightTo.vy   = ((u16)g_MainMenu_SelectedIdx * LINE_OFFSET_Y)        - HIGHLIGHT_OFFSET_Y;
     }
 
-    // Draw highlighted selection line and gradient.
-    sin               = shRsin(g_Options_SelectionCursorTimer << 7);
-    line.vertex0_0.vx = -121;
-    line.vertex1_4.vx = D_801E73CC.vx + FP_FROM((D_801E73D0.vx - D_801E73CC.vx) * sin, Q12_SHIFT);
-    line.vertex1_4.vy = D_801E73CC.vy + FP_FROM((D_801E73D0.vy - D_801E73CC.vy) * sin, Q12_SHIFT) + LINE_OFFSET_Y;
-    line.vertex0_0.vy = line.vertex1_4.vy;
-    Gfx_LineDraw(&line, true, false);
+    // Compute sine-based interpolation alpha.
+    interpAlpha = shRsin(g_Options_SelectionCursorTimer << 7);
+
+    // Draw active selection highlight.
+    highlightLine.vertex0_0.vx = HIGHLIGHT_OFFSET_X;
+    highlightLine.vertex1_4.vx = g_Options_Main_SelectionHighlightFrom.vx +
+                                 FP_FROM((g_Options_Main_SelectionHighlightTo.vx - g_Options_Main_SelectionHighlightFrom.vx) * interpAlpha, Q12_SHIFT);
+    highlightLine.vertex1_4.vy = g_Options_Main_SelectionHighlightFrom.vy +
+                                 FP_FROM((g_Options_Main_SelectionHighlightTo.vy - g_Options_Main_SelectionHighlightFrom.vy) * interpAlpha, Q12_SHIFT) +
+                                 LINE_OFFSET_Y;
+    highlightLine.vertex0_0.vy = highlightLine.vertex1_4.vy;
+    Gfx_LineDraw(&highlightLine, true, false);
 
     // Draw selection bullet points.
     for (i = 0; i < OptMain_Count; i++)
     {
+        // Set bullet quads.
         quadVerts = (DVECTOR*)&bulletQuads;
-
         for (j = 0; j < RECT_VERT_COUNT; j++)
         {
-            quadVerts[j].vx                   = D_801E2864[j].vx;
-            quadVerts[j].vy                   = D_801E2864[j].vy + (i * LINE_OFFSET_Y);
-            quadVerts[j + sizeof(DVECTOR)].vx = D_801E2874[j].vx;
-            quadVerts[j + sizeof(DVECTOR)].vy = D_801E2874[j].vy + (i * LINE_OFFSET_Y);
+            quadVerts[j].vx                   = bulletQuadVertsFront[j].vx;
+            quadVerts[j].vy                   = bulletQuadVertsFront[j].vy + (i * LINE_OFFSET_Y);
+            quadVerts[j + sizeof(DVECTOR)].vx = bulletQuadVertsBack[j].vx;
+            quadVerts[j + sizeof(DVECTOR)].vy = bulletQuadVertsBack[j].vy + (i * LINE_OFFSET_Y);
         }
 
-        // Lighter bullet point.
+        // Active selection bullet point.
         if (i == g_MainMenu_SelectedIdx)
         {
             Gfx_ButtonDraw(&bulletQuads[0], false, false);
             Gfx_ButtonDraw(&bulletQuads[1], true,  false);
         }
-        // Darker bullet point.
+        // Inactive selection bullet point.
         else
         {
             Gfx_ButtonDraw(&bulletQuads[0], false, true);
@@ -1788,7 +1815,7 @@ void Gfx_BrightnessLevelArrowsDraw() // 0x801E628C
 // DRAW OPTIONS FEATURES SCREEN
 // ========================================
 
-void Gfx_LineDraw(s_Line2d* line, bool hasShadow, bool isRegular) // 0x801E641C
+void Gfx_LineDraw(s_Line2d* line, bool hasShadow, bool invertGradient) // 0x801E641C
 {
     #define STR_OFFSET_Y 16
 
@@ -1804,9 +1831,9 @@ void Gfx_LineDraw(s_Line2d* line, bool hasShadow, bool isRegular) // 0x801E641C
     // Draw underline.
     setLineG2(linePrim);
 
-    // @unused: Non-functioning coloring feature. Line color gradient is same regardless of `isRegular`,
-    // which itself is always passed as `false` in every call.
-    if (isRegular)
+    // @unused: Non-functioning line color gradient inversion? Gradient is unchanged regardless of `invertGradient`'s value,
+    // which itself is always passed as `false`. Purpose is guessed based on a similar parameter in `Options_Selection_BulletPointDraw`.
+    if (invertGradient)
     {
         setRGBC0(linePrim, 0xB0, 0xB0, 0xB0, 0x50);
         setRGBC1(linePrim, 0xA0, 0x80, 0x40, 0x50);
@@ -1822,7 +1849,8 @@ void Gfx_LineDraw(s_Line2d* line, bool hasShadow, bool isRegular) // 0x801E641C
     addPrim((u8*)ot->org + (hasShadow ? 36 : 24), linePrim);
     GsOUT_PACKET_P = (u8*)linePrim + sizeof(LINE_G2);
 
-    // Draw upward shadow gradient.
+    // Draw shadow gradient.
+    // @unused: Though a line can be drawn independently without a shadow, `hasShadow` is always passed as `true`.
     if (hasShadow)
     {
         poly = (POLY_G4*)GsOUT_PACKET_P;
@@ -1842,7 +1870,7 @@ void Gfx_LineDraw(s_Line2d* line, bool hasShadow, bool isRegular) // 0x801E641C
     }
 }
 
-void Gfx_Options_BlueArrowDraw(s_Triangle2d* arrow, s32 isFlashing, s32 isColorReset) // 0x801E662C
+void Gfx_Options_BlueArrowDraw(s_Triangle2d* arrow, bool isFlashing, bool resetColor) // 0x801E662C
 {
     s32      colorFade;
     s32      colorStart;
@@ -1852,8 +1880,8 @@ void Gfx_Options_BlueArrowDraw(s_Triangle2d* arrow, s32 isFlashing, s32 isColorR
     
     ot = &g_ObjectTable1[g_ObjectTableIdx];
 
-    // Leftover or oversight? `isColorReset` doesn't serve any meaningful purpose.
-    if (isColorReset)
+    // @unused: `resetColor` doesn't serve any meaningful purpose.
+    if (resetColor)
     {
         colorEnd   = 0;
         colorStart = 0;
@@ -1909,7 +1937,7 @@ void Gfx_Options_BlueArrowDraw(s_Triangle2d* arrow, s32 isFlashing, s32 isColorR
     setPolyG3(arrowPoly);
 
     // Flash color from blue to cyan.
-    if (isFlashing != 0)
+    if (isFlashing)
     {
         // Base color is blue. `* 0x700` applies color shift somehow.
         *((u32*)&arrowPoly->r0) = (colorEnd   * 0x700) + 0x30FF0000;
@@ -1931,7 +1959,7 @@ void Gfx_Options_BlueArrowDraw(s_Triangle2d* arrow, s32 isFlashing, s32 isColorR
     GsOUT_PACKET_P = (u8*)arrowPoly + sizeof(POLY_G3);
 }
 
-void Gfx_ButtonDraw(s_Quad2d* quad, bool isCenter, bool isRegular) // 0x801E67B0
+void Gfx_ButtonDraw(s_Quad2d* quad, bool isCenter, bool invertGradient) // 0x801E67B0
 {
     #define QUAD_COUNT 2
 
@@ -1949,7 +1977,7 @@ void Gfx_ButtonDraw(s_Quad2d* quad, bool isCenter, bool isRegular) // 0x801E67B0
         if (isCenter)
         {
             // Set color.
-            switch (isRegular)
+            switch (invertGradient)
             {
                 case false:
                     setRGBC0(poly, 0xFF, 0xFF, 0xFF, 0x30);
@@ -1982,7 +2010,7 @@ void Gfx_ButtonDraw(s_Quad2d* quad, bool isCenter, bool isRegular) // 0x801E67B0
         else
         {
             // Set color.
-            switch (isRegular)
+            switch (invertGradient)
             {
                 case false:
                     setRGBC0(poly, 0xA0, 0x80, 0x40, 0x30);
@@ -2365,21 +2393,21 @@ char* g_ControllerSubmenu_ActionStrings[] =
  */
 static const u16 D_801E2D42 = 4160;
 
-DVECTOR D_801E73B4 = { 0, 0 };
+DVECTOR g_Options_Extra_SelectionHighlightFrom_Unused = { 0, 0 };
 
-DVECTOR D_801E73B8 = { 0, 0 };
+DVECTOR g_Options_Extra_SelectionHighlightTo_Unused = { 0, 0 };
 
-DVECTOR D_801E73BC = { 0, 0 };
+DVECTOR g_Options_Main_SelectionHighlightFrom_Unused = { 0, 0 };
 
-DVECTOR D_801E73C0 = { 0, 0 };
+DVECTOR g_Options_Main_SelectionHighlightTo_Unused = { 0, 0 };
 
-DVECTOR D_801E73C4 = { 0, 0 };
+DVECTOR g_Options_Extra_SelectionHighlightFrom = { 0, 0 };
 
-DVECTOR D_801E73C8 = { 0, 0 };
+DVECTOR g_Options_Extra_SelectionHighlightTo = { 0, 0 };
 
-DVECTOR D_801E73CC = { 0, 0 };
+DVECTOR g_Options_Main_SelectionHighlightFrom = { 0, 0 };
 
-DVECTOR D_801E73D0 = { 0, 0 };
+DVECTOR g_Options_Main_SelectionHighlightTo = { 0, 0 };
 
 s32 g_Gfx_ScreenPos_InvertColorBg_TransitionCounter = 0;
 
