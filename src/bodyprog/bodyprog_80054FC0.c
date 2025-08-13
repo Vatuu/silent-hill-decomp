@@ -486,26 +486,26 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80057228); // 0x
 
 void func_80057344(s_func_80057344* arg0, void* arg1, void* arg2, s32 arg3) // 0x80057344
 {
-    u32                var_s1;
-    u32                var_s4;
-    s_func_8005759C*   var_s0;
-    s_func_80057344_8* var_s2;
+    u32                normalOffset;
+    u32                vertexOffset;
+    s_ObjHeader*       var_s0;
+    s_ObjList*         var_s2;
     s_GteScratchData*  scratchData;
 
     scratchData = PSX_SCRATCH_ADDR(0);
 
     var_s2 = arg0->field_8;
-    var_s4 = var_s2->field_9;
-    var_s1 = var_s2->field_A;
+    vertexOffset = var_s2->vertexOffset_9;
+    normalOffset = var_s2->normalOffset_A;
 
     gte_lddqa(D_800C4168.field_4C);
     gte_lddqb_0();
 
-    for (var_s0 = var_s2->field_C; var_s0 < &var_s2->field_C[var_s2->field_8]; var_s0++)
+    for (var_s0 = var_s2->meshes_C; var_s0 < &var_s2->meshes_C[var_s2->meshCount_8]; var_s0++)
     {
-        if (var_s4 != 0 || var_s1 != 0)
+        if (vertexOffset != 0 || normalOffset != 0)
         {
-            func_8005759C(var_s0, scratchData, var_s4, var_s1);
+            func_8005759C(var_s0, scratchData, vertexOffset, normalOffset);
         }
         else
         {
@@ -518,22 +518,22 @@ void func_80057344(s_func_80057344* arg0, void* arg1, void* arg2, s32 arg3) // 0
                 break;
 
             case 1:
-                func_80057658(var_s0, var_s1, scratchData, &D_800C4168.field_74, &D_800C4168.field_7C);
+                func_80057658(var_s0, normalOffset, scratchData, &D_800C4168.field_74, &D_800C4168.field_7C);
                 break;
 
             case 2:
-                func_80057A3C(var_s0, var_s1, scratchData, &D_800C4168.field_74);
+                func_80057A3C(var_s0, normalOffset, scratchData, &D_800C4168.field_74);
                 break;
         }
 
-        func_80057B7C(var_s0, var_s4, scratchData, arg3);
+        func_80057B7C(var_s0, vertexOffset, scratchData, arg3);
         func_8005801C(var_s0, scratchData, arg1, arg2);
     }
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_800574D4); // 0x800574D4
 
-void func_8005759C(s_func_8005759C* arg0, s_GteScratchData* scratchData, s32 arg2, s32 arg3) // 0x8005759C
+void func_8005759C(s_ObjHeader* arg0, s_GteScratchData* scratchData, s32 vertexOffset, s32 normalOffset) // 0x8005759C
 {
     s16* vertexZPtr;
     s16* field_18CPtr;
@@ -543,8 +543,8 @@ void func_8005759C(s_func_8005759C* arg0, s_GteScratchData* scratchData, s32 arg
     u8*  field_14Ptr;
 
     // Should be loop? Tried but no luck.
-    screenXyPtr  = &scratchData->screenXy_0[arg2];
-    field_18CPtr = &scratchData->field_18C[arg2];
+    screenXyPtr  = &scratchData->screenXy_0[vertexOffset];
+    field_18CPtr = &scratchData->field_18C[vertexOffset];
     vertexXyPtr  = arg0->vertexXy_8;
     vertexZPtr   = arg0->vertexZ_C;
     while (vertexXyPtr < &arg0->vertexXy_8[arg0->vertexCount_1])
@@ -553,15 +553,15 @@ void func_8005759C(s_func_8005759C* arg0, s_GteScratchData* scratchData, s32 arg
         *field_18CPtr++ = *vertexZPtr++;
     }
 
-    field_14Ptr  = arg0->field_14;
-    field_2B8Ptr = &scratchData->field_2B8[arg3];
-    while (field_14Ptr < &arg0->field_14[arg0->field_3])
+    field_14Ptr  = arg0->unkPtr_14;
+    field_2B8Ptr = &scratchData->field_2B8[normalOffset];
+    while (field_14Ptr < &arg0->unkPtr_14[arg0->unkCount_3])
     {
         *field_2B8Ptr++ = *field_14Ptr++;
     }
 }
 
-void func_80057658(s_func_8005759C* arg0, s32 offset, s_GteScratchData* scratchData, SVECTOR3* arg3, SVECTOR* arg4) // 0x80057658
+void func_80057658(s_ObjHeader* arg0, s32 offset, s_GteScratchData* scratchData, SVECTOR3* arg3, SVECTOR* arg4) // 0x80057658
 {
     s32      geomOffsetX;
     s32      geomOffsetY;
@@ -578,7 +578,7 @@ void func_80057658(s_func_8005759C* arg0, s32 offset, s_GteScratchData* scratchD
     s32*     depthP;
     u8       temp_v1;
 
-    s_func_8005759C_10* var_t3;
+    s_ObjNormal* var_t3;
 
     scratchData->field_3AC = *arg4; // 3AC changed to `SVECTOR`.
 
@@ -599,7 +599,7 @@ void func_80057658(s_func_8005759C* arg0, s32 offset, s_GteScratchData* scratchD
     var_t0 = &scratchData->field_2B8[offset];
     mat    = &scratchData->field_380;
 
-    for (var_t3 = arg0->field_10; var_t3 < &arg0->field_10[arg0->field_2]; var_t3++)
+    for (var_t3 = arg0->normals_10; var_t3 < &arg0->normals_10[arg0->normalCount_2]; var_t3++)
     {
         temp_t8   = &scratchData->field_380.m[2][0];
         screenPos = &scratchData->screenPos_3A4;
@@ -608,9 +608,9 @@ void func_80057658(s_func_8005759C* arg0, s32 offset, s_GteScratchData* scratchD
 
         *(u32*)&scratchData->field_3A0 = *(u32*)var_t3;
 
-        mat->m[1][0] = scratchData->field_3A0.vx << 5;
-        mat->m[1][1] = scratchData->field_3A0.vy << 5;
-        mat->m[1][2] = scratchData->field_3A0.vz << 5;
+        mat->m[1][0] = scratchData->field_3A0.nx << 5;
+        mat->m[1][1] = scratchData->field_3A0.ny << 5;
+        mat->m[1][2] = scratchData->field_3A0.nz << 5;
         gte_SetRotMatrix_Row0_1(mat->m);
 
         end = &var_t0[scratchData->field_3A0.count];
@@ -696,14 +696,14 @@ void func_80057658(s_func_8005759C* arg0, s32 offset, s_GteScratchData* scratchD
     SetGeomScreen(geomScreen);
 }
 
-void func_80057A3C(s_func_8005759C* arg0, s32 offset, s_GteScratchData* scratchData, SVECTOR3* lightVec) // 0x80057A3C
+void func_80057A3C(s_ObjHeader* arg0, s32 offset, s_GteScratchData* scratchData, SVECTOR3* lightVec) // 0x80057A3C
 {
     s32   var_v1;
     u8*   var_a3;
     void* endPtr;
     s32   temp_t2;
 
-    s_func_8005759C_10* var_t0;
+    s_ObjNormal* var_t0;
 
     scratchData->field_380.m[0][0] = lightVec->vx;
     scratchData->field_380.m[0][1] = lightVec->vy;
@@ -713,13 +713,13 @@ void func_80057A3C(s_func_8005759C* arg0, s32 offset, s_GteScratchData* scratchD
     var_a3  = &scratchData->field_2B8[offset];
     temp_t2 = D_800C4168.field_20;
 
-    for (var_t0 = arg0->field_10; var_t0 < &arg0->field_10[arg0->field_2]; var_t0++)
+    for (var_t0 = arg0->normals_10; var_t0 < &arg0->normals_10[arg0->normalCount_2]; var_t0++)
     {
         *(u32*)&scratchData->field_3A0 = *(u32*)var_t0;
 
-        scratchData->field_3AC.vx = scratchData->field_3A0.vx << 5;
-        scratchData->field_3AC.vy = scratchData->field_3A0.vy << 5;
-        scratchData->field_3AC.vz = scratchData->field_3A0.vz << 5;
+        scratchData->field_3AC.vx = scratchData->field_3A0.nx << 5;
+        scratchData->field_3AC.vy = scratchData->field_3A0.ny << 5;
+        scratchData->field_3AC.vz = scratchData->field_3A0.nz << 5;
 
         gte_ldv0(&scratchData->field_3AC);
         gte_ll();
@@ -752,10 +752,10 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80059E34); // 0x
 void func_8005A21C(s_func_80057344* arg0, void* arg1, void* arg2, s_func_8005A21C* arg3) // 0x8005A21C
 {
     s16                var_v1;
-    u32                temp_s3;
-    u32                temp_s4;
-    s_func_80057344_8* temp_s1;
-    s_func_8005759C*   var_s0;
+    u32                normalOffset;
+    u32                vertexOffset;
+    s_ObjList*         temp_s1;
+    s_ObjHeader*       var_s0;
     s_GteScratchData*  scratchData;
 
     scratchData = PSX_SCRATCH_ADDR(0);
@@ -798,17 +798,16 @@ void func_8005A21C(s_func_80057344* arg0, void* arg1, void* arg2, s_func_8005A21
     }
 
     temp_s1 = arg0->field_8;
-    var_s0  = temp_s1->field_C;
-    temp_s4 = temp_s1->field_9;
-    temp_s3 = temp_s1->field_A;
+    vertexOffset = temp_s1->vertexOffset_9;
+    normalOffset = temp_s1->normalOffset_A;
 
-    for (var_s0 = temp_s1->field_C; var_s0 < &temp_s1->field_C[temp_s1->field_8]; var_s0++)
+    for (var_s0 = temp_s1->meshes_C; var_s0 < &temp_s1->meshes_C[temp_s1->meshCount_8]; var_s0++)
     {
-        func_8005A900(var_s0, temp_s4, scratchData, arg3);
+        func_8005A900(var_s0, vertexOffset, scratchData, arg3);
 
         if (D_800C4168.field_0 != 0)
         {
-            func_8005AA08(var_s0, temp_s3, scratchData);
+            func_8005AA08(var_s0, normalOffset, scratchData);
         }
 
         func_8005AC50(var_s0, scratchData, arg1, arg2);
@@ -970,7 +969,7 @@ void func_8005A838(s_GteScratchData* scratchData, s32 scale) // 0x8005A838
                  FP_MULTIPLY(D_800C4168.field_26, scale, Q12_SHIFT));
 }
 
-void func_8005A900(s_func_8005759C* arg0, s32 startVertex, s_GteScratchData* scratchData, MATRIX* mat) // 0x8005A900
+void func_8005A900(s_ObjHeader* arg0, s32 offset, s_GteScratchData* scratchData, MATRIX* mat) // 0x8005A900
 {
     DVECTOR* inXy;  // Model-space XY input
     u16*     inZ;   // Model-space Z input
@@ -985,13 +984,13 @@ void func_8005A900(s_func_8005759C* arg0, s32 startVertex, s_GteScratchData* scr
     SetRotMatrix(mat);
     SetTransMatrix(mat);
 
-    outXy = &scratchData->screenXy_0[startVertex];
-    outZ  = &scratchData->screenZ_168[startVertex];
+    outXy = &scratchData->screenXy_0[offset];
+    outZ  = &scratchData->screenZ_168[offset];
 
     inXy = arg0->vertexXy_8;
     inZ  = arg0->vertexZ_C;
 
-    while (outXy < &scratchData->screenXy_0[arg0->vertexCount_1 + startVertex])
+    while (outXy < &scratchData->screenXy_0[arg0->vertexCount_1 + offset])
     {
         // Nearly same as `gte_RotTransPers3`, processes 3 vertices per iteration.
         gte_LoadVector0_1_2_XYZ(inXy, inZ);

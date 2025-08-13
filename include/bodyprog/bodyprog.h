@@ -660,49 +660,6 @@ typedef struct
     s_func_8006E490_20 field_20[2];
 } s_func_8006E490;
 
-// TODO: Is this some SDK struct? `CVECTOR` is close but uses `u8` instead of `s8`.
-typedef struct
-{
-    s8 vx;
-    s8 vy;
-    s8 vz;
-    u8 count;
-} s_func_8005759C_10;
-
-/** Note: might be same as `ObjHeader`: https://github.com/Sparagas/Silent-Hill/blob/1945970dbd27c081592bf5699d05beddbaa2ff18/010%20Editor%20-%20Binary%20Templates/sh1_models_draft.bt#L96 */
-typedef struct
-{
-    s8       unk_0[1];
-    u8       vertexCount_1;
-    u8       field_2;
-    u8       field_3;
-    s8       unk_4[4];
-    DVECTOR* vertexXy_8;
-    s16*     vertexZ_C;
-
-    s_func_8005759C_10* field_10;
-
-    u8*  field_14;
-} s_func_8005759C;
-STATIC_ASSERT_SIZEOF(s_func_8005759C, 24);
-
-typedef struct
-{
-    u8               unk_0[8];
-    u8               field_8;
-    u8               field_9;
-    u8               field_A;
-    u8               unk_B[1];
-    s_func_8005759C* field_C;
-} s_func_80057344_8;
-
-typedef struct
-{
-    u8                 unk_0[8];
-    s_func_80057344_8* field_8;
-    // Likely incomplete.
-} s_func_80057344;
-
 typedef struct
 {
     u8  unk_0[0x1C];
@@ -749,16 +706,25 @@ typedef struct
 // STRUCTS
 // ========
 
+typedef struct
+{
+    s8 nx;
+    s8 ny;
+    s8 nz;
+    u8 count;
+} s_ObjNormal;
+STATIC_ASSERT_SIZEOF(s_ObjNormal, 4);
+
 /** @brief Struct used by many functions involved with GTE. Kept at `PSX_SCRATCH_ADDR` (possibly only temporarily). */
 typedef struct
 {
-    DVECTOR screenXy_0[0x5A];
-    u16     screenZ_168[0x12];
+    DVECTOR screenXy_0[90];
+    u16     screenZ_168[18];
     s16     field_18C[150];
     u8      field_2B8[200]; // Size likely incorrect.
     MATRIX  field_380;
 
-    s_func_8005759C_10 field_3A0;
+    s_ObjNormal field_3A0;
 
     DVECTOR  screenPos_3A4;
     s32      depthP_3A8;
@@ -769,6 +735,41 @@ typedef struct
     s32      depthP_3E0;
     MATRIX   field_3E4;
 } s_GteScratchData;
+
+/** Note: See `ObjHeader`: https://github.com/Sparagas/Silent-Hill/blob/1945970dbd27c081592bf5699d05beddbaa2ff18/010%20Editor%20-%20Binary%20Templates/sh1_models_draft.bt#L96 */
+typedef struct
+{
+    u8 primitiveCount_0;
+    u8 vertexCount_1;
+    u8 normalCount_2;
+    u8 unkCount_3;
+
+    void*        primitives_4;
+    DVECTOR*     vertexXy_8;
+    s16*         vertexZ_C;
+    s_ObjNormal* normals_10;
+    u8*          unkPtr_14;
+} s_ObjHeader;
+STATIC_ASSERT_SIZEOF(s_ObjHeader, 24);
+
+typedef struct
+{
+    char objName_0[8];
+    u8   meshCount_8;
+    u8   vertexOffset_9;
+    u8   normalOffset_A;
+    u8   unk_B[1];
+
+    s_ObjHeader* meshes_C;
+} s_ObjList;
+STATIC_ASSERT_SIZEOF(s_ObjList, 16);
+
+typedef struct
+{
+    u8         unk_0[8];
+    s_ObjList* field_8;
+    // Likely incomplete.
+} s_func_80057344;
 
 typedef struct
 {
@@ -2890,7 +2891,7 @@ void func_8005A478(s_GteScratchData* scratchData, s32 alpha);
 /** `scratchData` is unused? */
 void func_8005A838(s_GteScratchData* scratchData, s32 scale);
 
-void func_8005A900(s_func_8005759C* arg0, s32 startVertex, s_GteScratchData* scratchData, MATRIX* mat);
+void func_8005A900(s_ObjHeader* arg0, s32 offset, s_GteScratchData* scratchData, MATRIX* mat);
 
 void func_8005B370(s_func_8005B370* arg0);
 
@@ -2921,11 +2922,11 @@ void func_80057228(void*, s32, s8*, VECTOR3*);
 /** TODO: Unknown `arg1`/`arg2` types. */
 void func_80057344(s_func_80057344* arg0, void* arg1, void* arg2, s32 arg3);
 
-void func_8005759C(s_func_8005759C* arg0, s_GteScratchData* scratchData, s32 arg2, s32 arg3);
+void func_8005759C(s_ObjHeader* arg0, s_GteScratchData* scratchData, s32 vertexOffset, s32 normalOffset);
 
-void func_80057658(s_func_8005759C* arg0, s32 offset, s_GteScratchData* scratchData, SVECTOR3* arg3, SVECTOR* arg4);
+void func_80057658(s_ObjHeader* arg0, s32 offset, s_GteScratchData* scratchData, SVECTOR3* arg3, SVECTOR* arg4);
 
-void func_80057A3C(s_func_8005759C* arg0, s32 offset, s_GteScratchData* scratchData, SVECTOR3* lightVec);
+void func_80057A3C(s_ObjHeader* arg0, s32 offset, s_GteScratchData* scratchData, SVECTOR3* lightVec);
 
 void func_8005B55C(GsCOORDINATE2*);
 
