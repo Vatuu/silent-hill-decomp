@@ -143,38 +143,38 @@ void GsTMDfastTG4LFG(void* op, VERT* vp, VERT* np, PACKET* pk, int n, int shift,
 
 /** @brief Sets the `DQA` register in the GTE. Not part of Psy-Q for some reason. */
 #define gte_lddqa(r0) __asm__ volatile( \
-    "ctc2  %0, $27"                     \
+    "ctc2  %0, $27;"                    \
     :                                   \
     : "r"(r0))
 
 /** @brief Zeroes the `DQB` register in the GTE. */
 #define gte_lddqb_0() __asm__ volatile( \
-    "ctc2  $zero, $28")
+    "ctc2  $zero, $28;")
 
 /** @brief Zeroes transfer vector in the GTE. */
 #define gte_ldtr_0() __asm__ volatile( \
     "ctc2  $zero, $5;"                 \
     "ctc2  $zero, $6;"                 \
-    "ctc2  $zero, $7")
+    "ctc2  $zero, $7;")
 
 /** @brief Loads `SVECTOR` into light matrix, similar to `gte_SetLightMatrix`. */
 #define gte_SetLightSVector(p) __asm__ volatile( \
-    "lw    $12, 0(%0)\n\t"                       \
-    "lhu   $13, 4(%0)\n\t"                       \
-    "ctc2  $12, $8\n\t"                          \
-    "ctc2  $13, $9\n\t"                          \
-    "ctc2  $zero, $10\n\t"                       \
-    "ctc2  $zero, $11\n\t"                       \
-    "ctc2  $zero, $12\n\t"                       \
+    "lw    $12, 0(%0);"                          \
+    "lhu   $13, 4(%0);"                          \
+    "ctc2  $12, $8;"                             \
+    "ctc2  $13, $9;"                             \
+    "ctc2  $zero, $10;"                          \
+    "ctc2  $zero, $11;"                          \
+    "ctc2  $zero, $12;"                          \
     :                                            \
     : "r"(p)                                     \
     : "$12", "$13", "memory");
 
 /** @brief Broadcasts a single value into the GTE universal vector, similar to `gte_ldsv`. */
 #define gte_ldsv_(val) __asm__ volatile( \
-    "mtc2  %0, $9\n\t"                   \
-    "mtc2  %0, $10\n\t"                  \
-    "mtc2  %0, $11\n\t"                  \
+    "mtc2  %0, $9;"                      \
+    "mtc2  %0, $10;"                     \
+    "mtc2  %0, $11;"                     \
     :                                    \
     : "r"(val)                           \
     : "memory");
@@ -186,5 +186,56 @@ void GsTMDfastTG4LFG(void* op, VERT* vp, VERT* np, PACKET* pk, int n, int shift,
         __asm__ volatile("mfc2 %0, $9; nop;" : "=r"(__r)); \
         __r;                                               \
     })
+
+/** @brief Loads `SVECTOR` into GTE Vector 0. */
+#define gte_SetVector0(p) __asm__ volatile( \
+    "lw    $12, 0(%0);"                     \
+    "lhu   $13, 4(%0);"                     \
+    "mtc2  $12, $0;"                        \
+    "mtc2  $13, $1;"                        \
+    :                                       \
+    : "r"(p)                                \
+    : "$12", "$13", "memory")
+
+/** @brief Loads GTE light source vector `x` and `y`. */
+#define gte_SetLightSourceXY(x, y) __asm__ volatile( \
+    "sll  %0, %0, 16;"                               \
+    "srl  %0, %0, 16;"                               \
+    "sll  %1, %1, 16;"                               \
+    "or   %0, %0, %1;"                               \
+    "ctc2 %0, $8;"                                   \
+    :                                                \
+    : "r"(x), "r"(y))
+
+/** @brief Loads GTE light source vector `z`. */
+#define gte_SetLightSourceZ(z) __asm__ volatile( \
+    "ctc2  %0, $9;"                              \
+    "ctc2  $zero, $10;"                          \
+    "ctc2  $zero, $11;"                          \
+    "ctc2  $zero, $12;"                          \
+    :                                            \
+    : "r"((z) & 0xFFFF))
+
+/** @brief Loads row 0 and row 1 from `MATRIX` into GTE rotation matrix. */
+#define gte_SetRotMatrix_Row0_1(r0) __asm__ volatile( \
+    "lw   $12, 0( %0 );"                              \
+    "lw   $13, 4( %0 );"                              \
+    "ctc2 $12, $0;"                                   \
+    "lw   $12, 8( %0 );"                              \
+    "ctc2 $13, $1;"                                   \
+    "ctc2 $12, $2"                                    \
+    :                                                 \
+    : "r"(r0)                                         \
+    : "$12", "$13")
+
+/** @brief Loads row 2 from `MATRIX` into GTE rotation matrix. */
+#define gte_SetRotMatrix_Row2(r0) __asm__ volatile( \
+    "lw   $12, 12( %0 );"                           \
+    "lw   $13, 16( %0 );"                           \
+    "ctc2 $12, $3;"                                 \
+    "ctc2 $13, $4;"                                 \
+    :                                               \
+    : "r"(r0)                                       \
+    : "$12", "$13")
 
 #endif

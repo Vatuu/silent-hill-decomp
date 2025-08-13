@@ -559,7 +559,140 @@ void func_8005759C(s_func_8005759C* arg0, s_GteScratchData* scratchData, s32 arg
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80057658); // 0x80057658
+void func_80057658(s_func_8005759C* arg0, s32 offset, s_GteScratchData* scratchData, SVECTOR3* arg3, SVECTOR* arg4) // 0x80057658
+{
+    s32      geomOffsetX;
+    s32      geomOffsetY;
+    MATRIX*  mat;
+    s32      geomScreen;
+    s32      temp_t9;
+    s32      var_a1;
+    s32      var_v1;
+    s32      temp_t2;
+    u8*      end;
+    u8*      var_t0;
+    s16*     temp_t8;
+    DVECTOR* screenPos;
+    s32*     depthP;
+    u8       temp_v1;
+
+    s_func_8005759C_10* var_t3;
+
+    scratchData->field_3AC = *arg4; // 3AC changed to SVECTOR
+
+    scratchData->field_380.m[0][0] = arg3->vx;
+    scratchData->field_380.m[0][1] = arg3->vy;
+    scratchData->field_380.m[0][2] = arg3->vz;
+
+    gte_ldtr_0();
+
+    ReadGeomOffset(&geomOffsetX, &geomOffsetY);
+    geomScreen = ReadGeomScreen();
+    SetGeomOffset(-1024, -1024);
+    SetGeomScreen(16);
+
+    temp_t9 = D_800C4168.field_20 >> 5;
+    temp_v1 = D_800C4168.field_3;
+
+    var_t0 = &scratchData->field_2B8[offset];
+    mat    = &scratchData->field_380;
+
+    for (var_t3 = arg0->field_10; var_t3 < &arg0->field_10[arg0->field_2]; var_t3++)
+    {
+        temp_t8   = &scratchData->field_380.m[2][0];
+        screenPos = &scratchData->screenPos_3A4;
+        depthP    = &scratchData->depthP_3A8;
+        temp_t2   = temp_v1;
+
+        *(u32*)&scratchData->field_3A0 = *(u32*)var_t3;
+
+        mat->m[1][0] = scratchData->field_3A0.vx << 5;
+        mat->m[1][1] = scratchData->field_3A0.vy << 5;
+        mat->m[1][2] = scratchData->field_3A0.vz << 5;
+        gte_SetRotMatrix_Row0_1(mat->m);
+
+        end = &var_t0[scratchData->field_3A0.count];
+
+        mat->m[2][0] = scratchData->field_0[*var_t0].vx - scratchData->field_3AC.vx;
+        mat->m[2][1] = scratchData->field_0[*var_t0].vy - scratchData->field_3AC.vy;
+        mat->m[2][2] = scratchData->field_18C[*var_t0] - scratchData->field_3AC.vz;
+        gte_SetRotMatrix_Row2(mat->m);
+
+        gte_ldv0(temp_t8);
+        gte_rtps();
+        gte_stsxy(screenPos);
+        gte_stdp(depthP);
+
+        while (++var_t0 < end)
+        {
+            mat->m[2][0] = scratchData->field_0[*var_t0].vx - scratchData->field_3AC.vx;
+            mat->m[2][1] = scratchData->field_0[*var_t0].vy - scratchData->field_3AC.vy;
+            mat->m[2][2] = scratchData->field_18C[*var_t0] - scratchData->field_3AC.vz;
+
+            gte_SetRotMatrix_Row2(mat->m);
+            gte_ldv0(temp_t8);
+            gte_rtps();
+
+            scratchData->screenPos_3A4.vx += 1024;
+            scratchData->screenPos_3A4.vy += 1024;
+
+            var_a1 = (scratchData->screenPos_3A4.vx * scratchData->screenPos_3A4.vy) + (scratchData->screenPos_3A4.vy * (scratchData->depthP_3A8 >> 4));
+            var_a1 >>= 5;
+            var_a1 -= 16;
+            if (var_a1 < 0)
+            {
+                var_a1 = 0;
+            }
+
+            var_v1 = (scratchData->screenPos_3A4.vx >> 1) + (scratchData->depthP_3A8 >> 2);
+            var_a1 += temp_t9;
+            if (var_v1 > 48)
+            {
+                var_v1 = 48;
+            }
+            var_a1 += var_v1;
+
+            if (temp_t2 < var_a1)
+            {
+                var_a1 = temp_t2;
+            }
+
+            *(var_t0 - 1) = var_a1;
+
+            gte_stsxy(screenPos);
+            gte_stdp(depthP);
+        }
+
+        scratchData->screenPos_3A4.vx += 1024;
+        scratchData->screenPos_3A4.vy += 1024;
+
+        var_a1 = (scratchData->screenPos_3A4.vx * scratchData->screenPos_3A4.vy) + (scratchData->screenPos_3A4.vy * (scratchData->depthP_3A8 >> 4));
+        var_a1 >>= 5;
+        var_a1 -= 16;
+        if (var_a1 < 0)
+        {
+            var_a1 = 0;
+        }
+
+        var_v1 = (scratchData->screenPos_3A4.vx >> 1) + (scratchData->depthP_3A8 >> 2);
+        var_a1 += temp_t9;
+        if (var_v1 > 48)
+        {
+            var_v1 = 48;
+        }
+        var_a1 += var_v1;
+
+        if (temp_t2 < var_a1)
+        {
+            var_a1 = temp_t2;
+        }
+
+        *(var_t0 - 1) = var_a1;
+    }
+
+    SetGeomOffset(geomOffsetX, geomOffsetY);
+    SetGeomScreen(geomScreen);
+}
 
 void func_80057A3C(s_func_8005759C* arg0, s32 offset, s_GteScratchData* scratchData, SVECTOR3* lightVec) // 0x80057A3C
 {
@@ -680,7 +813,7 @@ void func_8005A21C(s_func_80057344* arg0, void* arg1, void* arg2, s_func_8005A21
     }
 }
 
-s32 func_8005A42C(s_GteScratchData* scratchData, s32 arg1) // 0x8005A42C
+void func_8005A42C(s_GteScratchData* scratchData, s32 arg1) // 0x8005A42C
 {
     s32 alpha = FP_ALPHA(1.0f) - FP_MULTIPLY(arg1, D_800C4168.field_20, Q12_SHIFT);
 
@@ -690,7 +823,135 @@ s32 func_8005A42C(s_GteScratchData* scratchData, s32 arg1) // 0x8005A42C
     gte_strgb(&scratchData->field_3D8);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8005A478); // 0x8005A478
+void func_8005A478(s_GteScratchData* scratchData, s32 alpha) // 0x8005A478
+{
+    s32 geomOffsetX;
+    s32 geomOffsetY;
+    s32 temp_s0;
+    s32 temp_s1;
+    s32 temp_s2;
+    s32 temp_a0;
+    s16 geomScreen;
+    s32 temp_v1;
+    s32 var_a1;
+    s32 var_a2;
+    s32 var_s0;
+    s32 var_t1;
+    s32 var_v1;
+
+    s32 temp_s0_neg;
+    s32 temp_s1_neg;
+    s32 temp_s2_neg;
+
+    ReadGeomOffset(&geomOffsetX, &geomOffsetY);
+    geomScreen = ReadGeomScreen();
+    SetGeomOffset(-1024, -1024);
+    SetGeomScreen(16);
+
+    temp_s0 = D_800C4168.field_7C.vx;
+    temp_s1 = D_800C4168.field_7C.vy;
+    temp_s2 = D_800C4168.field_7C.vz;
+
+    var_t1 = SquareRoot0(SQUARE(temp_s0) + SQUARE(temp_s1) + SQUARE(temp_s2));
+    if (var_t1 == 0)
+    {
+        var_t1 = 1;
+    }
+
+    temp_s0_neg = -temp_s0;
+    temp_s1_neg = -temp_s1;
+    temp_s2_neg = -temp_s2;
+
+    *(u32*)&scratchData->field_3E4.m[0][0] = *(u32*)&D_800C4168.field_74;
+    scratchData->field_3E4.m[0][2]         = D_800C4168.field_74.vz;
+
+    scratchData->field_3E4.m[1][0] = FP_METER(temp_s0_neg) / var_t1;
+    scratchData->field_3E4.m[1][1] = FP_METER(temp_s1_neg) / var_t1;
+    scratchData->field_3E4.m[1][2] = FP_METER(temp_s2_neg) / var_t1;
+
+    scratchData->field_3E4.m[2][0] = temp_s0_neg;
+    scratchData->field_3E4.m[2][1] = temp_s1_neg;
+    scratchData->field_3E4.m[2][2] = temp_s2_neg;
+
+    gte_SetRotMatrix(&scratchData->field_3E4);
+    gte_SetVector0(&scratchData->field_3E4.m[2][0]);
+    gte_ldtr_0();
+    gte_rtps();
+    gte_stsxy(&scratchData->screenPos_3DC);
+    gte_stdp(&scratchData->depthP_3E0);
+
+    scratchData->screenPos_3DC.vx += 1024;
+    scratchData->screenPos_3DC.vy += 1024;
+
+    var_s0 = (scratchData->screenPos_3DC.vx * scratchData->screenPos_3DC.vy) + (scratchData->screenPos_3DC.vy * (scratchData->depthP_3E0 >> 4));
+    var_s0 >>= 5;
+    var_s0 -= 16;
+    if (var_s0 < 0)
+    {
+        var_s0 = 0;
+    }
+
+    var_v1 = (scratchData->screenPos_3DC.vx >> 1) + (scratchData->depthP_3E0 >> 2);
+    if (var_v1 > 48)
+    {
+        var_v1 = 48;
+    }
+
+    var_s0 += var_v1;
+    var_s0 >>= 1;
+    if (D_800C4168.field_3 < var_s0)
+    {
+        var_s0 = D_800C4168.field_3;
+    }
+
+    var_s0 = FP_FROM(var_s0 * alpha, Q12_SHIFT);
+
+    if (var_s0 < 0)
+    {
+        var_s0 = 0;
+    }
+
+    if ((var_s0 >> 2) > 40)
+    {
+        var_a2 = var_s0 - 40;
+    }
+    else
+    {
+        var_a2 = var_s0 - (var_s0 >> 2);
+    }
+
+    temp_a0 = (scratchData->field_3E4.m[1][0] * var_a2) >> 7;
+    temp_a0 = CLAMP(temp_a0, FP_METER(-1.4f), FP_METER(1.4f));
+
+    temp_v1 = (scratchData->field_3E4.m[1][1] * var_a2) >> 7;
+    temp_v1 = CLAMP(temp_v1, FP_METER(-1.4f), FP_METER(1.4f));
+
+    gte_SetLightSourceXY(temp_a0, temp_v1);
+
+    temp_a0 = (scratchData->field_3E4.m[1][2] * var_a2) >> 7;
+    temp_a0 = CLAMP(temp_a0, FP_METER(-1.4f), FP_METER(1.4f));
+
+    gte_SetLightSourceZ(temp_a0);
+
+    SetGeomOffset(geomOffsetX, geomOffsetY);
+    SetGeomScreen(geomScreen);
+
+    var_a1 = 40;
+
+    if ((var_s0 >> 2) <= 40)
+    {
+        var_a1 = (var_s0 >> 2);
+    }
+
+    if (var_a1 > 64)
+    {
+        var_a1 = 64;
+    }
+
+    SetBackColor(FP_FROM((D_800C4168.field_24 + ((D_800C4168.field_28.r * var_a1) >> 7)) * alpha, Q12_SHIFT),
+                 FP_FROM((D_800C4168.field_25 + ((D_800C4168.field_28.g * var_a1) >> 7)) * alpha, Q12_SHIFT),
+                 FP_FROM((D_800C4168.field_26 + ((D_800C4168.field_28.b * var_a1) >> 7)) * alpha, Q12_SHIFT));
+}
 
 void func_8005A838(s32 arg0, s32 scale) // 0x8005A838
 {

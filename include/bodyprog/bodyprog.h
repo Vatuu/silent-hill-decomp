@@ -720,21 +720,20 @@ typedef struct
 /** @brief Struct used by many functions involved with GTE. Kept at `PSX_SCRATCH_ADDR` (possibly only temporarily). */
 typedef struct
 {
-    s32    field_0[99];
-    s16    field_18C[150];
-    u8     field_2B8[200]; // Size likely incorrect.
-    MATRIX field_380;
+    DVECTOR field_0[99];
+    s16     field_18C[150];
+    u8      field_2B8[200]; // Size likely incorrect.
+    MATRIX  field_380;
 
     s_func_8005759C_10 field_3A0;
 
-    u8       unk_3A4[8];
-    SVECTOR3 field_3AC;
-    u8       unk_3B2[2];
+    DVECTOR  screenPos_3A4;
+    s32      depthP_3A8;
+    SVECTOR  field_3AC;
     u8       unk_3B4[36];
     CVECTOR  field_3D8; // Written by `func_8005A42C`.
-    u16      field_3DC;
-    u16      field_3DE;
-    s32      field_3E0;
+    DVECTOR  screenPos_3DC;
+    s32      depthP_3E0;
     MATRIX   field_3E4;
 } s_GteScratchData;
 
@@ -1196,7 +1195,7 @@ typedef struct
     u8            field_0;
     u8            field_1;
     s8            field_2;
-    s8            field_3;
+    u8            field_3;
     s32           field_4;
     s32           field_8;
     s8            unk_C[8];
@@ -1221,8 +1220,7 @@ typedef struct
     u8            unk_70[4];
     SVECTOR3      field_74;
     u8            unk_7A[2];
-    SVECTOR3      field_7C;
-    u8            unk_82[2];
+    SVECTOR       field_7C;
     u8            unk_84[72];
     u8            field_CC[1]; // Unknown size.
 } s_800C4168;
@@ -2843,7 +2841,9 @@ void func_8005B1A0(s_800C1450_58*, s32, s32, u8, s32, s32, s16, s16);
 /** @brief Computes a fog-shaded version of `D_800C4190` color using `arg1` as the distance factor?
  *  Stores the result at 0x3D8 into `arg0`.
  */
-s32 func_8005A42C(s_GteScratchData* scratchData, s32 arg1);
+void func_8005A42C(s_GteScratchData* scratchData, s32 arg1);
+
+void func_8005A478(s_GteScratchData* scratchData, s32 alpha);
 
 /** `arg0` is unused? */
 void func_8005A838(s32 arg0, s32 scale);
@@ -2878,6 +2878,8 @@ void func_80057228(void*, s32, s8*, VECTOR3*);
 void func_80057344(s_func_80057344* arg0, void* arg1, void* arg2, s32 arg3);
 
 void func_8005759C(s_func_8005759C* arg0, s_GteScratchData* scratchData, s32 arg2, s32 arg3);
+
+void func_80057658(s_func_8005759C* arg0, s32 offset, s_GteScratchData* scratchData, SVECTOR3* arg3, SVECTOR* arg4);
 
 void func_80057A3C(s_func_8005759C* arg0, s32 offset, s_GteScratchData* scratchData, SVECTOR3* lightVec);
 
