@@ -2562,7 +2562,7 @@ void vcMakeNewBaseCamAng(SVECTOR* new_base_ang, VC_CAM_MV_TYPE cam_mv_type, VC_W
         {
             if (w_p->chara_mv_spd_13C != 0 && angle < FP_ANGLE(75.0f) && angle >= FP_ANGLE(-74.9f))
             {
-                temp_t0        = ((new_base_ang_y - w_p->base_cam_ang_C8.vy) << 20) >> 20;
+                temp_t0        = FP_ANGLE_NORM_S(new_base_ang_y - w_p->base_cam_ang_C8.vy);
                 temp_a0_3      = FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(120.0f), Q12_SHIFT);
                 var_v1_2       = CLAMP(temp_t0, -temp_a0_3, temp_a0_3);
                 new_base_ang_y = w_p->base_cam_ang_C8.vy + var_v1_2;
@@ -2581,16 +2581,16 @@ void vcMakeNewBaseCamAng(SVECTOR* new_base_ang, VC_CAM_MV_TYPE cam_mv_type, VC_W
 
         memcpy(sp18, D_8002AAE0, 5 * sizeof(s32));
         new_base_ang_x = vwOresenHokan(sp18, 5, new_base_ang_x, 0, FP_METER(0.25f));
-        new_base_ang_x = CLAMP(new_base_ang_x, 0, FP_ANGLE(90.0f));
+        new_base_ang_x = CLAMP(new_base_ang_x, FP_ANGLE(0.0f), FP_ANGLE(90.0f));
 
-        if (angle < 0)
+        if (angle < FP_ANGLE(0.0f))
         {
             new_base_ang_x = -new_base_ang_x;
         }
 
         new_base_ang->vx = new_base_ang_x;
         new_base_ang->vy = new_base_ang_y;
-        new_base_ang->vz = 0;
+        new_base_ang->vz = FP_ANGLE(0.0f);
     }
 }
 
