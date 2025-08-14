@@ -3801,8 +3801,6 @@ void func_8007F14C(u8 arg0);
 
 void func_8007F32C();
 
-void func_8007FB34(s16, s16, s16*);
-
 void func_8007FB94(s_SubCharacter*, s_MainCharacterExtra*, s32);
 
 void func_8007FD4C(s32);
@@ -3824,7 +3822,7 @@ s16 Player_AnimGetSomething();
 /** Player func. */
 bool func_8007F95C();
 
-void func_8007FB34(s16, s16, s16*);
+void Math_ShortestAngle(s16 angleFrom, s16 angleTo, s16* outShortestAngle);
 
 /** Gets property 8 from player. */
 s32 func_8007FD2C();

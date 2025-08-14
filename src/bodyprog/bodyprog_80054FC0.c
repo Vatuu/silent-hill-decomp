@@ -1879,7 +1879,7 @@ s32 func_8006BC34(s_func_8006BC34* arg0)
             temp_a3 = arg0->field_E0;
             temp_v0 = arg0->field_E6;
             temp_a1 = arg0->field_E0;
-            
+
             if (temp_a3 == temp_v0)
             {
                 var_v0 = temp_a1;
@@ -1890,7 +1890,7 @@ s32 func_8006BC34(s_func_8006BC34* arg0)
             }
         }
     }
-    
+
     return arg0->field_30 - (s16)var_v0;
 }
 
@@ -2771,13 +2771,13 @@ static inline void func_80071968_Switch0()
     {
         switch (g_SysWork.playerCombatInfo_38.equippedWeapon_F)
         {
-            case EquippedWeaponId_KitchenKnife: 
-            case EquippedWeaponId_SteelPipe: 
-            case EquippedWeaponId_RockDrill: 
-            case EquippedWeaponId_Hammer: 
-            case EquippedWeaponId_Chainsaw: 
-            case EquippedWeaponId_Katana: 
-            case EquippedWeaponId_Axe: 
+            case EquippedWeaponId_KitchenKnife:
+            case EquippedWeaponId_SteelPipe:
+            case EquippedWeaponId_RockDrill:
+            case EquippedWeaponId_Hammer:
+            case EquippedWeaponId_Chainsaw:
+            case EquippedWeaponId_Katana:
+            case EquippedWeaponId_Axe:
             case 10:
             case 11:
             case 12:
@@ -2837,20 +2837,20 @@ static inline void func_80071968_Switch1()
             case EquippedWeaponId_Chainsaw: 
             case EquippedWeaponId_Katana: 
             case EquippedWeaponId_Axe: 
-            case 10:
+            case 10: // Swipe knife.
             case 11:
             case 12:
             case 14:
             case 15:
             case 16:
-            case 17:
-            case 20:
+            case 17: // Swipe axe.
+            case 20: // Jab knife.
             case 21:
             case 22:
             case 24:
             case 25:
             case 26:
-            case 27:
+            case 27: // Overhead axe.
                 func_8003DD80(1, 18);
                 break;
 
@@ -3326,14 +3326,14 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
                     var_s3 = 0xFF;
                     var_s5 = 0x27;
                     npcIdx = g_SysWork.field_2354[0];
-                    func_8007FB34(chara->rotation_24.vy, (g_SysWork.npcs_1A0[npcIdx].rotation_24.vy + FP_ANGLE(180.0f)) & 0xFFF, &sp18);
+                    Math_ShortestAngle(chara->rotation_24.vy, (g_SysWork.npcs_1A0[npcIdx].rotation_24.vy + FP_ANGLE(180.0f)) & 0xFFF, &sp18);
                     break;
                     
                 case 38:
                     var_s3 = 0x101;
                     var_s5 = 0x28;
                     npcIdx = g_SysWork.field_2354[1];
-                    func_8007FB34(chara->rotation_24.vy, (g_SysWork.npcs_1A0[npcIdx].rotation_24.vy + FP_ANGLE(360.0f)) & 0xFFF, &sp18);
+                    Math_ShortestAngle(chara->rotation_24.vy, (g_SysWork.npcs_1A0[npcIdx].rotation_24.vy + FP_ANGLE(360.0f)) & 0xFFF, &sp18);
                     break;
             }
             
@@ -3374,7 +3374,7 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
                 }
             }
 
-            func_8007FB34(chara->rotation_24.vy, (g_SysWork.npcs_1A0[npcIdx].rotation_24.vy + FP_ANGLE(360.0f)) & 0xFFF, &sp18);
+            Math_ShortestAngle(chara->rotation_24.vy, (g_SysWork.npcs_1A0[npcIdx].rotation_24.vy + FP_ANGLE(360.0f)) & 0xFFF, &sp18);
             
             model = &g_SysWork.npcs_1A0[npcIdx].model_0;
             
@@ -3746,7 +3746,7 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
                     temp_v1_10 = chara->position_18.vx - g_SysWork.npcs_1A0[g_SysWork.field_2354[0]].position_18.vx;
                     temp_v1_11 = chara->position_18.vz - g_SysWork.npcs_1A0[g_SysWork.field_2354[0]].position_18.vz;
                     var_s7     = SquareRoot0(SQUARE(temp_v1_10) + SQUARE(temp_v1_11));
-                    func_8007FB34(chara->rotation_24.vy, (g_SysWork.npcs_1A0[g_SysWork.field_2354[0]].rotation_24.vy + FP_ANGLE(180.0f)) & 0xFFF, &sp1A);
+                    Math_ShortestAngle(chara->rotation_24.vy, (g_SysWork.npcs_1A0[g_SysWork.field_2354[0]].rotation_24.vy + FP_ANGLE(180.0f)) & 0xFFF, &sp1A);
                             
                     if (ABS(sp1A) < 0x80)
                     {
@@ -3772,7 +3772,7 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
                     temp_v1_12 = chara->position_18.vx - g_SysWork.npcs_1A0[g_SysWork.field_2354[1]].position_18.vx;
                     temp_v1_13 = chara->position_18.vz - g_SysWork.npcs_1A0[g_SysWork.field_2354[1]].position_18.vz;
                     var_s7 = SquareRoot0(SQUARE(temp_v1_12) + SQUARE(temp_v1_13));
-                    func_8007FB34(chara->rotation_24.vy, (g_SysWork.npcs_1A0[g_SysWork.field_2354[1]].rotation_24.vy + 0x1000) & 0xFFF, &sp1A);
+                    Math_ShortestAngle(chara->rotation_24.vy, (g_SysWork.npcs_1A0[g_SysWork.field_2354[1]].rotation_24.vy + 0x1000) & 0xFFF, &sp1A);
 
                     if (ABS(sp1A) < 0x80)
                     {
@@ -3795,10 +3795,10 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
             switch (g_SysWork.player_4C.extra_128.field_1C)
             {
                 case 39:
-                    func_8007FB34(chara->rotation_24.vy, (g_SysWork.npcs_1A0[g_SysWork.field_2354[0]].rotation_24.vy + FP_ANGLE(360.0f)) & 0xFFF, &sp1A);
+                    Math_ShortestAngle(chara->rotation_24.vy, (g_SysWork.npcs_1A0[g_SysWork.field_2354[0]].rotation_24.vy + FP_ANGLE(360.0f)) & 0xFFF, &sp1A);
                         
                 case 40:
-                    func_8007FB34(chara->rotation_24.vy, (g_SysWork.npcs_1A0[g_SysWork.field_2354[1]].rotation_24.vy + FP_ANGLE(360.0f)) & 0xFFF, &sp1A);
+                    Math_ShortestAngle(chara->rotation_24.vy, (g_SysWork.npcs_1A0[g_SysWork.field_2354[1]].rotation_24.vy + FP_ANGLE(360.0f)) & 0xFFF, &sp1A);
                     break;
             }
                     
@@ -4374,7 +4374,7 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
             switch (g_SysWork.player_4C.extra_128.field_1C)
             {
                 case 0x1D:
-                    func_8007FB34(chara->rotation_24.vy, g_SysWork.player_4C.chara_0.properties_E4.larvalStalker.properties_E8[0xC].val16[0], &sp1C);
+                    Math_ShortestAngle(chara->rotation_24.vy, g_SysWork.player_4C.chara_0.properties_E4.larvalStalker.properties_E8[0xC].val16[0], &sp1C);
                     
                     if (ABS(sp1C) >= 0x400)
                     {
@@ -4392,7 +4392,7 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
                     break;
                 
                 case 0x1E:
-                    func_8007FB34(chara->rotation_24.vy, g_SysWork.player_4C.chara_0.properties_E4.larvalStalker.properties_E8[0xC].val16[0], &sp1E);
+                    Math_ShortestAngle(chara->rotation_24.vy, g_SysWork.player_4C.chara_0.properties_E4.larvalStalker.properties_E8[0xC].val16[0], &sp1E);
                     
                     if (ABS(sp1E) < 0x400)
                     {
@@ -4880,7 +4880,7 @@ bool func_80075504(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                                0x1000) &
                               0xFFF;
 
-                    func_8007FB34(chara->rotation_24.vy, temp_a1, &ssp20);
+                    Math_ShortestAngle(chara->rotation_24.vy, temp_a1, &ssp20);
                     D_800C454C = g_DeltaTime0 * 0xF;
 
                     if (ABS(ssp20) >= 0x80)
@@ -5871,7 +5871,7 @@ bool func_80075504(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                         break;
                 }
 
-                func_8007FB34(chara->rotation_24.vy, temp_s1_2, &sp20);
+                Math_ShortestAngle(chara->rotation_24.vy, temp_s1_2, &sp20);
 
                 D_800C454C = ((extra->model_0.state_2 * 3) + 12) * g_DeltaTime0;
                 D_800C454C = CLAMP(D_800C454C, 0, 0xFFF);
@@ -5937,7 +5937,7 @@ bool func_80075504(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
 
             temp_s1_2 = (temp_v0_3 + 0x1000) & 0xFFF;
 
-            func_8007FB34(chara->rotation_24.vy, temp_s1_2, &sp20);
+            Math_ShortestAngle(chara->rotation_24.vy, temp_s1_2, &sp20);
 
             sp20 = CLAMP(sp20, -0x180, 0x180);
 
@@ -5945,7 +5945,7 @@ bool func_80075504(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
             temp_v1_3 = CLAMP(temp_v1_3, 0, 0xFFF);
             var_s0    = temp_v1_3;
 
-            func_8007FB34(chara->rotation_24.pad, temp_s1_2, &sp22);
+            Math_ShortestAngle(chara->rotation_24.pad, temp_s1_2, &sp22);
 
             if (ABS(sp22) > 0x80)
             {
@@ -9043,7 +9043,7 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
 
                 case 23:
                     g_SysWork.player_4C.chara_0.properties_E4.player.field_126 = 0x1800;
-                    func_8007FB34(chara->rotation_24.vy, g_SysWork.npcs_1A0[0].rotation_24.vy, &sp10);
+                    Math_ShortestAngle(chara->rotation_24.vy, g_SysWork.npcs_1A0[0].rotation_24.vy, &sp10);
                     D_800C4608 = sp10;
 
                     if (enemyRotY >= FP_ANGLE(90.0f) &&
@@ -9211,14 +9211,14 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
 
                 case 29:
                     g_SysWork.player_4C.chara_0.properties_E4.player.field_126 = 0x1999;
-                    func_8007FB34(chara->rotation_24.vy, 0x400, &sp10);
+                    Math_ShortestAngle(chara->rotation_24.vy, 0x400, &sp10);
                     D_800C4608 = sp10;
 
                 case 28:
                     if (chara->field_41 != 69)
                     {
                         g_SysWork.player_4C.chara_0.properties_E4.player.field_126 = 0x4000;
-                        func_8007FB34(chara->rotation_24.vy, (s16)chara->field_B8, &sp10);
+                        Math_ShortestAngle(chara->rotation_24.vy, (s16)chara->field_B8, &sp10);
                         D_800C4608 = sp10;
                     }
 
@@ -10509,7 +10509,7 @@ bool func_8007F95C() // 0x8007F95C
                 if (!Math_Distance2dCheck(&pos0, &pos1, radius) && ABS(pos1.vy - pos0.vy) < FP_METER(0.3f) &&
                     ptr1->health_B0 > FP_FLOAT_TO(0.0f, Q12_SHIFT) && (ptr1->flags_3E & (1 << 1)))
                 {
-                    func_8007FB34(g_SysWork.player_4C.chara_0.rotation_24.vy, (ratan2(pos1.vx - pos0.vx, pos1.vz - pos0.vz) + FP_ANGLE(360.0f)) & 0xFFF, &sp30);
+                    Math_ShortestAngle(g_SysWork.player_4C.chara_0.rotation_24.vy, (ratan2(pos1.vx - pos0.vx, pos1.vz - pos0.vz) + FP_ANGLE(360.0f)) & 0xFFF, &sp30);
 
                     temp = sp30 + 0x3FF;
                     if (temp < 0x8FF)
@@ -10526,7 +10526,35 @@ bool func_8007F95C() // 0x8007F95C
     return false;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8007FB34); // 0x8007FB34
+void Math_ShortestAngle(s16 angleFrom, s16 angleTo, s16* outShortestAngle) // 0x8007FB34
+{
+    s16 adjAngle;
+
+    if (angleTo > angleFrom)
+    {
+        if ((angleTo - angleFrom) < FP_ANGLE(180.0f)) 
+        {
+            *outShortestAngle = angleTo - angleFrom;
+        }
+        else
+        {
+            adjAngle          = angleTo - FP_ANGLE(360.0f);
+            *outShortestAngle = adjAngle - angleFrom;
+        }
+    }
+    else
+    {
+        if ((angleFrom - angleTo) < FP_ANGLE(180.0f))
+        {
+            *outShortestAngle = angleTo - angleFrom;
+        }
+        else
+        {
+            adjAngle          = angleFrom - FP_ANGLE(360.0f);
+            *outShortestAngle = angleTo - adjAngle;
+        }
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8007FB94); // 0x8007FB94
 

@@ -440,7 +440,7 @@ typedef enum _InventoryItemId
 
 /** @brief Equipped weapon IDs. Derivative of `e_InventoryItemId`.
  *
- * Maybe attack type instead?
+ * Maybe weapon state instead?
  * Name is likely inacurrate as some of values from the few uses of this enum
  * change in certain cases. Examples:
  *
