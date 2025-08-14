@@ -1257,7 +1257,7 @@ typedef struct
     s32           field_4C;
     s16           field_50;
     s32           field_54;
-    s8            unk_58[8];
+    SVECTOR       field_58;
     VECTOR3       field_60; // Type assumed.
     u8            unk_6C[4];
     u8            unk_70[4];
@@ -2875,7 +2875,7 @@ u8 func_80055D78(void*, void*, s32);
 
 void func_80055E90(CVECTOR* color, u8 fadeAmount);
 
-u8 func_80055F08(SVECTOR3* arg0, SVECTOR3* arg1, void* arg2);
+u8 func_80055F08(SVECTOR3* arg0, SVECTOR3* arg1, MATRIX* mat);
 
 void func_800560FC(s_800BE9FC* arg0);
 
@@ -2917,7 +2917,7 @@ void func_80056D64(s8* prevStr, s8* newStr);
 
 s32 func_800571D0(u32 arg0);
 
-void func_80057228(void*, s32, s8*, VECTOR3*);
+void func_80057228(MATRIX* mat, s32 alpha, SVECTOR* arg2, VECTOR3* arg3);
 
 /** TODO: Unknown `arg1`/`arg2` types. */
 void func_80057344(s_func_80057344* arg0, void* arg1, void* arg2, s32 arg3);

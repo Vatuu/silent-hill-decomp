@@ -272,4 +272,47 @@ void GsTMDfastTG4LFG(void* op, VERT* vp, VERT* np, PACKET* pk, int n, int shift,
     : "r"(xy), "r"(z) \
     : "$12", "memory")
 
+// Less efficient version of gte_SetRotMatrix from PsyQ?
+// PsyQ gte_SetRotMatrix loads 32-bit words from the `MATRIX` straight into GTE.
+// While this func is reading 16-bit words and then combining them into 32-bit word before loading.
+// Not sure of reason why, wonder if it's from some older PsyQ SDK.
+#define gte_SetRotMatrix_custom(mat) __asm__ volatile( \
+    "lhu $12, 16(%0);"                                 \
+    "nop;"                                             \
+    "ctc2 $12, $4;"                                    \
+    "lhu $12, 10(%0);"                                 \
+    "lhu $13, 4(%0);"                                  \
+    "sll $12, $12, 16;"                                \
+    "addu $12, $12, $13;"                              \
+    "ctc2 $12, $3;"                                    \
+    "lhu $12, 14(%0);"                                 \
+    "lhu $13, 8(%0);"                                  \
+    "sll $12, $12, 16;"                                \
+    "addu $12, $12, $13;"                              \
+    "ctc2 $12, $2;"                                    \
+    "lhu $12, 2(%0);"                                  \
+    "lhu $13, 12(%0);"                                 \
+    "sll $12, $12, 16;"                                \
+    "addu $12, $12, $13;"                              \
+    "ctc2 $12, $1;"                                    \
+    "lhu $12, 6(%0);"                                  \
+    "lhu $13, 0(%0);"                                  \
+    "sll $12, $12, 16;"                                \
+    "addu $12, $12, $13;"                              \
+    "ctc2 $12, $0;"                                    \
+    :                                                  \
+    : "r"(mat)                                         \
+    : "$12", "$13", "memory")
+
+/** @brief Loads `x`/`y`/`z` into GTE Vector 0 / `VZY0/VZ0`. */
+#define gte_LoadVector0_XYZ(x, y, z) __asm__ volatile( \
+    "sll %0, %0, 16;"                                  \
+    "srl %0, %0, 16;"                                  \
+    "sll %1, %1, 16;"                                  \
+    "or  %0, %0, %1;"                                  \
+    "mtc2 %0, $0;"                                     \
+    "mtc2 %2, $1;"                                     \
+    :                                                  \
+    : "r"(x), "r"(y), "r"(z))
+
 #endif

@@ -232,9 +232,9 @@ void func_80055E90(CVECTOR* color, u8 fadeAmount) // 0x80055E90
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80055ECC); // 0x80055ECC
 
-u8 func_80055F08(SVECTOR3* arg0, SVECTOR3* arg1, void* arg2) // 0x80055F08
+u8 func_80055F08(SVECTOR3* arg0, SVECTOR3* arg1, MATRIX* mat) // 0x80055F08
 {
-    MATRIX  mat;
+    MATRIX  rotMat;
     DVECTOR screenPos;
     s32     geomOffsetX;
     s32     geomOffsetY;
@@ -245,7 +245,7 @@ u8 func_80055F08(SVECTOR3* arg0, SVECTOR3* arg1, void* arg2) // 0x80055F08
     u8      field_3;
     s32     field_20;
 
-    func_80057228(arg2, D_800C4168.field_54, D_800C4168.unk_58, &D_800C4168.field_60);
+    func_80057228(mat, D_800C4168.field_54, &D_800C4168.field_58, &D_800C4168.field_60);
 
     gte_lddqa(D_800C4168.field_4C);
     gte_lddqb_0();
@@ -256,20 +256,22 @@ u8 func_80055F08(SVECTOR3* arg0, SVECTOR3* arg1, void* arg2) // 0x80055F08
     SetGeomOffset(-1024, -1024);
     SetGeomScreen(16);
 
-    mat.m[0][0] = D_800C4168.field_74.vx;
-    mat.m[0][1] = D_800C4168.field_74.vy;
-    mat.m[0][2] = D_800C4168.field_74.vz;
-    mat.m[1][0] = -arg1->vx;
-    mat.m[1][1] = -arg1->vy;
-    mat.m[1][2] = -arg1->vz;
-    mat.m[2][0] = arg0->vx - D_800C4168.field_7C.vx;
-    mat.m[2][1] = arg0->vy - D_800C4168.field_7C.vy;
-    mat.m[2][2] = arg0->vz - D_800C4168.field_7C.vz;
-    field_3     = D_800C4168.field_3;
-    field_20    = D_800C4168.field_20 >> 5;
-    SetRotMatrix(&mat);
+    rotMat.m[0][0] = D_800C4168.field_74.vx;
+    rotMat.m[0][1] = D_800C4168.field_74.vy;
+    rotMat.m[0][2] = D_800C4168.field_74.vz;
+    rotMat.m[1][0] = -arg1->vx;
+    rotMat.m[1][1] = -arg1->vy;
+    rotMat.m[1][2] = -arg1->vz;
+    rotMat.m[2][0] = arg0->vx - D_800C4168.field_7C.vx;
+    rotMat.m[2][1] = arg0->vy - D_800C4168.field_7C.vy;
+    rotMat.m[2][2] = arg0->vz - D_800C4168.field_7C.vz;
 
-    gte_ldv0(&mat.m[2][0]);
+    field_3  = D_800C4168.field_3;
+    field_20 = D_800C4168.field_20 >> 5;
+
+    SetRotMatrix(&rotMat);
+
+    gte_ldv0(&rotMat.m[2][0]);
     gte_rtps();
     gte_stsxy(&screenPos);
     gte_stdp(&depthP);
@@ -482,7 +484,31 @@ s32 func_800571D0(u32 arg0) // 0x800571D0
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_800571D0); // 0x800571D0
 #endif
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80057228); // 0x80057228
+void func_80057228(MATRIX* mat, s32 alpha, SVECTOR* arg2, VECTOR3* arg3) // 0x80057228
+{
+    s32 x;
+    s32 y;
+    s32 z;
+
+    gte_SetRotMatrix_custom(mat);
+
+    gte_ldv0(arg2);
+    gte_rtv0();
+    gte_lddp(alpha);
+    gte_gpf12();
+    gte_stsv(&D_800C4168.field_74);
+
+    // Divide arg3 by 16 and subtract matrix translation
+    x = (arg3->vx >> 4) - mat->t[0];
+    y = (arg3->vy >> 4) - mat->t[1];
+    z = (arg3->vz >> 4) - mat->t[2];
+
+    gte_LoadVector0_XYZ(x, y, z);
+
+    gte_rtv0();
+
+    gte_stsv(&D_800C4168.field_7C);
+}
 
 void func_80057344(s_func_80057344* arg0, void* arg1, void* arg2, s32 arg3) // 0x80057344
 {
