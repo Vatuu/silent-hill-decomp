@@ -414,7 +414,7 @@ typedef enum _InventoryItemId
     InventoryItemId_Ankh                 = 125,
     InventoryItemId_DaggerOfMelchior     = 126,
     InventoryItemId_DiskOfOuroboros      = 127,
-	
+
     InventoryItemId_KitchenKnife         = 128,
     InventoryItemId_SteelPipe            = 129,
     InventoryItemId_RockDrill            = 130,

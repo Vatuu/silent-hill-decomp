@@ -3784,9 +3784,9 @@ void func_80071284(s32 arg0);
 void func_800713B4(s_SubCharacter* chara, s32 arg1);
 
 /** Player anim handler? */
-void func_80071968(s_SubCharacter*, s_MainCharacterExtra*, void*, GsCOORDINATE2*);
+void func_80071968(s_SubCharacter* chara, s_MainCharacterExtra* extra, void* arg2, GsCOORDINATE2* coord);
 
-void func_80071CE8(s_SubCharacter*, s_MainCharacterExtra*, GsCOORDINATE2*);
+void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coord);
 
 void func_8007C0D8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coord);
 

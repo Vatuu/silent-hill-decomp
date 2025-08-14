@@ -510,17 +510,17 @@ void func_80057228(MATRIX* mat, s32 alpha, SVECTOR* arg2, VECTOR3* arg3) // 0x80
     gte_stsv(&D_800C4168.field_7C);
 }
 
-void func_80057344(s_func_80057344* arg0, void* arg1, void* arg2, s32 arg3) // 0x80057344
+void func_80057344(s_func_80057344* header, void* arg1, void* arg2, s32 arg3) // 0x80057344
 {
-    u32                normalOffset;
-    u32                vertexOffset;
-    s_ObjHeader*       var_s0;
-    s_ObjList*         var_s2;
-    s_GteScratchData*  scratchData;
+    u32               normalOffset;
+    u32               vertexOffset;
+    s_ObjHeader*      var_s0;
+    s_ObjList*        var_s2;
+    s_GteScratchData* scratchData;
 
     scratchData = PSX_SCRATCH_ADDR(0);
 
-    var_s2 = arg0->field_8;
+    var_s2 = header->field_8;
     vertexOffset = var_s2->vertexOffset_9;
     normalOffset = var_s2->normalOffset_A;
 
@@ -587,24 +587,23 @@ void func_8005759C(s_ObjHeader* arg0, s_GteScratchData* scratchData, s32 vertexO
     }
 }
 
-void func_80057658(s_ObjHeader* arg0, s32 offset, s_GteScratchData* scratchData, SVECTOR3* arg3, SVECTOR* arg4) // 0x80057658
+void func_80057658(s_ObjHeader* header, s32 offset, s_GteScratchData* scratchData, SVECTOR3* arg3, SVECTOR* arg4) // 0x80057658
 {
-    s32      geomOffsetX;
-    s32      geomOffsetY;
-    MATRIX*  mat;
-    s32      geomScreen;
-    s32      temp_t9;
-    s32      var_a1;
-    s32      var_v1;
-    s32      temp_t2;
-    u8*      end;
-    u8*      var_t0;
-    s16*     temp_t8;
-    DVECTOR* screenPos;
-    s32*     depthP;
-    u8       temp_v1;
-
-    s_ObjNormal* var_t3;
+    s32          geomOffsetX;
+    s32          geomOffsetY;
+    s32          geomScreen;
+    s32          temp_t9;
+    s32          var_a1;
+    s32          var_v1;
+    s32          temp_t2;
+    u8           temp_v1;
+    u8*          end;
+    u8*          var_t0;
+    s16*         temp_t8;
+    s32*         depthP;
+    MATRIX*      mat;
+    DVECTOR*     screenPos;
+    s_ObjNormal* normal;
 
     scratchData->field_3AC = *arg4; // 3AC changed to `SVECTOR`.
 
@@ -625,14 +624,14 @@ void func_80057658(s_ObjHeader* arg0, s32 offset, s_GteScratchData* scratchData,
     var_t0 = &scratchData->field_2B8[offset];
     mat    = &scratchData->field_380;
 
-    for (var_t3 = arg0->normals_10; var_t3 < &arg0->normals_10[arg0->normalCount_2]; var_t3++)
+    for (normal = header->normals_10; normal < &header->normals_10[header->normalCount_2]; normal++)
     {
         temp_t8   = &scratchData->field_380.m[2][0];
         screenPos = &scratchData->screenPos_3A4;
         depthP    = &scratchData->depthP_3A8;
         temp_t2   = temp_v1;
 
-        *(u32*)&scratchData->field_3A0 = *(u32*)var_t3;
+        *(u32*)&scratchData->field_3A0 = *(u32*)normal;
 
         mat->m[1][0] = scratchData->field_3A0.nx << 5;
         mat->m[1][1] = scratchData->field_3A0.ny << 5;
@@ -722,14 +721,13 @@ void func_80057658(s_ObjHeader* arg0, s32 offset, s_GteScratchData* scratchData,
     SetGeomScreen(geomScreen);
 }
 
-void func_80057A3C(s_ObjHeader* arg0, s32 offset, s_GteScratchData* scratchData, SVECTOR3* lightVec) // 0x80057A3C
+void func_80057A3C(s_ObjHeader* header, s32 offset, s_GteScratchData* scratchData, SVECTOR3* lightVec) // 0x80057A3C
 {
-    s32   var_v1;
-    u8*   var_a3;
-    void* endPtr;
-    s32   temp_t2;
-
-    s_ObjNormal* var_t0;
+    s32          var_v1;
+    s32          temp_t2;
+    u8*          var_a3;
+    void*        endPtr;
+    s_ObjNormal* normal;
 
     scratchData->field_380.m[0][0] = lightVec->vx;
     scratchData->field_380.m[0][1] = lightVec->vy;
@@ -739,9 +737,9 @@ void func_80057A3C(s_ObjHeader* arg0, s32 offset, s_GteScratchData* scratchData,
     var_a3  = &scratchData->field_2B8[offset];
     temp_t2 = D_800C4168.field_20;
 
-    for (var_t0 = arg0->normals_10; var_t0 < &arg0->normals_10[arg0->normalCount_2]; var_t0++)
+    for (normal = header->normals_10; normal < &header->normals_10[header->normalCount_2]; normal++)
     {
-        *(u32*)&scratchData->field_3A0 = *(u32*)var_t0;
+        *(u32*)&scratchData->field_3A0 = *(u32*)normal;
 
         scratchData->field_3AC.vx = scratchData->field_3A0.nx << 5;
         scratchData->field_3AC.vy = scratchData->field_3A0.ny << 5;
@@ -1256,9 +1254,9 @@ s32 func_8005D974() // 0x8005D974
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8005D9B8); // 0x8005D9B8
 
-void func_8005DC1C(s32 arg0, VECTOR3* arg1, s32 arg2, s32 arg3)
+void func_8005DC1C(s32 sfx, VECTOR3* pos, s32 arg2, s32 soundType)
 {
-	func_8005DC3C(arg0, arg1, arg2, arg3, 0);
+    func_8005DC3C(sfx, pos, arg2, soundType, 0);
 }
 
 void func_8005DC3C(s32 sfx, VECTOR3* pos, s32 arg2, s32 soundType, s32 arg4) // 0x8005DC3C
@@ -3139,7 +3137,6 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
     s32 var_s3;
     s_Model* model;
     s32 temp;
-
 
     var_s3 = 0;
     
@@ -8920,7 +8917,7 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
         case 40: // Thrown in the floor from behind    (Romper attack).
         case 47:
         case 48:
-		// Code related when enemies grab Harry.
+            // related to enemy grabbing.
             if (chara->damageReceived_C0 != 0 && !(g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & PlayerFlag_DamageReceived))
             {
                 g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_DamageReceived;
@@ -9256,7 +9253,7 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
                     {
                         var_v1_2 = 23; // Back harm animation.
                     }
-					
+
                     g_SysWork.player_4C.extra_128.field_1C = var_v1_2;
                     chara->model_0.stateStep_3             = 0;
                     chara->model_0.state_2                 = 0;
