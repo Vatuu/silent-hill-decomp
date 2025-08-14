@@ -758,7 +758,10 @@ typedef struct
     u8   meshCount_8;
     u8   vertexOffset_9;
     u8   normalOffset_A;
-    u8   unk_B[1];
+    u8   field_B_0 : 1;
+    u8   field_B_1 : 3;
+    u8   field_B_4 : 2;
+    u8   unk_B_6 : 2;
 
     s_ObjHeader* meshes_C;
 } s_ObjList;
@@ -766,7 +769,15 @@ STATIC_ASSERT_SIZEOF(s_ObjList, 16);
 
 typedef struct
 {
-    u8         unk_0[8];
+    u8    unk_0[4];
+    void* field_4;
+    // Likely incomplete.
+} s_func_80057090;
+
+typedef struct
+{
+    s32        field_0;
+    u8         unk_4[4];
     s_ObjList* field_8;
     // Likely incomplete.
 } s_func_80057344;
@@ -2304,6 +2315,8 @@ extern u8 D_800C3E40;
  */
 // extern s_800C4168 D_800C4168;
 
+extern u16 D_800C42B4; // TODO: May be part of `s_800C4168`.
+
 extern u16 D_800C42D0;
 
 extern u16 D_800C42D2;
@@ -2916,6 +2929,12 @@ void func_800560FC(s_800BE9FC* arg0);
 /** Related to enviroment textures. */
 void func_8005B1A0(s_800C1450_58* arg0, s32 arg1, s32 arg2, u8 arg3, s32 arg4, s32 arg5, s16 arg6, s16 arg7);
 
+/** TODO: Unknown `arg3`/`arg4` types. */
+void func_80059D50(s32 arg0, s_func_80057344* arg1, s_func_8005A21C* arg2, void* arg3, void* arg4);
+
+/** TODO: Unknown `arg1`/`arg2` types. */
+void func_8005A21C(s_func_80057344* arg0, void* arg1, void* arg2, s_func_8005A21C* arg3);
+
 /** @brief Computes a fog-shaded version of `D_800C4190` color using `arg1` as the distance factor?
  *  Stores the result at 0x3D8 into `arg0`.
  */
@@ -2950,12 +2969,16 @@ void func_80056C8C(s_Bone* bone, s_800BE9FC* arg1, s32 arg2);
 
 void func_80056D64(s8* prevStr, s8* newStr);
 
+void func_80057090(s_func_80057344* arg0, s_func_80057090* arg1, void* arg2, s32 arg3, MATRIX* mat, u16 arg5);
+
 s32 func_800571D0(u32 arg0);
 
 void func_80057228(MATRIX* mat, s32 alpha, SVECTOR* arg2, VECTOR3* arg3);
 
 /** TODO: Unknown `arg1`/`arg2` types. */
 void func_80057344(s_func_80057344* arg0, void* arg1, void* arg2, s32 arg3);
+
+void func_800574D4(s_ObjHeader* header, s_GteScratchData* scratchData);
 
 void func_8005759C(s_ObjHeader* header, s_GteScratchData* scratchData, s32 vertexOffset, s32 normalOffset);
 

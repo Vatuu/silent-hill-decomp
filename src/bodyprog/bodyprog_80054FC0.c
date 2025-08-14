@@ -452,7 +452,43 @@ void func_80056D64(s8* prevStr, s8* newStr) // 0x80056D64
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80056D8C); // 0x80056D8C
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80057090); // 0x80057090
+void func_80057090(s_func_80057344* arg0, s_func_80057090* arg1, void* arg2, s32 arg3, MATRIX* mat, u16 arg5) // 0x80057090
+{
+    s_ObjList* objList;
+    void*      temp_s1;
+    s32        temp_a0;
+
+    objList = arg0->field_8;
+
+    if (arg0->field_0 < 0)
+    {
+        return;
+    }
+
+    temp_s1 = arg1->field_4 + (func_800571D0(objList->field_B_1) * 4);
+    temp_a0 = objList->field_B_4;
+    if ((temp_a0 & 0xFF) != 0 && temp_a0 >= 0 && temp_a0 < 4) // HACK: & 0xFF needed for match
+    {
+        func_80059D50(temp_a0, arg0, arg3, arg2, temp_s1);
+    }
+    else
+    {
+        if (mat != NULL && D_800C4168.field_0 != 0)
+        {
+            func_80057228(mat, D_800C4168.field_54, &D_800C4168.field_58, &D_800C4168.field_60);
+        }
+
+        if (objList->field_B_0)
+        {
+            D_800C42B4 = arg5;
+            func_8005A21C(arg0, temp_s1, arg2, arg3);
+        }
+        else
+        {
+            func_80057344(arg0, temp_s1, arg2, arg3);
+        }
+    }
+}
 
 // TODO: .rodata migration and odd code.
 #ifdef NON_MATCHING
@@ -510,7 +546,7 @@ void func_80057228(MATRIX* mat, s32 alpha, SVECTOR* arg2, VECTOR3* arg3) // 0x80
     gte_stsv(&D_800C4168.field_7C);
 }
 
-void func_80057344(s_func_80057344* header, void* arg1, void* arg2, s32 arg3) // 0x80057344
+void func_80057344(s_func_80057344* arg0, void* arg1, void* arg2, s32 arg3) // 0x80057344
 {
     u32               normalOffset;
     u32               vertexOffset;
@@ -520,7 +556,7 @@ void func_80057344(s_func_80057344* header, void* arg1, void* arg2, s32 arg3) //
 
     scratchData = PSX_SCRATCH_ADDR(0);
 
-    var_s2 = header->field_8;
+    var_s2       = arg0->field_8;
     vertexOffset = var_s2->vertexOffset_9;
     normalOffset = var_s2->normalOffset_A;
 
@@ -557,9 +593,46 @@ void func_80057344(s_func_80057344* header, void* arg1, void* arg2, s32 arg3) //
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_800574D4); // 0x800574D4
+void func_800574D4(s_ObjHeader* header, s_GteScratchData* scratchData) // 0x800574D4
+{
+    DVECTOR* vertexXy;
+    s16*     vertexZ;
+    DVECTOR* screenXy;
+    s16*     var_a2;
+    u8*      unkPtr;
+    u8*      unkPtrDest;
 
-void func_8005759C(s_ObjHeader* arg0, s_GteScratchData* scratchData, s32 vertexOffset, s32 normalOffset) // 0x8005759C
+    screenXy = &scratchData->screenXy_0[0];
+    var_a2   = &scratchData->field_18C[0]; // screenZ? there's already field for it earlier in struct though..
+    vertexXy = &header->vertexXy_8[0];
+    vertexZ  = &header->vertexZ_C[0];
+
+    while (var_a2 < &scratchData->field_18C[header->vertexCount_1])
+    {
+        *(u32*)screenXy++ = *(u32*)vertexXy++;
+
+        *(u32*)var_a2 = *(u32*)vertexZ;
+        vertexZ += 2;
+        var_a2 += 2;
+    }
+
+    while (screenXy < &scratchData->screenXy_0[header->vertexCount_1])
+    {
+        *(u32*)screenXy++ = *(u32*)vertexXy++;
+    }
+
+    unkPtr     = &header->unkPtr_14[0];
+    unkPtrDest = &scratchData->field_2B8[0];
+
+    while (unkPtrDest < &scratchData->field_2B8[header->unkCount_3])
+    {
+        *(u32*)unkPtrDest = *(u32*)unkPtr;
+        unkPtr += 4;
+        unkPtrDest += 4;
+    }
+}
+
+void func_8005759C(s_ObjHeader* header, s_GteScratchData* scratchData, s32 vertexOffset, s32 normalOffset) // 0x8005759C
 {
     s16* vertexZPtr;
     s16* field_18CPtr;
@@ -571,17 +644,17 @@ void func_8005759C(s_ObjHeader* arg0, s_GteScratchData* scratchData, s32 vertexO
     // Should be loop? Tried but no luck.
     screenXyPtr  = &scratchData->screenXy_0[vertexOffset];
     field_18CPtr = &scratchData->field_18C[vertexOffset];
-    vertexXyPtr  = arg0->vertexXy_8;
-    vertexZPtr   = arg0->vertexZ_C;
-    while (vertexXyPtr < &arg0->vertexXy_8[arg0->vertexCount_1])
+    vertexXyPtr  = header->vertexXy_8;
+    vertexZPtr   = header->vertexZ_C;
+    while (vertexXyPtr < &header->vertexXy_8[header->vertexCount_1])
     {
         *screenXyPtr++  = *vertexXyPtr++;
         *field_18CPtr++ = *vertexZPtr++;
     }
 
-    field_14Ptr  = arg0->unkPtr_14;
+    field_14Ptr  = header->unkPtr_14;
     field_2B8Ptr = &scratchData->field_2B8[normalOffset];
-    while (field_14Ptr < &arg0->unkPtr_14[arg0->unkCount_3])
+    while (field_14Ptr < &header->unkPtr_14[header->unkCount_3])
     {
         *field_2B8Ptr++ = *field_14Ptr++;
     }
@@ -769,7 +842,23 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80057B7C); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8005801C); // 0x8005801C
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80059D50); // 0x80059D50
+void func_80059D50(s32 arg0, s_func_80057344* arg1, s_func_8005A21C* arg2, void* arg3, void* arg4) // 0x80059D50
+{
+    s_GteScratchData* scratchData;
+    s_ObjHeader*      mesh;
+    s_ObjList*        objList;
+
+    scratchData = PSX_SCRATCH_ADDR(0);
+
+    objList = arg1->field_8;
+
+    for (mesh = &objList->meshes_C[0]; mesh < &objList->meshes_C[objList->meshCount_8]; mesh++)
+    {
+        func_800574D4(mesh, scratchData);
+        func_80057B7C(mesh, 0, scratchData, arg2);
+        func_80059E34(arg0, mesh, scratchData, arg3, arg4);
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80059E34); // 0x80059E34
 
@@ -779,7 +868,7 @@ void func_8005A21C(s_func_80057344* arg0, void* arg1, void* arg2, s_func_8005A21
     u32                normalOffset;
     u32                vertexOffset;
     s_ObjList*         temp_s1;
-    s_ObjHeader*       var_s0;
+    s_ObjHeader*       mesh;
     s_GteScratchData*  scratchData;
 
     scratchData = PSX_SCRATCH_ADDR(0);
@@ -825,16 +914,16 @@ void func_8005A21C(s_func_80057344* arg0, void* arg1, void* arg2, s_func_8005A21
     vertexOffset = temp_s1->vertexOffset_9;
     normalOffset = temp_s1->normalOffset_A;
 
-    for (var_s0 = temp_s1->meshes_C; var_s0 < &temp_s1->meshes_C[temp_s1->meshCount_8]; var_s0++)
+    for (mesh = temp_s1->meshes_C; mesh < &temp_s1->meshes_C[temp_s1->meshCount_8]; mesh++)
     {
-        func_8005A900(var_s0, vertexOffset, scratchData, arg3);
+        func_8005A900(mesh, vertexOffset, scratchData, arg3);
 
         if (D_800C4168.field_0 != 0)
         {
-            func_8005AA08(var_s0, normalOffset, scratchData);
+            func_8005AA08(mesh, normalOffset, scratchData);
         }
 
-        func_8005AC50(var_s0, scratchData, arg1, arg2);
+        func_8005AC50(mesh, scratchData, arg1, arg2);
     }
 }
 
