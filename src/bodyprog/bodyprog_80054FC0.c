@@ -1261,12 +1261,12 @@ void func_8005DC1C(s32 arg0, VECTOR3* arg1, s32 arg2, s32 arg3)
 	func_8005DC3C(arg0, arg1, arg2, arg3, 0);
 }
 
-void func_8005DC3C(s32 sfx, VECTOR3* pos, s32 arg2, s32 arg3, s32 arg4) // 0x8005DC3C
+void func_8005DC3C(s32 sfx, VECTOR3* pos, s32 arg2, s32 soundType, s32 arg4) // 0x8005DC3C
 {
     s32 var_a2;
     s32 var_s1;
 
-    if ((arg3 & (1 << 0)) || (g_GameWork.config_0.optSoundType_1E))
+    if (soundType & (1 << 0) || g_GameWork.config_0.optSoundType_1E) // If sound is monaural.
     {
         var_s1 = 0;
     }
@@ -1284,7 +1284,7 @@ void func_8005DC3C(s32 sfx, VECTOR3* pos, s32 arg2, s32 arg3, s32 arg4) // 0x800
         arg2 = 0;
     }
 
-    if (!(arg3 & 2))
+    if (!(soundType & 2))
     {
         var_a2 = func_8005D9B8(pos, arg2);
     }
@@ -1298,7 +1298,7 @@ void func_8005DC3C(s32 sfx, VECTOR3* pos, s32 arg2, s32 arg3, s32 arg4) // 0x800
         var_a2 = 0xFF;
     }
 
-    if (arg3 & 4)
+    if (soundType & 4)
     {
         func_800463C0(sfx, var_s1, ~var_a2, arg4);
     }
@@ -3110,7 +3110,1369 @@ void func_80071968(s_SubCharacter* chara, s_MainCharacterExtra* extra, void* arg
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80071968); // 0x80071968
 #endif
 
+// TODO: RODATA migration.
+#ifdef NON_MATCHING
+void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coord)
+{
+    s16 sp10[2]; // Type assumed. Maybe DVECTOR
+    s16 sp18;
+    s16 sp1A;
+    s16 sp1C;
+    s16 sp1E;
+    s32 temp_a2;
+    s_Model **new_var;
+    s32 temp_s0;
+    s16 temp_v0;
+    s32 var_v1_5;
+    s32 temp_s0_3;
+    s32 temp_v1_10;
+    s32 temp_v1_11;
+    s32 temp_v1_12;
+    s32 temp_v1_13;
+    s32 var_s0;
+    s32 var_2;
+    s32 var_s5;
+    s32 var_s5_2;
+    s32 var_s6;
+    s16 var_s7;
+    s32 npcIdx;
+    s32 var_s3;
+    s_Model* model;
+    s32 temp;
+
+
+    var_s3 = 0;
+    
+    func_8004C8DC();
+    
+    D_800C4550 = 0;
+    D_800C454C = 0;
+    chara->properties_E4.player.field_10C >>= 1;
+    
+    if (chara->flags_3E & (1 << 3))
+    {
+        chara->properties_E4.larvalStalker.properties_E8[10].val32 += g_DeltaTime0;
+    }
+    
+    if (chara->properties_E4.larvalStalker.properties_E8[10].val32 > D_800C45EC)
+    {
+        chara->properties_E4.larvalStalker.properties_E8[10].val32 = 0;
+        chara->flags_3E &= ~(1 << 3);
+    }
+    
+    if (g_SysWork.player_4C.chara_0.properties_E4.player.field_114 != 0)
+    {
+        g_SysWork.player_4C.chara_0.properties_E4.player.field_114 -= g_DeltaTime0;
+    }
+    
+    g_SysWork.player_4C.chara_0.properties_E4.player.field_114 = CLAMP(g_SysWork.player_4C.chara_0.properties_E4.player.field_114, 0, FP_FLOAT_TO(60.0f, Q12_SHIFT));
+    
+    if (g_SysWork.playerCombatInfo_38.equippedWeapon_F == EquippedWeaponId_Chainsaw || g_SysWork.playerCombatInfo_38.equippedWeapon_F == EquippedWeaponId_RockDrill)
+    {
+        func_8004C564(g_SysWork.playerCombatInfo_38.equippedWeapon_F, g_SysWork.player_4C.chara_0.properties_E4.player.field_114 != 0 ? 4 : 2);
+    }
+    
+    g_SavegamePtr->field_238 -= g_DeltaTime0;
+    
+    g_SavegamePtr->field_238 = CLAMP(g_SavegamePtr->field_238, 0, FP_FLOAT_TO(300.0f, Q12_SHIFT));
+    
+    if (g_SavegamePtr->field_238 != 0)
+    {
+        g_SysWork.player_4C.chara_0.health_B0 += g_DeltaTime0;
+        g_SysWork.player_4C.chara_0.health_B0 = CLAMP(g_SysWork.player_4C.chara_0.health_B0, 0, FP_FLOAT_TO(100.0f, Q12_SHIFT));
+    }
+    
+    if (g_SavegamePtr->mapOverlayId_A4 == MapOverlayId_MAP2_S00)
+    {
+        g_MapOverlayHeader.func_108();
+    }
+    
+    if (g_DeltaTime0 != 0)
+    {
+        func_8007F32C();
+    }
+    
+    switch (g_SysWork.player_4C.extra_128.field_1C)
+    {
+        case 2:
+            g_SysWork.player_4C.chara_0.properties_E4.player.field_126 = 0;
+            func_8005545C(&sp10);
+            g_SysWork.player_4C.chara_0.properties_E4.npc.field_120 = sp10[1];
+            
+            if (extra->model_0.stateStep_3 == 0)
+            {
+                extra->model_0.anim_4.animIdx_0 = 34;
+                extra->model_0.stateStep_3++;
+            }
+            
+            if (chara->model_0.stateStep_3 == 0)
+            {
+                chara->model_0.anim_4.animIdx_0 = 34;
+                chara->model_0.stateStep_3++;
+            }
+            
+            if ((D_800C4558 | D_800C455C) == 0)
+            {
+                break;
+            }
+            
+            g_SysWork.player_4C.extra_128.field_1C = 0;
+            chara->model_0.stateStep_3 = 0;
+            chara->model_0.state_2 = 0;
+            extra->model_0.stateStep_3 = 0;
+            extra->model_0.state_2 = 0;
+            g_SysWork.player_4C.extra_128.field_20 = 0;
+            g_SysWork.player_4C.extra_128.field_24 = 0;
+
+        case 0:
+        case 1:
+            func_80077D00(chara, extra);
+                
+            if (g_SysWork.player_4C.extra_128.field_1C < 2u)
+            {
+                func_80074254(chara, extra);
+            }
+            break;
+            
+        case 7:
+            func_8007FB94(chara, extra, 0xC8);
+            
+            if (g_SysWork.player_4C.chara_0.properties_E4.player.field_126 != 0)
+            {
+                g_SysWork.player_4C.chara_0.properties_E4.player.field_126 -= ((g_DeltaTime0 << 11) / 136);
+                
+                if (g_SysWork.player_4C.chara_0.properties_E4.player.field_126 < 0)
+                {
+                    g_SysWork.player_4C.chara_0.properties_E4.player.field_126 = 0;
+                }
+            }
+            
+            if ((u32)((u8)chara->field_41 - 0x44) >= 2)
+            {
+                D_800C4608 = ratan2(chara->field_B4, chara->field_BC) - chara->rotation_24.vy;
+                g_SysWork.player_4C.chara_0.properties_E4.player.field_126 = SQUARE(chara->field_B4) + SQUARE(chara->field_BC) + SQUARE(chara->field_B8);
+            }
+            
+            if (extra->model_0.anim_4.keyframeIdx0_8 == g_MapOverlayHeader.field_38[D_800AF220].field_6)
+            {
+                chara->field_41                                             = NO_VALUE;
+                g_SysWork.field_2353                                        = NO_VALUE;
+                g_SysWork.player_4C.extra_128.field_1C                      = 0;
+                g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~(1 << 14);
+                chara->model_0.stateStep_3                                  = 0;
+                chara->model_0.state_2                                      = 0;
+                extra->model_0.stateStep_3                                  = 0;
+                extra->model_0.state_2                                      = 0;
+                g_SysWork.player_4C.extra_128.field_20                      = 0;
+                g_SysWork.player_4C.extra_128.field_24                      = 0;
+                g_SysWork.player_4C.chara_0.properties_E4.player.field_126  = 0;
+            }
+            
+            D_800C4550       = g_SysWork.player_4C.chara_0.properties_E4.player.field_126;
+            chara->flags_3E |= 1 << 3;
+            chara->field_41  = NO_VALUE;
+            break;
+        
+        case 45:
+        case 46:
+            var_s0 = 0;
+            
+            switch (g_SysWork.player_4C.extra_128.field_1C)
+            {
+                case 45:
+                    var_s3 = 0x107;
+                    var_s0 = 0x2F;
+                    break;
+                    
+                case 46:
+                    var_s3 = 0x108;
+                    var_s0 = 0x30;
+                    break;
+            }
+            
+            func_8007FB94(chara, extra, var_s3);
+            
+            if (chara->model_0.anim_4.keyframeIdx0_8 == g_MapOverlayHeader.field_38[D_800AF220].field_6)
+            {
+                g_SysWork.player_4C.extra_128.field_1C       = var_s0;
+                chara->model_0.stateStep_3                   = 0;
+                chara->model_0.state_2                       = 0;
+                extra->model_0.stateStep_3                   = 0;
+                extra->model_0.state_2                       = 0;
+                g_SysWork.player_4C.extra_128.field_20       = 0;
+                g_SysWork.player_4C.extra_128.field_24       = 0;
+                chara->properties_E4.player.properties_E4[1] = 0xA000;
+            }
+            
+            if (g_SysWork.player_4C.chara_0.properties_E4.player.field_126 != 0)
+            {
+                g_SysWork.player_4C.chara_0.properties_E4.player.field_126 -= ((g_DeltaTime0 << 11) / 136) >> 3;
+                
+                if ((g_SysWork.player_4C.chara_0.properties_E4.player.field_126) < 0)
+                {
+                    g_SysWork.player_4C.chara_0.properties_E4.player.field_126 = 0;
+                }
+            }
+            
+            D_800C4550 = g_SysWork.player_4C.chara_0.properties_E4.player.field_126;
+            
+            break;
+        
+        case 37:
+        case 38:
+            var_s5 = 0;
+            npcIdx = 0;
+            
+            switch (g_SysWork.player_4C.extra_128.field_1C)
+            {
+                case 37:
+                    var_s3 = 0xFF;
+                    var_s5 = 0x27;
+                    npcIdx = g_SysWork.field_2354[0];
+                    func_8007FB34(chara->rotation_24.vy, (g_SysWork.npcs_1A0[npcIdx].rotation_24.vy + FP_ANGLE(180.0f)) & 0xFFF, &sp18);
+                    break;
+                    
+                case 38:
+                    var_s3 = 0x101;
+                    var_s5 = 0x28;
+                    npcIdx = g_SysWork.field_2354[1];
+                    func_8007FB34(chara->rotation_24.vy, (g_SysWork.npcs_1A0[npcIdx].rotation_24.vy + FP_ANGLE(360.0f)) & 0xFFF, &sp18);
+                    break;
+            }
+            
+            g_SysWork.player_4C.chara_0.properties_E4.player.field_126 = 0;
+            func_8007FB94(chara, extra, var_s3);
+            chara->field_D4 = 0x400;
+            chara->field_D6 = 0;
+            
+            if (chara->model_0.anim_4.animIdx_0 & (1 << 0))
+            {
+                temp_s0 = -D_800AF1FC[chara->model_0.anim_4.keyframeIdx0_8 - g_MapOverlayHeader.field_38[D_800AF220].field_4];
+                g_SysWork.player_4C.chara_0.field_D8.field_0 = 0;
+                g_SysWork.player_4C.chara_0.field_D8.field_2 = 0;
+                g_SysWork.player_4C.chara_0.field_D8.field_4 = FP_MULTIPLY(temp_s0, shRsin(chara->rotation_24.vy), Q12_SHIFT);
+                g_SysWork.player_4C.chara_0.field_D8.field_6 = FP_MULTIPLY(temp_s0, shRcos(chara->rotation_24.vy), Q12_SHIFT);
+            }
+            
+            if (ABS(sp18) < 0x80)
+            {
+                if (g_SysWork.player_4C.extra_128.field_1C == 0x25)
+                {
+                    chara->rotation_24.vy = g_SysWork.npcs_1A0[npcIdx].rotation_24.vy + FP_ANGLE(180.0f);
+                }
+                else
+                {
+                    chara->rotation_24.vy = g_SysWork.npcs_1A0[npcIdx].rotation_24.vy;
+                }
+            }
+            else
+            {
+                if (sp18 > 0)
+                {
+                    chara->rotation_24.vy += 0x80;
+                }
+                else
+                {
+                    chara->rotation_24.vy -= 0x80;
+                }
+            }
+
+            func_8007FB34(chara->rotation_24.vy, (g_SysWork.npcs_1A0[npcIdx].rotation_24.vy + FP_ANGLE(360.0f)) & 0xFFF, &sp18);
+            
+            model = &g_SysWork.npcs_1A0[npcIdx].model_0;
+            
+            do { } while(0); // HACK
+            
+            D_800C4608 = temp = sp18;
+
+            if ((*new_var) != NULL) // HACK
+            {
+                D_800C4608 += 0;
+            }
+            
+            if (chara->model_0.anim_4.keyframeIdx0_8 == g_MapOverlayHeader.field_38[D_800AF220].field_6)
+            {
+                g_SysWork.player_4C.extra_128.field_1C       = var_s5;
+                chara->model_0.stateStep_3                   = 0;
+                chara->model_0.state_2                       = 0;
+                extra->model_0.stateStep_3                   = 0;
+                extra->model_0.state_2                       = 0;
+                g_SysWork.player_4C.extra_128.field_20       = 0;
+                g_SysWork.player_4C.extra_128.field_24       = 0;
+                chara->properties_E4.player.properties_E4[1] = 0xF000;
+            }
+
+            if (chara->model_0.anim_4.animIdx_0 & (1 << 0))
+            {
+                if (g_SysWork.player_4C.extra_128.field_1C >= 0x25 && g_SysWork.player_4C.extra_128.field_1C < 0x27)
+                {
+                    temp = -0x8000;
+                    extra->model_0.anim_4.time_4 = (FP_TO(g_MapOverlayHeader.animInfo_34[chara->model_0.anim_4.animIdx_0 - 0x4C].keyframeIdx0_C, Q12_SHIFT) + model->anim_4.time_4) + temp;
+                    chara->model_0.anim_4.time_4 = (FP_TO(g_MapOverlayHeader.animInfo_34[chara->model_0.anim_4.animIdx_0 - 0x4C].keyframeIdx0_C, Q12_SHIFT) + model->anim_4.time_4) + temp;
+                    chara->model_0.anim_4.keyframeIdx0_8 = FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT);
+                    extra->model_0.anim_4.keyframeIdx0_8 = FP_FROM(extra->model_0.anim_4.time_4, Q12_SHIFT);
+                }
+            }
+            
+
+            if (ABS(chara->position_18.vx - D_800C4610) < 0xCD)
+            {
+                chara->position_18.vx = D_800C4610;
+            }
+            else
+            {
+                if (chara->position_18.vx >= D_800C4610)
+                {
+                    chara->position_18.vx -= 0xCD;
+                }
+                else
+                {
+                    chara->position_18.vx += 0xCD;
+                }
+            }
+            
+            if (ABS(chara->position_18.vz - D_800C4618) < 0xCD)
+            {
+                chara->position_18.vz = D_800C4618;
+            }
+            else
+            {
+                if (chara->position_18.vz < D_800C4618)
+                {
+                    chara->position_18.vz += 0xCD;
+                }
+                else
+                {
+                    chara->position_18.vz -= 0xCD;
+                }
+            }
+            
+            break;
+        
+        case 10:
+        case 13:
+        case 14:
+        case 15:
+        case 32:
+        case 33:
+        case 39:
+        case 40:
+        case 47:
+        case 48:
+            var_2 = 0;
+            var_s5_2 = 0;
+            var_s6 = 0;
+            g_SysWork.player_4C.chara_0.properties_E4.player.field_126 = 0;
+            var_s7 = 0;
+            
+            switch (g_SysWork.player_4C.extra_128.field_1C)
+            {
+                case 47:
+                case 48:
+                    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
+                    {
+                        var_2 = 0x640;
+                    }
+                    else if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
+                    {
+                        var_2 = 0x12C0;
+                    }
+                    else
+                    {
+                        var_2 = 0xC80;
+                    }
+                    
+                    switch (g_SysWork.player_4C.extra_128.field_1C)
+                    {
+                        case 47:
+                            var_s3 = 0x109;
+                            var_s5_2 = 0x31;
+                            break;
+                        
+                        case 48:
+                            var_s3 = 0x10A;
+                            var_s5_2 = 0x32;
+                            break;
+                    }
+                    
+                    chara->field_D6 += FP_MULTIPLY((s64)g_DeltaTime0, (s64)FP_FLOAT_TO(0.27f, Q12_SHIFT), Q12_SHIFT);
+                    chara->field_C8 += FP_MULTIPLY((s64)g_DeltaTime0, (s64)FP_FLOAT_TO(1.2f, Q12_SHIFT), Q12_SHIFT);
+                    chara->field_CE += FP_MULTIPLY((s64)g_DeltaTime0, (s64)FP_FLOAT_TO(0.9f, Q12_SHIFT), Q12_SHIFT);
+                    
+                    chara->field_D6  = CLAMP(chara->field_D6, 0x3AE, 0x800);
+                    chara->field_C8  = CLAMP(chara->field_C8, -0x1999, -0x666);
+                    chara->field_CE  = CLAMP(chara->field_CE, -0x1199, -0x333);
+                    
+                    if (chara->health_B0 <= FP_FLOAT_TO(0.0f, Q12_SHIFT) && chara->properties_E4.player.properties_E4[1] <= 0)
+                    {
+                        g_MapOverlayHeader.func_DC();
+                        g_SysWork.sysState_8                                       = GameState_ExitMovie;
+                        g_SysWork.timer_24                                         = 0;
+                        g_SysWork.sysStateStep_C                                   = 0;
+                        g_SysWork.field_28                                         = 0;
+                        g_SysWork.field_10                                         = 0;
+                        g_SysWork.timer_2C                                         = 0;
+                        g_SysWork.field_14                                         = 0;
+                        chara->health_B0                                           = FP_FLOAT_TO(100.0f, Q12_SHIFT);
+                        g_SysWork.player_4C.chara_0.properties_E4.player.field_114 = 0;
+                        return;
+                    }
+                    break;
+
+                case 39:
+                case 40:
+                    var_s6 = 0xA66;
+                    
+                    switch (g_SysWork.player_4C.extra_128.field_1C)
+                    {
+                        case 39:
+                            if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
+                            {
+                                var_2 = 0x320;
+                            }
+                            else if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
+                            {
+                                var_2 = 0x960;
+                            }
+                            else
+                            {
+                                var_2 = 0x640;
+                            }
+                            
+                            var_s3 = 0x100;
+                            var_s5_2 = 0x29;
+                            break;
+                        
+                        case 40:
+                            if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
+                            {
+                                var_2 = 0x4B0;
+                            }
+                            else if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
+                            {
+                                var_2 = 0xE10;
+                            }
+                            else
+                            {
+                                var_2 = 0x960;
+                            }
+                            
+                            var_s3 = 0x102;
+                            var_s5_2 = 0x2A;
+                            break;
+                    }
+                    
+                    chara->field_D4                              = 0;
+                    g_SysWork.player_4C.chara_0.field_D8.field_6 = 0;
+                    g_SysWork.player_4C.chara_0.field_D8.field_4 = 0;
+                    g_SysWork.player_4C.chara_0.field_D8.field_2 = 0;
+                    g_SysWork.player_4C.chara_0.field_D8.field_0 = 0;
+                    
+                    if (ABS(chara->position_18.vx - D_800C4610) < 0xCD)
+                    {
+                        chara->position_18.vx = D_800C4610;
+                    }
+                    else
+                    {
+                        if (chara->position_18.vx >= D_800C4610)
+                        {
+                            chara->position_18.vx -= 0xCD;
+                        }
+                        else
+                        {
+                            chara->position_18.vx += 0xCD;
+                        }
+                    }
+                    
+                    if (ABS(chara->position_18.vz - D_800C4618) < 0xCD)
+                    {
+                        chara->position_18.vz = D_800C4618;
+                    }
+                    else
+                    {
+                        if (chara->position_18.vz >= D_800C4618)
+                        {
+                            chara->position_18.vz -= 0xCD;
+                        }
+                        else
+                        {
+                            chara->position_18.vz += 0xCD;
+                        }
+                    }
+                    
+                    if (chara->health_B0 <= FP_FLOAT_TO(0.0f, Q12_SHIFT) && chara->properties_E4.player.properties_E4[1] <= 0)
+                    {
+                        g_MapOverlayHeader.func_DC();
+                        g_SysWork.sysState_8                                       = GameState_ExitMovie;
+                        g_SysWork.timer_24                                         = 0;
+                        g_SysWork.sysStateStep_C                                   = 0;
+                        g_SysWork.field_28                                         = 0;
+                        g_SysWork.field_10                                         = 0;
+                        g_SysWork.timer_2C                                         = 0;
+                        g_SysWork.field_14                                         = 0;
+                        chara->health_B0                                           = FP_FLOAT_TO(100.0f, Q12_SHIFT);
+                        g_SysWork.player_4C.chara_0.properties_E4.player.field_114 = 0;
+                        return;
+                    }
+                    break;
+                
+                case 10:
+                    var_s6 = 0x1000;
+
+                    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
+                    {
+                        var_2 = 0x320;
+                    }
+                    else if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
+                    {
+                        var_2 = 0x960;
+                    }
+                    else
+                    {
+                        var_2 = 0x640;
+                    }
+                    
+                    var_s3 = 0xE6;
+                    var_s5_2 = 0x10;
+                    break;
+                
+                default:
+                    break;
+                
+                case 13:
+                    var_s6 = 0x1000;
+
+                    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
+                    {
+                        var_2 = 0x3E8;
+                    }
+                    else if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
+                    {
+                        var_2 = 0xBB8;
+                    }
+                    else
+                    {
+                        var_2 = 0x7D0;
+                    }
+                    
+                    var_s3 = 0xEA;
+                    var_s5_2 = 0x14;
+                    break;
+                
+                case 14:
+                    var_s6 = 0xCCC;
+
+                    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
+                    {
+                        var_2 = 0x2BC;
+                    }
+                    else if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
+                    {
+                        var_2 = 0x834;
+                    }
+                    else
+                    {
+                        var_2 = 0x578;
+                    }
+                    
+                    var_s3 = 0xEB;
+                    var_s5_2 = 0x15;
+                    break;
+                
+                case 15:
+                    var_s6 = 0xCCC;
+
+                    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
+                    {
+                        var_2 = 0x320;
+                    }
+                    else if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
+                    {
+                        var_2 = 0x960;
+                    }
+                    else
+                    {
+                        var_2 = 0x640;
+                    }
+                    
+                    var_s3 = 0xEC;
+                    var_s5_2 = 0x16;
+                    break;
+                
+                case 32:
+                    var_s6 = 0x1800;
+
+                    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
+                    {
+                        var_2 = 0xE10;
+                    }
+                    else if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
+                    {
+                        var_2 = 0x2A30;
+                    }
+                    else
+                    {
+                        var_2 = 0x1C20;
+                    }
+                    
+                    var_s3 = 0xFB;
+                    var_s5_2 = 0x10;
+                    break;
+                
+                case 33:
+                    var_s6 = 0x1800;
+
+                    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
+                    {
+                        var_2 = 0xE10;
+                    }
+                    else if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
+                    {
+                        var_2 = 0x2A30;
+                    }
+                    else
+                    {
+                        var_2 = 0x1C20;
+                    }
+                    
+                    var_s3 = 0xFB;
+                    var_s5_2 = 0x14;
+                    break;
+            }
+            
+            switch (g_SysWork.player_4C.extra_128.field_1C)
+            {
+                case 10:
+                case 14:
+                case 32:
+                case 39:
+                    temp_v1_10 = chara->position_18.vx - g_SysWork.npcs_1A0[g_SysWork.field_2354[0]].position_18.vx;
+                    temp_v1_11 = chara->position_18.vz - g_SysWork.npcs_1A0[g_SysWork.field_2354[0]].position_18.vz;
+                    var_s7     = SquareRoot0(SQUARE(temp_v1_10) + SQUARE(temp_v1_11));
+                    func_8007FB34(chara->rotation_24.vy, (g_SysWork.npcs_1A0[g_SysWork.field_2354[0]].rotation_24.vy + FP_ANGLE(180.0f)) & 0xFFF, &sp1A);
+                            
+                    if (ABS(sp1A) < 0x80)
+                    {
+                        chara->rotation_24.vy = g_SysWork.npcs_1A0[g_SysWork.field_2354[0]].rotation_24.vy + FP_ANGLE(180.0f);
+                    }
+                    else
+                    {
+                        if (sp1A > 0)
+                        {
+                            chara->rotation_24.vy += 0x80;
+                        }
+                        else
+                        {
+                            chara->rotation_24.vy -= 0x80;
+                        }
+                    }
+                    break;
+                        
+                case 13:
+                case 15:
+                case 33:
+                case 40:
+                    temp_v1_12 = chara->position_18.vx - g_SysWork.npcs_1A0[g_SysWork.field_2354[1]].position_18.vx;
+                    temp_v1_13 = chara->position_18.vz - g_SysWork.npcs_1A0[g_SysWork.field_2354[1]].position_18.vz;
+                    var_s7 = SquareRoot0(SQUARE(temp_v1_12) + SQUARE(temp_v1_13));
+                    func_8007FB34(chara->rotation_24.vy, (g_SysWork.npcs_1A0[g_SysWork.field_2354[1]].rotation_24.vy + 0x1000) & 0xFFF, &sp1A);
+
+                    if (ABS(sp1A) < 0x80)
+                    {
+                        chara->rotation_24.vy = g_SysWork.npcs_1A0[g_SysWork.field_2354[1]].rotation_24.vy;
+                    }
+                    else
+                    {
+                        if (sp1A > 0)
+                        {
+                            chara->rotation_24.vy += 0x80;
+                        }
+                        else
+                        {
+                            chara->rotation_24.vy -= 0x80;
+                        }
+                    }
+                    break;
+            }
+                    
+            switch (g_SysWork.player_4C.extra_128.field_1C)
+            {
+                case 39:
+                    func_8007FB34(chara->rotation_24.vy, (g_SysWork.npcs_1A0[g_SysWork.field_2354[0]].rotation_24.vy + FP_ANGLE(360.0f)) & 0xFFF, &sp1A);
+                        
+                case 40:
+                    func_8007FB34(chara->rotation_24.vy, (g_SysWork.npcs_1A0[g_SysWork.field_2354[1]].rotation_24.vy + FP_ANGLE(360.0f)) & 0xFFF, &sp1A);
+                    break;
+            }
+                    
+            D_800C4608 = sp1A;
+            func_8007FB94(chara, extra, var_s3);
+                    
+            if (chara->health_B0 > FP_FLOAT_TO(0.0f, Q12_SHIFT) && (D_800C4558 | D_800C455C) != 0)
+            {
+                D_800AF20C += g_DeltaTime0;
+            }
+                    
+            if ((g_SysWork.player_4C.extra_128.field_1C - 0x2F) >= 2u)
+            {
+                if (var_s6 < var_s7)
+                {
+                    D_800AF20C = var_2;
+                    if (g_SysWork.player_4C.extra_128.field_1C == 0x27)
+                    {
+                        g_SysWork.npcs_1A0[g_SysWork.field_2354[0]].moveSpeed_38 = 0;
+                    }
+                            
+                    if (g_SysWork.player_4C.extra_128.field_1C == 0x28)
+                    {
+                        g_SysWork.npcs_1A0[g_SysWork.field_2354[1]].moveSpeed_38 = 0;
+                    }
+                }
+            }
+                    
+            if (D_800AF20C >= var_2)
+            {
+                func_8007FD4C(0);
+                        
+                g_SysWork.player_4C.extra_128.field_1C = var_s5_2;
+                chara->model_0.stateStep_3 = 0;
+                chara->model_0.state_2 = 0;
+                extra->model_0.stateStep_3 = 0;
+                extra->model_0.state_2 = 0;
+                g_SysWork.player_4C.extra_128.field_20 = 0;
+                g_SysWork.player_4C.extra_128.field_24 = 0;
+                chara->flags_3E |= 1 << 3;
+            }
+            break;
+        
+        case 3: 
+        case 4: 
+        case 16:
+        case 17:
+        case 18:
+        case 19:
+        case 20:
+        case 21:
+        case 22:
+        case 41:
+        case 42:
+        case 49:
+        case 50:
+            if (g_SysWork.player_4C.extra_128.field_1C != 4)
+            {
+                if (g_SysWork.player_4C.chara_0.properties_E4.player.field_126 != 0)
+                {
+                    g_SysWork.player_4C.chara_0.properties_E4.player.field_126 -= ((g_DeltaTime0 * 0x666) / 136) >> 1;
+                    if (g_SysWork.player_4C.chara_0.properties_E4.player.field_126 >> 16 & 1)
+                    {
+                        g_SysWork.player_4C.chara_0.properties_E4.player.field_126 = 0;
+                    }
+                }
+                
+            }
+            else if (g_SysWork.player_4C.chara_0.properties_E4.player.field_126 != 0)
+            {
+                g_SysWork.player_4C.chara_0.properties_E4.player.field_126 -= ((g_DeltaTime0 * 0x666) / 136) >> 2;
+
+                if (g_SysWork.player_4C.chara_0.properties_E4.player.field_126 >> 16 & 1)
+                {
+                    g_SysWork.player_4C.chara_0.properties_E4.player.field_126 = 0;
+                }
+            }
+            
+            switch (g_SysWork.player_4C.extra_128.field_1C)
+            {
+                case 49:
+                    var_s3 = 0x10B;
+                    break;
+                    
+                case 50:
+                    var_s3 = 0x10C;
+                    break;
+                    
+                case 41:
+                    var_s3 = 0x103;
+                    break;
+                    
+                case 42:
+                    var_s3 = 0x104;
+                    break;
+                    
+                case 16:
+                    var_s3 = 0xF0;
+                    break;
+                    
+                case 20:
+                    var_s3 = 0xF4;
+                    break;
+                    
+                case 17:
+                    var_s3 = 0xF1;
+                    break;
+                    
+                case 18:
+                    var_s3 = 0xF3;
+                    break;
+                    
+                case 21:
+                    var_s3 = 0xF5;
+                    break;
+                    
+                case 22:
+                    var_s3 = 0xF6;
+                    break;
+                    
+                case 19:
+                    var_s3 = 0xF2;
+                    break;
+                    
+                case 3: 
+                    var_s3 = 0x2C;
+                    break;
+                    
+                case 4: 
+                    var_s3 = 0x2E;
+                    break;
+            }
+            
+            if ((u32)(g_SysWork.player_4C.extra_128.field_1C - 3) >= 2)
+            {
+                func_8007FB94(chara, extra, var_s3);
+            }
+            
+            D_800C4550 = g_SysWork.player_4C.chara_0.properties_E4.player.field_126;
+            chara->flags_3E |= 1 << 3;
+            
+            switch (g_SysWork.player_4C.extra_128.field_1C)
+            {
+                case 49:
+                case 50:
+                    chara->damageReceived_C0 = 0;
+                    chara->properties_E4.player.properties_E4[1] = 0;
+                    
+                    if (chara->model_0.anim_4.keyframeIdx0_8 == g_MapOverlayHeader.field_38[D_800AF220].field_6)
+                    {
+                        g_SysWork.player_4C.extra_128.field_1C                      = 0;
+                        g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~(1 << 14);
+                        chara->model_0.stateStep_3                                  = 0;
+                        chara->model_0.state_2                                      = 0;
+                        extra->model_0.stateStep_3                                  = 0;
+                        extra->model_0.state_2                                      = 0;
+                        g_SysWork.player_4C.chara_0.field_D4                        = 0x4CC;
+                        g_SysWork.player_4C.chara_0.field_D6                        = 0x3AE;
+                        g_SysWork.player_4C.chara_0.field_C8                        = -0x1999;
+                        g_SysWork.player_4C.extra_128.field_20                      = 0;
+                        g_SysWork.player_4C.extra_128.field_24                      = 0;
+                        g_SysWork.player_4C.chara_0.field_D8.field_6                = 0; 
+                        g_SysWork.player_4C.chara_0.field_D8.field_4                = 0;
+                        g_SysWork.player_4C.chara_0.field_D8.field_2                = 0;
+                        g_SysWork.player_4C.chara_0.field_D8.field_0                = 0;
+                        g_SysWork.player_4C.chara_0.field_CA                        = 0;
+                        g_SysWork.player_4C.chara_0.field_CE                        = -0x1199;
+                    }
+                    
+                    chara->field_41 = NO_VALUE;
+                    
+                default:
+                    break;
+                    
+                case 41:
+                case 42:
+                    chara->properties_E4.player.properties_E4[1] = 0;
+                    g_SysWork.player_4C.chara_0.field_D8.field_6 = 0;
+                    g_SysWork.player_4C.chara_0.field_D8.field_4 = 0;
+                    g_SysWork.player_4C.chara_0.field_D8.field_2 = 0;
+                    g_SysWork.player_4C.chara_0.field_D8.field_0 = 0;
+                    
+                    if (chara->model_0.anim_4.animIdx_0 & (1 << 0))
+                    {
+                        chara->field_D4 = ((chara->model_0.anim_4.keyframeIdx0_8 - g_MapOverlayHeader.field_38[D_800AF220].field_4) * 0x4CC) / 21;
+                    }
+                    else
+                    {
+                        chara->field_D4 = 0;
+                    }
+                    
+                    if (chara->model_0.anim_4.keyframeIdx0_8 == g_MapOverlayHeader.field_38[D_800AF220].field_6)
+                    {
+                        g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~(1 << 14);
+                        switch (g_SysWork.player_4C.extra_128.field_1C)
+                        {
+                            case 41:
+                                g_SysWork.player_4C.extra_128.field_1C = 0x2B;
+                                chara->model_0.stateStep_3             = 0;
+                                chara->model_0.state_2                 = 0;
+                                extra->model_0.stateStep_3             = 0;
+                                extra->model_0.state_2                 = 0;
+                                g_SysWork.player_4C.extra_128.field_20 = 0;
+                                g_SysWork.player_4C.extra_128.field_24 = 0;
+                                break;
+                                
+                            case 42:
+                                g_SysWork.player_4C.extra_128.field_1C = 0x2C;
+                                chara->model_0.stateStep_3             = 0;
+                                chara->model_0.state_2                 = 0;
+                                extra->model_0.stateStep_3             = 0;
+                                extra->model_0.state_2                 = 0;
+                                g_SysWork.player_4C.extra_128.field_20 = 0;
+                                g_SysWork.player_4C.extra_128.field_24 = 0;
+                                break;
+                        }
+                        
+                        g_SysWork.player_4C.chara_0.field_D4         = 0x4CC;
+                        g_SysWork.player_4C.chara_0.field_D8.field_6 = 0;
+                        g_SysWork.player_4C.chara_0.field_D8.field_4 = 0;
+                        g_SysWork.player_4C.chara_0.field_D8.field_2 = 0;
+                        g_SysWork.player_4C.chara_0.field_D8.field_0 = 0;
+                        chara->field_41                              = NO_VALUE;
+                    }
+                    break;
+                    
+                case 16:
+                case 17:
+                case 18:
+                case 19:
+                case 20:
+                case 21:
+                case 22:
+                    if (chara->model_0.anim_4.keyframeIdx0_8 == (g_MapOverlayHeader.field_38[D_800AF220].field_4 + 4))
+                    {
+                        chara->field_41 = NO_VALUE;
+                    }
+                    
+                    if (chara->model_0.anim_4.keyframeIdx0_8 == g_MapOverlayHeader.field_38[D_800AF220].field_6)
+                    {
+                        g_SysWork.player_4C.extra_128.field_1C                      = 0;
+                        g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~(1 << 14);
+                        chara->model_0.stateStep_3                                  = 0;
+                        chara->model_0.state_2                                      = 0;
+                        extra->model_0.stateStep_3                                  = 0;
+                        extra->model_0.state_2                                      = 0;
+                        g_SysWork.player_4C.extra_128.field_20                      = 0;
+                        g_SysWork.player_4C.extra_128.field_24                      = 0;
+                        chara->field_D4                                             = 0x4CC;
+                        g_SysWork.player_4C.chara_0.field_D8.field_6                = 0;
+                        g_SysWork.player_4C.chara_0.field_D8.field_4                = 0;
+                        g_SysWork.player_4C.chara_0.field_D8.field_2                = 0;
+                        g_SysWork.player_4C.chara_0.field_D8.field_0                = 0;
+                    }
+                    break;
+                    
+                case 3:
+                case 4:
+                    if (extra->model_0.stateStep_3 == 0)
+                    {
+                        extra->model_0.anim_4.animIdx_0 = var_s3;
+                        extra->model_0.stateStep_3++;
+                    }
+                    
+                    if (chara->model_0.stateStep_3 == 0)
+                    {
+                        chara->model_0.anim_4.animIdx_0 = var_s3;
+                        chara->model_0.stateStep_3++;
+                    }
+                    
+                    if (extra->model_0.state_2 == 0 && chara->position_18.vy >= chara->properties_E4.player.properties_E4[2])
+                    {
+                        extra->model_0.state_2++;
+                        func_8005DC1C(0x525, &chara->position_18, 0x20, 0);
+                        chara->properties_E4.player.field_10C = 0x80;
+                        func_80089470();
+                    }
+                    
+                    if (g_SysWork.player_4C.extra_128.field_1C == 3)
+                    {
+                        chara->properties_E4.player.field_10D = 0;
+                        if (chara->model_0.anim_4.animIdx_0 & 1)
+                        {
+                            g_SysWork.player_4C.chara_0.field_C8 = D_800AEEDC[chara->model_0.anim_4.keyframeIdx0_8 - 0x17B][0];
+                            g_SysWork.player_4C.chara_0.field_CE = D_800AEEDC[chara->model_0.anim_4.keyframeIdx0_8 - 0x17B][1];
+                        }
+                        
+                        if (chara->model_0.anim_4.keyframeIdx0_8 == D_800AF506)
+                        {
+                            if (chara->position_18.vy > FP_METER(6.5f))
+                            {
+                                g_SysWork.player_4C.extra_128.field_1C = 8;
+                                chara->model_0.stateStep_3             = 0;
+                                chara->model_0.state_2                 = 0;
+                                extra->model_0.stateStep_3             = 0;
+                                extra->model_0.state_2                 = 0;
+                                g_SysWork.player_4C.extra_128.field_20 = 0;
+                                g_SysWork.player_4C.extra_128.field_24 = 0;
+                            }
+                            else
+                            {
+                                g_SysWork.player_4C.extra_128.field_1C = 0;
+                                chara->model_0.stateStep_3             = 0;
+                                chara->model_0.state_2                 = 0;
+                                extra->model_0.stateStep_3             = 0;
+                                extra->model_0.state_2                 = 0;
+                                g_SysWork.player_4C.extra_128.field_20 = 0;
+                                g_SysWork.player_4C.extra_128.field_24 = 0;
+                            }
+                            
+                            g_SysWork.player_4C.chara_0.field_C8 = -0x1999;
+                            g_SysWork.player_4C.chara_0.field_CA = 0;
+                            g_SysWork.player_4C.chara_0.field_CE = -0x1199;
+                            chara->field_D4                      = 0x4CC;
+                        }
+                    }
+                    else
+                    {
+                        chara->properties_E4.player.field_10D = 1;
+                        
+                        if (chara->model_0.anim_4.animIdx_0 & 1)
+                        {
+                            g_SysWork.player_4C.chara_0.field_C8 = D_800AEF78[chara->model_0.anim_4.keyframeIdx0_8 - 0x1A2][0];
+                            g_SysWork.player_4C.chara_0.field_CE = D_800AEF78[chara->model_0.anim_4.keyframeIdx0_8 - 0x1A2][1];
+                        }
+                        
+                        if (chara->model_0.anim_4.keyframeIdx0_8 == D_800AF526)
+                        {
+                            if (chara->position_18.vy > FP_METER(6.5f))
+                            {
+                                g_SysWork.player_4C.extra_128.field_1C = 8;
+                                chara->model_0.stateStep_3             = 0;
+                                chara->model_0.state_2                 = 0;
+                                extra->model_0.stateStep_3             = 0;
+                                extra->model_0.state_2                 = 0;
+                                g_SysWork.player_4C.extra_128.field_20 = 0;
+                                g_SysWork.player_4C.extra_128.field_24 = 0;
+                            }
+                            else
+                            {
+                                g_SysWork.player_4C.extra_128.field_1C = 0;
+                                chara->model_0.stateStep_3             = 0;
+                                chara->model_0.state_2                 = 0;
+                                extra->model_0.stateStep_3             = 0;
+                                extra->model_0.state_2                 = 0;
+                                g_SysWork.player_4C.extra_128.field_20 = 0;
+                                g_SysWork.player_4C.extra_128.field_24 = 0;
+                            }
+
+                            g_SysWork.player_4C.chara_0.field_C8 = -0x1999;
+                            g_SysWork.player_4C.chara_0.field_CA = 0;
+                            g_SysWork.player_4C.chara_0.field_CE = -0x1199;
+                            chara->field_D4                      = 0x4CC;
+                        }
+                    }
+                    break;
+            }
+            
+            chara->field_41 = NO_VALUE;
+            break;
+        
+        case 43:
+            func_8007FB94(chara, extra, 0x105);
+            
+            if (chara->model_0.anim_4.keyframeIdx0_8 == g_MapOverlayHeader.field_38[D_800AF220].field_6)
+            {
+                g_SysWork.player_4C.extra_128.field_1C = 0;
+                chara->model_0.stateStep_3             = 0;
+                chara->model_0.state_2                 = 0;
+                extra->model_0.stateStep_3             = 0;
+                extra->model_0.state_2                 = 0;
+                g_SysWork.player_4C.extra_128.field_20 = 0;
+                g_SysWork.player_4C.extra_128.field_24 = 0;
+                chara->field_D6                        = 0x3AE;
+            }
+            break;
+        
+        case 44:
+            func_8007FB94(chara, extra, 0x106);
+            
+            if (chara->model_0.anim_4.keyframeIdx0_8 == g_MapOverlayHeader.field_38[D_800AF220].field_6)
+            {
+                g_SysWork.player_4C.extra_128.field_1C = 0;
+                chara->model_0.stateStep_3             = 0;
+                chara->model_0.state_2                 = 0;
+                extra->model_0.stateStep_3             = 0;
+                extra->model_0.state_2                 = 0;
+                g_SysWork.player_4C.extra_128.field_20 = 0;
+                g_SysWork.player_4C.extra_128.field_24 = 0;
+                chara->field_D6                        = 0x3AE;
+            }
+            break;
+        
+        case 36:
+            chara->field_41 = NO_VALUE;
+            func_8007FB94(chara, extra, 0xFC);
+            
+            if (chara->model_0.anim_4.animIdx_0 & 1)
+            {
+                if (g_MapOverlayHeader.field_38[D_800AF220].field_4 + 0xC >= chara->model_0.anim_4.keyframeIdx0_8)
+                {
+                    func_80071620(chara->model_0.anim_4.animIdx_0, chara, g_MapOverlayHeader.field_38[D_800AF220].field_4 + 0xC, 0x526);
+                }
+                else
+                {
+                    func_80071620(chara->model_0.anim_4.animIdx_0, chara, g_MapOverlayHeader.field_38[D_800AF220].field_4 + 0x1E, 0x527);
+                }
+            }
+            
+            if (chara->model_0.anim_4.keyframeIdx0_8 == g_MapOverlayHeader.field_38[D_800AF220].field_6)
+            {
+                g_MapOverlayHeader.func_DC();
+                g_SysWork.sysState_8     = GameState_ExitMovie;
+                g_SysWork.timer_24       = 0;
+                g_SysWork.sysStateStep_C = 0;
+                g_SysWork.field_28       = 0;
+                g_SysWork.field_10       = 0;
+                g_SysWork.timer_2C       = 0;
+                g_SysWork.field_14       = 0;
+                
+                func_8007E9C4();
+                
+                extra->model_0.state_2++;
+                chara->health_B0 = FP_FLOAT_TO(100.0f, Q12_SHIFT);
+                chara->model_0.state_2++;
+                g_SysWork.player_4C.chara_0.properties_E4.player.field_114 = 0;
+                return;
+            }
+            break;
+        
+        case 8: 
+            chara->field_41 = NO_VALUE;
+            func_8007FB94(chara, extra, 0xCA);
+            chara->field_D6 = 0;
+            
+            if (chara->model_0.anim_4.animIdx_0 & 1)
+            {
+                if (g_MapOverlayHeader.field_38[D_800AF220].field_4 + 0xC >= chara->model_0.anim_4.keyframeIdx0_8)
+                {
+                    func_80071620(chara->model_0.anim_4.animIdx_0, chara, g_MapOverlayHeader.field_38[D_800AF220].field_4 + 0xC, 0x526);
+                }
+                else
+                {
+                    func_80071620(chara->model_0.anim_4.animIdx_0, chara, g_MapOverlayHeader.field_38[D_800AF220].field_4 + 0x20, 0x527);
+                }
+                
+                temp_a2 = D_800AF070[chara->model_0.anim_4.keyframeIdx0_8 - g_MapOverlayHeader.field_38[D_800AF220].field_4];
+                
+                if (chara->model_0.anim_4.keyframeIdx0_8 != g_MapOverlayHeader.field_38[D_800AF220].field_6)
+                {
+                    var_v1_5 = D_800AF070[(chara->model_0.anim_4.keyframeIdx0_8 + 1) - g_MapOverlayHeader.field_38[D_800AF220].field_4];
+                }
+                else
+                {
+                    var_v1_5 = temp_a2;
+                }
+                
+                temp_s0_3                                    = temp_a2 + FP_MULTIPLY(var_v1_5 - temp_a2, chara->model_0.anim_4.time_4 & 0xFFF, Q12_SHIFT);
+                g_SysWork.player_4C.chara_0.field_D8.field_0 = 0;
+                g_SysWork.player_4C.chara_0.field_D8.field_2 = 0;
+                g_SysWork.player_4C.chara_0.field_D8.field_4 = FP_MULTIPLY(temp_s0_3, shRsin(chara->rotation_24.vy), Q12_SHIFT);
+                g_SysWork.player_4C.chara_0.field_D8.field_6 = FP_MULTIPLY(temp_s0_3, shRcos(chara->rotation_24.vy), Q12_SHIFT);
+                chara->field_D4                              = 0x4CC;
+            }
+            
+            if (chara->model_0.anim_4.keyframeIdx0_8 == g_MapOverlayHeader.field_38[D_800AF220].field_6)
+            {
+                if (g_SavegamePtr->mapOverlayId_A4 == MapOverlayId_MAP0_S00)
+                {
+                    g_MapOverlayHeader.func_DC();
+                    g_SavegamePtr->eventFlags_168[0] |= 1 << 25;
+                    
+                    func_8007E9C4();
+                    
+                    extra->model_0.state_2++;
+                    chara->health_B0 = FP_FLOAT_TO(100.0f, Q12_SHIFT);
+                    chara->model_0.state_2++;
+                    g_SysWork.player_4C.chara_0.properties_E4.player.field_114 = 0;
+                    return;
+                }
+                
+                g_MapOverlayHeader.func_DC();
+                g_SysWork.sysState_8     = GameState_ExitMovie;
+                g_SysWork.timer_24       = 0;
+                g_SysWork.sysStateStep_C = 0;
+                g_SysWork.field_28       = 0;
+                g_SysWork.field_10       = 0;
+                g_SysWork.timer_2C       = 0;
+                g_SysWork.field_14       = 0;
+                
+                func_8007E9C4();
+                
+                extra->model_0.state_2++;
+                chara->health_B0 = FP_FLOAT_TO(100.0f, Q12_SHIFT);
+                chara->model_0.state_2++;
+                g_SysWork.player_4C.chara_0.properties_E4.player.field_114 = 0;
+                return;
+            }
+            break;
+        
+        case 9: 
+            if (extra->model_0.state_2 == 0)
+            {
+                Sd_EngineCmd(0x127B);
+            }
+            
+            func_8007FB94(chara, extra, 0xCB);
+            chara->field_D6 = 0;
+            
+            if (chara->model_0.anim_4.keyframeIdx0_8 == g_MapOverlayHeader.field_38[D_800AF220].field_6 - 0x19)
+            {
+                g_MapOverlayHeader.func_DC();
+                g_SysWork.sysState_8     = GameState_ExitMovie;
+                g_SysWork.timer_24       = 0;
+                g_SysWork.sysStateStep_C = 0;
+                g_SysWork.field_28       = 0;
+                g_SysWork.field_10       = 0;
+                g_SysWork.timer_2C       = 0;
+                g_SysWork.field_14       = 0;
+                
+                func_8007E9C4();
+                
+                extra->model_0.state_2++;
+                chara->health_B0 = FP_FLOAT_TO(100.0f, Q12_SHIFT);
+                chara->model_0.state_2++;
+                return;
+            }
+            break;
+        
+        case 23:
+        case 24:
+        case 25:
+        case 26:
+        case 27:
+        case 28:
+        case 29:
+        case 30:
+            switch (g_SysWork.player_4C.extra_128.field_1C)
+            {
+                case 23:
+                    func_8007FB94(chara, extra, 0xD3);
+                    break;
+                    
+                case 24:
+                    func_8007FB94(chara, extra, 0xD2);
+                    break;
+                    
+                case 25:
+                    func_8007FB94(chara, extra, 0xD4);
+                    break;
+                    
+                case 26:
+                    func_8007FB94(chara, extra, 0xD5);
+                    break;
+                    
+                case 27:
+                    func_8007FB94(chara, extra, 0xD7);
+                    break;
+                    
+                case 28:
+                    func_8007FB94(chara, extra, 0xD6);
+                    break;
+                    
+                case 29:
+                    func_8007FB94(chara, extra, 0xF7);
+                    break;
+                    
+                case 30:
+                    func_8007FB94(chara, extra, 0xF8);
+                    break;
+            }
+
+            switch (g_SysWork.player_4C.extra_128.field_1C)
+            {
+                case 0x1D:
+                    func_8007FB34(chara->rotation_24.vy, g_SysWork.player_4C.chara_0.properties_E4.larvalStalker.properties_E8[0xC].val16[0], &sp1C);
+                    
+                    if (ABS(sp1C) >= 0x400)
+                    {
+                        break;
+                    }
+                    
+                    if (ABS(sp1C) < 0x40)
+                    {
+                        chara->rotation_24.vy = g_SysWork.player_4C.chara_0.properties_E4.player.field_118;
+                    }
+                    else
+                    {
+                        chara->rotation_24.vy += (sp1C / ABS(sp1C)) << 6;
+                    }
+                    break;
+                
+                case 0x1E:
+                    func_8007FB34(chara->rotation_24.vy, g_SysWork.player_4C.chara_0.properties_E4.larvalStalker.properties_E8[0xC].val16[0], &sp1E);
+                    
+                    if (ABS(sp1E) < 0x400)
+                    {
+                        break;
+                    }
+                        
+                    if (ABS(sp1E) >= 0x7C0)
+                    {
+                        chara->rotation_24.vy = (g_SysWork.player_4C.chara_0.properties_E4.player.field_118 + 0x800) & 0xFFF;
+                    }
+                    else
+                    {
+                        chara->rotation_24.vy -= (sp1E / ABS(sp1E)) << 6;
+                    }
+                    break;
+            }
+            
+            
+            if (g_SysWork.player_4C.chara_0.properties_E4.player.field_126 != 0)
+            {
+                g_SysWork.player_4C.chara_0.properties_E4.player.field_126 -= ((g_DeltaTime0 << 11) / 136) >> 2;
+                
+                if ((g_SysWork.player_4C.chara_0.properties_E4.player.field_126 >> 16) & 1)
+                {
+                    g_SysWork.player_4C.chara_0.properties_E4.player.field_126 = 0;
+                }
+            }
+            
+            if ((u32)((u8)chara->field_41 - 0x44) >= 2)
+            {
+                D_800C4608                                                 = ratan2(chara->field_B4, chara->field_BC) - chara->rotation_24.vy;
+                g_SysWork.player_4C.chara_0.properties_E4.player.field_126 = SQUARE(chara->field_B4) + SQUARE(chara->field_BC) + SQUARE(chara->field_B8);
+            }
+            
+            if (extra->model_0.anim_4.keyframeIdx0_8 == g_MapOverlayHeader.field_38[D_800AF220].field_6)
+            {
+                chara->field_41                                             = NO_VALUE;
+                g_SysWork.field_2353                                        = NO_VALUE;
+                g_SysWork.player_4C.extra_128.field_1C                      = 0;
+                g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~(1 << 14);
+                chara->model_0.stateStep_3                                  = 0;
+                chara->model_0.state_2                                      = 0;
+                extra->model_0.stateStep_3                                  = 0;
+                extra->model_0.state_2                                      = 0;
+                g_SysWork.player_4C.extra_128.field_20                      = 0;
+                g_SysWork.player_4C.extra_128.field_24                      = 0;
+                g_SysWork.player_4C.chara_0.properties_E4.player.field_126  = 0;
+            }
+            
+            D_800C4550 = g_SysWork.player_4C.chara_0.properties_E4.player.field_126;
+            chara->flags_3E = chara->flags_3E | 8;
+            break;
+        
+        case 5:
+            
+            func_80070DF0(extra, chara, 8, 0x31);
+            break;
+        
+        case 6:
+            
+            func_80070DF0(extra, chara, 9, 0x33);
+            break;
+    }
+
+    temp_v0 = (chara->rotation_24.vy + (D_800C454C >> 4) + FP_ANGLE(360.0f)) & 0xFFF;
+    chara->rotation_24.vy = temp_v0;
+    chara->headingAngle_3C = ((temp_v0 + D_800C4608) + FP_ANGLE(360.0f)) & 0xFFF;
+    chara->moveSpeed_38 = D_800C4550;
+    chara->field_34 += g_DeltaTime2;
+    chara->rotationSpeed_2C.vy = (D_800C454C << 8) / g_DeltaTime0;
+    coord->flg = 0;
+                
+    func_80096E78(&chara->rotation_24, &coord->coord);
+}
+#else
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80071CE8); // 0x80071CE8
+#endif
 
 void func_80073FC0(s_MainCharacterExtra* extra, s32 arg1, s32 arg2, s32 arg3) // 0x80073FC0
 {
@@ -7496,7 +8858,7 @@ void func_8007C0D8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
 void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007C800
 {
     s16 sp10;
-    u16 temp_s0;
+    u16 enemyRotY;
     s32 i;
     s32 var_s4;
     s32 var_v1_2;
@@ -7543,46 +8905,47 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
         case 50:
             break;
 
-        case 8:
+        case 8: // Player dies.
         case 9:
             return;
 
-        case 10:
-        case 13:
-        case 14:
-        case 15:
+        // Grab states.
+        case 10: // Front  - Torso.
+        case 13: // Behind - Torso.
+        case 14: // Front  - Legs.
+        case 15: // Behind - Legs.
         case 32:
         case 33:
-        case 39:
-        case 40:
+        case 39: // Thrown in the floor from the front (Romper attack).
+        case 40: // Thrown in the floor from behind    (Romper attack).
         case 47:
         case 48:
 		// Code related when enemies grab Harry.
-            if (chara->damageReceived_C0 != 0 && !(g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & PlayerFlag_Unk14))
+            if (chara->damageReceived_C0 != 0 && !(g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & PlayerFlag_DamageReceived))
             {
-                g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Unk14;
-                func_8005DC1C(var_s4, &chara->position_18, 0x20, 0);
+                g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_DamageReceived;
+                func_8005DC1C(var_s4, &chara->position_18, 32, 0);
                 chara->properties_E4.player.field_10C = 0x40;
             }
 
             if (chara->damageReceived_C0 == FP_FLOAT_TO(0.0f, Q12_SHIFT))
             {
-                g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk14;
+                g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_DamageReceived;
             }
 
             func_80089494();
             break;
 
         case 7:
-        case 16:
+        case 16: // Player free himself from grab - Frontal Torso.
         case 17:
         case 18:
         case 19:
-        case 20:
-        case 21:
-        case 22:
-        case 23:
-        case 24:
+        case 20: // Player free himself from grab - Behind Torso.
+        case 21: // Player free himself from grab - Frontal Legs.
+        case 22: // Player free himself from grab - Behind Legs.
+        case 23: // Attack - Behind.
+        case 24: // Attack - Frontal.
         case 25:
         case 26:
         case 27:
@@ -7594,7 +8957,7 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
             chara->field_B8 = 0;
             chara->field_B4 = 0;
 
-            if (chara->field_41 == 0x2F)
+            if (chara->field_41 == 47)
             {
                 g_SysWork.player_4C.chara_0.field_D6   = 0;
                 g_SysWork.player_4C.extra_128.field_1C = 9;
@@ -7607,8 +8970,8 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
                 return;
             }
 
-            if (chara->field_41 >= 0x44 &&
-                chara->field_41 <  0x46)
+            if (chara->field_41 >= 68 &&
+                chara->field_41 <  70)
             {
                 chara->damageReceived_C0 = FP_FLOAT_TO(0.0f, Q12_SHIFT);
             }
@@ -7643,31 +9006,31 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
             if (g_SysWork.player_4C.extra_128.field_1C >= 3 &&
                 g_SysWork.player_4C.extra_128.field_1C <  7)
             {
-                g_SysWork.player_4C.chara_0.field_C8         = -0x1999;
+                g_SysWork.player_4C.chara_0.field_C8         = FP_FLOAT_TO(-25.6f, Q8_SHIFT);
                 g_SysWork.player_4C.chara_0.field_CA         = 0;
-                g_SysWork.player_4C.chara_0.field_CE         = -0x1199;
+                g_SysWork.player_4C.chara_0.field_CE         = FP_FLOAT_TO(-17.6f, Q8_SHIFT);
                 g_SysWork.player_4C.chara_0.field_D8.field_6 = 0;
                 g_SysWork.player_4C.chara_0.field_D8.field_4 = 0;
                 g_SysWork.player_4C.chara_0.field_D8.field_2 = 0;
                 g_SysWork.player_4C.chara_0.field_D8.field_0 = 0;
             }
 
-            temp_s0 = g_SysWork.npcs_1A0[chara->field_40].rotation_24.vy;
-            if (chara->field_41 >= 0x40 &&
-                chara->field_41 <  0x42)
+            enemyRotY = g_SysWork.npcs_1A0[chara->field_40].rotation_24.vy;
+            if (chara->field_41 >= 64 &&
+                chara->field_41 <  66)
             {
-                temp_s0 -= 0x400;
+                enemyRotY -= FP_FLOAT_TO(4.0f, Q8_SHIFT);
             }
-            else if (chara->field_41 == 0x45)
+            else if (chara->field_41 == 69)
             {
-                temp_s0 = 0x400;
+                enemyRotY = FP_FLOAT_TO(4.0f, Q8_SHIFT);
             }
-            else if (chara->field_41 == 0x44)
+            else if (chara->field_41 == 68)
             {
-                temp_s0 = chara->field_B8;
+                enemyRotY = chara->field_B8;
             }
 
-            temp_s0   = ((temp_s0 - chara->rotation_24.vy) + 0x1000) & 0xFFF;
+            enemyRotY = ((enemyRotY - chara->rotation_24.vy) + FP_FLOAT_TO(16.0f, Q8_SHIFT)) & 0xFFF;
             temp_v0_3 = chara->field_41 - 40;
             switch (temp_v0_3)
             {
@@ -7686,8 +9049,8 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
                     func_8007FB34(chara->rotation_24.vy, g_SysWork.npcs_1A0[0].rotation_24.vy, &sp10);
                     D_800C4608 = sp10;
 
-                    if (temp_s0 >= 0x400 &&
-                        temp_s0 <  0xC00)
+                    if (enemyRotY >= FP_ANGLE(90.0f) &&
+                        enemyRotY <  FP_ANGLE(270.0f))
                     {
                         g_SysWork.player_4C.extra_128.field_1C = 45;
                         chara->model_0.stateStep_3             = 0;
@@ -7732,20 +9095,20 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
                     g_SysWork.player_4C.extra_128.field_24 = 0;
                     break;
 
-                case 9:
-                case 14:
-                case 16:
+                case 9:  // Leg grab.
+                case 14: // Romper grab.
+                case 16: // Torso grab.
                 case 26:
-                    if (temp_s0 >= 0x400 &&
-                        temp_s0 <  0xC00)
+                    if (enemyRotY >= FP_ANGLE(90.0f) &&
+                        enemyRotY <  FP_ANGLE(270.0f))
                     {
                         g_SysWork.field_2354[0] = chara->field_40;
 
-                        temp_v0_3 = chara->field_41 - 0x2D;
+                        temp_v0_3 = chara->field_41 - 45;
                         switch (temp_v0_3)
                         {
                             case 9:
-                                g_SysWork.player_4C.extra_128.field_1C = 0x25;
+                                g_SysWork.player_4C.extra_128.field_1C = 37;
                                 chara->model_0.stateStep_3             = 0;
                                 chara->model_0.state_2                 = 0;
                                 extra->model_0.stateStep_3             = 0;
@@ -7755,8 +9118,8 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
                                 break;
 
                             case 0:
-                            case 11:
-                                g_SysWork.player_4C.extra_128.field_1C = 0xA;
+                            case 11: // Torso front grab.
+                                g_SysWork.player_4C.extra_128.field_1C = 10;
                                 chara->model_0.stateStep_3             = 0;
                                 chara->model_0.state_2                 = 0;
                                 extra->model_0.stateStep_3             = 0;
@@ -7766,7 +9129,7 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
                                 break;
 
                             case 4:
-                                g_SysWork.player_4C.extra_128.field_1C = 0xE;
+                                g_SysWork.player_4C.extra_128.field_1C = 14;
                                 chara->model_0.stateStep_3             = 0;
                                 chara->model_0.state_2                 = 0;
                                 extra->model_0.stateStep_3             = 0;
@@ -7776,7 +9139,7 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
                                 break;
 
                             case 21:
-                                g_SysWork.player_4C.extra_128.field_1C = 0x20;
+                                g_SysWork.player_4C.extra_128.field_1C = 32;
                                 chara->model_0.stateStep_3             = 0;
                                 chara->model_0.state_2                 = 0;
                                 extra->model_0.stateStep_3             = 0;
@@ -7790,11 +9153,11 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
                     {
                         g_SysWork.field_2354[1] = chara->field_40;
 
-                        temp_v0_3 = chara->field_41 - 0x2D;
+                        temp_v0_3 = chara->field_41 - 45;
                         switch (temp_v0_3)
                         {
                             case 9:
-                                g_SysWork.player_4C.extra_128.field_1C = 0x26;
+                                g_SysWork.player_4C.extra_128.field_1C = 38;
                                 chara->model_0.stateStep_3             = 0;
                                 chara->model_0.state_2                 = 0;
                                 extra->model_0.stateStep_3             = 0;
@@ -7804,8 +9167,8 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
                                 break;
 
                             case 0:
-                            case 11:
-                                g_SysWork.player_4C.extra_128.field_1C = 0xD;
+                            case 11: // Torso back grab.
+                                g_SysWork.player_4C.extra_128.field_1C = 13;
                                 chara->model_0.stateStep_3             = 0;
                                 chara->model_0.state_2                 = 0;
                                 extra->model_0.stateStep_3             = 0;
@@ -7815,7 +9178,7 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
                                 break;
 
                             case 4:
-                                g_SysWork.player_4C.extra_128.field_1C = 0xF;
+                                g_SysWork.player_4C.extra_128.field_1C = 15;
                                 chara->model_0.stateStep_3             = 0;
                                 chara->model_0.state_2                 = 0;
                                 extra->model_0.stateStep_3             = 0;
@@ -7825,7 +9188,7 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
                                 break;
 
                             case 21:
-                                g_SysWork.player_4C.extra_128.field_1C = 0x21;
+                                g_SysWork.player_4C.extra_128.field_1C = 33;
                                 chara->model_0.stateStep_3             = 0;
                                 chara->model_0.state_2                 = 0;
                                 extra->model_0.stateStep_3             = 0;
@@ -7855,7 +9218,7 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
                     D_800C4608 = sp10;
 
                 case 28:
-                    if (chara->field_41 != 0x45)
+                    if (chara->field_41 != 69)
                     {
                         g_SysWork.player_4C.chara_0.properties_E4.player.field_126 = 0x4000;
                         func_8007FB34(chara->rotation_24.vy, (s16)chara->field_B8, &sp10);
@@ -7876,23 +9239,24 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
                 case 21:
                 case 24:
                 case 25:
-                    if (temp_s0 >= 0x200 && temp_s0 < 0x600)
+                    // Harm animations.
+                    if (enemyRotY >= FP_ANGLE(45.0f) && enemyRotY < FP_ANGLE(135.0f))
                     {
-                        var_v1_2 = 0x1A;
+                        var_v1_2 = 26; // Left harm animation.
                     }
-                    else if (temp_s0 >= 0x600 && temp_s0 < 0xA00)
+                    else if (enemyRotY >= FP_ANGLE(135.0f) && enemyRotY < FP_ANGLE(225.0f))
                     {
-                        var_v1_2 = 0x18;
+                        var_v1_2 = 24; // Front harm animation.
                     }
-                    else if (temp_s0 >= 0xA00 && temp_s0 < 0xE00)
+                    else if (enemyRotY >= FP_ANGLE(225.0f) && enemyRotY < FP_ANGLE(315.0f))
                     {
-                        var_v1_2 = 0x19;
+                        var_v1_2 = 25; // Right harm animation.
                     }
                     else
                     {
-                        var_v1_2 = 0x17;
+                        var_v1_2 = 23; // Back harm animation.
                     }
-
+					
                     g_SysWork.player_4C.extra_128.field_1C = var_v1_2;
                     chara->model_0.stateStep_3             = 0;
                     chara->model_0.state_2                 = 0;
@@ -7903,13 +9267,13 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
                     break;
 
                 case 13:
-                    if (temp_s0 < 0x7FF)
+                    if (enemyRotY < FP_FLOAT_TO(7.999f, Q8_SHIFT))
                     {
-                        var_v1_2 = 0x1B;
+                        var_v1_2 = 27;
                     }
                     else
                     {
-                        var_v1_2 = 0x1C;
+                        var_v1_2 = 28;
                     }
 
                     g_SysWork.player_4C.extra_128.field_1C = var_v1_2;
@@ -7946,10 +9310,10 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
     if (chara->damageReceived_C0 != 0)
     {
         g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk2;
-        if (!(g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & PlayerFlag_Unk14))
+        if (!(g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & PlayerFlag_DamageReceived))
         {
             func_8005DC1C(var_s4, &chara->position_18, 0x20, 0);
-            g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Unk14;
+            g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_DamageReceived;
             chara->properties_E4.player.field_10C = 0x40;
         }
 
@@ -9192,7 +10556,7 @@ void func_8007FD4C(s32 arg0) // 0x8007FD4C
     D_800AF20C      = 0;
     chara->field_40 = NO_VALUE;
 
-    g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk14;
+    g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_DamageReceived;
 
     for (i = 0; i < 4; i++)
     {

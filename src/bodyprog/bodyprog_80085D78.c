@@ -109,7 +109,7 @@ void func_80085EB8(u32 arg0, s_SubCharacter* chara0, s_SubCharacter* chara1, s32
         case 2:
             if (chara0 == &g_SysWork.player_4C.chara_0)
             {
-                g_MapOverlayHeader.func_DC(chara0);
+                g_MapOverlayHeader.func_DC();
             }
             else
             {

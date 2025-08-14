@@ -10,7 +10,7 @@
 // GLOBALS
 // ========
 
-/** @brief Boolean. Used to define if the player is transitioning from walking to running and vice-versa. */
+/** @brief Boolean. Defines if the player is transitioning from walking to running and vice-versa. */
 extern u8 g_Player_IsInWalkToRunTransition; // 0x800AF214
 
 /** Boolean. */
@@ -40,7 +40,10 @@ extern u8 D_800AF216; // 0x800AF216
  */
 extern u8 D_800C457C;
 
-/** Boolean. */
+/** Boolean.
+ * @note Possibly inacurrate name or buggy functionallity, if enemies grab the
+ * player with this enable the player will not be able to interact with anything.
+ */
 extern u8 g_Player_DisableDamage; // 0x800C4562
 
 extern VECTOR3 D_800C45F8;
@@ -49,7 +52,7 @@ extern VECTOR3 D_800C45F8;
 // FUNCTIONS
 // ==========
 
-void Player_Logic_Update(s_SubCharacter* chara, void* arg1, GsCOORDINATE2* coord);
+void Player_Logic_Update(s_SubCharacter* chara, void* arg1, GsCOORDINATE2* coord); // 0x800717D0
 
 void func_80071968(s_SubCharacter* chara, s_MainCharacterExtra* extra, void* arg2, GsCOORDINATE2* coord);
 

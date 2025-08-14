@@ -438,7 +438,18 @@ typedef enum _InventoryItemId
     InventoryItemId_GasolineTank         = 226
 } e_InventoryItemId;
 
-/** @brief Equipped weapon IDs. Derivative of `e_InventoryItemId`. */
+/** @brief Equipped weapon IDs. Derivative of `e_InventoryItemId`.
+ *
+ * Likely inacurrate name as some of values from the few intances this enum
+ * is used changes in case in specific cases as for example:
+ *
+ * The kitchen knife ID changes to 10/0x0A if the player press or hold
+ * the attack button and changes to 20/0x14 if the player start tapping
+ * the attack button.
+ *
+ * Another intance is the axe which by pressing or holding the attack
+ * button the ID changes to 17/0x11 and changes to 27/0x1B.
+ */
 typedef enum _EquippedWeaponId
 {
     EquippedWeaponId_KitchenKnife   = 0,
@@ -491,23 +502,23 @@ typedef enum _PlayerBone
 
 typedef enum _PlayerFlags
 {
-    PlayerFlag_None  = 0,
-    PlayerFlag_Unk0  = 1 << 0,
-    PlayerFlag_Unk1  = 1 << 1,
-    PlayerFlag_Unk2  = 1 << 2,
-    PlayerFlag_Unk3  = 1 << 3,
-    PlayerFlag_Unk4  = 1 << 4,
-    PlayerFlag_Unk5  = 1 << 5,
-    PlayerFlag_Unk6  = 1 << 6,
-    PlayerFlag_Unk7  = 1 << 7, // Not used anywhere yet.
-    PlayerFlag_Unk8  = 1 << 8,
-    PlayerFlag_Unk9  = 1 << 9,
-    PlayerFlag_Unk10 = 1 << 10,
-    PlayerFlag_Unk11 = 1 << 11,
-    PlayerFlag_Unk12 = 1 << 12,
-    PlayerFlag_Unk13 = 1 << 13,
-    PlayerFlag_Unk14 = 1 << 14,
-    PlayerFlag_Unk15 = 1 << 15
+    PlayerFlag_None           = 0,
+    PlayerFlag_Unk0           = 1 << 0,
+    PlayerFlag_Unk1           = 1 << 1,
+    PlayerFlag_Unk2           = 1 << 2,
+    PlayerFlag_Unk3           = 1 << 3,
+    PlayerFlag_Unk4           = 1 << 4,
+    PlayerFlag_Unk5           = 1 << 5,
+    PlayerFlag_Unk6           = 1 << 6,
+    PlayerFlag_Unk7           = 1 << 7, // Not used anywhere yet.
+    PlayerFlag_Unk8           = 1 << 8,
+    PlayerFlag_Unk9           = 1 << 9,
+    PlayerFlag_Unk10          = 1 << 10,
+    PlayerFlag_Unk11          = 1 << 11,
+    PlayerFlag_Unk12          = 1 << 12,
+    PlayerFlag_Unk13          = 1 << 13,
+    PlayerFlag_DamageReceived = 1 << 14,
+    PlayerFlag_Unk15          = 1 << 15
 } e_PlayerFlags;
 
 /** @brief Player property indices. */
@@ -913,8 +924,9 @@ typedef struct _SubCharPropertiesPlayer
     u8  field_10D;
     s8  unk_10E[6];
     s32 field_114;
-    s8  unk_118[4];
-    s32 flags_11C; /** `e_PlayerFlags` */
+    s16 field_118;
+    s8  unk_11A[2];
+    s32 flags_11C; /** `e_PlayerFlags`. */
     s16 field_120;
     s16 field_122;
     s16 field_124;
@@ -973,12 +985,14 @@ typedef struct _SubCharacter
     s16     headingAngle_3C;
     s16     flags_3E;
     s8      field_40; // In player: Index of the NPC attacking the player.
-                      // In NPCs: Possibly the index of the NPC.
-    s8      field_41; // In player: Indicates what animation to reproduce when getting damage.
+                      // In NPCs: Unknown.
+    s8      field_41; // In player: Indicates what attack has been performed to the player.
                       // In NPCs: The ID (from `e_EquippedWeaponId`) of the weapon which is getting attacked.
     s8      unk_42[2];
     s16     field_44;
-    s8      field_46;
+    s8      field_46; // In player: The ID (from `e_EquippedWeaponId`) of the weapon which the player is using.
+                      // This is not the same as `field_41` as this value only refresh when the player is aiming.
+                      // In NPCs: Indicate the attack performed to the player.
     s8      field_47;
     s8      unk_48[4];
     s32     field_4C; // } Fields used by `func_8008A3E0`. Types guessed for now.
@@ -995,9 +1009,9 @@ typedef struct _SubCharacter
     VECTOR3 field_98;
     VECTOR3 field_A4;
     q19_12  health_B0;
-    s32     field_B4;          // X?
-    s32     field_B8;          // Y?
-    s32     field_BC;          // Z?
+    s32     field_B4;          // X? - In player: Sums or rest in case of getting hurt by an enemy.
+    s32     field_B8;          // Y? - In player: Sums or rest in case of getting hurt by an enemy.
+    s32     field_BC;          // Z? - In player: Sums or rest in case of getting hurt by an enemy.
     q19_12  damageReceived_C0;
     u16     deathTimer_C4;     // Part of `shBattleInfo` struct in SH2, may use something similar here.
     s16     timer_C6;          // Some sort of timer, value written by `Ai_LarvalStalker_Update`.

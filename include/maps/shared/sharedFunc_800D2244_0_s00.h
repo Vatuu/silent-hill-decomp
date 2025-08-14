@@ -75,7 +75,7 @@ void sharedFunc_800D2244_0_s00(s32 arg0)
     g_SysWork.player_4C.chara_0.field_D8.field_0                = 0;
     g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~(PlayerFlag_Unk2 |
                                                                     PlayerFlag_Unk13 |
-                                                                    PlayerFlag_Unk14 |
+                                                                    PlayerFlag_DamageReceived |
                                                                     PlayerFlag_Unk15);
 
     player->flags_3E &= ~CharaFlag_Unk4;

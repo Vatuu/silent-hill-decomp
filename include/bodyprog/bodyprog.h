@@ -1462,6 +1462,14 @@ typedef struct
     u8 field_6;
 } s_UnkStruct2_Mo;
 
+typedef struct
+{
+    s16 field_0;
+    s16 field_2;
+    s16 field_4;
+    s16 field_6;
+} s_UnkStruct3_Mo;
+
 /** TODO: `g_MapOverlayHeader` is part of the map overlay BIN files. Maybe should be moved to `maps/shared.h`. */
 typedef struct _MapOverlayHeader
 {
@@ -1485,7 +1493,8 @@ typedef struct _MapOverlayHeader
     s_UnkStruct_MO*   field_2C;
     char**            mapMessageStrings_30; /** Points to array of `char*`s for each map message. */
     s_AnimInfo*       animInfo_34;
-    s8                unk_38[8];
+    s_UnkStruct3_Mo*  field_38;
+    s8                unk_3C[4];
     void              (*func_40)();
     void              (*func_44)();
     s8                unk_48[4];
@@ -1500,13 +1509,13 @@ typedef struct _MapOverlayHeader
     s32               (*func_D0)(s32, void*, s16, s32); // 0x800C964C
     s32               (*func_D4)(s_SubCharacter*);      // Assumed return type.
     void              (*func_D8)();                     // Assumed return type.
-    void              (*func_DC)(s_SubCharacter*);      // Assumed return type.
+    void              (*func_DC)();                     // Assumed return type.
     s8                unk_E0[4];
     s32               (*func_E4)(s_SubCharacter*, s_SubCharacter*); // Assumed return type.
     s64               (*func_E8)(s_SubCharacter*);                  // Is it really `s64`???
     s32               (*func_EC)();
     s8                unk_F0[24];
-    s32               (*func_108)(s32, s32);
+    s32               (*func_108)();
     s8                unk_10C[24];
     void              (*func_124)(s_SubCharacter*); // Assumed return type.
     s32               (*func_128)(s_SubCharacter*); // Assumed return type.
@@ -1955,6 +1964,10 @@ extern s32 D_800AF224;
 
 extern s_AnimInfo g_MaybePlayerAnims[]; // Maybe part of bigger struct.
 
+extern s16 D_800AF506;
+
+extern s16 D_800AF526;
+
 extern s16 D_800AF5C6;
 
 extern s16 D_800AF624;
@@ -2325,6 +2338,14 @@ extern s32 D_800C455C;
 
 extern s_800AFBF4 D_800C4570;
 
+extern s16 D_800AEEDC[][2]; // Type assumed.
+
+extern s16 D_800AEF78[][2]; //  Type assumed.
+
+extern s16 D_800AF070[]; // Type assumed.
+
+extern s16 D_800AF1FC[]; // Type assumed.
+
 extern s16 D_800C4574;
 
 /** Anim index. */
@@ -2370,13 +2391,17 @@ extern u16 D_800C45F0;
 
 extern u16 D_800C4604;
 
-extern s8 D_800C4560;
-
-extern u8 D_800C4561;
-
 extern u8 D_800C4606;
 
 extern s32 D_800C4608;
+
+extern s32 D_800C4610;
+
+extern s32 D_800C4618;
+
+extern s8 D_800C4560;
+
+extern u8 D_800C4561;
 
 extern s_800C4620 D_800C4620;
 
@@ -2831,6 +2856,10 @@ void func_8004729C(u16);
 /** Returns `true` if player has usable ammo in inventory (i.e. ammo + gun needed for it, or gun with ammo loaded). */
 s32 func_8004C328();
 
+void func_8004C564(u8, s32);
+
+void func_8004C8DC();
+
 // TODO: Can probably create status enums for the below funcs' return values to avoid magic,
 // but other funcs using similar return patterns should be identified first if they exist.
 
@@ -2855,6 +2884,8 @@ void func_80055330(u8 arg0, s32 arg1, u8 arg2, s32 arg3, s32 arg4, s32 arg5, s32
 void func_800553C4(u8 arg0, u8 arg1, u8 arg2, u8 arg3);
 
 void func_800553E0(u32 arg0, u8 arg1, u8 arg2, u8 arg3, u8 arg4, u8 arg5, u8 arg6);
+
+void func_8005545C(void*);
 
 /** `arg0` type assumed. */
 void func_80055434(VECTOR3* vec);
@@ -3736,8 +3767,12 @@ void GameFs_PlayerMapAnimLoad(s32 mapIdx);
 /** Used when exiting the inventory screen. */
 void func_8007EBBC();
 
+void func_80070DF0(s_MainCharacterExtra*, s_SubCharacter*, s32, s32);
+
 // `arg0` is `s_SubCharacter` pointer?
 void func_800711C4(s32 arg0, s32 arg1);
+
+s32 func_80071620(u8, s_SubCharacter*, s32, s32);
 
 void func_80071224(s32 arg0, s32 arg1);
 
@@ -3760,6 +3795,14 @@ void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord);
 void func_8007E9C4();
 
 void func_8007F14C(u8 arg0);
+
+void func_8007F32C();
+
+void func_8007FB34(s16, s16, s16*);
+
+void func_8007FB94(s_SubCharacter*, s_MainCharacterExtra*, s32);
+
+void func_8007FD4C(s32);
 
 /** Resets several global variables to 0. */
 void func_8007F1CC();
