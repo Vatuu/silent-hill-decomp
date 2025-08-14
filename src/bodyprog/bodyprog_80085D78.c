@@ -2245,7 +2245,7 @@ void func_8008B664(VECTOR3* pos, u32 caseVar) // 0x8008B664
 
     if (sfx != 0)
     {
-        func_8005DC1C(var, pos, 0xC0, 0);
+        func_8005DC1C(sfx, pos, 0xC0, 0);
     }
 }
 #else
