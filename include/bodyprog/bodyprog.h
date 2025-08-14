@@ -1593,14 +1593,15 @@ typedef struct
     s8      field_14;
 } s_800C4590;
 
+/** Anim switch struct? */
 typedef struct _s_800AFBF4
 {
-    s16 field_0;
-    s16 field_2;
+    s16 sfx_0;
+    s16 sfx_2;
     u8  unk_4[2];
-    u8 field_6;
-    u8 field_7;
-    u8 field_8;
+    u8  animIdx_6;
+    u8  field_7;
+    u8  field_8;
     u8  field_9;
     u8  field_A;
     u8  unk_B;
@@ -2346,6 +2347,7 @@ extern s16 D_800AF070[]; // Type assumed.
 
 extern s16 D_800AF1FC[]; // Type assumed.
 
+/** SFX. */
 extern s16 D_800C4574;
 
 /** Anim index. */
@@ -2910,6 +2912,7 @@ u8 func_80055F08(SVECTOR3* arg0, SVECTOR3* arg1, MATRIX* mat);
 
 void func_800560FC(s_800BE9FC* arg0);
 
+/** Related to enviroment textures. */
 void func_8005B1A0(s_800C1450_58* arg0, s32 arg1, s32 arg2, u8 arg3, s32 arg4, s32 arg5, s16 arg6, s16 arg7);
 
 /** @brief Computes a fog-shaded version of `D_800C4190` color using `arg1` as the distance factor?
@@ -2922,7 +2925,7 @@ void func_8005A478(s_GteScratchData* scratchData, s32 alpha);
 /** `scratchData` is unused? */
 void func_8005A838(s_GteScratchData* scratchData, s32 scale);
 
-void func_8005A900(s_ObjHeader* arg0, s32 offset, s_GteScratchData* scratchData, MATRIX* mat);
+void func_8005A900(s_ObjHeader* header, s32 offset, s_GteScratchData* scratchData, MATRIX* mat);
 
 void func_8005B370(s_func_8005B370* arg0);
 
@@ -2953,11 +2956,11 @@ void func_80057228(MATRIX* mat, s32 alpha, SVECTOR* arg2, VECTOR3* arg3);
 /** TODO: Unknown `arg1`/`arg2` types. */
 void func_80057344(s_func_80057344* arg0, void* arg1, void* arg2, s32 arg3);
 
-void func_8005759C(s_ObjHeader* arg0, s_GteScratchData* scratchData, s32 vertexOffset, s32 normalOffset);
+void func_8005759C(s_ObjHeader* header, s_GteScratchData* scratchData, s32 vertexOffset, s32 normalOffset);
 
-void func_80057658(s_ObjHeader* arg0, s32 offset, s_GteScratchData* scratchData, SVECTOR3* arg3, SVECTOR* arg4);
+void func_80057658(s_ObjHeader* header, s32 offset, s_GteScratchData* scratchData, SVECTOR3* arg3, SVECTOR* arg4);
 
-void func_80057A3C(s_ObjHeader* arg0, s32 offset, s_GteScratchData* scratchData, SVECTOR3* lightVec);
+void func_80057A3C(s_ObjHeader* header, s32 offset, s_GteScratchData* scratchData, SVECTOR3* lightVec);
 
 void func_8005B55C(GsCOORDINATE2*);
 
@@ -2969,9 +2972,9 @@ void func_8005C814(s_SubCharacter_D8* arg0, s_SubCharacter* chara);
 s32 func_8005D974();
 
 /** Spatial SFX func? */
-void func_8005DC1C(s32, VECTOR3*, s32, s32); // Types assumed.
+void func_8005DC1C(s32 sfx, VECTOR3* pos, s32 arg2, s32 soundType); // Types assumed.
 
-void func_8005DC3C(s32 sfx, VECTOR3* pos, s32 arg2, s32 arg3, s32 arg4);
+void func_8005DC3C(s32 sfx, VECTOR3* pos, s32 arg2, s32 soundType, s32 arg4);
 
 void func_8005DD44(s32, VECTOR3*, s32, s8); // Types assumed.
 
@@ -3091,7 +3094,7 @@ void func_80086DA8(s32 arg0, s32 arg1);
 
 void func_80086F44(s32 arg0, s32 arg1);
 
-void func_80086FE8(s32 mapMsgIdx, s32 arg1, s32 arg2);
+void func_80086FE8(s32 mapMsgIdx, s32 sfx, VECTOR3* pos);
 
 void func_8008716C(s32 arg0, s32 arg1, s32 arg2);
 
@@ -3205,7 +3208,7 @@ void func_8008B40C(s32 arg0, s32 arg1);
 /** `arg0` is boolean. */
 void func_8008B438(s32 arg0, s32 arg1, s32 arg2);
 
-void func_8008B664(s32 arg0, u32 caseVar);
+void func_8008B664(VECTOR3* pos, u32 caseVar);
 
 s32 func_8008D850();
 

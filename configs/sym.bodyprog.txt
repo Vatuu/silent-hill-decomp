@@ -474,10 +474,10 @@ Inventory_AddSpecialItem                    = 0x80054CAC; // type:func
 //--------------------------------------------------------------------
 //--- PA: 0x030460   VA: 0x80054FC0   subsegment: c, bodyprog_80054FC0
 //--------------------------------------------------------------------
-func_800571D0                               = 0x800571D0; // type:func size:0x58 - fix for truncated function
+func_800571D0                               = 0x800571D0; // type:func size:0x58 - Fix for truncated function.
 GameState_MapScreen_Update                  = 0x80066EB0; // type:func
 Player_Logic_Update                         = 0x800717D0; // type:func
-func_80074350.234                           = 0x80074350; // filename:func_80074350 type:func The generated result of the compilation for some reason adds .234 at name end.
+func_80074350.234                           = 0x80074350; // filename:func_80074350 type:func - Generated compilation result adds .234 at name end for some reason.
 Player_ReceiveDamage                        = 0x8007C800; // type:func
 Game_SavegameResetPlayer                    = 0x8007E530; // type:func
 GameFs_PlayerMapAnimLoad                    = 0x8007EB64; // type:func
@@ -492,13 +492,13 @@ Math_GetMagnitudeShift                      = 0x800808F8; // type:func
 //---------------------------------------------------------------
 vcInitVCSystem                              = 0x80080940; // type:func
 vcStartCameraSystem                         = 0x800809DC; // type:func
-vcEndCameraSystem                           = 0x80080A04; // type:func Guessed name.
+vcEndCameraSystem                           = 0x80080A04; // type:func - Guessed name.
 vcSetFirstCamWork                           = 0x80080A4C; // type:func
-vcWorkSetFlags                              = 0x80080BF8; // type:func Guessed name.
-Vc_LookAtAngleYMaxSet                       = 0x80080C18; // type:func An accurate guess might be `vcSetWatchTgtMaxY`.
+vcWorkSetFlags                              = 0x80080BF8; // type:func - Guessed name.
+Vc_LookAtAngleYMaxSet                       = 0x80080C18; // type:func - An accurate guess might be `vcSetWatchTgtMaxY`.
 vcUserWatchTarget                           = 0x80080C2C; // type:func
 vcUserCamTarget                             = 0x80080CBC; // type:func
-vcChangeProjectionValue                     = 0x80080D5C; // type:func Guessed name. Exists in SH2, but code is different.
+vcChangeProjectionValue                     = 0x80080D5C; // type:func - Guessed name. Exists in SH2, but code is different.
 vcGetNowWatchPos                            = 0x80080D78; // type:func
 vcGetNowCamPos                              = 0x80080EA8; // type:func
 vcReturnPreAutoCamWork                      = 0x80080ED0; // type:func
@@ -550,7 +550,7 @@ vcAdjCamOfsAngByOfsAngSpd                   = 0x8008555C; // type:func
 vcMakeCamMatAndCamAngByBaseAngAndOfsAng     = 0x800857EC; // type:func
 vcSetDataToVwSystem                         = 0x80085884; // type:func
 vcCamMatNoise                               = 0x80085A7C; // type:func
-Vc_VectorMagnitudeCalc                      = 0x80085B1C; // type:func Originally could've be something like `vcGetXZSumDist`.
+Vc_VectorMagnitudeCalc                      = 0x80085B1C; // type:func - Originally could've be something like `vcGetXZSumDist`.
 vcGetXZSumDistFromLimArea                   = 0x80085C80; // type:func
 
 //--------------------------------------------------------------------

@@ -272,9 +272,9 @@ void GsTMDfastTG4LFG(void* op, VERT* vp, VERT* np, PACKET* pk, int n, int shift,
     : "r"(xy), "r"(z) \
     : "$12", "memory")
 
-// Less efficient version of gte_SetRotMatrix from PsyQ?
-// PsyQ gte_SetRotMatrix loads 32-bit words from the `MATRIX` straight into GTE.
-// While this func is reading 16-bit words and then combining them into 32-bit word before loading.
+// Less efficient version of `gte_SetRotMatrix` from PsyQ?
+// PsyQ `gte_SetRotMatrix` loads 32-bit words from the `MATRIX` straight into GTE,
+// while this macro reads 16-bit words and combines them into a 32-bit word before loading.
 // Not sure of reason why, wonder if it's from some older PsyQ SDK.
 #define gte_SetRotMatrix_custom(mat) __asm__ volatile( \
     "lhu $12, 16(%0);"                                 \

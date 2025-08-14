@@ -11,7 +11,7 @@ void func_8008F94C() // 0x8008F94C
     s32 var_a0;
     s32 var_a0_3;
     s32 var_v1;
-    u16 temp_t1;
+    u16 firedShotCount;
     u16 var_v0_5;
     u8  temp_a0_2;
     u8  temp;
@@ -33,25 +33,24 @@ void func_8008F94C() // 0x8008F94C
     D_800C48B0 = g_SavegamePtr->clearGameCount_24A;
     D_800C48B1 = g_SavegamePtr->clearGameEndings_24B;
     D_800C48B2 = g_SavegamePtr->field_27A;
-    D_800C48B6 = (g_SavegamePtr->eventFlags_168[1] >> 29) & 1;
+    D_800C48B6 = (g_SavegamePtr->eventFlags_168[1] >> 29) & (1 << 0);
     D_800C48B4 = 0;
-    D_800C48B7 = (g_SavegamePtr->eventFlags_168[5] >> 23) & 1;
+    D_800C48B7 = (g_SavegamePtr->eventFlags_168[5] >> 23) & (1 << 0);
     D_800C48B8 = func_8009146C(1);
     D_800C48BA = func_8009146C(0);
 
-    temp_t1 = g_SavegamePtr->firedShotCount_264;
+    firedShotCount = g_SavegamePtr->firedShotCount_264;
+    D_800C48BC     = firedShotCount != 0;
 
-    D_800C48BC = temp_t1 != 0;
-
-    if (D_800C48BC != 0)
+    if (D_800C48BC)
     {
         D_800C48C0 = g_SavegamePtr->closeRangeShotCount_266;
         D_800C48C4 = g_SavegamePtr->midRangeShotCount_268;
         D_800C48C8 = g_SavegamePtr->longRangeShotCount_26A;
         D_800C48C4 = D_800C48C4 + g_SavegamePtr->field_26C;
-        D_800C48C0 = D_800C48C0 * 100 / temp_t1;
-        D_800C48C4 = D_800C48C4 * 100 / temp_t1;
-        D_800C48C8 = D_800C48C8 * 100 / temp_t1;
+        D_800C48C0 = D_800C48C0 * 100 / firedShotCount;
+        D_800C48C4 = D_800C48C4 * 100 / firedShotCount;
+        D_800C48C8 = D_800C48C8 * 100 / firedShotCount;
         D_800C48CC = ((100 - D_800C48C0) - D_800C48C4) - D_800C48C8;
 
         D_800AFDF4.field_0[0] = (((D_800C48C0) / 100) % 10) + '0';
@@ -78,7 +77,7 @@ void func_8008F94C() // 0x8008F94C
     D_800C3E40 = 7;
     temp_a0_2  = g_GameWork.config_0.optExtraOptionsEnabled_27;
 
-    if ((temp_a0_2 & 3) && (temp_a0_2 & 0xC))
+    if ((temp_a0_2 & 0x3) && (temp_a0_2 & 0xC))
     {
         D_800C3E40 = 0xF;
     }
@@ -223,7 +222,7 @@ void func_8008F94C() // 0x8008F94C
     if (temp >= 5)
     {
         D_800C48E0.field_1 = 0;
-        D_800C48B5 += 10;
+        D_800C48B5        += 10;
     }
     else
     {
@@ -236,7 +235,7 @@ void func_8008F94C() // 0x8008F94C
     if (temp >= 5)
     {
         D_800C48E0.field_6 = 0;
-        D_800C48B5 += 10;
+        D_800C48B5        += 10;
     }
     else
     {
@@ -245,7 +244,7 @@ void func_8008F94C() // 0x8008F94C
 
     D_800C48E0.field_8 = 7;
 
-    if (D_800C48BC != 0)
+    if (D_800C48BC)
     {
         var_a0 = ((D_800C48C0 + D_800C48C4 * 2) + (D_800C48C8 * 3)) - (D_800C48CC * 4);
         var_a0 = var_a0 / 10;
@@ -269,7 +268,7 @@ void func_8008F94C() // 0x8008F94C
     else
     {
         D_800C48E0.field_8 = 0;
-        D_800C48B5 += 10;
+        D_800C48B5        += 10;
     }
 
     D_800C48E0.field_7 = 7;
@@ -309,7 +308,7 @@ void func_8008F94C() // 0x8008F94C
         var_v1 = 0;
     }
 
-    temp3 = &D_800C48B5;
+    temp3       = &D_800C48B5;
     D_800C48B5 += var_v1;
 
     if (temp3 == NULL)
@@ -322,7 +321,7 @@ void func_8008F94C() // 0x8008F94C
         D_800C48E0.field_7 = 0;
     }
 
-    if (D_800C48D0 == -1)
+    if (D_800C48D0 == GameDifficulty_Easy)
     {
         D_800C48B5 += -5;
     }
@@ -604,7 +603,7 @@ void Results_DisplayInfo(u32* arg0) // 0x80090664
         Gfx_StringSetColor(D_800C48E0.field_7);
         Gfx_StringDrawInt(4, D_800C48BA);
 
-        if (D_800C48BC != 0)
+        if (D_800C48BC)
         {
             Gfx_StringSetColor(ColorId_White);
             Gfx_StringSetPosition(0x18, 0xAF);

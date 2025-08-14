@@ -1,6 +1,7 @@
 #ifndef _MAP5_S01_H
 #define _MAP5_S01_H
 
+/** `arg0` might be `s_SubCharacter` pointer. */
 void func_800D2450(s32 arg0);
 
 void func_800DEF80();

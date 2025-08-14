@@ -42,10 +42,14 @@ typedef struct
 // GLOBALS
 // ========
 
+// Data below is likely part of a collected results data struct.
+
 extern s_800AFDF4 D_800AFDF4;
 
+/** Savegame count. */
 extern s16 D_800C48A0;
 
+/** Gameplay time. */
 extern u16 D_800C48A2;
 
 extern u16 D_800C48A4;
@@ -56,18 +60,22 @@ extern u16 D_800C48A8;
 
 extern u16 D_800C48AA;
 
+/** Picked up item count. */
 extern u16 D_800C48AC;
 
 extern u8 D_800C48AE;
 
 extern u8 D_800C48AF;
 
+/** Clear game count. */
 extern u8 D_800C48B0;
 
+/** Clear game endings. */
 extern u8 D_800C48B1;
 
 extern u8 D_800C48B2;
 
+/** Location ID. */
 extern u8 D_800C48B3;
 
 extern u8 D_800C48B4;
@@ -82,18 +90,24 @@ extern u16 D_800C48B8;
 
 extern u16 D_800C48BA;
 
-extern s32 D_800C48BC;
+/** Has fired shots. */
+extern bool D_800C48BC;
 
+/** Close range shot count. */
 extern u32 D_800C48C0;
 
+/** Mid range shot count. */
 extern u32 D_800C48C4;
 
+/** Long range shot count. */
 extern u32 D_800C48C8;
 
 extern u32 D_800C48CC;
 
+/** Game difficulty. */
 extern s8 D_800C48D0;
 
+/** Continue count. */
 extern u8 D_800C48D1;
 
 extern s_800C48E0 D_800C48E0;
@@ -101,6 +115,9 @@ extern s_800C48E0 D_800C48E0;
 // ==========
 // FUNCTIONS
 // ==========
+
+/** Processes and collects results data. */
+void func_8008F94C();
 
 void func_800904F4();
 

@@ -4971,7 +4971,7 @@ bool func_80075504(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                     {
                         chara->field_44 = 1;
 
-                        func_8005DC1C(D_800C4570.field_0, &chara->position_18, 0x80, 0);
+                        func_8005DC1C(D_800C4570.sfx_0, &chara->position_18, 0x80, 0);
 
                         chara->properties_E4.player.field_10C                       = 0x40;
                         g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Unk2;
@@ -5017,11 +5017,11 @@ bool func_80075504(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                         g_SysWork.playerCombatInfo_38.currentWeaponAmmo_10--;
                         g_SavegamePtr->items_0[g_SysWork.playerCombatInfo_38.field_12].count_1--;
 
-                        func_8005DC1C(D_800C4570.field_0, &chara->position_18, 0x80, 0);
+                        func_8005DC1C(D_800C4570.sfx_0, &chara->position_18, 0x80, 0);
                     }
                     else
                     {
-                        func_8005DC1C(D_800C4570.field_0, &chara->position_18, 0x30, 0);
+                        func_8005DC1C(D_800C4570.sfx_0, &chara->position_18, 0x30, 0);
                     }
 
                     chara->properties_E4.player.field_10C = 0xC8;
@@ -6003,7 +6003,7 @@ bool func_80075504(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
 
             if (extra->model_0.stateStep_3 == 0)
             {
-                extra->model_0.anim_4.animIdx_0 = D_800C4570.field_6;
+                extra->model_0.anim_4.animIdx_0 = D_800C4570.animIdx_6;
                 extra->model_0.stateStep_3++;
             }
 
@@ -6060,7 +6060,7 @@ bool func_80075504(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
             if ((D_800AF624 + D_800C4570.field_9) <= extra->model_0.anim_4.keyframeIdx0_8 &&
                 !(g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & PlayerFlag_Unk2))
             {
-                func_8005DC1C(D_800C4570.field_2, &chara->position_18, 0x80, 0);
+                func_8005DC1C(D_800C4570.sfx_2, &chara->position_18, 0x80, 0);
 
                 chara->properties_E4.player.field_10C                       = 0x20;
                 g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Unk2;
@@ -6607,7 +6607,7 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                 {
                     if (!g_SysWork.playerCombatInfo_38.isAiming_13 && chara->model_0.stateStep_3 == 0)
                     {
-                        chara->model_0.anim_4.animIdx_0 = D_800C4570.field_6;
+                        chara->model_0.anim_4.animIdx_0 = D_800C4570.animIdx_6;
                         chara->model_0.stateStep_3++;
                     }
                 }
@@ -6632,7 +6632,7 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                 {
                     if (!g_SysWork.playerCombatInfo_38.isAiming_13 && chara->model_0.stateStep_3 == 0)
                     {
-                        chara->model_0.anim_4.animIdx_0 = D_800C4570.field_6;
+                        chara->model_0.anim_4.animIdx_0 = D_800C4570.animIdx_6;
                         chara->model_0.stateStep_3++;
                     }
                 }

@@ -440,15 +440,14 @@ typedef enum _InventoryItemId
 
 /** @brief Equipped weapon IDs. Derivative of `e_InventoryItemId`.
  *
- * Likely inacurrate name as some of values from the few intances this enum
- * is used changes in case in specific cases as for example:
+ * Maybe attack type instead?
+ * Name is likely inacurrate as some of values from the few uses of this enum
+ * change in certain cases. Examples:
  *
- * The kitchen knife ID changes to 10/0x0A if the player press or hold
- * the attack button and changes to 20/0x14 if the player start tapping
- * the attack button.
+ * The kitchen knife ID changes to 10 if the user holds the Action
+ * button and 20 if they tap rapidly.
  *
- * Another intance is the axe which by pressing or holding the attack
- * button the ID changes to 17/0x11 and changes to 27/0x1B.
+ * The axe ID changes to 17 or 27 depending on whether the user presses or holds Action.
  */
 typedef enum _EquippedWeaponId
 {
@@ -986,13 +985,13 @@ typedef struct _SubCharacter
     s16     flags_3E;
     s8      field_40; // In player: Index of the NPC attacking the player.
                       // In NPCs: Unknown.
-    s8      field_41; // In player: Indicates what attack has been performed to the player.
-                      // In NPCs: The ID (from `e_EquippedWeaponId`) of the weapon which is getting attacked.
+    s8      field_41; // In player: Indicates what attack has been performed ton player.
+                      // In NPCs: The ID (from `e_EquippedWeaponId`) of the weapon which is being used for attack.
     s8      unk_42[2];
     s16     field_44;
-    s8      field_46; // In player: The ID (from `e_EquippedWeaponId`) of the weapon which the player is using.
-                      // This is not the same as `field_41` as this value only refresh when the player is aiming.
-                      // In NPCs: Indicate the attack performed to the player.
+    s8      field_46; // In player: The ID (from `e_EquippedWeaponId`) of the weapon which player is using.
+                      // This is not the same as `field_41`, as this value only resets when player is aiming.
+                      // In NPCs: Indicates attack performed on player.
     s8      field_47;
     s8      unk_48[4];
     s32     field_4C; // } Fields used by `func_8008A3E0`. Types guessed for now.
@@ -1009,18 +1008,18 @@ typedef struct _SubCharacter
     VECTOR3 field_98;
     VECTOR3 field_A4;
     q19_12  health_B0;
-    s32     field_B4;          // X? - In player: Sums or rest in case of getting hurt by an enemy.
-    s32     field_B8;          // Y? - In player: Sums or rest in case of getting hurt by an enemy.
-    s32     field_BC;          // Z? - In player: Sums or rest in case of getting hurt by an enemy.
+    s32     field_B4;          // X? - In player: Adds/subtracts if hurt by enemy.
+    s32     field_B8;          // Y? - In player: Adds/subtracts if hurt by enemy.
+    s32     field_BC;          // Z? - In player: Adds/subtracts if hurt by enemy.
     q19_12  damageReceived_C0;
     u16     deathTimer_C4;     // Part of `shBattleInfo` struct in SH2, may use something similar here.
     s16     timer_C6;          // Some sort of timer, value written by `Ai_LarvalStalker_Update`.
 
     // Fields seen used inside maps (eg. `map0_s00` `func_800D923C`)
 
-    s16               field_C8;
-    s16               field_CA;
-    s16               field_CC;
+    s16               field_C8; // } Anim root offset?
+    s16               field_CA; // }
+    s16               field_CC; // }
     s16               field_CE;
     s16               field_D0;
     s16               field_D2;
@@ -1045,7 +1044,7 @@ typedef struct _MainCharacterExtra
 {
     s_Model model_0; // For player, this is a copy of model_0 in its corresponding s_SubCharacter.
     s32     field_18;
-    s32     field_1C; // Some kind of state related to the harm animation, animations where the player has no control, and the idle animation.
+    s32     field_1C; // Harm animation index?
     s32     field_20; // Some kind of anim state related to current action (running, walking, sidestepping, etc.).
     s32     field_24; // Some kind of anim state related to current action (running, walking, sidestepping, etc.). Sometimes same as above, but not always.
     s32     field_28; // Forcefully setting to 1 opens options menu.

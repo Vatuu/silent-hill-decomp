@@ -776,7 +776,7 @@ void func_80086F44(s32 arg0, s32 arg1) // 0x80086F44
     g_SysWork.sysStateStep_C++;
 }
 
-void func_80086FE8(s32 mapMsgIdx, s32 arg1, s32 arg2) // 0x80086FE8
+void func_80086FE8(s32 mapMsgIdx, s32 sfx, VECTOR3* pos) // 0x80086FE8
 {
     s32 i;
     
@@ -805,7 +805,7 @@ void func_80086FE8(s32 mapMsgIdx, s32 arg1, s32 arg2) // 0x80086FE8
     {
         case 0:
             g_MapOverlayHeader.func_C8();
-            func_8005DC1C(arg1, arg2, 0x80, 0);
+            func_8005DC1C(sfx, pos, 0x80, 0);
             
             g_SysWork.timer_2C = 0;
             g_SysWork.field_14 = 0;
@@ -2189,11 +2189,11 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008B474); // 0x
 
 // TODO: RODATA migration.
 #ifdef NON_MATCHING
-void func_8008B664(s32 arg0, u32 caseVar) // 0x8008B664
+void func_8008B664(VECTOR3* pos, u32 caseVar) // 0x8008B664
 {
-    s32 var;
+    s32 sfx;
 
-    var = 0;
+    sfx = 0;
     switch (caseVar)
     {
         case 0:
@@ -2202,7 +2202,7 @@ void func_8008B664(s32 arg0, u32 caseVar) // 0x8008B664
         case 16:
         case 20:
         case 26:
-            var = 0x511;
+            sfx = 0x511;
             break;
 
         case 1:
@@ -2214,13 +2214,13 @@ void func_8008B664(s32 arg0, u32 caseVar) // 0x8008B664
         case 21:
         case 24:
         case 27:
-            var = 0x510;
+            sfx = 0x510;
             break;
 
         case 32:
         case 33:
         case 34:
-            var = 0x506;
+            sfx = 0x506;
             break;
 
         case 2:
@@ -2235,7 +2235,7 @@ void func_8008B664(s32 arg0, u32 caseVar) // 0x8008B664
 
         case 8:
         case 9:
-            var = 0x524;
+            sfx = 0x524;
             break;
 
         case 35:
@@ -2243,9 +2243,9 @@ void func_8008B664(s32 arg0, u32 caseVar) // 0x8008B664
             break;
     }
 
-    if (var != 0)
+    if (sfx != 0)
     {
-        func_8005DC1C(var, arg0, 0xC0, 0);
+        func_8005DC1C(var, pos, 0xC0, 0);
     }
 }
 #else

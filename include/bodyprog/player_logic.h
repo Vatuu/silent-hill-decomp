@@ -41,8 +41,8 @@ extern u8 D_800AF216; // 0x800AF216
 extern u8 D_800C457C;
 
 /** Boolean.
- * @note Possibly inacurrate name or buggy functionallity, if enemies grab the
- * player with this enable the player will not be able to interact with anything.
+ * @note Possibly inaccurrate name or buggy functionality. If enemies grab the
+ * player with this set to `true`, the user will be unable to interact with anything.
  */
 extern u8 g_Player_DisableDamage; // 0x800C4562
 

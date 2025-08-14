@@ -124,11 +124,9 @@ INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", sharedFunc_800D2200_0_s01
 
 INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", sharedFunc_800D2274_0_s01); // 0x800D2360
 
-// `arg0` is `VECTOR3` pointer?
-void func_800D2450(s32 arg0)
+void func_800D2450(s32 arg0) // 0x800D2450
 {
-    // First argument might be `FILE_ITEM_UNQE0_TMD`.
-    func_8005DC1C(0x636, arg0 + 24, 0x80, 0);
+    func_8005DC1C(1590, arg0 + 24, 0x80, 0);
 }
 
 INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", sharedFunc_800D2390_0_s01); // 0x800D247C
