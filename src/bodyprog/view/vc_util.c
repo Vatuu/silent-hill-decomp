@@ -351,7 +351,7 @@ void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, s_SysWork* sys_p) // 0x80040
         ref_pos->vy = FP_TO(vec0.vy + vec1.vy, Q4_SHIFT);
         ref_pos->vz = FP_TO(vec0.vz + vec1.vz, Q4_SHIFT);
 
-        sys_p->cameraAngleY_237A   = shAngleRegulate(cam_ang.vy + FP_ANGLE(180.0f));
+        sys_p->cameraAngleY_237A   = Math_AngleNormalize(cam_ang.vy + FP_ANGLE(180.0f));
         sys_p->cameraY_2384        = FP_TO(-vec1.vy, Q4_SHIFT);
         sys_p->cameraRadiusXz_2380 = FP_TO(SquareRoot0(SQUARE(vec1.vx) + SQUARE(vec1.vz)), Q4_SHIFT);
     }

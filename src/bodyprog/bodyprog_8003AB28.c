@@ -1404,11 +1404,11 @@ void func_8003D058() // 0x8003D058
     {
         if (ptr0->field_0 == 164)
         {
-            coord = &g_SysWork.playerBoneCoords_890[6];
+            coord = &g_SysWork.playerBoneCoords_890[PlayerBone_LeftHand];
         } 
         else 
         {
-            coord = &g_SysWork.playerBoneCoords_890[10];
+            coord = &g_SysWork.playerBoneCoords_890[PlayerBone_RightHand];
         }
 
         if (Fs_QueueIsEntryLoaded(ptr0->field_4) != 0) 
@@ -2300,8 +2300,8 @@ void func_8003E740() // 0x8003E740
     sp38.vx = 1;
     sp38.vy = -7;
     sp38.vz = 0x21;
-    sp38.vx = FP_MULTIPLY(shAngleRegulate(D_800BCDE8[temp_s2++]), 5, Q12_SHIFT) + 1;
-    sp38.vz = FP_MULTIPLY(shAngleRegulate(D_800BCDE8[temp_s2++]), 5, Q12_SHIFT) + 33;
+    sp38.vx = FP_MULTIPLY(Math_AngleNormalize(D_800BCDE8[temp_s2++]), 5, Q12_SHIFT) + 1;
+    sp38.vz = FP_MULTIPLY(Math_AngleNormalize(D_800BCDE8[temp_s2++]), 5, Q12_SHIFT) + 33;
 
     poly = (POLY_FT4*)GsOUT_PACKET_P;
 
@@ -2403,30 +2403,30 @@ void func_8003EB54() // 0x8003EB54
 {
     g_SysWork.field_2378 = FP_FLOAT_TO(1.0f, Q12_SHIFT);
 
-    g_SysWork.field_235C = &g_SysWork.playerBoneCoords_890[0];
-    g_SysWork.field_236C = &g_SysWork.playerBoneCoords_890[0];
+    g_SysWork.field_235C = &g_SysWork.playerBoneCoords_890[PlayerBone_Root];
+    g_SysWork.field_236C = &g_SysWork.playerBoneCoords_890[PlayerBone_Root];
 
-    Math_Vector3Set(&g_SysWork.field_2360, 0, -0x333, -0x2000);
-    Math_SVectorSet(&g_SysWork.field_2370, 0x71, 0, 0);
+    Math_Vector3Set(&g_SysWork.field_2360, FP_METER(0.0f), FP_METER(-0.2f), FP_METER(-2.0f));
+    Math_SVectorSet(&g_SysWork.field_2370, FP_ANGLE(10.0f), FP_ANGLE(0.0f), FP_ANGLE(0.0f));
 }
 
 void func_8003EBA0() // 0x8003EBA0
 {
     g_SysWork.field_2378 = FP_FLOAT_TO(1.0f, Q12_SHIFT);
 
-    g_SysWork.field_235C = &g_SysWork.playerBoneCoords_890[1];
-    g_SysWork.field_236C = &g_SysWork.playerBoneCoords_890[0];
+    g_SysWork.field_235C = &g_SysWork.playerBoneCoords_890[PlayerBone_Torso];
+    g_SysWork.field_236C = &g_SysWork.playerBoneCoords_890[PlayerBone_Root];
 
-    Math_Vector3Set(&g_SysWork.field_2360, -0x147, -0x47A, 0x1EB);
-    Math_SVectorSet(&g_SysWork.field_2370, -0xAA, 0, 0);
+    Math_Vector3Set(&g_SysWork.field_2360, FP_METER(-0.08f), FP_METER(-0.28f), FP_METER(0.12f));
+    Math_SVectorSet(&g_SysWork.field_2370, FP_ANGLE(-15.0f), FP_ANGLE(0.0f), FP_ANGLE(0.0f));
 }
 
 void func_8003EBF4(s_MapOverlayHeader* arg0) // 0x8003EBF4
 {
-    s_800A9F80* ptr;
     s32         var_v1;
     s8          temp_a0;
     u8          temp_a1;
+    s_800A9F80* ptr;
 
     temp_a1 = arg0->field_0->field_6;
 

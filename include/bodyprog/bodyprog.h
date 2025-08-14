@@ -2128,6 +2128,7 @@ extern u8 D_800BCDD4;
 /** Related to main menu fog randomization. */
 extern s8* D_800BCDE0; // Type assumed.
 
+/** Angles. */
 extern s16 D_800BCDE8[];
 
 extern u16 D_800BCE14;

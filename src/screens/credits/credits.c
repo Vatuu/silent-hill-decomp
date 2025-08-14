@@ -953,7 +953,7 @@ void func_801E434C(u32 arg0, u32 arg1) // 0x801E434C
     u32 shiftedField_18;
     u32 maskedField_18;
 
-    D_800AFE08.field_7 = (arg0 != 0);
+    D_800AFE08.field_7 = arg0 != 0;
 
     if (arg1 < 4)
     {
@@ -974,29 +974,42 @@ void func_801E434C(u32 arg0, u32 arg1) // 0x801E434C
 
 void func_801E4394(u8* str) // 0x801E4394
 {
-    u8*     strPtr     = str;
-    s32     textX      = D_800AFE08.field_0;
-    s32     textY      = D_800AFE08.field_2;
-    s32     marginX    = D_800AFE08.field_4;
-    s32     fontH      = D_800AFE08.field_6;
-    s16*    widthTable = D_800AFE08.field_C;
-    s32*    colorTable = D_800AFE08.field_10;
-    PACKET* packet     = GsOUT_PACKET_P;
-    u32     blendFlag  = (u8)D_800AFE08.field_7;
-    u32     charCode   = *strPtr;
-    u32     colorCode  = D_800AFE08.field_8 | (blendFlag << 25); // RBG + code + semi-transparency flag.
-    u32     clut       = (u16)D_800AFE08.field_16;               // Clut Y, clut Y.
-    GsOT*   ot         = &D_800B5C58[g_ObjectTableIdx];
-
+    s32       textX;
+    s32       textY;
+    s32       marginX;
+    s32       fontH;
+    u32       blendFlag;
+    u32       charCode;
+    u32       colorCode;
+    u32       clut;
     s32       charWidth;
     s32       widthSum;
     s32       idx;
     u32       temp;
     u32       nextChar;
+    u8*       strPtr;
     u8*       scanPtr;
+    s16*      widthTable;
+    s32*      colorTable;
+    PACKET*   packet;
     SPRT*     sprite;
     SPRT_16*  sprite16;
     DR_TPAGE* tPage;
+    GsOT*     ot;
+
+    strPtr     = str;
+    textX      = D_800AFE08.field_0;
+    textY      = D_800AFE08.field_2;
+    marginX    = D_800AFE08.field_4;
+    fontH      = D_800AFE08.field_6;
+    widthTable = D_800AFE08.field_C;
+    colorTable = D_800AFE08.field_10;
+    packet     = GsOUT_PACKET_P;
+    blendFlag  = (u8)D_800AFE08.field_7;
+    charCode   = *strPtr;
+    colorCode  = D_800AFE08.field_8 | (blendFlag << 25); // RBG + code + semi-transparency flag.
+    clut       = (u16)D_800AFE08.field_16;               // Clut Y, clut Y.
+    ot         = &D_800B5C58[g_ObjectTableIdx];
 
     while (charCode != 0)
     {
@@ -1179,10 +1192,10 @@ void func_801E47E0(s32 arg0, s32 arg1) // 0x801E47E0
     }
     else if (check)
     {
-        temp_v0_4          = arg0 - D_800AFE24.field_0;
-        temp_a2            = temp_v0_4 * D_800AFE24.field_48;
-        temp_lo_15         = temp_v0_4 * D_800AFE24.field_4C;
-        D_800AFE24.field_0 = arg0;
+        temp_v0_4            = arg0 - D_800AFE24.field_0;
+        temp_a2              = temp_v0_4 * D_800AFE24.field_48;
+        temp_lo_15           = temp_v0_4 * D_800AFE24.field_4C;
+        D_800AFE24.field_0   = arg0;
         D_800AFE24.field_40 += temp_a2;
         D_800AFE24.field_44 += temp_lo_15;
     }

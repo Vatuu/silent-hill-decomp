@@ -1225,9 +1225,9 @@ typedef struct _SysWork
     u8              field_235A; // Assumed type.
     s8              unk_235B[1];
     GsCOORDINATE2*  field_235C;
-    VECTOR3         field_2360;
+    VECTOR3         field_2360; // Position?
     GsCOORDINATE2*  field_236C;
-    SVECTOR         field_2370;
+    SVECTOR         field_2370; // Rotation.
     s16             field_2378;
     s16             cameraAngleY_237A;
     s16             cameraAngleZ_237C;

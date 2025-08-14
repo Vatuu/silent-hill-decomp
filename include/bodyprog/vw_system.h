@@ -145,7 +145,7 @@ typedef struct _VC_ROAD_DATA
     VC_ROAD_FLAGS     flags_10          : 8; /** `VC_ROAD_FLAGS` | Path flags. */
     VC_AREA_SIZE_TYPE area_size_type_11 : 2;
     VC_ROAD_TYPE      rd_type_11        : 3; /** Path type. */
-    u32               mv_y_type_11      : 3;
+    u32               mv_y_type_11      : 3; /** `VC_CAM_MV_TYPE`? */
     s32               lim_rd_max_hy_12  : 8; // In SH2 `max_hy/min_hy` are part of `VC_LIMIT_AREA`, in SH1 these are separate for some reason.
     s32               lim_rd_min_hy_13  : 8;
     s32               ofs_watch_hy_14   : 8;
@@ -205,7 +205,7 @@ typedef struct _VC_WORK
     s32                       old_cam_excl_area_r_6C;         /** Previous exclusion area radius. */
     VC_WATCH_MV_PARAM         user_watch_mv_prm_70;
     VECTOR3                   watch_tgt_pos_7C;               /** Target look-at position. */
-    s32                       watch_tgt_max_y_88;             /** Max look-at Y angle. */
+    s32                       watch_tgt_max_y_88;             /** Max look-at Y offset. */
     s16                       watch_tgt_ang_z_8C;             /** Target look-at Z angle. */
     SVECTOR                   cam_mat_ang_8E;
     u8                        unk_96[2];
@@ -217,7 +217,7 @@ typedef struct _VC_WORK
     u8                        field_D8;                       /** `bool` */
     s8                        unk_D9[3];
     MATRIX                    field_DC;
-    u8                        field_FC;                      /** `bool` */
+    u8                        field_FC;                       /** `bool` */
     u8                        field_FD;
     s16                       cam_chara2ideal_ang_y_FE;  
     VECTOR3                   cam_tgt_velo_100;               /** Target velocity. */
@@ -351,7 +351,7 @@ void vcStartCameraSystem();
 void vcEndCameraSystem();
 void vcSetFirstCamWork(VECTOR3* cam_pos, s16 chara_eye_ang_y, s32 use_through_door_cam_f);
 void vcWorkSetFlags(VC_FLAGS enable, VC_FLAGS disable);
-s32  Vc_LookAtAngleYMaxSet(s32 lookAtAngleYMax);
+s32  Vc_LookAtOffsetYMaxSet(s32 lookAtOffsetYMax);
 void vcUserWatchTarget(VECTOR3* watch_tgt_pos, VC_WATCH_MV_PARAM* watch_prm_p, bool warp_watch_f);
 void vcUserCamTarget(VECTOR3* cam_tgt_pos, VC_CAM_MV_PARAM* cam_prm_p, bool warp_cam_f);
 void vcChangeProjectionValue(s16 scr_y);
@@ -374,7 +374,7 @@ void vcPreSetDataInVC_WORK(VC_WORK* w_p, VC_ROAD_DATA* vc_road_ary_list);
 void vcSetTHROUGH_DOOR_CAM_PARAM_in_VC_WORK(VC_WORK* w_p, THROUGH_DOOR_SET_CMD_TYPE set_cmd_type);
 void vcSetNearestEnemyDataInVC_WORK(VC_WORK* w_p);
 void vcSetNearRoadAryByCharaPos(VC_WORK* w_p, VC_ROAD_DATA* road_ary_list, s32 half_w, s32 unused, bool near_enemy_f);
-s32  vcRetRoadUsePriority(VC_ROAD_TYPE rd_type, s32 arg1);
+s32  vcRetRoadUsePriority(VC_ROAD_TYPE rd_type, s32 unused);
 bool vcSetCurNearRoadInVC_WORK(VC_WORK* w_p);
 s32  vcGetBestNewCurNearRoad(VC_NEAR_ROAD_DATA** new_cur_pp, VC_CAM_CHK_TYPE chk_type, VECTOR3* pos, VC_WORK* w_p);
 s32  vcGetNearestNEAR_ROAD_DATA(VC_NEAR_ROAD_DATA** out_nearest_p_addr, VC_CAM_CHK_TYPE chk_type, VC_ROAD_TYPE rd_type, VECTOR3* pos, VC_WORK* w_p, bool chk_only_set_marge_f);

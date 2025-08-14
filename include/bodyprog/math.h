@@ -128,12 +128,15 @@
 #define FP_TIME(sec) \
     FP_FLOAT_TO((sec), Q12_SHIFT)
 
-// `Math_AngleTruncate`
-static inline s16 shAngleRegulate(s32 angle)
+/** @brief Normalizes fixed-point degrees in Q3.12 format to the signed range `[-2048, 2047]`.
+ * Thin wrapper for `FP_ANGLE_NORM_S`.
+ */
+static inline s16 Math_AngleNormalize(s32 angle)
 {
     return FP_ANGLE_NORM_S(angle);
 }
 
+/** @brief Clears an `SVECTOR`'s components. */
 static inline void Math_SVectorZero(SVECTOR* vec)
 {
     vec->vx = 0;
@@ -141,6 +144,7 @@ static inline void Math_SVectorZero(SVECTOR* vec)
     vec->vz = 0;
 }
 
+/** @brief Sets an `SVECTOR`'s components. */
 static inline void Math_SVectorSet(SVECTOR* vec, s16 x, s16 y, s16 z)
 {
     vec->vx = x;
@@ -148,6 +152,7 @@ static inline void Math_SVectorSet(SVECTOR* vec, s16 x, s16 y, s16 z)
     vec->vz = z;
 }
 
+/** @brief Clears a `VECTOR3`'s components. */
 static inline void Math_Vector3Zero(VECTOR3* vec)
 {
     vec->vx = 0;
@@ -155,6 +160,7 @@ static inline void Math_Vector3Zero(VECTOR3* vec)
     vec->vz = 0;
 }
 
+/** @brief Sets an `VECTOR3`'s components. */
 static inline void Math_Vector3Set(VECTOR3* vec, s32 x, s32 y, s32 z)
 {
     vec->vx = x;

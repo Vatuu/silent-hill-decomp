@@ -523,8 +523,8 @@ bool Vw_AabbVisibleInFrustumCheck(MATRIX* modelMat, s16 minX, s16 minY, s16 minZ
     s32                             distToFarPlane;
     s32                             interpAlpha;
     s32                             transformedZ;
-    s32                             var_a0_2;
-    s32                             var_a2;
+    s32                             flag1Idx;
+    s32                             flag0Idx;
     s32                             pointsOutsideNearPlaneCount;
     s32                             i;
     s32                             pointsOutsideFarClipCount;
@@ -610,37 +610,37 @@ bool Vw_AabbVisibleInFrustumCheck(MATRIX* modelMat, s16 minX, s16 minY, s16 minZ
             {
                 if ((g_GameWork.gsScreenWidth_588 >> 1) < screenPos.vx)
                 {
-                    var_a2 = 2;
+                    flag0Idx = 2;
                 }
                 else
                 {
-                    var_a2 = 1;
+                    flag0Idx = 1;
                 }
             }
             else
             {
-                var_a2 = 0;
+                flag0Idx = 0;
             }
 
             if (screenPos.vy >= -(g_GameWork.gsScreenHeight_58A >> 1))
             {
                 if ((g_GameWork.gsScreenHeight_58A >> 1) < screenPos.vy)
                 {
-                    var_a0_2 = 2;
+                    flag1Idx = 2;
                 }
                 else
                 {
-                    var_a0_2 = 1;
+                    flag1Idx = 1;
                 }
             }
             else
             {
-                var_a0_2 = 0;
+                flag1Idx = 0;
             }
 
-            flags0[var_a2]                 |= 1 << 0;
-            flags1[var_a0_2]               |= 1 << 0;
-            sp20.field_0[var_a0_2][var_a2] |= 1 << 0;
+            flags0[flag0Idx]                 |= 1 << 0;
+            flags1[flag1Idx]                 |= 1 << 0;
+            sp20.field_0[flag1Idx][flag0Idx] |= 1 << 0;
         }
     }
 
@@ -710,36 +710,36 @@ bool Vw_AabbVisibleInFrustumCheck(MATRIX* modelMat, s16 minX, s16 minY, s16 minZ
             {
                 if ((g_GameWork.gsScreenWidth_588 >> 1) < screenPoints->vx)
                 {
-                    var_a2 = 2;
+                    flag0Idx = 2;
                 }
                 else
                 {
-                    var_a2 = 1;
+                    flag0Idx = 1;
                 }
             }
             else
             {
-                var_a2 = 0;
+                flag0Idx = 0;
             }
 
             if (screenPoints->vy >= -(g_GameWork.gsScreenHeight_58A >> 1))
             {
                 if ((g_GameWork.gsScreenHeight_58A >> 1) < screenPoints->vy)
                 {
-                    var_a0_2 = 2;
+                    flag1Idx = 2;
                 }
                 else
                 {
-                    var_a0_2 = 1;
+                    flag1Idx = 1;
                 }
             }
             else
             {
-                var_a0_2 = 0;
+                flag1Idx = 0;
             }
 
-            flags0[var_a2]   |= 1 << 0;
-            flags1[var_a0_2] |= 1 << 0;
+            flags0[flag0Idx] |= 1 << 0;
+            flags1[flag1Idx] |= 1 << 0;
 
             cullData->field_114++;
         }
@@ -812,7 +812,7 @@ bool func_8004A54C(s_func_8004A54C* arg0) // 0x8004A54C
 
 void vwAngleToVector(SVECTOR* vec, SVECTOR* ang, s32 r) // 0x8004A66C
 {
-    s32 entou_r; // "Entou" means "cylinder" in Japanese. Refers to radius on XZ plane.
+    s32 entou_r; // "Entou" means "cylinder" in Japanese. Refers to 2D radius on XZ plane.
     
     entou_r = FP_MULTIPLY(r, shRcos(ang->vx), Q12_SHIFT);
     vec->vy = FP_MULTIPLY(-r, shRsin(ang->vx), Q12_SHIFT);

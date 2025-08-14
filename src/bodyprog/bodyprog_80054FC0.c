@@ -9607,9 +9607,9 @@ void func_8007D090(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
 
     if (g_SysWork.field_2358 != 0 && g_SysWork.player_4C.extra_128.field_1C < 58)
     {
-        func_80044F14(&g_SysWork.playerBoneCoords_890[8],  0,    0x2D0, -0x64);
-        func_80044F14(&g_SysWork.playerBoneCoords_890[9], -0xA0, 0x100, -0x15E);
-        func_80044F14(&g_SysWork.playerBoneCoords_890[10], 0x96, 0,      0);
+        func_80044F14(&g_SysWork.playerBoneCoords_890[PlayerBone_RightUpperArm],  0,    0x2D0, -0x64);
+        func_80044F14(&g_SysWork.playerBoneCoords_890[PlayerBone_RightForearm], -0xA0, 0x100, -0x15E);
+        func_80044F14(&g_SysWork.playerBoneCoords_890[PlayerBone_RightHand], 0x96, 0,      0);
     }
 }
 
@@ -9718,9 +9718,9 @@ void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D970
     if (g_SysWork.player_4C.extra_128.field_24 < 20)
     {
         vec     = &g_SysWork.playerCombatInfo_38.field_0;
-        vec->vx = g_SysWork.playerBoneCoords_890[17].workm.t[0] * 16;
-        vec->vy = g_SysWork.playerBoneCoords_890[17].workm.t[1] * 16;
-        vec->vz = g_SysWork.playerBoneCoords_890[17].workm.t[2] * 16;
+        vec->vx = g_SysWork.playerBoneCoords_890[PlayerBone_RightFoot].workm.t[0] * 16;
+        vec->vy = g_SysWork.playerBoneCoords_890[PlayerBone_RightFoot].workm.t[1] * 16;
+        vec->vz = g_SysWork.playerBoneCoords_890[PlayerBone_RightFoot].workm.t[2] * 16;
     }
     else
     {
@@ -9730,16 +9730,16 @@ void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D970
             case 8:
             case 9:
                 vec2     = &g_SysWork.playerCombatInfo_38.field_0;
-                vec2->vx = g_SysWork.playerBoneCoords_890[17].workm.t[0] * 16;
-                vec2->vy = g_SysWork.playerBoneCoords_890[17].workm.t[1] * 16;
-                vec2->vz = g_SysWork.playerBoneCoords_890[17].workm.t[2] * 16;
+                vec2->vx = g_SysWork.playerBoneCoords_890[PlayerBone_RightFoot].workm.t[0] * 16;
+                vec2->vy = g_SysWork.playerBoneCoords_890[PlayerBone_RightFoot].workm.t[1] * 16;
+                vec2->vz = g_SysWork.playerBoneCoords_890[PlayerBone_RightFoot].workm.t[2] * 16;
                 break;
 
             default:
                 vec3     = &g_SysWork.playerCombatInfo_38.field_0;
-                vec3->vx = g_SysWork.playerBoneCoords_890[10].workm.t[0] * 16;
-                vec3->vy = g_SysWork.playerBoneCoords_890[10].workm.t[1] * 16;
-                vec3->vz = g_SysWork.playerBoneCoords_890[10].workm.t[2] * 16;
+                vec3->vx = g_SysWork.playerBoneCoords_890[PlayerBone_RightHand].workm.t[0] * 16;
+                vec3->vy = g_SysWork.playerBoneCoords_890[PlayerBone_RightHand].workm.t[1] * 16;
+                vec3->vz = g_SysWork.playerBoneCoords_890[PlayerBone_RightHand].workm.t[2] * 16;
                 break;
         }
     }

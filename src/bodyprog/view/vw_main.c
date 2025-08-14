@@ -119,8 +119,7 @@ void Vw_ClampAngleRange(s16* angleMin, s16* angleMax, s16 angleConstraintMin, s1
     rotToAngleConstraintMin = FP_ANGLE_NORM_U(angleConstraintMin - prevAngleMin);
     rotToAngleConstraintMax = FP_ANGLE_NORM_U(angleConstraintMax - prevAngleMin);
 
-    prevAngleMax = 0;
-
+    prevAngleMax = FP_ANGLE(0.0f);
     if (rotToAngleConstraintMin <= rotToAngleConstraintMax)
     {
         if (rotToAngleConstraintMin > prevAngleMax)
