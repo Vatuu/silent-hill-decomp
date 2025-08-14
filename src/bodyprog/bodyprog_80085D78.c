@@ -599,7 +599,7 @@ void Camera_TranslationSet(VECTOR3* pos, s32 xPosOffset, s32 yPosOffset, s32 zPo
 }
 
 void Camera_RotationSet(VECTOR3* lookAt, s32 xLookAtOffset, s32 yLookAtOffset, s32 zLookAtOffset,
-                        s32 xAngularAccel, s32 yAngularAccel, s32 xAngularSpeedMax, s32 yAngularSpeedMax, s32 warpLookAtFlag) // 0x80086B70
+                        s32 xAngularAccel, s32 yAngularAccel, s32 xAngularSpeedMax, s32 yAngularSpeedMax, bool warpLookAtFlag) // 0x80086B70
 {
     VECTOR3           lookAtTarget;
     VC_WATCH_MV_PARAM camRotParams;
@@ -619,7 +619,7 @@ void Camera_RotationSet(VECTOR3* lookAt, s32 xLookAtOffset, s32 yLookAtOffset, s
     }
 
     // Set angular acceleration on X axis.
-    if (xAngularAccel == 0)
+    if (xAngularAccel == FP_ANGLE(0.0f))
     {
         camRotParams.ang_accel_x = deflt_watch_mv_prm.ang_accel_x;
     }
@@ -629,7 +629,7 @@ void Camera_RotationSet(VECTOR3* lookAt, s32 xLookAtOffset, s32 yLookAtOffset, s
     }
 
     // Set angular acceleration on Y axis.
-    if (yAngularAccel == 0)
+    if (yAngularAccel == FP_ANGLE(0.0f))
     {
         camRotParams.ang_accel_y = deflt_watch_mv_prm.ang_accel_y;
     }
@@ -639,7 +639,7 @@ void Camera_RotationSet(VECTOR3* lookAt, s32 xLookAtOffset, s32 yLookAtOffset, s
     }
 
     // Set max angular speed on X axis.
-    if (xAngularSpeedMax == 0)
+    if (xAngularSpeedMax == FP_ANGLE(0.0f))
     {
         camRotParams.max_ang_spd_x = deflt_watch_mv_prm.max_ang_spd_x;
     }

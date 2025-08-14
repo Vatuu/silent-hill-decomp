@@ -142,7 +142,7 @@ typedef struct _VC_ROAD_DATA
 {
     VC_LIMIT_AREA     lim_sw_0;
     VC_LIMIT_AREA     lim_rd_8;
-    VC_ROAD_FLAGS     flags_10          : 8; /** Path flags. */
+    VC_ROAD_FLAGS     flags_10          : 8; /** `VC_ROAD_FLAGS` | Path flags. */
     VC_AREA_SIZE_TYPE area_size_type_11 : 2;
     VC_ROAD_TYPE      rd_type_11        : 3; /** Path type. */
     u32               mv_y_type_11      : 3;
@@ -159,7 +159,7 @@ STATIC_ASSERT_SIZEOF(VC_ROAD_DATA, 24);
 /** @brief Rail camera parementers. */
 typedef struct _VC_THROUGH_DOOR_CAM_PARAM
 {
-    u8      active_f_0;
+    u8      active_f_0;                /** `bool` */
     s8      unk_1[3];
     s32     timer_4;
     s16     rail_ang_y_8;              /** Rail Y angle. */
@@ -189,7 +189,7 @@ typedef struct _VC_WORK
     u8                        view_cam_active_f_0;
     VC_ROAD_DATA*             vc_road_ary_list_4;             /** Path array. */
     u32                       flags_8;                        /** `VC_FLAGS` */
-    u8                        through_door_activate_init_f_C;
+    u8                        through_door_activate_init_f_C; /** `bool` */
     s8                        unk_D[3];
     VC_THROUGH_DOOR_CAM_PARAM through_door_10;
     s16                       scr_half_ang_wy_2C;
@@ -214,10 +214,10 @@ typedef struct _VC_WORK
     SVECTOR                   ofs_cam_ang_spd_C0;             /** Offset rotational speed. */
     SVECTOR                   base_cam_ang_C8;                /** Base rotation. */
     s8                        unk_D0[8];
-    u8                        field_D8;                       /** Unknown boolean. */
+    u8                        field_D8;                       /** `bool` */
     s8                        unk_D9[3];
     MATRIX                    field_DC;
-    u8                        field_FC;
+    u8                        field_FC;                      /** `bool` */
     u8                        field_FD;
     s16                       cam_chara2ideal_ang_y_FE;  
     VECTOR3                   cam_tgt_velo_100;               /** Target velocity. */
@@ -352,13 +352,13 @@ void vcEndCameraSystem();
 void vcSetFirstCamWork(VECTOR3* cam_pos, s16 chara_eye_ang_y, s32 use_through_door_cam_f);
 void vcWorkSetFlags(VC_FLAGS enable, VC_FLAGS disable);
 s32  Vc_LookAtAngleYMaxSet(s32 lookAtAngleYMax);
-void vcUserWatchTarget(VECTOR3* watch_tgt_pos, VC_WATCH_MV_PARAM* watch_prm_p, s32 warp_watch_f);
-void vcUserCamTarget(VECTOR3* cam_tgt_pos, VC_CAM_MV_PARAM* cam_prm_p, s32 warp_cam_f);
+void vcUserWatchTarget(VECTOR3* watch_tgt_pos, VC_WATCH_MV_PARAM* watch_prm_p, bool warp_watch_f);
+void vcUserCamTarget(VECTOR3* cam_tgt_pos, VC_CAM_MV_PARAM* cam_prm_p, bool warp_cam_f);
 void vcChangeProjectionValue(s16 scr_y);
 void func_80080D68();
 void vcGetNowWatchPos(VECTOR3* watch_pos);
 void vcGetNowCamPos(VECTOR3* cam_pos);
-void vcReturnPreAutoCamWork(s32 warp_f);
+void vcReturnPreAutoCamWork(bool warp_f);
 void vcSetSubjChara(VECTOR3* chara_pos, s32 chara_bottom_y, s32 chara_top_y, s32 chara_grnd_y, VECTOR3* chara_head_pos,
                     s16 chara_mv_spd, s32 chara_mv_ang_y, s16 chara_ang_spd_y, s16 chara_eye_ang_y, s16 chara_eye_ang_wy, s32 chara_watch_xz_r);
 s32  vcExecCamera();
@@ -369,15 +369,15 @@ bool func_8008150C(s32 posX, s32 posZ);
 bool vcRetThroughDoorCamEndF(VC_WORK* w_p);
 s32  vcRetFarWatchRate(s32 far_watch_button_prs_f, VC_CAM_MV_TYPE cur_cam_mv_type, VC_WORK* w_p);
 s32  vcRetSelfViewEffectRate(VC_CAM_MV_TYPE cur_cam_mv_type, s32 far_watch_rate, VC_WORK* w_p);
-void vcSetFlagsByCamMvType(VC_CAM_MV_TYPE cam_mv_type, s32 far_watch_rate, s32 all_warp_f);
+void vcSetFlagsByCamMvType(VC_CAM_MV_TYPE cam_mv_type, s32 far_watch_rate, bool all_warp_f);
 void vcPreSetDataInVC_WORK(VC_WORK* w_p, VC_ROAD_DATA* vc_road_ary_list);
 void vcSetTHROUGH_DOOR_CAM_PARAM_in_VC_WORK(VC_WORK* w_p, THROUGH_DOOR_SET_CMD_TYPE set_cmd_type);
 void vcSetNearestEnemyDataInVC_WORK(VC_WORK* w_p);
-void vcSetNearRoadAryByCharaPos(VC_WORK* w_p, VC_ROAD_DATA* road_ary_list, s32 half_w, s32 unused, s32 near_enemy_f);
+void vcSetNearRoadAryByCharaPos(VC_WORK* w_p, VC_ROAD_DATA* road_ary_list, s32 half_w, s32 unused, bool near_enemy_f);
 s32  vcRetRoadUsePriority(VC_ROAD_TYPE rd_type, s32 arg1);
-s32  vcSetCurNearRoadInVC_WORK(VC_WORK* w_p);
+bool vcSetCurNearRoadInVC_WORK(VC_WORK* w_p);
 s32  vcGetBestNewCurNearRoad(VC_NEAR_ROAD_DATA** new_cur_pp, VC_CAM_CHK_TYPE chk_type, VECTOR3* pos, VC_WORK* w_p);
-s32  vcGetNearestNEAR_ROAD_DATA(VC_NEAR_ROAD_DATA** out_nearest_p_addr, VC_CAM_CHK_TYPE chk_type, VC_ROAD_TYPE rd_type, VECTOR3* pos, VC_WORK* w_p, s32 chk_only_set_marge_f);
+s32  vcGetNearestNEAR_ROAD_DATA(VC_NEAR_ROAD_DATA** out_nearest_p_addr, VC_CAM_CHK_TYPE chk_type, VC_ROAD_TYPE rd_type, VECTOR3* pos, VC_WORK* w_p, bool chk_only_set_marge_f);
 s32  vcAdvantageDistOfOldCurRoad(VC_NEAR_ROAD_DATA* old_cur_p);
 void vcAutoRenewalWatchTgtPosAndAngZ(VC_WORK* w_p, VC_CAM_MV_TYPE cam_mv_type, VC_AREA_SIZE_TYPE cur_rd_area_size, s32 far_watch_rate, s32 self_view_eff_rate);
 void vcMakeNormalWatchTgtPos(VECTOR3* watch_tgt_pos, s16* watch_tgt_ang_z_p, VC_WORK* w_p, VC_CAM_MV_TYPE cam_mv_type, VC_AREA_SIZE_TYPE cur_rd_area_size);
@@ -399,7 +399,7 @@ void vcCamTgtMvVecIsFlipedFromCharaFront(VECTOR3*  tgt_mv_vec, VC_WORK* w_p, s32
 s32  vcFlipFromCamExclusionArea(s16* flip_ang_y_p, s32* old_cam_excl_area_r_p, VECTOR3* in_pos, VECTOR3* chara_pos, s16 chara_eye_ang_y, VC_AREA_SIZE_TYPE cur_rd_area_size);
 void vcGetUseWatchAndCamMvParam(VC_WATCH_MV_PARAM** watch_mv_prm_pp, VC_CAM_MV_PARAM** cam_mv_prm_pp, s32 self_view_eff_rate, VC_WORK* w_p);
 void vcRenewalCamData(VC_WORK* w_p, VC_CAM_MV_PARAM* cam_mv_prm_p);
-void vcRenewalCamMatAng(VC_WORK* w_p, VC_WATCH_MV_PARAM* watch_mv_prm_p, VC_CAM_MV_TYPE cam_mv_type, s32 visible_chara_f);
+void vcRenewalCamMatAng(VC_WORK* w_p, VC_WATCH_MV_PARAM* watch_mv_prm_p, VC_CAM_MV_TYPE cam_mv_type, bool visible_chara_f);
 void vcMakeNewBaseCamAng(SVECTOR* new_base_ang, VC_CAM_MV_TYPE cam_mv_type, VC_WORK* w_p);
 void vcRenewalBaseCamAngAndAdjustOfsCamAng(VC_WORK* w_p, SVECTOR* new_base_cam_ang);
 void vcMakeOfsCamTgtAng(SVECTOR* ofs_tgt_ang, MATRIX* base_matT, VC_WORK* w_p);

@@ -3254,7 +3254,7 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
                 chara->field_41                                             = NO_VALUE;
                 g_SysWork.field_2353                                        = NO_VALUE;
                 g_SysWork.player_4C.extra_128.field_1C                      = 0;
-                g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~(1 << 14);
+                g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_DamageReceived;
                 chara->model_0.stateStep_3                                  = 0;
                 chara->model_0.state_2                                      = 0;
                 extra->model_0.stateStep_3                                  = 0;
@@ -3949,7 +3949,7 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
                     if (chara->model_0.anim_4.keyframeIdx0_8 == g_MapOverlayHeader.field_38[D_800AF220].field_6)
                     {
                         g_SysWork.player_4C.extra_128.field_1C                      = 0;
-                        g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~(1 << 14);
+                        g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_DamageReceived;
                         chara->model_0.stateStep_3                                  = 0;
                         chara->model_0.state_2                                      = 0;
                         extra->model_0.stateStep_3                                  = 0;
@@ -3991,7 +3991,7 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
                     
                     if (chara->model_0.anim_4.keyframeIdx0_8 == g_MapOverlayHeader.field_38[D_800AF220].field_6)
                     {
-                        g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~(1 << 14);
+                        g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_DamageReceived;
                         switch (g_SysWork.player_4C.extra_128.field_1C)
                         {
                             case 41:
@@ -4039,7 +4039,7 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
                     if (chara->model_0.anim_4.keyframeIdx0_8 == g_MapOverlayHeader.field_38[D_800AF220].field_6)
                     {
                         g_SysWork.player_4C.extra_128.field_1C                      = 0;
-                        g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~(1 << 14);
+                        g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_DamageReceived;
                         chara->model_0.stateStep_3                                  = 0;
                         chara->model_0.state_2                                      = 0;
                         extra->model_0.stateStep_3                                  = 0;
@@ -4431,7 +4431,7 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
                 chara->field_41                                             = NO_VALUE;
                 g_SysWork.field_2353                                        = NO_VALUE;
                 g_SysWork.player_4C.extra_128.field_1C                      = 0;
-                g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~(1 << 14);
+                g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_DamageReceived;
                 chara->model_0.stateStep_3                                  = 0;
                 chara->model_0.state_2                                      = 0;
                 extra->model_0.stateStep_3                                  = 0;

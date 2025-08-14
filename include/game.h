@@ -688,7 +688,7 @@ typedef struct _Savegame
     s16             savegameCount_A6;
     s8              locationId_A8;            /** `e_SaveLocationId` */
     u8              current2dMapIdx_A9;       /** `e_Current2dMapIdx` Index to the 2D map shown when opening the map screen. */
-    u8              equippedWeapon_AA;        /** `e_InventoryItemId` Default: 0. Effects only the visible player weapon model. */
+    u8              equippedWeapon_AA;        /** `e_InventoryItemId` Affects only the visible player weapon model. */
     u8              inventoryItemSpaces_AB;   /** Item spaces. `INVENTORY_ITEM_COUNT_MAX` */
     u32             flags_AC;                 /** Flashlight state? On: 3, Off: 1*/
     s32             field_B0[45];
@@ -770,21 +770,21 @@ typedef struct _SaveUserConfig
     s_ControllerConfig controllerConfig_0;
     s8                 optScreenPosX_1C;          /** Range: [-11, 11], default: 0. */
     s8                 optScreenPosY_1D;          /** Range: [-8, 8], default: 0. */
-    u8                 optSoundType_1E;           /** Stereo: 0, Monaural: 1, default: Stereo. */
+    u8                 optSoundType_1E;           /** `bool` | Stereo: `false`, Monaural: `true`, default: Stereo. */
     u8                 optVolumeBgm_1F;           /** Range: [0, 128] with steps of 8, default: 16. */
     u8                 optVolumeSe_20;            /** Range: [0, 128] with steps of 8, default: 16. */
-    u8                 optVibrationEnabled_21;    /** Off: 0, On: 128, default: On. */
+    u8                 optVibrationEnabled_21;    /** Weird `bool`. Off: 0, On: 128, default: On. */
     u8                 optBrightness_22;          /** Range: [0, 7], default: 3. */
-    u8                 optExtraWeaponCtrl_23;     /** Switch: 0, Press: 1, default: Press. */
-    u8                 optExtraBloodColor_24;     /** Normal: 0, Green: 2, Violet: 5, Black: 13, default: Normal */
-    s8                 optAutoLoad_25;            /** Off: 0, On: 1, default: Off. */
+    u8                 optExtraWeaponCtrl_23;     /** `bool` | Switch: `false`, Press: `true`, default: Press. */
+    u8                 optExtraBloodColor_24;     /** `e_BloodColor` | Default: Normal. */
+    s8                 optAutoLoad_25;            /** Off: `false`, On: `true`, default: Off. */
     u8                 unk_26;
     u8                 optExtraOptionsEnabled_27; /** Holds unlocked option flags. */
-    s8                 optExtraViewCtrl_28;       /** Normal: 0, Reverse: 1, default: Normal. */
-    s8                 optExtraViewMode_29;       /** Normal: 0, Self View: 1, default: Normal. */
-    s8                 optExtraRetreatTurn_2A;    /** Normal: 0, Reverse: 1, default: Normal. */
-    s8                 optExtraWalkRunCtrl_2B;    /** Normal: 0, Reverse: 1, default: Normal. */
-    s8                 optExtraAutoAiming_2C;     /** On: 0, Off: 1, default: On. */
+    s8                 optExtraViewCtrl_28;       /** `bool` | Normal: `false`, Reverse: `true`, default: Normal. */
+    s8                 optExtraViewMode_29;       /** `bool` | Normal: `false`, Self View: `true`, default: Normal. */
+    s8                 optExtraRetreatTurn_2A;    /** `bool` | Normal: `false`, Reverse: `true`, default: Normal. */
+    s8                 optExtraWalkRunCtrl_2B;    /** `bool` | Normal: `false`, Reverse: `true`, default: Normal. */
+    s8                 optExtraAutoAiming_2C;     /** `bool` | On: `false`, Off: `true`, default: On. */
     s8                 optExtraBulletAdjust_2D;   /** x1-x6: Range [0, 5], default: x1. */
     u16                seenGameOverTips_2E[1];    /** Bitfield tracking seen game-over tips. Each bit corresponds to a tip index (0–14), set bits indicate seen tips. Resets after picking all 15. */
     s8                 unk_30[4];

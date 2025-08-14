@@ -1876,14 +1876,14 @@ void Gfx_LoadingScreen_PlayerRun() // 0x80035BE0
         camLookAt.vx = g_SysWork.player_4C.chara_0.position_18.vx;
         camLookAt.vz = g_SysWork.player_4C.chara_0.position_18.vz;
 
-        vcUserWatchTarget(&camLookAt, NULL, 1);
+        vcUserWatchTarget(&camLookAt, NULL, true);
 
         camLookAt.vx -= shRsin(g_SysWork.player_4C.chara_0.rotation_24.vy - FP_ANGLE(22.5f)) * 2;
         temp          = shRcos(g_SysWork.player_4C.chara_0.rotation_24.vy - FP_ANGLE(22.5f));
         camLookAt.vy  = FP_METER(-1.0f);
         camLookAt.vz -= temp * 2;
 
-        vcUserCamTarget(&camLookAt, NULL, 1);
+        vcUserCamTarget(&camLookAt, NULL, true);
         func_8003EB54();
         func_8003EEDC(0, 0);
 

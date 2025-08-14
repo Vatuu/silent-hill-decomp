@@ -665,8 +665,8 @@ void func_800DC3C8() // 0x800DC3C8
 
             // Set camera.
             vcChangeProjectionValue(Dms_CameraGetTargetPos(&D_800E2380, &D_800E2390, NULL, 0, FS_BUFFER_11));
-            vcUserCamTarget(&D_800E2380, NULL, 1);
-            vcUserWatchTarget(&D_800E2390, NULL, 1);
+            vcUserCamTarget(&D_800E2380, NULL, true);
+            vcUserWatchTarget(&D_800E2390, NULL, true);
 
             // Warp player.
             g_SysWork.player_4C.chara_0.position_18.vx = 18784;
