@@ -114,8 +114,8 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
 
     newMoveSpeed = sharedData_800D32A0_0_s02;
 
-    playerChara->rotation_24.vy  = (playerChara->rotation_24.vy + (sharedData_800E39D8_0_s00 >> 4) + FP_TO(1, Q12_SHIFT)) & 0xFFF;
-    playerChara->headingAngle_3C = (playerChara->rotation_24.vy + unused) & 0xFFF;
+    playerChara->rotation_24.vy  = FP_ANGLE_NORM_U((playerChara->rotation_24.vy + (sharedData_800E39D8_0_s00 >> 4)) + FP_ANGLE(360.0f));
+    playerChara->headingAngle_3C = FP_ANGLE_NORM_U(playerChara->rotation_24.vy + unused);
     playerChara->moveSpeed_38    = newMoveSpeed;
     playerChara->field_34       += g_DeltaTime2;
 

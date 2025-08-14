@@ -3264,7 +3264,8 @@ s_800C1450_0_4* func_8005B4BC(char* str, s_800C1450* arg1);
 /** Sets the debug string position. */
 void func_8005BF0C(s16 unused, s16 x, s16 y);
 
-s16 func_8005BF38(s16 arg0);
+/** Angle func. */
+s16 func_8005BF38(s16 angle);
 
 /** `arg0` type assumed. */
 void func_800625F4(VECTOR3* arg0, s16 arg1, s32 arg2, s32 arg3);
@@ -3840,7 +3841,7 @@ void func_80080458();
 
 s32 func_80080478(VECTOR3* pos0, VECTOR3* pos1);
 
-/** Generates a random value of some kind. */
+/** Generates a random angle? */
 s32 func_80080514();
 
 /** Computes (abs(value) - subtractor) * copysign(value). */

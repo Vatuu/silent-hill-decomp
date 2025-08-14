@@ -2542,8 +2542,8 @@ void vcMakeNewBaseCamAng(SVECTOR* new_base_ang, VC_CAM_MV_TYPE cam_mv_type, VC_W
         temp_v1   = FP_TO(w_p->cur_near_road_2B8.road_p_0->fix_ang_x_16, Q4_SHIFT);
         temp_a0_2 = FP_TO(w_p->cur_near_road_2B8.road_p_0->fix_ang_y_17, Q4_SHIFT);
 
-        temp_v1_2 = FP_ANGLE_TRUNCATE(temp_v0 - temp_v1);
-        temp_v0_2 = FP_ANGLE_TRUNCATE(temp_v0 - temp_a0_2);
+        temp_v1_2 = FP_ANGLE_NORM_S(temp_v0 - temp_v1);
+        temp_v0_2 = FP_ANGLE_NORM_S(temp_v0 - temp_a0_2);
 
         if (temp_v1_2 >= 0 && temp_v0_2 <= 0)
         {

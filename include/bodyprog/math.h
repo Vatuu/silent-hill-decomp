@@ -98,17 +98,22 @@
 #define FP_ALPHA(alpha) \
     (s16)FP_FLOAT_TO((alpha), Q12_SHIFT)
 
+// TODO: Maybe not appropriate for this project since it often results in ugly floats.
 /** @brief Converts a normalized color value in the range `[0.0f, 1.0f]` to an 8-bit color value in the range `[0, 255]`. */
 #define FP_COLOR(val) \
     (u8)((val) * (FP_FLOAT_TO(1.0f, Q8_SHIFT) - 1))
 
 /** @brief Converts floating-point degrees to fixed-point degrees in Q3.12 format. */
 #define FP_ANGLE(deg) \
-    (s16)((deg) * ((FP_TO(1, Q12_SHIFT)) / 360.0f))
+    (s16)((deg) * ((float)FP_TO(1, Q12_SHIFT) / 360.0f))
 
-/** @brief Wraps fixed-point degrees in Q3.12 format to the range of a single turn. */
-#define FP_ANGLE_TRUNCATE(angle) \
+/** @brief Normalizes fixed-point degrees in Q3.12 format to the signed range `[-2048, 2047]`. */
+#define FP_ANGLE_NORM_S(angle) \
     (((angle) << 20) >> 20)
+
+/** @brief Normalizes fixed-point degrees in Q3.12 format to the unsigned range `[0, 4095]`. */
+#define FP_ANGLE_NORM_U(angle) \
+    ((angle) & (FP_ANGLE(360.0f) - 1))
 
 /** @brief Converts floating-point radians in the range `[-PI, PI]` to fixed-point radians in the range `[0, 0x5000]`. */
 #define FP_RADIAN(rad)                                                                \
@@ -126,7 +131,7 @@
 // `Math_AngleTruncate`
 static inline s16 shAngleRegulate(s32 angle)
 {
-    return FP_ANGLE_TRUNCATE(angle);
+    return FP_ANGLE_NORM_S(angle);
 }
 
 static inline void Math_SVectorZero(SVECTOR* vec)

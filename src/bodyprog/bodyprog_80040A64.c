@@ -85,13 +85,13 @@ void func_8004122C(s32* angle0, s32* angle1, VECTOR* arg2, VECTOR* arg3) // 0x80
     OuterProduct12(&vec0, &vec1, &vec2);
     VectorNormal(&vec2, &vec2);
 
-    *angle0 = (ratan2(vec2.vy, vec2.vx) - FP_ANGLE(90.0f)) & 0xFFF;
+    *angle0 = FP_ANGLE_NORM_U(ratan2(vec2.vy, vec2.vx) - FP_ANGLE(90.0f));
 
     svec0.vx = FP_FROM((vec0.vx * vec1.vx) + (vec0.vy * vec1.vy) + (vec0.vz * vec1.vz), Q12_SHIFT);
     OuterProduct12(&vec2, &vec0, &vec3);
     svec1.vx = FP_FROM((vec1.vx * vec3.vx) + (vec1.vy * vec3.vy) + (vec1.vz * vec3.vz), Q12_SHIFT);
 
-    *angle1 = ratan2(svec1.vx, svec0.vx) & 0xFFF;
+    *angle1 = FP_ANGLE_NORM_U(ratan2(svec1.vx, svec0.vx));
 }
 
 void func_8004137C(VECTOR3* result, VECTOR* vec0, VECTOR* vec1, s32 screenDist)
@@ -796,7 +796,7 @@ void Anim_Update0(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Anim
     }
 
     // Update skeleton.
-    alpha = newTime & 0xFFF;
+    alpha = newTime & 0xFFF; // TODO: Make macro similar to `FP_ANGLE_NORM_U`?
     if ((model->anim_4.flags_2 & AnimFlag_Unk1) || (model->anim_4.flags_2 & AnimFlag_Visible))
     {
         func_800446D8(skel, coord, newKeyframeIdx0, newKeyframeIdx0 + 1, alpha);

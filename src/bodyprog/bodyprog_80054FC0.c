@@ -1155,20 +1155,19 @@ void func_8005BF0C(s16 unused, s16 x, s16 y) // 0x8005BF0C
     Gfx_DebugStringPosition(x, y);
 }
 
-s16 func_8005BF38(s16 arg0) // 0x8005BF38
+s16 func_8005BF38(s16 angle) // 0x8005BF38
 {
-    s16 res;
-    s16 temp;
+    s16 outAngle;
+    s16 angleNorm;
 
-    temp = arg0 & 0xFFF;
-    res  = temp;
+    angleNorm = FP_ANGLE_NORM_U(angle);
 
-    if (temp > 0x800)
+    outAngle = angleNorm;
+    if (angleNorm > FP_ANGLE(180.0f))
     {
-        res = temp | 0xF000;
+        outAngle = angleNorm | 0xF000;
     }
-
-    return res;
+    return outAngle;
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8005BF58); // 0x8005BF58
@@ -3326,14 +3325,14 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
                     var_s3 = 0xFF;
                     var_s5 = 0x27;
                     npcIdx = g_SysWork.field_2354[0];
-                    Math_ShortestAngle(chara->rotation_24.vy, (g_SysWork.npcs_1A0[npcIdx].rotation_24.vy + FP_ANGLE(180.0f)) & 0xFFF, &sp18);
+                    Math_ShortestAngle(chara->rotation_24.vy, FP_ANGLE_NORM_U(g_SysWork.npcs_1A0[npcIdx].rotation_24.vy + FP_ANGLE(180.0f)), &sp18);
                     break;
                     
                 case 38:
                     var_s3 = 0x101;
                     var_s5 = 0x28;
                     npcIdx = g_SysWork.field_2354[1];
-                    Math_ShortestAngle(chara->rotation_24.vy, (g_SysWork.npcs_1A0[npcIdx].rotation_24.vy + FP_ANGLE(360.0f)) & 0xFFF, &sp18);
+                    Math_ShortestAngle(chara->rotation_24.vy, FP_ANGLE_NORM_U(g_SysWork.npcs_1A0[npcIdx].rotation_24.vy + FP_ANGLE(360.0f)), &sp18);
                     break;
             }
             
@@ -3374,7 +3373,7 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
                 }
             }
 
-            Math_ShortestAngle(chara->rotation_24.vy, (g_SysWork.npcs_1A0[npcIdx].rotation_24.vy + FP_ANGLE(360.0f)) & 0xFFF, &sp18);
+            Math_ShortestAngle(chara->rotation_24.vy, FP_ANGLE_NORM_U(g_SysWork.npcs_1A0[npcIdx].rotation_24.vy + FP_ANGLE(360.0f)), &sp18);
             
             model = &g_SysWork.npcs_1A0[npcIdx].model_0;
             
@@ -3746,7 +3745,7 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
                     temp_v1_10 = chara->position_18.vx - g_SysWork.npcs_1A0[g_SysWork.field_2354[0]].position_18.vx;
                     temp_v1_11 = chara->position_18.vz - g_SysWork.npcs_1A0[g_SysWork.field_2354[0]].position_18.vz;
                     var_s7     = SquareRoot0(SQUARE(temp_v1_10) + SQUARE(temp_v1_11));
-                    Math_ShortestAngle(chara->rotation_24.vy, (g_SysWork.npcs_1A0[g_SysWork.field_2354[0]].rotation_24.vy + FP_ANGLE(180.0f)) & 0xFFF, &sp1A);
+                    Math_ShortestAngle(chara->rotation_24.vy, FP_ANGLE_NORM_U(g_SysWork.npcs_1A0[g_SysWork.field_2354[0]].rotation_24.vy + FP_ANGLE(180.0f)), &sp1A);
                             
                     if (ABS(sp1A) < 0x80)
                     {
@@ -3772,7 +3771,7 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
                     temp_v1_12 = chara->position_18.vx - g_SysWork.npcs_1A0[g_SysWork.field_2354[1]].position_18.vx;
                     temp_v1_13 = chara->position_18.vz - g_SysWork.npcs_1A0[g_SysWork.field_2354[1]].position_18.vz;
                     var_s7 = SquareRoot0(SQUARE(temp_v1_12) + SQUARE(temp_v1_13));
-                    Math_ShortestAngle(chara->rotation_24.vy, (g_SysWork.npcs_1A0[g_SysWork.field_2354[1]].rotation_24.vy + 0x1000) & 0xFFF, &sp1A);
+                    Math_ShortestAngle(chara->rotation_24.vy, FP_ANGLE_NORM_U(g_SysWork.npcs_1A0[g_SysWork.field_2354[1]].rotation_24.vy + FP_ANGLE(360.0f)), &sp1A);
 
                     if (ABS(sp1A) < 0x80)
                     {
@@ -3795,10 +3794,10 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
             switch (g_SysWork.player_4C.extra_128.field_1C)
             {
                 case 39:
-                    Math_ShortestAngle(chara->rotation_24.vy, (g_SysWork.npcs_1A0[g_SysWork.field_2354[0]].rotation_24.vy + FP_ANGLE(360.0f)) & 0xFFF, &sp1A);
+                    Math_ShortestAngle(chara->rotation_24.vy, FP_ANGLE_NORM_U(g_SysWork.npcs_1A0[g_SysWork.field_2354[0]].rotation_24.vy + FP_ANGLE(360.0f)), &sp1A);
                         
                 case 40:
-                    Math_ShortestAngle(chara->rotation_24.vy, (g_SysWork.npcs_1A0[g_SysWork.field_2354[1]].rotation_24.vy + FP_ANGLE(360.0f)) & 0xFFF, &sp1A);
+                    Math_ShortestAngle(chara->rotation_24.vy, FP_ANGLE_NORM_U(g_SysWork.npcs_1A0[g_SysWork.field_2354[1]].rotation_24.vy + FP_ANGLE(360.0f)), &sp1A);
                     break;
             }
                     
@@ -4392,7 +4391,7 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
                     break;
                 
                 case 0x1E:
-                    Math_ShortestAngle(chara->rotation_24.vy, g_SysWork.player_4C.chara_0.properties_E4.larvalStalker.properties_E8[0xC].val16[0], &sp1E);
+                    Math_ShortestAngle(chara->rotation_24.vy, g_SysWork.player_4C.chara_0.properties_E4.larvalStalker.properties_E8[12].val16[0], &sp1E);
                     
                     if (ABS(sp1E) < 0x400)
                     {
@@ -4401,7 +4400,7 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
                         
                     if (ABS(sp1E) >= 0x7C0)
                     {
-                        chara->rotation_24.vy = (g_SysWork.player_4C.chara_0.properties_E4.player.field_118 + 0x800) & 0xFFF;
+                        chara->rotation_24.vy = FP_ANGLE_NORM_U(g_SysWork.player_4C.chara_0.properties_E4.player.field_118 + FP_ANGLE(180.0f));
                     }
                     else
                     {
@@ -4457,9 +4456,9 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
             break;
     }
 
-    temp_v0 = (chara->rotation_24.vy + (D_800C454C >> 4) + FP_ANGLE(360.0f)) & 0xFFF;
+    temp_v0 = FP_ANGLE_NORM_U(chara->rotation_24.vy + (D_800C454C >> 4) + FP_ANGLE(360.0f));
     chara->rotation_24.vy = temp_v0;
-    chara->headingAngle_3C = ((temp_v0 + D_800C4608) + FP_ANGLE(360.0f)) & 0xFFF;
+    chara->headingAngle_3C = FP_ANGLE_NORM_U((temp_v0 + D_800C4608) + FP_ANGLE(360.0f));
     chara->moveSpeed_38 = D_800C4550;
     chara->field_34 += g_DeltaTime2;
     chara->rotationSpeed_2C.vy = (D_800C454C << 8) / g_DeltaTime0;
@@ -5858,7 +5857,7 @@ bool func_80075504(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                 temp_v0_3 = ratan2((g_SysWork.npcs_1A0[g_SysWork.field_2353].position_18.vx + g_SysWork.npcs_1A0[g_SysWork.field_2353].field_D8.field_0) - g_SysWork.player_4C.chara_0.position_18.vx,
                                    (g_SysWork.npcs_1A0[g_SysWork.field_2353].position_18.vz + g_SysWork.npcs_1A0[g_SysWork.field_2353].field_D8.field_2) - g_SysWork.player_4C.chara_0.position_18.vz);
 
-                temp_s1_2 = (temp_v0_3 + 0x1000) & 0xFFF;
+                temp_s1_2 = FP_ANGLE_NORM_U(temp_v0_3 + FP_ANGLE(360.0f));
 
                 switch (extra->model_0.anim_4.animIdx_0)
                 {
@@ -5935,7 +5934,7 @@ bool func_80075504(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                                  g_SysWork.npcs_1A0[g_SysWork.field_2353].field_D8.field_2) -
                                 g_SysWork.player_4C.chara_0.position_18.vz);
 
-            temp_s1_2 = (temp_v0_3 + 0x1000) & 0xFFF;
+            temp_s1_2 = FP_ANGLE_NORM_U(temp_v0_3 + FP_ANGLE(360.0f));
 
             Math_ShortestAngle(chara->rotation_24.vy, temp_s1_2, &sp20);
 
@@ -5954,7 +5953,7 @@ bool func_80075504(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                     var_s0 = -var_s0;
                 }
 
-                chara->rotation_24.pad = (chara->rotation_24.pad + (var_s0 >> 4) + 0x1000) & 0xFFF;
+                chara->rotation_24.pad = FP_ANGLE_NORM_U((chara->rotation_24.pad + (var_s0 >> 4)) + FP_ANGLE(360.0f));
             }
             else
             {
@@ -8691,7 +8690,7 @@ void func_8007C0D8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
     VECTOR3         sp30;
     VECTOR3         sp40;
     s16             temp_v0;
-    s16             temp_a1;
+    s16             someAngle;
     s16             temp_s0;
     s32             temp_s0_2;
     s32             temp_s2;
@@ -8715,15 +8714,15 @@ void func_8007C0D8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
     temp_v0 = shRcos(ABS(sp10.field_6) >> 3);
 
     temp_v1 = FP_MULTIPLY(FP_MULTIPLY(temp_s3, temp_s0, Q12_SHIFT), temp_s0, Q12_SHIFT);
-    temp_a1 = FP_MULTIPLY(FP_MULTIPLY(temp_s2, temp_v0, Q12_SHIFT), temp_v0, Q12_SHIFT);
+    someAngle = FP_MULTIPLY(FP_MULTIPLY(temp_s2, temp_v0, Q12_SHIFT), temp_v0, Q12_SHIFT);
 
     if (chara->moveSpeed_38 >= 0)
     {
-        chara->moveSpeed_38 = SquareRoot0(SQUARE(temp_v1) + SQUARE(temp_a1));
+        chara->moveSpeed_38 = SquareRoot0(SQUARE(temp_v1) + SQUARE(someAngle));
     }
     else
     {
-        chara->moveSpeed_38 = -SquareRoot0(SQUARE(temp_v1) + SQUARE(temp_a1));
+        chara->moveSpeed_38 = -SquareRoot0(SQUARE(temp_v1) + SQUARE(someAngle));
     }
 
     temp_s0_2 = FP_MULTIPLY_PRECISE(chara->moveSpeed_38, g_DeltaTime0, Q12_SHIFT);
@@ -8807,7 +8806,7 @@ void func_8007C0D8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
         chara->field_34       = 0;
     }
 
-    temp_a1 = (ratan2(chara->position_18.vx - D_800C45F8.vx, chara->position_18.vz - D_800C45F8.vz) + 0x1000) & 0xFFF;
+    someAngle = FP_ANGLE_NORM_U(ratan2(chara->position_18.vx - D_800C45F8.vx, chara->position_18.vz - D_800C45F8.vz) + FP_ANGLE(360.0f));
 
     if (((u32)g_SysWork.player_4C.extra_128.field_1C - 3) >= 2)
     {
@@ -8816,8 +8815,8 @@ void func_8007C0D8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
             posY = chara->position_18.vy;
             if ((D_800C4590.field_C - posY) >= FP_METER(0.65f))
             {
-                if (ABS_DIFF(chara->rotation_24.vy, temp_a1) >= FP_ANGLE(90.0f) &&
-                    ABS_DIFF(chara->rotation_24.vy, temp_a1) < FP_ANGLE(270.0f))
+                if (ABS_DIFF(chara->rotation_24.vy, someAngle) >= FP_ANGLE(90.0f) &&
+                    ABS_DIFF(chara->rotation_24.vy, someAngle) <  FP_ANGLE(270.0f))
                 {
                     if (g_SysWork.player_4C.extra_128.field_24 != 11)
                     {
@@ -9027,7 +9026,7 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
                 enemyRotY = chara->field_B8;
             }
 
-            enemyRotY = ((enemyRotY - chara->rotation_24.vy) + FP_FLOAT_TO(16.0f, Q8_SHIFT)) & 0xFFF;
+            enemyRotY = FP_ANGLE_NORM_U((enemyRotY - chara->rotation_24.vy) + FP_ANGLE(360.0f));
             temp_v0_3 = chara->field_41 - 40;
             switch (temp_v0_3)
             {
@@ -9433,11 +9432,11 @@ void func_8007D090(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
                 {
                     if (chara->rotation_24.pad > chara->rotation_24.vy)
                     {
-                        D_800AF210 = -(((chara->rotation_24.vy + FP_ANGLE(360.0f)) - chara->rotation_24.pad) & 0xFFF);
+                        D_800AF210 = -FP_ANGLE_NORM_U((chara->rotation_24.vy + FP_ANGLE(360.0f)) - chara->rotation_24.pad);
                     }
                     else
                     {
-                        D_800AF210 = ((chara->rotation_24.pad + FP_ANGLE(360.0f)) - chara->rotation_24.vy) & 0xFFF;
+                        D_800AF210 = FP_ANGLE_NORM_U((chara->rotation_24.pad + FP_ANGLE(360.0f)) - chara->rotation_24.vy);
                     }
                 }
                 else
@@ -9671,7 +9670,7 @@ s32 func_8007D6F0(s_SubCharacter* arg0, s_D_800C45C8* arg1) // 0x8007D6F0
             arg1->field_14 = (sp10[0].field_14 + sp10[1].field_14) >> 1;
             arg1->field_1  = sp10[0].field_1;
 
-            angle      = (((sp10[0].field_1C + sp10[1].field_1C) >> 1) + FP_ANGLE(360.0f)) & 0xFFF;
+            angle      = FP_ANGLE_NORM_U(((sp10[0].field_1C + sp10[1].field_1C) >> 1) + FP_ANGLE(360.0f));
             angleDelta = ABS_DIFF(angle, arg0->headingAngle_3C);
 
             if (angleDelta > FP_ANGLE(160.0f) &&
@@ -10509,7 +10508,9 @@ bool func_8007F95C() // 0x8007F95C
                 if (!Math_Distance2dCheck(&pos0, &pos1, radius) && ABS(pos1.vy - pos0.vy) < FP_METER(0.3f) &&
                     ptr1->health_B0 > FP_FLOAT_TO(0.0f, Q12_SHIFT) && (ptr1->flags_3E & (1 << 1)))
                 {
-                    Math_ShortestAngle(g_SysWork.player_4C.chara_0.rotation_24.vy, (ratan2(pos1.vx - pos0.vx, pos1.vz - pos0.vz) + FP_ANGLE(360.0f)) & 0xFFF, &sp30);
+                    Math_ShortestAngle(g_SysWork.player_4C.chara_0.rotation_24.vy,
+                                       FP_ANGLE_NORM_U(ratan2(pos1.vx - pos0.vx, pos1.vz - pos0.vz) + FP_ANGLE(360.0f)),
+                                       &sp30);
 
                     temp = sp30 + 0x3FF;
                     if (temp < 0x8FF)
@@ -10538,7 +10539,7 @@ void Math_ShortestAngle(s16 angleFrom, s16 angleTo, s16* outShortestAngle) // 0x
         }
         else
         {
-            adjAngle          = angleTo - FP_ANGLE(360.0f);
+            adjAngle          = angleTo  - FP_ANGLE(360.0f);
             *outShortestAngle = adjAngle - angleFrom;
         }
     }
@@ -10551,7 +10552,7 @@ void Math_ShortestAngle(s16 angleFrom, s16 angleTo, s16* outShortestAngle) // 0x
         else
         {
             adjAngle          = angleFrom - FP_ANGLE(360.0f);
-            *outShortestAngle = angleTo - adjAngle;
+            *outShortestAngle = angleTo   - adjAngle;
         }
     }
 }
@@ -10654,7 +10655,7 @@ s32 func_80080514() // 0x80080514
     s32 rand16;
 
     rand16 = Rng_Rand16();
-    return (((rand16 * 2) ^ rand16) >> 3) & 0xFFF;
+    return FP_ANGLE_NORM_U(((rand16 * 2) ^ rand16) >> 3);
 }
 
 // TODO: Try decomping by hand. -- Sezz

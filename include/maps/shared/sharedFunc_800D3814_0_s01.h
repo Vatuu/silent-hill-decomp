@@ -20,7 +20,7 @@ s32 sharedFunc_800D3814_0_s01(s_SubCharacter* chara)
         invDist = invDist >> 3;
     }
 
-    headingAngleDelta = ABS_32(FP_ANGLE_TRUNCATE(headingAngleTo - headingAngleFrom));
+    headingAngleDelta = ABS_32(FP_ANGLE_NORM_S(headingAngleTo - headingAngleFrom));
     if (invDist >= headingAngleDelta)
     {
         dist = (invDist - headingAngleDelta) * 4;

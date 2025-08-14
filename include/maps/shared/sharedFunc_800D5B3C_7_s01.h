@@ -44,7 +44,7 @@ void sharedFunc_800D5B3C_7_s01(s_SubCharacter* chara, GsCOORDINATE2* coords)
     }
 
     chara->headingAngle_3C =
-    chara->rotation_24.vy  = (chara->rotation_24.vy + (sharedData_800E2C38_7_s01 >> 4) + 0x1000) & 0xFFF;
+    chara->rotation_24.vy  = FP_ANGLE_NORM_U((chara->rotation_24.vy + (sharedData_800E2C38_7_s01 >> 4)) + FP_ANGLE(360.0f));
 
     chara->moveSpeed_38 = chara->properties_E4.larvalStalker.properties_E8[15].val16[1];
     chara->field_34    += g_DeltaTime2;

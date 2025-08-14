@@ -70,7 +70,7 @@ void vwSetCoordRefAndEntou(GsCOORDINATE2* parent_p, s32 ref_x, s32 ref_y, s32 re
     view_ang.vy = cam_ang_y;
     view_ang.vz = cam_ang_z;
     view_ang.vx = -ratan2(-cam_y, cam_xz_r);
-    view_ang.vy = (view_ang.vy + FP_ANGLE(180.0f)) & 0xFFF;
+    view_ang.vy = FP_ANGLE_NORM_U(view_ang.vy + FP_ANGLE(180.0f));
 
     func_80096E78(&view_ang, view_mtx);
 
@@ -114,10 +114,10 @@ void Vw_ClampAngleRange(s16* angleMin, s16* angleMax, s16 angleConstraintMin, s1
     prevAngleMin = *angleMin;
 
     rotToAngleMax = prevAngleMax;
-    rotToAngleMax = (prevAngleMax - prevAngleMin) & 0xFFF;
+    rotToAngleMax = FP_ANGLE_NORM_U(prevAngleMax - prevAngleMin);
 
-    rotToAngleConstraintMin = (angleConstraintMin - prevAngleMin) & 0xFFF;
-    rotToAngleConstraintMax = (angleConstraintMax - prevAngleMin) & 0xFFF;
+    rotToAngleConstraintMin = FP_ANGLE_NORM_U(angleConstraintMin - prevAngleMin);
+    rotToAngleConstraintMax = FP_ANGLE_NORM_U(angleConstraintMax - prevAngleMin);
 
     prevAngleMax = 0;
 
@@ -151,8 +151,8 @@ void Vw_ClampAngleRange(s16* angleMin, s16* angleMax, s16 angleConstraintMin, s1
 
     newAngleMin = prevAngleMax + prevAngleMin;
 
-    *angleMin = newAngleMin & 0xFFF;
-    *angleMax = (rotToAngleMax + prevAngleMin) & 0xFFF;
+    *angleMin = FP_ANGLE_NORM_U(newAngleMin);
+    *angleMax = FP_ANGLE_NORM_U(rotToAngleMax + prevAngleMin);
 }
 
 s16 func_80048E3C(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4) // 0x80048E3C
