@@ -1028,7 +1028,7 @@ typedef struct _SubCharacter
     s_SubCharacter_D8 field_D8;
 
     s32 field_E0   : 8; // Related to collision. If the player collides with the only enemy in memory and the enemy is knocked down, this is set to 1.
-    s32 field_E0_8 : 4;
+    s32 field_E0_8 : 4; // Flags?
     s32 unk_E0_12  : 20;
 
     union

@@ -37,6 +37,7 @@ void GameState_OptionScreen_Update() // 0x801E2D44
         Game_TimerUpdate();
     }
 
+    // Handle options menu state.
     switch (g_GameWork.gameStateStep_598[0])
     {
         case OptMenuState_EnterMain:

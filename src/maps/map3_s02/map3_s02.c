@@ -89,7 +89,32 @@ INCLUDE_ASM("asm/maps/map3_s02/nonmatchings/map3_s02", func_800CDDAC);
 
 INCLUDE_ASM("asm/maps/map3_s02/nonmatchings/map3_s02", func_800CE3A4);
 
-INCLUDE_ASM("asm/maps/map3_s02/nonmatchings/map3_s02", func_800CE5F0);
+void func_800CE5F0(s_SubCharacter* chara, s32 moveSpeed) // 0x800CE5F0
+{
+    chara->flags_3E &= ~(1 << 1);
+
+    if (chara->health_B0 == FP_FLOAT_TO(0.0f, Q12_SHIFT) && func_8005C7D0(chara, moveSpeed) != g_SysWork.field_2353)
+    {
+        chara->health_B0   = NO_VALUE;
+        chara->field_E0_8 &= (1 << 5) | (1 << 6) | (1 << 7);
+    }
+
+    if (chara->moveSpeed_38 == 0 && !(chara->properties_E4.player.properties_E4[1] & 0xC))
+    {
+        chara->properties_E4.larvalStalker.properties_E8[0].val16[0] |= 1 << 3;
+
+        func_80037DC4(chara);
+
+        if (chara->model_0.anim_4.animIdx_0 == 29)
+        {
+            func_800622B8(3, chara, 10, 5);
+        }
+        else
+        {
+            func_800622B8(3, chara, 11, 5);
+        }
+    }
+}
 
 #include "maps/shared/sharedFunc_800D983C_1_s02.h" // 0x800CE6B8
 

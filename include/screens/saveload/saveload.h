@@ -28,6 +28,34 @@ typedef enum _MemCardState
     MemCardState_Load   = 3
 } s_MemCardState;
 
+typedef enum _MemCardFormatState
+{
+    MemCardFormatState_0,
+    MemCardFormatState_1,
+    MemCardFormatState_2,
+    MemCardFormatState_3
+} s_MemCardFormatState;
+
+typedef enum _SaveState
+{
+    SaveState_0,
+    SaveState_1,
+    SaveState_2
+} s_SaveState;
+
+typedef enum _LoadState
+{
+    LoadState_0,
+    LoadState_1,
+    LoadState_2
+} s_LoadState;
+
+typedef enum _ContinueState
+{
+    ContinueState_0,
+    ContinueState_1
+} s_ContinueState;
+
 /** @brief Used by `s_SavegameEntry`. */
 typedef enum _SavegameEntryType
 {
@@ -43,6 +71,15 @@ typedef enum _SavegameEntryType
     SavegameEntryType_NewSave            = 9,
     SavegameEntryType_NewFile            = 10
 } e_SavegameEntryType;
+
+typedef enum _SaveLoadLogicState
+{
+    SaveLoadLogicState_Init,
+    SaveLoadLogicState_Display,
+    SaveLoadLogicState_Format,
+    SaveLoadLogicState_Save,
+    SaveLoadLogicState_Load
+} s_SaveLoadLogicState;
 
 // ================
 // UNKNOWN STRUCTS
@@ -288,6 +325,7 @@ void Savegame_ContinueLogic();
 
 void Gfx_SaveBackgroundDraw();
 
+// `SaveLoad_SaveMenu_GraphicsDraw`
 void Gfx_SaveScreen(); // 0x801E70C8
 
 /** @brief Handles the text that shows when formatting, saving, or loading a file.

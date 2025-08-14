@@ -73,9 +73,9 @@ void func_801E42F8(s32 arg0, s32 arg1);
 
 /** @brief Sets the current RGB+command color for `D_800AFE08` struct.
  *
- * This function sets the packed RGB+command color for `D_800AFE08` with
- * the fourth component hard set to 0x64, possibly a graphics command.
- * 
+ * This function sets the packed RGB+command color for `D_800AFE08`,
+ * with the fourth component hard set to `PRIM_RECT | RECT_TEXTURE`.
+ *
  * @note RGB order only assumed.
  *
  * @param r Red component.
@@ -92,11 +92,11 @@ void func_801E4394(u8* str);
 
 void func_801E47E0(s32 arg0, s32 arg1);
 
-/** @brief Sets the current RGB+command color for D_800AFE2C.
+/** @brief Sets the current RGB+command color for `D_800AFE2C`.
  *
- * This function sets the packed RGB+command color for D_800AFE10 with
- * the fourth component hard set to 0x2C, possibly a graphics command.
- * 
+ * This function sets the packed RGB+command color for `D_800AFE10`,
+ * with the command component hard-set to `GPU_COM_TF4`.
+ *
  * @note RGB order only assumed.
  *
  * @param r Red component.

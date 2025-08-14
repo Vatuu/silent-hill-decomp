@@ -42,12 +42,12 @@ char* g_SaveLocationNames[] =
     "Next_fear"
 };
 
-
 s32 D_801E750C = 0;
 
 // Some kind of state. 0 or 1.
 s32 D_801E7510 = 0;
 
+/** `bool`s */
 s16 D_801E7514[MEMORY_CARD_SLOT_COUNT] = { 0, 0 };
 
 s16 g_LoadingMemCardTimer[MEMORY_CARD_SLOT_COUNT] = { 0, 0 };
@@ -1736,7 +1736,7 @@ void Savegame_ScreenLogic() // 0x801E649C
                     }
                     else
                     {
-                        g_SysWork.timer_20               = 0;
+                        g_SysWork.timer_20               = FP_TIME(0.0f);
                         g_GameWork.gameStateStep_598[1]  = 0;
                         g_GameWork.gameStateStep_598[2]  = 0;
                         g_GameWork.gameStateStep_598[0] += g_SaveScreenPlayerState;
@@ -1823,8 +1823,8 @@ void Savegame_ScreenLogic() // 0x801E649C
 
                 Fs_QueueWaitForEmpty();
 
-                // Unused piece of code or cut debug feature?
-                // This piece of code redirects to the status screen/inventory
+                // Unused or cut debug feature?
+                // This redirects to the status screen/inventory
                 // if the user was in the status screen/inventory before saving.
                 // However, it is impossible to access the save screen from there.
                 if (g_GameWork.gameStatePrev_590 == GameState_InventoryScreen)
@@ -1850,31 +1850,34 @@ void Savegame_ScreenLogic() // 0x801E649C
 
 void Savegame_FormatLogic() // 0x801E69E8
 {
+    #define STR_TIMER_MAX (TICKS_PER_SECOND / 2)
+
+    // Handle memory card format state.
     switch (g_GameWork.gameStateStep_598[1])
     {
-        case 0:
+        case MemCardFormatState_0:
             g_MemCardState                  = MemCardState_Format;
-            g_MemCardStateTextTimer         = 30;
-            g_GameWork.gameStateStep_598[1] = 1;
+            g_MemCardStateTextTimer         = STR_TIMER_MAX;
+            g_GameWork.gameStateStep_598[1] = MemCardFormatState_1;
             g_GameWork.gameStateStep_598[2] = 0;
 
-        case 1:
+        case MemCardFormatState_1:
             g_GameWork.gameStateStep_598[1]++;
             g_GameWork.gameStateStep_598[2] = 0;
             break;
 
-        case 2:
+        case MemCardFormatState_2:
             func_8002E94C(6, D_800BCD40, 0, 0);
 
             g_GameWork.gameStateStep_598[1]++;
             g_GameWork.gameStateStep_598[2] = 0;
             break;
 
-        case 3:
+        case MemCardFormatState_3:
             switch (func_8002E990())
             {
                 case 10:
-                    g_MemCardStateTextTimer         = 30;
+                    g_MemCardStateTextTimer         = STR_TIMER_MAX;
                     g_GameWork.gameStateStep_598[0] = 1;
                     g_SysWork.timer_20              = 0;
                     g_GameWork.gameStateStep_598[1] = 0;
@@ -1884,7 +1887,7 @@ void Savegame_FormatLogic() // 0x801E69E8
                 case 11:
                     g_SysWork.timer_20 = 0;
                     g_GameWork.gameStateStep_598[0]++;
-                    g_GameWork.gameStateStep_598[1] = 0;
+                    g_GameWork.gameStateStep_598[1] = MemCardFormatState_0;
                     g_GameWork.gameStateStep_598[2] = 0;
                     break;
 
@@ -1902,9 +1905,10 @@ void Savegame_SaveLogic() // 0x801E6B18
 {
     s_SavegameMetadata* saveEntry;
 
+    // Handle save state.
     switch (g_GameWork.gameStateStep_598[1])
     {
-        case 0:
+        case SaveState_0:
             g_MemCardState = MemCardState_Save;
             saveEntry      = Savegame_MetadataGet(D_800BCD40, g_SelectedFileIdx, g_SelectedSaveIdx);
 
@@ -1931,13 +1935,13 @@ void Savegame_SaveLogic() // 0x801E6B18
             g_GameWork.gameStateStep_598[1]++;
             g_GameWork.gameStateStep_598[2] = 0;
 
-        case 1:
+        case SaveState_1:
             switch (func_8002E990())
             {
                 default:
                     g_GameWork.gameStateStep_598[0] = 1;
                     g_SysWork.timer_20              = 0;
-                    g_GameWork.gameStateStep_598[1] = 0;
+                    g_GameWork.gameStateStep_598[1] = SaveState_0;
                     g_GameWork.gameStateStep_598[2] = 0;
                     break;
 
@@ -1953,7 +1957,7 @@ void Savegame_SaveLogic() // 0x801E6B18
             }
             break;
 
-        case 2:
+        case SaveState_2:
             switch (func_8002E990())
             {
                 case 1:
@@ -1982,9 +1986,10 @@ void Savegame_LoadLogic() // 0x801E6DB0
     s32 var0;
     s32 var1;
 
+    // Handle load state.
     switch (g_GameWork.gameStateStep_598[1])
     {
-        case 0:
+        case LoadState_0:
             g_MemCardState = MemCardState_Load;
 
             func_8002E94C(4, D_800BCD40, g_SelectedFileIdx, g_SelectedSaveIdx);
@@ -1992,7 +1997,7 @@ void Savegame_LoadLogic() // 0x801E6DB0
             g_GameWork.gameStateStep_598[1]++;
             g_GameWork.gameStateStep_598[2] = 0;
 
-        case 1:
+        case LoadState_1:
             var0 = func_8002E990();
             if (var0 != 1)
             {
@@ -2016,7 +2021,7 @@ void Savegame_LoadLogic() // 0x801E6DB0
             g_MemCardStateTextTimer = 30;
             break;
 
-        case 2:
+        case LoadState_2:
             var1 = func_8002E990();
             if (var1 == 1)
             {
@@ -2040,17 +2045,15 @@ void Savegame_LoadLogic() // 0x801E6DB0
             g_GameWork.gameStateStep_598[1] = 0;
             g_GameWork.gameStateStep_598[2] = 0;
             break;
-
-        default:
-            break;
     }
 }
 
 void Savegame_ContinueLogic() // 0x801E6F38
 {
+    // Handle continue state.
     switch (g_GameWork.gameStateStep_598[1])
     {
-        case 0:
+        case ContinueState_0:
             func_8002E830();
 
             D_800A97D7 = 1;
@@ -2069,7 +2072,7 @@ void Savegame_ContinueLogic() // 0x801E6F38
             g_GameWork.gameStateStep_598[2] = 0;
             break;
 
-        case 1:
+        case ContinueState_1:
         {
             if ((g_Gfx_ScreenFade & 0x7) == 0x5)
             {
@@ -2097,9 +2100,9 @@ void Gfx_SaveBackgroundDraw() // 0x801E709C
 
 void Gfx_SaveScreen() // 0x801E70C8
 {
-    s_SavegameEntry* nextSaveEntry;
     s32              i;
     s32              j;
+    s_SavegameEntry* nextSaveEntry;
 
     // Run through save slots.
     for (i = 0; i < MEMORY_CARD_SLOT_COUNT; i++)

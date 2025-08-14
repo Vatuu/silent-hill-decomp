@@ -960,13 +960,13 @@ void func_801E434C(u32 arg0, u32 arg1) // 0x801E434C
         maskedField_18  = D_800AFE08.field_18;
         shiftedField_18 = (maskedField_18 << 4) & (1 << 8);
 
-        maskedField_18 &= 0xF;
+        maskedField_18   &= 0xF;
         shiftedField_18 >>= 4;
 
-        shiftedArg1 = arg1 & 3;
+        shiftedArg1   = arg1 & 3;
         shiftedArg1 <<= 5;
-        shiftedArg1 |= shiftedField_18;
-        shiftedArg1 |= (u8)maskedField_18;
+        shiftedArg1  |= shiftedField_18;
+        shiftedArg1  |= (u8)maskedField_18;
 
         D_800AFE08.field_14 = shiftedArg1;
     }
