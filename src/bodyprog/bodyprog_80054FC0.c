@@ -2417,7 +2417,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8006EEB8); // 0x
 void func_8006F250(s_func_8006F250* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x8006F250
 {
     s32  idx;
-    s32* scratch = PSX_SCRATCH;
+    s32* scratch = PSX_SCRATCH; // Maybe a struct?
 
     func_8006F338(scratch, arg1, arg2, arg3, arg4);
 
