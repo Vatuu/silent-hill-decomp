@@ -467,7 +467,7 @@ void func_80057090(s_func_80057344* arg0, s_func_80057090* arg1, void* arg2, s32
 
     temp_s1 = arg1->field_4 + (func_800571D0(objList->field_B_1) * 4);
     temp_a0 = objList->field_B_4;
-    if ((temp_a0 & 0xFF) != 0 && temp_a0 >= 0 && temp_a0 < 4) // HACK: & 0xFF needed for match
+    if ((temp_a0 & 0xFF) != 0 && temp_a0 >= 0 && temp_a0 < 4) // HACK: `& 0xFF` needed for match.
     {
         func_80059D50(temp_a0, arg0, arg3, arg2, temp_s1);
     }
@@ -603,7 +603,7 @@ void func_800574D4(s_ObjHeader* header, s_GteScratchData* scratchData) // 0x8005
     u8*      unkPtrDest;
 
     screenXy = &scratchData->screenXy_0[0];
-    var_a2   = &scratchData->field_18C[0]; // screenZ? there's already field for it earlier in struct though..
+    var_a2   = &scratchData->field_18C[0]; // `screenZ`? There's already an earlier struct field though.
     vertexXy = &header->vertexXy_8[0];
     vertexZ  = &header->vertexZ_C[0];
 
@@ -9612,8 +9612,8 @@ void func_8007D090(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
                     }
                 }
 
-                D_800AF212 = CLAMP(D_800AF212, -0x280, 0x280);
-                D_800AF210 = CLAMP(D_800AF210, -0x180, 0x180);
+                D_800AF212 = CLAMP(D_800AF212, FP_ANGLE(-56.25), FP_ANGLE(56.25));
+                D_800AF210 = CLAMP(D_800AF210, FP_ANGLE(-33.75f), FP_ANGLE(33.75f));
 
                 func_80044F14(&coord[1], 0, D_800AF212 >> 1, D_800AF210);
                 shRotMatrixZ(D_800AF212 >> 1, &coord[4].coord);
@@ -9696,9 +9696,9 @@ void func_8007D090(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
 
     if (g_SysWork.field_2358 != 0 && g_SysWork.player_4C.extra_128.field_1C < 58)
     {
-        func_80044F14(&g_SysWork.playerBoneCoords_890[PlayerBone_RightUpperArm],  0,    0x2D0, -0x64);
+        func_80044F14(&g_SysWork.playerBoneCoords_890[PlayerBone_RightUpperArm], 0, 0x2D0, -0x64);
         func_80044F14(&g_SysWork.playerBoneCoords_890[PlayerBone_RightForearm], -0xA0, 0x100, -0x15E);
-        func_80044F14(&g_SysWork.playerBoneCoords_890[PlayerBone_RightHand], 0x96, 0,      0);
+        func_80044F14(&g_SysWork.playerBoneCoords_890[PlayerBone_RightHand], 0x96, 0, 0);
     }
 }
 
@@ -10067,13 +10067,15 @@ void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D970
 
 void Game_SavegameResetPlayer() // 0x8007E530
 {
+    #define DEFAULT_INV_SLOT_COUNT 8
+
     s32 i;
 
-    g_SavegamePtr->inventoryItemSpaces_AB = 8;
+    g_SavegamePtr->inventorySlotCount_AB = DEFAULT_INV_SLOT_COUNT;
 
     for (i = 0; i < INVENTORY_ITEM_COUNT_MAX; i++)
     {
-        g_SavegamePtr->items_0[i].id_0    = 0xFF;
+        g_SavegamePtr->items_0[i].id_0    = NO_VALUE;
         g_SavegamePtr->items_0[i].count_1 = 0;
     }
 
@@ -10174,7 +10176,7 @@ void func_8007E5AC() // 0x8007E5AC
     D_800AF224                = NO_VALUE;
     g_GameWork.mapAnimIdx_5B1 = NO_VALUE;
 
-    g_SavegamePtr->inventoryItemSpaces_AB = CLAMP(g_SavegamePtr->inventoryItemSpaces_AB, INVENTORY_ITEM_COUNT_MAX / 5, INVENTORY_ITEM_COUNT_MAX);
+    g_SavegamePtr->inventorySlotCount_AB = CLAMP(g_SavegamePtr->inventorySlotCount_AB, INVENTORY_ITEM_COUNT_MAX / 5, INVENTORY_ITEM_COUNT_MAX);
     g_SysWork.player_4C.chara_0.health_B0 = CLAMP(g_SysWork.player_4C.chara_0.health_B0, 1, FP_FLOAT_TO(100.0f, Q12_SHIFT));
 }
 

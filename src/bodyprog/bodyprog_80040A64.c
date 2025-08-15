@@ -757,14 +757,14 @@ static inline s32 Anim_GetTimeStep(s_Model* model, s_AnimInfo* targetAnim)
 
 void Anim_Update0(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_AnimInfo* targetAnim) // 0x800449F0
 {
-    s32 setAnimIdx;
-    s32 timeStep;
-    s32 newTime;
-    s32 newKeyframeIdx0;
-    s32 targetTime;
-    s32 alpha;
+    bool setAnimIdx;
+    s32  timeStep;
+    s32  newTime;
+    s32  newKeyframeIdx0;
+    s32  targetTime;
+    s32  alpha;
 
-    setAnimIdx = 0;
+    setAnimIdx = false;
 
     // Get time step.
     timeStep = Anim_GetTimeStep(model, targetAnim);
@@ -783,20 +783,20 @@ void Anim_Update0(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Anim
             if (newTime <= targetTime)
             {
                 newTime    = targetTime;
-                setAnimIdx = 1;
+                setAnimIdx = true;
             }
         }
         else
         {
             newTime    = targetTime;
-            setAnimIdx = 1;
+            setAnimIdx = true;
         }
 
         newKeyframeIdx0 = FP_FROM(newTime, Q12_SHIFT);
     }
 
     // Update skeleton.
-    alpha = newTime & 0xFFF; // TODO: Make macro similar to `FP_ANGLE_NORM_U`?
+    alpha = FP_ALPHA_NORM(newTime);
     if ((model->anim_4.flags_2 & AnimFlag_Unk1) || (model->anim_4.flags_2 & AnimFlag_Visible))
     {
         func_800446D8(skel, coord, newKeyframeIdx0, newKeyframeIdx0 + 1, alpha);
@@ -808,7 +808,7 @@ void Anim_Update0(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Anim
     model->anim_4.keyframeIdx1_A = 0;
 
     // Update anim.
-    if (setAnimIdx != 0)
+    if (setAnimIdx)
     {
         model->anim_4.animIdx_0 = targetAnim->animIdx_6;
     }
@@ -861,7 +861,7 @@ void Anim_Update1(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Anim
     }
 
     // Update skeleton.
-    alpha = newTime & 0xFFF;
+    alpha = FP_ALPHA_NORM(newTime);
     if ((model->anim_4.flags_2 & AnimFlag_Unk1) || (model->anim_4.flags_2 & AnimFlag_Visible))
     {
         func_800446D8(skel, coord, newKeyframeIdx0, newKeyframeIdx1, alpha);
@@ -875,13 +875,13 @@ void Anim_Update1(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Anim
 
 void Anim_Update2(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_AnimInfo* targetAnim) // 0x80044CA4
 {
-    s32 setAnimIdx;
-    s32 newKeyframeIdx0;
-    s32 newKeyframeIdx1;
-    s32 timeStep;
-    s32 alpha;
+    bool setAnimIdx;
+    s32  newKeyframeIdx0;
+    s32  newKeyframeIdx1;
+    s32  timeStep;
+    s32  alpha;
     
-    setAnimIdx      = 0;
+    setAnimIdx      = false;
     newKeyframeIdx0 = targetAnim->keyframeIdx0_C;
     newKeyframeIdx1 = targetAnim->keyframeIdx1_E;
 
@@ -912,8 +912,8 @@ void Anim_Update2(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Anim
         newKeyframeIdx0              = newKeyframeIdx1;
         model->anim_4.keyframeIdx0_8 = newKeyframeIdx1;
         
-        alpha      = 0;
-        setAnimIdx = 1;
+        alpha      = FP_ALPHA(0.0f);
+        setAnimIdx = true;
     }
 
     // Update skeleton.
@@ -926,7 +926,7 @@ void Anim_Update2(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Anim
     model->anim_4.keyframeIdx1_A = alpha;
 
     // Update anim.
-    if (setAnimIdx != 0)
+    if (setAnimIdx)
     {
         model->anim_4.animIdx_0 = targetAnim->animIdx_6;
     }
@@ -939,7 +939,7 @@ void Anim_Update3(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Anim
     s32 timeDelta;
     register s32 timeStep asm("v0"); // HACK: Manually set register to match.
     s32 newKeyframeIdx1;
-    s32 sinValue;
+    s32 sinVal;
     s32 newTime;
     s32 alpha;
 
@@ -962,8 +962,8 @@ void Anim_Update3(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Anim
     model->anim_4.keyframeIdx1_A = newKeyframeIdx1;
 
     // Sine-based easing?
-    sinValue = shRsin((newKeyframeIdx1 / 2) - FP_ALPHA(0.25f));
-    alpha    = (sinValue / 2) + FP_ALPHA(0.5f);
+    sinVal = shRsin((newKeyframeIdx1 / 2) - FP_ALPHA(0.25f));
+    alpha  = (sinVal / 2) + FP_ALPHA(0.5f);
 
     // Clamp new time to keyframe 0 or 1.
     if (alpha >= FP_ALPHA(0.5f))

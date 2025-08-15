@@ -249,7 +249,7 @@ void GameState_ItemScreens_Update() // 0x8004C9B0
                 Gfx_ScreenRefresh(320, 0);
                 Inventory_ExitAnimFixes();
 
-                g_SavegamePtr->inventoryItemSpaces_AB = func_8004F190(g_SavegamePtr);
+                g_SavegamePtr->inventorySlotCount_AB = func_8004F190(g_SavegamePtr);
 
                 func_8003CD6C(&g_SysWork.playerCombatInfo_38);
                 func_8003D01C();
@@ -534,9 +534,9 @@ void Inventory_Logic() // 0x8004D518
                 g_Inventory_CmdSelectedIdx           = 0;
                 Sd_PlaySfx(Sfx_Back, -64, 64);
 
-                g_SysWork.inventoryItemSelectedIdx_2351 = ((g_SysWork.inventoryItemSelectedIdx_2351 + g_SavegamePtr->inventoryItemSpaces_AB) - 1) % g_SavegamePtr->inventoryItemSpaces_AB;
-                temp                                    = g_SavegamePtr->inventoryItemSpaces_AB - 3;
-                func_800539A4(0, (g_SysWork.inventoryItemSelectedIdx_2351 + temp) % g_SavegamePtr->inventoryItemSpaces_AB);
+                g_SysWork.inventoryItemSelectedIdx_2351 = ((g_SysWork.inventoryItemSelectedIdx_2351 + g_SavegamePtr->inventorySlotCount_AB) - 1) % g_SavegamePtr->inventorySlotCount_AB;
+                temp                                    = g_SavegamePtr->inventorySlotCount_AB - 3;
+                func_800539A4(0, (g_SysWork.inventoryItemSelectedIdx_2351 + temp) % g_SavegamePtr->inventorySlotCount_AB);
             }
             else if (((g_Inventory_IsRightClicked || g_Inventory_IsRightPulsed) && g_Gfx_Inventory_SelectionBordersDraw == 8) ||
                      (g_Inventory_IsRightHeld && (g_Inventory_IsScrolling || g_Gfx_Inventory_SelectionBordersDraw == 8)))
@@ -551,8 +551,8 @@ void Inventory_Logic() // 0x8004D518
                 g_Inventory_CmdSelectedIdx           = 0;
                 Sd_PlaySfx(Sfx_Back, 64, 64);
 
-                g_SysWork.inventoryItemSelectedIdx_2351 = (g_SysWork.inventoryItemSelectedIdx_2351 + 1) % g_SavegamePtr->inventoryItemSpaces_AB;
-                func_800539A4(1, (g_SysWork.inventoryItemSelectedIdx_2351 + 3) % g_SavegamePtr->inventoryItemSpaces_AB);
+                g_SysWork.inventoryItemSelectedIdx_2351 = (g_SysWork.inventoryItemSelectedIdx_2351 + 1) % g_SavegamePtr->inventorySlotCount_AB;
+                func_800539A4(1, (g_SysWork.inventoryItemSelectedIdx_2351 + 3) % g_SavegamePtr->inventorySlotCount_AB);
             }
             else if (g_Inventory_IsUpClicked != InventorySelectionId_Item && g_Gfx_Inventory_SelectionBordersDraw == 8)
             {
@@ -1389,7 +1389,7 @@ bool func_8004EE94(u8 arg0, u8 arg1) // 0x8004EE94
 {
     s32 i;
 
-    for (i = 0; i < g_SavegamePtr->inventoryItemSpaces_AB; i++)
+    for (i = 0; i < g_SavegamePtr->inventorySlotCount_AB; i++)
     {
         if (arg0 == g_SavegamePtr->items_0[i].id_0)
         {
@@ -1401,7 +1401,7 @@ bool func_8004EE94(u8 arg0, u8 arg1) // 0x8004EE94
                     if (!(g_SavegamePtr->items_0[i].count_1 & 0xFF))
                     {
                         g_SavegamePtr->items_0[i].id_0        = 0xFF;
-                        g_SavegamePtr->inventoryItemSpaces_AB = func_8004F190(g_SavegamePtr);
+                        g_SavegamePtr->inventorySlotCount_AB = func_8004F190(g_SavegamePtr);
                     }
                 }
             }
@@ -1424,7 +1424,7 @@ void func_8004F10C(s32* arg0) // 0x8004F10C
 {
     s32 i;
 
-    g_SavegamePtr->inventoryItemSpaces_AB = func_8004F190(g_SavegamePtr);
+    g_SavegamePtr->inventorySlotCount_AB = func_8004F190(g_SavegamePtr);
 
     for (i = *arg0; i >= 0; i--)
     {

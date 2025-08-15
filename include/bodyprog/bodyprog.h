@@ -754,15 +754,14 @@ STATIC_ASSERT_SIZEOF(s_ObjHeader, 24);
 
 typedef struct
 {
-    char objName_0[8];
-    u8   meshCount_8;
-    u8   vertexOffset_9;
-    u8   normalOffset_A;
-    u8   field_B_0 : 1;
-    u8   field_B_1 : 3;
-    u8   field_B_4 : 2;
-    u8   unk_B_6 : 2;
-
+    char         objName_0[8];
+    u8           meshCount_8;
+    u8           vertexOffset_9;
+    u8           normalOffset_A;
+    u8           field_B_0 : 1;
+    u8           field_B_1 : 3;
+    u8           field_B_4 : 2;
+    u8           unk_B_6   : 2;
     s_ObjHeader* meshes_C;
 } s_ObjList;
 STATIC_ASSERT_SIZEOF(s_ObjList, 16);
@@ -1960,8 +1959,10 @@ extern s32 D_800AE1AC;
 
 extern s32 D_800AE1B0;
 
+/** Angle? */
 extern s16 D_800AF210;
 
+/** Angle? */
 extern s16 D_800AF212;
 
 extern s8 D_800AF217;
@@ -2701,6 +2702,7 @@ void Anim_Update2(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Anim
 /** Updates a character's animation, variant 3. */
 void Anim_Update3(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_AnimInfo* targetAnim);
 
+/** Something related to player weapon position. Takes coords to arm bones. */
 void func_80044F14(GsCOORDINATE2* coord, s16 z, s16 x, s16 y);
 
 s8 func_80044F6C(s8* ptr, s32 arg1);

@@ -689,7 +689,7 @@ typedef struct _Savegame
     s8              locationId_A8;            /** `e_SaveLocationId` */
     u8              current2dMapIdx_A9;       /** `e_Current2dMapIdx` Index to the 2D map shown when opening the map screen. */
     u8              equippedWeapon_AA;        /** `e_InventoryItemId` Affects only the visible player weapon model. */
-    u8              inventoryItemSpaces_AB;   /** Item spaces. `INVENTORY_ITEM_COUNT_MAX` */
+    u8              inventorySlotCount_AB;    /** Item slots. */
     u32             flags_AC;                 /** Flashlight state? On: 3, Off: 1*/
     s32             field_B0[45];
     s32             hasMapsFlags_164;         // See Sparagas' `HasMapsFlags` struct for details of every bit.

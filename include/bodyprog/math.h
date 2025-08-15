@@ -98,6 +98,10 @@
 #define FP_ALPHA(alpha) \
     (s16)FP_FLOAT_TO((alpha), Q12_SHIFT)
 
+/** @brief Normalizes a fixed-point alpha in Q3.12 format to the range `[0, 4095]`. */
+#define FP_ALPHA_NORM(alpha) \
+    ((alpha) & 0xFFF)
+
 // TODO: Maybe not appropriate for this project since it often results in ugly floats.
 /** @brief Converts a normalized color value in the range `[0.0f, 1.0f]` to an 8-bit color value in the range `[0, 255]`. */
 #define FP_COLOR(val) \
