@@ -2388,7 +2388,7 @@ extern u16 D_800C45AE;
 
 extern VECTOR3 D_800C45B0; // Assumed type
 
-extern s16 D_800C45BC;
+extern u16 D_800C45BC;
 
 extern u16 D_800C45BE;
 
@@ -3570,6 +3570,8 @@ void func_80037E78(s_SubCharacter* chara);
 
 s32 func_800382B0(s32 arg0);
 
+void func_800802CC(VECTOR3* pos0, VECTOR3* pos1);
+
 /** @brief Returns the distance on the XZ plane between two positions. */
 s32 Math_Distance2d(VECTOR3* pos0, VECTOR3* pos1);
 
@@ -3846,10 +3848,16 @@ bool func_8007F2AC();
 /** Gets something from the player's current animation? */
 s16 Player_AnimGetSomething();
 
+void func_8007F32C();
+
 /** Player func. */
 bool func_8007F95C();
 
 void Math_ShortestAngle(s16 angleFrom, s16 angleTo, s16* outShortestAngle);
+
+void func_8007FB94(s_SubCharacter* arg0, s_MainCharacterExtra* arg1, s32 arg2);
+
+void func_8007FC48(s_SubCharacter* arg0, s_MainCharacterExtra* arg1, s32 arg2);
 
 /** Gets property 8 from player. */
 s32 func_8007FD2C();
