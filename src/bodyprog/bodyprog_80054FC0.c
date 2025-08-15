@@ -2414,7 +2414,32 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8006EE0C); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8006EEB8); // 0x8006EEB8
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8006F250); // 0x8006F250
+void func_8006F250(s_func_8006F250* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x8006F250
+{
+    s32  idx;
+    s32* scratch = PSX_SCRATCH;
+
+    func_8006F338(scratch, arg1, arg2, arg3, arg4);
+
+    for (idx = 0; idx < D_800C4478.field_2; idx++)
+    {
+        if (func_8006F3C4(scratch, D_800C4478.field_4[idx]) != 0)
+        {
+            break;
+        }
+    }
+
+    if (scratch[10] == 0x1000)
+    {
+        arg0->field_0 = 0x20000;
+        arg0->field_4 = -0x10000;
+    }
+    else
+    {
+        arg0->field_0 = Math_MulFixed(Vc_VectorMagnitudeCalc(scratch[4], 0, scratch[5]), scratch[10], 12);
+        arg0->field_4 = scratch[11];
+    }
+}
 
 void func_8006F338(s_func_8006F338* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x8006F338
 {
