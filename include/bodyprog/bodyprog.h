@@ -363,8 +363,8 @@ STATIC_ASSERT_SIZEOF(s_func_800699E4_18, 10);
 
 typedef struct
 {
-    s32                 field_0;
-    s32                 field_4;
+    s32                 field_0; // Position X.
+    s32                 field_4; // Position Z.
     u32                 field_8_0  : 8;
     u32                 field_8_8  : 8;
     u32                 field_8_16 : 8;
@@ -517,7 +517,8 @@ typedef struct
     s32                field_94;
     s16                field_98;
     s16                field_9A;
-    u8                 unk_9C[4];
+    s16                field_9C;
+    s16                field_9E;
     u8                 field_A0;
     u8                 field_A1;
     u8                 field_A2;
@@ -3848,6 +3849,7 @@ bool func_8007F2AC();
 /** Gets something from the player's current animation? */
 s16 Player_AnimGetSomething();
 
+/** Something to do with player control. */
 void func_8007F32C();
 
 /** Player func. */
@@ -3855,9 +3857,9 @@ bool func_8007F95C();
 
 void Math_ShortestAngle(s16 angleFrom, s16 angleTo, s16* outShortestAngle);
 
-void func_8007FB94(s_SubCharacter* arg0, s_MainCharacterExtra* arg1, s32 arg2);
+void func_8007FB94(s_SubCharacter* chara, s_MainCharacterExtra* extra, s32 arg2);
 
-void func_8007FC48(s_SubCharacter* arg0, s_MainCharacterExtra* arg1, s32 arg2);
+void func_8007FC48(s_SubCharacter* chara, s_MainCharacterExtra* extra, s32 arg2);
 
 /** Gets property 8 from player. */
 s32 func_8007FD2C();

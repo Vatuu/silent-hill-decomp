@@ -1750,7 +1750,8 @@ void func_8006AD44(s_func_8006CC44* arg0, s_func_800699E4* arg1) // 0x8006AD44
     s32  var_s1;
     s32  var_s2;
 
-    if ((arg1->field_8_8 == 0 && arg1->field_8_16 == 0 && arg1->field_8_24 == 0) || !func_8006AEAC())
+    if ((arg1->field_8_8 == 0 && arg1->field_8_16 == 0 && arg1->field_8_24 == 0) ||
+        !func_8006AEAC(arg0, arg1))
     {
         return;
     }
@@ -3332,7 +3333,7 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
                 }
             }
 
-            if (!(chara->field_41 >= 0x44 && chara->field_41 < 0x46))
+            if (!(chara->field_41 >= 68 && chara->field_41 < 70))
             {
                 D_800C4608 = ratan2(chara->field_B4, chara->field_BC) - chara->rotation_24.vy;
                 g_SysWork.player_4C.chara_0.properties_E4.player.field_126 = SQUARE(chara->field_B4) + SQUARE(chara->field_BC) + SQUARE(chara->field_B8);
@@ -3898,7 +3899,7 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
                 D_800AF20C += g_DeltaTime0;
             }
 
-            if (!(g_SysWork.player_4C.extra_128.field_1C >= 0x2F && g_SysWork.player_4C.extra_128.field_1C < 0x31))
+            if (!(g_SysWork.player_4C.extra_128.field_1C >= 47 && g_SysWork.player_4C.extra_128.field_1C < 49))
             {
                 if (var_s6 < var_s7)
                 {
@@ -4509,7 +4510,7 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
                 }
             }
 
-            if (!(chara->field_41 >= 0x44 && chara->field_41 < 0x46))
+            if (!(chara->field_41 >= 68 && chara->field_41 < 70))
             {
                 D_800C4608                                                 = ratan2(chara->field_B4, chara->field_BC) - chara->rotation_24.vy;
                 g_SysWork.player_4C.chara_0.properties_E4.player.field_126 = SQUARE(chara->field_B4) + SQUARE(chara->field_BC) + SQUARE(chara->field_B8);
@@ -10176,7 +10177,7 @@ void func_8007E5AC() // 0x8007E5AC
     D_800AF224                = NO_VALUE;
     g_GameWork.mapAnimIdx_5B1 = NO_VALUE;
 
-    g_SavegamePtr->inventorySlotCount_AB = CLAMP(g_SavegamePtr->inventorySlotCount_AB, INVENTORY_ITEM_COUNT_MAX / 5, INVENTORY_ITEM_COUNT_MAX);
+    g_SavegamePtr->inventorySlotCount_AB  = CLAMP(g_SavegamePtr->inventorySlotCount_AB, INVENTORY_ITEM_COUNT_MAX / 5, INVENTORY_ITEM_COUNT_MAX);
     g_SysWork.player_4C.chara_0.health_B0 = CLAMP(g_SysWork.player_4C.chara_0.health_B0, 1, FP_FLOAT_TO(100.0f, Q12_SHIFT));
 }
 
@@ -10546,12 +10547,11 @@ s16 Player_AnimGetSomething() // 0x8007F308
     return g_MaybePlayerAnims[g_SysWork.player_4C.chara_0.model_0.anim_4.animIdx_0].keyframeIdx0_C;
 }
 
-// Large function. Something to do with player control.
 void func_8007F32C() // 0x8007F32C
 {
     s32 temp;
 
-    D_800C45E8 = (D_800C45E8 * 2) & 3;
+    D_800C45E8 = (D_800C45E8 * 2) & 0x3;
     D_800C4580 = (D_800C4580 * 2) & 0x3F;
     D_800C4582 = (D_800C4582 * 2) & 0x3F;
 
@@ -10564,7 +10564,7 @@ void func_8007F32C() // 0x8007F32C
         D_800C45F0 = (g_Controller0->sticks_20.sticks_0.leftY < 0x40) ^ 1;
         D_800C4558 = g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.stepLeft_10 |
                                                       (ControllerFlag_LStickUp2 | ControllerFlag_LStickRight2 | ControllerFlag_LStickDown2 | ControllerFlag_LStickLeft2) |
-                                                      (g_GameWorkPtr->config_0.controllerConfig_0.stepRight_12) | g_GameWorkPtr->config_0.controllerConfig_0.aim_8);
+                                                      g_GameWorkPtr->config_0.controllerConfig_0.stepRight_12 | g_GameWorkPtr->config_0.controllerConfig_0.aim_8);
     }
     else
     {
@@ -10574,7 +10574,7 @@ void func_8007F32C() // 0x8007F32C
         D_800C45F0 = (g_Controller0->btnsHeld_C & (ControllerFlag_LStickUp | ControllerFlag_LStickDown)) == ControllerFlag_LStickDown;
         D_800C4558 = g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.stepLeft_10 |
                                                       (ControllerFlag_LStickUp | ControllerFlag_LStickRight | ControllerFlag_LStickDown | ControllerFlag_LStickLeft) |
-                                                      (g_GameWorkPtr->config_0.controllerConfig_0.stepRight_12) | g_GameWorkPtr->config_0.controllerConfig_0.aim_8);
+                                                      g_GameWorkPtr->config_0.controllerConfig_0.stepRight_12 | g_GameWorkPtr->config_0.controllerConfig_0.aim_8);
     }
 
     D_800C45AC = (g_Controller0->btnsHeld_C & g_GameWorkPtr->config_0.controllerConfig_0.stepLeft_10) &&
@@ -10586,16 +10586,16 @@ void func_8007F32C() // 0x8007F32C
     D_800C4580 |= (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.stepLeft_10) != 0;
     D_800C4582 |= (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.stepRight_12) != 0;
 
-    if (g_GameWork.config_0.optExtraWalkRunCtrl_2B != 0)
+    if (g_GameWork.config_0.optExtraWalkRunCtrl_2B)
     {
-        D_800C4604 = (g_Controller0->btnsHeld_C & g_GameWorkPtr->config_0.controllerConfig_0.run_C) == 0;
+        D_800C4604 = !(g_Controller0->btnsHeld_C & g_GameWorkPtr->config_0.controllerConfig_0.run_C);
     }
     else
     {
         D_800C4604 = g_Controller0->btnsHeld_C & g_GameWorkPtr->config_0.controllerConfig_0.run_C;
     }
 
-    if (g_GameWork.config_0.optExtraWeaponCtrl_23 != 0)
+    if (g_GameWork.config_0.optExtraWeaponCtrl_23)
     {
         D_800C457E = g_Controller0->btnsHeld_C & g_GameWorkPtr->config_0.controllerConfig_0.aim_8;
     }
@@ -10604,7 +10604,7 @@ void func_8007F32C() // 0x8007F32C
         D_800C457E = g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.aim_8;
     }
 
-    if (g_SysWork.playerCombatInfo_38.equippedWeapon_F >= 0x20 && g_SysWork.player_4C.extra_128.field_24 >= 0x14)
+    if (g_SysWork.playerCombatInfo_38.equippedWeapon_F >= EquippedWeaponId_Handgun && g_SysWork.player_4C.extra_128.field_24 >= 20)
     {
         D_800C45C0 = g_Controller0->btnsHeld_C & g_GameWorkPtr->config_0.controllerConfig_0.action_6;
         D_800C45BE = D_800C45C0;
@@ -10617,10 +10617,10 @@ void func_8007F32C() // 0x8007F32C
         D_800C45BE = (D_800C45BE * 2) & 0x3;
         D_800C45C0 = (D_800C45C0 * 2) & 0x3;
 
-        D_800C45BC |= ((temp & 0xFFFF) != 0);
-        D_800C45BE |= ((D_800C45BC & 0xF) == 0xF);
+        D_800C45BC |= (temp & 0xFFFF) != 0;
+        D_800C45BE |= (D_800C45BC & 0xF) == 0xF;
 
-        D_800C45C0 |= (D_800C45BC != 0) && !(D_800C45BC & 0x11);
+        D_800C45C0 |= D_800C45BC != 0 && !(D_800C45BC & 0x11);
 
         if (D_800C45C0 != 0)
         {
@@ -10637,7 +10637,7 @@ void func_8007F32C() // 0x8007F32C
         D_800C45BC = 0;
     }
 
-    if (g_SysWork.playerCombatInfo_38.equippedWeapon_F == 0x23)
+    if (g_SysWork.playerCombatInfo_38.equippedWeapon_F == EquippedWeaponId_HyperBlaster)
     {
         switch (Inventory_HyperBlasterFunctionalTest())
         {
@@ -10656,9 +10656,11 @@ void func_8007F32C() // 0x8007F32C
         }
     }
 
-    if (g_SysWork.playerCombatInfo_38.isAiming_13 != 0 && (g_SysWork.playerCombatInfo_38.equippedWeapon_F == 0x21 ||
-                                                           (g_SysWork.playerCombatInfo_38.equippedWeapon_F < 0x20 && (g_SysWork.playerCombatInfo_38.equippedWeapon_F % 10 == 4 ||
-                                                                                                                      g_SysWork.playerCombatInfo_38.equippedWeapon_F % 10 == 2 || g_SysWork.playerCombatInfo_38.equippedWeapon_F % 10 == 6))))
+    if (g_SysWork.playerCombatInfo_38.isAiming_13 != 0 && (g_SysWork.playerCombatInfo_38.equippedWeapon_F == EquippedWeaponId_HuntingRifle ||
+                                                           (g_SysWork.playerCombatInfo_38.equippedWeapon_F < 0x20 &&
+                                                            ((g_SysWork.playerCombatInfo_38.equippedWeapon_F % 10) == 4 ||
+                                                             (g_SysWork.playerCombatInfo_38.equippedWeapon_F % 10) == 2 ||
+                                                             (g_SysWork.playerCombatInfo_38.equippedWeapon_F % 10) == 6))))
     {
         if (D_800C45E8 != 0)
         {
@@ -10782,60 +10784,66 @@ void Math_ShortestAngle(s16 angleFrom, s16 angleTo, s16* outShortestAngle) // 0x
     }
 }
 
-void func_8007FB94(s_SubCharacter* arg0, s_MainCharacterExtra* arg1, s32 arg2) // 0x8007FB94
+void func_8007FB94(s_SubCharacter* chara, s_MainCharacterExtra* extra, s32 arg2) // 0x8007FB94
 {
     s32 i;
 
-    if (arg1->model_0.state_2 != 0)
+    if (extra->model_0.state_2 != 0)
     {
         return;
     }
 
-    for (i = 0; i < 0x28; i++)
+    for (i = 0; i < 40; i++)
     {
-        if (g_MapOverlayHeader.field_38[i].field_2 == arg2)
+        if (g_MapOverlayHeader.field_38[i].field_2 != arg2)
         {
-            if (arg1->model_0.stateStep_3 == 0)
-            {
-                arg1->model_0.anim_4.animIdx_0 = g_MapOverlayHeader.field_38[i].field_0;
-                arg1->model_0.stateStep_3++;
-            }
-
-            if (arg0->model_0.stateStep_3 == 0)
-            {
-                arg0->model_0.anim_4.animIdx_0 = g_MapOverlayHeader.field_38[i].field_0;
-                arg0->model_0.stateStep_3++;
-            }
-            D_800AF220 = i;
-            i          = 0x29;
-            arg1->model_0.state_2++;
+            continue;
         }
+
+        if (extra->model_0.stateStep_3 == 0)
+        {
+            extra->model_0.anim_4.animIdx_0 = g_MapOverlayHeader.field_38[i].field_0;
+            extra->model_0.stateStep_3++;
+        }
+
+        if (chara->model_0.stateStep_3 == 0)
+        {
+            chara->model_0.anim_4.animIdx_0 = g_MapOverlayHeader.field_38[i].field_0;
+            chara->model_0.stateStep_3++;
+        }
+
+        D_800AF220 = i;
+        i          = 41;
+
+        extra->model_0.state_2++;
     }
 }
 
-void func_8007FC48(s_SubCharacter* arg0, s_MainCharacterExtra* arg1, s32 arg2) // 0x8007FC48
+void func_8007FC48(s_SubCharacter* chara, s_MainCharacterExtra* extra, s32 arg2) // 0x8007FC48
 {
     s32 i;
 
-    if (arg1->model_0.state_2 != 0)
+    if (extra->model_0.state_2 != 0)
     {
         return;
     }
 
-    for (i = 0; i < 0x28; i++)
+    for (i = 0; i < 40; i++)
     {
-        if (g_MapOverlayHeader.field_38[i].field_2 == arg2)
+        if (g_MapOverlayHeader.field_38[i].field_2 != arg2)
         {
-            arg1->model_0.anim_4.animIdx_0 = g_MapOverlayHeader.field_38[i].field_0 + 1;
-            arg0->model_0.anim_4.animIdx_0 = g_MapOverlayHeader.field_38[i].field_0 + 1;
-            arg1->model_0.stateStep_3++;
-            arg0->model_0.stateStep_3++;
-            arg1->model_0.anim_4.time_4 = FP_TO(g_MapOverlayHeader.field_38[i].field_4, Q12_SHIFT);
-            D_800AF220                  = i;
-            arg0->model_0.anim_4.time_4 = FP_TO(g_MapOverlayHeader.field_38[i].field_4, Q12_SHIFT);
-            i                           = 0x29;
-            arg1->model_0.state_2++;
+            continue;
         }
+
+        extra->model_0.anim_4.animIdx_0 = g_MapOverlayHeader.field_38[i].field_0 + 1;
+        chara->model_0.anim_4.animIdx_0 = g_MapOverlayHeader.field_38[i].field_0 + 1;
+        extra->model_0.stateStep_3++;
+        chara->model_0.stateStep_3++;
+        extra->model_0.anim_4.time_4 = FP_TO(g_MapOverlayHeader.field_38[i].field_4, Q12_SHIFT);
+        D_800AF220                   = i;
+        chara->model_0.anim_4.time_4 = FP_TO(g_MapOverlayHeader.field_38[i].field_4, Q12_SHIFT);
+        i                            = 41;
+        extra->model_0.state_2++;
     }
 }
 
@@ -10885,17 +10893,20 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8007FDE0); // 0x
 
 void func_800802CC(VECTOR3* pos0, VECTOR3* pos1) // 0x800802CC
 {
-    s32 xDelta = pos1->vx - pos0->vx;
-    s32 yDelta = pos1->vy - pos0->vy;
-    s32 zDelta = pos1->vz - pos0->vz;
-    return SquareRoot12(FP_MULTIPLY_PRECISE(xDelta, xDelta, Q12_SHIFT) + FP_MULTIPLY_PRECISE(yDelta, yDelta, Q12_SHIFT) + FP_MULTIPLY_PRECISE(zDelta, zDelta, Q12_SHIFT));
+    s32 deltaX = pos1->vx - pos0->vx;
+    s32 deltaY = pos1->vy - pos0->vy;
+    s32 deltaZ = pos1->vz - pos0->vz;
+    return SquareRoot12(FP_MULTIPLY_PRECISE(deltaX, deltaX, Q12_SHIFT) +
+                        FP_MULTIPLY_PRECISE(deltaY, deltaY, Q12_SHIFT) +
+                        FP_MULTIPLY_PRECISE(deltaZ, deltaZ, Q12_SHIFT));
 }
 
 s32 Math_Distance2d(VECTOR3* pos0, VECTOR3* pos1) // 0x8008037C
 {
-    s32 xDelta = pos1->vx - pos0->vx;
-    s32 zDelta = pos1->vz - pos0->vz;
-    return SquareRoot12(FP_MULTIPLY_PRECISE(xDelta, xDelta, Q12_SHIFT) + FP_MULTIPLY_PRECISE(zDelta, zDelta, Q12_SHIFT));
+    s32 deltaX = pos1->vx - pos0->vx;
+    s32 deltaZ = pos1->vz - pos0->vz;
+    return SquareRoot12(FP_MULTIPLY_PRECISE(deltaX, deltaX, Q12_SHIFT) +
+                        FP_MULTIPLY_PRECISE(deltaZ, deltaZ, Q12_SHIFT));
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_800803FC); // 0x800803FC
@@ -10913,8 +10924,8 @@ s32 func_80080478(VECTOR3* pos0, VECTOR3* pos1) // 0x80080478
     s32 y0;
     s32 z0;
     s32 z1;
-    s32 xDelta;
-    s32 zDelta;
+    s32 deltaX;
+    s32 deltaZ;
     u16 atan2Delta;
     s32 unk;
 
@@ -10925,11 +10936,11 @@ s32 func_80080478(VECTOR3* pos0, VECTOR3* pos1) // 0x80080478
     z0 = pos0->vz;
     z1 = pos1->vz;
 
-    xDelta     = x1 - x0;
-    zDelta     = z1 - z0;
-    atan2Delta = ratan2(xDelta, zDelta);
+    deltaX     = x1 - x0;
+    deltaZ     = z1 - z0;
+    atan2Delta = ratan2(deltaX, deltaZ);
 
-    unk = func_8008A058(func_80080540(xDelta, 0, zDelta));
+    unk = func_8008A058(func_80080540(deltaX, 0, deltaZ));
     return (ratan2(unk, y1 - y0) << 16) | atan2Delta;
 }
 

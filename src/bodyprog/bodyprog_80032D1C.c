@@ -3562,7 +3562,7 @@ void SysState_Unk3_Update() // 0x800396D4
             SysWork_StateSetNext(GameState_Unk0);
         }
     }
-    else if ((g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & (1 << 1)) && g_SysWork.field_2388.flashlightState_15 == 0 &&
+    else if ((g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & (1 << 1)) && !g_SysWork.field_2388.isFlashlightOn_15 &&
              ((g_SysWork.field_2388.field_1C[0].field_0.field_0.s_field_0.field_0 & (1 << 0)) ||
               (g_SysWork.field_2388.field_1C[1].field_0.field_0.s_field_0.field_0 & (1 << 0))))
     {

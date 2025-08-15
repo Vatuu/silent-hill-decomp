@@ -139,25 +139,25 @@ extern s32 g_Inventory_ScrollTransitionTimer; // 0x800AE1A4
 
 extern GsCOORD2PARAM D_800C3928; // 0x800C3928
 
-extern s32 g_Inventory_IsUpClicked; // 0x800C3968
+extern bool g_Inventory_IsUpClicked; // 0x800C3968
 
-extern s32 g_Inventory_IsDownClicked; // 0x800C396C
+extern bool g_Inventory_IsDownClicked; // 0x800C396C
 
-extern s32 g_Inventory_IsLeftClicked; // 0x800C3970
+extern bool g_Inventory_IsLeftClicked; // 0x800C3970
 
-extern s32 g_Inventory_IsRightClicked; // 0x800C3974
+extern bool g_Inventory_IsRightClicked; // 0x800C3974
 
-extern s32 g_Inventory_IsUpPulsed; // 0x800C3978
+extern bool g_Inventory_IsUpPulsed; // 0x800C3978
 
-extern s32 g_Inventory_IsDownPulsed; // 0x800C397C
+extern bool g_Inventory_IsDownPulsed; // 0x800C397C
 
-extern s32 g_Inventory_IsLeftPulsed; // 0x800C3980
+extern bool g_Inventory_IsLeftPulsed; // 0x800C3980
 
-extern s32 g_Inventory_IsRightPulsed; // 0x800C3984
+extern bool g_Inventory_IsRightPulsed; // 0x800C3984
 
-extern s32 g_Inventory_IsLeftHeld; // 0x800C3988
+extern bool g_Inventory_IsLeftHeld; // 0x800C3988
 
-extern s32 g_Inventory_IsRightHeld; // 0x800C398C
+extern bool g_Inventory_IsRightHeld; // 0x800C398C
 
 /** @brief Used for smooth inventory scrolling if a left/right input is held. */
 extern bool g_Inventory_IsScrolling; // 0x800C3990

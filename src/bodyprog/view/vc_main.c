@@ -2525,13 +2525,13 @@ void vcMakeNewBaseCamAng(SVECTOR* new_base_ang, VC_CAM_MV_TYPE cam_mv_type, VC_W
     s16 temp_v0_2;
     s16 temp_v1;
     s16 temp_v1_2;
-    s32 zDelta;
-    s32 yDelta;
-    s32 xDelta;
+    s32 deltaZ;
+    s32 deltaY;
+    s32 deltaX;
 
-    xDelta = FP_FROM(w_p->watch_tgt_pos_7C.vx - w_p->cam_pos_50.vx, Q4_SHIFT);
-    yDelta = FP_FROM(w_p->watch_tgt_pos_7C.vy - w_p->cam_pos_50.vy, Q4_SHIFT);
-    zDelta = FP_FROM(w_p->watch_tgt_pos_7C.vz - w_p->cam_pos_50.vz, Q4_SHIFT);
+    deltaX = FP_FROM(w_p->watch_tgt_pos_7C.vx - w_p->cam_pos_50.vx, Q4_SHIFT);
+    deltaY = FP_FROM(w_p->watch_tgt_pos_7C.vy - w_p->cam_pos_50.vy, Q4_SHIFT);
+    deltaZ = FP_FROM(w_p->watch_tgt_pos_7C.vz - w_p->cam_pos_50.vz, Q4_SHIFT);
 
     if (w_p->flags_8 & VC_USER_WATCH_F)
     {
@@ -2547,8 +2547,8 @@ void vcMakeNewBaseCamAng(SVECTOR* new_base_ang, VC_CAM_MV_TYPE cam_mv_type, VC_W
     }
     else
     {
-        angle   = ratan2(-yDelta, Vc_VectorMagnitudeCalc(xDelta, FP_METER(0.0f), zDelta));
-        temp_v0 = ratan2(xDelta, zDelta);
+        angle   = ratan2(-deltaY, Vc_VectorMagnitudeCalc(deltaX, FP_METER(0.0f), deltaZ));
+        temp_v0 = ratan2(deltaX, deltaZ);
 
         temp_v1   = FP_TO(w_p->cur_near_road_2B8.road_p_0->fix_ang_x_16, Q4_SHIFT);
         temp_a0_2 = FP_TO(w_p->cur_near_road_2B8.road_p_0->fix_ang_y_17, Q4_SHIFT);

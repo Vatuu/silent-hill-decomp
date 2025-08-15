@@ -3,8 +3,8 @@ bool sharedFunc_800D2E04_0_s01(s_SubCharacter* chara, VECTOR3* inVec, s32* outDi
     s32 tmp;
     u8  idxInfo;
     s32 idx;
-    s32 xDelta;
-    s32 zDelta;
+    s32 deltaX;
+    s32 deltaZ;
     s32 temp_s4;
     s32 temp_s3;
     s32 angle;
@@ -13,14 +13,14 @@ bool sharedFunc_800D2E04_0_s01(s_SubCharacter* chara, VECTOR3* inVec, s32* outDi
     idxInfo = g_SysWork.field_2388.field_154.field_0.field_0.field_0;
     idx     = (idxInfo & (1 << 1)) ? ((idxInfo & (1 << 0)) ? 2 : 3) : (sharedFunc_800D4A80_0_s01(chara) == 3);
 
-    xDelta = inVec->vx - chara->position_18.vx;
-    zDelta = inVec->vz - chara->position_18.vz;
+    deltaX = inVec->vx - chara->position_18.vx;
+    deltaZ = inVec->vz - chara->position_18.vz;
 
     temp_s4 = (u16)sharedData_800CAA98_0_s01.properties_D14[idx].val16[0];
     temp_s3 = (u16)sharedData_800CAA98_0_s01.properties_D14[idx].val16[1];
 
-    angle = FP_ANGLE_NORM_S(ratan2(xDelta, zDelta) - (chara->rotation_24.vy + chara->rotation_24.pad));
-    dist  = SquareRoot12(FP_MULTIPLY_PRECISE(xDelta, xDelta, 12) + FP_MULTIPLY_PRECISE(zDelta, zDelta, 12));
+    angle = FP_ANGLE_NORM_S(ratan2(deltaX, deltaZ) - (chara->rotation_24.vy + chara->rotation_24.pad));
+    dist  = SquareRoot12(FP_MULTIPLY_PRECISE(deltaX, deltaX, 12) + FP_MULTIPLY_PRECISE(deltaZ, deltaZ, 12));
 
     if (outDist != NULL)
     {

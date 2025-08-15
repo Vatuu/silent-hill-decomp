@@ -1062,11 +1062,11 @@ typedef struct _PlayerCombat
 {
     VECTOR3 field_0;
     s8      unk_C[3];
-    s8      equippedWeapon_F; // `e_EquippedWeaponId`.
+    s8      equippedWeapon_F; /** `e_EquippedWeaponId` */
     u8      currentWeaponAmmo_10;
     u8      totalWeaponAmmo_11;
     s8      field_12;
-    u8      isAiming_13; /** Boolean. */
+    u8      isAiming_13; /** `bool` */
 } s_PlayerCombat;
 STATIC_ASSERT_SIZEOF(s_PlayerCombat, 20);
 
@@ -1126,8 +1126,8 @@ typedef struct
     s32          field_C;
     s32          field_10;
     u8           field_14;
-    u8           flashlightState_15; /** 0: Off, 1: On */
-    u8           field_16;
+    u8           isFlashlightOn_15; /** `bool` | Off: `false`, On: `true`. */
+    u8           field_16;          /** `bool` */
     s8           unk_17;
     s16          flashlightIntensity_18;
     u16          field_1A;
