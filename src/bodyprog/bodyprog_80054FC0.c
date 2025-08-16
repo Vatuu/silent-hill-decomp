@@ -51,9 +51,9 @@ void func_80055028() // 0x80055028
     D_800C4168.field_2 = 0;
 
     // Likely a color triplet.
-    D_800C4168.field_1C = 0xFF;
-    D_800C4168.field_1D = 0xFF;
-    D_800C4168.field_1E = 0xFF;
+    D_800C4168.field_1C.r = 0xFF;
+    D_800C4168.field_1C.g = 0xFF;
+    D_800C4168.field_1C.b = 0xFF;
 
     D_800C4168.field_4C = 0;
     D_800C4168.field_50 = 0;
@@ -65,7 +65,88 @@ void func_80055028() // 0x80055028
     func_80055840(0x20000, 0x22000);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_800550D0); // 0x800550D0
+void func_800550D0() // 0x800550D0
+{
+    GsOT*    ot;
+    s32      color0;
+    s32      color2;
+    PACKET*  packet;
+    PACKET*  packet2;
+    DR_MODE* mode;
+    POLY_G4* poly;
+
+    ot = &g_ObjectTable0[g_ObjectTableIdx];
+
+    if (D_800C4168.field_2 != 0)
+    {
+        func_80041074(ot, D_800C4168.field_54, &D_800C4168.field_58, &D_800C4168.field_60);
+    }
+
+    if (D_800C4168.field_0 == 1 && D_800C4168.field_50 != 0)
+    {
+        func_8008D470(D_800C4168.field_50, &D_800C4168.field_58, &D_800C4168.field_60, D_800C4168.field_4);
+    }
+
+    if (D_800C4168.field_8 > 0)
+    {
+        poly = (POLY_G4*)GsOUT_PACKET_P;
+        mode = (DR_MODE*)(GsOUT_PACKET_P + sizeof(POLY_G4));
+        GsOUT_PACKET_P += sizeof(POLY_G4) + sizeof(DR_MODE);
+
+        color0           = (D_800C4168.field_8 + (D_800C4168.field_8 << 8)) + (D_800C4168.field_8 << 16);
+        *(s32*)&poly->r3 = color0;
+        *(s32*)&poly->r2 = color0;
+        *(s32*)&poly->r1 = color0;
+        *(s32*)&poly->r0 = color0;
+
+        setPolyG4(poly);
+        setSemiTrans(poly, 1);
+        setXY4(poly,
+               -180, -120,
+               180, -120,
+               -180, 120,
+               180, 120);
+
+        AddPrim(ot->org, poly);
+        SetDrawMode(mode, 0, 1, 0x20, NULL);
+        AddPrim(ot->org, mode);
+    }
+
+    packet2 = GsOUT_PACKET_P;
+    packet  = packet2;
+
+    SetPriority(packet2, 0, 0);
+    AddPrim(&ot->org[2047], packet2);
+
+    poly           = (POLY_G4*)(packet + 0xC);
+    GsOUT_PACKET_P = packet + 0x30;
+
+    color2           = *(s32*)&D_800C4168.field_1C;
+    *(s32*)&poly->r3 = color2;
+    *(s32*)&poly->r2 = color2;
+    *(s32*)&poly->r1 = color2;
+    *(s32*)&poly->r0 = color2;
+
+    SetPolyG4(poly);
+    setXY4(poly,
+           -180, -120,
+           180, -120,
+           -180, 120,
+           180, 120);
+
+    AddPrim(&ot->org[2047], poly);
+    packet = GsOUT_PACKET_P;
+    SetPriority(packet, 0, 1);
+    AddPrim(&ot->org[2047], packet);
+
+    GsOUT_PACKET_P = packet + sizeof(DR_MODE);
+    mode           = (DR_MODE*)GsOUT_PACKET_P;
+
+    SetDrawMode(mode, 0, 1, 0x20, NULL);
+    AddPrim(&ot->org[2047], mode);
+
+    GsOUT_PACKET_P = packet + 0x18;
+}
 
 void func_80055330(u8 arg0, s32 arg1, u8 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6) // 0x80055330
 {
@@ -93,9 +174,9 @@ void func_80055330(u8 arg0, s32 arg1, u8 arg2, s32 arg3, s32 arg4, s32 arg5, s32
 void func_800553C4(u8 arg0, u8 arg1, u8 arg2, u8 arg3) // 0x800553C4
 {
     D_800C4168.field_1  = arg0;
-    D_800C4168.field_1C = arg1;
-    D_800C4168.field_1D = arg2;
-    D_800C4168.field_1E = arg3;
+    D_800C4168.field_1C.r = arg1;
+    D_800C4168.field_1C.g = arg2;
+    D_800C4168.field_1C.b = arg3;
 }
 
 void func_800553E0(u32 arg0, u8 arg1, u8 arg2, u8 arg3, u8 arg4, u8 arg5, u8 arg6) // 0x800553E0
@@ -113,11 +194,67 @@ void func_80055434(VECTOR3* vec) // 0x80055434
     *vec = D_800C4168.field_60;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8005545C); // 0x8005545C
+s32 func_8005545C(SVECTOR* vec) // 0x8005545C
+{
+    *vec = D_800C4168.field_6C;
+    return D_800C4168.field_54;
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80055490); // 0x80055490
+s32 func_80055490(SVECTOR* arg0) // 0x80055490
+{
+    *arg0 = D_800C4168.field_58;
+    return D_800C4168.field_54;
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_800554C4); // 0x800554C4
+void func_800554C4(s32 arg0, s16 arg1, GsCOORDINATE2* coord0, GsCOORDINATE2* coord1, SVECTOR* svec, s32 x, s32 y, s32 z, s32 arg8) // 0x800554C4
+{
+    MATRIX   mat;
+    SVECTOR  tempSvec;
+    VECTOR   vec;
+    VECTOR3* ptr;
+    VECTOR3* ptr2;
+
+    D_800C4168.field_54 = arg0;
+    D_800C4168.field_50 = arg1;
+    D_800C4168.field_4  = arg8;
+
+    if (coord0 == NULL)
+    {
+        D_800C4168.field_58 = *svec;
+    }
+    else
+    {
+        Vw_CoordHierarchyMatrixCompute(coord0, &mat);
+        ApplyMatrixSV(&mat, svec, &D_800C4168.field_58);
+    }
+
+    if (coord1 == NULL)
+    {
+        ptr     = &D_800C4168.field_60;
+        ptr->vx = x;
+        ptr->vy = y;
+        ptr->vz = z;
+    }
+    else
+    {
+        Vw_CoordHierarchyMatrixCompute(coord1, &mat);
+
+        tempSvec.vx = FP_FROM(x, Q4_SHIFT);
+        tempSvec.vy = FP_FROM(y, Q4_SHIFT);
+        tempSvec.vz = FP_FROM(z, Q4_SHIFT);
+
+        ApplyMatrix(&mat, &tempSvec, &vec);
+
+        ptr2     = &D_800C4168.field_60;
+        ptr2->vx = (vec.vx + mat.t[0]) * 16;
+        ptr2->vy = (vec.vy + mat.t[1]) * 16;
+        ptr2->vz = (vec.vz + mat.t[2]) * 16;
+    }
+
+    vwVectorToAngle(&D_800C4168.field_6C, &D_800C4168.field_58);
+    D_800C4168.field_4C = arg0 >> 8;
+    func_80055648(arg0, &D_800C4168.field_58);
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80055648); // 0x80055648
 
@@ -164,7 +301,7 @@ void func_80055B74(CVECTOR* result, CVECTOR* color, s32 arg2) // 0x80055B74
 
     gte_lddp(var_v0);
     gte_ldrgb(color);
-    gte_SetFarColor(D_800C4168.field_1C, D_800C4168.field_1D, D_800C4168.field_1E);
+    gte_SetFarColor(D_800C4168.field_1C.r, D_800C4168.field_1C.g, D_800C4168.field_1C.b);
     gte_ldsv_(var_t0 << 5);
     gte_dpcl();
     gte_strgb(result);
@@ -193,7 +330,7 @@ void func_80055C3C(CVECTOR* result, CVECTOR* color, void* arg2, void* arg3, s32 
 
         gte_lddp(var_v0 << 4);
         gte_ldrgb(color);
-        gte_SetFarColor(D_800C4168.field_1C, D_800C4168.field_1D, D_800C4168.field_1E);
+        gte_SetFarColor(D_800C4168.field_1C.r, D_800C4168.field_1C.g, D_800C4168.field_1C.b);
         gte_ldsv_(temp_a1 << 5);
 
         gte_dpcl();
@@ -3226,7 +3363,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80071968); // 0x
 #ifdef NON_MATCHING
 void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coord)
 {
-    s16 sp10[2]; // Type assumed. Maybe DVECTOR
+    SVECTOR   sp10;
     s16 sp18;
     s16 sp1A;
     s16 sp1C;
@@ -3308,8 +3445,8 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
         case 2:
             g_SysWork.player_4C.chara_0.properties_E4.player.field_126 = 0;
             func_8005545C(&sp10);
-            g_SysWork.player_4C.chara_0.properties_E4.npc.field_120 = sp10[1];
-            
+            g_SysWork.player_4C.chara_0.properties_E4.npc.field_120 = sp10.vy;
+
             if (extra->model_0.stateStep_3 == 0)
             {
                 extra->model_0.anim_4.animIdx_0 = 34;

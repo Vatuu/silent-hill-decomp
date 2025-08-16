@@ -1254,16 +1254,14 @@ typedef struct
 {
     u8            field_0;
     u8            field_1;
-    s8            field_2;
+    u8            field_2;
     u8            field_3;
     s32           field_4;
     s32           field_8;
     s8            unk_C[8];
     s32           field_14;
     s32           field_18;
-    u8            field_1C;
-    u8            field_1D;
-    u8            field_1E;
+    CVECTOR       field_1C;
     s32           field_20;
     u8            field_24;
     u8            field_25;
@@ -1276,10 +1274,8 @@ typedef struct
     s32           field_54;
     SVECTOR       field_58;
     VECTOR3       field_60; // Type assumed.
-    u8            unk_6C[4];
-    u8            unk_70[4];
-    SVECTOR3      field_74;
-    u8            unk_7A[2];
+    SVECTOR       field_6C;
+    SVECTOR       field_74;
     SVECTOR       field_7C;
     u8            unk_84[72];
     u8            field_CC[1]; // Unknown size.
@@ -2907,16 +2903,24 @@ void func_80054FC0(s32* arg0, s32* arg1, u8 idx);
 
 void func_80055028();
 
+void func_800550D0();
+
 void func_80055330(u8 arg0, s32 arg1, u8 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6);
 
 void func_800553C4(u8 arg0, u8 arg1, u8 arg2, u8 arg3);
 
 void func_800553E0(u32 arg0, u8 arg1, u8 arg2, u8 arg3, u8 arg4, u8 arg5, u8 arg6);
 
-void func_8005545C(void*);
-
 /** `arg0` type assumed. */
 void func_80055434(VECTOR3* vec);
+
+s32 func_8005545C(SVECTOR* vec);
+
+s32 func_80055490(SVECTOR* arg0);
+
+void func_800554C4(s32 arg0, s16 arg1, GsCOORDINATE2* coord0, GsCOORDINATE2* coord1, SVECTOR* svec, s32 x, s32 y, s32 z, s32 arg8);
+
+void func_80055648(s32 arg0, SVECTOR* arg1);
 
 s32 func_800557DC();
 
