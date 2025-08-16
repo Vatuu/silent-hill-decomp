@@ -497,7 +497,7 @@ void func_80056464(s_800BE9FC* arg0, s32 fileIdx, s32* arg2, s32 arg3) // 0x8005
     func_80056558(arg0, sp10, arg2, arg3);
 }
 
-void func_80056504(s_800BE9FC* arg0, s8* arg1, s32* arg2, s32 arg3) // 0x80056504
+void func_80056504(s_800BE9FC* arg0, char* arg1, s32* arg2, s32 arg3) // 0x80056504
 {
     s8 sp10[8];
 
@@ -719,7 +719,7 @@ void func_80056C8C(s_Bone* bone, s_800BE9FC* arg1, s32 arg2)
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80056CB4); // 0x80056CB4
 
-void func_80056D64(s8* prevStr, s8* newStr) // 0x80056D64
+void func_80056D64(char* prevStr, char* newStr) // 0x80056D64
 {
     *(s32*)&prevStr[4] = 0;
     *(s32*)&prevStr[0] = 0;
@@ -1398,7 +1398,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8005AA08); // 0x
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8005AC50); // 0x8005AC50
 
 // Related to enviroment textures.
-void func_8005B1A0(s_800C1450_58* arg0, s32 arg1, s32 arg2, u8 arg3, s32 arg4, s32 arg5, s16 arg6, s16 arg7) // 0x8005B1A0
+void func_8005B1A0(s_800C1450_58* arg0, char* arg1, s32 arg2, u8 arg3, s32 arg4, s32 arg5, s16 arg6, s16 arg7) // 0x8005B1A0
 {
     arg0->field_0 = arg2;
     arg0->field_1 = arg3;
@@ -1406,29 +1406,29 @@ void func_8005B1A0(s_800C1450_58* arg0, s32 arg1, s32 arg2, u8 arg3, s32 arg4, s
     arg0->field_3 = arg5;
     arg0->field_4 = arg6;
     arg0->field_6 = arg7;
-    func_80056D64(&arg0->field_8, arg1);
+    func_80056D64(arg0->string_8, arg1);
     arg0->field_14 = 0;
     arg0->field_10 = -1;
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8005B1FC); // 0x8005B1FC
 
-void func_8005B370(s_func_8005B370* arg0) // 0x8005B370
+void func_8005B370(s_800C1450_58* arg0) // 0x8005B370
 {
     arg0->field_14 = 0;
 }
 
-void func_8005B378(s_func_8005B370* arg0, s8* arg1) // 0x8005B378
+void func_8005B378(s_800C1450_58* arg0, char* arg1) // 0x8005B378
 {
     arg0->field_14 = 1;
     arg0->field_10 = 0;
-    func_80056D64(arg0->field_8, arg1);
+    func_80056D64(arg0->string_8, arg1);
 }
 
-void func_8005B3A4(s_func_8005B3A4* arg0) // 0x8005B3A4
+void func_8005B3A4(s_800C1450_58* arg0) // 0x8005B3A4
 {
-    arg0->field_C  = 0;
-    arg0->field_8  = 0;
+    *(s32*)&arg0->string_8[4] = 0;
+    *(s32*)&arg0->string_8[0] = 0;
     arg0->field_14 = 0;
     arg0->field_10 = NO_VALUE;
 }

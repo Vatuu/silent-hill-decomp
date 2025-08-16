@@ -297,25 +297,6 @@ STATIC_ASSERT_SIZEOF(s_func_80056A88, 16);
 
 typedef struct
 {
-    u8  unk_0[8];
-    s8  field_8[8]; // Could be `char[]` string instead.
-    s32 field_10;
-    s8  field_14;
-} s_func_8005B370;
-
-typedef struct
-{
-    s8  unk_0[8];
-    s32 field_8;
-    s32 field_C;
-    s32 field_10;
-    s8  field_14;
-    s8  unk_15[3];
-} s_func_8005B3A4;
-STATIC_ASSERT_SIZEOF(s_func_8005B3A4, 24);
-
-typedef struct
-{
     char pad[12];
 } s_func_8005B424;
 
@@ -1049,10 +1030,9 @@ STATIC_ASSERT_SIZEOF(s_800BCE18_0, 1376);
 
 typedef struct
 {
-    s32 field_0; // String pointer?
-    s32 field_4;
-    s8  field_8;
-    s8  field_9;
+    char string_0[8];
+    s8   field_8;
+    s8   field_9;
 } s_800BCE18_2BEC_0_10;
 
 typedef struct
@@ -1179,18 +1159,18 @@ typedef struct
 
 typedef struct
 {
-    s8  field_0;
-    s8  field_1;
-    s8  field_2;
-    s8  field_3;
-    s16 field_4;
-    s16 field_6;
-    s8  field_8;
-    s8  unk_9[4];
-    s32 field_10;
-    s8  field_14;
-    s8  unk_15[3];
+    s8   field_0;
+    s8   field_1;
+    s8   field_2;
+    s8   field_3;
+    s16  field_4;
+    s16  field_6;
+    char string_8[8];
+    s32  field_10;
+    s8   field_14;
+    u8   unk_15[3];
 } s_800C1450_58;
+STATIC_ASSERT_SIZEOF(s_800C1450_58, 24);
 
 // Related to textures.
 typedef struct
@@ -2202,10 +2182,6 @@ extern s_800C1020 D_800C1020;
 
 extern s_800C1450 D_800C1450;
 
-extern s_func_8005B3A4 D_800C14A8[8];
-
-extern s_func_8005B3A4 D_800C1568[2];
-
 extern s_800C117C D_800C117C[];
 
 extern s8* D_800C15B0;
@@ -2585,7 +2561,7 @@ s32 func_8003C850();
 
 void func_8003C878(s32 arg0);
 
-void func_8003C8F8(s_800BCE18_2BEC_0* arg0, s8* newStr);
+void func_8003C8F8(s_800BCE18_2BEC_0* arg0, char* newStr);
 
 void func_8003C92C(s_800BCE18_2BEC_0* arg0, VECTOR3* pos, SVECTOR3* rot);
 
@@ -2987,9 +2963,6 @@ u8 func_80055F08(SVECTOR3* arg0, SVECTOR3* arg1, MATRIX* mat);
 
 void func_800560FC(s_800BE9FC* arg0);
 
-/** Related to enviroment textures. */
-void func_8005B1A0(s_800C1450_58* arg0, s32 arg1, s32 arg2, u8 arg3, s32 arg4, s32 arg5, s16 arg6, s16 arg7);
-
 /** TODO: Unknown `arg3`/`arg4` types. */
 void func_80059D50(s32 arg0, s_func_80057344* arg1, s_func_8005A21C* arg2, void* arg3, void* arg4);
 
@@ -3008,11 +2981,14 @@ void func_8005A838(s_GteScratchData* scratchData, s32 scale);
 
 void func_8005A900(s_ObjHeader* header, s32 offset, s_GteScratchData* scratchData, MATRIX* mat);
 
-void func_8005B370(s_func_8005B370* arg0);
+/** Related to enviroment textures. */
+void func_8005B1A0(s_800C1450_58* arg0, char* arg1, s32 arg2, u8 arg3, s32 arg4, s32 arg5, s16 arg6, s16 arg7);
 
-void func_8005B378(s_func_8005B370* arg0, s8* arg1);
+void func_8005B370(s_800C1450_58* arg0);
 
-void func_8005B3A4(s_func_8005B3A4* arg0);
+void func_8005B378(s_800C1450_58* arg0, char* arg1);
+
+void func_8005B3A4(s_800C1450_58* arg0);
 
 void func_8005B3BC(char* filename, s_800BE9FC_4* arg1);
 
@@ -3020,7 +2996,7 @@ void func_8005B424(VECTOR3* vec0, VECTOR3* vec1);
 
 void func_80056464(s_800BE9FC* arg0, s32 fileIdx, s32* arg2, s32 arg3);
 
-void func_80056504(s_800BE9FC* arg0, s8* arg1, s32* arg2, s32 arg3);
+void func_80056504(s_800BE9FC* arg0, char* arg1, s32* arg2, s32 arg3);
 
 void func_8005660C(s_800BE9FC_4* arg0, s_FsImageDesc* arg1, s32 arg2);
 
@@ -3041,7 +3017,7 @@ s32 func_80056C80(s_800BE9FC* arg0);
 
 void func_80056C8C(s_Bone* bone, s_800BE9FC* arg1, s32 arg2);
 
-void func_80056D64(s8* prevStr, s8* newStr);
+void func_80056D64(char* prevStr, char* newStr);
 
 void func_80057090(s_func_80057344* arg0, s_func_80057090* arg1, void* arg2, s32 arg3, MATRIX* mat, u16 arg5);
 

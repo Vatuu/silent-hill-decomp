@@ -2235,6 +2235,7 @@ g_SysState_GameOver_TipIdx                  = 0x800BCD80; // type:u8
 g_MapEventParam                             = 0x800BCDD8; // type:u32 - pointer to `s_EventParam`.
 vcRefPosSt                                  = 0x800BCDF8; // type:VECTOR3 size:0xC
 D_800BCE18                                  = 0x800BCE18; // type:u8 size:0x2BEC - size incomplete, contains `vcCameraInternalInfo` and others.
+D_800C1450                                  = 0x800C1450; // type:u8 size:0x148
 g_Sd_VolumeSe                               = 0x800C1684;
 g_Sd_VolumeBgm                              = 0x800C1685;
 g_Sd_VolumeXa                               = 0x800C1686;

@@ -1037,12 +1037,12 @@ void func_8003C878(s32 arg0) // 0x8003C878
     func_800550D0();
 }
 
-void func_8003C8F8(s_800BCE18_2BEC_0* arg0, s8* newStr) // 0x8003C8F8
+void func_8003C8F8(s_800BCE18_2BEC_0* arg0, char* newStr) // 0x8003C8F8
 {
     arg0->field_10.field_9 = 0;
     arg0->field_0          = 0;
 
-    func_80056D64(&arg0->field_10.field_0, newStr);
+    func_80056D64(arg0->field_10.string_0, newStr);
 
     arg0->field_10.field_8 = 0;
 }
@@ -1184,7 +1184,8 @@ void func_8003CC7C(s_800BCE18_2BEC_0* arg0, MATRIX* arg1, MATRIX* arg2) // 0x800
         }
     }
 
-    if (temp_s1->field_0 != temp_s2->field_0 || temp_s1->field_4 != temp_s2->field_4)
+    // TODO: Some kind of 8-byte-string compare inline/macro?
+    if (*(u32*)&temp_s1->string_0[0] != *(u32*)&temp_s2->string_0[0] || *(u32*)&temp_s1->string_0[4] != *(u32*)&temp_s2->string_0[4])
     {
         arg0->field_10.field_9 = 0;
         return;

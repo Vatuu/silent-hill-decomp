@@ -286,10 +286,10 @@ void func_80041FF0() // 0x80041FF0
 
 void func_8004201C() // 0x8004201C
 {
-    s_func_8005B3A4* ptr;
+    s_800C1450_58* ptr;
 
-    ptr = &D_800C14A8[0];
-    while (ptr < (&D_800C14A8[8]))
+    ptr = &D_800C1450.field_58[0];
+    while (ptr < (&D_800C1450.field_58[8]))
     {
         if (ptr->field_14 == 0)
         {
@@ -299,8 +299,8 @@ void func_8004201C() // 0x8004201C
         ptr++;
     }
 
-    ptr = &D_800C1568[0];
-    while (ptr < (&D_800C1568[2]))
+    ptr = &D_800C1450.field_118[0];
+    while (ptr < (&D_800C1450.field_118[2]))
     {
         if (ptr->field_14 == 0)
         {
