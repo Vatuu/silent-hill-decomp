@@ -1089,8 +1089,24 @@ STATIC_ASSERT_SIZEOF(s_800C117C, 28);
 
 typedef struct
 {
-    s8 unk_0[2];
-    u8 field_2;
+    u8 unk_0[20];
+    s8 field_14;
+} s_800C1020_138_4_8;
+
+typedef struct
+{
+    u8                  unk_0[8];
+    s_800C1020_138_4_8* field_8;
+    u8                  unk_C[12];
+} s_800C1020_138_4;
+STATIC_ASSERT_SIZEOF(s_800C1020_138_4, 24);
+
+typedef struct
+{
+    s8                unk_0[2];
+    u8                field_2;
+    u8                field_3;
+    s_800C1020_138_4* field_4;
 } s_800C1020_138;
 
 typedef struct
@@ -2720,10 +2736,10 @@ void func_80044FE0(s_Skeleton* skel, s_Bone* bones, u8 boneCount);
 void func_80045014(s_Skeleton* skel);
 
 /** Anim func. Used in tandem with skeleton bone traversal. */
-void func_8004506C(s_Skeleton* skel, void* arg1);
+void func_8004506C(s_Skeleton* skel, s_800BE9FC* arg1);
 
 /** Anim func. */
-void func_80045108(s_Skeleton* arg0, void* arg1, u8* arg2, s32 arg3);
+void func_80045108(s_Skeleton* arg0, s_800BE9FC* arg1, u8* arg2, s32 arg3);
 
 /** Anim func. */
 void func_800451B0(s_Skeleton* skel, s_800BE9FC* arg1, s32* arg2);
@@ -2980,6 +2996,10 @@ void func_80056504(s_800BE9FC* arg0, s8* arg1, s32* arg2, s32 arg3);
 void func_8005660C(s_func_8005660C_0* arg0, s_func_8005660C_1* arg1, s32 arg2);
 
 void func_800566B4(s_func_800566B4* arg0, s_FsImageDesc* image, s8 unused, s32 startIdx, s32 arg4);
+
+void func_80056BF8(s_800C1020_138* arg0);
+
+s32 func_80056C80(s_800BE9FC* arg0);
 
 void func_80056C8C(s_Bone* bone, s_800BE9FC* arg1, s32 arg2);
 

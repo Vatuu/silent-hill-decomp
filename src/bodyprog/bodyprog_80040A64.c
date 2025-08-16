@@ -1043,7 +1043,7 @@ void func_80045014(s_Skeleton* skel) // 0x80045014
     }
 }
 
-void func_8004506C(s_Skeleton* skel, void* arg1) // 0x8004506C
+void func_8004506C(s_Skeleton* skel, s_800BE9FC* arg1) // 0x8004506C
 {
     u8  sp10[3]; // Size unsure, this could be larger.
     s32 switchVar;
@@ -1073,7 +1073,7 @@ void func_8004506C(s_Skeleton* skel, void* arg1) // 0x8004506C
 }
 
 // Anim func.
-void func_80045108(s_Skeleton* skel, void* arg1, u8* arg2, s32 arg3) // 0x80045108
+void func_80045108(s_Skeleton* skel, s_800BE9FC* arg1, u8* arg2, s32 arg3) // 0x80045108
 {
     s_Skeleton*  skel0; // Guessed the type. They both access `field_14` so maybe it's also `s_Skeleton`.
     s_Skeleton** skel1;

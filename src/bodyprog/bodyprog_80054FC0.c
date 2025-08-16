@@ -561,9 +561,30 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80056954); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80056A88); // 0x80056A88
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80056BF8); // 0x80056BF8
+void func_80056BF8(s_800C1020_138* arg0) // 0x80056BF8
+{
+    s_800C1020_138_4*   var_a2;
+    s_800C1020_138_4_8* temp_v1;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80056C80); // 0x80056C80
+    for (var_a2 = &arg0->field_4[0]; var_a2 < &arg0->field_4[arg0->field_3]; var_a2++)
+    {
+        temp_v1 = var_a2->field_8;
+        if (temp_v1 != NULL)
+        {
+            temp_v1->field_14--;
+            if (temp_v1->field_14 < 0)
+            {
+                temp_v1->field_14 = 0;
+            }
+            var_a2->field_8 = NULL;
+        }
+    }
+}
+
+s32 func_80056C80(s_800BE9FC* arg0) // 0x80056C80
+{
+    return arg0->field_8;
+}
 
 void func_80056C8C(s_Bone* bone, s_800BE9FC* arg1, s32 arg2)
 {
