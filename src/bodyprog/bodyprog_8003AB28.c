@@ -387,16 +387,18 @@ void MainMenu_SelectedOptionIdxReset() // 0x8003B550
 
 void func_8003B560() {}
 
-const char D_800254C0[] = "EXTRA";
-const char D_800254C8[] = "OPTION";
-const char D_800254D0[] = "START";
-const char D_800254D8[] = "CONTINUE";
-const char D_800254E4[] = "LOAD";
+const char* g_MainMenuOptions[] =
+{
+    "LOAD",
+    "CONTINUE",
+    "START",
+    "OPTION",
+    "EXTRA",
+};
 
 void Gfx_MainMenu_MainTextDraw() // 0x8003B568
 {
-    static const u8 D_800254EC[] = { 0x1D, 0x32, 0x20, 0x27, 0x21 };
-    extern char*    D_800A9A8C[]; // TODO: Points to `D_800254C0` etc. strings above, needs .data?
+    static const u8 optionsXPos[] = { 0x1D, 0x32, 0x20, 0x27, 0x21 };
 
     #define STR_POS_X_BASE 158
     #define STR_POS_Y_BASE 184
@@ -408,7 +410,7 @@ void Gfx_MainMenu_MainTextDraw() // 0x8003B568
     {
         if (D_800A9A7C & (1 << i))
         {
-            Gfx_StringSetPosition(STR_POS_X_BASE - D_800254EC[i], STR_POS_Y_BASE + (i * 20));
+            Gfx_StringSetPosition(STR_POS_X_BASE - optionsXPos[i], STR_POS_Y_BASE + (i * 20));
             Gfx_StringSetColor(ColorId_White);
 
             if (i == g_MainMenu_SelectedIdx)
@@ -420,7 +422,7 @@ void Gfx_MainMenu_MainTextDraw() // 0x8003B568
                 Gfx_StringDraw("_", 99);
             }
 
-            Gfx_StringDraw(D_800A9A8C[i], 99);
+            Gfx_StringDraw(g_MainMenuOptions[i], 99);
 
             if (i == g_MainMenu_SelectedIdx)
             {
@@ -432,20 +434,23 @@ void Gfx_MainMenu_MainTextDraw() // 0x8003B568
     }
 }
 
-const char D_80025504[] = "HARD";
-const char D_8002550C[] = "NORMAL";
-const char D_80025514[] = "EASY";
+const char* g_MainMenuDifficulty[] =
+{
+    "EASY",
+    "NORMAL",
+    "HARD"
+};
 
 void Gfx_MainMenu_DifficultyTextDraw(s32 arg0) // 0x8003B678
 {
-    static const u8 D_8002551C[] = { 0x1C, 0x2B, 0x1E, 0x4C, 0x00, 0x95, 0xAB, 0x90, 0x00, 0x00, 0x00, 0x00 }; // Only first 3 are used, what are others for?
-    extern char*    D_800A9AA0[]; // TODO: points to `D_80025504` etc strings above, needs .data?
+    static const u8 difficultyXPos[] = { 0x1C, 0x2B, 0x1E, 0x4C };
+    static const u8 unknown_80025520[] = { 0x00, 0x95, 0xAB, 0x90, 0x00, 0x00, 0x00, 0x00 };
 
     s32 i;
 
     for (i = 0; i < 3; i++)
     {
-        Gfx_StringSetPosition(158 - D_8002551C[i], 204 + (20 * i));
+        Gfx_StringSetPosition(158 - difficultyXPos[i], 204 + (20 * i));
         Gfx_StringSetColor(ColorId_White);
 
         if (i == arg0)
@@ -457,7 +462,7 @@ void Gfx_MainMenu_DifficultyTextDraw(s32 arg0) // 0x8003B678
             Gfx_StringDraw("_", 99);
         }
 
-        Gfx_StringDraw(D_800A9AA0[i], 99);
+        Gfx_StringDraw(g_MainMenuDifficulty[i], 99);
 
         if (i == arg0)
         {

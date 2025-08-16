@@ -46,6 +46,8 @@ g_GameWorkPtr                               = 0x80024D54; // type:u32
 //--- PA: 0x00091C   VA: 0x8002547C   subsegment: .rodata, bodyprog_8003AB28
 //--------------------------------------------------------------------------
 nextGameStates                              = 0x80025480;
+mainMenuOptionsXPosition                    = 0x800254EC;
+difficultyXPos                              = 0x8002551C;
 
 //------------------------------------------------------
 //--- PA: 0x001084   VA: 0x80025BE4   subsegment: rodata
@@ -120,7 +122,7 @@ g_ItemVectors                               = 0x800262FC; // type:DVECTOR size:0
 hack_vcSetWatchTgtXzPos_fix                 = 0x8002B2B4; // type:s32 - Some 0x80083500 value which coincidentally points to code inside vcSetWatchTgtXzPos, probably unrelated flags or something. A jtbl is right before this which spimdisasm tries to include, breaking vcSetWatchTgtXzPos build.
 
 //----------------------------------------------------------------
-//--- PA: 0x0067DC   VA: 0x8002B33C   subsegment: .rodata, credits
+//--- PA: 0x00679C   VA: 0x8002B2FC   subsegment: .rodata, credits
 //----------------------------------------------------------------
 
 //------------------------------------------------------
@@ -1903,6 +1905,16 @@ g_MainMenuState                             = 0x800A9A74;
 g_MainMenu_SelectedIdx                      = 0x800A9A78;
 g_Demo_ReproducedCount                      = 0x800A9A80;
 g_MainMenu_NewGameSelectedDifficultyIdx     = 0x800A9A84;
+
+//------------------------------------------------------------------------
+//--- PA: 0x084F2C   VA: 0x800A9A8C   subsegment: .data, bodyprog_8003AB28
+//------------------------------------------------------------------------
+g_MainMenuOptions                           = 0x800A9A8C;
+g_MainMenuDifficulty                        = 0x800A9AA0;
+
+//-----------------------------------------------------------------------
+//--- PA: 0x084F4C   VA: 0x800A9AAC   subsegment: data, bodyprog_800A9AA0
+//-----------------------------------------------------------------------
 g_StringColorId                             = 0x800AD498; // type:s16
 g_Inventory_CmdSelectedIdx                  = 0x800ADB58; // type:s32
 g_Inventory_SelectionId                     = 0x800ADB5C; // type:u32
