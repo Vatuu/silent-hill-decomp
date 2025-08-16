@@ -452,15 +452,15 @@ void func_800560FC(s_800BE9FC* arg0) // 0x800560FC
     {
         arg0->field_2 = 1;
 
-        arg0->field_4  += (u32)arg0;
-        arg0->field_C  += (u32)arg0;
-        arg0->field_10 += (u32)arg0;
+        *(u32*)&arg0->field_4 += (u32)arg0;
+        *(u32*)&arg0->field_C += (u32)arg0;
+        arg0->field_10        += (u32)arg0;
 
         for (i = 0; i < arg0->field_8; i++)
         {
             if (arg0->field_0 == 48)
             {
-                func_800561A4(&arg0->field_C[i * 16], arg0);
+                func_800561A4(&arg0->field_C[i], arg0);
             }
         }
     }
@@ -507,12 +507,12 @@ void func_80056504(s_800BE9FC* arg0, s8* arg1, s32* arg2, s32 arg3) // 0x8005650
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80056558); // 0x80056558
 
-void func_8005660C(s_func_8005660C_0* arg0, s_func_8005660C_1* arg1, s32 arg2) // 0x8005660C
+void func_8005660C(s_800BE9FC_4* arg0, s_FsImageDesc* arg1, s32 arg2) // 0x8005660C
 {
     s32 coeff;
 
     coeff = 4;
-    switch (arg1->field_0)
+    switch (arg1->tPage[0])
     {
         default:
         case 0:
@@ -527,17 +527,17 @@ void func_8005660C(s_func_8005660C_0* arg0, s_func_8005660C_1* arg1, s32 arg2) /
             break;
     }
 
-    arg0->field_14 = arg1->field_2 * coeff;
-    arg0->field_15 = arg1->field_3;
+    arg0->field_14.u8[0] = arg1->u * coeff;
+    arg0->field_14.u8[1] = arg1->v;
 
-    arg0->field_E  = ((arg1->field_0 & 0x3) << 7) | ((arg2 & 0x3) << 5) | (arg1->field_1 & (1 << 4)) | (arg1->field_1 & 0xF);
-    arg0->field_10 = (arg1->field_6 << 6) | ((arg1->field_4 >> 4) & 0x3F);
+    arg0->field_E  = ((arg1->tPage[0] & 0x3) << 7) | ((arg2 & 0x3) << 5) | (arg1->tPage[1] & (1 << 4)) | (arg1->tPage[1] & 0xF);
+    arg0->field_10 = (arg1->clutY << 6) | ((arg1->clutX >> 4) & 0x3F);
 }
 
-void func_800566B4(s_func_800566B4* arg0, s_FsImageDesc* image, s8 unused, s32 startIdx, s32 arg4) // 0x800566B4
+void func_800566B4(s_800BE9FC* arg0, s_FsImageDesc* image, s8 unused, s32 startIdx, s32 arg4) // 0x800566B4
 {
     char                 filename[16];
-    s_func_800566B4_sub* var_s0;
+    s_800BE9FC_4*        var_s0;
     s_FsImageDesc*       imagePtr;
     s32                  i;
 
@@ -553,13 +553,131 @@ void func_800566B4(s_func_800566B4* arg0, s_FsImageDesc* image, s8 unused, s32 s
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80056774); // 0x80056774
+void func_80056774(s_800BE9FC* arg0, void* arg1, s32 (*arg2)(s_800BE9FC_4*), void* arg3, s32 arg4) // 0x80056774
+{
+    s_800BE9FC_4* var_s0;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80056888); // 0x80056888
+    for (var_s0 = &arg0->field_4[0]; var_s0 < &arg0->field_4[arg0->field_3]; var_s0++)
+    {
+        if (var_s0->field_C == 0 && var_s0->field_8 == NULL && (arg2 == NULL || arg2(var_s0)))
+        {
+            var_s0->field_8 = func_8005B1FC(var_s0, arg1, FS_BUFFER_9, arg3, arg4);
+            if (var_s0->field_8)
+            {
+                func_8005660C(var_s0, &var_s0->field_8->imageDesc_0, arg4);
+            }
+        }
+    }
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80056954); // 0x80056954
+s32 func_80056888(s_800BE9FC* arg0) // 0x80056888
+{
+    s_800BE9FC_4* ptr;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80056A88); // 0x80056A88
+    if (!arg0->field_2)
+    {
+        return false;
+    }
+
+    for (ptr = &arg0->field_4[0]; ptr < &arg0->field_4[arg0->field_3]; ptr++)
+    {
+        if (ptr->field_C != 0)
+        {
+            continue;
+        }
+
+        if (ptr->field_8 == NULL)
+        {
+            return false;
+        }
+
+        if (!Fs_QueueIsEntryLoaded(ptr->field_8->queueIdx_10))
+        {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+void func_80056954(s_800BE9FC* arg0) // 0x80056954
+{
+    s_800BE9FC_4* ptr;
+    s32           i;
+    s32           j;
+    s32           flags;
+
+    for (i = 0, ptr = arg0->field_4; i < arg0->field_3; i++, ptr++)
+    {
+        flags = (ptr->field_E != ptr->field_F) ? (1 << 0) : 0;
+
+        if (ptr->field_10 != ptr->field_12)
+        {
+            flags |= (1 << 1);
+        }
+
+        if (ptr->field_14.u16 != ptr->field_16.u16)
+        {
+            flags |= (1 << 2);
+        }
+
+        if (flags)
+        {
+            for (j = 0; j < arg0->field_8; j++)
+            {
+                if (arg0->field_0 == 0x30)
+                {
+                    func_80056A88(&arg0->field_C[j], i, ptr, flags);
+                }
+            }
+
+            ptr->field_F        = ptr->field_E;
+            ptr->field_12       = ptr->field_10;
+            ptr->field_16.u8[0] = ptr->field_14.u8[0];
+            ptr->field_16.u8[1] = ptr->field_14.u8[1];
+        }
+    }
+}
+
+void func_80056A88(s_func_80056A88* arg0, s32 arg1, s_800BE9FC_4* arg2, s32 flags) // 0x80056A88
+{
+    s_func_80056A88_C*   var_t2;
+    s_func_80056A88_C_4* var_t1;
+    u16                  field_14;
+    u16                  field_16;
+
+    for (var_t2 = arg0->field_C; var_t2 < &arg0->field_C[arg0->count_8]; var_t2++)
+    {
+        for (var_t1 = var_t2->field_4; var_t1 < &var_t2->field_4[var_t2->count_0]; var_t1++)
+        {
+            if (var_t1->field_6_8 == NO_VALUE)
+            {
+                var_t1->field_6_0 = 32;
+            }
+
+            if (var_t1->field_6_8 == arg1)
+            {
+                if (flags & (1 << 0))
+                {
+                    var_t1->field_6_0 = arg2->field_E;
+                }
+                if (flags & (1 << 1))
+                {
+                    var_t1->field_2 = arg2->field_10 + (var_t1->field_2 - arg2->field_12);
+                }
+                if (flags & (1 << 2))
+                {
+                    field_16        = arg2->field_16.u16;
+                    field_14        = arg2->field_14.u16;
+                    var_t1->field_0 = field_14 + (var_t1->field_0 - field_16);
+                    var_t1->field_4 = field_14 + (var_t1->field_4 - field_16);
+                    var_t1->field_8 = field_14 + (var_t1->field_8 - field_16);
+                    var_t1->field_A = field_14 + (var_t1->field_A - field_16);
+                }
+            }
+        }
+    }
+}
 
 void func_80056BF8(s_800C1020_138* arg0) // 0x80056BF8
 {
@@ -1315,15 +1433,15 @@ void func_8005B3A4(s_func_8005B3A4* arg0) // 0x8005B3A4
     arg0->field_10 = NO_VALUE;
 }
 
-void func_8005B3BC(char* filename, s_func_800566B4_sub* arg1) // 0x8005B3BC
+void func_8005B3BC(char* filename, s_800BE9FC_4* arg1) // 0x8005B3BC
 {
     char sp10[12];
 
     // Some inline `memcpy`/`bcopy`/`strncpy`? those use `lwl`/`lwr`/`swl`/`swr` instead though
     // Example: casting `filename`/`arg1` to `u32*` and using `memcpy` does generate `lw`/`sw`,
     // but not in same order as this, guess it's some custom inline/macro instead.
-    *(u32*)&sp10[0] = *(u32*)&arg1->unk_0[0];
-    *(u32*)&sp10[4] = *(u32*)&arg1->unk_0[4];
+    *(u32*)&sp10[0] = *(u32*)&arg1->string_0[0];
+    *(u32*)&sp10[4] = *(u32*)&arg1->string_0[4];
     *(u32*)&sp10[8] = 0;
 
     strcat(sp10, D_80028544); // Copies `TIM` to end of `sp10` string.

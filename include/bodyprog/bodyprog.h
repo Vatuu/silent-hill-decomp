@@ -265,36 +265,35 @@ typedef struct
 
 typedef struct
 {
-    u8  field_0;
-    u8  field_1;
-    u8  field_2;
-    u8  field_3;
-    s16 field_4;
-    s16 field_6;
-} s_func_8005660C_1;
+    u16 field_0;
+    u16 field_2;
+    u16 field_4;
+    u8  field_6_0 : 8;
+    s8  field_6_8 : 7;
+    u8  unk_6_15 : 1;
+    u16 field_8;
+    u16 field_A;
+    u8  unk_C[8];
+} s_func_80056A88_C_4;
+STATIC_ASSERT_SIZEOF(s_func_80056A88_C_4, 20);
 
 typedef struct
 {
-    s8  unk_0[14];
-    s8  field_E;
-    s16 field_10;
-    s8  unk_12[2];
-    u8  field_14;
-    u8  field_15;
-} s_func_8005660C_0;
+    u8                   count_0;
+    u8                   unk_1[3];
+    s_func_80056A88_C_4* field_4;
+    u8                   unk_8[16];
+} s_func_80056A88_C;
+STATIC_ASSERT_SIZEOF(s_func_80056A88_C, 24);
 
 typedef struct
 {
-  u8 unk_0[24];
-} s_func_800566B4_sub;
-STATIC_ASSERT_SIZEOF(s_func_800566B4_sub, 24);
-
-typedef struct
-{
-    s8                   unk_0[3];
-    u8                   field_3; // Size of `field_4` array.
-    s_func_800566B4_sub* field_4;
-} s_func_800566B4;
+    u8                 unk_0[8];
+    u8                 count_8;
+    u8                 unk_9[3];
+    s_func_80056A88_C* field_C;
+} s_func_80056A88;
+STATIC_ASSERT_SIZEOF(s_func_80056A88, 16);
 
 typedef struct
 {
@@ -936,19 +935,49 @@ typedef struct
 
 typedef struct
 {
-    u8  field_0;
-    s8  unk1;
-    u8  field_2;
-    u8  unk3;
-    u8* field_4;
-    u8  field_8;
-    u8  unk9;
-    u8  unkA;
-    u8  unkB;
-    u8* field_C;
-    u8* field_10;
-    s8  unk_11[4075];
-    s32 queueIdx_1000;
+    s_FsImageDesc imageDesc_0;
+    u8            unk_8[8];
+    u32           queueIdx_10;
+} s_800BE9FC_4_8;
+
+typedef struct
+{
+    char            string_0[8];
+    s_800BE9FC_4_8* field_8;
+    u8              field_C;
+    u8              unk_D[1];
+    u8              field_E;
+    u8              field_F;
+    u16             field_10;
+    u16             field_12;
+    union
+    {
+        u8  u8[2];
+        u16 u16;
+    } field_14;
+    union
+    {
+        u8  u8[2];
+        u16 u16;
+    } field_16;
+} s_800BE9FC_4;
+STATIC_ASSERT_SIZEOF(s_800BE9FC_4, 24);
+
+typedef struct
+{
+    u8               field_0;
+    s8               unk1;
+    u8               field_2;
+    u8               field_3;
+    s_800BE9FC_4*    field_4;
+    u8               field_8;
+    u8               unk9;
+    u8               unkA;
+    u8               unkB;
+    s_func_80056A88* field_C;
+    u8*              field_10;
+    s8               unk_11[4075];
+    s32              queueIdx_1000;
 } s_800BE9FC;
 
 typedef struct
@@ -2985,7 +3014,7 @@ void func_8005B378(s_func_8005B370* arg0, s8* arg1);
 
 void func_8005B3A4(s_func_8005B3A4* arg0);
 
-void func_8005B3BC(char* filename, s_func_800566B4_sub* arg1);
+void func_8005B3BC(char* filename, s_800BE9FC_4* arg1);
 
 void func_8005B424(VECTOR3* vec0, VECTOR3* vec1);
 
@@ -2993,9 +3022,18 @@ void func_80056464(s_800BE9FC* arg0, s32 fileIdx, s32* arg2, s32 arg3);
 
 void func_80056504(s_800BE9FC* arg0, s8* arg1, s32* arg2, s32 arg3);
 
-void func_8005660C(s_func_8005660C_0* arg0, s_func_8005660C_1* arg1, s32 arg2);
+void func_8005660C(s_800BE9FC_4* arg0, s_FsImageDesc* arg1, s32 arg2);
 
-void func_800566B4(s_func_800566B4* arg0, s_FsImageDesc* image, s8 unused, s32 startIdx, s32 arg4);
+void func_800566B4(s_800BE9FC* arg0, s_FsImageDesc* image, s8 unused, s32 startIdx, s32 arg4);
+
+/** Unknown `arg1` / `arg3` / `arg4` types. */
+void func_80056774(s_800BE9FC* arg0, void* arg1, s32 (*arg2)(s_800BE9FC_4*), void* arg3, s32 arg4);
+
+s32 func_80056888(s_800BE9FC* arg0);
+
+void func_80056954(s_800BE9FC* arg0);
+
+void func_80056A88(s_func_80056A88* arg0, s32 arg1, s_800BE9FC_4* arg2, s32 flags);
 
 void func_80056BF8(s_800C1020_138* arg0);
 
@@ -3021,6 +3059,8 @@ void func_8005759C(s_ObjHeader* header, s_GteScratchData* scratchData, s32 verte
 void func_80057658(s_ObjHeader* header, s32 offset, s_GteScratchData* scratchData, SVECTOR3* arg3, SVECTOR* arg4);
 
 void func_80057A3C(s_ObjHeader* header, s32 offset, s_GteScratchData* scratchData, SVECTOR3* lightVec);
+
+s_800BE9FC_4_8* func_8005B1FC(s_800BE9FC_4*, void*, void*, void*, s32);
 
 void func_8005B55C(GsCOORDINATE2*);
 
