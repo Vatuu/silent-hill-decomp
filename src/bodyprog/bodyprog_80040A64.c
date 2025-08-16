@@ -564,7 +564,7 @@ void func_80043BC4(s_80043B70* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32
 
     func_80043DA4();
     func_8006993C(arg0 + 3); // TODO: Pointer?
-    func_800560FC(arg0->field_4);
+    PlmHeader_FixOffsets(arg0->field_4);
     func_8008E4EC(arg0->field_4);
     func_80043C7C(arg0, arg3, arg4, arg5);
     func_80056954(arg0->field_4);
@@ -1043,12 +1043,12 @@ void func_80045014(s_Skeleton* skel) // 0x80045014
     }
 }
 
-void func_8004506C(s_Skeleton* skel, s_800BE9FC* arg1) // 0x8004506C
+void func_8004506C(s_Skeleton* skel, s_PlmHeader* arg1) // 0x8004506C
 {
     u8  sp10[3]; // Size unsure, this could be larger.
     s32 switchVar;
 
-    switchVar = func_80056C80(arg1);
+    switchVar = PlmHeader_ObjectCountGet(arg1);
     sp10[0]   = 0;
 
     switch (switchVar)
@@ -1064,7 +1064,7 @@ void func_8004506C(s_Skeleton* skel, s_800BE9FC* arg1) // 0x8004506C
 
         default:
             sp10[1] = 253;
-            sp10[2] = func_80056C80(arg1) - 1;
+            sp10[2] = PlmHeader_ObjectCountGet(arg1) - 1;
             sp10[3] = 254;
             break;
     }
@@ -1073,7 +1073,7 @@ void func_8004506C(s_Skeleton* skel, s_800BE9FC* arg1) // 0x8004506C
 }
 
 // Anim func.
-void func_80045108(s_Skeleton* skel, s_800BE9FC* arg1, u8* arg2, s32 arg3) // 0x80045108
+void func_80045108(s_Skeleton* skel, s_PlmHeader* arg1, u8* arg2, s32 arg3) // 0x80045108
 {
     s_Skeleton*  skel0; // Guessed the type. They both access `field_14` so maybe it's also `s_Skeleton`.
     s_Skeleton** skel1;
@@ -1099,7 +1099,7 @@ void func_80045108(s_Skeleton* skel, s_800BE9FC* arg1, u8* arg2, s32 arg3) // 0x
     func_800453E8(skel, 0);
 }
 
-void func_800451B0(s_Skeleton* skel, s_800BE9FC* arg1, s32* arg2) // 0x800451B0
+void func_800451B0(s_Skeleton* skel, s_PlmHeader* arg1, s32* arg2) // 0x800451B0
 {
     s32 var;
     

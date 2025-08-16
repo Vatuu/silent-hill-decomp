@@ -444,24 +444,27 @@ u8 func_80055F08(SVECTOR3* arg0, SVECTOR3* arg1, MATRIX* mat) // 0x80055F08
     return ret;
 }
 
-void func_800560FC(s_800BE9FC* arg0) // 0x800560FC
+void PlmHeader_FixOffsets(s_PlmHeader* header) // 0x800560FC
 {
     s32 i;
 
-    if (arg0->field_2 != 1)
+    if (header->isLoaded_2 == 1)
     {
-        arg0->field_2 = 1;
+        return;
+    }
 
-        *(u32*)&arg0->field_4 += (u32)arg0;
-        *(u32*)&arg0->field_C += (u32)arg0;
-        arg0->field_10        += (u32)arg0;
+    header->isLoaded_2 = 1;
 
-        for (i = 0; i < arg0->field_8; i++)
+    // Add memory addr of header to pointer fields.
+    header->textureList_4 = (u8*)header->textureList_4 + (u32)header;
+    header->objectList_C  = (u8*)header->objectList_C  + (u32)header;
+    header->objectOrds_10 = (u8*)header->objectOrds_10 + (u32)header;
+
+    for (i = 0; i < header->objectCount_8; i++)
+    {
+        if (header->magic_0 == 48)
         {
-            if (arg0->field_0 == 48)
-            {
-                func_800561A4(&arg0->field_C[i], arg0);
-            }
+            func_800561A4(&header->objectList_C[i], header);
         }
     }
 }
@@ -474,7 +477,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80056348); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_800563E8); // 0x800563E8
 
-void func_80056464(s_800BE9FC* arg0, s32 fileIdx, s32* arg2, s32 arg3) // 0x80056464
+void func_80056464(s_PlmHeader* arg0, s32 fileIdx, s32* arg2, s32 arg3) // 0x80056464
 {
     char  sp10[8];
     char  sp18[16];
@@ -497,7 +500,7 @@ void func_80056464(s_800BE9FC* arg0, s32 fileIdx, s32* arg2, s32 arg3) // 0x8005
     func_80056558(arg0, sp10, arg2, arg3);
 }
 
-void func_80056504(s_800BE9FC* arg0, char* arg1, s32* arg2, s32 arg3) // 0x80056504
+void func_80056504(s_PlmHeader* arg0, char* arg1, s32* arg2, s32 arg3) // 0x80056504
 {
     s8 sp10[8];
 
@@ -507,7 +510,7 @@ void func_80056504(s_800BE9FC* arg0, char* arg1, s32* arg2, s32 arg3) // 0x80056
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80056558); // 0x80056558
 
-void func_8005660C(s_800BE9FC_4* arg0, s_FsImageDesc* arg1, s32 arg2) // 0x8005660C
+void func_8005660C(s_PlmTexList* arg0, s_FsImageDesc* arg1, s32 arg2) // 0x8005660C
 {
     s32 coeff;
 
@@ -534,18 +537,18 @@ void func_8005660C(s_800BE9FC_4* arg0, s_FsImageDesc* arg1, s32 arg2) // 0x80056
     arg0->field_10 = (arg1->clutY << 6) | ((arg1->clutX >> 4) & 0x3F);
 }
 
-void func_800566B4(s_800BE9FC* arg0, s_FsImageDesc* image, s8 unused, s32 startIdx, s32 arg4) // 0x800566B4
+void func_800566B4(s_PlmHeader* arg0, s_FsImageDesc* image, s8 unused, s32 startIdx, s32 arg4) // 0x800566B4
 {
     char                 filename[16];
-    s_800BE9FC_4*        var_s0;
+    s_PlmTexList*        var_s0;
     s_FsImageDesc*       imagePtr;
     s32                  i;
 
     // Loop could be using `&image[i]`/`&arg0->field_4[i]` instead? Wasn't able to make that match though.
     imagePtr = image;
-    var_s0   = arg0->field_4;
+    var_s0   = arg0->textureList_4;
 
-    for (i = 0; i < arg0->field_3; i++, var_s0++, imagePtr++)
+    for (i = 0; i < arg0->textureCount_3; i++, var_s0++, imagePtr++)
     {
         func_8005B3BC(filename, var_s0);
         Fs_QueueStartReadTim(Fs_FindNextFile(filename, 0, startIdx), FS_BUFFER_9, imagePtr);
@@ -553,11 +556,11 @@ void func_800566B4(s_800BE9FC* arg0, s_FsImageDesc* image, s8 unused, s32 startI
     }
 }
 
-void func_80056774(s_800BE9FC* arg0, void* arg1, s32 (*arg2)(s_800BE9FC_4*), void* arg3, s32 arg4) // 0x80056774
+void func_80056774(s_PlmHeader* arg0, void* arg1, s32 (*arg2)(s_PlmTexList*), void* arg3, s32 arg4) // 0x80056774
 {
-    s_800BE9FC_4* var_s0;
+    s_PlmTexList* var_s0;
 
-    for (var_s0 = &arg0->field_4[0]; var_s0 < &arg0->field_4[arg0->field_3]; var_s0++)
+    for (var_s0 = &arg0->textureList_4[0]; var_s0 < &arg0->textureList_4[arg0->textureCount_3]; var_s0++)
     {
         if (var_s0->field_C == 0 && var_s0->field_8 == NULL && (arg2 == NULL || arg2(var_s0)))
         {
@@ -570,16 +573,16 @@ void func_80056774(s_800BE9FC* arg0, void* arg1, s32 (*arg2)(s_800BE9FC_4*), voi
     }
 }
 
-s32 func_80056888(s_800BE9FC* arg0) // 0x80056888
+s32 func_80056888(s_PlmHeader* arg0) // 0x80056888
 {
-    s_800BE9FC_4* ptr;
+    s_PlmTexList* ptr;
 
-    if (!arg0->field_2)
+    if (!arg0->isLoaded_2)
     {
         return false;
     }
 
-    for (ptr = &arg0->field_4[0]; ptr < &arg0->field_4[arg0->field_3]; ptr++)
+    for (ptr = &arg0->textureList_4[0]; ptr < &arg0->textureList_4[arg0->textureCount_3]; ptr++)
     {
         if (ptr->field_C != 0)
         {
@@ -600,14 +603,14 @@ s32 func_80056888(s_800BE9FC* arg0) // 0x80056888
     return true;
 }
 
-void func_80056954(s_800BE9FC* arg0) // 0x80056954
+void func_80056954(s_PlmHeader* arg0) // 0x80056954
 {
-    s_800BE9FC_4* ptr;
+    s_PlmTexList* ptr;
     s32           i;
     s32           j;
     s32           flags;
 
-    for (i = 0, ptr = arg0->field_4; i < arg0->field_3; i++, ptr++)
+    for (i = 0, ptr = arg0->textureList_4; i < arg0->textureCount_3; i++, ptr++)
     {
         flags = (ptr->field_E != ptr->field_F) ? (1 << 0) : 0;
 
@@ -623,11 +626,11 @@ void func_80056954(s_800BE9FC* arg0) // 0x80056954
 
         if (flags)
         {
-            for (j = 0; j < arg0->field_8; j++)
+            for (j = 0; j < arg0->objectCount_8; j++)
             {
-                if (arg0->field_0 == 0x30)
+                if (arg0->magic_0 == 48)
                 {
-                    func_80056A88(&arg0->field_C[j], i, ptr, flags);
+                    func_80056A88(&arg0->objectList_C[j], i, ptr, flags);
                 }
             }
 
@@ -639,16 +642,16 @@ void func_80056954(s_800BE9FC* arg0) // 0x80056954
     }
 }
 
-void func_80056A88(s_func_80056A88* arg0, s32 arg1, s_800BE9FC_4* arg2, s32 flags) // 0x80056A88
+void func_80056A88(s_ObjList* arg0, s32 arg1, s_PlmTexList* arg2, s32 flags) // 0x80056A88
 {
-    s_func_80056A88_C*   var_t2;
-    s_func_80056A88_C_4* var_t1;
-    u16                  field_14;
-    u16                  field_16;
+    s_ObjHeader*    var_t2;
+    s_ObjPrimitive* var_t1;
+    u16             field_14;
+    u16             field_16;
 
-    for (var_t2 = arg0->field_C; var_t2 < &arg0->field_C[arg0->count_8]; var_t2++)
+    for (var_t2 = arg0->meshes_C; var_t2 < &arg0->meshes_C[arg0->meshCount_8]; var_t2++)
     {
-        for (var_t1 = var_t2->field_4; var_t1 < &var_t2->field_4[var_t2->count_0]; var_t1++)
+        for (var_t1 = var_t2->primitives_4; var_t1 < &var_t2->primitives_4[var_t2->primitiveCount_0]; var_t1++)
         {
             if (var_t1->field_6_8 == NO_VALUE)
             {
@@ -699,19 +702,19 @@ void func_80056BF8(s_800C1020_138* arg0) // 0x80056BF8
     }
 }
 
-s32 func_80056C80(s_800BE9FC* arg0) // 0x80056C80
+s32 PlmHeader_ObjectCountGet(s_PlmHeader* arg0) // 0x80056C80
 {
-    return arg0->field_8;
+    return arg0->objectCount_8;
 }
 
-void func_80056C8C(s_Bone* bone, s_800BE9FC* arg1, s32 arg2)
+void func_80056C8C(s_Bone* bone, s_PlmHeader* arg1, s32 arg2)
 {
     u8* field_C;
-    
-    field_C       = arg1->field_C;
+
+    field_C       = arg1->objectList_C;
     bone->field_C = arg2;
 
-    if (arg1->field_0 == '0') // Maybe `s_800BE9FC`'s `field_0` is `char*`? But its used as `s32` somewhere.
+    if (arg1->magic_0 == 48)
     {
         bone->field_8 = field_C + (arg2 * 16);
     }
@@ -1433,15 +1436,15 @@ void func_8005B3A4(s_800C1450_58* arg0) // 0x8005B3A4
     arg0->field_10 = NO_VALUE;
 }
 
-void func_8005B3BC(char* filename, s_800BE9FC_4* arg1) // 0x8005B3BC
+void func_8005B3BC(char* filename, s_PlmTexList* arg1) // 0x8005B3BC
 {
     char sp10[12];
 
     // Some inline `memcpy`/`bcopy`/`strncpy`? those use `lwl`/`lwr`/`swl`/`swr` instead though
     // Example: casting `filename`/`arg1` to `u32*` and using `memcpy` does generate `lw`/`sw`,
     // but not in same order as this, guess it's some custom inline/macro instead.
-    *(u32*)&sp10[0] = *(u32*)&arg1->string_0[0];
-    *(u32*)&sp10[4] = *(u32*)&arg1->string_0[4];
+    *(u32*)&sp10[0] = *(u32*)&arg1->texName_0[0];
+    *(u32*)&sp10[4] = *(u32*)&arg1->texName_0[4];
     *(u32*)&sp10[8] = 0;
 
     strcat(sp10, D_80028544); // Copies `TIM` to end of `sp10` string.

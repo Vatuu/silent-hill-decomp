@@ -728,14 +728,14 @@ void GameFs_BgItemLoad() // 0x8003BE9C
 
 void func_8003BED0() // 0x8003BED0
 {
-    s_800BE9FC* D_800BE9FC = &D_800BCE18.field_1BE4;
+    s_PlmHeader* D_800BE9FC = &D_800BCE18.field_1BE4;
 
-    if (Fs_QueueIsEntryLoaded(D_800BE9FC->queueIdx_1000) == 0 || D_800BE9FC->field_2 != 0)
+    if (Fs_QueueIsEntryLoaded(D_800BE9FC->queueIdx_1000) == 0 || D_800BE9FC->isLoaded_2 != 0)
     {
         return;
     }
 
-    func_800560FC(&D_800BCE18.field_1BE4);
+    PlmHeader_FixOffsets(&D_800BCE18.field_1BE4);
     func_80056504(&D_800BCE18.field_1BE4, "TIM00", &D_800A9EBC, 1);
     func_80056504(&D_800BCE18.field_1BE4, "BG_ETC", &D_800A9EC4, 1);
     func_80056954(&D_800BCE18.field_1BE4);
@@ -807,7 +807,7 @@ void func_8003C0C0() // 0x8003C0C0
     s_800BCE18_1BAC* ptr = &D_800BCE18.field_1BAC;
 
     ptr->field_0  = NO_VALUE;
-    ptr->field_14 = (s_800BE9FC*)(Fs_GetFileSize(FILE_CHARA_HERO_ILM) + 0x800FE600); // `field_14` defined as a pointer?
+    ptr->field_14 = (s_PlmHeader*)(Fs_GetFileSize(FILE_CHARA_HERO_ILM) + 0x800FE600); // `field_14` defined as a pointer?
     ptr->field_18 = 0;
     ptr->field_1C = 0;
     ptr->field_20 = 0;
@@ -1402,7 +1402,7 @@ void func_8003D058() // 0x8003D058
     MATRIX           mat1;
     GsCOORDINATE2*   coord;
     s_800BCE18_1BAC* ptr0;
-    s_800BE9FC*      ptr1;
+    s_PlmHeader*     ptr1;
 
     ptr0 = &D_800BCE18.field_1BAC;
 
@@ -1421,9 +1421,9 @@ void func_8003D058() // 0x8003D058
         {
             ptr1 = ptr0->field_14;
 
-            if (ptr1->field_2 == 0)
+            if (ptr1->isLoaded_2 == 0)
             {
-                func_800560FC(ptr1);
+                PlmHeader_FixOffsets(ptr1);
                 func_80056504(ptr1, ptr0->field_8, &ptr0->imageDesc_C, 1);
                 func_80056954(ptr1);
                 func_80056C8C(&ptr0->field_18, ptr0->field_14, 0);
@@ -1779,7 +1779,7 @@ void func_8003D9C8(s_800BCE18_0_CC* arg0) // 0x8003D9C8
     {
         arg0->field_1 = 1;
 
-        func_800560FC(arg0->field_8);
+        PlmHeader_FixOffsets(arg0->field_8);
         func_80056464(arg0->field_8, g_Chara_FileInfo[arg0->field_0].textureFileIdx, &arg0->field_C, g_Chara_FileInfo[arg0->field_0].field_6_10 & 3);
 
         skel = &arg0->field_14;

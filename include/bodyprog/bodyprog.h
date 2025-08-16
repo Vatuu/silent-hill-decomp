@@ -265,38 +265,6 @@ typedef struct
 
 typedef struct
 {
-    u16 field_0;
-    u16 field_2;
-    u16 field_4;
-    u8  field_6_0 : 8;
-    s8  field_6_8 : 7;
-    u8  unk_6_15 : 1;
-    u16 field_8;
-    u16 field_A;
-    u8  unk_C[8];
-} s_func_80056A88_C_4;
-STATIC_ASSERT_SIZEOF(s_func_80056A88_C_4, 20);
-
-typedef struct
-{
-    u8                   count_0;
-    u8                   unk_1[3];
-    s_func_80056A88_C_4* field_4;
-    u8                   unk_8[16];
-} s_func_80056A88_C;
-STATIC_ASSERT_SIZEOF(s_func_80056A88_C, 24);
-
-typedef struct
-{
-    u8                 unk_0[8];
-    u8                 count_8;
-    u8                 unk_9[3];
-    s_func_80056A88_C* field_C;
-} s_func_80056A88;
-STATIC_ASSERT_SIZEOF(s_func_80056A88, 16);
-
-typedef struct
-{
     char pad[12];
 } s_func_8005B424;
 
@@ -717,6 +685,20 @@ typedef struct
     MATRIX   field_3E4;
 } s_GteScratchData;
 
+typedef struct
+{
+    u16 field_0;
+    u16 field_2;
+    u16 field_4;
+    u8  field_6_0 : 8;
+    s8  field_6_8 : 7;
+    u8  unk_6_15 : 1;
+    u16 field_8;
+    u16 field_A;
+    u8  unk_C[8];
+} s_ObjPrimitive;
+STATIC_ASSERT_SIZEOF(s_ObjPrimitive, 20);
+
 /** Note: See `ObjHeader`: https://github.com/Sparagas/Silent-Hill/blob/1945970dbd27c081592bf5699d05beddbaa2ff18/010%20Editor%20-%20Binary%20Templates/sh1_models_draft.bt#L96 */
 typedef struct
 {
@@ -725,11 +707,11 @@ typedef struct
     u8 normalCount_2;
     u8 unkCount_3;
 
-    void*        primitives_4;
-    DVECTOR*     vertexXy_8;
-    s16*         vertexZ_C;
-    s_ObjNormal* normals_10;
-    u8*          unkPtr_14;
+    s_ObjPrimitive* primitives_4;
+    DVECTOR*        vertexXy_8;
+    s16*            vertexZ_C;
+    s_ObjNormal*    normals_10;
+    u8*             unkPtr_14;
 } s_ObjHeader;
 STATIC_ASSERT_SIZEOF(s_ObjHeader, 24);
 
@@ -746,6 +728,54 @@ typedef struct
     s_ObjHeader* meshes_C;
 } s_ObjList;
 STATIC_ASSERT_SIZEOF(s_ObjList, 16);
+
+typedef struct
+{
+    s_FsImageDesc imageDesc_0;
+    u8            unk_8[8];
+    u32           queueIdx_10;
+} s_PlmTexList_8;
+
+typedef struct
+{
+    char            texName_0[8];
+    s_PlmTexList_8* field_8;
+    u8              field_C;
+    u8              unk_D[1];
+    u8              field_E;
+    u8              field_F;
+    u16             field_10;
+    u16             field_12;
+    union
+    {
+        u8  u8[2];
+        u16 u16;
+    } field_14;
+    union
+    {
+        u8  u8[2];
+        u16 u16;
+    } field_16;
+} s_PlmTexList;
+STATIC_ASSERT_SIZEOF(s_PlmTexList, 24);
+
+/** Note: See https://github.com/Sparagas/Silent-Hill/blob/1945970dbd27c081592bf5699d05beddbaa2ff18/010%20Editor%20-%20Binary%20Templates/sh1_models_draft.bt#L41 */
+typedef struct
+{
+    u8            magic_0;
+    u8            version_1;
+    u8            isLoaded_2;
+    u8            textureCount_3;
+    s_PlmTexList* textureList_4;
+    u8            objectCount_8;
+    u8            unk_9[3];
+    s_ObjList*    objectList_C;
+    u8*           objectOrds_10;
+    // File header ends, extra data below.
+    // (might be separate to this struct?)
+    s8            unk_11[4075];
+    s32           queueIdx_1000;
+} s_PlmHeader;
 
 typedef struct
 {
@@ -910,53 +940,6 @@ typedef struct
 
 typedef struct
 {
-    s_FsImageDesc imageDesc_0;
-    u8            unk_8[8];
-    u32           queueIdx_10;
-} s_800BE9FC_4_8;
-
-typedef struct
-{
-    char            string_0[8];
-    s_800BE9FC_4_8* field_8;
-    u8              field_C;
-    u8              unk_D[1];
-    u8              field_E;
-    u8              field_F;
-    u16             field_10;
-    u16             field_12;
-    union
-    {
-        u8  u8[2];
-        u16 u16;
-    } field_14;
-    union
-    {
-        u8  u8[2];
-        u16 u16;
-    } field_16;
-} s_800BE9FC_4;
-STATIC_ASSERT_SIZEOF(s_800BE9FC_4, 24);
-
-typedef struct
-{
-    u8               field_0;
-    s8               unk1;
-    u8               field_2;
-    u8               field_3;
-    s_800BE9FC_4*    field_4;
-    u8               field_8;
-    u8               unk9;
-    u8               unkA;
-    u8               unkB;
-    s_func_80056A88* field_C;
-    u8*              field_10;
-    s8               unk_11[4075];
-    s32              queueIdx_1000;
-} s_800BE9FC;
-
-typedef struct
-{
     s32 field_0[16];
 } s_800B5C40;
 
@@ -1058,7 +1041,7 @@ typedef struct
     s32           field_4;
     char*         field_8;
     s_FsImageDesc imageDesc_C;
-    s_800BE9FC*   field_14;
+    s_PlmHeader*  field_14;
     s32           field_18;
     s32           field_1C;
     s32           field_20;
@@ -1074,7 +1057,7 @@ typedef struct
     u8                unk_1BD0[8];
     s32               field_1BD8;
     VC_CAMERA_INTINFO vcCameraInternalInfo_1BDC; // Debug camera info.
-    s_800BE9FC        field_1BE4;
+    s_PlmHeader       field_1BE4;
     s32               field_2BE8;
     s_800BCE18_2BEC   field_2BEC[1]; // Unknown size, valid count determined by `field_2BE8`?
 } s_800BCE18;
@@ -1675,7 +1658,7 @@ extern RECT D_8002ABA4;
 
 extern s_8002AC04 D_8002AC04[10];
 
-extern s_800BE9FC D_8002B2CC;
+extern s_PlmHeader D_8002B2CC;
 
 extern s32 g_MapMsg_WidthTable[];
 
@@ -2735,13 +2718,13 @@ void func_80044FE0(s_Skeleton* skel, s_Bone* bones, u8 boneCount);
 void func_80045014(s_Skeleton* skel);
 
 /** Anim func. Used in tandem with skeleton bone traversal. */
-void func_8004506C(s_Skeleton* skel, s_800BE9FC* arg1);
+void func_8004506C(s_Skeleton* skel, s_PlmHeader* arg1);
 
 /** Anim func. */
-void func_80045108(s_Skeleton* arg0, s_800BE9FC* arg1, u8* arg2, s32 arg3);
+void func_80045108(s_Skeleton* arg0, s_PlmHeader* arg1, u8* arg2, s32 arg3);
 
 /** Anim func. */
-void func_800451B0(s_Skeleton* skel, s_800BE9FC* arg1, s32* arg2);
+void func_800451B0(s_Skeleton* skel, s_PlmHeader* arg1, s32* arg2);
 
 /** Anim func. Traverses skeleton bones to set flags/mask. */
 void func_800453E8(s_Skeleton* skel, s32 cond);
@@ -2955,7 +2938,7 @@ void func_80055E90(CVECTOR* color, u8 fadeAmount);
 
 u8 func_80055F08(SVECTOR3* arg0, SVECTOR3* arg1, MATRIX* mat);
 
-void func_800560FC(s_800BE9FC* arg0);
+void PlmHeader_FixOffsets(s_PlmHeader* header);
 
 /** TODO: Unknown `arg3`/`arg4` types. */
 void func_80059D50(s32 arg0, s_func_80057344* arg1, MATRIX* arg2, void* arg3, void* arg4);
@@ -2984,32 +2967,32 @@ void func_8005B378(s_800C1450_58* arg0, char* arg1);
 
 void func_8005B3A4(s_800C1450_58* arg0);
 
-void func_8005B3BC(char* filename, s_800BE9FC_4* arg1);
+void func_8005B3BC(char* filename, s_PlmTexList* arg1);
 
 void func_8005B424(VECTOR3* vec0, VECTOR3* vec1);
 
-void func_80056464(s_800BE9FC* arg0, s32 fileIdx, s32* arg2, s32 arg3);
+void func_80056464(s_PlmHeader* arg0, s32 fileIdx, s32* arg2, s32 arg3);
 
-void func_80056504(s_800BE9FC* arg0, char* arg1, s32* arg2, s32 arg3);
+void func_80056504(s_PlmHeader* arg0, char* arg1, s32* arg2, s32 arg3);
 
-void func_8005660C(s_800BE9FC_4* arg0, s_FsImageDesc* arg1, s32 arg2);
+void func_8005660C(s_PlmTexList* arg0, s_FsImageDesc* arg1, s32 arg2);
 
-void func_800566B4(s_800BE9FC* arg0, s_FsImageDesc* image, s8 unused, s32 startIdx, s32 arg4);
+void func_800566B4(s_PlmHeader* arg0, s_FsImageDesc* image, s8 unused, s32 startIdx, s32 arg4);
 
 /** Unknown `arg1` / `arg3` / `arg4` types. */
-void func_80056774(s_800BE9FC* arg0, void* arg1, s32 (*arg2)(s_800BE9FC_4*), void* arg3, s32 arg4);
+void func_80056774(s_PlmHeader* arg0, void* arg1, s32 (*arg2)(s_PlmTexList*), void* arg3, s32 arg4);
 
-s32 func_80056888(s_800BE9FC* arg0);
+s32 func_80056888(s_PlmHeader* arg0);
 
-void func_80056954(s_800BE9FC* arg0);
+void func_80056954(s_PlmHeader* arg0);
 
-void func_80056A88(s_func_80056A88* arg0, s32 arg1, s_800BE9FC_4* arg2, s32 flags);
+void func_80056A88(s_ObjList* arg0, s32 arg1, s_PlmTexList* arg2, s32 flags);
 
 void func_80056BF8(s_800C1020_138* arg0);
 
-s32 func_80056C80(s_800BE9FC* arg0);
+s32 PlmHeader_ObjectCountGet(s_PlmHeader* arg0);
 
-void func_80056C8C(s_Bone* bone, s_800BE9FC* arg1, s32 arg2);
+void func_80056C8C(s_Bone* bone, s_PlmHeader* arg1, s32 arg2);
 
 void func_80056D64(char* prevStr, char* newStr);
 
@@ -3030,7 +3013,7 @@ void func_80057658(s_ObjHeader* header, s32 offset, s_GteScratchData* scratchDat
 
 void func_80057A3C(s_ObjHeader* header, s32 offset, s_GteScratchData* scratchData, SVECTOR3* lightVec);
 
-s_800BE9FC_4_8* func_8005B1FC(s_800BE9FC_4*, void*, void*, void*, s32);
+s_PlmTexList_8* func_8005B1FC(s_PlmTexList*, void*, void*, void*, s32);
 
 void func_8005B55C(GsCOORDINATE2*);
 
