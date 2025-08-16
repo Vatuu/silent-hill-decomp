@@ -728,7 +728,7 @@ void func_80056D64(char* prevStr, char* newStr) // 0x80056D64
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80056D8C); // 0x80056D8C
 
-void func_80057090(s_func_80057344* arg0, s_func_80057090* arg1, void* arg2, s32 arg3, MATRIX* mat, u16 arg5) // 0x80057090
+void func_80057090(s_func_80057344* arg0, s_func_80057090* arg1, void* arg2, MATRIX* mat0, MATRIX* mat1, u16 arg5) // 0x80057090
 {
     s_ObjList* objList;
     void*      temp_s1;
@@ -745,23 +745,23 @@ void func_80057090(s_func_80057344* arg0, s_func_80057090* arg1, void* arg2, s32
     temp_a0 = objList->field_B_4;
     if ((temp_a0 & 0xFF) != 0 && temp_a0 >= 0 && temp_a0 < 4) // HACK: `& 0xFF` needed for match.
     {
-        func_80059D50(temp_a0, arg0, arg3, arg2, temp_s1);
+        func_80059D50(temp_a0, arg0, mat0, arg2, temp_s1);
     }
     else
     {
-        if (mat != NULL && D_800C4168.field_0 != 0)
+        if (mat1 != NULL && D_800C4168.field_0 != 0)
         {
-            func_80057228(mat, D_800C4168.field_54, &D_800C4168.field_58, &D_800C4168.field_60);
+            func_80057228(mat1, D_800C4168.field_54, &D_800C4168.field_58, &D_800C4168.field_60);
         }
 
         if (objList->field_B_0)
         {
             D_800C42B4 = arg5;
-            func_8005A21C(arg0, temp_s1, arg2, arg3);
+            func_8005A21C(arg0, temp_s1, arg2, mat0);
         }
         else
         {
-            func_80057344(arg0, temp_s1, arg2, arg3);
+            func_80057344(arg0, temp_s1, arg2, mat0);
         }
     }
 }
@@ -822,7 +822,7 @@ void func_80057228(MATRIX* mat, s32 alpha, SVECTOR* arg2, VECTOR3* arg3) // 0x80
     gte_stsv(&D_800C4168.field_7C);
 }
 
-void func_80057344(s_func_80057344* arg0, void* arg1, void* arg2, s32 arg3) // 0x80057344
+void func_80057344(s_func_80057344* arg0, void* arg1, void* arg2, MATRIX* arg3) // 0x80057344
 {
     u32               normalOffset;
     u32               vertexOffset;
@@ -1118,7 +1118,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80057B7C); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8005801C); // 0x8005801C
 
-void func_80059D50(s32 arg0, s_func_80057344* arg1, s_func_8005A21C* arg2, void* arg3, void* arg4) // 0x80059D50
+void func_80059D50(s32 arg0, s_func_80057344* arg1, MATRIX* arg2, void* arg3, void* arg4) // 0x80059D50
 {
     s_GteScratchData* scratchData;
     s_ObjHeader*      mesh;
@@ -1138,7 +1138,7 @@ void func_80059D50(s32 arg0, s_func_80057344* arg1, s_func_8005A21C* arg2, void*
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80059E34); // 0x80059E34
 
-void func_8005A21C(s_func_80057344* arg0, void* arg1, void* arg2, s_func_8005A21C* arg3) // 0x8005A21C
+void func_8005A21C(s_func_80057344* arg0, void* arg1, void* arg2, MATRIX* arg3) // 0x8005A21C
 {
     s16                var_v1;
     u32                normalOffset;
@@ -1151,9 +1151,9 @@ void func_8005A21C(s_func_80057344* arg0, void* arg1, void* arg2, s_func_8005A21
 
     if (D_800C4168.field_1 != 0)
     {
-        if (arg3->field_1C < (1 << D_800C4168.field_14))
+        if (arg3->t[2] < (1 << D_800C4168.field_14))
         {
-            var_v1 = 4096 - (D_800C4168.field_CC[(s32)(arg3->field_1C << 7) >> D_800C4168.field_14] << 4);
+            var_v1 = 4096 - (D_800C4168.field_CC[(s32)(arg3->t[2] << 7) >> D_800C4168.field_14] << 4);
         }
         else
         {
