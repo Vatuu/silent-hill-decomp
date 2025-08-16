@@ -1,8 +1,10 @@
 ## Analysis Guide
 
-Several tools can be used to help disassemble and analyze the game, this guide covers loading the game/overlays into both **Ghidra** and **IDA Pro**, a guide for using **decomp.me** to create matching function decompilations is also included below.
+Several tools can be used to help disassemble and analyze the game, this guide covers loading the game/overlays into both **Ghidra** and **IDA Pro**.
 
-Ghidra is the most recommended thanks to its simple support for overlays, but it's useful to have other tools to check against too.
+Ghidra is usually recommended over IDA thanks to its simple support for overlays, but it's always useful to have other tools to check with too.
+
+A short guide for using **decomp.me** to create matching function decompilations is also included below.
 
 ---
 
@@ -112,3 +114,11 @@ If the function uses jump tables, decomp.me/m2c may ask for jtbl data before it 
   .section .text, "a"
   ; original function code here (`glabel func_XXXX` through `.size func_XXXX`)
   ```
+
+### .rodata / code offset mismatch
+
+If the func makes use of .rodata you may notice the .rodata offsets can be wildly different compared to the original code, appearing in blue, this can happen when the context includes code of other functions that also use .rodata, causing that to be added before the .rodata of the function you're working on.
+
+Luckily it's an easy fix: just edit the context and remove all function code after the function/struct declarations (static inlines can usually be left in the context, unless those are causing decompilation issues)
+
+Code offsets can also be affected by the same thing, causing branch targets to appear in blue despite pointing to same code, the same fix above can also be used for those.
