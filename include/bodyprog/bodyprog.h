@@ -22,6 +22,8 @@
 #define OPT_VIBRATION_DISABLED 0
 #define OPT_VIBRATION_ENABLED  128
 
+#define PLM_HEADER_MAGIC       '0' // 0x30 / 48 / '0'
+
 // ======
 // ENUMS
 // ======
@@ -2939,6 +2941,8 @@ void func_80055E90(CVECTOR* color, u8 fadeAmount);
 u8 func_80055F08(SVECTOR3* arg0, SVECTOR3* arg1, MATRIX* mat);
 
 void PlmHeader_FixOffsets(s_PlmHeader* header);
+
+void ObjList_FixOffsets(s_ObjList* list, s_PlmHeader* header);
 
 /** TODO: Unknown `arg3`/`arg4` types. */
 void func_80059D50(s32 arg0, s_func_80057344* arg1, MATRIX* arg2, void* arg3, void* arg4);

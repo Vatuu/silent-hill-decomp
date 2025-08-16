@@ -462,14 +462,28 @@ void PlmHeader_FixOffsets(s_PlmHeader* header) // 0x800560FC
 
     for (i = 0; i < header->objectCount_8; i++)
     {
-        if (header->magic_0 == 48)
+        if (header->magic_0 == PLM_HEADER_MAGIC)
         {
-            func_800561A4(&header->objectList_C[i], header);
+            ObjList_FixOffsets(&header->objectList_C[i], header);
         }
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_800561A4); // 0x800561A4
+void ObjList_FixOffsets(s_ObjList* list, s_PlmHeader* header) // 0x800561A4
+{
+    s_ObjHeader* ptr;
+
+    list->meshes_C = (u8*)list->meshes_C + (u32)header;
+
+    for (ptr = &list->meshes_C[0]; ptr < &list->meshes_C[list->meshCount_8]; ptr++)
+    {
+        ptr->primitives_4 = (u8*)ptr->primitives_4 + (u32)header;
+        ptr->vertexXy_8   = (u8*)ptr->vertexXy_8   + (u32)header;
+        ptr->vertexZ_C    = (u8*)ptr->vertexZ_C    + (u32)header;
+        ptr->normals_10   = (u8*)ptr->normals_10   + (u32)header;
+        ptr->unkPtr_14    = (u8*)ptr->unkPtr_14    + (u32)header;
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80056244); // 0x80056244
 
@@ -628,7 +642,7 @@ void func_80056954(s_PlmHeader* arg0) // 0x80056954
         {
             for (j = 0; j < arg0->objectCount_8; j++)
             {
-                if (arg0->magic_0 == 48)
+                if (arg0->magic_0 == PLM_HEADER_MAGIC)
                 {
                     func_80056A88(&arg0->objectList_C[j], i, ptr, flags);
                 }
@@ -714,7 +728,7 @@ void func_80056C8C(s_Bone* bone, s_PlmHeader* arg1, s32 arg2)
     field_C       = arg1->objectList_C;
     bone->field_C = arg2;
 
-    if (arg1->magic_0 == 48)
+    if (arg1->magic_0 == PLM_HEADER_MAGIC)
     {
         bone->field_8 = field_C + (arg2 * 16);
     }
