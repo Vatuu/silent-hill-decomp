@@ -173,39 +173,6 @@ typedef struct
     s32 field_4;
 } s_func_80089644_1;
 
-// Maybe a collection of matrices.
-typedef struct
-{
-    s32 flags_0;
-    s8  unk_4[4];
-    s32 field_8;
-    s32 field_C;
-    s8  field_10;
-    s8  unk_11[7];
-} s_Bone;
-STATIC_ASSERT_SIZEOF(s_Bone, 24);
-
-// PROBABLY skeleton data.
-typedef struct
-{
-    u8      boneCount_0;
-    u8      boneIdx_1; // Current bone index? Used in traversal.
-    s8      field_2;
-    s8      field_3;
-    s32     field_4;
-    s_Bone* bones_8;
-
-    // Maybe incorrect.
-    s8                 field_C[4]; // Maybe struct similar to `s_Bone` but smaller.
-    u8                 field_10;   // Some count related to bone hierarchy.
-    s8                 field_11;
-    s8                 field_12;
-    s8                 field_13;
-    struct s_Skeleton* skeleton_14;
-    s8                 unk_18[4];
-} s_Skeleton;
-STATIC_ASSERT_SIZEOF(s_Skeleton, 28);
-
 typedef struct
 {
     s32               id_0;
@@ -666,6 +633,13 @@ typedef struct
 } s_ObjNormal;
 STATIC_ASSERT_SIZEOF(s_ObjNormal, 4);
 
+/** @brief 8 character string usually used for filenames, can be compared via `u32` field. */
+typedef union
+{
+    char str[8];
+    u32  u32[2];
+} u_Filename;
+
 /** @brief Struct used by many functions involved with GTE. Kept at `PSX_SCRATCH_ADDR` (possibly only temporarily). */
 typedef struct
 {
@@ -719,7 +693,7 @@ STATIC_ASSERT_SIZEOF(s_ObjHeader, 24);
 
 typedef struct
 {
-    char         objName_0[8];
+    u_Filename   objName_0;
     u8           meshCount_8;
     u8           vertexOffset_9;
     u8           normalOffset_A;
@@ -740,7 +714,7 @@ typedef struct
 
 typedef struct
 {
-    char            texName_0[8];
+    u_Filename      texName_0;
     s_PlmTexList_8* field_8;
     u8              field_C;
     u8              unk_D[1];
@@ -778,6 +752,39 @@ typedef struct
     s8            unk_11[4075];
     s32           queueIdx_1000;
 } s_PlmHeader;
+
+// Maybe a collection of matrices.
+typedef struct
+{
+    s32        flags_0;
+    s8         unk_4[4];
+    s_ObjList* objList_8;
+    s32        objListIdx_C;
+    s8         field_10;
+    s8         unk_11[7];
+} s_Bone;
+STATIC_ASSERT_SIZEOF(s_Bone, 24);
+
+// PROBABLY skeleton data.
+typedef struct
+{
+    u8      boneCount_0;
+    u8      boneIdx_1; // Current bone index? Used in traversal.
+    s8      field_2;
+    s8      field_3;
+    s32     field_4;
+    s_Bone* bones_8;
+
+    // Maybe incorrect.
+    s8                 field_C[4]; // Maybe struct similar to `s_Bone` but smaller.
+    u8                 field_10;   // Some count related to bone hierarchy.
+    s8                 field_11;
+    s8                 field_12;
+    s8                 field_13;
+    struct s_Skeleton* skeleton_14;
+    s8                 unk_18[4];
+} s_Skeleton;
+STATIC_ASSERT_SIZEOF(s_Skeleton, 28);
 
 typedef struct
 {
@@ -1018,8 +1025,8 @@ typedef struct
 {
     s32                   field_0;
     s8                    unk_0[4];
-    s_800BCE18_2BEC_0_10* field_8;
-    s8                    unk_C[4];
+    s_ObjList*            field_8;
+    s32                   field_C;
     s_800BCE18_2BEC_0_10  field_10;
 } s_800BCE18_2BEC_0;
 STATIC_ASSERT_SIZEOF(s_800BCE18_2BEC_0, 28);
@@ -2996,7 +3003,9 @@ void func_80056BF8(s_800C1020_138* arg0);
 
 s32 PlmHeader_ObjectCountGet(s_PlmHeader* arg0);
 
-void func_80056C8C(s_Bone* bone, s_PlmHeader* arg1, s32 arg2);
+void func_80056C8C(s_Bone* bone, s_PlmHeader* plmHeader, s32 objListIdx);
+
+s32 func_80056CB4(s_800BCE18_2BEC_0* arg0, s_PlmHeader* plmHeader, s_800BCE18_2BEC_0_10* arg2);
 
 void func_80056D64(char* prevStr, char* newStr);
 

@@ -721,20 +721,49 @@ s32 PlmHeader_ObjectCountGet(s_PlmHeader* arg0) // 0x80056C80
     return arg0->objectCount_8;
 }
 
-void func_80056C8C(s_Bone* bone, s_PlmHeader* arg1, s32 arg2)
+void func_80056C8C(s_Bone* bone, s_PlmHeader* plmHeader, s32 objListIdx)
 {
-    u8* field_C;
+    s_ObjList* objList = plmHeader->objectList_C;
 
-    field_C       = arg1->objectList_C;
-    bone->field_C = arg2;
+    bone->objListIdx_C = objListIdx;
 
-    if (arg1->magic_0 == PLM_HEADER_MAGIC)
+    if (plmHeader->magic_0 == PLM_HEADER_MAGIC)
     {
-        bone->field_8 = field_C + (arg2 * 16);
+        bone->objList_8 = &objList[objListIdx];
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80056CB4); // 0x80056CB4
+s32 func_80056CB4(s_800BCE18_2BEC_0* arg0, s_PlmHeader* plmHeader, s_800BCE18_2BEC_0_10* arg2) // 0x80056CB4
+{
+    u_Filename sp10;
+    s_ObjList* objList;
+    s32        objListCount;
+    s32        result;
+    s32        i;
+
+    result = 0;
+
+    func_80056D64(sp10.str, arg2->string_0);
+
+    objListCount = plmHeader->objectCount_8;
+
+    if (plmHeader->magic_0 == PLM_HEADER_MAGIC)
+    {
+        for (i = 0, objList = &plmHeader->objectList_C[i]; i < objListCount; i++, objList++)
+        {
+            if (objList->objName_0.u32[0] == sp10.u32[0] && objList->objName_0.u32[1] == sp10.u32[1])
+            {
+                result        = 1;
+                arg0->field_C = i;
+                arg0->field_8 = objList;
+                // TODO: `field_8` above used to be `s_800BCE18_2BEC_0_10*`, but this func showed it was `s_ObjList*`
+                // Unsure if all `s_800BCE18_2BEC_0_10` refs should be changed though since struct is different size.
+            }
+        }
+    }
+
+    return result;
+}
 
 void func_80056D64(char* prevStr, char* newStr) // 0x80056D64
 {
@@ -1457,8 +1486,8 @@ void func_8005B3BC(char* filename, s_PlmTexList* arg1) // 0x8005B3BC
     // Some inline `memcpy`/`bcopy`/`strncpy`? those use `lwl`/`lwr`/`swl`/`swr` instead though
     // Example: casting `filename`/`arg1` to `u32*` and using `memcpy` does generate `lw`/`sw`,
     // but not in same order as this, guess it's some custom inline/macro instead.
-    *(u32*)&sp10[0] = *(u32*)&arg1->texName_0[0];
-    *(u32*)&sp10[4] = *(u32*)&arg1->texName_0[4];
+    *(u32*)&sp10[0] = *(u32*)&arg1->texName_0.str[0];
+    *(u32*)&sp10[4] = *(u32*)&arg1->texName_0.str[4];
     *(u32*)&sp10[8] = 0;
 
     strcat(sp10, D_80028544); // Copies `TIM` to end of `sp10` string.
