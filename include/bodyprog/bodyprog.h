@@ -650,6 +650,7 @@ typedef struct
     s_FsImageDesc imageDesc_0;
     u8            unk_8[8];
     u32           queueIdx_10;
+    s8            field_14;
 } s_PlmTexList_8;
 
 typedef struct
@@ -1075,27 +1076,6 @@ typedef struct
 } s_800C117C;
 STATIC_ASSERT_SIZEOF(s_800C117C, 28);
 
-typedef struct
-{
-    u8 unk_0[20];
-    s8 field_14;
-} s_800C1020_138_4_8;
-
-typedef struct
-{
-    u8                  unk_0[8];
-    s_800C1020_138_4_8* field_8;
-    u8                  unk_C[12];
-} s_800C1020_138_4;
-STATIC_ASSERT_SIZEOF(s_800C1020_138_4, 24);
-
-typedef struct
-{
-    s8                unk_0[2];
-    u8                field_2;
-    u8                field_3;
-    s_800C1020_138_4* field_4;
-} s_800C1020_138;
 
 typedef struct
 {
@@ -1103,16 +1083,14 @@ typedef struct
     s16             field_1C;
     s8              unk_1E[278];
     s32             field_134;
-    s_800C1020_138* field_138;
-    s32             field_13C;
-    s32             field_140;
+    s_func_80041CB4 field_138;
     char            field_144[4]; // String.
     s32             field_148;    // String length.
     s32             field_14C;
     s32             field_150;
     s32             field_154;
     s32             field_158;     // Array length.
-    s_800C117C      field_15C[20]; // Length guessed, could be less or more.
+    s_800C117C      field_15C[20]; // Length guessed, could be less or more. Might be `s_Skeleton` instance based on `func_80041C24` usage.
     s8              unk_38C[492];
     s32             field_578;
     s32             field_57C;
@@ -2995,7 +2973,7 @@ void func_80056954(s_PlmHeader* plmHeader);
 
 void func_80056A88(s_ObjList* objList, s32 arg1, s_PlmTexList* plmTexList, s32 flags);
 
-void func_80056BF8(s_800C1020_138* arg0);
+void func_80056BF8(s_PlmHeader* plmHeader);
 
 s32 PlmHeader_ObjectCountGet(s_PlmHeader* plmHeader);
 

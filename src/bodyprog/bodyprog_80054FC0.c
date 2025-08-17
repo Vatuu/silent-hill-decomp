@@ -695,12 +695,12 @@ void func_80056A88(s_ObjList* objList, s32 arg1, s_PlmTexList* plmTexList, s32 f
     }
 }
 
-void func_80056BF8(s_800C1020_138* arg0) // 0x80056BF8
+void func_80056BF8(s_PlmHeader* plmHeader) // 0x80056BF8
 {
-    s_800C1020_138_4*   var_a2;
-    s_800C1020_138_4_8* temp_v1;
+    s_PlmTexList*   var_a2;
+    s_PlmTexList_8* temp_v1;
 
-    for (var_a2 = &arg0->field_4[0]; var_a2 < &arg0->field_4[arg0->field_3]; var_a2++)
+    for (var_a2 = &plmHeader->textureList_4[0]; var_a2 < &plmHeader->textureList_4[plmHeader->textureCount_3]; var_a2++)
     {
         temp_v1 = var_a2->field_8;
         if (temp_v1 != NULL)

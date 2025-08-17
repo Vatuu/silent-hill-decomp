@@ -195,14 +195,14 @@ s32 func_80041BA0(s_func_80041CB4* arg0) // 0x80041BA0
 void func_80041C24(s_PlmHeader* plmHeader, s32 arg1, s32 arg2) // 0x80041C24
 {
     bzero(&D_800C1020, 1420);
-    func_80041CB4((void*)((char*)&D_800C1020 + 312), plmHeader);
+    func_80041CB4(&D_800C1020.field_138, plmHeader);
 
     D_800C1020.field_150 = arg1;
     D_800C1020.field_154 = arg2;
     D_800C1020.field_158 = 0;
     D_800C1020.field_588 = 1;
 
-    func_80041D10((void*)((char*)&D_800C1020 + 348), 4);
+    func_80041D10(D_800C1020.field_15C, 4); // TODO: `field_15C` should be `s_Skeleton`?
     func_80041D48();
     func_80041E98();
 }
@@ -344,15 +344,15 @@ void func_800421D8(char* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5)
 
     if (arg1 != NO_VALUE)
     {
-        if (arg1 != D_800C1020.field_13C)
+        if (arg1 != D_800C1020.field_138.field_4)
         {
-            if (func_80041ADC(D_800C1020.field_140) >= 2 && D_800C1020.field_138->field_2)
+            if (func_80041ADC(D_800C1020.field_138.queueIdx_8) >= 2 && D_800C1020.field_138.plmHeader_0->isLoaded_2)
             {
-                func_80056BF8(D_800C1020.field_138);
+                func_80056BF8(D_800C1020.field_138.plmHeader_0);
             }
 
-            D_800C1020.field_13C = arg1;
-            D_800C1020.field_140 = NO_VALUE;
+            D_800C1020.field_138.field_4 = arg1;
+            D_800C1020.field_138.queueIdx_8 = NO_VALUE;
         }
     }
 
@@ -501,14 +501,14 @@ void func_80043A24(GsOT* ot, s32 arg1) // 0x80043A24
     s_800C117C* ptr;
     s32         ret;
 
-    ret = func_80041ADC(D_800C1020.field_140);
+    ret = func_80041ADC(D_800C1020.field_138.queueIdx_8);
 
     if (ret == 1)
     {
         return;
     }
 
-    if (!(ret == 0 || (ret == 2 && D_800C1020.field_138->field_2)))
+    if (!(ret == 0 || (ret == 2 && D_800C1020.field_138.plmHeader_0->isLoaded_2)))
     {
         return;
     }
