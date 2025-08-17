@@ -22,6 +22,7 @@
 #define OPT_VIBRATION_DISABLED 0
 #define OPT_VIBRATION_ENABLED  128
 
+#define IPD_HEADER_MAGIC       20  // 0x14 / 20
 #define PLM_HEADER_MAGIC       '0' // 0x30 / 48 / '0'
 
 // ======
@@ -190,17 +191,6 @@ typedef struct
     struct TMD_STRUCT objects_C[1];
 } s_TmdFile;
 
-// Likely not `s_Skeleton` since `field_8` must be `s8`.
-typedef struct
-{
-    s8 field_0;
-    s8 field_1;
-    u8 field_2;
-    s8 field_3;
-    s8 unk_4[4];
-    s8 field_8;
-} s_80041CEC;
-
 // Used in string parsing.
 typedef struct
 {
@@ -233,14 +223,6 @@ typedef struct
     s32 field_14;
 } s_func_8003FEC0;
 
-// Likely `D_800C1158`'s struct.
-typedef struct
-{
-    s_80041CEC* field_0;
-    s32         field_4;
-    s32         queueIdx_8; // Passed to `func_80041ADC`, thus the name.
-} s_func_80041CB4;
-
 typedef struct
 {
     char pad[12];
@@ -259,57 +241,6 @@ typedef struct
     s32 field_10;
 } s_func_800625F4;
 STATIC_ASSERT_SIZEOF(s_func_800625F4, 20);
-
-typedef struct
-{
-    s16 field_0;
-    s16 field_2;
-    s16 field_4;
-    u16 field_6_0  : 5; // TODO: Might be using `s_func_800699E4_18` substruct here? Won't fit though.
-    u16 field_6_5  : 3;
-    u16 field_6_8  : 3;
-    u16 field_6_11 : 4;
-    u16 field_6_15 : 1;
-    s16 field_8;
-    s16 field_A;
-} s_func_800699E4_10;
-STATIC_ASSERT_SIZEOF(s_func_800699E4_10, 12);
-
-typedef struct
-{
-    u16 field_0_0  : 5;
-    u16 field_0_5  : 3;
-    u16 field_0_8  : 3;
-    u16 field_0_11 : 4;
-    u16 field_0_15 : 1;
-    u8  unk_2[2];
-    u8  unk_4[6];
-} s_func_800699E4_18;
-STATIC_ASSERT_SIZEOF(s_func_800699E4_18, 10);
-
-typedef struct
-{
-    s32                 field_0; // Position X.
-    s32                 field_4; // Position Z.
-    u32                 field_8_0  : 8;
-    u32                 field_8_8  : 8;
-    u32                 field_8_16 : 8;
-    u32                 field_8_24 : 8;
-    u8                  unk_C[4];
-    s_func_800699E4_10* ptr_10;
-    u8                  unk_14[4];
-    s_func_800699E4_18* ptr_18;
-    u8                  unk_1C[2];
-    u8                  field_1E;
-    u8                  unk_1F[1];
-    s32*                field_20; // Might point to `s_func_8006B1C8`?
-    u8                  unk_24[4];
-    s8*                 field_28;
-    s8*                 field_2C;
-    u8                  field_30;
-    u8                  unk_31[3];
-    u8                  field_34[256];
-} s_func_800699E4;
 
 /** Returned by `func_800699F8`. Probably contains 2D point collision. */
 typedef struct _s_func_800699F8
@@ -761,19 +692,57 @@ typedef struct
     s32           queueIdx_1000;
 } s_PlmHeader;
 
+ typedef struct
+ {
+    s16 field_0;
+    s16 field_2;
+    s16 field_4;
+    u16 field_6_0  : 5; // TODO: Might be using `s_IpdColData_18` substruct here? Won't fit though.
+    u16 field_6_5  : 3;
+    u16 field_6_8  : 3;
+    u16 field_6_11 : 4;
+    u16 field_6_15 : 1;
+    s16 field_8;
+    s16 field_A;
+} s_IpdColData_10;
+STATIC_ASSERT_SIZEOF(s_IpdColData_10, 12);
+
 typedef struct
 {
-    s8    unk_0[12];
-    void* field_C;
-    void* field_10;
-    void* field_14;
-    void* field_18;
-    s8    unk_1C[4];
-    void* field_20;
-    s8    unk_24[4];
-    void* field_28;
-    void* field_2C;
-} s_IpdHeader_54;
+    u16 field_0_0  : 5;
+    u16 field_0_5  : 3;
+    u16 field_0_8  : 3;
+    u16 field_0_11 : 4;
+    u16 field_0_15 : 1;
+    u8  unk_2[2];
+    u8  unk_4[6];
+} s_IpdColData_18;
+STATIC_ASSERT_SIZEOF(s_IpdColData_18, 10);
+
+typedef struct
+{
+    s32              posX_0;
+    s32              posZ_4;
+    u32              field_8_0  : 8;
+    u32              field_8_8  : 8;
+    u32              field_8_16 : 8;
+    u32              field_8_24 : 8;
+    void*            ptr_C;
+    s_IpdColData_10* ptr_10;
+    void*            ptr_14;
+    s_IpdColData_18* ptr_18;
+    u8               unk_1C[2];
+    u8               field_1E;
+    u8               unk_1F[1];
+    s32*             ptr_20;   // Might point to `s_func_8006B1C8`?
+    u16              field_24; // field_24/field_26 defined in ipd2obj but haven't seen used yet, might be size of `ptr_28`/`ptr_2C`.
+    u16              field_26;
+    u8*              ptr_28;
+    void*            ptr_2C;
+    u8               field_30;
+    u8               unk_31[3];
+    u8               field_34[256];
+} s_IpdColData;
 
 typedef struct
 {
@@ -782,6 +751,16 @@ typedef struct
     void* field_10;
     void* field_14;
 } s_IpdModelBuffer;
+STATIC_ASSERT_SIZEOF(s_IpdModelBuffer, 24);
+
+typedef struct
+{
+    u8         isGlobalPlm_0; // `false` if loaded from inside IPD, `true` if loaded from `*_GLB.PLM`
+    u8         unk_1[3];
+    u_Filename modelName_4;
+    void*      field_C;
+} s_IpdModelInfo;
+STATIC_ASSERT_SIZEOF(s_IpdModelInfo, 16);
 
 typedef struct
 {
@@ -792,18 +771,27 @@ typedef struct
     s_PlmHeader*      plmHeader_4;
     u8                modelCount_8;
     u8                modelBufferCount_9;
-    u8                unk_A[2];
+    u8                modelOrderCount_A;
+    u8                unk_B[1];
     u8                unk_C[8];
-    void*             modelList_14;
+    s_IpdModelInfo*   modelInfo_14;
     s_IpdModelBuffer* modelBuffers_18;
     u8                textureCount_1C; // Should it be `u32`?
                                        // "`u8` - Relative pointer to textures list"
                                        // "`u32` - Relative pointer to object order"
     u8                unk_1D[3];
     u8                unk_20[48];
-    void*             field_50;
-    s_IpdHeader_54    field_54;
+    u8*               modelOrderList_50;
+    s_IpdColData      colData_54;
 } s_IpdHeader;
+
+// Likely `D_800C1158`'s struct.
+typedef struct
+{
+    s_PlmHeader* plmHeader_0;
+    s32          field_4;
+    s32          queueIdx_8; // Passed to `func_80041ADC`, thus the name.
+} s_func_80041CB4;
 
 // Maybe a collection of matrices.
 typedef struct
@@ -862,35 +850,6 @@ typedef struct
     s32 field_4[4];
 } s_800382B0;
 
-// Maybe same.
-typedef struct
-{
-    s32 field_0;
-    s32 field_4;
-    s32 field_8;
-    struct s_80043F2C* field_C;
-} s_80043F2C;
-STATIC_ASSERT_SIZEOF(s_80043F2C, 16);
-// Maybe same.
-typedef struct
-{
-    u8  field_0;
-    s8  unk_1[3];
-    s32 field_4;
-    s8  unk_2[3];
-    s32 field_C;
-} s_80043E50Sub;
-STATIC_ASSERT_SIZEOF(s_80043E50Sub, 16);
-
-typedef struct
-{
-    s32            field_0;
-    s32            field_4;
-    u8             elementCount_8;
-    s8             unk_C[9];
-    s_80043E50Sub* elements_14;
-} s_80043E50;
-
 typedef struct
 {
     s8  unk_0;
@@ -917,12 +876,6 @@ typedef struct
     s32 field_C;           // Something to do with distance from file chunk edge.
     s32 field_10;          // Something to do with distance from file chunk edge.
 } s_80043338;
-
-typedef struct
-{
-    s8 unk_0;
-    u8 field_1;
-} s_80043BA4;
 
 typedef struct
 {
@@ -2667,11 +2620,11 @@ void func_8004137C(VECTOR3* result, VECTOR* vec0, VECTOR* vec1, s32 screenDist);
 u32 func_80041ADC(s32 queueIdx);
 
 /** Used for loading maps */
-void func_80041C24(s_80041CEC* arg0, s32 arg1, s32 arg2);
+void func_80041C24(s_PlmHeader* plmHeader, s32 arg1, s32 arg2);
 
-void func_80041CB4(s_func_80041CB4* arg0, s_80041CEC* arg1);
+void func_80041CB4(s_func_80041CB4* arg0, s_PlmHeader* plmHeader);
 
-void func_80041CEC(s_80041CEC*);
+void func_80041CEC(s_PlmHeader* plmHeader);
 
 /** Clears `field_4` in array of skeletons? Might not be skeletons, but the struct fits. */
 void func_80041D10(s_Skeleton* skels, s32 size);
@@ -2714,25 +2667,26 @@ bool func_80043B34(s_800C117C* arg0, s_800C1020* arg1);
 
 bool func_80043B70(s_IpdHeader* ipdHeader);
 
-s_80043BA4* func_80043BA4(s_80043BA4* arg0);
+s_IpdColData* func_80043BA4(s_IpdHeader* ipdHeader);
 
-void IpdHeader_FixOffsets(s_IpdHeader* ipdHeader, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
+void IpdHeader_FixOffsets(s_IpdHeader* ipdHeader, s_PlmHeader** plmHeaders, s32 plmHeaderCount, s32 arg3, s32 arg4, s32 arg5);
 
 void func_80043C7C(s_IpdHeader* ipdHeader, s32 arg1, s32* arg2, s32 arg3);
 
 s32 func_80043D00(s_IpdHeader* ipdHeader);
 
 /** Returns inverse result of `func_80043D64`. */
-bool func_80043D44(s32 arg0);
+bool func_80043D44(s_PlmTexList* texList);
 
-bool func_80043D64(s32 arg0); // Types assumed.
+bool func_80043D64(s_PlmTexList* texList);
 
 void IpdHeader_FixHeaderOffsets(s_IpdHeader* header);
 
-void func_80043E50(s_80043E50* arg0, s32* arg1, s32 arg2);
+/** @brief Updates model pointers inside `s_IpdHeader` to point to objects from the given `s_PlmHeader` array. */
+void func_80043E50(s_IpdHeader* ipdHeader, s_PlmHeader** plmHeaders, s32 plmHeaderCount);
 
-/** TODO: Maybe doesn't operate on a linked list. Need more context from other functions before committing to this. */
-s_80043F2C* func_80043F2C(s_80043F2C* arg0, s_80043F2C* arg1);
+/** @brief Searches `s_PlmHeader` for objects with the given filename. */
+s_ObjList* func_80043F2C(u_Filename* objName, s_PlmHeader* plmHeader);
 
 void func_80044044(s_80044044* arg0, s32 arg1, s32 arg2);
 
@@ -3033,7 +2987,7 @@ void func_8005660C(s_PlmTexList* plmTexList, s_FsImageDesc* image, s32 arg2);
 void func_800566B4(s_PlmHeader* plmHeader, s_FsImageDesc* image, s8 unused, s32 startIdx, s32 arg4);
 
 /** Unknown `arg1` / `arg3` / `arg4` types. */
-void func_80056774(s_PlmHeader* plmHeader, void* arg1, s32 (*arg2)(s_PlmTexList* plmTexList), void* arg3, s32 arg4);
+void func_80056774(s_PlmHeader* plmHeader, void* arg1, bool (*fnPtr)(s_PlmTexList* plmTexList), void* arg3, s32 arg4);
 
 bool func_80056888(s_PlmHeader* plmHeader);
 
@@ -3320,7 +3274,7 @@ void func_8008B664(VECTOR3* pos, u32 caseVar);
 
 s32 func_8008D850();
 
-void func_8008E4EC();
+void func_8008E4EC(s_PlmHeader* plmHeader);
 
 void func_8008D78C();
 
@@ -3398,11 +3352,11 @@ void func_8006982C(u16 arg0);
 
 void func_80069844(s32 arg0);
 
-void func_8006993C(s_IpdHeader_54* header);
+void IpdColData_FixOffsets(s_IpdColData* colData);
 
-void func_80069994(s_func_800699E4* arg0);
+void func_80069994(s_IpdColData* colData);
 
-void func_800699E4(s_func_800699E4* arg0);
+void func_800699E4(s_IpdColData* colData);
 
 /** Getter for 2D point collision? */
 void func_800699F8(s_func_800699F8* coll, s32 posX, s32 posZ);
@@ -3417,9 +3371,9 @@ void func_8006AB50(s_func_8006CC44* arg0, VECTOR3* vec, s_func_8006AB50* arg2, s
 
 void func_8006ABC0(s_func_8006ABC0* result, VECTOR3* vec, s_func_8006AB50* arg2);
 
-void func_8006AD44(s_func_8006CC44* arg0, s_func_800699E4* arg1);
+void func_8006AD44(s_func_8006CC44* arg0, s_IpdColData* colData);
 
-void func_8006B1C8(s_func_8006CC44* arg0, s_func_800699E4* arg1, s_func_8006B1C8* arg2);
+void func_8006B1C8(s_func_8006CC44* arg0, s_IpdColData* colData, s_func_8006B1C8* arg2);
 
 /** `arg1` is unused, but `func_8006B1C8` passes second arg to this. */
 void func_8006B6E8(s_func_8006CC44* arg0, s_func_8006B1C8* arg1);
@@ -3432,9 +3386,9 @@ void func_8006BDDC(s_func_8006BDDC* arg0, s16 arg1, s16 arg2);
 
 bool func_8006C1B8(u32 arg0, s16 arg1, s_func_8006C1B8* arg2);
 
-void func_8006C838(s_func_8006CC44* arg0, s_func_800699E4* arg1);
+void func_8006C838(s_func_8006CC44* arg0, s_IpdColData* colData);
 
-void func_8006CA18(s_func_8006CC44* arg0, s_func_800699E4* arg1, s_func_8006CA18* arg2);
+void func_8006CA18(s_func_8006CC44* arg0, s_IpdColData* colData, s_func_8006CA18* arg2);
 
 s16 func_8006CB90(s_func_8006CC44* arg0);
 

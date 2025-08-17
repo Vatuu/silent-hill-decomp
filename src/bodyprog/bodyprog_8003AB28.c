@@ -803,7 +803,7 @@ void func_8003C048() // 0x8003C048
 
     D_800BCE18.field_0[0].field_4 = 0;
 
-    func_80041C24((s_80041CEC*)0x8016B600, 0x80175600, 0x2C000);
+    func_80041C24((s_PlmHeader*)0x8016B600, 0x80175600, 0x2C000);
     func_800697EC();
 
     g_SysWork.field_2378 = FP_FLOAT_TO(1.0f, Q12_SHIFT);

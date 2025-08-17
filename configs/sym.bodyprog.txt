@@ -483,6 +483,7 @@ ObjList_FixOffsets                          = 0x800561A4; // type:func
 PlmHeader_ObjectCountGet                    = 0x80056C80; // type:func
 func_800571D0                               = 0x800571D0; // type:func size:0x58 - Fix for truncated function.
 GameState_MapScreen_Update                  = 0x80066EB0; // type:func
+IpdColData_FixOffsets                       = 0x8006993C; // type:func
 Player_Logic_Update                         = 0x800717D0; // type:func
 func_80074350.234                           = 0x80074350; // filename:func_80074350 type:func - Generated compilation result adds .234 at name end for some reason.
 Player_ReceiveDamage                        = 0x8007C800; // type:func

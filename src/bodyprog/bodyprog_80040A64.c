@@ -160,7 +160,7 @@ u32 func_80041B1C(s_800C117C* arg0) // 0x80041B1C
     {
         return 0;
     }
-    else if (arg0->ipdHeader_0->isLoaded_1 && func_80043B70(arg0->ipdHeader_0) != 0)
+    else if (arg0->ipdHeader_0->isLoaded_1 && func_80043B70(arg0->ipdHeader_0))
     {
         return 3;
     }
@@ -184,7 +184,7 @@ s32 func_80041BA0(s_func_80041CB4* arg0) // 0x80041BA0
     {
         return 0;
     }
-    else if (arg0->field_0->field_2 != 0 && func_80056888(arg0->field_0) != 0)
+    else if (arg0->plmHeader_0->isLoaded_2 && func_80056888(arg0->plmHeader_0))
     {
         return 3;
     }
@@ -192,10 +192,10 @@ s32 func_80041BA0(s_func_80041CB4* arg0) // 0x80041BA0
     return 2;
 }
 
-void func_80041C24(s_80041CEC* arg0, s32 arg1, s32 arg2) // 0x80041C24
+void func_80041C24(s_PlmHeader* plmHeader, s32 arg1, s32 arg2) // 0x80041C24
 {
     bzero(&D_800C1020, 1420);
-    func_80041CB4((void*)((char*)&D_800C1020 + 312), arg0);
+    func_80041CB4((void*)((char*)&D_800C1020 + 312), plmHeader);
 
     D_800C1020.field_150 = arg1;
     D_800C1020.field_154 = arg2;
@@ -208,22 +208,22 @@ void func_80041C24(s_80041CEC* arg0, s32 arg1, s32 arg2) // 0x80041C24
 }
 
 // This function is related to map loading.
-void func_80041CB4(s_func_80041CB4* arg0, s_80041CEC* arg1) // 0x80041CB4
+void func_80041CB4(s_func_80041CB4* arg0, s_PlmHeader* plmHeader) // 0x80041CB4
 {
-    arg0->field_0 = arg1;
-    func_80041CEC(arg1);
+    arg0->plmHeader_0 = plmHeader;
+    func_80041CEC(plmHeader);
 
     arg0->queueIdx_8 = NULL;
     arg0->field_4    = NO_VALUE;
 }
 
-void func_80041CEC(s_80041CEC* arg0) // 0x80041CEC
+void func_80041CEC(s_PlmHeader* plmHeader) // 0x80041CEC
 {
-    arg0->field_0 = 48;
-    arg0->field_1 = 6;
-    arg0->field_2 = 1;
-    arg0->field_3 = 0;
-    arg0->field_8 = 0;
+    plmHeader->magic_0        = PLM_HEADER_MAGIC;
+    plmHeader->version_1      = 6;
+    plmHeader->isLoaded_2     = 1;
+    plmHeader->textureCount_3 = 0;
+    plmHeader->objectCount_8  = 0;
 }
 
 void func_80041D10(s_Skeleton* skels, s32 size) // 0x80041D10
@@ -543,17 +543,17 @@ bool func_80043B70(s_IpdHeader* ipdHeader) // 0x80043B70
     return func_80056888(ipdHeader->plmHeader_4);
 }
 
-s_80043BA4* func_80043BA4(s_80043BA4* arg0) // 0x80043BA4
+s_IpdColData* func_80043BA4(s_IpdHeader* ipdHeader) // 0x80043BA4
 {
-    if (arg0->field_1 != 0)
+    if (ipdHeader->isLoaded_1)
     {
-        return arg0 + 42;
+        return &ipdHeader->colData_54;
     }
 
     return NULL;
 }
 
-void IpdHeader_FixOffsets(s_IpdHeader* ipdHeader, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) // 0x80043BC4
+void IpdHeader_FixOffsets(s_IpdHeader* ipdHeader, s_PlmHeader** plmHeaders, s32 plmHeaderCount, s32 arg3, s32 arg4, s32 arg5) // 0x80043BC4
 {
     if (ipdHeader->isLoaded_1)
     {
@@ -562,13 +562,13 @@ void IpdHeader_FixOffsets(s_IpdHeader* ipdHeader, s32 arg1, s32 arg2, s32 arg3, 
     ipdHeader->isLoaded_1 = true;
 
     IpdHeader_FixHeaderOffsets(ipdHeader);
-    func_8006993C(&ipdHeader->field_54);
+    IpdColData_FixOffsets(&ipdHeader->colData_54);
     PlmHeader_FixOffsets(ipdHeader->plmHeader_4);
     func_8008E4EC(ipdHeader->plmHeader_4);
     func_80043C7C(ipdHeader, arg3, arg4, arg5);
     func_80056954(ipdHeader->plmHeader_4);
-    func_80043E50(ipdHeader, arg1, arg2);
-    func_80043F88(ipdHeader, ipdHeader->modelList_14);
+    func_80043E50(ipdHeader, plmHeaders, plmHeaderCount);
+    func_80043F88(ipdHeader, ipdHeader->modelInfo_14);
 }
 
 void func_80043C7C(s_IpdHeader* ipdHeader, s32 arg1, s32* arg2, s32 arg3) // 0x80043C7C
@@ -599,24 +599,23 @@ s32 func_80043D00(s_IpdHeader* ipdHeader) // 0x80043D00
     return func_80056348(&func_80043D64, ipdHeader->plmHeader_4);
 }
 
-bool func_80043D44(s32 arg0) // 0x80043D44
+bool func_80043D44(s_PlmTexList* texList) // 0x80043D44
 {
-    return !func_80043D64(arg0);
+    return !func_80043D64(texList);
 }
 
-bool func_80043D64(s32 arg0) // 0x80043D64
+bool func_80043D64(s_PlmTexList* texList) // 0x80043D64
 {
-    u32 i;
-    u8 var;
+    char* ptr;
 
-    i = arg0 + 7;
-    for (i = (arg0 + 7); i >= arg0; i--)
+    for (ptr = &texList->texName_0.str[7]; ptr >= &texList->texName_0.str[0]; ptr--)
     {
-        var = *(u8*)i;
-        if (var != NULL)
+        if (*ptr == 0)
         {
-            return var == 0x48;
+            continue;
         }
+
+        return *ptr == 'H';
     }
 
     return false;
@@ -626,10 +625,10 @@ void IpdHeader_FixHeaderOffsets(s_IpdHeader* header) // 0x80043DA4
 {
     s_IpdModelBuffer* modelBuf;
 
-    header->plmHeader_4     = (u8*)header->plmHeader_4 + (u32)header;
-    header->modelList_14    = (u8*)header->modelList_14 + (u32)header;
-    header->modelBuffers_18 = (u8*)header->modelBuffers_18 + (u32)header;
-    header->field_50        = (u8*)header->field_50 + (u32)header;
+    header->plmHeader_4       = (u8*)header->plmHeader_4 + (u32)header;
+    header->modelInfo_14      = (u8*)header->modelInfo_14 + (u32)header;
+    header->modelBuffers_18   = (u8*)header->modelBuffers_18 + (u32)header;
+    header->modelOrderList_50 = (u8*)header->modelOrderList_50 + (u32)header;
 
     for (modelBuf = &header->modelBuffers_18[0];
          modelBuf < &header->modelBuffers_18[header->modelBufferCount_9];
@@ -641,25 +640,25 @@ void IpdHeader_FixHeaderOffsets(s_IpdHeader* header) // 0x80043DA4
     }
 }
 
-void func_80043E50(s_80043E50* arg0, s32* arg1, s32 arg2) // 0x80043E50
+void func_80043E50(s_IpdHeader* ipdHeader, s_PlmHeader** plmHeaders, s32 plmHeaderCount) // 0x80043E50
 {
-    s32 i;
-    s32 j;
-    s_80043E50Sub* element;
+    s_IpdModelInfo* modelInfo;
+    s32             i;
+    s32             j;
 
-    for (i = 0; i < arg0->elementCount_8; i++)
+    for (i = 0; i < ipdHeader->modelCount_8; i++)
     {
-        element = &arg0->elements_14[i];
-        if (element->field_0 == 0)
+        modelInfo = &ipdHeader->modelInfo_14[i];
+        if (!modelInfo->isGlobalPlm_0)
         {
-            element->field_C = func_80043F2C(&element->field_4, arg0->field_4);
+            modelInfo->field_C = func_80043F2C(&modelInfo->modelName_4, ipdHeader->plmHeader_4);
         }
         else
         {
-            for (j = 0; j < arg2; j++)
+            for (j = 0; j < plmHeaderCount; j++)
             {
-                element->field_C = func_80043F2C(&element->field_4, arg1[j]);
-                if (element->field_C != 0)
+                modelInfo->field_C = func_80043F2C(&modelInfo->modelName_4, plmHeaders[j]);
+                if (modelInfo->field_C != 0)
                 {
                     break;
                 }
@@ -668,24 +667,20 @@ void func_80043E50(s_80043E50* arg0, s32* arg1, s32 arg2) // 0x80043E50
     }
 }
 
-s_80043F2C* func_80043F2C(s_80043F2C* arg0, s_80043F2C* arg1) // 0x80043F2C
+s_ObjList* func_80043F2C(u_Filename* objName, s_PlmHeader* plmHeader) // 0x80043F2C
 {
-    u8          size;
-    s_80043F2C* var;
-    s32         i;
+    s_ObjList* obj;
+    s32        i;
 
-    size = arg1->field_8;
-    var = arg1->field_C;
+    obj = plmHeader->objectList_C;
 
-    for (i = 0; i < size; i++)
+    for (i = 0; i < plmHeader->objectCount_8; i++, obj++)
     {
-        if (arg0->field_0 == var->field_0 &&
-            arg0->field_4 == var->field_4)
+        if (objName->u32[0] == obj->objName_0.u32[0] &&
+            objName->u32[1] == obj->objName_0.u32[1])
         {
-            return var;
+            return obj;
         }
-
-        var++;
     }
 
     return NULL;

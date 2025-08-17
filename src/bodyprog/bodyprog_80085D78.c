@@ -2686,9 +2686,9 @@ s32 func_8008D8C0(s16 x0, s32 x1, s32 x2) // 0x8008D8C0
 // Large function.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008D990); // 0x8008D990
 
-void func_8008E4EC(s32 arg) // 0x8008E4EC
+void func_8008E4EC(s_PlmHeader* plmHeader) // 0x8008E4EC
 {
-    func_80056504(arg, &D_8002B2CC, &D_800AFD9C, 1);
+    func_80056504(plmHeader, &D_8002B2CC, &D_800AFD9C, 1);
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008E51C); // 0x8008E51C
