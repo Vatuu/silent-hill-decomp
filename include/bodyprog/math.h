@@ -132,6 +132,14 @@
 #define FP_TIME(sec) \
     FP_FLOAT_TO((sec), Q12_SHIFT)
 
+/** @brief Converts floating-point value to fixed-point value in Q12.19 format. */
+#define Q19_12(val) \
+    FP_FLOAT_TO((val), Q12_SHIFT)
+
+/** @brief Converts floating-point value to fixed-point value in Q7.8 format. */
+#define Q7_8(val) \
+    FP_FLOAT_TO((val), Q8_SHIFT)
+
 /** @brief Normalizes fixed-point degrees in Q3.12 format to the signed range `[-2048, 2047]`.
  * Thin wrapper for `FP_ANGLE_NORM_S`.
  */
