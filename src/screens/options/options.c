@@ -1099,65 +1099,68 @@ void Gfx_SettingsOptionsExtraDraw() // 0x801E4B2C
     #define STR_BASE_Y   64
     #define STR_OFFSET_Y 16
 
-    s32 strPosX;
-    s32 i;
-    s32 j;
-
-    s_Triangle2d flashArrows[] =
+    const s_Triangle2d flashArrows[] =
     {
-        { { 0x0026, 0xFFD6 }, { 0x002E, 0xFFCE }, { 0x002E, 0xFFDE } },
-        { { 0x0078, 0xFFD6 }, { 0x0070, 0xFFCE }, { 0x0070, 0xFFDE } },
-        { { 0x0026, 0xFFE6 }, { 0x002E, 0xFFDE }, { 0x002E, 0xFFEE } },
-        { { 0x0078, 0xFFE6 }, { 0x0070, 0xFFDE }, { 0x0070, 0xFFEE } },
-        { { 0x0023, 0xFFF6 }, { 0x002B, 0xFFEE }, { 0x002B, 0xFFFE } },
-        { { 0x007B, 0xFFF6 }, { 0x0073, 0xFFEE }, { 0x0073, 0xFFFE } },
-        { { 0x0023, 0x0006 }, { 0x002B, 0xFFFE }, { 0x002B, 0x000E } },
-        { { 0x007B, 0x0006 }, { 0x0073, 0xFFFE }, { 0x0073, 0x000E } },
-        { { 0x0023, 0x0016 }, { 0x002B, 0x000E }, { 0x002B, 0x001E } },
-        { { 0x007B, 0x0016 }, { 0x0073, 0x000E }, { 0x0073, 0x001E } },
-        { { 0x0033, 0x0026 }, { 0x003B, 0x001E }, { 0x003B, 0x002E } },
-        { { 0x006B, 0x0026 }, { 0x0063, 0x001E }, { 0x0063, 0x002E } },
-        { { 0x0018, 0x0036 }, { 0x0020, 0x002E }, { 0x0020, 0x003E } },
-        { { 0x0083, 0x0036 }, { 0x007B, 0x002E }, { 0x007B, 0x003E } },
-        { { 0x0039, 0x0046 }, { 0x0041, 0x003E }, { 0x0041, 0x004E } },
-        { { 0x0068, 0x0046 }, { 0x0060, 0x003E }, { 0x0060, 0x004E } }
+        { { 38, -42 }, { 46, -50 }, { 46, -34 } },
+        { { 120, -42 }, { 112, -50 }, { 112, -34 } },
+        { { 38, -26 }, { 46, -34 }, { 46, -18 } },
+        { { 120, -26 }, { 112, -34 }, { 112, -18 } },
+        { { 35, -10 }, { 43, -18 }, { 43, -2 } },
+        { { 123, -10 }, { 115, -18 }, { 115, -2 } },
+        { { 35, 6 }, { 43, -2 }, { 43, 14 } },
+        { { 123, 6 }, { 115, -2 }, { 115, 14 } },
+        { { 35, 22 }, { 43, 14 }, { 43, 30 } },
+        { { 123, 22 }, { 115, 14 }, { 115, 30 } },
+        { { 51, 38 }, { 59, 30 }, { 59, 46 } },
+        { { 107, 38 }, { 99, 30 }, { 99, 46 } },
+        { { 24, 54 }, { 32, 46 }, { 32, 62 } },
+        { { 131, 54 }, { 123, 46 }, { 123, 62 } },
+        { { 57, 70 }, { 65, 62 }, { 65, 78 } },
+        { { 104, 70 }, { 96, 62 }, { 96, 78 } }
     };
 
-    s_Triangle2d borderArrows[] =
+    const s_Triangle2d borderArrows[] =
     {
-        { { 0x0025, 0xFFD6 }, { 0x002F, 0xFFCC }, { 0x002F, 0xFFE0 } },
-        { { 0x0079, 0xFFD6 }, { 0x006F, 0xFFCC }, { 0x006F, 0xFFE0 } },
-        { { 0x0025, 0xFFE6 }, { 0x002F, 0xFFDC }, { 0x002F, 0xFFF0 } },
-        { { 0x0079, 0xFFE6 }, { 0x006F, 0xFFDC }, { 0x006F, 0xFFF0 } },
-        { { 0x0022, 0xFFF6 }, { 0x002C, 0xFFEC }, { 0x002C, 0x0000 } },
-        { { 0x007C, 0xFFF6 }, { 0x0072, 0xFFEC }, { 0x0072, 0x0000 } },
-        { { 0x0022, 0x0006 }, { 0x002C, 0xFFFC }, { 0x002C, 0x0010 } },
-        { { 0x007C, 0x0006 }, { 0x0072, 0xFFFC }, { 0x0072, 0x0010 } },
-        { { 0x0022, 0x0016 }, { 0x002C, 0x000C }, { 0x002C, 0x0020 } },
-        { { 0x007C, 0x0016 }, { 0x0072, 0x000C }, { 0x0072, 0x0020 } },
-        { { 0x0032, 0x0026 }, { 0x003C, 0x001C }, { 0x003C, 0x0030 } },
-        { { 0x006C, 0x0026 }, { 0x0062, 0x001C }, { 0x0062, 0x0030 } },
-        { { 0x0017, 0x0036 }, { 0x0021, 0x002C }, { 0x0021, 0x0040 } },
-        { { 0x0084, 0x0036 }, { 0x007A, 0x002C }, { 0x007A, 0x0040 } },
-        { { 0x0038, 0x0046 }, { 0x0042, 0x003C }, { 0x0042, 0x0050 } },
-        { { 0x0069, 0x0046 }, { 0x005F, 0x003C }, { 0x005F, 0x0050 } }
+        { { 37, -42 }, { 47, -52 }, { 47, -32 } },
+        { { 121, -42 }, { 111, -52 }, { 111, -32 } },
+        { { 37, -26 }, { 47, -36 }, { 47, -16 } },
+        { { 121, -26 }, { 111, -36 }, { 111, -16 } },
+        { { 34, -10 }, { 44, -20 }, { 44, 0 } },
+        { { 124, -10 }, { 114, -20 }, { 114, 0 } },
+        { { 34, 6 }, { 44, -4 }, { 44, 16 } },
+        { { 124, 6 }, { 114, -4 }, { 114, 16 } },
+        { { 34, 22 }, { 44, 12 }, { 44, 32 } },
+        { { 124, 22 }, { 114, 12 }, { 114, 32 } },
+        { { 50, 38 }, { 60, 28 }, { 60, 48 } },
+        { { 108, 38 }, { 98, 28 }, { 98, 48 } },
+        { { 23, 54 }, { 33, 44 }, { 33, 64 } },
+        { { 132, 54 }, { 122, 44 }, { 122, 64 } },
+        { { 56, 70 }, { 66, 60 }, { 66, 80 } },
+        { { 105, 70 }, { 95, 60 }, { 95, 80 } }
     };
 
-    char* SettingsExtraOptions_str[] =
+    // TODO: Can this be split?
+    const char* SettingsExtraOptions_str[] =
     {
         "Press",
         "Switch",
+
         "Normal",
         "Green",
         "Violet",
         "Black",
+
         "_",
+
         "Normal",
         "Reverse",
+
         "On",
         "Off",
+
         "Normal",
         "Self_View",
+
         "x1",
         "x2",
         "x3",
@@ -1165,6 +1168,10 @@ void Gfx_SettingsOptionsExtraDraw() // 0x801E4B2C
         "x5",
         "x6"
     };
+
+    s32 strPosX;
+    s32 i;
+    s32 j;
 
     Gfx_StringSetColor(ColorId_White);
 
@@ -1174,17 +1181,17 @@ void Gfx_SettingsOptionsExtraDraw() // 0x801E4B2C
         // Draw flashing left/right arrows.
         for (i = 0; i < 2; i++)
         {
-            Gfx_Options_BlueArrowDraw(&flashArrows[(g_ExtraMenu_SelectedIdx * 2) + i], 1, 0);
+            Gfx_Options_BlueArrowDraw(&flashArrows[(g_ExtraMenu_SelectedIdx * 2) + i], true, false);
         }
 
         // Draw border to highlight flashing left/right arrow corresponding to direction of UI navigation.
         if (g_Controller0->btnsHeld_C & ControllerFlag_LStickLeft)
         {
-            Gfx_Options_BlueArrowDraw(&borderArrows[g_ExtraMenu_SelectedIdx << 1], 0, 0);
+            Gfx_Options_BlueArrowDraw(&borderArrows[g_ExtraMenu_SelectedIdx << 1], false, false);
         }
         if (g_Controller0->btnsHeld_C & ControllerFlag_LStickRight)
         {
-            Gfx_Options_BlueArrowDraw(&borderArrows[(g_ExtraMenu_SelectedIdx << 1) + 1], 0, 0);
+            Gfx_Options_BlueArrowDraw(&borderArrows[(g_ExtraMenu_SelectedIdx << 1) + 1], false, false);
         }
     }
 
@@ -1262,45 +1269,45 @@ void Gfx_SettingsOptionsExtraDraw() // 0x801E4B2C
 
 void Gfx_SettingsOptionsMainDraw() // 0x801E4FFC
 {
-    s32 strPosX;
-    s32 strIdx;
-    s32 i;
-
-    s_Triangle2d flashArrows[] =
+    const s_Triangle2d FRONT_ARROWS[] =
     {
-        { { 0x0028, 0x000E }, { 0x0030, 0x0006 }, { 0x0030, 0x0016 } },
-        { { 0x0060, 0x000E }, { 0x0058, 0x0006 }, { 0x0058, 0x0016 } },
-        { { 0x0028, 0x001E }, { 0x0030, 0x0016 }, { 0x0030, 0x0026 } },
-        { { 0x0060, 0x001E }, { 0x0058, 0x0016 }, { 0x0058, 0x0026 } },
-        { { 0x0013, 0x002E }, { 0x001B, 0x0026 }, { 0x001B, 0x0036 } },
-        { { 0x007C, 0x002E }, { 0x0074, 0x0026 }, { 0x0074, 0x0036 } },
-        { { 0x000C, 0x003E }, { 0x0014, 0x0036 }, { 0x0014, 0x0046 } },
-        { { 0x0083, 0x003E }, { 0x007B, 0x0036 }, { 0x007B, 0x0046 } },
-        { { 0x000C, 0x004E }, { 0x0014, 0x0046 }, { 0x0014, 0x0056 } },
-        { { 0x0083, 0x004E }, { 0x007B, 0x0046 }, { 0x007B, 0x0056 } }
+        { { 40, 14 }, { 48, 6 }, { 48, 22 } },
+        { { 96, 14 }, { 88, 6 }, { 88, 22 } },
+        { { 40, 30 }, { 48, 22 }, { 48, 38 } },
+        { { 96, 30 }, { 88, 22 }, { 88, 38 } },
+        { { 19, 46 }, { 27, 38 }, { 27, 54 } },
+        { { 124, 46 }, { 116, 38 }, { 116, 54 } },
+        { { 12, 62 }, { 20, 54 }, { 20, 70 } },
+        { { 131, 62 }, { 123, 54 }, { 123, 70 } },
+        { { 12, 78 }, { 20, 70 }, { 20, 86 } },
+        { { 131, 78 }, { 123, 70 }, { 123, 86 } }
     };
 
-    s_Triangle2d borderArrows[] =
+    const s_Triangle2d BACK_ARROWS[] =
     {
-        { { 0x0027, 0x000E }, { 0x0031, 0x0004 }, { 0x0031, 0x0018 } },
-        { { 0x0061, 0x000E }, { 0x0057, 0x0004 }, { 0x0057, 0x0018 } },
-        { { 0x0027, 0x001E }, { 0x0031, 0x0014 }, { 0x0031, 0x0028 } },
-        { { 0x0061, 0x001E }, { 0x0057, 0x0014 }, { 0x0057, 0x0028 } },
-        { { 0x0012, 0x002E }, { 0x001C, 0x0024 }, { 0x001C, 0x0038 } },
-        { { 0x007D, 0x002E }, { 0x0073, 0x0024 }, { 0x0073, 0x0038 } },
-        { { 0x000B, 0x003E }, { 0x0015, 0x0034 }, { 0x0015, 0x0048 } },
-        { { 0x0084, 0x003E }, { 0x007A, 0x0034 }, { 0x007A, 0x0048 } },
-        { { 0x000B, 0x004E }, { 0x0015, 0x0044 }, { 0x0015, 0x0058 } },
-        { { 0x0084, 0x004E }, { 0x007A, 0x0044 }, { 0x007A, 0x0058 } }
+        { { 39, 14 }, { 49, 4 }, { 49, 24 } },
+        { { 97, 14 }, { 87, 4 }, { 87, 24 } },
+        { { 39, 30 }, { 49, 20 }, { 49, 40 } },
+        { { 97, 30 }, { 87, 20 }, { 87, 40 } },
+        { { 18, 46 }, { 28, 36 }, { 28, 56 } },
+        { { 125, 46 }, { 115, 36 }, { 115, 56 } },
+        { { 11, 62 }, { 21, 52 }, { 21, 72 } },
+        { { 132, 62 }, { 122, 52 }, { 122, 72 } },
+        { { 11, 78 }, { 21, 68 }, { 21, 88 } },
+        { { 132, 78 }, { 122, 68 }, { 122, 88 } }
     };
 
-    char* D_801E2BDC[] =
+    const char* OPTIONS_MENU_SOUND_ENTRY_CONFIG_STRINGS[] = // 0x801E2BDC
     {
         "On",
         "Off",
         "Stereo",
         "Monaural"
     };
+
+    s32 strPosX;
+    s32 strIdx;
+    s32 i;
 
     Gfx_StringSetColor(ColorId_White);
 
@@ -1310,17 +1317,17 @@ void Gfx_SettingsOptionsMainDraw() // 0x801E4FFC
         // Draw flashing left/right arrows.
         for (i = 0; i < 2; i++)
         {
-            Gfx_Options_BlueArrowDraw(&flashArrows[(((g_MainMenu_SelectedIdx - 4) * 2) + i)], 1, 0);
+            Gfx_Options_BlueArrowDraw(&FRONT_ARROWS[(((g_MainMenu_SelectedIdx - 4) * 2) + i)], true, false);
         }
 
         // Draw border to highlight flashing left/right arrow corresponding to direction of UI navigation.
         if (g_Controller0->btnsHeld_C & ControllerFlag_LStickLeft)
         {
-            Gfx_Options_BlueArrowDraw(&borderArrows[(g_MainMenu_SelectedIdx - 4) << 1], 0, 0);
+            Gfx_Options_BlueArrowDraw(&BACK_ARROWS[(g_MainMenu_SelectedIdx - 4) << 1], false, false);
         }
         if (g_Controller0->btnsHeld_C & ControllerFlag_LStickRight)
         {
-            Gfx_Options_BlueArrowDraw(&borderArrows[((g_MainMenu_SelectedIdx - 4) << 1) + 1], 0, 0);
+            Gfx_Options_BlueArrowDraw(&BACK_ARROWS[((g_MainMenu_SelectedIdx - 4) << 1) + 1], false, false);
         }
     }
 
@@ -1333,7 +1340,7 @@ void Gfx_SettingsOptionsMainDraw() // 0x801E4FFC
                 Gfx_StringSetPosition(strPosX, 120);
 
                 strIdx = g_GameWork.config_0.optVibrationEnabled_21 == 0;
-                Gfx_StringDraw(D_801E2BDC[strIdx], 10);
+                Gfx_StringDraw(OPTIONS_MENU_SOUND_ENTRY_CONFIG_STRINGS[strIdx], 10);
                 break;
 
             case 1:
@@ -1341,7 +1348,7 @@ void Gfx_SettingsOptionsMainDraw() // 0x801E4FFC
                 Gfx_StringSetPosition(strPosX, 136);
 
                 strIdx = g_GameWork.config_0.optAutoLoad_25 == 0;
-                Gfx_StringDraw(D_801E2BDC[strIdx], 10);
+                Gfx_StringDraw(OPTIONS_MENU_SOUND_ENTRY_CONFIG_STRINGS[strIdx], 10);
                 break;
 
             case 2:
@@ -1349,7 +1356,7 @@ void Gfx_SettingsOptionsMainDraw() // 0x801E4FFC
                 Gfx_StringSetPosition(strPosX, 152);
 
                 strIdx = g_GameWork.config_0.optSoundType_1E + 2;
-                Gfx_StringDraw(D_801E2BDC[strIdx], 10);
+                Gfx_StringDraw(OPTIONS_MENU_SOUND_ENTRY_CONFIG_STRINGS[strIdx], 10);
                 break;
         }
     }
@@ -1549,20 +1556,20 @@ void Gfx_PositionArrowsDraw() // 0x801E5A08
 {
     #define DIR_COUNT 4
 
-    s_Triangle2d flashArrows[] =
+    const s_Triangle2d FRONT_ARROWS[] =
     {
-        { { 0x0000, 0xFF9C }, { 0xFFF8, 0xFFA4 }, { 0x0008, 0xFFA4 } },
-        { { 0x0000, 0x0064 }, { 0xFFF8, 0x005C }, { 0x0008, 0x005C } },
-        { { 0xFF6C, 0x0000 }, { 0xFF74, 0xFFF8 }, { 0xFF74, 0x0008 } },
-        { { 0x0094, 0x0000 }, { 0x008C, 0xFFF8 }, { 0x008C, 0x0008 } },
+        { { 0, -100 }, { -8, -92 }, { 8, -92 } },
+        { { 0, 100 }, { -8, 92 }, { 8, 92 } },
+        { { -148, 0 }, { -140, -8 }, { -140, 8 } },
+        { { 148, 0 }, { 140, -8 }, { 140, 8 } }
     };
 
-    s_Triangle2d borderArrows[] =
+    const s_Triangle2d BACK_ARROWS[] =
     {
-        { { 0x0000, 0xFF9B }, { 0xFFF6, 0xFFA5 }, { 0x0009, 0xFFA5 } },
-        { { 0x0000, 0x0065 }, { 0xFFF6, 0x005B }, { 0x0009, 0x005B } },
-        { { 0xFF6B, 0x0000 }, { 0xFF75, 0xFFF6 }, { 0xFF75, 0x000A } },
-        { { 0x0095, 0x0000 }, { 0x008B, 0xFFF6 }, { 0x008B, 0x000A } },
+        { { 0, -101 }, { -10, -91 }, { 9, -91 } },
+        { { 0, 101 }, { -10, 91 }, { 9, 91 } },
+        { { -149, 0 }, { -139, -10 }, { -139, 10 } },
+        { { 149, 0 }, { 139, -10 }, { 139, 10 } }
     };
 
     u8  dirs[DIR_COUNT]; // Booleans.
@@ -1574,7 +1581,7 @@ void Gfx_PositionArrowsDraw() // 0x801E5A08
     // Draw flashing up/down/left/right arrows.
     for (i = 0; i < DIR_COUNT; i++)
     {
-        Gfx_Options_BlueArrowDraw(&flashArrows[i], 1, 0);
+        Gfx_Options_BlueArrowDraw(&FRONT_ARROWS[i], true, false);
     }
 
     if ((g_Controller0->btnsClicked_10 & ControllerFlag_LStickUp) ||
@@ -1603,7 +1610,7 @@ void Gfx_PositionArrowsDraw() // 0x801E5A08
     {
         if (dirs[i])
         {
-            Gfx_Options_BlueArrowDraw(&borderArrows[i], 0, 0);
+            Gfx_Options_BlueArrowDraw(&BACK_ARROWS[i], false, false);
         }
     }
 }
@@ -1617,10 +1624,10 @@ void Gfx_PositionIndicatorDraw() // 0x801E5CBC
 
     DVECTOR D_801E2C4C[] =
     {
-        { 0xFFC4, 0x0028 },
-        { 0xFFC4, 0x0046 },
-        { 0x003C, 0x0046 },
-        { 0x003C, 0x0028 }
+        { -60, 40 },
+        { -60, 70 },
+        { 60, 70 },
+        { 60, 40 }
     };
 
     char* offsetStr[] =
@@ -1758,7 +1765,7 @@ void Settings_BrightnessScreen() // 0x801E6018
 
 void Gfx_BrightnessLevelTextDraw() // 0x801E6238
 {
-    char* D_801E2C64 = "LEVEL_________";
+    const char* D_801E2C64 = "LEVEL_________";
 
     Gfx_StringSetColor(ColorId_White);
     Gfx_StringSetPosition(SCREEN_POSITION_X(25.0f), SCREEN_POSITION_Y(79.5f));
@@ -1768,15 +1775,15 @@ void Gfx_BrightnessLevelTextDraw() // 0x801E6238
 
 void Gfx_BrightnessLevelArrowsDraw() // 0x801E628C
 {
-    s_Triangle2d flashArrows[] =
+    const s_Triangle2d FRONT_ARROWS[] =
     {
         { { 8, 84 }, {  16, 76 }, { 16, 92 } },
         { { 64, 84 }, { 56, 76 }, { 56, 92 } }
     };
 
-    s_Triangle2d borderArrows[] =
+    const s_Triangle2d BORDER_ARROWS[] =
     {
-        { { 7, 84 },  { 17, 74 }, { 17, 94 } },
+        { { 7, 84 }, { 17, 74 }, { 17, 94 } },
         { { 65, 84 }, { 55, 74 }, { 55, 94 } }
     };
 
@@ -1802,13 +1809,13 @@ void Gfx_BrightnessLevelArrowsDraw() // 0x801E628C
     // Draw flashing left/right arrows.
     for (i = 0; i < 2; i++)
     {
-        Gfx_Options_BlueArrowDraw(&flashArrows[i], 1, 0);
+        Gfx_Options_BlueArrowDraw(&FRONT_ARROWS[i], true, false);
     }
 
     // Draw border to highlight flashing left/right arrow corresponding to direction of UI navigation.
     for (i = dir - 1; i < dir; i++)
     {
-        Gfx_Options_BlueArrowDraw(&borderArrows[i], 0, 0);
+        Gfx_Options_BlueArrowDraw(&BORDER_ARROWS[i], false, false);
     }
 }
 
