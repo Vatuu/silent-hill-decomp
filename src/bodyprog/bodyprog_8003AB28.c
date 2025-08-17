@@ -1421,7 +1421,7 @@ void func_8003D058() // 0x8003D058
         {
             ptr1 = ptr0->field_14;
 
-            if (ptr1->isLoaded_2 == 0)
+            if (!ptr1->isLoaded_2)
             {
                 PlmHeader_FixOffsets(ptr1);
                 func_80056504(ptr1, ptr0->field_8, &ptr0->imageDesc_C, 1);

@@ -2268,7 +2268,7 @@ void DmsHeader_FixOffsets(s_DmsHeader* header) // 0x8008C9A0
         return;
     }
 
-    header->isLoaded_0 = 1;
+    header->isLoaded_0 = true;
 
     // Add memory addr of DMS header to offsets in header.
     header->intervalPtr_8 = (u8*)header->intervalPtr_8 + (u32)header;

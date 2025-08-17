@@ -453,7 +453,7 @@ void PlmHeader_FixOffsets(s_PlmHeader* header) // 0x800560FC
         return;
     }
 
-    header->isLoaded_2 = 1;
+    header->isLoaded_2 = true;
 
     // Add memory addr of header to pointer fields.
     header->textureList_4 = (u8*)header->textureList_4 + (u32)header;
@@ -1880,7 +1880,16 @@ void func_80069844(s32 arg0) // 0x80069844
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80069860); // 0x80069860
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8006993C); // 0x8006993C
+void func_8006993C(s_IpdHeader_54* header) // 0x8006993C
+{
+    header->field_C  = (u8*)header->field_C + (u32)header;
+    header->field_10 = (u8*)header->field_10 + (u32)header;
+    header->field_14 = (u8*)header->field_14 + (u32)header;
+    header->field_18 = (u8*)header->field_18 + (u32)header;
+    header->field_20 = (u8*)header->field_20 + (u32)header;
+    header->field_28 = (u8*)header->field_28 + (u32)header;
+    header->field_2C = (u8*)header->field_2C + (u32)header;
+}
 
 void func_80069994(s_func_800699E4* arg0) // 0x80069994
 {

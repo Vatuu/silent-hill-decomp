@@ -753,6 +753,50 @@ typedef struct
     s32           queueIdx_1000;
 } s_PlmHeader;
 
+typedef struct
+{
+    s8    unk_0[12];
+    void* field_C;
+    void* field_10;
+    void* field_14;
+    void* field_18;
+    s8    unk_1C[4];
+    void* field_20;
+    s8    unk_24[4];
+    void* field_28;
+    void* field_2C;
+} s_IpdHeader_54;
+
+typedef struct
+{
+    u8    unk_0[12];
+    void* field_C;
+    void* field_10;
+    void* field_14;
+} s_IpdModelBuffer;
+
+typedef struct
+{
+    u8                magic_0;
+    u8                isLoaded_1;
+    s8                levelGridX_2;
+    s8                levelGridY_3;
+    s_PlmHeader*      plmHeader_4;
+    u8                modelCount_8;
+    u8                modelBufferCount_9;
+    u8                unk_A[2];
+    u8                unk_C[8];
+    void*             modelList_14;
+    s_IpdModelBuffer* modelBuffers_18;
+    u8                textureCount_1C; // should it be uint32?
+    // "uint8 Relative pointer to textures list"
+    // "uint32 Relative pointer to object order"
+    u8                unk_1D[3];
+    u8                unk_20[48];
+    void*             field_50;
+    s_IpdHeader_54    field_54;
+} s_IpdHeader;
+
 // Maybe a collection of matrices.
 typedef struct
 {
@@ -865,18 +909,6 @@ typedef struct
     s32 field_C;           // Something to do with distance from file chunk edge.
     s32 field_10;          // Something to do with distance from file chunk edge.
 } s_80043338;
-
-// Maybe s_Skeleton?
-typedef struct
-{
-    s8  unk_0;
-    u8  field_1;
-    s8  unk_2[2];
-    s32 field_4;
-    s8  unk_8[12];
-    s32 field_14;
-    s32 unk_18; 
-} s_80043B70;
 
 typedef struct
 {
@@ -1074,11 +1106,11 @@ STATIC_ASSERT_SIZEOF(s_800BCE18, 11260);
 
 typedef struct
 {
-    s_80043B70* field_0;
-    s32         queueIdx_4;
-    s16         field_8;
-    s16         field_A;
-    u8          unk_C[16];
+    s_IpdHeader* ipdHeader_0;
+    s32          queueIdx_4;
+    s16          field_8;
+    s16          field_A;
+    u8           unk_C[16];
 } s_800C117C;
 STATIC_ASSERT_SIZEOF(s_800C117C, 28);
 
@@ -2672,20 +2704,22 @@ void func_80043A24(GsOT* ot, s32 arg1);
 
 bool func_80043B34(s_800C117C* arg0, s_800C1020* arg1);
 
-s32 func_80043B70(s_80043B70* arg0);
+s32 func_80043B70(s_IpdHeader* arg0);
 
 s_80043BA4* func_80043BA4(s_80043BA4* arg0);
 
-void func_80043BC4(s_80043B70* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
+void IpdHeader_FixOffsets(s_IpdHeader* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
 
-void func_80043C7C(s_80043B70* arg0, s32 arg1, s32* arg2, s32 arg3);
+void func_80043C7C(s_IpdHeader* arg0, s32 arg1, s32* arg2, s32 arg3);
 
-s32 func_80043D00(s_80043B70* arg0);
+s32 func_80043D00(s_IpdHeader* arg0);
 
 /** Returns inverse result of `func_80043D64`. */
 bool func_80043D44(s32 arg0);
 
 bool func_80043D64(s32 arg0); // Types assumed.
+
+void IpdHeader_FixHeaderOffsets(s_IpdHeader* header);
 
 void func_80043E50(s_80043E50* arg0, s32* arg1, s32 arg2);
 
@@ -3355,6 +3389,8 @@ void func_80069820(u16 arg0);
 void func_8006982C(u16 arg0);
 
 void func_80069844(s32 arg0);
+
+void func_8006993C(s_IpdHeader_54* header);
 
 void func_80069994(s_func_800699E4* arg0);
 

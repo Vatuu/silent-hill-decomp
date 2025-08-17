@@ -160,7 +160,7 @@ u32 func_80041B1C(s_800C117C* arg0) // 0x80041B1C
     {
         return 0;
     }
-    else if (arg0->field_0->field_1 != 0 && func_80043B70(arg0->field_0) != 0)
+    else if (arg0->ipdHeader_0->isLoaded_1 && func_80043B70(arg0->ipdHeader_0) != 0)
     {
         return 3;
     }
@@ -518,7 +518,7 @@ void func_80043A24(GsOT* ot, s32 arg1) // 0x80043A24
     {
         if (func_80041B1C(ptr) >= 3 && func_80043B34(ptr, &D_800C1020))
         {
-            func_80044090(ptr->field_0, D_800C1020.field_578, D_800C1020.field_57C, ot, arg1);
+            func_80044090(ptr->ipdHeader_0, D_800C1020.field_578, D_800C1020.field_57C, ot, arg1);
         }
     }
 }
@@ -533,14 +533,14 @@ bool func_80043B34(s_800C117C* arg0, s_800C1020* arg1)
     return arg1->field_588 != 0;
 }
 
-s32 func_80043B70(s_80043B70* arg0) // 0x80043B70
+s32 func_80043B70(s_IpdHeader* arg0) // 0x80043B70
 {
-    if (arg0->field_1 == 0)
+    if (!arg0->isLoaded_1)
     {
         return 0;
     }
 
-    return func_80056888(arg0->field_4);
+    return func_80056888(arg0->plmHeader_4);
 }
 
 s_80043BA4* func_80043BA4(s_80043BA4* arg0) // 0x80043BA4
@@ -553,51 +553,51 @@ s_80043BA4* func_80043BA4(s_80043BA4* arg0) // 0x80043BA4
     return NULL;
 }
 
-void func_80043BC4(s_80043B70* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) // 0x80043BC4
+void IpdHeader_FixOffsets(s_IpdHeader* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) // 0x80043BC4
 {
-    if (arg0->field_1 != 0)
+    if (arg0->isLoaded_1)
     {
         return;
     }
 
-    arg0->field_1 = 1;
+    arg0->isLoaded_1 = true;
 
-    func_80043DA4();
-    func_8006993C(arg0 + 3); // TODO: Pointer?
-    PlmHeader_FixOffsets(arg0->field_4);
-    func_8008E4EC(arg0->field_4);
+    IpdHeader_FixHeaderOffsets(arg0);
+    func_8006993C(&arg0->field_54);
+    PlmHeader_FixOffsets(arg0->plmHeader_4);
+    func_8008E4EC(arg0->plmHeader_4);
     func_80043C7C(arg0, arg3, arg4, arg5);
-    func_80056954(arg0->field_4);
+    func_80056954(arg0->plmHeader_4);
     func_80043E50(arg0, arg1, arg2);
-    func_80043F88(arg0, arg0->field_14);
+    func_80043F88(arg0, arg0->modelList_14);
 }
 
-void func_80043C7C(s_80043B70* arg0, s32 arg1, s32* arg2, s32 arg3) // 0x80043C7C
+void func_80043C7C(s_IpdHeader* arg0, s32 arg1, s32* arg2, s32 arg3) // 0x80043C7C
 {
-    if (arg0->field_1 == 0)
+    if (!arg0->isLoaded_1)
     {
         return;
     }
 
     if (arg1 != 0)
     {
-        func_80056774(arg0->field_4, arg1, &func_80043D44, arg3, 1);
+        func_80056774(arg0->plmHeader_4, arg1, &func_80043D44, arg3, 1);
     }
 
     if (arg2 != NULL)
     {
-        func_80056774(arg0->field_4, arg2, &func_80043D64, arg3, 1);
+        func_80056774(arg0->plmHeader_4, arg2, &func_80043D64, arg3, 1);
     }
 }
 
-s32 func_80043D00(s_80043B70* arg0) // 0x80043D00
+s32 func_80043D00(s_IpdHeader* arg0) // 0x80043D00
 {
-    if (arg0->field_1 == 0)
+    if (!arg0->isLoaded_1)
     {
         return 0;
     }
 
-    return func_80056348(&func_80043D64, arg0->field_4);
+    return func_80056348(&func_80043D64, arg0->plmHeader_4);
 }
 
 bool func_80043D44(s32 arg0) // 0x80043D44
@@ -623,7 +623,24 @@ bool func_80043D64(s32 arg0) // 0x80043D64
     return false;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80043DA4); // 0x80043DA4
+void IpdHeader_FixHeaderOffsets(s_IpdHeader* header) // 0x80043DA4
+{
+    s_IpdModelBuffer* modelBuf;
+
+    header->plmHeader_4     = (u8*)header->plmHeader_4 + (u32)header;
+    header->modelList_14    = (u8*)header->modelList_14 + (u32)header;
+    header->modelBuffers_18 = (u8*)header->modelBuffers_18 + (u32)header;
+    header->field_50        = (u8*)header->field_50 + (u32)header;
+
+    for (modelBuf = &header->modelBuffers_18[0];
+         modelBuf < &header->modelBuffers_18[header->modelBufferCount_9];
+         modelBuf++)
+    {
+        modelBuf->field_C  = (u8*)modelBuf->field_C + (u32)header;
+        modelBuf->field_10 = (u8*)modelBuf->field_10 + (u32)header;
+        modelBuf->field_14 = (u8*)modelBuf->field_14 + (u32)header;
+    }
+}
 
 void func_80043E50(s_80043E50* arg0, s32* arg1, s32 arg2) // 0x80043E50
 {
