@@ -46,9 +46,9 @@ g_GameWorkPtr                               = 0x80024D54; // type:u32
 //--- PA: 0x00091C   VA: 0x8002547C   subsegment: .rodata, bodyprog_8003AB28
 //--------------------------------------------------------------------------
 nextGameStates                              = 0x80025480;
-mainMenuOptionsXPosition                    = 0x800254EC;
-difficultyXPos                              = 0x8002551C;
-
+MAIN_MENU_STR_OFFSETS_X                     = 0x800254EC;
+DIFFICULTY_MENU_STR_OFFSETS_X               = 0x8002551C;
+DIFFICULTY_MENU_UNUSED                      = 0x80025520;
 //------------------------------------------------------
 //--- PA: 0x001084   VA: 0x80025BE4   subsegment: rodata
 //------------------------------------------------------
@@ -1914,8 +1914,8 @@ g_MainMenu_NewGameSelectedDifficultyIdx     = 0x800A9A84;
 //------------------------------------------------------------------------
 //--- PA: 0x084F2C   VA: 0x800A9A8C   subsegment: .data, bodyprog_8003AB28
 //------------------------------------------------------------------------
-g_MainMenu_OptionStrings                    = 0x800A9A8C;
-g_MainMenu_DifficultyStrings                = 0x800A9AA0;
+MAIN_MENU_ENTRY_STRINGS                     = 0x800A9A8C;
+DIFFICULTY_MENU_ENTRY_STRINGS               = 0x800A9AA0;
 
 //-----------------------------------------------------------------------
 //--- PA: 0x084F4C   VA: 0x800A9AAC   subsegment: data, bodyprog_800A9AA0

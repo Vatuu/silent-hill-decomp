@@ -15,12 +15,12 @@
 #define MENU_FADE_STEP        16
 #define LINE_CURSOR_TIMER_MAX 8
 
-s32  g_MainMenu_SelectedIdx               = 0;
-s32  g_ExtraMenu_SelectedIdx              = 0;
-s32  g_MainMenu_PrevSelectedIdx           = 0;
-s32  g_ExtraMenu_PrevSelectedIdx          = 0;
-s32  g_Gfx_ScreenPos_InvertColorBg        = 0;
-bool g_ControllerSubmenu_IsOnActionColumn = false;
+s32  g_MainMenu_SelectedIdx            = 0;
+s32  g_ExtraMenu_SelectedIdx           = 0;
+s32  g_MainMenu_PrevSelectedIdx        = 0;
+s32  g_ExtraMenu_PrevSelectedIdx       = 0;
+s32  g_Gfx_ScreenPos_InvertColorBg     = 0;
+bool g_ControllerMenu_IsOnActionColumn = false;
 
 void GameState_OptionScreen_Update() // 0x801E2D44
 {
@@ -2188,11 +2188,11 @@ void Settings_ControllerScreen() // 0x801E69BC
 
     if (g_GameWork.gameStateStep_598[1] == ContMenuState_Actions)
     {
-        g_ControllerSubmenu_IsOnActionColumn = true;
+        g_ControllerMenu_IsOnActionColumn = true;
     }
     else
     {
-        g_ControllerSubmenu_IsOnActionColumn = false;
+        g_ControllerMenu_IsOnActionColumn = false;
     }
 
     // Play cursor navigation SFX.
@@ -2202,7 +2202,7 @@ void Settings_ControllerScreen() // 0x801E69BC
     }
 
     // Draw submenu graphics.
-    Gfx_ControllerScreenDraw(g_ControllerSubmenu_IsOnActionColumn, g_ScreenCtrl_SelectedElement.optionIdx_0, g_ScreenCtrl_SelectedElement.actionIdx_4, boundActionIdx);
+    Gfx_ControllerScreenDraw(g_ControllerMenu_IsOnActionColumn, g_ScreenCtrl_SelectedElement.optionIdx_0, g_ScreenCtrl_SelectedElement.actionIdx_4, boundActionIdx);
 }
 
 s32 Settings_ButtonChange(s32 actionIdx) // 0x801E6CF4
@@ -2361,7 +2361,7 @@ POLY_G4 D_801E7324[2] =
     },
 };
 
-char* g_ControllerSubmenu_OptionStrings[] =
+static const char* CONTROLLER_MENU_PRESETS_PANE_ENTRY_STRINGS[] =
 {
     "EXIT",
     "TYPE_1",
@@ -2369,7 +2369,7 @@ char* g_ControllerSubmenu_OptionStrings[] =
     "TYPE_3"
 };
 
-char* g_ControllerSubmenu_ActionStrings[] =
+static const char* CONTROLLER_MENU_ACTIONS_PANE_ENTRY_STRINGS[] =
 {
     "ENTER",
     "CANCEL",
@@ -2450,7 +2450,7 @@ void Gfx_ControllerScreenDraw(bool isOnActionColumn, s32 optionIdx, s32 actionId
     for (i = 0; i < ContMenuState_Count; i++)
     {
         Gfx_StringSetPosition(24, STR_BASE_Y + (i * STR_OFFSET_Y));
-        Gfx_StringDraw(g_ControllerSubmenu_OptionStrings[i], 20);
+        Gfx_StringDraw(CONTROLLER_MENU_PRESETS_PANE_ENTRY_STRINGS[i], 20);
     }
 
     if (!isOnActionColumn)
@@ -2472,7 +2472,7 @@ void Gfx_ControllerScreenDraw(bool isOnActionColumn, s32 optionIdx, s32 actionId
     {
         // Draw action string.
         Gfx_DebugStringPosition(96, strYPos);
-        Gfx_DebugStringDraw(g_ControllerSubmenu_ActionStrings[i]);
+        Gfx_DebugStringDraw(CONTROLLER_MENU_ACTIONS_PANE_ENTRY_STRINGS[i]);
 
         // Draw button icon.
         if (i != boundActionIdx)

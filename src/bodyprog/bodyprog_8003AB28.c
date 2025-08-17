@@ -28,7 +28,9 @@ const s32 rodataPad_8002547C = 0;
 
 void GameState_MainMenu_Update() // 0x8003AB28
 {
-    s32 nextGameStates[5] = // 0x80025480
+    #define MAIN_MENU_GAME_STATE_COUNT 5
+
+    s32 nextGameStates[MAIN_MENU_GAME_STATE_COUNT] = // 0x80025480
     {
         GameState_SaveScreen, 
         GameState_DeathLoadScreen,
@@ -382,59 +384,62 @@ void GameState_MainMenu_Update() // 0x8003AB28
 
 void MainMenu_SelectedOptionIdxReset() // 0x8003B550
 {
-    g_MainMenu_SelectedIdx = 1;
+    g_MainMenu_SelectedIdx = MainMenuEntry_Continue;
 }
 
 void func_8003B560() {}
 
-const char* g_MainMenu_OptionStrings[] =
+static const char* MAIN_MENU_ENTRY_STRINGS[] =
 {
     "LOAD",
     "CONTINUE",
     "START",
     "OPTION",
-    "EXTRA" /** @unused The extra options menu may have once been accessible via the main menu. */
+    "EXTRA" /** @unused See `e_MainMenuEntry`. */
 };
 
 void Gfx_MainMenu_MainTextDraw() // 0x8003B568
 {
-    #define STR_POS_X_BASE 158
-    #define STR_POS_Y_BASE 184
+    #define COLUMN_POS_X 158
+    #define COLUMN_POS_Y 184
+    #define STR_OFFSET_Y 20
 
-    static const u8 optionsXOffsets[] = { 29, 50, 32, 39, 33 };
+    static const u8 MAIN_MENU_STR_OFFSETS_X[] = { 29, 50, 32, 39, 33 }; // @unused Element at index 4. See `D_800A9A7C`.
 
     s32 i;
 
     // Draw selection strings.
     for (i = 0; i < MAIN_MENU_OPTION_COUNT; i++)
     {
-        if (D_800A9A7C & (1 << i))
+        if (!(D_800A9A7C & (1 << i)))
         {
-            Gfx_StringSetPosition(STR_POS_X_BASE - optionsXOffsets[i], STR_POS_Y_BASE + (i * 20));
-            Gfx_StringSetColor(ColorId_White);
-
-            if (i == g_MainMenu_SelectedIdx)
-            {
-                Gfx_StringDraw("[", 99);
-            }
-            else
-            {
-                Gfx_StringDraw("_", 99);
-            }
-
-            Gfx_StringDraw(g_MainMenu_OptionStrings[i], 99);
-
-            if (i == g_MainMenu_SelectedIdx)
-            {
-                Gfx_StringDraw("]", 99);
-            }
-
-            Gfx_StringDraw("\n", 99);
+            continue;
         }
+
+        Gfx_StringSetPosition(COLUMN_POS_X - MAIN_MENU_STR_OFFSETS_X[i], COLUMN_POS_Y + (i * STR_OFFSET_Y));
+        Gfx_StringSetColor(ColorId_White);
+
+        if (i == g_MainMenu_SelectedIdx)
+        {
+            Gfx_StringDraw("[", 99);
+        }
+        else
+        {
+            Gfx_StringDraw("_", 99);
+        }
+
+        Gfx_StringDraw(MAIN_MENU_ENTRY_STRINGS[i], 99);
+
+        if (i == g_MainMenu_SelectedIdx)
+        {
+            Gfx_StringDraw("]", 99);
+        }
+
+        Gfx_StringDraw("\n", 99);
     }
 }
 
-const char* g_MainMenu_DifficultyStrings[] =
+static const char* DIFFICULTY_MENU_ENTRY_STRINGS[] =
 {
     "EASY",
     "NORMAL",
@@ -443,20 +448,20 @@ const char* g_MainMenu_DifficultyStrings[] =
 
 void Gfx_MainMenu_DifficultyTextDraw(s32 arg0) // 0x8003B678
 {
-    #define DIFFICULTY_SELECTION_COUNT 3
-    #define STR_POS_X_BASE             158
-    #define STR_POS_Y_BASE             204
-    #define STR_OFFSET_STEP_Y          20
+    #define DIFFICULTY_MENU_SELECTION_COUNT 3
+    #define COLUMN_POS_X                    158
+    #define COLUMN_POS_Y                    204
+    #define STR_OFFSET_Y                    20
 
-    static const u8 difficultyXPos[]   = { 28, 43, 30, 76 };
-    static const u8 unknown_80025520[] = { 0, 149, 171, 144, 0, 0, 0, 0 }; // @unused
+    static const u8 DIFFICULTY_MENU_STR_OFFSETS_X[] = { 28, 43, 30, 76 };               // @unused Element at index 3. May have been a 4th selectable difficulty.
+    static const u8 DIFFICULTY_MENU_UNUSED[]        = { 0, 149, 171, 144, 0, 0, 0, 0 }; // @unused Unknown purpose.
 
     s32 i;
 
     // Draw selection strings.
-    for (i = 0; i < DIFFICULTY_SELECTION_COUNT; i++)
+    for (i = 0; i < DIFFICULTY_MENU_SELECTION_COUNT; i++)
     {
-        Gfx_StringSetPosition(STR_POS_X_BASE - difficultyXPos[i], STR_POS_Y_BASE + (STR_OFFSET_STEP_Y * i));
+        Gfx_StringSetPosition(COLUMN_POS_X - DIFFICULTY_MENU_STR_OFFSETS_X[i], COLUMN_POS_Y + (i * STR_OFFSET_Y));
         Gfx_StringSetColor(ColorId_White);
 
         if (i == arg0)
@@ -468,7 +473,7 @@ void Gfx_MainMenu_DifficultyTextDraw(s32 arg0) // 0x8003B678
             Gfx_StringDraw("_", 99);
         }
 
-        Gfx_StringDraw(g_MainMenu_DifficultyStrings[i], 99);
+        Gfx_StringDraw(DIFFICULTY_MENU_ENTRY_STRINGS[i], 99);
 
         if (i == arg0)
         {

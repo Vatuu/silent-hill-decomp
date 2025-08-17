@@ -112,16 +112,25 @@ typedef enum _Sfx
     Sfx_Unk1610   = 1610,
 } e_Sfx;
 
-/** Used by `func_8003F654` to cast a specific field to the desired type. */
-typedef enum _MenuState
+typedef enum _MainMenuEntry
+{
+    MainMenuEntry_Load     = 0,
+    MainMenuEntry_Continue = 1,
+    MainMenuEntry_Start    = 2,
+    MainMenuEntry_Option   = 3,
+    MainMenuEntry_Extra    = 4 /** @unused The extra options menu may have been accessible via the main menu. */
+} e_MainMenuEntry;
+
+typedef enum _MainMenuState
 {
     MenuState_Start              = 0,
     MenuState_Main               = 1,
     MenuState_LoadGame           = 2,
     MenuState_DifficultySelector = 3,
     MenuState_NewGameStart       = 4
-} e_MenuState;
+} e_MainMenuState;
 
+/** Used by `func_8003F654` to cast a specific field to the desired type. */
 typedef enum _PrimitiveType
 {
     PrimitiveType_None = 0,
@@ -1864,7 +1873,7 @@ extern s32 g_MainMenuState;
 
 extern s32 g_MainMenu_SelectedIdx;
 
-/** Flags for which main menu options to display. */
+/** Flags for which main menu options to display. Flag (1 << 5) corresponts to the "EXTRA" option, which is unused and never set. */
 extern u32 D_800A9A7C;
 
 /** Counts the amount of times that demos has been play in the current game session. */

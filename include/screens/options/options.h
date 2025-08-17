@@ -172,15 +172,11 @@ extern s32 g_ExtraMenu_PrevSelectedIdx;
 
 extern s32 g_Gfx_ScreenPos_InvertColorBg;
 
-extern bool g_ControllerSubmenu_IsOnActionColumn;
+extern bool g_ControllerMenu_IsOnActionColumn;
 
 extern DR_MODE D_801E730C[MEMORY_CARD_SLOT_COUNT];
 
 extern POLY_G4 D_801E7324[MEMORY_CARD_SLOT_COUNT];
-
-extern char* g_ControllerSubmenu_OptionStrings[];
-
-extern char* g_ControllerSubmenu_ActionStrings[];
 
 extern DVECTOR g_Options_Extra_SelectionHighlightFrom_Unused;
 extern DVECTOR g_Options_Extra_SelectionHighlightTo_Unused;
@@ -226,82 +222,82 @@ extern s32 g_OptExtra_BulletMultLimit;
 // `GameState_Options_Update`
 void GameState_OptionScreen_Update();
 
-// `Options_ExtraMenu_ConfigUpdate`
+// `Options_ExtraOptionsMenu_ConfigUpdate`
 void Settings_ExtraScreen();
 
-// `Options_MainMenu_ConfigUpdate`
+// `Options_MainOptionsMenu_ConfigUpdate`
 void Settings_MainScreen();
 
 // ==================
 // `menu_graphics.c`
 // ==================
 
-// `Options_MainMenu_BgmVolumeBarDraw`
+// `Options_MainOptionsMenu_BgmVolumeBarDraw`
 void Gfx_BgmBarDraw();
 
-// `Options_MainMenu_SfxVolumeBarDraw`
+// `Options_MainOptionsMenu_SfxVolumeBarDraw`
 void Gfx_SfxBarDraw();
 
 /** @brief Draws the bars used for SFX and BGM audio options. */
-// `Options_MainMenu_VolumeBarDraw`
+// `Options_MainOptionsMenu_VolumeBarDraw`
 void Gfx_BarDraw(bool isSfx, u8 vol);
 
 /** @brief Draws the option strings in the extra options screen. */
-// `Options_ExtraMenu_SelectionStringsDraw`
+// `Options_ExtraOptionsMenu_SelectionStringsDraw`
 void Gfx_OptionsStringsExtraDraw();
 
 /** @brief Draws the option strings in the main options screen. */
-// `Options_MainMenu_SelectionStringsDraw`
+// `Options_MainOptionsMenu_SelectionStringsDraw`
 void Gfx_OptionsStringsMainDraw();
 
 /** @brief Draws the bullets next to options and highlight indicating the
  * selected option in the extra options screen.
  */
-// `Options_ExtraMenu_GraphicsDraw`
+// `Options_ExtraOptionsMenu_GraphicsDraw`
 void Gfx_SelectedOptionExtra();
 
 /** @brief Draws the bullets next to options and highlight indicating the
  * selected option in the main options screen.
  */
-// `Options_MainMenu_GraphicsDraw`
+// `Options_MainOptionsMenu_GraphicsDraw`
 void Gfx_SelectedOptionMain();
 
 /** @brief Draws the vignette for the main and extra options screens. */
 // `Options_Menu_VignetteDraw`
 void Gfx_VignetteDraw();
 
-// `Options_ExtraMenu_SettingsDraw`
+// `Options_ExtraOptionsMenu_ConfigDraw`
 void Gfx_SettingsOptionsExtraDraw();
 
 /** @brief Draws the options for each setting used in the main options screen. */
-// `Options_MainMenu_SettingsDraw`
+// `Options_MainOptionsMenu_ConfigDraw`
 void Gfx_SettingsOptionsMainDraw();
 
 // ====================
 // `screen_position.c`
 // ====================
 
-// `Options_ScreenPositionSubmenu_Control`
+// `Options_ScreenPositionMenu_Control`
 void Settings_PositionScreen();
 
-// `Options_ScreenPositionSubmenu_ArrowsDraw`
+// `Options_ScreenPositionMenu_ArrowsDraw`
 void Gfx_PositionArrowsDraw();
 
 /** @brief Draws the box that indicates the screen position in the position screen configuration. */
-// `Options_ScreenPositionSubmenu_IndicatorDraw`
+// `Options_ScreenPositionMenu_IndicatorDraw`
 void Gfx_PositionIndicatorDraw();
 
 // ===============
 // `brightness.c`
 // ===============
 
-// `Options_BrightnessSubmenu_Control`
+// `Options_BrightnessMenu_Control`
 void Settings_BrightnessScreen();
 
-// `Options_BrightnessSubmenu_LevelStringDraw`
+// `Options_BrightnessMenu_LevelStringDraw`
 void Gfx_BrightnessLevelTextDraw();
 
-// `Options_BrightnessSubmenu_ArrowsDraw`
+// `Options_BrightnessMenu_ArrowsDraw`
 void Gfx_BrightnessLevelArrowsDraw();
 
 // =======================
@@ -328,13 +324,13 @@ void Gfx_ButtonDraw(s_Quad2d* quad, bool isCenter, bool invertGradient);
 void Settings_ControllerScreen();
 
 /** @brief Changes the button mapping based on the input. */
-// `Options_ControllerSubmenu_BindingSet`
+// `Options_Controller>enu_BindingSet`
 s32 Settings_ButtonChange(s32 actionIdx);
 
-// `Options_ControllerSubmenu_SelectionStringDraw`
+// `Options_Controller>enu_SelectionStringDraw`
 void Gfx_ControllerScreenDraw(bool isOnActionColumn, s32 optionIdx, s32 actionIdx, s32 boundActionIdx);
 
-// `Options_ControllerSubmenu_ButtonIconsDraw`
+// `Options_Controller>enu_ButtonIconsDraw`
 void Gfx_ControllerButtonsDraw(s32 baseX, s32 baseY, u16 contConfig);
 
 #endif
