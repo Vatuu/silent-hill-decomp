@@ -533,14 +533,14 @@ bool func_80043B34(s_800C117C* arg0, s_800C1020* arg1)
     return arg1->field_588 != 0;
 }
 
-s32 func_80043B70(s_IpdHeader* arg0) // 0x80043B70
+bool func_80043B70(s_IpdHeader* ipdHeader) // 0x80043B70
 {
-    if (!arg0->isLoaded_1)
+    if (!ipdHeader->isLoaded_1)
     {
-        return 0;
+        return false;
     }
 
-    return func_80056888(arg0->plmHeader_4);
+    return func_80056888(ipdHeader->plmHeader_4);
 }
 
 s_80043BA4* func_80043BA4(s_80043BA4* arg0) // 0x80043BA4
@@ -553,51 +553,50 @@ s_80043BA4* func_80043BA4(s_80043BA4* arg0) // 0x80043BA4
     return NULL;
 }
 
-void IpdHeader_FixOffsets(s_IpdHeader* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) // 0x80043BC4
+void IpdHeader_FixOffsets(s_IpdHeader* ipdHeader, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) // 0x80043BC4
 {
-    if (arg0->isLoaded_1)
+    if (ipdHeader->isLoaded_1)
     {
         return;
     }
+    ipdHeader->isLoaded_1 = true;
 
-    arg0->isLoaded_1 = true;
-
-    IpdHeader_FixHeaderOffsets(arg0);
-    func_8006993C(&arg0->field_54);
-    PlmHeader_FixOffsets(arg0->plmHeader_4);
-    func_8008E4EC(arg0->plmHeader_4);
-    func_80043C7C(arg0, arg3, arg4, arg5);
-    func_80056954(arg0->plmHeader_4);
-    func_80043E50(arg0, arg1, arg2);
-    func_80043F88(arg0, arg0->modelList_14);
+    IpdHeader_FixHeaderOffsets(ipdHeader);
+    func_8006993C(&ipdHeader->field_54);
+    PlmHeader_FixOffsets(ipdHeader->plmHeader_4);
+    func_8008E4EC(ipdHeader->plmHeader_4);
+    func_80043C7C(ipdHeader, arg3, arg4, arg5);
+    func_80056954(ipdHeader->plmHeader_4);
+    func_80043E50(ipdHeader, arg1, arg2);
+    func_80043F88(ipdHeader, ipdHeader->modelList_14);
 }
 
-void func_80043C7C(s_IpdHeader* arg0, s32 arg1, s32* arg2, s32 arg3) // 0x80043C7C
+void func_80043C7C(s_IpdHeader* ipdHeader, s32 arg1, s32* arg2, s32 arg3) // 0x80043C7C
 {
-    if (!arg0->isLoaded_1)
+    if (!ipdHeader->isLoaded_1)
     {
         return;
     }
 
     if (arg1 != 0)
     {
-        func_80056774(arg0->plmHeader_4, arg1, &func_80043D44, arg3, 1);
+        func_80056774(ipdHeader->plmHeader_4, arg1, &func_80043D44, arg3, 1);
     }
 
     if (arg2 != NULL)
     {
-        func_80056774(arg0->plmHeader_4, arg2, &func_80043D64, arg3, 1);
+        func_80056774(ipdHeader->plmHeader_4, arg2, &func_80043D64, arg3, 1);
     }
 }
 
-s32 func_80043D00(s_IpdHeader* arg0) // 0x80043D00
+s32 func_80043D00(s_IpdHeader* ipdHeader) // 0x80043D00
 {
-    if (!arg0->isLoaded_1)
+    if (!ipdHeader->isLoaded_1)
     {
         return 0;
     }
 
-    return func_80056348(&func_80043D64, arg0->plmHeader_4);
+    return func_80056348(&func_80043D64, ipdHeader->plmHeader_4);
 }
 
 bool func_80043D44(s32 arg0) // 0x80043D44
@@ -1060,12 +1059,12 @@ void func_80045014(s_Skeleton* skel) // 0x80045014
     }
 }
 
-void func_8004506C(s_Skeleton* skel, s_PlmHeader* arg1) // 0x8004506C
+void func_8004506C(s_Skeleton* skel, s_PlmHeader* plmHeader) // 0x8004506C
 {
     u8  sp10[3]; // Size unsure, this could be larger.
     s32 switchVar;
 
-    switchVar = PlmHeader_ObjectCountGet(arg1);
+    switchVar = PlmHeader_ObjectCountGet(plmHeader);
     sp10[0]   = 0;
 
     switch (switchVar)
@@ -1081,16 +1080,16 @@ void func_8004506C(s_Skeleton* skel, s_PlmHeader* arg1) // 0x8004506C
 
         default:
             sp10[1] = 253;
-            sp10[2] = PlmHeader_ObjectCountGet(arg1) - 1;
+            sp10[2] = PlmHeader_ObjectCountGet(plmHeader) - 1;
             sp10[3] = 254;
             break;
     }
 
-    func_80045108(skel, arg1, sp10, 0);
+    func_80045108(skel, plmHeader, sp10, 0);
 }
 
 // Anim func.
-void func_80045108(s_Skeleton* skel, s_PlmHeader* arg1, u8* arg2, s32 arg3) // 0x80045108
+void func_80045108(s_Skeleton* skel, s_PlmHeader* plmHeader, u8* arg2, s32 arg3) // 0x80045108
 {
     s_Skeleton*  skel0; // Guessed the type. They both access `field_14` so maybe it's also `s_Skeleton`.
     s_Skeleton** skel1;
@@ -1103,7 +1102,7 @@ void func_80045108(s_Skeleton* skel, s_PlmHeader* arg1, u8* arg2, s32 arg3) // 0
     }
 
     boneIdx = skel->boneIdx_1;
-    func_800451B0(skel, arg1, arg2);
+    func_800451B0(skel, plmHeader, arg2);
 
     skel1 = &skel->field_4;
     while (*skel1 != 0)
@@ -1112,11 +1111,11 @@ void func_80045108(s_Skeleton* skel, s_PlmHeader* arg1, u8* arg2, s32 arg3) // 0
         skel1 = &skel0->skeleton_14;
     }
 
-    func_80045258(skel1, &skel->bones_8[boneIdx], skel->boneIdx_1 - boneIdx, arg1); // Very wierd third argument.
+    func_80045258(skel1, &skel->bones_8[boneIdx], skel->boneIdx_1 - boneIdx, plmHeader); // Very wierd third argument.
     func_800453E8(skel, 0);
 }
 
-void func_800451B0(s_Skeleton* skel, s_PlmHeader* arg1, s32* arg2) // 0x800451B0
+void func_800451B0(s_Skeleton* skel, s_PlmHeader* plmHeader, s32* arg2) // 0x800451B0
 {
     s32 var;
     
@@ -1124,7 +1123,7 @@ void func_800451B0(s_Skeleton* skel, s_PlmHeader* arg1, s32* arg2) // 0x800451B0
 
     while (var != -2)
     {
-        func_80056C8C(&skel->bones_8[skel->boneIdx_1], arg1, var);
+        func_80056C8C(&skel->bones_8[skel->boneIdx_1], plmHeader, var);
 
         skel->boneIdx_1++;
         var = func_80044F6C(arg2, 0);

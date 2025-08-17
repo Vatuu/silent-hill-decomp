@@ -649,7 +649,7 @@ void Camera_RotationSet(VECTOR3* lookAt, s32 xLookAtOffset, s32 yLookAtOffset, s
     }
     
     // Set max angular speed on Y axis.
-    if (yAngularSpeedMax == 0)
+    if (yAngularSpeedMax == FP_ANGLE(0.0f))
     {
         camRotParams.max_ang_spd_y = deflt_watch_mv_prm.max_ang_spd_y;
     }

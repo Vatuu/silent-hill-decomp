@@ -1914,8 +1914,8 @@ g_MainMenu_NewGameSelectedDifficultyIdx     = 0x800A9A84;
 //------------------------------------------------------------------------
 //--- PA: 0x084F2C   VA: 0x800A9A8C   subsegment: .data, bodyprog_8003AB28
 //------------------------------------------------------------------------
-g_MainMenuOptions                           = 0x800A9A8C;
-g_MainMenuDifficulty                        = 0x800A9AA0;
+g_MainMenu_OptionStrings                    = 0x800A9A8C;
+g_MainMenu_DifficultyStrings                = 0x800A9AA0;
 
 //-----------------------------------------------------------------------
 //--- PA: 0x084F4C   VA: 0x800A9AAC   subsegment: data, bodyprog_800A9AA0

@@ -633,7 +633,7 @@ typedef struct
 } s_ObjNormal;
 STATIC_ASSERT_SIZEOF(s_ObjNormal, 4);
 
-/** @brief 8 character string usually used for filenames, can be compared via `u32` field. */
+/** @brief 8-character string usually used for filenames. Can be compared via the `u32` field. */
 typedef union
 {
     char str[8];
@@ -668,7 +668,7 @@ typedef struct
     u16 field_4;
     u8  field_6_0 : 8;
     s8  field_6_8 : 7;
-    u8  unk_6_15 : 1;
+    u8  unk_6_15  : 1;
     u16 field_8;
     u16 field_A;
     u8  unk_C[8];
@@ -747,8 +747,7 @@ typedef struct
     u8            unk_9[3];
     s_ObjList*    objectList_C;
     u8*           objectOrds_10;
-    // File header ends, extra data below.
-    // (might be separate to this struct?)
+    // File header ends, extra data below. Might be separate from this struct?
     s8            unk_11[4075];
     s32           queueIdx_1000;
 } s_PlmHeader;
@@ -788,9 +787,9 @@ typedef struct
     u8                unk_C[8];
     void*             modelList_14;
     s_IpdModelBuffer* modelBuffers_18;
-    u8                textureCount_1C; // should it be uint32?
-    // "uint8 Relative pointer to textures list"
-    // "uint32 Relative pointer to object order"
+    u8                textureCount_1C; // Should it be `u32`?
+                                       // "`u8` - Relative pointer to textures list"
+                                       // "`u32` - Relative pointer to object order"
     u8                unk_1D[3];
     u8                unk_20[48];
     void*             field_50;
@@ -1329,7 +1328,7 @@ typedef struct
     u16 field_0;
     u8  field_2;
     u8  unk_3;
-    s32 field_4[20]; // Guessed size
+    s32 field_4[20]; // Guessed size.
 } s_800C4478;
 
 typedef struct
@@ -2704,15 +2703,15 @@ void func_80043A24(GsOT* ot, s32 arg1);
 
 bool func_80043B34(s_800C117C* arg0, s_800C1020* arg1);
 
-s32 func_80043B70(s_IpdHeader* arg0);
+bool func_80043B70(s_IpdHeader* ipdHeader);
 
 s_80043BA4* func_80043BA4(s_80043BA4* arg0);
 
-void IpdHeader_FixOffsets(s_IpdHeader* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
+void IpdHeader_FixOffsets(s_IpdHeader* ipdHeader, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
 
-void func_80043C7C(s_IpdHeader* arg0, s32 arg1, s32* arg2, s32 arg3);
+void func_80043C7C(s_IpdHeader* ipdHeader, s32 arg1, s32* arg2, s32 arg3);
 
-s32 func_80043D00(s_IpdHeader* arg0);
+s32 func_80043D00(s_IpdHeader* ipdHeader);
 
 /** Returns inverse result of `func_80043D64`. */
 bool func_80043D44(s32 arg0);
@@ -2761,13 +2760,13 @@ void func_80044FE0(s_Skeleton* skel, s_Bone* bones, u8 boneCount);
 void func_80045014(s_Skeleton* skel);
 
 /** Anim func. Used in tandem with skeleton bone traversal. */
-void func_8004506C(s_Skeleton* skel, s_PlmHeader* arg1);
+void func_8004506C(s_Skeleton* skel, s_PlmHeader* plmHeader);
 
 /** Anim func. */
-void func_80045108(s_Skeleton* arg0, s_PlmHeader* arg1, u8* arg2, s32 arg3);
+void func_80045108(s_Skeleton* arg0, s_PlmHeader* plmHeader, u8* arg2, s32 arg3);
 
 /** Anim func. */
-void func_800451B0(s_Skeleton* skel, s_PlmHeader* arg1, s32* arg2);
+void func_800451B0(s_Skeleton* skel, s_PlmHeader* plmHeader, s32* arg2);
 
 /** Anim func. Traverses skeleton bones to set flags/mask. */
 void func_800453E8(s_Skeleton* skel, s32 cond);
@@ -2981,15 +2980,15 @@ void func_80055E90(CVECTOR* color, u8 fadeAmount);
 
 u8 func_80055F08(SVECTOR3* arg0, SVECTOR3* arg1, MATRIX* mat);
 
-void PlmHeader_FixOffsets(s_PlmHeader* header);
+void PlmHeader_FixOffsets(s_PlmHeader* plmHeader);
 
-void ObjList_FixOffsets(s_ObjList* list, s_PlmHeader* header);
+void ObjList_FixOffsets(s_ObjList* objList, s_PlmHeader* plmHeader);
 
 /** TODO: Unknown `arg3`/`arg4` types. */
-void func_80059D50(s32 arg0, s_func_80057344* arg1, MATRIX* arg2, void* arg3, void* arg4);
+void func_80059D50(s32 arg0, s_func_80057344* arg1, MATRIX* mat, void* arg3, void* arg4);
 
 /** TODO: Unknown `arg1`/`arg2` types. */
-void func_8005A21C(s_func_80057344* arg0, void* arg1, void* arg2, MATRIX* arg3);
+void func_8005A21C(s_func_80057344* arg0, void* arg1, void* arg2, MATRIX* mat);
 
 /** @brief Computes a fog-shaded version of `D_800C4190` color using `arg1` as the distance factor?
  *  Stores the result at 0x3D8 into `arg0`.
@@ -3001,7 +3000,7 @@ void func_8005A478(s_GteScratchData* scratchData, s32 alpha);
 /** `scratchData` is unused? */
 void func_8005A838(s_GteScratchData* scratchData, s32 scale);
 
-void func_8005A900(s_ObjHeader* header, s32 offset, s_GteScratchData* scratchData, MATRIX* mat);
+void func_8005A900(s_ObjHeader* objHeader, s32 offset, s_GteScratchData* scratchData, MATRIX* mat);
 
 /** Related to enviroment textures. */
 void func_8005B1A0(s_800C1450_58* arg0, char* arg1, s32 arg2, u8 arg3, s32 arg4, s32 arg5, s16 arg6, s16 arg7);
@@ -3012,34 +3011,34 @@ void func_8005B378(s_800C1450_58* arg0, char* arg1);
 
 void func_8005B3A4(s_800C1450_58* arg0);
 
-void func_8005B3BC(char* filename, s_PlmTexList* arg1);
+void func_8005B3BC(char* filename, s_PlmTexList* plmTexList);
 
 void func_8005B424(VECTOR3* vec0, VECTOR3* vec1);
 
-void func_80056464(s_PlmHeader* arg0, s32 fileIdx, s32* arg2, s32 arg3);
+void func_80056464(s_PlmHeader* plmHeader, s32 fileIdx, s32* arg2, s32 arg3);
 
-void func_80056504(s_PlmHeader* arg0, char* arg1, s32* arg2, s32 arg3);
+void func_80056504(s_PlmHeader* plmHeader, char* newStr, s32* arg2, s32 arg3);
 
-void func_8005660C(s_PlmTexList* arg0, s_FsImageDesc* arg1, s32 arg2);
+void func_8005660C(s_PlmTexList* plmTexList, s_FsImageDesc* image, s32 arg2);
 
-void func_800566B4(s_PlmHeader* arg0, s_FsImageDesc* image, s8 unused, s32 startIdx, s32 arg4);
+void func_800566B4(s_PlmHeader* plmHeader, s_FsImageDesc* image, s8 unused, s32 startIdx, s32 arg4);
 
 /** Unknown `arg1` / `arg3` / `arg4` types. */
-void func_80056774(s_PlmHeader* arg0, void* arg1, s32 (*arg2)(s_PlmTexList*), void* arg3, s32 arg4);
+void func_80056774(s_PlmHeader* plmHeader, void* arg1, s32 (*arg2)(s_PlmTexList* plmTexList), void* arg3, s32 arg4);
 
-s32 func_80056888(s_PlmHeader* arg0);
+bool func_80056888(s_PlmHeader* plmHeader);
 
-void func_80056954(s_PlmHeader* arg0);
+void func_80056954(s_PlmHeader* plmHeader);
 
-void func_80056A88(s_ObjList* arg0, s32 arg1, s_PlmTexList* arg2, s32 flags);
+void func_80056A88(s_ObjList* objList, s32 arg1, s_PlmTexList* plmTexList, s32 flags);
 
 void func_80056BF8(s_800C1020_138* arg0);
 
-s32 PlmHeader_ObjectCountGet(s_PlmHeader* arg0);
+s32 PlmHeader_ObjectCountGet(s_PlmHeader* plmHeader);
 
 void func_80056C8C(s_Bone* bone, s_PlmHeader* plmHeader, s32 objListIdx);
 
-s32 func_80056CB4(s_800BCE18_2BEC_0* arg0, s_PlmHeader* plmHeader, s_800BCE18_2BEC_0_10* arg2);
+bool func_80056CB4(s_800BCE18_2BEC_0* arg0, s_PlmHeader* plmHeader, s_800BCE18_2BEC_0_10* arg2);
 
 void func_80056D64(char* prevStr, char* newStr);
 
@@ -3050,7 +3049,7 @@ s32 func_800571D0(u32 arg0);
 void func_80057228(MATRIX* mat, s32 alpha, SVECTOR* arg2, VECTOR3* arg3);
 
 /** TODO: Unknown `arg1`/`arg2` types. */
-void func_80057344(s_func_80057344* arg0, void* arg1, void* arg2, MATRIX* arg3);
+void func_80057344(s_func_80057344* arg0, void* arg1, void* arg2, MATRIX* mat);
 
 void func_800574D4(s_ObjHeader* header, s_GteScratchData* scratchData);
 

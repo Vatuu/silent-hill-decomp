@@ -67,13 +67,13 @@ void func_80055028() // 0x80055028
 
 void func_800550D0() // 0x800550D0
 {
-    GsOT*    ot;
     s32      color0;
     s32      color2;
     PACKET*  packet;
     PACKET*  packet2;
     DR_MODE* mode;
     POLY_G4* poly;
+    GsOT*    ot;
 
     ot = &g_ObjectTable0[g_ObjectTableIdx];
 
@@ -89,8 +89,8 @@ void func_800550D0() // 0x800550D0
 
     if (D_800C4168.field_8 > 0)
     {
-        poly = (POLY_G4*)GsOUT_PACKET_P;
-        mode = (DR_MODE*)(GsOUT_PACKET_P + sizeof(POLY_G4));
+        poly            = (POLY_G4*)GsOUT_PACKET_P;
+        mode            = (DR_MODE*)(GsOUT_PACKET_P + sizeof(POLY_G4));
         GsOUT_PACKET_P += sizeof(POLY_G4) + sizeof(DR_MODE);
 
         color0           = (D_800C4168.field_8 + (D_800C4168.field_8 << 8)) + (D_800C4168.field_8 << 16);
@@ -444,44 +444,43 @@ u8 func_80055F08(SVECTOR3* arg0, SVECTOR3* arg1, MATRIX* mat) // 0x80055F08
     return ret;
 }
 
-void PlmHeader_FixOffsets(s_PlmHeader* header) // 0x800560FC
+void PlmHeader_FixOffsets(s_PlmHeader* plmHeader) // 0x800560FC
 {
     s32 i;
 
-    if (header->isLoaded_2 == 1)
+    if (plmHeader->isLoaded_2 == true)
     {
         return;
     }
+    plmHeader->isLoaded_2 = true;
 
-    header->isLoaded_2 = true;
+    // Add memory address of header to pointer fields.
+    plmHeader->textureList_4 = (u8*)plmHeader->textureList_4 + (u32)plmHeader;
+    plmHeader->objectList_C  = (u8*)plmHeader->objectList_C  + (u32)plmHeader;
+    plmHeader->objectOrds_10 = (u8*)plmHeader->objectOrds_10 + (u32)plmHeader;
 
-    // Add memory addr of header to pointer fields.
-    header->textureList_4 = (u8*)header->textureList_4 + (u32)header;
-    header->objectList_C  = (u8*)header->objectList_C  + (u32)header;
-    header->objectOrds_10 = (u8*)header->objectOrds_10 + (u32)header;
-
-    for (i = 0; i < header->objectCount_8; i++)
+    for (i = 0; i < plmHeader->objectCount_8; i++)
     {
-        if (header->magic_0 == PLM_HEADER_MAGIC)
+        if (plmHeader->magic_0 == PLM_HEADER_MAGIC)
         {
-            ObjList_FixOffsets(&header->objectList_C[i], header);
+            ObjList_FixOffsets(&plmHeader->objectList_C[i], plmHeader);
         }
     }
 }
 
-void ObjList_FixOffsets(s_ObjList* list, s_PlmHeader* header) // 0x800561A4
+void ObjList_FixOffsets(s_ObjList* objList, s_PlmHeader* plmHeader) // 0x800561A4
 {
     s_ObjHeader* ptr;
 
-    list->meshes_C = (u8*)list->meshes_C + (u32)header;
+    objList->meshes_C = (u8*)objList->meshes_C + (u32)plmHeader;
 
-    for (ptr = &list->meshes_C[0]; ptr < &list->meshes_C[list->meshCount_8]; ptr++)
+    for (ptr = &objList->meshes_C[0]; ptr < &objList->meshes_C[objList->meshCount_8]; ptr++)
     {
-        ptr->primitives_4 = (u8*)ptr->primitives_4 + (u32)header;
-        ptr->vertexXy_8   = (u8*)ptr->vertexXy_8   + (u32)header;
-        ptr->vertexZ_C    = (u8*)ptr->vertexZ_C    + (u32)header;
-        ptr->normals_10   = (u8*)ptr->normals_10   + (u32)header;
-        ptr->unkPtr_14    = (u8*)ptr->unkPtr_14    + (u32)header;
+        ptr->primitives_4 = (u8*)ptr->primitives_4 + (u32)plmHeader;
+        ptr->vertexXy_8   = (u8*)ptr->vertexXy_8   + (u32)plmHeader;
+        ptr->vertexZ_C    = (u8*)ptr->vertexZ_C    + (u32)plmHeader;
+        ptr->normals_10   = (u8*)ptr->normals_10   + (u32)plmHeader;
+        ptr->unkPtr_14    = (u8*)ptr->unkPtr_14    + (u32)plmHeader;
     }
 }
 
@@ -491,7 +490,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80056348); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_800563E8); // 0x800563E8
 
-void func_80056464(s_PlmHeader* arg0, s32 fileIdx, s32* arg2, s32 arg3) // 0x80056464
+void func_80056464(s_PlmHeader* plmHeader, s32 fileIdx, s32* arg2, s32 arg3) // 0x80056464
 {
     char  sp10[8];
     char  sp18[16];
@@ -511,25 +510,25 @@ void func_80056464(s_PlmHeader* arg0, s32 fileIdx, s32* arg2, s32 arg3) // 0x800
         *sp10Ptr++ = *sp18Ptr++;
     }
 
-    func_80056558(arg0, sp10, arg2, arg3);
+    func_80056558(plmHeader, sp10, arg2, arg3);
 }
 
-void func_80056504(s_PlmHeader* arg0, char* arg1, s32* arg2, s32 arg3) // 0x80056504
+void func_80056504(s_PlmHeader* plmHeader, char* newStr, s32* arg2, s32 arg3) // 0x80056504
 {
     s8 sp10[8];
 
-    func_80056D64(&sp10, arg1);
-    func_80056558(arg0, &sp10, arg2, arg3);
+    func_80056D64(&sp10, newStr);
+    func_80056558(plmHeader, &sp10, arg2, arg3);
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80056558); // 0x80056558
 
-void func_8005660C(s_PlmTexList* arg0, s_FsImageDesc* arg1, s32 arg2) // 0x8005660C
+void func_8005660C(s_PlmTexList* plmHeader, s_FsImageDesc* image, s32 arg2) // 0x8005660C
 {
     s32 coeff;
 
     coeff = 4;
-    switch (arg1->tPage[0])
+    switch (image->tPage[0])
     {
         default:
         case 0:
@@ -544,71 +543,71 @@ void func_8005660C(s_PlmTexList* arg0, s_FsImageDesc* arg1, s32 arg2) // 0x80056
             break;
     }
 
-    arg0->field_14.u8[0] = arg1->u * coeff;
-    arg0->field_14.u8[1] = arg1->v;
+    plmHeader->field_14.u8[0] = image->u * coeff;
+    plmHeader->field_14.u8[1] = image->v;
 
-    arg0->field_E  = ((arg1->tPage[0] & 0x3) << 7) | ((arg2 & 0x3) << 5) | (arg1->tPage[1] & (1 << 4)) | (arg1->tPage[1] & 0xF);
-    arg0->field_10 = (arg1->clutY << 6) | ((arg1->clutX >> 4) & 0x3F);
+    plmHeader->field_E  = ((image->tPage[0] & 0x3) << 7) | ((arg2 & 0x3) << 5) | (image->tPage[1] & (1 << 4)) | (image->tPage[1] & 0xF);
+    plmHeader->field_10 = (image->clutY << 6) | ((image->clutX >> 4) & 0x3F);
 }
 
-void func_800566B4(s_PlmHeader* arg0, s_FsImageDesc* image, s8 unused, s32 startIdx, s32 arg4) // 0x800566B4
+void func_800566B4(s_PlmHeader* plmHeader, s_FsImageDesc* image, s8 unused, s32 startIdx, s32 arg4) // 0x800566B4
 {
-    char                 filename[16];
-    s_PlmTexList*        var_s0;
-    s_FsImageDesc*       imagePtr;
-    s32                  i;
+    char           filename[16];
+    s32            i;
+    s_PlmTexList*  plmTexList;
+    s_FsImageDesc* localImage;
 
     // Loop could be using `&image[i]`/`&arg0->field_4[i]` instead? Wasn't able to make that match though.
-    imagePtr = image;
-    var_s0   = arg0->textureList_4;
+    localImage = image;
+    plmTexList = plmHeader->textureList_4;
 
-    for (i = 0; i < arg0->textureCount_3; i++, var_s0++, imagePtr++)
+    for (i = 0; i < plmHeader->textureCount_3; i++, plmTexList++, localImage++)
     {
-        func_8005B3BC(filename, var_s0);
-        Fs_QueueStartReadTim(Fs_FindNextFile(filename, 0, startIdx), FS_BUFFER_9, imagePtr);
-        func_8005660C(var_s0, imagePtr, arg4);
+        func_8005B3BC(filename, plmTexList);
+        Fs_QueueStartReadTim(Fs_FindNextFile(filename, 0, startIdx), FS_BUFFER_9, localImage);
+        func_8005660C(plmTexList, localImage, arg4);
     }
 }
 
-void func_80056774(s_PlmHeader* arg0, void* arg1, s32 (*arg2)(s_PlmTexList*), void* arg3, s32 arg4) // 0x80056774
+void func_80056774(s_PlmHeader* plmHeader, void* arg1, s32 (*arg2)(s_PlmTexList* plmTexList), void* arg3, s32 arg4) // 0x80056774
 {
-    s_PlmTexList* var_s0;
+    s_PlmTexList* plmTexList;
 
-    for (var_s0 = &arg0->textureList_4[0]; var_s0 < &arg0->textureList_4[arg0->textureCount_3]; var_s0++)
+    for (plmTexList = &plmHeader->textureList_4[0]; plmTexList < &plmHeader->textureList_4[plmHeader->textureCount_3]; plmTexList++)
     {
-        if (var_s0->field_C == 0 && var_s0->field_8 == NULL && (arg2 == NULL || arg2(var_s0)))
+        if (plmTexList->field_C == 0 && plmTexList->field_8 == NULL && (arg2 == NULL || arg2(plmTexList)))
         {
-            var_s0->field_8 = func_8005B1FC(var_s0, arg1, FS_BUFFER_9, arg3, arg4);
-            if (var_s0->field_8)
+            plmTexList->field_8 = func_8005B1FC(plmTexList, arg1, FS_BUFFER_9, arg3, arg4);
+            if (plmTexList->field_8)
             {
-                func_8005660C(var_s0, &var_s0->field_8->imageDesc_0, arg4);
+                func_8005660C(plmTexList, &plmTexList->field_8->imageDesc_0, arg4);
             }
         }
     }
 }
 
-s32 func_80056888(s_PlmHeader* arg0) // 0x80056888
+bool func_80056888(s_PlmHeader* plmHeader) // 0x80056888
 {
-    s_PlmTexList* ptr;
+    s_PlmTexList* plmTexList;
 
-    if (!arg0->isLoaded_2)
+    if (!plmHeader->isLoaded_2)
     {
         return false;
     }
 
-    for (ptr = &arg0->textureList_4[0]; ptr < &arg0->textureList_4[arg0->textureCount_3]; ptr++)
+    for (plmTexList = &plmHeader->textureList_4[0]; plmTexList < &plmHeader->textureList_4[plmHeader->textureCount_3]; plmTexList++)
     {
-        if (ptr->field_C != 0)
+        if (plmTexList->field_C != 0)
         {
             continue;
         }
 
-        if (ptr->field_8 == NULL)
+        if (plmTexList->field_8 == NULL)
         {
             return false;
         }
 
-        if (!Fs_QueueIsEntryLoaded(ptr->field_8->queueIdx_10))
+        if (!Fs_QueueIsEntryLoaded(plmTexList->field_8->queueIdx_10))
         {
             return false;
         }
@@ -617,79 +616,79 @@ s32 func_80056888(s_PlmHeader* arg0) // 0x80056888
     return true;
 }
 
-void func_80056954(s_PlmHeader* arg0) // 0x80056954
+void func_80056954(s_PlmHeader* plmHeader) // 0x80056954
 {
-    s_PlmTexList* ptr;
     s32           i;
     s32           j;
     s32           flags;
+    s_PlmTexList* plmTexList;
 
-    for (i = 0, ptr = arg0->textureList_4; i < arg0->textureCount_3; i++, ptr++)
+    for (i = 0, plmTexList = plmHeader->textureList_4; i < plmHeader->textureCount_3; i++, plmTexList++)
     {
-        flags = (ptr->field_E != ptr->field_F) ? (1 << 0) : 0;
+        flags = (plmTexList->field_E != plmTexList->field_F) ? (1 << 0) : 0;
 
-        if (ptr->field_10 != ptr->field_12)
+        if (plmTexList->field_10 != plmTexList->field_12)
         {
-            flags |= (1 << 1);
+            flags |= 1 << 1;
         }
 
-        if (ptr->field_14.u16 != ptr->field_16.u16)
+        if (plmTexList->field_14.u16 != plmTexList->field_16.u16)
         {
-            flags |= (1 << 2);
+            flags |= 1 << 2;
         }
 
         if (flags)
         {
-            for (j = 0; j < arg0->objectCount_8; j++)
+            for (j = 0; j < plmHeader->objectCount_8; j++)
             {
-                if (arg0->magic_0 == PLM_HEADER_MAGIC)
+                if (plmHeader->magic_0 == PLM_HEADER_MAGIC)
                 {
-                    func_80056A88(&arg0->objectList_C[j], i, ptr, flags);
+                    func_80056A88(&plmHeader->objectList_C[j], i, plmTexList, flags);
                 }
             }
 
-            ptr->field_F        = ptr->field_E;
-            ptr->field_12       = ptr->field_10;
-            ptr->field_16.u8[0] = ptr->field_14.u8[0];
-            ptr->field_16.u8[1] = ptr->field_14.u8[1];
+            plmTexList->field_F        = plmTexList->field_E;
+            plmTexList->field_12       = plmTexList->field_10;
+            plmTexList->field_16.u8[0] = plmTexList->field_14.u8[0];
+            plmTexList->field_16.u8[1] = plmTexList->field_14.u8[1];
         }
     }
 }
 
-void func_80056A88(s_ObjList* arg0, s32 arg1, s_PlmTexList* arg2, s32 flags) // 0x80056A88
+void func_80056A88(s_ObjList* objList, s32 arg1, s_PlmTexList* plmTexList, s32 flags) // 0x80056A88
 {
-    s_ObjHeader*    var_t2;
-    s_ObjPrimitive* var_t1;
     u16             field_14;
     u16             field_16;
+    s_ObjHeader*    objHeader;
+    s_ObjPrimitive* objPrim;
 
-    for (var_t2 = arg0->meshes_C; var_t2 < &arg0->meshes_C[arg0->meshCount_8]; var_t2++)
+    for (objHeader = objList->meshes_C; objHeader < &objList->meshes_C[objList->meshCount_8]; objHeader++)
     {
-        for (var_t1 = var_t2->primitives_4; var_t1 < &var_t2->primitives_4[var_t2->primitiveCount_0]; var_t1++)
+        for (objPrim = objHeader->primitives_4; objPrim < &objHeader->primitives_4[objHeader->primitiveCount_0]; objPrim++)
         {
-            if (var_t1->field_6_8 == NO_VALUE)
+            if (objPrim->field_6_8 == NO_VALUE)
             {
-                var_t1->field_6_0 = 32;
+                objPrim->field_6_0 = 32;
             }
 
-            if (var_t1->field_6_8 == arg1)
+            if (objPrim->field_6_8 == arg1)
             {
                 if (flags & (1 << 0))
                 {
-                    var_t1->field_6_0 = arg2->field_E;
+                    objPrim->field_6_0 = plmTexList->field_E;
                 }
                 if (flags & (1 << 1))
                 {
-                    var_t1->field_2 = arg2->field_10 + (var_t1->field_2 - arg2->field_12);
+                    objPrim->field_2 = plmTexList->field_10 + (objPrim->field_2 - plmTexList->field_12);
                 }
                 if (flags & (1 << 2))
                 {
-                    field_16        = arg2->field_16.u16;
-                    field_14        = arg2->field_14.u16;
-                    var_t1->field_0 = field_14 + (var_t1->field_0 - field_16);
-                    var_t1->field_4 = field_14 + (var_t1->field_4 - field_16);
-                    var_t1->field_8 = field_14 + (var_t1->field_8 - field_16);
-                    var_t1->field_A = field_14 + (var_t1->field_A - field_16);
+                    field_16         = plmTexList->field_16.u16;
+                    field_14         = plmTexList->field_14.u16;
+                    objPrim->field_0 = field_14 + (objPrim->field_0 - field_16);
+                    objPrim->field_4 = field_14 + (objPrim->field_4 - field_16);
+                    objPrim->field_8 = field_14 + (objPrim->field_8 - field_16);
+                    objPrim->field_A = field_14 + (objPrim->field_A - field_16);
                 }
             }
         }
@@ -711,14 +710,15 @@ void func_80056BF8(s_800C1020_138* arg0) // 0x80056BF8
             {
                 temp_v1->field_14 = 0;
             }
+
             var_a2->field_8 = NULL;
         }
     }
 }
 
-s32 PlmHeader_ObjectCountGet(s_PlmHeader* arg0) // 0x80056C80
+s32 PlmHeader_ObjectCountGet(s_PlmHeader* plmHeader) // 0x80056C80
 {
-    return arg0->objectCount_8;
+    return plmHeader->objectCount_8;
 }
 
 void func_80056C8C(s_Bone* bone, s_PlmHeader* plmHeader, s32 objListIdx)
@@ -733,15 +733,15 @@ void func_80056C8C(s_Bone* bone, s_PlmHeader* plmHeader, s32 objListIdx)
     }
 }
 
-s32 func_80056CB4(s_800BCE18_2BEC_0* arg0, s_PlmHeader* plmHeader, s_800BCE18_2BEC_0_10* arg2) // 0x80056CB4
+bool func_80056CB4(s_800BCE18_2BEC_0* arg0, s_PlmHeader* plmHeader, s_800BCE18_2BEC_0_10* arg2) // 0x80056CB4
 {
     u_Filename sp10;
-    s_ObjList* objList;
     s32        objListCount;
-    s32        result;
+    bool       result;
     s32        i;
+    s_ObjList* objList;
 
-    result = 0;
+    result = false;
 
     func_80056D64(sp10.str, arg2->string_0);
 
@@ -753,7 +753,7 @@ s32 func_80056CB4(s_800BCE18_2BEC_0* arg0, s_PlmHeader* plmHeader, s_800BCE18_2B
         {
             if (objList->objName_0.u32[0] == sp10.u32[0] && objList->objName_0.u32[1] == sp10.u32[1])
             {
-                result        = 1;
+                result        = true;
                 arg0->field_C = i;
                 arg0->field_8 = objList;
                 // TODO: `field_8` above used to be `s_800BCE18_2BEC_0_10*`, but this func showed it was `s_ObjList*`
@@ -868,32 +868,32 @@ void func_80057228(MATRIX* mat, s32 alpha, SVECTOR* arg2, VECTOR3* arg3) // 0x80
     gte_stsv(&D_800C4168.field_7C);
 }
 
-void func_80057344(s_func_80057344* arg0, void* arg1, void* arg2, MATRIX* arg3) // 0x80057344
+void func_80057344(s_func_80057344* arg0, void* arg1, void* arg2, MATRIX* mat) // 0x80057344
 {
     u32               normalOffset;
     u32               vertexOffset;
-    s_ObjHeader*      var_s0;
-    s_ObjList*        var_s2;
+    s_ObjHeader*      objHeader;
+    s_ObjList*        objList;
     s_GteScratchData* scratchData;
 
     scratchData = PSX_SCRATCH_ADDR(0);
 
-    var_s2       = arg0->field_8;
-    vertexOffset = var_s2->vertexOffset_9;
-    normalOffset = var_s2->normalOffset_A;
+    objList      = arg0->field_8;
+    vertexOffset = objList->vertexOffset_9;
+    normalOffset = objList->normalOffset_A;
 
     gte_lddqa(D_800C4168.field_4C);
     gte_lddqb_0();
 
-    for (var_s0 = var_s2->meshes_C; var_s0 < &var_s2->meshes_C[var_s2->meshCount_8]; var_s0++)
+    for (objHeader = objList->meshes_C; objHeader < &objList->meshes_C[objList->meshCount_8]; objHeader++)
     {
         if (vertexOffset != 0 || normalOffset != 0)
         {
-            func_8005759C(var_s0, scratchData, vertexOffset, normalOffset);
+            func_8005759C(objHeader, scratchData, vertexOffset, normalOffset);
         }
         else
         {
-            func_800574D4(var_s0, scratchData);
+            func_800574D4(objHeader, scratchData);
         }
 
         switch (D_800C4168.field_0)
@@ -902,16 +902,16 @@ void func_80057344(s_func_80057344* arg0, void* arg1, void* arg2, MATRIX* arg3) 
                 break;
 
             case 1:
-                func_80057658(var_s0, normalOffset, scratchData, &D_800C4168.field_74, &D_800C4168.field_7C);
+                func_80057658(objHeader, normalOffset, scratchData, &D_800C4168.field_74, &D_800C4168.field_7C);
                 break;
 
             case 2:
-                func_80057A3C(var_s0, normalOffset, scratchData, &D_800C4168.field_74);
+                func_80057A3C(objHeader, normalOffset, scratchData, &D_800C4168.field_74);
                 break;
         }
 
-        func_80057B7C(var_s0, vertexOffset, scratchData, arg3);
-        func_8005801C(var_s0, scratchData, arg1, arg2);
+        func_80057B7C(objHeader, vertexOffset, scratchData, mat);
+        func_8005801C(objHeader, scratchData, arg1, arg2);
     }
 }
 
@@ -1164,7 +1164,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80057B7C); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8005801C); // 0x8005801C
 
-void func_80059D50(s32 arg0, s_func_80057344* arg1, MATRIX* arg2, void* arg3, void* arg4) // 0x80059D50
+void func_80059D50(s32 arg0, s_func_80057344* arg1, MATRIX* mat, void* arg3, void* arg4) // 0x80059D50
 {
     s_GteScratchData* scratchData;
     s_ObjHeader*      mesh;
@@ -1177,29 +1177,29 @@ void func_80059D50(s32 arg0, s_func_80057344* arg1, MATRIX* arg2, void* arg3, vo
     for (mesh = &objList->meshes_C[0]; mesh < &objList->meshes_C[objList->meshCount_8]; mesh++)
     {
         func_800574D4(mesh, scratchData);
-        func_80057B7C(mesh, 0, scratchData, arg2);
+        func_80057B7C(mesh, 0, scratchData, mat);
         func_80059E34(arg0, mesh, scratchData, arg3, arg4);
     }
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80059E34); // 0x80059E34
 
-void func_8005A21C(s_func_80057344* arg0, void* arg1, void* arg2, MATRIX* arg3) // 0x8005A21C
+void func_8005A21C(s_func_80057344* arg0, void* arg1, void* arg2, MATRIX* mat) // 0x8005A21C
 {
-    s16                var_v1;
-    u32                normalOffset;
-    u32                vertexOffset;
-    s_ObjList*         temp_s1;
-    s_ObjHeader*       mesh;
-    s_GteScratchData*  scratchData;
+    s16               var_v1;
+    u32               normalOffset;
+    u32               vertexOffset;
+    s_ObjList*        temp_s1;
+    s_ObjHeader*      mesh;
+    s_GteScratchData* scratchData;
 
     scratchData = PSX_SCRATCH_ADDR(0);
 
     if (D_800C4168.field_1 != 0)
     {
-        if (arg3->t[2] < (1 << D_800C4168.field_14))
+        if (mat->t[2] < (1 << D_800C4168.field_14))
         {
-            var_v1 = 4096 - (D_800C4168.field_CC[(s32)(arg3->t[2] << 7) >> D_800C4168.field_14] << 4);
+            var_v1 = 4096 - (D_800C4168.field_CC[(s32)(mat->t[2] << 7) >> D_800C4168.field_14] << 4);
         }
         else
         {
@@ -1232,13 +1232,13 @@ void func_8005A21C(s_func_80057344* arg0, void* arg1, void* arg2, MATRIX* arg3) 
             break;
     }
 
-    temp_s1 = arg0->field_8;
+    temp_s1      = arg0->field_8;
     vertexOffset = temp_s1->vertexOffset_9;
     normalOffset = temp_s1->normalOffset_A;
 
     for (mesh = temp_s1->meshes_C; mesh < &temp_s1->meshes_C[temp_s1->meshCount_8]; mesh++)
     {
-        func_8005A900(mesh, vertexOffset, scratchData, arg3);
+        func_8005A900(mesh, vertexOffset, scratchData, mat);
 
         if (D_800C4168.field_0 != 0)
         {
@@ -1404,14 +1404,14 @@ void func_8005A838(s_GteScratchData* scratchData, s32 scale) // 0x8005A838
                  FP_MULTIPLY(D_800C4168.field_26, scale, Q12_SHIFT));
 }
 
-void func_8005A900(s_ObjHeader* arg0, s32 offset, s_GteScratchData* scratchData, MATRIX* mat) // 0x8005A900
+void func_8005A900(s_ObjHeader* objHeader, s32 offset, s_GteScratchData* scratchData, MATRIX* mat) // 0x8005A900
 {
     DVECTOR* inXy;  // Model-space XY input
     u16*     inZ;   // Model-space Z input
     DVECTOR* outXy; // Projected XY output buffer
     u16*     outZ;  // Projected Z output buffer
 
-    if (arg0->vertexCount_1 == 0)
+    if (objHeader->vertexCount_1 == 0)
     {
         return;
     }
@@ -1422,10 +1422,10 @@ void func_8005A900(s_ObjHeader* arg0, s32 offset, s_GteScratchData* scratchData,
     outXy = &scratchData->screenXy_0[offset];
     outZ  = &scratchData->screenZ_168[offset];
 
-    inXy = arg0->vertexXy_8;
-    inZ  = arg0->vertexZ_C;
+    inXy = objHeader->vertexXy_8;
+    inZ  = objHeader->vertexZ_C;
 
-    while (outXy < &scratchData->screenXy_0[arg0->vertexCount_1 + offset])
+    while (outXy < &scratchData->screenXy_0[objHeader->vertexCount_1 + offset])
     {
         // Nearly same as `gte_RotTransPers3`, processes 3 vertices per iteration.
         gte_LoadVector0_1_2_XYZ(inXy, inZ);
@@ -1475,19 +1475,20 @@ void func_8005B3A4(s_800C1450_58* arg0) // 0x8005B3A4
 {
     *(s32*)&arg0->string_8[4] = 0;
     *(s32*)&arg0->string_8[0] = 0;
+
     arg0->field_14 = 0;
     arg0->field_10 = NO_VALUE;
 }
 
-void func_8005B3BC(char* filename, s_PlmTexList* arg1) // 0x8005B3BC
+void func_8005B3BC(char* filename, s_PlmTexList* plmTexList) // 0x8005B3BC
 {
     char sp10[12];
 
     // Some inline `memcpy`/`bcopy`/`strncpy`? those use `lwl`/`lwr`/`swl`/`swr` instead though
     // Example: casting `filename`/`arg1` to `u32*` and using `memcpy` does generate `lw`/`sw`,
     // but not in same order as this, guess it's some custom inline/macro instead.
-    *(u32*)&sp10[0] = *(u32*)&arg1->texName_0.str[0];
-    *(u32*)&sp10[4] = *(u32*)&arg1->texName_0.str[4];
+    *(u32*)&sp10[0] = *(u32*)&plmTexList->texName_0.str[0];
+    *(u32*)&sp10[4] = *(u32*)&plmTexList->texName_0.str[4];
     *(u32*)&sp10[8] = 0;
 
     strcat(sp10, D_80028544); // Copies `TIM` to end of `sp10` string.

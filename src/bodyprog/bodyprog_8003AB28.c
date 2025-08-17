@@ -387,30 +387,30 @@ void MainMenu_SelectedOptionIdxReset() // 0x8003B550
 
 void func_8003B560() {}
 
-const char* g_MainMenuOptions[] =
+const char* g_MainMenu_OptionStrings[] =
 {
     "LOAD",
     "CONTINUE",
     "START",
     "OPTION",
-    "EXTRA",
+    "EXTRA" /** @unused The extra options menu may have once been accessible via the main menu. */
 };
 
 void Gfx_MainMenu_MainTextDraw() // 0x8003B568
 {
-    static const u8 optionsXPos[] = { 0x1D, 0x32, 0x20, 0x27, 0x21 };
-
     #define STR_POS_X_BASE 158
     #define STR_POS_Y_BASE 184
 
+    static const u8 optionsXOffsets[] = { 29, 50, 32, 39, 33 };
+
     s32 i;
 
-    // Run through options.
+    // Draw selection strings.
     for (i = 0; i < MAIN_MENU_OPTION_COUNT; i++)
     {
         if (D_800A9A7C & (1 << i))
         {
-            Gfx_StringSetPosition(STR_POS_X_BASE - optionsXPos[i], STR_POS_Y_BASE + (i * 20));
+            Gfx_StringSetPosition(STR_POS_X_BASE - optionsXOffsets[i], STR_POS_Y_BASE + (i * 20));
             Gfx_StringSetColor(ColorId_White);
 
             if (i == g_MainMenu_SelectedIdx)
@@ -422,7 +422,7 @@ void Gfx_MainMenu_MainTextDraw() // 0x8003B568
                 Gfx_StringDraw("_", 99);
             }
 
-            Gfx_StringDraw(g_MainMenuOptions[i], 99);
+            Gfx_StringDraw(g_MainMenu_OptionStrings[i], 99);
 
             if (i == g_MainMenu_SelectedIdx)
             {
@@ -434,7 +434,7 @@ void Gfx_MainMenu_MainTextDraw() // 0x8003B568
     }
 }
 
-const char* g_MainMenuDifficulty[] =
+const char* g_MainMenu_DifficultyStrings[] =
 {
     "EASY",
     "NORMAL",
@@ -443,14 +443,20 @@ const char* g_MainMenuDifficulty[] =
 
 void Gfx_MainMenu_DifficultyTextDraw(s32 arg0) // 0x8003B678
 {
-    static const u8 difficultyXPos[] = { 0x1C, 0x2B, 0x1E, 0x4C };
-    static const u8 unknown_80025520[] = { 0x00, 0x95, 0xAB, 0x90, 0x00, 0x00, 0x00, 0x00 };
+    #define DIFFICULTY_SELECTION_COUNT 3
+    #define STR_POS_X_BASE             158
+    #define STR_POS_Y_BASE             204
+    #define STR_OFFSET_STEP_Y          20
+
+    static const u8 difficultyXPos[]   = { 28, 43, 30, 76 };
+    static const u8 unknown_80025520[] = { 0, 149, 171, 144, 0, 0, 0, 0 }; // @unused
 
     s32 i;
 
-    for (i = 0; i < 3; i++)
+    // Draw selection strings.
+    for (i = 0; i < DIFFICULTY_SELECTION_COUNT; i++)
     {
-        Gfx_StringSetPosition(158 - difficultyXPos[i], 204 + (20 * i));
+        Gfx_StringSetPosition(STR_POS_X_BASE - difficultyXPos[i], STR_POS_Y_BASE + (STR_OFFSET_STEP_Y * i));
         Gfx_StringSetColor(ColorId_White);
 
         if (i == arg0)
@@ -462,7 +468,7 @@ void Gfx_MainMenu_DifficultyTextDraw(s32 arg0) // 0x8003B678
             Gfx_StringDraw("_", 99);
         }
 
-        Gfx_StringDraw(g_MainMenuDifficulty[i], 99);
+        Gfx_StringDraw(g_MainMenu_DifficultyStrings[i], 99);
 
         if (i == arg0)
         {
@@ -730,7 +736,7 @@ void func_8003BED0() // 0x8003BED0
 {
     s_PlmHeader* D_800BE9FC = &D_800BCE18.field_1BE4;
 
-    if (Fs_QueueIsEntryLoaded(D_800BE9FC->queueIdx_1000) == 0 || D_800BE9FC->isLoaded_2 != 0)
+    if (Fs_QueueIsEntryLoaded(D_800BE9FC->queueIdx_1000) == 0 || D_800BE9FC->isLoaded_2)
     {
         return;
     }
@@ -1189,7 +1195,7 @@ void func_8003CC7C(s_800BCE18_2BEC_0* arg0, MATRIX* arg1, MATRIX* arg2) // 0x800
         }
     }
 
-    // TODO: Some kind of 8-byte-string compare inline/macro?
+    // TODO: Some kind of 8-byte string compare inline/macro?
     if (*(u32*)&temp_s1->string_0[0] != *(u32*)&temp_s2->string_0[0] || *(u32*)&temp_s1->string_0[4] != *(u32*)&temp_s2->string_0[4])
     {
         arg0->field_10.field_9 = 0;
@@ -1402,7 +1408,7 @@ void func_8003D058() // 0x8003D058
     MATRIX           mat1;
     GsCOORDINATE2*   coord;
     s_800BCE18_1BAC* ptr0;
-    s_PlmHeader*     ptr1;
+    s_PlmHeader*     plmHeader;
 
     ptr0 = &D_800BCE18.field_1BAC;
 
@@ -1419,13 +1425,13 @@ void func_8003D058() // 0x8003D058
 
         if (Fs_QueueIsEntryLoaded(ptr0->field_4) != 0) 
         {
-            ptr1 = ptr0->field_14;
+            plmHeader = ptr0->field_14;
 
-            if (!ptr1->isLoaded_2)
+            if (!plmHeader->isLoaded_2)
             {
-                PlmHeader_FixOffsets(ptr1);
-                func_80056504(ptr1, ptr0->field_8, &ptr0->imageDesc_C, 1);
-                func_80056954(ptr1);
+                PlmHeader_FixOffsets(plmHeader);
+                func_80056504(plmHeader, ptr0->field_8, &ptr0->imageDesc_C, 1);
+                func_80056954(plmHeader);
                 func_80056C8C(&ptr0->field_18, ptr0->field_14, 0);
             }
 

@@ -1,8 +1,8 @@
 ## Analysis Guide
 
-Several tools can be used to help disassemble and analyze the game, this guide covers loading the game/overlays into both **Ghidra** and **IDA Pro**.
+Several tools can be used to help disassemble and analyze the game. This guide covers loading the game's overlays into both **Ghidra** and **IDA Pro**.
 
-Ghidra is usually recommended over IDA thanks to its simple support for overlays, but it's always useful to have other tools to check with too.
+Ghidra is recommended over IDA due to its simple support for overlays, but it's useful to have other tools for cross-comparison.
 
 A short guide for using **decomp.me** to create matching function decompilations is also included below.
 
@@ -117,8 +117,8 @@ If the function uses jump tables, decomp.me/m2c may ask for jtbl data before it 
 
 ### .rodata / code offset mismatch
 
-If the func makes use of .rodata you may notice the .rodata offsets can be wildly different compared to the original code, appearing in blue, this can happen when the context includes code of other functions that also use .rodata, causing that to be added before the .rodata of the function you're working on.
+If the function makes use of .rodata, you may notice the .rodata offsets can be wildly different compared to the original ASM. If they appear in blue, this happens because the context includes code for other functions that also use the same .rodata, causing that reference to be added before the .rodata of the function you're working on.
 
-Luckily it's an easy fix: just edit the context and remove all function code after the function/struct declarations (static inlines can usually be left in the context, unless those are causing decompilation issues)
+This is an easy fix: simply edit the context and remove all function code after the function and struct declarations. Note that static inlines can usually be left in the context, unless those are causing decompilation issues.
 
-Code offsets can also be affected by the same thing, causing branch targets to appear in blue despite pointing to same code, the same fix above can also be used for those.
+Code offsets can also be affected by the same thing, causing branch targets to appear in blue despite pointing to the same code. The same fix can resolve them.
