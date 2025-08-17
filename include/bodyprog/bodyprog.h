@@ -1487,14 +1487,14 @@ typedef struct
 /** Part of map headers, pointer passed to `Chara_PositionUpdateFromParams`. */
 typedef struct _AreaLoadParams
 {
-    s32 char_x_0;
+    q19_12 char_x_0;
     u32 mapIdx_4_0     : 5;
     u32 field_4_5      : 4;
     u32 field_4_9      : 3;
     u32 field_4_12     : 4;
     u32 rotationY_4_16 : 8;
     u32 field_4_24     : 8;
-    s32 char_z_8;
+    q19_12 char_z_8;
 } s_AreaLoadParams;
 
 typedef struct
@@ -1544,7 +1544,7 @@ typedef struct _MapOverlayHeader
     s8                (*getMapRoomIdxFunc_4)(s32 x, s32 y); // Called by `Savegame_MapRoomIdxSet`.
     s8                field_8;
     s8                unk_9[3];
-    s8                unk_C[4];
+    void              (*func_C)(); // madeup signature
     s32               (*func_10)();
     s8                field_14; // Flags?
     u8                field_15;
@@ -1555,58 +1555,82 @@ typedef struct _MapOverlayHeader
                                                    // Background image + stage number: 3. Debug leftover? Not all overlays have the required string.
     s_AreaLoadParams* mapAreaLoadParams_1C;
     void              (**mapEventFuncs_20)(); /** Points to array of event functions. */
-    s8                unk_24[4];
+    u8*               unk_24;
     GsCOORDINATE2*    field_28;
     s_UnkStruct_MO*   field_2C;
-    char**            mapMessageStrings_30; /** Points to array of `char*`s for each map message. */
+    const char**      mapMessageStrings_30;
     s_AnimInfo*       animInfo_34;
     s_UnkStruct3_Mo*  field_38;
-    s8                unk_3C[4];
+    void              (*func_3C)(); // madeup signature
     void              (*func_40)();
     void              (*func_44)();
-    s8                unk_48[4];
+    void              (*func_48)(); // madeup signature
     s_func_800625F4*  field_4C;
-    s8                unk_50[16];
+    s32               unk_50;
+    s32*              unk_54;
+    s32               unk_58;
+    s32               unk_5C;
     s8                unk_60[88];
     void              (*func_B8)(s_SubCharacter*, s_MainCharacterExtra*, GsCOORDINATE2*);
     void              (*func_BC)(s_SubCharacter*, s_MainCharacterExtra*, GsCOORDINATE2*);
-    s8                unk_C0[8];
+    void              (*func_C0)(); // madeup signature
+    void              (*func_C4)(); // madeup signature
     void              (*func_C8)();
     void              (*func_CC)(s32);
     s32               (*func_D0)(s32, void*, s16, s32); // 0x800C964C
     s32               (*func_D4)(s_SubCharacter*);      // Assumed return type.
     void              (*func_D8)();                     // Assumed return type.
     void              (*func_DC)();                     // Assumed return type.
-    s8                unk_E0[4];
+    void              (*func_E0)(); // madeup signature
     s32               (*func_E4)(s_SubCharacter*, s_SubCharacter*); // Assumed return type.
     s64               (*func_E8)(s_SubCharacter*);                  // Is it really `s64`???
     s32               (*func_EC)();
-    s8                unk_F0[24];
+    void              (*func_F0)(); // madeup signature
+    void              (*func_F4)(); // madeup signature
+    void              (*func_F8)(); // madeup signature
+    void              (*func_FC)(); // madeup signature
+    void              (*func_100)(); // madeup signature
+    void              (*func_104)(); // madeup signature
     s32               (*func_108)();
-    s8                unk_10C[24];
+    void              (*func_10C)(); // madeup signature
+    void              (*func_110)(); // madeup signature
+    void              (*func_114)(); // madeup signature
+    void              (*func_118)(); // madeup signature
+    void              (*func_11C)(); // madeup signature
+    void              (*func_120)(); // madeup signature
     void              (*func_124)(s_SubCharacter*); // Assumed return type.
     s32               (*func_128)(s_SubCharacter*); // Assumed return type.
     s32               (*func_12C)(s_SubCharacter*); // Assumed return type.
-    s8                unk_130[4];
+    void              (*func_130)(); // madeup signature
     s32               (*func_134)(s_SubCharacter*);           // Assumed return type.
     s32               (*func_138)(s_SubCharacter*);           // Assumed return type.
     s32               (*func_13C)(s32, s32, void*, s16, s32); // 0x800C96B8
-    s8                unk_140[24];
+    void              (*func_140)(); // madeup signature
+    void              (*func_144)(); // madeup signature
+    void              (*func_148)(); // madeup signature
+    void              (*func_14C)(); // madeup signature
+    void              (*func_150)(); // madeup signature
+    void              (*func_154)(); // madeup signature
     void              (*func_158)(s32, s32);
     s8                unk_15C[12];
     void              (*func_168)(void*, void*, void*);
     void              (*func_16C)(VECTOR3*, s16);
-    s8                unk_170[8];
+    void              (*func_170)(); // madeup signature
+    void              (*func_174)(); // madeup signature
     void              (*func_178)(void*, void*, void*);
     void              (*func_17C)(void*, void*);
-    s8                unk_180[20];
+    void              (*func_180)(); // madeup signature
+    void              (*func_184)(); // madeup signature
+    void              (*func_188)(); // madeup signature
+    void              (*func_18C)(); // madeup signature
+    void              (*func_190)(); // madeup signature
     void              (*charaUpdateFuncs_194[Chara_Count])(s_SubCharacter*, void*, s32); /** Guessed params. Funcptrs for each `e_CharacterId`, set to 0 for IDs not included in the map overlay. Called by `func_80038354`. */
     s8                charaGroupIds_248[4];                                              /** `e_CharacterId` values where if `s_SpawnInfo.charaId_4` == 0, `charaGroupIds_248[0]` is used for `charaSpawns_24C[0]` and `charaGroupIds_248[1]` for `charaSpawns_24C[1]`. */
     s_SpawnInfo       charaSpawns_24C[2][16];                                            /** Array of character type/position/flags. `flags_6 == 0` are unused slots? Read by `func_80037F24`. */
     VC_ROAD_DATA      roadDataList_3CC[48];
-    // TODO: A lot more in here.
+    u32                unk_84C[0x200];
 } s_MapOverlayHeader;
-STATIC_ASSERT_SIZEOF(s_MapOverlayHeader, 2124); // Size incomplete.
+STATIC_ASSERT_SIZEOF(s_MapOverlayHeader, 4172); // Size incomplete.
 
 typedef struct
 {
