@@ -543,7 +543,7 @@ bool func_80043B70(s_IpdHeader* ipdHeader) // 0x80043B70
     return func_80056888(ipdHeader->plmHeader_4);
 }
 
-s_IpdColData* func_80043BA4(s_IpdHeader* ipdHeader) // 0x80043BA4
+s_IpdColData* IpdHeader_ColDataGet(s_IpdHeader* ipdHeader) // 0x80043BA4
 {
     if (ipdHeader->isLoaded_1)
     {
@@ -567,7 +567,7 @@ void IpdHeader_FixOffsets(s_IpdHeader* ipdHeader, s_PlmHeader** plmHeaders, s32 
     func_8008E4EC(ipdHeader->plmHeader_4);
     func_80043C7C(ipdHeader, arg3, arg4, arg5);
     func_80056954(ipdHeader->plmHeader_4);
-    func_80043E50(ipdHeader, plmHeaders, plmHeaderCount);
+    IpdHeader_ModelLinkObjLists(ipdHeader, plmHeaders, plmHeaderCount);
     func_80043F88(ipdHeader, ipdHeader->modelInfo_14);
 }
 
@@ -640,7 +640,7 @@ void IpdHeader_FixHeaderOffsets(s_IpdHeader* header) // 0x80043DA4
     }
 }
 
-void func_80043E50(s_IpdHeader* ipdHeader, s_PlmHeader** plmHeaders, s32 plmHeaderCount) // 0x80043E50
+void IpdHeader_ModelLinkObjLists(s_IpdHeader* ipdHeader, s_PlmHeader** plmHeaders, s32 plmHeaderCount) // 0x80043E50
 {
     s_IpdModelInfo* modelInfo;
     s32             i;
@@ -651,14 +651,14 @@ void func_80043E50(s_IpdHeader* ipdHeader, s_PlmHeader** plmHeaders, s32 plmHead
         modelInfo = &ipdHeader->modelInfo_14[i];
         if (!modelInfo->isGlobalPlm_0)
         {
-            modelInfo->field_C = func_80043F2C(&modelInfo->modelName_4, ipdHeader->plmHeader_4);
+            modelInfo->objList_C = PlmHeader_ObjListSearch(&modelInfo->modelName_4, ipdHeader->plmHeader_4);
         }
         else
         {
             for (j = 0; j < plmHeaderCount; j++)
             {
-                modelInfo->field_C = func_80043F2C(&modelInfo->modelName_4, plmHeaders[j]);
-                if (modelInfo->field_C != 0)
+                modelInfo->objList_C = PlmHeader_ObjListSearch(&modelInfo->modelName_4, plmHeaders[j]);
+                if (modelInfo->objList_C != 0)
                 {
                     break;
                 }
@@ -667,7 +667,7 @@ void func_80043E50(s_IpdHeader* ipdHeader, s_PlmHeader** plmHeaders, s32 plmHead
     }
 }
 
-s_ObjList* func_80043F2C(u_Filename* objName, s_PlmHeader* plmHeader) // 0x80043F2C
+s_ObjList* PlmHeader_ObjListSearch(u_Filename* objName, s_PlmHeader* plmHeader) // 0x80043F2C
 {
     s_ObjList* obj;
     s32        i;

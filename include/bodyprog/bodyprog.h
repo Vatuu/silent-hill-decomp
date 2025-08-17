@@ -758,7 +758,7 @@ typedef struct
     u8         isGlobalPlm_0; // `false` if loaded from inside IPD, `true` if loaded from `*_GLB.PLM`
     u8         unk_1[3];
     u_Filename modelName_4;
-    void*      field_C;
+    s_ObjList* objList_C;
 } s_IpdModelInfo;
 STATIC_ASSERT_SIZEOF(s_IpdModelInfo, 16);
 
@@ -2667,7 +2667,7 @@ bool func_80043B34(s_800C117C* arg0, s_800C1020* arg1);
 
 bool func_80043B70(s_IpdHeader* ipdHeader);
 
-s_IpdColData* func_80043BA4(s_IpdHeader* ipdHeader);
+s_IpdColData* IpdHeader_ColDataGet(s_IpdHeader* ipdHeader);
 
 void IpdHeader_FixOffsets(s_IpdHeader* ipdHeader, s_PlmHeader** plmHeaders, s32 plmHeaderCount, s32 arg3, s32 arg4, s32 arg5);
 
@@ -2682,11 +2682,11 @@ bool func_80043D64(s_PlmTexList* texList);
 
 void IpdHeader_FixHeaderOffsets(s_IpdHeader* header);
 
-/** @brief Updates model pointers inside `s_IpdHeader` to point to objects from the given `s_PlmHeader` array. */
-void func_80043E50(s_IpdHeader* ipdHeader, s_PlmHeader** plmHeaders, s32 plmHeaderCount);
+/** @brief Assigns `s_ObjList` pointers to models in `s_IpdHeader` by searching the given `s_PlmHeader` array. */
+void IpdHeader_ModelLinkObjLists(s_IpdHeader* ipdHeader, s_PlmHeader** plmHeaders, s32 plmHeaderCount);
 
-/** @brief Searches `s_PlmHeader` for objects with the given filename. */
-s_ObjList* func_80043F2C(u_Filename* objName, s_PlmHeader* plmHeader);
+/** @brief Searches `s_PlmHeader` for objects with the given `objName`. */
+s_ObjList* PlmHeader_ObjListSearch(u_Filename* objName, s_PlmHeader* plmHeader);
 
 void func_80044044(s_80044044* arg0, s32 arg1, s32 arg2);
 

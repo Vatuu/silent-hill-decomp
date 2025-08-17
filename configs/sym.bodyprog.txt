@@ -357,8 +357,11 @@ vcSetRefPosAndCamPosAngByPad                = 0x800406D4; // type:func
 //--------------------------------------------------------------------
 //--- PA: 0x01BF04   VA: 0x80040A64   subsegment: c, bodyprog_80040A64
 //--------------------------------------------------------------------
+IpdHeader_ColDataGet                        = 0x80043BA4; // type:func
 IpdHeader_FixOffsets                        = 0x80043BC4; // type:func
 IpdHeader_FixHeaderOffsets                  = 0x80043DA4; // type:func
+IpdHeader_ModelLinkObjLists                 = 0x80043E50; // type:func
+PlmHeader_ObjListSearch                     = 0x80043F2C; // type:func
 Anim_Update0                                = 0x800449F0; // type:func
 Anim_Update1                                = 0x80044B38; // type:func
 Anim_Update2                                = 0x80044CA4; // type:func
