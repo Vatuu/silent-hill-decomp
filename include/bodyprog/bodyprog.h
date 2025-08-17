@@ -1090,7 +1090,7 @@ typedef struct
     s32             field_150;
     s32             field_154;
     s32             field_158;     // Array length.
-    s_800C117C      field_15C[20]; // Length guessed, could be less or more. Might be `s_Skeleton` instance based on `func_80041C24` usage.
+    s_800C117C      field_15C[20]; // Length guessed, could be less or more.
     s8              unk_38C[492];
     s32             field_578;
     s32             field_57C;
@@ -2604,8 +2604,8 @@ void func_80041CB4(s_func_80041CB4* arg0, s_PlmHeader* plmHeader);
 
 void func_80041CEC(s_PlmHeader* plmHeader);
 
-/** Clears `field_4` in array of skeletons? Might not be skeletons, but the struct fits. */
-void func_80041D10(s_Skeleton* skels, s32 size);
+/** @brief Clears `queueIdx_4` in array of `s_800C117C` */
+void func_80041D10(s_800C117C* arg0, s32 size);
 
 /** Crucial for map loading. */
 void func_80041D48();

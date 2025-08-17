@@ -202,7 +202,7 @@ void func_80041C24(s_PlmHeader* plmHeader, s32 arg1, s32 arg2) // 0x80041C24
     D_800C1020.field_158 = 0;
     D_800C1020.field_588 = 1;
 
-    func_80041D10(D_800C1020.field_15C, 4); // TODO: `field_15C` should be `s_Skeleton`?
+    func_80041D10(D_800C1020.field_15C, 4);
     func_80041D48();
     func_80041E98();
 }
@@ -226,15 +226,13 @@ void func_80041CEC(s_PlmHeader* plmHeader) // 0x80041CEC
     plmHeader->objectCount_8  = 0;
 }
 
-void func_80041D10(s_Skeleton* skels, s32 size) // 0x80041D10
+void func_80041D10(s_800C117C* arg0, s32 size) // 0x80041D10
 {
-    s_Skeleton* end;
+    s_800C117C* ptr;
 
-    end = skels + size;
-    while (skels < end)
+    for(ptr = &arg0[0]; ptr < &arg0[size]; ptr++)
     {
-        skels->field_4 = NO_VALUE;
-        skels          = (s_Skeleton*)((u8*)skels + sizeof(s_Skeleton)); 
+        ptr->queueIdx_4 = NO_VALUE;
     }
 }
 
