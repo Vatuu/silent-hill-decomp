@@ -318,9 +318,9 @@ void func_800420C0() // 0x800420C0
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800420FC); // 0x800420FC
 
-s32 func_80042178(s32* arg0) // 0x80042178
+s_800C1450_58* func_80042178(char* arg0) // 0x80042178
 {
-    s32 ret = func_8005B4BC(arg0, &D_800C1450);
+    s_800C1450_58* ret = func_8005B4BC(arg0, &D_800C1450.field_0);
     if (ret != 0)
     {
         return ret;

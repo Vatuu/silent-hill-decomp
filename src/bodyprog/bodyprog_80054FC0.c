@@ -1530,7 +1530,7 @@ void func_8005B474(s_800C1450_0* arg0, s_800C1450_58* arg1, s32 num) // 0x8005B4
     }
 }
 
-s_800C1450_58* func_8005B4BC(char* str, s_800C1450* arg1) // 0x8005B4BC
+s_800C1450_58* func_8005B4BC(char* str, s_800C1450_0* arg1) // 0x8005B4BC
 {
     s_800C1450_58* ptr;
     char           prevStr[8];
@@ -1538,9 +1538,9 @@ s_800C1450_58* func_8005B4BC(char* str, s_800C1450* arg1) // 0x8005B4BC
 
     func_80056D64(prevStr, str);
 
-    for (i = 0; i < arg1->field_0.count_0; ++i)
+    for (i = 0; i < arg1->count_0; ++i)
     {
-        ptr = arg1->field_0.entries_4[i];
+        ptr = arg1->entries_4[i];
 
         // Fast string comparison.
         if (ptr->field_10 != NO_VALUE &&
@@ -11360,7 +11360,7 @@ u32 func_800806AC(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x800806AC
 
     func_800699F8(&D_800C4620, arg1, arg3);
 
-    res = arg2 < D_800C4620.field_0;
+    res = arg2 < D_800C4620.groundHeight_0;
     if (res != 0)
     {
         res = ~D_800C4620.field_8 != 0;

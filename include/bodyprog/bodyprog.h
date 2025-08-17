@@ -1266,13 +1266,6 @@ typedef struct
 
 typedef struct
 {
-    s32 field_0;
-    s8  unk_4[4];
-    s8  field_8;
-} s_800C4620;
-
-typedef struct
-{
     u8      field_0;
     u8      field_1;
     u8      field_2;
@@ -2390,7 +2383,7 @@ extern s8 D_800C4560;
 
 extern u8 D_800C4561;
 
-extern s_800C4620 D_800C4620;
+extern s_func_800699F8 D_800C4620;
 
 extern VECTOR3 D_800C4640[][8]; // Or struct?
 
@@ -2604,7 +2597,7 @@ void func_8004201C();
 
 void func_800420C0();
 
-s32 func_80042178(s32* arg0);
+s_800C1450_58* func_80042178(char* arg0);
 
 void func_800421D8(char* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
 
@@ -3280,7 +3273,7 @@ void func_8005B46C(s_800C1450_0* arg0);
 /** Crucial for map loading. */
 void func_8005B474(s_800C1450_0* arg0, s_800C1450_58* arg1, s32 num);
 
-s_800C1450_58* func_8005B4BC(char* str, s_800C1450* arg1);
+s_800C1450_58* func_8005B4BC(char* str, s_800C1450_0* arg1);
 
 /** Sets the debug string position. */
 void func_8005BF0C(s16 unused, s16 x, s16 y);
