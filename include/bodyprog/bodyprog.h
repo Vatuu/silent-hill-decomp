@@ -1874,14 +1874,14 @@ extern s32 g_MainMenuState;
 extern s32 g_MainMenu_SelectedIdx;
 
 /** Flags for which main menu options to display. Flag (1 << 5) corresponts to the "EXTRA" option, which is unused and never set. */
-extern u32 D_800A9A7C;
+extern u32 g_MainMenuShowOptions;
 
 /** Counts the amount of times that demos has been play in the current game session. */
 extern s8 g_Demo_ReproducedCount;
 
 extern s32 g_MainMenu_NewGameSelectedDifficultyIdx;
 
-extern s32 D_800A9A88;
+extern s32 g_LastSaveGameCount;
 
 extern RECT D_800A9A6C; // `RECT<320, 256, 160, 240>`, only used in `SysState_Fmv_Update`?
 
@@ -2137,7 +2137,7 @@ extern u16 D_800BCCB2;
  */
 extern s32 g_Gfx_ScreenFade; // 0x800BCD0C
 
-extern s16 D_800BCD28;
+extern s16 g_SaveGameCount;
 
 /** @brief Test if demo loading should be reinitialized.
  * This is used exclusively in `GameFs_MapStartup` with

@@ -99,31 +99,33 @@ void GameState_MainMenu_Update() // 0x8003AB28
                 }
             }
 
-            D_800A9A7C = (1 << 2) | (1 << 3);
+            g_MainMenuShowOptions = (1 << 2) | (1 << 3);
 
-            if (g_GameWork.savegame_90.playerHealth_240 > 0)
+            if (g_GameWork.autosave_90.playerHealth_240 > 0)
             {
-                D_800A9A7C = (1 << 1) | (1 << 2) | (1 << 3);
+                g_MainMenuShowOptions = (1 << 1) | (1 << 2) | (1 << 3);
             }
 
-            if (D_800BCD28 > 0)
+            // If memory card present and we have some saves
+            if (g_SaveGameCount > 0)
             {
-                D_800A9A7C |= (1 << 0) | (1 << 1);
+                g_MainMenuShowOptions |= (1 << 0) | (1 << 1);
                 
-                if (D_800A9A88 < D_800BCD28 && g_MainMenu_SelectedIdx != 0)
+                if (g_LastSaveGameCount < g_SaveGameCount && g_MainMenu_SelectedIdx != 0)
                 {
                     g_MainMenu_SelectedIdx = 1;
                 }
             }
-            else if (D_800A9A88 > 0)
+            // If we have no saves but had in the past (memory card was removed, then we died)
+            else if (g_LastSaveGameCount > 0)
             {
-                while(!(D_800A9A7C & (1 << g_MainMenu_SelectedIdx)))
+                while(!(g_MainMenuShowOptions & (1 << g_MainMenu_SelectedIdx)))
                 {
                     g_MainMenu_SelectedIdx++;
                 }
             }
 
-            D_800A9A7C |= D_800A9A7C << MAIN_MENU_OPTION_COUNT;
+            g_MainMenuShowOptions |= g_MainMenuShowOptions << MAIN_MENU_OPTION_COUNT;
 
             if (g_Controller0->btnsPulsed_18 & (ControllerFlag_LStickUp | ControllerFlag_LStickDown))
             {
@@ -140,14 +142,14 @@ void GameState_MainMenu_Update() // 0x8003AB28
             if (g_Controller0->btnsPulsed_18 & ControllerFlag_LStickUp)
             {
                 g_MainMenu_SelectedIdx += MAIN_MENU_OPTION_COUNT;
-                while(!(D_800A9A7C & (1 << --g_MainMenu_SelectedIdx)))
+                while(!(g_MainMenuShowOptions & (1 << --g_MainMenu_SelectedIdx)))
                 {
                 }
             }
 
             if (g_Controller0->btnsPulsed_18 & ControllerFlag_LStickDown)
             {                
-                while(!(D_800A9A7C & (1 << ++g_MainMenu_SelectedIdx)))
+                while(!(g_MainMenuShowOptions & (1 << ++g_MainMenu_SelectedIdx)))
                 {
                 }
             }
@@ -180,9 +182,9 @@ void GameState_MainMenu_Update() // 0x8003AB28
                 switch (g_MainMenu_SelectedIdx)
                 {
                     case 1: // Quick load.
-                        if (g_GameWork.savegame_90.playerHealth_240 > 0)
+                        if (g_GameWork.autosave_90.playerHealth_240 > 0)
                         {
-                            g_GameWork.savegame_30C = g_GameWork.savegame_90;
+                            g_GameWork.savegame_30C = g_GameWork.autosave_90;
                         }
                         else
                         {
@@ -212,7 +214,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
                 }
             }
 
-            D_800A9A88 = D_800BCD28;
+            g_LastSaveGameCount = g_SaveGameCount;
 
         default:
             break;
@@ -302,7 +304,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
                 Gfx_ScreenRefresh(SCREEN_WIDTH, 0);
                 Fs_QueueWaitForEmpty();
 
-                if (g_GameWork.savegame_90.playerHealth_240 > 0)
+                if (g_GameWork.autosave_90.playerHealth_240 > 0)
                 {
                     nextGameStates[1] = 10;
                 }
@@ -404,14 +406,14 @@ void Gfx_MainMenu_MainTextDraw() // 0x8003B568
     #define COLUMN_POS_Y 184
     #define STR_OFFSET_Y 20
 
-    static const u8 MAIN_MENU_STR_OFFSETS_X[] = { 29, 50, 32, 39, 33 }; // @unused Element at index 4. See `D_800A9A7C`.
+    static const u8 MAIN_MENU_STR_OFFSETS_X[] = { 29, 50, 32, 39, 33 }; // @unused Element at index 4. See `g_MainMenuShowOptions`.
 
     s32 i;
 
     // Draw selection strings.
     for (i = 0; i < MAIN_MENU_OPTION_COUNT; i++)
     {
-        if (!(D_800A9A7C & (1 << i)))
+        if (!(g_MainMenuShowOptions & (1 << i)))
         {
             continue;
         }
