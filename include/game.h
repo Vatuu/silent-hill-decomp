@@ -822,7 +822,7 @@ typedef struct _GameWork
 {
     s_SaveUserConfig   config_0;
     s_ControllerData   controllers_38[CONTROLLER_COUNT_MAX];
-    s_Savegame         savegame_90; // Backup savegame?
+    s_Savegame         autosave_90;
     s_Savegame         savegame_30C;
     u16                gsScreenWidth_588;
     u16                gsScreenHeight_58A;

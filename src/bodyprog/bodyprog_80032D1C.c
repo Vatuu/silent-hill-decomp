@@ -385,7 +385,7 @@ bool func_80033548() // 0x80033548
     sp38                        = D_800BCD34;
     D_800BCD34                  = func_8002E898();
     g_MemCardsTotalElementCount = 0;
-    D_800BCD28                  = 0;
+    g_SaveGameCount                  = 0;
 
     for (i = 0; i < 8; i += 4)
     {
@@ -515,7 +515,7 @@ bool func_80033548() // 0x80033548
                     var_a0 = WrapIdx(i);
 
                     g_MemCardElementCount[var_a0 >> 2]++;
-                    D_800BCD28--;
+                    g_SaveGameCount--;
                     g_SlotElementCount[var_a0 >> 2]++;
 
                     g_ActiveSavegameEntry++;
@@ -595,7 +595,7 @@ bool func_80033548() // 0x80033548
         g_MemCardsTotalElementCount += g_MemCardElementCount[WrapIdx(i) >> 2];
     }
 
-    D_800BCD28 += g_MemCardsTotalElementCount;
+    g_SaveGameCount += g_MemCardsTotalElementCount;
 
     for (i = 0; i < 8; i += 4)
     {
@@ -3844,8 +3844,7 @@ void func_8003A16C() // 0x8003A16C
         // Update `savegame_30C` with player info.
         SysWork_SavegameUpdatePlayer();
 
-        // TODO: What is `savegame_90` used for?
-        g_GameWork.savegame_90 = g_GameWork.savegame_30C;
+        g_GameWork.autosave_90 = g_GameWork.savegame_30C;
     }
 }
 
@@ -3976,9 +3975,9 @@ void SysState_GameOver_Update() // 0x8003A52C
             g_MapOverlayHeader.func_C8();
             g_SysWork.field_28 = 0;
 
-            if (g_GameWork.savegame_90.continueCount_27B < 99)
+            if (g_GameWork.autosave_90.continueCount_27B < 99)
             {
-                g_GameWork.savegame_90.continueCount_27B++;
+                g_GameWork.autosave_90.continueCount_27B++;
             }
 
             MainMenu_SelectedOptionIdxReset();

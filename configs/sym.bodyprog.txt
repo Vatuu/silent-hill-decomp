@@ -49,6 +49,7 @@ nextGameStates                              = 0x80025480;
 MAIN_MENU_STR_OFFSETS_X                     = 0x800254EC;
 DIFFICULTY_MENU_STR_OFFSETS_X               = 0x8002551C;
 DIFFICULTY_MENU_UNUSED                      = 0x80025520;
+
 //------------------------------------------------------
 //--- PA: 0x001084   VA: 0x80025BE4   subsegment: rodata
 //------------------------------------------------------
@@ -1912,8 +1913,10 @@ g_SysStateFuncs                             = 0x800A9A2C; // type:u32 size:0x3C
 //-----------------------------------------------------------------------
 g_MainMenuState                             = 0x800A9A74;
 g_MainMenu_SelectedIdx                      = 0x800A9A78;
+g_MainMenuShowOptions                       = 0x800A9A7C;
 g_Demo_ReproducedCount                      = 0x800A9A80;
 g_MainMenu_NewGameSelectedDifficultyIdx     = 0x800A9A84;
+g_LastSaveGameCount                         = 0x800A9A88;
 
 //------------------------------------------------------------------------
 //--- PA: 0x084F2C   VA: 0x800A9A8C   subsegment: .data, bodyprog_8003AB28
@@ -2236,6 +2239,7 @@ g_ObjectTableIdx                            = 0x800B9FB8;
 g_SysWork                                   = 0x800B9FC0; // type:SysWork size:0x2768 - should use s_SysWork here, but splat only supports custom structs with capital letter at beginning.
 g_GameWork                                  = 0x800BC728; // type:GameWork size:0x5D8
 g_Gfx_ScreenFade                            = 0x800BCD0C;
+g_SaveGameCount                             = 0x800BCD28;
 g_ActiveSavegameEntry                       = 0x800BCD2C;
 g_MemCardElementCount                       = 0x800BCD30;
 g_SaveScreenPlayerState                     = 0x800BCD38;

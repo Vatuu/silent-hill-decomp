@@ -1965,7 +1965,7 @@ void Savegame_SaveLogic() // 0x801E6B18
                     break;
 
                 case 11:
-                    g_GameWork.savegame_90 = g_GameWork.savegame_30C;
+                    g_GameWork.autosave_90 = g_GameWork.savegame_30C;
 
                 default:
                     g_GameWork.gameStateStep_598[0] = 1;
@@ -2059,7 +2059,7 @@ void Savegame_ContinueLogic() // 0x801E6F38
             D_800A97D7 = 1;
 
             // Backup current savegame? Does anything ever restore from this?
-            g_GameWork.savegame_90 = g_GameWork.savegame_30C;
+            g_GameWork.autosave_90 = g_GameWork.savegame_30C;
 
             Game_PlayerInit();
             
@@ -2140,7 +2140,7 @@ void Gfx_SaveScreen() // 0x801E70C8
 
         if (g_GameWork.gameState_594 == GameState_DeathLoadScreen)
         {
-            Gfx_SaveSelectedDisplacement(i, D_800BCD28);
+            Gfx_SaveSelectedDisplacement(i, g_SaveGameCount);
         }
         else
         {
@@ -2201,7 +2201,7 @@ void func_801E737C() // 0x801E737C
         return;
     }
 
-    if (D_800BCD28 == 0 || D_800BCD39 != 0 || !func_80033548())
+    if (g_SaveGameCount == 0 || D_800BCD39 != 0 || !func_80033548())
     {
         g_GameWork.gameState_594 = GameState_SaveScreen;
 
