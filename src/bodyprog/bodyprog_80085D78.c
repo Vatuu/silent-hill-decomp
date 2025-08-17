@@ -663,12 +663,12 @@ void Camera_RotationSet(VECTOR3* lookAt, s32 xLookAtOffset, s32 yLookAtOffset, s
     vcUserWatchTarget(&lookAtTarget, &camRotParams, warpLookAtFlag);
 }
 
-void func_80086C58(s32 arg0, s32 arg1)
+void func_80086C58(s_SubCharacter* chara0, s_SubCharacter* chara1) // 0x80086C58
 {
     switch (g_SysWork.field_10)
     {
         case 0:
-            func_80085EB8(0, arg0, arg1, 0);
+            func_80085EB8(0, chara0, chara1, 0);
 
             g_SysWork.timer_2C = 0;
             g_SysWork.field_14 = 0;
@@ -676,7 +676,7 @@ void func_80086C58(s32 arg0, s32 arg1)
             break;
 
         case 1:
-            func_80085EB8(1, arg0, 0, 1);
+            func_80085EB8(1, chara0, NULL, 1);
             break;
 
         default:
@@ -689,20 +689,20 @@ void func_80086C58(s32 arg0, s32 arg1)
     }
 }
 
-void func_80086D04(s32 arg0)
+void func_80086D04(s_SubCharacter* chara) // 0x80086D04
 {
     switch (g_SysWork.field_10)
     {
         case 0:
-            func_80085EB8(3, arg0, 0, 0);
-            
+            func_80085EB8(3, chara, NULL, 0);
+
             g_SysWork.timer_2C = 0;
             g_SysWork.field_14 = 0;
             g_SysWork.field_10++;
             break;
 
         case 1:
-            func_80085EB8(1, arg0, 0, 1);
+            func_80085EB8(1, chara, NULL, 1);
             break;
 
         default:
@@ -1443,11 +1443,11 @@ void func_800881B8(s32 x0, s16 y0, s32 x1, s16 y1, s16 arg4, s16 arg5, s16 arg6,
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80088370); // 0x80088370
 
-bool Chara_Load(s32 arg0, s8 arg1, s32 arg2, s8 arg3, s32 arg4, s32 arg5) // 0x80088C7C
+bool Chara_Load(s32 arg0, s8 arg1, GsCOORDINATE2* coord, s8 arg3, void* arg4, s_FsImageDesc* image) // 0x80088C7C
 {
-    func_80035338(arg0 + 1, arg1, NULL, arg2);
+    func_80035338(arg0 + 1, arg1, NULL, coord);
     func_8003D5B4(arg3);
-    func_8003D6E0(arg1, arg0, arg4, arg5);
+    func_8003D6E0(arg1, arg0, arg4, image);
     return true;
 }
 
@@ -1515,14 +1515,14 @@ void func_800890B8() // 0x800890B8
 
 s32 func_80089128() // 0x80089128
 {
-    s32             temp_s0;
-    s32             temp_s1;
-    s32             temp_v0;
-    s32             var_s0;
-    s_SysWork_2514* var_s2;
-    s32             var_s3;
-    s32             var_s5;
-    s32             var_s6;
+    s32                temp_s0;
+    s32                temp_s1;
+    s_func_80089644_0* temp_v0;
+    s_func_80089644_0* var_s0;
+    s_SysWork_2514*    var_s2;
+    s32                var_s3;
+    s32                var_s5;
+    s32                var_s6;
 
     var_s2 = &g_SysWork.field_2514;
 
@@ -1957,7 +1957,7 @@ s32 func_8008A0E4(s32 arg0, s16 arg1, s_SubCharacter* chara, s_PlayerCombat* com
         return NO_VALUE;
     }
 
-    if (chara == &g_SysWork.player_4C)
+    if (chara == &g_SysWork.player_4C.chara_0)
     {
         anim1                       = D_800297B8;
         anim0                       = g_MapOverlayHeader.animInfo_34;
@@ -1995,7 +1995,7 @@ s32 func_8008A0E4(s32 arg0, s16 arg1, s_SubCharacter* chara, s_PlayerCombat* com
     temp_a1         = func_8008A3E0(chara);
     ret             = NO_VALUE;
 
-    if (chara == &g_SysWork.player_4C)
+    if (chara == &g_SysWork.player_4C.chara_0)
     {
         count    = 6;
         var_v0_2 = 1;
@@ -2688,7 +2688,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008D990); // 0x
 
 void func_8008E4EC(s_PlmHeader* plmHeader) // 0x8008E4EC
 {
-    func_80056504(plmHeader, &D_8002B2CC, &D_800AFD9C, 1);
+    func_80056504(plmHeader, D_8002B2CC.str, &D_800AFD9C, 1);
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008E51C); // 0x8008E51C

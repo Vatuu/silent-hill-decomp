@@ -515,10 +515,10 @@ void func_80056464(s_PlmHeader* plmHeader, s32 fileIdx, s32* arg2, s32 arg3) // 
 
 void func_80056504(s_PlmHeader* plmHeader, char* newStr, s32* arg2, s32 arg3) // 0x80056504
 {
-    s8 sp10[8];
+    char sp10[8];
 
-    func_80056D64(&sp10, newStr);
-    func_80056558(plmHeader, &sp10, arg2, arg3);
+    func_80056D64(sp10, newStr);
+    func_80056558(plmHeader, sp10, arg2, arg3);
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80056558); // 0x80056558
@@ -1452,7 +1452,7 @@ void func_8005B1A0(s_800C1450_58* arg0, char* arg1, s32 arg2, u8 arg3, s32 arg4,
     arg0->field_3 = arg5;
     arg0->field_4 = arg6;
     arg0->field_6 = arg7;
-    func_80056D64(arg0->string_8, arg1);
+    func_80056D64(arg0->string_8.str, arg1);
     arg0->field_14 = 0;
     arg0->field_10 = -1;
 }
@@ -1468,13 +1468,13 @@ void func_8005B378(s_800C1450_58* arg0, char* arg1) // 0x8005B378
 {
     arg0->field_14 = 1;
     arg0->field_10 = 0;
-    func_80056D64(arg0->string_8, arg1);
+    func_80056D64(arg0->string_8.str, arg1);
 }
 
 void func_8005B3A4(s_800C1450_58* arg0) // 0x8005B3A4
 {
-    *(s32*)&arg0->string_8[4] = 0;
-    *(s32*)&arg0->string_8[0] = 0;
+    arg0->string_8.u32[1] = 0;
+    arg0->string_8.u32[0] = 0;
 
     arg0->field_14 = 0;
     arg0->field_10 = NO_VALUE;
@@ -1512,34 +1512,29 @@ void func_8005B424(VECTOR3* vec0, VECTOR3* vec1) // 0x8005B424
     *((s_func_8005B424*)vec0) = *((s_func_8005B424*)vec1);
 }
 
-void func_8005B46C(s32* arg0) // 0x8005B46C
+void func_8005B46C(s_800C1450_0* arg0) // 0x8005B46C
 {
-    *arg0 = 0;
+    arg0->count_0 = 0;
 }
 
-void func_8005B474(s32* arg0, u32 arg1, s32 idx) // 0x8005B474
+void func_8005B474(s_800C1450_0* arg0, s_800C1450_58* arg1, s32 num) // 0x8005B474
 {
-    u32  temp_a2;
-    u32  var_a1;
-    u32* ptr;
+    s_800C1450_58*  ptr;
+    s_800C1450_58** entryPtr;
 
-    var_a1  = arg1;
-    temp_a2 = var_a1 + (idx * 24);
-    ptr     = arg0 + 1;
-
-    for (; var_a1 < temp_a2; ptr++)
+    entryPtr = arg0->entries_4;
+    for (ptr = &arg1[0]; ptr < &arg1[num];)
     {
-        *ptr    = var_a1;
-        var_a1 += 24;
-        *arg0  += 1;
+        *entryPtr++ = ptr++;
+        arg0->count_0++;
     }
 }
 
-s_800C1450_0_4* func_8005B4BC(char* str, s_800C1450* arg1) // 0x8005B4BC
+s_800C1450_58* func_8005B4BC(char* str, s_800C1450* arg1) // 0x8005B4BC
 {
-    s_800C1450_0_4* ptr;
-    char            prevStr[8];
-    s32             i;
+    s_800C1450_58* ptr;
+    char           prevStr[8];
+    s32            i;
 
     func_80056D64(prevStr, str);
 
@@ -1547,9 +1542,9 @@ s_800C1450_0_4* func_8005B4BC(char* str, s_800C1450* arg1) // 0x8005B4BC
     {
         ptr = arg1->field_0.entries_4[i];
 
-        // Fast string comparison. `s_800C1450_0_4::field_8` is also likely a `char[8]`.
+        // Fast string comparison.
         if (ptr->field_10 != NO_VALUE &&
-            *(u32*)&prevStr[0] == ptr->field_8 && *(u32*)&prevStr[4] == ptr->field_C)
+            *(u32*)&prevStr[0] == ptr->string_8.u32[0] && *(u32*)&prevStr[4] == ptr->string_8.u32[1])
         {
             return ptr;
         }
@@ -1596,12 +1591,12 @@ s32 func_8005C7D0(s_SubCharacter* chara, s32 moveSpeed) // 0x8005C7D0
     s_SubCharacter* npc;
     s_SubCharacter* player;
 
-    if (chara == &g_SysWork.player_4C)
+    if (chara == &g_SysWork.player_4C.chara_0)
     {
         return NPC_COUNT_MAX;
     }
 
-    npc    = &g_SysWork.npcs_1A0;
+    npc    = &g_SysWork.npcs_1A0[0];
     player = chara;
     for (i = 0; i < NPC_COUNT_MAX; i++, npc++)
     {
@@ -1921,7 +1916,7 @@ void func_800699F8(s_func_800699F8* coll, s32 posX, s32 posZ) // 0x800699F8
     VECTOR3         sp28;
     s_func_8006CC44 sp38;
 
-    s32 temp_v0;
+    s_IpdColData* temp_v0;
 
     sp28.vx = 0;
     sp28.vy = 0;
@@ -2610,12 +2605,12 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8006DA08); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8006DAE4); // 0x8006DAE4
 
-static inline void func_8006DB3C_Inline(s8* arg0, VECTOR3* arg1, s32 arg2, u16* p)
+static inline void func_8006DB3C_Inline(s_func_800700F8_2* arg0, VECTOR3* arg1, VECTOR3* arg2, u16* p)
 {
     func_8006DAE4(arg0, arg1, arg2, (short)*p);
 }
 
-s32 func_8006DB3C(s_func_800700F8_2* arg0, VECTOR3* arg1, VECTOR3* arg2, s_func_800700F8* arg3) // 0x8006DB3C
+s32 func_8006DB3C(s_func_800700F8_2* arg0, VECTOR3* arg1, VECTOR3* arg2, s_SubCharacter* arg3) // 0x8006DB3C
 {
     s32 sp28;
     s32 temp_s0;
@@ -2749,7 +2744,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8006EEB8); // 0x
 void func_8006F250(s_func_8006F250* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x8006F250
 {
     s32  idx;
-    s32* scratch = PSX_SCRATCH; // Maybe a struct?
+    s_func_8006F338* scratch = PSX_SCRATCH;
 
     func_8006F338(scratch, arg1, arg2, arg3, arg4);
 
@@ -2761,15 +2756,15 @@ void func_8006F250(s_func_8006F250* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4
         }
     }
 
-    if (scratch[10] == 0x1000)
+    if (scratch->field_28 == 0x1000)
     {
         arg0->field_0 = 0x20000;
         arg0->field_4 = -0x10000;
     }
     else
     {
-        arg0->field_0 = Math_MulFixed(Vc_VectorMagnitudeCalc(scratch[4], 0, scratch[5]), scratch[10], 12);
-        arg0->field_4 = scratch[11];
+        arg0->field_0 = Math_MulFixed(Vc_VectorMagnitudeCalc(scratch->field_10, 0, scratch->field_14), scratch->field_28, Q12_SHIFT);
+        arg0->field_4 = scratch->field_2C;
     }
 }
 
@@ -2911,7 +2906,7 @@ bool func_80070084(s_SubCharacter* chara, s32 x, s32 y, s32 z) // 0x80070084
     deltaPos.vz = z - chara->position_18.vz;
 
     result = false;
-    if (func_8006DB3C(&var, &chara->position_18, &deltaPos, (s_func_800700F8*)chara) != 0)
+    if (func_8006DB3C(&var, &chara->position_18, &deltaPos, chara) != 0)
     {
         result = var.field_10 == 0;
     }
@@ -2919,17 +2914,17 @@ bool func_80070084(s_SubCharacter* chara, s32 x, s32 y, s32 z) // 0x80070084
     return result;
 }
 
-s32 func_800700F8(s_func_800700F8* arg0, s_func_800700F8* arg1) // 0x800700F8
+s32 func_800700F8(s_SubCharacter* arg0, s_SubCharacter* arg1) // 0x800700F8
 {
     s_func_800700F8_2 sp10;
     VECTOR3           vec0;
     VECTOR3           vec1;
 
-    vec0 = arg0->field_18;
+    vec0 = arg0->position_18;
 
-    vec1.vx = arg1->field_18.vx - arg0->field_18.vx;
+    vec1.vx = arg1->position_18.vx - arg0->position_18.vx;
     vec1.vy = FP_METER(-0.1f);
-    vec1.vz = arg1->field_18.vz - arg0->field_18.vz;
+    vec1.vz = arg1->position_18.vz - arg0->position_18.vz;
 
     return func_8006DB3C(&sp10, &vec0, &vec1, arg0) && sp10.field_10 == 0;
 }
@@ -2953,25 +2948,25 @@ bool func_80070184(s_SubCharacter* chara, s32 arg1, s16 rotY) // 0x80070184
     return func_80070084(chara, varX, varY, varZ);
 }
 
-bool func_80070208(s_func_800700F8* arg0, s32 arg1) // 0x80070208
+bool func_80070208(s_SubCharacter* arg0, s32 arg1) // 0x80070208
 {
     s_func_800700F8_2 var;
     VECTOR3           vec;
     s32               result;
 
-    vec.vx = FP_MULTIPLY(arg1, shRsin(arg0->rotation_26.vy), Q12_SHIFT);
+    vec.vx = FP_MULTIPLY(arg1, shRsin(arg0->rotation_24.vy), Q12_SHIFT);
     vec.vy = 0;
-    vec.vz = FP_MULTIPLY(arg1, shRcos(arg0->rotation_26.vy), Q12_SHIFT);
+    vec.vz = FP_MULTIPLY(arg1, shRcos(arg0->rotation_24.vy), Q12_SHIFT);
 
     result = false;
-    if (func_8006DB3C(&var, &arg0->field_18, &vec, arg0) != 0)
+    if (func_8006DB3C(&var, &arg0->position_18, &vec, arg0) != 0)
     {
         result = var.field_10 > 0;
     }
     return result;
 }
 
-s32 func_8007029C(VECTOR3* arg0, s32 arg1, s16 angle) // 0x8007029C
+s32 func_8007029C(s_SubCharacter* arg0, s32 arg1, s16 angle) // 0x8007029C
 {
     s8      vars[28];
     VECTOR3 vec;
@@ -2980,7 +2975,7 @@ s32 func_8007029C(VECTOR3* arg0, s32 arg1, s16 angle) // 0x8007029C
     vec.vy = 0;
     vec.vz = FP_MULTIPLY(arg1, shRcos(angle), Q12_SHIFT);
 
-    return func_8006DB3C(&vars, &arg0[2], &vec, arg0);
+    return func_8006DB3C(&vars, &arg0->position_18, &vec, arg0);
 }
 
 bool func_80070320() // 0x80070320
@@ -9195,7 +9190,7 @@ void func_8007C0D8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
         sp30.vz = sp20.vz;
     }
 
-    func_80069B24(&D_800C4590, &sp20, chara);
+    func_80069B24(&D_800C4590.field_0, &sp20, chara);
 
     if (g_SavegamePtr->mapOverlayId_A4 == MapOverlayId_MAP1_S05)
     {
@@ -11248,7 +11243,7 @@ void func_8007FD4C(s32 arg0) // 0x8007FD4C
 // Large function.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8007FDE0); // 0x8007FDE0
 
-void func_800802CC(VECTOR3* pos0, VECTOR3* pos1) // 0x800802CC
+s32 func_800802CC(VECTOR3* pos0, VECTOR3* pos1) // 0x800802CC
 {
     s32 deltaX = pos1->vx - pos0->vx;
     s32 deltaY = pos1->vy - pos0->vy;

@@ -59,7 +59,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80040BAC); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80040E7C); // 0x80040E7C
 
-void func_80041074(s32 arg0, void* arg1, void* arg2, s32 arg3) // 0x80041074
+void func_80041074(s32 arg0, void* arg1, SVECTOR* arg2, VECTOR3* arg3) // 0x80041074
 {
     VECTOR3 sp18;
     s32     sp28;
@@ -479,7 +479,7 @@ s32 func_800436D8(s_80043338* arg0, s32 fileIdx, s16 fileChunkCoordX, s16 fileCh
     // Store file chunk coords and read file.
     arg0->fileChunkCoordX_8 = fileChunkCoordX;
     arg0->fileChunkCoordZ_A = fileChunkCoordZ;
-    arg0->queueEntryIdx_4   = Fs_QueueStartRead(fileIdx, arg0->field_0);
+    arg0->queueEntryIdx_4   = Fs_QueueStartRead(fileIdx, arg0->destBuf_0);
 
     // Compute and store distance to file chunk edge in `arg0`.
     func_80043338(arg0, posX0, posZ0, posX1, posZ1, clip);
@@ -715,13 +715,12 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800445A4); // 0x
 // Anim func.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800446D8); // 0x800446D8
 
-s32 func_80044918(s_ModelAnim* anim) // 0x80044918
+s_AnimInfo* func_80044918(s_ModelAnim* anim) // 0x80044918
 {
-    // According to `80044950`, this func returns a funcptr?
     // `field_C`/`field_10` usually points to data at `0x800AF228` which contains funcptrs and other stuff.
 
-    s32 animInfo_C;
-    s32 animInfo_10;
+    s_AnimInfo* animInfo_C;
+    s_AnimInfo* animInfo_10;
     u8  animIdx_0;
     s32 field_1;
 
@@ -733,10 +732,10 @@ s32 func_80044918(s_ModelAnim* anim) // 0x80044918
     if (animInfo_10 != 0 && animIdx_0 >= field_1)
     {
         animInfo_C  = animInfo_10;
-        animInfo_C -= field_1 * 16;
+        animInfo_C -= field_1;
     }
 
-    return animInfo_C + (animIdx_0 * 16);
+    return &animInfo_C[animIdx_0];
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80044950); // 0x80044950

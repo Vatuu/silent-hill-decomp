@@ -156,9 +156,10 @@ typedef struct
 } s_AreaLoadSfx;
 
 // Exception, as one of the unidentified structs uses this.
-typedef struct
+typedef struct _s_8002AC04
 {
-    s32 field_0;
+    struct _s_8002AC04* field_0;
+
     u8  field_4;
     u8  field_5;
     u16 field_6;
@@ -870,12 +871,12 @@ typedef struct
 // Maybe level stream data?
 typedef struct
 {
-    s32 field_0;
-    s32 queueEntryIdx_4;
-    s16 fileChunkCoordX_8;
-    s16 fileChunkCoordZ_A;
-    s32 field_C;           // Something to do with distance from file chunk edge.
-    s32 field_10;          // Something to do with distance from file chunk edge.
+    void* destBuf_0;
+    s32   queueEntryIdx_4;
+    s16   fileChunkCoordX_8;
+    s16   fileChunkCoordZ_A;
+    s32   field_C;           // Something to do with distance from file chunk edge.
+    s32   field_10;          // Something to do with distance from file chunk edge.
 } s_80043338;
 
 typedef struct
@@ -1102,32 +1103,24 @@ typedef struct
 
 typedef struct
 {
-    s8  unk_0[8];
-    s32 field_8;
-    s32 field_C;
-    s32 field_10;
-} s_800C1450_0_4;
-
-typedef struct
-{
-    s32             count_0;
-    s_800C1450_0_4* entries_4[10];
-} s_800C1450_0;
-
-typedef struct
-{
     s8   field_0;
     s8   field_1;
     s8   field_2;
     s8   field_3;
     s16  field_4;
     s16  field_6;
-    char string_8[8];
+    u_Filename string_8;
     s32  field_10;
     s8   field_14;
     u8   unk_15[3];
 } s_800C1450_58;
 STATIC_ASSERT_SIZEOF(s_800C1450_58, 24);
+
+typedef struct
+{
+    s32            count_0;
+    s_800C1450_58* entries_4[10];
+} s_800C1450_0;
 
 // Related to textures.
 typedef struct
@@ -1564,13 +1557,6 @@ typedef struct
 
 typedef struct
 {
-    s8      unk_0[24];
-    VECTOR3 field_18;
-    SVECTOR rotation_26; // Implied type.
-} s_func_800700F8;
-
-typedef struct
-{
     s8   field_0; // Maybe bool?
     u8   field_1;
     s8   unk_2[2];
@@ -1615,7 +1601,7 @@ extern s_FsImageDesc g_MainImg0; // 0x80022C74 - TODO: Part of main exe, move to
 /** Some sort of struct inside RODATA, likely a constant. */
 extern s32 D_8002500C;
 
-extern s8* D_8002510C;
+extern char D_8002510C[]; // "\aNow_loading."
 
 /** Default key bindings. Multiple configs probably? */
 extern s_ControllerConfig D_8002511C[];
@@ -1638,7 +1624,7 @@ extern RECT D_8002ABA4;
 
 extern s_8002AC04 D_8002AC04[10];
 
-extern s_PlmHeader D_8002B2CC;
+extern u_Filename D_8002B2CC;
 
 extern s32 g_MapMsg_WidthTable[];
 
@@ -2046,7 +2032,7 @@ extern s_800B5D04 D_800B5D04[];
 
 extern u8 D_800B7CC4[][8192];
 
-extern s_func_800700F8 D_800BA00C; // Often passed to `func_800700F8`.
+extern s_SubCharacter D_800BA00C; // Often passed to `func_800700F8`, might not be full `s_SubCharacter`?
 
 extern u8 D_800BC74F;
 
@@ -2586,7 +2572,7 @@ s8 func_80040A64(VECTOR3* pos);
 
 bool func_80040B74(s32 arg0);
 
-void func_80041074(s32 arg0, void* arg1, void* arg2, s32 arg3);
+void func_80041074(s32 arg0, void* arg1, SVECTOR* arg2, VECTOR3* arg3);
 
 void func_800410D8(VECTOR3*, s32*, s32*, SVECTOR*, VECTOR3*);
 
@@ -2671,7 +2657,7 @@ void func_80044044(s_80044044* arg0, s32 arg1, s32 arg2);
 /** Loads anim file? */
 void func_800445A4(s_AnimFile*, GsCOORDINATE2*);
 
-s32 func_80044918(s_ModelAnim* anim);
+s_AnimInfo* func_80044918(s_ModelAnim* anim);
 
 void func_800446D8(s_Skeleton*, GsCOORDINATE2*, s32, s32, s32);
 
@@ -3126,9 +3112,9 @@ void Camera_TranslationSet(VECTOR3* pos, s32 xPosOffset, s32 yPosOffset, s32 zPo
 void Camera_RotationSet(VECTOR3* lookAt, s32 xLookAtOffset, s32 yLookAtOffset, s32 zLookAtOffset,
                         s32 xAngularAccel, s32 yAngularAccel, s32 xAngularSpeedMax, s32 yAngularSpeedMax, bool warpLookAtFlag);
 
-void func_80086C58(s32 arg0, s32 arg1);
+void func_80086C58(s_SubCharacter* chara0, s_SubCharacter* chara1);
 
-void func_80086D04(s32 arg0);
+void func_80086D04(s_SubCharacter* chara);
 
 void func_80086DA8(s32 arg0, s32 arg1);
 
@@ -3165,7 +3151,7 @@ Could `arg5` be a struct pointer?
 `func_8003D6E0` uses this function and in the last argument
 it input `arg5` and `arg5` is an undetermined function pointer
 */
-bool Chara_Load(s32 arg0, s8 arg1, s32 arg2, s8 arg3, s32 arg4, s32 arg5);
+bool Chara_Load(s32 arg0, s8 arg1, GsCOORDINATE2* coord, s8 arg3, void* arg4, s_FsImageDesc* image);
 
 bool func_80088D0C();
 
@@ -3289,17 +3275,12 @@ void GameFs_SaveLoadBinLoad();
 /** Loads `Tim00` graphic. */
 void GameFs_Tim00TIMLoad();
 
-void func_8005B46C(s32* arg0);
+void func_8005B46C(s_800C1450_0* arg0);
 
-/** Crucial for map loading.
- *
- * TODO: Reformulate the function.
- * Context provided by `func_80041D48` suggests the following signature:
- * `void func_8005B474(s_800C1450_0* arg0, s_800C1450_58* arg1, s32 num);`
- */
-void func_8005B474(s32* arg0, u32 arg1, s32 idx);
+/** Crucial for map loading. */
+void func_8005B474(s_800C1450_0* arg0, s_800C1450_58* arg1, s32 num);
 
-s_800C1450_0_4* func_8005B4BC(char* str, s_800C1450* arg1);
+s_800C1450_58* func_8005B4BC(char* str, s_800C1450* arg1);
 
 /** Sets the debug string position. */
 void func_8005BF0C(s16 unused, s16 x, s16 y);
@@ -3378,7 +3359,7 @@ bool func_8006D90C(s_func_800700F8_2* arg0, VECTOR3* vec1, VECTOR3* vec2);
 
 s32 func_8006DA08(VECTOR3*, VECTOR3*, VECTOR3*, s_SubCharacter*);
 
-s32 func_8006DB3C(s_func_800700F8_2* arg0, VECTOR3* arg1, VECTOR3* arg2, s_func_800700F8* arg3);
+s32 func_8006DB3C(s_func_800700F8_2* arg0, VECTOR3* arg1, VECTOR3* arg2, s_SubCharacter* arg3);
 
 bool func_8006DCE0(s_func_8006DCE0* arg0, s32 arg1, s16 arg2, VECTOR3* pos0, VECTOR3* pos1, s32 arg5, s32 arg6, s32 arg7, s32 arg8);
 
@@ -3394,7 +3375,7 @@ bool func_80070030(s_SubCharacter* chara, s32 x, s32 y, s32 z);
 
 bool func_80070084(s_SubCharacter* chara, s32 x, s32 y, s32 z);
 
-s32 func_800700F8(s_func_800700F8* arg0, s_func_800700F8* arg1);
+s32 func_800700F8(s_SubCharacter* arg0, s_SubCharacter* arg1);
 
 bool func_80070184(s_SubCharacter* chara, s32 arg1, s16 rotY);
 
@@ -3404,9 +3385,9 @@ s32 func_80070360(s_SubCharacter* chara, s32 someDist, s16 arg2);
 
 void func_80070400(s_func_80070400_0* arg0, s_func_80070400_1* arg1, s_func_80070400_1* arg2);
 
-bool func_80070208(s_func_800700F8* arg0, s32 arg1);
+bool func_80070208(s_SubCharacter* arg0, s32 arg1);
 
-s32 func_8007029C(VECTOR3* arg0, s32 arg1, s16 angle);
+s32 func_8007029C(s_SubCharacter* arg0, s32 arg1, s16 angle);
 
 void func_800705E4(GsCOORDINATE2*, s32, s32, s32, s32);
 
@@ -3588,7 +3569,7 @@ void func_80037E78(s_SubCharacter* chara);
 
 s32 func_800382B0(s32 arg0);
 
-void func_800802CC(VECTOR3* pos0, VECTOR3* pos1);
+s32 func_800802CC(VECTOR3* pos0, VECTOR3* pos1);
 
 /** @brief Returns the distance on the XZ plane between two positions. */
 s32 Math_Distance2d(VECTOR3* pos0, VECTOR3* pos1);
