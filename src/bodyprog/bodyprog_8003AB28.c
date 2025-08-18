@@ -111,17 +111,17 @@ void GameState_MainMenu_Update() // 0x8003AB28
             {
                 g_MainMenu_VisibleEntryFlags |= (1 << MainMenuEntry_Load) | (1 << MainMenuEntry_Continue);
                 
-                if (g_PrevSavegameCount < g_SavegameCount && g_MainMenu_SelectedIdx != MainMenuEntry_Load)
+                if (g_PrevSavegameCount < g_SavegameCount && g_MainMenu_SelectedEntry != MainMenuEntry_Load)
                 {
-                    g_MainMenu_SelectedIdx = MainMenuEntry_Continue;
+                    g_MainMenu_SelectedEntry = MainMenuEntry_Continue;
                 }
             }
             // Mo savegames exist but did previously (e.g. memory card removed before player death).
             else if (g_PrevSavegameCount > 0)
             {
-                while(!(g_MainMenu_VisibleEntryFlags & (1 << g_MainMenu_SelectedIdx)))
+                while(!(g_MainMenu_VisibleEntryFlags & (1 << g_MainMenu_SelectedEntry)))
                 {
-                    g_MainMenu_SelectedIdx++;
+                    g_MainMenu_SelectedEntry++;
                 }
             }
 
@@ -141,21 +141,21 @@ void GameState_MainMenu_Update() // 0x8003AB28
 
             if (g_Controller0->btnsPulsed_18 & ControllerFlag_LStickUp)
             {
-                g_MainMenu_SelectedIdx += MAIN_MENU_OPTION_COUNT;
-                while(!(g_MainMenu_VisibleEntryFlags & (1 << --g_MainMenu_SelectedIdx)))
+                g_MainMenu_SelectedEntry += MAIN_MENU_OPTION_COUNT;
+                while(!(g_MainMenu_VisibleEntryFlags & (1 << --g_MainMenu_SelectedEntry)))
                 {
                 }
             }
 
             if (g_Controller0->btnsPulsed_18 & ControllerFlag_LStickDown)
             {                
-                while(!(g_MainMenu_VisibleEntryFlags & (1 << ++g_MainMenu_SelectedIdx)))
+                while(!(g_MainMenu_VisibleEntryFlags & (1 << ++g_MainMenu_SelectedEntry)))
                 {
                 }
             }
 
             // Wrap selection.
-            g_MainMenu_SelectedIdx %= MAIN_MENU_OPTION_COUNT;
+            g_MainMenu_SelectedEntry %= MAIN_MENU_OPTION_COUNT;
 
             if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
             {
@@ -170,7 +170,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
                 g_Gfx_ScreenFade = 2;
                 g_MainMenuState++;
 
-                if (g_MainMenu_SelectedIdx < 2u)
+                if (g_MainMenu_SelectedEntry < (u32)MainMenuEntry_Start) // TODO: Odd cast.
                 {
                     Sd_EngineCmd(Sfx_StartGame);
                 }
@@ -179,9 +179,9 @@ void GameState_MainMenu_Update() // 0x8003AB28
                     Sd_EngineCmd(Sfx_Confirm);
                 }
 
-                switch (g_MainMenu_SelectedIdx)
+                switch (g_MainMenu_SelectedEntry)
                 {
-                    case 1: // Quick load.
+                    case MainMenuEntry_Continue:
                         if (g_GameWork.autosave_90.playerHealth_240 > Q19_12(0.0f))
                         {
                             g_GameWork.savegame_30C = g_GameWork.autosave_90;
@@ -196,20 +196,20 @@ void GameState_MainMenu_Update() // 0x8003AB28
                         GameFs_MapLoad(g_SavegamePtr->mapOverlayId_A4);
                         break;
 
-                    case 0: // Load save and load menu.
+                    case MainMenuEntry_Load:
                         GameFs_SaveLoadBinLoad();
                         break;
 
-                    case 2:
+                    case MainMenuEntry_Start:
                         g_Gfx_ScreenFade = 0;
                         g_MainMenuState  = MenuState_DifficultySelector;
                         break;
 
-                    case 3: // Load options menu.
+                    case MainMenuEntry_Option:
                         GameFs_OptionBinLoad();
                         break;
 
-                    case 4:
+                    case MainMenuEntry_Extra: // @unused See `e_MainMenuEntry`.
                         break;
                 }
             }
@@ -304,12 +304,12 @@ void GameState_MainMenu_Update() // 0x8003AB28
                 Gfx_ScreenRefresh(SCREEN_WIDTH, 0);
                 Fs_QueueWaitForEmpty();
 
-                if (g_GameWork.autosave_90.playerHealth_240 > 0)
+                if (g_GameWork.autosave_90.playerHealth_240 > Q19_12(0.0f))
                 {
                     nextGameStates[1] = 10;
                 }
 
-                if (g_MainMenu_SelectedIdx == 2)
+                if (g_MainMenu_SelectedEntry == MainMenuEntry_Start)
                 {
                     Chara_PositionUpdateFromParams(g_MapOverlayHeader.mapAreaLoadParams_1C);
                 }
@@ -318,7 +318,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
 
                 prevState                       = g_GameWork.gameState_594;
                 g_GameWork.gameStateStep_598[0] = prevState;
-                g_GameWork.gameState_594        = nextGameStates[g_MainMenu_SelectedIdx];
+                g_GameWork.gameState_594        = nextGameStates[g_MainMenu_SelectedEntry];
                 g_SysWork.timer_1C              = 0;
                 g_GameWork.gameStatePrev_590    = prevState;
                 g_GameWork.gameStateStep_598[0] = 0;
@@ -386,7 +386,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
 
 void MainMenu_SelectedOptionIdxReset() // 0x8003B550
 {
-    g_MainMenu_SelectedIdx = MainMenuEntry_Continue;
+    g_MainMenu_SelectedEntry = MainMenuEntry_Continue;
 }
 
 void func_8003B560() {}
@@ -422,7 +422,7 @@ void Gfx_MainMenu_MainTextDraw() // 0x8003B568
         Gfx_StringSetPosition(COLUMN_POS_X - MAIN_MENU_STR_OFFSETS_X[i], COLUMN_POS_Y + (i * STR_OFFSET_Y));
         Gfx_StringSetColor(ColorId_White);
 
-        if (i == g_MainMenu_SelectedIdx)
+        if (i == g_MainMenu_SelectedEntry)
         {
             Gfx_StringDraw("[", 99);
         }
@@ -433,7 +433,7 @@ void Gfx_MainMenu_MainTextDraw() // 0x8003B568
 
         Gfx_StringDraw(MAIN_MENU_ENTRY_STRINGS[i], 99);
 
-        if (i == g_MainMenu_SelectedIdx)
+        if (i == g_MainMenu_SelectedEntry)
         {
             Gfx_StringDraw("]", 99);
         }

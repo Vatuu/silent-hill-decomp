@@ -1912,7 +1912,7 @@ g_SysStateFuncs                             = 0x800A9A2C; // type:u32 size:0x3C
 //--- PA: 0x084F08   VA: 0x800A9A68   subsegment: data, bodyprog_800A9A68
 //-----------------------------------------------------------------------
 g_MainMenuState                             = 0x800A9A74;
-g_MainMenu_SelectedIdx                      = 0x800A9A78;
+g_MainMenu_SelectedEntry                    = 0x800A9A78;
 g_MainMenu_VisibleEntryFlags                = 0x800A9A7C;
 g_Demo_ReproducedCount                      = 0x800A9A80;
 g_MainMenu_NewGameSelectedDifficultyIdx     = 0x800A9A84;

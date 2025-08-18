@@ -9,47 +9,34 @@
 // ENUMS
 // ======
 
-/** @brief Master options menu states.
+/** @brief Options menu states.
  *
  * When the user navigates an options menu, this facilitates menu switching
  * via `s_GameWork::gameStateStep[0]`.
  */
-typedef enum _OptMenuState
+typedef enum _OptionsMenuState
 {
-    OptMenuState_EnterMain       = 0,  /** Entering main options menu. */
-    OptMenuState_Main            = 1,  /** In main options menu. */
-    OptMenuState_ScreenPos       = 2,  /** In screen position submenu. */
-    OptMenuState_Brightness      = 3,  /** In brightness submenu. */
-    OptMenuState_Controller      = 4,  /** In controller binding submenu. */
-    OptMenuState_LeaveMenu       = 5,  /** Leaving menu back to gameplay. */
-    OptMenuState_LeaveMain       = 6,  /** Leaving main options menu. */
-    OptMenuState_EnterScreenPos  = 7,  /** Entering screen position submenu. */
-    OptMenuState_EnterBrightness = 8,  /** Entering brightness submenu. */
-    OptMenuState_EnterController = 9,  /** Entering controller binding submenu. */
-    OptMenuState_LeaveScreenPos  = 10, /** Leaving screen position submenu. */
-    OptMenuState_LeaveBrightness = 11, /** Leaving brightness submenu. */
-    OptMenuState_LeaveController = 12, /** Leaving controller binding submenu. */
-    OptMenuState_EnterExtra      = 13, /** Entering extra options menu. */
-    OptMenuState_Extra           = 14, /** In extra options menu. */
-    OptMenuState_LeaveExtra      = 15  /** Leaving extra options menu. */
-} e_OptMenuState;
+    OptionsMenuState_EnterMainOptions  = 0,  /** Entering main options menu. */
+    OptionsMenuState_MainOptions       = 1,  /** In main options menu. */
+    OptionsMenuState_ScreenPos         = 2,  /** In screen position menu. */
+    OptionsMenuState_Brightness        = 3,  /** In brightness menu. */
+    OptionsMenuState_Controller        = 4,  /** In controller config menu. */
+    OptionsMenuState_Leave             = 5,  /** Leaving options menu back to gameplay. */
+    OptionsMenuState_LeaveMainOptions  = 6,  /** Leaving main options menu. */
+    OptionsMenuState_EnterScreenPos    = 7,  /** Entering screen position menu. */
+    OptionsMenuState_EnterBrightness   = 8,  /** Entering brightness menu. */
+    OptionsMenuState_EnterController   = 9,  /** Entering controller config menu. */
+    OptionsMenuState_LeaveScreenPos    = 10, /** Leaving screen position menu. */
+    OptionsMenuState_LeaveBrightness   = 11, /** Leaving brightness menu. */
+    OptionsMenuState_LeaveController   = 12, /** Leaving controller config menu. */
+    OptionsMenuState_EnterExtraOptions = 13, /** Entering extra options menu. */
+    OptionsMenuState_ExtraOptions      = 14, /** In extra options menu. */
+    OptionsMenuState_LeaveExtraOptions = 15  /** Leaving extra options menu. */
+} e_OptionsMenuState;
 
-/** @brief Screen position options submenu states.
+/** @brief Brightness menu states.
  *
- * When the user navigates the screen position options submenu, this facilitates menu switching
- * via `s_GameWork::gameStateStep[1]`.
- */
-typedef enum _OptMenuScreenPosState
-{
-    ScreenPosMenuState_0     = 0,
-    ScreenPosMenuState_1     = 1,
-    ScreenPosMenuState_2     = 2,
-    ScreenPosMenuState_Leave = 3
-} e_OptMenuScreenPosState;
-
-/** @brief Brightness options submenu states.
- *
- * When the user navigates the brightness options submenu, this facilitates menu switching
+ * When the user navigates the brightness menu, this facilitates menu switching
  * via `s_GameWork::gameStateStep[1]`.
  */
 typedef enum _BrightnessMenuState
@@ -60,66 +47,80 @@ typedef enum _BrightnessMenuState
     BrightnessMenuState_Leave = 3
 } e_BrightnessMenuState;
 
-/** @brief Controller binding options submenu states.
+/** @brief Controller config menu states. Also used as entries for the left presets pane.
  *
- * When the user navigates the controller binding options submenu, this facilitates menu switching
- * via `s_GameWork::gameStateStep[1]`. It is also used for submenu selections (left column).
+ * When the user navigates the controller config menu, this facilitates menu switching
+ * via `s_GameWork::gameStateStep[1]`.
  */
-typedef enum _ContMenuState
+typedef enum _ControllerMenuState
 {
-    ContMenuState_Leave   = -2,
-    ContMenuState_Actions = -1,
-    ContMenuState_Exit    = 0,
-    ContMenuState_Type1   = 1,
-    ContMenuState_Type2   = 2,
-    ContMenuState_Type3   = 3,
+    ControllerMenuState_Leave   = -2,
+    ControllerMenuState_Actions = -1,
+    ControllerMenuState_Exit    = 0,
+    ControllerMenuState_Type1   = 1,
+    ControllerMenuState_Type2   = 2,
+    ControllerMenuState_Type3   = 3,
 
-    ContMenuState_Count   = 4
-} e_ContMenuState;
+    ControllerMenuState_Count   = 4
+} e_ControllerMenuState;
 
-/** @brief Main options menu selections. */
-typedef enum _OptionMain
+/** @brief Screen position menu states.
+ *
+ * When the user navigates the screen position menu, this facilitates menu switching
+ * via `s_GameWork::gameStateStep[1]`.
+ */
+typedef enum _ScreenPosMenuState
 {
-    OptMain_Exit           = 0,
-    OptMain_Brightness     = 1,
-    OptMain_Controller     = 2,
-    OptMain_ScreenPosition = 3,
-    OptMain_Vibration      = 4,
-    OptMain_AutoLoad       = 5,
-    OptMain_Sound          = 6,
-    OptMain_BgmVolume      = 7,
-    OptMain_SfxVolume      = 8,
+    ScreenPosMenuState_0     = 0,
+    ScreenPosMenuState_1     = 1,
+    ScreenPosMenuState_2     = 2,
+    ScreenPosMenuState_Leave = 3
+} e_ScreenPosMenuState;
 
-    OptMain_Count          = 9
-} e_OptionMain;
-
-/** @brief Extra options menu selections. */
-typedef enum _OptionExtra
+/** @brief Main options menu entries. */
+typedef enum _MainOptionsMenuEntry
 {
-    OptExtra_WeaponCtrl   = 0,
-    OptExtra_Blood        = 1,
-    OptExtra_ViewCtrl     = 2,
-    OptExtra_RetreatTurn  = 3,
-    OptExtra_MovementCtrl = 4,
-    OptExtra_AutoAiming   = 5,
-    OptExtra_ViewMode     = 6,
-    OptExtra_BulletMult   = 7,
+    MainOptionsMenuEntry_Exit           = 0,
+    MainOptionsMenuEntry_Brightness     = 1,
+    MainOptionsMenuEntry_Controller     = 2,
+    MainOptionsMenuEntry_ScreenPosition = 3,
+    MainOptionsMenuEntry_Vibration      = 4,
+    MainOptionsMenuEntry_AutoLoad       = 5,
+    MainOptionsMenuEntry_Sound          = 6,
+    MainOptionsMenuEntry_BgmVolume      = 7,
+    MainOptionsMenuEntry_SfxVolume      = 8,
 
-    OptExtra_Count        = 8
-} e_OptionExtra;
+    MainOptionsMenuEntry_Count          = 9
+} e_MainOptionsMenuEntry;
 
-/** @brief Blood color options submenu selections. */
-typedef enum _OptionBloodColor
+/** @brief Extra options menu entries. */
+typedef enum _ExtraOptionsMenuEntry
 {
-    OptBloodColor_Normal = 0,
-    OptBloodColor_Green  = 1,
-    OptBloodColor_Violet = 2,
-    OptBloodColor_Black  = 3,
+    ExtraOptionsMenuEntry_WeaponCtrl   = 0,
+    ExtraOptionsMenuEntry_Blood        = 1,
+    ExtraOptionsMenuEntry_ViewCtrl     = 2,
+    ExtraOptionsMenuEntry_RetreatTurn  = 3,
+    ExtraOptionsMenuEntry_MovementCtrl = 4,
+    ExtraOptionsMenuEntry_AutoAiming   = 5,
+    ExtraOptionsMenuEntry_ViewMode     = 6,
+    ExtraOptionsMenuEntry_BulletMult   = 7,
 
-    OptBloodColor_Count  = 4
-} e_OptionBloodColor;
+    ExtraOptionsMenuEntry_Count        = 8
+} e_ExtraOptionsMenuEntry;
 
-/** @brief Controller binding options submenu selections (right column). */
+/** @brief Blood color menu entries. */
+typedef enum _BloodColorMenuEntry
+{
+    BloodColorMenuEntry_Normal = 0,
+    BloodColorMenuEntry_Green  = 1,
+    BloodColorMenuEntry_Violet = 2,
+    BloodColorMenuEntry_Black  = 3,
+
+    BloodColorMenuEntry_Count  = 4
+} e_BloodColorMenuEntry;
+
+// TODO: Should be moved elsewhere, options only borrow this enum.
+/** @brief Input actions. Also used as controller config menu entries for the right actions pane. */
 typedef enum _InputAction
 {
     InputAction_Enter  = 0,
@@ -152,64 +153,63 @@ typedef enum _BloodColor
 // STRUCTS
 // ========
 
-typedef struct _ScreenCtrl_SelectedElement
+typedef struct _ControllerMenu_SelectedEntries
 {
-    e_ContMenuState optionIdx_0;
-    e_InputAction   actionIdx_4;
-} s_ScreenCtrl_SelectedElement;
+    e_ControllerMenuState preset_0;
+    e_InputAction         action_4;
+} s_ControllerMenu_SelectedEntries;
 
 // ========
 // GLOBALS
 // ========
 
-extern s32 g_MainMenu_SelectedIdx;
+extern s32 g_MainOptionsMenu_SelectedEntry;
 
-extern s32 g_ExtraMenu_SelectedIdx;
+extern s32 g_ExtraOptionsMenu_SelectedEntry;
 
-extern s32 g_MainMenu_PrevSelectedIdx;
+extern s32 g_MainOptionsMenu_PrevSelectedEntry;
 
-extern s32 g_ExtraMenu_PrevSelectedIdx;
+extern s32 g_ExtraOptionsMenu_PrevSelectedEntry;
 
-extern s32 g_Gfx_ScreenPos_InvertColorBg;
+extern bool g_ScreenPosMenu_InvertBackgroundFade;
 
-extern bool g_ControllerMenu_IsOnActionColumn;
+extern bool g_ControllerMenu_IsOnActionsPane;
 
-extern DR_MODE D_801E730C[MEMORY_CARD_SLOT_COUNT];
+extern DR_MODE g_ControllerMenu_SelectionHighlightDrawModes[MEMORY_CARD_SLOT_COUNT];
 
-extern POLY_G4 D_801E7324[MEMORY_CARD_SLOT_COUNT];
+extern POLY_G4 g_ControllerMenu_SelectionHighlightQuad[MEMORY_CARD_SLOT_COUNT];
 
-extern DVECTOR g_Options_Extra_SelectionHighlightFrom_Unused;
-extern DVECTOR g_Options_Extra_SelectionHighlightTo_Unused;
-extern DVECTOR g_Options_Main_SelectionHighlightFrom_Unused;
-extern DVECTOR g_Options_Main_SelectionHighlightTo_Unused;
+extern DVECTOR g_ExtraOptions_SelectionHighlightFrom_Unused;
+extern DVECTOR g_ExtraOptions_SelectionHighlightTo_Unused;
+extern DVECTOR g_MainOptions_SelectionHighlightFrom_Unused;
+extern DVECTOR g_MainOptions_SelectionHighlightTo_Unused;
 
-extern DVECTOR g_Options_Extra_SelectionHighlightFrom;
-extern DVECTOR g_Options_Extra_SelectionHighlightTo;
+extern DVECTOR g_ExtraOptions_SelectionHighlightFrom;
+extern DVECTOR g_ExtraOptions_SelectionHighlightTo;
 
-extern DVECTOR g_Options_Main_SelectionHighlightFrom;
-extern DVECTOR g_Options_Main_SelectionHighlightTo;
+extern DVECTOR g_MainOptions_SelectionHighlightFrom;
+extern DVECTOR g_MainOptions_SelectionHighlightTo;
 
-extern s32 g_Gfx_ScreenPos_InvertColorBg_TransitionCounter;
+extern s32 g_ScreenPosMenu_BackgroundFade;
 
-extern s16 g_ScreenPos_PosX;
+extern s16 g_ScreenPosMenu_PositionX;
+extern s16 g_ScreenPosMenu_PositionY;
 
-extern s_ScreenCtrl_SelectedElement g_ScreenCtrl_SelectedElement;
-
-extern s16 g_ScreenPos_PosY;
+extern s_ControllerMenu_SelectedEntries g_ControllerMenu_SelectedEntries;
 
 /** @brief Tracks movement time of the cursor highlight. */
-extern s32 g_Options_SelectionCursorTimer;
+extern s32 g_Options_SelectionHighlightTimer;
 
 /** @brief Defines the number of options to
  * show in the extra options screen.
  * Used to show extra unlockable settings if
  * the player has them unlocked.
  */
-extern s32 g_OptExtra_ShowSettingsCount;
+extern s32 g_ExtraOptionsMenu_EntryCount;
 
-extern s32 g_OptExtra_BloodColorSelected;
+extern s32 g_ExtraOptionsMenu_SelectedBloodColorEntry;
 
-extern s32 g_OptExtra_BulletMultLimit;
+extern s32 g_ExtraOptionsMenu_BulletMultMax;
 
 // ==========
 // FUNCTIONS
@@ -219,118 +219,240 @@ extern s32 g_OptExtra_BulletMultLimit;
 // `options.c`
 // ============
 
-// `GameState_Options_Update`
-void GameState_OptionScreen_Update();
+/** @brief Options menu game state handler.
+ *
+ * Scratch: https://decomp.me/scratch/n8GDJ
+ */
+void GameState_Options_Update();
 
-// `Options_ExtraOptionsMenu_ConfigUpdate`
-void Settings_ExtraScreen();
+/** @brief Controller for the extra options menu.
+ *
+ * Scratch: https://decomp.me/scratch/HRrIM
+ */
+void Options_ExtraOptionsMenu_Control();
 
-// `Options_MainOptionsMenu_ConfigUpdate`
-void Settings_MainScreen();
+/** @brief Controller for the main options menu.
+ *
+ * Handles menu states according to user input as well as graphics draw calls.
+ *
+ * Scratch: https://decomp.me/scratch/N0xvj
+ */
+void Options_MainOptionsMenu_Control();
 
 // ==================
 // `menu_graphics.c`
 // ==================
 
-// `Options_MainOptionsMenu_BgmVolumeBarDraw`
-void Gfx_BgmBarDraw();
-
-// `Options_MainOptionsMenu_SfxVolumeBarDraw`
-void Gfx_SfxBarDraw();
-
-/** @brief Draws the bars used for SFX and BGM audio options. */
-// `Options_MainOptionsMenu_VolumeBarDraw`
-void Gfx_BarDraw(bool isSfx, u8 vol);
-
-/** @brief Draws the option strings in the extra options screen. */
-// `Options_ExtraOptionsMenu_SelectionStringsDraw`
-void Gfx_OptionsStringsExtraDraw();
-
-/** @brief Draws the option strings in the main options screen. */
-// `Options_MainOptionsMenu_SelectionStringsDraw`
-void Gfx_OptionsStringsMainDraw();
-
-/** @brief Draws the bullets next to options and highlight indicating the
- * selected option in the extra options screen.
+/** @brief Draws the BGM volume bar in the main options menu.
+ *
+ * Scratch: https://decomp.me/scratch/Zao7J
  */
-// `Options_ExtraOptionsMenu_GraphicsDraw`
-void Gfx_SelectedOptionExtra();
+void Options_MainOptionsMenu_BgmVolumeBarDraw();
 
-/** @brief Draws the bullets next to options and highlight indicating the
- * selected option in the main options screen.
+/** @brief Draws the SFX volume bar in the main options menu.
+ *
+ * Scratch: https://decomp.me/scratch/bE2Uz
  */
-// `Options_MainOptionsMenu_GraphicsDraw`
-void Gfx_SelectedOptionMain();
+void Options_MainOptionsMenu_SfxVolumeBarDraw();
 
-/** @brief Draws the vignette for the main and extra options screens. */
-// `Options_Menu_VignetteDraw`
-void Gfx_VignetteDraw();
+/** @brief Draws a volume bar.
+ *
+ * Called by `Options_MainOptionsMenu_BgmVolumeBarDraw` and `Options_MainOptionsMenu_SfxVolumeBarDraw`.
+ *
+ * Scratch: https://decomp.me/scratch/Hl65c
+*/
+void Options_MainOptionsMenu_VolumeBarDraw(bool isSfx, u8 vol);
 
-// `Options_ExtraOptionsMenu_ConfigDraw`
-void Gfx_SettingsOptionsExtraDraw();
+/** @brief Draws a heading and entry strings in the extra options menu.
+ *
+ * Scratch: https://decomp.me/scratch/IYutD
+ */
+void Options_ExtraOptionsMenu_EntryStringsDraw();
 
-/** @brief Draws the options for each setting used in the main options screen. */
-// `Options_MainOptionsMenu_ConfigDraw`
-void Gfx_SettingsOptionsMainDraw();
+/** @brief Draws a heading entry strings in the main options menu.
+ *
+ * Scratch: https://decomp.me/scratch/cbqqU
+ */
+void Options_MainOptionsMenu_EntryStringsDraw();
+
+/** @brief Draws bullet points next to entries and the highlight indicating the
+ * selected entry in the extra options menu.
+ * 
+ * Scratch: https://decomp.me/scratch/ghUNv
+ */
+void Options_ExtraOptionsMenu_SelectionHighlightDraw();
+
+/** @brief Draws bullet points next to entries and the highlight indicating the
+ * selected entry in the main options menu.
+ *
+ * Scratch: https://decomp.me/scratch/2gTWn
+ */
+void Options_MainOptionsMenu_SelectionHighlightDraw();
+
+/** @brief Draws the background vignette of Harry in the main and extra options menus.
+ *
+ * Scratch: https://decomp.me/scratch/F32M5
+ */
+void Options_Menu_VignetteDraw();
+
+/** @brief Draws configuration strings and other visual elements in the extra options menu.
+ *
+ * Scratch: https://decomp.me/scratch/GW3Mi
+ */
+void Options_ExtraOptionsMenu_ConfigDraw();
+
+/** @brief Draws configuration strings and other visual elements in the main options menu.
+ *
+ * Scratch: https://decomp.me/scratch/5fuLW
+ */
+void Options_MainOptionsMenu_ConfigDraw();
 
 // ====================
 // `screen_position.c`
 // ====================
 
-// `Options_ScreenPositionMenu_Control`
-void Settings_PositionScreen();
+/** @brief Controller for the screen position options menu.
+ *
+ * Handles menu states, user input, SFX, and graphics drawing.
+ *
+ * Scratch: https://decomp.me/scratch/5F9Gq
+*/
+void Options_ScreenPosMenu_Control();
 
-// `Options_ScreenPositionMenu_ArrowsDraw`
-void Gfx_PositionArrowsDraw();
+/** @brief Draws arrows in the screen position options menu.
+ *
+ * Draws the blue up, down, left, and right arrows with flowing color gradients at the edges of the screen.
+ * Depending on the directional input from the user, it also draws a cyan border around the arrow
+ * corresponding to the direction.
+ * Called by `Options_ScreenPosMenu_Control`.
+ *
+ * Scratch: https://decomp.me/scratch/vYoKG
+ */
+void Options_ScreenPosMenu_ArrowsDraw();
 
-/** @brief Draws the box that indicates the screen position in the position screen configuration. */
-// `Options_ScreenPositionMenu_IndicatorDraw`
-void Gfx_PositionIndicatorDraw();
+/** @brief Draws the box containing the screen position configuration.
+ *
+ * Scratch: https://decomp.me/scratch/TOnxP
+ */
+void Options_ScreenPosMenu_IndicatorDraw();
 
 // ===============
 // `brightness.c`
 // ===============
 
-// `Options_BrightnessMenu_Control`
-void Settings_BrightnessScreen();
+/** @brief Controller for the brightness options menu.
+ *
+ * Handles menu states, user input, SFX, and graphics drawing.
+ *
+ * Scratch: TODO
+*/
+void Options_BrightnessMenu_Control();
 
-// `Options_BrightnessMenu_LevelStringDraw`
-void Gfx_BrightnessLevelTextDraw();
+/** @brief Draws the string representing the light level in the brightness options menu. */
+void Options_BrightnessMenu_LevelStringDraw();
 
-// `Options_BrightnessMenu_ArrowsDraw`
-void Gfx_BrightnessLevelArrowsDraw();
+/** @brief Draws arrows in the brightness options menu.
+ *
+ * Handles drawing of the blue left and right arrows with flowing color gradients at the sides of the screen.
+ * Depending on the direction input from the user, it also draws a cyan border around the arrow
+ * corresponding to the direction.
+ *
+ * Scratch: TODO
+ *
+ * Called by `Options_BrightnessMenu_Control`.
+ */
+void Options_BrightnessMenu_ArrowsDraw();
 
 // =======================
 // `selection_graphics.c`
 // =======================
 
-/** @brief Draws the line and shadow on the selected option in options screens. */
-// `Options_Selection_HighlightDraw`
-void Gfx_LineDraw(s_Line2d* line, bool hasShadow, bool invertGradient);
+/** @brief Draws a UI selection highlight.
+ *
+ * Handles drawing of the underline and upward shadow gradient used to highlight the selected entry
+ * in the main and extra options menus.
+ * Called by `Options_MainOptionsMenu_SelectionHighlightDraw` and `Options_ExtraOptionsMenu_SelectionHighlightDraw`.
+ *
+ * Scratch: https://decomp.me/scratch/zHeCb
+ *
+ * @param line Reference line for the position and width of the highlight.
+ * @param hasShadow Whether a shadow is to be drawn along with an underline.
+ *                  `true` for a shadow,
+ *                  `false` for no shadow.
+ * @param invertGradient Whether to invert the color gradient of the underline. Non-functional.
+ */
+void Options_Selection_HighlightDraw(s_Line2d* line, bool hasShadow, bool invertGradient);
 
-/** @brief Draws the arrows used in options screens. */
-// `Options_Selection_ArrowDraw`
-void Gfx_Options_BlueArrowDraw(s_Triangle2d* arrow, bool isFlashing, bool resetColor);
+/** @brief Draws a UI arrow.
+ *
+ * Handles drawing of elements for the blue arrows used to indicate possible directions of navigation
+ * for certain selected entries in the main and extra options menus.
+ *
+ * @note Called twice if the arrow requires a border, with `isFlashing` passed as `false` in the second call.
+ *
+ * Scratch: TODO
+ *
+ * @param arrow 2D polygon of the arrow element.
+ * @param isFlashing Whether to draw the arrow element with a flowing color gradient.
+ *                   `true` for a dark blue and cyan gradient drawn in front,
+ *                   `false` for a solid cyan color drawn behind.
+ * @param resetColor @unused
+*/
+void Options_Selection_ArrowDraw(s_Triangle2d* arrow, bool isFlashing, bool resetColor);
 
-/** @brief Draws the button next to options in the main and extra option screens. */
-// `Options_Selection_BulletPointDraw`
-void Gfx_ButtonDraw(s_Quad2d* quad, bool isCenter, bool invertGradient);
+/** @brief Draws a UI bullet point.
+ *
+ * Handles drawing of elements of the gold bullet points placed next to entries in the main and extra options menus.
+ * 
+ * @note Called twice to build a whole bullet point, with `isCenter` passed as `true` and `false` on consecutive calls.
+ *
+ * Scratch: https://decomp.me/scratch/A88oo
+ *
+ * @param quad 2D polygon of the bullet point element to draw.
+ * @param isCenter Whether this is the center element of the bullet point.
+ *                 `true` for a smaller element at the center, drawn in front,
+ *                 `false` for a larger one serving as the border with an inverted gradient, drawn behind.
+ * @param isInactive Whether the entry for which the bullet point is being drawn is the active selection.
+ *                   `true` for a darker bullet point (unselected entry),
+ *                   `false` for a lighter one (selected entry).
+ */
+void Options_Selection_BulletPointDraw(s_Quad2d* quad, bool isCenter, bool isInactive);
 
 // ===============
 // `controller.c'
 // ===============
 
-// `Options_Controller_Control`
-void Settings_ControllerScreen();
+/** @brief Controller for the controller config options menu.
+ *
+ * Handles the menu state, user input, SFX, and graphics drawing.
+ *
+ * Scratch: https://decomp.me/scratch/uAay2
+*/
+void Options_Controller_Control();
 
-/** @brief Changes the button mapping based on the input. */
-// `Options_Controller>enu_BindingSet`
-s32 Settings_ButtonChange(s32 actionIdx);
+/** @brief Changes the button mapping based on the input and updates the configuration.
+ *
+ * Scratch: https://decomp.me/scratch/GZGwV
+ */
+s32 Options_ControllerMenu_ConfigUpdate(s32 actionIdx);
 
-// `Options_Controller>enu_SelectionStringDraw`
-void Gfx_ControllerScreenDraw(bool isOnActionColumn, s32 optionIdx, s32 actionIdx, s32 boundActionIdx);
+/** @brief Draws entry strings and icons in the controller config options menu.
+ *
+ * Scratch: https://decomp.me/scratch/0U6fb
+ */
+void Options_ControllerMenu_EntriesDraw(bool isOnActionsPane, s32 optionIdx, s32 actionIdx, s32 boundActionIdx);
 
-// `Options_Controller>enu_ButtonIconsDraw`
-void Gfx_ControllerButtonsDraw(s32 baseX, s32 baseY, u16 contConfig);
+/** @brief Draws the button icons in the controller config options menu.
+ *
+ * Handles drawing of a single row of 2D sprites representing a button mapping.
+ * Called by `Options_ControllerMenu_EntriesDraw`.
+ *
+ * Scratch: https://decomp.me/scratch/rRQjd
+ *
+ * @param baseX Base X position at which to begin drawing.
+ * @param baseY Base Y position at which to begin drawing.
+ * @param config Controller configuration flags.
+ */
+void Options_ControllerMenu_ButtonIconsDraw(s32 baseX, s32 baseY, u16 config);
 
 #endif
