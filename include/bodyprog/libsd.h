@@ -76,7 +76,7 @@ typedef struct Vab_h
     s16       vab_id_0;
     SD_VAB_H* vh_addr_4;
     s32       vh_size_8;
-    s32       vb_addr_C;
+    u8*       vb_addr_C;
     s32       vb_start_addr_10;
     s32       vb_size_14;
     s8        mvol_18; // These `s8`s are `u8` in `soundcd.irx`.

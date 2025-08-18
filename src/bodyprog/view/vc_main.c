@@ -889,7 +889,7 @@ void vcSetNearRoadAryByCharaPos(VC_WORK* w_p, VC_ROAD_DATA* road_ary_list, s32 h
     s32                sw_max_hz;
     s32                flag;
     s32                dir_type;
-    s32                unused;
+    s32                unused2;
 
     road_data_ptr          = road_ary_list;
     w_p->near_road_suu_2B4 = 0;
@@ -917,7 +917,7 @@ void vcSetNearRoadAryByCharaPos(VC_WORK* w_p, VC_ROAD_DATA* road_ary_list, s32 h
             rd_min_hz = FP_TO(road_data_ptr->lim_rd_8.min_hz, Q8_SHIFT);
             rd_max_hz = FP_TO(road_data_ptr->lim_rd_8.max_hz, Q8_SHIFT);
 
-            unused = 0;
+            unused2 = 0;
 
             sw_min_hx = FP_TO(road_data_ptr->lim_sw_0.min_hx, Q8_SHIFT);
             sw_max_hx = FP_TO(road_data_ptr->lim_sw_0.max_hx, Q8_SHIFT);
@@ -936,7 +936,7 @@ void vcSetNearRoadAryByCharaPos(VC_WORK* w_p, VC_ROAD_DATA* road_ary_list, s32 h
                                                                        ptr->road_p_0->flags_10 & VC_RD_MARGE_ROAD_F);
 
                 ptr->rd_dir_type_4  = dir_type;
-                ptr->use_priority_5 = vcRetRoadUsePriority(road_data_ptr->rd_type_11, unused);
+                ptr->use_priority_5 = vcRetRoadUsePriority(road_data_ptr->rd_type_11, unused2);
                 ptr->rd_14.min_hx   = FP_FROM(rd_min_hx, Q8_SHIFT);
                 ptr->rd_14.max_hx   = FP_FROM(rd_max_hx, Q8_SHIFT);
                 ptr->rd_14.min_hz   = FP_FROM(rd_min_hz, Q8_SHIFT);

@@ -269,7 +269,7 @@ void Gfx_ItemScreens_RenderInit(u32* selectedItemId) // 0x8004F764
         Inventory_PlayerItemScroll(selectedItemId);
 
         // Player Items
-        for (i = 0, ptr = &g_Items_ItemsModelData; i < 7; i++, ptr++)
+        for (i = 0, ptr = &g_Items_ItemsModelData[0]; i < 7; i++, ptr++)
         {
             if (D_800C3E18[i] != NO_VALUE)
             {
@@ -2371,7 +2371,7 @@ s32 func_80054AD8(u8 arg0) // 0x80054AD8
                 D_800AE1AC = 1;
             }
 
-            ptr     = &g_Items_Items3dData0;
+            ptr     = &g_Items_Items3dData0[0];
             temp_a1 = D_800AE1B0 << 12;
 
             x = g_ItemVectors[arg0 - 32].vx;

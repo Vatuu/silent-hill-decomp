@@ -512,7 +512,7 @@ s32 func_8008694C(s32 arg0, s16 arg1, s16 arg2, s32 arg3, s32 idx)
     return (arg0 * shRsin(arg1 + ((arg2 * D_800C4710[idx]) / arg3))) >> 12;
 }
 
-void func_800869E4(u8* mapMsgIdx, u8* arg1, u16* arg2) // 0x800869E4
+void func_800869E4(s32 mapMsgIdx, u8* arg1, u16* arg2) // 0x800869E4
 {
     s32 ret;
 
@@ -1516,12 +1516,12 @@ void func_800890B8() // 0x800890B8
 s32 func_80089128() // 0x80089128
 {
     s32                temp_s0;
-    s32                temp_s1;
     s32                var_s3;
     s32                var_s5;
     s32                var_s6;
     s_func_80089644_0* temp_v0;
     s_func_80089644_0* var_s0;
+    s_func_80089644_0* temp_s1;
     s_SysWork_2514*    var_s2;
     
     var_s2 = &g_SysWork.field_2514;
@@ -1572,7 +1572,7 @@ s32 func_80089128() // 0x80089128
     {
         temp_s1 = func_8009ED7C(var_s0);
 
-        if (! func_80089644(var_s2, var_s0, var_s6 & 0xFFFF, var_s3))
+        if (!func_80089644(var_s2, var_s0, var_s6 & 0xFFFF, var_s3))
         {
             func_8009EC1C(var_s2, var_s0);
         }
@@ -2295,7 +2295,7 @@ s_DmsInterval* func_8008CA60(volatile s32 unused, s32 idx, s_DmsHeader* header) 
     return &header->intervalPtr_8[idx];
 }
 
-void Dms_CharacterGetPosRot(VECTOR3* pos, SVECTOR* rot, char* charaName, s32 time, s_DmsHeader* header) // 0x8008CA74
+void Dms_CharacterGetPosRot(VECTOR3* pos, SVECTOR3* rot, char* charaName, s32 time, s_DmsHeader* header) // 0x8008CA74
 {
     s32 charaIdx;
 

@@ -169,12 +169,12 @@ STATIC_ASSERT_SIZEOF(s_8002AC04, 16);
 
 typedef struct
 {
-    s8  unk_0[15];
-    s32 field_10;
-    s32 field_14;
-    s32 field_18;
-    s8  unk_1[2];
-    u16 field_1E;
+    s8          unk_0[15];
+    s_8002AC04* field_10;
+    s32         field_14;
+    s32         field_18;
+    s8          unk_1[2];
+    u16         field_1E;
 } s_func_80089644_0;
 
 typedef struct
@@ -1921,7 +1921,7 @@ extern s32 D_800A9FB4[];
 
 extern u8* D_800A9FC8[];
 
-extern s32* D_800A9FD8[];
+extern u8* D_800A9FD8[];
 
 extern u8* D_800A9FDC[];
 
@@ -1993,7 +1993,7 @@ extern u8 D_800AFD04;
 
 extern u8 D_800AFD05;
 
-extern s32 (*D_800AFD08[])(s_SysWork_2514* arg0, s32 arg1, s_8002AC04* ptr, u32* arg3); // Function pointer array.
+extern s32 (*D_800AFD08[])(s_SysWork_2514* arg0, s_func_80089644_0* arg1, s_8002AC04* ptr, u32* arg3); // Function pointer array.
 
 extern s32 D_800AFD3C;
 
@@ -3039,9 +3039,9 @@ void DmsEntry_FixOffsets(s_DmsEntry* entry, s_DmsHeader* header);
 /** Unused func? `volatile` needed for match. */
 s_DmsInterval* func_8008CA60(volatile s32 unused, s32 idx, s_DmsHeader* header);
 
-void Dms_CharacterGetPosRot(VECTOR3* pos, SVECTOR* rot, char* charaName, s32 time, s_DmsHeader* header);
+void Dms_CharacterGetPosRot(VECTOR3* pos, SVECTOR3* rot, char* charaName, s32 time, s_DmsHeader* header);
 
-void Dms_CharacterGetStartPosRot(VECTOR3* pos, SVECTOR* rot, char* charaName, s32 time, s_DmsHeader* header);
+void Dms_CharacterGetStartPosRot(VECTOR3* pos, SVECTOR3* rot, char* charaName, s32 time, s_DmsHeader* header);
 
 s32 Dms_CharacterFindIdxByName(char* name, s_DmsHeader* header);
 
@@ -3121,7 +3121,7 @@ void func_800867B4(s32 caseParam, s32 idx);
 
 void func_800868DC(s32 idx);
 
-void func_800869E4(u8* mapMsgIdx, u8* arg1, u16* arg2);
+void func_800869E4(s32 mapMsgIdx, u8* arg1, u16* arg2);
 
 void Camera_TranslationSet(VECTOR3* pos, s32 xPosOffset, s32 yPosOffset, s32 zPosOffset,
                            s32 xzAccel, s32 yAccel, s32 xzSpeedMax, s32 ySpeedMax, s32 warpCamFlag);

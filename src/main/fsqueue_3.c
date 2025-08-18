@@ -97,7 +97,7 @@ bool Fs_QueueTickRead(s_FsQueueEntry* entry)
         sectorCount += FS_SECTOR_SIZE - 1;
     }
 
-    return CdRead(sectorCount >> FS_SECTOR_SHIFT, (u64*)entry->data, CdlModeSpeed);
+    return CdRead(sectorCount >> FS_SECTOR_SHIFT, (u32*)entry->data, CdlModeSpeed);
 }
 
 bool Fs_QueueResetTick(s_FsQueueEntry* entry)

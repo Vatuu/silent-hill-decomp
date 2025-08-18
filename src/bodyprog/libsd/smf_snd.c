@@ -717,7 +717,7 @@ s32 SdVbOpenOne(u8* addr, s32 sbaddr, s32 sbsize, s16 vabid) // 0x8009FBAC
     p             = &vab_h[i];
     p->vb_size_14 = sbsize;
     p->vab_id_0   = i;
-    p->vh_addr_4  = addr;
+    p->vh_addr_4  = (SD_VAB_H*)addr;
     p->vh_size_8  = sbsize;
     p->mvol_18    = 127;
     p->vb_size_14 = sbsize;

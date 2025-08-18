@@ -73,7 +73,7 @@ u32 readEOF(u32 loc) // 0x800A717C
 
     while (true)
     {
-        if (!MemCmp(&eof_char, smf_song[smf_file_no].mf_data_ptr_504 + loc, 3))
+        if (!MemCmp((u8*)&eof_char, smf_song[smf_file_no].mf_data_ptr_504 + loc, 3))
         {
             return loc + 3;
         }
@@ -265,7 +265,7 @@ u8 readheader(s32 file_no) // 0x800A7428
             break;
 
         case KDT_MODE:
-            seqh = smf_song[file_no].mf_data_ptr_504;
+            seqh = (Seqhdr*)smf_song[file_no].mf_data_ptr_504;
 
             smf_song[file_no].mf_division_528 = seqh->tb_8;
             smf_song[file_no].mf_tracks_526   = seqh->tracks_C;

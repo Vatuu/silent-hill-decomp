@@ -1487,7 +1487,7 @@ s32 func_8004F190(s_Savegame* save) // 0x8004F190
 
     for (i = 0; i < INVENTORY_ITEM_COUNT_MAX; i++)
     {
-        item = &savePtr->items_0;
+        item = &savePtr->items_0[0];
 
         if (item[i].id_0 != 0xFF)
         {
@@ -1518,7 +1518,7 @@ s32 func_8004F190(s_Savegame* save) // 0x8004F190
             }
             else 
             {
-                item = &savePtr->items_0;
+                item = &savePtr->items_0[0];
                 id = item[j].id_0;
                 
                 if (savePtr->items_0[j].id_0 == savePtr->items_0[i].id_0)

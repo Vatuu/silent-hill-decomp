@@ -755,7 +755,7 @@ void func_800DC8C8() // 0x800DC8C8
             g_SysWork.sysStateStep_C++;
 
         case 1:
-            func_800869E4((u8*)68, &D_800E23A0, &D_800DE128);
+            func_800869E4(68, &D_800E23A0, &D_800DE128);
             break;
 
         default:

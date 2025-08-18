@@ -934,7 +934,7 @@ void func_80047308() // 0x80047308
             break;
 
         case 5:
-            if (!func_80048954(CdlSeekL, &D_800C15E8, NULL))
+            if (!func_80048954(CdlSeekL, (u8*)&D_800C15E8, NULL))
             {
                 D_800C1658.field_0 = 0;
                 D_800C1673         = 6;

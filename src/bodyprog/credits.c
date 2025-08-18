@@ -612,25 +612,25 @@ void Results_DisplayInfo(u32* arg0) // 0x80090664
             Gfx_StringDraw(D_8002B4C0[30], 0x20);
             Gfx_StringSetPosition(0x106, 0xC4);
             Gfx_StringSetColor(D_800C48E0.field_8);
-            Gfx_StringDraw(&D_800AFDF4.field_0, 5);
+            Gfx_StringDraw(D_800AFDF4.field_0, 5);
             Gfx_StringSetColor(ColorId_White);
             Gfx_StringSetPosition(0x48, 0xD9);
             Gfx_StringDraw(D_8002B4C0[31], 0x20);
             Gfx_StringSetPosition(0x106, 0xD9);
             Gfx_StringSetColor(D_800C48E0.field_8);
-            Gfx_StringDraw(&D_800AFDF4.field_5, 5);
+            Gfx_StringDraw(D_800AFDF4.field_5, 5);
             Gfx_StringSetColor(ColorId_White);
             Gfx_StringSetPosition(0x48, 0xEE);
             Gfx_StringDraw(D_8002B4C0[32], 0x20);
             Gfx_StringSetPosition(0x106, 0xEE);
             Gfx_StringSetColor(D_800C48E0.field_8);
-            Gfx_StringDraw(&D_800AFDF4.field_A, 5);
+            Gfx_StringDraw(D_800AFDF4.field_A, 5);
             Gfx_StringSetColor(ColorId_White);
             Gfx_StringSetPosition(0x48, 0x103);
             Gfx_StringDraw(D_8002B4C0[33], 0x20);
             Gfx_StringSetPosition(0x106, 0x103);
             Gfx_StringSetColor(D_800C48E0.field_8);
-            Gfx_StringDraw(&D_800AFDF4.field_F, 5);
+            Gfx_StringDraw(D_800AFDF4.field_F, 5);
         }
 
         Gfx_StringSetColor(ColorId_White);
