@@ -181,7 +181,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
 
                 switch (g_MainMenu_SelectedEntry)
                 {
-                    case 1: // Quick load.
+                    case MainMenuEntry_Continue:
                         if (g_GameWork.autosave_90.playerHealth_240 > Q19_12(0.0f))
                         {
                             g_GameWork.savegame_30C = g_GameWork.autosave_90;
@@ -196,20 +196,20 @@ void GameState_MainMenu_Update() // 0x8003AB28
                         GameFs_MapLoad(g_SavegamePtr->mapOverlayId_A4);
                         break;
 
-                    case 0: // Load save and load menu.
+                    case MainMenuEntry_Load:
                         GameFs_SaveLoadBinLoad();
                         break;
 
-                    case 2:
+                    case MainMenuEntry_Start:
                         g_Gfx_ScreenFade = 0;
                         g_MainMenuState  = MenuState_DifficultySelector;
                         break;
 
-                    case 3: // Load options menu.
+                    case MainMenuEntry_Option:
                         GameFs_OptionBinLoad();
                         break;
 
-                    case 4:
+                    case MainMenuEntry_Extra: // @unused See `e_MainMenuEntry`.
                         break;
                 }
             }
