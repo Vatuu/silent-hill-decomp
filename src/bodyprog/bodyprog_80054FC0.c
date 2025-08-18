@@ -2608,7 +2608,7 @@ static inline void func_8006DB3C_Inline(s_func_800700F8_2* arg0, VECTOR3* arg1, 
     func_8006DAE4(arg0, arg1, arg2, (short)*p);
 }
 
-s32 func_8006DB3C(s_func_800700F8_2* arg0, VECTOR3* arg1, VECTOR3* arg2, s_SubCharacter* chara) // 0x8006DB3C
+bool func_8006DB3C(s_func_800700F8_2* arg0, VECTOR3* arg1, VECTOR3* arg2, s_SubCharacter* chara) // 0x8006DB3C
 {
     s32 sp28;
     s32 temp_s0;
@@ -2616,7 +2616,7 @@ s32 func_8006DB3C(s_func_800700F8_2* arg0, VECTOR3* arg1, VECTOR3* arg2, s_SubCh
     s32 scratchAddr;
 
     temp_v0       = func_8006A1A4(&sp28, chara, 1);
-    arg0->field_0 = 0;
+    arg0->field_0 = false;
 
     if (func_8006DCE0((s32)PSX_SCRATCH, 1, 0, arg1, arg2, 0, 0, temp_v0, sp28))
     {
@@ -2627,7 +2627,7 @@ s32 func_8006DB3C(s_func_800700F8_2* arg0, VECTOR3* arg1, VECTOR3* arg2, s_SubCh
         SetSp(temp_s0);
     }
 
-    if (arg0->field_0 == 0)
+    if (!arg0->field_0)
     {
         func_8006DB3C_Inline(arg0, arg1, arg2, &((u8*)scratchAddr)[92]);
     }
@@ -2906,7 +2906,7 @@ bool func_80070084(s_SubCharacter* chara, s32 x, s32 y, s32 z) // 0x80070084
     deltaPos.vz = z - chara->position_18.vz;
 
     result = false;
-    if (func_8006DB3C(&var, &chara->position_18, &deltaPos, chara) != 0)
+    if (func_8006DB3C(&var, &chara->position_18, &deltaPos, chara))
     {
         result = var.field_10 == 0;
     }
@@ -2914,7 +2914,7 @@ bool func_80070084(s_SubCharacter* chara, s32 x, s32 y, s32 z) // 0x80070084
     return result;
 }
 
-s32 func_800700F8(s_SubCharacter* chara0, s_SubCharacter* chara1) // 0x800700F8
+bool func_800700F8(s_SubCharacter* chara0, s_SubCharacter* chara1) // 0x800700F8
 {
     s_func_800700F8_2 sp10;
     VECTOR3           vec0;
@@ -11374,9 +11374,9 @@ bool func_800806AC(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x800806AC
     return result;
 }
 
-void func_8008074C(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x8008074C
+bool func_8008074C(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x8008074C
 {
-    func_800806AC(arg0, arg1, 1 << 31, arg3);
+    return func_800806AC(arg0, arg1, 1 << 31, arg3);
 }
 
 void func_8008076C(s32 posX, s32 posZ) // 0x8008076C

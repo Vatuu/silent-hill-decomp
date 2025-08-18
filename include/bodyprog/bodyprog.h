@@ -1574,13 +1574,13 @@ typedef struct
 
 typedef struct
 {
-    s8   field_0; // Maybe bool?
+    s8   field_0; /** `bool` */
     u8   field_1;
     s8   unk_2[2];
     s32* field_4;
     s32* field_8;
     s32  field_C;
-    u32  field_10;
+    u32  field_10; // Maybe `bool`, not enough context.
     s32  field_14;
     s32  field_18;
     s16  field_1C;
@@ -3378,7 +3378,7 @@ bool func_8006D90C(s_func_800700F8_2* arg0, VECTOR3* vec1, VECTOR3* vec2);
 
 s32 func_8006DA08(VECTOR3*, VECTOR3*, VECTOR3*, s_SubCharacter*);
 
-s32 func_8006DB3C(s_func_800700F8_2* arg0, VECTOR3* arg1, VECTOR3* arg2, s_SubCharacter* chara);
+bool func_8006DB3C(s_func_800700F8_2* arg0, VECTOR3* arg1, VECTOR3* arg2, s_SubCharacter* chara);
 
 bool func_8006DCE0(s_func_8006DCE0* arg0, s32 arg1, s16 arg2, VECTOR3* pos0, VECTOR3* pos1, s32 arg5, s32 arg6, s32 arg7, s32 arg8);
 
@@ -3394,7 +3394,7 @@ bool func_80070030(s_SubCharacter* chara, s32 x, s32 y, s32 z);
 
 bool func_80070084(s_SubCharacter* chara, s32 x, s32 y, s32 z);
 
-s32 func_800700F8(s_SubCharacter* chara0, s_SubCharacter* chara1);
+bool func_800700F8(s_SubCharacter* chara0, s_SubCharacter* chara1);
 
 bool func_80070184(s_SubCharacter* chara, s32 arg1, s16 rotY);
 
@@ -3904,7 +3904,8 @@ void func_800805BC(VECTOR3* pos, SVECTOR* rot, GsCOORDINATE2* rootCoord, s32 arg
 
 bool func_800806AC(s32 arg0, s32 arg1, s32 arg2, s32 arg3); // arg3 type assumed.
 
-void func_8008074C(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
+/** Probably returns `bool`. */
+bool func_8008074C(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 
 /** Collision func? */
 void func_8008076C(s32 posX, s32 posZ);
