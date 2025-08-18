@@ -394,9 +394,10 @@ typedef struct
     u8                 field_DB;
     u8                 field_DC;
     u8                 field_DD;
-    u8                 unk_DE[2];
+    s16                field_DE;
     s16                field_E0;
-    u8                 unk_E2[4];
+    u8                 unk_E2[2];
+    s16                field_E4;
     s16                field_E6;
     u8                 unk_E8[4];
     s16                field_EC;
@@ -407,7 +408,9 @@ typedef struct
     u8                 unk_F5[3];
     s32                field_F8;
     u16                field_FC;
-    u8                 unk_FE[6];
+    u8                 unk_FE[2];
+    s16                field_100;
+    s16                field_102;
     // TODO: May be incomplete. Maybe not, added the final padding based on `func_800699F8`
 } s_func_8006CC44;
 
@@ -3361,6 +3364,10 @@ void func_8006B9C8(s_func_8006CC44* arg0);
 s32 func_8006BC34(s_func_8006BC34* arg0);
 
 void func_8006BDDC(s_func_8006BDDC* arg0, s16 arg1, s16 arg2);
+
+void func_8006BE40(s_func_8006CC44* arg0);
+
+void func_8006C0C8(s_func_8006CC44*, s16, s16, s32);
 
 bool func_8006C1B8(u32 arg0, s16 arg1, s_func_8006C1B8* arg2);
 
