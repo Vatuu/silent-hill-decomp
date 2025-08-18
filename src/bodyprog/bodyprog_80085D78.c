@@ -1164,10 +1164,10 @@ void func_800879FC(u32 arg0, s32 arg1) // 0x800879FC
     }
 }
 
-// TODO: RODATA migration.
-#ifdef NON_MATCHING
 void func_80087AF4(s32 mapFlagIdx, s32 eventFlagIdx, s32 mapMsgIdx) // 0x80087AF4
 {
+    static const RECT D_8002ABA4 = {320, 256, 160, 240};
+
     s32 mapFlagIdxCpy;
 
     g_DeltaTime0  = 0;
@@ -1207,7 +1207,7 @@ void func_80087AF4(s32 mapFlagIdx, s32 eventFlagIdx, s32 mapMsgIdx) // 0x80087AF
         case 3:
             D_800A8E58 = 0x58;
 
-            func_800314EC(&g_MapImg);
+            Gfx_BackgroundSpriteDraw(&g_MapImg);
             func_800860B0(1, mapMsgIdx, 4, 5, 0, 1);
             break;
 
@@ -1253,7 +1253,7 @@ void func_80087AF4(s32 mapFlagIdx, s32 eventFlagIdx, s32 mapMsgIdx) // 0x80087AF
         case 5:
             D_800A8E58 = 0x58;
 
-            func_800314EC(&g_MapImg);
+            Gfx_BackgroundSpriteDraw(&g_MapImg);
             func_8008616C(2, 1, 0, 0, 1);
             break;
 
@@ -1274,9 +1274,6 @@ void func_80087AF4(s32 mapFlagIdx, s32 eventFlagIdx, s32 mapMsgIdx) // 0x80087AF
             break;
     }
 }
-#else
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80087AF4); // 0x80087AF4
-#endif
 
 void func_80087EA8(s32 cmd) // 0x80087EA8
 {
@@ -1584,6 +1581,17 @@ s32 func_80089128() // 0x80089128
 
     return var_s5;
 }
+
+// TODO: This has a lot more entries, need to fill them to migrate rest of .rodata of this file.
+// The block of data at `8002AC04` is huge and seems to include pointers to other data inside the block, not sure if all of it is using `s_8002AC04`.
+const s_8002AC04 D_8002AC04[] =
+{
+    { NULL, 3, 2, 0, 0, 0 },
+    { NULL, 3, 3, 0, 0, 0 },
+    { NULL, 3, 1, 0, 0, 0 },
+    { NULL, 3, 0, 0, 0, 0 },
+    { NULL, 3, 4, 0, 0, 0 },
+};
 
 void func_800892A4(s32 idx) // 0x800892A4
 {

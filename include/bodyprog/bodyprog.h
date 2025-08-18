@@ -1640,10 +1640,6 @@ extern s_D_800C44F0 D_800294F4[];
 
 extern s_AnimInfo* D_800297B8;
 
-extern RECT D_8002ABA4;
-
-extern s_8002AC04 D_8002AC04[10];
-
 extern u_Filename D_8002B2CC;
 
 extern s32 g_MapMsg_WidthTable[];
