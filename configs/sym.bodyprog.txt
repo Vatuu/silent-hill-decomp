@@ -1,5 +1,3 @@
-// sh "view" / "vw" / "vc" / "vb" code
-// Most names from SH2, functions seem to match pretty close between it and SH1 besides a few missing/extra funcs.
 scratchpad                                  = 0x1F800000; // size:0x400 ignore:True
 
 

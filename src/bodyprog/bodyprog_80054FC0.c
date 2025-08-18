@@ -10798,8 +10798,6 @@ void func_8007EBBC() // 0x8007EBBC
     }
 }
 
-// TODO: .rodata migration.
-#ifdef NON_MATCHING
 void func_8007F14C(u8 arg0) // 0x8007F14C
 {
     switch (arg0)
@@ -10837,9 +10835,6 @@ void func_8007F14C(u8 arg0) // 0x8007F14C
             break;
     }
 }
-#else
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8007F14C); // 0x8007F14C
-#endif
 
 void func_8007F1CC() // 0x8007F1CC
 {
