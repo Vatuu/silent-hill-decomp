@@ -565,7 +565,7 @@ typedef struct
 // STRUCTS
 // ========
 
-typedef struct
+typedef struct _ObjNormal
 {
     s8 nx;
     s8 ny;
@@ -575,14 +575,14 @@ typedef struct
 STATIC_ASSERT_SIZEOF(s_ObjNormal, 4);
 
 /** @brief 8-character string usually used for filenames. Can be compared via the `u32` field. */
-typedef union
+typedef union _Filename
 {
     char str[8];
     u32  u32[2];
 } u_Filename;
 
 /** @brief Struct used by many functions involved with GTE. Kept at `PSX_SCRATCH_ADDR` (possibly only temporarily). */
-typedef struct
+typedef struct _GteScratchData
 {
     DVECTOR screenXy_0[90];
     u16     screenZ_168[18];
@@ -602,7 +602,7 @@ typedef struct
     MATRIX   field_3E4;
 } s_GteScratchData;
 
-typedef struct
+typedef struct _ObjPrimitive
 {
     u16 field_0;
     u16 field_2;
@@ -616,8 +616,7 @@ typedef struct
 } s_ObjPrimitive;
 STATIC_ASSERT_SIZEOF(s_ObjPrimitive, 20);
 
-/** Note: See `ObjHeader`: https://github.com/Sparagas/Silent-Hill/blob/1945970dbd27c081592bf5699d05beddbaa2ff18/010%20Editor%20-%20Binary%20Templates/sh1_models_draft.bt#L96 */
-typedef struct
+typedef struct _ObjHeader
 {
     u8 primitiveCount_0;
     u8 vertexCount_1;
@@ -632,7 +631,7 @@ typedef struct
 } s_ObjHeader;
 STATIC_ASSERT_SIZEOF(s_ObjHeader, 24);
 
-typedef struct
+typedef struct _ObjList
 {
     u_Filename   objName_0;
     u8           meshCount_8;
@@ -646,7 +645,7 @@ typedef struct
 } s_ObjList;
 STATIC_ASSERT_SIZEOF(s_ObjList, 16);
 
-typedef struct
+typedef struct _PlmTexList_8
 {
     s_FsImageDesc imageDesc_0;
     u8            unk_8[8];
@@ -654,7 +653,7 @@ typedef struct
     s8            field_14;
 } s_PlmTexList_8;
 
-typedef struct
+typedef struct _PlmTexList
 {
     u_Filename      texName_0;
     s_PlmTexList_8* field_8;
@@ -677,8 +676,7 @@ typedef struct
 } s_PlmTexList;
 STATIC_ASSERT_SIZEOF(s_PlmTexList, 24);
 
-/** Note: See https://github.com/Sparagas/Silent-Hill/blob/1945970dbd27c081592bf5699d05beddbaa2ff18/010%20Editor%20-%20Binary%20Templates/sh1_models_draft.bt#L41 */
-typedef struct
+typedef struct _PlmHeader
 {
     u8            magic_0;
     u8            version_1;
@@ -689,12 +687,14 @@ typedef struct
     u8            unk_9[3];
     s_ObjList*    objectList_C;
     u8*           objectOrds_10;
-    // File header ends, extra data below. Might be separate from this struct?
+    // File header ends, extra data below.
+    // After this goes array of `s_PlmTexList`, `s_ObjList` `objOrder`
+    // see https://github.com/Sparagas/Silent-Hill/blob/main/010%20Editor%20-%20Binary%20Templates/sh1_model.bt
     s8            unk_11[4075];
     s32           queueIdx_1000;
 } s_PlmHeader;
 
- typedef struct
+ typedef struct _IpdColData_10
  {
     s16 field_0;
     s16 field_2;
@@ -709,7 +709,7 @@ typedef struct
 } s_IpdColData_10;
 STATIC_ASSERT_SIZEOF(s_IpdColData_10, 12);
 
-typedef struct
+typedef struct _IpdColData_18
 {
     u16 field_0_0  : 5;
     u16 field_0_5  : 3;
@@ -721,7 +721,7 @@ typedef struct
 } s_IpdColData_18;
 STATIC_ASSERT_SIZEOF(s_IpdColData_18, 10);
 
-typedef struct
+typedef struct _IpdColData
 {
     s32              posX_0;
     s32              posZ_4;
@@ -746,25 +746,25 @@ typedef struct
     u8               field_34[256];
 } s_IpdColData;
 
-typedef struct
+typedef struct _IpdModelBuffer
 {
     u8    unk_0[12];
-    void* field_C;
-    void* field_10;
-    void* field_14;
+    void* field_C;  // pointer to unknown collision data.
+    void* field_10; // pointer to unknown collision data.
+    void* field_14; // pointer to unknown collision data.
 } s_IpdModelBuffer;
 STATIC_ASSERT_SIZEOF(s_IpdModelBuffer, 24);
 
-typedef struct
+typedef struct _IpdModelInfo
 {
-    u8         isGlobalPlm_0; // `false` if loaded from inside IPD, `true` if loaded from `*_GLB.PLM`
+    u8         isGlobalPlm_0; // `false` if loaded from inside `IPD`, `true` if loaded from `*_GLB.PLM`.
     u8         unk_1[3];
     u_Filename modelName_4;
     s_ObjList* objList_C;
 } s_IpdModelInfo;
 STATIC_ASSERT_SIZEOF(s_IpdModelInfo, 16);
 
-typedef struct
+typedef struct _IpdHeader
 {
     u8                magic_0;
     u8                isLoaded_1;
