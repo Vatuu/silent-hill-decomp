@@ -2890,7 +2890,49 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8006F620); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8006F8FC); // 0x8006F8FC
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8006F99C); // 0x8006F99C
+s16 func_8006F99C(s_SubCharacter* chara, s32 arg1, s16 arg2) // 0x8006F99C
+{
+    s16 var_s0;
+    s16 var_s2;
+    s32 i;
+
+    var_s2 = NO_VALUE;
+    for (i = 0; i < 15; i++)
+    {
+        if (i == 0)
+        {
+            var_s0 = TEST_RNG(6) - 32;
+        }
+        else if (i & 1)
+        {
+            var_s0 = (256 << ((i + 1) >> 1)) + TEST_RNG(6);
+        }
+        else
+        {
+            var_s0 = -(256 << (i >> 1)) - TEST_RNG(6);
+        }
+
+        if (var_s2 != NO_VALUE)
+        {
+            if (ABS(var_s2) < ABS(var_s0))
+            {
+                continue;
+            }
+        }
+
+        if (!func_8007029C(chara, arg1, var_s0 + arg2))
+        {
+            var_s2 = var_s0;
+        }
+    }
+
+    if (var_s2 != NO_VALUE)
+    {
+        return func_8005BF38(var_s2 + arg2);
+    }
+
+    return FP_ALPHA(1.0f);
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8006FAFC); // 0x8006FAFC
 
