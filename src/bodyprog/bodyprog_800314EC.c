@@ -210,11 +210,11 @@ s32 Gfx_MotionBlur(s32 arg0) // 0x80031CCC
 
             if ((VSync(-1) % arg0) == 0)
             {
-                setRGBC0(sprt, 0x7F, 0x7F, 0x7F, (PRIM_RECT | RECT_TEXTURE));
+                setRGBC0(sprt, 0x7F, 0x7F, 0x7F, PRIM_RECT | RECT_TEXTURE);
             }
             else
             {
-                setRGBC0(sprt, 0x80, 0x80, 0x80, (PRIM_RECT | RECT_TEXTURE));
+                setRGBC0(sprt, 0x80, 0x80, 0x80, PRIM_RECT | RECT_TEXTURE);
             }
 
             setWH(sprt, 256, 224);

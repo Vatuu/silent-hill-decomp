@@ -1805,7 +1805,7 @@ extern s32 D_800A9A68;
 
 extern s32 g_MainMenuState;
 
-extern s32 g_MainMenu_SelectedIdx;
+extern s32 g_MainMenu_SelectedEntry;
 
 /** Flags for which main menu entries should be visible. Flag (1 << 5) corresponts to the "EXTRA" option, which is unused and never set. */
 extern u32 g_MainMenu_VisibleEntryFlags;

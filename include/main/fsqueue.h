@@ -212,36 +212,38 @@ typedef struct _FsQueue
 /** The FS queue. See `s_FsQueue`. */
 extern s_FsQueue g_FsQueue;
 
-/** Check if queue entry index has been loaded and post-loaded.
+/** @brief Check if queue entry index has been loaded and post-loaded.
  * 
  * @param queueIdx The index of the queue entry to check.
  * @return `true` if the entry has been fully processed, `false` otherwise.
  */
 bool Fs_QueueIsEntryLoaded(s32 queueIdx);
 
-/** Get number of operations currently in the queue.
+/** @brief Get number of operations currently in the queue.
  * @return Number of operations in the queue. Includes both pending reads and pending post-loads.
  */
 s32 Fs_QueueGetLength();
 
-/** Unknown. If queue is empty, call `func_8003c850`.
+/** @brief Unknown. If queue is empty, call `func_8003c850`.
  * @return `true` when queue is empty and the call succeeds, `false` otherwise.
  */
 bool Fs_QueueDoThingWhenEmpty();
 
-/** Spin-waits for the queue to become empty while calling `Fs_QueueUpdate`.
- * Calls some bodyprog functions before and after the wait, `VSync` in the wait and `DrawSync` after the wait.
+/** @brief Spin-waits for the queue to become empty while calling `Fs_QueueUpdate`.
+ * Calls some bodyprog functions before and after the wait, `VSync` during the waits and `DrawSync`
+ * after the wait.
  */
 void Fs_QueueWaitForEmpty();
 
-/** Add a new seek operation to the queue.
+/** @brief Add a new seek operation to the queue.
+ *
  * @param fileIdx File table index of the file to seek to.
  * @return Index of the new queue entry.
  */
 s32 Fs_QueueStartSeek(s32 fileIdx);
 
-/** Add a new read operation to the queue.
- * 
+/** @brief Add a new read operation to the queue.
+ *
  * @param fileIdx File table index of the file to read.
  * @param dest Destination buffer. Seems there are no size checks.
  * @return Index of the new queue entry.
@@ -250,9 +252,9 @@ s32 Fs_QueueStartRead(s32 fileIdx, void* dest);
 
 /** @brief Add a new TIM read operation to the queue.
  * Adds a read operation with `post-load = FS_POST_LOAD_TIM`.
- * 
+ *
  * @param fileIdx File table index of the file to read.
- * @param dest Destination buffer. Seems there are no size checks.
+ * @param dest Destination buffer. There are no size checks.
  * @param image Where to upload the TIM in VRAM.
  * @return Index of the new queue entry.
  */
@@ -260,10 +262,10 @@ s32 Fs_QueueStartReadTim(s32 fileIdx, void* dest, s_FsImageDesc* image);
 
 /** @brief Add a new ANM read operation to the queue.
  * Adds a read operation with `postLoad = FS_POST_LOAD_ANM`.
- * 
- * @note Does not actually take a file number, but instead takes one from an array of structs at 0x800a90fc in bodyprog,
+ *
+ * @note Does not actually take a file number, but instead takes one from an array of structs at 0x800A90FC in bodyprog,
  * using `arg1` as an index. Does not seem to take a `s_FsAnmDesc` pointer either. Maybe by value?
- * 
+ *
  * @param idx Unknown index.
  * @param charaId Character ID.
  * @param dest Destination buffer.
@@ -274,14 +276,14 @@ s32 Fs_QueueStartReadAnm(s32 idx, s32 charaId, void* dest, GsCOORDINATE2* coords
 
 /** @brief Add new operation to the queue.
  *
- * If the queue is full, will spin while calling `Fs_QueueUpdate` and wait until space frees up.
+ * If the queue is full, it will spin while calling `Fs_QueueUpdate` and wait until space frees up.
  * Called by all of the `Fs_QueueStart...` functions.
  *
  * @param fileIdx File table index of the file to load/seek.
  * @param op Operation type (`FsQueueOperation`).
  * @param postLoad Postload type (`FsQueuePostLoadType`).
  * @param alloc Whether to allocate owned memory for this operation (`s_FsQueueEntry::allocate`).
- * @param unused1 Value for `s_FsQueueEntry::unused1`. Seems to be unused.
+ * @param unused0 Value for `s_FsQueueEntry::unused1`. Seems to be unused.
  * @param extra Extra data for operation (`s_FsQueueEntry::extra`).
  * @return Index of the new queue entry.
  */
@@ -307,7 +309,7 @@ void Fs_QueueUpdate();
 
 /** @brief Ticks a seek operation once.
  *
- * Performs one step in the seeking process according to `g_FsQueue.state`. When the whole process is done, returns 1.
+ * Performs one step in the seeking process according to `g_FsQueue.state`. When the whole process is done, returns `true`.
  *
  * @param entry Entry to tick.
  * @return `true` when `entry` is done seeking, `false` otherwise.
@@ -316,7 +318,7 @@ bool Fs_QueueUpdateSeek(s_FsQueueEntry* entry);
 
 /** @brief Ticks a read operation once.
  *
- * Performs one step in the reading process according to `g_FsQueue.state`. When the whole process is done, it returns 1.
+ * Performs one step in the reading process according to `g_FsQueue.state`. When the whole process is done, it returns `true`.
  *
  * @param entry Entry to tick.
  * @return `true` when `entry` is done loading, `false` otherwise.
