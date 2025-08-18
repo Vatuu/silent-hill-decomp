@@ -2324,7 +2324,82 @@ void func_8006BDDC(s_func_8006BDDC* arg0, s16 arg1, s16 arg2) // 0x8006BDDC
     Vw_ClampAngleRange(&arg0->field_2, &arg0->field_4, arg1, arg2);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8006BE40); // 0x8006BE40
+void func_8006BE40(s_func_8006CC44* arg0) // 0x8006BE40
+{
+    s32 temp_a3;
+    s32 var_a2;
+    s32 var_a1;
+    u32 var_v1;
+    s32 temp;
+
+    var_a1  = 0;
+    temp_a3 = -arg0->field_4.field_28;
+    var_a2  = 0;
+
+    if (arg0->field_EE >= temp_a3)
+    {
+        if (arg0->field_EC >= 0)
+        {
+            if (arg0->field_D6 >= arg0->field_EC)
+            {
+                var_a2 = arg0->field_EC;
+                var_v1 = 2;
+            }
+            else
+            {
+                var_v1 = 1;
+            }
+        }
+        else
+        {
+            var_v1 = 0;
+        }
+    }
+    else
+    {
+        if (arg0->field_102 == 0)
+        {
+            if ((arg0->field_EC > 0) && (arg0->field_EC < arg0->field_D6))
+            {
+                var_a1 = 0;
+                var_a2 = arg0->field_EC;
+            }
+        }
+        else
+        {
+            var_a1 = FP_TO(temp_a3 - arg0->field_EE, Q12_SHIFT) / arg0->field_102;
+            temp   = arg0->field_100 * var_a1;
+            temp   = FP_FROM(temp, Q12_SHIFT);
+            var_a2 = temp + arg0->field_EC;
+        }
+
+        if (var_a2 < 0)
+        {
+            var_v1 = 0;
+        }
+        else if (arg0->field_D6 < var_a2)
+        {
+            var_v1 = 1;
+        }
+        else
+        {
+            var_v1 = 2;
+        }
+    }
+
+    switch (var_v1)
+    {
+        case 0:
+            func_8006BF88(arg0, &arg0->field_DE, var_a2, temp_a3); // Its possible `temp_a3` is not passed on these functions
+            break;
+        case 1:
+            func_8006BF88(arg0, &arg0->field_E4, var_a2, temp_a3);
+            break;
+        case 2:
+            func_8006C0C8(arg0, var_a1, var_a2, temp_a3);
+            break;
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8006BF88); // 0x8006BF88
 
@@ -2815,7 +2890,49 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8006F620); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8006F8FC); // 0x8006F8FC
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8006F99C); // 0x8006F99C
+s16 func_8006F99C(s_SubCharacter* chara, s32 arg1, s16 arg2) // 0x8006F99C
+{
+    s16 var_s0;
+    s16 var_s2;
+    s32 i;
+
+    var_s2 = NO_VALUE;
+    for (i = 0; i < 15; i++)
+    {
+        if (i == 0)
+        {
+            var_s0 = TEST_RNG(6) - 32;
+        }
+        else if (i & 1)
+        {
+            var_s0 = (256 << ((i + 1) >> 1)) + TEST_RNG(6);
+        }
+        else
+        {
+            var_s0 = -(256 << (i >> 1)) - TEST_RNG(6);
+        }
+
+        if (var_s2 != NO_VALUE)
+        {
+            if (ABS(var_s2) < ABS(var_s0))
+            {
+                continue;
+            }
+        }
+
+        if (!func_8007029C(chara, arg1, var_s0 + arg2))
+        {
+            var_s2 = var_s0;
+        }
+    }
+
+    if (var_s2 != NO_VALUE)
+    {
+        return func_8005BF38(var_s2 + arg2);
+    }
+
+    return FP_ALPHA(1.0f);
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8006FAFC); // 0x8006FAFC
 

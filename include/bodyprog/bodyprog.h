@@ -394,9 +394,10 @@ typedef struct
     u8                 field_DB;
     u8                 field_DC;
     u8                 field_DD;
-    u8                 unk_DE[2];
+    s16                field_DE;
     s16                field_E0;
-    u8                 unk_E2[4];
+    u8                 unk_E2[2];
+    s16                field_E4;
     s16                field_E6;
     u8                 unk_E8[4];
     s16                field_EC;
@@ -407,7 +408,9 @@ typedef struct
     u8                 unk_F5[3];
     s32                field_F8;
     u16                field_FC;
-    u8                 unk_FE[6];
+    u8                 unk_FE[2];
+    s16                field_100;
+    s16                field_102;
     // TODO: May be incomplete. Maybe not, added the final padding based on `func_800699F8`
 } s_func_8006CC44;
 
@@ -3362,6 +3365,10 @@ s32 func_8006BC34(s_func_8006BC34* arg0);
 
 void func_8006BDDC(s_func_8006BDDC* arg0, s16 arg1, s16 arg2);
 
+void func_8006BE40(s_func_8006CC44* arg0);
+
+void func_8006C0C8(s_func_8006CC44*, s16, s16, s32);
+
 bool func_8006C1B8(u32 arg0, s16 arg1, s_func_8006C1B8* arg2);
 
 void func_8006C838(s_func_8006CC44* arg0, s_IpdCollisionData* collData);
@@ -3387,6 +3394,8 @@ void func_8006E490(s_func_8006E490* arg0, u32 arg1, s32 arg2, s32 arg3);
 void func_8006F250(s_func_8006F250* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 
 void func_8006F338(s_func_8006F338* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
+
+s16 func_8006F99C(s_SubCharacter* chara, s32 arg1, s16 arg2);
 
 bool func_8006FD90(s_SubCharacter* chara, s32 arg1, s32 arg2, s32 arg3);
 
