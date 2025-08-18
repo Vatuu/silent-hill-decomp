@@ -2527,7 +2527,9 @@ void Options_ControllerMenu_ButtonIconsDraw(s32 baseX, s32 baseY, u16 config) //
     SPRT*          prim;
     DR_TPAGE*      tpage;
     PACKET*        packet;
-    s_FsImageDesc* image = &g_ControllerButtonAtlasImg;
+    s_FsImageDesc* image;
+
+    image = &g_ControllerButtonAtlasImg;
 
     ot     = &D_800B5D04[g_ObjectTableIdx];
     packet = GsOUT_PACKET_P;
@@ -2538,7 +2540,7 @@ void Options_ControllerMenu_ButtonIconsDraw(s32 baseX, s32 baseY, u16 config) //
         temp = i & 0xF;
         v0   = ((temp + 8) & 0xF) << 4;
 
-        if (((config >> temp) & (1 << 0)))
+        if (!((config >> temp) & (1 << 0)))
         {
             continue;
         }

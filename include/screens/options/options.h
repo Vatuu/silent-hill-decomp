@@ -278,22 +278,33 @@ void Options_MainOptionsMenu_EntryStringsDraw();
 /** @brief Draws bullet points next to entries and the highlight indicating the
  * selected entry in the extra options menu.
  * 
- * decomp.me scratch: `Gfx_SelectedOptionExtra`
+ * Scratch: https://decomp.me/scratch/ghUNv
  */
 void Options_ExtraOptionsMenu_SelectionHighlightDraw();
 
 /** @brief Draws bullet points next to entries and the highlight indicating the
  * selected entry in the main options menu.
+ *
+ * Scratch: https://decomp.me/scratch/2gTWn
  */
 void Options_MainOptionsMenu_SelectionHighlightDraw();
 
-/** @brief Draws the background vignette of Harry in the main and extra options menus. */
+/** @brief Draws the background vignette of Harry in the main and extra options menus.
+ *
+ * Scratch: https://decomp.me/scratch/F32M5
+ */
 void Options_Menu_VignetteDraw();
 
-/** @brief Draws configuration strings and other visual elements in the extra options menu. */
+/** @brief Draws configuration strings and other visual elements in the extra options menu.
+ *
+ * Scratch: https://decomp.me/scratch/GW3Mi
+ */
 void Options_ExtraOptionsMenu_ConfigDraw();
 
-/** @brief Draws configuration strings and other visual elements in the main options menu. */
+/** @brief Draws configuration strings and other visual elements in the main options menu.
+ *
+ * Scratch: https://decomp.me/scratch/5fuLW
+ */
 void Options_MainOptionsMenu_ConfigDraw();
 
 // ====================
@@ -303,6 +314,8 @@ void Options_MainOptionsMenu_ConfigDraw();
 /** @brief Controller for the screen position options menu.
  *
  * Handles menu states, user input, SFX, and graphics drawing.
+ *
+ * Scratch: https://decomp.me/scratch/5F9Gq
 */
 void Options_ScreenPosMenu_Control();
 
@@ -312,10 +325,15 @@ void Options_ScreenPosMenu_Control();
  * Depending on the directional input from the user, it also draws a cyan border around the arrow
  * corresponding to the direction.
  * Called by `Options_ScreenPosMenu_Control`.
+ *
+ * Scratch: https://decomp.me/scratch/vYoKG
  */
 void Options_ScreenPosMenu_ArrowsDraw();
 
-/** @brief Draws the box containing the screen position configuration. */
+/** @brief Draws the box containing the screen position configuration.
+ *
+ * Scratch: https://decomp.me/scratch/TOnxP
+ */
 void Options_ScreenPosMenu_IndicatorDraw();
 
 // ===============
@@ -325,6 +343,8 @@ void Options_ScreenPosMenu_IndicatorDraw();
 /** @brief Controller for the brightness options menu.
  *
  * Handles menu states, user input, SFX, and graphics drawing.
+ *
+ * Scratch: TODO
 */
 void Options_BrightnessMenu_Control();
 
@@ -336,6 +356,8 @@ void Options_BrightnessMenu_LevelStringDraw();
  * Handles drawing of the blue left and right arrows with flowing color gradients at the sides of the screen.
  * Depending on the direction input from the user, it also draws a cyan border around the arrow
  * corresponding to the direction.
+ *
+ * Scratch: TODO
  *
  * Called by `Options_BrightnessMenu_Control`.
  */
@@ -367,6 +389,8 @@ void Options_Selection_HighlightDraw(s_Line2d* line, bool hasShadow, bool invert
  * for certain selected entries in the main and extra options menus.
  *
  * @note Called twice if the arrow requires a border, with `isFlashing` passed as `false` in the second call.
+ *
+ * Scratch: TODO
  *
  * @param arrow 2D polygon of the arrow element.
  * @param isFlashing Whether to draw the arrow element with a flowing color gradient.
@@ -414,7 +438,7 @@ s32 Options_ControllerMenu_ConfigUpdate(s32 actionIdx);
 
 /** @brief Draws entry strings and icons in the controller config options menu.
  *
- * Scratch: https://decomp.me/scratch/rRQjd
+ * Scratch: https://decomp.me/scratch/0U6fb
  */
 void Options_ControllerMenu_EntriesDraw(bool isOnActionsPane, s32 optionIdx, s32 actionIdx, s32 boundActionIdx);
 
@@ -423,7 +447,7 @@ void Options_ControllerMenu_EntriesDraw(bool isOnActionsPane, s32 optionIdx, s32
  * Handles drawing of a single row of 2D sprites representing a button mapping.
  * Called by `Options_ControllerMenu_EntriesDraw`.
  *
- * Scratch: https://decomp.me/scratch/ghUNv
+ * Scratch: https://decomp.me/scratch/rRQjd
  *
  * @param baseX Base X position at which to begin drawing.
  * @param baseY Base Y position at which to begin drawing.
