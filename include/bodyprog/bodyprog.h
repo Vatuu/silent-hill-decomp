@@ -159,12 +159,11 @@ typedef struct
 typedef struct _s_8002AC04
 {
     struct _s_8002AC04* field_0;
-
-    u8  field_4;
-    u8  field_5;
-    u16 field_6;
-    s32 field_8;
-    s32 field_C;
+    u8                  field_4;
+    u8                  field_5;
+    u16                 field_6;
+    s32                 field_8;
+    s32                 field_C;
 } s_8002AC04;
 STATIC_ASSERT_SIZEOF(s_8002AC04, 16);
 
@@ -687,29 +686,30 @@ typedef struct _PlmHeader
     u8            unk_9[3];
     s_ObjList*    objectList_C;
     u8*           objectOrds_10;
+
     // File header ends, extra data below.
-    // After this goes array of `s_PlmTexList`, `s_ObjList` `objOrder`
-    // see https://github.com/Sparagas/Silent-Hill/blob/main/010%20Editor%20-%20Binary%20Templates/sh1_model.bt
+    // After this goes array of `s_PlmTexList`, `s_ObjList` `objOrder`.
+    // See https://github.com/Sparagas/Silent-Hill/blob/main/010%20Editor%20-%20Binary%20Templates/sh1_model.bt
     s8            unk_11[4075];
     s32           queueIdx_1000;
 } s_PlmHeader;
 
- typedef struct _IpdColData_10
+ typedef struct _IpdCollisionData_10
  {
     s16 field_0;
     s16 field_2;
     s16 field_4;
-    u16 field_6_0  : 5; // TODO: Might be using `s_IpdColData_18` substruct here? Won't fit though.
+    u16 field_6_0  : 5; // TODO: Might be using `s_IpdCollisionData_18` substruct here? Won't fit though.
     u16 field_6_5  : 3;
     u16 field_6_8  : 3;
     u16 field_6_11 : 4;
     u16 field_6_15 : 1;
     s16 field_8;
     s16 field_A;
-} s_IpdColData_10;
-STATIC_ASSERT_SIZEOF(s_IpdColData_10, 12);
+} s_IpdCollisionData_10;
+STATIC_ASSERT_SIZEOF(s_IpdCollisionData_10, 12);
 
-typedef struct _IpdColData_18
+typedef struct _IpdCollisionData_18
 {
     u16 field_0_0  : 5;
     u16 field_0_5  : 3;
@@ -718,40 +718,40 @@ typedef struct _IpdColData_18
     u16 field_0_15 : 1;
     u8  unk_2[2];
     u8  unk_4[6];
-} s_IpdColData_18;
-STATIC_ASSERT_SIZEOF(s_IpdColData_18, 10);
+} s_IpdCollisionData_18;
+STATIC_ASSERT_SIZEOF(s_IpdCollisionData_18, 10);
 
-typedef struct _IpdColData
+typedef struct _IpdCollisionData
 {
-    s32              posX_0;
-    s32              posZ_4;
-    u32              field_8_0  : 8;
-    u32              field_8_8  : 8;
-    u32              field_8_16 : 8;
-    u32              field_8_24 : 8;
-    void*            ptr_C;
-    s_IpdColData_10* ptr_10;
-    void*            ptr_14;
-    s_IpdColData_18* ptr_18;
-    u8               unk_1C[2];
-    u8               field_1E;
-    u8               unk_1F[1];
-    s32*             ptr_20;   // Might point to `s_func_8006B1C8`?
-    u16              field_24; // field_24/field_26 defined in ipd2obj but haven't seen used yet, might be size of `ptr_28`/`ptr_2C`.
-    u16              field_26;
-    u8*              ptr_28;
-    void*            ptr_2C;
-    u8               field_30;
-    u8               unk_31[3];
-    u8               field_34[256];
-} s_IpdColData;
+    s32                    posX_0;
+    s32                    posZ_4;
+    u32                    field_8_0  : 8;
+    u32                    field_8_8  : 8;
+    u32                    field_8_16 : 8;
+    u32                    field_8_24 : 8;
+    void*                  ptr_C;
+    s_IpdCollisionData_10* ptr_10;
+    void*                  ptr_14;
+    s_IpdCollisionData_18* ptr_18;
+    u8                     unk_1C[2];
+    u8                     field_1E;
+    u8                     unk_1F[1];
+    s32*                   ptr_20;   // Might point to `s_func_8006B1C8`?
+    u16                    field_24; // `field_24/``field_26` defined in ipd2obj but haven't seen used yet, might be size of `ptr_28`/`ptr_2C`.
+    u16                    field_26;
+    u8*                    ptr_28;
+    void*                  ptr_2C;
+    u8                     field_30;
+    u8                     unk_31[3];
+    u8                     field_34[256];
+} s_IpdCollisionData;
 
 typedef struct _IpdModelBuffer
 {
     u8    unk_0[12];
-    void* field_C;  // pointer to unknown collision data.
-    void* field_10; // pointer to unknown collision data.
-    void* field_14; // pointer to unknown collision data.
+    void* field_C;  // Pointer to unknown collision data.
+    void* field_10; // Pointer to unknown collision data.
+    void* field_14; // Pointer to unknown collision data.
 } s_IpdModelBuffer;
 STATIC_ASSERT_SIZEOF(s_IpdModelBuffer, 24);
 
@@ -766,25 +766,25 @@ STATIC_ASSERT_SIZEOF(s_IpdModelInfo, 16);
 
 typedef struct _IpdHeader
 {
-    u8                magic_0;
-    u8                isLoaded_1;
-    s8                levelGridX_2;
-    s8                levelGridY_3;
-    s_PlmHeader*      plmHeader_4;
-    u8                modelCount_8;
-    u8                modelBufferCount_9;
-    u8                modelOrderCount_A;
-    u8                unk_B[1];
-    u8                unk_C[8];
-    s_IpdModelInfo*   modelInfo_14;
-    s_IpdModelBuffer* modelBuffers_18;
-    u8                textureCount_1C; // Should it be `u32`?
-                                       // "`u8` - Relative pointer to textures list"
-                                       // "`u32` - Relative pointer to object order"
-    u8                unk_1D[3];
-    u8                unk_20[48];
-    u8*               modelOrderList_50;
-    s_IpdColData      colData_54;
+    u8                 magic_0;
+    u8                 isLoaded_1; /** `bool` */
+    s8                 levelGridX_2;
+    s8                 levelGridY_3;
+    s_PlmHeader*       plmHeader_4;
+    u8                 modelCount_8;
+    u8                 modelBufferCount_9;
+    u8                 modelOrderCount_A;
+    u8                 unk_B[1];
+    u8                 unk_C[8];
+    s_IpdModelInfo*    modelInfo_14;
+    s_IpdModelBuffer*  modelBuffers_18;
+    u8                 textureCount_1C; // Should it be `u32`?
+                                        // "`u8` - Relative pointer to textures list"
+                                        // "`u32` - Relative pointer to object order"
+    u8                 unk_1D[3];
+    u8                 unk_20[48];
+    u8*                modelOrderList_50;
+    s_IpdCollisionData collisionData_54;
 } s_IpdHeader;
 
 // Likely `D_800C1158`'s struct.
@@ -871,12 +871,12 @@ typedef struct
 // Maybe level stream data?
 typedef struct
 {
-    void* destBuf_0;
+    void* destBuffer_0;
     s32   queueEntryIdx_4;
     s16   fileChunkCoordX_8;
     s16   fileChunkCoordZ_A;
-    s32   field_C;           // Something to do with distance from file chunk edge.
-    s32   field_10;          // Something to do with distance from file chunk edge.
+    s32   field_C;  // Something to do with distance from file chunk edge.
+    s32   field_10; // Something to do with distance from file chunk edge.
 } s_80043338;
 
 typedef struct
@@ -1103,16 +1103,16 @@ typedef struct
 
 typedef struct
 {
-    s8   field_0;
-    s8   field_1;
-    s8   field_2;
-    s8   field_3;
-    s16  field_4;
-    s16  field_6;
+    s8         field_0;
+    s8         field_1;
+    s8         field_2;
+    s8         field_3;
+    s16        field_4;
+    s16        field_6;
     u_Filename string_8;
-    s32  field_10;
-    s8   field_14;
-    u8   unk_15[3];
+    s32        field_10;
+    s8         field_14;
+    u8         unk_15[3];
 } s_800C1450_58;
 STATIC_ASSERT_SIZEOF(s_800C1450_58, 24);
 
@@ -1405,12 +1405,12 @@ typedef struct
 typedef struct _AreaLoadParams
 {
     q19_12 char_x_0;
-    u32 mapIdx_4_0     : 5;
-    u32 field_4_5      : 4;
-    u32 field_4_9      : 3;
-    u32 field_4_12     : 4;
-    u32 rotationY_4_16 : 8;
-    u32 field_4_24     : 8;
+    u32    mapIdx_4_0     : 5;
+    u32    field_4_5      : 4;
+    u32    field_4_9      : 3;
+    u32    field_4_12     : 4;
+    u32    rotationY_4_16 : 8;
+    u32    field_4_24     : 8;
     q19_12 char_z_8;
 } s_AreaLoadParams;
 
@@ -1461,7 +1461,7 @@ typedef struct _MapOverlayHeader
     s8                (*getMapRoomIdxFunc_4)(s32 x, s32 y); // Called by `Savegame_MapRoomIdxSet`.
     s8                field_8;
     s8                unk_9[3];
-    void              (*func_C)(); // madeup signature
+    void              (*func_C)(); // Madeup signature.
     s32               (*func_10)();
     s8                field_14; // Flags?
     u8                field_15;
@@ -1478,10 +1478,10 @@ typedef struct _MapOverlayHeader
     const char**      mapMessageStrings_30;
     s_AnimInfo*       animInfo_34;
     s_UnkStruct3_Mo*  field_38;
-    void              (*func_3C)(); // madeup signature
+    void              (*func_3C)(); // Madeup signature.
     void              (*func_40)();
     void              (*func_44)();
-    void              (*func_48)(); // madeup signature
+    void              (*func_48)(); // Madeup signature.
     s_func_800625F4*  field_4C;
     s32               unk_50;
     s32*              unk_54;
@@ -1490,62 +1490,62 @@ typedef struct _MapOverlayHeader
     s8                unk_60[88];
     void              (*func_B8)(s_SubCharacter*, s_MainCharacterExtra*, GsCOORDINATE2*);
     void              (*func_BC)(s_SubCharacter*, s_MainCharacterExtra*, GsCOORDINATE2*);
-    void              (*func_C0)(); // madeup signature
-    void              (*func_C4)(); // madeup signature
+    void              (*func_C0)(); // Madeup signature.
+    void              (*func_C4)(); // Madeup signature.
     void              (*func_C8)();
     void              (*func_CC)(s32);
     s32               (*func_D0)(s32, void*, s16, s32); // 0x800C964C
     s32               (*func_D4)(s_SubCharacter*);      // Assumed return type.
     void              (*func_D8)();                     // Assumed return type.
     void              (*func_DC)();                     // Assumed return type.
-    void              (*func_E0)(); // madeup signature
+    void              (*func_E0)(); // Madeup signature.
     s32               (*func_E4)(s_SubCharacter*, s_SubCharacter*); // Assumed return type.
     s64               (*func_E8)(s_SubCharacter*);                  // Is it really `s64`???
     s32               (*func_EC)();
-    void              (*func_F0)(); // madeup signature
-    void              (*func_F4)(); // madeup signature
-    void              (*func_F8)(); // madeup signature
-    void              (*func_FC)(); // madeup signature
-    void              (*func_100)(); // madeup signature
-    void              (*func_104)(); // madeup signature
+    void              (*func_F0)(); // Madeup signature.
+    void              (*func_F4)(); // Madeup signature.
+    void              (*func_F8)(); // Madeup signature.
+    void              (*func_FC)(); // Madeup signature.
+    void              (*func_100)(); // Madeup signature.
+    void              (*func_104)(); // Madeup signature.
     s32               (*func_108)();
-    void              (*func_10C)(); // madeup signature
-    void              (*func_110)(); // madeup signature
-    void              (*func_114)(); // madeup signature
-    void              (*func_118)(); // madeup signature
-    void              (*func_11C)(); // madeup signature
-    void              (*func_120)(); // madeup signature
+    void              (*func_10C)(); // Madeup signature.
+    void              (*func_110)(); // Madeup signature.
+    void              (*func_114)(); // Madeup signature.
+    void              (*func_118)(); // Madeup signature.
+    void              (*func_11C)(); // Madeup signature.
+    void              (*func_120)(); // Madeup signature.
     void              (*func_124)(s_SubCharacter*); // Assumed return type.
     s32               (*func_128)(s_SubCharacter*); // Assumed return type.
     s32               (*func_12C)(s_SubCharacter*); // Assumed return type.
-    void              (*func_130)(); // madeup signature
+    void              (*func_130)(); // Madeup signature.
     s32               (*func_134)(s_SubCharacter*);           // Assumed return type.
     s32               (*func_138)(s_SubCharacter*);           // Assumed return type.
     s32               (*func_13C)(s32, s32, void*, s16, s32); // 0x800C96B8
-    void              (*func_140)(); // madeup signature
-    void              (*func_144)(); // madeup signature
-    void              (*func_148)(); // madeup signature
-    void              (*func_14C)(); // madeup signature
-    void              (*func_150)(); // madeup signature
-    void              (*func_154)(); // madeup signature
+    void              (*func_140)(); // Madeup signature.
+    void              (*func_144)(); // Madeup signature.
+    void              (*func_148)(); // Madeup signature.
+    void              (*func_14C)(); // Madeup signature.
+    void              (*func_150)(); // Madeup signature.
+    void              (*func_154)(); // Madeup signature.
     void              (*func_158)(s32, s32);
     s8                unk_15C[12];
     void              (*func_168)(void*, void*, void*);
     void              (*func_16C)(VECTOR3*, s16);
-    void              (*func_170)(); // madeup signature
-    void              (*func_174)(); // madeup signature
+    void              (*func_170)(); // Madeup signature.
+    void              (*func_174)(); // Madeup signature.
     void              (*func_178)(void*, void*, void*);
     void              (*func_17C)(void*, void*);
-    void              (*func_180)(); // madeup signature
-    void              (*func_184)(); // madeup signature
-    void              (*func_188)(); // madeup signature
-    void              (*func_18C)(); // madeup signature
-    void              (*func_190)(); // madeup signature
+    void              (*func_180)(); // Madeup signature.
+    void              (*func_184)(); // Madeup signature.
+    void              (*func_188)(); // Madeup signature.
+    void              (*func_18C)(); // Madeup signature.
+    void              (*func_190)(); // Madeup signature.
     void              (*charaUpdateFuncs_194[Chara_Count])(s_SubCharacter*, void*, s32); /** Guessed params. Funcptrs for each `e_CharacterId`, set to 0 for IDs not included in the map overlay. Called by `func_80038354`. */
     s8                charaGroupIds_248[4];                                              /** `e_CharacterId` values where if `s_SpawnInfo.charaId_4` == 0, `charaGroupIds_248[0]` is used for `charaSpawns_24C[0]` and `charaGroupIds_248[1]` for `charaSpawns_24C[1]`. */
     s_SpawnInfo       charaSpawns_24C[2][16];                                            /** Array of character type/position/flags. `flags_6 == 0` are unused slots? Read by `func_80037F24`. */
     VC_ROAD_DATA      roadDataList_3CC[48];
-    u32                unk_84C[0x200];
+    u32                unk_84C[512];
 } s_MapOverlayHeader;
 STATIC_ASSERT_SIZEOF(s_MapOverlayHeader, 4172); // Size incomplete.
 
@@ -1807,15 +1807,15 @@ extern s32 g_MainMenuState;
 
 extern s32 g_MainMenu_SelectedIdx;
 
-/** Flags for which main menu options to display. Flag (1 << 5) corresponts to the "EXTRA" option, which is unused and never set. */
-extern u32 g_MainMenuShowOptions;
+/** Flags for which main menu entries should be visible. Flag (1 << 5) corresponts to the "EXTRA" option, which is unused and never set. */
+extern u32 g_MainMenu_VisibleEntryFlags;
 
 /** Counts the amount of times that demos has been play in the current game session. */
 extern s8 g_Demo_ReproducedCount;
 
 extern s32 g_MainMenu_NewGameSelectedDifficultyIdx;
 
-extern s32 g_LastSaveGameCount;
+extern s32 g_PrevSavegameCount;
 
 extern RECT D_800A9A6C; // `RECT<320, 256, 160, 240>`, only used in `SysState_Fmv_Update`?
 
@@ -2071,7 +2071,7 @@ extern u16 D_800BCCB2;
  */
 extern s32 g_Gfx_ScreenFade; // 0x800BCD0C
 
-extern s16 g_SaveGameCount;
+extern s16 g_SavegameCount;
 
 /** @brief Test if demo loading should be reinitialized.
  * This is used exclusively in `GameFs_MapStartup` with
@@ -2648,7 +2648,7 @@ bool func_80043B34(s_800C117C* arg0, s_800C1020* arg1);
 
 bool func_80043B70(s_IpdHeader* ipdHeader);
 
-s_IpdColData* IpdHeader_ColDataGet(s_IpdHeader* ipdHeader);
+s_IpdCollisionData* IpdHeader_CollisionDataGet(s_IpdHeader* ipdHeader);
 
 void IpdHeader_FixOffsets(s_IpdHeader* ipdHeader, s_PlmHeader** plmHeaders, s32 plmHeaderCount, s32 arg3, s32 arg4, s32 arg5);
 
@@ -2664,10 +2664,10 @@ bool func_80043D64(s_PlmTexList* texList);
 void IpdHeader_FixHeaderOffsets(s_IpdHeader* header);
 
 /** @brief Assigns `s_ObjList` pointers to models in `s_IpdHeader` by searching the given `s_PlmHeader` array. */
-void IpdHeader_ModelLinkObjLists(s_IpdHeader* ipdHeader, s_PlmHeader** plmHeaders, s32 plmHeaderCount);
+void IpdHeader_ModelLinkObjectLists(s_IpdHeader* ipdHeader, s_PlmHeader** plmHeaders, s32 plmHeaderCount);
 
 /** @brief Searches `s_PlmHeader` for objects with the given `objName`. */
-s_ObjList* PlmHeader_ObjListSearch(u_Filename* objName, s_PlmHeader* plmHeader);
+s_ObjList* PlmHeader_ObjectListSearch(u_Filename* objName, s_PlmHeader* plmHeader);
 
 void func_80044044(s_80044044* arg0, s32 arg1, s32 arg2);
 
@@ -3208,7 +3208,7 @@ void func_80089500();
 
 s32 func_800895E4(s_SysWork_2514* arg0, s_8002AC04* arg1, u8 arg2);
 
-s32 func_80089644(s_SysWork_2514* arg0, s_func_80089644_0* arg1, s32 arg2, u32 arg3);
+bool func_80089644(s_SysWork_2514* arg0, s_func_80089644_0* arg1, s32 arg2, u32 arg3);
 
 bool func_8008973C(s_SysWork_2514* arg0, s32 arg1, s_8002AC04* ptr, u32* arg3);
 
@@ -3295,7 +3295,7 @@ void GameFs_Tim00TIMLoad();
 void func_8005B46C(s_800C1450_0* arg0);
 
 /** Crucial for map loading. */
-void func_8005B474(s_800C1450_0* arg0, s_800C1450_58* arg1, s32 num);
+void func_8005B474(s_800C1450_0* arg0, s_800C1450_58* arg1, s32 idx);
 
 s_800C1450_58* func_8005B4BC(char* str, s_800C1450_0* arg1);
 
@@ -3328,11 +3328,11 @@ void func_8006982C(u16 arg0);
 
 void func_80069844(s32 arg0);
 
-void IpdColData_FixOffsets(s_IpdColData* colData);
+void IpdCollData_FixOffsets(s_IpdCollisionData* collData);
 
-void func_80069994(s_IpdColData* colData);
+void func_80069994(s_IpdCollisionData* collData);
 
-void func_800699E4(s_IpdColData* colData);
+void func_800699E4(s_IpdCollisionData* collData);
 
 /** Getter for 2D point collision? */
 void func_800699F8(s_func_800699F8* coll, s32 posX, s32 posZ);
@@ -3341,15 +3341,17 @@ s32 func_80069B24(VECTOR3* vec0, VECTOR3* vec1, s_SubCharacter* chara);
 
 void func_8006A178(s_func_8006A178* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 
+s32 func_8006A1A4(s32 arg0, s_SubCharacter* chara, s32 arg2);
+
 s32 func_8006A3B4(s32 arg0, s32 arg1, s32 arg2);
 
 void func_8006AB50(s_func_8006CC44* arg0, VECTOR3* vec, s_func_8006AB50* arg2, s32 arg3);
 
 void func_8006ABC0(s_func_8006ABC0* result, VECTOR3* vec, s_func_8006AB50* arg2);
 
-void func_8006AD44(s_func_8006CC44* arg0, s_IpdColData* colData);
+void func_8006AD44(s_func_8006CC44* arg0, s_IpdCollisionData* collData);
 
-void func_8006B1C8(s_func_8006CC44* arg0, s_IpdColData* colData, s_func_8006B1C8* arg2);
+void func_8006B1C8(s_func_8006CC44* arg0, s_IpdCollisionData* collData, s_func_8006B1C8* arg2);
 
 /** `arg1` is unused, but `func_8006B1C8` passes second arg to this. */
 void func_8006B6E8(s_func_8006CC44* arg0, s_func_8006B1C8* arg1);
@@ -3362,9 +3364,9 @@ void func_8006BDDC(s_func_8006BDDC* arg0, s16 arg1, s16 arg2);
 
 bool func_8006C1B8(u32 arg0, s16 arg1, s_func_8006C1B8* arg2);
 
-void func_8006C838(s_func_8006CC44* arg0, s_IpdColData* colData);
+void func_8006C838(s_func_8006CC44* arg0, s_IpdCollisionData* collData);
 
-void func_8006CA18(s_func_8006CC44* arg0, s_IpdColData* colData, s_func_8006CA18* arg2);
+void func_8006CA18(s_func_8006CC44* arg0, s_IpdCollisionData* collData, s_func_8006CA18* arg2);
 
 s16 func_8006CB90(s_func_8006CC44* arg0);
 
@@ -3376,7 +3378,7 @@ bool func_8006D90C(s_func_800700F8_2* arg0, VECTOR3* vec1, VECTOR3* vec2);
 
 s32 func_8006DA08(VECTOR3*, VECTOR3*, VECTOR3*, s_SubCharacter*);
 
-s32 func_8006DB3C(s_func_800700F8_2* arg0, VECTOR3* arg1, VECTOR3* arg2, s_SubCharacter* arg3);
+s32 func_8006DB3C(s_func_800700F8_2* arg0, VECTOR3* arg1, VECTOR3* arg2, s_SubCharacter* chara);
 
 bool func_8006DCE0(s_func_8006DCE0* arg0, s32 arg1, s16 arg2, VECTOR3* pos0, VECTOR3* pos1, s32 arg5, s32 arg6, s32 arg7, s32 arg8);
 
@@ -3392,7 +3394,7 @@ bool func_80070030(s_SubCharacter* chara, s32 x, s32 y, s32 z);
 
 bool func_80070084(s_SubCharacter* chara, s32 x, s32 y, s32 z);
 
-s32 func_800700F8(s_SubCharacter* arg0, s_SubCharacter* arg1);
+s32 func_800700F8(s_SubCharacter* chara0, s_SubCharacter* chara1);
 
 bool func_80070184(s_SubCharacter* chara, s32 arg1, s16 rotY);
 
@@ -3402,9 +3404,9 @@ s32 func_80070360(s_SubCharacter* chara, s32 someDist, s16 arg2);
 
 void func_80070400(s_func_80070400_0* arg0, s_func_80070400_1* arg1, s_func_80070400_1* arg2);
 
-bool func_80070208(s_SubCharacter* arg0, s32 arg1);
+bool func_80070208(s_SubCharacter* chara, s32 arg1);
 
-s32 func_8007029C(s_SubCharacter* arg0, s32 arg1, s16 angle);
+s32 func_8007029C(s_SubCharacter* chara, s32 arg1, s16 angle);
 
 void func_800705E4(GsCOORDINATE2*, s32, s32, s32, s32);
 
@@ -3900,7 +3902,7 @@ s32 Math_PreservedSignSubtract(s32 val, s32 subtractor);
 
 void func_800805BC(VECTOR3* pos, SVECTOR* rot, GsCOORDINATE2* rootCoord, s32 arg3);
 
-u32 func_800806AC(s32 arg0, s32 arg1, s32 arg2, s32 arg3); // arg3 type assumed.
+bool func_800806AC(s32 arg0, s32 arg1, s32 arg2, s32 arg3); // arg3 type assumed.
 
 void func_8008074C(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 

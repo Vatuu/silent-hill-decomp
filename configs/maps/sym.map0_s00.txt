@@ -155,7 +155,7 @@ sharedData_800E3A24_0_s00 = 0x800E3A24; // type:s32
 sharedData_800E3A28_0_s00 = 0x800E3A28; // type:s32
 sharedData_800E3A2C_0_s00 = 0x800E3A2C; // type:s32
 
-g_LoadScreenFuncs = 0x800DF310;
-g_MapAreaLoadParams = 0x800DF320;
-g_MapEventFuncs = 0x800DF674;
-g_AnimInfo = 0x800DD2BC;
+g_LoadScreenFuncs         = 0x800DF310;
+g_MapAreaLoadParams       = 0x800DF320;
+g_MapEventFuncs           = 0x800DF674;
+g_AnimInfo                = 0x800DD2BC;

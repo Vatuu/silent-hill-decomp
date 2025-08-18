@@ -88,7 +88,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
             {
                 GameFs_MapStartup();
 
-                if (g_GameWork.gameStateStep_598[0] == 1 && g_SysWork.timer_20 == 0)
+                if (g_GameWork.gameStateStep_598[0] == 1 && g_SysWork.timer_20 == FP_TIME(0.0f))
                 {
                     g_Demo_ReproducedCount++;
                 }
@@ -99,33 +99,33 @@ void GameState_MainMenu_Update() // 0x8003AB28
                 }
             }
 
-            g_MainMenuShowOptions = (1 << 2) | (1 << 3);
+            g_MainMenu_VisibleEntryFlags = (1 << MainMenuEntry_Start) | (1 << MainMenuEntry_Option);
 
-            if (g_GameWork.autosave_90.playerHealth_240 > 0)
+            if (g_GameWork.autosave_90.playerHealth_240 > Q19_12(0.0f))
             {
-                g_MainMenuShowOptions = (1 << 1) | (1 << 2) | (1 << 3);
+                g_MainMenu_VisibleEntryFlags = (1 << MainMenuEntry_Continue) | (1 << MainMenuEntry_Start) | (1 << MainMenuEntry_Option);
             }
 
-            // If memory card present and we have some saves
-            if (g_SaveGameCount > 0)
+            // Memory card present and savegames exist.
+            if (g_SavegameCount > 0)
             {
-                g_MainMenuShowOptions |= (1 << 0) | (1 << 1);
+                g_MainMenu_VisibleEntryFlags |= (1 << MainMenuEntry_Load) | (1 << MainMenuEntry_Continue);
                 
-                if (g_LastSaveGameCount < g_SaveGameCount && g_MainMenu_SelectedIdx != 0)
+                if (g_PrevSavegameCount < g_SavegameCount && g_MainMenu_SelectedIdx != MainMenuEntry_Load)
                 {
-                    g_MainMenu_SelectedIdx = 1;
+                    g_MainMenu_SelectedIdx = MainMenuEntry_Continue;
                 }
             }
-            // If we have no saves but had in the past (memory card was removed, then we died)
-            else if (g_LastSaveGameCount > 0)
+            // Mo savegames exist but did previously (e.g. memory card removed before player death).
+            else if (g_PrevSavegameCount > 0)
             {
-                while(!(g_MainMenuShowOptions & (1 << g_MainMenu_SelectedIdx)))
+                while(!(g_MainMenu_VisibleEntryFlags & (1 << g_MainMenu_SelectedIdx)))
                 {
                     g_MainMenu_SelectedIdx++;
                 }
             }
 
-            g_MainMenuShowOptions |= g_MainMenuShowOptions << MAIN_MENU_OPTION_COUNT;
+            g_MainMenu_VisibleEntryFlags |= g_MainMenu_VisibleEntryFlags << MAIN_MENU_OPTION_COUNT;
 
             if (g_Controller0->btnsPulsed_18 & (ControllerFlag_LStickUp | ControllerFlag_LStickDown))
             {
@@ -142,14 +142,14 @@ void GameState_MainMenu_Update() // 0x8003AB28
             if (g_Controller0->btnsPulsed_18 & ControllerFlag_LStickUp)
             {
                 g_MainMenu_SelectedIdx += MAIN_MENU_OPTION_COUNT;
-                while(!(g_MainMenuShowOptions & (1 << --g_MainMenu_SelectedIdx)))
+                while(!(g_MainMenu_VisibleEntryFlags & (1 << --g_MainMenu_SelectedIdx)))
                 {
                 }
             }
 
             if (g_Controller0->btnsPulsed_18 & ControllerFlag_LStickDown)
             {                
-                while(!(g_MainMenuShowOptions & (1 << ++g_MainMenu_SelectedIdx)))
+                while(!(g_MainMenu_VisibleEntryFlags & (1 << ++g_MainMenu_SelectedIdx)))
                 {
                 }
             }
@@ -182,7 +182,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
                 switch (g_MainMenu_SelectedIdx)
                 {
                     case 1: // Quick load.
-                        if (g_GameWork.autosave_90.playerHealth_240 > 0)
+                        if (g_GameWork.autosave_90.playerHealth_240 > Q19_12(0.0f))
                         {
                             g_GameWork.savegame_30C = g_GameWork.autosave_90;
                         }
@@ -214,7 +214,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
                 }
             }
 
-            g_LastSaveGameCount = g_SaveGameCount;
+            g_PrevSavegameCount = g_SavegameCount;
 
         default:
             break;
@@ -224,7 +224,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
             {
                 GameFs_MapStartup();
 
-                if (g_GameWork.gameStateStep_598[0] == 1 && g_SysWork.timer_20 == 0)
+                if (g_GameWork.gameStateStep_598[0] == 1 && g_SysWork.timer_20 == FP_TIME(0.0f))
                 {
                     g_Demo_ReproducedCount++;
                 }
@@ -289,7 +289,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
                 g_Gfx_ScreenFade = 2;
                 g_MainMenuState  = 4;
             }
-            // Cancel
+            // Cancel.
             else if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)
             {
                 Sd_EngineCmd(Sfx_Cancel);
@@ -406,14 +406,15 @@ void Gfx_MainMenu_MainTextDraw() // 0x8003B568
     #define COLUMN_POS_Y 184
     #define STR_OFFSET_Y 20
 
-    static const u8 MAIN_MENU_STR_OFFSETS_X[] = { 29, 50, 32, 39, 33 }; // @unused Element at index 4. See `g_MainMenuShowOptions`.
+    static const u8 MAIN_MENU_STR_OFFSETS_X[] = { 29, 50, 32, 39, 33 }; // @unused Element at index 4. See `g_MainMenu_VisibleEntryFlags`.
 
     s32 i;
 
     // Draw selection strings.
     for (i = 0; i < MAIN_MENU_OPTION_COUNT; i++)
     {
-        if (!(g_MainMenuShowOptions & (1 << i)))
+        // Check entry visibility flag.
+        if (!(g_MainMenu_VisibleEntryFlags & (1 << i)))
         {
             continue;
         }

@@ -1517,13 +1517,13 @@ s32 func_80089128() // 0x80089128
 {
     s32                temp_s0;
     s32                temp_s1;
-    s_func_80089644_0* temp_v0;
-    s_func_80089644_0* var_s0;
-    s_SysWork_2514*    var_s2;
     s32                var_s3;
     s32                var_s5;
     s32                var_s6;
-
+    s_func_80089644_0* temp_v0;
+    s_func_80089644_0* var_s0;
+    s_SysWork_2514*    var_s2;
+    
     var_s2 = &g_SysWork.field_2514;
 
     temp_s0 = g_SysWork.field_2510;
@@ -1572,7 +1572,7 @@ s32 func_80089128() // 0x80089128
     {
         temp_s1 = func_8009ED7C(var_s0);
 
-        if (func_80089644(var_s2, var_s0, var_s6 & 0xFFFF, var_s3) == 0)
+        if (! func_80089644(var_s2, var_s0, var_s6 & 0xFFFF, var_s3))
         {
             func_8009EC1C(var_s2, var_s0);
         }
@@ -1692,7 +1692,7 @@ s32 func_800895E4(s_SysWork_2514* arg0, s_8002AC04* arg1, u8 arg2) // 0x800895E4
     return D_800AFD08[arg1->field_4](arg0, 0, arg1, &sp10);
 }
 
-s32 func_80089644(s_SysWork_2514* arg0, s_func_80089644_0* arg1, s32 arg2, u32 arg3) // 0x80089644
+bool func_80089644(s_SysWork_2514* arg0, s_func_80089644_0* arg1, s32 arg2, u32 arg3) // 0x80089644
 {
     s32                var0;
     u32                var1;

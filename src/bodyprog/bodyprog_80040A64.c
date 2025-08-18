@@ -320,19 +320,21 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800420FC); // 0x
 
 s_800C1450_58* func_80042178(char* arg0) // 0x80042178
 {
-    s_800C1450_58* ret = func_8005B4BC(arg0, &D_800C1450.field_0);
-    if (ret != 0)
+    s_800C1450_58* ptr;
+    
+    ptr = func_8005B4BC(arg0, &D_800C1450.field_0);
+    if (ptr != NULL)
     {
-        return ret;
+        return ptr;
     }
 
-    ret = func_8005B4BC(arg0, &D_800C1450.field_2C);
-    if (ret != 0)
+    ptr = func_8005B4BC(arg0, &D_800C1450.field_2C);
+    if (ptr != NULL)
     {
-        return ret;
+        return ptr;
     }
 
-    return 0;
+    return NULL;
 }
 
 void func_800421D8(char* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) // 0x800421D8
@@ -479,7 +481,7 @@ s32 func_800436D8(s_80043338* arg0, s32 fileIdx, s16 fileChunkCoordX, s16 fileCh
     // Store file chunk coords and read file.
     arg0->fileChunkCoordX_8 = fileChunkCoordX;
     arg0->fileChunkCoordZ_A = fileChunkCoordZ;
-    arg0->queueEntryIdx_4   = Fs_QueueStartRead(fileIdx, arg0->destBuf_0);
+    arg0->queueEntryIdx_4   = Fs_QueueStartRead(fileIdx, arg0->destBuffer_0);
 
     // Compute and store distance to file chunk edge in `arg0`.
     func_80043338(arg0, posX0, posZ0, posX1, posZ1, clip);
@@ -541,11 +543,11 @@ bool func_80043B70(s_IpdHeader* ipdHeader) // 0x80043B70
     return func_80056888(ipdHeader->plmHeader_4);
 }
 
-s_IpdColData* IpdHeader_ColDataGet(s_IpdHeader* ipdHeader) // 0x80043BA4
+s_IpdCollisionData* IpdHeader_CollisionDataGet(s_IpdHeader* ipdHeader) // 0x80043BA4
 {
     if (ipdHeader->isLoaded_1)
     {
-        return &ipdHeader->colData_54;
+        return &ipdHeader->collisionData_54;
     }
 
     return NULL;
@@ -560,12 +562,12 @@ void IpdHeader_FixOffsets(s_IpdHeader* ipdHeader, s_PlmHeader** plmHeaders, s32 
     ipdHeader->isLoaded_1 = true;
 
     IpdHeader_FixHeaderOffsets(ipdHeader);
-    IpdColData_FixOffsets(&ipdHeader->colData_54);
+    IpdCollData_FixOffsets(&ipdHeader->collisionData_54);
     PlmHeader_FixOffsets(ipdHeader->plmHeader_4);
     func_8008E4EC(ipdHeader->plmHeader_4);
     func_80043C7C(ipdHeader, arg3, arg4, arg5);
     func_80056954(ipdHeader->plmHeader_4);
-    IpdHeader_ModelLinkObjLists(ipdHeader, plmHeaders, plmHeaderCount);
+    IpdHeader_ModelLinkObjectLists(ipdHeader, plmHeaders, plmHeaderCount);
     func_80043F88(ipdHeader, ipdHeader->modelInfo_14);
 }
 
@@ -604,16 +606,16 @@ bool func_80043D44(s_PlmTexList* texList) // 0x80043D44
 
 bool func_80043D64(s_PlmTexList* texList) // 0x80043D64
 {
-    char* ptr;
+    char* charCode;
 
-    for (ptr = &texList->texName_0.str[7]; ptr >= &texList->texName_0.str[0]; ptr--)
+    for (charCode = &texList->texName_0.str[7]; charCode >= &texList->texName_0.str[0]; charCode--)
     {
-        if (*ptr == 0)
+        if (*charCode == '\0')
         {
             continue;
         }
 
-        return *ptr == 'H';
+        return *charCode == 'H';
     }
 
     return false;
@@ -638,25 +640,25 @@ void IpdHeader_FixHeaderOffsets(s_IpdHeader* header) // 0x80043DA4
     }
 }
 
-void IpdHeader_ModelLinkObjLists(s_IpdHeader* ipdHeader, s_PlmHeader** plmHeaders, s32 plmHeaderCount) // 0x80043E50
+void IpdHeader_ModelLinkObjectLists(s_IpdHeader* ipdHeader, s_PlmHeader** plmHeaders, s32 plmHeaderCount) // 0x80043E50
 {
-    s_IpdModelInfo* modelInfo;
     s32             i;
     s32             j;
+    s_IpdModelInfo* modelInfo;
 
     for (i = 0; i < ipdHeader->modelCount_8; i++)
     {
         modelInfo = &ipdHeader->modelInfo_14[i];
         if (!modelInfo->isGlobalPlm_0)
         {
-            modelInfo->objList_C = PlmHeader_ObjListSearch(&modelInfo->modelName_4, ipdHeader->plmHeader_4);
+            modelInfo->objList_C = PlmHeader_ObjectListSearch(&modelInfo->modelName_4, ipdHeader->plmHeader_4);
         }
         else
         {
             for (j = 0; j < plmHeaderCount; j++)
             {
-                modelInfo->objList_C = PlmHeader_ObjListSearch(&modelInfo->modelName_4, plmHeaders[j]);
-                if (modelInfo->objList_C != 0)
+                modelInfo->objList_C = PlmHeader_ObjectListSearch(&modelInfo->modelName_4, plmHeaders[j]);
+                if (modelInfo->objList_C != NULL)
                 {
                     break;
                 }
@@ -665,19 +667,19 @@ void IpdHeader_ModelLinkObjLists(s_IpdHeader* ipdHeader, s_PlmHeader** plmHeader
     }
 }
 
-s_ObjList* PlmHeader_ObjListSearch(u_Filename* objName, s_PlmHeader* plmHeader) // 0x80043F2C
+s_ObjList* PlmHeader_ObjectListSearch(u_Filename* objName, s_PlmHeader* plmHeader) // 0x80043F2C
 {
-    s_ObjList* obj;
     s32        i;
+    s_ObjList* objList;
 
-    obj = plmHeader->objectList_C;
+    objList = plmHeader->objectList_C;
 
-    for (i = 0; i < plmHeader->objectCount_8; i++, obj++)
+    for (i = 0; i < plmHeader->objectCount_8; i++, objList++)
     {
-        if (objName->u32[0] == obj->objName_0.u32[0] &&
-            objName->u32[1] == obj->objName_0.u32[1])
+        if (objName->u32[0] == objList->objName_0.u32[0] &&
+            objName->u32[1] == objList->objName_0.u32[1])
         {
-            return obj;
+            return objList;
         }
     }
 
@@ -721,18 +723,18 @@ s_AnimInfo* func_80044918(s_ModelAnim* anim) // 0x80044918
 
     s_AnimInfo* animInfo_C;
     s_AnimInfo* animInfo_10;
-    u8  animIdx_0;
-    s32 field_1;
+    u8          animIdx_0;
+    s32         animIdx_1;
 
     animInfo_C  = anim->animInfo_C;
     animInfo_10 = anim->animInfo_10;
     animIdx_0   = anim->animIdx_0;
-    field_1     = anim->maybeSomeState_1;
+    animIdx_1   = anim->maybeSomeState_1;
 
-    if (animInfo_10 != 0 && animIdx_0 >= field_1)
+    if (animInfo_10 != NULL && animIdx_0 >= animIdx_1)
     {
         animInfo_C  = animInfo_10;
-        animInfo_C -= field_1;
+        animInfo_C -= animIdx_1;
     }
 
     return &animInfo_C[animIdx_0];

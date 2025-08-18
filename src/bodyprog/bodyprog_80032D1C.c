@@ -385,7 +385,7 @@ bool func_80033548() // 0x80033548
     sp38                        = D_800BCD34;
     D_800BCD34                  = func_8002E898();
     g_MemCardsTotalElementCount = 0;
-    g_SaveGameCount                  = 0;
+    g_SavegameCount             = 0;
 
     for (i = 0; i < 8; i += 4)
     {
@@ -515,7 +515,7 @@ bool func_80033548() // 0x80033548
                     var_a0 = WrapIdx(i);
 
                     g_MemCardElementCount[var_a0 >> 2]++;
-                    g_SaveGameCount--;
+                    g_SavegameCount--;
                     g_SlotElementCount[var_a0 >> 2]++;
 
                     g_ActiveSavegameEntry++;
@@ -595,7 +595,7 @@ bool func_80033548() // 0x80033548
         g_MemCardsTotalElementCount += g_MemCardElementCount[WrapIdx(i) >> 2];
     }
 
-    g_SaveGameCount += g_MemCardsTotalElementCount;
+    g_SavegameCount += g_MemCardsTotalElementCount;
 
     for (i = 0; i < 8; i += 4)
     {

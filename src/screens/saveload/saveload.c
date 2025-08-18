@@ -2140,7 +2140,7 @@ void Gfx_SaveScreen() // 0x801E70C8
 
         if (g_GameWork.gameState_594 == GameState_DeathLoadScreen)
         {
-            Gfx_SaveSelectedDisplacement(i, g_SaveGameCount);
+            Gfx_SaveSelectedDisplacement(i, g_SavegameCount);
         }
         else
         {
@@ -2201,7 +2201,7 @@ void func_801E737C() // 0x801E737C
         return;
     }
 
-    if (g_SaveGameCount == 0 || D_800BCD39 != 0 || !func_80033548())
+    if (g_SavegameCount == 0 || D_800BCD39 != 0 || !func_80033548())
     {
         g_GameWork.gameState_594 = GameState_SaveScreen;
 

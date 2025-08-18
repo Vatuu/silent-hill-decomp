@@ -358,11 +358,11 @@ vcSetRefPosAndCamPosAngByPad                = 0x800406D4; // type:func
 //--------------------------------------------------------------------
 //--- PA: 0x01BF04   VA: 0x80040A64   subsegment: c, bodyprog_80040A64
 //--------------------------------------------------------------------
-IpdHeader_ColDataGet                        = 0x80043BA4; // type:func
+IpdHeader_CollisionDataGet                  = 0x80043BA4; // type:func
 IpdHeader_FixOffsets                        = 0x80043BC4; // type:func
 IpdHeader_FixHeaderOffsets                  = 0x80043DA4; // type:func
-IpdHeader_ModelLinkObjLists                 = 0x80043E50; // type:func
-PlmHeader_ObjListSearch                     = 0x80043F2C; // type:func
+IpdHeader_ModelLinkObjectLists              = 0x80043E50; // type:func
+PlmHeader_ObjectListSearch                  = 0x80043F2C; // type:func
 Anim_Update0                                = 0x800449F0; // type:func
 Anim_Update1                                = 0x80044B38; // type:func
 Anim_Update2                                = 0x80044CA4; // type:func
@@ -487,7 +487,7 @@ ObjList_FixOffsets                          = 0x800561A4; // type:func
 PlmHeader_ObjectCountGet                    = 0x80056C80; // type:func
 func_800571D0                               = 0x800571D0; // type:func size:0x58 - Fix for truncated function.
 GameState_MapScreen_Update                  = 0x80066EB0; // type:func
-IpdColData_FixOffsets                       = 0x8006993C; // type:func
+IpdCollData_FixOffsets                      = 0x8006993C; // type:func
 Player_Logic_Update                         = 0x800717D0; // type:func
 func_80074350.234                           = 0x80074350; // filename:func_80074350 type:func - Generated compilation result adds .234 at name end for some reason.
 Player_ReceiveDamage                        = 0x8007C800; // type:func
@@ -1913,10 +1913,10 @@ g_SysStateFuncs                             = 0x800A9A2C; // type:u32 size:0x3C
 //-----------------------------------------------------------------------
 g_MainMenuState                             = 0x800A9A74;
 g_MainMenu_SelectedIdx                      = 0x800A9A78;
-g_MainMenuShowOptions                       = 0x800A9A7C;
+g_MainMenu_VisibleEntryFlags                = 0x800A9A7C;
 g_Demo_ReproducedCount                      = 0x800A9A80;
 g_MainMenu_NewGameSelectedDifficultyIdx     = 0x800A9A84;
-g_LastSaveGameCount                         = 0x800A9A88;
+g_PrevSavegameCount                         = 0x800A9A88;
 
 //------------------------------------------------------------------------
 //--- PA: 0x084F2C   VA: 0x800A9A8C   subsegment: .data, bodyprog_8003AB28
@@ -2239,7 +2239,7 @@ g_ObjectTableIdx                            = 0x800B9FB8;
 g_SysWork                                   = 0x800B9FC0; // type:SysWork size:0x2768 - should use s_SysWork here, but splat only supports custom structs with capital letter at beginning.
 g_GameWork                                  = 0x800BC728; // type:GameWork size:0x5D8
 g_Gfx_ScreenFade                            = 0x800BCD0C;
-g_SaveGameCount                             = 0x800BCD28;
+g_SavegameCount                             = 0x800BCD28;
 g_ActiveSavegameEntry                       = 0x800BCD2C;
 g_MemCardElementCount                       = 0x800BCD30;
 g_SaveScreenPlayerState                     = 0x800BCD38;

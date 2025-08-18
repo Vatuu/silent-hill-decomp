@@ -9,33 +9,33 @@ s32 sharedFunc_800D8964_0_s00(s_SubCharacter* chara);
 bool sharedFunc_800D9188_0_s00(s32 arg0, s_SubCharacter* arg1, s32 arg2, s32 sfx);
 void sharedFunc_800D08B8_0_s00(s8 arg0, u32 arg1);
 
-// Undefined functions, unknown signature
-#define func_800D94F8   (void(*)(void))0x800D94F8
-#define func_800DBE68   (void(*)(void))0x800DBE68
-#define func_800DBF08   (void(*)(void))0x800DBF08
-#define func_800DC1E8   (void(*)(void))0x800DC1E8
-#define func_800D0E34   (void(*)(void))0x800D0E34
-#define func_800D1C38   (void(*)(void))0x800D1C38
-#define func_800D23EC   (void(*)(void))0x800D23EC
-#define func_800D8A00   (void(*)(void))0x800D8A00
-#define func_800CB6B0   (void(*)(void))0x800CB6B0
+// Undefined functions, unknown signature.
+#define func_800D94F8 (void(*)(void))0x800D94F8
+#define func_800DBE68 (void(*)(void))0x800DBE68
+#define func_800DBF08 (void(*)(void))0x800DBF08
+#define func_800DC1E8 (void(*)(void))0x800DC1E8
+#define func_800D0E34 (void(*)(void))0x800D0E34
+#define func_800D1C38 (void(*)(void))0x800D1C38
+#define func_800D23EC (void(*)(void))0x800D23EC
+#define func_800D8A00 (void(*)(void))0x800D8A00
+#define func_800CB6B0 (void(*)(void))0x800CB6B0
 
-#define func_800D9610   (void(*)(void))0x800D9610 
-#define func_800D9748   (void(*)(void))0x800D9748
-#define func_800D9D98   (void(*)(void))0x800D9D98
-#define func_800DA028   (void(*)(void))0x800DA028
-#define func_800DA254   (void(*)(void))0x800DA254
-#define func_800DA5A0   (void(*)(void))0x800DA5A0
-#define func_800DAA68   (void(*)(void))0x800DAA68
-#define func_800DAB8C   (void(*)(void))0x800DAB8C
-#define func_800DACB0   (void(*)(void))0x800DACB0
-#define func_800DADD4   (void(*)(void))0x800DADD4
-#define func_800DAEFC   (void(*)(void))0x800DAEFC
-#define func_800DB26C   (void(*)(void))0x800DB26C
-#define func_800DB514   (void(*)(void))0x800DB514
-#define func_800DB870   (void(*)(void))0x800DB870
-#define func_800DB94C   (void(*)(void))0x800DB94C
-#define func_800DBE00   (void(*)(void))0x800DBE00
+#define func_800D9610 (void(*)(void))0x800D9610 
+#define func_800D9748 (void(*)(void))0x800D9748
+#define func_800D9D98 (void(*)(void))0x800D9D98
+#define func_800DA028 (void(*)(void))0x800DA028
+#define func_800DA254 (void(*)(void))0x800DA254
+#define func_800DA5A0 (void(*)(void))0x800DA5A0
+#define func_800DAA68 (void(*)(void))0x800DAA68
+#define func_800DAB8C (void(*)(void))0x800DAB8C
+#define func_800DACB0 (void(*)(void))0x800DACB0
+#define func_800DADD4 (void(*)(void))0x800DADD4
+#define func_800DAEFC (void(*)(void))0x800DAEFC
+#define func_800DB26C (void(*)(void))0x800DB26C
+#define func_800DB514 (void(*)(void))0x800DB514
+#define func_800DB870 (void(*)(void))0x800DB870
+#define func_800DB94C (void(*)(void))0x800DB94C
+#define func_800DBE00 (void(*)(void))0x800DBE00
 
 extern u8 D_800DF754[];
 extern s_func_800625F4 D_800DFB7C[];
@@ -82,7 +82,7 @@ const s_MapOverlayHeader g_MapOverlayHeader =
     .field_0 = (s_UnkStruct2_Mo*)0x8002500C,
     .getMapRoomIdxFunc_4 = sharedFunc_800D92AC_0_s00,
     .field_8 = 0x22,
-    .unk_9 = {0x00, 0x00, 0x00},
+    .unk_9 = { 0x00, 0x00, 0x00 },
     .func_C = sharedFunc_800D929C_0_s00,
     .func_10 = func_800D94F8,
     .field_14 = 0x03, // Flags?
@@ -107,7 +107,7 @@ const s_MapOverlayHeader g_MapOverlayHeader =
     .unk_54 = D_800E0B1C,
     .unk_58 = 0x00000096,
     .unk_5C = 0x00000000,
-    .unk_60 = {}, // 88 zeros
+    .unk_60 = {}, // 88 zeros.
     .func_B8 = func_800D0E34,
     .func_BC = func_800D1C38,
     .func_C0 = sharedFunc_800D209C_0_s00,
@@ -150,7 +150,7 @@ const s_MapOverlayHeader g_MapOverlayHeader =
     .func_150 = sharedFunc_800D921C_0_s00,
     .func_154 = sharedFunc_800D923C_0_s00,
     .func_158 = 0,
-    .unk_15C = {}, //12 zeros
+    .unk_15C = {}, // 12 zeros.
     .func_168 = func_800CB6B0,
     .func_16C = sharedFunc_800D08B8_0_s00,
     .func_170 = sharedFunc_800D0A60_0_s00,
@@ -158,10 +158,10 @@ const s_MapOverlayHeader g_MapOverlayHeader =
     .func_178 = func_800D0E24,
     .func_17C = func_800D0E2C,
     .func_180 = sharedFunc_800D0E04_0_s00,
-    .func_184 = 0x800DFB64, //sharedData_800DFB64_0_s00,
-    .func_188 = 0x800DFB68, //sharedData_800DFB68_0_s00,
-    .func_18C = 0x800DFB6C, //sharedData_800DFB6C_0_s00,
-    .func_190 = 0x800DFB70, //sharedData_800DFB70_0_s00,
+    .func_184 = 0x800DFB64, // sharedData_800DFB64_0_s00`
+    .func_188 = 0x800DFB68, // sharedData_800DFB68_0_s00`
+    .func_18C = 0x800DFB6C, // sharedData_800DFB6C_0_s00`
+    .func_190 = 0x800DFB70, // sharedData_800DFB70_0_s00`
     .charaUpdateFuncs_194 =
     {
         0x00000000,
@@ -210,7 +210,7 @@ const s_MapOverlayHeader g_MapOverlayHeader =
         0x00000000,
         0x00000000,
     },
-    .charaGroupIds_248 = {}, // 4 zeros
+    .charaGroupIds_248 = {}, // 4 zeros.
     .charaSpawns_24C =
     {
         #include "chara_spawns.h"
@@ -224,4 +224,3 @@ const s_MapOverlayHeader g_MapOverlayHeader =
         #include "header_last_unknown_chunk.h"
     },
 };
-
