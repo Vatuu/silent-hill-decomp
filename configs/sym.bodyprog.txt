@@ -295,7 +295,7 @@ Game_PlayerInit                             = 0x80035178; // type:func
 GameFs_MapLoad                              = 0x8003521C; // type:func
 Gfx_LoadingScreen_PlayerRun                 = 0x80035BE0; // type:func
 Savegame_MapRoomIdxSet                      = 0x80036420; // type:func
-Gfx_MapMsg_Display                          = 0x800365B8; // type:func
+Gfx_MapMsg_Draw                             = 0x800365B8; // type:func
 Gfx_MapMsg_SelectionUpdate                  = 0x80036B5C; // type:func
 Chara_PositionUpdateFromParams              = 0x800371E8; // type:func
 Math_Distance2dCheck                        = 0x80038A6C; // type:func
@@ -569,6 +569,8 @@ vcGetXZSumDistFromLimArea                   = 0x80085C80; // type:func
 //--------------------------------------------------------------------
 Camera_TranslationSet                       = 0x80086A94; // type:func
 Camera_RotationSet                          = 0x80086B70; // type:func
+Pickup_ItemTake                             = 0x800877B8; // type:func
+Pickup_CommonItemTake                       = 0x800879FC; // type:func
 Chara_Load                                  = 0x80088C7C; // type:func
 Chara_Spawn                                 = 0x80088D78; // type:func
 DmsHeader_FixOffsets                        = 0x8008C9A0; // type:func

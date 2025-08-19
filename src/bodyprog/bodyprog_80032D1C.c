@@ -2262,7 +2262,8 @@ u32 func_800364BC() // 0x800364BC
     return FP_FROM(var0 + var1, Q12_SHIFT);
 }
 
-const char rodataPad_80025234[] = { 0x00, 0xB1, 0x3A, 0xCC, 0x00, 0x00, 0x00, 0x00 }; // Could this indicate file split nearby?
+// `RECT`s?
+const char rodataPad_80025234[] = { 0, 177, 58, 204, 0, 0, 0, 0 }; // Could this indicate file split nearby?
 
 void func_8003652C() // 0x8003652C
 {
@@ -2282,7 +2283,7 @@ void func_8003652C() // 0x8003652C
     LoadImage(&rect, vals);
 }
 
-s32 Gfx_MapMsg_Display(s32 mapMsgIdx) // 0x800365B8
+s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
 {
     #define MSG_TIMER_MAX   (FP_TIME(524288.0f) - 1)
     #define FINISH_CUTSCENE 0xFF
@@ -3557,7 +3558,7 @@ void SysState_Unk3_Update() // 0x800396D4
     if (!HAS_MAP(g_SavegamePtr->current2dMapIdx_A9))
     {
         if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.map_18 ||
-            Gfx_MapMsg_Display(MapMsgIdx_NoMap) > 0)
+            Gfx_MapMsg_Draw(MapMsgIdx_NoMap) > 0)
         {
             SysWork_StateSetNext(GameState_Unk0);
         }
@@ -3567,7 +3568,7 @@ void SysState_Unk3_Update() // 0x800396D4
               (g_SysWork.field_2388.field_1C[1].field_0.field_0.s_field_0.field_0 & (1 << 0))))
     {
         if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.map_18 ||
-            Gfx_MapMsg_Display(MapMsgIdx_TooDarkForMap) > 0)
+            Gfx_MapMsg_Draw(MapMsgIdx_TooDarkForMap) > 0)
         {
             SysWork_StateSetNext(GameState_Unk0);
         }
@@ -3803,7 +3804,7 @@ void SysState_ReadMessage_Update(s32 arg0) // 0x80039FB8
         g_MapOverlayHeader.func_C8(i);
     }
 
-    switch (Gfx_MapMsg_Display(g_MapEventIdx)) 
+    switch (Gfx_MapMsg_Draw(g_MapEventIdx)) 
     {
         case -1:
             break;
@@ -3879,7 +3880,7 @@ void SysState_SaveMenu_Update() // 0x8003A230
                 g_SysWork.sysStateStep_C++;
             }
 
-            else if (Gfx_MapMsg_Display(MapMsgIdx_SaveGame) == 1)
+            else if (Gfx_MapMsg_Draw(MapMsgIdx_SaveGame) == 1)
             {
                 g_SavegamePtr->eventFlags_168[5] |= EVENT_FLAG5_FIRST_TIME_SAVE_GAME;
 

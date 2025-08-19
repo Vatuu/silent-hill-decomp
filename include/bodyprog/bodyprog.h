@@ -1771,7 +1771,7 @@ extern s32 g_MapMsg_CurrentIdx;
 /** FP time value for map message. */
 extern s16 g_MapMsg_SelectFlashTimer;
 
-/** Array of indices? */
+/** Map flags. */
 extern s8 D_800A99B4[];
 
 /** Array of indices?
@@ -3083,9 +3083,9 @@ void func_8008E794(VECTOR3*, s16, s32);
 
 void func_8008EA68(SVECTOR*, VECTOR3*, s32);
 
-void func_80085D78(s32 arg0);
+void func_80085D78(bool arg0);
 
-void func_80085DC0(s32 arg0, s32 sysStateStep);
+void func_80085DC0(bool arg0, s32 sysStateStep);
 
 void func_80085DF0();
 
@@ -3093,17 +3093,19 @@ void func_80085E6C(s32 arg0, s32 arg1);
 
 void func_80085EB8(u32 arg0, s_SubCharacter* chara0, s_SubCharacter* chara1, s32 arg3);
 
-void func_8008605C(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
+void func_8008605C(s32 arg0, s32 arg1, s32 arg2, bool arg3);
 
-/** `arg1` might be `u8*`. */
-void func_800860B0(s32 arg0, s32 mapMsgIdx, s32 arg2, s32 arg3, s32 sysStateStep, s32 arg5);
+/** `arg2` is anothet `sysStateStep`. Something to do with the pickup item dialog? */
+void func_800860B0(bool arg0, s32 mapMsgIdx, s32 arg2, s32 arg3, s32 sysStateStep, bool arg5);
 
-/** `arg3` is some FP time value or picked up item count depending on the value of `arg2`. */
+/** Handles giving the player items.
+ * `arg3` is some FP time value or picked up item count depending on the value of `arg2`.
+ */
 void func_8008616C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 
 void func_800862F8(s32 arg0, s32 itemId, s32 arg2);
 
-void func_80086470(u32 switchVar, s32 arg1, s32 arg2, s32 arg3);
+void func_80086470(u32 switchVar, s32 arg1, s32 arg2, bool arg3);
 
 void func_800865FC(s32 arg0, s32 idx0, s32 idx1, s16 arg3, s32 arg4, s32 arg5);
 
@@ -3141,12 +3143,9 @@ void func_80087360(s32 arg0, s32 arg1, s32 arg2, s32 mapMsgIdx);
 
 void func_80087540(s32 arg0, s32 arg1, s32 arg2, s32 mapMsgIdx0, s32 mapMsgIdx1);
 
-void func_800877B8(s32 itemId, s32 itemCount, s32 globalPickupId, s32 mapMsgIdx);
+void Pickup_ItemTake(s32 itemId, s32 itemCount, s32 globalPickupId, s32 mapMsgIdx);
 
-/** Common item pickup handler.
- * `globalPickupId` is used to set an event flag. Maybe it allows the game to globally track which ones have been collected.
- */
-void func_800879FC(u32 pickupType, s32 globalPickupId);
+void Pickup_CommonItemTake(u32 pickupType, s32 globalPickupId);
 
 /** Inventory drawing? */
 void func_80087AF4(s32 mapFlagIdx, s32 eventFlagIdx, s32 mapMsgIdx);
@@ -3561,7 +3560,7 @@ u32 func_800364BC();
 
 void func_8003652C();
 
-s32 Gfx_MapMsg_Display(s32 mapMsgIdx);
+s32 Gfx_MapMsg_Draw(s32 mapMsgIdx);
 
 s32 Gfx_MapMsg_SelectionUpdate(u8 mapMsgIdx, s32* arg1);
 

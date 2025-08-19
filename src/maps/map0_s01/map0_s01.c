@@ -546,15 +546,15 @@ INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800DB790);
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800DBAA0);
 
-void func_800DC34C() // 0x800DC34C
+void Pickup_PocketRadioItemTake() // 0x800DC34C
 {
-    func_800877B8(225, 1, 37, 64);
+    Pickup_ItemTake(InventoryItemId_PocketRadio, 1, 37, 64);
     g_SavegamePtr->flags_AC |= 1 << 0;
 }
 
-void func_800DC394() // 0x800DC394
+void Pickup_FlashlightItemTake() // 0x800DC394
 {
-    func_800877B8(224, 1, 36, 61);
+    Pickup_ItemTake(InventoryItemId_Flashlight, 1, 36, 61);
     Game_TurnFlashlightOff();
 }
 
@@ -601,7 +601,7 @@ void func_800DC3C8() // 0x800DC3C8
             D_800A8E58 = 88;
 
             Gfx_BackgroundSpriteDraw(&g_MapImg);
-            func_800860B0(1, 59, 6, 4, 0, 0);
+            func_800860B0(true, 59, 6, 4, 0, false);
             break;
 
         case 5:
@@ -706,9 +706,9 @@ void func_800DC3C8() // 0x800DC3C8
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800DC3C8);
 #endif
 
-void func_800DC830() // 0x800DC830
+void Pickup_KitchenKnifeItemTake() // 0x800DC830
 {
-    func_800877B8(128, 1, 35, 60);
+    Pickup_ItemTake(InventoryItemId_KitchenKnife, 1, 35, 60);
 }
 
 void func_800DC85C() {}
@@ -718,23 +718,23 @@ void func_800DC864() // 0x800DC864
     s32 globalPickupId;
     u32 pickupType;
 
-    pickupType     = ItemPickupType_FirstAidKit;
+    pickupType     = CommonPickupItemId_FirstAidKit;
     globalPickupId = 0;
 
     switch (g_MapEventParam->field_5)
     {
         case 13:
-            pickupType     = ItemPickupType_HealthDrink;
+            pickupType     = CommonPickupItemId_HealthDrink;
             globalPickupId = 596;
             break;
 
         case 14:
-            pickupType     = ItemPickupType_HealthDrink;
+            pickupType     = CommonPickupItemId_HealthDrink;
             globalPickupId = 597;
             break;
     }
 
-    func_800879FC(pickupType, globalPickupId);
+    Pickup_CommonItemTake(pickupType, globalPickupId);
 }
 
 void func_800DC8C8() // 0x800DC8C8

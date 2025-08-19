@@ -441,15 +441,15 @@ typedef enum _InventoryItemId
     InventoryItemId_GasolineTank         = 226
 } e_InventoryItemId;
 
-typedef enum _ItemPickupType
+typedef enum _CommonPickupItemType
 {
-    ItemPickupType_FirstAidKit    = 0,
-    ItemPickupType_HealthDrink    = 1,
-    ItemPickupType_Ampoule        = 2,
-    ItemPickupType_HandgunBullets = 3,
-    ItemPickupType_RifleShells    = 4,
-    ItemPickupType_ShotgunShells  = 5
-} s_ItemPickupType;
+    CommonPickupItemId_FirstAidKit    = 0,
+    CommonPickupItemId_HealthDrink    = 1,
+    CommonPickupItemId_Ampoule        = 2,
+    CommonPickupItemId_HandgunBullets = 3,
+    CommonPickupItemId_RifleShells    = 4,
+    CommonPickupItemId_ShotgunShells  = 5
+} s_CommonPickupItemType;
 
 /** @brief Equipped weapon IDs. Derivative of `e_InventoryItemId`.
  *
@@ -1191,7 +1191,7 @@ typedef struct _SysWork
     s8              unk_0[8];
     s32             sysState_8;     /** e_SysState */
     s32             sysStateStep_C; // Current step/state of `sysState_8` game is in.
-    s32             field_10;       // Sometimes assigned to same thing as `sysStateStep_C`.
+    s32             field_10;       // Sometimes assigned to same thing as `sysStateStep_C`. Contains selected entry index from pickup item dialogs?
     s32             field_14;
     s32             field_18; // `s_Skeleton` array pointer?
     s32             timer_1C;

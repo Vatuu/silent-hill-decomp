@@ -115,13 +115,13 @@ void func_800DA7FC();
 
 void func_800DA8A4();
 
-void func_800DC34C();
+void Pickup_PocketRadioItemTake();
 
-void func_800DC394();
+void Pickup_FlashlightItemTake();
 
 void func_800DC3C8();
 
-void func_800DC830();
+void Pickup_KitchenKnifeItemTake();
 
 void func_800DC864();
 
