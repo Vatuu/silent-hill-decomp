@@ -535,7 +535,7 @@ void func_800DA8A4() // 0x800DA8A4
 
     Gfx_DebugStringPosition(100, 100);
     Gfx_DebugStringDraw(&D_800CBAD4);
-    func_80035BBC();
+    Gfx_LoadingScreen_BackgroundTexture();
 }
 
 #include "maps/shared/sharedFunc_800DA8E8_0_s01.h" // 0x800DA8E8

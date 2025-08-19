@@ -1847,7 +1847,7 @@ void func_80035B98() // 0x80035B98
     Gfx_BackgroundSpriteDraw(&g_ItemInspectionImg);
 }
 
-void func_80035BBC() // 0x80035BBC
+void Gfx_LoadingScreen_BackgroundTexture() // 0x80035BBC
 {
     Gfx_BackgroundSpriteDraw(&D_800A9034);
 }
