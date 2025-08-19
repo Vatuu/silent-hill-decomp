@@ -4138,8 +4138,8 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
         case PlayerStates_Grab_Lower_Behind:
         case PlayerStates_Unk32:
         case PlayerStates_Unk33:
-        case PlayerStates_Unk39:
-        case PlayerStates_Unk40:
+        case PlayerStates_Grab_RomperAttack_Front:
+        case PlayerStates_Grab_RomperAttack_Behind:
         case PlayerStates_Unk47:
         case PlayerStates_Unk48:
             var_2 = 0;
