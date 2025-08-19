@@ -86,12 +86,6 @@ segments:
                                              # Jumptable: `vcMixSelfViewEffectToWatchTgtPos`
       - [0x5F9C, .rodata, bodyprog_80085D78] # Jumptables
       - [0x6504, rodata]
-      # - [0x604C, .rodata, bodyprog_80085D78] # Jumptable: `func_80087AF4`
-      # - [0x6064, rodata]
-      # - [0x641C, .rodata, bodyprog_80085D78] # Jumptable: `func_8008973C`
-      # - [0x6444, rodata]
-      # - [0x64A4, .rodata, bodyprog_80085D78] # Jumptable: `func_8008A2E0`
-      # - [0x6504, rodata]
       - [0x679C, .rodata, credits]
       - [0x6A6C, rodata]
       - [0x6A74, lib, libcd, iso9660, .rdata]
