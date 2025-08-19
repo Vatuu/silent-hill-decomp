@@ -715,26 +715,26 @@ void func_800DC85C() {}
 
 void func_800DC864() // 0x800DC864
 {
-    s32 var_a1;
-    u32 var_a0;
+    s32 globalPickupId;
+    u32 pickupType;
 
-    var_a0 = 0;
-    var_a1 = 0;
+    pickupType     = ItemPickupType_FirstAidKit;
+    globalPickupId = 0;
 
     switch (g_MapEventParam->field_5)
     {
         case 13:
-            var_a0 = 1;
-            var_a1 = 596;
+            pickupType     = ItemPickupType_HealthDrink;
+            globalPickupId = 596;
             break;
 
         case 14:
-            var_a0 = 1;
-            var_a1 = 597;
+            pickupType     = ItemPickupType_HealthDrink;
+            globalPickupId = 597;
             break;
     }
 
-    func_800879FC(var_a0, var_a1);
+    func_800879FC(pickupType, globalPickupId);
 }
 
 void func_800DC8C8() // 0x800DC8C8

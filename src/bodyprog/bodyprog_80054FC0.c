@@ -2387,14 +2387,17 @@ void func_8006BE40(s_func_8006CC44* arg0) // 0x8006BE40
         }
     }
 
+    // TODO: It's possible `temp_a3` is not passed in these calls.
     switch (var_v1)
     {
         case 0:
-            func_8006BF88(arg0, &arg0->field_DE, var_a2, temp_a3); // Its possible `temp_a3` is not passed on these functions
+            func_8006BF88(arg0, &arg0->field_DE, var_a2, temp_a3);
             break;
+
         case 1:
             func_8006BF88(arg0, &arg0->field_E4, var_a2, temp_a3);
             break;
+
         case 2:
             func_8006C0C8(arg0, var_a1, var_a2, temp_a3);
             break;

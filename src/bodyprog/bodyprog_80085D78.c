@@ -202,6 +202,7 @@ void func_8008616C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x800861
     switch (caseVar)
     {
         case 0:
+            // `arg2` determines what `arg3` is, which could be a time value or picked up item count?
             if (arg2 != 2)
             {
                 D_800B5C30 = arg3;
@@ -271,7 +272,7 @@ void func_8008616C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x800861
 
 const RECT D_8002AB10 = { 320, 256, 192, 240 }; // 0x8002AB10 .rodata
 
-void func_800862F8(s32 arg0, s32 arg1, s32 arg2) // 0x800862F8
+void func_800862F8(s32 arg0, s32 itemId, s32 arg2) // 0x800862F8
 {
     s32 switchVar;
 
@@ -295,7 +296,7 @@ void func_800862F8(s32 arg0, s32 arg1, s32 arg2) // 0x800862F8
     switch (switchVar)
     {
         case 0:
-            Fs_QueueStartReadTim(arg1, FS_BUFFER_1, &g_ItemInspectionImg);
+            Fs_QueueStartReadTim(itemId, FS_BUFFER_1, &g_ItemInspectionImg);
 
             if (arg0 != 0)
             {
@@ -326,7 +327,7 @@ void func_800862F8(s32 arg0, s32 arg1, s32 arg2) // 0x800862F8
             break;
 
         case 4:
-            Fs_QueueStartReadTim(arg1, FS_BUFFER_1, &D_800A9A04);
+            Fs_QueueStartReadTim(itemId, FS_BUFFER_1, &D_800A9A04);
 
             if (arg0 == 8)
             {
@@ -951,20 +952,20 @@ void func_80087360(s32 arg0, s32 arg1, s32 arg2, s32 mapMsgIdx) // 0x80087360
     }
 }
 
-void func_80087540(s32 arg0, s32 arg1, s32 arg2, s32 mapMsgIdx0, s32 mapMsgIdx1) // 0x80087540
+void func_80087540(s32 itemId, s32 itemCount, s32 arg2, s32 mapMsgIdx0, s32 mapMsgIdx1) // 0x80087540
 {
     switch (g_SysWork.field_10)
     {
         case 0:
             g_MapOverlayHeader.func_C8();
-            func_8008616C(0, 1, 0, arg1, 0);
+            func_8008616C(0, 1, 0, itemCount, 0);
 
             g_SysWork.timer_2C = 0;
             g_SysWork.field_14 = 0;
             g_SysWork.field_10++;
 
         case 1:
-            func_800862F8(7, arg0, 1);
+            func_800862F8(7, itemId, 1);
             break;
 
         case 2:
@@ -1009,7 +1010,7 @@ void func_80087540(s32 arg0, s32 arg1, s32 arg2, s32 mapMsgIdx0, s32 mapMsgIdx1)
             break;
 
         default:
-            func_8008616C(0, 0, 0, arg1, 0);
+            func_8008616C(0, 0, 0, itemCount, 0);
             g_MapOverlayHeader.func_CC(0);
 
             g_SysWork.sysState_8     = 0;
@@ -1023,18 +1024,19 @@ void func_80087540(s32 arg0, s32 arg1, s32 arg2, s32 mapMsgIdx0, s32 mapMsgIdx1)
     }
 }
 
-void func_800877B8(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x800877B8
+void func_800877B8(s32 itemId, s32 itemCount, s32 globalPickupId, s32 mapMsgIdx) // 0x800877B8
 {
-    s32 i   = arg0;
-    s32 var = arg3;
+    s32 i            = itemId;
+    s32 mapMsgIdxCpy = mapMsgIdx;
 
     if (!(g_SysWork.flags_22A4 & (1 << 5)))
     {
         // Traverse NPCs.
         for (i = 0; i < NPC_COUNT_MAX; i++)
         {
-            if ((u32)((u8)g_SysWork.npcs_1A0[i].model_0.charaId_0 - 1) >= 24 ||
-                g_SysWork.npcs_1A0[i].health_B0 <= 0)
+            if (!(g_SysWork.npcs_1A0[i].model_0.charaId_0 >= Chara_Hero &&
+                  g_SysWork.npcs_1A0[i].model_0.charaId_0 <= Chara_MonsterCybil) ||
+                g_SysWork.npcs_1A0[i].health_B0 <= Q19_12(0.0f))
             {
                 continue;
             }
@@ -1042,9 +1044,9 @@ void func_800877B8(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x800877B8
             break;
         }
         
-        if (i != 6)
+        if (i != NPC_COUNT_MAX)
         {
-            g_DeltaTime0 = 0;
+            g_DeltaTime0 = FP_TIME(0.0f);
         }
     }
 
@@ -1052,35 +1054,37 @@ void func_800877B8(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x800877B8
     {
         case 0:
             g_MapOverlayHeader.func_C8();
-            func_80086470(0, arg0, 0, 0);
+            func_80086470(0, itemId, 0, 0);
 
             g_SysWork.timer_2C = 0;
             g_SysWork.field_14 = 0;
             g_SysWork.field_10++;
 
         case 1:
-            func_80086470(1, arg0, 0, 1);
+            func_80086470(1, itemId, 0, 1);
             break;
 
         case 2:
-            if (func_80054AD8(arg0) != 0)
+            if (func_80054AD8(itemId))
             {
-                func_800860B0(1, var, 3, NO_VALUE, 0, 1);
+                func_800860B0(1, mapMsgIdxCpy, 3, NO_VALUE, 0, 1);
             }
 
-            g_SavegamePtr->eventFlags_168[arg2 >> 5] |= 1 << (arg2 & 0x1F);
+            // Flag item pickup as collected.
+            g_SavegamePtr->eventFlags_168[globalPickupId >> 5] |= 1 << (globalPickupId & 0x1F);
             break;
 
         case 3:
-            func_80086470(3, arg0, arg1, 0);
+            func_80086470(3, itemId, itemCount, 0);
             g_SysWork.timer_2C = 0;
             g_SysWork.field_14 = 0;
             g_SysWork.field_10++;
 
-        default:    
+        default:
+            // Flag item pickup as uncollected.
             if (g_SysWork.field_10 == NO_VALUE)
             {
-                g_SavegamePtr->eventFlags_168[arg2 >> 5] &= ~(1 << (arg2 & 0x1F));
+                g_SavegamePtr->eventFlags_168[globalPickupId >> 5] &= ~(1 << (globalPickupId & 0x1F));
             }
 
             g_MapOverlayHeader.func_CC(0);
@@ -1095,78 +1099,54 @@ void func_800877B8(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x800877B8
     }
 }
 
-void func_800879FC(u32 arg0, s32 arg1) // 0x800879FC
+void func_800879FC(u32 pickupType, s32 globalPickupId) // 0x800879FC
 {
-    s32 var0;
-    s32 var1;
-    s32 var2;
-    s32 newBulletAdjust;
-    s32 var4;
+    #define EASY_DIFFICULTY_BULLET_COUNT_MULT_MIN 2
+    #define HANDGUN_BULLET_COUNT_BASE             15
+    #define SHOTGUN_BULLET_COUNT_BASE             6
+    #define RIFLE_BULLET_COUNT_BASE               6
 
-    newBulletAdjust = g_GameWork.config_0.optExtraBulletAdjust_2D + 1;
+    s32 bulletCountMult;
+
+    // Compute bullet count multiplier.
+    bulletCountMult = g_GameWork.config_0.optExtraBulletAdjust_2D + 1;
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
     {
-        var4 = 2;
-        if (newBulletAdjust >= var4)
-        {
-            var4 = newBulletAdjust;
-        }
-
-        newBulletAdjust = var4;
+        bulletCountMult = CLAMP(bulletCountMult, EASY_DIFFICULTY_BULLET_COUNT_MULT_MIN, bulletCountMult);
     }
 
-    switch (arg0)
+    // Handle item pickup.
+    switch (pickupType)
     {
-        case 0:
-            var0 = InventoryItemId_FirstAidKit;
-            var1 = 1;
-            var2 = 5;
-            func_800877B8(var0, var1, arg1, var2);
+        case ItemPickupType_FirstAidKit:
+            func_800877B8(InventoryItemId_FirstAidKit, 1, globalPickupId, 5);
             break;
 
-        case 1:
-            var0 = InventoryItemId_HealthDrink;
-            var1 = 1;
-            var2 = 6;
-            func_800877B8(var0, var1, arg1, var2);
+        case ItemPickupType_HealthDrink:
+            func_800877B8(InventoryItemId_HealthDrink, 1, globalPickupId, 6);
             break;
 
-        case 2:
-            var0 = InventoryItemId_Ampoule;
-            var1 = 1;
-            var2 = 7;
-            func_800877B8(var0, var1, arg1, var2);
+        case ItemPickupType_Ampoule:
+            func_800877B8(InventoryItemId_Ampoule, 1, globalPickupId, 7);
             break;
 
-        case 3:
-            var0 = InventoryItemId_HandgunBullets;
-            var1 = newBulletAdjust * 15;
-            var2 = 8;
-            func_800877B8(var0, var1, arg1, var2);
+        case ItemPickupType_HandgunBullets:
+            func_800877B8(InventoryItemId_HandgunBullets, bulletCountMult * HANDGUN_BULLET_COUNT_BASE, globalPickupId, 8);
             break;
 
-        case 5:
-            var0 = InventoryItemId_ShotgunShells;
-            var1 = newBulletAdjust * 6;
-            var2 = 10;
-            func_800877B8(var0, var1, arg1, var2);
+        case ItemPickupType_ShotgunShells:
+            func_800877B8(InventoryItemId_ShotgunShells, bulletCountMult * SHOTGUN_BULLET_COUNT_BASE, globalPickupId, 10);
             break;
 
-        case 4:
-            var0 = InventoryItemId_RifleShells;
-            var1 = newBulletAdjust * 6;
-            var2 = 9;
-            func_800877B8(var0, var1, arg1, var2);
-            break;
-
-        default:
+        case ItemPickupType_RifleShells:
+            func_800877B8(InventoryItemId_RifleShells, bulletCountMult * RIFLE_BULLET_COUNT_BASE, globalPickupId, 9);
             break;
     }
 }
 
 void func_80087AF4(s32 mapFlagIdx, s32 eventFlagIdx, s32 mapMsgIdx) // 0x80087AF4
 {
-    static const RECT D_8002ABA4 = {320, 256, 160, 240};
+    static const RECT D_8002ABA4 = { 320, 256, SCREEN_WIDTH / 2, SCREEN_HEIGHT };
 
     s32 mapFlagIdxCpy;
 

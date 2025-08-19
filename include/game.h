@@ -441,6 +441,16 @@ typedef enum _InventoryItemId
     InventoryItemId_GasolineTank         = 226
 } e_InventoryItemId;
 
+typedef enum _ItemPickupType
+{
+    ItemPickupType_FirstAidKit    = 0,
+    ItemPickupType_HealthDrink    = 1,
+    ItemPickupType_Ampoule        = 2,
+    ItemPickupType_HandgunBullets = 3,
+    ItemPickupType_RifleShells    = 4,
+    ItemPickupType_ShotgunShells  = 5
+} s_ItemPickupType;
+
 /** @brief Equipped weapon IDs. Derivative of `e_InventoryItemId`.
  *
  * Maybe weapon state instead?

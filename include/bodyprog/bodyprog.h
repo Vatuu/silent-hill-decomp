@@ -2027,7 +2027,7 @@ extern DVECTOR g_Gfx_DebugStringPosition1;
 
 extern s32 D_800B5C28;
 
-/** FP time value? */
+/** Used as both FP time value or picked up item count? */
 extern s32 D_800B5C30;
 
 extern s_800B5C40 D_800B5C40[];
@@ -2877,7 +2877,7 @@ void func_8005487C(s32);
 
 void func_80054A04(u8 arg0);
 
-s32 func_80054AD8(u8 arg0);
+bool func_80054AD8(u8 itemId);
 
 void func_80054FC0(s32* arg0, s32* arg1, u8 idx);
 
@@ -3098,10 +3098,10 @@ void func_8008605C(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 /** `arg1` might be `u8*`. */
 void func_800860B0(s32 arg0, s32 mapMsgIdx, s32 arg2, s32 arg3, s32 sysStateStep, s32 arg5);
 
-/** `arg3` is some FP time value. */
+/** `arg3` is some FP time value or picked up item count depending on the value of `arg2`. */
 void func_8008616C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 
-void func_800862F8(s32 arg0, s32 arg1, s32 arg2);
+void func_800862F8(s32 arg0, s32 itemId, s32 arg2);
 
 void func_80086470(u32 switchVar, s32 arg1, s32 arg2, s32 arg3);
 
@@ -3141,8 +3141,12 @@ void func_80087360(s32 arg0, s32 arg1, s32 arg2, s32 mapMsgIdx);
 
 void func_80087540(s32 arg0, s32 arg1, s32 arg2, s32 mapMsgIdx0, s32 mapMsgIdx1);
 
-/** Something to do with bullet adjust setting. */
-void func_800879FC(u32 arg0, s32 arg1);
+void func_800877B8(s32 itemId, s32 itemCount, s32 globalPickupId, s32 mapMsgIdx);
+
+/** Common item pickup handler.
+ * `globalPickupId` is used to set an event flag. Maybe it allows the game to globally track which ones have been collected.
+ */
+void func_800879FC(u32 pickupType, s32 globalPickupId);
 
 /** Inventory drawing? */
 void func_80087AF4(s32 mapFlagIdx, s32 eventFlagIdx, s32 mapMsgIdx);

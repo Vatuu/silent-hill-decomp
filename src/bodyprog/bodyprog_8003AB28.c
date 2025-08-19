@@ -2688,7 +2688,7 @@ void func_8003F170() // 0x8003F170
         temp_v1       = ptr->field_154.field_0.field_0.s_field_0.field_0;
         ptr->field_14 = 0;
 
-        if (temp_v1 & 1)
+        if (temp_v1 & (1 << 0))
         {
             func_8003F08C(ptr2, &D_800A952C);
         }

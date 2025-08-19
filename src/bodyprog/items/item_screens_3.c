@@ -2352,12 +2352,13 @@ void func_80054A04(u8 itemId) // 0x80054A04
     Gfx_ItemScreens_CameraSet(&D_800C3B48, &D_800C3AE8, &D_800C3B38, 0);
 }
 
-s32 func_80054AD8(u8 arg0) // 0x80054AD8
+bool func_80054AD8(u8 itemId) // 0x80054AD8
 {
-    s32 temp_a1;
-    GsDOBJ2* obj;
+    s32            temp_a1;
+    s16            x;
+    s16            y;
+    GsDOBJ2*       obj;
     s_Items3dData* ptr;
-    s16 x, y;
 
     g_Items_Items3dData1[9].coord.t[1] = 0x40;
     g_Items_Items3dData1[9].coord.t[0] = 0;
@@ -2374,8 +2375,8 @@ s32 func_80054AD8(u8 arg0) // 0x80054AD8
             ptr     = &g_Items_Items3dData0[0];
             temp_a1 = D_800AE1B0 << 12;
 
-            x = g_ItemVectors[arg0 - 32].vx;
-            y = g_ItemVectors[arg0 - 32].vy;
+            x = g_ItemVectors[itemId - 32].vx;
+            y = g_ItemVectors[itemId - 32].vy;
 
             ptr[9].scale_0.vz     = temp_a1 >> 11;
             ptr[9].scale_0.vy     = temp_a1 >> 11;

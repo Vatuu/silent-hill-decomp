@@ -488,8 +488,8 @@ void func_800CA2C8(s32 arg0) // 0x800CA2C8
 
     if (expectedTime - currentTime < timeVar1)
     {
-        expectedTime = currentTime + 468;
-        expectedTime = (expectedTime / 263) * 263;
+        expectedTime  = currentTime + 468;
+        expectedTime  = (expectedTime / 263) * 263;
         expectedTime -= timeVar0;
     }
 
@@ -501,7 +501,7 @@ void func_800CA2C8(s32 arg0) // 0x800CA2C8
             break;
         }
 
-        if ((var_s2 & (1 << 9)) == 0 && VSync(1) > expectedTime && arg0 != NO_VALUE)
+        if (!(var_s2 & (1 << 9)) && VSync(1) > expectedTime && arg0 != NO_VALUE)
         {
             break;
         }
@@ -509,20 +509,20 @@ void func_800CA2C8(s32 arg0) // 0x800CA2C8
         var_s2 = var_s2 / 2;
         var_v0 = var_s2;
 
-        if ((var_s2 & (1 << 8)) == 0)
+        if (!(var_s2 & (1 << 8)))
         {
             var_s2 = *var_s0;
             var_s0++;
             var_s2 = var_s2 | 0xFF00;
         }
 
-        if ((var_s2 & 1) != 0)
+        if (var_s2 & (1 << 0))
         {
             temp_s0 = &D_800CA4F4[var_s1];
             temp_v1 = *var_s0;
             var_s0++;
             *temp_s0 = temp_v1;
-            *var_s3 = temp_v1;
+            *var_s3  = temp_v1;
             var_s3++;
             var_s1++;
             var_s1 &= 0xFFF;
@@ -542,7 +542,7 @@ void func_800CA2C8(s32 arg0) // 0x800CA2C8
         temp_v0_3 = (*var_s0 & 0xF) + 3;
         temp_v0_2 = temp_v0_2 << 4;
         
-        var_a1 = temp_v0 | temp_v0_2;
+        var_a1    = temp_v0 | temp_v0_2;
         temp_v1_2 = var_a1 + temp_v0_3;
         var_s0++;
 
