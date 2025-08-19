@@ -1245,7 +1245,7 @@ void GameFs_MapStartup() // 0x80034964
             else if (g_SysWork.flags_2298 == SysWorkProcessFlag_LoadSave ||
                      g_SysWork.flags_2298 == SysWorkProcessFlag_Continue)
             {
-                g_SysWork.field_2281 = 1;
+                g_SysWork.loadingScreenIndex_2281 = 1;
             }
 
             g_GameWork.gameStateStep_598[0]++;
@@ -1351,11 +1351,11 @@ void GameFs_MapStartup() // 0x80034964
 
 void Gfx_LoadingScreenDraw() // 0x80034E58
 {
-    if (g_SysWork.field_2281 != 0 && g_GameWork.gameStateStep_598[0] < 10)
+    if (g_SysWork.loadingScreenIndex_2281 != 0 && g_GameWork.gameStateStep_598[0] < 10)
     {
         g_Gfx_ScreenFade = 7;
         D_800B5C30       = FP_TIME(0.8f);
-        g_MapOverlayHeader.loadingScreenFuncs_18[g_SysWork.field_2281]();
+        g_MapOverlayHeader.loadingScreenFuncs_18[g_SysWork.loadingScreenIndex_2281]();
     }
 
     Gfx_MotionBlur(2);
@@ -2848,7 +2848,7 @@ void Chara_PositionUpdateFromParams(s_AreaLoadParams* params) // 0x800371E8
         g_SysWork.player_4C.chara_0.position_18.vz += FP_MULTIPLY_FLOAT((s64)shRcos(rot), 0.4f, Q12_SHIFT);
     }
 
-    g_SysWork.field_2281 = params->field_4_9;
+    g_SysWork.loadingScreenIndex_2281 = params->field_4_9;
 
     if (params->mapIdx_4_0 == 24)
     {
@@ -3694,7 +3694,7 @@ void SysState_LoadArea_Update() // 0x80039C40
     s_AreaLoadParams* areaLoadParams;
 
     g_SysWork.field_229C = 0;
-    g_SysWork.field_2281 = D_800BCDB0.field_4_9;
+    g_SysWork.loadingScreenIndex_2281 = D_800BCDB0.field_4_9;
     g_SysWork.field_2283 = (g_MapEventParam->flags_8 >> 19) & 0x1F;
     g_SysWork.field_2282 = (g_MapEventParam->flags_8 >> 13) & 0x3F;
 
