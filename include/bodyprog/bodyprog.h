@@ -163,7 +163,19 @@ typedef struct _s_8002AC04
     u8                  field_5;
     u16                 field_6;
     s32                 field_8;
-    s32                 field_C;
+    union
+    {
+        // `func_80089DF0` reads `field_C` as bitfield.
+        // Other `D_800AFD08` funcptrs read as `u32`?
+        struct
+        {
+            u32 field_C_0  : 16;
+            u32 field_C_16 : 12;
+            u32 field_C_28 : 3;
+            u32 field_C_31 : 1;
+        } bf;
+        u32 u32;
+    } field_C;
 } s_8002AC04;
 STATIC_ASSERT_SIZEOF(s_8002AC04, 16);
 
