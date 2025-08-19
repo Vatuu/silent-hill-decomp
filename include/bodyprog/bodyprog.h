@@ -1447,22 +1447,23 @@ typedef struct
     s16 field_6;
 } s_UnkStruct3_Mo;
 
-/** TODO: `g_MapOverlayHeader` is part of the map overlay BIN files. Maybe should be moved to `maps/shared.h`. */
+/** TODO: `g_MapOverlayHeader` is part of the map overlay BIN files. Maybe should be moved to `maps/shared.h`. 
+ *  If field has a comment that lists only certain map(s) it means all others set this field to 0
+ *  func(?) means the signature is unknown and a default void() was selected for now
+ * */
 typedef struct _MapOverlayHeader
 {
     s_UnkStruct2_Mo*  field_0;
     s8                (*getMapRoomIdxFunc_4)(s32 x, s32 y); // Called by `Savegame_MapRoomIdxSet`.
     s8                field_8;
     s8                unk_9[3];
-    void              (*func_C)(); // Madeup signature.
+    void              (*func_C)(); // func(?).
     s32               (*func_10)();
     s8                field_14; // Flags?
     u8                field_15;
     s8                field_16;
     s8                field_17;
-    void              (**loadingScreenFuncs_18)(); // Player run: 1.
-                                                   // Background image: 2 (impossible to see as image is never loaded).
-                                                   // Background image + stage number: 3. Debug leftover? Not all overlays have the required string.
+    void              (**loadingScreenFuncs_18)();
     s_AreaLoadParams* mapAreaLoadParams_1C;
     void              (**mapEventFuncs_20)(); /** Points to array of event functions. */
     u8*               unk_24;
@@ -1471,69 +1472,92 @@ typedef struct _MapOverlayHeader
     const char**      mapMessageStrings_30;
     s_AnimInfo*       animInfo_34;
     s_UnkStruct3_Mo*  field_38;
-    void              (*func_3C)(); // Madeup signature.
+    void              (*func_3C)(); // func(?).
     void              (*func_40)();
     void              (*func_44)();
-    void              (*func_48)(); // Madeup signature.
-    s_func_800625F4*  field_4C;
-    s32               unk_50;
-    s32*              unk_54;
-    s32               unk_58;
-    s32               unk_5C;
-    s8                unk_60[88];
+    void              (*func_48)(); // func(?).
+    s_func_800625F4*  table200Items_4C; //unknown purpose, but all maps have an array[200] of this (4000 zero bytes)
+    s32               always200_50;
+    s32*              table76Items_54; //unknown purpose, but all maps have an array[76] of this (304 zero bytes)
+    s32               always150_58;
+    s32               always0_5C;
+    s32               always0_60;
+    s32               always0_64;
+    s32               always0_68;
+    void              (*func_6C)(); // func(?).
+    void              (*func_70)(); // func(?).
+    void              (*func_74)(); // func(?).
+    void              (*func_78)(); // func(?).
+    u8*               unk_7C; // only map1_s01, map6_s04. 
+    void              (*func_80)(); // func(?).
+    void              (*func_84)(); // func(?).
+    s32*              unk_88; // only map0_s01, map7_s01.
+    void              (*func_8C)(); // func(?) only map0_s01, map7_s01.
+    void              (*func_90)(); // func(?) only map5_s00.
+    s32*              unk_94; // only map1_s02, map1_s03.
+    s32*              unk_98; // only map1_s02, map1_s03.
+    s32*              unk_9C; // only map1_s02, map1_s03.
+    s32*              unk_A0; // only map1_s03.
+    void              (*func_A4)(); // func(?) only map1_s03.
+    void              (*func_A8)(); // func(?) only map6_s02.
+    void              (*func_AC)(); // func(?) only map4_s03, map4_s05.
+    void              (*func_B0)(); // func(?) only map4_s03, map4_s05.
+    void              (*func_B4)(); // func(?) only map1_s03, map4_s05, map6_s01, map6_s02, map5_s01.
     void              (*func_B8)(s_SubCharacter*, s_MainCharacterExtra*, GsCOORDINATE2*);
     void              (*func_BC)(s_SubCharacter*, s_MainCharacterExtra*, GsCOORDINATE2*);
-    void              (*func_C0)(); // Madeup signature.
-    void              (*func_C4)(); // Madeup signature.
+    void              (*func_C0)(); // func(?).
+    void              (*func_C4)(); // func(?).
     void              (*func_C8)();
     void              (*func_CC)(s32);
     s32               (*func_D0)(s32, void*, s16, s32); // 0x800C964C
     s32               (*func_D4)(s_SubCharacter*);      // Assumed return type.
     void              (*func_D8)();                     // Assumed return type.
     void              (*func_DC)();                     // Assumed return type.
-    void              (*func_E0)(); // Madeup signature.
+    void              (*func_E0)(); // func(?).
     s32               (*func_E4)(s_SubCharacter*, s_SubCharacter*); // Assumed return type.
     s64               (*func_E8)(s_SubCharacter*);                  // Is it really `s64`???
     s32               (*func_EC)();
-    void              (*func_F0)(); // Madeup signature.
-    void              (*func_F4)(); // Madeup signature.
-    void              (*func_F8)(); // Madeup signature.
-    void              (*func_FC)(); // Madeup signature.
-    void              (*func_100)(); // Madeup signature.
-    void              (*func_104)(); // Madeup signature.
+    void              (*func_F0)(); // func(?).
+    void              (*func_F4)(); // func(?).
+    void              (*func_F8)(); // func(?).
+    void              (*func_FC)(); // func(?).
+    void              (*func_100)(); // func(?).
+    void              (*func_104)(); // func(?).
     s32               (*func_108)();
-    void              (*func_10C)(); // Madeup signature.
-    void              (*func_110)(); // Madeup signature.
-    void              (*func_114)(); // Madeup signature.
-    void              (*func_118)(); // Madeup signature.
-    void              (*func_11C)(); // Madeup signature.
-    void              (*func_120)(); // Madeup signature.
+    void              (*func_10C)(); // func(?).
+    void              (*func_110)(); // func(?).
+    void              (*func_114)(); // func(?).
+    void              (*func_118)(); // func(?).
+    void              (*func_11C)(); // func(?).
+    void              (*func_120)(); // func(?).
     void              (*func_124)(s_SubCharacter*); // Assumed return type.
     s32               (*func_128)(s_SubCharacter*); // Assumed return type.
     s32               (*func_12C)(s_SubCharacter*); // Assumed return type.
-    void              (*func_130)(); // Madeup signature.
+    void              (*func_130)(); // func(?).
     s32               (*func_134)(s_SubCharacter*);           // Assumed return type.
     s32               (*func_138)(s_SubCharacter*);           // Assumed return type.
     s32               (*func_13C)(s32, s32, void*, s16, s32); // 0x800C96B8
-    void              (*func_140)(); // Madeup signature.
-    void              (*func_144)(); // Madeup signature.
-    void              (*func_148)(); // Madeup signature.
-    void              (*func_14C)(); // Madeup signature.
-    void              (*func_150)(); // Madeup signature.
-    void              (*func_154)(); // Madeup signature.
-    void              (*func_158)(s32, s32);
-    s8                unk_15C[12];
+    void              (*func_140)(); // func(?).
+    void              (*func_144)(); // func(?).
+    void              (*func_148)(); // func(?).
+    void              (*func_14C)(); // func(?).
+    void              (*func_150)(); // func(?).
+    void              (*func_154)(); // func(?).
+    void              (*func_158)(s32, s32); // only map1_s05, map1_s06.
+    void              (*func_15C)(); // func(?) only map5_s01.
+    void              (*func_160)(); // func(?) only map5_s01.
+    void              (*func_164)(); // func(?) only map5_s01.
     void              (*func_168)(void*, void*, void*);
     void              (*func_16C)(VECTOR3*, s16);
-    void              (*func_170)(); // Madeup signature.
-    void              (*func_174)(); // Madeup signature.
+    void              (*func_170)(); // func(?).
+    void              (*func_174)(); // func(?).
     void              (*func_178)(void*, void*, void*);
     void              (*func_17C)(void*, void*);
-    void              (*func_180)(); // Madeup signature.
-    void              (*func_184)(); // Madeup signature.
-    void              (*func_188)(); // Madeup signature.
-    void              (*func_18C)(); // Madeup signature.
-    void              (*func_190)(); // Madeup signature.
+    void              (*func_180)(); // func(?).
+    s32*              windSpeedX_184;
+    s32*              windSpeedZ_188;
+    s32*              data_18C;
+    s32*              data_190;
     void              (*charaUpdateFuncs_194[Chara_Count])(s_SubCharacter*, void*, s32); /** Guessed params. Funcptrs for each `e_CharacterId`, set to 0 for IDs not included in the map overlay. Called by `func_80038354`. */
     s8                charaGroupIds_248[4];                                              /** `e_CharacterId` values where if `s_SpawnInfo.charaId_4` == 0, `charaGroupIds_248[0]` is used for `charaSpawns_24C[0]` and `charaGroupIds_248[1]` for `charaSpawns_24C[1]`. */
     s_SpawnInfo       charaSpawns_24C[2][16];                                            /** Array of character type/position/flags. `flags_6 == 0` are unused slots? Read by `func_80037F24`. */
