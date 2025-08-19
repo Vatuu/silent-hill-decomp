@@ -1,4 +1,5 @@
 void sharedFunc_800D67FC_0_s00(s_SubCharacter* chara)
+#ifdef SHARED_FUNC_IMPL
 {
     s32* sp10[7]; // Type assumed.
     s16  newRotY;
@@ -76,3 +77,6 @@ void sharedFunc_800D67FC_0_s00(s_SubCharacter* chara)
 
     *(u16*)&chara->properties_E4.player.properties_E4[1] = newFlags;
 }
+#else
+;
+#endif

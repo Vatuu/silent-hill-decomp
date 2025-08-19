@@ -1,4 +1,3 @@
-
 // TODO: Refine comments and names, it's still kind of unclear.
 /** @brief Spawns snow particles. Called once when the map overlay is loaded.
  *
@@ -28,6 +27,7 @@
  * }
  */
 void sharedFunc_800CE59C_0_s01(s_Particle* parts)
+#ifdef SHARED_FUNC_IMPL
 {
     #define SNOW_COUNT_MAX       300
     #define SNOW_SPAWN_COUNT_MAX 150
@@ -155,3 +155,6 @@ void sharedFunc_800CE59C_0_s01(s_Particle* parts)
         }
     }
 }
+#else
+;
+#endif

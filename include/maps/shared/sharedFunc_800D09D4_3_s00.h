@@ -1,4 +1,5 @@
 void sharedFunc_800D09D4_3_s00()
+#ifdef SHARED_FUNC_IMPL
 {
     s32         flags;
     s32         var;
@@ -85,3 +86,6 @@ void sharedFunc_800D09D4_3_s00()
 
     func_80035F4C(flags, var, NULL);
 }
+#else
+;
+#endif

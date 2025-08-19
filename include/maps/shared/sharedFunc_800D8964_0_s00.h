@@ -1,4 +1,5 @@
 s32 sharedFunc_800D8964_0_s00(s_SubCharacter* chara)
+#ifdef SHARED_FUNC_IMPL
 {
 #if defined(MAP6_S01)
     extern s_AnimInfo D_800D35A0[];
@@ -138,3 +139,6 @@ s32 sharedFunc_800D8964_0_s00(s_SubCharacter* chara)
 
     return -1;
 }
+#else
+;
+#endif

@@ -1,4 +1,5 @@
 void sharedFunc_800D0CB8_0_s00()
+#ifdef SHARED_FUNC_IMPL
 {
     u8 unkValDiv4;
 
@@ -39,3 +40,6 @@ void sharedFunc_800D0CB8_0_s00()
             }
     }
 }
+#else
+;
+#endif

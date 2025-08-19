@@ -1,4 +1,5 @@
 bool sharedFunc_800D0B18_0_s00(s32 arg0)
+#ifdef SHARED_FUNC_IMPL
 {
     s32 temp_a0_2;
     u16 temp;
@@ -93,3 +94,6 @@ bool sharedFunc_800D0B18_0_s00(s32 arg0)
 
     return false;
 }
+#else
+;
+#endif

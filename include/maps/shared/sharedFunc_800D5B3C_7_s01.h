@@ -1,5 +1,6 @@
 
 void sharedFunc_800D5B3C_7_s01(s_SubCharacter* chara, GsCOORDINATE2* coords)
+#ifdef SHARED_FUNC_IMPL
 {
     s_func_800699F8 sp18;
     s32             sp28;
@@ -53,3 +54,6 @@ void sharedFunc_800D5B3C_7_s01(s_SubCharacter* chara, GsCOORDINATE2* coords)
 
     func_80096E78(&chara->rotation_24, &coords->coord);
 }
+#else
+;
+#endif

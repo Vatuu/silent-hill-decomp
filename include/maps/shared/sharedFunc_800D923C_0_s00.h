@@ -1,4 +1,5 @@
 void sharedFunc_800D923C_0_s00(s_SubCharacter* chara)
+#ifdef SHARED_FUNC_IMPL
 {
     chara->model_0.stateStep_3 = 0;
 
@@ -22,3 +23,6 @@ void sharedFunc_800D923C_0_s00(s_SubCharacter* chara)
 
     chara->field_E0_8 = 3;
 }
+#else
+;
+#endif

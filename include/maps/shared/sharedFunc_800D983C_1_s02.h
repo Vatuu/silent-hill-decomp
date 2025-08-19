@@ -1,4 +1,5 @@
 void sharedFunc_800D983C_1_s02(s_SubCharacter* chara)
+#ifdef SHARED_FUNC_IMPL
 {
     s32 unk[7]; // Type assumed.
     s32 newMoveSpeed;
@@ -46,3 +47,6 @@ void sharedFunc_800D983C_1_s02(s_SubCharacter* chara)
 
     chara->rotation_24.vy = func_8005BF38(chara->rotation_24.vy);
 }
+#else
+;
+#endif

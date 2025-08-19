@@ -1,4 +1,5 @@
 void sharedFunc_800D0A60_0_s00(s32 caseArg)
+#ifdef SHARED_FUNC_IMPL
 {
     s32 var0;
     s32 var1;
@@ -49,3 +50,6 @@ void sharedFunc_800D0A60_0_s00(s32 caseArg)
     sharedData_800E0CB0_0_s00 = (u16)sharedData_800E0CB0_0_s00 | ((var0 | (var1 * 16) | (var2 << 8)) << 16);
     sharedData_800E0CB8_0_s00 = (sharedData_800E0CB8_0_s00 & 0xF) | ((sharedData_800E0CB0_0_s00 >> 12) & 0x1110);
 }
+#else
+;
+#endif

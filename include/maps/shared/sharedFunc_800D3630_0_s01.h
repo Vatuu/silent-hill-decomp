@@ -1,4 +1,5 @@
 s32 sharedFunc_800D3630_0_s01(s_SubCharacter* chara, s32* arg1)
+#ifdef SHARED_FUNC_IMPL
 {
     s32 ret;
     s32 angle;
@@ -28,3 +29,6 @@ s32 sharedFunc_800D3630_0_s01(s_SubCharacter* chara, s32* arg1)
 
     return ret;
 }
+#else
+;
+#endif

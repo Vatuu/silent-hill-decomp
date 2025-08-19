@@ -1,4 +1,5 @@
 void sharedFunc_800CED44_3_s02(s_SubCharacter* chara, GsCOORDINATE2* coord)
+#ifdef SHARED_FUNC_IMPL
 {
     VECTOR3 unused;
     VECTOR3 vec;
@@ -30,3 +31,6 @@ void sharedFunc_800CED44_3_s02(s_SubCharacter* chara, GsCOORDINATE2* coord)
     coord->coord.t[1] = FP_FROM(chara->position_18.vy, Q4_SHIFT);
     coord->coord.t[2] = FP_FROM(chara->position_18.vz, Q4_SHIFT);
 }
+#else
+;
+#endif

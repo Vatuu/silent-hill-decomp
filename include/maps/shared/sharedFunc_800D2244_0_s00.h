@@ -1,4 +1,5 @@
 #include <bodyprog/player_logic.h>
+#ifdef SHARED_FUNC_IMPL
 
 void sharedFunc_800D2244_0_s00(s32 arg0)
 {
@@ -91,3 +92,6 @@ void sharedFunc_800D2244_0_s00(s32 arg0)
     D_800AF212 = 0;
 #endif
 }
+#else
+;
+#endif

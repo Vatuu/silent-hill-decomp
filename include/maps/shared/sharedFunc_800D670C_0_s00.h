@@ -1,5 +1,6 @@
 
 void sharedFunc_800D670C_0_s00(s_SubCharacter* arg0)
+#ifdef SHARED_FUNC_IMPL
 {
     if (arg0->model_0.stateStep_3 == 1)
     {
@@ -31,3 +32,6 @@ void sharedFunc_800D670C_0_s00(s_SubCharacter* arg0)
         }
     }
 }
+#else
+;
+#endif

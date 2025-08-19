@@ -1,4 +1,5 @@
 void sharedFunc_800D8244_1_s02(s_SubCharacter* chara)
+#ifdef SHARED_FUNC_IMPL
 {
     switch (chara->model_0.state_2)
     {
@@ -28,3 +29,6 @@ void sharedFunc_800D8244_1_s02(s_SubCharacter* chara)
 
     chara->properties_E4.player.properties_E4[0] &= ~(1 << 8);
 }
+#else
+;
+#endif

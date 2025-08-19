@@ -1,6 +1,7 @@
 #include "bodyprog/player_logic.h"
 
 void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra* extra, GsCOORDINATE2* coord)
+#ifdef SHARED_FUNC_IMPL
 {
     s_func_800699F8 sp10;
     s32             sp20;
@@ -122,3 +123,6 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
     coord->flg = 0;
     func_80096E78(&playerChara->rotation_24, &coord->coord);
 }
+#else
+;
+#endif

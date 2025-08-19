@@ -1,5 +1,6 @@
 /** @brief Reset function for a snow particle */
 void sharedFunc_800CF9A8_0_s01(s32 arg0, s_Particle* part, u16* rand)
+#ifdef SHARED_FUNC_IMPL
 {
     #define SNOW_XZ_SPAWN_RANGE 5
     #define SNOW_Y_START_SPEED  100
@@ -39,3 +40,6 @@ void sharedFunc_800CF9A8_0_s01(s32 arg0, s_Particle* part, u16* rand)
     // Step to active state.
     part->stateStep_1E++;
 }
+#else
+;
+#endif

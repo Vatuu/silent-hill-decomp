@@ -1,4 +1,5 @@
 void sharedFunc_800D7E04_0_s00(s_SubCharacter* chara, s32 caseArg)
+#ifdef SHARED_FUNC_IMPL
 {
     s32 var_s1;
 
@@ -56,3 +57,6 @@ void sharedFunc_800D7E04_0_s00(s_SubCharacter* chara, s32 caseArg)
         *((u16*)&chara->properties_E4.player.properties_E4[7] + 1) = var_s1;
     }
 }
+#else
+;
+#endif

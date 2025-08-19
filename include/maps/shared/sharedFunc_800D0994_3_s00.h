@@ -1,4 +1,5 @@
 void sharedFunc_800D0994_3_s00()
+#ifdef SHARED_FUNC_IMPL
 {
     #define TEST_FLAG       (1 << 7)
     #define OVERLAY_VAL_ON  0x10
@@ -9,3 +10,6 @@ void sharedFunc_800D0994_3_s00()
     mapOverlayVal = ((g_SavegamePtr->eventFlags_18C & TEST_FLAG) == 0) ? OVERLAY_VAL_OFF : OVERLAY_VAL_ON;
     func_8003640C(mapOverlayVal);
 }
+#else
+;
+#endif

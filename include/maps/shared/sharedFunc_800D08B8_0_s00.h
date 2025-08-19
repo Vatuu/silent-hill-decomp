@@ -5,6 +5,7 @@
 #endif
 
 void sharedFunc_800D08B8_0_s00(s8 arg0, u32 arg1)
+#ifdef SHARED_FUNC_IMPL
 {
     s32 temp_a1;
     s32 shiftAmt;
@@ -94,6 +95,9 @@ void sharedFunc_800D08B8_0_s00(s8 arg0, u32 arg1)
     sharedData_800E0CA8_0_s00 = var_s1;
     sharedData_800E0CAC_0_s00 = var_s0;
 }
+#else
+;
+#endif
 
 #ifdef SET_800E32D0
 #undef SET_800E32D0

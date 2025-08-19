@@ -1,4 +1,5 @@
 bool sharedFunc_800D9188_0_s00(s32 arg0, s_SubCharacter* arg1, s32 arg2, s32 sfx)
+#ifdef SHARED_FUNC_IMPL
 {
     // TODO: Should probably be using properties_E4.npc struct instead.
     if (arg1->model_0.anim_4.animIdx_0 == arg0)
@@ -97,3 +98,6 @@ bool sharedFunc_800D9188_0_s00(s32 arg0, s_SubCharacter* arg1, s32 arg2, s32 sfx
 
     return false;
 }
+#else
+;
+#endif

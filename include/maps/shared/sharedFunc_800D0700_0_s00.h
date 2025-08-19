@@ -1,4 +1,5 @@
 void sharedFunc_800D0700_0_s00(VECTOR3* point, VECTOR3* lineStart, VECTOR3* lineEnd, s32 flag)
+#ifdef SHARED_FUNC_IMPL
 {
     VECTOR3 offset0;
     VECTOR3 offset1;
@@ -121,3 +122,6 @@ void sharedFunc_800D0700_0_s00(VECTOR3* point, VECTOR3* lineStart, VECTOR3* line
     point->vx -= sharedData_800E323C_0_s00.vx;
     point->vz -= sharedData_800E323C_0_s00.vz;
 }
+#else
+;
+#endif

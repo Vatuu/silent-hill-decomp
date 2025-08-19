@@ -1,4 +1,5 @@
 void sharedFunc_800DA8E8_0_s01(s32* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) // 0x800DA8E8
+#ifdef SHARED_FUNC_IMPL
 {
     if (*arg0 < arg2)
     {
@@ -21,3 +22,6 @@ void sharedFunc_800DA8E8_0_s01(s32* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4
         }
     }
 }
+#else
+;
+#endif

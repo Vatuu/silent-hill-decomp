@@ -1,4 +1,5 @@
 #include <bodyprog/player_logic.h>
+#ifdef SHARED_FUNC_IMPL
 
 void sharedFunc_800D20E4_0_s00()
 {
@@ -60,3 +61,6 @@ void sharedFunc_800D20E4_0_s00()
         sysWork->playerCombatInfo_38.equippedWeapon_F %= 10;
     }
 }
+#else
+;
+#endif

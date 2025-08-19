@@ -1,4 +1,5 @@
 void sharedFunc_800D2C7C_0_s00(s32 arg0)
+#ifdef SHARED_FUNC_IMPL
 {
     s_MainCharacterExtra* extra = &g_SysWork.player_4C.extra_128;
     s_SubCharacter*       chara = &g_SysWork.player_4C.chara_0;
@@ -40,3 +41,6 @@ void sharedFunc_800D2C7C_0_s00(s32 arg0)
     g_SysWork.player_4C.extra_128.field_20 = 0;
     g_SysWork.player_4C.extra_128.field_24 = 0;
 }
+#else
+;
+#endif

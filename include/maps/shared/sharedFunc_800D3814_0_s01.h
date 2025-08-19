@@ -1,4 +1,5 @@
 s32 sharedFunc_800D3814_0_s01(s_SubCharacter* chara)
+#ifdef SHARED_FUNC_IMPL
 {
     s32 headingAngleDelta;
     s32 invDist;
@@ -54,3 +55,6 @@ s32 sharedFunc_800D3814_0_s01(s_SubCharacter* chara)
 
     return dist;
 }
+#else
+;
+#endif

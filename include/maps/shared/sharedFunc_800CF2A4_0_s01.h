@@ -1,5 +1,6 @@
 /** @brief Adds a random offset to a snow particle movement vector. Moves particle vertically, clamps Y to 0. */
 void sharedFunc_800CF2A4_0_s01(s32 arg0, s_Particle* part, u16* rand, s32* deltaTime)
+#ifdef SHARED_FUNC_IMPL
 {
     u16      localRand;
     VECTOR3* pos;
@@ -35,3 +36,6 @@ void sharedFunc_800CF2A4_0_s01(s32 arg0, s_Particle* part, u16* rand, s32* delta
     // Needed for match.
     if (pos->vy >= 0) {}
 }
+#else
+;
+#endif

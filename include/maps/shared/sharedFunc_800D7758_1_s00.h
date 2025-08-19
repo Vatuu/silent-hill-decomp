@@ -1,5 +1,6 @@
 
 u8 sharedFunc_800D7758_1_s00(s32 arg0, s32 arg1)
+#ifdef SHARED_FUNC_IMPL
 {
     s32 unk1 = 0xFFFB0000;
     s32 unk2 = 0x13FFFFU;
@@ -13,3 +14,6 @@ u8 sharedFunc_800D7758_1_s00(s32 arg0, s32 arg1)
     arg0 = (arg0 + 0xA0000) / 163840;
     return sharedData_800DCC14_1_s00[(arg0 * 7) + arg1];
 }
+#else
+;
+#endif

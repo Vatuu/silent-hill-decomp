@@ -1,4 +1,5 @@
 s32 sharedFunc_800D3758_0_s01(s_SubCharacter* chara, s32* outDist, s32* outAngle, s32 arg3, s32 arg4)
+#ifdef SHARED_FUNC_IMPL
 {
     s32 temp_a0;
     s32 temp_s2;
@@ -28,3 +29,6 @@ s32 sharedFunc_800D3758_0_s01(s_SubCharacter* chara, s32* outDist, s32* outAngle
     return var_v1 | (temp_a0 != 0);
 }
 
+#else
+;
+#endif

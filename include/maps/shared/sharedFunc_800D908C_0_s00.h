@@ -1,4 +1,5 @@
 bool sharedFunc_800D908C_0_s00(s32 arg0, s_SubCharacter* chara, s32 arg2, s32 arg3, s32 arg4, s32 arg5)
+#ifdef SHARED_FUNC_IMPL
 {
     if (chara->model_0.anim_4.animIdx_0 != arg0)
     {
@@ -35,3 +36,6 @@ bool sharedFunc_800D908C_0_s00(s32 arg0, s_SubCharacter* chara, s32 arg2, s32 ar
 
     return false;
 }
+#else
+;
+#endif

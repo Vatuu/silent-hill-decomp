@@ -1,4 +1,5 @@
 s16 sharedFunc_800D921C_0_s00(s_SubCharacter* chara)
+#ifdef SHARED_FUNC_IMPL
 {
     // TODO: Not sure if any of these match sharedData_800DF174_0_s00 in other maps.
 #if defined(MAP6_S01)
@@ -128,3 +129,6 @@ s16 sharedFunc_800D921C_0_s00(s_SubCharacter* chara)
 
     return animInfo->keyframeIdx0_C;
 }
+#else
+;
+#endif

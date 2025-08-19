@@ -1,4 +1,5 @@
 bool sharedFunc_800D2E04_0_s01(s_SubCharacter* chara, VECTOR3* inVec, s32* outDist, s32* outAngle)
+#ifdef SHARED_FUNC_IMPL
 {
     s32 tmp;
     u8  idxInfo;
@@ -42,3 +43,6 @@ bool sharedFunc_800D2E04_0_s01(s_SubCharacter* chara, VECTOR3* inVec, s32* outDi
 
     return false;
 }
+#else
+;
+#endif

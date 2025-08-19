@@ -1,3 +1,4 @@
+#define SHARED_FUNC_IMPL
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math.h"
 #include "main/rng.h"

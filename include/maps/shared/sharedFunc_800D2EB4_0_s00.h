@@ -1,4 +1,5 @@
 void sharedFunc_800D2EB4_0_s00()
+#ifdef SHARED_FUNC_IMPL
 {
     u8 prevVar;
 
@@ -10,3 +11,6 @@ void sharedFunc_800D2EB4_0_s00()
 
     func_8003DD80(1, 17);
 }
+#else
+;
+#endif

@@ -1,4 +1,5 @@
 void sharedFunc_800D5B48_0_s00(s_SubCharacter* chara)
+#ifdef SHARED_FUNC_IMPL
 {
     s32 moveSpeed;
     s32 newMoveSpeed;
@@ -38,3 +39,6 @@ void sharedFunc_800D5B48_0_s00(s_SubCharacter* chara)
         }
     }
 }
+#else
+;
+#endif

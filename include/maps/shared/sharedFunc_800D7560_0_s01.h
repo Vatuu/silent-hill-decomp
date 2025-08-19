@@ -1,4 +1,5 @@
 void sharedFunc_800D7560_0_s01(s_SubCharacter* chara)
+#ifdef SHARED_FUNC_IMPL
 {
     s32      headingAngle;
     s32      sinHeadingAngle;
@@ -44,3 +45,6 @@ void sharedFunc_800D7560_0_s01(s_SubCharacter* chara)
     mat->t[1] = FP_FROM(chara->position_18.vy, Q4_SHIFT);
     mat->t[2] = FP_FROM(chara->position_18.vz + offsetZ, Q4_SHIFT);
 }
+#else
+;
+#endif

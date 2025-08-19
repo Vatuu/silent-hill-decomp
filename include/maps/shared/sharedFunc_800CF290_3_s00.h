@@ -1,4 +1,5 @@
 void sharedFunc_800CF290_3_s00(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coord)
+#ifdef SHARED_FUNC_IMPL
 {
     if (chara->properties_E4.player.properties_E4[3] == 0)
     {
@@ -6,3 +7,6 @@ void sharedFunc_800CF290_3_s00(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* c
         animInfo->funcPtr_0(chara, arg1, coord, animInfo);
     }
 }
+#else
+;
+#endif

@@ -1,4 +1,5 @@
 s32 sharedFunc_800D2DAC_0_s00()
+#ifdef SHARED_FUNC_IMPL
 {
     s_Model*    playerModel = &g_SysWork.player_4C.chara_0.model_0;
     s_AnimInfo* animInfo    = &g_MapOverlayHeader.animInfo_34[playerModel->anim_4.animIdx_0 - 76];
@@ -24,3 +25,6 @@ s32 sharedFunc_800D2DAC_0_s00()
         return -1;
     }
 }
+#else
+;
+#endif

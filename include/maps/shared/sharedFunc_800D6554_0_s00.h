@@ -1,4 +1,5 @@
 void sharedFunc_800D6554_0_s00(s_SubCharacter* chara)
+#ifdef SHARED_FUNC_IMPL
 {
     s32  someDist;
     s16  someRotY;
@@ -56,3 +57,6 @@ void sharedFunc_800D6554_0_s00(s_SubCharacter* chara)
         sharedFunc_800D7E04_0_s00(chara, 0x553);
     }
 }
+#else
+;
+#endif

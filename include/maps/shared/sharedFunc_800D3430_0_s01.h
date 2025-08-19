@@ -1,4 +1,5 @@
 s32 sharedFunc_800D3430_0_s01(s_SubCharacter* chara, s32* arg1, s32* arg2)
+#ifdef SHARED_FUNC_IMPL
 {
     s32 ret;
 
@@ -24,3 +25,6 @@ s32 sharedFunc_800D3430_0_s01(s_SubCharacter* chara, s32* arg1, s32* arg2)
 
     return ret;
 }
+#else
+;
+#endif

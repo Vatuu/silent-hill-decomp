@@ -1,4 +1,5 @@
 void sharedFunc_800CFFF8_0_s00(s32 arg0, s_func_800CFFF8* arg1)
+#ifdef SHARED_FUNC_IMPL
 {
     s32 absX;
     s32 threshold;
@@ -37,3 +38,6 @@ void sharedFunc_800CFFF8_0_s00(s32 arg0, s_func_800CFFF8* arg1)
         arg1->field_C.vz = arg1->field_0.vz;
     }
 }
+#else
+;
+#endif

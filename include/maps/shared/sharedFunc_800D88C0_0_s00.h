@@ -1,4 +1,5 @@
 void sharedFunc_800D88C0_0_s00(s_SubCharacter* playerChara, s32 arg1)
+#ifdef SHARED_FUNC_IMPL
 {
     playerChara->properties_E4.player.properties_E4[PlayerProperty_Unk4] = 1;
 
@@ -18,3 +19,6 @@ void sharedFunc_800D88C0_0_s00(s_SubCharacter* playerChara, s32 arg1)
 
     playerChara->model_0.anim_4.flags_2 |= AnimFlag_Unk1;
 }
+#else
+;
+#endif

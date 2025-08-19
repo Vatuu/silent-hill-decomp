@@ -1,4 +1,5 @@
 void sharedFunc_800CEFD0_1_s02(s32 arg0, s_sharedFunc_800CEFD0_1_s02* arg1, u16* arg2, s32* deltaTime)
+#ifdef SHARED_FUNC_IMPL
 {
     s_func_800699F8              sp10;
     s32                          temp_v1;
@@ -83,3 +84,6 @@ void sharedFunc_800CEFD0_1_s02(s32 arg0, s_sharedFunc_800CEFD0_1_s02* arg1, u16*
         }
     }
 }
+#else
+;
+#endif

@@ -55,6 +55,7 @@ static inline s32 GetYIndex(s32 x, u32 y)
 }
 
 u8 sharedFunc_800D92AC_0_s00(s32 x, s32 y)
+#ifdef SHARED_FUNC_IMPL
 {
     extern u8 sharedData_800DF2DC_0_s00[];
     extern u8 sharedData_800DF1FC_0_s00[];
@@ -111,3 +112,6 @@ u8 sharedFunc_800D92AC_0_s00(s32 x, s32 y)
 
     return res;
 }
+#else
+;
+#endif

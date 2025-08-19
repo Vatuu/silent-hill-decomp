@@ -1,4 +1,5 @@
 bool sharedFunc_800CBBBC_0_s00()
+#ifdef SHARED_FUNC_IMPL
 {
     s32 dist;
     s32 var_v1;
@@ -15,3 +16,6 @@ bool sharedFunc_800CBBBC_0_s00()
 
     return false;
 }
+#else
+;
+#endif
