@@ -1512,14 +1512,14 @@ void func_800890B8() // 0x800890B8
 
 s32 func_80089128() // 0x80089128
 {
-    s32                temp_s0;
-    s32                var_s3;
-    s32                var_s5;
-    s32                var_s6;
-    s_func_80089644_0* temp_v0;
-    s_func_80089644_0* var_s0;
-    s_func_80089644_0* temp_s1;
-    s_SysWork_2514*    var_s2;
+    s32              temp_s0;
+    s32              var_s3;
+    s32              var_s5;
+    s32              var_s6;
+    s_func_8009ECCC* temp_v0;
+    s_func_8009ECCC* var_s0;
+    s_func_8009ECCC* temp_s1;
+    s_SysWork_2514*  var_s2;
     
     var_s2 = &g_SysWork.field_2514;
 
@@ -1582,15 +1582,64 @@ s32 func_80089128() // 0x80089128
     return var_s5;
 }
 
-// TODO: This has a lot more entries, need to fill them to migrate rest of .rodata of this file.
-// The block of data at `8002AC04` is huge and seems to include pointers to other data inside the block, not sure if all of it is using `s_8002AC04`.
+// TODO: This has more .rodata after the array (at 0x8002AF04) that some array entries point to, need to migrate that too.
 const s_8002AC04 D_8002AC04[] =
 {
-    { NULL, 3, 2, 0, 0, 0 },
-    { NULL, 3, 3, 0, 0, 0 },
-    { NULL, 3, 1, 0, 0, 0 },
-    { NULL, 3, 0, 0, 0, 0 },
-    { NULL, 3, 4, 0, 0, 0 },
+    // 2nd field is used as index into `D_800AFD08` funcptr array
+    // Seems each function takes different kind of params in 5th/6th fields
+    // #0 5th field is some kind of index/counter
+    // #1 5th field is pointer to another D_8002AC04 entry
+    // #2 5th field points to some data that comes after this array
+    // #3 5th field is always 0
+    // #4 5th field is index/counter
+    { NULL, 3, 2, 0x0000, 0, 0 },
+    { NULL, 3, 3, 0x0000, 0, 0 },
+    { NULL, 3, 1, 0x0000, 0, 0 },
+    { NULL, 3, 0, 0x0000, 0, 0 },
+    { NULL, 3, 4, 0x0000, 0, 0 },
+    { &D_8002AC04[22], 0, 0, 0x0000, 5, 0 },
+    { &D_8002AC04[25], 0, 32, 0x0000, 6, 0 },
+    { &D_8002AC04[26], 0, 32, 0x0000, 7, 0 },
+    { &D_8002AC04[27], 0, 32, 0x0000, 8, 0 },
+    { &D_8002AC04[23], 0, 32, 0x0000, 9, 0 },
+    { &D_8002AC04[24], 0, 32, 0x0000, 10, 0 },
+    { &D_8002AC04[5], 1, 0, 0x0000, &D_8002AC04[6], 0 },
+    { &D_8002AC04[31], 0, 32, 0x0000, 12, 0 },
+    { &D_8002AC04[34], 0, 32, 0x0000, 12, 0 },
+    { &D_8002AC04[37], 0, 32, 0x0000, 12, 0 },
+    { &D_8002AC04[40], 0, 32, 0x0000, 12, 0 },
+    { &D_8002AC04[43], 0, 32, 0x0000, 12, 0 },
+    { &D_8002AC04[46], 0, 32, 0x0000, 12, 0 },
+    { &D_8002AC04[28], 0, 32, 0x0000, 18, 0 },
+    { &D_8002AC04[29], 0, 32, 0x0000, 19, 0 },
+    { NULL, 4, 0, 0xFFFF, 20, -255 },
+    { NULL, 4, 1, 0xFFFF, 21, -255 },
+    { NULL, 2, 1, 0xFFFF, 0x8002AF70, 0x1009002D },
+    { NULL, 2, 1, 0xFFFF, 0x8002AF64, 0x10300180 },
+    { NULL, 2, 1, 0xFFFF, 0x8002AF5C, 0x10180090 },
+    { NULL, 2, 1, 0xFFFF, 0x8002AF54, 0x100F005A },
+    { NULL, 2, 1, 0xFFFF, 0x8002AF48, 0x900F0096 },
+    { NULL, 2, 1, 0xFFFF, 0x8002AF3C, 0x100C0060 },
+    { NULL, 2, 1, 0xFFFF, 0x8002AF3C, 0x100C0060 },
+    { NULL, 2, 1, 0xFFFF, 0x8002AF34, 0x100F004B },
+    { NULL, 0, 0, 0x0000, 0, 0 },
+    { NULL, 2, 0, 0xFFFF, 0x8002AF2C, 0xF0258 },
+    { NULL, 0, 0, 0x0000, 0, 0 },
+    { NULL, 0, 0, 0x0000, 0, 0 },
+    { NULL, 2, 0, 0xFFFF, 0x8002AF28, 0xF01E0 },
+    { NULL, 0, 0, 0x0000, 0, 0 },
+    { NULL, 0, 0, 0x0000, 0, 0 },
+    { NULL, 2, 0, 0xFFFF, 0x8002AF24, 0xF01A4 },
+    { NULL, 0, 0, 0x0000, 0, 0 },
+    { NULL, 0, 0, 0x0000, 0, 0 },
+    { NULL, 2, 0, 0xFFFF, 0x8002AF20, 0xF0168 },
+    { NULL, 0, 0, 0x0000, 0, 0 },
+    { NULL, 0, 0, 0x0000, 0, 0 },
+    { NULL, 2, 0, 0xFFFF, 0x8002AF20, 0xF010E },
+    { NULL, 0, 0, 0x0000, 0, 0 },
+    { NULL, 0, 0, 0x0000, 0, 0 },
+    { &D_8002AC04[47], 2, 0, 0xFFFF, 0x8002AF08, 0xF0B40 },
+    { &D_8002AC04[47], 2, 0, 0xFFFF, 0x8002AF04, 0xF001E }, // `0x8002AF04` is right after end of this array, looks like different struct type.
 };
 
 void func_800892A4(s32 idx) // 0x800892A4
@@ -1700,16 +1749,15 @@ s32 func_800895E4(s_SysWork_2514* arg0, s_8002AC04* arg1, u8 arg2) // 0x800895E4
     return D_800AFD08[arg1->field_4](arg0, 0, arg1, &sp10);
 }
 
-bool func_80089644(s_SysWork_2514* arg0, s_func_80089644_0* arg1, s32 arg2, u32 arg3) // 0x80089644
+bool func_80089644(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s32 arg2, u32 arg3) // 0x80089644
 {
-    s32                var0;
     u32                var1;
     s_func_80089644_1* ptr0;
     s_8002AC04*        ptr1;
 
-    arg3           *= 5;
-    arg1->field_18  = 0;
-    arg1->field_14 &= ~(1 << 31);
+    arg3             *= 5;
+    arg1->field_18    = 0;
+    arg1->field_14_31 = 0;
     while (true)
     {
         ptr1 = arg1->field_10;
@@ -1724,11 +1772,10 @@ bool func_80089644(s_SysWork_2514* arg0, s_func_80089644_0* arg1, s32 arg2, u32 
         }
     }
 
-    var0 = arg1->field_14;
-    if (var0 < 0 && (arg2 & arg1->field_1E))
+    if (arg1->field_14_31 && (arg2 & arg1->field_1E))
     {
         var1 = arg1->field_18;
-        ptr0 = &arg0->field_C->field_0[((u32)var0 >> 21) & 0x3F8];
+        ptr0 = &arg0->field_C->field_0[arg1->field_14_24 << 3];
         if (ptr0->field_4 < var1)
         {
             ptr0->field_4 = var1;
