@@ -3415,6 +3415,8 @@ s32 func_8007029C(s_SubCharacter* chara, s32 arg1, s16 angle);
 
 void func_800705E4(GsCOORDINATE2*, s32, s32, s32, s32);
 
+void func_80070B84(s_SubCharacter* chara, s32 arg1, s32 arg2, s32 arg3);
+
 void func_80074254(s_SubCharacter* chara, s_MainCharacterExtra* extra);
 
 void func_8007D6E0();
