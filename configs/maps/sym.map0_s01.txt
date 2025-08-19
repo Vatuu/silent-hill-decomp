@@ -122,6 +122,8 @@ Pickup_PocketRadioItemTake  = 0x800DC34C; // type:func
 Pickup_FlashlightItemTake   = 0x800DC394; // type:func
 Pickup_KitchenKnifeItemTake = 0x800DC830; // type:func
 
+
+
 //================================================
 //=== .data section
 //================================================

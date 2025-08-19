@@ -3,12 +3,6 @@
 #include "maps/shared.h"
 #include "maps/map0/map0_s00.h"
 
-s32 sharedFunc_800D929C_0_s00();
-s32 sharedFunc_800D2DAC_0_s00();
-s32 sharedFunc_800D8964_0_s00(s_SubCharacter* chara);
-bool sharedFunc_800D9188_0_s00(s32 arg0, s_SubCharacter* arg1, s32 arg2, s32 sfx);
-void sharedFunc_800D08B8_0_s00(s8 arg0, u32 arg1);
-
 // Undefined functions, unknown signature.
 #define func_800D94F8 (void(*)(void))0x800D94F8
 #define func_800DBE68 (void(*)(void))0x800DBE68
@@ -46,8 +40,8 @@ void (*g_LoadScreenFuncs[])() =
 {
     0,
     Gfx_LoadingScreen_PlayerRun,
-    0x80035BBC,
-    func_800D95D4
+    Gfx_LoadingScreen_BackgroundTexture,
+    Gfx_LoadingScreen_StageString
 };
 
 s_AreaLoadParams g_MapAreaLoadParams[] = 

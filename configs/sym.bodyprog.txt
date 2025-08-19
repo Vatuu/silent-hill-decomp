@@ -95,18 +95,6 @@ g_ItemVectors                               = 0x800262FC; // type:DVECTOR size:0
 //--- PA: 0x0054C0   VA: 0x8002A020   subsegment: .rodata, bodyprog_80054FC0
 //--------------------------------------------------------------------------
 
-//--------------------------------------------------------------------------
-//--- PA: 0x005638   VA: 0x8002A198   subsegment: .rodata, bodyprog_80054FC0
-//--------------------------------------------------------------------------
-
-//--------------------------------------------------------------------------
-//--- PA: 0x0056C8   VA: 0x8002A228   subsegment: .rodata, bodyprog_80054FC0
-//--------------------------------------------------------------------------
-
-//--------------------------------------------------------------------------
-//--- PA: 0x005758   VA: 0x8002A2B8   subsegment: .rodata, bodyprog_80054FC0
-//--------------------------------------------------------------------------
-
 //---------------------------------------------------------------------
 //--- PA: 0x005CF0   VA: 0x8002A850   subsegment: .rodata, view/vc_main
 //---------------------------------------------------------------------
@@ -116,7 +104,7 @@ g_ItemVectors                               = 0x800262FC; // type:DVECTOR size:0
 //--------------------------------------------------------------------------
 
 //------------------------------------------------------
-//--- PA: 0x006044   VA: 0x8002ABA4   subsegment: rodata
+//--- PA: 0x0063A4   VA: 0x8002AF04   subsegment: rodata
 //------------------------------------------------------
 hack_vcSetWatchTgtXzPos_fix                 = 0x8002B2B4; // type:s32 - Some 0x80083500 value which coincidentally points to code inside vcSetWatchTgtXzPos, probably unrelated flags or something. A jtbl is right before this which spimdisasm tries to include, breaking vcSetWatchTgtXzPos build.
 
@@ -293,6 +281,7 @@ Game_InGameInit                             = 0x80034FB8; // type:func
 Game_SavegameInitialize                     = 0x800350BC; // type:func
 Game_PlayerInit                             = 0x80035178; // type:func
 GameFs_MapLoad                              = 0x8003521C; // type:func
+Gfx_LoadingScreen_BackgroundTexture         = 0x80035BBC;
 Gfx_LoadingScreen_PlayerRun                 = 0x80035BE0; // type:func
 Savegame_MapRoomIdxSet                      = 0x80036420; // type:func
 Gfx_MapMsg_Draw                             = 0x800365B8; // type:func

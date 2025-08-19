@@ -3531,7 +3531,7 @@ void func_80035B98();
 /** Unused and broken.
  * Intended to draw a background image when a loading screen with the string "STAGE X-X" appears.
  */
-void func_80035BBC();
+void Gfx_LoadingScreen_BackgroundTexture();
 
 void Gfx_LoadingScreen_PlayerRun();
 
