@@ -1570,7 +1570,21 @@ s32 func_80089128() // 0x80089128
     return var_s5;
 }
 
-// TODO: This has more .rodata after the array (at 0x8002AF04) that some array entries point to, need to migrate that too.
+// Forward declare pointers used below
+extern const u32 D_8002AF04[];
+extern const u32 D_8002AF08[];
+extern const u32 D_8002AF20[];
+extern const u32 D_8002AF24[];
+extern const u32 D_8002AF28[];
+extern const u32 D_8002AF2C[];
+extern const u32 D_8002AF34[];
+extern const u32 D_8002AF3C[];
+extern const u32 D_8002AF48[];
+extern const u32 D_8002AF54[];
+extern const u32 D_8002AF5C[];
+extern const u32 D_8002AF64[];
+extern const u32 D_8002AF70[];
+
 const s_8002AC04 D_8002AC04[] =
 {
     // 2nd field is used as index into `D_800AFD08` funcptr array
@@ -1580,55 +1594,71 @@ const s_8002AC04 D_8002AC04[] =
     // #2 5th field points to some data that comes after this array
     // #3 5th field is always 0
     // #4 5th field is index/counter
-    { NULL, 3, 2, 0x0000, 0, 0 },
-    { NULL, 3, 3, 0x0000, 0, 0 },
-    { NULL, 3, 1, 0x0000, 0, 0 },
-    { NULL, 3, 0, 0x0000, 0, 0 },
-    { NULL, 3, 4, 0x0000, 0, 0 },
-    { &D_8002AC04[22], 0, 0, 0x0000, 5, 0 },
-    { &D_8002AC04[25], 0, 32, 0x0000, 6, 0 },
-    { &D_8002AC04[26], 0, 32, 0x0000, 7, 0 },
-    { &D_8002AC04[27], 0, 32, 0x0000, 8, 0 },
-    { &D_8002AC04[23], 0, 32, 0x0000, 9, 0 },
-    { &D_8002AC04[24], 0, 32, 0x0000, 10, 0 },
-    { &D_8002AC04[5], 1, 0, 0x0000, &D_8002AC04[6], 0 },
-    { &D_8002AC04[31], 0, 32, 0x0000, 12, 0 },
-    { &D_8002AC04[34], 0, 32, 0x0000, 12, 0 },
-    { &D_8002AC04[37], 0, 32, 0x0000, 12, 0 },
-    { &D_8002AC04[40], 0, 32, 0x0000, 12, 0 },
-    { &D_8002AC04[43], 0, 32, 0x0000, 12, 0 },
-    { &D_8002AC04[46], 0, 32, 0x0000, 12, 0 },
-    { &D_8002AC04[28], 0, 32, 0x0000, 18, 0 },
-    { &D_8002AC04[29], 0, 32, 0x0000, 19, 0 },
+    { NULL, 3, 2, 0, 0, 0 },
+    { NULL, 3, 3, 0, 0, 0 },
+    { NULL, 3, 1, 0, 0, 0 },
+    { NULL, 3, 0, 0, 0, 0 },
+    { NULL, 3, 4, 0, 0, 0 },
+    { &D_8002AC04[22], 0, 0, 0, 5, 0 },
+    { &D_8002AC04[25], 0, 32, 0, 6, 0 },
+    { &D_8002AC04[26], 0, 32, 0, 7, 0 },
+    { &D_8002AC04[27], 0, 32, 0, 8, 0 },
+    { &D_8002AC04[23], 0, 32, 0, 9, 0 },
+    { &D_8002AC04[24], 0, 32, 0, 10, 0 },
+    { &D_8002AC04[5], 1, 0, 0, &D_8002AC04[6], 0 },
+    { &D_8002AC04[31], 0, 32, 0, 12, 0 },
+    { &D_8002AC04[34], 0, 32, 0, 12, 0 },
+    { &D_8002AC04[37], 0, 32, 0, 12, 0 },
+    { &D_8002AC04[40], 0, 32, 0, 12, 0 },
+    { &D_8002AC04[43], 0, 32, 0, 12, 0 },
+    { &D_8002AC04[46], 0, 32, 0, 12, 0 },
+    { &D_8002AC04[28], 0, 32, 0, 18, 0 },
+    { &D_8002AC04[29], 0, 32, 0, 19, 0 },
     { NULL, 4, 0, 0xFFFF, 20, -255 },
     { NULL, 4, 1, 0xFFFF, 21, -255 },
-    { NULL, 2, 1, 0xFFFF, 0x8002AF70, 0x1009002D },
-    { NULL, 2, 1, 0xFFFF, 0x8002AF64, 0x10300180 },
-    { NULL, 2, 1, 0xFFFF, 0x8002AF5C, 0x10180090 },
-    { NULL, 2, 1, 0xFFFF, 0x8002AF54, 0x100F005A },
-    { NULL, 2, 1, 0xFFFF, 0x8002AF48, 0x900F0096 },
-    { NULL, 2, 1, 0xFFFF, 0x8002AF3C, 0x100C0060 },
-    { NULL, 2, 1, 0xFFFF, 0x8002AF3C, 0x100C0060 },
-    { NULL, 2, 1, 0xFFFF, 0x8002AF34, 0x100F004B },
+    { NULL, 2, 1, 0xFFFF, &D_8002AF70, 0x1009002D },
+    { NULL, 2, 1, 0xFFFF, &D_8002AF64, 0x10300180 },
+    { NULL, 2, 1, 0xFFFF, &D_8002AF5C, 0x10180090 },
+    { NULL, 2, 1, 0xFFFF, &D_8002AF54, 0x100F005A },
+    { NULL, 2, 1, 0xFFFF, &D_8002AF48, 0x900F0096 },
+    { NULL, 2, 1, 0xFFFF, &D_8002AF3C, 0x100C0060 },
+    { NULL, 2, 1, 0xFFFF, &D_8002AF3C, 0x100C0060 },
+    { NULL, 2, 1, 0xFFFF, &D_8002AF34, 0x100F004B },
     { NULL, 0, 0, 0x0000, 0, 0 },
-    { NULL, 2, 0, 0xFFFF, 0x8002AF2C, 0xF0258 },
-    { NULL, 0, 0, 0x0000, 0, 0 },
-    { NULL, 0, 0, 0x0000, 0, 0 },
-    { NULL, 2, 0, 0xFFFF, 0x8002AF28, 0xF01E0 },
+    { NULL, 2, 0, 0xFFFF, &D_8002AF2C, 0xF0258 },
     { NULL, 0, 0, 0x0000, 0, 0 },
     { NULL, 0, 0, 0x0000, 0, 0 },
-    { NULL, 2, 0, 0xFFFF, 0x8002AF24, 0xF01A4 },
+    { NULL, 2, 0, 0xFFFF, &D_8002AF28, 0xF01E0 },
     { NULL, 0, 0, 0x0000, 0, 0 },
     { NULL, 0, 0, 0x0000, 0, 0 },
-    { NULL, 2, 0, 0xFFFF, 0x8002AF20, 0xF0168 },
+    { NULL, 2, 0, 0xFFFF, &D_8002AF24, 0xF01A4 },
     { NULL, 0, 0, 0x0000, 0, 0 },
     { NULL, 0, 0, 0x0000, 0, 0 },
-    { NULL, 2, 0, 0xFFFF, 0x8002AF20, 0xF010E },
+    { NULL, 2, 0, 0xFFFF, &D_8002AF20, 0xF0168 },
     { NULL, 0, 0, 0x0000, 0, 0 },
     { NULL, 0, 0, 0x0000, 0, 0 },
-    { &D_8002AC04[47], 2, 0, 0xFFFF, 0x8002AF08, 0xF0B40 },
-    { &D_8002AC04[47], 2, 0, 0xFFFF, 0x8002AF04, 0xF001E }, // `0x8002AF04` is right after end of this array, looks like different struct type.
+    { NULL, 2, 0, 0xFFFF, &D_8002AF20, 0xF010E },
+    { NULL, 0, 0, 0x0000, 0, 0 },
+    { NULL, 0, 0, 0x0000, 0, 0 },
+    { &D_8002AC04[47], 2, 0, 0xFFFF, &D_8002AF08, 0xF0B40 },
+    { &D_8002AC04[47], 2, 0, 0xFFFF, &D_8002AF04, 0xF001E },
 };
+
+// TODO: Figure out what kind of data this is, the array above has some entries pointing to it, all of them using funcptr #2 (func_80089DF0)
+// Not sure why they'd all be different sizes though.
+const u32 D_8002AF04[] = { 0 };
+const u32 D_8002AF08[] = { 0x8000184, 0x61000003, 0x81000000, 1, 0x181, 0x10000 };
+const u32 D_8002AF20[] = { 0x184 };
+const u32 D_8002AF24[] = { 0x308 };
+const u32 D_8002AF28[] = { 0x610 };
+const u32 D_8002AF2C[] = { 0xC010, 0 };
+const u32 D_8002AF34[] = { 0x80008080, 0x80 };
+const u32 D_8002AF3C[] = { 0xFFFFFF, 0xFFFFFF00, 0 };
+const u32 D_8002AF48[] = { 0x468CA0A0, 0x1E28323C, 0xA14};
+const u32 D_8002AF54[] = { 0xAFC8C8C8, 0x4B96};
+const u32 D_8002AF5C[] = { 0x309060C0, 0xC048A8 };
+const u32 D_8002AF64[] = { 0x143C2850, 0xA321E46, 0x50};
+const u32 D_8002AF70[] = { 0xC4E0E0A8, 0x54A8, 0};
 
 void func_800892A4(s32 idx) // 0x800892A4
 {
@@ -1773,8 +1803,6 @@ bool func_80089644(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s32 arg2, u32 ar
     return arg1->field_10 != NULL;
 }
 
-// TODO: Rodata migration.
-#ifdef NON_MATCHING
 bool func_8008973C(s_SysWork_2514* arg0, s32 arg1, s_8002AC04* ptr, u32* arg3)
 {
     if (!arg0 || arg1)
@@ -1824,9 +1852,6 @@ bool func_8008973C(s_SysWork_2514* arg0, s32 arg1, s_8002AC04* ptr, u32* arg3)
 
     return true;
 }
-#else
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008973C);
-#endif
 
 void func_80089840(s_SysWork_2514* arg0) // 0x80089840
 {
