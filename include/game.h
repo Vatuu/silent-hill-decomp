@@ -514,24 +514,328 @@ typedef enum _PlayerBone
 
 typedef enum _PlayerFlags
 {
-    PlayerFlag_None           = 0,
-    PlayerFlag_Unk0           = 1 << 0,
-    PlayerFlag_Unk1           = 1 << 1,
-    PlayerFlag_Unk2           = 1 << 2,
-    PlayerFlag_Unk3           = 1 << 3,
-    PlayerFlag_Unk4           = 1 << 4,
-    PlayerFlag_Unk5           = 1 << 5,
-    PlayerFlag_Unk6           = 1 << 6,
-    PlayerFlag_Unk7           = 1 << 7, // Not used anywhere yet.
-    PlayerFlag_Unk8           = 1 << 8,
-    PlayerFlag_Unk9           = 1 << 9,
-    PlayerFlag_Unk10          = 1 << 10,
-    PlayerFlag_Unk11          = 1 << 11,
-    PlayerFlag_Unk12          = 1 << 12,
-    PlayerFlag_Unk13          = 1 << 13,
-    PlayerFlag_DamageReceived = 1 << 14,
-    PlayerFlag_Unk15          = 1 << 15
+    PlayerFlag_None               = 0,
+    PlayerFlag_Unk0               = 1 << 0,
+    PlayerFlag_Unk1               = 1 << 1,
+    PlayerFlag_Unk2               = 1 << 2,
+    PlayerFlag_AbruptStopAnimKind = 1 << 3, // Depending on the animation frame in which the player suddenly stopped running it could reproduce one of two animations, mainly differing in which leg Harry extends.
+    PlayerFlag_Unk4               = 1 << 4,
+    PlayerFlag_Unk5               = 1 << 5, // PlayerFlag_BackwardMove?
+    PlayerFlag_Unk6               = 1 << 6,
+    PlayerFlag_Unk7               = 1 << 7, // Not used anywhere yet.
+    PlayerFlag_Unk8               = 1 << 8,
+    PlayerFlag_Unk9               = 1 << 9,
+    PlayerFlag_Unk10              = 1 << 10, // PlayerFlag_Attack_Melee?
+    PlayerFlag_Unk11              = 1 << 11, // PlayerFlag_Attack_Gun_Hold?
+    PlayerFlag_Unk12              = 1 << 12,
+    PlayerFlag_Unk13              = 1 << 13,
+    PlayerFlag_DamageReceived     = 1 << 14,
+    PlayerFlag_Moving             = 1 << 15
 } e_PlayerFlags;
+
+typedef enum _PlayerStates
+{
+    PlayerStates_Unk0                     = 0,
+    PlayerStates_Unk1                     = 1,
+    PlayerStates_Idle                     = 2,
+    PlayerStates_Unk3                     = 3,
+    PlayerStates_Unk4                     = 4,
+    PlayerStates_Unk5                     = 5,
+    PlayerStates_Unk6                     = 6,
+    PlayerStates_Unk7                     = 7,
+    PlayerStates_Dead                     = 8,
+    PlayerStates_Unk9                     = 9,
+    PlayerStates_Grab_Upper_Front         = 10,
+    PlayerStates_Unk11                    = 11,
+    PlayerStates_Unk12                    = 12,
+    PlayerStates_Grab_Upper_Behind        = 13,
+    PlayerStates_Grab_Lower_Front         = 14,
+    PlayerStates_Grab_Lower_Behind        = 15,
+    PlayerStates_Grab_Free_Upper_Front    = 16,
+    PlayerStates_Unk17                    = 17,
+    PlayerStates_Unk18                    = 18,
+    PlayerStates_Unk19                    = 19,
+    PlayerStates_Grab_Free_Upper_Behind   = 20,
+    PlayerStates_Grab_Free_Lower_Front    = 21,
+    PlayerStates_Grab_Free_Lower_Behind   = 22,
+    PlayerStates_Damage_Upper_Behind      = 23,
+    PlayerStates_Damage_Upper_Front       = 24,
+    PlayerStates_Unk25                    = 25,
+    PlayerStates_Unk26                    = 26,
+    PlayerStates_Unk27                    = 27,
+    PlayerStates_Unk28                    = 28,
+    PlayerStates_Unk29                    = 29,
+    PlayerStates_Unk30                    = 30,
+    PlayerStates_Unk31                    = 31,
+    PlayerStates_Unk32                    = 32,
+    PlayerStates_Unk33                    = 33,
+    PlayerStates_Unk34                    = 34,
+    PlayerStates_Unk35                    = 35,
+    PlayerStates_Unk36                    = 36,
+    PlayerStates_Unk37                    = 37,
+    PlayerStates_Unk38                    = 38,
+    PlayerStates_Grab_RomperAttack_Front  = 39,
+    PlayerStates_Grab_RomperAttack_Behind = 40,
+    PlayerStates_Unk41                    = 41,
+    PlayerStates_Unk42                    = 42,
+    PlayerStates_Unk43                    = 43,
+    PlayerStates_Unk44                    = 44,
+    PlayerStates_Unk45                    = 45,
+    PlayerStates_Unk46                    = 46,
+    PlayerStates_Unk47                    = 47,
+    PlayerStates_Unk48                    = 48,
+    PlayerStates_Unk49                    = 49,
+    PlayerStates_Unk50                    = 50,
+    PlayerStates_Unk51                    = 51,
+    PlayerStates_Unk52                    = 52,
+    PlayerStates_Unk53                    = 53,
+    PlayerStates_Unk54                    = 54,
+    PlayerStates_Unk55                    = 55,
+    PlayerStates_Unk56                    = 56,
+    PlayerStates_Unk57                    = 57,
+    PlayerStates_Unk58                    = 58,
+    PlayerStates_Unk59                    = 59,
+    PlayerStates_Unk60                    = 60,
+    PlayerStates_Unk61                    = 61,
+    PlayerStates_Unk62                    = 62,
+    PlayerStates_Unk63                    = 63,
+    PlayerStates_Unk64                    = 64,
+    PlayerStates_Unk65                    = 65,
+    PlayerStates_Unk66                    = 66,
+    PlayerStates_Unk67                    = 67,
+    PlayerStates_Unk68                    = 68,
+    PlayerStates_Unk69                    = 69,
+    PlayerStates_Unk70                    = 70,
+    PlayerStates_Unk71                    = 71,
+    PlayerStates_Unk72                    = 72,
+    PlayerStates_Unk73                    = 73,
+    PlayerStates_Unk74                    = 74,
+    PlayerStates_Unk75                    = 75,
+    PlayerStates_Unk76                    = 76,
+    PlayerStates_Unk77                    = 77,
+    PlayerStates_Unk78                    = 78,
+    PlayerStates_Unk79                    = 79,
+    PlayerStates_Unk80                    = 80,
+    PlayerStates_Unk81                    = 81,
+    PlayerStates_Unk82                    = 82,
+    PlayerStates_Unk83                    = 83,
+    PlayerStates_Unk84                    = 84,
+    PlayerStates_Unk85                    = 85,
+    PlayerStates_Unk86                    = 86,
+    PlayerStates_Unk87                    = 87,
+    PlayerStates_Unk88                    = 88,
+    PlayerStates_Unk89                    = 89,
+    PlayerStates_Unk90                    = 90,
+    PlayerStates_Unk91                    = 91,
+    PlayerStates_Unk92                    = 92,
+    PlayerStates_Unk93                    = 93,
+    PlayerStates_Unk94                    = 94,
+    PlayerStates_Unk95                    = 95,
+    PlayerStates_Unk96                    = 96,
+    PlayerStates_Unk97                    = 97,
+    PlayerStates_Unk98                    = 98,
+    PlayerStates_Unk99                    = 99,
+    PlayerStates_Unk100                   = 100,
+    PlayerStates_Unk101                   = 101,
+    PlayerStates_Unk102                   = 102,
+    PlayerStates_Unk103                   = 103,
+    PlayerStates_Unk104                   = 104,
+    PlayerStates_Unk105                   = 105,
+    PlayerStates_Unk106                   = 106,
+    PlayerStates_Unk107                   = 107,
+    PlayerStates_Unk108                   = 108,
+    PlayerStates_Unk109                   = 109,
+    PlayerStates_Unk110                   = 110,
+    PlayerStates_Unk111                   = 111,
+    PlayerStates_Unk112                   = 112,
+    PlayerStates_Unk113                   = 113,
+    PlayerStates_Unk114                   = 114,
+    PlayerStates_Unk115                   = 115,
+    PlayerStates_Unk116                   = 116,
+    PlayerStates_Unk117                   = 117,
+    PlayerStates_Unk118                   = 118,
+    PlayerStates_Unk119                   = 119,
+    PlayerStates_Unk120                   = 120,
+    PlayerStates_Unk121                   = 121,
+    PlayerStates_Unk122                   = 122,
+    PlayerStates_Unk123                   = 123,
+    PlayerStates_Unk124                   = 124,
+    PlayerStates_Unk125                   = 125,
+    PlayerStates_Unk126                   = 126,
+    PlayerStates_Unk127                   = 127,
+    PlayerStates_Unk128                   = 128,
+    PlayerStates_Unk129                   = 129,
+    PlayerStates_Unk130                   = 130,
+    PlayerStates_Unk131                   = 131,
+    PlayerStates_Unk132                   = 132,
+    PlayerStates_Unk133                   = 133,
+    PlayerStates_Unk134                   = 134,
+    PlayerStates_Unk135                   = 135,
+    PlayerStates_Unk136                   = 136,
+    PlayerStates_Unk137                   = 137,
+    PlayerStates_Unk138                   = 138,
+    PlayerStates_Unk139                   = 139,
+    PlayerStates_Unk140                   = 140,
+    PlayerStates_Unk141                   = 141,
+    PlayerStates_Unk142                   = 142,
+    PlayerStates_Unk143                   = 143,
+    PlayerStates_Unk144                   = 144,
+    PlayerStates_Unk145                   = 145,
+    PlayerStates_Unk146                   = 146,
+    PlayerStates_Unk147                   = 147,
+    PlayerStates_Unk148                   = 148,
+    PlayerStates_Unk149                   = 149,
+    PlayerStates_Unk150                   = 150,
+    PlayerStates_Unk151                   = 151,
+    PlayerStates_Unk152                   = 152,
+    PlayerStates_Unk153                   = 153,
+    PlayerStates_Unk154                   = 154,
+    PlayerStates_Unk155                   = 155,
+    PlayerStates_Unk156                   = 156,
+    PlayerStates_Unk157                   = 157,
+    PlayerStates_Unk158                   = 158,
+    PlayerStates_Unk159                   = 159,
+    PlayerStates_Unk160                   = 160,
+    PlayerStates_Unk161                   = 161,
+    PlayerStates_Unk162                   = 162,
+    PlayerStates_Unk163                   = 163,
+    PlayerStates_Unk164                   = 164,
+    PlayerStates_Unk165                   = 165,
+    PlayerStates_Unk166                   = 166,
+    PlayerStates_Unk167                   = 167,
+    PlayerStates_Unk168                   = 168,
+    PlayerStates_Unk169                   = 169,
+    PlayerStates_Unk170                   = 170,
+    PlayerStates_Unk171                   = 171,
+    PlayerStates_Unk172                   = 172,
+    PlayerStates_Unk173                   = 173,
+    PlayerStates_Unk174                   = 174,
+    PlayerStates_Unk175                   = 175,
+    PlayerStates_Unk176                   = 176,
+    PlayerStates_Unk177                   = 177,
+    PlayerStates_Unk178                   = 178,
+    PlayerStates_Unk179                   = 179,
+    PlayerStates_Unk180                   = 180,
+    PlayerStates_Unk181                   = 181,
+    PlayerStates_Unk182                   = 182,
+    PlayerStates_Unk183                   = 183,
+    PlayerStates_Unk184                   = 184,
+    PlayerStates_Unk185                   = 185,
+    PlayerStates_Unk186                   = 186,
+    PlayerStates_Unk187                   = 187,
+    PlayerStates_Unk188                   = 188,
+    PlayerStates_Unk189                   = 189,
+    PlayerStates_Unk190                   = 190,
+    PlayerStates_Unk191                   = 191,
+    PlayerStates_Unk192                   = 192,
+    PlayerStates_Unk193                   = 193,
+    PlayerStates_Unk194                   = 194,
+    PlayerStates_Unk195                   = 195,
+    PlayerStates_Unk196                   = 196,
+    PlayerStates_Unk197                   = 197,
+    PlayerStates_Unk198                   = 198,
+    PlayerStates_Unk199                   = 199,
+    PlayerStates_Unk200                   = 200,
+    PlayerStates_Unk201                   = 201,
+    PlayerStates_Unk202                   = 202,
+    PlayerStates_Unk203                   = 203,
+    PlayerStates_Unk204                   = 204,
+    PlayerStates_Unk205                   = 205,
+    PlayerStates_Unk206                   = 206,
+    PlayerStates_Unk207                   = 207,
+    PlayerStates_Unk208                   = 208,
+    PlayerStates_Unk209                   = 209,
+    PlayerStates_Unk210                   = 210,
+    PlayerStates_Unk211                   = 211,
+    PlayerStates_Unk212                   = 212,
+    PlayerStates_Unk213                   = 213,
+    PlayerStates_Unk214                   = 214,
+    PlayerStates_Unk215                   = 215,
+    PlayerStates_Unk216                   = 216,
+    PlayerStates_Unk217                   = 217,
+    PlayerStates_Unk218                   = 218,
+    PlayerStates_Unk219                   = 219,
+    PlayerStates_Unk220                   = 220,
+    PlayerStates_Unk221                   = 221,
+    PlayerStates_Unk222                   = 222,
+    PlayerStates_Unk223                   = 223,
+    PlayerStates_Unk224                   = 224,
+    PlayerStates_Unk225                   = 225,
+    PlayerStates_Unk226                   = 226,
+    PlayerStates_Unk227                   = 227,
+    PlayerStates_Unk228                   = 228,
+    PlayerStates_Unk229                   = 229,
+    PlayerStates_Unk230                   = 230,
+    PlayerStates_Unk231                   = 231,
+    PlayerStates_Unk232                   = 232,
+    PlayerStates_Unk233                   = 233,
+    PlayerStates_Unk234                   = 234,
+    PlayerStates_Unk235                   = 235,
+    PlayerStates_Unk236                   = 236,
+    PlayerStates_Unk237                   = 237,
+    PlayerStates_Unk238                   = 238,
+    PlayerStates_Unk239                   = 239,
+    PlayerStates_Unk240                   = 240,
+    PlayerStates_Unk241                   = 241,
+    PlayerStates_Unk242                   = 242,
+    PlayerStates_Unk243                   = 243,
+    PlayerStates_Unk244                   = 244,
+    PlayerStates_Unk245                   = 245,
+    PlayerStates_Unk246                   = 246,
+    PlayerStates_Unk247                   = 247,
+    PlayerStates_Unk248                   = 248,
+    PlayerStates_Unk249                   = 249,
+    PlayerStates_Unk250                   = 250,
+    PlayerStates_Unk251                   = 251,
+    PlayerStates_Unk252                   = 252,
+    PlayerStates_Unk253                   = 253,
+    PlayerStates_Unk254                   = 254,
+    PlayerStates_Unk255                   = 255,
+    PlayerStates_Unk256                   = 256,
+    PlayerStates_Unk257                   = 257,
+    PlayerStates_Unk258                   = 258,
+    PlayerStates_Unk259                   = 259,
+    PlayerStates_Unk260                   = 260,
+    PlayerStates_Unk261                   = 261,
+    PlayerStates_Unk262                   = 262,
+    PlayerStates_Unk263                   = 263,
+    PlayerStates_Unk264                   = 264,
+    PlayerStates_Unk265                   = 265,
+    PlayerStates_Unk266                   = 266,
+    PlayerStates_Unk267                   = 267,
+    PlayerStates_Unk268                   = 268,
+    PlayerStates_Unk269                   = 269,
+    PlayerStates_Unk270                   = 270,
+    PlayerStates_Unk271                   = 271,
+    PlayerStates_Unk272                   = 272,
+    PlayerStates_Unk273                   = 273,
+    PlayerStates_Unk274                   = 274,
+    PlayerStates_Unk275                   = 275,
+    PlayerStates_Unk276                   = 276,
+    PlayerStates_Unk277                   = 277,
+    PlayerStates_Unk278                   = 278,
+    PlayerStates_Unk279                   = 279,
+    PlayerStates_Unk280                   = 280,
+    PlayerStates_Unk281                   = 281,
+    PlayerStates_Unk282                   = 282,
+    PlayerStates_Unk283                   = 283,
+    PlayerStates_Unk284                   = 284,
+    PlayerStates_Unk285                   = 285,
+    PlayerStates_Unk286                   = 286,
+    PlayerStates_Unk287                   = 287,
+    PlayerStates_Unk288                   = 288,
+    PlayerStates_Unk289                   = 289,
+    PlayerStates_Unk290                   = 290,
+    PlayerStates_Unk291                   = 291,
+    PlayerStates_Unk292                   = 292,
+    PlayerStates_Unk293                   = 293,
+    PlayerStates_Unk294                   = 294,
+    PlayerStates_Unk295                   = 295,
+    PlayerStates_Unk296                   = 296,
+    PlayerStates_Unk297                   = 297,
+    PlayerStates_Unk298                   = 298,
+    PlayerStates_Unk299                   = 299
+} e_PlayerStates;
 
 /** @brief Player property indices. */
 typedef enum _PlayerProperty
@@ -716,7 +1020,7 @@ typedef struct _Savegame
     s32             mapMarkingFlags_1D4[2];   //----------------------------------------
     s32             mapMarkingFlags_1DC;      // These 3 are one `u32 mapMarkingFlags[25];` (or maybe `u8 mapMarkingFlags[100];`?) See Sparagas' `MapMarkingsFlags` struct for details of every bit.
     s32             mapMarkingFlags_1E0[22];  //----------------------------------------
-    s32             field_238;                // Another player health store?
+    q19_12          healthSaturation_238;     /** Range [0, 300]. Ampoules give extra health that get stored. If the player if loose health then the stored extra health will slowly start to sum to player's health, in any case extra health will start to reduce progressively even if the player has full health. */
     s16             pickedUpItemCount_23C;
     s8              field_23E;
     u8              field_23F;
@@ -931,18 +1235,23 @@ STATIC_ASSERT_SIZEOF(s_800D5710, 0x34);
 // Probably easier to do that after it's merged with rest of code.
 typedef struct _SubCharPropertiesPlayer
 {
-    s32 properties_E4[CHARA_PROPERTY_COUNT_MAX]; // TODO: Integrate as `u_Property`.
-    u8  field_10C;
-    u8  field_10D;
-    s8  unk_10E[6];
-    s32 field_114;
-    s16 field_118;
-    s8  unk_11A[2];
-    s32 flags_11C; /** `e_PlayerFlags`. */
-    s16 field_120;
-    s16 field_122;
-    s16 field_124;
-    s16 field_126;
+    s32   properties_E4[CHARA_PROPERTY_COUNT_MAX]; // TODO: Integrate as `u_Property`.
+	// Element 1 is used as timer for triggering the idle state.
+	// Element 5 is used as timer? for triggering the abrupt stop animation. 1 start to be constantly sum while running and the value goes 0 ones the player stop running.
+	// Element 6 is used as a metric for how tired is Harry after running. (q19_12)
+	// Element 9 is used as a metric for how much has the player run in order to trigger a tumble animation in case the player crashes into a wall. (q19_12)
+	// `e_PlayerProperty`
+    u8    field_10C;
+    u8    field_10D;
+    s8    unk_10E[6];
+    s32   field_114;
+    s16   field_118;
+    s8    unk_11A[2];
+    s32   flags_11C; /** `e_PlayerFlags`. */
+    s16   field_120; // Related to player rotation when doing quick turns.
+    s16   field_122;
+    s16   field_124;
+    q3_12 playerMoveDistance_126; // Used to indicate how much the player should move foward.
 } s_SubCharaPropertiesPlayer;
 STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesPlayer, 68);
 
@@ -988,11 +1297,11 @@ STATIC_ASSERT_SIZEOF(s_SubCharacter_D8, 8);
 
 typedef struct _SubCharacter
 {
-    s_Model model_0;
+    s_Model model_0;           // In player: Manage the half lower part of Harry's body animations (legs and feet).
     VECTOR3 position_18;       /** `Q19.12` */
     SVECTOR rotation_24;       // Maybe `SVECTOR3` instead of `SVECTOR` because 4th field is copy of `.xy` field.
     SVECTOR rotationSpeed_2C;  /** Range [-0x700, 0x700]. */
-    s32     field_34;
+    q19_12  field_34;          // Character Y Position?
     s32     moveSpeed_38;
     s16     headingAngle_3C;
     s16     flags_3E;
@@ -1055,12 +1364,13 @@ STATIC_ASSERT_SIZEOF(s_SubCharacter, 296);
 
 typedef struct _MainCharacterExtra
 {
-    s_Model model_0; // For player, this is a copy of model_0 in its corresponding s_SubCharacter.
-    s32     field_18;
-    s32     field_1C; // Harm animation index?
-    s32     field_20; // Some kind of anim state related to current action (running, walking, sidestepping, etc.).
-    s32     field_24; // Some kind of anim state related to current action (running, walking, sidestepping, etc.). Sometimes same as above, but not always.
-    s32     field_28; // Forcefully setting to 1 opens options menu.
+    s_Model model_0;           // Manage the half upper part of Harry's body animations (torso, arms and head).
+    q19_12  field_18;
+    s32     field_1C;          // `e_PlayerStates`.
+    s32     field_20;          // Some kind of anim state related to current action (running, walking, sidestepping, etc.). Heavily related to `playerMovement_24`.
+    s32     playerMovement_24; // `e_PlayerMovement`.
+    s32     field_28;          // Related to item interactions.
+                               // Forcing specific values opens options menu. This behaviour is cause by `func_800373CC`.
 } s_MainCharacterExtra;
 STATIC_ASSERT_SIZEOF(s_MainCharacterExtra, 44);
 
@@ -1231,11 +1541,14 @@ typedef struct _SysWork
     u8              silentYesSelection_2350_4       : 4;
     u32             inventoryItemSelectedIdx_2351   : 8;
     u32             flags_2352                      : 8;
-    s32             field_2353                      : 8; // Some index into `npcs_1A0`.
-    s8              field_2354[4];                       // Size dervied from `func_80070320`.
+    s8              enemyAttackedIdx_2353; // Index of the enemy loaded in memory that is being attacked by the player.
+    s8              field_2354[4];         // Size dervied from `func_80070320`.
     u8              field_2358;
     s8              unk_2359[1];
-    u8              field_235A; // Assumed type.
+    u8              field_235A; /** If the player stop walking or running forward the value (as a bit) changes
+                                 * to 00000001 and if the player stop walking backward the value changes
+                                 * to 00000010.
+                                 */
     s8              unk_235B[1];
     GsCOORDINATE2*  field_235C;
     VECTOR3         field_2360; // Position?

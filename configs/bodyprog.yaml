@@ -80,7 +80,19 @@ segments:
       - [0x1350, .rodata, items/item_screens_2]
       - [0x1770, .rodata, items/item_screens_3]
       - [0x32F4, rodata]
-      - [0x54C0, .rodata, bodyprog_80054FC0]
+      - [0x54C0, .rodata, bodyprog_80054FC0] # Jumptable: `func_80073FC0`
+                                             # Jumptable: `func_80074350`
+                                             # Jumptable: `func_80075504`
+                                             # Jumptable: `func_800771BC`
+                                             # Jumptable: `func_80077D00`
+                                             # Jumptable: `func_8007B924`
+                                             # Jumptable: `Player_ReceiveDamage`
+                                             # Jumptable: `func_8007D970`
+                                             # Jumptable: `func_8007EBBC`
+                                             # Jumptable: `func_8007F14C`
+                                             
+      - [0x5C80, rodata] # Jumptable: `func_8007FDE0` and part of `func_80071CE8`
+      
       - [0x5CF0, .rodata, view/vc_main]      # Jumptable: `vcRetFarWatchRate`
                                              # Jumptable: `vcSetFlagsByCamMvType`
                                              # Jumptable: `vcMixSelfViewEffectToWatchTgtPos`

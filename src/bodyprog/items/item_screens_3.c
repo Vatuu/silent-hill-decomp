@@ -336,7 +336,7 @@ void func_8004FB0C() // 0x8004FB0C
 // TODO: RODATA migration.
 //
 // Function isn't fully matching.
-// `SelectionOuline_InnerLine[g_Inventory_PrevSelectionId].field_0.vx - new_var` is mismatched
+// `new_var  -= SelectionOuline_InnerLine[g_Inventory_PrevSelectionId].field_0.vx` is mismatched
 // Scratch: https://decomp.me/scratch/pGIn2
 #ifdef NON_MATCHING
 /** Draws many 2D menu elements.
@@ -1202,7 +1202,7 @@ void Gfx_Inventory_ItemDescriptionDraw(s32* selectedItemId) // 0x8005192C
             Gfx_StringSetPosition(stringPos.vx - 16, stringPos.vy);
             switch (Inventory_HyperBlasterFunctionalTest())
             {
-                case 2: // If Hyper Blaster connected (Port 1).
+                case 2: // If Hyper Blaster connected (Port 1) or player has unlocked it.
                     Gfx_StringDraw(D_80027F94[3], 10);
                     break;
 
@@ -1210,7 +1210,7 @@ void Gfx_Inventory_ItemDescriptionDraw(s32* selectedItemId) // 0x8005192C
                     Gfx_StringDraw(D_80027F94[4], 10);
                     break;
 
-                case 0: // If Hyper Blaster unlocked by finishing the game.
+                case 0: // If Hyper Blaster is in inventory, but needs to be unlocked by finishing the game.
                     Gfx_StringDraw(D_80027F94[5], 10);
                     break;
             }

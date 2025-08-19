@@ -11,6 +11,7 @@
  * - Animation funcs
  */
 
+/** Audio related. */
 s8 func_80040A64(VECTOR3* pos) // 0x80040A64
 {
     VECTOR3 camPos;

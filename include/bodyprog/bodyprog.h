@@ -195,7 +195,7 @@ typedef struct
     u8  field_1;
     u8  unk_2[18];
     s32 field_14;
-} s_D_800C45C8;
+} s_800C45C8;
 
 typedef struct
 {
@@ -1969,8 +1969,6 @@ extern s16 D_800AF210;
 /** Angle? */
 extern s16 D_800AF212;
 
-extern s8 D_800AF217;
-
 extern s32 D_800AF20C;
 
 extern s32 D_800AF21C;
@@ -2346,18 +2344,9 @@ extern s_D_800C44F0 D_800C44F0[10];
 
 extern VECTOR3 D_800C4540;
 
-/** FP time. */
-extern s32 D_800C454C;
-
-extern s32 D_800C4550;
-
 extern s16 D_800C4554;
 
 extern s16 D_800C4556;
-
-extern s32 D_800C4558;
-
-extern s32 D_800C455C;
 
 extern s_800AFBF4 D_800C4570;
 
@@ -2375,23 +2364,9 @@ extern s16 D_800C4574;
 /** Anim index. */
 extern u8 D_800C4577;
 
-extern u16 D_800C457E;
-
-extern u16 D_800C4580;
-
-extern u16 D_800C4582;
-
-extern u16 D_800C4584; // Is player moving left (in-game)?
-
-extern u16 D_800C4586; // Is player moving right (in-game)?
-
 extern s8 D_800C4588;
 
 extern s_800C4590 D_800C4590;
-
-extern u16 D_800C45AC;
-
-extern u16 D_800C45AE;
 
 extern VECTOR3 D_800C45B0; // Assumed type
 
@@ -2401,19 +2376,10 @@ extern u16 D_800C45BE;
 
 extern u16 D_800C45C0;
 
-extern s_D_800C45C8 D_800C45C8;
-
-/** SFX? */
-extern s32 D_800C45DC;
-
-extern u16 D_800C45E8;
+extern s_800C45C8 D_800C45C8;
 
 /** Related to game difficulty. Maybe multiplier? */
 extern s32 D_800C45EC;
-
-extern u16 D_800C45F0;
-
-extern u16 D_800C4604;
 
 extern u8 D_800C4606;
 
@@ -2885,8 +2851,6 @@ void func_8004729C(u16);
 s32 func_8004C328();
 
 void func_8004C564(u8, s32);
-
-void func_8004C8DC();
 
 // TODO: Can probably create status enums for the below funcs' return values to avoid magic,
 // but other funcs using similar return patterns should be identified first if they exist.
@@ -3439,13 +3403,7 @@ s32 func_8007029C(s_SubCharacter* chara, s32 arg1, s16 angle);
 
 void func_800705E4(GsCOORDINATE2*, s32, s32, s32, s32);
 
-void func_80070B84(s_SubCharacter* chara, s32 arg1, s32 arg2, s32 arg3);
-
-void func_80074254(s_SubCharacter* chara, s_MainCharacterExtra* extra);
-
 void func_8007D6E0();
-
-s32 func_8007D6F0(s_SubCharacter* chara, s_D_800C45C8* arg1);
 
 void func_8004BBF4(VbRVIEW* arg0, GsCOORDINATE2* arg1, SVECTOR* arg2);
 
@@ -3850,16 +3808,7 @@ void func_8007EBBC();
 
 void func_80070DF0(s_MainCharacterExtra*, s_SubCharacter*, s32, s32);
 
-// `arg0` is `s_SubCharacter` pointer?
-void func_800711C4(s32 arg0, s32 arg1);
-
 s32 func_80071620(u8, s_SubCharacter*, s32, s32);
-
-void func_80071224(s32 arg0, s32 arg1);
-
-void func_80071284(s32 arg0);
-
-void func_800713B4(s_SubCharacter* chara, s32 arg1);
 
 /** Player anim handler? */
 void func_80071968(s_SubCharacter* chara, s_MainCharacterExtra* extra, void* arg2, GsCOORDINATE2* coord);
@@ -3876,8 +3825,6 @@ void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord);
 void func_8007E9C4();
 
 void func_8007F14C(u8 arg0);
-
-void func_8007F32C();
 
 void func_8007FB94(s_SubCharacter*, s_MainCharacterExtra*, s32);
 
@@ -3896,12 +3843,6 @@ bool func_8007F2AC();
 
 /** Gets something from the player's current animation? */
 s16 Player_AnimGetSomething();
-
-/** Something to do with player control. */
-void func_8007F32C();
-
-/** Player func. */
-bool func_8007F95C();
 
 void Math_ShortestAngle(s16 angleFrom, s16 angleTo, s16* outShortestAngle);
 

@@ -31,22 +31,22 @@ void sharedFunc_800D20E4_0_s00()
     extra->model_0.stateStep_3            = 0;
     extra->model_0.state_2                = 0;
 
-    D_800C45C0 = 0;
-    D_800C45BE = 0;
-    D_800C45BC = 0;
-    D_800C457E = 0;
-    D_800C4604 = 0;
-    D_800C45F0 = 0;
-    D_800C45E8 = 0;
-    D_800C4582 = 0;
-    D_800C45AE = 0;
-    D_800C4586 = 0;
-    D_800C4580 = 0;
-    D_800C45AC = 0;
-    D_800C4584 = 0;
+    D_800C45C0                     = 0;
+    D_800C45BE                     = 0;
+    D_800C45BC                     = 0;
+    g_Player_IsAiming              = 0;
+    g_Player_IsRunning             = 0;
+    g_Player_IsMovingBackward      = 0;
+    g_Player_IsMovingForward       = 0;
+    g_Player_IsStepping_Right_Tap  = 0;
+    g_Player_IsStepping_Right_Hold = 0;
+    g_Player_IsTurning_Right       = 0;
+    g_Player_IsStepping_Left_Tap   = 0;
+    g_Player_IsStepping_Left_Hold  = 0;
+    g_Player_IsTurning_Left        = 0;
 
-    sysWork->player_4C.extra_128.field_20 = 0;
-    sysWork->player_4C.extra_128.field_24 = 0;
+    sysWork->player_4C.extra_128.field_20          = 0;
+    sysWork->player_4C.extra_128.playerMovement_24 = 0;
 
     sharedData_800E39D8_0_s00 = 0;
 

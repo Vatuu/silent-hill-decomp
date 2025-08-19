@@ -3190,7 +3190,7 @@ void GameState_InGame_Update() // 0x80038BD4
         Demo_DemoRandSeedRestore();
 
         player = &g_SysWork.player_4C.chara_0;
-        Player_Logic_Update(player, FS_BUFFER_0, g_SysWork.playerBoneCoords_890);
+        Player_Update(player, FS_BUFFER_0, g_SysWork.playerBoneCoords_890);
 
         Demo_DemoRandSeedRestore();
         func_8003F170();

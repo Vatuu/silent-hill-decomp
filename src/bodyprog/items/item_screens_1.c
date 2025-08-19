@@ -2,6 +2,7 @@
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/item_screens.h"
+#include "bodyprog/player_logic.h"
 #include "bodyprog/math.h"
 
 void Inventory_ExitAnimEquippedItemUpdate(u8* arg0) // 0x8004C088
@@ -40,13 +41,13 @@ void Inventory_ExitAnimEquippedItemUpdate(u8* arg0) // 0x8004C088
             g_SysWork.player_4C.chara_0.properties_E4.player.field_114 = 0;
         }
 
-        switch (g_SysWork.player_4C.extra_128.field_24)
+        switch (g_SysWork.player_4C.extra_128.playerMovement_24)
         {
-            case 9:
-            case 10:
-            case 11:
-            case 29:
-            case 30:
+            case PlayerMovement_QuickTurn_Right:
+            case PlayerMovement_QuickTurn_Left:
+            case PlayerMovement_Run_BackwardJump:
+            case PlayerMovement_Aim_QuickTurn_Right:
+            case PlayerMovement_Aim_QuickTurn_Left:
                 break;
 
             default:
@@ -57,7 +58,7 @@ void Inventory_ExitAnimEquippedItemUpdate(u8* arg0) // 0x8004C088
                     g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C = PlayerFlag_None;
                 }
 
-                if (g_SysWork.player_4C.extra_128.field_24 >= 20 && g_SysWork.playerCombatInfo_38.equippedWeapon_F != NO_VALUE &&
+                if (g_SysWork.player_4C.extra_128.playerMovement_24 >= 20 && g_SysWork.playerCombatInfo_38.equippedWeapon_F != NO_VALUE &&
                     (s8)D_800C3950 == g_SysWork.playerCombatInfo_38.equippedWeapon_F)
                 {
                     extraModelPtr0 = &g_SysWork.player_4C.extra_128.model_0;
@@ -84,13 +85,13 @@ void Inventory_ExitAnimEquippedItemUpdate(u8* arg0) // 0x8004C088
                     g_SysWork.player_4C.chara_0.model_0.state_2       = 0;
                     g_SysWork.player_4C.chara_0.model_0.stateStep_3   = 0;
                     g_SysWork.player_4C.extra_128.field_20            = 0;
-                    g_SysWork.player_4C.extra_128.field_24            = 0;
+                    g_SysWork.player_4C.extra_128.playerMovement_24   = PlayerMovement_None;
                     g_SysWork.player_4C.extra_128.model_0.state_2     = 0;
                     g_SysWork.player_4C.extra_128.model_0.stateStep_3 = 0;
                 }
 
-                g_SysWork.player_4C.chara_0.properties_E4.player.field_126        = 0;
-                g_SysWork.player_4C.chara_0.properties_E4.player.properties_E4[1] = 0;
+                g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = 0;
+                g_SysWork.player_4C.chara_0.properties_E4.player.properties_E4[1]       = 0;
         }
     }
 
@@ -230,7 +231,7 @@ s32 Inventory_HyperBlasterFunctionalTest() // 0x8004C4F8
     {
         if ((g_SavegamePtr->clearGameEndings_24B & GameEndingFlag_Ufo) != 0)
         {
-            // Game completed with some condition met?
+            // Game completed with Ufo ending.
             return 2;
         }
 
@@ -240,6 +241,7 @@ s32 Inventory_HyperBlasterFunctionalTest() // 0x8004C4F8
                g_GameWork.controllers_38[1].analogController_0.terminal_type  == PadTerminalType_GunControllerKonami;
     }
 
+	// Neither of the conditions has been completed.
     return 0;
 }
 
