@@ -1307,10 +1307,10 @@ typedef struct
     s16   textureFileIdx : 16;
     u16   field_6        : 10;
     u16   field_6_10     : 6;
-    void* field_8;
+    s_FsImageDesc* field_8; // guessed type
     u16   field_C_0 : 2;
     s32   field_C_2 : 14;
-    u16   unk_C_16  : 16;
+    u16            field_C_16 : 16;
 } s_CharaFileInfo;
 STATIC_ASSERT_SIZEOF(s_CharaFileInfo, 16);
 
@@ -1694,36 +1694,21 @@ extern s32 D_800A8F40;
 
 extern GsOT D_800A8F9C[];
 
-extern s_FsImageDesc g_Font16AtlasImg; // 0x800A8FF4
-
-extern s_FsImageDesc g_KonamiLogoImg; // 0x800A8FFC
-
-extern s_FsImageDesc g_KcetLogoImg; // 0x800A9004
-
-extern s_FsImageDesc g_TitleImg; // 0x800A9014
-
-extern s_FsImageDesc g_MapImg; // 0x800A901C
-
+extern s_FsImageDesc g_Font16AtlasImg;    // 0x800A8FF4
+extern s_FsImageDesc g_KonamiLogoImg;     // 0x800A8FFC
+extern s_FsImageDesc g_KcetLogoImg;       // 0x800A9004
+extern s_FsImageDesc g_TitleImg;          // 0x800A9014
+extern s_FsImageDesc g_MapImg;            // 0x800A901C
 extern s_FsImageDesc g_MapMarkerAtlasImg; // 0x800A9024
-
 extern s_FsImageDesc g_ItemInspectionImg; // 0x800A902C
-
 extern s_FsImageDesc D_800A9034;
-
 extern s_FsImageDesc D_800A905C;
-
-extern s_FsImageDesc g_ControllerButtonAtlasImg; // 0x800A903C
-
-extern s_FsImageDesc g_BrightnessScreenImg0; // 0x800A9044
-
-extern s_FsImageDesc g_BrightnessScreenImg1; // 0x800A904C
-
-extern s_FsImageDesc g_DeathTipImg; // 0x800A9054
-
-extern s_FsImageDesc g_HealthPortraitImg; // 0x800A905C
-
+extern s_FsImageDesc g_ControllerButtonAtlasImg;   // 0x800A903C
+extern s_FsImageDesc g_BrightnessScreenImg0;       // 0x800A9044
+extern s_FsImageDesc g_BrightnessScreenImg1;       // 0x800A904C
+extern s_FsImageDesc g_DeathTipImg;                // 0x800A9054
+extern s_FsImageDesc g_HealthPortraitImg;          // 0x800A905C
 extern s_FsImageDesc g_InventoryKeyItemTextureImg; // 0x800A9064
-
 extern s_FsImageDesc g_FirstAidKitItemTextureImg; // 0x800A906C
 
 /** Some intentory item texture (`ITEM/TIM07.TIM`). */

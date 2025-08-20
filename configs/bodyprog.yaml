@@ -297,7 +297,8 @@ segments:
       - [0x82458,   c, libsd/smf_mid]
 
       # .data section
-      - [0x84238, data, bodyprog_800A8D98]
+      - [0x84238, .data, bodyprog_800A8D98]
+      - [0x849CC, data, bodyprog_800A9074]
       - [0x84ECC, .data, syswork_functable]
       - [0x84F08, data, bodyprog_800A9A68]
       - [0x84F2C, .data, bodyprog_8003AB28]
