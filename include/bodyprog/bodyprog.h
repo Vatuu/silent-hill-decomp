@@ -1002,8 +1002,8 @@ typedef struct
     u8            field_1;
     u8            unk_2[2];
     s32           field_4;
-    void*         field_8;
-    s_FsImageDesc field_C;
+    s_PlmHeader*  plmHeader_8;
+    s_FsImageDesc texture_C;
     s_Skeleton    field_14; // Could be different struct?
 } s_800BCE18_0_CC; // Unknown size.
 
@@ -1012,8 +1012,8 @@ typedef struct
     s_sub_800BCE18_0* field_0;
     s8                field_4;
     u8                unk_5[3];
-    VECTOR3           field_8; // Position.
-    s32               field_14;
+    VECTOR3           field_8;               // Position.
+    s32               field_14;              // Used a lot as `s_PlmHeader*`, but code adds file-lengths to it, could just be `u8*` pointing to current file data?
     s_800BCE18_0_CC*  field_18[Chara_Count]; // Per-character data? So far only seen accessed by `map4_s03::800D59EC` which calls `func_8003BE50(Chara_Twinfeeler)`.
     s_800BCE18_0_CC   field_CC;
     u8                unk_D0[368];
@@ -2587,7 +2587,7 @@ void func_8003D160();
 
 void func_8003D5B4(s8 arg0);
 
-void func_8003D6E0(s32 arg0, s32 arg1, void* arg2, s_FsImageDesc* arg3);
+void func_8003D6E0(s32 arg0, s32 arg1, s_PlmHeader* plmHeader, s_FsImageDesc* texture);
 
 /** Param types assumed. */
 void func_8003DD80(s32 idx, s32 arg1); // Called by some chara init funcs.
@@ -3213,7 +3213,7 @@ Could `arg5` be a struct pointer?
 `func_8003D6E0` uses this function and in the last argument
 it input `arg5` and `arg5` is an undetermined function pointer
 */
-bool Chara_Load(s32 arg0, s8 charaId, GsCOORDINATE2* coord, s8 arg3, void* arg4, s_FsImageDesc* image);
+bool Chara_Load(s32 arg0, s8 charaId, GsCOORDINATE2* coord, s8 arg3, s_PlmHeader* plmHeader, s_FsImageDesc* texture);
 
 bool func_80088D0C();
 
@@ -3789,7 +3789,7 @@ void func_8003D354(s32* arg0, s32 arg1);
 /** Texture UV setup for NPCs. */
 void func_8003D3BC(s_FsImageDesc* img, s32 arg1, s32 arg2);
 
-s32 func_8003D7D4(u32 arg0, s32 arg1, void* arg2, s_FsImageDesc* img);
+s32 func_8003D7D4(u32 arg0, s32 arg1, s_PlmHeader* plmHeader, s_FsImageDesc* texture);
 
 /** Something related to animations. */
 void func_8003D938();
