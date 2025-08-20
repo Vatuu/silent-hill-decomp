@@ -4,7 +4,7 @@
 #include "gpu.h"
 #include "types.h"
 
-#define TICKS_PER_SECOND 60 // Game has a variable timestep with 60 ticks max.
+#define TICKS_PER_SECOND 60 /** Game has a variable timestep with 60 ticks max. */
 
 #define SCREEN_WIDTH                   320
 #define SCREEN_HEIGHT                  240
@@ -21,20 +21,20 @@
 
 #define EVENT_FLAG5_FIRST_TIME_SAVE_GAME (1 << 26)
 
-#define MAP_MSG_CODE_MARKER         '~'
-#define MAP_MSG_CODE_NEWLINE        'N' // Newline.
-#define MAP_MSG_CODE_END            'E' // End message.
-#define MAP_MSG_CODE_LINE_POSITION  'L' // Set next line position.
-#define MAP_MSG_CODE_JUMP           'J' // Jump timer.
-#define MAP_MSG_CODE_HIGH_RES       'H' // High-resolution glyph drawing.
-#define MAP_MSG_CODE_MIDDLE         'M' // Align center.
-#define MAP_MSG_CODE_TAB            'T' // Inset line.
-#define MAP_MSG_CODE_COLOR          'C' // Set color.
-#define MAP_MSG_CODE_DISPLAY_ALL    'D' // Display message instantly without roll.
-#define MAP_MSG_CODE_SELECT         'S' // Display dialog prompt.
+#define MAP_MSG_CODE_MARKER         '~' /** Message code start. */
+#define MAP_MSG_CODE_COLOR          'C' /** Set color. */
+#define MAP_MSG_CODE_DISPLAY_ALL    'D' /** Display message instantly without roll. */
+#define MAP_MSG_CODE_END            'E' /** End message. */
+#define MAP_MSG_CODE_HIGH_RES       'H' /** High-resolution glyph drawing. */
+#define MAP_MSG_CODE_JUMP           'J' /** Jump timer. */
+#define MAP_MSG_CODE_LINE_POSITION  'L' /** Set next line position. */
+#define MAP_MSG_CODE_MIDDLE         'M' /** Align center. */
+#define MAP_MSG_CODE_NEWLINE        'N' /** Newline. */
+#define MAP_MSG_CODE_SELECT         'S' /** Display dialog prompt with selectable entries. */
+#define MAP_MSG_CODE_TAB            'T' /** Inset line. */
 
-#define MAP_MESSAGE_DISPLAY_ALL_LENGTH 400  // Causes an entire message to display instantly by using a long string length.
-#define GLYPH_TABLE_ASCII_OFFSET       '\'' // Subtracted from ASCII bytes to get index to some string-related table.
+#define MAP_MESSAGE_DISPLAY_ALL_LENGTH 400  /** Hack. Long string length is used to display a whole message instantly. */
+#define GLYPH_TABLE_ASCII_OFFSET       '\'' /** Subtracted from ASCII bytes to get index to some string-related table. */
 
 /** @brief Converts a floating-point X screen position in percent to a fixed-point X screen coodinate. */
 #define SCREEN_POSITION_X(percent) \
@@ -1399,8 +1399,11 @@ static inline void Game_StateSetPrevious()
 /** @brief Sets the given flag ID inside the savegame event flags array. */
 static inline void Savegame_EventFlagSet(u32 flagId)
 {
-    s16 flagIdx = flagId / 32;
-    s16 flagBit = flagId % 32;
+    s16 flagIdx;
+    s16 flagBit;
+
+    flagIdx = flagId / 32;
+    flagBit = flagId % 32;
 
     g_SavegamePtr->eventFlags_168[flagIdx] |= 1 << flagBit;
 }

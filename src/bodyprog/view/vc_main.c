@@ -815,7 +815,7 @@ void vcSetNearestEnemyDataInVC_WORK(VC_WORK* w_p) // 0x80081D90
         if (sc_p->model_0.charaId_0 >= Chara_AirScreamer &&
             sc_p->model_0.charaId_0 <= Chara_MonsterCybil &&
             (sc_p->deathTimer_C4 <= ENEMY_DEATH_TIME_MAX ||
-             sc_p->health_B0 >= FP_FLOAT_TO(0.0f, Q12_SHIFT)) &&
+             sc_p->health_B0 >= Q19_12(0.0f)) &&
             !(sc_p->flags_3E & (1 << 4))) // `sc_p->battle(ShBattleInfo).status & (1 << 5)` in SH2.
         {
             ofs_x = sc_p->position_18.vx - w_p->chara_pos_114.vx;

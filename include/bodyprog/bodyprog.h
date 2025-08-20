@@ -3135,7 +3135,7 @@ void func_80085DF0();
 
 void func_80085E6C(s32 arg0, s32 arg1);
 
-void func_80085EB8(u32 arg0, s_SubCharacter* chara0, s_SubCharacter* chara1, s32 arg3);
+void func_80085EB8(u32 arg0, s_SubCharacter* chara0, s_SubCharacter* chara1, bool arg3);
 
 void func_8008605C(s32 arg0, s32 arg1, s32 arg2, bool arg3);
 
@@ -3166,10 +3166,10 @@ void func_800868DC(s32 idx);
 void func_800869E4(s32 mapMsgIdx, u8* arg1, u16* arg2);
 
 void Camera_TranslationSet(VECTOR3* pos, s32 xPosOffset, s32 yPosOffset, s32 zPosOffset,
-                           s32 xzAccel, s32 yAccel, s32 xzSpeedMax, s32 ySpeedMax, s32 warpCamFlag);
+                           s32 xzAccel, s32 yAccel, s32 xzSpeedMax, s32 ySpeedMax, s32 warpCam);
 
 void Camera_RotationSet(VECTOR3* lookAt, s32 xLookAtOffset, s32 yLookAtOffset, s32 zLookAtOffset,
-                        s32 xAngularAccel, s32 yAngularAccel, s32 xAngularSpeedMax, s32 yAngularSpeedMax, bool warpLookAtFlag);
+                        s32 xAngularAccel, s32 yAngularAccel, s32 xAngularSpeedMax, s32 yAngularSpeedMax, bool warpLookAt);
 
 void func_80086C58(s_SubCharacter* chara0, s_SubCharacter* chara1);
 

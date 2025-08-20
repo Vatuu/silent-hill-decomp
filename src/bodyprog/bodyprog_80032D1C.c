@@ -138,7 +138,8 @@ void MainLoop() // 0x80032EE0
 
         g_ObjectTableIdx = GsGetActiveBuff();
 
-        if (g_GameWork.gameState_594 >= GameState_MainLoadScreen && g_GameWork.gameState_594 < GameState_MapEvent)
+        if (g_GameWork.gameState_594 >= GameState_MainLoadScreen &&
+            g_GameWork.gameState_594 <  GameState_MapEvent)
         {
             GsOUT_PACKET_P = (PACKET*)(TEMP_MEMORY_ADDR + (g_ObjectTableIdx << 17));
         }
@@ -1275,7 +1276,7 @@ void GameFs_MapStartup() // 0x80034964
         case 9:
             if (func_80035780() == 0)
             {
-                g_GameWork.gameState_594 = 10;
+                g_GameWork.gameState_594 = GameState_MainLoadScreen;
                 Game_StateStepIncrement();
             }
             break;
@@ -4009,11 +4010,11 @@ void SysState_GameOver_Update() // 0x8003A52C
             SysWork_StateStepIncrement();
 
         case 1:
-            func_8008616C(2, 1, 0, FP_TIME(0.5f), 0);
+            func_8008616C(2, true, 0, FP_TIME(0.5f), false);
             break;
 
         case 2:
-            func_8008616C(0, 0, 0, FP_TIME(0.5f), 0);
+            func_8008616C(0, false, 0, FP_TIME(0.5f), false);
             SysWork_StateStepIncrement();
 
         case 3:
@@ -4032,7 +4033,7 @@ void SysState_GameOver_Update() // 0x8003A52C
         case 4:
             Gfx_StringSetPosition(SCREEN_POSITION_X(32.5f), SCREEN_POSITION_Y(43.5f));
             Gfx_StringDraw("\aGAME_OVER", 0x63);
-            func_8008616C(2, 1, 0, FP_TIME(2.0f), 0);
+            func_8008616C(2, true, 0, FP_TIME(2.0f), false);
             break;
 
         case 5:
@@ -4049,7 +4050,7 @@ void SysState_GameOver_Update() // 0x8003A52C
             }
 
         case 6:
-            func_8008616C(2, 0, 0, FP_TIME(2.0f), 0);
+            func_8008616C(2, false, 0, FP_TIME(2.0f), false);
             g_SysWork.field_28 = 0;
             Gfx_BackgroundSpriteDraw(&g_DeathTipImg);
             break;
@@ -4076,7 +4077,7 @@ void SysState_GameOver_Update() // 0x8003A52C
 
         case 8:
             Gfx_BackgroundSpriteDraw(&g_DeathTipImg);
-            func_8008616C(2, 1, 0, FP_TIME(2.0f), 0);
+            func_8008616C(2, true, 0, FP_TIME(2.0f), false);
             break;
 
         default:

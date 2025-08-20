@@ -5,6 +5,47 @@
 #include <libgpu.h>
 #include <libgs.h>
 
+/** @brief GLOSSARY OF ABBREVIATIONS
+ * ACCEL: Acceleration
+ * ANG:   Angle
+ * ARY:   Array
+ * EV:    ?
+ * EXCL:  Exclusion
+ * F:     Flag/flags
+ * FIX:   Fixed in place.
+ * H:     Height
+ * LIM:   Limit
+ * MV:    Movement
+ * OFS:   Offset
+ * PRIO:  Priority
+ * R:     Radius
+ * RD:    Road
+ * SCR:   Screen.
+ * SPD:   Speed
+ * STA:   Start
+ * SV:    Swivel?
+ * SW:    ?
+ * TGT:   Target
+ * VELO:  Velocity
+ * VB:    ?
+ * VC:    Virtual camera
+ * VW:    View
+*/
+
+/** @brief GLOSSARY OF JAPANGLISH TERMS
+ * Area:         A camera path's spatial constraint defining its area of influence.
+ * Flipped:      ?
+ * Limit area:   2D AABB parameters defining a camera path's spatial constraint.
+ * Near road:    Nearby camera path collision containing info about a camera path's relation to the player in space (distance, priority, etc.).
+ *               An array of these is kept to track which camera path should take effect.
+ * Renewal:      Reset.
+ * Road:         Camera path. A region which dictates specific camera behaviors while the player is inside.
+ * Self view:    First-person view.
+ * Suu:          "Cylinder" in Japanese. Refers to a 2D radius on the XZ plane.
+ * Through door: Rail camera.
+ * Watch:        Camera look-at.
+ */
+
 // TODO:
 // - Split into 4 separate headers.
 // - Add doc comments above func declarations.
@@ -61,6 +102,7 @@ typedef enum _VC_CAM_CHK_TYPE
 } VC_CAM_CHK_TYPE;
 STATIC_ASSERT_SIZEOF(VC_CAM_CHK_TYPE, 4);
 
+/** @brief Camera path type. */
 typedef enum _VC_ROAD_TYPE
 {
     VC_RD_TYPE_ROAD           = 0,
@@ -159,17 +201,17 @@ STATIC_ASSERT_SIZEOF(VC_ROAD_DATA, 24);
 /** @brief Rail camera parementers. */
 typedef struct _VC_THROUGH_DOOR_CAM_PARAM
 {
-    u8      active_f_0;                /** `bool` */
+    u8      active_f_0;                /** `bool` | Active flag. */
     s8      unk_1[3];
     s32     timer_4;
     s16     rail_ang_y_8;              /** Rail Y angle. */
     s8      unk_A[2];
     VECTOR3 rail_sta_pos_C;            /** Rail start position. */
-    s32     rail_sta_to_chara_dist_18; /** Distance from rail start position to a locked-on character position. */
+    s32     rail_sta_to_chara_dist_18; /** Distance from rail start position to locked-on character position. */
 } VC_THROUGH_DOOR_CAM_PARAM;
 STATIC_ASSERT_SIZEOF(VC_THROUGH_DOOR_CAM_PARAM, 28);
 
-/** @brief Nested camera path data? */
+/** @brief Nearby camera path collision. */
 typedef struct _VC_NEAR_ROAD_DATA
 {
     VC_ROAD_DATA* road_p_0;              /** Path. */
@@ -207,7 +249,7 @@ typedef struct _VC_WORK
     VECTOR3                   watch_tgt_pos_7C;               /** Target look-at position. */
     s32                       watch_tgt_max_y_88;             /** Max look-at Y offset. */
     s16                       watch_tgt_ang_z_8C;             /** Target look-at Z angle. */
-    SVECTOR                   cam_mat_ang_8E;
+    SVECTOR                   cam_mat_ang_8E;                 /** Matrix rotation. */
     u8                        unk_96[2];
     MATRIX                    cam_mat_98;                     /** Matrix. */
     SVECTOR                   ofs_cam_ang_B8;                 /** Offset rotation. */
@@ -236,11 +278,11 @@ typedef struct _VC_WORK
     s16                       chara_eye_ang_y_144;            /** Locked-on character look heading angle? */
     s16                       chara_eye_ang_wy_146;           /** Locked-on character unknown Y angle */
     s32                       chara_watch_xz_r_148;           /** Locked-on character radius on the XZ plane. */
-    VC_NEAR_ROAD_DATA         near_road_ary_14C[10];          /** Unknown path array. */
-    s32                       near_road_suu_2B4;              /** Path count? */
-    VC_NEAR_ROAD_DATA         cur_near_road_2B8;              /** Active path? */
-    struct _SubCharacter*     nearest_enemy_2DC;              /** Closest enemy. */
-    q19_12                    nearest_enemy_xz_dist_2E0;      /** Distance to the closest enemy on the XZ plane. */
+    VC_NEAR_ROAD_DATA         near_road_ary_14C[10];          /** Nearby camera path collisions. */
+    s32                       near_road_suu_2B4;              /** Nearby camera path collision radius? */
+    VC_NEAR_ROAD_DATA         cur_near_road_2B8;              /** Closest camera path? */
+    struct _SubCharacter*     nearest_enemy_2DC;              /** Closest enemy character. */
+    q19_12                    nearest_enemy_xz_dist_2E0;      /** Distance to the closest enemy character on the XZ plane. */
     s32                       field_2E4;
 } VC_WORK;
 STATIC_ASSERT_SIZEOF(VC_WORK, 744);
