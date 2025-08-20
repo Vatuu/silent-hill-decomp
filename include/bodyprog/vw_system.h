@@ -43,11 +43,11 @@ struct _MapOverlayHeader; // `bodyprog.h` forward declaration.
  * Marge:        ?
  * Near road:    Nearby camera path collision containing info about a camera path's relation to the player in space (distance, priority, etc.).
  *               An array of these is kept to track which camera path should take effect.
- * Oresen hokan: ????????????????????????????
+ * Oresen hokan: Polyline interpolation, linear interpolation over an array of values.
  * Renewal:      Reset.
  * Road:         Camera path. A region which dictates specific camera behaviors while the player is inside.
  * Self view:    First-person view.
- * Suu:          "Cylinder" in Japanese. Refers to a 2D radius on the XZ plane.
+ * Suu:          "Count" in Japanese, usually refers to number of entries in array, or is included in enums to signal number of values inside.
  * Through door: Rail camera.
  * Watch:        Camera look-at.
  */
@@ -285,7 +285,7 @@ typedef struct _VC_WORK
     s16                       chara_eye_ang_wy_146;                          /** Locked-on character unknown Y angle */
     s32                       chara_watch_xz_r_148;                          /** Locked-on character radius on the XZ plane. */
     VC_NEAR_ROAD_DATA         near_road_ary_14C[CAMERA_PATH_COLL_COUNT_MAX]; /** Nearby camera path collisions. */
-    s32                       near_road_suu_2B4;                             /** Nearby camera path collision radius? */
+    s32                       near_road_suu_2B4;                             /** Count of valid `near_road_ary_14C` entries. */
     VC_NEAR_ROAD_DATA         cur_near_road_2B8;                             /** Closest camera path? */
     struct _SubCharacter*     nearest_enemy_2DC;                             /** Closest enemy character. */
     q19_12                    nearest_enemy_xz_dist_2E0;                     /** Distance to the closest enemy character on the XZ plane. */
