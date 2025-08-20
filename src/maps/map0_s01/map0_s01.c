@@ -546,21 +546,21 @@ INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800DB790);
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800DBAA0);
 
-void Pickup_PocketRadioItemTake() // 0x800DC34C
+void Event_PocketRadioItemTake() // 0x800DC34C
 {
-    Pickup_ItemTake(InventoryItemId_PocketRadio, 1, 37, 64);
+    Event_ItemTake(InventoryItemId_PocketRadio, 1, 37, 64);
     g_SavegamePtr->flags_AC |= 1 << 0;
 }
 
-void Pickup_FlashlightItemTake() // 0x800DC394
+void Event_FlashlightItemTake() // 0x800DC394
 {
-    Pickup_ItemTake(InventoryItemId_Flashlight, 1, 36, 61);
+    Event_ItemTake(InventoryItemId_Flashlight, 1, 36, 61);
     Game_TurnFlashlightOff();
 }
 
 // TODO: .rodata migration.
 #ifdef NON_MATCHING
-void func_800DC3C8() // 0x800DC3C8
+void Event_MapItemTake() // 0x800DC3C8
 {
     switch (g_SysWork.sysStateStep_C)
     {
@@ -703,17 +703,18 @@ void func_800DC3C8() // 0x800DC3C8
     }
 }
 #else
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800DC3C8);
+INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", Event_MapItemTake);
 #endif
 
-void Pickup_KitchenKnifeItemTake() // 0x800DC830
+void Event_KitchenKnifeItemTake() // 0x800DC830
 {
-    Pickup_ItemTake(InventoryItemId_KitchenKnife, 1, 35, 60);
+    Event_ItemTake(InventoryItemId_KitchenKnife, 1, 35, 60);
 }
 
+/** Presumably a pickup function. Maybe debug or something unused and commented out. */
 void func_800DC85C() {}
 
-void func_800DC864() // 0x800DC864
+void Event_HealthItemTake() // 0x800DC864
 {
     s32 globalPickupId;
     u32 pickupType;
@@ -734,10 +735,10 @@ void func_800DC864() // 0x800DC864
             break;
     }
 
-    Pickup_CommonItemTake(pickupType, globalPickupId);
+    Event_CommonItemTake(pickupType, globalPickupId);
 }
 
-void func_800DC8C8() // 0x800DC8C8
+void Event_HandgunItemTake() // 0x800DC8C8
 {
     switch (g_SysWork.sysStateStep_C)
     {
@@ -820,12 +821,12 @@ void func_800DC9C8() // 0x800DC9C8
     {
         g_SysWork.flags_22A4 |= (1 << 5) | (1 << 9);
 
-        Chara_Load(0, 2, &g_SysWork.npcCoords_FC0, NO_VALUE, 0, 0);
+        Chara_Load(0, Chara_AirScreamer, &g_SysWork.npcCoords_FC0, NO_VALUE, 0, 0);
 
         if (g_SavegamePtr->eventFlags_168[1] & (1 << 6))
         {
             func_80088D0C();
-            Chara_Spawn(2, 0, 0xFFFF6000, 0x118000, 0, 12);
+            Chara_Spawn(Chara_AirScreamer, 0, 0xFFFF6000, 0x118000, 0, 12);
             func_800D3A3C(&g_SysWork.npcs_1A0[0]);
 
             Fs_QueueStartRead(FILE_ANIM_CAFE2_DMS, FS_BUFFER_11);

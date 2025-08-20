@@ -558,8 +558,8 @@ vcGetXZSumDistFromLimArea                   = 0x80085C80; // type:func
 //--------------------------------------------------------------------
 Camera_TranslationSet                       = 0x80086A94; // type:func
 Camera_RotationSet                          = 0x80086B70; // type:func
-Pickup_ItemTake                             = 0x800877B8; // type:func
-Pickup_CommonItemTake                       = 0x800879FC; // type:func
+Event_ItemTake                              = 0x800877B8; // type:func
+Event_CommonItemTake                        = 0x800879FC; // type:func
 Chara_Load                                  = 0x80088C7C; // type:func
 Chara_Spawn                                 = 0x80088D78; // type:func
 DmsHeader_FixOffsets                        = 0x8008C9A0; // type:func

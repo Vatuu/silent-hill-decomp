@@ -1028,7 +1028,7 @@ void func_80087540(s32 itemId, s32 itemCount, s32 arg2, s32 mapMsgIdx0, s32 mapM
     }
 }
 
-void Pickup_ItemTake(s32 itemId, s32 itemCount, s32 globalPickupId, s32 mapMsgIdx) // 0x800877B8
+void Event_ItemTake(s32 itemId, s32 itemCount, s32 globalPickupId, s32 mapMsgIdx) // 0x800877B8
 {
     s32 i            = itemId;
     s32 mapMsgIdxCpy = mapMsgIdx;
@@ -1103,7 +1103,7 @@ void Pickup_ItemTake(s32 itemId, s32 itemCount, s32 globalPickupId, s32 mapMsgId
     }
 }
 
-void Pickup_CommonItemTake(u32 pickupType, s32 globalPickupId) // 0x800879FC
+void Event_CommonItemTake(u32 pickupType, s32 globalPickupId) // 0x800879FC
 {
     #define EASY_DIFFICULTY_AMMO_COUNT_MULT_MIN 2
     #define HANDGUN_AMMO_COUNT_BASE             15
@@ -1123,27 +1123,27 @@ void Pickup_CommonItemTake(u32 pickupType, s32 globalPickupId) // 0x800879FC
     switch (pickupType)
     {
         case CommonPickupItemId_FirstAidKit:
-            Pickup_ItemTake(InventoryItemId_FirstAidKit, 1, globalPickupId, 5);
+            Event_ItemTake(InventoryItemId_FirstAidKit, 1, globalPickupId, 5);
             break;
 
         case CommonPickupItemId_HealthDrink:
-            Pickup_ItemTake(InventoryItemId_HealthDrink, 1, globalPickupId, 6);
+            Event_ItemTake(InventoryItemId_HealthDrink, 1, globalPickupId, 6);
             break;
 
         case CommonPickupItemId_Ampoule:
-            Pickup_ItemTake(InventoryItemId_Ampoule, 1, globalPickupId, 7);
+            Event_ItemTake(InventoryItemId_Ampoule, 1, globalPickupId, 7);
             break;
 
         case CommonPickupItemId_HandgunBullets:
-            Pickup_ItemTake(InventoryItemId_HandgunBullets, ammoCountMult * HANDGUN_AMMO_COUNT_BASE, globalPickupId, 8);
+            Event_ItemTake(InventoryItemId_HandgunBullets, ammoCountMult * HANDGUN_AMMO_COUNT_BASE, globalPickupId, 8);
             break;
 
         case CommonPickupItemId_ShotgunShells:
-            Pickup_ItemTake(InventoryItemId_ShotgunShells, ammoCountMult * SHOTGUN_AMMO_COUNT_BASE, globalPickupId, 10);
+            Event_ItemTake(InventoryItemId_ShotgunShells, ammoCountMult * SHOTGUN_AMMO_COUNT_BASE, globalPickupId, 10);
             break;
 
         case CommonPickupItemId_RifleShells:
-            Pickup_ItemTake(InventoryItemId_RifleShells, ammoCountMult * RIFLE_AMMO_COUNT_BASE, globalPickupId, 9);
+            Event_ItemTake(InventoryItemId_RifleShells, ammoCountMult * RIFLE_AMMO_COUNT_BASE, globalPickupId, 9);
             break;
     }
 }
@@ -1428,11 +1428,11 @@ void func_800881B8(s32 x0, s16 y0, s32 x1, s16 y1, s16 arg4, s16 arg5, s16 arg6,
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80088370); // 0x80088370
 
-bool Chara_Load(s32 arg0, s8 arg1, GsCOORDINATE2* coord, s8 arg3, void* arg4, s_FsImageDesc* image) // 0x80088C7C
+bool Chara_Load(s32 arg0, s8 charaId, GsCOORDINATE2* coord, s8 arg3, void* arg4, s_FsImageDesc* image) // 0x80088C7C
 {
-    func_80035338(arg0 + 1, arg1, NULL, coord);
+    func_80035338(arg0 + 1, charaId, NULL, coord);
     func_8003D5B4(arg3);
-    func_8003D6E0(arg1, arg0, arg4, image);
+    func_8003D6E0(charaId, arg0, arg4, image);
     return true;
 }
 

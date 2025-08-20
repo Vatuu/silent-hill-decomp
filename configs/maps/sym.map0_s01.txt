@@ -118,11 +118,12 @@ sharedFunc_800D923C_0_s00   = 0x800DA4BC; // type:func
 sharedFunc_800D929C_0_s00   = 0x800DA51C; // type:func
 sharedFunc_800D92AC_0_s00   = 0x800DA52C; // type:func
 sharedFunc_800DA8E8_0_s01   = 0x800DA8E8; // type:func
-Pickup_PocketRadioItemTake  = 0x800DC34C; // type:func
-Pickup_FlashlightItemTake   = 0x800DC394; // type:func
-Pickup_KitchenKnifeItemTake = 0x800DC830; // type:func
-
-
+Event_PocketRadioItemTake   = 0x800DC34C; // type:func
+Event_FlashlightItemTake    = 0x800DC394; // type:func
+Event_MapItemTake			= 0x800DC3C8; // type:func
+Event_KitchenKnifeItemTake  = 0x800DC830; // type:func
+Event_HealthItemTake 		= 0x800DC864; // type:func
+Event_HandgunItemTake		= 0x800DC8C8; // type:func
 
 //================================================
 //=== .data section

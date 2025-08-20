@@ -3187,9 +3187,9 @@ void func_80087360(s32 arg0, s32 arg1, s32 arg2, s32 mapMsgIdx);
 
 void func_80087540(s32 arg0, s32 arg1, s32 arg2, s32 mapMsgIdx0, s32 mapMsgIdx1);
 
-void Pickup_ItemTake(s32 itemId, s32 itemCount, s32 globalPickupId, s32 mapMsgIdx);
+void Event_ItemTake(s32 itemId, s32 itemCount, s32 globalPickupId, s32 mapMsgIdx);
 
-void Pickup_CommonItemTake(u32 pickupType, s32 globalPickupId);
+void Event_CommonItemTake(u32 pickupType, s32 globalPickupId);
 
 /** Inventory drawing? */
 void func_80087AF4(s32 mapFlagIdx, s32 eventFlagIdx, s32 mapMsgIdx);
@@ -3211,7 +3211,7 @@ Could `arg5` be a struct pointer?
 `func_8003D6E0` uses this function and in the last argument
 it input `arg5` and `arg5` is an undetermined function pointer
 */
-bool Chara_Load(s32 arg0, s8 arg1, GsCOORDINATE2* coord, s8 arg3, void* arg4, s_FsImageDesc* image);
+bool Chara_Load(s32 arg0, s8 charaId, GsCOORDINATE2* coord, s8 arg3, void* arg4, s_FsImageDesc* image);
 
 bool func_80088D0C();
 

@@ -1055,7 +1055,7 @@ STATIC_ASSERT_SIZEOF(s_SubCharacter, 296);
 
 typedef struct _MainCharacterExtra
 {
-    s_Model model_0; // For player, this is a copy of model_0 in its corresponding s_SubCharacter.
+    s_Model model_0; // For player, this is a copy of `model_0` in its corresponding `s_SubCharacter`.
     s32     field_18;
     s32     field_1C; // Harm animation index?
     s32     field_20; // Some kind of anim state related to current action (running, walking, sidestepping, etc.).

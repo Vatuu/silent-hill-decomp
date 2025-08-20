@@ -115,17 +115,18 @@ void func_800DA7FC();
 
 void func_800DA8A4();
 
-void Pickup_PocketRadioItemTake();
+void Event_PocketRadioItemTake();
 
-void Pickup_FlashlightItemTake();
+void Event_FlashlightItemTake();
 
-void func_800DC3C8();
+/** Also responsible for air screamer scene setup in the cafe. */
+void Event_MapItemTake();
 
-void Pickup_KitchenKnifeItemTake();
+void Event_KitchenKnifeItemTake();
 
-void func_800DC864();
+void Event_HealthItemTake();
 
-void func_800DC8C8();
+void Event_HandgunItemTake();
 
 void func_800DC9C8();
 
