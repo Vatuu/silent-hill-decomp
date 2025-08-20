@@ -138,8 +138,8 @@ void MainLoop() // 0x80032EE0
 
         g_ObjectTableIdx = GsGetActiveBuff();
 
-        if (g_GameWork.gameState_594 >= GameState_MainLoadScreen &&
-            g_GameWork.gameState_594 <  GameState_MapEvent)
+        if (g_GameWork.gameState_594 == GameState_MainLoadScreen || 
+            g_GameWork.gameState_594 == GameState_InGame)
         {
             GsOUT_PACKET_P = (PACKET*)(TEMP_MEMORY_ADDR + (g_ObjectTableIdx << 17));
         }
@@ -733,7 +733,7 @@ s32 MainLoop_ShouldWarmReset() // 0x80034108
         return 0;
     }
 
-    if (g_GameWork.gameState_594 == GameState_Unk10 && (g_GameWork.gameStateStep_598[0] - 2) < 2u)
+    if (g_GameWork.gameState_594 == GameState_Unk10 && (g_GameWork.gameStateStep_598[0] == 2 || g_GameWork.gameStateStep_598[0] == 3))
     {
         return 0;
     }

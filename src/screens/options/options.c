@@ -1638,7 +1638,7 @@ void Options_ScreenPosMenu_IndicatorDraw() // 0x801E5CBC
         setCodeWord(line, 0x40, (i < 2) ? 0xF0F0F0 : 0x808080);
 
         setXY0Fast(line, (u16)(D_801E2C4C[i].vx - g_GameWorkConst->config_0.optScreenPosX_1C), D_801E2C4C[i].vy - g_GameWorkConst->config_0.optScreenPosY_1D);
-        setXY1Fast(line, (u16)(D_801E2C4C[(i + 1) & 3].vx - g_GameWorkConst->config_0.optScreenPosX_1C), D_801E2C4C[(i + 1) & 3].vy - g_GameWorkConst->config_0.optScreenPosY_1D);
+        setXY1Fast(line, (u16)(D_801E2C4C[(i + 1) % 4].vx - g_GameWorkConst->config_0.optScreenPosX_1C), D_801E2C4C[(i + 1) % 4].vy - g_GameWorkConst->config_0.optScreenPosY_1D);
 
         addPrim((u8*)ot->org + 0x28, line);
         GsOUT_PACKET_P = (u8*)line + sizeof(LINE_F2);
@@ -2119,12 +2119,12 @@ void Options_Controller_Control() // 0x801E69BC
                 // Move selection cursor up/down.
                 if (g_Controller0->btnsPulsedGui_1C & ControllerFlag_LStickUp)
                 {
-                    g_GameWork.gameStateStep_598[1] = (g_GameWork.gameStateStep_598[1] - 1) & 0x3;
+                    g_GameWork.gameStateStep_598[1] = (g_GameWork.gameStateStep_598[1] - 1) % 4;
                     g_GameWork.gameStateStep_598[2] = 0;
                 }
                 else if (g_Controller0->btnsPulsedGui_1C & ControllerFlag_LStickDown)
                 {
-                    g_GameWork.gameStateStep_598[1] = (g_GameWork.gameStateStep_598[1] + 1) & 0x3;
+                    g_GameWork.gameStateStep_598[1] = (g_GameWork.gameStateStep_598[1] + 1) % 4;
                     g_GameWork.gameStateStep_598[2] = 0;
                 }
                 // Move selection cursor left/right.

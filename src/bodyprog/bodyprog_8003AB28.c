@@ -1788,7 +1788,7 @@ void func_8003D9C8(s_800BCE18_0_CC* arg0) // 0x8003D9C8
         arg0->field_1 = 1;
 
         PlmHeader_FixOffsets(arg0->field_8);
-        func_80056464(arg0->field_8, g_Chara_FileInfo[arg0->field_0].textureFileIdx, &arg0->field_C, g_Chara_FileInfo[arg0->field_0].field_6_10 & 3);
+        func_80056464(arg0->field_8, g_Chara_FileInfo[arg0->field_0].textureFileIdx, &arg0->field_C, g_Chara_FileInfo[arg0->field_0].field_6_10 % 4);
 
         skel = &arg0->field_14;
 
