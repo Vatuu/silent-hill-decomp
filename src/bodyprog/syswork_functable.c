@@ -6,7 +6,7 @@ void (*g_SysStateFuncs[])() =
     SysState_Gameplay_Update,
     SysState_OptionsMenu_Update,
     SysState_StatusMenu_Update,
-    SysState_Unk3_Update,
+    SysState_MapScreen_Update,
     SysState_Fmv_Update,
     SysState_LoadArea_Update,
     SysState_LoadArea_Update,

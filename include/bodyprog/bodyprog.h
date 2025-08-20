@@ -3648,7 +3648,7 @@ void SysState_StatusMenu_Update();
 
 void GameState_LoadStatusScreen_Update();
 
-void SysState_Unk3_Update();
+void SysState_MapScreen_Update();
 
 void GameState_LoadMapScreen_Update();
 
