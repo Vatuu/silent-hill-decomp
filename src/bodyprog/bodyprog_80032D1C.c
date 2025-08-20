@@ -3301,7 +3301,7 @@ void SysState_Gameplay_Update() // 0x80038BD4
         SysWork_StateSetNext(SysState_OptionsMenu);
     }
 
-    if (g_SysWork.sysState_8 >= SysState_OptionsMenu && g_SysWork.sysState_8 <= SysState_MapScreen)
+    if (g_SysWork.sysState_8 == SysState_OptionsMenu || g_SysWork.sysState_8 == SysState_StatusMenu || g_SysWork.sysState_8 == SysState_MapScreen)
     {
         g_SysWork.flags_22A4 |= 1 << 7;
     }
