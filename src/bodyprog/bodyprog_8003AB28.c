@@ -489,7 +489,7 @@ void Gfx_MainMenu_DifficultyTextDraw(s32 arg0) // 0x8003B678
 
 void Gfx_MainMenu_BackgroundDraw() // 0x8003B758
 {
-    if (g_SysWork.sysState_8 == 0)
+    if (g_SysWork.sysState_8 == SysState_Gameplay)
     {
         SysWork_StateSetNext(SysState_OptionsMenu);
         func_8003BCF4();

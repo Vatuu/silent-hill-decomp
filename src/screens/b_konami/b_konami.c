@@ -310,13 +310,7 @@ void GameState_KcetLogo_Update() // 0x800C99A4
                     g_GameWork.gameStateStep_598[1] = 0;
                     g_GameWork.gameStateStep_598[2] = 0;
 
-                    g_SysWork.sysState_8     = 0;
-                    g_SysWork.timer_24       = 0;
-                    g_SysWork.sysStateStep_C = 0;
-                    g_SysWork.field_28       = 0;
-                    g_SysWork.field_10       = 0;
-                    g_SysWork.timer_2C       = 0;
-                    g_SysWork.field_14       = 0;
+                    SysWork_StateSetNext(SysState_Gameplay);
 
                     g_GameWork.gameStateStep_598[0] = g_GameWork.gameState_594;
                     g_GameWork.gameState_594        = D_800CA4F0.field_0;

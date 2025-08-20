@@ -1940,7 +1940,7 @@ s32 func_8008A0E4(s32 arg0, s16 arg1, s_SubCharacter* chara, s_PlayerCombat* com
     var_t1    = chara->field_44;
     modelAnim = &chara->model_0.anim_4;
 
-    if (g_DeltaTime0 == 0 || g_SysWork.sysState_8 != 0)
+    if (g_DeltaTime0 == 0 || g_SysWork.sysState_8 != SysState_Gameplay)
     {
         return NO_VALUE;
     }

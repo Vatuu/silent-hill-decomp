@@ -1847,7 +1847,7 @@ void Gfx_LoadingScreen_PlayerRun() // 0x80035BE0
     boneCoords = g_SysWork.playerBoneCoords_890;
     model      = &g_SysWork.player_4C.chara_0.model_0;
 
-    if (g_SysWork.sysState_8 == 0)
+    if (g_SysWork.sysState_8 == SysState_Gameplay)
     {
         if (g_SysWork.flags_2298 == SysWorkProcessFlag_OverlayTransition)
         {
@@ -3117,7 +3117,7 @@ void GameState_InGame_Update() // 0x80038BD4
             break;
     }
 
-    if (g_SysWork.sysState_8 != 0 && g_SysWork.player_4C.chara_0.health_B0 <= 0)
+    if (g_SysWork.sysState_8 != SysState_Gameplay && g_SysWork.player_4C.chara_0.health_B0 <= 0)
     {
         SysWork_StateSetNext(SysState_Gameplay);
     }
@@ -3141,10 +3141,10 @@ void GameState_InGame_Update() // 0x80038BD4
         g_DeltaTime0 = 0;
         g_SysStateFuncs[g_SysWork.sysState_8]();
 
-        if (g_SysWork.sysState_8 == 0)
+        if (g_SysWork.sysState_8 == SysState_Gameplay)
         {
             func_800373CC(1);
-            if (D_800A9A10 != 0xF)
+            if (D_800A9A10 != SysState_Unk15)
             {
                 SysWork_StateSetNext(D_800A9A10);
             }
@@ -3695,7 +3695,7 @@ void SysState_LoadArea_Update() // 0x80039C40
         D_800BCDB0.char_z_8 += var1;
     }
 
-    if (g_SysWork.sysState_8 == 5)
+    if (g_SysWork.sysState_8 == SysState_LoadArea0)
     {
         g_SysWork.flags_2298           = SysWorkProcessFlag_OverlayTransition;
         g_SavegamePtr->mapOverlayId_A4 = (g_MapEventParam->flags_8 >> 25) & 0x3F; // This doesn't match when `flags_8` is defined as bitfields.
@@ -3911,7 +3911,7 @@ void SysState_EventSetFlag_Update() // 0x8003A460
 {
     g_DeltaTime0 = D_800BCD84;
     Savegame_EventFlagSet(g_MapEventParam->eventFlagId_2);
-    g_SysWork.sysState_8 = 0;
+    g_SysWork.sysState_8 = SysState_Gameplay;
 }
 
 void SysState_EventPlaySound_Update() // 0x8003A4B4
@@ -3921,7 +3921,7 @@ void SysState_EventPlaySound_Update() // 0x8003A4B4
     Sd_EngineCmd(((u16)g_MapEventIdx + 0x500) & 0xFFFF);
 
     Savegame_EventFlagSet(g_MapEventParam->eventFlagId_2);
-    g_SysWork.sysState_8 = 0;
+    g_SysWork.sysState_8 = SysState_Gameplay;
 }
 
 void SysState_GameOver_Update() // 0x8003A52C

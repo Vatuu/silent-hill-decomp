@@ -10,22 +10,6 @@
 #include "main/fileinfo.h"
 #include "screens/stream/stream.h"
 
-s32 g_Debug_MoviePlayerIdx = 0; // 0x801E3F3C
-s32 max_frame              = 0; // 0x801E3F40
-s32 frame_cnt              = 0; // 0x801E3F44
-
-DISPENV disp =
-{
-    { 0, 256, 320, 240 }, // `disp`
-    { 0, 8,   256, 208 }, // `screen`
-    0,                    // `isinter`
-    1,                    // `isrgb24`
-    0,                    // `pad0`
-    0                     // `pad1`
-}; // 0x801E3F48
-
-MOVIE_STR* m;
-
 void GameState_StartMovieIntro_Update() // 0x801E2654
 {
     switch (g_GameWork.gameStateStep_598[0])
@@ -85,25 +69,19 @@ void GameState_ExitMovie_Update() // 0x801E28B0
 
 void GameState_DebugMoviePlayer_Update() // 0x801E2908
 {
-    extern s32 g_Debug_MoviePlayerIdx; // Only used in this func, maybe static.
+    static s32 g_Debug_MoviePlayerIdx = 0; // 0x801E3F3C
 
-    s_GameWork*       gameWork;
-    s_ControllerData* controller;
-
-    gameWork   = g_GameWorkPtr;
-    controller = g_Controller0;
-
-    if (controller->btnsClicked_10 & gameWork->config_0.controllerConfig_0.cancel_2)
+    if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)
     {
         Game_StateSetNext(GameState_Unk16); // Changes to non-existent state 22 and crashes. Maybe removed debug menu.
     }
 
-    if (controller->btnsPulsed_18 & ControllerFlag_LStickLeft)
+    if (g_Controller0->btnsPulsed_18 & ControllerFlag_LStickLeft)
     {
         g_Debug_MoviePlayerIdx--;
     }
 
-    if (controller->btnsPulsed_18 & ControllerFlag_LStickRight)
+    if (g_Controller0->btnsPulsed_18 & ControllerFlag_LStickRight)
     {
         g_Debug_MoviePlayerIdx++;
     }
@@ -116,7 +94,7 @@ void GameState_DebugMoviePlayer_Update() // 0x801E2908
     Gfx_DebugStringDraw(Math_IntegerToString(2, g_Debug_MoviePlayerIdx));
 #endif
 
-    if (controller->btnsClicked_10 & gameWork->config_0.controllerConfig_0.enter_0)
+    if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
     {
         open_main(FILE_XA_ZC_14392 - g_Debug_MoviePlayerIdx, 0);
     }
@@ -129,6 +107,21 @@ void GameState_MovieIntroAlternate_Update() // 0x801E2A24
 
     D_800B5C30 = FP_TIME(1.0f);
 }
+
+s32 max_frame = 0; // 0x801E3F40
+s32 frame_cnt = 0; // 0x801E3F44
+
+DISPENV disp =
+{
+    { 0, 256, 320, 240 }, // `disp`
+    { 0, 8,   256, 208 }, // `screen`
+    0,                    // `isinter`
+    1,                    // `isrgb24`
+    0,                    // `pad0`
+    0                     // `pad1`
+}; // 0x801E3F48
+
+MOVIE_STR* m;
 
 void open_main(s32 file_idx, s16 num_frames) // 0x801E2AA4
 {

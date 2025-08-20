@@ -11138,7 +11138,7 @@ void func_8007F32C() // 0x8007F32C
 
     D_800C455C = g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.run_C | g_GameWorkPtr->config_0.controllerConfig_0.action_6);
 
-    if (g_SysWork.sysState_8 != 0)
+    if (g_SysWork.sysState_8 != SysState_Gameplay)
     {
         D_800C45C0 = 0;
         D_800C45BE = 0;
