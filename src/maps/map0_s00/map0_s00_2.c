@@ -109,12 +109,12 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00_2", func_800D8A00);
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00_2", func_800D94F8);
 
-/** Debug function??? It is unused here... */
+/** Debug function? */
 void Gfx_LoadingScreen_StageString() // 0x800D95D4
 {
     g_Gfx_ScreenFade = 7;
     Gfx_DebugStringPosition(100, 100);
-    Gfx_DebugStringDraw(&D_800CAE7C); // String "STAGE 0-0"
+    Gfx_DebugStringDraw(&D_800CAE7C);
 }
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00_2", func_800D9610);

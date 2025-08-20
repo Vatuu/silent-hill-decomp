@@ -1208,7 +1208,7 @@ typedef struct _SysWork
     GsCOORDINATE2   unkCoords_E30[5];  // Might be part of previous array for 5 extra coords which go unused.
     GsCOORDINATE2   npcCoords_FC0[60]; // Dynamic coord buffer? 10 coords per NPC (given max of 6 NPCs).
     s8              field_2280;        // Maybe NPC AI data past this point.
-    s8              loadingScreenIndex_2281;
+    s8              loadingScreenIdx_2281;
     s8              field_2282;
     s8              field_2283; // Index into `SfxPairs`.
     u16             field_2284[3];

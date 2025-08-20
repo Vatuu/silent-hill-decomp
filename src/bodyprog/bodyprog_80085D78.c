@@ -1570,7 +1570,7 @@ s32 func_80089128() // 0x80089128
     return var_s5;
 }
 
-// Forward declare pointers used below
+// Forward declare pointers used below.
 extern const u32 D_8002AF04[];
 extern const u32 D_8002AF08[];
 extern const u32 D_8002AF20[];
@@ -1587,13 +1587,13 @@ extern const u32 D_8002AF70[];
 
 const s_8002AC04 D_8002AC04[] =
 {
-    // 2nd field is used as index into `D_800AFD08` funcptr array
-    // Seems each function takes different kind of params in 5th/6th fields
-    // #0 5th field is some kind of index/counter
-    // #1 5th field is pointer to another D_8002AC04 entry
-    // #2 5th field points to some data that comes after this array
-    // #3 5th field is always 0
-    // #4 5th field is index/counter
+    // 2nd field is used as index into `D_800AFD08` funcptr array.
+    // Seems each function takes different kind of params in 5th/6th fields:
+    // #0 5th field is some kind of index/counter.
+    // #1 5th field is pointer to another `D_8002AC04` entry.
+    // #2 5th field points to some data that comes after this array.
+    // #3 5th field is always 0.
+    // #4 5th field is index/counter.
     { NULL, 3, 2, 0, 0, {} },
     { NULL, 3, 3, 0, 0, {} },
     { NULL, 3, 1, 0, 0, {} },
@@ -1614,37 +1614,37 @@ const s_8002AC04 D_8002AC04[] =
     { &D_8002AC04[46], 0, 32, 0, 12, {} },
     { &D_8002AC04[28], 0, 32, 0, 18, {} },
     { &D_8002AC04[29], 0, 32, 0, 19, {} },
-    { NULL, 4, 0, 0xFFFF, 20, {.u32 = -255} },
-    { NULL, 4, 1, 0xFFFF, 21, {.u32 = -255} },
-    { NULL, 2, 1, 0xFFFF, &D_8002AF70, {0x2D, 9, 1, 0} },
-    { NULL, 2, 1, 0xFFFF, &D_8002AF64, {0x180, 0x30, 1, 0} },
-    { NULL, 2, 1, 0xFFFF, &D_8002AF5C, {0x90, 0x18, 1, 0} },
-    { NULL, 2, 1, 0xFFFF, &D_8002AF54, {0x5A, 0xF, 1, 0} },
-    { NULL, 2, 1, 0xFFFF, &D_8002AF48, {0x96, 0xF, 1, 1} },
-    { NULL, 2, 1, 0xFFFF, &D_8002AF3C, {0x60, 0xC, 1, 0} },
-    { NULL, 2, 1, 0xFFFF, &D_8002AF3C, {0x60, 0xC, 1, 0} },
-    { NULL, 2, 1, 0xFFFF, &D_8002AF34, {0x4B, 0xF, 1, 0} },
+    { NULL, 4, 0, 0xFFFF, 20, { .u32 = -255 } },
+    { NULL, 4, 1, 0xFFFF, 21, { .u32 = -255 } },
+    { NULL, 2, 1, 0xFFFF, &D_8002AF70, { 0x2D, 9, 1, 0 } },
+    { NULL, 2, 1, 0xFFFF, &D_8002AF64, { 0x180, 0x30, 1, 0 } },
+    { NULL, 2, 1, 0xFFFF, &D_8002AF5C, { 0x90, 0x18, 1, 0 } },
+    { NULL, 2, 1, 0xFFFF, &D_8002AF54, { 0x5A, 0xF, 1, 0 } },
+    { NULL, 2, 1, 0xFFFF, &D_8002AF48, { 0x96, 0xF, 1, 1 } },
+    { NULL, 2, 1, 0xFFFF, &D_8002AF3C, { 0x60, 0xC, 1, 0 } },
+    { NULL, 2, 1, 0xFFFF, &D_8002AF3C, { 0x60, 0xC, 1, 0 } },
+    { NULL, 2, 1, 0xFFFF, &D_8002AF34, { 0x4B, 0xF, 1, 0 } },
     { NULL, 0, 0, 0x0000, 0, {} },
-    { NULL, 2, 0, 0xFFFF, &D_8002AF2C, {0x258, 0xF, 0, 0} },
-    { NULL, 0, 0, 0x0000, 0, {} },
-    { NULL, 0, 0, 0x0000, 0, {} },
-    { NULL, 2, 0, 0xFFFF, &D_8002AF28, {0x1E0, 0xF, 0, 0} },
+    { NULL, 2, 0, 0xFFFF, &D_8002AF2C, { 0x258, 0xF, 0, 0 } },
     { NULL, 0, 0, 0x0000, 0, {} },
     { NULL, 0, 0, 0x0000, 0, {} },
-    { NULL, 2, 0, 0xFFFF, &D_8002AF24, {0x1A4, 0xF, 0, 0} },
+    { NULL, 2, 0, 0xFFFF, &D_8002AF28, { 0x1E0, 0xF, 0, 0 } },
     { NULL, 0, 0, 0x0000, 0, {} },
     { NULL, 0, 0, 0x0000, 0, {} },
-    { NULL, 2, 0, 0xFFFF, &D_8002AF20, {0x168, 0xF, 0, 0} },
+    { NULL, 2, 0, 0xFFFF, &D_8002AF24, { 0x1A4, 0xF, 0, 0 } },
     { NULL, 0, 0, 0x0000, 0, {} },
     { NULL, 0, 0, 0x0000, 0, {} },
-    { NULL, 2, 0, 0xFFFF, &D_8002AF20, {0x10E, 0xF, 0, 0} },
+    { NULL, 2, 0, 0xFFFF, &D_8002AF20, { 0x168, 0xF, 0, 0 } },
     { NULL, 0, 0, 0x0000, 0, {} },
     { NULL, 0, 0, 0x0000, 0, {} },
-    { &D_8002AC04[47], 2, 0, 0xFFFF, &D_8002AF08, {0xB40, 0xF, 0, 0} },
-    { &D_8002AC04[47], 2, 0, 0xFFFF, &D_8002AF04, {0x1E, 0xF, 0, 0} },
+    { NULL, 2, 0, 0xFFFF, &D_8002AF20, { 0x10E, 0xF, 0, 0 } },
+    { NULL, 0, 0, 0x0000, 0, {} },
+    { NULL, 0, 0, 0x0000, 0, {} },
+    { &D_8002AC04[47], 2, 0, 0xFFFF, &D_8002AF08, { 0xB40, 0xF, 0, 0 } },
+    { &D_8002AC04[47], 2, 0, 0xFFFF, &D_8002AF04, { 0x1E, 0xF, 0, 0 } },
 };
 
-// TODO: Figure out what kind of data this is, the array above has some entries pointing to it, all of them using funcptr #2 (func_80089DF0)
+// TODO: Figure out what kind of data this is. The array above has some entries pointing to it, all of them using funcptr #2 (`func_80089DF0`).
 // Not sure why they'd all be different sizes though.
 const u32 D_8002AF04[] = { 0 };
 const u32 D_8002AF08[] = { 0x8000184, 0x61000003, 0x81000000, 1, 0x181, 0x10000 };
@@ -1705,17 +1705,17 @@ void func_800893D0(q19_12 arg0) // 0x800893D0
 {
     u32 var;
 
-    if (arg0 > FP_TO(25, Q12_SHIFT)) // 25 in Q19.12.
+    if (arg0 > FP_TO(25, Q12_SHIFT))
     {
         var = 200;
     }
-    else if (arg0 < FP_TO(5, Q12_SHIFT)) // 5 in Q19.12.
+    else if (arg0 < FP_TO(5, Q12_SHIFT))
     {
         var = 100;
     }
     else 
     {
-        var = ((arg0 + FP_TO(15, Q12_SHIFT)) / FP_TO(5, Q12_SHIFT)) * 25; // 15 and 5 in Q19.12.
+        var = ((arg0 + FP_TO(15, Q12_SHIFT)) / FP_TO(5, Q12_SHIFT)) * 25;
     }
     
     func_800892DC(10, var);

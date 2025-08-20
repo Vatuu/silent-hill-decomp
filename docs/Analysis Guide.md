@@ -40,22 +40,20 @@ After analysis has completed most functions should be identified and viewable in
 
 ### Parsing structs/function definitions from C headers
 
-Ghidra includes the ability to parse C headers into datatypes that are usable in the disassembly, fortunately this parser appears to work with the headers in our repo pretty well.
+Ghidra includes the ability to parse C headers into datatypes that are usable in the disassembly. However, it is unable to match functions with the function definitions from the header by itself, requiring a script is to make use of them.
 
-However Ghidra is unable to match up functions with the function definitions from the header by itself, so another script is needed to let Ghidra make use of them:
+- Copy the [silent-hill-decomp.prf](/tools/ghidra_scripts/silent-hill-decomp.prf) file from the repo to Ghidra's `parserprofiles` folder.
 
-- Copy the [silent-hill-decomp.prf](/tools/ghidra_scripts/silent-hill-decomp.prf) file from the repo to Ghidra `parserprofiles` folder
-
-   * (either `%AppData%/ghidra/ghidra_XXX_PUBLIC/parserprofiles/`, or `Ghidra/Features/Base/data/parserprofiles/` folder)
-- Copy the [LoadSHFuncdefs.py](/tools/ghidra_scripts/LoadSHFuncdefs.py) script into **Ghidra/Features/Jython/ghidra_scripts/** folder.
-- After loading SH in with the `LoadSHOverlays.py` script above, go to **File > Parse C Source**
-- Select `silent-hill-decomp.prf` in the **Parse Configuration** dropdown.
+   * (`%AppData%/ghidra/ghidra_XXX_PUBLIC/parserprofiles/` or `Ghidra/Features/Base/data/parserprofiles/`)
+- Copy the [LoadSHFuncdefs.py](/tools/ghidra_scripts/LoadSHFuncdefs.py) script into the **Ghidra/Features/Jython/ghidra_scripts/** folder.
+- After loading Silent Hill in with the `LoadSHOverlays.py` script above, go to **File > Parse C Source**.
+- Select `silent-hill-decomp.prf` in the **Parse Configuration** dropdown menu.
 - In the **Include Paths** section, double-click each of the paths and change them to use the correct repo path.
-- Click **Parse to Program**, if asked about open archives, pick **Don't Use Open Archives**
-- Once the headers have been parsed, go to **Window > Script Manager > PSX**, click on **LoadSHFuncdefs.py**, and press the green Play icon
-- Allow script to run, hopefully once it's finished most functions should now have the correct definition applied.
+- Click **Parse to Program**. If asked about open archives, pick **Don't Use Open Archives**.
+- Once the headers have been parsed, go to **Window > Script Manager > PSX**, click on **LoadSHFuncdefs.py**, and press the green Play icon.
+- Allow script to run. Once finished, most functions will have the correct definition applied.
 
-Currently global data variables such as `g_SysWork/g_GameWork` will still need to be setup manually, though the structs for them should have been loaded by the Ghidra parser.
+Currently, global data variables such as `g_SysWork/g_GameWork` still need to be set up manually, though the structs for them will be loaded by the Ghidra parser.
 
 ---
 

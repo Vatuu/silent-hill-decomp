@@ -3192,11 +3192,12 @@ void func_80070B84(s_SubCharacter* chara, s32 arg1, s32 arg2, s32 arg3) // 0x800
 
     arg1 = arg1 + ((arg2 - arg1) * (var_v0 - 0x40) / 64);
 
-    do // Hack.
+    // HACK: Wrapping in loop required for match.
+    do
     { 
         if (arg1 < g_SysWork.player_4C.chara_0.properties_E4.player.field_126)
         {
-            temp_v0                                                    = g_SysWork.player_4C.chara_0.properties_E4.player.field_126 - (((g_DeltaTime0 * 0x666) / 136) * 2);
+            temp_v0                                                    = g_SysWork.player_4C.chara_0.properties_E4.player.field_126 - (((g_DeltaTime0 * FP_TIME(0.4f)) / 136) * 2);
             g_SysWork.player_4C.chara_0.properties_E4.player.field_126 = temp_v0;
             if (temp_v0 < arg1)
             {
@@ -3208,12 +3209,13 @@ void func_80070B84(s_SubCharacter* chara, s32 arg1, s32 arg2, s32 arg3) // 0x800
             new_var = &g_SysWork.player_4C.chara_0.properties_E4.player.field_126;
             if (chara->model_0.anim_4.keyframeIdx0_8 >= arg3)
             {
-                g_SysWork.player_4C.chara_0.properties_E4.player.field_126 = *new_var + ((g_DeltaTime0 * 0x666) / 136);
+                g_SysWork.player_4C.chara_0.properties_E4.player.field_126 = *new_var + ((g_DeltaTime0 * FP_TIME(0.4f)) / 136);
             }
 
             g_SysWork.player_4C.chara_0.properties_E4.player.field_126 = CLAMP(*new_var, 0, arg1);
         }
-    } while (0);
+    }
+    while (0);
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80070CF0); // 0x80070CF0

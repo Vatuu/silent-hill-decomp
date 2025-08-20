@@ -142,6 +142,14 @@ typedef enum _PrimitiveType
     PrimitiveType_S32  = 5
 } e_PrimitiveType;
 
+typedef enum _LoadingScreenId
+{
+    LoadingScreenId_None              = 0,
+    LoadingScreenId_PlayerRun         = 1,
+    LoadingScreenId_BackgroundTexture = 2,
+    LoadingScreenId_StageString       = 3
+} e_LoadingScreenId;
+
 // ================
 // UNKNOWN STRUCTS
 // ================
@@ -166,14 +174,14 @@ typedef struct _s_8002AC04
     union
     {
         // `func_80089DF0` reads `field_C` as bitfield, other `D_800AFD08` funcptrs read as `u32`?
-        // TODO: some funcs also treat `field_8` differently, should probably be part of union too.
+        // TODO: Some funcs also treat `field_8` differently, should probably be part of union too.
         struct
         {
             u32 field_C_0  : 16;
             u32 field_C_16 : 12;
             u32 field_C_28 : 3;
             u32 field_C_31 : 1;
-        } bf;
+        } bitField;
         u32 u32;
     } field_C;
 } s_8002AC04;
@@ -1410,12 +1418,12 @@ typedef struct
 typedef struct _AreaLoadParams
 {
     q19_12 char_x_0;
-    u32    mapIdx_4_0     : 5;
-    u32    field_4_5      : 4;
-    u32    field_4_9      : 3;
-    u32    field_4_12     : 4;
-    u32    rotationY_4_16 : 8;
-    u32    field_4_24     : 8;
+    u32    mapIdx_4_0          : 5;
+    u32    field_4_5           : 4;
+    u32    loadingScreenId_4_9 : 3; /** e_LoadingScreenId` */
+    u32    field_4_12          : 4;
+    u32    rotationY_4_16      : 8;
+    u32    field_4_24          : 8;
     q19_12 char_z_8;
 } s_AreaLoadParams;
 
@@ -1460,9 +1468,9 @@ typedef struct
 } s_UnkStruct3_Mo;
 
 /** TODO: `g_MapOverlayHeader` is part of the map overlay BIN files. Maybe should be moved to `maps/shared.h`. 
- *  If field has a comment that lists only certain map(s) it means all others set this field to 0
- *  func(?) means the signature is unknown and a default void() was selected for now
- * */
+ * If field has a comment that lists only certain map(s) it means all others set this field to 0.
+ * func(?) means the signature is unknown and a default void() was selected for now.
+ */
 typedef struct _MapOverlayHeader
 {
     s_UnkStruct2_Mo*  field_0;
