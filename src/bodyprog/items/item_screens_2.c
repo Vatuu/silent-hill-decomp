@@ -344,7 +344,7 @@ void GameState_ItemScreens_Update() // 0x8004C9B0
         case 25:
             if ((g_Gfx_ScreenFade & 0x7) == 5)
             {
-                if (Fs_QueueDoThingWhenEmpty() != 0)
+                if (Fs_QueueDoThingWhenEmpty())
                 {
                     g_Demo_ReproducedCount = 0;
 

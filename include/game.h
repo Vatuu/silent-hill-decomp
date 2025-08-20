@@ -1330,7 +1330,9 @@ static inline void SysWork_StateStepReset()
 /** @brief Clears state steps twice for some reason? Only used once below, others use regular `Game_StateSetNext`. */
 static inline void Game_StateSetNext_ClearStateSteps(e_GameState gameState)
 {
-    e_GameState prevState = g_GameWork.gameState_594;
+    e_GameState prevState;
+
+    prevState = g_GameWork.gameState_594;
 
     g_GameWork.gameState_594        = gameState;
     g_SysWork.timer_1C              = 0;
@@ -1352,7 +1354,9 @@ static inline void Game_StateSetNext_ClearStateSteps(e_GameState gameState)
  */
 static inline void Game_StateSetNext(e_GameState gameState)
 {
-    e_GameState prevState = g_GameWork.gameState_594;
+    e_GameState prevState;
+
+    prevState = g_GameWork.gameState_594;
 
     g_GameWork.gameState_594 = gameState;
 
@@ -1374,7 +1378,9 @@ static inline void Game_StateSetNext(e_GameState gameState)
  */
 static inline void Game_StateSetPrevious()
 {
-    e_GameState prevState = g_GameWork.gameState_594;
+    e_GameState prevState;
+
+    prevState = g_GameWork.gameState_594;
 
     g_SysWork.timer_1C = 0;
     g_SysWork.timer_20 = 0;
@@ -1409,7 +1415,7 @@ static inline s32 Flags16b_IsSet(u16* array, s32 flagId)
 
 /** @brief Sets the given animation flag on both player character and player extra data. */
 // TODO: Move to separate character/player header.
-static inline void Player_AnimFlag_Set(u32 flag)
+static inline void Player_AnimFlagsSet(u32 flag)
 {
     s_MainCharacterExtra* extra;
     s_SubCharacter*       chara;

@@ -182,8 +182,8 @@ INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D2ED0);
 void Ai_Twinfeeler_TextureLoad() // 0x800D3038
 {
     // TODO: Does game ever use this texture afterward?
-    // After this `Ai_Twinfeeler_Init` checks `Fs_QueueDoThingWhenEmpty != 0` before proceeding.
-    // Could it be some preload/warm-up before the actual enemy file loads? If so this func should be renamed.
+    // After this `Ai_Twinfeeler_Init` checks `Fs_QueueDoThingWhenEmpty()` before proceeding.
+    // Could it be some preload/warm-up before the actual enemy file loads? If so, this func should be renamed.
     Fs_QueueStartReadTim(FILE_TEST_WARMTEST_TIM, FS_BUFFER_1, &D_800A9094);
 }
 

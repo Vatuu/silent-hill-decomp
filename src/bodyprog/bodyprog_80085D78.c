@@ -294,7 +294,7 @@ void func_800862F8(s32 arg0, s32 itemId, s32 arg2) // 0x800862F8
             {
                 g_SysWork.field_14++;
                 
-                if (Fs_QueueDoThingWhenEmpty() != 0)
+                if (Fs_QueueDoThingWhenEmpty())
                 {
                     func_80085D78(arg2);
                 }
@@ -302,7 +302,7 @@ void func_800862F8(s32 arg0, s32 itemId, s32 arg2) // 0x800862F8
             break;
 
         case 1:
-            if (Fs_QueueDoThingWhenEmpty() != 0)
+            if (Fs_QueueDoThingWhenEmpty())
             {
                 func_80085D78(arg2);
             }
@@ -383,7 +383,7 @@ void func_80086470(u32 switchVar, s32 itemId, s32 itemCount, bool arg3) // 0x800
             g_SysWork.field_14++;
 
         case 1:
-            if (Fs_QueueDoThingWhenEmpty() == 0)
+            if (!Fs_QueueDoThingWhenEmpty())
             {
                 break;
             }
@@ -1215,7 +1215,7 @@ void func_80087EDC(s32 arg0) // 0x80087EDC
     switch (g_SysWork.field_10)
     {
         case 0:
-            if (func_800358A8(arg0) == 0)
+            if (!func_800358A8(arg0))
             {
                 g_SysWork.field_10 = 3;
                 g_SysWork.timer_2C = 0;
