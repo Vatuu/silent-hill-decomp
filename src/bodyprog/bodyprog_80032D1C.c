@@ -75,7 +75,7 @@ void GameState_Unk0_Update() // 0x80032D1C
                 g_GameWork.gameStateStep_598[1] = 0;
                 g_GameWork.gameStateStep_598[2] = 0;
 
-                SysWork_StateSetNext(0);
+                SysWork_StateSetNext(SysState_Gameplay);
 
                 g_GameWork.gameStateStep_598[0] = gameState;
                 g_GameWork.gameState_594        = gameState + 1;
@@ -3490,7 +3490,7 @@ void SysState_StatusMenu_Update() // 0x80039568
     g_GameWork.gameStateStep_598[1] = 0;
     g_GameWork.gameStateStep_598[2] = 0;
 
-    SysWork_StateSetNext(0);
+    SysWork_StateSetNext(SysState_Gameplay);
 
     g_GameWork.gameStateStep_598[0] = gameState;
     g_GameWork.gameStatePrev_590    = gameState;
@@ -3539,7 +3539,7 @@ void SysState_MapScreen_Update() // 0x800396D4
         if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.map_18 ||
             Gfx_MapMsg_Draw(MapMsgIdx_NoMap) > 0)
         {
-            SysWork_StateSetNext(GameState_Unk0);
+            SysWork_StateSetNext(SysState_Gameplay);
         }
     }
     else if ((g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & (1 << 1)) && !g_SysWork.field_2388.isFlashlightOn_15 &&
@@ -3549,7 +3549,7 @@ void SysState_MapScreen_Update() // 0x800396D4
         if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.map_18 ||
             Gfx_MapMsg_Draw(MapMsgIdx_TooDarkForMap) > 0)
         {
-            SysWork_StateSetNext(GameState_Unk0);
+            SysWork_StateSetNext(SysState_Gameplay);
         }
     }
     else
@@ -3883,7 +3883,7 @@ void SysState_SaveMenu_Update() // 0x8003A230
                 g_GameWork.gameStateStep_598[1] = 0;
                 g_GameWork.gameStateStep_598[2] = 0;
 
-                SysWork_StateSetNext(0);
+                SysWork_StateSetNext(SysState_Gameplay);
 
                 g_GameWork.gameStateStep_598[0] = gameState;
                 g_GameWork.gameStatePrev_590    = gameState;
@@ -4082,7 +4082,7 @@ void SysState_GameOver_Update() // 0x8003A52C
 
         default:
             g_MapOverlayHeader.func_CC(0);
-            SysWork_StateSetNext(0);
+            SysWork_StateSetNext(SysState_Gameplay);
             Game_WarmBoot();
             break;
     }

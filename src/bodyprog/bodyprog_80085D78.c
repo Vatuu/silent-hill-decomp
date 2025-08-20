@@ -799,7 +799,7 @@ void func_80086FE8(s32 mapMsgIdx, s32 sfx, VECTOR3* pos) // 0x80086FE8
         default:
             g_MapOverlayHeader.func_CC(0);
 
-            SysWork_StateSetNext(0);
+            SysWork_StateSetNext(SysState_Gameplay);
             break;
     }
 }
@@ -848,7 +848,7 @@ void func_8008716C(s32 itemId, s32 arg1, s32 arg2) // 0x8008716C
         default:
             func_8008616C(0, false, 0, arg1, false);
             g_MapOverlayHeader.func_CC(0);
-            SysWork_StateSetNext(0);
+            SysWork_StateSetNext(SysState_Gameplay);
             break;
     }
 }
@@ -891,7 +891,7 @@ void func_80087360(s32 itemId, s32 arg1, s32 arg2, s32 mapMsgIdx) // 0x80087360
         default:
             func_8008616C(0, false, 0, arg1, false);
             g_MapOverlayHeader.func_CC(0);
-            SysWork_StateSetNext(0);
+            SysWork_StateSetNext(SysState_Gameplay);
             break;
     }
 }
@@ -956,7 +956,7 @@ void func_80087540(s32 itemId, s32 itemCount, s32 arg2, s32 mapMsgIdx0, s32 mapM
         default:
             func_8008616C(0, false, 0, itemCount, false);
             g_MapOverlayHeader.func_CC(0);
-            SysWork_StateSetNext(0);
+            SysWork_StateSetNext(SysState_Gameplay);
             break;
     }
 }
@@ -1025,7 +1025,7 @@ void Event_ItemTake(s32 itemId, s32 itemCount, s32 globalPickupId, s32 mapMsgIdx
             }
 
             g_MapOverlayHeader.func_CC(0);
-            SysWork_StateSetNext(0);
+            SysWork_StateSetNext(SysState_Gameplay);
             break;
     }
 }
@@ -1178,7 +1178,7 @@ void func_80087AF4(s32 mapFlagIdx, s32 eventFlagIdx, s32 mapMsgIdx) // 0x80087AF
             Gfx_Init(0x140, 0);
             func_8008616C(0, false, 0, 0, false);
             g_MapOverlayHeader.func_CC(0);
-            SysWork_StateSetNext(0);
+            SysWork_StateSetNext(SysState_Gameplay);
             break;
     }
 }

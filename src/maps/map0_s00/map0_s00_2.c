@@ -163,7 +163,7 @@ void func_800DB870() // 0x800DB870
 
         default:
             sharedFunc_800D2244_0_s00(0);
-            SysWork_StateSetNext(0);
+            SysWork_StateSetNext(SysState_Gameplay);
             break;
     }
 }
@@ -179,7 +179,7 @@ void func_800DBE00() // 0x800DBE00
     Sd_EngineCmd(22);
     func_800892A4(4);
 
-    SysWork_StateSetNext(0);
+    SysWork_StateSetNext(SysState_Gameplay);
     g_SysWork.player_4C.chara_0.position_18.vy = 0;
 }
 

@@ -757,7 +757,7 @@ void Event_HandgunItemTake() // 0x800DC8C8
 
         default:
             sharedFunc_800D2244_0_s00(0);
-            SysWork_StateSetNext(0);
+            SysWork_StateSetNext(SysState_Gameplay);
 
             g_SavegamePtr->eventFlags_168[1] |= 1 << 19;
             break;
