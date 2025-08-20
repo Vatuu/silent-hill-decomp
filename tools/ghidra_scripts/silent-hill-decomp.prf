@@ -12,6 +12,7 @@ bodyprog\memcard.h
 bodyprog\player_logic.h
 bodyprog\text_draw.h
 bodyprog\vw_system.h
+maps\shared.h
 
 
 C:\silent-hill-decomp\include\
