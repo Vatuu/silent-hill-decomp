@@ -749,11 +749,7 @@ void Event_HandgunItemTake() // 0x800DC8C8
 
             g_SavegamePtr->eventFlags_168[1] &= ~(1 << 20);
             D_800E23A0                        = 0;
-            g_SysWork.field_28                = 0;
-            g_SysWork.field_10                = 0;
-            g_SysWork.timer_2C                = 0;
-            g_SysWork.field_14                = 0;
-            g_SysWork.sysStateStep_C++;
+            SysWork_StateStepIncrement();
 
         case 1:
             func_800869E4(68, &D_800E23A0, &D_800DE128);
@@ -761,14 +757,8 @@ void Event_HandgunItemTake() // 0x800DC8C8
 
         default:
             sharedFunc_800D2244_0_s00(0);
+            SysWork_StateSetNext(0);
 
-            g_SysWork.sysState_8              = 0;
-            g_SysWork.timer_24                = 0;
-            g_SysWork.sysStateStep_C          = 0;
-            g_SysWork.field_28                = 0;
-            g_SysWork.field_10                = 0;
-            g_SysWork.timer_2C                = 0;
-            g_SysWork.field_14                = 0;
             g_SavegamePtr->eventFlags_168[1] |= 1 << 19;
             break;
     }

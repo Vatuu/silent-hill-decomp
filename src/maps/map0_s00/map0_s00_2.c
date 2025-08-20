@@ -151,12 +151,7 @@ void func_800DB870() // 0x800DB870
     {
         case 0:
             sharedFunc_800D20E4_0_s00();
-
-            g_SysWork.field_28 = 0;
-            g_SysWork.field_10 = 0;
-            g_SysWork.timer_2C = 0;
-            g_SysWork.field_14 = 0;
-            g_SysWork.sysStateStep_C++;
+            SysWork_StateStepIncrement();
 
         case 1:
             func_80085DF0();
@@ -168,14 +163,7 @@ void func_800DB870() // 0x800DB870
 
         default:
             sharedFunc_800D2244_0_s00(0);
-
-            g_SysWork.sysState_8     = 0;
-            g_SysWork.timer_24       = 0;
-            g_SysWork.sysStateStep_C = 0;
-            g_SysWork.field_28       = 0;
-            g_SysWork.field_10       = 0;
-            g_SysWork.timer_2C       = 0;
-            g_SysWork.field_14       = 0;
+            SysWork_StateSetNext(0);
             break;
     }
 }
@@ -191,13 +179,7 @@ void func_800DBE00() // 0x800DBE00
     Sd_EngineCmd(22);
     func_800892A4(4);
 
-    g_SysWork.sysState_8                       = 0;
-    g_SysWork.timer_24                         = 0;
-    g_SysWork.sysStateStep_C                   = 0;
-    g_SysWork.field_28                         = 0;
-    g_SysWork.field_10                         = 0;
-    g_SysWork.timer_2C                         = 0;
-    g_SysWork.field_14                         = 0;
+    SysWork_StateSetNext(0);
     g_SysWork.player_4C.chara_0.position_18.vy = 0;
 }
 

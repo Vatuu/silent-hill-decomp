@@ -75,13 +75,7 @@ void GameState_Unk0_Update() // 0x80032D1C
                 g_GameWork.gameStateStep_598[1] = 0;
                 g_GameWork.gameStateStep_598[2] = 0;
 
-                g_SysWork.sysState_8     = 0;
-                g_SysWork.timer_24       = 0;
-                g_SysWork.sysStateStep_C = 0;
-                g_SysWork.field_28       = 0;
-                g_SysWork.field_10       = 0;
-                g_SysWork.timer_2C       = 0;
-                g_SysWork.field_14       = 0;
+                SysWork_StateSetNext(0);
 
                 g_GameWork.gameStateStep_598[0] = gameState;
                 g_GameWork.gameState_594        = gameState + 1;
@@ -838,13 +832,7 @@ void Game_WarmBoot() // 0x80034264
     g_GameWork.gameStateStep_598[1] = 0;
     g_GameWork.gameStateStep_598[2] = 0;
 
-    g_SysWork.sysState_8     = SysState_Gameplay;
-    g_SysWork.timer_24       = 0;
-    g_SysWork.sysStateStep_C = 0;
-    g_SysWork.field_28       = 0;
-    g_SysWork.field_10       = 0;
-    g_SysWork.timer_2C       = 0;
-    g_SysWork.field_14       = 0;
+    SysWork_StateSetNext(SysState_Gameplay);
 
     g_Gfx_ScreenFade = 6;
 
@@ -3501,13 +3489,7 @@ void SysState_StatusMenu_Update() // 0x80039568
     g_GameWork.gameStateStep_598[1] = 0;
     g_GameWork.gameStateStep_598[2] = 0;
 
-    g_SysWork.sysState_8     = 0;
-    g_SysWork.timer_24       = 0;
-    g_SysWork.sysStateStep_C = 0;
-    g_SysWork.field_28       = 0;
-    g_SysWork.field_10       = 0;
-    g_SysWork.timer_2C       = 0;
-    g_SysWork.field_14       = 0;
+    SysWork_StateSetNext(0);
 
     g_GameWork.gameStateStep_598[0] = gameState;
     g_GameWork.gameStatePrev_590    = gameState;
@@ -3868,12 +3850,8 @@ void SysState_SaveMenu_Update() // 0x8003A230
             {
                 GameFs_SaveLoadBinLoad();
 
-                g_Gfx_ScreenFade   = 2;
-                g_SysWork.field_28 = 0;
-                g_SysWork.field_10 = 0;
-                g_SysWork.timer_2C = 0;
-                g_SysWork.field_14 = 0;
-                g_SysWork.sysStateStep_C++;
+                g_Gfx_ScreenFade = 2;
+                SysWork_StateStepIncrement();
             }
 
             else if (Gfx_MapMsg_Draw(MapMsgIdx_SaveGame) == 1)
@@ -3883,11 +3861,7 @@ void SysState_SaveMenu_Update() // 0x8003A230
                 GameFs_SaveLoadBinLoad();
 
                 g_Gfx_ScreenFade   = 2;
-                g_SysWork.field_28 = 0;
-                g_SysWork.field_10 = 0;
-                g_SysWork.timer_2C = 0;
-                g_SysWork.field_14 = 0;
-                g_SysWork.sysStateStep_C++;
+                SysWork_StateStepIncrement();
             }
             break;
         
@@ -3908,13 +3882,7 @@ void SysState_SaveMenu_Update() // 0x8003A230
                 g_GameWork.gameStateStep_598[1] = 0;
                 g_GameWork.gameStateStep_598[2] = 0;
 
-                g_SysWork.sysState_8     = 0;
-                g_SysWork.timer_24       = 0;
-                g_SysWork.sysStateStep_C = 0;
-                g_SysWork.field_28       = 0;
-                g_SysWork.field_10       = 0;
-                g_SysWork.timer_2C       = 0;
-                g_SysWork.field_14       = 0;
+                SysWork_StateSetNext(0);
 
                 g_GameWork.gameStateStep_598[0] = gameState;
                 g_GameWork.gameStatePrev_590    = gameState;
@@ -4070,12 +4038,7 @@ void SysState_GameOver_Update() // 0x8003A52C
         case 5:
             if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
             {
-                // TODO: Create `inline SysWork_StateStepReset` if other code matching is needed.
-                g_SysWork.sysStateStep_C = NO_VALUE;
-                g_SysWork.field_28       = 0;
-                g_SysWork.field_10       = 0;
-                g_SysWork.timer_2C       = 0;
-                g_SysWork.field_14       = 0;
+                SysWork_StateStepReset();
                 break;
             }
             else

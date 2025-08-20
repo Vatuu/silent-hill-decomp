@@ -18,11 +18,7 @@ void func_80085D78(bool arg0) // 0x80085D78
         return;
     }
 
-    g_SysWork.field_28 = 0;
-    g_SysWork.field_10 = 0;
-    g_SysWork.timer_2C = 0;
-    g_SysWork.field_14 = 0;
-    g_SysWork.sysStateStep_C++;
+    SysWork_StateStepIncrement();
 }
 
 void func_80085DC0(bool arg0, s32 sysStateStep) // 0x80085DC0
@@ -35,11 +31,7 @@ void func_80085DC0(bool arg0, s32 sysStateStep) // 0x80085DC0
     }
     else
     {
-        g_SysWork.sysStateStep_C = sysStateStep;
-        g_SysWork.field_28       = 0;
-        g_SysWork.field_10       = 0;
-        g_SysWork.timer_2C       = 0;
-        g_SysWork.field_14       = 0;
+        SysWork_NextStateStepSet(sysStateStep);
     }
 }
 
@@ -49,11 +41,7 @@ void func_80085DF0() // 0x80085DF0
 
     if (g_MapOverlayHeader.func_EC() != NULL || g_SysWork.timer_2C > 4096)
     {
-        g_SysWork.field_28 = 0;
-        g_SysWork.field_10 = 0;
-        g_SysWork.timer_2C = 0;
-        g_SysWork.field_14 = 0;
-        g_SysWork.sysStateStep_C++;
+        SysWork_StateStepIncrement();
     }
 }
 
@@ -526,11 +514,7 @@ void func_800869E4(s32 mapMsgIdx, u8* arg1, u16* arg2) // 0x800869E4
     ret = Gfx_MapMsg_Draw(mapMsgIdx);
     if (ret == 1)
     {
-        g_SysWork.field_28 = 0;
-        g_SysWork.field_10 = 0;
-        g_SysWork.timer_2C = 0;
-        g_SysWork.field_14 = 0;
-        g_SysWork.sysStateStep_C++;
+        SysWork_StateStepIncrement();
     }
     else if (ret == NO_VALUE)
     {
@@ -685,11 +669,7 @@ void func_80086C58(s_SubCharacter* chara0, s_SubCharacter* chara1) // 0x80086C58
             break;
 
         default:
-            g_SysWork.field_28 = 0;
-            g_SysWork.field_10 = 0;
-            g_SysWork.timer_2C = 0;
-            g_SysWork.field_14 = 0;
-            g_SysWork.sysStateStep_C++;
+            SysWork_StateStepIncrement();
             break;
     }
 }
@@ -711,11 +691,7 @@ void func_80086D04(s_SubCharacter* chara) // 0x80086D04
             break;
 
         default:
-            g_SysWork.field_28 = 0;
-            g_SysWork.field_10 = 0;
-            g_SysWork.timer_2C = 0;
-            g_SysWork.field_14 = 0;
-            g_SysWork.sysStateStep_C++;
+            SysWork_StateStepIncrement();
             break;
     }
 }
@@ -774,11 +750,7 @@ void func_80086F44(s32 arg0, s32 arg1) // 0x80086F44
     }
 
     func_8008616C(0, 0, 0, arg0, 0);
-    g_SysWork.field_28 = 0;
-    g_SysWork.field_10 = 0;
-    g_SysWork.timer_2C = 0;
-    g_SysWork.field_14 = 0;
-    g_SysWork.sysStateStep_C++;
+    SysWork_StateStepIncrement();
 }
 
 void func_80086FE8(s32 mapMsgIdx, s32 sfx, VECTOR3* pos) // 0x80086FE8
@@ -827,13 +799,7 @@ void func_80086FE8(s32 mapMsgIdx, s32 sfx, VECTOR3* pos) // 0x80086FE8
         default:
             g_MapOverlayHeader.func_CC(0);
 
-            g_SysWork.sysState_8     = 0;
-            g_SysWork.timer_24       = 0;
-            g_SysWork.sysStateStep_C = 0;
-            g_SysWork.field_28       = 0;
-            g_SysWork.field_10       = 0;
-            g_SysWork.timer_2C       = 0;
-            g_SysWork.field_14       = 0;
+            SysWork_StateSetNext(0);
             break;
     }
 }
@@ -888,14 +854,7 @@ void func_8008716C(s32 arg0, s32 arg1, s32 arg2) // 0x8008716C
         default:
             func_8008616C(0, 0, 0, arg1, 0);
             g_MapOverlayHeader.func_CC(0);
-
-            g_SysWork.sysState_8     = 0;
-            g_SysWork.timer_24       = 0;
-            g_SysWork.sysStateStep_C = 0;
-            g_SysWork.field_28       = 0;
-            g_SysWork.field_10       = 0;
-            g_SysWork.timer_2C       = 0;
-            g_SysWork.field_14       = 0;
+            SysWork_StateSetNext(0);
             break;
     }
 }
@@ -944,14 +903,7 @@ void func_80087360(s32 arg0, s32 arg1, s32 arg2, s32 mapMsgIdx) // 0x80087360
         default:
             func_8008616C(0, 0, 0, arg1, 0);
             g_MapOverlayHeader.func_CC(0);
-
-            g_SysWork.sysState_8     = 0;
-            g_SysWork.timer_24       = 0;
-            g_SysWork.sysStateStep_C = 0;
-            g_SysWork.field_28       = 0;
-            g_SysWork.field_10       = 0;
-            g_SysWork.timer_2C       = 0;
-            g_SysWork.field_14       = 0;
+            SysWork_StateSetNext(0);
             break;
     }
 }
@@ -1016,14 +968,7 @@ void func_80087540(s32 itemId, s32 itemCount, s32 arg2, s32 mapMsgIdx0, s32 mapM
         default:
             func_8008616C(0, 0, 0, itemCount, 0);
             g_MapOverlayHeader.func_CC(0);
-
-            g_SysWork.sysState_8     = 0;
-            g_SysWork.timer_24       = 0;
-            g_SysWork.sysStateStep_C = 0;
-            g_SysWork.field_28       = 0;
-            g_SysWork.field_10       = 0;
-            g_SysWork.timer_2C       = 0;
-            g_SysWork.field_14       = 0;
+            SysWork_StateSetNext(0);
             break;
     }
 }
@@ -1092,13 +1037,7 @@ void Event_ItemTake(s32 itemId, s32 itemCount, s32 globalPickupId, s32 mapMsgIdx
             }
 
             g_MapOverlayHeader.func_CC(0);
-            g_SysWork.sysState_8     = 0;
-            g_SysWork.timer_24       = 0;
-            g_SysWork.sysStateStep_C = 0;
-            g_SysWork.field_28       = 0;
-            g_SysWork.field_10       = 0;
-            g_SysWork.timer_2C       = 0;
-            g_SysWork.field_14       = 0;
+            SysWork_StateSetNext(0);
             break;
     }
 }
@@ -1251,21 +1190,14 @@ void func_80087AF4(s32 mapFlagIdx, s32 eventFlagIdx, s32 mapMsgIdx) // 0x80087AF
             Gfx_Init(0x140, 0);
             func_8008616C(0, 0, 0, 0, 0);
             g_MapOverlayHeader.func_CC(0);
-
-            g_SysWork.sysState_8     = 0;
-            g_SysWork.timer_24       = 0;
-            g_SysWork.sysStateStep_C = 0;
-            g_SysWork.field_28       = 0;
-            g_SysWork.field_10       = 0;
-            g_SysWork.timer_2C       = 0;
-            g_SysWork.field_14       = 0;
+            SysWork_StateSetNext(0);
             break;
     }
 }
 
 void func_80087EA8(s32 cmd) // 0x80087EA8
 {
-    if (func_800358A8(cmd) == 0)
+    if (!func_800358A8(cmd))
     {
         return;
     }
@@ -1275,7 +1207,7 @@ void func_80087EA8(s32 cmd) // 0x80087EA8
 
 void func_80087EDC(s32 arg0) // 0x80087EDC
 {
-    if (func_80045B28() || Fs_QueueDoThingWhenEmpty() == 0)
+    if (func_80045B28() || !Fs_QueueDoThingWhenEmpty())
     {
         return;
     }

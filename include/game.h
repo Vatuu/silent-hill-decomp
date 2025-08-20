@@ -1189,8 +1189,8 @@ STATIC_ASSERT_SIZEOF(s_SysWork_2514, 56);
 typedef struct _SysWork
 {
     s8              unk_0[8];
-    s32             sysState_8;     /** e_SysState */
-    s32             sysStateStep_C; // Current step/state of `sysState_8` game is in.
+    s32             sysState_8;     /** `e_SysState` */
+    s32             sysStateStep_C; /** Current step/state of `sysState_8` the game is in. */
     s32             field_10;       // Sometimes assigned to same thing as `sysStateStep_C`. Contains selected entry index from pickup item dialogs?
     s32             field_14;
     s32             field_18; // `s_Skeleton` array pointer?
@@ -1285,7 +1285,7 @@ extern s32 g_PrevVBlanks;     // 0x800A9770
 extern s32 g_VBlanks;         // 0x800B5C34
 extern s32 g_UncappedVBlanks; // 0x800B5C38
 
-/** @brief Sets the SysState to be used in the next game update. */
+/** @brief Sets `sysState` in `g_SysWork` for the next tick. */
 static inline void SysWork_StateSetNext(e_SysState sysState)
 {
     g_SysWork.sysState_8     = sysState;
@@ -1297,7 +1297,7 @@ static inline void SysWork_StateSetNext(e_SysState sysState)
     g_SysWork.field_14       = 0;
 }
 
-/** @brief Increments the `sysStateStep` index in `g_SysWork`. */
+/** @brief Increments `sysStateStep` in `g_SysWork` for the next tick. */
 static inline void SysWork_StateStepIncrement()
 {
     g_SysWork.field_28 = 0;
@@ -1305,6 +1305,26 @@ static inline void SysWork_StateStepIncrement()
     g_SysWork.timer_2C = 0;
     g_SysWork.field_14 = 0;
     g_SysWork.sysStateStep_C++;
+}
+
+/** @brief Sets `sysStateStep` in `g_SysWork` for the next tick. */
+static inline void SysWork_NextStateStepSet(s32 sysStateStep)
+{
+    g_SysWork.sysStateStep_C = sysStateStep;
+    g_SysWork.field_28       = 0;
+    g_SysWork.field_10       = 0;
+    g_SysWork.timer_2C       = 0;
+    g_SysWork.field_14       = 0;
+}
+
+/** @brief Resets `sysStateStep` in `g_SysWork` for the next tick. */
+static inline void SysWork_StateStepReset()
+{
+    g_SysWork.sysStateStep_C = NO_VALUE;
+    g_SysWork.field_28       = 0;
+    g_SysWork.field_10       = 0;
+    g_SysWork.timer_2C       = 0;
+    g_SysWork.field_14       = 0;
 }
 
 /** @brief Clears state steps twice for some reason? Only used once below, others use regular `Game_StateSetNext`. */

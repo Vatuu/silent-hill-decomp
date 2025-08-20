@@ -491,13 +491,7 @@ void Gfx_MainMenu_BackgroundDraw() // 0x8003B758
 {
     if (g_SysWork.sysState_8 == 0)
     {
-        g_SysWork.sysState_8     = 1;
-        g_SysWork.timer_24       = 0;
-        g_SysWork.sysStateStep_C = 0;
-        g_SysWork.field_28       = 0;
-        g_SysWork.field_10       = 0;
-        g_SysWork.timer_2C       = 0;
-        g_SysWork.field_14       = 0;
+        SysWork_StateSetNext(1);
         func_8003BCF4();
     }
 
