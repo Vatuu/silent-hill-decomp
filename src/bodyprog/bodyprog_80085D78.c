@@ -147,7 +147,7 @@ void func_800860B0(bool arg0, s32 mapMsgIdx, s32 arg2, s32 arg3, s32 sysStateSte
     s32 var;
 
     var = Gfx_MapMsg_Draw(mapMsgIdx);
-    if (var <= 0)
+    if (var <= MapMsgDrawRet_StillOnScreen)
     {
         return;
     }
@@ -158,15 +158,15 @@ void func_800860B0(bool arg0, s32 mapMsgIdx, s32 arg2, s32 arg3, s32 sysStateSte
         return;
     }
 
-    if (var == 1)
+    if (var == MapMsgDrawRet_Yes)
     {
         func_80085DC0(arg5, arg2);
     }
-    if (var == 2)
+    if (var == MapMsgDrawRet_No)
     {
         func_80085DC0(arg5, arg3);
     }
-    if (var == 3)
+    if (var == MapMsgDrawRet_3rd)
     {
         func_80085DC0(arg5, sysStateStep);
     }
@@ -512,11 +512,11 @@ void func_800869E4(s32 mapMsgIdx, u8* arg1, u16* arg2) // 0x800869E4
     g_SysWork.field_22A0 |= 1 << 5;
 
     ret = Gfx_MapMsg_Draw(mapMsgIdx);
-    if (ret == 1)
+    if (ret == MapMsgDrawRet_Yes)
     {
         SysWork_StateStepIncrement();
     }
-    else if (ret == NO_VALUE)
+    else if (ret == MapMsgDrawRet_Finished)
     {
         Sd_EngineCmd(arg2[*arg1]);
         *arg1 += 1;

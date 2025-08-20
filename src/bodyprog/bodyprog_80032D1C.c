@@ -2323,7 +2323,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
 
             D_800BCD74 = 1;
             g_SysWork.field_18++;
-            return NO_VALUE;
+            return MapMsgDrawRet_Finished;
 
         case 1:
             if (g_SysWork.field_22A0 & (1 << 5))
@@ -2440,7 +2440,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
                     if (g_MapMsg_AudioLoadBlock == MapMsgAudioLoadBlock_J2)
                     {
                         D_800BCD74 = 0;
-                        return 0;
+                        return MapMsgDrawRet_StillOnScreen;
                     }
 
                     if (g_SysWork.field_22A0 & (1 << 5))
@@ -2449,7 +2449,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
                     }
 
                     D_800BCD74 = 1;
-                    return NO_VALUE;
+                    return MapMsgDrawRet_Finished;
                 }
             }
             else
@@ -2471,7 +2471,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
 
     if (g_MapMsg_StateMachineIdx2 != FINISH_MAP_MSG)
     {
-        return 0;
+        return MapMsgDrawRet_StillOnScreen;;
     }
 
     g_SysWork.field_18                   = 0;
@@ -3536,7 +3536,7 @@ void SysState_MapScreen_Update() // 0x800396D4
     if (!HAS_MAP(g_SavegamePtr->current2dMapIdx_A9))
     {
         if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.map_18 ||
-            Gfx_MapMsg_Draw(MapMsgIdx_NoMap) > 0)
+            Gfx_MapMsg_Draw(MapMsgIdx_NoMap) > MapMsgDrawRet_StillOnScreen)
         {
             SysWork_StateSetNext(SysState_Gameplay);
         }
@@ -3546,7 +3546,7 @@ void SysState_MapScreen_Update() // 0x800396D4
               (g_SysWork.field_2388.field_1C[1].field_0.field_0.s_field_0.field_0 & (1 << 0))))
     {
         if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.map_18 ||
-            Gfx_MapMsg_Draw(MapMsgIdx_TooDarkForMap) > 0)
+            Gfx_MapMsg_Draw(MapMsgIdx_TooDarkForMap) > MapMsgDrawRet_StillOnScreen)
         {
             SysWork_StateSetNext(SysState_Gameplay);
         }
@@ -3784,13 +3784,13 @@ void SysState_ReadMessage_Update(s32 arg0) // 0x80039FB8
 
     switch (Gfx_MapMsg_Draw(g_MapEventIdx)) 
     {
-        case -1:
+        case MapMsgDrawRet_Finished:
             break;
 
-        case 0:
+        case MapMsgDrawRet_StillOnScreen:
             break;
         
-        case 1:
+        case MapMsgDrawRet_Yes:
             Savegame_EventFlagSet(g_MapEventParam->eventFlagId_2);
 
             func = &g_MapOverlayHeader.func_CC;
@@ -3854,7 +3854,7 @@ void SysState_SaveMenu_Update() // 0x8003A230
                 SysWork_StateStepIncrement();
             }
 
-            else if (Gfx_MapMsg_Draw(MapMsgIdx_SaveGame) == 1)
+            else if (Gfx_MapMsg_Draw(MapMsgIdx_SaveGame) == MapMsgDrawRet_Yes)
             {
                 g_SavegamePtr->eventFlags_168[5] |= EVENT_FLAG5_FIRST_TIME_SAVE_GAME;
 
