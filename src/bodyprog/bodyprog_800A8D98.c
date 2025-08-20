@@ -54,8 +54,7 @@ u32 D_800A8DA8[] =
     0x06DCCA31,
 };
 
-// used by setRGBC0
-u8 D_800A8E58 = 0x80;
+u8 g_BackgroundColor = 0x80;
 u8 D_800A8E59 = 0x00;
 u8 D_800A8E5A = 0x03;
 u8 D_800A8E5B = 0x00;

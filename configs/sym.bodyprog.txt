@@ -1898,6 +1898,7 @@ g_MapMsg_CurrentIdx                         = 0x800A99AC; // type:s32
 g_MapMsg_SelectFlashTimer                   = 0x800A99B0; // type:s16
 g_MapFullscreenTimFileIdx                   = 0x800A99B4;
 g_MapMarkingTimFileIdx                      = 0x800A99CC;
+g_BackgroundColor                            = 0x800A8E58;
 
 //-----------------------------------------------------------------------
 //--- PA: 0x084EA4   VA: 0x800A9A04   subsegment: data, bodyprog_800A9074

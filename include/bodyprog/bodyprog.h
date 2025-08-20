@@ -1678,7 +1678,7 @@ extern u_Filename D_8002B2CC;
 
 extern s32 g_MapMsg_WidthTable[];
 
-extern u8 D_800A8E58;
+extern u8 g_BackgroundColor;
 
 extern DR_MODE D_800A8E5C[];
 

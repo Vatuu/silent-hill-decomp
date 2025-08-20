@@ -598,7 +598,7 @@ void Event_MapItemTake() // 0x800DC3C8
             g_SysWork.sysStateStep_C++;
 
         case 3:
-            D_800A8E58 = 88;
+            g_BackgroundColor = 88;
 
             Gfx_BackgroundSpriteDraw(&g_MapImg);
             func_800860B0(true, 59, 6, 4, 0, false);
@@ -630,7 +630,7 @@ void Event_MapItemTake() // 0x800DC3C8
 
         case 4:
         case 7:
-            D_800A8E58 = 88;
+            g_BackgroundColor = 88;
 
             Gfx_BackgroundSpriteDraw(&g_MapImg);
             func_8008616C(2, true, 0, 0, false);

@@ -940,14 +940,13 @@ void func_80087540(s32 itemId, s32 itemCount, s32 arg2, s32 mapMsgIdx0, s32 mapM
             break;
 
         case 5:
-            D_800A8E58 = 0x30;
+            g_BackgroundColor = 0x30;
             func_800862F8(2, InventoryItemId_Unequipped, false);
-
             func_800860B0(false, mapMsgIdx1, 0, 0, 0, true);
             break;
 
         case 6:
-            D_800A8E58 = 0x30;
+            g_BackgroundColor = 0x30;
 
             func_800862F8(2, InventoryItemId_Unequipped, false);
             func_8008616C(2, true, 0, arg2, true);
@@ -1120,7 +1119,7 @@ void func_80087AF4(s32 mapFlagIdx, s32 eventFlagIdx, s32 mapMsgIdx) // 0x80087AF
             g_SysWork.field_10++;
 
         case 3:
-            D_800A8E58 = 0x58;
+            g_BackgroundColor = 0x58;
 
             Gfx_BackgroundSpriteDraw(&g_MapImg);
             func_800860B0(true, mapMsgIdx, 4, 5, 0, true);
@@ -1166,7 +1165,7 @@ void func_80087AF4(s32 mapFlagIdx, s32 eventFlagIdx, s32 mapMsgIdx) // 0x80087AF
             g_SysWork.field_10++;
 
         case 5:
-            D_800A8E58 = 0x58;
+            g_BackgroundColor = 0x58;
 
             Gfx_BackgroundSpriteDraw(&g_MapImg);
             func_8008616C(2, true, 0, 0, true);
