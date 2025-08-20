@@ -151,8 +151,6 @@ s32 func_800C9874() // 0x800C9874
 
 void GameState_KcetLogo_Update() // 0x800C99A4
 {
-    s_GameWork* ptr;
-
     while (g_GameWork.gameState_594 == GameState_KcetLogo)
     {
         Joy_Update();
@@ -218,9 +216,8 @@ void GameState_KcetLogo_Update() // 0x800C99A4
                 break;
 
             case 5:
-                if ((s32)g_GameWork.gameStateStep_598[1] < 3)
+                if (g_GameWork.gameStateStep_598[1] < 3)
                 {
-                    ptr = g_GameWorkConst; 
                     do
                     {
                         switch ((s32)g_GameWork.gameStateStep_598[1])
@@ -239,7 +236,7 @@ void GameState_KcetLogo_Update() // 0x800C99A4
                                 break;
 
                             case 2:
-                                if ((s8)ptr->config_0.optAutoLoad_25 != 0)
+                                if (g_GameWorkConst->config_0.optAutoLoad_25)
                                 {
                                     Fs_QueueStartRead(FILE_VIN_SAVELOAD_BIN, FS_BUFFER_1);
                                     Fs_QueueStartSeek(FILE_TIM_SAVELOAD_TIM);

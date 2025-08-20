@@ -6,7 +6,6 @@ void sharedFunc_800D20E4_0_s00()
 
     s_MainCharacterExtra* extra;
     s_SubCharacter*       chara;
-    s_SysWork*            sysWork;
 
     sharedData_800DD59C_0_s00 = NO_VALUE;
 
@@ -17,7 +16,6 @@ void sharedFunc_800D20E4_0_s00()
 
     extra   = &g_SysWork.player_4C.extra_128;
     chara   = &g_SysWork.player_4C.chara_0;
-    sysWork = &g_SysWork;
 
     D_800AF216 = 0;
 
@@ -25,11 +23,11 @@ void sharedFunc_800D20E4_0_s00()
     chara->properties_E4.player.properties_E4[PlayerProperty_RunTimer0]     = 0;
     chara->properties_E4.player.properties_E4[PlayerProperty_ExertionTimer] = 0;
 
-    sysWork->player_4C.extra_128.field_1C = 52;
-    chara->model_0.stateStep_3            = 0;
-    chara->model_0.state_2                = 0;
-    extra->model_0.stateStep_3            = 0;
-    extra->model_0.state_2                = 0;
+    g_SysWork.player_4C.extra_128.field_1C = 52;
+    chara->model_0.stateStep_3             = 0;
+    chara->model_0.state_2                 = 0;
+    extra->model_0.stateStep_3             = 0;
+    extra->model_0.state_2                 = 0;
 
     D_800C45C0 = 0;
     D_800C45BE = 0;
@@ -45,18 +43,18 @@ void sharedFunc_800D20E4_0_s00()
     D_800C45AC = 0;
     D_800C4584 = 0;
 
-    sysWork->player_4C.extra_128.field_20 = 0;
-    sysWork->player_4C.extra_128.field_24 = 0;
+    g_SysWork.player_4C.extra_128.field_20 = 0;
+    g_SysWork.player_4C.extra_128.field_24 = 0;
 
     sharedData_800E39D8_0_s00 = 0;
 
-    chara->field_D6                                            = 0;
-    sysWork->player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Unk4 | PlayerFlag_Unk5;
-    chara->flags_3E                                           |= CharaFlag_Unk4;
-    chara->field_E0_8                                          = 4;
+    chara->field_D6                                             = 0;
+    g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Unk4 | PlayerFlag_Unk5;
+    chara->flags_3E                                            |= CharaFlag_Unk4;
+    chara->field_E0_8                                           = 4;
 
-    if (sysWork->playerCombatInfo_38.equippedWeapon_F < EquippedWeaponId_Handgun)
+    if (g_SysWork.playerCombatInfo_38.equippedWeapon_F < EquippedWeaponId_Handgun)
     {
-        sysWork->playerCombatInfo_38.equippedWeapon_F %= 10;
+        g_SysWork.playerCombatInfo_38.equippedWeapon_F %= 10;
     }
 }

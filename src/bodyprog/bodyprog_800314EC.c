@@ -471,17 +471,14 @@ void Settings_ScreenXYSet(s32 x, s32 y) // 0x800324F4
 
 void Settings_DispEnvXYSet(DISPENV* display, s32 x, s32 y) // 0x80032524
 {
-    s_GameWork* gameWorkPtr;
-
     x = (x < -11) ? -11 : ((x > 11) ? 11 : x);
     y = (y < -8)  ? -8  : ((y > 8)  ? 8  : y);
 
-    gameWorkPtr = g_GameWorkConst;
-    gameWorkPtr->config_0.optScreenPosX_1C = x;
-    gameWorkPtr->config_0.optScreenPosY_1D = y;
+    g_GameWorkConst->config_0.optScreenPosX_1C = x;
+    g_GameWorkConst->config_0.optScreenPosY_1D = y;
 
-    display->screen.x = gameWorkPtr->config_0.optScreenPosX_1C;
-    display->screen.y = gameWorkPtr->config_0.optScreenPosY_1D + 8;
+    display->screen.x = g_GameWorkConst->config_0.optScreenPosX_1C;
+    display->screen.y = g_GameWorkConst->config_0.optScreenPosY_1D + 8;
 }
 
 void func_800325A4(DR_MODE* arg0) // 0x800325A4

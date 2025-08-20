@@ -1380,15 +1380,12 @@ void func_80034F18() // 0x80034F18
 void Game_InGameInit() // 0x80034FB8
 {
     s32        mapOverlayId;
-    s_SysWork* sysWork;
 
     mapOverlayId = g_SavegamePtr->mapOverlayId_A4;
 
     vcInitCamera(&g_MapOverlayHeader, &g_SysWork.player_4C.chara_0.position_18);
 
-    sysWork = &g_SysWork;
-
-    vcSetCameraUseWarp(&g_SysWork.player_4C.chara_0.position_18, sysWork->cameraAngleY_237A);
+    vcSetCameraUseWarp(&g_SysWork.player_4C.chara_0.position_18, g_SysWork.cameraAngleY_237A);
     func_80040004(&g_MapOverlayHeader);
     func_80035B58(0);
     func_8003D95C();
@@ -1398,7 +1395,7 @@ void Game_InGameInit() // 0x80034FB8
 
     func_80034EC8();
 
-    sysWork->field_2280 = 5;
+    g_SysWork.field_2280 = 5;
 
     func_8005E650(mapOverlayId);
     func_80037124();

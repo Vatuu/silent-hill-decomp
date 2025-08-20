@@ -250,7 +250,6 @@ bool Demo_Update() // 0x8008F5D8
     s32               var0;
     s32               var1;
     u32               demoStep;
-    s_ControllerData* cont;
     s_GameWork*       work;
 
     var0       = D_800AFDF0;
