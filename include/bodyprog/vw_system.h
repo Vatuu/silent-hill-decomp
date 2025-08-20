@@ -5,14 +5,18 @@
 #include <libgpu.h>
 #include <libgs.h>
 
+struct _MapOverlayHeader; // `bodyprog.h` forward declaration.
+
 /** @brief GLOSSARY OF ABBREVIATIONS
  * ACCEL: Acceleration
  * ANG:   Angle
  * ARY:   Array
+ * DEFLT: Default
  * EV:    ?
  * EXCL:  Exclusion
  * F:     Flag/flags
- * FIX:   Fixed in place.
+ * FIX:   Fixed in place
+ * GRND:  Ground
  * H:     Height
  * LIM:   Limit
  * MV:    Movement
@@ -36,8 +40,10 @@
  * Area:         A camera path's spatial constraint defining its area of influence.
  * Flipped:      ?
  * Limit area:   2D AABB parameters defining a camera path's spatial constraint.
+ * Marge:        ?
  * Near road:    Nearby camera path collision containing info about a camera path's relation to the player in space (distance, priority, etc.).
  *               An array of these is kept to track which camera path should take effect.
+ * Oresen hokan: ????????????????????????????
  * Renewal:      Reset.
  * Road:         Camera path. A region which dictates specific camera behaviors while the player is inside.
  * Self view:    First-person view.
@@ -51,7 +57,7 @@
 // - Add doc comments above func declarations.
 // - Flags below are from SH2, most seem to match with SH but there might be some differences.
 
-struct _MapOverlayHeader; // `bodyprog.h` forward declaration.
+#define CAMERA_PATH_COLL_COUNT_MAX 10
 
 typedef enum _VC_ROAD_FLAGS
 {
@@ -265,24 +271,24 @@ typedef struct _VC_WORK
     VECTOR3                   cam_tgt_velo_100;               /** Target velocity. */
     s16                       cam_tgt_mv_ang_y_10C;           /** Target Y angles. */
     s8                        unk_10E[2];
-    s32                       cam_tgt_spd_110;                /** Target speed. */
-    VECTOR3                   chara_pos_114;                  /** Locked-on character position. */
-    s32                       chara_bottom_y_120;             /** Locked-on character bottom height. */
-    s32                       chara_top_y_124;                /** Locked-on character top height. */
-    s32                       chara_center_y_128;             /** Locked-on character center height. */
-    s32                       chara_grnd_y_12C;               /** Locked-on character height from the ground? */
-    VECTOR3                   chara_head_pos_130;             /** Locked-on character head position. */
-    s32                       chara_mv_spd_13C;               /** Locked-on character movement speed. */
-    s16                       chara_mv_ang_y_140;             /** Locked-on character heading angle. */
-    s16                       chara_ang_spd_y_142;            /** Locked-on character heading angle angular speed. */
-    s16                       chara_eye_ang_y_144;            /** Locked-on character look heading angle? */
-    s16                       chara_eye_ang_wy_146;           /** Locked-on character unknown Y angle */
-    s32                       chara_watch_xz_r_148;           /** Locked-on character radius on the XZ plane. */
-    VC_NEAR_ROAD_DATA         near_road_ary_14C[10];          /** Nearby camera path collisions. */
-    s32                       near_road_suu_2B4;              /** Nearby camera path collision radius? */
-    VC_NEAR_ROAD_DATA         cur_near_road_2B8;              /** Closest camera path? */
-    struct _SubCharacter*     nearest_enemy_2DC;              /** Closest enemy character. */
-    q19_12                    nearest_enemy_xz_dist_2E0;      /** Distance to the closest enemy character on the XZ plane. */
+    s32                       cam_tgt_spd_110;                               /** Target speed. */
+    VECTOR3                   chara_pos_114;                                 /** Locked-on character position. */
+    s32                       chara_bottom_y_120;                            /** Locked-on character bottom height. */
+    s32                       chara_top_y_124;                               /** Locked-on character top height. */
+    s32                       chara_center_y_128;                            /** Locked-on character center height. */
+    s32                       chara_grnd_y_12C;                              /** Locked-on character height from the ground? */
+    VECTOR3                   chara_head_pos_130;                            /** Locked-on character head position. */
+    s32                       chara_mv_spd_13C;                              /** Locked-on character movement speed. */
+    s16                       chara_mv_ang_y_140;                            /** Locked-on character heading angle. */
+    s16                       chara_ang_spd_y_142;                           /** Locked-on character heading angle angular speed. */
+    s16                       chara_eye_ang_y_144;                           /** Locked-on character look heading angle? */
+    s16                       chara_eye_ang_wy_146;                          /** Locked-on character unknown Y angle */
+    s32                       chara_watch_xz_r_148;                          /** Locked-on character radius on the XZ plane. */
+    VC_NEAR_ROAD_DATA         near_road_ary_14C[CAMERA_PATH_COLL_COUNT_MAX]; /** Nearby camera path collisions. */
+    s32                       near_road_suu_2B4;                             /** Nearby camera path collision radius? */
+    VC_NEAR_ROAD_DATA         cur_near_road_2B8;                             /** Closest camera path? */
+    struct _SubCharacter*     nearest_enemy_2DC;                             /** Closest enemy character. */
+    q19_12                    nearest_enemy_xz_dist_2E0;                     /** Distance to the closest enemy character on the XZ plane. */
     s32                       field_2E4;
 } VC_WORK;
 STATIC_ASSERT_SIZEOF(VC_WORK, 744);
