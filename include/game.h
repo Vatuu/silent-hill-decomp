@@ -317,7 +317,7 @@ typedef enum _SysState
     SysState_Gameplay       = 0,
     SysState_OptionsMenu    = 1,
     SysState_StatusMenu     = 2,
-    SysState_Unk3           = 3,
+    SysState_MapScreen      = 3,
     SysState_Fmv            = 4,
     SysState_LoadArea0      = 5,
     SysState_LoadArea1      = 6,

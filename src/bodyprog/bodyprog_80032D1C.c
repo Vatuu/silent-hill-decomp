@@ -3297,8 +3297,8 @@ void SysState_Gameplay_Update() // 0x80038BD4
     }
     else if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.map_18)
     {
-        //SysWork_StateSetNext(SysState_Unk3); // TODO: Doesn't match?
-        g_SysWork.sysState_8     = SysState_Unk3;
+        //SysWork_StateSetNext(SysState_MapScreen); // TODO: Doesn't match?
+        g_SysWork.sysState_8     = SysState_MapScreen;
         g_SysWork.timer_24       = 0;
         g_SysWork.sysStateStep_C = 0;
         g_SysWork.field_28       = 0;
@@ -3312,7 +3312,7 @@ void SysState_Gameplay_Update() // 0x80038BD4
         SysWork_StateSetNext(SysState_OptionsMenu);
     }
 
-    if ((u32)(g_SysWork.sysState_8 - 1) < SysState_Unk3)
+    if ((u32)(g_SysWork.sysState_8 - 1) < SysState_MapScreen)
     {
         g_SysWork.flags_22A4 |= 1 << 7;
     }
@@ -3546,7 +3546,7 @@ void GameState_LoadStatusScreen_Update() // 0x800395C0
     }
 }
 
-void SysState_Unk3_Update() // 0x800396D4
+void SysState_MapScreen_Update() // 0x800396D4
 {
     s32         idx;
     s_Savegame* save;
