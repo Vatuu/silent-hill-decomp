@@ -165,8 +165,7 @@ typedef struct _s_8002AC04
     s32                 field_8;
     union
     {
-        // `func_80089DF0` reads `field_C` as bitfield.
-        // Other `D_800AFD08` funcptrs read as `u32`?
+        // `func_80089DF0` reads `field_C` as bitfield, other `D_800AFD08` funcptrs read as `u32`?
         // TODO: some funcs also treat `field_8` differently, should probably be part of union too.
         struct
         {

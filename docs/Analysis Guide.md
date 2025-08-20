@@ -38,6 +38,25 @@ If successful the LoadSHOverlays.py script should load in all the overlays for y
 
 After analysis has completed most functions should be identified and viewable in the decompiler view, though some may still be left undefined, needing to be set as code manually (especially map functions, which are often only referenced by data).
 
+### Parsing structs/function definitions from C headers
+
+Ghidra includes the ability to parse C headers into datatypes that are usable in the disassembly, fortunately this parser appears to work with the headers in our repo pretty well.
+
+However Ghidra is unable to match up functions with the function definitions from the header by itself, so another script is needed to let Ghidra make use of them:
+
+- Copy the [silent-hill-decomp.prf](/tools/ghidra_scripts/silent-hill-decomp.prf) file from the repo to Ghidra `parserprofiles` folder
+
+   * (either `%AppData%/ghidra/ghidra_XXX_PUBLIC/parserprofiles/`, or `Ghidra/Features/Base/data/parserprofiles/` folder)
+- Copy the [LoadSHFuncdefs.py](/tools/ghidra_scripts/LoadSHFuncdefs.py) script into **Ghidra/Features/Jython/ghidra_scripts/** folder.
+- After loading SH in with the `LoadSHOverlays.py` script above, go to **File > Parse C Source**
+- Select `silent-hill-decomp.prf` in the **Parse Configuration** dropdown.
+- In the **Include Paths** section, double-click each of the paths and change them to use the correct repo path.
+- Click **Parse to Program**, if asked about open archives, pick **Don't Use Open Archives**
+- Once the headers have been parsed, go to **Window > Script Manager > PSX**, click on **LoadSHFuncdefs.py**, and press the green Play icon
+- Allow script to run, hopefully once it's finished most functions should now have the correct definition applied.
+
+Currently global data variables such as `g_SysWork/g_GameWork` will still need to be setup manually, though the structs for them should have been loaded by the Ghidra parser.
+
 ---
 
 ## **[IDA Pro](https://hex-rays.com/ida-pro)**
@@ -117,7 +136,7 @@ If the function uses jump tables, decomp.me/m2c may ask for jtbl data before it 
 
 ### .rodata / code offset mismatch
 
-If the function makes use of .rodata, you may notice the .rodata offsets can be wildly different compared to the original ASM. If they appear in blue, this happens because the context includes code for other functions that also use the same .rodata, causing that reference to be added before the .rodata of the function you're working on.
+If the function makes use of .rodata, you may notice the .rodata offsets can be wildly different compared to the original ASM. If they appear in blue, this happens because the context includes code for other functions that have their own .rodata, causing that to be added before the .rodata of the function you're working on.
 
 This is an easy fix: simply edit the context and remove all function code after the function and struct declarations. Note that static inlines can usually be left in the context, unless those are causing decompilation issues.
 
