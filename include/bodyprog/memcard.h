@@ -176,7 +176,7 @@ extern u8 g_SlotElementSelectedIdx[MEMORY_CARD_SLOT_COUNT]; // 0 - Slot 1, 1 - S
 
 extern s8 g_SelectedSaveSlotIdx; // 0 - Slot 1, 1 - Slot 2.
 
-extern u8 D_800A8D98[]; // TIM image for save file?
+extern s_FsImageDesc D_800A8D98;
 
 extern s8 D_800A97D7;
 
