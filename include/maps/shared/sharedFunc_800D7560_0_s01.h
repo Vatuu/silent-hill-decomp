@@ -33,10 +33,10 @@ void sharedFunc_800D7560_0_s01(s_SubCharacter* chara)
     }
     else
     {
-        sinHeadingAngle = shRsin(headingAngle);
+        sinHeadingAngle = Math_Sin(headingAngle);
         offsetX         = FP_MULTIPLY_PRECISE(sinHeadingAngle, -0x2B8, Q12_SHIFT);
 
-        cosHeadingAngle = shRcos(headingAngle);
+        cosHeadingAngle = Math_Cos(headingAngle);
         offsetZ         = FP_MULTIPLY_PRECISE(cosHeadingAngle, -0x2B8, Q12_SHIFT);
     }
 

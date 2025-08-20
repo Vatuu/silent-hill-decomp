@@ -972,7 +972,7 @@ void Anim_Update3(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Anim
     model->anim_4.keyframeIdx1_A = newKeyframeIdx1;
 
     // Sine-based easing?
-    sinVal = shRsin((newKeyframeIdx1 / 2) - FP_ALPHA(0.25f));
+    sinVal = Math_Sin((newKeyframeIdx1 / 2) - FP_ALPHA(0.25f));
     alpha  = (sinVal / 2) + FP_ALPHA(0.5f);
 
     // Clamp new time to keyframe 0 or 1.

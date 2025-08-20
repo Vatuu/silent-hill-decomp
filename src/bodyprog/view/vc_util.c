@@ -31,9 +31,9 @@ void vcSetCameraUseWarp(VECTOR3* chr_pos, s16 chr_ang_y) // 0x800400D4
     cam_ang.vy = chr_ang_y;
     cam_ang.vz = 0;
 
-    cam_pos.vx = chr_pos->vx - FP_MULTIPLY_FLOAT(shRsin(chr_ang_y), 1.5f, Q12_SHIFT);
+    cam_pos.vx = chr_pos->vx - FP_MULTIPLY_FLOAT(Math_Sin(chr_ang_y), 1.5f, Q12_SHIFT);
     cam_pos.vy = chr_pos->vy - FP_METER(1.7f);
-    cam_pos.vz = chr_pos->vz - FP_MULTIPLY_FLOAT(shRcos(chr_ang_y), 1.5f, Q12_SHIFT);
+    cam_pos.vz = chr_pos->vz - FP_MULTIPLY_FLOAT(Math_Cos(chr_ang_y), 1.5f, Q12_SHIFT);
 
     vcSetFirstCamWork(&cam_pos, chr_ang_y, g_SysWork.flags_22A4 & (1 << 6));
     g_SysWork.flags_22A4 &= ~(1 << 6);
@@ -174,8 +174,8 @@ void vcMakeHeroHeadPos(VECTOR3* head_pos) // 0x8004047C
 
 void vcAddOfsToPos(VECTOR3* out_pos, VECTOR3* in_pos, s16 ofs_xz_r, s16 ang_y, s32 ofs_y) // 0x80040518
 {
-    out_pos->vx = in_pos->vx + FP_MULTIPLY(ofs_xz_r, shRsin(ang_y), Q12_SHIFT);
-    out_pos->vz = in_pos->vz + FP_MULTIPLY(ofs_xz_r, shRcos(ang_y), Q12_SHIFT);
+    out_pos->vx = in_pos->vx + FP_MULTIPLY(ofs_xz_r, Math_Sin(ang_y), Q12_SHIFT);
+    out_pos->vz = in_pos->vz + FP_MULTIPLY(ofs_xz_r, Math_Cos(ang_y), Q12_SHIFT);
     out_pos->vy = in_pos->vy + ofs_y;
 }
 
@@ -271,14 +271,14 @@ void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, s_SysWork* sys_p) // 0x80040
                 var0 = -0x1A;
             }
 
-            var1 = var0 * shRsin(cam_ang.vy);
+            var1 = var0 * Math_Sin(cam_ang.vy);
             if (var1 < 0)
             {
                 var1 += 0xFFF;
             }
 
             vec0.vx += FP_FROM(var1, Q12_SHIFT);
-            var2 = var0 * shRcos(cam_ang.vy);
+            var2 = var0 * Math_Cos(cam_ang.vy);
             if (var2 < 0)
             {
                 var2 += 0xFFF;
@@ -312,7 +312,7 @@ void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, s_SysWork* sys_p) // 0x80040
                 var0 = -0x1A;
             }
 
-            var1 = var0 * shRsin(cam_ang.vy + FP_ANGLE(90.0f));
+            var1 = var0 * Math_Sin(cam_ang.vy + FP_ANGLE(90.0f));
             if (var1 < 0)
             {
                 var1 += 0xFFF;
@@ -320,7 +320,7 @@ void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, s_SysWork* sys_p) // 0x80040
 
             vec0.vx += FP_FROM(var1, Q12_SHIFT);
 
-            var2 = var0 * shRcos(cam_ang.vy + FP_ANGLE(90.0f));
+            var2 = var0 * Math_Cos(cam_ang.vy + FP_ANGLE(90.0f));
             if (var2 < 0)
             {
                 var2 += 0xFFF;

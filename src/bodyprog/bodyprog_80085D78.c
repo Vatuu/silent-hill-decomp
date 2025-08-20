@@ -514,7 +514,7 @@ s32 func_8008694C(s32 arg0, s16 arg1, s16 arg2, s32 arg3, s32 idx)
 {
     D_800C4710[idx] += g_DeltaTime0;
     D_800C4710[idx] = (arg3 < D_800C4710[idx]) ? arg3 : D_800C4710[idx];
-    return (arg0 * shRsin(arg1 + ((arg2 * D_800C4710[idx]) / arg3))) >> 12;
+    return (arg0 * Math_Sin(arg1 + ((arg2 * D_800C4710[idx]) / arg3))) >> 12;
 }
 
 void func_800869E4(s32 mapMsgIdx, u8* arg1, u16* arg2) // 0x800869E4
@@ -2433,7 +2433,7 @@ void Dms_CharacterKeyframeInterpolate(s_DmsKeyframeCharacter* result, s_DmsKeyfr
 
 s16 func_8008CDBC(s16 angle) // 0x8008CDBC
 {
-    return (96 * shRcos(angle / 2)) / shRsin(angle / 2);
+    return (96 * Math_Cos(angle / 2)) / Math_Sin(angle / 2);
 }
 
 s32 Dms_CameraGetTargetPos(VECTOR3* posTarget, VECTOR3* lookAtTarget, u16* arg2, s32 time, s_DmsHeader* header) // 0x8008CE1C

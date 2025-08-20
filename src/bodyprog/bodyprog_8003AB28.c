@@ -599,7 +599,7 @@ void Gfx_MainMenu_FogRandomize() // 0x8003BAC4
     ptr         = D_800BCDE0;
     ptr1        = ptr + 441;
     D_800A9EAC += 4 + ((s32)Rng_Rand16() & 0x7);
-    val         = FP_MULTIPLY(shRsin(D_800A9EAC), 10, Q12_SHIFT) - 122;
+    val         = FP_MULTIPLY(Math_Sin(D_800A9EAC), 10, Q12_SHIFT) - 122;
     ptr2        = ptr + 461;
 
     for (i = 20; i >= 0; i--)
@@ -959,8 +959,8 @@ void func_8003C3AC() // 0x8003C3AC
     moveDist = (chara->moveSpeed_38 * FP_METER(5.5f)) / 16015; // TODO: `FP_METER(3.91f)`? What's this doing?
     moveDist = CLAMP(moveDist, FP_METER(0.0f), FP_METER(5.5f));
 
-    pos0.vx += FP_MULTIPLY_PRECISE(moveDist, shRsin(chara->headingAngle_3C), Q12_SHIFT);
-    pos0.vz += FP_MULTIPLY_PRECISE(moveDist, shRcos(chara->headingAngle_3C), Q12_SHIFT);
+    pos0.vx += FP_MULTIPLY_PRECISE(moveDist, Math_Sin(chara->headingAngle_3C), Q12_SHIFT);
+    pos0.vz += FP_MULTIPLY_PRECISE(moveDist, Math_Cos(chara->headingAngle_3C), Q12_SHIFT);
 
     if (D_800BCE18.field_0[0].field_0 == &D_8002500C &&
         chara->position_18.vx >= FP_METER(-40.0f) && chara->position_18.vx <= FP_METER(40.0f) &&
@@ -978,17 +978,17 @@ void func_8003C3AC() // 0x8003C3AC
         flags1 = D_800BCE18.field_0[0].field_0->field_6;
         if (!(flags1 & 0x4) || !(flags1 & 0x3))
         {
-            var_s1 = FP_MULTIPLY(shRcos(pos2.vx), FP_METER(9.0f), Q12_SHIFT);
+            var_s1 = FP_MULTIPLY(Math_Cos(pos2.vx), FP_METER(9.0f), Q12_SHIFT);
         }
         else
         {
             var_s1 = FP_METER(0.0f);
         }
         
-        temp_s0_2 = FP_MULTIPLY(var_s1, shRsin(pos2.vy), Q12_SHIFT);
+        temp_s0_2 = FP_MULTIPLY(var_s1, Math_Sin(pos2.vy), Q12_SHIFT);
         temp_s0_2 = CLAMP(temp_s0_2, FP_METER(-6.0f), FP_METER(6.0f));
 
-        temp_v1_4 = FP_MULTIPLY(var_s1, shRcos(pos2.vy), Q12_SHIFT);
+        temp_v1_4 = FP_MULTIPLY(var_s1, Math_Cos(pos2.vy), Q12_SHIFT);
         temp_v1_4 = CLAMP(temp_v1_4, FP_METER(-6.0f), FP_METER(6.0f));
 
         pos1.vx += temp_s0_2;
@@ -997,15 +997,15 @@ void func_8003C3AC() // 0x8003C3AC
         if (Vc_VectorMagnitudeCalc(pos1.vx - chara->position_18.vx, 0, pos1.vz - chara->position_18.vz) > 0x10000)
         {
             var_s1  = FP_METER(14.0f);
-            pos1.vx = chara->position_18.vx + FP_MULTIPLY(shRsin(pos2.vy), var_s1, Q12_SHIFT);
-            pos1.vz = chara->position_18.vz + FP_MULTIPLY(shRcos(pos2.vy), var_s1, Q12_SHIFT);
+            pos1.vx = chara->position_18.vx + FP_MULTIPLY(Math_Sin(pos2.vy), var_s1, Q12_SHIFT);
+            pos1.vz = chara->position_18.vz + FP_MULTIPLY(Math_Cos(pos2.vy), var_s1, Q12_SHIFT);
         }
     } 
     else
     {
         pos1     = chara->position_18;
-        pos1.vx += FP_FROM(FP_TO(shRsin(chara->rotation_24.vy), Q12_SHIFT), Q12_SHIFT);
-        pos1.vz += FP_FROM(FP_TO(shRcos(chara->rotation_24.vy), Q12_SHIFT), Q12_SHIFT);
+        pos1.vx += FP_FROM(FP_TO(Math_Sin(chara->rotation_24.vy), Q12_SHIFT), Q12_SHIFT);
+        pos1.vz += FP_FROM(FP_TO(Math_Cos(chara->rotation_24.vy), Q12_SHIFT), Q12_SHIFT);
     }
 
     flags0 = D_800BCE18.field_0[0].field_0->field_6;
@@ -2783,10 +2783,10 @@ s32 func_8003F4DC(GsCOORDINATE2** arg0, SVECTOR* rot, s32 arg2, s32 arg3, u32 ar
             break;
     }
 
-    rot->vy = -shRsin(vec.vx);
-    temp    = shRcos(vec.vx);
-    rot->vz = FP_MULTIPLY(temp, shRcos(vec.vy), Q12_SHIFT);
-    rot->vx = FP_MULTIPLY(temp, shRsin(vec.vy), Q12_SHIFT);
+    rot->vy = -Math_Sin(vec.vx);
+    temp    = Math_Cos(vec.vx);
+    rot->vz = FP_MULTIPLY(temp, Math_Cos(vec.vy), Q12_SHIFT);
+    rot->vx = FP_MULTIPLY(temp, Math_Sin(vec.vy), Q12_SHIFT);
     return res;
 }
 

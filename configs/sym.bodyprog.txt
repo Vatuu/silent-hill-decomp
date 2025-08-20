@@ -1114,8 +1114,8 @@ GsSortObject4J                              = 0x80095FEC; // type:func
 //-------------------------------------------------------------------------
 // Custom Konami rotation matrix library?
 // TODO: identify the other RotMatrix funcs here
-shRsin                                      = 0x8009687C; // type:func
-shRcos                                      = 0x8009689C; // type:func
+Math_Sin                                    = 0x8009687C; // type:func
+Math_Cos                                    = 0x8009689C; // type:func
 shRotMatrixZ                                = 0x800968BC; // type:func
 
 //------------------------------------------------------------------

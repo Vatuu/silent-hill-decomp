@@ -181,8 +181,8 @@ void func_800D3C80(s_SubCharacter* chara, GsCOORDINATE2* coord)
     scaleRestoreShift = ((u32)(moveDist + SHRT_MAX) >= USHRT_MAX) ? 4 : 0;
     scaleReduceShift  = scaleRestoreShift >> 1;
 
-    vec.vx = (u32)FP_MULTIPLY_PRECISE(moveDist >> scaleReduceShift, shRsin(headingAngle) >> scaleReduceShift, Q12_SHIFT) << scaleRestoreShift;
-    vec.vz = (u32)FP_MULTIPLY_PRECISE(moveDist >> scaleReduceShift, shRcos(headingAngle) >> scaleReduceShift, Q12_SHIFT) << scaleRestoreShift;
+    vec.vx = (u32)FP_MULTIPLY_PRECISE(moveDist >> scaleReduceShift, Math_Sin(headingAngle) >> scaleReduceShift, Q12_SHIFT) << scaleRestoreShift;
+    vec.vz = (u32)FP_MULTIPLY_PRECISE(moveDist >> scaleReduceShift, Math_Cos(headingAngle) >> scaleReduceShift, Q12_SHIFT) << scaleRestoreShift;
     vec.vy = FP_MULTIPLY_PRECISE(chara->field_34, g_DeltaTime0, Q12_SHIFT);
 
     chara->position_18.vx += vec.vx;
@@ -283,7 +283,7 @@ void Ai_LittleIncubus_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coo
         var_a2 = FP_TO(1, Q12_SHIFT);
     }
 
-    temp_s0 = shRsin(var_a2 >> 2);
+    temp_s0 = Math_Sin(var_a2 >> 2);
 
     func_80035B04(&chara->position_18, &chara->rotation_24, coords);
 

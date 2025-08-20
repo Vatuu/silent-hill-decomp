@@ -89,9 +89,6 @@ void GameState_Unk0_Update() // 0x80032D1C
                 g_GameWork.gameStateStep_598[0] = 0;
             }
             break;
-
-        default:
-            break;
     }
 
     func_80033548();
@@ -103,13 +100,12 @@ void MainLoop() // 0x80032EE0
 {
     #define TICKS_PER_SECOND_MIN (TICKS_PER_SECOND / 4)
     #define H_BLANKS_PER_TICK    263
-    #define ONE_SEC_FIXED        FP_FLOAT_TO(1.0f, Q12_SHIFT)
 
     #define H_BLANKS_PER_SECOND               (H_BLANKS_PER_TICK * TICKS_PER_SECOND)              // 15780
-    #define H_BLANKS_TO_SEC_CONVERSION_FACTOR ((float)ONE_SEC_FIXED / (float)H_BLANKS_PER_SECOND) // 0.25956907477f
+    #define H_BLANKS_TO_SEC_CONVERSION_FACTOR ((float)FP_TIME(1.0f) / (float)H_BLANKS_PER_SECOND) // 0.25956907477f
 
     #define H_BLANKS_PER_FRAME_MIN   (H_BLANKS_PER_SECOND / TICKS_PER_SECOND_MIN)                    // 1052
-    #define H_BLANKS_FP_TO_SEC_SCALE (s32)(H_BLANKS_TO_SEC_CONVERSION_FACTOR * (float)ONE_SEC_FIXED) // 1063
+    #define H_BLANKS_FP_TO_SEC_SCALE (s32)(H_BLANKS_TO_SEC_CONVERSION_FACTOR * (float)FP_TIME(1.0f)) // 1063
     #define H_BLANKS_UNKNOWN_SCALE   10419                                                           // TODO: Somehow derive this value.
     #define V_BLANKS_MAX             4
 
@@ -1878,8 +1874,8 @@ void Gfx_LoadingScreen_PlayerRun() // 0x80035BE0
 
         vcUserWatchTarget(&camLookAt, NULL, true);
 
-        camLookAt.vx -= shRsin(g_SysWork.player_4C.chara_0.rotation_24.vy - FP_ANGLE(22.5f)) * 2;
-        temp          = shRcos(g_SysWork.player_4C.chara_0.rotation_24.vy - FP_ANGLE(22.5f));
+        camLookAt.vx -= Math_Sin(g_SysWork.player_4C.chara_0.rotation_24.vy - FP_ANGLE(22.5f)) * 2;
+        temp          = Math_Cos(g_SysWork.player_4C.chara_0.rotation_24.vy - FP_ANGLE(22.5f));
         camLookAt.vy  = FP_METER(-1.0f);
         camLookAt.vz -= temp * 2;
 
@@ -2257,8 +2253,8 @@ u32 func_800364BC() // 0x800364BC
     D_800BCD58 += g_DeltaTime1 * 0x40001;
 
     var0  = 0x40000;
-    var0 += shRsin(D_800BCD58 >> 18) * 8;
-    var1  = shRsin((D_800BCD58 & 0xFFFF) / 16) * 32;
+    var0 += Math_Sin(D_800BCD58 >> 18) * 8;
+    var1  = Math_Sin((D_800BCD58 & 0xFFFF) / 16) * 32;
     return FP_FROM(var0 + var1, Q12_SHIFT);
 }
 
@@ -2844,8 +2840,8 @@ void Chara_PositionUpdateFromParams(s_AreaLoadParams* params) // 0x800371E8
 
     if (params->field_4_24 >= 2)
     {
-        g_SysWork.player_4C.chara_0.position_18.vx += FP_MULTIPLY_FLOAT((s64)shRsin(rot), 0.4f, Q12_SHIFT);
-        g_SysWork.player_4C.chara_0.position_18.vz += FP_MULTIPLY_FLOAT((s64)shRcos(rot), 0.4f, Q12_SHIFT);
+        g_SysWork.player_4C.chara_0.position_18.vx += FP_MULTIPLY_FLOAT((s64)Math_Sin(rot), 0.4f, Q12_SHIFT);
+        g_SysWork.player_4C.chara_0.position_18.vz += FP_MULTIPLY_FLOAT((s64)Math_Cos(rot), 0.4f, Q12_SHIFT);
     }
 
     g_SysWork.loadingScreenIdx_2281 = params->loadingScreenId_4_9;
@@ -2904,8 +2900,8 @@ bool func_800378D4(s_AreaLoadParams* areaLoadParams) // 0x800378D4
     if (g_MainLoop_FrameCount > D_800A9A20)
     {
         rotY       = g_SysWork.player_4C.chara_0.rotation_24.vy;
-        D_800A9A24 = g_SysWork.player_4C.chara_0.position_18.vx - (shRsin(rotY) >> 3);
-        D_800A9A28 = g_SysWork.player_4C.chara_0.position_18.vz - (shRcos(rotY) >> 3);
+        D_800A9A24 = g_SysWork.player_4C.chara_0.position_18.vx - (Math_Sin(rotY) >> 3);
+        D_800A9A28 = g_SysWork.player_4C.chara_0.position_18.vz - (Math_Cos(rotY) >> 3);
         D_800A9A20 = g_MainLoop_FrameCount;
     }
 
@@ -2973,16 +2969,16 @@ bool func_80037C5C(s_func_80037A4C* arg0) // 0x80037C5C
     }
 
     angle    = -(arg0->field_6 << 20) >> 16;
-    sinAngle = shRsin(angle);
+    sinAngle = Math_Sin(angle);
 
-    temp = FP_FROM((-deltaX * sinAngle) + (deltaZ * shRcos(angle)), Q12_SHIFT);
+    temp = FP_FROM((-deltaX * sinAngle) + (deltaZ * Math_Cos(angle)), Q12_SHIFT);
     if (temp > 0x4000)
     {
         return false;
     }
 
-    cosAngle = shRcos(angle);
-    temp_v0  = FP_FROM((deltaX * cosAngle) + (deltaZ * shRsin(angle)), Q12_SHIFT);
+    cosAngle = Math_Cos(angle);
+    temp_v0  = FP_FROM((deltaX * cosAngle) + (deltaZ * Math_Sin(angle)), Q12_SHIFT);
 
     if (shift8Field_7 < ABS(temp_v0))
     {

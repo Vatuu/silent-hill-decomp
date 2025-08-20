@@ -721,7 +721,7 @@ void Gfx_SavedFlashDraw() // 0x801E3E78
 
     if (rowIdx < 5)
     {
-        sin  = shRsin((g_Gfx_SaveFlashTimer << 10) / SAVE_FLASH_TIMER_MAX);
+        sin  = Math_Sin((g_Gfx_SaveFlashTimer << 10) / SAVE_FLASH_TIMER_MAX);
         poly = (POLY_F4*)GsOUT_PACKET_P;
         setPolyF4(poly);
         setSemiTrans(poly, 1);

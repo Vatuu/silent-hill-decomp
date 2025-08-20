@@ -2608,7 +2608,7 @@ s32 func_8003F6F0(s32 arg0, s32 arg1, s32 arg2);
 
 void func_8003F838(s_StructUnk3* arg0, s_StructUnk3* arg1, s_StructUnk3* arg2, s32 weight);
 
-/** Computes the weighted average of `a` and `b`. */
+/** @brief Computes the weighted average of `a` and `b`. */
 s32 Math_GetWeightedAverage(s32 a, s32 b, s32 weight);
 
 void func_8003FCB0(s_sub_StructUnk3* arg0, s_sub_StructUnk3* arg1, s_sub_StructUnk3* arg2, s32 arg3);

@@ -96,13 +96,13 @@
 #define FP_MULTIPLY_FLOAT_PRECISE(a, b, shift) \
     Math_MulFixed((a), FP_FLOAT_TO((b), (shift)), (shift))
 
-/** @brief Computes the dot product of the first column of a matrix with a vector in Q17.15 format. */
+/** @brief Computes the dot product of the first column of a matrix with a vector in Q17.15(?) format. */
 #define FP_MULTIPLY_MATRIX(mat, vec)    \
     (s32)((((mat).m[0][0] * (vec).vx) + \
            ((mat).m[1][0] * (vec).vy) + \
            ((mat).m[2][0] * (vec).vz)) >> 17)
 
-/** @brief Converts a floating-point alpha in the range `[0.0f, 1.0f]` to a fixed-point alpha in Q3.12 format. */
+/** @brief Converts a floating-point alpha in the range `[0.0f, 1.0f]` to a fixed-point alpha in Q3.12 format, range [0, 4096]. */
 #define FP_ALPHA(alpha) \
     (s16)FP_FLOAT_TO((alpha), Q12_SHIFT)
 
@@ -113,9 +113,9 @@
 // TODO: Maybe not appropriate for this project since it often results in ugly floats.
 /** @brief Converts a normalized color value in the range `[0.0f, 1.0f]` to an 8-bit color value in the range `[0, 255]`. */
 #define FP_COLOR(val) \
-    (u8)((val) * (FP_FLOAT_TO(1.0f, Q8_SHIFT) - 1))
+    (u8)((val) * 0xFF)
 
-/** @brief Converts floating-point degrees to fixed-point degrees in Q3.12 format. */
+/** @brief Converts floating-point degrees to fixed-point degrees in Q3.12 format, range [0, 4096]. */
 #define FP_ANGLE(deg) \
     (s16)((deg) * ((float)FP_TO(1, Q12_SHIFT) / 360.0f))
 
@@ -132,11 +132,11 @@
     (s32)(((((rad) < 0.0f) ? (PI + (PI - ABS(rad))) : (rad)) * ((float)FP_PI / PI)) * \
           (((rad) < 0.0f || (rad) >= PI) ? 1.0f : 2.0f))
 
-/** @brief Converts floating-point meters to fixed-point meters in Q12.19 format. */
+/** @brief Converts floating-point meters to fixed-point meters in Q19.12 format. */
 #define FP_METER(met) \
     FP_FLOAT_TO((met), Q12_SHIFT)
 
-/** @brief Converts floating-point seconds to fixed-point seconds in Q12.19 format. */
+/** @brief Converts floating-point seconds to fixed-point seconds in Q19.12 format. */
 #define FP_TIME(sec) \
     FP_FLOAT_TO((sec), Q12_SHIFT)
 
@@ -183,11 +183,27 @@ static inline void Math_Vector3Set(VECTOR3* vec, s32 x, s32 y, s32 z)
 void func_80096C94(SVECTOR* rot, MATRIX* mat); // Custom `vwRotMatrix[...]`?
 void func_80096E78(SVECTOR* rot, MATRIX* mat); // Another custom `vwRotMatrix[...]`?
 
-s32 Math_MulFixed(s32 val0, s32 val1, s32 shift);
+s32 Math_MulFixed(s32 a, s32 b, s32 shift);
 
-// Matched as `Math_Sin` and `Math_Cos` on decomp.me.
-s32 shRsin(s32 angle);
-s32 shRcos(s32 angle);
+// NOTE: Matched on decomp.me.
+/** @brief Computes the sine in Q19.12 format of degrees in Q3.12 format.
+ *
+ * Possible original name: `shRsin`
+ *
+ * @param angle Degrees in Q3.12 format.
+ * @return Sine in Q19.12 format (range [0, 4096]).
+ */
+s32 Math_Sin(s32 angle);
+
+// NOTE: Matched on decomp.me.
+/** @brief Computes the cosine in Q19.12 format of degrees in Q3.12 format.
+ *
+ * Possible original name: `shRcos`
+ *
+ * @param angle Degrees in Q3.12 format.
+ * @return Cosine in Q19.12 format (range [0, 4096]).
+ */
+s32 Math_Cos(s32 angle);
 
 MATRIX* shRotMatrixZ(s32, MATRIX*);
 

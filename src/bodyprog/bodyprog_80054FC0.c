@@ -1623,8 +1623,8 @@ void func_8005C814(s_SubCharacter_D8* arg0, s_SubCharacter* chara) // 0x8005C814
     temp_s2 = arg0->field_4;
     temp_s4 = arg0->field_6;
 
-    temp_s1 = shRcos(chara->rotation_24.vy);
-    temp_v0 = shRsin(chara->rotation_24.vy);
+    temp_s1 = Math_Cos(chara->rotation_24.vy);
+    temp_v0 = Math_Sin(chara->rotation_24.vy);
 
     chara->field_D8.field_0 = FP_FROM((temp_s0 * temp_s1) + (temp_s3 * temp_v0), Q12_SHIFT);
     chara->field_D8.field_2 = FP_FROM((-temp_s0 * temp_v0) + (temp_s3 * temp_s1), Q12_SHIFT);
@@ -2048,8 +2048,8 @@ void func_8006ABC0(s_func_8006ABC0* result, VECTOR3* vec, s_func_8006AB50* arg2)
         result->directionX_14 = FP_METER(result->field_C.vx) / result->field_8;
         result->directionZ_16 = FP_METER(result->field_C.vz) / result->field_8;
         angleXz               = ratan2(result->field_C.vz, result->field_C.vx);
-        result->directionX_14 = shRcos(angleXz);
-        result->directionZ_16 = shRsin(angleXz);
+        result->directionX_14 = Math_Cos(angleXz);
+        result->directionZ_16 = Math_Sin(angleXz);
     }
     else
     {
@@ -2633,8 +2633,8 @@ void func_8006D7EC(s_func_8006D7EC_0* arg0, s_func_8006D7EC_1* arg1, s_func_8006
         arg0->field_16 = FP_TO(arg0->field_C.vz, Q12_SHIFT) / arg0->field_8;
         
         angle          = ratan2(arg0->field_C.vz, arg0->field_C.vx);
-        arg0->field_14 = shRcos(angle);
-        arg0->field_16 = shRsin(angle);
+        arg0->field_14 = Math_Cos(angle);
+        arg0->field_16 = Math_Sin(angle);
     }
     else
     {
@@ -3057,9 +3057,9 @@ bool func_80070184(s_SubCharacter* chara, s32 arg1, s16 rotY) // 0x80070184
     s32 varY;
     s32 varZ;
 
-    iVar0 = shRsin(rotY);
+    iVar0 = Math_Sin(rotY);
     varX  = chara->position_18.vx + FP_MULTIPLY(arg1, iVar0, Q12_SHIFT);
-    iVar1 = shRcos(rotY);
+    iVar1 = Math_Cos(rotY);
 
     varY = chara->position_18.vy;
     varZ = chara->position_18.vz + FP_MULTIPLY(arg1, iVar1, Q12_SHIFT);
@@ -3074,9 +3074,9 @@ bool func_80070208(s_SubCharacter* chara, s32 arg1) // 0x80070208
     VECTOR3           vec;
     bool              result;
 
-    vec.vx = FP_MULTIPLY(arg1, shRsin(chara->rotation_24.vy), Q12_SHIFT);
+    vec.vx = FP_MULTIPLY(arg1, Math_Sin(chara->rotation_24.vy), Q12_SHIFT);
     vec.vy = 0;
-    vec.vz = FP_MULTIPLY(arg1, shRcos(chara->rotation_24.vy), Q12_SHIFT);
+    vec.vz = FP_MULTIPLY(arg1, Math_Cos(chara->rotation_24.vy), Q12_SHIFT);
 
     result = false;
     if (func_8006DB3C(&var, &chara->position_18, &vec, chara) != 0)
@@ -3091,9 +3091,9 @@ s32 func_8007029C(s_SubCharacter* chara, s32 arg1, s16 angle) // 0x8007029C
     s8      vars[28];
     VECTOR3 vec;
 
-    vec.vx = FP_MULTIPLY(arg1, shRsin(angle), Q12_SHIFT);
+    vec.vx = FP_MULTIPLY(arg1, Math_Sin(angle), Q12_SHIFT);
     vec.vy = 0;
-    vec.vz = FP_MULTIPLY(arg1, shRcos(angle), Q12_SHIFT);
+    vec.vz = FP_MULTIPLY(arg1, Math_Cos(angle), Q12_SHIFT);
 
     return func_8006DB3C(&vars, &chara->position_18, &vec, chara);
 }
@@ -3949,8 +3949,8 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
                 temp_s0 = -D_800AF1FC[chara->model_0.anim_4.keyframeIdx0_8 - g_MapOverlayHeader.field_38[D_800AF220].field_4];
                 g_SysWork.player_4C.chara_0.field_D8.field_0 = 0;
                 g_SysWork.player_4C.chara_0.field_D8.field_2 = 0;
-                g_SysWork.player_4C.chara_0.field_D8.field_4 = FP_MULTIPLY(temp_s0, shRsin(chara->rotation_24.vy), Q12_SHIFT);
-                g_SysWork.player_4C.chara_0.field_D8.field_6 = FP_MULTIPLY(temp_s0, shRcos(chara->rotation_24.vy), Q12_SHIFT);
+                g_SysWork.player_4C.chara_0.field_D8.field_4 = FP_MULTIPLY(temp_s0, Math_Sin(chara->rotation_24.vy), Q12_SHIFT);
+                g_SysWork.player_4C.chara_0.field_D8.field_6 = FP_MULTIPLY(temp_s0, Math_Cos(chara->rotation_24.vy), Q12_SHIFT);
             }
             
             if (ABS(sp18) < 0x80)
@@ -4861,8 +4861,8 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
                 temp_s0_3                                    = temp_a2 + FP_MULTIPLY(var_v1_5 - temp_a2, chara->model_0.anim_4.time_4 & 0xFFF, Q12_SHIFT);
                 g_SysWork.player_4C.chara_0.field_D8.field_0 = 0;
                 g_SysWork.player_4C.chara_0.field_D8.field_2 = 0;
-                g_SysWork.player_4C.chara_0.field_D8.field_4 = FP_MULTIPLY(temp_s0_3, shRsin(chara->rotation_24.vy), Q12_SHIFT);
-                g_SysWork.player_4C.chara_0.field_D8.field_6 = FP_MULTIPLY(temp_s0_3, shRcos(chara->rotation_24.vy), Q12_SHIFT);
+                g_SysWork.player_4C.chara_0.field_D8.field_4 = FP_MULTIPLY(temp_s0_3, Math_Sin(chara->rotation_24.vy), Q12_SHIFT);
+                g_SysWork.player_4C.chara_0.field_D8.field_6 = FP_MULTIPLY(temp_s0_3, Math_Cos(chara->rotation_24.vy), Q12_SHIFT);
                 chara->field_D4                              = 0x4CC;
             }
             
@@ -9309,12 +9309,12 @@ void func_8007C0D8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
 
     func_800699F8(&sp10, chara->position_18.vx, chara->position_18.vz);
 
-    temp_s3 = FP_MULTIPLY(chara->moveSpeed_38, shRsin(chara->headingAngle_3C), Q12_SHIFT);
-    temp_s2 = FP_MULTIPLY(chara->moveSpeed_38, shRcos(chara->headingAngle_3C), Q12_SHIFT);
+    temp_s3 = FP_MULTIPLY(chara->moveSpeed_38, Math_Sin(chara->headingAngle_3C), Q12_SHIFT);
+    temp_s2 = FP_MULTIPLY(chara->moveSpeed_38, Math_Cos(chara->headingAngle_3C), Q12_SHIFT);
 
-    temp_s0 = shRcos(ABS(sp10.field_4) >> 3);
+    temp_s0 = Math_Cos(ABS(sp10.field_4) >> 3);
 
-    temp_v0 = shRcos(ABS(sp10.field_6) >> 3);
+    temp_v0 = Math_Cos(ABS(sp10.field_6) >> 3);
 
     temp_v1 = FP_MULTIPLY(FP_MULTIPLY(temp_s3, temp_s0, Q12_SHIFT), temp_s0, Q12_SHIFT);
     someAngle = FP_MULTIPLY(FP_MULTIPLY(temp_s2, temp_v0, Q12_SHIFT), temp_v0, Q12_SHIFT);
@@ -9335,10 +9335,10 @@ void func_8007C0D8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
     temp_s2_2 = (temp > 0xFFFE) * 4;
     temp_s3_2 = temp_s2_2 >> 1;
 
-    sp20.vx = FP_MULTIPLY_PRECISE((temp_s0_2 >> temp_s3_2), shRsin(temp_v0_3) >> temp_s3_2, Q12_SHIFT);
+    sp20.vx = FP_MULTIPLY_PRECISE((temp_s0_2 >> temp_s3_2), Math_Sin(temp_v0_3) >> temp_s3_2, Q12_SHIFT);
     sp20.vx <<= temp_s2_2;
 
-    sp20.vz = FP_MULTIPLY_PRECISE((temp_s0_2 >> temp_s3_2), shRcos(temp_v0_3) >> temp_s3_2, Q12_SHIFT);
+    sp20.vz = FP_MULTIPLY_PRECISE((temp_s0_2 >> temp_s3_2), Math_Cos(temp_v0_3) >> temp_s3_2, Q12_SHIFT);
     sp20.vz <<= temp_s2_2;
 
     sp20.vy = FP_MULTIPLY_PRECISE(chara->field_34, g_DeltaTime0, Q12_SHIFT);
@@ -10240,10 +10240,10 @@ s32 func_8007D6F0(s_SubCharacter* arg0, s_D_800C45C8* arg1) // 0x8007D6F0
     temp_s1  = FP_METER(-0.6f);
     temp_s1 -= g_SysWork.player_4C.chara_0.properties_E4.player.field_126 >> 4;
 
-    temp_s4 = FP_MULTIPLY(shRcos(arg0->headingAngle_3C), FP_METER(0.2f), Q12_SHIFT); // Maybe meters?
-    temp_s3 = FP_MULTIPLY(shRsin(arg0->headingAngle_3C), FP_METER(0.2f), Q12_SHIFT); // Maybe meters?
-    temp_s5 = FP_MULTIPLY(temp_s0, shRsin(arg0->headingAngle_3C), Q12_SHIFT);
-    temp_lo = FP_MULTIPLY(temp_s0, shRcos(arg0->headingAngle_3C), Q12_SHIFT);
+    temp_s4 = FP_MULTIPLY(Math_Cos(arg0->headingAngle_3C), FP_METER(0.2f), Q12_SHIFT); // Maybe meters?
+    temp_s3 = FP_MULTIPLY(Math_Sin(arg0->headingAngle_3C), FP_METER(0.2f), Q12_SHIFT); // Maybe meters?
+    temp_s5 = FP_MULTIPLY(temp_s0, Math_Sin(arg0->headingAngle_3C), Q12_SHIFT);
+    temp_lo = FP_MULTIPLY(temp_s0, Math_Cos(arg0->headingAngle_3C), Q12_SHIFT);
 
     temp_s1 -= FP_METER(0.4f);
 

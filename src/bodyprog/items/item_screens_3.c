@@ -594,7 +594,7 @@ void Gfx_Inventory_2dBackgroundDraw(s32* arg0) // 0x8004FBCC
         }
     }
     
-    temp_t3   = (shRcos(g_Gfx_Inventory_SelectionBordersDraw << 7) * shRcos(g_Gfx_Inventory_SelectionBordersDraw << 7) * 0x10) >> 0x10;
+    temp_t3   = (Math_Cos(g_Gfx_Inventory_SelectionBordersDraw << 7) * Math_Cos(g_Gfx_Inventory_SelectionBordersDraw << 7) * 0x10) >> 0x10;
     new_var   = SelectionOuline_InnerLine[*arg0].field_0.vx;
     new_var  -= SelectionOuline_InnerLine[g_Inventory_PrevSelectionId].field_0.vx;
     temp_a2_2 = SelectionOuline_InnerLine[*arg0].field_0.vx + FP_FROM((new_var) * temp_t3, Q12_SHIFT);

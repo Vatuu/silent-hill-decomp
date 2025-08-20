@@ -810,7 +810,7 @@ void Options_ExtraOptionsMenu_EntryStringsDraw() // 0x801E416C
         g_ExtraOptions_SelectionHighlightFrom_Unused.vy = ((u16)g_MainOptionsMenu_PrevSelectedEntry * LINE_OFFSET_Y) + LINE_BASE_Y;
         g_ExtraOptions_SelectionHighlightTo_Unused.vy   = ((u16)g_MainOptionsMenu_SelectedEntry     * LINE_OFFSET_Y) + LINE_BASE_Y;
     }
-    shRsin(g_Options_SelectionHighlightTimer << 7);
+    Math_Sin(g_Options_SelectionHighlightTimer << 7);
 
     // Draw heading string.
     Gfx_StringSetColor(ColorId_White);
@@ -860,7 +860,7 @@ void Options_MainOptionsMenu_EntryStringsDraw() // 0x801E42EC
         g_MainOptions_SelectionHighlightFrom_Unused.vy = ((u16)g_MainOptionsMenu_PrevSelectedEntry * LINE_OFFSET_Y) + LINE_BASE_Y;
         g_MainOptions_SelectionHighlightTo_Unused.vy   = ((u16)g_MainOptionsMenu_SelectedEntry     * LINE_OFFSET_Y) + LINE_BASE_Y;
     }
-    shRsin(g_Options_SelectionHighlightTimer << 7);
+    Math_Sin(g_Options_SelectionHighlightTimer << 7);
 
     // Draw heading string.
     Gfx_StringSetColor(ColorId_White);
@@ -922,7 +922,7 @@ void Options_ExtraOptionsMenu_SelectionHighlightDraw() // 0x801E4450
     }
 
     // Compute sine-based interpolation alpha.
-    interpAlpha = shRsin(g_Options_SelectionHighlightTimer << 7);
+    interpAlpha = Math_Sin(g_Options_SelectionHighlightTimer << 7);
 
     // Draw active selection highlight.
     highlightLine.vertex0_0.vx = HIGHLIGHT_OFFSET_X;
@@ -1008,7 +1008,7 @@ void Options_MainOptionsMenu_SelectionHighlightDraw() // 0x801E472C
     }
 
     // Compute sine-based interpolation alpha.
-    interpAlpha = shRsin(g_Options_SelectionHighlightTimer << 7);
+    interpAlpha = Math_Sin(g_Options_SelectionHighlightTimer << 7);
 
     // Draw active selection highlight.
     highlightLine.vertex0_0.vx = HIGHLIGHT_OFFSET_X;
