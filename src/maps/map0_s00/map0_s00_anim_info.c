@@ -36,5 +36,6 @@ s_AnimInfo g_AnimInfo[] =
   { Anim_Update2, 106, 0, 107, 0, { FP_TIME(10.0f) }, 65535, 973 },
   { Anim_Update0, 107, 0, 107, 0, { FP_TIME(15.0f) }, 973,   993 },
   { Anim_Update2, 108, 0, 109, 0, { FP_TIME(10.0f) }, 65535, 994 },
-  { Anim_Update0, 109, 0, 109, 0, { FP_TIME(25.0f) }, 994,   1026 }
+  { Anim_Update0, 109, 0, 109, 0, { FP_TIME(25.0f) }, 994,   1026 },
+  {}, // end of list marker ?
 };
