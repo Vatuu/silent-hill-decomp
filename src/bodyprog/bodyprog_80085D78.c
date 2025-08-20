@@ -172,7 +172,7 @@ void func_800860B0(bool arg0, s32 mapMsgIdx, s32 arg2, s32 arg3, s32 sysStateSte
     }
 }
 
-void func_8008616C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x8008616C
+void func_8008616C(s32 arg0, bool arg1, s32 arg2, s32 arg3, bool arg4) // 0x8008616C
 {
     s32 caseVar;
     s32 var0;
@@ -196,7 +196,7 @@ void func_8008616C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x800861
                 D_800B5C30 = arg3;
             }
 
-            if (arg1 != 0)
+            if (arg1)
             {
                 if (arg2 == 0)
                 {
@@ -264,7 +264,7 @@ const RECT D_8002AB10 =  // 0x8002AB10 .rodata
     (SCREEN_WIDTH / 5) * 3, SCREEN_HEIGHT
 };
 
-void func_800862F8(s32 arg0, s32 itemId, s32 arg2) // 0x800862F8
+void func_800862F8(s32 arg0, s32 itemId, bool arg2) // 0x800862F8
 {
     s32 switchVar;
 
@@ -696,47 +696,47 @@ void func_80086D04(s_SubCharacter* chara) // 0x80086D04
     }
 }
 
-void func_80086DA8(s32 arg0, s32 arg1)
+void func_80086DA8(s32 itemId, s32 arg1) // 0x80086DA8
 {
     switch (g_SysWork.field_10)
     {
         case 0:
-            func_8008616C(0, 1, 0, arg1, 0);
+            func_8008616C(0, true, 0, arg1, false);
             g_SysWork.timer_2C = 0;
             g_SysWork.field_14 = 0;
             g_SysWork.field_10++;
 
         case 1:
-            func_800862F8(7, arg0, 1);
+            func_800862F8(7, itemId, true);
             break;
 
         default:
-            func_8008616C(1, 1, 0, 0, 0);
+            func_8008616C(1, true, 0, 0, false);
             break;
     }
 }
 
-void func_80086E50(s32 arg0, s32 arg1, s32 arg2)
+void func_80086E50(s32 itemId, s32 arg1, s32 arg2) // 0x80086E50
 {
     switch (g_SysWork.field_10)
     {
         case 0:
-            func_8008616C(0, 1, 0, arg1, 0);
+            func_8008616C(0, true, 0, arg1, false);
             g_SysWork.timer_2C = 0;
             g_SysWork.field_14 = 0;
             g_SysWork.field_10++;
 
         case 1:
-            func_800862F8(7, arg0, 1);
+            func_800862F8(7, itemId, true);
             break;
 
         case 2:
-            func_8008616C(1, 1, 0, 0, 1);
+            func_8008616C(1, true, 0, 0, true);
             break;
 
         default:
-            func_800862F8(2, 0, 0);
-            func_8008616C(2, 0, 0, arg2, 0);
+            func_800862F8(2, InventoryItemId_Unequipped, false);
+            func_8008616C(2, false, 0, arg2, false);
     }
 }
 
@@ -744,12 +744,12 @@ void func_80086F44(s32 arg0, s32 arg1) // 0x80086F44
 {
     if (g_SysWork.field_10 == 0)
     {
-        func_800862F8(2, 0, 0);
-        func_8008616C(2, 1, 0, arg1, 1);
+        func_800862F8(2, InventoryItemId_Unequipped, false);
+        func_8008616C(2, true, 0, arg1, true);
         return;
     }
 
-    func_8008616C(0, 0, 0, arg0, 0);
+    func_8008616C(0, false, 0, arg0, false);
     SysWork_StateStepIncrement();
 }
 
@@ -804,36 +804,32 @@ void func_80086FE8(s32 mapMsgIdx, s32 sfx, VECTOR3* pos) // 0x80086FE8
     }
 }
 
-void func_8008716C(s32 arg0, s32 arg1, s32 arg2) // 0x8008716C
+void func_8008716C(s32 itemId, s32 arg1, s32 arg2) // 0x8008716C
 {
-    s32 var;
-
     switch (g_SysWork.field_10)
     {
         case 0:
             g_MapOverlayHeader.func_C8();
-            func_8008616C(0, 1, 0, arg1, 0);
+            func_8008616C(0, true, 0, arg1, false);
             g_SysWork.timer_2C = 0;
             g_SysWork.field_14 = 0;
             g_SysWork.field_10++;
 
         case 1:
-            func_800862F8(7, arg0, 1);
+            func_800862F8(7, itemId, true);
             break;
 
         case 2:
-            func_8008616C(1, 1, 0, 0, 1);
+            func_8008616C(1, true, 0, 0, true);
             break;
 
         case 3:
-            func_800862F8(2, 0, 0);
-
-            var = 0;
-            func_8008616C(2, var, 0, arg2, 1);
+            func_800862F8(2, InventoryItemId_Unequipped, false);
+            func_8008616C(2, false, 0, arg2, true);
             break;
 
         case 4:
-            func_800862F8(2, 0, 0);
+            func_800862F8(2, InventoryItemId_Unequipped, false);
 
             if (g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 |
                                                  g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
@@ -845,63 +841,55 @@ void func_8008716C(s32 arg0, s32 arg1, s32 arg2) // 0x8008716C
             break;
 
         case 5:
-            func_800862F8(2, 0, 0);
-
-            var = 1;
-            func_8008616C(2, var, 0, arg2, 1);
+            func_800862F8(2, InventoryItemId_Unequipped, false);
+            func_8008616C(2, true, 0, arg2, true);
             break;
 
         default:
-            func_8008616C(0, 0, 0, arg1, 0);
+            func_8008616C(0, false, 0, arg1, false);
             g_MapOverlayHeader.func_CC(0);
             SysWork_StateSetNext(0);
             break;
     }
 }
 
-void func_80087360(s32 arg0, s32 arg1, s32 arg2, s32 mapMsgIdx) // 0x80087360
+void func_80087360(s32 itemId, s32 arg1, s32 arg2, s32 mapMsgIdx) // 0x80087360
 {
-    s32 var;
-
     switch (g_SysWork.field_10)
     {
         case 0:
             g_MapOverlayHeader.func_C8();
-            func_8008616C(0, 1, 0, arg1, 0);
+            func_8008616C(0, true, 0, arg1, false);
 
             g_SysWork.timer_2C = 0;
             g_SysWork.field_14 = 0;
             g_SysWork.field_10++;
 
         case 1:
-            func_800862F8(7, arg0, 1);
+            func_800862F8(7, itemId, true);
             break;
 
         case 2:
-            func_8008616C(1, 1, 0, 0, 1);
+            func_8008616C(1, true, 0, 0, true);
             break;
 
         case 3:
-            func_800862F8(2, 0, 0);
-
-            var = 0;
-            func_8008616C(2, var, 0, arg2,1);
+            func_800862F8(2, InventoryItemId_Unequipped, false);
+            func_8008616C(2, false, 0, arg2, true);
             break;
 
         case 4:
-            func_800862F8(2, 0, 0);
+            func_800862F8(2, InventoryItemId_Unequipped, false);
             func_800860B0(false, mapMsgIdx, 0, 0, 0, true);
             break;
         
         case 5:
-            func_800862F8(2, 0, 0);
-
-            var = 1;
-            func_8008616C(2, var, 0, arg2, 1);
+            func_800862F8(2, InventoryItemId_Unequipped, false);
+            func_8008616C(2, true, 0, arg2, true);
             break;
 
         default:
-            func_8008616C(0, 0, 0, arg1, 0);
+            func_8008616C(0, false, 0, arg1, false);
             g_MapOverlayHeader.func_CC(0);
             SysWork_StateSetNext(0);
             break;
@@ -914,27 +902,27 @@ void func_80087540(s32 itemId, s32 itemCount, s32 arg2, s32 mapMsgIdx0, s32 mapM
     {
         case 0:
             g_MapOverlayHeader.func_C8();
-            func_8008616C(0, 1, 0, itemCount, 0);
+            func_8008616C(0, true, 0, itemCount, false);
 
             g_SysWork.timer_2C = 0;
             g_SysWork.field_14 = 0;
             g_SysWork.field_10++;
 
         case 1:
-            func_800862F8(7, itemId, 1);
+            func_800862F8(7, itemId, true);
             break;
 
         case 2:
-            func_8008616C(1, 1, 0, 0, 1);
+            func_8008616C(1, true, 0, 0, true);
             break;
 
         case 3:
-            func_800862F8(2, 0, 0);
-            func_8008616C(2, 0, 0, arg2, 1);
+            func_800862F8(2, InventoryItemId_Unequipped, false);
+            func_8008616C(2, false, 0, arg2, true);
             break;
 
         case 4:
-            func_800862F8(2, 0, 0);
+            func_800862F8(2, InventoryItemId_Unequipped, false);
             
             if (mapMsgIdx0 != MapMsgCode_None)
             {
@@ -953,7 +941,7 @@ void func_80087540(s32 itemId, s32 itemCount, s32 arg2, s32 mapMsgIdx0, s32 mapM
 
         case 5:
             D_800A8E58 = 0x30;
-            func_800862F8(2, 0, 0);
+            func_800862F8(2, InventoryItemId_Unequipped, false);
 
             func_800860B0(false, mapMsgIdx1, 0, 0, 0, true);
             break;
@@ -961,12 +949,12 @@ void func_80087540(s32 itemId, s32 itemCount, s32 arg2, s32 mapMsgIdx0, s32 mapM
         case 6:
             D_800A8E58 = 0x30;
 
-            func_800862F8(2, 0, 0);
-            func_8008616C(2, 1, 0, arg2, 1);
+            func_800862F8(2, InventoryItemId_Unequipped, false);
+            func_8008616C(2, true, 0, arg2, true);
             break;
 
         default:
-            func_8008616C(0, 0, 0, itemCount, 0);
+            func_8008616C(0, false, 0, itemCount, false);
             g_MapOverlayHeader.func_CC(0);
             SysWork_StateSetNext(0);
             break;
@@ -1111,7 +1099,7 @@ void func_80087AF4(s32 mapFlagIdx, s32 eventFlagIdx, s32 mapMsgIdx) // 0x80087AF
             g_SysWork.field_10++;
 
         case 1:
-            func_8008616C(2, 1, 0, 0, 1);
+            func_8008616C(2, true, 0, 0, true);
             break;
 
         case 2:
@@ -1124,7 +1112,7 @@ void func_80087AF4(s32 mapFlagIdx, s32 eventFlagIdx, s32 mapMsgIdx) // 0x80087AF
             g_IntervalVBlanks = 1;
 
             GsSwapDispBuff();
-            func_8008616C(0, 0, 0, 0, 0);
+            func_8008616C(0, false, 0, 0, false);
             Fs_QueueWaitForEmpty();
 
             g_SysWork.timer_2C = 0;
@@ -1181,14 +1169,14 @@ void func_80087AF4(s32 mapFlagIdx, s32 eventFlagIdx, s32 mapMsgIdx) // 0x80087AF
             D_800A8E58 = 0x58;
 
             Gfx_BackgroundSpriteDraw(&g_MapImg);
-            func_8008616C(2, 1, 0, 0, 1);
+            func_8008616C(2, true, 0, 0, true);
             break;
 
         default:
             LoadImage(&D_8002ABA4, IMAGE_BUFFER);
             DrawSync(0);
             Gfx_Init(0x140, 0);
-            func_8008616C(0, 0, 0, 0, 0);
+            func_8008616C(0, false, 0, 0, false);
             g_MapOverlayHeader.func_CC(0);
             SysWork_StateSetNext(0);
             break;

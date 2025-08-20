@@ -575,7 +575,7 @@ void Event_MapItemTake() // 0x800DC3C8
             g_SysWork.sysStateStep_C++;
 
         case 1:
-            func_8008616C(2, 1, 0, 0, 0);
+            func_8008616C(2, true, 0, 0, false);
             break;
 
         case 2:
@@ -588,7 +588,7 @@ void Event_MapItemTake() // 0x800DC3C8
             g_IntervalVBlanks = 1;
 
             GsSwapDispBuff();
-            func_8008616C(0, 0, 0, 0, 0);
+            func_8008616C(0, false, 0, 0, false);
             Fs_QueueWaitForEmpty();
 
             g_SysWork.field_28 = 0;
@@ -608,7 +608,7 @@ void Event_MapItemTake() // 0x800DC3C8
             LoadImage(&D_800CCAC8, IMAGE_BUFFER);
             DrawSync(0);
             Gfx_Init(SCREEN_WIDTH, 0);
-            func_8008616C(0, 0, 0, 0, 0);
+            func_8008616C(0, false, 0, 0, false);
 
             g_SysWork.sysStateStep_C = NO_VALUE;
             g_SysWork.field_28       = 0;
@@ -633,14 +633,14 @@ void Event_MapItemTake() // 0x800DC3C8
             D_800A8E58 = 88;
 
             Gfx_BackgroundSpriteDraw(&g_MapImg);
-            func_8008616C(2, 1, 0, 0, 0);
+            func_8008616C(2, true, 0, 0, false);
             break;
 
         case 8:
             LoadImage(&D_800CCAC8, IMAGE_BUFFER);
             DrawSync(0);
             Gfx_Init(SCREEN_WIDTH, 0);
-            func_8008616C(0, 0, 0, 0, 0);
+            func_8008616C(0, false, 0, 0, false);
 
             g_SysWork.field_28 = 0;
             g_SysWork.field_10 = 0;
@@ -686,7 +686,7 @@ void Event_MapItemTake() // 0x800DC3C8
             g_SysWork.sysStateStep_C++;
 
         case 11:
-            func_8008616C(1, 0, 0, 0, 0);
+            func_8008616C(1, false, 0, 0, false);
             break;
 
         default:

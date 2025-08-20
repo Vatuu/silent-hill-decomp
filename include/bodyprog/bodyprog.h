@@ -3145,9 +3145,9 @@ void func_800860B0(bool arg0, s32 mapMsgIdx, s32 arg2, s32 arg3, s32 sysStateSte
 /** Handles giving the player items.
  * `arg3` is some FP time value or picked up item count depending on the value of `arg2`.
  */
-void func_8008616C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
+void func_8008616C(s32 arg0, bool arg1, s32 arg2, s32 arg3, bool arg4);
 
-void func_800862F8(s32 arg0, s32 itemId, s32 arg2);
+void func_800862F8(s32 arg0, s32 itemId, bool arg2);
 
 void func_80086470(u32 switchVar, s32 arg1, s32 arg2, bool arg3);
 
@@ -3175,13 +3175,15 @@ void func_80086C58(s_SubCharacter* chara0, s_SubCharacter* chara1);
 
 void func_80086D04(s_SubCharacter* chara);
 
-void func_80086DA8(s32 arg0, s32 arg1);
+void func_80086DA8(s32 itemId, s32 arg1);
+
+void func_80086E50(s32 itemId, s32 arg1, s32 arg2);
 
 void func_80086F44(s32 arg0, s32 arg1);
 
 void func_80086FE8(s32 mapMsgIdx, s32 sfx, VECTOR3* pos);
 
-void func_8008716C(s32 arg0, s32 arg1, s32 arg2);
+void func_8008716C(s32 itemId, s32 arg1, s32 arg2);
 
 void func_80087360(s32 arg0, s32 arg1, s32 arg2, s32 mapMsgIdx);
 
