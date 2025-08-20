@@ -54,7 +54,7 @@ u32 D_800A8DA8[] =
     0x06DCCA31,
 };
 
-// This is propably used by setRGBC0 somewhere (D_800A8E58 is used that way and contains the same 32bit value)
+// used by setRGBC0
 u8 D_800A8E58 = 0x80;
 u8 D_800A8E59 = 0x00;
 u8 D_800A8E5A = 0x03;
@@ -267,7 +267,7 @@ s_CharaFileInfo g_Chara_FileInfo[] =
     { 135,  1432, 1433, 64,  1, NULL,        0,  0,   0 },
     { 40,   1412, 1413, 64,  1, NULL,        0,  0,   0 },
     { 125,  1424, 1425, 64,  1, NULL,        0,  0,   0 },
-    { 0,    0,    0,    0,   0, NULL,        0,  0,   0 },
+    {} // end of list ?
 };
 
 s_sub_StructUnk3 D_800A93CC[] =
@@ -418,3 +418,384 @@ s_sub_StructUnk3 D_800A93CC[] =
     }
 };
 
+s_StructUnk3 D_800A952C =
+{
+    .field_0 =
+    {
+        .field_0 = { .field_0 = 0x15006 },
+        .field_4 = 1433,
+        .field_6 = 1638,
+        .field_8 = 2867,
+        .field_A = 3276,
+        .field_C = 4096,
+        .field_E = 1,
+        .unk_F   = 0,
+        .field_10 = 163840,
+        .field_14 = { .vec_0 = { 0, 0, 0, 0 } },
+        .field_18 = { .vec_0 = { 0, 0, 0, 0 } },
+        .field_1C = { .vec_0 = { 0, 0, 0, 0 } },
+        .field_20 = { .vec_0 = { 0, 64, 64, 64 } },
+        .field_24 = { .vec_0 = { 0, 12, 12, 12 } },
+        .unk_28 = 0,
+        .unk_2A = 0,
+    },
+    .field_2C = -250,
+    .field_2E = 1,
+    .field_30 = 0x2661CCC,
+};
+
+u32 D_800A9560[] = // Unknown
+{
+    0x0B331000,
+    0x00000999,
+    0x00028000,
+    0x00000000,
+    0x00000000,
+    0x00000000,
+    0x10204000,
+    0x0C0C1800,
+    0x00000000,
+    0x0001920E,
+    0x00000800,
+    0x0CCC1000,
+    0x00000999,
+    0x00028000,
+    0x00000000,
+    0x00000000,
+    0x00000000,
+    0x10182000,
+    0x08081200,
+    0x00000000,
+    0x0001FF06,
+    0x02661CCC,
+    0x066614CC,
+    0x00000333,
+    0x00028000,
+    0x00000000,
+    0x00000000,
+    0x00000000,
+    0x10204000,
+    0x0C0C1800,
+    0x00000000,
+    0x0001FF16,
+    0x019914CC,
+    0x10000F33,
+    0x00001147,
+    0x00028000,
+    0x00000000,
+    0x00000000,
+    0x00000000,
+    0x30303000,
+    0x0C0C0C00,
+    0x00000000,
+    0x0000FF00,
+    0x0C7A0000,
+    0x0D990BD7,
+    0x00011000,
+    0x0000D800,
+    0x0064545C,
+    0x00000000,
+    0x00000000,
+    0x18101000,
+    0x14080800,
+    0x00000000,
+    0x00013816,
+    0x00CC0B33,
+    0x09991199,
+    0x00000A66,
+    0x00028000,
+    0x00000000,
+    0x00000000,
+    0x00000000,
+    0x30303000,
+    0x0C0C0C00,
+    0x00000000,
+    0x0001C406,
+    0x03331333,
+    0x07330B33,
+    0x00000733,
+    0x00028000,
+    0x00000000,
+    0x00000000,
+    0x00000000,
+    0x10204000,
+    0x0C0C1800,
+    0x00000000,
+    0x0001FF06,
+    0x00CC1666,
+    0x09990D99,
+    0x00000999,
+    0x00028000,
+    0x00000000,
+    0x00000000,
+    0x00000000,
+    0x10204000,
+    0x0C0C1800,
+    0x00000000,
+    0x0000FF00,
+    0x10000000,
+    0x0E660F33,
+    0x00010E66,
+    0x00006800,
+    0x0064646C,
+    0x00000000,
+    0x00000000,
+    0x30303000,
+    0x1E0E0E00,
+    0x00000000,
+    0x0001FF16,
+    0x02662800,
+    0x0B331000,
+    0x00000B33,
+    0x00028000,
+    0x00000000,
+    0x00000000,
+    0x00000000,
+    0x10204000,
+    0x0C0C1800,
+    0x00000000,
+    0x0000FF07,
+    0x08CC0000,
+    0x0E140800,
+    0x00011400,
+    0x0000F000,
+    0x00000000,
+    0x00000000,
+    0x00000000,
+    0x18101000,
+    0x14080800,
+    0x00000000,
+    0x0001FF16,
+    0x03330CCC,
+    0x10000F33,
+    0x00001147,
+    0x00028000,
+    0x00000000,
+    0x00000000,
+    0x00000000,
+    0x30303000,
+    0x0C0C0C00,
+    0x00000000,
+};
+
+s32 g_Demo_FrameCount = 0;
+s32 g_UnknownFrameCounter = 0;
+s32 g_PrevVBlanks = 0;
+u16 D_800A9774[] =
+{
+   0x00A0,
+   0x00A2,
+   0x0000,
+   0x0000,
+};
+
+void (*g_GameStateUpdateFuncs[])() =
+{
+    GameState_Unk0_Update,
+    (void (*)())0x800C95AC, // Konami Logo
+    (void (*)())0x800C99A4, // KCET Logo
+    GameState_StartMovieIntro_Update,
+    GameState_DeathLoadScreen_Update,
+    GameState_MovieIntroAlternate_Update,
+    GameState_MovieIntro_Update,
+    GameState_MainMenu_Update,
+    GameState_SaveScreen_Update,
+    GameState_MovieOpening_Update,
+    GameState_LoadScreen_Update,
+    GameState_InGame_Update,
+    GameState_MapEvent_Update,
+    GameState_ExitMovie_Update,
+    GameState_ItemScreens_Update,
+    GameState_MapScreen_Update,
+    GameState_SaveScreen_Update,
+    GameState_DebugMoviePlayer_Update,
+    GameState_Options_Update,
+    GameState_LoadStatusScreen_Update,
+    GameState_LoadMapScreen_Update,
+    GameState_Unk15_Update,
+};
+
+u8 g_SlotElementSelectedIdx[MEMORY_CARD_SLOT_COUNT] = {0,0};
+s8 g_SelectedSaveSlotIdx = 0;
+u8 D_800A97D7 = 0;
+u8 D_800A97D8 = 0xFF;
+s8 D_800A97D9 = 0;
+s8 D_800A97DA = 0;
+s8 D_800A97DB = 0;
+s32 D_800A97DC = 0; // `e_SavegameEntryType`
+s8 D_800A97E0 = 0xFF;
+s8 D_800A97E1 = 0;
+s8 D_800A97E2 = 0;
+s8 D_800A97E3 = 0;
+u32 D_800A97E4[8] = {};
+u16 g_UnknownEngineCmdTable[] =
+{
+    0x0000,
+    0x0000,
+    0x0020,
+    0x0021,
+    0x0022,
+    0x0023,
+    0x0024,
+    0x0025,
+    0x0026,
+    0x0027,
+    0x0028,
+    0x0029,
+    0x002A,
+    0x002B,
+    0x002C,
+    0x002E,
+    0x002F,
+    0x0030,
+    0x0031,
+    0x0032,
+    0x0033,
+    0x0034,
+    0x0035,
+    0x0036,
+    0x0037,
+    0x0038,
+    0x0039,
+    0x003A,
+    0x003B,
+    0x003C,
+    0x003D,
+    0x003E,
+    0x0040,
+    0x0041,
+    0x0042,
+    0x0043,
+    0x0044,
+    0x0045,
+    0x002D,
+    0x0046,
+    0x0047,
+    0x003F,
+};
+u16 g_UnknownEngineCmdTable2[] =
+{
+    0x0000,
+    0x0000,
+    0x0301,
+    0x0302,
+    0x0303,
+    0x0304,
+    0x0305,
+    0x0306,
+    0x0307,
+    0x0308,
+};
+s_800C37D4 D_800A986C[] =
+{
+    { 9,  3, 778, 0x30c030b, 0x30f030d },
+    { 16, 3, 785, 0x3130312, 0x3150314 },
+    { 22, 3, 791, 0x3190318, 0x31b031a },
+    { 28, 3, 797, 0x31f031e, 0x3220321 },
+    { 35, 3, 804, 0x3260325, 0x327030e },
+};
+u32 D_800A98A8 = 0x03200328;
+u16 g_UnknownEngineCmdTable3[] =
+{
+    0x0000,
+    0x00A2,
+    0x00AA,
+    0x00AB,
+    0x00CC,
+    0x00AC,
+    0x00AD,
+    0x00AE,
+    0x00AF,
+    0x00B0,
+    0x00B1,
+    0x00B2,
+    0x00B3,
+    0x00B3,
+    0x00B3,
+    0x00B4,
+    0x00B5,
+    0x00B6,
+    0x00B7,
+    0x00B8,
+    0x00B9,
+    0x00BA,
+    0x00BB,
+    0x00BC,
+    0x00BD,
+    0x00B8,
+    0x00BE,
+    0x00BF,
+    0x00C0,
+    0x00C1,
+    0x00C2,
+    0x00C3,
+    0x00C4,
+    0x00C5,
+    0x00C6,
+    0x00C7,
+    0x00C8,
+    0x00C9,
+    0x00CA,
+    0x00CB,
+};
+s8 D_800A98FC[Chara_Count] =
+{
+    0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
+    0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
+    0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
+    0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
+    0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
+    0xFF, 0xFF, 0xFF, 0xFF, 0xFF, /* 3 0x00 padding */
+};
+
+/* We have some 24 bytes struct with data followed by 72 bytes (3 structs worth)
+ * of zeros. Which are also zeroed at runtime in func_800348C0.
+ * I think it is an array of this struct.
+ */
+s_800A992C D_800A992C[4] =
+{
+    {
+        .charaId0_0       = 1,
+        .charaId1_1       = 1,
+        .unk_2            = {0, 0},
+        .animFile0_4      = 0x8010A600,
+        .animFile1_8      = (s_AnimFile*)0x8010A600,
+        .animFileSize1_C  = 0x0002E630,
+        .animFileSize2_10 = 0x0002E630,
+        .npcCoords_14     = NULL,
+//extern u8 D_800A9944[]; <-- this is the empty 72 bytes bellow.
+    }, {}, {}, {}
+};
+s_AnimInfo D_800A998C =
+{
+    .funcPtr_0 = Anim_Update1,
+    .field_4 = 0,
+    .hasVariableTimeDelta_5 = 0,
+    .animIdx_6 = 0,
+    .unk_7 = 0,
+    .timeDelta_8 = { .constTimeDelta = 0x8000 },
+    .keyframeIdx0_C = 0x001A,
+    .keyframeIdx1_E = 0x002C,
+};
+u32 unknown_D_800A999C = 0x80025234;
+s32 D_800A99A0 = 0;
+u8 D_800A99A4[8] = {0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80 };
+s32 g_MapMsg_CurrentIdx = 0;
+s16 g_MapMsg_SelectFlashTimer = 0;
+//s16 __padding = 0;
+s8 g_MapFullscreenTimFileIdx[24] =
+{
+    0x00, 0x00, 0x01, 0x01, 0x09, 0x0C, 0x0A, 0x0B,
+    0x0D, 0x0C, 0x0A, 0x0B, 0x0D, 0x02, 0x03, 0x04,
+    0x08, 0x05, 0x06, 0x07, 0x08, 0x05, 0x06, 0x07,
+};
+s8 g_MapMarkingTimFileIdx[56] =
+{
+    0xFF, 0x00, 0x01, 0x01, 0x01, 0x04, 0x04, 0x04,
+    0x04, 0x04, 0x04, 0x04, 0x04, 0x02, 0x02, 0x02,
+    0x03, 0x03, 0x03, 0x03, 0x03, 0x03, 0x03, 0x03,
+    0x00, 0x00, 0x00, 0x00, 0x68, 0x53, 0x02, 0x80,
+    0x5C, 0x53, 0x02, 0x80, 0x50, 0x53, 0x02, 0x80,
+    0x44, 0x53, 0x02, 0x80, 0x38, 0x53, 0x02, 0x80,
+    0x2C, 0x53, 0x02, 0x80, 0x20, 0x53, 0x02, 0x80,
+};

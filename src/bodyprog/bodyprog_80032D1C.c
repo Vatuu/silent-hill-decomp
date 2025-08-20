@@ -158,7 +158,7 @@ void MainLoop() // 0x80032EE0
         g_SysWork.field_22A0 = 0;
 
         // Call update function for current GameState.
-        D_800A977C[g_GameWork.gameState_594]();
+        g_GameStateUpdateFuncs[g_GameWork.gameState_594]();
 
         Demo_Update();
         Demo_GameRandSeedSet();
@@ -740,14 +740,14 @@ s32 MainLoop_ShouldWarmReset() // 0x80034108
 
     if (g_SysWork.flags_22A4 & (1 << 1))
     {
-        if (D_800A9768 > 1800)
+        if (g_Demo_FrameCount > (60 * 30))
         {
             return 2;
         }
     }
     else
     {
-        D_800A9768 = 0;
+        g_Demo_FrameCount = 0;
     }
 
     if (g_GameWork.gameState_594 == GameState_MainMenu)
@@ -758,10 +758,10 @@ s32 MainLoop_ShouldWarmReset() // 0x80034108
     // Reset something.
     if ((g_Controller0->btnsHeld_C & RESET_BTN_FLAGS) != RESET_BTN_FLAGS)
     {
-        D_800A976C = 0;
+        g_UnknownFrameCounter = 0;
     }
 
-    if (D_800A976C >= 121)
+    if (g_UnknownFrameCounter >= 121)
     {
         return 2; 
     }
@@ -1109,7 +1109,7 @@ bool func_8003483C(u16* arg0) // 0x8003483C
 
 void func_800348C0() // 0x800348C0
 {
-    bzero(&D_800A9944, 0x48);
+    bzero(&D_800A992C[1], 0x48);
 }
 
 void GameState_LoadScreen_Update() // 0x800348E8
@@ -1729,7 +1729,7 @@ void func_800358DC(s32 cmd) // 0x800358DC
     }
 
     g_GameWork.soundCmd_5B2 = cmd;
-    Sd_EngineCmd(D_800A9804[cmd]);
+    Sd_EngineCmd(g_UnknownEngineCmdTable[cmd]);
 }
 
 void func_80035924() // 0x80035924
@@ -1742,7 +1742,7 @@ void func_80035924() // 0x80035924
         return;
     }
 
-    Sd_EngineCmd(D_800A9858[cmd]);
+    Sd_EngineCmd(g_UnknownEngineCmdTable2[cmd]);
 }
 
 void func_8003596C() // 0x8003596C
@@ -1803,7 +1803,7 @@ s32 func_80035AB0(s32 arg0) // 0x80035AB0
 void func_80035AC8(s32 idx) // 0x80035AC8
 {
     g_GameWork.field_5B3 = idx;
-    Sd_EngineCmd(D_800A98AC[idx]);
+    Sd_EngineCmd(g_UnknownEngineCmdTable3[idx]);
 }
 
 // ========================================
@@ -1878,7 +1878,7 @@ void Gfx_LoadingScreen_PlayerRun() // 0x80035BE0
         model->anim_4.time_4                       = FP_TIME(26.0f);
         g_SysWork.player_4C.chara_0.position_18.vy = FP_METER(0.2f);
 
-        D_800A9990 = model->anim_4.animIdx_0;
+        /*D_800A9990*/ D_800A998C.field_4 = model->anim_4.animIdx_0;
 
         func_80035B04(&g_SysWork.player_4C.chara_0.position_18, &g_SysWork.player_4C.chara_0.rotation_24, boneCoords);
         g_SysWork.sysState_8++;
@@ -3555,12 +3555,12 @@ void SysState_MapScreen_Update() // 0x800396D4
     {
         if (g_SysWork.sysStateStep_C == 0)
         {
-            if (D_800A99CC[g_SavegamePtr->current2dMapIdx_A9] != NO_VALUE)
+            if (g_MapMarkingTimFileIdx[g_SavegamePtr->current2dMapIdx_A9] != NO_VALUE)
             {
-                Fs_QueueStartReadTim(FILE_TIM_MR_0TOWN_TIM + D_800A99CC[g_SavegamePtr->current2dMapIdx_A9], FS_BUFFER_1, &g_MapMarkerAtlasImg);
+                Fs_QueueStartReadTim(FILE_TIM_MR_0TOWN_TIM + g_MapMarkingTimFileIdx[g_SavegamePtr->current2dMapIdx_A9], FS_BUFFER_1, &g_MapMarkerAtlasImg);
             }
 
-            Fs_QueueStartSeek(FILE_TIM_MP_0TOWN_TIM + D_800A99B4[g_SavegamePtr->current2dMapIdx_A9]);
+            Fs_QueueStartSeek(FILE_TIM_MP_0TOWN_TIM + g_MapFullscreenTimFileIdx[g_SavegamePtr->current2dMapIdx_A9]);
 
             g_Gfx_ScreenFade = 2;
             D_800B5C30       = FP_TIME(0.0f);
@@ -3588,12 +3588,12 @@ void GameState_LoadMapScreen_Update() // 0x8003991C
 
         save = g_SavegamePtr;
 
-        if (D_800A99CC[save->current2dMapIdx_A9] != NO_VALUE)
+        if (g_MapMarkingTimFileIdx[save->current2dMapIdx_A9] != NO_VALUE)
         {
-            Fs_QueueStartReadTim(FILE_TIM_MR_0TOWN_TIM + D_800A99CC[save->current2dMapIdx_A9], FS_BUFFER_1, &g_MapMarkerAtlasImg);
+            Fs_QueueStartReadTim(FILE_TIM_MR_0TOWN_TIM + g_MapMarkingTimFileIdx[save->current2dMapIdx_A9], FS_BUFFER_1, &g_MapMarkerAtlasImg);
         }
 
-        Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + D_800A99B4[save->current2dMapIdx_A9], FS_BUFFER_2, &g_MapImg);
+        Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + g_MapFullscreenTimFileIdx[save->current2dMapIdx_A9], FS_BUFFER_2, &g_MapImg);
         g_GameWork.gameStateStep_598[0]++;
     }
 

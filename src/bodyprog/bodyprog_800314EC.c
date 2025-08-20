@@ -715,8 +715,8 @@ void func_80032904()
 
 void Gfx_VSyncCallback() // 0x80032b80
 {
-    D_800A9768++;
-    D_800A976C++;
+    g_Demo_FrameCount++;
+    g_UnknownFrameCounter++;
 
     g_SysWork.timer_1C++;
     g_SysWork.timer_20++;

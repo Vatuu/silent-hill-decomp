@@ -462,8 +462,8 @@ void func_800867B4(s32 caseParam, s32 idx) // 0x800867B4
             StoreImage(&D_8002AB10, IMAGE_BUFFER_2);
             DrawSync(0);
 
-            Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + D_800A99B4[idx], FS_BUFFER_2, &g_MapImg);
-            Fs_QueueStartReadTim(FILE_TIM_MR_0TOWN_TIM + D_800A99CC[idx], FS_BUFFER_1, &g_MapMarkerAtlasImg);
+            Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + g_MapFullscreenTimFileIdx[idx], FS_BUFFER_2, &g_MapImg);
+            Fs_QueueStartReadTim(FILE_TIM_MR_0TOWN_TIM + g_MapMarkingTimFileIdx[idx], FS_BUFFER_1, &g_MapMarkerAtlasImg);
 
             Gfx_Init(SCREEN_WIDTH, 1);
             GsSwapDispBuff();
@@ -1092,7 +1092,7 @@ void func_80087AF4(s32 mapFlagIdx, s32 eventFlagIdx, s32 mapMsgIdx) // 0x80087AF
     {
         case 0:
             g_MapOverlayHeader.func_C8();
-            Fs_QueueStartSeek(FILE_TIM_MP_0TOWN_TIM + D_800A99B4[mapFlagIdx]);
+            Fs_QueueStartSeek(FILE_TIM_MP_0TOWN_TIM + g_MapFullscreenTimFileIdx[mapFlagIdx]);
 
             g_SysWork.timer_2C = 0;
             g_SysWork.field_14 = 0;
@@ -1106,7 +1106,7 @@ void func_80087AF4(s32 mapFlagIdx, s32 eventFlagIdx, s32 mapMsgIdx) // 0x80087AF
             DrawSync(0);
             StoreImage(&D_8002ABA4, IMAGE_BUFFER);
             DrawSync(0);
-            Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + D_800A99B4[mapFlagIdx], FS_BUFFER_2, &g_MapImg);
+            Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + g_MapFullscreenTimFileIdx[mapFlagIdx], FS_BUFFER_2, &g_MapImg);
             Gfx_Init(0x140, 1);
 
             g_IntervalVBlanks = 1;
