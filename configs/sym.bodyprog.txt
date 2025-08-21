@@ -104,7 +104,7 @@ g_ItemVectors                               = 0x800262FC; // type:DVECTOR size:0
 //--------------------------------------------------------------------------
 
 //------------------------------------------------------
-//--- PA: 0x00643C   VA: 0x8002AF9C   subsegment: rodata
+//--- PA: 0x006504   VA: 0x8002B064   subsegment: rodata
 //------------------------------------------------------
 hack_vcSetWatchTgtXzPos_fix                 = 0x8002B2B4; // type:s32 - Some 0x80083500 value which coincidentally points to code inside vcSetWatchTgtXzPos, probably unrelated flags or something. A jtbl is right before this which spimdisasm tries to include, breaking vcSetWatchTgtXzPos build.
 
@@ -464,6 +464,7 @@ Gfx_Items_RenderInit                        = 0x80054558; // type:func
 Inventory_ExitAnimFixes                     = 0x80054634; // type:func
 Gfx_Items_Display                           = 0x80054720; // type:func
 Gfx_Items_SetAmbientLighting                = 0x80054928; // type:func
+Gfx_AnimatePickupItem                       = 0x80054AD8; // type:func
 Inventory_AddSpecialItem                    = 0x80054CAC; // type:func
 
 //--------------------------------------------------------------------
@@ -556,10 +557,12 @@ vcGetXZSumDistFromLimArea                   = 0x80085C80; // type:func
 //--------------------------------------------------------------------
 //--- PA: 0x061218   VA: 0x80085D78   subsegment: c, bodyprog_80085D78
 //--------------------------------------------------------------------
+MapMsg_DisplayAndHandleSelection            = 0x800860B0; // type:func
 Camera_TranslationSet                       = 0x80086A94; // type:func
 Camera_RotationSet                          = 0x80086B70; // type:func
 Event_ItemTake                              = 0x800877B8; // type:func
 Event_CommonItemTake                        = 0x800879FC; // type:func
+Event_PickupMap                             = 0x80087AF4; // type:func
 Chara_Load                                  = 0x80088C7C; // type:func
 Chara_Spawn                                 = 0x80088D78; // type:func
 DmsHeader_FixOffsets                        = 0x8008C9A0; // type:func
@@ -1878,6 +1881,7 @@ midi_smf_stat                               = 0x800A8D00; // type:func
 //------------------------------------------------------------------------
 //--- PA: 0x084238   VA: 0x800A8D98   subsegment: .data, bodyprog_800A8D98
 //------------------------------------------------------------------------
+g_BackgroundColor                           = 0x800A8E58;
 // vw globals from SH2
 vcNullRoadArray                             = 0x800A8F44; // _VC_ROAD_DATA[2]
 g_ObjectTable0                              = 0x800A8F74; // type:s8
@@ -1898,7 +1902,6 @@ g_MapMsg_CurrentIdx                         = 0x800A99AC; // type:s32
 g_MapMsg_SelectFlashTimer                   = 0x800A99B0; // type:s16
 g_MapFullscreenTimFileIdx                   = 0x800A99B4;
 g_MapMarkingTimFileIdx                      = 0x800A99CC;
-g_BackgroundColor                            = 0x800A8E58;
 
 //-----------------------------------------------------------------------
 //--- PA: 0x084EA4   VA: 0x800A9A04   subsegment: data, bodyprog_800A9074
@@ -1950,6 +1953,7 @@ g_Inventory_HealthStatusScanlinePosition    = 0x800AE19A;
 g_Inventory_ItemNameTimer                   = 0x800AE19C;
 g_Inventory_DescriptionRollTimer            = 0x800AE1A0;
 g_Inventory_ScrollTransitionTimer           = 0x800AE1A4;
+g_ItemPickupAnimationState                  = 0x800AE1AC;
 g_Player_IsInWalkToRunTransition            = 0x800AF214;
 g_Player_DisableControl                     = 0x800AF215;
 g_MaybePlayerAnims                          = 0x800AF228; // type:MaybeCharacterAnim

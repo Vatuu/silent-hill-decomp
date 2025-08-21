@@ -1527,8 +1527,8 @@ typedef struct _MapOverlayHeader
     void              (*func_BC)(s_SubCharacter*, s_MainCharacterExtra*, GsCOORDINATE2*);
     void              (*func_C0)(); // func(?).
     void              (*func_C4)(); // func(?).
-    void              (*func_C8)();
-    void              (*func_CC)(s32);
+    void              (*freezePlayerControl_C8)();
+    void              (*returnPlayerControl_CC)(s32);
     s32               (*func_D0)(s32, void*, s16, s32); // 0x800C964C
     s32               (*func_D4)(s_SubCharacter*);      // Assumed return type.
     void              (*func_D8)();                     // Assumed return type.
@@ -1956,7 +1956,7 @@ extern u8 D_800AE187;
 
 extern s16 D_800AE1A8;
 
-extern s32 D_800AE1AC;
+extern s32 g_ItemPickupAnimationState;
 
 extern s32 D_800AE1B0;
 
@@ -2898,7 +2898,7 @@ void func_8005487C(s32);
 
 void func_80054A04(u8 arg0);
 
-bool func_80054AD8(u8 itemId);
+bool Gfx_AnimatePickupItem(u8 itemId);
 
 void func_80054FC0(s32* arg0, s32* arg1, u8 idx);
 
@@ -3116,8 +3116,7 @@ void func_80085EB8(u32 arg0, s_SubCharacter* chara0, s_SubCharacter* chara1, boo
 
 void func_8008605C(s32 arg0, s32 arg1, s32 arg2, bool arg3);
 
-/** `arg2` is anothet `sysStateStep`. Something to do with the pickup item dialog? */
-void func_800860B0(bool arg0, s32 mapMsgIdx, s32 arg2, s32 arg3, s32 sysStateStep, bool arg5);
+void MapMsg_DisplayAndHandleSelection(bool hasSelection, s32 mapMsgIdx, s32 selectYesArg, s32 selectNoArg, s32 select3rdArg, bool arg5);
 
 /** Handles giving the player items.
  * `arg3` is some FP time value or picked up item count depending on the value of `arg2`.
@@ -3170,8 +3169,7 @@ void Event_ItemTake(s32 itemId, s32 itemCount, s32 globalPickupId, s32 mapMsgIdx
 
 void Event_CommonItemTake(u32 pickupType, s32 globalPickupId);
 
-/** Inventory drawing? */
-void func_80087AF4(s32 mapFlagIdx, s32 eventFlagIdx, s32 mapMsgIdx);
+void Event_PickupMap(s32 mapFlagIdx, s32 eventFlagIdx, s32 mapMsgIdx);
 
 void func_80087EA8(s32 cmd);
 
