@@ -3775,7 +3775,7 @@ void SysState_ReadMessage_Update(s32 arg0) // 0x80039FB8
 
     if (g_SysWork.field_18 == 0)
     {
-        g_MapOverlayHeader.func_C8(i);
+        g_MapOverlayHeader.freezePlayerControl_C8(i);
     }
 
     switch (Gfx_MapMsg_Draw(g_MapEventIdx)) 
@@ -3789,7 +3789,7 @@ void SysState_ReadMessage_Update(s32 arg0) // 0x80039FB8
         case MapMsgDrawRet_Yes:
             Savegame_EventFlagSet(g_MapEventParam->eventFlagId_2);
 
-            func = &g_MapOverlayHeader.func_CC;
+            func = &g_MapOverlayHeader.returnPlayerControl_CC;
 
             SysWork_StateSetNext(SysState_Gameplay);
 
@@ -3933,7 +3933,7 @@ void SysState_GameOver_Update() // 0x8003A52C
     switch (g_SysWork.sysStateStep_C)
     {
         case 0:
-            g_MapOverlayHeader.func_C8();
+            g_MapOverlayHeader.freezePlayerControl_C8();
             g_SysWork.field_28 = 0;
 
             if (g_GameWork.autosave_90.continueCount_27B < 99)
@@ -4076,7 +4076,7 @@ void SysState_GameOver_Update() // 0x8003A52C
             break;
 
         default:
-            g_MapOverlayHeader.func_CC(0);
+            g_MapOverlayHeader.returnPlayerControl_CC(0);
             SysWork_StateSetNext(SysState_Gameplay);
             Game_WarmBoot();
             break;

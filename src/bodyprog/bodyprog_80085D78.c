@@ -142,7 +142,7 @@ void func_8008605C(s32 arg0, s32 arg1, s32 arg2, bool arg3) // 0x8008605C
     }
 }
 
-void func_800860B0(bool arg0, s32 mapMsgIdx, s32 arg2, s32 arg3, s32 sysStateStep, bool arg5) // 0x800860B0
+void MapMsg_DisplayAndHandleSelection(bool hasSelection, s32 mapMsgIdx, s32 selectYesArg, s32 selectNoArg, s32 select3rdArg, bool arg5) // 0x800860B0
 {
     s32 var;
 
@@ -152,7 +152,7 @@ void func_800860B0(bool arg0, s32 mapMsgIdx, s32 arg2, s32 arg3, s32 sysStateSte
         return;
     }
     
-    if (!arg0)
+    if (!hasSelection)
     {
         func_80085D78(arg5);
         return;
@@ -160,15 +160,15 @@ void func_800860B0(bool arg0, s32 mapMsgIdx, s32 arg2, s32 arg3, s32 sysStateSte
 
     if (var == MapMsgDrawRet_Yes)
     {
-        func_80085DC0(arg5, arg2);
+        func_80085DC0(arg5, selectYesArg);
     }
     if (var == MapMsgDrawRet_No)
     {
-        func_80085DC0(arg5, arg3);
+        func_80085DC0(arg5, selectNoArg);
     }
     if (var == MapMsgDrawRet_3rd)
     {
-        func_80085DC0(arg5, sysStateStep);
+        func_80085DC0(arg5, select3rdArg);
     }
 }
 
@@ -781,7 +781,7 @@ void func_80086FE8(s32 mapMsgIdx, s32 sfx, VECTOR3* pos) // 0x80086FE8
     switch (g_SysWork.field_10)
     {
         case 0:
-            g_MapOverlayHeader.func_C8();
+            g_MapOverlayHeader.freezePlayerControl_C8();
             func_8005DC1C(sfx, pos, 0x80, 0);
             
             g_SysWork.timer_2C = 0;
@@ -793,11 +793,11 @@ void func_80086FE8(s32 mapMsgIdx, s32 sfx, VECTOR3* pos) // 0x80086FE8
             break;
         
         case 2:
-            func_800860B0(false, mapMsgIdx, 0, 0, 0, true);
+            MapMsg_DisplayAndHandleSelection(false, mapMsgIdx, 0, 0, 0, true);
             break;
 
         default:
-            g_MapOverlayHeader.func_CC(0);
+            g_MapOverlayHeader.returnPlayerControl_CC(0);
 
             SysWork_StateSetNext(SysState_Gameplay);
             break;
@@ -809,7 +809,7 @@ void func_8008716C(s32 itemId, s32 arg1, s32 arg2) // 0x8008716C
     switch (g_SysWork.field_10)
     {
         case 0:
-            g_MapOverlayHeader.func_C8();
+            g_MapOverlayHeader.freezePlayerControl_C8();
             func_8008616C(0, true, 0, arg1, false);
             g_SysWork.timer_2C = 0;
             g_SysWork.field_14 = 0;
@@ -847,7 +847,7 @@ void func_8008716C(s32 itemId, s32 arg1, s32 arg2) // 0x8008716C
 
         default:
             func_8008616C(0, false, 0, arg1, false);
-            g_MapOverlayHeader.func_CC(0);
+            g_MapOverlayHeader.returnPlayerControl_CC(0);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
     }
@@ -858,7 +858,7 @@ void func_80087360(s32 itemId, s32 arg1, s32 arg2, s32 mapMsgIdx) // 0x80087360
     switch (g_SysWork.field_10)
     {
         case 0:
-            g_MapOverlayHeader.func_C8();
+            g_MapOverlayHeader.freezePlayerControl_C8();
             func_8008616C(0, true, 0, arg1, false);
 
             g_SysWork.timer_2C = 0;
@@ -880,7 +880,7 @@ void func_80087360(s32 itemId, s32 arg1, s32 arg2, s32 mapMsgIdx) // 0x80087360
 
         case 4:
             func_800862F8(2, InventoryItemId_Unequipped, false);
-            func_800860B0(false, mapMsgIdx, 0, 0, 0, true);
+            MapMsg_DisplayAndHandleSelection(false, mapMsgIdx, 0, 0, 0, true);
             break;
         
         case 5:
@@ -890,7 +890,7 @@ void func_80087360(s32 itemId, s32 arg1, s32 arg2, s32 mapMsgIdx) // 0x80087360
 
         default:
             func_8008616C(0, false, 0, arg1, false);
-            g_MapOverlayHeader.func_CC(0);
+            g_MapOverlayHeader.returnPlayerControl_CC(0);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
     }
@@ -901,7 +901,7 @@ void func_80087540(s32 itemId, s32 itemCount, s32 arg2, s32 mapMsgIdx0, s32 mapM
     switch (g_SysWork.field_10)
     {
         case 0:
-            g_MapOverlayHeader.func_C8();
+            g_MapOverlayHeader.freezePlayerControl_C8();
             func_8008616C(0, true, 0, itemCount, false);
 
             g_SysWork.timer_2C = 0;
@@ -926,7 +926,7 @@ void func_80087540(s32 itemId, s32 itemCount, s32 arg2, s32 mapMsgIdx0, s32 mapM
             
             if (mapMsgIdx0 != MapMsgCode_None)
             {
-                func_800860B0(false, mapMsgIdx0, 0, 0, 0, true);
+                MapMsg_DisplayAndHandleSelection(false, mapMsgIdx0, 0, 0, 0, true);
                 break;
             }
 
@@ -942,7 +942,7 @@ void func_80087540(s32 itemId, s32 itemCount, s32 arg2, s32 mapMsgIdx0, s32 mapM
         case 5:
             g_BackgroundColor = 0x30;
             func_800862F8(2, InventoryItemId_Unequipped, false);
-            func_800860B0(false, mapMsgIdx1, 0, 0, 0, true);
+            MapMsg_DisplayAndHandleSelection(false, mapMsgIdx1, 0, 0, 0, true);
             break;
 
         case 6:
@@ -954,7 +954,7 @@ void func_80087540(s32 itemId, s32 itemCount, s32 arg2, s32 mapMsgIdx0, s32 mapM
 
         default:
             func_8008616C(0, false, 0, itemCount, false);
-            g_MapOverlayHeader.func_CC(0);
+            g_MapOverlayHeader.returnPlayerControl_CC(0);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
     }
@@ -989,7 +989,8 @@ void Event_ItemTake(s32 itemId, s32 itemCount, s32 globalPickupId, s32 mapMsgIdx
     switch (g_SysWork.field_10)
     {
         case 0:
-            g_MapOverlayHeader.func_C8();
+            // Freeze player in place, start loading item model
+            g_MapOverlayHeader.freezePlayerControl_C8();
             func_80086470(0, itemId, 0, false);
 
             g_SysWork.timer_2C = 0;
@@ -997,13 +998,16 @@ void Event_ItemTake(s32 itemId, s32 itemCount, s32 globalPickupId, s32 mapMsgIdx
             g_SysWork.field_10++;
 
         case 1:
+            // Model is loading
             func_80086470(1, itemId, 0, true);
             break;
 
-        case 2: // "Yes" entry selected?
-            if (func_80054AD8(itemId))
+        case 2:
+            // Gfx_AnimatePickupItem first scales model up (returns false).
+            // Then starts rotating the model (returns true).
+            if (Gfx_AnimatePickupItem(itemId))
             {
-                func_800860B0(true, mapMsgIdxCpy, 3, NO_VALUE, 0, true);
+                MapMsg_DisplayAndHandleSelection(true, mapMsgIdxCpy, /*yes*/3, /*no*/NO_VALUE, 0, true);
             }
 
             // Flag pickup item as collected.
@@ -1011,19 +1015,21 @@ void Event_ItemTake(s32 itemId, s32 itemCount, s32 globalPickupId, s32 mapMsgIdx
             break;
 
         case 3:
+            // Yes selected
             func_80086470(3, itemId, itemCount, false);
             g_SysWork.timer_2C = 0;
             g_SysWork.field_14 = 0;
             g_SysWork.field_10++;
 
-        default: // "No" entry selected?
+        default:
+            // Selecting 'No' sets field_10 to NO_VALUE
             // Flag pickup item as uncollected.
             if (g_SysWork.field_10 == NO_VALUE)
             {
                 g_SavegamePtr->eventFlags_168[globalPickupId >> 5] &= ~(1 << (globalPickupId & 0x1F));
             }
 
-            g_MapOverlayHeader.func_CC(0);
+            g_MapOverlayHeader.returnPlayerControl_CC(0);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
     }
@@ -1049,32 +1055,32 @@ void Event_CommonItemTake(u32 pickupType, s32 globalPickupId) // 0x800879FC
     switch (pickupType)
     {
         case CommonPickupItemId_FirstAidKit:
-            Event_ItemTake(InventoryItemId_FirstAidKit, 1, globalPickupId, 5);
+            Event_ItemTake(InventoryItemId_FirstAidKit, 1, globalPickupId, MapMsgIdx_FirstAidSelect);
             break;
 
         case CommonPickupItemId_HealthDrink:
-            Event_ItemTake(InventoryItemId_HealthDrink, 1, globalPickupId, 6);
+            Event_ItemTake(InventoryItemId_HealthDrink, 1, globalPickupId, MapMsgIdx_HealthDrinkSelect);
             break;
 
         case CommonPickupItemId_Ampoule:
-            Event_ItemTake(InventoryItemId_Ampoule, 1, globalPickupId, 7);
+            Event_ItemTake(InventoryItemId_Ampoule, 1, globalPickupId, MapMsgIdx_AmpouleSelect);
             break;
 
         case CommonPickupItemId_HandgunBullets:
-            Event_ItemTake(InventoryItemId_HandgunBullets, ammoCountMult * HANDGUN_AMMO_COUNT_BASE, globalPickupId, 8);
+            Event_ItemTake(InventoryItemId_HandgunBullets, ammoCountMult * HANDGUN_AMMO_COUNT_BASE, globalPickupId, MapMsgIdx_HandgunAmmoSelect);
             break;
 
         case CommonPickupItemId_ShotgunShells:
-            Event_ItemTake(InventoryItemId_ShotgunShells, ammoCountMult * SHOTGUN_AMMO_COUNT_BASE, globalPickupId, 10);
+            Event_ItemTake(InventoryItemId_ShotgunShells, ammoCountMult * SHOTGUN_AMMO_COUNT_BASE, globalPickupId, MapMsgIdx_ShotgunAmmoSelect);
             break;
 
         case CommonPickupItemId_RifleShells:
-            Event_ItemTake(InventoryItemId_RifleShells, ammoCountMult * RIFLE_AMMO_COUNT_BASE, globalPickupId, 9);
+            Event_ItemTake(InventoryItemId_RifleShells, ammoCountMult * RIFLE_AMMO_COUNT_BASE, globalPickupId, MapMsgIdx_RifleAmmoSelect);
             break;
     }
 }
 
-void func_80087AF4(s32 mapFlagIdx, s32 eventFlagIdx, s32 mapMsgIdx) // 0x80087AF4
+void Event_PickupMap(s32 mapFlagIdx, s32 eventFlagIdx, s32 mapMsgIdx) // 0x80087AF4
 {
     static const RECT D_8002ABA4 =
     {
@@ -1090,7 +1096,7 @@ void func_80087AF4(s32 mapFlagIdx, s32 eventFlagIdx, s32 mapMsgIdx) // 0x80087AF
     switch (g_SysWork.field_10)
     {
         case 0:
-            g_MapOverlayHeader.func_C8();
+            g_MapOverlayHeader.freezePlayerControl_C8();
             Fs_QueueStartSeek(FILE_TIM_MP_0TOWN_TIM + g_MapFullscreenTimFileIdx[mapFlagIdx]);
 
             g_SysWork.timer_2C = 0;
@@ -1122,7 +1128,7 @@ void func_80087AF4(s32 mapFlagIdx, s32 eventFlagIdx, s32 mapMsgIdx) // 0x80087AF
             g_BackgroundColor = 0x58;
 
             Gfx_BackgroundSpriteDraw(&g_MapImg);
-            func_800860B0(true, mapMsgIdx, 4, 5, 0, true);
+            MapMsg_DisplayAndHandleSelection(true, mapMsgIdx, /*yes*/4, /*no*/5, 0, true);
             break;
 
         case 4:
@@ -1176,7 +1182,7 @@ void func_80087AF4(s32 mapFlagIdx, s32 eventFlagIdx, s32 mapMsgIdx) // 0x80087AF
             DrawSync(0);
             Gfx_Init(0x140, 0);
             func_8008616C(0, false, 0, 0, false);
-            g_MapOverlayHeader.func_CC(0);
+            g_MapOverlayHeader.returnPlayerControl_CC(0);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
     }

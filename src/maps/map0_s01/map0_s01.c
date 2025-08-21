@@ -788,7 +788,7 @@ void Event_MapItemTake() // 0x800DC3C8
             g_BackgroundColor = 88;
 
             Gfx_BackgroundSpriteDraw(&g_MapImg);
-            func_800860B0(true, 59, 6, 4, 0, false);
+            MapMsg_DisplayAndHandleSelection(true, 59, 6, 4, 0, false);
             break;
 
         case 5:
