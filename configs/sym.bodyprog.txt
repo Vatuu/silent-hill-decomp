@@ -2520,3 +2520,4 @@ Gfx_AnimatePickupItem = 0x80054AD8; // type:func
 MapMsg_DisplayAndHandleSelection = 0x800860B0; // type:func
 g_ItemPickupAnimationState = 0x800AE1AC;
 Event_PickupMap = 0x80087AF4; // type:func
+copyString = 0x80056D64; // type:func
