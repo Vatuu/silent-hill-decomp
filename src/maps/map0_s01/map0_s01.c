@@ -567,12 +567,7 @@ void Event_MapItemTake() // 0x800DC3C8
         case 0:
             sharedFunc_800D20E4_0_s00();
             Fs_QueueStartSeek(FILE_TIM_MP_0TOWN_TIM + D_800A99B5);
-
-            g_SysWork.field_28 = 0;
-            g_SysWork.field_10 = 0;
-            g_SysWork.timer_2C = 0;
-            g_SysWork.field_14 = 0;
-            g_SysWork.sysStateStep_C++;
+            SysWork_StateStepIncrement();
 
         case 1:
             func_8008616C(2, true, 0, 0, false);
@@ -590,12 +585,7 @@ void Event_MapItemTake() // 0x800DC3C8
             GsSwapDispBuff();
             func_8008616C(0, false, 0, 0, false);
             Fs_QueueWaitForEmpty();
-
-            g_SysWork.field_28 = 0;
-            g_SysWork.field_10 = 0;
-            g_SysWork.timer_2C = 0;
-            g_SysWork.field_14 = 0;
-            g_SysWork.sysStateStep_C++;
+            SysWork_StateStepIncrement();
 
         case 3:
             g_BackgroundColor = 88;
@@ -609,24 +599,14 @@ void Event_MapItemTake() // 0x800DC3C8
             DrawSync(0);
             Gfx_Init(SCREEN_WIDTH, 0);
             func_8008616C(0, false, 0, 0, false);
-
-            g_SysWork.sysStateStep_C = NO_VALUE;
-            g_SysWork.field_28       = 0;
-            g_SysWork.field_10       = 0;
-            g_SysWork.timer_2C       = 0;
-            g_SysWork.field_14       = 0;
+            SysWork_StateStepReset();
             break;
 
         case 6:
             g_SavegamePtr->hasMapsFlags_164 |= 1 << 1;
 
             Fs_QueueStartRead(FILE_ANIM_CAFE2_DMS, FS_BUFFER_11);
-
-            g_SysWork.field_28 = 0;
-            g_SysWork.field_10 = 0;
-            g_SysWork.timer_2C = 0;
-            g_SysWork.field_14 = 0;
-            g_SysWork.sysStateStep_C++;
+            SysWork_StateStepIncrement();
 
         case 4:
         case 7:
@@ -641,21 +621,11 @@ void Event_MapItemTake() // 0x800DC3C8
             DrawSync(0);
             Gfx_Init(SCREEN_WIDTH, 0);
             func_8008616C(0, false, 0, 0, false);
-
-            g_SysWork.field_28 = 0;
-            g_SysWork.field_10 = 0;
-            g_SysWork.timer_2C = 0;
-            g_SysWork.field_14 = 0;
-            g_SysWork.sysStateStep_C++;
+            SysWork_StateStepIncrement();
 
         case 9:
             func_80088D0C();
-
-            g_SysWork.field_28 = 0;
-            g_SysWork.field_10 = 0;
-            g_SysWork.timer_2C = 0;
-            g_SysWork.field_14 = 0;
-            g_SysWork.sysStateStep_C++;
+            SysWork_StateStepIncrement();
 
         case 10:
             // Set cutscene character?
@@ -678,12 +648,7 @@ void Event_MapItemTake() // 0x800DC3C8
             g_SysWork.field_228C             |= 1 << 0;
             g_SavegamePtr->eventFlags_168[1] |= 1 << 6;
 
-            // Set ???
-            g_SysWork.field_28 = 0;
-            g_SysWork.field_10 = 0;
-            g_SysWork.timer_2C = 0;
-            g_SysWork.field_14 = 0;
-            g_SysWork.sysStateStep_C++;
+            SysWork_StateStepIncrement();
 
         case 11:
             func_8008616C(1, false, 0, 0, false);
@@ -691,14 +656,7 @@ void Event_MapItemTake() // 0x800DC3C8
 
         default:
             sharedFunc_800D2244_0_s00(0);
-
-            g_SysWork.sysState_8     = 0;
-            g_SysWork.timer_24       = 0;
-            g_SysWork.sysStateStep_C = 0;
-            g_SysWork.field_28       = 0;
-            g_SysWork.field_10       = 0;
-            g_SysWork.timer_2C       = 0;
-            g_SysWork.field_14       = 0;
+            SysWork_StateSetNext(GameState_Unk0);
             break;
     }
 }

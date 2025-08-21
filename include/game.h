@@ -4,6 +4,8 @@
 #include "gpu.h"
 #include "types.h"
 
+struct _SubCharacter;
+
 #define TICKS_PER_SECOND 60 /** Game has a variable timestep with 60 ticks max. */
 
 #define SCREEN_WIDTH                   320
@@ -55,9 +57,6 @@
 /** @brief Checks if a specified map has been collected. */
 #define HAS_MAP(mapIdx) \
     ((((u32*)&g_SavegamePtr->hasMapsFlags_164)[(mapIdx) / 32] >> ((mapIdx) % 32)) & (1 << 0))
-
-/** Forward declarations. */
-struct _SubCharacter;
 
 /** Each map has its own messages, with the first 15 hardcoded to be the same. */
 typedef enum _MapMsgIdx
@@ -1432,7 +1431,7 @@ static inline s32 Flags16b_IsSet(u16* array, s32 flagId)
 
 /** @brief Sets the given animation flag on both player character and player extra data. */
 // TODO: Move to separate character/player header.
-static inline void Player_AnimFlagsSet(u32 flag)
+static inline void Player_AnimFlagsSet(u32 flags)
 {
     s_MainCharacterExtra* extra;
     s_SubCharacter*       chara;
@@ -1440,8 +1439,8 @@ static inline void Player_AnimFlagsSet(u32 flag)
     extra = &g_SysWork.player_4C.extra_128;
     chara = &g_SysWork.player_4C.chara_0;
 
-    extra->model_0.anim_4.flags_2 |= flag;
-    chara->model_0.anim_4.flags_2 |= flag;
+    extra->model_0.anim_4.flags_2 |= flags;
+    chara->model_0.anim_4.flags_2 |= flags;
 }
 
 #endif

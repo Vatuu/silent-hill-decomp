@@ -5,7 +5,7 @@
 #include <libgpu.h>
 #include <libgs.h>
 
-struct _MapOverlayHeader; // `bodyprog.h` forward declaration.
+struct _MapOverlayHeader;
 
 /** @brief GLOSSARY OF ABBREVIATIONS
  *

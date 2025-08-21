@@ -4105,13 +4105,16 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
                     if (chara->health_B0 <= FP_FLOAT_TO(0.0f, Q12_SHIFT) && chara->properties_E4.player.properties_E4[1] <= 0)
                     {
                         g_MapOverlayHeader.func_DC();
-                        g_SysWork.sysState_8                                       = GameState_ExitMovie;
-                        g_SysWork.timer_24                                         = 0;
-                        g_SysWork.sysStateStep_C                                   = 0;
-                        g_SysWork.field_28                                         = 0;
-                        g_SysWork.field_10                                         = 0;
-                        g_SysWork.timer_2C                                         = 0;
-                        g_SysWork.field_14                                         = 0;
+
+                        //SysWork_StateSetNext(GameState_ExitMovie); // TODO: Doesn't match.
+                        g_SysWork.sysState_8     = GameState_ExitMovie;
+                        g_SysWork.timer_24       = 0;
+                        g_SysWork.sysStateStep_C = 0;
+                        g_SysWork.field_28       = 0;
+                        g_SysWork.field_10       = 0;
+                        g_SysWork.timer_2C       = 0;
+                        g_SysWork.field_14       = 0;
+
                         chara->health_B0                                           = FP_FLOAT_TO(100.0f, Q12_SHIFT);
                         g_SysWork.player_4C.chara_0.properties_E4.player.field_114 = 0;
                         return;
@@ -4202,13 +4205,16 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
                     if (chara->health_B0 <= FP_FLOAT_TO(0.0f, Q12_SHIFT) && chara->properties_E4.player.properties_E4[1] <= 0)
                     {
                         g_MapOverlayHeader.func_DC();
-                        g_SysWork.sysState_8                                       = GameState_ExitMovie;
-                        g_SysWork.timer_24                                         = 0;
-                        g_SysWork.sysStateStep_C                                   = 0;
-                        g_SysWork.field_28                                         = 0;
-                        g_SysWork.field_10                                         = 0;
-                        g_SysWork.timer_2C                                         = 0;
-                        g_SysWork.field_14                                         = 0;
+
+                        //SysWork_StateSetNext(GameState_ExitMovie); // TODO: Doesn't match.
+                        g_SysWork.sysState_8     = GameState_ExitMovie;
+                        g_SysWork.timer_24       = 0;
+                        g_SysWork.sysStateStep_C = 0;
+                        g_SysWork.field_28       = 0;
+                        g_SysWork.field_10       = 0;
+                        g_SysWork.timer_2C       = 0;
+                        g_SysWork.field_14       = 0;
+
                         chara->health_B0                                           = FP_FLOAT_TO(100.0f, Q12_SHIFT);
                         g_SysWork.player_4C.chara_0.properties_E4.player.field_114 = 0;
                         return;
@@ -4813,6 +4819,8 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
             if (chara->model_0.anim_4.keyframeIdx0_8 == g_MapOverlayHeader.field_38[D_800AF220].field_6)
             {
                 g_MapOverlayHeader.func_DC();
+                
+                //SysWork_StateSetNext(GameState_ExitMovie); // TODO: Doesn't match.
                 g_SysWork.sysState_8     = GameState_ExitMovie;
                 g_SysWork.timer_24       = 0;
                 g_SysWork.sysStateStep_C = 0;
@@ -4883,7 +4891,9 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
                 }
                 
                 g_MapOverlayHeader.func_DC();
-                g_SysWork.sysState_8     = GameState_ExitMovie;
+                
+                SysWork_StateSetNext(GameState_ExitMovie); // TODO: Doesn't match.
+                //g_SysWork.sysState_8     = GameState_ExitMovie;
                 g_SysWork.timer_24       = 0;
                 g_SysWork.sysStateStep_C = 0;
                 g_SysWork.field_28       = 0;
@@ -4913,6 +4923,8 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
             if (chara->model_0.anim_4.keyframeIdx0_8 == g_MapOverlayHeader.field_38[D_800AF220].field_6 - 0x19)
             {
                 g_MapOverlayHeader.func_DC();
+                
+                //SysWork_StateSetNext(GameState_ExitMovie); // TODO: Doesn't match.
                 g_SysWork.sysState_8     = GameState_ExitMovie;
                 g_SysWork.timer_24       = 0;
                 g_SysWork.sysStateStep_C = 0;

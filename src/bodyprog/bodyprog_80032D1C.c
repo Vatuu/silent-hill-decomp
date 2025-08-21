@@ -3262,7 +3262,7 @@ void SysState_Gameplay_Update() // 0x80038BD4
         g_SysWork.timer_2C       = 0;
         g_SysWork.field_14       = 0;
     }
-    else if (func_8007F26C() == 1)
+    else if (func_8007F26C() == true)
     {
         return;
     }
@@ -3518,7 +3518,7 @@ void GameState_LoadStatusScreen_Update() // 0x800395C0
 
     Gfx_MotionBlur(2);
 
-    if (Fs_QueueDoThingWhenEmpty() != 0)
+    if (Fs_QueueDoThingWhenEmpty())
     {
         Game_StateSetNext(GameState_InventoryScreen);
     }
@@ -3595,7 +3595,7 @@ void GameState_LoadMapScreen_Update() // 0x8003991C
 
     Gfx_MotionBlur(2);
 
-    if (Fs_QueueDoThingWhenEmpty() != 0)
+    if (Fs_QueueDoThingWhenEmpty())
     {
         Game_StateSetNext(GameState_MapScreen);
     }
@@ -4097,7 +4097,7 @@ void GameState_MapEvent_Update() // 0x8003AA4C
         g_GameWork.gameStateStep_598[0] = 1;
     }
 
-    D_800A9A0C = (g_Gfx_ScreenFade & 0x7) == 5 && Fs_QueueDoThingWhenEmpty() != 0;
+    D_800A9A0C = (g_Gfx_ScreenFade & 0x7) == 5 && Fs_QueueDoThingWhenEmpty();
 
     Savegame_EventFlagSet(g_MapEventParam->eventFlagId_2);
 

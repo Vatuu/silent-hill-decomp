@@ -1,11 +1,11 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math.h"
 
-s_FsImageDesc D_800A8D98 = { { 16 , 0   } , 0  , 0  , 8     , 0      };
-s_FsImageDesc D_800A8DA0 = { { 44 , 0   } , 0  , 0  , 0     , 0      };
-/* The bellow could also be some s_FsImageDesc but the big negative numbers make me think it's not.
- * Might be some other primitive data (POLY, RGBC0, etc.)
- */
+s_FsImageDesc D_800A8D98 = { { 16, 0 }, 0, 0, 8, 0 };
+s_FsImageDesc D_800A8DA0 = { { 44, 0 }, 0, 0, 0, 0 };
+
+// Could also be some `s_FsImageDesc`, but the big negative numbers suggest not.
+// Might be some other primitive data (`POLY`, `RGBC0`, etc.).
 u32 D_800A8DA8[] =
 {
     0x00010010,
@@ -55,74 +55,74 @@ u32 D_800A8DA8[] =
 };
 
 u8 g_BackgroundColor = 0x80;
-u8 D_800A8E59 = 0x00;
-u8 D_800A8E5A = 0x03;
-u8 D_800A8E5B = 0x00;
+u8 D_800A8E59        = 0x00;
+u8 D_800A8E5A        = 0x03;
+u8 D_800A8E5B        = 0x00;
 
 DR_MODE D_800A8E5C[] =
 {
-    {0x03000000, {0xE1000240, 0x00000000}},
-    {0x03000000, {0xE1000240, 0x00000000}},
+    { 0x03000000, { 0xE1000240, 0x00000000 } },
+    { 0x03000000, { 0xE1000240, 0x00000000 } },
 };
 
 TILE D_800A8E74[] =
 {
-    {0x03000000, 0xFF, 0x00, 0x00, 0x62, 0xFEC0, 0xFF10, 0x0280, 0x01E0},
-    {0x03000000, 0xFF, 0x00, 0x00, 0x62, 0xFEC0, 0xFF10, 0x0280, 0x01E0},
+    { 0x03000000, 0xFF, 0x00, 0x00, 0x62, 0xFEC0, 0xFF10, 0x0280, 0x01E0 },
+    { 0x03000000, 0xFF, 0x00, 0x00, 0x62, 0xFEC0, 0xFF10, 0x0280, 0x01E0 },
 };
 
 s32 D_800A8E94 = 0x00000000;
 
 DR_MODE D_800A8E98[] =
 {
-    {0x03000000, {0xE1000240, 0x00000000}},
-    {0x03000000, {0xE1000240, 0x00000000}},
+    { 0x03000000, { 0xE1000240, 0x00000000 } },
+    { 0x03000000, { 0xE1000240, 0x00000000 } },
 };
 
-//TODO macrofy this ?
+// TODO: Make a macro?
 POLY_G4 D_800A8EB0[] =
 {
     {
         0x8000000,
-        0x0, 0x0, 0x0, 0x3a,
-        0xff60, 0xff90,
+        0x0, 0x0, 0x0, 0x3A,
+        0xFF60, 0xFF90,
         0x0, 0x0, 0x0, 0x0,
-        0xa0, 0xff90,
+        0xa0, 0xFF90,
         0x0, 0x0, 0x0, 0x0,
-        0xff60, 0xffa0,
+        0xFF60, 0xFFA0,
         0x0, 0x0, 0x0, 0x0,
-        0xa0, 0xffa0,
+        0xa0, 0xFFA0,
     },
     {
         0x8000000,
-        0x0, 0x0, 0x0, 0x3a,
-        0xff60, 0xff90,
+        0x0, 0x0, 0x0, 0x3A,
+        0xFF60, 0xFF90,
         0x0, 0x0, 0x0, 0x0,
-        0xa0, 0xff90,
+        0xa0, 0xFF90,
         0x0, 0x0, 0x0, 0x0,
-        0xff60, 0xffa0,
+        0xFF60, 0xFFA0,
         0x0, 0x0, 0x0, 0x0,
-        0xa0, 0xffa0,
+        0xa0, 0xFFA0,
     },
     {
         0x8000000,
-        0x0, 0x0, 0x0, 0x3a,
-        0xff60, 0x70,
+        0x0, 0x0, 0x0, 0x3A,
+        0xFF60, 0x70,
         0x0, 0x0, 0x0, 0x0,
         0xa0, 0x70,
         0x0, 0x0, 0x0, 0x0,
-        0xff60, 0x60,
+        0xFF60, 0x60,
         0x0, 0x0, 0x0, 0x0,
         0xa0, 0x60,
     },
     {
         0x8000000,
-        0x0, 0x0, 0x0, 0x3a,
-        0xff60, 0x70,
+        0x0, 0x0, 0x0, 0x3A,
+        0xFF60, 0x70,
         0x0, 0x0, 0x0, 0x0,
         0xa0, 0x70,
         0x0, 0x0, 0x0, 0x0,
-        0xff60, 0x60,
+        0xFF60, 0x60,
         0x0, 0x0, 0x0, 0x0,
         0xa0, 0x60,
     },
@@ -133,8 +133,8 @@ s32 D_800A8F40 = 0x00000000;
 VC_ROAD_DATA vcNullRoadArray[] =
 {
     {
-        .lim_sw_0          = {Q7_8(-30.0f), Q7_8(30.0f), Q7_8(-30.0f), Q7_8(30.0f)},
-        .lim_rd_8          = {Q7_8(-30.0f), Q7_8(30.0f), Q7_8(-30.0f), Q7_8(30.0f)},
+        .lim_sw_0          = { Q7_8(-30.0f), Q7_8(30.0f), Q7_8(-30.0f), Q7_8(30.0f) },
+        .lim_rd_8          = { Q7_8(-30.0f), Q7_8(30.0f), Q7_8(-30.0f), Q7_8(30.0f) },
         .flags_10          = 0,
         .area_size_type_11 = 2,
         .rd_type_11        = 0,
@@ -148,8 +148,8 @@ VC_ROAD_DATA vcNullRoadArray[] =
         .fix_ang_y_17      = 0,
     },
     {
-        .lim_sw_0          = {Q7_8(0.0f), Q7_8(0.0f), Q7_8(0.0f), Q7_8(0.0f)},
-        .lim_rd_8          = {Q7_8(0.0f), Q7_8(0.0f), Q7_8(0.0f), Q7_8(0.0f)},
+        .lim_sw_0          = { Q7_8(0.0f), Q7_8(0.0f), Q7_8(0.0f), Q7_8(0.0f) },
+        .lim_rd_8          = { Q7_8(0.0f), Q7_8(0.0f), Q7_8(0.0f), Q7_8(0.0f) },
         .flags_10          = 1,
         .area_size_type_11 = 0,
         .rd_type_11        = 0,
@@ -166,20 +166,20 @@ VC_ROAD_DATA vcNullRoadArray[] =
 
 GsOT g_ObjectTable0[] =
 {
-    {0x0B, (GsOT_TAG*)0x800B5CC8, 0, 0, 0},
-    {0x0B, (GsOT_TAG*)0x800B7CC8, 0, 0, 0},
+    { 0x0B, (GsOT_TAG*)0x800B5CC8, 0, 0, 0 },
+    { 0x0B, (GsOT_TAG*)0x800B7CC8, 0, 0, 0 },
 };
 
 GsOT D_800A8F9C[] =
 {
-    {0x09, (GsOT_TAG*)0x801E2600, 0, 0, 0},
-    {0x09, (GsOT_TAG*)0x801E2E00, 0, 0, 0},
+    { 0x09, (GsOT_TAG*)0x801E2600, 0, 0, 0 },
+    { 0x09, (GsOT_TAG*)0x801E2E00, 0, 0, 0 },
 };
 
 GsOT g_ObjectTable1[] =
 {
-    {0x04, (GsOT_TAG*)0x800B5C40, 0, 0, 0},
-    {0x04, (GsOT_TAG*)0x800B5C80, 0, 0, 0},
+    { 0x04, (GsOT_TAG*)0x800B5C40, 0, 0, 0 },
+    { 0x04, (GsOT_TAG*)0x800B5C80, 0, 0, 0 },
 };
 
 q19_12 g_DeltaTime1      = 0x00000044;
@@ -207,7 +207,7 @@ s_FsImageDesc D_800A9084                   = { { 0,   11  }, 0,    0,   304, 0  
 s_FsImageDesc D_800A908C                   = { { 0,   13  }, 0,    0,   224, 0   };
 s_FsImageDesc D_800A9094                   = { { 0,   13  }, 0,    128, 224, 8   };
 s_FsImageDesc g_Font24AtlasImg             = { { 0,   31  }, 0,    0,   960, 496 };
-/* Not sure if these are really s_FsImageDesc. Seems plausible but not sure about negative values here */
+/* Not sure if these are really `s_FsImageDesc`. Seems lausible but not sure about negative values here. */
 s_FsImageDesc D_800A90A4                   = { { 0,   0   }, 35,   0,   35,  3   };
 s_FsImageDesc D_800A90AC                   = { { 0,   0   }, 0,    0,   0,  -1   };
 s_FsImageDesc D_800A90B4                   = { { 0,   0   }, 15,   0,  -53,  10  };
@@ -272,7 +272,7 @@ s_CharaFileInfo g_Chara_FileInfo[] =
 s_sub_StructUnk3 D_800A93CC[] =
 {
     {
-        .field_0  = {.field_0 = 0xff00},
+        .field_0  = { .field_0 = 0xFF00 },
         .field_4  = 0,
         .field_6  = 4710,
         .field_8  = 4096,
@@ -281,16 +281,16 @@ s_sub_StructUnk3 D_800A93CC[] =
         .field_E  = 0,
         .unk_F    = 0,
         .field_10 = 409600,
-        .field_14 = {.vec_0 = {60, 60, 68, 0}},
-        .field_18 = {.vec_0 = {0, 0, 0, 0}},
-        .field_1C = {.vec_0 = {0, 0, 0, 0}},
-        .field_20 = {.vec_0 = {0, 64, 64, 64}},
-        .field_24 = {.vec_0 = {0, 12, 12, 28}},
+        .field_14 = { .vec_0 = {60, 60, 68, 0 } },
+        .field_18 = { .vec_0 = { 0, 0, 0, 0 } },
+        .field_1C = { .vec_0 = { 0, 0, 0, 0 } },
+        .field_20 = { .vec_0 = { 0, 64, 64, 64 } },
+        .field_24 = { .vec_0 = { 0, 12, 12, 28 } },
         .unk_28   = 0,
-        .unk_2A   = 0,
+        .unk_2A   = 0
     },
     {
-        .field_0  = {.field_0 = 0xff00},
+        .field_0  = { .field_0 = 0xFF00 },
         .field_4  = 0,
         .field_6  = 4505,
         .field_8  = 3891,
@@ -299,16 +299,16 @@ s_sub_StructUnk3 D_800A93CC[] =
         .field_E  = 1,
         .unk_F    = 0,
         .field_10 = 55296,
-        .field_14 = {.vec_0 = {108, 100, 116, 0}},
-        .field_18 = {.vec_0 = {0, 0, 0, 0}},
-        .field_1C = {.vec_0 = {0, 0, 0, 0}},
-        .field_20 = {.vec_0 = {0, 48, 48, 48}},
-        .field_24 = {.vec_0 = {0, 14, 14, 30}},
+        .field_14 = { .vec_0 = {108, 100, 116, 0 } },
+        .field_18 = { .vec_0 = { 0, 0, 0, 0 } },
+        .field_1C = { .vec_0 = { 0, 0, 0, 0 } },
+        .field_20 = { .vec_0 = { 0, 48, 48, 48 } },
+        .field_24 = { .vec_0 = { 0, 14, 14, 30 } },
         .unk_28   = 0,
-        .unk_2A   = 0,
+        .unk_2A   = 0
     },
     {
-        .field_0  = {.field_0 = 0x2ff00},
+        .field_0  = { .field_0 = 0x2ff00 },
         .field_4  = 2457,
         .field_6  = 2457,
         .field_8  = 3686,
@@ -317,16 +317,16 @@ s_sub_StructUnk3 D_800A93CC[] =
         .field_E  = 1,
         .unk_F    = 0,
         .field_10 = 57344,
-        .field_14 = {.vec_0 = {100, 92, 108, 0}},
-        .field_18 = {.vec_0 = {0, 0, 0, 0}},
-        .field_1C = {.vec_0 = {0, 0, 0, 0}},
-        .field_20 = {.vec_0 = {0, 48, 48, 48}},
-        .field_24 = {.vec_0 = {0, 13, 13, 29}},
+        .field_14 = { .vec_0 = { 100, 92, 108, 0 } },
+        .field_18 = { .vec_0 = { 0, 0, 0, 0 } },
+        .field_1C = { .vec_0 = { 0, 0, 0, 0 } },
+        .field_20 = { .vec_0 = { 0, 48, 48, 48 } },
+        .field_24 = { .vec_0 = { 0, 13, 13, 29 } },
         .unk_28   = 0,
-        .unk_2A   = 0,
+        .unk_2A   = 0
     },
     {
-        .field_0  = {.field_0 = 0x1ff16},
+        .field_0  = { .field_0 = 0x1ff16},
         .field_4  = 5324,
         .field_6  = 0,
         .field_8  = 3891,
@@ -335,16 +335,16 @@ s_sub_StructUnk3 D_800A93CC[] =
         .field_E  = 0,
         .unk_F    = 0,
         .field_10 = 163840,
-        .field_14 = {.vec_0 = {0, 0, 0, 0}},
-        .field_18 = {.vec_0 = {0, 0, 0, 0}},
-        .field_1C = {.vec_0 = {0, 0, 0, 0}},
-        .field_20 = {.vec_0 = {0, 48, 48, 48}},
-        .field_24 = {.vec_0 = {0, 12, 12, 12}},
+        .field_14 = { .vec_0 = { 0, 0, 0, 0 } },
+        .field_18 = { .vec_0 = { 0, 0, 0, 0 } },
+        .field_1C = { .vec_0 = { 0, 0, 0, 0 } },
+        .field_20 = { .vec_0 = { 0, 48, 48, 48 } },
+        .field_24 = { .vec_0 = { 0, 12, 12, 12 } },
         .unk_28   = 0,
-        .unk_2A   = 0,
+        .unk_2A   = 0
     },
     {
-        .field_0  = {.field_0 = 0x1ff16},
+        .field_0  = { .field_0 = 0x1ff16},
         .field_4  = 2867,
         .field_6  = 0,
         .field_8  = 3686,
@@ -353,16 +353,16 @@ s_sub_StructUnk3 D_800A93CC[] =
         .field_E  = 0,
         .unk_F    = 0,
         .field_10 = 163840,
-        .field_14 = {.vec_0 = {0, 0, 0, 0}},
-        .field_18 = {.vec_0 = {0, 0, 0, 0}},
-        .field_1C = {.vec_0 = {0, 0, 0, 0}},
-        .field_20 = {.vec_0 = {0, 48, 48, 48}},
-        .field_24 = {.vec_0 = {0, 12, 12, 12}},
+        .field_14 = { .vec_0 = { 0, 0, 0, 0 } },
+        .field_18 = { .vec_0 = { 0, 0, 0, 0 } },
+        .field_1C = { .vec_0 = { 0, 0, 0, 0 } },
+        .field_20 = { .vec_0 = { 0, 48, 48, 48 } },
+        .field_24 = { .vec_0 = { 0, 12, 12, 12 } },
         .unk_28   = 0,
-        .unk_2A   = 0,
+        .unk_2A   = 0
     },
     {
-        .field_0  = {.field_0 = 0x1ff16},
+        .field_0  = { .field_0 = 0x1ff16},
         .field_4  = 5324,
         .field_6  = 409,
         .field_8  = 3891,
@@ -371,16 +371,16 @@ s_sub_StructUnk3 D_800A93CC[] =
         .field_E  = 3,
         .unk_F    = 0,
         .field_10 = 55296,
-        .field_14 = {.vec_0 = {68, 60, 76, 0}},
-        .field_18 = {.vec_0 = {1, 24, 16, 32}},
-        .field_1C = {.vec_0 = {0, 85, 75, 75}},
-        .field_20 = {.vec_0 = {0, 32, 32, 40}},
-        .field_24 = {.vec_0 = {0, 12, 12, 28}},
+        .field_14 = { .vec_0 = { 68, 60, 76, 0 } },
+        .field_18 = { .vec_0 = {1, 24, 16, 32 } },
+        .field_1C = { .vec_0 = { 0, 85, 75, 75 } },
+        .field_20 = { .vec_0 = { 0, 32, 32, 40 } },
+        .field_24 = { .vec_0 = { 0, 12, 12, 28 } },
         .unk_28   = 0,
-        .unk_2A   = 0,
+        .unk_2A   = 0
     },
     {
-        .field_0  = {.field_0 = 0xff07},
+        .field_0  = { .field_0 = 0xFF07},
         .field_4  = 0,
         .field_6  = 1802,
         .field_8  = 1638,
@@ -389,16 +389,16 @@ s_sub_StructUnk3 D_800A93CC[] =
         .field_E  = 1,
         .unk_F    = 0,
         .field_10 = 57344,
-        .field_14 = {.vec_0 = {0, 0, 0, 0}},
-        .field_18 = {.vec_0 = {0, 0, 0, 0}},
-        .field_1C = {.vec_0 = {0, 0, 0, 0}},
-        .field_20 = {.vec_0 = {0, 16, 16, 24}},
-        .field_24 = {.vec_0 = {0, 8, 8, 20}},
+        .field_14 = { .vec_0 = { 0, 0, 0, 0 } },
+        .field_18 = { .vec_0 = { 0, 0, 0, 0 } },
+        .field_1C = { .vec_0 = { 0, 0, 0, 0 } },
+        .field_20 = { .vec_0 = { 0, 16, 16, 24 } },
+        .field_24 = { .vec_0 = { 0, 8, 8, 20 } },
         .unk_28   = 0,
-        .unk_2A   = 0,
+        .unk_2A   = 0
     },
     {
-        .field_0  = {.field_0 = 0xff07},
+        .field_0  = { .field_0 = 0xFF07},
         .field_4  = 0,
         .field_6  = 1802,
         .field_8  = 1638,
@@ -407,13 +407,13 @@ s_sub_StructUnk3 D_800A93CC[] =
         .field_E  = 1,
         .unk_F    = 0,
         .field_10 = 38092,
-        .field_14 = {.vec_0 = {0, 0, 0, 0}},
-        .field_18 = {.vec_0 = {0, 0, 0, 0}},
-        .field_1C = {.vec_0 = {0, 0, 0, 0}},
-        .field_20 = {.vec_0 = {0, 16, 16, 24}},
-        .field_24 = {.vec_0 = {0, 8, 8, 20}},
+        .field_14 = { .vec_0 = { 0, 0, 0, 0 } },
+        .field_18 = { .vec_0 = { 0, 0, 0, 0 } },
+        .field_1C = { .vec_0 = { 0, 0, 0, 0 } },
+        .field_20 = { .vec_0 = { 0, 16, 16, 24 } },
+        .field_24 = { .vec_0 = { 0, 8, 8, 20 } },
         .unk_28   = 0,
-        .unk_2A   = 0,
+        .unk_2A   = 0
     }
 };
 
@@ -421,26 +421,26 @@ s_StructUnk3 D_800A952C =
 {
     .field_0 =
     {
-        .field_0 = { .field_0 = 0x15006 },
-        .field_4 = 1433,
-        .field_6 = 1638,
-        .field_8 = 2867,
-        .field_A = 3276,
-        .field_C = 4096,
-        .field_E = 1,
-        .unk_F   = 0,
+        .field_0  = { .field_0 = 0x15006 },
+        .field_4  = 1433,
+        .field_6  = 1638,
+        .field_8  = 2867,
+        .field_A  = 3276,
+        .field_C  = 4096,
+        .field_E  = 1,
+        .unk_F    = 0,
         .field_10 = 163840,
         .field_14 = { .vec_0 = { 0, 0, 0, 0 } },
         .field_18 = { .vec_0 = { 0, 0, 0, 0 } },
         .field_1C = { .vec_0 = { 0, 0, 0, 0 } },
         .field_20 = { .vec_0 = { 0, 64, 64, 64 } },
         .field_24 = { .vec_0 = { 0, 12, 12, 12 } },
-        .unk_28 = 0,
-        .unk_2A = 0,
+        .unk_28  = 0,
+        .unk_2A  = 0
     },
     .field_2C = -250,
     .field_2E = 1,
-    .field_30 = 0x2661CCC,
+    .field_30 = 0x2661CCC
 };
 
 u32 D_800A9560[] = // Unknown
@@ -574,7 +574,7 @@ u32 D_800A9560[] = // Unknown
     0x00000000,
     0x30303000,
     0x0C0C0C00,
-    0x00000000,
+    0x00000000
 };
 
 s32 g_Demo_FrameCount = 0;
@@ -591,8 +591,8 @@ u16 D_800A9774[] =
 void (*g_GameStateUpdateFuncs[])() =
 {
     GameState_Unk0_Update,
-    (void (*)())0x800C95AC, // Konami Logo
-    (void (*)())0x800C99A4, // KCET Logo
+    (void (*)())0x800C95AC, // Konami Logo.
+    (void (*)())0x800C99A4, // KCET Logo.
     GameState_StartMovieIntro_Update,
     GameState_DeathLoadScreen_Update,
     GameState_MovieIntroAlternate_Update,
@@ -614,14 +614,14 @@ void (*g_GameStateUpdateFuncs[])() =
     GameState_Unk15_Update,
 };
 
-u8 g_SlotElementSelectedIdx[MEMORY_CARD_SLOT_COUNT] = {0,0};
+u8 g_SlotElementSelectedIdx[MEMORY_CARD_SLOT_COUNT] = { 0, 0 };
 s8 g_SelectedSaveSlotIdx = 0;
 u8 D_800A97D7 = 0;
 u8 D_800A97D8 = 0xFF;
 s8 D_800A97D9 = 0;
 s8 D_800A97DA = 0;
 s8 D_800A97DB = 0;
-s32 D_800A97DC = 0; // `e_SavegameEntryType`
+s32 D_800A97DC = 0; /** `e_SavegameEntryType` */
 s8 D_800A97E0 = 0xFF;
 s8 D_800A97E1 = 0;
 s8 D_800A97E2 = 0;
@@ -687,11 +687,11 @@ u16 g_UnknownEngineCmdTable2[] =
 };
 s_800C37D4 D_800A986C[] =
 {
-    { 9,  3, 778, 0x30c030b, 0x30f030d },
+    { 9,  3, 778, 0x30C030B, 0x30F030D },
     { 16, 3, 785, 0x3130312, 0x3150314 },
-    { 22, 3, 791, 0x3190318, 0x31b031a },
-    { 28, 3, 797, 0x31f031e, 0x3220321 },
-    { 35, 3, 804, 0x3260325, 0x327030e },
+    { 22, 3, 791, 0x3190318, 0x31B031A },
+    { 28, 3, 797, 0x31F031E, 0x3220321 },
+    { 35, 3, 804, 0x3260325, 0x327030E },
 };
 u32 D_800A98A8 = 0x03200328;
 u16 g_UnknownEngineCmdTable3[] =
@@ -744,11 +744,11 @@ s8 D_800A98FC[Chara_Count] =
     0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
     0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
     0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
-    0xFF, 0xFF, 0xFF, 0xFF, 0xFF, /* 3 0x00 padding */
+    0xFF, 0xFF, 0xFF, 0xFF, 0xFF, // 3 0x00 padding.
 };
 
-/* We have some 24 bytes struct with data followed by 72 bytes (3 structs worth)
- * of zeros. Which are also zeroed at runtime in func_800348C0.
+/* These is some 24-byte struct with data followed by 72 bytes (3 structs worth)
+ * of zeros, which are also zeroed at runtime in `func_800348C0`.
  * I think it is an array of this struct.
  */
 s_800A992C D_800A992C[4] =
@@ -756,29 +756,29 @@ s_800A992C D_800A992C[4] =
     {
         .charaId0_0       = 1,
         .charaId1_1       = 1,
-        .unk_2            = {0, 0},
+        .unk_2            = { 0, 0 },
         .animFile0_4      = 0x8010A600,
         .animFile1_8      = (s_AnimFile*)0x8010A600,
         .animFileSize1_C  = 0x0002E630,
         .animFileSize2_10 = 0x0002E630,
         .npcCoords_14     = NULL,
-//extern u8 D_800A9944[]; <-- this is the empty 72 bytes bellow.
+//extern u8 D_800A9944[]; <-- Aforementioned 72 empty bytes below.
     }, {}, {}, {}
 };
 s_AnimInfo D_800A998C =
 {
-    .funcPtr_0 = Anim_Update1,
-    .field_4 = 0,
+    .funcPtr_0              = Anim_Update1,
+    .field_4                = 0,
     .hasVariableTimeDelta_5 = 0,
-    .animIdx_6 = 0,
-    .unk_7 = 0,
-    .timeDelta_8 = { .constTimeDelta = 0x8000 },
-    .keyframeIdx0_C = 0x001A,
-    .keyframeIdx1_E = 0x002C,
+    .animIdx_6              = 0,
+    .unk_7                  = 0,
+    .timeDelta_8            = { .constTimeDelta = 0x8000 },
+    .keyframeIdx0_C         = 0x001A,
+    .keyframeIdx1_E         = 0x002C,
 };
 u32 unknown_D_800A999C = 0x80025234;
 s32 D_800A99A0 = 0;
-u8 D_800A99A4[8] = {0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80 };
+u8 D_800A99A4[8] = { 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80 };
 s32 g_MapMsg_CurrentIdx = 0;
 s16 g_MapMsg_SelectFlashTimer = 0;
 //s16 __padding = 0;
@@ -786,7 +786,7 @@ s8 g_MapFullscreenTimFileIdx[24] =
 {
     0x00, 0x00, 0x01, 0x01, 0x09, 0x0C, 0x0A, 0x0B,
     0x0D, 0x0C, 0x0A, 0x0B, 0x0D, 0x02, 0x03, 0x04,
-    0x08, 0x05, 0x06, 0x07, 0x08, 0x05, 0x06, 0x07,
+    0x08, 0x05, 0x06, 0x07, 0x08, 0x05, 0x06, 0x07
 };
 s8 g_MapMarkingTimFileIdx[56] =
 {
@@ -796,5 +796,5 @@ s8 g_MapMarkingTimFileIdx[56] =
     0x00, 0x00, 0x00, 0x00, 0x68, 0x53, 0x02, 0x80,
     0x5C, 0x53, 0x02, 0x80, 0x50, 0x53, 0x02, 0x80,
     0x44, 0x53, 0x02, 0x80, 0x38, 0x53, 0x02, 0x80,
-    0x2C, 0x53, 0x02, 0x80, 0x20, 0x53, 0x02, 0x80,
+    0x2C, 0x53, 0x02, 0x80, 0x20, 0x53, 0x02, 0x80
 };
