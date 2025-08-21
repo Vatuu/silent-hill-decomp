@@ -265,6 +265,7 @@ void sharedFunc_800D7BE8_0_s00(s_SubCharacter*);
 /** Among other things, sets the players's anim to anim 3 (which might actually be flags if the field packs more data). */
 void sharedFunc_800D88C0_0_s00(s_SubCharacter* playerChara, s32 arg1);
 
+/** Resets some player properties. */
 void sharedFunc_800D8904_0_s00(s_SubCharacter* playerChara, s32 afkTime);
 
 void sharedFunc_800D891C_0_s00(s_SubCharacter* playerChara);

@@ -54,7 +54,7 @@ void sharedFunc_800D5098_0_s00(s_SubCharacter* chara)
             }
         }
 
-        if (!((u16)chara->properties_E4.player.properties_E4[1] & (1 << 13)))
+        if (!((u16)chara->properties_E4.player.afkTimer_E8 & (1 << 13)))
         {
             if (temp_s5 > SPEED_0_9)
             {

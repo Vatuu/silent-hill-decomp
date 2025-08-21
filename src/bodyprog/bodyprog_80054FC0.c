@@ -3297,11 +3297,11 @@ void func_800713B4(s_SubCharacter* chara, s32 arg1) // 0x800713B4
 {
     if (g_SysWork.player_4C.extra_128.field_24 != arg1)
     {
-        chara->model_0.stateStep_3                   = 0;
-        chara->model_0.state_2                       = 0;
-        chara->properties_E4.player.properties_E4[5] = 0;
-        chara->properties_E4.player.properties_E4[1] = 0;
-        g_SysWork.field_235A                         = 0;
+        chara->model_0.stateStep_3              = 0;
+        chara->model_0.state_2                  = 0;
+        chara->properties_E4.player.runTimer_F8 = 0;
+        chara->properties_E4.player.afkTimer_E8 = 0;
+        g_SysWork.field_235A                    = 0;
     }
 }
 
@@ -3893,14 +3893,14 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
             
             if (chara->model_0.anim_4.keyframeIdx0_8 == g_MapOverlayHeader.field_38[D_800AF220].field_6)
             {
-                g_SysWork.player_4C.extra_128.field_1C       = var_s0;
-                chara->model_0.stateStep_3                   = 0;
-                chara->model_0.state_2                       = 0;
-                extra->model_0.stateStep_3                   = 0;
-                extra->model_0.state_2                       = 0;
-                g_SysWork.player_4C.extra_128.field_20       = 0;
-                g_SysWork.player_4C.extra_128.field_24       = 0;
-                chara->properties_E4.player.properties_E4[1] = 0xA000;
+                g_SysWork.player_4C.extra_128.field_1C  = var_s0;
+                chara->model_0.stateStep_3              = 0;
+                chara->model_0.state_2                  = 0;
+                extra->model_0.stateStep_3              = 0;
+                extra->model_0.state_2                  = 0;
+                g_SysWork.player_4C.extra_128.field_20  = 0;
+                g_SysWork.player_4C.extra_128.field_24  = 0;
+                chara->properties_E4.player.afkTimer_E8 = FP_TIME(10.0f);
             }
             
             if (g_SysWork.player_4C.chara_0.properties_E4.player.field_126 != 0)
@@ -3991,19 +3991,20 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
             
             if (chara->model_0.anim_4.keyframeIdx0_8 == g_MapOverlayHeader.field_38[D_800AF220].field_6)
             {
-                g_SysWork.player_4C.extra_128.field_1C       = var_s5;
-                chara->model_0.stateStep_3                   = 0;
-                chara->model_0.state_2                       = 0;
-                extra->model_0.stateStep_3                   = 0;
-                extra->model_0.state_2                       = 0;
-                g_SysWork.player_4C.extra_128.field_20       = 0;
-                g_SysWork.player_4C.extra_128.field_24       = 0;
-                chara->properties_E4.player.properties_E4[1] = 0xF000;
+                g_SysWork.player_4C.extra_128.field_1C  = var_s5;
+                chara->model_0.stateStep_3              = 0;
+                chara->model_0.state_2                  = 0;
+                extra->model_0.stateStep_3              = 0;
+                extra->model_0.state_2                  = 0;
+                g_SysWork.player_4C.extra_128.field_20  = 0;
+                g_SysWork.player_4C.extra_128.field_24  = 0;
+                chara->properties_E4.player.afkTimer_E8 = FP_TIME(15.0f);
             }
 
             if (chara->model_0.anim_4.animIdx_0 & (1 << 0))
             {
-                if (g_SysWork.player_4C.extra_128.field_1C >= 0x25 && g_SysWork.player_4C.extra_128.field_1C < 0x27)
+                if (g_SysWork.player_4C.extra_128.field_1C >= 37 &&
+                    g_SysWork.player_4C.extra_128.field_1C <  39)
                 {
                     temp = -0x8000;
                     extra->model_0.anim_4.time_4 = (FP_TO(g_MapOverlayHeader.animInfo_34[chara->model_0.anim_4.animIdx_0 - 0x4C].keyframeIdx0_C, Q12_SHIFT) + model->anim_4.time_4) + temp;
@@ -4102,7 +4103,7 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
                     chara->field_C8  = CLAMP(chara->field_C8, -0x1999, -0x666);
                     chara->field_CE  = CLAMP(chara->field_CE, -0x1199, -0x333);
                     
-                    if (chara->health_B0 <= FP_FLOAT_TO(0.0f, Q12_SHIFT) && chara->properties_E4.player.properties_E4[1] <= 0)
+                    if (chara->health_B0 <= FP_FLOAT_TO(0.0f, Q12_SHIFT) && chara->properties_E4.player.afkTimer_E8 <= FP_TIME(0.0f))
                     {
                         g_MapOverlayHeader.func_DC();
 
@@ -4202,7 +4203,7 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
                         }
                     }
                     
-                    if (chara->health_B0 <= FP_FLOAT_TO(0.0f, Q12_SHIFT) && chara->properties_E4.player.properties_E4[1] <= 0)
+                    if (chara->health_B0 <= FP_FLOAT_TO(0.0f, Q12_SHIFT) && chara->properties_E4.player.afkTimer_E8 <= FP_TIME(0.0f))
                     {
                         g_MapOverlayHeader.func_DC();
 
@@ -4552,8 +4553,8 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
             {
                 case 49:
                 case 50:
-                    chara->damageReceived_C0 = 0;
-                    chara->properties_E4.player.properties_E4[1] = 0;
+                    chara->damageReceived_C0                = 0;
+                    chara->properties_E4.player.afkTimer_E8 = FP_TIME(0.0f);
                     
                     if (chara->model_0.anim_4.keyframeIdx0_8 == g_MapOverlayHeader.field_38[D_800AF220].field_6)
                     {
@@ -4583,7 +4584,7 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
                     
                 case 41:
                 case 42:
-                    chara->properties_E4.player.properties_E4[1] = 0;
+                    chara->properties_E4.player.afkTimer_E8      = FP_TIME(0.0f);
                     g_SysWork.player_4C.chara_0.field_D8.field_6 = 0;
                     g_SysWork.player_4C.chara_0.field_D8.field_4 = 0;
                     g_SysWork.player_4C.chara_0.field_D8.field_2 = 0;
@@ -4677,7 +4678,7 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
                         chara->model_0.stateStep_3++;
                     }
                     
-                    if (extra->model_0.state_2 == 0 && chara->position_18.vy >= chara->properties_E4.player.properties_E4[2])
+                    if (extra->model_0.state_2 == 0 && chara->position_18.vy >= chara->properties_E4.player.positionY_EC)
                     {
                         extra->model_0.state_2++;
                         func_8005DC1C(0x525, &chara->position_18, 0x20, 0);
@@ -5353,7 +5354,7 @@ bool func_80075504(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
 
         if (g_SysWork.player_4C.extra_128.field_1C == 1)
         {
-            g_SysWork.player_4C.chara_0.properties_E4.player.properties_E4[8] += g_DeltaTime0;
+            g_SysWork.player_4C.chara_0.properties_E4.player.field_104 += g_DeltaTime0;
 
             if (g_GameWork.config_0.optExtraWeaponCtrl_23 == 0)
             {
@@ -5691,10 +5692,10 @@ bool func_80075504(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                         }
                     }
 
-                    g_SysWork.player_4C.chara_0.properties_E4.player.properties_E4[8] = 0;
-                    g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C       &= ~PlayerFlag_Unk2;
-                    g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C       &= ~PlayerFlag_Unk1;
-                    g_SysWork.playerCombatInfo_38.equippedWeapon_F                   %= 10;
+                    g_SysWork.player_4C.chara_0.properties_E4.player.field_104  = 0;
+                    g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk2;
+                    g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk1;
+                    g_SysWork.playerCombatInfo_38.equippedWeapon_F             %= 10;
                     return true;
                 }
             }
@@ -5728,10 +5729,10 @@ bool func_80075504(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                 }
             }
 
-            D_800C4556                                                        = NO_VALUE;
-            D_800C4554                                                        = NO_VALUE;
-            g_SysWork.player_4C.chara_0.properties_E4.player.properties_E4[8] = 0;
-            g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C       &= ~PlayerFlag_Unk1;
+            D_800C4556                                                  = NO_VALUE;
+            D_800C4554                                                  = NO_VALUE;
+            g_SysWork.player_4C.chara_0.properties_E4.player.field_104  = 0;
+            g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk1;
             return true;
         }
 
@@ -5788,7 +5789,7 @@ bool func_80075504(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
 
     if (g_SysWork.player_4C.extra_128.field_20 != 20 && g_SysWork.player_4C.extra_128.field_20 != 25)
     {
-        g_SysWork.player_4C.chara_0.properties_E4.player.properties_E4[8] = 0;
+        g_SysWork.player_4C.chara_0.properties_E4.player.field_104 = 0;
     }
 
     switch (g_SysWork.player_4C.extra_128.field_20)
@@ -5800,7 +5801,7 @@ bool func_80075504(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                 extra->model_0.stateStep_3 = 0;
             }
 
-            if (chara->properties_E4.player.properties_E4[6] < FP_FLOAT_TO(10.0f, Q12_SHIFT) && chara->health_B0 >= FP_FLOAT_TO(30.0f, Q12_SHIFT))
+            if (chara->properties_E4.player.exertionTimer_FC < FP_TIME(10.0f) && chara->health_B0 >= Q19_12(30.0f))
             {
                 if (extra->model_0.stateStep_3 == 0)
                 {
@@ -5812,7 +5813,7 @@ bool func_80075504(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
             }
             else
             {
-                chara->properties_E4.player.properties_E4[1] = 0;
+                chara->properties_E4.player.afkTimer_E8 = FP_TIME(0.0f);
 
                 if (extra->model_0.anim_4.animIdx_0 != 53)
                 {
@@ -5837,20 +5838,20 @@ bool func_80075504(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
 
             if (g_SysWork.player_4C.extra_128.field_20 != 0)
             {
-                chara->properties_E4.player.properties_E4[1] = 0;
+                chara->properties_E4.player.afkTimer_E8 = 0;
             }
 
             chara->rotation_24.pad = chara->rotation_24.vy;
 
             if (g_SysWork.player_4C.extra_128.field_20 == 0)
             {
-                chara->properties_E4.player.properties_E4[1]++;
+                chara->properties_E4.player.afkTimer_E8++;
 
-                if (chara->properties_E4.player.properties_E4[1] >= 0x12C)
+                if (chara->properties_E4.player.afkTimer_E8 >= 0x12C)
                 {
                     if (chara->health_B0 >= FP_FLOAT_TO(60.0f, Q12_SHIFT))
                     {
-                        chara->properties_E4.player.properties_E4[1]        = 0;
+                        chara->properties_E4.player.afkTimer_E8             = 0;
                         g_SysWork.player_4C.extra_128.field_1C              = 2;
                         chara->model_0.state_2 = chara->model_0.stateStep_3 = 0;
                         extra->model_0.state_2 = extra->model_0.stateStep_3 = 0;
@@ -6181,7 +6182,7 @@ bool func_80075504(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
             break;
 
         case 20:
-            g_SysWork.player_4C.chara_0.properties_E4.player.properties_E4[8] += g_DeltaTime0;
+            g_SysWork.player_4C.chara_0.properties_E4.player.field_104 += g_DeltaTime0;
             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C        &= ~PlayerFlag_Unk6;
 
             if (D_800C4586 != 0)
@@ -6198,17 +6199,17 @@ bool func_80075504(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                 (extra->model_0.anim_4.animIdx_0 != 65 || extra->model_0.anim_4.keyframeIdx0_8 != D_800C44F0[4].field_6))
             {
                 var_t0 = 0;
-                chara->properties_E4.player.properties_E4[7]++;
+                chara->properties_E4.player.field_100++;
             }
             else
             {
-                chara->properties_E4.player.properties_E4[7] = 0;
+                chara->properties_E4.player.field_100 = 0;
             }
 
             if (var_t0 != 0)
             {
                 g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk9;
-                chara->properties_E4.player.properties_E4[4]                 = D_800AF212;
+                chara->properties_E4.player.field_F4                 = D_800AF212;
 
                 if (!(g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & (1 << 0)))
                 {
@@ -6419,7 +6420,7 @@ bool func_80075504(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
             }
 
             D_800AF220 = 1;
-            chara->properties_E4.player.properties_E4[7]++;
+            chara->properties_E4.player.field_100++;
 
             if (g_GameWork.config_0.optExtraWeaponCtrl_23 == 0)
             {
@@ -6796,7 +6797,7 @@ void func_800771BC(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
 
                     extra->model_0.stateStep_3                   = 0;
                     extra->model_0.state_2                       = 0;
-                    chara->properties_E4.player.properties_E4[7] = 0;
+                    chara->properties_E4.player.field_100 = 0;
 
                     if (g_SysWork.playerCombatInfo_38.totalWeaponAmmo_11 != 0)
                     {
@@ -6877,7 +6878,7 @@ void func_800771BC(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
             if ((g_GameWork.config_0.optExtraWeaponCtrl_23 != 0 && D_800C457E == 0) ||
                 (g_GameWork.config_0.optExtraWeaponCtrl_23 == 0 && D_800C457E != 0))
             {
-                chara->properties_E4.player.properties_E4[4]                = 0;
+                chara->properties_E4.player.field_F4                        = 0;
                 g_SysWork.player_4C.extra_128.field_20                      = 24;
                 g_SysWork.field_2353                                        = NO_VALUE;
                 g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk0;
@@ -7222,7 +7223,7 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                         chara->model_0.stateStep_3++;
                     }
                 }
-                else if (chara->properties_E4.player.properties_E4[6] < FP_FLOAT_TO(10.0f, Q12_SHIFT) &&
+                else if (chara->properties_E4.player.exertionTimer_FC < FP_FLOAT_TO(10.0f, Q12_SHIFT) &&
                          chara->health_B0 >= FP_FLOAT_TO(30.0f, Q12_SHIFT))
                 {
                     if (chara->model_0.stateStep_3 == 0)
@@ -7449,13 +7450,13 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
 
                         if (D_800C454C != FP_TIME(0.0f))
                         {
-                            chara->properties_E4.player.properties_E4[1] = 0;
+                            chara->properties_E4.player.afkTimer_E8 = 0;
                         }
                     }
                 }
                 else if (D_800C454C != FP_TIME(0.0f))
                 {
-                    chara->properties_E4.player.properties_E4[1] = 0;
+                    chara->properties_E4.player.afkTimer_E8 = 0;
                 }
 
                 if (D_800C4584 != 0 && chara->model_0.stateStep_3 == 1 &&
@@ -7649,7 +7650,7 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
             break;
 
         case 2:
-            chara->properties_E4.player.properties_E4[6] += g_DeltaTime0;
+            chara->properties_E4.player.exertionTimer_FC += g_DeltaTime0;
 
             if (g_Controller0->sticks_20.sticks_0.leftY < -0x3F)
             {
@@ -7720,7 +7721,7 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
             }
 
             if ((chara->model_0.anim_4.keyframeIdx0_8 == 43 || chara->model_0.anim_4.keyframeIdx0_8 == 33) && 
-                chara->position_18.vy == chara->properties_E4.player.properties_E4[2])
+                chara->position_18.vy == chara->properties_E4.player.positionY_EC)
             {
                 chara->field_34 = FP_FLOAT_TO(-1.25f, Q12_SHIFT);
             }
@@ -7730,7 +7731,7 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                 switch (temp_s3)
                 {
                     case 1:
-                        if (chara->properties_E4.player.properties_E4[9] >= 0xA000u)
+                        if (chara->properties_E4.player.runTimer_108 >= 0xA000u)
                         {
                             g_SysWork.player_4C.extra_128.field_24 = 12;
                         }
@@ -7751,7 +7752,7 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                         break;
 
                     case 2:
-                        if (chara->properties_E4.player.properties_E4[9] >= 0xA000u)
+                        if (chara->properties_E4.player.runTimer_108 >= 0xA000u)
                         {
                             g_SysWork.player_4C.extra_128.field_24 = 3;
                         }
@@ -7791,7 +7792,7 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                                     g_MaybePlayerAnims[0].animIdx_6        = 5;
                                 }
                             }
-                            else if (chara->properties_E4.player.properties_E4[5] >= 5 &&
+                            else if (chara->properties_E4.player.runTimer_F8 >= 5 &&
                                      g_SysWork.player_4C.chara_0.properties_E4.player.field_126 >= FP_FLOAT_TO(3.125f, Q12_SHIFT))
                             {
                                 if (chara->model_0.anim_4.keyframeIdx0_8 >= 33 &&
@@ -8192,7 +8193,7 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
             break;
 
         case 7:
-            chara->properties_E4.player.properties_E4[6] += g_DeltaTime0;
+            chara->properties_E4.player.exertionTimer_FC += g_DeltaTime0;
             if (g_SysWork.player_4C.chara_0.properties_E4.player.field_126 > 0x32C8)
             {
                 g_SysWork.player_4C.chara_0.properties_E4.player.field_126 -= ((g_DeltaTime0 * FP_FLOAT_TO(0.4f, Q12_SHIFT)) / 136);
@@ -8215,7 +8216,7 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
 
             if ((chara->model_0.anim_4.keyframeIdx0_8 == 139 ||
                  chara->model_0.anim_4.keyframeIdx0_8 == 145) &&
-                chara->position_18.vy == chara->properties_E4.player.properties_E4[2])
+                chara->position_18.vy == chara->properties_E4.player.positionY_EC)
             {
                 chara->field_34 = FP_FLOAT_TO(-1.0f, Q12_SHIFT);
             }
@@ -8225,7 +8226,7 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                 switch (temp_s3)
                 {
                     case 1:
-                        if (chara->properties_E4.player.properties_E4[9] >= 0xA000u)
+                        if (chara->properties_E4.player.runTimer_108 >= 0xA000u)
                         {
                             g_SysWork.player_4C.extra_128.field_24 = 16;
                         }
@@ -8239,7 +8240,7 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                         break;
 
                     case 2:
-                        if (chara->properties_E4.player.properties_E4[9] >= 0xA000u)
+                        if (chara->properties_E4.player.runTimer_108 >= 0xA000u)
                         {
                             g_SysWork.player_4C.extra_128.field_24 = 14;
                         }
@@ -8253,7 +8254,7 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                         break;
 
                     default:
-                        if (chara->properties_E4.player.properties_E4[5] >= 5 &&
+                        if (chara->properties_E4.player.runTimer_F8 >= 5 &&
                             g_SysWork.player_4C.chara_0.properties_E4.player.field_126 >= FP_FLOAT_TO(3.125f, Q12_SHIFT))
                         {
                             if (chara->model_0.anim_4.keyframeIdx0_8 >= 144 && (D_800C4604 == 0 || D_800C45AE == 0))
@@ -8278,7 +8279,7 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
             break;
 
         case 8:
-            chara->properties_E4.player.properties_E4[6] += g_DeltaTime0;
+            chara->properties_E4.player.exertionTimer_FC += g_DeltaTime0;
             if (g_SysWork.player_4C.chara_0.properties_E4.player.field_126 >= 0x32C9)
             {
                 g_SysWork.player_4C.chara_0.properties_E4.player.field_126 -= ((g_DeltaTime0 * FP_FLOAT_TO(0.4f, Q12_SHIFT)) / 136);
@@ -8301,7 +8302,7 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
 
             if ((chara->model_0.anim_4.keyframeIdx0_8 == 125 ||
                  chara->model_0.anim_4.keyframeIdx0_8 == 132) &&
-                chara->position_18.vy == chara->properties_E4.player.properties_E4[2])
+                chara->position_18.vy == chara->properties_E4.player.positionY_EC)
             {
                 chara->field_34 = FP_FLOAT_TO(-1.0f, Q12_SHIFT);
             }
@@ -8311,7 +8312,7 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                 switch (temp_s3)
                 {
                     case 1:
-                        if (chara->properties_E4.player.properties_E4[9] >= 0xA000u)
+                        if (chara->properties_E4.player.runTimer_108 >= 0xA000u)
                         {
                             g_SysWork.player_4C.extra_128.field_24 = 15;
                         }
@@ -8326,7 +8327,7 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                         break;
 
                     case 2:
-                        if (chara->properties_E4.player.properties_E4[9] >= 0xA000u)
+                        if (chara->properties_E4.player.runTimer_108 >= 0xA000u)
                         {
                             g_SysWork.player_4C.extra_128.field_24 = 13;
                         }
@@ -8340,7 +8341,7 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                         break;
 
                     default:
-                        if (chara->properties_E4.player.properties_E4[5] >= 5 &&
+                        if (chara->properties_E4.player.runTimer_F8 >= 5 &&
                             g_SysWork.player_4C.chara_0.properties_E4.player.field_126 >= FP_FLOAT_TO(3.125f, Q12_SHIFT))
                         {
                             if (chara->model_0.anim_4.keyframeIdx0_8 > 128 && (D_800C4604 == 0 || D_800C45AC == 0))
@@ -8645,7 +8646,7 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
             if (chara->model_0.anim_4.animIdx_0 == 33 &&
                 chara->model_0.anim_4.keyframeIdx0_8 == 246)
             {
-                if (chara->position_18.vy < chara->properties_E4.player.properties_E4[2])
+                if (chara->position_18.vy < chara->properties_E4.player.positionY_EC)
                 {
                     g_SysWork.player_4C.extra_128.field_1C = 4;
 
@@ -9051,7 +9052,7 @@ void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
         case 8:
             if ((chara->model_0.anim_4.animIdx_0 & (1 << 0)) && chara->model_0.anim_4.animIdx_0 >= 7)
             {
-                chara->properties_E4.player.properties_E4[6] += g_DeltaTime0;
+                chara->properties_E4.player.exertionTimer_FC += g_DeltaTime0;
             }
             break;
 
@@ -9061,19 +9062,19 @@ void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
         case 15:
         case 16:
         case 20:
-            chara->properties_E4.player.properties_E4[6] -= g_DeltaTime0 * 2;
+            chara->properties_E4.player.exertionTimer_FC -= g_DeltaTime0 * 2;
             break;
 
         default:
-            chara->properties_E4.player.properties_E4[6] -= g_DeltaTime0;
+            chara->properties_E4.player.exertionTimer_FC -= g_DeltaTime0;
             break;
     }
 
-    chara->properties_E4.player.properties_E4[6] = CLAMP(chara->properties_E4.player.properties_E4[6], FP_FLOAT_TO(0.0f, Q12_SHIFT), FP_FLOAT_TO(35.0f, Q12_SHIFT));
+    chara->properties_E4.player.exertionTimer_FC = CLAMP(chara->properties_E4.player.exertionTimer_FC, FP_FLOAT_TO(0.0f, Q12_SHIFT), FP_FLOAT_TO(35.0f, Q12_SHIFT));
 
     if (chara->model_0.anim_4.animIdx_0 == 55)
     {
-        if (chara->properties_E4.player.properties_E4[6] < FP_FLOAT_TO(10.0f, Q12_SHIFT) &&
+        if (chara->properties_E4.player.exertionTimer_FC < FP_FLOAT_TO(10.0f, Q12_SHIFT) &&
             chara->health_B0 >= FP_FLOAT_TO(30.0f, Q12_SHIFT))
         {
             chara->model_0.stateStep_3 = 0;
@@ -9135,7 +9136,7 @@ void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
         case 2:
             if (func_800713E8(7, chara, 31, 41, sp18, sp1D) != 0)
             {
-                chara->properties_E4.player.properties_E4[5]++;
+                chara->properties_E4.player.runTimer_F8++;
             }
 
             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Unk15;
@@ -9154,7 +9155,7 @@ void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
         case 7:
             if (func_800713E8(17, chara, 145, 139, sp18, sp1D) != 0)
             {
-                chara->properties_E4.player.properties_E4[5]++;
+                chara->properties_E4.player.runTimer_F8++;
             }
 
             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Unk15;
@@ -9163,7 +9164,7 @@ void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
         case 8:
             if (func_800713E8(15, chara, 131, 125, sp18, sp1D) != 0)
             {
-                chara->properties_E4.player.properties_E4[5]++;
+                chara->properties_E4.player.runTimer_F8++;
             }
 
             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Unk15;
@@ -9396,13 +9397,13 @@ void func_8007C0D8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
         g_SysWork.player_4C.extra_128.field_20 == 6 ||
         g_SysWork.player_4C.extra_128.field_20 == 7)
     {
-        chara->properties_E4.player.properties_E4[9] += SquareRoot0(SQUARE(D_800C4590.field_0.vx) +
-                                                                    SQUARE(D_800C4590.field_0.vy) +
-                                                                    SQUARE(D_800C4590.field_0.vz));
+        chara->properties_E4.player.runTimer_108 += SquareRoot0(SQUARE(D_800C4590.field_0.vx) +
+                                                                SQUARE(D_800C4590.field_0.vy) +
+                                                                SQUARE(D_800C4590.field_0.vz));
     }
     else
     {
-        chara->properties_E4.player.properties_E4[9] = 0;
+        chara->properties_E4.player.runTimer_108 = 0;
     }
 
     if (*(u16*)&g_SavegamePtr->mapOverlayId_A4 == 3331)
@@ -9412,7 +9413,7 @@ void func_8007C0D8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
 
     if (D_800C4590.field_14 == 0)
     {
-        D_800C4590.field_C = chara->properties_E4.player.properties_E4[2];
+        D_800C4590.field_C = chara->properties_E4.player.positionY_EC;
     }
 
     if (chara->position_18.vy > D_800C4590.field_C)
@@ -9460,10 +9461,10 @@ void func_8007C0D8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
         }
     }
 
-    chara->properties_E4.player.properties_E4[2] = D_800C4590.field_C;
-    coord->coord.t[0]                            = FP_FROM(chara->position_18.vx, Q4_SHIFT);
-    coord->coord.t[1]                            = FP_FROM(chara->position_18.vy, Q4_SHIFT);
-    coord->coord.t[2]                            = FP_FROM(chara->position_18.vz, Q4_SHIFT);
+    chara->properties_E4.player.positionY_EC = D_800C4590.field_C;
+    coord->coord.t[0]                        = FP_FROM(chara->position_18.vx, Q4_SHIFT);
+    coord->coord.t[1]                        = FP_FROM(chara->position_18.vy, Q4_SHIFT);
+    coord->coord.t[2]                        = FP_FROM(chara->position_18.vz, Q4_SHIFT);
 }
 
 void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007C800
@@ -9899,8 +9900,8 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
 
             if ((u32)g_SysWork.player_4C.extra_128.field_1C >= 3)
             {
-                chara->properties_E4.player.properties_E4[1]                = 0;
-                chara->properties_E4.player.properties_E4[4]                = 0;
+                chara->properties_E4.player.afkTimer_E8                     = 0;
+                chara->properties_E4.player.field_F4                        = 0;
                 g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk12;
                 g_SysWork.playerCombatInfo_38.isAiming_13                   = false;
                 g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk9;
@@ -10059,7 +10060,7 @@ void func_8007D090(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
                     D_800AF210 = chara->rotation_24.pad - chara->rotation_24.vy;
                 }
 
-                if (chara->properties_E4.player.properties_E4[7] != 0 || g_SysWork.player_4C.extra_128.field_20 == 22 ||
+                if (chara->properties_E4.player.field_100 != 0 || g_SysWork.player_4C.extra_128.field_20 == 22 ||
                     g_SysWork.player_4C.extra_128.field_20 == 23)
                 {
                     if (g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & (1 << 8))
@@ -10071,12 +10072,12 @@ void func_8007D090(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
                         var_v1 = var_a3;
                     }
 
-                    if (chara->properties_E4.player.properties_E4[4] != 0)
+                    if (chara->properties_E4.player.field_F4 != 0)
                     {
-                        temp_a1_3 = chara->properties_E4.player.properties_E4[4] - D_800AF212;
-                        if (D_800AF212 < chara->properties_E4.player.properties_E4[4])
+                        temp_a1_3 = chara->properties_E4.player.field_F4 - D_800AF212;
+                        if (D_800AF212 < chara->properties_E4.player.field_F4)
                         {
-                            var_a0 = chara->properties_E4.player.properties_E4[7] * (((var_a2 + chara->properties_E4.player.properties_E4[7]) * g_DeltaTime0) / 136);
+                            var_a0 = chara->properties_E4.player.field_100 * (((var_a2 + chara->properties_E4.player.field_100) * g_DeltaTime0) / 136);
                             if (var_a0 < temp_a1_3)
                             {
                                 D_800AF212 = chara->properties_E4.larvalStalker.properties_E8[3].val16[0] - var_a0;
@@ -10084,7 +10085,7 @@ void func_8007D090(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
                         }
                         else
                         {
-                            var_a0 = -(chara->properties_E4.player.properties_E4[7] * (((var_a2 + chara->properties_E4.player.properties_E4[7]) * g_DeltaTime0) / 136));
+                            var_a0 = -(chara->properties_E4.player.field_100 * (((var_a2 + chara->properties_E4.player.field_100) * g_DeltaTime0) / 136));
                             if (temp_a1_3 < var_a0)
                             {
                                 D_800AF212 = chara->properties_E4.larvalStalker.properties_E8[3].val16[0] - var_a0;
@@ -10093,14 +10094,14 @@ void func_8007D090(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
                     }
                     else
                     {
-                        if (chara->properties_E4.player.properties_E4[7] < var_v1)
+                        if (chara->properties_E4.player.field_100 < var_v1)
                         {
                             D_800AF210 = 0;
                             D_800AF212 = 0;
                         }
                         else
                         {
-                            temp_v0   = chara->properties_E4.player.properties_E4[7] + 1;
+                            temp_v0   = chara->properties_E4.player.field_100 + 1;
                             temp_a1_3 = temp_v0 - var_v1;
                             var_a0    = 4;
                             var_a0    = temp_a1_3 * (((var_a2 + ((temp_a1_3 * 2) + var_a0)) * g_DeltaTime0) / 136);
@@ -10751,12 +10752,12 @@ void func_8007E9C4() // 0x8007E9C4
     D_800C45C0             = 0;
     D_800C45BE             = 0;
 
-    chara->properties_E4.player.properties_E4[1]               = 0;
-    chara->properties_E4.player.properties_E4[4]               = 0;
-    chara->properties_E4.player.properties_E4[5]               = 0;
-    chara->properties_E4.player.properties_E4[7]               = 0;
-    chara->properties_E4.player.properties_E4[8]               = 0;
-    chara->properties_E4.player.properties_E4[9]               = 0;
+    chara->properties_E4.player.afkTimer_E8                    = FP_TIME(0.0f);
+    chara->properties_E4.player.field_F4                       = 0;
+    chara->properties_E4.player.runTimer_F8                    = 0;
+    chara->properties_E4.player.field_100                      = 0;
+    chara->properties_E4.player.field_104                      = 0;
+    chara->properties_E4.player.runTimer_108                   = 0;
     chara->properties_E4.larvalStalker.properties_E8[10].val32 = 0;
     chara->properties_E4.player.flags_11C                      = 0;
     chara->properties_E4.player.field_126                      = 0;
@@ -11369,7 +11370,7 @@ void func_8007FC48(s_SubCharacter* chara, s_MainCharacterExtra* extra, s32 arg2)
 
 s32 func_8007FD2C() // 0x8007FD2C
 {
-    return g_SysWork.player_4C.chara_0.properties_E4.player.properties_E4[PlayerProperty_Unk8];
+    return g_SysWork.player_4C.chara_0.properties_E4.player.field_104;
 }
 
 s32 func_8007FD3C() // 0x8007FD3C

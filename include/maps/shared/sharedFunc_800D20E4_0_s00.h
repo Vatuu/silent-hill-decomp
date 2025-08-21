@@ -19,9 +19,9 @@ void sharedFunc_800D20E4_0_s00()
 
     D_800AF216 = 0;
 
-    chara->properties_E4.player.properties_E4[PlayerProperty_AfkTimer]      = 0;
-    chara->properties_E4.player.properties_E4[PlayerProperty_RunTimer0]     = 0;
-    chara->properties_E4.player.properties_E4[PlayerProperty_ExertionTimer] = 0;
+    chara->properties_E4.player.afkTimer_E8      = 0;
+    chara->properties_E4.player.runTimer_F8      = 0;
+    chara->properties_E4.player.exertionTimer_FC = 0;
 
     g_SysWork.player_4C.extra_128.field_1C = 52;
     chara->model_0.stateStep_3             = 0;

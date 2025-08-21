@@ -12,11 +12,11 @@ void sharedFunc_800D923C_0_s00(s_SubCharacter* chara)
     chara->field_D8.field_2 = 0;
     chara->field_D8.field_0 = 0;
 
-    chara->properties_E4.player.properties_E4[PlayerProperty_PositionY] = 0;
-    chara->properties_E4.player.properties_E4[PlayerProperty_AfkTimer]  = 0;
-    chara->properties_E4.player.properties_E4[PlayerProperty_PositionY] = 0;
-    chara->properties_E4.player.properties_E4[PlayerProperty_Unk3]      = 0;
-    chara->properties_E4.player.properties_E4[PlayerProperty_Unk4]      = 0;
+    chara->properties_E4.player.positionY_EC = 0;
+    chara->properties_E4.player.afkTimer_E8  = 0;
+    chara->properties_E4.player.positionY_EC = 0;
+    chara->properties_E4.player.field_F0     = 0;
+    chara->properties_E4.player.field_F4     = 0;
 
     chara->model_0.state_2++;
 

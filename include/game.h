@@ -13,7 +13,6 @@ struct _SubCharacter;
 #define FRAMEBUFFER_HEIGHT_PROGRESSIVE 224
 #define FRAMEBUFFER_HEIGHT_INTERLACED  (FRAMEBUFFER_HEIGHT_PROGRESSIVE * 2)
 
-#define CHARA_PROPERTY_COUNT_MAX 10
 #define NPC_COUNT_MAX            6
 #define INVENTORY_ITEM_COUNT_MAX 40
 #define INPUT_ACTION_COUNT       14
@@ -546,21 +545,6 @@ typedef enum _PlayerFlags
     PlayerFlag_Unk15          = 1 << 15
 } e_PlayerFlags;
 
-/** @brief Player property indices. */
-typedef enum _PlayerProperty
-{
-    PlayerProperty_Unk0          = 0,
-    PlayerProperty_AfkTimer      = 1, // Increments every tick for 10 seconds before AFK anim starts.
-    PlayerProperty_PositionY     = 2,
-    PlayerProperty_Unk3          = 3,
-    PlayerProperty_Unk4          = 4,
-    PlayerProperty_RunTimer0     = 5, // Increments indefinitely, but more slowly than `PlayerProperty_RunTimer1`.
-    PlayerProperty_ExertionTimer = 6, // Counts ~20 seconds worth of ticks while running and caps at 0x23000.
-    PlayerProperty_Unk7          = 7,
-    PlayerProperty_Unk8          = 8, // Distance?
-    PlayerProperty_RunTimer1     = 9  // Increments every tick indefinitely.
-} e_PlayerProperty;
-
 /** @brief Names for each character index used in the game, `g_Chara_FileInfo` array associates each character ID with anim/model/texture files. */
 typedef enum _CharacterId
 {
@@ -942,9 +926,18 @@ STATIC_ASSERT_SIZEOF(s_800D5710, 0x34);
 
 // TODO: Re-offset `s_SubCharaPropertiesPlayer` / `s_SubCharaPropertiesNpc`.
 // Probably easier to do that after it's merged with rest of code.
-typedef struct _SubCharPropertiesPlayer
+typedef struct _SubCharaPropertiesPlayer
 {
-    s32 properties_E4[CHARA_PROPERTY_COUNT_MAX]; // TODO: Integrate as `u_Property`.
+    s32 field_E4;
+    s32 afkTimer_E8; // Increments every tick for 10 seconds before AFK anim starts.
+    s32 positionY_EC;
+    s32 field_F0;
+    s32 field_F4;
+    s32 runTimer_F8;      // Tick counter?
+    s32 exertionTimer_FC; // Counts ~20 seconds worth of ticks while running and caps at 0x23000.
+    s32 field_100;
+    s32 field_104;    // Distance?
+    s32 runTimer_108; // `FP_TIME` format timer?.
     u8  field_10C;
     u8  field_10D;
     s8  unk_10E[6];

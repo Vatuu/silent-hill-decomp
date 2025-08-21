@@ -18,14 +18,14 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
 
     func_8004C564(0, -1);
 
-    playerChara->properties_E4.player.properties_E4[1] = 0;
-    playerChara->properties_E4.player.properties_E4[6] = 0;
+    playerChara->properties_E4.player.afkTimer_E8      = 0;
+    playerChara->properties_E4.player.exertionTimer_FC = 0;
 
     if (g_SysWork.player_4C.extra_128.field_1C == 52)
     {
         if (g_SysWork.player_4C.chara_0.properties_E4.player.field_126 != 0)
         {
-            g_SysWork.player_4C.chara_0.properties_E4.player.field_126 -= ((g_DeltaTime0 * FP_FLOAT_TO(0.4f, Q12_SHIFT)) / FP_FLOAT_TO(0.1f / 3.0f, Q12_SHIFT)) * 2;
+            g_SysWork.player_4C.chara_0.properties_E4.player.field_126 -= ((g_DeltaTime0 * FP_TIME(0.4f)) / FP_TIME(0.1f / 3.0f)) * 2;
             if (g_SysWork.player_4C.chara_0.properties_E4.player.field_126 < 0)
             {
                 g_SysWork.player_4C.chara_0.properties_E4.player.field_126 = 0;

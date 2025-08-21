@@ -13,7 +13,7 @@ void Ai_LarvalStalker_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coo
     sharedFunc_800D1524_1_s00(chara, arg1, coords);
     sharedFunc_800D1DBC_1_s00(chara);
 
-    if (*((u16*)&chara->properties_E4.player.properties_E4[9] + 1) < 0x3800)
+    if (*((u16*)&chara->properties_E4.player.runTimer_108 + 1) < 0x3800)
     {
         return;
     }

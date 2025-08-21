@@ -14,7 +14,7 @@ void sharedFunc_800D7560_0_s01(s_SubCharacter* chara)
     rot                        = &chara->rotation_24;
     func_80096E78(rot, mat);
 
-    if ((chara->properties_E4.player.properties_E4[1] & 0xF) == 3)
+    if ((chara->properties_E4.player.afkTimer_E8 & 0xF) == 3)
     {
         scale = &sharedData_800DD870_0_s01;
         ScaleMatrix(mat, scale);

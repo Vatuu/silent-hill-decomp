@@ -26,5 +26,5 @@ void sharedFunc_800D8244_1_s02(s_SubCharacter* chara)
             break;
     }
 
-    chara->properties_E4.player.properties_E4[0] &= ~(1 << 8);
+    chara->properties_E4.player.field_E4 &= ~(1 << 8);
 }

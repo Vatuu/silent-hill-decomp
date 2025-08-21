@@ -12,7 +12,7 @@ void sharedFunc_800D67FC_0_s00(s_SubCharacter* chara)
     newRotY               = func_8005BF38(chara->rotation_24.vy);
     chara->rotation_24.vy = newRotY;
 
-    if ((u16)chara->properties_E4.player.properties_E4[1] & (1 << 13))
+    if ((u16)chara->properties_E4.player.afkTimer_E8 & (1 << 13))
     {
         moveSpeed = chara->moveSpeed_38;
         if (moveSpeed > 0)
@@ -35,7 +35,7 @@ void sharedFunc_800D67FC_0_s00(s_SubCharacter* chara)
 
         if (newMoveSpeed == 0)
         {
-            *(u16*)&chara->properties_E4.player.properties_E4[1] &= ~(1 << 13);
+            *(u16*)&chara->properties_E4.player.afkTimer_E8 &= ~(1 << 13);
         }
     }
     else
@@ -44,7 +44,7 @@ void sharedFunc_800D67FC_0_s00(s_SubCharacter* chara)
     }
 
     origMoveSpeed = chara->moveSpeed_38;
-    if ((u16)chara->properties_E4.player.properties_E4[1] & (1 << 12))
+    if ((u16)chara->properties_E4.player.afkTimer_E8 & (1 << 12))
     {
         if (chara->model_0.state_2 == 2)
         {
@@ -58,21 +58,21 @@ void sharedFunc_800D67FC_0_s00(s_SubCharacter* chara)
 
     if (g_DeltaTime0 != 0)
     {
-        func_8005CB20(chara, &sp10, *(s16*)&chara->properties_E4.player.properties_E4[2], *((s16*)&chara->properties_E4.player.properties_E4[2] + 1));
+        func_8005CB20(chara, &sp10, *(s16*)&chara->properties_E4.player.positionY_EC, *((s16*)&chara->properties_E4.player.positionY_EC + 1));
     }
 
-    *((u16*)&chara->properties_E4.player.properties_E4[2] + 1) = 0;
-    *(u16*)&chara->properties_E4.player.properties_E4[2]       = 0;
+    *((u16*)&chara->properties_E4.player.positionY_EC + 1) = 0;
+    *(u16*)&chara->properties_E4.player.positionY_EC       = 0;
     chara->moveSpeed_38                   = origMoveSpeed;
 
     if (chara->field_34 != 0)
     {
-        newFlags = chara->properties_E4.player.properties_E4[1] | (1 << 8);
+        newFlags = chara->properties_E4.player.afkTimer_E8 | (1 << 8);
     }
     else
     {
-        newFlags = chara->properties_E4.player.properties_E4[1] & ~(1 << 8);
+        newFlags = chara->properties_E4.player.afkTimer_E8 & ~(1 << 8);
     }
 
-    *(u16*)&chara->properties_E4.player.properties_E4[1] = newFlags;
+    *(u16*)&chara->properties_E4.player.afkTimer_E8 = newFlags;
 }

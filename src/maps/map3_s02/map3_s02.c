@@ -99,7 +99,7 @@ void func_800CE5F0(s_SubCharacter* chara, s32 moveSpeed) // 0x800CE5F0
         chara->field_E0_8 &= (1 << 5) | (1 << 6) | (1 << 7);
     }
 
-    if (chara->moveSpeed_38 == 0 && !(chara->properties_E4.player.properties_E4[1] & 0xC))
+    if (chara->moveSpeed_38 == 0 && !(chara->properties_E4.player.afkTimer_E8 & 0xC))
     {
         chara->properties_E4.larvalStalker.properties_E8[0].val16[0] |= 1 << 3;
 

@@ -785,7 +785,7 @@ bool Ai_Unknown23_Init(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DFB
     chara->headingAngle_3C  = chara->rotation_24.vy;
     chara->flags_3E        |= CharaFlag_Unk3;
 
-    localChara->properties_E4.player.properties_E4[3] = 0;
+    localChara->properties_E4.player.field_F0 = 0;
 
     if (chara->model_0.stateStep_3 == 0)
     {
@@ -811,11 +811,11 @@ bool Ai_Unknown23_Init(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DFB
 
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
     {
-        localChara->properties_E4.player.properties_E4[4] = FP_TO(300, Q12_SHIFT);
+        localChara->properties_E4.player.field_F4 = FP_TO(300, Q12_SHIFT);
     }
     else
     {
-        localChara->properties_E4.player.properties_E4[4] = FP_TO(30, Q12_SHIFT);
+        localChara->properties_E4.player.field_F4 = FP_TO(30, Q12_SHIFT);
     }
 
     func_800DD67C(&chara->position_18, chara, coords);

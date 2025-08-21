@@ -5,7 +5,7 @@ void sharedFunc_800D63D0_0_s00(s_SubCharacter* chara, s32 arg1)
     s32  newMoveSpeed;
     s32  animVar;
 
-    flags = &chara->properties_E4.player.properties_E4[1];
+    flags = &chara->properties_E4.player.afkTimer_E8;
 
     moveSpeed = arg1;
     if (!(*flags & (1 << 13)))
@@ -41,7 +41,7 @@ void sharedFunc_800D63D0_0_s00(s_SubCharacter* chara, s32 arg1)
         }
     }
 
-    if (chara->moveSpeed_38 == 0 && !(chara->properties_E4.player.properties_E4[1] & ((1 << 8) | (1 << 9))))
+    if (chara->moveSpeed_38 == 0 && !(chara->properties_E4.player.afkTimer_E8 & ((1 << 8) | (1 << 9))))
     {
         animVar = chara->model_0.anim_4.animIdx_0 == 63;
         if (chara->model_0.anim_4.animIdx_0 == 65)
@@ -56,7 +56,7 @@ void sharedFunc_800D63D0_0_s00(s_SubCharacter* chara, s32 arg1)
         {
             func_800622B8(3, chara, animVar, 3);
 
-            flags = &chara->properties_E4.player.properties_E4[1];
+            flags = &chara->properties_E4.player.afkTimer_E8;
             *flags |= 1 << 9;
         }
     }
