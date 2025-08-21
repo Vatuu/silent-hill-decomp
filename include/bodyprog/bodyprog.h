@@ -1611,21 +1611,6 @@ typedef struct
     s8      field_14;
 } s_800C4590;
 
-/** Anim switch struct? */
-typedef struct _s_800AFBF4
-{
-    s16 sfx_0;
-    s16 sfx_2;
-    u8  unk_4[2];
-    u8  animIdx_6;
-    u8  field_7;
-    u8  field_8;
-    u8  field_9;
-    u8  field_A;
-    u8  unk_B;
-} s_800AFBF4;
-STATIC_ASSERT_SIZEOF(s_800AFBF4, 12);
-
 // ========
 // GLOBALS
 // ========
@@ -1971,13 +1956,11 @@ extern s16 D_800AF212;
 
 extern s32 D_800AF20C;
 
-extern s32 D_800AF21C;
-
 extern u8 D_800AF220;
 
 extern s32 D_800AF224;
 
-extern s_AnimInfo g_MaybePlayerAnims[]; // Maybe part of bigger struct.
+extern s_AnimInfo g_MaybePlayerAnims[]; // Maybe part of bigger struct. 0x800AF228
 
 extern s16 D_800AF506;
 
@@ -1989,14 +1972,6 @@ extern s16 D_800AF624;
 
 /** Keyframe index. */
 extern s16 D_800AF626;
-
-extern s32 D_800AFBE8;
-
-extern s32 D_800AFBEC;
-
-extern s32 D_800AFBF0;
-
-extern s_800AFBF4 D_800AFBF4[];
 
 extern s_800AFC78 D_800AFC78; // Maybe different struct.
 
@@ -2342,13 +2317,12 @@ extern s_PlayerCombat D_800C44E0;
 /** Table of player keyframe indices. Purpose unknown. */
 extern s_D_800C44F0 D_800C44F0[10];
 
+// Enemy target.
 extern VECTOR3 D_800C4540;
 
 extern s16 D_800C4554;
 
 extern s16 D_800C4556;
-
-extern s_800AFBF4 D_800C4570;
 
 extern s16 D_800AEEDC[][2]; // Type assumed.
 
@@ -2361,20 +2335,11 @@ extern s16 D_800AF1FC[]; // Type assumed.
 /** SFX. */
 extern s16 D_800C4574;
 
-/** Anim index. */
-extern u8 D_800C4577;
-
 extern s8 D_800C4588;
 
 extern s_800C4590 D_800C4590;
 
 extern VECTOR3 D_800C45B0; // Assumed type
-
-extern u16 D_800C45BC;
-
-extern u16 D_800C45BE;
-
-extern u16 D_800C45C0;
 
 extern s_800C45C8 D_800C45C8;
 
@@ -3803,9 +3768,6 @@ void func_8007E9C4();
 /** Loads player animations for a given map. Maybe for cutscenes? */
 void GameFs_PlayerMapAnimLoad(s32 mapIdx);
 
-/** Used when exiting the inventory screen. */
-void func_8007EBBC();
-
 void func_80070DF0(s_MainCharacterExtra*, s_SubCharacter*, s32, s32);
 
 s32 func_80071620(u8, s_SubCharacter*, s32, s32);
@@ -3829,9 +3791,6 @@ void func_8007F14C(u8 arg0);
 void func_8007FB94(s_SubCharacter*, s_MainCharacterExtra*, s32);
 
 void func_8007FD4C(s32);
-
-/** Resets several global variables to 0. */
-void func_8007F1CC();
 
 void func_8007F250(u8* ptr, s8 disableDamage);
 

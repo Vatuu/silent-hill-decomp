@@ -12,9 +12,9 @@ void sharedFunc_800D2244_0_s00(s32 arg0)
 
     if (arg0 != 0)
     {
-        g_SysWork.player_4C.extra_128.field_1C          = 0;
-        g_SysWork.player_4C.extra_128.field_20          = 0;
-        g_SysWork.player_4C.extra_128.playerMovement_24 = 0;
+        g_SysWork.player_4C.extra_128.field_1C             = PlayerState_None;
+        g_SysWork.player_4C.extra_128.playerSubMovement_20 = PlayerSubMovement_None;
+        g_SysWork.player_4C.extra_128.playerMovement_24    = PlayerMovement_None;
 
         player->model_0.anim_4.animIdx_0      = 53;
         player->model_0.anim_4.keyframeIdx0_8 = 503;
@@ -35,8 +35,8 @@ void sharedFunc_800D2244_0_s00(s32 arg0)
         extra->model_0.stateStep_3  = 0;
         extra->model_0.state_2      = 0;
 
-        g_SysWork.player_4C.extra_128.field_20          = 0;
-        g_SysWork.player_4C.extra_128.playerMovement_24 = 0;
+        g_SysWork.player_4C.extra_128.playerSubMovement_20 = PlayerSubMovement_None;
+        g_SysWork.player_4C.extra_128.playerMovement_24    = PlayerMovement_None;
     }
 
     player->field_41        = NO_VALUE;
@@ -48,9 +48,9 @@ void sharedFunc_800D2244_0_s00(s32 arg0)
     func_8003D01C();
 #endif
 
-    D_800C45C0                     = 0;
-    D_800C45BE                     = 0;
-    D_800C45BC                     = 0;
+    g_Player_IsShooting            = 0;
+    g_Player_IsAttacking           = 0;
+    g_Player_IsHoldAttack          = 0;
     g_Player_IsAiming              = 0;
     g_Player_IsRunning             = 0;
     g_Player_IsMovingBackward      = 0;
