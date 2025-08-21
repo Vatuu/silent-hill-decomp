@@ -592,7 +592,7 @@ void Gfx_MainMenu_FogRandomize() // 0x8003BAC4
 
     ptr         = D_800BCDE0;
     ptr1        = ptr + 441;
-    D_800A9EAC += 4 + ((s32)Rng_Rand16() & 0x7);
+    D_800A9EAC += 4 + ((s32)Rng_Rand16() & 0x7); // TODO: Range is [4, 11]. Can't use `Rng_GenerateInt`.
     val         = FP_MULTIPLY(Math_Sin(D_800A9EAC), 10, Q12_SHIFT) - 122;
     ptr2        = ptr + 461;
 
@@ -603,13 +603,13 @@ void Gfx_MainMenu_FogRandomize() // 0x8003BAC4
 
     for (i = 0; i < 16; i++)
     {
-        idx       = (s32)Rng_Rand16() % MAIN_MENU_FOG_COUNT;
+        idx       = Rng_GenerateInt(Rng_Rand16(), 0, MAIN_MENU_FOG_COUNT - 1);
         ptr1[idx] = NO_VALUE;
     }
 
     for (i = 0; i < 9; i++)
     {
-        idx       = (s32)Rng_Rand16() % MAIN_MENU_FOG_COUNT;
+        idx       = Rng_GenerateInt(Rng_Rand16(), 0, MAIN_MENU_FOG_COUNT - 1);
         ptr1[idx] = 0;
     }
 }

@@ -12,7 +12,7 @@ void sharedFunc_800D7E04_0_s00(s_SubCharacter* chara, s32 caseArg)
                 var_s1 = caseArg;
 
                 *((u8*)&chara->properties_E4.player.runTimer_108 + 2) = 3;
-                *(u16*)&chara->properties_E4.player.runTimer_108      = (s32)Rng_Rand16() % 819;
+                *(u16*)&chara->properties_E4.player.runTimer_108      = Rng_GenerateInt(Rng_Rand16(), 0, 818);
             }
             break;
 
@@ -22,7 +22,7 @@ void sharedFunc_800D7E04_0_s00(s_SubCharacter* chara, s32 caseArg)
                 var_s1 = caseArg;
 
                 *((u8*)&chara->properties_E4.player.runTimer_108 + 2) = 2;
-                *(u16*)&chara->properties_E4.player.runTimer_108      = (s32)Rng_Rand16() % 1228;
+                *(u16*)&chara->properties_E4.player.runTimer_108      = Rng_GenerateInt(Rng_Rand16(), 0, 1227);
             }
             break;
 
@@ -32,7 +32,7 @@ void sharedFunc_800D7E04_0_s00(s_SubCharacter* chara, s32 caseArg)
                 var_s1 = caseArg;
 
                 *((u8*)&chara->properties_E4.player.runTimer_108 + 2) = 2;
-                *(u16*)&chara->properties_E4.player.runTimer_108      = (s32)Rng_Rand16() % 1228;
+                *(u16*)&chara->properties_E4.player.runTimer_108      = Rng_GenerateInt(Rng_Rand16(), 0, 1227);
             }
             break;
 
@@ -42,7 +42,7 @@ void sharedFunc_800D7E04_0_s00(s_SubCharacter* chara, s32 caseArg)
                 var_s1 = caseArg;
 
                 *((u8*)&chara->properties_E4.player.runTimer_108 + 2) = 2;
-                *(u16*)&chara->properties_E4.player.runTimer_108      = (s32)Rng_Rand16() % 1228;
+                *(u16*)&chara->properties_E4.player.runTimer_108      = Rng_GenerateInt(Rng_Rand16(), 0, 1227);
             }
             break;
     }

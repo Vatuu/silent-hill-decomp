@@ -26,7 +26,8 @@ void sharedFunc_800D5B48_0_s00(s_SubCharacter* chara)
         chara->moveSpeed_38 = newMoveSpeed;
     }
 
-    if ((chara->model_0.anim_4.animIdx_0 == 0x37) && (Rng_Rand16() % 4) == 0)
+    // 25% chance.
+    if (chara->model_0.anim_4.animIdx_0 == 55 && !Rng_GenerateInt(Rng_Rand16(), 0, 3))
     {
         flags = chara->properties_E4.larvalStalker.properties_E8[0].val16[0];
         if (!(flags & (1 << 13)))

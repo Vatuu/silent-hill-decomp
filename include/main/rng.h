@@ -3,9 +3,14 @@
 
 #include "common.h"
 
+/** @brief Global variable storing the current random seed for the `Rng_Rand32`
+ * function. The value is updated with each call to the RNG functions.
+ */
+extern u32 g_RngSeed;
+
 /** @brief Tests if a probability is met.
  *
- * This macro evaluates the probability by performing a bitwise AND
+ * Evaluates the probability by performing a bitwise AND
  * operation with a mask that has the specified number of consecutive
  * low bits set to 1.
  *
@@ -28,17 +33,12 @@
  * 15   | 0x7FFF | 1 in 32768 | 0.003%
  * 16   | 0xFFFF | 1 in 65536 | 0.002%
  */
-#define TEST_RNG(bits) \
+#define Rng_TestProbabilityBits(bits) \
     (Rng_Rand16() & ((1 << (bits)) - 1))
 
 /** @brief Generates an integer in the range `[low, high]` from a random input. */
-#define GENERATE_INT(rand, low, high) \
-    (((rand) % (((high) - (low)) + 1)) + (low))
-
-/** @brief Global variable storing the current random seed for the `Rng_Rand32`
- * function. The value is updated with each call to the RNG functions.
- */
-extern u32 g_RngSeed;
+#define Rng_GenerateInt(rand, low, high) \
+    (((s32)(rand) % (((high) - (low)) + 1)) + (low))
 
 /** @brief Generates a new random 32-bit unsigned integer and updates
  * `g_RngSeed`.

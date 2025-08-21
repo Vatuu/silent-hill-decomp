@@ -240,7 +240,7 @@ void sharedFunc_800D63D0_0_s00(s_SubCharacter* chara, s32 arg1);
 
 void sharedFunc_800D6554_0_s00(s_SubCharacter* chara);
 
-void sharedFunc_800D670C_0_s00(s_SubCharacter* arg0);
+void sharedFunc_800D670C_0_s00(s_SubCharacter* chara);
 
 void sharedFunc_800D67FC_0_s00(s_SubCharacter* chara);
 

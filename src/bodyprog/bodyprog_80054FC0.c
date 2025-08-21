@@ -1800,7 +1800,7 @@ void func_800625F4(VECTOR3* arg0, s16 arg1, s32 arg2, s32 arg3) // 0x800625F4
     g_MapOverlayHeader.table200Items_4C[idx].field_4  = arg0->vz;
     g_MapOverlayHeader.table200Items_4C[idx].field_E  = arg1;
     g_MapOverlayHeader.table200Items_4C[idx].field_D  = var;
-    g_MapOverlayHeader.table200Items_4C[idx].field_B  = TEST_RNG(2);
+    g_MapOverlayHeader.table200Items_4C[idx].field_B  = Rng_TestProbabilityBits(2);
     g_MapOverlayHeader.table200Items_4C[idx].field_C  = 6;
     g_MapOverlayHeader.table200Items_4C[idx].field_10 = arg3 * FP_FLOAT_TO(5.0f, Q12_SHIFT);
 }
@@ -2904,15 +2904,15 @@ s16 func_8006F99C(s_SubCharacter* chara, s32 arg1, s16 arg2) // 0x8006F99C
     {
         if (i == 0)
         {
-            var_s0 = TEST_RNG(6) - 32;
+            var_s0 = Rng_TestProbabilityBits(6) - 32;
         }
         else if (i & 1)
         {
-            var_s0 = (256 << ((i + 1) >> 1)) + TEST_RNG(6);
+            var_s0 = (256 << ((i + 1) >> 1)) + Rng_TestProbabilityBits(6);
         }
         else
         {
-            var_s0 = -(256 << (i >> 1)) - TEST_RNG(6);
+            var_s0 = -(256 << (i >> 1)) - Rng_TestProbabilityBits(6);
         }
 
         if (var_s2 != NO_VALUE)

@@ -3968,7 +3968,7 @@ void SysState_GameOver_Update() // 0x8003A52C
                 }
             }
 
-            randTipVal = (s32)Rng_Rand16() % randTipVal;
+            randTipVal = Rng_GenerateInt(Rng_Rand16(), 0, randTipVal - 1);
 
             // `randTipVal` seems to go unused after loop, gets checked during loop and can cause early exit,
             // thereby affecting what `tipIdx` will contain.

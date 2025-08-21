@@ -110,7 +110,7 @@ void Ai_Cat_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords) // 0x
 
     if (var_a0 != 0)
     {
-        func_8005DD44(0x5A7, &chara->position_18, 128, TEST_RNG(4) - 7);
+        func_8005DD44(0x5A7, &chara->position_18, 128, Rng_TestProbabilityBits(4) - 7);
         chara->properties_E4.larvalStalker.properties_E8[0].val8[0] ^= 1;
     }
 }
