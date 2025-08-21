@@ -231,15 +231,11 @@ void MainLoop() // 0x80032EE0
                 g_VBlanks     = VSync(-1) - g_PrevVBlanks;
                 g_PrevVBlanks = VSync(-1);
 
-                if (g_VBlanks < g_IntervalVBlanks)
+                while (g_VBlanks < g_IntervalVBlanks)
                 {
-                    do
-                    {
-                        VSync(0);
-                        g_VBlanks++;
-                        g_PrevVBlanks++;
-                    }
-                    while (g_VBlanks < g_IntervalVBlanks);
+                    VSync(0);
+                    g_VBlanks++;
+                    g_PrevVBlanks++;
                 }
             }
 

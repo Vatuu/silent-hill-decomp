@@ -471,8 +471,8 @@ void Settings_ScreenXYSet(s32 x, s32 y) // 0x800324F4
 
 void Settings_DispEnvXYSet(DISPENV* display, s32 x, s32 y) // 0x80032524
 {
-    x = (x < -11) ? -11 : ((x > 11) ? 11 : x);
-    y = (y < -8)  ? -8  : ((y > 8)  ? 8  : y);
+    x = CLAMP(x, -11, 11);
+    y = CLAMP(y, -8, 8);
 
     g_GameWorkConst->config_0.optScreenPosX_1C = x;
     g_GameWorkConst->config_0.optScreenPosY_1D = y;

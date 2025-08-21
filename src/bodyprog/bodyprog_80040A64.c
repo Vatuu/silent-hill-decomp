@@ -1043,13 +1043,12 @@ void func_80044FE0(s_Skeleton* skel, s_Bone* bones, u8 boneCount) // 0x80044FE0
 
 void func_80045014(s_Skeleton* skel) // 0x80045014
 {
-    s_Bone* bone = skel->bones_8;
+    s_Bone* bone;
 
     // Traverse bone hierarchy and clear flags.
-    while (bone < &skel->bones_8[skel->boneCount_0])
+    for (bone = &skel->bones_8[0]; bone < &skel->bones_8[skel->boneCount_0]; bone++)
     {
         bone->flags_0 = 0;
-        bone++;
     }
 }
 
@@ -1138,15 +1137,8 @@ void func_800453E8(s_Skeleton* skel, s32 cond) // 0x800453E8
 {
     s_Bone* bone;
 
-    // Check if skeleton has bones.
-    bone = skel->bones_8;
-    if (bone >= &skel->bones_8[skel->boneCount_0])
-    {
-        return;
-    }
-
     // Traverse bone hierarchy and set flags according to cond.
-    while (bone < &skel->bones_8[skel->boneCount_0])
+    for (bone = &skel->bones_8[0]; bone < &skel->bones_8[skel->boneCount_0]; bone++)
     {
         if (cond != 0)
         {
@@ -1156,8 +1148,6 @@ void func_800453E8(s_Skeleton* skel, s32 cond) // 0x800453E8
         {
             bone->flags_0 |= 1 << 31;
         }
-        
-        bone++;
     }
 }
 

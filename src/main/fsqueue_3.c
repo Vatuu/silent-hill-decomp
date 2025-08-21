@@ -39,29 +39,22 @@ bool Fs_QueueCanRead(s_FsQueueEntry* entry)
 
     queueLength = g_FsQueue.read.idx - g_FsQueue.postLoad.idx;
 
-    if (queueLength > 0)
+    for (i = 0; i < queueLength; i++)
     {
-        i = 0;
-        do
+        other   = &g_FsQueue.entries[(g_FsQueue.postLoad.idx + i) & (FS_QUEUE_LENGTH - 1)];
+        overlap = false;
+        if (other->postLoad || other->allocate)
         {
-            other   = &g_FsQueue.entries[(g_FsQueue.postLoad.idx + i) & (FS_QUEUE_LENGTH - 1)];
-            overlap = false;
-            if (other->postLoad || other->allocate)
-            {
-                overlap = Fs_QueueDoBuffersOverlap(entry->data,
-                                                   ALIGN(entry->info->blockCount * FS_BLOCK_SIZE, FS_SECTOR_SIZE),
-                                                   other->data,
-                                                   other->info->blockCount * FS_BLOCK_SIZE);
-            }
-
-            if (overlap == true)
-            {
-                return false;
-            }
-
-            i++;
+            overlap = Fs_QueueDoBuffersOverlap(entry->data,
+                                               ALIGN(entry->info->blockCount * FS_BLOCK_SIZE, FS_SECTOR_SIZE),
+                                               other->data,
+                                               other->info->blockCount * FS_BLOCK_SIZE);
         }
-        while (i < queueLength);
+
+        if (overlap == true)
+        {
+            return false;
+        }
     }
 
     return true;

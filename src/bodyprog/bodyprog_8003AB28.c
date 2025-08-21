@@ -758,7 +758,6 @@ extern s_800C4168 const D_800C4168;
 s32 func_8003BF60(s32 x, s32 z) // 0x8003BF60
 {
     s32               ret;
-    s8                val;
     s_800BCE18_0_0_C* ptr;
 
     ret = 0;
@@ -771,23 +770,17 @@ s32 func_8003BF60(s32 x, s32 z) // 0x8003BF60
     if (D_800BCE18.field_0[0].field_0->field_C != NULL)
     {
         ptr = D_800BCE18.field_0[0].field_0->field_C;
-        val = ptr->field_0;
-     
-        if (val != NO_VALUE)
-        {
-            do 
-            {
-                if (x >= (ptr->field_2 << 8) && (ptr->field_4 << 8) >= x &&
-                    z >= (ptr->field_6 << 8) && (ptr->field_8 << 8) >= z &&
-                    ret < val)
-                {
-                    ret = val;
-                }
 
-                ptr++;
-                val = ptr->field_0;
+        while (ptr->field_0 != NO_VALUE)
+        {
+            if (x >= (ptr->field_2 << 8) && (ptr->field_4 << 8) >= x &&
+                z >= (ptr->field_6 << 8) && (ptr->field_8 << 8) >= z &&
+                ret < ptr->field_0)
+            {
+                ret = ptr->field_0;
             }
-            while (val != NO_VALUE);
+
+            ptr++;
         }
     }
 

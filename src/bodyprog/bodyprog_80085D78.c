@@ -1997,19 +1997,16 @@ s32 func_8008A0E4(s32 arg0, s16 arg1, s_SubCharacter* chara, s_PlayerCombat* com
     if (temp_a1 != 0)
     {
         var_a0 = var_v0_2;
-        if (count > 0)
+        while (count > 0)
         {
-            while (count > 0)
+            if (temp_a1 & var_a0)
             {
-                if (temp_a1 & var_a0)
-                {
-                    ret = count;
-                    break;
-                }
-
-                var_a0 *= 2; // Or `<<= 1`.
-                count--;
+                ret = count;
+                break;
             }
+
+            var_a0 *= 2; // Or `<<= 1`.
+            count--;
         }
     }
 

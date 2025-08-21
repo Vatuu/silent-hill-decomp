@@ -148,23 +148,16 @@ bool Fs_FreeMem(u8* ptr)
     s_FsMemBlock* prev   = &g_FsMemory.allocList;
     bool          result = false;
 
-    if (prev->next != NULL)
+    while (prev->next != NULL)
     {
-        do
+        iter = prev->next;
+        if (iter->start == ptr)
         {
-            iter = prev->next;
-            if (iter->start == ptr)
-            {
-                Fs_RelinkMemBlock(prev, &g_FsMemory.freeList, NULL, 0u);
-                result = true;
-                break;
-            }
-            else
-            {
-                prev = iter;
-            }
+            Fs_RelinkMemBlock(prev, &g_FsMemory.freeList, NULL, 0u);
+            result = true;
+            break;
         }
-        while (iter->next != NULL);
+        prev = iter;
     }
 
     return result;
