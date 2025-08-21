@@ -2326,7 +2326,7 @@ void func_80054A04(u8 itemId) // 0x80054A04
 {
     D_800AE187 = itemId;
     D_800AE180 = 0;
-    D_800AE1AC = 0;
+    g_ItemPickupAnimationState = 0;
     D_800AE1B0 = 0;
 
     D_800C3E18[9]                          = NO_VALUE;
@@ -2352,7 +2352,7 @@ void func_80054A04(u8 itemId) // 0x80054A04
     Gfx_ItemScreens_CameraSet(&D_800C3B48, &D_800C3AE8, &D_800C3B38, 0);
 }
 
-bool func_80054AD8(u8 itemId) // 0x80054AD8
+bool Gfx_AnimatePickupItem(u8 itemId) // 0x80054AD8
 {
     s32            temp_a1;
     s16            x;
@@ -2364,12 +2364,12 @@ bool func_80054AD8(u8 itemId) // 0x80054AD8
     g_Items_Items3dData1[9].coord.t[0] = 0;
     g_Items_Items3dData1[9].coord.t[2] = -0x20B0;
 
-    switch (D_800AE1AC) 
+    switch (g_ItemPickupAnimationState) 
     {
         case 0:
             if (D_800AE1B0 >= 0x800) 
             {
-                D_800AE1AC = 1;
+                g_ItemPickupAnimationState = 1;
             }
 
             ptr     = &g_Items_Items3dData0[0];
@@ -2391,7 +2391,7 @@ bool func_80054AD8(u8 itemId) // 0x80054AD8
             g_Items_Items3dData0[9].scale_0.vz = FP_FLOAT_TO(1.0f, Q12_SHIFT);
             g_Items_Items3dData0[9].scale_0.vy = FP_FLOAT_TO(1.0f, Q12_SHIFT);
             g_Items_Items3dData0[9].scale_0.vx = FP_FLOAT_TO(1.0f, Q12_SHIFT);
-            D_800AE1AC = 2;
+            g_ItemPickupAnimationState = 2;
             break;
     }
 
@@ -2413,7 +2413,7 @@ bool func_80054AD8(u8 itemId) // 0x80054AD8
     func_8004BD74(9, obj, 2);
     PopMatrix();
 
-    return D_800AE1AC > 0;
+    return g_ItemPickupAnimationState > 0;
 }
 
 // TODO: RODATA migration.

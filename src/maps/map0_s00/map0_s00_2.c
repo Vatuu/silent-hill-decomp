@@ -158,7 +158,7 @@ void func_800DB870() // 0x800DB870
             break;
 
         case 2:
-            func_800860B0(false, 26, 0, 0, 0, false);
+            MapMsg_DisplayAndHandleSelection(false, 26, 0, 0, 0, false);
             break;
 
         default:
