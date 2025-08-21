@@ -29,6 +29,20 @@ extern s_800A99E4 D_800A99E4;
 
 extern s8 D_800CBAD4;
 
+extern s8 D_800CC908;
+
+extern s32 D_800CCA1C; // Type assumed.
+
+extern s32 D_800CCA28; // Type assumed.
+
+extern VECTOR3 D_800CCA34;
+
+extern s32 D_800CCA40; // Type assumed.
+
+extern s32 D_800CCA4C; // Type assumed.
+
+extern VECTOR3 D_800CCA58;
+
 /** Character name. */
 extern char* D_800CCA64;
 
@@ -58,6 +72,8 @@ extern s8 D_800CCB6C;
 extern s8 D_800CCB78;
 
 extern SVECTOR3 D_800CCB84;
+
+extern u16 D_800DE124;
 
 extern u16 D_800DE128;
 
@@ -114,6 +130,9 @@ void func_800DA7AC();
 void func_800DA7FC();
 
 void func_800DA8A4();
+
+/** Event function. */
+void func_800DBAA0();
 
 void Event_PocketRadioItemTake();
 

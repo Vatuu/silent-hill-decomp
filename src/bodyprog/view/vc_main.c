@@ -2708,7 +2708,7 @@ void vcAdjCamOfsAngByCharaInScreen(SVECTOR* cam_ang, SVECTOR* ofs_cam2chara_btm_
     }
 
     cam_ang->vy += adj_cam_ang_y;
-    cam_ang->vx = adj_cam_ang_x + cam_ang->vx;
+    cam_ang->vx  = adj_cam_ang_x + cam_ang->vx;
 }
 
 void vcAdjCamOfsAngByOfsAngSpd(SVECTOR* ofs_ang, SVECTOR* ofs_ang_spd, SVECTOR* ofs_tgt_ang, VC_WATCH_MV_PARAM* prm_p) // 0x8008555C

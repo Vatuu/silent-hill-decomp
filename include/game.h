@@ -1196,7 +1196,7 @@ typedef struct _SysWork
 {
     s8              unk_0[8];
     s32             sysState_8;     /** `e_SysState` */
-    s32             sysStateStep_C; /** Current step/state of `sysState_8` the game is in. */
+    s32             sysStateStep_C; /** Current state step of `sysState_8` the game is in. */
     s32             field_10;       // Sometimes assigned to same thing as `sysStateStep_C`. Contains selected entry index from pickup item dialogs?
     s32             field_14;
     s32             field_18; // `s_Skeleton` array pointer?
