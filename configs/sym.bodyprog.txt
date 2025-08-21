@@ -104,7 +104,7 @@ g_ItemVectors                               = 0x800262FC; // type:DVECTOR size:0
 //--------------------------------------------------------------------------
 
 //------------------------------------------------------
-//--- PA: 0x0063A4   VA: 0x8002AF04   subsegment: rodata
+//--- PA: 0x00643C   VA: 0x8002AF9C   subsegment: rodata
 //------------------------------------------------------
 hack_vcSetWatchTgtXzPos_fix                 = 0x8002B2B4; // type:s32 - Some 0x80083500 value which coincidentally points to code inside vcSetWatchTgtXzPos, probably unrelated flags or something. A jtbl is right before this which spimdisasm tries to include, breaking vcSetWatchTgtXzPos build.
 
@@ -1875,9 +1875,9 @@ midi_smf_stat                               = 0x800A8D00; // type:func
 //================================================
 
 
-//-----------------------------------------------------------------------
-//--- PA: 0x084238   VA: 0x800A8D98   subsegment: data, bodyprog_800A8D98
-//-----------------------------------------------------------------------
+//------------------------------------------------------------------------
+//--- PA: 0x084238   VA: 0x800A8D98   subsegment: .data, bodyprog_800A8D98
+//------------------------------------------------------------------------
 // vw globals from SH2
 vcNullRoadArray                             = 0x800A8F44; // _VC_ROAD_DATA[2]
 g_ObjectTable0                              = 0x800A8F74; // type:s8
@@ -1885,11 +1885,24 @@ g_ObjectTable1                              = 0x800A8FC4; // type:s8
 g_DeltaTime1                                = 0x800A8FEC; // type:s32
 g_IntervalVBlanks                           = 0x800A8FF0; // type:s32
 g_Chara_FileInfo                            = 0x800A90FC; // type:CharaFileInfo size:0x2D0
+g_Demo_FrameCount                           = 0x800A9768; // type:s32
+g_UnknownFrameCounter                       = 0x800A976C; // type:s32
 g_PrevVBlanks                               = 0x800A9770; // type:s32
+g_GameStateUpdateFuncs                      = 0x800A977C;
 g_SlotElementSelectedIdx                    = 0x800A97D4;
 g_SelectedSaveSlotIdx                       = 0x800A97D6;
+g_UnknownEngineCmdTable                     = 0x800A9804;
+g_UnknownEngineCmdTable2                    = 0x800A9858; // type:u16
+g_UnknownEngineCmdTable3                    = 0x800A98AC;
 g_MapMsg_CurrentIdx                         = 0x800A99AC; // type:s32
 g_MapMsg_SelectFlashTimer                   = 0x800A99B0; // type:s16
+g_MapFullscreenTimFileIdx                   = 0x800A99B4;
+g_MapMarkingTimFileIdx                      = 0x800A99CC;
+g_BackgroundColor                            = 0x800A8E58;
+
+//-----------------------------------------------------------------------
+//--- PA: 0x084EA4   VA: 0x800A9A04   subsegment: data, bodyprog_800A9074
+//-----------------------------------------------------------------------
 g_MapEventIdx                               = 0x800A9A14; // type:u32
 
 //------------------------------------------------------------------------

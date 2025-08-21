@@ -90,6 +90,20 @@ typedef enum _MapMsgCode
     MapMsgCode_AlignCenter = 99
 } e_MapMsgCode;
 
+typedef enum _MapMsgDrawRet
+{
+    /* MapMsg_Draw is stateful. As first step it will setup message pointers and timers
+     * and return this code. In the second step it will return this value if
+     * cutscene timer or user pressed a button, this message is over*/
+    MapMsgDrawRet_Finished      = NO_VALUE,
+    /*The message is still on the screen, nothing happens*/
+    MapMsgDrawRet_StillOnScreen = 0,
+    /*This message was a selection and this is what was selected (choice+1)*/
+    MapMsgDrawRet_Yes           = 1,
+    MapMsgDrawRet_No            = 2,
+    MapMsgDrawRet_3rd           = 3,
+} e_MapMsgRetCode;
+
 typedef enum _MapMsgAudioLoadBlock
 {
     MapMsgAudioLoadBlock_None = 0, // TODO: Some code checks only for bit 0, so it should mean something.

@@ -1307,10 +1307,10 @@ typedef struct
     s16   textureFileIdx : 16;
     u16   field_6        : 10;
     u16   field_6_10     : 6;
-    void* field_8;
+    s_FsImageDesc* field_8; // guessed type
     u16   field_C_0 : 2;
     s32   field_C_2 : 14;
-    u16   unk_C_16  : 16;
+    u16            field_C_16 : 16;
 } s_CharaFileInfo;
 STATIC_ASSERT_SIZEOF(s_CharaFileInfo, 16);
 
@@ -1678,7 +1678,7 @@ extern u_Filename D_8002B2CC;
 
 extern s32 g_MapMsg_WidthTable[];
 
-extern u8 D_800A8E58;
+extern u8 g_BackgroundColor;
 
 extern DR_MODE D_800A8E5C[];
 
@@ -1694,36 +1694,21 @@ extern s32 D_800A8F40;
 
 extern GsOT D_800A8F9C[];
 
-extern s_FsImageDesc g_Font16AtlasImg; // 0x800A8FF4
-
-extern s_FsImageDesc g_KonamiLogoImg; // 0x800A8FFC
-
-extern s_FsImageDesc g_KcetLogoImg; // 0x800A9004
-
-extern s_FsImageDesc g_TitleImg; // 0x800A9014
-
-extern s_FsImageDesc g_MapImg; // 0x800A901C
-
+extern s_FsImageDesc g_Font16AtlasImg;    // 0x800A8FF4
+extern s_FsImageDesc g_KonamiLogoImg;     // 0x800A8FFC
+extern s_FsImageDesc g_KcetLogoImg;       // 0x800A9004
+extern s_FsImageDesc g_TitleImg;          // 0x800A9014
+extern s_FsImageDesc g_MapImg;            // 0x800A901C
 extern s_FsImageDesc g_MapMarkerAtlasImg; // 0x800A9024
-
 extern s_FsImageDesc g_ItemInspectionImg; // 0x800A902C
-
 extern s_FsImageDesc D_800A9034;
-
 extern s_FsImageDesc D_800A905C;
-
-extern s_FsImageDesc g_ControllerButtonAtlasImg; // 0x800A903C
-
-extern s_FsImageDesc g_BrightnessScreenImg0; // 0x800A9044
-
-extern s_FsImageDesc g_BrightnessScreenImg1; // 0x800A904C
-
-extern s_FsImageDesc g_DeathTipImg; // 0x800A9054
-
-extern s_FsImageDesc g_HealthPortraitImg; // 0x800A905C
-
+extern s_FsImageDesc g_ControllerButtonAtlasImg;   // 0x800A903C
+extern s_FsImageDesc g_BrightnessScreenImg0;       // 0x800A9044
+extern s_FsImageDesc g_BrightnessScreenImg1;       // 0x800A904C
+extern s_FsImageDesc g_DeathTipImg;                // 0x800A9054
+extern s_FsImageDesc g_HealthPortraitImg;          // 0x800A905C
 extern s_FsImageDesc g_InventoryKeyItemTextureImg; // 0x800A9064
-
 extern s_FsImageDesc g_FirstAidKitItemTextureImg; // 0x800A906C
 
 /** Some intentory item texture (`ITEM/TIM07.TIM`). */
@@ -1743,7 +1728,7 @@ extern s_StructUnk3 D_800A952C;
 
 extern u16 D_800A9774[];
 
-extern u16 D_800A9858[];
+extern u16 g_UnknownEngineCmdTable2[];
 
 extern s_800C37D4 D_800A986C[];
 
@@ -1755,10 +1740,8 @@ extern s32 D_800A9A24;
 /** Z. */
 extern s32 D_800A9A28;
 
-/** Related to character animation allocation handling.
- * Size could also be 45/0x2D as last 3 bytes are empty.
- */
-extern s8 D_800A98FC[48];
+/** Related to character animation allocation handling. */
+extern s8 D_800A98FC[Chara_Count];
 
 /** Related to main menu fog randomization. */
 extern s32 D_800A9EAC;
@@ -1774,17 +1757,17 @@ extern s_FsImageDesc D_800A9EC4;
 extern s_FsImageDesc D_800A9FA8;
 
 /** `Demo_FrameCount` */
-extern s32 D_800A9768;
+extern s32 g_Demo_FrameCount;
 
-extern s32 D_800A976C;
+extern s32 g_UnknownFrameCounter;
 
 /** Function pointer array, maybe state funcs of some kind. */
-extern void (*D_800A977C[])();
+extern void (*g_GameStateUpdateFuncs[])();
 
 /** Related to sound commands. */
-extern u16 D_800A9804[];
+extern u16 g_UnknownEngineCmdTable[];
 
-extern u16 D_800A98AC[];
+extern u16 g_UnknownEngineCmdTable3[];
 
 /** `D_800A992C` and `D_800A9944` are likely the same variable or they are inside a struct.
  * `D_800A992C` has values that seem related to the player, while `D_800A9944`
@@ -1794,7 +1777,7 @@ extern u16 D_800A98AC[];
  */
 extern s_800A992C D_800A992C[];
 
-extern u8 D_800A9944;
+extern u8 D_800A9944[];
 
 /** Player anim info? */
 extern s_AnimInfo D_800A998C;
@@ -1807,21 +1790,15 @@ extern s32 D_800A999C;
 
 extern s32 D_800A99A0;
 
-extern u8 D_800A99A4[];
+extern u8 D_800A99A4[8];
 
-/** Map message index. */
 extern s32 g_MapMsg_CurrentIdx;
 
-/** FP time value for map message. */
 extern s16 g_MapMsg_SelectFlashTimer;
 
-/** Map flags. */
-extern s8 D_800A99B4[];
+extern s8 g_MapFullscreenTimFileIdx[24];
 
-/** Array of indices?
- * Related to map markings. Used to indicate which file to load based on the current overlay.
- */
-extern s8 D_800A99CC[];
+extern s8 g_MapMarkingTimFileIdx[56];
 
 extern s_FsImageDesc D_800A9A04;
 
@@ -3509,8 +3486,6 @@ void ControllerData_AnalogToDigital(s_ControllerData* cont, s32 arg1);
 
 void func_800348C0();
 
-void GameState_LoadScreen_Update();
-
 /** Handles `g_GameWork.gameStateStep_598[0]`.
  * Used to handle map loading and room changes.
  */
@@ -3656,8 +3631,6 @@ void func_80037F24(s32);
 
 void func_80038354();
 
-void GameState_InGame_Update();
-
 void SysState_Gameplay_Update();
 
 void SysState_GamePaused_Update();
@@ -3671,8 +3644,6 @@ void SysState_StatusMenu_Update();
 void GameState_LoadStatusScreen_Update();
 
 void SysState_MapScreen_Update();
-
-void GameState_LoadMapScreen_Update();
 
 void SysState_Fmv_Update();
 
@@ -3702,13 +3673,9 @@ void SysState_EventPlaySound_Update();
 
 void SysState_GameOver_Update();
 
-void GameState_MapEvent_Update();
-
 // ====================
 // Main menu functions - TODO: Maybe a split around here?
 // ====================
-
-void GameState_MainMenu_Update();
 
 void MainMenu_SelectedOptionIdxReset();
 
@@ -3974,4 +3941,22 @@ s32 func_80080A10();
 
 u8 func_8008A2E0(s32 arg0);
 
+void GameState_Unk0_Update();
+void GameState_StartMovieIntro_Update();
+void GameState_DeathLoadScreen_Update();
+void GameState_MovieIntroAlternate_Update();
+void GameState_MovieIntro_Update();
+void GameState_MainMenu_Update();
+void GameState_MovieOpening_Update();
+void GameState_LoadScreen_Update();
+void GameState_InGame_Update();
+void GameState_MapEvent_Update();
+void GameState_ExitMovie_Update();
+void GameState_ItemScreens_Update();
+void GameState_MapScreen_Update();
+void GameState_SaveScreen_Update();
+void GameState_DebugMoviePlayer_Update();
+void GameState_Options_Update();
+void GameState_LoadMapScreen_Update();
+void GameState_Unk15_Update();
 #endif

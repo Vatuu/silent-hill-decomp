@@ -147,7 +147,7 @@ void func_800860B0(bool arg0, s32 mapMsgIdx, s32 arg2, s32 arg3, s32 sysStateSte
     s32 var;
 
     var = Gfx_MapMsg_Draw(mapMsgIdx);
-    if (var <= 0)
+    if (var <= MapMsgDrawRet_StillOnScreen)
     {
         return;
     }
@@ -158,15 +158,15 @@ void func_800860B0(bool arg0, s32 mapMsgIdx, s32 arg2, s32 arg3, s32 sysStateSte
         return;
     }
 
-    if (var == 1)
+    if (var == MapMsgDrawRet_Yes)
     {
         func_80085DC0(arg5, arg2);
     }
-    if (var == 2)
+    if (var == MapMsgDrawRet_No)
     {
         func_80085DC0(arg5, arg3);
     }
-    if (var == 3)
+    if (var == MapMsgDrawRet_3rd)
     {
         func_80085DC0(arg5, sysStateStep);
     }
@@ -462,8 +462,8 @@ void func_800867B4(s32 caseParam, s32 idx) // 0x800867B4
             StoreImage(&D_8002AB10, IMAGE_BUFFER_2);
             DrawSync(0);
 
-            Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + D_800A99B4[idx], FS_BUFFER_2, &g_MapImg);
-            Fs_QueueStartReadTim(FILE_TIM_MR_0TOWN_TIM + D_800A99CC[idx], FS_BUFFER_1, &g_MapMarkerAtlasImg);
+            Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + g_MapFullscreenTimFileIdx[idx], FS_BUFFER_2, &g_MapImg);
+            Fs_QueueStartReadTim(FILE_TIM_MR_0TOWN_TIM + g_MapMarkingTimFileIdx[idx], FS_BUFFER_1, &g_MapMarkerAtlasImg);
 
             Gfx_Init(SCREEN_WIDTH, 1);
             GsSwapDispBuff();
@@ -512,11 +512,11 @@ void func_800869E4(s32 mapMsgIdx, u8* arg1, u16* arg2) // 0x800869E4
     g_SysWork.field_22A0 |= 1 << 5;
 
     ret = Gfx_MapMsg_Draw(mapMsgIdx);
-    if (ret == 1)
+    if (ret == MapMsgDrawRet_Yes)
     {
         SysWork_StateStepIncrement();
     }
-    else if (ret == NO_VALUE)
+    else if (ret == MapMsgDrawRet_Finished)
     {
         Sd_EngineCmd(arg2[*arg1]);
         *arg1 += 1;
@@ -940,14 +940,13 @@ void func_80087540(s32 itemId, s32 itemCount, s32 arg2, s32 mapMsgIdx0, s32 mapM
             break;
 
         case 5:
-            D_800A8E58 = 0x30;
+            g_BackgroundColor = 0x30;
             func_800862F8(2, InventoryItemId_Unequipped, false);
-
             func_800860B0(false, mapMsgIdx1, 0, 0, 0, true);
             break;
 
         case 6:
-            D_800A8E58 = 0x30;
+            g_BackgroundColor = 0x30;
 
             func_800862F8(2, InventoryItemId_Unequipped, false);
             func_8008616C(2, true, 0, arg2, true);
@@ -1092,7 +1091,7 @@ void func_80087AF4(s32 mapFlagIdx, s32 eventFlagIdx, s32 mapMsgIdx) // 0x80087AF
     {
         case 0:
             g_MapOverlayHeader.func_C8();
-            Fs_QueueStartSeek(FILE_TIM_MP_0TOWN_TIM + D_800A99B4[mapFlagIdx]);
+            Fs_QueueStartSeek(FILE_TIM_MP_0TOWN_TIM + g_MapFullscreenTimFileIdx[mapFlagIdx]);
 
             g_SysWork.timer_2C = 0;
             g_SysWork.field_14 = 0;
@@ -1106,7 +1105,7 @@ void func_80087AF4(s32 mapFlagIdx, s32 eventFlagIdx, s32 mapMsgIdx) // 0x80087AF
             DrawSync(0);
             StoreImage(&D_8002ABA4, IMAGE_BUFFER);
             DrawSync(0);
-            Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + D_800A99B4[mapFlagIdx], FS_BUFFER_2, &g_MapImg);
+            Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + g_MapFullscreenTimFileIdx[mapFlagIdx], FS_BUFFER_2, &g_MapImg);
             Gfx_Init(0x140, 1);
 
             g_IntervalVBlanks = 1;
@@ -1120,7 +1119,7 @@ void func_80087AF4(s32 mapFlagIdx, s32 eventFlagIdx, s32 mapMsgIdx) // 0x80087AF
             g_SysWork.field_10++;
 
         case 3:
-            D_800A8E58 = 0x58;
+            g_BackgroundColor = 0x58;
 
             Gfx_BackgroundSpriteDraw(&g_MapImg);
             func_800860B0(true, mapMsgIdx, 4, 5, 0, true);
@@ -1166,7 +1165,7 @@ void func_80087AF4(s32 mapFlagIdx, s32 eventFlagIdx, s32 mapMsgIdx) // 0x80087AF
             g_SysWork.field_10++;
 
         case 5:
-            D_800A8E58 = 0x58;
+            g_BackgroundColor = 0x58;
 
             Gfx_BackgroundSpriteDraw(&g_MapImg);
             func_8008616C(2, true, 0, 0, true);
