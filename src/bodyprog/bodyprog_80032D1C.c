@@ -138,7 +138,7 @@ void MainLoop() // 0x80032EE0
 
         g_ObjectTableIdx = GsGetActiveBuff();
 
-        if (g_GameWork.gameState_594 == GameState_MainLoadScreen || 
+        if (g_GameWork.gameState_594 == GameState_MainLoadScreen ||
             g_GameWork.gameState_594 == GameState_InGame)
         {
             GsOUT_PACKET_P = (PACKET*)(TEMP_MEMORY_ADDR + (g_ObjectTableIdx << 17));
@@ -360,7 +360,8 @@ bool func_80033548() // 0x80033548
     func_8002E7BC();
     func_8002E85C();
 
-    if (g_GameWork.gameState_594 == GameState_Unk10 || g_GameWork.gameState_594 == GameState_KcetLogo)
+    if (g_GameWork.gameState_594 == GameState_Unk10 ||
+        g_GameWork.gameState_594 == GameState_KcetLogo)
     {
         g_SaveScreenPlayerState = 2;
     }
@@ -1375,9 +1376,9 @@ void func_80034F18() // 0x80034F18
 
 void Game_InGameInit() // 0x80034FB8
 {
-    s32        mapOverlayId;
+    s32 mapOvlId;
 
-    mapOverlayId = g_SavegamePtr->mapOverlayId_A4;
+    mapOvlId = g_SavegamePtr->mapOverlayId_A4;
 
     vcInitCamera(&g_MapOverlayHeader, &g_SysWork.player_4C.chara_0.position_18);
 
@@ -1387,13 +1388,13 @@ void Game_InGameInit() // 0x80034FB8
     func_8003D95C();
     func_8003EBA0();
 
-    g_MapOverlayHeader.func_168(NULL, (void*)mapOverlayId, (void*)NO_VALUE);
+    g_MapOverlayHeader.func_168(NULL, (void*)mapOvlId, (void*)NO_VALUE);
 
     func_80034EC8();
 
     g_SysWork.field_2280 = 5;
 
-    func_8005E650(mapOverlayId);
+    func_8005E650(mapOvlId);
     func_80037124();
     func_8007E8C0();
     func_80037F24(0);
@@ -1402,7 +1403,7 @@ void Game_InGameInit() // 0x80034FB8
     func_8007EBBC();
     GameFs_Tim00TIMLoad();
     Fs_QueueWaitForEmpty();
-    GameFs_MapItemsModelLoad(mapOverlayId);
+    GameFs_MapItemsModelLoad(mapOvlId);
 }
 
 void Game_SavegameInitialize(s8 overlayId, s32 difficulty) // 0x800350BC
@@ -3294,7 +3295,9 @@ void SysState_Gameplay_Update() // 0x80038BD4
         SysWork_StateSetNext(SysState_OptionsMenu);
     }
 
-    if (g_SysWork.sysState_8 == SysState_OptionsMenu || g_SysWork.sysState_8 == SysState_StatusMenu || g_SysWork.sysState_8 == SysState_MapScreen)
+    if (g_SysWork.sysState_8 == SysState_OptionsMenu ||
+        g_SysWork.sysState_8 == SysState_StatusMenu ||
+        g_SysWork.sysState_8 == SysState_MapScreen)
     {
         g_SysWork.flags_22A4 |= 1 << 7;
     }

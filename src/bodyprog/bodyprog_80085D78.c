@@ -1348,11 +1348,11 @@ void func_800881B8(s32 x0, s16 y0, s32 x1, s16 y1, s16 arg4, s16 arg5, s16 arg6,
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80088370); // 0x80088370
 
-bool Chara_Load(s32 arg0, s8 charaId, GsCOORDINATE2* coord, s8 arg3, s_PlmHeader* plmHeader, s_FsImageDesc* texture) // 0x80088C7C
+bool Chara_Load(s32 arg0, s8 charaId, GsCOORDINATE2* coord, s8 arg3, s_PlmHeader* plmHeader, s_FsImageDesc* tex) // 0x80088C7C
 {
     func_80035338(arg0 + 1, charaId, NULL, coord);
     func_8003D5B4(arg3);
-    func_8003D6E0(charaId, arg0, plmHeader, texture);
+    func_8003D6E0(charaId, arg0, plmHeader, tex);
     return true;
 }
 
@@ -1940,7 +1940,7 @@ s32 func_8008A0E4(s32 arg0, s16 arg1, s_SubCharacter* chara, s_PlayerCombat* com
     var_t1    = chara->field_44;
     modelAnim = &chara->model_0.anim_4;
 
-    if (g_DeltaTime0 == 0 || g_SysWork.sysState_8 != SysState_Gameplay)
+    if (g_DeltaTime0 == FP_TIME(0.0f) || g_SysWork.sysState_8 != SysState_Gameplay)
     {
         return NO_VALUE;
     }

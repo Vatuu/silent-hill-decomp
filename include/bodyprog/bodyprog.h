@@ -1013,7 +1013,7 @@ typedef struct
     s8                field_4;
     u8                unk_5[3];
     VECTOR3           field_8;               // Position.
-    s32               field_14;              // Used a lot as `s_PlmHeader*`, but code adds file-lengths to it, could just be `u8*` pointing to current file data?
+    s32               field_14;              // Used frequently as `s_PlmHeader*`, but code adds file lengths to it. Could just be `u8*` pointing to current file data?
     s_800BCE18_0_CC*  field_18[Chara_Count]; // Per-character data? So far only seen accessed by `map4_s03::800D59EC` which calls `func_8003BE50(Chara_Twinfeeler)`.
     s_800BCE18_0_CC   field_CC;
     u8                unk_D0[368];
@@ -2587,7 +2587,7 @@ void func_8003D160();
 
 void func_8003D5B4(s8 arg0);
 
-void func_8003D6E0(s32 arg0, s32 arg1, s_PlmHeader* plmHeader, s_FsImageDesc* texture);
+void func_8003D6E0(s32 arg0, s32 arg1, s_PlmHeader* plmHeader, s_FsImageDesc* tex);
 
 /** Param types assumed. */
 void func_8003DD80(s32 idx, s32 arg1); // Called by some chara init funcs.
@@ -2735,7 +2735,7 @@ void Anim_Update3(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Anim
 /** Something related to player weapon position. Takes coords to arm bones. */
 void func_80044F14(GsCOORDINATE2* coord, s16 z, s16 x, s16 y);
 
-s8 func_80044F6C(s8* ptr, s32 arg1);
+s8 func_80044F6C(s8* ptr, bool arg1);
 
 /** Skeleton setup? Assigns bones pointer for the skeleton and resets fields. */
 void func_80044FE0(s_Skeleton* skel, s_Bone* bones, u8 boneCount);
@@ -2753,10 +2753,10 @@ void func_80045108(s_Skeleton* arg0, s_PlmHeader* plmHeader, u8* arg2, s32 arg3)
 void func_800451B0(s_Skeleton* skel, s_PlmHeader* plmHeader, s32* arg2);
 
 /** Anim func. Traverses skeleton bones to set flags/mask. */
-void func_800453E8(s_Skeleton* skel, s32 cond);
+void func_800453E8(s_Skeleton* skel, bool cond);
 
 /** Does something with skeleton bones. `arg0` is a struct pointer. */
-void func_80045468(s_Skeleton* skel, s32* arg1, s32 cond);
+void func_80045468(s_Skeleton* skel, s32* arg1, bool cond);
 
 /** Passes a command to the sound driver. Plays SFX among other things. */
 void Sd_EngineCmd(u32 cmd);
@@ -3213,7 +3213,7 @@ Could `arg5` be a struct pointer?
 `func_8003D6E0` uses this function and in the last argument
 it input `arg5` and `arg5` is an undetermined function pointer
 */
-bool Chara_Load(s32 arg0, s8 charaId, GsCOORDINATE2* coord, s8 arg3, s_PlmHeader* plmHeader, s_FsImageDesc* texture);
+bool Chara_Load(s32 arg0, s8 charaId, GsCOORDINATE2* coord, s8 arg3, s_PlmHeader* plmHeader, s_FsImageDesc* tex);
 
 bool func_80088D0C();
 
@@ -3789,7 +3789,7 @@ void func_8003D354(s32* arg0, s32 arg1);
 /** Texture UV setup for NPCs. */
 void func_8003D3BC(s_FsImageDesc* img, s32 arg1, s32 arg2);
 
-s32 func_8003D7D4(u32 arg0, s32 arg1, s_PlmHeader* plmHeader, s_FsImageDesc* texture);
+s32 func_8003D7D4(u32 arg0, s32 arg1, s_PlmHeader* plmHeader, s_FsImageDesc* tex);
 
 /** Something related to animations. */
 void func_8003D938();

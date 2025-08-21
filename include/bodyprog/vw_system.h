@@ -8,6 +8,7 @@
 struct _MapOverlayHeader; // `bodyprog.h` forward declaration.
 
 /** @brief GLOSSARY OF ABBREVIATIONS
+ *
  * ACCEL: Acceleration
  * ANG:   Angle
  * ARY:   Array
@@ -24,7 +25,7 @@ struct _MapOverlayHeader; // `bodyprog.h` forward declaration.
  * PRIO:  Priority
  * R:     Radius
  * RD:    Road
- * SCR:   Screen.
+ * SCR:   Screen
  * SPD:   Speed
  * STA:   Start
  * SV:    Swivel?
@@ -37,17 +38,19 @@ struct _MapOverlayHeader; // `bodyprog.h` forward declaration.
 */
 
 /** @brief GLOSSARY OF JAPANGLISH TERMS
+ *
  * Area:         A camera path's spatial constraint defining its area of influence.
+ * Entou:        "Cylinder" in Japanese. Refers to a 2D radius on the XZ plane.
  * Flipped:      ?
  * Limit area:   2D AABB parameters defining a camera path's spatial constraint.
  * Marge:        ?
- * Near road:    Nearby camera path collision containing info about a camera path's relation to the player in space (distance, priority, etc.).
- *               An array of these is kept to track which camera path should take effect.
+ * Near road:    Nearby camera path collision containing info about a path's relation to the player in space (distance, priority, etc.).
+ *               An array of these is kept to track which path should take effect.
  * Oresen hokan: Polyline interpolation, linear interpolation over an array of values.
  * Renewal:      Reset.
  * Road:         Camera path. A region which dictates specific camera behaviors while the player is inside.
  * Self view:    First-person view.
- * Suu:          "Count" in Japanese, usually refers to number of entries in array, or is included in enums to signal number of values inside.
+ * Suu:          "Count" in Japanese. Usually refers to the number of entries in an array or is included in enums to denote the number of entries it contains.
  * Through door: Rail camera.
  * Watch:        Camera look-at.
  */

@@ -1008,11 +1008,11 @@ void func_80044F14(GsCOORDINATE2* coord, s16 z, s16 x, s16 y) // 0x80044F14
     MulMatrix(&coord->coord, (MATRIX*)0x1F800008);
 }
 
-s8 func_80044F6C(s8* ptr, s32 arg1) // 0x80044F6C
+s8 func_80044F6C(s8* ptr, bool arg1) // 0x80044F6C
 {
     s8 temp;
 
-    if (arg1 != 0)
+    if (arg1)
     {
         D_800C15B0 = ptr;
     }
@@ -1105,21 +1105,21 @@ void func_80045108(s_Skeleton* skel, s_PlmHeader* plmHeader, u8* arg2, s32 arg3)
     }
 
     func_80045258(skel1, &skel->bones_8[boneIdx], skel->boneIdx_1 - boneIdx, plmHeader); // Very wierd third argument.
-    func_800453E8(skel, 0);
+    func_800453E8(skel, false);
 }
 
 void func_800451B0(s_Skeleton* skel, s_PlmHeader* plmHeader, s32* arg2) // 0x800451B0
 {
     s32 var;
     
-    var = func_80044F6C(arg2, 1);
+    var = func_80044F6C(arg2, true);
 
     while (var != -2)
     {
         func_80056C8C(&skel->bones_8[skel->boneIdx_1], plmHeader, var);
 
         skel->boneIdx_1++;
-        var = func_80044F6C(arg2, 0);
+        var = func_80044F6C(arg2, false);
     }
 }
 
@@ -1133,14 +1133,14 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800452EC); // 0x
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80045360); // 0x80045360
 
 // `cond` may actually be another `s_Skeleton` pointer.
-void func_800453E8(s_Skeleton* skel, s32 cond) // 0x800453E8
+void func_800453E8(s_Skeleton* skel, bool cond) // 0x800453E8
 {
     s_Bone* bone;
 
     // Traverse bone hierarchy and set flags according to cond.
     for (bone = &skel->bones_8[0]; bone < &skel->bones_8[skel->boneCount_0]; bone++)
     {
-        if (cond != 0)
+        if (cond)
         {
             bone->flags_0 &= ~(1 << 31);
         }
@@ -1151,7 +1151,7 @@ void func_800453E8(s_Skeleton* skel, s32 cond) // 0x800453E8
     }
 }
 
-void func_80045468(s_Skeleton* skel, s32* arg1, s32 cond) // 0x80045468
+void func_80045468(s_Skeleton* skel, s32* arg1, bool cond) // 0x80045468
 {
     s_Bone* bone;
     s32     status;
@@ -1159,7 +1159,7 @@ void func_80045468(s_Skeleton* skel, s32* arg1, s32 cond) // 0x80045468
     bone = skel->bones_8;
 
     // Get skeleton status?
-    status = func_80044F6C(arg1, 1);
+    status = func_80044F6C(arg1, true);
     if (status == -2)
     {
         return;
@@ -1168,7 +1168,7 @@ void func_80045468(s_Skeleton* skel, s32* arg1, s32 cond) // 0x80045468
     // Traverse bone hierarchy and set flags according to some condition.
     do
     {
-        if (cond != 0)
+        if (cond)
         {
             bone[status].flags_0 &= ~(1 << 31);
         }
@@ -1177,7 +1177,7 @@ void func_80045468(s_Skeleton* skel, s32* arg1, s32 cond) // 0x80045468
             bone[status].flags_0 |= 1 << 31;
         }
         
-        status = func_80044F6C(arg1, 0);
+        status = func_80044F6C(arg1, false);
     }
     while (status != -2);
 }

@@ -762,7 +762,7 @@ s32 func_8003BF60(s32 x, s32 z) // 0x8003BF60
 
     ret = 0;
 
-    if (g_SavegamePtr->mapOverlayId_A4 == 0)
+    if (g_SavegamePtr->mapOverlayId_A4 == MapOverlayId_MAP0_S00)
     {
         return 1;
     }
@@ -1670,7 +1670,7 @@ void func_8003D6A4(s_800BCE18_0_CC* arg0) // 0x8003D6A4
     }
 }
 
-void func_8003D6E0(s32 arg0, s32 arg1, s_PlmHeader* plmHeader, s_FsImageDesc* texture) // 0x8003D6E0
+void func_8003D6E0(s32 arg0, s32 arg1, s_PlmHeader* plmHeader, s_FsImageDesc* tex) // 0x8003D6E0
 {
     s_FsImageDesc img;
     s_PlmHeader*  plmHeaderPtr;
@@ -1689,9 +1689,9 @@ void func_8003D6E0(s32 arg0, s32 arg1, s_PlmHeader* plmHeader, s_FsImageDesc* te
         func_8003D354(&D_800BCE18.field_0[0].field_14, arg0); // Increments `field_14`?
     }
 
-    if (texture != NULL)
+    if (tex != NULL)
     {
-        img = *texture;
+        img = *tex;
     } 
     else 
     {
@@ -1701,16 +1701,16 @@ void func_8003D6E0(s32 arg0, s32 arg1, s_PlmHeader* plmHeader, s_FsImageDesc* te
     func_8003D7D4(arg0, arg1, plmHeaderPtr, &img);
 }
 
-s32 func_8003D7D4(u32 arg0, s32 arg1, s_PlmHeader* plmHeader, s_FsImageDesc* texture) // 0x8003D7D4
+s32 func_8003D7D4(u32 arg0, s32 arg1, s_PlmHeader* plmHeader, s_FsImageDesc* tex) // 0x8003D7D4
 {
     s32              queueIdx;
     s32              idx;
     s_800BCE18_0_CC* ptr;
-    s_FsImageDesc*   img0;
+    s_FsImageDesc*   img;
 
     ptr = &D_800BCE18.field_0[arg1].field_CC;
     idx = ptr->field_0;
-    img0 = &ptr->texture_C;
+    img = &ptr->texture_C;
 
     if (arg0 == 0) 
     {
@@ -1722,7 +1722,7 @@ s32 func_8003D7D4(u32 arg0, s32 arg1, s_PlmHeader* plmHeader, s_FsImageDesc* tex
     {
         if (arg0 == idx) 
         {
-            if (plmHeader == ptr->plmHeader_8 && memcmp(texture, img0, sizeof(s_FsImageDesc)) == 0)
+            if (plmHeader == ptr->plmHeader_8 && memcmp(tex, img, sizeof(s_FsImageDesc)) == 0)
             {
                 return 0;
             }
@@ -1737,14 +1737,14 @@ s32 func_8003D7D4(u32 arg0, s32 arg1, s_PlmHeader* plmHeader, s_FsImageDesc* tex
 
     if (g_Chara_FileInfo[arg0].textureFileIdx != NO_VALUE) 
     {
-        queueIdx = Fs_QueueStartReadTim(g_Chara_FileInfo[arg0].textureFileIdx, FS_BUFFER_1, texture);
+        queueIdx = Fs_QueueStartReadTim(g_Chara_FileInfo[arg0].textureFileIdx, FS_BUFFER_1, tex);
     }
 
     ptr->field_0     = arg0;
     ptr->field_1     = 0;
     ptr->field_4     = queueIdx;
     ptr->plmHeader_8 = plmHeader;
-    ptr->texture_C   = *texture;
+    ptr->texture_C   = *tex;
 
     return queueIdx;
 }
@@ -1789,7 +1789,7 @@ void func_8003D9C8(s_800BCE18_0_CC* arg0) // 0x8003D9C8
         func_80044FE0(skel, &arg0->field_14.field_C, 56); // TODO: Can't fit `s_Bone` at `field_C`. Check `s_Skeleton` size.
         func_8004506C(skel, arg0->plmHeader_8);
         func_800452EC(skel);
-        func_800453E8(skel, 1);
+        func_800453E8(skel, true);
     }
 }
 
@@ -1897,28 +1897,28 @@ void func_8003DE60(s_Skeleton* skel, s32 arg1) // 0x8003DE60
     temp_s0 = arg1 & 0xF;
     if (temp_s0 != 0)
     {
-        func_80045468(skel, &D_800A9ECC, 0);
+        func_80045468(skel, &D_800A9ECC, false);
 
         switch (temp_s0)
         {
             case 1:
-                func_80045468(skel, &D_800A9ED0, 1);
+                func_80045468(skel, &D_800A9ED0, true);
                 break;
 
             case 2:
-                func_80045468(skel, &D_800A9ED4, 1);
+                func_80045468(skel, &D_800A9ED4, true);
                 break;
 
             case 3:
-                func_80045468(skel, &D_800A9ED8, 1);
+                func_80045468(skel, &D_800A9ED8, true);
                 break;
 
             case 4:
-                func_80045468(skel, &D_800A9EDC, 1);
+                func_80045468(skel, &D_800A9EDC, true);
                 break;
 
             case 5:
-                func_80045468(skel, &D_800A9EE0, 1);
+                func_80045468(skel, &D_800A9EE0, true);
                 break;
 
             default:
@@ -1929,16 +1929,16 @@ void func_8003DE60(s_Skeleton* skel, s32 arg1) // 0x8003DE60
     temp_s0 = arg1 & 0xF0;
     if (temp_s0 != 0)
     {
-        func_80045468(skel, &D_800A9EE4, 0);
+        func_80045468(skel, &D_800A9EE4, false);
 
         switch (temp_s0)
         {
             case 16:
-                func_80045468(skel, &D_800A9EE8, 1);
+                func_80045468(skel, &D_800A9EE8, true);
                 break;
 
             case 32:
-                func_80045468(skel, &D_800A9EEC, 1);
+                func_80045468(skel, &D_800A9EEC, true);
                 break;
 
             default:
@@ -1957,13 +1957,13 @@ void func_8003DF84(s_Skeleton* skel, s32 arg1) // 0x8003DF84
         switch (temp_v1)
         {
             case 1:
-                func_80045468(skel, &D_800A9EF4, 0);
-                func_80045468(skel, &D_800A9EF0, 1);
+                func_80045468(skel, &D_800A9EF4, false);
+                func_80045468(skel, &D_800A9EF0, true);
                 break;
 
             case 2:
-                func_80045468(skel, &D_800A9EF0, 0);
-                func_80045468(skel, &D_800A9EF4, 1);
+                func_80045468(skel, &D_800A9EF0, false);
+                func_80045468(skel, &D_800A9EF4, true);
                 break;
 
             default:
@@ -1977,13 +1977,13 @@ void func_8003DF84(s_Skeleton* skel, s32 arg1) // 0x8003DF84
         switch (temp_v1)
         {
             case 16:
-                func_80045468(skel, &D_800A9EFC, 0);
-                func_80045468(skel, &D_800A9EF8, 1);
+                func_80045468(skel, &D_800A9EFC, false);
+                func_80045468(skel, &D_800A9EF8, true);
                 break;
 
             case 32:
-                func_80045468(skel, &D_800A9EF8, 0);
-                func_80045468(skel, &D_800A9EFC, 1);
+                func_80045468(skel, &D_800A9EF8, false);
+                func_80045468(skel, &D_800A9EFC, true);
                 break;
 
             default:
@@ -2002,13 +2002,13 @@ void func_8003E08C(s_Skeleton* skel, s32 arg1) // 0x8003E08C
         switch (temp_v1)
         {
             case 1:
-                func_80045468(skel, &D_800A9F04, 0);
-                func_80045468(skel, &D_800A9F00, 1);
+                func_80045468(skel, &D_800A9F04, false);
+                func_80045468(skel, &D_800A9F00, true);
                 break;
 
             case 2:
-                func_80045468(skel, &D_800A9F00, 0);
-                func_80045468(skel, &D_800A9F04, 1);
+                func_80045468(skel, &D_800A9F00, false);
+                func_80045468(skel, &D_800A9F04, true);
                 break;
 
             default:
@@ -2022,13 +2022,13 @@ void func_8003E08C(s_Skeleton* skel, s32 arg1) // 0x8003E08C
         switch (temp_v1)
         {
             case 16:
-                func_80045468(skel, &D_800A9F0C, 0);
-                func_80045468(skel, &D_800A9F08, 1);
+                func_80045468(skel, &D_800A9F0C, false);
+                func_80045468(skel, &D_800A9F08, true);
                 break;
 
             case 32:
-                func_80045468(skel, &D_800A9F08, 0);
-                func_80045468(skel, &D_800A9F0C, 1);
+                func_80045468(skel, &D_800A9F08, false);
+                func_80045468(skel, &D_800A9F0C, true);
                 break;
 
             default:
@@ -2044,20 +2044,20 @@ void func_8003E194(s_Skeleton* skel, s32 arg1) // 0x8003E194
     temp_s0 = arg1 & 0xF;
     if (temp_s0 != 0)
     {
-        func_80045468(skel, &D_800A9F10, 0);
+        func_80045468(skel, &D_800A9F10, false);
 
         switch (temp_s0)
         {
             case 1:
-                func_80045468(skel, &D_800A9F14, 1);
+                func_80045468(skel, &D_800A9F14, true);
                 break;
 
             case 2:
-                func_80045468(skel, &D_800A9F18, 1);
+                func_80045468(skel, &D_800A9F18, true);
                 break;
 
             case 3:
-                func_80045468(skel, &D_800A9F1C, 1);
+                func_80045468(skel, &D_800A9F1C, true);
                 break;
 
             default:
@@ -2073,24 +2073,24 @@ void func_8003E238(s_Skeleton* skel, s32 arg1) // 0x8003E238
     var_s0 = arg1 & 0xF;
     if (var_s0 != 0)
     {
-        func_80045468(skel, &D_800A9F20, 0);
+        func_80045468(skel, &D_800A9F20, false);
 
         switch (var_s0)
         {
             case 1:
-                func_80045468(skel, &D_800A9F28, 1);
+                func_80045468(skel, &D_800A9F28, true);
                 break;
 
             case 2:
-                func_80045468(skel, &D_800A9F2C, 1);
+                func_80045468(skel, &D_800A9F2C, true);
                 break;
 
             case 3:
-                func_80045468(skel, &D_800A9F30, 1);
+                func_80045468(skel, &D_800A9F30, true);
                 break;
 
             case 4:
-                func_80045468(skel, &D_800A9F34, 1);
+                func_80045468(skel, &D_800A9F34, true);
                 break;
 
             default:
@@ -2102,20 +2102,20 @@ void func_8003E238(s_Skeleton* skel, s32 arg1) // 0x8003E238
     var_s0 = arg1 & 0xF0;
     if (var_s0 != 0)
     {
-        func_80045468(skel, &D_800A9F38, 0);
+        func_80045468(skel, &D_800A9F38, false);
 
         switch (var_s0)
         {
             case 16:
-                func_80045468(skel, &D_800A9F3C, 1);
+                func_80045468(skel, &D_800A9F3C, true);
                 break;
 
             case 32:
-                func_80045468(skel, &D_800A9F40, 1);
+                func_80045468(skel, &D_800A9F40, true);
                 break;
 
             case 48:
-                func_80045468(skel, &D_800A9F44, 1);
+                func_80045468(skel, &D_800A9F44, true);
                 break;
 
             default:
@@ -2134,13 +2134,13 @@ void func_8003E388(s_Skeleton* skel, s32 arg1) // 0x8003E388
         switch (temp_a1)
         {
             case 1:
-                func_80045468(skel, &D_800A9F4C, 0);
-                func_80045468(skel, &D_800A9F48, 1);
+                func_80045468(skel, &D_800A9F4C, false);
+                func_80045468(skel, &D_800A9F48, true);
                 break;
 
             case 2:
-                func_80045468(skel, &D_800A9F48, 0);
-                func_80045468(skel, &D_800A9F4C, 1);
+                func_80045468(skel, &D_800A9F48, false);
+                func_80045468(skel, &D_800A9F4C, true);
                 break;
 
             default:
@@ -2159,13 +2159,13 @@ void func_8003E414(s_Skeleton* skel, s32 arg1) // 0x8003E414
         switch (temp_a1)
         {
             case 1:
-                func_80045468(skel, &D_800A9F50, 0);
-                func_80045468(skel, &D_800A9F54, 1);
+                func_80045468(skel, &D_800A9F50, false);
+                func_80045468(skel, &D_800A9F54, true);
                 break;
 
             case 2:
-                func_80045468(skel, &D_800A9F54, 0);
-                func_80045468(skel, &D_800A9F50, 1);
+                func_80045468(skel, &D_800A9F54, false);
+                func_80045468(skel, &D_800A9F50, true);
                 break;
 
             default:
@@ -2181,20 +2181,20 @@ void func_8003E4A0(s_Skeleton* skel, s32 arg1) // 0x8003E4A0
     temp_s0 = arg1 & 0xF;
     if (temp_s0 != 0)
     {
-        func_80045468(skel, &D_800A9F58, 0);
+        func_80045468(skel, &D_800A9F58, false);
 
         switch (temp_s0)
         {
             case 1:
-                func_80045468(skel, &D_800A9F60, 1);
+                func_80045468(skel, &D_800A9F60, true);
                 break;
 
             case 2:
-                func_80045468(skel, &D_800A9F64, 1);
+                func_80045468(skel, &D_800A9F64, true);
                 break;
 
             case 3:
-                func_80045468(skel, &D_800A9F68, 1);
+                func_80045468(skel, &D_800A9F68, true);
                 break;
 
             default:
@@ -2213,20 +2213,20 @@ void func_8003E544(s_Skeleton* skel, s32 arg1) // 0x8003E544
         return;
     }
 
-    func_80045468(skel, &D_800A9F6C, 0);
+    func_80045468(skel, &D_800A9F6C, false);
 
     switch (temp_s0)
     {
         case 1:
-            func_80045468(skel, &D_800A9F74, 1);
+            func_80045468(skel, &D_800A9F74, true);
             break;
 
         case 2:
-            func_80045468(skel, &D_800A9F78, 1);
+            func_80045468(skel, &D_800A9F78, true);
             break;
 
         case 3:
-            func_80045468(skel, &D_800A9F7C, 1);
+            func_80045468(skel, &D_800A9F7C, true);
             break;
 
         default:

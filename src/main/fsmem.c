@@ -145,8 +145,11 @@ s32 Fs_ClampMemBlock(u8* start, u8* end)
 bool Fs_FreeMem(u8* ptr)
 {
     s_FsMemBlock* iter;
-    s_FsMemBlock* prev   = &g_FsMemory.allocList;
-    bool          result = false;
+    s_FsMemBlock* prev;
+    bool          result;
+
+    prev   = &g_FsMemory.allocList;
+    result = false;
 
     while (prev->next != NULL)
     {
@@ -157,6 +160,7 @@ bool Fs_FreeMem(u8* ptr)
             result = true;
             break;
         }
+
         prev = iter;
     }
 
