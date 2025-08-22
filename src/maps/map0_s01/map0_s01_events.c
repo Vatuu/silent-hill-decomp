@@ -3,23 +3,6 @@
 #include "main/rng.h"
 #include "maps/shared.h"
 #include "maps/map0/map0_s01.h"
-/*
-const u32 jtbl_800CCAD0[] =
-{
-    0x800DC418,
-    0x800DC454,
-    0x800DC464,
-    0x800DC508,
-    0x800DC5F0,
-    0x800DC544,
-    0x800DC5A8,
-    0x800DC5F0,
-    0x800DC628,
-    0x800DC68C,
-    0x800DC6B8,
-    0x800DC7D0,
-};
-*/
 
 void Event_MapItemTake() // 0x800DC3C8
 {
@@ -130,8 +113,8 @@ void Event_MapItemTake() // 0x800DC3C8
             vcUserWatchTarget(&D_800E2390, NULL, true);
 
             // Warp player.
-            g_SysWork.player_4C.chara_0.position_18.vx = 18784;
-            g_SysWork.player_4C.chara_0.position_18.vz = 1094800;
+            g_SysWork.player_4C.chara_0.position_18.vx = Q19_12(4.585938f);
+            g_SysWork.player_4C.chara_0.position_18.vz = Q19_12(267.285156f);
             g_SysWork.player_4C.chara_0.rotation_24.vy = FP_ANGLE(90.0f);
 
             // Set flags.
@@ -222,12 +205,16 @@ void Event_HandgunItemTake() // 0x800DC8C8
     }
 }
 
+extern s_800BCE18_2BEC_0 D_800E23B0[1];
+extern s_800BCE18_2BEC_0 D_800E23D0[1];
+extern s_800BCE18_2BEC_0 D_800E23F0[3];
+extern s_800BCE18_2BEC_0 D_800E2450[2];
 void func_800DC9C8() // 0x800DC9C8
 {
     D_800E23A1         = 0xE0;
-    D_800E2490.field_0 = 0;
-    D_800E2490.field_4 = 0;
-    D_800E2490.field_8 = 0x118000;
+    D_800E2490.vx_0    = Q19_12(0.0f);
+    D_800E2490.vy_4    = Q19_12(0.0f);
+    D_800E2490.vz_8    = Q19_12(280.0f);
 
     func_8003C8F8(&D_800E23B0[0], "IN_BLD1_");
     func_8003C8F8(&D_800E23D0[0], "IN1_HIDE");
@@ -237,30 +224,30 @@ void func_800DC9C8() // 0x800DC9C8
     func_8003C8F8(&D_800E2450[0], "OUT1_HID");
     func_8003C8F8(&D_800E2450[1], "OUT_BLD_");
 
-    D_800E24BC.field_0  = 0x5170;
-    D_800E24BC.field_4  = -0x1028;
-    D_800E24BC.field_8  = 0x1121EB;
+    D_800E24BC.vx_0     = Q19_12(5.089844f);
+    D_800E24BC.vy_4     = Q19_12(-1.009766f);
+    D_800E24BC.vz_8     = Q19_12(274.119873f);
     D_800E24BC.field_C  = 0x016C0000;
     D_800E24BC.field_10 = 0;
     func_8003C8F8(&D_800E24BC - 1, "KNIFE_HI");
 
-    D_800E24EC.field_0  = 0x52E1;
-    D_800E24EC.field_4  = -0x1000;
-    D_800E24EC.field_8  = 0x10B47A;
+    D_800E24EC.vx_0     = Q19_12(5.179932f);
+    D_800E24EC.vy_4     = Q19_12(-1.000000f);
+    D_800E24EC.vz_8     = Q19_12(267.279785f);
     D_800E24EC.field_C  = 0x04EEFFDE;
     D_800E24EC.field_10 = 0;
     func_8003C8F8(&D_800E24EC - 1, "FLASH_HI");
 
-    D_800E251C.field_0  = 0x53D7;
-    D_800E251C.field_4  = -0x1000;
-    D_800E251C.field_8  = 0x10B35C;
+    D_800E251C.vx_0     = Q19_12(5.239990f);
+    D_800E251C.vy_4     = Q19_12(-1.000000f);
+    D_800E251C.vz_8     = Q19_12(267.209961f);
     D_800E251C.field_C  = 0x02880000;
     D_800E251C.field_10 = 0;
     func_8003C8F8(&D_800E251C - 1, "MAP_HIDE");
 
-    D_800E254C.field_0  = 0x24F5;
-    D_800E254C.field_4  = -0x999;
-    D_800E254C.field_8  = 0x111F33;
+    D_800E254C.vx_0     = Q19_12(2.309815f);
+    D_800E254C.vy_4     = Q19_12(-0.599854f);
+    D_800E254C.vz_8     = Q19_12(273.949951f);
     D_800E254C.field_C  = 0x06880000;
     D_800E254C.field_10 = 0;
     func_8003C8F8(&D_800E254C - 1, "RADIO_HI");
