@@ -3605,6 +3605,8 @@ void func_80037388();
 
 bool func_800378D4(s_AreaLoadParams* areaLoadParams);
 
+bool func_80037A4C(s_AreaLoadParams* areaLoadParams);
+
 bool func_80037C5C(s_func_80037A4C* arg0);
 
 void func_80037DC4(s_SubCharacter* chara);

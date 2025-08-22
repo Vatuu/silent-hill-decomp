@@ -2920,7 +2920,86 @@ bool func_800378D4(s_AreaLoadParams* areaLoadParams) // 0x800378D4
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80032D1C", func_80037A4C); // 0x80037A4C
+bool func_80037A4C(s_AreaLoadParams* areaLoadParams) // 0x80037A4C
+{
+    s32  temp_a0_2;
+    s32  temp_a2;
+    s32  halfCosPlayerRotY;
+    s32  temp_s2;
+    s32  halfSinRotY;
+    s32  temp_s4;
+    s32  deltaX;
+    s32  deltaZ;
+    s32  temp_v1;
+    s32  var_a0;
+    s32  var_a0_2;
+    s32  clampedHalfCosPlayerRotY;
+    bool cond;
+    s32  var_v1;
+    s32  scaledSinPlayerRotY;
+    s32  scaledCosRotY;
+
+    halfSinRotY   = Math_Sin(g_SysWork.player_4C.chara_0.rotation_24.vy) >> 1;
+    scaledCosRotY = (-Math_Cos(areaLoadParams->rotationY_4_16 * 16)) * areaLoadParams->field_4_24;
+
+    clampedHalfCosPlayerRotY = halfSinRotY;
+
+    temp_a0_2 = scaledCosRotY >> 4;
+    deltaX    = areaLoadParams->char_x_0 - g_SysWork.player_4C.chara_0.position_18.vx;
+    temp_s2   = deltaX - temp_a0_2;
+    temp_s4   = deltaX + temp_a0_2;
+
+    clampedHalfCosPlayerRotY = MAX(halfSinRotY, 0);
+
+    if (temp_s4 >= temp_s2)
+    {
+        cond = clampedHalfCosPlayerRotY < temp_s2;
+    }
+    else
+    {
+        cond = clampedHalfCosPlayerRotY < temp_s4;
+    }
+
+    if (!cond)
+    {
+        if (MIN(halfSinRotY, 0) <= MAX(temp_s2, temp_s4))
+        {
+            halfCosPlayerRotY   = Math_Cos(g_SysWork.player_4C.chara_0.rotation_24.vy) >> 1;
+            scaledSinPlayerRotY = Math_Sin(areaLoadParams->rotationY_4_16 * 16) * areaLoadParams->field_4_24;
+
+            clampedHalfCosPlayerRotY = halfCosPlayerRotY;
+
+            temp_a0_2 = scaledSinPlayerRotY >> 4;
+            deltaZ    = areaLoadParams->char_z_8 - g_SysWork.player_4C.chara_0.position_18.vz;
+            temp_v1   = deltaZ - temp_a0_2;
+            temp_a2   = deltaZ + temp_a0_2;
+
+            clampedHalfCosPlayerRotY = MAX(halfCosPlayerRotY, 0);
+
+            if (temp_a2 >= temp_v1)
+            {
+                cond = clampedHalfCosPlayerRotY < temp_v1;
+            }
+            else
+            {
+                cond = clampedHalfCosPlayerRotY < temp_a2;
+            }
+
+            if (!cond)
+            {
+                if (MIN(halfCosPlayerRotY, 0) <= MAX(temp_v1, temp_a2) &&
+                   (((temp_s2 * halfCosPlayerRotY) - (halfSinRotY * temp_v1)) <= 0) && ((temp_s4 * halfCosPlayerRotY) - (halfSinRotY * temp_a2)) >= 0 &&
+                   ((-temp_s2 * (temp_a2 - temp_v1)) + ((temp_s4 - temp_s2) * temp_v1)) >= 0)
+                {
+                    return (((halfSinRotY - temp_s2) * (temp_a2 - temp_v1)) -
+                            ((temp_s4 - temp_s2) * (halfCosPlayerRotY - temp_v1))) < 1;
+                }
+            }
+        }
+    }
+
+    return false;
+}
 
 bool func_80037C5C(s_func_80037A4C* arg0) // 0x80037C5C
 {
