@@ -178,3 +178,10 @@ sharedData_800E21D8_0_s01   = 0x800E21D8; // type:s32
 sharedData_800E2330_0_s01   = 0x800E2330; // type:s32 - unknown type
 sharedData_800E2378_0_s01   = 0x800E2378; // type:s32
 sharedData_800E237C_0_s01   = 0x800E237C; // type:s32
+
+D_800E2490 = 0x800E2490;
+g_eventThing4A0 = 0x800E24A0;
+g_eventThing4D0 = 0x800E24D0;
+g_eventThing500 = 0x800E2500;
+g_eventThing530 = 0x800E2530;
+
