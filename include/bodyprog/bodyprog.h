@@ -3001,7 +3001,7 @@ void func_80056C8C(s_Bone* bone, s_PlmHeader* plmHeader, s32 objListIdx);
 
 bool func_80056CB4(s_800BCE18_2BEC_0* arg0, s_PlmHeader* plmHeader, s_800BCE18_2BEC_0_10* arg2);
 
-void copyString(char* prevStr, char* newStr);
+void StringCopy(char* prevStr, char* newStr);
 
 void func_80057090(s_func_80057344* arg0, s_func_80057090* arg1, void* arg2, MATRIX* mat0, MATRIX* mat1, u16 arg5);
 

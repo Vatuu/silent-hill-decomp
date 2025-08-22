@@ -1048,7 +1048,7 @@ void func_8003C8F8(s_800BCE18_2BEC_0* arg0, char* newStr) // 0x8003C8F8
     arg0->field_10.field_9 = 0;
     arg0->field_0          = 0;
 
-    copyString(arg0->field_10.string_0, newStr);
+    StringCopy(arg0->field_10.string_0, newStr);
 
     arg0->field_10.field_8 = 0;
 }

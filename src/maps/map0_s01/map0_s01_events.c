@@ -1,8 +1,8 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math.h"
 #include "main/rng.h"
-#include "maps/shared.h"
 #include "maps/map0/map0_s01.h"
+#include "maps/shared.h"
 
 void Event_MapItemTake() // 0x800DC3C8
 {
@@ -11,12 +11,7 @@ void Event_MapItemTake() // 0x800DC3C8
         case 0:
             sharedFunc_800D20E4_0_s00();
             Fs_QueueStartSeek(FILE_TIM_MP_0TOWN_TIM + D_800A99B5);
-
-            g_SysWork.field_28 = 0;
-            g_SysWork.field_10 = 0;
-            g_SysWork.timer_2C = 0;
-            g_SysWork.field_14 = 0;
-            g_SysWork.sysStateStep_C++;
+            SysWork_StateStepIncrement();
 
         case 1:
             func_8008616C(2, true, 0, 0, false);
@@ -34,12 +29,7 @@ void Event_MapItemTake() // 0x800DC3C8
             GsSwapDispBuff();
             func_8008616C(0, false, 0, 0, false);
             Fs_QueueWaitForEmpty();
-
-            g_SysWork.field_28 = 0;
-            g_SysWork.field_10 = 0;
-            g_SysWork.timer_2C = 0;
-            g_SysWork.field_14 = 0;
-            g_SysWork.sysStateStep_C++;
+            SysWork_StateStepIncrement();
 
         case 3:
             g_BackgroundColor = 88;
@@ -53,24 +43,14 @@ void Event_MapItemTake() // 0x800DC3C8
             DrawSync(0);
             Gfx_Init(SCREEN_WIDTH, 0);
             func_8008616C(0, false, 0, 0, false);
-
-            g_SysWork.sysStateStep_C = NO_VALUE;
-            g_SysWork.field_28       = 0;
-            g_SysWork.field_10       = 0;
-            g_SysWork.timer_2C       = 0;
-            g_SysWork.field_14       = 0;
+            SysWork_StateStepReset();
             break;
 
         case 6:
             g_SavegamePtr->hasMapsFlags_164 |= 1 << 1;
 
             Fs_QueueStartRead(FILE_ANIM_CAFE2_DMS, FS_BUFFER_11);
-
-            g_SysWork.field_28 = 0;
-            g_SysWork.field_10 = 0;
-            g_SysWork.timer_2C = 0;
-            g_SysWork.field_14 = 0;
-            g_SysWork.sysStateStep_C++;
+            SysWork_StateStepIncrement();
 
         case 4:
         case 7:
@@ -85,25 +65,15 @@ void Event_MapItemTake() // 0x800DC3C8
             DrawSync(0);
             Gfx_Init(SCREEN_WIDTH, 0);
             func_8008616C(0, false, 0, 0, false);
-
-            g_SysWork.field_28 = 0;
-            g_SysWork.field_10 = 0;
-            g_SysWork.timer_2C = 0;
-            g_SysWork.field_14 = 0;
-            g_SysWork.sysStateStep_C++;
+            SysWork_StateStepIncrement();
 
         case 9:
             func_80088D0C();
-
-            g_SysWork.field_28 = 0;
-            g_SysWork.field_10 = 0;
-            g_SysWork.timer_2C = 0;
-            g_SysWork.field_14 = 0;
-            g_SysWork.sysStateStep_C++;
+            SysWork_StateStepIncrement();
 
         case 10:
-            // Set cutscene character?
-            Chara_Spawn(Chara_AirScreamer, 0, 0, 0, 0, 12);
+            // Set cutscene character.
+            Chara_Spawn(Chara_AirScreamer, 0, FP_METER(0.0f), FP_METER(0.0f), FP_METER(0.0f), 12);
             DmsHeader_FixOffsets(FS_BUFFER_11);
             Dms_CharacterGetPosRot(&g_SysWork.npcs_1A0[0].position_18, &g_SysWork.npcs_1A0[0].rotation_24, &D_800CCA64, 0, FS_BUFFER_11);
 
@@ -113,8 +83,8 @@ void Event_MapItemTake() // 0x800DC3C8
             vcUserWatchTarget(&D_800E2390, NULL, true);
 
             // Warp player.
-            g_SysWork.player_4C.chara_0.position_18.vx = Q19_12(4.585938f);
-            g_SysWork.player_4C.chara_0.position_18.vz = Q19_12(267.285156f);
+            g_SysWork.player_4C.chara_0.position_18.vx = FP_METER(4.585938f);
+            g_SysWork.player_4C.chara_0.position_18.vz = FP_METER(267.285156f);
             g_SysWork.player_4C.chara_0.rotation_24.vy = FP_ANGLE(90.0f);
 
             // Set flags.
@@ -122,12 +92,7 @@ void Event_MapItemTake() // 0x800DC3C8
             g_SysWork.field_228C             |= 1 << 0;
             g_SavegamePtr->eventFlags_168[1] |= 1 << 6;
 
-            // Set ???
-            g_SysWork.field_28 = 0;
-            g_SysWork.field_10 = 0;
-            g_SysWork.timer_2C = 0;
-            g_SysWork.field_14 = 0;
-            g_SysWork.sysStateStep_C++;
+            SysWork_StateStepIncrement();
 
         case 11:
             func_8008616C(1, false, 0, 0, false);
@@ -135,14 +100,7 @@ void Event_MapItemTake() // 0x800DC3C8
 
         default:
             sharedFunc_800D2244_0_s00(0);
-
-            g_SysWork.sysState_8     = 0;
-            g_SysWork.timer_24       = 0;
-            g_SysWork.sysStateStep_C = 0;
-            g_SysWork.field_28       = 0;
-            g_SysWork.field_10       = 0;
-            g_SysWork.timer_2C       = 0;
-            g_SysWork.field_14       = 0;
+            SysWork_StateSetNext(0);
             break;
     }
 }
@@ -209,9 +167,10 @@ extern s_800BCE18_2BEC_0 D_800E23B0[1];
 extern s_800BCE18_2BEC_0 D_800E23D0[1];
 extern s_800BCE18_2BEC_0 D_800E23F0[3];
 extern s_800BCE18_2BEC_0 D_800E2450[2];
+
 void func_800DC9C8() // 0x800DC9C8
 {
-    D_800E23A1         = 0xE0;
+    D_800E23A1         = 224;
     D_800E2490.vx_0    = Q19_12(0.0f);
     D_800E2490.vy_4    = Q19_12(0.0f);
     D_800E2490.vz_8    = Q19_12(280.0f);
@@ -232,14 +191,14 @@ void func_800DC9C8() // 0x800DC9C8
     func_8003C8F8(&D_800E24BC - 1, "KNIFE_HI");
 
     D_800E24EC.vx_0     = Q19_12(5.179932f);
-    D_800E24EC.vy_4     = Q19_12(-1.000000f);
+    D_800E24EC.vy_4     = Q19_12(-1.0f);
     D_800E24EC.vz_8     = Q19_12(267.279785f);
     D_800E24EC.field_C  = 0x04EEFFDE;
     D_800E24EC.field_10 = 0;
     func_8003C8F8(&D_800E24EC - 1, "FLASH_HI");
 
     D_800E251C.vx_0     = Q19_12(5.239990f);
-    D_800E251C.vy_4     = Q19_12(-1.000000f);
+    D_800E251C.vy_4     = Q19_12(-1.f);
     D_800E251C.vz_8     = Q19_12(267.209961f);
     D_800E251C.field_C  = 0x02880000;
     D_800E251C.field_10 = 0;
@@ -261,7 +220,7 @@ void func_800DC9C8() // 0x800DC9C8
         if (g_SavegamePtr->eventFlags_168[1] & (1 << 6))
         {
             func_80088D0C();
-            Chara_Spawn(Chara_AirScreamer, 0, 0xFFFF6000, 0x118000, 0, 12);
+            Chara_Spawn(Chara_AirScreamer, 0, FP_METER(1048566.0f), FP_METER(280.0f), FP_METER(0.0f), 12);
             func_800D3A3C(&g_SysWork.npcs_1A0[0]);
 
             Fs_QueueStartRead(FILE_ANIM_CAFE2_DMS, FS_BUFFER_11);

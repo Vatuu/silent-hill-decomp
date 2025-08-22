@@ -1,5 +1,6 @@
 #ifndef _MAP0_S01_H
 #define _MAP0_S01_H
+
 #include "types.h"
 
 /** @brief Event flags specific to this map. */

@@ -517,7 +517,7 @@ void func_80056504(s_PlmHeader* plmHeader, char* newStr, s32* arg2, s32 arg3) //
 {
     char sp10[8];
 
-    copyString(sp10, newStr);
+    StringCopy(sp10, newStr);
     func_80056558(plmHeader, sp10, arg2, arg3);
 }
 
@@ -743,7 +743,7 @@ bool func_80056CB4(s_800BCE18_2BEC_0* arg0, s_PlmHeader* plmHeader, s_800BCE18_2
 
     result = false;
 
-    copyString(sp10.str, arg2->string_0);
+    StringCopy(sp10.str, arg2->string_0);
 
     objListCount = plmHeader->objectCount_8;
 
@@ -765,7 +765,7 @@ bool func_80056CB4(s_800BCE18_2BEC_0* arg0, s_PlmHeader* plmHeader, s_800BCE18_2
     return result;
 }
 
-void copyString(char* prevStr, char* newStr) // 0x80056D64
+void StringCopy(char* prevStr, char* newStr) // 0x80056D64
 {
     *(s32*)&prevStr[4] = 0;
     *(s32*)&prevStr[0] = 0;
@@ -1443,7 +1443,6 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8005AA08); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8005AC50); // 0x8005AC50
 
-// Related to enviroment textures.
 void func_8005B1A0(s_800C1450_58* arg0, char* arg1, s32 arg2, u8 arg3, s32 arg4, s32 arg5, s16 arg6, s16 arg7) // 0x8005B1A0
 {
     arg0->field_0 = arg2;
@@ -1452,9 +1451,11 @@ void func_8005B1A0(s_800C1450_58* arg0, char* arg1, s32 arg2, u8 arg3, s32 arg4,
     arg0->field_3 = arg5;
     arg0->field_4 = arg6;
     arg0->field_6 = arg7;
-    copyString(arg0->string_8.str, arg1);
+
+    StringCopy(arg0->string_8.str, arg1);
+
     arg0->field_14 = 0;
-    arg0->field_10 = -1;
+    arg0->field_10 = NO_VALUE;
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8005B1FC); // 0x8005B1FC
@@ -1468,7 +1469,7 @@ void func_8005B378(s_800C1450_58* arg0, char* arg1) // 0x8005B378
 {
     arg0->field_14 = 1;
     arg0->field_10 = 0;
-    copyString(arg0->string_8.str, arg1);
+    StringCopy(arg0->string_8.str, arg1);
 }
 
 void func_8005B3A4(s_800C1450_58* arg0) // 0x8005B3A4
@@ -1536,7 +1537,7 @@ s_800C1450_58* func_8005B4BC(char* str, s_800C1450_0* arg1) // 0x8005B4BC
     s32            i;
     s_800C1450_58* ptr;
 
-    copyString(prevStr, str);
+    StringCopy(prevStr, str);
 
     for (i = 0; i < arg1->count_0; ++i)
     {
