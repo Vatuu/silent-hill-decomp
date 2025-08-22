@@ -209,12 +209,27 @@ extern s_800BCE18_2BEC_0 D_800E23B0[1];
 extern s_800BCE18_2BEC_0 D_800E23D0[1];
 extern s_800BCE18_2BEC_0 D_800E23F0[3];
 extern s_800BCE18_2BEC_0 D_800E2450[2];
+
+extern s_eventPosition D_800E2490;
+extern s_eventThing g_eventThing4A0;
+extern s_eventThing g_eventThing4D0;
+extern s_eventThing g_eventThing500;
+extern s_eventThing g_eventThing530;
+
+static inline void EventPositionInit_int(s_eventPosition* ep, s32 x, s32 y, s32 z, s32 a, s16 b)
+{
+    Math_Vector3Set(&ep->v3_0, x, y, z);
+    ep->field_C = a;
+    ep->field_10 = b;
+}
+#define EventPositionInit(ep, x, y, z, a, b)\
+    EventPositionInit_int(ep, Q19_12((x)), Q19_12((y)), Q19_12((z)), a, b)
+
+
 void func_800DC9C8() // 0x800DC9C8
 {
     D_800E23A1         = 0xE0;
-    D_800E2490.vx_0    = Q19_12(0.0f);
-    D_800E2490.vy_4    = Q19_12(0.0f);
-    D_800E2490.vz_8    = Q19_12(280.0f);
+    Math_Vector3f(&D_800E2490.v3_0, 0.0f, 0.0f, 280.0f);
 
     func_8003C8F8(&D_800E23B0[0], "IN_BLD1_");
     func_8003C8F8(&D_800E23D0[0], "IN1_HIDE");
@@ -224,33 +239,17 @@ void func_800DC9C8() // 0x800DC9C8
     func_8003C8F8(&D_800E2450[0], "OUT1_HID");
     func_8003C8F8(&D_800E2450[1], "OUT_BLD_");
 
-    D_800E24BC.vx_0     = Q19_12(5.089844f);
-    D_800E24BC.vy_4     = Q19_12(-1.009766f);
-    D_800E24BC.vz_8     = Q19_12(274.119873f);
-    D_800E24BC.field_C  = 0x016C0000;
-    D_800E24BC.field_10 = 0;
-    func_8003C8F8(&D_800E24BC - 1, "KNIFE_HI");
+    EventPositionInit(&g_eventThing4A0.ep_1C, 5.089844f, -1.009766f, 274.119873f, 0x016C0000, 0);
+    func_8003C8F8(&g_eventThing4A0.thing_0, "KNIFE_HI");
 
-    D_800E24EC.vx_0     = Q19_12(5.179932f);
-    D_800E24EC.vy_4     = Q19_12(-1.000000f);
-    D_800E24EC.vz_8     = Q19_12(267.279785f);
-    D_800E24EC.field_C  = 0x04EEFFDE;
-    D_800E24EC.field_10 = 0;
-    func_8003C8F8(&D_800E24EC - 1, "FLASH_HI");
+    EventPositionInit(&g_eventThing4D0.ep_1C, 5.179932f, -1.0f, 267.279785f, 0x04EEFFDE, 0);
+    func_8003C8F8(&g_eventThing4D0.thing_0, "FLASH_HI");
 
-    D_800E251C.vx_0     = Q19_12(5.239990f);
-    D_800E251C.vy_4     = Q19_12(-1.000000f);
-    D_800E251C.vz_8     = Q19_12(267.209961f);
-    D_800E251C.field_C  = 0x02880000;
-    D_800E251C.field_10 = 0;
-    func_8003C8F8(&D_800E251C - 1, "MAP_HIDE");
+    EventPositionInit(&g_eventThing500.ep_1C, 5.239990f, -1.0f, 267.209961f, 0x02880000, 0);
+    func_8003C8F8(&g_eventThing500.thing_0, "MAP_HIDE");
 
-    D_800E254C.vx_0     = Q19_12(2.309815f);
-    D_800E254C.vy_4     = Q19_12(-0.599854f);
-    D_800E254C.vz_8     = Q19_12(273.949951f);
-    D_800E254C.field_C  = 0x06880000;
-    D_800E254C.field_10 = 0;
-    func_8003C8F8(&D_800E254C - 1, "RADIO_HI");
+    EventPositionInit(&g_eventThing530.ep_1C, 2.309815f, -0.599854f, 273.949951f, 0x06880000, 0);
+    func_8003C8F8(&g_eventThing530.thing_0, "RADIO_HI");
 
     if ((g_SavegamePtr->eventFlags_168[1] & ((1 << 8) | (1 << 15))) == (1 << 8))
     {
