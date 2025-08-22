@@ -1895,13 +1895,13 @@ g_PrevVBlanks                               = 0x800A9770; // type:s32
 g_GameStateUpdateFuncs                      = 0x800A977C;
 g_SlotElementSelectedIdx                    = 0x800A97D4;
 g_SelectedSaveSlotIdx                       = 0x800A97D6;
-g_UnknownEngineCmdTable                     = 0x800A9804;
-g_UnknownEngineCmdTable2                    = 0x800A9858; // type:u16
-g_UnknownEngineCmdTable3                    = 0x800A98AC;
+g_UnknownEngineCmdTable0                    = 0x800A9804;
+g_UnknownEngineCmdTable1                    = 0x800A9858; // type:u16
+g_UnknownEngineCmdTable2                    = 0x800A98AC;
 g_MapMsg_CurrentIdx                         = 0x800A99AC; // type:s32
 g_MapMsg_SelectFlashTimer                   = 0x800A99B0; // type:s16
-g_MapFullscreenTimFileIdx                   = 0x800A99B4;
-g_MapMarkingTimFileIdx                      = 0x800A99CC;
+g_FullscreenMapTimFileIdxs                  = 0x800A99B4;
+g_MapMarkingTimFileIdxs                     = 0x800A99CC;
 
 //-----------------------------------------------------------------------
 //--- PA: 0x084EA4   VA: 0x800A9A04   subsegment: data, bodyprog_800A9074

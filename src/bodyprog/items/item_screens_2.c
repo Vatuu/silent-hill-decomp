@@ -774,11 +774,11 @@ void Inventory_Logic() // 0x8004D518
                 {
                     Sd_PlaySfx(Sfx_Confirm, 64, 64);
 
-                    if (g_MapMarkingTimFileIdx[g_SavegamePtr->current2dMapIdx_A9] != NO_VALUE)
+                    if (g_MapMarkingTimFileIdxs[g_SavegamePtr->current2dMapIdx_A9] != NO_VALUE)
                     {
-                        Fs_QueueStartReadTim(FILE_TIM_MR_0TOWN_TIM + g_MapMarkingTimFileIdx[g_SavegamePtr->current2dMapIdx_A9], FS_BUFFER_1, &g_MapMarkerAtlasImg);
+                        Fs_QueueStartReadTim(FILE_TIM_MR_0TOWN_TIM + g_MapMarkingTimFileIdxs[g_SavegamePtr->current2dMapIdx_A9], FS_BUFFER_1, &g_MapMarkerAtlasImg);
                     }
-                    Fs_QueueStartSeek(FILE_TIM_MP_0TOWN_TIM + g_MapFullscreenTimFileIdx[g_SavegamePtr->current2dMapIdx_A9]);
+                    Fs_QueueStartSeek(FILE_TIM_MP_0TOWN_TIM + g_FullscreenMapTimFileIdxs[g_SavegamePtr->current2dMapIdx_A9]);
 
                     g_Gfx_ScreenFade                = 2;
                     g_GameWork.gameStateStep_598[1] = 19;

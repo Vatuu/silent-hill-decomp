@@ -1302,14 +1302,14 @@ typedef struct
 /** Holds file IDs of anim/model/texture for each `e_CharacterId`, along with some data used in VC camera code. */
 typedef struct
 {
-    s16   animFileIdx;
-    s16   modelFileIdx;
-    s16   textureFileIdx : 16;
-    u16   field_6        : 10;
-    u16   field_6_10     : 6;
-    s_FsImageDesc* field_8; // guessed type
-    u16   field_C_0 : 2;
-    s32   field_C_2 : 14;
+    s16            animFileIdx;
+    s16            modelFileIdx;
+    s16            textureFileIdx : 16;
+    u16            field_6        : 10;
+    u16            field_6_10     : 6;
+    s_FsImageDesc* field_8; // Guessed type.
+    u16            field_C_0  : 2;
+    s32            field_C_2  : 14;
     u16            field_C_16 : 16;
 } s_CharaFileInfo;
 STATIC_ASSERT_SIZEOF(s_CharaFileInfo, 16);
@@ -1598,7 +1598,7 @@ typedef struct
 typedef struct
 {
     s8 maxIdx_0;
-    u8 selectedIdx_1;
+    u8 selectedEntryIdx_1;
     u8 unk_2;
     u8 cancelIdx_3;
 } s_MapMsgSelect;
@@ -1709,7 +1709,7 @@ extern s_FsImageDesc g_BrightnessScreenImg1;       // 0x800A904C
 extern s_FsImageDesc g_DeathTipImg;                // 0x800A9054
 extern s_FsImageDesc g_HealthPortraitImg;          // 0x800A905C
 extern s_FsImageDesc g_InventoryKeyItemTextureImg; // 0x800A9064
-extern s_FsImageDesc g_FirstAidKitItemTextureImg; // 0x800A906C
+extern s_FsImageDesc g_FirstAidKitItemTextureImg;  // 0x800A906C
 
 /** Some intentory item texture (`ITEM/TIM07.TIM`). */
 extern s_FsImageDesc D_800A9074;
@@ -1728,7 +1728,7 @@ extern s_StructUnk3 D_800A952C;
 
 extern u16 D_800A9774[];
 
-extern u16 g_UnknownEngineCmdTable2[];
+extern u16 g_UnknownEngineCmdTable1[];
 
 extern s_800C37D4 D_800A986C[];
 
@@ -1765,9 +1765,9 @@ extern s32 g_UnknownFrameCounter;
 extern void (*g_GameStateUpdateFuncs[])();
 
 /** Related to sound commands. */
-extern u16 g_UnknownEngineCmdTable[];
+extern u16 g_UnknownEngineCmdTable0[];
 
-extern u16 g_UnknownEngineCmdTable3[];
+extern u16 g_UnknownEngineCmdTable2[];
 
 /** `D_800A992C` and `D_800A9944` are likely the same variable or they are inside a struct.
  * `D_800A992C` has values that seem related to the player, while `D_800A9944`
@@ -1796,9 +1796,9 @@ extern s32 g_MapMsg_CurrentIdx;
 
 extern s16 g_MapMsg_SelectFlashTimer;
 
-extern s8 g_MapFullscreenTimFileIdx[24];
+extern s8 g_FullscreenMapTimFileIdxs[24];
 
-extern s8 g_MapMarkingTimFileIdx[56];
+extern s8 g_MapMarkingTimFileIdxs[56];
 
 extern s_FsImageDesc D_800A9A04;
 

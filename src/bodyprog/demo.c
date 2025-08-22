@@ -203,7 +203,7 @@ s32 func_8008F470(s32 caseArg)
 
 void Demo_ExitDemo() // 0x8008F4E4
 {
-    g_Demo_FrameCount     = 999 * 60;
+    g_Demo_FrameCount     = 999 * TICKS_PER_SECOND;
     g_Demo_CurFrameData   = NULL;
     g_Demo_DemoStep       = 0;
     g_SysWork.flags_22A4 |= 1 << 8;

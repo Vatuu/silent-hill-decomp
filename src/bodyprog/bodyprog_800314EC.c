@@ -71,7 +71,7 @@ void Gfx_BackgroundSpriteDraw(s_FsImageDesc* image) // 0x800314EC
 
     GsOUT_PACKET_P        = packet;
     g_SysWork.field_22A0 |= 1 << 0;
-    g_BackgroundColor      = 0x80;
+    g_BackgroundColor     = 0x80;
 }
 
 void func_800317CC(s_FsImageDesc* image0, s_FsImageDesc* image1, s16 arg2) // 0x800317CC
@@ -130,7 +130,7 @@ void func_800317CC(s_FsImageDesc* image0, s_FsImageDesc* image1, s16 arg2) // 0x
 
 void func_80031AAC(s_FsImageDesc* image) // 0x80031AAC
 {
-    volatile s32 pad; // Is there a better solution?
+    volatile s32 pad; // TODO: Is there a better solution?
     s32          i;
     s32          xOffset;
     u8           tPageY;
@@ -168,9 +168,9 @@ void func_80031AAC(s_FsImageDesc* image) // 0x80031AAC
         poly++;
     }
 
-    GsOUT_PACKET_P = (PACKET*)poly;
+    GsOUT_PACKET_P        = (PACKET*)poly;
     g_SysWork.field_22A0 |= 1 << 0;
-    g_BackgroundColor = 0x80;
+    g_BackgroundColor     = 0x80;
 }
 
 s32 Gfx_MotionBlur(s32 arg0) // 0x80031CCC

@@ -2063,7 +2063,7 @@ void Savegame_ContinueLogic() // 0x801E6F38
 
             Game_PlayerInit();
             
-            g_SysWork.flags_2298 = SysWorkProcessFlag_LoadSave;
+            g_SysWork.processFlags_2298 = SysWorkProcessFlag_LoadSave;
 
             GameFs_MapLoad(g_SavegamePtr->mapOverlayId_A4);
 

@@ -88,19 +88,18 @@ typedef enum _MapMsgCode
     MapMsgCode_AlignCenter = 99
 } e_MapMsgCode;
 
-typedef enum _MapMsgDrawRet
+/** @brief Map message states.
+ *
+ * Return states used by `MapMsg_Draw`.
+ */
+typedef enum _MapMsgState
 {
-    /* MapMsg_Draw is stateful. As first step it will setup message pointers and timers
-     * and return this code. In the second step it will return this value if
-     * cutscene timer or user pressed a button, this message is over*/
-    MapMsgDrawRet_Finished      = NO_VALUE,
-    /*The message is still on the screen, nothing happens*/
-    MapMsgDrawRet_StillOnScreen = 0,
-    /*This message was a selection and this is what was selected (choice+1)*/
-    MapMsgDrawRet_Yes           = 1,
-    MapMsgDrawRet_No            = 2,
-    MapMsgDrawRet_3rd           = 3,
-} e_MapMsgRetCode;
+    MapMsgState_Finish       = NO_VALUE, /** Initial setup complete, cutscene timer complete, or input to continue from user received. */
+    MapMsgState_Idle         = 0,        /** Continue displaying message. */
+    MapMsgState_SelectEntry0 = 1,        /** First entry selected in selection dialog. */
+    MapMsgState_SelectEntry1 = 2,        /** Second entry selected in selection dialog. */
+    MapMsgState_SelectEntry2 = 3,        /** THird entry selected in selection dialog. */
+} e_MapMsgState;
 
 typedef enum _MapMsgAudioLoadBlock
 {
@@ -214,7 +213,6 @@ typedef enum _Current2dMapIdx
     Current2dMap_AltHospital3F  = 23
 } e_Current2dMapIdx;
 
-// TODO: Pick better name.
 typedef enum _SysWorkProcessFlags
 {
     SysWorkProcessFlag_None              = 0,
@@ -1004,7 +1002,7 @@ typedef struct _SubCharacter
     s16     flags_3E;
     s8      field_40; // In player: Index of the NPC attacking the player.
                       // In NPCs: Unknown.
-    s8      field_41; // In player: Indicates what attack has been performed ton player.
+    s8      field_41; // In player: Indicates what attack has been performed on player.
                       // In NPCs: The ID (from `e_EquippedWeaponId`) of the weapon which is being used for attack.
     s8      unk_42[2];
     s16     field_44;
@@ -1199,7 +1197,7 @@ typedef struct _SysWork
     s32             sysStateStep_C; /** Current state step of `sysState_8` the game is in. */
     s32             field_10;       // Sometimes assigned to same thing as `sysStateStep_C`. Contains selected entry index from pickup item dialogs?
     s32             field_14;
-    s32             field_18; // `s_Skeleton` array pointer?
+    s32             field_18;
     s32             timer_1C;
     s32             timer_20;
     s32             timer_24;
@@ -1222,7 +1220,7 @@ typedef struct _SysWork
     s32             field_228C;
     s32             field_2290;
     s8              unk_2294[4];
-    s32             flags_2298; /** `e_SysWorkProcessFlags` */
+    s32             processFlags_2298; /** `e_SysWorkProcessFlags` */
     s32             field_229C;
     s32             field_22A0; // Flags.
     s32             flags_22A4;
@@ -1233,8 +1231,8 @@ typedef struct _SysWork
     u8              field_234B_0 : 4;
     u8              field_234B_4 : 4;
     s32             mapMsgTimer_234C;
-    u8              enableHighResGlyphs_2350_0      : 4; /** Boolean. */
-    u8              silentYesSelection_2350_4       : 4;
+    u8              enableHighResGlyphs_2350_0      : 4; /** `bool` */
+    u8              silentYesSelection_2350_4       : 4; /** `bool` */
     u32             inventoryItemSelectedIdx_2351   : 8;
     u32             flags_2352                      : 8;
     s32             field_2353                      : 8; // Some index into `npcs_1A0`.
@@ -1426,7 +1424,7 @@ static inline void Savegame_EventFlagSet(u32 flagId)
 static inline s32 Flags16b_IsSet(u16* array, s32 flagId)
 {
     // BUG: `>> 5` divides `flagId` by 32 to get array index, but array is of 16-bit values.
-    // Maybe copy paste from `u32` version of func.
+    // Maybe copy-paste from `u32` version of func.
     return (array[flagId >> 5] >> (flagId & 0x1F)) & (1 << 0);
 }
 

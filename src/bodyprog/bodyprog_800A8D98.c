@@ -627,7 +627,7 @@ s8 D_800A97E1 = 0;
 s8 D_800A97E2 = 0;
 s8 D_800A97E3 = 0;
 u32 D_800A97E4[8] = {};
-u16 g_UnknownEngineCmdTable[] =
+u16 g_UnknownEngineCmdTable0[] =
 {
     0x0000,
     0x0000,
@@ -672,7 +672,7 @@ u16 g_UnknownEngineCmdTable[] =
     0x0047,
     0x003F,
 };
-u16 g_UnknownEngineCmdTable2[] =
+u16 g_UnknownEngineCmdTable1[] =
 {
     0x0000,
     0x0000,
@@ -694,7 +694,7 @@ s_800C37D4 D_800A986C[] =
     { 35, 3, 804, 0x3260325, 0x327030E },
 };
 u32 D_800A98A8 = 0x03200328;
-u16 g_UnknownEngineCmdTable3[] =
+u16 g_UnknownEngineCmdTable2[] =
 {
     0x0000,
     0x00A2,
@@ -782,13 +782,13 @@ u8 D_800A99A4[8] = { 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80 };
 s32 g_MapMsg_CurrentIdx = 0;
 s16 g_MapMsg_SelectFlashTimer = 0;
 //s16 __padding = 0;
-s8 g_MapFullscreenTimFileIdx[24] =
+s8 g_FullscreenMapTimFileIdxs[24] =
 {
     0x00, 0x00, 0x01, 0x01, 0x09, 0x0C, 0x0A, 0x0B,
     0x0D, 0x0C, 0x0A, 0x0B, 0x0D, 0x02, 0x03, 0x04,
     0x08, 0x05, 0x06, 0x07, 0x08, 0x05, 0x06, 0x07
 };
-s8 g_MapMarkingTimFileIdx[56] =
+s8 g_MapMarkingTimFileIdxs[56] =
 {
     0xFF, 0x00, 0x01, 0x01, 0x01, 0x04, 0x04, 0x04,
     0x04, 0x04, 0x04, 0x04, 0x04, 0x02, 0x02, 0x02,

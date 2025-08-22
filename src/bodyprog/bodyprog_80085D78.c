@@ -147,7 +147,7 @@ void MapMsg_DisplayAndHandleSelection(bool hasSelection, s32 mapMsgIdx, s32 entr
     s32 var;
 
     var = Gfx_MapMsg_Draw(mapMsgIdx);
-    if (var <= MapMsgDrawRet_StillOnScreen)
+    if (var <= MapMsgState_Idle)
     {
         return;
     }
@@ -158,15 +158,15 @@ void MapMsg_DisplayAndHandleSelection(bool hasSelection, s32 mapMsgIdx, s32 entr
         return;
     }
 
-    if (var == MapMsgDrawRet_Yes)
+    if (var == MapMsgState_SelectEntry0)
     {
         func_80085DC0(arg5, entry0);
     }
-    if (var == MapMsgDrawRet_No)
+    if (var == MapMsgState_SelectEntry1)
     {
         func_80085DC0(arg5, entry1);
     }
-    if (var == MapMsgDrawRet_3rd)
+    if (var == MapMsgState_SelectEntry2)
     {
         func_80085DC0(arg5, entry2);
     }
@@ -462,8 +462,8 @@ void func_800867B4(s32 caseParam, s32 idx) // 0x800867B4
             StoreImage(&D_8002AB10, IMAGE_BUFFER_2);
             DrawSync(0);
 
-            Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + g_MapFullscreenTimFileIdx[idx], FS_BUFFER_2, &g_MapImg);
-            Fs_QueueStartReadTim(FILE_TIM_MR_0TOWN_TIM + g_MapMarkingTimFileIdx[idx], FS_BUFFER_1, &g_MapMarkerAtlasImg);
+            Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + g_FullscreenMapTimFileIdxs[idx], FS_BUFFER_2, &g_MapImg);
+            Fs_QueueStartReadTim(FILE_TIM_MR_0TOWN_TIM + g_MapMarkingTimFileIdxs[idx], FS_BUFFER_1, &g_MapMarkerAtlasImg);
 
             Gfx_Init(SCREEN_WIDTH, 1);
             GsSwapDispBuff();
@@ -507,16 +507,16 @@ s32 func_8008694C(s32 arg0, s16 arg1, s16 arg2, s32 arg3, s32 idx)
 
 void func_800869E4(s32 mapMsgIdx, u8* arg1, u16* arg2) // 0x800869E4
 {
-    s32 ret;
+    s32 mapMsgState;
 
     g_SysWork.field_22A0 |= 1 << 5;
 
-    ret = Gfx_MapMsg_Draw(mapMsgIdx);
-    if (ret == MapMsgDrawRet_Yes)
+    mapMsgState = Gfx_MapMsg_Draw(mapMsgIdx);
+    if (mapMsgState == MapMsgState_SelectEntry0)
     {
         SysWork_StateStepIncrement();
     }
-    else if (ret == MapMsgDrawRet_Finished)
+    else if (mapMsgState == MapMsgState_Finish)
     {
         Sd_EngineCmd(arg2[*arg1]);
         *arg1 += 1;
@@ -1094,7 +1094,7 @@ void Event_MapTake(s32 mapFlagIdx, s32 eventFlagIdx, s32 mapMsgIdx) // 0x80087AF
     {
         case 0:
             g_MapOverlayHeader.freezePlayerControl_C8();
-            Fs_QueueStartSeek(FILE_TIM_MP_0TOWN_TIM + g_MapFullscreenTimFileIdx[mapFlagIdx]);
+            Fs_QueueStartSeek(FILE_TIM_MP_0TOWN_TIM + g_FullscreenMapTimFileIdxs[mapFlagIdx]);
 
             g_SysWork.timer_2C = 0;
             g_SysWork.field_14 = 0;
@@ -1108,7 +1108,7 @@ void Event_MapTake(s32 mapFlagIdx, s32 eventFlagIdx, s32 mapMsgIdx) // 0x80087AF
             DrawSync(0);
             StoreImage(&D_8002ABA4, IMAGE_BUFFER);
             DrawSync(0);
-            Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + g_MapFullscreenTimFileIdx[mapFlagIdx], FS_BUFFER_2, &g_MapImg);
+            Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + g_FullscreenMapTimFileIdxs[mapFlagIdx], FS_BUFFER_2, &g_MapImg);
             Gfx_Init(0x140, 1);
 
             g_IntervalVBlanks = 1;
