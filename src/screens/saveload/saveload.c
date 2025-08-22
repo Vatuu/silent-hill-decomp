@@ -2056,9 +2056,7 @@ void Savegame_ContinueLogic() // 0x801E6F38
         case ContinueState_0:
             func_8002E830();
 
-            D_800A97D7 = 1;
-
-            // Backup current savegame? Does anything ever restore from this?
+            D_800A97D7             = 1;
             g_GameWork.autosave_90 = g_GameWork.savegame_30C;
 
             Game_PlayerInit();

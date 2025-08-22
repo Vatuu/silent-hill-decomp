@@ -800,7 +800,7 @@ static inline s16 GetUvOrRandom()
 {
     if (D_800AE198 == 1) 
     {
-        D_800AE1A8 = Rng_GenerateInt(Rng_Rand16(), 0, 133);
+        D_800AE1A8 = Rng_GenerateInt(Rng_Rand16(), 0, 133); // TODO: `Rng_GenerateInt(Rng_Rand16(), 0, 133)` doesn't match.
         return D_800AE1A8;
     }
     else

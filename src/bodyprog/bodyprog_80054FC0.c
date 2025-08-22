@@ -4893,8 +4893,8 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
                 
                 g_MapOverlayHeader.func_DC();
                 
-                SysWork_StateSetNext(GameState_ExitMovie); // TODO: Doesn't match.
-                //g_SysWork.sysState_8     = GameState_ExitMovie;
+                //SysWork_StateSetNext(GameState_ExitMovie); // TODO: Doesn't match.
+                g_SysWork.sysState_8     = GameState_ExitMovie;
                 g_SysWork.timer_24       = 0;
                 g_SysWork.sysStateStep_C = 0;
                 g_SysWork.field_28       = 0;

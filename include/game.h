@@ -98,7 +98,7 @@ typedef enum _MapMsgState
     MapMsgState_Idle         = 0,        /** Continue displaying message. */
     MapMsgState_SelectEntry0 = 1,        /** First entry selected in selection dialog. */
     MapMsgState_SelectEntry1 = 2,        /** Second entry selected in selection dialog. */
-    MapMsgState_SelectEntry2 = 3,        /** THird entry selected in selection dialog. */
+    MapMsgState_SelectEntry2 = 3,        /** Third entry selected in selection dialog. */
 } e_MapMsgState;
 
 typedef enum _MapMsgAudioLoadBlock
@@ -781,11 +781,11 @@ typedef struct _SaveUserConfig
     u8                 optSoundType_1E;           /** `bool` | Stereo: `false`, Monaural: `true`, default: Stereo. */
     u8                 optVolumeBgm_1F;           /** Range: [0, 128] with steps of 8, default: 16. */
     u8                 optVolumeSe_20;            /** Range: [0, 128] with steps of 8, default: 16. */
-    u8                 optVibrationEnabled_21;    /** Weird `bool`. Off: 0, On: 128, default: On. */
+    u8                 optVibrationEnabled_21;    /** `bool` | Off: 0, On: 128, default: On. */
     u8                 optBrightness_22;          /** Range: [0, 7], default: 3. */
     u8                 optExtraWeaponCtrl_23;     /** `bool` | Switch: `false`, Press: `true`, default: Press. */
     u8                 optExtraBloodColor_24;     /** `e_BloodColor` | Default: Normal. */
-    s8                 optAutoLoad_25;            /** Off: `false`, On: `true`, default: Off. */
+    s8                 optAutoLoad_25;            /** `bool` | Off: `false`, On: `true`, default: Off. */
     u8                 unk_26;
     u8                 optExtraOptionsEnabled_27; /** Holds unlocked option flags. */
     s8                 optExtraViewCtrl_28;       /** `bool` | Normal: `false`, Reverse: `true`, default: Normal. */

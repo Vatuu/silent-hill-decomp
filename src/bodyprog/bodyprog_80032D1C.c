@@ -3692,9 +3692,11 @@ void SysState_LoadArea_Update() // 0x80039C40
         D_800BCDB0.char_z_8 += var1;
     }
 
+    // Handle `SysState_LoadArea0` and `SysState_LoadArea1`.
+    // TODO: Document what the difference here is.
     if (g_SysWork.sysState_8 == SysState_LoadArea0)
     {
-        g_SysWork.processFlags_2298           = SysWorkProcessFlag_OverlayTransition;
+        g_SysWork.processFlags_2298    = SysWorkProcessFlag_OverlayTransition;
         g_SavegamePtr->mapOverlayId_A4 = (g_MapEventParam->flags_8 >> 25) & 0x3F; // This doesn't match when `flags_8` is defined as bitfields.
         GameFs_MapLoad(g_SavegamePtr->mapOverlayId_A4);
     }
