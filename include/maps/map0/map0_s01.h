@@ -126,4 +126,7 @@ void func_800DC9C8();
 
 void func_800DD2EC(s32 arg0);
 
+s32 func_800D1E5C();
+s32 func_800D20FC();
+
 #endif
