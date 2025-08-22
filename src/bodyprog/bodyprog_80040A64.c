@@ -499,16 +499,16 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_8004393C); // 0x
 void func_80043A24(GsOT* ot, s32 arg1) // 0x80043A24
 {
     s_800C117C* ptr;
-    s32         ret;
+    s32         status;
 
-    ret = func_80041ADC(D_800C1020.field_138.queueIdx_8);
+    status = func_80041ADC(D_800C1020.field_138.queueIdx_8);
 
-    if (ret == 1)
+    if (status == 1)
     {
         return;
     }
 
-    if (!(ret == 0 || (ret == 2 && D_800C1020.field_138.plmHeader_0->isLoaded_2)))
+    if (!(status == 0 || (status == 2 && D_800C1020.field_138.plmHeader_0->isLoaded_2)))
     {
         return;
     }
