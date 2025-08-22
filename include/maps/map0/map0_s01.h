@@ -63,9 +63,6 @@ extern VECTOR3 D_800CCA58;
 /** Character name. */
 extern char* D_800CCA64;
 
-/** *Map `RECT`? */
-extern RECT D_800CCAC8;
-
 extern u16 D_800DE124;
 
 extern u16 D_800DE128;
@@ -105,7 +102,7 @@ void func_800DA7AC();
 
 void func_800DA7FC();
 
-void func_800DA8A4();
+void Gfx_LoadingScreen_StageString();
 
 /** Event function. */
 void func_800DBAA0();

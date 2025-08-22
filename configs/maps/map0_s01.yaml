@@ -59,12 +59,11 @@ segments:
       - [0x1288, rodata]
       - [0x2568, .rodata, map0_s01_msg]
       - [0x3384, rodata]
-      - [0x3558, .rodata, map0_s01_events]
-      #- [0x3588, .rodata, map0_s01_events]
+      - [0x34F8, .rodata, map0_s01_events]
 
       # .text section
       - [0x3614, c, map0_s01]
-      - [0x12E50, c, map0_s01_events]
+      - [0x11408, c, map0_s01_events]
 
       # .data section
       - [0x13EB8, data, map0_s01]

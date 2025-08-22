@@ -3962,4 +3962,6 @@ void GameState_DebugMoviePlayer_Update();
 void GameState_Options_Update();
 void GameState_LoadMapScreen_Update();
 void GameState_Unk15_Update();
+
+void Game_TurnFlashlightOff();
 #endif
