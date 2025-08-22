@@ -2458,7 +2458,7 @@ extern u8 D_800AD480[24];
 
 extern s_800AD4C8 D_800AD4C8[70];
 
-extern s_MapOverlayHeader g_MapOverlayHeader; // 0x800C957C
+extern const s_MapOverlayHeader g_MapOverlayHeader; // 0x800C957C
 
 // ==========
 // FUNCTIONS

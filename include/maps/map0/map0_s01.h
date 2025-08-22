@@ -116,6 +116,8 @@ void Event_MapItemTake();
 
 void Event_KitchenKnifeItemTake();
 
+void Event_EmptyFunction();
+
 void Event_HealthItemTake();
 
 void Event_HandgunItemTake();

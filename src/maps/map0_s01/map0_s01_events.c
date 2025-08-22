@@ -455,7 +455,7 @@ void func_800DC9C8() // 0x800DC9C8
 }
 
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01_events", func_800DCCF4);
+INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01_events", func_800DCCF4); // set in map header.func_40
 
 void func_800DD2EC(s32 arg0) // 0x800DD2EC // called by func_800DCCF4 only
 {

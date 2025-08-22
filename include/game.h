@@ -866,7 +866,7 @@ typedef struct _AnimInfo
     void (*funcPtr_0)(struct _SubCharacter*, s32, GsCOORDINATE2*, struct _AnimInfo*); // TODO: `funcPtr_0` signature doesn't currently match `Anim_Update`.
     u8  field_4;
     s8  hasVariableTimeDelta_5;
-    u8  animIdx_6;
+    s8  animIdx_6;
     u8  unk_7;
     union
     {
