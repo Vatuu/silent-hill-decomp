@@ -1225,24 +1225,24 @@ STATIC_ASSERT_SIZEOF(s_800D5710, 0x34);
 // Probably easier to do that after it's merged with rest of code.
 typedef struct _SubCharPropertiesPlayer
 {
-    s32   properties_E4[CHARA_PROPERTY_COUNT_MAX]; // TODO: Integrate as `u_Property`.
+    s32    properties_E4[CHARA_PROPERTY_COUNT_MAX]; // TODO: Integrate as `u_Property`.
 	// Element 1: Timer for triggering the idle state.
 	// Element 5: Timer for triggering the abrupt stop animation.
 	// Element 6: Metric for how tired is Harry after running. (q19_12)
-	// Element 8: Timer related to combat. Side note from IWILLCRAFT: I think I remember hearing that some developer said that the more you spent aiming a weapon the more damage will enemies inflict, could this be related to that?
+	// Element 8: Timer related to combat.
 	// Element 9: Metric for how much has the player run in order to trigger the stumble animation in case the player crashes into a wall. (q19_12)
 	// `e_PlayerProperty`
-    u8    field_10C;
-    u8    field_10D;
-    s8    unk_10E[6];
-    s32   field_114;
-    s16   field_118;
-    s8    unk_11A[2];
-    s32   flags_11C; /** `e_PlayerFlags`. */
-    s16   field_120; // Related to player rotation when doing quick turns.
-    s16   field_122;
-    s16   field_124;
-    q3_12 playerMoveDistance_126; // Used to indicate how much the player should move foward.
+    u8     field_10C;
+    u8     field_10D;
+    s8     unk_10E[6];
+    q19_12 gasWeaponPowerTimer_114; // Timer for the rock drill and chainsaw power.
+    s16    field_118;
+    s8     unk_11A[2];
+    s32    flags_11C; /** `e_PlayerFlags`. */
+    s16    field_120; // Related to player rotation when doing quick turns.
+    s16    field_122;
+    s16    field_124;
+    q3_12  playerMoveDistance_126; // Used to indicate how much the player should move foward.
 } s_SubCharaPropertiesPlayer;
 STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesPlayer, 68);
 
@@ -1365,6 +1365,7 @@ typedef struct _MainCharacterExtra
 } s_MainCharacterExtra;
 STATIC_ASSERT_SIZEOF(s_MainCharacterExtra, 44);
 
+// Based on SH2 symbols this struct should be named `shPlayerWork` and `chara_0` should be `player`.
 typedef struct _MainCharacter
 {
     s_SubCharacter       chara_0;
@@ -1532,8 +1533,8 @@ typedef struct _SysWork
     u8              silentYesSelection_2350_4       : 4;
     u32             inventoryItemSelectedIdx_2351   : 8;
     u32             flags_2352                      : 8;
-    s8              enemyAttackedIdx_2353; // Index of the enemy loaded in memory that is being attacked by the player.
-    s8              field_2354[4];         // Size dervied from `func_80070320`.
+    s8              enemyTargetIdx_2353; // Index of the enemy that is being attacked by the player.
+    s8              field_2354[4];       // Size dervied from `func_80070320`.
     u8              field_2358;
     s8              unk_2359[1];
     u8              field_235A; /** If the player stop walking or running forward the value (as a bit) changes

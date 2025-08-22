@@ -426,7 +426,8 @@ Gfx_StringDrawInt                           = 0x8004B9F8; // type:func
 Gfx_ItemScreens_CameraSet                   = 0x8004BB4C; // type:func
 GameFs_TmdDataAlloc                         = 0x8004BCBC; // type:func
 Gfx_Items_ItemRotate                        = 0x8004BCDC; // type:func
-
+Items_AmmoReloadCalculation = 0x80054FC0; // type:func
+g_Items_GunsMaxLoadAmmo = 0x800AD4A0;
 //-----------------------------------------------------------------------
 //--- PA: 0x027528   VA: 0x8004C088   subsegment: c, items/item_screens_1
 //-----------------------------------------------------------------------
@@ -2328,8 +2329,8 @@ g_Demo_RandSeedBackup                       = 0x800C488C;
 g_Demo_CurFrameData                         = 0x800C4890;
 g_Demo_DemoStep                             = 0x800C4894;
 g_Demo_VideoPresentInterval                 = 0x800C4898;
-
-
+Game_GasWeaponPowerTimerValue = 0x8007FD3C;
+g_TargetEnemyPosition = 0x800C4540;
 
 //================================================
 //=== .bss section

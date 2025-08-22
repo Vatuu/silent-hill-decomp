@@ -14,7 +14,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
     sharedData_800E39D8_0_s00 = 0;
 
     playerChara->properties_E4.player.field_10C = (playerChara->properties_E4.player.field_10C >> 1);
-    g_SysWork.player_4C.chara_0.properties_E4.player.field_114 = 0;
+    g_SysWork.player_4C.chara_0.properties_E4.player.gasWeaponPowerTimer_114 = 0;
 
     func_8004C564(0, -1);
 
@@ -62,7 +62,6 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
 				extra->model_0.state_2                             = 0;
 				g_SysWork.player_4C.extra_128.playerSubMovement_20 = PlayerSubMovement_None;
 				g_SysWork.player_4C.extra_128.playerMovement_24    = PlayerMovement_None;
-				D_800C4606                                         = 0;
                 break;
 
             case 4:
@@ -73,7 +72,6 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
 				extra->model_0.state_2                             = 0;
 				g_SysWork.player_4C.extra_128.playerSubMovement_20 = PlayerSubMovement_None;
 				g_SysWork.player_4C.extra_128.playerMovement_24    = PlayerMovement_None;
-				D_800C4606                                         = 0;
                 break;
         }
 

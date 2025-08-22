@@ -93,7 +93,7 @@ void func_800CE5F0(s_SubCharacter* chara, s32 moveSpeed) // 0x800CE5F0
 {
     chara->flags_3E &= ~(1 << 1);
 
-    if (chara->health_B0 == FP_FLOAT_TO(0.0f, Q12_SHIFT) && func_8005C7D0(chara, moveSpeed) != g_SysWork.enemyAttackedIdx_2353)
+    if (chara->health_B0 == FP_FLOAT_TO(0.0f, Q12_SHIFT) && func_8005C7D0(chara, moveSpeed) != g_SysWork.enemyTargetIdx_2353)
     {
         chara->health_B0   = NO_VALUE;
         chara->field_E0_8 &= (1 << 5) | (1 << 6) | (1 << 7);

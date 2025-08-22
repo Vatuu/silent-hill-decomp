@@ -37,8 +37,8 @@ void Inventory_ExitAnimEquippedItemUpdate(u8* arg0) // 0x8004C088
         if (temp_v0 == 2 && g_SysWork.playerCombatInfo_38.equippedWeapon_F != temp_v0)
         {
         Inventory_ExitAnimEquippedItemUpdate_block:
-            g_SysWork.player_4C.chara_0.field_44                       = 0;
-            g_SysWork.player_4C.chara_0.properties_E4.player.field_114 = 0;
+            g_SysWork.player_4C.chara_0.field_44                                     = 0;
+            g_SysWork.player_4C.chara_0.properties_E4.player.gasWeaponPowerTimer_114 = FP_FLOAT_TO(0.0f, Q12_SHIFT);
         }
 
         switch (g_SysWork.player_4C.extra_128.playerMovement_24)
@@ -265,7 +265,7 @@ void func_8004C564(u8 arg0, s32 arg1) // 0x8004C564
             D_800C3961 = 32;
 
             func_8008B398();
-            g_SysWork.player_4C.chara_0.properties_E4.player.field_114 = 0;
+            g_SysWork.player_4C.chara_0.properties_E4.player.gasWeaponPowerTimer_114 = FP_FLOAT_TO(0.0f, Q12_SHIFT);
             break;
 
         case 1:
@@ -312,10 +312,10 @@ void func_8004C564(u8 arg0, s32 arg1) // 0x8004C564
                 if (D_800C3961 == 0)
                 {
                     func_8008B398();
-                    D_800C3963                                                 = 0;
-                    D_800C3962                                                 = 0;
-                    g_SysWork.player_4C.chara_0.properties_E4.player.field_114 = 0;
-                    g_SysWork.player_4C.chara_0.field_44                       = 0;
+                    D_800C3963                                                               = 0;
+                    D_800C3962                                                               = 0;
+                    g_SysWork.player_4C.chara_0.properties_E4.player.gasWeaponPowerTimer_114 = FP_FLOAT_TO(0.0f, Q12_SHIFT);
+                    g_SysWork.player_4C.chara_0.field_44                                     = 0;
                 }
             }
             break;
@@ -328,8 +328,8 @@ void func_8004C564(u8 arg0, s32 arg1) // 0x8004C564
                     func_8008B438(0, 0, 0);
                     func_8008B3E4(0);
 
-                    g_SysWork.player_4C.chara_0.properties_E4.player.field_114 = 0;
-                    D_800C3963                                                -= 2;
+                    g_SysWork.player_4C.chara_0.properties_E4.player.gasWeaponPowerTimer_114 = FP_FLOAT_TO(0.0f, Q12_SHIFT);
+                    D_800C3963                                                              -= 2;
                 }
             }
             break;

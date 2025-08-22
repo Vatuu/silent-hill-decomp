@@ -2012,7 +2012,7 @@ extern GsF_LIGHT D_800C3AC8[];
 
 extern GsDOBJ2 D_800C3E08;
 
-extern u8 D_800AD4A0[];
+extern u8 g_Items_GunsMaxLoadAmmo[36]; // Max loaded ammo that a weapon can hold. 0x800AD4A0
 
 extern const char* g_ItemNames[];
 
@@ -2318,11 +2318,11 @@ extern s_PlayerCombat D_800C44E0;
 extern s_D_800C44F0 D_800C44F0[10];
 
 // Enemy target.
-extern VECTOR3 D_800C4540;
+extern VECTOR3 g_TargetEnemyPosition; // 0x800C4540
 
-extern s16 D_800C4554;
+extern s16 D_800C4554; // Timer?
 
-extern s16 D_800C4556;
+extern s16 D_800C4556; // Timer?
 
 extern s16 D_800AEEDC[][2]; // Type assumed.
 
@@ -2331,9 +2331,6 @@ extern s16 D_800AEF78[][2]; //  Type assumed.
 extern s16 D_800AF070[]; // Type assumed.
 
 extern s16 D_800AF1FC[]; // Type assumed.
-
-/** SFX. */
-extern s16 D_800C4574;
 
 extern s8 D_800C4588;
 
@@ -2832,7 +2829,12 @@ void func_80054A04(u8 arg0);
 
 bool func_80054AD8(u8 itemId);
 
-void func_80054FC0(s32* arg0, s32* arg1, u8 idx);
+/** @brief Calculates the ammo needed to reload the equipped gun.
+ * @param `currentAmmo` pointer to the variable holding the current amount of loaded ammunition of the equipped weapon.
+ * @param `availableAmmo` pointer to the variable holding the current amount of available ammunition for the equipped weapon.
+ * @param `gunIdx` Index of the gun being reloaded. `e_EquippedWeaponId`.
+ */
+void Items_AmmoReloadCalculation(s32* currentAmmo, s32* availableAmmo, u8 gunIdx); // 0x80054FC0
 
 void func_80055028();
 
@@ -3812,8 +3814,8 @@ void func_8007FC48(s_SubCharacter* chara, s_MainCharacterExtra* extra, s32 arg2)
 /** Gets property 8 from player. */
 s32 func_8007FD2C();
 
-/** Gets something from player. */
-s32 func_8007FD3C();
+/** @unused Gets current value from the power timer for gas based weapons. */
+q19_12 Game_GasWeaponPowerTimerValue();
 
 void func_8007FD4C(s32 arg0);
 

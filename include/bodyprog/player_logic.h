@@ -10,6 +10,21 @@
 // ENUMS
 // ======
 
+/** @note The game handles the upper and lower part of Harry with different states.
+ * Curiously by SH2 symbols indicate that the player is handle in a similar way, by
+ * separating them between 4 types (based on the part and control scheme):
+ * lower_*_2D
+ * lower_*_3D
+ * upper_*_2D
+ * upper_*_3D
+ *
+ * For the first two enums here, in SH2 there are two enums named as `_JAMES_UPPER_STATUS`
+ * and `_JAMES_LOWER_STATUS` that could likely hint this tecnique was carry over to the
+ * sequel their real names of the enums with some differences as for example: Stepping
+ * in a enemy has a specific value in the SH2's enums while in SH1 stepping is part of
+ * `g_SysWork.player_4C.extra_128.field_1C`.
+ */
+ 
 typedef enum _PlayerSubMovement
 {
     PlayerSubMovement_None                   = 0,
@@ -35,14 +50,10 @@ typedef enum _PlayerSubMovement
     PlayerSubMovement_Aim_TargetLock         = 20,
     PlayerSubMovement_Aim_Start              = 21,
     PlayerSubMovement_Aim_Start_TargetLock   = 22,
-    PlayerSubMovement_Unk23                  = 23,
+    PlayerSubMovement_Aim_TargetLock_Switch  = 23,
     PlayerSubMovement_Aim_Stop               = 24,
     PlayerSubMovement_Attack                 = 25,
-    PlayerSubMovement_Unk26                  = 26,
-    PlayerSubMovement_Unk27                  = 27,
-    PlayerSubMovement_Unk28                  = 28,
-    PlayerSubMovement_Unk29                  = 29,
-    PlayerSubMovement_Unk30                  = 30
+    PlayerSubMovement_Reload                 = 26
 } e_PlayerSubMovement;
 
 typedef enum _PlayerMovement

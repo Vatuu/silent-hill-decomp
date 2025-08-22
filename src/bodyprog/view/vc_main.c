@@ -844,7 +844,7 @@ void vcSetNearestEnemyDataInVC_WORK(VC_WORK* w_p) // 0x80081D90
                 if (sc_p->flags_3E & (1 << 1)) // `sc_p->battle(ShBattleInfo).status & (1 << 2)` in SH2.
                 {
                     set_active_data_f = 0;
-                    if (sc_p == &g_SysWork.npcs_1A0[g_SysWork.enemyAttackedIdx_2353])
+                    if (sc_p == &g_SysWork.npcs_1A0[g_SysWork.enemyTargetIdx_2353])
                     {
                         set_active_data_f = g_SysWork.playerCombatInfo_38.isAiming_13 > 0;
                     }

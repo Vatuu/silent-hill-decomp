@@ -42,7 +42,7 @@ s32 sharedFunc_800D3814_0_s01(s_SubCharacter* chara)
             dist += distProp8;
         }
 
-        if (chara == &g_SysWork.npcs_1A0[g_SysWork.enemyAttackedIdx_2353])
+        if (chara == &g_SysWork.npcs_1A0[g_SysWork.enemyTargetIdx_2353])
         {
             dist += FP_METER(1.0f);
         }

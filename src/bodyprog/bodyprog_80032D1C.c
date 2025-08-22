@@ -2311,7 +2311,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
         hasInput = 1;
     }
 
-    g_SysWork.player_4C.chara_0.properties_E4.player.field_114 = 0;
+    g_SysWork.player_4C.chara_0.properties_E4.player.gasWeaponPowerTimer_114 = FP_FLOAT_TO(0.0f, Q12_SHIFT);
     func_8004C564(g_SysWork.playerCombatInfo_38.equippedWeapon_F, EquippedWeaponId_RockDrill);
 
     if (g_MapMsg_MainIdx != mapMsgIdx)
