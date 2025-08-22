@@ -180,6 +180,10 @@ static inline void Math_Vector3Set(VECTOR3* vec, s32 x, s32 y, s32 z)
     vec->vz = z;
 }
 
+/** @brief Sets an `VECTOR3`'s components converting floats to Q19.12. */
+#define Math_Vector3f(v, f1, f2, f3) \
+    Math_Vector3Set((v), Q19_12((f1)), Q19_12((f2)), Q19_12((f3)))
+
 void func_80096C94(SVECTOR* rot, MATRIX* mat); // Custom `vwRotMatrix[...]`?
 void func_80096E78(SVECTOR* rot, MATRIX* mat); // Another custom `vwRotMatrix[...]`?
 

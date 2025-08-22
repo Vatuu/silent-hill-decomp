@@ -1,6 +1,7 @@
 #ifndef _MAP0_S01_H
 #define _MAP0_S01_H
 
+#include "bodyprog/bodyprog.h"
 #include "types.h"
 
 /** @brief Event flags specific to this map. */
@@ -15,23 +16,27 @@ typedef enum _EventFlags
 
 typedef struct
 {
-    q19_12 vx_0;
-    q19_12 vy_4;
-    q19_12 vz_8;
+    VECTOR3 v3_0;
     s32    field_C;
     s16    field_10;
-    s8     unk_12[8];
-} s_800E2490;
+    s16    __pad;
+} s_eventPosition;
+
+typedef struct
+{
+    s_800BCE18_2BEC_0 thing_0;
+    s_eventPosition   ep_1C;
+} s_eventThing;
 
 typedef struct
 {
     s8  unk_0[8];
-    s32 field_8;
-    s32 field_C;
-    s32 field_10;
-    s32 field_14;
-    s32 field_18;
-    s32 field_1C;
+    char* field_8;
+    char* field_C;
+    char* field_10;
+    char* field_14;
+    char* field_18;
+    char* field_1C;
 } s_800A99E4;
 
 /** Relative file offset for map texture? */
@@ -61,6 +66,8 @@ extern char* D_800CCA64;
 /** *Map `RECT`? */
 extern RECT D_800CCAC8;
 
+extern u16 D_800DE124;
+
 extern u16 D_800DE128;
 
 extern s32 D_800E239C;
@@ -75,15 +82,6 @@ extern VECTOR3 D_800E2380;
 /** Target camera look-at for cutscene. */
 extern VECTOR3 D_800E2390;
 
-extern s_800E2490 D_800E2490;
-
-extern s_800E2490 D_800E24BC;
-
-extern s_800E2490 D_800E24EC;
-
-extern s_800E2490 D_800E251C;
-
-extern s_800E2490 D_800E254C;
 
 extern s16 D_800E2560;
 
