@@ -1,5 +1,6 @@
 #ifndef _MAP0_S01_H
 #define _MAP0_S01_H
+#include "types.h"
 
 /** @brief Event flags specific to this map. */
 typedef enum _EventFlags
@@ -13,12 +14,12 @@ typedef enum _EventFlags
 
 typedef struct
 {
-    s32 field_0;
-    s32 field_4;
-    s32 field_8;
-    s32 field_C;
-    s16 field_10;
-    s8  unk_12[8];
+    q19_12 vx_0;
+    q19_12 vy_4;
+    q19_12 vz_8;
+    s32    field_C;
+    s16    field_10;
+    s8     unk_12[8];
 } s_800E2490;
 
 typedef struct
@@ -59,32 +60,6 @@ extern char* D_800CCA64;
 /** *Map `RECT`? */
 extern RECT D_800CCAC8;
 
-extern s8 D_800CCB00;
-
-extern s8 D_800CCB0C;
-
-extern s8 D_800CCB18;
-
-extern s8 D_800CCB24;
-
-extern s8 D_800CCB30;
-
-extern s8 D_800CCB3C;
-
-extern s8 D_800CCB48;
-
-extern s8 D_800CCB54;
-
-extern s8 D_800CCB60;
-
-extern s8 D_800CCB6C;
-
-extern s8 D_800CCB78;
-
-extern SVECTOR3 D_800CCB84;
-
-extern u16 D_800DE124;
-
 extern u16 D_800DE128;
 
 extern s32 D_800E239C;
@@ -98,14 +73,6 @@ extern VECTOR3 D_800E2380;
 
 /** Target camera look-at for cutscene. */
 extern VECTOR3 D_800E2390;
-
-extern s_800BCE18_2BEC_0 D_800E23B0[];
-
-extern s_800BCE18_2BEC_0 D_800E23D0[];
-
-extern s_800BCE18_2BEC_0 D_800E23F0[];
-
-extern s_800BCE18_2BEC_0 D_800E2450[];
 
 extern s_800E2490 D_800E2490;
 
