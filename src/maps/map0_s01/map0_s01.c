@@ -556,12 +556,12 @@ void func_800DBAA0() // 0x800DBAA0
             sharedFunc_800D20E4_0_s00();
             func_8003A16C();
 
-            g_SavegamePtr->eventFlags_168[1] |= 1 << 18;
+            Savegame_EventFlagSetAlt(EventFlag_50);
 
             Sd_EngineCmd(1321);
             Sd_EngineCmd(1322);
 
-            g_SavegamePtr->eventFlags_168[1] |= 1 << 20;
+            Savegame_EventFlagSetAlt(EventFlag_52);
 
             // Warp player.
             g_SysWork.player_4C.chara_0.position_18.vx = FP_METER(1.3f);
@@ -622,9 +622,9 @@ void func_800DBAA0() // 0x800DBAA0
             break;
 
         case 10:
-            D_800E239C                        = MAX(D_800E239C, Q19_12(53.0f));
-            D_800E23A1                        = 0x80;
-            g_SavegamePtr->eventFlags_168[1] |= 1 << 13;
+            D_800E239C = MAX(D_800E239C, Q19_12(53.0f));
+            D_800E23A1 = 0x80;
+            Savegame_EventFlagSetAlt(EventFlag_45);
             
             func_80085E6C(0x1800, 0);
             break;
@@ -646,9 +646,9 @@ void func_800DBAA0() // 0x800DBAA0
         case 13:
             func_80085EB8(0, &g_SysWork.player_4C.chara_0, (s_SubCharacter*)0x59, false);
             
-            D_800E23A1                        = 0xE0;
-            g_SavegamePtr->eventFlags_168[1] |= 1 << 14;
-            D_800E239C                        = Q19_12(76.0f);
+            D_800E23A1 = 0xE0;
+            Savegame_EventFlagSetAlt(EventFlag_46);
+            D_800E239C = Q19_12(76.0f);
 
             SysWork_StateStepIncrement();
 
@@ -704,8 +704,7 @@ void func_800DBAA0() // 0x800DBAA0
             break;
 
         case 21:
-            g_SavegamePtr->eventFlags_168[1] |= 1 << 15;
-            
+            Savegame_EventFlagSetAlt(EventFlag_47);
             func_800D39F4(g_SysWork.npcs_1A0);
             func_8008616C(0, false, 2, 0, false);
 

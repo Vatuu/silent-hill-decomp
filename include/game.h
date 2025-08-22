@@ -1414,6 +1414,14 @@ static inline void Savegame_EventFlagSet(u32 flagId)
     g_SavegamePtr->eventFlags_168[flagIdx] |= 1 << flagBit;
 }
 
+/** @brief Sets the given flag ID inside the savegame event flags array.
+ *
+ * @note This macro version seems to work better for `func_800DBAA0` than the `Savegame_EventFlagSet` inline above.
+ * Maybe other code depends on how the inline worked though.
+ */
+#define Savegame_EventFlagSetAlt(flagIdx) \
+    (g_SavegamePtr->eventFlags_168[(flagIdx) / 32] |= 1 << ((flagIdx) % 32))
+
 /** @brief Checks if the given flag ID is set inside the array of 16-bit flag values. */
 static inline s32 Flags16b_IsSet(u16* array, s32 flagId)
 {

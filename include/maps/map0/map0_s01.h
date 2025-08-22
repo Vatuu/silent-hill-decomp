@@ -1,6 +1,16 @@
 #ifndef _MAP0_S01_H
 #define _MAP0_S01_H
 
+/** @brief Event flags specific to this map. */
+typedef enum _EventFlags
+{
+    EventFlag_45 = 45,
+    EventFlag_46 = 46,
+    EventFlag_47 = 47,
+    EventFlag_50 = 50,
+    EventFlag_52 = 52
+} e_EventFlags;
+
 typedef struct
 {
     s32 field_0;
