@@ -1,14 +1,15 @@
 #ifndef _MAP0_S01_H
 #define _MAP0_S01_H
+#include "types.h"
 
 typedef struct
 {
-    s32 field_0;
-    s32 field_4;
-    s32 field_8;
-    s32 field_C;
-    s16 field_10;
-    s8  unk_12[8];
+    q19_12 vx_0;
+    q19_12 vy_4;
+    q19_12 vz_8;
+    s32    field_C;
+    s16    field_10;
+    s8     unk_12[8];
 } s_800E2490;
 
 typedef struct
@@ -48,14 +49,6 @@ extern VECTOR3 D_800E2380;
 
 /** Target camera look-at for cutscene. */
 extern VECTOR3 D_800E2390;
-
-extern s_800BCE18_2BEC_0 D_800E23B0[];
-
-extern s_800BCE18_2BEC_0 D_800E23D0[];
-
-extern s_800BCE18_2BEC_0 D_800E23F0[];
-
-extern s_800BCE18_2BEC_0 D_800E2450[];
 
 extern s_800E2490 D_800E2490;
 
