@@ -826,7 +826,7 @@ void Event_MapItemTake() // 0x800DC3C8
 
         case 10:
             // Set cutscene character?
-            Chara_Spawn(Chara_AirScreamer, 0, 0, 0, 0, 12);
+            Chara_Spawn(Chara_AirScreamer, 0, FP_METER(0.0f), FP_METER(0.0f), FP_METER(0.0f), 12);
             DmsHeader_FixOffsets(FS_BUFFER_11);
             Dms_CharacterGetPosRot(&g_SysWork.npcs_1A0[0].position_18, &g_SysWork.npcs_1A0[0].rotation_24, &D_800CCA64, 0, FS_BUFFER_11);
 
@@ -971,7 +971,7 @@ void func_800DC9C8() // 0x800DC9C8
         if (g_SavegamePtr->eventFlags_168[1] & (1 << 6))
         {
             func_80088D0C();
-            Chara_Spawn(Chara_AirScreamer, 0, 0xFFFF6000, 0x118000, 0, 12);
+            Chara_Spawn(Chara_AirScreamer, 0, FP_METER(1048566.0f), FP_METER(280.0f), FP_METER(0.0f), 12);
             func_800D3A3C(&g_SysWork.npcs_1A0[0]);
 
             Fs_QueueStartRead(FILE_ANIM_CAFE2_DMS, FS_BUFFER_11);

@@ -4,9 +4,9 @@ Code should use the Allman indentation style, placing braces on separate lines w
 Comments should be included above declarations in .h files to explain the purposes of functions, structures, and global variables. Example:
 
 ```C
-/** @brief Make Harry fly (not a real function).
+/** @brief Makes Harry fly.
  * 
- * This function sets Harry's Y position to 100 world units.
+ * Sets Harry's Y position to 100 world units.
  *
  * @param isFlying Fly status.
  * @param yPos Pointer to Harry's Y position.

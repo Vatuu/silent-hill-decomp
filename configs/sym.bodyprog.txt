@@ -464,7 +464,7 @@ Gfx_Items_RenderInit                        = 0x80054558; // type:func
 Inventory_ExitAnimFixes                     = 0x80054634; // type:func
 Gfx_Items_Display                           = 0x80054720; // type:func
 Gfx_Items_SetAmbientLighting                = 0x80054928; // type:func
-Gfx_AnimatePickupItem                       = 0x80054AD8; // type:func
+Gfx_PickupItemAnimate                       = 0x80054AD8; // type:func
 Inventory_AddSpecialItem                    = 0x80054CAC; // type:func
 
 //--------------------------------------------------------------------
@@ -562,7 +562,7 @@ Camera_TranslationSet                       = 0x80086A94; // type:func
 Camera_RotationSet                          = 0x80086B70; // type:func
 Event_ItemTake                              = 0x800877B8; // type:func
 Event_CommonItemTake                        = 0x800879FC; // type:func
-Event_PickupMap                             = 0x80087AF4; // type:func
+Event_MapTake                               = 0x80087AF4; // type:func
 Chara_Load                                  = 0x80088C7C; // type:func
 Chara_Spawn                                 = 0x80088D78; // type:func
 DmsHeader_FixOffsets                        = 0x8008C9A0; // type:func
@@ -1953,7 +1953,7 @@ g_Inventory_HealthStatusScanlinePosition    = 0x800AE19A;
 g_Inventory_ItemNameTimer                   = 0x800AE19C;
 g_Inventory_DescriptionRollTimer            = 0x800AE1A0;
 g_Inventory_ScrollTransitionTimer           = 0x800AE1A4;
-g_ItemPickupAnimationState                  = 0x800AE1AC;
+g_PickupItemAnimState                       = 0x800AE1AC;
 g_Player_IsInWalkToRunTransition            = 0x800AF214;
 g_Player_DisableControl                     = 0x800AF215;
 g_MaybePlayerAnims                          = 0x800AF228; // type:MaybeCharacterAnim

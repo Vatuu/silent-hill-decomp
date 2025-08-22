@@ -3789,7 +3789,7 @@ void SysState_ReadMessage_Update(s32 arg0) // 0x80039FB8
         case MapMsgDrawRet_Yes:
             Savegame_EventFlagSet(g_MapEventParam->eventFlagId_2);
 
-            func = &g_MapOverlayHeader.returnPlayerControl_CC;
+            func = &g_MapOverlayHeader.unfreezePlayerControl_CC;
 
             SysWork_StateSetNext(SysState_Gameplay);
 
@@ -4076,7 +4076,7 @@ void SysState_GameOver_Update() // 0x8003A52C
             break;
 
         default:
-            g_MapOverlayHeader.returnPlayerControl_CC(0);
+            g_MapOverlayHeader.unfreezePlayerControl_CC(0);
             SysWork_StateSetNext(SysState_Gameplay);
             Game_WarmBoot();
             break;

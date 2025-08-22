@@ -5,7 +5,7 @@
 
 /** @brief Custom implementation of `memmove` that copies word-by-word.
  *
- * This function copies a specified number of bytes from the source
+ * Copies a specified number of bytes from the source
  * memory location to the destination memory location.
  * Copies word-by-word instead of byte-by-byte. Beware of unaligned access?
  *

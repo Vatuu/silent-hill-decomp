@@ -2,7 +2,7 @@
 // TODO: Refine comments and names, it's still kind of unclear.
 /** @brief Spawns snow particles. Called once when the map overlay is loaded.
  *
- * This function spawns and updates snow particles.
+ * Spawns and updates snow particles.
  * This avoids having all the snow particles starting in the sky at the same time.
  *
  * The spawn loop works as follows (pseudocode):
