@@ -656,7 +656,7 @@ void func_80032904()
             g_SysWork.field_30++;
 
         case 19:
-            D_800A8F40 += FP_MULTIPLY_FLOAT((s64)g_DeltaTime0, 1.0f, Q12_SHIFT);
+            D_800A8F40 += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 1.0f, Q12_SHIFT);
 
             if (D_800A8F40 >= 0xFFF)
             {
@@ -677,7 +677,7 @@ void func_80032904()
             break;
 
         case 23:
-            D_800A8F40 -= FP_MULTIPLY_FLOAT((s64)g_DeltaTime0, 1.0f, Q12_SHIFT);
+            D_800A8F40 -= FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 1.0f, Q12_SHIFT);
 
             if (D_800A8F40 <= 0)
             {

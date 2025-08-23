@@ -2026,7 +2026,7 @@ void func_80035F4C(s32 arg0, s32 arg1, u8* arg2) // 0x80035F4C
 
         if (i == temp_s7) 
         {
-            var_t0 = FP_MULTIPLY_FLOAT((s64)g_DeltaTime1, 0.25f, Q12_SHIFT);
+            var_t0 = FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime1, 0.25f, Q12_SHIFT);
             if (g_SysWork.field_22A0 & (1 << 1)) 
             {
                 var_a0 = FP_FLOAT_TO(1.0f, Q12_SHIFT);
@@ -2822,8 +2822,8 @@ void Chara_PositionUpdateFromParams(s_AreaLoadParams* params) // 0x800371E8
 
     if (params->field_4_24 >= 2)
     {
-        g_SysWork.player_4C.chara_0.position_18.vx += FP_MULTIPLY_FLOAT((s64)Math_Sin(rot), 0.4f, Q12_SHIFT);
-        g_SysWork.player_4C.chara_0.position_18.vz += FP_MULTIPLY_FLOAT((s64)Math_Cos(rot), 0.4f, Q12_SHIFT);
+        g_SysWork.player_4C.chara_0.position_18.vx += FP_MULTIPLY_FLOAT_PRECISE(Math_Sin(rot), 0.4f, Q12_SHIFT);
+        g_SysWork.player_4C.chara_0.position_18.vz += FP_MULTIPLY_FLOAT_PRECISE(Math_Cos(rot), 0.4f, Q12_SHIFT);
     }
 
     g_SysWork.loadingScreenIdx_2281 = params->loadingScreenId_4_9;

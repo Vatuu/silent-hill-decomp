@@ -273,7 +273,7 @@ void Ai_LittleIncubus_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coo
         D_800EDA00 = 0;
     }
 
-    D_800EDA00 += FP_MULTIPLY_FLOAT((s64)g_DeltaTime0, 10.0f, Q12_SHIFT);
+    D_800EDA00 += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 10.0f, Q12_SHIFT);
     var_a2 = FP_TO(D_800EDA00, Q12_SHIFT) / FP_TO(80, Q12_SHIFT);
 
     temp_s0 = var_a2;

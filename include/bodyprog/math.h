@@ -92,17 +92,11 @@
 #define FP_MULTIPLY_FLOAT(aInt, bFlt, shift) \
     FP_MULTIPLY((aInt), FP_FLOAT_TO((bFlt), (shift)), (shift))
 
-/** @brief Multiplies an integer by a float converted to fixed-point Q format, using 64-bit intermediates via `Math_MulFixed` for higher precision. */
-#define FP_MULTIPLY_FLOAT_PRECISE(a, b, shift) \
-    Math_MulFixed((a), FP_FLOAT_TO((b), (shift)), (shift))
+/** @brief Multiplies an integer by a float converted to fixed-point Q format, using a 64-bit intermediate for higher precision. */
+#define FP_MULTIPLY_FLOAT_PRECISE(aInt, bFlt, shift) \
+    FP_MULTIPLY((s64)(aInt), FP_FLOAT_TO((bFlt), (shift)), (shift))
 
-/** @brief Computes the dot product of the first column of a matrix with a vector in Q17.15(?) format. */
-#define FP_MULTIPLY_MATRIX(mat, vec)    \
-    (s32)((((mat).m[0][0] * (vec).vx) + \
-           ((mat).m[1][0] * (vec).vy) + \
-           ((mat).m[2][0] * (vec).vz)) >> 17)
-
-/** @brief Converts a floating-point alpha in the range `[0.0f, 1.0f]` to a fixed-point alpha in Q3.12 format, range [0, 4096]. */
+/** @brief Converts a floating-point alpha in the range `[0.0f, 1.0f]` to a fixed-point alpha in Q3.12 format, range `[0, 4096]`. */
 #define FP_ALPHA(alpha) \
     (s16)FP_FLOAT_TO((alpha), Q12_SHIFT)
 
@@ -115,7 +109,7 @@
 #define FP_COLOR(val) \
     (u8)((val) * 0xFF)
 
-/** @brief Converts floating-point degrees to fixed-point degrees in Q3.12 format, range [0, 4096]. */
+/** @brief Converts floating-point degrees to fixed-point degrees in Q3.12 format, range `[0, 4096]`. */
 #define FP_ANGLE(deg) \
     (s16)((deg) * ((float)FP_TO(1, Q12_SHIFT) / 360.0f))
 
@@ -139,6 +133,20 @@
 /** @brief Converts floating-point seconds to fixed-point seconds in Q19.12 format. */
 #define FP_TIME(sec) \
     FP_FLOAT_TO((sec), Q12_SHIFT)
+
+/** @brief Multiplies an integer by a float converted to fixed-point Q format, using a 64-bit intermediate via `Math_MulFixed` for higher precision. */
+#define Math_MultiplyFloatPrecise(a, b, shift) \
+    Math_MulFixed((a), FP_FLOAT_TO((b), (shift)), (shift))
+
+/** @brief Computes the dot product of the first column of a matrix with a vector in Q17.15(?) format. */
+#define Math_MultiplyMatrix(mat, vec)   \
+    (s32)((((mat).m[0][0] * (vec).vx) + \
+           ((mat).m[1][0] * (vec).vy) + \
+           ((mat).m[2][0] * (vec).vz)) >> 17)
+
+/** @brief Sets an `VECTOR3`'s components to `float`s converted to a fixed-point format. */
+#define Math_Vector3f(vec, x, y, z, shift) \
+    Math_Vector3Set(vec, FP_FLOAT_TO(x, shift), FP_FLOAT_TO(y, shift), FP_FLOAT_TO(z, shift))
 
 /** @brief Normalizes fixed-point degrees in Q3.12 format to the signed range `[-2048, 2047]`.
  * Thin wrapper for `FP_ANGLE_NORM_S`.
@@ -195,7 +203,7 @@ s32 Math_MulFixed(s32 a, s32 b, s32 shift);
  * Possible original name: `shRsin`
  *
  * @param angle Degrees in Q3.12 format.
- * @return Sine in Q19.12 format (range [0, 4096]).
+ * @return Sine in Q19.12 format, range `[0, 4096]`.
  */
 s32 Math_Sin(s32 angle);
 
@@ -205,7 +213,7 @@ s32 Math_Sin(s32 angle);
  * Possible original name: `shRcos`
  *
  * @param angle Degrees in Q3.12 format.
- * @return Cosine in Q19.12 format (range [0, 4096]).
+ * @return Cosine in Q19.12 format, range `[0, 4096]`.
  */
 s32 Math_Cos(s32 angle);
 

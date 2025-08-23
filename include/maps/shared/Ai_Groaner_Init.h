@@ -68,11 +68,11 @@ void Ai_Groaner_Init(s_SubCharacter* chara)
     {
         if (!(g_SavegamePtr->eventFlags_168[4] & (1 << 6)))
         {
-            chara->properties_E4.larvalStalker.properties_E8[11].val16[0] = FP_MULTIPLY_FLOAT((s64)chara->properties_E4.larvalStalker.properties_E8[11].val16[0], 0.8f, Q12_SHIFT);
+            chara->properties_E4.larvalStalker.properties_E8[11].val16[0] = FP_MULTIPLY_FLOAT_PRECISE(chara->properties_E4.larvalStalker.properties_E8[11].val16[0], 0.8f, Q12_SHIFT);
         }
         else
         {
-            chara->properties_E4.larvalStalker.properties_E8[11].val16[0] = FP_MULTIPLY_FLOAT((s64)chara->properties_E4.larvalStalker.properties_E8[11].val16[0], 0.9f, Q12_SHIFT);
+            chara->properties_E4.larvalStalker.properties_E8[11].val16[0] = FP_MULTIPLY_FLOAT_PRECISE(chara->properties_E4.larvalStalker.properties_E8[11].val16[0], 0.9f, Q12_SHIFT);
         }
     }
 #endif

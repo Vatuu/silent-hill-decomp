@@ -2201,7 +2201,7 @@ void vcAdjTgtMvVecYByCurNearRoad(VECTOR3* tgt_mv_vec, VC_WORK* w_p) // 0x800843F
     dist = CLAMP(to_chara_dist, FP_METER(1.2f), FP_METER(7.0f));
 
     // TODO: Weird multiplier?
-    near_ratio = FP_MULTIPLY_FLOAT_PRECISE(FP_METER(7.0f) - dist, 0.1724f, Q12_SHIFT);
+    near_ratio = Math_MultiplyFloatPrecise(FP_METER(7.0f) - dist, 0.1724f, Q12_SHIFT);
     near_ratio = CLAMP(near_ratio, FP_METER(0.0f), FP_METER(1.0f));
 
     switch (w_p->cur_near_road_2B8.road_p_0->mv_y_type_11)
@@ -2451,8 +2451,8 @@ void vcRenewalCamData(VC_WORK* w_p, VC_CAM_MV_PARAM* cam_mv_prm_p) // 0x80084BD8
     }
 
     // SH2 removes this multiply and uses `accel_y` directly. Maybe 0.4f/1.0f were tunable defines and compiler removed them.
-    dec_spd_per_dist_xz = FP_MULTIPLY_FLOAT_PRECISE(cam_mv_prm_p->accel_xz, 0.4f, Q12_SHIFT);
-    dec_spd_per_dist_y  = FP_MULTIPLY_FLOAT_PRECISE(cam_mv_prm_p->accel_y,  1.0f, Q12_SHIFT);
+    dec_spd_per_dist_xz = Math_MultiplyFloatPrecise(cam_mv_prm_p->accel_xz, 0.4f, Q12_SHIFT);
+    dec_spd_per_dist_y  = Math_MultiplyFloatPrecise(cam_mv_prm_p->accel_y,  1.0f, Q12_SHIFT);
 
     vwRenewalXZVelocityToTargetPos(&w_p->cam_velo_60.vx, &w_p->cam_velo_60.vz, &w_p->cam_pos_50,
                                    &w_p->cam_tgt_pos_44, FP_METER(0.1f), cam_mv_prm_p->accel_xz,
@@ -2720,9 +2720,9 @@ void vcAdjCamOfsAngByOfsAngSpd(SVECTOR* ofs_ang, SVECTOR* ofs_ang_spd, SVECTOR* 
     unused.vy = Math_AngleNormalize(ofs_tgt_ang->vy - ofs_ang->vy);
     unused.vz = Math_AngleNormalize(ofs_tgt_ang->vz - ofs_ang->vz);
 
-    max_spd_dec_per_dist.vx = FP_MULTIPLY_FLOAT_PRECISE(prm_p->ang_accel_x, 8.0f, Q12_SHIFT);
-    max_spd_dec_per_dist.vy = FP_MULTIPLY_FLOAT_PRECISE(prm_p->ang_accel_y, 3.0f, Q12_SHIFT);
-    max_spd_dec_per_dist.vz = FP_MULTIPLY_FLOAT_PRECISE(prm_p->ang_accel_y, 3.3f, Q12_SHIFT);
+    max_spd_dec_per_dist.vx = Math_MultiplyFloatPrecise(prm_p->ang_accel_x, 8.0f, Q12_SHIFT);
+    max_spd_dec_per_dist.vy = Math_MultiplyFloatPrecise(prm_p->ang_accel_y, 3.0f, Q12_SHIFT);
+    max_spd_dec_per_dist.vz = Math_MultiplyFloatPrecise(prm_p->ang_accel_y, 3.3f, Q12_SHIFT);
 
     ofs_ang_spd->vx = vwRetNewAngSpdToTargetAng(ofs_ang_spd->vx, ofs_ang->vx, ofs_tgt_ang->vx, prm_p->ang_accel_x, prm_p->max_ang_spd_x, max_spd_dec_per_dist.vx);
     ofs_ang_spd->vy = vwRetNewAngSpdToTargetAng(ofs_ang_spd->vy, ofs_ang->vy, ofs_tgt_ang->vy, prm_p->ang_accel_y, prm_p->max_ang_spd_y, max_spd_dec_per_dist.vy);

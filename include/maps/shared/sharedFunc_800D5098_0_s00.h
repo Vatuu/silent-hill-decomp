@@ -45,11 +45,11 @@ void sharedFunc_800D5098_0_s00(s_SubCharacter* chara)
             {
                 if (temp_3 > 0)
                 {
-                    chara->rotation_24.vy = FP_MULTIPLY_FLOAT((s64)g_DeltaTime0, 0.0833f, Q12_SHIFT) + chara->rotation_24.vy;
+                    chara->rotation_24.vy = FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.0833f, Q12_SHIFT) + chara->rotation_24.vy;
                 }
                 else
                 {
-                    chara->rotation_24.vy = chara->rotation_24.vy - FP_MULTIPLY_FLOAT((s64)g_DeltaTime0, 0.0833f, Q12_SHIFT);
+                    chara->rotation_24.vy = chara->rotation_24.vy - FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.0833f, Q12_SHIFT);
                 }
             }
         }
@@ -60,7 +60,7 @@ void sharedFunc_800D5098_0_s00(s_SubCharacter* chara)
             {
                 if (chara->moveSpeed_38 > SPEED_0_7)
                 {
-                    newMoveSpeed0 = chara->moveSpeed_38 - FP_MULTIPLY_FLOAT((s64)g_DeltaTime0, 1.0f, Q12_SHIFT);
+                    newMoveSpeed0 = chara->moveSpeed_38 - FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 1.0f, Q12_SHIFT);
                     if (newMoveSpeed0 < SPEED_0_7)
                     {
                         newMoveSpeed0 = SPEED_0_7;
@@ -69,7 +69,7 @@ void sharedFunc_800D5098_0_s00(s_SubCharacter* chara)
                 else
                 {
                     newMoveSpeed0 = SPEED_0_7;
-                    var_v1        = chara->moveSpeed_38 + FP_MULTIPLY_FLOAT((s64)g_DeltaTime0, 1.0f, Q12_SHIFT);
+                    var_v1        = chara->moveSpeed_38 + FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 1.0f, Q12_SHIFT);
                     if (var_v1 <= SPEED_0_7)
                     {
                         newMoveSpeed0 = var_v1;
@@ -84,7 +84,7 @@ void sharedFunc_800D5098_0_s00(s_SubCharacter* chara)
             {
                 if (chara->moveSpeed_38 > -SPEED_0_7)
                 {
-                    newMoveSpeed0 = chara->moveSpeed_38 - FP_MULTIPLY_FLOAT((s64)g_DeltaTime0, 1.0f, Q12_SHIFT);
+                    newMoveSpeed0 = chara->moveSpeed_38 - FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 1.0f, Q12_SHIFT);
                     if (newMoveSpeed0 < -SPEED_0_7)
                     {
                         newMoveSpeed0 = -SPEED_0_7;
@@ -93,7 +93,7 @@ void sharedFunc_800D5098_0_s00(s_SubCharacter* chara)
                 else
                 {
                     newMoveSpeed0 = -SPEED_0_7;
-                    var_v1        = chara->moveSpeed_38 + FP_MULTIPLY_FLOAT((s64)g_DeltaTime0, 1.0f, Q12_SHIFT);
+                    var_v1        = chara->moveSpeed_38 + FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 1.0f, Q12_SHIFT);
                     if (var_v1 <= -SPEED_0_7)
                     {
                         newMoveSpeed0 = var_v1;
@@ -107,7 +107,7 @@ void sharedFunc_800D5098_0_s00(s_SubCharacter* chara)
             // TODO: This code is duplicated in block below, can it be shared somehow?
             if (chara->moveSpeed_38 > 0)
             {
-                newMoveSpeed1 = chara->moveSpeed_38 - FP_MULTIPLY_FLOAT((s64)g_DeltaTime0, 6.0f, Q12_SHIFT);
+                newMoveSpeed1 = chara->moveSpeed_38 - FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 6.0f, Q12_SHIFT);
                 if (newMoveSpeed1 < 0)
                 {
                     newMoveSpeed1 = 0;
@@ -115,7 +115,7 @@ void sharedFunc_800D5098_0_s00(s_SubCharacter* chara)
             }
             else
             {
-                newMoveSpeed1 = chara->moveSpeed_38 + FP_MULTIPLY_FLOAT((s64)g_DeltaTime0, 6.0f, Q12_SHIFT);
+                newMoveSpeed1 = chara->moveSpeed_38 + FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 6.0f, Q12_SHIFT);
                 if (newMoveSpeed1 > 0)
                 {
                     newMoveSpeed1 = 0;
@@ -129,7 +129,7 @@ void sharedFunc_800D5098_0_s00(s_SubCharacter* chara)
     {
         if (chara->moveSpeed_38 > 0)
         {
-            newMoveSpeed1 = chara->moveSpeed_38 - FP_MULTIPLY_FLOAT((s64)g_DeltaTime0, 6.0f, Q12_SHIFT);
+            newMoveSpeed1 = chara->moveSpeed_38 - FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 6.0f, Q12_SHIFT);
             if (newMoveSpeed1 < 0)
             {
                 newMoveSpeed1 = 0;
@@ -137,7 +137,7 @@ void sharedFunc_800D5098_0_s00(s_SubCharacter* chara)
         }
         else
         {
-            newMoveSpeed1 = chara->moveSpeed_38 + FP_MULTIPLY_FLOAT((s64)g_DeltaTime0, 6.0f, Q12_SHIFT);
+            newMoveSpeed1 = chara->moveSpeed_38 + FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 6.0f, Q12_SHIFT);
             if (newMoveSpeed1 > 0)
             {
                 newMoveSpeed1 = 0;

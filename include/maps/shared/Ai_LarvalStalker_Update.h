@@ -18,7 +18,7 @@ void Ai_LarvalStalker_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coo
         return;
     }
 
-    chara->timer_C6 += FP_MULTIPLY_FLOAT((s64)g_DeltaTime0, 0.25f, Q12_SHIFT);
+    chara->timer_C6 += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.25f, Q12_SHIFT);
 
     if (chara->timer_C6 <= FP_TO(1, Q12_SHIFT))
     {
