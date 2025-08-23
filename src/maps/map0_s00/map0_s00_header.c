@@ -4,7 +4,7 @@
 #include "maps/map0/map0_s00.h"
 
 // Undefined functions, unknown signature.
-#define func_800D94F8 (void(*)(void))0x800D94F8
+#define func_800D94F8 (void(*)(s32))0x800D94F8 // based on the signature of a func in map0_s01
 #define func_800DBE68 (void(*)(void))0x800DBE68
 #define func_800DBF08 (void(*)(void))0x800DBF08
 #define func_800DC1E8 (void(*)(void))0x800DC1E8

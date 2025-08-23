@@ -1476,11 +1476,11 @@ typedef struct
 typedef struct _MapOverlayHeader
 {
     s_UnkStruct2_Mo*  field_0;
-    s8                (*getMapRoomIdxFunc_4)(s32 x, s32 y); // Called by `Savegame_MapRoomIdxSet`.
+    u8                (*getMapRoomIdxFunc_4)(s32 x, s32 y); // Called by `Savegame_MapRoomIdxSet`.
     s8                field_8;
     s8                unk_9[3];
-    void              (*func_C)(); // func(?).
-    s32               (*func_10)();
+    s32               (*func_C)();
+    void              (*func_10)(s32 arg);
     s8                field_14; // Flags?
     u8                field_15;
     s8                field_16;
@@ -2460,7 +2460,7 @@ extern u8 D_800AD480[24];
 
 extern s_800AD4C8 D_800AD4C8[70];
 
-extern s_MapOverlayHeader g_MapOverlayHeader; // 0x800C957C
+extern const s_MapOverlayHeader g_MapOverlayHeader; // 0x800C957C
 
 // ==========
 // FUNCTIONS

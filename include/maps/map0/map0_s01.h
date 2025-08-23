@@ -116,6 +116,8 @@ void Event_MapItemTake();
 
 void Event_KitchenKnifeItemTake();
 
+void Event_EmptyFunction();
+
 void Event_HealthItemTake();
 
 void Event_HandgunItemTake();
@@ -123,5 +125,8 @@ void Event_HandgunItemTake();
 void func_800DC9C8();
 
 void func_800DD2EC(s32 arg0);
+
+s32 func_800D1E5C();
+s32 func_800D20FC();
 
 #endif
