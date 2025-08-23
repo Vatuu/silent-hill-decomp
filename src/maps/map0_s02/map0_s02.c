@@ -114,13 +114,18 @@ INCLUDE_ASM("asm/maps/map0_s02/nonmatchings/map0_s02", func_800CE8B8);
 
 INCLUDE_ASM("asm/maps/map0_s02/nonmatchings/map0_s02", func_800CE934);
 
+// Event func.
 void func_800CEBC0(void) {}
 
 INCLUDE_ASM("asm/maps/map0_s02/nonmatchings/map0_s02", func_800CEBC8);
 
+// Event func.
 void func_800CEC7C(void) {}
 
-INCLUDE_ASM("asm/maps/map0_s02/nonmatchings/map0_s02", func_800CEC84);
+void func_800CEC84(void) // 0x800CEC84
+{
+    Event_ItemTake(InventoryItemId_GasolineTank, 1, 60, 19);
+}
 
 INCLUDE_ASM("asm/maps/map0_s02/nonmatchings/map0_s02", func_800CECB0);
 

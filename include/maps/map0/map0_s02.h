@@ -7,4 +7,6 @@ s32 func_800CE768(void);
 
 void func_800CE884(s32 arg0);
 
+void func_800CEC84(void);
+
 #endif
