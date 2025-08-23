@@ -769,7 +769,13 @@ typedef struct _EventParam
     u8  unk_4[1];
     u8  field_5;
     u8  unk_6[2];
-    u32 flags_8;
+    u32 field_8_0  : 5;
+    u32 field_8_5  : 8;
+    u32 field_8_13 : 6;
+    u32 field_8_19 : 5;
+    u32 field_8_24 : 1;
+    u32 field_8_25 : 6;
+    u32 field_8_31 : 1;
 } s_EventParam;
 STATIC_ASSERT_SIZEOF(s_EventParam, 12);
 
