@@ -426,8 +426,7 @@ Gfx_StringDrawInt                           = 0x8004B9F8; // type:func
 Gfx_ItemScreens_CameraSet                   = 0x8004BB4C; // type:func
 GameFs_TmdDataAlloc                         = 0x8004BCBC; // type:func
 Gfx_Items_ItemRotate                        = 0x8004BCDC; // type:func
-Items_AmmoReloadCalculation = 0x80054FC0; // type:func
-g_Items_GunsMaxLoadAmmo = 0x800AD4A0;
+
 //-----------------------------------------------------------------------
 //--- PA: 0x027528   VA: 0x8004C088   subsegment: c, items/item_screens_1
 //-----------------------------------------------------------------------
@@ -474,6 +473,7 @@ Inventory_AddSpecialItem                    = 0x80054CAC; // type:func
 //--------------------------------------------------------------------
 //--- PA: 0x030460   VA: 0x80054FC0   subsegment: c, bodyprog_80054FC0
 //--------------------------------------------------------------------
+Items_AmmoReloadCalculation                 = 0x80054FC0; // type:func
 PlmHeader_FixOffsets                        = 0x800560FC; // type:func
 ObjList_FixOffsets                          = 0x800561A4; // type:func
 PlmHeader_ObjectCountGet                    = 0x80056C80; // type:func
@@ -485,19 +485,21 @@ Player_CharaTurn_1                          = 0x80071224; // type:func
 Player_CharaRotate                          = 0x80071284; // type:func
 Player_MovementStateReset                   = 0x800713B4; // type:func
 Player_Update                               = 0x800717D0; // type:func
-Player_MovementsSub_StateUpdate                  = 0x80073FC0; // type:func
-Player_MovementsSub                         = 0x80074254; // type:func
-func_80074350.234                           = 0x80074350; // filename:func_80074350 type:func - Generated compilation result adds .234 at name end for some reason.
+Player_Upper_StateUpdate                    = 0x80073FC0; // type:func
+Player_Upper_Update                         = 0x80074254; // type:func
+Player_CombatAnimUpdate.234                 = 0x80074350; // filename:Player_CombatAnimUpdate type:func - Generated compilation result adds .234 at name end for some reason.
+Player_Upper_MainUpdate                     = 0x80075504; // type:func
 Player_StepAbruptStop_MovementCancel        = 0x80077BB8; // type:func
-Player_MovementsMain                        = 0x80077D00; // type:func
+Player_Lower_Update                         = 0x80077D00; // type:func
 func_8007B924                               = 0x8007B924; // type:func
 Player_ReceiveDamage                        = 0x8007C800; // type:func
 Game_SavegameResetPlayer                    = 0x8007E530; // type:func
 GameFs_PlayerMapAnimLoad                    = 0x8007EB64; // type:func
-Game_PlayerMovementsReset                   = 0x8007F1CC; // type:func
+Game_PlayerLowerMovementsReset              = 0x8007F1CC; // type:func
 Player_AnimGetSomething                     = 0x8007F308; // type:func
 Player_Controller                           = 0x8007F32C; // type:func
 Math_ShortestAngle                          = 0x8007FB34; // type:func
+Game_GasWeaponPowerTimerValue               = 0x8007FD3C;
 Math_Distance2d                             = 0x8008037C; // type:func
 Math_PreservedSignSubtract                  = 0x80080594; // type:func
 Math_MulFixed                               = 0x800808D4; // type:func
@@ -1933,6 +1935,7 @@ DIFFICULTY_MENU_ENTRY_STRINGS               = 0x800A9AA0;
 //--- PA: 0x084F4C   VA: 0x800A9AAC   subsegment: data, bodyprog_800A9AA0
 //-----------------------------------------------------------------------
 g_StringColorId                             = 0x800AD498; // type:s16
+g_Items_GunsMaxLoadAmmo                     = 0x800AD4A0;
 g_Inventory_CmdSelectedIdx                  = 0x800ADB58; // type:s32
 g_Inventory_SelectionId                     = 0x800ADB5C; // type:u32
 
@@ -2302,6 +2305,7 @@ g_Items_ItemsModelData                      = 0x800C3D78;
 g_Inventory_EquippedItemIdx                 = 0x800C3E34;
 g_Items_Items3dData1                        = 0x800C3E48;
 D_800C4168                                  = 0x800C4168; // type:u8 size:0xCD - size likely incomplete
+g_TargetEnemyPosition                       = 0x800C4540;
 g_Player_MovementInputDetected              = 0x800C4558;
 g_Player_ActionRunPressed                   = 0x800C455C;
 g_Player_DisableDamage                      = 0x800C4562;
@@ -2329,8 +2333,8 @@ g_Demo_RandSeedBackup                       = 0x800C488C;
 g_Demo_CurFrameData                         = 0x800C4890;
 g_Demo_DemoStep                             = 0x800C4894;
 g_Demo_VideoPresentInterval                 = 0x800C4898;
-Game_GasWeaponPowerTimerValue = 0x8007FD3C;
-g_TargetEnemyPosition = 0x800C4540;
+
+
 
 //================================================
 //=== .bss section

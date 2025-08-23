@@ -1811,6 +1811,7 @@ void func_800625F4(VECTOR3* arg0, s16 arg1, s32 arg2, s32 arg3) // 0x800625F4
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80062708); // 0x80062708
 
+// Displays gun shooting effects.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8006342C); // 0x8006342C
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80063A50); // 0x80063A50
@@ -3224,37 +3225,37 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80070CF0); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80070DF0); // 0x80070DF0
 
-void Player_CharaTurn_0(s_SubCharacter* chara, e_PlayerMovement currentState) // 0x800711C4
+void Player_CharaTurn_0(s_SubCharacter* chara, e_PlayerLowerMovement currentState) // 0x800711C4
 {
-    if (g_SysWork.player_4C.extra_128.playerSubMovement_20 == 25 || g_Player_IsStepping_Left_Tap == 0 || g_Player_IsStepping_Right_Tap == 0)
+    if (g_SysWork.player_4C.extra_128.playerUpperMovement_20 == PlayerUpperMovement_Attack || g_Player_IsStepping_Left_Tap == 0 || g_Player_IsStepping_Right_Tap == 0)
     {
         return;
     }
 
     if (g_Player_IsTurning_Left != 0)
     {
-        g_SysWork.player_4C.extra_128.playerMovement_24 = currentState + 10;
+        g_SysWork.player_4C.extra_128.playerLowerMovement_24 = currentState + 10;
     }
     else
     {
-        g_SysWork.player_4C.extra_128.playerMovement_24 = currentState + 9;
+        g_SysWork.player_4C.extra_128.playerLowerMovement_24 = currentState + 9;
     }
 }
 
-void Player_CharaTurn_1(s_SubCharacter* chara, e_PlayerMovement currentState) // 0x80071224
+void Player_CharaTurn_1(s_SubCharacter* chara, e_PlayerLowerMovement currentState) // 0x80071224
 {
-    if (g_SysWork.player_4C.extra_128.playerSubMovement_20 == 25 || g_Player_IsStepping_Left_Tap == 0 || g_Player_IsStepping_Right_Tap == 0)
+    if (g_SysWork.player_4C.extra_128.playerUpperMovement_20 == PlayerUpperMovement_Attack || g_Player_IsStepping_Left_Tap == 0 || g_Player_IsStepping_Right_Tap == 0)
     {
         return;
     }
 
     if (g_Player_IsTurning_Right != 0)
     {
-        g_SysWork.player_4C.extra_128.playerMovement_24 = currentState + 9;
+        g_SysWork.player_4C.extra_128.playerLowerMovement_24 = currentState + 9;
     }
     else
     {
-        g_SysWork.player_4C.extra_128.playerMovement_24 = currentState + 10;
+        g_SysWork.player_4C.extra_128.playerLowerMovement_24 = currentState + 10;
     }
 }
 
@@ -3271,7 +3272,7 @@ void Player_CharaRotate(s32 speed) // 0x80071284
             D_800C454C = ((-speed * g_DeltaTime0) * g_Player_IsTurning_Left) >> 6;
         }
     }
-    else if (g_SysWork.player_4C.extra_128.playerMovement_24 == PlayerMovement_Walk_Backward || g_SysWork.player_4C.extra_128.playerMovement_24 == PlayerMovement_Aim_Walk_Backward)
+    else if (g_SysWork.player_4C.extra_128.playerLowerMovement_24 == PlayerLowerMovement_Walk_Backward || g_SysWork.player_4C.extra_128.playerLowerMovement_24 == PlayerLowerMovement_Aim_Walk_Backward)
     {
         if (g_Player_IsTurning_Right != 0)
         {
@@ -3295,9 +3296,9 @@ void Player_CharaRotate(s32 speed) // 0x80071284
     }
 }
 
-void Player_MovementStateReset(s_SubCharacter* chara, e_PlayerMovement state) // 0x800713B4
+void Player_MovementStateReset(s_SubCharacter* chara, e_PlayerLowerMovement state) // 0x800713B4
 {
-    if (g_SysWork.player_4C.extra_128.playerMovement_24 != state)
+    if (g_SysWork.player_4C.extra_128.playerLowerMovement_24 != state)
     {
         chara->model_0.stateStep_3                   = 0;
         chara->model_0.state_2                       = 0;
@@ -3578,7 +3579,7 @@ void func_80071968(s_SubCharacter* chara, s_MainCharacterExtra* extra, void* arg
 {
     s_AnimInfo* animInfo;
 
-    switch (g_SysWork.player_4C.extra_128.field_1C)
+    switch (g_SysWork.player_4C.extra_128.playerState_1C)
     {
         case 61:
         case 62:
@@ -3640,7 +3641,7 @@ void func_80071968(s_SubCharacter* chara, s_MainCharacterExtra* extra, void* arg
             break;
 
         case 0: 
-            switch (g_SysWork.player_4C.extra_128.playerSubMovement_20)
+            switch (g_SysWork.player_4C.extra_128.playerUpperMovement_20)
             {
                 case 2:
                 case 6:
@@ -3880,7 +3881,7 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
         Player_Controller();
     }
     
-    switch (g_SysWork.player_4C.extra_128.field_1C)
+    switch (g_SysWork.player_4C.extra_128.playerState_1C)
     {
         case PlayerState_Idle:
             g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = 0;
@@ -3904,21 +3905,21 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
                 break;
             }
             
-            g_SysWork.player_4C.extra_128.field_1C             = PlayerState_None;
+            g_SysWork.player_4C.extra_128.playerState_1C             = PlayerState_None;
             chara->model_0.stateStep_3                         = 0;
             chara->model_0.state_2                             = 0;
             extra->model_0.stateStep_3                         = 0;
             extra->model_0.state_2                             = 0;
-            g_SysWork.player_4C.extra_128.playerSubMovement_20 = PlayerSubMovement_None;
-            g_SysWork.player_4C.extra_128.playerMovement_24    = PlayerMovement_None;
+            g_SysWork.player_4C.extra_128.playerUpperMovement_20 = PlayerUpperMovement_None;
+            g_SysWork.player_4C.extra_128.playerLowerMovement_24    = PlayerLowerMovement_None;
 
         case PlayerState_None:
         case PlayerState_Combat:
-            Player_MovementsMain(chara, extra);
+            Player_Lower_Update(chara, extra);
                 
-            if (g_SysWork.player_4C.extra_128.field_1C < (u32)PlayerState_Idle)
+            if (g_SysWork.player_4C.extra_128.playerState_1C < (u32)PlayerState_Idle)
             {
-                Player_MovementsSub(chara, extra);
+                Player_Upper_Update(chara, extra);
             }
             break;
             
@@ -3945,14 +3946,14 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
             {
                 chara->field_41                                                          = NO_VALUE;
                 g_SysWork.enemyTargetIdx_2353                                            = NO_VALUE;
-                g_SysWork.player_4C.extra_128.field_1C                                   = 0;
+                g_SysWork.player_4C.extra_128.playerState_1C                                   = 0;
                 g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C              &= ~PlayerFlag_DamageReceived;
                 chara->model_0.stateStep_3                                               = 0;
                 chara->model_0.state_2                                                   = 0;
                 extra->model_0.stateStep_3                                               = 0;
                 extra->model_0.state_2                                                   = 0;
-                g_SysWork.player_4C.extra_128.playerSubMovement_20                       = 0;
-                g_SysWork.player_4C.extra_128.playerMovement_24                          = PlayerMovement_None;
+                g_SysWork.player_4C.extra_128.playerUpperMovement_20                       = 0;
+                g_SysWork.player_4C.extra_128.playerLowerMovement_24                          = PlayerLowerMovement_None;
                 g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126  = 0;
             }
             
@@ -3965,7 +3966,7 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
         case PlayerState_Unk46:
             var_s0 = 0;
             
-            switch (g_SysWork.player_4C.extra_128.field_1C)
+            switch (g_SysWork.player_4C.extra_128.playerState_1C)
             {
                 case PlayerState_Unk45:
                     var_s3 = 0x107;
@@ -3982,13 +3983,13 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
             
             if (chara->model_0.anim_4.keyframeIdx0_8 == g_MapOverlayHeader.field_38[D_800AF220].field_6)
             {
-                g_SysWork.player_4C.extra_128.field_1C             = var_s0;
+                g_SysWork.player_4C.extra_128.playerState_1C             = var_s0;
                 chara->model_0.stateStep_3                         = 0;
                 chara->model_0.state_2                             = 0;
                 extra->model_0.stateStep_3                         = 0;
                 extra->model_0.state_2                             = 0;
-                g_SysWork.player_4C.extra_128.playerSubMovement_20 = 0;
-                g_SysWork.player_4C.extra_128.playerMovement_24    = PlayerMovement_None;
+                g_SysWork.player_4C.extra_128.playerUpperMovement_20 = 0;
+                g_SysWork.player_4C.extra_128.playerLowerMovement_24    = PlayerLowerMovement_None;
                 chara->properties_E4.player.properties_E4[1]       = 0xA000;
             }
             
@@ -4011,7 +4012,7 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
             var_s5 = 0;
             npcIdx = 0;
             
-            switch (g_SysWork.player_4C.extra_128.field_1C)
+            switch (g_SysWork.player_4C.extra_128.playerState_1C)
             {
                 case PlayerState_Unk37:
                     var_s3 = 0xFF;
@@ -4044,7 +4045,7 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
             
             if (ABS(sp18) < 0x80)
             {
-                if (g_SysWork.player_4C.extra_128.field_1C == 0x25)
+                if (g_SysWork.player_4C.extra_128.playerState_1C == 0x25)
                 {
                     chara->rotation_24.vy = g_SysWork.npcs_1A0[npcIdx].rotation_24.vy + FP_ANGLE(180.0f);
                 }
@@ -4080,19 +4081,19 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
             
             if (chara->model_0.anim_4.keyframeIdx0_8 == g_MapOverlayHeader.field_38[D_800AF220].field_6)
             {
-                g_SysWork.player_4C.extra_128.field_1C             = var_s5;
+                g_SysWork.player_4C.extra_128.playerState_1C             = var_s5;
                 chara->model_0.stateStep_3                         = 0;
                 chara->model_0.state_2                             = 0;
                 extra->model_0.stateStep_3                         = 0;
                 extra->model_0.state_2                             = 0;
-                g_SysWork.player_4C.extra_128.playerSubMovement_20 = 0;
-                g_SysWork.player_4C.extra_128.playerMovement_24    = PlayerMovement_None;
+                g_SysWork.player_4C.extra_128.playerUpperMovement_20 = 0;
+                g_SysWork.player_4C.extra_128.playerLowerMovement_24    = PlayerLowerMovement_None;
                 chara->properties_E4.player.properties_E4[1]       = 0xF000;
             }
 
             if (chara->model_0.anim_4.animIdx_0 & (1 << 0))
             {
-                if (g_SysWork.player_4C.extra_128.field_1C >= 0x25 && g_SysWork.player_4C.extra_128.field_1C < 0x27)
+                if (g_SysWork.player_4C.extra_128.playerState_1C >= 0x25 && g_SysWork.player_4C.extra_128.playerState_1C < 0x27)
                 {
                     temp = -0x8000;
                     extra->model_0.anim_4.time_4 = (FP_TO(g_MapOverlayHeader.animInfo_34[chara->model_0.anim_4.animIdx_0 - 0x4C].keyframeIdx0_C, Q12_SHIFT) + model->anim_4.time_4) + temp;
@@ -4153,7 +4154,7 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
             g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = 0;
             var_s7                                                                  = 0;
             
-            switch (g_SysWork.player_4C.extra_128.field_1C)
+            switch (g_SysWork.player_4C.extra_128.playerState_1C)
             {
                 case PlayerState_Unk47:
                 case PlayerState_Unk48:
@@ -4170,7 +4171,7 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
                         var_2 = 0xC80;
                     }
                     
-                    switch (g_SysWork.player_4C.extra_128.field_1C)
+                    switch (g_SysWork.player_4C.extra_128.playerState_1C)
                     {
                         case PlayerState_Unk47:
                             var_s3 = 0x109;
@@ -4211,7 +4212,7 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
                 case PlayerState_Grab_RomperAttack_Behind:
                     var_s6 = 0xA66;
                     
-                    switch (g_SysWork.player_4C.extra_128.field_1C)
+                    switch (g_SysWork.player_4C.extra_128.playerState_1C)
                     {
                         case PlayerState_Grab_RomperAttack_Front:
                             if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
@@ -4428,7 +4429,7 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
                     break;
             }
             
-            switch (g_SysWork.player_4C.extra_128.field_1C)
+            switch (g_SysWork.player_4C.extra_128.playerState_1C)
             {
                 case PlayerState_Grab_Upper_Front:
                 case PlayerState_Grab_Lower_Front:
@@ -4483,7 +4484,7 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
                     break;
             }
                     
-            switch (g_SysWork.player_4C.extra_128.field_1C)
+            switch (g_SysWork.player_4C.extra_128.playerState_1C)
             {
                 case PlayerState_Grab_RomperAttack_Front:
                     Math_ShortestAngle(chara->rotation_24.vy, FP_ANGLE_NORM_U(g_SysWork.npcs_1A0[g_SysWork.field_2354[0]].rotation_24.vy + FP_ANGLE(360.0f)), &sp1A);
@@ -4501,17 +4502,17 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
                 D_800AF20C += g_DeltaTime0;
             }
 
-            if (!(g_SysWork.player_4C.extra_128.field_1C >= 47 && g_SysWork.player_4C.extra_128.field_1C < 49))
+            if (!(g_SysWork.player_4C.extra_128.playerState_1C >= 47 && g_SysWork.player_4C.extra_128.playerState_1C < 49))
             {
                 if (var_s6 < var_s7)
                 {
                     D_800AF20C = var_2;
-                    if (g_SysWork.player_4C.extra_128.field_1C == 0x27)
+                    if (g_SysWork.player_4C.extra_128.playerState_1C == 0x27)
                     {
                         g_SysWork.npcs_1A0[g_SysWork.field_2354[0]].moveSpeed_38 = 0;
                     }
                             
-                    if (g_SysWork.player_4C.extra_128.field_1C == 0x28)
+                    if (g_SysWork.player_4C.extra_128.playerState_1C == 0x28)
                     {
                         g_SysWork.npcs_1A0[g_SysWork.field_2354[1]].moveSpeed_38 = 0;
                     }
@@ -4522,13 +4523,13 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
             {
                 func_8007FD4C(0);
                         
-                g_SysWork.player_4C.extra_128.field_1C             = var_s5_2;
+                g_SysWork.player_4C.extra_128.playerState_1C             = var_s5_2;
                 chara->model_0.stateStep_3                         = 0;
                 chara->model_0.state_2                             = 0;
                 extra->model_0.stateStep_3                         = 0;
                 extra->model_0.state_2                             = 0;
-                g_SysWork.player_4C.extra_128.playerSubMovement_20 = 0;
-                g_SysWork.player_4C.extra_128.playerMovement_24    = PlayerMovement_None;
+                g_SysWork.player_4C.extra_128.playerUpperMovement_20 = 0;
+                g_SysWork.player_4C.extra_128.playerLowerMovement_24    = PlayerLowerMovement_None;
                 chara->flags_3E                                   |= 1 << 3;
             }
             break;
@@ -4546,7 +4547,7 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
         case PlayerState_Unk42:
         case PlayerState_Unk49:
         case PlayerState_Unk50:
-            if (g_SysWork.player_4C.extra_128.field_1C != 4)
+            if (g_SysWork.player_4C.extra_128.playerState_1C != 4)
             {
                 if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 != 0)
                 {
@@ -4568,7 +4569,7 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
                 }
             }
             
-            switch (g_SysWork.player_4C.extra_128.field_1C)
+            switch (g_SysWork.player_4C.extra_128.playerState_1C)
             {
                 case PlayerState_Unk49:
                     var_s3 = 0x10B;
@@ -4623,7 +4624,7 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
                     break;
             }
 
-            if (!(g_SysWork.player_4C.extra_128.field_1C >= 3 && g_SysWork.player_4C.extra_128.field_1C < 5))
+            if (!(g_SysWork.player_4C.extra_128.playerState_1C >= 3 && g_SysWork.player_4C.extra_128.playerState_1C < 5))
             {
                 func_8007FB94(chara, extra, var_s3);
             }
@@ -4631,7 +4632,7 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
             D_800C4550 = g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126;
             chara->flags_3E |= 1 << 3;
             
-            switch (g_SysWork.player_4C.extra_128.field_1C)
+            switch (g_SysWork.player_4C.extra_128.playerState_1C)
             {
                 case PlayerState_Unk49:
                 case PlayerState_Unk50:
@@ -4640,7 +4641,7 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
                     
                     if (chara->model_0.anim_4.keyframeIdx0_8 == g_MapOverlayHeader.field_38[D_800AF220].field_6)
                     {
-                        g_SysWork.player_4C.extra_128.field_1C                      = 0;
+                        g_SysWork.player_4C.extra_128.playerState_1C                      = 0;
                         g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_DamageReceived;
                         chara->model_0.stateStep_3                                  = 0;
                         chara->model_0.state_2                                      = 0;
@@ -4649,8 +4650,8 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
                         g_SysWork.player_4C.chara_0.field_D4                        = 0x4CC;
                         g_SysWork.player_4C.chara_0.field_D6                        = 0x3AE;
                         g_SysWork.player_4C.chara_0.field_C8                        = -0x1999;
-                        g_SysWork.player_4C.extra_128.playerSubMovement_20          = 0;
-                        g_SysWork.player_4C.extra_128.playerMovement_24             = PlayerMovement_None;
+                        g_SysWork.player_4C.extra_128.playerUpperMovement_20          = 0;
+                        g_SysWork.player_4C.extra_128.playerLowerMovement_24             = PlayerLowerMovement_None;
                         g_SysWork.player_4C.chara_0.field_D8.field_6                = 0; 
                         g_SysWork.player_4C.chara_0.field_D8.field_4                = 0;
                         g_SysWork.player_4C.chara_0.field_D8.field_2                = 0;
@@ -4684,26 +4685,26 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
                     if (chara->model_0.anim_4.keyframeIdx0_8 == g_MapOverlayHeader.field_38[D_800AF220].field_6)
                     {
                         g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_DamageReceived;
-                        switch (g_SysWork.player_4C.extra_128.field_1C)
+                        switch (g_SysWork.player_4C.extra_128.playerState_1C)
                         {
                             case PlayerState_Unk41:
-                                g_SysWork.player_4C.extra_128.field_1C             = 0x2B;
+                                g_SysWork.player_4C.extra_128.playerState_1C             = 0x2B;
                                 chara->model_0.stateStep_3                         = 0;
                                 chara->model_0.state_2                             = 0;
                                 extra->model_0.stateStep_3                         = 0;
                                 extra->model_0.state_2                             = 0;
-                                g_SysWork.player_4C.extra_128.playerSubMovement_20 = 0;
-                                g_SysWork.player_4C.extra_128.playerMovement_24    = PlayerMovement_None;
+                                g_SysWork.player_4C.extra_128.playerUpperMovement_20 = 0;
+                                g_SysWork.player_4C.extra_128.playerLowerMovement_24    = PlayerLowerMovement_None;
                                 break;
                                 
                             case PlayerState_Unk42:
-                                g_SysWork.player_4C.extra_128.field_1C             = 0x2C;
+                                g_SysWork.player_4C.extra_128.playerState_1C             = 0x2C;
                                 chara->model_0.stateStep_3                         = 0;
                                 chara->model_0.state_2                             = 0;
                                 extra->model_0.stateStep_3                         = 0;
                                 extra->model_0.state_2                             = 0;
-                                g_SysWork.player_4C.extra_128.playerSubMovement_20 = 0;
-                                g_SysWork.player_4C.extra_128.playerMovement_24    = PlayerMovement_None;
+                                g_SysWork.player_4C.extra_128.playerUpperMovement_20 = 0;
+                                g_SysWork.player_4C.extra_128.playerLowerMovement_24    = PlayerLowerMovement_None;
                                 break;
                         }
                         
@@ -4730,14 +4731,14 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
                     
                     if (chara->model_0.anim_4.keyframeIdx0_8 == g_MapOverlayHeader.field_38[D_800AF220].field_6)
                     {
-                        g_SysWork.player_4C.extra_128.field_1C                      = 0;
+                        g_SysWork.player_4C.extra_128.playerState_1C                      = 0;
                         g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_DamageReceived;
                         chara->model_0.stateStep_3                                  = 0;
                         chara->model_0.state_2                                      = 0;
                         extra->model_0.stateStep_3                                  = 0;
                         extra->model_0.state_2                                      = 0;
-                        g_SysWork.player_4C.extra_128.playerSubMovement_20          = 0;
-                        g_SysWork.player_4C.extra_128.playerMovement_24             = PlayerMovement_None;
+                        g_SysWork.player_4C.extra_128.playerUpperMovement_20          = 0;
+                        g_SysWork.player_4C.extra_128.playerLowerMovement_24             = PlayerLowerMovement_None;
                         chara->field_D4                                             = 0x4CC;
                         g_SysWork.player_4C.chara_0.field_D8.field_6                = 0;
                         g_SysWork.player_4C.chara_0.field_D8.field_4                = 0;
@@ -4768,7 +4769,7 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
                         func_80089470();
                     }
                     
-                    if (g_SysWork.player_4C.extra_128.field_1C == PlayerState_Unk3)
+                    if (g_SysWork.player_4C.extra_128.playerState_1C == PlayerState_Unk3)
                     {
                         chara->properties_E4.player.field_10D = 0;
                         if (chara->model_0.anim_4.animIdx_0 & 1)
@@ -4781,23 +4782,23 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
                         {
                             if (chara->position_18.vy > FP_METER(6.5f))
                             {
-                                g_SysWork.player_4C.extra_128.field_1C             = PlayerState_Dead;
+                                g_SysWork.player_4C.extra_128.playerState_1C             = PlayerState_Dead;
                                 chara->model_0.stateStep_3                         = 0;
                                 chara->model_0.state_2                             = 0;
                                 extra->model_0.stateStep_3                         = 0;
                                 extra->model_0.state_2                             = 0;
-                                g_SysWork.player_4C.extra_128.playerSubMovement_20 = 0;
-                                g_SysWork.player_4C.extra_128.playerMovement_24    = PlayerMovement_None;
+                                g_SysWork.player_4C.extra_128.playerUpperMovement_20 = 0;
+                                g_SysWork.player_4C.extra_128.playerLowerMovement_24    = PlayerLowerMovement_None;
                             }
                             else
                             {
-                                g_SysWork.player_4C.extra_128.field_1C             = PlayerState_None;
+                                g_SysWork.player_4C.extra_128.playerState_1C             = PlayerState_None;
                                 chara->model_0.stateStep_3                         = 0;
                                 chara->model_0.state_2                             = 0;
                                 extra->model_0.stateStep_3                         = 0;
                                 extra->model_0.state_2                             = 0;
-                                g_SysWork.player_4C.extra_128.playerSubMovement_20 = 0;
-                                g_SysWork.player_4C.extra_128.playerMovement_24    = PlayerMovement_None;
+                                g_SysWork.player_4C.extra_128.playerUpperMovement_20 = 0;
+                                g_SysWork.player_4C.extra_128.playerLowerMovement_24    = PlayerLowerMovement_None;
                             }
                             
                             g_SysWork.player_4C.chara_0.field_C8 = -0x1999;
@@ -4820,23 +4821,23 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
                         {
                             if (chara->position_18.vy > FP_METER(6.5f))
                             {
-                                g_SysWork.player_4C.extra_128.field_1C             = PlayerState_Dead;
+                                g_SysWork.player_4C.extra_128.playerState_1C             = PlayerState_Dead;
                                 chara->model_0.stateStep_3                         = 0;
                                 chara->model_0.state_2                             = 0;
                                 extra->model_0.stateStep_3                         = 0;
                                 extra->model_0.state_2                             = 0;
-                                g_SysWork.player_4C.extra_128.playerSubMovement_20 = 0;
-                                g_SysWork.player_4C.extra_128.playerMovement_24    = PlayerMovement_None;
+                                g_SysWork.player_4C.extra_128.playerUpperMovement_20 = 0;
+                                g_SysWork.player_4C.extra_128.playerLowerMovement_24    = PlayerLowerMovement_None;
                             }
                             else
                             {
-                                g_SysWork.player_4C.extra_128.field_1C             = PlayerState_None;
+                                g_SysWork.player_4C.extra_128.playerState_1C             = PlayerState_None;
                                 chara->model_0.stateStep_3                         = 0;
                                 chara->model_0.state_2                             = 0;
                                 extra->model_0.stateStep_3                         = 0;
                                 extra->model_0.state_2                             = 0;
-                                g_SysWork.player_4C.extra_128.playerSubMovement_20 = 0;
-                                g_SysWork.player_4C.extra_128.playerMovement_24    = PlayerMovement_None;
+                                g_SysWork.player_4C.extra_128.playerUpperMovement_20 = 0;
+                                g_SysWork.player_4C.extra_128.playerLowerMovement_24    = PlayerLowerMovement_None;
                             }
 
                             g_SysWork.player_4C.chara_0.field_C8 = -0x1999;
@@ -4856,13 +4857,13 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
             
             if (chara->model_0.anim_4.keyframeIdx0_8 == g_MapOverlayHeader.field_38[D_800AF220].field_6)
             {
-                g_SysWork.player_4C.extra_128.field_1C             = 0;
+                g_SysWork.player_4C.extra_128.playerState_1C             = 0;
                 chara->model_0.stateStep_3                         = 0;
                 chara->model_0.state_2                             = 0;
                 extra->model_0.stateStep_3                         = 0;
                 extra->model_0.state_2                             = 0;
-                g_SysWork.player_4C.extra_128.playerSubMovement_20 = 0;
-                g_SysWork.player_4C.extra_128.playerMovement_24    = PlayerMovement_None;
+                g_SysWork.player_4C.extra_128.playerUpperMovement_20 = 0;
+                g_SysWork.player_4C.extra_128.playerLowerMovement_24    = PlayerLowerMovement_None;
                 chara->field_D6                                    = 0x3AE;
             }
             break;
@@ -4872,13 +4873,13 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
             
             if (chara->model_0.anim_4.keyframeIdx0_8 == g_MapOverlayHeader.field_38[D_800AF220].field_6)
             {
-                g_SysWork.player_4C.extra_128.field_1C             = 0;
+                g_SysWork.player_4C.extra_128.playerState_1C             = 0;
                 chara->model_0.stateStep_3                         = 0;
                 chara->model_0.state_2                             = 0;
                 extra->model_0.stateStep_3                         = 0;
                 extra->model_0.state_2                             = 0;
-                g_SysWork.player_4C.extra_128.playerSubMovement_20 = 0;
-                g_SysWork.player_4C.extra_128.playerMovement_24    = PlayerMovement_None;
+                g_SysWork.player_4C.extra_128.playerUpperMovement_20 = 0;
+                g_SysWork.player_4C.extra_128.playerLowerMovement_24    = PlayerLowerMovement_None;
                 chara->field_D6                                    = 0x3AE;
             }
             break;
@@ -5027,7 +5028,7 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
         case PlayerState_Unk28:
         case PlayerState_Unk29:
         case PlayerState_Unk30:
-            switch (g_SysWork.player_4C.extra_128.field_1C)
+            switch (g_SysWork.player_4C.extra_128.playerState_1C)
             {
                 case PlayerState_Damage_Upper_Behind:
                     func_8007FB94(chara, extra, 0xD3);
@@ -5062,7 +5063,7 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
                     break;
             }
 
-            switch (g_SysWork.player_4C.extra_128.field_1C)
+            switch (g_SysWork.player_4C.extra_128.playerState_1C)
             {
                 case PlayerState_Unk29:
                     Math_ShortestAngle(chara->rotation_24.vy, g_SysWork.player_4C.chara_0.properties_E4.larvalStalker.properties_E8[0xC].val16[0], &sp1C);
@@ -5122,14 +5123,14 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
             {
                 chara->field_41                                                          = NO_VALUE;
                 g_SysWork.enemyTargetIdx_2353                                            = NO_VALUE;
-                g_SysWork.player_4C.extra_128.field_1C                                   = 0;
+                g_SysWork.player_4C.extra_128.playerState_1C                                   = 0;
                 g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C              &= ~PlayerFlag_DamageReceived;
                 chara->model_0.stateStep_3                                               = 0;
                 chara->model_0.state_2                                                   = 0;
                 extra->model_0.stateStep_3                                               = 0;
                 extra->model_0.state_2                                                   = 0;
-                g_SysWork.player_4C.extra_128.playerSubMovement_20                       = 0;
-                g_SysWork.player_4C.extra_128.playerMovement_24                          = PlayerMovement_None;
+                g_SysWork.player_4C.extra_128.playerUpperMovement_20                       = 0;
+                g_SysWork.player_4C.extra_128.playerLowerMovement_24                          = PlayerLowerMovement_None;
                 g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126  = 0;
             }
             
@@ -5160,88 +5161,88 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80071CE8); // 0x80071CE8
 #endif
 
-void Player_MovementsSub_StateUpdate(s_MainCharacterExtra* extra, e_PlayerSubMovement state, s32 unused, s32 arg3) // 0x80073FC0
+void Player_Upper_StateUpdate(s_MainCharacterExtra* extra, e_PlayerUpperMovement state, s32 unused, s32 arg3) // 0x80073FC0
 {
-    e_PlayerSubMovement prevState;
+    e_PlayerUpperMovement prevState;
     s_Model*         charaModel;
 
-    prevState  = g_SysWork.player_4C.extra_128.playerSubMovement_20;
+    prevState  = g_SysWork.player_4C.extra_128.playerUpperMovement_20;
     charaModel = &g_SysWork.player_4C.chara_0.model_0;
 
-    switch (g_SysWork.player_4C.extra_128.playerMovement_24)
+    switch (g_SysWork.player_4C.extra_128.playerLowerMovement_24)
     {
-        case PlayerMovement_Walk_Forward:
-            g_SysWork.player_4C.extra_128.playerSubMovement_20 = PlayerSubMovement_Walk_Forward;
+        case PlayerLowerMovement_Walk_Forward:
+            g_SysWork.player_4C.extra_128.playerUpperMovement_20 = PlayerUpperMovement_Walk_Forward;
 
         default:
             break;
 
-        case PlayerMovement_Run_Forward:
-            g_SysWork.player_4C.extra_128.playerSubMovement_20 = PlayerSubMovement_Run_Forward;
+        case PlayerLowerMovement_Run_Forward:
+            g_SysWork.player_4C.extra_128.playerUpperMovement_20 = PlayerUpperMovement_Run_Forward;
             break;
 
-        case PlayerMovement_Walk_Backward:
-            g_SysWork.player_4C.extra_128.playerSubMovement_20 = PlayerSubMovement_Walk_Backward;
+        case PlayerLowerMovement_Walk_Backward:
+            g_SysWork.player_4C.extra_128.playerUpperMovement_20 = PlayerUpperMovement_Walk_Backward;
             break;
 
-        case PlayerMovement_Walk_RStep:
-            g_SysWork.player_4C.extra_128.playerSubMovement_20 = PlayerSubMovement_Walk_RStep;
+        case PlayerLowerMovement_Walk_RStep:
+            g_SysWork.player_4C.extra_128.playerUpperMovement_20 = PlayerUpperMovement_Walk_RStep;
             break;
 
-        case PlayerMovement_Walk_LStep:
-            g_SysWork.player_4C.extra_128.playerSubMovement_20 = PlayerSubMovement_Walk_LStep;
+        case PlayerLowerMovement_Walk_LStep:
+            g_SysWork.player_4C.extra_128.playerUpperMovement_20 = PlayerUpperMovement_Walk_LStep;
             break;
 
-        case PlayerMovement_Run_RStep:
-            g_SysWork.player_4C.extra_128.playerSubMovement_20 = PlayerSubMovement_Run_RStep;
+        case PlayerLowerMovement_Run_RStep:
+            g_SysWork.player_4C.extra_128.playerUpperMovement_20 = PlayerUpperMovement_Run_RStep;
             break;
 
-        case PlayerMovement_Run_LStep:
-            g_SysWork.player_4C.extra_128.playerSubMovement_20 = PlayerSubMovement_Run_LStep;
+        case PlayerLowerMovement_Run_LStep:
+            g_SysWork.player_4C.extra_128.playerUpperMovement_20 = PlayerUpperMovement_Run_LStep;
             break;
 
-        case PlayerMovement_QuickTurn_Right:
-            g_SysWork.player_4C.extra_128.playerSubMovement_20 = PlayerSubMovement_QuickTurn_Right;
+        case PlayerLowerMovement_QuickTurn_Right:
+            g_SysWork.player_4C.extra_128.playerUpperMovement_20 = PlayerUpperMovement_QuickTurn_Right;
             break;
 
-        case PlayerMovement_QuickTurn_Left:
-            g_SysWork.player_4C.extra_128.playerSubMovement_20 = PlayerSubMovement_QuickTurn_Left;
+        case PlayerLowerMovement_QuickTurn_Left:
+            g_SysWork.player_4C.extra_128.playerUpperMovement_20 = PlayerUpperMovement_QuickTurn_Left;
             break;
 
-        case PlayerMovement_Run_BackwardJump:
-            g_SysWork.player_4C.extra_128.playerSubMovement_20 = PlayerSubMovement_Run_BackwardJump;
+        case PlayerLowerMovement_Run_BackwardJump:
+            g_SysWork.player_4C.extra_128.playerUpperMovement_20 = PlayerUpperMovement_Run_BackwardJump;
             break;
 
-        case PlayerMovement_Run_AbruptStop:
-            g_SysWork.player_4C.extra_128.playerSubMovement_20 = PlayerSubMovement_Run_AbruptStop;
+        case PlayerLowerMovement_Run_AbruptStop:
+            g_SysWork.player_4C.extra_128.playerUpperMovement_20 = PlayerUpperMovement_Run_AbruptStop;
             break;
 
-        case PlayerMovement_Stumble:
-            g_SysWork.player_4C.extra_128.playerSubMovement_20 = PlayerSubMovement_PlayerMovement_Stumble;
+        case PlayerLowerMovement_Stumble:
+            g_SysWork.player_4C.extra_128.playerUpperMovement_20 = PlayerUpperMovement_PlayerLowerMovement_Stumble;
             break;
 
-        case PlayerMovement_Run_LStep_AbruptStop:
-            g_SysWork.player_4C.extra_128.playerSubMovement_20 = PlayerSubMovement_Run_LStep_AbruptStop;
+        case PlayerLowerMovement_Run_LStep_AbruptStop:
+            g_SysWork.player_4C.extra_128.playerUpperMovement_20 = PlayerUpperMovement_Run_LStep_AbruptStop;
             break;
 
-        case PlayerMovement_Run_RStep_AbruptStop:
-            g_SysWork.player_4C.extra_128.playerSubMovement_20 = PlayerSubMovement_Run_RStep_AbruptStop;
+        case PlayerLowerMovement_Run_RStep_AbruptStop:
+            g_SysWork.player_4C.extra_128.playerUpperMovement_20 = PlayerUpperMovement_Run_RStep_AbruptStop;
             break;
 
-        case PlayerMovement_Run_LStep_Stumble:
-            g_SysWork.player_4C.extra_128.playerSubMovement_20 = PlayerSubMovement_Run_LStep_Stumble;
+        case PlayerLowerMovement_Run_LStep_Stumble:
+            g_SysWork.player_4C.extra_128.playerUpperMovement_20 = PlayerUpperMovement_Run_LStep_Stumble;
             break;
 
-        case PlayerMovement_Run_RStep_Stumble:
-            g_SysWork.player_4C.extra_128.playerSubMovement_20 = PlayerSubMovement_RStep_Stumble;
+        case PlayerLowerMovement_Run_RStep_Stumble:
+            g_SysWork.player_4C.extra_128.playerUpperMovement_20 = PlayerUpperMovement_RStep_Stumble;
             break;
 
-        case PlayerMovement_None:
+        case PlayerLowerMovement_None:
             switch (arg3)
             {
                 case 0:
                 case 2:
-                    g_SysWork.player_4C.extra_128.playerSubMovement_20 = PlayerSubMovement_None;
+                    g_SysWork.player_4C.extra_128.playerUpperMovement_20 = PlayerUpperMovement_None;
                     break;
 
                 case 1:
@@ -5249,45 +5250,45 @@ void Player_MovementsSub_StateUpdate(s_MainCharacterExtra* extra, e_PlayerSubMov
                     {
                         if (g_Player_IsTurning_Left != 0)
                         {
-                            g_SysWork.player_4C.extra_128.playerSubMovement_20 = PlayerSubMovement_LRotation;
+                            g_SysWork.player_4C.extra_128.playerUpperMovement_20 = PlayerUpperMovement_LRotation;
                         }
                     }
                     else
                     {
-                        g_SysWork.player_4C.extra_128.playerSubMovement_20 = PlayerSubMovement_RRotation;
+                        g_SysWork.player_4C.extra_128.playerUpperMovement_20 = PlayerUpperMovement_RRotation;
                     }
                     break;
 
                 case 3:
                     if (g_Player_IsTurning_Left != 0)
                     {
-                        g_SysWork.player_4C.extra_128.playerSubMovement_20 = PlayerSubMovement_LRotation;
+                        g_SysWork.player_4C.extra_128.playerUpperMovement_20 = PlayerUpperMovement_LRotation;
                         break;
                     }
 
                     if (g_Player_IsTurning_Right == 0)
                     {
-                        g_SysWork.player_4C.extra_128.playerSubMovement_20 = PlayerSubMovement_None;
+                        g_SysWork.player_4C.extra_128.playerUpperMovement_20 = PlayerUpperMovement_None;
                     }
                     break;
 
                 case 4:
                     if (g_Player_IsTurning_Right != 0)
                     {
-                        g_SysWork.player_4C.extra_128.playerSubMovement_20 = PlayerSubMovement_RRotation;
+                        g_SysWork.player_4C.extra_128.playerUpperMovement_20 = PlayerUpperMovement_RRotation;
                         break;
                     }
 
                     if (g_Player_IsTurning_Left == 0)
                     {
-                        g_SysWork.player_4C.extra_128.playerSubMovement_20 = PlayerSubMovement_None;
+                        g_SysWork.player_4C.extra_128.playerUpperMovement_20 = PlayerUpperMovement_None;
                     }
                     break;
             }
             break;
     }
 
-    if (g_SysWork.player_4C.extra_128.playerSubMovement_20 != state)
+    if (g_SysWork.player_4C.extra_128.playerUpperMovement_20 != state)
     {
         extra->model_0.stateStep_3 = 0;
         extra->model_0.state_2     = 0;
@@ -5295,8 +5296,8 @@ void Player_MovementsSub_StateUpdate(s_MainCharacterExtra* extra, e_PlayerSubMov
 
     switch (prevState)
     {
-        case PlayerSubMovement_Walk_Forward:
-            if (g_SysWork.player_4C.extra_128.playerSubMovement_20 != PlayerSubMovement_Run_Forward)
+        case PlayerUpperMovement_Walk_Forward:
+            if (g_SysWork.player_4C.extra_128.playerUpperMovement_20 != PlayerUpperMovement_Run_Forward)
             {
                 break;
             }
@@ -5307,8 +5308,8 @@ void Player_MovementsSub_StateUpdate(s_MainCharacterExtra* extra, e_PlayerSubMov
             extra->model_0.stateStep_3++;
             break;
 
-        case PlayerSubMovement_Run_Forward:
-            if (g_SysWork.player_4C.extra_128.playerSubMovement_20 != PlayerSubMovement_Walk_Forward)
+        case PlayerUpperMovement_Run_Forward:
+            if (g_SysWork.player_4C.extra_128.playerUpperMovement_20 != PlayerUpperMovement_Walk_Forward)
             {
                 break;
             }
@@ -5321,43 +5322,38 @@ void Player_MovementsSub_StateUpdate(s_MainCharacterExtra* extra, e_PlayerSubMov
     }
 }
 
-void Player_MovementsSub(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x80074254
+void Player_Upper_Update(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x80074254
 {
     s32 var0;
 
-    // In case of state being `PlayerSubMovement_None` and triggering the idle state
-	// which requires the player to have 60% or more of the health and less than 10 (in float value)
-	// of exhaustion then the idle state for `g_SysWork.player_4C.extra_128.field_1C` is triggered
-	// making it play the idle animation.
-
-    if (func_80075504(chara, extra))
+    if (Player_Upper_MainUpdate(chara, extra))
     {
         return;
     }
 
     var0 = (D_800C45C8.field_1 == 10) ? 1333 : 1314;
 
-    switch (g_SysWork.player_4C.extra_128.playerSubMovement_20)
+    switch (g_SysWork.player_4C.extra_128.playerUpperMovement_20)
     {
-        case PlayerSubMovement_None:
+        case PlayerUpperMovement_None:
             func_80071620(55, chara, 551, 1320); // Plays heavy breathing sound.
             break;
 
-        case PlayerSubMovement_PlayerMovement_Stumble:
+        case PlayerUpperMovement_PlayerLowerMovement_Stumble:
             if (func_80071620(23, chara, 173, var0) != 0) // Plays stumble sound.
             {
                 func_8008944C();
             }
             break;
 
-        case PlayerSubMovement_Run_LStep_Stumble:
+        case PlayerUpperMovement_Run_LStep_Stumble:
             if (func_80071620(39, chara, 340, var0) != 0) // Plays stumble sound.
             {
                 func_8008944C();
             }
             break;
 
-        case PlayerSubMovement_RStep_Stumble:
+        case PlayerUpperMovement_RStep_Stumble:
             if (func_80071620(43, chara, 369, var0) != 0) // Plays stumble sound.
             {
                 func_8008944C();
@@ -5368,7 +5364,7 @@ void Player_MovementsSub(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 
     func_800771BC(chara, extra);
 }
 
-bool func_80075504(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x80075504
+bool Player_Upper_MainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x80075504
 {
     s32 enemyAttackedIdx;
     s16 sp20;
@@ -5380,9 +5376,9 @@ bool func_80075504(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
     s16 temp_v1_3;
     s32 i;
     s16 var_s0;
-    s32 playerRot;
+    s32 playerTurn;
 
-    bool func_80074350() // 0x80074350
+    bool Player_CombatAnimUpdate() // 0x80074350
     {
         s16 ssp20;
         s16 temp_a1;
@@ -5396,7 +5392,7 @@ bool func_80075504(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
         {
             case EquippedWeaponId_KitchenKnife:
                 varKeyFrameIdx0 = 619;
-                varKeyFrameIdx1 = 0x265;
+                varKeyFrameIdx1 = 613;
                 break;
 
             case EquippedWeaponId_Chainsaw:
@@ -5431,7 +5427,7 @@ bool func_80075504(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                 break;
         }
 
-        if (g_SysWork.player_4C.extra_128.field_1C == PlayerState_Combat)
+        if (g_SysWork.player_4C.extra_128.playerState_1C == PlayerState_Combat)
         {
             g_SysWork.player_4C.chara_0.properties_E4.player.properties_E4[8] += g_DeltaTime0;
 
@@ -5461,7 +5457,7 @@ bool func_80075504(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
             g_Player_MeleeAttackType  = 0;
             g_Player_IsMultiTapAttack = 0;
 
-            g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk1;
+            g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Shoot;
             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk6;
 
             if (g_SysWork.playerCombatInfo_38.equippedWeapon_F >= EquippedWeaponId_Handgun)
@@ -5599,7 +5595,7 @@ bool func_80075504(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
 
             if (g_SysWork.playerCombatInfo_38.equippedWeapon_F >= EquippedWeaponId_Handgun)
             {
-                if (g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & PlayerFlag_Attacking)
+                if (g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & PlayerFlag_Unk11)
                 {
                     if (extra->model_0.stateStep_3 == 0)
                     {
@@ -5650,8 +5646,8 @@ bool func_80075504(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
             }
         }
 
-		// Audio effects for attack animations and no ammo audio.
-		// However it seems to trigger some special state for the Rock Drill.
+		// Audio effects for attack animations, no ammo audio and removes ammo value.
+		// Additionally trigger some special state for the Rock Drill.
         if (g_SysWork.playerCombatInfo_38.equippedWeapon_F < EquippedWeaponId_Handgun)
         {
             if ((g_SysWork.playerCombatInfo_38.equippedWeapon_F % 10) != EquippedWeaponId_Chainsaw &&
@@ -5696,9 +5692,9 @@ bool func_80075504(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
         else
         {
             if (extra->model_0.anim_4.keyframeIdx0_8 >= D_800C44D0 && D_800C44D4 >= extra->model_0.anim_4.keyframeIdx0_8 &&
-                !(g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & PlayerFlag_Unk1))
+                !(g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & PlayerFlag_Shoot))
             {
-                g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Unk1;
+                g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Shoot;
 
                 if (g_SysWork.playerCombatInfo_38.currentWeaponAmmo_10 != 0)
                 {
@@ -5726,7 +5722,7 @@ bool func_80075504(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                     extra->model_0.anim_4.keyframeIdx0_8  = D_800C44F0[D_800AF220].field_6 - 3;
                     extra->model_0.anim_4.time_4          = FP_TO(D_800C44F0[D_800AF220].field_6 - 3, Q12_SHIFT);
 
-                    if (g_SysWork.player_4C.extra_128.playerMovement_24 == PlayerMovement_Aim)
+                    if (g_SysWork.player_4C.extra_128.playerLowerMovement_24 == PlayerLowerMovement_Aim)
                     {
                         chara->model_0.anim_4.keyframeIdx0_8 = D_800C44F0[D_800AF220].field_6 - 3;
                         chara->model_0.anim_4.time_4         = FP_TO(D_800C44F0[D_800AF220].field_6 - 3, Q12_SHIFT);
@@ -5735,8 +5731,11 @@ bool func_80075504(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
             }
         }
 
+        // Finish attack animation.
+		// Even though more context about `D_800AF220` and `D_800C44F0` is required in this cases
+		// they are likely used to indicate if attack animations has finished.
         if (g_SysWork.playerCombatInfo_38.equippedWeapon_F < EquippedWeaponId_Handgun)
-        {
+        { // This are attack animation.
             if (extra->model_0.anim_4.animIdx_0 == 59 || extra->model_0.anim_4.animIdx_0 == 61 || extra->model_0.anim_4.animIdx_0 == 63 ||
                 extra->model_0.anim_4.animIdx_0 == 59 || extra->model_0.anim_4.animIdx_0 == 61 || extra->model_0.anim_4.animIdx_0 == 63 ||
                 extra->model_0.anim_4.animIdx_0 == 59 || extra->model_0.anim_4.animIdx_0 == 61 || extra->model_0.anim_4.animIdx_0 == 63)
@@ -5749,57 +5748,57 @@ bool func_80075504(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
 
                     if (g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & PlayerFlag_Unk0)
                     {
-                        g_SysWork.player_4C.extra_128.field_1C             = PlayerState_Combat;
-                        g_SysWork.player_4C.extra_128.playerSubMovement_20 = PlayerSubMovement_Aim_TargetLock;
+                        g_SysWork.player_4C.extra_128.playerState_1C             = PlayerState_Combat;
+                        g_SysWork.player_4C.extra_128.playerUpperMovement_20 = PlayerUpperMovement_Aim_TargetLock;
 
-                        if (g_SysWork.player_4C.extra_128.playerMovement_24 == PlayerMovement_Attack)
+                        if (g_SysWork.player_4C.extra_128.playerLowerMovement_24 == PlayerLowerMovement_Attack)
                         {
-                            g_SysWork.player_4C.extra_128.playerMovement_24 = PlayerMovement_Aim;
+                            g_SysWork.player_4C.extra_128.playerLowerMovement_24 = PlayerLowerMovement_Aim;
                         }
                     }
                     else
                     {
-                        g_SysWork.player_4C.extra_128.field_1C             = PlayerState_None;
-                        g_SysWork.player_4C.extra_128.playerSubMovement_20 = PlayerSubMovement_Aim;
+                        g_SysWork.player_4C.extra_128.playerState_1C             = PlayerState_None;
+                        g_SysWork.player_4C.extra_128.playerUpperMovement_20 = PlayerUpperMovement_Aim;
                         extra->model_0.state_2                             = extra->model_0.stateStep_3 = 0;
 
-                        if (g_SysWork.player_4C.extra_128.playerMovement_24 == PlayerMovement_Attack)
+                        if (g_SysWork.player_4C.extra_128.playerLowerMovement_24 == PlayerLowerMovement_Attack)
                         {
-                            g_SysWork.player_4C.extra_128.playerMovement_24             = PlayerMovement_Aim;
+                            g_SysWork.player_4C.extra_128.playerLowerMovement_24             = PlayerLowerMovement_Aim;
                             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk10;
                         }
                     }
 
                     g_SysWork.player_4C.chara_0.properties_E4.player.properties_E4[8] = 0;
                     g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C       &= ~PlayerFlag_Unk2;
-                    g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C       &= ~PlayerFlag_Unk1;
+                    g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C       &= ~PlayerFlag_Shoot;
                     g_SysWork.playerCombatInfo_38.equippedWeapon_F                   %= 10;
                     return true;
                 }
             }
-        }
+        } // This are attack animation.
         else if ((extra->model_0.anim_4.animIdx_0 == 61 || extra->model_0.anim_4.animIdx_0 == 73) &&
                  extra->model_0.anim_4.keyframeIdx0_8 == D_800C44F0[D_800AF220].field_6)
         {
             if (g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & PlayerFlag_Unk0)
             {
-                g_SysWork.player_4C.extra_128.field_1C             = PlayerState_Combat;
-                g_SysWork.player_4C.extra_128.playerSubMovement_20 = PlayerSubMovement_Aim_TargetLock;
+                g_SysWork.player_4C.extra_128.playerState_1C             = PlayerState_Combat;
+                g_SysWork.player_4C.extra_128.playerUpperMovement_20 = PlayerUpperMovement_Aim_TargetLock;
 
-                if (g_SysWork.player_4C.extra_128.playerMovement_24 == PlayerMovement_Attack)
+                if (g_SysWork.player_4C.extra_128.playerLowerMovement_24 == PlayerLowerMovement_Attack)
                 {
-                    g_SysWork.player_4C.extra_128.playerMovement_24 = PlayerMovement_Aim;
+                    g_SysWork.player_4C.extra_128.playerLowerMovement_24 = PlayerLowerMovement_Aim;
                 }
             }
             else
             {
-                g_SysWork.player_4C.extra_128.field_1C             = PlayerState_None;
-                g_SysWork.player_4C.extra_128.playerSubMovement_20 = PlayerSubMovement_Aim;
+                g_SysWork.player_4C.extra_128.playerState_1C             = PlayerState_None;
+                g_SysWork.player_4C.extra_128.playerUpperMovement_20 = PlayerUpperMovement_Aim;
                 extra->model_0.state_2                             = extra->model_0.stateStep_3 = 0;
 
-                if (g_SysWork.player_4C.extra_128.playerMovement_24 == PlayerMovement_Attack)
+                if (g_SysWork.player_4C.extra_128.playerLowerMovement_24 == PlayerLowerMovement_Attack)
                 {
-                    g_SysWork.player_4C.extra_128.playerMovement_24             = PlayerMovement_Aim;
+                    g_SysWork.player_4C.extra_128.playerLowerMovement_24             = PlayerLowerMovement_Aim;
                     g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk10;
                     chara->model_0.state_2                                      = chara->model_0.stateStep_3 = 0;
                 }
@@ -5808,12 +5807,13 @@ bool func_80075504(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
             D_800C4556                                                        = NO_VALUE;
             D_800C4554                                                        = NO_VALUE;
             g_SysWork.player_4C.chara_0.properties_E4.player.properties_E4[8] = 0;
-            g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C       &= ~PlayerFlag_Unk1;
+            g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C       &= ~PlayerFlag_Shoot;
             return true;
         }
 
         g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Unk6;
 
+        // This and next if conditional handles multitap attacks.
         if (g_SysWork.playerCombatInfo_38.equippedWeapon_F < EquippedWeaponId_Handgun)
         {
             if (g_Player_MeleeAttackType == 0 && g_SysWork.playerCombatInfo_38.equippedWeapon_F != EquippedWeaponId_RockDrill)
@@ -5833,7 +5833,7 @@ bool func_80075504(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
             {
                 extra->model_0.stateStep_3 = 0;
 
-                if (g_SysWork.player_4C.extra_128.playerMovement_24 == PlayerMovement_Attack)
+                if (g_SysWork.player_4C.extra_128.playerLowerMovement_24 == PlayerLowerMovement_Attack)
                 {
                     chara->model_0.stateStep_3 = 0;
                 }
@@ -5863,14 +5863,14 @@ bool func_80075504(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
 
     enemyAttackedIdx = NO_VALUE;
 
-    if (g_SysWork.player_4C.extra_128.playerSubMovement_20 != PlayerSubMovement_Aim_TargetLock && g_SysWork.player_4C.extra_128.playerSubMovement_20 != PlayerSubMovement_Attack)
+    if (g_SysWork.player_4C.extra_128.playerUpperMovement_20 != PlayerUpperMovement_Aim_TargetLock && g_SysWork.player_4C.extra_128.playerUpperMovement_20 != PlayerUpperMovement_Attack)
     {
         g_SysWork.player_4C.chara_0.properties_E4.player.properties_E4[8] = 0;
     }
 
-    switch (g_SysWork.player_4C.extra_128.playerSubMovement_20)
+    switch (g_SysWork.player_4C.extra_128.playerUpperMovement_20)
     {
-        case PlayerSubMovement_None:
+        case PlayerUpperMovement_None:
             if ((extra->model_0.anim_4.animIdx_0 == 5 || extra->model_0.anim_4.animIdx_0 == 7) &&
                 extra->model_0.stateStep_3 != 0)
             {
@@ -5887,14 +5887,14 @@ bool func_80075504(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                     extra->model_0.stateStep_3++;
                 }
 
-                Player_MovementsSub_StateUpdate(extra, PlayerSubMovement_None, 53, 1);
+                Player_Upper_StateUpdate(extra, PlayerUpperMovement_None, 53, 1);
             }
             else
             {
                 chara->properties_E4.player.properties_E4[1] = 0;
 				
 				// If the animation is not the normal idle animation it get asigned and then
-				// updates `playerSubMovement_20`.
+				// updates `playerUpperMovement_20`.
                 if (extra->model_0.anim_4.animIdx_0 != 53)
                 {
                     if (extra->model_0.stateStep_3 == 0)
@@ -5903,7 +5903,7 @@ bool func_80075504(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                         extra->model_0.stateStep_3++;
                     }
 
-                    Player_MovementsSub_StateUpdate(extra, PlayerSubMovement_None, 55, 1);
+                    Player_Upper_StateUpdate(extra, PlayerUpperMovement_None, 55, 1);
                 }
                 else
                 {
@@ -5916,14 +5916,14 @@ bool func_80075504(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                 }
             }
 
-            if (g_SysWork.player_4C.extra_128.playerSubMovement_20 != PlayerSubMovement_None)
+            if (g_SysWork.player_4C.extra_128.playerUpperMovement_20 != PlayerUpperMovement_None)
             {
                 chara->properties_E4.player.properties_E4[1] = 0;
             }
 
             chara->rotation_24.pad = chara->rotation_24.vy;
 
-            if (g_SysWork.player_4C.extra_128.playerSubMovement_20 == PlayerSubMovement_None)
+            if (g_SysWork.player_4C.extra_128.playerUpperMovement_20 == PlayerUpperMovement_None)
             {
                 chara->properties_E4.player.properties_E4[1]++;
 
@@ -5932,11 +5932,11 @@ bool func_80075504(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                     if (chara->health_B0 >= FP_FLOAT_TO(60.0f, Q12_SHIFT))
                     {
                         chara->properties_E4.player.properties_E4[1]        = 0;
-                        g_SysWork.player_4C.extra_128.field_1C              = PlayerState_Idle;
+                        g_SysWork.player_4C.extra_128.playerState_1C              = PlayerState_Idle;
                         chara->model_0.state_2 = chara->model_0.stateStep_3 = 0;
                         extra->model_0.state_2 = extra->model_0.stateStep_3 = 0;
-                        g_SysWork.player_4C.extra_128.playerSubMovement_20  = PlayerSubMovement_None;
-                        g_SysWork.player_4C.extra_128.playerMovement_24     = PlayerMovement_None;
+                        g_SysWork.player_4C.extra_128.playerUpperMovement_20  = PlayerUpperMovement_None;
+                        g_SysWork.player_4C.extra_128.playerLowerMovement_24     = PlayerLowerMovement_None;
                         return true;
                     }
                 }
@@ -5946,7 +5946,7 @@ bool func_80075504(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
         default:
             break;
 
-        case PlayerSubMovement_Walk_Forward:
+        case PlayerUpperMovement_Walk_Forward:
             if (extra->model_0.stateStep_3 == 0)
             {
                 extra->model_0.anim_4.animIdx_0 = 4;
@@ -5958,11 +5958,11 @@ bool func_80075504(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                 extra->model_0.anim_4.time_4 = chara->model_0.anim_4.time_4;
             }
 
-            Player_MovementsSub_StateUpdate(extra, PlayerSubMovement_Walk_Forward, 5, 0);
+            Player_Upper_StateUpdate(extra, PlayerUpperMovement_Walk_Forward, 5, 0);
             chara->rotation_24.pad = chara->rotation_24.vy;
             break;
 
-        case PlayerSubMovement_Run_Forward:
+        case PlayerUpperMovement_Run_Forward:
             if (extra->model_0.stateStep_3 == 0)
             {
                 extra->model_0.anim_4.animIdx_0 = 6;
@@ -5974,11 +5974,11 @@ bool func_80075504(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                 extra->model_0.anim_4.time_4 = chara->model_0.anim_4.time_4;
             }
 
-            Player_MovementsSub_StateUpdate(extra, PlayerSubMovement_Run_Forward, 7, 2);
+            Player_Upper_StateUpdate(extra, PlayerUpperMovement_Run_Forward, 7, 2);
             chara->rotation_24.pad = chara->rotation_24.vy;
             break;
 
-        case PlayerSubMovement_Run_AbruptStop:
+        case PlayerUpperMovement_Run_AbruptStop:
             if (g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & PlayerFlag_AbruptStopAnimKind)
             {
                 if (extra->model_0.stateStep_3 == 0)
@@ -5993,41 +5993,41 @@ bool func_80075504(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                 extra->model_0.stateStep_3++;
             }
 
-            Player_MovementsSub_StateUpdate(extra, PlayerSubMovement_Run_AbruptStop, 19, 0);
-            Player_MovementsSub_StateUpdate(extra, PlayerSubMovement_Run_AbruptStop, 21, 0);
+            Player_Upper_StateUpdate(extra, PlayerUpperMovement_Run_AbruptStop, 19, 0);
+            Player_Upper_StateUpdate(extra, PlayerUpperMovement_Run_AbruptStop, 21, 0);
             chara->rotation_24.pad = chara->rotation_24.vy;
             break;
 
-        case PlayerSubMovement_Walk_RStep:
+        case PlayerUpperMovement_Walk_RStep:
             if (extra->model_0.stateStep_3 == 0)
             {
                 extra->model_0.anim_4.animIdx_0 = 12;
                 extra->model_0.stateStep_3++;
             }
 
-            Player_MovementsSub_StateUpdate(extra, PlayerSubMovement_Walk_RStep, 13, 0);
+            Player_Upper_StateUpdate(extra, PlayerUpperMovement_Walk_RStep, 13, 0);
             chara->rotation_24.pad = chara->rotation_24.vy;
             break;
 
-        case PlayerSubMovement_Walk_LStep:
+        case PlayerUpperMovement_Walk_LStep:
             if (extra->model_0.stateStep_3 == 0)
             {
                 extra->model_0.anim_4.animIdx_0 = 10;
                 extra->model_0.stateStep_3++;
             }
 
-            Player_MovementsSub_StateUpdate(extra, PlayerSubMovement_Walk_LStep, 11, 0);
+            Player_Upper_StateUpdate(extra, PlayerUpperMovement_Walk_LStep, 11, 0);
             chara->rotation_24.pad = chara->rotation_24.vy;
             break;
 
-        case PlayerSubMovement_Run_RStep:
+        case PlayerUpperMovement_Run_RStep:
             if (extra->model_0.stateStep_3 == 0)
             {
                 extra->model_0.anim_4.animIdx_0 = 16;
                 extra->model_0.stateStep_3++;
             }
 
-            Player_MovementsSub_StateUpdate(extra, PlayerSubMovement_Run_RStep, 17, 0);
+            Player_Upper_StateUpdate(extra, PlayerUpperMovement_Run_RStep, 17, 0);
             chara->rotation_24.pad = chara->rotation_24.vy;
 
             if (extra->model_0.anim_4.animIdx_0 == 17)
@@ -6036,14 +6036,14 @@ bool func_80075504(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
             }
             break;
 
-        case PlayerSubMovement_Run_LStep:
+        case PlayerUpperMovement_Run_LStep:
             if (extra->model_0.stateStep_3 == 0)
             {
                 extra->model_0.anim_4.animIdx_0 = 14;
                 extra->model_0.stateStep_3++;
             }
 
-            Player_MovementsSub_StateUpdate(extra, PlayerSubMovement_Run_LStep, 15, 0);
+            Player_Upper_StateUpdate(extra, PlayerUpperMovement_Run_LStep, 15, 0);
             chara->rotation_24.pad = chara->rotation_24.vy;
 
             if (extra->model_0.anim_4.animIdx_0 == 15)
@@ -6052,25 +6052,25 @@ bool func_80075504(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
             }
             break;
 
-        case PlayerSubMovement_Walk_Backward:
+        case PlayerUpperMovement_Walk_Backward:
             if (extra->model_0.stateStep_3 == 0)
             {
                 extra->model_0.anim_4.animIdx_0 = 8;
                 extra->model_0.stateStep_3++;
             }
 
-            Player_MovementsSub_StateUpdate(extra, PlayerSubMovement_Walk_Backward, 9, 0);
+            Player_Upper_StateUpdate(extra, PlayerUpperMovement_Walk_Backward, 9, 0);
             chara->rotation_24.pad = chara->rotation_24.vy;
             break;
 
-        case PlayerSubMovement_QuickTurn_Right:
+        case PlayerUpperMovement_QuickTurn_Right:
             if (extra->model_0.stateStep_3 == 0)
             {
                 extra->model_0.anim_4.animIdx_0 = 28;
                 extra->model_0.stateStep_3++;
             }
 
-            Player_MovementsSub_StateUpdate(extra, PlayerSubMovement_QuickTurn_Right, 29, 0);
+            Player_Upper_StateUpdate(extra, PlayerUpperMovement_QuickTurn_Right, 29, 0);
 
             if (extra->model_0.anim_4.animIdx_0 == 29)
             {
@@ -6080,14 +6080,14 @@ bool func_80075504(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
             chara->rotation_24.pad = chara->rotation_24.vy;
             break;
 
-        case PlayerSubMovement_QuickTurn_Left:
+        case PlayerUpperMovement_QuickTurn_Left:
             if (extra->model_0.stateStep_3 == 0)
             {
                 extra->model_0.anim_4.animIdx_0 = 30;
                 extra->model_0.stateStep_3++;
             }
 
-            Player_MovementsSub_StateUpdate(extra, PlayerSubMovement_QuickTurn_Left, 31, 0);
+            Player_Upper_StateUpdate(extra, PlayerUpperMovement_QuickTurn_Left, 31, 0);
 
             if (extra->model_0.anim_4.animIdx_0 == 31)
             {
@@ -6097,29 +6097,29 @@ bool func_80075504(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
             chara->rotation_24.pad = chara->rotation_24.vy;
             break;
 
-        case PlayerSubMovement_RRotation:
+        case PlayerUpperMovement_RRotation:
             if (extra->model_0.stateStep_3 == 0)
             {
                 extra->model_0.anim_4.animIdx_0 = 26;
                 extra->model_0.stateStep_3++;
             }
 
-            Player_MovementsSub_StateUpdate(extra, PlayerSubMovement_RRotation, 27, 3);
+            Player_Upper_StateUpdate(extra, PlayerUpperMovement_RRotation, 27, 3);
             chara->rotation_24.pad = chara->rotation_24.vy;
             break;
 
-        case PlayerSubMovement_LRotation:
+        case PlayerUpperMovement_LRotation:
             if (extra->model_0.stateStep_3 == 0)
             {
                 extra->model_0.anim_4.animIdx_0 = 24;
                 extra->model_0.stateStep_3++;
             }
 
-            Player_MovementsSub_StateUpdate(extra, PlayerSubMovement_LRotation, 25, 4);
+            Player_Upper_StateUpdate(extra, PlayerUpperMovement_LRotation, 25, 4);
             chara->rotation_24.pad = chara->rotation_24.vy;
             break;
 
-        case PlayerSubMovement_Run_BackwardJump:
+        case PlayerUpperMovement_Run_BackwardJump:
             if (extra->model_0.stateStep_3 == 0)
             {
                 extra->model_0.anim_4.animIdx_0 = 32;
@@ -6131,11 +6131,11 @@ bool func_80075504(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                 extra->model_0.anim_4.time_4 = chara->model_0.anim_4.time_4;
             }
 
-            Player_MovementsSub_StateUpdate(extra, PlayerSubMovement_Run_BackwardJump, 33, 0);
+            Player_Upper_StateUpdate(extra, PlayerUpperMovement_Run_BackwardJump, 33, 0);
             chara->rotation_24.pad = chara->rotation_24.vy;
             break;
 
-        case PlayerSubMovement_PlayerMovement_Stumble:
+        case PlayerUpperMovement_PlayerLowerMovement_Stumble:
             if (extra->model_0.stateStep_3 == 0)
             {
                 extra->model_0.anim_4.animIdx_0 = 22;
@@ -6147,33 +6147,33 @@ bool func_80075504(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                 extra->model_0.anim_4.time_4 = chara->model_0.anim_4.time_4;
             }
 
-            Player_MovementsSub_StateUpdate(extra, PlayerSubMovement_PlayerMovement_Stumble, 23, 0);
+            Player_Upper_StateUpdate(extra, PlayerUpperMovement_PlayerLowerMovement_Stumble, 23, 0);
             chara->rotation_24.pad = chara->rotation_24.vy;
             break;
 
-        case PlayerSubMovement_Run_LStep_AbruptStop:
+        case PlayerUpperMovement_Run_LStep_AbruptStop:
             if (extra->model_0.stateStep_3 == 0)
             {
                 extra->model_0.anim_4.animIdx_0 = 36;
                 extra->model_0.stateStep_3++;
             }
 
-            Player_MovementsSub_StateUpdate(extra, PlayerSubMovement_Run_LStep_AbruptStop, 0x25, 0);
+            Player_Upper_StateUpdate(extra, PlayerUpperMovement_Run_LStep_AbruptStop, 0x25, 0);
             chara->rotation_24.pad = chara->rotation_24.vy;
             break;
 
-        case PlayerSubMovement_Run_RStep_AbruptStop:
+        case PlayerUpperMovement_Run_RStep_AbruptStop:
             if (extra->model_0.stateStep_3 == 0)
             {
                 extra->model_0.anim_4.animIdx_0 = 40;
                 extra->model_0.stateStep_3++;
             }
 
-            Player_MovementsSub_StateUpdate(extra, PlayerSubMovement_Run_RStep_AbruptStop, 41, 0);
+            Player_Upper_StateUpdate(extra, PlayerUpperMovement_Run_RStep_AbruptStop, 41, 0);
             chara->rotation_24.pad = chara->rotation_24.vy;
             break;
 
-        case PlayerSubMovement_Run_LStep_Stumble:
+        case PlayerUpperMovement_Run_LStep_Stumble:
             if (extra->model_0.stateStep_3 == 0)
             {
                 extra->model_0.anim_4.animIdx_0 = 38;
@@ -6185,11 +6185,11 @@ bool func_80075504(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                 extra->model_0.anim_4.time_4 = chara->model_0.anim_4.time_4;
             }
 
-            Player_MovementsSub_StateUpdate(extra, PlayerSubMovement_Run_LStep_Stumble, 39, 0);
+            Player_Upper_StateUpdate(extra, PlayerUpperMovement_Run_LStep_Stumble, 39, 0);
             chara->rotation_24.pad = chara->rotation_24.vy;
             break;
 
-        case PlayerSubMovement_RStep_Stumble:
+        case PlayerUpperMovement_RStep_Stumble:
             if (extra->model_0.stateStep_3 == 0)
             {
                 extra->model_0.anim_4.animIdx_0 = 42;
@@ -6201,11 +6201,11 @@ bool func_80075504(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                 extra->model_0.anim_4.time_4 = chara->model_0.anim_4.time_4;
             }
 
-            Player_MovementsSub_StateUpdate(extra, PlayerSubMovement_RStep_Stumble, 43, 0);
+            Player_Upper_StateUpdate(extra, PlayerUpperMovement_RStep_Stumble, 43, 0);
             chara->rotation_24.pad = chara->rotation_24.vy;
             break;
 
-        case PlayerSubMovement_Aim:
+        case PlayerUpperMovement_Aim:
             g_SysWork.enemyTargetIdx_2353 = NO_VALUE;
             if (g_SysWork.playerCombatInfo_38.equippedWeapon_F == EquippedWeaponId_Chainsaw ||
                 g_SysWork.playerCombatInfo_38.equippedWeapon_F == EquippedWeaponId_RockDrill)
@@ -6241,11 +6241,11 @@ bool func_80075504(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                 {
                     if (g_Player_IsAttacking != 0 || g_Player_IsShooting != 0)
                     {
-                        g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Attacking;
+                        g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Unk11;
                     }
                     else
                     {
-                        g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Attacking;
+                        g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk11;
 
                         if (extra->model_0.stateStep_3 == 0)
                         {
@@ -6256,29 +6256,29 @@ bool func_80075504(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                 }
                 else
                 {
-                    g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Attacking;
+                    g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk11;
                 }
             }
             break;
 
-        case PlayerSubMovement_Aim_TargetLock:
+        case PlayerUpperMovement_Aim_TargetLock:
             g_SysWork.player_4C.chara_0.properties_E4.player.properties_E4[8] += g_DeltaTime0;
             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C        &= ~PlayerFlag_Unk6;
 
             if (g_Player_IsTurning_Right != 0)
             {
-                playerRot = 1;
+                playerTurn = 1;
             }
             else
             {
-                playerRot = (g_Player_IsTurning_Left != 0) * 2;
+                playerTurn = (g_Player_IsTurning_Left != 0) * 2;
             }
 
             if ((extra->model_0.anim_4.animIdx_0 != 59 || extra->model_0.anim_4.keyframeIdx0_8 != D_800C44F0[1].field_6) &&
                 (extra->model_0.anim_4.animIdx_0 != 61 || extra->model_0.anim_4.keyframeIdx0_8 != D_800C44F0[2].field_6) &&
                 (extra->model_0.anim_4.animIdx_0 != 65 || extra->model_0.anim_4.keyframeIdx0_8 != D_800C44F0[4].field_6))
             {
-                playerRot = 0;
+                playerTurn = 0;
                 chara->properties_E4.player.properties_E4[7]++;
             }
             else
@@ -6286,18 +6286,18 @@ bool func_80075504(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                 chara->properties_E4.player.properties_E4[7] = 0;
             }
 
-            if (playerRot != 0)
+            if (playerTurn != 0)
             {
                 g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk9;
                 chara->properties_E4.player.properties_E4[4]                 = D_800AF212;
 
                 if (!(g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & (1 << 0)))
                 {
-                    func_8005CD38(&D_800AF21C, &g_SysWork.player_4C.chara_0.properties_E4.player.field_122, &g_SysWork.playerCombatInfo_38, 0xAAA, 0xA000, playerRot);
+                    func_8005CD38(&D_800AF21C, &g_SysWork.player_4C.chara_0.properties_E4.player.field_122, &g_SysWork.playerCombatInfo_38, 0xAAA, 0xA000, playerTurn);
                 }
                 else
                 {
-                    func_8005CD38(&D_800AF21C, &g_SysWork.player_4C.chara_0.properties_E4.player.field_122, &g_SysWork.playerCombatInfo_38, 0x555, 0x3000, playerRot);
+                    func_8005CD38(&D_800AF21C, &g_SysWork.player_4C.chara_0.properties_E4.player.field_122, &g_SysWork.playerCombatInfo_38, 0x555, 0x3000, playerTurn);
                 }
 
                 if (D_800AF21C == NO_VALUE)
@@ -6305,21 +6305,21 @@ bool func_80075504(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                     g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk12;
                     chara->model_0.stateStep_3                                  = 0;
                     g_SysWork.player_4C.chara_0.properties_E4.player.field_122  = 0x400;
-                    g_SysWork.player_4C.extra_128.playerSubMovement_20          = PlayerSubMovement_Aim;
+                    g_SysWork.player_4C.extra_128.playerUpperMovement_20          = PlayerUpperMovement_Aim;
                     g_Player_IsShooting                                         = 0;
-                    g_SysWork.player_4C.extra_128.field_1C                      = PlayerState_None;
+                    g_SysWork.player_4C.extra_128.playerState_1C                      = PlayerState_None;
                     g_Player_IsAttacking                                        = 0;
                     extra->model_0.state_2                                      = extra->model_0.stateStep_3 = 0;
 
-                    if (g_SysWork.player_4C.extra_128.playerMovement_24 == PlayerMovement_Attack)
+                    if (g_SysWork.player_4C.extra_128.playerLowerMovement_24 == PlayerLowerMovement_Attack)
                     {
-                        g_SysWork.player_4C.extra_128.playerMovement_24 = PlayerMovement_Aim;
+                        g_SysWork.player_4C.extra_128.playerLowerMovement_24 = PlayerLowerMovement_Aim;
                         chara->model_0.state_2                          = chara->model_0.stateStep_3 = 0;
                     }
                 }
                 else
                 {
-                    g_SysWork.player_4C.extra_128.playerSubMovement_20          = PlayerSubMovement_Aim_TargetLock_Switch;
+                    g_SysWork.player_4C.extra_128.playerUpperMovement_20          = PlayerUpperMovement_Aim_TargetLock_Switch;
                     g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Unk12;
                     extra->model_0.state_2                                      = extra->model_0.stateStep_3 = 0;
                 }
@@ -6366,8 +6366,8 @@ bool func_80075504(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                     chara->model_0.stateStep_3                                  = 0;
                     g_SysWork.player_4C.chara_0.properties_E4.player.field_122  = 0x400;
                     g_SysWork.enemyTargetIdx_2353                               = NO_VALUE;
-                    g_SysWork.player_4C.extra_128.field_1C                      = PlayerState_None;
-                    g_SysWork.player_4C.extra_128.playerSubMovement_20          = PlayerSubMovement_Aim;
+                    g_SysWork.player_4C.extra_128.playerState_1C                      = PlayerState_None;
+                    g_SysWork.player_4C.extra_128.playerUpperMovement_20        = PlayerUpperMovement_Aim;
                     extra->model_0.state_2                                      = extra->model_0.stateStep_3 = 0;
                 }
             }
@@ -6378,7 +6378,7 @@ bool func_80075504(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
             }
             break;
 
-        case PlayerSubMovement_Aim_Start:
+        case PlayerUpperMovement_Aim_Start:
             chara->rotation_24.pad = chara->rotation_24.vy;
 
             if (g_SysWork.playerCombatInfo_38.equippedWeapon_F == EquippedWeaponId_Chainsaw ||
@@ -6410,7 +6410,7 @@ bool func_80075504(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
 
                     func_8004C564(g_SysWork.playerCombatInfo_38.equippedWeapon_F, 0);
 
-                    chara->properties_E4.player.field_10C                        = 0x40;
+                    chara->properties_E4.player.field_10C                       = 0x40;
                     g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Unk2;
                 }
             }
@@ -6442,7 +6442,7 @@ bool func_80075504(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                         func_8004C564(g_SysWork.playerCombatInfo_38.equippedWeapon_F, 1);
                     }
 
-                    g_SysWork.player_4C.extra_128.playerSubMovement_20          = PlayerSubMovement_Aim;
+                    g_SysWork.player_4C.extra_128.playerUpperMovement_20          = PlayerUpperMovement_Aim;
                     extra->model_0.state_2                                      = extra->model_0.stateStep_3 = 0;
                     g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk2;
 
@@ -6457,16 +6457,16 @@ bool func_80075504(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                 if (extra->model_0.anim_4.keyframeIdx0_8 == D_800C44F0[0].field_6 ||
                     extra->model_0.anim_4.keyframeIdx0_8 == D_800C44F0[1].field_6)
                 {
-                    g_SysWork.player_4C.extra_128.playerSubMovement_20 = PlayerSubMovement_Aim;
+                    g_SysWork.player_4C.extra_128.playerUpperMovement_20 = PlayerUpperMovement_Aim;
                 }
             }
             break;
 
-        case PlayerSubMovement_Aim_Start_TargetLock:
-        case PlayerSubMovement_Aim_TargetLock_Switch:
+        case PlayerUpperMovement_Aim_Start_TargetLock:
+        case PlayerUpperMovement_Aim_TargetLock_Switch:
             sp22 = 0;
 
-            if (g_SysWork.player_4C.extra_128.playerSubMovement_20 == PlayerSubMovement_Aim_Start_TargetLock)
+            if (g_SysWork.player_4C.extra_128.playerUpperMovement_20 == PlayerUpperMovement_Aim_Start_TargetLock)
             {
                 if (g_GameWork.config_0.optExtraAutoAiming_2C != 0)
                 {
@@ -6515,7 +6515,7 @@ bool func_80075504(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
 
             extra->model_0.state_2++;
 
-            if (g_SysWork.player_4C.extra_128.playerSubMovement_20 == 22)
+            if (g_SysWork.player_4C.extra_128.playerUpperMovement_20 == PlayerUpperMovement_Aim_Start_TargetLock)
             {
                 if (extra->model_0.stateStep_3 == 0)
                 {
@@ -6532,8 +6532,8 @@ bool func_80075504(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
             if (g_SysWork.enemyTargetIdx_2353 == NO_VALUE)
             {
                 g_SysWork.player_4C.chara_0.properties_E4.player.field_122  = 0x400;
-                g_SysWork.player_4C.extra_128.playerSubMovement_20          = PlayerSubMovement_Aim;
-                g_SysWork.player_4C.extra_128.field_1C                      = PlayerState_None;
+                g_SysWork.player_4C.extra_128.playerUpperMovement_20          = PlayerUpperMovement_Aim;
+                g_SysWork.player_4C.extra_128.playerState_1C                      = PlayerState_None;
                 g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk12;
                 extra->model_0.state_2                                      = extra->model_0.stateStep_3 = 0;
                 break;
@@ -6575,7 +6575,7 @@ bool func_80075504(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                     D_800C454C             = 0;
                     chara->rotation_24.pad = temp_s1_2;
 
-                    if (g_SysWork.player_4C.extra_128.playerSubMovement_20 == PlayerSubMovement_Aim_Start_TargetLock)
+                    if (g_SysWork.player_4C.extra_128.playerUpperMovement_20 == PlayerUpperMovement_Aim_Start_TargetLock)
                     {
                         g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk8;
                     }
@@ -6588,11 +6588,11 @@ bool func_80075504(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                     {
                         if (extra->model_0.anim_4.keyframeIdx0_8 == D_800C44F0[4].field_6)
                         {
-                            g_SysWork.player_4C.extra_128.playerSubMovement_20 = 25;
+                            g_SysWork.player_4C.extra_128.playerUpperMovement_20 = 25;
 
-                            if (g_SysWork.player_4C.extra_128.playerMovement_24 == PlayerMovement_Aim)
+                            if (g_SysWork.player_4C.extra_128.playerLowerMovement_24 == PlayerLowerMovement_Aim)
                             {
-                                g_SysWork.player_4C.extra_128.playerMovement_24 = PlayerMovement_Attack;
+                                g_SysWork.player_4C.extra_128.playerLowerMovement_24 = PlayerLowerMovement_Attack;
                                 chara->model_0.state_2                          = chara->model_0.stateStep_3 = 0;
                             }
 
@@ -6602,7 +6602,7 @@ bool func_80075504(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                     }
                     else if (extra->model_0.anim_4.keyframeIdx0_8 == D_800C44F0[4].field_6)
                     {
-                        g_SysWork.player_4C.extra_128.playerSubMovement_20 = PlayerSubMovement_Aim_TargetLock;
+                        g_SysWork.player_4C.extra_128.playerUpperMovement_20 = PlayerUpperMovement_Aim_TargetLock;
                         extra->model_0.state_2                             = extra->model_0.stateStep_3 = 0;
                     }
                 }
@@ -6643,7 +6643,7 @@ bool func_80075504(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
             {
                 chara->rotation_24.pad = chara->rotation_24.vy + sp20;
 
-                if (g_SysWork.player_4C.extra_128.playerSubMovement_20 == PlayerSubMovement_Aim_Start_TargetLock)
+                if (g_SysWork.player_4C.extra_128.playerUpperMovement_20 == PlayerUpperMovement_Aim_Start_TargetLock)
                 {
                     g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk8;
                 }
@@ -6656,11 +6656,11 @@ bool func_80075504(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                 {
                     if (extra->model_0.anim_4.keyframeIdx0_8 == D_800C44F0[4].field_6)
                     {
-                        g_SysWork.player_4C.extra_128.playerSubMovement_20 = PlayerSubMovement_Attack;
+                        g_SysWork.player_4C.extra_128.playerUpperMovement_20 = PlayerUpperMovement_Attack;
 
-                        if (g_SysWork.player_4C.extra_128.playerMovement_24 == PlayerMovement_Aim)
+                        if (g_SysWork.player_4C.extra_128.playerLowerMovement_24 == PlayerLowerMovement_Aim)
                         {
-                            g_SysWork.player_4C.extra_128.playerMovement_24 = PlayerMovement_Attack;
+                            g_SysWork.player_4C.extra_128.playerLowerMovement_24 = PlayerLowerMovement_Attack;
                             chara->model_0.state_2                          = chara->model_0.stateStep_3 = 0;
                         }
 
@@ -6670,13 +6670,13 @@ bool func_80075504(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                 }
                 else if (extra->model_0.anim_4.keyframeIdx0_8 == D_800C44F0[4].field_6)
                 {
-                    g_SysWork.player_4C.extra_128.playerSubMovement_20  = PlayerSubMovement_Aim_TargetLock;
+                    g_SysWork.player_4C.extra_128.playerUpperMovement_20  = PlayerUpperMovement_Aim_TargetLock;
                     extra->model_0.state_2 = extra->model_0.stateStep_3 = 0;
                 }
             }
             break;
 
-        case PlayerSubMovement_Aim_Stop:
+        case PlayerUpperMovement_Aim_Stop:
             D_800AF220 = g_Player_EquippedWeaponInfo.field_A & 0xF;
 
             if (extra->model_0.stateStep_3 == 0)
@@ -6686,31 +6686,31 @@ bool func_80075504(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
             }
 
             if (extra->model_0.anim_4.keyframeIdx0_8 == D_800C44F0[D_800AF220].field_4 ||
-                ((g_SysWork.player_4C.extra_128.playerMovement_24 == PlayerMovement_Run_Forward || g_SysWork.player_4C.extra_128.playerMovement_24 == PlayerMovement_Run_RStep ||
-                  g_SysWork.player_4C.extra_128.playerMovement_24 == PlayerMovement_Run_LStep) &&
+                ((g_SysWork.player_4C.extra_128.playerLowerMovement_24 == PlayerLowerMovement_Run_Forward || g_SysWork.player_4C.extra_128.playerLowerMovement_24 == PlayerLowerMovement_Run_RStep ||
+                  g_SysWork.player_4C.extra_128.playerLowerMovement_24 == PlayerLowerMovement_Run_LStep) &&
                  (extra->model_0.anim_4.keyframeIdx0_8 <= D_800C44F0[D_800AF220].field_6)))
             {
-                switch (g_SysWork.player_4C.extra_128.playerMovement_24)
+                switch (g_SysWork.player_4C.extra_128.playerLowerMovement_24)
                 {
-                    case PlayerMovement_Run_Forward:
-                        g_SysWork.player_4C.extra_128.playerSubMovement_20 = PlayerSubMovement_Run_Forward;
+                    case PlayerLowerMovement_Run_Forward:
+                        g_SysWork.player_4C.extra_128.playerUpperMovement_20 = PlayerUpperMovement_Run_Forward;
                         break;
 
-                    case PlayerMovement_Run_RStep:
-                        g_SysWork.player_4C.extra_128.playerSubMovement_20 = PlayerSubMovement_Run_RStep;
+                    case PlayerLowerMovement_Run_RStep:
+                        g_SysWork.player_4C.extra_128.playerUpperMovement_20 = PlayerUpperMovement_Run_RStep;
                         break;
 
-                    case PlayerMovement_Aim_Run_LStep:
-                        g_SysWork.player_4C.extra_128.playerSubMovement_20 = PlayerSubMovement_Run_LStep;
+                    case PlayerLowerMovement_Aim_Run_LStep:
+                        g_SysWork.player_4C.extra_128.playerUpperMovement_20 = PlayerUpperMovement_Run_LStep;
                         break;
 
                     default:
-                        g_SysWork.player_4C.extra_128.playerSubMovement_20 = PlayerSubMovement_None;
+                        g_SysWork.player_4C.extra_128.playerUpperMovement_20 = PlayerUpperMovement_None;
                         break;
                 }
 
                 extra->model_0.state_2 = extra->model_0.stateStep_3 = 0;
-                if (g_SysWork.player_4C.extra_128.playerMovement_24 == PlayerMovement_None)
+                if (g_SysWork.player_4C.extra_128.playerLowerMovement_24 == PlayerLowerMovement_None)
                 {
                     chara->model_0.state_2 = chara->model_0.stateStep_3 = 0;
                 }
@@ -6721,14 +6721,14 @@ bool func_80075504(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
             chara->rotation_24.pad = chara->rotation_24.vy;
             break;
 
-        case PlayerSubMovement_Attack:
-            if (func_80074350())
+        case PlayerUpperMovement_Attack:
+            if (Player_CombatAnimUpdate())
             {
                 return true;
             }
             break;
 
-        case PlayerSubMovement_Reload:
+        case PlayerUpperMovement_Reload:
             if (extra->model_0.stateStep_3 == 0)
             {
                 extra->model_0.anim_4.animIdx_0 = 62;
@@ -6747,17 +6747,17 @@ bool func_80075504(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
             if (extra->model_0.anim_4.keyframeIdx0_8 == D_800AF626)
             {
                 D_800AF21C                                                  = NO_VALUE;
-                g_SysWork.player_4C.extra_128.playerSubMovement_20          = PlayerSubMovement_Aim;
+                g_SysWork.player_4C.extra_128.playerUpperMovement_20          = PlayerUpperMovement_Aim;
                 g_SysWork.enemyTargetIdx_2353                               = NO_VALUE;
-                g_SysWork.player_4C.extra_128.field_1C                      = PlayerState_None;
+                g_SysWork.player_4C.extra_128.playerState_1C                      = PlayerState_None;
                 g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk2;
                 extra->model_0.anim_4.animIdx_0                             = 57;
                 extra->model_0.anim_4.keyframeIdx0_8                        = 588;
                 extra->model_0.anim_4.time_4                                = 0x24C000;
 
-                if (g_SysWork.player_4C.extra_128.playerMovement_24 == PlayerMovement_Reload)
+                if (g_SysWork.player_4C.extra_128.playerLowerMovement_24 == PlayerLowerMovement_Reload)
                 {
-                    g_SysWork.player_4C.extra_128.playerMovement_24 = PlayerMovement_Aim;
+                    g_SysWork.player_4C.extra_128.playerLowerMovement_24 = PlayerLowerMovement_Aim;
                 }
 
                 if (g_SysWork.playerCombatInfo_38.totalWeaponAmmo_11 != 0)
@@ -6791,19 +6791,19 @@ bool func_80075504(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
 
 void func_800771BC(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x800771BC
 {
-    s32 sp18;
-    s32 sp1C;
+    s32 currentAmmoVar;
+    s32 totalAmmoVar;
     s32 i;
 
-    switch (g_SysWork.player_4C.extra_128.playerSubMovement_20)
+    switch (g_SysWork.player_4C.extra_128.playerUpperMovement_20)
     {
-        case PlayerSubMovement_None:
-        case PlayerSubMovement_Walk_Forward:
-        case PlayerSubMovement_Walk_RStep:
-        case PlayerSubMovement_Walk_LStep:
-        case PlayerSubMovement_Walk_Backward:
-        case PlayerSubMovement_RRotation:
-        case PlayerSubMovement_LRotation:
+        case PlayerUpperMovement_None:
+        case PlayerUpperMovement_Walk_Forward:
+        case PlayerUpperMovement_Walk_RStep:
+        case PlayerUpperMovement_Walk_LStep:
+        case PlayerUpperMovement_Walk_Backward:
+        case PlayerUpperMovement_RRotation:
+        case PlayerUpperMovement_LRotation:
             if (!g_Player_IsInWalkToRunTransition)
             {
                 if ((g_Player_IsAiming != 0 && g_SysWork.playerCombatInfo_38.equippedWeapon_F >= EquippedWeaponId_KitchenKnife) ||
@@ -6841,24 +6841,24 @@ void func_800771BC(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                     g_SysWork.enemyTargetIdx_2353 = D_800AF21C;
                     if (g_SysWork.enemyTargetIdx_2353 == NO_VALUE)
                     {
-                        g_SysWork.player_4C.extra_128.playerSubMovement_20         = PlayerSubMovement_Aim_Start;
+                        g_SysWork.player_4C.extra_128.playerUpperMovement_20       = PlayerUpperMovement_Aim_Start;
                         g_SysWork.player_4C.chara_0.properties_E4.player.field_122 = 0x400;
                     }
                     else
                     {
-                        g_SysWork.player_4C.extra_128.field_1C             = PlayerState_Combat;
-                        g_SysWork.player_4C.extra_128.playerSubMovement_20 = PlayerSubMovement_Aim_Start_TargetLock;
+                        g_SysWork.player_4C.extra_128.playerState_1C         = PlayerState_Combat;
+                        g_SysWork.player_4C.extra_128.playerUpperMovement_20 = PlayerUpperMovement_Aim_Start_TargetLock;
                     }
 
-                    if (g_SysWork.player_4C.extra_128.playerMovement_24 == PlayerMovement_None)
+                    if (g_SysWork.player_4C.extra_128.playerLowerMovement_24 == PlayerLowerMovement_None)
                     {
-                        g_SysWork.player_4C.extra_128.playerMovement_24 = PlayerMovement_Aim;
-                        chara->model_0.stateStep_3                      = 0;
-                        chara->model_0.state_2                          = 0;
+                        g_SysWork.player_4C.extra_128.playerLowerMovement_24 = PlayerLowerMovement_Aim;
+                        chara->model_0.stateStep_3                           = 0;
+                        chara->model_0.state_2                               = 0;
                     }
-                    else if (g_SysWork.player_4C.extra_128.playerMovement_24 < PlayerMovement_Aim)
+                    else if (g_SysWork.player_4C.extra_128.playerLowerMovement_24 < PlayerLowerMovement_Aim)
                     {
-                        g_SysWork.player_4C.extra_128.playerMovement_24 += PlayerMovement_Aim;
+                        g_SysWork.player_4C.extra_128.playerLowerMovement_24 += PlayerLowerMovement_Aim;
                     }
 
                     extra->model_0.stateStep_3                   = 0;
@@ -6869,13 +6869,13 @@ void func_800771BC(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                     {
                         if (g_SysWork.playerCombatInfo_38.equippedWeapon_F >= EquippedWeaponId_Handgun)
                         {
-                            sp18 = g_SysWork.playerCombatInfo_38.currentWeaponAmmo_10;
-                            sp1C = g_SysWork.playerCombatInfo_38.totalWeaponAmmo_11;
+                            currentAmmoVar = g_SysWork.playerCombatInfo_38.currentWeaponAmmo_10;
+                            totalAmmoVar   = g_SysWork.playerCombatInfo_38.totalWeaponAmmo_11;
+							
+                            Items_AmmoReloadCalculation(&currentAmmoVar, &totalAmmoVar, g_SysWork.playerCombatInfo_38.equippedWeapon_F);
 
-                            Items_AmmoReloadCalculation(&sp18, &sp1C, g_SysWork.playerCombatInfo_38.equippedWeapon_F);
-
-                            g_SysWork.playerCombatInfo_38.currentWeaponAmmo_10 = sp18;
-                            g_SysWork.playerCombatInfo_38.totalWeaponAmmo_11   = sp1C;
+                            g_SysWork.playerCombatInfo_38.currentWeaponAmmo_10 = currentAmmoVar;
+                            g_SysWork.playerCombatInfo_38.totalWeaponAmmo_11   = totalAmmoVar;
                         }
                     }
 
@@ -6898,64 +6898,64 @@ void func_800771BC(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
             break;
     }
 
-    switch (g_SysWork.player_4C.extra_128.playerSubMovement_20)
+    switch (g_SysWork.player_4C.extra_128.playerUpperMovement_20)
     {
-        case PlayerSubMovement_None:
-        case PlayerSubMovement_Walk_Forward:
-        case PlayerSubMovement_Walk_RStep:
-        case PlayerSubMovement_Walk_LStep:
-        case PlayerSubMovement_Walk_Backward:
-        case PlayerSubMovement_RRotation:
-        case PlayerSubMovement_LRotation:
-        case PlayerSubMovement_Aim:
+        case PlayerUpperMovement_None:
+        case PlayerUpperMovement_Walk_Forward:
+        case PlayerUpperMovement_Walk_RStep:
+        case PlayerUpperMovement_Walk_LStep:
+        case PlayerUpperMovement_Walk_Backward:
+        case PlayerUpperMovement_RRotation:
+        case PlayerUpperMovement_LRotation:
+        case PlayerUpperMovement_Aim:
             if (func_8007F95C() != false)
             {
                 if (g_Player_IsAttacking != 0)
                 {
-                    g_SysWork.player_4C.extra_128.field_1C             = PlayerState_Unk6;
-                    chara->model_0.stateStep_3                         = 0;
-                    chara->model_0.state_2                             = 0;
-                    extra->model_0.stateStep_3                         = 0;
-                    extra->model_0.state_2                             = 0;
-                    g_SysWork.player_4C.extra_128.playerSubMovement_20 = PlayerSubMovement_None;
-                    g_SysWork.player_4C.extra_128.playerMovement_24    = PlayerMovement_None;
+                    g_SysWork.player_4C.extra_128.playerState_1C         = PlayerState_Unk6;
+                    chara->model_0.stateStep_3                           = 0;
+                    chara->model_0.state_2                               = 0;
+                    extra->model_0.stateStep_3                           = 0;
+                    extra->model_0.state_2                               = 0;
+                    g_SysWork.player_4C.extra_128.playerUpperMovement_20 = PlayerUpperMovement_None;
+                    g_SysWork.player_4C.extra_128.playerLowerMovement_24 = PlayerLowerMovement_None;
                     return;
                 }
 
                 if (g_Player_IsShooting != 0)
                 {
-                    g_SysWork.player_4C.extra_128.field_1C             = PlayerState_Unk5;
-                    chara->model_0.stateStep_3                         = 0;
-                    chara->model_0.state_2                             = 0;
-                    extra->model_0.stateStep_3                         = 0;
-                    extra->model_0.state_2                             = 0;
-                    g_SysWork.player_4C.extra_128.playerSubMovement_20 = PlayerSubMovement_None;
-                    g_SysWork.player_4C.extra_128.playerMovement_24    = PlayerMovement_None;
+                    g_SysWork.player_4C.extra_128.playerState_1C         = PlayerState_Unk5;
+                    chara->model_0.stateStep_3                           = 0;
+                    chara->model_0.state_2                               = 0;
+                    extra->model_0.stateStep_3                           = 0;
+                    extra->model_0.state_2                               = 0;
+                    g_SysWork.player_4C.extra_128.playerUpperMovement_20 = PlayerUpperMovement_None;
+                    g_SysWork.player_4C.extra_128.playerLowerMovement_24 = PlayerLowerMovement_None;
                     return;
                 }
             }
             break;
     }
 
-    switch (g_SysWork.player_4C.extra_128.playerSubMovement_20)
+    switch (g_SysWork.player_4C.extra_128.playerUpperMovement_20)
     {
-        case PlayerSubMovement_Aim:
-        case PlayerSubMovement_Aim_TargetLock:
+        case PlayerUpperMovement_Aim:
+        case PlayerUpperMovement_Aim_TargetLock:
             if ((g_GameWork.config_0.optExtraWeaponCtrl_23 != 0 && g_Player_IsAiming == 0) ||
                 (g_GameWork.config_0.optExtraWeaponCtrl_23 == 0 && g_Player_IsAiming != 0))
             {
                 chara->properties_E4.player.properties_E4[4]                = 0;
-                g_SysWork.player_4C.extra_128.playerSubMovement_20          = PlayerSubMovement_Aim_Stop;
+                g_SysWork.player_4C.extra_128.playerUpperMovement_20          = PlayerUpperMovement_Aim_Stop;
                 g_SysWork.enemyTargetIdx_2353                               = NO_VALUE;
                 g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk0;
-                g_SysWork.player_4C.extra_128.field_1C                      = PlayerState_None;
+                g_SysWork.player_4C.extra_128.playerState_1C                      = PlayerState_None;
                 g_SysWork.playerCombatInfo_38.isAiming_13                   = 0;
                 g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk9;
 
-                if (g_SysWork.player_4C.extra_128.playerMovement_24 == PlayerMovement_Aim ||
-                    g_SysWork.player_4C.extra_128.playerMovement_24 == PlayerMovement_Attack)
+                if (g_SysWork.player_4C.extra_128.playerLowerMovement_24 == PlayerLowerMovement_Aim ||
+                    g_SysWork.player_4C.extra_128.playerLowerMovement_24 == PlayerLowerMovement_Attack)
                 {
-                    g_SysWork.player_4C.extra_128.playerMovement_24 = PlayerMovement_None;
+                    g_SysWork.player_4C.extra_128.playerLowerMovement_24 = PlayerLowerMovement_None;
                     chara->model_0.stateStep_3                      = 0;
                     chara->model_0.state_2                          = 0;
                     extra->model_0.stateStep_3                      = 0;
@@ -6963,9 +6963,9 @@ void func_800771BC(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                     break;
                 }
 
-                if (g_SysWork.player_4C.extra_128.playerMovement_24 >= PlayerMovement_Aim_Walk_Forward)
+                if (g_SysWork.player_4C.extra_128.playerLowerMovement_24 >= PlayerLowerMovement_Aim_Walk_Forward)
                 {
-                    g_SysWork.player_4C.extra_128.playerMovement_24 -= PlayerMovement_Aim;
+                    g_SysWork.player_4C.extra_128.playerLowerMovement_24 -= PlayerLowerMovement_Aim;
                 }
 
                 extra->model_0.stateStep_3 = 0;
@@ -6974,8 +6974,8 @@ void func_800771BC(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
             }
 
             if ((g_Player_IsAttacking != 0 || g_Player_IsShooting != 0) &&
-                g_SysWork.player_4C.extra_128.playerMovement_24 != PlayerMovement_Aim_QuickTurn_Right &&
-                g_SysWork.player_4C.extra_128.playerMovement_24 != PlayerMovement_Aim_QuickTurn_Left)
+                g_SysWork.player_4C.extra_128.playerLowerMovement_24 != PlayerLowerMovement_Aim_QuickTurn_Right &&
+                g_SysWork.player_4C.extra_128.playerLowerMovement_24 != PlayerLowerMovement_Aim_QuickTurn_Left)
             {
                 if (g_SysWork.playerCombatInfo_38.equippedWeapon_F < EquippedWeaponId_Handgun)
                 {
@@ -7050,22 +7050,22 @@ void func_800771BC(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                     default:
                         if (g_SysWork.playerCombatInfo_38.equippedWeapon_F >= EquippedWeaponId_Handgun)
                         {
-                            g_SysWork.player_4C.extra_128.field_1C                      = PlayerState_Combat;
+                            g_SysWork.player_4C.extra_128.playerState_1C                = PlayerState_Combat;
                             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Unk0 | PlayerFlag_Unk9;
 
                             if (g_SysWork.enemyTargetIdx_2353 != D_800AF21C)
                             {
-                                g_SysWork.player_4C.extra_128.playerSubMovement_20 = PlayerSubMovement_Aim_TargetLock_Switch;
+                                g_SysWork.player_4C.extra_128.playerUpperMovement_20 = PlayerUpperMovement_Aim_TargetLock_Switch;
                             }
                             else
                             {
-                                g_SysWork.player_4C.extra_128.playerSubMovement_20 = PlayerSubMovement_Attack;
+                                g_SysWork.player_4C.extra_128.playerUpperMovement_20 = PlayerUpperMovement_Attack;
 
-                                if (g_SysWork.player_4C.extra_128.playerMovement_24 == PlayerMovement_Aim)
+                                if (g_SysWork.player_4C.extra_128.playerLowerMovement_24 == PlayerLowerMovement_Aim)
                                 {
-                                    g_SysWork.player_4C.extra_128.playerMovement_24 = PlayerMovement_Attack;
-                                    chara->model_0.stateStep_3                      = 0;
-                                    chara->model_0.state_2                          = 0;
+                                    g_SysWork.player_4C.extra_128.playerLowerMovement_24 = PlayerLowerMovement_Attack;
+                                    chara->model_0.stateStep_3                           = 0;
+                                    chara->model_0.state_2                               = 0;
                                 }
                             }
 
@@ -7073,25 +7073,25 @@ void func_800771BC(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                             break;
                         }
 
-                        g_SysWork.player_4C.extra_128.playerSubMovement_20 = PlayerSubMovement_Attack;
+                        g_SysWork.player_4C.extra_128.playerUpperMovement_20 = PlayerUpperMovement_Attack;
 
-                        if (g_SysWork.player_4C.extra_128.playerMovement_24 == PlayerMovement_Aim)
+                        if (g_SysWork.player_4C.extra_128.playerLowerMovement_24 == PlayerLowerMovement_Aim)
                         {
-                            g_SysWork.player_4C.extra_128.playerMovement_24 = PlayerMovement_Attack;
-                            chara->model_0.stateStep_3                      = 0;
-                            chara->model_0.state_2                          = 0;
+                            g_SysWork.player_4C.extra_128.playerLowerMovement_24 = PlayerLowerMovement_Attack;
+                            chara->model_0.stateStep_3                           = 0;
+                            chara->model_0.state_2                               = 0;
                         }
 
                     case NO_VALUE:
                         g_SysWork.player_4C.chara_0.properties_E4.player.field_122  = 0x400;
-                        g_SysWork.player_4C.extra_128.playerSubMovement_20          = PlayerSubMovement_Attack;
+                        g_SysWork.player_4C.extra_128.playerUpperMovement_20        = PlayerUpperMovement_Attack;
                         g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk9;
 
-                        if (g_SysWork.player_4C.extra_128.playerMovement_24 == PlayerMovement_Aim)
+                        if (g_SysWork.player_4C.extra_128.playerLowerMovement_24 == PlayerLowerMovement_Aim)
                         {
-                            g_SysWork.player_4C.extra_128.playerMovement_24 = PlayerMovement_Attack;
-                            chara->model_0.stateStep_3                      = 0;
-                            chara->model_0.state_2                          = 0;
+                            g_SysWork.player_4C.extra_128.playerLowerMovement_24 = PlayerLowerMovement_Attack;
+                            chara->model_0.stateStep_3                           = 0;
+                            chara->model_0.state_2                               = 0;
                         }
                         break;
                 }
@@ -7102,31 +7102,31 @@ void func_800771BC(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                         (g_SavegamePtr->equippedWeapon_AA >> 5) == 5 &&
                         g_SysWork.playerCombatInfo_38.totalWeaponAmmo_11 != 0)
                     {
-                        g_SysWork.player_4C.extra_128.playerSubMovement_20          = PlayerSubMovement_Reload;
+                        g_SysWork.player_4C.extra_128.playerUpperMovement_20          = PlayerUpperMovement_Reload;
                         g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk9;
 
-                        if (g_SysWork.player_4C.extra_128.playerMovement_24 == PlayerMovement_Aim ||
-                            g_SysWork.player_4C.extra_128.playerMovement_24 == PlayerMovement_Attack)
+                        if (g_SysWork.player_4C.extra_128.playerLowerMovement_24 == PlayerLowerMovement_Aim ||
+                            g_SysWork.player_4C.extra_128.playerLowerMovement_24 == PlayerLowerMovement_Attack)
                         {
-                            g_SysWork.player_4C.extra_128.playerMovement_24 = PlayerMovement_Reload;
-                            chara->model_0.stateStep_3                      = 0;
-                            chara->model_0.state_2                          = 0;
+                            g_SysWork.player_4C.extra_128.playerLowerMovement_24 = PlayerLowerMovement_Reload;
+                            chara->model_0.stateStep_3                           = 0;
+                            chara->model_0.state_2                               = 0;
                         }
                     }
                 }
                 else
                 {
-                    g_SysWork.player_4C.extra_128.playerSubMovement_20 = PlayerSubMovement_Attack;
+                    g_SysWork.player_4C.extra_128.playerUpperMovement_20 = PlayerUpperMovement_Attack;
 
-                    if (g_SysWork.player_4C.extra_128.playerMovement_24 == PlayerMovement_Aim ||
-                        (g_SysWork.playerCombatInfo_38.equippedWeapon_F % 10) == 1 ||
-                        (g_SysWork.playerCombatInfo_38.equippedWeapon_F % 10) == 4 ||
-                        (g_SysWork.playerCombatInfo_38.equippedWeapon_F % 10) == 2 ||
-                        (g_SysWork.playerCombatInfo_38.equippedWeapon_F % 10) == 6)
+                    if (g_SysWork.player_4C.extra_128.playerLowerMovement_24 == PlayerLowerMovement_Aim ||
+                        (g_SysWork.playerCombatInfo_38.equippedWeapon_F % 10) == EquippedWeaponId_SteelPipe ||
+                        (g_SysWork.playerCombatInfo_38.equippedWeapon_F % 10) == EquippedWeaponId_Hammer    ||
+                        (g_SysWork.playerCombatInfo_38.equippedWeapon_F % 10) == EquippedWeaponId_RockDrill ||
+                        (g_SysWork.playerCombatInfo_38.equippedWeapon_F % 10) == EquippedWeaponId_Katana)
                     {
-                        g_SysWork.player_4C.extra_128.playerMovement_24 = PlayerMovement_Attack;
-                        chara->model_0.stateStep_3                      = 0;
-                        chara->model_0.state_2                          = 0;
+                        g_SysWork.player_4C.extra_128.playerLowerMovement_24 = PlayerLowerMovement_Attack;
+                        chara->model_0.stateStep_3                           = 0;
+                        chara->model_0.state_2                               = 0;
                     }
                 }
 
@@ -7141,7 +7141,7 @@ void func_800771BC(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
     }
 }
 
-void Player_StepAbruptStop_MovementCancel(s_SubCharacter* chara, s32 animIdx0, s32 animIdx1, s32 keyframeIdx, e_PlayerMovement playerState, q19_12 arg5, s32 aimingState) // 0x80077BB8
+void Player_StepAbruptStop_MovementCancel(s_SubCharacter* chara, s32 animIdx0, s32 animIdx1, s32 keyframeIdx, e_PlayerLowerMovement playerState, q19_12 arg5, s32 aimingState) // 0x80077BB8
 {
     s16 temp;
 
@@ -7160,18 +7160,18 @@ void Player_StepAbruptStop_MovementCancel(s_SubCharacter* chara, s32 animIdx0, s
         chara->model_0.stateStep_3++;
     }
 
-    if (g_SysWork.player_4C.extra_128.playerSubMovement_20 != PlayerSubMovement_Aim_Start_TargetLock)
+    if (g_SysWork.player_4C.extra_128.playerUpperMovement_20 != PlayerUpperMovement_Aim_Start_TargetLock)
     {
         if (chara->model_0.anim_4.animIdx_0 == animIdx1 && chara->model_0.anim_4.keyframeIdx0_8 >= keyframeIdx)
         {
-            g_SysWork.player_4C.extra_128.playerMovement_24 = aimingState;
+            g_SysWork.player_4C.extra_128.playerLowerMovement_24 = aimingState;
             Player_MovementStateReset(chara, playerState);
         }
 
         Player_CharaRotate(2);
     }
 
-    if (g_SysWork.player_4C.extra_128.playerMovement_24 == PlayerMovement_None)
+    if (g_SysWork.player_4C.extra_128.playerLowerMovement_24 == PlayerLowerMovement_None)
     {
         g_SysWork.player_4C.chara_0.properties_E4.player.field_124 = 0;
         D_800C4608                                                 = 0;
@@ -7184,7 +7184,7 @@ void Player_StepAbruptStop_MovementCancel(s_SubCharacter* chara, s32 animIdx0, s
     }
 }
 
-void Player_MovementsMain(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x80077D00
+void Player_Lower_Update(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x80077D00
 {
 	#define PLAYERSTOP_WALKING (1 << 0)
 	#define PLAYERSTOP_RUNNING (1 << 1)
@@ -7201,15 +7201,15 @@ void Player_MovementsMain(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
         (((delta) * 0xC00) / 136) : \
         (((delta) + (((delta) < 0) ? 3 : 0)) >> 2))
 
-    s32              var_a2;
-    s32              travelDistStep;
-    s32              temp_s1;
-    e_PlayerMovement temp_s3; // runningState?
-    s32              var_a3;
-    s32              aimingState;
-    s32              temp;
+    s32                   var_a2;
+    s32                   travelDistStep;
+    s32                   temp_s1;
+    e_PlayerLowerMovement temp_s3; // runningState?
+    s32                   var_a3;
+    s32                   aimingState;
+    s32                   temp;
 
-    if (g_SysWork.player_4C.extra_128.playerMovement_24 < PlayerMovement_Aim)
+    if (g_SysWork.player_4C.extra_128.playerLowerMovement_24 < PlayerLowerMovement_Aim)
     {
         aimingState = 0;
     }
@@ -7225,21 +7225,21 @@ void Player_MovementsMain(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
     temp           = SQUARE(chara->position_18.vz - D_800C45F8.vz);
     travelDistStep = SquareRoot0(var_a2 + temp);
 
-    switch (g_SysWork.player_4C.extra_128.playerMovement_24)
+    switch (g_SysWork.player_4C.extra_128.playerLowerMovement_24)
     {
-        case PlayerMovement_None:
-        case PlayerMovement_Aim:
-        case PlayerMovement_Attack:
+        case PlayerLowerMovement_None:
+        case PlayerLowerMovement_Aim:
+        case PlayerLowerMovement_Attack:
             break;
 
-        case PlayerMovement_Walk_Forward:
-        case PlayerMovement_Walk_Backward:
-        case PlayerMovement_Walk_RStep:
-        case PlayerMovement_Walk_LStep:
-        case PlayerMovement_Aim_Walk_Forward:
-        case PlayerMovement_Aim_Walk_Backward:
-        case PlayerMovement_Aim_RStep:
-        case PlayerMovement_Aim_LStep:
+        case PlayerLowerMovement_Walk_Forward:
+        case PlayerLowerMovement_Walk_Backward:
+        case PlayerLowerMovement_Walk_RStep:
+        case PlayerLowerMovement_Walk_LStep:
+        case PlayerLowerMovement_Aim_Walk_Forward:
+        case PlayerLowerMovement_Aim_Walk_Backward:
+        case PlayerLowerMovement_Aim_RStep:
+        case PlayerLowerMovement_Aim_LStep:
             g_SavegamePtr->walkDistance_258 += travelDistStep;
             g_SavegamePtr->walkDistance_258  = CLAMP(g_SavegamePtr->walkDistance_258, TRAVEL_DIST_MIN, TRAVEL_DIST_MAX);
             break;
@@ -7250,10 +7250,10 @@ void Player_MovementsMain(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
             break;
     }
 
-    switch (g_SysWork.player_4C.extra_128.playerMovement_24)
+    switch (g_SysWork.player_4C.extra_128.playerLowerMovement_24)
     {
-        case PlayerMovement_None:
-        case PlayerMovement_Aim:
+        case PlayerLowerMovement_None:
+        case PlayerLowerMovement_Aim:
             if (chara->model_0.anim_4.animIdx_0 == 5)
             {
                 chara->model_0.stateStep_3 = 0;
@@ -7280,9 +7280,9 @@ void Player_MovementsMain(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
             }
 
             // Code related to trigger animations during specific idle states either while aiming or standing.
-            if (g_SysWork.player_4C.extra_128.playerMovement_24 == PlayerMovement_None)
+            if (g_SysWork.player_4C.extra_128.playerLowerMovement_24 == PlayerLowerMovement_None)
             {
-                if (g_SysWork.player_4C.extra_128.playerSubMovement_20 == 24) // Transition from aiming to idle.
+                if (g_SysWork.player_4C.extra_128.playerUpperMovement_20 == 24) // Transition from aiming to idle.
                 {
                     if (!g_SysWork.playerCombatInfo_38.isAiming_13 && chara->model_0.stateStep_3 == 0)
                     {
@@ -7310,7 +7310,7 @@ void Player_MovementsMain(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
             else
             {
 				// Code related to triggering transition from idle to aiming weapon animations.
-                if (g_SysWork.player_4C.extra_128.playerSubMovement_20 == 24)
+                if (g_SysWork.player_4C.extra_128.playerUpperMovement_20 == 24)
                 {
                     if (!g_SysWork.playerCombatInfo_38.isAiming_13 && chara->model_0.stateStep_3 == 0)
                     {
@@ -7344,7 +7344,7 @@ void Player_MovementsMain(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
                         chara->model_0.stateStep_3++;
                     }
                 }
-                else if (g_SysWork.player_4C.extra_128.playerSubMovement_20 == 22)
+                else if (g_SysWork.player_4C.extra_128.playerUpperMovement_20 == 22)
                 {
                     if (chara->model_0.stateStep_3 == 0)
                     {
@@ -7373,7 +7373,7 @@ void Player_MovementsMain(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
             }
 
             // Code to change the state of the player to from idle to moving depending on the input action.
-            if (g_SysWork.player_4C.extra_128.field_1C == 1) // Aiming to or shooting to an enemy.
+            if (g_SysWork.player_4C.extra_128.playerState_1C == 1) // Aiming to or shooting to an enemy.
             {
                 if (chara->model_0.anim_4.animIdx_0 & 1 && extra->model_0.anim_4.animIdx_0 & 1)
                 {
@@ -7382,11 +7382,11 @@ void Player_MovementsMain(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
                     {
                         if (g_Player_IsMovingForward != 0)
                         {
-                            g_SysWork.player_4C.extra_128.playerMovement_24 = PlayerMovement_Aim_Walk_Forward;
+                            g_SysWork.player_4C.extra_128.playerLowerMovement_24 = PlayerLowerMovement_Aim_Walk_Forward;
                         }
                         else if (g_Player_IsMovingBackward != 0)
                         {
-                            g_SysWork.player_4C.extra_128.playerMovement_24 = PlayerMovement_Aim_Walk_Backward;
+                            g_SysWork.player_4C.extra_128.playerLowerMovement_24 = PlayerLowerMovement_Aim_Walk_Backward;
                         }
                     }
                 }
@@ -7404,35 +7404,35 @@ void Player_MovementsMain(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
                         if (g_Player_IsMovingForward != 0)
                         {
 							// This limits the player to not aim when going from idle to run.
-                            if ((g_Player_IsRunning != 0 && temp_s3 == PlayerMovement_None) &&
+                            if ((g_Player_IsRunning != 0 && temp_s3 == PlayerLowerMovement_None) &&
                                 (aimingState == 0 ||
                                  ((g_GameWork.config_0.optExtraWeaponCtrl_23 != 0 && g_Player_IsAiming == 0) ||
                                   (g_GameWork.config_0.optExtraWeaponCtrl_23 == 0 && g_Player_IsAiming != 0)) && 
                                  (g_SysWork.playerCombatInfo_38.equippedWeapon_F % 10) == EquippedWeaponId_SteelPipe))
                             {
-                                g_SysWork.player_4C.extra_128.playerMovement_24 = PlayerMovement_Run_Forward;
+                                g_SysWork.player_4C.extra_128.playerLowerMovement_24 = PlayerLowerMovement_Run_Forward;
                             }
                             else
                             {
-                                g_SysWork.player_4C.extra_128.playerMovement_24 = aimingState + PlayerMovement_Walk_Forward;
+                                g_SysWork.player_4C.extra_128.playerLowerMovement_24 = aimingState + PlayerLowerMovement_Walk_Forward;
                             }
                         }
                         else if (g_Player_IsMovingBackward != 0)
                         {
-                            g_SysWork.player_4C.extra_128.playerMovement_24 = aimingState + PlayerMovement_Walk_Backward;
+                            g_SysWork.player_4C.extra_128.playerLowerMovement_24 = aimingState + PlayerLowerMovement_Walk_Backward;
                         }
                         else if (g_Player_IsStepping_Right_Hold != 0)
                         {
                             chara->headingAngle_3C = chara->headingAngle_3C + FP_ANGLE(90.0f);
                             temp_s3                = func_8007D6F0(chara, &D_800C45C8);
 
-                            if (g_Player_IsRunning != 0 && aimingState == 0 && temp_s3 == PlayerMovement_None)
+                            if (g_Player_IsRunning != 0 && aimingState == 0 && temp_s3 == PlayerLowerMovement_None)
                             {
-                                g_SysWork.player_4C.extra_128.playerMovement_24 = PlayerMovement_Run_RStep;
+                                g_SysWork.player_4C.extra_128.playerLowerMovement_24 = PlayerLowerMovement_Run_RStep;
                             }
                             else
                             {
-                                g_SysWork.player_4C.extra_128.playerMovement_24 = aimingState + PlayerMovement_Walk_RStep;
+                                g_SysWork.player_4C.extra_128.playerLowerMovement_24 = aimingState + PlayerLowerMovement_Walk_RStep;
                             }
                         }
                         else if (g_Player_IsStepping_Left_Hold != 0)
@@ -7440,13 +7440,13 @@ void Player_MovementsMain(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
                             chara->headingAngle_3C -= FP_ANGLE(90.0f);
                             temp_s3                 = func_8007D6F0(chara, &D_800C45C8);
  
-                            if (g_Player_IsRunning != 0 && aimingState == 0 && temp_s3 == PlayerMovement_None)
+                            if (g_Player_IsRunning != 0 && aimingState == 0 && temp_s3 == PlayerLowerMovement_None)
                             {
-                                g_SysWork.player_4C.extra_128.playerMovement_24 = PlayerMovement_Run_LStep;
+                                g_SysWork.player_4C.extra_128.playerLowerMovement_24 = PlayerLowerMovement_Run_LStep;
                             }
                             else
                             {
-                                g_SysWork.player_4C.extra_128.playerMovement_24 = aimingState + PlayerMovement_Walk_LStep;
+                                g_SysWork.player_4C.extra_128.playerLowerMovement_24 = aimingState + PlayerLowerMovement_Walk_LStep;
                             }
                         }
 
@@ -7457,15 +7457,15 @@ void Player_MovementsMain(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
                             {
                                 if (g_Player_IsMovingBackward != 0)
                                 {
-                                    g_SysWork.player_4C.extra_128.playerMovement_24    = PlayerMovement_Run_BackwardJump;
-                                    g_SysWork.player_4C.extra_128.playerSubMovement_20 = 13;
+                                    g_SysWork.player_4C.extra_128.playerLowerMovement_24    = PlayerLowerMovement_Run_BackwardJump;
+                                    g_SysWork.player_4C.extra_128.playerUpperMovement_20 = 13;
                                     extra->model_0.stateStep_3                         = 0;
                                     extra->model_0.state_2                             = 0;
                                 }
                             }
                         }
 
-                        if (g_SysWork.player_4C.extra_128.playerMovement_24 == aimingState && !g_Player_IsInWalkToRunTransition)
+                        if (g_SysWork.player_4C.extra_128.playerLowerMovement_24 == aimingState && !g_Player_IsInWalkToRunTransition)
                         {
                             Player_CharaTurn_0(chara, aimingState);
                         }
@@ -7483,7 +7483,7 @@ void Player_MovementsMain(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
                     Player_CharaRotate(7);
                 }
 
-                if (aimingState != 0 && g_SysWork.player_4C.extra_128.playerSubMovement_20 == 19) // Aiming and moving.
+                if (aimingState != 0 && g_SysWork.player_4C.extra_128.playerUpperMovement_20 == 19) // Aiming and moving.
                 {
                     if (D_800C454C != FP_METER(0.0f))
                     {
@@ -7561,15 +7561,15 @@ void Player_MovementsMain(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
             }
             break;
 
-        case PlayerMovement_Walk_Forward:
-        case PlayerMovement_Aim_Walk_Forward:
+        case PlayerLowerMovement_Walk_Forward:
+        case PlayerLowerMovement_Aim_Walk_Forward:
             if (g_Player_IsMovingForward == 0)
             {
                 g_SysWork.field_235A |= PLAYERSTOP_WALKING;
             }
 
-            if (g_SysWork.field_235A & PLAYERSTOP_WALKING && g_SysWork.player_4C.extra_128.playerMovement_24 < PlayerMovement_Aim && 
-                g_SysWork.player_4C.extra_128.playerSubMovement_20 != 24) // Player stop walking (Reduce movement value).
+            if (g_SysWork.field_235A & PLAYERSTOP_WALKING && g_SysWork.player_4C.extra_128.playerLowerMovement_24 < PlayerLowerMovement_Aim && 
+                g_SysWork.player_4C.extra_128.playerUpperMovement_20 != 24) // Player stop walking (Reduce movement value).
             {
                 if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 != 0)
                 {
@@ -7626,22 +7626,22 @@ void Player_MovementsMain(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
             }
 
             // Something related to animation and states of player when aiming or attacking while moving.
-			// TODO - What makes `g_SysWork.player_4C.extra_128.field_1C` to be 1 exactly?
+			// TODO - What makes `g_SysWork.player_4C.extra_128.playerState_1C` to be 1 exactly?
 			// As far as I know only aiming and attacking an enemy make it change to 1, however, this code
 			// implies that there are other intances where the variable goes 1 as the first if implies
 			// that if the player just stopped walking, is not aiming, not in the transition from
 			// aiming to not aiming and some other onditionals related to animations that I don't get
 			// then the player state changes to aiming while standing. - Will
-            if (g_SysWork.player_4C.extra_128.field_1C == 1)
+            if (g_SysWork.player_4C.extra_128.playerState_1C == 1)
             {
                 if (g_SysWork.field_235A & PLAYERSTOP_WALKING)
                 {
-                    if ((g_SysWork.player_4C.extra_128.playerMovement_24 < PlayerMovement_Aim && g_SysWork.player_4C.extra_128.playerSubMovement_20 != 24) ||
+                    if ((g_SysWork.player_4C.extra_128.playerLowerMovement_24 < PlayerLowerMovement_Aim && g_SysWork.player_4C.extra_128.playerUpperMovement_20 != 24) ||
                          (chara->model_0.anim_4.keyframeIdx0_8 >= 10 && chara->model_0.anim_4.keyframeIdx0_8 <= 11) || 
                           chara->model_0.anim_4.keyframeIdx0_8 == 22 ||
 						  chara->model_0.anim_4.keyframeIdx0_8 == 21)
                     {
-                        g_SysWork.player_4C.extra_128.playerMovement_24 = PlayerMovement_Aim;
+                        g_SysWork.player_4C.extra_128.playerLowerMovement_24 = PlayerLowerMovement_Aim;
                     }
                 }
 
@@ -7659,13 +7659,13 @@ void Player_MovementsMain(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
 					// Code to change the player's state to running.
                     if (g_Player_IsRunning != 0)
                     {
-                        if (aimingState == 0 && temp_s3 == PlayerMovement_None &&
-                            (g_SysWork.player_4C.extra_128.playerSubMovement_20 == 1 || g_SysWork.player_4C.extra_128.playerSubMovement_20 == 24))
+                        if (aimingState == 0 && temp_s3 == PlayerLowerMovement_None &&
+                            (g_SysWork.player_4C.extra_128.playerUpperMovement_20 == 1 || g_SysWork.player_4C.extra_128.playerUpperMovement_20 == 24))
                         {
                             if (chara->model_0.anim_4.keyframeIdx0_8 >= 10 &&
                                 chara->model_0.anim_4.keyframeIdx0_8 <= 11)
                             {
-                                g_SysWork.player_4C.extra_128.playerMovement_24 = PlayerMovement_Run_Forward;
+                                g_SysWork.player_4C.extra_128.playerLowerMovement_24 = PlayerLowerMovement_Run_Forward;
                                 g_MaybePlayerAnims[0].keyframeIdx1_E            = 36;
                                 g_MaybePlayerAnims[0].animIdx_6                 = 7;
                                 g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Unk5;
@@ -7673,14 +7673,14 @@ void Player_MovementsMain(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
                             else if (chara->model_0.anim_4.keyframeIdx0_8 >= 21 &&
                                      chara->model_0.anim_4.keyframeIdx0_8 <= 22)
                             {
-                                g_SysWork.player_4C.extra_128.playerMovement_24 = PlayerMovement_Run_Forward;
+                                g_SysWork.player_4C.extra_128.playerLowerMovement_24 = PlayerLowerMovement_Run_Forward;
                                 g_MaybePlayerAnims[0].keyframeIdx1_E = 26;
                                 g_MaybePlayerAnims[0].animIdx_6      = 7;
                             }
                         }
                     }
                 }
-                else if ((g_SysWork.player_4C.extra_128.playerMovement_24 < PlayerMovement_Aim && g_SysWork.player_4C.extra_128.playerSubMovement_20 != 24) ||
+                else if ((g_SysWork.player_4C.extra_128.playerLowerMovement_24 < PlayerLowerMovement_Aim && g_SysWork.player_4C.extra_128.playerUpperMovement_20 != 24) ||
                          (chara->model_0.anim_4.keyframeIdx0_8 >= 10 && chara->model_0.anim_4.keyframeIdx0_8 <= 11) ||
                           chara->model_0.anim_4.keyframeIdx0_8 == 22 || chara->model_0.anim_4.keyframeIdx0_8 == 21)
                 {
@@ -7695,22 +7695,22 @@ void Player_MovementsMain(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
                             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Unk10;
                             chara->model_0.stateStep_3                                  = 0;
                             chara->model_0.state_2                                      = 0;
-                            g_SysWork.player_4C.extra_128.playerMovement_24             = PlayerMovement_Attack;
+                            g_SysWork.player_4C.extra_128.playerLowerMovement_24             = PlayerLowerMovement_Attack;
                         }
                         else
                         {
-                            g_SysWork.player_4C.extra_128.playerMovement_24             = aimingState;
+                            g_SysWork.player_4C.extra_128.playerLowerMovement_24             = aimingState;
                             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk10;
                         }
                     }
                     else
                     {
-                        g_SysWork.player_4C.extra_128.playerMovement_24             = aimingState;
+                        g_SysWork.player_4C.extra_128.playerLowerMovement_24             = aimingState;
                         g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk10;
                     }
                 }
 
-                if (g_SysWork.player_4C.extra_128.playerMovement_24 == (aimingState + PlayerMovement_Walk_Forward) && !g_Player_IsInWalkToRunTransition)
+                if (g_SysWork.player_4C.extra_128.playerLowerMovement_24 == (aimingState + PlayerLowerMovement_Walk_Forward) && !g_Player_IsInWalkToRunTransition)
                 {
                     Player_CharaTurn_0(chara, aimingState);
                 }
@@ -7722,7 +7722,7 @@ void Player_MovementsMain(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
             g_SysWork.player_4C.chara_0.properties_E4.player.field_124 = 0;
             D_800C4608                                                 = FP_FLOAT_TO(0.0f, Q12_SHIFT);
 
-            if (g_SysWork.player_4C.extra_128.playerMovement_24 == PlayerMovement_Run_Forward)
+            if (g_SysWork.player_4C.extra_128.playerLowerMovement_24 == PlayerLowerMovement_Run_Forward)
             {
                 chara->model_0.anim_4.animIdx_0  = 0;
                 chara->model_0.stateStep_3++;
@@ -7730,7 +7730,7 @@ void Player_MovementsMain(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
             }
             break;
 
-        case PlayerMovement_Run_Forward:
+        case PlayerLowerMovement_Run_Forward:
             chara->properties_E4.player.properties_E4[6] += g_DeltaTime0;
 
             if (g_Controller0->sticks_20.sticks_0.leftY < -0x3F)
@@ -7808,48 +7808,48 @@ void Player_MovementsMain(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
             }
 
             // If player is running.
-            if (g_SysWork.player_4C.extra_128.playerSubMovement_20 != 22 && chara->model_0.anim_4.animIdx_0 == 7)
+            if (g_SysWork.player_4C.extra_128.playerUpperMovement_20 != 22 && chara->model_0.anim_4.animIdx_0 == 7)
             {
 				// TODO - What `func_8007D6F0` does?
                 switch (temp_s3)
                 {
-                    case PlayerMovement_Walk_Forward:
+                    case PlayerLowerMovement_Walk_Forward:
                         if (chara->properties_E4.player.properties_E4[9] >= (u32)FP_METER(10.0f))
                         {
-                            g_SysWork.player_4C.extra_128.playerMovement_24 = PlayerMovement_Stumble;
+                            g_SysWork.player_4C.extra_128.playerLowerMovement_24 = PlayerLowerMovement_Stumble;
                         }
                         else if (chara->model_0.anim_4.keyframeIdx0_8 >= 30 &&
                                  chara->model_0.anim_4.keyframeIdx0_8 <= 31)
                         {
-                            g_SysWork.player_4C.extra_128.playerMovement_24 = temp_s3;
+                            g_SysWork.player_4C.extra_128.playerLowerMovement_24 = temp_s3;
                             g_MaybePlayerAnims[0].keyframeIdx1_E            = 8;
                             g_MaybePlayerAnims[0].animIdx_6                 = 5;
                         }
                         else if (chara->model_0.anim_4.keyframeIdx0_8 >= 41 &&
                                  chara->model_0.anim_4.keyframeIdx0_8 <= 42)
                         {
-                            g_SysWork.player_4C.extra_128.playerMovement_24 = temp_s3;
+                            g_SysWork.player_4C.extra_128.playerLowerMovement_24 = temp_s3;
                             g_MaybePlayerAnims[0].keyframeIdx1_E            = 20;
                             g_MaybePlayerAnims[0].animIdx_6                 = 5;
                         }
                         break;
 
-                    case PlayerMovement_Run_Forward:
+                    case PlayerLowerMovement_Run_Forward:
                         if (chara->properties_E4.player.properties_E4[9] >= (u32)FP_METER(10.0f))
                         {
-                            g_SysWork.player_4C.extra_128.playerMovement_24 = PlayerMovement_Run_AbruptStop;
+                            g_SysWork.player_4C.extra_128.playerLowerMovement_24 = PlayerLowerMovement_Run_AbruptStop;
                         }
                         else if (chara->model_0.anim_4.keyframeIdx0_8 >= 30 &&
                                  chara->model_0.anim_4.keyframeIdx0_8 <= 31)
                         {
-                            g_SysWork.player_4C.extra_128.playerMovement_24 = PlayerMovement_Walk_Forward;
+                            g_SysWork.player_4C.extra_128.playerLowerMovement_24 = PlayerLowerMovement_Walk_Forward;
                             g_MaybePlayerAnims[0].keyframeIdx1_E            = 8;
                             g_MaybePlayerAnims[0].animIdx_6                 = 5;
                         }
                         else if (chara->model_0.anim_4.keyframeIdx0_8 >= 41 &&
                                  chara->model_0.anim_4.keyframeIdx0_8 <= 42)
                         {
-                            g_SysWork.player_4C.extra_128.playerMovement_24 = PlayerMovement_Walk_Forward;
+                            g_SysWork.player_4C.extra_128.playerLowerMovement_24 = PlayerLowerMovement_Walk_Forward;
                             g_MaybePlayerAnims[0].keyframeIdx1_E            = 20;
                             g_MaybePlayerAnims[0].animIdx_6                 = 5;
                         }
@@ -7863,14 +7863,14 @@ void Player_MovementsMain(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
                                 if (chara->model_0.anim_4.keyframeIdx0_8 >= 30 &&
                                     chara->model_0.anim_4.keyframeIdx0_8 <= 31)
                                 {
-                                    g_SysWork.player_4C.extra_128.playerMovement_24 = PlayerMovement_Walk_Forward;
+                                    g_SysWork.player_4C.extra_128.playerLowerMovement_24 = PlayerLowerMovement_Walk_Forward;
                                     g_MaybePlayerAnims[0].keyframeIdx1_E            = 8;
                                     g_MaybePlayerAnims[0].animIdx_6                 = 5;
                                 }
                                 else if (chara->model_0.anim_4.keyframeIdx0_8 >= 41 &&
                                          chara->model_0.anim_4.keyframeIdx0_8 <= 42)
                                 {
-                                    g_SysWork.player_4C.extra_128.playerMovement_24 = PlayerMovement_Walk_Forward;
+                                    g_SysWork.player_4C.extra_128.playerLowerMovement_24 = PlayerLowerMovement_Walk_Forward;
                                     g_MaybePlayerAnims[0].keyframeIdx1_E            = 20;
                                     g_MaybePlayerAnims[0].animIdx_6                 = 5;
                                 }
@@ -7881,13 +7881,13 @@ void Player_MovementsMain(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
                                 if (chara->model_0.anim_4.keyframeIdx0_8 >= 33 &&
                                     chara->model_0.anim_4.keyframeIdx0_8 <= 34)
                                 {
-                                    g_SysWork.player_4C.extra_128.playerMovement_24             = PlayerMovement_Run_AbruptStop;
+                                    g_SysWork.player_4C.extra_128.playerLowerMovement_24             = PlayerLowerMovement_Run_AbruptStop;
                                     g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_AbruptStopAnimKind;
                                 }
                                 else if (chara->model_0.anim_4.keyframeIdx0_8 >= 43 &&
                                          chara->model_0.anim_4.keyframeIdx0_8 <= 44)
                                 {
-                                    g_SysWork.player_4C.extra_128.playerMovement_24             = PlayerMovement_Run_AbruptStop;
+                                    g_SysWork.player_4C.extra_128.playerLowerMovement_24             = PlayerLowerMovement_Run_AbruptStop;
                                     g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_AbruptStopAnimKind;
                                 }
                             }
@@ -7896,14 +7896,14 @@ void Player_MovementsMain(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
                                 if (chara->model_0.anim_4.keyframeIdx0_8 >= 30 &&
                                     chara->model_0.anim_4.keyframeIdx0_8 <= 31)
                                 {
-                                    g_SysWork.player_4C.extra_128.playerMovement_24 = PlayerMovement_Walk_Forward;
+                                    g_SysWork.player_4C.extra_128.playerLowerMovement_24 = PlayerLowerMovement_Walk_Forward;
                                     g_MaybePlayerAnims[0].keyframeIdx1_E            = 8;
                                     g_MaybePlayerAnims[0].animIdx_6                 = 5;
                                 }
                                 else if (chara->model_0.anim_4.keyframeIdx0_8 >= 41 &&
                                          chara->model_0.anim_4.keyframeIdx0_8 <= 42)
                                 {
-                                    g_SysWork.player_4C.extra_128.playerMovement_24 = PlayerMovement_Walk_Forward;
+                                    g_SysWork.player_4C.extra_128.playerLowerMovement_24 = PlayerLowerMovement_Walk_Forward;
                                     g_MaybePlayerAnims[0].keyframeIdx1_E            = 20;
                                     g_MaybePlayerAnims[0].animIdx_6                 = 5;
                                 }
@@ -7913,9 +7913,9 @@ void Player_MovementsMain(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
                 }
             }
 
-            if (g_SysWork.player_4C.extra_128.playerMovement_24 != PlayerMovement_Run_Forward)
+            if (g_SysWork.player_4C.extra_128.playerLowerMovement_24 != PlayerLowerMovement_Run_Forward)
             {
-                Player_MovementStateReset(chara, PlayerMovement_Run_Forward);
+                Player_MovementStateReset(chara, PlayerLowerMovement_Run_Forward);
             }
 
             Player_CharaRotate(4);
@@ -7923,7 +7923,7 @@ void Player_MovementsMain(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
             D_800C4608                                                 = FP_FLOAT_TO(0.0f, Q12_SHIFT);
             g_SysWork.player_4C.chara_0.properties_E4.player.field_124 = 0;
 
-            if (g_SysWork.player_4C.extra_128.playerMovement_24 == PlayerMovement_Walk_Forward)
+            if (g_SysWork.player_4C.extra_128.playerLowerMovement_24 == PlayerLowerMovement_Walk_Forward)
             {
                 chara->model_0.anim_4.animIdx_0 = 0;
                 chara->model_0.stateStep_3++;
@@ -7931,7 +7931,7 @@ void Player_MovementsMain(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
             }
             break;
 
-        case PlayerMovement_Run_AbruptStop:
+        case PlayerLowerMovement_Run_AbruptStop:
             if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 != 0)
             {
                 g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= ((g_DeltaTime0 * FP_FLOAT_TO(0.4f, Q12_SHIFT)) / 136) >> 1;
@@ -7960,28 +7960,28 @@ void Player_MovementsMain(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
                 chara->model_0.stateStep_3++;
             }
 
-            if (g_SysWork.player_4C.extra_128.playerSubMovement_20 != 22)
+            if (g_SysWork.player_4C.extra_128.playerUpperMovement_20 != 22)
             {
                 if (chara->model_0.anim_4.animIdx_0 == 21 && chara->model_0.anim_4.keyframeIdx0_8 >= 168 ||
                     chara->model_0.anim_4.animIdx_0 == 19 && chara->model_0.anim_4.keyframeIdx0_8 >= 158)
                 {
-                    g_SysWork.player_4C.extra_128.playerMovement_24 = PlayerMovement_None;
-                    Player_MovementStateReset(chara, PlayerMovement_Run_AbruptStop);
+                    g_SysWork.player_4C.extra_128.playerLowerMovement_24 = PlayerLowerMovement_None;
+                    Player_MovementStateReset(chara, PlayerLowerMovement_Run_AbruptStop);
                 }
 
                 Player_CharaRotate(4);
             }
             break;
 
-        case PlayerMovement_Walk_Backward:
-        case PlayerMovement_Aim_Walk_Backward:
+        case PlayerLowerMovement_Walk_Backward:
+        case PlayerLowerMovement_Aim_Walk_Backward:
             if (g_Player_IsMovingBackward == 0)
             {
                 g_SysWork.field_235A |= PLAYERSTOP_RUNNING;
             }
 
-            if (g_SysWork.field_235A & PLAYERSTOP_RUNNING && g_SysWork.player_4C.extra_128.playerMovement_24 < PlayerMovement_Aim &&
-			g_SysWork.player_4C.extra_128.playerSubMovement_20 != 24)
+            if (g_SysWork.field_235A & PLAYERSTOP_RUNNING && g_SysWork.player_4C.extra_128.playerLowerMovement_24 < PlayerLowerMovement_Aim &&
+			g_SysWork.player_4C.extra_128.playerUpperMovement_20 != 24)
             {
                 if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 != 0)
                 {
@@ -8035,21 +8035,21 @@ void Player_MovementsMain(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
                 chara->model_0.stateStep_3++;
             }
 
-            if (g_SysWork.player_4C.extra_128.field_1C == 1)
+            if (g_SysWork.player_4C.extra_128.playerState_1C == 1)
             {
                 if (g_SysWork.field_235A & PLAYERSTOP_RUNNING)
                 {
-                    if ((g_SysWork.player_4C.extra_128.playerMovement_24 < PlayerMovement_Aim && g_SysWork.player_4C.extra_128.playerSubMovement_20 != 24) ||
+                    if ((g_SysWork.player_4C.extra_128.playerLowerMovement_24 < PlayerLowerMovement_Aim && g_SysWork.player_4C.extra_128.playerUpperMovement_20 != 24) ||
                          (chara->model_0.anim_4.keyframeIdx0_8 >= 56 &&
                           chara->model_0.anim_4.keyframeIdx0_8 <= 57) ||
                          chara->model_0.anim_4.keyframeIdx0_8 == 67 ||
                          chara->model_0.anim_4.keyframeIdx0_8 == 66)
                     {
-                        g_SysWork.player_4C.extra_128.playerMovement_24 = PlayerMovement_Aim;
+                        g_SysWork.player_4C.extra_128.playerLowerMovement_24 = PlayerLowerMovement_Aim;
                     }
                 }
 
-                Player_MovementStateReset(chara, aimingState + PlayerMovement_Walk_Backward);
+                Player_MovementStateReset(chara, aimingState + PlayerLowerMovement_Walk_Backward);
 
                 if (g_SysWork.playerCombatInfo_38.equippedWeapon_F != EquippedWeaponId_HyperBlaster)
                 {
@@ -8064,22 +8064,22 @@ void Player_MovementsMain(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
                           chara->model_0.anim_4.keyframeIdx0_8 <= 67) ||
                          chara->model_0.anim_4.keyframeIdx0_8 == 46 ||
                          chara->model_0.anim_4.keyframeIdx0_8 == 47) && 
-                        aimingState == 0 && g_SysWork.player_4C.extra_128.playerSubMovement_20 != 24)
+                        aimingState == 0 && g_SysWork.player_4C.extra_128.playerUpperMovement_20 != 24)
                     {
                         if ((g_GameWork.config_0.optExtraWalkRunCtrl_2B != 0 && g_Player_IsRunning == 0) ||
                             (g_GameWork.config_0.optExtraWalkRunCtrl_2B == 0 && g_Player_IsRunning != 0))
                         {
                             if (g_Player_IsMovingBackward != 0)
                             {
-                                g_SysWork.player_4C.extra_128.playerMovement_24    = PlayerMovement_Run_BackwardJump;
-                                g_SysWork.player_4C.extra_128.playerSubMovement_20 = 13;
+                                g_SysWork.player_4C.extra_128.playerLowerMovement_24    = PlayerLowerMovement_Run_BackwardJump;
+                                g_SysWork.player_4C.extra_128.playerUpperMovement_20 = 13;
                                 extra->model_0.stateStep_3                         = 0;
                                 extra->model_0.state_2                             = 0;
                             }
                         }
                     }
                 }
-                else if ((g_SysWork.player_4C.extra_128.playerMovement_24 < PlayerMovement_Aim && g_SysWork.player_4C.extra_128.playerSubMovement_20 != 24) ||
+                else if ((g_SysWork.player_4C.extra_128.playerLowerMovement_24 < PlayerLowerMovement_Aim && g_SysWork.player_4C.extra_128.playerUpperMovement_20 != 24) ||
                          (chara->model_0.anim_4.keyframeIdx0_8 >= 56 && chara->model_0.anim_4.keyframeIdx0_8 <= 57) ||
                           chara->model_0.anim_4.keyframeIdx0_8 == 67 || chara->model_0.anim_4.keyframeIdx0_8 == 66)
                 {
@@ -8094,27 +8094,27 @@ void Player_MovementsMain(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
                             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Unk10;
                             chara->model_0.stateStep_3                                  = 0;
                             chara->model_0.state_2                                      = 0;
-                            g_SysWork.player_4C.extra_128.playerMovement_24             = PlayerMovement_Attack;
+                            g_SysWork.player_4C.extra_128.playerLowerMovement_24             = PlayerLowerMovement_Attack;
                         }
                         else
                         {
-                            g_SysWork.player_4C.extra_128.playerMovement_24             = aimingState;
+                            g_SysWork.player_4C.extra_128.playerLowerMovement_24             = aimingState;
                             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk10;
                         }
                     }
                     else
                     {
-                        g_SysWork.player_4C.extra_128.playerMovement_24             = aimingState;
+                        g_SysWork.player_4C.extra_128.playerLowerMovement_24             = aimingState;
                         g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk10;
                     }
                 }
 
-                if (g_SysWork.player_4C.extra_128.playerMovement_24 == (aimingState + PlayerMovement_Walk_Backward) && !g_Player_IsInWalkToRunTransition)
+                if (g_SysWork.player_4C.extra_128.playerLowerMovement_24 == (aimingState + PlayerLowerMovement_Walk_Backward) && !g_Player_IsInWalkToRunTransition)
                 {
                     Player_CharaTurn_0(chara, aimingState);
                 }
 
-                Player_MovementStateReset(chara, aimingState + PlayerMovement_Walk_Backward);
+                Player_MovementStateReset(chara, aimingState + PlayerLowerMovement_Walk_Backward);
                 Player_CharaRotate(4);
             }
 
@@ -8122,8 +8122,8 @@ void Player_MovementsMain(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
             D_800C4608                                                 = FP_FLOAT_TO(0.5f, Q12_SHIFT);
             break;
 
-        case PlayerMovement_Walk_RStep:
-        case PlayerMovement_Aim_RStep:
+        case PlayerLowerMovement_Walk_RStep:
+        case PlayerLowerMovement_Aim_RStep:
             if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 > FP_FLOAT_TO(1.25f, Q12_SHIFT))
             {
                 g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= ((g_DeltaTime0 * FP_FLOAT_TO(0.4f, Q12_SHIFT)) / 136);
@@ -8174,37 +8174,37 @@ void Player_MovementsMain(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
                             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Unk10;
                             chara->model_0.stateStep_3                                  = 0;
                             chara->model_0.state_2                                      = 0;
-                            g_SysWork.player_4C.extra_128.playerMovement_24             = PlayerMovement_Attack;
+                            g_SysWork.player_4C.extra_128.playerLowerMovement_24             = PlayerLowerMovement_Attack;
                         }
                         else
                         {
-                            g_SysWork.player_4C.extra_128.playerMovement_24 = aimingState;
+                            g_SysWork.player_4C.extra_128.playerLowerMovement_24 = aimingState;
                         }
                     }
                     else
                     {
-                        g_SysWork.player_4C.extra_128.playerMovement_24 = aimingState;
+                        g_SysWork.player_4C.extra_128.playerLowerMovement_24 = aimingState;
                     }
                 }
-                else if (g_Player_IsRunning != 0 && aimingState == 0 && temp_s3 == PlayerMovement_None)
+                else if (g_Player_IsRunning != 0 && aimingState == 0 && temp_s3 == PlayerLowerMovement_None)
                 {
-                    if (g_SysWork.player_4C.extra_128.playerSubMovement_20 != 24)
+                    if (g_SysWork.player_4C.extra_128.playerUpperMovement_20 != 24)
                     {
-                        g_SysWork.player_4C.extra_128.playerMovement_24 = PlayerMovement_Run_RStep;
+                        g_SysWork.player_4C.extra_128.playerLowerMovement_24 = PlayerLowerMovement_Run_RStep;
                     }
                 }
             }
 
             Player_CharaTurn_0(chara, aimingState);
-            Player_MovementStateReset(chara, aimingState + PlayerMovement_Walk_RStep);
+            Player_MovementStateReset(chara, aimingState + PlayerLowerMovement_Walk_RStep);
             Player_CharaRotate(3);
 
             g_SysWork.player_4C.chara_0.properties_E4.player.field_124 = FP_FLOAT_TO(0.25f, Q12_SHIFT);
             D_800C4608                                                 = FP_FLOAT_TO(0.25f, Q12_SHIFT);
             break;
 
-        case PlayerMovement_Walk_LStep:
-        case PlayerMovement_Aim_LStep:
+        case PlayerLowerMovement_Walk_LStep:
+        case PlayerLowerMovement_Aim_LStep:
             if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 > FP_FLOAT_TO(1.25f, Q12_SHIFT))
             {
                 g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= ((g_DeltaTime0 * FP_FLOAT_TO(0.4f, Q12_SHIFT)) / 136);
@@ -8255,36 +8255,36 @@ void Player_MovementsMain(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
                             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Unk10;
                             chara->model_0.stateStep_3                                  = 0;
                             chara->model_0.state_2                                      = 0;
-                            g_SysWork.player_4C.extra_128.playerMovement_24             = PlayerMovement_Attack;
+                            g_SysWork.player_4C.extra_128.playerLowerMovement_24             = PlayerLowerMovement_Attack;
                         }
                         else
                         {
-                            g_SysWork.player_4C.extra_128.playerMovement_24 = aimingState;
+                            g_SysWork.player_4C.extra_128.playerLowerMovement_24 = aimingState;
                         }
                     }
                     else
                     {
-                        g_SysWork.player_4C.extra_128.playerMovement_24 = aimingState;
+                        g_SysWork.player_4C.extra_128.playerLowerMovement_24 = aimingState;
                     }
                 }
-                else if (g_Player_IsRunning != 0 && aimingState == 0 && temp_s3 == PlayerMovement_None)
+                else if (g_Player_IsRunning != 0 && aimingState == 0 && temp_s3 == PlayerLowerMovement_None)
                 {
-                    if (g_SysWork.player_4C.extra_128.playerSubMovement_20 != 24)
+                    if (g_SysWork.player_4C.extra_128.playerUpperMovement_20 != 24)
                     {
-                        g_SysWork.player_4C.extra_128.playerMovement_24 = PlayerMovement_Run_LStep;
+                        g_SysWork.player_4C.extra_128.playerLowerMovement_24 = PlayerLowerMovement_Run_LStep;
                     }
                 }
             }
 
             Player_CharaTurn_1(chara, aimingState);
-            Player_MovementStateReset(chara, aimingState + PlayerMovement_Walk_LStep);
+            Player_MovementStateReset(chara, aimingState + PlayerLowerMovement_Walk_LStep);
             Player_CharaRotate(3);
 
             g_SysWork.player_4C.chara_0.properties_E4.player.field_124 = FP_FLOAT_TO(-0.25f, Q12_SHIFT);
             D_800C4608                                                 = FP_FLOAT_TO(-0.25f, Q12_SHIFT);
             break;
 
-        case PlayerMovement_Run_RStep:
+        case PlayerLowerMovement_Run_RStep:
             chara->properties_E4.player.properties_E4[6] += g_DeltaTime0;
             if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 > FP_FLOAT_TO(3.1739, Q12_SHIFT))
             {
@@ -8313,34 +8313,34 @@ void Player_MovementsMain(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
                 chara->field_34 = FP_FLOAT_TO(-1.0f, Q12_SHIFT);
             }
 
-            if (g_SysWork.player_4C.extra_128.playerSubMovement_20 != 22)
+            if (g_SysWork.player_4C.extra_128.playerUpperMovement_20 != 22)
             {
                 switch (temp_s3)
                 {
-                    case PlayerMovement_Walk_Forward:
+                    case PlayerLowerMovement_Walk_Forward:
                         if (chara->properties_E4.player.properties_E4[9] >= (u32)FP_METER(10.0f))
                         {
-                            g_SysWork.player_4C.extra_128.playerMovement_24 = PlayerMovement_Run_RStep_Stumble;
+                            g_SysWork.player_4C.extra_128.playerLowerMovement_24 = PlayerLowerMovement_Run_RStep_Stumble;
                         }
                         else
                         {
                             if (chara->model_0.anim_4.animIdx_0 == 17 && chara->model_0.anim_4.keyframeIdx0_8 >= 147)
                             {
-                                g_SysWork.player_4C.extra_128.playerMovement_24 = PlayerMovement_None;
+                                g_SysWork.player_4C.extra_128.playerLowerMovement_24 = PlayerLowerMovement_None;
                             }
                         }
                         break;
 
-                    case PlayerMovement_Run_Forward:
+                    case PlayerLowerMovement_Run_Forward:
                         if (chara->properties_E4.player.properties_E4[9] >= (u32)FP_METER(10.0f))
                         {
-                            g_SysWork.player_4C.extra_128.playerMovement_24 = PlayerMovement_Run_RStep_AbruptStop;
+                            g_SysWork.player_4C.extra_128.playerLowerMovement_24 = PlayerLowerMovement_Run_RStep_AbruptStop;
                         }
                         else
                         {
                             if (chara->model_0.anim_4.animIdx_0 == 17 && chara->model_0.anim_4.keyframeIdx0_8 >= 147)
                             {
-                                g_SysWork.player_4C.extra_128.playerMovement_24 = PlayerMovement_None;
+                                g_SysWork.player_4C.extra_128.playerLowerMovement_24 = PlayerLowerMovement_None;
                             }
                         }
                         break;
@@ -8351,26 +8351,26 @@ void Player_MovementsMain(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
                         {
                             if (chara->model_0.anim_4.keyframeIdx0_8 >= 144 && (g_Player_IsRunning == 0 || g_Player_IsStepping_Right_Hold == 0))
                             {
-                                g_SysWork.player_4C.extra_128.playerMovement_24 = PlayerMovement_Run_RStep_AbruptStop;
+                                g_SysWork.player_4C.extra_128.playerLowerMovement_24 = PlayerLowerMovement_Run_RStep_AbruptStop;
                             }
                         }
                         else if (chara->model_0.anim_4.animIdx_0 == 17 && chara->model_0.anim_4.keyframeIdx0_8 >= 147 &&
                                  (g_Player_IsRunning == 0 || g_Player_IsStepping_Right_Hold == 0))
                         {
-                            g_SysWork.player_4C.extra_128.playerMovement_24 = PlayerMovement_None;
+                            g_SysWork.player_4C.extra_128.playerLowerMovement_24 = PlayerLowerMovement_None;
                         }
                         break;
                 }
             }
 
-            Player_MovementStateReset(chara, PlayerMovement_Run_RStep);
+            Player_MovementStateReset(chara, PlayerLowerMovement_Run_RStep);
             Player_CharaRotate(4);
 
             g_SysWork.player_4C.chara_0.properties_E4.player.field_124 = FP_FLOAT_TO(0.25f, Q12_SHIFT);
             D_800C4608                                                 = FP_FLOAT_TO(0.25f, Q12_SHIFT);
             break;
 
-        case PlayerMovement_Run_LStep:
+        case PlayerLowerMovement_Run_LStep:
             chara->properties_E4.player.properties_E4[6] += g_DeltaTime0;
             if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 >= 0x32C9)
             {
@@ -8398,35 +8398,35 @@ void Player_MovementsMain(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
                 chara->field_34 = FP_FLOAT_TO(-1.0f, Q12_SHIFT);
             }
 
-            if (g_SysWork.player_4C.extra_128.playerSubMovement_20 != 22)
+            if (g_SysWork.player_4C.extra_128.playerUpperMovement_20 != 22)
             {
                 switch (temp_s3)
                 {
-                    case PlayerMovement_Walk_Forward:
+                    case PlayerLowerMovement_Walk_Forward:
                         if (chara->properties_E4.player.properties_E4[9] >= (u32)FP_METER(10.0f))
                         {
-                            g_SysWork.player_4C.extra_128.playerMovement_24 = PlayerMovement_Run_LStep_Stumble;
+                            g_SysWork.player_4C.extra_128.playerLowerMovement_24 = PlayerLowerMovement_Run_LStep_Stumble;
                         }
                         else
                         {
                             if (chara->model_0.anim_4.animIdx_0 == 15 &&
                                 chara->model_0.anim_4.keyframeIdx0_8 >= 0x84)
                             {
-                                g_SysWork.player_4C.extra_128.playerMovement_24 = PlayerMovement_None;
+                                g_SysWork.player_4C.extra_128.playerLowerMovement_24 = PlayerLowerMovement_None;
                             }
                         }
                         break;
 
-                    case PlayerMovement_Run_Forward:
+                    case PlayerLowerMovement_Run_Forward:
                         if (chara->properties_E4.player.properties_E4[9] >= (u32)FP_METER(10.0f))
                         {
-                            g_SysWork.player_4C.extra_128.playerMovement_24 = PlayerMovement_Run_LStep_AbruptStop;
+                            g_SysWork.player_4C.extra_128.playerLowerMovement_24 = PlayerLowerMovement_Run_LStep_AbruptStop;
                         }
                         else
                         {
                             if (chara->model_0.anim_4.animIdx_0 == 15 && chara->model_0.anim_4.keyframeIdx0_8 >= 132)
                             {
-                                g_SysWork.player_4C.extra_128.playerMovement_24 = PlayerMovement_None;
+                                g_SysWork.player_4C.extra_128.playerLowerMovement_24 = PlayerLowerMovement_None;
                             }
                         }
                         break;
@@ -8437,27 +8437,27 @@ void Player_MovementsMain(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
                         {
                             if (chara->model_0.anim_4.keyframeIdx0_8 > 128 && (g_Player_IsRunning == 0 || g_Player_IsStepping_Left_Hold == 0))
                             {
-                                g_SysWork.player_4C.extra_128.playerMovement_24 =PlayerMovement_Run_LStep_AbruptStop;
+                                g_SysWork.player_4C.extra_128.playerLowerMovement_24 =PlayerLowerMovement_Run_LStep_AbruptStop;
                             }
                         }
                         else if (chara->model_0.anim_4.animIdx_0 == 15 && chara->model_0.anim_4.keyframeIdx0_8 >= 132 &&
                                  (g_Player_IsRunning == 0 || g_Player_IsStepping_Left_Hold == 0))
                         {
-                            g_SysWork.player_4C.extra_128.playerMovement_24 = PlayerMovement_None;
+                            g_SysWork.player_4C.extra_128.playerLowerMovement_24 = PlayerLowerMovement_None;
                         }
                         break;
                 }
             }
 
-            Player_MovementStateReset(chara, PlayerMovement_Run_LStep);
+            Player_MovementStateReset(chara, PlayerLowerMovement_Run_LStep);
             Player_CharaRotate(4);
 
             g_SysWork.player_4C.chara_0.properties_E4.player.field_124 = FP_FLOAT_TO(-0.25f, Q12_SHIFT);
             D_800C4608                                                 = FP_FLOAT_TO(-0.25f, Q12_SHIFT);
             break;
 
-        case PlayerMovement_QuickTurn_Right:
-        case PlayerMovement_Aim_QuickTurn_Right:
+        case PlayerLowerMovement_QuickTurn_Right:
+        case PlayerLowerMovement_Aim_QuickTurn_Right:
             D_800C4608 = FP_FLOAT_TO(0.0f, Q12_SHIFT);
 
             if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 != 0)
@@ -8509,11 +8509,11 @@ void Player_MovementsMain(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
                         {
                             if (g_Player_IsRunning != 0 && aimingState == 0)
                             {
-                                g_SysWork.player_4C.extra_128.playerMovement_24 = PlayerMovement_Run_Forward;
+                                g_SysWork.player_4C.extra_128.playerLowerMovement_24 = PlayerLowerMovement_Run_Forward;
                             }
                             else
                             {
-                                g_SysWork.player_4C.extra_128.playerMovement_24 = aimingState + PlayerMovement_Walk_Forward;
+                                g_SysWork.player_4C.extra_128.playerLowerMovement_24 = aimingState + PlayerLowerMovement_Walk_Forward;
                             }
 
                             chara->model_0.stateStep_3 = 0;
@@ -8523,11 +8523,11 @@ void Player_MovementsMain(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
                         {
                             if (g_Player_IsRunning != 0 && aimingState == 0)
                             {
-                                g_SysWork.player_4C.extra_128.playerMovement_24 = PlayerMovement_Run_BackwardJump;
+                                g_SysWork.player_4C.extra_128.playerLowerMovement_24 = PlayerLowerMovement_Run_BackwardJump;
                             }
                             else
                             {
-                                g_SysWork.player_4C.extra_128.playerMovement_24 = aimingState + PlayerMovement_Walk_Backward;
+                                g_SysWork.player_4C.extra_128.playerLowerMovement_24 = aimingState + PlayerLowerMovement_Walk_Backward;
                             }
 
                             chara->model_0.stateStep_3 = 0;
@@ -8539,11 +8539,11 @@ void Player_MovementsMain(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
 
                             if (g_Player_IsRunning != 0 && aimingState == 0)
                             {
-                                g_SysWork.player_4C.extra_128.playerMovement_24 = PlayerMovement_Run_RStep;
+                                g_SysWork.player_4C.extra_128.playerLowerMovement_24 = PlayerLowerMovement_Run_RStep;
                             }
                             else
                             {
-                                g_SysWork.player_4C.extra_128.playerMovement_24 = aimingState + PlayerMovement_Walk_RStep;
+                                g_SysWork.player_4C.extra_128.playerLowerMovement_24 = aimingState + PlayerLowerMovement_Walk_RStep;
                             }
 
                             chara->model_0.stateStep_3 = 0;
@@ -8555,11 +8555,11 @@ void Player_MovementsMain(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
 
                             if (g_Player_IsRunning != 0 && aimingState == 0)
                             {
-                                g_SysWork.player_4C.extra_128.playerMovement_24 = PlayerMovement_Run_LStep;
+                                g_SysWork.player_4C.extra_128.playerLowerMovement_24 = PlayerLowerMovement_Run_LStep;
                             }
                             else
                             {
-                                g_SysWork.player_4C.extra_128.playerMovement_24 = aimingState + PlayerMovement_Walk_LStep;
+                                g_SysWork.player_4C.extra_128.playerLowerMovement_24 = aimingState + PlayerLowerMovement_Walk_LStep;
                             }
 
                             chara->model_0.stateStep_3 = 0;
@@ -8567,7 +8567,7 @@ void Player_MovementsMain(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
                         }
                         else if (chara->model_0.anim_4.keyframeIdx0_8 >= 216)
                         {
-                            g_SysWork.player_4C.extra_128.playerMovement_24 = aimingState;
+                            g_SysWork.player_4C.extra_128.playerLowerMovement_24 = aimingState;
                             chara->model_0.stateStep_3                      = 0;
                             chara->model_0.state_2                          = 0;
                         }
@@ -8579,8 +8579,8 @@ void Player_MovementsMain(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
             D_800C4608                                                 = FP_FLOAT_TO(0.0f, Q12_SHIFT);
             break;
 
-        case PlayerMovement_QuickTurn_Left:
-        case PlayerMovement_Aim_QuickTurn_Left:
+        case PlayerLowerMovement_QuickTurn_Left:
+        case PlayerLowerMovement_Aim_QuickTurn_Left:
             D_800C4608 = FP_FLOAT_TO(0.0f, Q12_SHIFT);
 
             if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 != 0)
@@ -8632,11 +8632,11 @@ void Player_MovementsMain(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
                         {
                             if (g_Player_IsRunning != 0 && aimingState == 0)
                             {
-                                g_SysWork.player_4C.extra_128.playerMovement_24 = PlayerMovement_Run_Forward;
+                                g_SysWork.player_4C.extra_128.playerLowerMovement_24 = PlayerLowerMovement_Run_Forward;
                             }
                             else
                             {
-                                g_SysWork.player_4C.extra_128.playerMovement_24 = aimingState + PlayerMovement_Walk_Forward;
+                                g_SysWork.player_4C.extra_128.playerLowerMovement_24 = aimingState + PlayerLowerMovement_Walk_Forward;
                             }
 
                             chara->model_0.stateStep_3 = 0;
@@ -8646,11 +8646,11 @@ void Player_MovementsMain(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
                         {
                             if (g_Player_IsRunning != 0 && aimingState == 0)
                             {
-                                g_SysWork.player_4C.extra_128.playerMovement_24 = PlayerMovement_Run_BackwardJump;
+                                g_SysWork.player_4C.extra_128.playerLowerMovement_24 = PlayerLowerMovement_Run_BackwardJump;
                             }
                             else
                             {
-                                g_SysWork.player_4C.extra_128.playerMovement_24 = aimingState + PlayerMovement_Walk_Backward;
+                                g_SysWork.player_4C.extra_128.playerLowerMovement_24 = aimingState + PlayerLowerMovement_Walk_Backward;
                             }
 
                             chara->model_0.stateStep_3 = 0;
@@ -8662,11 +8662,11 @@ void Player_MovementsMain(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
 
                             if (g_Player_IsRunning != 0 && aimingState == 0)
                             {
-                                g_SysWork.player_4C.extra_128.playerMovement_24 = PlayerMovement_Run_RStep;
+                                g_SysWork.player_4C.extra_128.playerLowerMovement_24 = PlayerLowerMovement_Run_RStep;
                             }
                             else
                             {
-                                g_SysWork.player_4C.extra_128.playerMovement_24 = aimingState + PlayerMovement_Walk_RStep;
+                                g_SysWork.player_4C.extra_128.playerLowerMovement_24 = aimingState + PlayerLowerMovement_Walk_RStep;
                             }
 
                             chara->model_0.stateStep_3 = 0;
@@ -8678,11 +8678,11 @@ void Player_MovementsMain(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
 
                             if (g_Player_IsRunning != 0 && aimingState == 0)
                             {
-                                g_SysWork.player_4C.extra_128.playerMovement_24 = PlayerMovement_Run_LStep;
+                                g_SysWork.player_4C.extra_128.playerLowerMovement_24 = PlayerLowerMovement_Run_LStep;
                             }
                             else
                             {
-                                g_SysWork.player_4C.extra_128.playerMovement_24 = aimingState + PlayerMovement_Walk_LStep;
+                                g_SysWork.player_4C.extra_128.playerLowerMovement_24 = aimingState + PlayerLowerMovement_Walk_LStep;
                             }
 
                             chara->model_0.stateStep_3 = 0;
@@ -8690,7 +8690,7 @@ void Player_MovementsMain(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
                         }
                         else if (chara->model_0.anim_4.keyframeIdx0_8 >= 229)
                         {
-                            g_SysWork.player_4C.extra_128.playerMovement_24 = aimingState;
+                            g_SysWork.player_4C.extra_128.playerLowerMovement_24 = aimingState;
                             chara->model_0.stateStep_3                      = 0;
                             chara->model_0.state_2                          = 0;
                         }
@@ -8702,7 +8702,7 @@ void Player_MovementsMain(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
             D_800C4608                                                 = FP_FLOAT_TO(0.0f, Q12_SHIFT);
             break;
             
-        case PlayerMovement_Run_BackwardJump:
+        case PlayerLowerMovement_Run_BackwardJump:
             if (chara->model_0.stateStep_3 == 0)
             {
                 chara->model_0.anim_4.animIdx_0 = 32;
@@ -8739,20 +8739,20 @@ void Player_MovementsMain(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
             {
                 if (chara->position_18.vy < chara->properties_E4.player.properties_E4[2])
                 {
-                    g_SysWork.player_4C.extra_128.field_1C = 4;
+                    g_SysWork.player_4C.extra_128.playerState_1C = 4;
 
                     chara->model_0.stateStep_3 = 0;
                     chara->model_0.state_2     = 0;
                     extra->model_0.stateStep_3 = 0;
                     extra->model_0.state_2     = 0;
 
-                    g_SysWork.player_4C.extra_128.playerSubMovement_20                      = 0;
-                    g_SysWork.player_4C.extra_128.playerMovement_24                         = PlayerMovement_None;
+                    g_SysWork.player_4C.extra_128.playerUpperMovement_20                      = 0;
+                    g_SysWork.player_4C.extra_128.playerLowerMovement_24                         = PlayerLowerMovement_None;
                     g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = FP_FLOAT_TO(1.25f, Q12_SHIFT);
                 }
                 else 
                 {
-                    g_SysWork.player_4C.extra_128.playerMovement_24 = aimingState;
+                    g_SysWork.player_4C.extra_128.playerLowerMovement_24 = aimingState;
                     chara->model_0.stateStep_3                      = 0;
                     chara->model_0.state_2                          = 0;
                     chara->field_34                                 = FP_FLOAT_TO(0.0f, Q12_SHIFT);
@@ -8763,7 +8763,7 @@ void Player_MovementsMain(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
             D_800C4608                                                 = FP_FLOAT_TO(0.5f, Q12_SHIFT);
             break;
 
-        case PlayerMovement_Stumble:
+        case PlayerLowerMovement_Stumble:
             if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 != 0)
             {
                 g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= ((((g_DeltaTime0 * FP_FLOAT_TO(0.4f, Q12_SHIFT)) / 136) * 2) / 3);
@@ -8790,20 +8790,20 @@ void Player_MovementsMain(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
 
             if (chara->model_0.anim_4.animIdx_0 == 23 && chara->model_0.anim_4.keyframeIdx0_8 == 179)
             {
-                g_SysWork.player_4C.extra_128.playerMovement_24 = PlayerMovement_None;
-                Player_MovementStateReset(chara, PlayerMovement_Stumble);
+                g_SysWork.player_4C.extra_128.playerLowerMovement_24 = PlayerLowerMovement_None;
+                Player_MovementStateReset(chara, PlayerLowerMovement_Stumble);
             }
             break;
 
-        case PlayerMovement_Run_LStep_AbruptStop:
-            Player_StepAbruptStop_MovementCancel(chara, 36, 37, 335, PlayerMovement_Run_LStep_AbruptStop, FP_FLOAT_TO(-0.25f, Q12_SHIFT), aimingState);
+        case PlayerLowerMovement_Run_LStep_AbruptStop:
+            Player_StepAbruptStop_MovementCancel(chara, 36, 37, 335, PlayerLowerMovement_Run_LStep_AbruptStop, FP_FLOAT_TO(-0.25f, Q12_SHIFT), aimingState);
             break;
 
-        case PlayerMovement_Run_RStep_AbruptStop:
-            Player_StepAbruptStop_MovementCancel(chara, 40, 41, 364, PlayerMovement_Run_RStep_AbruptStop, FP_FLOAT_TO(0.25f, Q12_SHIFT), aimingState);
+        case PlayerLowerMovement_Run_RStep_AbruptStop:
+            Player_StepAbruptStop_MovementCancel(chara, 40, 41, 364, PlayerLowerMovement_Run_RStep_AbruptStop, FP_FLOAT_TO(0.25f, Q12_SHIFT), aimingState);
             break;
 
-        case PlayerMovement_Run_LStep_Stumble:
+        case PlayerLowerMovement_Run_LStep_Stumble:
             if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 != 0)
             {
                 g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= ((g_DeltaTime0 * FP_FLOAT_TO(0.4f, Q12_SHIFT)) / 136) >> 2;
@@ -8826,11 +8826,11 @@ void Player_MovementsMain(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
 
             if (chara->model_0.anim_4.animIdx_0 == 39 && chara->model_0.anim_4.keyframeIdx0_8 == 349)
             {
-                g_SysWork.player_4C.extra_128.playerMovement_24 = PlayerMovement_None;
+                g_SysWork.player_4C.extra_128.playerLowerMovement_24 = PlayerLowerMovement_None;
                 Player_MovementStateReset(chara, 15);
             }
 
-            if (g_SysWork.player_4C.extra_128.playerMovement_24 != PlayerMovement_None)
+            if (g_SysWork.player_4C.extra_128.playerLowerMovement_24 != PlayerLowerMovement_None)
             {
                 g_SysWork.player_4C.chara_0.properties_E4.player.field_124 = FP_FLOAT_TO(-0.25f, Q12_SHIFT);
                 D_800C4608                                                 = FP_FLOAT_TO(-0.25f, Q12_SHIFT);
@@ -8841,7 +8841,7 @@ void Player_MovementsMain(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
             D_800C4608                                                 = FP_FLOAT_TO(0.0f, Q12_SHIFT);
             break;
 
-        case PlayerMovement_Run_RStep_Stumble:
+        case PlayerLowerMovement_Run_RStep_Stumble:
             if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 != 0)
             {
                 g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= ((g_DeltaTime0 * FP_FLOAT_TO(0.4f, Q12_SHIFT)) / 136) >> 2;
@@ -8864,11 +8864,11 @@ void Player_MovementsMain(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
 
             if (chara->model_0.anim_4.animIdx_0 == 43 && chara->model_0.anim_4.keyframeIdx0_8 == 378)
             {
-                g_SysWork.player_4C.extra_128.playerMovement_24 = PlayerMovement_None;
+                g_SysWork.player_4C.extra_128.playerLowerMovement_24 = PlayerLowerMovement_None;
                 Player_MovementStateReset(chara, 16);
             }
 
-            if (g_SysWork.player_4C.extra_128.playerMovement_24 == PlayerMovement_None)
+            if (g_SysWork.player_4C.extra_128.playerLowerMovement_24 == PlayerLowerMovement_None)
             {
                 g_SysWork.player_4C.chara_0.properties_E4.player.field_124 = 0;
                 D_800C4608                                                 = FP_FLOAT_TO(0.0f, Q12_SHIFT);
@@ -8879,7 +8879,7 @@ void Player_MovementsMain(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
             D_800C4608                                                 = FP_FLOAT_TO(0.25f, Q12_SHIFT);
             break;
 
-        case PlayerMovement_Attack:
+        case PlayerLowerMovement_Attack:
 		    // If weapon is the katana.
             if (g_SysWork.playerCombatInfo_38.equippedWeapon_F < EquippedWeaponId_Handgun && (g_SysWork.playerCombatInfo_38.equippedWeapon_F % 10) == EquippedWeaponId_Katana)
             {
@@ -8926,7 +8926,7 @@ void Player_MovementsMain(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
             {
                 if (g_SysWork.playerCombatInfo_38.equippedWeapon_F >= EquippedWeaponId_Handgun)
                 {
-                    if (g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & PlayerFlag_Attacking)
+                    if (g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & PlayerFlag_Unk11)
                     {
                         if (chara->model_0.stateStep_3 == 0)
                         {
@@ -9042,39 +9042,39 @@ void Player_MovementsMain(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
                         {
                             if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 == 0)
                             {
-                                g_SysWork.player_4C.extra_128.playerMovement_24 = PlayerMovement_Aim_Walk_Backward;
+                                g_SysWork.player_4C.extra_128.playerLowerMovement_24 = PlayerLowerMovement_Aim_Walk_Backward;
                             }
                         }
-                        else if (g_SysWork.player_4C.extra_128.field_1C != 1)
+                        else if (g_SysWork.player_4C.extra_128.playerState_1C != 1)
                         {
                             if (g_Player_IsStepping_Right_Hold == 0)
                             {
                                 if (g_Player_IsStepping_Left_Hold != 0)
                                 {
-                                    g_SysWork.player_4C.extra_128.playerMovement_24 = PlayerMovement_Aim_LStep;
+                                    g_SysWork.player_4C.extra_128.playerLowerMovement_24 = PlayerLowerMovement_Aim_LStep;
                                 }
                             }
                             else
                             {
-                                g_SysWork.player_4C.extra_128.playerMovement_24 = PlayerMovement_Aim_RStep;
+                                g_SysWork.player_4C.extra_128.playerLowerMovement_24 = PlayerLowerMovement_Aim_RStep;
                             }
                         }
                     }
                     else
                     {
-                        g_SysWork.player_4C.extra_128.playerMovement_24 = PlayerMovement_Aim_Walk_Forward;
+                        g_SysWork.player_4C.extra_128.playerLowerMovement_24 = PlayerLowerMovement_Aim_Walk_Forward;
                     }
                     
-                    if (g_SysWork.player_4C.extra_128.playerMovement_24 != PlayerMovement_Attack)
+                    if (g_SysWork.player_4C.extra_128.playerLowerMovement_24 != PlayerLowerMovement_Attack)
                     {
-                        Player_MovementStateReset(chara, PlayerMovement_Aim);
+                        Player_MovementStateReset(chara, PlayerLowerMovement_Aim);
                         break;
                     }
                 }
             }
             break;
 
-        case PlayerMovement_Reload:
+        case PlayerLowerMovement_Reload:
             if (chara->model_0.stateStep_3 == 0)
             {
                 chara->model_0.anim_4.animIdx_0 = 62;
@@ -9086,30 +9086,30 @@ void Player_MovementsMain(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
             {
                 if (g_Player_IsMovingForward != 0)
                 {
-                    g_SysWork.player_4C.extra_128.playerMovement_24 = PlayerMovement_Aim_Walk_Forward;
+                    g_SysWork.player_4C.extra_128.playerLowerMovement_24 = PlayerLowerMovement_Aim_Walk_Forward;
                 }
                 else if (g_Player_IsMovingBackward != 0)
                 {
                     if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 == 0)
                     {
-                        g_SysWork.player_4C.extra_128.playerMovement_24 = PlayerMovement_Aim_Walk_Backward;
+                        g_SysWork.player_4C.extra_128.playerLowerMovement_24 = PlayerLowerMovement_Aim_Walk_Backward;
                     }
                 }
-                else if (g_SysWork.player_4C.extra_128.field_1C != 1)
+                else if (g_SysWork.player_4C.extra_128.playerState_1C != 1)
                 {
                     if (g_Player_IsStepping_Right_Hold != 0)
                     {
-                        g_SysWork.player_4C.extra_128.playerMovement_24 = PlayerMovement_Aim_RStep;
+                        g_SysWork.player_4C.extra_128.playerLowerMovement_24 = PlayerLowerMovement_Aim_RStep;
                     }
                     else if (g_Player_IsStepping_Left_Hold != 0)
                     {
-                        g_SysWork.player_4C.extra_128.playerMovement_24 = PlayerMovement_Aim_LStep;
+                        g_SysWork.player_4C.extra_128.playerLowerMovement_24 = PlayerLowerMovement_Aim_LStep;
                     }
                 }
 
-                if (g_SysWork.player_4C.extra_128.playerMovement_24 != PlayerMovement_Reload)
+                if (g_SysWork.player_4C.extra_128.playerLowerMovement_24 != PlayerLowerMovement_Reload)
                 {
-                    Player_MovementStateReset(chara, PlayerMovement_Aim);
+                    Player_MovementStateReset(chara, PlayerLowerMovement_Aim);
                 }
             }
             break;
@@ -9127,28 +9127,28 @@ void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
     func_8007FDE0(D_800C4590.field_14, &sp18, &sp1C, &sp1D);
 
 	// This entire conditional is the reason why movement stop working when removing this function call.
-    if (g_SysWork.player_4C.extra_128.playerMovement_24 != PlayerMovement_Run_BackwardJump && g_SysWork.player_4C.extra_128.playerMovement_24 != PlayerMovement_Reload)
+    if (g_SysWork.player_4C.extra_128.playerLowerMovement_24 != PlayerLowerMovement_Run_BackwardJump && g_SysWork.player_4C.extra_128.playerLowerMovement_24 != PlayerLowerMovement_Reload)
     {
         D_800C4550 = g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126;
     }
 	
-    switch (g_SysWork.player_4C.extra_128.playerMovement_24)
+    switch (g_SysWork.player_4C.extra_128.playerLowerMovement_24)
     {
-        case PlayerMovement_Run_Forward:
-        case PlayerMovement_Run_RStep:
-        case PlayerMovement_Run_LStep:
+        case PlayerLowerMovement_Run_Forward:
+        case PlayerLowerMovement_Run_RStep:
+        case PlayerLowerMovement_Run_LStep:
             if (chara->model_0.anim_4.animIdx_0 & 1 && chara->model_0.anim_4.animIdx_0 >= 7)
             {
                 chara->properties_E4.player.properties_E4[6] += g_DeltaTime0;
             }
             break;
 
-        case PlayerMovement_None:
-        case PlayerMovement_Run_AbruptStop:
-        case PlayerMovement_Stumble:
-        case PlayerMovement_Run_LStep_Stumble:
-        case PlayerMovement_Run_RStep_Stumble:
-        case PlayerMovement_Aim:
+        case PlayerLowerMovement_None:
+        case PlayerLowerMovement_Run_AbruptStop:
+        case PlayerLowerMovement_Stumble:
+        case PlayerLowerMovement_Run_LStep_Stumble:
+        case PlayerLowerMovement_Run_RStep_Stumble:
+        case PlayerLowerMovement_Aim:
             chara->properties_E4.player.properties_E4[6] -= g_DeltaTime0 * 2;
             break;
 
@@ -9177,15 +9177,15 @@ void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
     }
 	
 	// Plays movement sounds.
-    switch (g_SysWork.player_4C.extra_128.playerMovement_24)
+    switch (g_SysWork.player_4C.extra_128.playerLowerMovement_24)
     {
-        case PlayerMovement_None:
-        case PlayerMovement_Aim:
-            if (g_SysWork.player_4C.extra_128.playerSubMovement_20 == 11) // Player is rotating to the left.
+        case PlayerLowerMovement_None:
+        case PlayerLowerMovement_Aim:
+            if (g_SysWork.player_4C.extra_128.playerUpperMovement_20 == 11) // Player is rotating to the left.
             {
                 func_800713E8(27, chara, 204, 200, sp18, sp1C);
             }
-            else if (g_SysWork.player_4C.extra_128.playerSubMovement_20 == 12) // Player is rotating to the right.
+            else if (g_SysWork.player_4C.extra_128.playerUpperMovement_20 == 12) // Player is rotating to the right.
             {
                 func_800713E8(25, chara, 187, 191, sp18, sp1C);
             }
@@ -9214,19 +9214,19 @@ void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
         default:
             break;
 
-        case PlayerMovement_Walk_Backward:
-        case PlayerMovement_Aim_Walk_Backward:
+        case PlayerLowerMovement_Walk_Backward:
+        case PlayerLowerMovement_Aim_Walk_Backward:
             func_800713E8(9, chara, 52, 63, sp18, sp1C);
             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Moving;
             break;
 
-        case PlayerMovement_Aim_Walk_Forward:
-        case PlayerMovement_Walk_Forward:
+        case PlayerLowerMovement_Aim_Walk_Forward:
+        case PlayerLowerMovement_Walk_Forward:
             func_800713E8(5, chara, 18, 6, sp18, sp1C);
             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Moving;
             break;
 
-        case PlayerMovement_Run_Forward:
+        case PlayerLowerMovement_Run_Forward:
             if (func_800713E8(7, chara, 31, 41, sp18, sp1D) != 0)
             {
                 chara->properties_E4.player.properties_E4[5]++;
@@ -9235,17 +9235,17 @@ void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Moving;
             break;
 
-        case PlayerMovement_Walk_RStep:
+        case PlayerLowerMovement_Walk_RStep:
             func_800713E8(13, chara, 118, 108, sp18, sp1C);
             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Moving;
             break;
 
-        case PlayerMovement_Walk_LStep:
+        case PlayerLowerMovement_Walk_LStep:
             func_800713E8(11, chara, 93, 83, sp18, sp1C);
             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Moving;
             break;
 
-        case PlayerMovement_Run_RStep:
+        case PlayerLowerMovement_Run_RStep:
             if (func_800713E8(17, chara, 145, 139, sp18, sp1D) != 0)
             {
                 chara->properties_E4.player.properties_E4[5]++;
@@ -9254,7 +9254,7 @@ void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Moving;
             break;
 
-        case PlayerMovement_Run_LStep:
+        case PlayerLowerMovement_Run_LStep:
             if (func_800713E8(15, chara, 131, 125, sp18, sp1D) != 0)
             {
                 chara->properties_E4.player.properties_E4[5]++;
@@ -9263,7 +9263,7 @@ void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Moving;
             break;
 
-        case PlayerMovement_Run_AbruptStop:
+        case PlayerLowerMovement_Run_AbruptStop:
             if (g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & PlayerFlag_AbruptStopAnimKind)
             {
                 if (chara->model_0.anim_4.keyframeIdx0_8 < 152)
@@ -9290,7 +9290,7 @@ void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Moving;
             break;
 
-        case PlayerMovement_Run_LStep_AbruptStop:
+        case PlayerLowerMovement_Run_LStep_AbruptStop:
             if (chara->model_0.anim_4.keyframeIdx0_8 < 323)
             {
                 func_800713E8(37, chara, 322, 324, sp18, sp1D);
@@ -9303,7 +9303,7 @@ void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Moving;
             break;
 
-        case PlayerMovement_Run_RStep_AbruptStop:
+        case PlayerLowerMovement_Run_RStep_AbruptStop:
             if (chara->model_0.anim_4.keyframeIdx0_8 < 352)
             {
                 func_800713E8(41, chara, 353, 351, sp18, sp1D);
@@ -9316,7 +9316,7 @@ void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Moving;
             break;
 
-        case PlayerMovement_Stumble:
+        case PlayerLowerMovement_Stumble:
             if (chara->model_0.anim_4.keyframeIdx0_8 < 172)
             {
                 func_800713E8(23, chara, 171, 174, sp18, sp1D);
@@ -9329,7 +9329,7 @@ void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Moving;
             break;
 
-        case PlayerMovement_Run_LStep_Stumble:
+        case PlayerLowerMovement_Run_LStep_Stumble:
             if (chara->model_0.anim_4.keyframeIdx0_8 < 338)
             {
                 func_800713E8(39, chara, 337, 341, sp18, sp1C);
@@ -9346,7 +9346,7 @@ void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Moving;
             break;
 
-        case PlayerMovement_Run_RStep_Stumble:
+        case PlayerLowerMovement_Run_RStep_Stumble:
             if (chara->model_0.anim_4.keyframeIdx0_8 < 367)
             {
                 func_800713E8(43, chara, 366, 370, sp18, sp1C);
@@ -9363,20 +9363,20 @@ void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Moving;
             break;
 
-        case PlayerMovement_QuickTurn_Left:
-        case PlayerMovement_Aim_QuickTurn_Left:
+        case PlayerLowerMovement_QuickTurn_Left:
+        case PlayerLowerMovement_Aim_QuickTurn_Left:
             func_800713E8(31, chara, 222, 224, sp18, sp1C);
             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Moving;
             break;
 
-        case PlayerMovement_QuickTurn_Right:
-        case PlayerMovement_Aim_QuickTurn_Right:
+        case PlayerLowerMovement_QuickTurn_Right:
+        case PlayerLowerMovement_Aim_QuickTurn_Right:
             func_800713E8(29, chara, 209, 211, sp18, sp1C);
             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Moving;
             break;
 
-        case PlayerMovement_Run_BackwardJump:
-        case PlayerMovement_Unk31:
+        case PlayerLowerMovement_Run_BackwardJump:
+        case PlayerLowerMovement_Unk31:
             if (chara->model_0.anim_4.keyframeIdx0_8 < 243)
             {
                 g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk5;
@@ -9486,9 +9486,9 @@ void func_8007C0D8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
     chara->position_18.vy += D_800C4590.field_0.vy;
     chara->position_18.vz += D_800C4590.field_0.vz;
 
-    if (g_SysWork.player_4C.extra_128.playerSubMovement_20 == 2 ||
-        g_SysWork.player_4C.extra_128.playerSubMovement_20 == 6 ||
-        g_SysWork.player_4C.extra_128.playerSubMovement_20 == 7)
+    if (g_SysWork.player_4C.extra_128.playerUpperMovement_20 == 2 ||
+        g_SysWork.player_4C.extra_128.playerUpperMovement_20 == 6 ||
+        g_SysWork.player_4C.extra_128.playerUpperMovement_20 == 7)
     {
         chara->properties_E4.player.properties_E4[9] += SquareRoot0(SQUARE(D_800C4590.field_0.vx) +
                                                                     SQUARE(D_800C4590.field_0.vy) +
@@ -9517,7 +9517,7 @@ void func_8007C0D8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
 
     someAngle = FP_ANGLE_NORM_U(ratan2(chara->position_18.vx - D_800C45F8.vx, chara->position_18.vz - D_800C45F8.vz) + FP_ANGLE(360.0f));
 
-    if (!(g_SysWork.player_4C.extra_128.field_1C >= 3 && g_SysWork.player_4C.extra_128.field_1C < 5))
+    if (!(g_SysWork.player_4C.extra_128.playerState_1C >= 3 && g_SysWork.player_4C.extra_128.playerState_1C < 5))
     {
         if (!g_Player_IsInWalkToRunTransition)
         {
@@ -9527,26 +9527,26 @@ void func_8007C0D8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
                 if (ABS_DIFF(chara->rotation_24.vy, someAngle) >= FP_ANGLE(90.0f) &&
                     ABS_DIFF(chara->rotation_24.vy, someAngle) <  FP_ANGLE(270.0f))
                 {
-                    if (g_SysWork.player_4C.extra_128.playerMovement_24 != PlayerMovement_Run_BackwardJump)
+                    if (g_SysWork.player_4C.extra_128.playerLowerMovement_24 != PlayerLowerMovement_Run_BackwardJump)
                     {
-                        g_SysWork.player_4C.extra_128.field_1C             = 4;
+                        g_SysWork.player_4C.extra_128.playerState_1C             = 4;
                         chara->model_0.stateStep_3                         = 0;
                         chara->model_0.state_2                             = 0;
                         extra->model_0.stateStep_3                         = 0;
                         extra->model_0.state_2                             = 0;
-                        g_SysWork.player_4C.extra_128.playerSubMovement_20 = 0;
-                        g_SysWork.player_4C.extra_128.playerMovement_24    = PlayerMovement_None;
+                        g_SysWork.player_4C.extra_128.playerUpperMovement_20 = 0;
+                        g_SysWork.player_4C.extra_128.playerLowerMovement_24    = PlayerLowerMovement_None;
                     }
                 }
                 else
                 {
-                    g_SysWork.player_4C.extra_128.field_1C             = 3;
+                    g_SysWork.player_4C.extra_128.playerState_1C             = 3;
                     chara->model_0.stateStep_3                         = 0;
                     chara->model_0.state_2                             = 0;
                     extra->model_0.stateStep_3                         = 0;
                     extra->model_0.state_2                             = 0;
-                    g_SysWork.player_4C.extra_128.playerSubMovement_20 = 0;
-                    g_SysWork.player_4C.extra_128.playerMovement_24    = PlayerMovement_None;
+                    g_SysWork.player_4C.extra_128.playerUpperMovement_20 = 0;
+                    g_SysWork.player_4C.extra_128.playerLowerMovement_24    = PlayerLowerMovement_None;
                 }
 
                 g_SysWork.playerCombatInfo_38.isAiming_13 = false;
@@ -9598,7 +9598,7 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
         return;
     }
 
-    switch (g_SysWork.player_4C.extra_128.field_1C)
+    switch (g_SysWork.player_4C.extra_128.playerState_1C)
     {
         case PlayerState_Unk3:
         case PlayerState_Unk4:
@@ -9665,13 +9665,13 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
             if (chara->field_41 == 47)
             {
                 g_SysWork.player_4C.chara_0.field_D6               = 0;
-                g_SysWork.player_4C.extra_128.field_1C             = 9;
+                g_SysWork.player_4C.extra_128.playerState_1C             = 9;
                 chara->model_0.stateStep_3                         = 0;
                 chara->model_0.state_2                             = 0;
                 extra->model_0.stateStep_3                         = 0;
                 extra->model_0.state_2                             = 0;
-                g_SysWork.player_4C.extra_128.playerSubMovement_20 = 0;
-                g_SysWork.player_4C.extra_128.playerMovement_24    = PlayerMovement_None;
+                g_SysWork.player_4C.extra_128.playerUpperMovement_20 = 0;
+                g_SysWork.player_4C.extra_128.playerLowerMovement_24    = PlayerLowerMovement_None;
                 return;
             }
 
@@ -9708,8 +9708,8 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
                 func_8004C564(2, 3);
             }
 
-            if (g_SysWork.player_4C.extra_128.field_1C >= 3 &&
-                g_SysWork.player_4C.extra_128.field_1C <  7)
+            if (g_SysWork.player_4C.extra_128.playerState_1C >= 3 &&
+                g_SysWork.player_4C.extra_128.playerState_1C <  7)
             {
                 g_SysWork.player_4C.chara_0.field_C8         = FP_FLOAT_TO(-25.6f, Q8_SHIFT);
                 g_SysWork.player_4C.chara_0.field_CA         = 0;
@@ -9740,13 +9740,13 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
             switch (temp_v0_3)
             {
                 case 27:
-                    g_SysWork.player_4C.extra_128.field_1C             = 7;
+                    g_SysWork.player_4C.extra_128.playerState_1C             = 7;
                     chara->model_0.stateStep_3                         = 0;
                     chara->model_0.state_2                             = 0;
                     extra->model_0.stateStep_3                         = 0;
                     extra->model_0.state_2                             = 0;
-                    g_SysWork.player_4C.extra_128.playerSubMovement_20 = 0;
-                    g_SysWork.player_4C.extra_128.playerMovement_24    = PlayerMovement_None;
+                    g_SysWork.player_4C.extra_128.playerUpperMovement_20 = 0;
+                    g_SysWork.player_4C.extra_128.playerLowerMovement_24    = PlayerLowerMovement_None;
                     break;
 
                 case 23:
@@ -9757,47 +9757,47 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
                     if (enemyRotY >= FP_ANGLE(90.0f) &&
                         enemyRotY <  FP_ANGLE(270.0f))
                     {
-                        g_SysWork.player_4C.extra_128.field_1C             = 45;
+                        g_SysWork.player_4C.extra_128.playerState_1C             = 45;
                         chara->model_0.stateStep_3                         = 0;
                         chara->model_0.state_2                             = 0;
                         extra->model_0.stateStep_3                         = 0;
                         extra->model_0.state_2                             = 0;
-                        g_SysWork.player_4C.extra_128.playerSubMovement_20 = 0;
-                        g_SysWork.player_4C.extra_128.playerMovement_24    = PlayerMovement_None;
+                        g_SysWork.player_4C.extra_128.playerUpperMovement_20 = 0;
+                        g_SysWork.player_4C.extra_128.playerLowerMovement_24    = PlayerLowerMovement_None;
                     }
                     else
                     {
-                        g_SysWork.player_4C.extra_128.field_1C             = 46;
+                        g_SysWork.player_4C.extra_128.playerState_1C             = 46;
                         chara->model_0.stateStep_3                         = 0;
                         chara->model_0.state_2                             = 0;
                         extra->model_0.stateStep_3                         = 0;
                         extra->model_0.state_2                             = 0;
-                        g_SysWork.player_4C.extra_128.playerSubMovement_20 = 0;
-                        g_SysWork.player_4C.extra_128.playerMovement_24    = PlayerMovement_None;
+                        g_SysWork.player_4C.extra_128.playerUpperMovement_20 = 0;
+                        g_SysWork.player_4C.extra_128.playerLowerMovement_24    = PlayerLowerMovement_None;
                     }
                     break;
 
                 case 20:
                 case 22:
                     chara->damageReceived_C0                           = FP_FLOAT_TO(10.0f, Q12_SHIFT);
-                    g_SysWork.player_4C.extra_128.field_1C             = 19;
+                    g_SysWork.player_4C.extra_128.playerState_1C             = 19;
                     chara->model_0.stateStep_3                         = 0;
                     chara->model_0.state_2                             = 0;
                     extra->model_0.stateStep_3                         = 0;
                     extra->model_0.state_2                             = 0;
-                    g_SysWork.player_4C.extra_128.playerSubMovement_20 = 0;
-                    g_SysWork.player_4C.extra_128.playerMovement_24    = PlayerMovement_None;
+                    g_SysWork.player_4C.extra_128.playerUpperMovement_20 = 0;
+                    g_SysWork.player_4C.extra_128.playerLowerMovement_24    = PlayerLowerMovement_None;
                     break;
 
                 case 1:
                 case 2:
-                    g_SysWork.player_4C.extra_128.field_1C             = 19;
+                    g_SysWork.player_4C.extra_128.playerState_1C             = 19;
                     chara->model_0.stateStep_3                         = 0;
                     chara->model_0.state_2                             = 0;
                     extra->model_0.stateStep_3                         = 0;
                     extra->model_0.state_2                             = 0;
-                    g_SysWork.player_4C.extra_128.playerSubMovement_20 = 0;
-                    g_SysWork.player_4C.extra_128.playerMovement_24    = PlayerMovement_None;
+                    g_SysWork.player_4C.extra_128.playerUpperMovement_20 = 0;
+                    g_SysWork.player_4C.extra_128.playerLowerMovement_24    = PlayerLowerMovement_None;
                     break;
 
                 case 9:  // Leg grab.
@@ -9813,44 +9813,44 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
                         switch (temp_v0_3)
                         {
                             case 9:
-                                g_SysWork.player_4C.extra_128.field_1C             = 37;
+                                g_SysWork.player_4C.extra_128.playerState_1C             = 37;
                                 chara->model_0.stateStep_3                         = 0;
                                 chara->model_0.state_2                             = 0;
                                 extra->model_0.stateStep_3                         = 0;
                                 extra->model_0.state_2                             = 0;
-                                g_SysWork.player_4C.extra_128.playerSubMovement_20 = 0;
-                                g_SysWork.player_4C.extra_128.playerMovement_24    = PlayerMovement_None;
+                                g_SysWork.player_4C.extra_128.playerUpperMovement_20 = 0;
+                                g_SysWork.player_4C.extra_128.playerLowerMovement_24    = PlayerLowerMovement_None;
                                 break;
 
                             case 0:
                             case 11: // Torso front grab.
-                                g_SysWork.player_4C.extra_128.field_1C             = 10;
+                                g_SysWork.player_4C.extra_128.playerState_1C             = 10;
                                 chara->model_0.stateStep_3                         = 0;
                                 chara->model_0.state_2                             = 0;
                                 extra->model_0.stateStep_3                         = 0;
                                 extra->model_0.state_2                             = 0;
-                                g_SysWork.player_4C.extra_128.playerSubMovement_20 = 0;
-                                g_SysWork.player_4C.extra_128.playerMovement_24    = PlayerMovement_None;
+                                g_SysWork.player_4C.extra_128.playerUpperMovement_20 = 0;
+                                g_SysWork.player_4C.extra_128.playerLowerMovement_24    = PlayerLowerMovement_None;
                                 break;
 
                             case 4:
-                                g_SysWork.player_4C.extra_128.field_1C             = 14;
+                                g_SysWork.player_4C.extra_128.playerState_1C             = 14;
                                 chara->model_0.stateStep_3                         = 0;
                                 chara->model_0.state_2                             = 0;
                                 extra->model_0.stateStep_3                         = 0;
                                 extra->model_0.state_2                             = 0;
-                                g_SysWork.player_4C.extra_128.playerSubMovement_20 = 0;
-                                g_SysWork.player_4C.extra_128.playerMovement_24    = PlayerMovement_None;
+                                g_SysWork.player_4C.extra_128.playerUpperMovement_20 = 0;
+                                g_SysWork.player_4C.extra_128.playerLowerMovement_24    = PlayerLowerMovement_None;
                                 break;
 
                             case 21:
-                                g_SysWork.player_4C.extra_128.field_1C             = 32;
+                                g_SysWork.player_4C.extra_128.playerState_1C             = 32;
                                 chara->model_0.stateStep_3                         = 0;
                                 chara->model_0.state_2                             = 0;
                                 extra->model_0.stateStep_3                         = 0;
                                 extra->model_0.state_2                             = 0;
-                                g_SysWork.player_4C.extra_128.playerSubMovement_20 = 0;
-                                g_SysWork.player_4C.extra_128.playerMovement_24    = PlayerMovement_None;
+                                g_SysWork.player_4C.extra_128.playerUpperMovement_20 = 0;
+                                g_SysWork.player_4C.extra_128.playerLowerMovement_24    = PlayerLowerMovement_None;
                                 break;
                         }
                     }
@@ -9862,44 +9862,44 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
                         switch (temp_v0_3)
                         {
                             case 9:
-                                g_SysWork.player_4C.extra_128.field_1C             = 38;
+                                g_SysWork.player_4C.extra_128.playerState_1C             = 38;
                                 chara->model_0.stateStep_3                         = 0;
                                 chara->model_0.state_2                             = 0;
                                 extra->model_0.stateStep_3                         = 0;
                                 extra->model_0.state_2                             = 0;
-                                g_SysWork.player_4C.extra_128.playerSubMovement_20 = 0;
-                                g_SysWork.player_4C.extra_128.playerMovement_24    = PlayerMovement_None;
+                                g_SysWork.player_4C.extra_128.playerUpperMovement_20 = 0;
+                                g_SysWork.player_4C.extra_128.playerLowerMovement_24    = PlayerLowerMovement_None;
                                 break;
 
                             case 0:
                             case 11: // Torso back grab.
-                                g_SysWork.player_4C.extra_128.field_1C             = 13;
+                                g_SysWork.player_4C.extra_128.playerState_1C             = 13;
                                 chara->model_0.stateStep_3                         = 0;
                                 chara->model_0.state_2                             = 0;
                                 extra->model_0.stateStep_3                         = 0;
                                 extra->model_0.state_2                             = 0;
-                                g_SysWork.player_4C.extra_128.playerSubMovement_20 = 0;
-                                g_SysWork.player_4C.extra_128.playerMovement_24    = PlayerMovement_None;
+                                g_SysWork.player_4C.extra_128.playerUpperMovement_20 = 0;
+                                g_SysWork.player_4C.extra_128.playerLowerMovement_24    = PlayerLowerMovement_None;
                                 break;
 
                             case 4:
-                                g_SysWork.player_4C.extra_128.field_1C             = 15;
+                                g_SysWork.player_4C.extra_128.playerState_1C             = 15;
                                 chara->model_0.stateStep_3                         = 0;
                                 chara->model_0.state_2                             = 0;
                                 extra->model_0.stateStep_3                         = 0;
                                 extra->model_0.state_2                             = 0;
-                                g_SysWork.player_4C.extra_128.playerSubMovement_20 = 0;
-                                g_SysWork.player_4C.extra_128.playerMovement_24    = PlayerMovement_None;
+                                g_SysWork.player_4C.extra_128.playerUpperMovement_20 = 0;
+                                g_SysWork.player_4C.extra_128.playerLowerMovement_24    = PlayerLowerMovement_None;
                                 break;
 
                             case 21:
-                                g_SysWork.player_4C.extra_128.field_1C             = 33;
+                                g_SysWork.player_4C.extra_128.playerState_1C             = 33;
                                 chara->model_0.stateStep_3                         = 0;
                                 chara->model_0.state_2                             = 0;
                                 extra->model_0.stateStep_3                         = 0;
                                 extra->model_0.state_2                             = 0;
-                                g_SysWork.player_4C.extra_128.playerSubMovement_20 = 0;
-                                g_SysWork.player_4C.extra_128.playerMovement_24    = PlayerMovement_None;
+                                g_SysWork.player_4C.extra_128.playerUpperMovement_20 = 0;
+                                g_SysWork.player_4C.extra_128.playerLowerMovement_24    = PlayerLowerMovement_None;
                                 break;
                         }
                     }
@@ -9908,13 +9908,13 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
                 case 7:
                     chara->health_B0                                   = NO_VALUE;
                     chara->field_D6                                    = 0;
-                    g_SysWork.player_4C.extra_128.field_1C             = 9;
+                    g_SysWork.player_4C.extra_128.playerState_1C             = 9;
                     chara->model_0.stateStep_3                         = 0;
                     chara->model_0.state_2                             = 0;
                     extra->model_0.stateStep_3                         = 0;
                     extra->model_0.state_2                             = 0;
-                    g_SysWork.player_4C.extra_128.playerSubMovement_20 = 0;
-                    g_SysWork.player_4C.extra_128.playerMovement_24    = PlayerMovement_None;
+                    g_SysWork.player_4C.extra_128.playerUpperMovement_20 = 0;
+                    g_SysWork.player_4C.extra_128.playerLowerMovement_24    = PlayerLowerMovement_None;
                     return;
 
                 case 29:
@@ -9962,13 +9962,13 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
                         var_v1_2 = 23; // Back harm animation.
                     }
 
-                    g_SysWork.player_4C.extra_128.field_1C             = var_v1_2;
+                    g_SysWork.player_4C.extra_128.playerState_1C             = var_v1_2;
                     chara->model_0.stateStep_3                         = 0;
                     chara->model_0.state_2                             = 0;
                     extra->model_0.stateStep_3                         = 0;
                     extra->model_0.state_2                             = 0;
-                    g_SysWork.player_4C.extra_128.playerSubMovement_20 = 0;
-                    g_SysWork.player_4C.extra_128.playerMovement_24    = PlayerMovement_None;
+                    g_SysWork.player_4C.extra_128.playerUpperMovement_20 = 0;
+                    g_SysWork.player_4C.extra_128.playerLowerMovement_24    = PlayerLowerMovement_None;
                     break;
 
                 case 13:
@@ -9981,17 +9981,17 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
                         var_v1_2 = 28;
                     }
 
-                    g_SysWork.player_4C.extra_128.field_1C             = var_v1_2;
+                    g_SysWork.player_4C.extra_128.playerState_1C             = var_v1_2;
                     chara->model_0.stateStep_3                         = 0;
                     chara->model_0.state_2                             = 0;
                     extra->model_0.stateStep_3                         = 0;
                     extra->model_0.state_2                             = 0;
-                    g_SysWork.player_4C.extra_128.playerSubMovement_20 = 0;
-                    g_SysWork.player_4C.extra_128.playerMovement_24    = PlayerMovement_None;
+                    g_SysWork.player_4C.extra_128.playerUpperMovement_20 = 0;
+                    g_SysWork.player_4C.extra_128.playerLowerMovement_24    = PlayerLowerMovement_None;
                     break;
             }
 
-            if ((u32)g_SysWork.player_4C.extra_128.field_1C >= 3)
+            if ((u32)g_SysWork.player_4C.extra_128.playerState_1C >= 3)
             {
                 chara->properties_E4.player.properties_E4[1]                = 0;
                 chara->properties_E4.player.properties_E4[4]                = 0;
@@ -10003,7 +10003,7 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
             break;
     }
 
-    if (g_SysWork.player_4C.extra_128.field_1C == 8)
+    if (g_SysWork.player_4C.extra_128.playerState_1C == 8)
     {
         chara->damageReceived_C0 = FP_FLOAT_TO(0.0f, Q12_SHIFT);
         chara->field_BC          = 0;
@@ -10052,10 +10052,10 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
         chara->damageReceived_C0 = FP_FLOAT_TO(0.0f, Q12_SHIFT);
     }
 
-    if (chara->health_B0 <= FP_FLOAT_TO(0.0f, Q12_SHIFT) && g_SysWork.player_4C.extra_128.field_1C != 8 &&
-        g_SysWork.player_4C.extra_128.field_1C != 36 && g_SysWork.player_4C.extra_128.field_1C != 39 &&
-        g_SysWork.player_4C.extra_128.field_1C != 40 && g_SysWork.player_4C.extra_128.field_1C != 47 &&
-        g_SysWork.player_4C.extra_128.field_1C != 48 && !g_Player_IsInWalkToRunTransition)
+    if (chara->health_B0 <= FP_FLOAT_TO(0.0f, Q12_SHIFT) && g_SysWork.player_4C.extra_128.playerState_1C != 8 &&
+        g_SysWork.player_4C.extra_128.playerState_1C != 36 && g_SysWork.player_4C.extra_128.playerState_1C != 39 &&
+        g_SysWork.player_4C.extra_128.playerState_1C != 40 && g_SysWork.player_4C.extra_128.playerState_1C != 47 &&
+        g_SysWork.player_4C.extra_128.playerState_1C != 48 && !g_Player_IsInWalkToRunTransition)
     {
         chara->field_40                     = NO_VALUE;
         g_SavegamePtr->healthSaturation_238 = FP_FLOAT_TO(0.0f, Q12_SHIFT);
@@ -10067,23 +10067,23 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
 
         if (chara->field_41 == 66)
         {
-            g_SysWork.player_4C.extra_128.field_1C             = 36;
+            g_SysWork.player_4C.extra_128.playerState_1C             = 36;
             chara->model_0.stateStep_3                         = 0;
             chara->model_0.state_2                             = 0;
             extra->model_0.stateStep_3                         = 0;
             extra->model_0.state_2                             = 0;
-            g_SysWork.player_4C.extra_128.playerSubMovement_20 = 0;
-            g_SysWork.player_4C.extra_128.playerMovement_24    = PlayerMovement_None;
+            g_SysWork.player_4C.extra_128.playerUpperMovement_20 = 0;
+            g_SysWork.player_4C.extra_128.playerLowerMovement_24    = PlayerLowerMovement_None;
         }
         else
         {
-            g_SysWork.player_4C.extra_128.field_1C             = 8;
+            g_SysWork.player_4C.extra_128.playerState_1C             = 8;
             chara->model_0.stateStep_3                         = 0;
             chara->model_0.state_2                             = 0;
             extra->model_0.stateStep_3                         = 0;
             extra->model_0.state_2                             = 0;
-            g_SysWork.player_4C.extra_128.playerSubMovement_20 = 0;
-            g_SysWork.player_4C.extra_128.playerMovement_24    = PlayerMovement_None;
+            g_SysWork.player_4C.extra_128.playerUpperMovement_20 = 0;
+            g_SysWork.player_4C.extra_128.playerLowerMovement_24    = PlayerLowerMovement_None;
         }
     }
 }
@@ -10097,7 +10097,7 @@ void func_8007D090(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
     s32 var_a3;
     s32 var_v1;
 
-    switch (g_SysWork.player_4C.extra_128.field_1C)
+    switch (g_SysWork.player_4C.extra_128.playerState_1C)
     {
         case 1:
             switch (g_SysWork.playerCombatInfo_38.equippedWeapon_F)
@@ -10128,7 +10128,7 @@ void func_8007D090(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
                     break;
             }
 
-            if (g_SysWork.player_4C.extra_128.playerSubMovement_20 == 26 || g_SysWork.playerCombatInfo_38.equippedWeapon_F < EquippedWeaponId_Handgun)
+            if (g_SysWork.player_4C.extra_128.playerUpperMovement_20 == 26 || g_SysWork.playerCombatInfo_38.equippedWeapon_F < EquippedWeaponId_Handgun)
             {
                 D_800AF212 = 0;
                 D_800AF210 = 0;
@@ -10153,8 +10153,8 @@ void func_8007D090(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
                     D_800AF210 = chara->rotation_24.pad - chara->rotation_24.vy;
                 }
 
-                if (chara->properties_E4.player.properties_E4[7] != 0 || g_SysWork.player_4C.extra_128.playerSubMovement_20 == 22 ||
-                    g_SysWork.player_4C.extra_128.playerSubMovement_20 == 23)
+                if (chara->properties_E4.player.properties_E4[7] != 0 || g_SysWork.player_4C.extra_128.playerUpperMovement_20 == 22 ||
+                    g_SysWork.player_4C.extra_128.playerUpperMovement_20 == 23)
                 {
                     if (g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & (1 << 8))
                     {
@@ -10301,8 +10301,8 @@ void func_8007D090(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
             break;
 
         default:
-            if (g_SysWork.player_4C.extra_128.field_1C >= 52 &&
-                g_SysWork.player_4C.extra_128.field_1C <  59)
+            if (g_SysWork.player_4C.extra_128.playerState_1C >= 52 &&
+                g_SysWork.player_4C.extra_128.playerState_1C <  59)
             {
                 func_80044F14(&coord[2], 0, 0, D_800AF210);
             }
@@ -10314,7 +10314,7 @@ void func_8007D090(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
             break;
     }
 
-    if (g_SysWork.field_2358 != 0 && g_SysWork.player_4C.extra_128.field_1C < 58)
+    if (g_SysWork.field_2358 != 0 && g_SysWork.player_4C.extra_128.playerState_1C < 58)
     {
         func_80044F14(&g_SysWork.playerBoneCoords_890[PlayerBone_RightUpperArm], 0, 0x2D0, -0x64);
         func_80044F14(&g_SysWork.playerBoneCoords_890[PlayerBone_RightForearm], -0xA0, 0x100, -0x15E);
@@ -10388,18 +10388,18 @@ s32 func_8007D6F0(s_SubCharacter* chara, s_800C45C8* arg1) // 0x8007D6F0
                 {
                     if ((chara->position_18.vy - FP_METER(0.3f)) >= sp10[0].field_18)
                     {
-                        return PlayerMovement_Run_Forward;
+                        return PlayerLowerMovement_Run_Forward;
                     }
                 }
                 else
                 {
-                    return PlayerMovement_Walk_Forward;
+                    return PlayerLowerMovement_Walk_Forward;
                 }
             }
         }
     }
 
-    return PlayerMovement_None;
+    return PlayerLowerMovement_None;
 }
 
 void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D970
@@ -10423,7 +10423,7 @@ void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D970
 
     model = &g_SysWork.player_4C.extra_128.model_0;
 
-    if (g_SysWork.player_4C.extra_128.playerMovement_24 < PlayerMovement_Aim)
+    if (g_SysWork.player_4C.extra_128.playerLowerMovement_24 < PlayerLowerMovement_Aim)
     {
         vec     = &g_SysWork.playerCombatInfo_38.field_0;
         vec->vx = g_SysWork.playerBoneCoords_890[PlayerBone_RightFoot].workm.t[0] * 16;
@@ -10462,12 +10462,12 @@ void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D970
         }
     }
 
-    if (!(g_SysWork.player_4C.extra_128.field_1C >= 7 && g_SysWork.player_4C.extra_128.field_1C < 51) &&
-        ((u32)g_SysWork.player_4C.extra_128.field_1C < 2 || g_SysWork.player_4C.extra_128.field_1C == 5 || g_SysWork.player_4C.extra_128.field_1C == 6))
+    if (!(g_SysWork.player_4C.extra_128.playerState_1C >= PlayerState_Unk7 && g_SysWork.player_4C.extra_128.playerState_1C < PlayerState_Unk51) &&
+        ((u32)g_SysWork.player_4C.extra_128.playerState_1C < PlayerState_Idle || g_SysWork.player_4C.extra_128.playerState_1C == 5 || g_SysWork.player_4C.extra_128.playerState_1C == PlayerState_Unk6))
     {
-        if (g_SysWork.playerCombatInfo_38.equippedWeapon_F >= EquippedWeaponId_Handgun && g_SysWork.player_4C.extra_128.playerMovement_24 >= 20)
+        if (g_SysWork.playerCombatInfo_38.equippedWeapon_F >= EquippedWeaponId_Handgun && g_SysWork.player_4C.extra_128.playerLowerMovement_24 >= PlayerLowerMovement_Aim)
         {
-            if (g_SysWork.player_4C.extra_128.field_1C == 1 && D_800AF21C != NO_VALUE)
+            if (g_SysWork.player_4C.extra_128.playerState_1C == PlayerState_Combat && D_800AF21C != NO_VALUE)
             {
                 sp98.vx = ratan2((g_SysWork.npcs_1A0[D_800AF21C].position_18.vx + g_SysWork.npcs_1A0[D_800AF21C].field_D8.field_0) - g_SysWork.playerCombatInfo_38.field_0.vx,
                                  (g_SysWork.npcs_1A0[D_800AF21C].position_18.vz + g_SysWork.npcs_1A0[D_800AF21C].field_D8.field_2) - g_SysWork.playerCombatInfo_38.field_0.vz);
@@ -10505,15 +10505,15 @@ void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D970
             switch (g_SysWork.playerCombatInfo_38.equippedWeapon_F)
             {
                 case NO_VALUE:
-                case 8:
-                case 9:
+                case EquippedWeaponId_Unk8:
+                case EquippedWeaponId_Unk9:
                     *(u32*)&sp90 = 0x3C0000;
                     sp90.vz      = 0x86;
                     Vw_CoordHierarchyMatrixCompute(&coord[17], &sp50);
                     break;
 
                 default:
-                    if (g_SysWork.player_4C.extra_128.playerMovement_24 < PlayerMovement_Aim)
+                    if (g_SysWork.player_4C.extra_128.playerLowerMovement_24 < PlayerLowerMovement_Aim)
                     {
                         *(u32*)&sp90 = 0x3C0000;
                         sp90.vz      = 0x86;
@@ -10523,41 +10523,41 @@ void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D970
                     {
                         switch (g_SysWork.playerCombatInfo_38.equippedWeapon_F % 10)
                         {
-                            case 0:
+                            case EquippedWeaponId_KitchenKnife:
                                 *(u32*)&sp90 = (FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.equippedWeapon_F].field_0, 0xF, Q12_SHIFT) & 0xFFFF) +
                                                (-(FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.equippedWeapon_F].field_0, 0x4B, Q12_SHIFT - 1)) << 16);
                                 sp90.vz      = FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.equippedWeapon_F].field_0, 0x4B, Q12_SHIFT) >> 1;
                                 break;
 
-                            case 1:
+                            case EquippedWeaponId_SteelPipe:
                                 *(u32*)&sp90 = (FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.equippedWeapon_F].field_0, 0xF, Q12_SHIFT) & 0xFFFF) +
                                                (-(FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.equippedWeapon_F].field_0, 0xE1, Q12_SHIFT) >> 1) << 16);
                                 sp90.vz      = FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.equippedWeapon_F].field_0, 0x2D, Q12_SHIFT - 2);
                                 break;
 
-                            case 5:
+                            case EquippedWeaponId_Chainsaw:
                                 *(u32*)&sp90 = ((FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.equippedWeapon_F].field_0, 0xF, Q12_SHIFT) >> 1) & 0xFFFF) +
                                                (-(FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.equippedWeapon_F].field_0, 0x87, Q12_SHIFT) >> 1) << 16);
                                 sp90.vz      = FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.equippedWeapon_F].field_0, 0x1EF, Q12_SHIFT) >> 1;
                                 break;
 
-                            case 2:
+                            case EquippedWeaponId_RockDrill:
                                 *(u32*)&sp90 = (-(FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.equippedWeapon_F].field_0, 0x2D, Q12_SHIFT)) << 16);
                                 sp90.vz          = FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.equippedWeapon_F].field_0, 0x2D, Q12_SHIFT - 2);
                                 break;
 
-                            case 7:
+                            case EquippedWeaponId_Axe:
                                 *(u32*)&sp90 = (-(FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.equippedWeapon_F].field_0, 0x2C1, Q12_SHIFT) >> 1) << 16);
                                 sp90.vz      = FP_MULTIPLY((u32)D_800AD4C8[g_SysWork.playerCombatInfo_38.equippedWeapon_F].field_0, 0xC3, Q12_SHIFT);
                                 break;
 
-                            case 4:
+                            case EquippedWeaponId_Hammer:
                                 *(u32*)&sp90 = ((FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.equippedWeapon_F].field_0, 0xF, Q12_SHIFT) >> 1) & 0xFFFF) +
                                                (-(FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.equippedWeapon_F].field_0, 0x69, Q12_SHIFT)) << 16);
                                 sp90.vz      = FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.equippedWeapon_F].field_0, 0x13B, Q12_SHIFT) >> 1;
                                 break;
 
-                            case 6:
+                            case EquippedWeaponId_Katana:
                                 *(u32*)&sp90 = ((FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.equippedWeapon_F].field_0, 0xF, Q12_SHIFT) >> 1) & 0xFFFF) +
                                                (-(FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.equippedWeapon_F].field_0, 0x13B, Q12_SHIFT) >> 1) << 16);
                                 sp90.vz      = FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.equippedWeapon_F].field_0, 0xF, Q12_SHIFT);
@@ -10586,12 +10586,11 @@ void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D970
 
         if (g_SysWork.playerCombatInfo_38.equippedWeapon_F == EquippedWeaponId_HyperBlaster &&
             g_SysWork.playerCombatInfo_38.isAiming_13 &&
-            model->anim_4.animIdx_0 >= 57 &&
-            model->anim_4.keyframeIdx0_8 >= 574)
+            model->anim_4.animIdx_0 >= 57 && model->anim_4.keyframeIdx0_8 >= 574)
         {
-            if (g_SysWork.player_4C.extra_128.field_1C < 2)
+            if (g_SysWork.player_4C.extra_128.playerState_1C < 2)
             {
-                if (g_SysWork.player_4C.extra_128.field_1C == 0 && g_SysWork.enemyTargetIdx_2353 != NO_VALUE)
+                if (g_SysWork.player_4C.extra_128.playerState_1C == 0 && g_SysWork.enemyTargetIdx_2353 != NO_VALUE)
                 {
                     g_SysWork.enemyTargetIdx_2353 = NO_VALUE;
                 }
@@ -10619,14 +10618,12 @@ void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D970
             }
         }
 
-        if (g_SysWork.player_4C.extra_128.field_1C < 2)
+        if (g_SysWork.player_4C.extra_128.playerState_1C < PlayerState_Idle)
         {
             if ((g_SysWork.playerCombatInfo_38.equippedWeapon_F == EquippedWeaponId_Chainsaw &&
-                 model->anim_4.keyframeIdx0_8 >= 572 &&
-                 model->anim_4.keyframeIdx0_8 <  584) ||
+                 model->anim_4.keyframeIdx0_8 >= 572 && model->anim_4.keyframeIdx0_8 <  584) ||
                 (g_SysWork.playerCombatInfo_38.equippedWeapon_F == EquippedWeaponId_RockDrill &&
-                 chara->model_0.anim_4.keyframeIdx0_8 >= 577 &&
-                 model->anim_4.keyframeIdx0_8         <  583))
+                 chara->model_0.anim_4.keyframeIdx0_8 >= 577 && model->anim_4.keyframeIdx0_8 <  583))
             {
                 *(u32*)&sp90 = 0;
                 sp90.vz      = 0;
@@ -10658,7 +10655,7 @@ void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D970
             }
         }
 
-        if (g_SysWork.player_4C.extra_128.playerSubMovement_20 != 24)
+        if (g_SysWork.player_4C.extra_128.playerUpperMovement_20 != PlayerUpperMovement_Aim_Stop)
         {
             if (g_SysWork.playerCombatInfo_38.equippedWeapon_F >= EquippedWeaponId_Handgun)
             {
@@ -10820,9 +10817,9 @@ void func_8007E9C4() // 0x8007E9C4
     chara = &g_SysWork.player_4C.chara_0;
 
     g_Player_IsInWalkToRunTransition                   = false;
-    g_SysWork.player_4C.extra_128.field_1C             = 0;
-    g_SysWork.player_4C.extra_128.playerSubMovement_20 = 0;
-	g_SysWork.player_4C.extra_128.playerMovement_24    = PlayerMovement_None;
+    g_SysWork.player_4C.extra_128.playerState_1C             = 0;
+    g_SysWork.player_4C.extra_128.playerUpperMovement_20 = 0;
+	g_SysWork.player_4C.extra_128.playerLowerMovement_24    = PlayerLowerMovement_None;
     g_SysWork.player_4C.extra_128.model_0.stateStep_3  = 0;
     g_SysWork.player_4C.extra_128.model_0.state_2      = 0;
 
@@ -11102,7 +11099,7 @@ void func_8007F14C(u8 arg0) // 0x8007F14C
     }
 }
 
-void Game_PlayerMovementsReset() // 0x8007F1CC
+void Game_PlayerLowerMovementsReset() // 0x8007F1CC
 {
     g_Player_ActionRunPressed        = 0;
     g_Player_MovementInputDetected   = 0;
@@ -11130,9 +11127,9 @@ void func_8007F250(u8* ptr, s8 disableDamage) // 0x8007F250
 
 bool func_8007F26C() // 0x8007F26C
 {
-    if (g_SysWork.player_4C.extra_128.playerSubMovement_20 == 25 ||
-        g_SysWork.player_4C.extra_128.field_1C == 5 ||
-        g_SysWork.player_4C.extra_128.field_1C == 6)
+    if (g_SysWork.player_4C.extra_128.playerUpperMovement_20 == 25 ||
+        g_SysWork.player_4C.extra_128.playerState_1C == 5 ||
+        g_SysWork.player_4C.extra_128.playerState_1C == 6)
     {
         return true;
     }
@@ -11144,10 +11141,10 @@ bool func_8007F2AC() // 0x8007F2AC
 {
     if (g_SysWork.player_4C.chara_0.health_B0 <= 0 ||
         g_SysWork.playerCombatInfo_38.isAiming_13 ||
-        g_SysWork.player_4C.extra_128.field_1C == 5 ||
-        g_SysWork.player_4C.extra_128.field_1C == 6 ||
-        (g_SysWork.player_4C.extra_128.field_1C >= 7 &&
-         g_SysWork.player_4C.extra_128.field_1C <= 50))
+        g_SysWork.player_4C.extra_128.playerState_1C == 5 ||
+        g_SysWork.player_4C.extra_128.playerState_1C == 6 ||
+        (g_SysWork.player_4C.extra_128.playerState_1C >= 7 &&
+         g_SysWork.player_4C.extra_128.playerState_1C <= 50))
     {
         return true;
     }
@@ -11218,7 +11215,7 @@ void Player_Controller() // 0x8007F32C
     }
 
     if (g_SysWork.playerCombatInfo_38.equippedWeapon_F >= EquippedWeaponId_Handgun // If weapon is a gun.
-	    && g_SysWork.player_4C.extra_128.playerMovement_24 >= PlayerMovement_Aim)
+	    && g_SysWork.player_4C.extra_128.playerLowerMovement_24 >= PlayerLowerMovement_Aim)
     {
         g_Player_IsShooting  = g_Controller0->btnsHeld_C & g_GameWorkPtr->config_0.controllerConfig_0.action_6;
         g_Player_IsAttacking = g_Player_IsShooting;

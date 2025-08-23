@@ -462,6 +462,9 @@ typedef enum _EquippedWeaponId
     EquippedWeaponId_Chainsaw       = 5,
     EquippedWeaponId_Katana         = 6,
     EquippedWeaponId_Axe            = 7,
+	
+    EquippedWeaponId_Unk8           = 8,
+    EquippedWeaponId_Unk9           = 9,
 
     EquippedWeaponId_Handgun        = 32,
     EquippedWeaponId_HuntingRifle   = 33,
@@ -506,7 +509,7 @@ typedef enum _PlayerFlags
 {
     PlayerFlag_None               = 0,
     PlayerFlag_Unk0               = 1 << 0,
-    PlayerFlag_Unk1               = 1 << 1,
+    PlayerFlag_Shoot              = 1 << 1,
     PlayerFlag_Unk2               = 1 << 2,
     PlayerFlag_AbruptStopAnimKind = 1 << 3, // Depending on the animation frame in which the player suddenly stopped running it could reproduce one of two animations, mainly differing in which leg Harry extends.
     PlayerFlag_Unk4               = 1 << 4,
@@ -516,7 +519,7 @@ typedef enum _PlayerFlags
     PlayerFlag_Unk8               = 1 << 8,
     PlayerFlag_Unk9               = 1 << 9,
     PlayerFlag_Unk10              = 1 << 10, // PlayerFlag_Attack_Melee?
-    PlayerFlag_Attacking          = 1 << 11, // PlayerFlag_Attack_Gun_Hold?
+    PlayerFlag_Unk11              = 1 << 11, // PlayerFlag_Attack_Gun_Hold?
     PlayerFlag_Unk12              = 1 << 12,
     PlayerFlag_Unk13              = 1 << 13,
     PlayerFlag_DamageReceived     = 1 << 14,
@@ -1298,7 +1301,7 @@ typedef struct _SubCharacter
     s16     flags_3E;
     s8      field_40; // In player: Index of the NPC attacking the player.
                       // In NPCs: Unknown.
-    s8      field_41; // In player: Indicates what attack has been performed ton player.
+    s8      field_41; // In player: Indicates what attack has been performed to the player.
                       // In NPCs: The ID (from `e_EquippedWeaponId`) of the weapon which is being used for attack.
     s8      unk_42[2];
     s16     field_44;
@@ -1357,11 +1360,11 @@ typedef struct _MainCharacterExtra
 {
     s_Model model_0;              // Manage the half upper part of Harry's body animations (torso, arms and head).
     q19_12  field_18;
-    s32     field_1C;             // `e_PlayerState`.
-    s32     playerSubMovement_20; // `e_PlayerSubMovement` Handler for Harry's actions perfomed by his upper part
-    s32     playerMovement_24;    // `e_PlayerMovement` Handler for Harry's actions perfomed by his lower part.
-    s32     field_28;             // Related to item interactions.
-                                  // Forcing specific values opens options menu. This behaviour is cause by `func_800373CC`.
+    s32     playerState_1C;         // `e_PlayerState`.
+    s32     playerUpperMovement_20; // `e_PlayerUpperMovement` Handler for Harry's actions perfomed by his upper part
+    s32     playerLowerMovement_24; // `e_PlayerLowerMovement` Handler for Harry's actions perfomed by his lower part.
+    s32     field_28;               // Related to item interactions.
+                                    // Forcing specific values opens options menu. This behaviour is cause by `func_800373CC`.
 } s_MainCharacterExtra;
 STATIC_ASSERT_SIZEOF(s_MainCharacterExtra, 44);
 

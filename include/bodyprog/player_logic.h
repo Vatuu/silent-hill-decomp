@@ -6,95 +6,90 @@
  * to the player logic.
  */
 
-// ======
-// ENUMS
-// ======
 
-/** @note The game handles the upper and lower part of Harry with different states.
+/** @note The game handles the upper and lower part of Harry as different parts.
  * Curiously by SH2 symbols indicate that the player is handle in a similar way, by
  * separating them between 4 types (based on the part and control scheme):
  * lower_*_2D
  * lower_*_3D
  * upper_*_2D
  * upper_*_3D
- *
- * For the first two enums here, in SH2 there are two enums named as `_JAMES_UPPER_STATUS`
- * and `_JAMES_LOWER_STATUS` that could likely hint this tecnique was carry over to the
- * sequel their real names of the enums with some differences as for example: Stepping
- * in a enemy has a specific value in the SH2's enums while in SH1 stepping is part of
- * `g_SysWork.player_4C.extra_128.field_1C`.
  */
- 
-typedef enum _PlayerSubMovement
-{
-    PlayerSubMovement_None                   = 0,
-    PlayerSubMovement_Walk_Forward           = 1,
-    PlayerSubMovement_Run_Forward            = 2,
-    PlayerSubMovement_Run_AbruptStop         = 3,
-    PlayerSubMovement_Walk_RStep             = 4,
-    PlayerSubMovement_Walk_LStep             = 5,
-    PlayerSubMovement_Run_RStep              = 6,
-    PlayerSubMovement_Run_LStep              = 7,
-    PlayerSubMovement_Walk_Backward          = 8,
-    PlayerSubMovement_QuickTurn_Right        = 9,
-    PlayerSubMovement_QuickTurn_Left         = 10,
-    PlayerSubMovement_RRotation              = 11,
-    PlayerSubMovement_LRotation              = 12,
-    PlayerSubMovement_Run_BackwardJump       = 13,
-    PlayerSubMovement_PlayerMovement_Stumble = 14,
-    PlayerSubMovement_Run_LStep_AbruptStop   = 15,
-    PlayerSubMovement_Run_RStep_AbruptStop   = 16,
-    PlayerSubMovement_Run_LStep_Stumble      = 17,
-    PlayerSubMovement_RStep_Stumble          = 18,
-    PlayerSubMovement_Aim                    = 19,
-    PlayerSubMovement_Aim_TargetLock         = 20,
-    PlayerSubMovement_Aim_Start              = 21,
-    PlayerSubMovement_Aim_Start_TargetLock   = 22,
-    PlayerSubMovement_Aim_TargetLock_Switch  = 23,
-    PlayerSubMovement_Aim_Stop               = 24,
-    PlayerSubMovement_Attack                 = 25,
-    PlayerSubMovement_Reload                 = 26
-} e_PlayerSubMovement;
 
-typedef enum _PlayerMovement
+// ======
+// ENUMS
+// ======
+ 
+typedef enum _PlayerUpperMovement
 {
-    PlayerMovement_None                 = 0,
-    PlayerMovement_Walk_Forward         = 1,
-    PlayerMovement_Run_Forward          = 2,
-    PlayerMovement_Run_AbruptStop       = 3,
-    PlayerMovement_Walk_Backward        = 4,
-    PlayerMovement_Walk_RStep           = 5,
-    PlayerMovement_Walk_LStep           = 6,
-    PlayerMovement_Run_RStep            = 7,
-    PlayerMovement_Run_LStep            = 8,
-    PlayerMovement_QuickTurn_Right      = 9,
-    PlayerMovement_QuickTurn_Left       = 10,
-    PlayerMovement_Run_BackwardJump     = 11,
-    PlayerMovement_Stumble              = 12,
-    PlayerMovement_Run_LStep_AbruptStop = 13,
-    PlayerMovement_Run_RStep_AbruptStop = 14,
-    PlayerMovement_Run_RStep_Stumble    = 16,
-    PlayerMovement_Run_LStep_Stumble    = 15,
-    PlayerMovement_Unk17                = 17,
-    PlayerMovement_Unk18                = 18,
-    PlayerMovement_Unk19                = 19,
-    PlayerMovement_Aim                  = 20,
-    PlayerMovement_Aim_Walk_Forward     = 21,
-    PlayerMovement_Unk22                = 22, // Unused PlayerMovement_Aim_Run_Forward?
-    PlayerMovement_Unk23                = 23, // Unused PlayerMovement_Aim_Run_AbruptStop?
-    PlayerMovement_Aim_Walk_Backward    = 24,
-    PlayerMovement_Aim_RStep            = 25,
-    PlayerMovement_Aim_LStep            = 26,
-    PlayerMovement_Aim_Run_RStep        = 27, // Unused.
-    PlayerMovement_Aim_Run_LStep        = 28, // Unused.
-    PlayerMovement_Aim_QuickTurn_Right  = 29,
-    PlayerMovement_Aim_QuickTurn_Left   = 30,
-    PlayerMovement_Unk31                = 31,
-    PlayerMovement_Unk32                = 32,
-    PlayerMovement_Unk33                = 33,
-    PlayerMovement_Attack               = 34,
-    PlayerMovement_Reload               = 35
-} e_PlayerMovement;
+    PlayerUpperMovement_None                        = 0,
+    PlayerUpperMovement_Walk_Forward                = 1,
+    PlayerUpperMovement_Run_Forward                 = 2,
+    PlayerUpperMovement_Run_AbruptStop              = 3,
+    PlayerUpperMovement_Walk_RStep                  = 4,
+    PlayerUpperMovement_Walk_LStep                  = 5,
+    PlayerUpperMovement_Run_RStep                   = 6,
+    PlayerUpperMovement_Run_LStep                   = 7,
+    PlayerUpperMovement_Walk_Backward               = 8,
+    PlayerUpperMovement_QuickTurn_Right             = 9,
+    PlayerUpperMovement_QuickTurn_Left              = 10,
+    PlayerUpperMovement_RRotation                   = 11,
+    PlayerUpperMovement_LRotation                   = 12,
+    PlayerUpperMovement_Run_BackwardJump            = 13,
+    PlayerUpperMovement_PlayerLowerMovement_Stumble = 14,
+    PlayerUpperMovement_Run_LStep_AbruptStop        = 15,
+    PlayerUpperMovement_Run_RStep_AbruptStop        = 16,
+    PlayerUpperMovement_Run_LStep_Stumble           = 17,
+    PlayerUpperMovement_RStep_Stumble               = 18,
+    PlayerUpperMovement_Aim                         = 19,
+    PlayerUpperMovement_Aim_TargetLock              = 20,
+    PlayerUpperMovement_Aim_Start                   = 21,
+    PlayerUpperMovement_Aim_Start_TargetLock        = 22,
+    PlayerUpperMovement_Aim_TargetLock_Switch       = 23,
+    PlayerUpperMovement_Aim_Stop                    = 24,
+    PlayerUpperMovement_Attack                      = 25,
+    PlayerUpperMovement_Reload                      = 26
+} e_PlayerUpperMovement;
+
+typedef enum _PlayerLowerMovement
+{
+    PlayerLowerMovement_None                 = 0,
+    PlayerLowerMovement_Walk_Forward         = 1,
+    PlayerLowerMovement_Run_Forward          = 2,
+    PlayerLowerMovement_Run_AbruptStop       = 3,
+    PlayerLowerMovement_Walk_Backward        = 4,
+    PlayerLowerMovement_Walk_RStep           = 5,
+    PlayerLowerMovement_Walk_LStep           = 6,
+    PlayerLowerMovement_Run_RStep            = 7,
+    PlayerLowerMovement_Run_LStep            = 8,
+    PlayerLowerMovement_QuickTurn_Right      = 9,
+    PlayerLowerMovement_QuickTurn_Left       = 10,
+    PlayerLowerMovement_Run_BackwardJump     = 11,
+    PlayerLowerMovement_Stumble              = 12,
+    PlayerLowerMovement_Run_LStep_AbruptStop = 13,
+    PlayerLowerMovement_Run_RStep_AbruptStop = 14,
+    PlayerLowerMovement_Run_RStep_Stumble    = 16,
+    PlayerLowerMovement_Run_LStep_Stumble    = 15,
+    PlayerLowerMovement_Unk17                = 17,
+    PlayerLowerMovement_Unk18                = 18,
+    PlayerLowerMovement_Unk19                = 19,
+    PlayerLowerMovement_Aim                  = 20,
+    PlayerLowerMovement_Aim_Walk_Forward     = 21,
+    PlayerLowerMovement_Unk22                = 22, // Unused PlayerLowerMovement_Aim_Run_Forward?
+    PlayerLowerMovement_Unk23                = 23, // Unused PlayerLowerMovement_Aim_Run_AbruptStop?
+    PlayerLowerMovement_Aim_Walk_Backward    = 24,
+    PlayerLowerMovement_Aim_RStep            = 25,
+    PlayerLowerMovement_Aim_LStep            = 26,
+    PlayerLowerMovement_Aim_Run_RStep        = 27, // Unused.
+    PlayerLowerMovement_Aim_Run_LStep        = 28, // Unused.
+    PlayerLowerMovement_Aim_QuickTurn_Right  = 29,
+    PlayerLowerMovement_Aim_QuickTurn_Left   = 30,
+    PlayerLowerMovement_Unk31                = 31,
+    PlayerLowerMovement_Unk32                = 32,
+    PlayerLowerMovement_Unk33                = 33,
+    PlayerLowerMovement_Attack               = 34,
+    PlayerLowerMovement_Reload               = 35
+} e_PlayerLowerMovement;
 
 // ========
 // STRUCTS
@@ -236,19 +231,22 @@ extern VECTOR3 D_800C45F8;
 // FUNCTIONS
 // ==========
 
+/** Used for lock the view on a targer. */
+void func_8005CD38(s32*, s32*, s_PlayerCombat*, s32, s32, s32);
+
 /** Used for running displacement. */
 void func_80070CF0(s_SubCharacter* chara, q19_12 arg1, s32 arg2, q19_12 arg3, s32 arg4); // 0x80070CF0
 
-void Player_CharaTurn_0(s_SubCharacter* chara, e_PlayerMovement currentState); // 0x800711C4
+void Player_CharaTurn_0(s_SubCharacter* chara, e_PlayerLowerMovement currentState); // 0x800711C4
 
-void Player_CharaTurn_1(s_SubCharacter* chara, e_PlayerMovement currentState); // 0x80071224
+void Player_CharaTurn_1(s_SubCharacter* chara, e_PlayerLowerMovement currentState); // 0x80071224
 
 void Player_CharaRotate(s32 speed); // 0x80071284
 
 /** @brief Clears movement variables and reset Harry's lower body part animation states in case
  * of switching the player state.
  */
-void Player_MovementStateReset(s_SubCharacter* chara, e_PlayerMovement state); // 0x800713B4
+void Player_MovementStateReset(s_SubCharacter* chara, e_PlayerLowerMovement state); // 0x800713B4
 
 /** Audio related. */
 s32 func_800713E8(s32 animIdx, s_SubCharacter* chara, s32 arg2, s32 arg3, s32 arg4, s8 arg5);
@@ -262,11 +260,11 @@ void Player_Update(s_SubCharacter* chara, void* arg1, GsCOORDINATE2* coord); // 
 
 void func_80071968(s_SubCharacter* chara, s_MainCharacterExtra* extra, void* arg2, GsCOORDINATE2* coord); // 0x80071968
 
-/** @brief Updates `g_SysWork.player_4C.extra_128.playerSubMovement_20` and prepares
+/** @brief Updates `g_SysWork.player_4C.extra_128.playerUpperMovement_20` and prepares
  * transitions between running to and from walking animation.
  *
  * @param `extra` Pointer to `s_MainCharacterExtra` struct.
- * @param `state` Checks if `g_SysWork.player_4C.extra_128.playerSubMovement_20` is not
+ * @param `state` Checks if `g_SysWork.player_4C.extra_128.playerUpperMovement_20` is not
  * the same being input in order to clear animation status.
  * @param `unused` Possibly intented to pass animation index.
  * @param `arg3` Indicates the player rotation state. This states will only affect the rotation animations.
@@ -275,23 +273,30 @@ void func_80071968(s_SubCharacter* chara, s_MainCharacterExtra* extra, void* arg
  * *       3: The player can be only at the left rotation state.
  * *       4: The player can be only at the right rotation state.
  */
-void Player_MovementsSub_StateUpdate(s_MainCharacterExtra* extra, e_PlayerSubMovement state, s32 unused, s32 arg3); // 0x80073FC0
+void Player_Upper_StateUpdate(s_MainCharacterExtra* extra, e_PlayerUpperMovement state, s32 unused, s32 arg3); // 0x80073FC0
 
-/** @brief Trigger animations and actions done in the upper half part of Harry's body (arms, torso and head). */
-void Player_MovementsSub(s_SubCharacter* chara, s_MainCharacterExtra* extra); // 0x80074254
+/** @brief Trigger animations and actions done by the upper half part of Harry's body. */
+void Player_Upper_Update(s_SubCharacter* chara, s_MainCharacterExtra* extra); // 0x80074254
 
-/** @note Important for handling `g_SysWork.player_4C.extra_128.field_20`.
- * Also Important for handling animations.
+/** @brief Update animations and status related to player attack.
+ * Returns true if animations where succefully finished, however,
+ * it returns in case of making a multitap attack.
  */
-bool func_80075504(s_SubCharacter* chara, s_MainCharacterExtra* extra); // 0x80075504
+bool Player_CombatAnimUpdate();
+
+/** @brief Main animation and state handler for the upper half part of Harry's body.
+ * Returns true if combat animations where completed or if the player is player health
+ * more than 60%.
+ */
+bool Player_Upper_MainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra); // 0x80075504
 
 void func_800771BC(s_SubCharacter* chara, s_MainCharacterExtra* extra); // 0x800771BC
 
 /** @brief Cancels movement when the player abruptly stop the running while stepping movement. */
-void Player_StepAbruptStop_MovementCancel(s_SubCharacter* chara, s32 arg1, s32 animIdx, s32 keyframeIdx, e_PlayerMovement playerState, q19_12 arg5, s32 aimingState); // 0x80077BB8
+void Player_StepAbruptStop_MovementCancel(s_SubCharacter* chara, s32 arg1, s32 animIdx, s32 keyframeIdx, e_PlayerLowerMovement playerState, q19_12 arg5, s32 aimingState); // 0x80077BB8
 
 /** @brief Main player movement function. */
-void Player_MovementsMain(s_SubCharacter* chara, s_MainCharacterExtra* extra); // 0x80077D00
+void Player_Lower_Update(s_SubCharacter* chara, s_MainCharacterExtra* extra); // 0x80077D00
 
 /** @brief Function with multiple purposes.
  * This function does:
@@ -316,7 +321,7 @@ s32 func_8007D6F0(s_SubCharacter* chara, s_800C45C8* arg1); // 0x8007D6F0
 
 void func_8007EBBC(); // 0x8007EBBC
 
-void Game_PlayerMovementsReset(); // 0x8007F1CC
+void Game_PlayerLowerMovementsReset(); // 0x8007F1CC
 
 void Player_Controller(); // 0x8007F32C
 

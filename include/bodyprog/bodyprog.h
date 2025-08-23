@@ -1277,7 +1277,7 @@ typedef struct
     u8  unk_0[4];
     s16 field_4;
     s16 field_6;
-} s_D_800C44F0;
+} s_800C44F0; // Probable size: 8 bytes.
 
 /** Holds file IDs of anim/model/texture for each `e_CharacterId`, along with some data used in VC camera code. */
 typedef struct
@@ -1635,7 +1635,7 @@ extern RECT D_80028A20;
 
 extern s_AnimInfo D_80028B94[];
 
-extern s_D_800C44F0 D_800294F4[];
+extern s_800C44F0 D_800294F4[];
 
 extern s_AnimInfo* D_800297B8;
 
@@ -2315,7 +2315,7 @@ extern s32 D_800C44D4;
 extern s_PlayerCombat D_800C44E0;
 
 /** Table of player keyframe indices. Purpose unknown. */
-extern s_D_800C44F0 D_800C44F0[10];
+extern s_800C44F0 D_800C44F0[10];
 
 // Enemy target.
 extern VECTOR3 g_TargetEnemyPosition; // 0x800C4540
@@ -3180,7 +3180,7 @@ void func_8008992C(s_SysWork_2514* arg0, u16 arg1, s32 (*arg2)(u16, s32));
 
 s32 func_8008A0CC();
 
-s32 func_8008A0E4(s32 arg0, s16 arg1, s_SubCharacter* chara, s_PlayerCombat* combat, s32 arg4, s16 arg5, s16 arg6);
+s32 func_8008A0E4(s32 arg0, e_EquippedWeaponId weaponId, s_SubCharacter* chara, s_PlayerCombat* combat, s32 arg4, s16 arg5, s16 arg6);
 
 u8 func_8008A270(s32 idx);
 

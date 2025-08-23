@@ -25,11 +25,11 @@ void sharedFunc_800D20E4_0_s00()
     chara->properties_E4.player.properties_E4[PlayerProperty_RunTimer0]     = 0;
     chara->properties_E4.player.properties_E4[PlayerProperty_ExertionTimer] = 0;
 
-    sysWork->player_4C.extra_128.field_1C = 52;
-    chara->model_0.stateStep_3            = 0;
-    chara->model_0.state_2                = 0;
-    extra->model_0.stateStep_3            = 0;
-    extra->model_0.state_2                = 0;
+    sysWork->player_4C.extra_128.playerState_1C = PlayerState_Unk52;
+    chara->model_0.stateStep_3                  = 0;
+    chara->model_0.state_2                      = 0;
+    extra->model_0.stateStep_3                  = 0;
+    extra->model_0.state_2                      = 0;
 
     g_Player_IsShooting            = 0;
     g_Player_IsAttacking           = 0;
@@ -45,8 +45,8 @@ void sharedFunc_800D20E4_0_s00()
     g_Player_IsStepping_Left_Hold  = 0;
     g_Player_IsTurning_Left        = 0;
 
-    sysWork->player_4C.extra_128.playerSubMovement_20 = 0;
-    sysWork->player_4C.extra_128.playerMovement_24    = 0;
+    sysWork->player_4C.extra_128.playerUpperMovement_20 = 0;
+    sysWork->player_4C.extra_128.playerLowerMovement_24 = 0;
 
     sharedData_800E39D8_0_s00 = 0;
 

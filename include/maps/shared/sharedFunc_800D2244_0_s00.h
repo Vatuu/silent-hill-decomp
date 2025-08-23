@@ -12,9 +12,9 @@ void sharedFunc_800D2244_0_s00(s32 arg0)
 
     if (arg0 != 0)
     {
-        g_SysWork.player_4C.extra_128.field_1C             = PlayerState_None;
-        g_SysWork.player_4C.extra_128.playerSubMovement_20 = PlayerSubMovement_None;
-        g_SysWork.player_4C.extra_128.playerMovement_24    = PlayerMovement_None;
+        g_SysWork.player_4C.extra_128.playerState_1C         = PlayerState_None;
+        g_SysWork.player_4C.extra_128.playerUpperMovement_20 = PlayerUpperMovement_None;
+        g_SysWork.player_4C.extra_128.playerLowerMovement_24 = PlayerLowerMovement_None;
 
         player->model_0.anim_4.animIdx_0      = 53;
         player->model_0.anim_4.keyframeIdx0_8 = 503;
@@ -28,15 +28,15 @@ void sharedFunc_800D2244_0_s00(s32 arg0)
     }
     else
     {
-        g_SysWork.player_4C.extra_128.field_1C = 0;
+        g_SysWork.player_4C.extra_128.playerState_1C = 0;
 
         player->model_0.stateStep_3 = 0;
         player->model_0.state_2     = 0;
         extra->model_0.stateStep_3  = 0;
         extra->model_0.state_2      = 0;
 
-        g_SysWork.player_4C.extra_128.playerSubMovement_20 = PlayerSubMovement_None;
-        g_SysWork.player_4C.extra_128.playerMovement_24    = PlayerMovement_None;
+        g_SysWork.player_4C.extra_128.playerUpperMovement_20 = PlayerUpperMovement_None;
+        g_SysWork.player_4C.extra_128.playerLowerMovement_24 = PlayerLowerMovement_None;
     }
 
     player->field_41        = NO_VALUE;
