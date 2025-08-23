@@ -3760,7 +3760,7 @@ void SysState_LoadArea_Update() // 0x80039C40
         g_SysWork.flags_22A4 |= 1 << 10;
     }
 
-    D_800BCDB0 = g_MapOverlayHeader.mapAreaLoadParams_1C[g_MapEventParam->poiIndex_8_5];
+    D_800BCDB0 = g_MapOverlayHeader.mapAreaLoadParams_1C[g_MapEventParam->pointOfInterestIdx_8_5];
 
     if (D_800BCDB0.field_4_24 == 1)
     {
@@ -3783,9 +3783,9 @@ void SysState_LoadArea_Update() // 0x80039C40
         g_SysWork.processFlags_2298 = SysWorkProcessFlag_RoomTransition;
         func_8003640C(g_MapEventParam->mapOverlayIdx_8_25);
 
-        if (g_MapOverlayHeader.mapAreaLoadParams_1C[g_MapEventParam->poiIndex_8_5].field_4_5 != 0)
+        if (g_MapOverlayHeader.mapAreaLoadParams_1C[g_MapEventParam->pointOfInterestIdx_8_5].field_4_5 != 0)
         {
-            g_SysWork.field_2349 = g_MapOverlayHeader.mapAreaLoadParams_1C[g_MapEventParam->poiIndex_8_5].field_4_5 - 1;
+            g_SysWork.field_2349 = g_MapOverlayHeader.mapAreaLoadParams_1C[g_MapEventParam->pointOfInterestIdx_8_5].field_4_5 - 1;
         }
     }
 

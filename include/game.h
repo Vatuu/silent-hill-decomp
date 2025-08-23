@@ -744,7 +744,7 @@ typedef struct _Savegame
     u8              meleeKillCount_25D;
     u8              meleeKillCountB_25E; // Can't be packed if used as `u16`.
     u8              rangedKillCount_25F;
-    u32             field_260 : 28;
+    u32             field_260          : 28;
     s32             gameDifficulty_260 : 4;  /** `e_GameDifficulty`. */
     u16             firedShotCount_264;      /** Missed shot count = firedShotCount - (closeRangeShotCount + midRangeShotCount + longRangeShotCount). */
     u16             closeRangeShotCount_266; /** Only hits counted. */
@@ -762,7 +762,7 @@ typedef struct _Savegame
 } s_Savegame;
 STATIC_ASSERT_SIZEOF(s_Savegame, 636);
 
-/** Known as `Trigger` in SilentHillMapExaminer: https://github.com/ItEndsWithTens/SilentHillMapExaminer/blob/master/src/SHME.ExternalTool.Guts/Trigger.cs */
+/** TODO: Known as `Trigger` in SilentHillMapExaminer: https://github.com/ItEndsWithTens/SilentHillMapExaminer/blob/master/src/SHME.ExternalTool.Guts/Trigger.cs */
 typedef struct _EventParam
 {
     u8  unk_0[2];
@@ -770,13 +770,13 @@ typedef struct _EventParam
     u8  unk_4[1];
     u8  field_5;
     u8  unk_6[2];
-    u32 triggerType_8_0 : 5;
-    u32 poiIndex_8_5 : 8; /** Index into `g_MapOverlayHeader.mapAreaLoadParams_1C` */
-    u32 flags_8_13 : 6;
-    u32 field_8_19 : 5;
-    u32 field_8_24 : 1;
-    u32 mapOverlayIdx_8_25 : 6;
-    u32 field_8_31 : 1;
+    u32 triggerType_8_0        : 5;
+    u32 pointOfInterestIdx_8_5 : 8; /** Index into `g_MapOverlayHeader.mapAreaLoadParams_1C`. */
+    u32 flags_8_13             : 6;
+    u32 field_8_19             : 5;
+    u32 field_8_24             : 1;
+    u32 mapOverlayIdx_8_25     : 6;
+    u32 field_8_31             : 1;
 } s_EventParam;
 STATIC_ASSERT_SIZEOF(s_EventParam, 12);
 

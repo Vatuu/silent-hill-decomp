@@ -1419,14 +1419,14 @@ typedef struct
 /** This also makes use of union from 0x4 - 0x8 for different kinds of params, see https://github.com/Sparagas/Silent-Hill/blob/6ec81b26b8cb21dad6518037a4de31f151476e60/010%20Editor%20-%20Binary%20Templates/sh1_overlays.bt#L177 */
 typedef struct _AreaLoadParams
 {
-    q19_12 char_x_0;
+    q19_12 char_x_0; // TODO: Rename to `positionX_0`.
     u32    mapIdx_4_0          : 5;
     u32    field_4_5           : 4;
-    u32    loadingScreenId_4_9 : 3; /** e_LoadingScreenId` */
+    u32    loadingScreenId_4_9 : 3; /** `e_LoadingScreenId`` */
     u32    field_4_12          : 4;
     u32    rotationY_4_16      : 8;
     u32    field_4_24          : 8;
-    q19_12 char_z_8;
+    q19_12 char_z_8; // TODO: Rename to `positionZ_8`.
 } s_AreaLoadParams;
 
 typedef struct
