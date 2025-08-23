@@ -97,7 +97,7 @@ void func_800CE770(void) {}
 
 #include "maps/shared/sharedFunc_800D929C_0_s00.h" // 0x800CE7DC
 
-INCLUDE_ASM("asm/maps/map0_s02/nonmatchings/map0_s02", func_800CE7EC);
+INCLUDE_ASM("asm/maps/map0_s02/nonmatchings/map0_s02", Map_RoomIdxGet); // 0x800CE7EC
 
 void func_800CE884(s32 arg0) // 0x800CE884
 {
@@ -117,12 +117,63 @@ INCLUDE_ASM("asm/maps/map0_s02/nonmatchings/map0_s02", func_800CE934);
 // Event func.
 void func_800CEBC0(void) {}
 
-INCLUDE_ASM("asm/maps/map0_s02/nonmatchings/map0_s02", func_800CEBC8);
+// TODO: .rodata migration.
+#ifdef NON_MATCHING
+void Event_HealthOrAmmoItemTake(void) // 0x800CEBC8
+{
+    u32 pickupType;
+    s32 globalPickupId;
+
+    pickupType     = CommonPickupItemId_FirstAidKit;
+    globalPickupId = 0;
+    switch (g_MapEventParam->field_5)
+    {
+        case 29:
+            pickupType     = CommonPickupItemId_FirstAidKit;
+            globalPickupId = 598;
+            break;
+
+        case 30:
+            pickupType     = CommonPickupItemId_HealthDrink;
+            globalPickupId = 599;
+            break;
+            
+        case 31:
+            pickupType     = CommonPickupItemId_HealthDrink;
+            globalPickupId = 600;
+            break;
+
+        case 32:
+            pickupType     = CommonPickupItemId_HealthDrink;
+            globalPickupId = 601;
+            break;
+
+        case 33:
+            pickupType     = CommonPickupItemId_HandgunBullets;
+            globalPickupId = 602;
+            break;
+
+        case 34:
+            pickupType     = CommonPickupItemId_HealthDrink;
+            globalPickupId = 603;
+            break;
+
+        case 35:
+            pickupType     = CommonPickupItemId_HealthDrink;
+            globalPickupId = 604;
+            break;
+    }
+
+    Event_CommonItemTake(pickupType, globalPickupId);
+}
+#else
+INCLUDE_ASM("asm/maps/map0_s02/nonmatchings/map0_s02", Event_HealthOrAmmoItemTake);
+#endif
 
 // Event func.
 void func_800CEC7C(void) {}
 
-void func_800CEC84(void) // 0x800CEC84
+void Event_GasolineTankItemTake(void) // 0x800CEC84
 {
     Event_ItemTake(InventoryItemId_GasolineTank, 1, 60, 19);
 }

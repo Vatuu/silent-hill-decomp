@@ -36,36 +36,37 @@
 //-----------------------------------------------------------
 //--- PA: 0x001778   VA: 0x800CACF0   subsegment: c, map0_s02
 //-----------------------------------------------------------
-sharedFunc_800CBBBC_0_s00 = 0x800CB17C; // type:func
-sharedFunc_800CE59C_0_s01 = 0x800CB254; // type:func
-sharedFunc_800CF2A4_0_s01 = 0x800CC110; // type:func
-sharedFunc_800CFFF8_0_s00 = 0x800CC628; // type:func
-sharedFunc_800D01BC_0_s00 = 0x800CC75C; // type:func
-sharedFunc_800CF9A8_0_s01 = 0x800CC814; // type:func
-sharedFunc_800D0700_0_s00 = 0x800CC89C; // type:func
-sharedFunc_800D08B8_0_s00 = 0x800CCA54; // type:func
-sharedFunc_800D0A60_0_s00 = 0x800CCBD4; // type:func
-sharedFunc_800D0B18_0_s00 = 0x800CCC8C; // type:func
-sharedFunc_800D0E04_0_s00 = 0x800CCE24; // type:func
-sharedFunc_800CDAA8_0_s02 = 0x800CDAA8; // type:func
-sharedFunc_800D209C_0_s00 = 0x800CE1C8; // type:func
-sharedFunc_800D20D8_0_s00 = 0x800CE204; // type:func
-sharedFunc_800D20E4_0_s00 = 0x800CE210; // type:func
-sharedFunc_800D2244_0_s00 = 0x800CE370; // type:func
-sharedFunc_800D2C7C_0_s00 = 0x800CE550; // type:func
-sharedFunc_800D2D2C_0_s00 = 0x800CE600; // type:func
-sharedFunc_800D2D44_0_s00 = 0x800CE618; // type:func
-sharedFunc_800D2D6C_0_s00 = 0x800CE640; // type:func
-sharedFunc_800D2D84_0_s00 = 0x800CE658; // type:func
-sharedFunc_800D2DAC_0_s00 = 0x800CE680; // type:func
-sharedFunc_800D2E50_0_s00 = 0x800CE724; // type:func
-sharedFunc_800D2E60_0_s00 = 0x800CE734; // type:func
-sharedFunc_800D2EA4_0_s00 = 0x800CE778; // type:func
-sharedFunc_800D2EB4_0_s00 = 0x800CE788; // type:func
-sharedFunc_800D2EF4_0_s00 = 0x800CE7C8; // type:func
-sharedFunc_800D929C_0_s00 = 0x800CE7DC; // type:func
-
-
+sharedFunc_800CBBBC_0_s00  = 0x800CB17C; // type:func
+sharedFunc_800CE59C_0_s01  = 0x800CB254; // type:func
+sharedFunc_800CF2A4_0_s01  = 0x800CC110; // type:func
+sharedFunc_800CFFF8_0_s00  = 0x800CC628; // type:func
+sharedFunc_800D01BC_0_s00  = 0x800CC75C; // type:func
+sharedFunc_800CF9A8_0_s01  = 0x800CC814; // type:func
+sharedFunc_800D0700_0_s00  = 0x800CC89C; // type:func
+sharedFunc_800D08B8_0_s00  = 0x800CCA54; // type:func
+sharedFunc_800D0A60_0_s00  = 0x800CCBD4; // type:func
+sharedFunc_800D0B18_0_s00  = 0x800CCC8C; // type:func
+sharedFunc_800D0E04_0_s00  = 0x800CCE24; // type:func
+sharedFunc_800CDAA8_0_s02  = 0x800CDAA8; // type:func
+sharedFunc_800D209C_0_s00  = 0x800CE1C8; // type:func
+sharedFunc_800D20D8_0_s00  = 0x800CE204; // type:func
+sharedFunc_800D20E4_0_s00  = 0x800CE210; // type:func
+sharedFunc_800D2244_0_s00  = 0x800CE370; // type:func
+sharedFunc_800D2C7C_0_s00  = 0x800CE550; // type:func
+sharedFunc_800D2D2C_0_s00  = 0x800CE600; // type:func
+sharedFunc_800D2D44_0_s00  = 0x800CE618; // type:func
+sharedFunc_800D2D6C_0_s00  = 0x800CE640; // type:func
+sharedFunc_800D2D84_0_s00  = 0x800CE658; // type:func
+sharedFunc_800D2DAC_0_s00  = 0x800CE680; // type:func
+sharedFunc_800D2E50_0_s00  = 0x800CE724; // type:func
+sharedFunc_800D2E60_0_s00  = 0x800CE734; // type:func
+sharedFunc_800D2EA4_0_s00  = 0x800CE778; // type:func
+sharedFunc_800D2EB4_0_s00  = 0x800CE788; // type:func
+sharedFunc_800D2EF4_0_s00  = 0x800CE7C8; // type:func
+sharedFunc_800D929C_0_s00  = 0x800CE7DC; // type:func
+Map_RoomIdxGet 			   = 0x800CE7EC; // type:func
+Event_HealthOrAmmoItemTake = 0x800CEBC8; // type:func
+Event_GasolineTankItemTake = 0x800CEC84; // type:func
 
 //================================================
 //=== .data section
