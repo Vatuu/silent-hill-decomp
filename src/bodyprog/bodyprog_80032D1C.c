@@ -3736,7 +3736,7 @@ void SysState_Fmv_Update() // 0x80039A58
     Game_StateSetNext(GameState_InGame);
 
     // If flag is set, returns to `GameState_InGame` with `gameStateStep[0]` = 1.
-    if (g_MapEventParam->field_8_13 & (1 << 1))
+    if (g_MapEventParam->flags_8_13 & (1 << 1))
     {
         g_GameWork.gameStateStep_598[0] = 1;
     }
@@ -3750,7 +3750,7 @@ void SysState_LoadArea_Update() // 0x80039C40
     g_SysWork.field_229C            = 0;
     g_SysWork.loadingScreenIdx_2281 = D_800BCDB0.loadingScreenId_4_9;
     g_SysWork.field_2283            = g_MapEventParam->field_8_19;
-    g_SysWork.field_2282            = g_MapEventParam->field_8_13;
+    g_SysWork.field_2282            = g_MapEventParam->flags_8_13;
 
     Sd_EngineCmd(SfxPairs[g_SysWork.field_2283].sfx_0);
 
@@ -3760,7 +3760,7 @@ void SysState_LoadArea_Update() // 0x80039C40
         g_SysWork.flags_22A4 |= 1 << 10;
     }
 
-    D_800BCDB0 = g_MapOverlayHeader.mapAreaLoadParams_1C[g_MapEventParam->field_8_5];
+    D_800BCDB0 = g_MapOverlayHeader.mapAreaLoadParams_1C[g_MapEventParam->poiIndex_8_5];
 
     if (D_800BCDB0.field_4_24 == 1)
     {
@@ -3775,17 +3775,17 @@ void SysState_LoadArea_Update() // 0x80039C40
     if (g_SysWork.sysState_8 == SysState_LoadArea0)
     {
         g_SysWork.processFlags_2298    = SysWorkProcessFlag_OverlayTransition;
-        g_SavegamePtr->mapOverlayId_A4 = g_MapEventParam->field_8_25;
+        g_SavegamePtr->mapOverlayId_A4 = g_MapEventParam->mapOverlayIdx_8_25;
         GameFs_MapLoad(g_SavegamePtr->mapOverlayId_A4);
     }
     else
     {
         g_SysWork.processFlags_2298 = SysWorkProcessFlag_RoomTransition;
-        func_8003640C(g_MapEventParam->field_8_25);
+        func_8003640C(g_MapEventParam->mapOverlayIdx_8_25);
 
-        if (g_MapOverlayHeader.mapAreaLoadParams_1C[g_MapEventParam->field_8_5].field_4_5 != 0)
+        if (g_MapOverlayHeader.mapAreaLoadParams_1C[g_MapEventParam->poiIndex_8_5].field_4_5 != 0)
         {
-            g_SysWork.field_2349 = g_MapOverlayHeader.mapAreaLoadParams_1C[g_MapEventParam->field_8_5].field_4_5 - 1;
+            g_SysWork.field_2349 = g_MapOverlayHeader.mapAreaLoadParams_1C[g_MapEventParam->poiIndex_8_5].field_4_5 - 1;
         }
     }
 
@@ -3833,7 +3833,7 @@ void SysState_ReadMessage_Update(s32 arg0) // 0x80039FB8
 
     i = arg0;
 
-    if (!(g_MapEventParam->field_8_13 & (1 << 0)) && !(g_SysWork.flags_22A4 & (1 << 5)))
+    if (!(g_MapEventParam->flags_8_13 & (1 << 0)) && !(g_SysWork.flags_22A4 & (1 << 5)))
     {
         for (i = 0; i < NPC_COUNT_MAX; i++) 
         {
@@ -3974,7 +3974,7 @@ void SysState_SaveMenu_Update() // 0x8003A230
 
 void SysState_EventCallFunc_Update() // 0x8003A3C8
 {
-    if (g_MapEventParam->field_8_13 != 0)
+    if (g_MapEventParam->flags_8_13 != 0)
     {
         Savegame_EventFlagSet(g_MapEventParam->eventFlagId_2);
     }
