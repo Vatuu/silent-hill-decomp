@@ -32,7 +32,7 @@ s8 func_80040A64(VECTOR3* pos) // 0x80040A64
     VectorNormal(&vec0, &vec1);
 
     Vw_CoordHierarchyMatrixCompute(vwGetViewCoord(), &mat);
-    dot = FP_MULTIPLY_MATRIX(mat, vec1);
+    dot = Math_MultiplyMatrix(mat, vec1);
     res = CLAMP(dot, -127, 127);
     return res;
 }
