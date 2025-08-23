@@ -1796,14 +1796,14 @@ void func_800625F4(VECTOR3* arg0, s16 arg1, s32 arg2, s32 arg3) // 0x800625F4
         return;
     }
 
-    g_MapOverlayHeader.table200Items_4C[idx].field_0  = arg0->vx;
-    g_MapOverlayHeader.table200Items_4C[idx].field_8  = arg0->vy;
-    g_MapOverlayHeader.table200Items_4C[idx].field_4  = arg0->vz;
-    g_MapOverlayHeader.table200Items_4C[idx].field_E  = arg1;
-    g_MapOverlayHeader.table200Items_4C[idx].field_D  = var;
-    g_MapOverlayHeader.table200Items_4C[idx].field_B  = Rng_TestProbabilityBits(2);
-    g_MapOverlayHeader.table200Items_4C[idx].field_C  = 6;
-    g_MapOverlayHeader.table200Items_4C[idx].field_10 = arg3 * FP_FLOAT_TO(5.0f, Q12_SHIFT);
+    g_MapOverlayHeader.unkTable1_4C[idx].field_0  = arg0->vx;
+    g_MapOverlayHeader.unkTable1_4C[idx].field_8  = arg0->vy;
+    g_MapOverlayHeader.unkTable1_4C[idx].field_4  = arg0->vz;
+    g_MapOverlayHeader.unkTable1_4C[idx].field_E  = arg1;
+    g_MapOverlayHeader.unkTable1_4C[idx].field_D  = var;
+    g_MapOverlayHeader.unkTable1_4C[idx].field_B  = Rng_TestProbabilityBits(2);
+    g_MapOverlayHeader.unkTable1_4C[idx].field_C  = 6;
+    g_MapOverlayHeader.unkTable1_4C[idx].field_10 = arg3 * FP_FLOAT_TO(5.0f, Q12_SHIFT);
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80062708); // 0x80062708
