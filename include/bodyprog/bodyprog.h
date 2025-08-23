@@ -1469,6 +1469,16 @@ typedef struct
     s16 field_6;
 } s_UnkStruct3_Mo;
 
+/** Guessed based on in-debugger observation during gameplay.
+ * Everything is inited to 0xFFFF and some data is written when I get hit by monsters.
+ * Might be more generic 'particles / decals' struct
+ */
+typedef struct
+{
+    u16 unk_0;
+    u16 unk_2;
+} s_BloodSplat;
+
 /** TODO: `g_MapOverlayHeader` is part of the map overlay BIN files. Maybe should be moved to `maps/shared.h`. 
  * If field has a comment that lists only certain map(s) it means all others set this field to 0.
  * func(?) means the signature is unknown and a default void() was selected for now.
@@ -1498,10 +1508,10 @@ typedef struct _MapOverlayHeader
     void              (*func_40)();
     void              (*func_44)();
     void              (*func_48)(); // func(?).
-    s_func_800625F4*  table200Items_4C; //unknown purpose, but all maps have an array[200] of this (4000 zero bytes)
-    s32               always200_50;
-    s32*              table76Items_54; //unknown purpose, but all maps have an array[76] of this (304 zero bytes)
-    s32               always150_58;
+    s_func_800625F4*  unkTable1_4C;
+    s32               unkTable1Len_50;
+    s32*              bloodSplats_54;
+    s32               bloodSplatsLen_58;
     s32               always0_5C;
     s32               always0_60;
     s32               always0_64;

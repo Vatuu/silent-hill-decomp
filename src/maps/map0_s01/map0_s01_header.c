@@ -18,6 +18,10 @@
 #define func_800CFFD8 ((void(*)())0x800CFFD8)
 #define func_800D0850 ((void(*)())0x800D0850)
 
+#define sharedData_800DFB64_0_s00 (0x800DE254)
+#define sharedData_800DFB68_0_s00 (0x800DE258)
+#define sharedData_800DFB6C_0_s00 (0x800DE25C)
+#define sharedData_800DFB70_0_s00 (0x800DE260)
 
 
 extern u8 D_800DDFB8[];
@@ -78,12 +82,12 @@ const s_MapOverlayHeader g_MapOverlayHeader =
     .field_38 = (s_UnkStruct3_Mo*)0x800DD6C0,
     .func_3C = func_800DC9C8,
     .func_40 = (void(*)())0x800DCCF4, // func_800DCCF4,
-    .func_44 = 0x00000000,
-    .func_48 = 0x00000000,
-    .table200Items_4C = D_800DE270,
-    .always200_50 = 300,
-    .table76Items_54 = D_800DF9E0,
-    .always150_58 = 150,
+    .func_44 = NULL,
+    .func_48 = NULL,
+    .unkTable1_4C = D_800DE270,
+    .unkTable1Len_50 = 300,
+    .bloodSplats_54 = D_800DF9E0,
+    .bloodSplatsLen_58 = 150,
     .always0_5C = 0,
     .always0_60 = 0,
     .always0_64 = 0,
@@ -92,16 +96,16 @@ const s_MapOverlayHeader g_MapOverlayHeader =
     .func_70 = NULL,
     .func_74 = NULL,
     .func_78 = NULL,
-    .unk_7C = 0x00000000,
+    .unk_7C = 0,
     .func_80 = NULL,
     .func_84 = NULL,
     .unk_88 = D_800DFB10,
     .func_8C = (void(*)())0x800CD1F8, // func_800CD1F8,
     .func_90 = NULL,
-    .unk_94 = 0x00000000,
-    .unk_98 = 0x00000000,
-    .unk_9C = 0x00000000,
-    .unk_A0 = 0x00000000,
+    .unk_94 = 0,
+    .unk_98 = 0,
+    .unk_9C = 0,
+    .unk_A0 = 0,
     .func_A4 = NULL,
     .func_A8 = NULL,
     .func_AC = NULL,
@@ -158,10 +162,10 @@ const s_MapOverlayHeader g_MapOverlayHeader =
     .func_178 = func_800CFFD8,
     .func_17C = func_800D0850,
     .func_180 = sharedFunc_800D0E04_0_s00,
-    .windSpeedX_184 = 0x800DE254, // sharedData_800DFB64_0_s00,
-    .windSpeedZ_188 = 0x800DE258, // sharedData_800DFB68_0_s00,
-    .data_18C = 0x800DE25C, // sharedData_800DFB6C_0_s00,
-    .data_190 = 0x800DE260, // sharedData_800DFB70_0_s00,
+    .windSpeedX_184 = sharedData_800DFB64_0_s00,
+    .windSpeedZ_188 = sharedData_800DFB68_0_s00,
+    .data_18C = sharedData_800DFB6C_0_s00,
+    .data_190 = sharedData_800DFB70_0_s00,
     .charaUpdateFuncs_194 = {
         NULL,
         NULL,
