@@ -2,6 +2,7 @@
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/item_screens.h"
+#include "bodyprog/player_logic.h"
 #include "bodyprog/math.h"
 
 const s32 rodataPad_80025EAC = 0;

@@ -2334,7 +2334,7 @@ g_Demo_CurFrameData                         = 0x800C4890;
 g_Demo_DemoStep                             = 0x800C4894;
 g_Demo_VideoPresentInterval                 = 0x800C4898;
 
-
+Player_CombatStateUpdate = 0x800771BC // type:func
 
 //================================================
 //=== .bss section

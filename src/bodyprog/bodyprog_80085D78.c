@@ -2095,7 +2095,7 @@ s32 func_8008A0E4(s32 arg0, e_EquippedWeaponId weaponId, s_SubCharacter* chara, 
 
     if (chara->model_0.charaId_0 != Chara_Hero)
     {
-        if (g_SysWork.player_4C.chara_0.field_41 != NO_VALUE)
+        if (g_SysWork.player_4C.chara_0.attackReceived_41 != NO_VALUE)
         {
             ret = 0;
         }

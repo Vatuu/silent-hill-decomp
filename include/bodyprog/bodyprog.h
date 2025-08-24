@@ -1242,7 +1242,7 @@ typedef struct
     s32           field_54;
     SVECTOR       field_58;
     VECTOR3       field_60; // Type assumed.
-    SVECTOR       field_6C;
+    SVECTOR       field_6C; // Player current angles?
     SVECTOR       field_74;
     SVECTOR       field_7C;
     u8            unk_84[72];
@@ -1445,7 +1445,7 @@ typedef struct
     s16 field_2;
     s16 field_4;
     s16 field_6;
-} s_UnkStruct3_Mo;
+} s_UnkStruct3_Mo; // Probable size: 8 bytes.
 
 /** TODO: `g_MapOverlayHeader` is part of the map overlay BIN files. Maybe should be moved to `maps/shared.h`. 
  *  If field has a comment that lists only certain map(s) it means all others set this field to 0

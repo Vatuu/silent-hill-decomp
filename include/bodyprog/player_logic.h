@@ -91,6 +91,191 @@ typedef enum _PlayerLowerMovement
     PlayerLowerMovement_Reload               = 35
 } e_PlayerLowerMovement;
 
+typedef enum _PlayerState
+{
+    PlayerState_None                            = 0,
+    PlayerState_Combat                          = 1,
+    PlayerState_Idle                            = 2,
+    PlayerState_Falling_Front                   = 3,
+    PlayerState_Falling_Behind                  = 4,
+    PlayerState_KickEnemy                       = 5,
+    PlayerState_StompEnemy                      = 6,
+    PlayerState_Unk7                            = 7, // Lighting bolts at the end of the game?
+    PlayerState_Dead                            = 8,
+    PlayerState_Instant_Dead                    = 9, // Split Head Lizard Boss
+    PlayerState_Grab_Upper_Front                = 10,
+    PlayerState_Unk11                           = 11,
+    PlayerState_Unk12                           = 12,
+    PlayerState_Grab_Upper_Behind               = 13,
+    PlayerState_Grab_Lower_Front                = 14,
+    PlayerState_Grab_Lower_Behind               = 15,
+    PlayerState_Grab_Free_Upper_Front           = 16,
+    PlayerState_Unk17                           = 17,
+    PlayerState_Unk18                           = 18,
+    PlayerState_Damage_Head                     = 19,
+    PlayerState_Grab_Free_Upper_Behind          = 20,
+    PlayerState_Grab_Free_Lower_Front           = 21,
+    PlayerState_Grab_Free_Lower_Behind          = 22,
+    PlayerState_Damage_Upper_Behind             = 23,
+    PlayerState_Damage_Upper_Front              = 24,
+    PlayerState_Damage_Upper_Right              = 25,
+    PlayerState_Damage_Upper_Left               = 26,
+    PlayerState_Damage_Feet_Frontal             = 27, // Creeper Attack
+    PlayerState_Damage_Feet_Behind              = 28, // Creeper Attack
+    PlayerState_Damage_Push_Behind              = 29, // Split Head Lizard Boss
+    PlayerState_Damage_Push_Frontal             = 30, // Split Head Lizard Boss
+    PlayerState_Unk31                           = 31,
+    PlayerState_Grab_Neck_Front                 = 32, // Cybil Boss
+    PlayerState_Grab_Neck_Behind                = 33, // Cybil Boss
+    PlayerState_Unk34                           = 34,
+    PlayerState_Unk35                           = 35,
+    PlayerState_Unk36                           = 36,
+    PlayerState_GettingGrab_RomperAttack_Front  = 37,
+    PlayerState_GettingGrab_RomperAttack_Behind = 38,
+    PlayerState_Grab_RomperAttack_Front         = 39,
+    PlayerState_Grab_RomperAttack_Behind        = 40,
+    PlayerState_Grab_Free_RomperAttack_Front    = 41,
+    PlayerState_Grab_Free_RomperAttack_Behind   = 42,
+    PlayerState_Unk43                           = 43,
+    PlayerState_Unk44                           = 44,
+    PlayerState_Damage_Thrown_Front             = 45,
+    PlayerState_Damage_Thrown_Behind            = 46,
+    PlayerState_OnFloor_Front                   = 47, // This techincally counts as a grab animation.
+    PlayerState_OnFloor_Behind                  = 48, // This techincally counts as a grab animation.
+    PlayerState_GettingUp_Front                 = 49,
+    PlayerState_GettingUp_Behind                = 50,
+    PlayerState_Unk51                           = 51, // Cutscenes
+    PlayerState_Unk52                           = 52, // Standing during interacting with something/cutscenes?
+    PlayerState_Unk53                           = 53, // Moving in cutscene?
+    PlayerState_Unk54                           = 54, // Running in cutscene?
+    PlayerState_Unk55                           = 55,
+    PlayerState_Unk56                           = 56,
+    PlayerState_Unk57                           = 57,
+    PlayerState_Unk58                           = 58,
+    PlayerState_Unk59                           = 59, // Crouching in cutscenes/interactions?
+    PlayerState_Unk60                           = 60, // Get up from crouching in cutscenes/interactions?
+    PlayerState_Unk61                           = 61,
+    PlayerState_Unk62                           = 62,
+    PlayerState_Unk63                           = 63,
+    PlayerState_Unk64                           = 64,
+    PlayerState_Unk65                           = 65,
+    PlayerState_Unk66                           = 66,
+    PlayerState_Unk67                           = 67,
+    PlayerState_Unk68                           = 68,
+    PlayerState_Unk69                           = 69,
+    PlayerState_Unk70                           = 70,
+    PlayerState_Unk71                           = 71,
+    PlayerState_Unk72                           = 72,
+    PlayerState_Unk73                           = 73,
+    PlayerState_Unk74                           = 74,
+    PlayerState_Unk75                           = 75,
+    PlayerState_Unk76                           = 76,
+    PlayerState_Unk77                           = 77,
+    PlayerState_Unk78                           = 78,
+    PlayerState_Unk79                           = 79,
+    PlayerState_Unk80                           = 80,
+    PlayerState_Unk81                           = 81,
+    PlayerState_Unk82                           = 82,
+    PlayerState_Unk83                           = 83,
+    PlayerState_Unk84                           = 84,
+    PlayerState_Unk85                           = 85,
+    PlayerState_Unk86                           = 86,
+    PlayerState_Unk87                           = 87,
+    PlayerState_Unk88                           = 88,
+    PlayerState_Unk89                           = 89,
+    PlayerState_Unk90                           = 90,
+    PlayerState_Unk91                           = 91,
+    PlayerState_Unk92                           = 92,
+    PlayerState_Unk93                           = 93,
+    PlayerState_Unk94                           = 94,
+    PlayerState_Unk95                           = 95,
+    PlayerState_Unk96                           = 96,
+    PlayerState_Unk97                           = 97,
+    PlayerState_Unk98                           = 98,
+    PlayerState_Unk99                           = 99,
+    PlayerState_Unk100                          = 100,
+    PlayerState_Unk101                          = 101,
+    PlayerState_Unk102                          = 102,
+    PlayerState_Unk103                          = 103,
+    PlayerState_Unk104                          = 104,
+    PlayerState_Unk105                          = 105,
+    PlayerState_Unk106                          = 106,
+    PlayerState_Unk107                          = 107,
+    PlayerState_Unk108                          = 108,
+    PlayerState_Unk109                          = 109,
+    PlayerState_Unk110                          = 110,
+    PlayerState_Unk111                          = 111,
+    PlayerState_Unk112                          = 112,
+    PlayerState_Unk113                          = 113,
+    PlayerState_Unk114                          = 114,
+    PlayerState_Unk115                          = 115,
+    PlayerState_Unk116                          = 116,
+    PlayerState_Unk117                          = 117,
+    PlayerState_Unk118                          = 118,
+    PlayerState_Unk119                          = 119,
+    PlayerState_Unk120                          = 120,
+    PlayerState_Unk121                          = 121,
+    PlayerState_Unk122                          = 122,
+    PlayerState_Unk123                          = 123,
+    PlayerState_Unk124                          = 124,
+    PlayerState_Unk125                          = 125,
+    PlayerState_Unk126                          = 126,
+    PlayerState_Unk127                          = 127,
+    PlayerState_Unk128                          = 128,
+    PlayerState_Unk129                          = 129,
+    PlayerState_Unk130                          = 130,
+    PlayerState_Unk131                          = 131,
+    PlayerState_Unk132                          = 132,
+    PlayerState_Unk133                          = 133,
+    PlayerState_Unk134                          = 134,
+    PlayerState_Unk135                          = 135,
+    PlayerState_Unk136                          = 136,
+    PlayerState_Unk137                          = 137,
+    PlayerState_Unk138                          = 138,
+    PlayerState_Unk139                          = 139,
+    PlayerState_Unk140                          = 140,
+    PlayerState_Unk141                          = 141,
+    PlayerState_Unk142                          = 142,
+    PlayerState_Unk143                          = 143,
+    PlayerState_Unk144                          = 144,
+    PlayerState_Unk145                          = 145,
+    PlayerState_Unk146                          = 146,
+    PlayerState_Unk147                          = 147,
+    PlayerState_Unk148                          = 148,
+    PlayerState_Unk149                          = 149,
+    PlayerState_Unk150                          = 150,
+    PlayerState_Unk151                          = 151,
+    PlayerState_Unk152                          = 152,
+    PlayerState_Unk153                          = 153,
+    PlayerState_Unk154                          = 154,
+    PlayerState_Unk155                          = 155,
+    PlayerState_Unk156                          = 156,
+    PlayerState_Unk157                          = 157,
+    PlayerState_Unk158                          = 158,
+    PlayerState_Unk159                          = 159,
+    PlayerState_Unk160                          = 160,
+    PlayerState_Unk161                          = 161,
+    PlayerState_Unk162                          = 162,
+    PlayerState_Unk163                          = 163,
+    PlayerState_Unk164                          = 164,
+    PlayerState_Unk165                          = 165,
+    PlayerState_Unk166                          = 166,
+    PlayerState_Unk167                          = 167,
+    PlayerState_Unk168                          = 168,
+    PlayerState_Unk169                          = 169,
+    PlayerState_Unk170                          = 170,
+    PlayerState_Unk171                          = 171,
+    PlayerState_Unk172                          = 172,
+    PlayerState_Unk173                          = 173,
+    PlayerState_Unk174                          = 174,
+    PlayerState_Unk175                          = 175,
+    PlayerState_Unk176                          = 176,
+    PlayerState_Unk177                          = 177,
+    PlayerState_Unk178                          = 178,
+    PlayerState_Unk179                          = 179,
+    PlayerState_Unk180                          = 180
+} e_PlayerState;
+
 // ========
 // STRUCTS
 // ========
@@ -290,7 +475,8 @@ bool Player_CombatAnimUpdate();
  */
 bool Player_Upper_MainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra); // 0x80075504
 
-void func_800771BC(s_SubCharacter* chara, s_MainCharacterExtra* extra); // 0x800771BC
+/** @brief Update upper part states related to combat action. */
+void Player_CombatStateUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra); // 0x800771BC
 
 /** @brief Cancels movement when the player abruptly stop the running while stepping movement. */
 void Player_StepAbruptStop_MovementCancel(s_SubCharacter* chara, s32 arg1, s32 animIdx, s32 keyframeIdx, e_PlayerLowerMovement playerState, q19_12 arg5, s32 aimingState); // 0x80077BB8
@@ -325,7 +511,7 @@ void Game_PlayerLowerMovementsReset(); // 0x8007F1CC
 
 void Player_Controller(); // 0x8007F32C
 
-/** Player func. */
+/** @brief Defines if the player can stomp/kick a knocked enemy. */
 bool func_8007F95C(); // 0x8007F95C
 
 #endif

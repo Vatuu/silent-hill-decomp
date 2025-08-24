@@ -3022,7 +3022,7 @@ void func_80037E78(s_SubCharacter* chara) // 0x80037E78
     // TODO: Strange `chara->headingAngle_3C` access.
     if (chara->health_B0 <= 0 && (*(s32*)&chara->headingAngle_3C & 0x600000) == 0x200000)
     {
-        idx = chara->field_41;
+        idx = chara->attackReceived_41;
         if (idx < 39)
         {
             cond = D_800AD4C8[idx].field_10 == 3;
@@ -3224,7 +3224,7 @@ void SysState_Gameplay_Update() // 0x80038BD4
     s32             state;
     s_SubCharacter* playerChara = &g_SysWork.player_4C.chara_0;
 
-    func_800373CC(~playerChara->field_41 != 0);
+    func_800373CC(~playerChara->attackReceived_41 != 0);
     Savegame_MapRoomIdxSet();
 
     switch (FP_ROUND_SCALED(playerChara->health_B0, 10, Q12_SHIFT))

@@ -55,36 +55,36 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
         switch (D_800C457C)
         {
             case 3:
-                g_SysWork.player_4C.extra_128.playerState_1C             = PlayerState_Unk56;
-				playerChara->model_0.stateStep_3                   = 0;
-				playerChara->model_0.state_2                       = 0;
-				extra->model_0.stateStep_3                         = 0;
-				extra->model_0.state_2                             = 0;
+                g_SysWork.player_4C.extra_128.playerState_1C         = PlayerState_Unk56;
+				playerChara->model_0.stateStep_3                     = 0;
+				playerChara->model_0.state_2                         = 0;
+				extra->model_0.stateStep_3                           = 0;
+				extra->model_0.state_2                               = 0;
 				g_SysWork.player_4C.extra_128.playerUpperMovement_20 = PlayerUpperMovement_None;
-				g_SysWork.player_4C.extra_128.playerLowerMovement_24    = PlayerLowerMovement_None;
+				g_SysWork.player_4C.extra_128.playerLowerMovement_24 = PlayerLowerMovement_None;
                 break;
 
             case 4:
-                g_SysWork.player_4C.extra_128.playerState_1C             = PlayerState_Unk57;
-				playerChara->model_0.stateStep_3                   = 0;
-				playerChara->model_0.state_2                       = 0;
-				extra->model_0.stateStep_3                         = 0;
-				extra->model_0.state_2                             = 0;
+                g_SysWork.player_4C.extra_128.playerState_1C         = PlayerState_Unk57;
+				playerChara->model_0.stateStep_3                     = 0;
+				playerChara->model_0.state_2                         = 0;
+				extra->model_0.stateStep_3                           = 0;
+				extra->model_0.state_2                               = 0;
 				g_SysWork.player_4C.extra_128.playerUpperMovement_20 = PlayerUpperMovement_None;
-				g_SysWork.player_4C.extra_128.playerLowerMovement_24    = PlayerLowerMovement_None;
+				g_SysWork.player_4C.extra_128.playerLowerMovement_24 = PlayerLowerMovement_None;
                 break;
         }
 
         if (D_800C4606 != 0)
         {
-            g_SysWork.player_4C.extra_128.playerState_1C             = PlayerState_Unk52;
-            playerChara->model_0.stateStep_3                   = 0;
-            playerChara->model_0.state_2                       = 0;
-            extra->model_0.stateStep_3                         = 0;
-            extra->model_0.state_2                             = 0;
+            g_SysWork.player_4C.extra_128.playerState_1C         = PlayerState_Unk52;
+            playerChara->model_0.stateStep_3                     = 0;
+            playerChara->model_0.state_2                         = 0;
+            extra->model_0.stateStep_3                           = 0;
+            extra->model_0.state_2                               = 0;
             g_SysWork.player_4C.extra_128.playerUpperMovement_20 = PlayerUpperMovement_None;
-            g_SysWork.player_4C.extra_128.playerLowerMovement_24    = PlayerLowerMovement_None;
-            D_800C4606                                         = 0;
+            g_SysWork.player_4C.extra_128.playerLowerMovement_24 = PlayerLowerMovement_None;
+            D_800C4606                                           = 0;
         }
 
         g_SysWork.player_4C.chara_0.properties_E4.player.field_124 = 0;

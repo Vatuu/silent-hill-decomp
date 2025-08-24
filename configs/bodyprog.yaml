@@ -83,7 +83,7 @@ segments:
       - [0x54C0, .rodata, bodyprog_80054FC0] # Jumptable: `Player_Upper_StateUpdate`
                                              # Jumptable: `Player_CombatAnimUpdate`
                                              # Jumptable: `Player_MovementsSubStateUpdate`
-                                             # Jumptable: `func_800771BC`
+                                             # Jumptable: `Player_CombatStateUpdate`
                                              # Jumptable: `Player_Lower_Update`
                                              # Jumptable: `func_8007B924`
                                              # Jumptable: `Player_ReceiveDamage`
