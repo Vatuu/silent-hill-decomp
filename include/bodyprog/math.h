@@ -199,6 +199,7 @@
     FP_MULTIPLY((s64)(aInt), FP_FLOAT_TO((bFlt), (shift)), (shift))
 
 /** @brief Converts a floating-point alpha in the range `[0.0f, 1.0f]` to a fixed-point alpha in Q3.12 format, range `[0, 4096]`.
+ * Mapping is direct.
  *
  * @param alpha Alpha as `float`.
  * @return Fixed-point alpha in Q3.12, range `[0, 4096]` (`s16`).
@@ -216,6 +217,7 @@
 
 // TODO: Maybe not appropriate for this project since it often results in ugly floats.
 /** @brief Converts a normalized color value in the range `[0.0f, 1.0f]` to an 8-bit color value in the range `[0, 255]`.
+ * Mapping is direct.
  *
  * @param val Color component as `float`.
  * @return Fixed-point color component, range `[0, 255]`.
@@ -224,7 +226,10 @@
     (u8)((val) * 0xFF)
 
 /** @brief Converts floating-point degrees to unsigned fixed-point degrees in Q3.12 format, range `[0, 4096]`.
+ * Mapping is direct.
  *
+ * @note 1 degree = 11.377778.
+ * 
  * @param deg Degrees as `float`.
  * @return Unsigned fixed-point degrees in Q3.12, range `[0, 4096]` (`s16`).
  */
@@ -233,6 +238,7 @@
 
 /** @brief Converts unsigned fixed-point degrees in Q3.12, packed range `[0, 256]` to
  * unsigned fixed-point degrees in Q3.12, range `[0, 4096]`.
+ * Mapping is direct.
  *
  * @param packedDeg Packed unsigned fixed-point degrees in Q3.12, range `[0, 256]`.
  * @return Unsigned fixed-point degrees converted to range `[0, 4096]` (`s16`).
@@ -257,6 +263,9 @@
     ((angle) & (FP_ANGLE(360.0f) - 1))
 
 /** @brief Converts floating-point radians in the range `[-PI, PI]` to fixed-point radians in the range `[0, 0x5000]`.
+ * Mapping is direct.
+ *
+ * @note Pi = 10240.
  *
  * @param rad Radians as `float`.
  * @return Fixed-point radians, range `[0, 0x5000]` (`s32`).
@@ -265,7 +274,9 @@
     (s32)(((((rad) < 0.0f) ? (PI + (PI - ABS(rad))) : (rad)) * ((float)FP_PI / PI)) * \
           (((rad) < 0.0f || (rad) >= PI) ? 1.0f : 2.0f))
 
-/** @brief Converts floating-point meters to fixed-point meters in Q19.12 format, where `1.0f == 4096`.
+/** @brief Converts floating-point meters to fixed-point meters in Q19.12 format.
+ *
+ * @note 1 meter = 4096.
  *
  * @param met Meters as `float`.
  * @return Fixed-point meters in Q19.12 (`s32`).
@@ -273,7 +284,9 @@
 #define FP_METER(met) \
     FP_FLOAT_TO((met), Q12_SHIFT)
 
-/** @brief Converts floating-point seconds to fixed-point seconds in Q19.12 format, where `1.0f == 4096`.
+/** @brief Converts floating-point seconds to fixed-point seconds in Q19.12 format.
+ *
+ * @note 1 second == 4096.
  *
  * @param sec Seconds as `float`.
  * @return Fixed-point seconds in Q19.12 (`s32`).
