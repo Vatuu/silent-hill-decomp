@@ -1796,9 +1796,9 @@ void func_800625F4(VECTOR3* arg0, s16 arg1, s32 arg2, s32 arg3) // 0x800625F4
         return;
     }
 
-    g_MapOverlayHeader.unkTable1_4C[idx].field_0  = arg0->vx;
-    g_MapOverlayHeader.unkTable1_4C[idx].field_8  = arg0->vy;
-    g_MapOverlayHeader.unkTable1_4C[idx].field_4  = arg0->vz;
+    g_MapOverlayHeader.unkTable1_4C[idx].vx_0     = arg0->vx;
+    g_MapOverlayHeader.unkTable1_4C[idx].vy_8     = arg0->vy;
+    g_MapOverlayHeader.unkTable1_4C[idx].vz_4     = arg0->vz;
     g_MapOverlayHeader.unkTable1_4C[idx].field_E  = arg1;
     g_MapOverlayHeader.unkTable1_4C[idx].field_D  = var;
     g_MapOverlayHeader.unkTable1_4C[idx].field_B  = Rng_TestProbabilityBits(2);

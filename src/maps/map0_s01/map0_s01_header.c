@@ -17,6 +17,8 @@
 #define func_800CE000 ((void(*)())0x800CE000)
 #define func_800CFFD8 ((void(*)())0x800CFFD8)
 #define func_800D0850 ((void(*)())0x800D0850)
+#define func_800DA980 ((void(*)())0x800DA980)
+#define func_800DB790 ((void(*)())0x800DB790)
 
 #define sharedData_800DFB64_0_s00 (0x800DE254)
 #define sharedData_800DFB68_0_s00 (0x800DE258)
@@ -25,8 +27,8 @@
 
 extern u8 D_800DDFB8[];
 extern s_AnimInfo g_AnimInfo[];
-extern s_func_800625F4 D_800DE270[];
-extern s_BloodSplat D_800DF9E0[];
+extern s_func_800625F4 D_800DE270[300];
+extern s_BloodSplat D_800DF9E0[150];
 extern s32 D_800DFB10[];
 
 void (*g_LoadScreenFuncs[])() =
@@ -44,11 +46,11 @@ s_AreaLoadParams g_MapAreaLoadParams[] =
 
 void (*g_MapEventFuncs[])() = 
 {
-    0x00000000,
-    0x00000000,
+    NULL,
+    NULL,
     Event_HealthItemTake,
-    (void(*)())0x800DA980, // func_800DA980,
-    (void(*)())0x800DB790, // func_800DB790,
+    func_800DA980,
+    func_800DB790,
     func_800DBAA0,
     Event_KitchenKnifeItemTake,
     Event_FlashlightItemTake,
@@ -82,13 +84,13 @@ const s_MapOverlayHeader g_MapOverlayHeader =
     .animInfo_34 = g_AnimInfo,
     .field_38 = (s_UnkStruct3_Mo*)0x800DD6C0,
     .func_3C = func_800DC9C8,
-    .func_40 = (void(*)())0x800DCCF4, // func_800DCCF4,
+    .func_40 = func_800DCCF4,
     .func_44 = NULL,
     .func_48 = NULL,
     .unkTable1_4C = D_800DE270,
-    .unkTable1Len_50 = 300,
+    .unkTable1Len_50 = ARRAY_SIZE(D_800DE270),
     .bloodSplats_54 = D_800DF9E0,
-    .bloodSplatsLen_58 = 150,
+    .bloodSplatsLen_58 = ARRAY_SIZE(D_800DF9E0),
     .always0_5C = 0,
     .always0_60 = 0,
     .always0_64 = 0,
@@ -101,7 +103,7 @@ const s_MapOverlayHeader g_MapOverlayHeader =
     .func_80 = NULL,
     .func_84 = NULL,
     .unk_88 = D_800DFB10,
-    .func_8C = (void(*)())0x800CD1F8, // func_800CD1F8,
+    .func_8C = func_800CD1F8,
     .func_90 = NULL,
     .unk_94 = 0,
     .unk_98 = 0,
@@ -112,8 +114,8 @@ const s_MapOverlayHeader g_MapOverlayHeader =
     .func_AC = NULL,
     .func_B0 = NULL,
     .func_B4 = NULL,
-    .func_B8 = (void(*)())0x800D0C3C, // func_800D0C3C,
-    .func_BC = (void(*)())0x800D16C4, // func_800D16C4,
+    .func_B8 = func_800D0C3C,
+    .func_BC = func_800D16C4,
     .func_C0 = sharedFunc_800D209C_0_s00,
     .func_C4 = sharedFunc_800D20D8_0_s00,
     .freezePlayerControl_C8 = sharedFunc_800D20E4_0_s00,
