@@ -25,27 +25,33 @@
  * its name, size and location on the CD.
  *
  * The file name is stored as 8 6-bit characters represented as two 24-bit bitfields:
- * `name0123` and `name4567`. The 6-bit character value maps to ASCII character range `[0x20, 0x5F]`.
+ * `name4567_8_0` and `name4567_8_0`. The 6-bit character value maps to ASCII character range `[0x20, 0x5F]`.
  * The name does not contain the path or extension.
  *
  * The path and extension are stored as 4-bit indices of the path string in `g_FilePaths` and of
  * the extension string in `g_FileExts`, respectively. This limits the amount of paths and extensions
  * to 16 each, with one representing an empty extension.
  */
-typedef struct s_FileInfo
+typedef struct _FileInfo
 {
-    u32 startSector : 19; /** Index of CD sector where file starts. */
-    u32 blockCount  : 12; /** Size of file in 256-byte blocks. */
-    u32 pathIdx     : 4;  /** Index of path to file in `g_FilePaths`. */
-    u32 name0123    : 24; /** First four 6-bit characters of file name. */
-    u32 name4567    : 24; /** Second four 6-bit characters of file name. */
-    u32 type        : 4;  /** File type (and index of extension in `g_FileExts`). */
+    // byte1
+    u32 startSector_0_0 : 19; /** Index of CD sector where file starts. */
+    u32 blockCount_0_13 : 12; /** Size of file in 256-byte blocks. */
+
+    // byte2
+    u32 pathIdx_4_0     : 4;  /** Index of path to file in `g_FilePaths`. */
+    u32 name0123_4_4    : 24; /** First four 6-bit characters of file name. */
+
+    // byte3
+    u32 name4567_8_0    : 24; /** Second four 6-bit characters of file name. */
+    u32 type_8_18       : 4;  /** File type (and index of extension in `g_FileExts`). */
 } s_FileInfo;
+STATIC_ASSERT_SIZEOF(s_FileInfo, 12);
 
 /** @brief File information table.
  *
  * The file table is the index to the game's two data archives:
- * the files `SILENT` and `HILL` on the CD. It contains metadata of every file
+ * the files `SILENT.` and `HILL.` on the CD. It contains metadata of every file
  * in those archives, such as the name, size, file type and where the file is on the CD.
  *
  * @note Not `const` because it has to end up in .data. Was also like that in the header
@@ -58,7 +64,7 @@ extern s_FileInfo g_FileTable[];
 /** @brief Array of file path strings.
  *
  * All possible path strings occuring in the data archives.
- * This is referenced by index (`pathIdx`) in each file table entry.
+ * This is referenced by index (`pathIdx_4_0`) in each file table entry.
  *
  * In SLUS_007.07 there are 11 possible paths. They are all one subfolder deep
  * and have starting and trailing path separators (backslashes).
