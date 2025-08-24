@@ -110,7 +110,23 @@ void func_800CE884(s32 arg0) // 0x800CE884
     func_800CE934();
 }
 
-INCLUDE_ASM("asm/maps/map0_s02/nonmatchings/map0_s02", func_800CE8B8);
+void func_800CE8B8(void) // 0x800CE8B8
+{
+    switch (g_SavegamePtr->mapRoomIdx_A5)
+    {
+        case 5:
+            func_8003640C(6);
+            break;
+
+        case 18:
+            func_8003640C(!(g_SavegamePtr->eventFlags_190[1] & (1 << 27)) ? 29 : 7);
+            break;
+
+        case 17:
+            func_8003640C(7);
+            break;
+    }
+}
 
 INCLUDE_ASM("asm/maps/map0_s02/nonmatchings/map0_s02", func_800CE934);
 

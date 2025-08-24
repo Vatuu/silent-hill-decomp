@@ -56,7 +56,7 @@ INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D16C4);
 
 #include "maps/shared/sharedFunc_800D2244_0_s00.h" // 0x800D1CA8
 
-s32 func_800D1E5C()
+s32 func_800D1E5C() // 0x800D1E5C
 {
     return 0;
 }
@@ -87,7 +87,7 @@ void func_800D20EC() {}
 
 void func_800D20F4() {}
 
-s32 func_800D20FC()
+s32 func_800D20FC() // 0x800D20FC
 {
     return 0;
 }

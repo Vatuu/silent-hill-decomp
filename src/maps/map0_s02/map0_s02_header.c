@@ -28,7 +28,7 @@ void (*g_LoadScreenFuncs[])() =
     0x00000000,
     Gfx_LoadingScreen_PlayerRun,
     Gfx_LoadingScreen_BackgroundTexture,
-    Gfx_LoadingScreen_StageString,
+    Gfx_LoadingScreen_StageString
 };
 
 s_AreaLoadParams g_MapAreaLoadParams[] =
@@ -44,7 +44,7 @@ void (*g_MapEventFuncs[])() =
     Event_EmptyFunction,
     Event_GasolineTankItemTake,
     func_800CECB0,
-    func_800CECDC,
+    func_800CECDC
 };
 
 const u32 D_800C9578 = 0x00000000; // rodata 0

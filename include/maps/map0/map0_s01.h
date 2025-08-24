@@ -111,15 +111,20 @@ void Event_PocketRadioItemTake();
 
 void Event_FlashlightItemTake();
 
-/** Also responsible for air screamer scene setup in the cafe. */
+/** @brief Handles the Silent Hill town map pickup event in the cafe.
+ *
+ * Also responsible for air screamer scene setup. */
 void Event_MapItemTake();
 
+/** @brief Handles the kitchen knife pickup event. */
 void Event_KitchenKnifeItemTake();
 
 void Event_EmptyFunction();
 
+/** @brief Handles a health item pickup event. */
 void Event_HealthItemTake();
 
+/** @brief Handles the handgun pickup event. */
 void Event_HandgunItemTake();
 
 void func_800DC9C8();
@@ -127,6 +132,7 @@ void func_800DC9C8();
 void func_800DD2EC(s32 arg0);
 
 s32 func_800D1E5C();
+
 s32 func_800D20FC();
 
 #endif
