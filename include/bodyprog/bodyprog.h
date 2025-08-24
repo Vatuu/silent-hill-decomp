@@ -984,17 +984,6 @@ typedef struct
     s16 field_8;
 } s_800BCE18_0_0_C;
 
-typedef struct
-{
-    s16 field_0;
-    s16 field_2;
-    s16 unk_4;
-    u8  field_6;
-    u8  unk_7;
-    s32 field_8;
-    s_800BCE18_0_0_C* field_C;
-} s_sub_800BCE18_0;
-
 // Looks similar to `s_Skeleton`
 typedef struct
 {
@@ -1009,7 +998,18 @@ typedef struct
 
 typedef struct
 {
-    s_sub_800BCE18_0* field_0;
+    s16               field_0;
+    s16               field_2;
+    s16               field_4;
+    u8                field_6;
+    u8                field_7;
+    s32*              field_8; // pointer to some other const data or NULL
+    s_800BCE18_0_0_C* field_C; // pointer to some other const data
+} s_UnkStruct2_Mo;
+
+typedef struct
+{
+    s_UnkStruct2_Mo*  field_0;
     s8                field_4;
     u8                unk_5[3];
     VECTOR3           field_8;               // Position.
@@ -1457,12 +1457,6 @@ typedef struct s_UnkStruct_MapOverlay
 
 typedef struct
 {
-    u8 unk_0[6];
-    u8 field_6;
-} s_UnkStruct2_Mo;
-
-typedef struct
-{
     s16 field_0;
     s16 field_2;
     s16 field_4;
@@ -1665,7 +1659,7 @@ STATIC_ASSERT_SIZEOF(s_800AFBF4, 12);
 extern s_FsImageDesc g_MainImg0; // 0x80022C74 - TODO: Part of main exe, move to `main/` headers?
 
 /** Some sort of struct inside RODATA, likely a constant. */
-extern s32 D_8002500C;
+extern s_UnkStruct2_Mo g_unknownMapTable1[16];
 
 extern char D_8002510C[]; // "\aNow_loading."
 
@@ -2534,7 +2528,7 @@ void func_8003943C();
  * After playback, savegame gets `D_800BCDD8->eventFlagNum_2` event flag set. */
 void SysState_Fmv_Update();
 
-s32 func_8003BD2C();
+s32 getUnknownMapTableIndex();
 
 void func_8003C1AC(s_800BCE18_0_CC* arg0);
 
@@ -2543,7 +2537,7 @@ void func_8003C1AC(s_800BCE18_0_CC* arg0);
  * passed are pointers to `g_MapOverlayHeader` (`arg0`), the player's
  * aX position (`arg1`), and the player's Z position (`arg2`).
  */
-void func_8003C220(s_sub_800BCE18_0** arg0, s32 arg1, s32 arg2);
+void func_8003C220(s_UnkStruct2_Mo** arg0, s32 arg1, s32 arg2);
 
 /** Unknown bodyprog func. Called by `Fs_QueueDoThingWhenEmpty`. */
 s32 func_8003C850();
@@ -2990,7 +2984,7 @@ void func_8005B424(VECTOR3* vec0, VECTOR3* vec1);
 
 void func_80056464(s_PlmHeader* plmHeader, s32 fileIdx, s32* arg2, s32 arg3);
 
-void func_80056504(s_PlmHeader* plmHeader, char* newStr, s32* arg2, s32 arg3);
+void func_80056504(s_PlmHeader* plmHeader, char* newStr, s_FsImageDesc* arg2, s32 arg3);
 
 void func_8005660C(s_PlmTexList* plmTexList, s_FsImageDesc* image, s32 arg2);
 
