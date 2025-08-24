@@ -114,8 +114,7 @@ INCLUDE_ASM("asm/maps/map0_s02/nonmatchings/map0_s02", func_800CE8B8);
 
 INCLUDE_ASM("asm/maps/map0_s02/nonmatchings/map0_s02", func_800CE934);
 
-// Event func.
-void func_800CEBC0(void) {}
+void Gfx_LoadingScreen_StageString(void) {}
 
 // TODO: .rodata migration.
 #ifdef NON_MATCHING
@@ -170,8 +169,7 @@ void Event_HealthOrAmmoItemTake(void) // 0x800CEBC8
 INCLUDE_ASM("asm/maps/map0_s02/nonmatchings/map0_s02", Event_HealthOrAmmoItemTake);
 #endif
 
-// Event func.
-void func_800CEC7C(void) {}
+void Event_EmptyFunction(void) {}
 
 void Event_GasolineTankItemTake(void) // 0x800CEC84
 {

@@ -1510,7 +1510,7 @@ typedef struct _MapOverlayHeader
     void              (*func_48)(); // func(?).
     s_func_800625F4*  unkTable1_4C;
     s32               unkTable1Len_50;
-    s32*              bloodSplats_54;
+    s_BloodSplat*     bloodSplats_54;
     s32               bloodSplatsLen_58;
     s32               always0_5C;
     s32               always0_60;

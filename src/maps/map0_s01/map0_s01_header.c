@@ -27,7 +27,7 @@
 extern u8 D_800DDFB8[];
 extern s_AnimInfo g_AnimInfo[];
 extern s_func_800625F4 D_800DE270[];
-extern s32 D_800DF9E0[];
+extern s_BloodSplat D_800DF9E0[];
 extern s32 D_800DFB10[];
 
 void (*g_LoadScreenFuncs[])() =
