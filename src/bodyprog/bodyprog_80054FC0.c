@@ -367,7 +367,10 @@ void func_80055E90(CVECTOR* color, u8 fadeAmount) // 0x80055E90
     color->cd = prev_cd;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80055ECC); // 0x80055ECC
+void func_80055ECC(CVECTOR* color, SVECTOR3* arg1, SVECTOR3* arg2, MATRIX* mat) // 0x80055ECC
+{
+    func_80055E90(color, func_80055F08(arg1, arg2, mat));
+}
 
 u8 func_80055F08(SVECTOR3* arg0, SVECTOR3* arg1, MATRIX* mat) // 0x80055F08
 {
@@ -1584,7 +1587,10 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8005C1CC); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8005C478); // 0x8005C478
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8005C7B0); // 0x8005C7B0
+s16 func_8005C7B0(s32 arg0) // 0x8005C7B0
+{
+    return D_800AE520[arg0 >> 5];
+}
 
 s32 func_8005C7D0(s_SubCharacter* chara, s32 moveSpeed) // 0x8005C7D0
 {

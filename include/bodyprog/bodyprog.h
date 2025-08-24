@@ -1966,6 +1966,8 @@ extern s32 g_PickupItemAnimState;
 
 extern s32 D_800AE1B0;
 
+extern s16 D_800AE520[];
+
 /** Angle? */
 extern s16 D_800AF210;
 
@@ -2948,6 +2950,8 @@ u8 func_80055D78(void*, void*, s32);
 
 void func_80055E90(CVECTOR* color, u8 fadeAmount);
 
+void func_80055ECC(CVECTOR* color, SVECTOR3* arg1, SVECTOR3* arg2, MATRIX* mat);
+
 u8 func_80055F08(SVECTOR3* arg0, SVECTOR3* arg1, MATRIX* mat);
 
 void PlmHeader_FixOffsets(s_PlmHeader* plmHeader);
@@ -3258,7 +3262,9 @@ bool func_80089D0C(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s_8002AC04* arg2
 
 void func_8008992C(s_SysWork_2514* arg0, u16 arg1, s32 (*arg2)(u16, s32));
 
-s32 func_8008A0CC();
+s32 func_8008A0CC(); /** Returns 0. */
+
+s64 func_8008A0D4(void); /** Returns 0. */
 
 s32 func_8008A0E4(s32 arg0, s16 arg1, s_SubCharacter* chara, s_PlayerCombat* combat, s32 arg4, s16 arg5, s16 arg6);
 
@@ -3338,6 +3344,8 @@ void func_8005BF0C(s16 unused, s16 x, s16 y);
 
 /** Angle func. */
 s16 func_8005BF38(s16 angle);
+
+s16 func_8005C7B0(s32 arg0);
 
 /** `arg0` type assumed. */
 void func_800625F4(VECTOR3* arg0, s16 arg1, s32 arg2, s32 arg3);

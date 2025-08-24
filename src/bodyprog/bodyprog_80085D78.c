@@ -1926,7 +1926,10 @@ s32 func_8008A0CC() // 0x8008A0CC
     return 0;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008A0D4); // 0x8008A0D4
+s64 func_8008A0D4(void) // 0x8008A0D4
+{
+    return 0;
+}
 
 s32 func_8008A0E4(s32 arg0, s16 arg1, s_SubCharacter* chara, s_PlayerCombat* combat, s32 arg4, s16 arg5, s16 arg6) // 0x8008A0E4
 {
