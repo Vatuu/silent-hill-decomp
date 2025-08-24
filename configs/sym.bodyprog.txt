@@ -35,6 +35,7 @@ g_GameWorkPtr                               = 0x80024D54; // type:u32
 //------------------------------------------------------
 //--- PA: 0x0001F8   VA: 0x80024D58   subsegment: rodata
 //------------------------------------------------------
+g_unknownMapTable1                          = 0x8002500C; // type:UnkStruct2_Mo size:0xF0
 
 //--------------------------------------------------------------------------
 //--- PA: 0x000618   VA: 0x80025178   subsegment: .rodata, bodyprog_80032D1C
@@ -322,6 +323,7 @@ Gfx_MainMenu_FogDraw                        = 0x8003BA08; // type:func
 Gfx_MainMenu_FogRandomize                   = 0x8003BAC4; // type:func
 Gfx_MainMenu_FogScatter                     = 0x8003BBF4; // type:func
 Gfx_MainMenu_FogUpdate                      = 0x8003BC8C; // type:func
+getUnknownMapTableIndex                     = 0x8003BD2C; // type:func
 GameFs_BgEtcGfxLoad                         = 0x8003BE6C; // type:func
 GameFs_BgItemLoad                           = 0x8003BE9C; // type:func
 GameFs_FlameGfxLoad                         = 0x8003E710; // type:func

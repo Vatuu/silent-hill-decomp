@@ -675,10 +675,9 @@ void func_8003BCF4() // 0x8003BCF4
 // UNKNOWN - IN-GAME LOOP RELATED
 // ========================================
 
-// TODO: Remake this whenever we have further context of `D_8002500C`.
-s32 func_8003BD2C() // 0x8003BD2C
+s32 getUnknownMapTableIndex() // 0x8003BD2C
 {
-    return ((s32*)D_800BCE18.field_0[0].field_0 - &D_8002500C) >> 2;
+    return D_800BCE18.field_0[0].field_0 - g_unknownMapTable1;
 }
 
 void func_8003BD48(s_SubCharacter* chara) // 0x8003BD48
@@ -688,7 +687,7 @@ void func_8003BD48(s_SubCharacter* chara) // 0x8003BD48
     D_800BCE14 = func_80069810();
     var_s0     = D_800BCE14;
 
-    switch (func_8003BD2C())
+    switch (getUnknownMapTableIndex())
     {
         case 0:
             if (chara->position_18.vx >= FP_METER(191.6f) && chara->position_18.vx <= FP_METER(198.8f) && 
@@ -851,11 +850,11 @@ void func_8003C1AC(s_800BCE18_0_CC* arg0) // 0x8003C1AC
     arg0->texture_C   = sp10;
 }
 
-void func_8003C220(s_sub_800BCE18_0** arg0, s32 arg1, s32 arg2) // 0x8003C220
+void func_8003C220(s_UnkStruct2_Mo** arg0, s32 arg1, s32 arg2) // 0x8003C220
 {
     s32               var_a2;
     u8                temp_v1;
-    s_sub_800BCE18_0* ptr;
+    s_UnkStruct2_Mo*  ptr;
 
     D_800BCE18.field_0[0].field_0 = *arg0;
     temp_v1 = (*arg0)->field_6;
@@ -876,7 +875,7 @@ void func_8003C220(s_sub_800BCE18_0** arg0, s32 arg1, s32 arg2) // 0x8003C220
     ptr = *arg0;
     func_800421D8(&ptr->field_2, ptr->field_0, var_a2, ((ptr->field_6 >> 2) ^ 1) & (1 << 0), 0, 0);
 
-    if (*arg0 == &D_8002500C) 
+    if (*arg0 == &g_unknownMapTable1[0]) 
     {
         func_80041ED0(0x467, -1, 8);
     }
@@ -949,7 +948,7 @@ void func_8003C3AC() // 0x8003C3AC
     pos0.vx += FP_MULTIPLY_PRECISE(moveDist, Math_Sin(chara->headingAngle_3C), Q12_SHIFT);
     pos0.vz += FP_MULTIPLY_PRECISE(moveDist, Math_Cos(chara->headingAngle_3C), Q12_SHIFT);
 
-    if (D_800BCE18.field_0[0].field_0 == &D_8002500C &&
+    if (D_800BCE18.field_0[0].field_0 == &g_unknownMapTable1[0] &&
         chara->position_18.vx >= FP_METER(-40.0f) && chara->position_18.vx <= FP_METER(40.0f) &&
         chara->position_18.vz >= FP_METER(200.0f) && chara->position_18.vz <= FP_METER(240.0f))
     {
