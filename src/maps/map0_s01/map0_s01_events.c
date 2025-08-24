@@ -7,6 +7,16 @@
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01_events", func_800DA980);
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01_events", func_800DB790);
 
+#define EventPositionInit(eventPos, x, y, z, arg4, arg5) \
+    EventPositionSet(eventPos, FP_METER(x), FP_METER(y), FP_METER(z), arg4, arg5)
+
+static inline void EventPositionSet(s_EventPosition* eventPos, s32 x, s32 y, s32 z, s32 arg4, s16 arg5)
+{
+    Math_Vector3Set(&eventPos->position_0, x, y, z);
+    eventPos->field_C  = arg4;
+    eventPos->field_10 = arg5;
+}
+
 void func_800DBAA0() // 0x800DBAA0
 {
     s32 var_a1;
@@ -212,10 +222,10 @@ void Event_FlashlightItemTake() // 0x800DC394
     Game_TurnFlashlightOff();
 }
 
-
 void Event_MapItemTake() // 0x800DC3C8
 {
-    static const RECT imageBufferRect = {320, 256, 160, 240};
+    static const RECT IMG_BUFFER_RECT = { 320, 256, 160, 240 };
+
     switch (g_SysWork.sysStateStep_C)
     {
         case 0:
@@ -229,7 +239,7 @@ void Event_MapItemTake() // 0x800DC3C8
 
         case 2:
             DrawSync(0);
-            StoreImage(&imageBufferRect, IMAGE_BUFFER);
+            StoreImage(&IMG_BUFFER_RECT, IMAGE_BUFFER);
             DrawSync(0);
             Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + D_800A99B5, FS_BUFFER_2, &g_MapImg);
             Gfx_Init(SCREEN_WIDTH, 1);
@@ -249,7 +259,7 @@ void Event_MapItemTake() // 0x800DC3C8
             break;
 
         case 5:
-            LoadImage(&imageBufferRect, IMAGE_BUFFER);
+            LoadImage(&IMG_BUFFER_RECT, IMAGE_BUFFER);
             DrawSync(0);
             Gfx_Init(SCREEN_WIDTH, 0);
             func_8008616C(0, false, 0, 0, false);
@@ -271,7 +281,7 @@ void Event_MapItemTake() // 0x800DC3C8
             break;
 
         case 8:
-            LoadImage(&imageBufferRect, IMAGE_BUFFER);
+            LoadImage(&IMG_BUFFER_RECT, IMAGE_BUFFER);
             DrawSync(0);
             Gfx_Init(SCREEN_WIDTH, 0);
             func_8008616C(0, false, 0, 0, false);
@@ -378,26 +388,16 @@ extern s_800BCE18_2BEC_0 D_800E23D0[1];
 extern s_800BCE18_2BEC_0 D_800E23F0[3];
 extern s_800BCE18_2BEC_0 D_800E2450[2];
 
-extern s_eventPosition g_defaultEventPosition;
-extern s_eventThing g_eventThing4A0;
-extern s_eventThing g_eventThing4D0;
-extern s_eventThing g_eventThing500;
-extern s_eventThing g_eventThing530;
-
-static inline void EventPositionInit_int(s_eventPosition* ep, s32 x, s32 y, s32 z, s32 a, s16 b)
-{
-    Math_Vector3Set(&ep->v3_0, x, y, z);
-    ep->field_C = a;
-    ep->field_10 = b;
-}
-#define EventPositionInit(ep, x, y, z, a, b)\
-    EventPositionInit_int(ep, Q19_12((x)), Q19_12((y)), Q19_12((z)), a, b)
-
+extern s_EventPosition g_DefaultEventPosition;
+extern s_EventThing g_EventThing4A0;
+extern s_EventThing g_EventThing4D0;
+extern s_EventThing g_EventThing500;
+extern s_EventThing g_EventThing530;
 
 void func_800DC9C8() // 0x800DC9C8
 {
-    D_800E23A1         = 0xE0;
-    Math_Vector3f(&g_defaultEventPosition.v3_0, 0.0f, 0.0f, 280.0f);
+    D_800E23A1 = 224;
+    Math_Vector3f(&g_DefaultEventPosition.position_0, 0.0f, 0.0f, 280.0f, Q12_SHIFT);
 
     func_8003C8F8(&D_800E23B0[0], "IN_BLD1_");
     func_8003C8F8(&D_800E23D0[0], "IN1_HIDE");
@@ -407,23 +407,23 @@ void func_800DC9C8() // 0x800DC9C8
     func_8003C8F8(&D_800E2450[0], "OUT1_HID");
     func_8003C8F8(&D_800E2450[1], "OUT_BLD_");
 
-    EventPositionInit(&g_eventThing4A0.ep_1C, 5.089844f, -1.009766f, 274.119873f, 0x016C0000, 0);
-    func_8003C8F8(&g_eventThing4A0.thing_0, "KNIFE_HI");
+    EventPositionInit(&g_EventThing4A0.eventPosition_1C, 5.089844f, -1.009766f, 274.119873f, 0x16C0000, 0);
+    func_8003C8F8(&g_EventThing4A0.field_0, "KNIFE_HI");
 
-    EventPositionInit(&g_eventThing4D0.ep_1C, 5.179932f, -1.0f, 267.279785f, 0x04EEFFDE, 0);
-    func_8003C8F8(&g_eventThing4D0.thing_0, "FLASH_HI");
+    EventPositionInit(&g_EventThing4D0.eventPosition_1C, 5.179932f, -1.0f, 267.279785f, 0x4EEFFDE, 0);
+    func_8003C8F8(&g_EventThing4D0.field_0, "FLASH_HI");
 
-    EventPositionInit(&g_eventThing500.ep_1C, 5.239990f, -1.0f, 267.209961f, 0x02880000, 0);
-    func_8003C8F8(&g_eventThing500.thing_0, "MAP_HIDE");
+    EventPositionInit(&g_EventThing500.eventPosition_1C, 5.23999f, -1.0f, 267.209961f, 0x2880000, 0);
+    func_8003C8F8(&g_EventThing500.field_0, "MAP_HIDE");
 
-    EventPositionInit(&g_eventThing530.ep_1C, 2.309815f, -0.599854f, 273.949951f, 0x06880000, 0);
-    func_8003C8F8(&g_eventThing530.thing_0, "RADIO_HI");
+    EventPositionInit(&g_EventThing530.eventPosition_1C, 2.309815f, -0.599854f, 273.949951f, 0x6880000, 0);
+    func_8003C8F8(&g_EventThing530.field_0, "RADIO_HI");
 
     if ((g_SavegamePtr->eventFlags_168[1] & ((1 << 8) | (1 << 15))) == (1 << 8))
     {
         g_SysWork.flags_22A4 |= (1 << 5) | (1 << 9);
 
-        Chara_Load(0, Chara_AirScreamer, &g_SysWork.npcCoords_FC0, NO_VALUE, 0, 0);
+        Chara_Load(0, Chara_AirScreamer, &g_SysWork.npcCoords_FC0, NO_VALUE, NULL, NULL);
 
         if (g_SavegamePtr->eventFlags_168[1] & (1 << 6))
         {
@@ -455,23 +455,24 @@ void func_800DC9C8() // 0x800DC9C8
 }
 
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01_events", func_800DCCF4); // set in map header.func_40
+INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01_events", func_800DCCF4); // Set in map `header.func_40`.
 
 void func_800DD2EC(s32 arg0) // 0x800DD2EC // called by func_800DCCF4 only
 {
-    static const SVECTOR3 defaultRotation = {};
+    static const SVECTOR3 DEFAULT_ROT = {};
+
     s32 i;
 
     if (arg0 == 0)
     {
         for (i = 0; i <= 0; i++)
         {
-            func_8003C92C(&D_800E23D0[i], &g_defaultEventPosition, &defaultRotation);
+            func_8003C92C(&D_800E23D0[i], &g_DefaultEventPosition, &DEFAULT_ROT);
         }
 
         for (i = 0; i <= 0; i++)
         {
-            func_8003C92C(&D_800E23B0[i], &g_defaultEventPosition, &defaultRotation);
+            func_8003C92C(&D_800E23B0[i], &g_DefaultEventPosition, &DEFAULT_ROT);
         }
 
         return;
@@ -481,7 +482,7 @@ void func_800DD2EC(s32 arg0) // 0x800DD2EC // called by func_800DCCF4 only
     {
         for (i = 0; i < 2; i++)
         {
-            func_8003C92C(&D_800E2450[i], &g_defaultEventPosition, &defaultRotation);
+            func_8003C92C(&D_800E2450[i], &g_DefaultEventPosition, &DEFAULT_ROT);
         }
 
         return;
@@ -489,11 +490,11 @@ void func_800DD2EC(s32 arg0) // 0x800DD2EC // called by func_800DCCF4 only
 
     for (i = 0; i <= 0; i++)
     {
-        func_8003C92C(&D_800E23D0[i], &g_defaultEventPosition, &defaultRotation);
+        func_8003C92C(&D_800E23D0[i], &g_DefaultEventPosition, &DEFAULT_ROT);
     }
 
     for (i = 0; i < 3; i++)
     {
-        func_8003C92C(&D_800E23F0[i], &g_defaultEventPosition, &defaultRotation);
+        func_8003C92C(&D_800E23F0[i], &g_DefaultEventPosition, &DEFAULT_ROT);
     }
 }

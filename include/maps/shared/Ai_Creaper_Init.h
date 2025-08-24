@@ -64,7 +64,7 @@ void Ai_Creaper_Init(s_SubCharacter* chara)
 
     if (i == NPC_COUNT_MAX)
     {
-        // No other Creaper present.
+        // No other Creapers present.
         sharedData_800E57CC_1_s02 = 0;
     }
 

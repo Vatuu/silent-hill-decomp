@@ -4,7 +4,7 @@
 #include "maps/map0/map0_s00.h"
 
 // Undefined functions, unknown signature.
-#define func_800D94F8 (void(*)(s32))0x800D94F8 // based on the signature of a func in map0_s01
+#define func_800D94F8 (void(*)(s32))0x800D94F8 // Based on the signature of a func in map0_s01.
 #define func_800DBE68 (void(*)(void))0x800DBE68
 #define func_800DBF08 (void(*)(void))0x800DBF08
 #define func_800DC1E8 (void(*)(void))0x800DC1E8
@@ -75,14 +75,14 @@ const s_MapOverlayHeader g_MapOverlayHeader =
 {
     .field_0 = (s_UnkStruct2_Mo*)0x8002500C,
     .getMapRoomIdxFunc_4 = sharedFunc_800D92AC_0_s00,
-    .field_8 = 0x22,
+    .field_8 = 34,
     .unk_9 = { 0, 0, 0 },
     .func_C = sharedFunc_800D929C_0_s00,
     .func_10 = func_800D94F8,
-    .field_14 = 0x03, // Flags?
-    .field_15 = 0x02,
-    .field_16 = 0x01,
-    .field_17 = 0x02,
+    .field_14 = 0x3, // Flags?
+    .field_15 = 0x2,
+    .field_16 = 0x1,
+    .field_17 = 0x2,
     .loadingScreenFuncs_18 = g_LoadScreenFuncs,
     .mapAreaLoadParams_1C = g_MapAreaLoadParams,
     .mapEventFuncs_20 = g_MapEventFuncs,
@@ -225,7 +225,7 @@ const s_MapOverlayHeader g_MapOverlayHeader =
         NULL,
         NULL,
         NULL,
-        NULL,
+        NULL
     },
     .charaGroupIds_248 = {}, // 4 zeros.
     .charaSpawns_24C =
@@ -239,5 +239,5 @@ const s_MapOverlayHeader g_MapOverlayHeader =
     .unk_84C = 
     {
         #include "header_last_unknown_chunk.h"
-    },
+    }
 };

@@ -16,21 +16,21 @@ typedef enum _EventFlags
 
 typedef struct
 {
-    VECTOR3 v3_0;
-    s32    field_C;
-    s16    field_10;
-    s16    __pad;
-} s_eventPosition;
+    VECTOR3 position_0;
+    s32     field_C;
+    s16     field_10;
+    s16     pad_12;
+} s_EventPosition;
 
 typedef struct
 {
-    s_800BCE18_2BEC_0 thing_0;
-    s_eventPosition   ep_1C;
-} s_eventThing;
+    s_800BCE18_2BEC_0 field_0;
+    s_EventPosition   eventPosition_1C;
+} s_EventThing;
 
 typedef struct
 {
-    s8  unk_0[8];
+    s8    unk_0[8]; // String?
     char* field_8;
     char* field_C;
     char* field_10;

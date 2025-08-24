@@ -2,6 +2,7 @@
 #include "maps/map0/map0_s02.h"
 #include "bodyprog/math.h"
 #include "maps/shared.h"
+
 #define func_800CECB0 (0x800CECB0)
 #define func_800CECDC (0x800CECDC)
 #define func_800CE7EC (0x800CE7EC)
@@ -29,10 +30,12 @@ void (*g_LoadScreenFuncs[])() =
     Gfx_LoadingScreen_BackgroundTexture,
     Gfx_LoadingScreen_StageString,
 };
+
 s_AreaLoadParams g_MapAreaLoadParams[] =
 {
     #include "area_load_params.h"
 };
+
 void (*g_MapEventFuncs[])() = 
 {
     0x00000000,
@@ -43,13 +46,15 @@ void (*g_MapEventFuncs[])() =
     func_800CECB0,
     func_800CECDC,
 };
+
 const u32 D_800C9578 = 0x00000000; // rodata 0
+
 const s_MapOverlayHeader g_MapOverlayHeader = 
 {
     .field_0 = (s_UnkStruct2_Mo*)0x8002509C,
     .getMapRoomIdxFunc_4 = func_800CE7EC,
     .field_8 = 0xFF,
-    .unk_9 = { 0x0, 0x0, 0x0, },
+    .unk_9 = { 0, 0, 0, },
     .func_C = sharedFunc_800D929C_0_s00,
     .func_10 = func_800CE884,
     .field_14 = 0x6,
@@ -161,5 +166,5 @@ const s_MapOverlayHeader g_MapOverlayHeader =
     .unk_84C = 
     {
         #include "header_last_unknown_chunk.h"
-    },
+    }
 };

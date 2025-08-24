@@ -1594,7 +1594,7 @@ typedef struct _MapOverlayHeader
     s8                charaGroupIds_248[4];                                              /** `e_CharacterId` values where if `s_SpawnInfo.charaId_4` == 0, `charaGroupIds_248[0]` is used for `charaSpawns_24C[0]` and `charaGroupIds_248[1]` for `charaSpawns_24C[1]`. */
     s_SpawnInfo       charaSpawns_24C[2][16];                                            /** Array of character type/position/flags. `flags_6 == 0` are unused slots? Read by `func_80037F24`. */
     VC_ROAD_DATA      roadDataList_3CC[48];
-    u32                unk_84C[512];
+    u32               unk_84C[512];
 } s_MapOverlayHeader;
 STATIC_ASSERT_SIZEOF(s_MapOverlayHeader, 4172); // Size incomplete.
 
