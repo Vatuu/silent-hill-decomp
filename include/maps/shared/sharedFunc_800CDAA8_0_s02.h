@@ -6,7 +6,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
     s32             sfx;
     s8              pitch;
     s8              sp25;
-    s32             unused;
+    s32             unused; // @unused Unknown purpose.
     s32             newMoveSpeed;
 
     unused                    = 0;

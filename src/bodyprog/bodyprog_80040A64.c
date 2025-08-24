@@ -11,8 +11,11 @@
  * - Animation funcs
  */
 
-s8 func_80040A64(VECTOR3* pos) // 0x80040A64
+ // Sound_StereoBalanceGet
+s8 Sound_StereoBalanceGet(VECTOR3* pos) // 0x80040A64
 {
+    #define SOUND_STEREO_BALANCE_RANGE 127
+
     VECTOR3 camPos;
     VECTOR  vec0;
     VECTOR  vec1;
@@ -20,20 +23,23 @@ s8 func_80040A64(VECTOR3* pos) // 0x80040A64
     s32     dot;
     s32     balance;
 
+    // If monoural sound type, default to balance of 0.
     if (g_GameWork.config_0.optSoundType_1E)
     {
         return 0;
     }
 
+    // Compute normal from input and camera positions.
     vwGetViewPosition(&camPos);
     vec0.vx = (pos->vx - camPos.vx) >> 6;
     vec0.vy = (pos->vy - camPos.vy) >> 6;
     vec0.vz = (pos->vz - camPos.vz) >> 6;
     VectorNormal(&vec0, &vec1);
 
+    // Compute stereo balance.
     Vw_CoordHierarchyMatrixCompute(vwGetViewCoord(), &mat);
     dot     = Math_MultiplyMatrix(mat, vec1);
-    balance = CLAMP(dot, -127, 127);
+    balance = CLAMP(dot, -SOUND_STEREO_BALANCE_RANGE, SOUND_STEREO_BALANCE_RANGE);
     return balance;
 }
 
@@ -43,7 +49,7 @@ bool func_80040B74(s32 arg0) // 0x80040B74
 {
     s32 i;
 
-    for (i = 0; i < 4; i++)
+    for (i = 0; i < ARRAY_SIZE(D_800BCE18.field_0); i++)
     {
         if (D_800BCE18.field_0[i].field_CC.field_0 == arg0)
         {

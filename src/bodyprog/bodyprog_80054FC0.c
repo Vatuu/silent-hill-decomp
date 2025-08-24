@@ -1678,7 +1678,7 @@ void func_8005DC3C(s32 sfx, VECTOR3* pos, s32 arg2, s32 soundType, s32 pitch) //
     }
     else
     {
-        balance = func_80040A64(pos);
+        balance = Sound_StereoBalanceGet(pos);
     }
 
     if (arg2 >= 0x100)
@@ -1725,7 +1725,7 @@ void func_8005DD44(s32 sfx, VECTOR3* pos, s32 arg2, s8 pitch) // 0x8005DD44
     }
     else
     {
-        balance = func_80040A64(pos);
+        balance = Sound_StereoBalanceGet(pos);
     }
 
     if (arg2 >= 256)

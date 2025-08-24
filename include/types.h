@@ -50,6 +50,6 @@ typedef struct
  * @return Element count.
  */
 #define ARRAY_SIZE(arr) \
-    (sizeof(arr) / sizeof((arr)[0]))
+    (s32)(sizeof(arr) / sizeof((arr)[0]))
 
 #endif

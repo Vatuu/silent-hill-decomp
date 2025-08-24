@@ -329,7 +329,7 @@ GameFs_BgItemLoad                           = 0x8003BE9C; // type:func
 GameFs_FlameGfxLoad                         = 0x8003E710; // type:func
 Game_TurnFlashlightOn                       = 0x8003ECBC; // type:func
 Game_TurnFlashlightOff                      = 0x8003ECE4; // type:func
-Math_GetWeightedAverage                     = 0x8003F7E4; // type:func
+Math_WeightedAverageGet                     = 0x8003F7E4; // type:func
 
 //---------------------------------------------------------------
 //--- PA: 0x01B4EC   VA: 0x8004004C   subsegment: c, view/vc_util
@@ -343,6 +343,7 @@ vcMakeHeroHeadPos                           = 0x8004047C; // type:func
 vcAddOfsToPos                               = 0x80040518; // type:func
 vcSetRefPosAndSysRef2CamParam               = 0x800405C4; // type:func
 vcSetRefPosAndCamPosAngByPad                = 0x800406D4; // type:func
+Sound_StereoBalanceGet                      = 0x80040A64; // type:func
 
 //--------------------------------------------------------------------
 //--- PA: 0x01BF04   VA: 0x80040A64   subsegment: c, bodyprog_80040A64
