@@ -25,7 +25,7 @@ extern s_AnimInfo g_AnimInfo[];
 
 void (*g_LoadScreenFuncs[])() =
 {
-    0x00000000,
+    NULL,
     Gfx_LoadingScreen_PlayerRun,
     Gfx_LoadingScreen_BackgroundTexture,
     Gfx_LoadingScreen_StageString
@@ -38,8 +38,8 @@ s_AreaLoadParams g_MapAreaLoadParams[] =
 
 void (*g_MapEventFuncs[])() = 
 {
-    0x00000000,
-    0x00000000,
+    NULL,
+    NULL,
     Event_HealthOrAmmoItemTake,
     Event_EmptyFunction,
     Event_GasolineTankItemTake,
@@ -75,9 +75,9 @@ const s_MapOverlayHeader g_MapOverlayHeader =
     .func_44 = NULL,
     .func_48 = NULL,
     .unkTable1_4C = D_800D03DC,
-    .unkTable1Len_50 = 100,
+    .unkTable1Len_50 = ARRAY_SIZE(D_800D03DC),
     .bloodSplats_54 = D_800D0BAC,
-    .bloodSplatsLen_58 = 50,
+    .bloodSplatsLen_58 = ARRAY_SIZE(D_800D0BAC),
     .always0_5C = 0,
     .always0_60 = 0,
     .always0_64 = 0,

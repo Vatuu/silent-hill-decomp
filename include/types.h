@@ -44,4 +44,6 @@ typedef struct
     short vz;
 } SVECTOR3;
 
+#define ARRAY_SIZE(arr) (sizeof(arr) / sizeof(arr[0]))
+
 #endif

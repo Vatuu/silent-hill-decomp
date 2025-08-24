@@ -240,9 +240,9 @@ typedef struct
 
 typedef struct
 {
-    s32 field_0;
-    s32 field_4;
-    s16 field_8;
+    s32 vx_0;
+    s32 vz_4;
+    s16 vy_8;
     s8  unk_A;
     s8  field_B;
     s8  field_C;

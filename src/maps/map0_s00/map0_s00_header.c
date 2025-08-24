@@ -31,9 +31,14 @@
 #define func_800DB94C (void(*)(void))0x800DB94C
 #define func_800DBE00 (void(*)(void))0x800DBE00
 
+#define sharedData_800DFB64_0_s00 (0x800DFB64)
+#define sharedData_800DFB68_0_s00 (0x800DFB68)
+#define sharedData_800DFB6C_0_s00 (0x800DFB6C)
+#define sharedData_800DFB70_0_s00 (0x800DFB70)
+
 extern u8 D_800DF754[];
-extern s_func_800625F4 D_800DFB7C[];
-extern s32 D_800E0B1C[];
+extern s_func_800625F4 D_800DFB7C[200];
+extern s_BloodSplat D_800E0B1C[150];
 
 extern s_AnimInfo g_AnimInfo[];
 void (*g_LoadScreenFuncs[])() = 
@@ -97,9 +102,9 @@ const s_MapOverlayHeader g_MapOverlayHeader =
     .func_44 = NULL,
     .func_48 = func_800DC1E8,
     .unkTable1_4C = D_800DFB7C,
-    .unkTable1Len_50 = 200,
+    .unkTable1Len_50 = ARRAY_SIZE(D_800DFB7C),
     .bloodSplats_54 = D_800E0B1C,
-    .bloodSplatsLen_58 = 150,
+    .bloodSplatsLen_58 = ARRAY_SIZE(D_800E0B1C),
     .always0_5C = 0,
     .always0_60 = 0,
     .always0_64 = 0,
@@ -175,10 +180,10 @@ const s_MapOverlayHeader g_MapOverlayHeader =
     .func_178 = func_800D0E24,
     .func_17C = func_800D0E2C,
     .func_180 = sharedFunc_800D0E04_0_s00,
-    .windSpeedX_184 = 0x800DFB64, // `sharedData_800DFB64_0_s00`
-    .windSpeedZ_188 = 0x800DFB68, // `sharedData_800DFB68_0_s00`
-    .data_18C = 0x800DFB6C, // `sharedData_800DFB6C_0_s00`
-    .data_190 = 0x800DFB70, // `sharedData_800DFB70_0_s00`
+    .windSpeedX_184 = sharedData_800DFB64_0_s00,
+    .windSpeedZ_188 = sharedData_800DFB68_0_s00,
+    .data_18C = sharedData_800DFB6C_0_s00,
+    .data_190 = sharedData_800DFB70_0_s00,
     .charaUpdateFuncs_194 =
     {
         NULL,
@@ -227,7 +232,7 @@ const s_MapOverlayHeader g_MapOverlayHeader =
         NULL,
         NULL
     },
-    .charaGroupIds_248 = {}, // 4 zeros.
+    .charaGroupIds_248 = {},
     .charaSpawns_24C =
     {
         #include "chara_spawns.h"
