@@ -3203,7 +3203,7 @@ bool func_80088D0C();
 
 void func_80088D34(s32 idx);
 
-void func_80088F94(s_SubCharacter* chara);
+void func_80088F94(s_SubCharacter* chara, s32 unused1, s32 unused2);
 
 void func_80088FF4(s32 groupIdx, s32 spawnIdx, s32 spawnFlags);
 

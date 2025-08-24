@@ -46,44 +46,30 @@ extern s_800A99E4 D_800A99E4;
 
 extern s8 D_800CBAD4;
 
-extern s8 D_800CC908;
-
-extern s32 D_800CCA1C; // Type assumed.
-
-extern s32 D_800CCA28; // Type assumed.
-
-extern VECTOR3 D_800CCA34;
-
-extern s32 D_800CCA40; // Type assumed.
-
-extern s32 D_800CCA4C; // Type assumed.
-
-extern VECTOR3 D_800CCA58;
-
-/** Character name. */
-extern char* D_800CCA64;
-
 extern u16 D_800DE124;
 
 extern u16 D_800DE128;
 
-extern s32 D_800E239C;
+extern s32 g_timer1;
 
-extern u8 D_800E23A0;
+extern u8 g_SdCmdIndex;
 
 extern u8 D_800E23A1;
 
-/** Target camera position for cutscene. */
-extern VECTOR3 D_800E2380;
-
-/** Target camera look-at for cutscene. */
-extern VECTOR3 D_800E2390;
+extern VECTOR3 g_cutsceneCameraTarget;
+extern VECTOR3 g_cutsceneCameraLookAt;
+void Chara_Spawn(s32, s32, s32, s32, s32, s32);
+void func_800D2054();
 
 
 extern s16 D_800E2560;
 
 /** Size might be 6. Possibly related to NPCs. */
 extern s_800BCE18_2BEC_0 D_800E2570[];
+
+extern u16 g_SdCmdTable[];
+extern u8 D_800DE250;
+extern u8 D_800DE251;
 
 /** `arg0` is a struct pointer, might be `s_SubCharacter`. */
 void func_800D2364(s32 arg0);

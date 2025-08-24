@@ -1,3 +1,4 @@
+#include "types.h"
 
 const char* g_MapMessages[] =
 {
@@ -64,3 +65,8 @@ const char* g_MapMessages[] =
     "\tCan't_turn_on_the_TV. ~N\n\tNo_power? ~E ",
     "\tI_have_more_important_stuff_to_do. ~E ",
 };
+
+const VECTOR3 D_800CC8FC = {0x00000CCC, 0xFFFFECCD, 0x0010D800};
+const char D_800CC908[] = "HERO";
+const char D_800CC910[] = "SIBYL";
+
