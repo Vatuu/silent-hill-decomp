@@ -1003,8 +1003,8 @@ typedef struct
     s16               field_4;
     u8                field_6;
     u8                field_7;
-    s32*              field_8; // pointer to some other const data or NULL
-    s_800BCE18_0_0_C* field_C; // pointer to some other const data
+    s32*              field_8; // Pointer to some other const data or `NULL`.
+    s_800BCE18_0_0_C* field_C; // Pointer to some other const data.
 } s_UnkStruct2_Mo;
 
 typedef struct
@@ -1659,7 +1659,7 @@ STATIC_ASSERT_SIZEOF(s_800AFBF4, 12);
 extern s_FsImageDesc g_MainImg0; // 0x80022C74 - TODO: Part of main exe, move to `main/` headers?
 
 /** Some sort of struct inside RODATA, likely a constant. */
-extern s_UnkStruct2_Mo g_unknownMapTable1[16];
+extern s_UnkStruct2_Mo g_UnknownMapTable0[16];
 
 extern char D_8002510C[]; // "\aNow_loading."
 
@@ -2530,7 +2530,7 @@ void func_8003943C();
  * After playback, savegame gets `D_800BCDD8->eventFlagNum_2` event flag set. */
 void SysState_Fmv_Update();
 
-s32 getUnknownMapTableIndex();
+s32 UnknownMapTableIdxGet();
 
 void func_8003C1AC(s_800BCE18_0_CC* arg0);
 

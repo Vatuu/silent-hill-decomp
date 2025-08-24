@@ -63,10 +63,10 @@ void (*g_MapEventFuncs[])() =
 const u32 D_800C9578 = 0x00000000; // rodata 0
 const s_MapOverlayHeader g_MapOverlayHeader = 
 {
-    .field_0 = &g_unknownMapTable1[0],
+    .field_0 = &g_UnknownMapTable0[0],
     .getMapRoomIdxFunc_4 = sharedFunc_800D92AC_0_s00,
     .field_8 = 34,
-    .unk_9 = { 0, 0, 0, },
+    .unk_9 = { 0, 0, 0 },
     .func_C = sharedFunc_800D929C_0_s00,
     .func_10 = func_800DA778,
     .field_14 = 1,

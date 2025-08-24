@@ -675,9 +675,9 @@ void func_8003BCF4() // 0x8003BCF4
 // UNKNOWN - IN-GAME LOOP RELATED
 // ========================================
 
-s32 getUnknownMapTableIndex() // 0x8003BD2C
+s32 UnknownMapTableIdxGet() // 0x8003BD2C
 {
-    return D_800BCE18.field_0[0].field_0 - g_unknownMapTable1;
+    return D_800BCE18.field_0[0].field_0 - g_UnknownMapTable0;
 }
 
 void func_8003BD48(s_SubCharacter* chara) // 0x8003BD48
@@ -687,7 +687,7 @@ void func_8003BD48(s_SubCharacter* chara) // 0x8003BD48
     D_800BCE14 = func_80069810();
     var_s0     = D_800BCE14;
 
-    switch (getUnknownMapTableIndex())
+    switch (UnknownMapTableIdxGet())
     {
         case 0:
             if (chara->position_18.vx >= FP_METER(191.6f) && chara->position_18.vx <= FP_METER(198.8f) && 
@@ -875,7 +875,7 @@ void func_8003C220(s_UnkStruct2_Mo** arg0, s32 arg1, s32 arg2) // 0x8003C220
     ptr = *arg0;
     func_800421D8(&ptr->field_2, ptr->field_0, var_a2, ((ptr->field_6 >> 2) ^ 1) & (1 << 0), 0, 0);
 
-    if (*arg0 == &g_unknownMapTable1[0]) 
+    if (*arg0 == &g_UnknownMapTable0[0]) 
     {
         func_80041ED0(0x467, -1, 8);
     }
@@ -948,7 +948,7 @@ void func_8003C3AC() // 0x8003C3AC
     pos0.vx += FP_MULTIPLY_PRECISE(moveDist, Math_Sin(chara->headingAngle_3C), Q12_SHIFT);
     pos0.vz += FP_MULTIPLY_PRECISE(moveDist, Math_Cos(chara->headingAngle_3C), Q12_SHIFT);
 
-    if (D_800BCE18.field_0[0].field_0 == &g_unknownMapTable1[0] &&
+    if (D_800BCE18.field_0[0].field_0 == &g_UnknownMapTable0[0] &&
         chara->position_18.vx >= FP_METER(-40.0f) && chara->position_18.vx <= FP_METER(40.0f) &&
         chara->position_18.vz >= FP_METER(200.0f) && chara->position_18.vz <= FP_METER(240.0f))
     {
