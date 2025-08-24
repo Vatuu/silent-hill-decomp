@@ -18,9 +18,9 @@ s8 func_80040A64(VECTOR3* pos) // 0x80040A64
     VECTOR  vec1;
     MATRIX  mat;
     s32     dot;
-    s32     res;
+    s32     balance;
 
-    if (g_GameWork.config_0.optSoundType_1E != 0)
+    if (g_GameWork.config_0.optSoundType_1E)
     {
         return 0;
     }
@@ -32,9 +32,9 @@ s8 func_80040A64(VECTOR3* pos) // 0x80040A64
     VectorNormal(&vec0, &vec1);
 
     Vw_CoordHierarchyMatrixCompute(vwGetViewCoord(), &mat);
-    dot = Math_MultiplyMatrix(mat, vec1);
-    res = CLAMP(dot, -127, 127);
-    return res;
+    dot     = Math_MultiplyMatrix(mat, vec1);
+    balance = CLAMP(dot, -127, 127);
+    return balance;
 }
 
 void func_80040B6C() {}

@@ -943,7 +943,7 @@ typedef struct _SubCharaPropertiesPlayer
     s32 field_100;
     s32 field_104;    // Distance?
     s32 runTimer_108; // `FP_TIME` format timer?.
-    u8  field_10C;
+    u8  field_10C;    // Player SFX pitch?
     u8  field_10D;
     s8  unk_10E[6];
     s32 field_114;

@@ -1209,7 +1209,7 @@ typedef struct
     s16 field_4;
     s16 field_6;
     s16 field_8;
-    s16 field_A;
+    s16 field_A; // Pitch?
     s16 volumeLeft_C;
     s16 volumeRight_E;
 } s_800C1698;
@@ -2173,6 +2173,7 @@ extern s8 D_800C15B4;
 
 extern s32 D_800C15B8;
 
+/** Absolute SFX index. */
 extern s16 D_800C15BC;
 
 extern s16 D_800C15BE;
@@ -2214,6 +2215,7 @@ extern u16 D_800C165A;
 
 extern u16 D_800C1666;
 
+/** `bool` | is stereo enabled? */
 extern u8 D_800C166A;
 
 extern s8 D_800C166C;
@@ -2608,6 +2610,7 @@ void func_80040004(s_800BCE18* arg0);
 
 void func_80040014();
 
+/** Computes stereo sound balance. */
 s8 func_80040A64(VECTOR3* pos);
 
 bool func_80040B74(s32 arg0);
@@ -2760,13 +2763,13 @@ u8 func_80045B28();
 
 void sd_work_init();
 
-u8 Sd_PlaySfx(u16 sfx, s8 arg1, u8 vol);
+u8 Sd_PlaySfx(u16 sfx, s8 balance, u8 vol);
 
 /** SFX func. */
-void func_800463C0(u16 sfx, s8 arg1, u8 vol, s8 arg3);
+void func_800463C0(u16 sfx, s8 balance, u8 vol, s8 pitch);
 
 /** SFX func. */
-void func_80046620(u16 sfx, s8 arg1, u8 vol, s8 arg3);
+void func_80046620(u16 sfx, s8 balance, u8 vol, s8 pitch);
 
 /** Sound command func. Unknown category. */
 void func_800468EC();
@@ -3040,9 +3043,11 @@ s32 func_8005D974();
 /** Spatial SFX func? */
 void func_8005DC1C(s32 sfx, VECTOR3* pos, s32 arg2, s32 soundType); // Types assumed.
 
-void func_8005DC3C(s32 sfx, VECTOR3* pos, s32 arg2, s32 soundType, s32 arg4);
+/** Spatial SFX func? */
+void func_8005DC3C(s32 sfx, VECTOR3* pos, s32 arg2, s32 soundType, s32 pitch);
 
-void func_8005DD44(s32, VECTOR3*, s32, s8); // Types assumed.
+/** Spatial SFX func? */
+void func_8005DD44(s32 sfx, VECTOR3* pos, s32 arg2, s8 pitch); // Types assumed.
 
 s32 func_8005F680(s_func_800699F8* arg0);
 
@@ -3916,7 +3921,7 @@ s32 func_8007FD3C();
 void func_8007FD4C(s32 arg0);
 
 /** Returns data in last 3 pointer args. */
-void func_8007FDE0(s8, s32*, s8*, s8*);
+void func_8007FDE0(s8, s32* sfx, s8* pitch, s8*);
 
 /** Forces ControllerFlag_Select button press. */
 void func_80080458();

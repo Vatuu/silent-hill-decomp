@@ -28,7 +28,7 @@ typedef enum { false, true } bool;
 
 #define NO_VALUE -1
 
-// Smaller `VECTOR` with padding removed. Seems to be used frequently.
+/** @brief Smaller `VECTOR` with padding removed. Used for fixed-point positions. */
 typedef struct
 {
     long vx;
@@ -36,7 +36,7 @@ typedef struct
     long vz;
 } VECTOR3;
 
-// Smaller `SVECTOR` with padding removed. Seems to be used frequently.
+/** @brief Smaller `SVECTOR` with padding removed. Used for fixed-point rotations. */
 typedef struct
 {
     short vx;
@@ -44,6 +44,12 @@ typedef struct
     short vz;
 } SVECTOR3;
 
-#define ARRAY_SIZE(arr) (sizeof(arr) / sizeof(arr[0]))
+/** @brief Computes the size of an array.
+ *
+ * @param arr Array.
+ * @return Element count.
+ */
+#define ARRAY_SIZE(arr) \
+    (sizeof(arr) / sizeof((arr)[0]))
 
 #endif

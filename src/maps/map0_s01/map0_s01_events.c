@@ -134,7 +134,7 @@ void func_800DBAA0() // 0x800DBAA0
 
         case 15:
             func_800CCB8C(&D_800CCA1C, &D_800CCA28, 0x2800, 0xCC, 0x999, 0x666, 0x199, 0);
-            func_8005DC1C(1373, &D_800CCA34, 0x80, 0);
+            func_8005DC1C(1373, &D_800CCA34, 128, 0);
             SysWork_StateStepIncrement();
 
         case 16:
@@ -148,8 +148,8 @@ void func_800DBAA0() // 0x800DBAA0
 
         case 17:
             func_800CCB8C(&D_800CCA40, &D_800CCA4C, 0x3000, 0x147, 0x666, 0x666, 0xED, 0);
-            func_8005DC1C(1374, &D_800CCA58, 0x80, 0);
-            func_8005DC1C(1375, &D_800CCA58, 0x80, 0);
+            func_8005DC1C(1374, &D_800CCA58, 128, 0);
+            func_8005DC1C(1375, &D_800CCA58, 128, 0);
             SysWork_StateStepIncrement();
 
         case 18:

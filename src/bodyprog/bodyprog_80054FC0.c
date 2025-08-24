@@ -1666,18 +1666,19 @@ void func_8005DC1C(s32 sfx, VECTOR3* pos, s32 arg2, s32 soundType)
     func_8005DC3C(sfx, pos, arg2, soundType, 0);
 }
 
-void func_8005DC3C(s32 sfx, VECTOR3* pos, s32 arg2, s32 soundType, s32 arg4) // 0x8005DC3C
+void func_8005DC3C(s32 sfx, VECTOR3* pos, s32 arg2, s32 soundType, s32 pitch) // 0x8005DC3C
 {
-    s32 var_a2;
-    s32 var_s1;
+    s32 vol1;
+    s32 balance;
 
-    if (soundType & (1 << 0) || g_GameWork.config_0.optSoundType_1E) // If sound is monaural.
+    // If sound is monaural.
+    if (soundType & (1 << 0) || g_GameWork.config_0.optSoundType_1E)
     {
-        var_s1 = 0;
+        balance = 0;
     }
     else
     {
-        var_s1 = func_80040A64(pos);
+        balance = func_80040A64(pos);
     }
 
     if (arg2 >= 0x100)
@@ -1689,60 +1690,60 @@ void func_8005DC3C(s32 sfx, VECTOR3* pos, s32 arg2, s32 soundType, s32 arg4) // 
         arg2 = 0;
     }
 
-    if (!(soundType & 2))
+    if (!(soundType & (1 << 1)))
     {
-        var_a2 = func_8005D9B8(pos, arg2);
+        vol1 = func_8005D9B8(pos, arg2);
     }
     else
     {
-        var_a2 = arg2;
+        vol1 = arg2;
     }
 
-    if (var_a2 >= 0x100)
+    if (vol1 >= 0x100)
     {
-        var_a2 = 0xFF;
+        vol1 = 0xFF;
     }
 
-    if (soundType & 4)
+    if (soundType & (1 << 2))
     {
-        func_800463C0(sfx, var_s1, ~var_a2, arg4);
+        func_800463C0(sfx, balance, ~vol1, pitch);
     }
     else
     {
-        Sd_PlaySfx(sfx, var_s1, ~var_a2);
+        Sd_PlaySfx(sfx, balance, ~vol1);
     }
 }
 
-void func_8005DD44(s32 arg0, VECTOR3* arg1, s32 arg2, s8 arg3) // 0x8005DD44
+void func_8005DD44(s32 sfx, VECTOR3* pos, s32 arg2, s8 pitch) // 0x8005DD44
 {
-    s32 var_a2;
-    s32 var_s1;
+    s32 vol;
+    s32 balance;
 
-    if (g_GameWork.config_0.optSoundType_1E != 0)
+    if (g_GameWork.config_0.optSoundType_1E)
     {
-        var_s1 = 0;
+        balance = 0;
     }
     else
     {
-        var_s1 = func_80040A64(arg1);
+        balance = func_80040A64(pos);
     }
 
-    if (arg2 >= 0x100)
+    if (arg2 >= 256)
     {
-        arg2 = 0xFF;
+        arg2 = 255;
     }
     else if (arg2 < 0)
     {
         arg2 = 0;
     }
 
-    var_a2 = func_8005D9B8(arg1, arg2);
-    if (var_a2 >= 0x100)
+    vol = func_8005D9B8(pos, arg2);
+    if (vol >= 256)
     {
-        var_a2 = 0xFF;
+        vol = 255;
     }
 
-    func_80046620(arg0 & 0xFFFF, var_s1, ~var_a2 & 0xFF, arg3);
+    func_80046620(sfx & 0xFFFF, balance, ~vol & 0xFF, pitch);
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8005DE0C); // 0x8005DE0C
@@ -4682,8 +4683,8 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
                     if (extra->model_0.state_2 == 0 && chara->position_18.vy >= chara->properties_E4.player.positionY_EC)
                     {
                         extra->model_0.state_2++;
-                        func_8005DC1C(0x525, &chara->position_18, 0x20, 0);
-                        chara->properties_E4.player.field_10C = 0x80;
+                        func_8005DC1C(1317, &chara->position_18, 32, 0);
+                        chara->properties_E4.player.field_10C = 128;
                         func_80089470();
                     }
                     
@@ -9035,11 +9036,11 @@ void func_80077D00(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
 
 void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007B924
 {
-    s32 sp18;
-    s8  sp1C;
+    s32 sfx;
+    s8  pitch;
     s8  sp1D;
 
-    func_8007FDE0(D_800C4590.field_14, &sp18, &sp1C, &sp1D);
+    func_8007FDE0(D_800C4590.field_14, &sfx, &pitch, &sp1D);
 
     if (g_SysWork.player_4C.extra_128.field_24 != 11 && g_SysWork.player_4C.extra_128.field_24 != 35)
     {
@@ -9091,11 +9092,11 @@ void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
         case 20:
             if (g_SysWork.player_4C.extra_128.field_20 == 11)
             {
-                func_800713E8(27, chara, 204, 200, sp18, sp1C);
+                func_800713E8(27, chara, 204, 200, sfx, pitch);
             }
             else if (g_SysWork.player_4C.extra_128.field_20 == 12)
             {
-                func_800713E8(25, chara, 187, 191, sp18, sp1C);
+                func_800713E8(25, chara, 187, 191, sfx, pitch);
             }
 
             if ((g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & PlayerFlag_Unk15) &&
@@ -9103,16 +9104,16 @@ void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                   chara->model_0.anim_4.animIdx_0 <= 54) ||
                  chara->model_0.anim_4.animIdx_0 == 57))
             {
-                func_8005DD44(sp18, &chara->position_18, 24, sp1C);
+                func_8005DD44(sfx, &chara->position_18, 24, pitch);
 
-                chara->properties_E4.player.field_10C                        = sp1C + 16;
+                chara->properties_E4.player.field_10C                        = pitch + 16;
                 g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk15;
             }
 
             if (chara->model_0.anim_4.keyframeIdx0_8 == 246 &&
                 !(g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & PlayerFlag_Unk5))
             {
-                func_8005DD44(sp18, &chara->position_18, 128, sp1D);
+                func_8005DD44(sfx, &chara->position_18, 128, sp1D);
 
                 chara->properties_E4.player.field_10C                        = sp1D + 32;
                 g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Unk5;
@@ -9124,18 +9125,18 @@ void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
 
         case 4:
         case 24:
-            func_800713E8(9, chara, 52, 63, sp18, sp1C);
+            func_800713E8(9, chara, 52, 63, sfx, pitch);
             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Unk15;
             break;
 
         case 1:
         case 21:
-            func_800713E8(5, chara, 18, 6, sp18, sp1C);
+            func_800713E8(5, chara, 18, 6, sfx, pitch);
             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Unk15;
             break;
 
         case 2:
-            if (func_800713E8(7, chara, 31, 41, sp18, sp1D) != 0)
+            if (func_800713E8(7, chara, 31, 41, sfx, sp1D) != 0)
             {
                 chara->properties_E4.player.runTimer_F8++;
             }
@@ -9144,17 +9145,17 @@ void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
             break;
 
         case 5:
-            func_800713E8(13, chara, 118, 108, sp18, sp1C);
+            func_800713E8(13, chara, 118, 108, sfx, pitch);
             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Unk15;
             break;
 
         case 6:
-            func_800713E8(11, chara, 93, 83, sp18, sp1C);
+            func_800713E8(11, chara, 93, 83, sfx, pitch);
             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Unk15;
             break;
 
         case 7:
-            if (func_800713E8(17, chara, 145, 139, sp18, sp1D) != 0)
+            if (func_800713E8(17, chara, 145, 139, sfx, sp1D) != 0)
             {
                 chara->properties_E4.player.runTimer_F8++;
             }
@@ -9163,7 +9164,7 @@ void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
             break;
 
         case 8:
-            if (func_800713E8(15, chara, 131, 125, sp18, sp1D) != 0)
+            if (func_800713E8(15, chara, 131, 125, sfx, sp1D) != 0)
             {
                 chara->properties_E4.player.runTimer_F8++;
             }
@@ -9176,22 +9177,22 @@ void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
             {
                 if (chara->model_0.anim_4.keyframeIdx0_8 < 152)
                 {
-                    func_800713E8(19, chara, 151, 154, sp18, sp1D);
+                    func_800713E8(19, chara, 151, 154, sfx, sp1D);
                 }
                 else
                 {
-                    func_800713E8(19, chara, 156, 154, sp18, sp1D);
+                    func_800713E8(19, chara, 156, 154, sfx, sp1D);
                 }
             }
             else
             {
                 if (chara->model_0.anim_4.keyframeIdx0_8 < 162)
                 {
-                    func_800713E8(21, chara, 164, 161, sp18, sp1D);
+                    func_800713E8(21, chara, 164, 161, sfx, sp1D);
                 }
                 else
                 {
-                    func_800713E8(21, chara, 164, 166, sp18, sp1D);
+                    func_800713E8(21, chara, 164, 166, sfx, sp1D);
                 }
             }
 
@@ -9201,11 +9202,11 @@ void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
         case 13:
             if (chara->model_0.anim_4.keyframeIdx0_8 < 323)
             {
-                func_800713E8(37, chara, 322, 324, sp18, sp1D);
+                func_800713E8(37, chara, 322, 324, sfx, sp1D);
             }
             else
             {
-                func_800713E8(37, chara, 327, 324, sp18, sp1D);
+                func_800713E8(37, chara, 327, 324, sfx, sp1D);
             }
 
             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk15;
@@ -9214,11 +9215,11 @@ void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
         case 14:
             if (chara->model_0.anim_4.keyframeIdx0_8 < 352)
             {
-                func_800713E8(41, chara, 353, 351, sp18, sp1D);
+                func_800713E8(41, chara, 353, 351, sfx, sp1D);
             }
             else
             {
-                func_800713E8(41, chara, 353, 356, sp18, sp1D);
+                func_800713E8(41, chara, 353, 356, sfx, sp1D);
             }
 
             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk15;
@@ -9227,11 +9228,11 @@ void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
         case 12:
             if (chara->model_0.anim_4.keyframeIdx0_8 < 172)
             {
-                func_800713E8(23, chara, 171, 174, sp18, sp1D);
+                func_800713E8(23, chara, 171, 174, sfx, sp1D);
             }
             else
             {
-                func_800713E8(23, chara, 176, 174, sp18, sp1D);
+                func_800713E8(23, chara, 176, 174, sfx, sp1D);
             }
 
             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk15;
@@ -9240,15 +9241,15 @@ void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
         case 15:
             if (chara->model_0.anim_4.keyframeIdx0_8 < 338)
             {
-                func_800713E8(39, chara, 337, 341, sp18, sp1C);
+                func_800713E8(39, chara, 337, 341, sfx, pitch);
             }
             else if (chara->model_0.anim_4.keyframeIdx0_8 < 344)
             {
-                func_800713E8(39, chara, 343, 341, sp18, sp1C);
+                func_800713E8(39, chara, 343, 341, sfx, pitch);
             }
             else
             {
-                func_800713E8(39, chara, 356, 346, sp18, sp1D);
+                func_800713E8(39, chara, 356, 346, sfx, sp1D);
             }
 
             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk15;
@@ -9257,15 +9258,15 @@ void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
         case 16:
             if (chara->model_0.anim_4.keyframeIdx0_8 < 367)
             {
-                func_800713E8(43, chara, 366, 370, sp18, sp1C);
+                func_800713E8(43, chara, 366, 370, sfx, pitch);
             }
             else if (chara->model_0.anim_4.keyframeIdx0_8 < 373)
             {
-                func_800713E8(43, chara, 372, 370, sp18, sp1C);
+                func_800713E8(43, chara, 372, 370, sfx, pitch);
             }
             else
             {
-                func_800713E8(43, chara, 385, 375, sp18, sp1D);
+                func_800713E8(43, chara, 385, 375, sfx, sp1D);
             }
 
             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk15;
@@ -9273,13 +9274,13 @@ void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
 
         case 10:
         case 30:
-            func_800713E8(31, chara, 222, 224, sp18, sp1C);
+            func_800713E8(31, chara, 222, 224, sfx, pitch);
             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk15;
             break;
 
         case 9:
         case 29:
-            func_800713E8(29, chara, 209, 211, sp18, sp1C);
+            func_800713E8(29, chara, 209, 211, sfx, pitch);
             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk15;
             break;
 
@@ -9292,7 +9293,7 @@ void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
 
             if (chara->position_18.vy == D_800C4590.field_C)
             {
-                func_800713E8(33, chara, 243, 245, sp18, sp1D);
+                func_800713E8(33, chara, 243, 245, sfx, sp1D);
             }
 
             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk15;
@@ -9473,26 +9474,26 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
     s16 sp10;
     u16 enemyRotY;
     s32 i;
-    s32 var_s4;
+    s32 sfx;
     s32 var_v1_2;
     s8  temp_v0_3;
 
-    var_s4 = 0x52E;
-
+    // Set damage SFX according to something.
+    sfx = 1326;
     if (chara->field_41 != NO_VALUE)
     {
         switch (D_800AD4C8[chara->field_41].field_11)
         {
             case 2:
-                var_s4 = 0x52F;
+                sfx = 1327;
                 break;
 
             case 4:
-                var_s4 = 0x530;
+                sfx = 1328;
                 break;
 
             case 5:
-                var_s4 = 0x531;
+                sfx = 1329;
                 break;
 
             case 0:
@@ -9537,7 +9538,7 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
             if (chara->damageReceived_C0 != 0 && !(g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & PlayerFlag_DamageReceived))
             {
                 g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_DamageReceived;
-                func_8005DC1C(var_s4, &chara->position_18, 32, 0);
+                func_8005DC1C(sfx, &chara->position_18, 32, 0);
                 chara->properties_E4.player.field_10C = 0x40;
             }
 
@@ -9925,7 +9926,7 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
         g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk2;
         if (!(g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & PlayerFlag_DamageReceived))
         {
-            func_8005DC1C(var_s4, &chara->position_18, 0x20, 0);
+            func_8005DC1C(sfx, &chara->position_18, 0x20, 0);
             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_DamageReceived;
             chara->properties_E4.player.field_10C = 0x40;
         }

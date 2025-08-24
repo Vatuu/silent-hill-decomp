@@ -375,7 +375,7 @@ static inline void Math_Vector3Zero(VECTOR3* vec)
     vec->vz = 0;
 }
 
-/** @brief Sets an `VECTOR3`'s components.
+/** @brief Sets a `VECTOR3`'s components.
  *
  * @param vec Output vector.
  * @param x X component.
@@ -392,6 +392,13 @@ static inline void Math_Vector3Set(VECTOR3* vec, s32 x, s32 y, s32 z)
 void func_80096C94(SVECTOR* rot, MATRIX* mat); // Custom `vwRotMatrix[...]`?
 void func_80096E78(SVECTOR* rot, MATRIX* mat); // Another custom `vwRotMatrix[...]`?
 
+/** @brief Multiplies two integers in fixed-point Q format and converts the result from the fixed-point Q format.
+ *
+ * @param a First fixed-point factor.
+ * @param b Second fixed-point factor.
+ * @param shift Fixed-point shift.
+ * @return Product of `a` and `b` converted from fixed-point.
+ */
 s32 Math_MulFixed(s32 a, s32 b, s32 shift);
 
 // NOTE: Matched on decomp.me.

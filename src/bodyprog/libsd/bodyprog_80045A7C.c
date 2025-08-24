@@ -196,7 +196,7 @@ void func_80045D28(u8 caseArg) // 0x80045D28
             CdMix(&vol);
 
             D_800C167C = 0x7F;
-            D_800C166A = 0;
+            D_800C166A = false;
             return;
 
         case 1:
@@ -212,7 +212,7 @@ void func_80045D28(u8 caseArg) // 0x80045D28
             CdMix(&vol);
 
             D_800C167C = 0x7F;
-            D_800C166A = 1;
+            D_800C166A = true;
             return;
 
         default:
@@ -314,7 +314,7 @@ static inline void WriteVolume(s16* left, s16* right, s16 vol)
     *right = vol;
 }
 
-u8 Sd_PlaySfx(u16 sfx, s8 arg1, u8 vol) // 0x80046048
+u8 Sd_PlaySfx(u16 sfx, s8 balance, u8 vol) // 0x80046048
 {
     SpuVoiceAttr attr;
     s16          convertedVol;
@@ -339,23 +339,24 @@ u8 Sd_PlaySfx(u16 sfx, s8 arg1, u8 vol) // 0x80046048
 
     WriteVolume(&D_800C1698.volumeLeft_C, &D_800C1698.volumeRight_E, convertedVol);
 
-    if (D_800C166A == 1)
+    // Apply stereo balance.
+    if (D_800C166A == true)
     {
-        if (arg1 < 0)
+        if (balance < 0)
         {
-            D_800C1698.volumeRight_E -= (D_800C1698.volumeLeft_C * ABS(arg1)) >> 7;
+            D_800C1698.volumeRight_E -= (D_800C1698.volumeLeft_C * ABS(balance)) >> 7;
         }
         else
         {
-            D_800C1698.volumeLeft_C -= (D_800C1698.volumeLeft_C * arg1) >> 7;
+            D_800C1698.volumeLeft_C -= (D_800C1698.volumeLeft_C * balance) >> 7;
         }
     }
 
+    // Clamp volume to positive range.
     if (D_800C1698.volumeLeft_C < 0)
     {
         D_800C1698.volumeLeft_C = 0;
     }
-
     if (D_800C1698.volumeRight_E < 0)
     {
         D_800C1698.volumeRight_E = 0;
@@ -403,7 +404,7 @@ u8 Sd_PlaySfx(u16 sfx, s8 arg1, u8 vol) // 0x80046048
     return NO_VALUE;
 }
 
-void func_800463C0(u16 sfx, s8 arg1, u8 vol, s8 arg3) // 0x800463C0
+void func_800463C0(u16 sfx, s8 balance, u8 vol, s8 pitch) // 0x800463C0
 {
     SpuVoiceAttr attr;
     s16          convertedVol;
@@ -450,21 +451,22 @@ void func_800463C0(u16 sfx, s8 arg1, u8 vol, s8 arg3) // 0x800463C0
 
     D_800C1698.field_A = 0;
     D_800C1698.field_8 = D_800ACAA8[D_800C15BE].field_4;
-    D_800C15C0         = D_800C1628[temp] + (arg3 * 2);
+    D_800C15C0         = D_800C1628[temp] + (pitch * 2);
     convertedVol       = vol;
     convertedVol       = D_800C1698.volumeLeft_C - ((D_800C1698.volumeLeft_C * (convertedVol)) / 255);
 
     WriteVolume(&D_800C1698.volumeLeft_C, &D_800C1698.volumeRight_E, convertedVol);
 
-    if (D_800C166A == 1)
+    // Apply stereo balance.
+    if (D_800C166A == true)
     {
-        if (arg1 < 0)
+        if (balance < 0)
         {
-            D_800C1698.volumeRight_E -= (convertedVol * ABS(arg1)) >> 7;
+            D_800C1698.volumeRight_E -= (convertedVol * ABS(balance)) >> 7;
         }
         else
         {
-            D_800C1698.volumeLeft_C -= (convertedVol * arg1) >> 7;
+            D_800C1698.volumeLeft_C -= (convertedVol * balance) >> 7;
         }
     }
 
@@ -476,11 +478,11 @@ void func_800463C0(u16 sfx, s8 arg1, u8 vol, s8 arg3) // 0x800463C0
     attr.volmode.left  = 0;
     attr.volmode.right = 0;
 
+    // Clamp volume to positive range.
     if (D_800C1698.volumeLeft_C < 0)
     {
         D_800C1698.volumeLeft_C = 0;
     }
-
     if (D_800C1698.volumeRight_E < 0)
     {
         D_800C1698.volumeRight_E = 0;
@@ -493,7 +495,7 @@ void func_800463C0(u16 sfx, s8 arg1, u8 vol, s8 arg3) // 0x800463C0
     SpuSetVoiceAttr(&attr);
 }
 
-void func_80046620(u16 sfx, s8 arg1, u8 vol, s8 arg3) // 0x80046620
+void func_80046620(u16 sfx, s8 balance, u8 vol, s8 pitch) // 0x80046620
 {
     s16 temp;
     s16 convertedVol;
@@ -507,15 +509,15 @@ void func_80046620(u16 sfx, s8 arg1, u8 vol, s8 arg3) // 0x80046620
     D_800C1698.field_2 = D_800ACAA8[D_800C15C2].field_2 >> 8;
     D_800C1698.field_4 = D_800ACAA8[D_800C15C2].field_2 & 0xFF;
     D_800C1698.field_6 = D_800ACAA8[D_800C15C2].field_0;
-    D_800C1698.field_8 = D_800ACAA8[D_800C15C2].field_4 + (s8)(arg3 * 5 / 127);
+    D_800C1698.field_8 = D_800ACAA8[D_800C15C2].field_4 + (s8)(pitch * 5 / 127);
 
-    if (arg3 > 0)
+    if (pitch > 0)
     {
-        D_800C1698.field_A = ABS(arg3 * 5) % 127;
+        D_800C1698.field_A = ABS(pitch * 5) % 127;
     }
     else
     {
-        D_800C1698.field_A = 0x7F - ABS(arg3 * 5) % 127;
+        D_800C1698.field_A = 0x7F - ABS(pitch * 5) % 127;
     }
 
     temp                    = D_800C167C + D_800ACAA8[D_800C15C2].field_5;
@@ -524,23 +526,24 @@ void func_80046620(u16 sfx, s8 arg1, u8 vol, s8 arg3) // 0x80046620
 
     WriteVolume(&D_800C1698.volumeLeft_C, &D_800C1698.volumeRight_E, D_800C1698.volumeLeft_C);
 
-    if (D_800C166A == 1)
+    // Apply stereo balance.
+    if (D_800C166A == true)
     {
-        if (arg1 < 0)
+        if (balance < 0)
         {
-            D_800C1698.volumeRight_E -= (D_800C1698.volumeRight_E * ABS(arg1)) >> 7;
+            D_800C1698.volumeRight_E -= (D_800C1698.volumeRight_E * ABS(balance)) >> 7;
         }
         else
         {
-            D_800C1698.volumeLeft_C -= (D_800C1698.volumeLeft_C * arg1) >> 7;
+            D_800C1698.volumeLeft_C -= (D_800C1698.volumeLeft_C * balance) >> 7;
         }
     }
 
+    // Clamp volume to positive range.
     if (D_800C1698.volumeLeft_C < 0)
     {
         D_800C1698.volumeLeft_C = 0;
     }
-
     if (D_800C1698.volumeRight_E < 0)
     {
         D_800C1698.volumeRight_E = 0;

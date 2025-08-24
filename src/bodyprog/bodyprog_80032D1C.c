@@ -3311,9 +3311,6 @@ void SysState_Gameplay_Update() // 0x80038BD4
         case 6:
             func_800892A4(12);
             break;
-
-        default:
-            break;
     }
 
     if (g_SysWork.player_4C.chara_0.health_B0 <= FP_FLOAT_TO(0.0f, Q12_SHIFT))
@@ -3450,9 +3447,6 @@ void SysState_OptionsMenu_Update() // 0x80039344
                 g_SysWork.sysStateStep_C++;
             }
             break;
-
-        default:
-            break;
     }
 
     if (D_800A9A0C != 0)
@@ -3544,9 +3538,6 @@ void func_8003943C()
 
         case MapOverlayId_MAP0_S00:
             func_8004690C(Sfx_Unk1358);
-            break;
-
-        default:
             break;
     }
 }
@@ -3683,7 +3674,7 @@ void GameState_LoadMapScreen_Update() // 0x8003991C
 
 void SysState_Fmv_Update() // 0x80039A58
 {
-    #define BASE_FILE_IDX 2072
+    #define BASE_AUDIO_FILE_IDX FILE_XA_ZC_14392
 
     switch (g_SysWork.sysStateStep_C)
     {
@@ -3698,9 +3689,6 @@ void SysState_Fmv_Update() // 0x80039A58
                 GameFs_StreamBinLoad();
                 g_SysWork.sysStateStep_C++;
             }
-            break;
-
-        default:
             break;
     }
 
@@ -3717,9 +3705,9 @@ void SysState_Fmv_Update() // 0x80039A58
     func_800892A4(0);
     func_80089128();
 
-    // Start playing movie. File to play is based on file ID `BASE_FILE_IDX - g_MapEventIdx`.
+    // Start playing movie. File to play is based on file ID `BASE_AUDIO_FILE_IDX - g_MapEventIdx`.
     // Blocks until movie has finished playback or user has skipped it.
-    open_main(BASE_FILE_IDX - g_MapEventIdx, g_FileTable[BASE_FILE_IDX - g_MapEventIdx].blockCount_0_13);
+    open_main(BASE_AUDIO_FILE_IDX - g_MapEventIdx, g_FileTable[BASE_AUDIO_FILE_IDX - g_MapEventIdx].blockCount_0_13);
 
     func_800892A4(1);
 
@@ -3875,15 +3863,14 @@ void SysState_ReadMessage_Update(s32 arg0) // 0x80039FB8
 
             (*func)(0);
             break;
-
-        default:
-            break;
     }
 }
 
 void SysWork_SavegameUpdatePlayer() // 0x8003A120
 {
-    s_Savegame* save = g_SavegamePtr;
+    s_Savegame* save;
+
+    save = g_SavegamePtr;
 
     save->locationId_A8       = g_MapEventIdx;
     save->playerPositionX_244 = g_SysWork.player_4C.chara_0.position_18.vx;
@@ -3964,9 +3951,6 @@ void SysState_SaveMenu_Update() // 0x8003A230
                 g_GameWork.gameStatePrev_590    = gameState;
                 g_GameWork.gameStateStep_598[0] = 0;
             }
-            break;
-
-        default:
             break;
     }
 }
