@@ -33,9 +33,9 @@ typedef enum _Sfx
 {
     Sfx_Base      = 1280,
 
-    Sfx_StartGame = Sfx_Base + 1, // `FIRST.VAB`
+    Sfx_StartGame = Sfx_Base + 1, // `SND/FIRST.VAB`
 
-    Sfx_Denied    = Sfx_Base + 24,
+    Sfx_Denied    = Sfx_Base + 24, // `1ST/BASE.VAB` onward, but loaded out of order?
     Sfx_Back      = Sfx_Base + 25,
     Sfx_Cancel    = Sfx_Base + 26,
     Sfx_Confirm   = Sfx_Base + 27, // TODO: Continue this pattern.
