@@ -113,6 +113,10 @@
 #define FP_ANGLE(deg) \
     (s16)((deg) * ((float)FP_TO(1, Q12_SHIFT) / 360.0f))
 
+/** @brief Converts fixed-point degrees in Q3.12, packed range [0, 256], to fixed-point degrees in Q3.12, range `[0, 4096]`. */
+#define FP_ANGLE_PACKED_FROM(packedDeg) \
+    (s16)((packedDeg) * 16)
+
 /** @brief Normalizes fixed-point degrees in Q3.12 format to the signed range `[-2048, 2047]`. */
 #define FP_ANGLE_NORM_S(angle) \
     (((angle) << 20) >> 20)

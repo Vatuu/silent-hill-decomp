@@ -121,7 +121,7 @@ void Event_KitchenKnifeItemTake();
 
 void Event_EmptyFunction();
 
-/** @brief Handles a health item pickup event. */
+/** @brief Handles a first aid kit or health drink pickup event. */
 void Event_HealthItemTake();
 
 /** @brief Handles the handgun pickup event. */

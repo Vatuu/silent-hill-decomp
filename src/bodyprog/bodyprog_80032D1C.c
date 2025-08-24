@@ -2810,34 +2810,33 @@ void func_80037188() // 0x80037188
 
 void Chara_PositionUpdateFromParams(s_AreaLoadParams* params) // 0x800371E8
 {
-    s32 rot;
+    s32 rotY;
     
-    rot = params->rotationY_4_16 * 16;
+    rotY = FP_ANGLE_PACKED_FROM(params->rotationY_4_16);
+    Math_SVectorSet(&g_SysWork.player_4C.chara_0.rotation_24, FP_ANGLE(0.0f), rotY, FP_ANGLE(0.0f));
 
-    Math_SVectorSet(&g_SysWork.player_4C.chara_0.rotation_24, 0, rot, 0);
-
-    g_SysWork.player_4C.chara_0.position_18.vy = 0;
+    g_SysWork.player_4C.chara_0.position_18.vy = FP_METER(0.0f);
     g_SysWork.player_4C.chara_0.position_18.vx = params->char_x_0;
     g_SysWork.player_4C.chara_0.position_18.vz = params->char_z_8;
 
     if (params->field_4_24 >= 2)
     {
-        g_SysWork.player_4C.chara_0.position_18.vx += FP_MULTIPLY_FLOAT_PRECISE(Math_Sin(rot), 0.4f, Q12_SHIFT);
-        g_SysWork.player_4C.chara_0.position_18.vz += FP_MULTIPLY_FLOAT_PRECISE(Math_Cos(rot), 0.4f, Q12_SHIFT);
+        g_SysWork.player_4C.chara_0.position_18.vx += FP_MULTIPLY_FLOAT_PRECISE(Math_Sin(rotY), 0.4f, Q12_SHIFT);
+        g_SysWork.player_4C.chara_0.position_18.vz += FP_MULTIPLY_FLOAT_PRECISE(Math_Cos(rotY), 0.4f, Q12_SHIFT);
     }
 
     g_SysWork.loadingScreenIdx_2281 = params->loadingScreenId_4_9;
 
     if (params->mapIdx_4_0 == 24)
     {
-        g_SavegamePtr->current2dMapIdx_A9 = 0;
+        g_SavegamePtr->current2dMapIdx_A9 = Current2dMap_OtherPlaces;
     }
-    else if (params->mapIdx_4_0 != 0)
+    else if (params->mapIdx_4_0 != Current2dMap_OtherPlaces)
     {
         g_SavegamePtr->current2dMapIdx_A9 = params->mapIdx_4_0;
     }
 
-    g_SysWork.cameraAngleY_237A = rot;
+    g_SysWork.cameraAngleY_237A = rotY;
 
     func_8007E9C4();
     Savegame_MapRoomIdxSet();
@@ -2940,7 +2939,7 @@ bool func_80037A4C(s_AreaLoadParams* areaLoadParams) // 0x80037A4C
     s32  scaledCosRotY;
 
     halfSinRotY   = Math_Sin(g_SysWork.player_4C.chara_0.rotation_24.vy) >> 1;
-    scaledCosRotY = (-Math_Cos(areaLoadParams->rotationY_4_16 * 16)) * areaLoadParams->field_4_24;
+    scaledCosRotY = -Math_Cos(FP_ANGLE_PACKED_FROM(areaLoadParams->rotationY_4_16)) * areaLoadParams->field_4_24;
 
     clampedHalfCosPlayerRotY = halfSinRotY;
 
@@ -2965,7 +2964,7 @@ bool func_80037A4C(s_AreaLoadParams* areaLoadParams) // 0x80037A4C
         if (MIN(halfSinRotY, 0) <= MAX(temp_s2, temp_s4))
         {
             halfCosPlayerRotY   = Math_Cos(g_SysWork.player_4C.chara_0.rotation_24.vy) >> 1;
-            scaledSinPlayerRotY = Math_Sin(areaLoadParams->rotationY_4_16 * 16) * areaLoadParams->field_4_24;
+            scaledSinPlayerRotY = Math_Sin(FP_ANGLE_PACKED_FROM(areaLoadParams->rotationY_4_16)) * areaLoadParams->field_4_24;
 
             clampedHalfCosPlayerRotY = halfCosPlayerRotY;
 

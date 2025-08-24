@@ -1420,11 +1420,11 @@ typedef struct
 typedef struct _AreaLoadParams
 {
     q19_12 char_x_0; // TODO: Rename to `positionX_0`.
-    u32    mapIdx_4_0          : 5;
+    u32    mapIdx_4_0          : 5; /** `e_Current2dMapIdx` */
     u32    field_4_5           : 4;
     u32    loadingScreenId_4_9 : 3; /** `e_LoadingScreenId`` */
     u32    field_4_12          : 4;
-    u32    rotationY_4_16      : 8;
+    u32    rotationY_4_16      : 8; /** Degrees in Q3.12, range [0, 256]. */
     u32    field_4_24          : 8;
     q19_12 char_z_8; // TODO: Rename to `positionZ_8`.
 } s_AreaLoadParams;
