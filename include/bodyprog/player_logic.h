@@ -510,7 +510,7 @@ s32 func_8007D6F0(s_SubCharacter* chara, s_800C45C8* arg1); // 0x8007D6F0
 
 void func_8007EBBC(); // 0x8007EBBC
 
-void Game_PlayerLowerMovementsReset(); // 0x8007F1CC
+void Game_PlayerMovementsReset(); // 0x8007F1CC
 
 void Player_Controller(); // 0x8007F32C
 

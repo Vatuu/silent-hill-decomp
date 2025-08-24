@@ -16,7 +16,7 @@ void Inventory_ExitAnimEquippedItemUpdate(u8* arg0) // 0x8004C088
     s_Model* modelPtr0;
     s_Model* modelPtr1;
 
-    Game_PlayerLowerMovementsReset();
+    Game_PlayerMovementsReset();
 
     temp = g_SysWork.player_4C.extra_128.playerState_1C;
 

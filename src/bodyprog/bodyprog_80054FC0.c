@@ -5943,12 +5943,12 @@ bool Player_Upper_MainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra)
                 {
                     if (chara->health_B0 >= FP_FLOAT_TO(60.0f, Q12_SHIFT))
                     {
-                        chara->properties_E4.player.properties_E4[1]        = 0;
-                        g_SysWork.player_4C.extra_128.playerState_1C              = PlayerState_Idle;
-                        chara->model_0.state_2 = chara->model_0.stateStep_3 = 0;
-                        extra->model_0.state_2 = extra->model_0.stateStep_3 = 0;
-                        g_SysWork.player_4C.extra_128.playerUpperMovement_20  = PlayerUpperMovement_None;
-                        g_SysWork.player_4C.extra_128.playerLowerMovement_24     = PlayerLowerMovement_None;
+                        chara->properties_E4.player.properties_E4[1]         = 0;
+                        g_SysWork.player_4C.extra_128.playerState_1C         = PlayerState_Idle;
+                        chara->model_0.state_2 = chara->model_0.stateStep_3  = 0;
+                        extra->model_0.state_2 = extra->model_0.stateStep_3  = 0;
+                        g_SysWork.player_4C.extra_128.playerUpperMovement_20 = PlayerUpperMovement_None;
+                        g_SysWork.player_4C.extra_128.playerLowerMovement_24 = PlayerLowerMovement_None;
                         return true;
                     }
                 }
@@ -6378,7 +6378,7 @@ bool Player_Upper_MainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra)
                     chara->model_0.stateStep_3                                  = 0;
                     g_SysWork.player_4C.chara_0.properties_E4.player.field_122  = 0x400;
                     g_SysWork.enemyTargetIdx_2353                               = NO_VALUE;
-                    g_SysWork.player_4C.extra_128.playerState_1C                      = PlayerState_None;
+                    g_SysWork.player_4C.extra_128.playerState_1C                = PlayerState_None;
                     g_SysWork.player_4C.extra_128.playerUpperMovement_20        = PlayerUpperMovement_Aim;
                     extra->model_0.state_2                                      = extra->model_0.stateStep_3 = 0;
                 }
@@ -6600,12 +6600,12 @@ bool Player_Upper_MainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra)
                     {
                         if (extra->model_0.anim_4.keyframeIdx0_8 == D_800C44F0[4].field_6)
                         {
-                            g_SysWork.player_4C.extra_128.playerUpperMovement_20 = 25;
+                            g_SysWork.player_4C.extra_128.playerUpperMovement_20 = PlayerUpperMovement_Attack;
 
                             if (g_SysWork.player_4C.extra_128.playerLowerMovement_24 == PlayerLowerMovement_Aim)
                             {
                                 g_SysWork.player_4C.extra_128.playerLowerMovement_24 = PlayerLowerMovement_Attack;
-                                chara->model_0.state_2                          = chara->model_0.stateStep_3 = 0;
+                                chara->model_0.state_2                               = chara->model_0.stateStep_3 = 0;
                             }
 
                             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk9;
@@ -6615,7 +6615,7 @@ bool Player_Upper_MainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra)
                     else if (extra->model_0.anim_4.keyframeIdx0_8 == D_800C44F0[4].field_6)
                     {
                         g_SysWork.player_4C.extra_128.playerUpperMovement_20 = PlayerUpperMovement_Aim_TargetLock;
-                        extra->model_0.state_2                             = extra->model_0.stateStep_3 = 0;
+                        extra->model_0.state_2                               = extra->model_0.stateStep_3 = 0;
                     }
                 }
 
@@ -7641,20 +7641,13 @@ void Player_Lower_Update(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 
             }
 
             // Something related to animation and states of player when aiming or attacking while moving.
-			// TODO - What makes `g_SysWork.player_4C.extra_128.playerState_1C` to be 1 exactly?
-			// As far as I know only aiming and attacking an enemy make it change to 1, however, this code
-			// implies that there are other intances where the variable goes 1 as the first if implies
-			// that if the player just stopped walking, is not aiming, not in the transition from
-			// aiming to not aiming and some other onditionals related to animations that I don't get
-			// then the player state changes to aiming while standing. - Will
             if (g_SysWork.player_4C.extra_128.playerState_1C == PlayerState_Combat)
             {
                 if (g_SysWork.field_235A & PLAYERSTOP_WALKING)
                 {
                     if ((g_SysWork.player_4C.extra_128.playerLowerMovement_24 < PlayerLowerMovement_Aim && g_SysWork.player_4C.extra_128.playerUpperMovement_20 != PlayerUpperMovement_Aim_Stop) ||
                          (chara->model_0.anim_4.keyframeIdx0_8 >= 10 && chara->model_0.anim_4.keyframeIdx0_8 <= 11) || 
-                          chara->model_0.anim_4.keyframeIdx0_8 == 22 ||
-						  chara->model_0.anim_4.keyframeIdx0_8 == 21)
+                          chara->model_0.anim_4.keyframeIdx0_8 == 22 || hara->model_0.anim_4.keyframeIdx0_8 == 21)
                     {
                         g_SysWork.player_4C.extra_128.playerLowerMovement_24 = PlayerLowerMovement_Aim;
                     }
@@ -7677,20 +7670,18 @@ void Player_Lower_Update(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 
                         if (aimingState == 0 && temp_s3 == PlayerLowerMovement_None &&
                             (g_SysWork.player_4C.extra_128.playerUpperMovement_20 == PlayerUpperMovement_Walk_Forward || g_SysWork.player_4C.extra_128.playerUpperMovement_20 == PlayerUpperMovement_Aim_Stop))
                         {
-                            if (chara->model_0.anim_4.keyframeIdx0_8 >= 10 &&
-                                chara->model_0.anim_4.keyframeIdx0_8 <= 11)
+                            if (chara->model_0.anim_4.keyframeIdx0_8 >= 10 && chara->model_0.anim_4.keyframeIdx0_8 <= 11)
                             {
-                                g_SysWork.player_4C.extra_128.playerLowerMovement_24 = PlayerLowerMovement_Run_Forward;
-                                g_MaybePlayerAnims[0].keyframeIdx1_E            = 36;
-                                g_MaybePlayerAnims[0].animIdx_6                 = 7;
+                                g_SysWork.player_4C.extra_128.playerLowerMovement_24        = PlayerLowerMovement_Run_Forward;
+                                g_MaybePlayerAnims[0].keyframeIdx1_E                        = 36;
+                                g_MaybePlayerAnims[0].animIdx_6                             = 7;
                                 g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Unk5;
                             }
-                            else if (chara->model_0.anim_4.keyframeIdx0_8 >= 21 &&
-                                     chara->model_0.anim_4.keyframeIdx0_8 <= 22)
+                            else if (chara->model_0.anim_4.keyframeIdx0_8 >= 21 && chara->model_0.anim_4.keyframeIdx0_8 <= 22)
                             {
                                 g_SysWork.player_4C.extra_128.playerLowerMovement_24 = PlayerLowerMovement_Run_Forward;
-                                g_MaybePlayerAnims[0].keyframeIdx1_E = 26;
-                                g_MaybePlayerAnims[0].animIdx_6      = 7;
+                                g_MaybePlayerAnims[0].keyframeIdx1_E                 = 26;
+                                g_MaybePlayerAnims[0].animIdx_6                      = 7;
                             }
                         }
                     }
@@ -7710,17 +7701,17 @@ void Player_Lower_Update(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 
                             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Unk10;
                             chara->model_0.stateStep_3                                  = 0;
                             chara->model_0.state_2                                      = 0;
-                            g_SysWork.player_4C.extra_128.playerLowerMovement_24             = PlayerLowerMovement_Attack;
+                            g_SysWork.player_4C.extra_128.playerLowerMovement_24        = PlayerLowerMovement_Attack;
                         }
                         else
                         {
-                            g_SysWork.player_4C.extra_128.playerLowerMovement_24             = aimingState;
+                            g_SysWork.player_4C.extra_128.playerLowerMovement_24        = aimingState;
                             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk10;
                         }
                     }
                     else
                     {
-                        g_SysWork.player_4C.extra_128.playerLowerMovement_24             = aimingState;
+                        g_SysWork.player_4C.extra_128.playerLowerMovement_24        = aimingState;
                         g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk10;
                     }
                 }
@@ -7837,15 +7828,15 @@ void Player_Lower_Update(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 
                                  chara->model_0.anim_4.keyframeIdx0_8 <= 31)
                         {
                             g_SysWork.player_4C.extra_128.playerLowerMovement_24 = temp_s3;
-                            g_MaybePlayerAnims[0].keyframeIdx1_E            = 8;
-                            g_MaybePlayerAnims[0].animIdx_6                 = 5;
+                            g_MaybePlayerAnims[0].keyframeIdx1_E                 = 8;
+                            g_MaybePlayerAnims[0].animIdx_6                      = 5;
                         }
                         else if (chara->model_0.anim_4.keyframeIdx0_8 >= 41 &&
                                  chara->model_0.anim_4.keyframeIdx0_8 <= 42)
                         {
                             g_SysWork.player_4C.extra_128.playerLowerMovement_24 = temp_s3;
-                            g_MaybePlayerAnims[0].keyframeIdx1_E            = 20;
-                            g_MaybePlayerAnims[0].animIdx_6                 = 5;
+                            g_MaybePlayerAnims[0].keyframeIdx1_E                 = 20;
+                            g_MaybePlayerAnims[0].animIdx_6                      = 5;
                         }
                         break;
 
@@ -8241,8 +8232,8 @@ void Player_Lower_Update(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 
                 }
 
                 g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = CLAMP(g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126,
-                                                                                   FP_FLOAT_TO(0.0f, Q12_SHIFT),
-                                                                                   FP_FLOAT_TO(1.25f, Q12_SHIFT));
+                                                                                           FP_FLOAT_TO(0.0f, Q12_SHIFT),
+                                                                                           FP_FLOAT_TO(1.25f, Q12_SHIFT));
             }
 
             if (chara->model_0.stateStep_3 == 0)
@@ -8270,7 +8261,7 @@ void Player_Lower_Update(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 
                             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Unk10;
                             chara->model_0.stateStep_3                                  = 0;
                             chara->model_0.state_2                                      = 0;
-                            g_SysWork.player_4C.extra_128.playerLowerMovement_24             = PlayerLowerMovement_Attack;
+                            g_SysWork.player_4C.extra_128.playerLowerMovement_24        = PlayerLowerMovement_Attack;
                         }
                         else
                         {
@@ -8706,8 +8697,8 @@ void Player_Lower_Update(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 
                         else if (chara->model_0.anim_4.keyframeIdx0_8 >= 229)
                         {
                             g_SysWork.player_4C.extra_128.playerLowerMovement_24 = aimingState;
-                            chara->model_0.stateStep_3                      = 0;
-                            chara->model_0.state_2                          = 0;
+                            chara->model_0.stateStep_3                           = 0;
+                            chara->model_0.state_2                               = 0;
                         }
                     }
                 }
@@ -8904,13 +8895,13 @@ void Player_Lower_Update(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 
                         (extra->model_0.anim_4.keyframeIdx0_8 >= D_800C44F0[D_800AF220].field_4 + 7))
                     {
                         g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = FP_FLOAT_TO(5.0f, Q12_SHIFT);
-                        D_800C4608                                                 = FP_FLOAT_TO(0.0f, Q12_SHIFT);
+                        D_800C4608                                                              = FP_FLOAT_TO(0.0f, Q12_SHIFT);
                     }
                 }
                 else if (chara->model_0.stateStep_3 == 0 && g_Player_IsAttacking == 0)
                 {
                     g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = FP_FLOAT_TO(5.0f, Q12_SHIFT);
-                    D_800C4608                                                 = FP_FLOAT_TO(0.0f, Q12_SHIFT);
+                    D_800C4608                                                              = FP_FLOAT_TO(0.0f, Q12_SHIFT);
                 }
             }
 			
@@ -10783,7 +10774,7 @@ void func_8007E5AC() // 0x8007E5AC
     }
 
     g_SysWork.playerCombatInfo_38.isAiming_13 = false;
-    g_Player_GrabFree_InputCount                                = 0;
+    g_Player_GrabFree_InputCount              = 0;
     D_800C4588                                = 0;
     D_800C457C                                = 0;
     g_Player_DisableControl                   = false;
@@ -11113,7 +11104,7 @@ void func_8007F14C(u8 arg0) // 0x8007F14C
     }
 }
 
-void Game_PlayerLowerMovementsReset() // 0x8007F1CC
+void Game_PlayerMovementsReset() // 0x8007F1CC
 {
     g_Player_ActionRunPressed        = 0;
     g_Player_MovementInputDetected   = 0;
@@ -11182,23 +11173,23 @@ void Player_Controller() // 0x8007F32C
     if (g_Controller0->sticks_20.sticks_0.leftY < -0x40 || g_Controller0->sticks_20.sticks_0.leftY >= 0x40 ||
         g_Controller0->sticks_20.sticks_0.leftX < -0x40 || g_Controller0->sticks_20.sticks_0.leftX >= 0x40)
     {
-        g_Player_IsTurning_Left   = g_Controller0->sticks_20.sticks_0.leftX < -0x40 ? ABS(g_Controller0->sticks_20.sticks_0.leftX + 0x40) : 0;
-        g_Player_IsTurning_Right  = g_Controller0->sticks_20.sticks_0.leftX >= 0x40 ? g_Controller0->sticks_20.sticks_0.leftX - 0x3F : 0;
-        g_Player_IsMovingForward |= g_Controller0->sticks_20.sticks_0.leftY < -0x40;
-        g_Player_IsMovingBackward = (g_Controller0->sticks_20.sticks_0.leftY < 0x40) ^ 1;
-        g_Player_MovementInputDetected       = g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.stepLeft_10 |
-                                                      (ControllerFlag_LStickUp2 | ControllerFlag_LStickRight2 | ControllerFlag_LStickDown2 | ControllerFlag_LStickLeft2) |
-                                                      g_GameWorkPtr->config_0.controllerConfig_0.stepRight_12 | g_GameWorkPtr->config_0.controllerConfig_0.aim_8);
+        g_Player_IsTurning_Left        = g_Controller0->sticks_20.sticks_0.leftX < -0x40 ? ABS(g_Controller0->sticks_20.sticks_0.leftX + 0x40) : 0;
+        g_Player_IsTurning_Right       = g_Controller0->sticks_20.sticks_0.leftX >= 0x40 ? g_Controller0->sticks_20.sticks_0.leftX - 0x3F : 0;
+        g_Player_IsMovingForward      |= g_Controller0->sticks_20.sticks_0.leftY < -0x40;
+        g_Player_IsMovingBackward      = (g_Controller0->sticks_20.sticks_0.leftY < 0x40) ^ 1;
+        g_Player_MovementInputDetected = g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.stepLeft_10 |
+                                          (ControllerFlag_LStickUp2 | ControllerFlag_LStickRight2 | ControllerFlag_LStickDown2 | ControllerFlag_LStickLeft2) |
+                                          g_GameWorkPtr->config_0.controllerConfig_0.stepRight_12 | g_GameWorkPtr->config_0.controllerConfig_0.aim_8);
     }
     else
     {
-        g_Player_IsTurning_Left   = ((g_Controller0->btnsHeld_C & (ControllerFlag_LStickRight | ControllerFlag_LStickLeft)) == ControllerFlag_LStickLeft) << 6;
-        g_Player_IsTurning_Right  = ((g_Controller0->btnsHeld_C & (ControllerFlag_LStickRight | ControllerFlag_LStickLeft)) == ControllerFlag_LStickRight) << 6;
-        g_Player_IsMovingForward |= (g_Controller0->btnsHeld_C & (ControllerFlag_LStickUp | ControllerFlag_LStickDown)) == ControllerFlag_LStickUp;
-        g_Player_IsMovingBackward = (g_Controller0->btnsHeld_C & (ControllerFlag_LStickUp | ControllerFlag_LStickDown)) == ControllerFlag_LStickDown;
-        g_Player_MovementInputDetected       = g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.stepLeft_10 |
-                                                      (ControllerFlag_LStickUp | ControllerFlag_LStickRight | ControllerFlag_LStickDown | ControllerFlag_LStickLeft) |
-                                                      g_GameWorkPtr->config_0.controllerConfig_0.stepRight_12 | g_GameWorkPtr->config_0.controllerConfig_0.aim_8);
+        g_Player_IsTurning_Left        = ((g_Controller0->btnsHeld_C & (ControllerFlag_LStickRight | ControllerFlag_LStickLeft)) == ControllerFlag_LStickLeft) << 6;
+        g_Player_IsTurning_Right       = ((g_Controller0->btnsHeld_C & (ControllerFlag_LStickRight | ControllerFlag_LStickLeft)) == ControllerFlag_LStickRight) << 6;
+        g_Player_IsMovingForward      |= (g_Controller0->btnsHeld_C & (ControllerFlag_LStickUp | ControllerFlag_LStickDown)) == ControllerFlag_LStickUp;
+        g_Player_IsMovingBackward      = (g_Controller0->btnsHeld_C & (ControllerFlag_LStickUp | ControllerFlag_LStickDown)) == ControllerFlag_LStickDown;
+        g_Player_MovementInputDetected = g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.stepLeft_10 |
+                                          (ControllerFlag_LStickUp | ControllerFlag_LStickRight | ControllerFlag_LStickDown | ControllerFlag_LStickLeft) |
+                                          g_GameWorkPtr->config_0.controllerConfig_0.stepRight_12 | g_GameWorkPtr->config_0.controllerConfig_0.aim_8);
     }
 
     g_Player_IsStepping_Left_Hold  = (g_Controller0->btnsHeld_C & g_GameWorkPtr->config_0.controllerConfig_0.stepLeft_10) &&
