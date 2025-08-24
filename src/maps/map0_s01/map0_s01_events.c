@@ -45,7 +45,7 @@ void func_800DBAA0() // 0x800DBAA0
             break;
 
         case 3:
-            func_80085EB8(0, &g_SysWork.player_4C.chara_0, (s_SubCharacter*)0x5B, 0);
+            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 91, 0);
             SysWork_StateStepIncrement();
 
         case 4:
@@ -70,7 +70,7 @@ void func_800DBAA0() // 0x800DBAA0
             break;
 
         case 8:
-            func_80085EB8(0, &g_SysWork.player_4C.chara_0, (s_SubCharacter*)0x5C, false);
+            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 92, false);
             SysWork_StateStepIncrement();
 
         case 9:
@@ -91,7 +91,7 @@ void func_800DBAA0() // 0x800DBAA0
             break;
 
         case 11:
-            func_80085EB8(0, &g_SysWork.player_4C.chara_0, (s_SubCharacter*)0x35, false);
+            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 53, false);
             SysWork_StateStepIncrement();
 
         case 12:
@@ -105,8 +105,8 @@ void func_800DBAA0() // 0x800DBAA0
             break;
 
         case 13:
-            func_80085EB8(0, &g_SysWork.player_4C.chara_0, (s_SubCharacter*)0x59, false);
-            
+            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 89, false);
+
             D_800E23A1 = 0xE0;
             Savegame_EventFlagSetAlt(EventFlag_46);
             D_800E239C = Q19_12(76.0f);

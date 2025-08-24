@@ -58,27 +58,27 @@ void func_80085E6C(s32 arg0, s32 arg1) // 0x80085E6C
     }
 }
 
-void func_80085EB8(u32 arg0, s_SubCharacter* chara0, s_SubCharacter* chara1, bool arg3) // 0x80085EB8
+void func_80085EB8(u32 arg0, s_SubCharacter* chara, s32 arg2, bool arg3) // 0x80085EB8
 {
     s32 res;
 
     switch (arg0)
     {
         case 0:
-            if (chara0 == &g_SysWork.player_4C.chara_0)
+            if (chara == &g_SysWork.player_4C.chara_0)
             {
-                g_MapOverlayHeader.func_D4(chara1);
+                g_MapOverlayHeader.func_D4(arg2);
             }
             else 
             {
-                g_MapOverlayHeader.func_124(chara0);
+                g_MapOverlayHeader.func_124(chara);
             }
             break;
 
         case 1:
-            if (chara0 == &g_SysWork.player_4C.chara_0)
+            if (chara == &g_SysWork.player_4C.chara_0)
             {
-                res = g_MapOverlayHeader.func_E8(chara0);
+                res = g_MapOverlayHeader.func_E8(chara);
                 if (res == 1) 
                 {
                     func_80085D78(arg3);
@@ -86,7 +86,7 @@ void func_80085EB8(u32 arg0, s_SubCharacter* chara0, s_SubCharacter* chara1, boo
             }
             else
             {
-                res = g_MapOverlayHeader.func_138(chara0);
+                res = g_MapOverlayHeader.func_138(chara);
                 if (res == 1)
                 {
                     func_80085D78(arg3);
@@ -95,36 +95,36 @@ void func_80085EB8(u32 arg0, s_SubCharacter* chara0, s_SubCharacter* chara1, boo
             break;
 
         case 2:
-            if (chara0 == &g_SysWork.player_4C.chara_0)
+            if (chara == &g_SysWork.player_4C.chara_0)
             {
                 g_MapOverlayHeader.func_DC();
             }
             else
             {
-                g_MapOverlayHeader.func_12C(chara0);
+                g_MapOverlayHeader.func_12C(chara);
             }
             break;
 
         case 3:
-            if (chara0 == &g_SysWork.player_4C.chara_0)
+            if (chara == &g_SysWork.player_4C.chara_0)
             {
-                g_MapOverlayHeader.func_E4(chara0, chara1);
+                g_MapOverlayHeader.func_E4(chara, arg2);
             }
             else 
             {
-                g_MapOverlayHeader.func_134(chara0);
+                g_MapOverlayHeader.func_134(chara);
             }
             break;
 
         case 4:
-            if (chara0 == &g_SysWork.player_4C.chara_0)
+            if (chara == &g_SysWork.player_4C.chara_0)
             {
-                g_MapOverlayHeader.func_E4(chara0, chara1);
+                g_MapOverlayHeader.func_E4(chara, arg2);
                 g_MapOverlayHeader.func_D8();
             }
             else 
             {
-                g_MapOverlayHeader.func_128(chara0);
+                g_MapOverlayHeader.func_128(chara);
             }
             break;
     }
@@ -652,12 +652,12 @@ void Camera_RotationSet(VECTOR3* lookAt, s32 xLookAtOffset, s32 yLookAtOffset, s
     vcUserWatchTarget(&lookAtTarget, &camRotParams, warpLookAt);
 }
 
-void func_80086C58(s_SubCharacter* chara0, s_SubCharacter* chara1) // 0x80086C58
+void func_80086C58(s_SubCharacter* chara, s32 arg1) // 0x80086C58
 {
     switch (g_SysWork.field_10)
     {
         case 0:
-            func_80085EB8(0, chara0, chara1, 0);
+            func_80085EB8(0, chara, arg1, 0);
 
             g_SysWork.timer_2C = 0;
             g_SysWork.field_14 = 0;
@@ -665,7 +665,7 @@ void func_80086C58(s_SubCharacter* chara0, s_SubCharacter* chara1) // 0x80086C58
             break;
 
         case 1:
-            func_80085EB8(1, chara0, NULL, 1);
+            func_80085EB8(1, chara, 0, 1);
             break;
 
         default:
@@ -679,7 +679,7 @@ void func_80086D04(s_SubCharacter* chara) // 0x80086D04
     switch (g_SysWork.field_10)
     {
         case 0:
-            func_80085EB8(3, chara, NULL, 0);
+            func_80085EB8(3, chara, 0, 0);
 
             g_SysWork.timer_2C = 0;
             g_SysWork.field_14 = 0;
@@ -687,7 +687,7 @@ void func_80086D04(s_SubCharacter* chara) // 0x80086D04
             break;
 
         case 1:
-            func_80085EB8(1, chara, NULL, 1);
+            func_80085EB8(1, chara, 0, 1);
             break;
 
         default:

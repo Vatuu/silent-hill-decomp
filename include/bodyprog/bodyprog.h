@@ -1542,12 +1542,12 @@ typedef struct _MapOverlayHeader
     void              (*freezePlayerControl_C8)();
     void              (*unfreezePlayerControl_CC)(s32);
     s32               (*func_D0)(s32, void*, s16, s32); // 0x800C964C
-    s32               (*func_D4)(s_SubCharacter*);      // Assumed return type.
+    s32               (*func_D4)(s32);                  // Assumed return type.
     void              (*func_D8)();                     // Assumed return type.
     void              (*func_DC)();                     // Assumed return type.
     void              (*func_E0)(); // func(?).
-    s32               (*func_E4)(s_SubCharacter*, s_SubCharacter*); // Assumed return type.
-    s64               (*func_E8)(s_SubCharacter*);                  // Is it really `s64`???
+    s32               (*func_E4)(s_SubCharacter*, s32); // Assumed return type.
+    s64               (*func_E8)(s_SubCharacter*);      // Is it really `s64`???
     s32               (*func_EC)();
     void              (*func_F0)(); // func(?).
     void              (*func_F4)(); // func(?).
@@ -3124,7 +3124,7 @@ void func_80085DF0();
 
 void func_80085E6C(s32 arg0, s32 arg1);
 
-void func_80085EB8(u32 arg0, s_SubCharacter* chara0, s_SubCharacter* chara1, bool arg3);
+void func_80085EB8(u32 arg0, s_SubCharacter* chara, s32 arg2, bool arg3);
 
 void func_8008605C(s32 arg0, s32 arg1, s32 arg2, bool arg3);
 
@@ -3162,7 +3162,7 @@ void Camera_TranslationSet(VECTOR3* pos, s32 xPosOffset, s32 yPosOffset, s32 zPo
 void Camera_RotationSet(VECTOR3* lookAt, s32 xLookAtOffset, s32 yLookAtOffset, s32 zLookAtOffset,
                         s32 xAngularAccel, s32 yAngularAccel, s32 xAngularSpeedMax, s32 yAngularSpeedMax, bool warpLookAt);
 
-void func_80086C58(s_SubCharacter* chara0, s_SubCharacter* chara1);
+void func_80086C58(s_SubCharacter* chara, s32 arg1);
 
 void func_80086D04(s_SubCharacter* chara);
 
