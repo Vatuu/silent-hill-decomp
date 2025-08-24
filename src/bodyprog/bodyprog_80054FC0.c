@@ -3561,15 +3561,15 @@ static inline void func_80071968_Switch1()
                 func_8003DD80(1, 20);
                 break;
 
-            case 3:
-            case 8:
-            case 9:
-            case 13:
-            case 18:
-            case 19:
-            case 23:
-            case 28:
-            case 29:
+            case WeaponId_AttackVariation(EquippedWeaponId_Unk3, ATTACK_TAP):
+            case WeaponId_AttackVariation(EquippedWeaponId_Unk8, ATTACK_TAP):
+            case WeaponId_AttackVariation(EquippedWeaponId_Unk9, ATTACK_TAP):
+            case WeaponId_AttackVariation(EquippedWeaponId_Unk3, ATTACK_HOLD):
+            case WeaponId_AttackVariation(EquippedWeaponId_Unk8, ATTACK_HOLD):
+            case WeaponId_AttackVariation(EquippedWeaponId_Unk9, ATTACK_HOLD):
+            case WeaponId_AttackVariation(EquippedWeaponId_Unk3, ATTACK_MULTITAP):
+            case WeaponId_AttackVariation(EquippedWeaponId_Unk8, ATTACK_MULTITAP):
+            case WeaponId_AttackVariation(EquippedWeaponId_Unk9, ATTACK_MULTITAP):
             case 31:
                 break;
         }
@@ -3827,9 +3827,9 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
     s32           temp_v1_12;
     s32           temp_v1_13;
     e_PlayerState thrownState;
-    s32           var_2;
-    s32           var_s5;
-    s32           var_s5_2;
+    s32           playeGrabFree_RequiredInputCount;
+    e_PlayerState romperAttackState;
+    e_PlayerState playeGrabFree_State;
     s32           var_s6;
     s16           var_s7;
     s32           npcIdx;
@@ -4016,22 +4016,22 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
         
         case PlayerState_GettingGrab_RomperAttack_Front:
         case PlayerState_GettingGrab_RomperAttack_Behind:
-            var_s5 = 0;
-            npcIdx = 0;
+            romperAttackState = PlayerState_None;
+            npcIdx            = 0;
             
             switch (g_SysWork.player_4C.extra_128.playerState_1C)
             {
                 case PlayerState_GettingGrab_RomperAttack_Front:
-                    var_s3 = 0xFF;
-                    var_s5 = 0x27;
-                    npcIdx = g_SysWork.field_2354[0];
+                    var_s3            = 255;
+                    romperAttackState = PlayerState_Grab_RomperAttack_Front;
+                    npcIdx            = g_SysWork.field_2354[0];
                     Math_ShortestAngle(chara->rotation_24.vy, FP_ANGLE_NORM_U(g_SysWork.npcs_1A0[npcIdx].rotation_24.vy + FP_ANGLE(180.0f)), &sp18);
                     break;
                     
                 case PlayerState_GettingGrab_RomperAttack_Behind:
-                    var_s3 = 0x101;
-                    var_s5 = 0x28;
-                    npcIdx = g_SysWork.field_2354[1];
+                    var_s3            = 257;
+                    romperAttackState = PlayerState_Grab_RomperAttack_Behind;
+                    npcIdx            = g_SysWork.field_2354[1];
                     Math_ShortestAngle(chara->rotation_24.vy, FP_ANGLE_NORM_U(g_SysWork.npcs_1A0[npcIdx].rotation_24.vy + FP_ANGLE(360.0f)), &sp18);
                     break;
             }
@@ -4050,7 +4050,7 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
                 g_SysWork.player_4C.chara_0.field_D8.field_6 = FP_MULTIPLY(temp_s0, shRcos(chara->rotation_24.vy), Q12_SHIFT);
             }
             
-            if (ABS(sp18) < 0x80)
+            if (ABS(sp18) < FP_ANGLE(11.25f))
             {
                 if (g_SysWork.player_4C.extra_128.playerState_1C == PlayerState_GettingGrab_RomperAttack_Front)
                 {
@@ -4063,13 +4063,13 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
             }
             else
             {
-                if (sp18 > 0)
+                if (sp18 > FP_ANGLE(0.0f))
                 {
-                    chara->rotation_24.vy += 0x80;
+                    chara->rotation_24.vy += FP_ANGLE(11.25f);
                 }
                 else
                 {
-                    chara->rotation_24.vy -= 0x80;
+                    chara->rotation_24.vy -= FP_ANGLE(11.25f);
                 }
             }
 
@@ -4088,19 +4088,20 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
             
             if (chara->model_0.anim_4.keyframeIdx0_8 == g_MapOverlayHeader.field_38[D_800AF220].field_6)
             {
-                g_SysWork.player_4C.extra_128.playerState_1C             = var_s5;
-                chara->model_0.stateStep_3                         = 0;
-                chara->model_0.state_2                             = 0;
-                extra->model_0.stateStep_3                         = 0;
-                extra->model_0.state_2                             = 0;
+                g_SysWork.player_4C.extra_128.playerState_1C         = romperAttackState;
+                chara->model_0.stateStep_3                           = 0;
+                chara->model_0.state_2                               = 0;
+                extra->model_0.stateStep_3                           = 0;
+                extra->model_0.state_2                               = 0;
                 g_SysWork.player_4C.extra_128.playerUpperMovement_20 = PlayerUpperMovement_None;
-                g_SysWork.player_4C.extra_128.playerLowerMovement_24    = PlayerLowerMovement_None;
-                chara->properties_E4.player.properties_E4[1]       = 0xF000;
+                g_SysWork.player_4C.extra_128.playerLowerMovement_24 = PlayerLowerMovement_None;
+                chara->properties_E4.player.properties_E4[1]         = 0xF000;
             }
 
             if (chara->model_0.anim_4.animIdx_0 & (1 << 0))
             {
-                if (g_SysWork.player_4C.extra_128.playerState_1C >= PlayerState_GettingGrab_RomperAttack_Front && g_SysWork.player_4C.extra_128.playerState_1C < PlayerState_Grab_RomperAttack_Front)
+                if (g_SysWork.player_4C.extra_128.playerState_1C >= PlayerState_GettingGrab_RomperAttack_Front &&
+				    g_SysWork.player_4C.extra_128.playerState_1C < PlayerState_Grab_RomperAttack_Front)
                 {
                     temp = -0x8000;
                     extra->model_0.anim_4.time_4 = (FP_TO(g_MapOverlayHeader.animInfo_34[chara->model_0.anim_4.animIdx_0 - 0x4C].keyframeIdx0_C, Q12_SHIFT) + model->anim_4.time_4) + temp;
@@ -4155,39 +4156,40 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
         case PlayerState_Grab_RomperAttack_Behind:
         case PlayerState_OnFloor_Front:
         case PlayerState_OnFloor_Behind:
-            var_2                                                                   = 0;
-            var_s5_2                                                                = 0;
+            playeGrabFree_RequiredInputCount                                        = 0;
+            playeGrabFree_State                                                     = PlayerState_None;
             var_s6                                                                  = 0;
             g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = 0;
             var_s7                                                                  = 0;
             
+			// Acomodates position of the player (for on floor "grab" and Romper attack) and stablish the required input amount for getting free.
             switch (g_SysWork.player_4C.extra_128.playerState_1C)
             {
                 case PlayerState_OnFloor_Front:
                 case PlayerState_OnFloor_Behind:
                     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
                     {
-                        var_2 = 0x640;
+                        playeGrabFree_RequiredInputCount = 1600;
                     }
                     else if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
                     {
-                        var_2 = 0x12C0;
+                        playeGrabFree_RequiredInputCount = 4800;
                     }
                     else
                     {
-                        var_2 = 0xC80;
+                        playeGrabFree_RequiredInputCount = 3200;
                     }
                     
                     switch (g_SysWork.player_4C.extra_128.playerState_1C)
                     {
                         case PlayerState_OnFloor_Front:
-                            var_s3 = 0x109;
-                            var_s5_2 = 0x31;
+                            var_s3              = 0x109;
+                            playeGrabFree_State = PlayerState_GettingUp_Front;
                             break;
                         
                         case PlayerState_OnFloor_Behind:
-                            var_s3 = 0x10A;
-                            var_s5_2 = 0x32;
+                            var_s3              = 0x10A;
+                            playeGrabFree_State = PlayerState_GettingUp_Behind;
                             break;
                     }
                     
@@ -4224,37 +4226,37 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
                         case PlayerState_Grab_RomperAttack_Front:
                             if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
                             {
-                                var_2 = 0x320;
+                                playeGrabFree_RequiredInputCount = 800;
                             }
                             else if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
                             {
-                                var_2 = 0x960;
+                                playeGrabFree_RequiredInputCount = 2400;
                             }
                             else
                             {
-                                var_2 = 0x640;
+                                playeGrabFree_RequiredInputCount = 1600;
                             }
                             
-                            var_s3 = 0x100;
-                            var_s5_2 = 0x29;
+                            var_s3              = 0x100;
+                            playeGrabFree_State = PlayerState_Grab_Free_RomperAttack_Front;
                             break;
                         
                         case PlayerState_Grab_RomperAttack_Behind:
                             if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
                             {
-                                var_2 = 0x4B0;
+                                playeGrabFree_RequiredInputCount = 1200;
                             }
                             else if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
                             {
-                                var_2 = 0xE10;
+                                playeGrabFree_RequiredInputCount = 3600;
                             }
                             else
                             {
-                                var_2 = 0x960;
+                                playeGrabFree_RequiredInputCount = 2400;
                             }
                             
-                            var_s3 = 0x102;
-                            var_s5_2 = 0x2A;
+                            var_s3              = 0x102;
+                            playeGrabFree_State = PlayerState_Grab_Free_RomperAttack_Behind;
                             break;
                     }
                     
@@ -4317,19 +4319,19 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
 
                     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
                     {
-                        var_2 = 0x320;
+                        playeGrabFree_RequiredInputCount = 800;
                     }
                     else if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
                     {
-                        var_2 = 0x960;
+                        playeGrabFree_RequiredInputCount = 2400;
                     }
                     else
                     {
-                        var_2 = 0x640;
+                        playeGrabFree_RequiredInputCount = 1600;
                     }
                     
-                    var_s3 = 0xE6;
-                    var_s5_2 = 0x10;
+                    var_s3              = 0xE6;
+                    playeGrabFree_State = PlayerState_Grab_Free_Upper_Front;
                     break;
                 
                 default:
@@ -4340,19 +4342,19 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
 
                     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
                     {
-                        var_2 = 0x3E8;
+                        playeGrabFree_RequiredInputCount = 1000;
                     }
                     else if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
                     {
-                        var_2 = 0xBB8;
+                        playeGrabFree_RequiredInputCount = 3000;
                     }
                     else
                     {
-                        var_2 = 0x7D0;
+                        playeGrabFree_RequiredInputCount = 2000;
                     }
                     
-                    var_s3 = 0xEA;
-                    var_s5_2 = 0x14;
+                    var_s3              = 0xEA;
+                    playeGrabFree_State = PlayerState_Grab_Free_Upper_Behind;
                     break;
                 
                 case PlayerState_Grab_Lower_Front:
@@ -4360,19 +4362,19 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
 
                     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
                     {
-                        var_2 = 0x2BC;
+                        playeGrabFree_RequiredInputCount = 700;
                     }
                     else if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
                     {
-                        var_2 = 0x834;
+                        playeGrabFree_RequiredInputCount = 2100;
                     }
                     else
                     {
-                        var_2 = 0x578;
+                        playeGrabFree_RequiredInputCount = 1400;
                     }
                     
-                    var_s3 = 0xEB;
-                    var_s5_2 = 0x15;
+                    var_s3              = 0xEB;
+                    playeGrabFree_State = PlayerState_Grab_Free_Lower_Front;
                     break;
                 
                 case PlayerState_Grab_Lower_Behind:
@@ -4380,19 +4382,19 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
 
                     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
                     {
-                        var_2 = 0x320;
+                        playeGrabFree_RequiredInputCount = 800;
                     }
                     else if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
                     {
-                        var_2 = 0x960;
+                        playeGrabFree_RequiredInputCount = 2400;
                     }
                     else
                     {
-                        var_2 = 0x640;
+                        playeGrabFree_RequiredInputCount = 1600;
                     }
                     
-                    var_s3 = 0xEC;
-                    var_s5_2 = 0x16;
+                    var_s3              = 0xEC;
+                    playeGrabFree_State = PlayerState_Grab_Free_Lower_Behind;
                     break;
                 
                 case PlayerState_Grab_Neck_Front:
@@ -4400,19 +4402,19 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
 
                     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
                     {
-                        var_2 = 0xE10;
+                        playeGrabFree_RequiredInputCount = 3600;
                     }
                     else if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
                     {
-                        var_2 = 0x2A30;
+                        playeGrabFree_RequiredInputCount = 10800;
                     }
                     else
                     {
-                        var_2 = 0x1C20;
+                        playeGrabFree_RequiredInputCount = 7200;
                     }
                     
-                    var_s3 = 0xFB;
-                    var_s5_2 = 0x10;
+                    var_s3              = 0xFB;
+                    playeGrabFree_State = PlayerState_Grab_Free_Upper_Front;
                     break;
                 
                 case PlayerState_Grab_Neck_Behind:
@@ -4420,22 +4422,23 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
 
                     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
                     {
-                        var_2 = 0xE10;
+                        playeGrabFree_RequiredInputCount = 3600;
                     }
                     else if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
                     {
-                        var_2 = 0x2A30;
+                        playeGrabFree_RequiredInputCount = 10800;
                     }
                     else
                     {
-                        var_2 = 0x1C20;
+                        playeGrabFree_RequiredInputCount = 7200;
                     }
                     
-                    var_s3 = 0xFB;
-                    var_s5_2 = 0x14;
+                    var_s3              = 0xFB;
+                    playeGrabFree_State = PlayerState_Grab_Free_Upper_Behind;
                     break;
             }
             
+			// Acomodates position of the player and the enemy?
             switch (g_SysWork.player_4C.extra_128.playerState_1C)
             {
                 case PlayerState_Grab_Upper_Front:
@@ -4470,7 +4473,7 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
                 case PlayerState_Grab_RomperAttack_Behind:
                     temp_v1_12 = chara->position_18.vx - g_SysWork.npcs_1A0[g_SysWork.field_2354[1]].position_18.vx;
                     temp_v1_13 = chara->position_18.vz - g_SysWork.npcs_1A0[g_SysWork.field_2354[1]].position_18.vz;
-                    var_s7 = SquareRoot0(SQUARE(temp_v1_12) + SQUARE(temp_v1_13));
+                    var_s7     = SquareRoot0(SQUARE(temp_v1_12) + SQUARE(temp_v1_13));
                     Math_ShortestAngle(chara->rotation_24.vy, FP_ANGLE_NORM_U(g_SysWork.npcs_1A0[g_SysWork.field_2354[1]].rotation_24.vy + FP_ANGLE(360.0f)), &sp1A);
 
                     if (ABS(sp1A) < 0x80)
@@ -4506,14 +4509,16 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
                     
             if (chara->health_B0 > FP_FLOAT_TO(0.0f, Q12_SHIFT) && (g_Player_MovementInputDetected | g_Player_ActionRunPressed) != 0)
             {
-                D_800AF20C += g_DeltaTime0;
+                g_Player_GrabFree_InputCount += g_DeltaTime0;
             }
 
-            if (!(g_SysWork.player_4C.extra_128.playerState_1C >= PlayerState_OnFloor_Front && g_SysWork.player_4C.extra_128.playerState_1C < PlayerState_GettingUp_Front))
+			// If player isn't thrown on the floor (Cybil shoot attack).
+            if (!(g_SysWork.player_4C.extra_128.playerState_1C >= PlayerState_OnFloor_Front &&
+			     g_SysWork.player_4C.extra_128.playerState_1C < PlayerState_GettingUp_Front))
             {
                 if (var_s6 < var_s7)
                 {
-                    D_800AF20C = var_2;
+                    g_Player_GrabFree_InputCount = playeGrabFree_RequiredInputCount;
                     if (g_SysWork.player_4C.extra_128.playerState_1C == PlayerState_Grab_RomperAttack_Front)
                     {
                         g_SysWork.npcs_1A0[g_SysWork.field_2354[0]].moveSpeed_38 = 0;
@@ -4526,11 +4531,11 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
                 }
             }
                     
-            if (D_800AF20C >= var_2)
+            if (g_Player_GrabFree_InputCount >= playeGrabFree_RequiredInputCount)
             {
                 func_8007FD4C(0);
                         
-                g_SysWork.player_4C.extra_128.playerState_1C         = var_s5_2;
+                g_SysWork.player_4C.extra_128.playerState_1C         = playeGrabFree_State;
                 chara->model_0.stateStep_3                           = 0;
                 chara->model_0.state_2                               = 0;
                 extra->model_0.stateStep_3                           = 0;
@@ -4643,7 +4648,7 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
             {
                 case PlayerState_GettingUp_Front:
                 case PlayerState_GettingUp_Behind:
-                    chara->damageReceived_C0 = 0;
+                    chara->damageReceived_C0                     = 0;
                     chara->properties_E4.player.properties_E4[1] = 0;
                     
                     if (chara->model_0.anim_4.keyframeIdx0_8 == g_MapOverlayHeader.field_38[D_800AF220].field_6)
@@ -4897,7 +4902,7 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
             
             if (chara->model_0.anim_4.animIdx_0 & 1)
             {
-                if (g_MapOverlayHeader.field_38[D_800AF220].field_4 + 0xC >= chara->model_0.anim_4.keyframeIdx0_8)
+                if (g_MapOverlayHeader.field_38[D_800AF220].field_4 + 12 >= chara->model_0.anim_4.keyframeIdx0_8)
                 {
                     func_80071620(chara->model_0.anim_4.animIdx_0, chara, g_MapOverlayHeader.field_38[D_800AF220].field_4 + 0xC, 0x526);
                 }
@@ -4935,7 +4940,7 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
             
             if (chara->model_0.anim_4.animIdx_0 & 1)
             {
-                if (g_MapOverlayHeader.field_38[D_800AF220].field_4 + 0xC >= chara->model_0.anim_4.keyframeIdx0_8)
+                if (g_MapOverlayHeader.field_38[D_800AF220].field_4 + 12 >= chara->model_0.anim_4.keyframeIdx0_8)
                 {
                     func_80071620(chara->model_0.anim_4.animIdx_0, chara, g_MapOverlayHeader.field_38[D_800AF220].field_4 + 0xC, 0x526);
                 }
@@ -5001,7 +5006,7 @@ void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
         case PlayerState_Instant_Dead:
             if (extra->model_0.state_2 == 0)
             {
-                Sd_EngineCmd(0x127B);
+                Sd_EngineCmd(4731);
             }
             
             func_8007FB94(chara, extra, 0xCB);
@@ -10778,7 +10783,7 @@ void func_8007E5AC() // 0x8007E5AC
     }
 
     g_SysWork.playerCombatInfo_38.isAiming_13 = false;
-    D_800AF20C                                = 0;
+    g_Player_GrabFree_InputCount                                = 0;
     D_800C4588                                = 0;
     D_800C457C                                = 0;
     g_Player_DisableControl                   = false;
@@ -11484,8 +11489,8 @@ void func_8007FD4C(s32 arg0) // 0x8007FD4C
 
     chara = &g_SysWork.player_4C.chara_0;
 
-    D_800AF20C      = 0;
-    chara->field_40 = NO_VALUE;
+    g_Player_GrabFree_InputCount = 0;
+    chara->field_40              = NO_VALUE;
 
     g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_DamageReceived;
 

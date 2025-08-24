@@ -489,6 +489,7 @@ Player_Upper_StateUpdate                    = 0x80073FC0; // type:func
 Player_Upper_Update                         = 0x80074254; // type:func
 Player_CombatAnimUpdate.234                 = 0x80074350; // filename:Player_CombatAnimUpdate type:func - Generated compilation result adds .234 at name end for some reason.
 Player_Upper_MainUpdate                     = 0x80075504; // type:func
+Player_CombatStateUpdate                    = 0x800771BC; // type:func
 Player_StepAbruptStop_MovementCancel        = 0x80077BB8; // type:func
 Player_Lower_Update                         = 0x80077D00; // type:func
 func_8007B924                               = 0x8007B924; // type:func
@@ -1956,6 +1957,7 @@ g_Inventory_HealthStatusScanlinePosition    = 0x800AE19A;
 g_Inventory_ItemNameTimer                   = 0x800AE19C;
 g_Inventory_DescriptionRollTimer            = 0x800AE1A0;
 g_Inventory_ScrollTransitionTimer           = 0x800AE1A4;
+g_Player_GrabFree_InputCount                = 0x800AF20C;
 g_Player_IsInWalkToRunTransition            = 0x800AF214;
 g_Player_DisableControl                     = 0x800AF215;
 g_Player_RockDrill_DirectionAttack          = 0x800AF217;
@@ -2334,7 +2336,7 @@ g_Demo_CurFrameData                         = 0x800C4890;
 g_Demo_DemoStep                             = 0x800C4894;
 g_Demo_VideoPresentInterval                 = 0x800C4898;
 
-Player_CombatStateUpdate = 0x800771BC // type:func
+
 
 //================================================
 //=== .bss section

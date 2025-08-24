@@ -469,6 +469,8 @@ typedef enum _EquippedWeaponId
     EquippedWeaponId_KitchenKnife   = 0,
     EquippedWeaponId_SteelPipe      = 1,
     EquippedWeaponId_RockDrill      = 2,
+	
+    EquippedWeaponId_Unk3           = 3,
 
     EquippedWeaponId_Hammer         = 4,
     EquippedWeaponId_Chainsaw       = 5,

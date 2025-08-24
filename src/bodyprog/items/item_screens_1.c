@@ -78,16 +78,16 @@ void Inventory_ExitAnimEquippedItemUpdate(u8* arg0) // 0x8004C088
                     modelPtr1      = &g_SysWork.player_4C.chara_0.model_0;
                     extraModelPtr1 = &g_SysWork.player_4C.extra_128.model_0;
 
-                    modelPtr1->anim_4.animIdx_0                        = 3;
-                    modelPtr1->anim_4.keyframeIdx0_8                   = 0;
-                    extraModelPtr1->anim_4.animIdx_0                   = 3;
-                    extraModelPtr1->anim_4.keyframeIdx0_8              = 0;
-                    g_SysWork.player_4C.chara_0.model_0.state_2        = 0;
-                    g_SysWork.player_4C.chara_0.model_0.stateStep_3    = 0;
+                    modelPtr1->anim_4.animIdx_0                          = 3;
+                    modelPtr1->anim_4.keyframeIdx0_8                     = 0;
+                    extraModelPtr1->anim_4.animIdx_0                     = 3;
+                    extraModelPtr1->anim_4.keyframeIdx0_8                = 0;
+                    g_SysWork.player_4C.chara_0.model_0.state_2          = 0;
+                    g_SysWork.player_4C.chara_0.model_0.stateStep_3      = 0;
                     g_SysWork.player_4C.extra_128.playerUpperMovement_20 = PlayerUpperMovement_None;
-                    g_SysWork.player_4C.extra_128.playerLowerMovement_24    = PlayerLowerMovement_None;
-                    g_SysWork.player_4C.extra_128.model_0.state_2      = 0;
-                    g_SysWork.player_4C.extra_128.model_0.stateStep_3  = 0;
+                    g_SysWork.player_4C.extra_128.playerLowerMovement_24 = PlayerLowerMovement_None;
+                    g_SysWork.player_4C.extra_128.model_0.state_2        = 0;
+                    g_SysWork.player_4C.extra_128.model_0.stateStep_3    = 0;
                 }
 
                 g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = 0;

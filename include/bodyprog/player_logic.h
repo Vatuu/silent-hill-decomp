@@ -318,6 +318,9 @@ extern s8 g_Player_RockDrill_DirectionAttack; // 0x800AF217
 /** Another variable that saves the index of the enemy being attacked. */
 extern s32 D_800AF21C; // 0x800AF21C
 
+/** @brief Counts the amount inputs the player has pressed in order to free himselft from a grab. */
+extern s32 g_Player_GrabFree_InputCount;
+
 /** @brief Attack animation currently playing. */
 extern s32 g_Player_AttackAnimationIdx; // 0x800AFBE8
 

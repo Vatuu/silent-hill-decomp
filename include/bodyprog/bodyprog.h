@@ -1954,8 +1954,6 @@ extern s16 D_800AF210;
 /** Angle? */
 extern s16 D_800AF212;
 
-extern s32 D_800AF20C;
-
 extern u8 D_800AF220;
 
 extern s32 D_800AF224;
