@@ -50,26 +50,32 @@ extern u16 D_800DE124;
 
 extern u16 D_800DE128;
 
-extern s32 g_timer1;
+extern s32 g_Timer0;
 
-extern u8 g_SdCmdIndex;
+extern u8 g_SoundCmdIdx;
 
 extern u8 D_800E23A1;
 
-extern VECTOR3 g_cutsceneCameraTarget;
-extern VECTOR3 g_cutsceneCameraLookAt;
-void Chara_Spawn(s32, s32, s32, s32, s32, s32);
-void func_800D2054();
+extern VECTOR3 g_CutsceneCameraPositionTarget;
 
+extern VECTOR3 g_CutsceneCameraLookAtTarget;
 
 extern s16 D_800E2560;
 
 /** Size might be 6. Possibly related to NPCs. */
 extern s_800BCE18_2BEC_0 D_800E2570[];
 
-extern u16 g_SdCmdTable[];
+extern u16 g_SoundCmds[];
+
 extern u8 D_800DE250;
+
 extern u8 D_800DE251;
+
+// From bodyprog.
+//=============================================
+void Chara_Spawn(s32, s32, s32, s32, s32, s32);
+void func_800D2054();
+//=============================================
 
 /** `arg0` is a struct pointer, might be `s_SubCharacter`. */
 void func_800D2364(s32 arg0);
