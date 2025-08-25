@@ -1,7 +1,8 @@
 python-Levenshtein
 python-ranges
 toml
-splat64[mips]>=0.33.2,<1.0.0
+splat64[mips]==0.33.2,<1.0.0
+spimdisasm==1.33.0
 clang-format
 clang-tidy
 pycparser
