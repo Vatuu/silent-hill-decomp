@@ -159,7 +159,63 @@ INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D3AC0);
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedSymbol_800D3B0C_0_s01); // 0x800D3B0C
 
+#ifdef NON_MATCHING // TODO .rodata
+void func_800D3CC4(s_SubCharacter* arg0)
+{
+    u32 temp_v0;
+    s32 var_s1;
+
+    sharedData_800E21D0_0_s01 |= 0x80000000;
+    var_s1 = 0;
+    switch (arg0->model_0.stateStep_3)
+    {
+        case 0:
+            var_s1 = 1;
+            arg0->model_0.anim_4.animIdx_0 = 0x2F;
+            arg0->model_0.stateStep_3 = 1;
+            break;
+
+        case 2:
+            var_s1 = 1;
+            arg0->model_0.anim_4.animIdx_0 = 0x31;
+            arg0->model_0.stateStep_3 = 3;
+            /* fallthrough */
+        case 1:
+        case 3:
+            arg0->properties_E4.player.flags_11C |= 0x10000;
+            /* fallthrough */
+        default:
+            break;
+        case 4:
+            var_s1 = 1;
+            arg0->model_0.anim_4.animIdx_0 = 0x1F;
+            arg0->model_0.stateStep_3 = 5;
+            /* fallthrough */
+        case 5:
+            arg0->properties_E4.player.flags_11C &= 0xFFFEFFFF;
+            break;
+        case 6:
+            if (arg0->model_0.anim_4.animIdx_0 == 0x27) {
+                arg0->model_0.stateStep_3 = 7;
+            }
+            break;
+        case 7:
+            arg0->model_0.state_2 = 0;
+            arg0->model_0.stateStep_3 = 0xD;
+            sharedSymbol_800D3B0C_0_s01(arg0);
+            break;
+    }
+    func_800D2C0C(arg0, 0);
+    if (var_s1 != 0)
+    {
+        temp_v0 = func_80044918(&arg0->model_0.anim_4)->keyframeIdx0_C;
+        arg0->model_0.anim_4.keyframeIdx0_8 = temp_v0;
+        arg0->model_0.anim_4.time_4 = FP_TO(temp_v0, Q12_SHIFT);
+    }
+}
+#else
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D3CC4);
+#endif
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D3DFC);
 
