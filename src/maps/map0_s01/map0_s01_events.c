@@ -269,7 +269,7 @@ void func_800DA980()
         
         case 43:
             func_80085EB8(0, &g_SysWork.player_4C.chara_0, 0x33, false);
-            g_timer1 = 0x129000;
+            g_timer1 = FP_TIME(297.0f);
             SysWork_StateStepIncrement();
         
         case 44:
